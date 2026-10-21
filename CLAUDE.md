@@ -63,5 +63,5 @@ Print: <bed face>, bed contact <mm²> (M), tree supports <g>; file <name>
 
 ## Git
 - Commit messages: `<part> <version>: <what>` or `ckpt <n>`. Push after every commit.
-- LFS tracks `*.stl *.3mf *.obj *.step *.png *.gcode *.zip`. Keep any single file under 100 MB.
+- No git LFS (its uploads are blocked from cloud boxes). Meshes, previews and print files go in plain git: keep any single file under 50 MB (decimate a viewing mesh, zip a big 3mf), and commit a run's final mesh, not every checkpoint's.
 - Never force-push `main`. Never rewrite history on a shared branch.
