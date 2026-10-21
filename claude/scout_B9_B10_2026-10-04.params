@@ -1,0 +1,21 @@
+# Onboard parameters for Scout, written 4 Oct 2026 (tasks B9, B10). NOT loaded: Spark loads on the bench (QGC > Parameters > Tools > Load from file).
+# Format: QGC  Vehicle-Id  Component-Id  Name  Value  Type (9 = float)
+# Notes and tags: scout_B9_B10_2026-10-04.txt
+#
+# B9 flow / range offsets, underside v2. Body frame FRD from the FC/IMU, metres.
+1	1	EKF2_OF_POS_X	0.0019	9
+1	1	EKF2_OF_POS_Y	0.0	9
+1	1	EKF2_OF_POS_Z	0.0155	9
+1	1	EKF2_RNG_POS_X	-0.0100	9
+1	1	EKF2_RNG_POS_Y	0.0	9
+1	1	EKF2_RNG_POS_Z	0.0155	9
+# B10 speed caps for the 1.0 m/s bump design speed (RULES.md). m/s.
+1	1	MPC_VEL_MANUAL	1.0	9
+1	1	MPC_XY_VEL_MAX	1.0	9
+1	1	MPC_XY_CRUISE	1.0	9
+1	1	MPC_Z_VEL_MAX_UP	1.0	9
+1	1	MPC_Z_VEL_MAX_DN	1.0	9
+1	1	MPC_Z_V_AUTO_UP	1.0	9
+1	1	MPC_Z_V_AUTO_DN	1.0	9
+1	1	MPC_TKO_SPEED	1.0	9
+1	1	MPC_LAND_SPEED	0.4	9

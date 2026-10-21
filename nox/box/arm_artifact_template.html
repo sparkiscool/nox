@@ -1,0 +1,318 @@
+<title>Nox Swap Arm</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: one-screen viewer; header strip, 3D stage with a side panel, transport bar; stacks to one column on a phone */
+:root {
+  --bg: #eceff2; --panel: #f8f9fb; --fg: #1a222c; --muted: #5f6d7b; --line: #d2d9e0; --line-2: #e3e8ed;
+  --accent: #c25e1b; --accent-soft: #f6e3d6; --ok: #2f7d4f; --ok-soft: #dcefe3; --bad: #b4302a; --bad-soft: #f5dcda;
+  --stage: #e3e7eb; --grid: #c9d1d9;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #14181d; --panel: #1b2026; --fg: #e4e9ee; --muted: #8e9cab; --line: #2d353e; --line-2: #242b33;
+  --accent: #e07a35; --accent-soft: #3a2619; --ok: #5cc98a; --ok-soft: #173224; --bad: #e46a62; --bad-soft: #3c1b19;
+  --stage: #1e242b; --grid: #333c46; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #14181d; --panel: #1b2026; --fg: #e4e9ee; --muted: #8e9cab; --line: #2d353e; --line-2: #242b33;
+  --accent: #e07a35; --accent-soft: #3a2619; --ok: #5cc98a; --ok-soft: #173224; --bad: #e46a62; --bad-soft: #3c1b19;
+  --stage: #1e242b; --grid: #333c46; color-scheme: dark }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.45 var(--sans); }
+* { box-sizing: border-box; }
+.app { height: 100%; display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 320px; grid-template-areas: "head head" "stage side" "bar side";
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; gap: 10px; }
+header { grid-area: head; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; }
+h1 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+h1 small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 8px; }
+.chip { font: 500 12px/1 var(--mono); padding: 6px 9px; border-radius: 4px; background: var(--ok-soft); color: var(--ok); border: 1px solid transparent; }
+.chip.bad { background: var(--bad-soft); color: var(--bad); }
+.chip.wait { background: var(--accent-soft); color: var(--accent); }
+.stage { grid-area: stage; position: relative; background: var(--stage); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; min-height: 320px; min-width: 0; }
+.stage canvas { display: block; width: 100%; height: 100%; }
+.views { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; }
+.views button, .bar button, .bar select, .side button { font: 500 12px/1 var(--mono); padding: 6px 9px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
+.views button:hover, .bar button:hover, .side button:hover { border-color: var(--accent); }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.hud { position: absolute; left: 8px; bottom: 8px; font: 12px/1.5 var(--mono); color: var(--fg); background: color-mix(in srgb, var(--panel) 85%, transparent); padding: 6px 9px; border-radius: 4px; border: 1px solid var(--line); pointer-events: none; }
+.hud b { font-weight: 500; color: var(--muted); display: inline-block; width: 6.5ch; }
+.phase { position: absolute; right: 8px; top: 8px; font: 500 13px/1.3 var(--sans); background: color-mix(in srgb, var(--panel) 85%, transparent); padding: 7px 10px; border-radius: 4px; border: 1px solid var(--line); max-width: 55%; pointer-events: none; }
+.phase span { display: block; font: 11px/1.3 var(--mono); color: var(--muted); margin-top: 2px; }
+.bar { grid-area: bar; display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; gap: 6px 10px; align-items: center; }
+.bar .strip { grid-column: 1 / -1; height: 54px; width: 100%; display: block; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); }
+.bar input[type=range] { width: 100%; accent-color: var(--accent); margin: 0; }
+.bar .time { font: 500 13px/1 var(--mono); min-width: 9ch; text-align: right; font-variant-numeric: tabular-nums; }
+.side { grid-area: side; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 12px 8px; overflow: auto; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.side h2 { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.read { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.read div { border: 1px solid var(--line-2); border-radius: 4px; padding: 6px 8px; }
+.read label { display: block; font: 11px/1 var(--mono); color: var(--muted); margin-bottom: 4px; }
+.read output { font: 500 15px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.clear { border: 1px solid var(--line-2); border-radius: 4px; padding: 8px 10px; font: 12px/1.5 var(--mono); }
+.clear output { font-weight: 500; font-size: 16px; }
+.clear.bad { border-color: var(--bad); background: var(--bad-soft); }
+.grp { border-top: 1px solid var(--line-2); padding-top: 6px; }
+.grp header { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 500; font-size: 13px; }
+.grp header label { font-weight: 400; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.grp ul { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.grp li { display: grid; grid-template-columns: 16px 12px 1fr auto; align-items: center; gap: 6px; font-size: 12.5px; min-width: 0; }
+.grp li.off { color: var(--muted); }
+.grp li i { width: 12px; height: 12px; border-radius: 2px; border: 1px solid var(--line); display: inline-block; }
+.grp li .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.grp li .nm.hot { color: var(--bad); font-weight: 600; }
+.grp li .mass { font: 11px/1 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.grp li .bought { font: 10px/1 var(--mono); color: var(--muted); border: 1px solid var(--line); border-radius: 3px; padding: 2px 4px; }
+.note { font-size: 12px; color: var(--muted); line-height: 1.4; }
+.note code { font: 11.5px var(--mono); }
+input[type=checkbox] { accent-color: var(--accent); margin: 0; }
+@media (max-width: 760px) {
+  html, body { height: auto; }
+  .app { height: auto; grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; grid-template-areas: "head" "stage" "bar" "side"; }
+  .stage { height: 58vh; }
+  .phase { top: 44px; max-width: 70%; }
+  .side { max-height: none; }
+  .read { grid-template-columns: repeat(3, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>Nox Swap Arm <small>v4: cartridge v3 long side along the axle, bolted bay modules</small></h1>
+    <span class="chip wait" id="verdict">sweep loading</span>
+  </header>
+
+  <div class="stage" id="stage">
+    <div class="views">
+      <button type="button" id="v-iso" title="From the far-wall side">iso</button>
+      <button type="button" id="v-axle" title="Along the axle, X right, Z up">axle</button>
+      <button type="button" id="v-top" title="From above the drone position">top</button>
+      <button type="button" id="v-head" title="Close on the heads">heads</button>
+    </div>
+    <div class="phase"><span id="phase-no"></span><div id="phase-txt"></div></div>
+    <div class="hud"><b>phi</b><span id="h-phi"></span> deg<br><b>zA</b><span id="h-zA"></span> mm &nbsp;<b>zB</b><span id="h-zB"></span> mm<br><b>fA</b><span id="h-fA"></span> &nbsp; <b>fB</b><span id="h-fB"></span></div>
+  </div>
+
+  <div class="bar">
+    <button type="button" id="play">pause</button>
+    <input type="range" id="scrub" min="0" max="18" step="0.02" value="0" aria-label="time in the swap cycle">
+    <span class="time"><span id="t-now">0.00</span> / <span id="t-end">18.0</span> s</span>
+    <canvas class="strip" id="strip" aria-label="clearance over the cycle"></canvas>
+  </div>
+
+  <aside class="side">
+    <h2>Gripper and clearance</h2>
+    <div class="clear" id="clear-box">nearest non-contacting pair<br><output id="clear-val">–</output> mm &nbsp;<span id="clear-pair" class="note"></span><div id="ovl" class="note"></div></div>
+    <div class="read">
+      <div><label>speed</label><select id="speed" aria-label="playback speed"><option value="0.25">x0.25</option><option value="0.5">x0.5</option><option value="1" selected>x1</option><option value="2">x2</option></select></div>
+      <div><label>printed only</label><input type="checkbox" id="printed-only" aria-label="hide bought parts"></div>
+    </div>
+    <h2>Parts</h2>
+    <div id="parts"></div>
+    <p class="note">Masses: mesh volume x 1.27 g/cm3 (M). Bought parts are context only. Clearance is the python-fcl distance between the nearest pair that is not meant to touch; a pack touching its own fingers, the 0° bay it seats in or a bay's TPU strip, and bolted parts, are allowed. Generated parts (noxopt): hub, heads A and B, the bay module (one design, printed 4x, bolted to its neighbours by link plates; linked, the modules are the standing frame, no casing). Each bay carries the receiver's copper shoes and 5 AA leaf contacts on the cartridge's balance pads. Overseer bays (45, 135, 180°) wait on the pack size. Sampled every 0.2 s and every 2° of every turn.</p>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const D = __DATA__;
+const L = D.layout;
+const $ = id => document.getElementById(id);
+
+// ---------- meshes
+function b64(s) { const b = atob(s); const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+function geom(m) {
+  const q = new Int16Array(b64(m.p).buffer); const pos = new Float32Array(q.length);
+  for (let k = 0; k < q.length; k++) pos[k] = q[k] * 0.02 + m.off[k % 3];
+  const ib = b64(m.i).buffer; const idx = m.big ? new Uint32Array(ib) : new Uint16Array(ib);
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setIndex(new THREE.BufferAttribute(idx, 1));
+  g.computeVertexNormals(); return g;
+}
+const G = {}; for (const k in D.meshes) G[k] = geom(D.meshes[k]);
+
+// ---------- scene
+const stage = $('stage');
+// software GL (no GPU in the viewer) gets no antialiasing, pixel ratio 1 and on-demand rendering
+const soft = (() => { try { const c = document.createElement('canvas'); const g = c.getContext('webgl'); if (!g) return true; const d = g.getExtension('WEBGL_debug_renderer_info'); const rn = d ? String(g.getParameter(d.UNMASKED_RENDERER_WEBGL)) : ''; return /swiftshader|llvmpipe|software|mesa|basic render/i.test(rn); } catch (e) { return true; } })();
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias: !soft, alpha: true, powerPreference: 'high-performance' }); }
+catch (e) { stage.insertAdjacentHTML('beforeend', '<p style="position:absolute;inset:40% 16px auto;text-align:center;font:14px var(--sans)">This viewer has no WebGL. Open the page in Chrome or Edge to see the model.</p>'); throw e; }
+renderer.setPixelRatio(soft ? 1 : Math.min(devicePixelRatio, 1.5)); stage.appendChild(renderer.domElement);
+let needsRender = true; const invalidate = () => { needsRender = true; };
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(38, 1, 5, 5000); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.target.set(0, 85, 0); controls.enableDamping = false; controls.addEventListener('change', invalidate);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x6b7a8a, 0.75));
+const sun = new THREE.DirectionalLight(0xffffff, 0.8); sun.position.set(260, -420, 520); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 0.35); fill.position.set(-300, 500, -200); scene.add(fill);
+const views = {
+  iso: [[330, 560, 300], [0, 85, 0]], axle: [[0, -520, 60], [0, 85, 0]], top: [[20, 90, 560], [0, 85, 0]], head: [[150, 330, 240], [0, 110, 50]] };
+function setView(v) { camera.position.set(...views[v][0]); controls.target.set(...views[v][1]); controls.update(); invalidate(); }
+for (const v in views) $('v-' + (v === 'head' ? 'head' : v)).onclick = () => setView(v);
+setView('iso');
+// ring guide: the R 100 seat circle and the pin circle, in the plane Y = Y_C
+function ring(r, col) { const pts = []; for (let i = 0; i <= 96; i++) { const a = i / 96 * Math.PI * 2; pts.push(new THREE.Vector3(Math.cos(a) * r, L.Y_C, Math.sin(a) * r)); }
+  return new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: col, transparent: true, opacity: 0.35 })); }
+const guides = new THREE.Group(); guides.add(ring(L.R, 0x888888)); guides.add(ring(L.R_PIN, 0x888888)); scene.add(guides);
+
+const boughtCol = new THREE.Color('#8e99a4');
+const M = {};   // id -> {mesh, part, base}
+for (const p of D.parts) {
+  const col = p.printed ? new THREE.Color(p.color) : boughtCol;
+  const isCase = p.id === 'casing';
+  const mat = new THREE.MeshStandardMaterial({ color: col, roughness: 0.78, metalness: 0.0, transparent: isCase, opacity: isCase ? 0.1 : 1, side: isCase ? THREE.DoubleSide : THREE.FrontSide, depthWrite: !isCase });
+  const mesh = new THREE.Mesh(G[p.mesh], mat); mesh.matrixAutoUpdate = false; scene.add(mesh);
+  if (isCase) { const e = new THREE.LineSegments(new THREE.EdgesGeometry(G[p.mesh], 30), new THREE.LineBasicMaterial({ color: 0x8e99a4, transparent: true, opacity: 0.5 })); e.matrixAutoUpdate = false; mesh.userData.edges = e; scene.add(e); }
+  M[p.id] = { mesh, part: p, base: col.clone(), on: true };
+}
+// stub wall tiles: one generated tile turned into the four quadrants
+// packs: two cartridges, geometry picked by squeeze
+const packs = {};
+for (const nm of ['pack charged', 'pack dead']) {
+  const mat = new THREE.MeshStandardMaterial({ color: new THREE.Color(nm === 'pack charged' ? '#3f9b63' : '#a35b8a'), roughness: 0.7 });
+  const mesh = new THREE.Mesh(G.cart0, mat); mesh.matrixAutoUpdate = false; scene.add(mesh); packs[nm] = { mesh, base: mat.color.clone(), on: true };
+}
+
+// ---------- kinematics (mirrors arm_kinematics.py)
+const KEYS = D.keys, PH = D.phases;
+function state(t) {
+  for (let i = 0; i < KEYS.length - 1; i++) { const a = KEYS[i], b = KEYS[i + 1];
+    if (a[0] <= t && t <= b[0]) { const u = b[0] === a[0] ? 0 : (t - a[0]) / (b[0] - a[0]); return { phi: a[1] + u * (b[1] - a[1]), zA: a[2] + u * (b[2] - a[2]), zB: a[3] + u * (b[3] - a[3]), fA: a[4] + u * (b[4] - a[4]), fB: a[5] + u * (b[5] - a[5]) }; } }
+  const k = KEYS[KEYS.length - 1]; return { phi: k[1], zA: k[2], zB: k[3], fA: k[4], fB: k[5] };
+}
+const rad = d => d * Math.PI / 180;
+const rotY = d => new THREE.Matrix4().makeRotationY(rad(d));
+const rotX = r => new THREE.Matrix4().makeRotationX(r);
+const rotZ = r => new THREE.Matrix4().makeRotationZ(r);
+const tr = (x, y, z) => new THREE.Matrix4().makeTranslation(x, y, z);
+const mul = (...ms) => ms.reduce((a, b) => a.clone().multiply(b));
+const RB = rotY(-90), T_END = D.tEnd, T_LAND = D.tLand;
+function owner(t) { return [t < 3 ? 'bay0' : (t < 10 ? 'A' : 'drone'), t < T_LAND ? null : (t < 5.5 ? 'drone' : (t < 16 ? 'B' : 'bay0'))]; }
+function apply(t) {
+  const s = state(t); const Tarm = rotY(90 - s.phi);
+  const TA = mul(Tarm, tr(0, 0, s.zA)), TB = mul(Tarm, RB, tr(0, 0, s.zB));
+  const T = {};
+  for (const id in M) {
+    const p = M[id].part;
+    if (id.startsWith('bay') || id.startsWith('link') || id.startsWith('strip') || id.startsWith('springs')) T[id] = new THREE.Matrix4();
+    else if (id.startsWith('stubtile')) T[id] = rotY(90 * +id.slice(8));
+    else if (p.group === 'fixed') T[id] = new THREE.Matrix4();
+    else if (p.group === 'arm') T[id] = Tarm;
+    else if (p.group === 'armB') T[id] = mul(Tarm, RB);
+  }
+  for (const [h, Th, d] of [['A', TA, s.fA], ['B', TB, s.fB]]) {
+    const sg = h === 'A' ? 1 : -1;   // head B's gripper is mirrored in X
+    T['head' + h] = Th; T['servo_' + h] = Th; T['fingA_' + h] = mul(Th, tr(sg * d, 0, 0)); T['fingB_' + h] = mul(Th, tr(-sg * d, 0, 0));
+    T['pinion_' + h] = mul(Th, tr(sg * L.P_SH, L.Y_C, 0), rotZ(-sg * d / 6));
+  }
+  for (const id in M) { M[id].mesh.matrix.copy(T[id]); if (M[id].mesh.userData.edges) M[id].mesh.userData.edges.matrix.copy(T[id]); }
+  // packs
+  const [ch, de] = owner(t);
+  const seat = h => mul(h === 'A' ? TA : TB, tr(0, 0, L.CART_BOT_DZ));
+  const place = { bay0: mul(rotY(90 - L.bays[0]), tr(0, 0, L.R)), drone: tr(0, 0, L.R + 5) };
+  function squeezeAt(Tp) { for (const [h, d] of [['A', s.fA], ['B', s.fB]]) { const Tc = seat(h); const e = Tc.elements, f = Tp.elements; let ok = true; for (let k = 0; k < 16; k++) if (Math.abs(e[k] - f[k]) > 0.5) ok = false; if (ok) return Math.max(d, 0); } return 0; }
+  for (const [nm, own] of [['pack charged', ch], ['pack dead', de]]) {
+    packs[nm].present = own !== null; if (own === null) { packs[nm].mesh.visible = false; continue; }
+    let Tp, sq; if (own === 'bay0' || own === 'drone') { Tp = place[own]; sq = squeezeAt(Tp); } else { Tp = seat(own); sq = Math.max(own === 'A' ? s.fA : s.fB, 0); }
+    const g = sq < 1 ? G.cart0 : (sq < 3 ? G.cart2 : G.cart4); packs[nm].mesh.geometry = g; packs[nm].mesh.matrix.copy(Tp); packs[nm].mesh.visible = packs[nm].on;
+  }
+  return s;
+}
+
+// ---------- sweep readout
+const SW = D.sweep; let swT = SW.map(r => r.t);
+function rowAt(t) { if (!SW.length) return null; let lo = 0, hi = SW.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (swT[m] <= t) lo = m; else hi = m; } return (Math.abs(swT[hi] - t) < Math.abs(swT[lo] - t)) ? SW[hi] : SW[lo]; }
+const nice = n => n.startsWith('pack') ? n.split('|')[0] : (M[n] ? M[n].part.name : n);
+(function verdict() {
+  const el = $('verdict'); if (!SW.length) { el.textContent = 'no sweep yet'; return; }
+  const vol = r => (r.overlaps || []).reduce((m, o) => Math.max(m, o[2]), 0);
+  const ov = SW.filter(r => vol(r) > 0).length; let mn = Infinity, at = null; for (const r of SW) if (r.clearance < mn) { mn = r.clearance; at = r; }
+  const touch = SW.filter(r => vol(r) <= 0 && r.clearance <= 0.001).length;
+  el.className = 'chip ' + (ov ? 'bad' : (touch ? 'wait' : ''));
+  el.textContent = `${SW.length} states swept · ${ov} overlap${ov === 1 ? '' : 's'}` + (touch ? ` · ${touch} touching` : '') + ` · min clearance ${mn.toFixed(2)} mm` + (at && at.pair ? ` (${nice(at.pair[0])} / ${nice(at.pair[1])} at ${at.t.toFixed(1)} s)` : '');
+})();
+
+// ---------- strip chart (clearance over the cycle)
+const strip = $('strip'); const sctx = strip.getContext('2d');
+function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function drawStrip(t) {
+  const W = strip.clientWidth, H = strip.clientHeight; if (strip.width !== W * devicePixelRatio) { strip.width = W * devicePixelRatio; strip.height = H * devicePixelRatio; }
+  sctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); sctx.clearRect(0, 0, W, H);
+  const padL = 34, padR = 8, padT = 6, padB = 14, x = tt => padL + (W - padL - padR) * tt / T_END, y = c => padT + (H - padT - padB) * (1 - Math.min(Math.max(Math.log10(Math.max(c, 0.1) / 0.1) / Math.log10(200), 0), 1));
+  sctx.strokeStyle = css('--grid'); sctx.lineWidth = 1; sctx.font = '10px ' + css('--mono'); sctx.fillStyle = css('--muted'); sctx.textAlign = 'right';
+  for (const c of [0.1, 1, 10]) { sctx.beginPath(); sctx.moveTo(padL, y(c) + 0.5); sctx.lineTo(W - padR, y(c) + 0.5); sctx.stroke(); sctx.fillText(c + ' mm', padL - 4, y(c) + 3.5); }
+  sctx.textAlign = 'center'; for (const ph of PH) { sctx.beginPath(); sctx.moveTo(x(ph[0]) + 0.5, padT); sctx.lineTo(x(ph[0]) + 0.5, H - padB); sctx.stroke(); }
+  for (let tt = 0; tt <= T_END; tt += 5) sctx.fillText(tt + ' s', x(tt), H - 3);
+  if (SW.length) { sctx.strokeStyle = css('--accent'); sctx.lineWidth = 1.5; sctx.beginPath(); SW.forEach((r, i) => { const px = x(r.t), py = y(r.clearance); i ? sctx.lineTo(px, py) : sctx.moveTo(px, py); }); sctx.stroke();
+    sctx.fillStyle = css('--bad'); for (const r of SW) if ((r.overlaps && r.overlaps.length) || r.clearance <= 0.001) sctx.fillRect(x(r.t) - 1.5, y(0.1) - 4, 3, 8); }
+  sctx.strokeStyle = css('--fg'); sctx.lineWidth = 1; sctx.beginPath(); sctx.moveTo(x(t) + 0.5, padT); sctx.lineTo(x(t) + 0.5, H - padB); sctx.stroke();
+}
+strip.addEventListener('click', e => { const r = strip.getBoundingClientRect(); const u = (e.clientX - r.left - 34) / (r.width - 42); setT(Math.max(0, Math.min(T_END, u * T_END))); });
+
+// ---------- parts panel
+const groups = [['fixed', 'Fixed: stub, bay modules'], ['arm', 'Arm: hub, bars, drives'], ['headA', 'Head A'], ['headB', 'Head B'], ['packs', 'Cartridges']];
+const partsEl = $('parts');
+for (const [g, label] of groups) {
+  const sec = document.createElement('section'); sec.className = 'grp';
+  const items = g === 'packs' ? Object.keys(packs).map(n => ({ id: n, name: n, color: '#' + packs[n].base.getHexString(), printed: false, pack: true })) : D.parts.filter(p => p.group === g || (g === 'arm' && p.group === 'armB'));
+  sec.innerHTML = `<header><span>${label}</span><label><input type="checkbox" checked data-grp="${g}" aria-label="toggle group"> all</label></header><ul></ul>`;
+  const ul = sec.querySelector('ul');
+  for (const p of items) {
+    const li = document.createElement('li'); const mass = p.pack ? '' : (p.printed ? (D.meshes[p.mesh].mass != null ? D.meshes[p.mesh].mass.toFixed(0) + ' g' : '') : '');
+    li.innerHTML = `<input type="checkbox" checked id="pt-${p.id.replace(/\W/g, '_')}" data-id="${p.id}" aria-label="${p.name}"><i style="background:${p.printed || p.pack ? p.color : '#8e99a4'}"></i><span class="nm">${p.name}</span>` + (p.pack ? '<span class="bought">pack</span>' : (p.id === 'casing' ? '<span class="bought">proxy</span>' : (p.printed ? `<span class="mass">${mass}</span>` : '<span class="bought">bought</span>')));
+    ul.appendChild(li);
+  }
+  partsEl.appendChild(sec);
+}
+partsEl.addEventListener('change', e => {
+  const cb = e.target; if (cb.dataset.grp) { for (const c of cb.closest('section').querySelectorAll('li input')) { c.checked = cb.checked; setOn(c.dataset.id, c.checked); } }
+  else setOn(cb.dataset.id, cb.checked);
+});
+function setOn(id, on) { const o = M[id] || packs[id]; if (!o) return; o.on = on; const li = document.getElementById('pt-' + id.replace(/\W/g, '_')).closest('li'); li.classList.toggle('off', !on); applyVis(); }
+function applyVis() {
+  const po = $('printed-only').checked, co = true;
+  for (const id in M) { const o = M[id]; let v = o.on; if (po && !o.part.printed) v = false; if (id === 'casing' && !co) v = false; o.mesh.visible = v; if (o.mesh.userData.edges) o.mesh.userData.edges.visible = v; }
+  for (const n in packs) packs[n].mesh.visible = packs[n].on && packs[n].present !== false;
+  invalidate();
+}
+$('printed-only').onchange = applyVis;
+
+// ---------- transport
+let t = 0, playing = true, last = performance.now();                 // plays on open and loops
+const scrub = $('scrub'), playBtn = $('play'); scrub.max = T_END; $('t-end').textContent = T_END.toFixed(1);
+function setT(v, fromScrub) { t = v; if (!fromScrub) scrub.value = v.toFixed(2); update(); invalidate(); }
+scrub.addEventListener('input', () => setT(parseFloat(scrub.value), true));
+playBtn.onclick = () => { playing = !playing; playBtn.textContent = playing ? 'pause' : 'play'; last = performance.now(); };
+document.addEventListener('keydown', e => { if (e.code === 'Space' && e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') { e.preventDefault(); playBtn.click(); } });
+function update() {
+  const s = apply(t);
+  $('t-now').textContent = t.toFixed(2);
+  $('h-phi').textContent = s.phi.toFixed(1).padStart(7); $('h-zA').textContent = s.zA.toFixed(1).padStart(5); $('h-zB').textContent = s.zB.toFixed(1).padStart(5);
+  $('h-fA').textContent = s.fA.toFixed(1).padStart(5); $('h-fB').textContent = s.fB.toFixed(1).padStart(5);
+  let ph = PH[0], k = 0; for (let i = 0; i < PH.length; i++) if (PH[i][0] <= t + 1e-9) { ph = PH[i]; k = i; }
+  $('phase-no').textContent = `phase ${k + 1} of ${PH.length} · ${ph[0]} s`; $('phase-txt').textContent = ph[1];
+  const r = rowAt(t); const box = $('clear-box');
+  for (const id in M) { const o = M[id]; o.mesh.material.color.copy(o.base); o.mesh.material.emissive.setHex(0); }
+  for (const n in packs) { packs[n].mesh.material.color.copy(packs[n].base); packs[n].mesh.material.emissive.setHex(0); }
+  for (const el of partsEl.querySelectorAll('.nm.hot')) el.classList.remove('hot');
+  if (r) {
+    $('clear-val').textContent = r.clearance.toFixed(2); $('clear-pair').textContent = r.pair ? `${nice(r.pair[0])} / ${nice(r.pair[1])} (sweep t ${r.t.toFixed(1)})` : '';
+    const ov = r.overlaps || []; const real = ov.filter(o => o[2] > 0);
+    box.classList.toggle('bad', real.length > 0 || r.clearance <= 0.001);
+    $('ovl').textContent = real.length ? 'OVERLAP: ' + real.map(o => `${nice(o[0])} / ${nice(o[1])} ${o[2]} mm3`).join('; ') : (r.clearance <= 0.001 ? 'touching (0 mm3): ' + ov.map(o => `${nice(o[0])} / ${nice(o[1])}`).join('; ') : 'no contact in this state');
+    const hot = new Set(); for (const o of ov) { hot.add(o[0].split('|')[0]); hot.add(o[1].split('|')[0]); } if (r.clearance <= 0.001 && r.pair) { hot.add(r.pair[0].split('|')[0]); hot.add(r.pair[1].split('|')[0]); }
+    for (const n of hot) { const o = M[n] || packs[n]; if (o) { o.mesh.material.emissive.setHex(0x8a1a12); } const li = document.getElementById('pt-' + n.replace(/\W/g, '_')); if (li) li.closest('li').querySelector('.nm').classList.add('hot'); }
+  }
+  drawStrip(t);
+}
+$('speed').onchange = () => {};
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); drawStrip(t); invalidate(); }
+new ResizeObserver(resize).observe(stage); resize();
+function loop(now) {
+  if (playing) { const dt = (now - last) / 1000 * parseFloat($('speed').value); last = now; let nt = t + dt; if (nt >= T_END) nt = 0; setT(nt); } else last = now;
+  if (needsRender) { needsRender = false; renderer.render(scene, camera); }
+  requestAnimationFrame(loop);
+}
+applyVis(); update(); requestAnimationFrame(loop);
+</script>

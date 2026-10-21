@@ -1,0 +1,429 @@
+<title>Nox Arm Detent</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: an instrument bench. The moving mechanism fills the left; a narrow readout column on the right reads like a gauge panel. */
+:root {
+  --bg: #eef0ec; --panel: #fbfcfa; --well: #e3e7e1; --fg: #191d1b; --muted: #5e6862; --line: #d2d8d1;
+  --accent: #d2702a; --steel: #4e6e94; --teal: #1f8a7c; --spring: #c23a2b; --ok: #2f7d4f; --bad: #b8402f;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111413; --panel: #171b1a; --well: #0c0f0e; --fg: #e6ebe7; --muted: #95a19a; --line: #29302d;
+  --accent: #e8914f; --steel: #7d9cc4; --teal: #3fb3a3; --spring: #e0604f; --ok: #5cb67f; --bad: #e0705e; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111413; --panel: #171b1a; --well: #0c0f0e; --fg: #e6ebe7; --muted: #95a19a; --line: #29302d;
+  --accent: #e8914f; --steel: #7d9cc4; --teal: #3fb3a3; --spring: #e0604f; --ok: #5cb67f; --bad: #e0705e; color-scheme: dark }
+html, body { height: auto; }
+body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 14px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px 32px; }
+.wrap { max-width: 1240px; margin: 0 auto; display: grid; gap: 18px; }
+header { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 24px; }
+h1 { font-family: var(--display); font-stretch: 72%; font-weight: 780; font-size: clamp(30px, 4.6vw, 46px); letter-spacing: 0.005em;
+  line-height: 0.95; margin: 0; text-wrap: balance; }
+h1 span { color: var(--accent); }
+.sub { color: var(--muted); max-width: 62ch; margin: 6px 0 0; text-wrap: pretty; }
+.tagkey { font-family: var(--mono); font-size: 11.5px; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; }
+.tagkey b { color: var(--fg); font-weight: 500; }
+.main { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 18px; align-items: start; }
+@media (max-width: 960px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.stage { background: var(--well); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; position: relative; min-width: 0; }
+#view { display: block; width: 100%; aspect-ratio: 16 / 11; max-width: 100%; touch-action: none; }
+@media (max-width: 600px) { #view { aspect-ratio: 1 / 1; } }
+.hud { position: absolute; left: 12px; top: 12px; display: flex; flex-direction: column; gap: 6px; pointer-events: none; }
+.chip { font-family: var(--mono); font-size: 11.5px; padding: 3px 8px; border-radius: 99px; background: var(--panel); border: 1px solid var(--line);
+  color: var(--fg); width: max-content; max-width: calc(100% - 24px); }
+.chip i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; background: var(--muted); vertical-align: 1px; }
+.chip.seated i { background: var(--ok); } .chip.ride i { background: var(--accent); } .chip.land i { background: var(--steel); }
+.phase { font-family: var(--display); font-stretch: 85%; font-weight: 600; font-size: 15px; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 9px; width: max-content; max-width: 70vw; }
+.legend { display: flex; gap: 6px 14px; flex-wrap: wrap; font-size: 12px; color: var(--muted); padding: 8px 12px 10px; background: var(--panel); border-top: 1px solid var(--line); }
+.legend span::before { content: ""; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; background: var(--c); vertical-align: -1px; }
+.transport { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 10px 12px; border-top: 1px solid var(--line); background: var(--panel); }
+button { font: 500 13px var(--body); color: var(--fg); background: var(--well); border: 1px solid var(--line); border-radius: 6px; padding: 6px 11px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button[aria-pressed="true"], .seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+#play { min-width: 76px; font-weight: 650; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg button { border: 0; border-radius: 0; background: transparent; padding: 6px 10px; }
+.seg button + button { border-left: 1px solid var(--line); }
+.scrub { flex: 1 1 220px; display: flex; align-items: center; gap: 10px; min-width: 0; }
+.scrub input { flex: 1; min-width: 0; accent-color: var(--accent); }
+.scrub output { font-family: var(--mono); font-size: 12.5px; min-width: 7.2ch; text-align: right; font-variant-numeric: tabular-nums; }
+label.tog { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+aside { display: grid; gap: 14px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.card h2 { font-family: var(--display); font-stretch: 80%; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+  margin: 0; color: var(--muted); }
+.read { display: grid; grid-template-columns: 1fr auto; gap: 7px 10px; align-items: baseline; }
+.read dt { color: var(--muted); font-size: 13px; }
+.read dd { margin: 0; font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; text-align: right; }
+.read dd small { color: var(--muted); font-size: 11px; margin-left: 3px; }
+.bar { grid-column: 1 / -1; height: 6px; border-radius: 3px; background: var(--well); position: relative; overflow: hidden; margin-top: -3px; }
+.bar b { position: absolute; inset: 0 auto 0 0; background: var(--spring); border-radius: 3px; }
+.bar::after { content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 2px; background: var(--fg); opacity: .5; }
+svg text { font-family: var(--mono); font-size: 10px; fill: var(--muted); }
+.chart { width: 100%; height: auto; display: block; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.checks li { display: grid; grid-template-columns: 8px 1fr auto; gap: 9px; align-items: baseline; font-size: 13px; }
+.checks li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); transform: translateY(1px); }
+.checks li.bad::before { background: var(--bad); }
+.checks li span { color: var(--muted); }
+.checks li b { font-family: var(--mono); font-weight: 500; font-size: 12.5px; white-space: nowrap; }
+.note { font-size: 12.5px; color: var(--muted); margin: 0; text-wrap: pretty; }
+.note strong { color: var(--fg); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Nox <span>Arm Detent</span></h1>
+      <p class="sub">Hub v5 auto-centering detent, driven by the solved motion: at every arm angle the roller arm swings until the 683ZZ just touches the notched ring, the hook moves and the springs stretch.</p>
+    </div>
+    <div class="tagkey"><span><b>C</b> CAD / solved</span><span><b>M</b> mesh</span><span><b>E</b> estimate</span></div>
+  </header>
+
+  <div class="main">
+    <section class="stage" aria-label="Moving model of the arm detent">
+      <canvas id="view"></canvas>
+      <div class="hud">
+        <div class="phase" id="phase">Head A at the 0° bay, head B under the drone</div>
+        <div class="chip seated" id="state"><i></i>Seated in a notch</div>
+      </div>
+      <div class="transport">
+        <button id="play" type="button">Pause</button>
+        <div class="seg" role="group" aria-label="Speed">
+          <button type="button" data-speed="0.4" aria-pressed="false">Slow</button>
+          <button type="button" data-speed="1" aria-pressed="true">1x</button>
+          <button type="button" data-speed="2.5" aria-pressed="false">Fast</button>
+        </div>
+        <div class="scrub">
+          <input id="phi" type="range" min="-278" max="143" step="0.25" value="0" aria-label="Arm angle">
+          <output id="phiOut" for="phi">0.00°</output>
+        </div>
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" data-view="dial" aria-pressed="true">Dial</button>
+          <button type="button" data-view="iso" aria-pressed="false">Hub</button>
+          <button type="button" data-view="arm" aria-pressed="false">Whole arm</button>
+        </div>
+        <label class="tog"><input id="ghost" type="checkbox"> See through the hub</label>
+      </div>
+      <div class="legend">
+        <span style="--c: var(--accent)">hub v5 (turns)</span>
+        <span style="--c: var(--steel)">detent ring (fixed)</span>
+        <span style="--c: var(--teal)">roller arm</span>
+        <span style="--c: var(--spring)">springs x2</span>
+      </div>
+    </section>
+
+    <aside>
+      <div class="card">
+        <h2>Live readout</h2>
+        <dl class="read">
+          <dt>Arm angle φ</dt><dd id="rPhi">0.00<small>°</small></dd>
+          <dt>Nearest stop</dt><dd id="rStop">0°<small>Δ 0.00°</small></dd>
+          <dt>Roller lift</dt><dd id="rLift">0.00<small>mm</small></dd>
+          <dt>Roller arm swing ψ</dt><dd id="rPsi">0.00<small>°</small></dd>
+          <dt>Spring length</dt><dd id="rSpring">37.86<small>/ 42 mm</small></dd>
+          <div class="bar" aria-hidden="true"><b id="rSpringBar"></b></div>
+          <dt>Detent torque, 2 springs</dt><dd id="rTorque">0.000<small>N·m</small></dd>
+          <dt>Closest moving gap</dt><dd id="rGap">0.30<small>mm</small></dd>
+        </dl>
+        <p class="note" id="rGapWho">roller arm over the tower web (designed axial gap)</p>
+      </div>
+
+      <div class="card">
+        <h2>Holding torque at a notch</h2>
+        <svg class="chart" id="chart" viewBox="0 0 300 190" role="img" aria-label="Detent torque against angle from the notch centre"></svg>
+        <p class="note">Solved from the spring energy (C, quasi-static, no friction). Dashed band: torque to beat with the driver off, ±0.366 N·m (E: carried pack at a horizontal stop, seals, cogging).</p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="main">
+    <section class="card">
+      <h2>Interference with the solved motion</h2>
+      <ul class="checks" id="checks"></ul>
+      <svg class="chart" id="gapstrip" viewBox="0 0 640 86" role="img" aria-label="Closest gap of the moving detent parts over the arm's full travel"></svg>
+      <p class="note">Every 0.25° of the arm's soft range, φ −278 to +143°: roller arm, roller, nut, spacer, hook pin and both springs at their solved positions, against hub v5 (mesh), both motors' bodies and pulleys, the axle loop, the bars, heads A and B at park, wait and full stroke, the detent ring, 80T sun and sun post. manifold3d exact gaps.</p>
+    </section>
+    <section class="card">
+      <h2>What the motion changed</h2>
+      <p class="note"><strong>The roller never touches the 60° flanks.</strong> Their tangent points from the seated roller sit at r 23.75 (C), above the rim edge at r 23.5 (C), so the roller rests on the two notch edges. It seats at r 25.45 instead of 25.5 and climbs over the edge more gently.</p>
+      <p class="note"><strong>Peak holding torque is 0.277 N·m per spring (C), not 0.39 (E).</strong> One spring gives margin 0.76 and does not hold a carried pack at a horizontal stop. Two springs give 1.51 (C / E): both springs are required, not optional.</p>
+      <p class="note">Spring length peaks at 41.90 on a land, under the 42 limit (C). Roller arm swing 0 to 5.74° (C). Tower to ring, 80T and post: 0.97 at worst (M).</p>
+    </section>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const DATA = __DATA__;
+(function () {
+  const K = DATA.kin, deg = Math.PI / 180;
+  const cssv = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  // ---------- kinematic lookup
+  const ph0 = K.phi[0], dph = K.phi[1] - K.phi[0];
+  function look(arr, phi) {
+    const x = (phi - ph0) / dph, i = Math.max(0, Math.min(arr.length - 2, Math.floor(x))), f = Math.min(1, Math.max(0, x - i));
+    return arr[i] * (1 - f) + arr[i + 1] * f;
+  }
+  function clearAt(phi) { const i = Math.max(0, Math.min(K.clear.length - 1, Math.round(phi - K.clear[0][0]))); return K.clear[i]; }
+  const stops = K.stops.slice().sort((a, b) => a - b);
+  const nearestStop = phi => stops.reduce((b, s) => Math.abs(s - phi) < Math.abs(b - phi) ? s : b, stops[0]);
+
+  // ---------- three
+  const canvas = document.getElementById("view");
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 16 / 11, 1, 4000);
+  const controls = new THREE.OrbitControls(camera, canvas);
+  controls.enableDamping = true; controls.dampingFactor = 0.08;
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8f88, 0.75));
+  const key = new THREE.DirectionalLight(0xffffff, 0.85); key.position.set(160, 300, 120); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.35); rim.position.set(-200, -60, -180); scene.add(rim);
+
+  const b64 = s => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u.buffer; };
+  function geom(p) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(b64(p.p)), 3));
+    g.setAttribute("normal", new THREE.BufferAttribute(new Int8Array(b64(p.n)), 3, true));
+    g.setIndex(new THREE.BufferAttribute(new Uint32Array(b64(p.i)), 1));
+    return g;
+  }
+  const mats = {};
+  function mat(name, color, opts) {
+    const m = new THREE.MeshStandardMaterial(Object.assign({ roughness: 0.62, metalness: 0.05 }, opts || {}));
+    m.color.set(color).convertSRGBToLinear();
+    mats[name] = m; return m;
+  }
+  const C = {
+    hub: () => cssv("--accent"), ring: () => cssv("--steel"), rarm: () => cssv("--teal"), spring: () => cssv("--spring"),
+  };
+  const M = {
+    hub: mat("hub", C.hub()), ring: mat("ring", C.ring()), p80: mat("p80", "#c9a43c", { metalness: 0.35, roughness: 0.45 }),
+    post: mat("post", "#5a6f8c"), motors: mat("motors", "#2b3035", { roughness: 0.5 }), pulleys: mat("pulleys", "#b8922a", { metalness: 0.4, roughness: 0.4 }),
+    loop: mat("loop", "#1d1f20", { roughness: 0.9 }), belts: mat("belts", "#1d1f20", { roughness: 0.9, transparent: true, opacity: 0.35, depthWrite: false }),
+    bars: mat("bars", "#b9c0c6", { metalness: 0.45, roughness: 0.4, transparent: true, opacity: 0.28, depthWrite: false }), anchor: mat("anchor", "#cfd4d8", { metalness: 0.6, roughness: 0.3 }),
+    rarm: mat("rarm", C.rarm()), roller: mat("roller", "#d9dde0", { metalness: 0.7, roughness: 0.25 }),
+    spring: mat("spring", C.spring(), { metalness: 0.3, roughness: 0.35 }),
+  };
+  const fixedG = new THREE.Group(), armG = new THREE.Group(), pivotG = new THREE.Group(), pivotInner = new THREE.Group();
+  scene.add(fixedG, armG); armG.add(pivotG); pivotG.add(pivotInner);
+  pivotG.position.set(K.P[0], 0, K.P[1]); pivotInner.position.set(-K.P[0], 0, -K.P[1]);
+  const meshes = {};
+  for (const [nm, p] of Object.entries(DATA.parts)) {
+    const m = new THREE.Mesh(geom(p), M[nm] || M.hub); meshes[nm] = m;
+    (p.g === "fixed" ? fixedG : p.g === "arm" ? armG : pivotInner).add(m);
+  }
+  // springs: one coil of the free length along +X, scaled to the live hook-to-anchor distance
+  const L0 = K.spring[0] || 37.9;
+  function coil() {
+    const turns = 24, R = 2.25, wire = 0.25, end = 3.0;
+    class Helix extends THREE.Curve {
+      getPoint(t) {
+        const x = t * L0; let y = 0, z = 0;
+        if (x > end && x < L0 - end) { const a = (x - end) / (L0 - 2 * end) * turns * 2 * Math.PI; y = R * Math.sin(a); z = R * Math.cos(a) - R; }
+        return new THREE.Vector3(x, y, z);
+      }
+    }
+    return new THREE.TubeGeometry(new Helix(), 900, wire * 1.4, 6, false);
+  }
+  const springs = K.spring_y.map(y => { const g = new THREE.Group(), m = new THREE.Mesh(coil(), M.spring); g.add(m); g.position.y = y; armG.add(g); return g; });
+  function rot2(p, c, a) { const s = Math.sin(a), co = Math.cos(a), dx = p[0] - c[0], dz = p[1] - c[1]; return [c[0] + co * dx - s * dz, c[1] + s * dx + co * dz]; }
+  // hub ghost
+  const ghost = document.getElementById("ghost");
+  ghost.addEventListener("change", () => { const g = ghost.checked; M.hub.transparent = g; M.hub.opacity = g ? 0.22 : 1; M.hub.depthWrite = !g; M.hub.needsUpdate = true; });
+
+  // ---------- views
+  const views = {
+    dial: { pos: [-40, 260, -150], tgt: [-4, 70, -36] },
+    iso: { pos: [170, 210, 260], tgt: [0, 48, 0] },
+    arm: { pos: [330, 300, 420], tgt: [0, 60, 0] },
+  };
+  let tween = null;
+  function setView(v, now) {
+    const V = views[v]; const from = { p: camera.position.clone(), t: controls.target.clone() };
+    const to = { p: new THREE.Vector3(...V.pos), t: new THREE.Vector3(...V.tgt) };
+    if (now) { camera.position.copy(to.p); controls.target.copy(to.t); controls.update(); return; }
+    tween = { from, to, t0: performance.now() };
+    document.querySelectorAll("[data-view]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.view === v)));
+  }
+  document.querySelectorAll("[data-view]").forEach(b => b.addEventListener("click", () => setView(b.dataset.view)));
+  setView("dial", true);
+
+  // ---------- the swap-cycle stops (arm_kinematics timeline) with the firmware's approach: within 3°, driver off, detent centres
+  const program = [
+    { to: 0, text: "Head A at the 0° bay, head B under the drone" },
+    { to: 90, text: "Head A at the drone, head B at the 180° bay" },
+    { to: -90, text: "Head B at the 0° bay (turned 180° through the top)" },
+    { to: 0, text: "Back to the start of the cycle" },
+  ];
+  let speed = 1, playing = !matchMedia("(prefers-reduced-motion: reduce)").matches, phi = 0;
+  let seg = 0, segT = 0, segPlan = null;
+  function plan(from, to) {
+    const dir = Math.sign(to - from) || 1, approach = to - dir * 2.6;            // stepper stops 2.6° short: inside the ±7° capture
+    const move = Math.abs(approach - from) / 34;                                  // 34°/s on screen (real: 90° in 0.3 s, E)
+    return { from, to, approach, dir, tMove: move, tSettle: 0.55, tDwell: 1.4 };
+  }
+  segPlan = plan(0, program[1].to); seg = 1;
+  const ease = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  const settle = t => 1 - Math.pow(1 - t, 3);
+  let stage = "dwell";
+  function advance(dt) {
+    segT += dt * speed; const P = segPlan;
+    if (segT < P.tMove) { phi = P.from + (P.approach - P.from) * ease(segT / P.tMove); stage = "move"; }
+    else if (segT < P.tMove + P.tSettle) { phi = P.approach + (P.to - P.approach) * settle((segT - P.tMove) / P.tSettle); stage = "settle"; }
+    else if (segT < P.tMove + P.tSettle + P.tDwell) { phi = P.to; stage = "lock"; }
+    else { const nxt = (seg + 1) % program.length; segPlan = plan(P.to, program[nxt].to); seg = nxt; segT = 0; }
+  }
+  const playBtn = document.getElementById("play");
+  function setPlaying(p) { playing = p; playBtn.textContent = p ? "Pause" : "Play"; }
+  setPlaying(playing);
+  playBtn.addEventListener("click", () => {
+    if (!playing) { const nxt = program.findIndex((s, i) => i > 0 && s.to !== phi); segPlan = plan(phi, program[seg].to === phi ? program[(seg + 1) % program.length].to : program[seg].to); segT = 0; }
+    setPlaying(!playing);
+  });
+  document.querySelectorAll("[data-speed]").forEach(b => b.addEventListener("click", () => {
+    speed = +b.dataset.speed; document.querySelectorAll("[data-speed]").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  }));
+  const slider = document.getElementById("phi");
+  slider.addEventListener("input", () => { setPlaying(false); phi = +slider.value; stage = "manual"; });
+
+  // ---------- chart: torque vs offset from the notch centre
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (n, a, p) => { const e = document.createElementNS(NS, n); for (const k in a) e.setAttribute(k, a[k]); if (p) p.appendChild(e); return e; };
+  const chart = document.getElementById("chart");
+  const W = 300, H = 190, pl = 40, pr = 10, pt = 12, pb = 28, xr = 15, yr = 0.6;
+  const X = x => pl + (x + xr) / (2 * xr) * (W - pl - pr), Y = y => pt + (yr - y) / (2 * yr) * (H - pt - pb);
+  let dot, dot1, tLabel;
+  function drawChart() {
+    chart.textContent = "";
+    const line = cssv("--line"), muted = cssv("--muted"), fg = cssv("--fg");
+    const dist = K.dist.total;
+    el("rect", { x: pl, y: Y(dist), width: W - pl - pr, height: Y(-dist) - Y(dist), fill: cssv("--well") }, chart);
+    for (const yv of [dist, -dist]) el("line", { x1: pl, x2: W - pr, y1: Y(yv), y2: Y(yv), stroke: muted, "stroke-dasharray": "3 3", "stroke-width": 1 }, chart);
+    for (const yv of [-0.6, -0.3, 0, 0.3, 0.6]) {
+      el("line", { x1: pl, x2: W - pr, y1: Y(yv), y2: Y(yv), stroke: line, "stroke-width": yv === 0 ? 1 : 0.6 }, chart);
+      el("text", { x: pl - 5, y: Y(yv) + 3.5, "text-anchor": "end" }, chart).textContent = yv.toFixed(1);
+    }
+    for (const xv of [-15, -7, 0, 7, 15]) {
+      el("line", { x1: X(xv), x2: X(xv), y1: pt, y2: H - pb, stroke: line, "stroke-width": 0.6 }, chart);
+      el("text", { x: X(xv), y: H - pb + 13, "text-anchor": "middle" }, chart).textContent = (xv > 0 ? "+" : "") + xv + "°";
+    }
+    el("text", { x: X(0), y: H - 3, "text-anchor": "middle" }, chart).textContent = "angle from the notch centre";
+    let d2 = "", d1 = "";
+    for (let x = -xr; x <= xr + 1e-9; x += 0.25) { const t = look(K.torque, x); d2 += (d2 ? "L" : "M") + X(x).toFixed(1) + "," + Y(t).toFixed(1); d1 += (d1 ? "L" : "M") + X(x).toFixed(1) + "," + Y(t / 2).toFixed(1); }
+    el("path", { d: d1, fill: "none", stroke: cssv("--spring"), "stroke-width": 1.4, "stroke-dasharray": "4 3", opacity: 0.8 }, chart);
+    el("path", { d: d2, fill: "none", stroke: cssv("--spring"), "stroke-width": 2.2 }, chart);
+    el("text", { x: X(-14.5), y: Y(0.53), "text-anchor": "start", style: "fill:" + fg }).textContent = "";
+    const lg = el("g", {}, chart);
+    el("text", { x: X(-14.4), y: Y(-0.44), "text-anchor": "start" }, lg).textContent = "2 springs (solid), 1 spring (dashed)";
+    el("text", { x: X(4.4), y: Y(dist) - 4, "text-anchor": "start" }, lg).textContent = "to beat, E";
+    dot = el("circle", { r: 4.2, fill: cssv("--spring"), stroke: cssv("--panel"), "stroke-width": 1.5 }, chart);
+  }
+  drawChart();
+
+  // gap strip over the whole travel
+  const strip = document.getElementById("gapstrip"); let stripCursor;
+  function drawStrip() {
+    strip.textContent = "";
+    const SW = 640, SH = 86, l = 34, r = 8, t = 8, b = 22, g0 = 0, g1 = 3.0;
+    const SX = p => l + (p + 278) / 421 * (SW - l - r), SY = g => t + (g1 - Math.min(g, g1)) / (g1 - g0) * (SH - t - b);
+    for (const gv of [0, 1, 2, 3]) { el("line", { x1: l, x2: SW - r, y1: SY(gv), y2: SY(gv), stroke: cssv("--line"), "stroke-width": gv ? 0.6 : 1 }, strip);
+      el("text", { x: l - 5, y: SY(gv) + 3.5, "text-anchor": "end" }, strip).textContent = gv.toFixed(0); }
+    for (const s of stops) el("line", { x1: SX(s), x2: SX(s), y1: t, y2: SH - b, stroke: cssv("--line"), "stroke-width": 0.6 }, strip);
+    for (const pv of [-270, -180, -90, 0, 90]) el("text", { x: SX(pv), y: SH - 6, "text-anchor": "middle" }, strip).textContent = pv + "°";
+    let d = ""; for (const [p, gv] of K.clear) d += (d ? "L" : "M") + SX(p).toFixed(1) + "," + SY(gv).toFixed(1);
+    el("path", { d: d + `L${SX(143)},${SY(0)}L${SX(-278)},${SY(0)}Z`, fill: cssv("--teal"), opacity: 0.16 }, strip);
+    el("path", { d, fill: "none", stroke: cssv("--teal"), "stroke-width": 1.6 }, strip);
+    el("text", { x: SW - r, y: t + 9, "text-anchor": "end" }, strip).textContent = "closest moving gap, mm (0 = touching)";
+    stripCursor = el("line", { y1: t, y2: SH - b, stroke: cssv("--fg"), "stroke-width": 1.2 }, strip);
+    strip._sx = SX;
+  }
+  drawStrip();
+  const gapMin = Math.min(...K.clear.map(c => c[1])), tqPeak = Math.max(...K.torque.map(Math.abs));
+  const checks = [
+    ["Overlaps, moving detent parts vs every other part", "0", false],
+    ["Closest gap, roller arm over the tower web (designed)", gapMin.toFixed(2) + " C", false],
+    ["Roller on the ring, rolling contact, never inside it", K.roller_ring.toFixed(3) + " C", false],
+    ["Spring length on a land, limit 42", Math.max(...K.spring).toFixed(2) + " C", false],
+    ["Tower to ring, 80T and post", K.tower_fixed.toFixed(2) + " M", false],
+    ["Holding margin, 2 springs", (tqPeak / K.dist.total).toFixed(2) + " C / E", false],
+    ["Holding margin, 1 spring", (tqPeak / 2 / K.dist.total).toFixed(2) + " C / E", true],
+  ];
+  const ul = document.getElementById("checks");
+  for (const [t, v, bad] of checks) { const li = document.createElement("li"); if (bad) li.className = "bad"; li.innerHTML = `<span></span><b></b>`; li.children[0].textContent = t; li.children[1].textContent = v; ul.appendChild(li); }
+
+  // ---------- readouts
+  const $ = id => document.getElementById(id);
+  const out = { phi: $("phiOut"), rPhi: $("rPhi"), rStop: $("rStop"), rLift: $("rLift"), rPsi: $("rPsi"), rSpring: $("rSpring"), bar: $("rSpringBar"),
+    rTorque: $("rTorque"), rGap: $("rGap"), who: $("rGapWho"), state: $("state"), phase: $("phase") };
+  let lastPhase = "";
+  function readout() {
+    const lift = look(K.lift, phi), psi = look(K.psi, phi), Ls = look(K.spring, phi), tq = look(K.torque, phi), st = nearestStop(phi), cl = clearAt(phi);
+    out.phi.textContent = phi.toFixed(2) + "°"; slider.value = phi;
+    out.rPhi.innerHTML = phi.toFixed(2) + "<small>°</small>";
+    out.rStop.innerHTML = st.toFixed(0) + "°<small>Δ " + (phi - st).toFixed(2) + "°</small>";
+    out.rLift.innerHTML = Math.max(0, lift).toFixed(2) + "<small>mm</small>";
+    out.rPsi.innerHTML = Math.abs(psi).toFixed(2) + "<small>°</small>";
+    out.rSpring.innerHTML = Ls.toFixed(2) + "<small>/ 42 mm</small>";
+    out.bar.style.width = (Math.max(0, (Ls - 30) / (42 - 30)) * 100).toFixed(1) + "%";
+    out.rTorque.innerHTML = (tq >= 0 ? "+" : "") + tq.toFixed(3) + "<small>N·m</small>";
+    out.rGap.innerHTML = cl[1].toFixed(2) + "<small>mm</small>"; out.who.textContent = cl[2] + (cl[2] === "roller arm / hub v5" && cl[1] < 0.35 ? ": the arm plate 0.3 over the tower web, designed" : "");
+    const d = phi - st, s = Math.abs(d) < 0.3 ? ["seated", "Seated in a notch"] : lift > 1.47 ? ["land", "On the land between notches"] : ["ride", "Riding over the notch edge"];
+    let label = s[1];
+    if (playing && stage === "move") label = "Stepper turning the arm";
+    if (playing && stage === "settle") label = "Driver off: the detent centres the arm";
+    if (playing && stage === "lock") label = "Full current: locked in the notch";
+    out.state.className = "chip " + s[0]; out.state.lastChild.textContent = label;
+    const ph = stage === "manual" ? "Scrubbing: arm angle " + phi.toFixed(1) + "°" : program[seg === 0 ? 0 : seg].text;
+    if (ph !== lastPhase) { out.phase.textContent = ph; lastPhase = ph; }
+    if (dot) { const x = Math.max(-15, Math.min(15, d)); dot.setAttribute("cx", X(x)); dot.setAttribute("cy", Y(look(K.torque, x))); dot.setAttribute("opacity", Math.abs(d) <= 15 ? 1 : 0.25); }
+    if (stripCursor) { const sx = strip._sx(phi); stripCursor.setAttribute("x1", sx); stripCursor.setAttribute("x2", sx); }
+  }
+
+  function pose() {
+    armG.rotation.y = (90 - phi) * deg;
+    const psi = look(K.psi, phi) * deg;
+    pivotG.rotation.y = -psi;
+    const Hh = rot2(K.H, K.P, psi), A = K.A, dx = A[0] - Hh[0], dz = A[1] - Hh[1], len = Math.hypot(dx, dz);
+    for (const g of springs) { g.position.x = Hh[0]; g.position.z = Hh[1]; g.rotation.y = Math.atan2(-dz, dx); g.scale.set(len / L0, 1, 1); }
+  }
+
+  // ---------- theme follow
+  function retheme() {
+    scene.background = new THREE.Color(cssv("--well")).convertSRGBToLinear();
+    for (const [k, f] of [["hub", C.hub], ["ring", C.ring], ["rarm", C.rarm], ["spring", C.spring]]) M[k].color.set(f()).convertSRGBToLinear();
+    drawChart(); drawStrip(); readout();
+  }
+  new MutationObserver(retheme).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+  scene.background = new THREE.Color(cssv("--well")).convertSRGBToLinear();
+
+  function resize() {
+    const r = canvas.getBoundingClientRect(); if (!r.width) return;
+    renderer.setSize(r.width, r.height, false); camera.aspect = r.width / r.height; camera.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(canvas); resize();
+
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (playing) advance(dt);
+    if (tween) { const u = Math.min(1, (now - tween.t0) / 700), e = ease(u);
+      camera.position.lerpVectors(tween.from.p, tween.to.p, e); controls.target.lerpVectors(tween.from.t, tween.to.t, e); if (u >= 1) tween = null; }
+    controls.update(); pose(); readout(); renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  }
+  pose(); readout(); requestAnimationFrame(frame);
+})();
+</script>

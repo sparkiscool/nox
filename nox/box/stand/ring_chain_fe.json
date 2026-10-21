@@ -1,0 +1,70 @@
+{
+ "v6 joints (outer pair + dovetail)": {
+  "tip_drop_mm": -0.11,
+  "tip_side_mm": 1.051,
+  "worst": 0.215,
+  "at": [
+   126.0,
+   202.0,
+   -116.0
+  ],
+  "at_angle": -42.6,
+  "at_r": 171.3,
+  "p99": 0.07,
+  "active": 41422,
+  "joint_-45": 0.215,
+  "joint_-15": 0.148,
+  "joint_15": 0.039
+ },
+ "+ inner pair": {
+  "tip_drop_mm": -0.104,
+  "tip_side_mm": 0.978,
+  "worst": 0.203,
+  "at": [
+   156.0,
+   198.0,
+   -68.0
+  ],
+  "at_angle": -23.6,
+  "at_r": 170.2,
+  "p99": 0.069,
+  "active": 41504,
+  "joint_-45": 0.197,
+  "joint_-15": 0.144,
+  "joint_15": 0.038
+ },
+ "+ inner pair + wall brackets": {
+  "tip_drop_mm": -0.0,
+  "tip_side_mm": 0.024,
+  "worst": 0.014,
+  "at": [
+   146.0,
+   150.0,
+   28.0
+  ],
+  "at_angle": 10.9,
+  "at_r": 148.7,
+  "p99": 0.008,
+  "active": 41504,
+  "joint_-45": 0.008,
+  "joint_-15": 0.012,
+  "joint_15": 0.012
+ },
+ "v7: outer pair + wall brackets": {
+  "tip_drop_mm": -0.0,
+  "tip_side_mm": 0.025,
+  "worst": 0.017,
+  "at": [
+   146.0,
+   200.0,
+   -38.0
+  ],
+  "at_angle": -14.6,
+  "at_r": 150.9,
+  "p99": 0.008,
+  "active": 41422,
+  "joint_-45": 0.009,
+  "joint_-15": 0.017,
+  "joint_15": 0.014
+ }
+}

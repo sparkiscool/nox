@@ -1,0 +1,1 @@
+{"foot_centre": [25.75, 30.75, -45.24], "pad_r": 3.2, "foot_bottom": -47.5, "skid": {"y": 30.75, "z": -44.6, "rod": 2.5}, "tip_deg": 26.6, "collar_gap_x_faces": 3.08, "collar_gap_y_faces": 0.07, "collar_gap_skid": 2.48, "collar_gap_legs": 1.77, "pack_gap": 2.82, "cone_gap": 24.39, "cg": [0.57, 0.0, 2.79], "feasible": 64}

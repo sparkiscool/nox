@@ -1,0 +1,23 @@
+Scout PX4 param changes, tasks B9 + B10 (written 4 Oct 2026, session C). NOT loaded on the drone.
+File: scout_B9_B10_2026-10-04.params (QGC format). Load on the bench, reboot, then check below.
+
+B9  flow / range sensor offsets for underside v2 (PX4 body frame FRD: x nose, y right, z down; metres from the FC/IMU)
+  EKF2_OF_POS_X   0.0019   lens 1.9 mm toward the nose of the FC centre (C, scout-underside-design.md)
+  EKF2_OF_POS_Y   0        lens on the centreline (C)
+  EKF2_OF_POS_Z   0.0155   lens face 22.5 below the plate (C) minus IMU ~7 below the plate (E: FC hangs inverted,
+                           lowest point 11 below the plate). CHECK: IMU height on the MicoAir743 board.
+  EKF2_RNG_POS_X  -0.0100  ToF windows at the tail end of the 22 mm board, ~12 behind the lens (E). CHECK on the board.
+  EKF2_RNG_POS_Y  0
+  EKF2_RNG_POS_Z  0.0155   same face as the lens (E)
+  Old values: X 0, Y 0, Z 0.02 (scout-status §3). Errors of a few mm here barely matter (lever arm only bites in fast
+  rotation); the sign of X matters more. SENS_FLOW_ROT 4 unchanged.
+
+B10 speed caps (bump design speed 1.0 m/s, RULES.md)
+  MPC_VEL_MANUAL 1.0, MPC_XY_VEL_MAX 1.0, MPC_XY_CRUISE 1.0 (must not exceed XY_VEL_MAX)
+  MPC_Z_VEL_MAX_UP 1.0, MPC_Z_VEL_MAX_DN 1.0, MPC_Z_V_AUTO_UP 1.0, MPC_Z_V_AUTO_DN 1.0, MPC_TKO_SPEED 1.0
+  MPC_LAND_SPEED 0.4 (default 0.7)
+  Caveat: these caps act in Position / auto modes only. In Stabilized and Altitude modes horizontal speed is
+  not limited, so bump-speed protection holds only in Position mode.
+
+After loading: reboot; read back each value in QGC (rc1 may clamp or rename a param: any "not found" line, note it);
+first flight in Position mode, low over the floor, check full stick gives ~1 m/s.

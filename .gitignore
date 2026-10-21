@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+.claude/settings.local.json
+CLAUDE.local.md
+# scratch inside a run that is not a result
+runs/**/tmp/
+*.log.tmp
+nohup.out

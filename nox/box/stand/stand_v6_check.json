@@ -1,0 +1,179 @@
+{
+ "frame_pairs_overlap_mm3": [
+  [
+   -210,
+   -180,
+   0.0
+  ],
+  [
+   -180,
+   -150,
+   0.0
+  ],
+  [
+   -150,
+   -120,
+   0.0
+  ],
+  [
+   -30,
+   0,
+   0.0
+  ],
+  [
+   0,
+   30,
+   0.0
+  ]
+ ],
+ "frames_vs_module": [
+  {
+   "bay": -90,
+   "frame": -120,
+   "kind": "frame_mid",
+   "module_vertices_inside": 0,
+   "closest": 0.09
+  },
+  {
+   "bay": -60,
+   "frame": -30,
+   "kind": "frame_mid",
+   "module_vertices_inside": 0,
+   "closest": 0.09
+  }
+ ],
+ "pads": [
+  {
+   "part": "frame_endR",
+   "inside_collar": 0,
+   "min_absX_above_Z102": 91.3,
+   "pad_bbox": [
+    [
+     91.3,
+     131.0,
+     140.2
+    ],
+    [
+     116.0,
+     223.0,
+     158.3
+    ]
+   ]
+  },
+  {
+   "part": "frame_endL",
+   "inside_collar": 0,
+   "min_absX_above_Z102": 91.3,
+   "pad_bbox": [
+    [
+     -116.0,
+     131.0,
+     140.2
+    ],
+    [
+     -91.3,
+     223.0,
+     158.3
+    ]
+   ]
+  }
+ ],
+ "keepouts": {
+  "frame_endL@-210": {
+   "min_r": 145.5,
+   "y": [
+    131.0,
+    223.0
+   ]
+  },
+  "frame_mid@-180": {
+   "min_r": 145.5,
+   "y": [
+    135.0,
+    219.0
+   ]
+  },
+  "frame_mid@-150": {
+   "min_r": 145.5,
+   "y": [
+    135.0,
+    219.0
+   ]
+  },
+  "frame_mid@-120": {
+   "min_r": 145.5,
+   "y": [
+    135.0,
+    219.0
+   ]
+  },
+  "frame_mid@-30": {
+   "min_r": 145.5,
+   "y": [
+    135.0,
+    219.0
+   ]
+  },
+  "frame_mid@0": {
+   "min_r": 145.5,
+   "y": [
+    135.0,
+    219.0
+   ]
+  },
+  "frame_endR@30": {
+   "min_r": 145.5,
+   "y": [
+    131.0,
+    223.0
+   ]
+  },
+  "mast": {
+   "in_hub_zone": 0,
+   "in_head_bar_sweep": 0,
+   "ymax": 0.0
+  },
+  "kb": {
+   "in_hub_zone": 0,
+   "in_head_bar_sweep": 0,
+   "ymax": 46.0
+  },
+  "cradle_keel": {
+   "in_hub_zone": 0,
+   "in_head_bar_sweep": 0,
+   "ymax": 197.0
+  },
+  "bar_half": {
+   "in_hub_zone": 0,
+   "in_head_bar_sweep": 0,
+   "ymax": 62.0
+  },
+  "toe": {
+   "in_hub_zone": 0,
+   "in_head_bar_sweep": 0,
+   "ymax": 260.0
+  }
+ },
+ "base_overlap_mm3": {
+  "kb^barA": -0.0,
+  "kb^barB": 0.0,
+  "barA^barB": -0.0,
+  "keel^barA": 0.0,
+  "keel^barB": 0.0,
+  "toe^cradle": -0.0,
+  "mast^kb (sleeve on spigot)": 0.0
+ },
+ "stub_print_bounds": [
+  [
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   74.4,
+   53.53,
+   40.0
+  ]
+ ],
+ "cradle_keel_vs_module_vertices_inside": 0
+}

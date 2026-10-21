@@ -1,0 +1,49 @@
+{
+ "version": "v2",
+ "cx": 59.76,
+ "cz": 6.0,
+ "tilt": 4.0,
+ "lens_front": [
+  81.31,
+  0.0,
+  7.51
+ ],
+ "board_centre": [
+  60.56,
+  0.0,
+  6.06
+ ],
+ "board_bottom_z": -12.9,
+ "margins": {
+  "collar": 0.0,
+  "props": 0.13,
+  "guard": 32.12,
+  "nose": 0.56,
+  "boss_trim": -1.45,
+  "flow_seat": 0.05
+ },
+ "ring_elev_deg": 38.5,
+ "fov_top_deg": 37.2,
+ "fov_ring_clear_deg": 1.3,
+ "camera_envelope": {
+  "x": [
+   50.5,
+   70.3
+  ],
+  "y": 19.0,
+  "z": [
+   -13.0,
+   25.1
+  ]
+ },
+ "lens_barrel": {
+  "x": [
+   69.2,
+   81.8
+  ],
+  "z": [
+   -0.3,
+   14.5
+  ]
+ }
+}

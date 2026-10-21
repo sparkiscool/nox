@@ -1,0 +1,62 @@
+{
+ "walls_inner": {
+  "x": 186.0,
+  "y": [
+   -66.0,
+   337.0
+  ]
+ },
+ "z_meet": {
+  "front": 237.0,
+  "back": 320.0,
+  "side": 263.0
+ },
+ "z_top": 240.0,
+ "wall_height": 441.0,
+ "sheets": {
+  "side wall x2": [
+   409,
+   441
+  ],
+  "front / back wall x2": [
+   372,
+   441
+  ]
+ },
+ "aprons": {
+  "side (x2)": {
+   "slant": 36.8,
+   "w_lo": 320.0,
+   "w_hi": 346.0
+  },
+  "rear": {
+   "slant": 117.4,
+   "w_lo": 320.0,
+   "w_hi": 372.0
+  },
+  "front": {
+   "slant": 0.0,
+   "note": "collar mouth touches the front wall"
+  }
+ },
+ "sheet_mass_kg": 2.6,
+ "posts": {
+  "n": 4,
+  "segments": 3,
+  "seg_len": 147.0,
+  "section": 25.0,
+  "slot": 3.2,
+  "slot_depth": 10.0,
+  "g_each_seg": 38.0
+ },
+ "posts_mass_kg": 0.46,
+ "tipover": 2.45,
+ "total_kg": 8.31,
+ "catch_tolerance_mm": {
+  "x": 102,
+  "y_back": 159,
+  "y_front": 76,
+  "v4_collar": 76
+ },
+ "psu": "beside the mast, X 25..89, Y -62..-22, on the floor (was behind the keel)"
+}

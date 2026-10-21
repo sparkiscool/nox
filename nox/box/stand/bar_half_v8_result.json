@@ -1,0 +1,70 @@
+{
+ "name": "bar_half",
+ "solid_ok": true,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   42220.4
+  ],
+  "necks": [],
+  "drawn_not_in_main": [],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": true
+ },
+ "bodies": 1,
+ "watertight": false,
+ "mass_g": 77.6,
+ "function_check": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "thin": 0,
+ "wrinkle": [
+  0.427,
+  0.53
+ ],
+ "worst": 0.68,
+ "worst_case": "box on one tip 50 N up",
+ "gen_cm3": 45.0,
+ "drawn_g": 28.4,
+ "print_bbox": [
+  164.0,
+  159.8,
+  16.0
+ ],
+ "strength_rows": [
+  [
+   "box on one tip 50 N up",
+   0.68,
+   0.4
+  ],
+  [
+   "tip 50 N down",
+   0.68,
+   0.43
+  ],
+  [
+   "sheet on the tip pad 13 N +X",
+   0.01,
+   0.03
+  ],
+  [
+   "sheet on the tip pad 13 N -X",
+   0.01,
+   0.03
+  ],
+  [
+   "sheet on the tip pad 13 N +Y",
+   0.35,
+   0.21
+  ],
+  [
+   "sheet on the tip pad 13 N -Y",
+   0.35,
+   0.22
+  ]
+ ]
+}

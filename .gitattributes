@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.params -text
+*.stl -text
+*.3mf -text
+*.obj -text
+*.step -text
+*.gcode -text
+*.png -text
+*.npz -text
+*.zip -text

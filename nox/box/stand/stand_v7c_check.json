@@ -1,0 +1,77 @@
+{
+ "part_overlaps_mm3": {},
+ "sheet_overlaps_mm3": {},
+ "module_vertices_inside": {},
+ "bracket_clearance": {
+  "bracket_jA@-15 to frame_mid@-30": {
+   "closest": 0.3,
+   "inside": 0
+  },
+  "bracket_jA@-15 to frame_mid@0": {
+   "closest": 0.3,
+   "inside": 0
+  },
+  "bracket_jB@15 to frame_mid@0": {
+   "closest": 0.3,
+   "inside": 0
+  },
+  "bracket_jB@15 to frame_endR@30": {
+   "closest": 0.3,
+   "inside": 0
+  },
+  "bracket_e@45 to frame_endR@30": {
+   "closest": 0.0,
+   "inside": 1
+  }
+ },
+ "funnel_collar_vertices_inside": {},
+ "sheets_mm": {
+  "side x2": [
+   397,
+   441
+  ],
+  "front / rear x2": [
+   366,
+   441
+  ]
+ },
+ "print_g": {
+  "bar_half": [
+   45.5,
+   2
+  ],
+  "toe": [
+   50.4,
+   1
+  ],
+  "kb": [
+   113.3,
+   1
+  ],
+  "frame_endR": [
+   83.5,
+   1
+  ],
+  "frame_endL": [
+   83.1,
+   1
+  ],
+  "post_seg": [
+   42.5,
+   12
+  ],
+  "bracket_jA": [
+   23.4,
+   2
+  ],
+  "bracket_jB": [
+   23.0,
+   2
+  ],
+  "bracket_e": [
+   51.4,
+   2
+  ]
+ },
+ "new_print_g_total": 1126.9
+}

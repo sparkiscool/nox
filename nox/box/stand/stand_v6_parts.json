@@ -1,0 +1,501 @@
+{
+ "layout": {
+  "floor": -201.0,
+  "mast": {
+   "x": 40,
+   "y": 60,
+   "wall": 1.7,
+   "head_x": 60.0,
+   "head_z": [
+    -40.0,
+    40.0
+   ],
+   "spigot_z": [
+    -198.0,
+    -60.0
+   ],
+   "sleeve_z": [
+    -136.0,
+    40.0
+   ],
+   "clearance": 0.2,
+   "bolts": [
+    [
+     "X",
+     -80.0
+    ],
+    [
+     "Y",
+     -120.0
+    ]
+   ]
+  },
+  "spigot": {
+   "outer": [
+    36.2,
+    56.2
+   ],
+   "wall": 3.0,
+   "root_stress_MPa": 0.6083429554116072,
+   "root_side_MPa": 0.6769927637328166,
+   "g": 90.85478400000002
+  },
+  "engage_mm": 76.0,
+  "joint_slop_deg": 0.30155394986827855,
+  "KB": {
+   "y": [
+    -110.0,
+    66.0
+   ],
+   "x": 20.0,
+   "z": [
+    -201.0,
+    -181.0
+   ]
+  },
+  "KF": {
+   "y": [
+    46.0,
+    194.0
+   ],
+   "x": 20.0,
+   "z": [
+    -201.0,
+    -181.0
+   ],
+   "tongue": {
+    "y": [
+     140.0,
+     194.0
+    ],
+    "x": 17.8,
+    "z": [
+     -198.6,
+     -186.0
+    ]
+   }
+  },
+  "joint_y": [
+   46.0,
+   66.0
+  ],
+  "bar": {
+   "len": 220.0,
+   "w": 20.0,
+   "h": [
+    16.0,
+    8.0
+   ],
+   "x_tip": 200.0,
+   "lap": 40.0
+  },
+  "toe": {
+   "y": [
+    197.0,
+    260.0
+   ],
+   "x": 20.0,
+   "h": 10.0
+  },
+  "frames": {
+   "pitch": 30,
+   "r": [
+    148.0,
+    163.0
+   ],
+   "y": [
+    133.0,
+    221.0
+   ],
+   "mass_e": 25.0
+  },
+  "bays_now": [
+   -90,
+   -60
+  ],
+  "contacts": [
+   [
+    0,
+    -110.0
+   ],
+   [
+    0,
+    260.0
+   ],
+   [
+    200.0,
+    56.0
+   ],
+   [
+    -200.0,
+    56.0
+   ],
+   [
+    20,
+    -110.0
+   ],
+   [
+    -20,
+    -110.0
+   ]
+  ]
+ },
+ "tipover": {
+  "mass_with_kg": 4.9375,
+  "cg_with": [
+   1.048506329113924,
+   68.8761518987342,
+   -10.542987341772152
+  ],
+  "margin_with": [
+   1.521637128556375,
+   "13 N -Y on the rim over the edge (-20, -110)-(20, -110): 8.66 vs 5.69 N\u00b7m"
+  ],
+  "mass_without_kg": 3.9375,
+  "cg_without": [
+   1.3147936507936508,
+   104.14628571428574,
+   32.49371428571428
+  ],
+  "margin_without": [
+   1.0276279541932685,
+   "13 N +X on the rim over the edge (200, 56)-(0, 260): 4.18 vs 4.07 N\u00b7m"
+  ],
+  "tilt_side_deg": 46.40006210664713,
+  "tilt_fwd_deg": 45.100127709617546,
+  "tilt_back_deg": 43.20401422741139,
+  "pushes": "13 N at the rim (Z 237) and the wheel top (Z 150), \u00b1X \u00b1Y"
+ },
+ "mast_pick": {
+  "a": 40,
+  "b": 60,
+  "t": 1.7,
+  "A": 328.44000000000005,
+  "lean_deg": 0.1919245223500517,
+  "side_deg": 0.3072929698368519,
+  "yaw_deg": 0.36263517058093503,
+  "stress_MPa": 0.844465923611558,
+  "drop_at_Y222_mm": 0.7436366923323381,
+  "g_per_mm": 0.4171188000000001
+ },
+ "mast_candidates": [
+  {
+   "a": 40,
+   "b": 44,
+   "t": 1.7,
+   "A": 274.03999999999996,
+   "lean_deg": 0.4014208941852436,
+   "side_deg": 0.39647051318778537,
+   "yaw_deg": 0.5747569248659862,
+   "stress_MPa": 1.2952483897168887,
+   "drop_at_Y222_mm": 1.5553578163427622,
+   "g_per_mm": 0.3480308
+  },
+  {
+   "a": 40,
+   "b": 44,
+   "t": 2.1,
+   "A": 335.1600000000003,
+   "lean_deg": 0.33428452110076606,
+   "side_deg": 0.33062334770679447,
+   "yaw_deg": 0.47946124140056734,
+   "stress_MPa": 1.0786221991305731,
+   "drop_at_Y222_mm": 1.2952291480287035,
+   "g_per_mm": 0.4256532000000004
+  },
+  {
+   "a": 40,
+   "b": 52,
+   "t": 1.7,
+   "A": 301.2399999999998,
+   "lean_deg": 0.2702439601707617,
+   "side_deg": 0.3462316655777669,
+   "yaw_deg": 0.4468149103449472,
+   "stress_MPa": 1.0305278916286842,
+   "drop_at_Y222_mm": 1.0470956092710222,
+   "g_per_mm": 0.38257479999999977
+  },
+  {
+   "a": 40,
+   "b": 52,
+   "t": 2.1,
+   "A": 368.7600000000002,
+   "lean_deg": 0.22430239232034926,
+   "side_deg": 0.28839589049623615,
+   "yaw_deg": 0.37193931316125184,
+   "stress_MPa": 0.8553377892297782,
+   "drop_at_Y222_mm": 0.8690889890720106,
+   "g_per_mm": 0.46832520000000033
+  },
+  {
+   "a": 40,
+   "b": 60,
+   "t": 1.7,
+   "A": 328.44000000000005,
+   "lean_deg": 0.1919245223500517,
+   "side_deg": 0.3072929698368519,
+   "yaw_deg": 0.36263517058093503,
+   "stress_MPa": 0.844465923611558,
+   "drop_at_Y222_mm": 0.7436366923323381,
+   "g_per_mm": 0.4171188000000001
+  },
+  {
+   "a": 40,
+   "b": 60,
+   "t": 2.1,
+   "A": 402.36000000000035,
+   "lean_deg": 0.15889897454354107,
+   "side_deg": 0.2557334288225109,
+   "yaw_deg": 0.3014303943473642,
+   "stress_MPa": 0.6991538530657424,
+   "drop_at_Y222_mm": 0.615674883009693,
+   "g_per_mm": 0.5109972000000005
+  },
+  {
+   "a": 40,
+   "b": 70,
+   "t": 1.7,
+   "A": 362.44000000000005,
+   "lean_deg": 0.13223483499944955,
+   "side_deg": 0.2694180809787435,
+   "yaw_deg": 0.2915719240887391,
+   "stress_MPa": 0.6788038989917144,
+   "drop_at_Y222_mm": 0.512361182958946,
+   "g_per_mm": 0.4602988000000001
+  },
+  {
+   "a": 40,
+   "b": 70,
+   "t": 2.1,
+   "A": 444.3600000000001,
+   "lean_deg": 0.10921736585372785,
+   "side_deg": 0.2240191395394754,
+   "yaw_deg": 0.2420609755424778,
+   "stress_MPa": 0.5606478336772879,
+   "drop_at_Y222_mm": 0.42317698485961686,
+   "g_per_mm": 0.5643372000000002
+  },
+  {
+   "a": 50,
+   "b": 44,
+   "t": 1.7,
+   "A": 308.03999999999996,
+   "lean_deg": 0.33715313703566,
+   "side_deg": 0.23519553577107707,
+   "yaw_deg": 0.40623810233166185,
+   "stress_MPa": 1.0878782449025026,
+   "drop_at_Y222_mm": 1.3063439760833782,
+   "g_per_mm": 0.39121079999999997
+  },
+  {
+   "a": 50,
+   "b": 44,
+   "t": 2.1,
+   "A": 377.1600000000003,
+   "lean_deg": 0.28033298113991917,
+   "side_deg": 0.19523121926084896,
+   "yaw_deg": 0.3377803208846346,
+   "stress_MPa": 0.9045389706058877,
+   "drop_at_Y222_mm": 1.0861868420666518,
+   "g_per_mm": 0.4789932000000004
+  },
+  {
+   "a": 50,
+   "b": 52,
+   "t": 1.7,
+   "A": 335.2399999999998,
+   "lean_deg": 0.22874312659259938,
+   "side_deg": 0.20688139437270542,
+   "yaw_deg": 0.31266130534272496,
+   "stress_MPa": 0.8722717496556593,
+   "drop_at_Y222_mm": 0.8862951954770466,
+   "g_per_mm": 0.42575479999999977
+  },
+  {
+   "a": 50,
+   "b": 52,
+   "t": 2.1,
+   "A": 410.7600000000002,
+   "lean_deg": 0.18958702465802543,
+   "side_deg": 0.17154833178971887,
+   "yaw_deg": 0.2593724335124723,
+   "stress_MPa": 0.7229568301083843,
+   "drop_at_Y222_mm": 0.7345797514539729,
+   "g_per_mm": 0.5216652000000003
+  },
+  {
+   "a": 50,
+   "b": 60,
+   "t": 1.7,
+   "A": 362.44000000000005,
+   "lean_deg": 0.16360762507893473,
+   "side_deg": 0.18465196767429115,
+   "yaw_deg": 0.25162470981647855,
+   "stress_MPa": 0.7198718669737457,
+   "drop_at_Y222_mm": 0.6339191660570805,
+   "g_per_mm": 0.4602988000000001
+  },
+  {
+   "a": 50,
+   "b": 60,
+   "t": 2.1,
+   "A": 444.3600000000001,
+   "lean_deg": 0.13527708205967037,
+   "side_deg": 0.15298963816194766,
+   "yaw_deg": 0.20840809960372067,
+   "stress_MPa": 0.5952177691844874,
+   "drop_at_Y222_mm": 0.5241487675438596,
+   "g_per_mm": 0.5643372000000002
+  },
+  {
+   "a": 50,
+   "b": 70,
+   "t": 1.7,
+   "A": 396.44000000000005,
+   "lean_deg": 0.11363752240272418,
+   "side_deg": 0.16278754500541684,
+   "yaw_deg": 0.2005350704604129,
+   "stress_MPa": 0.583337917569516,
+   "drop_at_Y222_mm": 0.4403034601814707,
+   "g_per_mm": 0.5034788000000001
+  },
+  {
+   "a": 50,
+   "b": 70,
+   "t": 2.1,
+   "A": 486.3600000000001,
+   "lean_deg": 0.09374552194933679,
+   "side_deg": 0.1347654022698234,
+   "yaw_deg": 0.16586511876821286,
+   "stress_MPa": 0.48122588735780575,
+   "drop_at_Y222_mm": 0.3632292997776718,
+   "g_per_mm": 0.6176772000000001
+  }
+ ],
+ "bar": {
+  "root_M_Nm": 8.718637500000002,
+  "stress_MPa": 17.181782467435323,
+  "tip_force_N": 48.436875
+ },
+ "ring": {
+  "chain_axial_N": 5.93505,
+  "push_couple_N": 12.731404958677686,
+  "root_M_Nm": 2.53435,
+  "lug_F_N": 174.89171666666667
+ },
+ "checks": {
+  "cross bar vs bar sweep": "bar top Z -185 vs bars' lowest Z -136.5 at Y 74..94: 48.5 clear",
+  "KB keel vs hub": "keel top Z -181 vs hub lowest Z -86 (Y 8..67): 95 clear",
+  "mast face": "flat plane Y 0 over the hub's r 86 and the motors (bodies start Y 2, arm doc): nothing proud of Y 0 (head pocket is a recess)",
+  "mast head vs motors": "head X \u00b130, Z \u00b140 all behind Y 0; motors to the face 2.0 as in v5e",
+  "frames vs parked heads": "frame band r >= 148 vs parked packs' corners r 97.5 and bars r 136.5 (Y 74..94, outside the ring's Y (133.0, 221.0))",
+  "frames vs extended heads": "heads extend only at a bay or the drone (|X| <= 19 beyond r 98.5); frame slots never see an extended head",
+  "adapters vs drone column": "pad arms from the 45\u00b0/135\u00b0 lugs (X \u00b1121.6, Z 121.6) to the pads (X \u00b198.14, Z 151.46): every point |X| >= 98 > 84.0",
+  "ring vs cross bar": "ring Y 133..221 vs cross bar Y 46..66: 67 apart",
+  "toe vs heads": "toe Y 197..260 at Z -201..-191; heads reach Y 222 at r <= 152.5: 38.5 clear"
+ },
+ "prints": [
+  {
+   "name": "mast sleeve + stub head",
+   "qty": 1,
+   "dims": [
+    176.0,
+    60.0,
+    60
+   ],
+   "face": "bottom face, standing",
+   "g": 92.46290880000001,
+   "fit": "fits",
+   "note": "stub pocket + 4 nut traps at the top, 45\u00b0 flare to the 60 head"
+  },
+  {
+   "name": "KB: keel + spigot + 2 gussets",
+   "qty": 1,
+   "dims": [
+    176.0,
+    141.0,
+    46.0
+   ],
+   "face": "floor face, standing",
+   "g": 150.47622400000003,
+   "fit": "fits",
+   "note": "keel channel 40 x 20; spigot to Z -60; gussets fore/aft at X 0, 3 thick, 45 long, top Z -140; 2 zip-tie slots behind the spigot"
+  },
+  {
+   "name": "KF: keel + cradle tongue",
+   "qty": 1,
+   "dims": [
+    148.0,
+    40.0,
+    20
+   ],
+   "face": "floor face, flat",
+   "g": 49.72712,
+   "fit": "fits",
+   "note": "tongue 35.6 x 12.6 slides into cradle v5e's open front; 2 M5 nut pockets at its end"
+  },
+  {
+   "name": "cross bar half",
+   "qty": 2,
+   "dims": [
+    220.0,
+    20.0,
+    16.0
+   ],
+   "face": "bottom face, flat (diagonal on the bed)",
+   "g": 27.168855999999995,
+   "fit": "fits on the diagonal",
+   "note": "tapered 16 -> 8; inner 40 half-lapped; 2 M5 x 35 through both halves + KF + KB"
+  },
+  {
+   "name": "toe",
+   "qty": 1,
+   "dims": [
+    63.0,
+    40.0,
+    20.0
+   ],
+   "face": "flat",
+   "g": 12.0,
+   "fit": "fits",
+   "note": "L: 4-thick upstand 40 x 20 on the cradle's back wall (its 2 M5 at X \u00b110, Z -191) + floor bar 10 tall"
+  },
+  {
+   "name": "ring frame 30\u00b0",
+   "qty": 7,
+   "dims": [
+    90.0,
+    88.0,
+    40.0
+   ],
+   "face": "near end (Y 133) down, 3 per plate",
+   "g": 25.0,
+   "fit": "fits",
+   "note": "generated; lugs + dovetails copied from arm_cad.bay_module_parts; band r 148..163"
+  },
+  {
+   "name": "ring end adapter (R, L mirrored)",
+   "qty": 2,
+   "dims": [
+    90.0,
+    60.0,
+    30.0
+   ],
+   "face": "lug plate face down",
+   "g": 20.0,
+   "fit": "fits",
+   "note": "2 x M5 on the chain's top lug pair + 2 funnel seat pads (P1 geometry, M3 x 25)"
+  }
+ ],
+ "g_total": 574.0039648000001,
+ "hardware": {
+  "stub to mast head": "4 x M5 x 12 ISO 7380 button head (was x 8 for the T-nuts) + 4 M5 nuts in side traps",
+  "sleeve to spigot": "2 x M5 x 55 + nuts (one along X at Z -80, one along Y at Z -120)",
+  "base joint": "4 x M5 x 35 + nuts at (X \u00b110, Y 51 / 61): bar halves + KF tongue + KB tongue",
+  "cradle + toe": "2 x M5 x 20 + nuts (the cradle's own back holes at X \u00b110, Z -191): toe + back wall + KF tongue",
+  "cradle to the -90\u00b0 module": "4 x M5 x 16 as v5e",
+  "ring": "2 x M5 x 16 + nut per joint (module pattern): 8 joints + 2 adapters = 20",
+  "funnel": "4 x M3 x 25 into the collar inserts as v5e",
+  "electronics": "2 zip ties through slots in the KB keel behind the spigot (PSU as ballast)"
+ }
+}

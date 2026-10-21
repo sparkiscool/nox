@@ -1,0 +1,13 @@
+Nox engine bundle, built 16 Oct 2026 23:20 (Pacific); 23:20 noxopt.py: Layout.run vol_gain option (damped volume-limit refresh, default 1.0 = unchanged)
+self-test: PASS 16 Oct 23:13 (FD checks incl. masked=False, end-to-end, polish, symmetry, thin) after the vol_gain change
+demo: PASS 16 Oct: noxopt_demo.py 2.0 = 10.4 g, function 0/0/0, thin 0, worst 0.32, 9 min
+noxopt_local: test_noxopt_local PASS 16 Oct 18:50 (pardiso/gmg vs noxopt 1e-10); bench h 2.0, 40 it: gmg 1.60 s/it 0.46 GB, pardiso 1.36 s/it 0.44 GB, 1 body
+
+noxopt.py  34680 bytes  sha256 4607f209abf5
+printopt.py  39032 bytes  sha256 a897299b19f5
+test_noxopt.py  9093 bytes  sha256 f8b65e22cdfe
+render_preview.py  3724 bytes  sha256 03c7b19da6df
+noxopt_bench.py  6355 bytes  sha256 140e036a3b1c
+noxopt_demo.py  4635 bytes  sha256 467b98801017
+noxopt_local.py  35347 bytes  sha256 d4cf3888ee0f
+setup.sh  948 bytes  sha256 7a0767b02db0

@@ -1,0 +1,95 @@
+{
+ "nose_single": {
+  "starts": [
+   [
+    13.5,
+    8.0,
+    76.0
+   ]
+  ],
+  "prop_clear": 16.13,
+  "lane_clear": 0.43,
+  "length": 112.4,
+  "n_feasible": 556
+ },
+ "nose_V": {
+  "starts": [
+   [
+    13.5,
+    8.0,
+    76.0
+   ],
+   [
+    13.5,
+    -8.0,
+    76.0
+   ]
+  ],
+  "prop_clear": 16.13,
+  "lane_clear": 0.43,
+  "length": 224.8,
+  "n_feasible": 556
+ },
+ "tail_single": {
+  "starts": [
+   [
+    -13.5,
+    0.0,
+    76.0
+   ]
+  ],
+  "prop_clear": 17.96,
+  "lane_clear": 29.9,
+  "length": 112.1,
+  "n_feasible": 882
+ },
+ "tail_V": {
+  "starts": [
+   [
+    -13.5,
+    4.0,
+    76.0
+   ],
+   [
+    -13.5,
+    -4.0,
+    76.0
+   ]
+  ],
+  "prop_clear": 17.0,
+  "lane_clear": 26.47,
+  "length": 224.3,
+  "n_feasible": 770
+ },
+ "side_single": {
+  "starts": [
+   [
+    10.0,
+    31.0,
+    76.0
+   ]
+  ],
+  "prop_clear": 17.2,
+  "lane_clear": 0.4,
+  "length": 95.9,
+  "n_feasible": 68
+ },
+ "side_V": {
+  "starts": [
+   [
+    10.0,
+    31.0,
+    76.0
+   ],
+   [
+    -10.0,
+    31.0,
+    76.0
+   ]
+  ],
+  "prop_clear": 17.2,
+  "lane_clear": 0.4,
+  "length": 191.8,
+  "n_feasible": 67
+ }
+}

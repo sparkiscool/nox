@@ -1,0 +1,1 @@
+{"nose": ["V", "U"], "tail": ["V", "U"], "side": ["single", "U"], "side_strut": false, "tail_strut": false, "tee_mat": "T", "upper": 3.0, "lower": 3.0, "spoke": 3.0, "skirt_d": 3.0, "pin": 3.0, "bottom": {"quad": {"x": 30.5, "z": 5.0, "targets": [["s", 0.0]]}, "feet": false}}

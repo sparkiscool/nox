@@ -1,0 +1,68 @@
+{
+ "bar_half": {
+  "g": 45.4,
+  "qty": 2,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   159.8,
+   159.8,
+   16.0
+  ]
+ },
+ "toe": {
+  "g": 52.7,
+  "qty": 1,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   72.0,
+   140.0,
+   20.0
+  ]
+ },
+ "kb": {
+  "g": 115.0,
+  "qty": 1,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   72.0,
+   112.0,
+   149.0
+  ]
+ },
+ "frame_endR": {
+  "g": 89.2,
+  "qty": 1,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   54.1,
+   94.0,
+   125.6
+  ]
+ },
+ "frame_endL": {
+  "g": 88.7,
+  "qty": 1,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   54.1,
+   94.0,
+   125.6
+  ]
+ },
+ "bracket_e": {
+  "g": 54.1,
+  "qty": 2,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   47.3,
+   102.0,
+   81.1
+  ]
+ }
+}
