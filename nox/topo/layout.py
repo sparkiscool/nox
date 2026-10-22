@@ -55,6 +55,7 @@ class Settings:
     geo_beta: float = 16.0
     geo_eps: float = 0.0                # 0 = automatic from the filter radius
     anchored_erosion: bool = True
+    gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
     reach_check: str = "raise"          # "raise" | "warn" | "off"
     auto_sym: bool = True
@@ -149,6 +150,61 @@ def auto_symmetry(solid3, void3, near_tol=0.08):
 
 class ReachabilityError(ValueError):
     pass
+
+
+def members_reach(part, m_mm):
+    """True when every drawn body (>= 4 cells) can be joined to one common region of the design space that holds a
+    rod of m_mm (the test Layout._reach makes before a run)."""
+    shape, h = part.shape, part.h
+    A = (part.design | part.solid).reshape(shape)
+    r = 0.45 * m_mm / h
+    E = ndi.distance_transform_edt(A) > r
+    labE, nE = ndi.label(E, S6)
+    if nE == 0:
+        return False
+    dist, ind = ndi.distance_transform_edt(~E, return_indices=True)
+    near_lab = labE[tuple(ind)]
+    lab, nb = ndi.label(part.solid.reshape(shape), S26)
+    common = None
+    for b in range(1, nb + 1):
+        cells = lab == b
+        if cells.sum() < 4:
+            continue
+        ok = cells & (dist <= r + 1.5)
+        labs = set(np.unique(near_lab[ok]).tolist()) if ok.any() else set()
+        common = labs if common is None else common & labs
+        if not common:
+            return False
+    return True
+
+
+def gate_member_mm(part, floor_mm, gate_erode_cap=2.0, gate_erode_min=0.9, margin_mm=1.0, log=print):
+    """minimum member that lets the solid gate pass. nox/solid_check.py erodes the part round every drawn body by
+    clip(0.8 x its depth, 0.9, 2.0) mm (depth measured in the finished part, where generated material has fused onto
+    the body) and requires the body's core to stay in the main eroded body. Members joining such a body must then be
+    thicker than twice that depth; a 3.2 mm frame splits into dozens of pieces at 2.0 mm (holder topo-v1: 72).
+    Returns the member size (blueprint rod diameter, mm) = 2 x depth + margin, lowered to the largest size the design
+    space can still route to every drawn body (a setup that cannot host it is reported, not refused)."""
+    lab, nb = ndi.label(part.solid.reshape(part.shape), S26)
+    if nb == 0:
+        return floor_mm
+    d_own = float(ndi.distance_transform_edt(part.solid.reshape(part.shape)).max()) * part.h
+    ef = float(np.clip(0.8 * (d_own + 0.5 * floor_mm), gate_erode_min, gate_erode_cap))
+    want = max(floor_mm, 2.0 * ef + margin_mm)
+    if want <= floor_mm or members_reach(part, want):
+        if want > floor_mm:
+            log(f"layout: min member {floor_mm:.2f} -> {want:.2f} mm so members survive the solid gate's "
+                f"{ef:.1f} mm erosion round the drawn bodies")
+        return want
+    lo, hi = floor_mm, want
+    if not members_reach(part, lo):
+        return floor_mm
+    for _ in range(8):
+        mid = 0.5 * (lo + hi)
+        lo, hi = (mid, hi) if members_reach(part, mid) else (lo, mid)
+    log(f"layout: WARNING the solid gate wants {want:.2f} mm members round the drawn bodies ({ef:.1f} mm erosion), "
+        f"the design space routes at most {lo:.2f} mm to every body: using {lo:.2f} mm; the gate may fail on the setup")
+    return lo
 
 
 # ------------------------------------------------------------------------------------------------------ layout

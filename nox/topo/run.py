@@ -18,7 +18,7 @@ import argparse
 import subprocess
 from dataclasses import replace
 
-from .layout import Layout, Settings
+from .layout import Layout, Settings, gate_member_mm
 from .build import build_and_check
 
 
@@ -66,6 +66,8 @@ def optimise(setup, h, gen_cm3, out_dir, name, settings=None, coarse=True, git=F
     hook = git_checkpoint(out_dir, log) if git else None
     ck = os.path.join(out_dir, "ck.npz")
     log(f"=== {name}: h {h}, generated {gen_cm3} cm3, min member {s.min_member_mm} mm, cores {os.cpu_count()}")
+    if s.gate_member:
+        s = replace(s, min_member_mm=round(gate_member_mm(setup(h), s.min_member_mm, log=log), 2))
     xh_c = part_c = None
     if coarse and not os.path.exists(ck):
         part_c = setup(2.0 * h)
