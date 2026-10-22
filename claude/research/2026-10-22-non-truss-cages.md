@@ -1,5 +1,8 @@
 # Keep the truss, soften it, crown it
 
+> **Correction (22 Oct 13:30):** the apex / rounded-crown fix for passive self-righting does not work on Scout's wide, flat lantern. Checked on the v13 hull (`nox/v2/lantern/dome_probe14.py`, E): a rounded hub only moves the inverted rest; clearing every rest needs a dome to apex z ~210, roughly doubling cage height. Cage v13 keeps the blip recovery.
+
+
 Non-truss cages exist, and several beat a rigid frame per gram in their own tests. None of them beats a *compliant* rod-and-node cage in a way that survives Scout's hard requirements. The families in the literature are tensegrity shells, buckling-rod "Euler spring" cages, soft glass-fibre ring frames, inflatable frames, ducts and thin shells, foam and lattice bumpers, folding origami, and gimbal or rolling cages. Every one that wins does it through compliance and stroke, not topology. The closest proof is CogniFly: **3 mm carbon rods in TPU 95A joints, 241 g (P), surviving about 7 m/s (P)** ([arXiv 2103.04423](https://arxiv.org/abs/2103.04423)). That is nearly Scout's own construction. Tensegrity, gimbals, inflatables, magnetic breakaway and folding origami each fail on no-moving-parts, dock repeatability or passive righting. Foam and full shells fail on mass, airflow or compression set.
 
 The direction this supports has four parts:
