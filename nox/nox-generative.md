@@ -1,12 +1,12 @@
 # Nox generative protocol: how to run it (7 Oct 2026; cloud setup 16 Oct; repo 21 Oct)
 
-The rule is in `README.md` ("Generative parts"); v2 settings in `v2/README.md` win. This doc is the how-to. Default optimizer for every generated part: **`noxopt.py`** (layout + smooth build). `printopt.py` is now only the FE kernel and the strength checker.
+The rule is in `README.md` ("Generative parts"); v2 settings in `archive/scout-v2/README.md` win. This doc is the how-to. Default optimizer for every generated part: **`noxopt.py`** (layout + smooth build). `printopt.py` is now only the FE kernel and the strength checker.
 
 Tags: T = measured in a cloud run, E = estimate.
 
 ## What you need
 - **Engine:** `nox/noxopt.py`, `printopt.py`, `test_noxopt.py`, `render_preview.py`, `noxopt_bench.py`, `noxopt_demo.py`, `noxopt_local.py`, `solid_check.py`, `print_orient.py`, all in this repo under `nox/`. Don't read the engine through the chat.
-- **The part's own script** from the repo (v2 parts: `nox/v2/`, box parts: `nox/box/`). It builds a `printopt.Problem` (masks, supports, load cases) plus the exact bodies. Every part script lives in the repo; none lives only on a PC.
+- **The part's own script** from the repo (v2 parts: `archive/scout-v2/`, box parts: `nox/box/`). It builds a `printopt.Problem` (masks, supports, load cases) plus the exact bodies. Every part script lives in the repo; none lives only on a PC.
 - **Setup:** the cloud environment's setup script (`cloud/setup.sh`) installs pymoto, pypardiso + mkl, trimesh, rtree, manifold3d, scikit-image, scikit-fmm, matplotlib, cadquery, sparse_dot_mkl (~1 min, T 16 Oct), and the SessionStart hook reinstalls them if a box lacks them. noxopt points pypardiso at pip's MKL itself, so import noxopt before pypardiso. `python3 nox/test_noxopt.py` runs the self-test (finite-difference checks incl. the plain filter, a small end-to-end run, the smooth build without and with the polish, automatic symmetry and the thin-member check; 1.5 min, T 16 Oct) and `python3 nox/noxopt_demo.py 2.0` the demo (9 min, T 16 Oct).
 - The box only runs while a command is running. Start a long run in the background and wait on it; checkpoints are written every 10 iterations and `run(resume=...)` continues. Commit and push the checkpoint each time (CLAUDE.md Heavy runs).
 
@@ -17,7 +17,7 @@ Tags: T = measured in a cloud run, E = estimate.
 ```python
 import noxopt as NO
 pb = <the part's printopt.Problem>          # pb.R = filter radius in cells, pb.overhang, pb.sym as before
-L = NO.Layout(pb, volfrac)                  # volfrac = mass target, share of the design cells; masked=False = plain filter (shells, v2/README.md)
+L = NO.Layout(pb, volfrac)                  # volfrac = mass target, share of the design cells; masked=False = plain filter (shells, archive/scout-v2/README.md)
 dens = L.run(checkpoint="ck.npz", resume="ck.npz")
 L.save("part_density.npz", dens)            # same file layout as printopt's
 ```
@@ -30,11 +30,11 @@ L.save("part_density.npz", dens)            # same file layout as printopt's
 ## Defaults (DEFAULT unless the part doc says otherwise)
 | Setting | Value | Why |
 |---|---|---|
-| Grid | h 1.0 or finer; small parts 0.5 (`v2/README.md`) | members at least 2 cells wide |
+| Grid | h 1.0 or finer; small parts 0.5 (`archive/scout-v2/README.md`) | members at least 2 cells wide |
 | Filter radius `pb.R` | 2.0 cells, and at least wall class / h | sets the smallest member; members come out at this size, nothing is grown afterwards |
 | Robust thresholds | 0.7 / 0.5 / 0.3 | eroded design carries the load, nominal is built |
 | Case weighting | p-mean, P 4, each case / its solid-domain value; tie cases x 0.25 | every case counts, no single case starves the rest |
-| Mass target | generated volume from the part's budget (`GEN_CM3`), then the v2 search (`v2/README.md`) | then step it: lower while the as-built worst index stays <= 1.0 |
+| Mass target | generated volume from the part's budget (`GEN_CM3`), then the v2 search (`archive/scout-v2/README.md`) | then step it: lower while the as-built worst index stays <= 1.0 |
 | Overhang filter | **on** for parts that print without supports and sit flat on the bed (cartridge); **off** for parts on tree supports with a small footprint (pocket) | on the pocket it wipes most of the part and one corner never attaches (T) |
 | Stop | <= 2 % grey cells and settled; hard cap 6 h | not an iteration count |
 | Smooth build | fine grid h / 4, sigma 0.6 mm at h 1.0 (scale with h: ~0.6 x h), volume preserved | rounds the voxel steps, fillets the joins |

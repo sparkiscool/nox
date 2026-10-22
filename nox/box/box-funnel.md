@@ -1,6 +1,6 @@
 # Box collar funnel v4 / panels v6 (catcher), shared by the Scout and the Overseer
 
-The box's catcher: a **static all-PETG collar** of 4 flat 45° faces on top of the box with an **open bottom** (Spark 16 Oct 19:02 / 19:33). The drone lands into it under its own control; the 8 print-in-place PETG wheels in the guard's corner nodes roll down the bare faces and centre it; the pack hangs through the open bottom to the swap wheel's top head. Nothing on the funnel moves. Numbers: `v2/dimensions.md` G (the only source; this page explains them). Guard side: `v2/s2-guard.md`. Box system: `nox/box.md`. Scripts: `v2/catch_v4/`. Seat frame = drone coordinates of a seated Scout. C / M / E tags; DEFAULT unless marked Spark.
+The box's catcher: a **static all-PETG collar** of 4 flat 45° faces on top of the box with an **open bottom** (Spark 16 Oct 19:02 / 19:33). The drone lands into it under its own control; the 8 print-in-place PETG wheels in the guard's corner nodes roll down the bare faces and centre it; the pack hangs through the open bottom to the swap wheel's top head. Nothing on the funnel moves. Numbers: `nox/dimensions.md` G (the only source; this page explains them). Guard side: `archive/scout-v2/s2-guard.md`. Box system: `nox/box/box.md`. Scripts: `archive/scout-v2/catch_v4/`. Seat frame = drone coordinates of a seated Scout. C / M / E tags; DEFAULT unless marked Spark.
 
 ## Brief (Spark)
 - One funnel for both drones; high error tolerance; nothing can stick; printed on the A1 mini, glued.
@@ -56,12 +56,12 @@ Build: print 4 A + 4 B. Scuff the flanges. Glue each A + B pair face-down on a f
 1. Drone descends inside ±40, ±5° yaw, ≤ 0.15 m/s.
 2. First face touch: motors kill (Spark's landing mode).
 3. Wheels roll to centre; KW11 made = seated; magnet on.
-4. Swap (`nox/box.md`). Leaving: magnet off, spin-up, take off. Miss (no switch within 1.0 s): climb, retry.
+4. Swap (`nox/box/box.md`). Leaving: magnet off, spin-up, take off. Miss (no switch within 1.0 s): climb, retry.
 
 ## Problems
 1. **Wheel coupon gate** (dimensions D14): a corner node's wheel turns free after printing and slides sideways on a 45° PETG face at μ ≤ 0.4. Test on a panel's bed-side face.
 2. **Valley seams are in the wheel path:** sand flush, step ≤ 0.2, and round the glue line so a wheel can't catch.
-3. **The 2 bays the collar bolts to (45° and 135°) aren't drawn** (Overseer bays, wait on D10). Their posts (45° seat + insert) are the bay ring chat's job (spec in `nox/box-case.md` "To add" 2). Best fix: draw those two modules now as bay envelopes with the posts, so the collar has something to bolt to; Overseer receivers later.
+3. **The 2 bays the collar bolts to (45° and 135°) aren't drawn** (Overseer bays, wait on D10). Their posts (45° seat + insert) are the bay ring chat's job (spec in `nox/box/box-case.md` "To add" 2). Best fix: draw those two modules now as bay envelopes with the posts, so the collar has something to bolt to; Overseer receivers later.
 4. **Glue joints are the structure:** glue coupon (current-parts 9) before gluing the panels.
 5. **The FE is a plate model (E):** first article check: glue one face (A + B), press 2 kg at u 60 v 90 (on the wheel track, 90 up the slope), ≤ 1.0 mm against a straightedge. If it fails, rerun `panel_opt.py` with a stiffer limit; it's one number.
 6. **Overseer contact positions are assumed on the wheel track** (DEFAULT). If its contacts land elsewhere on the faces, add them as functional cases and rerun.
