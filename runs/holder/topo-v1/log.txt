@@ -47,3 +47,14 @@ it  37 beta    2 J   0.5684 vol 0.1182 (dil 0.1596 g -0.006) grey 26.7% ch 0.100
 it  38 beta    2 J   0.5512 vol 0.1191 (dil 0.1603 g -0.001) grey 26.6% ch 0.100 worst pad push 104 1.3s
 it  39 beta    2 J   0.5446 vol 0.1194 (dil 0.1604 g -0.001) grey 26.6% ch 0.100 worst pad push 103 1.3s
 it  40 beta    2 J   0.5401 vol 0.1195 (dil 0.1604 g -0.001) grey 26.6% ch 0.100 worst pad push 102 1.3s
+it  41 beta    2 J   0.5365 vol 0.1196 (dil 0.1604 g -0.023) grey 26.5% ch 0.100 worst pad push 101 1.5s
+it  42 beta    2 J   0.5012 vol 0.1227 (dil 0.1638 g -0.002) grey 27.0% ch 0.100 worst pad push 94.6 1.6s
+it  43 beta    2 J   0.4945 vol 0.1231 (dil 0.1641 g -0.001) grey 27.0% ch 0.100 worst pad push 93.5 1.6s
+it  44 beta    2 J   0.4919 vol 0.1232 (dil 0.1642 g -0.000) grey 26.9% ch 0.100 worst pad push 93.2 1.7s
+it  45 beta    2 J   0.4900 vol 0.1233 (dil 0.1642 g -0.000) grey 26.9% ch 0.100 worst pad push 92.9 1.6s
+it  46 beta    2 J   0.4882 vol 0.1234 (dil 0.1642 g -0.014) grey 26.8% ch 0.100 worst pad push 92.5 1.5s
+it  47 beta    2 J   0.4693 vol 0.1252 (dil 0.1662 g -0.001) grey 27.1% ch 0.100 worst pad push 88.9 1.5s
+it  48 beta    2 J   0.4661 vol 0.1254 (dil 0.1664 g -0.000) grey 27.1% ch 0.100 worst pad push 88.4 1.5s
+it  49 beta    2 J   0.4646 vol 0.1255 (dil 0.1664 g -0.000) grey 27.1% ch 0.100 worst pad push 88.2 1.4s
+it  50 beta    2 J   0.4635 vol 0.1255 (dil 0.1664 g -0.000) grey 27.0% ch 0.100 worst pad push 87.9 1.6s
+layout: beta 2 done: eroded design 9 bodies, main 84.6%; anchored cores outside the main body: 2
