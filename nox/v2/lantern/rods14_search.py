@@ -26,7 +26,7 @@ def upper(zs=60.0, cols='8', spokes='8', rh=40.0, zh=85.0, mid=None, diag=False)
     if zs:
         rods += [(f, 'shoulder ring') for f in R.flats(zs)]
         printed += R.chamfer_links(zs)
-        colset = {'8': R.CORN+R.TEES, 'corners': R.CORN, 'tees': R.TEES}[cols]
+        colset = {'8': R.CORN+R.TEES, 'corners': R.CORN, 'tees': R.TEES, 'corners+nose': R.CORN+[(112, 0)]}[cols]
         for x, y in colset: printed.append(((x, y, 33.2), (x, y, zs), 8.0, 'column'))
         if diag:   # drum diagonals: each skid tee up to the two neighbouring shoulder corners
             for x, y in R.TEES:
@@ -93,8 +93,20 @@ def grid():
         out.append(kw)
     return out
 
+GRID2 = dict(zs=[62.0, 64.0, 66.0, 68.0, 70.0], cols=['corners+nose', 'tees', '8'], spokes=['corners'],
+             rh=[30.0, 40.0, 50.0], zh=[66.0, 70.0, 74.0, 78.0], mid=[0.4, 0.5, 0.6], diag=[False])
+def grid2():
+    return [dict(zip(GRID2, v)) for v in itertools.product(*GRID2.values()) if v[4] >= v[0]]
+
 if __name__ == '__main__':
     W = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+    if len(sys.argv) > 2 and sys.argv[2] == 'refine':
+        G = grid2(); print(len(G), 'refine layouts', flush=True); rows = []
+        with mp.Pool(W) as p:
+            for i, r in enumerate(p.imap_unordered(score, G, chunksize=4)):
+                rows.append(r)
+                if i % 50 == 0: print(i, flush=True); json.dump(rows, open('rods14_refine.json', 'w'), default=str)
+        json.dump(rows, open('rods14_refine.json', 'w'), default=str); print('done', len(rows)); sys.exit()
     base = score(dict(zs=60.0, cols='8', spokes='8', rh=40.0, zh=85.0, mid=None, diag=False))
     print('v13', json.dumps(base, default=str), flush=True)
     G = grid(); print(len(G), 'layouts', flush=True)
