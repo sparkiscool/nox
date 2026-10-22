@@ -403,13 +403,32 @@ class Solver:
             pen = restrict(levels[-1]["pen"][None])[0]
             levels.append(dict(grid=gl, E=None, Ke=Ke, pen=pen))
             Kprev = Ke
-        for lv in levels:
+        for l, lv in enumerate(levels):
             lv["diag"] = self._diag(lv)
+            if l < len(levels) - 1 or self.levels == 1:
+                lv["omega"] = min(self.omega, 4.0 / (3.0 * self._lam_max(lv, l)))
         # coarsest direct
         last = levels[-1]
         if self.levels > 1:
             last["coarse"] = _CoarseDirect(self._assemble_level(last), log=self.log)
         return levels
+
+    def _lam_max(self, lv, l, its=12):
+        """largest eigenvalue of D^-1 K on one level (power iteration, warm-started from the last call, +10 %).
+        Damped Jacobi only smooths when omega * lam_max < 2; for 3D hex elasticity lam_max is 4 to 6, so a fixed
+        omega 0.6 diverges on the high modes and the V-cycle stops being a valid CG preconditioner."""
+        g = lv["grid"]
+        key = ("lam", l)
+        x = self.warm.get(key)
+        if x is None or x.shape != (1,) + g.nshape + (3,):
+            x = np.random.default_rng(l).normal(size=(1,) + g.nshape + (3,))
+        lam = 1.0
+        for _ in range(its):
+            y = self._apply(lv, x) / lv["diag"][None]
+            lam = np.sqrt((y * y).sum() / max((x * x).sum(), 1e-300))
+            x = y / max(np.abs(y).max(), 1e-300)
+        self.warm[key] = x
+        return 1.1 * lam
 
     def _diag(self, lv):
         g = lv["grid"]
@@ -466,7 +485,7 @@ class Solver:
             X = lv["coarse"].solve(g.to_flat(B))
             return g.to_field(X)
         Dinv = 1.0 / lv["diag"][None]
-        w = self.omega
+        w = lv["omega"]
         X = w * Dinv * B
         for _ in range(self.nu - 1):
             X += w * Dinv * (B - self._apply(lv, X))
@@ -486,7 +505,7 @@ class Solver:
         for sup, cols in groups.items():
             fixed = self.fixed[sup]
             levels = self._mg_hierarchy(E, fixed)
-            fmask = (fixed.reshape(g.nshape + (3,)) | self.dead)[None]
+            fmask = (fixed.reshape(g.nshape + (3,)) | self.dead[..., None])[None]
             B = g.to_field(F[:, cols]) * ~fmask
             X = np.zeros_like(B)
             for q, c in enumerate(cols):
@@ -495,7 +514,7 @@ class Solver:
                     X[q] = w
             X *= ~fmask
             t0 = time.time()
-            its = self._pcg(levels, B, X)
+            its = self._pcg(levels, B, X, ~fmask)
             self.stats.append((sup, its, time.time() - t0))
             for q, c in enumerate(cols):
                 self.warm[keys[c]] = X[q].copy()
@@ -505,14 +524,14 @@ class Solver:
             del levels
         return U
 
-    def _pcg(self, levels, B, X):
+    def _pcg(self, levels, B, X, free):
         lv = levels[0]
         k = B.shape[0]
-        dot = lambda a, b: np.einsum("k...,k...->k", a, b)
+        dot = lambda a, b: (a * b).reshape(a.shape[0], -1).sum(1)
         bn = np.sqrt(dot(B, B))
         bn[bn == 0] = 1.0
-        R = B - self._apply(lv, X)
-        Z = self._vcycle(levels, 0, R)
+        R = (B - self._apply(lv, X)) * free                               # supports eliminated exactly
+        Z = self._vcycle(levels, 0, R) * free
         P = Z.copy()
         rz = dot(R, Z)
         active = np.ones(k, bool)
@@ -523,13 +542,13 @@ class Solver:
             if not active.any():
                 break
             its = it + 1
-            AP = self._apply(lv, P)
+            AP = self._apply(lv, P) * free
             pap = dot(P, AP)
             alpha = np.where(active & (pap > 0), rz / np.where(pap > 0, pap, 1.0), 0.0)
             sh = (k,) + (1,) * (B.ndim - 1)
             X += alpha.reshape(sh) * P
             R -= alpha.reshape(sh) * AP
-            Z = self._vcycle(levels, 0, R)
+            Z = self._vcycle(levels, 0, R) * free
             rz_new = dot(R, Z)
             beta = np.where(active, rz_new / np.where(rz != 0, rz, 1.0), 0.0)
             P = Z + beta.reshape(sh) * P
