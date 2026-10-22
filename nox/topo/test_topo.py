@@ -244,15 +244,30 @@ def t_gradients():
         check("gradients", False, str(e))
 
 
+def _stem_part(half):
+    """mini part whose pad (x 21..24) hangs on a drawn stem x 18..21 of 2 * half mm square: a neck inside the drawn
+    body, which frozen pads cannot see."""
+    import manifold3d as mf
+    from .part import Part
+    box = lambda x0, x1, y0, y1, z0, z1: mf.Manifold.cube([x1 - x0, y1 - y0, z1 - z0]).translate([x0, y0, z0])
+    drawn = box(0, 3, 0, 10, 0, 10) + box(21, 24, 2, 8, 2, 8) + box(18, 21, 5 - half, 5 + half, 5 - half, 5 + half)
+    p = Part("stem", 1.0, drawn, box(100, 101, 100, 101, 100, 101), box(0, 24, 0, 10, 0, 10), log=lambda s: None)
+    p.support("default", box(-1, 1.5, -1, 11, -1, 11))
+    p.load("down", box(21, 24, 2, 8, 2, 8), (0, 0, -10.0))
+    return p
+
+
 def t_neck():
-    """the reason for anchored erosion: the same pad joined by a 2 mm neck vs a full-width root. In the eroded design
-    the neck must open a gap (compliance ratio >> wide root); with frozen pads (old behaviour) it must not."""
+    """the reason for anchored erosion. (a) A generated 2 mm neck at a pad must open a gap in the eroded design
+    (compliance ratio >> wide root). The constant-normalised filter already erodes such a neck in the design itself, so
+    frozen pads punish it too (x_tilde is the same in both modes). (b) A pad hung on a 2 mm drawn stem: only anchored
+    erosion erodes the stem's skin and sees the gap; frozen pads (old behaviour) must not."""
     try:
         res = {}
         for anchored in (True, False):
-            p = _mini_part()
             s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False,
                          anchored_erosion=anchored)
+            p = _mini_part()
             L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
             cen = p.cell_centres()[L.design]
             # member from the base to x = 18, then a neck (2 x 2) or a wide root (6 x 6) to the pad face at x 20
@@ -263,10 +278,19 @@ def t_neck():
                 f = L.fields(x, 32.0)
                 comp, _ = L._compliance(f["rho_e"], need_grad=False)
                 res[(anchored, kind)] = float(comp[0] / L.c_ref[0])
-        ratio_new = res[(True, "neck")] / res[(True, "wide")]
-        ratio_old = res[(False, "neck")] / res[(False, "wide")]
-        check("anchored erosion punishes a 2 mm neck at a pad", ratio_new > 50 and ratio_new > 10 * ratio_old,
-              f"neck / wide compliance: anchored {ratio_new:.3g}, frozen pads {ratio_old:.3g}")
+            for kind, half in (("stem", 1.0), ("fat stem", 3.0)):
+                p = _stem_part(half)
+                L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
+                cen = p.cell_centres()[L.design]
+                x = np.where((cen[:, 0] < 18) & (np.abs(cen[:, 1] - 5) < 3) & (np.abs(cen[:, 2] - 5) < 3), 1.0, 0.0)
+                comp, _ = L._compliance(L.fields(x, 32.0)["rho_e"], need_grad=False)
+                res[(anchored, kind)] = float(comp[0] / L.c_ref[0])
+        neck = res[(True, "neck")] / res[(True, "wide")]
+        stem_new = res[(True, "stem")] / res[(True, "fat stem")]
+        stem_old = res[(False, "stem")] / res[(False, "fat stem")]
+        check("anchored erosion punishes a 2 mm neck at a pad", neck > 50 and stem_new > 50 and stem_new > 10 * stem_old,
+              f"generated neck / wide: {neck:.3g}; drawn stem / fat stem: anchored {stem_new:.3g}, frozen pads "
+              f"{stem_old:.3g}")
     except Exception as e:
         traceback.print_exc()
         check("anchored erosion neck test", False, str(e))
