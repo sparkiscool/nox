@@ -1,0 +1,184 @@
+<title>Scout Cage Rod Layout</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column engineering sheet; the 3D viewer is the hero, the scorecard sits beside it on wide screens */
+:root{
+  --bg:#f3f4f2; --panel:#ffffff; --ink:#1b222b; --muted:#5d6672; --line:#d9ddd8;
+  --rod:#4f5966; --new:#c8561f; --part:#2b6c8c; --prop:#9db3c6; --good:#2f7d4f; --warn:#b07a12;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif; --f-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161b; --panel:#1a2027; --ink:#e7ebee; --muted:#9aa4ae; --line:#2c343d;
+  --rod:#a7b1bd; --new:#f07d43; --part:#5fa9cc; --prop:#3d5568; --good:#5fbf86; --warn:#e0a63a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161b; --panel:#1a2027; --ink:#e7ebee; --muted:#9aa4ae; --line:#2c343d;
+  --rod:#a7b1bd; --new:#f07d43; --part:#5fa9cc; --prop:#3d5568; --good:#5fbf86; --warn:#e0a63a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;gap:28px}
+.eyebrow{font:500 12px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:800 clamp(30px,5vw,46px)/1.02 var(--f-display);font-stretch:80%;letter-spacing:-.01em;margin:8px 0 12px;text-wrap:balance}
+h2{font:700 20px/1.2 var(--f-display);font-stretch:85%;margin:0 0 12px;text-wrap:balance}
+.lead{max-width:68ch;color:var(--ink);margin:0}
+.lead b{color:var(--new);font-weight:600}
+.hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+.viewer{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;min-width:0}
+.vbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+.seg button{font:500 13px var(--f-body);color:var(--muted);background:transparent;border:0;padding:6px 12px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--new);outline-offset:-2px}
+.legend{display:flex;gap:12px;flex-wrap:wrap;font:12px var(--f-mono);color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+#stage{width:100%;aspect-ratio:4/3;max-width:100%;display:block;touch-action:none}
+.hint{font:12px var(--f-mono);color:var(--muted);padding:8px 12px;border-top:1px solid var(--line)}
+.score{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:7px 4px;border-bottom:1px solid var(--line);font-size:14px}
+th:first-child,td:first-child{text-align:left}
+thead th{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+td.n{font-family:var(--f-mono);font-size:13.5px}
+td .tag{font:10.5px var(--f-mono);color:var(--muted);margin-left:3px}
+.up{color:var(--good)} .dn{color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:860px){.cols{grid-template-columns:1fr}}
+.card{border-top:3px solid var(--new);padding-top:12px;min-width:0}
+.card.p{border-color:var(--part)} .card.k{border-color:var(--rod)}
+.card p{margin:0;color:var(--ink);max-width:62ch}
+.card .k{font:600 13px var(--f-mono);color:var(--muted);display:block;margin-bottom:6px}
+.notes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+@media (max-width:860px){.notes{grid-template-columns:1fr}}
+ul{margin:0;padding-left:18px;display:grid;gap:7px} li{max-width:66ch}
+.foot{font:12px var(--f-mono);color:var(--muted);border-top:1px solid var(--line);padding-top:14px;max-width:none}
+code{font:13px var(--f-mono);background:color-mix(in srgb,var(--line) 55%,transparent);padding:1px 5px;border-radius:4px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Scout v2 · cage · rod layout · 22 Oct 2026</div>
+    <h1>Cage v14: corner spokes and a crown ring</h1>
+    <p class="lead">Same lower half, same 29 rods of 3.0 carbon, about the same mass. The crown changes from eight spokes into a hub to <b>four corner spokes tied by a square ring over the props</b>, the shoulder ring rises 60 to 68, and only the corner and nose columns stay. In the frame model that doubles what a top hit takes and cuts the paths a plank edge can reach a prop by more than five times.</p>
+  </header>
+
+  <section class="hero">
+    <div class="viewer">
+      <div class="vbar">
+        <div class="seg" role="group" aria-label="Layout">
+          <button id="b-v14" aria-pressed="true">v14</button>
+          <button id="b-v13" aria-pressed="false">v13</button>
+          <button id="b-both" aria-pressed="false">Overlay</button>
+        </div>
+        <div class="legend"><span><i style="background:var(--new)"></i>new rod</span><span><i style="background:var(--rod)"></i>rod</span><span><i style="background:var(--part)"></i>printed</span><span><i style="background:var(--prop)"></i>prop disk</span></div>
+      </div>
+      <canvas id="stage" aria-label="3D view of the cage rods"></canvas>
+      <div class="hint">Drag to orbit, scroll or pinch to zoom. Units mm, x to the nose.</div>
+    </div>
+    <div class="score">
+      <h2>Frame model scorecard</h2>
+      <table>
+        <thead><tr><th>Metric</th><th>v13</th><th>v14</th></tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+      <p class="hint" style="border:0;padding:10px 0 0">F = frame model, E = estimate, C = CAD. Rod strength 1500 MPa (E) until the D21 bend test. Core held rigid at the 6 mounts.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What changed and why</h2>
+    <div class="cols">
+      <div class="card"><span class="k">Crown</span><p>Eight radial spokes left a wedge-shaped gap over every prop. Four corner spokes with a square ring at 40% of their length put a rod straight over each prop disk and make the top a braced frame instead of a fan. Top-hit capacity 0.15 to 0.29 J (F).</p></div>
+      <div class="card p"><span class="k">Columns</span><p>Tail and side columns go; corners carry the drum and the nose column keeps the camera pads. The side and tail flats become 200 mm through-rods. Printed mass about 4 g lower (E), three more small printed parts.</p></div>
+      <div class="card k"><span class="k">Shoulder ring</span><p>Rises from z 60 to 68. The drum window grows to 35 mm tall, still too small for a 38 mm plank edge, and the camera gets a taller view. The crown ring sits about 30 mm above the swept disks; nearest rod to a prop 20 to 26.5 mm (F).</p></div>
+    </div>
+  </section>
+
+  <section class="notes">
+    <div>
+      <h2>What it costs</h2>
+      <ul>
+        <li>Weakest plank-edge span drops 4%: 0.529 to 0.508 J (F), now the 200 mm shoulder flats, which bow 8.6 mm at that load, still 23 mm above the swept disks.</li>
+        <li>Upside down, the blip has to lift the CG 46.9 mm instead of 43.0: 0.24 J vs 0.22 J (E). Same top height, z 85.</li>
+        <li>20 printed parts instead of 17: four crown-ring nodes on the spokes and two small side nodes, against three columns removed (tail and both sides).</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Before it prints</h2>
+      <ul>
+        <li>The new parts (hub, 4 crown nodes, corner and nose columns at z 68) need the topology run and <code>solid_check.py</code>; this is the skeleton only.</li>
+        <li>D21 rod bend test sets every energy number; D20 motor test confirms the blip still clears 0.24 J.</li>
+        <li>A lower crown (z 74) scores better still, 0.34 J top hits and 11 mm shorter, but needs a 0.30 J blip. Hold it until D20.</li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="foot">Source: <code>nox/v2/lantern/rods14.py</code> (frame model), <code>rods14_search.py</code> (1026-layout grid + 486-layout refine), <code>rods14_export.py</code>. Run: <code>runs/cage/v14-rods/</code>. Lower half fixed by the funnel, sled, swap head and core mounts.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const GEO = {"v13":{"rods":[[[100.0,112.0,33.2],[0.0,112.0,33.2],"skid ring"],[[0.0,112.0,33.2],[-100.0,112.0,33.2],"skid ring"],[[-112.0,100.0,33.2],[-112.0,0.0,33.2],"skid ring"],[[-112.0,0.0,33.2],[-112.0,-100.0,33.2],"skid ring"],[[-100.0,-112.0,33.2],[0.0,-112.0,33.2],"skid ring"],[[0.0,-112.0,33.2],[100.0,-112.0,33.2],"skid ring"],[[112.0,-100.0,33.2],[112.0,0.0,33.2],"skid ring"],[[112.0,0.0,33.2],[112.0,100.0,33.2],"skid ring"],[[37.5,32.0,-47.0],[15.0,32.0,-47.0],"sled rail"],[[15.0,32.0,-47.0],[-5.0,32.0,-47.0],"sled rail"],[[-5.0,32.0,-47.0],[-25.0,32.0,-47.0],"sled rail"],[[-25.0,32.0,-47.0],[-52.0,32.0,-47.0],"sled rail"],[[106.0,106.0,33.2],[37.5,32.0,-7.0],"glove nose"],[[-106.0,106.0,33.2],[-66.0,52.0,-0.8],"glove tail"],[[-66.0,52.0,-0.8],[-52.0,32.0,-47.0],"glove tail low"],[[0.0,112.0,33.2],[-5.0,32.0,-47.0],"glove side"],[[0.0,112.0,33.2],[2.0,50.0,24.0],"strut"],[[37.5,-32.0,-47.0],[15.0,-32.0,-47.0],"sled rail"],[[15.0,-32.0,-47.0],[-5.0,-32.0,-47.0],"sled rail"],[[-5.0,-32.0,-47.0],[-25.0,-32.0,-47.0],"sled rail"],[[-25.0,-32.0,-47.0],[-52.0,-32.0,-47.0],"sled rail"],[[106.0,-106.0,33.2],[37.5,-32.0,-7.0],"glove nose"],[[-106.0,-106.0,33.2],[-66.0,-52.0,-0.8],"glove tail"],[[-66.0,-52.0,-0.8],[-52.0,-32.0,-47.0],"glove tail low"],[[0.0,-112.0,33.2],[-5.0,-32.0,-47.0],"glove side"],[[0.0,-112.0,33.2],[2.0,-50.0,24.0],"strut"],[[-52.0,32.0,-47.0],[-52.0,-32.0,-47.0],"sled cross"],[[100.0,112.0,60.0],[0.0,112.0,60.0],"shoulder ring"],[[0.0,112.0,60.0],[-100.0,112.0,60.0],"shoulder ring"],[[-112.0,100.0,60.0],[-112.0,0.0,60.0],"shoulder ring"],[[-112.0,0.0,60.0],[-112.0,-100.0,60.0],"shoulder ring"],[[-100.0,-112.0,60.0],[0.0,-112.0,60.0],"shoulder ring"],[[0.0,-112.0,60.0],[100.0,-112.0,60.0],"shoulder ring"],[[112.0,-100.0,60.0],[112.0,0.0,60.0],"shoulder ring"],[[112.0,0.0,60.0],[112.0,100.0,60.0],"shoulder ring"],[[112.0,0.0,60.0],[40.0,0.0,85.0],"spoke"],[[0.0,112.0,60.0],[0.0,40.0,85.0],"spoke"],[[-112.0,0.0,60.0],[-40.0,0.0,85.0],"spoke"],[[0.0,-112.0,60.0],[0.0,-40.0,85.0],"spoke"],[[106.0,106.0,60.0],[28.3,28.3,85.0],"spoke"],[[-106.0,106.0,60.0],[-28.3,28.3,85.0],"spoke"],[[-106.0,-106.0,60.0],[-28.3,-28.3,85.0],"spoke"],[[106.0,-106.0,60.0],[28.3,-28.3,85.0],"spoke"]],"printed":[[[106.0,106.0,33.2],[100.0,112.0,33.2],8.0,"link"],[[106.0,106.0,33.2],[112.0,100.0,33.2],8.0,"link"],[[-106.0,106.0,33.2],[-100.0,112.0,33.2],8.0,"link"],[[-106.0,106.0,33.2],[-112.0,100.0,33.2],8.0,"link"],[[-106.0,-106.0,33.2],[-100.0,-112.0,33.2],8.0,"link"],[[-106.0,-106.0,33.2],[-112.0,-100.0,33.2],8.0,"link"],[[106.0,-106.0,33.2],[100.0,-112.0,33.2],8.0,"link"],[[106.0,-106.0,33.2],[112.0,-100.0,33.2],8.0,"link"],[[37.5,32.0,-7.0],[37.5,32.0,-47.0],8.0,"leg"],[[37.5,-32.0,-7.0],[37.5,-32.0,-47.0],8.0,"leg"],[[106.0,106.0,60.0],[100.0,112.0,60.0],8.0,"link"],[[106.0,106.0,60.0],[112.0,100.0,60.0],8.0,"link"],[[-106.0,106.0,60.0],[-100.0,112.0,60.0],8.0,"link"],[[-106.0,106.0,60.0],[-112.0,100.0,60.0],8.0,"link"],[[-106.0,-106.0,60.0],[-100.0,-112.0,60.0],8.0,"link"],[[-106.0,-106.0,60.0],[-112.0,-100.0,60.0],8.0,"link"],[[106.0,-106.0,60.0],[100.0,-112.0,60.0],8.0,"link"],[[106.0,-106.0,60.0],[112.0,-100.0,60.0],8.0,"link"],[[106.0,106.0,33.2],[106.0,106.0,60.0],8.0,"column"],[[-106.0,106.0,33.2],[-106.0,106.0,60.0],8.0,"column"],[[-106.0,-106.0,33.2],[-106.0,-106.0,60.0],8.0,"column"],[[106.0,-106.0,33.2],[106.0,-106.0,60.0],8.0,"column"],[[112.0,0.0,33.2],[112.0,0.0,60.0],8.0,"column"],[[0.0,112.0,33.2],[0.0,112.0,60.0],8.0,"column"],[[-112.0,0.0,33.2],[-112.0,0.0,60.0],8.0,"column"],[[0.0,-112.0,33.2],[0.0,-112.0,60.0],8.0,"column"],[[-28.3,-28.3,85.0],[0.0,-40.0,85.0],6.0,"hub"],[[0.0,-40.0,85.0],[28.3,-28.3,85.0],6.0,"hub"],[[28.3,-28.3,85.0],[40.0,0.0,85.0],6.0,"hub"],[[40.0,0.0,85.0],[28.3,28.3,85.0],6.0,"hub"],[[28.3,28.3,85.0],[0.0,40.0,85.0],6.0,"hub"],[[0.0,40.0,85.0],[-28.3,28.3,85.0],6.0,"hub"],[[-28.3,28.3,85.0],[-40.0,0.0,85.0],6.0,"hub"],[[-40.0,0.0,85.0],[-28.3,-28.3,85.0],6.0,"hub"]]},"v14":{"rods":[[[100.0,112.0,33.2],[0.0,112.0,33.2],"skid ring"],[[0.0,112.0,33.2],[-100.0,112.0,33.2],"skid ring"],[[-112.0,100.0,33.2],[-112.0,0.0,33.2],"skid ring"],[[-112.0,0.0,33.2],[-112.0,-100.0,33.2],"skid ring"],[[-100.0,-112.0,33.2],[0.0,-112.0,33.2],"skid ring"],[[0.0,-112.0,33.2],[100.0,-112.0,33.2],"skid ring"],[[112.0,-100.0,33.2],[112.0,0.0,33.2],"skid ring"],[[112.0,0.0,33.2],[112.0,100.0,33.2],"skid ring"],[[37.5,32.0,-47.0],[15.0,32.0,-47.0],"sled rail"],[[15.0,32.0,-47.0],[-5.0,32.0,-47.0],"sled rail"],[[-5.0,32.0,-47.0],[-25.0,32.0,-47.0],"sled rail"],[[-25.0,32.0,-47.0],[-52.0,32.0,-47.0],"sled rail"],[[106.0,106.0,33.2],[37.5,32.0,-7.0],"glove nose"],[[-106.0,106.0,33.2],[-66.0,52.0,-0.8],"glove tail"],[[-66.0,52.0,-0.8],[-52.0,32.0,-47.0],"glove tail low"],[[0.0,112.0,33.2],[-5.0,32.0,-47.0],"glove side"],[[0.0,112.0,33.2],[2.0,50.0,24.0],"strut"],[[37.5,-32.0,-47.0],[15.0,-32.0,-47.0],"sled rail"],[[15.0,-32.0,-47.0],[-5.0,-32.0,-47.0],"sled rail"],[[-5.0,-32.0,-47.0],[-25.0,-32.0,-47.0],"sled rail"],[[-25.0,-32.0,-47.0],[-52.0,-32.0,-47.0],"sled rail"],[[106.0,-106.0,33.2],[37.5,-32.0,-7.0],"glove nose"],[[-106.0,-106.0,33.2],[-66.0,-52.0,-0.8],"glove tail"],[[-66.0,-52.0,-0.8],[-52.0,-32.0,-47.0],"glove tail low"],[[0.0,-112.0,33.2],[-5.0,-32.0,-47.0],"glove side"],[[0.0,-112.0,33.2],[2.0,-50.0,24.0],"strut"],[[-52.0,32.0,-47.0],[-52.0,-32.0,-47.0],"sled cross"],[[100.0,112.0,68.0],[0.0,112.0,68.0],"shoulder ring"],[[0.0,112.0,68.0],[-100.0,112.0,68.0],"shoulder ring"],[[-112.0,100.0,68.0],[-112.0,0.0,68.0],"shoulder ring"],[[-112.0,0.0,68.0],[-112.0,-100.0,68.0],"shoulder ring"],[[-100.0,-112.0,68.0],[0.0,-112.0,68.0],"shoulder ring"],[[0.0,-112.0,68.0],[100.0,-112.0,68.0],"shoulder ring"],[[112.0,-100.0,68.0],[112.0,0.0,68.0],"shoulder ring"],[[112.0,0.0,68.0],[112.0,100.0,68.0],"shoulder ring"],[[106.0,106.0,68.0],[74.9,74.9,74.8],"spoke"],[[74.9,74.9,74.8],[28.3,28.3,85.0],"spoke"],[[-106.0,106.0,68.0],[-74.9,74.9,74.8],"spoke"],[[-74.9,74.9,74.8],[-28.3,28.3,85.0],"spoke"],[[-106.0,-106.0,68.0],[-74.9,-74.9,74.8],"spoke"],[[-74.9,-74.9,74.8],[-28.3,-28.3,85.0],"spoke"],[[106.0,-106.0,68.0],[74.9,-74.9,74.8],"spoke"],[[74.9,-74.9,74.8],[28.3,-28.3,85.0],"spoke"],[[-74.9,-74.9,74.8],[74.9,-74.9,74.8],"crown ring"],[[74.9,-74.9,74.8],[74.9,74.9,74.8],"crown ring"],[[74.9,74.9,74.8],[-74.9,74.9,74.8],"crown ring"],[[-74.9,74.9,74.8],[-74.9,-74.9,74.8],"crown ring"]],"printed":[[[106.0,106.0,33.2],[100.0,112.0,33.2],8.0,"link"],[[106.0,106.0,33.2],[112.0,100.0,33.2],8.0,"link"],[[-106.0,106.0,33.2],[-100.0,112.0,33.2],8.0,"link"],[[-106.0,106.0,33.2],[-112.0,100.0,33.2],8.0,"link"],[[-106.0,-106.0,33.2],[-100.0,-112.0,33.2],8.0,"link"],[[-106.0,-106.0,33.2],[-112.0,-100.0,33.2],8.0,"link"],[[106.0,-106.0,33.2],[100.0,-112.0,33.2],8.0,"link"],[[106.0,-106.0,33.2],[112.0,-100.0,33.2],8.0,"link"],[[37.5,32.0,-7.0],[37.5,32.0,-47.0],8.0,"leg"],[[37.5,-32.0,-7.0],[37.5,-32.0,-47.0],8.0,"leg"],[[106.0,106.0,68.0],[100.0,112.0,68.0],8.0,"link"],[[106.0,106.0,68.0],[112.0,100.0,68.0],8.0,"link"],[[-106.0,106.0,68.0],[-100.0,112.0,68.0],8.0,"link"],[[-106.0,106.0,68.0],[-112.0,100.0,68.0],8.0,"link"],[[-106.0,-106.0,68.0],[-100.0,-112.0,68.0],8.0,"link"],[[-106.0,-106.0,68.0],[-112.0,-100.0,68.0],8.0,"link"],[[106.0,-106.0,68.0],[100.0,-112.0,68.0],8.0,"link"],[[106.0,-106.0,68.0],[112.0,-100.0,68.0],8.0,"link"],[[106.0,106.0,33.2],[106.0,106.0,68.0],8.0,"column"],[[-106.0,106.0,33.2],[-106.0,106.0,68.0],8.0,"column"],[[-106.0,-106.0,33.2],[-106.0,-106.0,68.0],8.0,"column"],[[106.0,-106.0,33.2],[106.0,-106.0,68.0],8.0,"column"],[[112.0,0.0,33.2],[112.0,0.0,68.0],8.0,"column"],[[-28.3,-28.3,85.0],[28.3,-28.3,85.0],6.0,"hub"],[[28.3,-28.3,85.0],[28.3,28.3,85.0],6.0,"hub"],[[28.3,28.3,85.0],[-28.3,28.3,85.0],6.0,"hub"],[[-28.3,28.3,85.0],[-28.3,-28.3,85.0],6.0,"hub"]]}};
+const SCORE = {"v13": {"score": {"mass_g": 137.5, "rod_g": 37.5, "printed_g": 100.0, "wall_J": 0.15, "wall_v": 0.77, "edge_min_J": 0.529, "edge_worst": ["glove tail low", [-59.0, -42.0, -23.9], 4.6], "probe_fail": 4323, "probe_tested": 74324, "prop_hull_clear": 14.2, "rod_clear": 20.0, "rods": 29, "rod_m": 3.42, "sockets": 58}, "climb_mm": 43.0}, "v14": {"score": {"mass_g": 137.0, "rod_g": 40.7, "printed_g": 96.3, "wall_J": 0.29, "wall_v": 1.06, "edge_min_J": 0.508, "edge_worst": ["shoulder ring", [-50.0, -112.0, 68.0], 8.6], "probe_fail": 758, "probe_tested": 74324, "prop_hull_clear": 14.2, "rod_clear": 26.5, "rods": 29, "rod_m": 3.71, "sockets": 58}, "climb_mm": 46.9}};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+// scorecard
+const rows = [
+  ['Rods + printed', s=>s.mass_g.toFixed(1)+' g', 'E', -1, s=>s.mass_g],
+  ['Top-hit energy', s=>s.wall_J.toFixed(2)+' J', 'F', 1, s=>s.wall_J],
+  ['Weakest edge span', s=>s.edge_min_J.toFixed(3)+' J', 'F', 1, s=>s.edge_min_J],
+  ['Plank paths to a prop', s=>s.probe_fail.toLocaleString(), 'F', -1, s=>s.probe_fail],
+  ['Rod to prop clearance', s=>s.rod_clear.toFixed(1)+' mm', 'F', 1, s=>s.rod_clear],
+  ['Recovery climb', (s,k)=>SCORE[k].climb_mm.toFixed(1)+' mm', 'E', -1, (s,k)=>SCORE[k].climb_mm],
+  ['Rods / length', s=>s.rods+' / '+s.rod_m.toFixed(2)+' m', 'C', 0, s=>0],
+];
+const tb = document.getElementById('tb');
+rows.forEach(([name,fmt,tag,better,val])=>{
+  const a=SCORE.v13.score, b=SCORE.v14.score, va=val(a,'v13'), vb=val(b,'v14');
+  const cls = better===0||va===vb ? '' : ((vb-va)*better>0 ? 'up':'dn');
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${name}<span class="tag">${tag}</span></td><td class="n">${fmt(a,'v13')}</td><td class="n ${cls}">${fmt(b,'v14')}</td>`;
+  tb.appendChild(tr);
+});
+// 3D
+const cv=document.getElementById('stage');
+let renderer; try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});}catch(e){cv.replaceWith(Object.assign(document.createElement('p'),{textContent:'3D view needs WebGL. The scorecard and notes below still hold.',className:'hint'}));}
+if(renderer){
+  renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(32,4/3,1,5000);
+  cam.up.set(0,0,1); cam.position.set(330,-420,300);
+  const ctl=new THREE.OrbitControls(cam,cv); ctl.target.set(0,0,10); ctl.enableDamping=true; ctl.minDistance=200; ctl.maxDistance=1400;
+  scene.add(new THREE.HemisphereLight(0xffffff,0x445566,0.95));
+  const dl=new THREE.DirectionalLight(0xffffff,0.55); dl.position.set(200,-300,500); scene.add(dl);
+  const groups={v13:new THREE.Group(),v14:new THREE.Group()};
+  const mats={};
+  function mat(key,op){const k=key+op; if(!mats[k]) mats[k]=new THREE.MeshStandardMaterial({color:new THREE.Color(css(key)),roughness:.55,metalness:.15,transparent:op<1,opacity:op}); return mats[k];}
+  function tube(a,b,r,m){const A=new THREE.Vector3(...a),B=new THREE.Vector3(...b),L=A.distanceTo(B);
+    const g=new THREE.CylinderGeometry(r,r,L,10,1); const me=new THREE.Mesh(g,m); me.position.copy(A).add(B).multiplyScalar(.5);
+    me.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),B.clone().sub(A).normalize()); return me;}
+  const key=(a,b)=>JSON.stringify([a,b]);
+  const old=new Set(GEO.v13.rods.map(([a,b])=>key(a,b)));
+  function build(name,op){const g=groups[name]; g.clear();
+    GEO[name].rods.forEach(([a,b])=>g.add(tube(a,b,1.6,mat(name==='v14'&&!old.has(key(a,b))?'--new':'--rod',op))));
+    GEO[name].printed.forEach(([a,b,sz])=>g.add(tube(a,b,sz*0.55,mat('--part',op))));}
+  // props
+  const props=new THREE.Group();
+  [[54.1,54.1],[-54.1,54.1],[54.1,-54.1],[-54.1,-54.1]].forEach(([x,y])=>{const d=new THREE.Mesh(new THREE.CylinderGeometry(44.45,44.45,1.2,48),mat('--prop',0.55)); d.rotation.x=Math.PI/2; d.position.set(x,y,41.2); props.add(d);});
+  scene.add(props);
+  let mode='v14';
+  function show(m){mode=m; scene.remove(groups.v13,groups.v14);
+    if(m==='v14'){build('v14',1);scene.add(groups.v14);} else if(m==='v13'){build('v13',1);scene.add(groups.v13);} else {build('v13',0.22);build('v14',1);scene.add(groups.v13,groups.v14);}
+    ['v14','v13','both'].forEach(k=>document.getElementById('b-'+k).setAttribute('aria-pressed',String(k===m)));}
+  ['v14','v13','both'].forEach(k=>document.getElementById('b-'+k).addEventListener('click',()=>show(k)));
+  function size(){const w=cv.clientWidth,h=cv.clientHeight; renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix();}
+  new ResizeObserver(size).observe(cv); size(); show('v14');
+  const mq=matchMedia('(prefers-color-scheme: dark)'); const re=()=>{for(const k in mats) delete mats[k]; props.children.forEach(p=>p.material=mat('--prop',0.55)); show(mode);};
+  mq.addEventListener?.('change',re); new MutationObserver(re).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  (function loop(){ctl.update(); renderer.render(scene,cam); requestAnimationFrame(loop);})();
+}
+</script>

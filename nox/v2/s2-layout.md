@@ -25,6 +25,19 @@ Merge rule (DEFAULT, Spark 02:43): a rod with under 20 mm bare between its two s
 
 29 rods, 3.42 m axis (3.30 m cut, ending at the socket floors), 36 g. Printed parts **100.0 g M** (finished v13, finish v2; v12 73.1); side hubs 3.7 M; sleeves ~5, strips ~3, grommets 2, epoxy 2 → **cage ~152 g E** (v12 ~125, v11 ~116 with the narrow sockets).
 
+## Rod layout v14 (22 Oct, research chat; Spark 13:41 "the arrangement of the rods ... make it better"; DEFAULT)
+Frame model `lantern/rods14.py` (every rod + printed member as beams, core rigid at the 6 mounts, 1500 MPa E) over a 1026-layout grid and a 486-layout refine of the upper half (`rods14_search.py`); lower half unchanged. Picked: **4 corner spokes to a square hub (r 40, z 85) with a crown ring at 40% of each spoke (z 74.8), shoulder ring z 68, columns at the 4 corners + nose only** (tail and side flats become 200 through-rods; side skid tees keep a small node for glove side + strut).
+| | v13 | v14 |
+|---|---|---|
+| Rods + printed (E) | 137.5 g | 137.0 g |
+| Top-hit energy (F) | 0.15 J | 0.29 J |
+| Weakest edge span (F) | 0.529 J (glove tail low) | 0.508 J (shoulder ring, bow 8.6) |
+| Plank (38 mm) paths to a prop (F) | 4323 | 758 |
+| Rod to prop clearance (F) | 20.0 | 26.5 |
+| Recovery climb (E) | 43.0 mm, 0.22 J | 46.9 mm, 0.24 J |
+| Printed parts | 17 | 20 (4 crown nodes + 2 side nodes, 3 columns gone) |
+Crown z 74 instead of 85 scores 0.34 J top hits and is 11 shorter but needs a 0.30 J blip (D20 first). Next: topology run for the hub, crown nodes and the z 68 columns, then `solid_check.py`. Page: artifact "Scout Cage Rod Layout".
+
 ## Socket v2 (Spark 02:42; `node_topo2.socket_parts`, coupon `s2_socket_v2_coupon_v2` READY)
 | Feature | Value | Why |
 |---|---|---|
