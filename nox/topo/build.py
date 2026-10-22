@@ -1,0 +1,277 @@
+"""From the optimised field to a printable part, and the checks that judge it.
+
+Surface: the filtered field x_tilde is smooth by construction (it is a cone-filtered density), so its eta_n
+iso-surface IS the blueprint boundary, and near a drawn body the filter has already blended the member into the body
+(a fillet whose radius is the filter radius). It is sampled with cubic interpolation at a fine pitch, held
+`clip_margin` inside every keep-out (except where it meets a drawn body), meshed by marching cubes and lightly Taubin
+smoothed. Then, exactly: (generated + drawn) intersect envelope minus cuts. Mounting features stay exact.
+
+Checks: nox/solid_check.py (the hard gate, unchanged), function check (drawn complete, nothing in cuts or keep-outs),
+as-built strength (voxel FE of the built part, every real load case, layer-aware failure indices), mass.
+"""
+import os
+import json
+import time
+import importlib.util
+import numpy as np
+from scipy import ndimage as ndi
+
+from .part import tm, man, voxelise
+from .material import allowables
+from .fem import Solver
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+# ------------------------------------------------------------------------------------------------------ surface
+def surface(layout, pitch=None, clip_margin=0.5, max_points=60e6, taubin_iters=8, log=print):
+    import trimesh
+    from skimage import measure
+    part = layout.part
+    h = part.h
+    shape = part.shape
+    eta_n = layout.s.eta[1]
+    xt = layout.result["xt"].reshape(shape)
+    up = max(2, int(round(h / (pitch or 0.3))))
+    while np.prod(np.array(shape) * up) > max_points and up > 2:
+        up -= 1
+    p = h / up
+    t0 = time.time()
+    xf = ndi.zoom(xt, up, order=3, mode="grid-constant", cval=0.0, grid_mode=True)
+    o = np.asarray(part.origin)
+    axes = [o[k] + (np.arange(xf.shape[k]) + 0.5) * p for k in range(3)]
+    f = (xf - eta_n) / max(1e-9, 1.0 - eta_n)                              # > 0 inside, ~ 1 per filter radius
+    del xf
+    # keep-out margin: generated material stays clip_margin inside env - cuts, except near drawn bodies
+    allowed = part.env_m - part.cuts_m
+    A = voxelise(tm(allowed), *axes)
+    din = ndi.distance_transform_edt(A) * p
+    D = voxelise(part.drawn_t, *axes)
+    near_drawn = ndi.distance_transform_edt(~D) * p <= 2.0 * clip_margin + p
+    g = np.where(near_drawn, din, din - clip_margin) / layout.R_mm           # same scale as f
+    del din, near_drawn
+    F = np.minimum(f, g)
+    F[~A] = np.minimum(F[~A], -0.05)
+    F = np.pad(F, 1, constant_values=-1.0)
+    gen_vox = float((F > 0).sum()) * p ** 3
+    v, fc, _, _ = measure.marching_cubes(F.astype(np.float32), 0.0, spacing=(p, p, p))
+    v += o - p / 2.0 + np.array([1.1e-4, 0.7e-4, 0.9e-4])                  # pad offset (+0.5 p cell centre - 1 p pad)
+    mesh = trimesh.Trimesh(v, fc, process=True)
+    if mesh.volume < 0:
+        mesh.invert()
+    if taubin_iters:
+        trimesh.smoothing.filter_taubin(mesh, lamb=0.5, nu=0.53, iterations=taubin_iters)
+    log(f"build: surface at pitch {p:.3f} mm (x{up}), generated field {gen_vox / 1000:.2f} cm3, mesh "
+        f"{len(mesh.faces):,} faces, {time.time() - t0:.0f} s")
+    return mesh
+
+
+def assemble(layout, gen_mesh, speck_mm3=20.0, log=print):
+    """(generated + drawn) ^ env - cuts as one manifold; loose specks under speck_mm3 dropped and reported."""
+    part = layout.part
+    S = man(gen_mesh)
+    P = ((S + part.drawn_m) ^ part.env_m) - part.cuts_m
+    bodies = P.decompose()
+    vols = sorted([b.volume() for b in bodies], reverse=True)
+    dropped = []
+    if len(bodies) > 1:
+        keep = None
+        for b in bodies:
+            if b.volume() >= speck_mm3:
+                keep = b if keep is None else keep + b
+            else:
+                dropped.append(round(b.volume(), 2))
+        P = keep
+        log(f"build: {len(bodies)} bodies before clean-up, volumes {[round(v_, 1) for v_ in vols[:6]]} mm3; dropped "
+            f"specks {dropped}")
+    return P, dict(bodies_raw=len(bodies), dropped_specks_mm3=dropped, bodies=len(P.decompose()))
+
+
+# -------------------------------------------------------------------------------------------------------- checks
+def _solid_check_module():
+    spec = importlib.util.spec_from_file_location("nox_solid_check", os.path.join(HERE, "..", "solid_check.py"))
+    SC = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(SC)
+
+    def _voxels(mesh, pitch, lo, shape):
+        ax = [lo[k] + (np.arange(shape[k]) + 0.5) * pitch for k in range(3)]
+        return voxelise(mesh, *ax)
+    SC.voxels = _voxels
+    return SC
+
+
+def solid_check(mesh, drawn_meshes):
+    return _solid_check_module().solid_check(mesh, drawn=drawn_meshes)
+
+
+def function_check(P, part):
+    fin = part.drawn_m - part.cuts_m
+    missing = (fin - P).volume()
+    in_cuts = (P ^ part.cuts_m).volume()
+    in_keep = (P - (part.env_m)).volume()
+    return dict(drawn_missing_mm3=round(missing, 2), in_cuts_mm3=round(in_cuts, 2), outside_env_mm3=round(in_keep, 2),
+                ok=bool(max(missing, in_cuts, in_keep) < 0.5))
+
+
+def strength(layout, part_mesh, log=print):
+    """as-built voxel FE on the layout grid: every real load case at nominal loads, transversely isotropic material,
+    failure indices in-layer (von Mises / A_xy) and across layers (sqrt((sigma_n+ / A_z)^2 + (tau_n / A_s)^2)) at
+    element centres; elements touching a loaded or fixed node are left out (point-load singularities)."""
+    part = layout.part
+    A = voxelise(part_mesh, *part.axes).ravel()
+    E = np.where(A, 1.0, 1e-9)
+    real = [c for c in layout.cases if not c.tie]
+    sol = Solver(part.shape, part.h, layout.C, part.supports, active=A | layout.solid, backend="auto",
+                 log=lambda s_: None)
+    g = sol.grid
+    wg = layout.mat.density * 1e-6 * part.h ** 3 * 9.81
+    F = np.zeros((part.ndof, len(real)))
+    for q, c in enumerate(real):
+        F[:, q] = c.F
+        if c.fe is not None:
+            F[:, q] += g.to_flat(g.scatter((A.astype(float)[:, None] * c.fe[None, :])[None]))[:, 0]
+    U = sol.solve(E, F, [c.support for c in real], keys=[c.name for c in real])
+    edof = g.edof()
+    enodes = edof[:, ::3] // 3
+    hot = np.zeros(part.nn, bool)
+    for c in real:
+        if c.nodes is not None and len(c.nodes):
+            hot[c.nodes] = True
+    for fx in part.supports.values():
+        hot[fx.any(1)] = True
+    keep = A & ~hot[enodes].any(1)
+    CB = layout.C @ sol.B0
+    ax = layout.build_axis
+    lay = [k for k, (i, j) in {3: (0, 1), 4: (1, 2), 5: (2, 0)}.items() if ax in (i, j)]
+    M = np.array([[1, -.5, -.5, 0, 0, 0], [-.5, 1, -.5, 0, 0, 0], [-.5, -.5, 1, 0, 0, 0],
+                  [0, 0, 0, 3, 0, 0], [0, 0, 0, 0, 3, 0], [0, 0, 0, 0, 0, 3.]])
+    rows = []
+    cen = part.cell_centres()
+    idx = np.where(keep)[0]
+    for q, c in enumerate(real):
+        if c.cls is None:
+            continue
+        Axy, Az, As = allowables(layout.mat, c.cls)
+        ue = U[:, q][edof[idx]]
+        sgm = ue @ CB.T
+        vm = np.sqrt(np.maximum(np.einsum("ei,ij,ej->e", sgm, M, sgm), 0.0))
+        sn = np.maximum(sgm[:, ax], 0.0)
+        tau2 = sum(sgm[:, k] ** 2 for k in lay)
+        f1 = vm / Axy
+        f2 = np.sqrt((sn / Az) ** 2 + tau2 / As ** 2)
+        j1, j2 = int(np.argmax(f1)), int(np.argmax(f2))
+        rows.append(dict(case=c.name, cls=c.cls, inlayer=round(float(f1[j1]), 3), across=round(float(f2[j2]), 3),
+                         at=cen[idx[j1 if f1[j1] >= f2[j2] else j2]].round(1).tolist()))
+    worst = max(rows, key=lambda r: max(r["inlayer"], r["across"])) if rows else None
+    log(f"strength: worst index {max(worst['inlayer'], worst['across']):.2f} in '{worst['case']}' at {worst['at']}"
+        if worst else "strength: no classed load cases")
+    return dict(rows=rows, worst=None if worst is None else max(worst["inlayer"], worst["across"]),
+                worst_case=None if worst is None else worst["case"], worst_at=None if worst is None else worst["at"])
+
+
+# ------------------------------------------------------------------------------------------------------ outputs
+def render(mesh, path, title="", info=""):
+    """one PNG, four views, overhangs > 45 deg red, bed (z min) blue: the print-preview look of render_preview.py."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+    m = mesh
+    if len(m.faces) > 250_000:
+        try:
+            m = m.simplify_quadric_decimation(face_count=250_000)
+        except Exception:
+            pass
+    n = m.face_normals
+    lo, hi = m.bounds
+    fig = plt.figure(figsize=(16, 4.6), dpi=130)
+    views = [(25, -60, "iso"), (25, 120, "iso back"), (90, -90, "top"), (-60, -60, "underside")]
+    for i, (el, az, nm) in enumerate(views):
+        ax = fig.add_subplot(1, 4, i + 1, projection="3d")
+        a, e = np.radians(az), np.radians(el)
+        cam = np.array([np.cos(e) * np.cos(a), np.cos(e) * np.sin(a), np.sin(e)])
+        shade = 0.35 + 0.65 * np.clip(n @ (cam / np.linalg.norm(cam)), 0, 1)
+        base = np.tile([0.80, 0.80, 0.78], (len(n), 1))
+        down = n[:, 2] < -np.cos(np.radians(45))
+        bed = down & (m.triangles_center[:, 2] < lo[2] + 0.2)
+        base[down & ~bed] = [0.90, 0.35, 0.28]
+        base[bed] = [0.30, 0.48, 0.90]
+        col = np.clip(base * shade[:, None], 0, 1)
+        ax.add_collection3d(Poly3DCollection(m.triangles, facecolors=col, edgecolors=col, linewidths=0.1))
+        c, r = (lo + hi) / 2, (hi - lo).max() / 2
+        ax.set_xlim(c[0] - r, c[0] + r); ax.set_ylim(c[1] - r, c[1] + r); ax.set_zlim(c[2] - r, c[2] + r)
+        ax.set_box_aspect((1, 1, 1), zoom=1.3)
+        ax.view_init(elev=el, azim=az)
+        ax.set_axis_off()
+        ax.set_title(nm, fontsize=9)
+    fig.suptitle(f"{title}\n{info}", fontsize=10)
+    fig.tight_layout()
+    fig.savefig(path)
+    plt.close(fig)
+
+
+def export_view_mesh(mesh, path, faces=120_000):
+    """a decimated copy for the web viewer (binary STL, < ~6 MB)."""
+    m = mesh
+    if len(m.faces) > faces:
+        try:
+            m = m.simplify_quadric_decimation(face_count=faces)
+        except Exception:
+            pass
+    m.export(path)
+    return len(m.faces)
+
+
+def build_and_check(layout, out_dir, name, clip_margin=0.5, pitch=None, log=print, extra=None):
+    """surface -> exact part -> every check -> STL, preview PNG, viewer STL, result.json. Returns the result dict."""
+    os.makedirs(out_dir, exist_ok=True)
+    part = layout.part
+    t0 = time.time()
+    gm = surface(layout, pitch=pitch, clip_margin=clip_margin, log=log)
+    P, bod = assemble(layout, gm, log=log)
+    PT = tm(P)
+    drawn_fin = tm(part.drawn_m - part.cuts_m)
+    ok_solid, solid = solid_check(PT, [drawn_fin])
+    log(f"solid check: {'PASS' if ok_solid else 'FAIL'} {json.dumps(solid)[:600]}")
+    fc = function_check(P, part)
+    log(f"function check: {fc}")
+    st = strength(layout, PT, log=log)
+    mass = P.volume() / 1000.0 * layout.mat.density
+    stl = os.path.join(out_dir, f"{name}.stl")
+    PT.export(stl)
+    view = os.path.join(out_dir, f"{name}_view.stl")
+    nview = export_view_mesh(PT, view)
+    info = (f"{mass:.1f} g | solid check {'PASS' if ok_solid else 'FAIL'} | worst index "
+            f"{st['worst'] if st['worst'] is None else round(st['worst'], 2)} | min member {layout.s.min_member_mm} mm")
+    png = os.path.join(out_dir, "preview.png")
+    try:
+        render(PT, png, title=f"{name} (nox/topo)", info=info)
+    except Exception as e:                                                # a preview must never sink a run
+        log(f"render failed: {e}")
+        png = None
+    res = dict(name=name, engine="nox/topo", solid_ok=bool(ok_solid), solid=solid, function_check=fc,
+               strength=st, mass_g=round(mass, 2), watertight=bool(PT.is_watertight), bodies=bod,
+               volume_mm3=round(P.volume(), 1), drawn_g=round((part.drawn_m - part.cuts_m).volume() / 1000.0 *
+                                                               layout.mat.density, 2),
+               stl=os.path.basename(stl), view_stl=os.path.basename(view), view_faces=nview,
+               preview=None if png is None else os.path.basename(png), layout=layout.meta(),
+               grid=part.summary(), build_s=round(time.time() - t0, 1))
+    if extra:
+        res.update(extra)
+    with open(os.path.join(out_dir, "result.json"), "w") as fh:
+        json.dump(res, fh, indent=1, default=_json_default)
+    log("RESULT " + json.dumps(dict(name=name, solid_ok=res["solid_ok"], mass_g=res["mass_g"], worst=st["worst"],
+                                    function_ok=fc["ok"], bodies=bod["bodies"]), default=_json_default))
+    return res, PT
+
+
+def _json_default(o):
+    if isinstance(o, (np.integer,)):
+        return int(o)
+    if isinstance(o, (np.floating,)):
+        return float(o)
+    if isinstance(o, np.ndarray):
+        return o.tolist()
+    if isinstance(o, (set, tuple)):
+        return list(o)
+    return str(o)

@@ -1,0 +1,126 @@
+"""Run a part end to end: coarse warm start -> fine layout -> build -> checks -> files, with checkpoints.
+
+    python3 -m topo.run <part> [--h 1.0] [--gen 12] [--min-member 3.2] [--out runs/<part>/topo-v1] [--no-coarse]
+                               [--git] [--backend auto|direct|mg] [--time-limit 19800]
+(run from nox/, i.e. `cd nox && python3 -m topo.run holder`). <part> is a name from topo.demos.PARTS.
+
+Speed plan for a 4 vCPU / 16 GB cloud box (measured numbers go in the run log):
+  * stage 1 on a 2h grid (8x fewer cells) for beta 1..4, where most iterations are spent;
+  * stage 2 on the h grid from beta 4, warm-started from stage 1;
+  * Pardiso for small active systems, multigrid CG beyond (topo.fem.Solver picks by RAM);
+  * time-aware continuation: past 75 % of the time limit the beta steps are taken as soon as allowed.
+"""
+import os
+import sys
+import json
+import time
+import argparse
+import subprocess
+from dataclasses import replace
+
+from .layout import Layout, Settings
+from .build import build_and_check
+
+
+class Tee:
+    def __init__(self, path):
+        self.f = open(path, "a", buffering=1)
+
+    def __call__(self, s):
+        s = str(s)
+        print(s[:2000], flush=True)
+        self.f.write(s + "\n")
+
+
+def git_checkpoint(out_dir, log):
+    def hook(it):
+        try:
+            root = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True,
+                                  cwd=out_dir).stdout.strip()
+            if not root:
+                return
+            subprocess.run(["git", "add", os.path.relpath(out_dir, root)], cwd=root, capture_output=True)
+            subprocess.run(["git", "commit", "-q", "-m", f"ckpt {it}"], cwd=root, capture_output=True)
+            r = subprocess.run(["git", "push", "-q"], cwd=root, capture_output=True, text=True)
+            if r.returncode:
+                log(f"git push failed: {r.stderr.strip()[:200]}")
+        except Exception as e:                                   # a checkpoint push must never stop the run
+            log(f"git checkpoint failed: {e}")
+    return hook
+
+
+def peak_gb():
+    try:
+        import resource
+        return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
+    except Exception:
+        return None
+
+
+def optimise(setup, h, gen_cm3, out_dir, name, settings=None, coarse=True, git=False, log=None, maxit=400,
+             extra=None):
+    os.makedirs(out_dir, exist_ok=True)
+    log = log or Tee(os.path.join(out_dir, "log.txt"))
+    s = settings or Settings()
+    t0 = time.time()
+    hook = git_checkpoint(out_dir, log) if git else None
+    ck = os.path.join(out_dir, "ck.npz")
+    log(f"=== {name}: h {h}, generated {gen_cm3} cm3, min member {s.min_member_mm} mm, cores {os.cpu_count()}")
+    xh_c = part_c = None
+    if coarse and not os.path.exists(ck):
+        part_c = setup(2.0 * h)
+        sc = replace(s, reach_check="off", geometric=False, max_stage=25)
+        Lc = Layout(part_c, gen_cm3=gen_cm3, settings=sc, log=log)
+        ckc = os.path.join(out_dir, "coarse_ck.npz")
+        Lc.run(maxit=maxit, checkpoint=ckc, resume=ckc, beta_stop=2, on_checkpoint=hook)
+        xh_c = Lc.x_hat()
+        log(f"coarse stage done: {len(Lc.hist)} iterations, {time.time() - t0:.0f} s, peak {peak_gb()} GB")
+        del Lc
+    part = setup(h)
+    L = Layout(part, gen_cm3=gen_cm3, settings=s, log=log)
+    if xh_c is not None:
+        L.init_from(xh_c, part_c)
+    L.run(maxit=maxit, checkpoint=ck, resume=ck, beta_start=2 if coarse else 0, on_checkpoint=hook)
+    L.save(os.path.join(out_dir, "density.npz"))
+    t_layout = time.time() - t0
+    log(f"layout done: {t_layout:.0f} s, peak {peak_gb()} GB")
+    ex = dict(layout_s=round(t_layout), peak_gb=peak_gb(), gen_cm3=gen_cm3, h=h)
+    if extra:
+        ex.update(extra)
+    res, P = build_and_check(L, out_dir, name, log=log, extra=ex)
+    res["total_s"] = round(time.time() - t0)
+    with open(os.path.join(out_dir, "result.json"), "w") as fh:
+        json.dump(res, fh, indent=1, default=str)
+    if hook:
+        hook("final")
+    return res
+
+
+def main(argv=None):
+    from .demos import PARTS
+    ap = argparse.ArgumentParser()
+    ap.add_argument("part", choices=sorted(PARTS))
+    ap.add_argument("--h", type=float)
+    ap.add_argument("--gen", type=float)
+    ap.add_argument("--min-member", type=float, default=Settings.min_member_mm)
+    ap.add_argument("--out")
+    ap.add_argument("--no-coarse", action="store_true")
+    ap.add_argument("--git", action="store_true")
+    ap.add_argument("--backend", default="auto")
+    ap.add_argument("--time-limit", type=float, default=5.5 * 3600)
+    ap.add_argument("--maxit", type=int, default=400)
+    a = ap.parse_args(argv)
+    spec = PARTS[a.part]()
+    h = a.h or spec["h"]
+    gen = a.gen or spec["gen_cm3"]
+    out = a.out or os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", a.part, "topo-v1")
+    s = Settings(min_member_mm=a.min_member, backend=a.backend, time_limit_s=a.time_limit)
+    res = optimise(spec["setup"], h, gen, os.path.abspath(out), a.part, settings=s, coarse=not a.no_coarse,
+                   git=a.git, maxit=a.maxit, extra=dict(baseline=spec.get("baseline")))
+    print(json.dumps(dict(name=res["name"], solid_ok=res["solid_ok"], mass_g=res["mass_g"],
+                          worst=res["strength"]["worst"], total_s=res["total_s"]), indent=1))
+    return 0 if res["solid_ok"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
