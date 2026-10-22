@@ -217,7 +217,7 @@ def t_gradients():
         idx = rng.choice(L.nd, 6, replace=False)
         errs = []
         for i in idx:
-            e = 1e-5
+            e = 1e-4            # 1e-5 is below the roundoff floor of J (~1e3, Emin 1e-6); truncation at 1e-4 is ~1e-8
             xp, xm = x.copy(), x.copy()
             xp[i] += e
             xm[i] -= e
