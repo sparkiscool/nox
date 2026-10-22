@@ -7,7 +7,7 @@ background: true
 
 You run exactly one heavy job for one part. Follow CLAUDE.md "Heavy runs" and "Hard rules".
 
-Inputs you are given: part name, version, the part script path, and any numbers (tagged). If a number is missing, take the value in `nox/v2/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
+Inputs you are given: part name, version, the part script path, and any numbers (tagged). If a number is missing, take the value in `nox/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
 
 Steps:
 1. `git fetch && git checkout -b run/<part>-<version> origin/main` (or check it out if it exists).
