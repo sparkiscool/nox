@@ -561,6 +561,8 @@ class Layout:
                 self.stopped = stopped
                 return self.final(bi)
         last_bi = len(s.betas) - 1 if beta_stop is None else int(beta_stop)
+        if not (resume and os.path.exists(resume)):
+            self._reset_vlim(s.betas[bi])
         geo_eps = s.geo_eps or (1e-6 if self.R < 5 else 1e-7)
         self.stopped = "maxit"
         while it < maxit:
@@ -620,6 +622,7 @@ class Layout:
                 bi += 1
                 since = 0
                 self.mma.reset()
+                self._reset_vlim(s.betas[bi])
             elif bi >= last_bi and beta_stop is not None and (settled or since >= s.max_stage):
                 self.stopped = "beta_stop"
                 break
@@ -637,6 +640,15 @@ class Layout:
             self._save(checkpoint, it, bi, since, self.stopped)
         log(f"layout: stopped ({self.stopped}) at it {it}, beta {s.betas[bi]}, {time.time() - t0:.0f} s")
         return self.final(bi)
+
+    def _reset_vlim(self, beta):
+        """V* at the fixed point of the volume-limit update for the current design at this beta. A beta step (or a warm
+        start from the coarse grid) changes the dilated / nominal ratio at once; left to the damped update, V* lags
+        for ~15 iterations, the dilated constraint reads up to +70 % violated and MMA strips the design."""
+        f = self.fields(self.symmetrise_design(self.x), float(beta))
+        vd, vn = float(f["rho_d"][self.design].mean()), float(f["rho_n"][self.design].mean())
+        if vn > 0:
+            self.vlim = float(np.clip(self.volfrac * vd / vn, self.volfrac, 3.0 * self.volfrac))
 
     def symmetrise_design(self, v):
         if not self.sym_axes:
