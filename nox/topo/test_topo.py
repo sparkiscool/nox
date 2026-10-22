@@ -150,10 +150,35 @@ def t_mma():
 
 
 def t_calibration():
+    """independent check of layout.calibration: the exact 3D cone kernel voxelised at R = 40 cells, a plate and a rod
+    of the calibrated input sizes filtered by brute force, blueprint widths read off at eta_n. (The 1D hat filter gives
+    plate = 1.0 R; the 3D cone integrated over a plane has a cubic profile and gives 0.88 R, so 1.0 is not the target.)"""
+    from scipy.signal import fftconvolve
     c = calibration()
-    ok = abs(c["plate"] - 1.0) < 0.02 and 1.0 < c["rod"] < 2.0 and 0 < c["erode"] < 0.5
-    check("length-scale calibration (plate = 1.0 R analytically)", ok,
-          f"rod {c['rod']:.3f} R, plate {c['plate']:.3f} R, erosion {c['erode']:.3f} R, dilation {c['dilate']:.3f} R")
+    R = 40
+    q = np.arange(-3 * R, 3 * R + 1)
+    # plate: 1D profile of the cone = its integral over the plane, done numerically on a 3D voxel grid
+    X3, Y3, Z3 = np.meshgrid(np.arange(-R, R + 1), np.arange(-R, R + 1), np.arange(-R, R + 1),
+                             indexing="ij")
+    w3 = np.maximum(1.0 - np.sqrt(X3 ** 2 + Y3 ** 2 + Z3 ** 2) / R, 0.0)
+    prof1 = w3.sum((1, 2))
+    prof1 /= prof1.sum()
+    prof2 = w3.sum(2)
+    prof2 /= prof2.sum()
+    edge = lambda f: (np.argmax(f < 0.5) - 1 + (f[np.argmax(f < 0.5) - 1] - 0.5) /
+                      (f[np.argmax(f < 0.5) - 1] - f[np.argmax(f < 0.5)]))      # 0.5 crossing, linear interpolation
+    slab = np.clip(c["plate_input"] * R / 2 + 0.5 - np.abs(q), 0.0, 1.0)     # area-weighted edge cells
+    f1 = np.convolve(slab, prof1, mode="same")
+    plate_bp = 2 * edge(f1[3 * R:]) / R
+    X, Y = np.meshgrid(q, q, indexing="ij")
+    disc = np.clip(c["rod_input"] * R / 2 + 0.5 - np.sqrt(X ** 2 + Y ** 2), 0.0, 1.0)
+    f2 = fftconvolve(disc, prof2, mode="same")
+    rod_bp = 2 * edge(f2[3 * R:, 3 * R]) / R
+    ok = (abs(f1[3 * R] - 0.75) < 0.02 and abs(f2[3 * R, 3 * R] - 0.75) < 0.02 and abs(plate_bp - c["plate"]) < 0.03
+          and abs(rod_bp - c["rod"]) < 0.03 and 0 < c["erode"] < 0.5)
+    check("length-scale calibration vs brute-force 3D cone filter", ok,
+          f"rod {c['rod']:.3f} R (brute {rod_bp:.3f}), plate {c['plate']:.3f} R (brute {plate_bp:.3f}), centre "
+          f"{f1[3 * R]:.3f} / {f2[3 * R, 3 * R]:.3f} (eta_e 0.75), erosion {c['erode']:.3f} R")
 
 
 def _mini_part(neck=False, h=1.0):
