@@ -26,3 +26,14 @@ it  17 beta    1 J   0.4091 vol 0.1326 (dil 0.1512 g -0.005) grey 37.4% ch 0.100
 it  18 beta    1 J   0.3862 vol 0.1331 (dil 0.1513 g -0.005) grey 36.6% ch 0.100 worst pad push 72 1.3s
 it  19 beta    1 J   0.3668 vol 0.1335 (dil 0.1514 g -0.004) grey 35.9% ch 0.100 worst pad push 68.7 1.3s
 it  20 beta    1 J   0.3503 vol 0.1339 (dil 0.1514 g -0.004) grey 35.4% ch 0.100 worst pad push 65.8 1.3s
+it  21 beta    1 J   0.3355 vol 0.1342 (dil 0.1515 g +0.009) grey 34.8% ch 0.100 worst pad push 63.2 1.4s
+it  22 beta    1 J   0.3330 vol 0.1328 (dil 0.1496 g -0.004) grey 34.3% ch 0.100 worst pad push 62.6 1.3s
+it  23 beta    1 J   0.3207 vol 0.1331 (dil 0.1497 g -0.003) grey 34.0% ch 0.100 worst pad push 60.2 1.2s
+it  24 beta    1 J   0.3100 vol 0.1335 (dil 0.1497 g -0.003) grey 33.6% ch 0.100 worst pad push 58.2 1.2s
+it  25 beta    1 J   0.3014 vol 0.1338 (dil 0.1498 g -0.002) grey 33.4% ch 0.100 worst pad push 56.6 1.3s
+layout: beta 1 done: eroded design 5 bodies, main 99.5%; anchored cores outside the main body: 0
+it  26 beta    2 J   0.5491 vol 0.1285 (dil 0.1767 g -0.004) grey 30.2% ch 0.100 worst pad push 102 1.5s
+it  27 beta    2 J   0.5230 vol 0.1291 (dil 0.1767 g -0.004) grey 30.0% ch 0.100 worst pad push 97.1 1.3s
+it  28 beta    2 J   0.5025 vol 0.1299 (dil 0.1769 g -0.003) grey 29.9% ch 0.100 worst pad push 93.4 1.3s
+it  29 beta    2 J   0.4865 vol 0.1305 (dil 0.1770 g -0.002) grey 29.8% ch 0.100 worst pad push 90.6 1.3s
+it  30 beta    2 J   0.4728 vol 0.1310 (dil 0.1770 g -0.002) grey 29.5% ch 0.100 worst pad push 88.1 1.5s
