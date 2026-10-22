@@ -1,0 +1,18 @@
+=== holder: h 1.0, generated 6.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 mm (rods), plates 2.91 mm, filter radius 3.30 mm = 1.65 cells, erosion depth 0.88 mm; volfrac 0.129 of 5,814 design cells
+layout: WARNING filter radius 1.65 cells < 2: the grid is too coarse for 3.2 mm members; use h <= 1.32
+layout: WARNING nearly mirrored in x (0.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.2% of passive cells differ): no symmetry
+layout: 8 drawn bodies; anchored cores 302 cells, skins 0 cells (eroded with the design)
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts')
+fem: grid (32, 24, 24) = 18,432 elements, 25,023 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1087 (dil 0.1324 g +0.027) grey 42.6% ch 0.100 worst pad push 1.57e+03 1.7s
+it   2 beta    1 J   6.3795 vol 0.0966 (dil 0.1168 g -0.095) grey 45.8% ch 0.100 worst tie b8 my 1.27e+03 1.6s
+it   3 beta    1 J   5.3336 vol 0.0999 (dil 0.1204 g -0.067) grey 46.6% ch 0.100 worst retain R 1.01e+03 1.4s
+it   4 beta    1 J   6.5483 vol 0.0980 (dil 0.1172 g -0.092) grey 42.0% ch 0.100 worst tie b4 mx 1.31e+03 1.4s
+it   5 beta    1 J   3.9553 vol 0.0978 (dil 0.1168 g -0.095) grey 42.3% ch 0.100 worst retain R 742 1.6s
+it   6 beta    1 J   4.0755 vol 0.0956 (dil 0.1137 g -0.164) grey 40.4% ch 0.100 worst tie b4 mx 814 1.6s
+it   7 beta    1 J   2.1174 vol 0.1016 (dil 0.1204 g -0.115) grey 42.3% ch 0.100 worst pad push 367 1.3s
+it   8 beta    1 J   1.3650 vol 0.1099 (dil 0.1294 g -0.049) grey 43.3% ch 0.100 worst pad push 254 1.6s
+it   9 beta    1 J   1.1022 vol 0.1143 (dil 0.1340 g -0.015) grey 43.1% ch 0.100 worst pad push 200 1.5s
+it  10 beta    1 J   0.9838 vol 0.1154 (dil 0.1349 g -0.008) grey 42.0% ch 0.100 worst pad push 179 1.5s
