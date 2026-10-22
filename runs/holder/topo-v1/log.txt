@@ -68,3 +68,27 @@ it  57 beta    4 J   0.7781 vol 0.1314 (dil 0.2076 g -0.001) grey 16.2% ch 0.100
 it  58 beta    4 J   0.7682 vol 0.1317 (dil 0.2076 g -0.000) grey 16.0% ch 0.100 worst pad push 144 1.4s
 it  59 beta    4 J   0.7614 vol 0.1318 (dil 0.2076 g -0.000) grey 16.0% ch 0.100 worst pad push 143 1.2s
 it  60 beta    4 J   0.7557 vol 0.1320 (dil 0.2077 g -0.000) grey 15.9% ch 0.100 worst pad push 142 1.4s
+it  61 beta    4 J   0.7507 vol 0.1321 (dil 0.2077 g +0.007) grey 15.8% ch 0.100 worst pad push 141 1.3s
+it  62 beta    4 J   0.7723 vol 0.1309 (dil 0.2062 g -0.001) grey 15.8% ch 0.100 worst pad push 146 1.4s
+it  63 beta    4 J   0.7658 vol 0.1311 (dil 0.2062 g -0.000) grey 15.8% ch 0.100 worst pad push 144 1.4s
+layout: stopped (beta_stop) at it 63, beta 4, 97 s
+layout: beta 4 done: eroded design 15 bodies, main 90.8%; anchored cores outside the main body: 1
+coarse stage done: 63 iterations, 101 s, peak 0.526144 GB
+layout: min member 3.20 mm (rods), plates 2.91 mm, filter radius 3.30 mm = 3.30 cells, erosion depth 0.88 mm; volfrac 0.128 of 46,896 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (0.8% of passive cells differ): no symmetry
+layout: 8 drawn bodies; anchored cores 1,952 cells, skins 272 cells (eroded with the design)
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts')
+layout: reachability OK: every drawn body can be joined by members of 3.2 mm
+fem: grid (64, 48, 32) = 98,304 elements, 174,480 active dofs; backend direct (direct estimate 1.7 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 24) grid (h 2.0): mean x 0.146
+it   1 beta    4 J  10.0000 vol 0.1002 (dil 0.2245 g -0.217) grey 24.8% ch 0.100 worst pad push 1.49e+04 19.8s
+it   2 beta    4 J   2.2311 vol 0.1330 (dil 0.2713 g -0.053) grey 29.6% ch 0.100 worst pad push 3.32e+03 21.2s
+it   3 beta    4 J   0.7617 vol 0.1489 (dil 0.2762 g -0.036) grey 29.3% ch 0.100 worst pad push 1.13e+03 20.8s
+it   4 beta    4 J   0.3451 vol 0.1629 (dil 0.2809 g -0.020) grey 28.2% ch 0.100 worst pad push 511 20.7s
+it   5 beta    4 J   0.1834 vol 0.1734 (dil 0.2825 g -0.014) grey 26.2% ch 0.100 worst pad push 268 20.8s
+it   6 beta    4 J   0.1105 vol 0.1825 (dil 0.2832 g +0.087) grey 23.7% ch 0.100 worst pad push 158 21.1s
+it   7 beta    4 J   0.2993 vol 0.1531 (dil 0.2592 g -0.005) grey 25.2% ch 0.100 worst pad push 435 20.7s
+it   8 beta    4 J   0.1471 vol 0.1600 (dil 0.2567 g -0.015) grey 22.3% ch 0.100 worst pad push 213 20.2s
+it   9 beta    4 J   0.1178 vol 0.1652 (dil 0.2584 g -0.008) grey 21.5% ch 0.100 worst pad push 170 21.7s
+it  10 beta    4 J   0.1009 vol 0.1683 (dil 0.2591 g -0.005) grey 21.1% ch 0.100 worst pad push 145 21.0s
