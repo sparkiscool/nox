@@ -34,3 +34,6 @@ done 1026
 400
 450
 done 486
+v13 {"wall_J": 0.15, "wall_v": 0.77, "wall_dir": [-0.05, 0.23, 0.97], "bow_clear": 6.6, "edge_min_J": 0.529, "edge_worst": ["glove tail low", [-59.0, -42.0, -23.9], 4.6, 12.9], "prop_hull_clear": 14.2, "probe_fail": 4323, "probe_tested": 74324, "rod_g": 37.5, "printed_g": 100.0, "sockets": 58, "rods": 29, "rod_m": 3.42, "wedge_tip_r": 100.7, "kw": {"zs": 60.0, "cols": "8", "spokes": "8", "rh": 40.0, "zh": 85.0, "mid": null, "diag": false}, "rod_clear": 20.0, "printed_clear": 28.9, "mass_g": 137.5}
+done 163
+done r4 96

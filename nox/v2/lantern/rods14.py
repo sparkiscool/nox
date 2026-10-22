@@ -84,6 +84,7 @@ class Cage:
         s.free = np.where(~fx)[0]
         s.lu = spl.splu(K[s.free][:, s.free].tocsc() + sp.identity(len(s.free))*1e-9)
         s.rod_el = np.array([e['mat'] == 'C' for e in s.el])
+        s.rod_node = np.unique(np.array([e['n'] for e in s.el if e['mat'] == 'C']).ravel())
     def solve(s, F):
         u = np.zeros(6*s.N); u[s.free] = s.lu.solve(F[s.free]); return u
     def _prep_stress(s):
@@ -125,6 +126,17 @@ class Cage:
         return dict(rod_g=round(rod_len*RHO_ROD, 1), printed_g=round(sockets*SOCKET_G + s.thru*THRU_G + col_len*COL_G_MM + s.hub_len*HUB_G_MM, 1),
                     sockets=sockets, rods=len(s.rods), rod_m=round(rod_len/1000, 2))
 
+BOW_E = 0.5   # J: rod bow under a 0.5 J edge hit (or its capacity if lower) must stay off the swept disks
+def disk_dist(pts):
+    pts = np.asarray(pts, float); best = 1e9
+    for mx, my in MOT:
+        dr = np.maximum(np.hypot(pts[:, 0]-mx, pts[:, 1]-my)-R_PROP, 0); dz = np.maximum(np.abs(pts[:, 2]-Z_PROP)-SWEEP, 0)
+        best = min(best, np.hypot(dr, dz).min())
+    return best
+def wedge_reach(z_lo, z_hi, r_flat=112.0, rod_r=1.5):
+    """90 deg plank edge pushed between two horizontal rods on a flat: tip depth past the rod axes (s/2 - r/sin45),
+    returned as the tip's distance from the centre in plan; compare with the prop tip at 98.55"""
+    s_ = z_hi-z_lo; return r_flat-(s_/2-rod_r/math.sin(math.pi/4))
 def prop_points(n=48):
     pts = []
     for mx, my in MOT:
@@ -158,8 +170,10 @@ def evaluate(cage, nodes_hull, ext_spans, probe_r=15.0, n_dirs=160, verbose=Fals
         o = m-ctr; o = o-(o@ax)*ax; o /= np.linalg.norm(o)
         i = cage._node(m)
         E, F, dl, uf = cage.point_capacity([i], -o)
-        ew.append((round(E, 3), tag, tuple(np.round(m, 1)), round(dl, 1)))
-    ew.sort(); res['edge_min_J'] = ew[0][0]; res['edge_worst'] = ew[0][1:]; res['edge_list'] = ew[:6]
+        Ed = min(E, BOW_E); U3 = (uf*math.sqrt(Ed/E)).reshape(-1, 6)[:, :3]
+        bc = disk_dist(cage.X[cage.rod_node]+U3[cage.rod_node])
+        ew.append((round(E, 3), tag, tuple(np.round(m, 1)), round(dl, 1), round(bc, 1)))
+    ew.sort(); res['bow_clear'] = min(e[4] for e in ew); res['edge_min_J'] = ew[0][0]; res['edge_worst'] = ew[0][1:]; res['edge_list'] = ew[:6]
     # static prop clearance and probe test
     P = prop_points(); Ud = fib_dirs(400, zmin=-0.3)
     res['prop_hull_clear'] = round(min((H@u).max()-(P@u).max() for u in Ud), 1)

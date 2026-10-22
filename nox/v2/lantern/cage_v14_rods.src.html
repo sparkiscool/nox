@@ -63,7 +63,7 @@ code{font:13px var(--f-mono);background:color-mix(in srgb,var(--line) 55%,transp
   <header>
     <div class="eyebrow">Scout v2 · cage · rod layout · 22 Oct 2026</div>
     <h1>Cage v14: corner spokes and a crown ring</h1>
-    <p class="lead">Same lower half, same 29 rods of 3.0 carbon, about the same mass. The crown changes from eight spokes into a hub to <b>four corner spokes tied by a square ring over the props</b>, the shoulder ring rises 60 to 68, and only the corner and nose columns stay. In the frame model that doubles what a top hit takes and cuts the paths a plank edge can reach a prop by more than five times.</p>
+    <p class="lead">Same lower half, same 29 rods of 3.0 carbon, 3.5 g lighter. The crown changes from eight spokes into a hub to <b>four corner spokes tied by a square ring over the props</b>, and only the corner and nose columns stay. In the frame model that doubles what a top hit takes and cuts the paths a plank edge can reach a prop by five times. The drum rings stay where they are: z 60 is already the highest the upper ring can go before a plank edge reaches the props.</p>
   </header>
 
   <section class="hero">
@@ -93,8 +93,8 @@ code{font:13px var(--f-mono);background:color-mix(in srgb,var(--line) 55%,transp
     <h2>What changed and why</h2>
     <div class="cols">
       <div class="card"><span class="k">Crown</span><p>Eight radial spokes left a wedge-shaped gap over every prop. Four corner spokes with a square ring at 40% of their length put a rod straight over each prop disk and make the top a braced frame instead of a fan. Top-hit capacity 0.15 to 0.29 J (F).</p></div>
-      <div class="card p"><span class="k">Columns</span><p>Tail and side columns go; corners carry the drum and the nose column keeps the camera pads. The side and tail flats become 200 mm through-rods. Printed mass about 4 g lower (E), three more small printed parts.</p></div>
-      <div class="card k"><span class="k">Shoulder ring</span><p>Rises from z 60 to 68. The drum window grows to 35 mm tall, still too small for a 38 mm plank edge, and the camera gets a taller view. The crown ring sits about 30 mm above the swept disks; nearest rod to a prop 20 to 26.5 mm (F).</p></div>
+      <div class="card p"><span class="k">Columns</span><p>Tail and side columns go; corners carry the drum and the nose column keeps the camera pads. The side and tail flats become 200 mm through-rods. Printed mass about 7 g lower (E), three more small printed parts.</p></div>
+      <div class="card k"><span class="k">Shoulder ring</span><p>Stays at z 60. A 90° plank edge pushed between the two drum rings stops at r 100.7, 2.2 mm short of the prop tips (E). A first pass with the ring at z 68 scored better on top hits but let that edge reach r 96.7, into the props, so it was dropped.</p></div>
     </div>
   </section>
 
@@ -102,22 +102,22 @@ code{font:13px var(--f-mono);background:color-mix(in srgb,var(--line) 55%,transp
     <div>
       <h2>What it costs</h2>
       <ul>
-        <li>Weakest plank-edge span drops 4%: 0.529 to 0.508 J (F), now the 200 mm shoulder flats, which bow 8.6 mm at that load, still 23 mm above the swept disks.</li>
-        <li>Upside down, the blip has to lift the CG 46.9 mm instead of 43.0: 0.24 J vs 0.22 J (E). Same top height, z 85.</li>
+        <li>Weakest plank-edge span drops 7%: 0.529 to 0.491 J (F), now a crown spoke.</li><li>A 0.5 J hit on the tail skid flat, now a 200 mm through-rod, bows it to 5.0 mm from the rear props instead of 6.6 (F). Still clear.</li>
+        <li>Upside down nothing changes: same top height (z 85), same 43 mm climb for the blip (E).</li>
         <li>20 printed parts instead of 17: four crown-ring nodes on the spokes and two small side nodes, against three columns removed (tail and both sides).</li>
       </ul>
     </div>
     <div>
       <h2>Before it prints</h2>
       <ul>
-        <li>The new parts (hub, 4 crown nodes, corner and nose columns at z 68) need the topology run and <code>solid_check.py</code>; this is the skeleton only.</li>
-        <li>D21 rod bend test sets every energy number; D20 motor test confirms the blip still clears 0.24 J.</li>
-        <li>A lower crown (z 74) scores better still, 0.34 J top hits and 11 mm shorter, but needs a 0.30 J blip. Hold it until D20.</li>
+        <li>The new parts (square hub, 4 crown nodes, 2 side nodes) need the topology run and <code>solid_check.py</code>; this is the skeleton only.</li>
+        <li>D21 rod bend test sets every energy number.</li>
+        <li>A lower crown (z 74) scores 0.35 J on top hits and is 11 mm shorter, but the blip has to lift 54 mm (0.28 J, E). Hold it until the D20 motor test.</li>
       </ul>
     </div>
   </section>
 
-  <p class="foot">Source: <code>nox/v2/lantern/rods14.py</code> (frame model), <code>rods14_search.py</code> (1026-layout grid + 486-layout refine), <code>rods14_export.py</code>. Run: <code>runs/cage/v14-rods/</code>. Lower half fixed by the funnel, sled, swap head and core mounts.</p>
+  <p class="foot">Source: <code>nox/v2/lantern/rods14.py</code> (frame model), <code>rods14_search.py</code> (about 1,800 layouts over five passes), <code>rods14_export.py</code>. Run: <code>runs/cage/v14-rods/</code>. Lower half fixed by the funnel, sled, swap head and core mounts.</p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -133,6 +133,8 @@ const rows = [
   ['Weakest edge span', s=>s.edge_min_J.toFixed(3)+' J', 'F', 1, s=>s.edge_min_J],
   ['Plank paths to a prop', s=>s.probe_fail.toLocaleString(), 'F', -1, s=>s.probe_fail],
   ['Rod to prop clearance', s=>s.rod_clear.toFixed(1)+' mm', 'F', 1, s=>s.rod_clear],
+  ['Bow to prop, 0.5 J hit', s=>s.bow_clear.toFixed(1)+' mm', 'F', 1, s=>s.bow_clear],
+  ['90° edge tip in drum', s=>'r '+s.wedge_tip_r.toFixed(1), 'E', 1, s=>s.wedge_tip_r],
   ['Recovery climb', (s,k)=>SCORE[k].climb_mm.toFixed(1)+' mm', 'E', -1, (s,k)=>SCORE[k].climb_mm],
   ['Rods / length', s=>s.rods+' / '+s.rod_m.toFixed(2)+' m', 'C', 0, s=>0],
 ];

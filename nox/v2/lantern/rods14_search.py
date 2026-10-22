@@ -26,7 +26,7 @@ def upper(zs=60.0, cols='8', spokes='8', rh=40.0, zh=85.0, mid=None, diag=False)
     if zs:
         rods += [(f, 'shoulder ring') for f in R.flats(zs)]
         printed += R.chamfer_links(zs)
-        colset = {'8': R.CORN+R.TEES, 'corners': R.CORN, 'tees': R.TEES, 'corners+nose': R.CORN+[(112, 0)]}[cols]
+        colset = {'8': R.CORN+R.TEES, 'corners': R.CORN, 'tees': R.TEES, 'corners+nose': R.CORN+[(112, 0)], 'corners+nose+tail': R.CORN+[(112, 0), (-112, 0)]}[cols]
         for x, y in colset: printed.append(((x, y, 33.2), (x, y, zs), 8.0, 'column'))
         if diag:   # drum diagonals: each skid tee up to the two neighbouring shoulder corners
             for x, y in R.TEES:
@@ -77,6 +77,7 @@ def score(kw):
         cage, hull, spans, rc, pc = build(**kw)
         r = R.evaluate(cage, hull, spans, probe_r=19.0, n_dirs=160)
         r.pop('edge_list', None)
+        r.update(wedge_tip_r=round(R.wedge_reach(33.2, kw['zs'] or 33.2), 1) if kw['zs'] else None)
         r.update(kw=kw, rod_clear=round(rc, 1), printed_clear=round(pc, 1), mass_g=round(r['rod_g']+r['printed_g'], 1))
         return r
     except Exception as e:
@@ -98,8 +99,23 @@ GRID2 = dict(zs=[62.0, 64.0, 66.0, 68.0, 70.0], cols=['corners+nose', 'tees', '8
 def grid2():
     return [dict(zip(GRID2, v)) for v in itertools.product(*GRID2.values()) if v[4] >= v[0]]
 
+GRID3 = dict(zs=[58.0, 60.0], cols=['corners+nose', 'corners+nose+tail', '8'], spokes=['corners'],
+             rh=[30.0, 40.0, 50.0], zh=[74.0, 78.0, 85.0], mid=[0.3, 0.4, 0.5], diag=[False])
+GRID4 = dict(zs=[60.0], cols=['8', 'corners+nose+tail'], spokes=['8', 'corners'],
+             rh=[30.0, 40.0], zh=[74.0, 78.0, 85.0], mid=[None, 0.3, 0.4, 0.5], diag=[False])
+def grid4(): return [dict(zip(GRID4, v)) for v in itertools.product(*GRID4.values())]
+def grid3(): return [dict(zip(GRID3, v)) for v in itertools.product(*GRID3.values())]
+
 if __name__ == '__main__':
     W = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+    if len(sys.argv) > 2 and sys.argv[2] == 'r4':
+        with mp.Pool(W) as p: rows = list(p.imap_unordered(score, grid4(), chunksize=4))
+        json.dump(rows, open('rods14_r4.json', 'w'), default=str); print('done r4', len(rows)); sys.exit()
+    if len(sys.argv) > 2 and sys.argv[2] == 'r3':
+        rows = [score(dict(zs=60.0, cols='8', spokes='8', rh=40.0, zh=85.0, mid=None, diag=False))]
+        print('v13', json.dumps(rows[0], default=str), flush=True)
+        with mp.Pool(W) as p: rows += list(p.imap_unordered(score, grid3(), chunksize=4))
+        json.dump(rows, open('rods14_r3.json', 'w'), default=str); print('done', len(rows)); sys.exit()
     if len(sys.argv) > 2 and sys.argv[2] == 'refine':
         G = grid2(); print(len(G), 'refine layouts', flush=True); rows = []
         with mp.Pool(W) as p:
