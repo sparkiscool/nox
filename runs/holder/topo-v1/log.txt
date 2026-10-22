@@ -195,3 +195,16 @@ it 107 beta   32 J   0.1079 vol 0.1279 (dil 0.2190 g -0.000) grey  2.0% ch 0.100
 it 108 beta   32 J   0.1076 vol 0.1280 (dil 0.2190 g -0.000) grey  2.0% ch 0.100 worst pad push 156 geo -0.00/-0.00 20.7s
 it 109 beta   32 J   0.1073 vol 0.1280 (dil 0.2190 g -0.000) grey  2.1% ch 0.100 worst pad push 155 geo -0.00/-0.00 20.9s
 it 110 beta   32 J   0.1071 vol 0.1281 (dil 0.2190 g -0.000) grey  2.0% ch 0.100 worst pad push 155 geo -0.00/-0.00 19.3s
+it 111 beta   32 J   0.1068 vol 0.1281 (dil 0.2190 g +0.000) grey  2.0% ch 0.100 worst pad push 155 geo -0.00/-0.00 20.6s
+it 112 beta   32 J   0.1068 vol 0.1281 (dil 0.2190 g -0.000) grey  2.0% ch 0.100 worst pad push 155 geo -0.00/-0.00 19.9s
+it 113 beta   32 J   0.1066 vol 0.1282 (dil 0.2190 g -0.000) grey  2.1% ch 0.100 worst pad push 155 geo -0.00/-0.00 19.6s
+it 114 beta   32 J   0.1064 vol 0.1282 (dil 0.2190 g -0.000) grey  2.0% ch 0.100 worst pad push 154 geo -0.00/-0.00 19.4s
+it 115 beta   32 J   0.1062 vol 0.1282 (dil 0.2190 g -0.000) grey  2.0% ch 0.100 worst pad push 154 geo -0.00/-0.00 18.9s
+layout: stopped (grey) at it 115, beta 32, 2373 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; anchored cores outside the main body: 0
+layout done: 2504 s, peak 3.218996 GB
+build: surface at pitch 0.333 mm (x3), generated field 7.38 cm3, mesh 141,352 faces, 4 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 7, "eroded_volumes_mm3": [3682.7, 3.4, 3.4, 3.4, 3.4, 3.4], "necks": [], "drawn_not_in_main": [[0, 0.981], ["0.0", 0.0, "erode 2.0"], ["0.1", 0.0, "erode 2.0"], ["0.2", 0.0, "erode 2.0"]], "thin_walls": [], "acute_edges": 10, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.50 in 'misuse 8' at [19.5, 32.5, 21.5]
+RESULT {"name": "holder", "solid_ok": false, "mass_g": 10.26, "worst": 0.498, "function_ok": true, "bodies": 1}
