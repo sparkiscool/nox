@@ -35,3 +35,64 @@ it  29 beta  2 obj   0.0400 vol 0.0777 (dil 0.0893 g -0.000) grey 7.1% change 0.
 it  30 beta  2 obj   0.0399 vol 0.0777 (dil 0.0893 g -0.000) grey 7.1% change 0.089 worst hand push -z 30 N 4.11x  632s
 it  31 beta  2 obj   0.0398 vol 0.0778 (dil 0.0893 g +0.005) grey 7.1% change 0.090 worst hand push -z 30 N 4.1x  647s
 it  32 beta  2 obj   0.0397 vol 0.0775 (dil 0.0888 g -0.000) grey 7.0% change 0.091 worst hand push -z 30 N 4.1x  663s
+it  33 beta  4 obj   0.0418 vol 0.0736 (dil 0.0933 g +0.050) grey 4.9% change 0.097 worst hand push -z 30 N 4.24x  680s
+it  34 beta  4 obj   0.0431 vol 0.0708 (dil 0.0885 g -0.004) grey 4.8% change 0.094 worst hand push -z 30 N 4.5x  696s
+it  35 beta  4 obj   0.0432 vol 0.0703 (dil 0.0887 g -0.002) grey 4.8% change 0.092 worst hand push -z 30 N 4.55x  712s
+it  36 beta  4 obj   0.0433 vol 0.0699 (dil 0.0887 g -0.090) grey 4.8% change 0.093 worst hand push -z 30 N 4.58x  727s
+it  37 beta  4 obj   0.0417 vol 0.0734 (dil 0.0973 g -0.002) grey 5.0% change 0.075 worst hand push -z 30 N 4.41x  743s
+it  38 beta  4 obj   0.0412 vol 0.0740 (dil 0.0975 g -0.001) grey 5.1% change 0.071 worst hand push -z 30 N 4.35x  759s
+it  39 beta  4 obj   0.0408 vol 0.0743 (dil 0.0975 g -0.000) grey 5.1% change 0.076 worst hand push -z 30 N 4.31x  775s
+it  40 beta  4 obj   0.0406 vol 0.0746 (dil 0.0975 g -0.000) grey 5.1% change 0.078 worst hand push -z 30 N 4.28x  791s
+it  41 beta  4 obj   0.0404 vol 0.0748 (dil 0.0975 g -0.036) grey 5.1% change 0.087 worst hand push -z 30 N 4.26x  807s
+it  42 beta  4 obj   0.0399 vol 0.0763 (dil 0.1011 g -0.000) grey 5.2% change 0.089 worst hand push -z 30 N 4.2x  823s
+it  43 beta  4 obj   0.0396 vol 0.0767 (dil 0.1011 g -0.000) grey 5.2% change 0.090 worst hand push -z 30 N 4.17x  839s
+it  44 beta  4 obj   0.0394 vol 0.0770 (dil 0.1011 g -0.000) grey 5.2% change 0.091 worst hand push -z 30 N 4.13x  856s
+it  45 beta  4 obj   0.0392 vol 0.0773 (dil 0.1011 g -0.000) grey 5.2% change 0.092 worst hand push -z 30 N 4.11x  871s
+it  46 beta  4 obj   0.0390 vol 0.0775 (dil 0.1011 g -0.001) grey 5.2% change 0.090 worst hand push -z 30 N 4.08x  887s
+it  47 beta  4 obj   0.0388 vol 0.0778 (dil 0.1012 g -0.000) grey 5.2% change 0.090 worst hand push -z 30 N 4.06x  902s
+it  48 beta  4 obj   0.0386 vol 0.0780 (dil 0.1012 g -0.000) grey 5.2% change 0.091 worst hand push -z 30 N 4.04x  920s
+it  49 beta  4 obj   0.0385 vol 0.0782 (dil 0.1012 g -0.000) grey 5.2% change 0.092 worst hand push -z 30 N 4.02x  936s
+it  50 beta  4 obj   0.0384 vol 0.0783 (dil 0.1012 g -0.000) grey 5.2% change 0.089 worst hand push -z 30 N 4.01x  954s
+it  51 beta  4 obj   0.0383 vol 0.0785 (dil 0.1012 g +0.012) grey 5.2% change 0.089 worst hand push -z 30 N 3.99x  970s
+it  52 beta  8 obj   0.0387 vol 0.0750 (dil 0.0954 g -0.045) grey 1.7% change 0.100 worst hand push -z 30 N 3.86x  987s
+it  53 beta  8 obj   0.0370 vol 0.0759 (dil 0.1000 g +0.001) grey 1.8% change 0.082 worst hand push -z 30 N 3.83x  1003s
+it  54 beta  8 obj   0.0370 vol 0.0758 (dil 0.0999 g -0.000) grey 1.8% change 0.051 worst hand push -z 30 N 3.84x  1019s
+it  55 beta  8 obj   0.0370 vol 0.0758 (dil 0.0999 g -0.000) grey 1.8% change 0.054 worst hand push -z 30 N 3.84x  1035s
+it  56 beta  8 obj   0.0370 vol 0.0758 (dil 0.0999 g -0.021) grey 1.8% change 0.076 worst hand push -z 30 N 3.84x  1052s
+it  57 beta  8 obj   0.0367 vol 0.0764 (dil 0.1021 g -0.000) grey 1.8% change 0.075 worst hand push -z 30 N 3.81x  1068s
+it  58 beta  8 obj   0.0366 vol 0.0766 (dil 0.1020 g -0.000) grey 1.8% change 0.083 worst hand push -z 30 N 3.8x  1084s
+it  59 beta  8 obj   0.0365 vol 0.0768 (dil 0.1020 g -0.000) grey 1.8% change 0.080 worst hand push -z 30 N 3.79x  1101s
+it  60 beta  8 obj   0.0365 vol 0.0769 (dil 0.1021 g -0.000) grey 1.9% change 0.085 worst hand push -z 30 N 3.78x  1117s
+it  61 beta  8 obj   0.0364 vol 0.0771 (dil 0.1021 g -0.005) grey 1.9% change 0.088 worst hand push -z 30 N 3.77x  1134s
+it  62 beta  8 obj   0.0363 vol 0.0774 (dil 0.1026 g -0.000) grey 1.9% change 0.089 worst hand push -z 30 N 3.76x  1150s
+it  63 beta  8 obj   0.0362 vol 0.0775 (dil 0.1026 g -0.000) grey 1.9% change 0.085 worst hand push -z 30 N 3.75x  1165s
+it  64 beta 16 obj   0.0347 vol 0.0770 (dil 0.0955 g -0.069) grey 0.7% change 0.097 worst hand push -z 30 N 3.56x  1181s
+it  65 beta 16 obj   0.0341 vol 0.0785 (dil 0.1007 g -0.019) grey 0.7% change 0.085 worst hand push -z 30 N 3.49x  1197s
+it  66 beta 16 obj   0.0338 vol 0.0793 (dil 0.1025 g +0.033) grey 0.8% change 0.086 worst hand push -z 30 N 3.45x  1213s
+it  67 beta 16 obj   0.0340 vol 0.0789 (dil 0.0991 g -0.001) grey 0.8% change 0.084 worst hand push -z 30 N 3.47x  1229s
+it  68 beta 16 obj   0.0339 vol 0.0791 (dil 0.0992 g -0.000) grey 0.8% change 0.083 worst hand push -z 30 N 3.46x  1245s
+it  69 beta 16 obj   0.0338 vol 0.0794 (dil 0.0992 g -0.000) grey 0.8% change 0.087 worst hand push -z 30 N 3.45x  1262s
+it  70 beta 16 obj   0.0337 vol 0.0796 (dil 0.0992 g -0.000) grey 0.8% change 0.086 worst hand push -z 30 N 3.44x  1278s
+it  71 beta 16 obj   0.0337 vol 0.0798 (dil 0.0992 g +0.029) grey 0.8% change 0.094 worst hand push -z 30 N 3.43x  1295s
+it  72 beta 16 obj   0.0343 vol 0.0783 (dil 0.0965 g +0.000) grey 0.9% change 0.092 worst hand push -z 30 N 3.51x  1311s
+it  73 beta 16 obj   0.0342 vol 0.0782 (dil 0.0964 g -0.000) grey 0.8% change 0.084 worst hand push -z 30 N 3.5x  1327s
+it  74 beta 16 obj   0.0342 vol 0.0782 (dil 0.0964 g -0.000) grey 0.9% change 0.081 worst hand push -z 30 N 3.5x  1342s
+it  75 beta 16 obj   0.0342 vol 0.0782 (dil 0.0964 g -0.000) grey 0.9% change 0.084 worst hand push -z 30 N 3.5x  1359s
+it  76 beta 32 obj   0.0332 vol 0.0784 (dil 0.0937 g -0.017) grey 0.4% change 0.091 worst hand push -z 30 N 3.38x  1375s
+it  77 beta 32 obj   0.0330 vol 0.0790 (dil 0.0957 g +0.004) grey 0.4% change 0.073 worst hand push -z 30 N 3.35x  1391s
+it  78 beta 32 obj   0.0330 vol 0.0792 (dil 0.0954 g +0.001) grey 0.4% change 0.095 worst hand push -z 30 N 3.35x  1408s
+it  79 beta 32 obj   0.0329 vol 0.0792 (dil 0.0953 g +0.000) grey 0.4% change 0.090 worst hand push -z 30 N 3.34x  1425s
+it  80 beta 32 obj   0.0329 vol 0.0794 (dil 0.0953 g -0.000) grey 0.4% change 0.095 worst hand push -z 30 N 3.34x  1442s
+it  81 beta 32 obj   0.0329 vol 0.0794 (dil 0.0953 g +0.026) grey 0.4% change 0.093 worst hand push -z 30 N 3.33x  1459s
+it  82 beta 32 obj   0.0333 vol 0.0783 (dil 0.0933 g +0.004) grey 0.4% change 0.097 worst hand push -z 30 N 3.39x  1476s
+it  83 beta 32 obj   0.0332 vol 0.0783 (dil 0.0929 g -0.000) grey 0.4% change 0.095 worst hand push -z 30 N 3.37x  1493s
+it  84 beta 32 obj   0.0332 vol 0.0782 (dil 0.0929 g -0.000) grey 0.4% change 0.096 worst hand push -z 30 N 3.37x  1510s
+it  85 beta 32 obj   0.0331 vol 0.0783 (dil 0.0929 g -0.000) grey 0.4% change 0.095 worst hand push -z 30 N 3.37x  1526s
+it  86 beta 32 obj   0.0331 vol 0.0783 (dil 0.0929 g +0.012) grey 0.4% change 0.098 worst hand push -z 30 N 3.37x  1542s
+it  87 beta 32 obj   0.0335 vol 0.0774 (dil 0.0919 g +0.001) grey 0.4% change 0.097 worst hand push -z 30 N 3.42x  1559s
+it  88 beta 32 obj   0.0334 vol 0.0775 (dil 0.0918 g -0.000) grey 0.4% change 0.096 worst hand push -z 30 N 3.4x  1575s
+stopped: grey at it 88, beta 32, grey 0.4%
+layout done 1622 s; pruned 0
+connectivity: {'ok': True, 'bodies': 1, 'main_share': 1.0, 'detached_interfaces': [], 'loose_generated': []}
+  edge-joint closing: +0.25 cm3
+  clip: generated material held 0.5 mm inside the keep-outs: 0.98 cm3 pulled back (volume target unchanged)
