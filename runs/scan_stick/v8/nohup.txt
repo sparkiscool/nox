@@ -1,0 +1,15 @@
+=== scan_stick_head: h 1.5, generated 12.0 cm3, min member 3.2 mm, cores 4
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 56,720 (191.4 cm3), drawn 5,584, void 68,768
+  support default: 2128 cells, 3192 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 56,720 (191.4 cm3), drawn 5,584, void 68,768
+  support default: 2128 cells, 3192 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.063 of 56,720 design cells
+layout: WARNING nearly mirrored in x (4.5% of passive cells differ): no symmetry
+layout: 4 drawn bodies (5,584 cells), held solid in every realization; eroded filter: masked
+layout: 47 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 64, 32) = 131,072 elements, 209,661 active dofs; backend direct (direct estimate 2.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0634 (dil 0.0774 g +0.011) grey  7.5% ch 0.100 worst tie b1 my 1.12e+04 16.7s
+it   2 beta    1 J   1.0955 vol 0.0553 (dil 0.0662 g -0.135) grey 25.7% ch 0.100 worst drop on lidar -z 150 N 1.5e+03 19.1s
+it   3 beta    1 J   0.5312 vol 0.0606 (dil 0.0717 g -0.063) grey 24.8% ch 0.100 worst drop on lidar -z 150 N 742 17.8s

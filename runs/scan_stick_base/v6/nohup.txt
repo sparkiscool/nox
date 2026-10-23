@@ -1,0 +1,6 @@
+=== scan_stick_base: h 2.0, generated 30.0 cm3, min member 3.2 mm, cores 4
+scan_stick_base: grid (56, 40, 88) h 2.0 = 197,120 cells; design 39,404 (315.2 cm3), drawn 19,461, void 138,255
+  support default: 1196 cells, 1974 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_base: grid (56, 40, 88) h 2.0 = 197,120 cells; design 39,404 (315.2 cm3), drawn 19,461, void 138,255
+  support default: 1196 cells, 1974 nodes
