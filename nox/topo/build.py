@@ -73,18 +73,24 @@ def assemble(layout, gen_mesh, speck_mm3=20.0, log=print):
     P = ((S + part.drawn_m) ^ part.env_m) - part.cuts_m
     bodies = P.decompose()
     vols = sorted([b.volume() for b in bodies], reverse=True)
-    dropped = []
+    dropped, filled = [], []
     if len(bodies) > 1:
         keep = None
         for b in bodies:
-            if b.volume() >= speck_mm3:
+            v = b.volume()
+            if v >= speck_mm3:
                 keep = b if keep is None else keep + b
+            elif v < 0:
+                # an inverted shell is a sealed cavity inside a body (the nominal field enclosed a void, a hollow
+                # section). It is filled: a sealed cavity cannot be cleaned or inspected and prints as extra walls.
+                filled.append(round(-v, 2))
             else:
-                dropped.append(round(b.volume(), 2))
+                dropped.append(round(v, 2))
         P = keep
-        log(f"build: {len(bodies)} bodies before clean-up, volumes {[round(v_, 1) for v_ in vols[:6]]} mm3; dropped "
-            f"specks {dropped}")
-    return P, dict(bodies_raw=len(bodies), dropped_specks_mm3=dropped, bodies=len(P.decompose()))
+        log(f"build: {len(bodies)} shells before clean-up, volumes {[round(v_, 1) for v_ in vols[:6]]} mm3; dropped "
+            f"specks {dropped}; filled sealed cavities {filled} mm3")
+    return P, dict(bodies_raw=len(bodies), dropped_specks_mm3=dropped, filled_cavities_mm3=filled,
+                   bodies=len(P.decompose()))
 
 
 # -------------------------------------------------------------------------------------------------------- checks
