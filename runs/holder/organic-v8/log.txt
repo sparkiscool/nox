@@ -179,3 +179,13 @@ it  77 beta   16 J  21.0470 vol 0.1213 (dil 0.2602 g -0.002) grey  6.9% ch 0.061
 it  78 beta   16 J  20.2471 vol 0.1216 (dil 0.2604 g -0.001) grey  6.9% ch 0.083 worst poke cam y 3.45 34.8s
 it  79 beta   16 J  19.7096 vol 0.1217 (dil 0.2605 g -0.001) grey  6.9% ch 0.082 worst poke cam y 3.32 34.1s
 it  80 beta   16 J  19.2517 vol 0.1218 (dil 0.2605 g -0.000) grey  6.9% ch 0.100 worst poke cam y 3.22 30.6s
+it  81 beta   16 J  18.8303 vol 0.1219 (dil 0.2605 g +0.005) grey  6.9% ch 0.100 worst poke cam y 3.13 33.2s
+it  82 beta   16 J  20.7220 vol 0.1205 (dil 0.2588 g -0.001) grey  6.9% ch 0.100 worst gate b8 my 3.51 33.8s
+it  83 beta   16 J  19.9572 vol 0.1208 (dil 0.2589 g -0.001) grey  6.9% ch 0.100 worst poke cam y 3.32 34.9s
+it  84 beta   16 J  19.5513 vol 0.1209 (dil 0.2590 g -0.000) grey  6.9% ch 0.100 worst poke cam y 3.18 33.3s
+it  85 beta   16 J  19.2455 vol 0.1209 (dil 0.2590 g -0.000) grey  6.9% ch 0.100 worst poke cam y 3.1 33.5s
+it  86 beta   16 J  18.9747 vol 0.1210 (dil 0.2590 g +0.003) grey  6.9% ch 0.100 worst poke cam y 3.04 32.8s
+it  87 beta   16 J  20.1542 vol 0.1201 (dil 0.2580 g -0.001) grey  6.9% ch 0.100 worst gate b8 my 3.25 30.2s
+it  88 beta   16 J  19.7140 vol 0.1202 (dil 0.2581 g -0.000) grey  6.9% ch 0.100 worst poke cam y 3.13 32.5s
+it  89 beta   16 J  19.4768 vol 0.1203 (dil 0.2581 g -0.000) grey  6.9% ch 0.100 worst poke cam y 3.06 32.2s
+it  90 beta   16 J  19.2700 vol 0.1203 (dil 0.2581 g -0.000) grey  6.9% ch 0.100 worst poke cam y 3.01 30.7s
