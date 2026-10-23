@@ -93,3 +93,10 @@ it  77 beta    8 J   0.0550 vol 0.0643 (dil 0.1137 g -0.001) grey  4.1% ch 0.100
 it  78 beta    8 J   0.0546 vol 0.0644 (dil 0.1137 g -0.000) grey  4.1% ch 0.100 worst drop on lidar -z 150 N 71.2 26.5s
 it  79 beta    8 J   0.0543 vol 0.0645 (dil 0.1137 g -0.000) grey  4.1% ch 0.100 worst drop on lidar -z 150 N 71 22.9s
 it  80 beta    8 J   0.0541 vol 0.0646 (dil 0.1138 g -0.000) grey  4.1% ch 0.100 worst drop on lidar -z 150 N 70.9 18.7s
+it  81 beta    8 J   0.0540 vol 0.0646 (dil 0.1138 g +0.009) grey  4.1% ch 0.100 worst drop on lidar -z 150 N 70.8 21.6s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  82 beta   16 J   0.4763 vol 0.0629 (dil 0.1118 g +0.003) grey  1.9% ch 0.100 worst drop on lidar -z 150 N 665 23.1s
+it  83 beta   16 J   0.4436 vol 0.0607 (dil 0.1107 g -0.007) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 602 19.4s
+it  84 beta   16 J   0.4134 vol 0.0600 (dil 0.1106 g -0.008) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 576 15.9s
+it  85 beta   16 J   0.4067 vol 0.0605 (dil 0.1110 g -0.005) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 566 16.1s
+it  86 beta   16 J   0.4009 vol 0.0608 (dil 0.1111 g -0.013) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 559 17.4s
