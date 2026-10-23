@@ -1,4 +1,4 @@
-scan_stick_base v15: ready to print
+scan_stick_base v15: retired (superseded by v16 after review round 2 of PR 22: the rocker and button cuts ran into the tube wall behind the strip, 0.7 mm (M) left, and the switch bodies had no room). Was: ready to print
 Weight: 334.3 g (M), was 300.1 g (v12, M; +34 g for the 5 mm Pi tray plate and the -Y rail and back plate the v12 keep-out had cut) / 194.7 g (clamp cradle v1, M, retired)
 Strength: worst index 0.26 (F, as-built voxel recheck) in pack impact 50 g 3 (-Y) at the tube / back-plate web [-8.5, 15.0, 35.0] mm (M); v12 read 0.56 (F) at the tube / Pi-pad web, now carried by the tray; all 67 cases (E loads: pack 0.59 kg, Pi 0.08 kg and head 0.30 kg at 25 g in 14 dirs and 50 g impact in 6, 100 N flange side hits, 150 N drop on the head, 120 N strap tension, 50 N hand grabs, 100 N push on the ledge) ≤ 0.26 (F): sturdy
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_base_v15.stl (the engine's pre-export count read 4 bodies on its own grid, as on v12: stray voxels at the Ø40 boss / tube step, gone on the exact file)

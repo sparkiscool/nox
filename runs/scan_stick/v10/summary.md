@@ -1,4 +1,4 @@
-scan_stick_head v10: ready to print
+scan_stick_head v10: retired (superseded by v11 after review round 2 of PR 22: the camera insert holes were 4.5 deep for a 5.7 long insert). Was: ready to print
 Weight: 40.0 g (M), was 40.0 g (v9, M) / 40.8 g (v8, M) / 61.9 g (v2 noxopt, M)
 Strength: worst index 0.36 (F, as-built voxel recheck) in lidar impact 50 g 2 at a pad gusset root [-5.2, -18.8, 10.2] mm (M); all 47 cases (E loads: 25 g in 14 dirs, 50 g impact in 6, 100 N side hits, 150 N drop on the lidar, 20 N hand grab, camera 25 / 50 g, 5 N pokes) ≤ 0.36 (F): sturdy
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_head_v10.stl

@@ -172,7 +172,7 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Loads | 25 g knocks (14 dirs) on lidar 0.23 kg, camera 0.03, Pi 0.08, pack 0.59, head 0.30; 50 g impact (6 dirs); 100 N side hits; 150 N drop; hand 20-50 N; strap 120 N | E |
 | Power | 4S 6000 → rocker → 12 V 2 A buck (L2, spec) + 5 V 5 A UBEC (Pi 5 + camera); ~19 W | spec / E |
 | Network | L2 192.168.1.62 → Pi 192.168.1.2, UDP 6101 → 6201 | spec |
-| Masses | base v15 334.3, head v10 40.0, cam v4 12.5, thread test 8.3 (PETG); unit 395 printed + 230 L2 + ~30 camera + ~50 Pi + 590 pack (E) ≈ 1.30 kg | M / E |
+| Masses | base v16 338.9, head v11 40.8, cam v4 12.5, thread test 8.3 (PETG); unit 400 printed + 230 L2 + ~30 camera + ~50 Pi + 590 pack (E) ≈ 1.30 kg | M / E |
 
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
 Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
