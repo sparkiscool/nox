@@ -119,3 +119,8 @@ it  52 beta   32 J 196.4712 vol 0.3843 (dil 0.5677 g -0.000) grey  4.4% ch 0.100
 it  53 beta   32 J 196.4711 vol 0.3843 (dil 0.5677 g -0.000) grey  4.4% ch 0.100 worst cable pull -y 20 N 5.62e+04 12.9s
 it  54 beta   32 J 196.4711 vol 0.3842 (dil 0.5677 g -0.000) grey  4.4% ch 0.100 worst cable pull -y 20 N 5.62e+04 13.2s
 it  55 beta   32 J 196.4711 vol 0.3842 (dil 0.5677 g -0.000) grey  4.4% ch 0.100 worst cable pull -y 20 N 5.62e+04 13.2s
+it  56 beta   32 J 196.4711 vol 0.3842 (dil 0.5677 g -0.000) grey  4.4% ch 0.100 worst cable pull -y 20 N 5.62e+04 12.6s
+it  57 beta   32 J 196.4711 vol 0.3842 (dil 0.5677 g -0.000) grey  4.4% ch 0.100 worst cable pull -y 20 N 5.62e+04 13.0s
+it  58 beta   32 J 196.4711 vol 0.3842 (dil 0.5677 g -0.000) grey  4.4% ch 0.100 worst cable pull -y 20 N 5.62e+04 12.8s
+it  59 beta   32 J 196.4711 vol 0.3841 (dil 0.5677 g -0.000) grey  4.4% ch 0.089 worst cable pull -y 20 N 5.62e+04 12.6s
+it  60 beta   32 J 196.4711 vol 0.3841 (dil 0.5677 g -0.000) grey  4.4% ch 0.078 worst cable pull -y 20 N 5.62e+04 12.7s
