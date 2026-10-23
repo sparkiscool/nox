@@ -136,3 +136,17 @@ it  38 beta   16 J   8.1118 vol 0.5507 (dil 0.6733 g -0.000) grey  9.4% ch 0.100
 it  39 beta   16 J   8.0881 vol 0.5512 (dil 0.6733 g -0.000) grey  9.4% ch 0.100 worst tie b2 mx 8.88 8.9s
 it  40 beta   16 J   8.0665 vol 0.5516 (dil 0.6733 g -0.000) grey  9.4% ch 0.100 worst tie b2 mx 8.85 9.0s
 layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403
+To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to p
+it  41 beta   32 J   7.4690 vol 0.5566 (dil 0.6730 g +0.011) grey  4.7% ch 0.100 worst tie b2 mx 7.91 9.5s
+it  42 beta   32 J   8.8851 vol 0.5434 (dil 0.6642 g -0.002) grey  4.7% ch 0.100 worst tie b2 mx 8.86 9.4s
+it  43 beta   32 J   7.9646 vol 0.5445 (dil 0.6642 g -0.002) grey  4.7% ch 0.100 worst tie b2 mx 8.57 8.6s
+it  44 beta   32 J   7.7893 vol 0.5463 (dil 0.6648 g -0.001) grey  4.7% ch 0.100 worst tie b2 mx 8.42 8.6s
+it  45 beta   32 J   7.7066 vol 0.5467 (dil 0.6649 g -0.001) grey  4.7% ch 0.100 worst tie b2 mx 8.39 8.5s
+it  46 beta   32 J   7.6533 vol 0.5477 (dil 0.6651 g -0.002) grey  4.7% ch 0.100 worst tie b2 mx 8.32 8.4s
+it  47 beta   32 J   7.5696 vol 0.5494 (dil 0.6663 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.24 8.9s
+it  48 beta   32 J   7.5436 vol 0.5500 (dil 0.6664 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.21 8.6s
+it  49 beta   32 J   7.5263 vol 0.5503 (dil 0.6665 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.19 8.5s
+it  50 beta   32 J   7.5125 vol 0.5507 (dil 0.6665 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.18 8.7s
