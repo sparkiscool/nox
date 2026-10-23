@@ -1,0 +1,22 @@
+<frozen runpy>:130: RuntimeWarning: 'topo.run' found in sys.modules after import of package 'topo', but prior to execution of 'topo.run'; this may result in unpredictable behaviour
+=== motor_mount: h 0.8, generated 7.0 cm3, min member 3.2 mm, cores 4
+motor_mount: grid (56, 56, 56) h 0.8 = 175,616 cells; design 83,384 (42.7 cm3), drawn 13,728, void 78,504
+  support default: 1536 cells, 2784 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+motor_mount: grid (32, 32, 32) h 1.6 = 32,768 cells; design 10,304 (42.2 cm3), drawn 1,632, void 20,832
+  support default: 352 cells, 816 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.22 cells, erosion depth 1.37 mm; volfrac 0.166 of 10,304 design cells
+layout: drawn bodies and keep-outs mirror about x, y: the design is held symmetric there
+layout: 5 drawn bodies (1,632 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties
+fem: grid (32, 32, 32) = 32,768 elements, 44,904 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1481 (dil 0.1780 g -0.107) grey 78.8% ch 0.100 worst tie b3 mz 819 0.9s
+it   2 beta    1 J   4.3099 vol 0.1603 (dil 0.1913 g -0.040) grey 75.4% ch 0.100 worst tie b3 mz 369 0.8s
+it   3 beta    1 J   2.4293 vol 0.1623 (dil 0.1923 g -0.035) grey 67.5% ch 0.100 worst tie b3 mz 213 0.7s
+it   4 beta    1 J   1.6042 vol 0.1655 (dil 0.1945 g -0.024) grey 61.5% ch 0.100 worst tie b3 mz 142 0.7s
+it   5 beta    1 J   1.1470 vol 0.1670 (dil 0.1949 g -0.022) grey 56.4% ch 0.100 worst tie b3 mz 102 0.8s
+it   6 beta    1 J   0.8445 vol 0.1687 (dil 0.1955 g -0.011) grey 52.7% ch 0.100 worst tie b3 mz 75.3 0.9s
+it   7 beta    1 J   0.6816 vol 0.1692 (dil 0.1948 g -0.014) grey 49.4% ch 0.100 worst tie b3 mz 61.2 0.9s
+it   8 beta    1 J   0.5652 vol 0.1707 (dil 0.1955 g -0.010) grey 47.2% ch 0.100 worst tie b3 mz 50.9 0.8s
+it   9 beta    1 J   0.4880 vol 0.1720 (dil 0.1960 g -0.008) grey 45.8% ch 0.100 worst tie b3 mz 44.2 0.8s
+it  10 beta    1 J   0.4377 vol 0.1730 (dil 0.1965 g -0.006) grey 44.9% ch 0.100 worst tie b3 mz 39.7 0.8s
