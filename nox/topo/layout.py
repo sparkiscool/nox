@@ -64,11 +64,12 @@ class Settings:
     erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
     gate_ties: bool = True              # thin held drawn bodies count by their cover + ties to one body (masked only)
     gate_thin_mm: float = 2.0           # the solid gate's erosion cap: held bodies with half thickness under it are thin
-    # case normalisation: "frame" divides every case by its own compliance on the first frame the run reaches (the
-    # warm start of a warm-started run, else the design at the first beta step), so each case counts by how much it
-    # worsens from a frame; "solid" divides by the full solid only (concentrated loads and ties then swamp the
-    # distributed cases: holder organic-v7, each misuse case 1e-4 of the objective, the worst index in misuse 10 / 12)
-    case_norm: str = "frame"
+    # case normalisation: "solid" divides every case by the full solid's compliance; "frame" (option) divides by its
+    # own compliance on the first frame the run reaches (the warm start of a warm-started run, else the design at the
+    # first beta step), so each case counts by how much it worsens from a frame. Against the solid, concentrated loads
+    # and ties swamp the distributed cases (holder organic-v7: each misuse case 1e-4 of the objective), but "frame"
+    # did not lower the worst index (organic-v8 0.596 vs v7 0.569) and spiked once at beta 32, so it stays off.
+    case_norm: str = "solid"
     held_ties: bool = True              # held bodies (each on its own support patch) tied to one hub body (see _cases)
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
