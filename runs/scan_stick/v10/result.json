@@ -712,5 +712,7 @@
  "overhang_mm2": 1896,
  "file": "print/scan_stick_head_v10.stl",
  "sha12": "453d14339999",
- "date": "2026-10-23"
+ "date": "2026-10-23 17:11",
+ "peak_mem_gb": 4.3,
+ "wall_time_min": 2.1
 }

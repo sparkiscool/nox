@@ -24,7 +24,7 @@ def box(x0, x1, y0, y1, z0, z1):
     b = trimesh.creation.box([x1 - x0, y1 - y0, z1 - z0]); b.apply_translation([(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2]); return b
 
 base = load(os.path.join(ROOT, "print", "scan_stick_base_v15.stl"))
-HEAD_ROT = 90.0                                           # head bolted turned +90 about z: camera block over the Pi tray (+X), L2 notch over the shelf (-Y)
+HEAD_ROT = -90.0                                          # head bolted turned -90 about z: camera block over the Pi tray (+X), L2 notch on +Y (the rail side)
 head = load(os.path.join(ROOT, "print", "scan_stick_head_v10.stl"), rot([0, 0, 1], HEAD_ROT, (0, 0, TOP)))
 # cam print frame: plate in XY, tab at +Y (bolt pads at y 53), lens / posts +z. Mount: plate against the block's +Y face
 # (world: plate in XZ, lens +Y), tab holes at world z TOP+17, the plate hanging down below them (the head's bracket keep-out
@@ -44,15 +44,12 @@ lens = trimesh.creation.cylinder(6, 8, sections=32); lens.apply_transform(rot([1
 for g in (camera, lens):
     g.apply_transform(rot([0, 0, 1], HEAD_ROT))
 pi = box(PI_X0 + PI_SO, PI_X0 + PI_SO + 1.6, -28, 28, PI_Z0, PI_Z0 + 85)
-pack = box(BAT_X1 - 45, BAT_X1, -24, 24, BAT_Z0, BAT_Z0 + 148)
+pack = box(BAT_X1 - 45.5, BAT_X1 - 0.5, -24, 24, BAT_Z0 + 0.5, BAT_Z0 + 148.5)            # in its keep-out, 0.5 off the back plate and the ledge
 
-def overlap(a, b, pitch=0.5):
-    """overlap volume (mm3, M) of two meshes on a 0.5 mm grid over their common bounds"""
-    lo = np.maximum(a.bounds[0], b.bounds[0]); hi = np.minimum(a.bounds[1], b.bounds[1])
-    if np.any(hi <= lo): return 0.0
-    g = np.stack(np.meshgrid(*[np.arange(l + pitch / 2, h, pitch) for l, h in zip(lo, hi)], indexing="ij"), -1).reshape(-1, 3)
-    if len(g) == 0: return 0.0
-    return float(np.count_nonzero(a.contains(g) & b.contains(g)) * pitch ** 3)
+def overlap(a, b):
+    """overlap volume (mm3, M) of two meshes, an exact manifold boolean (the engine's own)"""
+    from topo.part import man
+    return (man(a) ^ man(b)).volume()
 for an, am, bn, bm in (("base", base, "head", head), ("base", base, "cam bracket", cam), ("head", head, "cam bracket", cam),
                        ("base", base, "camera board", camera), ("head", head, "camera board", camera), ("base", base, "Pi", pi), ("base", base, "pack", pack)):
     print(f"fit: {an} x {bn}: {overlap(am, bm):.0f} mm3 overlap (M; 0 = clear)")

@@ -944,7 +944,7 @@
  "layout_s": 1929,
  "peak_gb": 5.635872,
  "total_s": 414,
- "status": "DONE",
+ "status": "RETIRED",
  "mass_tag": "M",
  "worst_index": 0.559,
  "bed_face": "-z (bottom)",
@@ -952,7 +952,9 @@
  "overhang_mm2": 6692,
  "file": "print/scan_stick_base_v12.stl",
  "sha12": "3b91d7fa19e7",
- "date": "2026-10-23",
+ "date": "2026-10-23 15:31",
  "solid_cli": "python3 nox/solid_check.py print/scan_stick_base_v12.stl PASS bodies_plain 1 bodies_eroded 1 necks 0 thin_walls 0",
- "solid_note": "engine pre-export count 4 bodies on its own grid; the exact file reads 1 (solid_print.txt)"
+ "solid_note": "engine pre-export count 4 bodies on its own grid; the exact file reads 1 (solid_print.txt)",
+ "peak_mem_gb": 5.6,
+ "wall_time_min": 6.9
 }

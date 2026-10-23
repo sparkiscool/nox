@@ -41,9 +41,9 @@ Every FAILED run keeps its folder and summary; only the READY files are in `prin
   on the tube, so the pole's lower tube OD no longer matters. Head and base bolt together (4x M4 x 12 into heat-set
   inserts), the camera bracket bolts to the head (2x M3 x 6 into inserts).
 - **Pack and Pi low, lidar and camera high** (Spark 23 Oct): pack and Pi right above the thread, lidar seat 202 mm
-  above the pole tip (C), camera on the head's block. The head bolts on turned +90° about z (the flange pattern is a square):
+  above the pole tip (C), camera on the head's block. The head bolts on turned -90° about z (the flange pattern is a square):
   the camera block and its bracket hang over the Pi tray side (+X), where nothing of the base rises above z 123; over the
-  pack side (±Y) the bracket would hit the 5 mm back plate. The L2 cable notch then faces the shelf (-Y). `assembly_view.py`
+  pack side (±Y) the bracket would hit the 5 mm back plate. The L2 cable notch then faces +Y (the rail side). `assembly_view.py`
   prints the overlap of every pair (0 mm³ = clear, M).
 - **Pole:** EXTEND-A-REACH 1.5-3 ft telescoping extension pole, Amazon B08LL28XZW, universal 3/4"-5 ACME tip.
 - **Lidar up-facing**, matching a top-mounted L2 on the Overseer (section O). The hemisphere FOV must see the same
@@ -71,7 +71,7 @@ in each summary.
 2. Heat-set inserts: 4x M4 in the base flange, 2x M3 in the head's camera block.
 3. Base onto the pole. Pack on the ledge (lip at the bottom, rails each side), two straps through the slots in the rails and the back plate. Pi on its
    4 standoffs (M2.5 x 6 self-tap), ports up. UBEC + 12 V buck on end in the shelf bay, zip-tied through the ±12 slots. Switch / button / LED in the strip.
-4. Head onto the flange turned so its camera block sits over the Pi (+X) and the cable notch over the shelf (-Y); 4x M4 x 12 from the top (counterbored, reachable before the L2 goes on). L2 on the pads, cable
+4. Head onto the flange turned so its camera block sits over the Pi (+X) and the cable notch faces +Y; 4x M4 x 12 from the top (counterbored, reachable before the L2 goes on). L2 on the pads, cable
    outlet over the -X notch, 4x M3 x 12 from below (driver clearance is cut under each pad). Camera on its 4 posts
    (M2 x 5), bracket on the block (2x M3 x 6).
 5. Ethernet L2 → Pi, L2 barrel → 12 V buck, camera USB → Pi: cables through the head's flange hole, down the tube bore and out of the 10 x 30 window at z 40-70 on -Y (the shelf side).
