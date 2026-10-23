@@ -142,3 +142,18 @@ it  77 beta   32 J   4.3394 vol 0.5986 (dil 0.7425 g -0.000) grey  4.7% ch 0.100
 it  78 beta   32 J   4.3376 vol 0.5986 (dil 0.7425 g -0.000) grey  4.7% ch 0.100 worst gate b2 fy 5.01 5.2s
 it  79 beta   32 J   4.3365 vol 0.5986 (dil 0.7425 g -0.000) grey  4.6% ch 0.100 worst gate b2 fy 5.01 5.3s
 it  80 beta   32 J   4.3355 vol 0.5987 (dil 0.7425 g -0.000) grey  4.6% ch 0.100 worst gate b2 fy 5 5.0s
+it  81 beta   32 J   4.3347 vol 0.5987 (dil 0.7425 g +0.001) grey  4.6% ch 0.100 worst gate b2 fy 5 7.2s
+it  82 beta   32 J   4.3454 vol 0.5979 (dil 0.7417 g -0.000) grey  4.6% ch 0.100 worst gate b2 fy 5.03 5.2s
+it  83 beta   32 J   4.3444 vol 0.5979 (dil 0.7417 g -0.000) grey  4.6% ch 0.100 worst gate b2 fy 5.02 5.7s
+it  84 beta   32 J   4.3436 vol 0.5979 (dil 0.7417 g -0.000) grey  4.6% ch 0.100 worst gate b2 fy 5.02 5.2s
+it  85 beta   32 J   4.3429 vol 0.5979 (dil 0.7417 g -0.000) grey  4.7% ch 0.100 worst gate b2 fy 5.02 5.1s
+it  86 beta   32 J   4.3422 vol 0.5979 (dil 0.7417 g +0.001) grey  4.6% ch 0.100 worst gate b2 fy 5.02 5.2s
+it  87 beta   32 J   4.3491 vol 0.5973 (dil 0.7411 g -0.000) grey  4.7% ch 0.100 worst gate b2 fy 5.04 5.4s
+layout: stopped (max_stage) at it 87, beta 32, 513 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 559 s, peak 2.387028 GB
+build: organic surface at pitch 0.333 mm (x3), skins 13.93 cm3, field 36.56 cm3, in env - cuts 28.97 cm3 (layout 28.97, level offset +0.415 mm), fillet 2.5 mm, rims 1.0 mm, mesh 291,044 faces, 24 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [19830.8], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 1, "ok": true}
+function check: {'skin_mm3': 8883.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.11 in 'ring up + fore 30 N' at [178.5, 140.5, -63.0]
+RESULT {"name": "bracket_jA", "solid_ok": true, "mass_g": 36.82, "worst": 0.108, "function_ok": true, "bodies": 1}
