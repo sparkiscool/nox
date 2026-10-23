@@ -1,0 +1,22 @@
+=== scan_stick_cam: h 0.75, generated 5.0 cm3, min member 3.2 mm, cores 4
+scan_stick_cam: grid (64, 88, 16) h 0.75 = 90,112 cells; design 34,030 (14.4 cm3), drawn 10,910, void 45,172
+  support default: 2628 cells, 3682 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_cam: grid (32, 48, 8) h 1.5 = 12,288 cells; design 5,424 (18.3 cm3), drawn 1,596, void 5,268
+  support default: 354 cells, 648 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.273 of 5,424 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (6.5% of passive cells differ): no symmetry
+layout: 6 drawn bodies (1,596 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 0 gate ties
+fem: grid (32, 48, 8) = 12,288 elements, 26,313 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.2485 (dil 0.2909 g -0.090) grey 99.3% ch 0.100 worst cable pull -y 20 N 175 0.9s
+it   2 beta    1 J   4.9043 vol 0.2670 (dil 0.3106 g -0.029) grey 96.4% ch 0.100 worst tie b1 mx 88.4 0.9s
+it   3 beta    1 J   3.3207 vol 0.2688 (dil 0.3111 g -0.027) grey 89.5% ch 0.100 worst tie b2 mz 54.3 1.0s
+it   4 beta    1 J   2.4730 vol 0.2730 (dil 0.3142 g -0.017) grey 86.2% ch 0.100 worst tie b5 mz 46.4 0.8s
+it   5 beta    1 J   2.0793 vol 0.2736 (dil 0.3135 g -0.020) grey 81.7% ch 0.100 worst poke post 1 +x 10 N 36.6 0.9s
+it   6 beta    1 J   1.7636 vol 0.2760 (dil 0.3154 g -0.007) grey 81.2% ch 0.100 worst tie b1 mz 33 0.8s
+it   7 beta    1 J   1.5224 vol 0.2755 (dil 0.3137 g -0.013) grey 78.6% ch 0.100 worst tie b2 mz 28.2 0.9s
+it   8 beta    1 J   1.3417 vol 0.2785 (dil 0.3161 g -0.005) grey 77.1% ch 0.100 worst tie b6 mz 24.8 0.9s
+it   9 beta    1 J   1.2459 vol 0.2793 (dil 0.3162 g -0.005) grey 75.4% ch 0.100 worst tie b6 mz 23.9 0.8s
+it  10 beta    1 J   1.1848 vol 0.2803 (dil 0.3167 g -0.003) grey 74.6% ch 0.100 worst tie b2 mz 23.2 0.8s
