@@ -6,3 +6,13 @@ layout: 4 drawn bodies (5,572 cells), held solid in every realization; eroded fi
 layout: 47 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (64, 64, 32) = 131,072 elements, 209,649 active dofs; backend direct (direct estimate 2.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0634 (dil 0.0774 g +0.011) grey  7.5% ch 0.100 worst tie b1 my 1.12e+04 20.7s
+it   2 beta    1 J   1.0919 vol 0.0553 (dil 0.0662 g -0.135) grey 25.7% ch 0.100 worst drop on lidar -z 150 N 1.5e+03 16.6s
+it   3 beta    1 J   0.5300 vol 0.0606 (dil 0.0717 g -0.063) grey 24.8% ch 0.100 worst drop on lidar -z 150 N 740 15.8s
+it   4 beta    1 J   0.2019 vol 0.0626 (dil 0.0734 g -0.041) grey 22.3% ch 0.100 worst drop on lidar -z 150 N 259 16.2s
+it   5 beta    1 J   0.0938 vol 0.0632 (dil 0.0737 g -0.038) grey 21.1% ch 0.100 worst tie b3 mz 120 15.8s
+it   6 beta    1 J   0.1859 vol 0.0645 (dil 0.0745 g -0.013) grey 19.9% ch 0.100 worst drop on lidar -z 150 N 261 16.5s
+it   7 beta    1 J   0.0651 vol 0.0638 (dil 0.0736 g -0.025) grey 19.2% ch 0.100 worst tie b1 mz 90.2 16.4s
+it   8 beta    1 J   0.0550 vol 0.0645 (dil 0.0738 g -0.023) grey 18.2% ch 0.100 worst drop on lidar -z 150 N 71.1 15.8s
+it   9 beta    1 J   0.0420 vol 0.0646 (dil 0.0737 g -0.023) grey 18.0% ch 0.100 worst tie b1 mz 55.3 15.0s
+it  10 beta    1 J   0.0341 vol 0.0659 (dil 0.0747 g -0.011) grey 17.4% ch 0.100 worst tie b3 mz 42.7 15.4s
