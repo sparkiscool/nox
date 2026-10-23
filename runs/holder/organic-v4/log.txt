@@ -1,0 +1,20 @@
+=== holder: h 1.0, generated 5.2 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (2.82 cm3); 0.74 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.123 of 6,023 design cells
+layout: WARNING nearly mirrored in x (0.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: 8 drawn bodies (353 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (216 cells) count by their cover; 3 bodies tied to body 3
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts') + 18 gate ties + 24 held ties
+fem: grid (32, 24, 24) = 18,432 elements, 25,653 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0949 (dil 0.1157 g -0.231) grey 24.5% ch 0.100 worst held b2 fz 3.76e+03 2.1s
+it   2 beta    1 J   2.6829 vol 0.1160 (dil 0.1399 g -0.070) grey 56.3% ch 0.100 worst held b2 mz 1.36e+03 2.5s
+it   3 beta    1 J   3.2941 vol 0.1186 (dil 0.1425 g -0.053) grey 54.9% ch 0.100 worst tie b8 my 1.87e+03 2.1s
+it   4 beta    1 J   2.9310 vol 0.1151 (dil 0.1384 g -0.080) grey 52.1% ch 0.100 worst held b2 mz 1.43e+03 2.5s
+it   5 beta    1 J   3.3454 vol 0.1124 (dil 0.1353 g -0.101) grey 51.5% ch 0.100 worst tie b8 my 1.8e+03 2.2s
+it   6 beta    1 J   2.6492 vol 0.1096 (dil 0.1319 g -0.120) grey 48.6% ch 0.100 worst held b2 mz 1.2e+03 2.3s
+it   7 beta    1 J   1.6571 vol 0.1179 (dil 0.1417 g -0.054) grey 54.6% ch 0.100 worst pad push 694 2.2s
+it   8 beta    1 J   1.3327 vol 0.1230 (dil 0.1474 g -0.016) grey 56.0% ch 0.100 worst pad push 571 2.0s
+it   9 beta    1 J   1.2301 vol 0.1246 (dil 0.1492 g -0.004) grey 56.1% ch 0.100 worst pad push 527 2.0s
+it  10 beta    1 J   1.1901 vol 0.1249 (dil 0.1495 g -0.002) grey 55.4% ch 0.100 worst pad push 516 2.1s
