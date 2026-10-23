@@ -167,3 +167,18 @@ it  87 beta   32 J   4.6114 vol 0.1522 (dil 0.3116 g -0.000) grey  3.6% ch 0.100
 it  88 beta   32 J   4.6034 vol 0.1522 (dil 0.3116 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 135 geo -1.00/-0.95 25.6s
 it  89 beta   32 J   4.5961 vol 0.1523 (dil 0.3116 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 134 geo -1.00/-0.95 26.3s
 it  90 beta   32 J   4.5895 vol 0.1523 (dil 0.3116 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 134 geo -1.00/-0.96 25.5s
+it  91 beta   32 J   4.5836 vol 0.1523 (dil 0.3116 g +0.001) grey  3.6% ch 0.100 worst tie b3 mz 134 geo -1.00/-0.96 26.4s
+it  92 beta   32 J   4.6164 vol 0.1521 (dil 0.3113 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 135 geo -1.00/-0.96 25.0s
+it  93 beta   32 J   4.6112 vol 0.1522 (dil 0.3113 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 135 geo -1.00/-0.96 25.4s
+it  94 beta   32 J   4.6063 vol 0.1522 (dil 0.3113 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 135 geo -1.00/-0.96 25.0s
+it  95 beta   32 J   4.6019 vol 0.1522 (dil 0.3113 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 134 geo -1.00/-0.96 25.4s
+it  96 beta   32 J   4.5979 vol 0.1522 (dil 0.3113 g +0.001) grey  3.6% ch 0.100 worst tie b3 mz 134 geo -1.00/-0.96 25.2s
+it  97 beta   32 J   4.6244 vol 0.1521 (dil 0.3111 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 135 geo -1.00/-0.96 25.2s
+layout: stopped (max_stage) at it 97, beta 32, 2437 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; anchored cores outside the main body: 0
+layout done: 2551 s, peak 6.080632 GB
+build: surface at pitch 0.267 mm (x3), generated field 8.72 cm3, mesh 223,504 faces, 7 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [5563.0], "necks": [], "drawn_not_in_main": [["0.0", 0.715, "erode 1.6"], ["0.1", 0.711, "erode 1.6"], ["0.2", 0.715, "erode 1.6"], ["0.3", 0.711, "erode 1.6"], ["0.4", 0.501, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.11 in 'crash push 40 N +Y on the motor' at [-8.4, -15.6, 2.6]
+RESULT {"name": "motor_mount", "solid_ok": false, "mass_g": 13.06, "worst": 0.106, "function_ok": true, "bodies": 1}
