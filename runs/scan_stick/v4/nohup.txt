@@ -65,3 +65,34 @@ it  47 beta    4 J   0.1064 vol 0.0786 (dil 0.1301 g -0.014) grey 10.5% ch 0.100
 it  48 beta    4 J   0.0995 vol 0.0799 (dil 0.1303 g -0.012) grey 10.3% ch 0.100 worst gate b7 my 71.8 2.2s
 it  49 beta    4 J   0.0946 vol 0.0802 (dil 0.1298 g -0.016) grey 10.0% ch 0.100 worst drop on lidar -z 150 N 73.5 2.1s
 it  50 beta    4 J   0.0835 vol 0.0811 (dil 0.1303 g -0.012) grey  9.9% ch 0.100 worst gate b7 my 66.9 2.2s
+it  51 beta    4 J   0.0776 vol 0.0827 (dil 0.1313 g +0.001) grey 10.0% ch 0.100 worst gate b7 my 61.5 2.6s
+it  52 beta    4 J   0.0750 vol 0.0830 (dil 0.1308 g -0.003) grey  9.8% ch 0.100 worst gate b7 my 58.6 2.1s
+it  53 beta    4 J   0.0722 vol 0.0838 (dil 0.1309 g -0.002) grey  9.6% ch 0.100 worst gate b7 my 55.9 2.2s
+it  54 beta    4 J   0.0701 vol 0.0843 (dil 0.1310 g -0.001) grey  9.4% ch 0.100 worst gate b7 my 53.9 2.2s
+it  55 beta    4 J   0.0682 vol 0.0847 (dil 0.1310 g -0.001) grey  9.2% ch 0.100 worst gate b7 my 52.4 2.2s
+it  56 beta    4 J   0.0666 vol 0.0851 (dil 0.1310 g +0.015) grey  9.2% ch 0.100 worst gate b7 my 51.2 2.1s
+it  57 beta    4 J   0.0704 vol 0.0833 (dil 0.1288 g -0.003) grey  8.9% ch 0.100 worst tie b4 fx 54 2.0s
+layout: stopped (beta_stop) at it 57, beta 4, 144 s
+layout: beta 4 done: eroded design 25 bodies, main 95.6%; drawn bodies outside the main body: 24
+coarse stage done: 57 iterations, 153 s, peak 0.768364 GB
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 53,989 (182.2 cm3), drawn 5,367, void 71,716
+  support default: 2124 cells, 3180 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (11.99 cm3); 6.12 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.064 of 55,803 design cells
+layout: WARNING nearly mirrored in x (3.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.2% of passive cells differ): no symmetry
+layout: 4 drawn bodies (3,553 cells), held solid in every realization; eroded filter: masked
+layout: 47 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 64, 32) = 131,072 elements, 199,461 active dofs; backend direct (direct estimate 2.0 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 16) grid (h 3.0): mean x 0.075
+it   1 beta    4 J  10.0000 vol 0.0729 (dil 0.1171 g +0.133) grey  9.8% ch 0.100 worst drop on lidar -z 150 N 2.56e+03 17.7s
+it   2 beta    4 J  11.7538 vol 0.0641 (dil 0.1104 g +0.068) grey 10.4% ch 0.100 worst drop on lidar -z 150 N 3.01e+03 18.1s
+it   3 beta    4 J  14.2589 vol 0.0548 (dil 0.1031 g -0.003) grey 10.6% ch 0.100 worst drop on lidar -z 150 N 3.65e+03 17.3s
+it   4 beta    4 J  10.0618 vol 0.0539 (dil 0.1017 g -0.016) grey 10.2% ch 0.100 worst drop on lidar -z 150 N 2.56e+03 16.9s
+it   5 beta    4 J   5.6903 vol 0.0537 (dil 0.1015 g -0.018) grey  9.8% ch 0.100 worst drop on lidar -z 150 N 1.45e+03 17.4s
+it   6 beta    4 J   2.7103 vol 0.0534 (dil 0.1018 g -0.063) grey  9.6% ch 0.100 worst drop on lidar -z 150 N 611 18.5s
+it   7 beta    4 J   1.5242 vol 0.0583 (dil 0.1064 g -0.020) grey  9.7% ch 0.100 worst tie b3 mz 304 18.0s
+it   8 beta    4 J   1.0709 vol 0.0610 (dil 0.1068 g -0.016) grey  9.2% ch 0.100 worst tie b3 mz 200 18.1s
+it   9 beta    4 J   0.6188 vol 0.0638 (dil 0.1073 g -0.012) grey  8.9% ch 0.100 worst tie b3 mz 146 18.2s
+it  10 beta    4 J   0.4767 vol 0.0659 (dil 0.1075 g -0.010) grey  8.6% ch 0.100 worst tie b3 mz 111 17.5s
