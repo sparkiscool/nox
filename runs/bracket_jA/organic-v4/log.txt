@@ -112,3 +112,13 @@ it  47 beta   32 J   5.4554 vol 0.5952 (dil 0.7734 g -0.000) grey  6.0% ch 0.100
 it  48 beta   32 J   5.4423 vol 0.5951 (dil 0.7735 g -0.000) grey  6.0% ch 0.100 worst gate b4 fy 8.25 7.4s
 it  49 beta   32 J   5.4308 vol 0.5950 (dil 0.7735 g -0.000) grey  6.0% ch 0.100 worst gate b4 fy 8.21 7.0s
 it  50 beta   32 J   5.4200 vol 0.5950 (dil 0.7735 g -0.000) grey  6.1% ch 0.100 worst gate b4 fy 8.18 7.7s
+it  51 beta   32 J   5.4091 vol 0.5950 (dil 0.7735 g -0.001) grey  6.2% ch 0.100 worst gate b4 fy 8.14 8.7s
+it  52 beta   32 J   5.3884 vol 0.5957 (dil 0.7740 g -0.000) grey  6.3% ch 0.100 worst gate b4 fy 8.1 7.6s
+it  53 beta   32 J   5.3776 vol 0.5956 (dil 0.7740 g -0.000) grey  6.4% ch 0.100 worst gate b4 fy 8.06 7.6s
+it  54 beta   32 J   5.3679 vol 0.5956 (dil 0.7740 g -0.000) grey  6.4% ch 0.100 worst gate b4 fy 8.04 7.9s
+it  55 beta   32 J   5.3603 vol 0.5956 (dil 0.7741 g -0.000) grey  6.5% ch 0.100 worst gate b4 fy 8.02 7.4s
+it  56 beta   32 J   5.3542 vol 0.5956 (dil 0.7741 g -0.000) grey  6.5% ch 0.100 worst gate b4 fy 8 7.3s
+it  57 beta   32 J   5.3429 vol 0.5960 (dil 0.7744 g -0.000) grey  6.6% ch 0.100 worst gate b4 fy 7.97 7.0s
+it  58 beta   32 J   5.3365 vol 0.5959 (dil 0.7744 g -0.000) grey  6.6% ch 0.100 worst gate b4 fy 7.95 7.3s
+it  59 beta   32 J   5.3303 vol 0.5959 (dil 0.7744 g -0.000) grey  6.6% ch 0.100 worst gate b4 fy 7.92 7.2s
+it  60 beta   32 J   5.3246 vol 0.5960 (dil 0.7744 g -0.000) grey  6.6% ch 0.100 worst gate b4 fy 7.9 7.1s
