@@ -1,0 +1,18 @@
+=== scan_stick_cam: h 0.75, generated 5.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.149 of 9,924 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (4.8% of passive cells differ): no symmetry
+layout: 6 drawn bodies (1,696 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 0 gate ties
+fem: grid (32, 48, 16) = 24,576 elements, 41,349 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1568 (dil 0.1872 g +0.050) grey 78.3% ch 0.100 worst cable pull -y 20 N 1.15e+03 1.5s
+it   2 beta    1 J  10.2920 vol 0.1430 (dil 0.1706 g -0.043) grey 58.1% ch 0.100 worst tie b5 my 1.39e+03 1.7s
+it   3 beta    1 J  14.0662 vol 0.1389 (dil 0.1651 g -0.074) grey 57.5% ch 0.100 worst poke post 1 +x 10 N 1.82e+03 1.5s
+it   4 beta    1 J   9.4658 vol 0.1394 (dil 0.1655 g -0.072) grey 57.9% ch 0.100 worst poke post 2 +x 10 N 1.24e+03 1.8s
+it   5 beta    1 J   9.5753 vol 0.1376 (dil 0.1631 g -0.085) grey 57.0% ch 0.100 worst poke post 3 +x 10 N 1.23e+03 1.5s
+it   6 beta    1 J   8.9471 vol 0.1362 (dil 0.1611 g -0.094) grey 54.6% ch 0.100 worst poke post 2 +x 10 N 1.17e+03 2.0s
+it   7 beta    1 J   7.8823 vol 0.1341 (dil 0.1585 g -0.109) grey 55.4% ch 0.100 worst poke post 1 +x 10 N 1.01e+03 1.9s
+it   8 beta    1 J   5.3225 vol 0.1334 (dil 0.1575 g -0.115) grey 52.5% ch 0.100 worst tie b1 my 635 1.4s
+it   9 beta    1 J   2.6371 vol 0.1390 (dil 0.1637 g -0.079) grey 55.4% ch 0.100 worst tie b1 my 350 1.7s
+it  10 beta    1 J   1.8320 vol 0.1454 (dil 0.1708 g -0.039) grey 56.6% ch 0.100 worst tie b5 my 240 1.5s
