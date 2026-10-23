@@ -1,0 +1,20 @@
+=== bracket_jA: h 1.0, generated 12.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (16.46 cm3); 0.08 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.545 of 2,772 design cells
+layout: WARNING nearly mirrored in y (0.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (7.3% of passive cells differ): no symmetry
+layout: 5 drawn bodies (2,057 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (1,276 cells) count by their cover; 3 bodies tied to body 1
+layout: 6 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 18 gate ties + 0 held ties
+fem: grid (24, 48, 24) = 27,648 elements, 20,985 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.4549 (dil 0.5070 g -0.165) grey 100.0% ch 0.100 worst gate b4 fz 25.9 0.9s
+it   2 beta    1 J   5.5000 vol 0.5181 (dil 0.5695 g -0.062) grey 100.0% ch 0.100 worst gate b4 fz 14.2 0.8s
+it   3 beta    1 J   3.5048 vol 0.5484 (dil 0.5982 g -0.015) grey 100.0% ch 0.100 worst gate b2 fz 8.83 0.8s
+it   4 beta    1 J   2.6822 vol 0.5518 (dil 0.6003 g -0.011) grey 99.8% ch 0.100 worst gate b2 fy 7.09 0.7s
+it   5 beta    1 J   2.2260 vol 0.5543 (dil 0.6012 g -0.010) grey 97.5% ch 0.100 worst gate b2 fy 6.14 0.7s
+it   6 beta    1 J   1.9478 vol 0.5579 (dil 0.6030 g +0.001) grey 95.2% ch 0.100 worst gate b2 fy 5.26 0.7s
+it   7 beta    1 J   1.8566 vol 0.5550 (dil 0.5990 g -0.005) grey 93.5% ch 0.100 worst gate b2 fy 4.8 0.7s
+it   8 beta    1 J   1.7628 vol 0.5566 (dil 0.5991 g -0.005) grey 91.2% ch 0.100 worst gate b2 fy 4.32 0.7s
+it   9 beta    1 J   1.6913 vol 0.5585 (dil 0.5996 g -0.004) grey 87.3% ch 0.100 worst gate b4 fy 4.07 0.7s
+it  10 beta    1 J   1.6477 vol 0.5605 (dil 0.6007 g -0.003) grey 86.1% ch 0.100 worst gate b2 fz 3.97 0.7s
