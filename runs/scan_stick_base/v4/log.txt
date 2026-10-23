@@ -125,3 +125,8 @@ it 111 beta   32 J   2.8082 vol 0.0789 (dil 0.1567 g +0.007) grey  1.4% ch 0.100
 layout: stopped (grey) at it 111, beta 32, 2946 s
 layout: beta 32 done: eroded design 22 bodies, main 99.5%; drawn bodies outside the main body: 0
 layout done: 2998 s, peak 5.989256 GB
+build: surface at pitch 0.333 mm (x6), generated field 83.27 cm3, mesh 850,700 faces, 76 s
+solid check: FAIL {"bodies_plain": 4, "bodies_eroded": 1, "eroded_volumes_mm3": [62756.0], "necks": [], "drawn_not_in_main": [["0.2", 0.922, "erode 2.0"], ["0.6", 0.915, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.5, "core_mm3": 43.25, "at": [-21.8, -25.6, 121.0], "span": [5.6, 0.9, 0.2]}, {"kind": "wall", "thick_mm": 1.5, "core_mm3": 43.23, "at": [-21.7, 25.6, 47.0], "span": [5.5, 0.9, 0.2]}, {"kind": "wall", "thick_mm": 1.5, "core_mm3": 43.23, "at": [-21.7, 25.6, 121.0], "span": [5.5, 0.9, 0.2]}], "acute_edges": 35, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 5.52 in 'pack impact 50 g 3' at [-15.5, -21.0, 13.0]
+RESULT {"name": "scan_stick_base", "solid_ok": false, "mass_g": 123.37, "worst": 5.522, "function_ok": true, "bodies": 1}
