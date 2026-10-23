@@ -102,3 +102,13 @@ layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside 
 it  38 beta   32 J   5.4718 vol 0.5999 (dil 0.7763 g +0.006) grey  6.1% ch 0.100 worst gate b4 fy 8.41 7.4s
 it  39 beta   32 J   5.6201 vol 0.5914 (dil 0.7703 g -0.002) grey  6.2% ch 0.086 worst gate b4 fy 8.63 7.2s
 it  40 beta   32 J   5.5621 vol 0.5934 (dil 0.7715 g -0.000) grey  6.2% ch 0.069 worst gate b4 fy 8.54 8.0s
+it  41 beta   32 J   5.5481 vol 0.5935 (dil 0.7717 g -0.002) grey  6.2% ch 0.100 worst gate b4 fy 8.52 9.0s
+it  42 beta   32 J   5.5187 vol 0.5947 (dil 0.7727 g -0.000) grey  6.1% ch 0.100 worst gate b4 fy 8.47 7.3s
+it  43 beta   32 J   5.5087 vol 0.5947 (dil 0.7728 g -0.000) grey  6.0% ch 0.100 worst gate b4 fy 8.44 7.7s
+it  44 beta   32 J   5.4999 vol 0.5946 (dil 0.7728 g -0.000) grey  5.9% ch 0.100 worst gate b4 fy 8.41 7.4s
+it  45 beta   32 J   5.4908 vol 0.5945 (dil 0.7728 g -0.000) grey  5.9% ch 0.100 worst gate b4 fy 8.39 7.3s
+it  46 beta   32 J   5.4803 vol 0.5944 (dil 0.7727 g -0.001) grey  5.9% ch 0.100 worst gate b4 fy 8.35 8.2s
+it  47 beta   32 J   5.4554 vol 0.5952 (dil 0.7734 g -0.000) grey  6.0% ch 0.100 worst gate b4 fy 8.29 7.3s
+it  48 beta   32 J   5.4423 vol 0.5951 (dil 0.7735 g -0.000) grey  6.0% ch 0.100 worst gate b4 fy 8.25 7.4s
+it  49 beta   32 J   5.4308 vol 0.5950 (dil 0.7735 g -0.000) grey  6.0% ch 0.100 worst gate b4 fy 8.21 7.0s
+it  50 beta   32 J   5.4200 vol 0.5950 (dil 0.7735 g -0.000) grey  6.1% ch 0.100 worst gate b4 fy 8.18 7.7s
