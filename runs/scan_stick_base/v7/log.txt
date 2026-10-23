@@ -48,3 +48,14 @@ it  37 beta    4 J   0.2771 vol 0.0872 (dil 0.1769 g -0.035) grey 17.7% ch 0.100
 it  38 beta    4 J   0.2771 vol 0.0879 (dil 0.1775 g -0.032) grey 17.6% ch 0.100 worst head 25 g 4 134 19.7s
 it  39 beta    4 J   0.2771 vol 0.0887 (dil 0.1782 g -0.028) grey 17.6% ch 0.100 worst head 25 g 4 134 19.8s
 it  40 beta    4 J   0.2771 vol 0.0895 (dil 0.1790 g -0.024) grey 17.6% ch 0.100 worst head 25 g 4 133 20.9s
+it  41 beta    4 J   0.2771 vol 0.0903 (dil 0.1798 g +0.004) grey 17.6% ch 0.100 worst head 25 g 4 133 22.3s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  42 beta    8 J   1.1838 vol 0.0732 (dil 0.1939 g -0.137) grey  5.7% ch 0.100 worst pi 25 g 4 556 21.8s
+it  43 beta    8 J   0.6712 vol 0.0776 (dil 0.1968 g -0.124) grey  5.7% ch 0.100 worst pi 25 g 4 321 22.5s
+it  44 beta    8 J   0.4031 vol 0.0807 (dil 0.1989 g -0.115) grey  5.6% ch 0.100 worst pi 25 g 4 186 21.2s
+it  45 beta    8 J   0.3278 vol 0.0829 (dil 0.2005 g -0.108) grey  5.6% ch 0.100 worst pi 25 g 6 141 21.9s
+it  46 beta    8 J   0.2999 vol 0.0846 (dil 0.2018 g -0.077) grey  5.6% ch 0.100 worst drop on head -z 150 N 133 20.4s
+it  47 beta    8 J   0.2856 vol 0.0859 (dil 0.2027 g -0.072) grey  5.5% ch 0.100 worst head 25 g 4 133 20.6s
+it  48 beta    8 J   0.2813 vol 0.0867 (dil 0.2034 g -0.070) grey  5.5% ch 0.100 worst head 25 g 4 133 20.6s
+it  49 beta    8 J   0.2796 vol 0.0873 (dil 0.2039 g -0.067) grey  5.5% ch 0.100 worst head 25 g 4 133 19.5s
+it  50 beta    8 J   0.2793 vol 0.0877 (dil 0.2043 g -0.065) grey  5.5% ch 0.100 worst drop on head -z 150 N 133 19.6s
