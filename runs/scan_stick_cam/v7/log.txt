@@ -65,3 +65,8 @@ it   7 beta    4 J   6.4277 vol 0.3883 (dil 0.5791 g -0.030) grey 46.4% ch 0.100
 it   8 beta    4 J   6.0082 vol 0.3975 (dil 0.5875 g -0.015) grey 46.7% ch 0.100 worst cable pull -y 20 N 1.72e+03 12.7s
 it   9 beta    4 J   5.6277 vol 0.4069 (dil 0.5959 g -0.001) grey 46.9% ch 0.100 worst cable pull -y 20 N 1.61e+03 13.6s
 it  10 beta    4 J   5.2829 vol 0.4108 (dil 0.5963 g -0.001) grey 46.3% ch 0.100 worst cable pull -y 20 N 1.51e+03 13.0s
+it  11 beta    4 J   4.9706 vol 0.4137 (dil 0.5964 g +0.020) grey 45.9% ch 0.100 worst cable pull -y 20 N 1.42e+03 14.4s
+it  12 beta    4 J   4.9717 vol 0.4014 (dil 0.5833 g -0.002) grey 45.6% ch 0.100 worst cable pull -y 20 N 1.42e+03 13.8s
+it  13 beta    4 J   4.9711 vol 0.4040 (dil 0.5845 g -0.001) grey 45.4% ch 0.100 worst cable pull -y 20 N 1.42e+03 13.5s
+it  14 beta    4 J   4.9710 vol 0.4048 (dil 0.5847 g -0.000) grey 45.2% ch 0.081 worst cable pull -y 20 N 1.42e+03 12.8s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
