@@ -73,24 +73,25 @@ def assemble(layout, gen_mesh, speck_mm3=20.0, log=print):
     P = ((S + part.drawn_m) ^ part.env_m) - part.cuts_m
     bodies = P.decompose()
     vols = sorted([b.volume() for b in bodies], reverse=True)
-    dropped, filled = [], []
+    dropped, cavities = [], []
     if len(bodies) > 1:
-        keep = None
+        specks = None
         for b in bodies:
             v = b.volume()
-            if v >= speck_mm3:
-                keep = b if keep is None else keep + b
-            elif v < 0:
-                # an inverted shell is a sealed cavity inside a body (the nominal field enclosed a void, a hollow
-                # section). It is filled: a sealed cavity cannot be cleaned or inspected and prints as extra walls.
-                filled.append(round(-v, 2))
-            else:
+            if v < 0:
+                # an inverted shell is a sealed cavity of a body (the nominal field enclosed a void: a hollow
+                # section). It stays: filling it adds mass the optimiser did not ask for (bar_half topo-v2: +4.8 g,
+                # same worst index), and it prints as an internal wall.
+                cavities.append(round(-v, 2))
+            elif v < speck_mm3:
                 dropped.append(round(v, 2))
-        P = keep
-        log(f"build: {len(bodies)} shells before clean-up, volumes {[round(v_, 1) for v_ in vols[:6]]} mm3; dropped "
-            f"specks {dropped}; filled sealed cavities {filled} mm3")
-    return P, dict(bodies_raw=len(bodies), dropped_specks_mm3=dropped, filled_cavities_mm3=filled,
-                   bodies=len(P.decompose()))
+                specks = b if specks is None else specks + b
+        if specks is not None:
+            P = P - specks
+        log(f"build: {len(bodies)} shells, volumes {[round(v_, 1) for v_ in vols[:6]]} mm3; dropped specks {dropped}; "
+            f"sealed cavities kept {cavities} mm3")
+    return P, dict(bodies_raw=len(bodies), dropped_specks_mm3=dropped, cavities_mm3=cavities,
+                   bodies=len([b for b in P.decompose() if b.volume() > 0]))
 
 
 # -------------------------------------------------------------------------------------------------------- checks
