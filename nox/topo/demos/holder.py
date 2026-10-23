@@ -7,7 +7,13 @@ Changes for the solid gate (23 Oct, organic test part):
   * bolt bosses: 6 x 6 mm squares round the 3.2 mm holes left 1.4 mm walls, which the gate's 0.9 mm erosion cut off
     (topo-v1: 4 boss cores of 3.4 mm3 split off, FAIL; the self-test smoke run never joined one corner boss). Now
     round bosses of 10 mm diameter, 6 mm tall: 3.4 mm walls, the largest round boss the 60 x 40 envelope holds at the
-    corner bolts (5 mm from both edges). Load set, supports (the 6 x 6 seats), keep-outs and envelope unchanged."""
+    corner bolts (5 mm from both edges).
+  * keep-out under the pack round the pad: starts at z 27 (was 26), 3 mm clearance under the pack instead of 4 (DEFAULT).
+    The pad sat on a 4 mm layer between that keep-out and the battery channel (top z 22), so every member out of the
+    pad was a plate at most 4 mm thick, which the gate's 2.0 mm erosion removes (organic-v1: the engine could route
+    only 4.44 mm members to the pad, gate FAIL; worst index 0.65 at the channel's top edge, in that layer). A 5 mm
+    layer hosts the 5.0 mm members the gate needs.
+  Load set, supports (the 6 x 6 seats), battery channel and envelope unchanged."""
 import numpy as np
 import manifold3d as mf
 from ..part import Part
@@ -15,6 +21,7 @@ from ..part import Part
 BOLTS = [(x, y) for x in (5, 55) for y in (5, 35)]
 M_PACK = 0.165                                   # kg on the pad
 BOSS_R = 5.0                                     # bolt boss radius: 3.4 mm wall round the 1.6 mm hole
+PACK_CLEAR_Z = 27.0                              # keep-out under the pack round the pad starts here (was 26)
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -34,7 +41,7 @@ def bodies():
     drawn = pad + hookL + hookR + cam
     for b in bosses:
         drawn += b
-    cuts = box(10, 50, 8, 32, 6, 22) + (box(8, 52, 6, 34, 26, 30.5) - box(22, 38, 14, 26, 26, 30.5))
+    cuts = box(10, 50, 8, 32, 6, 22) + (box(8, 52, 6, 34, PACK_CLEAR_Z, 30.5) - box(22, 38, 14, 26, 26, 30.5))
     for x, y in BOLTS:
         cuts += cyl(x, y, -1, 31, 1.6) + cyl(x, y, 6, 31, 3.0)
     env = box(0, 60, 0, 40, 0, 30)
