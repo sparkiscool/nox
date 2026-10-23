@@ -1,0 +1,17 @@
+[Unit]
+Description=Noxen scan stick recorder (button-triggered lidar + camera capture)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=__USER__
+Environment=HOME=__HOME__
+Environment=SCAN_DATA_ROOT=/data/scans
+# LIDAR_MODE=ros2 or pcap (auto if unset).  LIDAR_IFACE=eth0.  CAM_ARGS to change resolution.
+#Environment=LIDAR_MODE=pcap
+ExecStart=/usr/bin/python3 /usr/local/bin/scan-record.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

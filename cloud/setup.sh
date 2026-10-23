@@ -13,6 +13,9 @@ pip install --break-system-packages -q \
   shapely fast_simplification playwright \
   2>&1 | grep -v "running pip as the 'root'" || true
 
+echo "== openscad + xvfb (nox/overseer/scan_stick: parametric SCAD parts, headless PNG renders)"
+(apt-get update -qq && apt-get install -y -qq openscad xvfb) >/dev/null 2>&1 || echo "nox: openscad install failed (scan_stick renders need it)"
+
 echo "== git-lfs"
 if ! command -v git-lfs >/dev/null 2>&1; then
   (apt-get update -qq && apt-get install -y -qq git-lfs) >/dev/null 2>&1 || true

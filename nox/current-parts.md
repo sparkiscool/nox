@@ -29,6 +29,14 @@ DESIGN (being drawn or run) · BUILT (passes the README Done checks, file not sa
 
 Dropped 17 Oct 15:50 (Spark, DEFAULTs): the S2 latch coupon v1 (its script `archive/scout-v2/s2_latch_coupon.py` deleted; the latch is tested on the real cartridge); the retired docs `archive/scout-v2/s2-guard.md` and `archive/scout-v2/s2-underside.md` (cage v2 and receiver v3.3 replace them).
 
+## Overseer
+| Part | Doc / scripts | Version | State | Saved file (Nox Print Files) | g | Next (owner) |
+|---|---|---|---|---|---|---|
+| Scan stick head | `nox/overseer/scan_stick/scan_stick.md`, `scan_stick.scad` (part lidar_head), topology run `head_topo_run.py` | v1 (drawn, 23 Oct) | **READY** | `print/scan_stick_head_v1.stl` (lidar seat on the bed) | 85.3 (M) | v2 topology run (`run/scan_stick-v2`); measure the pole's lower tube OD (P) |
+| Scan stick thread test | same, part thread_test | v1 | **READY** | `print/scan_stick_thread_test_v1.stl` | 8.3 (M) | print first, screw on the pole, tune `acme_clear` |
+| Scan stick cam bracket | same, part camera_bracket | v1 | **READY** | `print/scan_stick_cam_v1.stl` | 10.0 (M) | camera lens / board thickness (Q3) |
+| Scan stick cradle | same, part pi_bat_cradle | v1 | **READY** | `print/scan_stick_cradle_v1.stl` | 194.7 (M) | re-render once `rod_d` is measured (P) |
+
 ## Box
 | Part | Doc / scripts | Version | State | Saved file (Nox Print Files) | g | Next (owner) |
 |---|---|---|---|---|---|---|
