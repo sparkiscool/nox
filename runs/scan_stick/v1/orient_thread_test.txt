@@ -1,0 +1,2 @@
+print/scan_stick_thread_test_v1.stl extents [32. 32. 12.] g PETG 8.28 watertight True
+   saved: bed    543 mm2  overhang    338 mm2  height  12.0  first layer 1 islands [543.1] (total 543.1)  thin-island run 0 mm

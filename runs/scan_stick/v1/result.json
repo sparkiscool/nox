@@ -1,0 +1,62 @@
+{
+ "part": "scan_stick",
+ "version": "v1",
+ "parts": {
+  "head": {
+   "file": "scan_stick_head_v1.stl",
+   "mass_g": 86.8,
+   "sha12": "0c0e04bc5ba3",
+   "bbox": [
+    86.0,
+    86.0,
+    40.0
+   ]
+  },
+  "thread_test": {
+   "file": "scan_stick_thread_test_v1.stl",
+   "mass_g": 8.3,
+   "sha12": "7b35ab438606",
+   "bbox": [
+    32.0,
+    32.0,
+    12.0
+   ]
+  },
+  "cam": {
+   "file": "scan_stick_cam_v1.stl",
+   "mass_g": 10.0,
+   "sha12": "9e41b03db34d",
+   "bbox": [
+    44.0,
+    60.0,
+    6.0
+   ]
+  },
+  "cradle": {
+   "file": "scan_stick_cradle_v1.stl",
+   "mass_g": 194.7,
+   "sha12": "6df0f4362ada",
+   "bbox": [
+    92.0,
+    84.0,
+    156.0
+   ]
+  }
+ },
+ "solid_check_pass": true,
+ "bed": {
+  "head": "lidar seat, 6440 mm2",
+  "cam": "flat, 2418 mm2",
+  "cradle": "bottom, 4257 mm2"
+ },
+ "loads": "none (drawn v1)",
+ "date": "2026-10-23",
+ "status": "DONE",
+ "mass_g": 86.8,
+ "mass_tag": "M",
+ "solid_ok": true,
+ "bed_face": "head: lidar seat",
+ "bed_contact_mm2": 6440,
+ "worst_index": null,
+ "worst_case": "no FE on v1 (drawn)"
+}

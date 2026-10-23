@@ -1,0 +1,2 @@
+print/scan_stick_head_v2.stl extents [61.9 61.8 40. ] g PETG 61.88 watertight True
+   saved: bed   1037 mm2  overhang   2147 mm2  height  40.0  first layer 1 islands [1068.4] (total 1068.4)  thin-island run 0 mm

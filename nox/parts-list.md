@@ -43,6 +43,23 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | RC receiver | 1 | RC (CRSF) | CHECK (model not recorded) | |
 | Belly frame, 8 PETG wheels, steel belly plate, pogo pads | 1 set | box catch (section G) | to design | G |
 
+## Scan stick (hand-held L2 scanner, 23 Oct; `nox/overseer/scan_stick/scan_stick.md`)
+Shares the Overseer's L2, camera and 4S 6000 pack (above); the Pi 5 is the Overseer's companion computer (resume, P).
+| Part | Qty | Role | Status | Mount data |
+|---|---|---|---|---|
+| EXTEND-A-REACH 1.5-3 ft extension pole, 3/4-5 ACME tip (B08LL28XZW) | 1 | the stick | on hand (Spark 23 Oct) | S |
+| Raspberry Pi 5 + microSD ≥ 64 GB (E: ~1 GB/min) | 1 | recorder | on hand (resume) | M: Pi 5 (58 x 49, Ø2.7) |
+| 5 V 5 A UBEC | 1 | Pi + camera | CHECK (box has one) | M: UBEC, Q4 |
+| 12 V 2 A buck (Pololu D24V22F12 class) | 1 | L2 supply | to buy | S |
+| KCD1 rocker switch | 1 | main power | on hand (Parts & Resource sheet) | S |
+| 12 mm momentary button + 5 mm LED + 330 Ω (typical) | 1 + 1 | record start / stop | to buy | S |
+| 20 mm hook-and-loop strap, 450 mm (E) | 2 | pack | to buy | S |
+| M3 heat-set inserts (Ø4.0 hole) | 2 | camera bracket | on hand | M: inserts |
+| M3 x 12, M4 x 30 + nut, M2 x 5, M2.5 x 6 | 4, 2, 4, 4 | assembly | on hand / CHECK | S |
+| Cat5e 0.5 m, XT60 pigtail, DC 3.5 x 1.35 plug lead | 1 each | wiring | CHECK | |
+
+Printed (state only in `nox/current-parts.md`): head `print/scan_stick_head_v1.stl`, thread test `print/scan_stick_thread_test_v1.stl`, cam `print/scan_stick_cam_v1.stl`, cradle `print/scan_stick_cradle_v1.stl`.
+
 ## Box: bought parts
 | Part | Qty | Role | Status | Mount data |
 |---|---|---|---|---|
