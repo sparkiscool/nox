@@ -113,3 +113,21 @@ it  57 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.089
 it  58 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.074 worst tie b1 fz 2.74 3.9s
 it  59 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.096 worst tie b1 fz 2.74 3.6s
 it  60 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.100 worst tie b1 fz 2.74 5.1s
+it  61 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.100 worst tie b1 fz 2.74 3.0s
+it  62 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.085 worst tie b1 fz 2.74 3.4s
+it  63 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.083 worst tie b1 fz 2.74 4.0s
+it  64 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.093 worst tie b1 fz 2.74 4.7s
+it  65 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.100 worst tie b1 fz 2.74 3.8s
+it  66 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.100 worst tie b1 fz 2.74 4.6s
+it  67 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.100 worst tie b1 fz 2.74 4.7s
+it  68 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.100 worst tie b2 fz 2.74 4.0s
+it  69 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.076 worst tie b2 fz 2.74 4.5s
+it  70 beta   32 J   7.5222 vol 0.5593 (dil 0.7165 g -0.000) grey  4.0% ch 0.088 worst tie b1 fz 2.74 4.2s
+layout: stopped (max_stage) at it 70, beta 32, 292 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 316 s, peak 1.962216 GB
+build: surface at pitch 0.333 mm (x3), generated field 25.10 cm3, mesh 237,340 faces, 7 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [19002.7], "necks": [], "drawn_not_in_main": [["0.2", 0.0, "erode 2.0"], ["0.3", 0.0, "erode 2.0"], ["0.4", 0.501, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.12 in 'ring up + fore 30 N' at [168.5, 139.5, -64.0]
+RESULT {"name": "bracket_jA", "solid_ok": false, "mass_g": 35.87, "worst": 0.119, "function_ok": true, "bodies": 1}
