@@ -161,3 +161,13 @@ layout: beta 16 done: eroded design 15 bodies, main 21.6%; drawn bodies outside 
 it  58 beta   32 J  54.7287 vol 0.1167 (dil 0.2530 g -0.004) grey  3.4% ch 0.100 worst gate b8 fx 2.18e+04 33.0s
 it  59 beta   32 J 706.5594 vol 0.1130 (dil 0.2520 g -0.008) grey  3.6% ch 0.100 worst held b1 my 2.87e+05 32.7s
 it  60 beta   32 J 1500.7632 vol 0.1112 (dil 0.2501 g -0.015) grey  3.4% ch 0.100 worst tie b8 mx 5.65e+05 31.6s
+it  61 beta   32 J  66.9714 vol 0.1140 (dil 0.2535 g -0.013) grey  3.4% ch 0.100 worst pad push 2.46e+04 34.4s
+it  62 beta   32 J 121.0705 vol 0.1159 (dil 0.2539 g -0.011) grey  3.5% ch 0.100 worst tie b8 my 5.49e+04 33.2s
+it  63 beta   32 J 421.2056 vol 0.1107 (dil 0.2513 g -0.021) grey  3.5% ch 0.100 worst held b2 my 1.71e+05 33.9s
+it  64 beta   32 J  81.7797 vol 0.1106 (dil 0.2502 g -0.026) grey  3.3% ch 0.100 worst held b7 mx 3.3e+04 34.1s
+it  65 beta   32 J  91.5712 vol 0.1115 (dil 0.2504 g -0.024) grey  3.3% ch 0.100 worst held b2 my 3.72e+04 34.4s
+it  66 beta   32 J  25.5274 vol 0.1123 (dil 0.2475 g -0.043) grey  3.2% ch 0.100 worst pad push 8.81e+03 34.9s
+it  67 beta   32 J  12.8231 vol 0.1185 (dil 0.2513 g -0.028) grey  3.2% ch 0.100 worst pad push 4.41e+03 33.7s
+it  68 beta   32 J  10.5846 vol 0.1241 (dil 0.2559 g -0.010) grey  3.2% ch 0.100 worst poke cam z 3.93e+03 33.6s
+it  69 beta   32 J   9.7089 vol 0.1261 (dil 0.2570 g -0.006) grey  3.3% ch 0.100 worst poke cam z 3.7e+03 34.4s
+it  70 beta   32 J   8.9754 vol 0.1270 (dil 0.2571 g -0.006) grey  3.3% ch 0.100 worst poke cam z 3.42e+03 34.0s
