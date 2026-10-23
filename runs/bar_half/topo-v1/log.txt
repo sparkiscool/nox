@@ -1,0 +1,18 @@
+=== bar_half: h 1.0, generated 45.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.532 of 10,579 design cells
+layout: WARNING nearly mirrored in y (4.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (6.0% of passive cells differ): no symmetry
+layout: 2 drawn bodies; anchored cores 979 cells, skins 655 cells (eroded with the design)
+layout: 6 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default')
+fem: grid (112, 16, 24) = 43,008 elements, 45,552 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.4595 (dil 0.5142 g -0.136) grey 100.0% ch 0.100 worst tie b2 mz 16.2 1.0s
+it   2 beta    1 J   6.0285 vol 0.5226 (dil 0.5762 g -0.032) grey 100.0% ch 0.100 worst tie b2 mx 9.88 0.6s
+it   3 beta    1 J   4.8577 vol 0.5356 (dil 0.5880 g -0.012) grey 100.0% ch 0.100 worst tie b2 mx 8.34 0.7s
+it   4 beta    1 J   4.2415 vol 0.5388 (dil 0.5899 g -0.009) grey 99.6% ch 0.100 worst tie b2 mx 7.36 0.7s
+it   5 beta    1 J   3.7583 vol 0.5409 (dil 0.5901 g -0.008) grey 97.0% ch 0.100 worst tie b2 mx 6.55 0.7s
+it   6 beta    1 J   3.3276 vol 0.5435 (dil 0.5901 g -0.001) grey 93.2% ch 0.100 worst tie b2 mx 5.81 0.6s
+it   7 beta    1 J   3.0547 vol 0.5417 (dil 0.5861 g -0.008) grey 91.2% ch 0.100 worst tie b2 mx 5.37 0.8s
+it   8 beta    1 J   2.7628 vol 0.5441 (dil 0.5861 g -0.007) grey 88.1% ch 0.100 worst tie b2 mx 4.87 0.6s
+it   9 beta    1 J   2.5505 vol 0.5473 (dil 0.5872 g -0.006) grey 82.6% ch 0.100 worst tie b2 mx 4.51 0.6s
+it  10 beta    1 J   2.4246 vol 0.5495 (dil 0.5879 g -0.005) grey 79.0% ch 0.100 worst tie b2 mx 4.27 0.7s
