@@ -23,7 +23,7 @@ def load(p, M=None):
 def box(x0, x1, y0, y1, z0, z1):
     b = trimesh.creation.box([x1 - x0, y1 - y0, z1 - z0]); b.apply_translation([(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2]); return b
 
-base = load(os.path.join(ROOT, "print", "scan_stick_base_v13.stl"))
+base = load(os.path.join(ROOT, "print", "scan_stick_base_v15.stl"))
 HEAD_ROT = 90.0                                           # head bolted turned +90 about z: camera block over the Pi tray (+X), L2 notch over the shelf (-Y)
 head = load(os.path.join(ROOT, "print", "scan_stick_head_v10.stl"), rot([0, 0, 1], HEAD_ROT, (0, 0, TOP)))
 # cam print frame: plate in XY, tab at +Y (bolt pads at y 53), lens / posts +z. Mount: plate against the block's +Y face
@@ -56,8 +56,8 @@ def overlap(a, b, pitch=0.5):
 for an, am, bn, bm in (("base", base, "head", head), ("base", base, "cam bracket", cam), ("head", head, "cam bracket", cam),
                        ("base", base, "camera board", camera), ("head", head, "camera board", camera), ("base", base, "Pi", pi), ("base", base, "pack", pack)):
     print(f"fit: {an} x {bn}: {overlap(am, bm):.0f} mm3 overlap (M; 0 = clear)")
-s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v13 (Pi 5 + 4S 6000 near the hand), head v10 (Unitree L2 + DECXIN camera), cam v4; nox/topo parts")
-s.part("base v13", base, group="printed", color="#8899aa", printed=True)
+s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v15 (Pi 5 + 4S 6000 near the hand), head v10 (Unitree L2 + DECXIN camera), cam v4; nox/topo parts")
+s.part("base v15", base, group="printed", color="#8899aa", printed=True)
 s.part("head v10", head, group="printed", color="#9aa8b8", printed=True)
 s.part("cam bracket v4", cam, group="printed", color="#aab4c0", printed=True)
 s.part("thread test v1", ring, group="printed", color="#b8c0c8", printed=True, note="fit ring, beside the pole for scale")
@@ -66,7 +66,7 @@ s.part("DECXIN camera", trimesh.util.concatenate([camera, lens]), group="bought"
 s.part("Raspberry Pi 5", pi, group="bought", color="#2e7d32", printed=False)
 s.part("4S 6000 pack", pack, group="bought", color="#2f4fbf", printed=False, note="148 x 48 x 45 P")
 s.part("pole", trimesh.util.concatenate([pole, tip]), group="bought", color="#777777", printed=False, note="EXTEND-A-REACH 1.5-3 ft")
-names = ["base v13", "head v10", "cam bracket v4", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
+names = ["base v15", "head v10", "cam bracket v4", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
 s.timeline(lambda t: {n: rot([0, 0, 1], 360 * t / 16) for n in names}, duration_s=16, fps=30)
 s.view("iso", (520, -620, 260), (0, 0, 80)); s.view("front", (0, -800, 80), (0, 0, 80)); s.view("head", (220, -260, 260), (0, 0, 200))
 os.makedirs(OUT, exist_ok=True)

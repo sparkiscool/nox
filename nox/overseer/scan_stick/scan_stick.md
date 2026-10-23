@@ -23,16 +23,17 @@ thread: `thread_cut.scad` exports the thread body every run cuts; `thread_test` 
 ## Parts (printed, PETG; every one a nox/topo part except the thread ring)
 | Part | File (`print/`) | What |
 |---|---|---|
-| base | `scan_stick_base_v13.stl` | 3/4-5 ACME socket in a Ø40 boss, drawn Ø36 tube column (the cables run up its bore), top flange with 4x M4 heat-set inserts; Pi tray plate with Ø8 standoffs + panel strip on +X, pack ledge / lip / rails / 5 mm back plate with strap slots on -X, UBEC / buck shelf on -Y; the webs between them generated (`base_topo_v7.py` layout, `base_topo_v13.py` rebuild with the exact cuts) |
+| base | `scan_stick_base_v15.stl` | 3/4-5 ACME socket in a Ø40 boss, drawn Ø36 tube column (the cables run up its bore), top flange with 4x M4 heat-set inserts; Pi tray plate with Ø8 standoffs + panel strip on +X, pack ledge / lip / rails / 5 mm back plate with strap slots on -X, UBEC / buck shelf on -Y; the webs between them generated (`base_topo_v7.py` layout, `base_topo_v15.py` rebuild with the exact cuts) |
 | head | `scan_stick_head_v10.stl` | bolt flange with a Ø10 cable hole, 4 L2 pads with drawn gussets, camera block; four generated arms between (`head_topo_v8.py` layout, `head_topo_v10.py` rebuild) |
 | cam | `scan_stick_cam_v4.stl` | 2 bolt pads to the head's block, 4 Ø12 posts on the DECXIN 28 x 28 M2 pattern with drawn gussets; generated web (`cam_topo_v4.py`) |
 | thread test | `scan_stick_thread_test_v1.stl` | ring with the base's thread: print first, screw onto the pole, tune `acme_clear` |
 
-Results, strength and print data per part: `runs/scan_stick_base/v13/summary.md`, `runs/scan_stick/v10/summary.md`,
+Results, strength and print data per part: `runs/scan_stick_base/v15/summary.md`, `runs/scan_stick/v10/summary.md`,
 `runs/scan_stick_cam/v4/summary.md`. Retired: head v1 (drawn), v2 (noxopt, no gussets), v3 (stopped at the layout change),
 v4-v7 (gate FAILs), v8 / v9 (passed; v9 rebuilt as v10 after review: 3.0 pad wall round the counterbores) (`runs/scan_stick/`),
-the clamp cradle v1, cam v1-v3, base v2-v12 (`runs/scan_stick_base/`; v8-v11 feather FAILs at the boss / tube step, fixed by
-the Ø40 boss; v12 passed but its UBEC keep-out cut a Pi standoff and the -Y rail, and the standoffs had no drawn tray).
+the clamp cradle v1, cam v1-v3, base v2-v14 (`runs/scan_stick_base/`; v8-v11 feather FAILs at the boss / tube step, fixed by
+the Ø40 boss; v12 passed but the layout envelope clipped a Pi standoff and the UBEC keep-out cut the -Y rail, and the
+standoffs had no drawn tray; v13 / v14 lost drawn bodies to the envelope at the build, lesson in `base_topo_v15.py`).
 Every FAILED run keeps its folder and summary; only the READY files are in `print/`.
 
 ## Decisions (DEFAULT unless Spark says otherwise)

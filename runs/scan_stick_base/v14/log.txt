@@ -6,3 +6,8 @@ layout: 4 drawn bodies (24,699 cells), held solid in every realization; eroded f
 layout: 67 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (56, 48, 88) = 236,544 elements, 226,980 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
+build: surface at pitch 0.333 mm (x6), generated field 185.92 cm3, mesh 1,455,356 faces, 94 s
+solid check: FAIL {"bodies_plain": 4, "bodies_eroded": 1, "eroded_volumes_mm3": [175290.8], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 35, "ok": false}
+function check: {'drawn_missing_mm3': 31010.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': False}
+strength: worst index 0.26 in 'pack impact 50 g 0' at [-6.5, -15.0, 69.0]
+RESULT {"name": "scan_stick_base", "solid_ok": false, "mass_g": 296.65, "worst": 0.263, "function_ok": false, "bodies": 1}
