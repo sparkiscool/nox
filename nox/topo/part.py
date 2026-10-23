@@ -96,10 +96,30 @@ class Part:
     def vox(self, t):
         return voxelise(t, *self.axes)
 
-    def elems(self, region, within=None):
-        m = self.vox(tm(region)).ravel()
+    def elems(self, region, within=None, what="region"):
+        """cells whose centre lies in the region; if none does (a region thinner than a cell, e.g. a 1 mm support band
+        on the 2h grid), the cells the region intersects: 3 x 3 x 3 sample points per cell, any inside counts."""
+        t = tm(region)
+        m = self.vox(t).ravel()
         if within is not None:
             m &= within
+        if not m.any():
+            off = (np.arange(3) - 1.0) * self.h / 3.0
+            for dx in off:
+                for dy in off:
+                    for dz in off:
+                        m |= voxelise(t, self.axes[0] + dx, self.axes[1] + dy, self.axes[2] + dz).ravel()
+            how = "intersects (3 x 3 x 3 samples per cell)"
+            if within is not None:
+                hit = m.copy()
+                m &= within
+                if not m.any() and hit.any():
+                    # the region lies in the boundary cells only (a band thinner than the cell beyond the part's last
+                    # cell centre): take the part cells touching those cells
+                    from scipy import ndimage as ndi
+                    m = ndi.binary_dilation(hit.reshape(self.shape), np.ones((3, 3, 3), bool)).ravel() & within
+                    how = "touches (the region lies in the void boundary cells; their part-cell neighbours)"
+            self.log(f"  {what}: no cell centre in the region at h {self.h}; using the {int(m.sum())} cells it {how}")
         return np.where(m)[0]
 
     def nodes_of(self, el):
@@ -110,7 +130,7 @@ class Part:
 
     # ------------------------------------------------------------------------------------- supports and loads
     def support(self, name, region):
-        el = self.elems(region, self.solid | self.design)
+        el = self.elems(region, self.solid | self.design, what=f"support {name}")
         if len(el) == 0:
             raise ValueError(f"support {name}: the region holds no part cells")
         nd = self.nodes_of(el)
@@ -121,7 +141,7 @@ class Part:
         self.log(f"  support {name}: {len(el)} cells, {len(nd)} nodes")
 
     def load(self, name, region, vec, cls="misuse", support="default", accel=None):
-        el = self.elems(region, self.solid | self.design)
+        el = self.elems(region, self.solid | self.design, what=f"load {name}")
         if len(el) == 0:
             raise ValueError(f"load {name}: empty region")
         nd = self.nodes_of(el)
@@ -136,7 +156,7 @@ class Part:
         F = np.zeros(self.ndof)
         alln = []
         for region, vec in parts:
-            el = self.elems(region, self.solid | self.design)
+            el = self.elems(region, self.solid | self.design, what=f"load {name}")
             if len(el) == 0:
                 raise ValueError(f"load {name}: empty region")
             nd = self.nodes_of(el)
