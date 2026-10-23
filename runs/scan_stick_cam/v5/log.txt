@@ -16,3 +16,14 @@ it   7 beta    1 J   7.8823 vol 0.1341 (dil 0.1585 g -0.109) grey 55.4% ch 0.100
 it   8 beta    1 J   5.3225 vol 0.1334 (dil 0.1575 g -0.115) grey 52.5% ch 0.100 worst tie b1 my 635 1.4s
 it   9 beta    1 J   2.6371 vol 0.1390 (dil 0.1637 g -0.079) grey 55.4% ch 0.100 worst tie b1 my 350 1.7s
 it  10 beta    1 J   1.8320 vol 0.1454 (dil 0.1708 g -0.039) grey 56.6% ch 0.100 worst tie b5 my 240 1.5s
+git push failed: fatal: The current branch part/scan-stick-cam has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin part/scan-stick-cam
+
+To have th
+it  11 beta    1 J   1.4698 vol 0.1486 (dil 0.1744 g -0.016) grey 56.4% ch 0.100 worst tie b1 my 186 1.8s
+it  12 beta    1 J   1.3016 vol 0.1496 (dil 0.1753 g -0.010) grey 56.0% ch 0.100 worst tie b1 my 159 1.6s
+it  13 beta    1 J   1.1997 vol 0.1503 (dil 0.1759 g -0.007) grey 55.7% ch 0.100 worst tie b1 my 142 1.8s
+it  14 beta    1 J   1.1243 vol 0.1506 (dil 0.1761 g -0.006) grey 55.0% ch 0.100 worst tie b1 my 130 1.5s
+it  15 beta    1 J   1.0628 vol 0.1509 (dil 0.1763 g -0.005) grey 54.5% ch 0.100 worst tie b1 my 121 2.0s
