@@ -466,7 +466,6 @@ class Layout:
                     if b != a:
                         ties(b, "_gate", "gate")
                 n_gate = len(self.cases) - n_real - n_tie
-                self.anchor = self.anchor & ~self.cover
                 self.log(f"layout: gate ties: held bodies thinner than {s.gate_thin_mm} mm ({int(self.cover.sum()):,} "
                          f"cells) count by their cover; {len(free_b) - 1} bodies tied to body {a}")
         self.n_real = n_real
@@ -556,13 +555,14 @@ class Layout:
             xd[self.design] = x
             xc = self.filt(xd) / self.den_c
             Hc, dHc = project(xc, beta, ee)
-            He = np.where(self.cover, Hc, He)
         Hn, dHn = project(xt, beta, en)
         Hd, dHd = project(xt, beta, ed)
         rho_e = np.where(self.anchor, 1.0, np.where(self.void, 0.0, He))
+        # gate realization (gate ties only): the thin held bodies count by their cover; everywhere else = rho_e
+        rho_g = None if dHc is None else np.where(self.cover, Hc, rho_e)
         rho_n = np.where(self.solid, 1.0, np.where(self.void, 0.0, Hn))
         rho_d = np.where(self.solid, 1.0, np.where(self.void, 0.0, Hd))
-        return dict(xt=xt, xte=xte, dHc=dHc, rho_e=rho_e, rho_n=rho_n, rho_d=rho_d, dHe=dHe, dHn=dHn, dHd=dHd, Hn=Hn)
+        return dict(xt=xt, xte=xte, dHc=dHc, rho_e=rho_e, rho_g=rho_g, rho_n=rho_n, rho_d=rho_d, dHe=dHe, dHn=dHn, dHd=dHd, Hn=Hn)
 
     def _back(self, g_xt):
         """d/dx_tilde -> d/dx on the design cells (filter transpose; the kernel is symmetric)."""
@@ -576,11 +576,16 @@ class Layout:
         return self._back(g_xte)
 
     def grad_eroded(self, f, g_rho):
-        """dJ/d rho_e (nel,) -> dJ/dx on the design cells through the eroded projection and filter."""
+        """dJ/d rho (nel,) -> dJ/dx on the design cells through the eroded projection and filter. g_rho is one array
+        (one realization) or (g on rho_e, g on rho_g) from _grad_rho_e when gate ties run on the gate realization."""
+        g_g = None
+        if isinstance(g_rho, tuple):
+            g_rho, g_g = g_rho
         m_e = self.design | (self.skin if self.s.erosion == "anchored" else np.zeros(self.nel, bool))
-        d = self._back_e(np.where(m_e, g_rho * f["dHe"], 0.0))
-        if f.get("dHc") is not None:
-            d = d + self.filt(np.where(self.cover, g_rho * f["dHc"], 0.0) / self.den_c)[self.design]
+        g_all = g_rho if g_g is None else g_rho + g_g                          # rho_g = rho_e outside the cover
+        d = self._back_e(np.where(m_e, g_all * f["dHe"], 0.0))
+        if g_g is not None:
+            d = d + self.filt(np.where(self.cover, g_g * f["dHc"], 0.0) / self.den_c)[self.design]
         return d
 
     @property
@@ -591,7 +596,9 @@ class Layout:
         return self._den_c
 
     # ---------------------------------------------------------------------------------------- compliance
-    def _compliance(self, rho_e, need_grad=True):
+    def _compliance(self, rho_e, need_grad=True, rho_g=None):
+        """compliance of every case. Gate ties run on rho_g (the gate realization) when it is given, the rest on
+        rho_e (a held thin body stays whole there, so the real cases and the ordinary ties keep it attached)."""
         s = self.s
         E = s.emin + (1.0 - s.emin) * rho_e ** s.penal
         g = self.fe_solver.grid
@@ -602,7 +609,16 @@ class Layout:
             if c.fe is not None:
                 r = (rho_e[:, None] * c.fe[None, :])[None]
                 F[:, q] += g.to_flat(g.scatter(r))[:, 0]
-        U = self.fe_solver.solve(E, F, [c.support for c in cases], keys=[c.name for c in cases])
+        gate = np.array([c.support == "_gate" for c in cases])
+        if rho_g is None or not gate.any():
+            U = self.fe_solver.solve(E, F, [c.support for c in cases], keys=[c.name for c in cases])
+        else:
+            U = np.zeros_like(F)
+            Eg = s.emin + (1.0 - s.emin) * rho_g ** s.penal
+            for m, EE in ((~gate, E), (gate, Eg)):
+                idx = np.where(m)[0]
+                U[:, idx] = self.fe_solver.solve(EE, F[:, idx], [cases[q].support for q in idx],
+                                                 keys=[cases[q].name for q in idx])
         comp = (F * U).sum(0)
         if not need_grad:
             return comp, None
@@ -618,11 +634,14 @@ class Layout:
         dJdc = J ** (1.0 - P) * w * r ** (P - 1.0) / sw / self.c_ref
         return J, dJdc, r
 
-    def _grad_rho_e(self, rho_e, U, dJdc):
-        """dJ / d rho_e (nel,), accumulated case by case."""
+    def _grad_rho_e(self, rho_e, U, dJdc, rho_g=None):
+        """dJ / d rho_e (nel,), accumulated case by case; with rho_g, (dJ / d rho_e, dJ / d rho_g) where the gate
+        ties contribute to the second."""
         s = self.s
         g = np.zeros(self.nel)
+        gg = np.zeros(self.nel) if rho_g is not None else None
         dE = s.penal * np.maximum(rho_e, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin)
+        dEg = None if rho_g is None else s.penal * np.maximum(rho_g, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin)
         CH = 4
         for a in range(0, len(self.cases), CH):
             sl = list(range(a, min(a + CH, len(self.cases))))
@@ -631,11 +650,15 @@ class Layout:
             for j, q in enumerate(sl):
                 if dJdc[q] == 0.0:
                     continue
-                d = -dE * en[j]
+                on_g = gg is not None and self.cases[q].support == "_gate"
+                d = -(dEg if on_g else dE) * en[j]
                 if fe[j] is not None:
                     d = d + 2.0 * fo[j]
-                g += dJdc[q] * d
-        return g
+                if on_g:
+                    gg += dJdc[q] * d
+                else:
+                    g += dJdc[q] * d
+        return g if gg is None else (g, gg)
 
     # --------------------------------------------------------------------------------- geometric constraints
     def _geo_masks(self):
@@ -754,11 +777,11 @@ class Layout:
             ti = time.time()
             x = self.symmetrise_design(self.x)
             f = self.fields(x, beta)
-            comp, (U, E) = self._compliance(f["rho_e"])
+            comp, (U, E) = self._compliance(f["rho_e"], rho_g=f["rho_g"])
             J, dJdc, r = self._objective(comp)
             if self.scale is None:
                 self.scale = 10.0 / J
-            g_rho = self._grad_rho_e(f["rho_e"], U, dJdc)
+            g_rho = self._grad_rho_e(f["rho_e"], U, dJdc, rho_g=f["rho_g"])
             del U
             df0 = self.scale * self.grad_eroded(f, g_rho)
             vd = float(f["rho_d"][self.design].mean())

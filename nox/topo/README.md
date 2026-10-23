@@ -67,7 +67,7 @@ The old `arm_topo.PartProblem` setups run unchanged. See `demos/stand.py`.
 
 ## Demos
 
-Results per part and round: `runs/topo-demo-summary.md` (round 1), `runs/topo-dev-round2.md` (round 2).
+Results per part and round: `runs/topo-demo-summary.md` (round 1), `runs/topo-dev-round2.md` (round 2). The round 2 column was made with `finish="drawn"` (the engine before the organic default); organic runs are listed under Finish below.
 
 | Name | What | Round 2 |
 |---|---|---|
@@ -75,7 +75,7 @@ Results per part and round: `runs/topo-demo-summary.md` (round 1), `runs/topo-de
 | `bracket_e` | The bracket whose v8 bolt pads hung on necks. | Not run. Its coarse stage now builds (support band falls back to touching cells). |
 | `bracket_jA` | Box stand joint bracket the old v8 shipped. | topo-v3: gate PASS, 36.04 g, worst 0.125 (v8: 38.37 g, 0.133, same grid). |
 | `bar_half` | Box stand cross bar half the old v8 shipped. | topo-v3: gate PASS, 71.23 g, worst 0.804 (v8: 77.58 g, 0.929, same grid). |
-| `motor_mount` | A generic drone motor mount (assumed dimensions, E), pads 6 mm tall. | MOTOR_RESULT |
+| `motor_mount` | A generic drone motor mount (assumed dimensions, E), pads 6 mm tall. | topo-v3: gate PASS, 17.21 g, worst 0.117 (v2 with 5 mm pads: FAIL by 4 voxels). |
 
 ## Sources
 

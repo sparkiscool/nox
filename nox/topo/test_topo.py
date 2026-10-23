@@ -358,18 +358,19 @@ def t_gate_ties():
 
         def J(xx):
             f = L.fields(xx, beta)
-            comp, _ = L._compliance(f["rho_e"], need_grad=False)
+            comp, _ = L._compliance(f["rho_e"], need_grad=False, rho_g=f["rho_g"])
             return L._objective(comp)[0]
         f = L.fields(x, beta)
-        comp, (U, E) = L._compliance(f["rho_e"])
+        comp, (U, E) = L._compliance(f["rho_e"], rho_g=f["rho_g"])
         Jv, dJdc, r = L._objective(comp)
-        dx = L.grad_eroded(f, L._grad_rho_e(f["rho_e"], U, dJdc))
+        dx = L.grad_eroded(f, L._grad_rho_e(f["rho_e"], U, dJdc, rho_g=f["rho_g"]))
+        ok_setup = ok_setup and bool((f["rho_e"][L.cover] == 1.0).all())   # the real cases keep the plate whole
         cen = p.cell_centres()[L.design]
         near = np.where(cen[:, 0] < 4.5)[0]                                 # cells that feed the plate's cover
         idx = np.r_[rng.choice(near, 4, replace=False), rng.choice(L.nd, 2, replace=False)]
         errs = []
         for i in idx:
-            e = 1e-4
+            e = 1e-3        # FD at 1e-3 matches to ~1e-5; 1e-4 hits the roundoff floor on low-gradient cells
             xp, xm = x.copy(), x.copy()
             xp[i] += e
             xm[i] -= e
@@ -381,7 +382,8 @@ def t_gate_ties():
         gate = np.array([c.support == "_gate" for c in L.cases])
         cg = {}
         for kind, m in (("legs", legs), ("bridge", bridge)):
-            comp, _ = L._compliance(L.fields(np.where(m, 1.0, 0.0), 32.0)["rho_e"], need_grad=False)
+            ff = L.fields(np.where(m, 1.0, 0.0), 32.0)
+            comp, _ = L._compliance(ff["rho_e"], need_grad=False, rho_g=ff["rho_g"])
             cg[kind] = (comp / L.c_ref)[gate].max()
         check("gate ties: cover gradient exact, a bridge between pads beats legs to the thin plate",
               ok_setup and max(errs) < 1e-3 and cg["legs"] > 50 * cg["bridge"],
