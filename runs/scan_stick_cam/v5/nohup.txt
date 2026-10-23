@@ -36,3 +36,14 @@ it  17 beta    1 J   0.9721 vol 0.1505 (dil 0.1755 g -0.004) grey 53.1% ch 0.100
 it  18 beta    1 J   0.9222 vol 0.1507 (dil 0.1755 g -0.005) grey 52.3% ch 0.100 worst tie b1 my 101 1.9s
 it  19 beta    1 J   0.8727 vol 0.1508 (dil 0.1754 g -0.005) grey 51.4% ch 0.100 worst tie b2 my 96 1.6s
 it  20 beta    1 J   0.8233 vol 0.1511 (dil 0.1754 g -0.005) grey 50.4% ch 0.100 worst tie b6 my 90.9 1.5s
+it  21 beta    1 J   0.7754 vol 0.1513 (dil 0.1754 g -0.000) grey 49.1% ch 0.100 worst tie b2 my 85.6 1.8s
+it  22 beta    1 J   0.7387 vol 0.1508 (dil 0.1745 g -0.005) grey 47.8% ch 0.100 worst tie b2 my 81.1 1.4s
+it  23 beta    1 J   0.6920 vol 0.1510 (dil 0.1745 g -0.005) grey 46.8% ch 0.100 worst tie b6 my 76.4 1.6s
+it  24 beta    1 J   0.6475 vol 0.1513 (dil 0.1745 g -0.005) grey 45.6% ch 0.100 worst tie b6 my 70.9 1.3s
+it  25 beta    1 J   0.6084 vol 0.1518 (dil 0.1746 g -0.005) grey 44.8% ch 0.100 worst tie b2 my 66.4 1.7s
+layout: beta 1 done: eroded design 2 bodies, main 50.0%; drawn bodies outside the main body: 1
+it  26 beta    2 J   1.8619 vol 0.1380 (dil 0.2090 g -0.076) grey 39.1% ch 0.100 worst poke post 2 +x 10 N 230 1.3s
+it  27 beta    2 J   1.3061 vol 0.1473 (dil 0.2216 g -0.020) grey 40.8% ch 0.100 worst poke post 3 +x 10 N 155 1.7s
+it  28 beta    2 J   1.4826 vol 0.1484 (dil 0.2218 g -0.019) grey 40.6% ch 0.100 worst poke post 2 +x 10 N 191 1.5s
+it  29 beta    2 J   1.2752 vol 0.1472 (dil 0.2201 g -0.026) grey 40.2% ch 0.100 worst poke post 3 +x 10 N 158 1.5s
+it  30 beta    2 J   1.3805 vol 0.1472 (dil 0.2196 g -0.029) grey 40.0% ch 0.100 worst poke post 2 +x 10 N 174 1.6s
