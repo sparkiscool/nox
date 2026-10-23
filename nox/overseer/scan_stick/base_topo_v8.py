@@ -59,7 +59,9 @@ pi_pads = [(-PI_W / 2 + PI_OFF + iy * PI_HY, PI_Z0 + PI_OFF + ix * PI_HX) for ix
 bar_z = [BAT_Z0 + f * BAT_L for f in (0.25, 0.75)]
 fl_bolts = [(sx * FL_BOLT, sy * FL_BOLT) for sx in (-1, 1) for sy in (-1, 1)]
 
-def bodies():
+def bodies(off=0.5):
+    """off = how far the keep-out / bore cut faces sit off the drawn faces: 0 = v7 (the layout's masks), 0.5 = the exact v8 cuts"""
+    o2 = 4 * off                                                                       # bore ends: 2 mm at off 0.5
     boss = cyl(0, 0, 0, SOCK_H, BOSS_R, 96)
     tube = cyl(0, 0, SOCK_H - 4, FL_Z + 2, 18.0, 96)                      # drawn column Ø36, bore Ø28 cut below
     flange = cyl(0, 0, FL_Z, TOP, FL_R, 96)
@@ -82,16 +84,16 @@ def bodies():
         os.makedirs(os.path.dirname(tc), exist_ok=True)
         os.system(f"openscad -o {tc} {os.path.join(HERE, 'thread_cut.scad')} >/dev/null 2>&1")
     cuts = man(trimesh.load(tc, force="mesh"))                                               # thread from z 0 up 27
-    cuts += cyl(0, 0, SOCK_H + 2, FL_Z - 2, 14.0, 96)                                        # tube bore Ø28 (wires), 2 mm off the boss top and flange bottom
+    cuts += cyl(0, 0, SOCK_H + o2, FL_Z - o2, 14.0, 96)                                      # tube bore Ø28 (wires), off the boss top and flange bottom
     cuts += box(-100, 100, -100, 100, -10, 0)                                                 # the pole below
     for x, y in fl_bolts:
         cuts += cyl(x, y, FL_Z, TOP + 1, 2.8)                                                 # M4 heat-set insert holes from the top
     for y, z in pi_pads:
         cuts += cylx(PI_X0 + PI_SO - 6, PI_X0 + PI_SO + 1, y, z, 1.15)
-    cuts += box(PI_X0 + PI_SO + 0.5, PI_X0 + PI_SO + 30, -PI_W / 2 - 2, PI_W / 2 + 2, PI_Z0 - 2, PI_Z0 + PI_L + 2)   # Pi + parts, 0.5 off the pad ends
+    cuts += box(PI_X0 + PI_SO + off, PI_X0 + PI_SO + 30, -PI_W / 2 - 2, PI_W / 2 + 2, PI_Z0 - 2, PI_Z0 + PI_L + 2)   # Pi + parts, 0.5 off the pad ends
     cuts += box(PI_X0 - PLATE_T - 1, PI_X0 + 1, -14 - 9.7, -14 + 9.7, PANEL_Z - 6.6, PANEL_Z + 6.6)           # rocker
     cuts += cylx(PI_X0 - PLATE_T - 1, PI_X0 + 1, 12, PANEL_Z, 6.15) + cylx(PI_X0 - PLATE_T - 1, PI_X0 + 1, 24, PANEL_Z, 2.6)
-    cuts += box(BAT_X1 - BAT_H - 1, BAT_X1 - 0.5, -BAT_W / 2 - 1, BAT_W / 2 + 1, BAT_Z0, BAT_Z0 + BAT_L + 1)   # pack, 0.5 off the back plate
+    cuts += box(BAT_X1 - BAT_H - 1, BAT_X1 - off, -BAT_W / 2 - 1, BAT_W / 2 + 1, BAT_Z0, BAT_Z0 + BAT_L + 1)   # pack, 0.5 off the back plate
     for z in bar_z:
         for sy in (-1, 1):
             yc = sy * (BAT_W / 2 + 8)                                                         # slot through rail + back plate, 5 mm cheeks
@@ -99,13 +101,16 @@ def bodies():
     for sx in (-1, 1):
         for z in (12.0, 32.0, 52.0):
             cuts += box(sx * 18 - 1.5, sx * 18 + 1.5, SHELF_Y[0] - 1, SHELF_Y[1] + 1, z, z + 8)
-    cuts += box(-SHELF_W / 2 - 1, SHELF_W / 2 + 1, SHELF_Y[0] - 30, SHELF_Y[0] - 0.5, 4, 68)                 # UBEC / buck, 0.5 off the shelf
+    cuts += box(-SHELF_W / 2 - 1, SHELF_W / 2 + 1, SHELF_Y[0] - 30, SHELF_Y[0] - off, 4, 68)                 # UBEC / buck, 0.5 off the shelf
     env = box(BAT_X1 - BAT_H - 5, PI_X0 + PI_SO, SHELF_Y[0], 30.0, 0, TOP)
     return dict(drawn=drawn, cuts=cuts, env=env, ledge=ledge, lip=lip, rails=rails, panel=panel, flange=flange, web=web, tube=tube, back=back)
 
 def setup(h):
-    B = bodies()
+    B = bodies(0.0)                                                                    # v7 cuts: the layout's grid and masks
     p = Part("scan_stick_base", h, B["drawn"], B["cuts"], B["env"], build="+z", material="PETG")
+    from topo.part import tm
+    B8 = bodies(0.5)
+    p.cuts_m = B8["cuts"]; p.cuts_t = tm(B8["cuts"])                                   # the exact cuts applied at the build: faces off the drawn faces
     p.support("default", cyl(0, 0, 2, SOCK_H - 6, 15.0, 64) - cyl(0, 0, 0, SOCK_H, 10.0, 64))   # the boss wall round the thread
     pack_region = B["ledge"] + B["lip"] + B["rails"] + B["back"]
     pad_region = mf.Manifold()
