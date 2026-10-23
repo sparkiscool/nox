@@ -59,3 +59,13 @@ it   7 beta    4 J   9.9901 vol 0.5366 (dil 0.8103 g -0.309) grey 89.9% ch 0.100
 it   8 beta    4 J   9.9900 vol 0.5379 (dil 0.8121 g -0.308) grey 90.1% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.7s
 it   9 beta    4 J   9.9898 vol 0.5393 (dil 0.8142 g -0.306) grey 90.3% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.5s
 it  10 beta    4 J   9.9897 vol 0.5409 (dil 0.8164 g -0.304) grey 90.6% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.6s
+it  11 beta    4 J   9.9896 vol 0.5425 (dil 0.8187 g -0.300) grey 90.8% ch 0.100 worst cable pull -y 20 N 3.67e+03 11.2s
+it  12 beta    4 J   9.9895 vol 0.5441 (dil 0.8211 g -0.298) grey 91.2% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.6s
+it  13 beta    4 J   9.9894 vol 0.5459 (dil 0.8236 g -0.296) grey 91.5% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.5s
+it  14 beta    4 J   9.9893 vol 0.5477 (dil 0.8263 g -0.293) grey 92.0% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.6s
+it  15 beta    4 J   9.9892 vol 0.5498 (dil 0.8292 g -0.291) grey 92.4% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.3s
+it  16 beta    4 J   9.9891 vol 0.5520 (dil 0.8323 g -0.286) grey 92.9% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.6s
+it  17 beta    4 J   9.9890 vol 0.5544 (dil 0.8354 g -0.284) grey 93.2% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.5s
+it  18 beta    4 J   9.9889 vol 0.5567 (dil 0.8384 g -0.281) grey 93.6% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.8s
+it  19 beta    4 J   9.9889 vol 0.5589 (dil 0.8414 g -0.278) grey 94.1% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.5s
+it  20 beta    4 J   9.9888 vol 0.5612 (dil 0.8442 g -0.276) grey 94.6% ch 0.100 worst cable pull -y 20 N 3.67e+03 10.6s
