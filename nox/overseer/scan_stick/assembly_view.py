@@ -10,7 +10,7 @@ from motion import Scene
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scan_stick", "assembly")
 TOP, SEAT = 168.0, 34.0                                   # base flange top; head seat above the head flange
-CAM_Y, CAM_Z = 21.0, 10.0                                 # bracket origin in the head frame (holes 20 apart at z 17, bracket holes at z 7)
+CAM_Y = 21.0                                              # bracket plate against the block's +Y face (block y 10..20 in head v11)
 PI_X0, PI_SO, PI_Z0 = 20.0, 7.0, 10.0
 BAT_X1, BAT_Z0 = -20.0, 10.0
 
@@ -23,9 +23,9 @@ def load(p, M=None):
 def box(x0, x1, y0, y1, z0, z1):
     b = trimesh.creation.box([x1 - x0, y1 - y0, z1 - z0]); b.apply_translation([(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2]); return b
 
-base = load(os.path.join(ROOT, "print", "scan_stick_base_v15.stl"))
+base = load(os.path.join(ROOT, "print", "scan_stick_base_v16.stl"))
 HEAD_ROT = -90.0                                          # head bolted turned -90 about z: camera block over the Pi tray (+X), L2 notch on +Y (the rail side)
-head = load(os.path.join(ROOT, "print", "scan_stick_head_v10.stl"), rot([0, 0, 1], HEAD_ROT, (0, 0, TOP)))
+head = load(os.path.join(ROOT, "print", "scan_stick_head_v11.stl"), rot([0, 0, 1], HEAD_ROT, (0, 0, TOP)))
 # cam print frame: plate in XY, tab at +Y (bolt pads at y 53), lens / posts +z. Mount: plate against the block's +Y face
 # (world: plate in XZ, lens +Y), tab holes at world z TOP+17, the plate hanging down below them (the head's bracket keep-out
 # ends at z 25).  print (x, y, z) -> world (-x, z + CAM_Y, y + TOP + 17 - 53): a 180 deg turn about the (0, 1, 1) axis.
@@ -38,7 +38,7 @@ tip = trimesh.creation.cylinder(19.05 / 2, 27, sections=48); tip.apply_translati
 lidar = box(-37.5, 37.5, -37.5, 37.5, TOP + SEAT, TOP + SEAT + 39)
 dome = trimesh.creation.icosphere(3, 35.5); dome.apply_scale([1, 1, 26 / 35.5]); dome.apply_translation([0, 0, TOP + SEAT + 39])
 dome = dome.slice_plane([0, 0, TOP + SEAT + 39], [0, 0, 1], cap=True)
-cam_cz = TOP + 17 - 25
+cam_cz = TOP + 17 - 32                                    # board centre 32 below the bracket's bolt holes (C, cam_topo_v4)
 camera = box(-19, 19, CAM_Y + 6 + 0.1, CAM_Y + 6 + 1.7, cam_cz - 19, cam_cz + 19)
 lens = trimesh.creation.cylinder(6, 8, sections=32); lens.apply_transform(rot([1, 0, 0], -90, (0, CAM_Y + 7.8 + 4, cam_cz)))
 for g in (camera, lens):
@@ -51,11 +51,11 @@ def overlap(a, b):
     from topo.part import man
     return (man(a) ^ man(b)).volume()
 for an, am, bn, bm in (("base", base, "head", head), ("base", base, "cam bracket", cam), ("head", head, "cam bracket", cam),
-                       ("base", base, "camera board", camera), ("head", head, "camera board", camera), ("base", base, "Pi", pi), ("base", base, "pack", pack)):
+                       ("base", base, "camera board", camera), ("head", head, "camera board", camera), ("cam bracket", cam, "camera board", camera), ("base", base, "Pi", pi), ("base", base, "pack", pack)):
     print(f"fit: {an} x {bn}: {overlap(am, bm):.0f} mm3 overlap (M; 0 = clear)")
-s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v15 (Pi 5 + 4S 6000 near the hand), head v10 (Unitree L2 + DECXIN camera), cam v4; nox/topo parts")
-s.part("base v15", base, group="printed", color="#8899aa", printed=True)
-s.part("head v10", head, group="printed", color="#9aa8b8", printed=True)
+s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v16 (Pi 5 + 4S 6000 near the hand), head v11 (Unitree L2 + DECXIN camera), cam v4; nox/topo parts")
+s.part("base v16", base, group="printed", color="#8899aa", printed=True)
+s.part("head v11", head, group="printed", color="#9aa8b8", printed=True)
 s.part("cam bracket v4", cam, group="printed", color="#aab4c0", printed=True)
 s.part("thread test v1", ring, group="printed", color="#b8c0c8", printed=True, note="fit ring, beside the pole for scale")
 s.part("Unitree L2", trimesh.util.concatenate([lidar, dome]), group="bought", color="#222222", printed=False, note="75 x 75 x 65, 230 g spec")
@@ -63,7 +63,7 @@ s.part("DECXIN camera", trimesh.util.concatenate([camera, lens]), group="bought"
 s.part("Raspberry Pi 5", pi, group="bought", color="#2e7d32", printed=False)
 s.part("4S 6000 pack", pack, group="bought", color="#2f4fbf", printed=False, note="148 x 48 x 45 P")
 s.part("pole", trimesh.util.concatenate([pole, tip]), group="bought", color="#777777", printed=False, note="EXTEND-A-REACH 1.5-3 ft")
-names = ["base v15", "head v10", "cam bracket v4", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
+names = ["base v16", "head v11", "cam bracket v4", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
 s.timeline(lambda t: {n: rot([0, 0, 1], 360 * t / 16) for n in names}, duration_s=16, fps=30)
 s.view("iso", (520, -620, 260), (0, 0, 80)); s.view("front", (0, -800, 80), (0, 0, 80)); s.view("head", (220, -260, 260), (0, 0, 200))
 os.makedirs(OUT, exist_ok=True)
