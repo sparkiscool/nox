@@ -1,0 +1,19 @@
+=== holder: h 1.0, generated 5.4 cm3, min member 6.6 mm, cores 4
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (2.86 cm3); 1.19 cm3 of drawn volume opened to the design
+layout: min member 6.60 mm (rods), plates 5.99 mm, filter radius 6.80 mm = 3.40 cells, erosion depth 1.81 mm; volfrac 0.131 of 6,279 design cells
+layout: WARNING nearly mirrored in x (0.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: 8 drawn bodies (357 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (244 cells) count by their cover; 3 bodies tied to body 3
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts') + 18 gate ties + 24 held ties
+fem: grid (32, 24, 24) = 18,432 elements, 26,283 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1001 (dil 0.1219 g -0.237) grey 44.6% ch 0.100 worst pad push 2.78e+03 2.1s
+it   2 beta    1 J   2.7494 vol 0.1237 (dil 0.1491 g -0.068) grey 60.8% ch 0.100 worst pad push 999 2.8s
+it   3 beta    1 J   2.3480 vol 0.1294 (dil 0.1554 g -0.028) grey 62.8% ch 0.100 worst tie b8 my 826 2.1s
+it   4 beta    1 J   3.6770 vol 0.1260 (dil 0.1510 g -0.056) grey 56.1% ch 0.100 worst held b2 my 1.45e+03 2.1s
+it   5 beta    1 J   2.9960 vol 0.1205 (dil 0.1448 g -0.094) grey 58.5% ch 0.100 worst held b6 mx 966 2.1s
+it   6 beta    1 J   2.5251 vol 0.1251 (dil 0.1501 g -0.058) grey 58.0% ch 0.100 worst held b2 mz 983 2.2s
+it   7 beta    1 J   2.4700 vol 0.1220 (dil 0.1465 g -0.080) grey 59.0% ch 0.100 worst held b6 mx 839 2.2s
+it   8 beta    1 J   1.7419 vol 0.1273 (dil 0.1526 g -0.042) grey 60.5% ch 0.100 worst pad push 542 2.3s
+it   9 beta    1 J   1.4830 vol 0.1321 (dil 0.1581 g -0.007) grey 61.6% ch 0.100 worst pad push 472 2.1s
+it  10 beta    1 J   1.4234 vol 0.1329 (dil 0.1590 g -0.002) grey 61.6% ch 0.100 worst pad push 458 2.1s
