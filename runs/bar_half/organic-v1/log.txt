@@ -1,0 +1,26 @@
+<frozen runpy>:130: RuntimeWarning: 'topo.run' found in sys.modules after import of package 'topo', but prior to execution of 'topo.run'; this may result in unpredictable behaviour
+=== bar_half: h 1.0, generated 45.0 cm3, min member 3.2 mm, cores 4
+bar_half: grid (208, 24, 40) h 1.0 = 199,680 cells; design 82,896 (82.9 cm3), drawn 13,032, void 103,752
+  support default: 5648 cells, 7263 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+bar_half: grid (112, 16, 24) h 2.0 = 43,008 cells; design 10,579 (84.6 cm3), drawn 1,634, void 30,795
+  support default: 752 cells, 1200 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (9.38 cm3); 3.70 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.551 of 11,041 design cells
+layout: WARNING nearly mirrored in y (4.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (5.3% of passive cells differ): no symmetry
+layout: 2 drawn bodies (1,172 cells), held solid in every realization; eroded filter: masked
+layout: 6 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties
+fem: grid (112, 16, 24) = 43,008 elements, 45,552 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.4837 (dil 0.5381 g -0.123) grey 100.0% ch 0.100 worst tie b2 mz 15 0.9s
+it   2 beta    1 J   6.0439 vol 0.5416 (dil 0.5947 g -0.031) grey 100.0% ch 0.100 worst tie b2 mx 9.15 0.7s
+it   3 beta    1 J   4.7667 vol 0.5537 (dil 0.6055 g -0.013) grey 100.0% ch 0.100 worst tie b2 mx 7.57 0.7s
+it   4 beta    1 J   4.0697 vol 0.5572 (dil 0.6074 g -0.010) grey 100.0% ch 0.100 worst tie b2 mx 6.56 0.6s
+it   5 beta    1 J   3.5518 vol 0.5597 (dil 0.6077 g -0.009) grey 96.5% ch 0.100 worst tie b2 mx 5.74 0.6s
+it   6 beta    1 J   3.1322 vol 0.5628 (dil 0.6082 g -0.001) grey 92.4% ch 0.100 worst tie b2 mx 5.12 0.7s
+it   7 beta    1 J   2.8750 vol 0.5615 (dil 0.6044 g -0.007) grey 88.2% ch 0.100 worst tie b2 mx 4.68 0.7s
+it   8 beta    1 J   2.6233 vol 0.5638 (dil 0.6047 g -0.007) grey 84.4% ch 0.100 worst tie b2 mx 4.3 0.6s
+it   9 beta    1 J   2.4573 vol 0.5667 (dil 0.6058 g -0.005) grey 82.1% ch 0.100 worst tie b2 mx 4 0.6s
+it  10 beta    1 J   2.3558 vol 0.5687 (dil 0.6065 g -0.004) grey 79.0% ch 0.100 worst tie b2 mx 3.81 0.6s
+y 82.1% ch 0.100 worst tie b2 mx 4 0.6s
+it  10 beta    1 J   2.3558 vol 0.5687 (dil 0.6065 g -0.004) grey 79.0% ch 0.100 worst tie b2 mx 3.81 0.6s
