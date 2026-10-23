@@ -28,6 +28,7 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 | Part | Doc / scripts | Version | State | File (`print/`) | g | Next (owner) |
 |---|---|---|---|---|---|---|
 | Overseer (scope) | `overseer/README.md`; hardware `dimensions.md` O | | **DESIGN** | none | | Spark sets the scope. Tune backup `claude/overseer_params_2026-09-26.params`, never delete |
+| Lidar mount | not started; lidar `dimensions.md` M (Unitree L2) and O | | **DESIGN** | none | | Generate with the new engine `nox/topo` (`from topo import Part, Settings, optimise`), never `noxopt`. Until it is on `main`, merge `origin/topo/new-engine` into the part branch first. Before READY, check the run used the newest `nox/topo` on `main` or that branch; if the engine changed after the run, rerun |
 
 ## Spark
 Each line carries its best answer; a session that cannot wait takes it as DEFAULT.
