@@ -15,6 +15,7 @@ branch and prints the true outcome; the repo setting "Automatically delete head 
 import json
 import subprocess
 import sys
+import time
 
 REPO = "sparkiscool/nox"
 
@@ -52,7 +53,11 @@ def cmd_merge(n):
     sha = (res.get("sha") or "")[:7]
     # branch delete: see the docstring
     subprocess.run(["git", "push", "-q", "origin", "--delete", head], text=True, capture_output=True)
-    gone = subprocess.run(["gh", "api", f"repos/{REPO}/branches/{head}"], text=True, capture_output=True).returncode != 0
+    for _ in range(10):  # the repo's auto-delete lands a few seconds after the merge
+        gone = subprocess.run(["gh", "api", f"repos/{REPO}/branches/{head}"], text=True, capture_output=True).returncode != 0
+        if gone:
+            break
+        time.sleep(2)
     if gone:
         print(f"merged {n} ({sha}), deleted {head}")
     else:
