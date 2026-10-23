@@ -100,3 +100,4 @@ it  83 beta   16 J   0.4436 vol 0.0607 (dil 0.1107 g -0.007) grey  2.0% ch 0.100
 it  84 beta   16 J   0.4134 vol 0.0600 (dil 0.1106 g -0.008) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 576 15.9s
 it  85 beta   16 J   0.4067 vol 0.0605 (dil 0.1110 g -0.005) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 566 16.1s
 it  86 beta   16 J   0.4009 vol 0.0608 (dil 0.1111 g -0.013) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 559 17.4s
+it  87 beta   16 J   0.3934 vol 0.0617 (dil 0.1122 g -0.003) grey  2.0% ch 0.100 worst drop on lidar -z 150 N 548 22.1s
