@@ -8,7 +8,7 @@ This repo is the only source. Docs, scripts, engine, run results and print files
 1. `git pull` on `main` before anything else, then read only what the task needs: your part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` section it uses. Nothing else is a must-read.
 2. Work on a branch: `part/<part>` for design work, `run/<part>-<version>` for a heavy run.
 3. **Every turn that changes a design commits and pushes, same turn, no exceptions:** the script, the result files, the part's State / Version / Saved file cells in `current-parts.md`, one line at the top of `nox/log.md`. Work that is not pushed does not exist; the next session cannot see it.
-4. Finish by opening a PR to `main` (small, one part: `python3 tools/pr.py open "<part> <version>: <what>" [body.md]`), run the `review` agent on it, and on PASS merge it yourself: `python3 tools/pr.py merge <n>` (REST merge + branch delete; the allow rules are in `.claude/settings.json`). On FAIL fix and re-review; never merge a FAIL. Spark or the Nox control conversation merge only what a session could not.
+4. Finish by opening a PR to `main` (small, one part: `python3 tools/pr.py open "<part> <version>: <what>" [body.md]`), run the `review` agent on it, and on PASS merge it yourself: `python3 tools/pr.py merge <n>` (REST merge + branch delete; the allow rules are in `.claude/settings.json`). On FAIL fix and re-review; never merge a FAIL. A tooling, docs, config or research PR is merged after the session's own check. A refused merge means main moved: merge `origin/main` into the branch, resolve, push, merge again. No PR waits on Spark.
 5. Never edit another part's script or row. Write what it must change as one line in the PR description, and in the PR say which part you kept.
 
 ## Where things are
@@ -26,6 +26,7 @@ This repo is the only source. Docs, scripts, engine, run results and print files
 | `print/<part>_<version>.<ext>` | print-ready files; `print/latest/<part>.<ext>` + `print/latest/LATEST.md` = newest file per part, fixed name; the only folder anyone slices from |
 | `claude/` | research notes and tune backups; background, never a current design |
 | `cloud/` | cloud environment setup; `.claude/` agents, the `/part` skill (one prompt: brief to saved part + motion artifact) and settings |
+| `tools/amazon-parts-mcp/` | the `amazon-parts` MCP server (`.mcp.json`): Amazon ASINs, prices and cart links per build in `catalog.json`; skill `.claude/skills/drone-parts/`. Status words stay in `nox/parts-list.md` |
 
 ## Heavy runs (generative / topology / FE)
 - One heavy run per session. The Nox control conversation starts one thread per run; a thread never waits on another.
@@ -40,7 +41,7 @@ This repo is the only source. Docs, scripts, engine, run results and print files
 - **Simplest design wins.** Fewer parts, features and steps; justify any added complexity.
 - **Every placement comes from an optimization.** Nothing sits somewhere because it has to be somewhere.
 - **Tag every number:** P measured, M mesh, C CAD, E estimate, F frame model.
-- **Ask Spark** only on costly or hard-to-undo choices, or before changing a shared number. Otherwise decide, mark DEFAULT, continue. A question comes with its best answer in one line.
+- **Never wait on Spark.** Decide, mark DEFAULT, write the choice and the alternative in one line in `log.md`, continue; a shared number changes the same way (its `dimensions.md` row + the log line). Spark reverts what he disagrees with. The only things a session does not do alone: spend money (Spark places the Amazon order from the cart link) and delete work on `main`.
 - **Replies short.** Each problem plainly, with the best fix. No em dashes.
 - Everything we make is beautiful: the part, the preview, the summary, the doc.
 - Drone parts: lightest that meets the loads. Box parts: strong and fits. PETG rigid, TPU nodes / feet, no PLA. Nothing thinner than 2.0 mm (flexures excepted). Rods epoxied.
