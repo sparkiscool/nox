@@ -150,3 +150,17 @@ it  47 beta   32 J   7.5696 vol 0.5494 (dil 0.6663 g -0.000) grey  4.7% ch 0.100
 it  48 beta   32 J   7.5436 vol 0.5500 (dil 0.6664 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.21 8.6s
 it  49 beta   32 J   7.5263 vol 0.5503 (dil 0.6665 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.19 8.5s
 it  50 beta   32 J   7.5125 vol 0.5507 (dil 0.6665 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.18 8.7s
+git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403
+To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to p
+it  51 beta   32 J   7.4989 vol 0.5510 (dil 0.6665 g +0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.16 8.9s
+it  52 beta   32 J   7.4905 vol 0.5512 (dil 0.6664 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.15 9.4s
+it  53 beta   32 J   7.4779 vol 0.5517 (dil 0.6664 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.14 8.6s
+it  54 beta   32 J   7.4664 vol 0.5521 (dil 0.6664 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.13 8.5s
+it  55 beta   32 J   7.4557 vol 0.5524 (dil 0.6664 g -0.000) grey  4.7% ch 0.100 worst tie b2 mx 8.11 8.6s
+it  56 beta   32 J   7.4449 vol 0.5527 (dil 0.6664 g +0.001) grey  4.6% ch 0.100 worst tie b2 mx 8.1 8.8s
+it  57 beta   32 J   7.4674 vol 0.5520 (dil 0.6656 g -0.000) grey  4.6% ch 0.100 worst tie b2 mx 8.13 8.4s
+it  58 beta   32 J   7.4518 vol 0.5523 (dil 0.6657 g -0.000) grey  4.6% ch 0.100 worst tie b2 mx 8.11 8.7s
+it  59 beta   32 J   7.4377 vol 0.5526 (dil 0.6657 g -0.000) grey  4.6% ch 0.100 worst tie b2 mx 8.1 8.3s
+it  60 beta   32 J   7.4263 vol 0.5528 (dil 0.6657 g -0.000) grey  4.6% ch 0.100 worst tie b2 mx 8.09 8.0s
