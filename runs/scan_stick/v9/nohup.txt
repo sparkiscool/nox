@@ -1,0 +1,12 @@
+=== scan_stick_head: rebuild from /home/user/nox/runs/scan_stick/v8/density.npz (layout not rerun)
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 56,688 (191.3 cm3), drawn 5,424, void 68,960
+  support default: 2128 cells, 3192 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 56,688 (191.3 cm3), drawn 5,424, void 68,960
+  support default: 2128 cells, 3192 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.063 of 56,688 design cells
+layout: WARNING nearly mirrored in x (4.5% of passive cells differ): no symmetry
+layout: 4 drawn bodies (5,424 cells), held solid in every realization; eroded filter: masked
+layout: 47 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 64, 32) = 131,072 elements, 209,283 active dofs; backend direct (direct estimate 2.2 GB, budget 11.8 GB)
