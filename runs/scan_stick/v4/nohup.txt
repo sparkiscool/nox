@@ -1,0 +1,25 @@
+=== scan_stick_head: h 1.5, generated 6.0 cm3, min member 3.2 mm, cores 4
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 53,989 (182.2 cm3), drawn 5,367, void 71,716
+  support default: 2124 cells, 3180 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_head: grid (32, 32, 16) h 3.0 = 16,384 cells; design 6,939 (187.4 cm3), drawn 821, void 8,624
+  support default: 340 cells, 636 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (12.29 cm3); 9.88 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.72 cells, erosion depth 1.37 mm; volfrac 0.081 of 7,305 design cells
+layout: WARNING filter radius 1.72 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in x (4.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (6.0% of passive cells differ): no symmetry
+layout: 7 drawn bodies (455 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (350 cells) count by their cover; 5 bodies tied to body 1
+layout: 47 load cases + 36 tie cases (6 bodies tied, 1 held by support 'default') + 30 gate ties
+fem: grid (32, 32, 16) = 16,384 elements, 28,956 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0804 (dil 0.0980 g -0.002) grey  9.4% ch 0.100 worst gate b7 fy 6.53e+03 2.1s
+it   2 beta    1 J   0.9778 vol 0.0719 (dil 0.0860 g -0.124) grey 34.3% ch 0.100 worst tie b4 fx 712 2.6s
+it   3 beta    1 J   2.0304 vol 0.0781 (dil 0.0923 g -0.060) grey 31.2% ch 0.100 worst camera 25 g 4 1.49e+03 2.0s
+it   4 beta    1 J   0.4755 vol 0.0791 (dil 0.0932 g -0.051) grey 29.7% ch 0.100 worst tie b4 mz 470 2.3s
+it   5 beta    1 J   1.7477 vol 0.0781 (dil 0.0915 g -0.068) grey 28.2% ch 0.100 worst camera 25 g 4 1.28e+03 2.4s
+it   6 beta    1 J   0.2705 vol 0.0778 (dil 0.0912 g -0.060) grey 27.8% ch 0.100 worst tie b4 mz 260 2.5s
+it   7 beta    1 J   0.9591 vol 0.0771 (dil 0.0898 g -0.075) grey 25.9% ch 0.100 worst camera 25 g 4 688 2.3s
+it   8 beta    1 J   0.1675 vol 0.0762 (dil 0.0888 g -0.085) grey 25.3% ch 0.100 worst tie b4 mz 138 2.4s
+it   9 beta    1 J   0.1207 vol 0.0809 (dil 0.0934 g -0.038) grey 24.9% ch 0.100 worst drop on lidar -z 150 N 96.7 2.2s
+it  10 beta    1 J   0.0963 vol 0.0817 (dil 0.0939 g -0.032) grey 24.3% ch 0.100 worst tie b4 mz 82.2 2.4s
