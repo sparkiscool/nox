@@ -191,3 +191,21 @@ it  87 beta   32 J  74.4577 vol 0.1230 (dil 0.2454 g -0.004) grey  3.4% ch 0.100
 it  88 beta   32 J  73.8433 vol 0.1235 (dil 0.2459 g -0.002) grey  3.4% ch 0.100 worst pad push 2.28e+05 34.2s
 it  89 beta   32 J  73.5413 vol 0.1238 (dil 0.2461 g -0.002) grey  3.4% ch 0.100 worst pad push 2.27e+05 33.2s
 it  90 beta   32 J  72.8809 vol 0.1236 (dil 0.2461 g -0.001) grey  3.3% ch 0.100 worst pad push 2.25e+05 33.8s
+it  91 beta   32 J  72.5131 vol 0.1230 (dil 0.2461 g +0.008) grey  3.3% ch 0.100 worst pad push 2.24e+05 35.0s
+it  92 beta   32 J  72.6278 vol 0.1209 (dil 0.2439 g -0.001) grey  3.3% ch 0.100 worst pad push 2.24e+05 32.8s
+it  93 beta   32 J  72.3795 vol 0.1208 (dil 0.2440 g -0.001) grey  3.4% ch 0.100 worst pad push 2.24e+05 32.6s
+it  94 beta   32 J  72.1177 vol 0.1206 (dil 0.2440 g -0.001) grey  3.4% ch 0.100 worst pad push 2.23e+05 32.3s
+it  95 beta   32 J  71.9469 vol 0.1203 (dil 0.2440 g -0.001) grey  3.4% ch 0.100 worst pad push 2.22e+05 34.2s
+it  96 beta   32 J  71.8042 vol 0.1204 (dil 0.2441 g +0.000) grey  3.4% ch 0.100 worst pad push 2.22e+05 33.0s
+it  97 beta   32 J  71.5012 vol 0.1199 (dil 0.2438 g -0.001) grey  3.4% ch 0.100 worst pad push 2.21e+05 32.8s
+it  98 beta   32 J  71.2883 vol 0.1195 (dil 0.2438 g -0.001) grey  3.4% ch 0.100 worst pad push 2.2e+05 34.8s
+it  99 beta   32 J  71.0706 vol 0.1195 (dil 0.2439 g -0.001) grey  3.4% ch 0.100 worst pad push 2.2e+05 32.6s
+layout: stopped (max_stage) at it 99, beta 32, 3370 s
+layout: beta 32 done: eroded design 10 bodies, main 26.1%; drawn bodies outside the main body: 7
+layout done: 3606 s, peak 3.946924 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.46 cm3, field 10.86 cm3, in env - cuts 9.22 cm3 (layout 9.22, level offset +0.055 mm), fillet 2.5 mm, rims 1.0 mm, mesh 142,952 faces, 15 s
+build: 2 shells, volumes [5572.1, 3666.1] mm3; dropped specks []; sealed cavities kept [] mm3
+solid check: FAIL {"bodies_plain": 2, "bodies_eroded": 2, "eroded_volumes_mm3": [3167.6, 2124.3], "necks": [{"neck_under_mm": 1.8, "blob_thick_mm": 7.3, "joint_mm2": 0.0, "blob_mm3": 2124.3, "at": [51.5, 20.0, 6.5]}, {"neck_under_mm": 2.4, "blob_thick_mm": 7.3, "joint_mm2": 0.0, "blob_mm3": 1637.6, "at": [51.3, 20.0, 6.5]}, {"neck_under_mm": 3.0, "blob_thick_mm": 7.3, "joint_mm2": 0.0, "blob_mm3": 1107.3, "at": [50.7, 20.0, 6.6]}], "drawn_not_in_main": [[0, 0.574], ["0.3", 0.0, "erode 2.0"], ["0.4", 0.968, "erode 2.0"], ["0.5", 0.968, "erode 2.0"], ["0.6", 0.0, "erode 2.0"], ["0.7", 0.0, "erode 2.0"]], "thin_wa
+function check: {'skin_mm3': 1512.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 1.16 in 'misuse 7' at [15.5, 3.5, 11.5]
+RESULT {"name": "holder", "solid_ok": false, "mass_g": 11.73, "worst": 1.157, "function_ok": true, "bodies": 2}
