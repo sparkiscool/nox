@@ -119,3 +119,18 @@ it  37 beta    8 J   6.3147 vol 0.8743 (dil 0.9887 g +0.036) grey 24.3% ch 0.100
 it  38 beta    8 J   6.4897 vol 0.8597 (dil 0.9857 g +0.032) grey 25.2% ch 0.100 worst gate b1 fz 3.58 5.7s
 it  39 beta    8 J   6.7672 vol 0.8383 (dil 0.9805 g +0.027) grey 27.4% ch 0.100 worst gate b1 fz 3.71 5.6s
 it  40 beta    8 J   7.2441 vol 0.8082 (dil 0.9716 g +0.018) grey 27.8% ch 0.100 worst gate b2 fy 3.98 5.8s
+git push failed: To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to push some refs to 'https://github.com/sparkiscool/nox'
+hint: Updates were r
+it  41 beta    8 J   7.9906 vol 0.7713 (dil 0.9577 g -0.018) grey 28.9% ch 0.100 worst gate b2 fy 4.6 6.9s
+it  42 beta    8 J   7.0877 vol 0.8101 (dil 0.9696 g -0.006) grey 27.4% ch 0.100 worst gate b2 fy 3.85 5.5s
+it  43 beta    8 J   6.6383 vol 0.8278 (dil 0.9721 g -0.004) grey 26.3% ch 0.100 worst gate b1 fz 3.63 5.6s
+it  44 beta    8 J   6.3981 vol 0.8406 (dil 0.9735 g -0.002) grey 25.2% ch 0.100 worst gate b1 fz 3.52 5.4s
+it  45 beta    8 J   6.3001 vol 0.8488 (dil 0.9746 g -0.001) grey 24.6% ch 0.100 worst gate b1 fz 3.47 5.6s
+it  46 beta    8 J   6.2704 vol 0.8528 (dil 0.9750 g -0.002) grey 24.2% ch 0.100 worst gate b1 fz 3.46 5.4s
+it  47 beta    8 J   6.2523 vol 0.8567 (dil 0.9763 g -0.001) grey 24.0% ch 0.100 worst gate b1 fz 3.46 5.7s
+it  48 beta    8 J   6.2429 vol 0.8586 (dil 0.9766 g -0.000) grey 23.8% ch 0.100 worst gate b1 fz 3.45 5.5s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  49 beta   16 J   5.6356 vol 0.8773 (dil 0.9841 g +0.028) grey 11.4% ch 0.100 worst gate b1 fz 3.18 5.5s
+it  50 beta   16 J   5.7003 vol 0.8661 (dil 0.9805 g +0.024) grey 11.7% ch 0.100 worst gate b1 fz 3.2 5.8s
