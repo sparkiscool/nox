@@ -22,7 +22,7 @@ screws onto the pole tip; the head no longer carries the thread. It bolts onto t
    python3 head_topo_v13.py (rebuilds from runs/scan_stick/v8) [h] [gen_cm3] [--no-git]
 Print frame: flange bottom on the bed (z = 0), build +z, lidar seat at z = 34. Numbers C unless tagged.
 Drawn: flange Ø40 x 8 (4x Ø4.3 at (±8.5, ±8.5), a 17 square on a Ø24 circle, counterbored), 4 L2 pads Ø12 x 6 on Ø51 at 22.5° (spec) each with a 6 x 10
-gusset toward the axis (rule), camera block 32 x 12 x 30 on +Y (v12). Cuts: bolt holes + counterbores, L2 holes + driver clearance
+gusset toward the axis (rule), camera block 34 x 10.5 x 30 on +Y, bracket holes at z 6 (v13). Cuts: bolt holes + counterbores, L2 holes + driver clearance
 below each pad, camera insert holes, camera-bracket keep-out, L2 cable notch on -X.
 Loads (DEFAULT, E): 25 g on the 230 g lidar (14 dirs) + self weight, 50 g impact (6 dirs), 100 N side hits, 150 N drop
 on the lidar, 20 N hand grab; 30 g camera at 25 / 50 g, 5 N pokes. Support: the bolted flange."""

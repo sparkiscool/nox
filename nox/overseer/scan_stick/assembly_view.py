@@ -10,7 +10,7 @@ from motion import Scene
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scan_stick", "assembly")
 TOP, SEAT = 168.0, 34.0                                   # base flange top; head seat above the head flange
-CAM_Y, CAM_HZ = 23.5, 6.0                                 # bracket plate against the block's +Y face (block y 12..22.5 in head v13), tab holes at head z 6
+CAM_Y, CAM_HZ = 23.5, 6.0                                 # bracket plate 1.0 off the block's +Y face (block y 12..22.5 in head v13; the bolts pull it flat), tab holes at head z 6
 PI_X0, PI_SO, PI_Z0 = 20.0, 7.0, 10.0
 BAT_X1, BAT_Z0 = -20.0, 10.0
 
