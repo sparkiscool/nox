@@ -178,3 +178,22 @@ it  92 beta   32 J   2.7399 vol 0.1618 (dil 0.3235 g -0.000) grey  3.5% ch 0.100
 it  93 beta   32 J   2.7348 vol 0.1618 (dil 0.3235 g -0.000) grey  3.5% ch 0.100 worst tie b3 mz 61.3 geo -0.99/-0.97 19.1s
 it  94 beta   32 J   2.7301 vol 0.1618 (dil 0.3235 g -0.000) grey  3.5% ch 0.100 worst tie b3 mz 61.3 geo -0.99/-0.97 18.6s
 it  95 beta   32 J   2.7256 vol 0.1618 (dil 0.3235 g -0.000) grey  3.6% ch 0.100 worst tie b3 mz 61.2 geo -0.99/-0.97 18.0s
+it  96 beta   32 J   2.7215 vol 0.1618 (dil 0.3235 g +0.000) grey  3.5% ch 0.100 worst tie b3 mz 61.2 geo -0.99/-0.97 17.3s
+it  97 beta   32 J   2.7241 vol 0.1617 (dil 0.3234 g -0.000) grey  3.5% ch 0.100 worst tie b3 mz 61.3 geo -0.99/-0.98 18.6s
+it  98 beta   32 J   2.7201 vol 0.1617 (dil 0.3234 g -0.000) grey  3.5% ch 0.100 worst tie b3 mz 61.3 geo -0.99/-0.98 18.6s
+it  99 beta   32 J   2.7162 vol 0.1617 (dil 0.3234 g -0.000) grey  3.5% ch 0.100 worst tie b3 mz 61.2 geo -0.99/-0.98 18.8s
+layout: stopped (max_stage) at it 99, beta 32, 1807 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; anchored cores outside the main body: 0
+layout done: 1901 s, peak 6.048 GB
+build: surface at pitch 0.267 mm (x3), generated field 11.39 cm3, mesh 258,404 faces, 6 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [7647.6], "necks": [], "drawn_not_in_main": [["0.0", 0.998, "erode 2.0"], ["0.2", 0.998, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.07 in 'crash push 40 N +X on the motor' at [-10.0, -3.6, 26.6]
+RESULT {"name": "motor_mount", "solid_ok": false, "mass_g": 16.46, "worst": 0.075, "function_ok": true, "bodies": 1}
+{
+ "name": "motor_mount",
+ "solid_ok": false,
+ "mass_g": 16.46,
+ "worst": 0.075,
+ "total_s": 1928
+}
