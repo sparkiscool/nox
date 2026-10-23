@@ -538,5 +538,9 @@
  "peak_gb": 2.516852,
  "gen_cm3": 2.5,
  "h": 0.75,
- "total_s": 1369
+ "total_s": 1369,
+ "status": "FAILED",
+ "mass_tag": "M",
+ "worst_index": null,
+ "date": "2026-10-23"
 }
