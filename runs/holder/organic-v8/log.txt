@@ -220,3 +220,18 @@ it 117 beta   32 J  23.7639 vol 0.1204 (dil 0.2578 g +0.001) grey  3.5% ch 0.100
 it 118 beta   32 J  24.3379 vol 0.1201 (dil 0.2575 g -0.000) grey  3.5% ch 0.053 worst poke cam y 4.12 37.3s
 it 119 beta   32 J  24.1382 vol 0.1201 (dil 0.2575 g -0.000) grey  3.5% ch 0.048 worst poke cam y 4.06 36.8s
 it 120 beta   32 J  24.0195 vol 0.1201 (dil 0.2575 g -0.000) grey  3.5% ch 0.052 worst poke cam y 4.03 35.2s
+it 121 beta   32 J  23.9171 vol 0.1201 (dil 0.2575 g +0.001) grey  3.5% ch 0.100 worst poke cam y 4.01 34.8s
+it 122 beta   32 J  24.6719 vol 0.1198 (dil 0.2571 g -0.000) grey  3.5% ch 0.041 worst poke cam y 4.12 33.3s
+it 123 beta   32 J  24.5546 vol 0.1198 (dil 0.2571 g -0.000) grey  3.5% ch 0.048 worst poke cam y 4.09 33.1s
+it 124 beta   32 J  24.4683 vol 0.1198 (dil 0.2571 g -0.000) grey  3.5% ch 0.059 worst poke cam y 4.08 31.8s
+it 125 beta   32 J  24.3821 vol 0.1198 (dil 0.2571 g -0.000) grey  3.5% ch 0.063 worst poke cam y 4.07 32.3s
+it 126 beta   32 J  24.2900 vol 0.1198 (dil 0.2571 g +0.001) grey  3.5% ch 0.100 worst poke cam y 4.06 33.4s
+it 127 beta   32 J  24.5663 vol 0.1196 (dil 0.2569 g -0.000) grey  3.5% ch 0.057 worst poke cam y 4.09 33.7s
+layout: stopped (max_stage) at it 127, beta 32, 4215 s
+layout: beta 32 done: eroded design 12 bodies, main 14.6%; drawn bodies outside the main body: 7
+layout done: 4438 s, peak 3.955212 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.29 cm3, field 10.61 cm3, in env - cuts 9.21 cm3 (layout 9.21, level offset -0.024 mm), fillet 2.5 mm, rims 1.0 mm, mesh 145,856 faces, 13 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [5256.5], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 0, "ok": true}
+function check: {'skin_mm3': 1141.5, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.60 in 'misuse 10' at [28.5, 7.5, 22.5]
+RESULT {"name": "holder", "solid_ok": true, "mass_g": 11.72, "worst": 0.596, "function_ok": true, "bodies": 1}
