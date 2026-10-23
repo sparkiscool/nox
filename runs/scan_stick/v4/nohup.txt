@@ -39,3 +39,8 @@ it  23 beta    1 J   0.0423 vol 0.0833 (dil 0.0926 g -0.003) grey 19.1% ch 0.100
 it  24 beta    1 J   0.0409 vol 0.0834 (dil 0.0927 g -0.003) grey 18.9% ch 0.100 worst gate b7 my 31 2.9s
 it  25 beta    1 J   0.0398 vol 0.0836 (dil 0.0927 g -0.002) grey 18.7% ch 0.100 worst gate b7 my 30 2.7s
 layout: beta 1 done: eroded design 23 bodies, main 96.4%; drawn bodies outside the main body: 22
+it  26 beta    2 J   0.0898 vol 0.0813 (dil 0.1083 g +0.010) grey 16.9% ch 0.100 worst camera 25 g 4 62.9 3.0s
+it  27 beta    2 J   0.0798 vol 0.0764 (dil 0.1048 g -0.023) grey 17.2% ch 0.100 worst tie b4 mz 64.3 3.2s
+it  28 beta    2 J   0.0811 vol 0.0789 (dil 0.1055 g -0.016) grey 16.8% ch 0.100 worst poke cam -z 55 2.6s
+it  29 beta    2 J   0.0678 vol 0.0780 (dil 0.1054 g -0.017) grey 16.8% ch 0.100 worst gate b7 my 51.5 2.5s
+it  30 beta    2 J   0.0625 vol 0.0794 (dil 0.1058 g -0.013) grey 16.7% ch 0.100 worst gate b7 my 45.3 2.2s
