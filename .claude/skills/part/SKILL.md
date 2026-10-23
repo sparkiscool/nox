@@ -11,7 +11,7 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
 ## 1. Load (read only what the row names)
 - `git pull` on `main`; `git checkout -b part/<part>` (or `run/<part>-<version>` if the brief needs a generative run).
 - The part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` sections it names. Numbers in the brief
-  that change a shared number: take the brief's number, update its `dimensions.md` row, mark DEFAULT in the log line, continue.
+  that change a shared number: ask Spark in one line with the best answer, otherwise DEFAULT and continue.
 
 ## 2. Design (the part's own script, nothing else)
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
@@ -36,12 +36,12 @@ Artifact tool (icon "gear") and send the mp4 with SendUserFile. A static part ge
 ## 5. Done = saved (same turn, automatic)
 Follow CLAUDE.md "Done = saved" exactly: `print/<part>_<version>.stl` + `print/latest/`, `LATEST.md`, State READY in
 `current-parts.md`, one `log.md` line, `summary.md` in the fixed form beside `preview.png` and `motion.*`,
-`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `gh pr create --fill --base main`.
+`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
 
 ## 6. Review and merge (same turn)
-Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `gh pr merge <n> --merge --delete-branch`
-and `git checkout main && git pull`. FAIL: fix the design, re-review; never merge a FAIL. If the merge is refused because
-main moved, merge `origin/main` into the branch, resolve, push, merge again. Nothing waits on Spark.
+Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `python3 tools/pr.py merge <n>` (REST; `gh pr merge` fails in cloud boxes)
+and `git checkout main && git pull`. FAIL: fix the design, re-review; never merge a FAIL. If the merge is refused by
+permissions, say so with the PR link and stop; do not work around it.
 
 ## Reply (short)
 The summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.
