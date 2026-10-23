@@ -47,3 +47,13 @@ it  37 beta    4 J   2.3950 vol 0.1711 (dil 0.3099 g -0.003) grey 32.5% ch 0.100
 it  38 beta    4 J   2.2719 vol 0.1724 (dil 0.3106 g -0.001) grey 32.4% ch 0.100 worst tie b3 mz 176 0.7s
 it  39 beta    4 J   2.2065 vol 0.1729 (dil 0.3107 g -0.001) grey 32.3% ch 0.100 worst tie b3 mz 172 0.8s
 it  40 beta    4 J   2.1463 vol 0.1733 (dil 0.3107 g -0.001) grey 31.9% ch 0.100 worst tie b3 mz 167 0.7s
+it  41 beta    4 J   2.0922 vol 0.1737 (dil 0.3107 g +0.017) grey 31.8% ch 0.100 worst tie b3 mz 164 0.9s
+it  42 beta    4 J   2.4286 vol 0.1680 (dil 0.3050 g -0.002) grey 31.5% ch 0.100 worst tie b3 mz 190 1.1s
+it  43 beta    4 J   2.3451 vol 0.1688 (dil 0.3054 g -0.000) grey 31.3% ch 0.100 worst tie b3 mz 184 0.9s
+it  44 beta    4 J   2.3022 vol 0.1691 (dil 0.3054 g -0.000) grey 31.3% ch 0.100 worst tie b3 mz 181 0.9s
+it  45 beta    4 J   2.2619 vol 0.1694 (dil 0.3054 g -0.000) grey 31.2% ch 0.100 worst tie b3 mz 178 0.7s
+it  46 beta    4 J   2.2256 vol 0.1697 (dil 0.3055 g +0.010) grey 31.0% ch 0.100 worst tie b3 mz 176 0.7s
+it  47 beta    4 J   2.4158 vol 0.1665 (dil 0.3021 g -0.001) grey 30.8% ch 0.100 worst tie b3 mz 191 0.8s
+it  48 beta    4 J   2.3728 vol 0.1668 (dil 0.3023 g -0.000) grey 30.7% ch 0.100 worst tie b3 mz 188 0.8s
+it  49 beta    4 J   2.3490 vol 0.1670 (dil 0.3023 g -0.000) grey 30.7% ch 0.100 worst tie b3 mz 186 0.8s
+it  50 beta    4 J   2.3317 vol 0.1671 (dil 0.3023 g -0.000) grey 30.5% ch 0.100 worst tie b3 mz 185 0.7s
