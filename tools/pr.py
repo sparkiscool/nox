@@ -5,9 +5,12 @@ Cloud boxes block GitHub GraphQL, so every `gh pr ...` subcommand fails there (4
 `gh api` (REST) works, and this wraps the two calls a session needs:
 
     python3 tools/pr.py open "<part> <version>: <what>" [body.md]   # head = current branch, base = main
-    python3 tools/pr.py merge <n>                                    # merge commit (the repo's auto-delete setting removes the branch)
+    python3 tools/pr.py merge <n>                                    # merge commit, then delete the head branch
 
-Prints the PR URL (open) or "merged <n> (<sha>)" (merge). Exit 1 on any failure.
+Prints the PR URL (open) or "merged <n> (<sha>), deleted <branch>" (merge). Exit 1 on any failure.
+Branch deletion is refused from cloud boxes both ways (git push --delete and REST DELETE ref, proxy 403), as is
+the repo-settings write that would turn on auto-delete. merge tries the delete (works on a PC), then checks the
+branch and prints the true outcome; the repo setting "Automatically delete head branches" covers cloud merges.
 """
 import json
 import subprocess
@@ -46,9 +49,15 @@ def cmd_merge(n):
     res = json.loads(gh("-X", "PUT", f"repos/{REPO}/pulls/{n}/merge", "-f", "merge_method=merge"))
     if not res.get("merged"):
         sys.exit(f"merge: {res.get('message', res)}")
-    # Branch deletion is refused by the cloud proxy both ways (git push --delete and REST DELETE ref, 403),
-    # so the repo setting "Automatically delete head branches" (Settings -> General) does it on merge.
-    print(f"merged {n} ({res['sha'][:7]}); head branch {head} is removed by the repo's auto-delete setting")
+    sha = (res.get("sha") or "")[:7]
+    # branch delete: see the docstring
+    subprocess.run(["git", "push", "-q", "origin", "--delete", head], text=True, capture_output=True)
+    gone = subprocess.run(["gh", "api", f"repos/{REPO}/branches/{head}"], text=True, capture_output=True).returncode != 0
+    if gone:
+        print(f"merged {n} ({sha}), deleted {head}")
+    else:
+        print(f"merged {n} ({sha}); {head} left on origin (cloud boxes cannot delete branches: "
+              "turn on Settings -> General -> Automatically delete head branches once)")
 
 
 if __name__ == "__main__":
