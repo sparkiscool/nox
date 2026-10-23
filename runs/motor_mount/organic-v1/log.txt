@@ -1,0 +1,19 @@
+=== motor_mount: h 0.8, generated 7.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.69 cm3); 1.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.03 cells, erosion depth 1.71 mm; volfrac 0.185 of 10,548 design cells
+layout: drawn bodies and keep-outs mirror about x, y: the design is held symmetric there
+layout: WARNING nearly mirrored in z (7.9% of passive cells differ): no symmetry
+layout: 5 drawn bodies (1,388 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 44,904 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1597 (dil 0.1913 g -0.137) grey 84.4% ch 0.100 worst held b1 fz 718 1.8s
+it   2 beta    1 J   4.8165 vol 0.1807 (dil 0.2149 g -0.031) grey 86.5% ch 0.100 worst held b1 fz 332 1.7s
+it   3 beta    1 J   3.6244 vol 0.1838 (dil 0.2177 g -0.018) grey 79.6% ch 0.100 worst held b1 fx 254 1.7s
+it   4 beta    1 J   2.8843 vol 0.1854 (dil 0.2186 g -0.014) grey 74.0% ch 0.100 worst held b4 fx 206 1.7s
+it   5 beta    1 J   2.3729 vol 0.1863 (dil 0.2189 g -0.013) grey 68.9% ch 0.100 worst held b5 fx 167 1.7s
+it   6 beta    1 J   1.9995 vol 0.1871 (dil 0.2189 g -0.007) grey 65.7% ch 0.100 worst held b1 fx 145 2.0s
+it   7 beta    1 J   1.7669 vol 0.1868 (dil 0.2179 g -0.012) grey 62.4% ch 0.100 worst held b1 fx 120 1.7s
+it   8 beta    1 J   1.5804 vol 0.1875 (dil 0.2181 g -0.010) grey 60.5% ch 0.100 worst held b2 fx 114 1.8s
+it   9 beta    1 J   1.4387 vol 0.1884 (dil 0.2187 g -0.008) grey 59.4% ch 0.100 worst held b5 fx 96.8 1.7s
+it  10 beta    1 J   1.3260 vol 0.1891 (dil 0.2191 g -0.006) grey 58.8% ch 0.100 worst held b2 fx 93.2 2.0s
