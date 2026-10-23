@@ -6,4 +6,4 @@ Print: lidar seat face down (4 pads), bed contact 1037 mm² (M), the largest of 
 
 Run: head_topo_run.py h 1.75 (C), 20 cm3 (E), 70,304 cells / 48,242 design (M), 34 cases (C), layout stopped on grey 0.4 % (M) at it 88 (1622 s, M), pruned 0 (M), polished build, function check 0.0/0.0/0.0 mm3 (M), thin 0 (M), wrinkle p95/p99 0.183/0.236 1/mm (M; engine floor 0.18/0.21, E), peak 3.51 GB (M, ru_maxrss), wall 2108 s (M) on 4 cores (M).
 Next: the part is far over-strong (worst 0.03, F): step the generated target down (10 cm3, then 6; E) while the worst index stays ≤ 1.0; measure the pole tube (P) for the cradle.
-Previews: preview.png (as printed, from below, front, top); run-frame mesh scan_stick_head_v2_runframe.stl (lidar seat at z = +6, C).
+Previews: motion.html (interactive assembly, `assembly_view.py`), motion.mp4 / gif / png; preview.png (as printed, from below, front, top); run-frame mesh scan_stick_head_v2_runframe.stl (lidar seat at z = +6, C).
