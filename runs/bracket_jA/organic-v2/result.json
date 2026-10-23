@@ -1,0 +1,226 @@
+{
+ "name": "bracket_jA",
+ "engine": "nox/topo",
+ "solid_ok": true,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   18277.5
+  ],
+  "necks": [],
+  "drawn_not_in_main": [],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": true
+ },
+ "function_check": {
+  "skin_mm3": 8883.3,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "ring down + side 30 N",
+    "cls": "misuse",
+    "inlayer": 0.037,
+    "across": 0.077,
+    "at": [
+     176.5,
+     204.5,
+     -57.0
+    ]
+   },
+   {
+    "case": "ring up + fore 30 N",
+    "cls": "misuse",
+    "inlayer": 0.067,
+    "across": 0.117,
+    "at": [
+     178.5,
+     141.5,
+     -63.0
+    ]
+   },
+   {
+    "case": "ring up + aft 30 N",
+    "cls": "misuse",
+    "inlayer": 0.067,
+    "across": 0.117,
+    "at": [
+     178.5,
+     212.5,
+     -63.0
+    ]
+   },
+   {
+    "case": "ring -X 30 N",
+    "cls": "misuse",
+    "inlayer": 0.028,
+    "across": 0.076,
+    "at": [
+     176.5,
+     213.5,
+     -57.0
+    ]
+   },
+   {
+    "case": "ring +X 30 N",
+    "cls": "misuse",
+    "inlayer": 0.028,
+    "across": 0.021,
+    "at": [
+     176.5,
+     213.5,
+     -57.0
+    ]
+   },
+   {
+    "case": "ring -Z 30 N",
+    "cls": "misuse",
+    "inlayer": 0.056,
+    "across": 0.143,
+    "at": [
+     176.5,
+     213.5,
+     -57.0
+    ]
+   }
+  ],
+  "worst": 0.143,
+  "worst_case": "ring -Z 30 N",
+  "worst_at": [
+   176.5,
+   213.5,
+   -57.0
+  ]
+ },
+ "mass_g": 34.58,
+ "watertight": false,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 27227.2,
+ "drawn_g": 21.4,
+ "stl": "bracket_jA.stl",
+ "view_stl": "bracket_jA_view.stl",
+ "view_faces": 115588,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 5.0,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 5.1540534993002876,
+  "R_cells": 5.1540534993002876,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.596414852752881,
+  "nd": 23430,
+  "sym_axes": [
+   1
+  ],
+  "n_real": 6,
+  "n_ties": 42,
+  "backend": "direct",
+  "iterations": 87,
+  "stopped": "max_stage"
+ },
+ "grid": {
+  "name": "bracket_jA",
+  "h": 1.0,
+  "shape": [
+   40,
+   88,
+   48
+  ],
+  "origin": [
+   148.0,
+   133.0,
+   -69.4828
+  ],
+  "cells": 168960,
+  "design": 21456,
+  "drawn": 16948,
+  "cases": [
+   "ring down + side 30 N",
+   "ring up + fore 30 N",
+   "ring up + aft 30 N",
+   "ring -X 30 N",
+   "ring +X 30 N",
+   "ring -Z 30 N"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 49.3,
+ "layout_s": 565,
+ "peak_gb": 2.387672,
+ "gen_cm3": 12.0,
+ "h": 1.0,
+ "baseline": {
+  "engine": "noxopt v8",
+  "mass_g": 38.4,
+  "worst": 0.06,
+  "solid_ok_then": true,
+  "necks_checked": true,
+  "gen_cm3": 12.0,
+  "note": "v8 shipped 20 Oct 17:55"
+ },
+ "total_s": 614
+}
