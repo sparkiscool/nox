@@ -1,6 +1,6 @@
 # Runs
 
-_31 runs · rebuilt 2026-10-23 15:29_
+_34 runs · rebuilt 2026-10-23 16:02_
 
 ## Latest per part
 
@@ -12,7 +12,7 @@ _31 runs · rebuilt 2026-10-23 15:29_
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
 | scan_stick | v1 | DONE | 86.8 (M) | · in no FE on v1 (drawn) | PASS | [runs/scan_stick/v1](runs/scan_stick/v1/summary.md) |
-| scan_stick_base | v2 | FAILED | · | ·  | · | [runs/scan_stick_base/v2](runs/scan_stick_base/v2/summary.md) |
+| scan_stick_base | v10 | FAILED | 291.4 (M) | 0.57 in head impact 50 g | FAIL | [runs/scan_stick_base/v10](runs/scan_stick_base/v10/summary.md) |
 | scan_stick_cam | v2 | FAILED | 5.5 (M) | ·  | FAIL | [runs/scan_stick_cam/v2](runs/scan_stick_cam/v2/summary.md) |
 
 ## All runs, newest first
@@ -39,6 +39,9 @@ _31 runs · rebuilt 2026-10-23 15:29_
 | 2026-10-23 | scan_stick | [v7](runs/scan_stick/v7/summary.md) | FAILED | 40.7 (M) | 0.36 | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v8](runs/scan_stick/v8/summary.md) | DONE | 40.8 (M) | 0.36 | PASS | flange | 4.3 (P) GB | 53 min | · |
 | 2026-10-23 | scan_stick | [v9](runs/scan_stick/v9/summary.md) | DONE | 40.0 (M) | 0.36 | PASS | flange | 4.3 (P) GB | 2 min | · |
+| 2026-10-23 | scan_stick_base | [v10](runs/scan_stick_base/v10/summary.md) | FAILED | 291.4 (M) | 0.57 | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v11](runs/scan_stick_base/v11/summary.md) | FAILED | 291.4 (M) | 0.57 | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v12](runs/scan_stick_base/v12/summary.md) | DONE | 300.1 (M) | 0.56 | PASS | -z (bottom) | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v2](runs/scan_stick_base/v2/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v3](runs/scan_stick_base/v3/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v4](runs/scan_stick_base/v4/summary.md) | FAILED | 123.4 (M) | 5.52 | FAIL | · | · GB | · min | · |
