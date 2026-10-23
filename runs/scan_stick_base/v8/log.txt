@@ -1,2 +1,8 @@
 === scan_stick_base: rebuild from /home/user/nox/runs/scan_stick_base/v7/density.npz (layout not rerun)
 layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.085 of 36,850 design cells
+layout: WARNING nearly mirrored in z (6.5% of passive cells differ): no symmetry
+layout: 4 drawn bodies (24,699 cells), held solid in every realization; eroded filter: masked
+layout: 67 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (56, 48, 88) = 236,544 elements, 226,980 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
