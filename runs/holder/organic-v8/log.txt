@@ -128,3 +128,13 @@ it  28 beta    4 J   3.5328 vol 0.1206 (dil 0.2373 g -0.000) grey 24.7% ch 0.100
 it  29 beta    4 J   3.5251 vol 0.1207 (dil 0.2373 g -0.000) grey 24.7% ch 0.100 worst tie b4 my 0.482 31.7s
 it  30 beta    4 J   3.5183 vol 0.1207 (dil 0.2373 g -0.000) grey 24.7% ch 0.100 worst tie b4 my 0.481 31.3s
 layout: beta 4 done: eroded design 6 bodies, main 24.7%; drawn bodies outside the main body: 5
+it  31 beta    8 J  93.5186 vol 0.1073 (dil 0.2555 g -0.102) grey 13.8% ch 0.100 worst gate b8 my 19.6 34.4s
+it  32 beta    8 J  45.4044 vol 0.1209 (dil 0.2785 g -0.021) grey 14.9% ch 0.100 worst gate b8 my 9.43 32.7s
+it  33 beta    8 J  59.7781 vol 0.1179 (dil 0.2785 g -0.021) grey 15.2% ch 0.100 worst held b1 my 10.7 32.7s
+it  34 beta    8 J  53.8647 vol 0.1204 (dil 0.2774 g -0.025) grey 14.8% ch 0.100 worst poke cam z 8.68 31.4s
+it  35 beta    8 J  60.8764 vol 0.1174 (dil 0.2757 g -0.031) grey 15.0% ch 0.100 worst held b2 my 10.9 30.4s
+it  36 beta    8 J  50.8887 vol 0.1173 (dil 0.2714 g -0.042) grey 14.5% ch 0.100 worst poke cam z 8.2 29.9s
+it  37 beta    8 J  27.4360 vol 0.1180 (dil 0.2726 g -0.038) grey 14.5% ch 0.100 worst held b2 my 4.64 30.4s
+it  38 beta    8 J  17.8358 vol 0.1219 (dil 0.2737 g -0.034) grey 14.2% ch 0.100 worst poke cam y 3.27 32.2s
+it  39 beta    8 J  11.3694 vol 0.1249 (dil 0.2765 g -0.024) grey 14.3% ch 0.100 worst gate b8 my 1.82 33.3s
+it  40 beta    8 J   9.3695 vol 0.1292 (dil 0.2799 g -0.012) grey 14.1% ch 0.100 worst grab side 1.44 32.7s
