@@ -179,7 +179,14 @@ solid check: FAIL {"bodies_plain": 778, "bodies_eroded": 2, "eroded_volumes_mm3"
 function check: {'skin_mm3': 6645.8, 'skin_missing_mm3': 10.19, 'in_cuts_mm3': 23.79, 'outside_env_mm3': 0.0, 'ok': False}
 strength: worst index 0.86 in 'box on one tip 50 N up' at [21.5, 53.5, -181.5]
 RESULT {"name": "bar_half", "solid_ok": false, "mass_g": 74.98, "worst": 0.859, "function_ok": false, "bodies": 3}
-6, 51.4, -191.1]}, {"neck_under_mm": 3.0, "blob_thick_mm": 12.0, "joint_mm2": 312.9, "blob_mm3": 4277.5, "at": [172.7, 54.0, -187.2]}], "drawn_not_in_main": [["0.0", 0.0, "erode 2.0"], ["0.1", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.66, "core_mm3": 35.53, "at": [166.7, 46.9,
+{
+ "name": "bar_half",
+ "solid_ok": false,
+ "mass_g": 74.98,
+ "worst": 0.859,
+ "total_s": 1212
+}
+4277.5, "at": [172.7, 54.0, -187.2]}], "drawn_not_in_main": [["0.0", 0.0, "erode 2.0"], ["0.1", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.66, "core_mm3": 35.53, "at": [166.7, 46.9,
 function check: {'skin_mm3': 6645.8, 'skin_missing_mm3': 10.19, 'in_cuts_mm3': 23.79, 'outside_env_mm3': 0.0, 'ok': False}
 strength: worst index 0.86 in 'box on one tip 50 N up' at [21.5, 53.5, -181.5]
 RESULT {"name": "bar_half", "solid_ok": false, "mass_g": 74.98, "worst": 0.859, "function_ok": false, "bodies": 3}
