@@ -1,0 +1,2 @@
+scan_stick_base v9: FAILED (solid_check FAIL on 0.5 mm slivers)
+Rebuild of the v7 layout. Strength unchanged (worst 0.56 F, head impact at the tube / Pi-pad web, M). Gate: 5 plain bodies and three 1.0 mm walls at (-20, -20.5, z 16 / 36 / 56) (M): the zip-tie slots at x ±18 cut through the shelf into the back plate behind it, leaving 0.5 mm. v9 added the cable hole through the flange and the tube window. Fix: v10 moves the slots to x ±12 (only the shelf behind them).
