@@ -138,3 +138,8 @@ it 120 beta   32 J   0.4328 vol 0.0634 (dil 0.1140 g -0.001) grey  0.9% ch 0.100
 layout: stopped (grey) at it 120, beta 32, 2040 s
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 2074 s, peak 4.283216 GB
+build: surface at pitch 0.300 mm (x5), generated field 29.11 cm3, mesh 344,792 faces, 43 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [22572.4], "necks": [], "drawn_not_in_main": [], "thin_walls": [{"kind": "wall", "thick_mm": 1.5, "core_mm3": 5.31, "at": [-9.9, 12.8, 17.0], "span": [0.8, 0.8, 0.2]}], "acute_edges": 1, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.36 in 'lidar impact 50 g 2' at [-5.2, -18.8, 10.2]
+RESULT {"name": "scan_stick_head", "solid_ok": false, "mass_g": 40.73, "worst": 0.362, "function_ok": true, "bodies": 1}
