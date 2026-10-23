@@ -36,7 +36,7 @@ stepper A 4 x 690 · stepper B 4 x 620 · axle 4 x 630 · hall 3 x 595 · servo 
 
 ## Problems
 1. **Wire count was wrong in box-arm.md (15 -> 19):** the head servos were never in the twist count. Fixed here; Problem 3 there updated.
-2. **Bundle heat in the bore (E):** 26 AWG at full 2 A continuous warms a closed PETG tube. Low duty makes it moot (E); fallback = drivers to 1.2 A (margins above). Check by feel after the first full-cycle soak test.
+2. **Bundle heat in the bore (E):** 26 AWG at full 2 A continuous warms a closed PETG tube. Low duty makes it moot (E); fallback = drivers to 1.2 A (margins above). Check by feel after the first full-cycle soak test. **XT60 (23 Oct): the 1.2 A fallback no longer pushes the XT60 home (insert 60 N E, `box-arm.md` XT60 swap); keep the head drivers at 2 A for the insert (short, so little heat) and drop only the hold current.**
 3. **Fold-in-slot is untested:** ribbon stiffness, fold friction, lift toward the mouth. Fix: dry-run one ribbon in a loose 2040 offcut over 100 strokes by hand before the heads print; add a 4th slot clip if it lifts. **The slot clip's wing/undercut sizes ride on the E slot profile: caliper the slot (opening, depth, undercut width) before trusting the fit.**
 4. **The 135° drop lane and the saddle are not yet in the sweep.** The v5-heads full sweep chat adds three wire keep-outs (saddle Ø10 at Y 78..86 on axis, drop lane Ø8 at 135° r 32 Y 50..86, hub lacing Ø6 at r 46 Y 8..50) as arm bodies vs the fixed parts.
 5. **Fixed-tail length (250 E) is a guess:** the bay layout (PSU, SKR, buck) is undesigned. Cut the fixed tails last.

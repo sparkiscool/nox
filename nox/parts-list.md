@@ -81,7 +81,10 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | 625ZZ bearing 5 x 16 x 5 | 12 | arm v5 carriage V-wheels (2 per wheel) | to buy | box-arm.md v5 |
 | M5 eccentric spacer, 6 tall, 0.8 throw (openbuilds type) | 2 | arm v5 carriage preload (one per head) | to buy (or a printed eccentric bush) | box-arm.md v5 |
 | M5 x 25 socket head + nyloc | 6 | arm v5 wheel axles | CHECK on hand | box-arm.md v5 |
-| Bay contacts: copper-clad sheet, AA spring contacts | per bay | charging contacts | on hand | box.md |
+| Bay contacts: copper-clad sheet, AA spring contacts | 0 | retired 23 Oct (XT60 back) | on hand, not used | |
+| XT60E1-M panel mount (the half that mates the packs' plug; gender CHECK, D17) | 3 now (drone receiver + 2 live bays; +1 per later bay) | swap and bay power, on the float carrier | to buy | M: XT60; dimensions I "XT60 mate" |
+| 24 V P20/15 electromagnet (listed as Heschen HS-P20x15) | 4 (DEFAULT, hold ≥ 85 N for the XT60 push; alt 2 x 5 kg P25/20) | drone hold-down | to buy | M: electromagnet; dimensions G |
+| Mild steel plate ≥ 3 thick (belly plate; replaces the 1/16 strip) | 1 (size from the Scout v3 bottom layout) | magnet target | to buy | dimensions G |
 | KW11 microswitch | per bay (CHECK) | drone seated | to buy (CHECK) | M: KW11 |
 | Pogo pins (Mill-Max 0854 class) | per bay (CHECK) | keep-alive power | to buy (CHECK) | M: pogo pin |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |
@@ -94,8 +97,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 ## Box: priced for later (not ordered)
 | Part | Qty | Role | Mount data |
 |---|---|---|---|
-| 24 V P20/15 electromagnet (listed as Heschen HS-P20x15) | 2 | drone hold-down | M: electromagnet |
-| 15N20 steel strip 1/16 x 1.5 x 12 in | 1 | belly strips | |
+| 15N20 steel strip 1/16 x 1.5 x 12 in | 1 | belly strips (too thin for the XT60 hold, 23 Oct: the ≥ 3 plate above) | |
 | A3144 hall module | 1 pack | axle index | M: A3144 |
 | 5 x 2 magnets | 1 pack | axle index | |
 | M6 ball plungers | 1 pack | axle detent | |
@@ -103,7 +105,6 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | ISDT PD60 charger (listed as PD60S) + 65 W USB-C brick | 1 + 1 | balance charging | M: PD60 |
 | 8-channel 5 V relay board | 7 | bay switching | CHECK size |
 | JST-XH 4S balance pigtails, 5-pack | 2 | bay balance leads | M: JST-XH |
-| XT60 panel mount (XT60E1-M) | per bay (CHECK) | bay power | M: XT60 |
 | Hub USB camera, box Raspberry Pi | 1 + 1 | vision, box computer | CHECK model |
 
 ## Box: printed parts (state only in `nox/current-parts.md`)
