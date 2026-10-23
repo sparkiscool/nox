@@ -147,3 +147,18 @@ it  77 beta   32 J   3.6788 vol 0.5601 (dil 0.7326 g -0.000) grey  5.0% ch 0.100
 it  78 beta   32 J   3.6759 vol 0.5602 (dil 0.7326 g -0.000) grey  5.1% ch 0.100 worst gate b2 fy 6.06 5.8s
 it  79 beta   32 J   3.6731 vol 0.5603 (dil 0.7326 g -0.000) grey  5.1% ch 0.100 worst gate b2 fy 6.06 5.7s
 it  80 beta   32 J   3.6702 vol 0.5604 (dil 0.7326 g -0.000) grey  5.1% ch 0.100 worst gate b2 fy 6.07 5.7s
+it  81 beta   32 J   3.6674 vol 0.5605 (dil 0.7326 g +0.001) grey  4.9% ch 0.100 worst gate b2 fy 6.07 6.3s
+it  82 beta   32 J   3.6706 vol 0.5602 (dil 0.7322 g -0.000) grey  5.0% ch 0.100 worst gate b2 fy 6.09 5.9s
+it  83 beta   32 J   3.6680 vol 0.5602 (dil 0.7322 g -0.000) grey  5.0% ch 0.100 worst gate b2 fy 6.1 5.9s
+it  84 beta   32 J   3.6653 vol 0.5603 (dil 0.7322 g -0.000) grey  4.9% ch 0.100 worst gate b2 fy 6.1 5.9s
+it  85 beta   32 J   3.6620 vol 0.5604 (dil 0.7322 g -0.000) grey  4.9% ch 0.100 worst gate b2 fy 6.11 5.7s
+it  86 beta   32 J   3.6574 vol 0.5605 (dil 0.7321 g +0.000) grey  4.9% ch 0.100 worst gate b2 fy 6.11 5.7s
+it  87 beta   32 J   3.6568 vol 0.5601 (dil 0.7317 g -0.000) grey  4.9% ch 0.100 worst gate b2 fy 6.13 5.8s
+layout: stopped (max_stage) at it 87, beta 32, 545 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 589 s, peak 2.483652 GB
+build: surface at pitch 0.333 mm (x3), generated field 24.90 cm3, mesh 230,596 faces, 5 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [19262.0], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 0, "ok": true}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.12 in 'ring -Z 30 N' at [176.5, 211.5, -58.0]
+RESULT {"name": "bracket_jA", "solid_ok": true, "mass_g": 36.02, "worst": 0.124, "function_ok": true, "bodies": 1}
