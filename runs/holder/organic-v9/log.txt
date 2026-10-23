@@ -199,3 +199,13 @@ it  98 beta   16 J  42.8883 vol 0.1234 (dil 0.2691 g +0.016) grey  7.2% ch 0.100
 it  99 beta   16 J  43.8804 vol 0.1230 (dil 0.2686 g +0.014) grey  7.2% ch 0.100 worst gate b8 my 7.35 33.3s
 it 100 beta   16 J  45.0554 vol 0.1227 (dil 0.2680 g +0.012) grey  7.2% ch 0.100 worst gate b8 my 7.53 33.4s
 layout: beta 16 done: eroded design 20 bodies, main 16.1%; drawn bodies outside the main body: 7
+it 101 beta   32 J 211.4036 vol 0.1210 (dil 0.2654 g +0.013) grey  3.7% ch 0.100 worst tie b3 mx 35.4 34.2s
+it 102 beta   32 J 234.9350 vol 0.1271 (dil 0.2728 g +0.041) grey  3.8% ch 0.100 worst poke cam y 39.3 33.8s
+it 103 beta   32 J 612.6473 vol 0.1189 (dil 0.2674 g +0.021) grey  3.6% ch 0.100 worst tie b5 fx 93.2 33.0s
+it 104 beta   32 J 14778.6521 vol 0.1263 (dil 0.2728 g +0.041) grey  3.9% ch 0.100 worst tie b8 fy 3.13e+03 35.2s
+it 105 beta   32 J 112.1306 vol 0.1318 (dil 0.2790 g +0.065) grey  3.9% ch 0.100 worst held b2 my 21.3 33.8s
+it 106 beta   32 J 3416.4185 vol 0.1195 (dil 0.2685 g +0.036) grey  3.8% ch 0.100 worst tie b8 mz 752 34.0s
+it 107 beta   32 J 1154.2472 vol 0.1185 (dil 0.2674 g +0.031) grey  3.8% ch 0.100 worst tie b3 mx 241 33.3s
+it 108 beta   32 J 1386.4209 vol 0.1243 (dil 0.2709 g +0.045) grey  3.8% ch 0.100 worst tie b8 mz 301 36.3s
+it 109 beta   32 J 1281.8542 vol 0.1134 (dil 0.2631 g +0.015) grey  3.9% ch 0.100 worst tie b3 mx 254 35.4s
+it 110 beta   32 J 190.5519 vol 0.1196 (dil 0.2677 g +0.033) grey  3.8% ch 0.100 worst tie b5 fx 29.2 34.5s
