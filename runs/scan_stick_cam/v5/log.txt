@@ -151,3 +151,18 @@ it  57 beta   32 J  51.2186 vol 0.1748 (dil 0.3266 g -0.000) grey  3.3% ch 0.100
 it  58 beta   32 J  51.2184 vol 0.1750 (dil 0.3267 g -0.000) grey  3.3% ch 0.100 worst cable pull -y 20 N 5.29e+04 37.5s
 it  59 beta   32 J  51.2182 vol 0.1751 (dil 0.3266 g -0.000) grey  3.3% ch 0.100 worst cable pull -y 20 N 5.29e+04 37.6s
 it  60 beta   32 J  51.2181 vol 0.1752 (dil 0.3266 g -0.000) grey  3.3% ch 0.100 worst cable pull -y 20 N 5.29e+04 37.7s
+it  61 beta   32 J  51.2179 vol 0.1752 (dil 0.3267 g +0.003) grey  3.3% ch 0.100 worst cable pull -y 20 N 5.29e+04 38.7s
+it  62 beta   32 J  51.2179 vol 0.1745 (dil 0.3258 g -0.000) grey  3.3% ch 0.100 worst cable pull -y 20 N 5.29e+04 37.6s
+it  63 beta   32 J  51.2178 vol 0.1746 (dil 0.3258 g -0.000) grey  3.2% ch 0.100 worst cable pull -y 20 N 5.29e+04 36.9s
+it  64 beta   32 J  51.2177 vol 0.1747 (dil 0.3258 g -0.000) grey  3.3% ch 0.100 worst cable pull -y 20 N 5.29e+04 37.3s
+it  65 beta   32 J  51.2176 vol 0.1747 (dil 0.3258 g -0.000) grey  3.2% ch 0.100 worst cable pull -y 20 N 5.29e+04 38.0s
+it  66 beta   32 J  51.2175 vol 0.1748 (dil 0.3258 g +0.002) grey  3.2% ch 0.100 worst cable pull -y 20 N 5.29e+04 36.6s
+it  67 beta   32 J  51.2175 vol 0.1743 (dil 0.3251 g -0.000) grey  3.2% ch 0.100 worst cable pull -y 20 N 5.29e+04 36.9s
+layout: stopped (max_stage) at it 67, beta 32, 2454 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 2637 s, peak 5.719776 GB
+build: surface at pitch 0.375 mm (x2), generated field 8.23 cm3, mesh 87,088 faces, 4 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [6135.0], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 0, "ok": true}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.31 in 'impact 50 g 4' at [11.6, 45.4, 0.6]
+RESULT {"name": "scan_stick_cam", "solid_ok": true, "mass_g": 13.04, "worst": 0.306, "function_ok": true, "bodies": 1}
