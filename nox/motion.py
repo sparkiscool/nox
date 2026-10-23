@@ -1,4 +1,4 @@
-"""Nox motion artifact (23 Oct 2026): any set of part meshes plus a timeline -> one self-contained HTML page with the parts
+"""Nox motion artifact (23 Oct 2026): any set of part meshes plus a timeline -> one HTML file (meshes embedded; three.js from the CDN) with the parts
 in motion (scrub, speed, views, groups, printed-only, exploded, optional readout series), and headless an mp4 / gif / png
 of the same page. Generic replacement for the hand-rolled arm / detent pages: a part script builds its meshes and poses
 and hands them here; nothing visual is written per part.
@@ -11,7 +11,7 @@ Python:
     s.timeline(lambda t: {"hub": T_hub(t), "motor_A": T_hub(t)}, duration_s=18, fps=30)   # t in s -> {part: 4x4 or (xyz, rpy_deg)}
     s.series("clearance", values, unit="mm", bad_below=0.5)                       # optional readout strip, one value per frame
     s.write("runs/arm/v4/motion.html")                                           # the artifact
-    s.video("runs/arm/v4/motion.html", "runs/arm/v4/motion.mp4")                # + .gif + .png beside it (headless Chromium + ffmpeg)
+    s.video("runs/arm/v4/motion.mp4")                                            # + .gif + .png beside it (headless Chromium + ffmpeg)
 
 CLI (JSON spec, poses as [x, y, z, rx, ry, rz] mm / deg or a flat 4x4 row-major):
     python3 nox/motion.py spec.json [--video]
@@ -19,9 +19,10 @@ CLI (JSON spec, poses as [x, y, z, rx, ry, rz] mm / deg or a flat 4x4 row-major)
      "parts": [{"name": "hub", "file": "print/box_hub_v5.stl", "group": "arm", "color": "#8899aa", "printed": true, "faces": 30000}],
      "frames": [{"hub": [0, 0, 0, 0, 0, 30]}, ...]}
 
-Masses on the page: mesh volume x 1.27 g/cm3 PETG (M) for printed parts. Meshes are decimated (fast_simplification, default
+Masses on the page: mesh volume (M) x 1.27 g/cm3 PETG (E, solid) for printed parts. Meshes are decimated (fast_simplification, default
 30k faces) and quantised to 0.02 mm int16, normals int8, so a 10 MB STL costs ~0.5 MB in the page; keep the page under 15 MB.
-Needs: trimesh, numpy; fast_simplification (decimation); playwright + ffmpeg + three.js from npm (video only).
+Needs: trimesh, numpy; fast_simplification (decimation); video only: playwright, the box's Chromium (/opt/pw-browsers/chromium or
+CHROMIUM_PATH), ffmpeg on PATH, three.js from npm (fetched once into ~/.cache/nox-motion).
 """
 import base64, json, math, os, shutil, subprocess, sys, tempfile
 import numpy as np, trimesh
@@ -148,7 +149,8 @@ class Scene:
         print(f"motion: {path} {mb:.2f} MB, {len(self.parts)} parts, {len(self.frames)} frames" + ("  TOO BIG for an artifact (15 MB): lower faces=" if mb > 15 else ""))
         return path
 
-    def video(self, html_path, mp4_path, width=1280, height=720, fps=30, view="iso", gif=True, png=True):
+    def video(self, mp4_path, width=1280, height=720, fps=30, view="iso", gif=True, png=True):
+        """mp4 + gif + png beside it, rendered headless from the same page."""
         return render_video(self, mp4_path, width, height, fps, view, gif, png)
 
 
@@ -235,4 +237,4 @@ if __name__ == "__main__":
     out = spec.get("out", os.path.splitext(sys.argv[1])[0])
     s.write(out + ".html")
     if "--video" in sys.argv:
-        s.video(out + ".html", out + ".mp4")
+        s.video(out + ".mp4")

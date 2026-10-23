@@ -30,7 +30,7 @@ Strength recheck when the part carries a load case (pattern: `nox/box/arm_rechec
 ## 4. Motion artifact (every part that moves or sits in a mechanism)
 Use `nox/motion.py`: build a `Scene` from the part's meshes and its kinematics (`*_kinematics.py`, `*_kin.py`, or a
 pose function written in the part script), one cycle of the mechanism, mating parts as context (`printed=False` for
-bought parts). Write `runs/<part>/<version>/motion.html` and `motion.mp4` (`Scene.video`). Publish the html with the
+bought parts). Write `runs/<part>/<version>/motion.html` (`Scene.write`) and `motion.mp4` (`Scene.video`). Publish the html with the
 Artifact tool (icon "gear") and send the mp4 with SendUserFile. A static part gets `preview.png` only.
 
 ## 5. Done = saved (same turn, automatic)

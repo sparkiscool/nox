@@ -26,7 +26,10 @@ mkdir -p "$HOME/.cache/nox-motion"
 echo "== smoke import"
 cd "$(dirname "$0")/.." 2>/dev/null || true
 if [ -f nox/noxopt.py ]; then
-  (cd nox && python3 -c "import noxopt, trimesh, manifold3d, skimage, skfmm, pypardiso, shapely, fast_simplification; print('nox engine packages OK')")
+  (cd nox && python3 -c "import noxopt, trimesh, manifold3d, skimage, skfmm, pypardiso, shapely, fast_simplification; print('nox engine packages OK')") || echo "nox: smoke import FAILED, see above"
+  # motion.py video path: the box's Chromium + ffmpeg (not pip-installed; report, never abort)
+  [ -x /opt/pw-browsers/chromium ] || [ -n "${CHROMIUM_PATH:-}" ] || echo "nox: no Chromium at /opt/pw-browsers/chromium (motion.py video needs CHROMIUM_PATH)"
+  command -v ffmpeg >/dev/null || echo "nox: ffmpeg missing (motion.py video)"
 else
   python3 -c "import trimesh, manifold3d, skimage, skfmm, pypardiso; print('packages OK (repo not cloned yet)')"
 fi

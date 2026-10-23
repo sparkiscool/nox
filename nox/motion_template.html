@@ -94,8 +94,8 @@ body.rec .stage { border: 0; border-radius: 0; }
 const D = JSON.parse(document.getElementById('data').textContent);
 const $ = id => document.getElementById(id);
 $('title').innerHTML = D.title + (D.subtitle ? '<small>' + D.subtitle.replace(/</g, '&lt;') + '</small>' : '');
-$('mass').textContent = D.mass_total ? D.mass_total.toFixed(1) + ' g printed (M, ' + D.material + ')' : 'no printed mass';
-$('note').textContent = 'Masses: mesh volume x ' + (D.material === 'TPU' ? '1.21' : '1.27') + ' g/cm3 (M). Bought parts are context. Drag to orbit, wheel to zoom, right-drag to pan.';
+$('mass').textContent = D.mass_total ? D.mass_total.toFixed(1) + ' g printed (M; ' + D.material + ' density E)' : 'no printed mass';
+$('note').textContent = 'Masses: mesh volume (M) x ' + (D.material === 'TPU' ? '1.21' : '1.27') + ' g/cm3 solid (E). Bought parts are context. Drag to orbit, wheel to zoom, right-drag to pan.';
 
 // ---------- meshes
 function b64(s) { const b = atob(s); const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
