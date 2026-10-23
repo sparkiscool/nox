@@ -42,7 +42,7 @@ lidar_screw_d  = 3.4;   // clearance for M3
 lidar_plate_w  = 86;    // printed plate size (square)
 lidar_plate_t  = 6;     // printed plate thickness
 lidar_cable_w  = 14;    // notch for the L2's bottom cable outlet (on the -X side of the plate)
-lidar_center_hole = 26; // weight-saving hole under the centre of the base
+lidar_center_hole = 26; // air under the L2 base (bottom cover must stay <= 85 C, section M) and -16 g
 
 /* [Camera - DECXIN 2633V2 USB global shutter (section M, P)] */
 cam_hole_x   = 28;      // M2 hole spacing X
@@ -207,7 +207,6 @@ module lidar_head_up() {
                 translate([-16, boss_r - 4, sock_h - 32]) cube([32, 8, 30]);   // camera boss, front
             }
         }
-        translate([-9, -lidar_plate_w/2 - 1, -1]) cube([18, 12, lidar_plate_t + 2]);           // cable notch, rear
         for (sx=[-1,1]) translate([sx*10, boss_r + 6, -sock_h + head_cam_z()]) rotate([90,0,0]) cylinder(d=4.0, h=8);
     }
 }

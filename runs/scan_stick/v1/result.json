@@ -4,8 +4,8 @@
  "parts": {
   "head": {
    "file": "scan_stick_head_v1.stl",
-   "mass_g": 85.3,
-   "sha12": "230e83ddd088",
+   "mass_g": 86.8,
+   "sha12": "0c0e04bc5ba3",
    "bbox": [
     86.0,
     86.0,
@@ -50,5 +50,13 @@
   "cradle": "bottom, 4257 mm2"
  },
  "loads": "none (drawn v1)",
- "date": "2026-10-23"
+ "date": "2026-10-23",
+ "status": "DONE",
+ "mass_g": 86.8,
+ "mass_tag": "M",
+ "solid_ok": true,
+ "bed_face": "head: lidar seat",
+ "bed_contact_mm2": 6440,
+ "worst_index": null,
+ "worst_case": "no FE on v1 (drawn)"
 }

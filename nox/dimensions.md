@@ -159,13 +159,13 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Item | Value | Tag |
 |---|---|---|
 | Pole | EXTEND-A-REACH 1.5-3 ft telescoping extension pole (B08LL28XZW); tip 3/4"-5 ACME (major 19.05, pitch 5.08); lower tube OD **open: 25.4 until measured** | spec / E |
-| Head thread | female 3/4-5 ACME, 27 deep, 0.40 radial clearance, boss Ø32 x 34, entry chamfer 1.6; test ring 12 tall | C |
+| Head thread | female 3/4-5 ACME, 27 deep, 0.40 radial clearance, boss Ø32 x 34, no entry chamfer (sliver on the first turn); test ring 12 tall | C |
 | Head plate | 86 x 86 x 6, L2 pattern (4 x Ø3.4 on Ø51 at 22.5°, Ø6.2 x 3 counterbore from below), Ø26 centre hole, cable notch 14 wide on -X; lidar seat z = 6 above the boss top | C |
 | Camera block | 32 x 8 x 30 on the boss +Y face, 2 x Ø4 heat-set holes 20 apart, 17 above the boss bottom; bracket 44 x 60 x 3, standoffs Ø6 x 3 on 28 x 28, Ø1.8 holes | C |
 | Down-facing head (alt.) | arm 115 long x 50 wide x 6, ribs 4 x 14; camera inserts 38 along the arm; total length 174 (A1 mini bed) | C |
 | Cradle | hub Ø(rod_d + 10.5) x 60, slit 2.5, ears 7 with M4 (Ø4.3) + nut trap 7.2 AF; Pi tray 64 x 117 x 3.5, standoffs Ø7 x 7 on 58 x 49, Ø2.3; panel strip: rocker 19.4 x 13.2, button Ø12.3, LED Ø5.2; battery plate 84 x 156 x 3.5 + ledge 48 x 52 x 4 + lip 12, rails 3, strap slots 20 x 3.5 at 25 % / 75 %; shelf 52 x 60 x 3.5 on -Y, 6 zip slots | C |
-| Masses | head 85.3, cam 10.0, cradle 194.7, thread test 8.3 (PETG, M) | M |
-| Power | 4S 6000 → rocker → 12 V 2 A buck (L2) + 5 V 5 A UBEC (Pi 5 + camera); ~19 W | E |
+| Masses | head 86.8, cam 10.0, cradle 194.7, thread test 8.3 (PETG) | M |
+| Power | 4S 6000 → rocker → 12 V 2 A buck (L2, spec) + 5 V 5 A UBEC (Pi 5 + camera); ~19 W | spec / E |
 | Network | L2 192.168.1.62 → Pi 192.168.1.2, UDP 6101 → 6201 | spec |
 
 ## M. Mounting interfaces of bought parts (web research 22 Oct 2026; for future mounts)
