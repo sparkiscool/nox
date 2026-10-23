@@ -180,3 +180,14 @@ it  77 beta   16 J  25.0981 vol 0.1198 (dil 0.2745 g -0.000) grey  7.6% ch 0.100
 it  78 beta   16 J  24.9002 vol 0.1199 (dil 0.2745 g -0.000) grey  7.6% ch 0.100 worst pad push 3.46e+04 31.2s
 it  79 beta   16 J  24.7518 vol 0.1199 (dil 0.2745 g -0.000) grey  7.6% ch 0.100 worst pad push 3.44e+04 32.6s
 it  80 beta   16 J  24.6201 vol 0.1199 (dil 0.2745 g -0.000) grey  7.6% ch 0.100 worst pad push 3.42e+04 31.3s
+it  81 beta   16 J  24.4954 vol 0.1199 (dil 0.2745 g +0.001) grey  7.6% ch 0.100 worst pad push 3.41e+04 32.4s
+layout: beta 16 done: eroded design 15 bodies, main 15.6%; drawn bodies outside the main body: 7
+it  82 beta   32 J 175.2340 vol 0.1184 (dil 0.2722 g -0.009) grey  3.7% ch 0.100 worst gate b4 mz 2.32e+05 33.0s
+it  83 beta   32 J 273.5303 vol 0.1187 (dil 0.2742 g -0.002) grey  3.7% ch 0.100 worst held b2 mz 3.77e+05 32.6s
+it  84 beta   32 J 418.4390 vol 0.1156 (dil 0.2711 g -0.013) grey  3.8% ch 0.100 worst tie b8 my 5.7e+05 32.3s
+it  85 beta   32 J 326.2963 vol 0.1147 (dil 0.2707 g -0.014) grey  3.8% ch 0.100 worst held b2 mx 4.06e+05 33.4s
+it  86 beta   32 J  48.2656 vol 0.1202 (dil 0.2759 g -0.003) grey  3.9% ch 0.100 worst gate b8 my 6.02e+04 33.7s
+it  87 beta   32 J 100.2595 vol 0.1172 (dil 0.2734 g -0.012) grey  3.6% ch 0.100 worst held b1 my 1.45e+05 33.6s
+it  88 beta   32 J 248.4355 vol 0.1111 (dil 0.2674 g -0.034) grey  3.7% ch 0.100 worst gate b8 mz 3.86e+05 33.1s
+it  89 beta   32 J 323.7818 vol 0.1119 (dil 0.2674 g -0.034) grey  3.5% ch 0.100 worst held b1 my 4.34e+05 32.0s
+it  90 beta   32 J  14.5354 vol 0.1157 (dil 0.2671 g -0.035) grey  3.6% ch 0.100 worst pad push 2e+04 32.4s
