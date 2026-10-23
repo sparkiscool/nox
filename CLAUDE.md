@@ -26,6 +26,7 @@ This repo is the only source. Docs, scripts, engine, run results and print files
 | `print/<part>_<version>.<ext>` | print-ready files; `print/latest/<part>.<ext>` + `print/latest/LATEST.md` = newest file per part, fixed name; the only folder anyone slices from |
 | `claude/` | research notes and tune backups; background, never a current design |
 | `cloud/` | cloud environment setup; `.claude/` agents and settings |
+| `tools/amazon-parts-mcp/` | the `amazon-parts` MCP server (`.mcp.json`): Amazon ASINs, prices and cart links per build in `catalog.json`; skill `.claude/skills/drone-parts/`. Status words stay in `nox/parts-list.md` |
 
 ## Heavy runs (generative / topology / FE)
 - One heavy run per session. The Nox control conversation starts one thread per run; a thread never waits on another.
