@@ -198,19 +198,23 @@ def members_reach(part, m_mm):
     return True
 
 
-def gate_member_mm(part, floor_mm, gate_erode_cap=2.0, gate_erode_min=0.9, margin_mm=1.0, log=print):
+def gate_member_mm(part, floor_mm, gate_erode_cap=2.0, gate_erode_min=0.9, margin_mm=1.0, built_ratio=0.8,
+                   log=print):
     """minimum member that lets the solid gate pass. nox/solid_check.py erodes the part round every drawn body by
     clip(0.8 x its depth, 0.9, 2.0) mm (depth measured in the finished part, where generated material has fused onto
     the body) and requires the body's core to stay in the main eroded body. Members joining such a body must then be
     thicker than twice that depth; a 3.2 mm frame splits into dozens of pieces at 2.0 mm (holder topo-v1: 72).
-    Returns the member size (blueprint rod diameter, mm) = 2 x depth + margin, lowered to the largest size the design
-    space can still route to every drawn body (a setup that cannot host it is reported, not refused)."""
+    Returns the member size (blueprint rod diameter, mm) = (2 x depth + margin) / built_ratio, lowered to the largest
+    size the design space can still route to every drawn body (a setup that cannot host it is reported, not refused).
+    built_ratio: the thinnest built members come out at about 0.8 of the blueprint minimum (holder organic-v2: 5.0 mm
+    blueprint, members away from drawn bodies 4.0 mm median as built, and the whole part fell into 30 pieces at the
+    gate's 2.0 mm erosion)."""
     lab, nb = ndi.label(part.solid.reshape(part.shape), S26)
     if nb == 0:
         return floor_mm
     d_own = float(ndi.distance_transform_edt(part.solid.reshape(part.shape)).max()) * part.h
     ef = float(np.clip(0.8 * (d_own + 0.5 * floor_mm), gate_erode_min, gate_erode_cap))
-    want = max(floor_mm, 2.0 * ef + margin_mm)
+    want = max(floor_mm, (2.0 * ef + margin_mm) / built_ratio)
     if want <= floor_mm or members_reach(part, want):
         if want > floor_mm:
             log(f"layout: min member {floor_mm:.2f} -> {want:.2f} mm so members survive the solid gate's "
