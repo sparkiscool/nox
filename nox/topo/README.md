@@ -97,7 +97,9 @@ engine, not in the part scripts, so every part gets it the same way (`Settings.f
 
 - **Layout.** A drawn body stays passive only as a functional skin: its cells within `skin_mm` (2.5) of a cut (holes,
   mating and contact faces, keep-outs) or of the outside of the envelope as given. A drawn body touching neither stays
-  whole. The rest of every drawn body becomes design space, so blocky drawn plates and bosses turn into optimised,
+  whole. A body the main support holds (bolt pads, bosses, a wall flange: the mounting features) stays whole: opening
+  part of a bolt pad left its envelope-side skin with a core of its own at the gate's 2.0 mm erosion (motor_mount
+  organic-v1, pad cores 0.75 in the main body, FAIL). The rest of every drawn body becomes design space, so blocky drawn plates and bosses turn into optimised,
   smooth material.
 - **Build.** One smooth field, all signed distances redistanced by fast marching from continuous fields (scikit-fmm),
   so no surface carries voxel steps: the generated region (eta_n level set of the cubic-upsampled filtered field) is

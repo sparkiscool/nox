@@ -96,6 +96,13 @@ def skin_field(part, axes, p, skin_mm):
     if n:
         has = np.asarray(ndi.maximum(K, lab, np.arange(1, n + 1)), bool)
         K |= np.r_[False, ~has][lab] & D
+        # the bodies the main support holds stay whole (Part.held_bodies): a fine body is held where it meets one
+        o = np.asarray(part.origin)
+        ijk = [np.clip(np.floor((np.asarray(axes[k]) - o[k]) / part.h).astype(int), 0, part.shape[k] - 1)
+               for k in range(3)]
+        Hc = part.held_bodies().reshape(part.shape)[np.ix_(*ijk)]
+        held = np.unique(lab[Hc & D])
+        K |= np.isin(lab, held[held > 0]) & D
     return K, C, O
 
 
