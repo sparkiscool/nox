@@ -4,6 +4,6 @@ Strength: worst index 0.28 (F, as-built voxel recheck) in impact 50 g 4 (was non
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_cam_v4.stl
 Print: plate bottom down (the 2 bolt pads + 4 post pads + gussets), bed contact 1169 mm² (M), the largest of the 6 faces (post tops 563); overhang 357 mm² (M) under the generated web, tree supports ~1 g (E); file print/scan_stick_cam_v4.stl (sha256 016d187f2b81)
 
-Run: cam_topo_v4.py, nox/topo (finish drawn, min member 5.0 mm after the gate calibration), h 0.75 (C), 5 cm3 generated (E), 90,112 cells / 38,000 design (M), layout 1082 s, build + checks to 1102 s, peak 3.05 GB (M).
-History: v2 (organic, 2.5 cm3) FAIL necks + 0.96; v3 (drawn, Ø8 posts) FAIL posts at the drawn erosion, 0.33; v4 Ø12 posts PASS.
+Run: cam_topo_v4.py, nox/topo (finish drawn, min member 5.0 mm (C) after the gate calibration), h 0.75 (C), 5 cm3 generated (E), 90,112 cells / 38,000 design (M), layout 1082 s, build + checks to 1102 s, peak 3.05 GB (M).
+History: v2 (organic, 2.5 cm3 E) FAIL necks + worst 0.96 (F); v3 (drawn, Ø8 posts C) FAIL posts at the drawn erosion, 0.33 (F); v4 Ø12 posts (C) PASS.
 Previews: preview.png (engine), preview_print.png (render_preview).

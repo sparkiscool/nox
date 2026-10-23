@@ -23,15 +23,16 @@ thread: `thread_cut.scad` exports the thread body every run cuts; `thread_test` 
 ## Parts (printed, PETG; every one a nox/topo part except the thread ring)
 | Part | File (`print/`) | What |
 |---|---|---|
-| base | `scan_stick_base_v12.stl` | 3/4-5 ACME socket in a Ø40 boss, drawn Ø36 tube column (the cables run up its bore), top flange with 4x M4 heat-set inserts; Pi standoffs + panel strip on +X, pack ledge / lip / rails / 5 mm back plate with strap slots on -X, UBEC / buck shelf on -Y; the webs between them generated (`base_topo_v7.py` layout, `base_topo_v12.py` rebuild with the exact cuts) |
-| head | `scan_stick_head_v9.stl` | bolt flange with a Ø10 cable hole, 4 L2 pads with drawn gussets, camera block; four generated arms between (`head_topo_v8.py` layout, `head_topo_v9.py` rebuild) |
+| base | `scan_stick_base_v13.stl` | 3/4-5 ACME socket in a Ø40 boss, drawn Ø36 tube column (the cables run up its bore), top flange with 4x M4 heat-set inserts; Pi tray plate with Ø8 standoffs + panel strip on +X, pack ledge / lip / rails / 5 mm back plate with strap slots on -X, UBEC / buck shelf on -Y; the webs between them generated (`base_topo_v7.py` layout, `base_topo_v13.py` rebuild with the exact cuts) |
+| head | `scan_stick_head_v10.stl` | bolt flange with a Ø10 cable hole, 4 L2 pads with drawn gussets, camera block; four generated arms between (`head_topo_v8.py` layout, `head_topo_v10.py` rebuild) |
 | cam | `scan_stick_cam_v4.stl` | 2 bolt pads to the head's block, 4 Ø12 posts on the DECXIN 28 x 28 M2 pattern with drawn gussets; generated web (`cam_topo_v4.py`) |
 | thread test | `scan_stick_thread_test_v1.stl` | ring with the base's thread: print first, screw onto the pole, tune `acme_clear` |
 
-Results, strength and print data per part: `runs/scan_stick_base/v12/summary.md`, `runs/scan_stick/v9/summary.md`,
-`runs/scan_stick_cam/v4/summary.md` (361 g printed, M; worst indices 0.56 / 0.36 / 0.28, F). Retired: head v1 (drawn),
-v2 (noxopt, no gussets), v3 (stopped at the layout change), v4-v7 (gate FAILs, `runs/scan_stick/`), the clamp cradle v1,
-cam v1-v3, base v2-v11 (`runs/scan_stick_base/`; v8-v11 were feather FAILs at the boss / tube step, fixed by the Ø40 boss).
+Results, strength and print data per part: `runs/scan_stick_base/v13/summary.md`, `runs/scan_stick/v10/summary.md`,
+`runs/scan_stick_cam/v4/summary.md`. Retired: head v1 (drawn), v2 (noxopt, no gussets), v3 (stopped at the layout change),
+v4-v7 (gate FAILs), v8 / v9 (passed; v9 rebuilt as v10 after review: 3.0 pad wall round the counterbores) (`runs/scan_stick/`),
+the clamp cradle v1, cam v1-v3, base v2-v12 (`runs/scan_stick_base/`; v8-v11 feather FAILs at the boss / tube step, fixed by
+the Ø40 boss; v12 passed but its UBEC keep-out cut a Pi standoff and the -Y rail, and the standoffs had no drawn tray).
 Every FAILED run keeps its folder and summary; only the READY files are in `print/`.
 
 ## Decisions (DEFAULT unless Spark says otherwise)
@@ -39,7 +40,10 @@ Every FAILED run keeps its folder and summary; only the READY files are in `prin
   on the tube, so the pole's lower tube OD no longer matters. Head and base bolt together (4x M4 x 12 into heat-set
   inserts), the camera bracket bolts to the head (2x M3 x 6 into inserts).
 - **Pack and Pi low, lidar and camera high** (Spark 23 Oct): pack and Pi right above the thread, lidar seat 202 mm
-  above the pole tip (C), camera on the head's +Y block.
+  above the pole tip (C), camera on the head's block. The head bolts on turned +90° about z (the flange pattern is a square):
+  the camera block and its bracket hang over the Pi tray side (+X), where nothing of the base rises above z 123; over the
+  pack side (±Y) the bracket would hit the 5 mm back plate. The L2 cable notch then faces the shelf (-Y). `assembly_view.py`
+  prints the overlap of every pair (0 mm³ = clear, M).
 - **Pole:** EXTEND-A-REACH 1.5-3 ft telescoping extension pole, Amazon B08LL28XZW, universal 3/4"-5 ACME tip.
 - **Lidar up-facing**, matching a top-mounted L2 on the Overseer (section O). The hemisphere FOV must see the same
   side of the room as the drone's, or the nightly diff flags occlusion differences as changes.
@@ -54,8 +58,10 @@ Every FAILED run keeps its folder and summary; only the READY files are in `prin
   `point_lio_unilidar` or FAST-LIO2 (settings in `claude/research/2026-10-11-pi5-l2-lidar-slam.md`).
 
 ## Print
-PETG, 0.2 layers, 4 walls, 30 % gyroid (DEFAULT, E), tree supports, every file saved on its largest flat face: base on
-its bottom (thread boss + ledge, 168 tall: fits the A1 mini), head on its flange, cam on its plate. Support grams are
+PETG, 0.2 layers, 4 walls, 30 % gyroid (DEFAULT, E), tree supports, every file saved on its largest flat face: head on
+its flange, cam on its plate; the base on its bottom (thread boss ring + ledge foot, 97 x 78 footprint, 168 tall: fits the
+A1 mini) although the flange top reads 8 % more contact (M): a 168 tall column standing on a Ø40 flange would tip, and
+the insert holes print cleaner facing up. Support grams are
 in each summary.
 
 ## Assembly
@@ -63,8 +69,8 @@ in each summary.
    (`thread_cut.scad`) and rerun the base.
 2. Heat-set inserts: 4x M4 in the base flange, 2x M3 in the head's camera block.
 3. Base onto the pole. Pack on the ledge (lip at the bottom, rails each side), two straps through the slots in the rails and the back plate. Pi on its
-   4 standoffs (M2.5 x 6 self-tap), ports up. UBEC + 12 V buck zip-tied to the shelf. Switch / button / LED in the strip.
-4. Head onto the flange, 4x M4 x 12 from the top (counterbored, reachable before the L2 goes on). L2 on the pads, cable
+   4 standoffs (M2.5 x 6 self-tap), ports up. UBEC + 12 V buck on end in the shelf bay, zip-tied through the ±12 slots. Switch / button / LED in the strip.
+4. Head onto the flange turned so its camera block sits over the Pi (+X) and the cable notch over the shelf (-Y); 4x M4 x 12 from the top (counterbored, reachable before the L2 goes on). L2 on the pads, cable
    outlet over the -X notch, 4x M3 x 12 from below (driver clearance is cut under each pad). Camera on its 4 posts
    (M2 x 5), bracket on the block (2x M3 x 6).
 5. Ethernet L2 → Pi, L2 barrel → 12 V buck, camera USB → Pi: cables through the head's flange hole, down the tube bore and out of the 10 x 30 window at z 40-70 on -Y (the shelf side).
@@ -72,5 +78,6 @@ in each summary.
 
 ## Open (measure or ask Spark)
 - Camera lens barrel Ø and board thickness (Q3) → post height if the lens needs more than 3 mm.
-- UBEC and 12 V buck bodies (Q4) → shelf is 52 x 60 with zip slots, fits 43-50 x 17-25 (E).
+- UBEC and 12 V buck bodies (Q4) → the bay on the shelf's -Y face is 28 wide (x ±14, C) x 30 deep x 64 tall: 43-50 x 17-25 (E)
+  bodies stand on end, stacked outward, zip ties through the slots at x ±12. Wider than 22 and the ties no longer clear it.
 - Pack mass (Q9): 0.59 kg (E) in every load case.

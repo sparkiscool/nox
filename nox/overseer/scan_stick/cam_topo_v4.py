@@ -3,8 +3,8 @@ v2 / v3 failed the gate: posts under Ø12 round an M2 hole do not survive the 2.
 through both layers (8 tall), 8 wide gussets, 4 + 4 thick.
 Print frame: plate in XY, thickness Z, bed at z = 0. Tab end at +Y (bolts to the head's camera block, 2x M3 20 apart),
 camera board on 4 standoffs on the DECXIN 28 x 28 M2 pattern (section M, P), lens up (+z), USB slot below the board.
-Drawn: 2 bolt pads Ø12 x 3 (rule: pads >= Ø12, 2.0 web), 4 standoff pads Ø8 x 3 + Ø6 x 3 posts, a 6 x 6 gusset bar from each
-standoff toward the tab (rule: a gusset into the body). Cuts: M3 Ø3.4, M2 Ø1.8, USB slot, the board keep-out above the posts.
+Drawn: 2 bolt pads Ø12 x 4 (rule: pads >= Ø12, 2.0 web), 4 posts Ø12 through plate + standoff (8 tall), an 8 x 10 gusset bar
+from each post toward the tab (rule: a gusset into the body). Cuts: M3 Ø3.4, M2 Ø1.8, USB slot, the board keep-out above the posts.
 Loads (DEFAULT, E): 30 g camera at 25 g knocks (14 dirs) and 50 g impact (6 dirs), 10 N pokes on each post, 20 N pull on the
 cable slot. Support: the two bolt pads (clamped to the block)."""
 import sys, os
@@ -14,10 +14,10 @@ import numpy as np, manifold3d as mf
 from topo import Part, Settings, optimise
 
 H = float(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else 0.75
-GEN = float(sys.argv[2]) if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else 4.0   # cm3 generated (DEFAULT, E)
+GEN = float(sys.argv[2]) if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else 5.0   # cm3 generated (DEFAULT, E; the saved v4 run)
 GIT = "--no-git" not in sys.argv
 
-W, L, T, POST = 44.0, 60.0, 4.0, 4.0            # C: plate 44 x 60 x 4, posts 4 tall (v3)
+W, L, T, POST = 44.0, 60.0, 4.0, 4.0            # C: plate 44 x 60 x 4, posts 4 above the plate
 BOLT_Y, BOLT_X = L - 7.0, 10.0                  # C: M3 holes 7 from the tab end, 20 apart
 CAM_C = (0.0, L - 14.0 - 25.0)                  # C: camera centre 25 below the tab (cam_cz = -(46/2) - 2 from the holes)
 CAM_P = 28.0 / 2                                # spec P: 28 x 28 M2 pattern
