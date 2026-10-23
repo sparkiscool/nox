@@ -1,0 +1,13 @@
+scan_stick_head: grid (52, 52, 26) h 1.75 = 70,304 cells; design 48,242 (259 cm3), solid 5,960, void 16,102
+  support default: 960 elements, 1904 nodes
+scan_stick_head: mass target 20.0 cm3 generated = volfrac 0.077 of the design cells; 34 cases
+noxopt: WARNING drawn features are nearly but not exactly mirrored in x (5.5% of the passive cells differ): no symmetry imposed there.
+noxopt: 5 interface bodies (4 tied with 3 cases each, 1 held by support 'default'); 0 fragments under 4 cells not tied
+it   1 beta  1 obj  10.0000 vol 0.0786 (dil 0.0923 g +0.194) grey 5.6% change 0.100 worst hand push -z 30 N 1.26e+03x  26s
+it   2 beta  1 obj   1.5888 vol 0.0561 (dil 0.0650 g -0.159) grey 27.5% change 0.100 worst hand push -z 30 N 172x  44s
+it   3 beta  1 obj   0.4726 vol 0.0632 (dil 0.0723 g -0.065) grey 24.6% change 0.100 worst hand push -z 30 N 57.3x  62s
+it   4 beta  1 obj   0.2844 vol 0.0653 (dil 0.0739 g -0.045) grey 21.1% change 0.100 worst hand push -z 30 N 28.3x  82s
+it   5 beta  1 obj   0.1502 vol 0.0663 (dil 0.0742 g -0.041) grey 18.3% change 0.100 worst hand push -z 30 N 17.6x  100s
+it   6 beta  1 obj   0.1027 vol 0.0682 (dil 0.0752 g -0.131) grey 16.2% change 0.100 worst hand push -z 30 N 11.5x  119s
+it   7 beta  1 obj   0.0734 vol 0.0776 (dil 0.0847 g -0.022) grey 15.7% change 0.099 worst hand push -z 30 N 7.76x  140s
+it   8 beta  1 obj   0.0592 vol 0.0792 (dil 0.0854 g -0.013) grey 14.9% change 0.099 worst hand push -z 30 N 6.05x  164s
