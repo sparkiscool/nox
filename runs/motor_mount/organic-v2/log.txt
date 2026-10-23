@@ -48,3 +48,13 @@ it  37 beta    4 J   8.2064 vol 0.1958 (dil 0.3755 g -0.004) grey 39.6% ch 0.100
 it  38 beta    4 J   7.3660 vol 0.1987 (dil 0.3762 g -0.003) grey 39.5% ch 0.100 worst yaw torque 0.35 Nm 653 1.8s
 it  39 beta    4 J   6.7660 vol 0.2006 (dil 0.3764 g -0.002) grey 39.4% ch 0.100 worst yaw torque 0.35 Nm 598 1.8s
 it  40 beta    4 J   6.2349 vol 0.2021 (dil 0.3765 g -0.002) grey 39.5% ch 0.100 worst yaw torque 0.35 Nm 546 1.7s
+it  41 beta    4 J   5.7349 vol 0.2035 (dil 0.3765 g +0.035) grey 39.3% ch 0.100 worst yaw torque 0.35 Nm 489 1.7s
+it  42 beta    4 J   8.3521 vol 0.1885 (dil 0.3619 g -0.005) grey 38.1% ch 0.100 worst yaw torque 0.35 Nm 657 1.6s
+it  43 beta    4 J   7.3940 vol 0.1917 (dil 0.3628 g -0.002) grey 37.9% ch 0.100 worst yaw torque 0.35 Nm 632 1.6s
+it  44 beta    4 J   6.8171 vol 0.1932 (dil 0.3630 g -0.002) grey 37.7% ch 0.100 worst yaw torque 0.35 Nm 576 1.7s
+it  45 beta    4 J   6.2690 vol 0.1948 (dil 0.3630 g -0.002) grey 37.3% ch 0.100 worst yaw torque 0.35 Nm 537 1.8s
+it  46 beta    4 J   5.7533 vol 0.1964 (dil 0.3630 g +0.024) grey 36.9% ch 0.100 worst yaw torque 0.35 Nm 486 1.7s
+it  47 beta    4 J   7.0239 vol 0.1880 (dil 0.3536 g -0.002) grey 35.7% ch 0.100 worst tie b3 mz 584 1.6s
+it  48 beta    4 J   6.4346 vol 0.1899 (dil 0.3539 g -0.001) grey 35.4% ch 0.100 worst yaw torque 0.35 Nm 543 1.6s
+it  49 beta    4 J   6.0473 vol 0.1911 (dil 0.3540 g -0.001) grey 35.4% ch 0.100 worst tie b3 mz 512 1.6s
+it  50 beta    4 J   5.7108 vol 0.1922 (dil 0.3540 g -0.001) grey 35.4% ch 0.100 worst tie b3 mz 490 1.5s
