@@ -1,0 +1,24 @@
+=== scan_stick_cam: h 0.75, generated 5.0 cm3, min member 3.2 mm, cores 4
+scan_stick_cam: grid (64, 88, 16) h 0.75 = 90,112 cells; design 38,000 (16.0 cm3), drawn 6,940, void 45,172
+  support default: 2628 cells, 3682 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_cam: grid (32, 48, 8) h 1.5 = 12,288 cells; design 5,970 (20.1 cm3), drawn 1,050, void 5,268
+  support default: 354 cells, 648 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (2.86 cm3); 0.69 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.273 of 6,174 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (6.8% of passive cells differ): no symmetry
+layout: 6 drawn bodies (846 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (230 cells) count by their cover; 3 bodies tied to body 1
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
+fem: grid (32, 48, 8) = 12,288 elements, 26,313 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.2340 (dil 0.2752 g -0.143) grey 99.1% ch 0.100 worst gate b5 fz 265 1.3s
+it   2 beta    1 J   4.3329 vol 0.2640 (dil 0.3076 g -0.042) grey 94.8% ch 0.100 worst gate b6 my 105 1.3s
+it   3 beta    1 J   2.8949 vol 0.2708 (dil 0.3134 g -0.024) grey 87.6% ch 0.100 worst gate b6 my 77.4 1.4s
+it   4 beta    1 J   2.3731 vol 0.2739 (dil 0.3145 g -0.021) grey 81.8% ch 0.100 worst poke post 0 +x 10 N 63.1 1.2s
+it   5 beta    1 J   2.0002 vol 0.2759 (dil 0.3161 g -0.016) grey 79.9% ch 0.100 worst gate b6 my 55.2 1.4s
+it   6 beta    1 J   1.9262 vol 0.2756 (dil 0.3144 g -0.013) grey 76.2% ch 0.100 worst poke post 2 +x 10 N 49.1 1.4s
+it   7 beta    1 J   1.6595 vol 0.2749 (dil 0.3134 g -0.016) grey 75.2% ch 0.100 worst gate b6 my 46.6 1.3s
+it   8 beta    1 J   1.5018 vol 0.2776 (dil 0.3152 g -0.011) grey 72.9% ch 0.100 worst gate b6 my 39.6 1.7s
+it   9 beta    1 J   1.4227 vol 0.2770 (dil 0.3144 g -0.013) grey 73.0% ch 0.100 worst gate b6 my 40.5 1.5s
+it  10 beta    1 J   1.2991 vol 0.2798 (dil 0.3166 g -0.006) grey 71.8% ch 0.100 worst gate b6 my 36.3 1.3s
