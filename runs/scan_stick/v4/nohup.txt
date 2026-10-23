@@ -44,3 +44,9 @@ it  27 beta    2 J   0.0798 vol 0.0764 (dil 0.1048 g -0.023) grey 17.2% ch 0.100
 it  28 beta    2 J   0.0811 vol 0.0789 (dil 0.1055 g -0.016) grey 16.8% ch 0.100 worst poke cam -z 55 2.6s
 it  29 beta    2 J   0.0678 vol 0.0780 (dil 0.1054 g -0.017) grey 16.8% ch 0.100 worst gate b7 my 51.5 2.5s
 it  30 beta    2 J   0.0625 vol 0.0794 (dil 0.1058 g -0.013) grey 16.7% ch 0.100 worst gate b7 my 45.3 2.2s
+it  31 beta    2 J   0.0595 vol 0.0800 (dil 0.1064 g -0.008) grey 16.7% ch 0.100 worst gate b7 my 45 2.3s
+it  32 beta    2 J   0.0567 vol 0.0808 (dil 0.1069 g -0.004) grey 16.5% ch 0.100 worst gate b7 my 42.6 1.9s
+it  33 beta    2 J   0.0553 vol 0.0813 (dil 0.1071 g -0.001) grey 16.4% ch 0.100 worst gate b7 my 41.4 2.2s
+it  34 beta    2 J   0.0546 vol 0.0815 (dil 0.1072 g -0.001) grey 16.4% ch 0.100 worst gate b7 my 40.7 2.7s
+it  35 beta    2 J   0.0539 vol 0.0816 (dil 0.1072 g -0.001) grey 16.3% ch 0.100 worst gate b7 my 40.2 2.1s
+it  36 beta    2 J   0.0534 vol 0.0818 (dil 0.1072 g +0.004) grey 16.3% ch 0.100 worst gate b7 my 39.9 2.1s
