@@ -16,3 +16,13 @@ it   7 beta    1 J   0.0653 vol 0.0638 (dil 0.0736 g -0.025) grey 19.3% ch 0.100
 it   8 beta    1 J   0.0553 vol 0.0645 (dil 0.0738 g -0.023) grey 18.3% ch 0.100 worst drop on lidar -z 150 N 71.6 24.9s
 it   9 beta    1 J   0.0422 vol 0.0646 (dil 0.0737 g -0.023) grey 18.0% ch 0.100 worst tie b1 mz 55.6 27.2s
 it  10 beta    1 J   0.0342 vol 0.0659 (dil 0.0747 g -0.011) grey 17.4% ch 0.100 worst tie b3 mz 42.9 27.1s
+it  11 beta    1 J   0.0302 vol 0.0665 (dil 0.0750 g +0.012) grey 16.9% ch 0.100 worst tie b1 mz 36.8 30.3s
+it  12 beta    1 J   0.0292 vol 0.0656 (dil 0.0737 g -0.005) grey 16.5% ch 0.100 worst tie b3 mz 35.3 27.5s
+it  13 beta    1 J   0.0273 vol 0.0659 (dil 0.0738 g -0.004) grey 16.1% ch 0.100 worst tie b1 mz 32.4 25.4s
+it  14 beta    1 J   0.0259 vol 0.0661 (dil 0.0739 g -0.003) grey 15.8% ch 0.100 worst tie b1 mz 30.4 26.8s
+it  15 beta    1 J   0.0248 vol 0.0663 (dil 0.0739 g -0.002) grey 15.6% ch 0.100 worst tie b1 mz 29 26.5s
+it  16 beta    1 J   0.0240 vol 0.0664 (dil 0.0740 g +0.016) grey 15.4% ch 0.100 worst tie b1 mz 28.2 24.2s
+it  17 beta    1 J   0.0245 vol 0.0653 (dil 0.0727 g -0.002) grey 15.2% ch 0.100 worst tie b1 mz 28.9 27.5s
+it  18 beta    1 J   0.0239 vol 0.0654 (dil 0.0727 g -0.001) grey 15.0% ch 0.100 worst tie b1 mz 28.1 24.1s
+it  19 beta    1 J   0.0235 vol 0.0655 (dil 0.0727 g -0.001) grey 14.9% ch 0.100 worst tie b1 mz 27.5 26.8s
+it  20 beta    1 J   0.0230 vol 0.0656 (dil 0.0727 g -0.001) grey 14.7% ch 0.100 worst tie b1 mz 27 26.8s
