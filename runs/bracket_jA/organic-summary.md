@@ -39,6 +39,7 @@ Engine nox/topo, branch topo/new-engine, `Settings.finish = "organic"` (default)
 | organic-v1 | 20 | 43.45 | 0.115 | PASS | ok | 445 mm2 (8.4 %) + terraces | 633 s |
 | organic-v2 | 12 | 34.58 | 0.143 | PASS | ok | 58 mm2 (1.3 %) | 614 s |
 | **organic-v3** | 12 | **36.82** | **0.108** | PASS | ok | 101 mm2 (2.2 %) | 610 s |
+| organic-v4 (final engine, 6.25 mm members) | 12 | 36.82 | 0.113 | PASS | ok | box beam, as v3 | 662 s |
 
 Peak memory 2.39 GB for each run. "Flat free surface" counts surface that is not on a cut or envelope face and is
 planar within 3 deg over a 4 mm patch.
