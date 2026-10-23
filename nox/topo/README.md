@@ -6,9 +6,10 @@ Written 22 Oct 2026 to replace `noxopt.py`, `noxopt_local.py` and `printopt.py` 
 
 | Problem with the old engine | What nox/topo does |
 |---|---|
-| Pads hung on 2 to 3 mm necks (bracket_e v8). The 0.9 mm erosion check passed them, and the neck test found them only after the build. | **Anchored-core erosion.** In the eroded analysis only the drawn bodies' cores stay solid. Their skins erode like design material, and loads on them move to the core. A narrow root leaves a gap in the eroded design and every load through it blows up, so the optimiser widens the root during the run. Unit test `t_neck` measures this. |
+| Pads hung on 2 to 3 mm necks (bracket_e v8). The 0.9 mm erosion check passed them, and the neck test found them only after the build. | **Drawn-masked eroded filter.** The eroded design filters the design density over the non-drawn cells only, so a member is not propped up by the drawn body it meets. A wide root keeps its own density up to the drawn face; a thin neck is averaged with the empty space round it, erodes, and every load through it blows up, so the optimiser widens the root during the run. Drawn bodies stay solid and loads stay where they are. Unit test `t_masked_neck`: a 2 mm neck along a cut reads 3.2e3 x the eroded compliance of a full-width root. |
+| Thin drawn plates the solid gate erodes away (bracket_jA: a 4 mm wall flange at the gate's 2.0 mm erosion) linked parts of the design that the gate then splits. | **Gate ties.** A held drawn body thinner than the gate's erosion counts in the eroded design only where generated material covers it, and a second tie set holds the largest unheld body instead of the support, so the other bodies must join it through generated material. Unit test `t_gate_ties`. |
 | The masked filter treated keep-outs as "outside", so material flush against a cut was never eroded. Thin sheets and necks along cuts survived. | Constant-normalised cone filter. Every void and the grid edge count as empty, so the length scale holds against keep-outs too. |
-| The length scale was set by hand per part (R in cells, floor_mm, prune_thin passes). | **Minimum member in mm** (default 3.2 mm rods, about 3.0 mm plates). The filter radius comes from a 3D calibration of the robust thresholds (`layout.calibration`). On top of that, Zhou et al. 2015 geometric constraints act on solid and void from beta 16. There is no prune pass. |
+| The length scale was set by hand per part (R in cells, floor_mm, prune_thin passes). | **Minimum member in mm** (default 3.2 mm rods, about 3.0 mm plates). The filter radius comes from a 3D calibration of the robust thresholds (`layout.calibration`), and `gate_member_mm` raises it to what the solid gate's erosion needs (5.0 mm on the demos). There is no prune pass. |
 | Unreachable setups (an access cut wider than its pad, an uncovered boss) ran for hours before failing. | **Reachability check** before the first solve. Every drawn body must be joinable by a member of the minimum size. If not, the run raises with the body's position. |
 | Ties were translations only, at weight 0.25. | Ties use 3 forces plus 3 moments per unheld body, weight 0.5, on the eroded design. |
 | Pardiso OOM above about 60k design cells. The separate gmg file had its own Layout. | One `Solver`. Pardiso runs on the active dofs only, and a Galerkin geometric multigrid CG takes over beyond the RAM budget. Coarse levels are built element by element and exactly. It warm-starts and solves all load cases of a support group together. |
@@ -19,11 +20,16 @@ The gate is unchanged: `nox/solid_check.py`, run on the exact built mesh.
 
 ## Formulation
 
-- **Fields.** The design variable x lives on the design cells. x_hat is x there, 1 on drawn cells and 0 on voids. Filtering gives x_tilde, and three Heaviside projections give the designs: eroded (eta 0.75), nominal or blueprint (0.5) and dilated (0.25) (Wang, Lazarov & Sigmund 2011).
-- **Objective.** The p-mean (P = 6) of c_i(eroded) / c_i(full solid) over the real load cases and the tie cases. SIMP p = 3, Emin 1e-6. Body forces (`accel`) are density-weighted and carry their sensitivities.
-- **Constraints.** Dilated volume <= V*, with V* adapted so the blueprint meets the mass target. The Zhou 2015 solid and void indicators are capped at eps (c = R^4).
-- **Optimiser.** MMA (Svanberg 2007 asymptotes, dual solved by L-BFGS-B). Beta runs 1, 2, 4, 8, 16, 32. A stage advances when it has settled. The run stops at <= 2 % grey.
+- **Fields.** The design variable x lives on the design cells. x_hat is x there, 1 on drawn cells and 0 on voids. The constant-normalised cone filter gives x_tilde (voids and the grid outside count as empty). Heaviside projections at eta 0.5 (nominal or blueprint) and 0.25 (dilated) act on x_tilde (Wang, Lazarov & Sigmund 2011).
+- **Eroded design (`erosion="masked"`, default).** x_tilde_e = conv(x on design, 0 elsewhere) / max(1 - conv(drawn), 0.05), projected at eta 0.75. Voids and the grid outside count as empty in numerator and denominator, drawn cells are left out of both. Drawn cells stay 1, loads stay on their nodes. The sensitivity is the filter transpose with the 1/den weight. Options: `"anchored"` (round 1: only drawn cores solid, skins eroded, loads moved to the core; it isolated thin drawn plates next to cuts) and `"frozen"` (drawn cells 1, eroded field = x_tilde).
+- **Gate ties (`gate_ties=True`).** A drawn body that touches the main support and has a half thickness under `gate_thin_mm` (2.0, the solid gate's erosion cap) counts in the eroded design by its cover, x_tilde_c = conv(x on design) / max(conv(design), 0.05), projected at eta 0.75. A second tie set (3 forces + 3 moments per body, weight 0.5) holds the largest unheld body (support `_gate`) and loads every other unheld body. Active only when such a thin held body and at least two unheld bodies exist (bracket_jA: 18 gate ties; bar_half, motor_mount: none).
+- **Objective.** The p-mean (P = 6) of c_i(eroded) / c_i(full solid) over the real load cases, the tie cases and the gate ties. SIMP p = 3, Emin 1e-6. Body forces (`accel`) are density-weighted and carry their sensitivities.
+- **Constraints.** Dilated volume <= V*, with V* adapted (gain 0.3, reset to its fixed point at every beta step) so the blueprint meets the mass target.
+- **Geometric constraints (Zhou 2015): off by default** (`geometric=True` turns them on from beta 16). Measured on bar_half topo-v1 at beta 32: the solid one read +294 because all 977 cells it counted sat at x = 1, one to two cells off a cut, where the constant-normalised filter cannot reach eta_e at all; bracket_jA topo-v1 read +6, 97 % of it from cells next to drawn bodies. Both stayed constant for 25+ iterations while MMA spent its moves on them. They now count only cells where they can be met (`_geo_masks`: x_tilde with the design all 1 reaches eta_e + 0.05 for solid, x_tilde with the design all 0 stays under eta_d - 0.05 for void). With that mask the same bar_half density reads 0.002 eps (solid) and motor_mount topo-v2 0.009 eps: the robust formulation already holds the solid length scale, so the constraints add cost and no length scale the gate needs.
+- **Optimiser.** MMA (Svanberg 2007 asymptotes, dual solved by L-BFGS-B). Beta runs 1, 2, 4 (coarse grid), then 4, 8, 16, 32 (fine grid). A stage advances when it has settled. The run stops at <= 2 % grey or after max_stage iterations at beta 32.
+- **Build.** The surface is the eta_n iso-surface of x_tilde (cubic upsampling, marching cubes, Taubin), held 0.5 mm off keep-outs, then (generated + drawn) ^ env - cuts exactly in manifold3d. Specks under 20 mm3 are dropped; sealed cavities (a hollow section in the nominal field) stay.
 - **Material.** PETG, PLA or TPU, transversely isotropic about the build axis. The as-built strength report uses in-layer von Mises / A_xy and across-layer sqrt((sigma_n+/A_z)^2 + (tau_n/A_s)^2), with the same allowables as the old engine so indices compare.
+- **Voxels.** Inside tests cast one +z ray per column from below the mesh (not below the grid: a keep-out reaching under the grid, as the stand setups' ring and half spaces do, inverted whole columns in round 1). A support or load region that holds no cell centre falls back to the cells it intersects (3 x 3 x 3 samples per cell), then to the part cells touching those.
 
 ## Compute plan (4 vCPU / 16 GB cloud box, 6 h cap)
 
@@ -39,7 +45,12 @@ The gate is unchanged: `nox/solid_check.py`, run on the exact built mesh.
 cd nox
 python3 -m topo.test_topo            # self-test, ~3 min
 python3 -m topo.run holder --git     # a demo part end to end -> runs/holder/topo-v1/
+python3 -m topo.run bar_half --out ../runs/bar_half/topo-v3 --rebuild-from ../runs/bar_half/topo-v2   # build stage only
+python3 -m topo.run bracket_jA --set pmean=8 --set gate_ties=false                                   # any Settings field
+python3 -m topo.compare bracket_jA --new ../runs/bracket_jA/topo-v3/bracket_jA.stl   # old v8 part vs new, same grid
 ```
+
+`topo.compare` maps the old print file (`print/box_<part>_v8.stl`) back to W with the inverse of the repo's print-pose rotation (`stand_v7_parts.print_pose`; bar_half 45.12 deg from `stand_v8_bar_export.py`) and a translation fitted by overlaying the drawn bodies (voxel cross-correlation, then Nelder-Mead on exact volumes; both v8 parts fit with 0.0 mm3 drawn missing, in cuts or outside the envelope). Then it runs `build.strength` for both parts on the same Part grid and load cases and writes `compare.json` beside the new part.
 
 From a part script:
 
@@ -56,12 +67,15 @@ The old `arm_topo.PartProblem` setups run unchanged. See `demos/stand.py`.
 
 ## Demos
 
-| Name | What |
-|---|---|
-| `holder` | The old engine's benchmark holder (28 cases, 3 supports). |
-| `bracket_e` | The bracket whose v8 bolt pads hung on necks. |
-| `bracket_jA`, `bar_half` | Box stand parts the old v8 shipped. |
-| `motor_mount` | A generic drone motor mount (assumed dimensions, E). |
+Results per part and round: `runs/topo-demo-summary.md` (round 1), `runs/topo-dev-round2.md` (round 2).
+
+| Name | What | Round 2 |
+|---|---|---|
+| `holder` | The old engine's benchmark holder (28 cases, 3 supports). | Not run. Fails the gate even filled solid (setup: 1.4 mm boss walls, pad on a 4 mm layer between cuts). |
+| `bracket_e` | The bracket whose v8 bolt pads hung on necks. | Not run. Its coarse stage now builds (support band falls back to touching cells). |
+| `bracket_jA` | Box stand joint bracket the old v8 shipped. | topo-v3: gate PASS, 36.04 g, worst 0.125 (v8: 38.37 g, 0.133, same grid). |
+| `bar_half` | Box stand cross bar half the old v8 shipped. | topo-v3: gate PASS, 71.23 g, worst 0.804 (v8: 77.58 g, 0.929, same grid). |
+| `motor_mount` | A generic drone motor mount (assumed dimensions, E), pads 6 mm tall. | MOTOR_RESULT |
 
 ## Sources
 
@@ -70,6 +84,7 @@ The old `arm_topo.PartProblem` setups run unchanged. See `demos/stand.py`.
 - Zhou, Lazarov, Wang, Sigmund 2015, CMAME 293:266: geometric constraints.
 - Clausen & Andreassen 2017, SMO: filter boundary conditions and eroded designs detaching at boundaries.
 - Cool, Aage, Sigmund 2025, arXiv 2501.09402: connectivity review.
+- Development rounds: `runs/topo-demo-summary.md`, `runs/topo-dev-round2.md`.
 - Amir, Aage, Lazarov 2014 and Ferrari & Sigmund 2020: multigrid CG for TO.
 - Svanberg 1987 / 2007: MMA.
 - Research notes behind the choices: `claude/research/topo-engine-2026-10-22.md`.
