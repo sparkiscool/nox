@@ -40,3 +40,28 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v7 | gen 5.4, 6.25 mm, 7 mm layer, offset 11.5 mm bosses | 11.73 | 0.569 | **PASS** | ok | right: one frame | 4260 s |
 | organic-v8 | as v7, case_norm frame | 11.72 | 0.596 | **PASS** | ok | right: one frame | 4471 s |
 | organic-v9 | as v8, min member 6.6 mm | 11.74 | 1.083 | FAIL (2 bodies) | ok | wrong: two frames | ~4300 s |
+| organic-v10 | as v7, gen 6.0 | 12.50 | 0.504 | **PASS** | ok | right: one frame | 4148 s |
+
+## Result
+
+Final engine (nox/topo at this commit, `finish="organic"`, `case_norm="solid"`). Two candidates, each misses one
+target:
+
+| Run | Mass g | Worst | Solid | Look |
+|---|---|---|---|---|
+| organic-v7 | 11.73 (+14 %) | 0.569 (target 0.50) | PASS | right |
+| organic-v10 | 12.50 (+21 %) | 0.504 (target 0.50) | PASS | right |
+
+Targets (a) look and (b) gate hold on both. (c) worst <= 0.50 and (d) mass within about 15 % do not hold together.
+
+Why it is the setup, not the engine: the worst cell is the same in every run, topo-v1 included: (28.5, 7.5 / 32.5,
+22.5), where the member from each hook column bends 90 deg over the battery channel's top long edge (channel
+x 10..50, y 8..32, top z 22). The material there is a column 8 mm wide beside the channel and an arm at most 6 mm thick
+over it (the 7 mm layer under the pad, held 0.5 mm off both keep-outs), wrapped round a sharp keep-out edge. Mass
+moves it slowly (+0.77 g for -0.065); bigger members (v9, 6.6 mm) or a different case weighting (v8) did not help;
+filling, normalising or pulling the surface back at keep-outs made it worse (0.71 to 1.04, rebuilds of v8).
+
+Setup change that would do it (Spark to approve; it changes the battery keep-out): round the battery channel's two top
+long edges with r 3 mm (a pack's own edge radius is about that), or lower the channel top from z 22 to z 21. Either
+gives the bend a radius or 1 mm more arm, at the cell that sets the index, without more mass. Not run: it changes a
+keep-out the control session did not clear.
