@@ -13,9 +13,10 @@ from ..part import Part
 PLATE_BOLTS = [(sx * 12.0, sy * 12.0) for sx in (1, -1) for sy in (1, -1)]
 MOTOR_BOLTS = [(8.0, 0.0), (-8.0, 0.0), (0.0, 9.5), (0.0, -9.5)]          # 16 x 19 pattern
 Z_SEAT0, Z_TOP = 32.0, 38.0
+# v3 (23 Oct): pads 6 mm tall so the solid gate (2.0 mm erosion) keeps a 2 mm core (v2: Ø13 x 5 failed by 4 voxels of 2370).
 # v2 (23 Oct): pads Ø13 x 5 (README pad rule >= Ø12; 4.8 web round the M3 so a core survives the solid gate's 2.0 mm
 # erosion) and a 6 mm seat (v1: Ø10 x 4 pads and a 4 mm seat had no core at 2.0 mm erosion and failed the gate)
-PAD_R, PAD_T = 6.5, 5.0
+PAD_R, PAD_T = 6.5, 6.0
 
 
 def box(x0, x1, y0, y1, z0, z1):
