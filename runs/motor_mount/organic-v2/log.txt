@@ -169,3 +169,17 @@ it  77 beta   32 J   9.8416 vol 0.1816 (dil 0.3409 g -0.000) grey  3.5% ch 0.100
 it  78 beta   32 J   9.8255 vol 0.1816 (dil 0.3410 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 822 38.3s
 it  79 beta   32 J   9.8121 vol 0.1816 (dil 0.3410 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 821 39.1s
 it  80 beta   32 J   9.8004 vol 0.1817 (dil 0.3410 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 820 38.2s
+git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403
+To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to p
+it  81 beta   32 J   9.7898 vol 0.1817 (dil 0.3410 g +0.001) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 819 39.4s
+it  82 beta   32 J   9.7933 vol 0.1812 (dil 0.3405 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 819 39.3s
+it  83 beta   32 J   9.7841 vol 0.1813 (dil 0.3405 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 818 39.0s
+it  84 beta   32 J   9.7750 vol 0.1813 (dil 0.3405 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 817 39.4s
+it  85 beta   32 J   9.7655 vol 0.1814 (dil 0.3405 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 816 38.1s
+it  86 beta   32 J   9.7557 vol 0.1816 (dil 0.3405 g +0.001) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 815 40.3s
+it  87 beta   32 J   9.7548 vol 0.1815 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 814 38.6s
+it  88 beta   32 J   9.7455 vol 0.1817 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 814 37.8s
+it  89 beta   32 J   9.7364 vol 0.1820 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 813 37.8s
+it  90 beta   32 J   9.7275 vol 0.1823 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 812 38.9s
