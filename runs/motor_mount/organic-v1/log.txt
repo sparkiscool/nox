@@ -69,3 +69,28 @@ it  57 beta    4 J   7.0952 vol 0.1923 (dil 0.3572 g -0.002) grey 36.4% ch 0.100
 it  58 beta    4 J   6.7048 vol 0.1937 (dil 0.3575 g -0.001) grey 36.6% ch 0.100 worst tie b3 mz 530 1.7s
 it  59 beta    4 J   6.4592 vol 0.1944 (dil 0.3576 g -0.001) grey 36.4% ch 0.100 worst tie b3 mz 513 2.1s
 it  60 beta    4 J   6.2531 vol 0.1951 (dil 0.3576 g -0.001) grey 36.3% ch 0.100 worst tie b3 mz 497 1.9s
+it  61 beta    4 J   6.0495 vol 0.1957 (dil 0.3576 g +0.015) grey 36.3% ch 0.100 worst tie b3 mz 483 2.0s
+it  62 beta    4 J   6.8963 vol 0.1904 (dil 0.3517 g -0.002) grey 35.5% ch 0.100 worst tie b3 mz 548 1.8s
+it  63 beta    4 J   6.6182 vol 0.1914 (dil 0.3520 g -0.001) grey 35.5% ch 0.100 worst tie b3 mz 533 2.2s
+it  64 beta    4 J   6.4251 vol 0.1920 (dil 0.3520 g -0.001) grey 35.6% ch 0.100 worst tie b3 mz 519 1.8s
+layout: stopped (beta_stop) at it 64, beta 4, 130 s
+layout: beta 4 done: eroded design 17 bodies, main 56.4%; drawn bodies outside the main body: 4
+coarse stage done: 64 iterations, 136 s, peak 0.762676 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.69 cm3); 1.34 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 8.05 cells, erosion depth 1.71 mm; volfrac 0.189 of 86,003 design cells
+layout: WARNING nearly mirrored in x (0.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: 5 drawn bodies (11,109 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (56, 56, 56) = 175,616 elements, 325,635 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 32) grid (h 1.6): mean x 0.224
+it   1 beta    4 J  10.0000 vol 0.1902 (dil 0.3525 g +0.004) grey 36.3% ch 0.100 worst tie b3 mz 708 45.9s
+it   2 beta    4 J  10.0537 vol 0.1890 (dil 0.3504 g -0.002) grey 36.1% ch 0.100 worst tie b3 mz 733 47.1s
+it   3 beta    4 J   9.6069 vol 0.1899 (dil 0.3506 g -0.001) grey 36.0% ch 0.100 worst tie b3 mz 702 44.1s
+it   4 beta    4 J   9.1939 vol 0.1907 (dil 0.3505 g -0.001) grey 35.9% ch 0.100 worst tie b3 mz 670 42.0s
+it   5 beta    4 J   8.7771 vol 0.1915 (dil 0.3505 g -0.001) grey 35.8% ch 0.100 worst tie b3 mz 636 41.3s
+it   6 beta    4 J   8.3621 vol 0.1923 (dil 0.3505 g +0.002) grey 35.6% ch 0.100 worst tie b3 mz 603 43.8s
+it   7 beta    4 J   8.2148 vol 0.1920 (dil 0.3493 g -0.001) grey 35.4% ch 0.100 worst tie b3 mz 588 42.7s
+it   8 beta    4 J   7.7906 vol 0.1929 (dil 0.3493 g -0.001) grey 35.2% ch 0.100 worst tie b3 mz 556 43.1s
+it   9 beta    4 J   7.3794 vol 0.1939 (dil 0.3493 g -0.001) grey 35.1% ch 0.100 worst tie b3 mz 525 43.3s
