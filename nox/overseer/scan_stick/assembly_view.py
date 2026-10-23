@@ -29,7 +29,7 @@ head = load(os.path.join(ROOT, "print", "scan_stick_head_v13.stl"), rot([0, 0, 1
 # cam print frame: plate in XY, tab at +Y (bolt pads at y 53), lens / posts +z. Mount: plate against the block's +Y face
 # (world: plate in XZ, lens +Y), tab holes at world z TOP+6, the plate hanging down below them (the head's bracket keep-out
 # ends at z 25).  print (x, y, z) -> world (-x, z + CAM_Y, y + TOP + CAM_HZ - 53): a 180 deg turn about the (0, 1, 1) axis.
-cam = load(os.path.join(ROOT, "print", "scan_stick_cam_v5.stl"), rot([0, 1, 1], 180, (0, CAM_Y, TOP + CAM_HZ - 53)))
+cam = load(os.path.join(ROOT, "print", "scan_stick_cam_v6.stl"), rot([0, 1, 1], 180, (0, CAM_Y, TOP + CAM_HZ - 53)))
 cam.apply_transform(rot([0, 0, 1], HEAD_ROT))                                                  # follows the head
 ring = load(os.path.join(ROOT, "print", "scan_stick_thread_test_v1.stl"), rot([0, 0, 1], 0, (-95, 20, -60)))
 
@@ -53,17 +53,17 @@ def overlap(a, b):
 for an, am, bn, bm in (("base", base, "head", head), ("base", base, "cam bracket", cam), ("head", head, "cam bracket", cam),
                        ("base", base, "camera board", camera), ("head", head, "camera board", camera), ("cam bracket", cam, "camera board", camera), ("base", base, "Pi", pi), ("base", base, "pack", pack)):
     print(f"fit: {an} x {bn}: {overlap(am, bm):.0f} mm3 overlap (M; 0 = clear)")
-s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v17 (Pi 5 + 4S 6000 near the hand), head v13 (Unitree L2 + DECXIN camera), cam v5; nox/topo parts")
+s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v17 (Pi 5 + 4S 6000 near the hand), head v13 (Unitree L2 + DECXIN camera), cam v6; nox/topo parts")
 s.part("base v17", base, group="printed", color="#8899aa", printed=True)
 s.part("head v13", head, group="printed", color="#9aa8b8", printed=True)
-s.part("cam bracket v5", cam, group="printed", color="#aab4c0", printed=True)
+s.part("cam bracket v6", cam, group="printed", color="#aab4c0", printed=True)
 s.part("thread test v1", ring, group="printed", color="#b8c0c8", printed=True, note="fit ring, beside the pole for scale")
 s.part("Unitree L2", trimesh.util.concatenate([lidar, dome]), group="bought", color="#222222", printed=False, note="75 x 75 x 65, 230 g spec")
 s.part("DECXIN camera", trimesh.util.concatenate([camera, lens]), group="bought", color="#2d5a2d", printed=False)
 s.part("Raspberry Pi 5", pi, group="bought", color="#2e7d32", printed=False)
 s.part("4S 6000 pack", pack, group="bought", color="#2f4fbf", printed=False, note="148 x 48 x 45 P")
 s.part("pole", trimesh.util.concatenate([pole, tip]), group="bought", color="#777777", printed=False, note="EXTEND-A-REACH 1.5-3 ft")
-names = ["base v17", "head v13", "cam bracket v5", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
+names = ["base v17", "head v13", "cam bracket v6", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
 s.timeline(lambda t: {n: rot([0, 0, 1], 360 * t / 16) for n in names}, duration_s=16, fps=30)
 s.view("iso", (520, -620, 260), (0, 0, 80)); s.view("front", (0, -800, 80), (0, 0, 80)); s.view("head", (220, -260, 260), (0, 0, 200))
 os.makedirs(OUT, exist_ok=True)

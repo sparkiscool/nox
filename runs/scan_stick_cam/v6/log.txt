@@ -1,0 +1,1 @@
+=== scan_stick_cam: h 0.75, generated 5.0 cm3, min member 3.2 mm, cores 4

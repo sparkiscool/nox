@@ -488,5 +488,12 @@
  "peak_gb": 5.719776,
  "gen_cm3": 5.0,
  "h": 0.75,
- "total_s": 2661
+ "total_s": 2661,
+ "status": "FAILED",
+ "mass_tag": "M",
+ "worst_index": 0.306,
+ "note": "gate PASS, brief missed: web wrapped the standoffs; v6",
+ "date": "2026-10-23 23:31",
+ "peak_mem_gb": 5.7,
+ "wall_time_min": 44.4
 }

@@ -25,11 +25,11 @@ thread: `thread_cut.scad` exports the thread body every run cuts; `thread_test` 
 |---|---|---|
 | base | `scan_stick_base_v17.stl` | 3/4-5 ACME socket in a Ø40 (C) boss, drawn Ø36 (C) tube column (the cables run up its bore), top flange with 4x M4 heat-set inserts; Pi tray plate with Ø8 (C) standoffs + switch strip on +X (rocker, button and LED beside the tube), pack ledge / lip / rails / 5 mm (C) back plate with strap slots on -X, UBEC / buck shelf on -Y; the webs between them generated (`base_topo_v7.py` layout, `base_topo_v17.py` rebuild with the exact cuts) |
 | head | `scan_stick_head_v13.stl` | bolt flange with a Ø10 (C) cable hole, 4 L2 pads with drawn gussets, 10.5 thick (C) camera block with its bracket holes at z 6 (C); four generated arms between (`head_topo_v8.py` layout, `head_topo_v13.py` rebuild) |
-| cam | `scan_stick_cam_v5.stl` | 2 bolt pads to the head's block, 4 Ø9 x 10 (C) standoffs with M2.5 inserts on the DECXIN 28 x 28 (P) pattern, drawn gussets; generated web (`cam_topo_v5.py`) |
+| cam | `scan_stick_cam_v6.stl` | 2 bolt pads to the head's block, 4 Ø9 x 10 (C) standoffs with M2.5 inserts on the DECXIN 28 x 28 (P) pattern, drawn gussets; generated web (`cam_topo_v6.py`) |
 | thread test | `scan_stick_thread_test_v1.stl` | ring with the base's thread: print first, screw onto the pole, tune `acme_clear` |
 
 Results, strength and print data per part: `runs/scan_stick_base/v17/summary.md`, `runs/scan_stick/v13/summary.md`,
-`runs/scan_stick_cam/v5/summary.md`. Retired: head v1 (drawn), v2 (noxopt, no gussets), v3 (stopped at the layout change),
+`runs/scan_stick_cam/v6/summary.md`. Retired: head v1 (drawn), v2 (noxopt, no gussets), v3 (stopped at the layout change),
 v4-v7 (gate FAILs), v8-v12 (passed; rebuilt after review: v10 a 3.0 mm (C) pad wall round the counterbores, v11 a 10 thick (C) camera
 block for 7 deep (C) insert holes, v12 a 12 thick (C) block so the holes clear the M4 pockets plus Ø5 (C) key holes, v13 the holes
 down at z 6 (C) because v12's -X hole ran into the 112.5° pad's driver clearance) (`runs/scan_stick/`),

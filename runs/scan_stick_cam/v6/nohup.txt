@@ -1,0 +1,3 @@
+=== scan_stick_cam: h 0.75, generated 5.0 cm3, min member 3.2 mm, cores 4
+scan_stick_cam: grid (64, 88, 24) h 0.75 = 135,168 cells; design 15,420 (6.5 cm3), drawn 12,110, void 107,638
+  support default: 2190 cells, 3156 nodes
