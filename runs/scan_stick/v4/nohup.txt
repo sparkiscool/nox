@@ -179,3 +179,13 @@ it  87 beta   32 J   4.1167 vol 0.0640 (dil 0.1062 g -0.005) grey  1.0% ch 0.100
 it  88 beta   32 J   3.3390 vol 0.0624 (dil 0.1059 g -0.007) grey  1.0% ch 0.100 worst drop on lidar -z 150 N 842 17.1s
 it  89 beta   32 J   3.2354 vol 0.0629 (dil 0.1060 g -0.006) grey  1.0% ch 0.100 worst drop on lidar -z 150 N 820 17.6s
 it  90 beta   32 J   3.2591 vol 0.0628 (dil 0.1062 g -0.005) grey  1.0% ch 0.100 worst drop on lidar -z 150 N 830 18.1s
+it  91 beta   32 J   3.4486 vol 0.0629 (dil 0.1058 g -0.014) grey  0.9% ch 0.100 worst drop on lidar -z 150 N 817 17.8s
+it  92 beta   32 J   3.3932 vol 0.0625 (dil 0.1056 g -0.016) grey  1.0% ch 0.100 worst drop on lidar -z 150 N 864 17.4s
+it  93 beta   32 J   3.2613 vol 0.0628 (dil 0.1055 g -0.016) grey  0.9% ch 0.100 worst drop on lidar -z 150 N 816 16.0s
+it  94 beta   32 J   3.2131 vol 0.0629 (dil 0.1054 g -0.017) grey  1.0% ch 0.100 worst drop on lidar -z 150 N 818 16.8s
+it  95 beta   32 J   3.1934 vol 0.0635 (dil 0.1059 g -0.013) grey  0.9% ch 0.100 worst drop on lidar -z 150 N 813 16.3s
+it  96 beta   32 J   3.1877 vol 0.0645 (dil 0.1068 g -0.004) grey  0.9% ch 0.100 worst drop on lidar -z 150 N 812 17.0s
+it  97 beta   32 J   3.1834 vol 0.0648 (dil 0.1070 g -0.003) grey  0.9% ch 0.100 worst drop on lidar -z 150 N 811 17.2s
+layout: stopped (grey) at it 97, beta 32, 1702 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 1888 s, peak 4.170812 GB
