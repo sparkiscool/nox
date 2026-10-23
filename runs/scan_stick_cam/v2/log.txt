@@ -175,3 +175,13 @@ it  77 beta   32 J 274.5796 vol 0.1984 (dil 0.3744 g -0.000) grey  5.5% ch 0.100
 it  78 beta   32 J 274.5709 vol 0.1985 (dil 0.3745 g -0.000) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 13.9s
 it  79 beta   32 J 274.5668 vol 0.1985 (dil 0.3745 g -0.000) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.4s
 it  80 beta   32 J 274.5632 vol 0.1986 (dil 0.3745 g -0.000) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.2s
+it  81 beta   32 J 274.5594 vol 0.1986 (dil 0.3745 g +0.001) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.5s
+it  82 beta   32 J 274.5647 vol 0.1983 (dil 0.3741 g -0.000) grey  5.6% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.4s
+it  83 beta   32 J 274.5613 vol 0.1983 (dil 0.3741 g -0.000) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.4s
+it  84 beta   32 J 274.5585 vol 0.1984 (dil 0.3741 g -0.000) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.4s
+it  85 beta   32 J 274.5560 vol 0.1984 (dil 0.3742 g -0.000) grey  5.5% ch 0.100 worst cable pull -y 20 N 6.55e+04 13.9s
+it  86 beta   32 J 274.5535 vol 0.1984 (dil 0.3742 g +0.001) grey  5.6% ch 0.100 worst cable pull -y 20 N 6.55e+04 14.1s
+layout: stopped (max_stage) at it 86, beta 32, 1234 s
+layout: beta 32 done: eroded design 5 bodies, main 72.5%; drawn bodies outside the main body: 2
+layout done: 1344 s, peak 2.516852 GB
+build: organic surface at pitch 0.375 mm (x2), skins 1.72 cm3, field 4.82 cm3, in env - cuts 4.30 cm3 (layout 4.30, level offset +0.084 mm), fillet 2.5 mm, rims 1.0 mm, mesh 58,776 faces, 9 s
