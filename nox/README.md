@@ -30,7 +30,7 @@ The short version of this page is `CLAUDE.md` at the repo root, loaded in every 
 - One piece = one part, or one heavy run (one generative run per machine).
 - Pieces that write the same doc rows or the same shared number stay in one session.
 - A prompt holds: the goal, the files to read, the exact commands, what to report back, and the numbers it needs (tagged). Short, in a code block, ready to paste.
-- The session that splits says which piece it kept and doesn't touch the others. Each piece ends in its own PR; the control conversation merges them.
+- The session that splits says which piece it kept and doesn't touch the others. Each piece ends in its own PR, reviewed by the `review` agent and merged by the session on PASS (23 Oct); the control conversation merges only what a session could not.
 
 ## Live status (17 Oct 15:40)
 - **A part's state is written in exactly one cell: its State cell in `nox/current-parts.md`.** No other doc restates it: the queue holds print order, part docs hold design and test results, the print log and `nox/log.md` are history. A doc that disagrees with that cell is stale.
@@ -75,6 +75,7 @@ The short version of this page is `CLAUDE.md` at the repo root, loaded in every 
 - **Files:** a run's meshes, checkpoints and logs go in `runs/<part>/<version>/` and are committed with every checkpoint, so a reclaimed box loses nothing. A print-ready file goes into `print/` the same turn (Printing, Done = saved); a cloud box and the chat itself are not storage.
 - **Limits:** a Claude Code cloud box is listed at ~4 vCPU, 16 GB RAM, 30 GB disk (docs 20 Oct; the chat boxes were 2 cores / 7 GB, P). Measure on the first run and tag it; keep peak under 75 % of RAM and run nothing else heavy beside a generative run. A run lives only while a command runs (start it in the background, checkpoint every ~10 iterations, commit each checkpoint); hard cap 6 h. One generative run per box (split the rest, section above). Generative runs above ~60k design cells: `noxopt_local` with `backend="gmg"` (pardiso died at 6 GB in the 7 GB boxes, 20 Oct).
 - **Control:** one conversation at claude.ai/code (Projects → Nox) starts and watches every thread. A heavy run uses the `run-part` agent; a PR gets the `review` agent before merge. Scheduled or on-demand reruns are routines (claude.ai/code → Routines).
+- **One prompt per part (23 Oct):** `/part <part> <version>: <brief>` in a cloud session on the repo runs the whole chain (`.claude/skills/part/SKILL.md`): branch, script, `solid_check` gate, `print_orient`, preview, the motion artifact (`nox/motion.py`: every moving part as one HTML file + mp4, published from the box), Done = saved, PR. Spark's machine only opens the page. What still touches the laptop: slicing in Bambu Studio and sending the plate (Printing).
 
 ## Rules (Spark)
 - **Speed first.** No blocking gates, **except one: the solid check (next rule).** Print, test, iterate. Every other check is reported, never blocks.
