@@ -1,0 +1,995 @@
+{
+ "name": "scan_stick_base",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 6,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   107457.2
+  ],
+  "necks": [
+   {
+    "neck_under_mm": 3.0,
+    "blob_thick_mm": 6.5,
+    "joint_mm2": 0.0,
+    "blob_mm3": 1752.1,
+    "at": [
+     -25.0,
+     -28.2,
+     113.5
+    ]
+   }
+  ],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.965,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [
+   {
+    "kind": "wall",
+    "thick_mm": 1.0,
+    "core_mm3": 23.02,
+    "at": [
+     -56.5,
+     -25.5,
+     12.9
+    ],
+    "span": [
+     11.1,
+     2.4,
+     0.1
+    ]
+   },
+   {
+    "kind": "wall",
+    "thick_mm": 1.0,
+    "core_mm3": 22.53,
+    "at": [
+     -57.1,
+     25.5,
+     13.0
+    ],
+    "span": [
+     10.6,
+     2.4,
+     0.1
+    ]
+   }
+  ],
+  "acute_edges": 32,
+  "ok": false
+ },
+ "function_check": {
+  "drawn_missing_mm3": -0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "pack 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.242,
+    "across": 0.26,
+    "at": [
+     -18.0,
+     -11.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.012,
+    "across": 0.015,
+    "at": [
+     8.0,
+     -21.0,
+     67.0
+    ]
+   },
+   {
+    "case": "head 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.53,
+    "across": 1.174,
+    "at": [
+     -4.0,
+     -21.0,
+     109.0
+    ]
+   },
+   {
+    "case": "pack 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.242,
+    "across": 0.309,
+    "at": [
+     -20.0,
+     -9.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.012,
+    "across": 0.012,
+    "at": [
+     8.0,
+     -21.0,
+     67.0
+    ]
+   },
+   {
+    "case": "head 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.53,
+    "across": 1.078,
+    "at": [
+     16.0,
+     3.0,
+     157.0
+    ]
+   },
+   {
+    "case": "pack 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.54,
+    "across": 0.414,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.019,
+    "at": [
+     22.0,
+     -19.0,
+     55.0
+    ]
+   },
+   {
+    "case": "head 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.362,
+    "across": 0.682,
+    "at": [
+     -18.0,
+     -1.0,
+     119.0
+    ]
+   },
+   {
+    "case": "pack 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.54,
+    "across": 1.041,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.013,
+    "at": [
+     20.0,
+     25.0,
+     31.0
+    ]
+   },
+   {
+    "case": "head 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.362,
+    "across": 0.431,
+    "at": [
+     -18.0,
+     19.0,
+     151.0
+    ]
+   },
+   {
+    "case": "pack 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.15,
+    "across": 0.176,
+    "at": [
+     -16.0,
+     11.0,
+     37.0
+    ]
+   },
+   {
+    "case": "pi 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.006,
+    "across": 0.013,
+    "at": [
+     24.0,
+     -23.0,
+     65.0
+    ]
+   },
+   {
+    "case": "head 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.111,
+    "across": 0.237,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "pack 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.15,
+    "across": 0.26,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.006,
+    "across": 0.007,
+    "at": [
+     20.0,
+     -19.0,
+     19.0
+    ]
+   },
+   {
+    "case": "head 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.111,
+    "across": 0.088,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "pack 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.39,
+    "across": 0.339,
+    "at": [
+     -12.0,
+     -19.0,
+     5.0
+    ]
+   },
+   {
+    "case": "pi 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.007,
+    "across": 0.012,
+    "at": [
+     16.0,
+     -19.0,
+     57.0
+    ]
+   },
+   {
+    "case": "head 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.351,
+    "across": 0.769,
+    "at": [
+     -4.0,
+     -21.0,
+     109.0
+    ]
+   },
+   {
+    "case": "pack 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.223,
+    "across": 0.274,
+    "at": [
+     -14.0,
+     21.0,
+     143.0
+    ]
+   },
+   {
+    "case": "pi 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.009,
+    "across": 0.01,
+    "at": [
+     8.0,
+     -21.0,
+     67.0
+    ]
+   },
+   {
+    "case": "head 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.456,
+    "across": 0.661,
+    "at": [
+     -10.0,
+     17.0,
+     153.0
+    ]
+   },
+   {
+    "case": "pack 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.252,
+    "across": 0.505,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.008,
+    "across": 0.01,
+    "at": [
+     10.0,
+     21.0,
+     41.0
+    ]
+   },
+   {
+    "case": "head 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.331,
+    "across": 0.737,
+    "at": [
+     -4.0,
+     -21.0,
+     109.0
+    ]
+   },
+   {
+    "case": "pack 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.41,
+    "across": 0.803,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.011,
+    "across": 0.012,
+    "at": [
+     -18.0,
+     11.0,
+     37.0
+    ]
+   },
+   {
+    "case": "head 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.357,
+    "across": 0.586,
+    "at": [
+     -4.0,
+     -21.0,
+     109.0
+    ]
+   },
+   {
+    "case": "pack 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.41,
+    "across": 0.212,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.011,
+    "across": 0.019,
+    "at": [
+     22.0,
+     -19.0,
+     55.0
+    ]
+   },
+   {
+    "case": "head 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.357,
+    "across": 0.737,
+    "at": [
+     16.0,
+     -21.0,
+     125.0
+    ]
+   },
+   {
+    "case": "pack 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.252,
+    "across": 0.266,
+    "at": [
+     -18.0,
+     -11.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.008,
+    "across": 0.012,
+    "at": [
+     22.0,
+     -19.0,
+     55.0
+    ]
+   },
+   {
+    "case": "head 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.331,
+    "across": 0.6,
+    "at": [
+     16.0,
+     -21.0,
+     125.0
+    ]
+   },
+   {
+    "case": "pack 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.223,
+    "across": 0.399,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.009,
+    "across": 0.011,
+    "at": [
+     22.0,
+     23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "head 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.456,
+    "across": 0.98,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "pack 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.39,
+    "across": 0.699,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.007,
+    "across": 0.009,
+    "at": [
+     22.0,
+     23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "head 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.351,
+    "across": 0.706,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "pack impact 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.483,
+    "across": 0.52,
+    "at": [
+     -18.0,
+     -11.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi impact 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.023,
+    "across": 0.031,
+    "at": [
+     8.0,
+     -21.0,
+     67.0
+    ]
+   },
+   {
+    "case": "head impact 50 g 0",
+    "cls": "misuse",
+    "inlayer": 1.06,
+    "across": 2.347,
+    "at": [
+     -4.0,
+     -21.0,
+     109.0
+    ]
+   },
+   {
+    "case": "pack impact 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.483,
+    "across": 0.619,
+    "at": [
+     -20.0,
+     -9.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi impact 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.023,
+    "across": 0.023,
+    "at": [
+     8.0,
+     -21.0,
+     67.0
+    ]
+   },
+   {
+    "case": "head impact 50 g 1",
+    "cls": "misuse",
+    "inlayer": 1.06,
+    "across": 2.156,
+    "at": [
+     16.0,
+     3.0,
+     157.0
+    ]
+   },
+   {
+    "case": "pack impact 50 g 2",
+    "cls": "misuse",
+    "inlayer": 1.08,
+    "across": 0.829,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi impact 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.021,
+    "across": 0.038,
+    "at": [
+     22.0,
+     -19.0,
+     55.0
+    ]
+   },
+   {
+    "case": "head impact 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.724,
+    "across": 1.365,
+    "at": [
+     -18.0,
+     -1.0,
+     119.0
+    ]
+   },
+   {
+    "case": "pack impact 50 g 3",
+    "cls": "misuse",
+    "inlayer": 1.08,
+    "across": 2.081,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi impact 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.021,
+    "across": 0.025,
+    "at": [
+     20.0,
+     25.0,
+     31.0
+    ]
+   },
+   {
+    "case": "head impact 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.724,
+    "across": 0.862,
+    "at": [
+     -18.0,
+     19.0,
+     151.0
+    ]
+   },
+   {
+    "case": "pack impact 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.3,
+    "across": 0.353,
+    "at": [
+     -16.0,
+     11.0,
+     37.0
+    ]
+   },
+   {
+    "case": "pi impact 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.012,
+    "across": 0.026,
+    "at": [
+     24.0,
+     -23.0,
+     65.0
+    ]
+   },
+   {
+    "case": "head impact 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.221,
+    "across": 0.475,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "pack impact 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.3,
+    "across": 0.521,
+    "at": [
+     -20.0,
+     -23.0,
+     13.0
+    ]
+   },
+   {
+    "case": "pi impact 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.012,
+    "across": 0.014,
+    "at": [
+     20.0,
+     -19.0,
+     19.0
+    ]
+   },
+   {
+    "case": "head impact 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.221,
+    "across": 0.176,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "flange side hit +x 100 N",
+    "cls": "misuse",
+    "inlayer": 0.72,
+    "across": 1.595,
+    "at": [
+     -4.0,
+     -21.0,
+     109.0
+    ]
+   },
+   {
+    "case": "flange side hit -y 100 N",
+    "cls": "misuse",
+    "inlayer": 0.492,
+    "across": 0.586,
+    "at": [
+     -18.0,
+     19.0,
+     151.0
+    ]
+   },
+   {
+    "case": "drop on head -z 150 N",
+    "cls": "misuse",
+    "inlayer": 0.225,
+    "across": 0.18,
+    "at": [
+     16.0,
+     3.0,
+     153.0
+    ]
+   },
+   {
+    "case": "strap tension -x 120 N",
+    "cls": "misuse",
+    "inlayer": 0.333,
+    "across": 0.441,
+    "at": [
+     -20.0,
+     -9.0,
+     13.0
+    ]
+   },
+   {
+    "case": "hand grab panel +x 50 N",
+    "cls": "misuse",
+    "inlayer": 0.163,
+    "across": 0.324,
+    "at": [
+     12.0,
+     27.0,
+     91.0
+    ]
+   },
+   {
+    "case": "hand grab panel -y 50 N",
+    "cls": "misuse",
+    "inlayer": 0.098,
+    "across": 0.191,
+    "at": [
+     20.0,
+     -15.0,
+     83.0
+    ]
+   },
+   {
+    "case": "hand push ledge -z 100 N",
+    "cls": "misuse",
+    "inlayer": 0.116,
+    "across": 0.176,
+    "at": [
+     -20.0,
+     -11.0,
+     13.0
+    ]
+   }
+  ],
+  "worst": 2.347,
+  "worst_case": "head impact 50 g 0",
+  "worst_at": [
+   -4.0,
+   -21.0,
+   109.0
+  ]
+ },
+ "mass_g": 188.49,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 148421.1,
+ "drawn_g": 112.4,
+ "stl": "scan_stick_base.stl",
+ "view_stl": "scan_stick_base_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 5.0,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "drawn",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 5.1540534993002876,
+  "R_cells": 2.5770267496501438,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.13334044482372392,
+  "nd": 56247,
+  "sym_axes": [],
+  "n_real": 67,
+  "n_ties": 30,
+  "backend": "direct",
+  "iterations": 101,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "scan_stick_base",
+  "h": 2.0,
+  "shape": [
+   56,
+   40,
+   88
+  ],
+  "origin": [
+   -77.0,
+   -40.0,
+   -4.0
+  ],
+  "cells": 197120,
+  "design": 56247,
+  "drawn": 11588,
+  "cases": [
+   "pack 25 g 0",
+   "pi 25 g 0",
+   "head 25 g 0",
+   "pack 25 g 1",
+   "pi 25 g 1",
+   "head 25 g 1",
+   "pack 25 g 2",
+   "pi 25 g 2",
+   "head 25 g 2",
+   "pack 25 g 3",
+   "pi 25 g 3",
+   "head 25 g 3",
+   "pack 25 g 4",
+   "pi 25 g 4",
+   "head 25 g 4",
+   "pack 25 g 5",
+   "pi 25 g 5",
+   "head 25 g 5",
+   "pack 25 g 6",
+   "pi 25 g 6",
+   "head 25 g 6",
+   "pack 25 g 7",
+   "pi 25 g 7",
+   "head 25 g 7",
+   "pack 25 g 8",
+   "pi 25 g 8",
+   "head 25 g 8",
+   "pack 25 g 9",
+   "pi 25 g 9",
+   "head 25 g 9",
+   "pack 25 g 10",
+   "pi 25 g 10",
+   "head 25 g 10",
+   "pack 25 g 11",
+   "pi 25 g 11",
+   "head 25 g 11",
+   "pack 25 g 12",
+   "pi 25 g 12",
+   "head 25 g 12",
+   "pack 25 g 13",
+   "pi 25 g 13",
+   "head 25 g 13",
+   "pack impact 50 g 0",
+   "pi impact 50 g 0",
+   "head impact 50 g 0",
+   "pack impact 50 g 1",
+   "pi impact 50 g 1",
+   "head impact 50 g 1",
+   "pack impact 50 g 2",
+   "pi impact 50 g 2",
+   "head impact 50 g 2",
+   "pack impact 50 g 3",
+   "pi impact 50 g 3",
+   "head impact 50 g 3",
+   "pack impact 50 g 4",
+   "pi impact 50 g 4",
+   "head impact 50 g 4",
+   "pack impact 50 g 5",
+   "pi impact 50 g 5",
+   "head impact 50 g 5",
+   "flange side hit +x 100 N",
+   "flange side hit -y 100 N",
+   "drop on head -z 150 N",
+   "strap tension -x 120 N",
+   "hand grab panel +x 50 N",
+   "hand grab panel -y 50 N",
+   "hand push ledge -z 100 N"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 388.6,
+ "layout_s": 3450,
+ "peak_gb": 6.103628,
+ "gen_cm3": 60.0,
+ "h": 2.0,
+ "total_s": 3838
+}

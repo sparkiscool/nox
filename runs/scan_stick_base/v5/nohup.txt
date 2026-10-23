@@ -120,3 +120,7 @@ layout: stopped (grey) at it 101, beta 32, 3392 s
 layout: beta 32 done: eroded design 8 bodies, main 99.9%; drawn bodies outside the main body: 0
 layout done: 3450 s, peak 6.103628 GB
 build: surface at pitch 0.333 mm (x6), generated field 133.40 cm3, mesh 1,090,656 faces, 90 s
+solid check: FAIL {"bodies_plain": 6, "bodies_eroded": 1, "eroded_volumes_mm3": [107457.2], "necks": [{"neck_under_mm": 3.0, "blob_thick_mm": 6.5, "joint_mm2": 0.0, "blob_mm3": 1752.1, "at": [-25.0, -28.2, 113.5]}], "drawn_not_in_main": [["0.0", 0.965, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.0, "core_mm3": 23.02, "at": [-56.5, -25.5, 12.9], "span": [11.1, 2.4, 0.1]}, {"kind": "wall", "thick_mm": 1.0, "core_mm3": 22.53, "at": [-57.1, 25.5, 13.0], "span": [10.6, 2.4, 0.1]}], "acute_edges": 32, "ok": false}
+function check: {'drawn_missing_mm3': -0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 2.35 in 'head impact 50 g 0' at [-4.0, -21.0, 109.0]
+RESULT {"name": "scan_stick_base", "solid_ok": false, "mass_g": 188.49, "worst": 2.347, "function_ok": true, "bodies": 1}
