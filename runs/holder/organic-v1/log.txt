@@ -129,3 +129,13 @@ it  28 beta    4 J   2.5825 vol 0.1070 (dil 0.2006 g -0.000) grey 20.0% ch 0.100
 it  29 beta    4 J   2.5776 vol 0.1070 (dil 0.2006 g -0.000) grey 20.0% ch 0.100 worst pad push 1.48e+03 30.5s
 it  30 beta    4 J   2.5731 vol 0.1070 (dil 0.2006 g -0.000) grey 20.0% ch 0.100 worst pad push 1.47e+03 30.8s
 layout: beta 4 done: eroded design 7 bodies, main 81.3%; drawn bodies outside the main body: 1
+it  31 beta    8 J  13.6796 vol 0.0977 (dil 0.2147 g -0.079) grey 10.8% ch 0.100 worst gate b8 fy 7.11e+03 33.3s
+it  32 beta    8 J   7.5879 vol 0.1071 (dil 0.2294 g -0.016) grey 11.5% ch 0.100 worst pad push 3.94e+03 31.9s
+it  33 beta    8 J   5.6948 vol 0.1095 (dil 0.2313 g -0.008) grey 11.5% ch 0.100 worst pad push 3.08e+03 35.3s
+it  34 beta    8 J   4.9294 vol 0.1110 (dil 0.2322 g -0.004) grey 11.4% ch 0.100 worst pad push 2.66e+03 34.3s
+it  35 beta    8 J   4.5130 vol 0.1119 (dil 0.2326 g -0.002) grey 11.4% ch 0.100 worst pad push 2.45e+03 32.9s
+it  36 beta    8 J   4.2370 vol 0.1125 (dil 0.2327 g +0.015) grey 11.4% ch 0.100 worst pad push 2.33e+03 33.1s
+it  37 beta    8 J   4.7585 vol 0.1094 (dil 0.2287 g -0.002) grey 11.3% ch 0.100 worst pad push 2.68e+03 31.6s
+it  38 beta    8 J   4.5353 vol 0.1100 (dil 0.2291 g -0.001) grey 11.3% ch 0.100 worst pad push 2.54e+03 32.7s
+it  39 beta    8 J   4.4132 vol 0.1103 (dil 0.2291 g -0.001) grey 11.3% ch 0.100 worst pad push 2.48e+03 31.7s
+it  40 beta    8 J   4.3194 vol 0.1105 (dil 0.2292 g -0.000) grey 11.3% ch 0.100 worst pad push 2.44e+03 29.2s
