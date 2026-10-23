@@ -4,3 +4,9 @@ scan_stick_base: grid (56, 40, 88) h 2.0 = 197,120 cells; design 39,404 (315.2 c
 layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
 scan_stick_base: grid (56, 40, 88) h 2.0 = 197,120 cells; design 39,404 (315.2 cm3), drawn 19,461, void 138,255
   support default: 1196 cells, 1974 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.095 of 39,404 design cells
+layout: WARNING nearly mirrored in z (7.8% of passive cells differ): no symmetry
+layout: 4 drawn bodies (19,461 cells), held solid in every realization; eroded filter: masked
+layout: 67 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (56, 40, 88) = 197,120 elements, 217,881 active dofs; backend direct (direct estimate 2.3 GB, budget 11.8 GB)
