@@ -148,3 +148,13 @@ it  47 beta    8 J  31.0827 vol 0.1189 (dil 0.2627 g -0.015) grey 14.0% ch 0.100
 it  48 beta    8 J  13.6540 vol 0.1228 (dil 0.2633 g -0.013) grey 13.7% ch 0.100 worst poke cam y 2.23 33.0s
 it  49 beta    8 J   9.7177 vol 0.1247 (dil 0.2642 g -0.010) grey 13.6% ch 0.100 worst gate b8 my 1.62 32.6s
 it  50 beta    8 J   8.4787 vol 0.1272 (dil 0.2661 g -0.003) grey 13.6% ch 0.100 worst grab side 1.28 31.8s
+it  51 beta    8 J   8.1265 vol 0.1278 (dil 0.2666 g +0.019) grey 13.6% ch 0.100 worst grab side 1.26 35.3s
+it  52 beta    8 J  19.6637 vol 0.1182 (dil 0.2591 g -0.010) grey 13.7% ch 0.100 worst gate b8 my 3.99 34.6s
+it  53 beta    8 J  12.7009 vol 0.1212 (dil 0.2598 g -0.007) grey 13.5% ch 0.100 worst poke cam y 2.16 33.2s
+it  54 beta    8 J  10.5048 vol 0.1224 (dil 0.2606 g -0.004) grey 13.5% ch 0.100 worst gate b8 my 1.63 31.8s
+it  55 beta    8 J   9.8213 vol 0.1234 (dil 0.2614 g -0.001) grey 13.5% ch 0.100 worst gate b8 my 1.51 33.5s
+it  56 beta    8 J   9.6117 vol 0.1236 (dil 0.2615 g +0.010) grey 13.4% ch 0.100 worst gate b8 my 1.5 31.7s
+it  57 beta    8 J  12.5165 vol 0.1196 (dil 0.2581 g -0.004) grey 13.4% ch 0.100 worst gate b8 my 2.21 31.5s
+it  58 beta    8 J  10.9965 vol 0.1212 (dil 0.2588 g -0.001) grey 13.4% ch 0.087 worst gate b8 my 1.69 31.9s
+it  59 beta    8 J  10.7054 vol 0.1214 (dil 0.2590 g -0.000) grey 13.4% ch 0.083 worst gate b8 my 1.68 30.2s
+it  60 beta    8 J  10.5655 vol 0.1215 (dil 0.2590 g -0.000) grey 13.4% ch 0.068 worst gate b8 my 1.68 31.8s
