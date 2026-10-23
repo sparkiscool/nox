@@ -191,3 +191,18 @@ it  87 beta   32 J   7.1736 vol 0.1061 (dil 0.2224 g -0.000) grey  3.0% ch 0.100
 it  88 beta   32 J   7.1669 vol 0.1061 (dil 0.2224 g -0.000) grey  3.0% ch 0.100 worst pad push 3.86e+03 33.6s
 it  89 beta   32 J   7.1612 vol 0.1061 (dil 0.2224 g -0.000) grey  3.0% ch 0.100 worst pad push 3.86e+03 30.6s
 it  90 beta   32 J   7.1560 vol 0.1061 (dil 0.2224 g -0.000) grey  3.0% ch 0.100 worst pad push 3.86e+03 32.5s
+it  91 beta   32 J   7.1512 vol 0.1061 (dil 0.2224 g +0.000) grey  3.0% ch 0.100 worst pad push 3.86e+03 31.9s
+it  92 beta   32 J   7.1736 vol 0.1061 (dil 0.2223 g -0.000) grey  3.0% ch 0.100 worst pad push 3.87e+03 31.6s
+it  93 beta   32 J   7.1689 vol 0.1061 (dil 0.2223 g -0.000) grey  3.0% ch 0.100 worst pad push 3.87e+03 31.1s
+it  94 beta   32 J   7.1648 vol 0.1061 (dil 0.2223 g -0.000) grey  3.0% ch 0.100 worst pad push 3.87e+03 33.1s
+it  95 beta   32 J   7.1611 vol 0.1061 (dil 0.2223 g -0.000) grey  3.0% ch 0.100 worst pad push 3.87e+03 32.2s
+it  96 beta   32 J   7.1576 vol 0.1061 (dil 0.2223 g +0.000) grey  3.0% ch 0.100 worst pad push 3.86e+03 31.3s
+it  97 beta   32 J   7.1699 vol 0.1061 (dil 0.2223 g -0.000) grey  3.0% ch 0.100 worst pad push 3.87e+03 33.7s
+layout: stopped (max_stage) at it 97, beta 32, 3238 s
+layout: beta 32 done: eroded design 4 bodies, main 79.7%; drawn bodies outside the main body: 1
+layout done: 3463 s, peak 3.76006 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.00 cm3, field 9.45 cm3, in env - cuts 7.98 cm3 (layout 7.98, level offset -0.004 mm), fillet 2.5 mm, rims 1.0 mm, mesh 151,304 faces, 15 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [3876.6], "necks": [{"neck_under_mm": 3.0, "blob_thick_mm": 5.5, "joint_mm2": 71.3, "blob_mm3": 244.1, "at": [30.7, 20.0, 26.8]}], "drawn_not_in_main": [["0.0", 0.0, "erode 2.0"], ["0.1", 0.508, "erode 2.0"], ["0.2", 0.508, "erode 2.0"], ["0.3", 0.0, "erode 2.0"], ["0.4", 0.999, "erode 2.0"], ["0.5", 0.999, "erode 2.0"], ["0.6", 0.0, "erode 1.9"], ["0.7", 0.0, "erode 1.9"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 1227.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.65 in 'misuse 6' at [22.5, 6.5, 20.5]
+RESULT {"name": "holder", "solid_ok": false, "mass_g": 10.15, "worst": 0.65, "function_ok": true, "bodies": 1}
