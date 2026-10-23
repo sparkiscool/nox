@@ -40,7 +40,7 @@ angles = [BOLT_ROT + a for a in (0, 90, 180, 270)]
 pads = [(BOLT_R * np.cos(np.radians(a)), BOLT_R * np.sin(np.radians(a))) for a in angles]
 fl_bolts = [(sx * FL_BOLT, sy * FL_BOLT) for sx in (-1, 1) for sy in (-1, 1)]
 
-def bodies():
+def bodies(hole=False):
     flange = cyl(0, 0, 0, FL_T, FL_R, 96)
     padb = sum((cyl(x, y, SEAT - PAD_T, SEAT, PAD_R) for x, y in pads), mf.Manifold())
     gussets = mf.Manifold()
@@ -51,7 +51,6 @@ def bodies():
     cuts = mf.Manifold()
     for x, y in fl_bolts:
         cuts += cyl(x, y, -1, FL_T + 1, 2.15) + cyl(x, y, 4.0, SEAT - PAD_T - 2, 4.0)        # M4 through + head / driver clearance
-    cuts += cyl(0, 0, -1, FL_T + 1, 5.0, 48)                                                  # Ø10 cable hole through the flange centre
     for x, y in pads:
         cuts += cyl(x, y, SEAT - PAD_T - 1, SEAT + 1, 1.7) + cyl(x, y, SEAT - PAD_T - 1, SEAT - PAD_T + 3, 3.1)
         cuts += cyl(x, y, FL_T + 2, SEAT - PAD_T - 1, 4.5)                                   # driver reaches the M3 heads
@@ -59,12 +58,17 @@ def bodies():
         cuts += mf.Manifold.cylinder(6.0, 2.0, 2.0, 32).rotate([-90, 0, 0]).translate([sx * CAM_HOLE_X, CAM_Y[1] - 4.5, CAM_HOLE_Z])   # 6 deep, 3.5 floor
     cuts += box(-24, 24, CAM_Y[1], PLATE_W / 2 + 1, -1, 25.0)                                # camera bracket sits here (tab top z 24; pads start at 28)
     cuts += box(-PLATE_W / 2 - 1, -PLATE_W / 2 + 12.5, -7.0, 7.0, 18.0, SEAT + 1)             # L2 cable drops here (-X)
+    if hole:
+        cuts += cyl(0, 0, -1, FL_T + 1, 5.0, 48)                                              # Ø10 cable hole through the flange centre (exact cut only)
     env = box(-PLATE_W / 2, PLATE_W / 2, -PLATE_W / 2, PLATE_W / 2, 0, SEAT)
     return dict(drawn=drawn, cuts=cuts, env=env, flange=flange, cam=cam_block)
 
 def setup(h):
-    B = bodies()
+    B = bodies(False)                                                                  # v8 cuts: the layout's grid and masks
     p = Part("scan_stick_head", h, B["drawn"], B["cuts"], B["env"], build="+z", material="PETG")
+    from topo.part import tm
+    B9 = bodies(True)
+    p.cuts_m = B9["cuts"]; p.cuts_t = tm(B9["cuts"])                                   # exact cuts at the build: + the cable hole
     p.support("default", cyl(0, 0, -1, FL_T + 0.5, FL_R, 64) - cyl(0, 0, -1, FL_T + 1, 7.0, 64))
     pad_region = sum((cyl(x, y, SEAT - PAD_T, SEAT, PAD_R + 0.5) for x, y in pads), mf.Manifold())
     cam_region = box(-CAM_X / 2 - 0.5, CAM_X / 2 + 0.5, CAM_Y[0] - 0.5, CAM_Y[1] + 0.5, CAM_Z[0] - 0.5, CAM_Z[1] + 0.5)

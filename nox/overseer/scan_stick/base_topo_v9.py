@@ -87,8 +87,9 @@ def bodies(off=0.5):
         os.system(f"openscad -o {tc} {os.path.join(HERE, 'thread_cut.scad')} >/dev/null 2>&1")
     cuts = man(trimesh.load(tc, force="mesh"))                                               # thread from z 0 up 27
     cuts += cyl(0, 0, SOCK_H + o2, FL_Z - o2, 14.0, 96)                                      # tube bore Ø28 (wires), off the boss top and flange bottom
-    cuts += cyl(0, 0, FL_Z - 4, TOP + 1, 5.0, 48)                                            # Ø10 cable hole through the flange centre
-    cuts += box(-5, 5, -19.5, -12.5, 40, 70)                                                 # cable window through the tube wall, shelf side
+    if off > 0:                                                                            # openings only in the exact cuts (the layout masks stay v7's)
+        cuts += cyl(0, 0, FL_Z - 4, TOP + 1, 5.0, 48)                                        # Ø10 cable hole through the flange centre
+        cuts += box(-5, 5, -19.5, -12.5, 40, 70)                                             # cable window through the tube wall, shelf side
     cuts += box(-100, 100, -100, 100, -10, 0)                                                 # the pole below
     for x, y in fl_bolts:
         cuts += cyl(x, y, FL_Z, TOP + 1, 2.8)                                                 # M4 heat-set insert holes from the top
