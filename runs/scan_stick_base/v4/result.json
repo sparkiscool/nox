@@ -999,5 +999,10 @@
  "peak_gb": 5.989256,
  "gen_cm3": 35.0,
  "h": 2.0,
- "total_s": 3299
+ "total_s": 3299,
+ "status": "FAILED",
+ "mass_tag": "M",
+ "worst_index": 5.52,
+ "worst_case": "pack impact 50 g 3",
+ "date": "2026-10-23"
 }
