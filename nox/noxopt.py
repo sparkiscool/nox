@@ -344,17 +344,21 @@ def strength_report(pb, dens, thr=0.5, title="noxopt"):
 
 
 # ------------------------------------------------------------------------------------------- stage 3: smooth build
-def _voxelise(mesh, xs, ys, zs):
+def _voxelise(mesh, xs, ys, zs, chunk=20000):
+    """inside test by ray parity along Z; rays go in chunks (all 425k rays of a 164 x 160 part at 0.25 at once took > 14 GB, P)."""
     XX, YY = np.meshgrid(xs, ys, indexing="ij")
     org = np.stack([XX.ravel(), YY.ravel(), np.full(XX.size, zs[0] - 5.0)], 1)
-    loc, ray, _ = mesh.ray.intersects_location(org, np.tile([0, 0, 1.0], (len(org), 1)), multiple_hits=True)
     A = np.zeros((len(xs) * len(ys), len(zs)), bool)
-    order = np.argsort(ray, kind="stable"); ray = ray[order]; z = loc[order][:, 2]
-    st = np.r_[0, np.where(np.diff(ray))[0] + 1, len(ray)] if len(ray) else np.array([0])
-    for a, b in zip(st[:-1], st[1:]):
-        zz = np.sort(z[a:b]); zz = zz[np.r_[True, np.diff(zz) > 1e-6]]
-        for p, q in zip(zz[0::2], zz[1::2]):
-            A[ray[a], (zs > p) & (zs < q)] = True
+    for c0 in range(0, len(org), chunk):
+        o = org[c0:c0 + chunk]
+        loc, ray, _ = mesh.ray.intersects_location(o, np.tile([0, 0, 1.0], (len(o), 1)), multiple_hits=True)
+        if not len(ray): continue                                     # a chunk of rays that all miss the part
+        order = np.argsort(ray, kind="stable"); ray = ray[order] + c0; z = loc[order][:, 2]
+        st = np.r_[0, np.where(np.diff(ray))[0] + 1, len(ray)]
+        for a, b in zip(st[:-1], st[1:]):
+            zz = np.sort(z[a:b]); zz = zz[np.r_[True, np.diff(zz) > 1e-6]]
+            for p, q in zip(zz[0::2], zz[1::2]):
+                A[ray[a], (zs > p) & (zs < q)] = True
     return A.reshape(len(xs), len(ys), len(zs))
 
 
