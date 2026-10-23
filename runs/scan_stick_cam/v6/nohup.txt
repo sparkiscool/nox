@@ -1,3 +1,22 @@
 === scan_stick_cam: h 0.75, generated 5.0 cm3, min member 3.2 mm, cores 4
 scan_stick_cam: grid (64, 88, 24) h 0.75 = 135,168 cells; design 15,420 (6.5 cm3), drawn 12,110, void 107,638
   support default: 2190 cells, 3156 nodes
+layout: WARNING the solid gate wants 5.00 mm members round the drawn bodies (2.0 mm erosion), the design space routes at most 4.99 mm to every body: using 4.99 mm; the gate may fail on the setup
+scan_stick_cam: grid (32, 48, 16) h 1.5 = 24,576 cells; design 2,490 (8.4 cm3), drawn 1,696, void 20,390
+  support default: 354 cells, 648 nodes
+layout: min member 4.99 mm (rods), plates 4.53 mm, filter radius 5.14 mm = 3.43 cells, erosion depth 1.37 mm; volfrac 0.595 of 2,490 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: 6 drawn bodies (1,696 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 0 gate ties
+fem: grid (32, 48, 16) = 24,576 elements, 18,480 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.3904 (dil 0.4440 g -0.344) grey 100.0% ch 0.100 worst tie b6 fz 24.9 0.7s
+it   2 beta    1 J   6.0276 vol 0.4465 (dil 0.5012 g -0.259) grey 100.0% ch 0.100 worst tie b2 fz 14.8 0.6s
+it   3 beta    1 J   3.9377 vol 0.5026 (dil 0.5567 g -0.177) grey 99.8% ch 0.100 worst tie b2 fz 9.54 0.8s
+it   4 beta    1 J   2.7446 vol 0.5586 (dil 0.6104 g -0.098) grey 99.8% ch 0.100 worst tie b2 fz 6.53 0.6s
+it   5 beta    1 J   2.0169 vol 0.6139 (dil 0.6621 g -0.022) grey 99.4% ch 0.100 worst tie b2 fz 4.69 0.6s
+it   6 beta    1 J   1.9880 vol 0.6159 (dil 0.6638 g -0.003) grey 99.1% ch 0.100 worst tie b2 fz 4.62 0.6s
+it   7 beta    1 J   1.9876 vol 0.6152 (dil 0.6629 g -0.005) grey 98.8% ch 0.100 worst tie b6 fz 4.62 0.6s
+it   8 beta    1 J   1.9876 vol 0.6155 (dil 0.6632 g -0.004) grey 98.8% ch 0.100 worst tie b2 fz 4.62 0.7s
+it   9 beta    1 J   1.9876 vol 0.6157 (dil 0.6635 g -0.004) grey 98.8% ch 0.100 worst tie b2 fz 4.62 0.7s
+it  10 beta    1 J   1.9876 vol 0.6160 (dil 0.6637 g -0.003) grey 98.8% ch 0.100 worst tie b2 fz 4.62 0.7s
+layout: beta 1 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
