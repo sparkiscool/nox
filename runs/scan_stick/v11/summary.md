@@ -1,0 +1,10 @@
+scan_stick_head v11: retired (superseded by v12 after review round 3 of PR 22: its 7 deep camera insert holes ended 0.5 mm (M) from the M4 pockets). Was: ready to print
+Weight: 40.8 g (M), was 40.0 g (v10, M; +0.8 g for the 10 thick camera block) / 61.9 g (v2 noxopt, M)
+Strength: worst index 0.34 (F, as-built voxel recheck) in lidar impact 50 g 2 at a pad gusset root [-5.2, -18.8, 10.2] mm (M); all 47 cases (E loads: 25 g in 14 dirs, 50 g impact in 6, 100 N side hits, 150 N drop on the lidar, 20 N hand grab, camera 25 / 50 g, 5 N pokes) ≤ 0.34 (F): sturdy
+Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_head_v11.stl
+Print: flange face down, bed contact 1119 mm² (M), the largest of the 6 faces (pad tops 698 mm², M); overhang 1898 mm² (M) under the four spider arms and the camera block, tree supports ~5 g (E); 65.6 x 65.7 x 34 (M); file print/scan_stick_head_v11.stl (sha256 d326c7712c8f)
+
+Run: rebuild of the v8 layout (`head_topo_v11.py`, topo.run.rebuild, 126 s, M) with the v9 Ø10 (C) cable hole, the v10 Ø6.0 (C) pad counterbores (3.0 mm wall, C) and a 10 thick (C) camera block (y 10..20, exact drawn, masks v8's) whose M3 heat-set holes are 7 deep (C; Ruthex M3 5.7 long, spec, depth ≥ L + 1) on a 3 mm (C) floor; v8 layout: nox/topo, finish drawn, h 1.5 (C), 12 cm3 generated (E), 131,072 cells / 53,989 design (M), peak 4.3 GB (M).
+Layout: 4 arms from the Ø40 (C) bolt flange to the L2 pads (drawn Ø12 pads with 6 x 10 gussets, C), the camera block tied in; M4 x 12 (C) from the top into the base's inserts (4 clamp + 8 in a Ruthex M4 x 8.1, spec), M3 x 8 (C) up into the L2 (3 under the head + 5 of its 6 deep holes, spec) with Ø9 (C) driver clearance cut under each pad; bracket on 2x M3 x 10 (C). Bolted to the base turned -90° (C): camera over the Pi tray side.
+History: v3 stopped (layout change), v4 organic FAIL + 0.87 (F), v5 keep-out sheet, v6 hung (coarse grid), v7 insert-hole floor speck, v8 PASS 40.8 g (M, no cable hole), v9 PASS 40.0 g (M, cable hole, 2.9 mm pad wall), v10 PASS 40.0 g (M, 3.0 wall; 4.5 deep camera inserts), v11 PASS.
+Previews: preview.png (engine), preview_print.png.

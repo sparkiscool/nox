@@ -1,0 +1,44 @@
+08:24 START cam v2
+08:47 END cam v2 rc=0 mass 5.5 worst None solid False
+08:47 START head v4
+09:21 END head v4 rc=0 mass 30.4 worst None solid False
+09:21 START base v2
+09:22 END base v2 rc=0 no result.json
+09:22 QUEUE DONE
+09:22 START cam v3 (5 cm3)
+09:23 queue 3: finish=drawn (organic opened the drawn bodies: head v4 and cam v2 failed the gate); cam v3 restarted
+09:23 START cam v3
+09:43 END cam v3 rc=0 mass 10.2 worst None solid False
+09:43 START head v5
+09:44 queue 4: cam v3 FAILED (Ø8 posts); flange bolts moved to a 24 square (counterbore wall rule); head v5 restarted
+09:44 START head v5
+10:07 END head v5 rc=0 mass 40.1 worst None solid False
+10:07 START base v3
+10:07 END base v3 rc=0 no result.json
+10:07 START cam v4
+10:26 END cam v4 rc=0 mass 12.6 worst None solid True
+10:26 QUEUE 4 DONE
+10:27 START head v6
+10:45 END head v6 rc=0 mass 0 worst None solid None
+10:45 QUEUE 5 DONE
+10:46 START base v4
+11:41 END base v4 rc=0 mass 123.4 worst None solid False
+11:41 QUEUE 6 DONE
+11:41 START head v7
+12:17 END head v7 rc=0 mass 40.7 worst None solid False
+12:17 QUEUE 7 DONE
+12:18 START base v5
+13:22 END base v5 rc=0 mass 188.5 worst None solid False
+13:22 QUEUE 8 DONE
+13:23 START head v8
+13:24 START base v6 (direct, alongside head v8)
+13:59 START base v7 (direct)
+14:16 END head v8 rc=0 mass 40.8 worst None solid True
+14:16 QUEUE 9 DONE
+14:39 START base v8 (rebuild of v7)
+15:17 START base v9 (rebuild, cable openings)
+15:24 END base v9 rc=0 mass 291.3 worst None solid False
+15:24 QUEUE 10 DONE
+15:28 START base v10 (rebuild, zip slots moved)
+15:39 START base v11 (rebuild at 24.5 cm3)
+15:48 START base v12 (rebuild, Ø40 boss)

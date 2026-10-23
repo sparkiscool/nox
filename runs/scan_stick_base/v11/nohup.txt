@@ -1,0 +1,17 @@
+=== scan_stick_base: rebuild from /home/user/nox/runs/scan_stick_base/v7/density.npz (layout not rerun)
+scan_stick_base: grid (56, 48, 88) h 2.0 = 236,544 cells; design 36,850 (294.8 cm3), drawn 24,699, void 174,995
+  support default: 1196 cells, 1974 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_base: grid (56, 48, 88) h 2.0 = 236,544 cells; design 36,850 (294.8 cm3), drawn 24,699, void 174,995
+  support default: 1196 cells, 1974 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.083 of 36,850 design cells
+layout: WARNING nearly mirrored in z (6.5% of passive cells differ): no symmetry
+layout: 4 drawn bodies (24,699 cells), held solid in every realization; eroded filter: masked
+layout: 67 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (56, 48, 88) = 236,544 elements, 226,980 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
+build: surface at pitch 0.333 mm (x6), generated field 203.19 cm3, mesh 1,533,796 faces, 101 s
+solid check: FAIL {"bodies_plain": 5, "bodies_eroded": 1, "eroded_volumes_mm3": [170420.3], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 35, "ok": false}
+function check: {'drawn_missing_mm3': -0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.57 in 'head impact 50 g 1' at [13.5, 11.0, 45.0]
+RESULT {"name": "scan_stick_base", "solid_ok": false, "mass_g": 291.37, "worst": 0.57, "function_ok": true, "bodies": 1}

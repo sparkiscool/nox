@@ -1,0 +1,202 @@
+{
+ "part": "bar_half",
+ "grid": {
+  "name": "bar_half",
+  "h": 1.0,
+  "shape": [
+   208,
+   24,
+   40
+  ],
+  "origin": [
+   -21.0,
+   42.0,
+   -203.0
+  ],
+  "cells": 199680,
+  "design": 82896,
+  "drawn": 13032,
+  "cases": [
+   "box on one tip 50 N up",
+   "tip 50 N down",
+   "sheet on the tip pad 13 N +X",
+   "sheet on the tip pad 13 N -X",
+   "sheet on the tip pad 13 N +Y",
+   "sheet on the tip pad 13 N -Y"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "h": 1.0,
+ "fit": {
+  "shift": [
+   -37.071,
+   0.0,
+   -191.0567
+  ],
+  "drawn_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "evals": 154,
+  "angle_deg": 45.12
+ },
+ "old": {
+  "mass_g": 77.58,
+  "worst": 0.929,
+  "worst_case": "box on one tip 50 N up",
+  "worst_at": [
+   21.5,
+   51.5,
+   -180.5
+  ],
+  "rows": [
+   {
+    "case": "box on one tip 50 N up",
+    "cls": "misuse",
+    "inlayer": 0.929,
+    "across": 0.6,
+    "at": [
+     21.5,
+     51.5,
+     -180.5
+    ]
+   },
+   {
+    "case": "tip 50 N down",
+    "cls": "misuse",
+    "inlayer": 0.929,
+    "across": 0.804,
+    "at": [
+     21.5,
+     51.5,
+     -180.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N +X",
+    "cls": "misuse",
+    "inlayer": 0.014,
+    "across": 0.021,
+    "at": [
+     21.5,
+     54.5,
+     -183.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N -X",
+    "cls": "misuse",
+    "inlayer": 0.014,
+    "across": 0.013,
+    "at": [
+     21.5,
+     53.5,
+     -182.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N +Y",
+    "cls": "misuse",
+    "inlayer": 0.438,
+    "across": 0.391,
+    "at": [
+     21.5,
+     46.5,
+     -181.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N -Y",
+    "cls": "misuse",
+    "inlayer": 0.438,
+    "across": 0.661,
+    "at": [
+     21.5,
+     54.5,
+     -183.5
+    ]
+   }
+  ],
+  "stl": "print/box_bar_half_v8.stl"
+ },
+ "new": {
+  "mass_g": 76.06,
+  "worst": 0.804,
+  "worst_case": "box on one tip 50 N up",
+  "worst_at": [
+   21.5,
+   53.5,
+   -181.5
+  ],
+  "rows": [
+   {
+    "case": "box on one tip 50 N up",
+    "cls": "misuse",
+    "inlayer": 0.804,
+    "across": 0.51,
+    "at": [
+     21.5,
+     53.5,
+     -181.5
+    ]
+   },
+   {
+    "case": "tip 50 N down",
+    "cls": "misuse",
+    "inlayer": 0.804,
+    "across": 0.514,
+    "at": [
+     21.5,
+     53.5,
+     -181.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N +X",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.009,
+    "at": [
+     21.5,
+     53.5,
+     -181.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N -X",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.009,
+    "at": [
+     21.5,
+     53.5,
+     -181.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N +Y",
+    "cls": "misuse",
+    "inlayer": 0.346,
+    "across": 0.247,
+    "at": [
+     21.5,
+     46.5,
+     -183.5
+    ]
+   },
+   {
+    "case": "sheet on the tip pad 13 N -Y",
+    "cls": "misuse",
+    "inlayer": 0.346,
+    "across": 0.389,
+    "at": [
+     21.5,
+     55.5,
+     -193.5
+    ]
+   }
+  ],
+  "stl": "runs/bar_half/topo-v2/bar_half.stl"
+ }
+}

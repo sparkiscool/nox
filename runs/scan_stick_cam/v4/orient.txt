@@ -1,0 +1,7 @@
+print/scan_stick_cam_v4.stl extents [40.  58.5  8. ] g PETG 12.55 watertight True
+   saved: bed   1169 mm2  overhang    357 mm2  height   8.0  first layer 1 islands [1170.7] (total 1170.7)  thin-island run 0 mm
+ +x down: bed     25 mm2  overhang    805 mm2  height  40.0  first layer 2 islands [29.4, 29.4] (total 58.7)  thin-island run 0 mm
+ -x down: bed     25 mm2  overhang    805 mm2  height  40.0  first layer 2 islands [29.4, 29.4] (total 58.7)  thin-island run 0 mm
+ +y down: bed     13 mm2  overhang    456 mm2  height  58.5  first layer 2 islands [14.7, 14.7] (total 29.4)  thin-island run 0 mm
+ -y down: bed      3 mm2  overhang    505 mm2  height  58.5  first layer 2 islands [8.3, 8.3] (total 16.6)  thin-island run 0 mm
+ +z down: bed    563 mm2  overhang   1021 mm2  height   8.0  first layer 3 islands [115.1, 115.1, 334.5] (total 564.7)  thin-island run 0 mm

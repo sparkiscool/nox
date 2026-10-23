@@ -1,0 +1,1 @@
+print/scan_stick_base_v17.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [203634.2], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 36, 'ok': True}

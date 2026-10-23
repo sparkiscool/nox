@@ -1,0 +1,738 @@
+{
+ "name": "scan_stick_head",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 7,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   15457.5
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.987,
+    "erode 2.0"
+   ],
+   [
+    "0.2",
+    0.998,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [
+   {
+    "kind": "wall",
+    "thick_mm": 1.12,
+    "core_mm3": 39.84,
+    "at": [
+     -9.8,
+     24.3,
+     33.5
+    ],
+    "span": [
+     3.2,
+     2.6,
+     0.1
+    ]
+   }
+  ],
+  "acute_edges": 0,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 5049.9,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": -0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "lidar 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.203,
+    "across": 0.315,
+    "at": [
+     -17.2,
+     -8.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.003,
+    "at": [
+     -17.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.203,
+    "across": 0.435,
+    "at": [
+     8.2,
+     -15.8,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.003,
+    "at": [
+     -15.8,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.155,
+    "across": 0.259,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "camera 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.006,
+    "across": 0.012,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.155,
+    "across": 0.322,
+    "at": [
+     -15.8,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.006,
+    "across": 0.011,
+    "at": [
+     5.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.072,
+    "across": 0.157,
+    "at": [
+     -17.2,
+     -12.8,
+     14.8
+    ]
+   },
+   {
+    "case": "camera 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.001,
+    "at": [
+     18.8,
+     15.8,
+     20.8
+    ]
+   },
+   {
+    "case": "lidar 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.072,
+    "across": 0.061,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "camera 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     18.8,
+     15.8,
+     20.8
+    ]
+   },
+   {
+    "case": "lidar 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.136,
+    "across": 0.263,
+    "at": [
+     -17.2,
+     -11.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.006,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.131,
+    "across": 0.166,
+    "at": [
+     -17.2,
+     -11.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.006,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.17,
+    "across": 0.331,
+    "at": [
+     -17.2,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.007,
+    "at": [
+     5.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.155,
+    "across": 0.271,
+    "at": [
+     -17.2,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.007,
+    "at": [
+     5.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.155,
+    "across": 0.324,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "camera 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.008,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.17,
+    "across": 0.249,
+    "at": [
+     8.2,
+     -17.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.008,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.131,
+    "across": 0.283,
+    "at": [
+     6.8,
+     -14.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.006,
+    "at": [
+     5.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.136,
+    "across": 0.242,
+    "at": [
+     6.8,
+     -14.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.006,
+    "at": [
+     5.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar impact 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.406,
+    "across": 0.629,
+    "at": [
+     -17.2,
+     -8.2,
+     10.2
+    ]
+   },
+   {
+    "case": "camera impact 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.006,
+    "at": [
+     -17.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar impact 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.406,
+    "across": 0.87,
+    "at": [
+     8.2,
+     -15.8,
+     10.2
+    ]
+   },
+   {
+    "case": "camera impact 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.005,
+    "at": [
+     -15.8,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar impact 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.309,
+    "across": 0.518,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "camera impact 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.012,
+    "across": 0.024,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "lidar impact 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.309,
+    "across": 0.643,
+    "at": [
+     -15.8,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "camera impact 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.012,
+    "across": 0.023,
+    "at": [
+     5.2,
+     -12.8,
+     10.2
+    ]
+   },
+   {
+    "case": "lidar impact 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.145,
+    "across": 0.314,
+    "at": [
+     -17.2,
+     -12.8,
+     14.8
+    ]
+   },
+   {
+    "case": "camera impact 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.002,
+    "at": [
+     18.8,
+     15.8,
+     20.8
+    ]
+   },
+   {
+    "case": "lidar impact 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.145,
+    "across": 0.122,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "camera impact 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.0,
+    "at": [
+     18.8,
+     15.8,
+     20.8
+    ]
+   },
+   {
+    "case": "side hit +x 100 N",
+    "cls": "misuse",
+    "inlayer": 0.341,
+    "across": 0.528,
+    "at": [
+     -17.2,
+     -8.2,
+     10.2
+    ]
+   },
+   {
+    "case": "side hit -y 100 N",
+    "cls": "misuse",
+    "inlayer": 0.259,
+    "across": 0.539,
+    "at": [
+     -15.8,
+     -6.8,
+     10.2
+    ]
+   },
+   {
+    "case": "drop on lidar -z 150 N",
+    "cls": "misuse",
+    "inlayer": 0.184,
+    "across": 0.158,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "hand grab +y 20 N",
+    "cls": "misuse",
+    "inlayer": 0.052,
+    "across": 0.087,
+    "at": [
+     -15.8,
+     -12.8,
+     11.8
+    ]
+   },
+   {
+    "case": "poke cam +y",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.008,
+    "at": [
+     3.8,
+     -14.2,
+     22.2
+    ]
+   },
+   {
+    "case": "poke cam -z",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     18.8,
+     15.8,
+     20.8
+    ]
+   },
+   {
+    "case": "poke cam +x",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.002,
+    "at": [
+     -17.2,
+     -12.8,
+     10.2
+    ]
+   }
+  ],
+  "worst": 0.87,
+  "worst_case": "lidar impact 50 g 1",
+  "worst_at": [
+   8.2,
+   -15.8,
+   10.2
+  ]
+ },
+ "mass_g": 30.45,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 23979.2,
+ "drawn_g": 24.73,
+ "stl": "scan_stick_head.stl",
+ "view_stl": "scan_stick_head_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 5.0,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 5.1540534993002876,
+  "R_cells": 3.436035666200192,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.06436531687862262,
+  "nd": 55803,
+  "sym_axes": [],
+  "n_real": 47,
+  "n_ties": 18,
+  "backend": "direct",
+  "iterations": 97,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "scan_stick_head",
+  "h": 1.5,
+  "shape": [
+   64,
+   64,
+   32
+  ],
+  "origin": [
+   -48.0,
+   -48.0,
+   -7.0
+  ],
+  "cells": 131072,
+  "design": 53989,
+  "drawn": 5367,
+  "cases": [
+   "lidar 25 g 0",
+   "camera 25 g 0",
+   "lidar 25 g 1",
+   "camera 25 g 1",
+   "lidar 25 g 2",
+   "camera 25 g 2",
+   "lidar 25 g 3",
+   "camera 25 g 3",
+   "lidar 25 g 4",
+   "camera 25 g 4",
+   "lidar 25 g 5",
+   "camera 25 g 5",
+   "lidar 25 g 6",
+   "camera 25 g 6",
+   "lidar 25 g 7",
+   "camera 25 g 7",
+   "lidar 25 g 8",
+   "camera 25 g 8",
+   "lidar 25 g 9",
+   "camera 25 g 9",
+   "lidar 25 g 10",
+   "camera 25 g 10",
+   "lidar 25 g 11",
+   "camera 25 g 11",
+   "lidar 25 g 12",
+   "camera 25 g 12",
+   "lidar 25 g 13",
+   "camera 25 g 13",
+   "lidar impact 50 g 0",
+   "camera impact 50 g 0",
+   "lidar impact 50 g 1",
+   "camera impact 50 g 1",
+   "lidar impact 50 g 2",
+   "camera impact 50 g 2",
+   "lidar impact 50 g 3",
+   "camera impact 50 g 3",
+   "lidar impact 50 g 4",
+   "camera impact 50 g 4",
+   "lidar impact 50 g 5",
+   "camera impact 50 g 5",
+   "side hit +x 100 N",
+   "side hit -y 100 N",
+   "drop on lidar -z 150 N",
+   "hand grab +y 20 N",
+   "poke cam +y",
+   "poke cam -z",
+   "poke cam +x"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 196.4,
+ "layout_s": 1888,
+ "peak_gb": 4.170812,
+ "gen_cm3": 6.0,
+ "h": 1.5,
+ "total_s": 2084,
+ "status": "FAILED",
+ "mass_tag": "M",
+ "worst_index": null,
+ "date": "2026-10-23"
+}

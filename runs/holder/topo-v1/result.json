@@ -1,0 +1,504 @@
+{
+ "name": "holder",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 7,
+  "eroded_volumes_mm3": [
+   3682.7,
+   3.4,
+   3.4,
+   3.4,
+   3.4,
+   3.4
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    0,
+    0.981
+   ],
+   [
+    "0.0",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.1",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.2",
+    0.0,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 10,
+  "ok": false
+ },
+ "function_check": {
+  "drawn_missing_mm3": 0.0,
+  "in_cuts_mm3": -0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "misuse 0",
+    "cls": "misuse",
+    "inlayer": 0.154,
+    "across": 0.211,
+    "at": [
+     19.5,
+     32.5,
+     21.5
+    ]
+   },
+   {
+    "case": "misuse 1",
+    "cls": "misuse",
+    "inlayer": 0.154,
+    "across": 0.153,
+    "at": [
+     42.5,
+     27.5,
+     23.5
+    ]
+   },
+   {
+    "case": "misuse 2",
+    "cls": "misuse",
+    "inlayer": 0.256,
+    "across": 0.412,
+    "at": [
+     52.5,
+     2.5,
+     2.5
+    ]
+   },
+   {
+    "case": "misuse 3",
+    "cls": "misuse",
+    "inlayer": 0.256,
+    "across": 0.391,
+    "at": [
+     7.5,
+     37.5,
+     2.5
+    ]
+   },
+   {
+    "case": "misuse 4",
+    "cls": "misuse",
+    "inlayer": 0.193,
+    "across": 0.34,
+    "at": [
+     19.5,
+     32.5,
+     21.5
+    ]
+   },
+   {
+    "case": "misuse 5",
+    "cls": "misuse",
+    "inlayer": 0.193,
+    "across": 0.211,
+    "at": [
+     25.5,
+     23.5,
+     24.5
+    ]
+   },
+   {
+    "case": "misuse 6",
+    "cls": "misuse",
+    "inlayer": 0.312,
+    "across": 0.497,
+    "at": [
+     19.5,
+     7.5,
+     21.5
+    ]
+   },
+   {
+    "case": "misuse 7",
+    "cls": "misuse",
+    "inlayer": 0.236,
+    "across": 0.235,
+    "at": [
+     40.5,
+     33.5,
+     18.5
+    ]
+   },
+   {
+    "case": "misuse 8",
+    "cls": "misuse",
+    "inlayer": 0.312,
+    "across": 0.498,
+    "at": [
+     19.5,
+     32.5,
+     21.5
+    ]
+   },
+   {
+    "case": "misuse 9",
+    "cls": "misuse",
+    "inlayer": 0.236,
+    "across": 0.235,
+    "at": [
+     40.5,
+     6.5,
+     18.5
+    ]
+   },
+   {
+    "case": "misuse 10",
+    "cls": "misuse",
+    "inlayer": 0.236,
+    "across": 0.41,
+    "at": [
+     40.5,
+     7.5,
+     21.5
+    ]
+   },
+   {
+    "case": "misuse 11",
+    "cls": "misuse",
+    "inlayer": 0.312,
+    "across": 0.305,
+    "at": [
+     19.5,
+     31.5,
+     22.5
+    ]
+   },
+   {
+    "case": "misuse 12",
+    "cls": "misuse",
+    "inlayer": 0.236,
+    "across": 0.41,
+    "at": [
+     40.5,
+     32.5,
+     21.5
+    ]
+   },
+   {
+    "case": "misuse 13",
+    "cls": "misuse",
+    "inlayer": 0.312,
+    "across": 0.305,
+    "at": [
+     19.5,
+     8.5,
+     22.5
+    ]
+   },
+   {
+    "case": "flight",
+    "cls": "flight",
+    "inlayer": 0.077,
+    "across": 0.077,
+    "at": [
+     19.5,
+     31.5,
+     22.5
+    ]
+   },
+   {
+    "case": "landing 6g",
+    "cls": "misuse",
+    "inlayer": 0.046,
+    "across": 0.051,
+    "at": [
+     25.5,
+     23.5,
+     24.5
+    ]
+   },
+   {
+    "case": "pinch L",
+    "cls": "misuse",
+    "inlayer": 0.123,
+    "across": 0.188,
+    "at": [
+     52.5,
+     2.5,
+     2.5
+    ]
+   },
+   {
+    "case": "pinch R",
+    "cls": "misuse",
+    "inlayer": 0.123,
+    "across": 0.188,
+    "at": [
+     7.5,
+     37.5,
+     2.5
+    ]
+   },
+   {
+    "case": "retain L",
+    "cls": "misuse",
+    "inlayer": 0.117,
+    "across": 0.144,
+    "at": [
+     24.5,
+     2.5,
+     13.5
+    ]
+   },
+   {
+    "case": "retain R",
+    "cls": "misuse",
+    "inlayer": 0.117,
+    "across": 0.144,
+    "at": [
+     24.5,
+     37.5,
+     13.5
+    ]
+   },
+   {
+    "case": "poke cam x",
+    "cls": "misuse",
+    "inlayer": 0.025,
+    "across": 0.031,
+    "at": [
+     57.5,
+     7.5,
+     2.5
+    ]
+   },
+   {
+    "case": "poke cam z",
+    "cls": "misuse",
+    "inlayer": 0.022,
+    "across": 0.024,
+    "at": [
+     56.5,
+     8.5,
+     2.5
+    ]
+   },
+   {
+    "case": "poke cam y",
+    "cls": "misuse",
+    "inlayer": 0.016,
+    "across": 0.02,
+    "at": [
+     55.5,
+     13.5,
+     6.5
+    ]
+   },
+   {
+    "case": "preload",
+    "cls": "misuse",
+    "inlayer": 0.056,
+    "across": 0.1,
+    "at": [
+     19.5,
+     32.5,
+     21.5
+    ]
+   },
+   {
+    "case": "grab lift",
+    "cls": "misuse",
+    "inlayer": 0.042,
+    "across": 0.036,
+    "at": [
+     26.5,
+     35.5,
+     20.5
+    ]
+   },
+   {
+    "case": "grab side",
+    "cls": "misuse",
+    "inlayer": 0.014,
+    "across": 0.01,
+    "at": [
+     25.5,
+     27.5,
+     25.5
+    ]
+   },
+   {
+    "case": "pad push",
+    "cls": "misuse",
+    "inlayer": 0.106,
+    "across": 0.193,
+    "at": [
+     11.5,
+     4.5,
+     13.5
+    ]
+   },
+   {
+    "case": "pad shear",
+    "cls": "misuse",
+    "inlayer": 0.087,
+    "across": 0.109,
+    "at": [
+     22.5,
+     13.5,
+     24.5
+    ]
+   }
+  ],
+  "worst": 0.498,
+  "worst_case": "misuse 8",
+  "worst_at": [
+   19.5,
+   32.5,
+   21.5
+  ]
+ },
+ "mass_g": 10.26,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 8076.9,
+ "drawn_g": 2.95,
+ "stl": "holder.stl",
+ "view_stl": "holder_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 3.2,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": true,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "anchored_erosion": true,
+   "collar_mm": 0.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 3.2985942395521843,
+  "R_cells": 3.2985942395521843,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.12794268167860798,
+  "nd": 46896,
+  "sym_axes": [
+   1
+  ],
+  "n_real": 28,
+  "n_ties": 24,
+  "backend": "direct",
+  "iterations": 115,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "holder",
+  "h": 1.0,
+  "shape": [
+   64,
+   48,
+   32
+  ],
+  "origin": [
+   -2.0,
+   -4.0,
+   -1.0
+  ],
+  "cells": 98304,
+  "design": 46896,
+  "drawn": 2224,
+  "cases": [
+   "misuse 0",
+   "misuse 1",
+   "misuse 2",
+   "misuse 3",
+   "misuse 4",
+   "misuse 5",
+   "misuse 6",
+   "misuse 7",
+   "misuse 8",
+   "misuse 9",
+   "misuse 10",
+   "misuse 11",
+   "misuse 12",
+   "misuse 13",
+   "flight",
+   "landing 6g",
+   "pinch L",
+   "pinch R",
+   "retain L",
+   "retain R",
+   "poke cam x",
+   "poke cam z",
+   "poke cam y",
+   "preload",
+   "grab lift",
+   "grab side",
+   "pad push",
+   "pad shear"
+  ],
+  "supports": [
+   "bolts",
+   "grab",
+   "pad"
+  ]
+ },
+ "build_s": 25.6,
+ "layout_s": 2504,
+ "peak_gb": 3.218996,
+ "gen_cm3": 6.0,
+ "h": 1.0,
+ "baseline": {
+  "engine": "noxopt v0 demo (h 4/3, vf 0.12)",
+  "mass_g": 10.4,
+  "worst": 0.32,
+  "note": "noxopt_demo.py smoke test, 16 Oct (T)"
+ },
+ "total_s": 2530
+}

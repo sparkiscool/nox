@@ -1,0 +1,503 @@
+{
+ "name": "scan_stick_cam",
+ "engine": "nox/topo",
+ "solid_ok": true,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   6515.5
+  ],
+  "necks": [],
+  "drawn_not_in_main": [],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": true
+ },
+ "function_check": {
+  "drawn_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "camera 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.033,
+    "across": 0.015,
+    "at": [
+     16.1,
+     48.4,
+     1.4
+    ]
+   },
+   {
+    "case": "camera 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.033,
+    "across": 0.015,
+    "at": [
+     16.1,
+     48.4,
+     1.4
+    ]
+   },
+   {
+    "case": "camera 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.008,
+    "at": [
+     10.1,
+     41.6,
+     5.9
+    ]
+   },
+   {
+    "case": "camera 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.009,
+    "at": [
+     10.1,
+     41.6,
+     5.9
+    ]
+   },
+   {
+    "case": "camera 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.138,
+    "across": 0.068,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.138,
+    "across": 0.077,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.09,
+    "across": 0.048,
+    "at": [
+     10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.083,
+    "across": 0.043,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.083,
+    "across": 0.038,
+    "at": [
+     10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.09,
+    "across": 0.054,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.09,
+    "across": 0.048,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.083,
+    "across": 0.043,
+    "at": [
+     10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.083,
+    "across": 0.038,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "camera 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.09,
+    "across": 0.054,
+    "at": [
+     10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "impact 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.066,
+    "across": 0.03,
+    "at": [
+     16.1,
+     48.4,
+     1.4
+    ]
+   },
+   {
+    "case": "impact 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.066,
+    "across": 0.03,
+    "at": [
+     16.1,
+     48.4,
+     1.4
+    ]
+   },
+   {
+    "case": "impact 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.026,
+    "across": 0.017,
+    "at": [
+     10.1,
+     41.6,
+     5.9
+    ]
+   },
+   {
+    "case": "impact 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.026,
+    "across": 0.019,
+    "at": [
+     10.1,
+     41.6,
+     5.9
+    ]
+   },
+   {
+    "case": "impact 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.276,
+    "across": 0.137,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "impact 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.276,
+    "across": 0.155,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "poke post 0 -z 10 N",
+    "cls": "misuse",
+    "inlayer": 0.259,
+    "across": 0.148,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "poke post 0 +x 10 N",
+    "cls": "misuse",
+    "inlayer": 0.043,
+    "across": 0.016,
+    "at": [
+     16.1,
+     48.4,
+     1.4
+    ]
+   },
+   {
+    "case": "poke post 1 -z 10 N",
+    "cls": "misuse",
+    "inlayer": 0.095,
+    "across": 0.058,
+    "at": [
+     -10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "poke post 1 +x 10 N",
+    "cls": "misuse",
+    "inlayer": 0.039,
+    "across": 0.023,
+    "at": [
+     -8.6,
+     45.4,
+     4.4
+    ]
+   },
+   {
+    "case": "poke post 2 -z 10 N",
+    "cls": "misuse",
+    "inlayer": 0.259,
+    "across": 0.148,
+    "at": [
+     10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "poke post 2 +x 10 N",
+    "cls": "misuse",
+    "inlayer": 0.043,
+    "across": 0.017,
+    "at": [
+     -16.1,
+     48.4,
+     1.4
+    ]
+   },
+   {
+    "case": "poke post 3 -z 10 N",
+    "cls": "misuse",
+    "inlayer": 0.095,
+    "across": 0.058,
+    "at": [
+     10.1,
+     45.4,
+     0.6
+    ]
+   },
+   {
+    "case": "poke post 3 +x 10 N",
+    "cls": "misuse",
+    "inlayer": 0.039,
+    "across": 0.024,
+    "at": [
+     8.6,
+     45.4,
+     4.4
+    ]
+   },
+   {
+    "case": "cable pull -y 20 N",
+    "cls": "misuse",
+    "inlayer": 0.019,
+    "across": 0.008,
+    "at": [
+     -10.1,
+     39.4,
+     0.6
+    ]
+   }
+  ],
+  "worst": 0.276,
+  "worst_case": "impact 50 g 4",
+  "worst_at": [
+   -10.1,
+   45.4,
+   0.6
+  ]
+ },
+ "mass_g": 12.55,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 9878.1,
+ "drawn_g": 6.26,
+ "stl": "scan_stick_cam.stl",
+ "view_stl": "scan_stick_cam_view.stl",
+ "view_faces": 48068,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 5.0,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "drawn",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 5.1540534993002876,
+  "R_cells": 6.872071332400384,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.34827657513522925,
+  "nd": 34030,
+  "sym_axes": [
+   0
+  ],
+  "n_real": 29,
+  "n_ties": 42,
+  "backend": "direct",
+  "iterations": 65,
+  "stopped": "max_stage"
+ },
+ "grid": {
+  "name": "scan_stick_cam",
+  "h": 0.75,
+  "shape": [
+   64,
+   88,
+   16
+  ],
+  "origin": [
+   -24.0,
+   -3.0,
+   -2.0
+  ],
+  "cells": 90112,
+  "design": 34030,
+  "drawn": 10910,
+  "cases": [
+   "camera 25 g 0",
+   "camera 25 g 1",
+   "camera 25 g 2",
+   "camera 25 g 3",
+   "camera 25 g 4",
+   "camera 25 g 5",
+   "camera 25 g 6",
+   "camera 25 g 7",
+   "camera 25 g 8",
+   "camera 25 g 9",
+   "camera 25 g 10",
+   "camera 25 g 11",
+   "camera 25 g 12",
+   "camera 25 g 13",
+   "impact 50 g 0",
+   "impact 50 g 1",
+   "impact 50 g 2",
+   "impact 50 g 3",
+   "impact 50 g 4",
+   "impact 50 g 5",
+   "poke post 0 -z 10 N",
+   "poke post 0 +x 10 N",
+   "poke post 1 -z 10 N",
+   "poke post 1 +x 10 N",
+   "poke post 2 -z 10 N",
+   "poke post 2 +x 10 N",
+   "poke post 3 -z 10 N",
+   "poke post 3 +x 10 N",
+   "cable pull -y 20 N"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 20.3,
+ "layout_s": 1082,
+ "peak_gb": 3.049572,
+ "gen_cm3": 5.0,
+ "h": 0.75,
+ "total_s": 1102,
+ "status": "DONE",
+ "mass_tag": "M",
+ "worst_index": 0.276,
+ "worst_case": "impact 50 g 4",
+ "bed_face": "plate bottom",
+ "bed_contact_mm2": 1169,
+ "peak_mem_gb": 3.049572,
+ "wall_time_min": 18,
+ "file": "print/scan_stick_cam_v4.stl",
+ "sha12": "016d187f2b81",
+ "date": "2026-10-23 15:13"
+}
