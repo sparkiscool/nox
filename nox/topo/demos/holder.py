@@ -6,9 +6,11 @@ landing, hand and retention loads, catcher grab, pad push). Units mm, N.
 Changes for the solid gate (23 Oct, organic test part):
   * bolt bosses: 6 x 6 mm squares round the 3.2 mm holes left 1.4 mm walls, which the gate's 0.9 mm erosion cut off
     (topo-v1: 4 boss cores of 3.4 mm3 split off, FAIL; the self-test smoke run never joined one corner boss). Now
-    12 mm round bosses, 6 mm tall, cut flat by the envelope's outer faces (the corner bolts sit 5 mm from both
-    edges): 4.4 mm walls toward the part. 10 mm round bosses (3.4 mm walls, organic-v1 to v4) left single-voxel
-    cores at the gate's 2.0 mm erosion where the legs fuse on (v4: core share 0.996 to 0.999, FAIL).
+    11.5 mm round bosses, 6 mm tall, centred 0.75 mm toward the part on x and y from the bolt and cut flat by the
+    envelope's outer faces (the corner bolts sit 5 mm from both edges): 4.7 mm wall toward the part, 3.4 mm to the
+    envelope faces, so the boss keeps one core at the gate's 2.0 mm erosion and it sits where the legs fuse on.
+    10 mm round (3.4 mm walls, organic-v1 to v4) left single-voxel cores there (v4: share 0.996 to 0.999, FAIL);
+    12 mm round on the bolt (organic-v5, v6) left a 64-voxel core lobe toward the envelope corner (v6: share 0.96).
   * keep-out under the pack round the pad: starts at z 29 (was 26), 1 mm clearance under the pack instead of 4 (DEFAULT).
     The pad sat on a 4 mm layer between that keep-out and the battery channel (top z 22), so every member out of the
     pad was a plate at most 4 mm thick (3 mm as built: the build holds 0.5 mm off each keep-out), which the gate's
@@ -24,7 +26,8 @@ from ..part import Part
 
 BOLTS = [(x, y) for x in (5, 55) for y in (5, 35)]
 M_PACK = 0.165                                   # kg on the pad
-BOSS_R = 6.0                                     # bolt boss radius: 4.4 mm wall round the 1.6 mm hole
+BOSS_R = 5.75                                    # bolt boss radius, centre BOSS_OFF toward the part on x and y:
+BOSS_OFF = 0.75                                  # 4.7 mm wall toward the part, 3.4 mm to the envelope faces
 PACK_CLEAR_Z = 29.0                              # keep-out under the pack round the pad starts here (was 26)
 
 
@@ -41,7 +44,8 @@ def bodies():
     hookL = box(26, 34, 0, 3, 14, 24)
     hookR = box(26, 34, 37, 40, 14, 24)
     cam = box(56, 60, 15, 25, 8, 18)
-    bosses = [cyl(x, y, 0, 6, BOSS_R) ^ box(0, 60, 0, 40, 0, 30) for x, y in BOLTS]
+    bosses = [cyl(x + BOSS_OFF * np.sign(30 - x), y + BOSS_OFF * np.sign(20 - y), 0, 6, BOSS_R) ^ box(0, 60, 0, 40, 0, 30)
+              for x, y in BOLTS]
     drawn = pad + hookL + hookR + cam
     for b in bosses:
         drawn += b
