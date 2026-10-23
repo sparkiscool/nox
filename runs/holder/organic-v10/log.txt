@@ -201,3 +201,13 @@ it  97 beta   32 J   3.7320 vol 0.1437 (dil 0.2832 g -0.004) grey  3.8% ch 0.100
 it  98 beta   32 J   3.4262 vol 0.1458 (dil 0.2836 g -0.003) grey  3.8% ch 0.100 worst grab side 3.1e+03 32.1s
 it  99 beta   32 J   3.2391 vol 0.1470 (dil 0.2837 g -0.002) grey  3.7% ch 0.100 worst grab side 2.93e+03 32.6s
 it 100 beta   32 J   3.0789 vol 0.1481 (dil 0.2838 g -0.002) grey  3.7% ch 0.100 worst grab side 2.76e+03 31.4s
+it 101 beta   32 J   2.9599 vol 0.1492 (dil 0.2839 g +0.035) grey  3.7% ch 0.100 worst grab side 2.65e+03 34.8s
+it 102 beta   32 J 171.8971 vol 0.1281 (dil 0.2695 g -0.018) grey  3.8% ch 0.100 worst gate b8 mz 1.62e+05 32.6s
+it 103 beta   32 J 232.6374 vol 0.1311 (dil 0.2705 g -0.014) grey  3.7% ch 0.100 worst held b2 my 2.05e+05 29.4s
+it 104 beta   32 J  64.8486 vol 0.1249 (dil 0.2649 g -0.035) grey  3.8% ch 0.100 worst gate b8 my 6.44e+04 31.2s
+it 105 beta   32 J  11.4466 vol 0.1310 (dil 0.2676 g -0.025) grey  3.8% ch 0.100 worst held b1 mz 1.04e+04 30.3s
+it 106 beta   32 J   4.8058 vol 0.1350 (dil 0.2698 g -0.011) grey  3.8% ch 0.100 worst pad push 4.22e+03 32.1s
+it 107 beta   32 J   3.9786 vol 0.1381 (dil 0.2718 g -0.003) grey  3.8% ch 0.100 worst pad push 3.22e+03 33.6s
+it 108 beta   32 J   3.7601 vol 0.1393 (dil 0.2724 g -0.001) grey  3.8% ch 0.100 worst grab side 3.08e+03 33.5s
+it 109 beta   32 J   3.6391 vol 0.1399 (dil 0.2725 g -0.001) grey  3.8% ch 0.100 worst grab side 2.94e+03 32.9s
+it 110 beta   32 J   3.5559 vol 0.1403 (dil 0.2726 g -0.001) grey  3.8% ch 0.100 worst grab side 2.86e+03 32.0s
