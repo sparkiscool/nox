@@ -1,1 +1,2 @@
 === scan_stick_base: rebuild from /home/user/nox/runs/scan_stick_base/v7/density.npz (layout not rerun)
+scan_stick_base: grid (56, 48, 88) h 2.0 = 236,544 cells; design 36,850 (294.8 cm3), drawn 24,699, void 174,995
