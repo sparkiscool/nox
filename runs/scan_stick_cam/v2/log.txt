@@ -61,3 +61,13 @@ it  47 beta    4 J  12.1157 vol 0.2009 (dil 0.3981 g -0.011) grey 43.4% ch 0.100
 it  48 beta    4 J  10.3207 vol 0.2013 (dil 0.3989 g -0.009) grey 43.3% ch 0.100 worst cable pull -y 20 N 1.67e+03 1.3s
 it  49 beta    4 J   8.7342 vol 0.2064 (dil 0.4002 g -0.006) grey 43.2% ch 0.100 worst poke post 2 +x 10 N 1.23e+03 1.3s
 it  50 beta    4 J   7.8988 vol 0.2064 (dil 0.4004 g -0.005) grey 43.1% ch 0.100 worst poke post 2 +x 10 N 1.17e+03 1.0s
+it  51 beta    4 J   7.2709 vol 0.2088 (dil 0.4012 g +0.043) grey 43.4% ch 0.100 worst poke post 2 +x 10 N 1.08e+03 1.1s
+it  52 beta    4 J  11.1705 vol 0.1870 (dil 0.3812 g -0.009) grey 41.0% ch 0.100 worst gate b6 mz 1.84e+03 1.1s
+it  53 beta    4 J   9.5707 vol 0.1919 (dil 0.3826 g -0.005) grey 41.1% ch 0.100 worst poke post 0 +x 10 N 1.38e+03 0.9s
+it  54 beta    4 J   8.7269 vol 0.1940 (dil 0.3836 g -0.003) grey 41.0% ch 0.100 worst poke post 2 +x 10 N 1.32e+03 0.9s
+it  55 beta    4 J   8.2434 vol 0.1959 (dil 0.3840 g -0.002) grey 41.1% ch 0.100 worst poke post 2 +x 10 N 1.24e+03 0.9s
+it  56 beta    4 J   7.8922 vol 0.1971 (dil 0.3842 g +0.027) grey 40.9% ch 0.100 worst poke post 2 +x 10 N 1.18e+03 1.1s
+it  57 beta    4 J   9.9788 vol 0.1848 (dil 0.3722 g -0.005) grey 39.8% ch 0.100 worst poke post 0 +x 10 N 1.46e+03 1.0s
+it  58 beta    4 J   9.1545 vol 0.1875 (dil 0.3733 g -0.002) grey 39.9% ch 0.100 worst poke post 2 +x 10 N 1.37e+03 0.9s
+it  59 beta    4 J   8.8072 vol 0.1886 (dil 0.3736 g -0.001) grey 40.0% ch 0.100 worst poke post 0 +x 10 N 1.32e+03 0.9s
+it  60 beta    4 J   8.5554 vol 0.1893 (dil 0.3737 g -0.001) grey 39.7% ch 0.100 worst poke post 0 +x 10 N 1.28e+03 1.0s
