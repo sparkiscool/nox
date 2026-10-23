@@ -37,3 +37,4 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v5 | gen 5.4, 6.25 mm, 6 mm layer, 12 mm bosses | 11.73 | 1.157 | FAIL (2 bodies) | ok | wrong: two frames | ~3700 s |
 | organic-v6 | gen 5.0, 6.25 mm, 7 mm layer, 12 mm bosses | 11.26 | 0.582 | FAIL (boss corner lobes, share 0.96) | ok | right: one frame | ~4200 s |
 | organic-v7 | gen 5.4, 6.25 mm, 7 mm layer, offset 11.5 mm bosses | 11.73 | 0.569 | **PASS** | ok | right: one frame | 4260 s |
+| organic-v8 | as v7, case_norm frame | 11.72 | 0.596 | **PASS** | ok | right: one frame | 4471 s |
