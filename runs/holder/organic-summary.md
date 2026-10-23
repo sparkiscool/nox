@@ -22,6 +22,8 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
    faces, Taubin spikes and voxel slivers on keep-out faces).
 3. Gate member margin 2.25 mm (5.0 -> 6.25 mm members): v2's 5.0 mm struts broke at 2.0 mm erosion, v3's 6.25 mm
    struts kept a core.
+4. Case normalisation on the first frame (`case_norm="frame"`, default): against the full solid, pad push and the
+   tie cases took the whole objective and the misuse cases that set the worst index had 1e-4 each (organic-v7).
 
 ## Runs
 
@@ -34,3 +36,4 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v4 | gen 5.2, 6.25 mm, 6 mm layer | 10.83 | 0.587 | FAIL (single boss voxels, share 0.996) | ok | right | ~4300 s |
 | organic-v5 | gen 5.4, 6.25 mm, 6 mm layer, 12 mm bosses | 11.73 | 1.157 | FAIL (2 bodies) | ok | wrong: two frames | ~3700 s |
 | organic-v6 | gen 5.0, 6.25 mm, 7 mm layer, 12 mm bosses | 11.26 | 0.582 | FAIL (boss corner lobes, share 0.96) | ok | right: one frame | ~4200 s |
+| organic-v7 | gen 5.4, 6.25 mm, 7 mm layer, offset 11.5 mm bosses | 11.73 | 0.569 | **PASS** | ok | right: one frame | 4260 s |
