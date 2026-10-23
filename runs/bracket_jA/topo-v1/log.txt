@@ -98,3 +98,13 @@ it  38 beta   16 J 1704.5188 vol 0.1858 (dil 0.3271 g -0.001) grey  5.7% ch 0.10
 layout: beta 16 done: eroded design 6 bodies, main 73.4%; anchored cores outside the main body: 3
 it  39 beta   32 J 2371.7711 vol 0.1848 (dil 0.3232 g -0.002) grey  2.8% ch 0.100 worst tie b2 my 1.83e+05 geo +6.64/-0.13 8.7s
 it  40 beta   32 J 2369.6474 vol 0.1842 (dil 0.3232 g -0.002) grey  2.7% ch 0.100 worst tie b1 my 1.83e+05 geo +6.56/-0.08 9.2s
+it  41 beta   32 J 2367.7846 vol 0.1837 (dil 0.3232 g -0.003) grey  2.8% ch 0.100 worst tie b2 my 1.82e+05 geo +6.48/+0.02 10.1s
+it  42 beta   32 J 2367.5532 vol 0.1838 (dil 0.3237 g -0.001) grey  2.7% ch 0.100 worst tie b2 my 1.82e+05 geo +6.42/-0.01 9.5s
+it  43 beta   32 J 2366.5199 vol 0.1836 (dil 0.3237 g -0.001) grey  2.8% ch 0.100 worst tie b2 my 1.82e+05 geo +6.36/-0.01 8.8s
+it  44 beta   32 J 2364.8290 vol 0.1834 (dil 0.3238 g -0.001) grey  2.8% ch 0.100 worst tie b2 my 1.82e+05 geo +6.32/-0.00 9.2s
+it  45 beta   32 J 2363.6917 vol 0.1831 (dil 0.3238 g -0.001) grey  2.8% ch 0.100 worst tie b2 my 1.82e+05 geo +6.28/-0.00 9.1s
+it  46 beta   32 J 2361.5519 vol 0.1827 (dil 0.3238 g -0.004) grey  2.8% ch 0.100 worst tie b2 my 1.81e+05 geo +6.25/-0.00 9.0s
+it  47 beta   32 J 2359.0680 vol 0.1831 (dil 0.3249 g -0.001) grey  2.9% ch 0.100 worst tie b2 my 1.81e+05 geo +6.22/-0.00 9.0s
+it  48 beta   32 J 2356.9939 vol 0.1823 (dil 0.3248 g -0.001) grey  2.8% ch 0.100 worst tie b2 my 1.81e+05 geo +6.18/-0.00 9.3s
+it  49 beta   32 J 2354.8532 vol 0.1815 (dil 0.3248 g -0.001) grey  2.9% ch 0.100 worst tie b1 my 1.81e+05 geo +6.15/-0.00 9.1s
+it  50 beta   32 J 2350.6052 vol 0.1808 (dil 0.3247 g -0.001) grey  3.0% ch 0.100 worst tie b1 my 1.8e+05 geo +6.13/-0.00 9.0s
