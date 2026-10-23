@@ -70,3 +70,4 @@ layout: gate ties: held bodies thinner than 2.0 mm (1,820 cells) count by their 
 layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (64, 88, 16) = 90,112 elements, 154,275 active dofs; backend direct (direct estimate 1.4 GB, budget 11.8 GB)
+layout: warm start from a (32, 48, 8) grid (h 1.5): mean x 0.347
