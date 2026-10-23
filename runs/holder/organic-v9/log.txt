@@ -229,3 +229,17 @@ it 127 beta   32 J 106.2805 vol 0.1206 (dil 0.2599 g -0.001) grey  3.7% ch 0.100
 it 128 beta   32 J 106.0202 vol 0.1206 (dil 0.2599 g -0.000) grey  3.7% ch 0.100 worst gate b8 my 21.2 33.3s
 it 129 beta   32 J 105.8506 vol 0.1207 (dil 0.2599 g -0.000) grey  3.7% ch 0.100 worst gate b8 my 21.2 33.8s
 it 130 beta   32 J 105.7183 vol 0.1208 (dil 0.2600 g -0.000) grey  3.7% ch 0.100 worst gate b8 my 21.2 33.3s
+it 131 beta   32 J 105.6121 vol 0.1209 (dil 0.2600 g +0.003) grey  3.7% ch 0.100 worst gate b8 my 21.2 33.4s
+it 132 beta   32 J 106.1385 vol 0.1201 (dil 0.2590 g -0.000) grey  3.7% ch 0.100 worst gate b8 my 21.2 33.7s
+it 133 beta   32 J 105.9946 vol 0.1202 (dil 0.2591 g -0.000) grey  3.8% ch 0.100 worst gate b8 my 21.2 33.1s
+it 134 beta   32 J 105.9108 vol 0.1202 (dil 0.2591 g -0.000) grey  3.8% ch 0.100 worst gate b8 my 21.2 31.4s
+it 135 beta   32 J 105.8368 vol 0.1202 (dil 0.2591 g -0.000) grey  3.7% ch 0.100 worst gate b8 my 21.2 31.7s
+layout: stopped (max_stage) at it 135, beta 32, 4471 s
+layout: beta 32 done: eroded design 4 bodies, main 49.5%; drawn bodies outside the main body: 3
+layout done: 4689 s, peak 3.953676 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.29 cm3, field 10.64 cm3, in env - cuts 9.25 cm3 (layout 9.25, level offset +0.009 mm), fillet 2.5 mm, rims 1.0 mm, mesh 143,228 faces, 12 s
+build: 2 shells, volumes [5363.9, 3881.5] mm3; dropped specks []; sealed cavities kept [] mm3
+solid check: FAIL {"bodies_plain": 2, "bodies_eroded": 2, "eroded_volumes_mm3": [3036.7, 2297.0], "necks": [{"neck_under_mm": 1.8, "blob_thick_mm": 8.0, "joint_mm2": 0.0, "blob_mm3": 2297.0, "at": [52.2, 20.0, 7.7]}, {"neck_under_mm": 2.4, "blob_thick_mm": 8.0, "joint_mm2": 0.0, "blob_mm3": 1792.2, "at": [52.2, 20.0, 7.8]}, {"neck_under_mm": 3.0, "blob_thick_mm": 8.0, "joint_mm2": 95.2, "blob_mm3": 1261.2, "at": [52.2, 20.0, 8.0]}], "drawn_not_in_main": [[0, 0.537], ["0.3", 0.0, "erode 2.0"], ["0.6", 0.0, "erode 2.0"], ["0.7", 0.0, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 1141.5, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 1.08 in 'misuse 7' at [8.5, 2.5, 7.5]
+RESULT {"name": "holder", "solid_ok": false, "mass_g": 11.74, "worst": 1.083, "function_ok": true, "bodies": 2}
