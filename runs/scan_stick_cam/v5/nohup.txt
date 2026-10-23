@@ -58,3 +58,13 @@ layout: beta 2 done: eroded design 1 bodies, main 100.0%; drawn bodies outside t
 it  38 beta    4 J  20.2139 vol 0.1266 (dil 0.2751 g -0.152) grey 28.5% ch 0.100 worst cable pull -y 20 N 2.79e+03 1.6s
 it  39 beta    4 J  13.6053 vol 0.1505 (dil 0.3150 g -0.029) grey 32.5% ch 0.100 worst cable pull -y 20 N 2.03e+03 1.6s
 it  40 beta    4 J  10.0915 vol 0.1564 (dil 0.3183 g -0.019) grey 33.1% ch 0.100 worst cable pull -y 20 N 1.5e+03 1.5s
+it  41 beta    4 J   7.8025 vol 0.1580 (dil 0.3192 g +0.004) grey 33.1% ch 0.100 worst cable pull -y 20 N 1.13e+03 1.6s
+it  42 beta    4 J   6.9505 vol 0.1544 (dil 0.3126 g -0.017) grey 32.3% ch 0.100 worst cable pull -y 20 N 870 1.5s
+it  43 beta    4 J   6.6228 vol 0.1506 (dil 0.3088 g -0.029) grey 31.7% ch 0.100 worst poke post 0 +x 10 N 822 1.4s
+it  44 beta    4 J   6.0002 vol 0.1536 (dil 0.3098 g -0.026) grey 32.1% ch 0.100 worst poke post 3 +x 10 N 776 1.5s
+it  45 beta    4 J   4.8368 vol 0.1533 (dil 0.3102 g -0.025) grey 31.8% ch 0.100 worst poke post 0 +x 10 N 583 1.7s
+it  46 beta    4 J   4.0022 vol 0.1577 (dil 0.3140 g +0.003) grey 32.0% ch 0.100 worst poke post 3 +x 10 N 453 1.5s
+it  47 beta    4 J   3.8352 vol 0.1569 (dil 0.3122 g -0.003) grey 31.8% ch 0.100 worst poke post 0 +x 10 N 434 1.6s
+it  48 beta    4 J   3.6336 vol 0.1576 (dil 0.3126 g -0.002) grey 31.8% ch 0.100 worst poke post 2 +x 10 N 404 1.5s
+it  49 beta    4 J   3.4961 vol 0.1580 (dil 0.3126 g -0.002) grey 31.9% ch 0.100 worst cable pull -y 20 N 398 1.8s
+it  50 beta    4 J   3.3786 vol 0.1584 (dil 0.3127 g -0.001) grey 31.8% ch 0.100 worst cable pull -y 20 N 396 1.5s
