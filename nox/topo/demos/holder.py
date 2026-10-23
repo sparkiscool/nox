@@ -8,11 +8,12 @@ Changes for the solid gate (23 Oct, organic test part):
     (topo-v1: 4 boss cores of 3.4 mm3 split off, FAIL; the self-test smoke run never joined one corner boss). Now
     round bosses of 10 mm diameter, 6 mm tall: 3.4 mm walls, the largest round boss the 60 x 40 envelope holds at the
     corner bolts (5 mm from both edges).
-  * keep-out under the pack round the pad: starts at z 27 (was 26), 3 mm clearance under the pack instead of 4 (DEFAULT).
+  * keep-out under the pack round the pad: starts at z 28 (was 26), 2 mm clearance under the pack instead of 4 (DEFAULT).
     The pad sat on a 4 mm layer between that keep-out and the battery channel (top z 22), so every member out of the
-    pad was a plate at most 4 mm thick, which the gate's 2.0 mm erosion removes (organic-v1: the engine could route
-    only 4.44 mm members to the pad, gate FAIL; worst index 0.65 at the channel's top edge, in that layer). A 5 mm
-    layer hosts the 5.0 mm members the gate needs.
+    pad was a plate at most 4 mm thick (3 mm as built: the build holds 0.5 mm off each keep-out), which the gate's
+    2.0 mm erosion removes (organic-v1: worst index 0.65 in that layer, gate FAIL). z 27 (organic-v2, v3) built a
+    4 mm plate, still cut there: the eroded part split at the pad and every other body read as loose. A 6 mm layer
+    builds 5 mm and keeps a 1 mm core at 2.0 mm erosion.
   Load set, supports (the 6 x 6 seats), battery channel and envelope unchanged."""
 import numpy as np
 import manifold3d as mf
@@ -21,7 +22,7 @@ from ..part import Part
 BOLTS = [(x, y) for x in (5, 55) for y in (5, 35)]
 M_PACK = 0.165                                   # kg on the pad
 BOSS_R = 5.0                                     # bolt boss radius: 3.4 mm wall round the 1.6 mm hole
-PACK_CLEAR_Z = 27.0                              # keep-out under the pack round the pad starts here (was 26)
+PACK_CLEAR_Z = 28.0                              # keep-out under the pack round the pad starts here (was 26)
 
 
 def box(x0, x1, y0, y1, z0, z1):
