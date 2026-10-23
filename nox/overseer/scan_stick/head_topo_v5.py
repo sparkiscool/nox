@@ -4,7 +4,7 @@ screws onto the pole tip; the head no longer carries the thread. It bolts onto t
 (heat-set inserts in the base) and carries the Unitree L2 on 4 pads and the camera block.
    python3 head_topo_v5.py [h] [gen_cm3] [--no-git]
 Print frame: flange bottom on the bed (z = 0), build +z, lidar seat at z = 34. Numbers C unless tagged.
-Drawn: flange Ø40 x 8 (4x Ø4.3 on a 28 square, counterbored), 4 L2 pads Ø12 x 6 on Ø51 at 22.5° (spec) each with a 6 x 10
+Drawn: flange Ø40 x 8 (4x Ø4.3 on a 24 square, counterbored), 4 L2 pads Ø12 x 6 on Ø51 at 22.5° (spec) each with a 6 x 10
 gusset toward the axis (rule), camera block 32 x 8 x 30 on +Y. Cuts: bolt holes + counterbores, L2 holes + driver clearance
 below each pad, camera insert holes, camera-bracket keep-out, L2 cable notch on -X.
 Loads (DEFAULT, E): 25 g on the 230 g lidar (14 dirs) + self weight, 50 g impact (6 dirs), 100 N side hits, 150 N drop
@@ -19,7 +19,7 @@ H = float(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") 
 GEN = float(sys.argv[2]) if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else 12.0  # cm3 generated (DEFAULT, E)
 GIT = "--no-git" not in sys.argv
 
-FL_R, FL_T, FL_BOLT = 20.0, 8.0, 9.9            # flange Ø40 x 8, M4 at (±9.9, ±9.9) = 28 square
+FL_R, FL_T, FL_BOLT = 20.0, 8.0, 8.5            # flange Ø40 x 8, M4 at (±8.5, ±8.5) = 24 square (counterbore wall 4 to the edge)
 SEAT, PAD_T, PLATE_W = 34.0, 6.0, 86.0
 BOLT_R, BOLT_ROT, PAD_R = 51.0 / 2, 22.5, 6.0
 CAM_X, CAM_Y, CAM_Z = 32.0, (12.0, 20.0), (2.0, 32.0)

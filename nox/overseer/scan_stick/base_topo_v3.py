@@ -22,7 +22,7 @@ GEN = float(sys.argv[2]) if len(sys.argv) > 2 and not sys.argv[2].startswith("-"
 GIT = "--no-git" not in sys.argv
 
 BOSS_R, SOCK_H = 16.0, 34.0
-FL_Z, FL_T, FL_R, FL_BOLT = 160.0, 8.0, 20.0, 9.9
+FL_Z, FL_T, FL_R, FL_BOLT = 160.0, 8.0, 20.0, 8.5
 TOP = FL_Z + FL_T                                  # 168
 PI_L, PI_W, PI_HX, PI_HY, PI_OFF, PI_SO = 85.0, 56.0, 58.0, 49.0, 3.5, 7.0
 PI_X0, PI_Z0 = 20.0, 10.0                          # tray face at x 20, Pi bottom edge at z 10

@@ -8,3 +8,7 @@
 09:22 START cam v3 (5 cm3)
 09:23 queue 3: finish=drawn (organic opened the drawn bodies: head v4 and cam v2 failed the gate); cam v3 restarted
 09:23 START cam v3
+09:43 END cam v3 rc=0 mass 10.2 worst None solid False
+09:43 START head v5
+09:44 queue 4: cam v3 FAILED (Ø8 posts); flange bolts moved to a 24 square (counterbore wall rule); head v5 restarted
+09:44 START head v5
