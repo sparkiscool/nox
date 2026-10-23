@@ -62,3 +62,17 @@ it  47 beta    4 J  12.9841 vol 0.2823 (dil 0.4522 g -0.002) grey 38.8% ch 0.100
 it  48 beta    4 J  12.6158 vol 0.2835 (dil 0.4522 g -0.002) grey 38.9% ch 0.100 worst cable pull -y 20 N 304 0.7s
 it  49 beta    4 J  12.6024 vol 0.2844 (dil 0.4525 g -0.001) grey 38.6% ch 0.100 worst cable pull -y 20 N 304 0.8s
 it  50 beta    4 J  12.5938 vol 0.2851 (dil 0.4527 g -0.001) grey 38.3% ch 0.100 worst cable pull -y 20 N 304 0.8s
+it  51 beta    4 J  12.5869 vol 0.2857 (dil 0.4528 g +0.012) grey 38.2% ch 0.100 worst cable pull -y 20 N 304 0.9s
+layout: stopped (beta_stop) at it 51, beta 4, 53 s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+coarse stage done: 51 iterations, 60 s, peak 0.543216 GB
+scan_stick_cam: grid (64, 88, 16) h 0.75 = 90,112 cells; design 34,030 (14.4 cm3), drawn 10,910, void 45,172
+  support default: 2628 cells, 3682 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 6.87 cells, erosion depth 1.37 mm; volfrac 0.348 of 34,030 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (5.7% of passive cells differ): no symmetry
+layout: 6 drawn bodies (10,910 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (1,820 cells) count by their cover; 3 bodies tied to body 1
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 88, 16) = 90,112 elements, 154,275 active dofs; backend direct (direct estimate 1.4 GB, budget 11.8 GB)

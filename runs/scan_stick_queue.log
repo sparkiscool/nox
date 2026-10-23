@@ -12,3 +12,7 @@
 09:43 START head v5
 09:44 queue 4: cam v3 FAILED (Ø8 posts); flange bolts moved to a 24 square (counterbore wall rule); head v5 restarted
 09:44 START head v5
+10:07 END head v5 rc=0 mass 40.1 worst None solid False
+10:07 START base v3
+10:07 END base v3 rc=0 no result.json
+10:07 START cam v4

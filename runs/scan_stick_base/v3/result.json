@@ -1,0 +1,7 @@
+{
+ "part": "scan_stick_base",
+ "version": "v3",
+ "status": "FAILED",
+ "note": "crashed in the coarse stage (tie on fixed nodes)",
+ "date": "2026-10-23"
+}

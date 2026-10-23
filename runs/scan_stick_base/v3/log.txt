@@ -1,0 +1,10 @@
+=== scan_stick_base: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.29 cells, erosion depth 1.37 mm; volfrac 0.083 of 6,584 design cells
+layout: WARNING filter radius 1.29 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in y (5.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.8% of passive cells differ): no symmetry
+layout: 7 drawn bodies (836 cells), held solid in every realization; eroded filter: masked
+layout: 67 load cases + 36 tie cases (6 bodies tied, 1 held by support 'default') + 0 gate ties
+fem: grid (32, 24, 48) = 36,864 elements, 30,189 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+fem: Cholesky failed (The Pardiso solver failed with error code -4. See Pardiso documentation for details.); LU fallback

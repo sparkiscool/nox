@@ -1,0 +1,2 @@
+scan_stick_base v3: FAILED (crashed before the first iteration)
+nox/topo raised "zero compliance of the full solid for tie b2: the load sits on fixed nodes" in the coarse stage (h 4): the 3 mm support band round the thread (r 10..13) fell back to touching cells and took in a neighbouring drawn body. Rerun as v4 (`base_topo_v4.py`): support band r 10..15, z 2..28, no coarse stage (h 2 from the start), finish "drawn", 35 cm3 (E).
