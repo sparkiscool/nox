@@ -50,3 +50,14 @@ it  37 beta    2 J   0.0537 vol 0.0814 (dil 0.1067 g -0.001) grey 16.2% ch 0.100
 it  38 beta    2 J   0.0531 vol 0.0815 (dil 0.1067 g -0.001) grey 16.2% ch 0.100 worst gate b7 my 39.9 2.2s
 it  39 beta    2 J   0.0526 vol 0.0816 (dil 0.1067 g -0.001) grey 16.2% ch 0.100 worst gate b7 my 39.7 2.0s
 it  40 beta    2 J   0.0522 vol 0.0817 (dil 0.1067 g -0.001) grey 16.1% ch 0.100 worst gate b7 my 39.5 2.2s
+it  41 beta    2 J   0.0518 vol 0.0818 (dil 0.1067 g +0.004) grey 16.1% ch 0.100 worst gate b7 my 39.3 2.7s
+it  42 beta    2 J   0.0523 vol 0.0814 (dil 0.1062 g -0.001) grey 16.1% ch 0.100 worst gate b7 my 39.8 2.2s
+layout: beta 2 done: eroded design 29 bodies, main 95.0%; drawn bodies outside the main body: 27
+it  43 beta    4 J   1.8874 vol 0.0773 (dil 0.1247 g -0.040) grey  9.7% ch 0.100 worst camera 25 g 4 1.38e+03 2.0s
+it  44 beta    4 J   0.3374 vol 0.0763 (dil 0.1278 g -0.015) grey 10.5% ch 0.100 worst drop on lidar -z 150 N 281 2.1s
+it  45 beta    4 J   0.1667 vol 0.0750 (dil 0.1276 g -0.017) grey 10.8% ch 0.100 worst tie b4 fx 143 2.2s
+it  46 beta    4 J   0.2481 vol 0.0769 (dil 0.1281 g -0.029) grey 10.5% ch 0.100 worst camera 25 g 4 180 2.1s
+it  47 beta    4 J   0.1064 vol 0.0786 (dil 0.1301 g -0.014) grey 10.5% ch 0.100 worst tie b4 fx 85.7 2.7s
+it  48 beta    4 J   0.0995 vol 0.0799 (dil 0.1303 g -0.012) grey 10.3% ch 0.100 worst gate b7 my 71.8 2.2s
+it  49 beta    4 J   0.0946 vol 0.0802 (dil 0.1298 g -0.016) grey 10.0% ch 0.100 worst drop on lidar -z 150 N 73.5 2.1s
+it  50 beta    4 J   0.0835 vol 0.0811 (dil 0.1303 g -0.012) grey  9.9% ch 0.100 worst gate b7 my 66.9 2.2s
