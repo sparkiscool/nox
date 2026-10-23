@@ -50,3 +50,21 @@ layout: beta 2 done: eroded design 17 bodies, main 95.9%; drawn bodies outside t
 it  38 beta    4 J   0.1334 vol 0.1024 (dil 0.1365 g -0.019) grey  6.8% ch 0.100 worst hand push -z 30 N 42.8 2.2s
 it  39 beta    4 J   0.0687 vol 0.1025 (dil 0.1379 g -0.009) grey  7.3% ch 0.100 worst hand push -z 30 N 23.6 2.3s
 it  40 beta    4 J   0.0553 vol 0.1033 (dil 0.1385 g -0.005) grey  7.2% ch 0.100 worst hand push -z 30 N 16.2 2.1s
+it  41 beta    4 J   0.0520 vol 0.1039 (dil 0.1388 g -0.004) grey  7.1% ch 0.100 worst tie b1 my 14.8 2.1s
+it  42 beta    4 J   0.0506 vol 0.1045 (dil 0.1391 g -0.001) grey  7.1% ch 0.100 worst tie b1 my 14.6 1.9s
+it  43 beta    4 J   0.0499 vol 0.1048 (dil 0.1392 g -0.001) grey  7.1% ch 0.100 worst tie b1 my 14.4 1.9s
+it  44 beta    4 J   0.0494 vol 0.1050 (dil 0.1392 g -0.001) grey  7.1% ch 0.100 worst tie b1 my 14.3 2.1s
+it  45 beta    4 J   0.0491 vol 0.1052 (dil 0.1393 g -0.000) grey  7.0% ch 0.100 worst tie b1 my 14.2 2.0s
+it  46 beta    4 J   0.0488 vol 0.1053 (dil 0.1393 g +0.002) grey  6.9% ch 0.100 worst tie b1 my 14.1 2.0s
+it  47 beta    4 J   0.0491 vol 0.1050 (dil 0.1390 g -0.000) grey  6.9% ch 0.100 worst tie b1 my 14.1 1.9s
+layout: stopped (beta_stop) at it 47, beta 4, 105 s
+layout: beta 4 done: eroded design 16 bodies, main 96.9%; drawn bodies outside the main body: 15
+coarse stage done: 47 iterations, 120 s, peak 0.745552 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (14.27 cm3); 14.92 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.088 of 67,327 design cells
+layout: WARNING nearly mirrored in x (6.2% of passive cells differ): no symmetry
+layout: 4 drawn bodies (4,229 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (3,578 cells) count by their cover; 2 bodies tied to body 1
+layout: 34 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 12 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 64, 32) = 131,072 elements, 238,311 active dofs; backend direct (direct estimate 2.6 GB, budget 11.8 GB)
