@@ -119,3 +119,4 @@ it 101 beta   32 J  11.9401 vol 0.1365 (dil 0.2274 g +0.004) grey  1.7% ch 0.100
 layout: stopped (grey) at it 101, beta 32, 3392 s
 layout: beta 32 done: eroded design 8 bodies, main 99.9%; drawn bodies outside the main body: 0
 layout done: 3450 s, peak 6.103628 GB
+build: surface at pitch 0.333 mm (x6), generated field 133.40 cm3, mesh 1,090,656 faces, 90 s
