@@ -4,6 +4,6 @@ Strength: worst index 0.03 (F, as-built voxel recheck) in lidar 25 g 11 (was non
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_head_v2.stl
 Print: lidar seat face down (4 pads), bed contact 1037 mm² (M), the largest of the 6 faces (boss end 671 mm², sides ≤ 11 mm², M); tree supports ~6 g (E) under the generated body and the camera block; file print/scan_stick_head_v2.stl
 
-Run: head_topo_run.py h 1.75 (C), 20 cm3 (E), 70,304 cells / 48,242 design (M), 34 cases (C), layout stopped on grey 0.4 % (M) at it 88 (1622 s, M), pruned 0 (M), polished build, function check 0.0/0.0/0.0 mm3 (M), thin 0 (M), wrinkle p95/p99 0.183/0.236 1/mm (M; engine floor 0.18/0.21, T), peak 3.51 GB (M, ru_maxrss), wall 2108 s (M) on 4 cores (M).
+Run: head_topo_run.py h 1.75 (C), 20 cm3 (E), 70,304 cells / 48,242 design (M), 34 cases (C), layout stopped on grey 0.4 % (M) at it 88 (1622 s, M), pruned 0 (M), polished build, function check 0.0/0.0/0.0 mm3 (M), thin 0 (M), wrinkle p95/p99 0.183/0.236 1/mm (M; engine floor 0.18/0.21, E), peak 3.51 GB (M, ru_maxrss), wall 2108 s (M) on 4 cores (M).
 Next: the part is far over-strong (worst 0.03, F): step the generated target down (10 cm3, then 6; E) while the worst index stays ≤ 1.0; measure the pole tube (P) for the cradle.
 Previews: preview.png (as printed, from below, front, top); run-frame mesh scan_stick_head_v2_runframe.stl (lidar seat at z = +6, C).

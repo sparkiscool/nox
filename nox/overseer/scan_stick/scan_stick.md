@@ -23,14 +23,13 @@ engine's Python/manifold parts live beside it: `head_topo_run.py` is the v2 topo
 ## Parts (printed, PETG)
 | Part | File (`print/`) | What |
 |---|---|---|
-| head | `scan_stick_head_v1.stl` | lidar plate on the pole boss with the 3/4-5 ACME female thread, camera block on the front (numbers: section S) |
+| head | `scan_stick_head_v2.stl` | topology part (`head_topo_run.py`, `runs/scan_stick/v2/summary.md`): generated body joining the 3/4-5 ACME pole boss, the 4 L2 bolt pads and the camera block (drawn features: section S) |
 | thread test | `scan_stick_thread_test_v1.stl` | ring with the same thread: print first, screw onto the pole, tune `acme_clear` |
 | cam | `scan_stick_cam_v1.stl` | plate with the camera's 28 x 28 M2 pattern on standoffs, 2 x M3 to the head's block |
 | cradle | `scan_stick_cradle_v1.stl` | split clamp on the pole, Pi 5 tray, pack plate with ledge and straps, UBEC / buck shelf, switch / button / LED strip |
 
-Why the non-mounting features exist (simplest design rule): head centre hole Ø26 = air under the L2 base (its bottom
-cover must stay ≤ 85 °C, section M) and 16 g less (M); the 4 gussets stiffen the 6 plate on the Ø32 boss against the
-25 g knock cases (E; the v2 run replaces plate + gussets with generated material); cradle ribs stiffen the 3.5 plates
+Why the non-mounting features exist (simplest design rule): the head has none left, v2 is generated between its
+mounting features (the drawn v1 plate with centre hole and gussets is history, 86.8 g M); cradle ribs stiffen the 3.5 plates
 that carry the ~590 g pack (Q9) and the Pi; ledge lip and side rails keep the pack from sliding out of the straps;
 vent slots behind the Pi 5 are for its cooler; lightening slots on the pack plate are mass only (M); zip slots hold the
 UBEC and buck, which have no holes (section M, Q4).
@@ -60,8 +59,9 @@ same script on a camera-stud or plain-tube pole; unused with this pole.
 
 ## Print
 PETG, 0.2 layers, 4 walls, 40 % gyroid (head) / 30 % (cradle, cam) (DEFAULT, E). Every file is saved on its largest
-flat face: head = lidar seat down (6440 mm² bed, M), boss up, thread crests are the only overhang (no entry chamfer: it
-left a 1.1 mm sliver on the first turn, solid_check thin wall; the pole tip is chamfered); cam flat (2418 mm², M);
+flat face: head = the 4 lidar pads down (1037 mm² bed, M), boss up, tree supports ~6 g (E) under the generated body
+and the camera block (no thread entry chamfer: it left a 1.1 mm sliver on the first turn, solid_check thin wall; the
+pole tip is chamfered); cam flat (2418 mm², M);
 cradle on its bottom (4257 mm², M: the ledge + hub + plate feet; the two bigger faces carry standoffs and the ledge,
 so they cannot be the bed face), tree supports under the horizontal Pi standoffs and the clamp bolt holes.
 
