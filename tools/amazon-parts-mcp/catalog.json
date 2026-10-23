@@ -1,0 +1,21 @@
+{
+  "drones": {
+    "box": {
+      "created": "2026-10-23T04:56:00+00:00",
+      "name": "box",
+      "notes": "the box: funnel, swap wheel, radial arm (nox/box/)"
+    },
+    "overseer": {
+      "created": "2026-10-23T04:56:00+00:00",
+      "name": "overseer",
+      "notes": "Overseer aircraft (nox/overseer/)"
+    },
+    "scout": {
+      "created": "2026-10-23T04:56:00+00:00",
+      "name": "scout",
+      "notes": "Scout v3 aircraft (nox/scout/v3/)"
+    }
+  },
+  "orders": [],
+  "parts": {}
+}

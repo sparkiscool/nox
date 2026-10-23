@@ -1,4 +1,11 @@
 {
+  "model": "opus",
+  "modelSettings": {
+    "claude-opus-5-5": { "effortLevel": "high" },
+    "claude-fable-5-1": { "effortLevel": "high" },
+    "claude-sonnet-5-5": { "effortLevel": "medium" },
+    "claude-haiku-5-5": { "effortLevel": "low" }
+  },
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "600000",
     "BASH_MAX_TIMEOUT_MS": "600000",
@@ -9,7 +16,27 @@
       "Bash(git *)",
       "Bash(python3 *)",
       "Bash(bash cloud/*)",
-      "Bash(pip install *)"
+      "Bash(pip install *)",
+      "Bash(gh pr merge *)",
+      "Bash(gh pr view *)",
+      "Bash(gh pr checks *)",
+      "Bash(gh api repos/sparkiscool/nox/pulls/*)",
+      "Bash(gh api -X PUT repos/sparkiscool/nox/pulls/*)",
+      "Bash",
+      "Edit",
+      "Read",
+      "WebFetch",
+      "WebSearch",
+      "mcp__amazon-parts",
+      "Bash(gh *)",
+      "Bash(uv *)"
+    ],
+    "defaultMode": "bypassPermissions",
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f *)",
+      "Bash(git push * --force*)",
+      "Bash(git push * -f *)"
     ]
   },
   "hooks": {
@@ -24,5 +51,14 @@
         ]
       }
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "autoMode": {
+    "allow": [
+      "$defaults",
+      "Merging a pull request of sparkiscool/nox into main with gh pr merge or the GitHub REST merge call: a part PR after the review agent reported PASS; a tooling, docs, config or research PR after the session's own check. No PR waits on Spark (CLAUDE.md step 4).",
+      "Pushing to any branch, creating branches and PRs, merging main into a branch and resolving conflicts, deleting a branch after its PR merged, pip or uv installs, bash cloud/*.sh, web fetches and searches for research, and the amazon-parts MCP tools (catalog, cart links, log_order). Direct Amazon purchases (place_business_order) stay off."
+    ]
+  },
+  "askUserQuestionTimeout": "60s"
 }

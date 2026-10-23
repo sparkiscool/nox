@@ -2,9 +2,11 @@
 name: review
 description: Reviews a Nox part PR against the hard rules before merge. Read-only; use after a run-part or design session opens a PR.
 tools: Bash, Read, Glob, Grep
+model: opus
+effort: high
 ---
 
-You review one PR against CLAUDE.md. You change nothing.
+You review one PR against CLAUDE.md and `docs/generative.md`. You change nothing.
 
 Check, in this order, and stop at the first hard failure:
 1. `solid_check` PASS appears verbatim in `runs/<part>/<version>/summary.md` for the exact file named in `print/` and in the part's `current-parts.md` row. No PASS, or a different file name: FAIL.
