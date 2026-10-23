@@ -12,7 +12,10 @@ from ..part import Part
 
 PLATE_BOLTS = [(sx * 12.0, sy * 12.0) for sx in (1, -1) for sy in (1, -1)]
 MOTOR_BOLTS = [(8.0, 0.0), (-8.0, 0.0), (0.0, 9.5), (0.0, -9.5)]          # 16 x 19 pattern
-Z_SEAT0, Z_TOP = 34.0, 38.0
+Z_SEAT0, Z_TOP = 32.0, 38.0
+# v2 (23 Oct): pads Ø13 x 5 (README pad rule >= Ø12; 4.8 web round the M3 so a core survives the solid gate's 2.0 mm
+# erosion) and a 6 mm seat (v1: Ø10 x 4 pads and a 4 mm seat had no core at 2.0 mm erosion and failed the gate)
+PAD_R, PAD_T = 6.5, 5.0
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -24,16 +27,16 @@ def cyl(x, y, z0, z1, r, n=48):
 
 
 def bodies():
-    pads = [cyl(x, y, 0.0, 4.0, 5.0) for x, y in PLATE_BOLTS]
+    pads = [cyl(x, y, 0.0, PAD_T, PAD_R) for x, y in PLATE_BOLTS]
     seat = cyl(0, 0, Z_SEAT0, Z_TOP, 15.0, 96)
     drawn = seat
     for p in pads:
         drawn += p
-    cuts = cyl(0, 0, 20.0, Z_TOP + 1, 4.0)                                   # shaft / bearing / circlip clearance
+    cuts = cyl(0, 0, 18.0, Z_TOP + 1, 4.0)                                   # shaft / bearing / circlip clearance
     for x, y in PLATE_BOLTS:
-        cuts += cyl(x, y, -1.0, 5.0, 1.7) + cyl(x, y, 4.0, Z_TOP + 1, 3.3)   # M3 + key / nut access from above
+        cuts += cyl(x, y, -1.0, PAD_T + 1, 1.7) + cyl(x, y, PAD_T, Z_TOP + 1, 3.3)   # M3 + key / nut access from above
     for x, y in MOTOR_BOLTS:
-        cuts += cyl(x, y, Z_SEAT0 - 1, Z_TOP + 1, 1.7) + cyl(x, y, 26.0, Z_SEAT0, 3.0)   # screw + head from below
+        cuts += cyl(x, y, Z_SEAT0 - 1, Z_TOP + 1, 1.7) + cyl(x, y, 24.0, Z_SEAT0, 3.0)   # screw + head from below
     env = cyl(0, 0, 0.0, Z_TOP, 21.0, 96) + box(-18, 18, -18, 18, 0.0, Z_TOP)
     return dict(pads=pads, seat=seat, drawn=drawn, cuts=cuts, env=env)
 
@@ -43,7 +46,7 @@ def setup(h):
     p = Part("motor_mount", h, B["drawn"], B["cuts"], B["env"], build="+z", material="PETG")
     seats = None
     for x, y in PLATE_BOLTS:
-        s = cyl(x, y, -1.0, 1.5 * h, 5.0)
+        s = cyl(x, y, -1.0, 1.5 * h, PAD_R)
         seats = s if seats is None else seats + s
     p.support("default", seats)
     seat = B["seat"]
