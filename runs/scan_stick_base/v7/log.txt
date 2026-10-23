@@ -17,3 +17,14 @@ it   8 beta    1 J   0.2773 vol 0.0861 (dil 0.0998 g -0.000) grey 26.1% ch 0.033
 it   9 beta    1 J   0.2773 vol 0.0861 (dil 0.0998 g -0.000) grey 26.1% ch 0.029 worst head 25 g 4 134 32.4s
 it  10 beta    1 J   0.2773 vol 0.0862 (dil 0.0998 g -0.000) grey 26.1% ch 0.035 worst head 25 g 4 134 34.1s
 layout: beta 1 done: eroded design 4 bodies, main 99.5%; drawn bodies outside the main body: 3
+it  11 beta    2 J   0.2844 vol 0.0770 (dil 0.1201 g -0.092) grey 23.4% ch 0.100 worst head 25 g 4 134 32.4s
+it  12 beta    2 J   0.2773 vol 0.0851 (dil 0.1296 g -0.020) grey 24.4% ch 0.023 worst head 25 g 4 134 31.1s
+it  13 beta    2 J   0.2773 vol 0.0856 (dil 0.1300 g -0.017) grey 24.5% ch 0.022 worst head 25 g 4 134 26.0s
+it  14 beta    2 J   0.2773 vol 0.0859 (dil 0.1303 g -0.014) grey 24.5% ch 0.026 worst head 25 g 4 134 27.7s
+it  15 beta    2 J   0.2773 vol 0.0863 (dil 0.1306 g -0.012) grey 24.5% ch 0.032 worst head 25 g 4 134 30.8s
+it  16 beta    2 J   0.2773 vol 0.0866 (dil 0.1309 g -0.001) grey 24.5% ch 0.039 worst head 25 g 4 134 34.4s
+it  17 beta    2 J   0.2773 vol 0.0868 (dil 0.1311 g -0.000) grey 24.5% ch 0.049 worst head 25 g 4 134 32.4s
+it  18 beta    2 J   0.2773 vol 0.0869 (dil 0.1311 g -0.000) grey 24.5% ch 0.063 worst head 25 g 4 134 34.8s
+it  19 beta    2 J   0.2773 vol 0.0870 (dil 0.1311 g -0.000) grey 24.4% ch 0.083 worst head 25 g 4 134 29.5s
+it  20 beta    2 J   0.2773 vol 0.0871 (dil 0.1310 g -0.000) grey 24.4% ch 0.100 worst head 25 g 4 134 24.1s
+layout: beta 2 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
