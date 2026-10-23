@@ -30,7 +30,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 ## Overseer (development starting)
 | Part | Qty | Role | Status | Mount data |
 |---|---|---|---|---|
-| S500 frame, 2015 edition (Spark 23 Oct; wheelbase CHECK 500 / 480; arms replaced by printed ones) | 1 | airframe | on hand | M: S500, O |
+| S500 frame, PCB version with carbon fibre landing gear, 2015 edition (Spark 23 Oct, AliExpress item 2251832276919319; 500 wheelbase, listing; arms replaced by printed ones) | 1 | airframe | on hand | M: S500, O |
 | SunnySky X2216 II 880 KV | 4 | propulsion | on hand | M: X2216 |
 | 1045 prop | 4 + spares | propulsion | on hand | M: 1045 |
 | ESCs | 4 | motor drive | CHECK (not recorded) | |
