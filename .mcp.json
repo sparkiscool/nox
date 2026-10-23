@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "amazon-parts": {
+      "command": "python3",
+      "args": ["tools/amazon-parts-mcp/server.py"]
+    }
+  }
+}

@@ -30,6 +30,7 @@
       }
     ]
   },
+  "enableAllProjectMcpServers": true,
   "autoMode": {
     "allow": [
       "$defaults",
