@@ -40,6 +40,8 @@ def surface(layout, pitch=None, clip_margin=0.5, max_points=60e6, taubin_iters=8
     xf = ndi.zoom(xt, up, order=3, mode="grid-constant", cval=0.0, grid_mode=True)
     o = np.asarray(part.origin)
     axes = [o[k] + (np.arange(xf.shape[k]) + 0.5) * p for k in range(3)]
+    if layout.s.finish == "organic":
+        return _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log)
     f = (xf - eta_n) / max(1e-9, 1.0 - eta_n)                              # > 0 inside, ~ 1 per filter radius
     del xf
     # keep-out margin: generated material stays clip_margin inside env - cuts, except near drawn bodies
@@ -66,11 +68,86 @@ def surface(layout, pitch=None, clip_margin=0.5, max_points=60e6, taubin_iters=8
     return mesh
 
 
+def _sdf(M, p):
+    """signed distance in mm of a voxel mask, positive outside."""
+    return ((ndi.distance_transform_edt(~M) - ndi.distance_transform_edt(M)) * p).astype(np.float32)
+
+
+def _smin(a, b, k):
+    """polynomial smooth minimum (union of two signed distances with a blend of width k mm)."""
+    if k <= 0:
+        return np.minimum(a, b)
+    hh = np.clip(0.5 + 0.5 * (b - a) / k, 0.0, 1.0)
+    return b * (1.0 - hh) + a * hh - k * hh * (1.0 - hh)
+
+
+def skin_field(part, axes, p, skin_mm):
+    """the functional skins at the fine pitch, from the exact bodies (same rule as Part.functional_skin): drawn voxels
+    (minus cuts) within skin_mm of a cut or of the outside of the envelope as given, plus drawn voxels outside it, plus
+    every drawn body that touches neither."""
+    D = voxelise(part.drawn_t, *axes)
+    C = voxelise(part.cuts_t, *axes)
+    O = ~voxelise(part.env0_t, *axes)
+    D &= ~C
+    d = (ndi.distance_transform_edt(~(C | O)) - 0.5) * p
+    K = D & ((d <= skin_mm) | O)
+    lab, n = ndi.label(D, np.ones((3, 3, 3), bool))
+    if n:
+        has = np.asarray(ndi.maximum(K, lab, np.arange(1, n + 1)), bool)
+        K |= np.r_[False, ~has][lab] & D
+    return K, C, O
+
+
+def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters=15):
+    """one smooth field: the generated region (eta_n level of the filtered field, held clip_margin inside env - cuts)
+    smooth-unioned with the functional skins (fillet_mm); the skins run 1 mm into the cuts and past the envelope so the
+    exact booleans in assemble() cut the holes and contact faces flat and true."""
+    import trimesh
+    from skimage import measure
+    part, s = layout.part, layout.s
+    eta_n = s.eta[1]
+    G = xf >= eta_n
+    del xf
+    A = voxelise(tm(part.env_m - part.cuts_m), *axes)
+    din = ndi.distance_transform_edt(A).astype(np.float32) * p
+    d_gen = ndi.gaussian_filter(_sdf(G, p), 0.5 / p)
+    del G
+    d_gen = np.maximum(d_gen, clip_margin - din)                          # generated material stays off the keep-outs
+    del din, A
+    K, C, O = skin_field(part, axes, p, s.skin_mm)
+    Kx = K | ((C | O) & (ndi.distance_transform_edt(~K) * p <= 1.0))
+    del C, O
+    d_skin = ndi.gaussian_filter(_sdf(Kx, p), 0.35 / p)
+    del Kx
+    d = _smin(d_gen, d_skin, s.fillet_mm)
+    del d_gen, d_skin
+    F = np.pad(-d, 1, constant_values=-1e3)
+    del d
+    gen_vox = float((F > 0).sum()) * p ** 3
+    v, fc, _, _ = measure.marching_cubes(F.astype(np.float32), 0.0, spacing=(p, p, p))
+    del F
+    o = np.asarray(part.origin)
+    v += o - p / 2.0 + np.array([1.1e-4, 0.7e-4, 0.9e-4])
+    mesh = trimesh.Trimesh(v, fc, process=True)
+    if mesh.volume < 0:
+        mesh.invert()
+    if taubin_iters:
+        trimesh.smoothing.filter_taubin(mesh, lamb=0.5, nu=0.53, iterations=taubin_iters)
+    layout._skin_fine = (K, axes, p)
+    log(f"build: organic surface at pitch {p:.3f} mm (x{up}), skins {K.sum() * p ** 3 / 1000:.2f} cm3, field "
+        f"{gen_vox / 1000:.2f} cm3, fillet {s.fillet_mm} mm, mesh {len(mesh.faces):,} faces, {time.time() - t0:.0f} s")
+    return mesh
+
+
 def assemble(layout, gen_mesh, speck_mm3=20.0, log=print):
-    """(generated + drawn) ^ env - cuts as one manifold; loose specks under speck_mm3 dropped and reported."""
+    """the part as one manifold: organic finish = smooth field ^ env - cuts (exact holes and contact faces); drawn
+    finish = (generated + drawn) ^ env - cuts. Loose specks under speck_mm3 dropped and reported."""
     part = layout.part
     S = man(gen_mesh)
-    P = ((S + part.drawn_m) ^ part.env_m) - part.cuts_m
+    if layout.s.finish == "organic":
+        P = (S ^ part.env_m) - part.cuts_m
+    else:
+        P = ((S + part.drawn_m) ^ part.env_m) - part.cuts_m
     bodies = P.decompose()
     vols = sorted([b.volume() for b in bodies], reverse=True)
     dropped, cavities = [], []
@@ -111,11 +188,22 @@ def solid_check(mesh, drawn_meshes):
     return _solid_check_module().solid_check(mesh, drawn=drawn_meshes)
 
 
-def function_check(P, part):
-    fin = part.drawn_m - part.cuts_m
-    missing = (fin - P).volume()
+def function_check(P, part, layout=None):
+    """drawn finish: every drawn body complete (exact). Organic finish: every functional skin present (voxels at the
+    build pitch, 1 % allowance for the smoothed free edges of the skins). Both: nothing in the cuts or outside the
+    envelope (exact)."""
     in_cuts = (P ^ part.cuts_m).volume()
     in_keep = (P - (part.env_m)).volume()
+    if layout is not None and getattr(layout, "_skin_fine", None) is not None:
+        K, axes, p = layout._skin_fine
+        Pv = voxelise(tm(P), *axes)
+        skin = float(K.sum()) * p ** 3
+        missing = float((K & ~Pv).sum()) * p ** 3
+        ok = missing <= 0.01 * skin and max(in_cuts, in_keep) < 0.5
+        return dict(skin_mm3=round(skin, 1), skin_missing_mm3=round(missing, 2), in_cuts_mm3=round(in_cuts, 2),
+                    outside_env_mm3=round(in_keep, 2), ok=bool(ok))
+    fin = part.drawn_m - part.cuts_m
+    missing = (fin - P).volume()
     return dict(drawn_missing_mm3=round(missing, 2), in_cuts_mm3=round(in_cuts, 2), outside_env_mm3=round(in_keep, 2),
                 ok=bool(max(missing, in_cuts, in_keep) < 0.5))
 
@@ -240,7 +328,7 @@ def build_and_check(layout, out_dir, name, clip_margin=0.5, pitch=None, log=prin
     drawn_fin = tm(part.drawn_m - part.cuts_m)
     ok_solid, solid = solid_check(PT, [drawn_fin])
     log(f"solid check: {'PASS' if ok_solid else 'FAIL'} {json.dumps(solid)[:600]}")
-    fc = function_check(P, part)
+    fc = function_check(P, part, layout)
     log(f"function check: {fc}")
     st = strength(layout, PT, log=log)
     mass = P.volume() / 1000.0 * layout.mat.density

@@ -216,7 +216,7 @@ def t_gradients():
         info = []
         worst = 0.0
         for mode in ("masked", "anchored"):
-            s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, erosion=mode)
+            s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, erosion=mode, finish="drawn")
             L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
             x = rng.uniform(0.2, 0.8, L.nd)
 
@@ -285,7 +285,7 @@ def t_neck():
         res = {}
         for anchored in (True, False):
             s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False,
-                         erosion="anchored" if anchored else "frozen")
+                         erosion="anchored" if anchored else "frozen", finish="drawn")
             p = _mini_part()
             L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
             cen = p.cell_centres()[L.design]
@@ -349,7 +349,7 @@ def t_gate_ties():
     cover filter vs finite differences, and a bridge between the pads must beat two separate legs to the plate."""
     try:
         p = _plate_part()
-        s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False)
+        s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, finish="drawn")
         L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
         ok_setup = L.cover.any() and L.gate_anchor is not None and any(c.support == "_gate" for c in L.cases)
         rng = np.random.default_rng(7)
@@ -398,7 +398,7 @@ def t_masked_neck():
     try:
         res = {}
         for mode in ("masked", "frozen"):
-            s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, erosion=mode)
+            s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, erosion=mode, finish="drawn")
             p = _cut_part()
             L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
             cen = p.cell_centres()[L.design]

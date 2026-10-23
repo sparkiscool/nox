@@ -68,6 +68,7 @@ class Part:
                  log=print):
         self.name, self.h, self.build, self.material, self.log = name, float(h), build, material, log
         self.overhang = overhang
+        self.env0_m = env                                       # the envelope as given (functional-skin rule)
         env = env + drawn
         self.drawn_m, self.cuts_m, self.env_m = drawn, cuts, env
         bb = np.array(env.bounding_box(), float)
@@ -84,9 +85,12 @@ class Part:
         self.nn = int(np.prod(self.nshape))
         self.ndof = 3 * self.nn
         self.env_t, self.drawn_t, self.cuts_t = tm(env), tm(drawn), tm(cuts)
+        self.env0_t = tm(self.env0_m)
         inside_env = self.vox(self.env_t)
         inside_cut = self.vox(self.cuts_t)
         inside_drawn = self.vox(self.drawn_t)
+        self.cut = inside_cut.ravel()
+        self.in_env0 = self.vox(self.env0_t).ravel()
         self.solid = (inside_drawn & ~inside_cut).ravel()
         self.void = ((~inside_env) | inside_cut).ravel() & ~self.solid
         self.design = ~self.solid & ~self.void
@@ -174,6 +178,25 @@ class Part:
     def accel_case(self, name, g, cls="misuse", support="default"):
         self.cases.append(LoadCase(name, np.zeros(self.ndof), cls=cls, support=support, accel=np.asarray(g, float),
                                    nodes=np.zeros(0, int)))
+
+    # ------------------------------------------------------------------------------------------- finish
+    def functional_skin(self, skin_mm):
+        """drawn cells that carry a function: within skin_mm of a cut (hole, mating / contact face, keep-out) or of the
+        outside of the envelope as given, plus every drawn cell outside that envelope (no design space there). A drawn
+        body that touches neither keeps all its cells. Same rule as build.skin_field at the fine pitch."""
+        from scipy import ndimage as ndi
+        sh = self.shape
+        sol = self.solid.reshape(sh)
+        out0 = ~self.in_env0.reshape(sh)
+        ext = self.cut.reshape(sh) | out0
+        d = (ndi.distance_transform_edt(~ext) - 0.5) * self.h               # cell centre to the face of the nearest cell
+        skin = sol & ((d <= skin_mm) | out0)
+        lab, n = ndi.label(sol, np.ones((3, 3, 3), bool))
+        if n:
+            has = np.asarray(ndi.maximum(skin, lab, np.arange(1, n + 1)), bool)
+            keep = np.r_[False, ~has]
+            skin |= keep[lab] & sol
+        return skin.ravel()
 
     # ------------------------------------------------------------------------------------------------ misc
     def cell_centres(self):
