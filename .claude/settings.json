@@ -1,4 +1,11 @@
 {
+  "model": "opus",
+  "modelSettings": {
+    "claude-opus-5-5": { "effortLevel": "high" },
+    "claude-fable-5-1": { "effortLevel": "high" },
+    "claude-sonnet-5-5": { "effortLevel": "medium" },
+    "claude-haiku-5-5": { "effortLevel": "low" }
+  },
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "600000",
     "BASH_MAX_TIMEOUT_MS": "600000",

@@ -364,6 +364,12 @@ STUB_LEAD = dict(x_dir=-1, w=10.0)  # lead channel in the plate's back face towa
 WIRE_TWIST = dict(L=69.0, n_wires=19, bundle_d=7.3, travel_deg=421.0, neutral_phi=-45.0)   # stub v3: channel (Y ~3) to the saddle
                                     # (Y ~72 exit): L 90 -> 69; lay the bundle untwisted at phi -45 (cycle centre), C
 
+# ================================================================== arm v5 (23 Oct 2026, Spark: no 2040 bars, belts, idlers): printed V-rails on
+# the hub posts, 3-wheel bearing carriages (printed V-wheels on 625ZZ, one eccentric), rack and pinion on the head motors. Every v5
+# number (rails, carriages, racks, pinions, MOTORS v5, the detent re-placement, the compaction stacks) lives in arm_v5_layout.py; the
+# blocks above stay the v4 demo build (hub v5, belts, connectors). Hub v6 = hub v5 with the v5 motor seats + the moved detent tower.
+ARM_V5 = "arm_v5_layout.py"
+
 DEMO_BAY = -90.0                    # the mounted bay (stand v5e cradle): head A picks the charged pack there, B returns the dead one.
                                     # BAY_ANGLES / SCOUT_BAYS keep all 9 module angles (the chained ring); arm_kinematics uses DEMO_BAY.
 HOME_PHI = 0.0                      # homing stays at phi 0 (the magnet in detent ring v1, unchanged); cycle start = phi DEMO_BAY

@@ -5,13 +5,13 @@ description: One prompt from a design brief to a saved Nox part with its motion 
 
 # /part <part> <version>: <brief>
 
-One session, one part, start to finish, following CLAUDE.md. Research and decisions are already made: the brief
+One session, one part, start to finish, following CLAUDE.md and `docs/generative.md`. Research and decisions are already made: the brief
 carries them. Everything below runs in this cloud box; Spark's machine only opens the results.
 
 ## 1. Load (read only what the row names)
 - `git pull` on `main`; `git checkout -b part/<part>` (or `run/<part>-<version>` if the brief needs a generative run).
 - The part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` sections it names. Numbers in the brief
-  that change a shared number: take the brief's number, update its `dimensions.md` row, mark DEFAULT in the log line, continue.
+  that change a shared number: DEFAULT, its `dimensions.md` row + one `log.md` line, and continue (never wait on Spark).
 
 ## 2. Design (the part's own script, nothing else)
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
@@ -34,14 +34,14 @@ bought parts). Write `runs/<part>/<version>/motion.html` (`Scene.write`) and `mo
 Artifact tool (icon "gear") and send the mp4 with SendUserFile. A static part gets `preview.png` only.
 
 ## 5. Done = saved (same turn, automatic)
-Follow CLAUDE.md "Done = saved" exactly: `print/<part>_<version>.stl` + `print/latest/`, `LATEST.md`, State READY in
+Follow `docs/generative.md` "Save and print" exactly: `print/<part>_<version>.stl`, State READY and the File cell in
 `current-parts.md`, one `log.md` line, `summary.md` in the fixed form beside `preview.png` and `motion.*`,
-`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `gh pr create --fill --base main`.
+`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
 
 ## 6. Review and merge (same turn)
-Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `gh pr merge <n> --merge --delete-branch`
-and `git checkout main && git pull`. FAIL: fix the design, re-review; never merge a FAIL. If the merge is refused because
-main moved, merge `origin/main` into the branch, resolve, push, merge again. Nothing waits on Spark.
+Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `python3 tools/pr.py merge <n>` (REST; `gh pr merge` fails in cloud boxes)
+and `git checkout main && git pull`. FAIL: fix the design, re-review; never merge a FAIL. If the merge is refused by
+permissions, say so with the PR link and stop; do not work around it.
 
 ## Reply (short)
 The summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.

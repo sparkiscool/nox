@@ -1,10 +1,10 @@
-# Scout v2: dimensions (current values only)
+# Nox: dimensions (current values only)
 
-The only source for Scout v2 and box numbers. mm unless stated. Tags: P part, M mesh, C CAD, E estimate. **CHECK** = unconfirmed. Changes: one line in `nox/log.md`. Rules: `archive/scout-v2/README.md`. Box system: `nox/box/box.md`. v1 docs were deleted 14 Oct; the bought hardware that carries over is in section A.
+The only source for Scout and box numbers. mm unless stated. Tags: P part, M mesh, C CAD, E estimate. **CHECK** = unconfirmed. Changes: one line in `nox/log.md`. Rules: `CLAUDE.md`. Box system: `nox/box/box.md`. Sections E, G, H and J hold Scout v2 numbers carried into v3 until v3 replaces them (`archive/scout-v2/` for the v2 design).
 
-**Coordinates.** Drone axes: x forward (nose +), y left +, z up, CG at x 0. Plate top z 22; z 0 is the old pusher prop plane (kept so part numbers stay valid). **Props are on top since 14 Oct 16:41: prop plane z ≈ +41.2 (E: plate top 22 + D12 19.2, listing; Spark 17 Oct 00:52: go with it; row "Motor / prop layout" in C).** Rows below that still describe props at z 0 (prop rule in H, the underside's below-the-props placement) are pusher-era until their chats update them (current-parts Problem 33). Each part doc defines its own part coordinates.
+**Coordinates.** Drone axes: x forward (nose +), y left +, z up, CG at x 0. Plate top z 22; z 0 is the old pusher prop plane (kept so part numbers stay valid). **Props are on top since 14 Oct 16:41: prop plane z ≈ +41.2 (E: plate top 22 + D12 19.2, listing; Spark 17 Oct 00:52: go with it; row "Motor / prop layout" in C).** Rows below that still describe props at z 0 (prop rule in H, the underside's below-the-props placement) are pusher-era until their chats update them (`nox/current-parts.md` Scout v3 row). Each part doc defines its own part coordinates.
 
-## A. Bought hardware (carried over from v1, unchanged)
+## A. Bought hardware (Scout)
 | Item | Value | Tag |
 |---|---|---|
 | Frame | SpeedyBee Bee35 arm plate, 153 wheelbase, ducts off; details in C | P |
@@ -17,7 +17,7 @@ The only source for Scout v2 and box numbers. mm unless stated. Tags: P part, M 
 | Companion Radxa Zero 3W | section H | C |
 | Firmware, radio, wiring | `nox/scout/scout.md` | P |
 
-## C. v2 numbers
+## C. Scout shared numbers
 | Item | Value | Tag |
 |---|---|---|
 | All-up now (v1 as flown, Radxa mount on) | about 520 g max | Spark 8 Oct 20:39, approximate; exact reading and which cage is fitted CHECK |
@@ -53,7 +53,7 @@ Closed 17 Oct 00:52 (Spark: go with these, carbon plate): D8 plate thickness 3.5
 15. Head belts (nox/box/box-arm.md "Head belt clamp v2" (tension bullet)): weigh the 918 spare GT2 6 mm piece (g, for the pluck target's g/m); the M3 heat-set inserts' OD and length; belt clamp coupon: 10 kg hang, slip or not.
 16. 3.0 solid carbon rod on hand: length (m) and true diameter (P); current-parts item 23. It is now the only rod size in the project.
 
-## E. S2 cartridge and contacts (14 Oct; geometry pending the bottom layout, DEFAULT unless tagged)
+## E. Cartridge and contacts (DEFAULT unless tagged)
 | Item | Value | Tag |
 |---|---|---|
 | Pack in the cartridge | 70 x 32 x 33 (P); 0.5 clearance per side; ~6 of lead room at the lead end; leads and balance lead exit that end face | C / P |
@@ -64,7 +64,7 @@ Closed 17 Oct 00:52 (Spark: go with these, carbon plate): D8 plate thickness 3.5
 | Pads (cartridge) | hard-gold PCB strips 0.6 thick (FR4, 2 oz copper, hard gold ≥ 50 µin over ≥ 100 µin nickel, not ENIG), 4 wide, **22 long (both sides), in a 0.9 recess in the guide rail, y 39 to 43, z 55.5 to 77.5, face 0.3 under the rail (19.7); rail top edge 21.8° lead-in; 45° sanded ends; solder window 5 x 3 at the lead-end end** (make only after the latch seats) | Spark 12 Oct (gold) / C 16 Oct |
 | Plate bolts (shared) | **round holes, no slots (Spark 12 Oct 21:39):** sides (3.9, ±31) M3 socket head, through the plate and the S2 underside, nylocs under the underside; whatever carries the guard sockets sits on these two above the plate. Nose (45, 0): the S2 underside's, button head on the plate top | Spark / C |
 
-## G. S2 guard v2 and box collar funnel v4 (props on top; **catch interface changed by Spark 16 Oct 19:02: contacts built into the corner nodes, a collar with an open bottom; 19:33: all PETG, so wheels in the nodes and 45° faces**; DEFAULT unless tagged)
+## G. Guard and box collar funnel (DEFAULT unless tagged)
 Guard: `archive/scout-v2/s2-cage-v2.md` (C3; the older rows below that say 2.5 / 2.0 rings, struts, hubs, feet and legs are pre-C3 and superseded by that doc). Catcher: `nox/box/box-funnel.md`. Scripts: `archive/scout-v2/catch_v4/` (`s2_catch_opt.py` layout search, `s2_collar_settle.py` MuJoCo drop sim with Coulomb friction, `s2_corner_opt.py` and `s2_dome_place.py` contact placement, `s2_slope_trade.py`, `s2_node_wheels.py` node wheels and slope). **One funnel for both drones (Spark 12 Oct 22:37); the only numbers they share are the "Catch interface" row. Every guard row is Scout only.** Seat frame = drone coordinates of a seated Scout. Sim cases: offsets 0 / 20 / 40 in 8 directions, ±5° yaw, 0 / 2° tilt, 0.15 m/s drift in and out, 204 drops; centred = within 0.5 and 0.3° of the centred seat.
 | Item | Value | Tag |
 |---|---|---|
@@ -88,7 +88,7 @@ Guard: `archive/scout-v2/s2-cage-v2.md` (C3; the older rows below that say 2.5 /
 | Camera keep-out | the 45° face reaches x 98 at z 13.2 (seat frame): the nose camera's bottom above z 13 at x 95; the placeholder (z 8 to 26) overlaps 5 | C |
 | **Catch interface: the only dimensions both drones share** (Spark 12 Oct 22:37 one catcher; 16 Oct 19:02 node contacts and collar; 19:33 all PETG) | **(1) Wheels:** 8 PETG wheels (**R 4 (v3.2 printed) or R 5 (v4 set), 3 wide, Ø3 carbon pin**, 17 Oct 21:45 / 18 Oct 06:40; was Ø2) built into the drone's own nodes or belly frame, at the Scout's points (±112, ±100), (±100, ±112), axles horizontal along their faces, rims on the 45° face planes when seated; the Overseer uses the same points on its belly frame so it seats the same way and keeps the ±40 capture (DEFAULT). Nothing else of the drone within 1.0 of a face. **(2) Below the wheels:** everything inside the 168 opening at ±5° yaw. **(3) Hover:** within ±40 and ±5° yaw at the gate, ≤ 0.15 m/s. **(4) Friction:** wheel sideways on the face μ ≤ 0.4, wheels turn free. **(5) Each drone's own check:** its wheels take its own face hit (Scout 0.004 J; Overseer 2.0 kg 0.02 J), its floor landing at 6 g and a 15 N push on two wheels. **(6) Belly:** a steel plate for the magnet and two pogo pads, same positions on both drones (DEFAULT). **Overseer:** pack 148 x 48 x 45 (P), cartridge ~157 x 54 (E) sweeps ~161 at 5° yaw: 3.4 a side in the 168 opening (E); S500 skids come off or stay above the faces; the L2 at the nose stays above the faces | C / P / E |
 
-## H. S2 underside: FC, Radxa, flow sensor stack (Spark 12 Oct 22:13 / 22:22, DEFAULT unless tagged)
+## H. Underside: FC, Radxa, flow sensor stack (DEFAULT unless tagged)
 Under the plate on all three plate bolts (M3, Spark 13 Oct 17:16; nose bolt back 14 Oct 01:25). All heights in drone z. **Stack, top to bottom: FC, Radxa, flow sensor, one above the other on the drone axis (Spark 22:13). The FC cannot move up.** The "below the props" rule and the prop rule below are pusher-era (Problem 33): with the props on top the stack and the bottom pack can sit right under the plate. **The bottom pack goes on the drone axis too (section J): lay out pack and stack together before latch CAD (Problem 31); the flow sensor stays lowest.** Problems and fixes: `archive/scout-v2/s2-underside.md`.
 Prop rule (pusher-era): blade tips sweep z -4 to +4. In plan nothing is under a disk inside \|x\| ≤ 9.6 or \|y\| ≤ 9.6; along the axis the clear half-width is 20.5 at \|x\| 25 and 15.25 at \|x\| 32.5 (C).
 | Item | Value | Tag |
@@ -103,7 +103,7 @@ Prop rule (pusher-era): blade tips sweep z -4 to +4. In plan nothing is under a 
 | Wiring | Radxa 5 V and FC UART on its GPIO pads (no plug, DEFAULT 22:38); camera on USB-C 2, plugged; all leads run up the centre strip to the FC and toward the tail | E, DEFAULT |
 | Mass and modes (underside v2) | budget was 8 g (E); **v2 11.8 g (M)** (v1 10.9, never printed), set by stiffness; first modes 230 Hz sway, 251 fore-aft (C), inside 80 to 350: checked in the first hover (`archive/scout-v2/s2-underside.md` Problem 2) | E / M / C |
 
-## I. Box swap wheel: arm, bay modules (Spark 14 Oct whiteboard; **v4 16 Oct 2026: cartridge long side along the axle (Spark 17:34), bolted bay modules (19:28), balance charging (20:39); `nox/box/box-arm.md`, `nox/box/box-case.md`, numbers in `nox/box/arm_layout.py`**; C unless tagged)
+## I. Box swap wheel: arm, bay modules (C unless tagged; `nox/box/box-arm.md`, `nox/box/box-case.md`, numbers in `nox/box/arm_layout.py`)
 Wheel coordinates (W): origin on the axle at the inner face of the stub-side wall; Y axial (+ away from that wall) = the cartridge's length z (closed end toward −Y); Z radial, up at the drone position; X tangential at the top = the cartridge's slide axis (X = −x, a proper rotation: a wheel turn rotates a pack, never mirrors it). phi = head A's bar direction; head B's bar at phi + 90 (counter-clockwise). Head frame: bar along +Z, u from the glide's inner end, s = Y − Y_C.
 | Item | Value | Tag |
 |---|---|---|
@@ -111,7 +111,12 @@ Wheel coordinates (W): origin on the axle at the inner face of the stub-side wal
 | Axial stack (Y) | stub flange 0..6, stub Ø50 to 42; hub 7..50 (6010s 8..24, 24..40); motor plate 50..54 (motor bodies 2..50); 80T 54..64, its belt 56..62 and head B's belt 56..62; head A's belt 66..72; posts 52..74; bars 74..94; glide top 97.3; **tab centre Y_C 136, pack Y 98.5..177.5** (1.2 past the glide); head servo Y 125.5..166 (ears 118.5..173); bay modules Y 94..182; **Y 184 = the wheel envelope's far end** (+10 vs v3; no casing); stub spider and electronics: `nox/box/box-stand.md` | C |
 | Motors (XZ, rotated squares 42.3, bodies Y 2..50) | head A (34, −59) turned 25°; head B (61, 55) 0°; axle (−34.7, −60.1) 50° (`arm_pose.py`) | C (pose search) |
 | Axle drive | **v4 (17 Oct, Spark 01:37: no closed belt, only 6 mm open GT2 on hand): planetary: the 80T sun is fixed on the sun post (Stub axle row), the axle motor rides on the arm and walks its 20T round it (4:1).** Loop of 122T cut from the open belt (cut 274 = 244 + 30 lap), lap-spliced (15 teeth, rubber-toughened CA), C 69.4. **Axle motor seat slotted ±1 along the motor-to-axle line (hub v4): C 68.4..70.4 = loop 242.2..246.0, tensions the jig-made loop (C).** The lap only ever passes the 80T: 422° of arm travel before it reaches the 20T, the cycle uses 315° (phi −225..90, E): bounded travel, soft limits phi −278 / +143. **Leads (DEFAULT, slip ring retired): a 12-wire bundle twists along the axle inside the post's Ø8.5 bore, ±210° over ~90, outer wire strain 0.75 % (E).** Printed m1 gears 28T : 111T (C 69.5) rejected: the 111T hits the inner bar posts, head B's belt and head B's clamp at every Y 50..80. 80T: bore drilled Ø12, web drilled for 3 x M3 on Ø36 at 0 / 120 / 240° (DEFAULT, CHECK) | C / E, DEFAULT |
-| Bars | two 2040s, 112 each, flat (Y 74..94 x X ±20), r 22..134 along each head's axis; two hub posts each (r 32 and 76, 2 x M5); idler ends under each bar end | C |
+| Bars (v4 demo build) | two 2040s, 112 each, flat (Y 74..94 x X ±20), r 22..134 along each head's axis; two hub posts each (r 32 and 76, 2 x M5); idler ends under each bar end | C |
+| **Rails v5** (`nox/box/arm_v5_layout.py`, 23 Oct) | printed PETG V-rail per head on the same posts and bolts (M5 inserts in the foot at X ±10, r 35 / 38.75 and 76): Y 74..94, r 29..134, body X ±9, 90° ridges to X ±12 at Y 88 ±3 (tip flat at 11.5), foot pads X ±16 x 6 at the posts, ribbon channel 4 x 4 in the top at X −8..−4 (3.2 mouth); ~44 g (E) | C / E |
+| **Carriage v5** (in heads A / B v6; B = A mirrored in X) | plate Y 94..98, X −28..28, u 0..46; wing X 28..46.5, u 0..30; 3 printed V-wheels OD 24 x 10 (90° groove 2 deep) on 2 x 625ZZ, M5 x 25 axles at X ±22 (groove bottom X 12), Y 83..93, at (22, u 10), (22, 38), eccentric (−22, 24) with an M5 eccentric spacer 0.8 throw; nylocs Y 79..83; rack web X 40.5..46.5, Y 64..94, u −41..30, m1 teeth on +X at Y 64..73 (pitch X 45.5) | C |
+| **Rack and pinion v5** | pinion 16T m1 (r 8, tip 9, boss Ø14 x 7.5, M3 grub on the D-flat), teeth Y 64.5..72.5, boss Y 56.5..64, axis at head X 53.5, Z 55 (6.4 / 7.0 inside the rack at the drone / park); 50.3 mm per turn, stroke 1.15 turns; backlash 0.2 | C |
+| **Motors v5** (XZ, bodies Y 2..50) | head A (53.5, 55) turned 45.8°; head B (−55, −53.5) turned −135.8°; axle (53.9, −43.7) at −39° on C 69.4 (balance search, residual 10.1 g·m E); loop band at −39°; drop lane r 34; detent roller at −45° (candidate, ring unchanged) | C (search) |
+| **Axial stack options (v5 compaction)** | v5 on the posts: rails 74..94, Y_C 175, modules 94..255, funnel 15..335, enclosure −66..337 (403). C1 Scout-length modules: Y_C 138, modules 94..184, funnel −22..298, enclosure 366. C2 rails on the motor plate (hub v6 without posts): rails 54..74, pinion plane 55..63, carriage plate 74..78, Y_C 118, modules 74..164, funnel −42..278, enclosure 346. Height, width unchanged. Spark decides (`current-parts.md` Spark section, Decide: arm v5 stack) | C |
 | Head (x2, 90° apart, A and B mirror variants) | v1-style glide 44 long round the flat bar, **belt clamp v2 (`nox/box/box-arm.md` clamp section; the Head v5 features line below)**; a generated body under the carried pack (Y 97.3..183, u −26..14) to a **rack guide block** (X 17..44, u −12..−2) and a **servo plate** (u −21..−15, 4 x M3 heat-set). **Gripper v4: servo standing radially, shaft +u at X 33.5 (B −33.5), body u −50.5..−14, 40.5 along s (−10.5..30); 12T module-1 pinion (axis u) at u −10..−4; racks side by side, s ±(6..12), moving along X; blades 13 wide (s ±6.5), 3 thick to u 22.9, 5 thick below u 14; inner faces X ∓10 on the tabs, ∓11 open, ∓6 squeezed; rib 0.8 at u 19.4.** Placement rules: parked, X + z0 + u ≥ 1.5 (heads ≥ 3 apart); at every position outside the own mouth (|X| ≤ 19) inside r 98.5. **Heads A and B v5 with the belt clamp v2 (A v5 56.1 g M, worst 0.45; v4 was 50.0 g, worst 0.34)** | C / M |
 | Head belts | A: 20T at (34, −59), idler at u 120, runs X 27.65 / 40.35, Y 66..72. B: 20T at (55, −61) in B's frame, idler at u 124, Y 56..62. **Loops A 398, B 410 (idler pitch = 20T's, CHECK); open-belt cuts with clamp v2: A ~445, B ~457 (each end uses 38.1 inside the clamp + ~5 tail, mouths 39.7 apart; nox/box/box-arm.md clamp section), cut long, trim the tails. Preload 20 N (E, DEFAULT): pluck the free return run to A 143 Hz (span 179), B 139 Hz (span 185) at 7.6 g/m (E, D15)** | C / E |
 | Head stroke (z0 = glide inner end) | **park 32** (packs r 47.4..95.4, corners r 97.5: 2.5 inside the seated packs' faces; glides 11 apart); bay 84.6 (+1.5 into the TPU strip); drone 89.6 (the latched pack sits at r 105); B waits at 81 until the drone has landed. Drawn layout swept every 1 s and 6° of turn: 0 overlaps, closest 0.14 (rack teeth on the pinion); full sweep after the reruns | C |
@@ -124,7 +129,7 @@ Wheel coordinates (W): origin on the axle at the inner face of the stub-side wal
 | Hardware sizes assumed (CHECK, DEFAULT until D13, Spark 16 Oct 23:39) | NEMA17 42.3 x 48, boss Ø22, holes 31; 80T OD 51.6 / flange 56 / 10 wide / boss Ø24 x 8; 20T Ø12.7, 14 wide; idler Ø16 x 10, bore 5; slip ring Ø22 x 18, flange 44 x 1.5; servo 40.5 x 20 x 36.5, ears 54.5 at 27 up, shaft 10.5 from the front; AA spring contact free ~7 | E |
 - **Head v5 features (17 Oct 19:10, head A chat, C):** belt clamp v2 in the head: slot centre X 27.77 (A) / 48.77 (B, own frame), body X ±5.63 about it, Y 63.8..74.2 (A) / 53.8..64.2 (B), pins (Ø3.3 along Y) at u −3.0 and 5.5 (A) / 0.0 and 8.5 (B), mouths u −18.6 / 21.1 (A), −15.6 / 24.1 (B); slot width = coupon pick (1.8 / 2.0 / 2.2), DEFAULT 2.0. Wiring entry: Ø4.5 channel along Y at X −10 (A; B +10), u 8, through the glide top skin (Y 94.3..97.3) to Y 100.3; zip fin on the skin X −7..−5 (A), Y 97.3..102.3, u 4..12, slot 3.4 x 1.6 through it along X at Y 98.3..99.9; servo plate zip tab X P_SH ±6, s 41..47, u −20.6..−14.6, slot 3.4 (X) x 1.6 (s) at s 43..44.6.
 
-## J. S2 bottom latch: battery under the drone (concept changed by Spark 14 Oct 21:50 / 21:56, latch chat; coupon v1 drawn 22:30, standalone rig; DEFAULT, C from the coupon, E where tagged)
+## J. Bottom latch: battery under the drone (DEFAULT, C from the coupon, E where tagged)
 Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coupon.py`. Research: `claude/research/2026-10-14-bottom-cartridge-latch.md` (hook era). Coupon coords: x = slide axis (0 at centre), y = up toward the drone, z = thickness = print Z (14). Positions on the drone come from a sweep once the bottom layout (pack + underside stack, Problem 31) is set; the numbers below are the slider, pocket and gripper themselves.
 | Item | Value | Tag |
 |---|---|---|
@@ -140,7 +145,7 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Release and insert | Release: fingers open, head extends to the tabs, spring closes: 4 N per finger while the bolt wedges out under preload, 2 N after; head retracts with the pack (no lift step; 1 mm over-travel is the fallback). Insert: head extends with the pack held, bolts retracted, **the receiver's lead-ins capture the cartridge (±3.3) and its faces locate it (0.3)**, to the preload (~15 N through the pocket upper walls; 10° taper splays the fingers ~2.5 N, under the 8 N spring), 1 mm over-travel, servo opens: the spring pushes the bolts into the pockets, preload wedges them home, pads make | E |
 | Contacts | pads reach the pins only after the bolts seat (a half-in pack can't arm); latched check = pack voltage on the drone bus via the keep-alive link (no tug test). Orientation is fixed by the swap wheel (section I), so B+ left / B- right stands | DEFAULT |
 
-## O. Overseer (paused; bought hardware only)
+## O. Overseer (bought hardware)
 | Item | Value | Tag |
 |---|---|---|
 | Mass | 2.0 kg with battery | P |
@@ -168,8 +173,8 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Power | 4S 6000 → rocker → 12 V 2 A buck (L2, spec) + 5 V 5 A UBEC (Pi 5 + camera); ~19 W | spec / E |
 | Network | L2 192.168.1.62 → Pi 192.168.1.2, UDP 6101 → 6201 | spec |
 
-## M. Mounting interfaces of bought parts (web research 22 Oct 2026; for future mounts)
-Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`. The parts themselves: `nox/parts-list.md`.
+## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
+Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
 
 **Flight electronics**
 | Part | Body | Mounting | Notes | Tag |

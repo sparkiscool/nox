@@ -76,7 +76,10 @@ Printed (state only in `nox/current-parts.md`): head `print/scan_stick_head_v1.s
 | GT2 20T pulley, 5 bore (kit) | CHECK | axle + head drives | on hand | M: GT2 20T |
 | GT2 6 mm open belt, 2 m | 1 | 2 head belts + spliced axle loop | ordered | box-arm.md |
 | GT2 belt connectors | per head | belt clamp (decision 27) | on hand | box-arm.md |
-| GT2 toothless idler (bore 3 or 5) | 2 | head belt turnarounds | on hand (kit; bore CHECK) | M: idler |
+| GT2 toothless idler (bore 3 or 5) | 2 | head belt turnarounds (v4 demo; out in arm v5) | on hand (kit; bore CHECK) | M: idler |
+| 625ZZ bearing 5 x 16 x 5 | 12 | arm v5 carriage V-wheels (2 per wheel) | to buy | box-arm.md v5 |
+| M5 eccentric spacer, 6 tall, 0.8 throw (openbuilds type) | 2 | arm v5 carriage preload (one per head) | to buy (or a printed eccentric bush) | box-arm.md v5 |
+| M5 x 25 socket head + nyloc | 6 | arm v5 wheel axles | CHECK on hand | box-arm.md v5 |
 | Bay contacts: copper-clad sheet, AA spring contacts | per bay | charging contacts | on hand | box.md |
 | KW11 microswitch | per bay (CHECK) | drone seated | to buy (CHECK) | M: KW11 |
 | Pogo pins (Mill-Max 0854 class) | per bay (CHECK) | keep-alive power | to buy (CHECK) | M: pogo pin |
@@ -116,6 +119,7 @@ Printed (state only in `nox/current-parts.md`): head `print/scan_stick_head_v1.s
 | Pinion v4 | 2 | `print/box_pinion_v4.stl` |
 | Fingers v4 (A and B, for heads A and B) | 4 | `print/box_finger_*_v4.stl` |
 | Arm heads A / B v5 (v5b with the connector pad) | 1 + 1 | not in `print/` yet |
+| Arm v5: rail A / B v1, V-wheel v1 (x6), pinion 16T v1 (x2), hub v6, heads A / B v6 with the carriages | 2, 6, 2, 1, 2 | design (`box-arm.md` v5); replaces the 2040 bars, idler ends, glides, belt clamp |
 | Belt clamp coupon set v2 | 1 (on hold, decision 27) | `print/belt_clamp_coupon_set_v2.stl` |
 | Mast v6 | 1 | `print/box_mast_v6.stl` |
 | KB v7b | 1 | `print/box_kb_v7b.stl` |

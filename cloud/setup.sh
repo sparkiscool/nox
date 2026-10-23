@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # Nox cloud environment setup script.
 # Paste this file's contents into the "Setup script" of the Nox environment at claude.ai/code
-# (Environments). It runs once as root before Claude starts; the filesystem is snapshotted and
+# (Environments -> Nox -> Edit -> Setup script; create the environment if it is missing: the Default
+# environment has no setup script, so every new box pays this install, ~2.5 min, through
+# session_start.sh). It runs once as root before Claude starts; the filesystem is snapshotted and
 # reused for ~7 days, so the pip install only pays once.
 # Also safe to run by hand in any fresh box:  bash cloud/setup.sh
 set -euo pipefail
@@ -22,6 +24,10 @@ if ! command -v git-lfs >/dev/null 2>&1; then
 fi
 git lfs install --skip-repo >/dev/null 2>&1 || true
 
+echo "== amazon-parts MCP server deps (.mcp.json)"
+pip install --break-system-packages -q "mcp>=2,<3" "httpx>=0.27" \
+  2>&1 | grep -v "running pip as the 'root'" || true
+
 echo "== three.js for headless motion renders (nox/motion.py; the npm registry is reachable where the CDNs are not)"
 mkdir -p "$HOME/.cache/nox-motion"
 [ -d "$HOME/.cache/nox-motion/node_modules/three" ] || npm install --silent --no-audit --no-fund --prefix "$HOME/.cache/nox-motion" three@0.128.0 || true
@@ -34,6 +40,7 @@ if [ -f nox/noxopt.py ]; then
   [ -x /opt/pw-browsers/chromium ] || [ -n "${CHROMIUM_PATH:-}" ] || echo "nox: no Chromium at /opt/pw-browsers/chromium (motion.py video needs CHROMIUM_PATH)"
   command -v ffmpeg >/dev/null || echo "nox: ffmpeg missing (motion.py video)"
 else
-  python3 -c "import trimesh, manifold3d, skimage, skfmm, pypardiso; print('packages OK (repo not cloned yet)')"
+  # pypardiso needs noxopt's MKL path, so it is only checked with the repo present; report, never abort
+  python3 -c "import trimesh, manifold3d, skimage, skfmm, shapely, mcp, httpx; print('packages OK (repo not cloned yet)')" || echo "nox: smoke import FAILED, see above"
 fi
 echo "== done"

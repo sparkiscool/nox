@@ -1,6 +1,6 @@
 # Scout: aircraft and bring-up
 
-Numbers: `nox-dimensions.md` §1-3. Battery parts: `scout-cartridge-pocket.md`. Cage: `scout-cage.md`. **Unverified** = not confirmed on the aircraft.
+Numbers: `nox/dimensions.md` A, C and H. Battery, cage and the rest of the v2 airframe: `archive/scout-v2/` (retired) until Scout v3 docs exist. **Unverified** = not confirmed on the aircraft.
 
 ## What it is for
 - Close-up inspection footage where the Overseer's overhead view can't see (under tables, behind racks), live to the operator through the box.
@@ -17,10 +17,10 @@ Numbers: `nox-dimensions.md` §1-3. Battery parts: `scout-cartridge-pocket.md`. 
 | Props | Gemfan 3520, 3.5 in, 3 blade (P, Spark 11 Oct) (replacement set; first set destroyed 1 Oct) |
 | Receiver | RadioMaster XR2 (ELRS 2.4) on the rear TPU mount, on the **GPS port (UART3)**. RC port (RX6) has a hardwired SBUS inverter that corrupts ELRS: not used |
 | Flow + range | MicoAir MTF-02P on TELEM1 (UART1), re-pinned 4-to-6 cable. Lens to the nose, ToF windows to the tail (180° from the Overseer). Goes in underside v5 (printed, not yet fitted): lens at (1.9, 0), 22.5 below the plate |
-| Companion | Radxa Zero 3W, **model RS107-D2E0H0W15, rev V1.12J (P, box label, 7 Oct): 2 GB, no eMMC (P, board photo 7 Oct: eMMC footprint on the underside is bare pads; boots from microSD only; card needed, >= 32 GB A1), no GPIO header (wires soldered to the header holes), WiFi 6 / BT 5.4**, on TELEM2 (UART4), uXRCE-DDS 921600. **Board layout (P, silkscreen on the underside, 7 Oct):** along the connector edge: micro HDMI at one end, then the **USB3.0 host** port in the middle, then the **USB_OTG / 5V IN** port at the far end; microSD (TF) slot on the underside at the OTG end, card goes in from the short edge; CSI connector on the short edge at the HDMI end; u.FL at the HDMI end on the top. **Location (Spark, 5 Oct 19:20): in the pocket gap under the cartridge**, envelope in `nox-dimensions.md` §1. **Being installed now (Spark, 7 Oct 00:51)**; wiring plan below |
+| Companion | Radxa Zero 3W, **model RS107-D2E0H0W15, rev V1.12J (P, box label, 7 Oct): 2 GB, no eMMC (P, board photo 7 Oct: eMMC footprint on the underside is bare pads; boots from microSD only; card needed, >= 32 GB A1), no GPIO header (wires soldered to the header holes), WiFi 6 / BT 5.4**, on TELEM2 (UART4), uXRCE-DDS 921600. **Board layout (P, silkscreen on the underside, 7 Oct):** along the connector edge: micro HDMI at one end, then the **USB3.0 host** port in the middle, then the **USB_OTG / 5V IN** port at the far end; microSD (TF) slot on the underside at the OTG end, card goes in from the short edge; CSI connector on the short edge at the HDMI end; u.FL at the HDMI end on the top. **Location (Spark, 5 Oct 19:20): in the pocket gap under the cartridge**, envelope in `nox/dimensions.md` A. **Being installed now (Spark, 7 Oct 00:51)**; wiring plan below |
 | Camera | DECXIN 2633V2 (USB, global shutter, 102°), on the pocket nose |
 | Power | 4S 1500 (~165 g), XT60 pigtail, 220 µF 35 V cap on the battery pads |
-| Size / mass | Size and mass: `nox-dimensions.md` §1 (~197 x 197 with props, ~78 tall, 400 g with battery and no cage, P). All-up 610 g with everything fitted, battery in (P, Spark 7 Oct 22:55; taken as cage + Radxa + BEC on, CHECK). Hover time on the 4S 1500 ~7 min to 20 % reserve (E, not measured: time a 2 min hover from a full pack and read the mAh used) |
+| Size / mass | Size and mass: `nox/dimensions.md` A (~197 x 197 with props, ~78 tall, 400 g with battery and no cage, P). All-up 610 g with everything fitted, battery in (P, Spark 7 Oct 22:55; taken as cage + Radxa + BEC on, CHECK). Hover time on the 4S 1500 ~7 min to 20 % reserve (E, not measured: time a 2 min hover from a full pack and read the mAh used) |
 
 ## Final wiring (plan, 5 Oct; DEFAULTs until built; **wiring started 17 Oct**)
 | From | To | Wires | Notes |
