@@ -1,3 +1,16 @@
 === scan_stick_head: h 1.5, generated 12.0 cm3, min member 3.2 mm, cores 4
 scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 53,878 (181.8 cm3), drawn 5,434, void 71,760
   support default: 2128 cells, 3192 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_head: grid (32, 32, 16) h 3.0 = 16,384 cells; design 6,975 (188.3 cm3), drawn 837, void 8,572
+  support default: 348 cells, 636 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.72 cells, erosion depth 1.37 mm; volfrac 0.064 of 6,975 design cells
+layout: WARNING filter radius 1.72 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in x (4.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (7.1% of passive cells differ): no symmetry
+layout: 4 drawn bodies (837 cells), held solid in every realization; eroded filter: masked
+layout: 47 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+fem: grid (32, 32, 16) = 16,384 elements, 28,956 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0662 (dil 0.0809 g +0.039) grey  8.5% ch 0.100 worst tie b3 my 1.05e+04 1.1s
+it   2 beta    1 J   2.7485 vol 0.0568 (dil 0.0681 g -0.126) grey 27.1% ch 0.100 worst poke cam -z 2.68e+03 1.1s
+it   3 beta    1 J   0.4218 vol 0.0619 (dil 0.0736 g -0.055) grey 25.7% ch 0.100 worst tie b3 mz 592 1.2s
