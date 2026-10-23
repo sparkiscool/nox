@@ -160,18 +160,19 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Firmware | PX4 1.18.0rc, airframe 4001, DShot, CRSF; backup `claude/overseer_params_2026-09-26.params` | P |
 | Catch | the shared collar, section G "Catch interface": a belly frame with 8 PETG wheels at the Scout's points, steel belly plate and pogo pads, designed when it resumes | DEFAULT |
 
-## S. Scan stick (23 Oct 2026; `nox/overseer/scan_stick/scan_stick.md`; C from `scan_stick.scad` unless tagged)
+## S. Scan stick (23 Oct 2026; `nox/overseer/scan_stick/scan_stick.md`; C from the run scripts unless tagged; one bolted unit on the pole tip, Spark 23 Oct)
 | Item | Value | Tag |
 |---|---|---|
-| Pole | EXTEND-A-REACH 1.5-3 ft telescoping extension pole (B08LL28XZW); tip 3/4"-5 ACME (major 19.05, pitch 5.08); lower tube OD **open: 25.4 until measured** | spec / E |
-| Head thread | female 3/4-5 ACME, 27 deep, 0.40 radial clearance, boss Ø32 x 34, no entry chamfer (sliver on the first turn); test ring 12 tall | C |
-| Head plate | 86 x 86 x 6, L2 pattern (4 x Ø3.4 on Ø51 at 22.5°, Ø6.2 x 3 counterbore from below), Ø26 centre hole, cable notch 14 wide on -X; lidar seat z = 6 above the boss top | C |
-| Camera block | 32 x 8 x 30 on the boss +Y face, 2 x Ø4 heat-set holes 20 apart, 17 above the boss bottom; bracket 44 x 60 x 3, standoffs Ø6 x 3 on 28 x 28, Ø1.8 holes | C |
-| Down-facing head (alt.) | arm 115 long x 50 wide x 6, ribs 4 x 14; camera inserts 38 along the arm; total length 174 (A1 mini bed) | C |
-| Cradle | hub Ø(rod_d + 10.5) x 60, slit 2.5, ears 7 with M4 (Ø4.3) + nut trap 7.2 AF; Pi tray 64 x 117 x 3.5, standoffs Ø7 x 7 on 58 x 49, Ø2.3; panel strip: rocker 19.4 x 13.2, button Ø12.3, LED Ø5.2; battery plate 84 x 156 x 3.5 + ledge 48 x 52 x 4 + lip 12, rails 3, strap slots 20 x 3.5 at 25 % / 75 %; shelf 52 x 60 x 3.5 on -Y, 6 zip slots | C |
-| Masses | head 61.9 (v2 topology), cam 10.0, cradle 194.7, thread test 8.3 (PETG, M) | M |
+| Pole | EXTEND-A-REACH 1.5-3 ft telescoping extension pole (B08LL28XZW); tip 3/4"-5 ACME (major 19.05, pitch 5.08) | spec |
+| Thread | base socket: female 3/4-5 ACME, 27 deep, 0.40 radial clearance, boss Ø32 x 34, no entry chamfer; test ring 12 tall | C |
+| Base | 168 tall; top flange Ø40 x 8 at z 160, 4 x M4 heat-set (Ø5.6 holes) on a 28 square; Pi tray face x 20, standoffs Ø7 x 7 on 58 x 49, Ø2.3; panel strip x 16.5..20, z 99..123: rocker 19.4 x 13.2 at y -14, button Ø12.3 at y 12, LED Ø5.2 at y 24; pack face x -20, ledge z 6..10, lip to z 18, rails 3 thick at y ±(26..29), strap bars 10 x 26 at y ±28, z 47 / 121, slots 20 x 3.5; shelf plate y -21.5..-18, x ±26, z 6..66, 6 zip slots 3 x 8 | C |
+| Head | 34 tall; flange Ø40 x 8, 4 x Ø4.3 on the 28 square with Ø8 counterbores; L2 pads Ø12 x 6 on Ø51 at 22.5°, seat z 34 (world 202), 6 x 10 gussets to r 8; camera block 32 x 8 x 30 at y 12..20, 2 x Ø4 heat-set 20 apart at z 17; L2 cable notch 14 wide on -X | C |
+| Camera bracket | 44 x 60 x 6 envelope; 2 bolt pads Ø12 at y 53, 20 apart; posts Ø6 x 3 on Ø8 pads on the 28 x 28 pattern, centre 25 below the holes; USB slot 16 x 4 | C |
+| Keep-outs | pack 148 x 48 x 45 + 1 all round (P + C); Pi board + parts 30 deep off the standoffs; UBEC / buck 30 deep off the shelf; camera bracket 48 x 24 x 33 off the block | C |
+| Loads | 25 g knocks (14 dirs) on lidar 0.23 kg, camera 0.03, Pi 0.08, pack 0.59, head 0.30; 50 g impact (6 dirs); 100 N side hits; 150 N drop; hand 20-50 N; strap 120 N | E |
 | Power | 4S 6000 → rocker → 12 V 2 A buck (L2, spec) + 5 V 5 A UBEC (Pi 5 + camera); ~19 W | spec / E |
 | Network | L2 192.168.1.62 → Pi 192.168.1.2, UDP 6101 → 6201 | spec |
+| Masses | base, head, cam: in `runs/*/summary.md`; thread test 8.3 (PETG) | M |
 
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
 Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
