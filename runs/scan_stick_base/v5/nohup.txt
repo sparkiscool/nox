@@ -83,3 +83,13 @@ layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside t
 it  68 beta    8 J   4.6834 vol 0.1278 (dil 0.2282 g -0.041) grey  6.4% ch 0.100 worst pi 25 g 4 555 33.1s
 it  69 beta    8 J   3.8868 vol 0.1325 (dil 0.2355 g -0.010) grey  6.8% ch 0.100 worst pi 25 g 4 455 33.2s
 it  70 beta    8 J   3.3469 vol 0.1332 (dil 0.2366 g -0.006) grey  6.9% ch 0.100 worst pi 25 g 6 388 32.1s
+it  71 beta    8 J   2.9429 vol 0.1330 (dil 0.2368 g -0.004) grey  7.2% ch 0.100 worst pi 25 g 6 350 33.4s
+it  72 beta    8 J   2.6179 vol 0.1324 (dil 0.2364 g -0.005) grey  7.5% ch 0.100 worst pi 25 g 6 316 30.9s
+it  73 beta    8 J   2.3736 vol 0.1326 (dil 0.2366 g -0.005) grey  7.6% ch 0.100 worst pi 25 g 6 291 35.2s
+it  74 beta    8 J   2.2056 vol 0.1331 (dil 0.2367 g -0.004) grey  7.7% ch 0.100 worst pi 25 g 6 273 34.5s
+it  75 beta    8 J   2.0902 vol 0.1340 (dil 0.2368 g -0.003) grey  7.6% ch 0.100 worst pi 25 g 6 260 33.6s
+it  76 beta    8 J   2.0051 vol 0.1352 (dil 0.2369 g -0.001) grey  7.5% ch 0.100 worst pi 25 g 6 250 34.6s
+it  77 beta    8 J   1.9471 vol 0.1359 (dil 0.2364 g -0.003) grey  7.3% ch 0.100 worst pi 25 g 6 243 34.2s
+it  78 beta    8 J   1.8989 vol 0.1374 (dil 0.2365 g -0.002) grey  7.0% ch 0.100 worst pi 25 g 6 237 33.4s
+it  79 beta    8 J   1.8966 vol 0.1385 (dil 0.2367 g -0.001) grey  6.9% ch 0.100 worst pi 25 g 6 237 34.9s
+it  80 beta    8 J   1.8948 vol 0.1392 (dil 0.2368 g -0.001) grey  6.9% ch 0.100 worst pi 25 g 6 237 35.0s
