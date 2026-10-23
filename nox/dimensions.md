@@ -156,7 +156,7 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Battery | 4S 6000, XT60, 3 on hand; out the bottom. **148 x 48 x 45 (P, Spark 16 Oct 19:02); mass and lead exit E until weighed (Spark 16 Oct 23:39: go on these)**; balance pads: the Scout's 5-pad layout and pitch (Spark 16 Oct 20:39) | P / E |
 | Flow + range | MTF-02P, lens at X +22.5, Y 0, Z +74 from the FC centre (FRD) | P |
 | Lidar | Unitree L2, 230 g, 75 x 75 x 65, 12 V 10 W, at the nose. Mount open; must stay above the collar faces (section G) | P |
-| Camera | DECXIN 2633V2 global shutter, 102° (same as the Scout) | P |
+| Camera | **2 x DECXIN 2633V2 global shutter, 102° diagonal (same as the Scout), front + underside (Spark 23 Oct: no camera ring; the lidar cloud is coloured by yawing the drone)**. Front: portrait, 30° up (DEFAULT; alt 45° reaches the zenith but loses the forward view): sweeps about -14 to +74° elevation as the drone yaws (E, 4:3 sensor assumed: 89 x 73°), covers the L2 FOV incl. wide mode; the ceiling overhead gets coloured from earlier frames as the drone moves. At or below the L2 base plane (nothing in the lidar FOV), rigid to the L2 for the camera-lidar calibration. Yaw ≤ 30°/s while colouring (E). Underside: straight down; the L2 sees no points below -6°, so it colours almost nothing (floor beyond ~9.5 x the height only, E): inspection and landing | P / Spark / E |
 | Firmware | PX4 1.18.0rc, airframe 4001, DShot, CRSF; backup `claude/overseer_params_2026-09-26.params` | P |
 | Catch | the shared collar, section G "Catch interface": a belly frame with 8 PETG wheels at the Scout's points, steel belly plate and pogo pads, designed when it resumes | DEFAULT |
 
