@@ -56,7 +56,7 @@ Shares the Overseer's L2, camera and 4S 6000 pack (above); the Pi 5 is the Overs
 | 20 mm hook-and-loop strap, 450 mm (E) | 2 | pack | to buy | S |
 | M3 heat-set inserts (Ruthex 5.7 long, Ø4.0 hole, 7 deep) | 2 | camera bracket to the head | on hand | M: inserts |
 | M4 heat-set inserts (Ruthex RX-M4x8.1, Ø5.6 hole, 9.5 deep) + M4 x 12 | 4 + 4 | head to base flange | CHECK | S, M: inserts |
-| M3 x 8, M3 x 10, M2.5 x 6, M2.5 x 6 | 4, 2, 4, 4 | L2 (3 under the head + 5 in the L2), camera bracket (4 pad + 6 in the insert), camera (1.6 board + 4.4 in the post insert), Pi | on hand / CHECK | S |
+| M3 x 8, M3 x 12, M2.5 x 6, M2.5 x 6 | 4, 2, 4, 4 | L2 (3 under the head + 5 in the L2), camera bracket (6 pad + 6 in the insert, v7), camera (1.6 board + 4.4 in the post insert), Pi | on hand / CHECK | S |
 | Cat5e 0.5 m, XT60 pigtail, DC 3.5 x 1.35 plug lead | 1 each | wiring | CHECK | |
 
 Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts) and the thread test ring; files in the current-parts rows.
