@@ -1,4 +1,4 @@
-scan_stick_head v12: ready to print
+scan_stick_head v12: retired (superseded by v13 after review round 4 of PR 22: its -X camera insert hole ran into the 112.5° pad's Ø9 driver clearance). Was: ready to print
 Weight: 42.8 g (M), was 40.8 g (v11, M; +2.0 g for the 12 thick camera block less the key holes) / 61.9 g (v2 noxopt, M)
 Strength: worst index 0.28 (F, as-built voxel recheck) in lidar impact 50 g 2 at a pad gusset root [-5.2, -18.8, 10.2] mm (M); all 47 cases (E loads: 25 g in 14 dirs, 50 g impact in 6, 100 N side hits, 150 N drop on the lidar, 20 N hand grab, camera 25 / 50 g, 5 N pokes) ≤ 0.28 (F): sturdy
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_head_v12.stl; camera insert holes end at y 17, 4.5 mm (C) from the M4 pockets (v11: 0.5 mm, M); Ø5.2 (M) key holes open above all four pockets at z 30
