@@ -718,5 +718,10 @@
  "peak_gb": 4.283216,
  "gen_cm3": 12.0,
  "h": 1.5,
- "total_s": 2169
+ "total_s": 2169,
+ "status": "FAILED",
+ "mass_tag": "M",
+ "worst_index": 0.362,
+ "worst_case": "lidar impact 50 g 2",
+ "date": "2026-10-23"
 }

@@ -25,3 +25,5 @@
 11:41 END base v4 rc=0 mass 123.4 worst None solid False
 11:41 QUEUE 6 DONE
 11:41 START head v7
+12:17 END head v7 rc=0 mass 40.7 worst None solid False
+12:17 QUEUE 7 DONE
