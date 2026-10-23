@@ -1,0 +1,21 @@
+=== bracket_jA: h 1.0, generated 20.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (11.78 cm3); 4.75 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.745 of 3,356 design cells
+layout: WARNING nearly mirrored in y (0.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (7.5% of passive cells differ): no symmetry
+layout: 5 drawn bodies (1,473 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (692 cells) count by their cover; 3 bodies tied to body 1
+layout: 6 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 18 gate ties
+fem: grid (24, 48, 24) = 27,648 elements, 20,985 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.6269 (dil 0.6740 g -0.158) grey 100.0% ch 0.100 worst gate b4 fz 6.75 0.5s
+it   2 beta    1 J   6.5080 vol 0.7019 (dil 0.7424 g -0.073) grey 100.0% ch 0.100 worst gate b4 fz 4.33 0.5s
+it   3 beta    1 J   4.6419 vol 0.7533 (dil 0.7876 g -0.017) grey 74.3% ch 0.100 worst gate b4 fz 2.99 0.7s
+it   4 beta    1 J   4.0412 vol 0.7655 (dil 0.7976 g -0.004) grey 66.7% ch 0.100 worst gate b2 fz 2.53 0.8s
+it   5 beta    1 J   4.0070 vol 0.7685 (dil 0.8000 g -0.001) grey 64.1% ch 0.100 worst gate b4 fz 2.52 0.6s
+it   6 beta    1 J   3.9943 vol 0.7693 (dil 0.8003 g +0.009) grey 62.6% ch 0.100 worst gate b4 fz 2.52 0.5s
+it   7 beta    1 J   4.0232 vol 0.7606 (dil 0.7921 g -0.001) grey 64.6% ch 0.100 worst gate b4 fz 2.54 0.6s
+it   8 beta    1 J   4.0087 vol 0.7614 (dil 0.7924 g -0.001) grey 62.8% ch 0.100 worst gate b4 fz 2.53 0.5s
+it   9 beta    1 J   3.9968 vol 0.7619 (dil 0.7924 g -0.001) grey 61.3% ch 0.100 worst gate b4 fz 2.53 0.5s
+it  10 beta    1 J   3.9849 vol 0.7625 (dil 0.7924 g -0.001) grey 59.9% ch 0.100 worst gate b4 fz 2.52 0.6s
+layout: beta 1 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
