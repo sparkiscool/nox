@@ -117,3 +117,14 @@ it  17 beta    4 J   3.4275 vol 0.1227 (dil 0.2405 g -0.003) grey 24.9% ch 0.100
 it  18 beta    4 J   3.2856 vol 0.1233 (dil 0.2410 g -0.001) grey 25.0% ch 0.100 worst tie b4 my 0.439 32.6s
 it  19 beta    4 J   3.2432 vol 0.1235 (dil 0.2410 g -0.000) grey 25.0% ch 0.100 worst tie b4 my 0.438 31.2s
 it  20 beta    4 J   3.2191 vol 0.1236 (dil 0.2411 g -0.000) grey 25.0% ch 0.100 worst tie b4 my 0.434 31.8s
+it  21 beta    4 J   3.2002 vol 0.1237 (dil 0.2411 g +0.010) grey 25.0% ch 0.100 worst tie b4 my 0.432 33.9s
+it  22 beta    4 J   3.4913 vol 0.1213 (dil 0.2384 g -0.001) grey 24.8% ch 0.100 worst tie b4 my 0.477 29.8s
+it  23 beta    4 J   3.4403 vol 0.1216 (dil 0.2386 g -0.000) grey 24.8% ch 0.100 worst tie b4 my 0.466 31.5s
+it  24 beta    4 J   3.4245 vol 0.1217 (dil 0.2386 g -0.000) grey 24.8% ch 0.100 worst tie b4 my 0.465 31.3s
+it  25 beta    4 J   3.4132 vol 0.1217 (dil 0.2386 g -0.000) grey 24.8% ch 0.100 worst tie b4 my 0.463 34.3s
+it  26 beta    4 J   3.4027 vol 0.1217 (dil 0.2386 g +0.005) grey 24.8% ch 0.100 worst tie b4 my 0.462 31.1s
+it  27 beta    4 J   3.5519 vol 0.1206 (dil 0.2373 g -0.000) grey 24.7% ch 0.100 worst tie b4 my 0.485 31.3s
+it  28 beta    4 J   3.5328 vol 0.1206 (dil 0.2373 g -0.000) grey 24.7% ch 0.100 worst tie b4 my 0.483 31.9s
+it  29 beta    4 J   3.5251 vol 0.1207 (dil 0.2373 g -0.000) grey 24.7% ch 0.100 worst tie b4 my 0.482 31.7s
+it  30 beta    4 J   3.5183 vol 0.1207 (dil 0.2373 g -0.000) grey 24.7% ch 0.100 worst tie b4 my 0.481 31.3s
+layout: beta 4 done: eroded design 6 bodies, main 24.7%; drawn bodies outside the main body: 5
