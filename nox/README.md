@@ -83,7 +83,7 @@ The short version of this page is `CLAUDE.md` at the repo root, loaded in every 
 - **Simplest design wins.** Fewer parts, features and steps beat clever ones; justify any added complexity.
 - **Every design decision comes from an optimization.** Nothing goes in a spot just because it has to be somewhere.
 - **Tag every number:** P measured on the part, M mesh, C CAD, E estimate, F frame model.
-- **Ask Spark** only on costly or hard-to-undo choices, or before changing a shared number. Otherwise decide, mark DEFAULT, continue. Every question comes with its best answer, one short line.
+- **Never wait on Spark.** Decide, mark DEFAULT, one line in `log.md` with the choice and the alternative, continue; a shared number changes the same way. Spark reverts what he disagrees with. A session never spends money or deletes work on `main` alone.
 - **Replies short.** Each problem plainly, with the best fix.
 - Drone parts: lightest that meets the loads. Box parts: strong and fits, mass not a target.
 - Materials: PETG for rigid parts, TPU for nodes, feet, bumpers, PLA out (v2 detail in `archive/scout-v2/README.md`). Rods epoxied, never press fit.
