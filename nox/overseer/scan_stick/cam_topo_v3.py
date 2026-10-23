@@ -75,4 +75,4 @@ if __name__ == "__main__":
     if os.environ.get("NOX_SETUP_ONLY"):
         print(setup(H).summary())
     else:
-        optimise(setup, h=H, gen_cm3=GEN, out_dir=out, name="scan_stick_cam", settings=Settings(), git=GIT)
+        optimise(setup, h=H, gen_cm3=GEN, out_dir=out, name="scan_stick_cam", settings=Settings(finish="drawn"), git=GIT)
