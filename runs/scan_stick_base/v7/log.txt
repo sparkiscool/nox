@@ -82,3 +82,4 @@ it  68 beta   32 J   2.4040 vol 0.0847 (dil 0.2145 g -0.005) grey  1.0% ch 0.100
 it  69 beta   32 J   2.4024 vol 0.0853 (dil 0.2151 g -0.002) grey  1.0% ch 0.100 worst pi 25 g 4 1.12e+03 21.3s
 it  70 beta   32 J   2.4009 vol 0.0857 (dil 0.2155 g -0.000) grey  1.0% ch 0.100 worst pi 25 g 4 1.11e+03 19.8s
 it  71 beta   32 J   2.3996 vol 0.0858 (dil 0.2155 g +0.003) grey  1.0% ch 0.100 worst pi 25 g 4 1.11e+03 21.7s
+it  72 beta   32 J   2.3984 vol 0.0853 (dil 0.2148 g -0.000) grey  1.0% ch 0.100 worst pi 25 g 4 1.11e+03 20.2s
