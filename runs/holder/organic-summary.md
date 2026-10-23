@@ -7,8 +7,9 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 
 ## Setup changes (nox/topo/demos/holder.py, written in its docstring)
 
-1. Bolt bosses 12 mm round, cut flat by the envelope's outer faces (were 6 x 6 squares with 1.4 mm walls round the
-   holes, which the gate cut off; 10 mm round in organic-v1 to v4 left single-voxel cores at 2.0 mm erosion).
+1. Bolt bosses 11.5 mm round, centred 0.75 mm toward the part, cut flat by the envelope's outer faces (were 6 x 6
+   squares with 1.4 mm walls, which the gate cut off; 10 mm round (v1 to v4) and 12 mm round (v5, v6) left stray
+   boss cores at 2.0 mm erosion).
 2. Keep-out under the pack round the pad from z 29 (was 26; DEFAULT, 1 mm pack clearance instead of 4): the pad sat on
    a 4 mm layer above the battery channel, built 3 mm, too thin for anything that survives the gate's 2.0 mm erosion
    or the optimiser's own eroded design (5.7 mm plates at 6.25 mm members). Battery channel unchanged.
@@ -32,3 +33,4 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v3 | gen 5.6, 6.25 mm, 5 mm layer | 12.52 | 0.399 | FAIL (split at the 4 mm built layer) | ok | right | ~3400 s |
 | organic-v4 | gen 5.2, 6.25 mm, 6 mm layer | 10.83 | 0.587 | FAIL (single boss voxels, share 0.996) | ok | right | ~4300 s |
 | organic-v5 | gen 5.4, 6.25 mm, 6 mm layer, 12 mm bosses | 11.73 | 1.157 | FAIL (2 bodies) | ok | wrong: two frames | ~3700 s |
+| organic-v6 | gen 5.0, 6.25 mm, 7 mm layer, 12 mm bosses | 11.26 | 0.582 | FAIL (boss corner lobes, share 0.96) | ok | right: one frame | ~4200 s |
