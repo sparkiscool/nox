@@ -3,7 +3,7 @@ For each of the 6 axis-aligned 'down' directions: bed contact area, overhang are
 (faces more than 60 deg from vertical pointing down, i.e. steeper than the 30 deg support threshold),
 and the worst free-standing island history: islands < 20 mm2 that persist > 10 mm from the bed.
 Usage: python print_orient.py part.stl [--all]   (needs trimesh, shapely, scipy)
-Pass: saved face has the largest bed contact (or the designer says why not); no first-layer island < 20 mm2 lasting > 10 mm; no free-standing post > 10 mm. Rule: docs/printing.md, Orientation and supports.
+Pass: saved face has the largest bed contact (or the designer says why not); no first-layer island < 20 mm2 lasting > 10 mm; no free-standing post > 10 mm. Rule: docs/generative.md, Save and print.
 """
 import sys, numpy as np, trimesh
 

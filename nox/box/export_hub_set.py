@@ -1,5 +1,5 @@
 """Hub v5 print set, drawn parts (18 Oct 2026; stub v3 18 Oct, arm chat): builds every drawn part of the arm's hub set from arm_cad / detent, picks
-the bed face by the docs/printing.md rule (print_orient: largest bed contact among the 6 axis faces, no first-layer island under
+the bed face by the docs/generative.md "Save and print" rule (print_orient: largest bed contact among the 6 axis faces, no first-layer island under
 20 mm2 lasting more than 10 mm), saves each STL in that pose and checks one watertight body inside the 180 cube.
 python3 export_hub_set.py -> out/<name>.stl + out/hub_set.json   (hub v5 itself: arm_run_hub.py, then post_hub_v5.py)"""
 import json, math

@@ -95,7 +95,7 @@ def bracket_j_setup(h, a):
         bosses = b if bosses is None else bosses + b
     flange = box(X_IN - 4.0, X_IN, 137.0, 217.0, zc - 16.0, zc + 16.0)
     cheeks_only = cheeks
-    cheeks = cheeks + bosses                                                     # drawn cheek = plate + its boss (docs/rules.md Solid parts)
+    cheeks = cheeks + bosses                                                     # drawn cheek = plate + its boss (CLAUDE.md hard rules, attachments)
     drawn = cheeks + flange
     holes = None
     for y in L.LUG_Y:
@@ -200,7 +200,7 @@ def kb_setup(h):
     boss = None
     for sx in (1, -1):
         b = box(min(sx * 18, sx * 34), max(sx * 18, sx * 34), y0 + 6.0, y0 + 12.0, FLOOR, -183.0); boss = b if boss is None else boss + b
-    # 20 Oct v8 (docs/rules.md Solid parts: access cut never wider than its pad, boss wall >= 3 round it). Audit of the
+    # 20 Oct v8 (CLAUDE.md hard rules: access cut never wider than its pad, boss wall >= 3 round it). Audit of the
     # 14:45 setup: rear nut access r 5.5 in a 16 x 18 boss left 2.5; the 4 base-joint head cuts r 5.0 reached the plate top
     # (0 above the upper pair), sat 0.08 apart and notched the floor to 2.3. Fix: boss shells 3.0 round both, drawn.
     above_floor = box(-BIG, BIG, -BIG, BIG, FLOOR, BIG)

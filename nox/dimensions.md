@@ -1,8 +1,8 @@
 # Nox: dimensions (current values only)
 
-The only source for Scout and box numbers. mm unless stated. Tags: P part, M mesh, C CAD, E estimate. **CHECK** = unconfirmed. Changes: one line in `nox/log.md`. Rules: `docs/rules.md`. Box system: `nox/box/box.md`. Sections E, G, H and J hold Scout v2 numbers carried into v3 until v3 replaces them (`archive/scout-v2/` for the v2 design).
+The only source for Scout and box numbers. mm unless stated. Tags: P part, M mesh, C CAD, E estimate. **CHECK** = unconfirmed. Changes: one line in `nox/log.md`. Rules: `CLAUDE.md`. Box system: `nox/box/box.md`. Sections E, G, H and J hold Scout v2 numbers carried into v3 until v3 replaces them (`archive/scout-v2/` for the v2 design).
 
-**Coordinates.** Drone axes: x forward (nose +), y left +, z up, CG at x 0. Plate top z 22; z 0 is the old pusher prop plane (kept so part numbers stay valid). **Props are on top since 14 Oct 16:41: prop plane z ≈ +41.2 (E: plate top 22 + D12 19.2, listing; Spark 17 Oct 00:52: go with it; row "Motor / prop layout" in C).** Rows below that still describe props at z 0 (prop rule in H, the underside's below-the-props placement) are pusher-era until their chats update them (`nox/open.md` Problem 33). Each part doc defines its own part coordinates.
+**Coordinates.** Drone axes: x forward (nose +), y left +, z up, CG at x 0. Plate top z 22; z 0 is the old pusher prop plane (kept so part numbers stay valid). **Props are on top since 14 Oct 16:41: prop plane z ≈ +41.2 (E: plate top 22 + D12 19.2, listing; Spark 17 Oct 00:52: go with it; row "Motor / prop layout" in C).** Rows below that still describe props at z 0 (prop rule in H, the underside's below-the-props placement) are pusher-era until their chats update them (`nox/current-parts.md` Scout v3 row). Each part doc defines its own part coordinates.
 
 ## A. Bought hardware (Scout)
 | Item | Value | Tag |
@@ -156,7 +156,7 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Catch | the shared collar, section G "Catch interface": a belly frame with 8 PETG wheels at the Scout's points, steel belly plate and pogo pads, designed when it resumes | DEFAULT |
 
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
-Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`. The parts themselves: `nox/parts-list.md`.
+Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
 
 **Flight electronics**
 | Part | Body | Mounting | Notes | Tag |
