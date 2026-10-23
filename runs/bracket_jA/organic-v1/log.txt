@@ -177,3 +177,17 @@ it  77 beta   32 J   5.3325 vol 0.8537 (dil 0.9631 g -0.000) grey  4.5% ch 0.100
 it  78 beta   32 J   5.3322 vol 0.8538 (dil 0.9631 g -0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.9s
 it  79 beta   32 J   5.3319 vol 0.8538 (dil 0.9631 g -0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.5s
 it  80 beta   32 J   5.3316 vol 0.8539 (dil 0.9631 g -0.000) grey  4.6% ch 0.100 worst gate b1 fz 3.01 5.3s
+git push failed: To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to push some refs to 'https://github.com/sparkiscool/nox'
+hint: Updates were r
+it  81 beta   32 J   5.3314 vol 0.8539 (dil 0.9631 g +0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 7.0s
+it  82 beta   32 J   5.3316 vol 0.8538 (dil 0.9630 g -0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.5s
+it  83 beta   32 J   5.3314 vol 0.8539 (dil 0.9630 g -0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.5s
+it  84 beta   32 J   5.3312 vol 0.8539 (dil 0.9630 g -0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.4s
+it  85 beta   32 J   5.3310 vol 0.8540 (dil 0.9630 g -0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.5s
+it  86 beta   32 J   5.3308 vol 0.8541 (dil 0.9630 g +0.000) grey  4.5% ch 0.100 worst gate b1 fz 3.01 5.6s
+it  87 beta   32 J   5.3313 vol 0.8540 (dil 0.9629 g -0.000) grey  4.4% ch 0.100 worst gate b1 fz 3.01 5.3s
+it  88 beta   32 J   5.3311 vol 0.8540 (dil 0.9629 g -0.000) grey  4.4% ch 0.100 worst gate b1 fz 3.01 5.3s
+it  89 beta   32 J   5.3310 vol 0.8541 (dil 0.9629 g -0.000) grey  4.4% ch 0.100 worst gate b1 fz 3.01 5.4s
+it  90 beta   32 J   5.3308 vol 0.8542 (dil 0.9629 g -0.000) grey  4.4% ch 0.100 worst gate b1 fz 3.01 5.4s
