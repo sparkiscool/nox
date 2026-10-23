@@ -62,6 +62,8 @@ class Settings:
     geo_beta: float = 16.0
     geo_eps: float = 0.0                # 0 = automatic from the filter radius
     erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
+    gate_ties: bool = True              # thin held drawn bodies count by their cover + ties to one body (masked only)
+    gate_thin_mm: float = 2.0           # the solid gate's erosion cap: held bodies with half thickness under it are thin
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
     reach_check: str = "raise"          # "raise" | "warn" | "off"
@@ -273,12 +275,13 @@ class Layout:
         self.mat = mat
         self.build_axis = AXES[part.build][0]
         self.C = stiffness(mat, self.build_axis)
+        self.supports = dict(part.supports)
         self._anchors()
         self._cases()
         self._reach()
         # ---- solver
         active = ~void
-        self.fe_solver = Solver(shape, h, self.C, part.supports, active=active,
+        self.fe_solver = Solver(shape, h, self.C, self.supports, active=active,
                                 backend=os.environ.get("NOX_TOPO_BACKEND", s.backend), log=log, mg_tol=s.mg_tol)
         self.KE = self.fe_solver.KE
         # ---- reference compliances (full solid)
@@ -381,23 +384,24 @@ class Layout:
         fixed_n = part.supports[main].any(1).reshape(nshape)
         nx, ny, nz = self.shape
         origin = np.asarray(part.origin)
-        tied = held = 0
+        held_b, free_b = [], []
         for b in range(1, self.nbody + 1):
             cells = self.body_lab == b
             if cells.sum() < s.tie_min_cells:
                 continue
-            bn = self._node_mask(cells)
-            if (bn & fixed_n).any():
-                held += 1
-                continue
+            (held_b if (self._node_mask(cells) & fixed_n).any() else free_b).append(b)
+
+        def ties(b, support, tag):
+            cells = self.body_lab == b
             an = self._node_mask(cells & self.anchor)
-            nodes = np.where((an if an.any() else bn).ravel())[0]
+            nodes = np.where((an if an.any() else self._node_mask(cells)).ravel())[0]
             P = np.stack(np.unravel_index(nodes, nshape), 1) * h + origin
             c = P.mean(0)
             for ax in range(3):
                 F = np.zeros(part.ndof)
                 F[3 * nodes + ax] = 1.0 / len(nodes)
-                self.cases.append(_Case(f"tie b{b} f{'xyz'[ax]}", F, F, main, None, s.tie_weight, True, None, nodes))
+                self.cases.append(_Case(f"{tag} b{b} f{'xyz'[ax]}", F, F, support, None, s.tie_weight, True, None,
+                                        nodes))
             if s.tie_moments:
                 r = P - c
                 rr = (r ** 2).sum()
@@ -409,12 +413,41 @@ class Layout:
                         F = np.zeros(part.ndof)
                         for q in range(3):
                             F[3 * nodes + q] = f[:, q]
-                        self.cases.append(_Case(f"tie b{b} m{'xyz'[ax]}", F, F, main, None, s.tie_weight, True, None,
-                                                nodes))
-            tied += 1
+                        self.cases.append(_Case(f"{tag} b{b} m{'xyz'[ax]}", F, F, support, None, s.tie_weight, True,
+                                                None, nodes))
+        for b in free_b:
+            ties(b, main, "tie")
+        n_tie = len(self.cases) - n_real
+        # gate ties (masked erosion): a held drawn body thinner than the solid gate's erosion keeps no core of its own
+        # there, so the gate counts it only where generated material covers it. In the eroded realization such a body
+        # is credited by its cover (x_tilde_c = conv(x on design) / conv(design): the density of the design material
+        # next to it), and a second tie set holds the largest unheld body instead of the support: every other unheld
+        # body must then join it through generated material, not through the thin plate or the ground.
+        self.cover = np.zeros(self.nel, bool)
+        self.gate_anchor = None
+        n_gate = 0
+        if s.erosion == "masked" and s.gate_ties and len(free_b) >= 2:
+            for b in held_b:
+                cells3 = (self.body_lab == b).reshape(self.shape)
+                own = float(ndi.distance_transform_edt(np.pad(cells3, 1))[1:-1, 1:-1, 1:-1].max()) * h
+                if own <= s.gate_thin_mm + 0.5 * h:
+                    self.cover |= cells3.ravel()
+            if self.cover.any():
+                a = max(free_b, key=lambda b: int((self.body_lab == b).sum()))
+                fx = np.zeros((part.nn, 3), bool)
+                fx[self._node_mask(self.body_lab == a).ravel()] = True
+                self.supports["_gate"] = fx
+                self.gate_anchor = a
+                for b in free_b:
+                    if b != a:
+                        ties(b, "_gate", "gate")
+                n_gate = len(self.cases) - n_real - n_tie
+                self.anchor = self.anchor & ~self.cover
+                self.log(f"layout: gate ties: held bodies thinner than {s.gate_thin_mm} mm ({int(self.cover.sum()):,} "
+                         f"cells) count by their cover; {len(free_b) - 1} bodies tied to body {a}")
         self.n_real = n_real
-        self.log(f"layout: {n_real} load cases + {len(self.cases) - n_real} tie cases ({tied} bodies tied, "
-                 f"{held} held by support '{main}')")
+        self.log(f"layout: {n_real} load cases + {n_tie} tie cases ({len(free_b)} bodies tied, {len(held_b)} held by "
+                 f"support '{main}') + {n_gate} gate ties")
 
     # -------------------------------------------------------------------------------------- reachability
     def _reach(self):
@@ -493,12 +526,19 @@ class Layout:
             xd[self.design] = x
             xte = self.filt(xd) / self.den_e
         He, dHe = project(xte, beta, ee)
+        dHc = None
+        if self.cover.any():
+            xd = np.zeros(self.nel)
+            xd[self.design] = x
+            xc = self.filt(xd) / self.den_c
+            Hc, dHc = project(xc, beta, ee)
+            He = np.where(self.cover, Hc, He)
         Hn, dHn = project(xt, beta, en)
         Hd, dHd = project(xt, beta, ed)
         rho_e = np.where(self.anchor, 1.0, np.where(self.void, 0.0, He))
         rho_n = np.where(self.solid, 1.0, np.where(self.void, 0.0, Hn))
         rho_d = np.where(self.solid, 1.0, np.where(self.void, 0.0, Hd))
-        return dict(xt=xt, xte=xte, rho_e=rho_e, rho_n=rho_n, rho_d=rho_d, dHe=dHe, dHn=dHn, dHd=dHd, Hn=Hn)
+        return dict(xt=xt, xte=xte, dHc=dHc, rho_e=rho_e, rho_n=rho_n, rho_d=rho_d, dHe=dHe, dHn=dHn, dHd=dHd, Hn=Hn)
 
     def _back(self, g_xt):
         """d/dx_tilde -> d/dx on the design cells (filter transpose; the kernel is symmetric)."""
@@ -514,7 +554,17 @@ class Layout:
     def grad_eroded(self, f, g_rho):
         """dJ/d rho_e (nel,) -> dJ/dx on the design cells through the eroded projection and filter."""
         m_e = self.design | (self.skin if self.s.erosion == "anchored" else np.zeros(self.nel, bool))
-        return self._back_e(np.where(m_e, g_rho * f["dHe"], 0.0))
+        d = self._back_e(np.where(m_e, g_rho * f["dHe"], 0.0))
+        if f.get("dHc") is not None:
+            d = d + self.filt(np.where(self.cover, g_rho * f["dHc"], 0.0) / self.den_c)[self.design]
+        return d
+
+    @property
+    def den_c(self):
+        """denominator of the cover filter: kernel weight of the design cells, clamped at 0.05."""
+        if getattr(self, "_den_c", None) is None:
+            self._den_c = np.maximum(self.filt(self.design.astype(float)), 0.05)
+        return self._den_c
 
     # ---------------------------------------------------------------------------------------- compliance
     def _compliance(self, rho_e, need_grad=True):

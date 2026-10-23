@@ -330,6 +330,67 @@ def _cut_part():
     return p
 
 
+def _plate_part():
+    """a thin held plate (2 mm, x 0..2, supported) and two pads (x 20..24): gate ties are active."""
+    import manifold3d as mf
+    from .part import Part
+    box = lambda x0, x1, y0, y1, z0, z1: mf.Manifold.cube([x1 - x0, y1 - y0, z1 - z0]).translate([x0, y0, z0])
+    p1, p2 = box(20, 24, 1, 7, 2, 8), box(20, 24, 13, 19, 2, 8)
+    p = Part("platemini", 1.0, box(0, 2, 0, 20, 0, 10) + p1 + p2, box(100, 101, 100, 101, 100, 101),
+             box(0, 24, 0, 20, 0, 10), log=lambda s: None)
+    p.support("default", box(-1, 1.0, -1, 21, -1, 11))
+    p.load("down 1", p1, (0, 0, -10.0))
+    p.load("down 2", p2, (0, 0, -10.0))
+    return p
+
+
+def t_gate_ties():
+    """gate ties: the 2 mm held plate counts by its cover, the second pad is tied to the first. Gradient through the
+    cover filter vs finite differences, and a bridge between the pads must beat two separate legs to the plate."""
+    try:
+        p = _plate_part()
+        s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False)
+        L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
+        ok_setup = L.cover.any() and L.gate_anchor is not None and any(c.support == "_gate" for c in L.cases)
+        rng = np.random.default_rng(7)
+        x = rng.uniform(0.2, 0.8, L.nd)
+        beta = 4.0
+
+        def J(xx):
+            f = L.fields(xx, beta)
+            comp, _ = L._compliance(f["rho_e"], need_grad=False)
+            return L._objective(comp)[0]
+        f = L.fields(x, beta)
+        comp, (U, E) = L._compliance(f["rho_e"])
+        Jv, dJdc, r = L._objective(comp)
+        dx = L.grad_eroded(f, L._grad_rho_e(f["rho_e"], U, dJdc))
+        cen = p.cell_centres()[L.design]
+        near = np.where(cen[:, 0] < 4.5)[0]                                 # cells that feed the plate's cover
+        idx = np.r_[rng.choice(near, 4, replace=False), rng.choice(L.nd, 2, replace=False)]
+        errs = []
+        for i in idx:
+            e = 1e-4
+            xp, xm = x.copy(), x.copy()
+            xp[i] += e
+            xm[i] -= e
+            fd = (J(xp) - J(xm)) / (2 * e)
+            errs.append(abs(fd - dx[i]) / max(abs(fd), 1e-3 * np.abs(dx).max()))
+        # two legs (pad -> plate) vs the same legs plus a bridge between the pads: the gate ties must see the bridge
+        legs = (((np.abs(cen[:, 1] - 4) < 3) | (np.abs(cen[:, 1] - 16) < 3)) & (np.abs(cen[:, 2] - 5) < 3))
+        bridge = legs | ((cen[:, 0] > 15) & (np.abs(cen[:, 2] - 5) < 3))
+        gate = np.array([c.support == "_gate" for c in L.cases])
+        cg = {}
+        for kind, m in (("legs", legs), ("bridge", bridge)):
+            comp, _ = L._compliance(L.fields(np.where(m, 1.0, 0.0), 32.0)["rho_e"], need_grad=False)
+            cg[kind] = (comp / L.c_ref)[gate].max()
+        check("gate ties: cover gradient exact, a bridge between pads beats legs to the thin plate",
+              ok_setup and max(errs) < 1e-3 and cg["legs"] > 50 * cg["bridge"],
+              f"max rel err {max(errs):.1e}; worst gate tie ratio legs {cg['legs']:.3g}, bridge {cg['bridge']:.3g}")
+    except Exception as e:
+        traceback.print_exc()
+        check("gate ties", False, str(e))
+
+
 def t_masked_neck():
     """the reason for the drawn-masked eroded filter: a pad joined by a 2 mm generated neck that runs along a cut must
     open a gap in the eroded design (eroded compliance >> a full-width root), while the full-width root keeps its own
@@ -377,7 +438,7 @@ def t_end_to_end():
 def main():
     quick = "--quick" in sys.argv
     t0 = time.time()
-    for t in (t_ke, t_voxelise, t_matvec, t_transfer, t_galerkin, t_mg_vs_direct, t_mma, t_calibration, t_gradients, t_masked_neck, t_neck):
+    for t in (t_ke, t_voxelise, t_matvec, t_transfer, t_galerkin, t_mg_vs_direct, t_mma, t_calibration, t_gradients, t_masked_neck, t_gate_ties, t_neck):
         t()
     if not quick:
         t_end_to_end()
