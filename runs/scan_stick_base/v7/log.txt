@@ -90,3 +90,8 @@ it  76 beta   32 J   2.3940 vol 0.0855 (dil 0.2148 g +0.002) grey  0.9% ch 0.100
 layout: stopped (grey) at it 76, beta 32, 1873 s
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 1929 s, peak 5.635872 GB
+build: surface at pitch 0.333 mm (x6), generated field 205.18 cm3, mesh 1,515,296 faces, 96 s
+solid check: FAIL {"bodies_plain": 5, "bodies_eroded": 1, "eroded_volumes_mm3": [170356.9], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 35, "ok": false}
+function check: {'drawn_missing_mm3': -0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.58 in 'head impact 50 g 1' at [13.5, 11.0, 45.0]
+RESULT {"name": "scan_stick_base", "solid_ok": false, "mass_g": 290.71, "worst": 0.576, "function_ok": true, "bodies": 1}
