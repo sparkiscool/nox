@@ -100,3 +100,4 @@ it  11 beta    4 J   0.4236 vol 0.0681 (dil 0.1076 g +0.001) grey  8.3% ch 0.100
 it  12 beta    4 J   0.3828 vol 0.0679 (dil 0.1067 g -0.008) grey  8.0% ch 0.100 worst tie b3 mz 80.5 17.8s
 it  13 beta    4 J   0.3723 vol 0.0688 (dil 0.1067 g -0.007) grey  7.9% ch 0.100 worst tie b3 mz 70.9 17.9s
 it  14 beta    4 J   0.3389 vol 0.0688 (dil 0.1064 g -0.010) grey  7.8% ch 0.100 worst drop on lidar -z 150 N 71.6 18.0s
+it  15 beta    4 J   0.3124 vol 0.0697 (dil 0.1067 g -0.007) grey  7.7% ch 0.100 worst drop on lidar -z 150 N 63.8 18.0s
