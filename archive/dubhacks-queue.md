@@ -1,3 +1,5 @@
+> Archived 23 Oct 2026: DubHacks (17 Oct) is over and Scout v2 is retired. History only; the artifact and laptop paths below no longer apply. Live state: `nox/current-parts.md`.
+
 # DubHacks print queue (17 Oct 2026; hand-off = Nox Print Files 17 Oct 15:10; state moved to current-parts 15:40; supports rule 16:38; orientation rule 18:30; receiver v3.4 in row 1, 18 Oct 00:20; stand v5e prints row 8, 01:15; stand v6 all printed, rows 8 / 8b, files saved 19 Oct 19:40; stand v7 enclosure: rows 8 / 8b updated, row 8c added, 19 Oct 21:35; **20 Oct: rows 8 / 8b / 8c moved to the v7b files (strict solid check) and bracket_e v8 topology run 3; 14:45: bracket_e v8 pulled (pads on necks), row 8c prints bracket_e v7c; 17:55: row 8c prints bracket_jA v8 (topology); 18:25: row 8 prints bar_half v8 (topology)**)
 
 **Priority (Spark 16 Oct 23:58): the Scout flown at DubHacks is v2.** Scout v2 flight parts print first; box parts (funnel panels) only fill idle printer time. v1 stays intact until every v2 flight part is printed and fit-checked (v1 is the only fallback: same arm plate and electronics).

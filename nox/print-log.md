@@ -6,7 +6,7 @@ Every print job, newest first. Rule (Spark, 5 Oct 13:47): add a row the moment S
 
 **One Bambu Studio window per print (Spark, 11 Oct 13:56; 17 Oct 15:34):** never launch Bambu Studio while it is running (an "open app" call starts a second copy; 9 piled up on 17 Oct): click the open window instead. Before opening or slicing the next print, close every other Bambu Studio project window / print tab (save first if unsaved), so only the job being sent is open. Several open projects crashed the PC on 11 Oct.
 
-**Supports on every part (Spark, 17 Oct 16:36):** tree(auto), enabled globally, none switched off per object. Rule in `nox/dubhacks-queue.md`.
+**Supports on every part (Spark, 17 Oct 16:36):** tree(auto), enabled globally, none switched off per object. Rule in `docs/printing.md`.
 
 **Remote typing (18 Oct 01:25, 01:37, 05:13):** the remote "type" action pastes through the shared clipboard, so a path typed into a Bambu dialog can come out as whatever Spark last copied. Backslash paths fail most often; a bare file name (dialog already in the right folder) or forward slashes go through. Zoom on the file name field before every Enter; one bad name was caught twice that night and twice more on the 18th.
 
