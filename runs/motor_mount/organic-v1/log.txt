@@ -49,3 +49,13 @@ it  38 beta    2 J   2.1386 vol 0.1886 (dil 0.2751 g -0.001) grey 49.1% ch 0.100
 it  39 beta    2 J   2.1107 vol 0.1889 (dil 0.2751 g -0.000) grey 48.9% ch 0.100 worst tie b3 mz 149 1.7s
 layout: beta 2 done: eroded design 9 bodies, main 52.6%; drawn bodies outside the main body: 4
 it  40 beta    4 J  26.5719 vol 0.1624 (dil 0.3438 g -0.123) grey 37.8% ch 0.100 worst tie b3 mz 1.99e+03 1.8s
+it  41 beta    4 J  11.9075 vol 0.1925 (dil 0.3817 g -0.026) grey 40.7% ch 0.100 worst yaw torque 0.35 Nm 868 2.1s
+it  42 beta    4 J   8.5480 vol 0.2032 (dil 0.3883 g -0.009) grey 41.0% ch 0.100 worst yaw torque 0.35 Nm 683 1.7s
+it  43 beta    4 J   7.1686 vol 0.2083 (dil 0.3902 g -0.005) grey 41.0% ch 0.100 worst yaw torque 0.35 Nm 585 1.9s
+it  44 beta    4 J   6.2903 vol 0.2111 (dil 0.3908 g -0.003) grey 40.8% ch 0.100 worst yaw torque 0.35 Nm 496 1.6s
+it  45 beta    4 J   5.6624 vol 0.2131 (dil 0.3911 g -0.002) grey 40.7% ch 0.100 worst yaw torque 0.35 Nm 424 1.7s
+it  46 beta    4 J   5.1571 vol 0.2149 (dil 0.3913 g +0.042) grey 40.7% ch 0.100 worst yaw torque 0.35 Nm 371 1.7s
+it  47 beta    4 J   8.4575 vol 0.1959 (dil 0.3732 g -0.006) grey 39.3% ch 0.100 worst tie b3 mz 603 1.8s
+it  48 beta    4 J   7.3726 vol 0.1999 (dil 0.3748 g -0.002) grey 39.3% ch 0.100 worst yaw torque 0.35 Nm 563 1.6s
+it  49 beta    4 J   6.8631 vol 0.2013 (dil 0.3750 g -0.001) grey 39.0% ch 0.100 worst yaw torque 0.35 Nm 503 1.9s
+it  50 beta    4 J   6.4045 vol 0.2026 (dil 0.3750 g -0.001) grey 38.6% ch 0.100 worst yaw torque 0.35 Nm 475 1.7s
