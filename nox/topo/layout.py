@@ -64,6 +64,7 @@ class Settings:
     erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
     gate_ties: bool = True              # thin held drawn bodies count by their cover + ties to one body (masked only)
     gate_thin_mm: float = 2.0           # the solid gate's erosion cap: held bodies with half thickness under it are thin
+    held_ties: bool = True              # held bodies (each on its own support patch) tied to one hub body (see _cases)
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
     # finish (23 Oct, Spark: the whole part smooth; only flat contact faces and mounting holes geometric).
@@ -468,9 +469,24 @@ class Layout:
                 n_gate = len(self.cases) - n_real - n_tie
                 self.log(f"layout: gate ties: held bodies thinner than {s.gate_thin_mm} mm ({int(self.cover.sum()):,} "
                          f"cells) count by their cover; {len(free_b) - 1} bodies tied to body {a}")
+        # held ties: a body the main support holds on its own patch (a bolt boss on its seat) needs no material to
+        # stay put, so a boss the load cases do not lean on is left loose (holder smoke run: one corner boss never
+        # joined). With two or more held bodies, a third tie set holds one hub body (the largest unheld body, else the
+        # largest held one) and loads every other held body with 3 forces + 3 moments: each must join the hub.
+        n_held = 0
+        if s.held_ties and len(held_b) >= 2:
+            size = lambda b: int((self.body_lab == b).sum())
+            hub = max(free_b, key=size) if free_b else max(held_b, key=size)
+            fx = np.zeros((part.nn, 3), bool)
+            fx[self._node_mask(self.body_lab == hub).ravel()] = True
+            self.supports["_hub"] = fx
+            for b in held_b:
+                if b != hub:
+                    ties(b, "_hub", "held")
+            n_held = len(self.cases) - n_real - n_tie - n_gate
         self.n_real = n_real
         self.log(f"layout: {n_real} load cases + {n_tie} tie cases ({len(free_b)} bodies tied, {len(held_b)} held by "
-                 f"support '{main}') + {n_gate} gate ties")
+                 f"support '{main}') + {n_gate} gate ties + {n_held} held ties")
 
     # -------------------------------------------------------------------------------------- reachability
     def _reach(self):
