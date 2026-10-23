@@ -1,13 +1,20 @@
 """The old engine's benchmark holder (noxopt_bench.holder + noxopt_demo.py bodies), same features and load set:
 60 x 40 x 30 mm, 4 bolt bosses (bottom corners), pack pad (top), 2 hook roots (sides), camera pad (front), battery
 channel keep-out; supports: bolts / grab (hooks) / pad; 28 cases (14 misuse directions at 25 g with the pack, flight,
-landing, hand and retention loads, catcher grab, pad push). Units mm, N."""
+landing, hand and retention loads, catcher grab, pad push). Units mm, N.
+
+Changes for the solid gate (23 Oct, organic test part):
+  * bolt bosses: 6 x 6 mm squares round the 3.2 mm holes left 1.4 mm walls, which the gate's 0.9 mm erosion cut off
+    (topo-v1: 4 boss cores of 3.4 mm3 split off, FAIL; the self-test smoke run never joined one corner boss). Now
+    round bosses of 10 mm diameter, 6 mm tall: 3.4 mm walls, the largest round boss the 60 x 40 envelope holds at the
+    corner bolts (5 mm from both edges). Load set, supports (the 6 x 6 seats), keep-outs and envelope unchanged."""
 import numpy as np
 import manifold3d as mf
 from ..part import Part
 
 BOLTS = [(x, y) for x in (5, 55) for y in (5, 35)]
 M_PACK = 0.165                                   # kg on the pad
+BOSS_R = 5.0                                     # bolt boss radius: 3.4 mm wall round the 1.6 mm hole
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -23,7 +30,7 @@ def bodies():
     hookL = box(26, 34, 0, 3, 14, 24)
     hookR = box(26, 34, 37, 40, 14, 24)
     cam = box(56, 60, 15, 25, 8, 18)
-    bosses = [box(x - 3, x + 3, y - 3, y + 3, 0, 6) for x, y in BOLTS]
+    bosses = [cyl(x, y, 0, 6, BOSS_R) for x, y in BOLTS]
     drawn = pad + hookL + hookR + cam
     for b in bosses:
         drawn += b
