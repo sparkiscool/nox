@@ -1,0 +1,20 @@
+=== holder: h 1.0, generated 4.7 cm3, min member 3.2 mm, cores 4
+layout: WARNING the solid gate wants 5.00 mm members round the drawn bodies (2.0 mm erosion), the design space routes at most 4.44 mm to every body: using 4.44 mm; the gate may fail on the setup
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (2.82 cm3); 0.74 cm3 of drawn volume opened to the design
+layout: min member 4.44 mm (rods), plates 4.03 mm, filter radius 4.58 mm = 2.29 cells, erosion depth 1.22 mm; volfrac 0.118 of 5,763 design cells
+layout: WARNING nearly mirrored in x (0.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: 8 drawn bodies (353 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (216 cells) count by their cover; 3 bodies tied to body 3
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts') + 18 gate ties + 24 held ties
+fem: grid (32, 24, 24) = 18,432 elements, 25,023 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0972 (dil 0.1183 g -0.177) grey 41.2% ch 0.100 worst gate b8 fz 3.76e+03 2.0s
+it   2 beta    1 J   4.5456 vol 0.1100 (dil 0.1323 g -0.080) grey 52.4% ch 0.100 worst held b2 mz 2.8e+03 2.5s
+it   3 beta    1 J  11.8655 vol 0.1095 (dil 0.1314 g -0.086) grey 46.1% ch 0.100 worst tie b8 my 6.79e+03 2.1s
+it   4 beta    1 J   3.9654 vol 0.1057 (dil 0.1273 g -0.115) grey 50.3% ch 0.100 worst held b2 mz 2.18e+03 2.2s
+it   5 beta    1 J  11.1385 vol 0.1051 (dil 0.1262 g -0.122) grey 45.4% ch 0.100 worst tie b8 my 6.41e+03 2.0s
+it   6 beta    1 J   4.3923 vol 0.0940 (dil 0.1133 g -0.209) grey 42.7% ch 0.100 worst held b1 mz 2.27e+03 2.0s
+it   7 beta    1 J   2.8806 vol 0.1048 (dil 0.1259 g -0.121) grey 46.9% ch 0.100 worst tie b8 my 1.55e+03 2.1s
+it   8 beta    1 J   2.2038 vol 0.1026 (dil 0.1233 g -0.139) grey 47.0% ch 0.100 worst held b2 mz 1.26e+03 2.1s
+it   9 beta    1 J   1.3813 vol 0.1113 (dil 0.1333 g -0.069) grey 51.0% ch 0.100 worst tie b8 my 592 2.4s
+it  10 beta    1 J   1.0977 vol 0.1176 (dil 0.1405 g -0.019) grey 53.4% ch 0.100 worst held b2 mz 472 2.0s
