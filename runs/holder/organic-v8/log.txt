@@ -200,3 +200,13 @@ it  97 beta   32 J 1386.4945 vol 0.1229 (dil 0.2635 g +0.024) grey  3.6% ch 0.10
 it  98 beta   32 J 1820.9073 vol 0.1095 (dil 0.2516 g -0.022) grey  3.4% ch 0.100 worst tie b3 mx 358 32.8s
 it  99 beta   32 J 313.2814 vol 0.1243 (dil 0.2646 g +0.028) grey  3.6% ch 0.100 worst tie b8 fx 57.4 34.2s
 it 100 beta   32 J 1760.8424 vol 0.1092 (dil 0.2521 g -0.020) grey  3.3% ch 0.100 worst tie b3 mx 370 34.1s
+it 101 beta   32 J  41.9820 vol 0.1232 (dil 0.2617 g -0.004) grey  3.6% ch 0.100 worst poke cam y 8.02 34.6s
+it 102 beta   32 J 217.4455 vol 0.1166 (dil 0.2572 g -0.021) grey  3.5% ch 0.100 worst tie b3 mx 41.5 32.6s
+it 103 beta   32 J  38.6594 vol 0.1217 (dil 0.2596 g -0.012) grey  3.5% ch 0.100 worst poke cam y 7.61 32.3s
+it 104 beta   32 J  27.7244 vol 0.1215 (dil 0.2597 g -0.012) grey  3.5% ch 0.100 worst poke cam y 5.17 31.9s
+it 105 beta   32 J  22.5228 vol 0.1231 (dil 0.2615 g -0.005) grey  3.6% ch 0.100 worst poke cam y 4.22 33.0s
+it 106 beta   32 J  20.5401 vol 0.1235 (dil 0.2622 g +0.008) grey  3.6% ch 0.100 worst poke cam y 3.68 31.1s
+it 107 beta   32 J  22.2565 vol 0.1223 (dil 0.2605 g +0.002) grey  3.6% ch 0.100 worst poke cam y 4 32.2s
+it 108 beta   32 J  22.7487 vol 0.1219 (dil 0.2598 g -0.001) grey  3.6% ch 0.100 worst poke cam y 4.06 30.2s
+it 109 beta   32 J  22.0376 vol 0.1220 (dil 0.2599 g -0.000) grey  3.6% ch 0.100 worst poke cam y 3.91 31.7s
+it 110 beta   32 J  21.6612 vol 0.1220 (dil 0.2599 g -0.000) grey  3.6% ch 0.100 worst poke cam y 3.81 33.0s
