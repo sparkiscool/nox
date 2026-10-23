@@ -64,6 +64,11 @@ class Settings:
     erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
     gate_ties: bool = True              # thin held drawn bodies count by their cover + ties to one body (masked only)
     gate_thin_mm: float = 2.0           # the solid gate's erosion cap: held bodies with half thickness under it are thin
+    # case normalisation: "frame" divides every case by its own compliance on the first frame the run reaches (the
+    # warm start of a warm-started run, else the design at the first beta step), so each case counts by how much it
+    # worsens from a frame; "solid" divides by the full solid only (concentrated loads and ties then swamp the
+    # distributed cases: holder organic-v7, each misuse case 1e-4 of the objective, the worst index in misuse 10 / 12)
+    case_norm: str = "frame"
     held_ties: bool = True              # held bodies (each on its own support patch) tied to one hub body (see _cases)
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
@@ -318,6 +323,8 @@ class Layout:
         if bad:
             raise ValueError(f"layout: zero compliance of the full solid for {bad}: the load sits on fixed nodes")
         self.c_ref = c_ref
+        self.normed = False
+        self.warm = False
         self.hist = []
         self.scale = None
         self.vlim = self.volfrac
@@ -742,7 +749,7 @@ class Layout:
         np.savez_compressed(tmp, x=self.x, it=it, bi=bi, since=since, vlim=self.vlim,
                             scale=self.scale if self.scale else 0.0, hist=np.array(self.hist, float),
                             xold1=st["xold1"], xold2=st["xold2"], low=st["low"], upp=st["upp"], k=st["k"],
-                            stopped=stopped)
+                            stopped=stopped, c_ref=self.c_ref, normed=self.normed)
         os.replace(tmp, path)
 
     def _load(self, path):
@@ -751,6 +758,9 @@ class Layout:
         self.vlim = float(ck["vlim"])
         self.scale = float(ck["scale"]) or None
         self.hist = [tuple(r) for r in ck["hist"]]
+        if "c_ref" in ck.files and len(ck["c_ref"]) == len(self.c_ref):
+            self.c_ref = ck["c_ref"].copy()
+            self.normed = bool(ck["normed"])
         self.mma.load_state(dict(xold1=ck["xold1"], xold2=ck["xold2"], low=ck["low"], upp=ck["upp"], k=ck["k"]))
         return int(ck["it"]), int(ck["bi"]), int(ck["since"]), str(ck["stopped"])
 
@@ -764,6 +774,7 @@ class Layout:
             ijk[:, a] = np.clip(ijk[:, a], 0, other_part.shape[a] - 1)
         flat = np.ravel_multi_index(ijk.T, other_part.shape)
         self.x = np.clip(np.asarray(other_x_full)[flat], 0.0, 1.0)
+        self.warm = True
         self.log(f"layout: warm start from a {other_part.shape} grid (h {other_part.h}): mean x {self.x.mean():.3f}")
 
     def x_hat(self):
@@ -796,6 +807,8 @@ class Layout:
             x = self.symmetrise_design(self.x)
             f = self.fields(x, beta)
             comp, (U, E) = self._compliance(f["rho_e"], rho_g=f["rho_g"])
+            if s.case_norm == "frame" and not self.normed and (self.warm or bi > int(beta_start)):
+                self._renorm(comp)
             J, dJdc, r = self._objective(comp)
             if self.scale is None:
                 self.scale = 10.0 / J
@@ -862,6 +875,17 @@ class Layout:
             self._save(checkpoint, it, bi, since, self.stopped)
         log(f"layout: stopped ({self.stopped}) at it {it}, beta {s.betas[bi]}, {time.time() - t0:.0f} s")
         return self.final(bi)
+
+    def _renorm(self, comp):
+        """case_norm "frame": every case from now on counts by its compliance over its value on this design."""
+        r = comp / self.c_ref
+        self.c_ref = comp.copy()
+        self.normed = True
+        self.scale = None
+        self.mma.reset()
+        o = np.argsort(-r)[:3]
+        self.log("layout: cases renormalised on this frame (case_norm frame); largest solid ratios were "
+                 + ", ".join(f"{self.cases[q].name} {r[q]:.3g}" for q in o))
 
     def _reset_vlim(self, beta):
         """V* at the fixed point of the volume-limit update for the current design at this beta. A beta step (or a warm
