@@ -23,14 +23,16 @@ thread: `thread_cut.scad` exports the thread body every run cuts; `thread_test` 
 ## Parts (printed, PETG; every one a nox/topo part except the thread ring)
 | Part | File (`print/`) | What |
 |---|---|---|
-| base | `scan_stick_base_v2.stl` | thread socket at the bottom, Pi standoffs, panel strip, pack ledge / lip / rails / strap bars, shelf plate, top flange with 4x M4 heat-set inserts; the column between them generated (`base_topo_v2.py`) |
-| head | `scan_stick_head_v4.stl` | bolt flange, 4 L2 pads with drawn gussets, camera block; generated between (`head_topo_v4.py`) |
-| cam | `scan_stick_cam_v2.stl` | 2 bolt pads to the head's block, 4 posts on the DECXIN 28 x 28 M2 pattern with drawn gussets; generated web (`cam_topo_v2.py`) |
+| base | `scan_stick_base_v12.stl` | 3/4-5 ACME socket in a Ø40 boss, drawn Ø36 tube column (the cables run up its bore), top flange with 4x M4 heat-set inserts; Pi standoffs + panel strip on +X, pack ledge / lip / rails / 5 mm back plate with strap slots on -X, UBEC / buck shelf on -Y; the webs between them generated (`base_topo_v7.py` layout, `base_topo_v12.py` rebuild with the exact cuts) |
+| head | `scan_stick_head_v9.stl` | bolt flange with a Ø10 cable hole, 4 L2 pads with drawn gussets, camera block; four generated arms between (`head_topo_v8.py` layout, `head_topo_v9.py` rebuild) |
+| cam | `scan_stick_cam_v4.stl` | 2 bolt pads to the head's block, 4 Ø12 posts on the DECXIN 28 x 28 M2 pattern with drawn gussets; generated web (`cam_topo_v4.py`) |
 | thread test | `scan_stick_thread_test_v1.stl` | ring with the base's thread: print first, screw onto the pole, tune `acme_clear` |
 
-Results, strength and print data per part: `runs/scan_stick_base/v2/summary.md`, `runs/scan_stick/v4/summary.md`,
-`runs/scan_stick_cam/v2/summary.md`. Head v1 (drawn), v2 (noxopt, no gussets), the clamp cradle v1 and cam v1 are
-retired; v3 was stopped at the layout change.
+Results, strength and print data per part: `runs/scan_stick_base/v12/summary.md`, `runs/scan_stick/v9/summary.md`,
+`runs/scan_stick_cam/v4/summary.md` (361 g printed, M; worst indices 0.56 / 0.36 / 0.28, F). Retired: head v1 (drawn),
+v2 (noxopt, no gussets), v3 (stopped at the layout change), v4-v7 (gate FAILs, `runs/scan_stick/`), the clamp cradle v1,
+cam v1-v3, base v2-v11 (`runs/scan_stick_base/`; v8-v11 were feather FAILs at the boss / tube step, fixed by the Ø40 boss).
+Every FAILED run keeps its folder and summary; only the READY files are in `print/`.
 
 ## Decisions (DEFAULT unless Spark says otherwise)
 - **One unit on the pole tip** (Spark 23 Oct): the base's 3/4-5 ACME female socket is the only pole interface; no clamp
@@ -60,12 +62,12 @@ in each summary.
 1. Thread test ring on the pole tip. Light drag by hand = right. Tight: `acme_clear` + 0.1, re-export the thread
    (`thread_cut.scad`) and rerun the base.
 2. Heat-set inserts: 4x M4 in the base flange, 2x M3 in the head's camera block.
-3. Base onto the pole. Pack on the ledge (lip at the bottom, rails each side), two straps through the bars. Pi on its
+3. Base onto the pole. Pack on the ledge (lip at the bottom, rails each side), two straps through the slots in the rails and the back plate. Pi on its
    4 standoffs (M2.5 x 6 self-tap), ports up. UBEC + 12 V buck zip-tied to the shelf. Switch / button / LED in the strip.
 4. Head onto the flange, 4x M4 x 12 from the top (counterbored, reachable before the L2 goes on). L2 on the pads, cable
    outlet over the -X notch, 4x M3 x 12 from below (driver clearance is cut under each pad). Camera on its 4 posts
    (M2 x 5), bracket on the block (2x M3 x 6).
-5. Ethernet L2 → Pi, L2 barrel → 12 V buck, camera USB → Pi, cables down the column.
+5. Ethernet L2 → Pi, L2 barrel → 12 V buck, camera USB → Pi: cables through the head's flange hole, down the tube bore and out of the 10 x 30 window at z 40-70 on -Y (the shelf side).
 6. `pi/install.sh` on the Pi. Wait ~10 s after power-up before recording (the L2 sends no points until warm).
 
 ## Open (measure or ask Spark)
