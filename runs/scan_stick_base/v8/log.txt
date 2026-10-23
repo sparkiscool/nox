@@ -6,3 +6,5 @@ layout: 4 drawn bodies (24,699 cells), held solid in every realization; eroded f
 layout: 67 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (56, 48, 88) = 236,544 elements, 226,980 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
+build: surface at pitch 0.333 mm (x6), generated field 205.83 cm3, mesh 1,517,036 faces, 103 s
+build: 2 shells, volumes [306959.2, -75068.1] mm3; dropped specks []; sealed cavities kept [75068.14] mm3
