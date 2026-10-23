@@ -74,3 +74,27 @@ it  57 beta    4 J   3.4177 vol 0.1527 (dil 0.3032 g -0.002) grey 30.6% ch 0.100
 it  58 beta    4 J   3.3521 vol 0.1531 (dil 0.3034 g -0.001) grey 30.6% ch 0.100 worst cable pull -y 20 N 400 1.5s
 it  59 beta    4 J   3.3094 vol 0.1534 (dil 0.3035 g -0.001) grey 30.6% ch 0.100 worst cable pull -y 20 N 399 1.4s
 it  60 beta    4 J   3.2710 vol 0.1536 (dil 0.3035 g -0.001) grey 30.6% ch 0.100 worst cable pull -y 20 N 398 1.3s
+it  61 beta    4 J   3.2354 vol 0.1538 (dil 0.3035 g +0.008) grey 30.5% ch 0.100 worst cable pull -y 20 N 398 1.7s
+it  62 beta    4 J   3.3496 vol 0.1518 (dil 0.3007 g -0.001) grey 30.2% ch 0.100 worst cable pull -y 20 N 401 1.6s
+layout: stopped (beta_stop) at it 62, beta 4, 108 s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+coarse stage done: 62 iterations, 125 s, peak 0.792232 GB
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 6.87 cells, erosion depth 1.37 mm; volfrac 0.174 of 68,278 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (7.3% of passive cells differ): no symmetry
+layout: 6 drawn bodies (12,110 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (1,820 cells) count by their cover; 3 bodies tied to body 1
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 88, 24) = 135,168 elements, 265,335 active dofs; backend direct (direct estimate 3.0 GB, budget 11.8 GB)
+layout: warm start from a (32, 48, 16) grid (h 1.5): mean x 0.191
+it   1 beta    4 J  10.0000 vol 0.1399 (dil 0.2956 g -0.194) grey 30.8% ch 0.100 worst gate b6 fx 1.06e+04 35.9s
+it   2 beta    4 J   6.2522 vol 0.1665 (dil 0.3518 g -0.041) grey 35.5% ch 0.100 worst gate b6 fx 6.55e+03 37.9s
+it   3 beta    4 J   3.8698 vol 0.1708 (dil 0.3530 g -0.037) grey 36.3% ch 0.100 worst gate b6 fx 3.98e+03 36.3s
+it   4 beta    4 J   2.3596 vol 0.1764 (dil 0.3570 g -0.026) grey 36.8% ch 0.100 worst gate b6 mz 2.43e+03 36.2s
+it   5 beta    4 J   1.6443 vol 0.1836 (dil 0.3603 g -0.017) grey 36.7% ch 0.100 worst gate b6 mz 1.5e+03 35.3s
+it   6 beta    4 J   1.2773 vol 0.1881 (dil 0.3606 g +0.005) grey 35.9% ch 0.100 worst cable pull -y 20 N 1.18e+03 34.1s
+it   7 beta    4 J   1.2790 vol 0.1880 (dil 0.3545 g -0.012) grey 34.9% ch 0.100 worst cable pull -y 20 N 1.16e+03 36.3s
+it   8 beta    4 J   1.1727 vol 0.1866 (dil 0.3516 g -0.020) grey 34.2% ch 0.100 worst cable pull -y 20 N 1.16e+03 35.8s
+it   9 beta    4 J   1.1268 vol 0.1932 (dil 0.3554 g -0.009) grey 34.0% ch 0.100 worst cable pull -y 20 N 1.15e+03 35.6s
+it  10 beta    4 J   1.1104 vol 0.1960 (dil 0.3567 g -0.006) grey 33.7% ch 0.100 worst cable pull -y 20 N 1.14e+03 36.3s
