@@ -1,6 +1,6 @@
 # Runs
 
-_34 runs · rebuilt 2026-10-23 16:02_
+_36 runs · rebuilt 2026-10-23 16:54_
 
 ## Latest per part
 
@@ -12,13 +12,14 @@ _34 runs · rebuilt 2026-10-23 16:02_
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
 | scan_stick | v1 | DONE | 86.8 (M) | · in no FE on v1 (drawn) | PASS | [runs/scan_stick/v1](runs/scan_stick/v1/summary.md) |
-| scan_stick_base | v10 | FAILED | 291.4 (M) | 0.57 in head impact 50 g | FAIL | [runs/scan_stick_base/v10](runs/scan_stick_base/v10/summary.md) |
+| scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v2 | FAILED | 5.5 (M) | ·  | FAIL | [runs/scan_stick_cam/v2](runs/scan_stick_cam/v2/summary.md) |
 
 ## All runs, newest first
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-23 16:50 | scan_stick_base | [v13](runs/scan_stick_base/v13/summary.md) | · | 328.1 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-23 08:10 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-23 08:10 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-23 08:10 | bracket_jA | [organic-v1](runs/bracket_jA/organic-v1/summary.md) | · | 43.5 (M) | · | PASS | · | · GB | · min | · |
@@ -32,6 +33,7 @@ _34 runs · rebuilt 2026-10-23 16:02_
 | 2026-10-23 08:10 | motor_mount | [topo-v3](runs/motor_mount/topo-v3/summary.md) | · | 17.2 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-23 | arm | [v5-layout](runs/arm/v5-layout/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v1](runs/scan_stick/v1/summary.md) | DONE | 86.8 (M) | · | PASS | head: lidar seat | · GB | · min | · |
+| 2026-10-23 | scan_stick | [v10](runs/scan_stick/v10/summary.md) | DONE | 40.0 (M) | 0.36 | PASS | -z (flange) | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v2](runs/scan_stick/v2/summary.md) | DONE | 61.9 (M) | 0.03 | PASS | lidar seat (4 pads) down | 3.5 (P) GB | 35 min | · |
 | 2026-10-23 | scan_stick | [v4](runs/scan_stick/v4/summary.md) | FAILED | 30.4 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v5](runs/scan_stick/v5/summary.md) | FAILED | 40.1 (M) | · | FAIL | · | · GB | · min | · |

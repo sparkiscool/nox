@@ -1,4 +1,4 @@
-scan_stick_base v12: ready to print
+scan_stick_base v12: retired (superseded by v14 after the review of PR 22: the Pi standoffs had no drawn tray, the lower -Y one and the -Y rail below z 68 were clipped to slivers by the envelope / UBEC keep-out). Was: ready to print
 Weight: 300.05 g (M), was 194.7 g (clamp cradle v1, M, retired; +105 g for the thread socket, the Ø36 tube column, the 5 mm pack back plate, the top flange and the impact cases)
 Strength: worst index 0.56 (F, as-built voxel recheck) in head impact 50 g 1 (-X) at the tube / Pi-pad web [13.5, 11.0, 45.0] mm (M); all 67 cases (E loads: pack 0.59 kg, Pi 0.08 kg and head 0.30 kg at 25 g in 14 dirs and 50 g impact in 6, 100 N flange side hits, 150 N drop on the head, 120 N strap tension, 50 N hand grabs, 100 N push on the ledge) ≤ 0.56: sturdy
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_base_v12.stl (the engine's pre-export count read 4 bodies on its own grid: 3 stray voxels at the Ø40 boss / tube step, gone on the exact file)
