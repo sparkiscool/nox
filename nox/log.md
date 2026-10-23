@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 23 Oct (env check): **Claude in Chrome handoff** (Spark): a GitHub action a cloud session cannot do goes to Spark as one paste-ready Claude in Chrome prompt (CLAUDE.md Git).
 - 23 Oct (env check): **`noxopt._voxelise` casts its Z rays in chunks of 20k**: all 425k rays of bar_half v8 at pitch 0.25 in one call took over 14 GB and was killed; now `solid_check.py` peaks at 2.45 GB (P) and bar_half v8 passes at the default pitch. Voxels identical to the old code on 4 parts (P); every file in `print/` rechecked with the same results (31 files, 25 PASS, the same 6 FAIL); `test_noxopt.py` PASS.
 - 23 Oct (scan stick chat): **scan stick assembly visual**: `nox/overseer/scan_stick/assembly_view.py` builds the motion artifact (`runs/scan_stick/v2/motion.html` + mp4 / gif / png) of every printed part on the pole with the L2, camera, Pi 5 and pack as context (sizes spec / P / E as tagged in the script).
 <<<<<<< HEAD

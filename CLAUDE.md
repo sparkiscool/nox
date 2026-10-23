@@ -39,3 +39,4 @@ Agents carry theirs in `.claude/agents/`; a session takes `.claude/settings.json
 - Commit messages: `<part> <version>: <what>` or `ckpt <n>`. Push after every commit. Never force-push `main`; never rewrite history on a shared branch.
 - No git LFS (blocked from cloud boxes): any single file under 50 MB (decimate a viewing mesh, zip a big file); commit a run's final mesh, not every checkpoint's.
 - Cloud boxes block GitHub GraphQL: every `gh pr ...` subcommand fails with 403. `gh api repos/sparkiscool/nox/...` (REST) works; `tools/pr.py` wraps open and merge. Branch deletes are refused from cloud boxes; the repo's auto-delete removes merged branches.
+- **A GitHub action a session cannot do** (branch deletes, repo settings, anything the proxy or the permission check refuses): give Spark one ready-to-paste prompt for Claude in Chrome in a code block (exact URLs, what to click, what to leave alone, what to check after), then carry on with the rest.
