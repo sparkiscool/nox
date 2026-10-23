@@ -32,3 +32,13 @@ it  18 beta    2 J   0.3819 vol 0.0986 (dil 0.1482 g -0.000) grey 27.4% ch 0.071
 it  19 beta    2 J   0.3819 vol 0.0987 (dil 0.1482 g -0.000) grey 27.4% ch 0.086 worst drop on head -z 150 N 128 24.2s
 it  20 beta    2 J   0.3819 vol 0.0988 (dil 0.1482 g -0.000) grey 27.3% ch 0.094 worst drop on head -z 150 N 128 27.7s
 layout: beta 2 done: eroded design 3 bodies, main 99.5%; drawn bodies outside the main body: 2
+it  21 beta    4 J   0.7302 vol 0.0795 (dil 0.1852 g -0.164) grey 21.3% ch 0.100 worst tie b3 fx 310 24.1s
+it  22 beta    4 J   0.3821 vol 0.0964 (dil 0.1991 g -0.101) grey 22.0% ch 0.100 worst drop on head -z 150 N 128 23.6s
+it  23 beta    4 J   0.3819 vol 0.0997 (dil 0.2004 g -0.095) grey 21.6% ch 0.051 worst drop on head -z 150 N 128 26.5s
+it  24 beta    4 J   0.3819 vol 0.1000 (dil 0.2005 g -0.095) grey 21.6% ch 0.037 worst drop on head -z 150 N 128 24.4s
+it  25 beta    4 J   0.3819 vol 0.1003 (dil 0.2007 g -0.094) grey 21.5% ch 0.045 worst drop on head -z 150 N 128 24.0s
+it  26 beta    4 J   0.3818 vol 0.1007 (dil 0.2008 g -0.051) grey 21.3% ch 0.055 worst drop on head -z 150 N 128 27.5s
+it  27 beta    4 J   0.3818 vol 0.1011 (dil 0.2010 g -0.051) grey 21.2% ch 0.067 worst drop on head -z 150 N 128 25.2s
+it  28 beta    4 J   0.3818 vol 0.1016 (dil 0.2012 g -0.050) grey 21.1% ch 0.075 worst drop on head -z 150 N 128 27.5s
+it  29 beta    4 J   0.3818 vol 0.1022 (dil 0.2014 g -0.048) grey 21.0% ch 0.088 worst drop on head -z 150 N 128 25.6s
+it  30 beta    4 J   0.3818 vol 0.1028 (dil 0.2017 g -0.047) grey 20.8% ch 0.082 worst drop on head -z 150 N 128 26.9s
