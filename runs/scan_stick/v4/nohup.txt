@@ -50,3 +50,7 @@ it  33 beta    2 J   0.0553 vol 0.0813 (dil 0.1071 g -0.001) grey 16.4% ch 0.100
 it  34 beta    2 J   0.0546 vol 0.0815 (dil 0.1072 g -0.001) grey 16.4% ch 0.100 worst gate b7 my 40.7 2.7s
 it  35 beta    2 J   0.0539 vol 0.0816 (dil 0.1072 g -0.001) grey 16.3% ch 0.100 worst gate b7 my 40.2 2.1s
 it  36 beta    2 J   0.0534 vol 0.0818 (dil 0.1072 g +0.004) grey 16.3% ch 0.100 worst gate b7 my 39.9 2.1s
+it  37 beta    2 J   0.0537 vol 0.0814 (dil 0.1067 g -0.001) grey 16.2% ch 0.100 worst gate b7 my 40.2 2.7s
+it  38 beta    2 J   0.0531 vol 0.0815 (dil 0.1067 g -0.001) grey 16.2% ch 0.100 worst gate b7 my 39.9 2.2s
+it  39 beta    2 J   0.0526 vol 0.0816 (dil 0.1067 g -0.001) grey 16.2% ch 0.100 worst gate b7 my 39.7 2.0s
+it  40 beta    2 J   0.0522 vol 0.0817 (dil 0.1067 g -0.001) grey 16.1% ch 0.100 worst gate b7 my 39.5 2.2s
