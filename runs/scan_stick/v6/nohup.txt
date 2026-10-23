@@ -1,0 +1,12 @@
+=== scan_stick_head: h 1.5, generated 12.0 cm3, min member 3.2 mm, cores 4
+scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 56,720 (191.4 cm3), drawn 5,572, void 68,780
+  support default: 2128 cells, 3192 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_head: grid (32, 32, 16) h 3.0 = 16,384 cells; design 7,185 (194.0 cm3), drawn 843, void 8,356
+  support default: 348 cells, 636 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.72 cells, erosion depth 1.37 mm; volfrac 0.062 of 7,185 design cells
+layout: WARNING filter radius 1.72 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in x (4.8% of passive cells differ): no symmetry
+layout: 4 drawn bodies (843 cells), held solid in every realization; eroded filter: masked
+layout: 47 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
+fem: grid (32, 32, 16) = 16,384 elements, 29,580 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)

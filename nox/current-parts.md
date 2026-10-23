@@ -32,7 +32,7 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 | Lidar mount | not started; lidar `dimensions.md` M (Unitree L2) and O | | **DESIGN** | none | | Generate with the new engine `nox/topo` (`from topo import Part, Settings, optimise`), never `noxopt`. Until it is on `main`, merge `origin/topo/new-engine` into the part branch first. Before READY, check the run used the newest `nox/topo` on `main` or that branch; if the engine changed after the run, rerun |
 | Scan stick head | `nox/overseer/scan_stick/scan_stick.md`, drawn features `scan_stick.scad` (part lidar_head), topology run `head_topo_run.py` | v2 (topology, 23 Oct; v1 drawn 86.8 g (M) not printed) | **READY** | `print/scan_stick_head_v2.stl` (lidar seat on the bed) | 61.9 (M) | worst 0.03 (F): rerun at 10 then 6 cm3 generated (E); measure the pole's lower tube OD (P) |
 | Scan stick thread test | same, part thread_test | v1 | **READY** | `print/scan_stick_thread_test_v1.stl` | 8.3 (M) | print first, screw on the pole, tune `acme_clear` |
-| Scan stick cam bracket | same, part camera_bracket | v1 | **READY** | `print/scan_stick_cam_v1.stl` | 10.0 (M) | camera lens / board thickness (Q3) |
+| Scan stick cam bracket | `nox/overseer/scan_stick/scan_stick.md`, `cam_topo_v4.py` (nox/topo) | v4 (topology, 23 Oct; v1 drawn retired, v2 / v3 FAILED the gate) | **READY** | `print/scan_stick_cam_v4.stl` | 12.5 (M) | camera lens / board thickness (Q3) |
 | Scan stick cradle | same, part pi_bat_cradle | v1 | **READY** | `print/scan_stick_cradle_v1.stl` | 194.7 (M) | re-render once `rod_d` is measured (P) |
 
 ## Spark

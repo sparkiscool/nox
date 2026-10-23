@@ -16,3 +16,6 @@
 10:07 START base v3
 10:07 END base v3 rc=0 no result.json
 10:07 START cam v4
+10:26 END cam v4 rc=0 mass 12.6 worst None solid True
+10:26 QUEUE 4 DONE
+10:27 START head v6

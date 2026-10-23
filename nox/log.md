@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 23 Oct (scan stick chat): **scan stick cam v4** (nox/topo, finish drawn, 5 cm3 E): 12.5 g (M), worst 0.28 (F) with the impact cases, solid_check PASS, READY `print/scan_stick_cam_v4.stl`. v2 (organic) failed on necks and 0.96; v3 failed on Ø8 posts at the 2.0 mm drawn erosion (lesson: a drawn post needs ≥ 4.3 mm wall round its hole, so Ø12 round M2 / M3).
 - 23 Oct (scan stick chat): **scan stick assembly visual**: `nox/overseer/scan_stick/assembly_view.py` builds the motion artifact (`runs/scan_stick/v2/motion.html` + mp4 / gif / png) of every printed part on the pole with the L2, camera, Pi 5 and pack as context (sizes spec / P / E as tagged in the script).
 <<<<<<< HEAD
 - 23 Oct (scan stick chat): **scan stick head v2** topology run (`run/scan_stick-v2`, `head_topo_run.py` h 1.75 (C), 20 cm3 generated (DEFAULT, E)): 61.9 g (M) vs 86.8 g (M) drawn, worst 0.03 (F) in the 25 g (E) lidar knock, solid_check PASS, 35 min / 3.5 GB (M); far over-strong, next run at 10 then 6 cm3 (E).

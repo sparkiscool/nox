@@ -1,6 +1,6 @@
 # Runs
 
-_14 runs · rebuilt 2026-10-23 08:11_
+_21 runs · rebuilt 2026-10-23 10:27_
 
 ## Latest per part
 
@@ -12,6 +12,8 @@ _14 runs · rebuilt 2026-10-23 08:11_
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
 | scan_stick | v1 | DONE | 86.8 (M) | · in no FE on v1 (drawn) | PASS | [runs/scan_stick/v1](runs/scan_stick/v1/summary.md) |
+| scan_stick_base | v2 | FAILED | · | ·  | · | [runs/scan_stick_base/v2](runs/scan_stick_base/v2/summary.md) |
+| scan_stick_cam | v2 | FAILED | 5.5 (M) | ·  | FAIL | [runs/scan_stick_cam/v2](runs/scan_stick_cam/v2/summary.md) |
 
 ## All runs, newest first
 
@@ -31,3 +33,10 @@ _14 runs · rebuilt 2026-10-23 08:11_
 | 2026-10-23 | arm | [v5-layout](runs/arm/v5-layout/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v1](runs/scan_stick/v1/summary.md) | DONE | 86.8 (M) | · | PASS | head: lidar seat | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v2](runs/scan_stick/v2/summary.md) | DONE | 61.9 (M) | 0.03 | PASS | lidar seat (4 pads) down | 3.5 (P) GB | 35 min | · |
+| 2026-10-23 | scan_stick | [v4](runs/scan_stick/v4/summary.md) | FAILED | 30.4 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick | [v5](runs/scan_stick/v5/summary.md) | FAILED | 40.1 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v2](runs/scan_stick_base/v2/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v3](runs/scan_stick_base/v3/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_cam | [v2](runs/scan_stick_cam/v2/summary.md) | FAILED | 5.5 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_cam | [v3](runs/scan_stick_cam/v3/summary.md) | FAILED | 10.2 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_cam | [v4](runs/scan_stick_cam/v4/summary.md) | DONE | 12.6 (M) | 0.28 | PASS | plate bottom | 3.0 (P) GB | 18 min | · |
