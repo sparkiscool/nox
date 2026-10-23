@@ -711,7 +711,8 @@
  "bed_contact_mm2": 1198,
  "peak_mem_gb": 4.328944,
  "wall_time_min": 53,
- "file": "print/scan_stick_head_v8.stl",
+ "file": null,
  "sha12": "3782ee325388",
- "date": "2026-10-23"
+ "date": "2026-10-23",
+ "note": "superseded by v9"
 }

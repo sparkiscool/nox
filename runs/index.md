@@ -1,6 +1,6 @@
 # Runs
 
-_27 runs · rebuilt 2026-10-23 14:17_
+_31 runs · rebuilt 2026-10-23 15:29_
 
 ## Latest per part
 
@@ -38,11 +38,15 @@ _27 runs · rebuilt 2026-10-23 14:17_
 | 2026-10-23 | scan_stick | [v6](runs/scan_stick/v6/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v7](runs/scan_stick/v7/summary.md) | FAILED | 40.7 (M) | 0.36 | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v8](runs/scan_stick/v8/summary.md) | DONE | 40.8 (M) | 0.36 | PASS | flange | 4.3 (P) GB | 53 min | · |
+| 2026-10-23 | scan_stick | [v9](runs/scan_stick/v9/summary.md) | DONE | 40.0 (M) | 0.36 | PASS | flange | 4.3 (P) GB | 2 min | · |
 | 2026-10-23 | scan_stick_base | [v2](runs/scan_stick_base/v2/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v3](runs/scan_stick_base/v3/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v4](runs/scan_stick_base/v4/summary.md) | FAILED | 123.4 (M) | 5.52 | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v5](runs/scan_stick_base/v5/summary.md) | FAILED | 188.5 (M) | 2.35 | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_base | [v6](runs/scan_stick_base/v6/summary.md) | FAILED | 234.8 (M) | 2.23 | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v7](runs/scan_stick_base/v7/summary.md) | FAILED | 290.7 (M) | 0.58 | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v8](runs/scan_stick_base/v8/summary.md) | FAILED | 294.5 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-23 | scan_stick_base | [v9](runs/scan_stick_base/v9/summary.md) | FAILED | 291.3 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_cam | [v2](runs/scan_stick_cam/v2/summary.md) | FAILED | 5.5 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_cam | [v3](runs/scan_stick_cam/v3/summary.md) | FAILED | 10.2 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-23 | scan_stick_cam | [v4](runs/scan_stick_cam/v4/summary.md) | DONE | 12.6 (M) | 0.28 | PASS | plate bottom | 3.0 (P) GB | 18 min | · |

@@ -703,5 +703,17 @@
  "rebuilt_from": "v8",
  "layout_s": 3092,
  "peak_gb": 4.328944,
- "total_s": 125
+ "total_s": 125,
+ "status": "DONE",
+ "mass_tag": "M",
+ "worst_index": 0.361,
+ "worst_case": "lidar impact 50 g 2",
+ "bed_face": "flange",
+ "bed_contact_mm2": 1119,
+ "peak_mem_gb": 4.33,
+ "wall_time_min": 2,
+ "file": "print/scan_stick_head_v9.stl",
+ "sha12": "b9c1607a9aa3",
+ "date": "2026-10-23",
+ "source": "runs/scan_stick/v8"
 }
