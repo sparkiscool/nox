@@ -1,0 +1,20 @@
+=== scan_stick_head: h 1.5, generated 5.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (13.10 cm3); 19.63 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.72 cells, erosion depth 1.37 mm; volfrac 0.104 of 8,741 design cells
+layout: WARNING filter radius 1.72 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in x (6.1% of passive cells differ): no symmetry
+layout: 4 drawn bodies (485 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (392 cells) count by their cover; 2 bodies tied to body 1
+layout: 34 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 12 gate ties
+fem: grid (32, 32, 16) = 16,384 elements, 33,462 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1006 (dil 0.1224 g -0.036) grey 11.3% ch 0.100 worst gate b4 fy 2.91e+03 2.6s
+it   2 beta    1 J   1.5948 vol 0.0936 (dil 0.1119 g -0.119) grey 41.9% ch 0.100 worst camera 25 g 2 469 2.2s
+it   3 beta    1 J   0.4455 vol 0.1009 (dil 0.1184 g -0.067) grey 36.3% ch 0.100 worst hand push -z 30 N 132 1.8s
+it   4 beta    1 J   1.0873 vol 0.1045 (dil 0.1207 g -0.049) grey 31.0% ch 0.100 worst poke cam +y 344 2.4s
+it   5 beta    1 J   0.2652 vol 0.1043 (dil 0.1199 g -0.056) grey 30.4% ch 0.100 worst tie b3 mz 88.9 2.1s
+it   6 beta    1 J   0.1472 vol 0.1066 (dil 0.1214 g -0.027) grey 28.7% ch 0.100 worst poke cam +y 40.4 2.3s
+it   7 beta    1 J   0.1052 vol 0.1063 (dil 0.1201 g -0.037) grey 26.7% ch 0.100 worst gate b4 my 30.6 2.5s
+it   8 beta    1 J   0.0791 vol 0.1093 (dil 0.1220 g -0.022) grey 25.0% ch 0.100 worst gate b4 my 22.4 2.0s
+it   9 beta    1 J   0.0630 vol 0.1108 (dil 0.1224 g -0.019) grey 23.5% ch 0.100 worst tie b3 mx 17.5 2.2s
+it  10 beta    1 J   0.0522 vol 0.1124 (dil 0.1231 g -0.013) grey 22.0% ch 0.100 worst gate b4 my 14.6 2.0s
