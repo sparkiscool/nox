@@ -208,3 +208,7 @@ solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": 
 function check: {'skin_mm3': 13933.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
 strength: worst index 0.12 in 'ring -Z 30 N' at [177.5, 140.5, -29.0]
 RESULT {"name": "bracket_jA", "solid_ok": true, "mass_g": 43.45, "worst": 0.115, "function_ok": true, "bodies": 1}
+git push failed: To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to push some refs to 'https://github.com/sparkiscool/nox'
+hint: Updates were r
