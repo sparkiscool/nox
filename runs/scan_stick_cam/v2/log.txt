@@ -71,3 +71,25 @@ it  57 beta    4 J   9.9788 vol 0.1848 (dil 0.3722 g -0.005) grey 39.8% ch 0.100
 it  58 beta    4 J   9.1545 vol 0.1875 (dil 0.3733 g -0.002) grey 39.9% ch 0.100 worst poke post 2 +x 10 N 1.37e+03 0.9s
 it  59 beta    4 J   8.8072 vol 0.1886 (dil 0.3736 g -0.001) grey 40.0% ch 0.100 worst poke post 0 +x 10 N 1.32e+03 0.9s
 it  60 beta    4 J   8.5554 vol 0.1893 (dil 0.3737 g -0.001) grey 39.7% ch 0.100 worst poke post 0 +x 10 N 1.28e+03 1.0s
+it  61 beta    4 J   8.3190 vol 0.1900 (dil 0.3737 g +0.017) grey 39.4% ch 0.100 worst poke post 2 +x 10 N 1.25e+03 1.1s
+it  62 beta    4 J   9.4168 vol 0.1831 (dil 0.3665 g -0.002) grey 38.9% ch 0.100 worst poke post 2 +x 10 N 1.4e+03 0.9s
+it  63 beta    4 J   9.0360 vol 0.1845 (dil 0.3671 g -0.001) grey 39.1% ch 0.100 worst poke post 0 +x 10 N 1.35e+03 1.0s
+it  64 beta    4 J   8.8418 vol 0.1851 (dil 0.3671 g -0.001) grey 39.1% ch 0.100 worst poke post 2 +x 10 N 1.32e+03 1.1s
+it  65 beta    4 J   8.6761 vol 0.1855 (dil 0.3671 g -0.001) grey 39.2% ch 0.100 worst poke post 2 +x 10 N 1.3e+03 1.1s
+it  66 beta    4 J   8.5129 vol 0.1859 (dil 0.3671 g +0.011) grey 39.2% ch 0.100 worst poke post 2 +x 10 N 1.28e+03 1.1s
+it  67 beta    4 J   9.1578 vol 0.1818 (dil 0.3627 g -0.001) grey 38.8% ch 0.100 worst poke post 0 +x 10 N 1.37e+03 1.4s
+layout: stopped (beta_stop) at it 67, beta 4, 84 s
+layout: beta 4 done: eroded design 9 bodies, main 17.3%; drawn bodies outside the main body: 5
+coarse stage done: 67 iterations, 91 s, peak 0.482516 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (1.61 cm3); 0.18 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 6.87 cells, erosion depth 1.37 mm; volfrac 0.198 of 32,132 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in y (7.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.2% of passive cells differ): no symmetry
+layout: 6 drawn bodies (3,820 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (1,288 cells) count by their cover; 3 bodies tied to body 1
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 88, 16) = 90,112 elements, 126,225 active dofs; backend direct (direct estimate 1.1 GB, budget 11.8 GB)
+layout: warm start from a (32, 48, 8) grid (h 1.5): mean x 0.283
+it   1 beta    4 J  10.0000 vol 0.1900 (dil 0.3829 g -0.040) grey 41.2% ch 0.100 worst cable pull -y 20 N 2.06e+03 13.0s
