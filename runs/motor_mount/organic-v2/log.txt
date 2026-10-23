@@ -1,0 +1,18 @@
+=== motor_mount: h 0.8, generated 7.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (6.00 cm3); 0.69 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.03 cells, erosion depth 1.71 mm; volfrac 0.179 of 10,472 design cells
+layout: drawn bodies and keep-outs mirror about x, y: the design is held symmetric there
+layout: 5 drawn bodies (1,464 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 44,904 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1569 (dil 0.1880 g -0.125) grey 80.8% ch 0.100 worst held b1 fz 782 1.7s
+it   2 beta    1 J   5.0250 vol 0.1752 (dil 0.2084 g -0.029) grey 83.5% ch 0.100 worst held b1 fz 378 1.8s
+it   3 beta    1 J   3.7709 vol 0.1779 (dil 0.2109 g -0.018) grey 77.7% ch 0.100 worst held b5 fx 291 1.6s
+it   4 beta    1 J   2.9608 vol 0.1793 (dil 0.2116 g -0.015) grey 71.4% ch 0.100 worst held b2 fx 227 1.7s
+it   5 beta    1 J   2.3909 vol 0.1802 (dil 0.2119 g -0.013) grey 66.8% ch 0.100 worst held b1 fx 186 1.7s
+it   6 beta    1 J   1.9817 vol 0.1812 (dil 0.2122 g -0.006) grey 63.9% ch 0.100 worst held b2 fx 151 1.7s
+it   7 beta    1 J   1.7165 vol 0.1811 (dil 0.2114 g -0.010) grey 60.8% ch 0.100 worst held b2 fx 131 1.8s
+it   8 beta    1 J   1.5079 vol 0.1820 (dil 0.2118 g -0.008) grey 58.9% ch 0.100 worst held b1 fx 112 1.5s
+it   9 beta    1 J   1.3705 vol 0.1827 (dil 0.2120 g -0.007) grey 57.6% ch 0.100 worst held b5 fx 105 1.7s
+it  10 beta    1 J   1.3054 vol 0.1830 (dil 0.2119 g -0.007) grey 56.9% ch 0.100 worst held b1 mz 101 1.6s
