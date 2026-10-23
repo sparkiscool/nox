@@ -54,4 +54,12 @@ Strength: worst index <x> in <case> (was <y>); weakest spot <where>   [box parts
 Solid: solid_check PASS
 Print: <bed face>, bed contact <mm²> (M), tree supports <g>; file print/<name>
 ```
+Every "ready to print" reply (and every reply that names a file to print) ends with one ready-to-paste prompt for a print and slicing session on the laptop (Spark 23 Oct), in a code block, filled in for that file:
+```
+Print and slicing session (opus, medium, computer control on the laptop). In the nox clone: git pull on main.
+Part: <part> <version>, file print/<name> (<g> g <material>, <x> x <y> x <z> mm, solid_check PASS).
+Bambu Studio, A1 mini, <material>: import the file as saved (<bed face> down, do not re-orient), tree(auto) supports 30° global<, brim 5 mm if bed contact < 400 mm²><, part rules>.
+Ctrl+R slice; report time, filament g, support g (over ~25 % of the part mass: stop and tell Spark). Check <what to keep clear, e.g. the thread>.
+Send to the A1 mini only after Spark says go. Then one row at the top of nox/print-log.md (State PRINTING), commit, push.
+```
 Slicing: tree(auto) supports, 30°, global; brim 5 mm under 400 mm² of bed contact; box parts 4 walls, 15 % gyroid. Report bed face, bed contact, support g, time; over ~25 % of the mass in supports goes back to the designer. A print that fails for orientation is re-sliced; one that snaps at a member is a design failure (`log.md` failure log). The moment a print is sent: one row at the top of `nox/print-log.md`, State PRINTING. A printed version is frozen; any change is a new version. Bambu Studio on the laptop: one window, never launch it while running, type paths, Ctrl+R slice, Ctrl+G export; set orientation in the `.3mf` transform if a remote session must re-orient.
