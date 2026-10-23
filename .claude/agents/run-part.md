@@ -2,6 +2,8 @@
 name: run-part
 description: Runs one generative / topology / FE job for one Nox part on a run branch, checkpointing to git. Use for any heavy run; one run per session.
 tools: Bash, Read, Write, Edit, Glob, Grep
+model: sonnet
+effort: medium
 background: true
 ---
 

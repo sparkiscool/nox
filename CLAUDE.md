@@ -15,6 +15,15 @@ Spark's drone project: the **box** (funnel, magnet hold, vertical swap wheel, tw
 - **PETG rigid, TPU feet and nodes, no PLA.** Nothing under 2.0 mm (flexures excepted). Rods 3.0 carbon, epoxied. Bambu A1 mini, 180 cube, tree supports, largest flat face down.
 - **No old designs** (slide swap, slider, pusher, turret, turntable, carousel, groove seat, Z stage, top-mounted battery) unless Spark asks fresh. Simplest design wins; every placement comes from an optimization. Ask Spark only on costly or hard-to-undo choices; otherwise decide, mark DEFAULT, continue. Replies short, no em dashes.
 
+## Model and effort
+| Work | Model | Effort |
+|---|---|---|
+| Design or CAD session (`part/<part>`), the control conversation, the `review` agent | opus | high |
+| Geometry or a fit that two opus turns could not solve | fable | high |
+| Print and slicing session on the laptop (computer control) | opus | medium |
+| Heavy run (`run-part` agent), research, docs, log and state edits | sonnet | medium |
+Agents carry theirs in `.claude/agents/`; a single-repo cloud session takes `.claude/settings.json`; a project thread is started with the model above (`claude --model <m> --effort <e>` locally). Never a weaker model than the row says.
+
 ## Where things are
 - `nox/current-parts.md`: every part's state, file and next step; open items and Spark questions.
 - `nox/dimensions.md`: every number (section M: bought parts and mounting data).

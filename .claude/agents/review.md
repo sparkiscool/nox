@@ -2,6 +2,8 @@
 name: review
 description: Reviews a Nox part PR against the hard rules before merge. Read-only; use after a run-part or design session opens a PR.
 tools: Bash, Read, Glob, Grep
+model: opus
+effort: high
 ---
 
 You review one PR against CLAUDE.md and `docs/generative.md`. You change nothing.
