@@ -1,0 +1,469 @@
+<title>Nox Box Mechanism</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: one-screen viewer; header strip with the arm-version toggle, 3D stage with a side panel, transport bar; one column on a phone.
+   Source of this page: nox/box/box_mechanism_page.html (Nox repo); numbers from arm_layout.py, arm_v5_layout.py, box-funnel.md, box-stand.md. */
+:root {
+  --bg: #eceff2; --panel: #f8f9fb; --fg: #1a222c; --muted: #5f6d7b; --line: #d2d9e0; --line-2: #e3e8ed;
+  --accent: #c25e1b; --accent-soft: #f6e3d6; --ok: #2f7d4f; --ok-soft: #dcefe3; --warn: #8a6d1d; --warn-soft: #f3ead0;
+  --stage: #e3e7eb; --grid: #c9d1d9;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #14181d; --panel: #1b2026; --fg: #e4e9ee; --muted: #8e9cab; --line: #2d353e; --line-2: #242b33;
+  --accent: #e07a35; --accent-soft: #3a2619; --ok: #5cc98a; --ok-soft: #173224; --warn: #d9b45a; --warn-soft: #33291a;
+  --stage: #1e242b; --grid: #333c46; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #14181d; --panel: #1b2026; --fg: #e4e9ee; --muted: #8e9cab; --line: #2d353e; --line-2: #242b33;
+  --accent: #e07a35; --accent-soft: #3a2619; --ok: #5cc98a; --ok-soft: #173224; --warn: #d9b45a; --warn-soft: #33291a;
+  --stage: #1e242b; --grid: #333c46; color-scheme: dark }
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 14px/1.45 var(--sans); }
+* { box-sizing: border-box; }
+.app { height: 100%; display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 330px; grid-template-areas: "head head" "stage side" "bar side";
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; gap: 10px; }
+header { grid-area: head; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; }
+h1 { font-size: 18px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+h1 small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 8px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-left: auto; }
+.seg button { font: 500 12px/1 var(--mono); padding: 7px 10px; background: var(--panel); color: var(--fg); border: 0; border-left: 1px solid var(--line); cursor: pointer; }
+.seg button:first-child { border-left: 0; }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
+.chip { font: 500 12px/1 var(--mono); padding: 6px 9px; border-radius: 4px; background: var(--warn-soft); color: var(--warn); }
+.stage { grid-area: stage; position: relative; background: var(--stage); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; min-height: 320px; min-width: 0; }
+.stage canvas { display: block; width: 100%; height: 100%; }
+.views { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
+.views button, .bar button, .bar select, .side select { font: 500 12px/1 var(--mono); padding: 6px 9px; background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; cursor: pointer; }
+.views button:hover, .bar button:hover, .seg button:hover { border-color: var(--accent); color: var(--accent); }
+button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.hud { position: absolute; left: 8px; bottom: 8px; font: 12px/1.5 var(--mono); color: var(--fg); background: color-mix(in srgb, var(--panel) 85%, transparent); padding: 6px 9px; border-radius: 4px; border: 1px solid var(--line); pointer-events: none; font-variant-numeric: tabular-nums; }
+.hud b { font-weight: 500; color: var(--muted); display: inline-block; width: 7ch; }
+.phase { position: absolute; right: 8px; top: 8px; font: 500 13px/1.3 var(--sans); background: color-mix(in srgb, var(--panel) 85%, transparent); padding: 7px 10px; border-radius: 4px; border: 1px solid var(--line); max-width: 52%; pointer-events: none; }
+.phase span { display: block; font: 11px/1.3 var(--mono); color: var(--muted); margin-top: 2px; }
+.bar { grid-area: bar; display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; gap: 6px 10px; align-items: center; }
+.bar .strip { grid-column: 1 / -1; height: 44px; width: 100%; display: block; border: 1px solid var(--line); border-radius: 4px; background: var(--panel); cursor: pointer; }
+.bar input[type=range] { width: 100%; accent-color: var(--accent); margin: 0; }
+.bar .time { font: 500 13px/1 var(--mono); min-width: 9ch; text-align: right; font-variant-numeric: tabular-nums; }
+.side { grid-area: side; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px 12px 8px; overflow: auto; min-height: 0; display: flex; flex-direction: column; gap: 10px; }
+.side h2 { font: 500 11px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+.cfg { border: 1px solid var(--line-2); border-radius: 4px; padding: 8px 10px; font-size: 12.5px; line-height: 1.45; }
+.cfg b { font-weight: 600; }
+.cfg table { border-collapse: collapse; width: 100%; margin-top: 6px; font: 11.5px/1.4 var(--mono); font-variant-numeric: tabular-nums; }
+.cfg td { padding: 2px 0; border-top: 1px solid var(--line-2); vertical-align: top; }
+.cfg td + td { text-align: right; white-space: nowrap; padding-left: 8px; }
+.cfg tr.now td { color: var(--accent); font-weight: 500; }
+.ctl { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ctl div { border: 1px solid var(--line-2); border-radius: 4px; padding: 6px 8px; min-width: 0; }
+.ctl label { display: block; font: 11px/1 var(--mono); color: var(--muted); margin-bottom: 5px; }
+.ctl input[type=range] { width: 100%; accent-color: var(--accent); margin: 0; }
+.ctl output { font: 500 12px/1 var(--mono); font-variant-numeric: tabular-nums; }
+.grp { border-top: 1px solid var(--line-2); padding-top: 6px; }
+.grp header { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-weight: 500; font-size: 13px; }
+.grp header label { font-weight: 400; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.grp.off header span { color: var(--muted); }
+.seq { margin: 0; padding: 0 0 0 18px; font-size: 12.5px; display: flex; flex-direction: column; gap: 3px; }
+.seq li { cursor: pointer; padding: 1px 4px; border-radius: 3px; }
+.seq li:hover { background: var(--accent-soft); }
+.seq li.now { background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+.seq li span { font: 11px/1 var(--mono); color: var(--muted); margin-left: 6px; }
+.note { font-size: 12px; color: var(--muted); line-height: 1.4; margin: 0; }
+.note code { font: 11.5px var(--mono); }
+input[type=checkbox] { accent-color: var(--accent); margin: 0; }
+@media (max-width: 760px) {
+  html, body { height: auto; }
+  .app { height: auto; grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; grid-template-areas: "head" "stage" "bar" "side"; }
+  .stage { height: 58vh; }
+  .phase { top: 44px; max-width: 70%; }
+  .seg { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>Nox Box Mechanism <small>collar funnel, swap wheel, bay ring, stand: one landing and swap, start to finish</small></h1>
+    <div class="seg" role="group" aria-label="arm version">
+      <button type="button" id="cfg-v4" aria-pressed="true">v4 belts</button>
+      <button type="button" id="cfg-v5" aria-pressed="false">v5 rails</button>
+      <button type="button" id="cfg-v5c" aria-pressed="false">v5 compact</button>
+    </div>
+    <span class="chip" id="chip">envelopes, C from the layout numbers; motion times E</span>
+  </header>
+
+  <div class="stage" id="stage">
+    <div class="views">
+      <button type="button" id="v-iso" title="From the open side, above">iso</button>
+      <button type="button" id="v-axle" title="Along the axle, X right, Z up">axle</button>
+      <button type="button" id="v-side" title="Along X: the axial stack">side</button>
+      <button type="button" id="v-top" title="From above the funnel">top</button>
+      <button type="button" id="v-heads" title="Close on the heads and their drives">heads</button>
+    </div>
+    <div class="phase"><span id="phase-no"></span><div id="phase-txt"></div></div>
+    <div class="hud"><b>phi</b><span id="h-phi"></span> deg<br><b>z0 A/B</b><span id="h-z"></span> mm<br><b>drone</b><span id="h-dr"></span></div>
+  </div>
+
+  <div class="bar">
+    <button type="button" id="play">pause</button>
+    <input type="range" id="scrub" min="0" max="22" step="0.02" value="0" aria-label="time in the cycle">
+    <span class="time"><span id="t-now">0.00</span> / <span id="t-end">22.0</span> s</span>
+    <canvas class="strip" id="strip" aria-label="phases over the cycle"></canvas>
+  </div>
+
+  <aside class="side">
+    <h2>Arm version</h2>
+    <div class="cfg" id="cfg-box"></div>
+    <h2>View</h2>
+    <div class="ctl">
+      <div><label for="speed">speed</label><select id="speed" aria-label="playback speed"><option value="0.25">x0.25</option><option value="0.5" selected>x0.5</option><option value="1">x1</option><option value="2">x2</option></select></div>
+      <div><label for="cut">cutaway (W Y)</label><input type="range" id="cut" min="-80" max="340" step="1" value="340"><output id="cut-val">off</output></div>
+    </div>
+    <h2>Sequence (−90° bay cycle)</h2>
+    <ol class="seq" id="seq"></ol>
+    <h2>Parts</h2>
+    <div id="parts"></div>
+    <p class="note">Every body is the layout envelope from <code>arm_layout.py</code>, <code>arm_v5_layout.py</code>, <code>box-funnel.md</code> and <code>box-stand.md</code> (C), not the generated meshes: hub, heads, bay modules, ring frames and stand parts are drawn as their bounding solids; the detent is its ring, roller arm and tower only. The collar is centred on the gripper tab line Y_C. The drone is the Scout v2 envelope (E). Wheel coordinates W: Y along the axle, Z up at the drone, X tangential.</p>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const rad = d => d * Math.PI / 180;
+// ---------- layout numbers shared by every version (W, C unless noted) ----------
+const L = {
+  R: 100, R_PIN: 141.5, PITCH: 30, DEMO_BAY: -90,
+  POSITIONS: [30, 0, -30, -60, -90, -120, -150, -180, -210],      // the 9 ring positions; modules at -90 (cradle) and -60, ring frames elsewhere (stand v6 / v7)
+  MODULES: [-90, -60], MOD_R: [99.5, 163], LUG_RHO: [165, 179], FRAME_RHO: [150, 179],
+  CART_W: 40, CART_XO: 19, CART_H: 48, CART_L: 79, Z_TABC: 37.5,
+  Z0_PARK: 32, Z0_BAY: 84.6, Z0_DRONE: 89.6, Z0_WAIT: 81, CART_BOT_DZ: 15.4, BAR: [22, 134], RAIL_R: [29, 134],
+  HUB_R: 44, HUB_Y: [7, 50], PLATE_Y: [50, 54], NEMA: 42.3,
+  P80: { r: 27.5, y: [54, 64], collar: 15, cy: [64, 72] }, P20_R: 8, SUN_POST_R: 21.75,
+  SEAT_Z: 159.2, COLLAR: { z0: 1.3, z1: 77.2, w0: 168, w1: 320 },
+  FLOOR: -160, SHEET_X: 186, TOP_Z: 240, Y_BACK: -66,
+  P_SH: 33.5,
+};
+// ---------- the three arm versions ----------
+const CFG = {
+  v4: { label: 'v4: 2040 bars, belts, idlers (the demo build on hub v5)', drive: 'belt', Y_C: 175, MOD_Y: [94, 255], LUG_Y: [145, 209], RAIL_Y: [74, 94], PLATE_TOP: 97.3, posts: true,
+        MOTORS: { A: [34, -59, 25], B: [61, 55, 0], axle: [69.4 * Math.cos(rad(-120)), 69.4 * Math.sin(rad(-120)), 50] }, detent: { th: -105, Q: [17, -29.4] }, enclosureEnd: 337,
+        rows: [['Y_C (tab line)', '175'], ['bay modules Y', '94..255'], ['funnel mouth Y', '15..335'], ['enclosure Y', '−66..337 = 403 long'], ['head drive', 'GT2 belt, 20T, idler, clamp'], ['carriage', 'printed glide on 2040']] },
+  v5: { label: 'v5: printed V-rails on the hub posts, 3-wheel 625ZZ carriages, rack and pinion (hub v6)', drive: 'rack', Y_C: 175, MOD_Y: [94, 255], LUG_Y: [145, 209], RAIL_Y: [74, 94], PLATE_TOP: 98, posts: true,
+        MOTORS: { A: [53.5, 55, 45.8], B: [-55, -53.5, -135.8], axle: [53.9, -43.7, -39] }, detent: { th: -45, Q: [16, -38] }, enclosureEnd: 337,
+        rows: [['Y_C (tab line)', '175'], ['bay modules Y', '94..255'], ['funnel mouth Y', '15..335'], ['enclosure Y', '−66..337 = 403 long'], ['head drive', '16T m1 pinion on a 71 rack'], ['carriage', '3 V-wheels OD 24, one eccentric']] },
+  v5c: { label: 'v5 compact: rails on the motor plate (hub v6 without posts), Scout-length modules', drive: 'rack', Y_C: 118, MOD_Y: [74, 164], LUG_Y: [88, 152], RAIL_Y: [54, 74], PLATE_TOP: 78, posts: false,
+        MOTORS: { A: [53.5, 55, 45.8], B: [-55, -53.5, -135.8], axle: [53.9, -43.7, -39] }, detent: { th: -45, Q: [16, -38] }, enclosureEnd: 280,
+        rows: [['Y_C (tab line)', '118'], ['bay modules Y', '74..164'], ['funnel mouth Y', '−42..278'], ['enclosure Y', '−66..280 = 346 long'], ['head drive', '16T m1 pinion on a 71 rack'], ['carriage', '3 V-wheels OD 24, one eccentric']] },
+};
+let cfgKey = 'v4', C_ = CFG.v4;
+
+// ---------- cycle (arm_kinematics.py, −90° bay, 18 Oct): t, phi, zA, zB, fA, fB (f 4 = fingers closed / squeezed, −1 = open) ----------
+const T_END = 22, T_LAND = 6.5, T_LEAVE = 14;
+const ZP = L.Z0_PARK, ZB = L.Z0_BAY, ZD = L.Z0_DRONE, ZW = L.Z0_WAIT;
+const KEYS = [[0, -90, ZP, ZP, 4, 4], [0.5, -90, ZP, ZP, -1, 4], [2, -90, ZB, ZP, -1, 4], [2.5, -90, ZB, ZP, 4, 4], [4, -90, ZP, ZP, 4, 4], [4.5, -90, ZP, ZP, 4, 4],
+  [5.5, 0, ZP, ZP, 4, 4], [6, 0, ZP, ZW, 4, -1], [6.5, 0, ZP, ZW, 4, -1], [7.5, 0, ZP, ZD, 4, -1], [8, 0, ZP, ZD, 4, 4], [9.5, 0, ZP, ZP, 4, 4],
+  [10.5, 90, ZP, ZP, 4, 4], [11.5, 90, ZD, ZP, 4, 4], [12, 90, ZD, ZP, -1, 4], [13.5, 90, ZP, ZP, -1, 4], [14, 90, ZP, ZP, 4, 4],
+  [17, -180, ZP, ZP, 4, 4], [18, -180, ZP, ZB, 4, 4], [18.5, -180, ZP, ZB, 4, -1], [20, -180, ZP, ZP, 4, -1], [20.5, -180, ZP, ZP, 4, 4], [22, -90, ZP, ZP, 4, 4]];
+const PH = [[0, "phi −90: head A opens at the −90° bay; head B parked at the 0° position; drone on approach"], [0.5, "A extends into the bay"], [2.5, "A grips the charged pack (bolts retract)"], [4, "A retracts with it"],
+  [4.5, "wheel turns +90: B under the drone seat, A carrying at 0°"], [6, "B opens and rises to wait under the seat"], [6.5, "drone seated in the collar: switch, magnet on, pogo pads make; B reaches the dead pack"], [8, "B grips the dead pack: bolts leave the drone pockets"], [9.5, "B retracts"],
+  [10.5, "wheel turns +90: A at the top"], [11.5, "A inserts the charged pack up into the drone"], [12, "A releases: latched, contacts make"], [13.5, "A retracts; magnet off, spin-up"], [14, "drone leaves; wheel turns −270 through the top: B to the free −90° bay"],
+  [17, "B extends into the bay"], [18.5, "B releases into the bay latch; charging starts"], [20, "B retracts and closes"], [20.5, "wheel turns +90 home: ready for the next landing"]];
+function state(t) {
+  for (let i = 0; i < KEYS.length - 1; i++) { const a = KEYS[i], b = KEYS[i + 1];
+    if (a[0] <= t && t <= b[0]) { const u = b[0] === a[0] ? 0 : (t - a[0]) / (b[0] - a[0]); const s = i => a[i] + u * (b[i] - a[i]); return { phi: s(1), zA: s(2), zB: s(3), fA: s(4), fB: s(5) }; } }
+  const k = KEYS[KEYS.length - 1]; return { phi: k[1], zA: k[2], zB: k[3], fA: k[4], fB: k[5] };
+}
+const ease = u => u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+function droneZ(t) {   // seat z 0 in W = 159.2; approach from 600 (E), leaves at 14
+  if (t < T_LAND) return L.SEAT_Z + (600 - L.SEAT_Z) * (1 - ease(t / T_LAND));
+  if (t < T_LEAVE) return L.SEAT_Z;
+  if (t < T_LEAVE + 2.5) return L.SEAT_Z + (600 - L.SEAT_Z) * ease((t - T_LEAVE) / 2.5);
+  return 600;
+}
+function owner(t) { return [t < 2.5 ? 'bay' : (t < 12 ? 'A' : 'drone'), t < T_LAND ? null : (t < 8 ? 'drone' : (t < 18.5 ? 'B' : 'bay'))]; }
+
+// ---------- scene ----------
+const stage = $('stage');
+const soft = (() => { try { const c = document.createElement('canvas'); const g = c.getContext('webgl'); if (!g) return true; const d = g.getExtension('WEBGL_debug_renderer_info'); const rn = d ? String(g.getParameter(d.UNMASKED_RENDERER_WEBGL)) : ''; return /swiftshader|llvmpipe|software|mesa|basic render/i.test(rn); } catch (e) { return true; } })();
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ antialias: !soft, alpha: true }); }
+catch (e) { stage.insertAdjacentHTML('beforeend', '<p style="position:absolute;inset:40% 16px auto;text-align:center">This viewer has no WebGL. Open the page in Chrome or Edge to see the model.</p>'); throw e; }
+renderer.setPixelRatio(soft ? 1 : Math.min(devicePixelRatio, 1.5)); renderer.localClippingEnabled = true; stage.appendChild(renderer.domElement);
+let needsRender = true; const invalidate = () => { needsRender = true; };
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(36, 1, 5, 6000); camera.up.set(0, 0, 1);
+const controls = new THREE.OrbitControls(camera, renderer.domElement); controls.enableDamping = false; controls.addEventListener('change', invalidate);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x5c6b7a, 0.8));
+const sun = new THREE.DirectionalLight(0xffffff, 0.75); sun.position.set(-500, -380, 600); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 0.3); fill.position.set(400, 600, -100); scene.add(fill);
+function views() { const yc = C_.Y_C; return { iso: [[-640, -520 + (yc - 175) * 0.5, 430], [0, yc - 65, 40]], axle: [[0, -780, 60], [0, yc - 65, 60]], side: [[-800, yc - 65, 60], [0, yc - 65, 60]], top: [[-30, yc, 820], [0, yc, 100]], heads: [[-260, -120, 260], [0, yc - 20, 80]] }; }
+function setView(v) { const V = views()[v]; camera.position.set(...V[0]); controls.target.set(...V[1]); controls.update(); invalidate(); }
+for (const v of ['iso', 'axle', 'side', 'top', 'heads']) $('v-' + v).onclick = () => setView(v);
+
+// cutaway: everything with Y > cut is hidden
+const clip = new THREE.Plane(new THREE.Vector3(0, -1, 0), 340);
+function mat(col, o = {}) { return new THREE.MeshStandardMaterial(Object.assign({ color: new THREE.Color(col), roughness: 0.8, metalness: 0, clippingPlanes: [clip], clipShadows: true }, o)); }
+const C = { petg: '#b9c3cc', petgDark: '#7f8c96', bay: '#5b8ac9', bayTop: '#4a73a8', frame: '#7d9cc4', hub: '#6b7580', head: '#d35400', finger: '#e59866', servo: '#1f2a33', motor: '#2c3e50', brass: '#b7950b', belt: '#2b2b2b', bar: '#95a5a6', rail: '#c9a46a', wheel: '#e8e2d0', collar: '#dfe5ea', drone: '#2a3540', carbon: '#1a1f24', pack: '#3f9b63', dead: '#a35b8a', floor: '#9aa5ae', stand: '#8d99a6', copper: '#b87333', sheet: '#9fb4c8', detent: '#3d5a80' };
+
+// helpers (w along X, d along Y, h along Z)
+const box = (w, d, h, m, x = 0, y = 0, z = 0) => { const o = new THREE.Mesh(new THREE.BoxGeometry(w, d, h), m); o.position.set(x, y, z); return o; };
+function cylY(r, y0, y1, m, x = 0, z = 0, n = 48) { const o = new THREE.Mesh(new THREE.CylinderGeometry(r, r, y1 - y0, n), m); o.position.set(x, (y0 + y1) / 2, z); return o; }
+function cylZ(r, z0, z1, m, x = 0, y = 0, n = 32) { const o = new THREE.Mesh(new THREE.CylinderGeometry(r, r, z1 - z0, n), m); o.rotation.x = Math.PI / 2; o.position.set(x, y, (z0 + z1) / 2); return o; }
+function sectorY(r0, r1, a0, a1, y0, y1, m) {   // ring sector in the XZ plane (angles from +X toward +Z), extruded along Y
+  const sh = new THREE.Shape(); const n = 12;
+  for (let i = 0; i <= n; i++) { const a = rad(a0 + (a1 - a0) * i / n); sh[i ? 'lineTo' : 'moveTo'](r1 * Math.cos(a), -r1 * Math.sin(a)); }
+  for (let i = n; i >= 0; i--) { const a = rad(a0 + (a1 - a0) * i / n); sh.lineTo(r0 * Math.cos(a), -r0 * Math.sin(a)); }
+  sh.closePath();
+  const g = new THREE.ExtrudeGeometry(sh, { depth: y1 - y0, bevelEnabled: false }); g.rotateX(-Math.PI / 2); g.translate(0, y0, 0); g.computeVertexNormals();
+  return new THREE.Mesh(g, m);
+}
+function radialBox(w, d, r0, r1, th, y, m) {   // a box along the radius at arm angle th (deg from +X toward +Z), w tangential, d along Y
+  const o = box(w, d, r1 - r0, m, 0, 0, 0); const rc = (r0 + r1) / 2; o.position.set(rc * Math.cos(rad(th)), y, rc * Math.sin(rad(th))); o.rotation.y = rad(90 - th); return o;
+}
+function frustumFaces(w0, w1, z0, z1, m, yc) {   // square collar: 4 trapezoid faces, open top and bottom; centred on (0, yc)
+  const g = new THREE.BufferGeometry(); const v = []; const h0 = w0 / 2, h1 = w1 / 2;
+  const q = (a, b, c, d) => { v.push(...a, ...b, ...c, ...a, ...c, ...d); };
+  q([-h0, -h0, z0], [h0, -h0, z0], [h1, -h1, z1], [-h1, -h1, z1]); q([h0, h0, z0], [-h0, h0, z0], [-h1, h1, z1], [h1, h1, z1]);
+  q([h0, -h0, z0], [h0, h0, z0], [h1, h1, z1], [h1, -h1, z1]); q([-h0, h0, z0], [-h0, -h0, z0], [-h1, -h1, z1], [-h1, h1, z1]);
+  g.setAttribute('position', new THREE.Float32BufferAttribute(v, 3)); g.computeVertexNormals();
+  const o = new THREE.Mesh(g, m); o.position.y = yc; return o;
+}
+
+// ---------- the world: rebuilt for each arm version ----------
+const GROUPS = [['collar', 'Collar funnel (4 faces, 45°)'], ['drone', 'Scout v2 with cartridge'], ['arm', 'Wheel: hub, rails or bars, motors, sun, detent'], ['heads', 'Heads A / B with grippers'], ['bays', 'Ring: 2 bay modules + 7 ring frames'], ['packs', 'Cartridges (charged / dead / spare)'], ['stand', 'Stand v7: mast, keel, cross bar, toe, sheets']];
+const groups = {}; for (const [g, label] of GROUPS) groups[g] = { label, objs: [], on: true };
+let world = [];     // every object added for the current version
+let arm, headAG, headBG, HA, HB, drone, packCharged, packDead;
+function reg(g, obj) { groups[g].objs.push(obj); scene.add(obj); world.push(obj); return obj; }
+function clearWorld() {
+  for (const o of world) { scene.remove(o); o.traverse(c => { if (c.geometry) c.geometry.dispose(); if (c.material) (Array.isArray(c.material) ? c.material : [c.material]).forEach(m => m.dispose()); }); }
+  world = []; for (const g in groups) groups[g].objs = [];
+}
+
+function buildWorld() {
+  clearWorld();
+  const yc = C_.Y_C, petg = mat(C.petg), petgD = mat(C.petgDark), copper = mat(C.copper), hubM = mat(C.hub), brass = mat(C.brass), standM = mat(C.stand);
+  // ----- ring: 2 bay modules (−90 on the cradle, −60), 7 printed ring frames with the lug rows
+  const h = L.PITCH / 2 - 0.2;
+  for (const a of L.POSITIONS) {
+    if (L.MODULES.includes(a)) {
+      reg('bays', sectorY(L.MOD_R[0], L.MOD_R[1], a - h, a + h, C_.MOD_Y[0], C_.MOD_Y[1], mat(C.bay)));
+      for (const s of [-1, 1]) { const o = box(4, 24, 12, copper); const r = 118, ang = rad(a); o.position.set(r * Math.cos(ang) + s * 22 * -Math.sin(ang), yc + 10, r * Math.sin(ang) + s * 22 * Math.cos(ang)); o.rotation.y = -ang; reg('bays', o); }
+    } else {
+      reg('bays', sectorY(L.FRAME_RHO[0], L.FRAME_RHO[1], a - h, a + h, C_.LUG_Y[0] - 10, C_.LUG_Y[1] + 10, mat(C.frame, { transparent: true, opacity: 0.85 })));
+      reg('bays', sectorY(L.FRAME_RHO[0], L.FRAME_RHO[0] + 4, a - h, a + h, C_.MOD_Y[0], C_.MOD_Y[1], mat(C.frame, { transparent: true, opacity: 0.5 })));   // the frame's rim rib along the module length
+    }
+    for (const s of [-1, 1]) for (const yl of C_.LUG_Y) reg('bays', sectorY(L.LUG_RHO[0], L.LUG_RHO[1], a + s * h - (s > 0 ? 3.2 : 0), a + s * h + (s > 0 ? 0 : 3.2), yl - 7, yl + 7, mat(C.bayTop)));
+  }
+  // ----- collar on the ring, its 4 seat pads on the end frames (30° / −210°), magnet post + pogo pads
+  reg('collar', frustumFaces(L.COLLAR.w0, L.COLLAR.w1, L.SEAT_Z + L.COLLAR.z0, L.SEAT_Z + L.COLLAR.z1, mat(C.collar, { side: THREE.DoubleSide, transparent: true, opacity: 0.78 }), yc));
+  for (const s of [-1, 1]) for (const dy of [-36, 36]) reg('collar', box(22, 14, 10, petgD, s * 128, yc + dy, L.SEAT_Z - 6));
+  reg('collar', box(22, 22, 24, petgD, 40, yc - 30, L.SEAT_Z - 20));
+  reg('collar', cylZ(10, L.SEAT_Z - 9, L.SEAT_Z - 7.5, mat('#3b4752'), 40, yc - 30));
+  for (const s of [-1, 1]) reg('collar', cylZ(2, L.SEAT_Z - 9, L.SEAT_Z - 3, brass, 40 + s * 14, yc - 30));
+  // ----- stand v7 (envelopes, E from box-stand.md): floor, keel KB behind the stub, mast on its spigot, PSU, cradle + front keel, cross bar, toe, 4 sheets
+  const yEnd = C_.enclosureEnd;
+  reg('stand', box(2 * L.SHEET_X + 40, yEnd - L.Y_BACK + 40, 2, mat(C.floor, { transparent: true, opacity: 0.35 }), 0, (yEnd + L.Y_BACK) / 2, L.FLOOR - 1));
+  reg('stand', box(44, 106, 30, standM, 0, -13, L.FLOOR + 15));                                   // KB: back keel Y −66..40, U-channel + spigot
+  reg('stand', box(72, 6, 30, standM, 0, -63, L.FLOOR + 15));                                     // KB rear plate on the rear sheet
+  reg('stand', box(50, 28, 40 - L.FLOOR, standM, 0, -14, (40 + L.FLOOR) / 2));                    // mast: from the spigot up to the stub
+  reg('stand', box(64, 40, 100, mat(C.motor), 57, -30, L.FLOOR + 50));                            // PSU beside the mast (E)
+  reg('stand', box(30, 78, 20, standM, 0, 101, L.FLOOR + 10));                                    // front keel Y 62..140
+  reg('stand', box(60, C_.MOD_Y[1] - C_.MOD_Y[0], 12, standM, 0, (C_.MOD_Y[0] + C_.MOD_Y[1]) / 2, -L.MOD_R[1] - 6));   // cradle under the −90 module
+  reg('stand', box(30, 20, L.MOD_R[1] + L.FLOOR * -1 - 20, standM, 0, C_.MOD_Y[0] + 20, (-L.MOD_R[1] + L.FLOOR) / 2));  // cradle upstand to the floor keel
+  reg('stand', box(2 * L.SHEET_X, 24, 16, standM, 0, 101, L.FLOOR + 8));                          // cross bar (2 halves) to the side sheets
+  reg('stand', box(20, yEnd - 6 - 140, 10, standM, 0, (140 + yEnd - 6) / 2, L.FLOOR + 5));       // toe foot bar to the front plate
+  reg('stand', box(72, 6, 30, standM, 0, yEnd - 3, L.FLOOR + 15));                                 // toe front plate on the front sheet
+  const sheetM = mat(C.sheet, { transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false });
+  for (const s of [-1, 1]) reg('stand', box(3, yEnd - L.Y_BACK, L.TOP_Z - L.FLOOR, sheetM, s * L.SHEET_X, (yEnd + L.Y_BACK) / 2, (L.TOP_Z + L.FLOOR) / 2));
+  for (const y of [L.Y_BACK, yEnd]) reg('stand', box(2 * L.SHEET_X, 3, L.TOP_Z - L.FLOOR, sheetM, 0, y, (L.TOP_Z + L.FLOOR) / 2));
+  for (const s of [-1, 1]) for (const y of [L.Y_BACK, yEnd]) reg('stand', box(12, 12, L.TOP_Z - L.FLOOR, standM, s * (L.SHEET_X - 6), y + (y < 0 ? 6 : -6), (L.TOP_Z + L.FLOOR) / 2));   // corner post segments
+  // ----- stub v3 (fixed): 4-lobe spider plate Y 0..6 on the mast's face, Ø40 hollow shaft to Y 40, sun post, 80T sun, detent ring
+  reg('arm', cylY(27, 0, 6, petgD)); for (const [x, z] of [[10, 30], [-10, 30], [-10, -30], [10, -30]]) reg('arm', cylY(7.2, 0, 6, petgD, x, z, 24));
+  reg('arm', cylY(25, 6, 40, petgD));
+  reg('arm', cylY(L.SUN_POST_R, 40, 54, petgD));
+  reg('arm', cylY(L.P80.r, L.P80.y[0], L.P80.y[1], brass)); reg('arm', cylY(L.P80.collar, L.P80.cy[0], L.P80.cy[1], brass));
+  reg('arm', cylY(23.5, 67.8, 69.9, mat(C.detent), 0, 0, 24));
+  // ----- the arm (turns with phi)
+  arm = new THREE.Group(); reg('arm', arm);
+  arm.add(cylY(L.HUB_R, L.HUB_Y[0], L.HUB_Y[1], hubM));
+  arm.add(box(176, 4, 176, hubM, 0, 52, 0));
+  for (const k in C_.MOTORS) {
+    const [x, z, r] = C_.MOTORS[k]; const m = box(L.NEMA, 48, L.NEMA, mat(C.motor), x, 26, z); m.rotation.y = -rad(r); arm.add(m);
+    if (k === 'axle' || C_.drive === 'belt') { const yb = k === 'A' ? [66, 72] : [56, 62]; arm.add(cylY(L.P20_R, yb[0] - 1, yb[1] + 1, brass, x, z)); arm.add(cylY(2.5, 50, 74, hubM, x, z, 12)); }
+    else { const dy = C_.RAIL_Y[0] - 74; const ty = dy ? [55.5, 63.5] : [64.5, 72.5], by = dy ? [63.5, 71] : [56.5, 64];       // v5: 16T m1 pinion, boss with the grub
+      arm.add(cylY(9, ty[0], ty[1], brass, x, z, 32)); arm.add(cylY(7, by[0], by[1], brass, x, z, 24)); arm.add(cylY(2.5, 50, 74, hubM, x, z, 12)); }
+  }
+  { const [x, z] = C_.MOTORS.axle; const d = Math.hypot(x, z); const bd = box(d, 6, 2, mat(C.belt), x / 2, 59, z / 2); bd.rotation.y = -Math.atan2(z, x); arm.add(bd); }   // axle loop as a flat band
+  // detent: roller arm (pivot to hook) and tower column at the version's roller angle
+  { const th = C_.detent.th, Q = C_.detent.Q; arm.add(radialBox(9, 2.5, 24, 66, th + (C_.drive === 'belt' ? 12 : -12), 72.8, mat(C.detent))); arm.add(cylY(5, 53.5, 71.3, mat(C.detent), Q[0], Q[1], 20)); }
+  // the two heads' guides, in each head's own frame (A along +Z, B at phi + 90)
+  function guide(hd) {
+    const g = new THREE.Group(); const [y0, y1] = C_.RAIL_Y; const dy = y0 - 74; const sg = hd === 'A' ? 1 : -1;
+    if (C_.posts) for (const r of (hd === 'A' ? [35, 76] : [38.75, 76])) g.add(box(32, 22, 12, hubM, 0, 63, r));
+    if (C_.drive === 'belt') {
+      const [r0, r1] = L.BAR; g.add(box(40, 20, r1 - r0, mat(C.bar), 0, 84, (r0 + r1) / 2));
+      const xb = hd === 'A' ? 34 : 55, yb = hd === 'A' ? [66, 72] : [56, 62], zi = hd === 'A' ? 120 : 124, zm = hd === 'A' ? -59 : -61;
+      g.add(cylY(8, yb[0] - 1.5, yb[1] + 1.5, brass, xb, zi)); g.add(box(14, 20, 24, petgD, 0, 84, r1 - 6));
+      for (const s of [-1, 1]) g.add(box(1.4, 6, zi - zm, mat(C.belt), xb + s * 6.35, (yb[0] + yb[1]) / 2, (zi + zm) / 2));
+    } else {
+      const [r0, r1] = L.RAIL_R, railM = mat(C.rail);
+      for (const r of (hd === 'A' ? [35, 76] : [38.75, 76])) g.add(box(32, 6, 20, railM, 0, y0 + 3, r));              // foot pads with the M5 inserts
+      g.add(box(18, 14, r1 - r0, railM, 0, y0 + 13, (r0 + r1) / 2));                                                  // body X ±9
+      for (const s of [-1, 1]) g.add(box(3, 6, r1 - r0, railM, s * 10.5, y0 + 14, (r0 + r1) / 2));                     // the two 90° ridges to X ±12
+      g.add(box(4, 4.2, r1 - r0, mat(C.belt), -6, y1 - 2, (r0 + r1) / 2));                                            // servo ribbon in its channel
+    }
+    return g;
+  }
+  arm.add(guide('A')); const gB = guide('B'); gB.rotation.y = rad(-90); arm.add(gB);
+  // ----- heads: carriage on the guide, body under the carried pack, servo, two blades, pinion (B = A mirrored in X)
+  function head(hd) {
+    const sg = hd === 'A' ? 1 : -1; const g = new THREE.Group(); const hm = mat(C.head); const pt = C_.PLATE_TOP; const dy = C_.RAIL_Y[0] - 74;
+    if (C_.drive === 'belt') {
+      g.add(box(48, 4, 44, hm, 0, 96, 22)); for (const s of [-1, 1]) g.add(box(4, 26, 44, hm, s * 22, 85, 22));
+      g.add(box(11, 10.4, 40, hm, sg * (hd === 'A' ? 27.8 : 48.8), 69 - (hd === 'A' ? 0 : 10), 1.4));                   // belt clamp v2
+    } else {
+      g.add(box(56, 4, 46, hm, 0, pt - 2, 23));                                                                       // carriage plate
+      g.add(box(18.5, 4, 30, hm, sg * 37.25, pt - 2, 15));                                                            // wing to the rack web
+      g.add(box(6, 30, 71, hm, sg * 43.5, 79 + dy, -5.5));                                                            // rack web, teeth on its outer face Y 64..73
+      g.add(box(1.5, 9, 71, mat(C.finger), sg * 47.2, 68.5 + dy, -5.5));
+      const wm = mat(C.wheel);
+      for (const [x, u] of [[22, 10], [22, 38], [-22, 24]]) { g.add(cylY(12, 83 + dy, 93 + dy, wm, sg * x, u, 32)); g.add(cylY(4.6, 79 + dy, 83 + dy, mat('#3b4752'), sg * x, u, 6)); g.add(cylY(4.25, pt, pt + 5, mat('#3b4752'), sg * x, u, 12)); }
+    }
+    g.add(box(40, yc + 47 - pt, 10, hm, 0, (pt + yc + 47) / 2, 2));                                                   // body from the carriage to the pack
+    g.add(box(40, 20, 28, hm, 0, pt + 7, 0));
+    g.add(box(27, 15, 10, hm, sg * 30.5, yc, -7));
+    g.add(box(20, 40, 40.7, mat(C.servo), sg * L.P_SH, yc + 11.5, -31.35));
+    g.add(box(54.5, 2.9, 6, mat(C.servo), sg * L.P_SH, yc + 11.5, -22));
+    g.add(cylZ(6, -10, -4, brass, sg * L.P_SH, yc, 16));
+    const fm = mat(C.finger); const fA = new THREE.Group(), fB = new THREE.Group();
+    fA.add(box(3, 13, 27, fm, -11.5, yc, 9.4)); fA.add(box(44, 6, 6, fm, sg * 11, yc + 9, -7));
+    fB.add(box(3, 13, 27, fm, 11.5, yc, 9.4)); fB.add(box(44, 6, 6, fm, sg * 22, yc - 9, -7));
+    g.add(fA); g.add(fB);
+    return { g, fA, fB, sg };
+  }
+  HA = head('A'); HB = head('B');
+  headAG = new THREE.Group(); headAG.add(HA.g); arm.add(headAG); groups.heads.objs.push(HA.g);
+  headBG = new THREE.Group(); headBG.add(HB.g); headBG.rotation.y = rad(-90); arm.add(headBG); groups.heads.objs.push(HB.g);
+  // ----- cartridges
+  function cartridge(col) {
+    const g = new THREE.Group(); const m = mat(col);
+    g.add(box(2 * L.CART_XO, L.CART_L, L.CART_H, m, 0, yc - L.Z_TABC + L.CART_L / 2, L.CART_H / 2));
+    for (const s of [-1, 1]) g.add(box(1, L.CART_L, 10, m, s * 19.5, yc - L.Z_TABC + L.CART_L / 2, 43));
+    g.add(box(28, 14, 2, mat('#2b2b2b'), 0, yc, 1));
+    for (const s of [-1, 1]) g.add(box(2, 12, 24, mat('#e8d8b0'), s * 18, yc + 29, 24));
+    return g;
+  }
+  packCharged = reg('packs', cartridge(C.pack)); packDead = reg('packs', cartridge(C.dead));
+  { const a = -60; const p = cartridge('#4f8a66'); p.rotation.y = -rad(a - 90); p.position.set(L.R * Math.cos(rad(a)), 0, L.R * Math.sin(rad(a))); reg('packs', p); }   // the spare in the −60 module
+  // ----- the drone (Scout v2 envelope, E)
+  drone = new THREE.Group(); reg('drone', drone);
+  { const cf = mat(C.carbon), dm = mat(C.drone);
+    drone.add(box(100, 100, 3, cf, 0, 0, 1.5));
+    for (const s of [-1, 1]) { const a = box(150, 12, 3, cf, 0, 0, 1.5); a.rotation.z = s * Math.PI / 4; drone.add(a); }
+    drone.add(box(52, 92, 6, mat(C.head), 0, 0, -3));
+    for (const [x, y] of [[53, 53], [-53, 53], [53, -53], [-53, -53]]) { drone.add(cylZ(10, 3, 18, dm, x, y)); drone.add(cylZ(45, 20, 21.5, mat('#9fb0bf', { transparent: true, opacity: 0.35 }), x, y, 24)); }
+    drone.add(box(34, 34, 28, dm, 0, 0, 17)); drone.add(box(22, 10, 14, mat('#3b4752'), 0, 52, 8));
+    const rodM = mat(C.carbon); const top = 90;
+    for (const [x, y] of [[85, 85], [-85, 85], [85, -85], [-85, -85]]) {
+      drone.add(cylZ(4, -4, 4, mat(C.petgDark), x, y));
+      const dir = new THREE.Vector3(x * 70 / 85 - x, y * 70 / 85 - y, top); const len = dir.length();
+      const r = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, len, 8), rodM); r.position.set((x + x * 70 / 85) / 2, (y + y * 70 / 85) / 2, top / 2); r.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize()); drone.add(r);
+      for (const w of [[x + (x > 0 ? 7 : -7), y], [x, y + (y > 0 ? 7 : -7)]]) { const wh = new THREE.Mesh(new THREE.SphereGeometry(4.5, 12, 8), mat('#e3e7eb')); wh.position.set(w[0], w[1], 0); drone.add(wh); }
+    }
+    for (const [a, b] of [[[70, 70], [-70, 70]], [[-70, 70], [-70, -70]], [[-70, -70], [70, -70]], [[70, -70], [70, 70]]]) { const r = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 140, 8), rodM); r.position.set((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, top); r.rotation.z = a[1] === b[1] ? Math.PI / 2 : 0; drone.add(r); }
+    for (const [a, b] of [[[85, 85], [-85, 85]], [[-85, 85], [-85, -85]], [[-85, -85], [85, -85]], [[85, -85], [85, 85]]]) { const r = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 170, 8), rodM); r.position.set((a[0] + b[0]) / 2, (a[1] + b[1]) / 2, 0); r.rotation.z = a[1] === b[1] ? Math.PI / 2 : 0; drone.add(r); }
+    drone.add(cylZ(10, -8, -6, mat('#3b4752'), 40, -30));
+  }
+  applyGroups();
+}
+
+// ---------- kinematics ----------
+function apply(t) {
+  const s = state(t); const yc = C_.Y_C;
+  arm.rotation.y = rad(90 - s.phi);
+  headAG.position.set(0, 0, s.zA); HB.g.position.set(0, 0, s.zB);
+  for (const [H, d] of [[HA, s.fA], [HB, s.fB]]) { H.fA.position.x = H.sg * d; H.fB.position.x = -H.sg * d; }
+  const dz = droneZ(t); drone.position.set(0, yc, dz);
+  drone.rotation.z = t < T_LAND ? rad(4 * Math.sin(t * 5) * (1 - t / T_LAND)) : 0;
+  const [ch, de] = owner(t);
+  function place(p, own) {
+    if (own === null) { p.visible = false; return; }
+    p.visible = groups.packs.on; p.rotation.set(0, 0, 0); p.position.set(0, 0, 0);
+    if (own === 'bay') { const a = L.DEMO_BAY; p.rotation.y = -rad(a - 90); p.position.set(L.R * Math.cos(rad(a)), 0, L.R * Math.sin(rad(a))); }
+    else if (own === 'drone') { p.position.set(0, 0, Math.max(dz - L.SEAT_Z, 0) + L.R + 5); }
+    else { const z0 = own === 'A' ? s.zA : s.zB; const r = z0 + L.CART_BOT_DZ;
+      const ang = own === 'A' ? arm.rotation.y : arm.rotation.y + rad(-90); p.rotation.y = ang; p.position.set(r * Math.sin(ang), 0, r * Math.cos(ang)); }
+  }
+  place(packCharged, ch); place(packDead, de);
+  return s;
+}
+
+// ---------- panels ----------
+const partsEl = $('parts');
+for (const g in groups) {
+  const G = groups[g]; const sec = document.createElement('section'); sec.className = 'grp'; sec.id = 'grp-' + g;
+  sec.innerHTML = `<header><span>${G.label}</span><label><input type="checkbox" checked id="show-${g}" data-grp="${g}" aria-label="toggle ${G.label}"> show</label></header>`;
+  partsEl.appendChild(sec);
+}
+function applyGroups() { for (const g in groups) { for (const o of groups[g].objs) o.visible = groups[g].on; $('grp-' + g).classList.toggle('off', !groups[g].on); } invalidate(); }
+partsEl.addEventListener('change', e => { const g = e.target.dataset.grp; if (!g) return; groups[g].on = e.target.checked; applyGroups(); });
+const seqEl = $('seq');
+PH.forEach((p, i) => { const li = document.createElement('li'); li.innerHTML = `${p[1]}<span>${p[0]} s</span>`; li.onclick = () => { setT(p[0]); }; seqEl.appendChild(li); });
+$('cut').oninput = () => { const v = +$('cut').value; clip.constant = v; $('cut-val').textContent = v >= 340 ? 'off' : 'Y ' + v; invalidate(); };
+function cfgPanel() {
+  const rows = C_.rows.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+  const delta = C_.drive === 'belt' ? 'Per arm: 2 x 2040, 2 belts + connectors, 2 idlers + idler ends, 8 T-nuts, 2 x 20T, 2 printed glides.'
+    : 'Per arm: 2 printed rails, 6 printed V-wheels on 12 x 625ZZ, 2 eccentric spacers, 2 printed 16T pinions, 2 racks in the heads; out: bars, belts, idlers, clamps, T-nuts, head 20Ts (about −120 g, E).';
+  $('cfg-box').innerHTML = `<b>${C_.label}</b><table>${rows}</table><p class="note" style="margin-top:6px">${delta}</p>`;
+}
+function setCfg(k) {
+  cfgKey = k; C_ = CFG[k]; for (const kk in CFG) $('cfg-' + kk).setAttribute('aria-pressed', String(kk === k));
+  buildWorld(); cfgPanel(); setView('iso'); update(); invalidate();
+  try { localStorage.setItem('nox-box-cfg', k); } catch (e) {}
+}
+for (const k in CFG) $('cfg-' + k).onclick = () => setCfg(k);
+
+// ---------- strip (phase bands) ----------
+const strip = $('strip'); const sctx = strip.getContext('2d');
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function drawStrip(t) {
+  const W = strip.clientWidth, H = strip.clientHeight; if (strip.width !== W * devicePixelRatio) { strip.width = W * devicePixelRatio; strip.height = H * devicePixelRatio; }
+  sctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0); sctx.clearRect(0, 0, W, H);
+  const padL = 6, padR = 6, x = tt => padL + (W - padL - padR) * tt / T_END;
+  const bands = [[0, 4.5, 'A picks at −90°', css('--muted')], [4.5, T_LAND, 'landing', css('--muted')], [T_LAND, T_LEAVE, 'swap: drone seated 7.5 s', css('--accent')], [T_LEAVE, 16.5, 'take-off', css('--muted')], [16.5, 22, 'B returns the dead pack', css('--muted')]];
+  sctx.font = '11px ' + css('--mono'); sctx.textBaseline = 'middle';
+  for (const [a, b, lab, col] of bands) { sctx.fillStyle = col; sctx.globalAlpha = 0.18; sctx.fillRect(x(a), 6, x(b) - x(a) - 1, H - 12); sctx.globalAlpha = 1; sctx.fillStyle = css('--fg'); if (x(b) - x(a) > 70) sctx.fillText(lab, x(a) + 6, H / 2); }
+  sctx.strokeStyle = css('--grid'); for (const p of PH) { sctx.beginPath(); sctx.moveTo(x(p[0]) + 0.5, H - 6); sctx.lineTo(x(p[0]) + 0.5, H - 1); sctx.stroke(); }
+  sctx.strokeStyle = css('--accent'); sctx.lineWidth = 2; sctx.beginPath(); sctx.moveTo(x(t), 2); sctx.lineTo(x(t), H - 2); sctx.stroke(); sctx.lineWidth = 1;
+}
+strip.addEventListener('click', e => { const r = strip.getBoundingClientRect(); setT(Math.max(0, Math.min(T_END, (e.clientX - r.left - 6) / (r.width - 12) * T_END))); });
+
+// ---------- transport ----------
+let t = 0, playing = true, last = performance.now();
+const scrub = $('scrub'), playBtn = $('play'); scrub.max = T_END; $('t-end').textContent = T_END.toFixed(1);
+function setT(v, fromScrub) { t = v; if (!fromScrub) scrub.value = v.toFixed(2); update(); invalidate(); }
+scrub.addEventListener('input', () => setT(parseFloat(scrub.value), true));
+playBtn.onclick = () => { playing = !playing; playBtn.textContent = playing ? 'pause' : 'play'; last = performance.now(); };
+document.addEventListener('keydown', e => { if (e.code === 'Space' && !/INPUT|SELECT|BUTTON/.test(e.target.tagName)) { e.preventDefault(); playBtn.click(); } });
+function update() {
+  const s = apply(t);
+  $('t-now').textContent = t.toFixed(2);
+  $('h-phi').textContent = s.phi.toFixed(1).padStart(7); $('h-z').textContent = s.zA.toFixed(1).padStart(5) + ' / ' + s.zB.toFixed(1).padStart(5);
+  $('h-dr').textContent = t < T_LAND ? 'descending' : (t < T_LEAVE ? 'seated · magnet on' : (t < T_LEAVE + 2.5 ? 'leaving' : 'away'));
+  let k = 0; for (let i = 0; i < PH.length; i++) if (PH[i][0] <= t + 1e-9) k = i;
+  $('phase-no').textContent = `step ${k + 1} of ${PH.length} · ${PH[k][0]} s`; $('phase-txt').textContent = PH[k][1];
+  [...seqEl.children].forEach((li, i) => li.classList.toggle('now', i === k));
+  drawStrip(t);
+}
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); drawStrip(t); invalidate(); }
+new ResizeObserver(resize).observe(stage); resize();
+function loop(now) {
+  if (playing) { const dt = (now - last) / 1000 * parseFloat($('speed').value); last = now; let nt = t + dt; if (nt >= T_END) nt = 0; setT(nt); } else last = now;
+  if (needsRender) { needsRender = false; renderer.render(scene, camera); }
+  requestAnimationFrame(loop);
+}
+let startKey = 'v4'; try { const k = localStorage.getItem('nox-box-cfg'); if (k && CFG[k]) startKey = k; } catch (e) {}
+setCfg(startKey); requestAnimationFrame(loop);
+</script>
