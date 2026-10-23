@@ -14,19 +14,20 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 ### Keep (decided, the box is built around them)
 - Airframe and electronics as built: cut-down Bee35 carbon plate, EMAX ECO II 2004, Gemfan 3520, MicoAir743 AIO, XR2, MTF-02P, Radxa Zero 3W, DECXIN camera (`scout.md` As built, `dimensions.md` A).
 - **Props on top** (tractor, Spark 14 Oct); prop plane in `dimensions.md` C.
-- **Battery under the drone** in a cartridge, pushed straight up the drone axis, held by the bottom latch (side bolts the box fingers squeeze out), contact pads not the XT60 (Spark 8 / 12 / 14 Oct; `dimensions.md` C, E, J).
+- **XT60, not contact pads** (Spark 23 Oct: the touch contacts won't work). Battery under the drone in a cartridge on the bottom latch stays (DEFAULT, Spark 14 Oct); the box swap now has to mate and unmate the XT60 along the drone axis (box chat; alternative: hand swap).
 - **Cartridge long side along the box axle** (Spark 16 Oct 17:34).
 - **Shared collar funnel catch**: electromagnet on a steel belly plate, 2 pogo keep-alive pads (Spark 12 / 14 Oct; `dimensions.md` G).
 - **Full prop cage**, every printed cage part PETG, every rod 3.0 carbon epoxied (Spark 17 Oct 10:39 / 21:45; 19 Oct 19:12: "v2 worse than v1, keep only the bottom battery + funnel fit, full cage back").
 - PX4 version and switches matched to the Overseer (mode ch 5, kill ch 8); no resoldering without asking (`scout.md` Flight setup brief).
 
-### Priorities (DEFAULT, from v2)
+### Priorities (DEFAULT; v2 was retired for being way too flimsy, Spark 23 Oct)
 1. It works: flies, swaps its pack in the box, sends video, props enclosed.
-2. Light: all-up target in `dimensions.md` C (E); a part under budget gives its grams back to the total.
+2. Stiff and robust: nothing flexes in the hand or on a landing; parts that held up on v1 beat lighter ones.
 3. One crash: pack, FC, camera, Radxa and motors come out safe; cage and printed parts may bend or break.
+4. No weight target (Spark 23 Oct); all-up now in `dimensions.md` C.
 
 ### Done when (DEFAULT)
-- Holds position over a textured floor to the `scout.md` Flight setup brief line; kill and failsafe proven props off; parameter file saved.
+- Flies perfectly in Position mode (Spark 23 Oct, done); kill and failsafe proven props off; parameter file saved.
 - Lands in the funnel, the box swaps its pack and it flies out, with the drone powered through the swap.
 - Live video from the Radxa reaches the box (B7).
 
@@ -36,7 +37,6 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 3. Camera mount on the nose, outside the cage keep-outs.
 4. Cartridge (Scout size) matching the bay modules (`nox/box/box-case.md`).
 
-### Open for Spark (DEFAULT in brackets, work goes on)
-- Why v2 was retired, i.e. what v3 must do differently [v2.1's verdict: full cage, bottom battery, funnel fit].
-- All-up target [`dimensions.md` C].
-- PX4 multi-vehicle ids: Scout `MAV_SYS_ID` 2, Overseer 1 [E, `claude/research/2026-10-11-multi-drone-coordination.md`].
+### Open (DEFAULT in brackets, work goes on)
+- How the box mates the XT60 [straight push on the drone axis; box chat sizes the push, the hold and the plug's float].
+- PX4 multi-vehicle ids: none set yet (Spark 23 Oct) [Scout `MAV_SYS_ID` 2, Overseer 1 at the next bench session; `claude/research/2026-10-11-multi-drone-coordination.md`].

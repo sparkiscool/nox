@@ -51,6 +51,7 @@ Pocket model "Scout" = copy of the Overseer model, XR2 bound. Ch 1-4 sticks (cal
 **Unverified:** stick directions on the QGC radio page, kill with motors running, RC-loss failsafe. Check props off.
 
 ## Flights
+- **23 Oct: flies perfectly in Position mode (Spark).** B1 (position drift) closed. `MAV_SYS_ID` not set yet (Spark 23 Oct).
 - **By 7 Oct, first stable flight (Spark, reported 7 Oct 00:51):** bring-up finished, flies stable. Mode, what fixed the drift, parameter changes and backup not recorded here: the Firmware, Radio and Bring-up sections below still show the pre-flight state (CHECK with Spark, save a parameter file).
 - **1 Oct, first try:** armed in Position, never left the ground. At part throttle the prop hubs split round the screws: two props came off (FR, RL), two cracked. Cause not found. Suspects: 5 mm centre-hole props instead of the 1.5 T-mount version, countersunk screw heads, overtightened screws, generic tune buzzing on the ground.
 - **1 Oct, new props:** flies, no damage. Drifts in Position mode.
