@@ -19,3 +19,5 @@
 10:26 END cam v4 rc=0 mass 12.6 worst None solid True
 10:26 QUEUE 4 DONE
 10:27 START head v6
+10:45 END head v6 rc=0 mass 0 worst None solid None
+10:45 QUEUE 5 DONE

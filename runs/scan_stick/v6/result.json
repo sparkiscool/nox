@@ -1,0 +1,7 @@
+{
+ "part": "scan_stick_head",
+ "version": "v6",
+ "status": "FAILED",
+ "note": "hung in Pardiso at coarse it 11, killed",
+ "date": "2026-10-23"
+}
