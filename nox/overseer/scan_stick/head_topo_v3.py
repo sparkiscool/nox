@@ -17,6 +17,8 @@ from topo.part import man
 H = float(sys.argv[1]) if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else 1.25
 GEN = float(sys.argv[2]) if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else 5.0   # cm3 generated (DEFAULT, E)
 GIT = "--no-git" not in sys.argv
+IMPACT = "--impact" in sys.argv          # v4: + 50 g drop (6 dirs) on the lidar and 100 N side hits (DEFAULT, E)
+VER = "v4" if IMPACT else "v3"
 
 BOSS_R, SOCK_H = 16.0, 34.0
 PLATE_T, PLATE_W = 6.0, 86.0
@@ -77,10 +79,16 @@ def setup(h):
     p.load("hand push -z 30 N", pad_region, np.array((0, 0, -30), float))
     for nm, v in (("poke cam +y", (0, 5, 0)), ("poke cam -z", (0, 0, -5)), ("poke cam +x", (5, 0, 0))):
         p.load(nm, cam_region, np.array(v, float))
+    if IMPACT:
+        for k, d in enumerate(dirs[:6]):
+            p.load(f"lidar impact 50 g {k}", pad_region, LIDAR_KG * G * 50 * d, accel=50 * d)
+            p.load(f"camera impact 50 g {k}", cam_region, CAM_KG * G * 50 * d)
+        for nm, v in (("side hit +x 100 N", (100, 0, 0)), ("side hit -y 100 N", (0, -100, 0)), ("drop on lidar -z 150 N", (0, 0, -150))):
+            p.load(nm, pad_region, np.array(v, float))
     return p
 
 if __name__ == "__main__":
-    out = os.path.join(ROOT, "runs", "scan_stick", "v3")
+    out = os.path.join(ROOT, "runs", "scan_stick", VER)
     if os.environ.get("NOX_SETUP_ONLY"):
         p = setup(H); print(p.summary() if hasattr(p, "summary") else p)
     else:
