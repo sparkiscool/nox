@@ -218,3 +218,18 @@ it 127 beta   32 J   6.4585 vol 0.1112 (dil 0.2438 g -0.000) grey  3.5% ch 0.100
 it 128 beta   32 J   6.3856 vol 0.1112 (dil 0.2439 g -0.000) grey  3.5% ch 0.100 worst pad push 1.81e+04 26.6s
 it 129 beta   32 J   6.3273 vol 0.1113 (dil 0.2439 g -0.000) grey  3.4% ch 0.100 worst pad push 1.8e+04 26.5s
 it 130 beta   32 J   6.2729 vol 0.1113 (dil 0.2439 g -0.000) grey  3.4% ch 0.100 worst pad push 1.78e+04 26.9s
+it 131 beta   32 J   6.2196 vol 0.1113 (dil 0.2439 g +0.001) grey  3.5% ch 0.100 worst pad push 1.76e+04 27.5s
+it 132 beta   32 J   6.3144 vol 0.1111 (dil 0.2437 g -0.000) grey  3.5% ch 0.100 worst pad push 1.79e+04 26.6s
+it 133 beta   32 J   6.2602 vol 0.1111 (dil 0.2437 g -0.000) grey  3.5% ch 0.100 worst pad push 1.78e+04 27.4s
+it 134 beta   32 J   6.2065 vol 0.1111 (dil 0.2437 g -0.000) grey  3.5% ch 0.100 worst pad push 1.76e+04 26.6s
+it 135 beta   32 J   6.1542 vol 0.1112 (dil 0.2437 g -0.000) grey  3.5% ch 0.100 worst pad push 1.75e+04 26.5s
+it 136 beta   32 J   6.1053 vol 0.1112 (dil 0.2437 g +0.000) grey  3.5% ch 0.100 worst pad push 1.74e+04 27.2s
+it 137 beta   32 J   6.1583 vol 0.1111 (dil 0.2436 g -0.000) grey  3.5% ch 0.100 worst pad push 1.75e+04 26.8s
+layout: stopped (max_stage) at it 137, beta 32, 4422 s
+layout: beta 32 done: eroded design 12 bodies, main 15.0%; drawn bodies outside the main body: 7
+layout done: 4629 s, peak 3.945972 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.37 cm3, field 10.43 cm3, in env - cuts 8.86 cm3 (layout 8.86, level offset -0.014 mm), fillet 2.5 mm, rims 1.0 mm, mesh 145,076 faces, 13 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [4932.7], "necks": [], "drawn_not_in_main": [["0.4", 0.962, "erode 2.0"], ["0.5", 0.962, "erode 2.0"], ["0.6", 0.984, "erode 2.0"], ["0.7", 0.984, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 1430.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.58 in 'misuse 10' at [26.5, 7.5, 21.5]
+RESULT {"name": "holder", "solid_ok": false, "mass_g": 11.26, "worst": 0.582, "function_ok": true, "bodies": 1}
