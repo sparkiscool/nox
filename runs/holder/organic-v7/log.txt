@@ -211,3 +211,17 @@ it 107 beta   32 J  10.8338 vol 0.1199 (dil 0.2553 g -0.007) grey  3.6% ch 0.100
 it 108 beta   32 J   6.4655 vol 0.1216 (dil 0.2559 g -0.004) grey  3.5% ch 0.100 worst pad push 8.89e+03 33.3s
 it 109 beta   32 J   5.4227 vol 0.1229 (dil 0.2566 g -0.002) grey  3.6% ch 0.095 worst pad push 7.42e+03 31.9s
 it 110 beta   32 J   5.1410 vol 0.1233 (dil 0.2568 g -0.001) grey  3.6% ch 0.100 worst pad push 6.97e+03 33.2s
+it 111 beta   32 J   5.0010 vol 0.1236 (dil 0.2569 g +0.009) grey  3.6% ch 0.100 worst pad push 6.73e+03 33.6s
+it 112 beta   32 J   6.5154 vol 0.1205 (dil 0.2538 g -0.003) grey  3.6% ch 0.100 worst pad push 8.91e+03 33.7s
+it 113 beta   32 J   5.8603 vol 0.1213 (dil 0.2543 g -0.001) grey  3.6% ch 0.100 worst pad push 7.98e+03 33.0s
+it 114 beta   32 J   5.7204 vol 0.1214 (dil 0.2544 g -0.000) grey  3.6% ch 0.100 worst pad push 7.76e+03 33.8s
+it 115 beta   32 J   5.6321 vol 0.1215 (dil 0.2544 g -0.000) grey  3.6% ch 0.100 worst pad push 7.61e+03 31.2s
+it 116 beta   32 J   5.5503 vol 0.1216 (dil 0.2544 g +0.005) grey  3.6% ch 0.100 worst pad push 7.46e+03 30.9s
+layout: stopped (max_stage) at it 116, beta 32, 3990 s
+layout: beta 32 done: eroded design 2 bodies, main 92.6%; drawn bodies outside the main body: 1
+layout done: 4230 s, peak 3.952172 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.29 cm3, field 10.64 cm3, in env - cuts 9.24 cm3 (layout 9.24, level offset -0.008 mm), fillet 2.5 mm, rims 1.0 mm, mesh 146,100 faces, 12 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [5262.1], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 0, "ok": true}
+function check: {'skin_mm3': 1141.5, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.57 in 'misuse 12' at [28.5, 33.5, 21.5]
+RESULT {"name": "holder", "solid_ok": true, "mass_g": 11.73, "worst": 0.569, "function_ok": true, "bodies": 1}
