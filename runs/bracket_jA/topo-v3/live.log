@@ -44,3 +44,33 @@ it  27 beta    4 J   4.3557 vol 0.5162 (dil 0.7055 g -0.008) grey 52.3% ch 0.100
 it  28 beta    4 J   3.2266 vol 0.5269 (dil 0.7065 g -0.006) grey 48.9% ch 0.100 worst gate b2 fz 6.59 1.3s
 it  29 beta    4 J   3.0044 vol 0.5345 (dil 0.7094 g -0.002) grey 47.8% ch 0.100 worst gate b2 fz 6.19 1.3s
 it  30 beta    4 J   2.9428 vol 0.5374 (dil 0.7104 g -0.001) grey 47.2% ch 0.100 worst gate b2 fy 6.12 1.5s
+it  31 beta    4 J   2.9189 vol 0.5388 (dil 0.7107 g -0.003) grey 46.9% ch 0.100 worst gate b2 fy 6.05 1.2s
+it  32 beta    4 J   2.8813 vol 0.5418 (dil 0.7127 g -0.001) grey 46.7% ch 0.100 worst gate b2 fz 5.95 1.4s
+it  33 beta    4 J   2.8665 vol 0.5428 (dil 0.7128 g -0.000) grey 46.5% ch 0.100 worst gate b2 fz 5.91 1.4s
+it  34 beta    4 J   2.8534 vol 0.5437 (dil 0.7129 g -0.000) grey 46.2% ch 0.100 worst gate b2 fz 5.87 1.4s
+it  35 beta    4 J   2.8410 vol 0.5447 (dil 0.7129 g -0.000) grey 45.9% ch 0.100 worst gate b2 fz 5.84 1.4s
+it  36 beta    4 J   2.8294 vol 0.5456 (dil 0.7129 g +0.001) grey 45.7% ch 0.100 worst gate b2 fz 5.81 1.3s
+it  37 beta    4 J   2.8275 vol 0.5456 (dil 0.7123 g -0.000) grey 45.5% ch 0.100 worst gate b2 fz 5.8 1.4s
+layout: stopped (beta_stop) at it 37, beta 4, 54 s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+coarse stage done: 37 iterations, 56 s, peak 0.447188 GB
+bracket_jA: grid (40, 88, 48) h 1.0 = 168,960 cells; design 21,456 (21.5 cm3), drawn 16,948, void 130,556
+  support default: 3336 cells, 6950 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 5.15 cells, erosion depth 1.37 mm; volfrac 0.559 of 21,456 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: 5 drawn bodies (16,948 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (10,144 cells) count by their cover; 3 bodies tied to body 3
+layout: 6 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 18 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (40, 88, 48) = 168,960 elements, 141,150 active dofs; backend direct (direct estimate 1.3 GB, budget 11.8 GB)
+layout: warm start from a (24, 48, 24) grid (h 2.0): mean x 0.585
+it   1 beta    4 J  10.0000 vol 0.5230 (dil 0.7179 g -0.065) grey 52.5% ch 0.100 worst gate b4 fx 17.8 7.3s
+it   2 beta    4 J   8.6235 vol 0.5540 (dil 0.7470 g -0.027) grey 53.6% ch 0.100 worst gate b4 fx 15.1 9.7s
+it   3 beta    4 J   7.3894 vol 0.5748 (dil 0.7597 g -0.011) grey 52.0% ch 0.100 worst gate b4 fx 12.7 8.9s
+it   4 beta    4 J   6.4053 vol 0.5845 (dil 0.7628 g -0.006) grey 50.4% ch 0.100 worst gate b4 fz 11.1 8.9s
+it   5 beta    4 J   5.6457 vol 0.5913 (dil 0.7641 g -0.005) grey 48.6% ch 0.100 worst gate b4 fz 9.78 9.3s
+it   6 beta    4 J   5.0506 vol 0.5971 (dil 0.7648 g +0.014) grey 47.1% ch 0.100 worst gate b4 fz 8.73 8.2s
+it   7 beta    4 J   5.2455 vol 0.5797 (dil 0.7505 g -0.005) grey 47.3% ch 0.100 worst gate b4 fy 8.98 8.6s
+it   8 beta    4 J   4.9474 vol 0.5855 (dil 0.7520 g -0.003) grey 46.1% ch 0.100 worst gate b4 fz 8.42 9.7s
+it   9 beta    4 J   4.7424 vol 0.5885 (dil 0.7525 g -0.002) grey 45.3% ch 0.100 worst gate b4 fz 8.02 8.9s
+it  10 beta    4 J   4.5682 vol 0.5906 (dil 0.7529 g -0.001) grey 44.7% ch 0.100 worst gate b4 fz 7.67 8.2s
