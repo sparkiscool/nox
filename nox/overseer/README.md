@@ -14,7 +14,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - The scan stick carries the same L2, camera, Pi 5 and pack on a pole to scan on foot the way the drone will (Spark 23 Oct; `scan_stick/scan_stick.md`): the mapping pipeline is proven there before it flies.
 
 ### Keep (on hand, decided)
-- S500 centre (generic S500, Spark 23 Oct, CHECK), SunnySky X2216 II, 1045 props, MicoAir743-Lite, Matek FCHUB-12S, 4S 6000 packs (3), MTF-02P, Unitree L2, Pi 5 companion (`dimensions.md` O, `nox/parts-list.md`).
+- S500 centre plates (2015 edition, Spark 23 Oct, CHECK), SunnySky X2216 II, 1045 props, MicoAir743-Lite, Matek FCHUB-12S, 4S 6000 packs (3), MTF-02P, Unitree L2, Pi 5 companion (`dimensions.md` O, `nox/parts-list.md`).
 - **L2 top-mounted**, above the collar faces (log 23 Oct; `dimensions.md` O, G).
 - 2 x DECXIN 2633V2: front portrait 30° up (decided 23 Oct, Spark left it to us: keeps the forward view and still covers the L2 field incl. wide mode), rigid to the L2 for the camera-lidar calibration; underside straight down (Spark 23 Oct).
 - PX4 1.18.0rc, airframe 4001, DShot, CRSF; flies perfectly in Position mode (Spark 23 Oct); tune backup `claude/overseer_params_2026-09-26.params`, never delete. Switches matched to the Scout (mode ch 5, kill ch 8).
@@ -32,9 +32,9 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel and the box swaps its pack.
 
 ### Parts to draw (order DEFAULT)
-0. **Printed arms** (Spark 23 Oct): the gap between adjacent prop tips is what the arms take back; wheelbase, tip gap and span in `dimensions.md` O Frame / Props. Strength is easy; stiffness is the gate: PETG is a few times softer than the stock glass-nylon arms (E), so a deep box section tapering out to the motor, first bending and torsion modes clear of the motor speed band (frame model), and the L2 kept above the prop tips' plane by its -6° lower edge. Needs the centre plate's arm bolt pattern (measure, `dimensions.md` M Q7). Row in `nox/current-parts.md`.
+0. **Printed arms** (Spark 23 Oct; wheelbase, root height and modes in `dimensions.md` O Arms and hub, sweep `arm_reach.py`): the gap between adjacent prop tips is what the arms take back; wheelbase, tip gap and span in `dimensions.md` O Frame / Props. Strength is easy; stiffness is the gate: PETG is a few times softer than the stock glass-nylon arms (E), so a deep box section tapering out to the motor, first bending and torsion modes clear of the motor speed band (frame model), and the L2 kept above the prop tips' plane by its -6° lower edge. Tall root between the plates (Spark 23 Oct): the arm roots set the plate gap, so the hub becomes the electronics bay and the deep root stiffens the arm. Needs the centre plates measured (`dimensions.md` M Q7). Row in `nox/current-parts.md`.
 1. Lidar + front camera mount (DESIGN row in `nox/current-parts.md`), reusing the scan stick head's L2 pads and camera block where they fit.
-2. Pi 5 + UBEC / 12 V buck tray.
+2. Pi 5 + UBEC / 12 V buck deck, inside the hub between the plates (Spark 23 Oct).
 3. Underside camera mount.
 4. Belly frame for the catch: 8 PETG wheels at the Scout's points, steel belly plate, pogo pads (`dimensions.md` G Catch interface).
 5. Overseer cartridge + latch block for the bays; it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
