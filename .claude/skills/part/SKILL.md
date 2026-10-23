@@ -36,7 +36,7 @@ Artifact tool (icon "gear") and send the mp4 with SendUserFile. A static part ge
 ## 5. Done = saved (same turn, automatic)
 Follow CLAUDE.md "Done = saved" exactly: `print/<part>_<version>.stl` + `print/latest/`, `LATEST.md`, State READY in
 `current-parts.md`, one `log.md` line, `summary.md` in the fixed form beside `preview.png` and `motion.*`,
-`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `gh pr create --fill --base main`.
+`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
 
 ## 6. Review and merge (same turn)
 Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `gh pr merge <n> --merge --delete-branch`

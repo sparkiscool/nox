@@ -8,7 +8,7 @@ This repo is the only source. Docs, scripts, engine, run results and print files
 1. `git pull` on `main` before anything else, then read only what the task needs: your part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` section it uses. Nothing else is a must-read.
 2. Work on a branch: `part/<part>` for design work, `run/<part>-<version>` for a heavy run.
 3. **Every turn that changes a design commits and pushes, same turn, no exceptions:** the script, the result files, the part's State / Version / Saved file cells in `current-parts.md`, one line at the top of `nox/log.md`. Work that is not pushed does not exist; the next session cannot see it.
-4. Finish by opening a PR to `main` (small, one part; `gh pr create --fill --base main`), run the `review` agent on it, and on PASS merge it yourself: `gh api -X PUT repos/sparkiscool/nox/pulls/<n>/merge -f merge_method=merge`, then `git push origin --delete <branch>` (the allow rules are in `.claude/settings.json`). On FAIL fix and re-review; never merge a FAIL. Spark or the Nox control conversation merge only what a session could not.
+4. Finish by opening a PR to `main` (small, one part: `python3 tools/pr.py open "<part> <version>: <what>" [body.md]`), run the `review` agent on it, and on PASS merge it yourself: `python3 tools/pr.py merge <n>` (REST merge + branch delete; the allow rules are in `.claude/settings.json`). On FAIL fix and re-review; never merge a FAIL. Spark or the Nox control conversation merge only what a session could not.
 5. Never edit another part's script or row. Write what it must change as one line in the PR description, and in the PR say which part you kept.
 
 ## Where things are
@@ -67,4 +67,4 @@ Print: <bed face>, bed contact <mm²> (M), tree supports <g>; file <name>
 - Commit messages: `<part> <version>: <what>` or `ckpt <n>`. Push after every commit.
 - No git LFS (its uploads are blocked from cloud boxes). Meshes, previews and print files go in plain git: keep any single file under 50 MB (decimate a viewing mesh, zip a big 3mf), and commit a run's final mesh, not every checkpoint's.
 - Never force-push `main`. Never rewrite history on a shared branch.
-- Cloud boxes block GitHub GraphQL: `gh pr view`, `gh pr list`, `gh pr checks` and `gh pr merge` fail there. `gh pr create` and `gh api repos/sparkiscool/nox/...` (REST) work; use those.
+- Cloud boxes block GitHub GraphQL: every `gh pr ...` subcommand (create, view, list, checks, merge) fails there with 403. `gh api repos/sparkiscool/nox/...` (REST) works; `tools/pr.py` wraps open and merge.
