@@ -25,3 +25,8 @@ it  12 beta    1 J   0.0292 vol 0.0656 (dil 0.0737 g -0.005) grey 16.4% ch 0.100
 it  13 beta    1 J   0.0273 vol 0.0658 (dil 0.0738 g -0.004) grey 16.1% ch 0.100 worst tie b1 mz 32.3 16.0s
 it  14 beta    1 J   0.0259 vol 0.0661 (dil 0.0739 g -0.003) grey 15.8% ch 0.100 worst tie b1 mz 30.4 16.1s
 it  15 beta    1 J   0.0248 vol 0.0663 (dil 0.0739 g -0.002) grey 15.6% ch 0.100 worst tie b1 mz 29 16.2s
+it  16 beta    1 J   0.0240 vol 0.0664 (dil 0.0740 g +0.016) grey 15.4% ch 0.100 worst tie b1 mz 28.1 17.4s
+it  17 beta    1 J   0.0244 vol 0.0653 (dil 0.0727 g -0.002) grey 15.2% ch 0.100 worst tie b1 mz 28.8 17.1s
+it  18 beta    1 J   0.0239 vol 0.0654 (dil 0.0727 g -0.001) grey 15.0% ch 0.100 worst tie b1 mz 28.1 16.9s
+it  19 beta    1 J   0.0234 vol 0.0655 (dil 0.0727 g -0.001) grey 14.9% ch 0.100 worst tie b1 mz 27.5 16.0s
+it  20 beta    1 J   0.0230 vol 0.0656 (dil 0.0727 g -0.001) grey 14.7% ch 0.100 worst tie b1 mz 26.9 15.9s
