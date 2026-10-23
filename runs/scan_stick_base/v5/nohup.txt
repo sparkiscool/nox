@@ -104,3 +104,14 @@ it  87 beta   16 J   5.6227 vol 0.1326 (dil 0.2306 g -0.002) grey  3.4% ch 0.100
 it  88 beta   16 J   5.6198 vol 0.1331 (dil 0.2306 g -0.002) grey  3.5% ch 0.100 worst pi 25 g 4 677 35.9s
 it  89 beta   16 J   5.6169 vol 0.1339 (dil 0.2306 g -0.001) grey  3.4% ch 0.100 worst pi 25 g 4 676 31.1s
 it  90 beta   16 J   5.6140 vol 0.1347 (dil 0.2308 g -0.001) grey  3.4% ch 0.100 worst pi 25 g 4 676 35.0s
+it  91 beta   16 J   5.6111 vol 0.1352 (dil 0.2308 g +0.002) grey  3.4% ch 0.100 worst pi 25 g 4 675 34.0s
+layout: beta 16 done: eroded design 10 bodies, main 99.9%; drawn bodies outside the main body: 0
+it  92 beta   32 J  12.0339 vol 0.1349 (dil 0.2301 g +0.012) grey  1.8% ch 0.100 worst pi 25 g 4 1.42e+03 34.1s
+it  93 beta   32 J  12.0672 vol 0.1318 (dil 0.2268 g -0.003) grey  1.9% ch 0.100 worst pi 25 g 4 1.42e+03 33.2s
+it  94 beta   32 J  11.9987 vol 0.1307 (dil 0.2266 g -0.004) grey  1.8% ch 0.100 worst pi 25 g 4 1.42e+03 31.7s
+it  95 beta   32 J  11.9789 vol 0.1328 (dil 0.2271 g -0.002) grey  1.8% ch 0.100 worst pi 25 g 4 1.42e+03 33.2s
+it  96 beta   32 J  11.9687 vol 0.1331 (dil 0.2271 g -0.002) grey  1.8% ch 0.100 worst pi 25 g 4 1.41e+03 32.2s
+it  97 beta   32 J  11.9626 vol 0.1334 (dil 0.2273 g -0.001) grey  1.7% ch 0.100 worst pi 25 g 4 1.41e+03 34.9s
+it  98 beta   32 J  11.9565 vol 0.1336 (dil 0.2273 g -0.001) grey  1.8% ch 0.100 worst pi 25 g 4 1.41e+03 34.7s
+it  99 beta   32 J  11.9513 vol 0.1342 (dil 0.2272 g -0.002) grey  1.7% ch 0.100 worst pi 25 g 4 1.41e+03 34.5s
+it 100 beta   32 J  11.9460 vol 0.1352 (dil 0.2273 g -0.002) grey  1.7% ch 0.100 worst pi 25 g 4 1.41e+03 34.2s
