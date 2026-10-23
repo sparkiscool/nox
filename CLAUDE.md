@@ -8,7 +8,7 @@ This repo is the only source. Docs, scripts, engine, run results and print files
 1. `git pull` on `main` before anything else, then read only what the task needs: your part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` section it uses. Nothing else is a must-read.
 2. Work on a branch: `part/<part>` for design work, `run/<part>-<version>` for a heavy run.
 3. **Every turn that changes a design commits and pushes, same turn, no exceptions:** the script, the result files, the part's State / Version / Saved file cells in `current-parts.md`, one line at the top of `nox/log.md`. Work that is not pushed does not exist; the next session cannot see it.
-4. Finish by opening a PR to `main` (small, one part). Spark merges, or the Nox control conversation does.
+4. Finish by opening a PR to `main` (small, one part), run the `review` agent on it, and on PASS merge it yourself (`gh pr merge <n> --merge --delete-branch`; the allow rules are in `.claude/settings.json`). On FAIL fix and re-review; never merge a FAIL. Spark or the Nox control conversation merge only what a session could not.
 5. Never edit another part's script or row. Write what it must change as one line in the PR description, and in the PR say which part you kept.
 
 ## Where things are

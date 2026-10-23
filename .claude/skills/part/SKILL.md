@@ -38,5 +38,10 @@ Follow CLAUDE.md "Done = saved" exactly: `print/<part>_<version>.stl` + `print/l
 `current-parts.md`, one `log.md` line, `summary.md` in the fixed form beside `preview.png` and `motion.*`,
 `python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `gh pr create --fill --base main`.
 
+## 6. Review and merge (same turn)
+Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `gh pr merge <n> --merge --delete-branch`
+and `git checkout main && git pull`. FAIL: fix the design, re-review; never merge a FAIL. If the merge is refused by
+permissions, say so with the PR link and stop; do not work around it.
+
 ## Reply (short)
 The summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.

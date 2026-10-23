@@ -30,7 +30,7 @@ The short version of this page is `CLAUDE.md` at the repo root, loaded in every 
 - One piece = one part, or one heavy run (one generative run per machine).
 - Pieces that write the same doc rows or the same shared number stay in one session.
 - A prompt holds: the goal, the files to read, the exact commands, what to report back, and the numbers it needs (tagged). Short, in a code block, ready to paste.
-- The session that splits says which piece it kept and doesn't touch the others. Each piece ends in its own PR; the control conversation merges them.
+- The session that splits says which piece it kept and doesn't touch the others. Each piece ends in its own PR, reviewed by the `review` agent and merged by the session on PASS (23 Oct); the control conversation merges only what a session could not.
 
 ## Live status (17 Oct 15:40)
 - **A part's state is written in exactly one cell: its State cell in `nox/current-parts.md`.** No other doc restates it: the queue holds print order, part docs hold design and test results, the print log and `nox/log.md` are history. A doc that disagrees with that cell is stale.
