@@ -48,3 +48,5 @@ it  36 beta    2 J   0.0407 vol 0.1048 (dil 0.1230 g +0.001) grey 12.2% ch 0.100
 it  37 beta    2 J   0.0407 vol 0.1047 (dil 0.1229 g -0.000) grey 12.2% ch 0.100 worst gate b4 my 11.7 2.1s
 layout: beta 2 done: eroded design 17 bodies, main 95.9%; drawn bodies outside the main body: 16
 it  38 beta    4 J   0.1334 vol 0.1024 (dil 0.1365 g -0.019) grey  6.8% ch 0.100 worst hand push -z 30 N 42.8 2.2s
+it  39 beta    4 J   0.0687 vol 0.1025 (dil 0.1379 g -0.009) grey  7.3% ch 0.100 worst hand push -z 30 N 23.6 2.3s
+it  40 beta    4 J   0.0553 vol 0.1033 (dil 0.1385 g -0.005) grey  7.2% ch 0.100 worst hand push -z 30 N 16.2 2.1s
