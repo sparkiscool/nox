@@ -58,3 +58,5 @@ it  47 beta    4 J   0.3963 vol 0.1357 (dil 0.2222 g -0.003) grey 19.4% ch 0.100
 it  48 beta    4 J   0.3726 vol 0.1366 (dil 0.2224 g -0.003) grey 19.2% ch 0.100 worst tie b2 mz 55 32.7s
 it  49 beta    4 J   0.3575 vol 0.1374 (dil 0.2225 g -0.002) grey 19.0% ch 0.100 worst tie b2 mz 52.5 32.9s
 it  50 beta    4 J   0.3466 vol 0.1380 (dil 0.2226 g -0.001) grey 18.9% ch 0.100 worst tie b2 mz 50.5 33.7s
+it  51 beta    4 J   0.3381 vol 0.1385 (dil 0.2227 g +0.010) grey 18.8% ch 0.100 worst tie b2 mz 49 32.8s
+it  52 beta    4 J   0.3469 vol 0.1365 (dil 0.2203 g -0.001) grey 18.7% ch 0.100 worst tie b2 mz 50.6 32.7s
