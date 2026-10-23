@@ -181,6 +181,19 @@ def t_calibration():
           f"{f1[3 * R]:.3f} / {f2[3 * R, 3 * R]:.3f} (eta_e 0.75), erosion {c['erode']:.3f} R")
 
 
+def t_voxelise():
+    """a keep-out that reaches far under the grid (the stand setups' ring r 180 / BIG half spaces) must voxelise as
+    inside: the ray origin sits below the mesh, not below the grid (bracket_jA topo-v1 read 43k ring cells as design)."""
+    import manifold3d as mf
+    from .part import tm, voxelise
+    ax = np.arange(4) + 0.5
+    big = tm(mf.Manifold.cube([2000.0, 2000.0, 2000.0]).translate([-1000.0, -1000.0, -1000.0]))
+    ring = tm(mf.Manifold.cylinder(100.0, 180.0, 180.0, 180).rotate([90, 0, 0]).translate([0, 50, 0]))
+    a = voxelise(big, ax, ax, ax)
+    b = voxelise(ring, ax + 150.0, ax, ax - 60.0)           # x^2 + z^2 < 180^2 everywhere on this small grid
+    check("voxelise: meshes reaching below the grid read inside", a.all() and b.all(), f"{a.mean():.2f}, {b.mean():.2f}")
+
+
 def _mini_part(neck=False, h=1.0):
     """bar 24 x 10 x 10 mm: drawn plate at x 0..3 (support), drawn pad at x 20..24 loaded down; design between."""
     import manifold3d as mf
@@ -364,7 +377,7 @@ def t_end_to_end():
 def main():
     quick = "--quick" in sys.argv
     t0 = time.time()
-    for t in (t_ke, t_matvec, t_transfer, t_galerkin, t_mg_vs_direct, t_mma, t_calibration, t_gradients, t_masked_neck, t_neck):
+    for t in (t_ke, t_voxelise, t_matvec, t_transfer, t_galerkin, t_mg_vs_direct, t_mma, t_calibration, t_gradients, t_masked_neck, t_neck):
         t()
     if not quick:
         t_end_to_end()

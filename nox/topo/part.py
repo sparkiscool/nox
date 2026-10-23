@@ -37,7 +37,11 @@ def voxelise(mesh, xs, ys, zs):
     """inside test of a closed trimesh at the grid points xs x ys x zs (cell centres): ray parity along +z, one ray
     per (x, y) column. Returns bool (len xs, len ys, len zs)."""
     XX, YY = np.meshgrid(xs, ys, indexing="ij")
-    org = np.stack([XX.ravel(), YY.ravel(), np.full(XX.size, zs[0] - 5.0)], 1)
+    # rays start below the mesh, not below the grid: a keep-out that reaches under the grid (the stand setups' ring
+    # r 180 and BIG half spaces) put the old origin inside the mesh and inverted the parity of those columns
+    # (bracket_jA topo-v1: 43k design cells inside the ring cut, the build kept 2.4 of 12 cm3 generated)
+    z0 = min(float(zs[0]), float(mesh.bounds[0][2]) if len(mesh.faces) else float(zs[0])) - 5.0
+    org = np.stack([XX.ravel(), YY.ravel(), np.full(XX.size, z0)], 1)
     # a tiny irrational offset keeps rays off mesh edges / vertices that sit exactly on grid lines
     org[:, 0] += 1.234e-5
     org[:, 1] += 2.345e-5
