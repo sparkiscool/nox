@@ -93,3 +93,12 @@ layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (64, 88, 16) = 90,112 elements, 126,225 active dofs; backend direct (direct estimate 1.1 GB, budget 11.8 GB)
 layout: warm start from a (32, 48, 8) grid (h 1.5): mean x 0.283
 it   1 beta    4 J  10.0000 vol 0.1900 (dil 0.3829 g -0.040) grey 41.2% ch 0.100 worst cable pull -y 20 N 2.06e+03 13.0s
+it   2 beta    4 J   7.0520 vol 0.2006 (dil 0.3943 g -0.012) grey 42.2% ch 0.100 worst cable pull -y 20 N 1.55e+03 14.7s
+it   3 beta    4 J   5.7548 vol 0.2041 (dil 0.3966 g -0.006) grey 42.4% ch 0.100 worst cable pull -y 20 N 1.24e+03 13.5s
+it   4 beta    4 J   5.0112 vol 0.2069 (dil 0.3977 g -0.003) grey 42.4% ch 0.100 worst cable pull -y 20 N 1.04e+03 14.8s
+it   5 beta    4 J   4.5212 vol 0.2088 (dil 0.3981 g -0.002) grey 42.3% ch 0.100 worst cable pull -y 20 N 897 14.4s
+it   6 beta    4 J   4.1648 vol 0.2105 (dil 0.3983 g +0.015) grey 42.2% ch 0.100 worst cable pull -y 20 N 795 14.4s
+it   7 beta    4 J   4.4870 vol 0.2051 (dil 0.3914 g -0.003) grey 41.6% ch 0.100 worst poke post 0 +x 10 N 772 14.3s
+it   8 beta    4 J   4.2175 vol 0.2068 (dil 0.3919 g -0.001) grey 41.5% ch 0.100 worst poke post 0 +x 10 N 725 15.0s
+it   9 beta    4 J   4.0387 vol 0.2080 (dil 0.3921 g -0.001) grey 41.5% ch 0.100 worst poke post 2 +x 10 N 694 14.9s
+it  10 beta    4 J   3.8868 vol 0.2090 (dil 0.3921 g -0.001) grey 41.4% ch 0.100 worst poke post 2 +x 10 N 668 14.4s
