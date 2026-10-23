@@ -134,10 +134,7 @@ def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters
     d_gen = -_fmm(xf - eta_n, p, band)                                     # > 0 outside the generated material
     del xf
     A = voxelise(tm(part.env_m - part.cuts_m), *axes)
-    din = _mask_dist(A, p, band)
-    del A
-    d_gen = _smax(d_gen, clip_margin - din, s.fillet_mm)                  # off the keep-outs, edge rounded, not creased
-    del din
+    d_off = clip_margin - _mask_dist(A, p, band)                          # > 0 within clip_margin of a keep-out
     K, C, O = skin_field(part, axes, p, s.skin_mm)
     Kx = K | ((C | O) & (ndi.distance_transform_edt(~K) * p <= 1.0))
     r = s.skin_round_mm
@@ -148,8 +145,25 @@ def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters
     del Kx
     if r > 0:                                                             # opening: round the skins' free convex rims
         d_skin = -_fmm(-(d_skin + r), p, band) - r
-    d = _smin(d_gen, d_skin, s.fillet_mm)
-    del d_gen, d_skin
+    # the build keeps the layout's volume: one level offset t (mm) of the generated field before it is held off the
+    # keep-outs (edge rounded, not creased), so the clip, the rounding and the fillets neither thin nor fatten the
+    # optimised design (organic-v2: -6 % without it)
+    target = float(layout.result["rho_n"].sum()) * part.h ** 3
+    field = lambda t: _smin(_smax(d_gen - t, d_off, 2.0 * clip_margin), d_skin, s.fillet_mm)
+    vol = lambda t: float(((field(t) < 0) & A).sum()) * p ** 3
+    lo_t, hi_t = -1.0, 1.5
+    if vol(lo_t) > target:
+        t = lo_t
+    elif vol(hi_t) < target:
+        t = hi_t
+    else:
+        for _ in range(18):
+            t = 0.5 * (lo_t + hi_t)
+            lo_t, hi_t = (t, hi_t) if vol(t) < target else (lo_t, t)
+        t = 0.5 * (lo_t + hi_t)
+    d = field(t)
+    vt = float(((d < 0) & A).sum()) * p ** 3
+    del d_gen, d_skin, d_off, A
     F = np.pad(-d, 1, constant_values=-band)
     del d
     gen_vox = float((F > 0).sum()) * p ** 3
@@ -164,7 +178,8 @@ def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters
         trimesh.smoothing.filter_taubin(mesh, lamb=0.5, nu=0.53, iterations=taubin_iters)
     layout._skin_fine = (Kc, axes, p)
     log(f"build: organic surface at pitch {p:.3f} mm (x{up}), skins {K.sum() * p ** 3 / 1000:.2f} cm3, field "
-        f"{gen_vox / 1000:.2f} cm3, fillet {s.fillet_mm} mm, rims {r} mm, mesh {len(mesh.faces):,} faces, "
+        f"{gen_vox / 1000:.2f} cm3, in env - cuts {vt / 1000:.2f} cm3 (layout {target / 1000:.2f}, level offset {t:+.3f} mm), "
+        f"fillet {s.fillet_mm} mm, rims {r} mm, mesh {len(mesh.faces):,} faces, "
         f"{time.time() - t0:.0f} s")
     return mesh
 
