@@ -80,3 +80,31 @@ it  67 beta    4 J   1.6647 vol 0.1252 (dil 0.2256 g -0.006) grey 22.1% ch 0.100
 it  68 beta    4 J   1.5075 vol 0.1271 (dil 0.2266 g -0.002) grey 22.0% ch 0.100 worst pad push 756 2.1s
 it  69 beta    4 J   1.4565 vol 0.1277 (dil 0.2268 g -0.001) grey 21.9% ch 0.100 worst pad push 732 2.1s
 it  70 beta    4 J   1.4207 vol 0.1282 (dil 0.2268 g -0.001) grey 21.8% ch 0.100 worst pad push 715 2.0s
+it  71 beta    4 J   1.3911 vol 0.1285 (dil 0.2268 g +0.024) grey 21.8% ch 0.100 worst pad push 698 2.7s
+it  72 beta    4 J   1.6728 vol 0.1229 (dil 0.2206 g -0.004) grey 21.5% ch 0.100 worst pad push 841 2.2s
+it  73 beta    4 J   1.5925 vol 0.1239 (dil 0.2212 g -0.001) grey 21.4% ch 0.100 worst pad push 796 2.2s
+it  74 beta    4 J   1.5636 vol 0.1242 (dil 0.2213 g -0.001) grey 21.4% ch 0.100 worst pad push 782 2.4s
+it  75 beta    4 J   1.5416 vol 0.1244 (dil 0.2213 g -0.001) grey 21.3% ch 0.100 worst pad push 770 2.3s
+layout: stopped (beta_stop) at it 75, beta 4, 179 s
+layout: beta 4 done: eroded design 16 bodies, main 16.9%; drawn bodies outside the main body: 7
+coarse stage done: 75 iterations, 185 s, peak 0.63784 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (3.10 cm3); 0.18 cm3 of drawn volume opened to the design
+layout: min member 4.44 mm (rods), plates 4.03 mm, filter radius 4.58 mm = 4.58 cells, erosion depth 1.22 mm; volfrac 0.106 of 46,020 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (0.6% of passive cells differ): no symmetry
+layout: 8 drawn bodies (3,100 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (1,612 cells) count by their cover; 3 bodies tied to body 3
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts') + 18 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 4.44 mm
+fem: grid (64, 48, 32) = 98,304 elements, 174,480 active dofs; backend direct (direct estimate 1.7 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 24) grid (h 2.0): mean x 0.146
+it   1 beta    4 J  10.0000 vol 0.1062 (dil 0.2141 g +0.002) grey 22.2% ch 0.100 worst pad push 5.81e+03 30.4s
+it   2 beta    4 J   7.1567 vol 0.1043 (dil 0.2110 g -0.013) grey 22.1% ch 0.100 worst pad push 4.21e+03 30.7s
+it   3 beta    4 J   5.1026 vol 0.1067 (dil 0.2118 g -0.009) grey 22.1% ch 0.100 worst pad push 3e+03 34.0s
+it   4 beta    4 J   3.9587 vol 0.1090 (dil 0.2124 g -0.007) grey 22.0% ch 0.100 worst pad push 2.31e+03 32.1s
+it   5 beta    4 J   3.2498 vol 0.1111 (dil 0.2127 g -0.005) grey 21.8% ch 0.100 worst pad push 1.88e+03 33.8s
+it   6 beta    4 J   2.7825 vol 0.1128 (dil 0.2130 g +0.012) grey 21.7% ch 0.100 worst pad push 1.6e+03 34.7s
+it   7 beta    4 J   2.7957 vol 0.1111 (dil 0.2099 g -0.003) grey 21.4% ch 0.100 worst pad push 1.61e+03 32.8s
+it   8 beta    4 J   2.5524 vol 0.1120 (dil 0.2101 g -0.002) grey 21.3% ch 0.100 worst pad push 1.46e+03 34.3s
+it   9 beta    4 J   2.3649 vol 0.1128 (dil 0.2102 g -0.002) grey 21.2% ch 0.100 worst pad push 1.35e+03 36.1s
+it  10 beta    4 J   2.2094 vol 0.1135 (dil 0.2102 g -0.001) grey 21.1% ch 0.100 worst pad push 1.26e+03 35.8s
