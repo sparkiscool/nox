@@ -319,10 +319,10 @@ def main():
     json.dump(data, open(f"{OUT}/result.json", "w"), indent=1)
     open(f"{OUT}/summary.md", "w").write(
         "arm v5-layout: layout check, no mesh (pure python, C)\n"
-        f"Motors: A ({MOTORS_V5['A']['xc']:.1f}, {MOTORS_V5['A']['zc']:.1f}), B ({MOTORS_V5['B']['xc']:.1f}, {MOTORS_V5['B']['zc']:.1f}), axle ({best['xc']}, {best['zc']}) at {best['th']:.0f} deg; unbalance {best['unbal_gmm'] / 1000:.1f} g.m (E)\n"
-        f"Clearance: min {best['gmin']:.2f} over {len(Z0S)}x{len(Z0S)} stroke states (wheels to the rail body, designed); bisector {bis:.1f}\n"
-        f"Detent: re-place at th -45 (s -1 best, gap {max(d['gmin'] for d in det if d['th'] == -45):.2f}); ring v1 unchanged\n"
-        f"Compaction: {' / '.join(f'{r['length']:.0f}' for r in rows)} long (v4 / v5 / +C1 / compact)\n"
+        f"Motors: A ({MOTORS_V5['A']['xc']:.1f}, {MOTORS_V5['A']['zc']:.1f}), B ({MOTORS_V5['B']['xc']:.1f}, {MOTORS_V5['B']['zc']:.1f}), axle ({best['xc']}, {best['zc']}) at {best['th']:.0f} deg (C); unbalance {best['unbal_gmm'] / 1000:.1f} g.m (E)\n"
+        f"Clearance: min {best['gmin']:.2f} over {len(Z0S)}x{len(Z0S)} stroke states (wheels to the rail body, designed, C); bisector {bis:.1f} (C)\n"
+        f"Detent: re-place at th -45 (s -1 best, gap {max(d['gmin'] for d in det if d['th'] == -45):.2f} C); ring v1 unchanged\n"
+        f"Compaction: {' / '.join(f'{r['length']:.0f}' for r in rows)} long (C; v4 / v5 / +C1 / compact)\n"
         "Solid: n/a (no part built here; rails, wheels, pinions and heads v6 are drawn in their own chats)\n")
     print(f"-> {OUT}/result.json, summary.md")
 
