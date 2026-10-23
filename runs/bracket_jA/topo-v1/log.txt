@@ -37,3 +37,31 @@ layout: beta 2 done: eroded design 1 bodies, main 100.0%; anchored cores outside
 it  28 beta    4 J   4.0409 vol 0.1727 (dil 0.2812 g -0.055) grey 24.4% ch 0.100 worst tie b4 mz 66.7 0.6s
 it  29 beta    4 J   3.7967 vol 0.1821 (dil 0.2944 g -0.011) grey 25.5% ch 0.100 worst tie b4 mz 62 0.6s
 it  30 beta    4 J   3.6646 vol 0.1844 (dil 0.2961 g -0.005) grey 25.3% ch 0.100 worst tie b4 mz 58.9 0.6s
+it  31 beta    4 J   3.5801 vol 0.1857 (dil 0.2967 g +0.001) grey 25.1% ch 0.100 worst tie b4 mz 56.7 0.6s
+it  32 beta    4 J   3.5403 vol 0.1855 (dil 0.2957 g -0.002) grey 24.9% ch 0.100 worst tie b4 mz 55.5 0.5s
+it  33 beta    4 J   3.4949 vol 0.1861 (dil 0.2959 g -0.002) grey 24.8% ch 0.100 worst tie b4 mz 54.2 0.6s
+it  34 beta    4 J   3.4581 vol 0.1867 (dil 0.2960 g -0.001) grey 24.8% ch 0.100 worst tie b4 mz 53.1 0.6s
+it  35 beta    4 J   3.4274 vol 0.1872 (dil 0.2961 g -0.001) grey 24.8% ch 0.100 worst tie b4 mz 52.2 0.5s
+it  36 beta    4 J   3.4022 vol 0.1876 (dil 0.2961 g +0.007) grey 24.9% ch 0.100 worst tie b4 mz 51.6 0.5s
+it  37 beta    4 J   3.4222 vol 0.1859 (dil 0.2939 g -0.001) grey 24.8% ch 0.100 worst tie b4 mz 51.8 0.5s
+it  38 beta    4 J   3.3993 vol 0.1864 (dil 0.2940 g -0.001) grey 24.7% ch 0.100 worst tie b4 mz 51.2 0.6s
+layout: stopped (beta_stop) at it 38, beta 4, 28 s
+layout: beta 4 done: eroded design 5 bodies, main 77.4%; anchored cores outside the main body: 4
+coarse stage done: 38 iterations, 35 s, peak 0.585028 GB
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 5.15 cells, erosion depth 1.37 mm; volfrac 0.185 of 64,808 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: 5 drawn bodies; anchored cores 8,736 cells, skins 7,074 cells (eroded with the design)
+layout: 6 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default')
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (40, 88, 48) = 168,960 elements, 282,417 active dofs; backend direct (direct estimate 3.2 GB, budget 11.8 GB)
+layout: warm start from a (24, 48, 24) grid (h 2.0): mean x 0.191
+it   1 beta    4 J  10.0000 vol 0.1705 (dil 0.2826 g -0.079) grey 22.9% ch 0.100 worst ring -X 30 N 768 8.7s
+it   2 beta    4 J   8.8013 vol 0.1805 (dil 0.2962 g -0.035) grey 23.5% ch 0.100 worst ring -X 30 N 675 8.6s
+it   3 beta    4 J   7.6763 vol 0.1874 (dil 0.3045 g -0.008) grey 23.8% ch 0.100 worst ring -X 30 N 587 8.5s
+it   4 beta    4 J   6.5426 vol 0.1878 (dil 0.3051 g -0.006) grey 23.5% ch 0.100 worst ring -X 30 N 498 8.6s
+it   5 beta    4 J   5.4462 vol 0.1867 (dil 0.3048 g -0.007) grey 23.7% ch 0.100 worst ring -X 30 N 412 8.2s
+it   6 beta    4 J   4.4181 vol 0.1861 (dil 0.3047 g -0.003) grey 23.7% ch 0.100 worst ring -X 30 N 332 8.4s
+it   7 beta    4 J   3.5349 vol 0.1854 (dil 0.3036 g -0.006) grey 23.8% ch 0.100 worst ring -X 30 N 264 8.8s
+it   8 beta    4 J   2.8179 vol 0.1873 (dil 0.3041 g -0.005) grey 23.7% ch 0.100 worst ring -X 30 N 210 8.4s
+it   9 beta    4 J   2.2586 vol 0.1897 (dil 0.3044 g -0.004) grey 23.5% ch 0.100 worst ring -X 30 N 168 8.5s
+it  10 beta    4 J   1.8409 vol 0.1920 (dil 0.3047 g -0.003) grey 23.2% ch 0.100 worst ring -X 30 N 137 8.7s
