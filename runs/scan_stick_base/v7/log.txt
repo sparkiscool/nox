@@ -6,3 +6,14 @@ layout: 4 drawn bodies (24,699 cells), held solid in every realization; eroded f
 layout: 67 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (56, 48, 88) = 236,544 elements, 226,980 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1256 (dil 0.1487 g +0.481) grey 29.6% ch 0.100 worst tie b3 my 5.43e+03 30.9s
+it   2 beta    1 J   2.7954 vol 0.0759 (dil 0.0889 g -0.115) grey 26.4% ch 0.100 worst tie b4 fz 1.8e+03 26.6s
+it   3 beta    1 J   0.3645 vol 0.0835 (dil 0.0977 g -0.027) grey 27.8% ch 0.100 worst tie b4 my 187 33.3s
+it   4 beta    1 J   0.2783 vol 0.0847 (dil 0.0986 g -0.018) grey 26.8% ch 0.100 worst head 25 g 4 134 25.3s
+it   5 beta    1 J   0.2773 vol 0.0860 (dil 0.0998 g -0.006) grey 26.4% ch 0.080 worst head 25 g 4 134 27.1s
+it   6 beta    1 J   0.2773 vol 0.0866 (dil 0.1003 g +0.006) grey 26.3% ch 0.027 worst head 25 g 4 134 27.9s
+it   7 beta    1 J   0.2773 vol 0.0861 (dil 0.0998 g -0.000) grey 26.2% ch 0.038 worst head 25 g 4 134 28.8s
+it   8 beta    1 J   0.2773 vol 0.0861 (dil 0.0998 g -0.000) grey 26.1% ch 0.033 worst head 25 g 4 134 28.8s
+it   9 beta    1 J   0.2773 vol 0.0861 (dil 0.0998 g -0.000) grey 26.1% ch 0.029 worst head 25 g 4 134 32.4s
+it  10 beta    1 J   0.2773 vol 0.0862 (dil 0.0998 g -0.000) grey 26.1% ch 0.035 worst head 25 g 4 134 34.1s
+layout: beta 1 done: eroded design 4 bodies, main 99.5%; drawn bodies outside the main body: 3
