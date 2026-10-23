@@ -69,3 +69,16 @@ it  17 beta    8 J   9.4416 vol 0.5484 (dil 0.7376 g +0.029) grey 25.4% ch 0.100
 it  18 beta    8 J   9.7599 vol 0.5209 (dil 0.7250 g +0.011) grey 26.6% ch 0.100 worst tie b2 fz 3.67 3.7s
 it  19 beta    8 J   9.4929 vol 0.5053 (dil 0.7127 g -0.006) grey 25.9% ch 0.100 worst tie b1 fz 3.55 4.2s
 it  20 beta    8 J   9.2738 vol 0.5198 (dil 0.7135 g -0.005) grey 24.8% ch 0.100 worst tie b2 fz 3.48 3.9s
+git push failed: To https://github.com/sparkiscool/nox
+ ! [remote rejected] topo/new-engine -> topo/new-engine (cannot lock ref 'refs/heads/topo/new-engine': is at 8a116641191a78a29d12891b034c4d447a385a76 but expected
+it  21 beta    8 J   9.1649 vol 0.5308 (dil 0.7139 g -0.024) grey 23.9% ch 0.100 worst tie b2 fz 3.44 5.9s
+it  22 beta    8 J   9.1029 vol 0.5491 (dil 0.7253 g -0.009) grey 23.7% ch 0.100 worst tie b1 fz 3.43 3.6s
+it  23 beta    8 J   9.0759 vol 0.5593 (dil 0.7302 g -0.002) grey 23.6% ch 0.100 worst tie b2 fz 3.42 3.9s
+it  24 beta    8 J   9.0729 vol 0.5621 (dil 0.7311 g -0.001) grey 23.5% ch 0.100 worst tie b1 fz 3.42 4.0s
+it  25 beta    8 J   9.0712 vol 0.5635 (dil 0.7313 g -0.001) grey 23.5% ch 0.100 worst tie b1 fz 3.42 3.4s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  26 beta   16 J   8.1187 vol 0.5702 (dil 0.7336 g +0.019) grey  9.6% ch 0.100 worst tie b1 fz 3 3.8s
+it  27 beta   16 J   8.1846 vol 0.5553 (dil 0.7263 g +0.009) grey 10.1% ch 0.100 worst tie b2 fz 3.02 4.2s
+it  28 beta   16 J   8.2699 vol 0.5382 (dil 0.7176 g -0.003) grey 10.3% ch 0.100 worst tie b1 fz 3.05 3.8s
+it  29 beta   16 J   8.1555 vol 0.5482 (dil 0.7177 g -0.003) grey  9.7% ch 0.100 worst tie b1 fz 3.01 3.8s
+it  30 beta   16 J   8.1274 vol 0.5528 (dil 0.7183 g -0.002) grey  9.5% ch 0.100 worst tie b1 fz 3 4.2s
