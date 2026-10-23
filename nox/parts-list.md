@@ -112,7 +112,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | Arm harness: wire grommet, end clips, slot clips | 1, 2, 6 | in the wiring chat (`nox/box/wire_parts.py`) |
 
 ## Gaps to close (measure or ask Spark)
+Dimension gaps (sizes, holes, threads) are the open questions Q1..Q20 at the end of `dimensions.md` M: settled when a mount for that part is designed. The gaps below are about what is on hand.
 - Overseer: S500 variant, ESC model, RC receiver model.
 - Scout: motor KV, number of spare packs, carbon rod stock, grommet size.
-- Box: KW11 and pogo pin counts per bay, 5 V buck and relay board sizes, kit pulley and idler bores, MG995 ear holes.
-- Camera: lens barrel size and board thickness (no maker data online).
+- Box: KW11 and pogo pin counts per bay, 5 V buck and relay board models.
