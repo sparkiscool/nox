@@ -1,7 +1,7 @@
 """Nox Source manifest update (18 Oct 2026). Every script, config and mesh lives in the artifact "Nox Source"
 (https://claude.ai/artifact/WvmWqQXwVzW12N486MBaTA) at its old Project path; MANIFEST.json there lists path, bytes, sha256.
 
-Save flow for any chat (nox/README.md "Where files live"):
+Save flow for any chat (superseded: the repo is the only source, see CLAUDE.md):
   1. Artifact read, url = Nox Source, paths = ["index.html", "MANIFEST.json"]  -> saved to a folder D (the result names it)
   2. copy each changed file to D/<its path>, e.g. D/nox/v2/receiver_v34.py
   3. python3 source_manifest.py D nox/v2/receiver_v34.py [more paths]     (adds or updates their rows; --rm <path> drops one)

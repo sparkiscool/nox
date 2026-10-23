@@ -1,4 +1,4 @@
-"""kb v8 setup audit (20 Oct): every access cut keeps >= 3 of drawn material all round (README Rules, Solid parts)."""
+"""kb v8 setup audit (20 Oct): every access cut keeps >= 3 of drawn material all round (CLAUDE.md hard rules, attachments)."""
 import os; os.environ["NOX_SETUP_ONLY"] = "1"
 import json, numpy as np, trimesh
 import stand_v7_topo as T, stand_v6_parts as S

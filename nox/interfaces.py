@@ -26,7 +26,7 @@ axial thicknesses (roofs, floors, grip) are rounded up to whole layers (LAYER_H 
 (Bambu A1 mini default profile, Spark's profile unverified) and becomes BINDING ONLY AFTER COUPON K6 (P7 section 9);
 until then the floors read as 0.8 / 1.2 / 1.6 / 2.5 and the grid is guidance.
 
-Source tags (as in docs\nox-dimensions.md): P measured, M mesh, C CAD / design doc, E estimate or unverified datasheet.
+Source tags (as in nox/dimensions.md): P measured, M mesh, C CAD / design doc, E estimate or unverified datasheet.
 Units mm. Rules: R11 (3 Oct 2026).
 """
 import math
