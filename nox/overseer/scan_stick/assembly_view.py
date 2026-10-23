@@ -8,7 +8,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scan_stick", "v4")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scan_stick", "v8")
 TOP, SEAT = 168.0, 34.0                                   # base flange top; head seat above the head flange
 CAM_Y, CAM_Z = 21.0, 10.0                                 # bracket origin in the head frame (holes 20 apart at z 17, bracket holes at z 7)
 PI_X0, PI_SO, PI_Z0 = 20.0, 7.0, 10.0
@@ -23,11 +23,11 @@ def load(p, M=None):
 def box(x0, x1, y0, y1, z0, z1):
     b = trimesh.creation.box([x1 - x0, y1 - y0, z1 - z0]); b.apply_translation([(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2]); return b
 
-base = load(os.path.join(ROOT, "print", "scan_stick_base_v2.stl"))
-head = load(os.path.join(ROOT, "print", "scan_stick_head_v4.stl"), rot([0, 0, 1], 0, (0, 0, TOP)))
+base = load(os.path.join(ROOT, "print", "scan_stick_base_v8.stl"))
+head = load(os.path.join(ROOT, "print", "scan_stick_head_v8.stl"), rot([0, 0, 1], 0, (0, 0, TOP)))
 # cam print frame: plate in XY, tab at +Y, lens +z. Mount: plate against the block's +Y face (world: plate in XZ, lens +Y),
 # tab holes at world z TOP+17, the plate hanging down.  print (x, y, z) -> world (x, z + CAM_Y, TOP + 17 - (y - 53))
-cam = load(os.path.join(ROOT, "print", "scan_stick_cam_v2.stl"), rot([1, 0, 0], 90, (0, CAM_Y, TOP + 17 + 53)))
+cam = load(os.path.join(ROOT, "print", "scan_stick_cam_v4.stl"), rot([1, 0, 0], 90, (0, CAM_Y, TOP + 17 + 53)))
 ring = load(os.path.join(ROOT, "print", "scan_stick_thread_test_v1.stl"), rot([0, 0, 1], 0, (-95, 20, -60)))
 
 pole = trimesh.creation.cylinder(12.7, 420, sections=64); pole.apply_translation([0, 0, -6 - 210])
@@ -41,17 +41,17 @@ lens = trimesh.creation.cylinder(6, 8, sections=32); lens.apply_transform(rot([1
 pi = box(PI_X0 + PI_SO, PI_X0 + PI_SO + 1.6, -28, 28, PI_Z0, PI_Z0 + 85)
 pack = box(BAT_X1 - 45, BAT_X1, -24, 24, BAT_Z0, BAT_Z0 + 148)
 
-s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v2 (Pi 5 + 4S 6000 near the hand), head v4 (Unitree L2 + DECXIN camera), nox/topo parts")
-s.part("base v2", base, group="printed", color="#8899aa", printed=True)
-s.part("head v4", head, group="printed", color="#9aa8b8", printed=True)
-s.part("cam bracket v2", cam, group="printed", color="#aab4c0", printed=True)
+s = Scene("Scan stick", "one bolted unit on the 3/4-5 ACME pole tip: base v8 (Pi 5 + 4S 6000 near the hand), head v8 (Unitree L2 + DECXIN camera), cam v4; nox/topo parts")
+s.part("base v8", base, group="printed", color="#8899aa", printed=True)
+s.part("head v8", head, group="printed", color="#9aa8b8", printed=True)
+s.part("cam bracket v4", cam, group="printed", color="#aab4c0", printed=True)
 s.part("thread test v1", ring, group="printed", color="#b8c0c8", printed=True, note="fit ring, beside the pole for scale")
 s.part("Unitree L2", trimesh.util.concatenate([lidar, dome]), group="bought", color="#222222", printed=False, note="75 x 75 x 65, 230 g spec")
 s.part("DECXIN camera", trimesh.util.concatenate([camera, lens]), group="bought", color="#2d5a2d", printed=False)
 s.part("Raspberry Pi 5", pi, group="bought", color="#2e7d32", printed=False)
 s.part("4S 6000 pack", pack, group="bought", color="#2f4fbf", printed=False, note="148 x 48 x 45 P")
 s.part("pole", trimesh.util.concatenate([pole, tip]), group="bought", color="#777777", printed=False, note="EXTEND-A-REACH 1.5-3 ft")
-names = ["base v2", "head v4", "cam bracket v2", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
+names = ["base v8", "head v8", "cam bracket v4", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
 s.timeline(lambda t: {n: rot([0, 0, 1], 360 * t / 16) for n in names}, duration_s=16, fps=30)
 s.view("iso", (520, -620, 260), (0, 0, 80)); s.view("front", (0, -800, 80), (0, 0, 80)); s.view("head", (220, -260, 260), (0, 0, 200))
 os.makedirs(OUT, exist_ok=True)
