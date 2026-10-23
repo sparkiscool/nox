@@ -78,3 +78,32 @@ it  47 beta    4 J   1.4984 vol 0.1708 (dil 0.3009 g -0.002) grey 30.7% ch 0.100
 it  48 beta    4 J   1.4139 vol 0.1717 (dil 0.3011 g -0.001) grey 30.5% ch 0.100 worst tie b3 mz 139 0.7s
 it  49 beta    4 J   1.3499 vol 0.1723 (dil 0.3011 g -0.001) grey 30.0% ch 0.100 worst tie b3 mz 133 1.0s
 it  50 beta    4 J   1.2967 vol 0.1730 (dil 0.3011 g -0.001) grey 29.7% ch 0.100 worst tie b3 mz 128 0.7s
+git push failed: To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (non-fast-forward)
+error: failed to push some refs to 'https://github.com/sparkiscool/nox'
+hint: Updates w
+it  51 beta    4 J   1.2497 vol 0.1735 (dil 0.3011 g +0.012) grey 29.4% ch 0.100 worst tie b3 mz 124 0.8s
+it  52 beta    4 J   1.3593 vol 0.1702 (dil 0.2972 g -0.001) grey 29.1% ch 0.100 worst tie b3 mz 134 0.7s
+layout: stopped (beta_stop) at it 52, beta 4, 45 s
+layout: beta 4 done: eroded design 5 bodies, main 65.7%; drawn bodies outside the main body: 4
+coarse stage done: 52 iterations, 48 s, peak 0.710252 GB
+motor_mount: grid (56, 56, 56) h 0.8 = 175,616 cells; design 83,384 (42.7 cm3), drawn 13,728, void 78,504
+  support default: 1536 cells, 2784 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 6.44 cells, erosion depth 1.37 mm; volfrac 0.164 of 83,384 design cells
+layout: WARNING nearly mirrored in x (0.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: 5 drawn bodies (13,728 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (56, 56, 56) = 175,616 elements, 325,635 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 32) grid (h 1.6): mean x 0.184
+it   1 beta    4 J  10.0000 vol 0.1662 (dil 0.2984 g +0.014) grey 30.3% ch 0.100 worst tie b3 mz 199 23.5s
+it   2 beta    4 J  11.1295 vol 0.1616 (dil 0.2933 g -0.003) grey 29.9% ch 0.100 worst tie b3 mz 220 23.4s
+it   3 beta    4 J  10.3205 vol 0.1629 (dil 0.2938 g -0.002) grey 29.8% ch 0.100 worst tie b3 mz 205 20.9s
+it   4 beta    4 J   9.7921 vol 0.1635 (dil 0.2939 g -0.001) grey 29.7% ch 0.100 worst tie b3 mz 194 16.6s
+it   5 beta    4 J   9.3111 vol 0.1640 (dil 0.2939 g -0.001) grey 29.5% ch 0.100 worst tie b3 mz 185 26.3s
+it   6 beta    4 J   8.8521 vol 0.1646 (dil 0.2940 g -0.001) grey 29.4% ch 0.100 worst tie b3 mz 176 19.7s
+it   7 beta    4 J   8.4520 vol 0.1651 (dil 0.2938 g -0.001) grey 29.2% ch 0.100 worst tie b3 mz 168 26.6s
+it   8 beta    4 J   8.0253 vol 0.1658 (dil 0.2938 g -0.001) grey 28.9% ch 0.100 worst tie b3 mz 159 21.3s
+it   9 beta    4 J   7.6073 vol 0.1665 (dil 0.2938 g -0.001) grey 28.5% ch 0.100 worst tie b3 mz 151 14.4s
+it  10 beta    4 J   7.2084 vol 0.1672 (dil 0.2938 g -0.001) grey 28.3% ch 0.100 worst tie b3 mz 143 16.5s
