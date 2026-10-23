@@ -30,3 +30,14 @@ it  17 beta    1 J   0.0244 vol 0.0653 (dil 0.0727 g -0.002) grey 15.2% ch 0.100
 it  18 beta    1 J   0.0239 vol 0.0654 (dil 0.0727 g -0.001) grey 15.0% ch 0.100 worst tie b1 mz 28.1 16.9s
 it  19 beta    1 J   0.0234 vol 0.0655 (dil 0.0727 g -0.001) grey 14.9% ch 0.100 worst tie b1 mz 27.5 16.0s
 it  20 beta    1 J   0.0230 vol 0.0656 (dil 0.0727 g -0.001) grey 14.7% ch 0.100 worst tie b1 mz 26.9 15.9s
+it  21 beta    1 J   0.0226 vol 0.0657 (dil 0.0728 g +0.013) grey 14.6% ch 0.100 worst tie b1 mz 26.5 18.0s
+it  22 beta    1 J   0.0230 vol 0.0648 (dil 0.0718 g -0.001) grey 14.4% ch 0.100 worst tie b1 mz 27.1 17.5s
+it  23 beta    1 J   0.0227 vol 0.0648 (dil 0.0718 g -0.001) grey 14.3% ch 0.100 worst tie b1 mz 26.7 15.8s
+it  24 beta    1 J   0.0224 vol 0.0649 (dil 0.0718 g -0.001) grey 14.2% ch 0.100 worst tie b1 mz 26.5 17.2s
+layout: beta 1 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  25 beta    2 J   0.0481 vol 0.0626 (dil 0.0833 g -0.001) grey 12.1% ch 0.100 worst drop on lidar -z 150 N 54.8 16.7s
+it  26 beta    2 J   0.0365 vol 0.0604 (dil 0.0821 g -0.015) grey 12.6% ch 0.100 worst tie b3 mz 44 17.1s
+it  27 beta    2 J   0.0341 vol 0.0620 (dil 0.0826 g -0.008) grey 12.1% ch 0.100 worst tie b1 mz 36 16.6s
+it  28 beta    2 J   0.0316 vol 0.0620 (dil 0.0829 g -0.006) grey 12.1% ch 0.100 worst tie b1 mz 36.8 16.2s
+it  29 beta    2 J   0.0307 vol 0.0625 (dil 0.0832 g -0.002) grey 12.1% ch 0.100 worst tie b1 mz 35.7 15.8s
+it  30 beta    2 J   0.0302 vol 0.0627 (dil 0.0833 g -0.001) grey 12.0% ch 0.100 worst tie b1 mz 35.1 16.7s
