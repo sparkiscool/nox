@@ -74,7 +74,8 @@ class Settings:
     # "drawn": the drawn bodies stay whole and are added exactly at the build (the v1 behaviour).
     finish: str = "organic"
     skin_mm: float = 2.5                # functional skin thickness (>= the 2.0 wall rule round holes and contact faces)
-    fillet_mm: float = 2.5              # blend radius between generated material and the skins
+    fillet_mm: float = 2.5              # blend radius between generated material and the skins (and off keep-outs)
+    skin_round_mm: float = 1.0          # the skins' free rims rounded with this radius (they never meet a cut there)
     reach_check: str = "raise"          # "raise" | "warn" | "off"
     auto_sym: bool = True
     backend: str = "auto"               # "auto" | "direct" | "mg"
@@ -239,10 +240,12 @@ class Layout:
         design = part.design.copy()
         if s.finish not in ("organic", "drawn"):
             raise ValueError(f"layout: finish must be organic or drawn, not {s.finish!r}")
+        free_cm3 = 0.0
         if s.finish == "organic":
             skin = part.functional_skin(s.skin_mm)
             free = solid & ~skin
             solid, design = skin, design | free
+            free_cm3 = free.sum() * h ** 3 / 1000.0
             log(f"layout: organic finish: drawn bodies kept as {s.skin_mm} mm functional skins "
                 f"({skin.sum() * h ** 3 / 1000:.2f} cm3); {free.sum() * h ** 3 / 1000:.2f} cm3 of drawn volume opened to "
                 f"the design")
@@ -257,6 +260,9 @@ class Layout:
         if self.nd == 0:
             raise ValueError("layout: no design cells")
         if gen_cm3 is not None:
+            # gen_cm3 is the volume added to the drawn bodies as given, in both finishes, so a part keeps one mass
+            # target: the drawn volume the organic finish opened to the design is put back on top of it
+            gen_cm3 = gen_cm3 + free_cm3
             volfrac = gen_cm3 * 1000.0 / (self.nd * h ** 3)
         self.volfrac = float(volfrac)
         if not 0.0 < self.volfrac < 1.0:

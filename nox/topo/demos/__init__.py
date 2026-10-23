@@ -52,7 +52,7 @@ PARTS = {
     "holder": _holder,
     "bracket_e": _stand("bracket_e", 60.0, 1.0, "bracket_e_result.json",
                         "v8 run 3: passed the 0.9 mm erosion check, pulled 20 Oct 14:30 for bolt pads on 2..3 mm necks"),
-    "bracket_jA": _stand("bracket_jA", 20.0, 1.0, "bracket_jA_result.json", "v8 shipped 20 Oct 17:55"),
+    "bracket_jA": _stand("bracket_jA", 12.0, 1.0, "bracket_jA_result.json", "v8 shipped 20 Oct 17:55"),
     "bar_half": _stand("bar_half", 45.0, 1.0, "bar_half_v8_result.json", "v8 shipped 20 Oct 18:25 (after a failed run 1)"),
     "motor_mount": _motor,
 }

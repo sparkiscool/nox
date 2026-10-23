@@ -98,11 +98,16 @@ engine, not in the part scripts, so every part gets it the same way (`Settings.f
   mating and contact faces, keep-outs) or of the outside of the envelope as given. A drawn body touching neither stays
   whole. The rest of every drawn body becomes design space, so blocky drawn plates and bosses turn into optimised,
   smooth material.
-- **Build.** One smooth field: the generated region (eta_n level of the filtered field, held 0.5 mm off keep-outs)
-  smooth-unioned with the skins (blend `fillet_mm`, 2.5). The skins run 1 mm into the cuts and past the envelope, then
-  `field ^ env - cuts` cuts the holes and contact faces exactly. Nothing else is exact or flat.
-- **Function check** measures the skins (present within 1 % at the build pitch) instead of whole drawn bodies; the solid
-  gate is unchanged.
+- **Build.** One smooth field, all signed distances redistanced by fast marching from continuous fields (scikit-fmm),
+  so no surface carries voxel steps: the generated region (eta_n level set of the cubic-upsampled filtered field) is
+  held 0.5 mm off keep-outs with a rounded `fillet_mm` blend (not a crease), the skins' free rims are rounded by
+  `skin_round_mm` (1.0, an opening), and the two are smooth-unioned (blend `fillet_mm`, 2.5). The skins run 1 mm into
+  the cuts and past the envelope, then `field ^ env - cuts` cuts the holes and contact faces exactly. Nothing else is
+  exact or flat.
+- **Function check** measures the skins (present within 1 % at the build pitch, less the free rim within
+  `skin_round_mm` + 1 voxel of the design side that the build rounds on purpose) instead of whole drawn bodies; the
+  solid gate is unchanged.
 
-`--set finish=drawn` restores the v1 behaviour (drawn bodies whole and exact). The mass target `--gen` now also covers
-the drawn volume that became design space, so it is higher than before for the same part mass (bracket_jA: 20 cm3).
+`--set finish=drawn` restores the v1 behaviour (drawn bodies whole and exact). The mass target `--gen` means the same in
+both finishes (volume added to the drawn bodies as given): the layout adds the drawn volume it opened to the design, so
+every part keeps its v1 number (bracket_jA 12 cm3; 20 cm3 filled 85 % of the design space, organic-v1).

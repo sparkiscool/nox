@@ -98,30 +98,59 @@ def skin_field(part, axes, p, skin_mm):
     return K, C, O
 
 
-def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters=15):
-    """one smooth field: the generated region (eta_n level of the filtered field, held clip_margin inside env - cuts)
-    smooth-unioned with the functional skins (fillet_mm); the skins run 1 mm into the cuts and past the envelope so the
-    exact booleans in assemble() cut the holes and contact faces flat and true."""
+def _fmm(phi, p, band):
+    """signed distance in mm, positive where phi > 0, from a continuous field (the zero level is found to subcell
+    accuracy, so planes and curves come out without voxel steps); computed in a narrow band, +-band outside it."""
+    import skfmm
+    phi = np.asarray(phi, np.float64)
+    if phi.min() >= 0 or phi.max() <= 0:
+        return np.full(phi.shape, band if phi.max() > 0 else -band, np.float32)
+    d = skfmm.distance(phi, dx=p, narrow=band)
+    if np.ma.isMaskedArray(d):
+        d = np.where(d.mask, np.where(phi > 0, band, -band), d.data)
+    return np.clip(d, -band, band).astype(np.float32)
+
+
+def _mask_dist(M, p, band):
+    """signed distance in mm of a voxel mask, positive inside: the mask is blurred by one voxel and its 0.5 level
+    redistanced, so a voxelised plane or cylinder comes back flat or round instead of terraced."""
+    return _fmm(ndi.gaussian_filter(M.astype(np.float32), 1.0) - 0.5, p, band)
+
+
+def _smax(a, b, k):
+    return -_smin(-a, -b, k)
+
+
+def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters=6):
+    """one smooth field: the generated region (eta_n level set of the filtered field, redistanced from the continuous
+    field, held clip_margin inside env - cuts with a rounded fillet) smooth-unioned with the functional skins
+    (fillet_mm), the skins' free rims rounded by skin_round_mm (a morphological opening); the skins run 1 mm into the
+    cuts and past the envelope so the exact booleans in assemble() cut the holes and contact faces flat and true."""
     import trimesh
     from skimage import measure
     part, s = layout.part, layout.s
     eta_n = s.eta[1]
-    G = xf >= eta_n
+    band = 2.0 * max(s.fillet_mm, s.skin_round_mm, clip_margin) + 4.0 * p + 2.0
+    d_gen = -_fmm(xf - eta_n, p, band)                                     # > 0 outside the generated material
     del xf
     A = voxelise(tm(part.env_m - part.cuts_m), *axes)
-    din = ndi.distance_transform_edt(A).astype(np.float32) * p
-    d_gen = ndi.gaussian_filter(_sdf(G, p), 0.5 / p)
-    del G
-    d_gen = np.maximum(d_gen, clip_margin - din)                          # generated material stays off the keep-outs
-    del din, A
+    din = _mask_dist(A, p, band)
+    del A
+    d_gen = _smax(d_gen, clip_margin - din, s.fillet_mm)                  # off the keep-outs, edge rounded, not creased
+    del din
     K, C, O = skin_field(part, axes, p, s.skin_mm)
     Kx = K | ((C | O) & (ndi.distance_transform_edt(~K) * p <= 1.0))
+    r = s.skin_round_mm
+    # the part of the skin the function check holds to: all of it but the free rim that the rounding may take
+    Kc = K & (ndi.distance_transform_edt(K | C | O) * p > r + p) if r > 0 else K
     del C, O
-    d_skin = ndi.gaussian_filter(_sdf(Kx, p), 0.35 / p)
+    d_skin = -_mask_dist(Kx, p, band)
     del Kx
+    if r > 0:                                                             # opening: round the skins' free convex rims
+        d_skin = -_fmm(-(d_skin + r), p, band) - r
     d = _smin(d_gen, d_skin, s.fillet_mm)
     del d_gen, d_skin
-    F = np.pad(-d, 1, constant_values=-1e3)
+    F = np.pad(-d, 1, constant_values=-band)
     del d
     gen_vox = float((F > 0).sum()) * p ** 3
     v, fc, _, _ = measure.marching_cubes(F.astype(np.float32), 0.0, spacing=(p, p, p))
@@ -133,9 +162,10 @@ def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters
         mesh.invert()
     if taubin_iters:
         trimesh.smoothing.filter_taubin(mesh, lamb=0.5, nu=0.53, iterations=taubin_iters)
-    layout._skin_fine = (K, axes, p)
+    layout._skin_fine = (Kc, axes, p)
     log(f"build: organic surface at pitch {p:.3f} mm (x{up}), skins {K.sum() * p ** 3 / 1000:.2f} cm3, field "
-        f"{gen_vox / 1000:.2f} cm3, fillet {s.fillet_mm} mm, mesh {len(mesh.faces):,} faces, {time.time() - t0:.0f} s")
+        f"{gen_vox / 1000:.2f} cm3, fillet {s.fillet_mm} mm, rims {r} mm, mesh {len(mesh.faces):,} faces, "
+        f"{time.time() - t0:.0f} s")
     return mesh
 
 
@@ -190,7 +220,8 @@ def solid_check(mesh, drawn_meshes):
 
 def function_check(P, part, layout=None):
     """drawn finish: every drawn body complete (exact). Organic finish: every functional skin present (voxels at the
-    build pitch, 1 % allowance for the smoothed free edges of the skins). Both: nothing in the cuts or outside the
+    build pitch, without the free rim within skin_round_mm + 1 voxel of the design side, which the build rounds on
+    purpose; 1 % allowance). Both: nothing in the cuts or outside the
     envelope (exact)."""
     in_cuts = (P ^ part.cuts_m).volume()
     in_keep = (P - (part.env_m)).volume()
@@ -278,6 +309,8 @@ def render(mesh, path, title="", info=""):
         except Exception:
             pass
     n = m.face_normals
+    ns = m.vertex_normals[m.faces].mean(1)                                # smooth shading: no marching-cubes moire
+    ns /= np.maximum(np.linalg.norm(ns, axis=1, keepdims=True), 1e-12)
     lo, hi = m.bounds
     fig = plt.figure(figsize=(16, 4.6), dpi=130)
     views = [(25, -60, "iso"), (25, 120, "iso back"), (90, -90, "top"), (-60, -60, "underside")]
@@ -285,7 +318,7 @@ def render(mesh, path, title="", info=""):
         ax = fig.add_subplot(1, 4, i + 1, projection="3d")
         a, e = np.radians(az), np.radians(el)
         cam = np.array([np.cos(e) * np.cos(a), np.cos(e) * np.sin(a), np.sin(e)])
-        shade = 0.35 + 0.65 * np.clip(n @ (cam / np.linalg.norm(cam)), 0, 1)
+        shade = 0.35 + 0.65 * np.clip(ns @ (cam / np.linalg.norm(cam)), 0, 1)
         base = np.tile([0.80, 0.80, 0.78], (len(n), 1))
         down = n[:, 2] < -np.cos(np.radians(45))
         bed = down & (m.triangles_center[:, 2] < lo[2] + 0.2)
