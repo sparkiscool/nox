@@ -9,8 +9,9 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 
 1. Bolt bosses 12 mm round, cut flat by the envelope's outer faces (were 6 x 6 squares with 1.4 mm walls round the
    holes, which the gate cut off; 10 mm round in organic-v1 to v4 left single-voxel cores at 2.0 mm erosion).
-2. Keep-out under the pack round the pad from z 28 (was 26; DEFAULT, 2 mm pack clearance instead of 4): the pad sat on
-   a 4 mm layer above the battery channel, built 3 mm, too thin for anything that survives the gate's 2.0 mm erosion.
+2. Keep-out under the pack round the pad from z 29 (was 26; DEFAULT, 1 mm pack clearance instead of 4): the pad sat on
+   a 4 mm layer above the battery channel, built 3 mm, too thin for anything that survives the gate's 2.0 mm erosion
+   or the optimiser's own eroded design (5.7 mm plates at 6.25 mm members). Battery channel unchanged.
 
 ## Engine changes (nox/topo)
 
@@ -30,3 +31,4 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v2 | gen 5.3, 5.0 mm, 5 mm layer | 10.93 | 0.529 | FAIL (30 pieces at 2.0 mm; slivers) | ok | right; spikes under the pad | 3333 s |
 | organic-v3 | gen 5.6, 6.25 mm, 5 mm layer | 12.52 | 0.399 | FAIL (split at the 4 mm built layer) | ok | right | ~3400 s |
 | organic-v4 | gen 5.2, 6.25 mm, 6 mm layer | 10.83 | 0.587 | FAIL (single boss voxels, share 0.996) | ok | right | ~4300 s |
+| organic-v5 | gen 5.4, 6.25 mm, 6 mm layer, 12 mm bosses | 11.73 | 1.157 | FAIL (2 bodies) | ok | wrong: two frames | ~3700 s |
