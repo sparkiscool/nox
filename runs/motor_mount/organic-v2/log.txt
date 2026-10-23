@@ -130,3 +130,13 @@ it  47 beta   16 J  11.8793 vol 0.1803 (dil 0.3518 g -0.002) grey  7.6% ch 0.100
 it  48 beta   16 J  11.6410 vol 0.1808 (dil 0.3521 g -0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 1.01e+03 38.3s
 it  49 beta   16 J  11.4601 vol 0.1811 (dil 0.3521 g -0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 991 38.5s
 it  50 beta   16 J  11.2966 vol 0.1815 (dil 0.3521 g -0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 977 38.6s
+it  51 beta   16 J  11.1493 vol 0.1819 (dil 0.3521 g +0.000) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 963 39.7s
+it  52 beta   16 J  11.0674 vol 0.1819 (dil 0.3517 g -0.001) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 953 40.7s
+it  53 beta   16 J  10.9364 vol 0.1823 (dil 0.3517 g -0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 942 39.4s
+it  54 beta   16 J  10.8119 vol 0.1828 (dil 0.3517 g -0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 929 38.8s
+it  55 beta   16 J  10.6944 vol 0.1833 (dil 0.3517 g -0.001) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 917 39.0s
+it  56 beta   16 J  10.5819 vol 0.1838 (dil 0.3517 g +0.003) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 905 38.1s
+it  57 beta   16 J  10.6078 vol 0.1829 (dil 0.3502 g -0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 902 38.4s
+it  58 beta   16 J  10.5004 vol 0.1834 (dil 0.3503 g -0.001) grey  7.5% ch 0.100 worst yaw torque 0.35 Nm 894 38.0s
+it  59 beta   16 J  10.4081 vol 0.1838 (dil 0.3503 g -0.001) grey  7.5% ch 0.100 worst yaw torque 0.35 Nm 884 39.4s
+it  60 beta   16 J  10.3256 vol 0.1843 (dil 0.3503 g -0.001) grey  7.5% ch 0.100 worst yaw torque 0.35 Nm 876 39.4s
