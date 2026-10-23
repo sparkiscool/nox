@@ -128,3 +128,14 @@ it  67 beta   32 J 2323.4155 vol 0.1829 (dil 0.3325 g -0.000) grey  3.1% ch 0.10
 it  68 beta   32 J 2323.3102 vol 0.1827 (dil 0.3326 g -0.000) grey  3.1% ch 0.100 worst tie b1 my 1.77e+05 geo +5.81/-0.00 9.2s
 it  69 beta   32 J 2323.1374 vol 0.1825 (dil 0.3326 g -0.000) grey  3.1% ch 0.100 worst tie b2 my 1.77e+05 geo +5.79/-0.00 9.0s
 it  70 beta   32 J 2322.5902 vol 0.1822 (dil 0.3326 g -0.000) grey  3.1% ch 0.100 worst tie b1 my 1.77e+05 geo +5.77/-0.00 9.2s
+it  71 beta   32 J 2321.9732 vol 0.1820 (dil 0.3326 g -0.005) grey  3.1% ch 0.100 worst tie b2 my 1.77e+05 geo +5.74/-0.00 9.9s
+it  72 beta   32 J 2321.1732 vol 0.1832 (dil 0.3341 g -0.000) grey  3.1% ch 0.100 worst tie b2 my 1.77e+05 geo +5.71/-0.00 8.9s
+it  73 beta   32 J 2320.7202 vol 0.1831 (dil 0.3342 g -0.000) grey  3.1% ch 0.100 worst tie b2 my 1.77e+05 geo +5.68/-0.00 9.1s
+layout: stopped (max_stage) at it 73, beta 32, 667 s
+layout: beta 32 done: eroded design 6 bodies, main 69.5%; anchored cores outside the main body: 3
+layout done: 722 s, peak 4.179572 GB
+build: surface at pitch 0.333 mm (x3), generated field 13.87 cm3, mesh 182,652 faces, 5 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [11050.4], "necks": [], "drawn_not_in_main": [["0.0", 0.0, "erode 2.0"], ["0.2", 0.0, "erode 2.0"], ["0.3", 0.0, "erode 2.0"], ["0.4", 0.369, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'drawn_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.32 in 'ring up + fore 30 N' at [181.5, 139.5, -60.0]
+RESULT {"name": "bracket_jA", "solid_ok": false, "mass_g": 24.48, "worst": 0.317, "function_ok": true, "bodies": 1}
