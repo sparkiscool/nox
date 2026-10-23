@@ -1,0 +1,21 @@
+=== scan_stick_cam: h 0.75, generated 2.5 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (1.80 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.179 of 4,148 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in y (6.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.6% of passive cells differ): no symmetry
+layout: 6 drawn bodies (532 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (184 cells) count by their cover; 3 bodies tied to body 2
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
+fem: grid (32, 48, 8) = 12,288 elements, 18,795 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1494 (dil 0.1793 g -0.163) grey 84.9% ch 0.100 worst gate b1 fz 1.4e+03 1.2s
+it   2 beta    1 J   3.5949 vol 0.1720 (dil 0.2050 g -0.044) grey 83.1% ch 0.100 worst tie b1 mz 486 1.2s
+it   3 beta    1 J   2.6063 vol 0.1744 (dil 0.2069 g -0.035) grey 78.0% ch 0.100 worst gate b6 my 403 1.3s
+it   4 beta    1 J   2.3657 vol 0.1753 (dil 0.2073 g -0.033) grey 74.3% ch 0.100 worst tie b1 mz 358 1.0s
+it   5 beta    1 J   2.3914 vol 0.1734 (dil 0.2051 g -0.043) grey 72.3% ch 0.100 worst gate b6 fz 339 1.1s
+it   6 beta    1 J   1.9315 vol 0.1747 (dil 0.2062 g -0.034) grey 71.8% ch 0.100 worst tie b1 mz 279 1.0s
+it   7 beta    1 J   1.6110 vol 0.1768 (dil 0.2085 g -0.023) grey 70.5% ch 0.100 worst gate b6 my 240 0.9s
+it   8 beta    1 J   1.4525 vol 0.1792 (dil 0.2110 g -0.011) grey 70.7% ch 0.100 worst gate b6 my 215 1.0s
+it   9 beta    1 J   1.3319 vol 0.1804 (dil 0.2121 g -0.006) grey 70.1% ch 0.100 worst gate b6 my 197 1.1s
+it  10 beta    1 J   1.2734 vol 0.1811 (dil 0.2128 g -0.003) grey 69.7% ch 0.099 worst gate b6 my 189 1.0s
