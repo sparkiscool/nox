@@ -18,3 +18,13 @@ it   7 beta    1 J   1.5110 vol 0.1278 (dil 0.1530 g -0.042) grey 59.4% ch 0.100
 it   8 beta    1 J   1.2615 vol 0.1317 (dil 0.1574 g -0.014) grey 59.4% ch 0.100 worst pad push 440 2.1s
 it   9 beta    1 J   1.1754 vol 0.1333 (dil 0.1592 g -0.003) grey 59.4% ch 0.100 worst pad push 413 2.2s
 it  10 beta    1 J   1.1447 vol 0.1336 (dil 0.1594 g -0.002) grey 58.6% ch 0.100 worst pad push 403 2.1s
+it  11 beta    1 J   1.1202 vol 0.1336 (dil 0.1594 g +0.003) grey 57.9% ch 0.100 worst pad push 394 2.9s
+it  12 beta    1 J   1.1269 vol 0.1329 (dil 0.1585 g -0.002) grey 56.9% ch 0.100 worst pad push 401 2.3s
+it  13 beta    1 J   1.0939 vol 0.1330 (dil 0.1585 g -0.002) grey 56.3% ch 0.100 worst pad push 387 2.2s
+it  14 beta    1 J   1.0717 vol 0.1331 (dil 0.1585 g -0.002) grey 55.6% ch 0.100 worst pad push 380 2.1s
+it  15 beta    1 J   1.0407 vol 0.1332 (dil 0.1585 g -0.002) grey 55.1% ch 0.100 worst pad push 368 2.3s
+it  16 beta    1 J   1.0129 vol 0.1334 (dil 0.1586 g +0.002) grey 54.6% ch 0.100 worst pad push 359 2.2s
+it  17 beta    1 J   1.0021 vol 0.1329 (dil 0.1579 g -0.002) grey 53.9% ch 0.100 worst pad push 354 2.0s
+it  18 beta    1 J   0.9802 vol 0.1329 (dil 0.1578 g -0.003) grey 53.6% ch 0.100 worst pad push 344 2.4s
+it  19 beta    1 J   0.9665 vol 0.1329 (dil 0.1576 g -0.004) grey 52.9% ch 0.100 worst held b2 my 340 2.1s
+it  20 beta    1 J   0.9501 vol 0.1327 (dil 0.1574 g -0.005) grey 52.7% ch 0.100 worst held b1 mz 332 2.0s
