@@ -9,9 +9,9 @@ The only source for Scout v2 and box numbers. mm unless stated. Tags: P part, M 
 |---|---|---|
 | Frame | SpeedyBee Bee35 arm plate, 153 wheelbase, ducts off; details in C | P |
 | Props | Gemfan 3520, 3.5 in (r 44.45), 3 blade; hubs at (±54.1, ±54.1); tips span ~197 square | P / C |
-| Motor shaft / prop mount | 1.5 shaft, T-mount, two M2 | C |
+| Motor shaft / prop mount | Ø3 motor shaft; prop on a T-mount, Ø1.5 locating shaft, two M2 (section M, 22 Oct) | C / spec |
 | Battery 4S 1500 | 70 x 32 x 33, 165 g; leads and balance lead out one end | P |
-| FC MicoAir743 AIO | 35 x 35 diamond at (1.9, 0), hangs under the plate on standoffs; USB-C at the tail corner, slightly right. Board detail: section H | P |
+| FC MicoAir743 AIO | 36 x 36 diamond at (1.9, 0) (was 35 x 35; MicoAir spec, section M, 22 Oct), hangs under the plate on standoffs; USB-C at the tail corner, slightly right. Board detail: section H | P |
 | Camera | DECXIN 2633V2 global shutter, 102° diagonal; board 38 x 38, M2 on 28 x 28, M2 x 4 heat-set inserts (holes ~3.2 E) | P |
 | Flow sensor MTF-02P | board 22 x 16, 8 tall (P, spec 6.5 CHECK), 1.5 g; lens 6 from the nose edge and 6 from the drone-right edge; plug exits the tail; `SENS_FLOW_ROT 4` | P |
 | Companion Radxa Zero 3W | section H | C |
@@ -144,13 +144,86 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Item | Value | Tag |
 |---|---|---|
 | Mass | 2.0 kg with battery | P |
-| Frame | S500, 500 wheelbase, motors at (±177, ±177) | C |
+| Frame | S500, 500 wheelbase, motors at (±177, ±177); open, section M Q7 (Holybro's S500 V2 is 480) | C / open |
 | Props | 1045 (254 dia); disks reach 304 from the centre along x and y | C |
 | Propulsion | SunnySky X2216 II 880 KV x4, 4S; 1650 gf per motor at 27.2 A = 6.6 kg static, T/W ~3.3 | C |
-| FC / PDB | MicoAir743-Lite (single IMU, no compass), 30.5 mount; MATEK FCHUB-12S V2 | P |
+| FC / PDB | MicoAir743-Lite (single IMU, no compass), 30.5 mount, Ø4 holes; MATEK FCHUB-12S V2, 30.5 mount, Ø3 holes (section M) | P / spec |
 | Battery | 4S 6000, XT60, 3 on hand; out the bottom. **148 x 48 x 45 (P, Spark 16 Oct 19:02); mass and lead exit E until weighed (Spark 16 Oct 23:39: go on these)**; balance pads: the Scout's 5-pad layout and pitch (Spark 16 Oct 20:39) | P / E |
 | Flow + range | MTF-02P, lens at X +22.5, Y 0, Z +74 from the FC centre (FRD) | P |
 | Lidar | Unitree L2, 230 g, 75 x 75 x 65, 12 V 10 W, at the nose. Mount open; must stay above the collar faces (section G) | P |
 | Camera | DECXIN 2633V2 global shutter, 102° (same as the Scout) | P |
 | Firmware | PX4 1.18.0rc, airframe 4001, DShot, CRSF; backup `claude/overseer_params_2026-09-26.params` | P |
 | Catch | the shared collar, section G "Catch interface": a belly frame with 8 PETG wheels at the Scout's points, steel belly plate and pogo pads, designed when it resumes | DEFAULT |
+
+## M. Mounting interfaces of bought parts (web research 22 Oct 2026; for future mounts)
+Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`. The parts themselves: `nox/parts-list.md`.
+
+**Flight electronics**
+| Part | Body | Mounting | Notes | Tag |
+|---|---|---|---|---|
+| MicoAir743v2-AIO-35A (Scout FC) | 36 x 36 x 8, 10 g | 4 x Ø3 (M3) on 25.5 x 25.5 | grommet size open, Q1; USB-C on one edge, battery pads on the next, DJI SH1.0-6P opposite USB | spec |
+| MicoAir743-Lite (Overseer FC) | 36 x 36 x 8, 10 g | 4 x **Ø4** on 30.5 x 30.5 | screw size open, Q2; FC + ESC stack 17.5 tall, 24 g | spec |
+| Matek FCHUB-12S V2 (Overseer PDB) | 55 x 50 x 6, 21 g | 4 x Ø3 (M3) on 30.5 x 30.5 | battery pads on a top tab, ESC pads at the 4 corners, JST-SH 8-pin at bottom centre | spec |
+| MicoAir MTF-02P flow + ToF | 21.6 x 16 x 6.5, 1.5 g | **no holes**: pocket, clamp or tape | SH1.0-4P on a short edge, exits sideways; flow FOV 42°, ToF 2°, both windows face down, clear; protocol jumper on the back | spec |
+| Radxa Zero 3W | 65.0 x 30.0 | 4 x Ø2.82 (M2.5) at 57.85 x 22.85 | Radxa DXF v1.11 agrees with section H's STEP to 0.05 | spec |
+| DECXIN 2633V2 camera | board 38 x 38 (A, P); lens and thickness open, Q3 | M2 on 28 x 28 (A, P) | no maker data online | P / open |
+| RadioMaster XR2 (Nano) | 16 x 12 x 6, 0.8 g | **no holes**: solder pads, tape or heat-shrink | on-board tower antenna | spec |
+| 5 V 5 A UBEC (generic) | open, Q4 | no holes: tape or zip tie | leads out both short ends | open |
+
+**Airframes, motors, props, lidar, packs**
+| Part | Body | Mounting | Notes | Tag |
+|---|---|---|---|---|
+| SpeedyBee Bee35 frame (Scout) | 153 wheelbase, 138 g | FC stack 20 x 20, 25.5 x 25.5 (AIO) or 30.5 x 30.5 (maker: not recommended), hole size open, Q5; motors 12 x 12 M2 | top plate 3.5, bottom 2.0 (Pro: aluminium bottom); camera width 19 / 20; frame kit uses M2.5 x 20 and M3 x 15 standoffs | spec |
+| EMAX ECO II 2004 (Scout motor) | bell size open, Q6; 16.4–18 g | base 4 x M2 on 12 x 12 | motor shaft Ø3; prop T-mount on a Ø1.5 locating shaft, 2 screws (spacing open, Q6); KV 1600 / 2000 / 2400 / 3000 | spec / listing |
+| Gemfan Hurricane 3520 prop | Ø89.5, hub 5.5 tall, 1.8 g | T-mount 1.5 | the D90 is a different prop (ducted, 3.0 in pitch) | listing |
+| S500 frame (Overseer) | wheelbase open, Q7 | open, Q7 (Holybro S500 V2 CAD: top plate 4 x Ø3.1 on 49 x 49; generic S500: motors 16 x 19 / 19 x 25) | arm screws M2.5 x 6 and motor screws M3 on the Holybro kit | open |
+| SunnySky X2216 II 880 KV (Overseer motor) | bell Ø27.7, can 32, 68 g + 13 g parts | base 4 x M3 x 0.5, 2.8 deep, pairs at 16 and 19, 45° to the leads | shaft Ø3.175; prop adapter M5 x 0.8 on 3 x M2 at Ø12; X-mount cross 34 x 34 x 3 | spec |
+| 1045 prop | Ø254, hub 9.5–10 thick; mass open, Q8 | bore 6, rings to 5 for the M5 adapter | | listing |
+| Unitree L2 lidar (Overseer) | 75 x 75 x 65, 230 g, base flange Ø75 | 4 x M3, 6 deep, on a Ø51 circle (≈ 36.06 square), 22.5° off the cable axis; 4 locating slots 3.5 wide in the base rim | cable notch at the base on -X; FOV 360 x 90° hemisphere above the base (96° in negative-angle mode): nothing in it, not even clear glass; cooling room on all 4 sides; body carries no load; base ≤ 85 °C | spec |
+| 4S 1500 pack | section A (P) | strap | | P |
+| 4S 6000 pack | section O envelope; mass open, Q9 | strap | | P / open |
+
+**Box**
+| Part | Body | Mounting | Notes | Tag |
+|---|---|---|---|---|
+| NEMA 17 (StepperOnline 17HS19) | 42.3 square, 48 long (38 and 48 common) | 4 x M3, 4.5 deep min, on 31 ± 0.2 | pilot Ø22 x 2; shaft Ø5 x 24 with a 15 D-flat | spec |
+| BTT SKR Mini E3 V3 | 103.75 x 70.25 | 5 holes in the Ender-3 pattern, not a rectangle: offsets in the research note 3.2; hole size open, Q10 | microSD sticks out 2.8 past one edge | spec |
+| Mean Well LRS-350-24 | 215 x 115 x 30 | bottom 4 x M4 on 150 x 50, 32.5 from the terminal end and from each side, screw in ≤ 3; sides 4 x M4 at 150, 12.5 up, screw in ≤ 5 | terminals on a 115 end; fan on top, air out the far end | spec |
+| DS3218 servo | 40 x 20 x 40.4 | ears 4 x Ø4.5 on 49.5 x 10; 54.5 over the ears; ear underside 27.7 above the base | 25T spline; output axis position open, Q11 | spec |
+| MG995 servo | 40.9 x 20, 37 to case top, 55 g | 54 over the ears, ear underside 26.8 above the base; ear holes open, Q12 | 25T (listing); not the DS3218 ears | spec / open |
+| 6010-2RS bearing | 50 x 80 x 16, r 1 | shaft shoulder 54.6–59.7, housing shoulder ≤ 75.4 | C 22.9 kN | spec |
+| 2020 / 2040 extrusion, 6 slot | 20 x 20 / 20 x 40, R1 corners | slot opening 6, inner 12, lip 2, ~6 deep; core Ø4.2 tapped M5 (2040: two, 20 apart) | V-slot (opening 6.13, 6.1 deep) is close enough to use the same slot features | spec |
+| GT2 80T, 8 bore (Phidgets) | OD 50.42, belt width 11, 19 long | hub Ø36 x 8, 2 x M4 set screws | no flanges | spec |
+| GT2 20T, 5 bore (kit) | OD 12.22, 16 long (LDO) | hub Ø15 x 7.8; set screw size open, Q13 | | spec / open |
+| GT2 toothless idler (kit) | 8.5 wide | flange and bore open, Q14 | | open |
+| KW11-3Z microswitch (Omron SS-5GL footprint) | 19.8 x 10.2 x 6.4 | 2 x Ø2.35 at 9.5 ± 0.1 (Ø2.4 or M2.3 in the mount) | generic KW11 listed 20 x 10 x 6, which is close | spec |
+| A3144 hall module | open, Q15 | open, Q15 | | open |
+| 24 V P20/15 electromagnet | Ø20 x 15 | rear thread open, Q16 | 2.5 kg at zero gap on flat steel | typical / open |
+| Heat-set inserts (Ruthex = CNC Kitchen) | M3 OD 4.6 x 5.7; M5 OD 7.1 x 9.5 (short M5 5.8) | hole M3 Ø4.0, M5 Ø6.4; depth ≥ L + 1 | short M3 length open, Q17 | spec |
+| ISDT PD60 charger (listed as PD60S) | 56 x 85 x 21, 87 g | no holes | USB-C PD in, 60 W | spec |
+| 4010 fan | 40 x 40 x 10.5 | 4 holes on 32 square; hole size open, Q18 | | spec / open |
+| XT60 | F face 15.5 x 8.1, pins 7.2 apart | panel XT60E1-M: flange 27.1 x 12.1 x 3.0, screws 20.5 apart; screw size and cutout open, Q19 | | spec |
+| JST-XH | housing 2.5 (n − 1) + 4.8 long, 5.7 deep | 2.5 pitch | 9.8 tall mated above the PCB | spec |
+| Mill-Max 0854 pogo pin | body Ø2.413 x 5.563, flange Ø3.175 x 0.762, 15.215 overall | press or bond in a Ø2.413 bore on the flange | stroke 2.286 max, 120 g at mid; 12 A. Other pogo pins (P75): open, Q20 | spec |
+
+**Open questions (settle when a mount for the part is designed: measure, write P in the cell, strike the line)**
+- Q1 Scout FC grommet size: not published.
+- Q2 MicoAir743-Lite screw: Ø4 holes, size not stated (M3 in grommets is usual).
+- Q3 DECXIN 2633V2 lens barrel Ø and height, board thickness, mass: no maker data anywhere online.
+- Q4 UBEC body: makers range 43–50 x 17–25 x 7–10, 11–21 g.
+- Q5 Bee35 FC stack hole size: not published.
+- Q6 EMAX 2004 bell: listings give 24.7 x 19.2 without saying which is the diameter; prop screw spacing not published.
+- Q7 S500 frame: section O says 500 wheelbase, motors at ±177; Holybro's S500 V2 is 480 (motors ≈ ±170), with a 1.5 or 2.0 bottom plate (its page and CAD disagree). Which frame is on hand sets the plate pattern and the motor holes.
+- Q8 1045 prop mass: listings 7 to 12 g.
+- Q9 4S 6000 pack mass: listings ≈ 590 g for 144 x 45 x 40, ours is a larger envelope.
+- Q10 SKR Mini E3 V3 hole size: not published (M3 in practice).
+- Q11 DS3218 output axis: about 10 from one end, scaled off the drawing only.
+- Q12 MG995 ear holes and output axis: not published.
+- Q13 20T pulley set screws: LDO uses M4, generic kits often M3.
+- Q14 Kit idlers: listings have flange 13 or 18 with bore 3, or 18 with bore 5; the buy list's Ø16, 5 mm bore exists in none.
+- Q15 A3144 module: sellers give 29.2 x 11.2 with one Ø2 hole, or 32 x 14 / 27 x 15.5 with a 2 or 3 hole.
+- Q16 Electromagnet thread: M3 on most listings, M4 on one; the Heschen part has no maker data.
+- Q17 Short M3 insert length: 4.0 (Ruthex) vs 3.0 (CNC Kitchen).
+- Q18 4010 fan hole size: Ø4.3 on one maker, others not stated.
+- Q19 XT60E1-M panel cutout and screw size: not in the Amass sheet.
+- Q20 P75 pogo pins: barrel 1.0 to 1.5 and length 16.5 to 33 across listings.

@@ -43,7 +43,8 @@ The short version of this page is `CLAUDE.md` at the repo root, loaded in every 
 | `CLAUDE.md` (repo root) | the short rule book every session loads; this page is the long one |
 | `box/box.md` | **the box design**: funnel, magnet hold, keep-alive, swap wheel, sequence, buy list |
 | `nox/current-parts.md` | every current part (Scout v2 and box): version, **live state (the only place)**, saved file, next; open problems; waiting on Spark |
-| `nox/dimensions.md` | the only source for numbers, by section (A bought hardware, C shared, E cartridge / contacts, G guard / funnel, H underside, I box swap wheel, J bottom latch, O Overseer) |
+| `nox/dimensions.md` | the only source for numbers, by section (A bought hardware, C shared, E cartridge / contacts, G guard / funnel, H underside, I box swap wheel, J bottom latch, M mounting interfaces of bought parts, O Overseer) |
+| `parts-list.md` | every part, bought and printed, for the box, Scout and Overseer: qty, role, status; mount data links to `dimensions.md` M |
 | `scout/scout.md` | Scout aircraft and bring-up (hardware, wiring, firmware, radio) |
 | `scout/v3/README.md` | Scout v3 scope (starting) |
 | `overseer/README.md` | Overseer scope (development starting) |
