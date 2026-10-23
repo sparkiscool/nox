@@ -60,3 +60,13 @@ it  48 beta    2 J   0.7300 vol 0.1256 (dil 0.1856 g -0.004) grey 34.4% ch 0.100
 it  49 beta    2 J   0.6947 vol 0.1263 (dil 0.1857 g -0.003) grey 34.1% ch 0.100 worst pad push 300 2.1s
 it  50 beta    2 J   0.6696 vol 0.1269 (dil 0.1859 g -0.002) grey 34.0% ch 0.100 worst held b2 my 291 2.1s
 layout: beta 2 done: eroded design 4 bodies, main 38.7%; drawn bodies outside the main body: 3
+it  51 beta    4 J   7.3599 vol 0.1063 (dil 0.2287 g -0.100) grey 23.5% ch 0.100 worst pad push 4.06e+03 2.6s
+it  52 beta    4 J   3.9176 vol 0.1189 (dil 0.2481 g -0.023) grey 25.9% ch 0.100 worst pad push 2e+03 2.0s
+it  53 beta    4 J   3.0077 vol 0.1236 (dil 0.2512 g -0.011) grey 26.1% ch 0.100 worst pad push 1.47e+03 2.0s
+it  54 beta    4 J   2.7484 vol 0.1271 (dil 0.2520 g -0.008) grey 25.9% ch 0.100 worst poke cam z 1.37e+03 2.1s
+it  55 beta    4 J   2.3021 vol 0.1291 (dil 0.2518 g -0.009) grey 25.5% ch 0.100 worst pad push 1.09e+03 2.1s
+it  56 beta    4 J   1.9694 vol 0.1329 (dil 0.2522 g +0.023) grey 25.2% ch 0.100 worst pad push 905 2.1s
+it  57 beta    4 J   2.0338 vol 0.1284 (dil 0.2442 g -0.010) grey 24.3% ch 0.100 worst pad push 1.04e+03 2.2s
+it  58 beta    4 J   1.6697 vol 0.1320 (dil 0.2451 g -0.006) grey 24.2% ch 0.100 worst pad push 844 1.9s
+it  59 beta    4 J   1.4573 vol 0.1349 (dil 0.2457 g -0.004) grey 23.7% ch 0.100 worst pad push 738 2.1s
+it  60 beta    4 J   1.3084 vol 0.1371 (dil 0.2459 g -0.003) grey 23.4% ch 0.100 worst pad push 661 2.4s
