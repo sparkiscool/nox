@@ -19,7 +19,10 @@ Changes for the solid gate (23 Oct, organic test part):
     organic-v4, v5) builds 5 mm, but the optimiser's own eroded design needs plates of 5.7 mm at 6.25 mm members, so
     every case through the pad read 1e4 to 2e5 x its solid compliance and v5 lost the link to the right bosses (2
     bodies). A 7 mm layer clears both (6 mm built, 2 mm core at the gate's erosion).
-  Load set, supports (the 6 x 6 seats), battery channel and envelope unchanged."""
+  * battery channel: its two top long edges rounded r 3 mm (about a pack's own edge radius), approved by Spark
+    23 Oct. In organic-v1 to v10 the worst index sat where each hook strut bends 90 deg over that sharp edge
+    (28.5, 7.5 / 32.5, 22.5); v7 11.73 g / 0.569 and v10 12.50 g / 0.504 each missed one target.
+  Load set, supports (the 6 x 6 seats) and envelope unchanged."""
 import numpy as np
 import manifold3d as mf
 from ..part import Part
@@ -29,6 +32,7 @@ M_PACK = 0.165                                   # kg on the pad
 BOSS_R = 5.75                                    # bolt boss radius, centre BOSS_OFF toward the part on x and y:
 BOSS_OFF = 0.75                                  # 4.7 mm wall toward the part, 3.4 mm to the envelope faces
 PACK_CLEAR_Z = 29.0                              # keep-out under the pack round the pad starts here (was 26)
+CHANNEL_R = 3.0                                  # battery channel top long edges rounded (was sharp)
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -37,6 +41,15 @@ def box(x0, x1, y0, y1, z0, z1):
 
 def cyl(x, y, z0, z1, r, n=48):
     return mf.Manifold.cylinder(z1 - z0, r, r, n).translate([x, y, z0])
+
+
+def channel():
+    """battery channel keep-out x 10..50, y 8..32, z 6..22, its two top long edges rounded r CHANNEL_R"""
+    r = CHANNEL_R
+    ch = box(10, 50, 8, 32, 6, 22 - r) + box(10, 50, 8 + r, 32 - r, 6, 22)
+    for y in (8 + r, 32 - r):
+        ch += mf.Manifold.cylinder(40, r, r, 48).rotate([0, 90, 0]).translate([10, y, 22 - r])
+    return ch
 
 
 def bodies():
@@ -49,7 +62,7 @@ def bodies():
     drawn = pad + hookL + hookR + cam
     for b in bosses:
         drawn += b
-    cuts = box(10, 50, 8, 32, 6, 22) + (box(8, 52, 6, 34, PACK_CLEAR_Z, 30.5) - box(22, 38, 14, 26, 26, 30.5))
+    cuts = channel() + (box(8, 52, 6, 34, PACK_CLEAR_Z, 30.5) - box(22, 38, 14, 26, 26, 30.5))
     for x, y in BOLTS:
         cuts += cyl(x, y, -1, 31, 1.6) + cyl(x, y, 6, 31, 3.0)
     env = box(0, 60, 0, 40, 0, 30)
