@@ -198,32 +198,38 @@ def _mini_part(neck=False, h=1.0):
 def t_gradients():
     try:
         p = _mini_part()
-        s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False)
-        L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
         rng = np.random.default_rng(5)
-        x = rng.uniform(0.2, 0.8, L.nd)
         beta = 4.0
+        info = []
+        worst = 0.0
+        for mode in ("masked", "anchored"):
+            s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, erosion=mode)
+            L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
+            x = rng.uniform(0.2, 0.8, L.nd)
 
-        def J(xx):
-            f = L.fields(xx, beta)
-            comp, _ = L._compliance(f["rho_e"], need_grad=False)
-            return L._objective(comp)[0]
-        f = L.fields(x, beta)
-        comp, (U, E) = L._compliance(f["rho_e"])
-        Jv, dJdc, r = L._objective(comp)
-        g = L._grad_rho_e(f["rho_e"], U, dJdc)
-        m_e = L.design | L.skin
-        dx = L._back(np.where(m_e, g * f["dHe"], 0.0))
-        idx = rng.choice(L.nd, 6, replace=False)
-        errs = []
-        for i in idx:
-            e = 1e-4            # 1e-5 is below the roundoff floor of J (~1e3, Emin 1e-6); truncation at 1e-4 is ~1e-8
-            xp, xm = x.copy(), x.copy()
-            xp[i] += e
-            xm[i] -= e
-            fd = (J(xp) - J(xm)) / (2 * e)
-            errs.append(abs(fd - dx[i]) / max(abs(fd), 1e-3 * np.abs(dx).max()))
-        check("objective gradient vs finite differences", max(errs) < 1e-3, f"max rel err {max(errs):.1e}")
+            def J(xx):
+                f = L.fields(xx, beta)
+                comp, _ = L._compliance(f["rho_e"], need_grad=False)
+                return L._objective(comp)[0]
+            f = L.fields(x, beta)
+            comp, (U, E) = L._compliance(f["rho_e"])
+            Jv, dJdc, r = L._objective(comp)
+            g = L._grad_rho_e(f["rho_e"], U, dJdc)
+            dx = L.grad_eroded(f, g)
+            # cells next to the drawn bodies (where the masked denominator differs from 1) and random ones
+            near = np.where(L.den_e[L.design] < 0.95)[0]
+            idx = np.r_[rng.choice(near, 3, replace=False), rng.choice(L.nd, 3, replace=False)]
+            errs = []
+            for i in idx:
+                e = 1e-4        # 1e-5 is below the roundoff floor of J (~1e3, Emin 1e-6); truncation at 1e-4 is ~1e-8
+                xp, xm = x.copy(), x.copy()
+                xp[i] += e
+                xm[i] -= e
+                fd = (J(xp) - J(xm)) / (2 * e)
+                errs.append(abs(fd - dx[i]) / max(abs(fd), 1e-3 * np.abs(dx).max()))
+            worst = max(worst, max(errs))
+            info.append(f"{mode} {max(errs):.1e}")
+        check("objective gradient vs finite differences", worst < 1e-3, "max rel err " + ", ".join(info))
         geo = L._geometric(f, 32.0)
         errs = []
         for q in range(2):
@@ -266,7 +272,7 @@ def t_neck():
         res = {}
         for anchored in (True, False):
             s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False,
-                         anchored_erosion=anchored)
+                         erosion="anchored" if anchored else "frozen")
             p = _mini_part()
             L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
             cen = p.cell_centres()[L.design]
@@ -288,12 +294,53 @@ def t_neck():
         neck = res[(True, "neck")] / res[(True, "wide")]
         stem_new = res[(True, "stem")] / res[(True, "fat stem")]
         stem_old = res[(False, "stem")] / res[(False, "fat stem")]
-        check("anchored erosion punishes a 2 mm neck at a pad", neck > 50 and stem_new > 50 and stem_new > 10 * stem_old,
+        check("anchored erosion (option) punishes a 2 mm neck at a pad", neck > 50 and stem_new > 50 and stem_new > 10 * stem_old,
               f"generated neck / wide: {neck:.3g}; drawn stem / fat stem: anchored {stem_new:.3g}, frozen pads "
               f"{stem_old:.3g}")
     except Exception as e:
         traceback.print_exc()
         check("anchored erosion neck test", False, str(e))
+
+
+def _cut_part():
+    """mini part with a slot cut (x 17..20, z 0..4) under the pad's root: the pad (x 20..24) can be reached over the
+    cut face only, as at a bolt pad beside its access cut."""
+    import manifold3d as mf
+    from .part import Part
+    box = lambda x0, x1, y0, y1, z0, z1: mf.Manifold.cube([x1 - x0, y1 - y0, z1 - z0]).translate([x0, y0, z0])
+    pad = box(20, 24, 2, 8, 2, 8)
+    p = Part("cutmini", 1.0, box(0, 3, 0, 10, 0, 10) + pad, box(17, 20, -1, 11, -1, 4), box(0, 24, 0, 10, 0, 10),
+             log=lambda s: None)
+    p.support("default", box(-1, 1.5, -1, 11, -1, 11))
+    p.load("down", pad, (0, 0, -10.0))
+    p.load("side", pad, (0, 5.0, 0))
+    return p
+
+
+def t_masked_neck():
+    """the reason for the drawn-masked eroded filter: a pad joined by a 2 mm generated neck that runs along a cut must
+    open a gap in the eroded design (eroded compliance >> a full-width root), while the full-width root keeps its own
+    density up to the drawn face. Frozen pads with the nominal filter are printed for comparison."""
+    try:
+        res = {}
+        for mode in ("masked", "frozen"):
+            s = Settings(min_member_mm=3.2, backend="direct", reach_check="off", auto_sym=False, erosion=mode)
+            p = _cut_part()
+            L = Layout(p, volfrac=0.3, settings=s, log=lambda s_: None)
+            cen = p.cell_centres()[L.design]
+            core = (cen[:, 0] < 18) & (np.abs(cen[:, 1] - 5) < 3) & (np.abs(cen[:, 2] - 5) < 3)
+            for kind, (y0, y1, z0, z1) in (("neck", (4, 6, 4, 6)), ("wide", (2, 8, 4, 8))):
+                lnk = (cen[:, 0] >= 18) & (cen[:, 1] > y0) & (cen[:, 1] < y1) & (cen[:, 2] > z0) & (cen[:, 2] < z1)
+                x = np.where(core | lnk, 1.0, 0.0)
+                comp, _ = L._compliance(L.fields(x, 32.0)["rho_e"], need_grad=False)
+                res[(mode, kind)] = comp[:2]
+        rm = (res[("masked", "neck")] / res[("masked", "wide")]).min()
+        rf = (res[("frozen", "neck")] / res[("frozen", "wide")]).min()
+        check("drawn-masked eroded filter punishes a 2 mm neck along a cut", rm > 50,
+              f"eroded compliance neck / wide (min over 2 cases): masked {rm:.3g}, frozen + nominal filter {rf:.3g}")
+    except Exception as e:
+        traceback.print_exc()
+        check("drawn-masked neck test", False, str(e))
 
 
 def t_end_to_end():
@@ -317,7 +364,7 @@ def t_end_to_end():
 def main():
     quick = "--quick" in sys.argv
     t0 = time.time()
-    for t in (t_ke, t_matvec, t_transfer, t_galerkin, t_mg_vs_direct, t_mma, t_calibration, t_gradients, t_neck):
+    for t in (t_ke, t_matvec, t_transfer, t_galerkin, t_mg_vs_direct, t_mma, t_calibration, t_gradients, t_masked_neck, t_neck):
         t()
     if not quick:
         t_end_to_end()

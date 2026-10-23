@@ -9,12 +9,18 @@ Formulation (references in nox/topo/README.md):
   s.t. volume(dilated) <= V*  (V* adapted so the nominal volume meets the mass target)
        Zhou et al. 2015 geometric length-scale constraints on the blueprint (solid and void), from beta >= geo_beta.
 
-Anchored-core erosion (new, the fix for pads on necks): in the eroded design the drawn bodies are NOT frozen solid.
-Only their cores (cells deeper than the erosion depth) and the cells next to the supports stay at 1; their skins are
-projected like design material (input 1). A member that meets a pad over a narrow neck leaves a gap between the eroded
-member and the pad's core, every load reaching that pad then has to cross Emin material, its compliance explodes and
-the optimiser widens the root. Loads on drawn bodies are moved to the nearest core node for the eroded analysis.
-A pad whose root is at least the minimum member wide keeps its skin in the eroded design and costs nothing.
+Drawn-masked eroded filter (default, Settings.erosion = "masked"): the eroded realization filters the design density
+over the NON-drawn cells only, x_tilde_e = conv(x on design, 0 elsewhere) / (1 - conv(drawn)) (voids and the grid
+outside count as empty in both, drawn cells are left out of both; the denominator is clamped at 0.05). Drawn cells stay
+1 in the eroded design and the loads stay where they are. A wide member keeps its own density up to the drawn face and
+survives erosion; a thin neck is averaged with the empty space round it and erodes, so every load through it blows up
+and the optimiser widens the root. A thin drawn plate next to a cut no longer erodes, so it cannot isolate anything.
+Nominal and dilated keep the constant-normalised filter of x_hat (drawn = 1).
+
+Anchored-core erosion (option, erosion = "anchored", round 1 default): only the drawn bodies' cores stay 1 in the eroded
+design; their skins are projected like design material and loads on them move to the nearest core node. It isolated
+thin drawn plates next to cuts (bracket_jA topo-v1: 3 bodies off from beta 8, tie compliance ratio ~1e5).
+erosion = "frozen": drawn cells 1, eroded field = the nominal filter (the classic robust formulation).
 
 The minimum member (rod diameter of the blueprint) is set in mm; the filter radius follows from a calibration of the
 robust thresholds for a cone filter in 3D (rods and plates), so the engine, not the part script, owns the length scale.
@@ -54,7 +60,7 @@ class Settings:
     geometric: bool = True              # Zhou 2015 constraints
     geo_beta: float = 16.0
     geo_eps: float = 0.0                # 0 = automatic from the filter radius
-    anchored_erosion: bool = True
+    erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
     reach_check: str = "raise"          # "raise" | "warn" | "off"
@@ -291,7 +297,9 @@ class Layout:
     def _anchors(self):
         s, shape, part = self.s, self.shape, self.part
         sol3 = self.solid.reshape(shape)
-        if not s.anchored_erosion:
+        if s.erosion not in ("masked", "anchored", "frozen"):
+            raise ValueError(f"layout: erosion must be masked, anchored or frozen, not {s.erosion!r}")
+        if s.erosion != "anchored":
             self.anchor = self.solid.copy()
         else:
             din = ndi.distance_transform_edt(sol3)
@@ -315,8 +323,12 @@ class Layout:
         self.skin = self.solid & ~self.anchor
         lab, nb = ndi.label(sol3, S26)
         self.body_lab, self.nbody = lab.ravel(), nb
-        self.log(f"layout: {nb} drawn bodies; anchored cores {int(self.anchor.sum()):,} cells, skins "
-                 f"{int(self.skin.sum()):,} cells (eroded with the design)")
+        if s.erosion == "anchored":
+            self.log(f"layout: {nb} drawn bodies; anchored cores {int(self.anchor.sum()):,} cells, skins "
+                     f"{int(self.skin.sum()):,} cells (eroded with the design)")
+        else:
+            self.log(f"layout: {nb} drawn bodies ({int(self.solid.sum()):,} cells), held solid in every realization; "
+                     f"eroded filter: {s.erosion}")
 
     def _node_mask(self, cells):
         nx, ny, nz = self.shape
@@ -336,7 +348,7 @@ class Layout:
         anc_n = self._node_mask(self.anchor)
         sol_n = self._node_mask(self.solid)
         remap = None
-        if s.anchored_erosion and anc_n.any():
+        if s.erosion == "anchored" and anc_n.any():
             _, ind = ndi.distance_transform_edt(~anc_n, return_indices=True)
             nid = np.ravel_multi_index(tuple(ind), nshape).ravel()
             move = (sol_n & ~anc_n).ravel()
@@ -453,6 +465,14 @@ class Layout:
     def filt(self, v):
         return fftconvolve(v.reshape(self.shape), self.ker, mode="same").ravel()
 
+    @property
+    def den_e(self):
+        """denominator of the drawn-masked eroded filter: kernel weight of the non-drawn cells (voids and the grid
+        outside included), 1 - conv(drawn), clamped at 0.05 of the kernel sum (1)."""
+        if getattr(self, "_den_e", None) is None:
+            self._den_e = np.maximum(1.0 - self.filt(self.solid.astype(float)), 0.05)
+        return self._den_e
+
     def symmetrise(self, v):
         if not self.sym_axes:
             return v
@@ -466,19 +486,34 @@ class Layout:
         xh[self.design] = x
         xt = self.filt(xh)
         ee, en, ed = self.s.eta
-        He, dHe = project(xt, beta, ee)
+        xte = xt
+        if self.s.erosion == "masked":
+            xd = np.zeros(self.nel)
+            xd[self.design] = x
+            xte = self.filt(xd) / self.den_e
+        He, dHe = project(xte, beta, ee)
         Hn, dHn = project(xt, beta, en)
         Hd, dHd = project(xt, beta, ed)
         rho_e = np.where(self.anchor, 1.0, np.where(self.void, 0.0, He))
-        if not self.s.anchored_erosion:
-            rho_e = np.where(self.solid, 1.0, rho_e)
         rho_n = np.where(self.solid, 1.0, np.where(self.void, 0.0, Hn))
         rho_d = np.where(self.solid, 1.0, np.where(self.void, 0.0, Hd))
-        return dict(xt=xt, rho_e=rho_e, rho_n=rho_n, rho_d=rho_d, dHe=dHe, dHn=dHn, dHd=dHd, Hn=Hn)
+        return dict(xt=xt, xte=xte, rho_e=rho_e, rho_n=rho_n, rho_d=rho_d, dHe=dHe, dHn=dHn, dHd=dHd, Hn=Hn)
 
     def _back(self, g_xt):
         """d/dx_tilde -> d/dx on the design cells (filter transpose; the kernel is symmetric)."""
         return self.filt(g_xt)[self.design]
+
+    def _back_e(self, g_xte):
+        """d/dx_tilde_e -> d/dx: x_tilde_e = conv(x_d) / den with den independent of x, so the transpose carries the
+        1 / den weight before the (symmetric) convolution."""
+        if self.s.erosion == "masked":
+            return self.filt(g_xte / self.den_e)[self.design]
+        return self._back(g_xte)
+
+    def grad_eroded(self, f, g_rho):
+        """dJ/d rho_e (nel,) -> dJ/dx on the design cells through the eroded projection and filter."""
+        m_e = self.design | (self.skin if self.s.erosion == "anchored" else np.zeros(self.nel, bool))
+        return self._back_e(np.where(m_e, g_rho * f["dHe"], 0.0))
 
     # ---------------------------------------------------------------------------------------- compliance
     def _compliance(self, rho_e, need_grad=True):
@@ -634,8 +669,7 @@ class Layout:
                 self.scale = 10.0 / J
             g_rho = self._grad_rho_e(f["rho_e"], U, dJdc)
             del U
-            m_e = self.design | (self.skin if s.anchored_erosion else np.zeros(self.nel, bool))
-            df0 = self.scale * self._back(np.where(m_e, g_rho * f["dHe"], 0.0))
+            df0 = self.scale * self.grad_eroded(f, g_rho)
             vd = float(f["rho_d"][self.design].mean())
             vn = float(f["rho_n"][self.design].mean())
             gvol = vd / self.vlim - 1.0
@@ -726,7 +760,7 @@ class Layout:
         off = np.unique(lab[anc & (lab != main)])
         off = off[off > 0]
         self.log(f"layout: beta {beta:.0f} done: eroded design {n} bodies, main {sizes[main] / sizes.sum():.1%}; "
-                 f"anchored cores outside the main body: {len(off)}")
+                 f"drawn {'cores' if self.s.erosion == 'anchored' else 'bodies'} outside the main body: {len(off)}")
 
     def final(self, bi):
         beta = float(self.s.betas[bi])
