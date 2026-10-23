@@ -54,3 +54,14 @@ layout: gate ties: held bodies thinner than 2.0 mm (2,912 cells) count by their 
 layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 18 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (64, 88, 24) = 135,168 elements, 147,861 active dofs; backend direct (direct estimate 1.4 GB, budget 11.8 GB)
+layout: warm start from a (32, 48, 16) grid (h 1.5): mean x 0.414
+it   1 beta    4 J  10.0000 vol 0.3405 (dil 0.5341 g -0.114) grey 47.1% ch 0.100 worst cable pull -y 20 N 2.86e+03 11.8s
+it   2 beta    4 J   9.2535 vol 0.3488 (dil 0.5421 g -0.101) grey 47.2% ch 0.100 worst cable pull -y 20 N 2.65e+03 11.7s
+it   3 beta    4 J   8.5752 vol 0.3562 (dil 0.5491 g -0.089) grey 47.7% ch 0.100 worst cable pull -y 20 N 2.45e+03 12.2s
+it   4 beta    4 J   7.9588 vol 0.3636 (dil 0.5561 g -0.077) grey 47.6% ch 0.100 worst cable pull -y 20 N 2.28e+03 12.4s
+it   5 beta    4 J   7.3986 vol 0.3714 (dil 0.5634 g -0.065) grey 47.7% ch 0.100 worst cable pull -y 20 N 2.12e+03 12.7s
+it   6 beta    4 J   6.8898 vol 0.3796 (dil 0.5710 g -0.043) grey 46.6% ch 0.100 worst cable pull -y 20 N 1.97e+03 12.9s
+it   7 beta    4 J   6.4277 vol 0.3883 (dil 0.5791 g -0.030) grey 46.4% ch 0.100 worst cable pull -y 20 N 1.84e+03 12.7s
+it   8 beta    4 J   6.0082 vol 0.3975 (dil 0.5875 g -0.015) grey 46.7% ch 0.100 worst cable pull -y 20 N 1.72e+03 12.7s
+it   9 beta    4 J   5.6277 vol 0.4069 (dil 0.5959 g -0.001) grey 46.9% ch 0.100 worst cable pull -y 20 N 1.61e+03 13.6s
+it  10 beta    4 J   5.2829 vol 0.4108 (dil 0.5963 g -0.001) grey 46.3% ch 0.100 worst cable pull -y 20 N 1.51e+03 13.0s
