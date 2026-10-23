@@ -69,3 +69,14 @@ it   7 beta    4 J   6.2114 vol 0.6099 (dil 0.7602 g -0.003) grey 41.3% ch 0.100
 it   8 beta    4 J   5.9740 vol 0.6130 (dil 0.7610 g -0.002) grey 40.7% ch 0.100 worst gate b4 fz 7.08 5.7s
 it   9 beta    4 J   5.7881 vol 0.6148 (dil 0.7614 g -0.001) grey 40.4% ch 0.100 worst gate b4 fz 6.77 5.7s
 it  10 beta    4 J   5.6274 vol 0.6160 (dil 0.7615 g -0.001) grey 40.0% ch 0.100 worst gate b4 fz 6.5 5.6s
+it  11 beta    4 J   5.4841 vol 0.6171 (dil 0.7616 g +0.009) grey 39.6% ch 0.100 worst gate b4 fz 6.25 7.7s
+it  12 beta    4 J   5.6826 vol 0.6060 (dil 0.7531 g -0.002) grey 39.3% ch 0.100 worst gate b4 fy 6.53 5.5s
+it  13 beta    4 J   5.5888 vol 0.6081 (dil 0.7540 g -0.001) grey 39.2% ch 0.100 worst gate b4 fy 6.38 5.5s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  14 beta    8 J   5.5898 vol 0.6216 (dil 0.7851 g +0.042) grey 21.6% ch 0.100 worst gate b4 fz 6.29 5.6s
+it  15 beta    8 J   6.4117 vol 0.5964 (dil 0.7713 g +0.024) grey 21.9% ch 0.100 worst gate b4 fy 7.52 5.7s
+it  16 beta    8 J   7.5910 vol 0.5690 (dil 0.7555 g -0.004) grey 22.6% ch 0.100 worst gate b4 fy 9.34 5.2s
+it  17 beta    8 J   6.6974 vol 0.5773 (dil 0.7557 g -0.004) grey 21.4% ch 0.100 worst gate b4 fy 7.91 5.5s
+it  18 beta    8 J   6.3223 vol 0.5819 (dil 0.7565 g -0.003) grey 21.1% ch 0.100 worst gate b4 fy 7.32 5.8s
+it  19 beta    8 J   6.1676 vol 0.5848 (dil 0.7575 g -0.002) grey 20.9% ch 0.100 worst gate b4 fy 7.13 5.8s
+it  20 beta    8 J   6.0850 vol 0.5863 (dil 0.7580 g -0.001) grey 20.7% ch 0.100 worst gate b4 fy 7.02 6.0s
