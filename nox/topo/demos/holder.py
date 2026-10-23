@@ -9,12 +9,14 @@ Changes for the solid gate (23 Oct, organic test part):
     12 mm round bosses, 6 mm tall, cut flat by the envelope's outer faces (the corner bolts sit 5 mm from both
     edges): 4.4 mm walls toward the part. 10 mm round bosses (3.4 mm walls, organic-v1 to v4) left single-voxel
     cores at the gate's 2.0 mm erosion where the legs fuse on (v4: core share 0.996 to 0.999, FAIL).
-  * keep-out under the pack round the pad: starts at z 28 (was 26), 2 mm clearance under the pack instead of 4 (DEFAULT).
+  * keep-out under the pack round the pad: starts at z 29 (was 26), 1 mm clearance under the pack instead of 4 (DEFAULT).
     The pad sat on a 4 mm layer between that keep-out and the battery channel (top z 22), so every member out of the
     pad was a plate at most 4 mm thick (3 mm as built: the build holds 0.5 mm off each keep-out), which the gate's
     2.0 mm erosion removes (organic-v1: worst index 0.65 in that layer, gate FAIL). z 27 (organic-v2, v3) built a
-    4 mm plate, still cut there: the eroded part split at the pad and every other body read as loose. A 6 mm layer
-    builds 5 mm and keeps a 1 mm core at 2.0 mm erosion.
+    4 mm plate, still cut there: the eroded part split at the pad and every other body read as loose. z 28 (6 mm,
+    organic-v4, v5) builds 5 mm, but the optimiser's own eroded design needs plates of 5.7 mm at 6.25 mm members, so
+    every case through the pad read 1e4 to 2e5 x its solid compliance and v5 lost the link to the right bosses (2
+    bodies). A 7 mm layer clears both (6 mm built, 2 mm core at the gate's erosion).
   Load set, supports (the 6 x 6 seats), battery channel and envelope unchanged."""
 import numpy as np
 import manifold3d as mf
@@ -23,7 +25,7 @@ from ..part import Part
 BOLTS = [(x, y) for x in (5, 55) for y in (5, 35)]
 M_PACK = 0.165                                   # kg on the pad
 BOSS_R = 6.0                                     # bolt boss radius: 4.4 mm wall round the 1.6 mm hole
-PACK_CLEAR_Z = 28.0                              # keep-out under the pack round the pad starts here (was 26)
+PACK_CLEAR_Z = 29.0                              # keep-out under the pack round the pad starts here (was 26)
 
 
 def box(x0, x1, y0, y1, z0, z1):
