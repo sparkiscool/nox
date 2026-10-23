@@ -1,0 +1,21 @@
+=== scan_stick_cam: h 0.75, generated 4.0 cm3, min member 3.2 mm, cores 4
+scan_stick_cam: grid (64, 88, 24) h 0.75 = 135,168 cells; design 24,672 (10.4 cm3), drawn 16,656, void 93,840
+  support default: 3504 cells, 4734 nodes
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_cam: grid (32, 48, 16) h 1.5 = 24,576 cells; design 3,320 (11.2 cm3), drawn 1,928, void 19,328
+  support default: 472 cells, 810 nodes
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.357 of 3,320 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: 6 drawn bodies (1,928 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 0 gate ties
+fem: grid (32, 48, 16) = 24,576 elements, 21,747 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.2857 (dil 0.3321 g -0.200) grey 99.8% ch 0.100 worst tie b6 fz 90.4 0.8s
+it   2 beta    1 J   4.4011 vol 0.3463 (dil 0.3970 g -0.043) grey 99.8% ch 0.100 worst cable pull -y 20 N 39.6 1.0s
+it   3 beta    1 J   2.7941 vol 0.3571 (dil 0.4076 g -0.018) grey 99.4% ch 0.100 worst cable pull -y 20 N 26.1 0.8s
+it   4 beta    1 J   1.9982 vol 0.3583 (dil 0.4074 g -0.018) grey 97.7% ch 0.100 worst cable pull -y 20 N 18 0.7s
+it   5 beta    1 J   1.4890 vol 0.3611 (dil 0.4082 g -0.016) grey 93.9% ch 0.100 worst cable pull -y 20 N 12.9 0.6s
+it   6 beta    1 J   1.1571 vol 0.3646 (dil 0.4090 g -0.006) grey 89.2% ch 0.100 worst tie b5 fx 10.1 0.6s
+it   7 beta    1 J   0.9564 vol 0.3657 (dil 0.4071 g -0.010) grey 85.3% ch 0.100 worst tie b5 fx 8.42 0.7s
+it   8 beta    1 J   0.8498 vol 0.3693 (dil 0.4085 g -0.007) grey 80.5% ch 0.100 worst tie b1 fx 7.28 0.7s
+it   9 beta    1 J   0.8047 vol 0.3719 (dil 0.4094 g -0.005) grey 77.3% ch 0.100 worst tie b2 fx 6.61 0.6s
+it  10 beta    1 J   0.7777 vol 0.3736 (dil 0.4102 g -0.003) grey 75.5% ch 0.100 worst tie b2 fx 6.41 0.7s
