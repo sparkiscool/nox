@@ -25,5 +25,7 @@
   0.0,
   0.0
  ],
- "cases": 34
+ "cases": 34,
+ "wall_time_min": 35,
+ "peak_tag": "M"
 }

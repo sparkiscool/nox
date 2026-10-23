@@ -23,14 +23,23 @@ engine's Python/manifold parts live beside it: `head_topo_run.py` is the v2 topo
 ## Parts (printed, PETG)
 | Part | File (`print/`) | What |
 |---|---|---|
-| head | `scan_stick_head_v1.stl` | 86 x 86 x 6 plate, L2 pattern (4x M3 on Ø51 at 22.5°, counterbored from below, M3 x 12), Ø26 centre hole, 14-wide cable notch on -X, Ø32 x 34 boss with the 3/4-5 ACME female thread (27 deep, 0.40 radial clearance), camera block 32 x 8 x 30 on +Y with 2 x Ø4 heat-set holes 20 apart |
-| thread test | `scan_stick_thread_test_v1.stl` | 12 mm ring with the same thread: print first, screw onto the pole, tune `acme_clear` |
-| cam | `scan_stick_cam_v1.stl` | 44 x 60 x 3 plate, 2 x M3 at the top (20 apart), 4 x Ø6 x 3 standoffs on 28 x 28 with Ø1.8 M2 self-tap holes, USB slot |
-| cradle | `scan_stick_cradle_v1.stl` | split clamp (bore `rod_d` + 0.5, 2 x M4 with nut traps), Pi 5 tray (85 x 56 pattern on Ø7 standoffs, Ø2.3 M2.5 self-tap, vent slots, 19.4 x 13.2 rocker cutout, Ø12.3 button, Ø5.2 LED), battery plate for 148 x 48 x 45 with a ledge, lip, side rails and 2 pairs of 20 x 3.5 strap slots, 52 x 60 UBEC / buck shelf with 6 zip-tie slots |
+| head | `scan_stick_head_v1.stl` | lidar plate on the pole boss with the 3/4-5 ACME female thread, camera block on the front (numbers: section S) |
+| thread test | `scan_stick_thread_test_v1.stl` | ring with the same thread: print first, screw onto the pole, tune `acme_clear` |
+| cam | `scan_stick_cam_v1.stl` | plate with the camera's 28 x 28 M2 pattern on standoffs, 2 x M3 to the head's block |
+| cradle | `scan_stick_cradle_v1.stl` | split clamp on the pole, Pi 5 tray, pack plate with ledge and straps, UBEC / buck shelf, switch / button / LED strip |
 
-Alternative head, same file set: `lidar_facing = "down"` hangs the L2 under a 115 mm arm, dome down (a belly-mounted
-drone layout), camera flat under the arm looking down. Not printed; the Overseer's L2 mount is open (section O "at the
-nose, above the collar faces", i.e. top-mounted), so the stick is up-facing, DEFAULT.
+Why the non-mounting features exist (simplest design rule): head centre hole Ø26 = air under the L2 base (its bottom
+cover must stay ≤ 85 °C, section M) and 16 g less (M); the 4 gussets stiffen the 6 plate on the Ø32 boss against the
+25 g knock cases (E; the v2 run replaces plate + gussets with generated material); cradle ribs stiffen the 3.5 plates
+that carry the ~590 g pack (Q9) and the Pi; ledge lip and side rails keep the pack from sliding out of the straps;
+vent slots behind the Pi 5 are for its cooler; lightening slots on the pack plate are mass only (M); zip slots hold the
+UBEC and buck, which have no holes (section M, Q4).
+
+Alternative head, same script: `lidar_facing = "down"` hangs the L2 under a 115 mm arm, dome down (a belly-mounted
+drone layout), camera flat under the arm looking down. Not saved and not gated (solid_check runs only on the up head;
+the down head gets its own pass if it is ever printed). The Overseer's L2 mount is open (section O "at the nose, above
+the collar faces", i.e. top-mounted), so the stick is up-facing, DEFAULT. `mount_style` "quarter20" / "clamp" are the
+same script on a camera-stud or plain-tube pole; unused with this pole.
 
 ## Decisions (DEFAULT unless Spark says otherwise)
 - **Pole:** EXTEND-A-REACH 1.5-3 ft telescoping extension pole, Amazon B08LL28XZW, universal 3/4"-5 ACME tip (the
@@ -39,9 +48,9 @@ nose, above the collar faces", i.e. top-mounted), so the stick is up-facing, DEF
 - **Lidar up-facing**, matching a top-mounted L2 on the Overseer. The hemisphere FOV must see the same side of the
   room as the drone's, otherwise the nightly diff flags occlusion differences as changes. Switch to `"down"` if the
   Overseer's mount goes under the belly.
-- **Power:** 4S 6000 pack through a rocker switch to a 12 V 2 A buck (L2, 10 W, 13 W warm-up) and a 5 V 5 A UBEC
-  (Pi 5 + camera). ~19 W total, ~3 h on the 6000 (E). Pole mass with everything: lidar 230 + pack ~590 (Q9) + Pi ~80
-  + prints 290 (M) + pole ≈ 1.4 kg (E).
+- **Power:** 4S 6000 pack through a rocker switch to a 12 V 2 A buck (L2: 10 W, 13 W warm-up, spec) and a 5 V 5 A
+  UBEC (Pi 5 + camera; section M). ~19 W total, ~3 h on the 6000 (E). Pole mass with everything: lidar 230 (spec) +
+  pack ~590 (Q9) + Pi ~80 (E) + prints 298 (M) + pole (CHECK) ≈ 1.4 kg (E).
 - **Data:** the L2 is Ethernet (lidar 192.168.1.62, host 192.168.1.2, UDP 6101 → 6201); the Pi records a ROS 2 bag
   of `unilidar/cloud` + `unilidar/imu` (or a raw pcap without ROS) and `rpicam-vid`-style video from the USB camera;
   one folder per session; button on GPIO17, LED on GPIO27. Files in `pi/` (`record.py`, `install.sh`, the systemd unit).
@@ -50,9 +59,10 @@ nose, above the collar faces", i.e. top-mounted), so the stick is up-facing, DEF
   M2 x 5 self-tap camera, M2.5 x 6 self-tap Pi.
 
 ## Print
-PETG, 0.2, 4 walls, 40 % gyroid (head) / 30 % (cradle, cam). Every file is saved on its largest flat face: head =
-lidar seat down (6440 mm² bed, M), boss up, no supports needed except the thread chamfer; cam flat (2418 mm²);
-cradle on its bottom (4257 mm², the ledge + hub + plate feet; the two bigger faces carry standoffs and the ledge,
+PETG, 0.2 layers, 4 walls, 40 % gyroid (head) / 30 % (cradle, cam) (DEFAULT, E). Every file is saved on its largest
+flat face: head = lidar seat down (6440 mm² bed, M), boss up, thread crests are the only overhang (no entry chamfer: it
+left a 1.1 mm sliver on the first turn, solid_check thin wall; the pole tip is chamfered); cam flat (2418 mm², M);
+cradle on its bottom (4257 mm², M: the ledge + hub + plate feet; the two bigger faces carry standoffs and the ledge,
 so they cannot be the bed face), tree supports under the horizontal Pi standoffs and the clamp bolt holes.
 
 ## Assembly
