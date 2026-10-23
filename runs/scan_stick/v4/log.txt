@@ -121,3 +121,13 @@ it  37 beta    8 J   3.3276 vol 0.0619 (dil 0.1038 g -0.011) grey  3.6% ch 0.100
 it  38 beta    8 J   2.4788 vol 0.0605 (dil 0.1038 g -0.010) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 629 17.4s
 it  39 beta    8 J   1.9063 vol 0.0604 (dil 0.1040 g -0.009) grey  3.7% ch 0.100 worst drop on lidar -z 150 N 446 16.4s
 it  40 beta    8 J   1.4534 vol 0.0595 (dil 0.1038 g -0.010) grey  3.9% ch 0.100 worst drop on lidar -z 150 N 365 16.8s
+it  41 beta    8 J   1.2319 vol 0.0602 (dil 0.1041 g -0.028) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 282 19.6s
+it  42 beta    8 J   0.9337 vol 0.0611 (dil 0.1054 g -0.015) grey  3.9% ch 0.100 worst drop on lidar -z 150 N 231 16.7s
+it  43 beta    8 J   0.8381 vol 0.0625 (dil 0.1062 g -0.009) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 187 16.6s
+it  44 beta    8 J   0.7109 vol 0.0621 (dil 0.1058 g -0.012) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 170 16.7s
+it  45 beta    8 J   0.6335 vol 0.0633 (dil 0.1066 g -0.005) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 149 17.8s
+it  46 beta    8 J   0.5893 vol 0.0637 (dil 0.1069 g -0.006) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 138 18.0s
+it  47 beta    8 J   0.5643 vol 0.0643 (dil 0.1073 g -0.002) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 133 17.3s
+it  48 beta    8 J   0.5527 vol 0.0645 (dil 0.1074 g -0.001) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 131 17.9s
+it  49 beta    8 J   0.5456 vol 0.0647 (dil 0.1074 g -0.001) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 130 16.4s
+it  50 beta    8 J   0.5406 vol 0.0648 (dil 0.1074 g -0.001) grey  3.8% ch 0.100 worst drop on lidar -z 150 N 130 16.7s
