@@ -141,5 +141,15 @@ it  57 beta   32 J   7.0477 vol 0.5470 (dil 0.6550 g -0.003) grey  3.0% ch 0.100
 it  58 beta   32 J   6.7445 vol 0.5495 (dil 0.6562 g -0.002) grey  3.0% ch 0.100 worst tie b2 mx 6.44 11.0s
 it  59 beta   32 J   6.6314 vol 0.5504 (dil 0.6566 g -0.001) grey  3.0% ch 0.100 worst tie b2 mx 6.28 10.6s
 it  60 beta   32 J   6.5621 vol 0.5506 (dil 0.6568 g -0.001) grey  3.0% ch 0.100 worst tie b2 mx 6.21 11.6s
-0% ch 0.100 worst tie b2 mx 6.28 10.6s
-it  60 beta   32 J   6.5621 vol 0.5506 (dil 0.6568 g -0.001) grey  3.0% ch 0.100 worst tie b2 mx 6.21 11.6s
+it  61 beta   32 J   6.5148 vol 0.5512 (dil 0.6569 g -0.002) grey  2.9% ch 0.100 worst tie b2 mx 6.17 11.8s
+it  62 beta   32 J   6.4543 vol 0.5525 (dil 0.6576 g -0.000) grey  2.9% ch 0.100 worst tie b2 mx 6.13 11.0s
+it  63 beta   32 J   6.4250 vol 0.5530 (dil 0.6577 g -0.000) grey  2.9% ch 0.100 worst tie b2 mx 6.11 11.6s
+it  64 beta   32 J   6.3995 vol 0.5535 (dil 0.6577 g -0.000) grey  2.9% ch 0.100 worst tie b2 mx 6.09 11.1s
+it  65 beta   32 J   6.3745 vol 0.5540 (dil 0.6577 g -0.000) grey  2.9% ch 0.100 worst tie b2 mx 6.07 10.6s
+it  66 beta   32 J   6.3494 vol 0.5544 (dil 0.6578 g +0.000) grey  2.8% ch 0.100 worst tie b2 mx 6.05 10.9s
+it  67 beta   32 J   6.3399 vol 0.5543 (dil 0.6574 g -0.000) grey  2.8% ch 0.100 worst tie b2 mx 6.04 11.0s
+it  68 beta   32 J   6.3185 vol 0.5547 (dil 0.6574 g -0.000) grey  2.8% ch 0.100 worst tie b2 mx 6.02 11.2s
+it  69 beta   32 J   6.2989 vol 0.5550 (dil 0.6574 g -0.000) grey  2.7% ch 0.100 worst tie b2 mx 6 11.1s
+it  70 beta   32 J   6.2808 vol 0.5554 (dil 0.6574 g -0.000) grey  2.7% ch 0.100 worst tie b2 mx 5.99 11.0s
+ 2.7% ch 0.100 worst tie b2 mx 6 11.1s
+it  70 beta   32 J   6.2808 vol 0.5554 (dil 0.6574 g -0.000) grey  2.7% ch 0.100 worst tie b2 mx 5.99 11.0s
