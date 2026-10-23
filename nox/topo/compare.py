@@ -116,7 +116,7 @@ def compare(name, new_stl, old_stl=None, h=None, out=None, log=print):
     old_stl = old_stl or os.path.join(ROOT, "print", f"box_{name}_v8.stl")
     W_old, fit = old_in_w(name, part, old_stl, log=log)
     W_new = trimesh.load(new_stl, force="mesh")
-    s = Settings(reach_check="off", auto_sym=False)
+    s = Settings(reach_check="off", auto_sym=False, finish="drawn")
     L = Layout(part, volfrac=0.5, settings=s, log=lambda s_: None)
     rows = {}
     for tag, m in (("old", W_old), ("new", W_new)):

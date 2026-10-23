@@ -73,3 +73,21 @@ The old `arm_topo.PartProblem` setups run unchanged. See `demos/stand.py`.
 - Amir, Aage, Lazarov 2014 and Ferrari & Sigmund 2020: multigrid CG for TO.
 - Svanberg 1987 / 2007: MMA.
 - Research notes behind the choices: `claude/research/topo-engine-2026-10-22.md`.
+
+## Finish: organic by default (23 Oct)
+
+Spark's rule: the whole part is smooth; only flat contact faces and mounting holes are geometric. The rule lives in the
+engine, not in the part scripts, so every part gets it the same way (`Settings.finish`, default `"organic"`):
+
+- **Layout.** A drawn body stays passive only as a functional skin: its cells within `skin_mm` (2.5) of a cut (holes,
+  mating and contact faces, keep-outs) or of the outside of the envelope as given. A drawn body touching neither stays
+  whole. The rest of every drawn body becomes design space, so blocky drawn plates and bosses turn into optimised,
+  smooth material.
+- **Build.** One smooth field: the generated region (eta_n level of the filtered field, held 0.5 mm off keep-outs)
+  smooth-unioned with the skins (blend `fillet_mm`, 2.5). The skins run 1 mm into the cuts and past the envelope, then
+  `field ^ env - cuts` cuts the holes and contact faces exactly. Nothing else is exact or flat.
+- **Function check** measures the skins (present within 1 % at the build pitch) instead of whole drawn bodies; the solid
+  gate is unchanged.
+
+`--set finish=drawn` restores the v1 behaviour (drawn bodies whole and exact). The mass target `--gen` now also covers
+the drawn volume that became design space, so it is higher than before for the same part mass (bracket_jA: 20 cm3).

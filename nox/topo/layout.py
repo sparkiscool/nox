@@ -66,6 +66,15 @@ class Settings:
     gate_thin_mm: float = 2.0           # the solid gate's erosion cap: held bodies with half thickness under it are thin
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
+    # finish (23 Oct, Spark: the whole part smooth; only flat contact faces and mounting holes geometric).
+    # "organic": a drawn body stays passive only as a functional skin: its cells within skin_mm of a cut (holes, mating
+    # and contact faces, keep-outs) or of the envelope's outside; the rest of every drawn body is design space, and the
+    # build makes the part one smooth field (generated material blended into the skins with fillet_mm) cut exactly by
+    # the cuts and the envelope, so holes and contact faces come out exact and everything else smooth.
+    # "drawn": the drawn bodies stay whole and are added exactly at the build (the v1 behaviour).
+    finish: str = "organic"
+    skin_mm: float = 2.5                # functional skin thickness (>= the 2.0 wall rule round holes and contact faces)
+    fillet_mm: float = 2.5              # blend radius between generated material and the skins
     reach_check: str = "raise"          # "raise" | "warn" | "off"
     auto_sym: bool = True
     backend: str = "auto"               # "auto" | "direct" | "mg"
@@ -228,6 +237,15 @@ class Layout:
         solid = part.solid.copy()
         void = part.void.copy()
         design = part.design.copy()
+        if s.finish not in ("organic", "drawn"):
+            raise ValueError(f"layout: finish must be organic or drawn, not {s.finish!r}")
+        if s.finish == "organic":
+            skin = part.functional_skin(s.skin_mm)
+            free = solid & ~skin
+            solid, design = skin, design | free
+            log(f"layout: organic finish: drawn bodies kept as {s.skin_mm} mm functional skins "
+                f"({skin.sum() * h ** 3 / 1000:.2f} cm3); {free.sum() * h ** 3 / 1000:.2f} cm3 of drawn volume opened to "
+                f"the design")
         if s.collar_mm > 0:
             d = ndi.distance_transform_edt(~solid.reshape(shape)).ravel() * h
             add = design & (d <= s.collar_mm)
