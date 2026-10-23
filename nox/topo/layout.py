@@ -57,7 +57,8 @@ class Settings:
     max_stage: int = 35
     grey_stop: float = 0.02
     vol_gain: float = 0.3               # damped volume-limit correction (1.0 limit-cycles at low volfrac)
-    geometric: bool = True              # Zhou 2015 constraints
+    geometric: bool = False             # Zhou 2015 constraints (off: README, Geometric constraints)
+    geo_margin: float = 0.05            # reachability margin of the geometric-constraint masks
     geo_beta: float = 16.0
     geo_eps: float = 0.0                # 0 = automatic from the filter radius
     erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
@@ -563,8 +564,23 @@ class Layout:
         return g
 
     # --------------------------------------------------------------------------------- geometric constraints
+    def _geo_masks(self):
+        """design cells where each indicator can be met at all. Solid: x_tilde with every design cell at 1 reaches
+        eta_e + geo_margin (round 1 counted design cells beside cuts whose x was already 1: bar_half topo-v1 read +294
+        at beta 32 from 977 such cells, all at x = 1, 1 to 2 cells off a cut). Void: x_tilde with every design cell at 0
+        (the drawn bodies' spill alone) stays under eta_d - geo_margin."""
+        if getattr(self, "_gmask", None) is None:
+            ee, en, ed = self.s.eta
+            mg = self.s.geo_margin
+            d3 = self.design.reshape(self.shape)
+            hi = self.filt((self.design | self.solid).astype(float)).reshape(self.shape)
+            lo = self.filt(self.solid.astype(float)).reshape(self.shape)
+            self._gmask = (d3 & (hi >= ee + mg)).astype(float), (d3 & (lo <= ed - mg)).astype(float)
+        return self._gmask
+
     def _geometric(self, f, beta):
-        """Zhou, Lazarov, Wang, Sigmund (2015): (g_s, g_v) and d/dx_tilde of each, over the design cells."""
+        """Zhou, Lazarov, Wang, Sigmund (2015): (g_s, g_v) and d/dx_tilde of each, over the design cells where each
+        can be met (_geo_masks), normalised by the number of design cells."""
         xt = f["xt"].reshape(self.shape)
         rb = f["Hn"].reshape(self.shape)
         drb = f["dHn"].reshape(self.shape)
@@ -576,10 +592,11 @@ class Layout:
         D = [d[tuple(slice(1, -1) if b != a else slice(None) for b in range(3))] for a, d in enumerate(D)]
         G = D[0] ** 2 + D[1] ** 2 + D[2] ** 2
         ex = np.exp(-c * G)
-        msk = self.design.reshape(self.shape)
+        ms, mv = self._geo_masks()
         n = float(self.nd)
         out = []
         for kind in ("s", "v"):
+            msk = ms if kind == "s" else mv
             if kind == "s":
                 ind = rb * ex
                 m = np.minimum(xt - ee, 0.0)
