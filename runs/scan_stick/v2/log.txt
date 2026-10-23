@@ -11,3 +11,5 @@ it   5 beta  1 obj   0.1502 vol 0.0663 (dil 0.0742 g -0.041) grey 18.3% change 0
 it   6 beta  1 obj   0.1027 vol 0.0682 (dil 0.0752 g -0.131) grey 16.2% change 0.100 worst hand push -z 30 N 11.5x  119s
 it   7 beta  1 obj   0.0734 vol 0.0776 (dil 0.0847 g -0.022) grey 15.7% change 0.099 worst hand push -z 30 N 7.76x  140s
 it   8 beta  1 obj   0.0592 vol 0.0792 (dil 0.0854 g -0.013) grey 14.9% change 0.099 worst hand push -z 30 N 6.05x  164s
+it   9 beta  1 obj   0.0520 vol 0.0801 (dil 0.0857 g -0.010) grey 13.9% change 0.098 worst hand push -z 30 N 5.2x  190s
+it  10 beta  1 obj   0.0468 vol 0.0808 (dil 0.0859 g -0.008) grey 11.1% change 0.098 worst hand push -z 30 N 4.58x  209s
