@@ -1,7 +1,7 @@
 """Run a part end to end: coarse warm start -> fine layout -> build -> checks -> files, with checkpoints.
 
     python3 -m topo.run <part> [--h 1.0] [--gen 12] [--min-member 3.2] [--out runs/<part>/topo-v1] [--no-coarse]
-                               [--git] [--backend auto|direct|mg] [--time-limit 19800]
+                               [--git] [--backend auto|direct|mg] [--time-limit 19800] [--set KEY=VALUE ...]
 (run from nox/, i.e. `cd nox && python3 -m topo.run holder`). <part> is a name from topo.demos.PARTS.
 
 Speed plan for a 4 vCPU / 16 GB cloud box (measured numbers go in the run log):
@@ -98,6 +98,32 @@ def optimise(setup, h, gen_cm3, out_dir, name, settings=None, coarse=True, git=F
     return res
 
 
+def parse_sets(items):
+    """['pmean=8', 'eta=0.7,0.5,0.3', 'geometric=true'] -> typed Settings overrides (types from the defaults)."""
+    import dataclasses
+    names = {f.name for f in dataclasses.fields(Settings)}
+    out = {}
+    for kv in items:
+        if "=" not in kv:
+            raise SystemExit(f"--set needs KEY=VALUE, got {kv!r}")
+        k, v = kv.split("=", 1)
+        k = k.strip().replace("-", "_")
+        if k not in names:
+            raise SystemExit(f"unknown setting {k!r}; settings: {', '.join(sorted(names))}")
+        d = getattr(Settings, k)
+        if isinstance(d, bool):
+            out[k] = v.strip().lower() in ("1", "true", "yes", "on")
+        elif isinstance(d, tuple):
+            out[k] = tuple(type(d[0])(float(t)) if d else float(t) for t in v.split(","))
+        elif isinstance(d, int):
+            out[k] = int(float(v))
+        elif isinstance(d, float):
+            out[k] = float(v)
+        else:
+            out[k] = v.strip()
+    return out
+
+
 def main(argv=None):
     from .demos import PARTS
     ap = argparse.ArgumentParser()
@@ -111,12 +137,14 @@ def main(argv=None):
     ap.add_argument("--backend", default="auto")
     ap.add_argument("--time-limit", type=float, default=5.5 * 3600)
     ap.add_argument("--maxit", type=int, default=400)
+    ap.add_argument("--set", action="append", default=[], metavar="KEY=VALUE",
+                    help="override any Settings field, e.g. --set pmean=8 --set eta=0.7,0.5,0.3 (repeatable)")
     a = ap.parse_args(argv)
     spec = PARTS[a.part]()
     h = a.h or spec["h"]
     gen = a.gen or spec["gen_cm3"]
     out = a.out or os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", a.part, "topo-v1")
-    s = Settings(min_member_mm=a.min_member, backend=a.backend, time_limit_s=a.time_limit)
+    s = Settings(min_member_mm=a.min_member, backend=a.backend, time_limit_s=a.time_limit, **parse_sets(a.set))
     res = optimise(spec["setup"], h, gen, os.path.abspath(out), a.part, settings=s, coarse=not a.no_coarse,
                    git=a.git, maxit=a.maxit, extra=dict(baseline=spec.get("baseline")))
     print(json.dumps(dict(name=res["name"], solid_ok=res["solid_ok"], mass_g=res["mass_g"],
