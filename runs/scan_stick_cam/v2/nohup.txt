@@ -191,3 +191,7 @@ layout: stopped (max_stage) at it 86, beta 32, 1234 s
 layout: beta 32 done: eroded design 5 bodies, main 72.5%; drawn bodies outside the main body: 2
 layout done: 1344 s, peak 2.516852 GB
 build: organic surface at pitch 0.375 mm (x2), skins 1.72 cm3, field 4.82 cm3, in env - cuts 4.30 cm3 (layout 4.30, level offset +0.084 mm), fillet 2.5 mm, rims 1.0 mm, mesh 58,776 faces, 9 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [2146.3], "necks": [{"neck_under_mm": 3.0, "blob_thick_mm": 5.2, "joint_mm2": 45.5, "blob_mm3": 65.6, "at": [-11.8, 44.1, 2.4]}, {"neck_under_mm": 3.0, "blob_thick_mm": 5.2, "joint_mm2": 44.1, "blob_mm3": 65.2, "at": [11.8, 44.1, 2.4]}], "drawn_not_in_main": [["0.0", 0.0, "erode 2.0"], ["0.1", 0.0, "erode 2.0"], ["0.3", 0.542, "erode 2.0"], ["0.4", 0.999, "erode 2.0"], ["0.5", 0.532, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 572.1, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.96 in 'poke post 0 -z 10 N' at [-11.6, 39.4, 3.4]
+RESULT {"name": "scan_stick_cam", "solid_ok": false, "mass_g": 5.47, "worst": 0.957, "function_ok": true, "bodies": 1}
