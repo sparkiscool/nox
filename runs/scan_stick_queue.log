@@ -33,3 +33,5 @@
 13:23 START head v8
 13:24 START base v6 (direct, alongside head v8)
 13:59 START base v7 (direct)
+14:16 END head v8 rc=0 mass 40.8 worst None solid True
+14:16 QUEUE 9 DONE

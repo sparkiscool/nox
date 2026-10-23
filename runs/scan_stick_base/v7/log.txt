@@ -38,3 +38,8 @@ it  27 beta    4 J   0.2772 vol 0.0832 (dil 0.1739 g -0.100) grey 17.8% ch 0.073
 it  28 beta    4 J   0.2772 vol 0.0835 (dil 0.1740 g -0.099) grey 17.7% ch 0.089 worst drop on head -z 150 N 134 30.9s
 it  29 beta    4 J   0.2772 vol 0.0837 (dil 0.1742 g -0.098) grey 17.7% ch 0.086 worst head 25 g 4 134 33.4s
 it  30 beta    4 J   0.2772 vol 0.0840 (dil 0.1744 g -0.097) grey 17.7% ch 0.100 worst head 25 g 4 134 24.2s
+it  31 beta    4 J   0.2772 vol 0.0843 (dil 0.1746 g -0.070) grey 17.7% ch 0.100 worst head 25 g 4 134 27.4s
+it  32 beta    4 J   0.2772 vol 0.0847 (dil 0.1748 g -0.069) grey 17.7% ch 0.100 worst head 25 g 4 134 27.0s
+it  33 beta    4 J   0.2771 vol 0.0851 (dil 0.1751 g -0.068) grey 17.6% ch 0.100 worst head 25 g 4 134 23.7s
+it  34 beta    4 J   0.2771 vol 0.0855 (dil 0.1755 g -0.066) grey 17.6% ch 0.100 worst head 25 g 4 134 22.8s
+it  35 beta    4 J   0.2771 vol 0.0860 (dil 0.1759 g -0.064) grey 17.7% ch 0.100 worst head 25 g 4 134 21.4s

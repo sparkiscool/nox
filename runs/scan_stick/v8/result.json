@@ -702,5 +702,16 @@
  "peak_gb": 4.328944,
  "gen_cm3": 12.0,
  "h": 1.5,
- "total_s": 3188
+ "total_s": 3188,
+ "status": "DONE",
+ "mass_tag": "M",
+ "worst_index": 0.361,
+ "worst_case": "lidar impact 50 g 2",
+ "bed_face": "flange",
+ "bed_contact_mm2": 1198,
+ "peak_mem_gb": 4.328944,
+ "wall_time_min": 53,
+ "file": "print/scan_stick_head_v8.stl",
+ "sha12": "3782ee325388",
+ "date": "2026-10-23"
 }
