@@ -1,0 +1,29 @@
+{
+ "part": "scan_stick_head",
+ "version": "v2",
+ "date": "2026-10-23",
+ "status": "DONE",
+ "mass_g": 61.9,
+ "mass_tag": "M",
+ "worst_index": 0.03,
+ "worst_case": "lidar 25 g 11",
+ "solid_ok": true,
+ "bed_face": "lidar seat (4 pads) down",
+ "bed_contact_mm2": 1037,
+ "peak_mem_gb": 3.51,
+ "wall_s": 2108,
+ "file": "print/scan_stick_head_v2.stl",
+ "sha12": "d1a965e3a1a4",
+ "gen_cm3": 20.0,
+ "drawn_g": 36.0,
+ "wrinkle": [
+  0.183,
+  0.236
+ ],
+ "function_check": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "cases": 34
+}
