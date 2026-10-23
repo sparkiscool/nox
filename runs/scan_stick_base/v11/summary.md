@@ -1,0 +1,2 @@
+scan_stick_base v11: FAILED (same stray voxel as v10)
+Rebuild at 24.5 cm3: the rebuild keeps the source layout's iso-surface, so the part is identical to v10 (eroded volume 170420 mm3, M). The stray voxel is a 0.14 mm feather of the generated surface hugging the thread boss at r 18, z 9.6 (ray crossings z 9.55 / 9.70, M). Fix in the design (v12): the exact thread boss drawn at Ø40, swallowing the feather zone.
