@@ -1,4 +1,4 @@
-scan_stick_base v16: ready to print
+scan_stick_base v16: retired (superseded by v17 after review round 3 of PR 22: 1.25 mm (M) of strip between the button and LED holes). Was: ready to print
 Weight: 338.9 g (M), was 334.3 g (v15, M; +4.6 g for the wider switch strip) / 300.1 g (v12, M) / 194.7 g (clamp cradle v1, M, retired)
 Strength: worst index 0.26 (F, as-built voxel recheck) in pack impact 50 g 3 (-Y) at the tube / back-plate web [-8.5, 15.0, 35.0] mm (M); all 67 cases (E loads: pack 0.59 kg, Pi 0.08 kg and head 0.30 kg at 25 g in 14 dirs and 50 g impact in 6, 100 N flange side hits, 150 N drop on the head, 120 N strap tension, 50 N hand grabs, 100 N push on the ledge) ≤ 0.26 (F): sturdy
 Solid: solid_check PASS (1 body, 1 eroded body, 0 necks, 0 thin walls) on print/scan_stick_base_v16.stl (the engine's pre-export count read 4 bodies on its own grid, as on v12 / v15: stray voxels at the Ø40 boss / tube step, gone on the exact file); the tube wall behind the switch strip is whole, bore to strip 6.7 mm (M) at y -4.4, z 111 (v15 had 0.7 mm there)

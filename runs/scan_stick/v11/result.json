@@ -704,7 +704,7 @@
  "layout_s": 3092,
  "peak_gb": 4.328944,
  "total_s": 126,
- "status": "DONE",
+ "status": "RETIRED",
  "mass_tag": "M",
  "worst_index": 0.335,
  "bed_face": "-z (flange)",

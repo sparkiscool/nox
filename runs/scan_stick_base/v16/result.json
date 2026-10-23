@@ -944,7 +944,7 @@
  "layout_s": 1929,
  "peak_gb": 5.635872,
  "total_s": 371,
- "status": "DONE",
+ "status": "RETIRED",
  "mass_tag": "M",
  "worst_index": 0.263,
  "bed_face": "-z (bottom)",

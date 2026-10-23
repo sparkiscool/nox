@@ -1,6 +1,6 @@
 # Runs
 
-_40 runs · rebuilt 2026-10-23 18:13_
+_42 runs · rebuilt 2026-10-23 18:46_
 
 ## Latest per part
 
@@ -11,16 +11,18 @@ _40 runs · rebuilt 2026-10-23 18:13_
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
-| scan_stick | v11 | DONE | 40.8 (M) | 0.34  | PASS | [runs/scan_stick/v11](runs/scan_stick/v11/summary.md) |
-| scan_stick_base | v16 | DONE | 338.9 (M) | 0.26  | PASS | [runs/scan_stick_base/v16](runs/scan_stick_base/v16/summary.md) |
+| scan_stick | v12 | DONE | 42.8 (M) | 0.28  | PASS | [runs/scan_stick/v12](runs/scan_stick/v12/summary.md) |
+| scan_stick_base | v17 | DONE | 340.1 (M) | 0.26  | PASS | [runs/scan_stick_base/v17](runs/scan_stick_base/v17/summary.md) |
 | scan_stick_cam | v4 | DONE | 12.6 (M) | 0.28 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v4](runs/scan_stick_cam/v4/summary.md) |
 
 ## All runs, newest first
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-23 18:13 | scan_stick_base | [v16](runs/scan_stick_base/v16/summary.md) | DONE | 338.9 (M) | 0.26 | PASS | -z (bottom) | 5.6 (P) GB | 6 min | · |
-| 2026-10-23 17:52 | scan_stick | [v11](runs/scan_stick/v11/summary.md) | DONE | 40.8 (M) | 0.34 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
+| 2026-10-23 18:46 | scan_stick_base | [v17](runs/scan_stick_base/v17/summary.md) | DONE | 340.1 (M) | 0.26 | PASS | -z (bottom) | 5.6 (P) GB | 6 min | · |
+| 2026-10-23 18:38 | scan_stick | [v12](runs/scan_stick/v12/summary.md) | DONE | 42.8 (M) | 0.28 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
+| 2026-10-23 18:13 | scan_stick_base | [v16](runs/scan_stick_base/v16/summary.md) | RETIRED | 338.9 (M) | 0.26 | PASS | -z (bottom) | 5.6 (P) GB | 6 min | · |
+| 2026-10-23 17:52 | scan_stick | [v11](runs/scan_stick/v11/summary.md) | RETIRED | 40.8 (M) | 0.34 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
 | 2026-10-23 17:31 | scan_stick_base | [v15](runs/scan_stick_base/v15/summary.md) | RETIRED | 334.3 (M) | 0.26 | PASS | -z (bottom) | 5.6 (P) GB | 6 min | · |
 | 2026-10-23 17:11 | scan_stick | [v10](runs/scan_stick/v10/summary.md) | RETIRED | 40.0 (M) | 0.36 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
 | 2026-10-23 16:58 | scan_stick_base | [v14](runs/scan_stick_base/v14/summary.md) | · | 296.6 (M) | · | FAIL | · | · GB | · min | · |
