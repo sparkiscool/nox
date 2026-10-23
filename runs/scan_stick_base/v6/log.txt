@@ -49,3 +49,14 @@ it  37 beta    8 J   0.3908 vol 0.1065 (dil 0.2251 g -0.000) grey  6.3% ch 0.100
 it  38 beta    8 J   0.3884 vol 0.1070 (dil 0.2251 g -0.000) grey  6.3% ch 0.100 worst drop on head -z 150 N 128 26.0s
 it  39 beta    8 J   0.3867 vol 0.1074 (dil 0.2251 g -0.000) grey  6.2% ch 0.100 worst drop on head -z 150 N 128 24.6s
 it  40 beta    8 J   0.3856 vol 0.1078 (dil 0.2251 g -0.000) grey  6.1% ch 0.100 worst drop on head -z 150 N 128 21.7s
+it  41 beta    8 J   0.3855 vol 0.1083 (dil 0.2251 g +0.038) grey  6.1% ch 0.100 worst drop on head -z 150 N 128 21.7s
+it  42 beta    8 J   0.3855 vol 0.1005 (dil 0.2155 g -0.006) grey  5.8% ch 0.100 worst drop on head -z 150 N 128 25.6s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  43 beta   16 J   0.8728 vol 0.0961 (dil 0.2189 g +0.010) grey  2.4% ch 0.100 worst pi 25 g 4 290 25.6s
+it  44 beta   16 J   0.8714 vol 0.0960 (dil 0.2165 g -0.001) grey  2.3% ch 0.100 worst pi 25 g 4 289 26.0s
+it  45 beta   16 J   0.8706 vol 0.0968 (dil 0.2166 g -0.000) grey  2.3% ch 0.100 worst pi 25 g 4 289 22.6s
+it  46 beta   16 J   0.8699 vol 0.0976 (dil 0.2166 g +0.005) grey  2.2% ch 0.100 worst pi 25 g 4 289 26.9s
+it  47 beta   16 J   0.8695 vol 0.0976 (dil 0.2155 g -0.000) grey  2.2% ch 0.100 worst pi 25 g 4 289 25.6s
+it  48 beta   16 J   0.8693 vol 0.0982 (dil 0.2155 g -0.000) grey  2.2% ch 0.100 worst pi 25 g 4 289 26.4s
+it  49 beta   16 J   0.8691 vol 0.0988 (dil 0.2155 g -0.000) grey  2.2% ch 0.100 worst pi 25 g 4 289 26.9s
+it  50 beta   16 J   0.8689 vol 0.0993 (dil 0.2155 g -0.000) grey  2.2% ch 0.100 worst pi 25 g 4 289 27.4s
