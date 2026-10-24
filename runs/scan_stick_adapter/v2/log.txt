@@ -123,3 +123,19 @@ it  37 beta   32 J   8.7590 vol 0.1347 (dil 0.2122 g -0.000) grey  1.2% ch 0.100
 it  38 beta   32 J   8.7557 vol 0.1347 (dil 0.2122 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 14.1s
 it  39 beta   32 J   8.7526 vol 0.1348 (dil 0.2122 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 14.6s
 it  40 beta   32 J   8.7500 vol 0.1348 (dil 0.2122 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 13.8s
+git push failed: fatal: The current branch run/scan_stick_adapter-v2 has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin run/scan_stick_adapter-v2
+it  41 beta   32 J   8.7476 vol 0.1348 (dil 0.2122 g +0.001) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 14.5s
+it  42 beta   32 J   8.7504 vol 0.1347 (dil 0.2120 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 14.3s
+it  43 beta   32 J   8.7482 vol 0.1347 (dil 0.2120 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 13.2s
+it  44 beta   32 J   8.7462 vol 0.1347 (dil 0.2120 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 13.2s
+layout: stopped (grey) at it 44, beta 32, 653 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 845 s, peak 4.53482 GB
+build: organic surface at pitch 0.300 mm (x5), skins 75.49 cm3, field 115.25 cm3, in env - cuts 103.27 cm3 (layout 103.27, level offset +0.090 mm), fillet 2.5 mm, rims 1.0 mm, mesh 634,336 faces, 221 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [86005.5], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 27, "ok": true}
+function check: {'skin_mm3': 61863.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.61 in 'unit 50 g 0' at [-22.2, 18.8, 15.8]
+RESULT {"name": "scan_stick_adapter", "solid_ok": true, "mass_g": 131.63, "worst": 0.606, "function_ok": true, "bodies": 1}
