@@ -418,7 +418,8 @@ def candidate_nodes():
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
-    for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5), (0, 28.5)]:
+    for x, y in [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6)]:   # y 29.6 (was 28.5): outboard of the
+                                                                                               # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
             (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
