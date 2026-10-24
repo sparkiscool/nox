@@ -35,8 +35,12 @@ WING = dict(x=(28.0, 46.5), u=(0.0, 30.0))
 # the rack tail's backing rib (concept review r3: the pinion's separating force 22.1 N at u -56.3 bends the tail; E): Y 63..68.75 over the
 # axle belt (Y <= 62), X out to the arm's free space (space map, >= 1.0): head A clear to X 28.5 the whole tail, head B beside the hub
 # and the detent at park; stops at u -11.5, clear of the near wheel and the +X ear screw's channel
-TAIL_RIB = dict(y=(63.0, 68.76), A=[(29.5, -62.0), (39.6, -62.0), (39.6, -11.5), (29.5, -11.5)],
-                B=[(37.5, -52.0), (39.6, -52.0), (39.6, -11.5), (32.5, -11.5), (32.5, -19.5), (34.5, -20.5), (34.5, -31.5), (37.5, -33.5)])
+TAIL_RIB = dict(   # (polygon X, u; Y range) per head; free space from the per-head space map (>= 1.0)
+    A=[([(29.5, -62.0), (39.6, -62.0), (39.6, -11.5), (29.5, -11.5)], (63.0, 68.76)),                                  # over the belt
+       ([(29.5, -37.0), (36.5, -40.5), (39.6, -40.5), (39.6, -11.5), (29.5, -11.5)], (68.75, 74.35)),    # up to the plate top (the detent arm at u -46 at park)
+       ([(33.5, -31.0), (39.6, -31.0), (39.6, -11.5), (29.5, -11.5), (29.5, -25.0)], (59.25, 63.01))],                 # the root, under Y 63
+    B=[([(37.5, -52.0), (39.6, -52.0), (39.6, -11.5), (32.5, -11.5), (32.5, -17.2), (35.5, -17.2), (35.5, -31.5), (37.5, -33.5)], (63.0, 68.76)),
+       ([(32.5, -31.0), (39.6, -31.0), (39.6, -11.5), (32.5, -11.5)], (59.25, 63.01))])    # B: the detent arm and roller sit above / beside it at park
 FILLET = [(28.0, 30.0), (40.5, 30.0), (40.5, 32.5), (28.0, 40.0)]   # plate / wing inside corner (bound r3: the pull peak sat in the sharp corner)
 WEB = dict(x=(40.5, 46.5), body_x=(39.5, 41.5), bar_x=(41.5, 46.5), y=(59.25, 72.75), uA=(-63.0, 30.0), uB=(-54.0, 30.0), teeth_y=(59.25, 73.25), tail_u=-39.0, tail_y0=63.0)
 WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))      # (X, u); the last is the eccentric
@@ -319,7 +323,10 @@ def rack_bar(servo="DS3218"):
 
 def tail_rib(servo="DS3218"):
     """the drawn backing rib behind the rack tail (head A or B)"""
-    return prism_xu(TAIL_RIB["B" if servo == "MG995" else "A"], *TAIL_RIB["y"])
+    r = None
+    for poly, (y0, y1) in TAIL_RIB["B" if servo == "MG995" else "A"]:
+        m = prism_xu(poly, y0, y1); r = m if r is None else r + m
+    return r
 
 
 def bed_land():
@@ -370,8 +377,8 @@ def cradle(servo="DS3218"):
 
 
 # ============================================================== the body's design space (topology) and keep-outs
-COLUMN_POLY = [(-28.6, 14.9), (28.1, 14.9), (31.5, 13.0), (34.5, 10.5), (38.5, 8.0), (41.5, 6.0), (45.5, 4.0), (48.5, 1.5), (48.5, -18.0),
-               (-12.6, -18.0), (-38.1, 8.0), (-34.5, 10.5), (-31.5, 13.0)]   # X, u: the bay wedge (map - 1.0), the park bisector (X + u >= -30.6), u -18
+COLUMN_POLY = [(-28.6, 14.9), (28.1, 14.9), (31.5, 13.0), (34.5, 10.5), (38.5, 8.0), (41.5, 6.0), (45.5, 4.0), (48.5, 1.5), (48.5, -12.7), (44.0, -17.2),
+               (-13.4, -17.2), (-38.1, 8.0), (-34.5, 10.5), (-31.5, 13.0)]   # X, u: the bay wedge (map - 1.0), the park bisector (X + u >= -30.6), u -17.2 (flush with the plate edge)
 COLUMN_Y = (74.5, 188.0)
 BED_X = -34.0                                            # the +x build's bed: the column's -X flank cut flat here (u 3.4..10.9 x 113 long)
 
@@ -416,7 +423,8 @@ def keepouts(servo="DS3218"):
     for (xh, uh) in ear_screws(servo):                                                                # the ear screws and their driver from -Y,
         K.append(cylY(xh, uh, 50.0, ye - 12.0, 3.5, 24))                                             # through the plate (M3 head Ø5.5 + 1.5)
     K.append(cradle(servo)[1])
-    K.append(box(15.0, WEB["body_x"][0], 70.0, 77.0, -20.0, -14.0))                                    # detent arm by head B at park (+1.0); the web and bar keep 1.16 (sweep)
+    if servo == "MG995":                                                                              # detent arm by head B at park (+1.0); the web and bar keep 1.16 (sweep)
+        K.append(box(15.0, WEB["body_x"][0], 70.0, 77.0, -20.0, -14.0))
     return K
 
 
@@ -446,7 +454,7 @@ def plate_ext():
     """the room below u 0 at the plate and root level (Y 68.75..74.5) the assembled arm leaves free over the four cycles (space map:
     outside the detent ring's V |X| >= 4.5 + 1.25 |u| and the rail stop |X| >= 11, + 1.0; the park bisector X + u >= -29.6 on -X;
     u >= -17.2 on +X): the carriage plate and the column's root grow into it (concept review r1, the root over the 4.0 plate)"""
-    plus = [(11.0, 0.0), (11.0, -5.2), (26.0, -17.2), (44.0, -17.2), (44.0, 0.0)]   # -17.2: 1.0 over the detent arm (B, sweep r3)
+    plus = [(11.0, 0.0), (11.0, -5.2), (26.0, -17.2), (39.5, -17.2), (44.0, -21.7), (44.0, 0.0)]   # -17.2: 1.0 over the detent arm (B, sweep r3); 45 deg down the web
     minus = [(-11.0, 0.0), (-29.6, 0.0), (-18.5, -11.2), (-11.0, -5.2)]
     return prism_xu(plus, PLATE["y"][0], COLUMN_Y[0] + 0.01) + prism_xu(minus, PLATE["y"][0], COLUMN_Y[0] + 0.01)
 
@@ -644,7 +652,8 @@ BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space fille
     "plate top 72.75, plate / root grown to u -18": {"+y": 1.03, "+z": 0.73},
     "plate top 74.35, plate / root grown to u -18, all-direction supports (r2)": {"+y": 0.70, "+z": 0.61, "+x": 0.44},
     "r3: partial supports (bores X Y, rack teeth u X), across + Y loads, stops, bonded rack bar, bed land, sharp plate / wing corner": {"+x": 0.59},
-    "r3: as above with the 12.5 x 10 plate / wing fillet (chosen)": {"+x": 0.41},
+    "r3: as above with the 12.5 x 10 plate / wing fillet": {"+x": 0.41},
+    "r4: + the pinion's separating force, teeth hold u only, the tail rib, the servo window, the ear screw holes (head A / head B)": {"+x A": 0.434, "+x B": 0.484},
 }
 
 ACCESS = [
@@ -671,7 +680,7 @@ ALTERNATIVES = {
     ],
     "cut": [
         ("one body printed on its side + a bonded rack bar (chosen)", "no joint at the highest moment (5.3 / 6.8 N.m at the plate); the "
-         "column's bending and the plate's lie in the layers (+x build, upper bound 0.41 with the r3 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
+         "column's bending and the plate's lie in the layers (+x build, upper bound 0.43 / 0.48 (A / B) with the r4 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
          "(5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"),
         ("carriage plate printed flat + column bolted on", "the plate and teeth print flat, but the joint sits at the root: 4 M3 inserts "
          "carry ~190..490 N per pair at the moment, the across-layer root is replaced by bolts in PETG bosses (~+8 g), one more fit and "

@@ -1,18 +1,18 @@
 {
  "h": 1.5,
- "mass_g": 239.0,
- "worst": 0.486,
+ "mass_g": 232.8,
+ "worst": 0.484,
  "worst_case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
  "worst_at": [
-  33.5,
-  67.4,
+  42.5,
+  73.4,
   -18.2
  ],
  "rows": [
   {
    "case": "insert at the drone 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.395,
+   "inlayer": 0.396,
    "across": 0.408,
    "at": [
     27.5,
@@ -24,7 +24,7 @@
    "case": "insert at the drone, stall 74 N [misuse]",
    "cls": "misuse",
    "inlayer": 0.305,
-   "across": 0.315,
+   "across": 0.314,
    "at": [
     27.5,
     74.9,
@@ -34,18 +34,18 @@
   {
    "case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.399,
-   "across": 0.387,
+   "inlayer": 0.394,
+   "across": 0.372,
    "at": [
     42.5,
     73.4,
-    -16.8
+    -18.2
    ]
   },
   {
    "case": "insert at a bay 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.395,
+   "inlayer": 0.396,
    "across": 0.408,
    "at": [
     27.5,
@@ -57,7 +57,7 @@
    "case": "insert at a bay, stall 74 N [misuse]",
    "cls": "misuse",
    "inlayer": 0.305,
-   "across": 0.315,
+   "across": 0.314,
    "at": [
     27.5,
     74.9,
@@ -67,11 +67,11 @@
   {
    "case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.486,
-   "across": 0.392,
+   "inlayer": 0.484,
+   "across": 0.437,
    "at": [
-    33.5,
-    67.4,
+    42.5,
+    73.4,
     -18.2
    ]
   },
@@ -79,7 +79,7 @@
    "case": "handling 3 g in + 2 g along +X, Overseer cartridge carried [handling]",
    "cls": "misuse",
    "inlayer": 0.087,
-   "across": 0.079,
+   "across": 0.08,
    "at": [
     21.5,
     76.4,
@@ -89,8 +89,8 @@
   {
    "case": "handling 3 g in + 2 g along -X, Overseer cartridge carried [handling]",
    "cls": "misuse",
-   "inlayer": 0.108,
-   "across": 0.116,
+   "inlayer": 0.109,
+   "across": 0.118,
    "at": [
     29.0,
     73.4,
@@ -100,8 +100,8 @@
   {
    "case": "handling 3 g out, Overseer cartridge carried (on the rods; along its CG line, no couple) [handling]",
    "cls": "misuse",
-   "inlayer": 0.092,
-   "across": 0.083,
+   "inlayer": 0.093,
+   "across": 0.081,
    "at": [
     27.5,
     74.9,
@@ -144,8 +144,8 @@
   {
    "case": "across -X 43.5 N at a seat, receiver gaps closed (+ rib-to-stop couple) [swap]",
    "cls": "flight",
-   "inlayer": 0.21,
-   "across": 0.123,
+   "inlayer": 0.209,
+   "across": 0.124,
    "at": [
     -26.5,
     71.9,
@@ -177,8 +177,8 @@
   {
    "case": "MG995 stall torque 0.88 N.m on the ear pads [misuse]",
    "cls": "misuse",
-   "inlayer": 0.044,
-   "across": 0.054,
+   "inlayer": 0.045,
+   "across": 0.056,
    "at": [
     38.0,
     92.9,

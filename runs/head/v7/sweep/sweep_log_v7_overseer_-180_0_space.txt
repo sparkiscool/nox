@@ -295,4 +295,4 @@ t 21.93 phi -174.0 zA  32.0 zB  32.0 clearance   0.00 ('headA', 'fingA_A') overl
 t 21.96 phi -176.0 zA  32.0 zB  32.0 clearance   0.00 ('headA', 'fingA_A') overlaps []
 t 21.98 phi -178.0 zA  32.0 zB  32.0 clearance   0.00 ('headA', 'fingA_A') overlaps []
 t 22.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('headA', 'fingA_A') overlaps []
-sweep 297 states in 156 s
+sweep 297 states in 142 s
