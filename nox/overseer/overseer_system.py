@@ -599,7 +599,9 @@ def at_dm(dm_):
 if os.environ.get("SYS_FINAL_SIZES"):                                 # a settled design to recheck: its topology and sizes at SYS_FINAL_DM, no re-sizing
     fz_ = json.load(open(os.environ["SYS_FINAL_SIZES"])); CAGE_TOPO, CAGE_SIZES = fz_["topo"], fz_["sizes"]
     dm = float(os.environ.get("SYS_FINAL_DM", dm)); zB_ = math.ceil(l2_low_zB()); dc_ = TIP_OFF - dm
-    xB_ = solve_xB(lambda x: build(dm, dc_, x, zB_), zB_); g_ = build(dm, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+    for _ in range(2):                                                # the crash load follows the drone mass: build, weigh, build again
+        xB_ = solve_xB(lambda x: build(dm, dc_, x, zB_), zB_); g_ = build(dm, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+    g_ = build(dm, dc_, xB_, zB_)
     fr_ = co.evaluate(g_["P"], CAGE_TOPO, CAGE_SIZES)
     say(f"final: motors {dm:.1f} ahead, cage {fr_['mass_g']:.0f} g from {os.environ['SYS_FINAL_SIZES']}, CG {cg_[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
     tries = [dict(e=float(cg_[0] - dm), ok=fr_["violation"] == 0, dm=dm, sizes=CAGE_SIZES, xB=xB_, zB=zB_)]
@@ -625,6 +627,7 @@ if not (tries[0]["ok"] and abs(tries[0]["e"]) <= BAL_TOL):
 best = min(tries, key=lambda t: (not t["ok"], abs(t["e"]) > BAL_TOL, abs(t["e"])))
 dm, xB, zB, CAGE_SIZES = best["dm"], best["xB"], best["zB"], best["sizes"]; dc = TIP_OFF - dm
 g = build(dm, dc, xB, zB); tot, cg = cg_of(g); M_DRONE = float(tot)
+g = build(dm, dc, xB, zB)                                             # with the drone mass of this layout in its crash cases
 if not best["ok"] and os.environ.get("SYS_SEARCH", "1") == "1":       # no passing sizing at any point tried: every topology here
     from multiprocessing import Pool
     with Pool(4) as pool:
