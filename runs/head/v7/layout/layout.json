@@ -393,8 +393,8 @@
  "space": {
   "body (drawn interfaces) A": {
    "arm_overlap_voxels": 0,
-   "min_X_plus_u": -30.74,
-   "park_ok": false,
+   "min_X_plus_u": -30.54,
+   "park_ok": true,
    "Z_min_at_drone": 48.3,
    "X": [
     -34.0,
@@ -662,7 +662,7 @@
    ]
   }
  },
- "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: {'body (drawn interfaces) A': (0, -30.74)}; lowest point at the commanded drone insert Z 96.3 (keep-out 95)",
+ "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: yes; lowest point at the commanded drone insert Z 96.3 (keep-out 95)",
  "internal": {
   "squeezed": {},
   "open": {}
@@ -714,8 +714,12 @@
    "+x A": 0.406,
    "+x B": 0.479
   },
-  "r6: + the cradle kept (servo pocket only), wire channels, \u00d812 retainer bosses (chosen)": {
+  "r6: + the cradle kept (servo pocket only), wire channels, \u00d812 retainer bosses": {
    "+x A": 0.421,
+   "+x B": 0.48
+  },
+  "r7: + servo dims from dimensions.md M, the lead and socket slot, the deck slot = blade travel + 1, the cradle clipped at the park bisector (chosen)": {
+   "+x A": 0.407,
    "+x B": 0.48
   }
  },
@@ -3577,7 +3581,7 @@
   "cut": [
    [
     "one body printed on its side + a bonded rack bar (chosen)",
-    "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.42 / 0.48 (A / B) with the r6 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
+    "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.41 / 0.48 (A / B) with the r7 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
    ],
    [
     "carriage plate printed flat + column bolted on",
