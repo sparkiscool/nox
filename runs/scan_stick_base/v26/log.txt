@@ -69,3 +69,11 @@ fem: grid (64, 48, 120) = 368,640 elements, 499,026 active dofs; backend direct 
 layout: warm start from a (32, 24, 64) grid (h 4.0): mean x 0.094
 it   1 beta    4 J  10.0000 vol 0.1046 (dil 0.1748 g +0.200) grey 13.7% ch 0.100 worst cage bump top 100 N (spine s 91.1 39.6s
 it   2 beta    4 J  10.2712 vol 0.0960 (dil 0.1668 g +0.145) grey 13.8% ch 0.100 worst cage bump top 100 N (spine s 91.6 39.0s
+it   3 beta    4 J  10.9334 vol 0.0875 (dil 0.1597 g +0.096) grey 14.4% ch 0.100 worst cage bump top 100 N (spine s 92.2 40.0s
+it   4 beta    4 J  16.3460 vol 0.0786 (dil 0.1523 g +0.045) grey 14.6% ch 0.100 worst tie b2 mx 146 39.9s
+it   5 beta    4 J  15.1804 vol 0.0721 (dil 0.1458 g +0.001) grey 14.5% ch 0.100 worst switch panel push 50 N 132 38.5s
+it   6 beta    4 J  10.5610 vol 0.0705 (dil 0.1438 g -0.068) grey 14.1% ch 0.100 worst cage bump top 100 N (spine s 95.7 38.1s
+it   7 beta    4 J  10.2888 vol 0.0794 (dil 0.1517 g -0.016) grey 13.8% ch 0.100 worst cage bump top 100 N (spine s 93.7 38.8s
+it   8 beta    4 J  10.1616 vol 0.0834 (dil 0.1526 g -0.011) grey 13.2% ch 0.100 worst cage bump top 100 N (spine s 92.5 39.0s
+it   9 beta    4 J  10.0853 vol 0.0863 (dil 0.1531 g -0.007) grey 12.6% ch 0.100 worst cage bump top 100 N (spine s 91.8 39.9s
+it  10 beta    4 J  10.0337 vol 0.0884 (dil 0.1534 g -0.006) grey 12.2% ch 0.100 worst cage bump top 100 N (spine s 91.4 40.0s
