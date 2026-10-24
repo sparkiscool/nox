@@ -148,22 +148,22 @@ def setup_factory(log, info):
         pd = pads(max(3.0, h))
         stub = cylY(45.0, -T, 0.0)
         cuts = [load_grown(n) for n in ("receivers", "cartridge_paths", "drone", "catch")]
-        gy = getattr(L2, "FUNNEL_V8_GROW_Y", 0.0)                       # funnel v8: opening 11.5 wider at each Y face
-        cuts[3] = cuts[3] + cuts[3].translate([0, gy, 0])               # asymmetric: only the +Y face moves out
+        gy = getattr(L2, "FUNNEL_V8_GROW_Y", 0.0)                       # funnel v8 plain: each +-Y face moves out 11.5
+        c0 = cuts[3]
+        cuts[3] = c0 + c0.translate([0, gy, 0]) + c0.translate([0, -gy, 0])
         hub = cylY(88.0 + GROW, 7.0 - GROW, 74.0 + GROW)
         motor = cylY(106.5 + GROW, 2.0 - GROW, 50.0 + GROW)
         park = cylY(R - L2.ARM_PARK_R, 74.0, 300.0)
-        pts = [(0.0, 0.0)] + [(1.2 * 159 * math.cos(math.radians(90 + a)), 1.2 * 159 * math.sin(math.radians(90 + a)))
-                              for a in np.linspace(-25, 25, 21)]
-        lane = mf.Manifold.extrude(mf.CrossSection([pts]), LANE_Y[1] - LANE_Y[0]).rotate([90, 0, 0]).translate([0, LANE_Y[1], 0]) \
-            ^ cylY(159.0, LANE_Y[0], LANE_Y[1])
+        lx, ly = L2.LANE["x"], L2.LANE["y"]                              # drone insert, carriage (arm PR 79)
+        lane = cylY(L2.LANE["r"] + GROW, ly[0] - GROW, ly[1] + GROW) ^ box(lx[0] - GROW, lx[1] + GROW, ly[0] - GROW, ly[1] + GROW, -300, 300)
+        grab = (cylY(159.6 + GROW, 73.75, 217.0 + GROW) - cylY(111.5, 73.0, 218.0)) ^ box(-47.5 - GROW, 47.5 + GROW, 73.75, 217.0 + GROW, -300, 300)
         zt = Z1 + 5
-        a0 = 84.0; b0 = 84.0 + gy / 2; dz = zt - Z_EDGE
+        a0 = 84.0; b0 = 84.0 + gy; dz = zt - Z_EDGE
         sq = mf.CrossSection([[(-a0, -b0), (a0, -b0), (a0, b0), (-a0, b0)]])
-        fun = mf.Manifold.extrude(sq, dz, 0, 0.0, ((a0 + dz) / a0, (b0 + dz) / b0)).translate([0, Y_FUN + gy / 2, Z_EDGE])
-        rail = cylY(151.0 + GROW, 38.0 - GROW, 73.0 + GROW)                 # arm rail disc (round 3)
+        fun = mf.Manifold.extrude(sq, dz, 0, 0.0, ((a0 + dz) / a0, (b0 + dz) / b0)).translate([0, Y_FUN, Z_EDGE])
+        rail = cylY(L2.RAIL_DISC["r"] + GROW, L2.RAIL_DISC["y"][0] - GROW, L2.RAIL_DISC["y"][1] + GROW)
         elec = box(42 - GROW, 157 + GROW, Y0 + T, -36 + GROW, -170 - GROW, 45 + GROW)
-        cuts += [hub, motor, park, lane, fun, elec, rail]
+        cuts += [hub, motor, park, lane, grab, fun, elec, rail]
         sweeps = service_sweeps(Y1)
         cuts += sweeps
         posts, side = seat_posts(6.0 if h <= 6 else h, cuts[3] + fun)
@@ -244,6 +244,18 @@ def _cases(p, h, T, pd, posts, stub, sheets, log):
     add_case(p, "stub tilt: XT60 at the drone 57 N + 5.9 N.m", "flight", "default", down,
              lumps(down, "Scout") + [(stub, (0, 0, -57.0), (5900.0, 0, 0), (0, Y_C, 0)),
                                      (posts_m, (0, 0, 57.0), (-5900.0, 0, 0), (0, Y_C, 144.5))])
+    # every bay located to the stub: all nine pads loaded together (60 N insert outward; 43.5 N across, one sense), reacted at the stub
+    P0 = np.array([0.0, Y_C, 0.0])
+    for nm, cl, mode in (("all bays: 60 N insert", "flight", "rad"), ("all bays: 43.5 N across", "flight", "tan")):
+        loads = []; Ft = np.zeros(3); Mt = np.zeros(3)
+        for ang in L2.BAYS:
+            cg = pad_cg[ang][0]; r_ = np.array([math.cos(math.radians(ang)), 0, math.sin(math.radians(ang))])
+            tdir = np.array([-math.sin(math.radians(ang)), 0, math.cos(math.radians(ang))])
+            F_ = (60.0 * r_) if mode == "rad" else (43.5 * tdir)
+            Pp = np.array([cg[0], Y_C, cg[2]]) * (1.0 + 0.0)
+            loads.append((pd[ang], F_, None, Pp)); Ft += F_; Mt += np.cross(Pp - P0, F_)
+        loads.append((stub, -Ft, -Mt, P0))
+        add_case(p, nm, cl, "default", down, lumps(down, "Scout") + loads)
     a2 = (0, 0, -2); a5 = (0, 0, -5); al = (5, 0, 0)
     add_case(p, "lifted by the side sheets 2 g", "flight", "hands", a2, lumps(a2, None))
     add_case(p, "misuse: set down hard 5 g", "misuse", "default", a5, lumps(a5, None))
