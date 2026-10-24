@@ -72,11 +72,11 @@ Results per part and round: `runs/topo-demo-summary.md` (round 1), `runs/topo-de
 
 | Name | What | Round 2 |
 |---|---|---|
-| `holder` | The old engine's benchmark holder (28 cases, 3 supports); the organic look test part since 23 Oct. Setup fixed for the gate (11.5 mm offset bosses, 7 mm layer under the pad; `demos/holder.py`). | organic-v7: gate PASS, 11.73 g, worst 0.569; organic-v10: PASS, 12.50 g, 0.504 (topo-v1: 10.26 g, 0.498, gate FAIL). `runs/holder/organic-summary.md`. |
+| `holder` | The old engine's benchmark holder (28 cases, 3 supports); the organic look test part since 23 Oct. Setup fixed for the gate (11.5 mm offset bosses, 7 mm layer under the pad; `demos/holder.py`). | organic-v11: gate PASS, 11.73 g, worst 0.493 (topo-v1: 10.26 g, 0.498, gate FAIL). `runs/holder/organic-summary.md`. |
 | `bracket_e` | The bracket whose v8 bolt pads hung on necks. | Not run. Its coarse stage now builds (support band falls back to touching cells). |
-| `bracket_jA` | Box stand joint bracket the old v8 shipped. | topo-v4: gate PASS, 36.02 g, worst 0.124 (v8: 38.37 g, 0.133, same grid). |
+| `bracket_jA` | Box stand joint bracket the old v8 shipped. | topo-v4: gate PASS, 36.02 g, worst 0.124 (v8: 38.37 g, 0.133, same grid). Organic, final engine: organic-v5, PASS, 36.85 g, 0.127. |
 | `bar_half` | Box stand cross bar half the old v8 shipped. | topo-v3: gate PASS, 71.23 g, worst 0.804 (v8: 77.58 g, 0.929, same grid). |
-| `motor_mount` | A generic drone motor mount (assumed dimensions, E), pads 6 mm tall. | topo-v3: gate PASS, 17.21 g, worst 0.117 (v2 with 5 mm pads: FAIL by 4 voxels). |
+| `motor_mount` | A generic drone motor mount (assumed dimensions, E), pads 6 mm tall. | topo-v3: gate PASS, 17.21 g, worst 0.117 (v2 with 5 mm pads: FAIL by 4 voxels). Organic, final engine: organic-v2, PASS, 18.03 g, 0.122. |
 
 ## Sources
 

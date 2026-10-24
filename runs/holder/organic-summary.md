@@ -22,7 +22,9 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
    faces, Taubin spikes and voxel slivers on keep-out faces).
 3. Gate member margin 2.25 mm (5.0 -> 6.25 mm members): v2's 5.0 mm struts broke at 2.0 mm erosion, v3's 6.25 mm
    struts kept a core.
-4. `case_norm="frame"` (option, off): renormalises every case on the first frame. Against the full solid, pad push
+4. Organic finish keeps the bodies the main support holds whole (bolt pads, bosses, a wall flange): opening part of a
+   pad left its envelope-side skin with a core of its own at 2.0 mm erosion (motor_mount organic-v1, FAIL).
+5. `case_norm="frame"` (option, off): renormalises every case on the first frame. Against the full solid, pad push
    and the tie cases take the whole objective (misuse cases 1e-4 each, organic-v7), but frame did not lower the worst
    index (organic-v8).
 
@@ -41,27 +43,23 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v8 | as v7, case_norm frame | 11.72 | 0.596 | **PASS** | ok | right: one frame | 4471 s |
 | organic-v9 | as v8, min member 6.6 mm | 11.74 | 1.083 | FAIL (2 bodies) | ok | wrong: two frames | ~4300 s |
 | organic-v10 | as v7, gen 6.0 | 12.50 | 0.504 | **PASS** | ok | right: one frame | 4148 s |
+| **organic-v11** | final engine (held bodies whole), gen 5.4 | **11.73** | **0.493** | **PASS** | ok | right: one frame | 2677 s |
 
 ## Result
 
-Final engine (nox/topo at this commit, `finish="organic"`, `case_norm="solid"`). Two candidates, each misses one
-target:
+**organic-v11 meets all four targets** on the final engine: (a) thin round members with open space and smooth fillets
+into every drawn body, geometric only on holes, bores and contact faces; (b) `nox/solid_check.py` PASS on the exact
+STL; (c) worst 0.493 <= 0.498 (topo-v1); (d) 11.73 g, +14 % on topo-v1's 10.26 g.
 
-| Run | Mass g | Worst | Solid | Look |
-|---|---|---|---|---|
-| organic-v7 | 11.73 (+14 %) | 0.569 (target 0.50) | PASS | right |
-| organic-v10 | 12.50 (+21 %) | 0.504 (target 0.50) | PASS | right |
+The worst index still sits at the 90 deg bend over the battery channel's top long edge behind each hook (every run,
+topo-v1 included) and clears its target by 0.005; same-setup runs spread by about 0.03. More margin there needs a setup
+change for Spark: round the battery channel's two top long edges (r 3 mm) or lower its top from z 22 to 21. organic-v10
+shows the mass route (12.50 g, 0.504, before the held-body rule).
 
-Targets (a) look and (b) gate hold on both. (c) worst <= 0.50 and (d) mass within about 15 % do not hold together.
+## Final engine on the other demos
 
-Why it is the setup, not the engine: the worst cell is the same in every run, topo-v1 included: (28.5, 7.5 / 32.5,
-22.5), where the member from each hook column bends 90 deg over the battery channel's top long edge (channel
-x 10..50, y 8..32, top z 22). The material there is a column 8 mm wide beside the channel and an arm at most 6 mm thick
-over it (the 7 mm layer under the pad, held 0.5 mm off both keep-outs), wrapped round a sharp keep-out edge. Mass
-moves it slowly (+0.77 g for -0.065); bigger members (v9, 6.6 mm) or a different case weighting (v8) did not help;
-filling, normalising or pulling the surface back at keep-outs made it worse (0.71 to 1.04, rebuilds of v8).
-
-Setup change that would do it (Spark to approve; it changes the battery keep-out): round the battery channel's two top
-long edges with r 3 mm (a pack's own edge radius is about that), or lower the channel top from z 22 to z 21. Either
-gives the bend a radius or 1 mm more arm, at the cell that sets the index, without more mass. Not run: it changes a
-keep-out the control session did not clear.
+| Part | Run | Mass g (M) | Worst | Solid | Look |
+|---|---|---|---|---|---|
+| bracket_jA | organic-v5 | 36.85 (v8 38.37) | 0.127 same grid (v8 0.133) | PASS | smooth beam on a whole flange (thin crescent design space) |
+| motor_mount | organic-v2 | 18.03 (topo-v3 17.21) | 0.122 (topo-v3 0.117) | PASS | four round legs branching into the seat, open base ring |
+| motor_mount | organic-v1 (before the held-body rule) | 17.94 | 0.143 | FAIL (pad cores 0.75) | as v2 |
