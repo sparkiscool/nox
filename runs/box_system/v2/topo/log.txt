@@ -279,3 +279,10 @@ layout: beta 32 done: eroded design 31 bodies, main 91.5%; drawn bodies outside 
  "misuse: set down hard 5 g": 407.9337331578701,
  "misuse: knocked over onto +X 5 g": 1109.0789906604955
 }
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To

@@ -56,6 +56,11 @@ def view(parts, elev, azim, path, title, lim):
 
 def main():
     d, h, o, sh, rho = field()
+    L0 = json.load(open(os.path.join(LAY, "layout.json")))["enclosure"]
+    ax = [o[k] + (np.arange(sh[k]) + 0.5) * h for k in range(3)]
+    XX, YY, ZZ = np.meshgrid(*ax, indexing="ij")
+    sheet = (np.abs(XX) > L0["X_IN"] - h) | (YY < L0["Y_BACK"] + h)
+    rho = np.where(sheet, 0.0, rho)                                       # the sheets are ghosted, not drawn solid
     m = iso(rho, h, o); m.export(os.path.join(OUT, "iso05.stl"))
     L = json.load(open(os.path.join(LAY, "layout.json"))); EN = L["enclosure"]
     rec = ghost("receivers_W.stl"); catch = ghost("catch_W.stl")
@@ -63,9 +68,9 @@ def main():
     X, Y0, Y1, Z0, Z1 = EN["X_IN"], EN["Y_BACK"], EN["Y_FRONT"], EN["FLOOR"], EN["Z_TOP"]
     for b in ([-X, X, Y0, Y0 + 3, Z0, Z1], [X - 3, X, Y0, Y1, Z0, Z1], [-X, -X + 3, Y0, Y1, Z0, Z1]):
         sheets.append(trimesh.creation.box(extents=[b[1] - b[0], b[3] - b[2], b[5] - b[4]],
-                                           transform=trimesh.transformations.translation([(b[0] + b[1]) / 2, (b[2] + b[3]) / 2, (b[4] + b[5]) / 2])))
+                                           transform=trimesh.transformations.translation_matrix([(b[0] + b[1]) / 2, (b[2] + b[3]) / 2, (b[4] + b[5]) / 2])))
     lim = [(-X, X), (Y0, Y1), (Z0, Z1)]
-    G = lambda: [(m, "#2a6fdb", 1.0), (rec, "#999999", 0.25), (catch, "#e08a1e", 0.22)] + [(s, "#88aacc", 0.05) for s in sheets[:1]]
+    G = lambda: [(m, "#2a6fdb", 1.0), (rec, "#999999", 0.25), (catch, "#e08a1e", 0.22)] + [(s, "#88aacc", 0.04) for s in sheets]
     names = dict(front=(0, -90), side=(0, 0), top=(90, -90), iso=(25, -55), back_iso=(25, 125))
     for n, (el, az) in names.items():
         view(G(), el, az, os.path.join(OUT, f"view_{n}.png"), f"eta 0.5, {n}", lim)
