@@ -1,0 +1,6 @@
+{
+ "name": "scan_stick_cam",
+ "status": "FAILED",
+ "note": "stopped, superseded by scan_stick_unit v1 (camera mount in the head)",
+ "date": "2026-10-24"
+}
