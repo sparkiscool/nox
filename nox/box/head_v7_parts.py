@@ -1,6 +1,6 @@
 """Heads A / B v7: the drawn printed parts of the grabber (24 Oct 2026, heads v7 part session), from head_v7_layout.py:
   - carrier +X and carrier -X (PETG): blade 3 x 10 with the 0.8 rib into the tab's grip pocket, boss 12 long on the two 3.0 carbon
-    rods (bores 3.3), the inward stop face, the 623ZZ roller lug (3.0 carbon pin 8 long, 4.0 blind in the lug, epoxied), the spring arm and seat
+    rods (bores 3.3), the inward stop face, the 623ZZ roller lug (3.0 carbon pin 8.8 long, 3.8 blind in the lug through a Ø7 collar, epoxied; the inner race epoxied on the pin), the spring arm and seat
     on the spring rod (bore 3.5);
   - cam (PETG): the two-fold profile (base 4.0, lobe 10.5), 6 thick, on a clamping metal 25T disc horn (radial clamp screw), 2 x M2.5 x 10
     at r 7 in the lobes, M2.5 (horn hole pattern E, CHECK on hand: drill the horn if its holes differ);
@@ -21,7 +21,7 @@ OUT = os.path.join(H.ROOT, "runs", "head", "v7", "parts"); os.makedirs(os.path.j
 def carrier(sign):
     """printed carrier (A frame, squeezed pose): the layout's carrier with the roller pin bore and the blade tip chamfers"""
     c = H.carrier(sign, open_=False)
-    # the roller pin: blind 3.0 bore in the lug, from the roller side, 4.2 deep (epoxied carbon pin, 1.85 of lug past it)
+    # the roller pin: blind 3.0 bore through the collar into the lug, to Y 158.5 (epoxied carbon pin)
     xr = sign * H.ROLLER["x_sq"]
     c -= cylY(xr, H.U_C, H.ROLLER["y"][1] - 0.01, H.ROLLER["pin_y"][1] + 0.2, 1.5, 24)
     # blade tip chamfers (0.5 on the top edges)

@@ -74,13 +74,14 @@ SERVOS = {   # body L x W, base-to-case-top H, spline boss d x h, shaft from the
 HORN = dict(hub_d=10.0, hub_h=3.5, disc_d=25.0, disc_t=3.0, bolt_circle=16.0, tag="metal 25T disc horn, E (CHECK on hand)")
 ROD_D = 3.0
 B623 = dict(od=10.0, id=3.0, w=4.0, g=1.6)        # 623ZZ roller followers (C, catalogue)
-HALL = dict(pkg=(3.0, 3.0, 1.5), board=(4.2, 4.5, 1.6), tag="DRV5055A4 SOT-23 on a 4.2 x 4.5 strip (r5: 1.0 off the carriers at their stops), E")
+HALL = dict(pkg=(3.0, 3.0, 1.5), board=(4.2, 3.0, 1.6), tag="DRV5055A4 SOT-23 on a 4.2 x 3.0 strip at Y 155.5..158.5 (r7: past the cam, 1.0 off the carriers), E")
 
 # ============================================================== layout (DEFAULT, this session)
 Y_SERVO_TOP = 138.0                              # case top; spline boss to 142, horn hub 142..145.5, disc 145.5..148.5, cam 148.5..153.5
 U_C = -2.5                                       # servo shaft / cam / roller axis level
 CAM = dict(y=(148.5, 154.5), base=4.0, lobe=10.5, rise_deg=100.0, dwell0=10.0, dwell1=10.0, law="modified sine")
-ROLLER = dict(x_sq=10.5, y=(149.5, 153.5), pin_y=(149.5, 157.5))   # the 3.0 carbon pin: flush with the roller, 4.0 into the lug (blind, epoxied)   # roller centre X at squeezed; open + 5.0
+ROLLER = dict(x_sq=10.5, y=(149.5, 153.5), pin_y=(149.5, 158.3), collar=(154.5, 155.6))   # the 3.0 carbon pin: flush with the roller (inner race epoxied
+                                                  # on it), 3.8 into the lug through a Ø7 collar past the cam's end (r7: it was held 2.0)   # roller centre X at squeezed; open + 5.0
 BLADE = dict(t=3.0, y=(160.0, 170.0), inner_sq=6.0, inner_open=11.0, tip_u=U_BOT + 6.0, rib=dict(d=0.8, u=U_BOT + 4.0))
 STROKE = BLADE["inner_open"] - BLADE["inner_sq"]  # 5.0 per blade (the mechanism's datum: inner 6.0)
 CLAMP = 7.0                                       # blade inner face on the squeezed tabs of cartridge v6 (latch 24 Oct: a 2.0 centre rib, tabs stop
@@ -249,7 +250,8 @@ def carrier(sign, open_=False):
         bx(xi, BOSS["x_sq"][0] + 0.01, 163.0, 167.0, 4.5, rb + 0.2)   # a plate over the rods + a web between them
     boss = bx(BOSS["x_sq"][0], BOSS["x_sq"][1], BOSS["y"][0], BOSS["y"][1], BOSS["u"][0], BOSS["u"][1])
     yb = RODS["y"][0] - ROD_D / 2 - 0.15                                        # the lower rod bore's edge
-    lug = bx(ROLLER["x_sq"] - 3.5, ROLLER["x_sq"] + 3.5, CAM["y"][1] + CLR, yb, U_C - 3.5, 5.4) + \
+    xc = s * (ROLLER["x_sq"] + dx)
+    lug = cylY(xc, U_C, *ROLLER["collar"], 3.5, 32) + bx(ROLLER["x_sq"] - 3.5, ROLLER["x_sq"] + 3.5, CAM["y"][1] + CLR, yb, U_C - 3.5, 5.4) + \
         bx(BOSS["x_sq"][0], ROLLER["x_sq"] + 3.5, CAM["y"][1] + CLR, yb, BOSS["u"][0], BOSS["u"][1])   # under the hall board (u 6.4); the pin cantilevers from it
     # spring arm: the +X carrier's arm runs above the spring (u 8.9..11.4) to a seat at X -26..-22, the -X carrier's below it
     # (u -2.5..0.9) to a seat at X 22..26; each leaves its boss at the boss's outer end, at its own arm level only (they cross)
@@ -354,7 +356,8 @@ def tail_rib(servo="DS3218"):
     return r
 
 
-WIRE = dict(plug=dict(x=(21.0, 29.6), y=(87.5, 92.5), u_top=12.9), hall_x=(8.8, 12.3), hall_u=(10.6, 12.91), y_merge=(92.0, 96.0))
+WIRE = dict(plug=dict(x=(17.0, 45.0), y=(86.0, 94.6), u=(-12.3, -6.8)),   # the mated JR pair (~25..29 x 8 x 4.5, E) along X under the case, over the tab
+            hall_x=(8.8, 12.3), hall_u=(10.6, 12.91), y_merge=(92.0, 96.0), board=dict(x=(4.6, 8.7), y=(155.5, 158.5), u0=9.0))
 
 
 def wiring(servo="DS3218"):
@@ -366,14 +369,19 @@ def wiring(servo="DS3218"):
     along -u with the servo."""
     s = SERVOS[servo]; base = Y_SERVO_TOP - s["H"]; x1 = s["L"] - s["shaft"]; ld = s["lead"]; W_ = []
     for sg in (-1, 1):
-        a_, b_ = sorted((sg * WIRE["hall_x"][0], sg * WIRE["hall_x"][1]))
-        W_.append(box(a_, b_, WIRE["y_merge"][0], 153.8, *WIRE["hall_u"]))                       # to the board's pocket (1.0 off the carriers)
+        def bx_(a, b, *r):
+            a, b = sorted((sg * a, sg * b)); return box(a, b, *r)
+        W_.append(bx_(*WIRE["hall_x"], WIRE["y_merge"][0], 153.8, *WIRE["hall_u"]))                   # the run above the servo
+        W_.append(bx_(WIRE["board"]["x"][0], WIRE["hall_x"][1], 152.5, 153.8, 11.3, WIRE["hall_u"][1]))   # over to the board (>= 1.0 over the horn,
+        W_.append(bx_(*WIRE["board"]["x"], 152.5, WIRE["board"]["y"][0] + 0.1, 11.3, WIRE["hall_u"][1]))  # >= 1.0 off the lug's sweep)
+        W_.append(bx_(*WIRE["board"]["x"], *WIRE["board"]["y"], WIRE["board"]["u0"], DECK["u"][0] + 0.01))   # the board's pocket, past the cam (r7)
     W_.append(box(-WIRE["hall_x"][1], WIRE["hall_x"][1], *WIRE["y_merge"], 7.0, WIRE["hall_u"][1]))
     ut = RETAINER["u"][1] + 0.2                                                # just over the retainer's tab: with the retainer off, its pocket is the way out
     W_.append(box(x1 - 0.2, x1 + 4.0, base - 0.5, base + ld["y"][1] + 1.0, RETAINER["u"][0] - 1.0, U_C + ld["t"] / 2 + 1.0))   # grommet, lead down (open to -u)
-    W_.append(box(WIRE["plug"]["x"][0], x1 + 4.0, WIRE["plug"]["y"][0], base - 0.4, ut, ut + 3.0))                           # lead to the socket, over the tab
-    W_.append(box(*WIRE["plug"]["x"], *WIRE["plug"]["y"], ut, WIRE["plug"]["u_top"]))                                       # the JR socket slot, over the tab
-    W_.append(box(3.0, WIRE["plug"]["x"][0] + 1.0, 88.0, 92.0, 7.0, 10.3))                                                         # its wires to the ribbon
+    W_.append(box(x1 - 0.2, x1 + 4.0, WIRE["plug"]["y"][1] - 0.6, base - 0.4, ut, ut + 3.0))                          # the lead over the tab to the pair
+    W_.append(box(*WIRE["plug"]["x"], *WIRE["plug"]["y"], *WIRE["plug"]["u"]))                                       # the mated JR pair, over the tab
+    W_.append(box(WIRE["plug"]["x"][0] - 0.5, WIRE["plug"]["x"][0] + 2.0, 88.0, 92.0, WIRE["plug"]["u"][1] - 0.1, 10.3))   # its wires up (1.5 off the boss)
+    W_.append(box(3.0, WIRE["plug"]["x"][0] + 2.0, 88.0, 92.0, 7.0, 10.3))                                       # to the ribbon slot
     return W_
 
 
@@ -383,7 +391,7 @@ def retainer(filled=False):
     ends = cylZ(x0, y0, u0, u1, RETAINER["end_r"], 32) + cylZ(x1, y1, u0, u1, RETAINER["end_r"], 32)
     L = math.hypot(x1 - x0, y1 - y0); ang = math.degrees(math.atan2(y1 - y0, x1 - x0))
     bar = box(0, L, -RETAINER["w"] / 2, RETAINER["w"] / 2, u0, u1).rotate([0, 0, ang]).translate([x0, y0, 0])
-    m = ends + bar + box(x0, SERVOS["MG995"]["L"] - SERVOS["MG995"]["shaft"] + 4.5, 86.0, 95.0, u0, u1)   # the tab under the socket slot and the lead
+    m = ends + bar + box(x0, WIRE["plug"]["x"][1] + 0.5, WIRE["plug"]["y"][0] - 0.5, 97.0, u0, u1)   # the tab under the JR pair and the lead
     if filled: return m
     for (x, y) in RETAINER["ends"]:
         m -= cylZ(x, y, u0 - 1, u1 + 1, 1.7, 24)
@@ -465,7 +473,7 @@ def keepouts(servo="DS3218"):
         sg = 1 if nm.endswith("+") else -1
         K.append(swept_grown(servo, nm, -sg * din, sg * STROKE) - stops())   # 1.0 everywhere but the stop faces (r4)
     K.append(cylY(0, U_C, CAM["y"][0] - CLR, CAM["y"][1] + CLR, CAM["lobe"] + CLR, 64))             # the cam's swept disc
-    K.append(cylY(0, U_C, Y_SERVO_TOP + 4.0 - CLR, CAM["y"][1] + CLR, HORN["disc_d"] / 2 + CLR, 64))  # horn, over the cam's Y too (r4: its top face had 0)
+    K.append(cylY(0, U_C, Y_SERVO_TOP + 4.0 - CLR, Y_SERVO_TOP + 4.0 + HORN["hub_h"] + HORN["disc_t"] + CLR, HORN["disc_d"] / 2 + CLR, 64))  # horn + 1.0 (r4: its top face)
     sv_ = SERVOS[servo]                                                        # the servo: its pocket is the cradle's cut (0.2 fit, slide-in to -u,
     K.append(cylY(0.0, U_C, Y_SERVO_TOP - 0.01, Y_SERVO_TOP + sv_["boss"][1] + CLR, sv_["boss"][0] / 2 + CLR, 48))   # ear slots; r5); its spline boss
     K += wiring(servo)
@@ -777,7 +785,7 @@ ACCESS = [
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
     "servo in: rest orientation, pushed in along +u; the cam's flanks spread the rollers off their stops by 1.1 each against the spring (~18 N, a hand push), then the retainer",
-    "wires: the hall boards linked under the deck and run down the column's -X side above the servo into the ribbon slot; the servo lead to a connector pocket open to -u at Y 86..96 (unplugged from below with the retainer off); the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
+    "wires: the hall boards (past the cam, Y 155.5..158.5) each in a closed run down its side above the servo (|X| 8.8..12.3) into the ribbon slot; the servo lead to its JR pair laid along X under the case over the retainer's tab (unplugged from below with the retainer off); the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
 ]
 
 

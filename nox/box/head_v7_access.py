@@ -5,7 +5,7 @@ that is not the head's own (arm, other head, receivers, bays; the cartridges lef
     own carriers and rollers in that pose), 0..40 in 2 mm steps;
   - the 3 mm L-key to the near axle (down Y from the plate top, its short leg along +X), the pin spanner on the eccentric flange;
   - the two 3.0 grip rods and the spring rod pushed in from +X (a 64 straight run past the +X wall);
-  - a driver (Ø3 bit 100 long + Ø25 handle) on the retainer's two M3 along +u from -u, and the retainer out along -u.
+  - a driver (Ø3 bit 100 long + Ø25 handle) on the retainer's two M3 along +u from -u, the retainer out along -u, then the JR pair.
 A path is open at a state when no position along it touches a part. The result names the states (t, z0, phi) where each path is open.
 python3 head_v7_access.py [v7:<pack>:<pick>:<ret>]  -> runs/head/v7/access/access_<mode>.json"""
 import os, sys, json
@@ -41,6 +41,9 @@ def tools(h):
         drv = d if drv is None else drv + d
     T["driver on the two retainer screws (along +u, from -u)"] = ([drv], None)
     T["retainer out -u"] = ([H.retainer().translate([0, 0, -d]) for d in np.arange(0.0, 30.1, 2.0)], None)
+    pw = H.WIRE["plug"]                                                         # then the JR pair and the servo lead drop out along -u (r7)
+    pair = box(pw["x"][0] + 0.5, pw["x"][1] - 0.5, pw["y"][0] + 0.5, pw["y"][1] - 0.5, pw["u"][0] + 0.2, pw["u"][1] - 0.5)
+    T["JR pair out -u (retainer off)"] = ([pair.translate([0, 0, -d]) for d in np.arange(0.0, 30.1, 2.0)], None)
     if h == "B": T = {k: ([mirror_x(m) for m in v], None if o is None else mirror_x(o)) for k, (v, o) in T.items()}
     return {k: ([tm(m) for m in v], None if o is None else tm(o)) for k, (v, o) in T.items()}
 

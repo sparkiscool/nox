@@ -37,7 +37,7 @@ def head_parts(h, use_space=False):
     from arm_cad import cylY
     grip = cylY(0, H.U_C, *H.CAM["y"], H.CAM["lobe"], 64) + P0["rods"] + P0["spring rod"] + P0["spring"]
     servo = P0["servo"] + P0["horn"]
-    body = body_mesh(h, use_space) + H.rack_bar(sv)                          # the bonded rack bar rides with the body
+    body = body_mesh(h, use_space) + H.rack_bar(sv) + H.retainer()          # the bonded rack bar and the servo retainer ride with the body
     out = {f"head{h}": body, f"fingA_{h}": fingA, f"fingB_{h}": fingB, f"grip{h}": grip, f"servo_{h}": servo}
     if h == "B": out = {k: mirror_x(v) for k, v in out.items()}
     return out
