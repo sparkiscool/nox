@@ -1,6 +1,6 @@
 # Print files
 
-Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them.
+Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. `scan_stick_cam_v4.stl` is superseded by `scan_stick_cam_v7.stl` (10 mm standoffs, M2.5); do not print it.
 
 | File | Bytes | sha256[:12] |
 |---|---|---|
@@ -30,3 +30,7 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_stub_v3.stl` | 416684 | e5b73c7c9588 |
 | `box_sun_post_v1.stl` | 184084 | c43f58f5d93a |
 | `box_toe_v7b.stl` | 59884 | 74892913179a |
+| `scan_stick_base_v17.stl` | 17832284 | 0eab574096d4 |
+| `scan_stick_cam_v7.stl` | 2173084 | cf092d1aba74 |
+| `scan_stick_head_v13.stl` | 10370984 | 249eec82eca0 |
+| `scan_stick_thread_test_v1.stl` | 3905473 | 7b35ab438606 |
