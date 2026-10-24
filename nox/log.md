@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session): the receiver pitch-guide couple (3.5 / 6.1 N·m) leaves the bay-body and stub cases and the guide posts leave the bay-body clearances (hub: the XT60 float takes ±2.37°, the latch drops its guide posts). dimensions System box structure.
 - 24 Oct (box structure system session): insert keep-outs from the arm's swept meshes (PR 79); latch receivers at PR 69 258becf placed by tab line on Y_C (hub DEFAULT; alt receiver mid); box 82.1 L; funnel v8 ±x landings +11.5, posts clamp; v8 lane check committed (492.6 mm³, E); XT60 loads for bay / mast cases.
 - 24 Oct (box structure system session): v2 layout visual, the four variants side by side from the concept meshes (`box_layout_v2_views.py`, artifact Mn5JGDkjEGSQXyPhjqrpxb); system file `nox/box/box_structure_v2.assembly.json` with both insert keep-outs (hub); bay bodies take the receiver inserts from below (latch PR 69); summary at Y_C 165.
 - 24 Oct (box structure system session, box electronics): axle brake (3 relays), boot self-test (open-load flags, slow spreadCycle), idle = brake order; keep-alive to the face pins per the keep-alive concept; seat sense GPIO 24 (1 kΩ, BAT54, TVS) on the drone's 10 kΩ, needs ideal diodes (alt 2.2 kΩ with a Schottky); brake + seat wiring sheet; script rerun.
