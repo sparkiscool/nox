@@ -11,6 +11,8 @@ python3 hub_v6_topo.py [h] [gen_cm3] [out_dir] -> <out_dir>/box_hub_v6.stl (W) +
 import sys, os, math, json
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, ".."))
+import arm_v7_layout as S7
+if os.environ.get("NOX_ARM", "v7") == "v7": S7.use()                         # the v7 stack (ties, R 113 loads); NOX_ARM=v6 for the v6 hub
 import arm_layout as L, arm_cad as A, detent as DT
 import hub_v6 as HV
 from arm_cad import box
@@ -18,7 +20,7 @@ from topo import Part, Settings, optimise
 
 H = float(sys.argv[1]) if len(sys.argv) > 1 else 1.5
 GEN = float(sys.argv[2]) if len(sys.argv) > 2 else 40.0
-SYSTEM = os.path.join(HV.REPO, "runs", "arm", "v6", "system.json")
+SYSTEM = os.path.join(HV.REPO, "runs", "arm", os.environ.get("NOX_ARM", "v7"), "system.json")
 CLS = dict(swap="flight", misuse="misuse", handling="misuse", sustained="sustained")
 BIG = 400.0
 
@@ -56,6 +58,11 @@ def regions():
     for h, r, p, hole in HV.pads():
         c = (0.0, 52.0, r) if h == "A" else (-r, 52.0, 0.0)
         out[f"pad{h} {r:g}"] = (p - hole, c, 2 * 0.5 * HV.PAD_L)
+    for h in ("A", "B"):                                                     # v7: the tie sockets (both rods of a head as one interface)
+        b, c = HV.tie_sockets((h,))
+        if b is not None:
+            t = HV.S6.TIE; ctr = (0.0, t["hub"][0], t["hub"][1]) if h == "A" else (-t["hub"][1], t["hub"][0], 0.0)
+            out[f"tie hub {h}"] = (b - c, ctr, 2 * t["x"])
     return out
 
 
@@ -66,8 +73,9 @@ def setup(h):
     R = regions()
     sysres = json.load(open(SYSTEM))
     n = 0
-    for case in sysres["frame"]:
-        # every case, the power cut carrying included: the fallback until the head brake (box electronics) is built and bench-tested
+    for case in sysres["frame"] + [dict(c, case=c["case"] + " [Overseer]") for c in sysres.get("frame_overseer", [])]:
+        # every case, both power cuts carrying included: the Scout's as the fallback until the head brake passes its bench drop, the Overseer's
+        # as the brake-failed bound (the hub carries it; the wheels' 625ZZ do not: the bench drop gates every Overseer swap)
         parts = []
         for node, v in case["hub"].items():
             if node not in R: continue

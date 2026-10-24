@@ -1,0 +1,67 @@
+{
+ "guided": {
+  "rss_guided_deg": 0.283,
+  "rss_full_deg": 0.409,
+  "float_deg": 1.06,
+  "packs": {
+   "scout": {
+    "guide_pitch_deg": 0.47,
+    "per_axis_deg": 0.753,
+    "margin": 0.29,
+    "per_axis_full_rss_deg": 0.879,
+    "margin_full_rss": 0.17,
+    "worst_place": "drone A",
+    "free_tangent_deg": 1.098,
+    "k_tangent_Nm_deg": 3.998,
+    "receiver_moment_Nm_stub_1.9": 2.95,
+    "receiver_moment_Nm_stub_5": 3.66,
+    "receiver_moment_Nm_stub_15.1": 5.97
+   },
+   "overseer": {
+    "guide_pitch_deg": 0.38,
+    "per_axis_deg": 0.663,
+    "margin": 0.37,
+    "per_axis_full_rss_deg": 0.789,
+    "margin_full_rss": 0.26,
+    "worst_place": "drone A",
+    "free_tangent_deg": 0.875,
+    "k_tangent_Nm_deg": 3.983,
+    "receiver_moment_Nm_stub_1.9": 2.41,
+    "receiver_moment_Nm_stub_5": 3.11,
+    "receiver_moment_Nm_stub_15.1": 5.42
+   }
+  }
+ },
+ "sets": {
+  "Y_C": 177.0,
+  "scout": {
+   "tab_off_from_cg": 0.0,
+   "receiver_y": [
+    122.4,
+    223.7
+   ],
+   "cartridge_body_y": [
+    126.55,
+    219.55
+   ],
+   "xt60_y": 133.75,
+   "plate_top": 78.0,
+   "receiver_clear": 44.4
+  },
+  "overseer": {
+   "tab_off_from_cg": 5.18,
+   "receiver_y": [
+    87.35,
+    266.65
+   ],
+   "cartridge_body_y": [
+    91.5,
+    262.5
+   ],
+   "xt60_y": 98.7,
+   "plate_top": 78.0,
+   "receiver_clear": 9.35
+  },
+  "note": "the funnel centre = each catch centre = each latch set centre = the grip line"
+ }
+}

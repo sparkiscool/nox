@@ -168,6 +168,17 @@ def test_probe_margin():
     assert not r2["probes"]["pass_"] and not r2["probes"]["worst"]["unshielded"]
 
 
+def test_probes_shadow():
+    """a probe stops at the first solid: a part inside the pack is never reached, even when the pack is exempt."""
+    fc = {"name": "fc", "box": [-10, 10, -10, 10, -10, 10], "role": "protected", "mass_g": 10}
+    r = run(dict(name="rods", parts=RODS + [BOX, fc]), probes={"n_dirs": 100})
+    rows = r["probes"]["per_probe_part"]
+    assert not r["probes"]["pass_"] and {x["part"] for x in rows} == {"pack"}, rows    # only the pack is ever met
+    op = [{"part": "pack", "axis": [0, 0, 1], "half_angle_deg": 180.0, "skip_probes": True}]
+    r2 = run(dict(name="rods", parts=RODS + [BOX, fc], openings=op), probes={"n_dirs": 100})
+    assert r2["probes"]["pass_"] and not r2["probes"]["per_probe_part"], r2["probes"]   # exempt pack still shields the fc
+
+
 TRAY = {"name": "tray", "box": [-50, 50, -30, 30, -5, 0], "role": "structure", "material": "PETG"}
 PACK = {"name": "pack", "box": [-40, 40, -15, 15, 0, 25], "role": "bought", "mass_g": 180, "swap": True}
 
