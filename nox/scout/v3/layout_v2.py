@@ -122,22 +122,34 @@ def c2d(m):
 
 
 PR44 = os.path.join(OUT, "pr44")
-PACK_PTS = np.array([[x, y, z] for x in (-35, 35) for y in (-16, 16) for z in (-44.5 + 14.4, -44.5 + 47.4)], float)   # pack in the cartridge (PR 44)
-IFACE = c2d(trimesh.load(os.path.join(PR44, "interface_v4_cart_coords.stl")))     # receiver interface (control session's)
-CART = c2d(trimesh.load(os.path.join(PR44, "cartridge_v4_cart_coords.stl")))      # cartridge v4, 93 long
-RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # PR 44: standing, -y side, parts outward (E)
-RADXA_STANDOFF = box(-33, 32, -30.3, -21.3, -35, -5)
-FLOW = box(-45, -23, 23, 39, -33.5, -25.5); FLOW_LENS = np.array([-29.0, 29.0, -33.5])
+# battery latch standard (control session, branch part/battery-latch @ b59b2dc, dimensions "System box swap: latch"; interim):
+# cartridge v5 93 long with the XT60 at the NOSE, receiver block v1 + lid + 2 TPU strips + XT60E1-M, posed by its T_dc
+LATCH = os.path.join(OUT, "latch")
+_L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")) for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug", "receiver",
+                                                                "receiver_lid", "receiver_strips", "xt60e1m")}
+IFACE = trimesh.util.concatenate([_L[k] for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m")])   # receiver set (M)
+CART = trimesh.util.concatenate([_L[k] for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug")])   # swap set (M)
+PACK_PTS = _L["pack"].bounding_box.vertices.copy()
+# the Scout's own mount (partner part): receiver bosses (z 9.6) up to the plate (18.5) round the FC and the XT60 lead window,
+# legs down outside the receiver plates carrying the suspension joints, the Radxa plate (-y), the flow seat and pogo carrier (+y)
+MOUNT = box(-46.85, 54.75, -30.6, 30.6, 9.6, 18.5)
+LEADS = box(37.7, 48.8, -9.25, 9.25, 9.6, 18.5)                                   # keep clear above the lid (latch row)
+# legs at the nose only, >= 7.0 inside the funnel planes like the receiver (|x| <= 84.8 + z - 10.5 at their foot); the tail
+# joints sit on the mount's corners (a tail leg would stand outside the cage there, pass 4)
+LEGS = [box(34, 40, sy * 31.0 if sy > 0 else -35.0, 35.0 if sy > 0 else -31.0, -34.0, 9.6) for sy in (1, -1)]
+RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # standing, -y side, parts outward (PR 44, E)
+RADXA_STANDOFF = box(-33, 32, -30.3, -25.5, -35, -5)                              # on the mount's -y plate (1.2 off the receiver)
+FLOW = box(-45, -23, 26, 42, -33.5, -25.5); FLOW_LENS = np.array([-29.0, 32.0, -33.5])   # +y, off the receiver plate (DEFAULT)
 UBEC = box(-22.5, 22.5, -10, 10, PLATE_TOP + 0.5, PLATE_TOP + 8.5)               # plate top centre (DEFAULT)
 XR2 = box(-48, -36, 10, 26, PLATE_TOP + 0.5, PLATE_TOP + 6.5)
-XT_M = box(-48 - 4.5, -48 + 4.5, -14, 14, 3.5, 19.3)                              # drone XT60 + lid region (E)
+XT_M = LEADS                                                                       # XT60E1-M rear + leads (the male itself is in IFACE)
 CAM_Z = (RING_LO + RING_HI) / 2
 CAM_X = 104.0                                  # lens front, 8 behind the ring line (crash stroke at the nose; DEFAULT)
 CAM = union([box(CAM_X - 14, CAM_X - 12, -19, 19, CAM_Z - 19, CAM_Z + 19), box(CAM_X - 12, CAM_X, -7, 7, CAM_Z - 7, CAM_Z + 7)])
 LENS = np.array([CAM_X, 0, CAM_Z])
 
 # box keep-outs at the drone station (PR 44 K1..K3, C / E)
-KO = {"cartridge path": ([-60, -23, -200], [41, 23, -42]), "head |y|<=19 to r105": ([-60, -19, -200], [77, -19 + 38, -39.5]),
+KO = {"cartridge path": ([-47, -23.5, -200], [58, 23.5, -42]), "head |y|<=19 to r105": ([-60, -19, -200], [77, -19 + 38, -39.5]),
       "head r<=98.5": ([-60, -50, -200], [77, 50, -46]), "carriage plate": ([77, -28, -200], [81, 28, -8.9]),
       "carriage wings": ([77, -46.5, -200], [81, 46.5, -24.9]), "rail + bar": ([81, -20, -200], [101, 20, -10.5])}
 
@@ -186,8 +198,9 @@ PAD_DX = 12.0
 def pads(yp, zp):
     """PR 44 model (C): carrier bottom = KW11 target plane zp; pads 10 x 6 at (+-12, yp) in 1.0 recesses, face zp - 0.6;
     carrier section (21.3, zp) -> (yp + 3.5, zp) -> (yp + 7.5, zp + 4) -> (21.3, top), x +-20.5; post body under the pads"""
-    top = zp + 4.0 + (yp + 7.5 - 21.3)
-    sec = [(21.3, zp), (yp + 3.5, zp), (yp + 7.5, zp + 4.0), (21.3, top)]
+    top = zp + 4.0 + (yp + 7.5 - 26.0)
+    sec = [(26.0, zp), (yp + 3.0, zp), (yp + 7.0, zp + 4.0), (26.0, top)]          # from the mount's +y plate (latch receiver at 24.3);
+    # the 45 deg chamfer starts at the pad's outer edge (DEFAULT, +0.35 to the funnel planes; PR 44 kept a 0.5 rim)
     carrier = trimesh.Trimesh(np.array([[x, y, z] for (y, z) in sec for x in (-20.5, 20.5)])).convex_hull
     pad = [box(sx * PAD_DX - 5, sx * PAD_DX + 5, yp - 3, yp + 3, zp + 1.0 - 1.6, zp + 1.0) for sx in (-1, 1)]
     zf = zp - 0.6
@@ -243,15 +256,15 @@ def candidate_nodes():
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
             (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
             (34, 0, 24.0), (-30, 0, 24.0), (0, 26, 24.0), (0, -26, 24.0),
-            (38, 27.6, -32.0), (38, -27.6, -32.0), (-56, 27.6, -30.0), (-56, -27.6, -30.0), (38, 27.6, 4.0), (38, -27.6, 4.0),
-            (-56, 27.6, 4.0), (-56, -27.6, 4.0)]
+            (37, 33, -32.0), (37, -33, -32.0), (37, 33, 4.0), (37, -33, 4.0),
+            (54, 31, 14.0), (54, -31, 14.0), (-46, 31, 14.0), (-46, -31, 14.0)]   # nose legs and the mount's corners
     for c in core:
         N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
     return np.array(N), kind
 
 
 # ================================================================ feasibility of a rod
-BODIES = {"plate": PLATE, "FC": FC, "receiver": IFACE, "cartridge": CART, "Radxa": union([RADXA, RADXA_STANDOFF]), "flow": FLOW,
+BODIES = {"plate": PLATE, "FC": FC, "receiver": IFACE, "cartridge": CART, "mount": MOUNT, **{f"leg{i}": l for i, l in enumerate(LEGS)}, "Radxa": union([RADXA, RADXA_STANDOFF]), "flow": FLOW,
           "UBEC": UBEC, "XR2": XR2, "XT60": XT_M, "camera": CAM, **{f"bell{i}": b for i, b in enumerate(BELLS)}}
 
 
@@ -322,8 +335,9 @@ def load_cases(N, kind, live=None):
     dirs = [np.array(d, float) for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))]
     dirs += [np.array((sx, sy, sz), float) / math.sqrt(3) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]
     for d in dirs:
-        i = max(cage, key=lambda i: N[i] @ d)
-        cases.append((f"crash {V_CRASH} m/s {np.round(d, 2).tolist()}", {i: -crash * d}, "crash"))
+        top_ = max(N[i] @ d for i in cage)
+        touch = [i for i in cage if N[i] @ d >= top_ - 1.0]                 # a flat wall meets every node within 1.0 at once
+        cases.append((f"crash {V_CRASH} m/s {np.round(d, 2).tolist()}", {i: -crash * d / len(touch) for i in touch}, "crash"))
     land = 6 * MASS_KG * 1000 * G0                                        # 29.4 N
     B = idx.get("B", [])
     if B:
@@ -445,8 +459,8 @@ def frame_eval(N, kind, members, cases):
         if not np.isfinite(u).all() or np.abs(u).max() > 1e4: return None
         scale, stroke_lim = 1.0, None
         if cls == "crash":
-            (i0, f0), = F.items(); d = f0 / np.linalg.norm(f0)
-            ud = float(u[6 * i0:6 * i0 + 3] @ d)                         # mm per N along the hit
+            f0 = sum(F.values()); d = f0 / np.linalg.norm(f0)
+            ud = float(np.mean([u[6 * i:6 * i + 3] @ d for i in F]))     # mm per N of total hit force, along the hit
             if ud <= 0: return None
             kc = 1.0 / ud                                                 # cage stiffness along the hit, N/mm
             f_el = math.sqrt(2 * E_CRASH * kc)
@@ -612,7 +626,8 @@ CASES = load_cases(N, kind)
 say(f"load cases: {len(CASES)}")
 fixed_pts = {"props": prop_points(), "bells": np.vstack([pts(b, 400) for b in BELLS]), "plate": pts(PLATE, 3000), "FC": pts(FC, 500),
              "receiver": pts(IFACE, 6000), "cartridge": pts(CART, 4000), "Radxa": pts(RADXA, 600), "flow": pts(FLOW, 400),
-             "UBEC": pts(UBEC, 400), "XR2": pts(XR2, 200), "XT60": pts(XT_M, 400), "camera": pts(CAM, 800)}
+             "UBEC": pts(UBEC, 400), "XR2": pts(XR2, 200), "XT60": pts(XT_M, 400), "camera": pts(CAM, 800),
+             "mount": np.vstack([pts(m_, 300) for m_ in [MOUNT] + LEGS])}
 BASE, why0 = [], {}
 nn = len(N)
 for a in range(nn):
@@ -625,7 +640,8 @@ for a in range(nn):
         if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
         else: why0[r] = why0.get(r, 0) + 1
 say(f"rods feasible before the pads: {len(BASE)}; dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why0.items(), key=lambda kv: -kv[1])))
-PAD_OPTIONS = [(38.5, -36.5)]                    # PR 44 (DEFAULT; pass 1 searched its neighbours: same cage, post r / cones bind)
+PAD_OPTIONS = [(40.6, -37.0)]   # PR 44's (38.5, -36.5) breaks the landing
+# cones against the latch receiver's feet (y 24.3); grid 39.5..42 x -36..-38 searched (24 Oct): only this band passes
 if os.environ.get('PADS'): PAD_OPTIONS = [tuple(map(float, p.split(','))) for p in os.environ['PADS'].split(';')]
 runs = []
 for yp, zp in PAD_OPTIONS:
@@ -671,14 +687,15 @@ for yp, zp in PAD_OPTIONS:
     STROKE.clear()
     for nm_, F_, cls_ in CASES:
         if cls_ != "crash": continue
-        (i0, f0), = F_.items(); d = -f0 / np.linalg.norm(f0)
+        f0 = sum(F_.values()); d = -f0 / np.linalg.norm(f0)
         # a hit from below may bring the cartridge floor onto the ground once the keel has given (the latch is designed for
         # the 35 g upright drop, J; Skydio lands on its battery, research 19 Oct): the stroke there runs to the pack (DEFAULT)
         oth = np.vstack([v for k_, v in others.items() if not (k_ in ("cartridge", "receiver") and d[2] < -0.5)] + ([PACK_PTS] if d[2] < -0.5 else []))
         STROKE[tuple(np.round(d, 3))] = max(float((Pc @ d).max() + ROD_R - (oth @ d).max()) - 1.0, 0.5)
     say("   crash stroke limits (mm): " + ", ".join(f"{list(k)}: {v:.1f}" for k, v in STROKE.items()))
     # balance (CLAUDE.md, dimensions L): whole-drone CG within 3 mm of the thrust axis, pack in and out
-    fixed_items = [(165, np.array([0, 0, -13.6]), True), (42.4, CART.bounding_box.centroid, True), (79.9, IFACE.centroid, False),
+    fixed_items = [(165, _L["pack"].bounding_box.centroid, True), (39.4, _L["cartridge"].centroid, True), (54.5, IFACE.centroid, False),
+                   (25, MOUNT.centroid, False),
                    (10, FC.bounding_box.centroid, False), (10, RADXA.bounding_box.centroid, False), (15, UBEC.bounding_box.centroid, False),
                    (1, XR2.bounding_box.centroid, False), (1.5, FLOW.bounding_box.centroid, False), (16, CAM.bounding_box.centroid, False),
                    (28, PLATE.centroid, False), (20, FC.bounding_box.centroid, False), (8, XT_M.bounding_box.centroid, False)] + \
@@ -745,7 +762,8 @@ say("printed nodes (sockets): " + ", ".join(f"{kind[i]}{tuple(N[i].round(0).asty
 
 # mass and CG of the whole drone (E)
 PACK_BOX = box(-35, 35, -16, 16, -44.5 + 14.4, -44.5 + 14.4 + 33)          # pack centred on the tab line (x 0), PR 44 cavity
-items = [("pack", 165, PACK_BOX), ("cartridge v4 (PR 44, M)", 42.4, CART), ("receiver v4 (PR 44, M)", 79.9, IFACE), ("FC", 10, FC),
+items = [("pack + plug", 165, _L["pack"]), ("cartridge v5 + sliders (latch, M)", 39.4, _L["cartridge"]), ("receiver v1 + lid + strips + XT60E1-M (latch, M / E)", 54.5, IFACE),
+         ("mount + legs (E)", 25, MOUNT), ("FC", 10, FC),
          ("Radxa", 10, RADXA), ("UBEC", 15, UBEC), ("XR2", 1, XR2), ("flow", 1.5, FLOW), ("camera + mount", 16, CAM), ("plate", 28, PLATE),
          ("wires", 20, FC), ("XT60E1-M", 8, XT_M)] + [(f"motor {i}", 19.8, b) for i, b in enumerate(BELLS)]
 tot, mom = 0.0, np.zeros(3)
@@ -781,12 +799,13 @@ for i, (x, y) in enumerate(MOTORS_XY):
     bl = box(-PROP_R, PROP_R, -6, 6, PROP_Z - 1, PROP_Z + 1); bl.apply_transform(rotz(30 + 45 * i)); bl.apply_translation([x, y, 0]); pv.append(bl)
 P("props (swept)", trimesh.util.concatenate(pv), "frame", "#d9a400", False)
 P("FC", FC, "electronics", "#1b5e20", False)
-P("Radxa (PR 44)", RADXA, "electronics", "#2e7d32", False)
-P("flow (PR 44)", FLOW, "electronics", "#2d5a2d", False)
+P("Radxa", RADXA, "electronics", "#2e7d32", False)
+P("flow", FLOW, "electronics", "#2d5a2d", False)
 P("UBEC", UBEC, "electronics", "#444488", False)
 P("XR2", XR2, "electronics", "#6a1b9a", False)
 P("camera", CAM, "electronics", "#2d5a2d", False)
-P("receiver v4 interface (PR 44)", IFACE, "receiver", "#8899aa", True, "latch standard: control session")
+P("receiver v1 (latch standard)", IFACE, "receiver", "#8899aa", True, "control session, part/battery-latch b59b2dc")
+P("mount + legs (Scout)", union([MOUNT] + LEGS), "receiver", "#9aa8b8", True, "envelope, own topology next")
 P("pogo pads + carrier", union(pad + [carrier]), "receiver", "#c9a227", True)
 P("cage rods", trimesh.util.concatenate(bands["rods"]), "cage", "#202020", False, "3.0 carbon, LP layout")
 nodes_m = [trimesh.creation.icosphere(1, 4.0).apply_translation(N[i]) for i in used if kind[i] != "C"]
@@ -798,7 +817,7 @@ for sx, sy in itertools.product((1, -1), (1, -1)):
         w.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [1, 0, 0] if f == "x" else [0, 1, 0]))
         w.apply_translation([px - (sx / S2 if f == "x" else 0), py - (sy / S2 if f == "y" else 0), RING_LO + 1 / S2]); whe.append(w)
 P("catch wheels", trimesh.util.concatenate(whe), "cage", "#cc6644", True)
-P("cartridge v4 (PR 44)", CART, "pack", "#7d8a99", True)
+P("cartridge v5 + pack (latch)", CART, "pack", "#7d8a99", True)
 P("belly post (box)", body, "box", "#e07a5f", False, "PR 44 model")
 fun = []
 for ax in (0, 1):
@@ -821,7 +840,7 @@ def pose(t):
     dz = 140 * (1 - smooth(t, 0, 3)) + 160 * smooth(t, 9, 12); dx = 30 * (1 - smooth(t, 0, 3))
     Td = np.eye(4); Td[:3, 3] = [dx, 0, dz]
     Tp = Td.copy(); Tp[2, 3] += -70 * (smooth(t, 4, 5.5) - smooth(t, 6.5, 8))
-    out = {n: Td for n in drone_names}; out["cartridge v4 (PR 44)"] = Tp
+    out = {n: Td for n in drone_names}; out["cartridge v5 + pack (latch)"] = Tp
     return out
 
 
