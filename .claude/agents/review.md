@@ -23,5 +23,6 @@ Check, in this order, and stop at the first hard failure:
 8. Simplicity: name any drawn geometry that is not mounting or a must-have.
 9. `python3 tools/check_state.py` shows no ERROR, and no warning from this PR's rows or log line. Three strikes (`docs/generative.md` The rule, 0): a fourth version of a piece whose last three failed, without a new system pass: FAIL.
 10. Visual (CLAUDE.md "Every idea comes with a visual"): a PR that introduces or changes a design links its visual (artifact URL in `summary.md` or the PR body, source committed). Missing: FAIL.
+11. Carbon where its length earns it (`docs/generative.md` The rule, 0): the summary lists carbon rods (count, shortest length) and printed struts. A carbon rod shorter than the break-even length stated there without a stated reason, or no such list on a drone, cage or mount PR: FAIL.
 
 Report: PASS or FAIL in the first line, then at most 8 lines of findings, each with the file and line. No praise, no summary of the PR.
