@@ -178,3 +178,43 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ---------------------------------------------------------------- the box catch assembly file (nox/ASSEMBLY.md)
+def _print_pose(m, R):
+    """4x4 that maps a print file (made by to_tm(m, R) then rezeroed) back to the unit frame of m."""
+    t = H.to_tm(m, R); off = -t.bounds[0]
+    F = np.eye(4); F[:3, 3] = off
+    return np.linalg.inv(F @ R)
+
+
+def update_assembly(path=None):
+    """write hook latch v2 (housings A / B, plungers A / B, print files, posed from the unit frames) into
+    nox/box/box_catch.assembly.json; panels and drone context stay as the file has them (the panels move to v7 when PR 37
+    is on main). Returns the Assembly."""
+    sys.path.insert(0, os.path.dirname(HERE))
+    import assembly as AS
+    path = path or os.path.join(HERE, "box_catch.assembly.json")
+    a = AS.load(path)
+    lay = H.servo_layout(13.0, 1, -1); P = H.build(lay)
+    RA = np.array([[1, 0, 0, 0], [0, 0, -1, 0], [0, 1, 0, 0], [0, 0, 0, 1.0]])
+    RB = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, 0], [0, 0, 0, 1.0]])
+    RP = np.array([[0, 0, -1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1.0]])
+    Mv = np.diag([1.0, -1.0, 1.0, 1.0])
+    hA, hB = P["housing"], P["housing"].mirror([0, 1, 0])
+    pA, pB = P["plunger"], P["plunger"].mirror([0, 1, 0])
+    inv = dict(hA=_print_pose(hA, RA), hB=_print_pose(hB, RB), pA=_print_pose(pA, RP), pB=_print_pose(pB, RP))
+    for name, fs, xs in H.UNITS:
+        T, mir = H.unit_frame(fs, xs)
+        k = "B" if mir else "A"
+        Th = (T @ Mv if mir else T) @ inv["h" + k]; Tp = (T @ Mv if mir else T) @ inv["p" + k]
+        for nm, mesh, pose in ((f"latch housing {name}", f"print/box_hook_latch_housing_{k}_{H.VER}.stl", Th),
+                               (f"latch plunger {name}", f"print/box_hook_latch_plunger_{k}_{H.VER}.stl", Tp)):
+            p = a.part(nm)
+            p["mesh"] = mesh; p["version"] = H.VER; p["source"] = "nox/box/hook_latch.py + nox/box/catch_system.py:update_assembly"
+            a.set_pose(nm, pose)
+    a.data["note"] = a.data["note"].replace("hook latch v1", "hook latch v2").replace(
+        "B-unit plungers are posed mirrored as hook_latch.py does (one plunger file x4: CHECK the magnet pocket side).",
+        "B units use the mirrored housing and plunger files (plunger A / B v2: the plunger is chiral).")
+    a.save()
+    return a
