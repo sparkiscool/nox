@@ -648,7 +648,7 @@
     "material": "PETG",
     "count": 1,
     "version": "v1",
-    "bed_face": "lead-end face down",
+    "bed_face": "closed-end face down",
     "mass_g": 38.39,
     "extents": [
      61.2,
@@ -659,15 +659,15 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[13682.6]",
+     "eroded_volumes_mm3": "[13692.9]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
-     "acute_edges": 9,
+     "acute_edges": 8,
      "ok": true
     },
-    "bed_mm2": 758.0,
-    "overhang_mm2": 1971.0,
+    "bed_mm2": 837.0,
+    "overhang_mm2": 1894.0,
     "island_run_mm": 0.0
    },
    "receiver_lid": {
@@ -1360,7 +1360,7 @@
     "material": "PETG",
     "count": 1,
     "version": "v1",
-    "bed_face": "lead-end face down",
+    "bed_face": "closed-end face down",
     "mass_g": 66.69,
     "extents": [
      76.2,
@@ -1371,15 +1371,15 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[25192.3]",
+     "eroded_volumes_mm3": "[25181.3]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
      "acute_edges": 10,
      "ok": true
     },
-    "bed_mm2": 1211.0,
-    "overhang_mm2": 2338.0,
+    "bed_mm2": 1251.0,
+    "overhang_mm2": 2298.0,
     "island_run_mm": 0.0
    },
    "receiver_lid": {
@@ -1437,6 +1437,83 @@
     "island_run_mm": 0.0
    }
   },
-  "system_manifest": "runs/battery_latch/v1/manifest_overseer/manifest.json"
+  "system_manifest": "runs/battery_latch/v1/manifest_overseer/manifest.json",
+  "overseer_assembly_fit": {
+   "x_tab": 22.098999999999997,
+   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 10537.2 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2480 g (E), CG 11.9 mm off thrust axis (E) [+11.9, +1.0, -75.5], 30.0 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
+   "pairs": [
+    [
+     "cage lower",
+     "pack",
+     324.0
+    ],
+    [
+     "belly sled + pods",
+     "receiver",
+     10537.22
+    ],
+    [
+     "belly sled + pods",
+     "receiver_lid",
+     604.56
+    ],
+    [
+     "belly sled + pods",
+     "receiver_strips",
+     92.92
+    ],
+    [
+     "foot 1",
+     "receiver",
+     48.7
+    ],
+    [
+     "foot 2",
+     "receiver",
+     48.7
+    ]
+   ],
+   "balance": {
+    "applies": true,
+    "ref": [
+     52.099,
+     0.0,
+     82.0
+    ],
+    "thrust_axis": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "tol_mm": 3.0,
+    "cases": {
+     "all": {
+      "mass_g": 2479.52,
+      "cg_offset": [
+       11.89,
+       1.0,
+       -75.55
+      ],
+      "horizontal_mm": 11.93,
+      "axial_mm": -75.55,
+      "pass_": false
+     },
+     "no_swap": {
+      "mass_g": 1732.44,
+      "cg_offset": [
+       29.95,
+       1.43,
+       -52.6
+      ],
+      "horizontal_mm": 29.98,
+      "axial_mm": -52.6,
+      "pass_": false
+     }
+    },
+    "worst_case": "no_swap",
+    "worst_horizontal_mm": 29.98,
+    "pass_": false
+   }
+  }
  }
 }
