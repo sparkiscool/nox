@@ -183,6 +183,21 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Network | L2 192.168.1.62 → Pi 192.168.1.2, UDP 6101 → 6201 | spec |
 | Masses | base v17 340.1, head v13 42.0, cam v7 13.35 on the unit; thread test ring 8.3 (PETG); unit 395 printed + 230 L2 + ~30 camera + ~50 Pi + 590 pack (E) ≈ 1.30 kg | M / E |
 
+## System scan stick (24 Oct 2026; system model and coarse system solve `nox/overseer/scan_stick/unit_topo_v3.py`, piece pass `scan_stick_pieces_v1.py`; docs/generative.md The rule, 0)
+| Item | Value | Tag |
+|---|---|---|
+| Pieces | base v19 (below the joint), head v14 (above: L2 ring, camera mount, L2-frame rails), thread test v1 (pole fit only), TPU cage node v1 x2; the camera bracket is retired into the head | C |
+| Cut | the bolted joint at z 168 (world, thread socket bottom z 0): the head hangs from it alone, so its reactions are statics | C |
+| Joint | lower flange (base) x -20..28, y ±34, z 162..168, Ø3.4 holes; upper flange (head) same footprint z 168..178, 4x Ruthex M3 inserts Ø4.0 x 7 from the joint face; 4x M3 x 12 up from below at (-8, ±28), (16, ±28); L-key keyways in the base under the flange, open to ±y (z 138..162) | C |
+| Joint reactions | per system case in `runs/scan_stick_unit/v3/joint_reactions.txt` (about the joint centre (4, 0, 168)); largest: 50 g ±y knock F 193 N, M 17.4 N m about x; 50 g ±x knock F 193 N, M 17.4 N m about y; L2 front hit 100 N gives M 12.7 N m | F (statics, E masses) |
+| Head envelope | x -20..57, y ±46 (±59 at z 176..250 for the rails), z 176..332, behind the L2 base plane (a 2 mm stair, within 0.54 mm); the pack's drop-in path x ≤ -19.5 kept clear | C |
+| Base envelope | the v17 envelope + the Pi guard (x 15..68, y ±40, z 0..105) and UBEC guard (x ±24, y -63..-23, z 0..74) regions | C |
+| Sensors | L2 forward (+X) 15° down (Spark), base face centre (38, 0, 290), cable notch down; camera level, board centre (−2.3, 0, 205), front face x -1.5, lens to x 14.5 (plane at 15.2) | C / Spark |
+| Masses | pack 0.59, Pi 0.08, L2 0.23, camera 0.03 kg; head 0.133 kg at (-5, 0, 214) (unit v2 head piece) until head v14 reports | E / M |
+| System cases | whole-unit knocks 25 g (14 dirs) and 50 g (6); L2 hits 100 N front / ±y and 150 N drop; camera hits 50 N front, ±y, above, below; guard bumps 100 N (L2 frame ±y / top / back, Pi guard front / side, UBEC guard, pack posts back / side); strap 120 N, hand grabs 50 N, ledge 100 N; support: the thread boss wall | E (DEFAULT) |
+| Targets | each piece worst index ≤ 0.5 (F) at every case (the assembled system then ≤ 0.5 with the joint bonded); solid_check PASS per print file; assembled fit 0 mm³; nothing printed in the L2 hemisphere above the joint, nothing in the camera view | E (DEFAULT) |
+| System solve | unit v1 / v2 at h 2.0 failed (v1 joint keyways, v2 the camera keep-out; both gate slivers); unit v3 at h 2.0 does not fit the 15 GB box (42 cases x 650k dofs, killed); the coarse h 4.0 stage of v3 is the system solve | M |
+
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
 Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
 

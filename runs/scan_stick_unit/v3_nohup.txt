@@ -65,3 +65,23 @@ scan_stick_unit: grid (80, 64, 168) h 2.0 = 860,160 cells; design 136,097 (1088.
 layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
 scan_stick_unit: grid (40, 40, 88) h 4.0 = 140,800 cells; design 16,123 (1031.9 cm3), drawn 5,791, void 118,886
   support default: 288 cells, 532 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (362.24 cm3); 8.38 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.071 of 16,254 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (4.6% of passive cells differ): no symmetry
+layout: 5 drawn bodies (5,660 cells), held solid in every realization; eroded filter: masked
+layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (40, 40, 88) = 140,800 elements, 90,297 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/scan_stick_unit/v3/coarse_ck.npz at it 33, beta 4 (already stopped: beta_stop)
+layout: beta 4 done: eroded design 18 bodies, main 98.7%; drawn bodies outside the main body: 8
+coarse stage done: 33 iterations, 21 s, peak 1.976008 GB
+scan_stick_unit: grid (80, 64, 168) h 2.0 = 860,160 cells; design 136,097 (1088.8 cm3), drawn 48,168, void 675,895
+  support default: 2600 cells, 3598 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (365.06 cm3); 20.29 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.077 of 138,633 design cells
+layout: WARNING nearly mirrored in y (6.6% of passive cells differ): no symmetry
+layout: 5 drawn bodies (45,632 cells), held solid in every realization; eroded filter: masked
+layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (80, 64, 168) = 860,160 elements, 650,337 active dofs; backend mg (direct estimate 9.8 GB, budget 11.8 GB)
+fem: multigrid 4 levels [(np.int64(80), np.int64(64), np.int64(168)), (np.int64(40), np.int64(32), np.int64(84)), (np.int64(20), np.int64(16), np.int64(42)), (np.int64(10), np.int64(8), np.int64(21))], coarsest 6,534 dofs (direct)
