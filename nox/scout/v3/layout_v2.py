@@ -47,7 +47,7 @@ BELL_R, BELL_H = 12.4, 15.0
 FACE_K, FACE_Z0, FACE_Z1 = 84.8, -0.8, 75.1
 RING_LO = (112 - FACE_K) + 4.0 * S2          # 32.86: lower-ring rod centre 4.0 off the face at the outline (seat = drone)
 RING_HI = 49.2
-TOP_Z = 66.0                                 # crown nodes (dome over the props; centre strips carry posts to the plate)
+TOP_Z = float(os.environ.get("TOP_Z", "72.0"))                                # crown nodes (dome over the props; centre strips carry posts to the plate)
 BOT_Z = -47.5                                # keel nodes: 3.0 under the cartridge bottom (-44.5)
 ROD_R, ROD_A, ROD_I = 1.5, 7.069, 3.976      # 3.0 solid carbon (C)
 NROD = int(os.environ.get("NROD", "1"))       # rods per member (a pair = 2 x 3.0 side by side in shared sockets, test only)
@@ -121,6 +121,7 @@ def c2d(m):
 
 
 PR44 = os.path.join(OUT, "pr44")
+PACK_PTS = np.array([[x, y, z] for x in (-35, 35) for y in (-16, 16) for z in (-44.5 + 14.4, -44.5 + 47.4)], float)   # pack in the cartridge (PR 44)
 IFACE = c2d(trimesh.load(os.path.join(PR44, "interface_v4_cart_coords.stl")))     # receiver interface (control session's)
 CART = c2d(trimesh.load(os.path.join(PR44, "cartridge_v4_cart_coords.stl")))      # cartridge v4, 93 long
 RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # PR 44: standing, -y side, parts outward (E)
@@ -130,8 +131,9 @@ UBEC = box(-22.5, 22.5, -10, 10, PLATE_TOP + 0.5, PLATE_TOP + 8.5)              
 XR2 = box(-48, -36, 10, 26, PLATE_TOP + 0.5, PLATE_TOP + 6.5)
 XT_M = box(-48 - 4.5, -48 + 4.5, -14, 14, 3.5, 19.3)                              # drone XT60 + lid region (E)
 CAM_Z = (RING_LO + RING_HI) / 2
-CAM = union([box(94, 96, -19, 19, CAM_Z - 19, CAM_Z + 19), cyl(7, 96, 108).apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0], [96, 0, 96])) if False else box(96, 108, -7, 7, CAM_Z - 7, CAM_Z + 7)])
-LENS = np.array([108.0, 0, CAM_Z])
+CAM_X = 104.0                                  # lens front, 8 behind the ring line (crash stroke at the nose; DEFAULT)
+CAM = union([box(CAM_X - 14, CAM_X - 12, -19, 19, CAM_Z - 19, CAM_Z + 19), box(CAM_X - 12, CAM_X, -7, 7, CAM_Z - 7, CAM_Z + 7)])
+LENS = np.array([CAM_X, 0, CAM_Z])
 
 # box keep-outs at the drone station (PR 44 K1..K3, C / E)
 KO = {"cartridge path": ([-60, -23, -200], [41, 23, -42]), "head |y|<=19 to r105": ([-60, -19, -200], [77, -19 + 38, -39.5]),
@@ -226,6 +228,9 @@ def candidate_nodes():
     N += L; kind += ["L"] * len(L); N += U; kind += ["U"] * len(U)
     for x, y in [(0, 0), (45, 0), (-45, 0), (0, 45), (0, -45), (36, 36), (36, -36), (-36, 36), (-36, -36)]:
         N.append(np.array([x, y, TOP_Z], float)); kind.append("T")
+    for sx in (1, -1):                                                        # shoulders over the prop tips: dome the corners
+        for sy in (1, -1):
+            N.append(np.array([sx * 92.0, sy * 92.0, 0.5 * (RING_HI + TOP_Z) + 2.0])); kind.append("T")
     for x, y in [(76, 0), (-76, 0), (0, 76), (0, -76), (66, 66), (66, -66), (-66, 66), (-66, -66)]:
         N.append(np.array([x, y, 0.0])); kind.append("G")                   # glove knees along the faces at z 0
     for x, y, z in [(20, -46, -24), (-20, -46, -24), (20, 46, -24), (-20, 46, -24), (44, 29, -32), (44, -29, -32), (-44, 29, -32),
@@ -311,12 +316,12 @@ def load_cases(N, kind, live=None):
     cases = []
     idx = {k: [i for i, kk in enumerate(kind) if kk == k and (live is None or i in live)] for k in set(kind)}
     cage = [i for i, k in enumerate(kind) if k != "C" and (live is None or i in live)]
-    crash = 35 * MASS_KG * 1000 * G0                                      # 172 N
+    crash = 1.0                                                          # unit: frame_eval scales to the design hit
     dirs = [np.array(d, float) for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))]
     dirs += [np.array((sx, sy, sz), float) / math.sqrt(3) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]
     for d in dirs:
         i = max(cage, key=lambda i: N[i] @ d)
-        cases.append((f"crash 35 g {np.round(d, 2).tolist()}", {i: -crash * d}, "crash"))
+        cases.append((f"crash {V_CRASH} m/s {np.round(d, 2).tolist()}", {i: -crash * d}, "crash"))
     land = 6 * MASS_KG * 1000 * G0                                        # 29.4 N
     B = idx.get("B", [])
     if B:
@@ -332,7 +337,7 @@ def load_cases(N, kind, live=None):
     yw = [(100, 112), (-100, 112), (100, -112), (-100, -112)]
     down = lambda x, y: np.array([0, -np.sign(y), -1.0]) / S2
     cases.append(("latch hold 4 x 30 N", {W[p]: 30.0 * down(*p) for p in yw}, "flight"))
-    cases.append(("latch misuse 100 N on one wheel", {W[yw[0]]: 100.0 * down(*yw[0])}, "crash"))
+    cases.append(("latch misuse 100 N on one wheel", {W[yw[0]]: 100.0 * down(*yw[0])}, "misuse"))
     # handling 50 N: one node, inward / down / up at the side flat, the nose flat, the crown, a keel node
     for ring in ("L", "U"):
         for d in (np.array([0, 1.0, 0]), np.array([1.0, 0, 0])):
@@ -349,19 +354,30 @@ def capacity(L):
 
 
 # ================================================================ frame FE (Euler beams, rigid printed nodes, core joints fixed)
-DEFL_LIM = {"crash": 6.0, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 2.0}   # mm at the load (E, DEFAULT)
+DEFL_LIM = {"crash": 1e9, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 2.0}   # mm at the load (E, DEFAULT);
+                                              # crash: the stroke limit of each hit direction instead (below)
+# TPU 95A joints (Spark 24 Oct: 3.0 rods only, TPU for nodes / mounts; CLAUDE.md "TPU feet and nodes"). Every rod end sits in a
+# TPU socket, modelled as a short TPU connector beam (socket depth) between the node centre and the rod.
+TPU_E, TPU_G = 26.0, 9.0                      # MPa, 95A (E)
+CONN_L = 8.0                                  # socket depth (E)
+CONN_A, CONN_I = 42.0, 187.0                  # socket ring OD 7.9 / rod 3.0 section, mm2 / mm4 (C)
+MOUNT_SCALE = float(os.environ.get("MOUNT_SCALE", "1.0"))   # cage-to-core TPU mounts relative to a node socket
+CAP_TPU = 150.0                               # N, rod in a TPU socket, axial + shear (E; socket coupon)
+V_CRASH = float(os.environ.get("V_CRASH", "2.0"))   # m/s, design hit speed (DEFAULT; PX4 cap 1.0 m/s planned; alt 3.0)
+M_DRONE = 0.72                                # kg (E, system pass v2)
+E_CRASH = 0.5 * M_DRONE * V_CRASH ** 2 * 1000.0      # N.mm
 IDX_LIM = {"crash": 1.0, "flight": 0.5, "functional": 0.5, "misuse": 1.0, "handling": 1.0}   # dimensions L index targets
+STROKE = {}                                   # crash direction (tuple) -> allowed stroke, mm (contact margin - 1, set per run)
 _ELC = {}
 
 
-def _elem(N, a, b):
-    key = (a, b)
+def _beam(p0, p1, E, G, A, I, J):
+    key = (tuple(np.round(p0, 4)), tuple(np.round(p1, 4)), E, A)
     if key in _ELC: return _ELC[key]
-    d = N[b] - N[a]; L = np.linalg.norm(d); ex = d / L
+    d = p1 - p0; L = np.linalg.norm(d); ex = d / L
     ref = np.array([0, 0, 1.0]) if abs(ex[2]) < 0.9 else np.array([1.0, 0, 0])
     ey = np.cross(ref, ex); ey /= np.linalg.norm(ey); ez = np.cross(ex, ey)
     T = np.kron(np.eye(4), np.vstack([ex, ey, ez]))
-    E, G, A, I, J = E_ROD, G_ROD, ROD_A, ROD_I, 2 * ROD_I
     k = np.zeros((12, 12))
     k[0, 0] = k[6, 6] = E * A / L; k[0, 6] = k[6, 0] = -E * A / L
     k[3, 3] = k[9, 9] = G * J / L; k[3, 9] = k[9, 3] = -G * J / L
@@ -374,19 +390,45 @@ def _elem(N, a, b):
     _ELC[key] = (L, T, k, T.T @ k @ T); return _ELC[key]
 
 
+TPU_NODES = os.environ.get("TPU_NODES") == "1"     # test: TPU socket joints everywhere (too soft for the swap, 24 Oct sweep)
+F_PLATEAU = float(os.environ.get("F_PLATEAU", "110"))   # N, preloaded TPU suspension between cage and core starts to give
+                                                      # (DEFAULT: above swap 60, latch 85, misuse 100 N, so every static case sees it rigid)
+
+
+def _members_elems(N, kind, members):
+    """each rod: carbon in PETG sockets (rigid joints); with TPU_NODES a TPU socket connector at both ends (C / E)"""
+    nn = len(N); X = [N]; els = []
+    if not TPU_NODES:
+        for e, (a, b) in enumerate(members):
+            els.append((e, "rod", a, b, _beam(N[a], N[b], E_ROD, G_ROD, ROD_A, ROD_I, 2 * ROD_I)))
+        return N, els
+    for e, (a, b) in enumerate(members):
+        u = (N[b] - N[a]) / np.linalg.norm(N[b] - N[a])
+        pa, pb = N[a] + CONN_L * u, N[b] - CONN_L * u
+        ia, ib = nn + 2 * e, nn + 2 * e + 1
+        X.append(np.array([pa, pb]))
+        for (i, j, p, q, end) in ((a, ia, N[a], pa, a), (ib, b, pb, N[b], b)):
+            s_ = MOUNT_SCALE if kind[end] == "C" else 1.0
+            els.append((e, "tpu", i, j, _beam(p, q, TPU_E * s_, TPU_G * s_, CONN_A, CONN_I, 2 * CONN_I)))
+        els.append((e, "rod", ia, ib, _beam(pa, pb, E_ROD, G_ROD, ROD_A, ROD_I, 2 * ROD_I)))
+    return np.vstack(X), els
+
+
 def frame_eval(N, kind, members, cases):
-    """per case: index of every rod (max of bending + axial stress / 750, tension / joint, compression / buckling), the
-    deflection at the load, the reactions at the core joints. None if the frame is singular (a loaded node cut off)."""
+    """per case: index of every rod (carbon: bending + axial / 750 MPa, tension / socket, compression / buckling; TPU
+    socket: axial + shear / 150 N), the deflection at the load, the reactions at the core joints. Crash cases carry a unit
+    load: the hit stiffness k gives the peak force of the design hit, F = sqrt(2 E k) (elastic), and the case is scaled
+    to it; its stroke F / k is checked against the hit direction's contact margin. None if the frame is singular."""
     from scipy.sparse import coo_matrix
     from scipy.sparse.linalg import splu
-    nn = len(N); rows, cols, vals = [], [], []
-    for a, b in members:
-        L, T, k, kg = _elem(N, a, b)
-        dofs = np.r_[6 * a:6 * a + 6, 6 * b:6 * b + 6]
+    X, els = _members_elems(N, kind, members)
+    nn = len(X); rows, cols, vals = [], [], []
+    for _, _, i, j, (L, T, k, kg) in els:
+        dofs = np.r_[6 * i:6 * i + 6, 6 * j:6 * j + 6]
         rows.append(np.repeat(dofs, 12)); cols.append(np.tile(dofs, 12)); vals.append(kg.ravel())
     K = coo_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(6 * nn, 6 * nn)).tocsc()
     used = sorted(set(i for e in members for i in e))
-    act = np.array([d for i in used if kind[i] != "C" for d in range(6 * i, 6 * i + 6)])
+    act = np.array([d for i in list(used) + list(range(len(N), nn)) if i >= len(N) or kind[i] != "C" for d in range(6 * i, 6 * i + 6)])
     for _, F, _ in cases:
         if any(i not in used for i in F): return None
     try:
@@ -398,24 +440,42 @@ def frame_eval(N, kind, members, cases):
         f = np.zeros(6 * nn)
         for i, v in F.items(): f[6 * i:6 * i + 3] += v
         u = np.zeros(6 * nn); u[act] = lu.solve(f[act])
-        if not np.isfinite(u).all() or np.abs(u).max() > 1e3: return None
+        if not np.isfinite(u).all() or np.abs(u).max() > 1e4: return None
+        scale, stroke_lim = 1.0, None
+        if cls == "crash":
+            (i0, f0), = F.items(); d = f0 / np.linalg.norm(f0)
+            ud = float(u[6 * i0:6 * i0 + 3] @ d)                         # mm per N along the hit
+            if ud <= 0: return None
+            kc = 1.0 / ud                                                 # cage stiffness along the hit, N/mm
+            f_el = math.sqrt(2 * E_CRASH * kc)
+            if f_el <= F_PLATEAU:                                         # the suspension never gives: elastic hit
+                scale, stroke = f_el, f_el / kc
+            else:                                                         # the suspension gives at F_PLATEAU for the rest
+                scale = F_PLATEAU
+                stroke = F_PLATEAU / kc + (E_CRASH - 0.5 * F_PLATEAU ** 2 / kc) / F_PLATEAU
+            stroke_lim = STROKE.get(tuple(np.round(-d, 3)), 9.0)
+        u *= scale
         idx = np.zeros(len(members)); reac = {}
-        for e, (a, b) in enumerate(members):
-            L, T, k, kg = _elem(N, a, b)
-            fl = k @ (T @ np.concatenate([u[6 * a:6 * a + 6], u[6 * b:6 * b + 6]]))
-            Nax = fl[6]; M = max(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
-            Tc, Cc = capacity(L)
-            idx[e] = max((abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, Nax / Tc if Nax > 0 else -Nax / Cc)
-            for node, sl in ((a, slice(0, 6)), (b, slice(6, 12))):
-                if kind[node] == "C":
+        for e, typ, i, j, (L, T, k, kg) in els:
+            fl = k @ (T @ np.concatenate([u[6 * i:6 * i + 6], u[6 * j:6 * j + 6]]))
+            if typ == "rod":
+                Nax = fl[6]; M = max(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
+                Tc, Cc = capacity(L + 2 * CONN_L)
+                v = max((abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, Nax / Tc if Nax > 0 else -Nax / Cc)
+            else:
+                v = np.linalg.norm(fl[6:9]) / CAP_TPU
+            idx[e] = max(idx[e], v)
+            for node, sl in ((i, slice(0, 6)), (j, slice(6, 12))):
+                if node < len(N) and kind[node] == "C":
                     reac[node] = reac.get(node, np.zeros(6)) + (T.T @ fl)[sl]
-        defl = max(np.linalg.norm(u[6 * i:6 * i + 3]) for i in F)
-        out.append(dict(case=name, cls=cls, idx=idx, worst=float(idx.max()), el=int(idx.argmax()), defl=float(defl), reac=reac))
+        defl = max(np.linalg.norm(u[6 * i:6 * i + 3]) for i in F) if cls != "crash" else stroke
+        out.append(dict(case=name, cls=cls, idx=idx, worst=float(idx.max()), el=int(idx.argmax()), defl=float(defl), reac=reac,
+                        peak=scale if cls == "crash" else None, stroke_lim=stroke_lim))
     return out
 
 
 def feasible(fe):
-    return fe is not None and all(r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= DEFL_LIM[r["cls"]] for r in fe)
+    return fe is not None and all(r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]]) for r in fe)
 
 
 def cage_mass(N, kind, members):
@@ -453,9 +513,25 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
     """greedy mass removal on the frame model, mirror pairs together: repeatedly drop the group that saves the most mass
     per unit of use, while every case stays at index <= 1 inside its deflection limit and the contact-first margin holds"""
     cur = list(members); fe = frame_eval(N, kind, cur, cases)
-    if not feasible(fe) or not contact_ok(cur):
-        return cur, fe, "full ground structure fails"
     groups = [g for g in mirror_groups(N, members) if not any(m in mandatory for m in g)]
+
+    def violation(f):
+        if f is None: return np.inf
+        return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
+    for _ in range(40):                                                    # start: drop rods that attract load past a limit
+        if fe is not None and feasible(fe): break
+        v0 = violation(fe); best_ = None
+        for r in fe or []:
+            if r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
+            m = cur[r["el"]]
+            g = next((g for g in groups if m in g), None)
+            if g is None: continue
+            trial = [x for x in cur if x not in g]; f2 = frame_eval(N, kind, trial, cases)
+            if violation(f2) < v0 and (best_ is None or violation(f2) < best_[0]): best_ = (violation(f2), trial, f2)
+        if best_ is None: break
+        cur, fe = best_[1], best_[2]
+    if not feasible(fe) or not contact_ok(cur):
+        return cur, fe, "no feasible start (ground structure, after dropping load-attracting rods)"
     tried, steps = set(), 0
     while True:
         pos = {m: j for j, m in enumerate(cur)}
@@ -584,10 +660,23 @@ for yp, zp in PAD_OPTIONS:
         return (DIRS @ P_.T).max(1) + ROD_R
     base_margin = cage_support(members) - so_all                      # per direction, the full ground structure
     target = np.minimum(base_margin, CONTACT_MARGIN)
+    # crash stroke per hit direction = how far the cage leads everything else there, less 1.0 (full ground structure)
+    allo = np.vstack(list(others.values()))
+    Pc = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 12)]) for a_, b_ in members] + [WP])
+    STROKE.clear()
+    for nm_, F_, cls_ in CASES:
+        if cls_ != "crash": continue
+        (i0, f0), = F_.items(); d = -f0 / np.linalg.norm(f0)
+        # a hit from below may bring the cartridge floor onto the ground once the keel has given (the latch is designed for
+        # the 35 g upright drop, J; Skydio lands on its battery, research 19 Oct): the stroke there runs to the pack (DEFAULT)
+        oth = np.vstack([v for k_, v in others.items() if not (k_ in ("cartridge", "receiver") and d[2] < -0.5)] + ([PACK_PTS] if d[2] < -0.5 else []))
+        STROKE[tuple(np.round(d, 3))] = max(float((Pc @ d).max() + ROD_R - (oth @ d).max()) - 1.0, 0.5)
+    say("   crash stroke limits (mm): " + ", ".join(f"{list(k)}: {v:.1f}" for k, v in STROKE.items()))
     contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all())
     chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
     if fe is None or not feasible(fe):
-        bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f}" for r in fe if r["worst"] > IDX_LIM[r["cls"]] or r["defl"] > DEFL_LIM[r["cls"]]]
+        bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f} at rod {np.round(N[chosen[r['el']][0]]).astype(int).tolist()}-{np.round(N[chosen[r['el']][1]]).astype(int).tolist()}"
+                                     for r in fe if r["worst"] > IDX_LIM[r["cls"]] or r["defl"] > (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]])]
         say(f"   ESO: {note}; failing cases: {bad[:6]}"); continue
     used = sorted(set([i for e in chosen for i in e]))
     cage_pts = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 25)]) for a_, b_ in chosen] + [N[[i for i in used if kind[i] != "C"]]])
@@ -613,7 +702,7 @@ say("cases (frame model, F): worst rod index / deflection at the load")
 for r in fe:
     a, b = chosen[r["el"]]
     say(f"   {r['case']:44s} {r['cls']:10s} index {r['worst']:.2f} (rod {tuple(N[a].round(0).astype(int))}-{tuple(N[b].round(0).astype(int))}), "
-        f"deflection {r['defl']:.2f} mm")
+        f"deflection {r['defl']:.2f} mm" + (f" (stroke limit {r['stroke_lim']:.1f}), peak {r['peak']:.0f} N" if r["cls"] == "crash" else ""))
 say(f"contact-first: cage ahead by {best['cf'][0]:.2f} mm at worst (vs {best['cf'][1]}, direction {np.round(best['cf'][2], 2).tolist()})")
 REAC = {}
 for r in fe:
