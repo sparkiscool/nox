@@ -2,450 +2,450 @@
  "part": "hook_latch",
  "version": "v1",
  "best": {
-  "r_h": 10.0,
+  "r_h": 11.5,
   "side": 1,
   "body_dir": -1,
-  "theta": 20.5,
-  "g_unit": 18.38,
+  "theta": 28.6,
+  "g_unit": 26.82,
   "footprint": [
-   48.5,
-   37.3
+   53.2,
+   49.8
   ],
-  "valley_margin": 6.42,
-  "t_max": 82.3,
-  "t_min": 33.8,
+  "valley_margin": 3.44,
+  "t_max": 85.1,
+  "t_min": 31.9,
   "lateral": [
-   70.9,
-   108.2
+   59.4,
+   109.2
   ],
-  "seat_block_dist": 42.4,
+  "seat_block_dist": 29.5,
   "ok": true,
   "why": ""
  },
  "search": [
   {
-   "r_h": 7.0,
+   "r_h": 10.0,
    "side": 1,
    "body_dir": 1,
    "ok": false,
    "why": "swing > 30 deg"
-  },
-  {
-   "r_h": 7.0,
-   "side": 1,
-   "body_dir": -1,
-   "ok": false,
-   "why": "swing > 30 deg"
-  },
-  {
-   "r_h": 7.0,
-   "side": -1,
-   "body_dir": 1,
-   "ok": false,
-   "why": "swing > 30 deg"
-  },
-  {
-   "r_h": 7.0,
-   "side": -1,
-   "body_dir": -1,
-   "ok": false,
-   "why": "swing > 30 deg"
-  },
-  {
-   "r_h": 8.5,
-   "side": 1,
-   "body_dir": 1,
-   "theta": 24.3,
-   "g_unit": 19.88,
-   "footprint": [
-    56.5,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 91.8,
-   "t_min": 35.4,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 43.2,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 8.5,
-   "side": 1,
-   "body_dir": -1,
-   "theta": 24.3,
-   "g_unit": 18.38,
-   "footprint": [
-    48.5,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 80.8,
-   "t_min": 32.3,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 41.6,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 8.5,
-   "side": -1,
-   "body_dir": 1,
-   "theta": 24.3,
-   "g_unit": 18.38,
-   "footprint": [
-    48.5,
-    37.3
-   ],
-   "valley_margin": 3.41,
-   "t_max": 74.8,
-   "t_min": 26.3,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 38.8,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 8.5,
-   "side": -1,
-   "body_dir": -1,
-   "theta": 24.3,
-   "g_unit": 19.88,
-   "footprint": [
-    56.5,
-    37.3
-   ],
-   "valley_margin": -4.37,
-   "t_max": 71.8,
-   "t_min": 15.3,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 35.6,
-   "ok": false,
-   "why": "placement rule"
   },
   {
    "r_h": 10.0,
    "side": 1,
+   "body_dir": -1,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 10.0,
+   "side": -1,
    "body_dir": 1,
-   "theta": 20.5,
-   "g_unit": 20.17,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 10.0,
+   "side": -1,
+   "body_dir": -1,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 11.5,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 28.6,
+   "g_unit": 29.6,
+   "footprint": [
+    64.2,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 96.1,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 11.5,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 28.6,
+   "g_unit": 26.82,
+   "footprint": [
+    53.2,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 85.1,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 11.5,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 28.6,
+   "g_unit": 26.82,
+   "footprint": [
+    53.2,
+    49.8
+   ],
+   "valley_margin": -3.53,
+   "t_max": 75.3,
+   "t_min": 22.0,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 24.7,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 11.5,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 28.6,
+   "g_unit": 29.6,
+   "footprint": [
+    64.2,
+    49.8
+   ],
+   "valley_margin": -11.31,
+   "t_max": 75.3,
+   "t_min": 11.0,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 23.6,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 13.0,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 25.0,
+   "g_unit": 30.01,
+   "footprint": [
+    65.8,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 97.7,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 13.0,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 25.0,
+   "g_unit": 27.23,
+   "footprint": [
+    54.8,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 86.7,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 13.0,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 25.0,
+   "g_unit": 27.23,
+   "footprint": [
+    54.8,
+    49.8
+   ],
+   "valley_margin": -4.65,
+   "t_max": 75.3,
+   "t_min": 20.5,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 24.3,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 13.0,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 25.0,
+   "g_unit": 30.01,
+   "footprint": [
+    65.8,
+    49.8
+   ],
+   "valley_margin": -12.43,
+   "t_max": 75.3,
+   "t_min": 9.5,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 23.8,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 14.5,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 22.3,
+   "g_unit": 30.41,
+   "footprint": [
+    67.4,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 99.3,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 14.5,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 22.3,
+   "g_unit": 27.63,
+   "footprint": [
+    56.4,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 88.3,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 14.5,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 22.3,
+   "g_unit": 27.63,
+   "footprint": [
+    56.4,
+    49.8
+   ],
+   "valley_margin": -5.76,
+   "t_max": 75.3,
+   "t_min": 18.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 23.9,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 14.5,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 22.3,
+   "g_unit": 30.41,
+   "footprint": [
+    67.4,
+    49.8
+   ],
+   "valley_margin": -13.54,
+   "t_max": 75.3,
+   "t_min": 7.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 24.2,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 16.0,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 20.1,
+   "g_unit": 30.81,
+   "footprint": [
+    69.0,
+    49.8
+   ],
+   "valley_margin": 3.44,
+   "t_max": 100.9,
+   "t_min": 31.9,
+   "lateral": [
+    59.4,
+    109.2
+   ],
+   "seat_block_dist": 29.5,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 16.0,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 20.1,
+   "g_unit": 28.03,
    "footprint": [
     58.0,
-    37.3
+    49.8
    ],
-   "valley_margin": 6.42,
-   "t_max": 93.3,
-   "t_min": 35.4,
+   "valley_margin": 3.44,
+   "t_max": 89.9,
+   "t_min": 31.9,
    "lateral": [
-    70.9,
-    108.2
+    59.4,
+    109.2
    ],
-   "seat_block_dist": 43.2,
+   "seat_block_dist": 29.5,
    "ok": true,
    "why": ""
   },
   {
-   "r_h": 10.0,
-   "side": 1,
-   "body_dir": -1,
-   "theta": 20.5,
-   "g_unit": 18.38,
-   "footprint": [
-    48.5,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 82.3,
-   "t_min": 33.8,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 42.4,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 10.0,
+   "r_h": 16.0,
    "side": -1,
    "body_dir": 1,
-   "theta": 20.5,
-   "g_unit": 18.38,
-   "footprint": [
-    48.5,
-    37.3
-   ],
-   "valley_margin": 2.35,
-   "t_max": 73.3,
-   "t_min": 24.8,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 38.3,
-   "ok": false,
-   "why": "placement rule"
-  },
-  {
-   "r_h": 10.0,
-   "side": -1,
-   "body_dir": -1,
-   "theta": 20.5,
-   "g_unit": 20.17,
+   "theta": 20.1,
+   "g_unit": 28.03,
    "footprint": [
     58.0,
-    37.3
+    49.8
    ],
-   "valley_margin": -5.43,
-   "t_max": 71.8,
-   "t_min": 13.8,
+   "valley_margin": -6.86,
+   "t_max": 75.3,
+   "t_min": 17.3,
    "lateral": [
-    70.9,
-    108.2
+    59.4,
+    109.2
    ],
-   "seat_block_dist": 35.3,
+   "seat_block_dist": 23.6,
    "ok": false,
    "why": "placement rule"
   },
   {
-   "r_h": 11.5,
-   "side": 1,
-   "body_dir": 1,
-   "theta": 17.7,
-   "g_unit": 20.46,
-   "footprint": [
-    59.5,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 94.8,
-   "t_min": 35.4,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 43.2,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 11.5,
-   "side": 1,
-   "body_dir": -1,
-   "theta": 17.7,
-   "g_unit": 18.38,
-   "footprint": [
-    48.5,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 83.8,
-   "t_min": 35.3,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 43.2,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 11.5,
-   "side": -1,
-   "body_dir": 1,
-   "theta": 17.7,
-   "g_unit": 18.38,
-   "footprint": [
-    48.5,
-    37.3
-   ],
-   "valley_margin": 1.29,
-   "t_max": 71.8,
-   "t_min": 23.3,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 37.7,
-   "ok": false,
-   "why": "placement rule"
-  },
-  {
-   "r_h": 11.5,
+   "r_h": 16.0,
    "side": -1,
    "body_dir": -1,
-   "theta": 17.7,
-   "g_unit": 20.46,
+   "theta": 20.1,
+   "g_unit": 30.81,
    "footprint": [
-    59.5,
-    37.3
+    69.0,
+    49.8
    ],
-   "valley_margin": -6.49,
-   "t_max": 71.8,
-   "t_min": 12.3,
+   "valley_margin": -14.64,
+   "t_max": 75.3,
+   "t_min": 6.3,
    "lateral": [
-    70.9,
-    108.2
+    59.4,
+    109.2
    ],
-   "seat_block_dist": 35.1,
-   "ok": false,
-   "why": "placement rule"
-  },
-  {
-   "r_h": 13.0,
-   "side": 1,
-   "body_dir": 1,
-   "theta": 15.6,
-   "g_unit": 20.74,
-   "footprint": [
-    61.0,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 96.3,
-   "t_min": 35.4,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 43.2,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 13.0,
-   "side": 1,
-   "body_dir": -1,
-   "theta": 15.6,
-   "g_unit": 18.66,
-   "footprint": [
-    50.0,
-    37.3
-   ],
-   "valley_margin": 6.42,
-   "t_max": 85.3,
-   "t_min": 35.4,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 43.2,
-   "ok": true,
-   "why": ""
-  },
-  {
-   "r_h": 13.0,
-   "side": -1,
-   "body_dir": 1,
-   "theta": 15.6,
-   "g_unit": 18.66,
-   "footprint": [
-    50.0,
-    37.3
-   ],
-   "valley_margin": 0.22,
-   "t_max": 71.8,
-   "t_min": 21.8,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 37.2,
-   "ok": false,
-   "why": "placement rule"
-  },
-  {
-   "r_h": 13.0,
-   "side": -1,
-   "body_dir": -1,
-   "theta": 15.6,
-   "g_unit": 20.74,
-   "footprint": [
-    61.0,
-    37.3
-   ],
-   "valley_margin": -7.55,
-   "t_max": 71.8,
-   "t_min": 10.8,
-   "lateral": [
-    70.9,
-    108.2
-   ],
-   "seat_block_dist": 35.0,
+   "seat_block_dist": 24.6,
    "ok": false,
    "why": "placement rule"
   }
  ],
  "layout": {
-  "r_h": 10.0,
+  "r_h": 11.5,
   "side": 1,
   "body_dir": -1,
-  "theta": 20.487,
-  "u_s": 10.0,
-  "w_s": -19.9,
-  "v_horn0": 9.0,
-  "v_top": 14.6,
+  "theta": 28.572,
+  "u_s": 10.8,
+  "w_s": -21.9,
+  "v_horn0": 11.0,
+  "v_top": 16.6,
   "body": [
-   -6.899999999999999,
-   15.9
+   -6.10024753081896,
+   16.69975246918104
   ],
   "holes": [
-   -9.349999999999998,
-   18.35
+   -8.550247530818961,
+   19.14975246918104
   ],
   "ear_v": [
-   18.6,
-   21.1
+   20.6,
+   23.1
   ],
-  "drift": 0.633
+  "drift": 1.4
  },
  "plunger": {
-  "L": 27.55,
+  "L": 31.55,
   "u0_on_slope": 53.6,
   "t_contact": 43.6,
-  "rise": 7.0,
+  "rise": 11.0,
   "guide_bottom": -20.55,
-  "pin_retracted": -23.4,
+  "pin_retracted": -27.4,
   "pin_extended": -16.4
  },
  "bolts_uv": [
   [
-   -13.75,
-   -2.2
+   -15.7,
+   -3.2
   ],
   [
-   -13.75,
-   23.1
+   15.7,
+   -3.2
   ],
   [
-   22.75,
-   -2.2
+   -15.7,
+   34.6
   ],
   [
-   22.75,
-   23.1
+   20.2,
+   34.6
   ]
  ],
  "flange": {
   "u": [
-   -19.75,
-   28.75
+   -21.7,
+   31.55
   ],
   "v": [
-   -8.2,
-   29.1
+   -9.2,
+   40.6
   ],
   "w": [
    -12.6,
@@ -453,79 +453,225 @@
   ]
  },
  "placement": {
-  "valley_margin": 6.42,
-  "t_max": 82.3,
-  "t_min": 33.8,
+  "valley_margin": 3.44,
+  "t_max": 85.1,
+  "t_min": 31.9,
   "lateral": [
-   70.9,
-   108.2
+   59.4,
+   109.2
   ],
-  "seat_block_dist": 42.4,
+  "seat_block_dist": 29.5,
   "ok": true
  },
  "strength": [
   {
    "case": "functional 30 N",
-   "plunger_MPa": 2.43,
-   "plunger_index": 0.22,
-   "guide_top_N": 41.1,
-   "guide_wall_MPa": 1.57,
-   "guide_wall_index": 0.15,
-   "guide_wall_index_if_across": 0.29
+   "plunger_MPa": 2.32,
+   "plunger_index": 0.21,
+   "guide_top_N": 45.9,
+   "guide_wall_MPa": 1.49,
+   "guide_wall_index": 0.14,
+   "guide_wall_index_if_across": 0.27
   },
   {
    "case": "misuse 100 N",
-   "plunger_MPa": 8.09,
-   "plunger_index": 0.47,
-   "guide_top_N": 137.0,
-   "guide_wall_MPa": 5.25,
-   "guide_wall_index": 0.3,
-   "guide_wall_index_if_across": 0.61
+   "plunger_MPa": 7.73,
+   "plunger_index": 0.45,
+   "guide_top_N": 153.1,
+   "guide_wall_MPa": 4.96,
+   "guide_wall_index": 0.29,
+   "guide_wall_index_if_across": 0.57
   }
  ],
  "clearances": {
   "gap_R4": 2.0,
   "gap_R5": 1.0,
-  "plunger_top_proud": 7.0,
+  "plunger_top_proud": 11.0,
   "drone_lift_mm": 1.41,
+  "held_wheel_centre_off_face": 6.0,
+  "tolerance_along_slope": {
+   "uphill_clean": 1.0,
+   "uphill_with_lead_in": 3.0,
+   "downhill": 2.0,
+   "drone_lift_max": 4.24
+  },
+  "tolerance_sideways_full_rim": 4.5,
+  "bolt_access_mm3": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
   "plunger_engaged_at_rise": 18.6,
-  "swing_deg": 20.5,
-  "pin_drift_u": 0.63,
+  "swing_deg": 28.6,
+  "pin_drift_u": 1.4,
   "plunger_vs_housing_mm3": 0.0,
   "horn_pin_vs_housing_mm3": 0.0,
   "horn_pin_vs_plunger_mm3": 0.0,
   "horn_vs_housing_mm3": 0.0,
-  "servo_vs_housing_mm3": -0.0
+  "servo_vs_housing_mm3": -0.0,
+  "tolerance_sweep": [
+   {
+    "e": -3.0,
+    "d": 0.0,
+    "state": "held too high",
+    "first_contact": null,
+    "held_centre": 9.0
+   },
+   {
+    "e": -3.0,
+    "d": 4.5,
+    "state": "held too high",
+    "first_contact": null,
+    "held_centre": 9.0
+   },
+   {
+    "e": -2.0,
+    "d": 0.0,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 8.0
+   },
+   {
+    "e": -2.0,
+    "d": 4.5,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 8.0
+   },
+   {
+    "e": -1.0,
+    "d": 0.0,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 7.0
+   },
+   {
+    "e": -1.0,
+    "d": 4.5,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 7.0
+   },
+   {
+    "e": 0.0,
+    "d": 0.0,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 6.0
+   },
+   {
+    "e": 0.0,
+    "d": 4.5,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 6.0
+   },
+   {
+    "e": 1.0,
+    "d": 0.0,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 5.0
+   },
+   {
+    "e": 1.0,
+    "d": 4.5,
+    "state": "held",
+    "first_contact": null,
+    "held_centre": 5.0
+   },
+   {
+    "e": 2.0,
+    "d": 0.0,
+    "state": "lead-in",
+    "first_contact": [
+     4.25,
+     -3.83
+    ],
+    "held_centre": null
+   },
+   {
+    "e": 2.0,
+    "d": 4.5,
+    "state": "lead-in",
+    "first_contact": [
+     4.25,
+     -3.83
+    ],
+    "held_centre": null
+   },
+   {
+    "e": 3.0,
+    "d": 0.0,
+    "state": "lead-in",
+    "first_contact": [
+     3.25,
+     -3.31
+    ],
+    "held_centre": null
+   },
+   {
+    "e": 3.0,
+    "d": 4.5,
+    "state": "lead-in",
+    "first_contact": [
+     3.25,
+     -3.31
+    ],
+    "held_centre": null
+   },
+   {
+    "e": 3.5,
+    "d": 0.0,
+    "state": "lead-in",
+    "first_contact": [
+     2.5,
+     -2.92
+    ],
+    "held_centre": null
+   },
+   {
+    "e": 3.5,
+    "d": 4.5,
+    "state": "lead-in",
+    "first_contact": [
+     2.5,
+     -2.92
+    ],
+    "held_centre": null
+   }
+  ]
  },
  "mass": {
-  "housing_g": 17.3,
-  "plunger_g": 2.17,
-  "set_of_4_g": 77.9
+  "housing_g": 23.07,
+  "plunger_g": 3.75,
+  "set_of_4_g": 107.3
  },
  "fit": {
   "+y_x+": {
    "plunger_ext_vs_wheels_mm3": 0.0,
    "plunger_ext_vs_cage_mm3": 0.0,
    "housing_vs_drone_mm3": 0.0,
-   "housing_vs_collar_v6_mm3": 433.3
+   "housing_vs_collar_v6_mm3": 878.7
   },
   "+y_x-": {
    "plunger_ext_vs_wheels_mm3": 0.0,
    "plunger_ext_vs_cage_mm3": 0.0,
    "housing_vs_drone_mm3": 0.0,
-   "housing_vs_collar_v6_mm3": 433.3
+   "housing_vs_collar_v6_mm3": 878.7
   },
   "-y_x+": {
    "plunger_ext_vs_wheels_mm3": 0.0,
    "plunger_ext_vs_cage_mm3": 0.0,
    "housing_vs_drone_mm3": 0.0,
-   "housing_vs_collar_v6_mm3": 433.3
+   "housing_vs_collar_v6_mm3": 878.7
   },
   "-y_x-": {
    "plunger_ext_vs_wheels_mm3": 0.0,
    "plunger_ext_vs_cage_mm3": 0.0,
    "housing_vs_drone_mm3": 0.0,
-   "housing_vs_collar_v6_mm3": 433.3
+   "housing_vs_collar_v6_mm3": 878.7
   }
  }
 }
