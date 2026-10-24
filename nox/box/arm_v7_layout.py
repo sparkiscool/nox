@@ -56,7 +56,7 @@ LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.7
 
 
 RACK_V3_Y = (59.25, 73.25)              # concept review r3: rack teeth grow down (the top stays 0.5 under the keep-out's 73.75)
-PIN_V3 = dict(teeth_y=(59.75, 72.75), boss_y=(55.0, 59.25))   # pinion16 v3: face 13 fully engaged (Lewis 0.45 at the stall); D-bore on the
+PIN_V3 = dict(teeth_y=(59.75, 73.25), boss_y=(55.0, 59.25))   # pinion16 v3: face 13.5 fully engaged on the rack, 10.25 on its tail (from Y 63); D-bore on the
                                         # shaft's flat (Y 59..74), boss Y 55..59.25 with an M3 grub on the round shaft for axial hold only
 
 

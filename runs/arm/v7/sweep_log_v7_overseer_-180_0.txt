@@ -295,7 +295,7 @@ t 21.93 phi -174.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') 
 t 21.96 phi -176.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.98 phi -178.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 22.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
-sweep 297 states in 130 s
+sweep 297 states in 113 s
 states with overlaps: 0 min clearance 0.0
 closest pairs over the cycle:
     0.000  pack charged / rec-180  (t 0.0)

@@ -65,9 +65,9 @@ def numbers():
                           pad_insert_Nm={p: round(F_STALL * (y - PLATE_TOP) / 1e3, 2) for p, y in XT60_Y.items()},
                           note="alt D: a push pad under the XT60 end cuts the insert moment, the pull still loads the grip (5.3 N.m); "
                                "frame model: the mate tilt barely moves (Scout 0.822 -> 0.817 deg), so D is not taken")
-    r["pinion"] = dict(face_now=10.5, face_v3=13.0, lewis_stall_now=0.56, lewis_stall_v3=round(0.56 * 10.5 / 13.0, 2),
-                       lewis_dropped_now=0.61, lewis_dropped_v3=round(0.61 * 10.5 / 13.0, 2),
-                       note="research: module 1 is the printable limit; pinion v3 teeth Y 59.75..72.75 on rack teeth Y 59.25..73.25 (grown "
+    r["pinion"] = dict(face_now=10.5, face_v3=13.5, tail_face_v3=10.25, swap_drone_insert=dict(scout=0.447, overseer=0.486),
+                       stall_misuse=dict(scout=0.572, overseer=0.611), note_src="swap_system frame (round 3d), the drone insert on the rack tail",
+                       note="research: module 1 is the printable limit; pinion v3 teeth Y 59.75..73.25 on rack teeth Y 59.25..73.25 (grown "
                             "down: the top stays under the carriage-lane keep-out 73.75, concept review r3); on the rack tail (drone insert) "
                             "the engaged face is 9.75 from the tail's step at Y 63 (swap_system)")
     r["alternatives"] = {
@@ -138,8 +138,9 @@ def page(r):
             ("Pull path", f"pocket → blade → guide boss 16 long (≥ {rd['anti_rack_boss_min']} to slide without racking) → 2 x 3.0 carbon rods along x "
                           f"({rd['per_rod_N']} N each, {rd['sigma_MPa']} MPa, index {rd['index']}, {rd['deflection_mm']} mm) → head body walls"),
             ("Head body (to its topology run)", f"{hb['pull_Nm']} N·m pull / {hb['stall_Nm']} N·m stall at the grip, lever {hb['grip_lever_mm']} from the plate"),
-            ("Pinion v3", f"face {pn['face_now']} → {pn['face_v3']}: Lewis at the stall {pn['lewis_stall_now']} → {pn['lewis_stall_v3']}, dropped Overseer "
-                          f"{pn['lewis_dropped_now']} → {pn['lewis_dropped_v3']}")]
+            ("Pinion v3", f"face {pn['face_now']} → {pn['face_v3']} (rack grown down; {pn['tail_face_v3']} on the rack tail at the drone insert): Lewis at the 60 N "
+                          f"drone insert Scout {pn['swap_drone_insert']['scout']}, Overseer {pn['swap_drone_insert']['overseer']} (≤ 0.5); at the 74 N stall "
+                          f"{pn['stall_misuse']['scout']} / {pn['stall_misuse']['overseer']} (misuse ≤ 1.0)")]
     nrows = "".join(f"<tr><th>{a}</th><td>{b}</td></tr>" for a, b in nums)
     return f"""<title>Heads v7 grabber concept</title>
 <meta name="claude:viewport-fit-sides" content="cover">

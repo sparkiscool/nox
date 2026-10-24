@@ -370,9 +370,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.47,
+     "index": 0.447,
      "elem": "pinion A",
-     "sigma": 21.1
+     "sigma": 20.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.046,
@@ -390,7 +390,7 @@
    "hub_turn_deg": 0.179,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.47,
+    "index": 0.447,
     "elem": "pinion A"
    }
   },
@@ -759,9 +759,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.47,
+     "index": 0.447,
      "elem": "pinion A",
-     "sigma": 21.1
+     "sigma": 20.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.041,
@@ -779,7 +779,7 @@
    "hub_turn_deg": 0.123,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.47,
+    "index": 0.447,
     "elem": "pinion A"
    }
   },
@@ -1152,9 +1152,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.357,
+     "index": 0.34,
      "elem": "pinion A",
-     "sigma": 16.1
+     "sigma": 15.3
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.031,
@@ -1172,7 +1172,7 @@
    "hub_turn_deg": -0.008,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.357,
+    "index": 0.34,
     "elem": "pinion A"
    }
   },
@@ -1540,9 +1540,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.357,
+     "index": 0.34,
      "elem": "pinion A",
-     "sigma": 16.1
+     "sigma": 15.3
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.027,
@@ -1934,9 +1934,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.357,
+     "index": 0.34,
      "elem": "pinion B",
-     "sigma": 16.1
+     "sigma": 15.3
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.03,
@@ -1954,7 +1954,7 @@
    "hub_turn_deg": 0.036,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.357,
+    "index": 0.34,
     "elem": "pinion B"
    }
   },
@@ -2323,9 +2323,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.357,
+     "index": 0.34,
      "elem": "pinion B",
-     "sigma": 16.1
+     "sigma": 15.3
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.027,
@@ -2717,9 +2717,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.601,
+     "index": 0.572,
      "elem": "pinion A",
-     "sigma": 27.0
+     "sigma": 25.7
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.051,
@@ -2737,7 +2737,7 @@
    "hub_turn_deg": 0.177,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.601,
+    "index": 0.572,
     "elem": "pinion A"
    }
   },
@@ -3106,9 +3106,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.601,
+     "index": 0.572,
      "elem": "pinion A",
-     "sigma": 27.0
+     "sigma": 25.7
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.045,
@@ -3126,7 +3126,7 @@
    "hub_turn_deg": 0.112,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.601,
+    "index": 0.572,
     "elem": "pinion A"
    }
   },
@@ -3490,7 +3490,7 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.029,
+     "index": 0.028,
      "elem": "pinion A",
      "sigma": 1.3
     },
@@ -3882,9 +3882,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.564,
+     "index": 0.536,
      "elem": "pinion A",
-     "sigma": 25.4
+     "sigma": 24.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.073,
@@ -3901,9 +3901,9 @@
    },
    "hub_turn_deg": -0.064,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.564,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.536,
+    "elem": "worst wheel"
    }
   },
   {
@@ -4271,9 +4271,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.067,
+     "index": 0.064,
      "elem": "pinion B",
-     "sigma": 3.0
+     "sigma": 2.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.027,
@@ -4305,7 +4305,7 @@
     "F_bumper_N": 409.0,
     "decel_g": 80.3,
     "F_tooth_N": 101.0,
-    "pinion_index": 0.59,
+    "pinion_index": 0.56,
     "stop_index": 0.45,
     "cart_inertia_N": 166.0
    },
@@ -5443,7 +5443,7 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.022,
+     "index": 0.021,
      "elem": "pinion B",
      "sigma": 1.0
     },
@@ -5836,9 +5836,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion A",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.047,
@@ -5856,7 +5856,7 @@
    "hub_turn_deg": 0.164,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion A"
    }
   },
@@ -6224,9 +6224,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion A",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.038,
@@ -6244,7 +6244,7 @@
    "hub_turn_deg": 0.303,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion A"
    }
   },
@@ -6617,9 +6617,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.372,
+     "index": 0.353,
      "elem": "pinion A",
-     "sigma": 16.7
+     "sigma": 15.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.033,
@@ -6637,7 +6637,7 @@
    "hub_turn_deg": -0.033,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.372,
+    "index": 0.353,
     "elem": "pinion A"
    }
   },
@@ -7005,9 +7005,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.372,
+     "index": 0.353,
      "elem": "pinion A",
-     "sigma": 16.7
+     "sigma": 15.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.028,
@@ -7399,9 +7399,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion B",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.047,
@@ -7419,7 +7419,7 @@
    "hub_turn_deg": -0.049,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion B"
    }
   },
@@ -7788,9 +7788,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion B",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.038,
@@ -7808,7 +7808,7 @@
    "hub_turn_deg": -0.016,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion B"
    }
   },
@@ -8181,9 +8181,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion A",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.042,
@@ -8201,7 +8201,7 @@
    "hub_turn_deg": 0.148,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
+    "index": 0.405,
     "elem": "pinion A"
    }
   },
@@ -8569,9 +8569,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion A",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.035,
@@ -8588,9 +8588,9 @@
    },
    "hub_turn_deg": 0.274,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.407,
+    "elem": "worst wheel"
    }
   },
   {
@@ -8962,9 +8962,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.401,
+     "index": 0.381,
      "elem": "pinion A",
-     "sigma": 18.0
+     "sigma": 17.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.038,
@@ -8982,7 +8982,7 @@
    "hub_turn_deg": -0.049,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.401,
+    "index": 0.381,
     "elem": "pinion A"
    }
   },
@@ -9350,9 +9350,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.401,
+     "index": 0.381,
      "elem": "pinion A",
-     "sigma": 18.0
+     "sigma": 17.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.032,
@@ -9744,9 +9744,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion B",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.042,
@@ -9764,7 +9764,7 @@
    "hub_turn_deg": -0.095,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
+    "index": 0.405,
     "elem": "pinion B"
    }
   },
@@ -10133,9 +10133,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion B",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.035,
@@ -10152,9 +10152,9 @@
    },
    "hub_turn_deg": -0.068,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
-    "elem": "pinion B"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.408,
+    "elem": "worst wheel"
    }
   },
   {
@@ -10526,9 +10526,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.411,
+     "index": 0.391,
      "elem": "pinion A",
-     "sigma": 18.5
+     "sigma": 17.6
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.04,
@@ -10546,7 +10546,7 @@
    "hub_turn_deg": 0.158,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.411,
+    "index": 0.391,
     "elem": "pinion A"
    }
   },
@@ -10914,9 +10914,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.411,
+     "index": 0.391,
      "elem": "pinion A",
-     "sigma": 18.5
+     "sigma": 17.6
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.034,
@@ -10933,9 +10933,9 @@
    },
    "hub_turn_deg": 0.121,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.411,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.392,
+    "elem": "worst wheel"
    }
   },
   {
@@ -11307,9 +11307,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.416,
+     "index": 0.395,
      "elem": "pinion A",
-     "sigma": 18.7
+     "sigma": 17.8
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.04,
@@ -11327,7 +11327,7 @@
    "hub_turn_deg": -0.029,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.416,
+    "index": 0.395,
     "elem": "pinion A"
    }
   },
@@ -11695,9 +11695,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.416,
+     "index": 0.395,
      "elem": "pinion A",
-     "sigma": 18.7
+     "sigma": 17.8
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.033,
@@ -11714,9 +11714,9 @@
    },
    "hub_turn_deg": 0.02,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.416,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.404,
+    "elem": "worst wheel"
    }
   },
   {
@@ -12089,9 +12089,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.411,
+     "index": 0.391,
      "elem": "pinion B",
-     "sigma": 18.5
+     "sigma": 17.6
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.04,
@@ -12109,7 +12109,7 @@
    "hub_turn_deg": -0.184,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.411,
+    "index": 0.391,
     "elem": "pinion B"
    }
   },
@@ -12478,9 +12478,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.411,
+     "index": 0.391,
      "elem": "pinion B",
-     "sigma": 18.5
+     "sigma": 17.6
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.034,
@@ -12497,9 +12497,9 @@
    },
    "hub_turn_deg": -0.223,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.411,
-    "elem": "pinion B"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.392,
+    "elem": "worst wheel"
    }
   },
   {
@@ -12871,9 +12871,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion A",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.042,
@@ -12891,7 +12891,7 @@
    "hub_turn_deg": 0.037,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
+    "index": 0.405,
     "elem": "pinion A"
    }
   },
@@ -13259,9 +13259,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion A",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.035,
@@ -13278,9 +13278,9 @@
    },
    "hub_turn_deg": -0.004,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.408,
+    "elem": "worst wheel"
    }
   },
   {
@@ -13652,9 +13652,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.401,
+     "index": 0.381,
      "elem": "pinion A",
-     "sigma": 18.0
+     "sigma": 17.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.038,
@@ -13672,7 +13672,7 @@
    "hub_turn_deg": -0.141,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.401,
+    "index": 0.381,
     "elem": "pinion A"
    }
   },
@@ -14040,9 +14040,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.401,
+     "index": 0.381,
      "elem": "pinion A",
-     "sigma": 18.0
+     "sigma": 17.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.032,
@@ -14059,9 +14059,9 @@
    },
    "hub_turn_deg": -0.105,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.401,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.387,
+    "elem": "worst wheel"
    }
   },
   {
@@ -14434,9 +14434,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion B",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.042,
@@ -14454,7 +14454,7 @@
    "hub_turn_deg": -0.151,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
+    "index": 0.405,
     "elem": "pinion B"
    }
   },
@@ -14823,9 +14823,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.426,
+     "index": 0.405,
      "elem": "pinion B",
-     "sigma": 19.2
+     "sigma": 18.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.035,
@@ -14842,9 +14842,9 @@
    },
    "hub_turn_deg": -0.326,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.426,
-    "elem": "pinion B"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.407,
+    "elem": "worst wheel"
    }
   },
   {
@@ -15216,9 +15216,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion A",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.047,
@@ -15236,7 +15236,7 @@
    "hub_turn_deg": 0.074,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion A"
    }
   },
@@ -15604,9 +15604,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion A",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.038,
@@ -15624,7 +15624,7 @@
    "hub_turn_deg": 0.025,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion A"
    }
   },
@@ -15997,9 +15997,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.372,
+     "index": 0.353,
      "elem": "pinion A",
-     "sigma": 16.7
+     "sigma": 15.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.033,
@@ -16017,7 +16017,7 @@
    "hub_turn_deg": -0.104,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.372,
+    "index": 0.353,
     "elem": "pinion A"
    }
   },
@@ -16385,9 +16385,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.372,
+     "index": 0.353,
      "elem": "pinion A",
-     "sigma": 16.7
+     "sigma": 15.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.028,
@@ -16404,9 +16404,9 @@
    },
    "hub_turn_deg": -0.075,
    "worst": {
-    "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.372,
-    "elem": "pinion A"
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.371,
+    "elem": "worst wheel"
    }
   },
   {
@@ -16779,9 +16779,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion B",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.047,
@@ -16799,7 +16799,7 @@
    "hub_turn_deg": -0.151,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion B"
    }
   },
@@ -17168,9 +17168,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.455,
+     "index": 0.433,
      "elem": "pinion B",
-     "sigma": 20.5
+     "sigma": 19.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.038,
@@ -17188,7 +17188,7 @@
    "hub_turn_deg": -0.274,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.455,
+    "index": 0.433,
     "elem": "pinion B"
    }
   }
@@ -17564,9 +17564,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.511,
+     "index": 0.486,
      "elem": "pinion A",
-     "sigma": 23.0
+     "sigma": 21.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.031,
@@ -17584,7 +17584,7 @@
    "hub_turn_deg": -0.001,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.511,
+    "index": 0.486,
     "elem": "pinion A"
    }
   },
@@ -17953,9 +17953,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.511,
+     "index": 0.486,
      "elem": "pinion A",
-     "sigma": 23.0
+     "sigma": 21.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.03,
@@ -17973,7 +17973,7 @@
    "hub_turn_deg": -0.048,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.511,
+    "index": 0.486,
     "elem": "pinion A"
    }
   },
@@ -18346,9 +18346,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.316,
+     "index": 0.301,
      "elem": "pinion A",
-     "sigma": 14.2
+     "sigma": 13.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.005,
@@ -18366,7 +18366,7 @@
    "hub_turn_deg": 0.009,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.316,
+    "index": 0.301,
     "elem": "pinion A"
    }
   },
@@ -18734,9 +18734,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.316,
+     "index": 0.301,
      "elem": "pinion A",
-     "sigma": 14.2
+     "sigma": 13.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.005,
@@ -18754,7 +18754,7 @@
    "hub_turn_deg": 0.009,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.316,
+    "index": 0.301,
     "elem": "pinion A"
    }
   },
@@ -19128,9 +19128,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.316,
+     "index": 0.301,
      "elem": "pinion B",
-     "sigma": 14.2
+     "sigma": 13.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.006,
@@ -19148,7 +19148,7 @@
    "hub_turn_deg": 0.186,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.316,
+    "index": 0.301,
     "elem": "pinion B"
    }
   },
@@ -19517,9 +19517,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.316,
+     "index": 0.301,
      "elem": "pinion B",
-     "sigma": 14.2
+     "sigma": 13.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.006,
@@ -19537,7 +19537,7 @@
    "hub_turn_deg": 0.227,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.316,
+    "index": 0.301,
     "elem": "pinion B"
    }
   },
@@ -19911,9 +19911,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.642,
+     "index": 0.611,
      "elem": "pinion A",
-     "sigma": 28.9
+     "sigma": 27.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.025,
@@ -19931,7 +19931,7 @@
    "hub_turn_deg": 0.028,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.642,
+    "index": 0.611,
     "elem": "pinion A"
    }
   },
@@ -20300,9 +20300,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.642,
+     "index": 0.611,
      "elem": "pinion A",
-     "sigma": 28.9
+     "sigma": 27.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.024,
@@ -20320,7 +20320,7 @@
    "hub_turn_deg": -0.049,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.642,
+    "index": 0.611,
     "elem": "pinion A"
    }
   },
@@ -20684,9 +20684,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.07,
+     "index": 0.067,
      "elem": "pinion A",
-     "sigma": 3.2
+     "sigma": 3.0
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.009,
@@ -21076,9 +21076,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.656,
+     "index": 0.624,
      "elem": "pinion A",
-     "sigma": 29.5
+     "sigma": 28.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.085,
@@ -21096,7 +21096,7 @@
    "hub_turn_deg": -0.08,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.656,
+    "index": 0.624,
     "elem": "pinion A"
    }
   },
@@ -21465,9 +21465,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.158,
+     "index": 0.152,
      "elem": "pinion B",
-     "sigma": 7.1
+     "sigma": 6.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.075,
@@ -21499,7 +21499,7 @@
     "F_bumper_N": 630.0,
     "decel_g": 60.8,
     "F_tooth_N": 76.0,
-    "pinion_index": 0.44,
+    "pinion_index": 0.43,
     "stop_index": 0.7,
     "cart_inertia_N": 446.0
    },
@@ -22637,9 +22637,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.053,
+     "index": 0.051,
      "elem": "pinion B",
-     "sigma": 2.4
+     "sigma": 2.3
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.021,
@@ -23030,9 +23030,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion A",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.023,
@@ -23050,7 +23050,7 @@
    "hub_turn_deg": 0.129,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion A"
    }
   },
@@ -23418,9 +23418,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion A",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.021,
@@ -23438,7 +23438,7 @@
    "hub_turn_deg": 0.686,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion A"
    }
   },
@@ -23811,9 +23811,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.386,
+     "index": 0.367,
      "elem": "pinion A",
-     "sigma": 17.4
+     "sigma": 16.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.015,
@@ -23831,7 +23831,7 @@
    "hub_turn_deg": -0.043,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.386,
+    "index": 0.367,
     "elem": "pinion A"
    }
   },
@@ -24199,9 +24199,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.386,
+     "index": 0.367,
      "elem": "pinion A",
-     "sigma": 17.4
+     "sigma": 16.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.014,
@@ -24219,7 +24219,7 @@
    "hub_turn_deg": 0.539,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.386,
+    "index": 0.367,
     "elem": "pinion A"
    }
   },
@@ -24593,9 +24593,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion B",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.023,
@@ -24613,7 +24613,7 @@
    "hub_turn_deg": -0.052,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion B"
    }
   },
@@ -24982,9 +24982,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion B",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.021,
@@ -25002,7 +25002,7 @@
    "hub_turn_deg": 0.305,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion B"
    }
   },
@@ -25375,9 +25375,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion A",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.014,
@@ -25395,7 +25395,7 @@
    "hub_turn_deg": 0.134,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion A"
    }
   },
@@ -25763,9 +25763,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion A",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.013,
@@ -25783,7 +25783,7 @@
    "hub_turn_deg": 0.415,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion A"
    }
   },
@@ -26156,9 +26156,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.447,
+     "index": 0.426,
      "elem": "pinion A",
-     "sigma": 20.1
+     "sigma": 19.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.024,
@@ -26176,7 +26176,7 @@
    "hub_turn_deg": -0.043,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.447,
+    "index": 0.426,
     "elem": "pinion A"
    }
   },
@@ -26544,9 +26544,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.447,
+     "index": 0.426,
      "elem": "pinion A",
-     "sigma": 20.1
+     "sigma": 19.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.022,
@@ -26564,7 +26564,7 @@
    "hub_turn_deg": 0.268,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.447,
+    "index": 0.426,
     "elem": "pinion A"
    }
   },
@@ -26938,9 +26938,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion B",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.014,
@@ -26958,7 +26958,7 @@
    "hub_turn_deg": -0.163,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion B"
    }
   },
@@ -27327,9 +27327,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion B",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.014,
@@ -27347,7 +27347,7 @@
    "hub_turn_deg": -0.163,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion B"
    }
   },
@@ -27720,9 +27720,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion A",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.014,
@@ -27740,7 +27740,7 @@
    "hub_turn_deg": 0.0,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion A"
    }
   },
@@ -28108,9 +28108,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion A",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.013,
@@ -28128,7 +28128,7 @@
    "hub_turn_deg": -0.09,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion A"
    }
   },
@@ -28501,9 +28501,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.447,
+     "index": 0.426,
      "elem": "pinion A",
-     "sigma": 20.1
+     "sigma": 19.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.024,
@@ -28521,7 +28521,7 @@
    "hub_turn_deg": -0.177,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.447,
+    "index": 0.426,
     "elem": "pinion A"
    }
   },
@@ -28889,9 +28889,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.447,
+     "index": 0.426,
      "elem": "pinion A",
-     "sigma": 20.1
+     "sigma": 19.1
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.022,
@@ -28909,7 +28909,7 @@
    "hub_turn_deg": -0.237,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.447,
+    "index": 0.426,
     "elem": "pinion A"
    }
   },
@@ -29283,9 +29283,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion B",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.016,
@@ -29303,7 +29303,7 @@
    "hub_turn_deg": -0.153,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion B"
    }
   },
@@ -29672,9 +29672,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.379,
+     "index": 0.361,
      "elem": "pinion B",
-     "sigma": 17.1
+     "sigma": 16.2
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.016,
@@ -29692,7 +29692,7 @@
    "hub_turn_deg": -0.665,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.379,
+    "index": 0.361,
     "elem": "pinion B"
    }
   },
@@ -30065,9 +30065,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion A",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.023,
@@ -30085,7 +30085,7 @@
    "hub_turn_deg": 0.042,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion A"
    }
   },
@@ -30453,9 +30453,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion A",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.021,
@@ -30473,7 +30473,7 @@
    "hub_turn_deg": -0.323,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion A"
    }
   },
@@ -30846,9 +30846,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.386,
+     "index": 0.367,
      "elem": "pinion A",
-     "sigma": 17.4
+     "sigma": 16.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.015,
@@ -30866,7 +30866,7 @@
    "hub_turn_deg": -0.134,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.386,
+    "index": 0.367,
     "elem": "pinion A"
    }
   },
@@ -31234,9 +31234,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.386,
+     "index": 0.367,
      "elem": "pinion A",
-     "sigma": 17.4
+     "sigma": 16.5
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.014,
@@ -31254,7 +31254,7 @@
    "hub_turn_deg": -0.47,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.386,
+    "index": 0.367,
     "elem": "pinion A"
    }
   },
@@ -31628,9 +31628,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion B",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.023,
@@ -31648,7 +31648,7 @@
    "hub_turn_deg": -0.121,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion B"
    }
   },
@@ -32017,9 +32017,9 @@
      "sigma": null
     },
     "pinion 16T (Lewis, in-layer)": {
-     "index": 0.44,
+     "index": 0.419,
      "elem": "pinion B",
-     "sigma": 19.8
+     "sigma": 18.9
     },
     "rail pad insert (pull-out 1000 N E)": {
      "index": 0.021,
@@ -32037,7 +32037,7 @@
    "hub_turn_deg": -0.7,
    "worst": {
     "piece": "pinion 16T (Lewis, in-layer)",
-    "index": 0.44,
+    "index": 0.419,
     "elem": "pinion B"
    }
   }
@@ -32055,14 +32055,14 @@
    "F_stop_N": 1171.0,
    "stop_index": 1.3,
    "F_tooth_N": 487.0,
-   "pinion_index": 2.82
+   "pinion_index": 2.72
   },
   "tpu": {
    "k_N_mm": 281.0,
    "F_stop_N": 278.0,
    "stop_index": 0.31,
    "F_tooth_N": 115.0,
-   "pinion_index": 0.67
+   "pinion_index": 0.64
   },
   "carrying": {
    "falling_g": 391.0,
