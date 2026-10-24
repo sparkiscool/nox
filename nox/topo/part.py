@@ -180,6 +180,26 @@ class Part:
                                    nodes=np.zeros(0, int)))
 
     # ------------------------------------------------------------------------------------------- finish
+    def main_support(self):
+        cnt = {}
+        for c in self.cases:
+            cnt[c.support] = cnt.get(c.support, 0) + 1
+        return max(cnt, key=cnt.get) if cnt else None
+
+    def held_bodies(self):
+        """drawn cells of every drawn body the main support (the one most load cases use) holds: the mounting
+        features (bolt pads and bosses, a wall flange). The organic finish keeps them whole."""
+        from scipy import ndimage as ndi
+        sol = self.solid.reshape(self.shape)
+        main = self.main_support()
+        if main is None:
+            return np.zeros(self.nel, bool)
+        lab, n = ndi.label(sol, np.ones((3, 3, 3), bool))
+        sup = np.zeros(self.nel, bool)
+        sup[self.support_cells[main]] = True
+        ids = np.unique(lab[sup.reshape(self.shape) & sol])
+        return np.isin(lab, ids[ids > 0]).ravel()
+
     def functional_skin(self, skin_mm):
         """drawn cells that carry a function: within skin_mm of a cut (hole, mating / contact face, keep-out) or of the
         outside of the envelope as given, plus every drawn cell outside that envelope (no design space there). A drawn
@@ -196,7 +216,9 @@ class Part:
             has = np.asarray(ndi.maximum(skin, lab, np.arange(1, n + 1)), bool)
             keep = np.r_[False, ~has]
             skin |= keep[lab] & sol
-        return skin.ravel()
+        # mounting features stay whole: opening part of a bolt pad left its envelope-side skin with a core of its own
+        # at the gate's 2.0 mm erosion, cut off from the legs (motor_mount organic-v1: pad cores 0.75 in the main body)
+        return skin.ravel() | self.held_bodies()
 
     # ------------------------------------------------------------------------------------------------ misc
     def cell_centres(self):

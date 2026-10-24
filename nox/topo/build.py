@@ -55,6 +55,7 @@ def surface(layout, pitch=None, clip_margin=0.5, max_points=60e6, taubin_iters=8
     F = np.minimum(f, g)
     F[~A] = np.minimum(F[~A], -0.05)
     F = np.pad(F, 1, constant_values=-1.0)
+    F[np.abs(F) < 1e-4] = -1e-4                                           # exact zeros make degenerate MC faces
     gen_vox = float((F > 0).sum()) * p ** 3
     v, fc, _, _ = measure.marching_cubes(F.astype(np.float32), 0.0, spacing=(p, p, p))
     v += o - p / 2.0 + np.array([1.1e-4, 0.7e-4, 0.9e-4])                  # pad offset (+0.5 p cell centre - 1 p pad)
@@ -95,6 +96,13 @@ def skin_field(part, axes, p, skin_mm):
     if n:
         has = np.asarray(ndi.maximum(K, lab, np.arange(1, n + 1)), bool)
         K |= np.r_[False, ~has][lab] & D
+        # the bodies the main support holds stay whole (Part.held_bodies): a fine body is held where it meets one
+        o = np.asarray(part.origin)
+        ijk = [np.clip(np.floor((np.asarray(axes[k]) - o[k]) / part.h).astype(int), 0, part.shape[k] - 1)
+               for k in range(3)]
+        Hc = part.held_bodies().reshape(part.shape)[np.ix_(*ijk)]
+        held = np.unique(lab[Hc & D])
+        K |= np.isin(lab, held[held > 0]) & D
     return K, C, O
 
 
@@ -166,6 +174,9 @@ def _organic_surface(layout, xf, axes, p, up, clip_margin, t0, log, taubin_iters
     del d_gen, d_skin, d_off, A
     F = np.pad(-d, 1, constant_values=-band)
     del d
+    # samples exactly on the level give degenerate marching-cubes faces; Taubin then pulls spikes off them through
+    # the keep-out margin and the exact cut leaves voxel slivers (holder organic-v2: 27 shells, 5 voxel bodies)
+    F[np.abs(F) < 1e-4] = -1e-4
     gen_vox = float((F > 0).sum()) * p ** 3
     v, fc, _, _ = measure.marching_cubes(F.astype(np.float32), 0.0, spacing=(p, p, p))
     del F
