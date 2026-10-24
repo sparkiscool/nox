@@ -178,3 +178,5 @@ it  28 beta    2 J   0.8981 vol 0.0758 (dil 0.1056 g -0.000) grey 18.1% ch 0.100
 it  29 beta    2 J   0.8946 vol 0.0758 (dil 0.1056 g -0.000) grey 18.1% ch 0.100 worst cage bump low back 100 N 12.7 1.9s
 layout: beta 2 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 it  30 beta    4 J   0.9800 vol 0.0642 (dil 0.1267 g -0.143) grey 11.5% ch 0.100 worst cage bump low back 100 N 14.4 1.6s
+it  31 beta    4 J   0.9367 vol 0.0713 (dil 0.1385 g -0.063) grey 12.5% ch 0.100 worst cage bump low back 100 N 13.5 1.7s
+it  32 beta    4 J   0.8933 vol 0.0770 (dil 0.1454 g -0.016) grey 13.1% ch 0.100 worst cage bump low back 100 N 12.6 1.6s
