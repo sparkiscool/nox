@@ -82,7 +82,7 @@ BLADE = dict(t=3.0, y=(160.0, 170.0), inner_sq=6.0, inner_open=11.0, tip_u=U_BOT
 STROKE = BLADE["inner_open"] - BLADE["inner_sq"]  # 5.0 per blade (the mechanism's datum: inner 6.0)
 CLAMP = 7.0                                       # blade inner face on the squeezed tabs of cartridge v6 (latch 24 Oct: a 2.0 centre rib, tabs stop
                                                   # at +-1.0, outer faces +-7.0; DEFAULT): the carriers clamp 1.0 out from the datum
-DECK = dict(u=(12.9, 14.9), x=20.0, y=(150.0, 180.0), pad=dict(x=(16.5, 20.0), y=(155.0, 175.0), u_top=U_BOT), slot=(5.5, 14.5, 159.0, 171.0))   # the hall's opening joins the slot
+DECK = dict(u=(12.9, 14.9), x=18.2, y=(150.0, 180.0), pad=dict(x=(16.0, 18.2), y=(155.0, 175.0), u_top=U_BOT), slot=(5.5, 14.5, 159.0, 171.0))   # the hall's opening joins the slot; |X| <= 18.2: 1.0 off the Scout v6 TPU strips
 RODS = dict(y=(161.0, 169.0), u=6.75, wall_in=29.0, wall_out=32.0)
 BOSS = dict(x_sq=(11.0, 23.0), y=(155.85, 174.15), u=(1.6, 11.9))   # 3.2 walls round the rod bores (the gate's 1.5 neck erosion)
 SPRING_ROD = dict(y=181.25, u=4.5, wall_in=29.0, wall_out=31.0, arm_w=8.0)
@@ -432,6 +432,9 @@ def keepouts(servo="DS3218"):
     K.append(box(sb[0][0] - CLR, sb[1][0] + CLR, sb[0][1] - CLR, sb[1][1] + CLR, -40.0, sb[0][2] + CLR))
     K.append(cylX(SPRING_ROD["y"], SPRING_ROD["u"], -SEAT_SQ, SEAT_SQ, spring_pick()["OD"] / 2 + CLR, 32))
     K.append(box(-HORN["disc_d"] / 2 - CLR, HORN["disc_d"] / 2 + CLR, Y_SERVO_TOP + 3.0, CAM["y"][1] + CLR, -40.0, U_C))   # horn + cam out with the servo (-u)
+    for s_ in (-1, 1):                                                         # cartridge v6 (Scout): TPU strips |x| 19.2..23.2, 2.0 under the flat bottom, z_T +-32
+        a_, b_ = sorted((s_ * (19.2 - CLR), s_ * (23.2 + CLR)))
+        K.append(box(a_, b_, Y_C - 33.0, Y_C + 33.0, U_BOT - 2.0 - CLR, U_BOT + 0.01))
     for s_ in (-1, 1):                                                         # the receivers' side walls come down to u 15.6 at |x| >= 23.4
         a_, b_ = sorted((s_ * (23.4 - CLR), s_ * 40.0))
         K.append(box(a_, b_, Y_C - 16.0, Y_C + 16.0, 15.6 - CLR, 30.0))
