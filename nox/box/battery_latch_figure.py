@@ -20,7 +20,7 @@ COL = dict(receiver="#5b6b7a", cartridge="#c9a227", slider="#c0392b", pack="#9aa
 KEYCOL = dict(cartridge="cartridge", slider_px="slider", slider_nx="slider", pack="pack", cartridge_skid_closed="skid",
               cartridge_skid_lead="skid", xt60_plug="xt60", receiver="receiver", receiver_lid="lid", receiver_strips="strips",
               xt60e1m="xt60", xt60_carrier="xt60", cartridge_strip_px="skid", cartridge_strip_nx="skid",
-              receiver_skid_nose_plate="skid", receiver_skid_side_px="skid", receiver_skid_side_nx="skid")
+              **{f"receiver_skid_{n}": "skid" for n in BL.RSKID_NAMES})
 T_ISO = np.array([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1.0]])    # plot (z, x, y): pack along, across, up
 
 

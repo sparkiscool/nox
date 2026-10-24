@@ -230,17 +230,19 @@ def centre_rib(g):
 # drone frame limits, >= 1.0 inside the funnel planes, clear of the 4 bolt keys): L sections bonded on (flexible contact
 # adhesive), the foot under the edge, the leg on the outer face
 CSTRIP = dict(x0=19.2, x1=23.2, y0=-2.0, leg=(19.0, 21.0, 3.0), dz=32.0)      # cartridge v6: under its bottom long edges
-RSTRIP = dict(x0=24.6, x1=27.0, y0=-2.0, dz=32.0)   # receiver v2: under the feet's outer edges (spec |y| 24.6..27, drone z
-                                                   # -46.5..-44.4; its top at the feet's underside y 0.2, 0.1 over spec)
 NOSE_BAR = 3.5                                     # o 3.5 (spec), along the 45 deg lower nose chamfer
-NOSE_PTS = [(60.0, 31.0, -16.0), (36.0, 31.0, -40.0), (31.0, 25.8, -45.4)]     # drone frame (+y side; mirrored), Scout spec
+NOSE_PTS = [(59.2, 31.0, -16.0), (35.2, 31.0, -40.0)]   # drone frame (+y side; mirrored): Scout spec, its axis 1.0 off the
+                                                   # 45 deg chamfer (a 2.9 flat bonds and prints), above z -40 only (keel)
 NOSE_PLATE = dict(t=2.2, y=27.0, z0=-22.0, z1=-6.0)    # drone frame (spec y +-27), 2.2 on the lead end wall's face
 TAIL_PTS = [(-x, y, z) for (x, y, z) in NOSE_PTS]  # tail bars: the nose bars mirrored (the collar clip is symmetric in x)
 TAIL_PLATE = dict(t=2.2, y=27.0, z0=-31.5, z1=-6.0, key_r=4.5)   # drone frame (Scout v3 ask 24 Oct, no-keel cage): 2.2 on
                                                    # the tail end wall's face and 45 deg chamfer, o 9 round each bolt key;
                                                    # down to z -31.5 (below it the side bars and strips cover)
 SKID_FUNNEL = 1.0                                  # every receiver skid >= 1.0 inside the funnel planes at +-5 yaw / +-2 tilt
-RSKID_NAMES = ("nose_plate", "side_px", "side_nx", "tail_plate")
+RSKID_NAMES = ("nose_plate", "nose_bar_px", "nose_bar_nx", "tail_plate", "tail_bar_px", "tail_bar_nx")
+NARROW = dict(x=25.5, y=6.5)    # receiver v3 (Scout, keel back 24 Oct): |y| <= 25.5 below drone z -38 (cartridge y 6.5), so the
+                                # keel's printed nodes (r 4 + 1.0 at (x, +-29.6, -47.5)) clear it by 5.2; only the bolt
+                                # columns' outer halves stood past it there (the bores below the head flats, open from below)
 KEY_LINES = [(-41.85, 25.6), (-41.85, -25.6), (43.25, 25.6), (43.25, -25.6)]   # receiver bolt key lines, drone (x, y), vertical
 
 def cart_strips(g):
@@ -255,17 +257,15 @@ def cart_strips(g):
     return out
 
 def _trim_skids(sk, recv, clip=None):
-    """skids clear of the receiver and inside the funnel clip: [nose plate, side skid +x, side skid -x, tail plate]; each
-    side skid is its strip, its nose bar and its tail bar in one TPU print (trimmed by the plate it butts against; each bonded on)."""
+    """skids clear of the receiver and inside the funnel clip, in RSKID_NAMES order; each bar is bonded on its flat to the
+    receiver's chamfer (trimmed by the plate it butts against; each bonded on)."""
     sk = [(m - recv) if clip is None else (m ^ clip) - recv for m in sk]
-    plate, bp, bn, sp, sn, tail, tbp, tbn = sk
-    z_in = plate.bounding_box()[2]                                  # the plate's inner face: the bars end on it
-    keep = box(-500, 500, RSTRIP["y0"], 500, -500, z_in)             # and no lower than the strip's foot (its bed face)
-    return [plate, U(sp, bp, tbp - tail) ^ keep, U(sn, bn, tbn - tail) ^ keep, tail]
+    plate, bp, bn, tail, tbp, tbn = sk
+    return [plate, bp - plate, bn - plate, tail, tbp - tail, tbn - tail]
 
 def recv_skids(g, r, moving=()):
-    """receiver v2 TPU skids (Scout only), cartridge coords: [nose plate, nose bar +x, nose bar -x, side strip +x, -x,
-    tail plate, tail bar +x, tail bar -x]. `moving`: the swap parts; the tail plate keeps out of their path (down, -y)."""
+    """receiver TPU skids (Scout only), cartridge coords: [nose plate, nose bar +x, nose bar -x, tail plate, tail bar +x,
+    tail bar -x]. `moving`: the swap parts; the tail plate keeps out of their path (down, -y)."""
     T = T_dc(g); Ti = np.linalg.inv(T)
     to_c = lambda P: (Ti @ np.array([*P, 1.0]))[:3]
     zt = g["Z_T"]
@@ -296,12 +296,7 @@ def recv_skids(g, r, moving=()):
         P = tm(m).vertices
         Q = np.vstack([P + np.array([dx, dy, dz]) for dx in (-0.5, 0.5) for dz in (-0.5, 0.5) for dy in (0.5, -120.0)])
         shell = shell - hullp(Q)
-    c = RSTRIP
-    strips = []
-    for s in (1, -1):
-        def X(a, b): return sorted((s * a, s * b))
-        strips.append(box(*X(c["x0"], c["x1"]), c["y0"], Y_RB, zt - c["dz"], zt + c["dz"]))
-    return [plate] + bars + strips + [shell] + bars_on(TAIL_PTS)
+    return [plate] + bars + [shell] + bars_on(TAIL_PTS)
 
 def skid_inset(g, r, recv):
     """smallest collar-clip inset (0.25 steps) that leaves every receiver skid >= SKID_FUNNEL inside the funnel planes at
@@ -770,6 +765,8 @@ def build(pack, clip_inset=None):
         cb, cc = xt60_carrier(r)
         if clip is not None: cb, cc = cb ^ clip, cc ^ clip
         out_recv = receiver_v2(r, clip)
+        if pack == "scout":                                          # receiver v3: narrowed under the keel
+            out_recv = out_recv - U(*[box(*sorted((s * NARROW["x"], s * 200)), -50, NARROW["y"], -200, 400) for s in (-1, 1)])
         cart = cartridge(g, cclip)
         cst = cart_strips(g) if pack == "scout" else []
         moving = [cart, slider(g, 0, 1), slider(g, 0, -1), slider(g, TRAVEL, 1), slider(g, TRAVEL, -1)] + skids + cst
@@ -1219,14 +1216,13 @@ PIECES = {   # name: (getter, material, print pose (c -> print), count, version,
     "cart_strip": (lambda B: B["cstrips"][0] if B.get("cstrips") else None, "TPU", _rot("x", 90), 2, "v1",
                    "foot down (one part, both sides)"),
     "rskid_plate": (lambda B: B["rskids"][0] if B.get("rskids") else None, "TPU", np.eye(4), 1, "v1", "flat, wall face down"),
-    "rskid_side_px": (lambda B: B["rskids"][1] if B.get("rskids") else None, "TPU", _rot("x", 90), 1, "v2",
-                      "strip foot down, the nose and tail bars on tree supports"),
-    "rskid_side_nx": (lambda B: B["rskids"][2] if B.get("rskids") else None, "TPU", _rot("x", 90), 1, "v2",
-                      "strip foot down, the nose and tail bars on tree supports (mirror of px)"),
-    "rskid_tail": (lambda B: B["rskids"][3] if B.get("rskids") and len(B["rskids"]) > 3 else None, "TPU", np.eye(4), 1, "v1",
+    "rskid_bar": (lambda B: B["rskids"][1] if B.get("rskids") else None, "TPU", None, 4, "v1",
+                  "flat (its bond face) down; 2 nose + 2 tail, the -x ones mirrored"),
+    "rskid_tail": (lambda B: B["rskids"][3] if B.get("rskids") else None, "TPU", np.eye(4), 1, "v1",
                    "wall face down, the chamfer on tree supports"),
     "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v6", "bar top (y 11.5) down: largest face, bar layers along its length"),
-    "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, "v2", "mount plane (deck top) down: layers across the install axis"),
+    "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, {"scout": "v3", "overseer": "v2"},
+                 "mount plane (deck top) down: layers across the install axis"),
     "xt60_carrier": (lambda B: B["carrier"], "PETG", _rot("x", -90), 1, "v1", "ear tops down (pocket open to the bed)"),
     "receiver_lid": (lambda B: B["cap"], "PETG", _rot("x", -90), 1, "v1", "top face down (the XT60 carrier's cap, = v1 lid)"),
     "receiver_strip": (lambda B: U(*[box(*sorted((B["r"]["X_IN"] - 1.55, B["r"]["RF"] - 0.05)), B["r"]["Y_TOP"], B["r"]["Y_TOP"] + STRIP_T,
@@ -1244,7 +1240,11 @@ def save_prints(B, pack, log=print):
     for nm, (get, mat, T, n, ver, face) in PIECES.items():
         m = get(B)
         if m is None: continue
+        if isinstance(ver, dict): ver = ver[pack]
         t = tm(m, T)
+        if T is None:                                     # largest flat face down (the bars' bond face)
+            k = int(np.argmax(t.facets_area))
+            t.apply_transform(trimesh.geometry.align_vectors(t.facets_normal[k], [0, 0, -1]))
         t.apply_translation([-t.bounds[:, 0].mean(), -t.bounds[:, 1].mean(), -t.bounds[0, 2]])
         fn = f"box_battery_{nm}_{pack}_{ver}.stl"
         path = os.path.join(d, fn); t.export(path)
@@ -1400,9 +1400,9 @@ def scout_system(log=print):
         man["parts"].append(dict(name=f"receiver skid {k} (latch)", trimesh=tm(sk, T), role="cage", material="TPU", tag="M"))
         man["contact_pairs"].append([f"receiver skid {k} (latch)", "receiver v1 (latch)", 5.0])
         man["contact_pairs"].append([f"receiver skid {k} (latch)", "receiver lid (latch)", 5.0])
-    for a_ in ("side px", "side nx"):
-        for b_ in ("nose plate", "tail plate"):
-            man["contact_pairs"].append([f"receiver skid {a_} (latch)", f"receiver skid {b_} (latch)", 5.0])
+    for e_ in ("nose", "tail"):
+        for k_ in ("px", "nx"):
+            man["contact_pairs"].append([f"receiver skid {e_} bar {k_} (latch)", f"receiver skid {e_} plate (latch)", 5.0])
     swap_move = ["pack 4S 1500", "pack XT60 plug", "slider +y (latch)", "slider -y (latch)", "cartridge v5 (latch)",
                  "cartridge skid closed (latch)", "cartridge skid lead (latch)", "cartridge strip px (latch)",
                  "cartridge strip nx (latch)"]
