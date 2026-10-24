@@ -151,3 +151,17 @@ it  67 beta   16 J  27.8314 vol 0.1171 (dil 0.2737 g -0.007) grey  7.6% ch 0.100
 it  68 beta   16 J  25.7525 vol 0.1187 (dil 0.2745 g -0.004) grey  7.7% ch 0.100 worst held b2 mz 4.23e+04 20.9s
 it  69 beta   16 J  54.4578 vol 0.1168 (dil 0.2732 g -0.008) grey  7.6% ch 0.100 worst held b6 mx 9.79e+04 21.9s
 it  70 beta   16 J 203.5742 vol 0.1128 (dil 0.2714 g -0.015) grey  7.7% ch 0.100 worst held b2 my 3.67e+05 21.2s
+git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403
+To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to p
+it  71 beta   16 J  85.1645 vol 0.1125 (dil 0.2703 g -0.024) grey  7.5% ch 0.100 worst held b7 mx 1.45e+05 21.1s
+it  72 beta   16 J 110.1083 vol 0.1153 (dil 0.2723 g -0.017) grey  7.7% ch 0.100 worst held b1 my 2.08e+05 21.4s
+it  73 beta   16 J  59.8119 vol 0.1137 (dil 0.2710 g -0.022) grey  7.5% ch 0.100 worst pad push 1.07e+05 21.5s
+it  74 beta   16 J  21.1238 vol 0.1180 (dil 0.2739 g -0.011) grey  7.7% ch 0.100 worst pad push 3.74e+04 20.9s
+it  75 beta   16 J  15.1589 vol 0.1206 (dil 0.2762 g -0.003) grey  7.6% ch 0.100 worst pad push 2.76e+04 20.9s
+it  76 beta   16 J  13.5737 vol 0.1214 (dil 0.2768 g +0.010) grey  7.6% ch 0.100 worst pad push 2.45e+04 21.5s
+it  77 beta   16 J  19.4077 vol 0.1183 (dil 0.2734 g -0.002) grey  7.6% ch 0.100 worst pad push 3.49e+04 21.1s
+it  78 beta   16 J  17.3182 vol 0.1189 (dil 0.2739 g -0.000) grey  7.7% ch 0.100 worst pad push 3.14e+04 20.6s
+it  79 beta   16 J  16.8776 vol 0.1191 (dil 0.2739 g -0.000) grey  7.6% ch 0.100 worst pad push 3.06e+04 21.1s
+it  80 beta   16 J  16.6468 vol 0.1191 (dil 0.2740 g -0.000) grey  7.6% ch 0.100 worst pad push 3.01e+04 20.6s
