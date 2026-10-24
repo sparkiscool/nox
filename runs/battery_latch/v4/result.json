@@ -1099,7 +1099,7 @@
    "xt60_carrier": 4.62,
    "skids": 4.5,
    "cart_strips": 2.23,
-   "recv_skids": 8.0
+   "recv_skids": 7.96
   },
   "pitch_guidance": {
    "guide": false,
@@ -1187,54 +1187,54 @@
     "material": "TPU",
     "count": 1,
     "version": "v2",
-    "bed_face": "wall face down, the bars on tree supports",
-    "mass_g": 3.15,
+    "bed_face": "plate's outer face down, the bars on tree supports",
+    "mass_g": 3.12,
     "extents": [
      65.5,
      35.8,
-     27.5
+     25.5
     ],
     "solid_check": "PASS",
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[754.7]",
+     "eroded_volumes_mm3": "[730.8]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
-     "acute_edges": 1,
+     "acute_edges": 2,
      "ok": true
     },
-    "bed_mm2": 0.0,
-    "overhang_mm2": 1116.0,
-    "island_run_mm": 23.3
+    "bed_mm2": 838.0,
+    "overhang_mm2": 328.0,
+    "island_run_mm": 0.0
    },
    "rskid_tail": {
     "file": "box_battery_rskid_tail_scout_v1.stl",
     "material": "TPU",
     "count": 1,
     "version": "v1",
-    "bed_face": "wall face down, the chamfer and bars on tree supports",
-    "mass_g": 4.85,
+    "bed_face": "plate's outer face down, the chamfer and bars on tree supports",
+    "mass_g": 4.84,
     "extents": [
      65.5,
      35.8,
-     18.2
+     17.6
     ],
     "solid_check": "PASS",
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[930.4]",
+     "eroded_volumes_mm3": "[1211.7]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
      "acute_edges": 3,
      "ok": true
     },
-    "bed_mm2": 0.0,
-    "overhang_mm2": 1759.0,
-    "island_run_mm": 0.3
+    "bed_mm2": 1247.0,
+    "overhang_mm2": 509.0,
+    "island_run_mm": 0.0
    },
    "slider": {
     "file": "box_battery_slider_scout_v6.stl",
@@ -2968,30 +2968,30 @@
    "tol_mm": 3.0,
    "cases": {
     "all": {
-     "mass_g": 810.14,
+     "mass_g": 810.1,
      "cg_offset": [
-      1.24,
+      1.23,
       0.03,
-      -38.28
+      -38.27
      ],
-     "horizontal_mm": 1.24,
-     "axial_mm": -38.28,
+     "horizontal_mm": 1.23,
+     "axial_mm": -38.27,
      "pass_": true
     },
     "no_swap": {
-     "mass_g": 594.47,
+     "mass_g": 594.43,
      "cg_offset": [
-      1.8,
-      0.04,
+      1.79,
+      0.05,
       -30.46
      ],
-     "horizontal_mm": 1.8,
+     "horizontal_mm": 1.79,
      "axial_mm": -30.46,
      "pass_": true
     }
    },
    "worst_case": "no_swap",
-   "worst_horizontal_mm": 1.8,
+   "worst_horizontal_mm": 1.79,
    "pass_": true
   },
   "access": {
@@ -4232,7 +4232,7 @@
     0.0,
     10.0
    ],
-   "n_points": 235148
+   "n_points": 234530
   },
   "cage_first": {
    "receiver v1 (latch)": 5.37,

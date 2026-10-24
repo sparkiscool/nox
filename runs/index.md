@@ -1,6 +1,6 @@
 # Runs
 
-_93 runs · rebuilt 2026-10-24 12:27_
+_94 runs · rebuilt 2026-10-24 16:00_
 
 ## Latest per part
 
@@ -12,7 +12,7 @@ _93 runs · rebuilt 2026-10-24 12:27_
 | arm_rail | v3 | · | 56.6 (M) | [0.11, 'dropped Overseer']  | · | [runs/arm_rail/v3](runs/arm_rail/v3/summary.md) |
 | arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
-| battery_latch | v3 | · | · | ·  | · | [runs/battery_latch/v3](runs/battery_latch/v3/summary.md) |
+| battery_latch | v4 | · | · | ·  | · | [runs/battery_latch/v4](runs/battery_latch/v4/summary.md) |
 | box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
 | box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
@@ -37,6 +37,7 @@ _93 runs · rebuilt 2026-10-24 12:27_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 15:57 | battery_latch | [v4](runs/battery_latch/v4/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 12:24 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 11:13 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
 | 2026-10-24 11:12 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |

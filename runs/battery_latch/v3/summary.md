@@ -1,3 +1,5 @@
+**Superseded by `runs/battery_latch/v4/` (receiver v3 for the Scout, end pieces). Meshes trimmed; recoverable from git (f548f58).**
+
 # battery latch v3 (24 Oct 2026): cartridge v6 (centre rib) + the Scout TPU edge skids, on receiver v2
 
 Script `nox/box/battery_latch.py`; figures `battery_latch_figure.py` (`figs/`); FE reused from `runs/battery_latch/v2/` (receiver body unchanged, copied into `fe/`). Doc `nox/box/battery-latch.md` ("Cartridge v6 and the Scout skids"). Numbers `nox/dimensions.md` "System box swap: latch". Layout artifact: https://claude.ai/artifact/MX2dpRcjHegntjHvqp6U8x (sections with the rib and the skids). Tags: M mesh, C CAD, E estimate, F frame model. Supersedes `runs/battery_latch/v2/` (the cartridge v5 there).
