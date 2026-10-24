@@ -1,0 +1,4 @@
+motion: /home/user/nox/.claude/worktrees/agent-a2e2f0c5439757e8a/runs/scout_bottom/v1/motion.html 0.56 MB, 15 parts, 300 frames
+motion: /home/user/nox/.claude/worktrees/agent-a2e2f0c5439757e8a/runs/scout_bottom/v1/motion.mp4 0.24 MB
+motion: /home/user/nox/.claude/worktrees/agent-a2e2f0c5439757e8a/runs/scout_bottom/v1/motion.gif 0.41 MB
+motion: /home/user/nox/.claude/worktrees/agent-a2e2f0c5439757e8a/runs/scout_bottom/v1/motion.png 0.07 MB

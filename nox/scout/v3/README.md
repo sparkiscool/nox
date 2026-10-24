@@ -32,10 +32,10 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Live video from the Radxa reaches the box (B7).
 
 ### v3 parts to draw (order DEFAULT)
-1. **Bottom layout v1 READY (24 Oct, `bottom.md`, `scout_bottom.py`):** receiver v4 (cartridge interface every bay copies, XT60E1-M float pocket + lid, TPU stop strips, pogo pad / KW11 carrier, Radxa standoffs, flow seat), XT60 placed at the cartridge's lead end, belly plate out (hook latch), underside stack placed in the same sweep (Radxa standing on the −y side, flow on the +y side).
+1. **Bottom layout v1, DESIGN, handed to the Scout v3 chat's system pass (24 Oct, `bottom.md`, `scout_bottom.py`):** receiver v4 (cartridge interface every bay copies, XT60E1-M float pocket + lid, TPU stop strips, pogo pad / KW11 carrier, Radxa standoffs, flow seat), XT60 placed at the cartridge's lead end, belly plate out (hook latch), underside stack placed in the same sweep (Radxa standing on the −y side, flow on the +y side).
 2. Cage around the raised prop plane that rolls into the funnel (catch interface `dimensions.md` G).
 3. Camera mount on the nose, outside the cage keep-outs.
-4. **Cartridge v4 READY (24 Oct, `bottom.md`):** the v3 box with the pack's XT60 fixed face up at the lead end, 93 long; the bay modules copy the receiver v4 interface (`dimensions.md` E).
+4. **Cartridge v4, DESIGN (24 Oct, `bottom.md`, handed off with item 1):** the v3 box with the pack's XT60 fixed face up at the lead end, 93 long; the bay modules copy the receiver v4 interface (`dimensions.md` E).
 
 ### Open (DEFAULT in brackets, work goes on)
 - How the box mates the XT60: straight push on the drone axis, the pack plug fixed in the cartridge, the XT60E1-M on a ±1.0 float pocket in the receiver (bottom layout v1); D17 (which half the packs carry, the real forces) still to measure.

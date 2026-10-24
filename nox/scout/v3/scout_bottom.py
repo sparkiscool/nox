@@ -30,7 +30,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 OUT = os.path.join(ROOT, "runs", "scout_bottom", "v1"); os.makedirs(OUT, exist_ok=True)
-PRINT = os.path.join(ROOT, "print")
+PRINT = os.path.join(OUT, "stl"); os.makedirs(PRINT, exist_ok=True)   # handoff: candidates stay in the run folder, not print/ (DESIGN)
 S2 = math.sqrt(2.0)
 RHO_PETG, RHO_TPU = 1.27e-3, 1.22e-3                       # g / mm3 (E, printopt)
 
@@ -877,7 +877,7 @@ def main():
                             ("scout_receiver_strip_v4", st, P_STRIP, "TPU")):
         p = os.path.join(PRINT, name + ".stl"); t = export(m, M, p)
         ok, info = solid(t)
-        files[name] = dict(file=f"print/{name}.stl", material=mat, solid_check="PASS" if ok else "FAIL", info=info,
+        files[name] = dict(file=f"runs/scout_bottom/v1/stl/{name}.stl", material=mat, solid_check="PASS" if ok else "FAIL", info=info,
                            extents=np.round(t.extents, 1).tolist(), watertight=bool(t.is_watertight))
         log(f"{name}: solid_check {'PASS' if ok else 'FAIL'} {info}")
     res["files"] = files

@@ -1,5 +1,7 @@
 # Scout v3 bottom layout v1 (24 Oct 2026): receiver v4, cartridge v4, pogo pads, underside stack
 
+**State: DESIGN, handoff WIP (Spark, PR 42: the Scout v3 chat owns the Scout system and runs the system pass first).** Candidate meshes in `runs/scout_bottom/v1/stl/` (solid_check PASS, not reviewed, not in `print/`). System model started: `scout_system.py` (assembly, mass / CG, contact-state FE cases); not run yet.
+
 Spark 23 Oct: XT60 back, the contact pads are retired; the pack stays under the drone on the bottom latch. Every swap now mates and unmates the pack's own XT60 on the install axis (`nox/dimensions.md` I "XT60 mate": insert 60 N, pull-out 50 N, E). This part draws, places and checks the whole Scout underside in one sweep. Script: `nox/scout/v3/scout_bottom.py` (sweep, parts, checks, FE, motion). Run: `runs/scout_bottom/v1/` (`result.json` holds every number below, `motion.html`). Numbers shared with the box: `nox/dimensions.md` E (cartridge and receiver interface), G Catch interface (6) (pogo pads and KW11 target), H (underside stack), J (latch v4). Tags: P measured, C CAD, E estimate, spec maker data; **DEFAULT** = chosen without Spark, alternative in `nox/log.md`.
 
 ## Frames (C)
@@ -10,7 +12,7 @@ Spark 23 Oct: XT60 back, the contact pads are retired; the pack stays under the 
 ## What it is
 | Part | What | g (M) | Print |
 |---|---|---|---|
-| `scout_receiver_v4` (PETG) | drawn: side plates (locating faces x_c ±20.3, 2.0) with 30° lead-in feet (capture ±3.0 from y_c 2), end plates (faces z_c −0.3 / 93.3, lead-ins at y_c 38), both latch pockets, deck (y_c 49.5..52.5) with the two TPU strip seats, the XT60E1-M float pocket with its pull lips and 2 lid inserts, 3 plate bosses (M3 heat-set, o 12 pads, the sides on 6 x 6 posts down to the pocket blocks), pad carrier (+y), Radxa standoffs (−y), flow seat (+y). Ends chamfered 45° to the collar planes | 72.5 | lead-end face down (C), tree supports |
+| `scout_receiver_v4` (PETG, candidate) | drawn: side plates (locating faces x_c ±20.3, 2.0) with 30° lead-in feet (capture ±3.0 from y_c 2), end plates (faces z_c −0.3 / 93.3, lead-ins at y_c 38), both latch pockets, deck (y_c 49.5..52.5) with the two TPU strip seats, the XT60E1-M float pocket with its pull lips and 2 lid inserts, 3 plate bosses (M3 heat-set, o 12 pads, the sides on 6 x 6 posts down to the pocket blocks), pad carrier (+y), Radxa standoffs (−y), flow seat (+y). Ends chamfered 45° to the collar planes | 72.5 | lead-end face down (C), tree supports |
 | `scout_receiver_lid_v4` (PETG) | XT60E1-M lid: 62 x 20 x 4 plate, 2 keys onto the flange ends (push face y_c 51.0), window for the rear body and leads, 2 x M3 x 10 into the receiver's inserts | 5.4 | top face down |
 | `scout_receiver_strip_v4` (TPU 95A) x 2 | 4.8 x 70.6 x 2.4 stop strips in 0.9 recesses on the deck underside, face at y_c 48.0 = the cartridge top at seat | 1.0 each | flat |
 | `scout_cartridge_v4` (PETG) | v3 box 38 x 48 (rails ±20, flat bottom, sunken tabs) lengthened to 93 for the XT60; latch frames built in (no separate block); pack keeper lips; 4 wall windows; lead end: pack end stop, lead loop, cross wall, plug shelf, keyed plug pocket, end wall with 2 set-screw bosses; bottom end edges chamfered 45° to the collar planes | 38.5 | closed end down, no supports |
@@ -58,7 +60,7 @@ Keep-outs: cartridge path with its lead-ins (exact) and W X ±23 below the recei
 - **Collar planes (±5° yaw, ±2° tilt):** receiver 1.01, cartridge 1.50, flow 1.19, pads 3.14, Radxa 9.17 (need 1.0).
 - **Landing slide of the belly post:** 0 drone points in the pin-tip or post cones (gaps 0.56 / 4.28); post r ≥ 101.1.
 - **Flow view cone:** 0 mm³ with the drone.
-- **Strength:** FE_SECTION
+- **Strength:** not run (handoff). `scout_bottom.py --fe` (piece FE) and `scout_system.py` (assembled contact-state FE, system cases) are written, untested, need the heavy lock (~3 GB, E).
 
 ## Problems
 1. **XT60 dims are spec + E** (XT60E1-M insert and rear body, the pack plug's length, Q19, D17). First fit: plug the pack into the cartridge, tighten the set screws, push the cartridge into the receiver by hand: the XT60 must click home with the cartridge top on the strips. If the plug stops short: lower `Y_XF_FACE` (the shelf) in the script.
