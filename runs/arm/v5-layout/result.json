@@ -1,5 +1,5 @@
 {
- "date": "2026-10-24",
+ "date": "2026-10-23",
  "status": "DONE",
  "mass_tag": "C",
  "note": "arm v5 layout (pure python): rails + 3-wheel carriages + rack and pinion; min gap 1.00 over the stroke; axle motor at -39 deg, unbalance 10.1 g.m E",
@@ -46,13 +46,6 @@
   },
   {
    "pair": [
-    "railA:stop",
-    "A:plate"
-   ],
-   "gap": 1.0
-  },
-  {
-   "pair": [
     "railB:body",
     "B:wheel0"
    ],
@@ -69,13 +62,6 @@
    "pair": [
     "railB:body",
     "B:wheel2"
-   ],
-   "gap": 1.0
-  },
-  {
-   "pair": [
-    "railB:stop",
-    "B:plate"
    ],
    "gap": 1.0
   },
@@ -147,7 +133,7 @@
     "railA:foot35",
     "drop"
    ],
-   "gap": 4.6
+   "gap": 4.13
   },
   {
    "pair": [
@@ -232,16 +218,30 @@
     "A:nut1"
    ],
    "gap": 8.4
+  },
+  {
+   "pair": [
+    "railA:body",
+    "A:nut2"
+   ],
+   "gap": 8.4
+  },
+  {
+   "pair": [
+    "railB:body",
+    "B:nut0"
+   ],
+   "gap": 8.4
   }
  ],
  "rail": {
   "y": [
    74.0,
-   93.0
+   94.0
   ],
   "r": [
-   27.0,
-   140.0
+   29.0,
+   134.0
   ],
   "foot_x": 16.0,
   "foot_h": 6.0,
@@ -251,17 +251,20 @@
   "ridge_half_h": 3.0,
   "chan": {
    "x": [
-    -2.0,
-    2.0
+    -8.0,
+    -4.0
    ],
    "y": [
-    89.0,
-    93.0
+    90.0,
+    94.0
    ],
    "mouth": 3.2
   },
-  "bolts": {
-   "x": 0.0,
+  "inserts": {
+   "x": [
+    -10.0,
+    10.0
+   ],
    "r_A": [
     35.0,
     76.0
@@ -269,72 +272,8 @@
    "r_B": [
     38.75,
     76.0
-   ],
-   "cbore_r": 4.5,
-   "cbore_y": 84.0,
-   "hole_r": 2.75,
-   "bolt": "M5 x 16 ISO 4762",
-   "post_insert": {
-    "hole_d": 6.4,
-    "depth": 8.0,
-    "insert": "M5 x 5.8 heat-set (OD 7.0, E)"
-   }
-  },
-  "stop": {
-   "x": [
-    -9.0,
-    9.0
-   ],
-   "y": [
-    93.0,
-    97.0
-   ],
-   "r": [
-    27.0,
-    31.0
-   ],
-   "z0_home": 31.0
+   ]
   }
- },
- "stroke": {
-  "z0s": [
-   32.0,
-   81.0,
-   86.1,
-   89.6,
-   95.6
-  ],
-  "drone_push": 6.0,
-  "slow_last": 12.0,
-  "slow_v": 20.0
- },
- "ecc": {
-  "x": -22.0,
-  "u": 24.0,
-  "shank_r": 5.5,
-  "bore_in_plate_r": 5.6,
-  "plate_boss_r": 7.6,
-  "flange_af": 13.0,
-  "flange_y": [
-   98.0,
-   100.5
-  ],
-  "throw": 0.8,
-  "bolt_r": 2.65
- },
- "axle_keep": {
-  "r": 5.0,
-  "y": [
-   98.0,
-   106.0
-  ]
- },
- "ecc_keep": {
-  "r": 13.0,
-  "y": [
-   98.0,
-   101.0
-  ]
  },
  "carriage": {
   "wheel_od": 24.0,
@@ -390,7 +329,7 @@
    94.0
   ],
   "web_u": [
-   -47.0,
+   -41.0,
    30.0
   ],
   "rack_pitch_x": 45.5,
@@ -420,12 +359,12 @@
   {
    "th": -45.0,
    "s": 1,
-   "gmin": -1.32,
+   "gmin": 2.12,
    "at": [
     "arm",
-    "A:web"
+    "axshaft"
    ],
-   "ok": false,
+   "ok": true,
    "pts": {
     "C": [
      18.0,
@@ -448,12 +387,12 @@
   {
    "th": -45.0,
    "s": -1,
-   "gmin": -1.32,
+   "gmin": 2.93,
    "at": [
     "arm",
     "B:web"
    ],
-   "ok": false,
+   "ok": true,
    "pts": {
     "C": [
      18.0,
@@ -476,12 +415,12 @@
   {
    "th": -75.0,
    "s": 1,
-   "gmin": -1.93,
+   "gmin": 2.92,
    "at": [
     "arm",
     "B:web"
    ],
-   "ok": false,
+   "ok": true,
    "pts": {
     "C": [
      6.6,
@@ -504,7 +443,7 @@
   {
    "th": -75.0,
    "s": -1,
-   "gmin": -23.35,
+   "gmin": -17.56,
    "at": [
     "arm",
     "B:web"

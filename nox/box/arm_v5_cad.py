@@ -64,10 +64,10 @@ def rail(h="A"):
     m -= hull([[cc + s * cm, cy1 - 0.01, z] for s in (-1, 1) for z in (S["r"][1], r1 + 1)] + [[cc + s * cm, cy1 + 1, z] for s in (-1, 1) for z in (S["r"][1], r1 + 1)])
     # one M5 per post from the top: Ø9 counterbore to Y 84, Ø5.5 through
     for rp in B["r_" + h]:
-        m -= cylY(B["x"], rp, B["cbore_y"], y1 + 1, B["cbore_r"], 48) + cylY(B["x"], rp, y0 - 1, B["cbore_y"] + 0.01, B["hole_r"], 32)
+        m -= cylY(B["x"], rp, B["cbore_y"], S["y"][1] + 1, B["cbore_r"], 48) + cylY(B["x"], rp, y0 - 1, B["cbore_y"] + 0.01, B["hole_r"], 32)
     # A / B mark: 1 or 2 Ø2 x 1 dimples in the top at r 137, beside the channel
     for k in range(1 if h == "A" else 2):
-        m -= cylY(5.5, 137.0 - 3.5 * k, y1 - 1.0, y1 + 1, 1.0, 16)
+        m -= cylY(5.5, 125.0 - 4.5 * k, y1 - 1.0, y1 + 1, 1.0, 16)          # 4.5 apart: 2.5 web
     return m
 
 
@@ -90,8 +90,10 @@ def vwheel(x=0.0, u=0.0):
 
 
 # ------------------------------------------------------------------ pinion 16T m1 (x2)
-def involute_gear_cs(n, m, pa=20.0, backlash=0.1, steps=8):
-    rp = n * m / 2; ra = rp + m; rf = rp - 1.25 * m; rb = rp * math.cos(math.radians(pa))
+def involute_gear_cs(n, m, pa=20.0, backlash=0.1, steps=8, tip_relief=0.06, relief_band=0.35, tip_cut=0.1):
+    """involute 20 deg; the top `relief_band` of each flank is thinned linearly by up to `tip_relief` (mm, along the arc) and the tip circle
+    cut by `tip_cut` (24 Oct review: tip relief against the rack, which heads v6 draw without one)."""
+    rp = n * m / 2; ra = rp + m - tip_cut; rf = rp - 1.25 * m; rb = rp * math.cos(math.radians(pa))
     inv = lambda a: math.tan(a) - a
     # half tooth angle at the pitch circle, thinned by backlash / 2 per flank
     half_p = (math.pi * m / 2 - backlash) / (2 * rp)
@@ -104,6 +106,7 @@ def involute_gear_cs(n, m, pa=20.0, backlash=0.1, steps=8):
         for i in range(steps + 1):
             r = r_start + (ra - r_start) * i / steps
             a = math.acos(min(1.0, rb / r)); th = off - inv(a)
+            if r > ra - relief_band: th -= tip_relief * (r - (ra - relief_band)) / relief_band / r
             flank.append((r, th))
         left = [(r, c - th) for r, th in flank]
         right = [(r, c + th) for r, th in reversed(flank)]
@@ -114,17 +117,20 @@ def involute_gear_cs(n, m, pa=20.0, backlash=0.1, steps=8):
 
 
 def pinion16(xc=0.0, zc=0.0):
-    """16T m1 pinion on the head motor's D-shaft, axis along Y at (xc, zc): boss Ø14 Y 56.5..64.5, teeth Y 64.5..72.5, D-bore,
+    """16T m1 pinion on the head motor's D-shaft, axis along Y at (xc, zc): boss Ø14 Y 56.5..63, neck Ø12 Y 63..64.5, teeth Y 64.5..72.5, D-bore,
     M3 grub radial at the boss middle onto the flat (the flat faces -X locally)."""
     cs, g = involute_gear_cs(V.PIN_T, V.PIN_M)
     t0, t1 = V.PIN_TEETH_Y; b0 = V.PIN_BOSS_Y[0]
-    gear = mf.Manifold.extrude(cs, t1 - t0).rotate([-90, 0, 0]).translate([0, t0, 0])
-    boss = cylY(0, 0, b0, t0 + 0.01, V.PIN_BOSS_R, 96)
+    ef = 0.3                                                          # elephant-foot step: the bed-side 0.3 of the teeth inset 0.3 (prints gear face down)
+    gear = mf.Manifold.extrude(cs, t1 - t0 - ef).rotate([-90, 0, 0]).translate([0, t0, 0])
+    gear += mf.Manifold.extrude(cs.offset(-0.3, mf.JoinType.Round), ef + 0.01).rotate([-90, 0, 0]).translate([0, t1 - ef - 0.01, 0])
+    b1 = V.WEB_Y[0] - 1.0                                              # boss ends 1.0 under the rack web (Y 64); a Ø12 neck (1.0 off the web face X 46.5) joins the teeth
+    boss = cylY(0, 0, b0, b1, V.PIN_BOSS_R, 96) + cylY(0, 0, b1 - 0.01, t0 + 0.01, V.PIN_X - V.WEB_X[1] - 1.0, 96)
     p = gear + boss
     r = SHAFT_D / 2 + BORE_CLR / 2; fd = SHAFT_FLAT - SHAFT_D / 2 + BORE_CLR / 2       # bore r 2.575, flat plane 2.075 off the axis on -X
     bore = cylY(0, 0, b0 - 1, t1 + 1, r, 48) ^ box(-fd, r + 1, b0 - 1, t1 + 1, -r - 1, r + 1)
     p -= bore
-    yg = (b0 + t0) / 2
+    yg = (b0 + b1) / 2
     p -= A.cylX(yg, 0, -V.PIN_BOSS_R - 1, 0, GRUB_TAP_D / 2, 24)        # grub from the -X side onto the flat
     return p.translate([xc, 0, zc]), g
 
@@ -171,7 +177,7 @@ def carriage(h="A", rack_teeth=True):
         s = cylY(x, u, V.WHEEL_Y[1], V.PLATE_Y[0], 5.0, 32)                                      # 5 x 10 x 1 shim
         s += cylY(x, u, V.NUT_Y[0], V.NUT_Y[1], V.NUT_R, 6)                                     # nyloc
         top = V.ECC["flange_y"][1] if (x, u) == (V.ECC["x"], V.ECC["u"]) else V.PLATE_Y[1]
-        s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, V.NUT_Y[0] - 3.0, top, 2.5, 24)  # M5 socket head + shank
+        s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - 25.0, top, 2.5, 24)      # M5 x 25 socket head + its real shank (tail Y 73 / 75.5)
         stack = s if stack is None else stack + s
     bush = ecc_bush(V.ECC["x"], V.ECC["u"], 90.0)
     out = dict(printed=printed, wheels=wheels, stack=stack, bush=bush)
@@ -229,6 +235,10 @@ def loads():
     flat_p = Td * 1000 / 2.0 / (3.0 * (V.PIN_TEETH_Y[1] - V.PIN_BOSS_Y[0]))   # D-flat bearing stress: lever ~2, flat ~3 wide x 16 (E)
     sig_y = 45.0                                                      # PETG tensile strength in-layer (MPa, E); across layers ~25 (E)
     S = V.RAIL_STOP; sw, st, sh = S["x"][1] - S["x"][0], S["r"][1] - S["r"][0], S["y"][1] - S["y"][0]
+    E_ = V.ECC; Fb = 30.0 + F_in * math.tan(math.radians(20))           # eccentric wheel: preload ~30 N (E) + the pinion's separating force
+    lev = (V.WHEEL_Y[0] + V.WHEEL_Y[1]) / 2 - V.PLATE_Y[0]              # wheel centre below the plate face (the shank root sees the moment)
+    ro, ri = E_["shank_r"], E_["bolt_r"] + E_["throw"]; Zs = math.pi * (ro ** 4 - ri ** 4) / (4 * ro)
+    sig_bush = Fb * abs(lev) / Zs
     sig_stop = 6 * 74.0 * sh / (sw * st ** 2)                         # stall 74 N on the stop face, bending at its root (across layers)
     return dict(insert_N=F_in, pull_N=F_out, carriage_couple_Nm=round(M, 2), wheel_axial_N=round(Fy, 0),
                 wheel_axial_N_layout_plate_plane=round(F_in * (V.L.Y_C - V.PLATE_Y[1]) / (us[1] - us[0]), 0),
@@ -237,7 +247,8 @@ def loads():
                 flank_normal_N=round(Fn, 0), flank_band_mm=round(band, 2), flank_contact_MPa=round(p_max, 0), flank_index=round(p_max / P_CONTACT, 2),
                 brg_axial_N=round(Fy, 0), brg_C0_N=670, pinion_torque_Nm=round(Td, 2), pinion_lewis_MPa=round(lew(F_in), 1),
                 pinion_index=round(lew(F_in) / sig_y, 2), pinion_stall_lewis_MPa=round(lew(74.0), 1), pinion_stall_index=round(lew(74.0) / sig_y, 2),
-                dflat_MPa=round(flat_p, 1), stop_stall_MPa=round(sig_stop, 1), stop_index=round(sig_stop / 25.0, 2), notes="E: PETG E 2 GPa, in-layer 45 MPa, across 25 MPa, line-contact yield onset p0 = 1.67 x 55 MPa compressive yield = 92 MPa (Tresca, E); rail bends across layers "
+                dflat_MPa=round(flat_p, 1), stop_stall_MPa=round(sig_stop, 1), stop_index=round(sig_stop / 25.0, 2),
+                bush_load_N=round(Fb, 0), bush_MPa=round(sig_bush, 1), bush_index=round(sig_bush / 25.0, 2), notes="E: PETG E 2 GPa, in-layer 45 MPa, across 25 MPa, line-contact yield onset p0 = 1.67 x 55 MPa compressive yield = 92 MPa (Tresca, E); rail bends across layers "
                 "(printed bottom down, the couple bends it in Y = print Z), so its index uses 25 MPa")
 
 
@@ -276,6 +287,8 @@ def main(checks=False):
             res[nm]["solid_check"] = "PASS" if ok else "FAIL"; res[nm]["solid_info"] = info
             print(nm, "solid_check", "PASS" if ok else "FAIL", info)
         res["fit"] = fit()
+        res["roll_max_overlap_mm3"], res["roll_min_gap"] = roll_check()
+        print("roll", res["roll_max_overlap_mm3"], res["roll_min_gap"])
         for r in res["fit"]: print("fit", r)
         save_runs(res)
     json.dump(res, open(os.path.join(RUN, "checks.json"), "w"), indent=1, default=str)
@@ -283,9 +296,9 @@ def main(checks=False):
 
 
 PRINT_NOTES = {   # part folder -> (files, bed face, print rule)
-    "arm_rail": (("arm_rail_A_v1", "arm_rail_B_v1"), "bottom (Y 74: body + both feet, coplanar)", "no supports needed (ridge flanks 45 deg, channel taper 6 deg); 4 walls, 15 % gyroid"),
-    "arm_vwheel": (("arm_vwheel_v1",), "either face (symmetric)", "brim 5 mm (bed < 400 mm2), no supports (groove flanks 45 deg); 100 % infill (small, rolling contact); print 6"),
-    "arm_pinion16": (("arm_pinion16_v1",), "gear face (Y 72.5) down, boss up", "brim 5 mm, no supports; 100 % infill; print 2"),
+    "arm_rail": (("arm_rail_A_v1", "arm_rail_B_v1"), "bottom (Y 74 (C): body + both feet, coplanar)", "no supports needed (ridge flanks 45 deg (C), channel taper 6 deg (C)); 4 walls, 15 % gyroid"),
+    "arm_vwheel": (("arm_vwheel_v1",), "either face (symmetric, C)", "brim 5 mm (bed < 400 mm2), no supports (groove flanks 45 deg, C); 100 % infill (small, rolling contact); print 6"),
+    "arm_pinion16": (("arm_pinion16_v1",), "gear face (Y 72.5, C) down with a 0.3 (C) elephant-foot inset step, boss up", "brim 5 mm, no supports; 100 % infill; print 2"),
     "arm_eccbush": (("arm_eccbush_v1",), "hex flange face down", "brim 5 mm, no supports; 100 % infill; print 2"),
 }
 
@@ -293,10 +306,10 @@ PRINT_NOTES = {   # part folder -> (files, bed face, print rule)
 def save_runs(res):
     """result.json + summary.md (docs/generative.md fixed form) in runs/<part>/v1/ for the four parts."""
     Ld = res["loads"]; fit_ = res.get("fit", [])
-    worst = {"arm_rail": (Ld["rail_index"], f"insert 60 N couple {Ld['carriage_couple_Nm']} N.m, rail bending at the outer post (hand calc, across layers)"),
-             "arm_vwheel": (Ld["flank_index"], f"insert 60 N: {Ld['wheel_axial_N']:.0f} N axial on the outer fixed wheel, all on one flank, Hertz {Ld['flank_contact_MPa']:.0f} MPa vs 92 yield onset (hand calc; Hertz line contact, E)"),
-             "arm_pinion16": (Ld["pinion_index"], f"insert 60 N at r 8, Lewis {Ld['pinion_lewis_MPa']} MPa (stall 74 N: {Ld['pinion_stall_index']})"),
-             "arm_eccbush": (0.1, "preload + separating 21.8 N on a 2.05 wall (hand calc, E)")}
+    worst = {"arm_rail": (Ld["rail_index"], f"insert 60 N (E): couple {Ld['carriage_couple_Nm']} N.m (E), rail bending at the outer post {Ld['rail_sigma_MPa']} MPa (E, hand calc, across layers vs 25 E)"),
+             "arm_vwheel": (Ld["flank_index"], f"insert 60 N (E): {Ld['wheel_axial_N']:.0f} N (E) axial on an outer fixed wheel, all on one flank, Hertz {Ld['flank_contact_MPa']:.0f} MPa (E) vs 92 yield onset (E, hand calc)"),
+             "arm_pinion16": (Ld["pinion_index"], f"insert 60 N (E) at r 8 (C), Lewis {Ld['pinion_lewis_MPa']} MPa (E) vs 45 in-layer (E); stall 74 N (E): {Ld['pinion_stall_index']}"),
+             "arm_eccbush": (Ld["bush_index"], f"eccentric wheel load {Ld['bush_load_N']:.0f} N (E: preload 30 + separating) bending the shank, {Ld['bush_MPa']} MPa (E, hand calc) vs 25 across layers (E)")}
     for part, (files, bed, rule) in PRINT_NOTES.items():
         d = os.path.join(ROOT, "runs", part, "v1"); os.makedirs(d, exist_ok=True)
         ms = [res[f]["mass_g"] for f in files]
@@ -306,17 +319,18 @@ def save_runs(res):
             n = t.face_normals; zc = t.triangles_center[:, 2]
             po[f] = round(float(t.area_faces[(n[:, 2] < -0.99) & (zc < t.bounds[0][2] + 0.3)].sum()), 0)
         sok = all(res[f].get("solid_check") == "PASS" for f in files)
+        ms_t = " / ".join(f"{m:.1f}" for m in ms)
         w, wc = worst[part]
         json.dump(dict(date="2026-10-24", status="DONE", mass_g=round(sum(ms) / len(ms), 2), mass_tag="M", worst_index=w, worst_case=wc,
                        solid_ok=sok, bed_face=bed, bed_contact_mm2=min(po.values()), note="drawn (manifold3d), nox/box/arm_v5_cad.py"),
                   open(os.path.join(d, "result.json"), "w"), indent=1)
         fl = ", ".join(f"print/box_{f}.stl" for f in files)
         txt = (f"{part} v1: ready to print\n"
-               f"Weight: {' / '.join(f'{m:.1f}' for m in ms)} g (M), was ~{ {'arm_rail': '44', 'arm_vwheel': '3', 'arm_pinion16': '2', 'arm_eccbush': 'none'}[part]} (E, v5 layout)\n"
+               f"Weight: {ms_t} g (M), was ~{ {'arm_rail': '44 (E)', 'arm_vwheel': '3 (E)', 'arm_pinion16': '2 (E)', 'arm_eccbush': 'none'}[part]} (v5 layout)\n"
                f"Strength: worst index {w} in {wc}; weakest spot " +
                {"arm_rail": "the rail's bottom fibre at the outer post", "arm_vwheel": "the groove flank contact (rolling, PETG on PETG)",
                 "arm_pinion16": "the tooth root (in-layer)", "arm_eccbush": "the shank wall beside the eccentric bore"}[part] +
-               f"   [box part: fits (C, drawn): wheels on the ridge 0 mm3 over the stroke, rim 1.0 to the rail body, axle stack 1.4, plate 1.0, rack and pinion 0 mm3 through a full pitch]\n"
+               f"   [box part: fits (C, drawn): wheels on the ridge 0 mm3 (C) at every stroke state, rim 1.0 (C) to the rail body, axle stack 1.4 (C), plate 1.0 (C), rack and pinion 0 mm3 (C) through a full pitch of rolling, closest {res.get('roll_min_gap', 0):.2f} (C); no supports]\n"
                f"Solid: solid_check {'PASS' if sok else 'FAIL'}\n"
                f"Print: {bed}, bed contact {' / '.join(str(int(po[f])) for f in files)} mm2 (M), {rule}; file {fl}\n")
         open(os.path.join(d, "summary.md"), "w").write(txt)
@@ -331,6 +345,18 @@ def pinion_at(z0):
     rot = -math.degrees(d / V.PIN_R)                                  # roll the -X tooth by -d along u onto the gap centre
     # the tooth at angle 0 points +X; the rack is at -X of the pinion: start with a tooth at 180 deg (16T: k = 8 is at 180)
     return pinion16()[0].rotate([0, rot, 0]).translate([V.PIN_X, 0, V.PIN_Z])
+
+
+def roll_check(n=25):
+    """pinion v1 rolling on the drawn rack through one full pitch: max overlap (mm3) and min gap (C)."""
+    pl = carriage("A")["printed"]; base = pinion16()[0]; p = math.pi * V.PIN_M; gc = V.WEB_U[0] + p / 2
+    ov, gmin = 0.0, 9.0
+    for k in range(n):
+        z0 = 60.0 + k * p / (n - 1)
+        d = (V.PIN_Z - z0) - gc
+        pin = base.rotate([0, -math.degrees(d / V.PIN_R), 0]).translate([V.PIN_X, 0, V.PIN_Z]); pp = pl.translate([0, 0, z0])
+        ov = max(ov, (pin ^ pp).volume()); gmin = min(gmin, pin.min_gap(pp, 2.0))
+    return round(ov, 4), round(gmin, 3)
 
 
 def fit():

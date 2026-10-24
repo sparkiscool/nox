@@ -9,15 +9,15 @@ python3 arm_v5_layout.py  -> report + runs/arm/v5-layout/result.json (the artifa
 import math, json, os, itertools
 import arm_layout as L
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "arm", "v5-layout"); os.makedirs(OUT, exist_ok=True)
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "arm", "v5-layout-b"); os.makedirs(OUT, exist_ok=True)
 CLR = 1.0                                   # rule: every designed gap >= 1.0 (DEFAULT, = CLR_POST)
 
 # ================================================================== v5 parts (C)
 # --- rail (PETG, one per head; A and B differ only in the inner insert row) ---
 RAIL_Y = (74.0, 93.0)                       # posts Y 52..74; top 93 (24 Oct, arm-mech: was 94 = 0.0 under the carriage plate, now 1.0)
-RAIL_R = (27.0, 140.0)                      # along the head axis: start 27 (24 Oct: was 29; the rail is Y 74..93, the 80T / ring / collar end at
-                                            # Y 72, so only the park stop needs it); end 140 (was 134: the +6 drone push puts the outer wheel at
-                                            # r 133.6; 140 keeps 6.4 of ridge past its contact)
+RAIL_R = (27.0, 134.0)                      # along the head axis: start 27 (24 Oct: was 29; the rail is Y 74..93, the 80T / ring / collar end at
+                                            # Y 72, so only the park stop needs it); end 134 (the outer wheel contact at the drone insert is r 127.6:
+                                            # 6.4 of ridge past it)
 # park hard stop (24 Oct, box electronics v1: homing without endstops): a block on the rail top at the inner end; the carriage plate's inner
 # edge (u 0) meets it at z0 31, 1.0 inside park (32). Homing: drive inward at low current to the stall, z0 := 31, go to park. Heads v6 keep
 # nothing at u < 0 inside X +-10, Y 93..98 (the plate's own band).
@@ -38,14 +38,16 @@ RAIL_INSERTS = RAIL_BOLTS                   # old name kept for importers; the r
 WHEEL_OD, WHEEL_W, WHEEL_GROOVE_D = 24.0, 10.0, 2.0  # printed V-wheel on 2 x 625ZZ (5 x 16 x 5, P spec): rim r 12, 90 deg groove 2 deep (bottom r 10, 2.0 over the bearing)
 WHEEL_X = 22.0                               # axle X: groove bottom at X 12 = the ridge's virtual apex; rim at X 10, 1.0 off the rail body (9)
 WHEEL_Y = (83.0, 93.0)                       # wheel over the ridge plane Y 88 +-5
-WHEELS = ((22.0, 10.0), (22.0, 38.0), (-22.0, 24.0))   # (X, u): fixed pair on the rack side, the eccentric opposite (0.8 throw M5 spacer, E)
+WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))    # (X, u): fixed pair on the rack side, the eccentric opposite (printed bush, 0.8 throw)
+                                            # 24 Oct: u 10 / 38 / 24 -> 4 / 32 / 18 (wheelbase 28 kept): with the +6 drone push the old set reached r 147.3
+                                            # (wheel rim) / 144.3 (plate corner), past the r 143 module keep and the stand's r 145.5 arm lane
 NUT_Y, NUT_R = (79.0, 83.0), 4.6             # M5 nyloc under the wheel (8 AF)
 SPACER_Y = (93.0, 94.0)
-PLATE_Y, PLATE_X, PLATE_U = (94.0, 98.0), (-28.0, 28.0), (0.0, 46.0)   # carriage plate: 2 web beside the M5 holes; the head body generates from Y 98
+PLATE_Y, PLATE_X, PLATE_U = (94.0, 98.0), (-28.0, 28.0), (0.0, 40.0)   # carriage plate: 2 web beside the M5 holes; the head body generates from Y 98
 # eccentric (24 Oct, arm-mech, DEFAULT printed bush `arm_eccbush` v1, no bought spacer): shank Ø11 in a Ø11.2 plate bore (Y 94..98), hex flange
 # AF 13 x 2.5 on the plate top (Y 98..100.5), M5 bore 0.8 off its axis (wall 2.05); a 5 x 10 x 1 shim at Y 93..94 under it. The plate grows a
-# boss r 7.6 round the bush (2.0 web; to X -29.6). Head keep-outs over every axle: Ø10 x Y 98..106 (socket head + key); over the bush Ø26 x Y 98..101 (13 wrench)
-ECC = dict(x=-22.0, u=24.0, shank_r=5.5, bore_in_plate_r=5.6, plate_boss_r=7.6, flange_af=13.0, flange_y=(98.0, 100.5), throw=0.8, bolt_r=2.65)
+# boss r 8.6 round the bush (3.0 wall, the boss rule; to X -30.6). Head keep-outs over every axle: Ø10 x Y 98..106 (socket head + key); over the bush Ø26 x Y 98..101 (13 wrench)
+ECC = dict(x=-22.0, u=18.0, shank_r=5.5, bore_in_plate_r=5.6, plate_boss_r=8.6, flange_af=13.0, flange_y=(98.0, 100.5), throw=0.8, bolt_r=2.65)
 AXLE_KEEP = dict(r=5.0, y=(98.0, 106.0)); ECC_KEEP = dict(r=13.0, y=(98.0, 101.0))
 WING_X, WING_U = (28.0, 46.5), (0.0, 30.0)   # plate wing over the fixed wheels out to the rack web (Y 94..98)
 WEB_X, WEB_Y, WEB_U = (40.5, 46.5), (64.0, 94.0), (-47.0, 30.0)   # rack web, 6 thick: teeth on its +X face at Y 64..73, plain above (u -47: was -41, +6 drone push)
@@ -53,7 +55,7 @@ RACK_PITCH_X, RACK_TEETH_Y, RACK_LEN = 45.5, (64.0, 73.0), 77.0   # m1 rack: tip
 # --- pinion and motors ---
 PIN_T, PIN_M = 16, 1.0
 PIN_R, PIN_TIP_R, PIN_BOSS_R = 8.0, 9.0, 7.0
-PIN_TEETH_Y, PIN_BOSS_Y = (64.5, 72.5), (56.5, 64.0)   # on the NEMA D-shaft (Y 50..74, flat from Y 54): M3 grub in the boss at Y 60
+PIN_TEETH_Y, PIN_BOSS_Y = (64.5, 72.5), (56.5, 63.0)   # boss ends 1.0 under the rack web (24 Oct; a Ø12 neck to the teeth); on the NEMA D-shaft (Y 50..74, flat from Y 54): M3 grub in the boss at Y 60
 PIN_Z = 55.0                                 # pinion axis along the head's travel: pinion u = PIN_Z - z0 stays >= 6 inside the rack for z0 32..89.6
 PIN_X = RACK_PITCH_X + PIN_R                 # 53.5
 MOTORS_V5 = {"A": dict(xc=PIN_X, zc=PIN_Z, rot=math.degrees(math.atan2(PIN_Z, PIN_X))),          # (53.5, 55), edge toward the axle
@@ -270,11 +272,13 @@ def stacks():
 # ================================================================== parts delta (per arm: both heads)
 PARTS_OUT = [("2040 extrusion 112", 2, "bars"), ("idler end A / B v3 (printed)", 2, ""), ("GT2 toothless idler", 2, ""), ("GT2 6 mm belt cut 445 / 457", 2, "+ 2 belt connectors"),
              ("M5 T-nut", 8, "bar posts + idler ends"), ("GT2 20T 5 bore", 2, "head motors (the axle 20T stays)"), ("glide (in heads A / B v5)", 2, "replaced by the carriage")]
-PARTS_IN = [("rail A / B v1 (PETG, printed)", 2, "~44 g each E: foot pads 32 x 6 x 20 at the posts, body 18 x 14 x 105, ridges, ribbon channel"),
-            ("V-wheel v1 (PETG, printed, OD 24 x 10, 90 deg groove)", 6, "~3 g each E, on 2 x 625ZZ"), ("625ZZ bearing 5 x 16 x 5", 12, "~5 g each E"),
-            ("M5 x 25 socket head + nyloc", 6, "wheel axles through the plate"), ("M5 eccentric spacer, 6 tall, 0.8 throw (OpenBuilds type)", 2, "one per head in a hex pocket; fallback a printed eccentric bush"),
-            ("pinion 16T m1 v1 (PETG, printed, Ø18 x 16, boss Ø14)", 2, "on the NEMA D-shaft, M3 grub"), ("M3 x 4 grub", 2, ""), ("M5 heat-set insert", 8, "rail feet, 2 per post"),
-            ("rack 71 m1 (printed into each head's carriage web)", 2, "~16 g per head with the web E")]
+PARTS_IN = [("rail A / B v1 (PETG, printed)", 2, "52.4 / 52.6 g M (arm_v5_cad): body 18 x 19 full depth, ridges, feet at the posts, park stop, ribbon channel"),
+            ("V-wheel v1 (PETG, printed, OD 24 x 10, 90 deg groove)", 6, "2.8 g each M, on 2 x 625ZZ (press + epoxy)"), ("625ZZ bearing 5 x 16 x 5", 12, "~5 g each E"),
+            ("M5 x 25 socket head + nyloc", 6, "wheel axles through the plate"), ("M5 precision shim 5 x 10 x 1", 6, "one under each wheel's inner race (Y 93..94)"),
+            ("eccentric bush v1 (PETG, printed, 0.8 throw)", 2, "0.8 g each M, in the plate's eccentric bore"),
+            ("pinion 16T m1 v1 (PETG, printed, Ø18 x 16, boss Ø14)", 2, "3.1 g each M, on the NEMA D-shaft, M3 grub"), ("M3 x 4 grub", 2, ""),
+            ("M5 x 16 socket head", 4, "rail to post, one per post from the rail top"), ("M5 heat-set insert (OD 7.0 x 5.8, E)", 4, "one per hub v6 post top"),
+            ("rack 77 m1 (printed into each head's carriage web)", 2, "in heads v6")]
 
 def main():
     best = axle_search()
@@ -309,16 +313,18 @@ def main():
         rc = max(math.hypot(x, zz + u) for x, u in corners)
         rw = math.hypot(WHEEL_X, zz + WHEELS[1][1] + WHEEL_OD / 2)
         ang = max(math.degrees(math.atan2(x, zz + u)) for x, u in corners)
-        print(f"reach at the {nm}: plate corner r {rc:.1f} (Y 94..98), wheel rim r {rw:.1f} (Y 83..93), {ang:.1f} deg off the head axis; module keep cylinder r 136.5 to Y 95.5 -> grow to r 143 to Y 98 (v4 corner 135.7); stand arm lane r 145.5")
+        print(f"reach at the {nm}: plate corner r {rc:.1f} (Y 94..98), wheel rim r {rw:.1f} (Y 83..93), {ang:.1f} deg off the head axis; rail tip r {math.hypot(RIDGE_X, RAIL_R[1]):.1f}; "
+              f"bay module keep cylinder (v4i r 136.5 to Y 95.5) needs r >= {max(rc, rw, math.hypot(RIDGE_X, RAIL_R[1])) + CLR:.1f} to Y {PLATE_Y[1]:g}; stand arm lane r 145.5")
     print(f"wheel on the ridge: outer wheel contact at u {WHEELS[1][1]} -> r {max(Z0S) + WHEELS[1][1]:.1f} at the drone ({RAIL_R[1] - max(Z0S) - WHEELS[1][1]:.1f} of ridge left); inner at park r {min(Z0S) + WHEELS[0][1]:.1f} ({min(Z0S) + WHEELS[0][1] - RAIL_R[0]:.1f} from the rail start)")
     # loads (E)
-    F_push = 60.0; lever = (L.Y_C - PLATE_Y[1])
-    print(f"loads (E): insert push {F_push:.0f} N at Y_C -> moment {F_push * lever / 1000:.2f} N.m on the carriage, {F_push * lever / (WHEELS[1][1] - WHEELS[0][1]):.0f} N on a wheel flank (625ZZ dyn ~1.4 kN); "
+    F_push = 60.0; lever = (L.Y_C - sum(RACK_TEETH_Y) / 2)                 # the rack takes the push at its teeth (Y 68.5)
+    print(f"loads (E): insert push {F_push:.0f} N at Y_C -> couple {F_push * lever / 1000:.2f} N.m on the carriage, {F_push * lever / (WHEELS[1][1] - WHEELS[0][1]):.0f} N axial on each outer fixed wheel "
+          f"({F_push * lever / (WHEELS[1][1] - WHEELS[0][1]) * math.sqrt(2):.0f} N normal if one flank takes it; 625ZZ C0 ~670 N); "
           f"pinion tangential {F_push:.0f} N, separating {F_push * math.tan(math.radians(20)):.1f} N; motor stall 0.59 N.m / {PIN_R / 1000} m = {0.59 / (PIN_R / 1000):.0f} N (misuse)")
     I_web = (WEB_Y[1] - WEB_Y[0]) * (WEB_X[1] - WEB_X[0]) ** 3 / 12
     Lt = -WEB_U[0] - 6.0
     Fs = F_push * math.tan(math.radians(20))
-    print(f"rack web tail: {WEB_X[1] - WEB_X[0]:.0f} x {WEB_Y[1] - WEB_Y[0]:.0f} x {-WEB_U[0]:.0f} hanging; separating {Fs:.1f} N at the drone insert -> {Fs * Lt ** 3 / (3 * 2000 * I_web):.2f} mm sideways (E, PETG 2 GPa), 0.2 backlash")
+    print(f"rack web tail: {WEB_X[1] - WEB_X[0]:.0f} x {WEB_Y[1] - WEB_Y[0]:.0f} x {-WEB_U[0]:.0f} hanging; separating {Fs:.1f} N at the drone insert -> {Fs * Lt ** 3 / (3 * 2000 * I_web):.2f} mm sideways (E, PETG 2 GPa), backlash 0.1 per flank (pinion v1)")
     # detent
     det = detent_check(ax)
     print("detent re-placement (ring v1 unchanged for th = -105 + 30 k; detent.py search() reruns with the v5 obstacles):")

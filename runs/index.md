@@ -1,16 +1,16 @@
 # Runs
 
-_51 runs · rebuilt 2026-10-24 01:26_
+_52 runs · rebuilt 2026-10-24 01:50_
 
 ## Latest per part
 
 | Part | Version | Status | Mass | Worst index | Solid | Summary |
 |---|---|---|---|---|---|---|
-| arm | v5-layout | DONE | · | ·  | · | [runs/arm/v5-layout](runs/arm/v5-layout/summary.md) |
-| arm_eccbush | v1 | DONE | 0.8 (M) | 0.10 in preload + separating 21.8 N on a 2.05 wall (hand calc, E) | PASS | [runs/arm_eccbush/v1](runs/arm_eccbush/v1/summary.md) |
-| arm_pinion16 | v1 | DONE | 3.1 (M) | 0.56 in insert 60 N at r 8, Lewis 25.4 MPa (stall 74 N: 0.7) | PASS | [runs/arm_pinion16/v1](runs/arm_pinion16/v1/summary.md) |
-| arm_rail | v1 | DONE | 52.5 (M) | 0.23 in insert 60 N couple 6.39 N.m, rail bending at the outer post (hand calc, across layers) | PASS | [runs/arm_rail/v1](runs/arm_rail/v1/summary.md) |
-| arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N: 228 N axial on the outer fixed wheel, all on one flank, Hertz 60 MPa vs 92 yield onset (hand calc; Hertz line contact, E) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
+| arm | v5-layout-b | DONE | · | ·  | · | [runs/arm/v5-layout-b](runs/arm/v5-layout-b/summary.md) |
+| arm_eccbush | v1 | DONE | 0.8 (M) | 0.11 in eccentric wheel load 52 N (E: preload 30 + separating) bending the shank, 2.8 MPa (E, hand calc) vs 25 across layers (E) | PASS | [runs/arm_eccbush/v1](runs/arm_eccbush/v1/summary.md) |
+| arm_pinion16 | v1 | DONE | 3.0 (M) | 0.56 in insert 60 N (E) at r 8 (C), Lewis 25.4 MPa (E) vs 45 in-layer (E); stall 74 N (E): 0.7 | PASS | [runs/arm_pinion16/v1](runs/arm_pinion16/v1/summary.md) |
+| arm_rail | v1 | DONE | 49.9 (M) | 0.23 in insert 60 N (E): couple 6.39 N.m (E), rail bending at the outer post 5.7 MPa (E, hand calc, across layers vs 25 E) | PASS | [runs/arm_rail/v1](runs/arm_rail/v1/summary.md) |
+| arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | topo-v2 | · | 76.1 (M) | ·  | PASS | [runs/bar_half/topo-v2](runs/bar_half/topo-v2/summary.md) |
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
@@ -38,11 +38,11 @@ _51 runs · rebuilt 2026-10-24 01:26_
 | 2026-10-24 00:55 | motor_mount | [topo-v3](runs/motor_mount/topo-v3/summary.md) | · | 17.2 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 00:55 | scan_stick_base | [v13](runs/scan_stick_base/v13/summary.md) | · | 328.1 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-24 00:55 | scan_stick_base | [v14](runs/scan_stick_base/v14/summary.md) | · | 296.6 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 | arm | [v5-layout](runs/arm/v5-layout/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 | arm_eccbush | [v1](runs/arm_eccbush/v1/summary.md) | DONE | 0.8 (M) | 0.10 | PASS | hex flange face down | · GB | · min | · |
-| 2026-10-24 | arm_pinion16 | [v1](runs/arm_pinion16/v1/summary.md) | DONE | 3.1 (M) | 0.56 | PASS | gear face (Y 72.5) down, boss up | · GB | · min | · |
-| 2026-10-24 | arm_rail | [v1](runs/arm_rail/v1/summary.md) | DONE | 52.5 (M) | 0.23 | PASS | bottom (Y 74: body + both feet, coplanar) | · GB | · min | · |
-| 2026-10-24 | arm_vwheel | [v1](runs/arm_vwheel/v1/summary.md) | DONE | 2.8 (M) | 0.66 | PASS | either face (symmetric) | · GB | · min | · |
+| 2026-10-24 | arm | [v5-layout-b](runs/arm/v5-layout-b/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 | arm_eccbush | [v1](runs/arm_eccbush/v1/summary.md) | DONE | 0.8 (M) | 0.11 | PASS | hex flange face down | · GB | · min | · |
+| 2026-10-24 | arm_pinion16 | [v1](runs/arm_pinion16/v1/summary.md) | DONE | 3.0 (M) | 0.56 | PASS | gear face (Y 72.5, C) down with a 0.3 (C) elephant-foot inset step, boss up | · GB | · min | · |
+| 2026-10-24 | arm_rail | [v1](runs/arm_rail/v1/summary.md) | DONE | 49.9 (M) | 0.23 | PASS | bottom (Y 74 (C): body + both feet, coplanar) | · GB | · min | · |
+| 2026-10-24 | arm_vwheel | [v1](runs/arm_vwheel/v1/summary.md) | DONE | 2.8 (M) | 0.66 | PASS | either face (symmetric, C) | · GB | · min | · |
 | 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
 | 2026-10-23 23:31 | scan_stick_cam | [v5](runs/scan_stick_cam/v5/summary.md) | FAILED | 13.0 (M) | 0.31 | PASS | · | 5.7 (P) GB | 44 min | · |
 | 2026-10-23 19:52 | scan_stick | [v13](runs/scan_stick/v13/summary.md) | DONE | 42.0 (M) | 0.30 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
@@ -54,6 +54,7 @@ _51 runs · rebuilt 2026-10-24 01:26_
 | 2026-10-23 17:11 | scan_stick | [v10](runs/scan_stick/v10/summary.md) | RETIRED | 40.0 (M) | 0.36 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
 | 2026-10-23 15:31 | scan_stick_base | [v12](runs/scan_stick_base/v12/summary.md) | RETIRED | 300.1 (M) | 0.56 | PASS | -z (bottom) | 5.6 (P) GB | 7 min | · |
 | 2026-10-23 15:13 | scan_stick_cam | [v4](runs/scan_stick_cam/v4/summary.md) | DONE | 12.6 (M) | 0.28 | PASS | plate bottom | 3.0 (P) GB | 18 min | · |
+| 2026-10-23 | arm | [v5-layout](runs/arm/v5-layout/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v1](runs/scan_stick/v1/summary.md) | DONE | 86.8 (M) | · | PASS | head: lidar seat | · GB | · min | · |
 | 2026-10-23 | scan_stick | [v2](runs/scan_stick/v2/summary.md) | DONE | 61.9 (M) | 0.03 | PASS | lidar seat (4 pads) down | 3.5 (P) GB | 35 min | · |
 | 2026-10-23 | scan_stick | [v4](runs/scan_stick/v4/summary.md) | FAILED | 30.4 (M) | · | FAIL | · | · GB | · min | · |
