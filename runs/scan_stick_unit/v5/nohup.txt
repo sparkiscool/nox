@@ -33,3 +33,4 @@ it  18 beta    2 J   1.0586 vol 0.0432 (dil 0.0713 g -0.000) grey 17.0% ch 0.087
 it  19 beta    2 J   1.0586 vol 0.0433 (dil 0.0713 g -0.000) grey 17.0% ch 0.100 worst camera hit above 50 N 2.96e+03 15.0s
 it  20 beta    2 J   1.0586 vol 0.0435 (dil 0.0713 g -0.000) grey 16.9% ch 0.100 worst camera hit above 50 N 2.96e+03 16.2s
 layout: beta 2 done: eroded design 17 bodies, main 99.2%; drawn bodies outside the main body: 15
+it  21 beta    4 J   6.0073 vol 0.0282 (dil 0.0894 g -0.292) grey 10.9% ch 0.100 worst tie b2 my 1.86e+04 15.6s
