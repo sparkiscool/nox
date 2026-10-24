@@ -1,0 +1,2 @@
+=== scan_stick_base: h 2.0, generated 70.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies

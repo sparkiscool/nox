@@ -29,6 +29,9 @@ s = Scene("Scan stick assembly", f"Generated so far: head {hv} and base {bv} are
           "3 mm carbon cage, TPU nodes and the pole are the v5 system models. Base socket: Ø28.3 sleeve 27 over the Ø27.5 pole, then the thread.")
 s.part(f"base {bv} (generated)", base, group="printed", color="#8899aa", printed=True, note=f"{BASE}: spine, pack pocket, thread boss with the 27 sleeve down the pole")
 s.part(f"head {hv} (generated)", head, group="printed", color="#c0cad6", printed=True, note=f"{HEAD}: front module, L2 ring + bosses, camera posts")
+sides = U.tm(sum((U.box(U.PACK[0] - 0.5, U.PACK[1] + 0.5, *sorted((sy * (U.PACK[3] + 0.5), sy * (U.PACK[3] + 6.5))), 32.0, U.SPINE[5]) for sy in (-1, 1)), U.mf.Manifold())
+              - U.spine_bodies()["cuts"])
+s.part("side walls (new in base v26)", sides, group="printed", color="#e0592a", printed=True, note="drawn 6 mm walls y ±26..32 close the pocket into a tube; in the v26 run now, not in the v23 mesh shown")
 s.part("cage rods", rods, group="bought", color="#111111", printed=False, note="3 mm carbon")
 s.part("TPU nodes", nodes, group="printed", color="#d4a017", printed=False, note="drawn 12 mm nodes (model)")
 for n, b, col in (("pack", U.PACK, "#2f4fbf"), ("Pi 5", U.PI_KEEP, "#2e7d32"), ("UBEC + buck", U.EL_KEEP, "#b07d2b"),
@@ -36,7 +39,7 @@ for n, b, col in (("pack", U.PACK, "#2f4fbf"), ("Pi 5", U.PI_KEEP, "#2e7d32"), (
     s.part(n, bx(b), group="bought", color=col, printed=False)
 s.part("Unitree L2", l2, group="bought", color="#222222", printed=False)
 s.part("pole", pole, group="bought", color="#777777", printed=False)
-names = [p for p in (f"base {bv} (generated)", f"head {hv} (generated)", "cage rods", "TPU nodes", "pack", "Pi 5", "UBEC + buck", "camera", "Unitree L2", "pole")]
+names = [p for p in (f"base {bv} (generated)", f"head {hv} (generated)", "side walls (new in base v26)", "cage rods", "TPU nodes", "pack", "Pi 5", "UBEC + buck", "camera", "Unitree L2", "pole")]
 s.timeline(lambda t: {n: T.transformations.rotation_matrix(2 * math.pi * t / 16, [0, 0, 1]) for n in names}, duration_s=16, fps=30)
 s.view("iso", (420, -480, 300), (20, 0, 90)); s.view("side", (0, -700, 90), (20, 0, 90)); s.view("front", (700, 0, 90), (20, 0, 90))
 s.view("back", (-700, 0, 90), (20, 0, 90))
