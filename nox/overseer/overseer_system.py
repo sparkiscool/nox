@@ -243,7 +243,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     rb = g["receiver"].bounds
     # sled: printed PETG plate on the receiver's mount plane (the 6 M3 come up from below into its inserts), 4 thick,
     # on the belly frame tabs of the 4 corner nodes; the pods hang from it beside the receiver
-    g["sled"] = box(rb[0][0] - 5, rb[1][0] + 5, -76, 76, RT, RT + 4)
+    g["sled"] = box(-dc - 89.65, -dc + 89.65, -76, 76, RT, RT + 4)          # over the receiver body (179.3), its bolts at x -84.7 / 0 / +78.3; 13.8 off the ±x faces (G (8) ≥ 9)
     g["cam_pod"] = box(-dc - 23, -dc + 23, 35, 75, PB + 16, RT)
     g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
     g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 36, 74, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 55)])
@@ -443,8 +443,10 @@ def funnel(g, dc):
     nothing within 9.0 of the ±x faces over y -35..+69 (+x) / -69..+35 (-x) between the face edge and the probes, the
     pads excepted); below the face edges everything inside 191 (x) x 168 (y) at ±5 deg yaw, 3 a side (G (2))"""
     others = trimesh.util.concatenate(g["arms"] + g["motors"] + [g["cage_low"], g["cage_up"], TOP, BOTTOM, FC, PI, DECK, PDB, UBEC, BUCK, RX, g["apex"], g["l2"], g["cam"],
-                                       g["cam_bracket"], g["cart"], g["receiver"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"] + [g["pan"]])
-    p = pts(others, 40000) + [dc, 0, SEAT_DZ]                     # funnel centre at the catch centre
+                                       g["cam_bracket"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"] + [g["pan"]])
+    latch = trimesh.util.concatenate([g["cart"], g["receiver"]])   # the battery latch's set: its own session's check (3.42 a side to the panels)
+    p = np.vstack([pts(others, 40000), pts(latch, 8000)]) + [dc, 0, SEAT_DZ]   # funnel centre at the catch centre
+    own = np.arange(len(p)) < len(p) - 8000
     d_face = np.full(len(p), np.inf); z = p[:, 2]
     for ax, z0 in ((0, X_EDGE_Z), (1, Y_EDGE_Z)):
         for sg in (1, -1):
@@ -461,16 +463,23 @@ def funnel(g, dc):
             ds = np.maximum(np.maximum(50.1 - s_up, s_up - 58.1), 0)
             do = np.maximum(np.maximum(-off, off - 12.0), 0)
             PLUNGER_CLEAR = min(PLUNGER_CLEAR, float(np.sqrt(dx ** 2 + ds ** 2 + do ** 2).min()))
-    G8_CLEAR = np.inf
-    for sx, (y0, y1) in ((1, (-35.0, 69.0)), (-1, (-69.0, 35.0))):
-        sel = (z > X_EDGE_Z) & (z < PROBE_Z) & (p[:, 1] > y0) & (p[:, 1] < y1) & (sx * p[:, 0] > 0)
-        if sel.any(): G8_CLEAR = min(G8_CLEAR, float(((z[sel] + FACE_C - sx * p[sel, 0]) / math.sqrt(2)).min()))
-    worst = -np.inf
-    for yaw in np.radians(np.linspace(-5, 5, 11)):
-        c, s_ = math.cos(yaw), math.sin(yaw); q = p[:, :2] @ np.array([[c, -s_], [s_, c]]).T
-        lx = q[z < X_EDGE_Z]; ly = q[z < Y_EDGE_Z]
-        if len(lx): worst = max(worst, np.abs(lx[:, 0]).max() - (OPEN_X - 3.0))
-        if len(ly): worst = max(worst, np.abs(ly[:, 1]).max() - (OPEN_HALF - 3.0))
+    global LATCH_G8, LATCH_LOW
+    def g8(mask):
+        c_ = np.inf
+        for sx, (y0, y1) in ((1, (-35.0, 69.0)), (-1, (-69.0, 35.0))):
+            sel = mask & (z > X_EDGE_Z) & (z < PROBE_Z) & (p[:, 1] > y0) & (p[:, 1] < y1) & (sx * p[:, 0] > 0)
+            if sel.any(): c_ = min(c_, float(((z[sel] + FACE_C - sx * p[sel, 0]) / math.sqrt(2)).min()))
+        return c_
+    def below(mask):
+        w_ = -np.inf
+        for yaw in np.radians(np.linspace(-5, 5, 11)):
+            c, s_ = math.cos(yaw), math.sin(yaw); q = p[:, :2] @ np.array([[c, -s_], [s_, c]]).T
+            lx = q[mask & (z < X_EDGE_Z)]; ly = q[mask & (z < Y_EDGE_Z)]
+            if len(lx): w_ = max(w_, np.abs(lx[:, 0]).max() - (OPEN_X - 3.0))
+            if len(ly): w_ = max(w_, np.abs(ly[:, 1]).max() - (OPEN_HALF - 3.0))
+        return w_
+    G8_CLEAR, LATCH_G8 = g8(own), g8(~own)
+    worst, LATCH_LOW = below(own), below(~own)
     return d_face[i], p[i], worst
 
 
@@ -504,6 +513,18 @@ if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 
                  ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("wheels", trimesh.util.concatenate(g_["wheels"]))]
         print(x_, zB_, l2_clear_margin(g_, g_["B"], items), guard_v_gap(g_))
     json.dump(g_["P"], open(os.path.join(SCR_DBG, "P_debug.json"), "w"), indent=1, default=float)
+    for nm__, m__ in (("cage low", g_["cage_low"]), ("cage up", g_["cage_up"]), ("feet", trimesh.util.concatenate(g_["feet"])), ("runners", trimesh.util.concatenate(g_["runners"])),
+                      ("receiver", g_["receiver"]), ("cart", g_["cart"]), ("sled", g_["sled"]), ("pods", trimesh.util.concatenate([g_["cam_pod"], g_["flow_pod"]])),
+                      ("arms", trimesh.util.concatenate(g_["arms"])), ("wheels", trimesh.util.concatenate(g_["wheels"])), ("nodes", trimesh.util.concatenate(g_["nodes"]))):
+        q__ = pts(m__, 20000) + [TIP_OFF - dmd_, 0, SEAT_DZ]; z__ = q__[:, 2]; worst__ = -np.inf; g8__ = np.inf
+        for yaw in np.radians(np.linspace(-5, 5, 11)):
+            c_, s_ = math.cos(yaw), math.sin(yaw); qq = q__[:, :2] @ np.array([[c_, -s_], [s_, c_]]).T
+            if (z__ < X_EDGE_Z).any(): worst__ = max(worst__, np.abs(qq[z__ < X_EDGE_Z, 0]).max() - (OPEN_X - 3))
+            if (z__ < Y_EDGE_Z).any(): worst__ = max(worst__, np.abs(qq[z__ < Y_EDGE_Z, 1]).max() - (OPEN_HALF - 3))
+        for sx, (y0, y1) in ((1, (-35.0, 69.0)), (-1, (-69.0, 35.0))):
+            sel = (z__ > X_EDGE_Z) & (z__ < PROBE_Z) & (q__[:, 1] > y0) & (q__[:, 1] < y1) & (sx * q__[:, 0] > 0)
+            if sel.any(): g8__ = min(g8__, float(((z__[sel] + FACE_C - sx * q__[sel, 0]) / math.sqrt(2)).min()))
+        print(f"  {nm__}: below the edges {worst__:+.1f}, G8 {g8__:.1f}")
     print("camera x arms", [round(overlap(g_["cam"], a__), 1) for a__ in g_["cam_arms"]], "camera x apex", round(overlap(g_["cam"], g_["apex"]), 1),
           "camera x lugs+seat", round(overlap(g_["cam"], union([c__ for c__ in [g_["apex"]]])), 1))
     sys.exit(0)
@@ -689,7 +710,8 @@ say(f"landing: feet at z {fz:.0f} (lowest points), stance x {x0:.0f}..{x1:.0f}, 
 fd, fp, low = funnel(g, dc)
 say(f"funnel seated (catch centre on the funnel axis, bottom plate top at seat z {SEAT_DZ:.1f}): closest non-wheel point {fd:.1f} "
     f"at seat ({fp[0]:.0f}, {fp[1]:.0f}, {fp[2]:.0f}) (G ≥ 1.0); hook latch plungers {PLUNGER_CLEAR:.1f} (G (7) ≥ 1.0); "
-    f"keep-alive band G (8) {G8_CLEAR:.1f} (≥ {G8_OFF:.0f}); below the face edges (latch set incl.) {low:+.1f} past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0)")
+    f"keep-alive band G (8) {G8_CLEAR:.1f} (≥ {G8_OFF:.0f}); below the face edges {low:+.1f} past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0); "
+    f"the latch set (receiver + cartridge, the battery latch's: its check vs the real panels 3.42 a side): G (8) {LATCH_G8:.1f}, past the 3 a side box {LATCH_LOW:+.1f} (receiver guide posts 183.6 long here vs 179.3 in its check)")
 say(f"mass ~{tot:.0f} g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), "
     f"CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}) vs thrust centre ({dm:.1f}, 0): {cg[0] - dm:+.1f} in x")
 # balance pack in and out (CLAUDE.md "Balanced"; layout B, Spark 24 Oct: the pack-out shift is an accepted exception)
