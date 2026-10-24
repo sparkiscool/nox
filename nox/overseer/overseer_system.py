@@ -21,6 +21,7 @@ from OCP.StlAPI import StlAPI_Writer
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "overseer_system", "v1")
 import json
 import cage_opt2 as co
+import cam_cover
 from system_check import run as system_check_run
 _CJ = json.load(open(os.environ.get("SYS_CAGE", os.path.join(ROOT, "runs", "overseer_cage", "v3", "cage_opt2.json"))))
 _LV = _CJ["levels"][os.environ.get("SYS_LEVEL", "100Hz_35g")]
@@ -83,8 +84,13 @@ def set_wheel(wz):
 
 set_wheel(-12.0)
 MOTOR_DEG = (45, 135, 225, 315)
-CAM_BACK = 30.0                          # front camera board behind the L2 base plane
-CAM_UP_DEFAULT = 30.0                    # front camera 30 deg up (the 23 Oct choice; a lower bracket than the horizon one, compact)
+CAM_BACK = 30.0                          # (v1 single camera, kept for the old layouts' numbers)
+CAM_UP_DEFAULT = 30.0
+_CC = os.path.join(ROOT, "runs", "overseer_cams", "v1", "cam_cover.json")
+_PAIR = json.load(open(_CC))["pairs"][0] if os.path.exists(_CC) else None
+_MIR = [r_ for r_ in json.load(open(_CC))["pairs"] if r_["kind"] == "mirror" and not r_["portrait"]][0] if _PAIR else None
+CAM_YAW, CAM_PITCH = (abs(_MIR["x"][0]), _MIR["x"][1]) if _MIR else (46.8, -13.6)   # mirror landscape pair (DEFAULT; ties the ceiling 54.8 %)
+CAM_Y, CAM_H2 = 66.0, 0.0                # camera centres beside the L2 (outside the socket lugs), at its mid height (DEFAULT)
 ROD_R = 1.5                              # 3.0 carbon rods everywhere (G Carbon rods), 11.0 g/m (C)
 ROD_GPM = 11.0e-3
 GUARD_GAP = 12.0                         # guard rods 12 off the swept disks in plan, like the Scout's (G Guard outline)
@@ -245,26 +251,33 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     back = box(-22, 22, -16, 16, -11, -5); back.apply_transform(T)               # apex block behind the seat (L2 local z -11..-5)
     # apex rod sockets on side lugs beside the L2 body (y ±46), just behind the base plane, so the V never bends back
     # inside the front flat (the guard keeps 12 off the front disks)
-    # front camera: board centre CAM on the base plane's back side, aimed cam_up above the horizon
-    fwd = np.array([math.cos(math.radians(cam_up)), 0, math.sin(math.radians(cam_up))])
-    cup = np.array([-math.sin(math.radians(cam_up)), 0, math.cos(math.radians(cam_up))])
-    h = cam_h if cam_h is not None else 60.0
-    C = B + up_b * h - A * CAM_BACK                               # h along the base plane, CAM_BACK behind it
-    g["cam_c"], g["cam_fwd"], g["cam_up_v"] = C, fwd, cup
-    Rc = np.eye(4); Rc[:3, 0] = fwd; Rc[:3, 1] = [0, 1, 0]; Rc[:3, 2] = cup
-    board = box(-1, 1, -19, 19, -19, 19); lens = trimesh.creation.cylinder(6, 8, sections=32)
-    lens.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); lens.apply_translation([5, 0, 0])
-    cam = trimesh.util.concatenate([board, lens]); Rc[:3, 3] = C; cam.apply_transform(Rc); g["cam"] = cam
-    g["cam_lens"] = C + fwd * 9
-    # camera bracket: a 3 thick printed plate behind the board on three 3.0 rods down to the apex block (Spark 24 Oct:
-    # 3 mm rods wherever they do the job)
-    plate = box(-4.5, -1.5, -20, 20, -20, 20).apply_transform(Rc)
-    to_w = lambda v: (Rc @ np.array([*v, 1.0]))[:3]
-    cam_rods = [(to_w((-3.5, sy * 16.0, -21.5)), B - A * 8 + up_b * 20 + np.array([0, sy * 16.0, 0])) for sy in (1, -1)]
-    cam_rods.append((to_w((-3.5, 0.0, -21.5)), B - A * 11 + up_b * 20))
-    g["cam_rods"] = cam_rods
-    g["cam_plate"] = plate
-    g["cam_bracket"] = trimesh.util.concatenate([plate] + [rod(a, b) for a, b in cam_rods])
+    # two front cameras (Spark 24 Oct: both forward, angled to see as much of the lidar's view as possible): the mirror
+    # pair from cam_cover.py (yaw +-CAM_YAW, pitch CAM_PITCH, landscape) beside the L2 at its mid height, each set back
+    # until it is out of the L2 field (negative-angle mode + 1.5), on a printed arm from its socket lug
+    cams, cam_meshes, plates, arms_ = [], [], [], []
+    for sy in (1, -1):
+        Rc = np.eye(4); Rc[:3, :3] = cam_cover.R_cam(sy * CAM_YAW, CAM_PITCH, 0.0)
+        board = box(-1, 1, -19, 19, -19, 19); lens = trimesh.creation.cylinder(6, 8, sections=32)
+        lens.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); lens.apply_translation([5, 0, 0])
+        cam0 = trimesh.util.concatenate([board, lens]); plate0 = box(-4.5, -1.5, -20, 20, -20, 20)
+        back_ = 0.0
+        for _ in range(3):                                         # set back along -A until clear of the field
+            C = B + up_b * CAM_H2 + np.array([0, sy * CAM_Y, 0]) - A * back_
+            Rc[:3, 3] = C; q = np.vstack([cam0.copy().apply_transform(Rc).vertices, plate0.copy().apply_transform(Rc).vertices])
+            d = q - B; mg_ = -(d @ A) - math.sin(math.radians(L2_NEG)) * np.linalg.norm(d, axis=1)
+            back_ += max(0.0, 1.5 - float(mg_.min()))
+        cm = cam0.copy().apply_transform(Rc); pl = plate0.copy().apply_transform(Rc)
+        fwd = Rc[:3, 0].copy(); cup = Rc[:3, 2].copy()
+        cams.append(dict(c=C, fwd=fwd, up=cup, left=Rc[:3, 1].copy(), lens=C + fwd * 9, back=back_, sy=sy))
+        cam_meshes.append(cm); plates.append(pl)
+        lugp = B - A * (co.SOCK_BACK + 3) + np.array([0, sy * 46.0, 0])            # printed arm from the socket lug to the plate back
+        arms_.append(rod(lugp, C - fwd * 4.5, 6.0))                # printed with the apex block, ends on the plate back
+    g["cams"] = cams
+    g["cam"] = trimesh.util.concatenate(cam_meshes)
+    g["cam_lens"] = cams[0]["lens"]; g["cam_fwd"] = cams[0]["fwd"]; g["cam_up_v"] = cams[0]["up"]
+    g["cam_rods"] = []
+    g["cam_plate"] = trimesh.util.concatenate(plates); g["cam_arms"] = arms_
+    g["cam_bracket"] = g["cam_plate"]
     sock = co.sockets(xB, zB)
     lugs = []
     for sy in (1, -1):                                             # lugs spanning the socket spread (local x = -up_b)
@@ -272,6 +285,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         lug = box(-h, h, 36 if sy > 0 else -50, 50 if sy > 0 else -36, -co.SOCK_BACK - 6, -2); lug.apply_transform(T); lugs.append(lug)
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
+             cam_bot=float(min(cb[0][2], g["cam_bracket"].bounds[0][2])), nose_y=float(max(co.NOSE_Y, np.abs(cb[:, 1]).max() + co.NOSE_GAP)),
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
              feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t6"}, seat_dz=float(SEAT_DZ),
              z_rhub=-5.6, z_skirt=-5.6, z_fhub=8.0)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
@@ -298,11 +312,12 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
             for n in Ng if n.startswith(("fhubB", "fhubT", "chin", "rhubB"))]
     g["hubs"] = hubs
     g["hub_socket_mm3"] = g.get("hub_socket_mm3", 0.0) + sum(overlap(h_, g["pan"]) for h_ in hubs)   # hub blocks seated on the belly pan
+    g["hub_plate_mm3"] = sum(overlap(h_, pl_) for h_ in hubs for pl_ in (TOP, BOTTOM)) + 1.0            # and clamped on the plates
     g["cage_N"], g["cage_info"] = Ng, info
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
-    g["apex"] = union([seat, back] + lugs + hubs)
+    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"])
     low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring", "skid_belly")]
     nose_keys = [k for k, v in rods.items() if v[3] in NOSE_GROUPS or k in ("spider nose+", "spider nose-")]
     g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
@@ -331,7 +346,7 @@ def l2_clear_margin(g, B, solid_items):
 
 
 def cg_of(g):
-    items = [("L2", 230, g["l2"]), ("front camera", 15, g["cam"]), ("down camera", 15, g["down_cam"]), ("Pi 5 + cooler", 55, PI),
+    items = [("L2", 230, g["l2"]), ("front cameras", 30, g["cam"]), ("down camera", 15, g["down_cam"]), ("Pi 5 + cooler", 55, PI),
              ("FC", 10, FC), ("PDB", 21, PDB), ("UBEC", 15, UBEC), ("buck", 6, BUCK), ("RX", 2, RX), ("pack", 650, g["pack"]),
              ("flow", 2, g["flow"]), ("top plate", 23, TOP), ("bottom plate", 61, BOTTOM), ("wires", 80, FC)]
     items += [(f"motor + prop {i}", 81 + 10, m) for i, m in enumerate(g["motors"])]
@@ -384,7 +399,7 @@ def solve_xB(g_fn, zB):
         mid = (lo + hi) / 2; g = g_fn(mid)
         items = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.util.concatenate(g["motors"])),
                  ("arms", trimesh.util.concatenate(g["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g["apex"]),
-                 ("cage up", g["cage_up"]), ("cage low", g["cage_low"]), ("wheels", trimesh.util.concatenate(g["wheels"]))]
+                 ("cage up", g["cage_up"]), ("cage low", g["cage_low"]), ("wheels", trimesh.util.concatenate(g["wheels"])), ("front cameras", g["cam"]), ("cam bracket", g["cam_bracket"])]
         _, mg = l2_clear_margin(g, g["B"], items)
         if mg >= 1.0 and guard_v_gap(g) >= GUARD_GAP - 0.05: hi = mid
         else: lo = mid
@@ -463,14 +478,7 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cag
     else:
         say("NO FUNNEL FIT in the wheel z range: the last height is kept and the funnel line below FAILS")
     dc = TIP_OFF - dm
-    # camera: lowest height on the L2 back plane where the L2 leaves the view (lower edge + 2 deg), aimed at the horizon
-    for h in np.arange(20, 160, 2.0):
-        g = build(dm, dc, xB, zB, CAM_UP, h)
-        d = pts(g["l2"], 4000) - g["cam_lens"]; z = d @ g["cam_fwd"]
-        elev = np.degrees(np.arctan2(d @ g["cam_up_v"], np.maximum(z, 1e-6))); azim = np.degrees(np.arctan2(d[:, 1], np.maximum(z, 1e-6)))
-        inview = (z > 0) & (elev > -CAM_VFOV / 2 - 2.0) & (np.abs(azim) < CAM_HFOV / 2 + 2.0)
-        if not inview.any(): CAM_H = h; break
-    g = build(dm, dc, xB, zB, CAM_UP, CAM_H)
+    g = build(dm, dc, xB, zB)
     tot, cg = cg_of(g)
     new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO)            # re-size the cage on this geometry (F)
     if not ok_sz and os.environ.get("SYS_SEARCH", "1") == "1":         # the layout no longer passes here: search every topology again
@@ -489,7 +497,7 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cag
         f"{sum(new_sizes.get(k) != v for k, v in CAGE_SIZES.items())} rods changed")
     if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
-CAM_DESC = f"{CAM_UP:.0f} deg up, portrait"
+CAM_DESC = f"two, yaw ±{CAM_YAW:.1f}, pitch {CAM_PITCH:.1f}, landscape"
 
 # ---------------------------------------------------------------- checks on the chosen layout
 mx_front = g["motors_xy"][0]
@@ -535,14 +543,30 @@ say(f"L2 field blocked by the thin nose rods: {blocked.mean() * 100:.1f} % of th
 nose = max(g["l2"].bounds[1][0], g["cam"].bounds[1][0], g["cage_nose"].bounds[1][0])
 say(f"length: rear prop tips x {dm - HALF - PROP_R:.0f} to the nose x {nose:.0f} ({nose - (dm - HALF - PROP_R):.0f}); width 533; "
     f"height {max(g['cam_bracket'].bounds[1][2], g['cam'].bounds[1][2], PROP_Z) - g['feet'][0].bounds[0][2]:.0f}")
-say(f"front camera: {CAM_DESC}, lens at ({g['cam_lens'][0]:.0f}, 0, {g['cam_lens'][2]:.0f}), {CAM_H:.0f} up the L2 back plane: "
-    f"the L2 leaves its view 2 deg under the lower edge")
-for name, m in (("props", trimesh.util.concatenate(g["props"])), ("arms", trimesh.util.concatenate(g["arms"])), ("motors", trimesh.util.concatenate(g["motors"]))):
-    d = pts(m) - g["cam_lens"]; z = d @ g["cam_fwd"]
-    el = np.degrees(np.arctan2(d @ g["cam_up_v"], np.maximum(z, 1e-6))); az = np.degrees(np.arctan2(d[:, 1], np.maximum(z, 1e-6)))
-    n = ((z > 0) & (abs(el) < CAM_VFOV / 2) & (abs(az) < CAM_HFOV / 2)).sum()
-    if n: say(f"   {name} in the front camera view: {n} points")
-say("front camera view: checked (lines above list anything in view)")
+FOV_H, FOV_V = 89.0, 73.0                                           # landscape (E, 102 diag 4:3)
+def in_view(cm, P_):
+    d = P_ - cm["lens"]; x = d @ cm["fwd"]; y = d @ cm["left"]; z = d @ cm["up"]
+    return (x > 0) & (np.abs(y) <= x * math.tan(math.radians(FOV_H / 2))) & (np.abs(z) <= x * math.tan(math.radians(FOV_V / 2)))
+cov = cam_cover.cover([(sy * CAM_YAW, CAM_PITCH, 0.0, False) for sy in (1, -1)])
+for cm in g["cams"]:
+    say(f"front camera {'left' if cm['sy'] > 0 else 'right'}: {CAM_DESC}, lens at ({cm['lens'][0]:.0f}, {cm['lens'][1]:.0f}, {cm['lens'][2]:.0f}), "
+        f"{cm['back']:.1f} behind the L2 base plane")
+    for name, m in (("props", trimesh.util.concatenate(g["props"])), ("arms", trimesh.util.concatenate(g["arms"])), ("motors", trimesh.util.concatenate(g["motors"])),
+                    ("L2", g["l2"]), ("apex", g["apex"]), ("other camera", g["cam"])):
+        n = int(in_view(cm, pts(m)).sum())
+        if n and name != "other camera": say(f"   {name} in its view: {n} points")
+    # blocked share of its image by cage rods (thin rods allowed in camera fields, share reported)
+    rr = np.random.default_rng(2); u = rr.uniform(-1, 1, size=(20000, 2))
+    dirs = (cm["fwd"][None, :] + u[:, :1] * math.tan(math.radians(FOV_H / 2)) * cm["left"][None, :] + u[:, 1:] * math.tan(math.radians(FOV_V / 2)) * cm["up"][None, :])
+    dirs /= np.linalg.norm(dirs, axis=1)[:, None]; bl = np.zeros(len(dirs), bool); who = {}
+    for k, (a_, b_, od_, _, _) in g["rods"].items():
+        a_, b_ = np.asarray(a_, float), np.asarray(b_, float); u_ = b_ - a_; w0 = cm["lens"] - a_
+        uu = u_ @ u_; ud = dirs @ u_; dw = dirs @ w0; uw = u_ @ w0
+        den = uu - ud ** 2; sc_ = np.clip((ud * dw - uw) / np.maximum(den, 1e-9), 0, 1); tc = np.maximum(sc_ * ud - dw, 0)
+        hit = np.linalg.norm((w0[None, :] + tc[:, None] * dirs) - sc_[:, None] * u_[None, :], axis=1) < od_ / 2
+        if hit.any(): who[k] = hit.mean(); bl |= hit
+    say(f"   cage rods block {100 * bl.mean():.1f} % of its image (C): " + ", ".join(f"{k} {100 * v:.1f}" for k, v in sorted(who.items(), key=lambda t: -t[1])[:4]))
+say(f"front cameras: together {100 * cov:.1f} % of the L2 field in view (C, cam_cover.py; one camera at best 27.6 %)")
 dn = np.array([0, 0, -1.0])
 for name, m in (("feet", trimesh.util.concatenate(g["feet"])), ("cartridge", g["cart"]), ("wheels", trimesh.util.concatenate(g["wheels"])),
                 ("cage low", g["cage_low"]), ("arms", trimesh.util.concatenate(g["arms"]))):
@@ -619,16 +643,17 @@ cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concaten
 man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
-                          ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)]],         # rod ends in the hub and apex sockets
+                          ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
+                          ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)]],        # hub blocks clamped on the plates
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),                    # the cartridge path: it drops out the bottom, its cartridge guards it below the wheels
-                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=50.0, min_mm=0.0, skip_probes=True)],         # their views (down camera 44.5 / 36.5, flow 23 half angles) + 5.5 guard band (DEFAULT)
+                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
            access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
     dict(name="L2", trimesh=g["l2"], role="protected", mass_g=230, tag="P"),
-    dict(name="front camera", trimesh=g["cam"], role="protected", mass_g=17, tag="E"),
+    dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
     dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="E", swap=True),
     dict(name="electronics", trimesh=trimesh.util.concatenate([FC, PI, PDB, UBEC, BUCK, RX]), role="protected", mass_g=110 + 80, tag="E"),
     dict(name="down cam + flow", trimesh=trimesh.util.concatenate([g["down_cam"], g["flow"]]), role="protected", mass_g=17, tag="E"),
@@ -637,7 +662,7 @@ man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
     dict(name="sled + pods + deck", trimesh=trimesh.util.concatenate([g["sled"], g["cam_pod"], g["flow_pod"], DECK]), role="structure",
          mass_g=(abs(g["sled"].volume) + abs(g["cam_pod"].volume) + abs(g["flow_pod"].volume)) * 1.27e-3 * 0.3 + abs(DECK.volume) * 1.27e-3 * 0.5, tag="E"),
     dict(name="apex + hubs", trimesh=g["apex"], role="structure", mass_g=abs(g["apex"].volume) * 1.27e-3 * 0.45, tag="E"),
-    dict(name="cam bracket rods", trimesh=g["cam_bracket"], role="structure", mass_g=6, tag="E")])
+    dict(name="cam brackets", trimesh=g["cam_bracket"], role="structure", mass_g=round(abs(g["cam_bracket"].volume) * 1.27e-3 * 0.5, 1), tag="E")])
 try:
     with contextlib.redirect_stdout(io.StringIO()):
         SYS = system_check_run(man)
@@ -715,7 +740,7 @@ P("belly sled + pods", union([g["sled"], g["cam_pod"], g["flow_pod"]]), "printed
 P("feet", trimesh.util.concatenate(g["feet"]), "printed", "#555555", True, "TPU")
 P("catch wheels", trimesh.util.concatenate(g["wheels"]), "cage", "#cc6644", True, "R 5")
 P("Unitree L2", g["l2"], "bought", "#222222", False, "axis 15 deg below forward")
-P("front camera", g["cam"], "bought", "#2d5a2d", False, "horizon, portrait")
+P("front cameras", g["cam"], "bought", "#2d5a2d", False, CAM_DESC)
 P("down camera", g["down_cam"], "bought", "#2d5a2d", False)
 P("flow MTF-02P", g["flow"], "bought", "#2d5a2d", False)
 P("Pi 5", PI, "bought", "#2e7d32", False)

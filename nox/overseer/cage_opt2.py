@@ -228,9 +228,10 @@ def geometry(p, topo, sizes=None):
     corners_l2 = [Bv + lx * a + np.array([0, b, 0]) + A * c for a in (-37.5, 37.5) for b in (-37.5, 37.5) for c in (0.0, 39.0)] + [Bv + A * 65]
     l2x = max(q[0] for q in corners_l2); l2zmax = max(q[2] for q in corners_l2); l2zmin = min(q[2] for q in corners_l2)
     xn = max(l2x, p.get("cam_front", xB)) + NOSE_GAP
-    ztn = max(l2zmax, p.get("cam_top", zB + 60)) + NOSE_GAP; zbn = l2zmin - NOSE_GAP
+    ztn = max(l2zmax, p.get("cam_top", zB + 60)) + NOSE_GAP; zbn = min(l2zmin, p.get("cam_bot", l2zmin)) - NOSE_GAP
+    ny = p.get("nose_y", NOSE_Y)                                      # wide enough for the two front cameras beside the L2
     for sy in (1, -1):
-        node(f"NT{sy:+d}", (xn, NOSE_Y * sy, ztn)); node(f"NB{sy:+d}", (xn, NOSE_Y * sy, zbn))
+        node(f"NT{sy:+d}", (xn, ny * sy, ztn)); node(f"NB{sy:+d}", (xn, ny * sy, zbn))
         mem(f"nose vert {sy:+d}", f"NT{sy:+d}", f"NB{sy:+d}", "nose")
     mem("nose top", "NT+1", "NT-1", "nose"); mem("nose bot", "NB+1", "NB-1", "nose")
     if topo["nose_x"]:
