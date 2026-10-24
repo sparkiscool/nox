@@ -177,7 +177,7 @@
   {
    "case": "DS3218 stall torque 1.96 N.m on the ear pads, reacted at the rod sockets through the rollers [misuse]",
    "cls": "misuse",
-   "inlayer": 0.162,
+   "inlayer": 0.158,
    "across": 0.273,
    "at": [
     33.5,

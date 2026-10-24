@@ -675,7 +675,7 @@
    "roller-": 1.0,
    "horn": 1.0,
    "servo": "seated: ears on their pads (designed contact), 0.2 fit in its pocket",
-   "cam (every 10 deg)": 0.99
+   "cam (every 10 deg)": 1.0
   },
   "MG995": {
    "carrier+": 1.0,
@@ -684,7 +684,7 @@
    "roller-": 1.0,
    "horn": 1.0,
    "servo": "seated: ears on their pads (designed contact), 0.2 fit in its pocket",
-   "cam (every 10 deg)": 0.99
+   "cam (every 10 deg)": 1.0
   }
  },
  "bound": {
@@ -718,9 +718,13 @@
    "+x A": 0.421,
    "+x B": 0.48
   },
-  "r7: + servo dims from dimensions.md M, the lead and socket slot, the deck slot = blade travel + 1, the cradle clipped at the park bisector (chosen)": {
+  "r7: + servo dims from dimensions.md M, the lead and socket slot, the deck slot = blade travel + 1, the cradle clipped at the park bisector": {
    "+x A": 0.407,
    "+x B": 0.48
+  },
+  "r8: + the JR pair along X over the retainer's tab, the hall boards past the cam, the roller collar, the horn keep-out to its disc (chosen)": {
+   "+x A": 0.415,
+   "+x B": 0.479
   }
  },
  "access": {
@@ -3859,7 +3863,7 @@
   "cut": [
    [
     "one body printed on its side + a bonded rack bar (chosen)",
-    "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.41 / 0.48 (A / B) with the r7 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
+    "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.42 / 0.48 (A / B) with the r8 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
    ],
    [
     "carriage plate printed flat + column bolted on",

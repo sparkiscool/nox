@@ -776,7 +776,8 @@ BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space fille
     "r4: + the pinion's separating force, teeth hold u only, the tail rib, the servo window (head A / head B)": {"+x A": 0.434, "+x B": 0.484},
     "r5: + column on the head lane (u -16.3), retainer bosses, exact keep-out sweep, deck |X| 18.2, CG offset couples, stall reacted at the rods": {"+x A": 0.406, "+x B": 0.479},
     "r6: + the cradle kept (servo pocket only), wire channels, Ø12 retainer bosses": {"+x A": 0.421, "+x B": 0.48},
-    "r7: + servo dims from dimensions.md M, the lead and socket slot, the deck slot = blade travel + 1, the cradle clipped at the park bisector (chosen)": {"+x A": 0.407, "+x B": 0.48},
+    "r7: + servo dims from dimensions.md M, the lead and socket slot, the deck slot = blade travel + 1, the cradle clipped at the park bisector": {"+x A": 0.407, "+x B": 0.48},
+    "r8: + the JR pair along X over the retainer's tab, the hall boards past the cam, the roller collar, the horn keep-out to its disc (chosen)": {"+x A": 0.415, "+x B": 0.479},
 }
 
 ACCESS = [
@@ -804,7 +805,7 @@ ALTERNATIVES = {
     ],
     "cut": [
         ("one body printed on its side + a bonded rack bar (chosen)", "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the "
-         "column's bending and the plate's lie in the layers (+x build, upper bound 0.41 / 0.48 (A / B) with the r7 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
+         "column's bending and the plate's lie in the layers (+x build, upper bound 0.42 / 0.48 (A / B) with the r8 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
          "(5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"),
         ("carriage plate printed flat + column bolted on", "the plate and teeth print flat, but the joint sits at the root: 4 M3 inserts "
          "carry ~190..490 N per pair at the moment, the across-layer root is replaced by bolts in PETG bosses (~+8 g), one more fit and "
