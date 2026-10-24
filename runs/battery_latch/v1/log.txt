@@ -1,0 +1,34 @@
+collar inset search (Scout, >= 7.0 inside the planes below z 20, +-5 yaw, +-2 tilt):
+  inset 8.0: collar margin 4.60
+  inset 8.5: collar margin 5.08
+  inset 9.0: collar margin 5.56
+  inset 9.5: collar margin 6.04
+  inset 10.0: collar margin 6.52
+  inset 10.5: collar margin 7.00
+== scout: z_T 42.55 (swap CG), swap 210.8 g, cartridge 93.0 x 40.0 x 45.6
+  FE v1 (h 1.0): worst 0.674 in handling 50 N on a foot; crash worst 0.156
+scout receiver as a pack mount: first mode ~373.0 Hz (E, rigid pack 211 g)
+{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 32.09, "slider": 3.18, "receiver": 40.8, "lid": 5.34, "strips": 1.97, "skids": 4.43}, "bbox": {"extents": [61.2, 54.1, 101.6], "volume_L": 0.3364, "largest": 101.6}}
+  insert free: cart 0.0 mm3, stuck []; off 0.3 stuck []
+  hand calc worst index 0.354; grip pull {'total_N': np.float64(52.1), 'per_tab_N': np.float64(26.0), 'bar_MPa': np.float64(3.82), 'index': np.float64(0.354), 'lever_mm': 11.0}
+  box_battery_cartridge_scout_v5.stl: solid_check PASS, 32.09 g, bed 1267 mm2, overhang 1747 mm2
+  box_battery_slider_scout_v5.stl: solid_check PASS, 3.18 g, bed 328 mm2, overhang 63 mm2
+  box_battery_receiver_scout_v1.stl: solid_check PASS, 40.8 g, bed 837 mm2, overhang 1942 mm2
+  box_battery_receiver_lid_scout_v1.stl: solid_check PASS, 5.34 g, bed 1001 mm2, overhang 0 mm2
+  box_battery_receiver_strip_scout_v1.stl: solid_check PASS, 0.98 g, bed 339 mm2, overhang 0 mm2
+  box_battery_skid_closed_scout_v1.stl: solid_check PASS, 1.38 g, bed 537 mm2, overhang 114 mm2
+  box_battery_skid_lead_scout_v1.stl: solid_check PASS, 3.06 g, bed 1271 mm2, overhang 0 mm2
+== overseer: z_T 85.5 (swap CG), swap 748.2 g, cartridge 171.0 x 55.0 x 58.6
+  FE v1 (h 1.0): worst 0.706 in handling 50 N on a foot; crash worst 0.575
+overseer receiver as a pack mount: first mode ~355.0 Hz (E, rigid pack 748 g)
+{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 89.7, "slider": 4.04, "receiver": 76.12, "lid": 7.85, "strips": 4.14}, "bbox": {"extents": [66.8, 68.8, 179.6], "volume_L": 0.8254, "largest": 179.6}}
+  insert free: cart 0.0 mm3, stuck []; off 0.3 stuck []
+  hand calc worst index 0.389; grip pull {'total_N': np.float64(57.3), 'per_tab_N': np.float64(28.7), 'bar_MPa': np.float64(4.2), 'index': np.float64(0.389), 'lever_mm': 11.0}
+  box_battery_cartridge_overseer_v5.stl: solid_check PASS, 89.7 g, bed 3125 mm2, overhang 4271 mm2
+  box_battery_slider_overseer_v5.stl: solid_check PASS, 4.04 g, bed 463 mm2, overhang 63 mm2
+  box_battery_receiver_overseer_v1.stl: solid_check PASS, 76.12 g, bed 1229 mm2, overhang 2463 mm2
+  box_battery_receiver_lid_overseer_v1.stl: solid_check PASS, 7.85 g, bed 1049 mm2, overhang 0 mm2
+  box_battery_receiver_strip_overseer_v1.stl: solid_check PASS, 2.07 g, bed 713 mm2, overhang 0 mm2
+scout v3 system (refit): System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 0.0 mm³ (E), bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 738 g (E), CG 1.4 mm off thrust axis (E) [+1.4, +0.0, -36.5], 2.0 mm without swap parts, probes -43.9 mm (E) edge at (-0.78, -0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear
+overseer in overseer.assembly.json (B): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 12101.0 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2491 g (E), CG 12.9 mm off thrust axis (E) [+12.9, +1.0, -75.8], 31.3 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL
+overseer in overseer.assembly.json (A): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 9960.9 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2491 g (E), CG 23.0 mm off thrust axis (E) [+23.0, +1.0, -75.8], 32.9 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL
