@@ -149,13 +149,13 @@ BOTTOM = cad_mesh("BOTTOM-PLATE-S500", -0.10)
 TOP = cad_mesh("TOP-PLATE-S500", ROOT_H - 18.04)
 
 # ---------------------------------------------------------------- hub (between the plates), fixed to the plates
-FC = box(-18, 18, -18, 18, 1.0, 18.5)                        # FC (+ stack) 36 x 36 x 17.5 (spec)
-DECK = union([box(-44.5, 44.5, -30, 30, 20.0, 22.0)] + [box(sx * 40 - 2, sx * 40 + 2, sy * 25 - 2, sy * 25 + 2, 0, 20) for sx in (1, -1) for sy in (1, -1)])
+FC = box(4, 40, -18, 18, 1.0, 18.5)                          # FC (+ stack) 36 x 36 x 17.5 (spec), front half of the hub
+DECK = union([box(-44.5, 44.5, -30, 30, 20.0, 22.0)] + [box(sx * 41 - 2, sx * 41 + 2, sy * 28 - 2, sy * 28 + 2, 0, 20) for sx in (1, -1) for sy in (1, -1)])
 PI = box(-42.5, 42.5, -28, 28, 22.5, 42.0)                   # Pi 5 with cooler (E height)
-PDB = box(-95, -45, -25, 25, 0.5, 6.5)                       # FCHUB-12S on the rear wing (spec)
-UBEC = box(-95, -47, 0, 24, 7.5, 17.5)                       # stacked over the PDB on the rear wing (v1: the front wing carries the boom)
-BUCK = box(-80, -62, -24, -6, 7.5, 13.5)
-RX = box(-95, -83, -22, -10, 7.5, 13.5)
+PDB = box(-55, 0, -24.5, 24.5, 0.5, 6.5)                     # FCHUB-12S under the Pi deck, rear half (spec): inside the cage (system pass)
+UBEC = box(-52, -4, 1, 25, 7.5, 17.5)                        # on the PDB, under the deck
+BUCK = box(-40, -22, -24, -6, 7.5, 13.5)
+RX = box(-52, -40, -22, -10, 7.5, 13.5)
 FRONT_HUB = box(86, 99, -18, 18, 0, 12)                       # keel rod hub on the bottom plate front wing (DEFAULT)
 
 
@@ -250,8 +250,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # 3 mm rods wherever they do the job)
     plate = box(-4.5, -1.5, -20, 20, -20, 20).apply_transform(Rc)
     to_w = lambda v: (Rc @ np.array([*v, 1.0]))[:3]
-    cam_rods = [(to_w((-3.0, sy * 16.0, -19.0)), B - A * 8 + up_b * 20 + np.array([0, sy * 16.0, 0])) for sy in (1, -1)]
-    cam_rods.append((to_w((-3.0, 0.0, -19.0)), B - A * 11 + up_b * 20))
+    cam_rods = [(to_w((-3.5, sy * 16.0, -21.5)), B - A * 8 + up_b * 20 + np.array([0, sy * 16.0, 0])) for sy in (1, -1)]
+    cam_rods.append((to_w((-3.5, 0.0, -21.5)), B - A * 11 + up_b * 20))
     g["cam_rods"] = cam_rods
     g["cam_plate"] = plate
     g["cam_bracket"] = trimesh.util.concatenate([plate] + [rod(a, b) for a, b in cam_rods])
@@ -262,7 +262,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         lug = box(-h, h, 36 if sy > 0 else -50, 50 if sy > 0 else -36, -8, -2); lug.apply_transform(T); lugs.append(lug)
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
-             m_drone_g=2200.0)
+             m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0)   # crash mass: the A system is ~2.95 kg (E), no cap
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     for name, a, b, group, kind in Mg:
@@ -272,6 +272,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     for nm in info["pnodes"]:
         for lvl in ("lo", "hi"):
             q = Ng[f"{nm}{lvl}"]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
+    for n in [n_ for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]:   # rear tower and skirt nodes (cage up)
+        q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
     for n in ("NT+1", "NT-1", "NB+1", "NB-1", "TN"):
         q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
@@ -528,9 +530,11 @@ for k, v in g["rods"].items():
             worst_ring = min(worst_ring, float((rr - PROP_R - od / 2).min()))
         else:
             under = rr < PROP_R + od / 2 + GUARD_GAP
-            if under.any(): worst_under = min(worst_under, float((PROP_Z - BLADE - (q[under, 2] + od / 2)).min()))
-say(f"guard: ring and V rods {worst_ring:.1f} off the disks in plan (≥ {GUARD_GAP:.0f}); spokes, struts and keels under a disk "
-    f"{worst_under:.1f} below the swept band (≥ {GUARD_GAP:.0f})")
+            if under.any():                                  # clear below the swept band or above it
+                zq = q[under, 2]
+                worst_under = min(worst_under, float(np.maximum(PROP_Z - BLADE - (zq + od / 2), zq - od / 2 - PROP_Z - BLADE).min()))
+say(f"guard: ring and V rods {worst_ring:.1f} off the disks in plan (≥ {GUARD_GAP:.0f}); rods under a disk "
+    f"{worst_under:.1f} off the swept band (≥ {GUARD_GAP:.0f})")
 by_sec = {}
 for k, v in g["rods"].items():
     sec = v[4]; L = float(np.linalg.norm(np.subtract(v[1], v[0])))
@@ -569,7 +573,7 @@ man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
     dict(name="L2", trimesh=g["l2"], role="protected", mass_g=230, tag="P"),
-    dict(name="front camera", trimesh=trimesh.util.concatenate([g["cam"], g["cam_plate"]]), role="protected", mass_g=17, tag="E"),
+    dict(name="front camera", trimesh=g["cam"], role="protected", mass_g=17, tag="E"),
     dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="E", swap=True),
     dict(name="electronics", trimesh=trimesh.util.concatenate([FC, PI, PDB, UBEC, BUCK, RX]), role="protected", mass_g=110 + 80, tag="E"),
     dict(name="down cam + flow", trimesh=trimesh.util.concatenate([g["down_cam"], g["flow"]]), role="protected", mass_g=17, tag="E"),
@@ -638,6 +642,7 @@ try:
     s.video(os.path.join(OUT, "motion.mp4"))
 except Exception as e:
     say("video skipped:", str(e)[:200])
+json.dump({k: float(v) for k, v in P_FINAL.items()}, open(os.path.join(OUT, "params.json"), "w"), indent=1)
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())
 print("wrote", OUT)

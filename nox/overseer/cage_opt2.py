@@ -11,7 +11,7 @@ pack centre, = dm: the pack on the thrust axis), wz (wheel centres), xB, zB (L2 
 camera extremes), m_drone_g.
 
 Cage (all 3.0 carbon unless a case needs more): guard rings round the props at z 68 and 104 (the upper ring is the top
-perimeter), posts at the vertices, spokes from the arm tips; a top node over the thrust centre on a 4-leg pyramid from the
+perimeter), posts at the vertices, spokes from the arm tips; a top node over the plate centre on a 4-leg pyramid from the
 top plate with a spider to the upper ring; a nose box round the L2 and camera, 3 mm + rod ahead of them (thin rods in
 the L2 field, blocked share reported by the system model); the L2 lugs tied to the nose box and back to the core by
 keels; the wheel ring with 4 corner nodes on struts; TPU feet on the sled (plate-fixed here).
@@ -45,8 +45,9 @@ GUARD_GAP, ROD_R3 = 12.0, 1.5
 RING_LO, RING_HI = PROP_Z - 14.0, PROP_Z + 22.0            # upper ring = top perimeter, 17 over the swept band
 Z_TOP = 116.0                                               # top node over the thrust centre (DEFAULT)
 NOSE_Y, NOSE_GAP = 58.0, 3.0 + 2.0                          # nose box half width; ahead of the L2 / camera by 3 + rod
-F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_R3                 # 280
-C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_R3)   # 477.7
+ROD_RMAX = 4.0                                              # guard offset for the largest ring rod (8/6 tube), so any size keeps 12
+F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 282.5
+C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 481.2
 L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
@@ -84,10 +85,11 @@ def sockets(xB, zB):
             for lvl in ("hi", "lo") for sy in (1, -1)}
 
 
-def ring_positions(dm):
+def ring_positions(dm, rear_x=None):
     """ordered ring positions (name, x, y, is_vertex, is_mid) from the front-left vertex round to the front-right one"""
     F, c = F_FLAT, C_CHAMF - F_FLAT
-    V = [(F, c), (c, F), (-c, F), (-F, c), (-F, -c), (-c, -F), (c, -F), (F, -c)]
+    Fr = max(F, dm - rear_x) if rear_x is not None else F           # rear flat moves back to cover the plates (hub aft of the motors)
+    V = [(F, c), (c, F), (-c, F), (-Fr, c), (-Fr, -c), (-c, -F), (c, -F), (F, -c)]
     out = []
     for k in range(7):
         a, b = np.array(V[k]), np.array(V[k + 1])
@@ -152,7 +154,7 @@ def geometry(p, topo, sizes=None):
         mass[f"mot{k}"] = mass.get(f"mot{k}", 0) + 91e-6
         mass[f"arm{k}_0.500"] = mass.get(f"arm{k}_0.500", 0) + 25e-6          # ESC on the arm (E)
     # guard rings
-    rp = ring_positions(dm)
+    rp = ring_positions(dm, p.get("rear_x"))
     diag_on, mid_on = topo["ring_diag"], topo["mid_spokes"]
     pnodes = []
     for i, (nm, x, y, isv, ismid) in enumerate(rp):
@@ -234,11 +236,35 @@ def geometry(p, topo, sizes=None):
         mem(f"mount hi {sy:+d}", f"Shi{sy:+d}", f"NT{sy:+d}", "nose_mount"); mem(f"mount lo {sy:+d}", f"Slo{sy:+d}", f"NB{sy:+d}", "nose_mount")
         mem(f"mount dg {sy:+d}", f"Shi{sy:+d}", f"NB{sy:+d}", "nose_mount")
     # top: node over the thrust centre on a 4-leg pyramid from the top plate, spider to the upper ring vertices
-    node("TN", (dm, 0, Z_TOP))
-    for sx in (1, -1):
+    # pyramid "plate": 4 legs from the top plate corners; "rear": the hub sits under the rear disks (layout A), so the
+    # top node stands on a rear tower (top plate rear corners + rear arm roots to TR behind the disks) tied to TN
+    pyr = p.get("pyramid", "plate")
+    node("TN", (p.get("x_top", dm), 0, Z_TOP))
+    if pyr == "plate":
+        for sx in (1, -1):
+            for sy in (1, -1):
+                fixed.add(node(f"tp{sx:+d}{sy:+d}", (40 * sx, 40 * sy, ROOT_H + 1.6)))
+                mem(f"pyramid {sx:+d}{sy:+d}", f"tp{sx:+d}{sy:+d}", "TN", "pyramid")
+    elif pyr == "rear":
+        node("TR", (p.get("x_tower", -100.0), 0, Z_TOP))
         for sy in (1, -1):
-            fixed.add(node(f"tp{sx:+d}{sy:+d}", (40 * sx, 40 * sy, ROOT_H + 1.6)))
-            mem(f"pyramid {sx:+d}{sy:+d}", f"tp{sx:+d}{sy:+d}", "TN", "pyramid")
+            fixed.add(node(f"tp-1{sy:+d}", (-40, 40 * sy, ROOT_H + 1.6)))
+            mem(f"pyramid -1{sy:+d}", f"tp-1{sy:+d}", "TR", "pyramid")
+            kr = [k for k, d in enumerate(MOTOR_DEG) if math.cos(math.radians(d)) < 0 and math.sin(math.radians(d)) * sy > 0][0]
+            mem(f"pyramid root{kr}", f"root{kr}", "TR", "pyramid")
+        mem("top bar", "TR", "TN", "pyramid")
+    if p.get("rear_x") is not None:                                   # rear skirt: the rear flat drops to plate level and ties to the rear roots
+        zs = p.get("z_skirt", 0.0)
+        rv = [r for r in rp if r[0] in ("V3", "P3_50", "V4")]
+        for r in rv:
+            node(f"K{r[0]}", (r[1], r[2], zs)); mem(f"skirt post {r[0]}", f"{r[0]}lo", f"K{r[0]}", "skirt")
+        mem("skirt rail +", "KV3", "KP3_50", "skirt"); mem("skirt rail -", "KP3_50", "KV4", "skirt")
+        mem("skirt dg +", "V3lo", "KP3_50", "skirt"); mem("skirt dg -", "V4lo", "KP3_50", "skirt")
+        for k, d in enumerate(MOTOR_DEG):
+            if math.cos(math.radians(d)) < 0:
+                sy = 1 if math.sin(math.radians(d)) > 0 else -1
+                mem(f"skirt tie root{k}", f"root{k}", "KP3_50", "skirt")
+                mem(f"skirt side root{k}", f"root{k}", "KV3" if sy > 0 else "KV4", "skirt")
     if topo["top_spider"]:
         for r in vx:
             mem(f"spider {r[0]}", "TN", f"{r[0]}hi", "top")
@@ -382,7 +408,7 @@ class Model:
         g = 0.0
         for e in self.el:
             if e["kind"] == "rod": g += SECTIONS[e["P"]["sec"]]["gpm"] * e["L"] / 1000.0
-        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1) + CORNER_G * 4             # ring nodes lo + hi, nose 4, top 1
+        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1 + sum(n.startswith("K") or n == "TR" for n in self.N)) + CORNER_G * 4   # ring lo + hi, nose 4, top, skirt, tower
         if self.topo.get("arm_spars"):
             g += sum(4 * SECTIONS["r3"]["gpm"] * e["L"] / 1000.0 for e in self.el if e["kind"] == "arm")
         return g
@@ -453,7 +479,7 @@ def evaluate(p, topo, sizes, detail=False):
     g["L2 mode"] = F_L2_MIN / f_l2 - 1
     m_drone = p.get("m_drone_g", 2200.0) * 1e-6                       # t (g -> t)
     cage_nodes = [n for n in m.names if n not in m.fixed and (n.endswith(("lo", "hi")) and not n.startswith(("S", "Vmid"))
-                                                              or n.startswith(("NT", "NB", "TN", "corner")))]
+                                                              or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP")))]
     P_ = np.array([m.N[n] for n in cage_nodes])
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
     for d in crash_dirs():
@@ -461,7 +487,7 @@ def evaluate(p, topo, sizes, detail=False):
         cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -CRASH_G * G_ACC * m_drone * d}, 1.0, "crash", n_, d))
     for d in crash_dirs():
         cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": CRASH_G * G_ACC * 266e-6 * d}, 1.0, "l2", None, d))
-    real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "TN", "corner"))]
+    real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP"))]
     for n_ in real_nodes:
         for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
             cases.append((f"handling {n_} {d}", {n_: 50.0 * np.array(d, float)}, 1.0, "handling", None, None))   # misuse-type (DEFAULT)
@@ -508,7 +534,7 @@ def evaluate(p, topo, sizes, detail=False):
 
 
 def groups_of(topo):
-    gs = ["chords", "posts", "spokes", "V", "keels", "wheel_ring", "struts", "nose", "nose_mount", "pyramid"]
+    gs = ["chords", "posts", "spokes", "V", "keels", "wheel_ring", "struts", "nose", "nose_mount", "pyramid", "skirt"]
     for k in TOPO_KEYS:
         if topo[k] and k != "arm_spars":
             gs.append("top" if k == "top_spider" else k)
@@ -557,11 +583,19 @@ def size_fsd(p, topo, iters=30, log=False):
     run_names = [[m0.el[i]["name"] for i in run] for run in runs]
     run_group = [m0.el[run[0]]["group"] for run in runs]
     sec = ["r3"] * len(runs)
+    # mirror pairs (y -> -y): both sides of a run take the larger section, so the cage is built symmetric
+    def rkey(run, sgn):
+        pts = sorted({tuple(np.round(np.asarray(m0.N[m0.el[i][e]], float) * [1, sgn, 1], 1)) for i in run for e in ("a", "b")})
+        return tuple(pts)
+    kpos = {rkey(r, 1): i for i, r in enumerate(runs)}
+    mirror = [kpos.get(rkey(r, -1), i) for i, r in enumerate(runs)]
+    def sym(req):
+        return [ORDER[max(ORDER.index(req[i]), ORDER.index(req[mirror[i]]))] for i in range(len(req))]
     def sizes_of(sec):
         return {n: s_ for names, s_ in zip(run_names, sec) for n in names}
     for it in range(iters):
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        req = run_required(m, res, runs)                               # smallest passing section at the current forces
+        req = sym(run_required(m, res, runs))                          # smallest passing section at the current forces
         changed = False
         for i in range(len(sec)):
             k, kr = ORDER.index(sec[i]), ORDER.index(req[i])
@@ -586,6 +620,7 @@ def size_fsd(p, topo, iters=30, log=False):
                     els = [e for e in m.el if e["name"] in names]
                     if hn and any(hn in (e["a"], e["b"]) for e in els) and ORDER.index(sec[i]) < len(ORDER) - 1:
                         sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
+        sec = sym(sec)
         if not stepped:
             for i in range(len(sec)):                                     # last resort: everything one step
                 if ORDER.index(sec[i]) < len(ORDER) - 1: sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
