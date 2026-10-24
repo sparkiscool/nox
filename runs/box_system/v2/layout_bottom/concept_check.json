@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 981.7 mm\u00b3 (E) (bay -120 receiver/bay -150 receiver) FAIL, bbox 80.8 L (E), extents 406 x 418 x 476 mm (E), mass 18583 g (E), CG [-6.0, 150.3, -53.5] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 981.7 mm\u00b3 (E) (bay -120 receiver/bay -150 receiver) FAIL, bbox 80.8 L (E), extents 406 x 418 x 476 mm (E), mass 18583 g (E), CG [-6.0, 149.3, -53.5] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -366,7 +366,7 @@
    {
     "a": "bay 30 receiver",
     "b": "bay 30 body envelope",
-    "overlap_mm3": 37889.59,
+    "overlap_mm3": 37889.6,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -375,7 +375,7 @@
    {
     "a": "bay 30 cartridge",
     "b": "bay 30 body envelope",
-    "overlap_mm3": 25074.84,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -429,7 +429,7 @@
    {
     "a": "bay -30 cartridge",
     "b": "bay -30 body envelope",
-    "overlap_mm3": 25074.84,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -483,7 +483,7 @@
    {
     "a": "bay -60 cartridge",
     "b": "bay -60 body envelope",
-    "overlap_mm3": 70631.36,
+    "overlap_mm3": 70631.35,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -609,7 +609,7 @@
    {
     "a": "bay -150 cartridge",
     "b": "bay -150 body envelope",
-    "overlap_mm3": 70631.36,
+    "overlap_mm3": 70631.35,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -663,7 +663,7 @@
    {
     "a": "bay -210 cartridge",
     "b": "bay -210 body envelope",
-    "overlap_mm3": 25074.84,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",

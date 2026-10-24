@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 980.6 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 91.8 L (E), extents 434 x 418 x 506 mm (E), mass 19864 g (E), CG [-7.2, 150.8, -59.0] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 980.6 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 91.8 L (E), extents 434 x 418 x 506 mm (E), mass 19864 g (E), CG [-7.2, 149.8, -59.0] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -391,7 +391,7 @@
    {
     "a": "bay -30 receiver",
     "b": "bay -30 body envelope",
-    "overlap_mm3": 37889.59,
+    "overlap_mm3": 37889.6,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -553,7 +553,7 @@
    {
     "a": "bay -210 receiver",
     "b": "bay -210 body envelope",
-    "overlap_mm3": 37889.59,
+    "overlap_mm3": 37889.6,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -670,7 +670,7 @@
    {
     "a": "arm: drone insert lane (grabber)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 383226.77,
+    "overlap_mm3": 383226.76,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",

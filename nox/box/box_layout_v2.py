@@ -31,9 +31,9 @@ Y_FUN = Y_C                                     # funnel centre = the grip line 
 
 
 def grip_z(pk, meta):
-    """the grip line in cartridge z: the latch set's centre (hub 24 Oct: each drone's catch centre on its set's centre,
-    the arm grips there), taken as the receiver's z mid (C from the latch v1 meshes; E until the latch republishes)."""
-    t = trimesh.load(os.path.join(CTX, f"{pk}_receiver_c.stl"), force="mesh"); return float(t.bounds[:, 2].mean())
+    """the grip line in cartridge z: the latch's tab line Z_T (hub DEFAULT 24 Oct: the arm grips there and fixes Y_C; the
+    Scout set's mid then sits 5.4 off the funnel centre, inside the 191 x 168 opening; was the receiver's z mid)."""
+    return float(meta[pk]["Z_T"])
 PATH = 70.0                                     # cartridge install path kept clear, radially inward from the seat (E: park r ~ R - 15)
 ARM_PARK_R = 1.5                                # turning envelope of the parked heads + cartridges: r <= R - 1.5 (arm v6: limit R - 2.5)
 LANE = dict(r=159.0, x=(-35.0, 47.5), y=(53.75, 73.75))  # drone insert, carriage: r <= 159 over X -35..47.5, Y 53.75..73.75 (arm PR 79
