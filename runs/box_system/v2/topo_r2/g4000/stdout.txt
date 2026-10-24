@@ -126,3 +126,28 @@ it  39 beta    8 J   0.1301 vol 0.0879 (dil 0.1501 g -0.003) grey  5.0% ch 0.100
 it  40 beta    8 J   0.1254 vol 0.0884 (dil 0.1502 g -0.002) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 54.3 40.6s
 it  41 beta    8 J   0.1223 vol 0.0888 (dil 0.1503 g -0.004) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 53.3 34.2s
 it  42 beta    8 J   0.1187 vol 0.0894 (dil 0.1508 g -0.001) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 52 38.4s
+it  43 beta    8 J   0.1167 vol 0.0897 (dil 0.1509 g -0.001) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 51.2 57.2s
+it  44 beta    8 J   0.1151 vol 0.0899 (dil 0.1509 g -0.001) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 50.6 44.2s
+it  45 beta    8 J   0.1137 vol 0.0901 (dil 0.1509 g -0.000) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 50 35.0s
+it  46 beta    8 J   0.1126 vol 0.0902 (dil 0.1509 g +0.002) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 49.5 35.1s
+it  47 beta    8 J   0.1125 vol 0.0900 (dil 0.1506 g -0.000) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 49.4 34.0s
+it  48 beta    8 J   0.1117 vol 0.0900 (dil 0.1506 g -0.000) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 49.2 35.4s
+it  49 beta    8 J   0.1109 vol 0.0901 (dil 0.1506 g -0.000) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 48.9 33.8s
+it  50 beta    8 J   0.1102 vol 0.0901 (dil 0.1506 g -0.000) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 48.6 35.1s
+it  51 beta    8 J   0.1096 vol 0.0902 (dil 0.1506 g +0.002) grey  5.1% ch 0.100 worst Overseer catch -X-Y diag 48.3 33.9s
+it  52 beta    8 J   0.1100 vol 0.0899 (dil 0.1503 g -0.000) grey  5.0% ch 0.100 worst Overseer catch -X-Y diag 48.5 42.2s
+layout: beta 8 done: eroded design 37 bodies, main 95.0%; drawn bodies outside the main body: 28
+it  53 beta   16 J   0.2014 vol 0.0902 (dil 0.1484 g +0.008) grey  2.5% ch 0.100 worst misuse: knocked over onto +X 108 36.4s
+it  54 beta   16 J   0.1294 vol 0.0868 (dil 0.1461 g -0.007) grey  2.8% ch 0.100 worst misuse: knocked over onto +X 58.7 41.3s
+it  55 beta   16 J   0.1089 vol 0.0878 (dil 0.1467 g -0.004) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 47.1 34.9s
+it  56 beta   16 J   0.1044 vol 0.0884 (dil 0.1470 g -0.006) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 45.9 37.2s
+it  57 beta   16 J   0.1009 vol 0.0893 (dil 0.1477 g -0.001) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 44.6 39.3s
+it  58 beta   16 J   0.0996 vol 0.0895 (dil 0.1478 g -0.001) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 44.1 39.8s
+it  59 beta   16 J   0.0987 vol 0.0895 (dil 0.1478 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 43.8 41.2s
+it  60 beta   16 J   0.0980 vol 0.0896 (dil 0.1478 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 43.5 34.1s
+it  61 beta   16 J   0.0974 vol 0.0896 (dil 0.1478 g +0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 43.3 35.4s
+it  62 beta   16 J   0.0971 vol 0.0896 (dil 0.1477 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 43.1 42.5s
+it  63 beta   16 J   0.0967 vol 0.0897 (dil 0.1477 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 43 32.7s
+it  64 beta   16 J   0.0963 vol 0.0897 (dil 0.1478 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.8 33.7s
+it  65 beta   16 J   0.0959 vol 0.0898 (dil 0.1478 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.6 44.1s
+it  66 beta   16 J   0.0955 vol 0.0898 (dil 0.1478 g +0.001) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.5 33.8s
