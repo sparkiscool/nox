@@ -17,8 +17,9 @@ L = {"__file__": SRC, "__name__": "layout_v2_defs"}
 exec(compile(src, SRC, "exec"), L)
 from assembly import load
 
-OUT = os.path.join(ROOT, "runs", "scout_layout", "v3", "assembly"); os.makedirs(OUT, exist_ok=True)
-R = json.load(open(os.path.join(ROOT, "runs", "scout_layout", "v3", "result.json")))
+RES = os.environ.get("SCOUT_RESULT") or os.path.join(ROOT, "runs", "scout_layout", "v3", "result.json")   # a candidate run's result
+OUT = os.path.join(os.path.dirname(os.path.abspath(RES)), "assembly"); os.makedirs(OUT, exist_ok=True)
+R = json.load(open(RES))
 rel = lambda p: os.path.relpath(p, ROOT)
 
 
@@ -107,18 +108,18 @@ a = {"name": "Scout v3", "machine": "scout",
                        ["camera mount", "cage (rods + nodes)", 1e9], ["plate hubs + TPU suspension", "frame plate", 1e9],
                        ["plate hubs + TPU suspension", "cage (rods + nodes)", 1e9], ["plate hubs + TPU suspension", "mount + nose legs (Scout)", 1e9]],
      # access (review PR 94; docs/generative.md 0): the swap drops the set out through the keel; USB and the receiver bolts
-     # are reached with the pack out; the mount envelope is a solid box here, so its channels are requirements (dimensions)
+     # are reached with the pack out; the mount envelope is a solid box here, so its channels are requirements (dimensions);
+     # the Radxa is reached over WiFi (SSH), no USB path (DEFAULT; alt: a 12 x 7 path down from its bottom edge)
      "access": [{"name": f"swap: {n} down", "part": n, "dir": [0, 0, -1], "length_mm": 90, "tool": "part", "ignore": SWAPSET}
                 for n in ("cartridge v5 (latch)", "pack 4S 1500", "pack XT60 plug")] +
                [{"name": f"M3 key, receiver bolt ({x:+.1f}, {y:+.1f})", "part": "receiver v1 (latch)", "from": [x, y, 9.6], "dir": [0, 0, -1],
                  "length_mm": 90, "tool": {"type": "cylinder", "d": 4}, "ignore": SWAPSET + ["receiver lid (latch)", "mount + nose legs (Scout)", "XT60E1-M"]}
                 for x in (-41.7, 43.25) for y in (-25.6, 25.6)] +
                [{"name": "FC USB-C (edge to the tail-left, E)", "part": "FC", "from": [-10.8, -12.7, 13.5], "dir": [-0.7071, -0.7071, 0], "length_mm": 70,
-                 "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["mount + nose legs (Scout)", "wires"]},
-                {"name": "Radxa USB-C (bottom edge, E)", "part": "Radxa Zero 3W", "from": [-20.0, -31.9, -35.0 + L["RADXA_DZ"]], "dir": [0, 0, -1], "length_mm": 50,
-                 "tool": {"type": "box", "w": 12, "h": 7}, "ignore": SWAPSET}],
+                 "tool": {"type": "box", "w": 12, "h": 7, "w_axis": [0.7071, -0.7071, 0]}, "ignore": ["mount + nose legs (Scout)", "wires"]}],
+
      "parts": parts}
-dst = os.path.join(HERE, "scout.assembly.json")
+dst = os.environ.get("SCOUT_MANIFEST") or os.path.join(HERE, "scout.assembly.json")
 json.dump(a, open(dst, "w"), indent=1)
 load(dst).save()                                              # one part per line, the assembly.py format
 print("wrote", rel(dst))
