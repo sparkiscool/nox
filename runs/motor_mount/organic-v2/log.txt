@@ -183,3 +183,22 @@ it  87 beta   32 J   9.7548 vol 0.1815 (dil 0.3402 g -0.000) grey  3.4% ch 0.100
 it  88 beta   32 J   9.7455 vol 0.1817 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 814 37.8s
 it  89 beta   32 J   9.7364 vol 0.1820 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 813 37.8s
 it  90 beta   32 J   9.7275 vol 0.1823 (dil 0.3402 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 812 38.9s
+git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403
+To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to p
+it  91 beta   32 J   9.7185 vol 0.1826 (dil 0.3402 g +0.002) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 811 39.5s
+it  92 beta   32 J   9.7316 vol 0.1822 (dil 0.3394 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 811 38.3s
+it  93 beta   32 J   9.7213 vol 0.1825 (dil 0.3394 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 811 37.6s
+it  94 beta   32 J   9.7124 vol 0.1828 (dil 0.3394 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 810 37.4s
+it  95 beta   32 J   9.7045 vol 0.1831 (dil 0.3394 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 809 38.3s
+it  96 beta   32 J   9.6969 vol 0.1833 (dil 0.3394 g +0.004) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 809 36.5s
+it  97 beta   32 J   9.7225 vol 0.1824 (dil 0.3381 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 810 37.6s
+layout: stopped (max_stage) at it 97, beta 32, 3819 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 3986 s, peak 6.298948 GB
+build: organic surface at pitch 0.267 mm (x3), skins 5.63 cm3, field 16.02 cm3, in env - cuts 14.10 cm3 (layout 14.10, level offset +0.161 mm), fillet 2.5 mm, rims 1.0 mm, mesh 265,640 faces, 26 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [9040.8], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 2, "ok": true}
+function check: {'skin_mm3': 2974.9, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.12 in 'crash push 40 N +Y on the motor' at [-7.6, -7.6, 15.4]
+RESULT {"name": "motor_mount", "solid_ok": true, "mass_g": 18.03, "worst": 0.122, "function_ok": true, "bodies": 1}
