@@ -1,0 +1,20 @@
+{
+ "file": "runs/arm_pinion16/v3/box_arm_pinion16_v3.stl",
+ "mass_g": 3.7,
+ "extents": [
+  17.8,
+  17.8,
+  18.2
+ ],
+ "face": 13.5,
+ "boss": [
+  55.0,
+  59.25
+ ],
+ "solid_check": "PASS",
+ "solid_info": {
+  "bodies_eroded": 1,
+  "necks": [],
+  "thin_walls": []
+ }
+}

@@ -1,0 +1,125 @@
+{
+ "cam": {
+  "base": 4.5,
+  "rise": 6.0,
+  "open_reach": 10.5,
+  "open_x": 10.5,
+  "ok": true
+ },
+ "blade": {
+  "open_x": 10.5,
+  "squeezed_x": 6.0,
+  "stroke": 4.5,
+  "recess_gap": 5.5,
+  "fits_open": true
+ },
+ "spring": {
+  "closed_N": 15.0,
+  "open_N": 19.5,
+  "release_margin": {
+   "scout": 5.0,
+   "overseer": 3.3
+  }
+ },
+ "hold_while_unmating": {
+  "scout": {
+   "per_tab_N": 26.1,
+   "opening_N": 4.68,
+   "margin": 3.2
+  },
+  "overseer": {
+   "per_tab_N": 28.6,
+   "opening_N": 4.91,
+   "margin": 3.1
+  }
+ },
+ "servo": {
+  "cam_lever_mm": 3.82,
+  "torque_Nm": 0.194,
+  "torque_kgcm": 1.98,
+  "margin": {
+   "DS3218": 10.1,
+   "MG995": 4.6
+  },
+  "spline_side_N": 5.8,
+  "note": "the two blades load the cam equal and opposite: the spline sees only the friction imbalance (no outboard pin); at squeezed the cam is off the blades (the springs hold, servo unloaded)"
+ },
+ "bosses": {
+  "squeezed_x": [
+   1.0,
+   17.0
+  ],
+  "open_x": [
+   5.5,
+   21.5
+  ],
+  "gap_at_centre": 2.0,
+  "y": [
+   -11.0,
+   -5.0
+  ],
+  "cam_top_y": -14.5,
+  "cam_clear": 3.5,
+  "inside_walls": true
+ },
+ "rods": {
+  "per_rod_N": 14.3,
+  "sigma_MPa": 70.3,
+  "index": 0.07,
+  "deflection_mm": 0.088,
+  "boss_MPa": 0.3,
+  "anti_rack_boss_min": 15.0,
+  "boss": 16.0,
+  "ok": true
+ },
+ "head_body": {
+  "grip_lever_mm": 92.2,
+  "stall_Nm": 6.83,
+  "pull_Nm": 5.29,
+  "pad_insert_Nm": {
+   "scout": 3.63,
+   "overseer": 1.03
+  },
+  "note": "alt D: a push pad under the XT60 end cuts the insert moment, the pull still loads the grip (5.3 N.m); frame model: the mate tilt barely moves (Scout 0.822 -> 0.817 deg), so D is not taken"
+ },
+ "pinion": {
+  "face_now": 10.5,
+  "face_v3": 13.5,
+  "tail_face_v3": 10.25,
+  "swap_drone_insert": {
+   "scout": 0.447,
+   "overseer": 0.486
+  },
+  "stall_misuse": {
+   "scout": 0.572,
+   "overseer": 0.611
+  },
+  "note_src": "swap_system frame (round 3d), the drone insert on the rack tail",
+  "note": "research: module 1 is the printable limit; pinion v3 teeth Y 59.75..73.25 on rack teeth Y 59.25..73.25 (grown down: the top stays under the carriage-lane keep-out 73.75, concept review r3); on the rack tail (drone insert) the engaged face is 10.25 from the tail's step at Y 63 (swap_system)"
+ },
+ "alternatives": {
+  "A sprung blades + servo cam (chosen)": {
+   "holds_unpowered": true,
+   "servo_sees_pull": false,
+   "servo_torque_kgcm": 1.98,
+   "parts": "2 springs, 2 carbon rods along x, 2 blade guide bosses 16 long, metal horn"
+  },
+  "B servo toggle fingers": {
+   "holds_unpowered": true,
+   "servo_sees_pull": false,
+   "servo_torque_kgcm": "~0.5 at the squeeze, rises near dead centre",
+   "parts": "4 pins + links per finger",
+   "note": "needs a tuned stop per pack (the Scout / Overseer tabs differ in release force); a stop error loses the lock or overloads the servo; more parts"
+  },
+  "C v4 servo fingers": {
+   "holds_unpowered": false,
+   "servo_sees_pull": true,
+   "note": "the servo holds the grip; a power cut drops the pack; the spline takes the pull side load (no published limit)"
+  },
+  "D A + push pad": {
+   "holds_unpowered": true,
+   "servo_sees_pull": false,
+   "note": "a pad under the XT60 end: the insert moment on the head body drops (Scout 6.8 -> 3.6 N.m) but the pull still loads the grip (5.3) and the mate tilt barely moves (0.822 -> 0.817 deg): an extra contact for little; not taken"
+  }
+ }
+}

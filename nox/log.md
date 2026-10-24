@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (swap arm worker): **swap arm v7 round 3d, concept PASS** (PR 79): Y_C 165 = tab line (latch 258becf), low carriage + rail v4 keel, 5:1 axle, detent v6 x1.3 (623ZZ), pinion v3; XT60 x 1.24° / ±2.37, z 0.84° / ±1.06; stub ≤ 10 mrad; heads v7 grabber concept. Shared: L Swap. `box-arm.md` v7
 - 24 Oct (box structure system session): funnel v8 file (catch PR 81) loaded as is: fit 0.0 mm³, both arm insert lanes clear the −Y panel (r 159.61 vs 159, C on M), v9 notch not needed for fit; v8 needs no Y room, box 418 x 407 x 470 (80.0 L). `box_layout_v2.py`, dimensions System box structure.
 - 24 Oct (rule): carbon where its length earns it (Spark): short cage members printed, break-even 33 mm DEFAULT; CLAUDE.md Hard rules, generative.md The rule 0, review check 11.
 - 24 Oct (box structure system session, box electronics): from arm v7 (PR 79): per-bay gravity offset in the axle step target (commissioning) + sag check ≤ ±0.55° (E, arm budget), ≤ 100 full steps/s through each notch, TURN 1.1 s; detent now holds (x1.3, index 1.04), KB3 stays. box-electronics.md, dimensions I.
