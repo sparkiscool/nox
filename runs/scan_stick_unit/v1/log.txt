@@ -68,3 +68,14 @@ layout: 3 drawn bodies (39,127 cells), held solid in every realization; eroded f
 layout: 33 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties
 layout: reachability OK: every drawn body can be joined by members of 5.0 mm
 fem: grid (64, 48, 160) = 491,520 elements, 502,194 active dofs; backend direct (direct estimate 6.9 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 80) grid (h 4.0): mean x 0.086
+it   1 beta    4 J  10.0000 vol 0.0895 (dil 0.1518 g +0.353) grey 15.2% ch 0.100 worst camera hit above 50 N 1.04e+03 36.7s
+it   2 beta    4 J   8.6649 vol 0.0812 (dil 0.1457 g +0.298) grey 15.5% ch 0.100 worst camera hit above 50 N 904 37.0s
+it   3 beta    4 J   7.8180 vol 0.0720 (dil 0.1387 g +0.236) grey 15.4% ch 0.100 worst camera hit above 50 N 803 37.3s
+it   4 beta    4 J  17.7957 vol 0.0622 (dil 0.1306 g +0.164) grey 13.7% ch 0.100 worst tie b3 my 2.12e+03 37.3s
+it   5 beta    4 J  25.2871 vol 0.0538 (dil 0.1225 g +0.092) grey 13.3% ch 0.100 worst tie b3 my 2.98e+03 37.7s
+it   6 beta    4 J  28.9681 vol 0.0479 (dil 0.1150 g -0.062) grey 12.7% ch 0.100 worst tie b3 my 3.59e+03 38.2s
+it   7 beta    4 J   6.7922 vol 0.0528 (dil 0.1199 g -0.022) grey 13.2% ch 0.100 worst camera hit above 50 N 668 37.8s
+it   8 beta    4 J   4.7317 vol 0.0559 (dil 0.1205 g -0.017) grey 13.2% ch 0.100 worst camera hit above 50 N 493 37.9s
+it   9 beta    4 J   3.8811 vol 0.0587 (dil 0.1208 g -0.015) grey 12.8% ch 0.100 worst camera hit above 50 N 405 37.9s
+it  10 beta    4 J   3.3555 vol 0.0615 (dil 0.1211 g -0.012) grey 12.3% ch 0.100 worst camera hit above 50 N 350 37.5s
