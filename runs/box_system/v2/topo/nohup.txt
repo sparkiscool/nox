@@ -1,0 +1,28 @@
+=== box_system_topo_v2: h 8.0, gen 1500.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
+seat posts side/overlap mm3 [(1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9), (1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9)]
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
+  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
+  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
+box_system_topo_v2: grid (32, 32, 32) h 16.0 = 32,768 cells; design 9,082 (37199.9 cm3), drawn 2,528, void 21,158
+  support default: 624 cells, 1350 nodes
+  support hands: 162 cells, 400 nodes
+  support side: 720 cells, 1550 nodes
+  50 cells of 10 design islands cut off by the keep-outs set void
+setup h 16.0: 12 s, 14 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 1.16 cells, erosion depth 4.93 mm; volfrac 0.041 of 9,032 design cells
+layout: WARNING filter radius 1.16 cells < 2: the grid is too coarse for 18.0 mm members; use h <= 7.42
+layout: WARNING nearly mirrored in x (0.4% of passive cells differ): no symmetry
+layout: 17 drawn bodies (2,528 cells), held solid in every realization; eroded filter: masked
+layout: 14 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 46,137 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0526 (dil 0.0648 g +0.298) grey 21.2% ch 0.100 worst all bays: 43.5 N across 2.45e+04 1.8s
+it   2 beta    1 J  33.6803 vol 0.0367 (dil 0.0447 g -0.104) grey 14.8% ch 0.100 worst misuse: Overseer motors cut 7.78e+04 1.7s
+it   3 beta    1 J  21.0934 vol 0.0375 (dil 0.0457 g -0.086) grey 11.3% ch 0.100 worst misuse: Overseer motors cut 4.9e+04 1.6s
+it   4 beta    1 J  14.2285 vol 0.0377 (dil 0.0458 g -0.084) grey 12.2% ch 0.100 worst misuse: Overseer motors cut 3.3e+04 1.7s
+it   5 beta    1 J   9.3710 vol 0.0387 (dil 0.0469 g -0.060) grey 12.7% ch 0.100 worst misuse: Overseer motors cut 2.18e+04 1.8s
+it   6 beta    1 J   4.2865 vol 0.0395 (dil 0.0476 g -0.041) grey 12.4% ch 0.100 worst misuse: Overseer motors cut 9.95e+03 1.8s
+it   7 beta    1 J   0.4653 vol 0.0390 (dil 0.0470 g -0.054) grey 11.6% ch 0.100 worst all bays: 60 N insert 960 1.6s
+it   8 beta    1 J   0.1870 vol 0.0367 (dil 0.0444 g -0.107) grey 11.1% ch 0.100 worst Overseer catch -X-Y diag 406 1.8s
+it   9 beta    1 J   0.1542 vol 0.0389 (dil 0.0469 g -0.057) grey 11.8% ch 0.100 worst XT60 insert at the -90 bay 6 365 1.7s
+it  10 beta    1 J   0.1633 vol 0.0370 (dil 0.0446 g -0.103) grey 11.1% ch 0.100 worst Overseer catch -X-Y diag 356 1.7s
