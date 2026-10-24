@@ -134,8 +134,9 @@ def hub_v6_parts():
     env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
     env -= bore + cav
     env -= seat_cuts
+    env0 = env - post_k                                                          # the generated region as given (topo organic finish)
     env = (env + pst + plate_c + seats + tower + roof + wall) - post_k
-    return dict(drawn=drawn, cuts=cuts, env=env, allowed=env - cuts, posts=P, seat_cuts=seat_cuts, detent=(D, S), tower=tower)
+    return dict(drawn=drawn, cuts=cuts, env=env, env0=env0, allowed=env - cuts, posts=P, seat_cuts=seat_cuts, detent=(D, S), tower=tower)
 
 # ------------------------------------------------------------------ v5 parts as solids (arm frame), for the checks
 def prism(poly, y0, y1):

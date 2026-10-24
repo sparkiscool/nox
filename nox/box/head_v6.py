@@ -64,7 +64,7 @@ def head_v6_parts(variant="A"):
     drawn = C["drawn"] + G["drawn"]
     cuts = C["cuts"] + G["cuts"]
     env = genv + gus + drawn
-    parts = dict(drawn=drawn, cuts=cuts, env=env, guide=G["guide"], splate=G["plate"], carriage=C, gusset=gus)
+    parts = dict(drawn=drawn, cuts=cuts, env=env, env0=genv + gus, guide=G["guide"], splate=G["plate"], carriage=C, gusset=gus)
     if variant == "B":
         parts = {k: (mirror_x(v) if isinstance(v, mf.Manifold) else v) for k, v in parts.items()}
         parts["carriage"] = {k: mirror_x(v) for k, v in C.items()}
