@@ -1,0 +1,20 @@
+=== scan_stick_base: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+=== scan_stick_base: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (212.35 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.040 of 15,543 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (1.1% of passive cells differ): no symmetry
+layout: 2 drawn bodies (3,318 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 56) = 43,008 elements, 71,460 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0571 (dil 0.0695 g +0.443) grey 14.9% ch 0.100 worst tie b2 my 3.11e+04 3.2s
+it   2 beta    1 J   1.7094 vol 0.0368 (dil 0.0443 g -0.080) grey 18.9% ch 0.100 worst L2 hit -y 100 N (joint) 5.51e+03 2.5s
+it   3 beta    1 J   1.7062 vol 0.0387 (dil 0.0465 g -0.035) grey 19.9% ch 0.100 worst L2 hit -y 100 N (joint) 5.51e+03 2.5s
+it   4 beta    1 J   1.7060 vol 0.0400 (dil 0.0480 g -0.004) grey 20.2% ch 0.100 worst L2 hit -y 100 N (joint) 5.51e+03 2.4s
+it   5 beta    1 J   1.7052 vol 0.0399 (dil 0.0478 g -0.007) grey 20.1% ch 0.100 worst L2 hit -y 100 N (joint) 5.51e+03 2.5s
+it   6 beta    1 J   1.7023 vol 0.0399 (dil 0.0477 g -0.004) grey 19.8% ch 0.100 worst L2 hit -y 100 N (joint) 5.5e+03 2.3s
+it   7 beta    1 J   1.6876 vol 0.0397 (dil 0.0474 g -0.011) grey 19.2% ch 0.100 worst L2 hit -y 100 N (joint) 5.45e+03 2.2s
+it   8 beta    1 J   1.4971 vol 0.0391 (dil 0.0468 g -0.023) grey 19.0% ch 0.100 worst L2 hit -y 100 N (joint) 4.84e+03 2.3s
+it   9 beta    1 J   0.5800 vol 0.0392 (dil 0.0468 g -0.024) grey 19.1% ch 0.100 worst tie b2 my 2.01e+03 2.3s
+it  10 beta    1 J   1.4972 vol 0.0387 (dil 0.0462 g -0.036) grey 18.7% ch 0.100 worst L2 hit -y 100 N (joint) 4.84e+03 2.4s
