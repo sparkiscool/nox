@@ -89,3 +89,12 @@ layout: beta 4 done: eroded design 2 bodies, main 99.9%; drawn bodies outside th
 coarse stage done: 71 iterations, 1002 s, peak 3.236444 GB
 box_hub_v6: grid (128, 48, 128) h 1.5 = 786,432 cells; design 224,361 (757.2 cm3), drawn 30,635, void 531,436
   support default: 4686 cells, 9913 nodes
+  82 system cases from runs/arm/v7/system.json + the detent springs
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (101.75 cm3); 1.64 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.055 of 224,847 design cells
+layout: 5 drawn bodies (30,149 cells), held solid in every realization; eroded filter: masked
+layout: 83 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (128, 48, 128) = 786,432 elements, 858,462 active dofs; backend mg (direct estimate 14.2 GB, budget 11.8 GB)
+fem: multigrid 4 levels [(np.int64(128), np.int64(48), np.int64(128)), (np.int64(64), np.int64(24), np.int64(64)), (np.int64(32), np.int64(12), np.int64(32)), (np.int64(16), np.int64(6), np.int64(16))], coarsest 6,069 dofs (direct)
+fem: multigrid 4 levels [(np.int64(128), np.int64(48), np.int64(128)), (np.int64(64), np.int64(24), np.int64(64)), (np.int64(32), np.int64(12), np.int64(32)), (np.int64(16), np.int64(6), np.int64(16))], coarsest 6,069 dofs (direct)
