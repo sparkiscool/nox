@@ -985,13 +985,15 @@ for opt in PAD_OPTIONS:
             if (a_ in live) != (b_ in live): live |= {a_, b_}; grow = True
     members = [m for m in members if m[0] in live and m[1] in live]
     if os.environ.get("WARM"):                                         # warm start (v4): a previous cage, plus every member at
-        Wr = json.load(open(os.environ["WARM"]))["rods"]                # the new shield nodes, plus members between nodes it uses
+        Wr = json.load(open(os.environ["WARM"]))["rods"]                # the new shield nodes and at the ends of its lost rods
         Wk = {_mkey(np.array(a), np.array(b)) for a, b in Wr}
         Wn = {tuple(np.round(p_, 2)) for ab in Wr for p_ in ab}
         new_nodes = {i for i in range(len(N)) if kind[i] == "M" and tuple(np.round(N[i], 2)) not in Wn}
         n_all = len(members)
-        members = [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or m[0] in new_nodes or m[1] in new_nodes
-                   or (tuple(np.round(N[m[0]], 2)) in Wn and tuple(np.round(N[m[1]], 2)) in Wn)]
+        feas_k = {_mkey(N[a_], N[b_]) for a_, b_ in members}
+        lost_n = {p_ for k_ in Wk - feas_k for p_ in k_}                 # ends of the previous rods that no longer fit
+        near = lambda i: i in new_nodes or tuple(np.round(N[i], 2)) in lost_n
+        members = [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or near(m[0]) or near(m[1])]
         say(f"   warm start from {os.environ['WARM']}: {len(Wk)} rods, {sum(1 for m in members if _mkey(N[m[0]], N[m[1]]) in Wk)} still feasible; "
             f"ground structure {n_all} -> {len(members)} members")
     set_collinear(N, kind, members)
