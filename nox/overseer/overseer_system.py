@@ -134,6 +134,16 @@ def union(meshes):
     return trimesh.Trimesh(mm.vert_properties[:, :3], mm.tri_verts)
 
 
+def plate_bolts(which):
+    """arm-to-plate M3 bolt axes in plan (dimensions O Arms and hub): top 2 per arm at u 63.17, v ±15; bottom at u 63.74, v ±10"""
+    u_, v_ = (63.17, 15.0) if which == "top" else (63.74, 10.0)
+    out = []
+    for d_ in MOTOR_DEG:
+        c_, s_ = math.cos(math.radians(d_)), math.sin(math.radians(d_))
+        out += [(u_ * c_ - sv * v_ * s_, u_ * s_ + sv * v_ * c_) for sv in (1, -1)]
+    return out
+
+
 def overlap(a, b):
     from topo.part import man
     return (man(a) ^ man(b)).volume()
@@ -257,8 +267,9 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # hub belly pan: printed PETG skid plate under the bottom plate (cage): the electronics' shield from below; the hub
     # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
     g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.7, -2.2)
-    g["runners"] = [union([box(-dc - 72, -dc + 72, 62 if sy > 0 else -74, 74 if sy > 0 else -62, PB - 17, PB + 12),     # sleeve on the skid rail
-                           box(-dc - 72, -dc + 72, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 26)])     # outer lip: shields the camera board / flow window edge (to 10 over the board: a side edge 15..60 deg up meets it first)
+    g["pan"] = g["pan"].difference(union([cyl(4.5, -6.0, -1.0, *xy_) for xy_ in plate_bolts("bottom")]))   # driver holes under the bottom plate bolts
+    g["runners"] = [union([box(-dc - 85, -dc + 85, 62 if sy > 0 else -74, 74 if sy > 0 else -62, PB - 17, PB + 12),     # sleeve on the skid rail, to ±85: past the set's ends (±86 cartridge) inside the opening at ±5 deg yaw
+                           box(-dc - 85, -dc + 85, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 26)])     # outer lip: shields the camera board / flow window edge (to 10 over the board: a side edge 15..60 deg up meets it first)
                     for sy in (1, -1)]
     g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 77, sy * 66) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     # keep-alive pads (G (6)): one per ±x lower-ring face, 2.0 off the face at the probe height, over the probe pair
@@ -303,6 +314,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         lugp = B - A * (co.SOCK_BACK + 3) + np.array([0, sy * 46.0, 0])            # printed arm from the socket lug to the plate back
         ax_ = C - lugp; ax_ /= np.linalg.norm(ax_); sphi = float(np.linalg.norm(np.cross(ax_, fwd)))
         arms_.append(rod(lugp, C - fwd * (2.0 + 6.0 * sphi), 6.0))  # printed with the apex block: its end disc stops inside the 3 plate
+        g.setdefault("cam_arm_len", []).append(float(np.linalg.norm(C - fwd * (2.0 + 6.0 * sphi) - lugp)))
     g["cams"] = cams
     g["cam"] = trimesh.util.concatenate(cam_meshes)
     g["cam_lens"] = cams[0]["lens"]; g["cam_fwd"] = cams[0]["fwd"]; g["cam_up_v"] = cams[0]["up"]
@@ -331,23 +343,26 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
     for name, a, b, group, kind in Mg:
         if kind == "rod":
-            sc = sec_of(name, group); rods[name] = (Ng[a], Ng[b], co.SECTIONS[sc]["od"], group, sc)
+            sc = sec_of(name, group); rods[name] = (Ng[a], Ng[b], co.SECTIONS[sc]["od"], group, sc); g.setdefault("rod_ends", {})[name] = (a, b)
             sock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("tipb", "tipt", "armbot", "arm", "root")))
             hsock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc")))
     g["arm_socket_mm3"] = sock; g["hub_socket_mm3"] = hsock
     g["pod_clamp_mm3"] = (sum(math.pi * (v[2] / 2) ** 2 * 46.0 for k, v in rods.items() if k.startswith("belly bar"))   # pods clamp on the belly bars (E)
                           + sum(overlap(rod(v[0], v[1], v[2] / 2), g["sled"]) for k, v in rods.items() if k.startswith("skid leg")) * 1.05 + 1.0)   # skid legs through the sled bosses
-    ring_nodes = []
-    for nm in info["pnodes"]:
-        for lvl in ("lo", "hi"):
-            q = Ng[f"{nm}{lvl}"]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
-    for n in [n_ for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]:   # rear tower and skirt nodes (cage up)
-        q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
-    mx_ = [Ng[n_] for n_ in Ng if n_.startswith("MX")]
+    od_n = {}                                                     # printed nodes drawn at their size: a block round the largest socket
+    for name, a, b, group, kind in Mg:
+        if kind == "rod":
+            for n_ in (a, b): od_n[n_] = max(od_n.get(n_, 0.0), co.SECTIONS[sec_of(name, group)]["od"])
+    def nbox(n_):
+        h_ = co.node_size(od_n.get(n_, 3.0)) / 2; q = Ng[n_]
+        return box(q[0] - h_, q[0] + h_, q[1] - h_, q[1] + h_, q[2] - h_, q[2] + h_)
+    ring_nodes = [nbox(f"{nm}{lvl}") for nm in info["pnodes"] for lvl in ("lo", "hi")]
+    ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]   # rear tower and skirt nodes (cage up)
+    mx_ = [n_ for n_ in Ng if n_.startswith("MX")]
     if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print
-        mx_ = np.array(mx_); ring_nodes.append(box(mx_[:, 0].min() - 7, mx_[:, 0].max() + 7, -7, 7, mx_[:, 2].min() - 7, mx_[:, 2].max() + 7))
-    for n in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN"):     # nose nodes (the last 7)
-        q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
+        h_ = max(co.node_size(od_n.get(n_, 3.0)) for n_ in mx_) / 2; q_ = np.array([Ng[n_] for n_ in mx_])
+        ring_nodes.append(box(q_[:, 0].min() - h_, q_[:, 0].max() + h_, -h_, h_, q_[:, 2].min() - h_, q_[:, 2].max() + h_))
+    ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)
             for n in Ng if n.startswith(("fhubB", "fhubT", "chin", "rhubB"))]
@@ -654,8 +669,11 @@ def worst_of(prefix, key):
     k = max(sel, key=lambda k: sel[k][key]); return k, sel[k][key]
 cr = {k: v for k, v in cs.items() if k.startswith("crash")}
 wdef = max(cr, key=lambda k: cr[k]["defl"])
-say(f"frame model on the final geometry (F, dimensions L cases): L2 mode {FRAME['f_l2']:.0f} Hz (≥ {co.F_L2_MIN:.0f}), cage first mode {FRAME['f_first']:.0f} Hz; "
-    f"crash {co.crash_force(P_FINAL['m_drone_g'] * 1e-6):.0f} N ({co.CRASH_MODE}: {co.V_HIT} m/s x {P_FINAL['m_drone_g']:.0f} g over a {co.STROKE:.0f} stroke) in 14 directions: worst rod {max(v['rod'] for v in cr.values()):.2f}, buckling {max(v['buckle'] for v in cr.values()):.2f}, "
+say(f"frame model on the final geometry (F, dimensions L cases): L2 mode {FRAME['f_l2']:.0f} Hz (≥ {co.F_L2_MIN:.0f}), cage first mode {FRAME['f_first']:.0f} Hz (moves "
+    + ", ".join(f"{n_} {v_:.0%}" for n_, v_ in FRAME["first_mode_where"]) + "); "
+    + (f"crash {co.crash_force(P_FINAL['m_drone_g'] * 1e-6):.0f} N (rigid {co.CRASH_G:g} g x {P_FINAL['m_drone_g']:.0f} g, L)" if co.CRASH_MODE == "rigid" else
+       f"crash {co.crash_force(P_FINAL['m_drone_g'] * 1e-6):.0f} N (energy: {co.V_HIT} m/s x {P_FINAL['m_drone_g']:.0f} g over a {co.STROKE:.0f} stroke)")
+    + f" in 14 directions on {sum(1 for k_ in cs if k_.startswith('crash'))} hit points (members ≤ {1 / co.NODE_FUSE:.2f}, the node is the fuse): worst rod {max(v['rod'] for v in cr.values()):.2f}, buckling {max(v['buckle'] for v in cr.values()):.2f}, "
     f"sockets {max(v['socket'] for v in cr.values()):.2f}, arm {max(v['arm'] for v in cr.values()):.2f} (≤ 1.0), touching node moves ≤ {cr[wdef]['defl']:.1f} (≤ 9); "
     f"L2 at {co.CRASH_G:.0f} g: worst {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('L2 crash')):.2f}; "
     f"handling 50 N: {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('handling')):.2f}; "
@@ -712,6 +730,10 @@ for cm in g["cams"]:
         if hit.any(): who[k] = hit.mean(); bl |= hit
     say(f"   cage rods block {100 * bl.mean():.1f} % of its image (C): " + ", ".join(f"{k} {100 * v:.1f}" for k, v in sorted(who.items(), key=lambda t: -t[1])[:4]))
 say(f"front cameras: together {100 * cov:.1f} % of the L2 field in view (C, cam_cover.py; one camera at best 27.6 %)")
+# camera arm first mode (L Sensor mounts): a PETG rod r 6 cantilevered from the apex lug, camera 15 g + its plate at the tip
+_I = math.pi * 6.0 ** 4 / 4; _mt = (15.0 + abs(g["cam_plates"][0].volume) * 1.27e-3 * 0.5) * 1e-6
+_fa = [math.sqrt(3 * 2780.0 * _I / L_ ** 3 / (_mt + 0.24 * math.pi * 36 * L_ * 1.27e-9)) / (2 * math.pi) for L_ in g["cam_arm_len"]]
+say(f"camera arms: {min(g['cam_arm_len']):.0f}..{max(g['cam_arm_len']):.0f} long, first bending mode {min(_fa):.0f} Hz (≥ 100, E: rigid lug, PETG E 2780)")
 dn = np.array([0, 0, -1.0])
 for name, m in (("feet", trimesh.util.concatenate(g["feet"])), ("cartridge", g["cart"]), ("wheels", trimesh.util.concatenate(g["wheels"])),
                 ("cage low", g["cage_low"]), ("arms", trimesh.util.concatenate(g["arms"]))):
@@ -794,20 +816,46 @@ for ms_, f_ in ((g["nodes"], 0.6), (g["ring_nodes"], 0.5), (g["runners"], 0.4), 
         w_ = abs(m_.volume) * 1.27e-3 * f_; _cm += w_ * m_.bounding_box.centroid; _cw += w_
 cage_cg = _cm / _cw
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"] + [g["pan"]]
+# contact allowances joint by joint: each rod end's own overlap with the piece it is designed to sit in (its socket), summed
+# per part pair (x 1.05 + 1 for mesh noise); any other overlap shows in the fit check
+J_ARM = ("tipb", "tipt", "armbot", "arm", "root"); J_HUB = ("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc", "SP")
+JOINTS = {"arms": [], "apex": [], "sled": []}
+for k_, (a_, b_) in g["rod_ends"].items():
+    rm_ = g["rod_meshes"][k_]
+    if any(n_.startswith(J_ARM) for n_ in (a_, b_)): JOINTS["arms"].append((k_, sum(overlap(rm_, am_) for am_ in g["arms"])))
+    if any(n_.startswith(J_HUB) for n_ in (a_, b_)): JOINTS["apex"].append((k_, overlap(rm_, g["apex"])))
+    if k_.startswith(("skid leg", "belly bar")): JOINTS["sled"].append((k_, overlap(rm_, union([g["sled"], g["cam_pod"], g["flow_pod"]]))))
+JOINTS["apex"] += [("hub on the pan", sum(overlap(h_, g["pan"]) for h_ in g["hubs"]))]
+J_ALLOW = {k_: round(sum(v_ for _, v_ in js_) * 1.05 + 1.0, 1) for k_, js_ in JOINTS.items()}
+os.makedirs(OUT, exist_ok=True); json.dump({k_: [[n_, round(float(v_), 1)] for n_, v_ in js_] for k_, js_ in JOINTS.items()}, open(os.path.join(OUT, "joints.json"), "w"), indent=0)
+say(f"contact allowances (per joint, M): cage/arms {len(JOINTS['arms'])} sockets {J_ALLOW['arms']} mm3, cage/apex + hubs {len(JOINTS['apex'])} sockets {J_ALLOW['apex']} mm3, "
+    f"cage/sled {len(JOINTS['sled'])} clamps {J_ALLOW['sled']} mm3")
+# what must be reached without taking a part off (concept check): connectors, the SD card, the arm bolts (DEFAULT connector sides where unmeasured)
+_l2lx = np.array([math.cos(math.radians(L2_TILT)), 0.0, -math.sin(math.radians(L2_TILT))])            # L2 local x in the drone frame
+_tz, _bz = float(TOP.bounds[1][2]), float(BOTTOM.bounds[0][2])
+ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7}),
+          dict(name="Pi 5 SD card", part="electronics", **{"from": [-42.5, 0.0, 23.5]}, dir=[-1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
+          dict(name="Pi 5 USB / Ethernet end", part="electronics", **{"from": [42.5, 0.0, 32.0]}, dir=[1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
+          dict(name="L2 cable (base notch, local -X)", part="L2", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx]}, dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
+          dict(name="XT60 lead up through the sled", part="receiver XT60", **{"from": [float(v) for v in (g["xt60"].bounds.mean(0) * [1, 1, 0] + [0, 0, g["xt60"].bounds[1][2]])]}, dir=[0, 0, 1], length_mm=30, tool={"type": "cylinder", "d": 9})]
+ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["lens"] - c_["fwd"] * 12]},
+                dir=[float(v) for v in c_["up"]], length_mm=30, tool={"type": "box", "w": 10, "h": 6}) for c_ in g["cams"]]
+ACCESS += [dict(name=f"arm bolt {wh_} {i_}", part="plates", **{"from": [xy_[0], xy_[1], _tz if wh_ == "top" else _bz]}, dir=[0, 0, 1 if wh_ == "top" else -1], length_mm=70,
+                tool={"type": "cylinder", "d": 8}) for wh_ in ("top", "bottom") for i_, xy_ in enumerate(plate_bolts(wh_))]
 man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cg_tol_no_swap_mm=15.0, cage_margin_mm=3.0, n_dirs=1500,
-           contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
-                          ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
-                          ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
+           contact_pairs=[["cage", "arms", J_ALLOW["arms"]],                         # designed joints, summed per joint (above): rod ends in the arm sockets,
+                          ["cage", "sled + pods + deck", J_ALLOW["sled"]],                 # the skid legs and belly bars through the sled and pod clamps,
+                          ["cage", "apex + hubs", J_ALLOW["apex"]],                        # rod ends in the hub and apex sockets, hub blocks on the pan,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
                           ["arms", "apex + hubs", round(g["hub_arm_mm3"], 1)],             # front hub blocks seated on the front arm roots,
                           ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "receiver XT60", round(abs(g["receiver"].intersection(g["xt60"]).volume) * 1.05 + 1.0, 1)],   # the XT60 panel mount in its receiver pocket
                           ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
-                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=105.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
+                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      *[dict(part=pt_, axis=[sx_, 0, 0], half_angle_deg=45.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60") for sx_ in (1, -1)],   # the set's ends face the funnel pit walls (0.7 to the opening): a member shielding them up to 45 deg would sit in the wall (DEFAULT, alt a shorter set, latch session)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
-           access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver", "receiver XT60"])], parts=[
+           access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver", "receiver XT60"])] + ACCESS, parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
@@ -832,6 +880,8 @@ try:
     for k in ("probes", "access", "fit"):
         w = (SYS.get(k) or {}).get("worst")
         if w: say(f"  {k} worst: " + json.dumps(w, default=str)[:600])
+    for p_ in (SYS.get("access") or {}).get("paths", []):                # every reach path, one line each
+        say(f"  access {p_['name']}: {'clear' if p_['pass_'] else 'BLOCKED by ' + ', '.join(f'{b_}' for b_ in p_.get('blocked_by', []))} ({p_['overlap_mm3']} mm3)")
     wf = (SYS.get("fit") or {}).get("worst")
     if wf and not wf["pass_"] and "cage" in (wf["a"], wf["b"]):          # which rods make the cage's overlap
         other = [pt["trimesh"] for pt in man["parts"] if pt["name"] == (wf["b"] if wf["a"] == "cage" else wf["a"])][0]

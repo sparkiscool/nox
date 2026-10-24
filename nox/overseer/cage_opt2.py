@@ -22,8 +22,9 @@ front hub, sled) fixed. Carbon E 120 GPa, G 5 GPa (pultruded UD, E); PETG E 2780
 Cases (dimensions L, DEFAULT unless tagged) and limits:
 - L2 mount: lowest mode with ≥ 20 % of its kinetic energy on the L2 group ≥ 100 Hz (L Sensor mounts).
 - Crash, 35 g x the whole drone in 14 directions (6 faces, 8 corners), on the cage node that touches first in that
-  direction (largest support) and on every node within CRASH_TIE (3) of it, hub fixed: rod index σ/600 MPa, buckling 1.5 x Euler, sockets (600 N per 3.0 rod, scaled
-  with OD), arm PETG σ/51 MPa, all ≤ 1.0; the touching node moves ≤ 9 toward the drone (12 prop gap, 3 kept).
+  direction (largest support) and on every node within CRASH_TIE (3) of it, hub fixed: sockets (600 N per 3.0 rod, scaled
+  with OD) ≤ 1.0; rod index σ/600 MPa, buckling 1.5 x Euler and arm PETG σ/51 MPa ≤ 1 / NODE_FUSE (the cage node is the
+  fuse, drawn to let go at ≤ 1 / 1.5 of its rod); the touching node moves ≤ 9 toward the drone (12 prop gap, 3 kept).
 - L2 crash: 35 g x the L2 group at its CG in 14 directions: the same indices ≤ 1.0.
 - Handling: 50 N on every real cage node in ±x, ±y, ±z: indices ≤ 1.0 (DEFAULT: a misuse load; L gives 0.5 to flight and landing).
 - Catch landing: 6 g x the drone up through the 8 wheels; latch misuse 100 N down the slope on each ±y-face wheel (≤ 1.0);
@@ -78,7 +79,19 @@ F_FIRST_MIN = 0.0                                           # cage's own lowest 
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
 CRASH_TIE = 3.0                                             # nodes this close to the leading one in a crash direction get their own case (the cage margin, L)
 CARBON_MIN = 33.0                                           # carbon break-even (CLAUDE.md): a shorter link is printed into its node
-NODE_G, CORNER_G = 2.0, 6.0                                 # printed ring node / corner node (E, g)
+NODE_G, CORNER_G = 2.0, 6.0                                 # (retired: nodes are sized from their rods) / corner node (E, g)
+NODE_WALL = 3.0                                             # printed node: socket bore OD + 0.3, wall 3 round it (CLAUDE.md attachments)
+PRINTED_NODES = ("NT", "NB", "NR", "TN", "TR", "KV", "KP", "FT", "MX")
+
+
+def node_size(od):
+    """drawn printed node: a block round its largest socket (bore OD + 0.3, NODE_WALL a side), never under 12"""
+    return max(12.0, od + 0.3 + 2 * NODE_WALL)
+
+
+def node_mass_g(od):
+    """printed PETG node at its drawn size, half filled (sockets, infill; E)"""
+    return 1.27e-3 * 0.5 * node_size(od) ** 3
 
 TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
 # retired from the search (24 Oct, system v3): keels (prop guard), v_diag (the cameras), strut2 (funnel), spokes_hi (motor bells): off
@@ -420,6 +433,15 @@ class Model:
             for n_ in (a, b):
                 i = 6 * self.idx[n_]; Mm[i:i + 3] += m / 2; Mm[i + 3:i + 6] += m / 2 * (L ** 2) / 24 + 1e-12
             self.el.append(dict(name=name, a=a, b=b, group=group, kind=kind, P=P, L=L, T=T, kl=kl, dofs=dofs))
+        od_max = {}
+        for e in self.el:
+            if e["kind"] == "rod":
+                for n_ in (e["a"], e["b"]): od_max[n_] = max(od_max.get(n_, 0.0), e["P"]["od"])
+        self.node_g = {n_: node_mass_g(od_max.get(n_, 3.0)) for n_ in self.names
+                       if n_ not in self.fixed and (n_[:-2] in self.info["pnodes"] or n_.startswith(PRINTED_NODES))}
+        self.node_size = {n_: node_size(od_max.get(n_, 3.0)) for n_ in self.node_g}
+        for n_, gm in self.node_g.items():                                                # printed nodes at their drawn size (E)
+            i = 6 * self.idx[n_]; Mm[i:i + 3] += gm * 1e-6; Mm[i + 3:i + 6] += gm * 1e-6 * self.node_size[n_] ** 2 / 6
         for n_, m in self.mass.items():
             i = 6 * self.idx[n_]; Mm[i:i + 3] += m; Mm[i + 3:i + 6] += m * 400.0          # rotary ~ m (20 mm)^2 (E)
         i = 6 * self.idx["apexM"]; Mm[i + 3:i + 6] += 0.2                                  # L2 rotary inertia ~2e-4 kg m2 (E)
@@ -472,8 +494,7 @@ class Model:
         g = 0.0
         for e in self.el:
             if e["kind"] == "rod": g += SECTIONS[e["P"]["sec"]]["gpm"] * e["L"] / 1000.0
-        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1 + sum(n.startswith(("K", "FT")) or n == "TR" for n in self.N)) + CORNER_G * 4
-        g += NODE_G * 2 * any(n.startswith("MX") for n in self.N)                          # mast node block (the spine crossings, printed)   # ring lo + hi, nose 4, top, skirt, tower
+        g += sum(self.node_g.values()) + CORNER_G * 4                                     # printed nodes at their drawn size, corner blocks
         if self.topo.get("arm_spars"):
             g += sum(4 * SECTIONS["r3"]["gpm"] * e["L"] / 1000.0 for e in self.el if e["kind"] == "arm")
         return g
@@ -509,7 +530,9 @@ def structural_members(model):
 
 G_ACC = 9810.0                                                # mm/s2
 CRASH_G = 35.0                                                # dimensions L Crash (DEFAULT, E): the rigid case
-CRASH_MODE = os.environ.get("CAGE_CRASH_MODE", "energy")      # Overseer (DEFAULT 24 Oct, Spark "go with default"): as the Scout, a
+NODE_FUSE = 1.5                                               # breaking order (CLAUDE.md design 7, L): cage nodes are drawn as fuses that let go at
+                                                              # <= 1 / 1.5 of their rod's strength, so rods and buckling size to 1 / 1.5 in the crash cases
+CRASH_MODE = os.environ.get("CAGE_CRASH_MODE", "rigid")       # rigid 35 g (L) until a suspension is drawn (review 24 Oct); "energy": as the Scout, a
 V_HIT, STROKE, PLATEAU_MIN = 2.0, 10.0, 200.0                 # 2.0 m/s hit through a preloaded TPU suspension, 10 stroke, plateau ≥ 200 N
 
 
@@ -688,6 +711,10 @@ def evaluate(p, topo, sizes, detail=False):
     l2 = [i for i, fr in enumerate(frac) if fr >= MODE_SHARE]
     f_l2 = float(f[l2[0]]) if l2 else float(f[-1]); res["_l2_mode"] = l2[0] if l2 else len(f) - 1
     res["f_first"], res["f_l2"] = float(f[0]), f_l2
+    fr_idx = {d_: k_ for k_, d_ in enumerate(m.free)}; y0 = m.mode_Y[:, 0] ** 2       # where the first mode moves: kinetic-energy share per node
+    sh = {n_: sum(y0[fr_idx[6 * m.idx[n_] + j]] for j in range(3) if 6 * m.idx[n_] + j in fr_idx) for n_ in m.names}
+    tot_ = sum(sh.values()) or 1.0
+    res["first_mode_where"] = [(n_, round(float(v_ / tot_), 2)) for n_, v_ in sorted(sh.items(), key=lambda kv: -kv[1])[:4]]
     g["L2 mode"] = F_L2_MIN / f_l2 - 1
     bf = [n for n in m.names if n.startswith("BF")]
     if bf:                                                            # the down camera and flow ride the belly frame: a sensor mount too
@@ -753,7 +780,8 @@ def evaluate(p, topo, sizes, detail=False):
     for j, (cname, ld, lim, kind, hn, d) in enumerate(cases):
         u = U[:, j]
         ix = dict(rod=float(rod_ix[j]), socket=float(sock_ix[j]), buckle=float(buck_ix[j]), arm=float(arm_ix[j]))
-        r = dict(ix, limit=lim)
+        mlim = lim / NODE_FUSE if kind == "crash" else lim               # crash: members at <= 1 / 1.5, the node is the fuse
+        r = dict(ix, limit=lim, mlimit=mlim)
         if kind == "crash":
             r["defl"] = float(-(u[6 * m.idx[hn]:6 * m.idx[hn] + 3] @ d))
             g[f"{cname} defl"] = r["defl"] / 9.0 - 1
@@ -765,9 +793,9 @@ def evaluate(p, topo, sizes, detail=False):
                 held_req[g_] = max(held_req[g_], abs(float(Nax[i, j])))
         res["cases"][cname] = r
         for key in ("rod", "socket", "buckle", "arm"):
-            g[f"{cname} {key}"] = ix[key] / lim - 1
+            g[f"{cname} {key}"] = ix[key] / (lim if key == "socket" else mlim) - 1
     res["breaking_order"] = dict(node=crash_node, arm_vs_node=crash_member / max(crash_node, 1e-9), rod=crash_rod,
-                                 node_first=crash_member * 1.5 <= crash_node,
+                                 node_first=crash_member * 1.5 <= crash_node and crash_rod * NODE_FUSE <= 1.0 + 1e-9,
                                  joint_req_N={k: 1.5 * v / max(crash_node, 1e-9) for k, v in held_req.items()})   # held socket at <= 1 / 1.5 of the worst node index
     if detail: res["_U"], res["_names"] = U, [c[0] for c in cases]
     worst_pc = np.inf                                                # prop guard (C): every rod under / over the swept band by 12
@@ -904,6 +932,7 @@ def run_required(m, res, runs):
     """per run, the smallest section (ORDER) whose stress, buckling and socket indices pass every case at its limit,
     holding the run's present axial force and moments"""
     lim = np.array([v["limit"] for v in res["cases"].values()]); U = res["_U"]
+    mlim = np.array([v.get("mlimit", v["limit"]) for v in res["cases"].values()])
     out = []
     for run in runs:
         L = sum(m.el[i]["L"] for i in run)
@@ -916,7 +945,7 @@ def run_required(m, res, runs):
         for sname in ORDER:
             S = SECTIONS[sname]; cap = SOCKET_3 * S["od"] / 3.0; Pcr = math.pi ** 2 * E_C * S["I"] / L ** 2
             sig = (abs(Nall) / S["A"] + Mall * (S["od"] / 2) / S["I"]) / SIG_ALLOW
-            ok = (sig / lim).max() <= 1.0 and (abs(Nall) / cap / lim).max() <= 1.0 and (BUCKLE_SF * np.maximum(-Nall, 0).max(axis=0) / Pcr / lim).max() <= 1.0
+            ok = (sig / mlim).max() <= 1.0 and (abs(Nall) / cap / lim).max() <= 1.0 and (BUCKLE_SF * np.maximum(-Nall, 0).max(axis=0) / Pcr / mlim).max() <= 1.0
             if ok: choice = sname; break
         out.append(choice)
     return out
@@ -924,7 +953,7 @@ def run_required(m, res, runs):
 
 def run_need(m, res, runs, p, topo, sizes):
     """per run: the worst (index / case limit) over every case of stress, buckling and sockets"""
-    cases_lim = [v["limit"] for v in res["cases"].values()]
+    cases_lim = [v["limit"] for v in res["cases"].values()]; cases_mlim = np.array([v.get("mlimit", v["limit"]) for v in res["cases"].values()])
     U, names = res["_U"], res["_names"]
     need = []
     for run in runs:
@@ -937,9 +966,9 @@ def run_need(m, res, runs, p, topo, sizes):
             N_ = -fl[0]; My = np.maximum(abs(fl[4]), abs(fl[10])); Mz = np.maximum(abs(fl[5]), abs(fl[11]))
             sg = abs(N_) / P["A"] + np.hypot(My, Mz) * P["c"] / P["Iy"]
             lim = np.array(cases_lim)
-            worst = max(worst, float((sg / SIG_ALLOW / lim).max()), float((abs(N_) / cap / lim).max()))
+            worst = max(worst, float((sg / SIG_ALLOW / cases_mlim).max()), float((abs(N_) / cap / lim).max()))
             Nmin = np.minimum(Nmin, N_) if Nmin is not None else N_
-        worst = max(worst, float((BUCKLE_SF * np.maximum(-Nmin, 0) / Pcr / np.array(cases_lim)).max()))
+        worst = max(worst, float((BUCKLE_SF * np.maximum(-Nmin, 0) / Pcr / cases_mlim).max()))
         need.append(worst)
     return need
 
