@@ -1,6 +1,7 @@
 """Hub v6 on the topo engine (24 Oct 2026, swap arm system worker): hub_v6.hub_v6_parts(), build +y (sleeve end on the bed, as hub v5).
 The hub is cut from the arm system at its joints (swap_system.py, docs/generative.md The rule 0): supports = the two 6010 seats; loads =
-the joint reactions the system frame puts on the hub's interfaces in every system case (runs/arm/v6/system.json "frame" -> "hub"):
+the joint reactions the system frame puts on the hub's interfaces in every system case (runs/arm/v6/system.json "frame" -> "hub"),
+the receiver-guided swap cases both with the receiver's 0.3 gaps and free (no receiver), so the hub carries the worse of the two:
   - motor seats A / B / axle: force + moment (the pinion / 20T loads and the motor weights at their CGs), moments as force couples on
     the seat ring's halves;
   - rail pads A / B at r 40 / 78: force + moment from each rail foot (one M5 + the foot on the pad), moments as couples on the pad halves;
@@ -66,6 +67,7 @@ def setup(h):
     sysres = json.load(open(SYSTEM))
     n = 0
     for case in sysres["frame"]:
+        if case["case"].startswith("power cut"): continue                  # the head motors brake on a power cut (shorted coils, box electronics)
         parts = []
         for node, v in case["hub"].items():
             if node not in R: continue

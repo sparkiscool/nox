@@ -28,9 +28,11 @@ AXLE_BOLT_L = dict(fixed=20.0, ecc=25.0)  # M5 socket heads (C): fixed wheels pl
                                        # the eccentric from its bush flange (Y 80.5): x 25, tail Y 55.5, 1.5 over the hub plate
 RACK_TAIL = dict(u_max=-40.0, y0=63.0)  # heads v6: the rack below u -40 has its teeth from Y 63 (1.0 over the axle loop's top Y 62, which its
                                        # tail crosses at park, X 40.5..45.3, sweep C); only the drone insert meshes there (pinion face 9.5 of 10.5)
-Z0_INSERT_MAX = 96.6                   # the commanded drone insert: 1.0 past the seat (95.6) = the arm's lag under the 60 N with the cartridge
-                                       # in the receiver's rails (swap_system: 0.99 guided, E; DEFAULT). The head stops at the seat; the 1.0 is
-                                       # elastic, so the force at the seat stays ~61 N under the 74 N stall. Wheel rim r 142.3 at X 22 (stand lane r 145.5)
+OVERTRAVEL = 2.7                       # every insert is commanded 2.7 past its seat at 2 A and ends on the driver's stall detection (or the
+                                       # step count): the arm's lag with the receiver's 0.3 gaps is 1.88 at 60 N, 2.22 at the 74 N stall
+                                       # (swap_system, E), so the seat always sees 60..74 N; re-home on the park stop each cycle (DEFAULT)
+Z0_INSERT_MAX = 95.6 + OVERTRAVEL      # 98.3: wheel rim r 144.0 at X 22 (stand lane r 145.5); the pinion stays 6.7 inside the rack tail u -50
+Z0_BAY_INSERT = 86.1 + OVERTRAVEL      # 88.8: wheel rim r 134.6 at a bay (module keep r 136.5)
 # carbon tie under each rail (swap_system alternatives: cartridge pitch 2.61 -> 1.85 deg at Y_C 175): 2 x 3.0 carbon rods at X +-8 in the
 # rail's frame from a socket in the hub's lower rim into the rail's bottom face near its outer end (mouth Y 54 at r 120, 36.9 deg up the
 # rail); rod ends 10 deep in Ø3.3 bores, epoxied (CLAUDE.md). X +-5: 2.35 wall to the rail's sides, 6.7 between the bores (C)
@@ -56,7 +58,7 @@ def v6_values(dy=-20.0):
     v["RACK_TEETH_Y"] = RACK_V2_Y if dy < -9.0 else V5["RACK_TEETH_Y"]
     v["PIN_TEETH_Y"] = PIN_V2["teeth_y"] if dy < -9.0 else V5["PIN_TEETH_Y"]; v["PIN_BOSS_Y"] = PIN_V2["boss_y"] if dy < -9.0 else V5["PIN_BOSS_Y"]
     v["WEB_U"] = WEB_U_V2 if dy < -9.0 else V5["WEB_U"]
-    v["Z0S"] = tuple(V5["Z0S"]) + ((Z0_INSERT_MAX,) if dy < -9.0 else ())
+    v["Z0S"] = tuple(V5["Z0S"]) + ((Z0_BAY_INSERT, Z0_INSERT_MAX) if dy < -9.0 else ())
     v["AXLE_BOLT_L"] = AXLE_BOLT_L if dy < -9.0 else V5["AXLE_BOLT_L"]; v["RACK_TAIL"] = RACK_TAIL if dy < -9.0 else V5["RACK_TAIL"]
     v["WEB_Y"] = (v["RACK_TEETH_Y"][0], v["PLATE_Y"][1])                                    # rack web from its teeth to the plate top
     b = copy.deepcopy(V5["RAIL_BOLTS"])

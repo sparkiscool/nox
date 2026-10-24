@@ -101,12 +101,16 @@ F_HAND = 50.0                             # a hand on a rail tip, any direction 
 TARGET = dict(pack_x=0.5, tilt_deg=0.5)   # pack shift at the XT60 across the insert axis and tilt under the 60 N insert (DEFAULT: half the
                                           # receiver XT60 float carrier's +-1.0 / +-1.06 deg)
 INDEX_TARGET = dict(swap=0.5, sustained=0.5, misuse=1.0, handling=1.0)
-K_RECV_T, K_RECV_R = 2.0e3, 2.0e6         # the receiver's rails on a cartridge in them: across N/mm, tilt N.mm/rad (E); free along the insert
+K_RECV_T, K_RECV_R = 2.0e3, 2.0e6         # the receiver's rails on a cartridge in them: across N/mm, tilt N.mm/rad (E, the drone on its plungers
+                                          # in series); free along the insert
+GAP_T = 0.3                               # the latch receiver's locating faces 0.3 off the cartridge (battery_latch RF, C)
+GAP_R = 2 * GAP_T / 87.0                  # tilt before both ends touch: 0.6 over the ~87 engaged length at the XT60 mate (C): 0.0069 rad = 0.40 deg
 LAG_MAX = S6.Z0_INSERT_MAX - (L.Z0_BAY + 5.0 + V.DRONE_PUSH)   # 2.0: the commanded drone insert's over-travel (arm_v6_layout)
 M_HEAD_FALL = 180.0                       # head + carriage that fall to the park stop on a power cut at the drone insert (g, E)
 BUMPER = dict(x=(-9.5, 9.5), u=(0.0, 5.0), t=5.0, contact_mm2=18.0 * 3.0, E_MPa=26.0)   # head v6: TPU 95A pad in a notch of the carriage plate's
                                           # inner edge (X +-10 x u 0..5, no axle there), glued; meets the rail's park stop (X +-9, Y 73..77) over Y 74..77 (C)
 K_STOP = dict(petg=5.0e3, tpu=round(BUMPER["E_MPa"] * BUMPER["contact_mm2"] / BUMPER["t"], 0))   # N/mm: PETG on PETG (E) / the bumper (E 26 MPa)
+KT_HEAD, R_PHASE = 0.21, 1.4             # 17HS19 head motor: torque constant N.m/A, phase resistance ohm (E, datasheet class)
 STOP_SHEAR_N = 0.5 * S_ACROSS * 18.0 * 4.0                # the stop block on the rail top, across layers (C area, E strength): 900 N
 
 
@@ -416,17 +420,47 @@ def cases(Y_C=L.Y_C, cart="scout"):
          "a cartridge falls 50 back onto head A's seat at the drone: F = sqrt(2 m g h k) with the assembled seat stiffness (E)"),
         ("box handling 3 g down + 2 g side", "handling", (z["park"], z["park"]), ("A", "B"), "belt", 0.0, None,
          "the box set down hard / carried, both heads parked and carrying, arm at phi 0 (A horizontal)"),
+        ("power cut carrying: head A falls to the park stop", "misuse", (z["park"], z["park"]), ("A",), "detent", 90.0, None,
+         "power cut with head A up carrying a cartridge at the drone insert: head + carriage + cartridge outweigh the cogging and fall 63.6 onto the "
+         "TPU bumper; the bumper force decelerates them and the free rotor (through the 16T); static equivalent at the stop"),
         ("hand on rail A tip 50 N", "misuse", (z["park"], z["park"]), (), "belt", 90.0, None, "50 N in -X (tangential), worst of +-X / +-Y"),
         ("gravity, A horizontal carrying", "sustained", (z["park"], z["park"]), ("A", "B"), "belt", 0.0, None, "self weight, the worst stop for the axle"),
     ]
     return out
 
 
+def solve_gap(Fr, info, ld):
+    """Fr.solve with the receiver as gap + spring per DOF (GAP_T across, GAP_R in tilt): the arm alone carries the push until a gap
+    closes; an active set over the six DOFs. Returns (u, ef, sf, reac, receiver force 6-vector on the cartridge or None)."""
+    if "receiver" not in info:
+        u, ef, sf, reac = Fr.solve(ld); return u, ef, sf, reac, None
+    k = [s_["nm"] for s_ in Fr.springs].index(info["receiver"]); sp = Fr.springs[k]; k0 = sp["k"].copy()
+    i = Fr.idx[sp["a"]]; gap = np.array([GAP_T] * 3 + [GAP_R] * 3)
+    act = np.zeros(6, bool); sgn = np.zeros(6)
+    for _ in range(12):
+        sp["k"] = np.where(act, k0, 0.0)
+        l2 = {n: np.asarray(v, float).copy() for n, v in ld.items()}
+        add(l2, sp["a"], np.where(act, k0 * gap * sgn, 0.0))
+        u, ef, sf, reac = Fr.solve(l2)
+        d = u[i]
+        new = (np.abs(d) > gap) & (k0 > 0)
+        if np.array_equal(new, act) and np.array_equal(np.sign(d) * new, sgn * act): break
+        act, sgn = new, np.where(new, np.sign(d), 0.0)
+    f = -np.where(act, k0 * (d - gap * sgn), 0.0)
+    sp["k"] = k0
+    return u, ef, sf, reac, f
+
+
 def run_frame(Y_C=L.Y_C, cart="scout", verbose=True, guided=True):
     res = []
-    for nm, cls, (zA, zB), carry, axle, phi, fn, note in cases(Y_C, cart):
+    rows = []
+    for c in cases(Y_C, cart):                                              # every receiver-guided case also runs free (no receiver): the arm
+        rows.append(c + ("gap",))                                           # pieces take the worse of the two (concept review, DEFAULT)
+        if getattr(c[6], "h", None): rows.append((c[0] + " (free, no receiver)", "misuse") + c[2:] + ("free",))   # the bound for a missing or
+                                                                            # misaligned receiver: misuse class (DEFAULT)
+    for nm, cls, (zA, zB), carry, axle, phi, fn, note, mode in rows:
         gh = getattr(fn, "h", None)
-        Fr, info = build(zA, zB, Y_C, cart, carry, axle, phi, dict(guided=gh) if guided and gh else None)
+        Fr, info = build(zA, zB, Y_C, cart, carry, axle, phi, dict(guided=gh) if guided and gh and mode == "gap" else None)
         ld = gravity_loads(Fr, phi)
         if fn is not None:
             for k, v in fn(Fr, info).items(): add(ld, k, v)
@@ -456,7 +490,9 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True, guided=True):
             ld = gravity_loads(Fr, phi, gx=G_HANDLE[1], gz=-G_HANDLE[0])
         if nm.startswith("hand on rail"):
             add(ld, f"railA {V.RAIL_R[1]:.1f}", (-F_HAND, 0, 0))
-        u, ef, sf, reac = Fr.solve(ld)
+        if nm.startswith("power cut"):
+            pc = power_cut_loads(Fr, info, ld, cart)
+        u, ef, sf, reac, frec = solve_gap(Fr, info, ld)
         # separating force of the rack (tan 20 x the tangential tooth force): one more pass with it applied
         sep = {}
         for h in info["rack"]:
@@ -464,16 +500,16 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True, guided=True):
             ft = float(np.dot(sf[k][:3], head_dir(h, (0, 0, 1))))
             fs = abs(ft) * math.tan(math.radians(20.0)); sep[h] = (ft, fs)
             add(ld, f"rack {h}", -fs * head_dir(h, (1, 0, 0))); add(ld, f"pinion {h}", fs * head_dir(h, (1, 0, 0)))
-        u, ef, sf, reac = Fr.solve(ld)
+        u, ef, sf, reac, frec = solve_gap(Fr, info, ld)
         extra = {}
         if nm.startswith("dropped"): extra = dict(F_drop_rigid_N=round(F_drop_raw, 1), F_drop_N=round(F_drop, 1), k_seat_N_mm=round(k_seat, 1), slip_mm=round(slip_mm, 2))
-        if "receiver" in info:
-            k = [s_["nm"] for s_ in Fr.springs].index(info["receiver"]); fr = sf[k]
-            extra["receiver"] = dict(F_across_N=round(float(np.linalg.norm(fr[:3])), 1), M_Nm=round(float(np.linalg.norm(fr[3:])) / 1e3, 2),
-                                     note="what the receiver's rails hold while the cartridge is in them (latch requirement)")
+        if frec is not None:
+            extra["receiver"] = dict(F_across_N=round(float(np.linalg.norm(frec[:3])), 1), M_Nm=round(float(np.linalg.norm(frec[3:])) / 1e3, 2),
+                                     note="what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)")
+        if nm.startswith("power cut"): extra["power_cut"] = pc
         extra["hub"] = hub_interfaces(Fr, u, ef, sf)
         extra["hub_mass"] = {nm: dict(p=Fr.P[Fr.idx[nm]].round(2).tolist(), g=m) for nm, m in Fr.mass.items() if nm in ("H32",)}
-        res.append(dict(case=nm, cls=cls, note=note, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep)))
+        res.append(dict(case=nm, cls=cls, note=note, mode=mode, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep)))
         if verbose:
             r = res[-1]
             if "receiver" in r: print(f"{'':38s} lag along the insert {r['pack']['du_mm']:6.2f} (max {LAG_MAX:.1f}), receiver {r['receiver']}")
@@ -590,8 +626,8 @@ def pitch(stack="v6", Y_C=L.Y_C, opts=None, F=(F_XT60, F_PRELOAD)):
         free = (round(math.degrees(float(np.linalg.norm(u[i][3:]))), 2), round(float(-u[i][2]), 2))
         og = dict(opts or {}); og["guided"] = "A"
         Fg, ig = build(max(V.Z0S), L.Z0_A_HOME, Y_C, "scout", ("A",), "belt", 90.0, og)
-        ug, efg, sfg, _ = Fg.solve(ld); k = [s_["nm"] for s_ in Fg.springs].index(ig["receiver"])
-        return free + (round(float(-ug[Fg.idx["xt60 A"]][2]), 2), round(float(np.linalg.norm(sfg[k][3:])) / 1e3, 2))
+        ug, efg, sfg, _, frec = solve_gap(Fg, ig, ld)                       # the receiver with its 0.3 gaps
+        return free + (round(float(-ug[Fg.idx["xt60 A"]][2]), 2), round(float(np.linalg.norm(frec[3:])) / 1e3, 2))
     finally:
         S6.use("v6")
 
@@ -611,6 +647,27 @@ def alternatives():
     return rows
 
 
+def power_cut_loads(Fr, info, ld, cart="scout", k=None):
+    """the power-cut-carrying case on the frame (A up, at the park stop): bumper F = sqrt(2 E k) for head + carriage + cartridge falling
+    from the drone insert, deceleration a = F / (falling + rotor); inertial loads m a toward the axle at the masses' nodes, the free rotor's
+    share as a tooth-force pair (rack -, pinion +, the rack spring's tangential holding stiffness off: unpowered), the stop as a spring."""
+    k = k or K_STOP["tpu"]
+    m_f = (MASS["head"] + MASS["carriage"] + CART[cart]["mass"]) * 1e-3; m_r = 82e-7 / (V.PIN_R * 1e-3) ** 2
+    h = (L.Z0_BAY + 5.0 + V.DRONE_PUSH - V.RAIL_STOP["z0_home"]) * 1e-3
+    F = math.sqrt(2 * m_f * 9.81 * h * k * 1e3); a = F / (m_f + m_r)
+    u_ = head_dir("A", (0, 0, 1))
+    for node, g in (("cseat A", MASS["head"]), ("carriage A", MASS["carriage"]), ("pack cg A", CART[cart]["mass"])):
+        add(ld, node, -g * 1e-3 * a * u_)
+    Ft = m_r * a
+    add(ld, "rack A", -Ft * u_); add(ld, "pinion A", Ft * u_)
+    ks = [s_["nm"] for s_ in Fr.springs].index(info["rack"]["A"]); Fr.springs[ks]["k"] = np.r_[np.abs(head_dir("A", (1, 0, 0))) * K_TOOTH_N, 0, 0, 0]
+    Fr.node("park stop A", Fr.P[Fr.idx["carriage A"]]); Fr.fixed.add("park stop A")
+    Fr.spring("bumper on the park stop A", "carriage A", "park stop A", (*(np.abs(u_) * k), 0, 0, 0), piece="bumper")
+    lew = Ft / ((V.PIN_TEETH_Y[1] - V.PIN_TEETH_Y[0]) * V.PIN_M * 0.295) / S_IN
+    return dict(falling_g=round(m_f * 1e3, 0), F_bumper_N=round(F, 0), decel_g=round(a / 9.81, 1), F_tooth_N=round(Ft, 0), pinion_index=round(lew, 2),
+                stop_index=round(F / STOP_SHEAR_N, 2), cart_inertia_N=round(CART[cart]["mass"] * 1e-3 * a, 0))
+
+
 def power_cut():
     """misuse: power cut with head A at the drone insert (arm vertical), then a bump. Unpowered, the stepper's cogging (0.022 N.m E,
     detent.disturbance) holds the head at r 8 against its weight; a 3 g bump beats it and head + carriage fall 64.6 to the park stop,
@@ -625,6 +682,15 @@ def power_cut():
     for nm, k in K_STOP.items():
         F = math.sqrt(2 * E_ * k * 1e3); Ft = F * m_r / (m_h + m_r)
         out[nm] = dict(k_N_mm=k, F_stop_N=round(F, 0), stop_index=round(F / STOP_SHEAR_N, 2), F_tooth_N=round(Ft, 0), pinion_index=round(lew(Ft), 2))
+    # carrying (head + carriage + cartridge 391 g): falls at 1 g with no bump (3.8 N > the 2.75 N cogging); the frame case "power cut carrying"
+    m_c = m_h + CART["scout"]["mass"] * 1e-3; w_c = m_c * 9.81
+    out["carrying"] = dict(falling_g=round(m_c * 1e3, 0), weight_N=round(w_c, 2), holds_at_1g=bool(hold_N > w_c),
+                           F_bumper_N=round(math.sqrt(2 * w_c * h * K_STOP["tpu"] * 1e3), 0), note="frame case: carriage to head 24 N.m, 625ZZ 1.23 without a brake")
+    # the brake (box electronics): both coils of each head motor shorted by a normally closed relay contact while the 24 V is off; back-EMF
+    # torque Kt^2 w / R (17HS19: Kt ~0.21 N.m/A, R 1.4 ohm per phase, E) against the weight at r 8: the head creeps down instead of falling
+    w_br = w_c * V.PIN_R * 1e-3 / (KT_HEAD ** 2 / R_PHASE); v = w_br * V.PIN_R
+    E_br = 0.5 * (m_c + m_r) * (v * 1e-3) ** 2
+    out["brake"] = dict(creep_mm_s=round(v, 1), impact_J=round(E_br, 6), F_bumper_N=round(math.sqrt(2 * E_br * K_STOP["tpu"] * 1e3), 1))
     return out
 
 
