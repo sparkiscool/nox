@@ -238,10 +238,11 @@ Y_RB = 0.2                         # block bottom 0.2 over the flat bottom (bays
 CAP, LEAD = 3.0, math.radians(30.0)
 HCAP = CAP / math.tan(LEAD)        # 5.20
 FOOT_T, DECK_T = 4.0, 3.0
-END_T_BY = {"scout": 4.0, "overseer": 10.0}      # end plates (FE v1: the Overseer +-z crash)
-DECK_END_BY = {"scout": 6.0, "overseer": 30.0}  # deck kept solid this far in from each pack end (FE v1: the end plate
+END_T_BY = {"scout": 4.0, "overseer": 4.0}       # end plates; 10 on the Overseer passed FE but made it 191.6 long (> 180 bed)
+END_RIB_BY = {"scout": False, "overseer": False}   # deck ends raised to the mount plane (Overseer +-z crash, FE v1)
+DECK_END_BY = {"scout": 6.0, "overseer": 8.0}  # deck kept solid this far in from each pack end (FE v1: the end plate
                                                 # bends the deck strip beside the window)
-LEG_L = 16.0                                    # side frame end legs, z (FE v1: 50 N on a foot)
+LEG_L_BY = {"scout": 16.0, "overseer": 24.0}    # side frame end legs, z (FE v1: 50 N on a foot)
 MID_MOUNT = {"scout": False, "overseer": True}   # bosses at the tab line too: the Overseer's 257 N pull-out goes pocket ->
                                                   # leg -> boss, not along a 163 span (concept review 24 Oct); the Scout's
                                                   # tab-line boss would sit under the FC corner (1.9, +-25.5)
@@ -309,7 +310,11 @@ def receiver(r, clip=None):
         y0 = r["RAIL_Y0"]
         pts = [(zf + sg * CAP, y0), (zf + sg * END_T, y0), (zf + sg * END_T, r["Y_DK1"]), (zf, r["Y_DK1"]), (zf, y0 + HCAP)]
         parts.append(prism_zy(pts, -xw, xw))
-    parts.append(box(-xw, xw, r["Y_DK0"], r["Y_DK1"], z0, z1))                                             # deck
+    parts.append(box(-xw, xw, r["Y_DK0"], r["Y_DK1"], z0, z1))
+    if END_RIB_BY[r["pack"]]:                                                                               # end ribs
+        de = DECK_END_BY[r["pack"]]
+        parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, r["Y_M"], z0, r["Z_P0"] + de))
+        parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, r["Y_M"], r["Z_P1"] - de, r["Z_X"] - 10.5))
     # XT60E1-M float pocket body + lid bolt bosses; mount bosses
     zx = r["Z_X"]
     parts.append(box(-r["PKX_XW"] - 2.0, r["PKX_XW"] + 2.0, r["LIP_Y0"], r["Y_DK1"], zx - r["PKX_ZW"] - 2.0, zx + r["PKX_ZW"] + 2.0))
@@ -336,13 +341,22 @@ def receiver(r, clip=None):
     # side frame (DEFAULT, mass): a top band (rails' locating face) full length and three legs down to the feet per side
     # (both ends and the latch leg); the feet lead-ins at those stations capture the rigid cartridge
     wy0, wy1 = Y_RB - 1.0, r["RAIL_Y0"] - 2.0
-    for (za, zb) in ((r["Z_E0"] + LEG_L, zt - r["PK_HZ"] - PK_WALL - 2), (zt + r["PK_HZ"] + PK_WALL + 2, r["Z_E1"] - LEG_L)):
+    for (za, zb) in ((r["Z_E0"] + LEG_L_BY[r["pack"]], zt - r["PK_HZ"] - PK_WALL - 2), (zt + r["PK_HZ"] + PK_WALL + 2, r["Z_E1"] - LEG_L_BY[r["pack"]])):
         if zb - za > 8:
             for s in (-1, 1):
                 a0, a1 = sorted((s * (rf - 0.5), s * (xw + 1)))
                 cuts.append(box(a0, a1, wy0, wy1, za, zb))
-    R = R - U(*cuts) - cart_path(r)
+    R = R - U(*cuts) - cart_path(r) - end_relief(r)
     return R if clip is None else R ^ clip
+
+END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 1: the cartridge's end bears at its corners
+                                   # (its side walls), so a +-z crash goes into the side frames, not the deck beside the
+                                   # XT60 pocket (FE v1: Overseer +z 1.56 -> see result.json)
+
+def end_relief(r):
+    xr = r["X_IN"] - 1.0
+    return U(box(-xr, xr, r["RAIL_Y0"] - 1, r["Y_DK0"] - 0.01, r["Z_E0"] - END_RELIEF, r["Z_E0"] + 0.01),
+             box(-xr, xr, r["RAIL_Y0"] - 1, r["Y_DK0"] - 0.01, r["Z_E1"] - 0.01, r["Z_E1"] + END_RELIEF))
 
 def lid(r):
     zx, bx = r["Z_X"], r["BX"]
