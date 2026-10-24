@@ -57,6 +57,15 @@ for nm, key, g, t in (("Radxa Zero 3W", "RADXA", 10, "E"), ("flow MTF-02P", "FLO
 if R.get("pads"):
     pad, carrier, body, tips = L["pads"](R["pads"]["y"], R["pads"]["z"])
     parts.append(mesh_part("pogo pads + carrier", L["union"](pad + [carrier]), role="structure", protect=True, mass_g=6, tag="E", note="belly post pads", **own))
+# left-out items now in (review PR 94): wires as a mass point, camera mount, plate hubs at the core joints (E)
+parts.append(dict(name="wires", role="structure", sphere=dict(r=3.0, center=[0.0, 0.0, 13.5]), mass_g=20, tag="E",
+                  note="harness as one mass point at the FC (E 20 g)", **own))
+parts.append(mesh_part("camera mount", L["box"](84.0, 90.0, -10.0, 10.0, 22.0, 60.0), role="structure", mass_g=6, tag="E",
+                       note="envelope; the piece needs >= 100 Hz with the 10 g camera (k >= 4 N/mm, dimensions)", **own))
+HUBS = [c["at"] for c in R.get("core_reactions", []) if c["at"][2] > 18.0]       # plate hubs (the mount carries the rest)
+if HUBS:
+    parts.append(mesh_part("plate hubs + TPU suspension", trimesh.util.concatenate([L["box"](x - 5, x + 5, y - 5, y + 5, z - 4, z + 4) for x, y, z in HUBS]),
+                           role="structure", mass_g=2.0 * len(HUBS), tag="E", note="cage joints on the plate, preloaded TPU inside (E)", **own))
 rods = [L["member_mesh"](np.array(a), np.array(b), t) for (a, b), t in zip(R["rods"], R["types"])]   # carbon rods and printed struts
 ends = {tuple(np.round(p, 2)) for ab in R["rods"] for p in ab}
 def _at_core(p):                                              # core joints are the mount's / plate's hubs, not printed cage nodes
@@ -73,10 +82,11 @@ parts.append(mesh_part("catch wheels", trimesh.Trimesh(WP).convex_hull if False 
     [trimesh.creation.icosphere(1, 5.0).apply_translation(c) for c in WP.reshape(-1, 72, 3).mean(1)]), role="cage", mass_g=1.6, tag="M", **own))
 parts.append(mesh_part("keep-alive pads", trimesh.util.concatenate(L["KA_PADS"]), role="cage", mass_g=2.0, tag="E",
                        note="B+ on the +x lower ring, B- on -x; the box catch's face probes touch them (G (8))", **own))
+SWAPSET = ["cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug", "cartridge skid closed end (latch, TPU)", "cartridge skid lead end (latch, TPU)", "receiver TPU strips (latch)"]
 a = {"name": "Scout v3", "machine": "scout",
      "note": ("Scout v3 system pass v3: printed short members (carbon >= 33 mm, Spark), fewest pieces (layout.md). Seat frame = drone frame. Battery set = the control session's "
               "latch standard (part/battery-latch 258becf, interim). No belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT, G (8)). "
-              "Left out: wires (20 g E), camera mount, plate hubs, the TPU suspension pads, wheel contact pads."),
+              "Wires, camera mount and plate hubs are E envelopes / mass points. Left out: wheel contact pads."),
      "cg_ref": [0.0, 0.0, L["PROP_Z"]], "thrust_axis": [0, 0, 1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0,
      "openings": [{"part": n, "axis": [0, 0, -1], "half_angle_deg": L["SWAP_CONE"], "min_mm": 0.0, "skip_probes": True}   # the swap path:
                   # the box drops the cartridge out through the keel; recessed (margin >= 0); edges inside 35 deg of straight up
@@ -92,7 +102,21 @@ a = {"name": "Scout v3", "machine": "scout",
                        ["mount + nose legs (Scout)", "frame plate", 1e9], ["mount + nose legs (Scout)", "XT60E1-M", 1e9], ["mount + nose legs (Scout)", "FC", 1e9], ["mount + nose legs (Scout)", "UBEC", 1e9],
                        ["cage (rods + nodes)", "frame plate", 1e9], ["cage (rods + nodes)", "mount + nose legs (Scout)", 1e9],
                        ["cage (rods + nodes)", "catch wheels", 1e9], ["cage (rods + nodes)", "keep-alive pads", 1e9], ["FC", "frame plate", 1e9],
-                       ["Radxa Zero 3W", "mount + nose legs (Scout)", 1e9], ["flow MTF-02P", "mount + nose legs (Scout)", 1e9]],
+                       ["Radxa Zero 3W", "mount + nose legs (Scout)", 1e9], ["flow MTF-02P", "mount + nose legs (Scout)", 1e9],
+                       ["wires", "FC", 1e9], ["wires", "mount + nose legs (Scout)", 1e9], ["camera mount", "camera", 1e9], ["camera mount", "frame plate", 1e9],
+                       ["camera mount", "cage (rods + nodes)", 1e9], ["plate hubs + TPU suspension", "frame plate", 1e9],
+                       ["plate hubs + TPU suspension", "cage (rods + nodes)", 1e9], ["plate hubs + TPU suspension", "mount + nose legs (Scout)", 1e9]],
+     # access (review PR 94; docs/generative.md 0): the swap drops the set out through the keel; USB and the receiver bolts
+     # are reached with the pack out; the mount envelope is a solid box here, so its channels are requirements (dimensions)
+     "access": [{"name": f"swap: {n} down", "part": n, "dir": [0, 0, -1], "length_mm": 90, "tool": "part", "ignore": SWAPSET}
+                for n in ("cartridge v5 (latch)", "pack 4S 1500", "pack XT60 plug")] +
+               [{"name": f"M3 key, receiver bolt ({x:+.1f}, {y:+.1f})", "part": "receiver v1 (latch)", "from": [x, y, 9.6], "dir": [0, 0, -1],
+                 "length_mm": 90, "tool": {"type": "cylinder", "d": 4}, "ignore": SWAPSET + ["receiver lid (latch)", "mount + nose legs (Scout)", "XT60E1-M"]}
+                for x in (-41.7, 43.25) for y in (-25.6, 25.6)] +
+               [{"name": "FC USB-C (edge to the tail-left, E)", "part": "FC", "from": [-10.8, -12.7, 13.5], "dir": [-0.7071, -0.7071, 0], "length_mm": 70,
+                 "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["mount + nose legs (Scout)", "wires"]},
+                {"name": "Radxa USB-C (bottom edge, E)", "part": "Radxa Zero 3W", "from": [-20.0, -31.9, -35.0], "dir": [0, 0, -1], "length_mm": 50,
+                 "tool": {"type": "box", "w": 12, "h": 7}, "ignore": SWAPSET}],
      "parts": parts}
 dst = os.path.join(HERE, "scout.assembly.json")
 json.dump(a, open(dst, "w"), indent=1)
