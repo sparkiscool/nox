@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box catch chat): **funnel panel A / B v8 plain** (±x, DESIGN, do not print: v9 plain next): bottom edge seat z 12.8, opening 191 x 168 (DEFAULT; alt 181 sq), Overseer set centred 3.3 a side (C); FE on the seat landings 0.911 (C), 53.8 / 53.7 g (M); v7 plain do not print; box_catch.assembly.json in box W (Y_C 165). `runs/funnel_panel/v8_plain/`.
 - 24 Oct (box structure system session): stub tilt ≤ 10 mrad at the mast face, k ≥ 0.59 N·m/mrad (arm worker DEFAULT: XT60 float ±2.37° at 20 % margin leaves 11.6 / 15.2 mrad; replaces 1.9 mrad, merged an hour ago). dimensions System box structure.
 - 24 Oct (box structure system session): stub tilt back to ≤ 1.9 mrad, k ≥ 3.1 N·m/mrad (DEFAULT, arm: the pitch guide that allowed 5 mrad is gone; alt 5 mrad); across load kept at 43.5 N (hub) over the arm's 40.7. dimensions System box structure.
 - 24 Oct (box structure system session): the receiver pitch-guide couple (3.5 / 6.1 N·m) leaves the bay-body and stub cases and the guide posts leave the bay-body clearances (hub: the XT60 float takes ±2.37°, the latch drops its guide posts). dimensions System box structure.

@@ -18,14 +18,22 @@ half: v_FE = U0 + u_L, u_FE = 100 - v_L (v_L toward the centre line).
 Fixed ts 2.0, h 9 (one panel family with the v6 flanges and keys); bisection on the rib fraction for the lightest feasible.
 python3 panel_opt_v7.py -> rib_mask_v7.json (here) + runs/funnel_panel/v7/panel_opt_v7.json
 NOX_FUNNEL_PLAIN=1 python3 panel_opt_v7.py -> the v7 plain panel (unlatched faces): the same skin 2.0, rib height and v6
-cases, no window, bosses, low ribs or latch cases -> rib_mask_v7_plain.json + panel_opt_v7_plain.json"""
+cases, no window, bosses, low ribs or latch cases -> rib_mask_v7_plain.json + panel_opt_v7_plain.json
+NOX_FUNNEL_PLAIN=1 NOX_FUNNEL_ZBOT=12.8 python3 panel_opt_v7.py -> v8 plain (24 Oct, box catch DEFAULT: the +-x faces end at
+seat z 12.8, opening 191 along drone x): the plate starts 16.26 up the slope (supported there), the presses that fall
+below the new edge drop out, a 20 N press at the seated wheel (u 100, v 43.6) is added; supports: the two seat-block
+landings (r 8) and the valleys, bottom edge free -> rib_mask_v8_plain.json +
+runs/funnel_panel/v8_plain/panel_opt_v8_plain.json. Unset (z 1.3): v7 exactly as before."""
 import math, json, time, os, sys
 import numpy as np, scipy.sparse as sp, scipy.sparse.linalg as spl
 from scipy.spatial import cKDTree
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-RUN = os.path.join(ROOT, "runs", "funnel_panel", "v7"); os.makedirs(RUN, exist_ok=True)
+Z_BOT = float(os.environ.get("NOX_FUNNEL_ZBOT", "1.3"))      # seat z of the panel's bottom edge (v7 1.3, v8 plain 12.8)
+V_BOT = round((Z_BOT - 1.3) * math.sqrt(2), 4)                  # the new edge, up the slope from the v7 edge (v8 plain 16.26, C)
+V8 = V_BOT > 0
+RUN = os.path.join(ROOT, "runs", "funnel_panel", "v8_plain" if V8 else "v7"); os.makedirs(RUN, exist_ok=True)
 sys.path[:0] = [os.path.dirname(HERE)]
 import hook_latch as HL                                         # latch geometry and loads (C / E), not edited here
 
@@ -56,12 +64,15 @@ _lay = HL.servo_layout(13.0, 1, -1)              # the v1 pose (result.json best
 BOLTS = HL.build(_lay)["bolts"]                  # (u_L, v_L) of the 4 bolts (C)
 def to_fe(uL, vL, side=1): return (side * (X_L - vL), U0 + uL)
 
-nx, ny = int(round(320 / H)), int(math.ceil(SLANT / H))
-xs = -160 + H * (np.arange(nx) + 0.5); ys = H * (np.arange(ny) + 0.5)
+nx, ny = int(round(320 / H)), int(math.ceil((SLANT - V_BOT) / H))
+xs = -160 + H * (np.arange(nx) + 0.5); ys = V_BOT + H * (np.arange(ny) + 0.5)   # the grid starts at the bottom edge
 XC, YC = np.meshgrid(xs, ys, indexing="ij")
 uL_g = YC - U0; vL_g = X_L - np.abs(XC)                         # unit coordinates of every element (both halves)
 PLAIN = os.environ.get("NOX_FUNNEL_PLAIN") == "1"              # v7 plain: the unlatched faces (no latch features or cases)
+if V8 and not PLAIN: raise SystemExit("NOX_FUNNEL_ZBOT is for the plain panel only (NOX_FUNNEL_PLAIN=1)")
 SUFFIX = "_plain" if PLAIN else ""
+MASK_NAME = "rib_mask_v8_plain.json" if V8 else f"rib_mask_v7{SUFFIX}.json"
+OPT_NAME = "panel_opt_v8_plain.json" if V8 else f"panel_opt_v7{SUFFIX}.json"
 hole_g = (np.abs(uL_g) < WIN_U / 2) & (np.abs(vL_g) < WIN_V / 2) & (not PLAIN)
 active = (np.abs(XC) <= HW(YC)) & ~hole_g
 passive_grid = active & (np.abs(XC) < FL_HALF)
@@ -81,16 +92,42 @@ for i, j in el_ij:
             nid_full[i + a, j + b] = 0
 nodes = np.argwhere(nid_full == 0); nn = len(nodes)
 nid_full[nodes[:, 0], nodes[:, 1]] = np.arange(nn)
-NX = -160 + H * nodes[:, 0]; NY = H * nodes[:, 1]
+NX = -160 + H * nodes[:, 0]; NY = V_BOT + H * nodes[:, 1]
 conn = np.array([[nid_full[i, j], nid_full[i + 1, j], nid_full[i + 1, j + 1], nid_full[i, j + 1]] for i, j in el_ij])
 ndof = 3 * nn
 edof = np.stack([3 * conn[:, k] + d for k in range(4) for d in range(3)], 1)
 ec = np.stack([XC[active], YC[active]], 1)
 passive = passive_grid[active]; ribfree = ribfree_grid[active]; boss = boss_grid[active]; guide = guide_grid[active]
-norib = passive | guide | boss                                 # rho held at 0 (boss and flange thickness set directly)
-T_PASS = np.where(passive, FL_W, np.where(boss, BOSS_T, 0.0))   # fixed thickness where > 0
+SEAT_U, SEAT_V, LAND_R, FLARE_R, CLAMP = 36.0, 14.0, 8.0, 13.0, 6.0   # funnel_panel.py seat block (C)
+# v8 plain: the seat block is passive plate (the panel hangs on it): skin + the block's depth, 6.0 inside the landing r 8
+# falling to 0.5 at the flare r 13 (C); no ribs on it (the post room cuts them behind the landing)
+# NOX_FUNNEL_SUPPORT=seat: the v8 plain support model on any panel (the v7 recheck, PR 81 round 2: nothing of box structure
+# v2 sits under the collar foot at z 1.3 either): bottom edge free, landings clamped, seat block passive. v8 plain: always.
+SEAT_SUP = V8 or os.environ.get("NOX_FUNNEL_SUPPORT") == "seat"
+seatblk = np.zeros(len(ec), bool); T_SEAT = np.zeros(len(ec))
+if SEAT_SUP:
+    for su in (SEAT_U, -SEAT_U):
+        r_ = np.hypot(ec[:, 0] - su, ec[:, 1] - V_BOT - SEAT_V)
+        inn = r_ <= FLARE_R
+        seatblk |= inn
+        T_SEAT = np.where(inn, TS + np.clip(CLAMP - (r_ - LAND_R) * (CLAMP - 0.5) / (FLARE_R - LAND_R), 0.5, CLAMP), T_SEAT)
+norib = passive | guide | boss | seatblk                       # rho held at 0 (boss, flange, seat block thickness set directly)
+T_PASS = np.where(passive, FL_W, np.where(boss, BOSS_T, np.where(seatblk, T_SEAT, 0.0)))   # fixed thickness where > 0
 fixedT = T_PASS > 0
-sup = np.where((NY < 1e-6) | (np.abs(NX) >= HW(NY) - 0.5 * H))[0]
+# supports (w = 0). v6 / v7: the bottom edge (foot on the box top) and both valleys. v8 plain (PR 81 review): the bottom edge
+# at z 12.8 rests on nothing, so it is free; the panel sits on its two seat-block landings on the bay posts (a fixed disc
+# r 8 = the landing, at u +-SEAT_Y, 14 up the slope from the edge) and is glued along both valleys to the +-y faces'
+# flanges (the whole v8 valley is above z 12.8); the centre seam glue line stays the passive flange strip (A + B one plate).
+# NOX_FUNNEL_VALLEY_V0: valley support only from that slant up (the v7 recheck with its partner flange ending at z 12.8).
+VALLEY_V0 = float(os.environ.get("NOX_FUNNEL_VALLEY_V0", "0"))
+valley = (np.abs(NX) >= HW(NY) - 0.5 * H) & (NY >= VALLEY_V0 - 1e-6)
+if SEAT_SUP:
+    seat_patch = np.zeros(nn, bool)
+    for su in (SEAT_U, -SEAT_U):
+        seat_patch |= (NX - su) ** 2 + (NY - V_BOT - SEAT_V) ** 2 <= LAND_R ** 2
+    sup = np.where(valley | seat_patch)[0]
+else:
+    sup = np.where((NY < V_BOT + 1e-6) | valley)[0]
 fixed = 3 * sup
 free = np.setdiff1d(np.arange(ndof), fixed)
 
@@ -138,10 +175,13 @@ def latch_forces(F, sides):
 cases, names, LIMS = [], [], []
 for v in (15, 40, 65, 90):
     for u in (0, 30, 60, 90, 120, 150):
-        if u <= HW(v) - 8:
+        if u <= HW(v) - 8 and v - 5.0 > V_BOT:                 # v8 plain: the v 15 row falls below the new edge
             cases.append(patch(u, v, 20.0)); names.append(f"press u{u} v{v}")
 for v in (40, 65):
     cases.append(patch(100.0, v, 20.0)); names.append(f"press u100 v{v}")
+V_WHEEL = 43.6                                                   # seated wheel contact up the slope from the v7 edge (T_C, C)
+if V8:                                                           # the seated wheel spot (27.3 up from the v8 edge)
+    cases.append(patch(100.0, V_WHEEL, 20.0)); names.append(f"press u100 v{V_WHEEL}")
 topv = SLANT - 2.5
 for u in (0, 40, 80, 120, 150):
     if u <= HW(topv) - 6:
@@ -265,20 +305,21 @@ if __name__ == "__main__":
     print("boss forces N (functional, misuse):", np.round(N_fun, 2).tolist(), np.round(N_mis, 2).tolist(), flush=True)
     base = report(np.zeros(ne, bool)); print("skin only:", {k: base[k] for k in ("face_g", "util", "worst", "stress_MPa")}, flush=True)
     lo, hi, best, x0, sweep = 0.0, 0.8, None, None, []
-    for k in range(7):
-        vf = 0.5 * (lo + hi)
+    VF_FIX = os.environ.get("NOX_FUNNEL_VF")                     # one run at a set rib fraction (v8 plain: the as-built
+    for k in range(1 if VF_FIX else 7):                          # outline must keep members the smoothing does not drop)
+        vf = float(VF_FIX) if VF_FIX else 0.5 * (lo + hi)
         x, rho = optimize(TS, RIB_H, vf, x0)
         mask = (rho > 0.5) & ~norib
         r = report(mask)
         sweep.append(dict(vf=round(vf, 4), **{k2: r[k2] for k2 in ("face_g", "util", "worst", "stress_MPa", "ok")}))
         print(f"vf {vf:.3f}: util {r['util']:.3f} ({r['worst']}), stress {r['stress_MPa']} MPa, face {r['face_g']} g  {'OK' if r['ok'] else '--'}  [{time.time()-t0:.0f}s]", flush=True)
-        if r["ok"]: hi, best, x0 = vf, (mask.copy(), r, vf), x
+        if r["ok"] or VF_FIX: hi, best, x0 = vf, (mask.copy(), r, vf), x
         else: lo, x0 = vf, x
     mask, r, vf = best
-    json.dump(dict(ts=TS, h=RIB_H, H=H, ec=np.round(ec, 3).tolist(), mask=np.where(mask)[0].tolist(), vf=vf,
+    json.dump(dict(ts=TS, h=RIB_H, H=H, v0=V_BOT, z_bot=Z_BOT, ec=np.round(ec, 3).tolist(), mask=np.where(mask)[0].tolist(), vf=vf,
                    window=dict(centre_u=X_L, centre_v=U0, along_slope=WIN_U, along_edge=WIN_V),
-                   lowrib_unit=dict(u=FREE_U, v=FREE_V, h=H_LOW), guide_keep_unit=dict(u=GUIDE_U, v=GUIDE_V)), open(os.path.join(HERE, f"rib_mask_v7{SUFFIX}.json"), "w"))
+                   lowrib_unit=dict(u=FREE_U, v=FREE_V, h=H_LOW), guide_keep_unit=dict(u=GUIDE_U, v=GUIDE_V)), open(os.path.join(HERE, MASK_NAME), "w"))
     json.dump(dict(elements=ne, cases=names, boss_forces_N=dict(functional=np.round(N_fun, 2).tolist(), misuse=np.round(N_mis, 2).tolist()),
                    skin_only={k: base[k] for k in ("face_g", "util", "worst", "stress_MPa")}, sweep=sweep, chosen=r,
-                   wall_s=round(time.time() - t0)), open(os.path.join(RUN, f"panel_opt_v7{SUFFIX}.json"), "w"), indent=1)
+                   wall_s=round(time.time() - t0)), open(os.path.join(RUN, OPT_NAME), "w"), indent=1)
     print(json.dumps({k: v for k, v in r.items() if k != "per_case"}, indent=1))

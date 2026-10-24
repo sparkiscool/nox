@@ -1,0 +1,399 @@
+{
+ "part": "funnel_panel",
+ "version": "v8_plain",
+ "skin": 2.0,
+ "rib_h": 9.0,
+ "rib_vf": 0.2,
+ "rib_vf_plain": 0.0625,
+ "unlatched_faces": "v8 plain",
+ "v8_geometry": {
+  "z_bottom": 12.8,
+  "v_bottom_from_v7_edge": 16.2635,
+  "opening_half_x": 95.5,
+  "seat_v_from_new_edge": 14.0,
+  "seat_v_from_v7_edge": 30.26,
+  "screw_entry_seat": [
+   105.4,
+   36.0,
+   22.7
+  ],
+  "landing_seat": [
+   109.64,
+   36.0,
+   18.46
+  ],
+  "post_rise_z": 11.5,
+  "key_v_from_new_edge": [
+   13.74,
+   63.74
+  ],
+  "lower_key_wall_to_new_edge": 11.59,
+  "wheel_contact_v_from_new_edge": 27.34
+ },
+ "A_v8_plain": {
+  "cm3": 42.4,
+  "g_PETG": 53.8,
+  "bbox": [
+   91.1,
+   167.8,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 11592,
+  "overhang_mm2": 55.4,
+  "watertight_after_stl_reload": true
+ },
+ "B_v8_plain": {
+  "cm3": 42.3,
+  "g_PETG": 53.7,
+  "bbox": [
+   91.1,
+   165.6,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 11592,
+  "overhang_mm2": 57.7,
+  "watertight_after_stl_reload": true
+ },
+ "assembly": {
+  "unlatched": "v8 plain",
+  "overlap_mm3": 0.0,
+  "bodies": 1,
+  "g_PETG": 534.8,
+  "bbox": [
+   336.8,
+   336.8,
+   78.4
+  ]
+ },
+ "latch_fit_v7_skin": {
+  "+y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "+y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  }
+ },
+ "latch_fit_v1_as_merged": {
+  "+y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "+y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  }
+ },
+ "window": {
+  "grown_0.45_mm3": 0.0,
+  "grown_0.55_mm3": 16.796,
+  "window_centre_slope_lateral": [
+   54.1,
+   100.0
+  ],
+  "plunger_axis_slope_lateral": [
+   54.1,
+   100.0
+  ]
+ },
+ "bosses_vs_housing_mm3": 0.0,
+ "wheel_path": {
+  "face k0": {
+   "rays": 15298,
+   "hits": 14010,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k1 (seated)": {
+   "rays": 15298,
+   "hits": 15046,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k2": {
+   "rays": 15298,
+   "hits": 14010,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k3 (seated)": {
+   "rays": 15298,
+   "hits": 15046,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "opening": {
+  "rect_mm": [
+   191.0,
+   168.0
+  ],
+  "below_z": 12.8,
+  "collar_v8_in_rect_mm3": 0.0,
+  "collar_all_v7_in_rect_mm3": 15896.1
+ },
+ "fe_mode": "v8 plain",
+ "fe_asbuilt": {
+  "face_g": 102.9,
+  "util": 0.911,
+  "worst": "top edge u0",
+  "stress_MPa": 12.8,
+  "stress_case": "top edge u40",
+  "ok": true,
+  "per_case": {
+   "press u0 v40": [
+    0.235,
+    4.0
+   ],
+   "press u30 v40": [
+    0.006,
+    0.5
+   ],
+   "press u60 v40": [
+    0.167,
+    6.5
+   ],
+   "press u90 v40": [
+    0.277,
+    4.4
+   ],
+   "press u0 v65": [
+    0.519,
+    3.8
+   ],
+   "press u30 v65": [
+    0.237,
+    5.0
+   ],
+   "press u60 v65": [
+    0.376,
+    4.8
+   ],
+   "press u90 v65": [
+    0.459,
+    4.7
+   ],
+   "press u120 v65": [
+    0.128,
+    4.4
+   ],
+   "press u0 v90": [
+    1.563,
+    7.0
+   ],
+   "press u30 v90": [
+    1.123,
+    9.0
+   ],
+   "press u60 v90": [
+    0.806,
+    8.8
+   ],
+   "press u90 v90": [
+    0.689,
+    6.2
+   ],
+   "press u120 v90": [
+    0.372,
+    4.1
+   ],
+   "press u100 v40": [
+    0.091,
+    1.7
+   ],
+   "press u100 v65": [
+    0.292,
+    2.7
+   ],
+   "press u100 v43.6": [
+    0.12,
+    1.9
+   ],
+   "top edge u0": [
+    2.733,
+    9.3
+   ],
+   "top edge u40": [
+    2.436,
+    12.8
+   ],
+   "top edge u80": [
+    1.351,
+    9.1
+   ],
+   "top edge u120": [
+    0.623,
+    4.6
+   ],
+   "top edge u150": [
+    0.085,
+    4.0
+   ],
+   "uniform 20 N": [
+    0.096,
+    2.1
+   ]
+  },
+  "latch_boss_defl_mm": {}
+ },
+ "wheel_spot_system": {
+  "case": "press u100 v43.6 (20 N)",
+  "per_20N": [
+   0.12,
+   1.9
+  ],
+  "allow_MPa": 19.5,
+  "rows": {
+   "Scout insert 60 N": {
+    "load_N": 7.24,
+    "stress_MPa": 0.69,
+    "index": 0.035,
+    "defl_mm": 0.043
+   },
+   "Scout pull 50 N": {
+    "load_N": 17.04,
+    "stress_MPa": 1.62,
+    "index": 0.083,
+    "defl_mm": 0.102
+   },
+   "Scout hand lift 100 N at a corner": {
+    "load_N": 46.25,
+    "stress_MPa": 4.39,
+    "index": 0.225,
+    "defl_mm": 0.277
+   },
+   "Scout catch 6 g": {
+    "load_N": 6.06,
+    "stress_MPa": 0.58,
+    "index": 0.03,
+    "defl_mm": 0.036
+   },
+   "Overseer pack in: seat (latch in)": {
+    "load_N": 5.09,
+    "stress_MPa": 0.48,
+    "index": 0.025,
+    "defl_mm": 0.031
+   },
+   "Overseer pack in: catch 6 g (latch in)": {
+    "load_N": 35.63,
+    "stress_MPa": 3.38,
+    "index": 0.174,
+    "defl_mm": 0.214
+   },
+   "Overseer pack in: hand lift 100 N": {
+    "load_N": 51.21,
+    "stress_MPa": 4.86,
+    "index": 0.249,
+    "defl_mm": 0.307
+   },
+   "Overseer pack in: pull 50 N": {
+    "load_N": 17.9,
+    "stress_MPa": 1.7,
+    "index": 0.087,
+    "defl_mm": 0.107
+   },
+   "Overseer pack out: seat (latch in)": {
+    "load_N": 3.69,
+    "stress_MPa": 0.35,
+    "index": 0.018,
+    "defl_mm": 0.022
+   },
+   "Overseer pack out: catch 6 g (latch in)": {
+    "load_N": 25.82,
+    "stress_MPa": 2.45,
+    "index": 0.126,
+    "defl_mm": 0.155
+   },
+   "Overseer pack out: hand lift 100 N": {
+    "load_N": 49.83,
+    "stress_MPa": 4.73,
+    "index": 0.243,
+    "defl_mm": 0.299
+   },
+   "Overseer pack out: insert 60 N": {
+    "load_N": 0.17,
+    "stress_MPa": 0.02,
+    "index": 0.001,
+    "defl_mm": 0.001
+   }
+  },
+  "worst": [
+   "Overseer pack in: hand lift 100 N",
+   0.249
+  ]
+ },
+ "solid_check": {
+  "A_v8_plain": {
+   "ok": true,
+   "bodies_eroded": 1,
+   "necks": 0,
+   "thin_walls": 0
+  },
+  "B_v8_plain": {
+   "ok": true,
+   "bodies_eroded": 1,
+   "necks": 0,
+   "thin_walls": 0
+  }
+ },
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 53.8,
+ "mass_tag": "M",
+ "worst_index": 0.911,
+ "worst_case": "top edge u0",
+ "solid_ok": true,
+ "bed_face": "contact face",
+ "bed_contact_mm2": 11592
+}
