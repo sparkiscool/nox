@@ -57,6 +57,9 @@ SEAL_R, SEAL_Y = 37.5, 41.0           # the shoulder on bearing 2's outer race o
 SH_R = 43.0                           # shoulder / cavity wall outer r (= the sleeve)
 
 
+COL_FLARE = (7.5, 6.0)                # detent tower column: r 7.5 at the plate top tapering to its r 5 over 6 (hub v6 run 2: the sustained springs 1.33 at the root, F)
+ENV_OVERLAP = float(os.environ.get("NOX_ENV_OVERLAP", "1.0"))                     # the generated region runs 1.0 into the plate (runs 1 / 2: the field met the plate's underside edge-on at Y 50
+                                      # and left 15 sub-0.25 mm lips there: solid_check's face-connected body count 13 / 16)
 LANE_Y = 53.0                         # arm v7 round 3d: the wheel lanes' floor (the axle tails at Y 54.75 pass 1.75 over it)
 SEAT_SKIP = {("axle", -1, -1)}      # the axle motor's (-1, -1) M3 sits under the detent springs (key line blocked, swap_system access): 3 x M3
                                     # hold it (85 N + 0.6 N.m worst, E) and its tension slide stays free (DEFAULT; turning the square 40 deg to
@@ -137,6 +140,8 @@ def hub_v6_parts():
     D, S = detent6()
     Q = DT.chosen()["Q"]
     tower = S["tower"] + cylY(Q[0], Q[1], L.Y_PLATE0, L.Y_PLATE1, 7.0, 48)      # + a plate pad under the column (joins the spoke)
+    ring = lambda r, y: [[Q[0] + r * math.cos(t), y, Q[1] + r * math.sin(t)] for t in np.linspace(0, 2 * math.pi, 48, endpoint=False)]
+    tower += hull(ring(COL_FLARE[0], L.Y_PLATE1 - 0.5) + ring(5.0, L.Y_PLATE1 + COL_FLARE[1]))   # column base flare (hub v6 run 2: sustained 1.33 at its root)
     mov = S["arm"] + S["spacer"] + S["nut"] + S["roller"] + S["springs"][0] + S["springs"][1]
     ties, tie_cuts = tie_sockets()
     drawn = (sleeve + wall + roof + plate_c + seats + pst + tower + (ties if ties is not None else mf.Manifold())) - post_k
@@ -154,7 +159,7 @@ def hub_v6_parts():
                 lanes = m if lanes is None else lanes + m
     cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop + (tie_cuts if tie_cuts is not None else mf.Manifold()) + (lanes if lanes is not None else mf.Manifold())
     if lanes is not None: drawn -= lanes
-    env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
+    env = cylY(0, 0, y0, L.Y_PLATE0 + ENV_OVERLAP, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1 + ENV_OVERLAP, -88.0, 88.0)
     env -= bore + cav + holes + drop
     env -= seat_cuts
     env0 = env - post_k                                                          # the generated region as given (topo organic finish)

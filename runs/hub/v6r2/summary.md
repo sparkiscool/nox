@@ -26,3 +26,9 @@ Bed contact 0 mm2: the mesh does not sit on a face. Preview `preview.png`; commi
 
 ## What it says
 Dropping the unbraked power cuts fixes misuse (3.40 to 0.51). Swap 0.596 and sustained 1.33 (detent anchor at the tower) still miss; solid_check fails on 16 loose plain bodies and one acute edge. Next: a drawn gusset or boss at the detent anchor (25.1, 55.8, -25.1), and the insert-at-bay load path; do not reopen the park-stop case.
+
+## Arm worker's read (24 Oct)
+- solid_check fails on the face-connected body count, 16 (run 1: 13): 15 lips of 1 to 5 voxels (≤ 0.2 mm³, M) under the plate at Y 49.8..49.9, where the generated region (top Y 50) meets the drawn plate's underside edge-on. The eroded body is 1; no thin wall; the acute edge does not fail the gate. Two non-manifold mesh edges at the r 40 pads' inner ends (−30, 51, 0) / (0, 51, 30) (M).
+- Swap 0.596 sits under the wheel lanes (the lane cut leaves the drawn plate Y 50..53 there); sustained 1.33 at the detent tower column's root (a drawn Ø10, nothing generated above the plate).
+- Run 3 changes (hub_v6.py): the generated region runs 1.0 into the plate (ENV_OVERLAP), the tower column flares r 7.5 → 5 over its first 6 (COL_FLARE), gen 40 → 52 cm³; tested at h 3.0 before the full run.
+- Checkpoints and the full mesh are not committed (rerun to recover).
