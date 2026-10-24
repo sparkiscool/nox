@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.0 mm\u00b3 (E) (bay -30 body envelope/bay -60 receiver), bbox 80 L (E), extents 418 x 407 x 470 mm (E), mass 18472 g (E), CG [4.0, 148.4, -36.9] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.0 mm\u00b3 (E) (bay -30 body envelope/bay -60 receiver), bbox 80 L (E), extents 418 x 407 x 470 mm (E), mass 18488 g (E), CG [4.0, 148.4, -36.7] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -639,7 +639,7 @@
    {
     "a": "arm: hub + rails (turning)",
     "b": "arm: drone insert lane (carriage)",
-    "overlap_mm3": 241709.14,
+    "overlap_mm3": 95145.18,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -675,16 +675,16 @@
    {
     "a": "arm: parked heads + cartridges (turning)",
     "b": "arm: drone insert lane (carriage)",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 2190.9,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "arm: parked heads + cartridges (turning)",
     "b": "arm: drone insert lane (grabber)",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 232912.52,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -702,10 +702,10 @@
    {
     "a": "arm: drone insert lane (carriage)",
     "b": "arm: drone insert lane (grabber)",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 8553.32,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -720,7 +720,7 @@
    {
     "a": "arm: drone insert lane (grabber)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 389621.09,
+    "overlap_mm3": 517664.8,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
