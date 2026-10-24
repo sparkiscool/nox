@@ -34,7 +34,8 @@ if SYS_PICK:
             CAGE_TOPO, CAGE_SIZES = row["topo"], row["sizes"]; break
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
-TIP_OFF = float(os.environ.get("SYS_TIP_OFF", "0"))     # pack / catch centre behind the thrust axis: 0 = the balance rule (CG ≤ 3 mm pack in and out)
+SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
+M_DRONE = 3000.0                                            # crash mass, updated to the assembled mass every balance (g)
 NOSE_GROUPS = ("nose", "nose_x", "nose_mount")                      # thin rods allowed in the L2 field (blocked share reported)
 
 
@@ -80,6 +81,7 @@ LATCH_MESH = {k: trimesh.load(os.path.join(LATCH_DIR, f"overseer_{k}_c.stl")) fo
 LATCH_SEAT_Z0 = 113.0 - 155.3
 SWAP_G, RECEIVER_G = LATCH_META["SWAP_M"], 190.0                    # cartridge + pack 748 g (M), receiver set 190.0 g (latch PR 69, E)
 SWAP_FWD = LATCH_META["Z_T"] - LATCH_META["SWAP_CG"][2]              # swap CG 5.18 behind the set centre (the catch centre)
+TIP_OFF = SWAP_BACK - SWAP_FWD                                      # catch centre (the set centre) 24.8 behind the thrust axis (B)
 
 
 def set_wheel(wz):
@@ -313,7 +315,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
              cam_bot=float(min(cb[0][2], g["cam_bracket"].bounds[0][2])), nose_y=float(max(co.NOSE_Y, np.abs(cb[:, 1]).max() + co.NOSE_GAP)),
              obstacles=[dict(c=[float(v) for v in cm_["c"] + cm_["fwd"] * xc_], fwd=[float(v) for v in cm_["fwd"]], left=[float(v) for v in cm_["left"]],
                              half=hf_) for cm_ in g["cams"] for xc_, hf_ in ((-1.75, [2.75, 20.0, 20.0]), (5.0, [4.0, 6.0, 6.0]))],   # each camera: plate + board, lens (C)
-             m_drone_g=3000.0, rear_x=-102.0, pyramid="rear", x_top=dm, x_tower=-100.0,
+             m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
              feet=(80.0, 66.0, float(g["PB"]) - 3.5), belly=(80.0, 40.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
@@ -375,7 +377,8 @@ def l2_clear_margin(g, B, solid_items):
 
 def cg_of(g):
     items = [("L2", 230, g["l2"]), ("front cameras", 30, g["cam"]), ("down camera", 15, g["down_cam"]), ("Pi 5 + cooler", 55, PI),
-             ("FC", 10, FC), ("PDB", 21, PDB), ("UBEC", 15, UBEC), ("buck", 6, BUCK), ("RX", 2, RX), ("pack", 650, g["pack"]),
+             ("FC", 10, FC), ("PDB", 21, PDB), ("UBEC", 15, UBEC), ("buck", 6, BUCK), ("RX", 2, RX),
+             ("pack + cartridge (swap set)", SWAP_G, trimesh.points.PointCloud([g["swap_cg"]])), ("receiver set", RECEIVER_G, g["receiver"]),
              ("flow", 2, g["flow"]), ("top plate", 23, TOP), ("bottom plate", 61, BOTTOM), ("wires", 80, FC)]
     items += [(f"motor + prop {i}", 81 + 10, m) for i, m in enumerate(g["motors"])]
     items += [(f"ESC {i}", 25, g["arms"][i]) for i in range(4)]                  # on the arms (model open, E)
@@ -392,7 +395,7 @@ def cg_of(g):
     printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("ring nodes", g["ring_nodes"], 0.5), ("apex", [g["apex"]], 0.45),
                ("cam plate", [g["cam_plate"]], 0.5),
                ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5), ("skid runners", g["runners"], 0.4), ("belly pan", [g["pan"]], 0.5),
-               ("cartridge", [g["cart"]], 0.04)]
+               ("keep-alive pads", g["pads"], 0.6)]
     tot, mom = 0.0, np.zeros(3)
     for _, gm, m in items:
         c = m.vertices.mean(axis=0) if isinstance(m, trimesh.points.PointCloud) else m.bounding_box.centroid
@@ -435,30 +438,39 @@ def solve_xB(g_fn, zB):
 
 
 def funnel(g, dc):
+    """seated funnel checks (G): every non-wheel point 1.0 off the faces (planes half = 82.7 + seat z: the ±x faces from
+    z 12.8, the ±y faces from z 1.3, to the top 75.1); the hook latch plunger zone (G (7)); the keep-alive band (G (8):
+    nothing within 9.0 of the ±x faces over y -35..+69 (+x) / -69..+35 (-x) between the face edge and the probes, the
+    pads excepted); below the face edges everything inside 191 (x) x 168 (y) at ±5 deg yaw, 3 a side (G (2))"""
     others = trimesh.util.concatenate(g["arms"] + g["motors"] + [g["cage_low"], g["cage_up"], TOP, BOTTOM, FC, PI, DECK, PDB, UBEC, BUCK, RX, g["apex"], g["l2"], g["cam"],
-                                       g["cam_bracket"], g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"] + [g["pan"]])
-    p = pts(others, 30000) + [dc, 0, SEAT_DZ]                     # funnel centre at the catch centre
-    d_face = np.full(len(p), np.inf)
-    for ax in (0, 1):
+                                       g["cam_bracket"], g["cart"], g["receiver"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"] + [g["pan"]])
+    p = pts(others, 40000) + [dc, 0, SEAT_DZ]                     # funnel centre at the catch centre
+    d_face = np.full(len(p), np.inf); z = p[:, 2]
+    for ax, z0 in ((0, X_EDGE_Z), (1, Y_EDGE_Z)):
         for sg in (1, -1):
-            x = sg * p[:, ax]; z = p[:, 2]; in_z = (z > -0.8) & (z < FACE_TOP) & (np.abs(p[:, 1 - ax]) < OPEN_HALF + 0.8 + z)
-            d_face = np.where(in_z, np.minimum(d_face, (z + OPEN_HALF + 0.8 - x) / math.sqrt(2)), d_face)
+            x = sg * p[:, ax]; in_z = (z > z0) & (z < FACE_TOP) & (np.abs(p[:, 1 - ax]) < FACE_C + z)
+            d_face = np.where(in_z, np.minimum(d_face, (z + FACE_C - x) / math.sqrt(2)), d_face)
     i = int(np.argmin(d_face))
-    # hook latch (G (7)): extended plunger uphill of each ±y-face wheel, 12 wide at x ±100, slope 50.1..58.1 from the
-    # bottom edge, 12 off the face; nothing of the drone within 1.0 of it
-    global PLUNGER_CLEAR
+    global PLUNGER_CLEAR, G8_CLEAR
     PLUNGER_CLEAR = np.inf
     for sy in (1, -1):
-        y = sy * p[:, 1]; z = p[:, 2]
-        s_up = ((y - OPEN_HALF) + (z + 0.8)) / math.sqrt(2); off = (z + OPEN_HALF + 0.8 - y) / math.sqrt(2)
+        y = sy * p[:, 1]
+        s_up = ((y - OPEN_HALF) + (z - Y_EDGE_Z)) / math.sqrt(2); off = (z + FACE_C - y) / math.sqrt(2)
         for sx in (1, -1):
             dx = np.maximum(np.abs(p[:, 0] - sx * 100.0) - 6.0, 0)
             ds = np.maximum(np.maximum(50.1 - s_up, s_up - 58.1), 0)
             do = np.maximum(np.maximum(-off, off - 12.0), 0)
             PLUNGER_CLEAR = min(PLUNGER_CLEAR, float(np.sqrt(dx ** 2 + ds ** 2 + do ** 2).min()))
-    low = p[p[:, 2] < -0.8]; worst = 0.0
+    G8_CLEAR = np.inf
+    for sx, (y0, y1) in ((1, (-35.0, 69.0)), (-1, (-69.0, 35.0))):
+        sel = (z > X_EDGE_Z) & (z < PROBE_Z) & (p[:, 1] > y0) & (p[:, 1] < y1) & (sx * p[:, 0] > 0)
+        if sel.any(): G8_CLEAR = min(G8_CLEAR, float(((z[sel] + FACE_C - sx * p[sel, 0]) / math.sqrt(2)).min()))
+    worst = -np.inf
     for yaw in np.radians(np.linspace(-5, 5, 11)):
-        c, s = math.cos(yaw), math.sin(yaw); q = low[:, :2] @ np.array([[c, -s], [s, c]]).T; worst = max(worst, np.abs(q).max())
+        c, s_ = math.cos(yaw), math.sin(yaw); q = p[:, :2] @ np.array([[c, -s_], [s_, c]]).T
+        lx = q[z < X_EDGE_Z]; ly = q[z < Y_EDGE_Z]
+        if len(lx): worst = max(worst, np.abs(lx[:, 0]).max() - (OPEN_X - 3.0))
+        if len(ly): worst = max(worst, np.abs(ly[:, 1]).max() - (OPEN_HALF - 3.0))
     return d_face[i], p[i], worst
 
 
@@ -468,6 +480,7 @@ def leg_reach(g):
 
 
 def balance(dc_unused, dm0):
+    global M_DRONE
     zB = math.ceil(l2_low_zB()); dm = dm0
     for _ in range(10):
         dc = TIP_OFF - dm
@@ -477,6 +490,7 @@ def balance(dc_unused, dm0):
         dm = cg[0]                                                # thrust centre (motor square centre) onto the CG
     dc = TIP_OFF - dm
     xB = solve_xB(lambda x: build(dm, dc, x, zB), zB); g = build(dm, dc, xB, zB); tot, cg = cg_of(g)
+    M_DRONE = float(tot)
     return dm, xB, zB, g, tot, cg
 
 
@@ -484,7 +498,7 @@ SCR_DBG = os.environ.get("SYS_DEBUG_DIR", "/tmp")
 if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 base sits where it does
     set_wheel(-48.0); zB_ = math.ceil(l2_low_zB())
     for x_ in [float(v) for v in os.environ["SYS_DEBUG_XB"].split(",")]:
-        g_ = build(197.6, -197.6, x_, zB_)
+        dmd_ = float(os.environ.get("SYS_DEBUG_DM", "197.6")); g_ = build(dmd_, TIP_OFF - dmd_, x_, zB_)
         items = [("props", trimesh.util.concatenate(g_["props"])), ("motors", trimesh.util.concatenate(g_["motors"])),
                  ("arms", trimesh.util.concatenate(g_["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g_["apex"]),
                  ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("wheels", trimesh.util.concatenate(g_["wheels"]))]
@@ -506,8 +520,8 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cag
         dc = TIP_OFF - dm
         fd, fp, low = funnel(g, dc)
         say(f"wheels z {wz:5.1f}: motors {dm:5.1f} ahead, catch centre x {-dc:5.1f}, L2 base ({xB:5.1f}, {zB:4.0f}), funnel {fd:5.1f}, "
-            f"plungers {PLUNGER_CLEAR:4.1f}, below-opening {low:4.1f}, {tot:4.0f} g")
-        if fd >= 1.0 and low <= OPEN_HALF - 1.0 and PLUNGER_CLEAR >= 1.0: break
+            f"plungers {PLUNGER_CLEAR:4.1f}, G (8) {G8_CLEAR:4.1f}, below the edges {low:+5.1f} (≤ 0), {tot:4.0f} g")
+        if fd >= 1.0 and low <= 0.0 and PLUNGER_CLEAR >= 1.0 and G8_CLEAR >= G8_OFF: break
     else:
         say("NO FUNNEL FIT in the wheel z range: the last height is kept and the funnel line below FAILS")
     dc = TIP_OFF - dm
@@ -547,7 +561,7 @@ CAM_DESC = f"two, yaw ±{CAM_YAW:.1f}, pitch {CAM_PITCH:.1f}, landscape"
 # ---------------------------------------------------------------- checks on the chosen layout
 mx_front = g["motors_xy"][0]
 r_front = math.hypot(*mx_front); r_rear = math.hypot(*g["motors_xy"][1])
-say(f"\nchosen: catch centre x {-dc:.1f} ({TIP_OFF:.0f} behind the thrust centre), motor square {dm:.1f} ahead of the plate centre; motors at ({dm + HALF:.1f}, ±{HALF}) and ({dm - HALF:.1f}, ±{HALF})")
+say(f"\nchosen: catch centre x {-dc:.1f} ({TIP_OFF:.1f} behind the thrust centre, swap CG {SWAP_BACK:.0f} behind, layout B), motor square {dm:.1f} ahead of the plate centre; motors at ({dm + HALF:.1f}, ±{HALF}) and ({dm - HALF:.1f}, ±{HALF})")
 say(f"arms: front r {r_front:.0f} (stock 243), rear r {r_rear:.0f}; tip gaps 25 all round (square kept)")
 P_FINAL = g["P"]
 FRAME = co.evaluate(P_FINAL, CAGE_TOPO, CAGE_SIZES)
@@ -558,7 +572,7 @@ def worst_of(prefix, key):
 cr = {k: v for k, v in cs.items() if k.startswith("crash")}
 wdef = max(cr, key=lambda k: cr[k]["defl"])
 say(f"frame model on the final geometry (F, dimensions L cases): L2 mode {FRAME['f_l2']:.0f} Hz (≥ {co.F_L2_MIN:.0f}), cage first mode {FRAME['f_first']:.0f} Hz; "
-    f"crash {co.CRASH_G:.0f} g x {P_FINAL['m_drone_g']:.0f} g in 14 directions: worst rod {max(v['rod'] for v in cr.values()):.2f}, buckling {max(v['buckle'] for v in cr.values()):.2f}, "
+    f"crash {co.crash_force(P_FINAL['m_drone_g'] * 1e-6):.0f} N ({co.CRASH_MODE}: {co.V_HIT} m/s x {P_FINAL['m_drone_g']:.0f} g over a {co.STROKE:.0f} stroke) in 14 directions: worst rod {max(v['rod'] for v in cr.values()):.2f}, buckling {max(v['buckle'] for v in cr.values()):.2f}, "
     f"sockets {max(v['socket'] for v in cr.values()):.2f}, arm {max(v['arm'] for v in cr.values()):.2f} (≤ 1.0), touching node moves ≤ {cr[wdef]['defl']:.1f} (≤ 9); "
     f"L2 at {co.CRASH_G:.0f} g: worst {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('L2 crash')):.2f}; "
     f"handling 50 N: {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('handling')):.2f}; "
@@ -675,13 +689,13 @@ say(f"landing: feet at z {fz:.0f} (lowest points), stance x {x0:.0f}..{x1:.0f}, 
 fd, fp, low = funnel(g, dc)
 say(f"funnel seated (catch centre on the funnel axis, bottom plate top at seat z {SEAT_DZ:.1f}): closest non-wheel point {fd:.1f} "
     f"at seat ({fp[0]:.0f}, {fp[1]:.0f}, {fp[2]:.0f}) (G ≥ 1.0); hook latch plungers {PLUNGER_CLEAR:.1f} (G (7) ≥ 1.0); "
-    f"below seat z -0.8 (cartridge incl.) {low:.1f} at ±5 deg yaw vs {OPEN_HALF:.0f}")
+    f"keep-alive band G (8) {G8_CLEAR:.1f} (≥ {G8_OFF:.0f}); below the face edges (latch set incl.) {low:+.1f} past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0)")
 say(f"mass ~{tot:.0f} g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), "
     f"CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}) vs thrust centre ({dm:.1f}, 0): {cg[0] - dm:+.1f} in x")
-# balance pack in and out (CLAUDE.md "Balanced"): the pack and cartridge on the thrust axis
-pk = g["pack"].bounding_box.centroid; cart_g = abs(g["cart"].volume) * 1.27e-3 * 0.04
-cg_out = (cg * tot - pk * 650 - g["cart"].centroid * cart_g) / (tot - 650 - cart_g)
-say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the pack, {np.hypot(cg_out[0] - dm, cg_out[1]):.1f} without (≤ 3)")
+# balance pack in and out (CLAUDE.md "Balanced"; layout B, Spark 24 Oct: the pack-out shift is an accepted exception)
+cg_out = (cg * tot - g["swap_cg"] * SWAP_G) / (tot - SWAP_G)
+say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the pack (≤ 3), {np.hypot(cg_out[0] - dm, cg_out[1]):.1f} without "
+    f"(layout B, Spark 24 Oct: accepted, reported)")
 # system_check manifest (cage first, fit, compact, mass; grouped meshes)
 def tm(m): return m.copy()
 # cage CG from the rod model (tubes by g/m, not solid mesh volume) + printed cage pieces by volume
@@ -693,23 +707,27 @@ for ms_, f_ in ((g["nodes"], 0.6), (g["ring_nodes"], 0.5), (g["runners"], 0.4), 
         w_ = abs(m_.volume) * 1.27e-3 * f_; _cm += w_ * m_.bounding_box.centroid; _cw += w_
 cage_cg = _cm / _cw
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"] + [g["pan"]]
-man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
+man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cg_tol_no_swap_mm=15.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
                           ["arms", "apex + hubs", round(g["hub_arm_mm3"], 1)],             # front hub blocks seated on the front arm roots,
+                          ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5],
+                          ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
-                     dict(part="pack", axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True),                   # the cartridge path: it drops out the bottom and fills the 168 opening under the wheels, where nothing else may go; its cartridge walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
+                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
-           access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
+           access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver"])], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
     dict(name="L2", trimesh=g["l2"], role="protected", mass_g=230, tag="P"),
     dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
-    dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="E", swap=True),
+    dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="P", swap=True),
+    dict(name="cartridge", trimesh=g["cart"], role="protected", mass_g=round(SWAP_G - 650, 1), tag="M", swap=True),
+    dict(name="receiver", trimesh=g["receiver"], role="protected", mass_g=RECEIVER_G, tag="E"),
     dict(name="electronics", trimesh=trimesh.util.concatenate([FC, PI, PDB, UBEC, BUCK, RX]), role="protected", mass_g=110 + 80, tag="E"),
     dict(name="down cam + flow", trimesh=trimesh.util.concatenate([g["down_cam"], g["flow"]]), role="protected", mass_g=17, tag="E"),
     dict(name="arms", trimesh=trimesh.util.concatenate(g["arms"]), role="structure", mass_g=sum(abs(a.volume) for a in g["arms"]) * 1.27e-3 * 0.45 + 100, tag="E"),
@@ -766,7 +784,7 @@ say(f"PX4 flow position from the CG (FRD, m): x {FLOW_POS[0]:+.3f}, y {FLOW_POS[
     f"IMU (FC centre) from the CG: x {(0 - cg[0]) / 1000:+.3f}, z {-(9.75 - cg[2]) / 1000:+.3f}")
 
 # ---------------------------------------------------------------- motion artifact + run record
-s = Scene("Overseer system v2", f"full cage (frame model): L2 mode {FRAME['f_l2']:.0f} Hz, crash {co.CRASH_G:.0f} g, tip-over ≥ {min(tips.values()):.0f} deg; pack {TIP_OFF:.0f} behind the thrust axis, motors {dm:.0f} ahead of the plates")
+s = Scene("Overseer system v2", f"full cage (frame model): L2 mode {FRAME['f_l2']:.0f} Hz, crash {co.crash_force(M_DRONE * 1e-6):.0f} N, tip-over ≥ {min(tips.values()):.0f} deg; pack {TIP_OFF:.0f} behind the thrust axis, motors {dm:.0f} ahead of the plates")
 P = lambda n, m, grp, c, pr, note="": s.part(n, m, group=grp, color=c, printed=pr, note=note)
 
 

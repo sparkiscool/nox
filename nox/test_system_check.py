@@ -108,6 +108,8 @@ def test_balance():
     r = run(dict(name="b", parts=[frame, ctr, pk2], cg_ref=[0, 0, 0]))
     c = r["balance"]["cases"]
     assert c["all"]["pass_"] and c["all"]["horizontal_mm"] < 1e-6 and not c["no_swap"]["pass_"], c
+    r = run(dict(name="b", parts=[frame, ctr, pk2], cg_ref=[0, 0, 0], cg_tol_no_swap_mm=10.0))   # pack-out exception (Overseer B)
+    assert r["balance"]["pass_"] and r["balance"]["cases"]["no_swap"]["pass_"], r["balance"]
     assert abs(c["no_swap"]["horizontal_mm"] - 500 / 125) < 0.01                          # 4 mm without the pack
     r = run(dict(name="b", parts=[frame, ctr, pk2], cg_ref=[0, 0, 0]))
     assert not r["pass"] and r["balance"]["worst_case"] == "no_swap"

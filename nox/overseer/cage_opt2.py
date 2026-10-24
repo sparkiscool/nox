@@ -75,7 +75,8 @@ F_FIRST_MIN = 0.0                                           # cage's own lowest 
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
 NODE_G, CORNER_G = 2.0, 6.0                                 # printed ring node / corner node (E, g)
 
-TOPO_KEYS = ("keels", "mid_spokes", "ring_diag", "l2_braces", "v_diag", "strut2", "spokes_hi", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
+TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
+# retired from the search (24 Oct, system v3): keels (prop guard), v_diag (the cameras), strut2 (funnel), spokes_hi (motor bells): off
 
 
 def motors(dm):
@@ -114,6 +115,7 @@ def geometry(p, topo, sizes=None):
     kind: 'rod' (group sized), 'arm' (PETG box), 'link' (rigid), 'pnode' (printed node post, PETG 10 x 10)."""
     dm, xc, wz, xB, zB = p["dm"], p["xc"], p["wz"], p["xB"], p["zB"]
     N, M, fixed, mass = {}, [], set(), {}
+    SPINE_X = []
     def node(n, xyz):
         N[n] = np.asarray(xyz, float); return n
     def mem(name, a, b, group, kind="rod"):
@@ -179,7 +181,7 @@ def geometry(p, topo, sizes=None):
         near = sorted(vx, key=lambda r: math.hypot(r[1] - mx, r[2] - my))[:2]
         for r in near:
             mem(f"spoke m{k}-{r[0]}", f"tipb{k}", f"{r[0]}lo", "spokes")
-    if topo["spokes_hi"]:                                             # second support height: arm top (z 45) to the same ring nodes
+    if topo.get("spokes_hi", 0):                                             # second support height: arm top (z 45) to the same ring nodes
         for k, (mx, my) in enumerate(mot):
             near = sorted(vx, key=lambda r: math.hypot(r[1] - mx, r[2] - my))[:2]
             for r in near:
@@ -205,10 +207,10 @@ def geometry(p, topo, sizes=None):
         for lvl in ("lo", "hi"):
             mid = node(f"Vmid {vn}{lvl}", (N[f"{vn}{lvl}"] + N[f"S{lvl}{sy:+d}"]) / 2)
             mem(f"V {vn}{lvl} a", f"{vn}{lvl}", mid, "V"); mem(f"V {vn}{lvl} b", mid, f"S{lvl}{sy:+d}", "V")
-        if topo["v_diag"]:
+        if topo.get("v_diag", 0):
             mem(f"vdiag {vn}", f"{vn}hi", f"Slo{sy:+d}", "v_diag")
     for sy in (1, -1):
-        if topo.get("keels", 1):
+        if topo.get("keels", 0):
             mem(f"keel {sy:+d}", f"fhubB{sy:+d}", f"Shi{sy:+d}", "keels")   # bottom plate front up to the upper socket (16 deg)
         if topo["keels_lo"]:                                              # top plate front down to the lower socket: the keels cross (pitch, bounce)
             mem(f"keello {sy:+d}", f"fhubT{sy:+d}", f"Slo{sy:+d}", "keels_lo")
@@ -217,6 +219,18 @@ def geometry(p, topo, sizes=None):
             mem(f"keelx {sy:+d}", f"fhubB{sy:+d}", f"Slo{-sy:+d}", "keels_x")
         if topo["chin"]:                                                  # from the sled front, 30 under the plates: 23 deg of climb
             mem(f"chin {sy:+d}", f"chin{sy:+d}", f"Shi{sy:+d}", "chin")
+    if topo.get("spine"):                                             # keel spine on the centre line, in the gap between the front disks
+        B0 = np.array([xB, 0.0, zB])                                      # (out of the prop wash): top plate front to the upper centre socket,
+        sp = {lv: B0 - A * SOCK_BACK + UP_B * (APEX_SPAN / 2 if lv == "hi" else -APEX_SPAN / 2) for lv in ("hi", "lo")}   # hub bottom to the lower
+        for lv, q in sp.items():                                          # one and up to the upper one (triangulated in pitch)
+            node(f"SP{lv}", q); mem(f"apexlink SP{lv}", "apexM", f"SP{lv}", None, "link")
+        fixed.add(node("fhubB0", (98, 0, p.get("z_fhub", -2.0)))); fixed.add(node("fhubT0", (58, 0, 46)))
+        for nm_, a_, b_ in (("spine top", "fhubT0", "SPlo"), ("spine lo", "fhubB0", "SPlo"), ("spine dg", "fhubB0", "SPhi")):   # all under the swept band
+            if p.get("pyramid") == "mast" and N[a_][0] < dm < N[b_][0]:  # crosses the mast: a shared node (the spine braces the mast)
+                f_ = (dm - N[a_][0]) / (N[b_][0] - N[a_][0]); xn_ = node(f"MX {nm_}", N[a_] + f_ * (N[b_] - N[a_]))
+                mem(f"{nm_} a", a_, xn_, "spine"); mem(f"{nm_} b", xn_, b_, "spine"); SPINE_X.append(xn_)
+            else:
+                mem(nm_, a_, b_, "spine")
     if topo["l2_braces"]:
         for k, (mx, my) in enumerate(mot):
             if mx > dm:
@@ -298,25 +312,33 @@ def geometry(p, topo, sizes=None):
         bot = node(f"armbot{sx:+d}{sy:+d}", (N[an][0], N[an][1], t * (ROOT_H - H_TIP[side])))
         mem(f"armbotlink{sx:+d}{sy:+d}", an, bot, None, "link")
         mem(f"strut {sx:+d}{sy:+d}", f"SR{sx:+d}{sy:+d}", bot, "struts")
-        if topo["strut2"]:
+        if topo.get("strut2", 0):
             mem(f"strut2 {sx:+d}{sy:+d}", f"SR{sx:+d}{sy:+d}", f"hubc{sx:+d}{sy:+d}", "strut2")
     for sx in (1, -1):
         mem(f"wring x{sx:+d}", f"WAi{sx:+d}+1", f"WAi{sx:+d}-1", "wheel_ring")
     for sy in (1, -1):
         mem(f"wring y{sy:+d}", f"WBi+1{sy:+d}", f"WBi-1{sy:+d}", "wheel_ring")
     if p.get("feet") is not None:                                     # belly frame + skid (layout A: the catch sits under the motor square)
-        fx, fy, fz = p["feet"]
+        fx, fy, fz = p["feet"]; bx, by = p.get("belly", (fx, fy))
         for sx in (1, -1):
             for sy in (1, -1):
-                # printed belly frame tab on each corner block at wheel height: carries the cartridge receiver, the pods
-                # and the pack (720 g, E, a quarter each); vertical skid leg inside the 168 opening down to the foot
-                node(f"BF{sx:+d}{sy:+d}", (xc + fx * sx, fy * sy, wz)); mem(f"belly tab {sx:+d}{sy:+d}", f"corner{sx:+d}{sy:+d}", f"BF{sx:+d}{sy:+d}", None, "link")
-                mass[f"BF{sx:+d}{sy:+d}"] = 180e-6
+                # printed belly frame (the sled under the receiver mount plane) on each corner block at wheel height: it
+                # carries the receiver, the swap set and the pods (a quarter each); skid leg inside the opening to the foot
+                node(f"BF{sx:+d}{sy:+d}", (xc + bx * sx, by * sy, wz)); mem(f"belly tab {sx:+d}{sy:+d}", f"corner{sx:+d}{sy:+d}", f"BF{sx:+d}{sy:+d}", None, "link")
+                mass[f"BF{sx:+d}{sy:+d}"] = p.get("swap_g", 720.0) / 4 * 1e-6
                 node(f"FT{sx:+d}{sy:+d}", (xc + fx * sx, fy * sy, fz))
                 mem(f"skid leg {sx:+d}{sy:+d}", f"BF{sx:+d}{sy:+d}", f"FT{sx:+d}{sy:+d}", "skid_belly")
         for sy in (1, -1):                                            # side bar + rail close each side; no rail across the ends (the pack drops out the bottom)
             mem(f"belly bar {sy:+d}", f"BF+1{sy:+d}", f"BF-1{sy:+d}", "skid_belly")
             mem(f"skid rail {sy:+d}", f"FT+1{sy:+d}", f"FT-1{sy:+d}", "skid_belly")
+        if p.get("pyramid") == "mast":                                # top node on a vertical mast at the thrust centre (70 off every
+            node("MB", (dm, 0, p.get("z_mast", wz)))                    # disk, out of the prop wash) down to the sled (no tail, Spark 24 Oct)
+            for sx in (1, -1):
+                for sy in (1, -1):
+                    mem(f"sled link {sx:+d}{sy:+d}", "MB", f"BF{sx:+d}{sy:+d}", None, "link")
+            chain = ["MB"] + sorted(SPINE_X, key=lambda n_: N[n_][2]) + ["TN"]   # through the spine crossings
+            for i_ in range(len(chain) - 1):
+                mem(f"mast {i_}", chain[i_], chain[i_ + 1], "pyramid")
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
 
@@ -477,7 +499,9 @@ def structural_members(model):
 
 
 G_ACC = 9810.0                                                # mm/s2
-CRASH_G = 35.0                                                # dimensions L Crash (DEFAULT, E)
+CRASH_G = 35.0                                                # dimensions L Crash (DEFAULT, E): the rigid case
+CRASH_MODE = os.environ.get("CAGE_CRASH_MODE", "energy")      # Overseer (DEFAULT 24 Oct, Spark "go with default"): as the Scout, a
+V_HIT, STROKE, PLATEAU_MIN = 2.0, 10.0, 200.0                 # 2.0 m/s hit through a preloaded TPU suspension, 10 stroke, plateau ≥ 200 N
 
 
 PLAN_GROUPS = ("chords", "V", "ring_diag", "posts", "skirt")       # guard rods checked in plan (12 off the disks), the rest under / over the band
@@ -497,23 +521,26 @@ def prop_clear(a, b, od, motors):
 OPEN_HALF, FACE_TOP = 84.0, 75.1                                   # box collar funnel (dimensions G)
 
 
+FACE_C, X_EDGE_Z, Y_EDGE_Z, OPEN_X = 82.7, 12.8, 1.3, 95.5           # funnel v9 plain / v7 (dimensions G): half = 82.7 + seat z
+
+
 def funnel_clear(a, b, od, p):
     """smallest clearance (mm) of a rod to the seated funnel (catch centre on the funnel axis, p["seat_dz"] = bottom
-    plate top in the seat frame): 45 deg faces from the 168 opening at seat z -0.8 to the top at 75.1; under the
-    opening the rod stays inside it at ±5 deg yaw with 1.0 (dimensions G (2))"""
+    plate top in the seat frame): face planes half = 82.7 + seat z, the ±x faces from z 12.8, the ±y faces from z 1.3,
+    to the top 75.1; below the edges the rod stays inside 191 (x) x 168 (y) at ±5 deg yaw, 3 a side (dimensions G (2))"""
     if p.get("seat_dz") is None: return np.inf
     t = np.linspace(0, 1, 80)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float))
     q = q + np.array([-p["xc"], 0.0, p["seat_dz"]]); z = q[:, 2]; c = np.inf
-    for ax in (0, 1):
+    for ax, z0 in ((0, X_EDGE_Z), (1, Y_EDGE_Z)):
         for sg in (1, -1):
-            x = sg * q[:, ax]; inz = (z > -0.8) & (z < FACE_TOP) & (np.abs(q[:, 1 - ax]) < OPEN_HALF + 0.8 + z)
-            if inz.any(): c = min(c, float(((z[inz] + OPEN_HALF + 0.8 - x[inz]) / math.sqrt(2) - od / 2).min()))
-    low = q[z <= -0.8]
-    if len(low):
-        for yaw in np.radians((-5.0, 0.0, 5.0)):
-            cy, sy_ = math.cos(yaw), math.sin(yaw)
-            r = np.abs(np.stack([low[:, 0] * cy - low[:, 1] * sy_, low[:, 0] * sy_ + low[:, 1] * cy], 1)).max()
-            c = min(c, float(OPEN_HALF - r - od / 2))
+            x = sg * q[:, ax]; inz = (z > z0) & (z < FACE_TOP) & (np.abs(q[:, 1 - ax]) < FACE_C + z)
+            if inz.any(): c = min(c, float(((z[inz] + FACE_C - x[inz]) / math.sqrt(2) - od / 2).min()))
+    for yaw in np.radians((-5.0, 0.0, 5.0)):
+        cy, sy_ = math.cos(yaw), math.sin(yaw)
+        rx = np.abs(q[:, 0] * cy - q[:, 1] * sy_); ry = np.abs(q[:, 0] * sy_ + q[:, 1] * cy)
+        lx, ly = z <= X_EDGE_Z, z <= Y_EDGE_Z
+        if lx.any(): c = min(c, float((OPEN_X - 3.0 - rx[lx] - od / 2).min()) + 1.0)   # +1: the 1.0 clearance target is the 3 a side here
+        if ly.any(): c = min(c, float((OPEN_HALF - 3.0 - ry[ly] - od / 2).min()) + 1.0)
     return c
 
 
@@ -542,6 +569,33 @@ def obstacle_clear(a, b, od, obstacles):
     return c
 
 
+WASH_OD, WASH_LEN = 8.0, 15.0                                    # thin rods in the prop wash (CLAUDE.md design 8, DEFAULT): ≤ 8/6 tube where a rod runs ≥ 15 under / over a disk;
+WASH_SHARE = None                                                # each disk's shadowed share reported (a 5 % gate is not reachable with the L2 mount under the front disks)
+
+
+def wash_share(m):
+    """per motor: share of its swept disk shadowed in plan by the cage rods (od x length inside the disk / disk area)"""
+    out = []
+    for mx, my in m.info["motors"]:
+        a_ = 0.0
+        for e in m.el:
+            if e["kind"] != "rod": continue
+            A, B = np.asarray(m.N[e["a"]], float), np.asarray(m.N[e["b"]], float)
+            t = np.linspace(0, 1, 60)[:, None]; q = A + t * (B - A)
+            ins = np.hypot(q[:, 0] - mx, q[:, 1] - my) < PROP_R
+            if ins.any(): a_ += ins.mean() * float(np.hypot(*(B - A)[:2])) * SECTIONS[e["P"]["sec"]]["od"]
+        out.append(a_ / (math.pi * PROP_R ** 2))
+    return out
+
+
+def wash_len(a, b, motors):
+    """length (mm) of a rod inside the swept disks in plan (in the prop wash, above or below)"""
+    t = np.linspace(0, 1, 100)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float))
+    inside = np.zeros(len(q), bool)
+    for mx, my in motors: inside |= np.hypot(q[:, 0] - mx, q[:, 1] - my) < PROP_R
+    return float(inside.mean() * np.linalg.norm(np.subtract(b, a)))
+
+
 def guard_caps(m):
     """largest section index (ORDER) per rod that keeps the prop clearance (12) and the funnel clearance (1.0);
     -1 = no section does (the layout fails)"""
@@ -555,6 +609,7 @@ def guard_caps(m):
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
             if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
             if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, m.p.get("obstacles")) < 1.0: break
+            if od > WASH_OD and wash_len(m.N[e["a"]], m.N[e["b"]], m.info["motors"]) >= WASH_LEN: break
             cap = i
         caps[e["name"]] = cap
     return caps
@@ -571,6 +626,13 @@ def mode_energy_runs(m, k, runs):
         ue = e["T"] @ U[e["dofs"]]; se[ie] = 0.5 * float(ue @ (e["kl"] @ ue))
     tot = se.sum() or 1.0
     return np.array([se[run].sum() / tot for run in runs])
+
+
+def crash_force(m_t):
+    """touching-node crash force (N) for a drone of m_t (t): rigid CRASH_G, or the suspension plateau that stops a V_HIT
+    hit in STROKE (½ m v² / s, never under PLATEAU_MIN, above the 175 N latch misuse)"""
+    if CRASH_MODE == "rigid": return CRASH_G * G_ACC * m_t
+    return max(0.5 * (m_t * 1e3) * V_HIT ** 2 / (STROKE * 1e-3), PLATEAU_MIN)
 
 
 def crash_dirs():
@@ -616,9 +678,9 @@ def evaluate(p, topo, sizes, detail=False):
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
     for d in crash_dirs():
         k = int(np.argmax(P_ @ d)); n_ = cage_nodes[k]
-        cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -CRASH_G * G_ACC * m_drone * d}, 1.0, "crash", n_, d))
+        cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -crash_force(m_drone) * d}, 1.0, "crash", n_, d))
     for d in crash_dirs():
-        cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": CRASH_G * G_ACC * 266e-6 * d}, 1.0, "l2", None, d))
+        cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": crash_force(m_drone) / m_drone * 266e-6 * d}, 1.0, "l2", None, d))
     real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT"))]
     for n_ in real_nodes:
         for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
@@ -626,11 +688,16 @@ def evaluate(p, topo, sizes, detail=False):
     wheels = [f"W{a}{sx:+d}{sy:+d}" for a in ("A", "B") for sx in (1, -1) for sy in (1, -1)]
     cases.append(("catch landing 6 g", {w: np.array([0, 0, 6.0 * G_ACC * m_drone / 8]) for w in wheels}, 0.5, "landing", None, None))
     feet = [n for n in m.names if n.startswith("FT")]
+    bfs = [n for n in m.names if n.startswith("BF")]
+    if bfs:                                                           # receiver on the sled (latch PR 69, E): stall 74 N up, 43.5 N across,
+        bx_ = max(abs(m.N[n][0] - p["xc"]) for n in bfs)             # pitch couple 6.1 N m (misuse)
+        ld = {n: np.array([0.0, 43.5 / 4, 74.0 / 4 + np.sign(m.N[n][0] - p["xc"]) * 6100.0 / (2 * bx_) / 2]) for n in bfs}
+        cases.append(("receiver misuse", ld, 1.0, "swap", None, None))
     if feet:                                                          # floor landing on the 4 feet (dimensions G (5): 6 g)
         cases.append(("floor landing 6 g", {f_: np.array([0, 0, 6.0 * G_ACC * m_drone / len(feet)]) for f_ in feet}, 0.5, "landing", None, None))
     for sx in (1, -1):
         for sy in (1, -1):
-            cases.append((f"latch WB{sx:+d}{sy:+d}", {f"WB{sx:+d}{sy:+d}": 100.0 * np.array([0, -sy, -1]) / math.sqrt(2)}, 1.0, "latch", None, None))
+            cases.append((f"latch WB{sx:+d}{sy:+d}", {f"WB{sx:+d}{sy:+d}": 175.0 * np.array([0, -sy, -1]) / math.sqrt(2)}, 1.0, "latch", None, None))
     cases.append(("swap pull", {"WA+1+1": 50.0 * np.array([1, 0, -1]) / math.sqrt(2), "WA+1-1": 50.0 * np.array([1, 0, -1]) / math.sqrt(2)}, 0.5, "swap", None, None))
     U = m.solve([c[1] for c in cases])
     runs = structural_members(m)
@@ -674,6 +741,8 @@ def evaluate(p, topo, sizes, detail=False):
         res["funnel_clear"] = float(wf); g["funnel"] = 1.0 - wf if np.isfinite(wf) else -1.0
     wm = min(motor_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], m.info["motors"]) for e in m.el if e["kind"] == "rod")
     res["motor_clear"] = float(wm); g["motor clear"] = 1.0 - wm if np.isfinite(wm) else -1.0
+    ws = wash_share(m); res["wash_share"] = [float(v) for v in ws]
+    if WASH_SHARE: g["prop wash"] = max(ws) / WASH_SHARE - 1
     if p.get("obstacles"):
         wo = min(obstacle_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], p["obstacles"]) for e in m.el if e["kind"] == "rod")
         res["obstacle_clear"] = float(wo); g["obstacles"] = 1.0 - wo
@@ -721,7 +790,7 @@ def size_topology(p, topo, log=None):
     return sizes, r, True
 
 
-FIXED_ON = ("keels_lo", "keels_x", "arm_spars", "top_spider")   # found by diagnosis / needed by cage first; the ablation re-tests each
+FIXED_ON = ("arm_spars", "top_spider")   # found by diagnosis / needed by cage first; the ablation re-tests each
 
 
 def size_fsd(p, topo, iters=30, log=False, init=None):
@@ -762,7 +831,7 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
     for it in range(30):
         prev = list(sec)
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel", "motor clear", "obstacles")}
+        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel", "motor clear", "obstacles", "prop wash")}
         if not bad: break
         stepped = False
         for key, mk in (("L2 mode", "_l2_mode"), ("belly mode", "_belly_mode")):
