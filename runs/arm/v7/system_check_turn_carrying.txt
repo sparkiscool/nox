@@ -31,8 +31,8 @@ system_check box swap arm v7: PASS
     motor_axle / p20_axle: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     shaft_axle / p20_axle: 196.03 mm³ (E) limit 1000000000.0 contact [manifold3d]
     shaft_axle / belt_axle: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    p20_axle / belt_axle: 184.49 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    p80 / belt_axle: 812.35 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    p20_axle / belt_axle: 184.25 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    p80 / belt_axle: 819.39 mm³ (E) limit 1000000000.0 contact [manifold3d]
     p80 / detent_ring: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     brg0 / brg1: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     railA / wheelsA: 3.81 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -132,8 +132,8 @@ system_check box swap arm v7: PASS
     rec-120 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack charged: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-  mass 5589.41 g (E), CG [0.53, 120.52, -35.27], offset [0.53, 120.52, -35.27] = 125.58 mm from [0.0, 0.0, 0.0]
-    hub: 129.55 g (M) at [0.0, 40.45, -10.99]
+  mass 5591.44 g (E), CG [0.53, 120.49, -35.26], offset [0.53, 120.49, -35.26] = 125.54 mm from [0.0, 0.0, 0.0]
+    hub: 131.58 g (M) at [0.0, 40.45, -10.99]
     stub: 47.68 g (M) at [0.47, 15.91, -0.0]
     stub_bolts: 8.0 g (C) at [0.0, 2.23, -0.0]
     post: 30.36 g (M) at [-0.0, 46.24, 0.0]
@@ -145,7 +145,7 @@ system_check box swap arm v7: PASS
     shaft_axle: 0.0 g (C) at [7.25, 52.65, -69.01]
     p20_axle: 8.0 g (C) at [7.25, 59.0, -69.01]
     p80: 30.0 g (C) at [-0.0, 60.73, 0.0]
-    belt_axle: 8.0 g (C) at [2.2, 59.0, -20.95]
+    belt_axle: 8.0 g (C) at [2.11, 59.0, -20.1]
     brg0: 110.0 g (C) at [-0.0, 16.0, -0.0]
     brg1: 110.0 g (C) at [-0.0, 32.0, -0.0]
     railA: 56.48 g (M) at [72.15, 54.6, 72.15]
@@ -189,7 +189,7 @@ system_check box swap arm v7: PASS
     pack charged: 210.8 g (E) at [52.16, 166.36, 52.16] swap
     pack dead: 210.8 g (E) at [-52.16, 166.36, 52.16] swap
   balance PASS (horizontal CG offset <= 1000.0 mm, thrust axis [0.0, 1.0, 0.0]):
-    all: 35.27 mm horizontal, 120.52 mm axial, 5589.41 g
-    no_swap: 42.4 mm horizontal, 116.77 mm axial, 5167.81 g
+    all: 35.26 mm horizontal, 120.49 mm axial, 5591.44 g
+    no_swap: 42.39 mm horizontal, 116.74 mm axial, 5169.84 g
   crash probes: skipped
-System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 27.6 L (E), extents 371 x 259 x 287 mm (E), mass 5589 g (E), CG 35.3 mm off thrust axis (E) [+0.5, +120.5, -35.3], 42.4 mm without swap parts
+System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 27.6 L (E), extents 371 x 259 x 287 mm (E), mass 5591 g (E), CG 35.3 mm off thrust axis (E) [+0.5, +120.5, -35.3], 42.4 mm without swap parts
