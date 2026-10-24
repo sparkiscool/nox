@@ -263,7 +263,9 @@ def _trim_skids(sk, recv, clip=None):
     sk = [(m - recv) if clip is None else (m ^ clip) - recv for m in sk]
     plate, bp, bn, tail, tbp, tbn = sk
     big = lambda m: max(m.decompose(), key=lambda p: p.volume())     # drop the boolean's zero-volume shards
-    return [big(U(plate, bp, bn)), big(U(tail, tbp, tbn))]
+    zo, zt_ = plate.bounding_box()[5], tail.bounding_box()[2]       # plate outer faces: the bars end flush (bed face)
+    nose = big(U(plate, bp, bn) ^ box(-500, 500, -500, 500, -500, zo))
+    return [nose, big(U(tail, tbp, tbn) ^ box(-500, 500, -500, 500, zt_, 500))]
 
 def recv_skids(g, r, moving=()):
     """receiver TPU skids (Scout only), cartridge coords: [nose plate, nose bar +x, nose bar -x, tail plate, tail bar +x,
@@ -1220,10 +1222,10 @@ PIECES = {   # name: (getter, material, print pose (c -> print), count, version,
     "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, "v6", "closed end (z 0) down"),
     "cart_strip": (lambda B: B["cstrips"][0] if B.get("cstrips") else None, "TPU", _rot("x", 90), 2, "v1",
                    "foot down (one part, both sides)"),
-    "rskid_nose": (lambda B: B["rskids"][0] if B.get("rskids") else None, "TPU", np.eye(4), 1, "v2",
-                   "wall face down, the bars on tree supports"),
+    "rskid_nose": (lambda B: B["rskids"][0] if B.get("rskids") else None, "TPU", _rot("y", 180), 1, "v2",
+                   "plate's outer face down, the bars on tree supports"),
     "rskid_tail": (lambda B: B["rskids"][1] if B.get("rskids") else None, "TPU", np.eye(4), 1, "v1",
-                   "wall face down, the chamfer and bars on tree supports"),
+                   "plate's outer face down, the chamfer and bars on tree supports"),
     "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v6", "bar top (y 11.5) down: largest face, bar layers along its length"),
     "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, {"scout": "v3", "overseer": "v2"},
                  "mount plane (deck top) down: layers across the install axis"),
