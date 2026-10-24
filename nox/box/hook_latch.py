@@ -1,4 +1,5 @@
-"""Box hook latch v1 (23 Oct 2026, Spark: "a hooked latch, not a steel belly, no magnets").
+"""Box hook latch v2 (24 Oct 2026; v1 23 Oct, Spark: "a hooked latch, not a steel belly, no magnets"). v2: built on the funnel
+panel v7 skin 2.0 (guide top w -2.3, flange w -9.0..-13.0), everything else as v1.
 
 Holds the seated drone down against the XT60 insert push (dimensions I "XT60 mate": 60 N E) during the swap and lets it
 go for takeoff. Replaces the electromagnet and the steel belly plate. Four units, one behind each catch wheel on the two
@@ -14,7 +15,7 @@ plunger axis; u up the slope, w out of the face into the mouth, v along the face
 right-handed); unit B is A mirrored in v (the other half of the same face). Housing A sits on panel half x > 0 of the
 +y face and on x < 0 of the -y face; B on the other two.
 
-python3 nox/box/hook_latch.py            -> placement search, parts, checks, runs/hook_latch/v1/ (STLs, result.json)
+python3 nox/box/hook_latch.py            -> placement search, parts, checks, runs/hook_latch/<VER>/ (STLs, result.json)
 python3 nox/box/hook_latch.py --motion   -> + motion.html / .mp4 / .gif / .png
 """
 import json, math, os, sys
@@ -23,13 +24,14 @@ import numpy as np, trimesh, manifold3d as mf
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path[:0] = [os.path.join(ROOT, "nox"), os.path.join(HERE, "catch_v4")]
-OUT = os.path.join(ROOT, "runs", "hook_latch", "v1"); os.makedirs(OUT, exist_ok=True)
+VER = "v2"                             # v2 (24 Oct): panel v7 skin 2.0 (v1 was built on the v6 skin 1.6)
+OUT = os.path.join(ROOT, "runs", "hook_latch", VER); os.makedirs(OUT, exist_ok=True)
 S2 = math.sqrt(2.0)
 
 # ---------------------------------------------------------------- collar and wheel (dimensions G; funnel_panel.py, C)
 K0, ZB, ZT = 82.7, 1.3, 77.2           # contact face y = K0 + z on the +y face; bottom / top edge z (C, funnel_panel)
 T_TOP = (ZT - ZB) * S2                 # slope length bottom edge -> rim, 107.3 (C)
-SKIN = 1.6                             # panel skin (C, rib_mask.json ts)
+SKIN = 2.0                             # panel v7 skin (C, dimensions G "Funnel panel v7"; v6 was 1.6)
 ROD_OUT, ROD_OFF = 112.0, 4.0          # lower-ring rod centre on the guard outline, 4.0 off the face when seated:
                                        # rod r 1.5 + wheel rim 2.5 proud (dimensions G Catch wheels, v4 set, C)
 R_WHEEL = (4.0, 5.0)                   # v3.2 printed R 4 / v4 set R 5 (G, C); the latch is set by the larger
@@ -467,11 +469,11 @@ def main(motion=False):
     hA = P["housing"]; hB = P["housing"].mirror([0, 1, 0])
     # housing A print pose: v- face down -> rotate so +v is +z
     RA = np.array([[1, 0, 0, 0], [0, 0, -1, 0], [0, 1, 0, 0], [0, 0, 0, 1.0]])   # (u, v, w) -> (u, -w, v)
-    tA = to_tm(hA, RA); tA.apply_translation(-tA.bounds[0]); tA.export(os.path.join(OUT, "box_hook_latch_housing_A_v1.stl"))
+    tA = to_tm(hA, RA); tA.apply_translation(-tA.bounds[0]); tA.export(os.path.join(OUT, f"box_hook_latch_housing_A_{VER}.stl"))
     RB = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, 0], [0, 0, 0, 1.0]])   # mirrored copy: its v+ face down
-    tB = to_tm(hB, RB); tB.apply_translation(-tB.bounds[0]); tB.export(os.path.join(OUT, "box_hook_latch_housing_B_v1.stl"))
+    tB = to_tm(hB, RB); tB.apply_translation(-tB.bounds[0]); tB.export(os.path.join(OUT, f"box_hook_latch_housing_B_{VER}.stl"))
     RP = np.array([[0, 0, -1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1.0]])   # plunger: u- (downhill, contact) face on the bed
-    tP = to_tm(P["plunger"], RP); tP.apply_translation(-tP.bounds[0]); tP.export(os.path.join(OUT, "box_hook_latch_plunger_v1.stl"))
+    tP = to_tm(P["plunger"], RP); tP.apply_translation(-tP.bounds[0]); tP.export(os.path.join(OUT, f"box_hook_latch_plunger_{VER}.stl"))
     # seat-frame copies for the fit check
     mass = dict(housing_g=round(vol(hA) * 1.27e-3, 2), plunger_g=round(vol(P["plunger"]) * 1.27e-3, 2))
     mass["set_of_4_g"] = round(4 * (mass["housing_g"] + mass["plunger_g"]), 1)
@@ -490,7 +492,7 @@ def main(motion=False):
         T, mir = unit_frame(fs, xs)
         hm = to_mf(hA, T)
         fit[name]["housing_vs_collar_v6_mm3"] = round(vol(hm ^ collar), 1)   # v6 ribs in the way: the panel v7 window
-    res = dict(part="hook_latch", version="v1", best=best, search=rows, layout={k: (round(v, 3) if isinstance(v, float) else v) for k, v in lay.items()},
+    res = dict(part="hook_latch", version=VER, best=best, search=rows, layout={k: (round(v, 3) if isinstance(v, float) else v) for k, v in lay.items()},
                plunger=dict(L=round(P["L_pl"], 2), u0_on_slope=round(U0, 2), t_contact=round(T_C, 2), rise=RISE,
                             guide_bottom=round(P["g_bot"], 2), pin_retracted=round(P["pin_lo"], 2), pin_extended=round(P["pin_hi"], 2)),
                bolts_uv=[(round(a, 2), round(b, 2)) for a, b in P["bolts"]], flange=dict(u=[round(x, 2) for x in P["u_range"]], v=[round(x, 2) for x in P["v_range"]], w=[W_FL1, W_FL0]),
@@ -515,7 +517,7 @@ CLOSE_EYE, CLOSE_TGT = (150, 70, 75), (100, 118, 38)       # inside the mouth by
 
 def make_motion(lay, P, hA, hB, D, collar):
     from motion import Scene
-    sc = Scene("Box hook latch v1", "4 plungers behind the seated faces hold the drone through the XT60 swap")
+    sc = Scene(f"Box hook latch {VER}", "4 plungers behind the seated faces hold the drone through the XT60 swap")
     # collar with the v7 spec (skin windows + bosses)
     col = collar
     for name, fs, xs in UNITS:
