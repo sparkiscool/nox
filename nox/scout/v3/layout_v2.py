@@ -429,7 +429,7 @@ def candidate_nodes():
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
-    for x, y in ([] if os.environ.get("NOKEEL", "1") == "1" else    # v5 DEFAULT: no cage keel, the swap set's own TPU skids take the
+    for x, y in ([] if os.environ.get("NOKEEL", "1") == "1" else    # v5 DEFAULT no cage keel: a node (r 4) cannot fit under receiver v2
                  [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # bottom   # y 29.6 (was 28.5): outboard of the
                                                                                                # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
