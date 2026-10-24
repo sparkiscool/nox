@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (battery latch worker): **battery latch v1**, one squeeze latch for every pack (concept B of 5; review FAIL x6 fixed): cartridge v5 + sliders, receiver block v1 (drone + bays), Scout 87.9 g (was 122.3), collar 7.00, FE crash 0.36 / 0.44; grabber interface in dimensions "System box swap: latch"; `box/battery-latch.md`. DEFAULT: hall seat check, 15° undercut.
 - 24 Oct (workflow chat, Spark: "just use assumed numbers for all those"): strength / XT60 calibration tests dropped; coupons HOLD (files kept), `dimensions.md` T factors 1.0 (E) stand, Spark Tests line trimmed.
 - 24 Oct (workflow chat, Spark: weight is a soft limit, never sacrifice design for weight): system_check `mass_budget_g` / `budget_g` never FAIL or change the exit code; System line keeps "mass <g> of <budget> g (<pct> %)" + "over budget (...)", report adds a WARN line.
 - 24 Oct (workflow chat, Spark: "weight a soft limit, as low as we can, never sacrifice design for weight"): mass budget soft: reported + warned, never a gate; CLAUDE.md design list item 1, dimensions L, review check 7 (FAIL only if lightening broke a target), generative mass target.
