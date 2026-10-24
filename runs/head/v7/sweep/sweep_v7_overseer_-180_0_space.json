@@ -8,30 +8,6 @@
  "overlaps": {},
  "closest": [
   [
-   "fingA_A",
-   "headA",
-   0.0,
-   0.0
-  ],
-  [
-   "fingB_A",
-   "headA",
-   0.0,
-   0.0
-  ],
-  [
-   "fingA_B",
-   "headB",
-   0.0,
-   0.0
-  ],
-  [
-   "fingB_B",
-   "headB",
-   0.0,
-   0.0
-  ],
-  [
    "headA",
    "pack charged",
    0.5,
@@ -102,6 +78,24 @@
    "rec0",
    1.0,
    17.9
+  ],
+  [
+   "fingA_A",
+   "headA",
+   1.002,
+   1.0
+  ],
+  [
+   "fingB_A",
+   "headA",
+   1.002,
+   1.0
+  ],
+  [
+   "fingA_B",
+   "headB",
+   1.002,
+   1.0
   ]
  ]
 }
