@@ -31,7 +31,7 @@ if SYS_PICK:
     for row in _LV["table"]:
         if row["feasible"] and {k for k, v in row["topo"].items() if v and k not in co.FIXED_ON} == want:
             CAGE_TOPO, CAGE_SIZES = row["topo"], row["sizes"]; break
-TIP_OFF = 0.0                            # the pack and catch on the thrust axis (balance rule: CG ≤ 3 mm pack in and out)
+TIP_OFF = float(os.environ.get("SYS_TIP_OFF", "0"))     # pack / catch centre behind the thrust axis: 0 = the balance rule (CG ≤ 3 mm pack in and out)
 NOSE_GROUPS = ("nose", "nose_x", "nose_mount")                      # thin rods allowed in the L2 field (blocked share reported)
 
 
@@ -590,7 +590,7 @@ say(f"PX4 flow position from the CG (FRD, m): x {FLOW_POS[0]:+.3f}, y {FLOW_POS[
     f"IMU (FC centre) from the CG: x {(0 - cg[0]) / 1000:+.3f}, z {-(9.75 - cg[2]) / 1000:+.3f}")
 
 # ---------------------------------------------------------------- motion artifact + run record
-s = Scene("Overseer cage v1", f"optimized cage (frame model): L2 mode {FRAME['f_l2']:.0f} Hz, 1 m/s hits ≤ {hits[wd]['defl']:.1f} mm, tip-over ≥ {min(tips.values()):.0f} deg; motors {dm:.0f} ahead of the plates")
+s = Scene("Overseer system v1", f"full cage (frame model): L2 mode {FRAME['f_l2']:.0f} Hz, crash {co.CRASH_G:.0f} g, tip-over ≥ {min(tips.values()):.0f} deg; pack {TIP_OFF:.0f} behind the thrust axis, motors {dm:.0f} ahead of the plates")
 P = lambda n, m, grp, c, pr, note="": s.part(n, m, group=grp, color=c, printed=pr, note=note)
 
 
