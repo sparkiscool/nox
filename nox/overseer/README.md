@@ -32,12 +32,12 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel and the box swaps its pack.
 
 ### Parts to draw (order DEFAULT)
-0. **Printed arms** (Spark 23 Oct; wheelbase, root height and modes in `dimensions.md` O Arms and hub, sweep `arm_reach.py`): the gap between adjacent prop tips is what the arms take back; wheelbase, tip gap and span in `dimensions.md` O Frame / Props. Strength is easy; stiffness is the gate: PETG is a few times softer than the stock glass-nylon arms (E), so a deep box section tapering out to the motor, first bending and torsion modes clear of the motor speed band (frame model), and the L2 kept above the prop tips' plane by its -6° lower edge. Tall root between the plates (Spark 23 Oct): the arm roots set the plate gap, so the hub becomes the electronics bay and the deep root stiffens the arm. Plate interface from the S500 STEP (`s500/`, `dimensions.md` M S500 row). Row in `nox/current-parts.md`.
-1. Lidar + front camera mount (DESIGN row in `nox/current-parts.md`), reusing the scan stick head's L2 pads and camera block where they fit.
-2. Pi 5 + UBEC / 12 V buck deck, inside the hub between the plates (Spark 23 Oct).
-3. Underside camera mount.
-4. Belly frame for the catch: 8 PETG wheels at the Scout's points, steel belly plate, pogo pads (`dimensions.md` G Catch interface).
-5. Overseer cartridge + latch block for the bays; it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
+Layout v0 (24 Oct, Spark: no cage, everything between the two plates, L2 on top, down camera + flow at the bottom, battery centred under): `layout_v0.py`, `dimensions.md` O Layout v0.
+0. **Printed arms** (Spark 23 Oct; wheelbase, root height and modes in `dimensions.md` O Arms and hub, sweep `arm_reach.py`): tall root between the plates, plate interface from the S500 STEP (`s500/`, `dimensions.md` M S500 row), the catch wheel pair on a short leg under each arm (layout v0, DEFAULT). Row in `nox/current-parts.md`.
+1. L2 mast + front camera: spider on the arm-top screws, column, L2 seat at z 125, camera 30° up on the column face, reusing the scan stick head's L2 pads and camera block where they fit.
+2. Pi deck between the plates (4 posts over the FC stack).
+3. Belly sled: pack cartridge slot centred under the bottom plate, down camera pod and flow pod beside it, 4 TPU feet.
+4. Overseer cartridge + latch block for the bays; it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
 
 ### Open for Spark (DEFAULT in brackets, work goes on)
 - Centre plate arm bolt pattern and motor centres, measured (P) [generic S500].
