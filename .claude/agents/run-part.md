@@ -11,7 +11,7 @@ You run exactly one heavy job for one part. Other `run-part` workers may run bes
 
 Engine: generated parts use `nox/topo` (`docs/generative.md` How-to), organic finish, never `noxopt`. Do not edit `nox/topo` from a run session; report an engine problem instead.
 
-System first (`docs/generative.md` The rule, 0): the run designs the system or uses its solve (joint reactions as loads, neighbours as drawn bodies), and `summary.md` reports the assembled check beside the piece's own.
+System first (`docs/generative.md` The rule, 0): the run's loads, supports and targets are the piece requirements in `dimensions.md` "System <name>" (joint reactions per case, neighbour interfaces, stiffness and worst index needed), and `summary.md` reports the assembled recheck beside the piece's own. No requirements section: stop and report; do not invent loads.
 
 Inputs you are given: part name, version, the part script path, the system model script, and any numbers (tagged). If a number is missing, take the value in `nox/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
 
