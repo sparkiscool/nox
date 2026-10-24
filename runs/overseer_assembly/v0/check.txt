@@ -1,0 +1,159 @@
+Overseer (overseer): 45 parts
+  name                               role      geometry  tag   mass_g  extents mm             owner / version
+  bottom plate                       bought    mesh      E       61.0  196x118x2              overseer layout v2 / cage v0
+  top plate                          bought    mesh      E       23.0  120x120x2              overseer layout v2 / cage v0
+  arm 1                              structure mesh      E      171.1  183x131x45             overseer layout v2 / cage v0
+  arm 2                              structure mesh      E       86.3  79x131x45              overseer layout v2 / cage v0
+  arm 3                              structure mesh      E       86.3  79x131x45              overseer layout v2 / cage v0
+  arm 4                              structure mesh      E      171.1  183x131x45             overseer layout v2 / cage v0
+  motor 1                            bought    cylinder  E       81.0  28x28x26               overseer layout v2 / cage v0 P
+  motor 2                            bought    cylinder  E       81.0  28x28x26               overseer layout v2 / cage v0 P
+  motor 3                            bought    cylinder  E       81.0  28x28x26               overseer layout v2 / cage v0 P
+  motor 4                            bought    cylinder  E       81.0  28x28x26               overseer layout v2 / cage v0 P
+  prop 1                             bought    cylinder  E       10.0  254x254x1              overseer layout v2 / cage v0 P
+  prop 2                             bought    cylinder  E       10.0  254x254x1              overseer layout v2 / cage v0 P
+  prop 3                             bought    cylinder  E       10.0  254x254x1              overseer layout v2 / cage v0 P
+  prop 4                             bought    cylinder  E       10.0  254x254x1              overseer layout v2 / cage v0 P
+  cage upper                         cage      mesh      E       80.7  570x570x92             overseer layout v2 / cage v0
+  cage lower                         cage      mesh      E       13.6  237x244x64             overseer layout v2 / cage v0
+  wheel 1                            cage      cylinder  E        0.2  10x3x10                overseer layout v2 / cage v0
+  wheel 2                            cage      cylinder  E        0.2  3x10x10                overseer layout v2 / cage v0
+  wheel 3                            cage      cylinder  E        0.2  10x3x10                overseer layout v2 / cage v0
+  wheel 4                            cage      cylinder  E        0.2  3x10x10                overseer layout v2 / cage v0
+  wheel 5                            cage      cylinder  E        0.2  10x3x10                overseer layout v2 / cage v0
+  wheel 6                            cage      cylinder  E        0.2  3x10x10                overseer layout v2 / cage v0
+  wheel 7                            cage      cylinder  E        0.2  10x3x10                overseer layout v2 / cage v0
+  wheel 8                            cage      cylinder  E        0.2  3x10x10                overseer layout v2 / cage v0
+  apex                               cage      mesh      E       23.1  260x100x89             overseer layout v2 / cage v0
+  cam bracket                        structure mesh      E        4.4  13x40x78               overseer layout v2 / cage v0
+  Pi deck                            structure mesh      E        7.6  89x60x22               overseer layout v2 / cage v0
+  belly sled + pods                  structure mesh      E      101.1  120x144x72             overseer layout v2 / cage v0
+  foot 1                             structure cylinder  E        0.7  10x10x13               overseer layout v2 / cage v0
+  foot 2                             structure cylinder  E        0.7  10x10x13               overseer layout v2 / cage v0
+  foot 3                             structure cylinder  E        0.7  10x10x13               overseer layout v2 / cage v0
+  foot 4                             structure cylinder  E        0.7  10x10x13               overseer layout v2 / cage v0
+  cartridge                          protected box       E       33.5  157x54x78              overseer layout v2 / cage v0 S
+  pack                               bought    box       E      650.0  148x48x45              overseer layout v2 / cage v0 PS
+  Unitree L2                         bought    mesh      E      230.0  74x75x83               overseer layout v2 / cage v0 P
+  front camera                       bought    mesh      E       15.0  10x38x38               overseer layout v2 / cage v0 P
+  down camera                        bought    mesh      E       15.0  38x38x10               overseer layout v2 / cage v0 P
+  flow MTF-02P                       bought    box       E        2.0  22x16x6                overseer layout v2 / cage v0 P
+  Pi 5                               bought    box       E       55.0  85x56x20               overseer layout v2 / cage v0 P
+  FC                                 bought    box       E       10.0  36x36x18               overseer layout v2 / cage v0 P
+  PDB                                bought    box       E       21.0  50x50x6                overseer layout v2 / cage v0 P
+  UBEC                               bought    box       E       15.0  48x24x10               overseer layout v2 / cage v0 P
+  buck                               bought    box       E        6.0  18x18x6                overseer layout v2 / cage v0 P
+  RX                                 bought    box       E        2.0  12x12x6                overseer layout v2 / cage v0 P
+  wires                              bought    box       E       80.0  36x36x18               overseer layout v2 / cage v0
+  flags: P protect, S swap, K moves
+system_check Overseer: FAIL
+  cage first FAIL: worst -62.35 mm (E) at (+0.95, +0.02, -0.32) on Unitree L2 (needs 3.0), 2006 dirs
+    motor 1: min margin 27.0 mm, outside openings 27.0, slack 24.0 at +Z
+    motor 2: min margin 27.0 mm, outside openings 27.0, slack 24.0 at +Z
+    motor 3: min margin 27.0 mm, outside openings 27.0, slack 24.0 at +Z
+    motor 4: min margin 27.0 mm, outside openings 27.0, slack 24.0 at +Z
+    prop 1: min margin 15.5 mm, outside openings 15.5, slack 12.5 at +Z
+    prop 2: min margin 15.5 mm, outside openings 15.5, slack 12.5 at +Z
+    prop 3: min margin 15.5 mm, outside openings 15.5, slack 12.5 at +Z
+    prop 4: min margin 15.5 mm, outside openings 15.5, slack 12.5 at +Z
+    cartridge: min margin -37.0 mm, outside openings -37.0, slack -40.0 at -Z FAIL
+    pack: min margin -35.0 mm, outside openings -35.0, slack -38.0 at -Z FAIL
+    Unitree L2: min margin -62.35 mm, outside openings -62.35, slack -65.35 at (+0.95, +0.03, -0.32) FAIL
+    front camera: min margin -51.24 mm, outside openings -51.24, slack -54.24 at +Z FAIL
+    down camera: min margin -41.0 mm, outside openings -41.0, slack -44.0 at -Z FAIL
+    flow MTF-02P: min margin -37.5 mm, outside openings -37.5, slack -40.5 at -Z FAIL
+    Pi 5: min margin 56.0 mm, outside openings 56.0, slack 53.0 at +Z
+    FC: min margin 44.0 mm, outside openings 44.0, slack 41.0 at -Z
+    PDB: min margin 43.5 mm, outside openings 43.5, slack 40.5 at -Z
+    UBEC: min margin 50.5 mm, outside openings 50.5, slack 47.5 at -Z
+    buck: min margin 50.5 mm, outside openings 50.5, slack 47.5 at -Z
+    RX: min margin 50.5 mm, outside openings 50.5, slack 47.5 at -Z
+  compact: bbox 85.68 L (E), hull 39.39 L (E), extents [633.6, 570.0, 237.2] mm (E), largest 633.6 mm, guards {'guard rods to prop disks, plan (G)': 12.0}
+  fit FAIL (tol 0.5 mm³):
+    bottom plate / arm 1: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 2: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 3: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 4: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / apex: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 1: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 2: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 3: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 4: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / apex: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 1 / motor 1: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 1 / cage upper: 186.97 mm³ (E) limit inf contact [manifold3d]
+    arm 1 / cage lower: 2.92 mm³ (E) limit inf contact [manifold3d]
+    arm 2 / motor 2: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 2 / cage upper: 141.18 mm³ (E) limit inf contact [manifold3d]
+    arm 2 / cage lower: 28.25 mm³ (E) limit inf contact [manifold3d]
+    arm 3 / motor 3: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 3 / cage upper: 141.18 mm³ (E) limit inf contact [manifold3d]
+    arm 3 / cage lower: 28.25 mm³ (E) limit inf contact [manifold3d]
+    arm 4 / motor 4: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 4 / cage upper: 186.97 mm³ (E) limit inf contact [manifold3d]
+    arm 4 / cage lower: 2.92 mm³ (E) limit inf contact [manifold3d]
+    cage upper / apex: 188.98 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 1: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 2: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 3: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 4: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 5: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 6: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 7: 71.07 mm³ (E) limit inf contact [manifold3d]
+    cage lower / wheel 8: 71.07 mm³ (E) limit inf contact [manifold3d]
+    apex / cam bracket: 19.28 mm³ (E) limit inf contact [manifold3d]
+    apex / Unitree L2: 0.0 mm³ (E) limit inf contact [manifold3d]
+    Pi deck / Pi 5: 0.0 mm³ (E) limit inf contact [aabb]
+    belly sled + pods / cartridge: 19375.2 mm³ (E) limit 0.5 [manifold3d] FAIL
+    cartridge / pack: 319680.0 mm³ (E) limit inf contact [manifold3d]
+    FC / wires: 22680.0 mm³ (E) limit inf contact [manifold3d]
+  mass 2332.28 g (E), CG [51.95, 1.06, 6.9], offset [-0.15, 1.06, -75.1] = 75.11 mm from [52.099, 0.0, 82.0]
+    bottom plate: 61.0 g (E) at [0.16, -0.3, -1.1]
+    top plate: 23.0 g (E) at [-0.66, 0.0, 45.75]
+    arm 1: 171.11 g (E) at [115.64, 91.04, 24.09]
+    arm 2: 86.28 g (E) at [-64.06, 86.01, 26.38]
+    arm 3: 86.28 g (E) at [-64.06, -86.01, 26.38]
+    arm 4: 171.11 g (E) at [115.64, -91.04, 24.09]
+    motor 1: 81.0 g (E) at [191.6, 139.5, 58.0]
+    motor 2: 81.0 g (E) at [-87.4, 139.5, 58.0]
+    motor 3: 81.0 g (E) at [-87.4, -139.5, 58.0]
+    motor 4: 81.0 g (E) at [191.6, -139.5, 58.0]
+    prop 1: 10.0 g (E) at [191.6, 139.5, 82.0]
+    prop 2: 10.0 g (E) at [-87.4, 139.5, 82.0]
+    prop 3: 10.0 g (E) at [-87.4, -139.5, 82.0]
+    prop 4: 10.0 g (E) at [191.6, -139.5, 82.0]
+    cage upper: 80.69 g (E) at [56.72, 0.0, 69.11]
+    cage lower: 13.56 g (E) at [-33.36, 0.0, -31.69]
+    wheel 1: 0.25 g (E) at [82.0, 100.0, -38.0]
+    wheel 2: 0.25 g (E) at [70.0, 112.0, -38.0]
+    wheel 3: 0.25 g (E) at [82.0, -100.0, -38.0]
+    wheel 4: 0.25 g (E) at [70.0, -112.0, -38.0]
+    wheel 5: 0.25 g (E) at [-142.0, 100.0, -38.0]
+    wheel 6: 0.25 g (E) at [-130.0, 112.0, -38.0]
+    wheel 7: 0.25 g (E) at [-142.0, -100.0, -38.0]
+    wheel 8: 0.25 g (E) at [-130.0, -112.0, -38.0]
+    apex: 23.07 g (E) at [299.24, 0.0, 46.6]
+    cam bracket: 4.36 g (E) at [324.94, 0.0, 118.72]
+    Pi deck: 7.59 g (E) at [0.0, 0.0, 19.82]
+    belly sled + pods: 101.08 g (E) at [-30.0, 17.61, -30.9]
+    foot 1: 0.65 g (E) at [38.0, 34.0, -80.5]
+    foot 2: 0.65 g (E) at [38.0, -34.0, -80.5]
+    foot 3: 0.65 g (E) at [-98.0, 34.0, -80.5]
+    foot 4: 0.65 g (E) at [-98.0, -34.0, -80.5]
+    cartridge: 33.55 g (E) at [-30.0, 0.0, -41.05] swap
+    pack: 650.0 g (E) at [-30.0, 0.0, -55.5] swap
+    Unitree L2: 230.0 g (E) at [363.67, 0.0, 45.95]
+    front camera: 15.0 g (E) at [327.73, -0.0, 130.24]
+    down camera: 15.0 g (E) at [-30.0, 49.0, -76.25]
+    flow MTF-02P: 2.0 g (E) at [-30.0, -42.0, -77.25]
+    Pi 5: 55.0 g (E) at [0.0, 0.0, 32.25]
+    FC: 10.0 g (E) at [0.0, 0.0, 9.75]
+    PDB: 21.0 g (E) at [-70.0, 0.0, 3.5]
+    UBEC: 15.0 g (E) at [-71.0, 12.0, 12.5]
+    buck: 6.0 g (E) at [-71.0, -15.0, 10.5]
+    RX: 2.0 g (E) at [-89.0, -16.0, 10.5]
+    wires: 80.0 g (E) at [0.0, 0.0, 9.75]
+  balance FAIL (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
+    all: 1.07 mm horizontal, -75.1 mm axial, 2332.28 g
+    no_swap: 33.86 mm horizontal, -49.52 mm axial, 1648.73 g FAIL
+System: Overseer, cage first -62.4 mm (E) at (+0.95, +0.02, -0.32) (Unitree L2) FAIL, fit 19375.2 mm³ (E) (belly sled + pods/cartridge) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2332 g (E), CG 1.1 mm off thrust axis (E) [-0.1, +1.1, -75.1], 33.9 mm without swap parts FAIL (tol 3)

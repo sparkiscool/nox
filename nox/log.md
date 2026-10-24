@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (workflow chat): **assembly.py**: one assembly file per system (`nox/<machine>/<system>.assembly.json`, system_check format + owner, version, source, moves), every tool reads it; seeded Overseer (cage v0), box catch (panels v6 + hook latch v1), Scout v3 skeleton; `nox/ASSEMBLY.md`.
 - 24 Oct (workflow chat): **CI** `.github/workflows/checks.yml` on every PR: state, tests (topo stays local), solid_check on changed print/*.stl, log lines ≤ 400. `tools/pr.py merge` refuses on red CI, waits ≤ 15 min on pending. solid_check: noxopt-free voxeliser (contains fallback ran OOM).
 - 24 Oct (workflow chat, Spark: an organisation agent that runs without me): **organiser** `docs/organiser.md`: every 6 h into the workflow session (tagged keep; fresh sessions lack the repo and session tools), light pass (sweep, check_state, board) + daily full pass (rules in one place, ownership, stale work, weight, log).
 - 24 Oct (workflow chat, Spark: no status updates from running parts, one session reports every ~30 min): **quiet workers, one reporter**: hub = control session, digest every 30 min only on change, board refresh; `tools/board_data.py` + Nox Board dashboard; CLAUDE.md, sessions.md, /part, run-part.
