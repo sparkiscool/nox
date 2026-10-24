@@ -106,3 +106,13 @@ it  27 beta    8 J  55.2226 vol 0.1006 (dil 0.2637 g -0.137) grey 15.1% ch 0.100
 it  28 beta    8 J  24.3811 vol 0.1194 (dil 0.2970 g -0.028) grey 16.7% ch 0.100 worst pad push 4.37e+04 22.0s
 it  29 beta    8 J  12.4936 vol 0.1248 (dil 0.2996 g -0.020) grey 16.8% ch 0.100 worst pad push 2.23e+04 21.4s
 it  30 beta    8 J   8.1164 vol 0.1297 (dil 0.3033 g -0.008) grey 16.8% ch 0.100 worst pad push 1.44e+04 21.3s
+it  31 beta    8 J   6.3897 vol 0.1323 (dil 0.3044 g +0.030) grey 16.8% ch 0.100 worst pad push 1.13e+04 22.6s
+it  32 beta    8 J   9.5156 vol 0.1246 (dil 0.2937 g -0.006) grey 16.4% ch 0.100 worst pad push 1.69e+04 21.2s
+it  33 beta    8 J   8.1661 vol 0.1262 (dil 0.2949 g -0.002) grey 16.3% ch 0.100 worst pad push 1.44e+04 20.7s
+it  34 beta    8 J   7.6182 vol 0.1269 (dil 0.2951 g -0.001) grey 16.3% ch 0.100 worst pad push 1.34e+04 22.0s
+it  35 beta    8 J   7.2593 vol 0.1274 (dil 0.2952 g -0.001) grey 16.2% ch 0.100 worst pad push 1.28e+04 22.5s
+it  36 beta    8 J   6.9958 vol 0.1277 (dil 0.2952 g +0.026) grey 16.2% ch 0.100 worst pad push 1.23e+04 21.6s
+it  37 beta    8 J  12.6354 vol 0.1192 (dil 0.2862 g -0.005) grey 16.0% ch 0.100 worst pad push 2.26e+04 22.0s
+it  38 beta    8 J  10.8635 vol 0.1208 (dil 0.2874 g -0.001) grey 16.1% ch 0.100 worst pad push 1.92e+04 22.0s
+it  39 beta    8 J  10.5242 vol 0.1211 (dil 0.2875 g -0.000) grey 16.0% ch 0.100 worst pad push 1.87e+04 22.5s
+it  40 beta    8 J  10.3342 vol 0.1213 (dil 0.2876 g -0.000) grey 16.0% ch 0.100 worst pad push 1.83e+04 21.6s
