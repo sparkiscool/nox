@@ -1,0 +1,8 @@
+{
+ "name": "scan_stick_unit",
+ "status": "FAILED",
+ "note": "worst 2.00 at the joint keyways; gate FAIL on both pieces (slivers on tilted keep-outs)",
+ "mass_g": 455.12,
+ "worst_index": 2.005,
+ "date": "2026-10-24"
+}
