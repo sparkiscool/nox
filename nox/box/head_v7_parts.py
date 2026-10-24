@@ -4,7 +4,7 @@
     on the spring rod (bore 3.5);
   - cam (PETG): the two-fold profile (base 4.0, lobe 10.5), 6 thick, on a clamping metal 25T disc horn (radial clamp screw), 2 x M2.5 x 10
     at r 7 in the lobes, M2.5 (horn hole pattern E, CHECK on hand: drill the horn if its holes differ);
-  - rack bar (PETG): the m1 rack (tips X 46.5, root 44.25), 4.25 x 14 x 93 (A) / 84 (B), printed on its Y 73.25 face (tooth profile in
+  - rack bar (PETG): the m1 rack (tips X 46.5, root 44.25), 5.0 x 14 x 93 (A) / 84 (B), printed on its Y 73.25 face (tooth profile in
     the layers), epoxied along its back face into the body's web (arm_v5_cad tooth phase).
 Head B uses the same printed parts mirrored (its carriers are A's turned over: carrier +X of B = mirror of A's, printed as the mirror).
 python3 head_v7_parts.py [A|B] -> runs/head/v7/parts/<name>.stl (head frame) and runs/head/v7/parts/print/<name>.stl (print pose),

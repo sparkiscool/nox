@@ -55,7 +55,7 @@ def drawn_and_cuts():
         w += box(a, b, H.SPRING_ROD["y"] - 4.5, H.SPRING_ROD["y"] + 4.5, H.SPRING_ROD["u"] - 3.5, H.SPRING_ROD["u"] + 4.0)
         walls = w if walls is None else walls + w
     pads, pad_cuts = H.cradle(SERVO)
-    drawn = plate + web + spine + ecc + deck + walls + pads + H.stops() + H.bed_land()
+    drawn = plate + web + spine + ecc + deck + walls + pads + H.stops() + H.bed_land() + H.tail_rib(SERVO)
     drawn = drawn + H.rack_bar(SERVO)          # the epoxied rack bar rides in the FE as bonded (13.5 x 93 glue line); removed from the print after
     # cuts
     cuts = []
@@ -90,7 +90,8 @@ def setup(h):
         b = cylY(x, u, H.PLATE["y"][0], H.PLATE["y"][1], r + 2.0) - cylY(x, u, H.PLATE["y"][0] - 1, H.PLATE["y"][1] + 1, r)
         bores = b if bores is None else bores + b
     # supports as the real interfaces (concept review r2): the wheels hold X and Y at their bores (they roll along u); the pinion holds
-    # u (its tangential force) and X (its separating force) on the bonded rack bar's teeth, over its patch in the case
+    # u (its tangential force) on the bonded rack bar's teeth over its patch in the case; its separating force (tangential x tan 20,
+    # toward -X) is a load in every case with a u component (concept review r3; system.json "rack on pinion A": 60.8 / 22.1 N)
     pp.support("_bores", bores)
     nb = pp.supports.pop("_bores"); cb = pp.support_cells.pop("_bores")
     for nm, pu in PIN_U.items():
@@ -99,9 +100,9 @@ def setup(h):
         nt = pp.supports.pop("_t"); ct = pp.support_cells.pop("_t")
         fx = np.zeros_like(nb)
         fx[nb.any(1), 0] = True; fx[nb.any(1), 1] = True
-        fx[nt.any(1), 0] = True; fx[nt.any(1), 2] = True
+        fx[nt.any(1), 2] = True                                              # the teeth hold u only; X is the wheels' (r3)
         pp.supports[nm] = fx; pp.support_cells[nm] = np.unique(np.concatenate([cb, ct]))
-        pp.log(f"  support {nm}: bores X Y, rack face u X at u {pu:.1f}")
+        pp.log(f"  support {nm}: bores X Y, rack teeth u at u {pu:.1f}")
     pads = None
     for s in (-1, 1):
         a, b = sorted((s * H.DECK["pad"]["x"][0], s * H.DECK["pad"]["x"][1]))
@@ -115,30 +116,46 @@ def setup(h):
             sock = c if sock is None else sock + c
     stopp = H.stops() ^ box(0, 40, 0, 300, -50, 50); stopm = H.stops() ^ box(-40, 0, 0, 300, -50, 50)
     L = H.LOADS
+    T20 = math.tan(math.radians(20.0))
+
+    def teeth(sup):                                                           # the rack teeth at the pinion in this case
+        pu = max(PIN_U[sup], web_u()[0] + 3)
+        return box(44.25, H.WEB["bar_x"][1], H.WEB["y"][0], H.WEB["teeth_y"][1], pu - 4.0, pu + 4.0)
+
+    def case(name, parts, cls, sup):                                          # + the pinion's separating force for the case's net u load
+        fu = sum(f[2] for _, f in parts)
+        if abs(fu) > 1e-6: parts = parts + [(teeth(sup), (-abs(fu) * T20, 0, 0))]
+        pp.load_multi(name, parts, cls=cls, support=sup)
+
     for where in (("drone", "insert at the drone"), ("bay", "insert at a bay")):
-        pp.load(f"{where[1]} 60 N [swap]", pads, (0, 0, -L["insert"]), cls=CLS["swap"], support=where[0])
-        pp.load(f"{where[1]}, stall 74 N [misuse]", pads, (0, 0, -L["stall"]), cls=CLS["misuse"], support=where[0])
-        pp.load(f"pull at the {where[0]} 57.3 N while the XT60 unmates [swap]", sock, (0, 0, L["pull_unmate"]), cls=CLS["swap"], support=where[0])
+        case(f"{where[1]} 60 N [swap]", [(pads, (0, 0, -L["insert"]))], CLS["swap"], where[0])
+        case(f"{where[1]}, stall 74 N [misuse]", [(pads, (0, 0, -L["stall"]))], CLS["misuse"], where[0])
+        case(f"pull at the {where[0]} 57.3 N while the XT60 unmates [swap]", [(sock, (0, 0, L["pull_unmate"]))], CLS["swap"], where[0])
     Ov = L["cart_g"]["overseer"] / 1000 * 9.81
     lever = 48.5 - H.U_BOT; cpl = 2 * Ov * lever / (2 * 18.25)                 # the 2 g lateral at the cartridge CG as a couple on the pads
     padp = box(H.DECK["pad"]["x"][0], H.DECK["pad"]["x"][1], *H.DECK["pad"]["y"], H.DECK["u"][1], H.DECK["pad"]["u_top"])
     padm = box(-H.DECK["pad"]["x"][1], -H.DECK["pad"]["x"][0], *H.DECK["pad"]["y"], H.DECK["u"][1], H.DECK["pad"]["u_top"])
+    yc = sum(H.DECK["pad"]["y"]) / 2
+    padf = pads ^ box(-50, 50, 0, yc, -50, 50); padb = pads ^ box(-50, 50, yc, 300, -50, 50)   # pad halves along Y
     for sx in (1, -1):
-        pp.load_multi(f"handling 3 g in + 2 g along {'+' if sx > 0 else '-'}X, Overseer cartridge carried [handling]",
-                      [(pads, (0, 0, -3 * Ov)), (stopm if sx > 0 else stopp, (sx * 2 * Ov, 0, 0)), (padp if sx > 0 else padm, (0, 0, -cpl)), (padm if sx > 0 else padp, (0, 0, cpl))],
-                      cls=CLS["handling"], support="park")
-    pp.load(f"handling 3 g out, Overseer cartridge carried (on the rods) [handling]", sock, (0, 0, 3 * Ov), cls=CLS["handling"], support="park")
+        case(f"handling 3 g in + 2 g along {'+' if sx > 0 else '-'}X, Overseer cartridge carried [handling]",
+             [(pads, (0, 0, -3 * Ov)), (stopm if sx > 0 else stopp, (sx * 2 * Ov, 0, 0)), (padp if sx > 0 else padm, (0, 0, -cpl)), (padm if sx > 0 else padp, (0, 0, cpl))],
+             CLS["handling"], "park")
+    case(f"handling 3 g out, Overseer cartridge carried (on the rods; along its CG line, no couple) [handling]", [(sock, (0, 0, 3 * Ov))], CLS["handling"], "park")
+    cy = 2 * Ov * (48.5 - H.RODS["u"]) / (yc - H.DECK["pad"]["y"][0])        # 2 g along Y at the CG (u 48.5) to the sockets (u 6.75): a couple on the pad halves
     for sy in (1, -1):
-        pp.load(f"handling 2 g along {'+' if sy > 0 else '-'}Y, Overseer cartridge carried (rib -> blades -> rods) [handling]", sock, (0, sy * 2 * Ov, 0),
-                cls=CLS["handling"], support="park")
+        case(f"handling 2 g along {'+' if sy > 0 else '-'}Y, Overseer cartridge carried (rib -> blades -> rods, couple on the pads) [handling]",
+             [(sock, (0, sy * 2 * Ov, 0)), (padb if sy > 0 else padf, (0, 0, -cy)), (padf if sy > 0 else padb, (0, 0, cy))], CLS["handling"], "park")
+    sockp = sock ^ box(0, 60, 0, 300, -50, 50); sockm = sock ^ box(-60, 0, 0, 300, -50, 50)
+    ca = 43.5 * (H.BLADE["rib"]["u"] - sum(H.STOP["u"]) / 2) / (2 * H.RODS["wall_out"])   # the rib (u 19.4) to the stop: a couple through the rods to the walls
     for sx in (1, -1):                                                        # the receiver's gaps closed: 43.5 N across (latch v2 load set)
         # +X on the cartridge pushes the -X carrier inward onto its stop, and the reverse
-        pp.load(f"across {'+' if sx > 0 else '-'}X 43.5 N at a seat, receiver gaps closed [swap]", stopm if sx > 0 else stopp, (sx * 43.5, 0, 0),
-                cls=CLS["swap"], support="bay")
+        case(f"across {'+' if sx > 0 else '-'}X 43.5 N at a seat, receiver gaps closed (+ rib-to-stop couple) [swap]",
+             [(stopm if sx > 0 else stopp, (sx * 43.5, 0, 0)), (sockp, (0, 0, -sx * ca)), (sockm, (0, 0, sx * ca))], CLS["swap"], "bay")
     cm = 1.05e3 / (2 * 18.25)                                                 # the lead-ins' centring 7.6 N / 1.05 N.m (arm position error, latch v2 load set)
     for sx in (1, -1):
-        pp.load_multi(f"centring {'+' if sx > 0 else '-'}X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
-                      [(stopm if sx > 0 else stopp, (sx * 7.6, 0, 0)), (padp, (0, 0, -sx * cm)), (padm, (0, 0, sx * cm))], cls=CLS["swap"], support="bay")
+        case(f"centring {'+' if sx > 0 else '-'}X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
+             [(stopm if sx > 0 else stopp, (sx * 7.6, 0, 0)), (padp, (0, 0, -sx * cm)), (padm, (0, 0, sx * cm))], CLS["swap"], "bay")
     # power cut carrying: the head brake is required (System box swap: arm, row Head brake): braked creep 7.8 mm/s puts 3 N on the bumper
     # (runs/arm/v7/system.json brake), under the handling cases; unbraked (409 / 630 N) is outside the design, gated by the brake self-test
     sv = H.SERVOS[SERVO]; T = sv["kgcm"] * 98.07; ye = H.Y_SERVO_TOP - sv["H"] + sv["ear_y"]
