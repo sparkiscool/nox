@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (workflow chat): **assembly.py**: one assembly file per system (`nox/<machine>/<system>.assembly.json`, system_check format + owner, version, source, moves), every tool reads it; seeded Overseer (cage v0), box catch (panels v6 + hook latch v1), Scout v3 skeleton; `nox/ASSEMBLY.md`.
 - 24 Oct (workflow chat, Spark: clean up sessions whose use is over, autonomously): `docs/sessions.md` lifecycle + sweep rules; CLAUDE.md rule; 10 finished idle sessions archived; scheduled sweep every 6 h (fresh session). DEFAULT idle 6 h before archive (alt 24 h).
 - 24 Oct (workflow chat, Spark: light, compact and accessible, cage first, balanced, mounted for what it carries): CLAUDE.md **Every drone design** ordered list 1-9 (6-9 added DEFAULT: sensor modes, breaking order, air / view / wiring, fits the box); `dimensions.md` L standard cases + targets; generative rule 0 mount rule; review check 4.
 - 24 Oct (workflow chat): **system_check.py**: one manifest of the assembled system (parts, poses, roles, openings, contact pairs) gates cage first (≥ 3 mm, 0 in openings), fit (≤ 0.5 mm³/pair), CG ≤ 3 mm off thrust axis with and without swap parts; reports bbox, extents, mass; System line.

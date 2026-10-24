@@ -1,0 +1,55 @@
+Box catch (box): 18 parts
+  name                               role      geometry  tag   mass_g  extents mm             owner / version
+  funnel panel A +x                  structure mesh      M      (vol)  84x171x78              box catch v6
+  funnel panel B +x                  structure mesh      M      (vol)  84x168x78              box catch v6
+  funnel panel A +y                  structure mesh      M      (vol)  171x84x78              box catch v6
+  funnel panel B +y                  structure mesh      M      (vol)  168x84x78              box catch v6
+  funnel panel A -x                  structure mesh      M      (vol)  84x171x78              box catch v6
+  funnel panel B -x                  structure mesh      M      (vol)  84x168x78              box catch v6
+  funnel panel A -y                  structure mesh      M      (vol)  171x84x78              box catch v6
+  funnel panel B -y                  structure mesh      M      (vol)  168x84x78              box catch v6
+  latch housing +y_x+                structure mesh      M      (vol)  50x52x48               box catch v1
+  latch plunger +y_x+                structure mesh      M      (vol)  12x27x28               box catch v1 K
+  latch housing +y_x-                structure mesh      M      (vol)  50x52x48               box catch v1
+  latch plunger +y_x-                structure mesh      M      (vol)  12x27x28               box catch v1 K
+  latch housing -y_x+                structure mesh      M      (vol)  50x52x48               box catch v1
+  latch plunger -y_x+                structure mesh      M      (vol)  12x27x28               box catch v1 K
+  latch housing -y_x-                structure mesh      M      (vol)  50x52x48               box catch v1
+  latch plunger -y_x-                structure mesh      M      (vol)  12x27x28               box catch v1 K
+  drone wheels (seated)              structure mesh      E      (vol)  233x233x10             context: Scout v3 / Overseer catch interface (dimensions G) hook_latch.drone_parts
+  drone cage ring (seated)           structure mesh      E      (vol)  231x231x21             context: Scout v3 / Overseer catch interface (dimensions G) hook_latch.drone_parts
+  flags: P protect, S swap, K moves
+system_check Box catch: FAIL
+  cage first: n/a (no protected part)
+  compact: bbox 8.892 L (E), hull 6.667 L (E), extents [336.8, 336.8, 78.4] mm (E), largest 336.8 mm
+  fit FAIL (tol 0.5 mm³):
+    funnel panel A +y / latch housing +y_x-: 961.37 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel A +y / latch plunger +y_x-: 125.65 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel B +y / latch housing +y_x+: 961.37 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel B +y / latch plunger +y_x+: 125.65 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel A -y / latch housing -y_x-: 961.37 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel A -y / latch plunger -y_x-: 125.65 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel B -y / latch housing -y_x+: 961.37 mm³ (E) limit 0.5 [manifold3d] FAIL
+    funnel panel B -y / latch plunger -y_x+: 125.65 mm³ (E) limit 0.5 [manifold3d] FAIL
+    drone wheels (seated) / drone cage ring (seated): 349.01 mm³ (E) limit inf contact [manifold3d]
+  mass 673.26 g (E), CG [0.0, 0.0, 42.18]
+    funnel panel A +x: 67.95 g (M) at [132.56, 70.62, 44.19]
+    funnel panel B +x: 67.79 g (M) at [132.57, -70.79, 44.21]
+    funnel panel A +y: 67.95 g (M) at [-70.62, 132.56, 44.19]
+    funnel panel B +y: 67.79 g (M) at [70.79, 132.57, 44.21]
+    funnel panel A -x: 67.95 g (M) at [-132.56, -70.62, 44.19]
+    funnel panel B -x: 67.79 g (M) at [-132.57, 70.79, 44.21]
+    funnel panel A -y: 67.95 g (M) at [70.62, -132.56, 44.19]
+    funnel panel B -y: 67.79 g (M) at [-70.79, -132.57, 44.21]
+    latch housing +y_x+: 23.67 g (M) at [85.85, 133.77, 33.0]
+    latch plunger +y_x+: 3.85 g (M) at [100.03, 133.69, 28.14]
+    latch housing +y_x-: 23.67 g (M) at [-85.85, 133.77, 33.0]
+    latch plunger +y_x-: 3.85 g (M) at [-100.03, 133.69, 28.14]
+    latch housing -y_x+: 23.67 g (M) at [-85.85, -133.77, 33.0]
+    latch plunger -y_x+: 3.85 g (M) at [-100.03, -133.69, 28.14]
+    latch housing -y_x-: 23.67 g (M) at [85.85, -133.77, 33.0]
+    latch plunger -y_x-: 3.85 g (M) at [100.03, -133.69, 28.14]
+    drone wheels (seated): 2.38 g (E) at [0.0, 0.0, 35.66]
+    drone cage ring (seated): 17.8 g (E) at [0.0, 0.0, 42.27]
+  balance: n/a (no cg_ref)
+System: Box catch, cage first n/a (no protected part), fit 961.4 mm³ (E) (funnel panel A +y/latch housing +y_x-) FAIL, bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 673 g (E), CG [0.0, 0.0, 42.2] (E, no cg_ref)
