@@ -5,8 +5,8 @@ detent_ring_v3: DESIGN (v6 concept check FAIL x2; READY in v7 after its concept 
 System: box swap arm v6 (`nox/box/swap_system.py`, `nox/box/box_swap_arm.assembly.json`), assembled worst index 0.18 in the detent's holding torque 0.55 N·m (keyed bearing ~1.8 MPa on three pockets, E; was n/a), fit 0.0 mm³ at 5 poses (M), mass 3232 g (E, the assembly with its context), CG 7.0 mm off the axle (E; the turning parts' unbalance 22.5 g·m at park, M / E)
 Weight: 6.7 g (M), was 5.0 (v1): the 1.7 g buy a full-height ring without the v1 lower step and bolt holes, the three key pockets need the 5.9 height to keep the 2.0 walls
 Strength: keyed torque 0.55 N·m at r 18 over three pockets ~10 N each (E, bearing ~2 MPa); fits
-Solid: solid_check PASS (print/box_detent_ring_v3.stl)
-Print: bottom (pocket side) down, bed contact 916 mm² (M), pockets bridged 6.2, no supports; file print/box_detent_ring_v3.stl
+Solid: solid_check PASS (the print-pose mesh that was print/box_detent_ring_v3.stl; W mesh `runs/arm_v6_parts/detent_ring_v3_W.stl`)
+Print: bottom (pocket side) down, bed contact 916 mm² (M), pockets bridged 6.2, no supports; mesh `runs/arm_v6_parts/detent_ring_v3_W.stl` (out of print/ until v7)
 ```
 
 Previews (rendered from the files this PR first saved in print/, now removed until v7): `preview_box_detent_ring_v3.png`

@@ -8,5 +8,6 @@
  "solid_ok": true,
  "bed_face": "arm top face (Y 74.1) down",
  "bed_contact_mm2": 714,
- "note": "detent.py CHOSEN_V5 (arm v5), python3 detent.py v5"
+ "note": "detent.py CHOSEN_V6 (arm v6: tower (21.2, -30.3), ring v3); drawn for CHOSEN_V5 (same roller and levers)",
+ "state": "DESIGN (v6 concept check FAIL x2), mesh runs/arm_v6_parts/detent_arm_v2_print_pose.stl"
 }

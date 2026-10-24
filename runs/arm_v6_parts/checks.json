@@ -1,6 +1,6 @@
 {
  "arm_rail_A_v2": {
-  "file": "print/box_arm_rail_A_v2.stl",
+  "file": "runs/arm_v6_parts/arm_rail_A_v2_W.stl (W mesh; out of print/ until v7)",
   "mass_g": 49.42,
   "prev_g": 49.7,
   "qty": 1,
@@ -21,10 +21,11 @@
   "first_layer": [
    1,
    0.0
-  ]
+  ],
+  "file_was": "print/box_arm_rail_A_v2.stl"
  },
  "arm_rail_B_v2": {
-  "file": "print/box_arm_rail_B_v2.stl",
+  "file": "runs/arm_v6_parts/arm_rail_B_v2_W.stl (W mesh; out of print/ until v7)",
   "mass_g": 49.41,
   "prev_g": 50.0,
   "qty": 1,
@@ -45,10 +46,11 @@
   "first_layer": [
    1,
    0.0
-  ]
+  ],
+  "file_was": "print/box_arm_rail_B_v2.stl"
  },
  "arm_pinion16_v2": {
-  "file": "print/box_arm_pinion16_v2.stl",
+  "file": "runs/arm_v6_parts/arm_pinion16_v2_W.stl (W mesh; out of print/ until v7)",
   "mass_g": 3.1,
   "prev_g": 3.0,
   "qty": 2,
@@ -69,10 +71,11 @@
   "first_layer": [
    1,
    0.0
-  ]
+  ],
+  "file_was": "print/box_arm_pinion16_v2.stl"
  },
  "detent_ring_v3": {
-  "file": "print/box_detent_ring_v3.stl",
+  "file": "runs/arm_v6_parts/detent_ring_v3_W.stl (W mesh; out of print/ until v7)",
   "mass_g": 6.74,
   "prev_g": 5.0,
   "qty": 1,
@@ -93,7 +96,8 @@
   "first_layer": [
    1,
    0.0
-  ]
+  ],
+  "file_was": "print/box_detent_ring_v3.stl"
  },
  "ring_walls": {
   "pocket_to_notch": 2.05,
