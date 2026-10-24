@@ -104,6 +104,35 @@ def seat_posts(th, forbid):
     return out, side
 
 
+def service_sweeps(Y1):
+    """each bay body leaves along +Y with the front sheet off: its envelope cross-section extruded from its far end to the front."""
+    out = []
+    for ang in L2.BAYS:
+        t = trimesh.load(os.path.join(LAY, "parts", f"bay{ang}_body_envelope.stl"), force="mesh")
+        ymax = float(t.bounds[1, 1])
+        if ymax >= Y1: continue
+        e = man(t).rotate([90, 0, 0])                                  # (x, y, z) -> (x, -z, y): the old Y is the new Z
+        cs = e.project()
+        sw = mf.Manifold.extrude(cs, Y1 - ymax).translate([0, 0, ymax]).rotate([-90, 0, 0])
+        out.append(sw)
+    return out
+
+
+def _drop_islands(p, log):
+    """design pockets cut off from the floor support by the keep-outs (not reachable by any member) are made void;
+    a drawn body in such a pocket is a setup error."""
+    from scipy import ndimage as ndi
+    A = (p.solid | p.design).reshape(p.shape)
+    lab, n = ndi.label(A, ndi.generate_binary_structure(3, 1))
+    sup = np.zeros(p.nel, bool); sup[p.support_cells["default"]] = True
+    keep = np.unique(lab[sup.reshape(p.shape) & A])
+    isl = A & ~np.isin(lab, keep[keep > 0])
+    if isl.any():
+        if (isl & p.solid.reshape(p.shape)).any(): raise ValueError("a drawn body is cut off from the floor by the keep-outs")
+        p.design = p.design & ~isl.ravel(); p.void = p.void | isl.ravel()
+        log(f"  {int(isl.sum())} cells of {n - len(keep)} design islands cut off by the keep-outs set void")
+
+
 def setup_factory(log, info):
     geom = {}
 
@@ -111,9 +140,11 @@ def setup_factory(log, info):
         t0 = time.time()
         T = max(3.0, h)                                              # drawn thickness: at least one cell layer
         X_IN, Y0, Y1, Z0, Z1 = EN["X_IN"], EN["Y_BACK"], EN["Y_FRONT"], EN["FLOOR"], EN["Z_TOP"]
+        # the front sheet is the service door (bolted, removable): not drawn, not structural; the envelope stops at its inner face
+        Y1 = Y1 - T
         env = box(-X_IN, X_IN, Y0, Y1, Z0, Z1)
         sheets = {"+X": box(X_IN - T, X_IN, Y0, Y1, Z0, Z1), "-X": box(-X_IN, -X_IN + T, Y0, Y1, Z0, Z1),
-                  "rear": box(-X_IN, X_IN, Y0, Y0 + T, Z0, Z1), "front": box(-X_IN, X_IN, Y1 - T, Y1, Z0, Z1)}
+                  "rear": box(-X_IN, X_IN, Y0, Y0 + T, Z0, Z1)}
         pd = pads(max(3.0, h))
         stub = cylY(45.0, -T, 0.0)
         cuts = [load_grown(n) for n in ("receivers", "cartridge_paths", "drone", "catch")]
@@ -130,6 +161,8 @@ def setup_factory(log, info):
         fun = mf.Manifold.extrude(sq, zt - Z_EDGE, 0, 0.0, (a1 / a0, a1 / a0)).translate([0, Y_FUN, Z_EDGE])
         elec = box(42 - GROW, 157 + GROW, Y0 + T, -36 + GROW, -170 - GROW, 45 + GROW)
         cuts += [hub, motor, park, lane, fun, elec]
+        sweeps = service_sweeps(Y1)
+        cuts += sweeps
         posts, side = seat_posts(6.0 if h <= 6 else h, cuts[3] + fun)
         drawn_all = union(list(sheets.values()) + list(pd.values()) + posts + [stub])
         cutm = union(cuts) - drawn_all                                  # drawn wins where it touches a cut
@@ -137,6 +170,7 @@ def setup_factory(log, info):
         geom.update(pads=pd, posts=posts, stub=stub, sheets=sheets, drawn=drawn_all, cuts=cutm, env=env, fun=fun)
         p = Part("box_system_topo_v2", h, drawn_all, cutm, env, build="+z", log=log)
         _cases(p, h, T, pd, posts, stub, sheets, log)
+        _drop_islands(p, log)
         log(f"setup h {h}: {time.time() - t0:.0f} s, {len(p.cases)} cases")
         return p
     return setup, geom
@@ -160,6 +194,7 @@ def add_case(p, name, cls, support, acc, loads):
 
 def _cases(p, h, T, pd, posts, stub, sheets, log):
     X_IN, Y0, Y1, Z0, Z1 = EN["X_IN"], EN["Y_BACK"], EN["Y_FRONT"], EN["FLOOR"], EN["Z_TOP"]
+    Y1 = Y1 - T
     p.support("default", box(-X_IN - 1, X_IN + 1, Y0 - 1, Y1 + 1, Z0 - 1, Z0 + h))
     p.support("hands", union([box(X_IN - T - .1, X_IN + .1, 100, 250, 0, 150), box(-X_IN - .1, -X_IN + T + .1, 100, 250, 0, 150)]))
     p.support("side", sheets["+X"])
