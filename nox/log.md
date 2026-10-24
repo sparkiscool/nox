@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (swap arm worker): **swap arm v7 piece pass**: concept check PASS; detent v6 (623ZZ roller, ring v4, arm v3; hold 1.065 N·m, rim 0.45, arm 0.16; tower (21.9, −28.6)), pinion16 v3 (face 13.5), rail stop r 27.5; all solid_check PASS, DESIGN; hub v6 topo restarted (run/hub-v6). Bought: 623ZZ, GT2 16T (parts-list)
 - 24 Oct (swap arm worker): **swap arm v7 round 3d** (concept review r3 FAIL, fixed): XT60 per axis x 1.24° / ±2.37, z 0.84° / ±1.06 (side faces, gravity offset); springs x1.3 (index 1.31 slow pass); grabber rods along x + 16 boss, cam rise 6; pinion v3 face 13.5; stub ≤ 10 mrad (to structure). `box-arm.md` v7
 - 24 Oct (swap arm worker): **swap arm v7 round 3c**: latch 258becf (Scout TAB_OFF 0, receiver pitch guidance): XT60 Scout 0.75° / Overseer 0.66° vs ±1.06°, guide ≤ 2.9 N·m; sweeps 0 overlaps; servo / gripper research `claude/research/2026-10-24-servo-gripper-head-v7.md` for heads v7 (Spark: plug / unplug loads)
 - 24 Oct (swap arm worker): **swap arm v7 round 3b**: Y_C 165 = funnel = catch = latch set centre (DEFAULT, hub), TAB_OFF Scout 3.71 / Overseer 5.18; XT60 on the latch's receiver pitch guidance: 0.68° vs ±1.06°, guide ≤ 3.5 N·m; brake needed for both packs; insert-lane keep-out published. Shared: L Swap row. `box-arm.md` v7
