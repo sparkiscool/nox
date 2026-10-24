@@ -59,3 +59,13 @@ it  48 beta    2 J   0.2027 vol 0.0707 (dil 0.1106 g -0.004) grey 24.8% ch 0.100
 it  49 beta    2 J   0.1882 vol 0.0710 (dil 0.1106 g -0.004) grey 24.8% ch 0.100 worst tie b4 mx 219 1.3s
 it  50 beta    2 J   0.1755 vol 0.0714 (dil 0.1106 g -0.004) grey 24.7% ch 0.100 worst tie b4 mx 203 1.3s
 layout: beta 2 done: eroded design 15 bodies, main 90.5%; drawn bodies outside the main body: 12
+it  51 beta    4 J   8.9440 vol 0.0533 (dil 0.1341 g -0.209) grey 11.3% ch 0.100 worst camera hit front 50 N 1.17e+04 1.3s
+it  52 beta    4 J   3.1344 vol 0.0677 (dil 0.1637 g -0.035) grey 13.7% ch 0.100 worst camera hit front 50 N 4.06e+03 1.4s
+it  53 beta    4 J   1.7192 vol 0.0684 (dil 0.1641 g -0.032) grey 14.4% ch 0.100 worst switch panel push 100 N 2.12e+03 1.5s
+it  54 beta    4 J   1.4091 vol 0.0680 (dil 0.1626 g -0.041) grey 13.4% ch 0.100 worst L2 frame bump +y 100 N 1.68e+03 1.4s
+it  55 beta    4 J   1.7049 vol 0.0671 (dil 0.1613 g -0.049) grey 14.4% ch 0.100 worst switch panel push 100 N 2.29e+03 1.5s
+it  56 beta    4 J   1.4094 vol 0.0655 (dil 0.1568 g -0.063) grey 13.2% ch 0.100 worst L2 frame bump +y 100 N 1.69e+03 1.1s
+it  57 beta    4 J   1.7301 vol 0.0640 (dil 0.1548 g -0.074) grey 13.6% ch 0.100 worst switch panel push 100 N 2.3e+03 1.1s
+it  58 beta    4 J   1.5623 vol 0.0617 (dil 0.1499 g -0.104) grey 12.4% ch 0.100 worst L2 frame bump +y 100 N 1.88e+03 1.2s
+it  59 beta    4 J   1.2732 vol 0.0621 (dil 0.1506 g -0.100) grey 13.0% ch 0.100 worst switch panel push 100 N 1.7e+03 1.5s
+it  60 beta    4 J   0.8008 vol 0.0632 (dil 0.1516 g -0.094) grey 12.7% ch 0.100 worst L2 frame bump +y 100 N 880 1.5s
