@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box_system v2 topo round 2, run-part): sheets as cladding, floor only support: 3000 cm3 stands alone (9/9 bays, 8/8 posts, stub tilt 0.41 mrad, bay rot 1.8 mrad, 9 cm2 floor, 3886 g generated E); 2000 too soft, 4000 2x stiffer +1.2 kg; datum ring not needed; Overseer bays 200 long. `runs/box_system/v2/topo_r2/`.
 - 24 Oct (swap arm worker): **rails A / B v5** (DESIGN): ribbon channel X ±3.25 / mouth 5.0 (C) for the 5-conductor head ribbon ~6.1 wide (E, box electronics PR 103), M5 x 10 heads sunk under its floor (C; v4 had them in it). 56.5 g (M), solid PASS, access 9/9 (M), rest unchanged. Bundle 22 wires Ø7.6 (E) fits the Ø8.5 post bore (C). `runs/arm_rail/v5/`
 - 24 Oct (box structure system session, box electronics): heads v7 gripper items: dwell positions only, stall cut (K4 + INA226 0x40, 0.5 s, E; PCA9685 to 0x60), grip halls at 3.3 V upstream of K4, 2 per head summed 3:1 on an ADS1115 0x48 (DEFAULT; alt 2 lines per head); bundle 19 → 22 (CHECK arm). Script rerun.
 - 24 Oct (swap arm worker): **swap arm v7 recheck**: carriage plate top 74.35 and insert-lane keep-out Z 89 / 95 (heads v7 asks, DEFAULT; Y_C_min 165.0); rerun 0 overlaps, swap 0.45 / 0.49, XT60 x 1.25° / z 0.84°; review notes folded. Shared: keep-out row (catch, structure told). `box-arm.md` v7

@@ -1,0 +1,18 @@
+Base + feet (Z < -150): 12.8 cm3 = 16 g (E); X [-80, 96] Y [10, 58] Z [-169, -153]; longest 176; 3 islands
+Bay body -120 (O): 271.4 cm3 = 345 g (E); X [-208, -40] Y [58, 258] Z [-233, -113]; longest 200 OVER 180; 3 islands
+Bay body -150 (S): 341.5 cm3 = 434 g (E); X [-208, -112] Y [66, 242] Z [-201, -41]; longest 176; 1 islands
+Bay body -180 (O): 207.9 cm3 = 264 g (E); X [-208, -152] Y [58, 258] Z [-57, 47]; longest 200 OVER 180; 2 islands
+Bay body -210 (S): 160.3 cm3 = 204 g (E); X [-192, -104] Y [58, 218] Z [39, 135]; longest 160; 2 islands
+Bay body -30 (S): 294.4 cm3 = 374 g (E); X [120, 208] Y [58, 210] Z [-201, -41]; longest 160; 1 islands
+Bay body -60 (O): 243.2 cm3 = 309 g (E); X [48, 208] Y [58, 258] Z [-233, -121]; longest 200 OVER 180; 3 islands
+Bay body -90 (S): 161.3 cm3 = 205 g (E); X [-48, 56] Y [58, 210] Z [-233, -153]; longest 152; 1 islands
+Bay body 0 (O): 241.2 cm3 = 306 g (E); X [144, 208] Y [58, 258] Z [-57, 55]; longest 200 OVER 180; 1 islands
+Bay body 30 (S): 235.0 cm3 = 298 g (E); X [96, 200] Y [58, 226] Z [39, 143]; longest 168; 1 islands
+Hub links (rest, r < 110 or between): 368.6 cm3 = 468 g (E); X [-184, 192] Y [10, 266] Z [-153, 111]; longest 376 OVER 180; 8 islands
+Mast + stub face (Y < 8, |X| < 70): 944.6 cm3 = 1200 g (E); X [-72, 72] Y [-70, 10] Z [-233, 135]; longest 368 OVER 180; 1 islands
+Rear frame +X (Y < 8, X > 70): 254.0 cm3 = 323 g (E); X [72, 208] Y [-70, 10] Z [-233, 87]; longest 320 OVER 180; 5 islands
+Rear frame -X (Y < 8, X < -70): 129.5 cm3 = 165 g (E); X [-192, -72] Y [-70, 10] Z [-225, 103]; longest 328 OVER 180; 7 islands
+Seat-post bridge (Y > 270): 110.1 cm3 = 140 g (E); X [-72, 72] Y [266, 290] Z [103, 175]; longest 144; 1 islands
+Top frame +X half (Z > 110): 433.7 cm3 = 551 g (E); X [0, 136] Y [10, 266] Z [111, 183]; longest 256 OVER 180; 1 islands
+Top frame -X half (Z > 110): 423.4 cm3 = 538 g (E); X [-128, 0] Y [10, 266] Z [111, 183]; longest 256 OVER 180; 1 islands
+
