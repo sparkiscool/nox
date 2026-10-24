@@ -10,6 +10,7 @@ Contact-first: FAIL at the tail-bottom, receiver ahead by 16.4 (C): needs receiv
 Drone: ~744 g (E), CG (-1.8, -1.8, 8.9)
 ```
 
+- System line (`python3 nox/assembly.py nox/scout/v3/scout.assembly.json --check`, file written by `nox/scout/v3/write_assembly.py`): System: Scout v3, cage first -13.4 mm (E) at (-0.66, +0.06, -0.75) (receiver v4 interface) FAIL, fit 0.0 mm³ (E), bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 725 g (E), CG 0.9 mm off thrust axis (E) [-0.9, -0.1, -38.2], 0.5 mm without swap parts
 - `checks.txt`: candidates, dropped rods by reason, every case (index, deflection), core joint reactions, nodes.
 - `result.json`, `motion.html` (artifact), `motion.mp4` / `.gif` / `.png`.
 - `pr44/`: PR 44 meshes used as the latch-standard bottom (DEFAULT).
