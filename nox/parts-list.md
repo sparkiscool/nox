@@ -67,7 +67,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | NEMA 17 stepper | 3 | axle + 2 arm heads | on hand | M: NEMA 17 |
 | BTT SKR Mini E3 V3 | 1 | stepper + servo control | on hand | M: SKR |
 | Mean Well LRS-350-24 | 1 | 24 V supply | on hand | M: LRS-350 |
-| 5 V buck (servo supply) | 1 | servos, logic | on hand | CHECK size |
+| 5 V buck (servo supply) | 1 | spare (electronics v1: servos on a 6.0 V buck, logic on a 5.1 V 5 A buck); the logic buck if it gives ≥ 4 A | on hand | CHECK size |
 | DS3218 20 kg servo | 1 | gripper 1 | on hand | M: DS3218 |
 | MG995 servo (2-pack) | 1 | gripper 2 | ordered | M: MG995 (measure ears) |
 | 6010-2RS bearing | 2 | hub on the stub | on hand | M: 6010 |
@@ -89,14 +89,34 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | M2 x 12 screws + nuts | 12 (8 ear screws + nuts, 4 yoke pins) | hook latch | CHECK on hand | `box/box-hook-latch.md` |
 | M3 x 10 + M3 x 5.7 heat-set inserts | 16 + 16 | hook latch housings on the panel v7 bosses | on hand (CHECK count) | M: inserts |
 | A3144 hall switch + Ø3 x 2 magnet | 4 + 4 | hook latch: plunger fully out | to buy (A3144 pack priced below; Ø3 x 2 magnets CHECK) | `box/box-hook-latch.md` |
-| KW11 microswitch | per bay (CHECK) | drone seated | to buy (CHECK) | M: KW11 |
-| Pogo pins (Mill-Max 0854 class) | per bay (CHECK) | keep-alive power | to buy (CHECK) | M: pogo pin |
+| KW11 microswitch | 1 (on the pogo post, not per bay) | drone seated, Pi GPIO 24 | to buy (CHECK on hand) | M: KW11 |
+| Pogo pins, travel ≥ 8, ≥ 1.5 A each | 4 (2 pads x 2 pins, on the post) | keep-alive 13.0 V | to buy (CHECK model, Q20; the 0854's 2.3 stroke is too short) | M: pogo pin; `box/box-electronics.md` |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |
 | Clear sheet, 3.0 (enclosure) | 4 | stand v7 walls | CHECK | box-stand.md |
 | Brass heat-set inserts M3 / M5 | as drawn | printed-part threads | on hand | M: inserts |
 | M3 / M5 screws and nuts (M4 for the PSU: CHECK) | per joint | assembly | on hand | box-stand.md Parts, box-arm.md |
 | Wire: 26 / 28 / 22 AWG | ~7.8 m / ~2.8 m / ~0.9 m | arm harness | on hand | box-wiring.md cut list |
 | Taidacent 12-wire slip ring | 1 | (retired: bounded-travel harness instead) | ordered, not used | |
+| **Box electronics v1 (24 Oct, `box/box-electronics.md`)** | | | | |
+| Raspberry Pi 4 B 2 GB + microSD ≥ 32 GB | 1 | box computer: Klipper host + `boxd` (DEFAULT; alt Pi 5) | to buy | M: Pi 4 85 x 56 (spec) |
+| GPIO screw-terminal HAT for the Pi 4 | 1 | halls, KW11, relay inputs, I2C, pull-ups | to buy | |
+| PCA9685 16-ch PWM board (Adafruit 815 class) | 1 | 4 latch MG90S + 2 gripper servos | to buy | 62.5 x 25.4 (spec) |
+| INA226 module + R010 2512 shunt (swap the R100) | 3 + 3 | keep-alive and 2 live bays: current + bus voltage | to buy (CHECK: INA226 on hand?) | E 32 x 22 |
+| XL4016-class CC/CV buck, 8 A | 2 | keep-alive 13.0 V CC 3.0 A; servo rail 6.0 V | to buy | E 66 x 47 |
+| 24 → 5.1 V 5 A buck (Pololu D36V50F5 class) | 1 | Pi + logic (or the on-hand 5 V buck if ≥ 4 A) | to buy (CHECK) | E 41 x 26 |
+| 4-ch 5 V opto relay board (SRD-05VDC-SL-C, 10 A 30 VDC) | 1 | K1 keep-alive, K2 / K3 live bays, K4 spare (replaces the 7 x 8-ch mux, priced) | to buy | E 75 x 55 |
+| 6-way blade fuse box with negative bus + blade fuses 10 / 5 / 3 / 2 A | 1 + 1 set | 24 V distribution | to buy | E 105 x 60 |
+| IEC C14 fused switched inlet + mains cord | 1 + 1 | mains in, on the rear sheet | to buy (cord CHECK on hand) | cut-out 48 x 28 (E, CHECK) |
+| 22 mm mushroom E-stop, NC | 1 | cuts the SKR and the servo buck | to buy | hole 22.5 (E) |
+| iCharger 456DUO class dual-channel DC charger | 1 | 2 live bays, MODBUS to the Pi | to buy (CHECK the MODBUS map first; alt ToolkitRC M8D or 2 x ISDT PD60) | listing 171 x 118 x 59 |
+| Nylon M3 standoffs 10 F-F + M3 x 6 + nuts; M2.5 set for the Pi / PCA | ~50 | boards on the rear sheet | CHECK on hand | |
+| M4 x 6 pan head + fender washers | 4 + 4 | PSU on the rear sheet | CHECK on hand | M: LRS-350 |
+| Wago 221-415 lever connectors | 3 | 6.0 V, 5.1 V, GND buses | CHECK on hand | |
+| XT60 pairs; XT30 pair; JST-XH 2 / 3 / 4-pin housings + crimps; bootlace ferrules; fork crimps M3.5 | 2; 1; 1 / 1 / 3; ~60; 5 | sheet disconnects, board ends | CHECK on hand | |
+| 22 AWG 3-core servo extension, 1 m | 4 | hook latch servos | to buy | |
+| Silicone wire 14 / 16 / 18 / 20 AWG red + black | 0.6 / 4.5 / 5.3 / 1.1 m (totals) | power nets (cut list in the doc) | CHECK on hand | |
+| 10 kΩ resistors | 8 | GPIO pull-ups | CHECK on hand | |
+| USB-A to USB-C 0.3 m | 1 | Pi → SKR | CHECK on hand | |
 
 ## Box: priced for later (not ordered)
 | Part | Qty | Role | Mount data |
@@ -104,11 +124,11 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | A3144 hall module | 1 pack | axle index | M: A3144 |
 | 5 x 2 magnets | 1 pack | axle index | |
 | M6 ball plungers | 1 pack | axle detent | |
-| 24 V 4010 fan | 1 | cooling | M: 4010 |
-| ISDT PD60 charger (listed as PD60S) + 65 W USB-C brick | 1 + 1 | balance charging | M: PD60 |
-| 8-channel 5 V relay board | 7 | bay switching | CHECK size |
+| 24 V 4010 fan | 1 | cooling; electronics v1: only if the SKR drivers run hot in the soak test (Problem 1) | M: 4010 |
+| ISDT PD60 charger (listed as PD60S) + 65 W USB-C brick | 1 + 1 (2 + 2 as the alternative) | balance charging; the alternative to the dual-channel DC charger (electronics v1) | M: PD60 |
+| 8-channel 5 V relay board | 7 | 7-bay mux; electronics v1 uses one 4-ch board for 2 live bays (row above) | CHECK size |
 | JST-XH 4S balance pigtails, 5-pack | 2 | bay balance leads | M: JST-XH |
-| Hub USB camera, box Raspberry Pi | 1 + 1 | vision, box computer | CHECK model |
+| Hub USB camera | 1 | vision (the box Pi is now to buy, row above) | CHECK model |
 
 ## Box: printed parts (state only in `nox/current-parts.md`)
 | Part | Qty | Print file |
@@ -142,4 +162,4 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 Dimension gaps (sizes, holes, threads) are the open questions Q1..Q20 at the end of `dimensions.md` M: settled when a mount for that part is designed. The gaps below are about what is on hand.
 - Overseer: S500 variant, ESC model, RC receiver model.
 - Scout: motor KV, number of spare packs, carbon rod stock, grommet size.
-- Box: KW11 and pogo pin counts per bay, 5 V buck and relay board models.
+- Box: 5 V buck model (spare or logic); INA226 on hand; electronics v1 hardware marked CHECK on hand.
