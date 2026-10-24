@@ -48,3 +48,5 @@ it  37 beta    2 J   0.1075 vol 0.0569 (dil 0.0860 g -0.024) grey 17.3% ch 0.100
 it  38 beta    2 J   0.1210 vol 0.0583 (dil 0.0862 g -0.023) grey 16.8% ch 0.100 worst L2 frame bump top 100 N 79.3 8.5s
 it  39 beta    2 J   0.0881 vol 0.0578 (dil 0.0861 g -0.024) grey 16.8% ch 0.100 worst tie b4 mx 52 8.7s
 it  40 beta    2 J   0.0859 vol 0.0583 (dil 0.0864 g -0.021) grey 16.9% ch 0.100 worst L2 frame bump top 100 N 50.1 8.6s
+it  41 beta    2 J   0.0946 vol 0.0575 (dil 0.0850 g -0.037) grey 16.6% ch 0.100 worst spine side bump 100 N 59.2 9.4s
+it  42 beta    2 J   0.0857 vol 0.0570 (dil 0.0854 g -0.032) grey 17.0% ch 0.100 worst tie b4 mx 47 8.6s
