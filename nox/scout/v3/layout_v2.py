@@ -427,7 +427,7 @@ def candidate_nodes():
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
-    for x, y in [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6)]:   # y 29.6 (was 28.5): outboard of the
+    for x, y in [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]:   # (0, +29.6) is in the flow view   # y 29.6 (was 28.5): outboard of the
                                                                                                # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
@@ -438,8 +438,17 @@ def candidate_nodes():
             (50.3, 31, 14.0), (50.3, -31, 14.0), (-49.7, 31, 14.0), (-49.7, -31, 14.0)]   # moved with the set (LATCH_DX)   # nose legs and the mount's corners
     for c in core:
         N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
-    keep = [i for i in range(len(N)) if kind[i] in "CL" or not in_band8(N[i])]          # G (8): no printed node in the probe band
+    keep = [i for i in range(len(N)) if kind[i] in "CL" or not (in_band8(N[i]) or in_view(N[i]))]   # G (8) band, sensor views
     return np.array(N)[keep], [kind[i] for i in keep]
+
+
+def in_view(p, pad=ROD_R + 1.0):
+    """a node inside the flow sensor's or the camera's view (the rod_ok cones, plus a rod radius and 1.0)"""
+    d = np.asarray(p, float) - FLOW_LENS; dz = -d[2]
+    if dz > 0 and math.degrees(math.atan2(max(np.hypot(d[0], d[1]) - pad, 0.0), dz)) < 23.0 + 3.0: return True
+    d = np.asarray(p, float) - LENS
+    if d[0] > 0.5 and math.degrees(math.atan2(max(abs(d[1]) - pad, 0.0), d[0])) < 45 and math.degrees(math.atan2(max(abs(d[2]) - pad, 0.0), d[0])) < 37: return True
+    return False
 
 
 def in_band8(p):
