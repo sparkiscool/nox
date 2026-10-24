@@ -36,12 +36,12 @@ def grip_z(pk, meta):
     return float(meta[pk]["Z_T"])
 PATH = 70.0                                     # cartridge install path kept clear, radially inward from the seat (E: park r ~ R - 15)
 ARM_PARK_R = 1.5                                # turning envelope of the parked heads + cartridges: r <= R - 1.5 (arm v6: limit R - 2.5)
-LANE = dict(r=159.0, x=(-35.0, 47.5), y=(53.75, 73.75))  # drone insert, carriage: r <= 159 over X -35..47.5, Y 53.75..73.75 (arm PR 79
-                                                # 70c3c33, measured from the swept meshes, C; was 90 +- 25 deg over Y 53.75..86.5)
+LANE = dict(r=159.0, x=(-35.0, 47.5), y=(53.75, 75.35), z0=89.0)  # drone insert, carriage: r <= 159, Z >= 89 over X -35..47.5, Y 53.75..75.35
+                                                # (arm, heads v7: plate top 74.35 + 1, C; was Y ..73.75 from PR 79, before that 90 +- 25 deg)
 MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_system)
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
-GRIP_LANE = dict(r0=111.5, r=159.6, x=47.5, y0=73.75, dy1=52.0)  # the head's grabber beside the cartridge at the drone insert: X to 46.5 (the
-                                                # rack web X 40.5..46.5) + 1, from the parked heads' r 111.5 to the cartridge top r 158.6 + 1, Y 73.75..Y_C + 52 (arm PR 79 70c3c33, C)
+GRIP_LANE = dict(r0=95.0, r=159.6, x=47.5, y0=73.75, dy1=52.0)  # the head's grabber beside the cartridge at the drone insert: X to 46.5 (the
+                                                # rack web X 40.5..46.5) + 1, from r 95 (heads v7 via the arm, was 111.5) to the cartridge top r 158.6 + 1, Y 73.75..Y_C + 52 (C)
 RAIL_DISC = dict(r=151.0, y=(38.0, 73.0))       # arm round 3 (24 Oct): the rails' keel sweeps Y 38..73 out to r 151 (C)
 BRACKET = 12.0                                  # ring envelope to sheet inner face (U-clip + flange, v1 brackets 3.5..10)
 CRADLE = 48.1                                   # bottom bay's outer face to the floor (v1 cradle_keel: Z_TOP -152.9 to -201)
@@ -219,7 +219,7 @@ def arm_envelopes(R):
     parked heads with cartridges, the drone-insert lane."""
     cyl = lambda r, y0, y1: mf.Manifold.cylinder(y1 - y0, r, r, 96).rotate([-90, 0, 0]).translate([0, y0, 0])
     (x0, x1), (y0, y1) = LANE["x"], LANE["y"]
-    lane = cyl(LANE["r"], y0, y1) ^ mf.Manifold.cube([x1 - x0, y1 - y0 + 2, LANE["r"] + 1]).translate([x0, y0 - 1, 0])
+    lane = cyl(LANE["r"], y0, y1) ^ mf.Manifold.cube([x1 - x0, y1 - y0 + 2, LANE["r"] + 1 - LANE["z0"]]).translate([x0, y0 - 1, LANE["z0"]])
     grab = (cyl(GRIP_LANE["r"], GRIP_LANE["y0"], Y_C + GRIP_LANE["dy1"]) - cyl(GRIP_LANE["r0"], GRIP_LANE["y0"] - 1, Y_C + GRIP_LANE["dy1"] + 1)) ^ \
         mf.Manifold.cube([2 * GRIP_LANE["x"], Y_C + GRIP_LANE["dy1"] - GRIP_LANE["y0"] + 2, GRIP_LANE["r"] + 1]).translate([-GRIP_LANE["x"], GRIP_LANE["y0"] - 1, 0])
     return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]) + cyl(RAIL_DISC["r"], *RAIL_DISC["y"]),
