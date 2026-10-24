@@ -222,7 +222,9 @@ def main():
     for nm_p, fn in (("v7", "result.json"), ("v7 plain", "result_plain.json")):
         pc = json.load(open(os.path.join(base, fn)))["fe_asbuilt"]["per_case"]["press u100 v40"]
         sk[nm_p] = pc                                                  # [defl / 1.0 mm, MPa] at 20 N
-    # allowable: the panel's own design rule, 19.5 MPa in-layer (PETG XY 39 / SF 2, box-funnel.md Loads), every case
+    # allowable: the panel's own design rule, 19.5 MPa in-layer (PETG XY 39 / SF 2, box-funnel.md Loads), every case; for
+    # misuse that is conservative (a ceiling). The seated contact is 43.6 up the slope (T_C); the FE patch is at v 40
+    # (interpolating toward v 65 gives the plain panel ~0.60 instead of 0.58, v7 a little lower)
     for nm, row in ov.items():
         cls = "misuse" if "hand" in nm else "flight"
         row["panel_wheel_spot"] = {}
