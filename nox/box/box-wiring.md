@@ -32,7 +32,7 @@ The ribbon lies in the 6 x 6 slot, anchored at r 23 (clip), **folds 180° back o
 Continuous conductors from the bay to each load: **no connector inside the bore or on the arm** (DEFAULT). Steppers keep their own pigtails + JST-XH inline right at each motor (service). Servos keep their stock plugs; mate at the servo plate. Hall soldered + heat-shrink at the tower.
 
 ## Cut list (E, +20 % slack)
-**24 Oct, fixed tails from the electronics layout (164 / 311 / 276 C on E, was 250 E):** stepper A 4 x 590 · stepper B 4 x 520 · axle 4 x 530 · hall 3 x 495 · servo ribbons 2 x 240 · servo power pair 2 x 510 (22 AWG) · servo signals 2 x 470. Was: stepper A 4 x 690 · stepper B 4 x 620 · axle 4 x 630 · hall 3 x 595 · servo power pair 2 x 435 · servo signals 2 x 435. Totals: 26 AWG ~7.8 m, 28 AWG ~2.8 m, 22 AWG ~0.9 m. These cuts are on the 164 / 311 / 276 tails; with 174 / 308 / 256 cut each stepper and the hall +12, the servo power pair −4, the servo signals −24 (the +20 %, E).
+**24 Oct, fixed tails from the electronics layout (174 / 308 / 256 C on E, rerun with the face-pin ends; was 164 / 311 / 276, then 250 E):** stepper A 4 x 600 · stepper B 4 x 530 · axle 4 x 540 · hall 3 x 505 · servo ribbons 2 x 240 · servo power pair 2 x 505 (22 AWG) · servo signals 2 x 445. Was (164 / 311 / 276): stepper A 4 x 590 · stepper B 4 x 520 · axle 4 x 530 · hall 3 x 495 · servo power pair 2 x 510 · servo signals 2 x 470. Totals: 26 AWG ~7.9 m, 28 AWG ~2.8 m, 22 AWG ~0.9 m.
 
 ## Problems
 1. **Wire count was wrong in box-arm.md (15 -> 19):** the head servos were never in the twist count. Fixed here; Problem 3 there updated.

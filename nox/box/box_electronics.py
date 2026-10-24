@@ -8,7 +8,7 @@ W frame (nox/dimensions.md I): X tangential, Y axial (+ away from the stub wall)
 rear sheet's inner face is Y -66 (box-stand.md Enclosure, C).
 
 Run: python3 nox/box/box_electronics.py
- -> runs/box_electronics/v1/{result.json, layout.svg, schematic.svg, states.svg, diagram.html}
+ -> runs/box_electronics/v1/{result.json, layout.svg, schematic.svg, brake.svg, states.svg, diagram.html}
 """
 import json, math, pathlib, random
 
@@ -520,9 +520,108 @@ def states_svg(standalone=True):
     return svg_wrap("".join(b), W, H, standalone)
 
 
-HTML = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Box Electronics</title>
+def brake_svg(standalone=True):
+    """head / axle brake (one of 3 identical DPDT channels) and the keep-alive + seat-sense circuit, as wired."""
+    W, H = 1180, 820
+    b = ['<text class="tb" x="20" y="24">Brake: one DPDT relay per motor (KB1 head A, KB2 head B, KB3 axle), drawn de-energised = braked</text>']
+
+    def box(x, y, w, h, c, lab, sub=""):
+        b.append(f'<rect class="{c}" x="{x}" y="{y}" width="{w}" height="{h}" rx="5"/>')
+        b.append(f'<text class="tb" x="{x+8}" y="{y+18}">{lab}</text>')
+        if sub:
+            b.append(f'<text class="ts" x="{x+8}" y="{y+33}">{sub}</text>')
+
+    def wire(cls, pts, lab=None, at=0, dx=4, dy=-4):
+        b.append(f'<path class="{cls}" d="M' + " L".join(f"{x},{y}" for x, y in pts) + '"/>')
+        if lab:
+            x, y = pts[at]
+            b.append(f'<text class="ts" x="{x+dx}" y="{y+dy}">{lab}</text>')
+
+    def dot(x, y):
+        b.append(f'<circle cx="{x}" cy="{y}" r="3.2" fill="currentColor"/>')
+
+    def contact(x, y, lab):
+        # common at (x, y); NO up-right at (x+60, y-22), NC down-right at (x+60, y+22); blade rests on NC
+        for cy, t in ((y - 22, "NO"), (y + 22, "NC")):
+            b.append(f'<circle cx="{x+60}" cy="{cy}" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/>')
+            b.append(f'<text class="ts" x="{x+66}" y="{cy+4}">{t}</text>')
+        b.append(f'<circle cx="{x}" cy="{y}" r="3" fill="none" stroke="currentColor" stroke-width="1.3"/>')
+        b.append(f'<path class="wst" d="M{x+3},{y+1} L{x+57},{y+20}"/>')
+        b.append(f'<text class="ts" x="{x-16}" y="{y-10}">{lab}</text>')
+
+    # driver, relay poles, motor
+    box(30, 60, 170, 250, "brd", "TMC2209 (SKR)", "head A shown; B, axle same")
+    for i, (nm, y) in enumerate((("A1 (out 1)", 110), ("A2 (out 2)", 160), ("B1 (out 1)", 220), ("B2 (out 2)", 270))):
+        b.append(f'<text class="ts" x="120" y="{y+4}">{nm}</text>')
+        dot(200, y)
+    box(330, 60, 260, 250, "pwr", "KB1: G2RL-2 DC24 (DPDT, 8 A)", "pole 1 = coil A, pole 2 = coil B")
+    contact(380, 140, "pole 1 COM")
+    contact(380, 250, "pole 2 COM")
+    box(760, 60, 190, 250, "off", "NEMA17 (head A)", "own pigtail, JST-XH inline")
+    b.append('<path class="wst" d="M850,120 c 30,0 30,20 0,20 c 30,0 30,20 0,20 c 30,0 30,20 0,20"/>')
+    b.append('<text class="ts" x="890" y="155">coil A</text>')
+    b.append('<path class="wst" d="M850,230 c 30,0 30,20 0,20 c 30,0 30,20 0,20 c 30,0 30,20 0,20"/>')
+    b.append('<text class="ts" x="890" y="265">coil B</text>')
+    # coil A: out1 -> NO, COM -> coil wire 1, coil wire 2 -> out2 and -> NC
+    wire("wst", [(200, 110), (300, 110), (300, 118), (440, 118)], "driver out 1 to NO", 0, 8, -6)
+    wire("wst", [(380, 140), (350, 140), (350, 96), (700, 96), (700, 120), (850, 120)], "COM to coil wire 1", 3, -140, -6)
+    wire("wst", [(440, 162), (620, 162), (620, 180), (850, 180)], "NC to coil wire 2", 0, 30, 18)
+    wire("wst", [(200, 160), (260, 160), (260, 196), (660, 196), (660, 180)], "driver out 2 to coil wire 2 (always)", 1, 8, 14)
+    dot(620, 180); dot(660, 180)
+    wire("wst", [(200, 220), (300, 220), (300, 228), (440, 228)], None)
+    wire("wst", [(380, 250), (350, 250), (350, 206), (700, 206), (700, 230), (850, 230)], None)
+    wire("wst", [(440, 272), (620, 272), (620, 290), (850, 290)], None)
+    wire("wst", [(200, 270), (260, 270), (260, 300), (660, 300), (660, 290)], None)
+    dot(620, 290); dot(660, 290)
+    # relay coil drive
+    box(330, 360, 260, 80, "sig", "ULN2003A (bare DIP)", "COM pin 9 to 24 V: the flyback diodes")
+    box(30, 360, 170, 80, "brd", "SKR EXP1 pin", "[output_pin brake_a] (CHECK pins)")
+    wire("wsg", [(200, 400), (330, 400)], "high = released", 0, 8, -6)
+    wire("w24", [(700, 380), (700, 340), (470, 340), (470, 310)], "24 V to the relay coil + and ULN COM", 0, 6, 16)
+    wire("w24", [(700, 380), (590, 380)])
+    wire("wsg", [(590, 420), (620, 420), (620, 330), (540, 330), (540, 310)], "OUT1 sinks the relay coil -", 0, 6, 16)
+    b.append('<text class="ts" x="30" y="476">De-energised (pin low, power off, E-stop, Klipper shutdown): out 1 is open on NO and each coil is shorted on itself through NC, so the motor brakes and the driver is never shorted.</text>')
+    b.append('<text class="ts" x="30" y="494">Start: brake pin high, dwell 30 ms, MANUAL_STEPPER ENABLE=1, move. Stop: ENABLE=0, dwell 30 ms, pin low; re-enable only after a further 50 ms (NC closes ~35 ms, E).</text>')
+
+    # keep-alive + seat sense
+    y0 = 540
+    b.append(f'<text class="tb" x="20" y="{y0}">Keep-alive and seat sense (panel v9 plain pins on the drone\'s lower-ring pads; runs/keepalive_contacts/concept)</text>')
+    box(30, y0 + 20, 140, 60, "pwr", "Keep-alive buck", "13.0 V CV, 3.0 A CC")
+    box(210, y0 + 20, 90, 60, "pwr", "K1", "relay ch 1")
+    box(340, y0 + 20, 110, 60, "sig", "INA226 0x41", "R010 shunt")
+    box(700, y0 + 10, 150, 80, "off", "+x face: 2 pins", "B+, panel v9 plain")
+    box(700, y0 + 150, 150, 80, "off", "-x face: 2 pins", "B- = box GND")
+    box(960, y0 + 10, 200, 220, "off", "Drone", "")
+    b.append(f'<text class="ts" x="968" y="{y0+50}">+ pad (lower ring, 22 x 12)</text>')
+    b.append(f'<text class="ts" x="968" y="{y0+80}">ideal diode (LM74700) to bus</text>')
+    b.append(f'<text class="ts" x="968" y="{y0+110}">10 kOhm across the pads</text>')
+    b.append(f'<text class="ts" x="968" y="{y0+200}">- pad</text>')
+    wire("wst", [(1060, y0 + 50), (1060, y0 + 120)])
+    wire("wst", [(1060, y0 + 180), (1060, y0 + 190)])
+    wire("w13", [(170, y0 + 50), (210, y0 + 50)])
+    wire("w13", [(300, y0 + 50), (340, y0 + 50)])
+    wire("w13", [(450, y0 + 50), (700, y0 + 50)], "B+ 18 AWG, bullet at the sheet", 0, 50, -6)
+    wire("w13", [(850, y0 + 50), (960, y0 + 50)], "spring pins", 0, 8, -6)
+    wire("w13", [(850, y0 + 190), (960, y0 + 190)], None)
+    wire("w13", [(700, y0 + 190), (100, y0 + 190), (100, y0 + 80)], "B- 18 AWG to the buck -", 1, 8, -6)
+    b.append(f'<path class="wst" d="M1060,{y0+120} L1060,{y0+135} l -6,4 l 12,6 l -12,6 l 12,6 l -12,6 l 6,4 L1060,{y0+180}"/>')
+    # seat-sense branch
+    dot(560, y0 + 50)
+    wire("wsg", [(560, y0 + 50), (560, y0 + 100)], "BAT54 (cathode up)", 1, 8, 0)
+    b.append(f'<path d="M552,{y0+100} L568,{y0+100} L560,{y0+88} z" fill="currentColor"/>')
+    wire("wsg", [(560, y0 + 100), (560, y0 + 130), (480, y0 + 130)], "1 kOhm", 2, 0, -6)
+    wire("wsg", [(480, y0 + 130), (380, y0 + 130)], None)
+    dot(520, y0 + 130)
+    wire("wsg", [(520, y0 + 130), (520, y0 + 160)], "5 V TVS, &#8804; 1 uA at 3.3 V", 1, 8, 4)
+    box(220, y0 + 110, 160, 60, "brd", "Pi GPIO 24", "100 kOhm to 3.3 V")
+    dot(620, y0 + 50)
+    wire("w13", [(620, y0 + 50), (620, y0 + 110)], "SMBJ15A to GND", 1, 6, 4)
+    b.append(f'<text class="ts" x="30" y="{y0+262}">K1 open, drone seated: 3.3 V, 100 kOhm, 1 kOhm, BAT54 into the drone\'s 10 kOhm: GPIO 24 ~0.52 V = low (E, CHECK). No drone: high. K1 closed: the line is at 13.0 V, the BAT54 blocks, GPIO reads high and boxd ignores it.</text>')
+    return svg_wrap("".join(b), W, H, standalone)
+
+
+HTML = """<title>Box Electronics</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Nox box electronics v1: power, I/O, rear-sheet layout and the swap state machine.">
 <style>
 :root{--bg:#ffffff;--ink:#1d2730;--muted:#55626e;--line:#8a97a3;--sheet:#eef3f6;--ko:#e2e2e2;--fix:#dfe8f0;--brd:#fff4d8;
@@ -534,22 +633,23 @@ HTML = """<!doctype html>
 :root[data-theme="dark"]{--bg:#12171c;--ink:#e6edf3;--muted:#9aa7b3;--line:#5b6875;--sheet:#1b2630;--ko:#2a2f35;--fix:#1f2d3a;
 --brd:#3a3220;--pwr:#3d2522;--sig:#1f3324;--off:#262638;--c24:#ff6b5b;--c13:#ff9f43;--c6:#c39bd3;--c5:#5dade2;--cch:#f4d03f;
 --csg:#58d68d;--cst:#aab7c4;--cm:#e57373}
-body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif;margin:0;padding:16px}
+body{background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif;margin:0;padding-block:16px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
 main{max-width:1180px;margin:0 auto} h1{font-size:22px;margin:4px 0 8px} h2{font-size:17px;margin:26px 0 8px}
 p,li{color:var(--ink)} .muted{color:var(--muted)} .fig{overflow-x:auto;border:1px solid var(--line);border-radius:8px;padding:6px}
 table{border-collapse:collapse;width:100%;font-size:13px} td,th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left;vertical-align:top}
 .wrap{overflow-x:auto} svg{color:var(--ink)}
 """ + STYLE + """
-</style></head><body><main>
+</style><main>
 <h1>Box electronics v1</h1>
 <p class="muted">24 Oct 2026. Doc <code>nox/box/box-electronics.md</code>, numbers <code>nox/box/box_electronics.py</code>. C unless tagged; E = estimate; DEFAULT = chosen without Spark.</p>
 <h2>Power and signal</h2><div class="fig">__SCHEM__</div>
+<h2>Head and axle brake, keep-alive and seat sense (wiring)</h2><div class="fig">__BRAKE__</div>
 <h2>Rear sheet layout (placement search)</h2><div class="fig">__LAYOUT__</div>
 <h2>Swap state machine</h2><div class="fig">__STATES__</div>
 <h2>Aborts</h2><div class="wrap"><table><tr><th>Abort</th><th>Trigger</th><th>Action</th></tr>__ABORTS__</table></div>
 <h2>Power budget (E)</h2><div class="wrap"><table><tr><th>Load</th><th>Rail</th><th>W cont</th><th>W peak</th><th>at 24 V peak</th></tr>__BUDGET__</table></div>
 <h2>Nets and cut list</h2><div class="wrap"><table><tr><th>Net</th><th>From</th><th>To</th><th>n</th><th>AWG</th><th>I peak A</th><th>route mm</th><th>cut mm</th><th>drop peak</th></tr>__NETS__</table></div>
-</main></body></html>
+</main>
 """
 
 
@@ -605,6 +705,7 @@ def main():
     lay, sch, sta = layout_svg(place), schematic_svg(), states_svg()
     (OUT / "layout.svg").write_text(lay)
     (OUT / "schematic.svg").write_text(sch)
+    (OUT / "brake.svg").write_text(brake_svg())
     (OUT / "states.svg").write_text(sta)
     ab = "".join(f"<tr><td>{a}</td><td>{t}</td><td>{x}</td></tr>" for a, t, x in ABORTS)
     bu = "".join(f"<tr><td>{r['load']}</td><td>{r['rail']}</td><td>{r['W_cont']}</td><td>{r['W_peak']}</td><td>{r['W_at_24V_peak']}</td></tr>"
@@ -614,7 +715,7 @@ def main():
                  f"<td>{r['I_peak']}</td><td>{r['route_mm']}</td><td>{r['cut_mm']}</td>"
                  f"<td>{'' if not r['drop'] else str(r['drop']['peak_V']) + ' V (' + str(r['drop']['peak_pct']) + ' %)'}</td></tr>" for r in nets)
     html = (HTML.replace("__SCHEM__", schematic_svg(False)).replace("__LAYOUT__", layout_svg(place, False))
-            .replace("__STATES__", states_svg(False)).replace("__ABORTS__", ab).replace("__BUDGET__", bu).replace("__NETS__", nt))
+            .replace("__STATES__", states_svg(False)).replace("__BRAKE__", brake_svg(False)).replace("__ABORTS__", ab).replace("__BUDGET__", bu).replace("__NETS__", nt))
     (OUT / "diagram.html").write_text(html)
     print(f"best seed {seed} cost {c:.0f}; costs {[round(r[0]) for r in runs]}")
     for n in BOARDS:
