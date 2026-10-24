@@ -21,7 +21,7 @@ The box's catcher: a **static all-PETG collar** of 4 flat 45° faces on top of t
 
 ## Geometry (seat frame, C)
 - Faces: 45°, bottom edge z 1.3 (168 square), top z 77.2 (320 square). **The ±x faces (v8 plain) end at z 12.8: opening 191 along drone x by 168 along drone y (24 Oct, DEFAULT).**
-- Below the bottom edge: open; 2 pogo pads and the KW11 sit on a post under the belly (box chat, DEFAULT). Hold: the hook latch on the two seated faces (Spark 23 Oct; the electromagnet is retired).
+- Below the bottom edge: open; no post under the belly: the keep-alive and the seat sense run through spring probes in the plain ±x faces (v9 plain, `dimensions.md` G (6) / (8)). Hold: the hook latch on the two seated faces (Spark 23 Oct; the electromagnet is retired).
 - Camera keep-out: the face reaches x 98 at z 15.3.
 - **Mount (v6, v7, v8 plain the same, box structure v2):** seat frame to W by `catch_system.py` SEAT_TO_W (dimensions G System Box catch, L v2 layout): collar centred on the grip line W Y = Y_C 165 (arm PR 79 DEFAULT, hub 24 Oct), seat z 0 = W Z 155.3 at ring R 113 (C); seat y → W −X, seat x → W Y. `box_catch.assembly.json` is posed in that W. The 2 faces over the 45° and 135° bay modules carry the 4 screws; the other 4 holes are spares (any 90° rotation fits). 3D view: artifact "Nox Collar Mount".
 
@@ -133,7 +133,7 @@ The collar may meet only cage members: the catch wheels in the corner nodes (Cat
 ## Sequence
 1. Drone descends inside ±40, ±5° yaw, ≤ 0.15 m/s.
 2. First face touch: motors kill (Spark's landing mode).
-3. Wheels roll to centre; KW11 made = seated; the 4 hook latch plungers go out through the v7 skin windows (all 4 halls read out, else abort).
+3. Wheels roll to centre; seat sensed through the probes (1.3 mA); the 4 hook latch plungers go out through the v7 skin windows (all 4 halls read out, else abort).
 4. Swap (`nox/box/box.md`): the XT60 push lifts the drone 2.1 .. 5.7 (C) onto the plungers. Leaving: plungers in, spin-up, take off. Miss (no switch within 1.0 s): climb, retry.
 
 ## Problems
