@@ -150,7 +150,9 @@
   "front_Y": 333.4,
   "back_Y": -3.4,
   "side_X": 168.4,
-  "seat_W_Z": 155.3
+  "seat_W_Z": 155.3,
+  "file": "W, funnel v8 plain (catch PR 81)",
+  "v8_allowance_Y": 0.0
  },
  "landings": [
   {
@@ -261,12 +263,12 @@
  "enclosure": {
   "X_IN": 206,
   "Y_BACK": -66.0,
-  "Y_FRONT": 346,
+  "Y_FRONT": 335,
   "FLOOR": -236,
   "Z_TOP": 234,
   "sheets_mm": {
    "side x2": [
-    406,
+    395,
     470
    ],
    "front / rear x2": [
@@ -280,10 +282,10 @@
   },
   "outer": [
    418,
-   418.0,
+   407.0,
    470
   ],
-  "volume_L": 82.1
+  "volume_L": 80.0
  },
  "drone_keepout": "drone receivers (Scout, Overseer) + cartridge paths at 90 deg: drone_W.stl"
 }

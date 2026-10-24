@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session): funnel v8 file (catch PR 81) loaded as is: fit 0.0 mm³, both arm insert lanes clear the −Y panel (r 159.61 vs 159, C on M), v9 notch not needed for fit; v8 needs no Y room, box 418 x 407 x 470 (80.0 L). `box_layout_v2.py`, dimensions System box structure.
 - 24 Oct (box structure system session, box electronics): from arm v7 (PR 79): per-bay gravity offset in the axle step target (commissioning) + sag check ≤ ±0.55° (E, arm budget), ≤ 100 full steps/s through each notch, TURN 1.1 s; detent now holds (x1.3, index 1.04), KB3 stays. box-electronics.md, dimensions I.
 - 24 Oct (box catch chat): **funnel panel A / B v8 plain** (±x, DESIGN, do not print: v9 plain next): bottom edge seat z 12.8, opening 191 x 168 (DEFAULT; alt 181 sq), Overseer set centred 3.3 a side (C); FE on the seat landings 0.911 (C), 53.8 / 53.7 g (M); v7 plain do not print; box_catch.assembly.json in box W (Y_C 165). `runs/funnel_panel/v8_plain/`.
 - 24 Oct (box structure system session): stub tilt ≤ 10 mrad at the mast face, k ≥ 0.59 N·m/mrad (arm worker DEFAULT: XT60 float ±2.37° at 20 % margin leaves 11.6 / 15.2 mrad; replaces 1.9 mrad, merged an hour ago). dimensions System box structure.
