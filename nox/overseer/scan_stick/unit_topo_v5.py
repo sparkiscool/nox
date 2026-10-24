@@ -9,8 +9,8 @@ DEFAULT; alternative electronics on the sides 3.23 L, 154 x 108 x 194, the CG fu
   - the joint: the module's bottom edge hooks behind two lips of a ledge on the spine, 2x M3 x 12 at z 180 from inside the pocket
     (8 under the opening, reachable) into Ruthex inserts in the module plate;
   - the camera lens 1 behind the L2 plane, the top ring front ahead of the lens and outside its view.
-Spark 24 Oct: the pole screws in at the very end and as far as possible: thread 32 deep (C; the tip thread ~25, E), boss Ø40 x 38,
-2 mm entry chamfer.
+Spark 24 Oct (rod in hand): the tip has 25 of thread then a Ø27.5 plain shank, 27 engaged and no more: a Ø28.3 x 2 counterbore
+takes the shank (its shoulder seats on the floor), the thread runs 25.5 above it (0.5 past the tip), 1 mm entry chamfer; boss Ø40 x 38.
 Pieces: spine = base v21 (prints lying on its back on the bed diagonal), front module = head v16.
    python3 unit_topo_v5.py --check | --manifest | --system [h] [gen] | --piece base|head [h] [gen] | --reactions"""
 import sys, os, json
@@ -24,7 +24,8 @@ ARGS = [a for a in sys.argv[1:] if not a.startswith("-")]
 G = 9.81
 OUT_SYS = os.path.join(ROOT, "runs", "scan_stick_system", "v2")
 # ---------------------------------------------------------------- layout (placement v2 + the drawn interfaces, C)
-BOSS_R, BOSS_H, THREAD = 20.0, 38.0, 32.0                      # C (Spark: as far on as possible)
+BOSS_R, BOSS_H, THREAD = 20.0, 38.0, 27.0                      # THREAD = engagement: 2 shank + 25 thread (P Spark 24 Oct), C
+SHANK_R, SHANK_D = 14.15, 2.0                                    # Ø27.5 shank (P) + 0.4 radial (C), counterbore depth
 PACK = (-23.5, 23.5, -25.5, 25.5, 38.0, 188.0)                 # P + clearance
 SPINE = (-30.0, 30.0, -31.5, 31.5, 0.0, 196.0)
 JX = 30.0
@@ -125,7 +126,9 @@ def spine_bodies():
     if not os.path.exists(tc):
         os.makedirs(os.path.dirname(tc), exist_ok=True)
         os.system(f"openscad -o {tc} {os.path.join(HERE, 'thread_cut.scad')} >/dev/null 2>&1")
-    cuts = man(trimesh.load(tc, force="mesh")) + mf.Manifold.cylinder(2.0, 11.5, 9.5, 64)        # thread 32 deep + 2 mm entry chamfer
+    cuts = man(trimesh.load(tc, force="mesh")).translate([0, 0, SHANK_D - 0.5])                  # thread z 1.5..27.5 (overlaps the counterbore: no coincident faces)
+    cuts += mf.Manifold.cylinder(SHANK_D + 1.0, SHANK_R, SHANK_R, 96).translate([0, 0, -1.0])      # shank counterbore z 0..2
+    cuts += mf.Manifold.cylinder(1.5, 10.9, 9.9, 64).translate([0, 0, SHANK_D - 0.5])              # 1 mm entry chamfer on the thread
     cuts += box(-100, 100, -100, 100, -10, 0)
     cuts += B6(PACK) + box(PACK[0], PACK[1], PACK[2], PACK[3], PACK[5] - 0.01, 420)
     cuts += cyly(-40, 40, 0.0, POCKET_PIN, ROD_R)
@@ -164,7 +167,7 @@ def head_bodies():
             drawn += loc(cylx(-6.0, 0.0, y, u, 9.0))
         l2_reg += loc(cylx(-6.0, 0.5, y, u, 9.0))
         tj = (p6[0] - JX) / c + 0.5                                                             # the bore runs along the screw to the plate's back face
-        cuts += loc(cylx(-7, 1, y, u, 1.7) + cylx(-6.0, -3.0, y, u, 3.0) + cylx(-6.0 - tj, -6.0, y, u, 4.5))
+        cuts += loc(cylx(-7, 1, y, u, 1.7) + cylx(-6.5, -3.0, y, u, 3.0) + cylx(-6.0 - tj, -6.0, y, u, 4.5))   # overlapped 0.5: face-to-face cuts left a 0 mm film (head v16)
     posts = sum((cylx(CAM_PLATE[1] - 0.5, CAM_XF - 1.6, y, z, POST_R) for y, z in cam_posts), mf.Manifold())
     for y, z in cam_posts:
         cuts += cylx(CAM_PLATE[0] + 0.01, CAM_XF + 1, y, z, HOLE_R)
