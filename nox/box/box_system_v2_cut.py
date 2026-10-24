@@ -9,7 +9,7 @@ Stages (python3 box_system_v2_cut.py --stage structure|cut|fe|report|all):
   fe         system FE (h 4) on the cut assembly, piece-labelled voxel model (box_system.Model), unilateral floor on the feet
   report     requirements, assembly file, visual page
 Outputs: runs/box_system/v2/cut/. Everything is in W (box-arm.md). Tags: C geometry / drawn, M mesh, E estimate, F this model."""
-import os, sys, json, math, time, argparse, pickle
+import os, sys, json, math, time, argparse, pickle, re
 HERE = os.path.dirname(os.path.abspath(__file__))
 NOX = os.path.abspath(os.path.join(HERE, ".."))
 ROOT = os.path.abspath(os.path.join(NOX, ".."))
@@ -342,6 +342,170 @@ def split_islands(pieces, names, planes, new_plane, log, vfold=12000.0, vdrop=20
             else: pieces[f"{nm}_{i}"] = c; log(f"    island {nm}{i} ({c.volume() / 1e3:.1f} cm3) kept as a piece")
 
 
+# ================================================================================================ bolted laps
+# one lap site = a lug of one piece lying on a recess of the other, over the cut plane (drawn, never generated):
+#   lug: width 2 hw, thickness Lt (in the member's outer layer), runs from 8 inside its own piece to ov over the other piece's
+#   face (overlap ov >= 12, pads >= O12 with >= 2.0 web: hw = 8 for M3); counterbore, clearance hole through the lug;
+#   insert boss under the lug (receiving piece) with the heat-set hole, wall >= 3.
+BOLT = {"M3": dict(Lt=6.0, hw=8.0, ov=14.0, root=7.0, hole=3.4, cb_d=6.2, cb_h=3.2, ins_d=4.0, ins_h=6.7, boss=9.5, screw="M3 x 10", insert="M3 x 5.7",
+                   cap_N=250.0, shear_N=450.0),
+        "M5": dict(Lt=8.0, hw=10.0, ov=18.0, root=9.0, hole=5.5, cb_d=9.4, cb_h=5.3, ins_d=6.4, ins_h=10.5, boss=13.0, screw="M5 x 16", insert="M5 x 9.5",
+                   cap_N=650.0, shear_N=1100.0)}      # per-bolt capacities, E: insert pull-out in PETG (tension) and lug bearing / shear, at SF 1
+
+
+def lcyl(pl, r, p, d, length, n=32):
+    """cylinder radius r, from local point p along local unit vector d, length (world manifold)."""
+    d = np.asarray(d, float); d /= np.linalg.norm(d)
+    z = np.array([0, 0, 1.0]); v = np.cross(z, d); c = float(z @ d)
+    if np.linalg.norm(v) < 1e-9: Rm = np.eye(3) if c > 0 else np.diag([1, -1, -1.0])
+    else:
+        vx = np.array([[0, -v[2], v[1]], [v[2], 0, -v[0]], [-v[1], v[0], 0]]); Rm = np.eye(3) + vx + vx @ vx / (1 + c)
+    T = np.hstack([Rm, np.asarray(p, float)[:, None]])
+    return pl.world(mf.Manifold.cylinder(length, r, r, n).transform(T.tolist()))
+
+
+def poly_of(P):
+    """shapely geometry of a CrossSection (rings with their orientation: outer positive, holes negative)."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    outs, holes = [], []
+    for r in P.to_polygons():
+        pg = Polygon(r)
+        if not pg.is_valid: pg = pg.buffer(0)
+        (outs if Polygon(r).exterior.is_ccw else holes).append(pg)
+    g = unary_union(outs)
+    if holes: g = g.difference(unary_union(holes))
+    return g
+
+
+def candidates(P, hw, depth, step=3.0, min_fill=None):
+    """boundary sites of a contact footprint (plane-local u, v): q the boundary point, theta the outward direction of the
+    material boundary there, fill the share of the lug + boss rectangle (2 hw x depth, inward) inside the contact footprint."""
+    from shapely.geometry import Polygon, MultiPolygon
+    from shapely.geometry.polygon import orient
+    g = poly_of(P); out = []
+    if min_fill is None: min_fill = 0.55 if g.area > 500.0 else 0.12
+    polys = list(g.geoms) if isinstance(g, MultiPolygon) else [g]
+    for pg in polys:
+        if pg.is_empty or pg.area < 8: continue
+        pg = orient(pg, 1.0)
+        for ring in [pg.exterior] + list(pg.interiors):
+            L = ring.length
+            for s in np.arange(0.5 * step, L, step):
+                p = np.array(ring.interpolate(s).coords[0]); p1 = np.array(ring.interpolate(min(s + 2.5, L)).coords[0]); p0 = np.array(ring.interpolate(max(s - 2.5, 0)).coords[0])
+                t = p1 - p0
+                if np.linalg.norm(t) < 1e-6: continue
+                t /= np.linalg.norm(t); nu = np.array([t[1], -t[0]])                      # outward from the material = right of travel
+                th = math.atan2(nu[1], nu[0]); R2 = np.array([[math.cos(th), -math.sin(th)], [math.sin(th), math.cos(th)]])
+                rect = Polygon([p + R2 @ np.array(c_) for c_ in ((0, -hw), (0, hw), (-depth, hw), (-depth, -hw))])
+                fill = g.intersection(rect).area / rect.area
+                if fill >= min_fill: out.append(dict(q=p, theta=th, fill=float(fill)))
+    return out
+
+
+def site_T(c):
+    """site frame (x' outward from the member, y' across, z' = plane normal) -> plane-local."""
+    th = c["theta"]; q = c["q"]
+    return np.array([[math.cos(th), -math.sin(th), 0, q[0]], [math.sin(th), math.cos(th), 0, q[1]], [0, 0, 1, 0]])
+
+
+def n_sites(area):
+    if area < 150.0: return 1
+    if area < 600.0: return 2
+    return int(np.clip(round(math.sqrt(area) / 14.0), 3, 6))
+
+
+def site_boxes(pl, c, owner_is_a, spec):
+    """lug, boss (world manifolds) and bolt point / inward axis (site coordinates mapped to plane-local)."""
+    Lt, hw, ov, bs, rt = spec["Lt"], spec["hw"], spec["ov"], spec["boss"], spec["root"]
+    T = site_T(c)
+    n_lug = (-rt, ov) if owner_is_a else (-ov, rt)
+    n_bs = (0.0, ov) if owner_is_a else (-ov, 0.0)
+    mk = lambda tr, nr: pl.world(box(tr[0], tr[1], -hw, hw, nr[0], nr[1]).transform(T.tolist()))
+    nb = ov / 2.0 if owner_is_a else -ov / 2.0
+    pt = T[:, :3] @ np.array([0.0, 0.0, nb]) + T[:, 3]; tdir = T[:, :3] @ np.array([-1.0, 0, 0])
+    return mk((-Lt, 0.0), n_lug), mk((-Lt - bs, -Lt), n_bs), pt, tdir
+
+
+def apply_site(pieces, KEEP, itf, c, owner_is_a, spec, log=print, level=0):
+    pl = itf["plane"]; a, b = itf["a"], itf["b"]
+    O, Rr = (a, b) if owner_is_a else (b, a)
+    lug, boss, pt, tdir = site_boxes(pl, c, owner_is_a, spec)
+    Lt = spec["Lt"]
+    lug_c = lug - KEEP; boss_c = boss - KEEP
+    if lug_c.volume() < 0.97 * lug.volume() or boss_c.volume() < 0.97 * boss.volume(): return None, "keep-out clips the pad"
+    lb = bbox(lug); bb = bbox(boss)
+    tol_o, tol_a = (2.0, 3.0) if level == 0 else (60.0, 60.0)
+    trim = {}
+    for k, m in pieces.items():                                          # a third piece in the way (level 1: it gives the material up)
+        if k in (a, b): continue
+        mb = bbox(m)
+        for blk, bx in ((lug_c, lb), (boss_c, bb)):
+            if (mb[0] < bx[1] + 0.1).all() and (bx[0] < mb[1] + 0.1).all():
+                v = (blk ^ m).volume()
+                if v > tol_o: return None, f"piece {k} in the way"
+                if v > 0.5: trim[k] = trim.get(k, m) - blk
+    ptw = pl.to_world(pt); dw = pl.Tw[:, :3] @ tdir
+    head = lcyl(pl, 5.0, pt - tdir * 0.3, -tdir, ACCESS)                 # screwdriver and head clear, outward
+    if (head ^ KEEP).volume() > tol_a: return None, "screw access blocked by a keep-out"
+    for k, m in pieces.items():
+        if (head ^ m).volume() > tol_a: return None, f"screw access blocked by {k}"
+    hole = lcyl(pl, spec["hole"] / 2, pt + (-tdir) * 1.0, tdir, Lt + 1.0)
+    cbore = lcyl(pl, spec["cb_d"] / 2, pt + (-tdir) * 1.0, tdir, spec["cb_h"] + 1.0)
+    ins = lcyl(pl, spec["ins_d"] / 2, pt + tdir * (Lt - 0.5), tdir, spec["ins_h"] + 0.5)      # from the lug underside in the receiving piece
+    nO = (pieces[O] + lug_c) - hole - cbore
+    nR = ((pieces[Rr] - lug) + boss_c) - ins
+    for k, mnew, mold in ((O, nO, pieces[O]), (Rr, nR, pieces[Rr])):
+        if len(comps(mnew, 50.0)) > len(comps(mold, 50.0)): return None, f"{k} would fall into two bodies"
+        eo, en = np.ptp(bbox(mold), axis=0), np.ptp(bbox(mnew), axis=0)
+        if (en > np.maximum(MAXEXT, eo) + 1e-6).any(): return None, f"{k} would pass the 180 cube"
+    for k, m in trim.items():
+        if len(comps(m, 50.0)) > len(comps(pieces[k], 50.0)): return None, f"{k} would fall into two bodies"
+    pieces.update(trim)
+    pieces[O], pieces[Rr] = nO, nR
+    return dict(owner=O, receiver=Rr, size=spec_name(spec), pos=np.round(ptw, 2).tolist(), axis_in=np.round(dw, 4).tolist(), plane=pl.name,
+                lug_box=np.round(bbox(lug), 2).tolist(), boss_box=np.round(bbox(boss), 2).tolist(), screw=spec["screw"], insert=spec["insert"]), None
+
+
+ACCESS = 10.0                                                            # free length outside the screw head, Ø10 (E: hex driver + head)
+MAXEXT = 178.0
+
+
+def spec_name(spec):
+    return "M3" if spec["hole"] < 4 else "M5"
+
+
+def laps(pieces, planes, KEEP, sizes=None, log=print, amin=60.0):
+    """a bolted lap on every contact. sizes: {(a, b, plane): ('M3' | 'M5', n)} from the system FE (default M3, n_sites(area))."""
+    C = [c for c in contacts(pieces, planes, amin) if c["area"] >= amin]
+    joints = []; rej = {}
+    for k, itf in enumerate(C):
+        sz, nn = ((sizes or {}).get((itf["a"], itf["b"], itf["plane"].name)) or ("M3", n_sites(itf["area"])))
+        spec = BOLT[sz]
+        cand = candidates(itf["P"], spec["hw"], spec["Lt"] + spec["boss"])
+        got = []; tried = 0; rj = {}
+        for level in (0, 1):
+          if level == 1 and len(got) >= min(nn, 2): break
+          tried = 0
+          for c in sorted(cand, key=lambda c: -c["fill"]):
+            if len(got) >= nn or tried >= 60: break
+            if any(np.linalg.norm(c["q"] - g[0]["q"]) < 26.0 for g in got): continue
+            tried += 1
+            owner_a = (len(got) % 2 == 0)
+            r, why = apply_site(pieces, KEEP, itf, c, owner_a, spec, log, level)
+            if r is None:
+                r, why2 = apply_site(pieces, KEEP, itf, c, not owner_a, spec, log, level)
+                if r is None:
+                    key = re.sub(r"(blocked by|piece|falls?|would fall|in the way)\s*\S*", "", why2).strip() or why2
+                    key = re.sub(r"^\S+ would", "piece would", why2) if "would" in why2 else re.sub(r"(piece|by) \S+", r"\1 X", why2)
+                    rej[key] = rej.get(key, 0) + 1; rj[key] = rj.get(key, 0) + 1; continue
+            r['relaxed'] = level; got.append((c, r))
+        joints.append(dict(a=itf["a"], b=itf["b"], plane=itf["plane"].name, area=itf["area"], want=nn, size=sz, sites=[r for _, r in got]))
+        log(f"  lap {itf['a']} | {itf['b']} on {itf['plane'].name}: {itf['area'] / 100:.1f} cm2, {len(got)}/{nn} {sz} sites ({len(cand)} candidates){' rejected ' + str(rj) if len(got) < nn else ''}")
+    log(f"  rejected candidates: {rej}")
+    return joints
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--stage", default="structure")
     a = ap.parse_args()
@@ -356,6 +520,16 @@ def main():
         C = contacts(P, pl)
         for c in C: log(f"  contact {c['a']} | {c['b']} on {c['plane'].name}: {c['area'] / 100:.1f} cm2")
         log(f"{len(C)} interfaces")
+    if a.stage == "laps":
+        S = structure(); out, pl = partition(S)
+        P = fold(out, pl, log=log); P = size_splits(P, pl, log=log)
+        D = drawn_inputs(); KEEP = D["cuts"] - D["drawn"]
+        t0 = time.time(); J = laps(P, pl, KEEP, log=log); log(f"laps {time.time() - t0:.0f} s")
+        os.makedirs(os.path.join(OUT, "pieces_wip"), exist_ok=True)
+        for k, m in P.items():
+            b = bbox(m); log(f"{k}: {m.volume() / 1e3:.1f} cm3 ext {np.round(b[1] - b[0]).tolist()} lo {np.round(b[0]).tolist()} comps {[round(c.volume(), 1) for c in comps(m)][:4]}")
+            tm(m).export(os.path.join(CACHE, f"wip_{k}.stl"))
+        json.dump(J, open(os.path.join(CACHE, "wip_joints.json"), "w"), indent=1, default=float)
 
 
 if __name__ == "__main__":
