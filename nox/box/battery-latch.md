@@ -29,7 +29,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 3. Half-in: the hall model gives 96.7 mT latched / 7.2 half in / 1.0 squeezed; the box seat check gates the drone's release (dimensions "Latched state").
 4. Overlap 2.5 → 2.3; asymmetric squeeze swept at ±1.0: 0 mm³, pull-out clear, tip 0.7 inside the face.
 5. "System box swap: latch" written, with reactions and `budget_g`; v3 baseline 72.1 g noted.
-6. Overseer posed at A (on the thrust axis, the Overseer DEFAULT) and B; the balance FAIL in `overseer.assembly.json` is that layout's, not the latch's.
+6. Overseer posed at B (pack 30 behind the thrust axis, Spark 24 Oct decision) and A; the balance numbers in `overseer.assembly.json` are that layout's, not the latch's.
 
 ## Pieces
 | Piece | Material, count | Scout g (M) | Overseer g (M) | Print |
