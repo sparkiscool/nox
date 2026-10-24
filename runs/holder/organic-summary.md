@@ -43,7 +43,8 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 | organic-v8 | as v7, case_norm frame | 11.72 | 0.596 | **PASS** | ok | right: one frame | 4471 s |
 | organic-v9 | as v8, min member 6.6 mm | 11.74 | 1.083 | FAIL (2 bodies) | ok | wrong: two frames | ~4300 s |
 | organic-v10 | as v7, gen 6.0 | 12.50 | 0.504 | **PASS** | ok | right: one frame | 4148 s |
-| **organic-v11** | final engine (held bodies whole), gen 5.4 | **11.73** | **0.493** | **PASS** | ok | right: one frame | 2677 s |
+| **organic-v11** | final engine (held bodies whole), channel edges r 3 mm, gen 5.4 | **11.73** | **0.493** | **PASS** | ok | right: one frame | 2677 s |
+| organic-v12 (run-only session) | as v11, gen 6.0 | 12.50 | 0.481 | PASS | ok | right | see its summary |
 
 ## Result
 
@@ -51,10 +52,9 @@ the bosses, pad, hooks and camera pad, only holes, bores and flat contact faces 
 into every drawn body, geometric only on holes, bores and contact faces; (b) `nox/solid_check.py` PASS on the exact
 STL; (c) worst 0.493 <= 0.498 (topo-v1); (d) 11.73 g, +14 % on topo-v1's 10.26 g.
 
-The worst index still sits at the 90 deg bend over the battery channel's top long edge behind each hook (every run,
-topo-v1 included) and clears its target by 0.005; same-setup runs spread by about 0.03. More margin there needs a setup
-change for Spark: round the battery channel's two top long edges (r 3 mm) or lower its top from z 22 to 21. organic-v10
-shows the mass route (12.50 g, 0.504, before the held-body rule).
+Setup for v11: Spark approved rounding the battery channel's two top long edges r 3 mm (611f4e8), the spot every run
+peaked at (the bend over that edge behind each hook). The index clears its target by 0.005 and same-setup runs spread
+by about 0.03, so the margin is thin; organic-v12 (gen 6.0) gives 0.481 at 12.5 g (+22 %).
 
 ## Final engine on the other demos
 
@@ -63,3 +63,4 @@ shows the mass route (12.50 g, 0.504, before the held-body rule).
 | bracket_jA | organic-v5 | 36.85 (v8 38.37) | 0.127 same grid (v8 0.133) | PASS | smooth beam on a whole flange (thin crescent design space) |
 | motor_mount | organic-v2 | 18.03 (topo-v3 17.21) | 0.122 (topo-v3 0.117) | PASS | four round legs branching into the seat, open base ring |
 | motor_mount | organic-v1 (before the held-body rule) | 17.94 | 0.143 | FAIL (pad cores 0.75) | as v2 |
+| bar_half | organic-v2 (run-only session, engine at 611f4e8) | 74.94 (v8 77.58) | 0.833 same grid (v8 0.929) | PASS | see its summary |
