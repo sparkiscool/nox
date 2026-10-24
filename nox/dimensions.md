@@ -200,6 +200,16 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Breaking order | in the crash case the frame, every mount and the pack holder stay at ≤ 1 / 1.5 of the worst cage node or foot index (the node goes first) | DEFAULT |
 | Index target | worst as-built index ≤ 1.0 in the crash case, ≤ 0.5 in flight and landing | DEFAULT |
 
+**Mass budget (24 Oct; light is priority 1).** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section; each piece's topology mass target is its slot; `system_check` fails a system over `mass_budget_g` or a part over its `budget_g`. A slot moves only with the same total (one `log.md` line).
+
+| System | Whole (`mass_budget_g`) | Bought, fixed | Structure allowance (printed + rods + fasteners) | Tag |
+|---|---|---|---|---|
+| Overseer | 2200 g (DEFAULT, 5 % under the 2330 g cage v0 estimate; alt 2330) | 1649 g: L2 230, pack 650, 4 motor + prop 364, 4 ESC 100, Pi 5 + cooler 55, plates 84, wires 80, cameras 30, PDB 21, UBEC 15, FC 10, buck 6, RX 2, flow 2 (`layout_v2.py` cg_of) | ≤ 551 g: cage rods + nodes, arms, apex / L2 mount, deck, sled + pods, feet, cartridge | E |
+| Scout v3 | 500 g (DEFAULT: never heavier than today's ~500 g; Spark set no target, alt none) | from the Scout v3 bottom layout (pack 165 P, frame 24 to 32 E, ...) | 500 minus bought, split by the Scout v3 system pass | E |
+| Box | no cap (ground station); each piece reports its mass, a new version may not be heavier without a reason in its summary | | | DEFAULT |
+| Scan stick (on the Overseer) | counts inside the Overseer's 2200 g when mounted; its own section sets its slot | | | DEFAULT |
+
+
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
 Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
 
