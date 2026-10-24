@@ -95,3 +95,20 @@ it  47 beta    4 J   0.1643 vol 0.0263 (dil 0.0737 g -0.320) grey  3.8% ch 0.100
 it  48 beta    4 J   0.1117 vol 0.0299 (dil 0.0814 g -0.250) grey  4.3% ch 0.100 worst misuse: Overseer motors cut 125 5.1s
 it  49 beta    4 J   0.0964 vol 0.0340 (dil 0.0894 g -0.175) grey  5.8% ch 0.100 worst misuse: Overseer motors cut 112 4.9s
 it  50 beta    4 J   0.0882 vol 0.0390 (dil 0.0974 g -0.102) grey  6.1% ch 0.100 worst misuse: Overseer motors cut 105 5.0s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  51 beta    4 J   0.0829 vol 0.0448 (dil 0.1048 g +0.001) grey  6.7% ch 0.100 worst misuse: Overseer motors cut 99.7 5.6s
+it  52 beta    4 J   0.0797 vol 0.0460 (dil 0.1040 g -0.007) grey  6.3% ch 0.100 worst misuse: Overseer motors cut 96.3 4.9s
+it  53 beta    4 J   0.0766 vol 0.0478 (dil 0.1040 g -0.007) grey  6.3% ch 0.100 worst misuse: Overseer motors cut 93 5.1s
+it  54 beta    4 J   0.0734 vol 0.0495 (dil 0.1042 g -0.005) grey  6.0% ch 0.100 worst misuse: Overseer motors cut 89.7 5.1s
+it  55 beta    4 J   0.0694 vol 0.0511 (dil 0.1043 g -0.004) grey  5.8% ch 0.100 worst misuse: Overseer motors cut 86.1 5.3s
+it  56 beta    4 J   0.0663 vol 0.0521 (dil 0.1044 g +0.085) grey  5.5% ch 0.100 worst misuse: Overseer motors cut 83 5.1s
+it  57 beta    4 J   0.0756 vol 0.0468 (dil 0.0999 g +0.038) grey  5.7% ch 0.100 worst misuse: Overseer motors cut 92 5.1s
+it  58 beta    4 J   0.0867 vol 0.0420 (dil 0.0956 g -0.007) grey  5.8% ch 0.100 worst misuse: Overseer motors cut 98.8 5.3s
+it  59 beta    4 J   0.0742 vol 0.0433 (dil 0.0957 g -0.005) grey  5.3% ch 0.100 worst misuse: Overseer motors cut 90.4 4.8s
+it  60 beta    4 J   0.0700 vol 0.0446 (dil 0.0958 g -0.004) grey  5.0% ch 0.100 worst misuse: Overseer motors cut 86.5 5.0s
