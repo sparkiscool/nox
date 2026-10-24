@@ -1,7 +1,7 @@
 """Battery latch figures for the layout artifact, all from the script's geometry: tab-line sections (latched / gripped /
 free, both packs), the assembled sets (latch_assembly, Scout end skids), receiver v1 vs v2 (compare) and their |u| under
 the swap cases (fe_sections, from battery_latch_topo --swap-v1 / --swap-v2 fields), and the Scout set in the collar planes.
-python3 nox/box/battery_latch_figure.py -> runs/battery_latch/v2/figs/*.png"""
+python3 nox/box/battery_latch_figure.py -> runs/battery_latch/<OUT>/figs/*.png"""
 import os, sys, math
 import numpy as np
 import matplotlib
@@ -132,7 +132,7 @@ def _clip_image(ax, img, extent, polys, vmax, cmap="viridis"):
 
 def fe_sections(case="swap insert 74 N + across 43.5 N", out=None):
     """|u| (mm) of receiver v1 and v2 under one swap case (battery_latch_topo --swap-v1 / --swap-v2 saved the node fields
-    in runs/battery_latch/v2/fe/), on the tab-line section and the side section through the wall, same colour scale."""
+    in <OUT>/fe/), on the tab-line section and the side section through the wall, same colour scale."""
     import trimesh as T_
     d = os.path.join(BL.OUT, "fe")
     key = case.replace(" ", "_")

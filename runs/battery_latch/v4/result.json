@@ -1099,7 +1099,7 @@
    "xt60_carrier": 4.76,
    "skids": 4.57,
    "cart_strips": 2.23,
-   "recv_skids": 8.02
+   "recv_skids": 8.2
   },
   "pitch_guidance": {
    "guide": false,
@@ -1127,8 +1127,8 @@
     "rail_swept_mm": 2.48
    },
    "receiver_end_pieces": {
-    "nodes_mm": 4.85,
-    "rail_swept_mm": 4.85
+    "nodes_mm": 5.57,
+    "rail_swept_mm": 5.57
    },
    "cartridge": {
     "nodes_mm": 7.02,
@@ -1235,25 +1235,25 @@
     "count": 1,
     "version": "v2",
     "bed_face": "plate's outer face down, the bars on tree supports",
-    "mass_g": 3.15,
+    "mass_g": 3.2,
     "extents": [
-     66.5,
+     71.5,
      35.8,
      25.5
     ],
-    "solid_check": "FAIL",
+    "solid_check": "PASS",
     "solid_info": {
-     "bodies_plain": 7,
+     "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[753.5]",
+     "eroded_volumes_mm3": "[767.5]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
      "acute_edges": 1,
-     "ok": false
+     "ok": true
     },
-    "bed_mm2": 846.0,
-    "overhang_mm2": 334.0,
+    "bed_mm2": 856.0,
+    "overhang_mm2": 342.0,
     "island_run_mm": 0.0
    },
    "rskid_tail": {
@@ -1262,9 +1262,9 @@
     "count": 1,
     "version": "v1",
     "bed_face": "plate's outer face down, the chamfer and bars on tree supports",
-    "mass_g": 4.87,
+    "mass_g": 5.0,
     "extents": [
-     66.5,
+     71.5,
      35.8,
      17.6
     ],
@@ -1272,15 +1272,15 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[1239.7]",
+     "eroded_volumes_mm3": "[1274.0]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
      "acute_edges": 2,
      "ok": true
     },
-    "bed_mm2": 1236.0,
-    "overhang_mm2": 533.0,
+    "bed_mm2": 1277.0,
+    "overhang_mm2": 532.0,
     "island_run_mm": 0.0
    },
    "slider": {
@@ -1474,15 +1474,15 @@
    }
   },
   "skids": {
-   "funnel_clip_inset": 6.0,
+   "funnel_clip_inset": 6.25,
    "need_mm": 1.0,
    "receiver": {
     "nose": {
-     "funnel_margin_mm": 1.13,
-     "key_line_mm": 6.18
+     "funnel_margin_mm": 1.21,
+     "key_line_mm": 9.33
     },
     "tail": {
-     "funnel_margin_mm": 2.4,
+     "funnel_margin_mm": 2.24,
      "key_line_mm": 4.49
     }
    },
@@ -1839,15 +1839,15 @@
    "rows": {
     "hover 1 g": 0.018,
     "flight 4 g + 2 g x": 0.072,
-    "catch 6 g": 0.108,
-    "crash -y": 0.392,
-    "crash +y": 0.22,
-    "crash +x": 0.341,
-    "crash -x": 0.341,
+    "catch 6 g": 0.109,
+    "crash -y": 0.396,
+    "crash +y": 0.222,
+    "crash +x": 0.344,
+    "crash -x": 0.344,
     "crash +z": 0.081,
     "crash -z": 0.076,
-    "crash corner (+x -y +z)": 0.227,
-    "crash corner (-x -y -z)": 0.245,
+    "crash corner (+x -y +z)": 0.229,
+    "crash corner (-x -y -z)": 0.247,
     "swap insert 60 N": 0.047,
     "swap pull 50 N": 0.046,
     "handling 50 N on a foot": 0.069,
@@ -1867,9 +1867,9 @@
      "inlayer": 0.008,
      "across": 0.018,
      "at": [
-      -30.8,
+      30.8,
       8.2,
-      81.8
+      89.2
      ]
     },
     {
@@ -1887,29 +1887,29 @@
      "case": "catch 6 g",
      "cls": "flight",
      "inlayer": 0.049,
-     "across": 0.108,
+     "across": 0.109,
      "at": [
       30.8,
       8.2,
-      81.8
+      89.2
      ]
     },
     {
      "case": "crash -y",
      "cls": "misuse",
-     "inlayer": 0.178,
-     "across": 0.392,
+     "inlayer": 0.179,
+     "across": 0.396,
      "at": [
       30.8,
       8.2,
-      81.8
+      89.2
      ]
     },
     {
      "case": "crash +y",
      "cls": "misuse",
-     "inlayer": 0.191,
-     "across": 0.22,
+     "inlayer": 0.193,
+     "across": 0.222,
      "at": [
       -29.2,
       59.2,
@@ -1919,8 +1919,8 @@
     {
      "case": "crash +x",
      "cls": "misuse",
-     "inlayer": 0.332,
-     "across": 0.341,
+     "inlayer": 0.334,
+     "across": 0.344,
      "at": [
       29.2,
       59.2,
@@ -1930,8 +1930,8 @@
     {
      "case": "crash -x",
      "cls": "misuse",
-     "inlayer": 0.332,
-     "across": 0.341,
+     "inlayer": 0.334,
+     "across": 0.344,
      "at": [
       -29.2,
       59.2,
@@ -1944,7 +1944,7 @@
      "inlayer": 0.079,
      "across": 0.081,
      "at": [
-      29.2,
+      -29.2,
       59.2,
       167.2
      ]
@@ -1955,7 +1955,7 @@
      "inlayer": 0.054,
      "across": 0.076,
      "at": [
-      30.8,
+      -30.8,
       45.8,
       -0.8
      ]
@@ -1963,8 +1963,8 @@
     {
      "case": "crash corner (+x -y +z)",
      "cls": "misuse",
-     "inlayer": 0.198,
-     "across": 0.227,
+     "inlayer": 0.2,
+     "across": 0.229,
      "at": [
       -30.8,
       8.2,
@@ -1974,8 +1974,8 @@
     {
      "case": "crash corner (-x -y -z)",
      "cls": "misuse",
-     "inlayer": 0.217,
-     "across": 0.245,
+     "inlayer": 0.218,
+     "across": 0.247,
      "at": [
       -29.2,
       59.2,
@@ -1988,7 +1988,7 @@
      "inlayer": 0.042,
      "across": 0.047,
      "at": [
-      -20.2,
+      20.2,
       63.8,
       161.2
      ]
@@ -2054,9 +2054,9 @@
      "inlayer": 0.052,
      "across": 0.116,
      "at": [
-      -30.8,
+      30.8,
       8.2,
-      81.8
+      89.2
      ]
     },
     {
@@ -2073,7 +2073,7 @@
     {
      "case": "swap across 43.5 N +x",
      "cls": "flight",
-     "inlayer": 0.249,
+     "inlayer": 0.248,
      "across": 0.548,
      "at": [
       9.8,
@@ -2084,7 +2084,7 @@
     {
      "case": "swap across 43.5 N -x",
      "cls": "flight",
-     "inlayer": 0.249,
+     "inlayer": 0.248,
      "across": 0.548,
      "at": [
       -9.8,
@@ -2108,15 +2108,15 @@
     "swap insert 74 N on the XT60 seat": 0.001,
     "swap insert 74 N on the stops": 0.0039,
     "swap pull 57 N on the XT60 lips": 0.016,
-    "swap pull 57 N on the bolts": 0.0213,
+    "swap pull 57 N on the bolts": 0.0214,
     "swap insert 74 N + across 43.5 N": 0.6092,
-    "swap across 43.5 N +x": 0.7805,
-    "swap across 43.5 N -x": 0.7805,
-    "swap centring 7.6 N + 1.05 N m": 0.2144
+    "swap across 43.5 N +x": 0.7794,
+    "swap across 43.5 N -x": 0.7794,
+    "swap centring 7.6 N + 1.05 N m": 0.2141
    },
    "guide_lever_mm": null,
    "build": "+y",
-   "crash_worst": 0.392,
+   "crash_worst": 0.396,
    "swap_worst": 0.548
   },
   "first_mode": {
@@ -2997,7 +2997,7 @@
   }
  },
  "scout_system": {
-  "summary": "System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 3.9 mm\u00b3 (E) (cage (rods + nodes)/receiver skid nose (latch)) FAIL, bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 812 g (E), CG 1.3 mm off thrust axis (E) [+1.3, +0.0, -38.3], 1.9 mm without swap parts, probes -27.9 mm (E) edge at (+0.96, -0.06, +0.26) (receiver v1 (latch)) FAIL, access 7/7 clear",
+  "summary": "System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 2.6 mm\u00b3 (E) (mount + nose legs (Scout)/receiver skid nose (latch)) FAIL, bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 812 g (E), CG 1.3 mm off thrust axis (E) [+1.3, +0.0, -38.3], 1.8 mm without swap parts, probes -27.9 mm (E) edge at (+0.96, -0.06, +0.26) (receiver v1 (latch)) FAIL, access 7/7 clear",
   "pass_": false,
   "clashes": [],
   "balance": {
@@ -3015,7 +3015,7 @@
    "tol_mm": 3.0,
    "cases": {
     "all": {
-     "mass_g": 811.76,
+     "mass_g": 811.94,
      "cg_offset": [
       1.27,
       0.03,
@@ -3026,19 +3026,19 @@
      "pass_": true
     },
     "no_swap": {
-     "mass_g": 596.28,
+     "mass_g": 596.46,
      "cg_offset": [
-      1.85,
+      1.84,
       0.04,
-      -30.47
+      -30.48
      ],
-     "horizontal_mm": 1.85,
-     "axial_mm": -30.47,
+     "horizontal_mm": 1.84,
+     "axial_mm": -30.48,
      "pass_": true
     }
    },
    "worst_case": "no_swap",
-   "worst_horizontal_mm": 1.85,
+   "worst_horizontal_mm": 1.84,
    "pass_": true
   },
   "access": {
@@ -3334,32 +3334,6 @@
      "pass_": false
     },
     {
-     "probe": "post r10",
-     "r_mm": 10.0,
-     "part": "flow MTF-02P",
-     "margin_mm": -10.85,
-     "unshielded": false,
-     "dir": [
-      0.005,
-      0.866,
-      0.5
-     ],
-     "dir_label": "(+0.01, +0.87, +0.50)",
-     "axis": [
-      -1.0,
-      -0.001,
-      0.013
-     ],
-     "roll_deg": 60.0,
-     "lateral_mm": 71.2,
-     "contact": [
-      -11.0,
-      43.5,
-      -33.5
-     ],
-     "pass_": false
-    },
-    {
      "probe": "edge",
      "r_mm": 0.0,
      "part": "receiver lid (latch)",
@@ -3386,52 +3360,52 @@
      "pass_": false
     },
     {
-     "probe": "edge",
-     "r_mm": 0.0,
-     "part": "Radxa Zero 3W",
-     "margin_mm": -5.0,
+     "probe": "post r10",
+     "r_mm": 10.0,
+     "part": "flow MTF-02P",
+     "margin_mm": -7.29,
      "unshielded": false,
      "dir": [
-      0.14,
-      -0.282,
-      -0.949
+      0.005,
+      0.866,
+      0.5
      ],
-     "dir_label": "(+0.14, -0.28, -0.95)",
+     "dir_label": "(+0.01, +0.87, +0.50)",
      "axis": [
-      0.422,
-      -0.85,
-      0.315
+      -1.0,
+      -0.001,
+      0.013
      ],
-     "roll_deg": 180.0,
-     "lateral_mm": -42.8,
+     "roll_deg": 60.0,
+     "lateral_mm": 71.2,
      "contact": [
-      -30.0,
-      -33.5,
-      -35.0
+      -11.0,
+      43.5,
+      -33.5
      ],
      "pass_": false
     },
     {
-     "probe": "post r10",
-     "r_mm": 10.0,
+     "probe": "edge",
+     "r_mm": 0.0,
      "part": "Radxa Zero 3W",
-     "margin_mm": -0.78,
+     "margin_mm": -6.0,
      "unshielded": false,
      "dir": [
-      -0.048,
-      -0.975,
-      -0.217
+      0.1,
+      -0.179,
+      -0.979
      ],
-     "dir_label": "(-0.05, -0.98, -0.22)",
+     "dir_label": "(+0.10, -0.18, -0.98)",
      "axis": [
-      -0.833,
-      -0.08,
-      0.547
+      0.48,
+      -0.853,
+      0.205
      ],
-     "roll_deg": 255.0,
-     "lateral_mm": -48.8,
+     "roll_deg": 180.0,
+     "lateral_mm": -44.3,
      "contact": [
-      -33.0,
+      -31.0,
       -33.5,
       -35.0
      ],
@@ -3646,6 +3620,32 @@
      "pass_": true
     },
     {
+     "probe": "post r10",
+     "r_mm": 10.0,
+     "part": "Radxa Zero 3W",
+     "margin_mm": 1.9,
+     "unshielded": false,
+     "dir": [
+      -0.317,
+      -0.741,
+      -0.592
+     ],
+     "dir_label": "(-0.32, -0.74, -0.59)",
+     "axis": [
+      -0.833,
+      -0.08,
+      0.547
+     ],
+     "roll_deg": 225.0,
+     "lateral_mm": -12.8,
+     "contact": [
+      -29.0,
+      -33.5,
+      -35.0
+     ],
+     "pass_": true
+    },
+    {
      "probe": "edge",
      "r_mm": 0.0,
      "part": "UBEC",
@@ -3700,32 +3700,6 @@
     {
      "probe": "post r10",
      "r_mm": 10.0,
-     "part": "receiver lid (latch)",
-     "margin_mm": 2.56,
-     "unshielded": false,
-     "dir": [
-      0.723,
-      0.49,
-      -0.486
-     ],
-     "dir_label": "(+0.72, +0.49, -0.49)",
-     "axis": [
-      0.648,
-      -0.726,
-      0.231
-     ],
-     "roll_deg": 240.0,
-     "lateral_mm": 20.2,
-     "contact": [
-      53.3,
-      31.5,
-      2.6
-     ],
-     "pass_": true
-    },
-    {
-     "probe": "post r10",
-     "r_mm": 10.0,
      "part": "UBEC",
      "margin_mm": 3.1,
      "unshielded": false,
@@ -3750,8 +3724,60 @@
      "pass_": true
     },
     {
+     "probe": "post r10",
+     "r_mm": 10.0,
+     "part": "receiver lid (latch)",
+     "margin_mm": 3.61,
+     "unshielded": false,
+     "dir": [
+      0.662,
+      -0.749,
+      0.0
+     ],
+     "dir_label": "(+0.66, -0.75, +0.00)",
+     "axis": [
+      0.714,
+      0.631,
+      0.303
+     ],
+     "roll_deg": 90.0,
+     "lateral_mm": 21.7,
+     "contact": [
+      53.3,
+      -31.5,
+      2.6
+     ],
+     "pass_": true
+    },
+    {
      "probe": "edge",
      "r_mm": 0.0,
+     "part": "pack XT60 plug",
+     "margin_mm": 4.46,
+     "unshielded": false,
+     "dir": [
+      0.666,
+      -0.287,
+      -0.688
+     ],
+     "dir_label": "(+0.67, -0.29, -0.69)",
+     "axis": [
+      0.745,
+      0.275,
+      0.607
+     ],
+     "roll_deg": 150.0,
+     "lateral_mm": 17.2,
+     "contact": [
+      45.0,
+      3.0,
+      -24.9
+     ],
+     "pass_": true
+    },
+    {
+     "probe": "post r10",
+     "r_mm": 10.0,
      "part": "pack XT60 plug",
      "margin_mm": 5.0,
      "unshielded": false,
@@ -3767,33 +3793,7 @@
       0.665
      ],
      "roll_deg": 180.0,
-     "lateral_mm": 2.2,
-     "contact": [
-      45.0,
-      -3.9,
-      -24.9
-     ],
-     "pass_": true
-    },
-    {
-     "probe": "post r10",
-     "r_mm": 10.0,
-     "part": "pack XT60 plug",
-     "margin_mm": 5.09,
-     "unshielded": false,
-     "dir": [
-      0.601,
-      0.261,
-      -0.756
-     ],
-     "dir_label": "(+0.60, +0.26, -0.76)",
-     "axis": [
-      0.782,
-      0.003,
-      0.623
-     ],
-     "roll_deg": 195.0,
-     "lateral_mm": -20.3,
+     "lateral_mm": 3.7,
      "contact": [
       45.0,
       -3.3,
@@ -4305,7 +4305,7 @@
     0.0,
     10.0
    ],
-   "n_points": 236159
+   "n_points": 236753
   },
   "cage_first": {
    "receiver v1 (latch)": 5.68,
