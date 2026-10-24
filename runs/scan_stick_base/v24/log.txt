@@ -1,0 +1,1 @@
+=== scan_stick_base: h 2.0, generated 70.0 cm3, min member 3.2 mm, cores 4

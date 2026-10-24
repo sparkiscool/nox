@@ -1,0 +1,3 @@
+=== scan_stick_base: h 2.0, generated 70.0 cm3, min member 3.2 mm, cores 4
+scan_stick_base: grid (64, 48, 120) h 2.0 = 368,640 cells; design 116,152 (929.2 cm3), drawn 28,492, void 223,996
+  support default: 3660 cells, 5460 nodes
