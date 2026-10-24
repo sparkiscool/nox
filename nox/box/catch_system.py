@@ -120,10 +120,10 @@ def overseer_cases():
                 pl = [r[j] for j, s_ in enumerate(S) if s_[0] == "plunger"] or [0.0]
                 fc = [r[j] for j, s_ in enumerate(S) if s_[0] == "face"]
                 f_lat = max(r[j] for j, s_ in enumerate(S) if s_[0] == "face" and s_[1] in (0, 2))   # +-y faces: panels v7
-                f_pln = max(r[j] for j, s_ in enumerate(S) if s_[0] == "face" and s_[1] in (1, 3))   # +-x faces: v7 plain
+                f_pln = max(r[j] for j, s_ in enumerate(S) if s_[0] == "face" and s_[1] in (1, 3))   # +-x faces: v8 plain
                 row = dict(at=[round(v, 1) for v in p], plunger_max_N=round(max(pl), 2), plungers_N=[round(v, 2) for v in pl],
                            face_wheel_max_N=round(max(fc), 2), face_wheel_min_N=round(min(fc), 2),
-                           face_wheel_v7_N=round(f_lat, 2), face_wheel_v7_plain_N=round(f_pln, 2),
+                           face_wheel_v7_N=round(f_lat, 2), face_wheel_plain_N=round(f_pln, 2),
                            wheels_loaded=int(sum(v > 0.05 for v in fc)), residual_N=round(float(res), 3))
                 if worst is None or (row["residual_N"], row["plunger_max_N"], row["face_wheel_max_N"]) > \
                    (worst["residual_N"], worst["plunger_max_N"], worst["face_wheel_max_N"]):
@@ -215,12 +215,13 @@ def main():
             row.update(panel_fe_util=round(fe[ref[0]]["util"] * k, 3), panel_boss_index=round(bh[ref[1]]["index_across_layers"] * k, 3),
                        panel_boss_defl_mm=round(fe[ref[0]]["boss_defl_mm"] * k, 2))
             row["piece_worst"] = max(row["plunger_index"], row["guide_wall_index"], row["panel_fe_util"], row["panel_boss_index"])
-    # panel skins at the seated wheel spot (u 100, v 40 of the panel FE, 20 N press, linear; C): the Overseer puts up to
-    # 9 x the Scout's face-wheel load on them (6 g landing, hand lift); latched v7 (result.json), plain v7 (result_plain.json)
-    base = os.path.join(os.path.dirname(os.path.dirname(HERE)), "runs", "funnel_panel", "v7")
+    # panel skins at the seated wheel spot (20 N press, linear; C): the Overseer puts up to 9 x the Scout's face-wheel load
+    # on them (6 g landing, hand lift); latched v7 (runs/funnel_panel/v7/result.json, u 100 v 40), v8 plain on +-x
+    # (runs/funnel_panel/v8_plain/result.json, at the seated wheel itself, u 100 v 43.6)
+    base = os.path.join(os.path.dirname(os.path.dirname(HERE)), "runs", "funnel_panel")
     sk = {}
-    for nm_p, fn in (("v7", "result.json"), ("v7 plain", "result_plain.json")):
-        pc = json.load(open(os.path.join(base, fn)))["fe_asbuilt"]["per_case"]["press u100 v40"]
+    for nm_p, fn, case in (("v7", "v7/result.json", "press u100 v40"), ("v8 plain", "v8_plain/result.json", "press u100 v43.6")):
+        pc = json.load(open(os.path.join(base, fn)))["fe_asbuilt"]["per_case"][case]
         sk[nm_p] = pc                                                  # [defl / 1.0 mm, MPa] at 20 N
     # allowable: the panel's own design rule, 19.5 MPa in-layer (PETG XY 39 / SF 2, box-funnel.md Loads), every case; for
     # misuse that is conservative (a ceiling). The seated contact is 43.6 up the slope (T_C); the FE patch is at v 40
@@ -228,7 +229,7 @@ def main():
     for nm, row in ov.items():
         cls = "misuse" if "hand" in nm else "flight"
         row["panel_wheel_spot"] = {}
-        for nm_p, key in (("v7", "face_wheel_v7_N"), ("v7 plain", "face_wheel_v7_plain_N")):
+        for nm_p, key in (("v7", "face_wheel_v7_N"), ("v8 plain", "face_wheel_plain_N")):
             F = row[key]; st = sk[nm_p][1] * F / 20.0
             row["panel_wheel_spot"][nm_p] = dict(load_N=F, stress_MPa=round(st, 1), index=round(st / 19.5, 3),
                                                  defl_mm=round(sk[nm_p][0] * F / 20.0, 2), cls=cls)
@@ -288,27 +289,30 @@ def update_assembly(path=None):
 
 
 def panels_v7_into_assembly(path=None):
-    """the funnel panels in the catch assembly file: v7 on the seated faces (+-y), v7 plain on the others, seat meshes
-    from funnel_panel_v7.build (print files' geometry) in runs/box_catch_assembly/v1/."""
+    """the funnel panels in the catch assembly file: v7 on the seated faces (+-y), v8 plain on the others (+-x, bottom
+    edge at seat z 12.8, opening 191 along drone x), seat meshes from funnel_panel_v7.build (print files' geometry) in
+    runs/box_catch_assembly/v1/. Run in a fresh process (the v8 switch is read when funnel_panel_v7 is imported)."""
+    os.environ["NOX_FUNNEL_PLAIN"] = "1"; os.environ["NOX_FUNNEL_ZBOT"] = "12.8"
     sys.path[:0] = [os.path.dirname(HERE), os.path.join(HERE, "catch_v4")]
     import assembly as AS, funnel_panel_v7 as FV
+    assert FV.V8, "funnel_panel_v7 was imported before the v8 switch: run in a fresh process"
     root = os.path.dirname(os.path.dirname(HERE)); od = os.path.join(root, "runs", "box_catch_assembly", "v1"); os.makedirs(od, exist_ok=True)
     files = {}
     for plain in (False, True):
         pa, pb, _, _ = FV.build(plain=plain)
         for k, m in (("A", pa), ("B", pb)):
-            nm = f"funnel_panel_{k}_v7{'_plain' if plain else ''}_seat.stl"
+            nm = f"funnel_panel_{k}_{'v8_plain' if plain else 'v7'}_seat.stl"
             FV.tm(FV.to_seat(m)).export(os.path.join(od, nm)); files[(k, plain)] = f"runs/box_catch_assembly/v1/{nm}"
     a = AS.load(path or os.path.join(HERE, "box_catch.assembly.json"))
     for face in ("+x", "-x", "+y", "-y"):
         plain = face in ("+x", "-x")
         for k in ("A", "B"):
             p = a.part(f"funnel panel {k} {face}")
-            p["mesh"] = files[(k, plain)]; p["version"] = "v7 plain" if plain else "v7"
+            p["mesh"] = files[(k, plain)]; p["version"] = "v8 plain" if plain else "v7"
             p["source"] = "nox/box/catch_v4/funnel_panel_v7.py (seat mesh by nox/box/catch_system.py:panels_v7_into_assembly)"
     a.data["note"] = ("Box catch, 24 Oct. Frame: the seat frame of funnel_panel.py / hook_latch.py (drone coordinates of a seated "
                       "drone, contact face max(|x|, |y|) = 82.7 + z, bottom edge z 1.3). Funnel panels v7 on the seated faces "
-                      "(+-y, latch windows and bosses), v7 plain on +-x. Hook latch v2: B units use the mirrored housing and "
+                      "(+-y, latch windows and bosses), v8 plain on +-x (bottom edge at seat z 12.8: opening 191 along x by 168 along y). Hook latch v2: B units use the mirrored housing and "
                       "plunger files. Plunger state via 'moves' (0 retracted, 1 out). Drone wheels and ring: hook_latch.drone_parts "
                       "context (E; the wheels sit in their cheeks, a contact pair). Left out: funnel hub + corner blocks (DESIGN), "
                       "MG90S servos and horns (no mass in dimensions.md), the box frame (box structure system), KW11 + pogo post.")

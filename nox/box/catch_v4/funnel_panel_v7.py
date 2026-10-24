@@ -18,13 +18,20 @@ half; in the collar the seated faces are +-y (k = 1, 3 of funnel_panel.assembly)
 v7 plain (the 4 panels of the unlatched faces; the v6 file fails solid_check): the same skin 2.0, rib height, flanges,
 keys, seat block and seat tie, ribs from panel_opt_v7.py run plain (rib_mask_v7_plain.json), no window, bosses or low ribs.
 python3 funnel_panel_v7.py [--motion] -> runs/funnel_panel/v7/ (STLs, result.json: latched FE), print/box_funnel_panel_*_v7*.stl
-python3 funnel_panel_v7.py --plain     -> the same files + result_plain.json (plain FE)"""
+python3 funnel_panel_v7.py --plain     -> the same files + result_plain.json (plain FE)
+v8 plain (24 Oct, box catch DEFAULT): v7 plain with its bottom edge at seat z 12.8 (opening 191 along drone x; the +-x faces
+only), 16.26 up the slope from the v7 edge: skin, ribs and flanges end square on the new edge, the seat block and its M3
+stay 14 up the slope from it (v 30.26), its tie redrawn; ribs from panel_opt_v7.py with NOX_FUNNEL_ZBOT=12.8
+(rib_mask_v8_plain.json). Mouth, top edge, face plane, keys and every v7 file unchanged.
+python3 funnel_panel_v7.py --v8        -> runs/funnel_panel/v8_plain/ (STLs, result.json: plain FE + system wheel loads), print/box_funnel_panel_*_v8_plain.stl"""
 import math, json, os, sys, shutil
 import numpy as np, trimesh, manifold3d as mf
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(HERE)))
-RUN = os.path.join(ROOT, "runs", "funnel_panel", "v7"); os.makedirs(RUN, exist_ok=True)
+if "--v8" in sys.argv:                                           # v8 plain: the plain panel with the raised bottom edge
+    os.environ["NOX_FUNNEL_PLAIN"] = "1"; os.environ.setdefault("NOX_FUNNEL_ZBOT", "12.8")
+RUN = os.path.join(ROOT, "runs", "funnel_panel", "v8_plain" if "--v8" in sys.argv else "v7"); os.makedirs(RUN, exist_ok=True)
 sys.path[:0] = [HERE, os.path.dirname(HERE), os.path.join(ROOT, "nox")]
 import funnel_panel as F                                         # v6, not edited: its globals are switched for v7 below
 import hook_latch as HL
@@ -41,6 +48,10 @@ FREE_U, FREE_V = PO.FREE_U, PO.FREE_V
 WIN_U, WIN_V = PO.WIN_U, PO.WIN_V
 RIB_GROW_V7 = 1.25                                               # least outline grow whose as-built FE passes (sweep 1.0 .. 2.5, C)
 RIB_GROW_PLAIN = 1.25                                            # the same for v7 plain (C)
+V8, V_BOT = PO.V8, PO.V_BOT                                      # v8 plain: the plain build ends at v V_BOT (16.26, C)
+RIB_GROW_V8 = 0.5                                                # v8 plain (C): as-built FE sweep 0 .. 1.25 reads 1.023 / 0.991 / 0.949 / 0.897 / 0.879 / 0.859; 0.5 keeps 5 % margin (DEFAULT; 0.25 passes at 0.991)
+SEAT_V7, P_FACE7 = F.SEAT_V, F.P_FACE.copy()                     # v6 / v7 seat block: 14 up the slope from the z 1.3 edge
+SEAT_V8 = F.SEAT_V + V_BOT                                       # v8 plain: 14 up the slope from its own edge (30.26, C)
 MODE = dict(plain=False)                                         # which panel the build functions draw
 
 RZ = np.array([[0, 1, 0, 0], [-1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1.0]])   # seat (+y face) -> panel A world (+x face)
@@ -48,11 +59,21 @@ T_A = RZ @ HL.unit_frame(1, -1)[0]                               # unit frame ->
 
 def to_mf(m, T): return m.transform(np.asarray(T)[:3, :4].tolist())
 
+def v8():
+    return MODE["plain"] and V8                                  # the plain build is v8 plain in a --v8 run
+
+def v_bot():
+    return V_BOT if v8() else 0.0
+
 def v7_globals():
-    J = json.load(open(os.path.join(HERE, "rib_mask_v7_plain.json" if MODE["plain"] else "rib_mask_v7.json")))
-    F._OPT = dict(ts=J["ts"], h=J["h"], H=J["H"], ec=np.asarray(J["ec"]), mask=np.isin(np.arange(len(J["ec"])), J["mask"]))
+    fn = ("rib_mask_v8_plain.json" if V8 else "rib_mask_v7_plain.json") if MODE["plain"] else "rib_mask_v7.json"
+    J = json.load(open(os.path.join(HERE, fn)))
+    F._OPT = dict(ts=J["ts"], h=J["h"], H=J["H"], v0=J.get("v0", 0.0), ec=np.asarray(J["ec"]),
+                  mask=np.isin(np.arange(len(J["ec"])), J["mask"]))
     F.T, F.RIB_H = float(J["ts"]), float(J["h"])
-    F.RIB_GROW = RIB_GROW_PLAIN if MODE["plain"] else RIB_GROW_V7
+    F.RIB_GROW = (RIB_GROW_V8 if v8() else RIB_GROW_PLAIN) if MODE["plain"] else RIB_GROW_V7
+    F.SEAT_V = SEAT_V8 if v8() else SEAT_V7                       # the seat block (at_seat reads P_FACE at call time)
+    F.P_FACE = P_FACE7 + (V_BOT if v8() else 0.0) * F.E_V
     return J
 
 def unit_rect(U, V):
@@ -73,6 +94,11 @@ TIES_FACE = [((142.0, 101.0), (139.0, 89.0))]                   # rim corner pie
 TIE_SEAT_PLAIN = TIE_SEAT                                        # v7 plain: seat block to its nearest rib (set from its layout)
 TIES_FACE_PLAIN = [((65.5, 66.0), (63.0, 82.0)),              # v7 plain: wheel-track strut up into the rim stub
                    ((139.0, 101.0), (139.0, 87.0))]             # rim corner piece to the valley diagonal
+TIE_SEAT_V8 = ((F.SEAT_Y, SEAT_V8), (84.0, SEAT_V8))            # v8 plain: seat block into the strut (its edge at u ~80, v 30)
+TIES_FACE_V8 = [((139.0, 101.0), (139.0, 87.0)),               # v8 plain: rim corner piece to the valley diagonal
+                ((98.0, 103.5), (126.0, 103.0))]                # rim beam into the rim corner piece (it joined the rest only
+                                                                 # through the 2.4 valley flange: solid_check neck). The strut
+                                                                 # now runs whole from the rim to the edge: no strut tie
 
 def ties_cs(seat=True):
     """drawn tie ribs (face coordinates): the 4 latch bosses, the strut under the wheel track, the rim beam and the seat block
@@ -82,9 +108,9 @@ def ties_cs(seat=True):
         return mf.CrossSection.batch_hull([c(a), c(b)])
     f = lambda p: (PO.X_L - p[1], PO.U0 + p[0])
     pl = MODE["plain"]
-    out = seg(*(TIE_SEAT_PLAIN if pl else TIE_SEAT)) if seat else mf.CrossSection()
+    out = seg(*(TIE_SEAT_V8 if v8() else TIE_SEAT_PLAIN if pl else TIE_SEAT)) if seat else mf.CrossSection()
     for a, b in ([] if pl else TIES_UNIT): out = out + seg(f(a), f(b))
-    for a, b in (TIES_FACE_PLAIN if pl else TIES_FACE): out = out + seg(a, b)
+    for a, b in (TIES_FACE_V8 if v8() else TIES_FACE_PLAIN if pl else TIES_FACE): out = out + seg(a, b)
     dom = mf.CrossSection([[(0.0, 0.0), (84.0, 0.0), (84.0 + F.SLANT / S2, F.SLANT), (0.0, F.SLANT)]])
     return out ^ dom
 
@@ -110,7 +136,8 @@ def rib_sections(seat=True):
     """(full-height section, low section) in face coordinates. Full: the rib outline outside the housing footprint + 1.0;
     low: inside it, less the guide block + 1.0. Each opened by 1.0, so the cut at the footprint edge leaves no lip under
     2.0 (review 1: 1.1 wide full-height lips where the outline ended just past the edge)."""
-    cs = rib_section_full(seat) ^ mf.CrossSection([[(-1.0, 0.3), (400.0, 0.3), (400.0, 200.0), (-1.0, 200.0)]])
+    vb = v_bot() + 0.3
+    cs = rib_section_full(seat) ^ mf.CrossSection([[(-1.0, vb), (400.0, vb), (400.0, 200.0), (-1.0, 200.0)]])
     # ribs stop 0.3 above the skin's square bottom end (flush faces there gave non-manifold edges in the STL)
     if MODE["plain"]: return opened(cs), mf.CrossSection()
     box = unit_rect(FREE_U, FREE_V)
@@ -119,7 +146,7 @@ def rib_sections(seat=True):
 def seat_tie():
     """the seat block's tie rib: through the block, kept 0.1 short of the landing plane inside the post room's radius."""
     room = F.at_seat(mf.Manifold.cylinder(40, F.KEEP_R, F.KEEP_R, 64).translate([0, 0, F.CLAMP - 0.1]))
-    ts = TIE_SEAT_PLAIN if MODE["plain"] else TIE_SEAT
+    ts = TIE_SEAT_V8 if v8() else TIE_SEAT_PLAIN if MODE["plain"] else TIE_SEAT
     return extrude_face(mf.CrossSection.batch_hull([mf.CrossSection.circle(TIE_W / 2, 24).translate(p) for p in ts])) \
         - room - F.screw_hole()
 
@@ -153,7 +180,7 @@ def edge_cuts(m):
     """square ends (review 1): the skin ends square to the face at the bottom edge (v >= 0; v6 ran a 2.5 lip under it,
     cut horizontal and by the drafted opening wall: a 48 deg feather), and the valley flange ends square to the valley
     line at the rim corner (the rim plane met it obliquely: a 0.7 wedge)."""
-    m = F.plane_keep(m, F.E_V, float(F.E_V @ np.array([84.0, 0.0, F.ZB])))
+    m = F.plane_keep(m, F.E_V, float(F.E_V @ np.array([84.0, 0.0, F.ZB])) + v_bot())   # v8 plain: on its raised edge
     n = np.array([1.0, 1.0, 1.0]) / math.sqrt(3); pc = np.array([F.K0 + F.ZT, F.K0 + F.ZT, F.ZT])
     return F.plane_keep(m, -n, float(-n @ pc))
 
@@ -314,15 +341,29 @@ if __name__ == "__main__":
     F_v6 = F.build()                                             # v6 panels (1.6 skin, v6 ribs) before the v7 switch
     have_plain = os.path.exists(os.path.join(HERE, "rib_mask_v7_plain.json"))
     out = {}
-    if have_plain:
+    if V8:
+        pua, pub, _, Jp = build(plain=True); F_U, U_NAME = (pua, pub), "v8 plain"
+        out.update({"A_v8_plain": pua, "B_v8_plain": pub})
+    elif have_plain:
         pua, pub, _, Jp = build(plain=True); F_U, U_NAME = (pua, pub), "v7 plain"
         out.update({"A_v7_plain": pua, "B_v7_plain": pub})
     else:
         F_U, U_NAME = F_v6, "v6"
     pa, pb, wA, J = build(plain=False)
-    out.update({"A_v7": pa, "B_v7": pb})
-    res = dict(part="funnel_panel", version="v7", skin=SKIN, rib_h=float(J["h"]), rib_vf=J.get("vf"),
-               rib_vf_plain=Jp.get("vf") if have_plain else None, unlatched_faces=U_NAME)
+    if not V8: out.update({"A_v7": pa, "B_v7": pb})               # a --v8 run builds v7 for the collar only, files untouched
+    PK = "A_v8_plain" if V8 else "A_v7_plain" if PO.PLAIN else "A_v7"
+    res = dict(part="funnel_panel", version="v8_plain" if V8 else "v7", skin=SKIN, rib_h=float(J["h"]), rib_vf=J.get("vf"),
+               rib_vf_plain=Jp.get("vf") if (have_plain or V8) else None, unlatched_faces=U_NAME)
+    if V8:
+        MODE["plain"] = True; v7_globals()
+        res["v8_geometry"] = dict(z_bottom=PO.Z_BOT, v_bottom_from_v7_edge=V_BOT, opening_half_x=round(F.K0 + PO.Z_BOT, 2),
+                                  seat_v_from_new_edge=round(F.SEAT_V - V_BOT, 2), seat_v_from_v7_edge=round(F.SEAT_V, 2),
+                                  screw_entry_seat=[round(v, 2) for v in F.P_FACE],
+                                  landing_seat=[round(v, 2) for v in F.P_FACE + F.CLAMP * F.N_IN],
+                                  post_rise_z=round(float(V_BOT / S2), 2),
+                                  key_v_from_new_edge=[round(v - V_BOT, 2) for v in F.PEG_V],
+                                  lower_key_wall_to_new_edge=round(F.PEG_V[0] - V_BOT - F.PEG_D / 2 - F.CLR, 2),
+                                  wheel_contact_v_from_new_edge=round(PO.V_WHEEL - V_BOT, 2))
     names = {}
     for name, m in out.items():
         t = tm(m)
@@ -342,10 +383,31 @@ if __name__ == "__main__":
     res["window"] = window_fit(full)
     res["bosses_vs_housing_mm3"] = round(HL.vol(HL.bosses_local(P7) ^ P7["housing"]), 3)
     res["wheel_path"] = wheel_path_steps(ft)
+    if V8:
+        # the opening: nothing of the collar inside |x| < 95.5, |y| < 84 below seat z 12.8 (the latch v1 cartridge set
+        # 190.7 x ... at +-5 deg yaw passes there); the v7 collar for comparison
+        hx, hy = F.K0 + PO.Z_BOT, F.K0 + F.ZB
+        prism = F.box(-hx + 0.01, hx - 0.01, -hy + 0.01, hy - 0.01, -20.0, PO.Z_BOT - 0.01)
+        v7c = [m.rotate([0, -F.ROT, 0]).rotate([0, 0, 90 * k]) for k in range(4) for m in (pa, pb)]   # v7 edge on all 4
+        res["opening"] = dict(rect_mm=[round(2 * hx, 1), round(2 * hy, 1)], below_z=PO.Z_BOT,
+                              collar_v8_in_rect_mm3=round(HL.vol(full ^ prism), 3),
+                              collar_all_v7_in_rect_mm3=round(sum(HL.vol(m ^ prism) for m in v7c), 1))
     # FE: the as-built rib outline on the plate model of this run's mode (latched, or plain with --plain), every case
     MODE["plain"] = PO.PLAIN; v7_globals()
-    res["fe_mode"] = "v7 plain" if PO.PLAIN else "v7 latched"
+    res["fe_mode"] = "v8 plain" if V8 else "v7 plain" if PO.PLAIN else "v7 latched"
     res["fe_asbuilt"] = {k: v for k, v in PO.report(asbuilt_mask()).items()}
+    if V8:
+        # face-wheel loads of the catch system (hook latch v2 system.json, C) at the seated wheel spot of a +-x face
+        # (u 100, v 43.6: the 20 N press there, linear plate FE): Scout per face wheel (max), Overseer on the plain faces
+        sj = json.load(open(os.path.join(ROOT, "runs", "hook_latch", "v2", "system.json")))
+        d0, s0 = res["fe_asbuilt"]["per_case"][f"press u100 v{PO.V_WHEEL}"]
+        rows = [("Scout " + k, v["face_wheel_max_N"]) for k, v in sj["cases"].items()] + \
+               [("Overseer " + k, v.get("face_wheel_plain_N", v.get("face_wheel_v7_plain_N"))) for k, v in sj["overseer"]["cases"].items()]
+        ws = {nm: dict(load_N=Fw, stress_MPa=round(s0 * Fw / 20.0, 2), index=round(s0 * Fw / 20.0 / PO.SIG_ALLOW, 3),
+                       defl_mm=round(d0 * Fw / 20.0, 3)) for nm, Fw in rows}
+        wk = max(ws, key=lambda k: ws[k]["index"])
+        res["wheel_spot_system"] = dict(case=f"press u100 v{PO.V_WHEEL} (20 N)", per_20N=[d0, s0], allow_MPa=PO.SIG_ALLOW,
+                                        rows=ws, worst=[wk, ws[wk]["index"]])
     if not PO.PLAIN:
         res["boss_hand_calc"] = boss_hand_calc()
         # the system loads on the same as-built model (linear: the latch cases scale with the load)
@@ -373,12 +435,12 @@ if __name__ == "__main__":
     res["solid_check"] = sol
     fe = res["fe_asbuilt"]
     res.update(date=__import__("datetime").date.today().isoformat(), status="DONE",
-               mass_g=res["A_v7_plain" if PO.PLAIN else "A_v7"]["g_PETG"], mass_tag="M",
+               mass_g=res[PK]["g_PETG"], mass_tag="M",
                worst_index=fe["util"], worst_case=fe["worst"], solid_ok=all(v["ok"] for v in sol.values()),
-               bed_face="contact face", bed_contact_mm2=res["A_v7_plain" if PO.PLAIN else "A_v7"]["bed_mm2"])
-    json.dump(res, open(os.path.join(RUN, "result_plain.json" if PO.PLAIN else "result.json"), "w"), indent=1,
+               bed_face="contact face", bed_contact_mm2=res[PK]["bed_mm2"])
+    json.dump(res, open(os.path.join(RUN, "result_plain.json" if PO.PLAIN and not V8 else "result.json"), "w"), indent=1,
               default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
-    ft.export(os.path.join(RUN, "collar_v7_seat_frame.stl"))
+    ft.export(os.path.join(RUN, "collar_v8_seat_frame.stl" if V8 else "collar_v7_seat_frame.stl"))
     print(json.dumps({k: v for k, v in res.items() if k not in ("fe_asbuilt",)}, indent=1, default=str))
     print("fe as-built:", res["fe_mode"], {k: v for k, v in res["fe_asbuilt"].items() if k != "per_case"})
     for name, p in names.items(): shutil.copy(p, os.path.join(ROOT, "print", os.path.basename(p)))

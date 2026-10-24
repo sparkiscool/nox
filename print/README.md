@@ -1,6 +1,6 @@
 # Print files
 
-Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. `scan_stick_cam_v4.stl` is superseded by `scan_stick_cam_v7.stl` (10 mm standoffs, M2.5); do not print it. `box_hook_latch_*_v1.stl` are superseded by v2 (funnel panel v7 skin 2.0); do not print them.
+Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. `scan_stick_cam_v4.stl` is superseded by `scan_stick_cam_v7.stl` (10 mm standoffs, M2.5); do not print it. `box_hook_latch_*_v1.stl` are superseded by v2 (funnel panel v7 skin 2.0); do not print them. `box_funnel_panel_*_v7_plain.stl` are superseded by v8 plain (bottom edge at seat z 12.8, opening 191 x 168, 24 Oct); do not print them.
 
 | File | Bytes | sha256[:12] |
 |---|---|---|
@@ -20,6 +20,8 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_detent_ring_v1.stl` | 156284 | cf619ecdfdf7 |
 | `box_funnel_panel_A_v7.stl` | 287284 | 5ff1a1f036d7 |
 | `box_funnel_panel_B_v7.stl` | 287684 | 363001539b9c |
+| `box_funnel_panel_A_v8_plain.stl` | 150984 | 5062faa69ef4 |
+| `box_funnel_panel_B_v8_plain.stl` | 151384 | 274c8956bfdb |
 | `box_funnel_panel_A_v7_plain.stl` | 154084 | 8021dea5c6a2 |
 | `box_funnel_panel_B_v7_plain.stl` | 154484 | 43190158f0f8 |
 | `box_finger_A_for_head_A_v4.stl` | 9084 | 088889b387a2 |
