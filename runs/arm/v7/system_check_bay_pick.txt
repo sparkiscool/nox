@@ -1,6 +1,6 @@
 system_check box swap arm v7: PASS
   cage first: n/a (no protected part)
-  compact: bbox 32.41 L (E), hull 20.117 L (E), extents [370.6, 259.6, 336.9] mm (E), largest 370.6 mm
+  compact: bbox 32.392 L (E), hull 20.085 L (E), extents [370.6, 259.4, 336.9] mm (E), largest 370.6 mm
   fit PASS (tol 0.5 mm³):
     hub / motor_A: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / shaft_A: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -132,7 +132,7 @@ system_check box swap arm v7: PASS
     rec-120 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack charged: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-  mass 5559.29 g (E), CG [-2.67, 120.98, -25.39], offset [-2.67, 120.98, -25.39] = 123.64 mm from [0.0, 0.0, 0.0]
+  mass 5576.94 g (E), CG [-2.65, 120.6, -25.47], offset [-2.65, 120.6, -25.47] = 123.29 mm from [0.0, 0.0, 0.0]
     hub: 132.41 g (M) at [3.53, 40.3, -0.27]
     stub: 47.68 g (M) at [0.47, 15.91, -0.0]
     stub_bolts: 8.0 g (C) at [0.0, 2.23, -0.0]
@@ -177,20 +177,20 @@ system_check box swap arm v7: PASS
     detent_tower: 0.5 g (C) at [73.5, 79.8, -5.97]
     tiesA: 5.0 g (C) at [-89.2, 32.05, 51.5]
     tiesB: 5.0 g (C) at [-51.5, 32.05, -89.2]
-    rec30: 51.24 g (M) at [130.88, 159.64, 75.56]
-    rec-30: 187.07 g (M) at [123.41, 166.52, -71.25]
-    rec-90: 187.07 g (M) at [0.0, 166.52, -142.5]
-    rec-150: 187.07 g (M) at [-123.41, 166.52, -71.25]
-    rec-210: 51.24 g (M) at [-130.88, 159.64, 75.56]
-    rec0: 597.58 g (M) at [147.49, 168.38, 0.0]
-    rec-60: 597.58 g (M) at [73.74, 168.38, -127.73]
-    rec-120: 597.58 g (M) at [-73.74, 168.38, -127.73]
-    rec-180: 597.58 g (M) at [-147.49, 168.38, -0.0]
-    pack charged: 211.6 g (E) at [-120.59, 169.11, 69.62] swap
-    pack dead: 211.6 g (E) at [-0.0, 169.11, 144.25] swap
+    rec30: 53.24 g (M) at [130.5, 157.74, 75.34]
+    rec-30: 187.3 g (M) at [123.48, 163.91, -71.29]
+    rec-90: 187.3 g (M) at [0.0, 163.91, -142.58]
+    rec-150: 187.3 g (M) at [-123.48, 163.91, -71.29]
+    rec-210: 53.24 g (M) at [-130.5, 157.74, 75.34]
+    rec0: 601.22 g (M) at [147.46, 168.33, 0.0]
+    rec-60: 601.22 g (M) at [73.73, 168.33, -127.71]
+    rec-120: 601.22 g (M) at [-73.73, 168.33, -127.71]
+    rec-180: 601.22 g (M) at [-147.46, 168.33, -0.0]
+    pack charged: 210.8 g (E) at [-120.69, 166.36, 69.68] swap
+    pack dead: 210.8 g (E) at [-0.0, 166.36, 144.36] swap
   balance PASS (horizontal CG offset <= 1000.0 mm, thrust axis [0.0, 1.0, 0.0]):
-    all: 25.53 mm horizontal, 120.98 mm axial, 5559.29 g
-    no_swap: 36.36 mm horizontal, 117.02 mm axial, 5136.09 g
+    all: 25.6 mm horizontal, 120.6 mm axial, 5576.94 g
+    no_swap: 36.36 mm horizontal, 116.86 mm axial, 5155.34 g
   crash probes: skipped
   access PASS (swept tool overlap <= 0.5 mm³):
     M5 key, rail A r 40 (railA, type cylinder, d 6.0, 100 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
@@ -202,4 +202,4 @@ system_check box swap arm v7: PASS
     M3 key, motor axle (-1, +1) (hub, type cylinder, d 6.0, 70 mm along [0.0, 1.0, 0.0]): 0.02 mm³ (E); belt_axle 0.02 mm³
     M3 key, motor axle (+1, -1) (hub, type cylinder, d 6.0, 70 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
     M3 key, motor axle (+1, +1) (hub, type cylinder, d 6.0, 70 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
-System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 32.4 L (E), extents 371 x 260 x 337 mm (E), mass 5559 g (E), CG 25.5 mm off thrust axis (E) [-2.7, +121.0, -25.4], 36.4 mm without swap parts, access 9/9 clear
+System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 32.4 L (E), extents 371 x 259 x 337 mm (E), mass 5577 g (E), CG 25.6 mm off thrust axis (E) [-2.6, +120.6, -25.5], 36.4 mm without swap parts, access 9/9 clear

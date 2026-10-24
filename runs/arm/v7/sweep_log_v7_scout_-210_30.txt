@@ -244,8 +244,8 @@ t 16.88 phi  -54.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') over
 t 16.92 phi  -56.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
 t 16.96 phi  -58.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
 t 17.00 phi  -60.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
-t 17.90 phi  -60.0 zA  32.0 zB  85.6 clearance   0.30 ('hub', 'detent_arm') overlaps []
-t 18.00 phi  -60.0 zA  32.0 zB  87.6 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 17.90 phi  -60.0 zA  32.0 zB  85.6 clearance   0.15 ('pack dead|4.0', 'rec30') overlaps []
+t 18.00 phi  -60.0 zA  32.0 zB  87.6 clearance   0.15 ('pack dead|4.0', 'rec30') overlaps []
 t 18.50 phi  -60.0 zA  32.0 zB  97.6 clearance   0.00 ('pack dead|4.0', 'rec30') overlaps []
 t 19.00 phi  -60.0 zA  32.0 zB  97.6 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
 t 20.00 phi  -60.0 zA  32.0 zB  53.9 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
@@ -255,102 +255,3 @@ t 21.01 phi  -62.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30')
 t 21.03 phi  -64.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
 t 21.04 phi  -66.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
 t 21.05 phi  -68.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.07 phi  -70.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.08 phi  -72.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.09 phi  -74.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.11 phi  -76.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.12 phi  -78.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.13 phi  -80.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.15 phi  -82.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.16 phi  -84.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.17 phi  -86.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.19 phi  -88.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.20 phi  -90.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.21 phi  -92.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.23 phi  -94.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.24 phi  -96.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.25 phi  -98.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.27 phi -100.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.28 phi -102.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.29 phi -104.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.31 phi -106.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.32 phi -108.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.33 phi -110.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.35 phi -112.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.36 phi -114.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.37 phi -116.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.39 phi -118.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.40 phi -120.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.41 phi -122.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.43 phi -124.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.44 phi -126.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.45 phi -128.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.47 phi -130.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.48 phi -132.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.49 phi -134.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.51 phi -136.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.52 phi -138.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.53 phi -140.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.55 phi -142.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.56 phi -144.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.57 phi -146.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.59 phi -148.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.60 phi -150.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.61 phi -152.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.63 phi -154.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.64 phi -156.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.65 phi -158.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.67 phi -160.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.68 phi -162.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.69 phi -164.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.71 phi -166.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.72 phi -168.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.73 phi -170.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.75 phi -172.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.76 phi -174.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.77 phi -176.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.79 phi -178.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.80 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.81 phi -182.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.83 phi -184.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.84 phi -186.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.85 phi -188.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.87 phi -190.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.88 phi -192.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.89 phi -194.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.91 phi -196.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.92 phi -198.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.93 phi -200.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.95 phi -202.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.96 phi -204.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.97 phi -206.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 21.99 phi -208.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-t 22.00 phi -210.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-sweep 328 states in 141 s
-states with overlaps: 0 min clearance 0.0
-closest pairs over the cycle:
-    0.000  pack charged / rec-210  (t 0.0)
-    0.000  pack dead / rec30  (t 18.5)
-    0.300  detent_arm / hub  (t 22.0)
-    0.300  fingA_A / servo_A  (t 0.0)
-    0.300  fingB_A / servo_A  (t 0.0)
-    0.300  fingA_B / servo_B  (t 0.0)
-    0.300  fingB_B / servo_B  (t 0.0)
-    0.500  fingA_A / fingB_A  (t 21.96)
-    0.500  fingA_B / fingB_B  (t 21.973)
-    0.500  detent_arm / detent_ring  (t 5.0)
-    0.750  axlesA / hub  (t 21.76)
-    0.750  axlesB / hub  (t 21.76)
-    0.991  hub / p80  (t 4.529)
-    0.993  hub / post  (t 4.519)
-    1.000  belt_axle / headA  (t 21.76)
-    1.000  p80 / railA  (t 0.0)
-    1.000  headA / railA  (t 21.893)
-    1.000  p80 / railB  (t 0.0)
-    1.000  headB / railB  (t 21.893)
-    1.000  headA / wheelsA  (t 0.0)
-    1.000  headB / wheelsB  (t 0.0)
-    1.487  fingA_B / pack dead  (t 6.5)
-    1.487  fingB_B / pack dead  (t 6.5)
-    1.621  hub / stub  (t 22.0)
-    1.977  detent_arm / p80  (t 4.538)

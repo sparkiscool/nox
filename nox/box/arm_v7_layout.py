@@ -24,7 +24,7 @@ Y_C7 = float(__import__("os").environ.get("NOX_YC", "165"))   # round 3b (DEFAUL
 DETENT_SPRING_SCALE = 1.5               # round 3 (DEFAULT; the hub's x1.8 leaves the axle motor 1.29 to index past a notch): with the 5:1 axle the
                                         # parked arm holds 1.31, indexing 1.43, a head out at a horizontal Overseer bay 0.80: the axle motor on the brake
                                         # relay lets it creep ~21 deg/s onto the neighbour's seated pack (~71 N, E; swap_system.power_cut_head_out)
-AXLE_RATIO = 5.0                        # round 3: a GT2 16T on the axle motor (80:16, DEFAULT): x1.25 the stall torque and x1.56 the shorted-coil
+AXLE_RATIO = float(__import__("os").environ.get("NOX_AXLE_RATIO", "5.0"))                          # round 3: a GT2 16T on the axle motor (80:16, DEFAULT): x1.25 the stall torque and x1.56 the shorted-coil
                                         # damping, so the springs can hold the Overseer and the motor still indexes past them (swap_system.power_cut_head_out)
 XT60_Z = 7.0                            # the cartridge's XT60 axis 7 from its closed end (DEFAULT, asked of the latch; plug face at its y as before)
 OV_GRIP_OFFSET = 30.0                   # the Overseer's tab line 30 toward the closed end from its swap CG = its drone's thrust axis (Spark B)
