@@ -30,7 +30,7 @@ sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 from topo.part import man
 
-OUT = os.environ.get("LAYOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v4")   # v4: layout change (review PR 94), warm start from v3
+OUT = os.environ.get("LAYOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v5")   # v5: receiver v2 / cartridge v6 (latch PR 109), review PR 94 fixes
 LATCH_DIR = os.path.join(ROOT, "runs", "scout_layout", "v2")                  # inputs (latch, pr44) always from the v2 run folder
 ESO_SEED = int(os.environ.get("ESO_SEED", "1"))         # multi-start: seed 1 had the fewest pieces of 4 (count objective, 24 Oct)
 VIDEO = "--novideo" not in sys.argv
@@ -227,15 +227,20 @@ def c2d(m):
 PR44 = os.path.join(LATCH_DIR, "pr44")
 # battery latch standard (control session, branch part/battery-latch @ 258becf, dimensions "System box swap: latch"; interim):
 # cartridge v5 93 long with the XT60 at the NOSE, receiver block v1 + lid + 2 TPU strips + XT60E1-M, posed by its T_dc
-LATCH = os.path.join(LATCH_DIR, "latch")
+LATCH = os.environ.get("LATCH_MESHES") or os.path.join(ROOT, "runs", "scout_layout", "v5", "latch")   # v5: receiver v2 / cartridge
+LATCH_V = "v6" if "v5" in LATCH else "v1"                       # v6 + their skids (latch PR 109 @ b0b0321); v1 meshes stay in v2/latch
 LATCH_DX = 0.0                                 # the set stays where the latch's T_dc puts it: its ends are clipped to the funnel planes
                                                # from this catch centre (a 3.7 aft shift cut cage first to 0.83); centring is the latch's
-_L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_DX, 0, 0])
-      for k in ("cartridge", "slider_px", "slider_nx", "pack", "cartridge_skid_closed", "cartridge_skid_lead", "xt60_plug", "receiver",
-                "receiver_lid", "receiver_strips", "xt60e1m")}
+_LK = ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug", "receiver", "receiver_lid", "receiver_strips", "xt60e1m") + \
+      (("cartridge_strip_px", "cartridge_strip_nx", "receiver_skid_nose_plate", "receiver_skid_side_px", "receiver_skid_side_nx")
+       if LATCH_V == "v6" else ("cartridge_skid_closed", "cartridge_skid_lead"))
+_L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_DX, 0, 0]) for k in _LK}
+# set masses (g): v6 141.6 total (latch, E) split by volume: receiver 85, lid 9, strips 2, receiver skids 3.5 (+ XT60E1-M 6);
+# cartridge 35, sliders 5.2, cartridge strips 2.0. v1: receiver set 54.5 (M / E), cartridge + sliders + end skids 43.9
+M_REC, M_CART = (105.5, 42.2) if LATCH_V == "v6" else (54.5, 39.4 + 4.5)
 IFACE = trimesh.util.concatenate([_L[k] for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m")])   # receiver set (M)
 CART = trimesh.util.concatenate([_L[k] for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug")])   # swap set (M)
-SKIDS = [_L["cartridge_skid_closed"], _L["cartridge_skid_lead"]]   # the latch's TPU end skids: sacrificial contacts, counted as cage
+SKIDS = [_L["cartridge_skid_closed"], _L["cartridge_skid_lead"]] if LATCH_V == "v1" else []   # v1 TPU end skids (cage); v6 has none
 
 
 def latch_skids():
@@ -253,7 +258,9 @@ def latch_skids():
     return union(rec), union(cart)
 
 
-REC_SKIDS, CART_SKIDS = latch_skids()
+REC_SKIDS, CART_SKIDS = latch_skids() if LATCH_V == "v1" else (
+    trimesh.util.concatenate([_L[k] for k in ("receiver_skid_nose_plate", "receiver_skid_side_px", "receiver_skid_side_nx")]),
+    trimesh.util.concatenate([_L[k] for k in ("cartridge_strip_px", "cartridge_strip_nx")]))   # v6: the latch's drawn skids (PR 109)
 EDGE_SKIDS = [REC_SKIDS, CART_SKIDS]                 # edge cover for the probes only: cage first and the crash cases stay on the rods
 PACK_PTS = _L["pack"].bounding_box.vertices.copy()
 # the Scout's own mount (partner part): receiver bosses (z 9.6) up to the plate (18.5) round the FC and the XT60 lead window,
@@ -1177,7 +1184,7 @@ for opt in PAD_OPTIONS:
         STROKE[tuple(np.round(d, 3))] = max(float((Pc @ d).max() + ROD_R - (oth @ d).max()) - 1.0, 0.5)
     say("   crash stroke limits (mm): " + ", ".join(f"{list(k)}: {v:.1f}" for k, v in STROKE.items()))
     # balance (CLAUDE.md, dimensions L): whole-drone CG within 3 mm of the thrust axis, pack in and out
-    fixed_items = [(165, _L["pack"].bounding_box.centroid, True), (39.4 + 4.5, _L["cartridge"].centroid, True), (54.5, IFACE.centroid, False),
+    fixed_items = [(165, _L["pack"].bounding_box.centroid, True), (M_CART, _L["cartridge"].centroid, True), (M_REC, IFACE.centroid, False),
                    (25, MOUNT.centroid, False),
                    (10, FC.bounding_box.centroid, False), (10, RADXA.bounding_box.centroid, False), (15, UBEC.bounding_box.centroid, False),
                    (1, XR2.bounding_box.centroid, False), (1.5, FLOW.bounding_box.centroid, False), (16, CAM.bounding_box.centroid, False),
@@ -1285,7 +1292,7 @@ say("printed nodes (sockets): " + ", ".join(f"{kind[i]}{tuple(N[i].round(0).asty
 
 # mass and CG of the whole drone (E)
 PACK_BOX = box(-35, 35, -16, 16, -44.5 + 14.4, -44.5 + 14.4 + 33)          # pack centred on the tab line (x 0), PR 44 cavity
-items = [("pack + plug", 165, _L["pack"]), ("cartridge v5 + sliders (latch, M)", 39.4, _L["cartridge"]), ("receiver v1 + lid + strips + XT60E1-M (latch, M / E)", 54.5, IFACE),
+items = [("pack + plug", 165, _L["pack"]), ("cartridge + sliders (latch)", M_CART, _L["cartridge"]), ("receiver + lid + strips + XT60E1-M (latch)", M_REC, IFACE),
          ("mount + legs (E)", 25, MOUNT), ("FC", 10, FC),
          ("Radxa", 10, RADXA), ("UBEC", 15, UBEC), ("XR2", 1, XR2), ("flow", 1.5, FLOW), ("camera + mount", 16, CAM), ("plate", 28, PLATE),
          ("wires", 20, FC), ("XT60E1-M", 8, XT_M)] + [(f"motor {i}", 19.8, b) for i, b in enumerate(BELLS)]
