@@ -1,0 +1,9 @@
+# CI dependencies (.github/workflows/checks.yml). cloud/setup.sh pins nothing, so these are the versions on the
+# Nox cloud box on 24 Oct 2026, tested in a clean venv. No pymoto / pypardiso / mkl: solid_check then falls back to
+# trimesh contains (rtree).
+numpy==2.5.3
+scipy==1.18.1
+trimesh==5.1.1
+manifold3d==3.5.4
+rtree==1.4.1
+networkx==3.7

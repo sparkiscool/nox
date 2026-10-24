@@ -1,0 +1,24 @@
+{
+ "name": "Scout v3",
+ "machine": "scout",
+ "note": "SKELETON (24 Oct): the Scout v3 session is building the real layout on its own branch and replaces this file; kept minimal on purpose. Drone frame per dimensions.md Coordinates (x fwd, y left, z up, CG at x 0, plate top z 22). Left out (no v3 pose yet, bottom layout open): 4S 1500 pack (70 x 32 x 33, 165 g, P) and cartridge, receiver and latch, Radxa Zero 3W, flow MTF-02P, XR2, camera (pusher-era placeholder), cage and catch wheels, frame arms. Contact pairs: each prop sits on its motor (the swept band reaches the motor top). No cage part yet, so cage first reads FAIL until the cage is drawn.",
+ "cg_ref": [0.0, 0.0, 41.2],
+ "thrust_axis": [0, 0, 1],
+ "cg_tol_mm": 3.0,
+ "cage_margin_mm": 3.0,
+ "openings": [],
+ "contact_pairs": [["motor 1", "prop 1"], ["motor 2", "prop 2"], ["motor 3", "prop 3"], ["motor 4", "prop 4"]],
+ "guard_offsets": {},
+ "parts": [
+  {"name": "frame plate", "role": "bought", "box": [-50.0, 50.0, -47.0, 47.0, 18.5, 22.0], "mass_g": 28, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "centre body only: tail x -50 (C, E CHECK), nose +50 mirrored (DEFAULT), y ±47 (E), z 18.5..22; arms not drawn; mass the middle of 24..32 (C)"},
+  {"name": "motor 1", "role": "bought", "protect": true, "cylinder": {"r": 12.35, "p0": [54.1, 54.1, 22.0], "p1": [54.1, 54.1, 41.2]}, "mass_g": 18, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "EMAX ECO II 2004: plate top to prop hub face 19.2 (D12, E); Ø24.7 listing (Q6, E); 16.4..18 g, top used"},
+  {"name": "prop 1", "role": "bought", "protect": true, "cylinder": {"r": 44.45, "p0": [54.1, 54.1, 37.2], "p1": [54.1, 54.1, 45.2]}, "mass_g": 1.8, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "Gemfan 3520 r 44.45 (A), 1.8 g (M listing), swept ±4 about the prop plane"},
+  {"name": "motor 2", "role": "bought", "protect": true, "cylinder": {"r": 12.35, "p0": [-54.1, 54.1, 22.0], "p1": [-54.1, 54.1, 41.2]}, "mass_g": 18, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "EMAX ECO II 2004: plate top to prop hub face 19.2 (D12, E); Ø24.7 listing (Q6, E); 16.4..18 g, top used"},
+  {"name": "prop 2", "role": "bought", "protect": true, "cylinder": {"r": 44.45, "p0": [-54.1, 54.1, 37.2], "p1": [-54.1, 54.1, 45.2]}, "mass_g": 1.8, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "Gemfan 3520 r 44.45 (A), 1.8 g (M listing), swept ±4 about the prop plane"},
+  {"name": "motor 3", "role": "bought", "protect": true, "cylinder": {"r": 12.35, "p0": [-54.1, -54.1, 22.0], "p1": [-54.1, -54.1, 41.2]}, "mass_g": 18, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "EMAX ECO II 2004: plate top to prop hub face 19.2 (D12, E); Ø24.7 listing (Q6, E); 16.4..18 g, top used"},
+  {"name": "prop 3", "role": "bought", "protect": true, "cylinder": {"r": 44.45, "p0": [-54.1, -54.1, 37.2], "p1": [-54.1, -54.1, 45.2]}, "mass_g": 1.8, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "Gemfan 3520 r 44.45 (A), 1.8 g (M listing), swept ±4 about the prop plane"},
+  {"name": "motor 4", "role": "bought", "protect": true, "cylinder": {"r": 12.35, "p0": [54.1, -54.1, 22.0], "p1": [54.1, -54.1, 41.2]}, "mass_g": 18, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "EMAX ECO II 2004: plate top to prop hub face 19.2 (D12, E); Ø24.7 listing (Q6, E); 16.4..18 g, top used"},
+  {"name": "prop 4", "role": "bought", "protect": true, "cylinder": {"r": 44.45, "p0": [54.1, -54.1, 37.2], "p1": [54.1, -54.1, 45.2]}, "mass_g": 1.8, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "Gemfan 3520 r 44.45 (A), 1.8 g (M listing), swept ±4 about the prop plane"},
+  {"name": "FC MicoAir743", "role": "bought", "protect": true, "box": [-18.0, 18.0, -18.0, 18.0, 9.5, 17.5], "pose": {"t": [1.9, 0, 0], "rpy_deg": [0, 0, 45]}, "mass_g": 10, "tag": "E", "owner": "scout v3", "version": "skeleton", "source": "nox/dimensions.md A / C", "note": "36 x 36 x 8 diamond at (1.9, 0) (A, M), lowest point drone z 9.5 (H, CHECK)"}
+ ]
+}

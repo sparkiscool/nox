@@ -1,0 +1,509 @@
+{
+ "system": "catch: seated drone + 8 wheels + collar + 4 hook latches + cartridge push",
+ "cases": {
+  "insert 60 N": {
+   "at": [
+    -41.5,
+    -19.0,
+    -41.1
+   ],
+   "plunger_max_N": 28.28,
+   "plungers_N": [
+    10.68,
+    28.28,
+    28.28,
+    17.92
+   ],
+   "face_wheel_max_N": 7.24,
+   "residual_N": 0.0
+  },
+  "pull 50 N": {
+   "at": [
+    -41.5,
+    -19.0,
+    -41.1
+   ],
+   "plunger_max_N": 1.71,
+   "plungers_N": [
+    1.71,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "face_wheel_max_N": 17.04,
+   "residual_N": 0.0
+  },
+  "hand lift 100 N at a corner": {
+   "at": [
+    112,
+    100,
+    50
+   ],
+   "plunger_max_N": 85.81,
+   "plungers_N": [
+    85.81,
+    46.21,
+    0.0,
+    79.16
+   ],
+   "face_wheel_max_N": 46.25,
+   "residual_N": 0.0
+  },
+  "catch 6 g": {
+   "at": [
+    0,
+    0,
+    20
+   ],
+   "plunger_max_N": 0.0,
+   "plungers_N": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "face_wheel_max_N": 6.06,
+   "residual_N": 0.0
+  }
+ },
+ "pieces": {
+  "insert 60 N": {
+   "plunger_N": 28.28,
+   "plunger_index": 0.23,
+   "guide_wall_index": 0.136,
+   "guide_top_N": 45.4,
+   "boss_bolt_shear_N": 7.07,
+   "face_wheel_max_N": 7.24,
+   "cls": "flight",
+   "panel_fe_util": 0.101,
+   "panel_boss_index": 0.068,
+   "piece_worst": 0.23
+  },
+  "pull 50 N": {
+   "plunger_N": 1.71,
+   "plunger_index": 0.014,
+   "guide_wall_index": 0.008,
+   "guide_top_N": 2.7,
+   "boss_bolt_shear_N": 0.43,
+   "face_wheel_max_N": 17.04,
+   "cls": "flight",
+   "panel_fe_util": "n/a",
+   "panel_boss_index": "n/a",
+   "piece_worst": 0.014
+  },
+  "hand lift 100 N at a corner": {
+   "plunger_N": 85.81,
+   "plunger_index": 0.437,
+   "guide_wall_index": 0.257,
+   "guide_top_N": 137.8,
+   "boss_bolt_shear_N": 21.45,
+   "face_wheel_max_N": 46.25,
+   "cls": "misuse",
+   "panel_fe_util": 0.075,
+   "panel_boss_index": 0.128,
+   "piece_worst": 0.437
+  },
+  "catch 6 g": {
+   "plunger_N": 0.0,
+   "plunger_index": 0.0,
+   "guide_wall_index": 0.0,
+   "guide_top_N": 0.0,
+   "boss_bolt_shear_N": 0.0,
+   "face_wheel_max_N": 6.06,
+   "cls": "flight",
+   "panel_fe_util": "n/a",
+   "panel_boss_index": "n/a",
+   "piece_worst": 0.0
+  }
+ },
+ "compact": {
+  "latch_unit_bbox_mm": [
+   57.5,
+   49.8,
+   44.4
+  ],
+  "latch_unit_bbox_cm3": 127.2,
+  "latch_unit_largest_extent_mm": 57.5,
+  "latch_unit_solid_cm3": 28.7
+ },
+ "cage_first_face_clearance_mm": {
+  "cage": 1.0,
+  "plate": 30.62,
+  "props": 19.02,
+  "receiver": 25.24
+ },
+ "cage_first_note": "the node cheeks (part of the cage) sit 1.0 off the faces by the catch interface (G (1)); the rings, plate, props and receiver are the 'everything else' and must be >= 3 mm (Scout v3 / Overseer chats own them)",
+ "system_check": {
+  "pass_out": true,
+  "pass_in": true,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +y/latch housing +y_x-), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 750 g (E), CG [0.0, 0.0, 42.3] (E, no cg_ref)",
+  "fit_fail_pairs": [],
+  "compact": {
+   "bbox_min": [
+    -168.39,
+    -168.39,
+    -1.2
+   ],
+   "bbox_max": [
+    168.39,
+    168.39,
+    77.2
+   ],
+   "extents_mm": [
+    336.8,
+    336.8,
+    78.4
+   ],
+   "largest_extent_mm": 336.8,
+   "bbox_L": 8.892,
+   "hull_L": 6.629,
+   "guard_offsets_mm": {}
+  }
+ },
+ "assembled_worst": [
+  "hand lift 100 N at a corner",
+  0.437
+ ],
+ "overseer": {
+  "source": "runs/overseer_system/v1B/checks.txt (overseer system chat, layout B, E)",
+  "mass_kg": {
+   "pack_in": 2.85,
+   "pack_out": 2.065
+  },
+  "cg_catch_frame": {
+   "pack_in": [
+    29.7,
+    1.5,
+    91.9
+   ],
+   "pack_out": [
+    41.0,
+    1.5,
+    91.9
+   ]
+  },
+  "cases": {
+   "pack in: seat (latch in)": {
+    "at": [
+     29.7,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 7.88,
+    "face_wheel_min_N": 2.01,
+    "face_wheel_v7_N": 7.88,
+    "face_wheel_v7_plain_N": 5.09,
+    "wheels_loaded": 8,
+    "residual_N": 0.0,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 7.88,
+      "stress_MPa": 1.1,
+      "index": 0.059,
+      "defl_mm": 0.03,
+      "cls": "flight"
+     },
+     "v7 plain": {
+      "load_N": 5.09,
+      "stress_MPa": 1.1,
+      "index": 0.057,
+      "defl_mm": 0.04,
+      "cls": "flight"
+     }
+    },
+    "piece_worst": 0.059
+   },
+   "pack in: catch 6 g (latch in)": {
+    "at": [
+     29.7,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 55.15,
+    "face_wheel_min_N": 14.05,
+    "face_wheel_v7_N": 55.15,
+    "face_wheel_v7_plain_N": 35.63,
+    "wheels_loaded": 8,
+    "residual_N": 0.0,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 55.15,
+      "stress_MPa": 8.0,
+      "index": 0.41,
+      "defl_mm": 0.18,
+      "cls": "flight"
+     },
+     "v7 plain": {
+      "load_N": 35.63,
+      "stress_MPa": 7.8,
+      "index": 0.402,
+      "defl_mm": 0.25,
+      "cls": "flight"
+     }
+    },
+    "piece_worst": 0.41
+   },
+   "pack in: hand lift 100 N": {
+    "at": [
+     300.0,
+     200.0,
+     100.0
+    ],
+    "plunger_max_N": 173.62,
+    "plungers_N": [
+     173.62,
+     65.42,
+     0.0,
+     149.14
+    ],
+    "face_wheel_max_N": 122.54,
+    "face_wheel_min_N": 0.0,
+    "face_wheel_v7_N": 122.54,
+    "face_wheel_v7_plain_N": 51.21,
+    "wheels_loaded": 6,
+    "residual_N": 0.0,
+    "cls": "misuse",
+    "plunger_index": 0.884,
+    "guide_wall_index": 0.521,
+    "guide_top_N": 278.8,
+    "boss_bolt_shear_N": 43.4,
+    "panel_fe_util": 0.152,
+    "panel_boss_index": 0.259,
+    "panel_boss_defl_mm": 1.27,
+    "piece_worst": 0.911,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 122.54,
+      "stress_MPa": 17.8,
+      "index": 0.911,
+      "defl_mm": 0.41,
+      "cls": "misuse"
+     },
+     "v7 plain": {
+      "load_N": 51.21,
+      "stress_MPa": 11.3,
+      "index": 0.578,
+      "defl_mm": 0.36,
+      "cls": "misuse"
+     }
+    }
+   },
+   "pack in: pull 50 N": {
+    "at": [
+     78.5,
+     27.0,
+     -41.1
+    ],
+    "plunger_max_N": 5.29,
+    "plungers_N": [
+     0.0,
+     1.47,
+     5.29,
+     0.0
+    ],
+    "face_wheel_max_N": 32.15,
+    "face_wheel_min_N": 0.0,
+    "face_wheel_v7_N": 32.15,
+    "face_wheel_v7_plain_N": 17.9,
+    "wheels_loaded": 7,
+    "residual_N": 0.0,
+    "cls": "flight",
+    "plunger_index": 0.043,
+    "guide_wall_index": 0.025,
+    "guide_top_N": 8.5,
+    "boss_bolt_shear_N": 1.32,
+    "panel_fe_util": 0.019,
+    "panel_boss_index": 0.013,
+    "panel_boss_defl_mm": 0.06,
+    "piece_worst": 0.239,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 32.15,
+      "stress_MPa": 4.7,
+      "index": 0.239,
+      "defl_mm": 0.11,
+      "cls": "flight"
+     },
+     "v7 plain": {
+      "load_N": 17.9,
+      "stress_MPa": 3.9,
+      "index": 0.202,
+      "defl_mm": 0.13,
+      "cls": "flight"
+     }
+    }
+   },
+   "pack out: seat (latch in)": {
+    "at": [
+     41.0,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 6.52,
+    "face_wheel_min_N": 0.64,
+    "face_wheel_v7_N": 6.52,
+    "face_wheel_v7_plain_N": 3.69,
+    "wheels_loaded": 8,
+    "residual_N": 0.0,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 6.52,
+      "stress_MPa": 0.9,
+      "index": 0.048,
+      "defl_mm": 0.02,
+      "cls": "flight"
+     },
+     "v7 plain": {
+      "load_N": 3.69,
+      "stress_MPa": 0.8,
+      "index": 0.042,
+      "defl_mm": 0.03,
+      "cls": "flight"
+     }
+    },
+    "piece_worst": 0.048
+   },
+   "pack out: catch 6 g (latch in)": {
+    "at": [
+     41.0,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 45.62,
+    "face_wheel_min_N": 4.51,
+    "face_wheel_v7_N": 45.62,
+    "face_wheel_v7_plain_N": 25.82,
+    "wheels_loaded": 8,
+    "residual_N": 0.0,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 45.62,
+      "stress_MPa": 6.6,
+      "index": 0.339,
+      "defl_mm": 0.15,
+      "cls": "flight"
+     },
+     "v7 plain": {
+      "load_N": 25.82,
+      "stress_MPa": 5.7,
+      "index": 0.291,
+      "defl_mm": 0.18,
+      "cls": "flight"
+     }
+    },
+    "piece_worst": 0.339
+   },
+   "pack out: hand lift 100 N": {
+    "at": [
+     300.0,
+     200.0,
+     100.0
+    ],
+    "plunger_max_N": 174.99,
+    "plungers_N": [
+     174.99,
+     67.13,
+     0.0,
+     151.5
+    ],
+    "face_wheel_max_N": 121.89,
+    "face_wheel_min_N": 0.0,
+    "face_wheel_v7_N": 121.89,
+    "face_wheel_v7_plain_N": 49.83,
+    "wheels_loaded": 6,
+    "residual_N": 0.0,
+    "cls": "misuse",
+    "plunger_index": 0.891,
+    "guide_wall_index": 0.525,
+    "guide_top_N": 281.0,
+    "boss_bolt_shear_N": 43.75,
+    "panel_fe_util": 0.153,
+    "panel_boss_index": 0.261,
+    "panel_boss_defl_mm": 1.28,
+    "piece_worst": 0.906,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 121.89,
+      "stress_MPa": 17.7,
+      "index": 0.906,
+      "defl_mm": 0.41,
+      "cls": "misuse"
+     },
+     "v7 plain": {
+      "load_N": 49.83,
+      "stress_MPa": 11.0,
+      "index": 0.562,
+      "defl_mm": 0.35,
+      "cls": "misuse"
+     }
+    }
+   },
+   "pack out: insert 60 N": {
+    "at": [
+     -78.5,
+     -27.0,
+     -41.1
+    ],
+    "plunger_max_N": 33.73,
+    "plungers_N": [
+     0.0,
+     33.73,
+     33.73,
+     10.33
+    ],
+    "face_wheel_max_N": 15.78,
+    "face_wheel_min_N": 0.0,
+    "face_wheel_v7_N": 15.78,
+    "face_wheel_v7_plain_N": 0.17,
+    "wheels_loaded": 4,
+    "residual_N": 0.0,
+    "cls": "flight",
+    "plunger_index": 0.275,
+    "guide_wall_index": 0.162,
+    "guide_top_N": 54.2,
+    "boss_bolt_shear_N": 8.43,
+    "panel_fe_util": 0.12,
+    "panel_boss_index": 0.081,
+    "panel_boss_defl_mm": 0.37,
+    "piece_worst": 0.275,
+    "panel_wheel_spot": {
+     "v7": {
+      "load_N": 15.78,
+      "stress_MPa": 2.3,
+      "index": 0.117,
+      "defl_mm": 0.05,
+      "cls": "flight"
+     },
+     "v7 plain": {
+      "load_N": 0.17,
+      "stress_MPa": 0.0,
+      "index": 0.002,
+      "defl_mm": 0.0,
+      "cls": "flight"
+     }
+    }
+   }
+  },
+  "assembled_worst": [
+   "pack in: hand lift 100 N",
+   0.911
+  ],
+  "landing_all_8_wheels_loaded": true
+ }
+}
