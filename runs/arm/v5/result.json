@@ -1,0 +1,8 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_tag": "C",
+ "solid_ok": true,
+ "worst_index": null,
+ "note": "arm v5 swap cycle sweep (arm_kinematics.py 1.0 v5): 298 states, 0 overlaps; closest designed 0.30 (v4 fingers to servo); motion.html"
+}

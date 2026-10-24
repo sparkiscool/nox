@@ -82,6 +82,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | M5 precision shim 5 x 10 x 1 | 6 | arm v5: one under each V-wheel (Y 93..94), the eccentric bush sits on one | to buy | box-arm.md v5 mechanism drawn |
 | M5 x 16 socket head (ISO 4762) + M5 heat-set insert (OD 7.0 x 5.8, E) | 4 + 4 | arm v5 rail to hub post, one per post (the inserts go in hub v6's post tops) | CHECK on hand | box-arm.md v5 mechanism drawn |
 | M3 x 4 grub screw | 2 | arm v5 16T pinions on the D-shafts (tapped in the printed boss) | CHECK on hand | box-arm.md v5 mechanism drawn |
+| DIN 988 shim 3 x 5 x 0.5 | 2 | detent arm v2: under the arm on the roller's M3 (replaces v1's printed spacer) | to buy | box-arm.md v5 detent |
 | M5 x 25 socket head + nyloc | 6 | arm v5 wheel axles | CHECK on hand | box-arm.md v5 |
 | Bay contacts: copper-clad sheet, AA spring contacts | 0 | retired 23 Oct (XT60 back) | on hand, not used | |
 | XT60E1-M panel mount (the half that mates the packs' plug; gender CHECK, D17) | 3 now (drone receiver + 2 live bays; +1 per later bay) | swap and bay power, on the float carrier | to buy | M: XT60; dimensions I "XT60 mate" |
