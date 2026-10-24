@@ -877,8 +877,14 @@ def warm_start(N, kind, members, path, cases, contact_ok, max_add=40):
     fe = frame_eval(N, kind, cur, cases); added = 0; mset = set(members)
     while not (feasible(fe) and contact_ok(cur)) and added < max_add:
         used = {i for m in cur for i in m}; v0 = violation(fe) + (0 if contact_ok(cur) else 1.0); best = None
+        hot = set()                                                       # nodes of the failing cases: worst handling nodes, worst members
+        for r in fe or []:
+            if r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
+            if r.get("node_idx"): hot |= set(sorted(r["node_idx"], key=lambda i: -r["node_idx"][i])[:4])
+            hot |= set(cur[r["el"]]) | set(F_i for F_i in r.get("loaded", ()))
         for m in members:
             if m in cur or not (m[0] in used or m[1] in used): continue
+            if hot and not (m[0] in hot or m[1] in hot): continue
             mm = _mirror(N, m); add = close_ends(N, kind, cur, [m] + ([mm] if mm is not None and mm in mset and mm not in cur else []), members)
             trial = drop_bad(N, kind, cur + add)
             if m not in trial: continue
