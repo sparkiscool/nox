@@ -20,6 +20,7 @@ from assembly import load
 OUT = os.path.join(ROOT, "runs", "scout_layout", "v2", "assembly"); os.makedirs(OUT, exist_ok=True)
 R = json.load(open(os.path.join(ROOT, "runs", "scout_layout", "v2", "result.json")))
 rel = lambda p: os.path.relpath(p, ROOT)
+for p_, q_ in R.get("short_carbon_clearance", []): L["FORCED_CARBON"].add(L["_mkey"](np.array(p_), np.array(q_)))   # short carbon kept for clearance
 
 
 def mesh_part(name, m, **kw):
@@ -57,7 +58,7 @@ for nm, key, g, t in (("Radxa Zero 3W", "RADXA", 10, "E"), ("flow MTF-02P", "FLO
 if R.get("pads"):
     pad, carrier, body, tips = L["pads"](R["pads"]["y"], R["pads"]["z"])
     parts.append(mesh_part("pogo pads + carrier", L["union"](pad + [carrier]), role="structure", protect=True, mass_g=6, tag="E", note="belly post pads", **own))
-rods = [L["rod"](np.array(a), np.array(b)) for a, b in R["rods"]]
+rods = [L["member_mesh"](np.array(a), np.array(b)) for a, b in R["rods"]]   # carbon rods and printed struts (short members)
 ends = {tuple(np.round(p, 2)) for ab in R["rods"] for p in ab}
 def _at_core(p):                                              # core joints are the mount's / plate's hubs, not printed cage nodes
     for m_ in [L["MOUNT"], L["PLATE"]] + L["LEGS"]:
@@ -67,7 +68,7 @@ def _at_core(p):                                              # core joints are 
 nodes = [trimesh.creation.icosphere(1, 4.0).apply_translation(p) for p in ends if not _at_core(p)]
 cage = trimesh.util.concatenate(rods + nodes)
 parts.append(mesh_part("cage (rods + nodes)", cage, role="cage", mass_g=round(R["cage_mass"], 1), tag="E", material="carbon rod",
-                       note=f"{len(R['rods'])} x 3.0 rods in PETG sockets on a preloaded TPU suspension; F frame model", **own))
+                       note=f"{R.get('carbon_members', len(R['rods']))} x 3.0 carbon rods (>= {R.get('l_carbon', 0):.0f} mm) + {R.get('printed_struts', 0)} printed 6 x 6 PETG struts, on a preloaded TPU suspension; F frame model", **own))
 WP = L["wheel_pts"]()
 parts.append(mesh_part("catch wheels", trimesh.Trimesh(WP).convex_hull if False else trimesh.util.concatenate(
     [trimesh.creation.icosphere(1, 5.0).apply_translation(c) for c in WP.reshape(-1, 72, 3).mean(1)]), role="cage", mass_g=1.6, tag="M", **own))
