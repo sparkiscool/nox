@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scout v3 chat): **belly post pad search** (`pad_search.py`): no belly spot passes funnel, post r ≥ 101 and cones with the keel the cage needs (best: keel 4.2 inside the cones, C); asked the box catch for hook latch v3 leaf contacts. layout.md.
 - 24 Oct (scout v3 chat): **latch refit done**: latch standard placed, no belly post (keep-alive through the latch, hub DEFAULT), 4th keel node in, flow mid +y, UBEC in the mount tail. System: cage first 4.5 PASS, fit 0, CG 1.3 / 2.0 PASS, cage ~294 g (E); edge probes FAIL (side windows). layout.md.
 - 24 Oct (scout v3 chat): **refit to the latch standard (WIP)**: receiver v1 / cartridge v5 placed; pogo pads must move to (±12, 40.6) (cones vs the new feet), and then no 4th keel node fits: cage first −5.9, cage ~394 g (E). Proposed: keep-alive through the latch plungers, no belly post. layout.md.
 - 24 Oct (scout v3 chat, Spark: "only 3mm rods ... definitely use tpu ... more sections fine, v1 was very sturdy"): **cage v2 pass 3**: crash as energy (1.5 m/s DEFAULT, alt 2.0), rods in PETG sockets on a preloaded TPU suspension that gives at 120 N; 124 rods, ~290 g (E), every case ≤ 0.97 (F), stroke ≤ 7.4 mm. Research: Elios, EPFL, CogniFly.
