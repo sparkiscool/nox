@@ -28,7 +28,7 @@ def mesh_part(name, m, **kw):
 
 
 SRC_REL = "nox/scout/v3/layout_v2.py"
-own = dict(owner="scout v3", version="v2 pass 1", source=SRC_REL)
+own = dict(owner="scout v3", version=R.get("version", "v2"), source=SRC_REL)
 parts = []
 parts.append(mesh_part("frame plate", L["PLATE"], role="structure", mass_g=28, tag="E", note="Bee35 cut down, 3.5 carbon (C), tail XT60 cut-out", **own))
 for i, (b, (x, y)) in enumerate(zip(L["BELLS"], L["MOTORS_XY"])):
@@ -37,37 +37,57 @@ for i, (b, (x, y)) in enumerate(zip(L["BELLS"], L["MOTORS_XY"])):
     parts.append(dict(name=f"prop {i + 1}", role="bought", protect=True, cylinder=dict(r=L["PROP_R"], p0=[x, y, L["PROP_Z"] - L["SWEEP"]], p1=[x, y, L["PROP_Z"] + L["SWEEP"]]),
                       mass_g=1.8, tag="P", note="swept disk +-4", **own))
 parts.append(mesh_part("FC", L["FC"], role="bought", protect=True, mass_g=10, tag="P", **own))
-parts.append(mesh_part("receiver v4 interface", L["IFACE"], role="structure", protect=True, mass_g=79.9, tag="M",
-                       note="PR 44 (control session's latch standard, DEFAULT)", **own))
-parts.append(mesh_part("cartridge v4", L["CART"], role="protected", protect=True, swap=True, mass_g=42.4, tag="M", note="PR 44", **own))
-parts.append(mesh_part("pack 4S 1500", L["box"](-35, 35, -16, 16, -44.5 + 14.4, -44.5 + 14.4 + 33), role="protected", protect=True, swap=True, mass_g=165, tag="P", **own))
+Lm = L["_L"]                                                  # battery latch standard meshes (control session, b59b2dc), drone frame
+latch_parts = [("receiver", "receiver v1 (latch)", "protected", 41.2, False, "M"), ("receiver_lid", "receiver lid (latch)", "protected", 5.3, False, "M"),
+               ("receiver_strips", "receiver TPU strips (latch)", "structure", 2.0, False, "M"), ("xt60e1m", "XT60E1-M", "bought", 6.0, False, "E"),
+               ("cartridge", "cartridge v5 (latch)", "protected", 35.5, True, "M"), ("slider_px", "slider +y (latch)", "protected", 1.95, True, "M"),
+               ("slider_nx", "slider -y (latch)", "protected", 1.95, True, "M"), ("pack", "pack 4S 1500", "protected", 155.0, True, "P"),
+               ("xt60_plug", "pack XT60 plug", "bought", 10.0, True, "E")]
+for key, nm, role, g, swap, t in latch_parts:
+    d = dict(role=role, protect=True, mass_g=g, tag=t, note="battery latch standard, part/battery-latch b59b2dc (control session)", **own)
+    if swap: d["swap"] = True
+    parts.append(mesh_part(nm, Lm[key], **d))
+parts.append(mesh_part("mount + nose legs (Scout)", L["union"]([L["MOUNT"]] + L["LEGS"]), role="structure", mass_g=25, tag="E",
+                       note="the Scout's receiver mount: bosses z 9.6 to the plate, Radxa plate, flow seat, suspension joints; envelope", **own))
 for nm, key, g, t in (("Radxa Zero 3W", "RADXA", 10, "E"), ("flow MTF-02P", "FLOW", 1.5, "P"), ("UBEC", "UBEC", 15, "E"), ("XR2", "XR2", 1, "P"),
-                      ("XT60E1-M + lid", "XT_M", 8, "E"), ("camera", "CAM", 10, "E")):
+                      ("camera", "CAM", 10, "E")):
     parts.append(mesh_part(nm, L[key], role="bought", protect=True, mass_g=g, tag=t, **own))
-pad, carrier, body, tips = L["pads"](R["pads"]["y"], R["pads"]["z"])
-parts.append(mesh_part("pogo pads + carrier", L["union"](pad + [carrier]), role="structure", protect=True, mass_g=6, tag="E", note="PR 44 position", **own))
+if R.get("pads"):
+    pad, carrier, body, tips = L["pads"](R["pads"]["y"], R["pads"]["z"])
+    parts.append(mesh_part("pogo pads + carrier", L["union"](pad + [carrier]), role="structure", protect=True, mass_g=6, tag="E", note="belly post pads", **own))
 rods = [L["rod"](np.array(a), np.array(b)) for a, b in R["rods"]]
 ends = {tuple(np.round(p, 2)) for ab in R["rods"] for p in ab}
-nodes = [trimesh.creation.icosphere(1, 4.0).apply_translation(p) for p in ends]
+def _at_core(p):                                              # core joints are the mount's / plate's hubs, not printed cage nodes
+    for m_ in [L["MOUNT"], L["PLATE"]] + L["LEGS"]:
+        lo, hi = m_.bounds
+        if np.all(np.array(p) >= lo - 2.5) and np.all(np.array(p) <= hi + 2.5): return True
+    return False
+nodes = [trimesh.creation.icosphere(1, 4.0).apply_translation(p) for p in ends if not _at_core(p)]
 cage = trimesh.util.concatenate(rods + nodes)
 parts.append(mesh_part("cage (rods + nodes)", cage, role="cage", mass_g=round(R["cage_mass"], 1), tag="E", material="carbon rod",
-                       note="system pass v2 pass 1: 116 x 3.0 rods, printed nodes; F frame model", **own))
+                       note=f"{len(R['rods'])} x 3.0 rods in PETG sockets on a preloaded TPU suspension; F frame model", **own))
 WP = L["wheel_pts"]()
 parts.append(mesh_part("catch wheels", trimesh.Trimesh(WP).convex_hull if False else trimesh.util.concatenate(
     [trimesh.creation.icosphere(1, 5.0).apply_translation(c) for c in WP.reshape(-1, 72, 3).mean(1)]), role="cage", mass_g=1.6, tag="M", **own))
 a = {"name": "Scout v3", "machine": "scout",
-     "note": ("Scout v3 system pass v2 (pass 1 cage, E cases; layout.md). Seat frame = drone frame (PR 44). Bottom from PR 44 "
-              "(control session's latch standard, DEFAULT). Left out: wires (20 g E, in no part), camera mount, plate hubs, rods' "
-              "core sockets. Known FAIL: cage first at the tail-bottom (receiver needs >= 7.0 inside the funnel planes)."),
+     "note": ("Scout v3 system pass v2, latch refit (layout.md). Seat frame = drone frame. Battery set = the control session's "
+              "latch standard (part/battery-latch b59b2dc, interim). No belly post: keep-alive through the hook latch (hub DEFAULT). "
+              "Left out: wires (20 g E), camera mount, plate hubs, the TPU suspension pads, wheel contact pads."),
      "cg_ref": [0.0, 0.0, L["PROP_Z"]], "thrust_axis": [0, 0, 1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0,
-     "openings": [{"part": "cartridge v4", "axis": [0, 0, -1], "half_angle_deg": 20.0, "min_mm": 0.0},
-                  {"part": "pack 4S 1500", "axis": [0, 0, -1], "half_angle_deg": 20.0, "min_mm": 0.0}],
+     "openings": [{"part": n, "axis": [0, 0, -1], "half_angle_deg": 35.0, "min_mm": 0.0, "skip_probes": True}   # the swap path:
+                  # the box drops the cartridge out through the keel; recessed (margin >= 0); edges inside 35 deg of straight up
+                  # may reach the cartridge's chamfered ends (no keel rail fits under them inside the funnel planes); it takes
+                  # landings (J) (DEFAULT, Scout refit; alt: a cartridge end skid, control session)
+                  for n in ("cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug")],
      "contact_pairs": [[f"motor {i}", f"prop {i}", 1e9] for i in range(1, 5)] + [[f"motor {i}", "frame plate", 1e9] for i in range(1, 5)] +
-                      [["cartridge v4", "pack 4S 1500", 1e9], ["cartridge v4", "receiver v4 interface", 1e9], ["XT60E1-M + lid", "receiver v4 interface", 1e9],
-                       ["XT60E1-M + lid", "cartridge v4", 1e9], ["XT60E1-M + lid", "frame plate", 1e9], ["pogo pads + carrier", "receiver v4 interface", 1e9],
-                       ["cage (rods + nodes)", "frame plate", 1e9], ["cage (rods + nodes)", "receiver v4 interface", 1e9],
-                       ["cage (rods + nodes)", "catch wheels", 1e9], ["FC", "frame plate", 1e9], ["Radxa Zero 3W", "receiver v4 interface", 1e9],
-                       ["flow MTF-02P", "receiver v4 interface", 1e9]],
+                      [["cartridge v5 (latch)", "receiver TPU strips (latch)", 5.0], ["pack 4S 1500", "cartridge v5 (latch)", 1.0],
+                       ["pack XT60 plug", "cartridge v5 (latch)", 5.0], ["XT60E1-M", "receiver v1 (latch)", 5.0], ["XT60E1-M", "receiver lid (latch)", 5.0],
+                       ["receiver TPU strips (latch)", "receiver v1 (latch)", 5.0], ["pack XT60 plug", "XT60E1-M", 1.0],
+                       ["mount + nose legs (Scout)", "receiver v1 (latch)", 1e9], ["mount + nose legs (Scout)", "receiver lid (latch)", 1e9],
+                       ["mount + nose legs (Scout)", "frame plate", 1e9], ["mount + nose legs (Scout)", "XT60E1-M", 1e9], ["mount + nose legs (Scout)", "FC", 1e9], ["mount + nose legs (Scout)", "UBEC", 1e9],
+                       ["cage (rods + nodes)", "frame plate", 1e9], ["cage (rods + nodes)", "mount + nose legs (Scout)", 1e9],
+                       ["cage (rods + nodes)", "catch wheels", 1e9], ["FC", "frame plate", 1e9],
+                       ["Radxa Zero 3W", "mount + nose legs (Scout)", 1e9], ["flow MTF-02P", "mount + nose legs (Scout)", 1e9]],
      "parts": parts}
 dst = os.path.join(HERE, "scout.assembly.json")
 json.dump(a, open(dst, "w"), indent=1)

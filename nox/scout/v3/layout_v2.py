@@ -139,8 +139,10 @@ LEADS = box(37.7, 48.8, -9.25, 9.25, 9.6, 18.5)                                 
 LEGS = [box(34, 40, sy * 31.0 if sy > 0 else -35.0, 35.0 if sy > 0 else -31.0, -34.0, 9.6) for sy in (1, -1)]
 RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # standing, -y side, parts outward (PR 44, E)
 RADXA_STANDOFF = box(-33, 32, -30.3, -25.5, -35, -5)                              # on the mount's -y plate (1.2 off the receiver)
-FLOW = box(-45, -23, 26, 42, -33.5, -25.5); FLOW_LENS = np.array([-29.0, 32.0, -33.5])   # +y, off the receiver plate (DEFAULT)
-UBEC = box(-22.5, 22.5, -10, 10, PLATE_TOP + 0.5, PLATE_TOP + 8.5)               # plate top centre (DEFAULT)
+FLOW = box(-11, 11, 27.5, 43.5, -33.5, -25.5); FLOW_LENS = np.array([5.0, 33.5, -33.5])    # +y mid-length on the mount (DEFAULT; the
+# tail spot blocked the 4th keel node's rods; lens 6 from the nose edge, SENS_FLOW_ROT unchanged)
+UBEC = box(-58, -13, 10.6, 26.0, 10.0, 18.0)                                    # in the mount's tail beside the FC (DEFAULT:
+# balance with the pack out, latch refit: the receiver XT60 + lid at the nose put the dry CG 3.2 forward; was the plate top)
 XR2 = box(-48, -36, 10, 26, PLATE_TOP + 0.5, PLATE_TOP + 6.5)
 XT_M = LEADS                                                                       # XT60E1-M rear + leads (the male itself is in IFACE)
 CAM_Z = (RING_LO + RING_HI) / 2
@@ -251,7 +253,7 @@ def candidate_nodes():
                     (-44, -29, -32), (30, 62, -12), (30, -62, -12), (-30, 62, -12), (-30, -62, -12), (60, 40, -12), (60, -40, -12),
                     (-60, 40, -12), (-60, -40, -12)]:
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
-    for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5)]:
+    for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5), (0, 28.5)]:
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
             (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
@@ -283,6 +285,9 @@ def rod_pad_ok(inner, padb, tips, post_pts):
     return None
 
 
+STRICT = ("FC", "Radxa", "flow", "UBEC", "XR2", "XT60", "camera")
+
+
 def rod_ok(p0, p1, kinds, B, is_ring, core_ends=()):
     inner = rod_samples(p0, p1)
     body_pts = inner
@@ -297,9 +302,10 @@ def rod_ok(p0, p1, kinds, B, is_ring, core_ends=()):
         if (box_dist(inner, lo, hi) < KEEP + ROD_R).any(): return nm
     for nm, m in B.items():
         lo, hi = m.bounds
-        near = box_dist(body_pts, lo, hi) < KEEP + ROD_R + 0.01
+        bp = inner if nm in STRICT else body_pts                         # electronics: no rod near them, even at a joint
+        near = box_dist(bp, lo, hi) < KEEP + ROD_R + 0.01
         if near.any():
-            q = body_pts[near]
+            q = bp[near]
             if nm in ("receiver", "cartridge", "plate"):
                 d = np.abs(trimesh.proximity.signed_distance(m, q))
                 inside = m.contains(q)
@@ -640,23 +646,31 @@ for a in range(nn):
         if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
         else: why0[r] = why0.get(r, 0) + 1
 say(f"rods feasible before the pads: {len(BASE)}; dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why0.items(), key=lambda kv: -kv[1])))
-PAD_OPTIONS = [(40.6, -37.0)]   # PR 44's (38.5, -36.5) breaks the landing
-# cones against the latch receiver's feet (y 24.3); grid 39.5..42 x -36..-38 searched (24 Oct): only this band passes
+BELLY_POST = os.environ.get("BELLY_POST") == "1"
+# Hub DEFAULT 24 Oct (Scout proposal, box catch to confirm): keep-alive through two hook latch plungers onto contact pads on the
+# two latched +-y wheel nodes; seat sensing by the plunger halls; belly post, pogo pads and KW11 target dropped (BELLY_POST=1
+# brings back the refit's post at (+-12, 40.6): its landing cones leave no room for the 4th keel node, cage first -5.9)
+PAD_OPTIONS = [(40.6, -37.0)] if BELLY_POST else [None]
 if os.environ.get('PADS'): PAD_OPTIONS = [tuple(map(float, p.split(','))) for p in os.environ['PADS'].split(';')]
 runs = []
-for yp, zp in PAD_OPTIONS:
-    pp = pads(yp, zp)
-    pad, carrier, body, tips = pp
-    post_pts = pts(body, 400)
-    # the pad carrier and post themselves: funnel planes and the r >= 101 rule
-    fm = float(face_margin(pts(union(pad + [carrier]), 600)).min())
-    rmin = float(np.hypot(body.vertices[:, 1], body.vertices[:, 2] + 144.5).min())
-    drone_base = np.vstack([fixed_pts["receiver"], fixed_pts["cartridge"], fixed_pts["Radxa"], fixed_pts["flow"]])
-    cg_base = min(cone_gap(tips, drone_base), cone_gap(post_pts, drone_base))
-    if fm < 1.0 or rmin < 101.0 or cg_base < 0:
-        say(f"pads ({yp}, {zp}): out (funnel {fm:.2f}, post r {rmin:.1f}, cones vs receiver {cg_base:.2f})"); continue
-    say(f"pads ({yp}, {zp}): funnel {fm:.2f}, post r {rmin:.1f}, cones vs receiver {cg_base:.2f}")
-    padb = {"pads": union(pad + [carrier]), "post": body}
+for opt in PAD_OPTIONS:
+    if opt is None:
+        yp = zp = None; pad, carrier, body, tips = [], None, None, np.zeros((0, 3)); post_pts = np.zeros((0, 3))
+        fm, rmin = None, None; padb = {}
+        say("no belly post (keep-alive through the latch, hub DEFAULT)")
+    else:
+        yp, zp = opt
+        pp = pads(yp, zp)
+        pad, carrier, body, tips = pp
+        post_pts = pts(body, 400)
+        fm = float(face_margin(pts(union(pad + [carrier]), 600)).min())
+        rmin = float(np.hypot(body.vertices[:, 1], body.vertices[:, 2] + 144.5).min())
+        drone_base = np.vstack([fixed_pts["receiver"], fixed_pts["cartridge"], fixed_pts["Radxa"], fixed_pts["flow"]])
+        cg_base = min(cone_gap(tips, drone_base), cone_gap(post_pts, drone_base))
+        if fm < 1.0 or rmin < 101.0 or cg_base < 0:
+            say(f"pads ({yp}, {zp}): out (funnel {fm:.2f}, post r {rmin:.1f}, cones vs receiver {cg_base:.2f})"); continue
+        say(f"pads ({yp}, {zp}): funnel {fm:.2f}, post r {rmin:.1f}, cones vs receiver {cg_base:.2f}")
+        padb = {"pads": union(pad + [carrier]), "post": body}
     members, why = [], {}
     for a_, b_, inner in BASE:
         r = rod_pad_ok(inner, padb, tips, post_pts)
@@ -672,8 +686,14 @@ for yp, zp in PAD_OPTIONS:
     CASES = load_cases(N, kind, live)
     ring_members = [j for j, (a, b) in enumerate(members) if kind[a] == kind[b] and kind[a] in "LU"
                     and abs(N[a][2] - N[b][2]) < 0.1 and np.linalg.norm(N[b] - N[a]) < 60]
+    # keel rails along both sides of the pack are mandatory too (edge probes from below found the slider unshielded, refit)
+    ring_members += [j for j, (a, b) in enumerate(members) if kind[a] == kind[b] == "B" and abs(N[a][1] - N[b][1]) < 0.1
+                     and np.linalg.norm(N[b] - N[a]) < 31]
+    say(f"   mandatory: {len(ring_members)} ring + keel rail rods; keel rails " +
+        ", ".join(f"{N[members[j][0]][:2].astype(int).tolist()}-{N[members[j][1]][:2].astype(int).tolist()}" for j in ring_members if kind[members[j][0]] == "B"))
     say(f"pads ({yp}, {zp}): {len(members)} feasible rods ({len(ring_members)} ring), dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why.items(), key=lambda kv: -kv[1])))
-    others = dict(fixed_pts); others["pads"] = pts(union(pad + [carrier]), 600)
+    others = dict(fixed_pts)
+    if pad: others["pads"] = pts(union(pad + [carrier]), 600)
     WP = wheel_pts(); DIRS = fib_sphere(1200)
     so_all = np.max(np.stack([(DIRS @ p.T).max(1) for p in others.values()]), 0)
     def cage_support(ms):
@@ -727,11 +747,11 @@ for yp, zp in PAD_OPTIONS:
     worst = max(fe, key=lambda r: r["worst"])
     say(f"   ESO {note}: {len(chosen)} rods, cage {mass:.1f} g (E); worst index {worst['worst']:.2f} "
         f"({worst['case']}); max deflection at a load {max(r['defl'] for r in fe):.2f} mm; contact-first {cf[0]:.2f} mm (worst vs {cf[1]})")
-    runs.append(dict(yp=yp, zp=zp, chosen=chosen, fe=fe, cf=cf, mass=mass, members=members, pp=pp, fm=fm, rmin=rmin, why=why))
+    runs.append(dict(yp=yp, zp=zp, chosen=chosen, fe=fe, cf=cf, mass=mass, members=members, pp=(pad, carrier, body, tips), fm=fm, rmin=rmin, why=why))
 
 ok = [r for r in runs if r["cf"][0] >= CONTACT_MARGIN and feasible(r["fe"])]
 best = min(ok, key=lambda r: r["mass"]) if ok else max(runs, key=lambda r: (min(r["cf"][0], CONTACT_MARGIN), -r["mass"]))
-say(f"\nchosen pads ({best['yp']}, {best['zp']}){'' if ok else '  (no option met every rule: best contact-first margin kept)'}")
+say(f"\nchosen: {'pads (%s, %s)' % (best['yp'], best['zp']) if best['yp'] is not None else 'no belly post'}{'' if ok else '  (not every rule met: best contact-first margin kept)'}")
 say(f"elapsed {time.time() - t0:.0f} s")
 
 # ================================================================ report the chosen system
@@ -774,9 +794,10 @@ tot += best["mass"]; mom += best["mass"] * cage_cent
 cg = mom / tot
 say(f"drone ~{tot:.0f} g (E), CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f})")
 
-R = dict(date="2026-10-24T23:30", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
+R = dict(version="v2 latch refit", date="2026-10-24T23:59", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
-         pads=dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]), cage_mass=best["mass"], contact_first=best["cf"][0],
+         pads=(dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]) if best["yp"] is not None else None), belly_post=BELLY_POST,
+         keepalive="latch plungers onto the two latched +-y wheel nodes (hub DEFAULT)" if not BELLY_POST else "belly post", cage_mass=best["mass"], contact_first=best["cf"][0],
          contact_vs=best["cf"][1], rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
          cases=[dict(case=r["case"], cls=r["cls"], index=r["worst"], defl=r["defl"]) for r in fe],
          core_reactions=[dict(at=N[i].tolist(), F=F, M=M, case=c) for i, (F, M, c) in REAC.items()],
@@ -806,7 +827,7 @@ P("XR2", XR2, "electronics", "#6a1b9a", False)
 P("camera", CAM, "electronics", "#2d5a2d", False)
 P("receiver v1 (latch standard)", IFACE, "receiver", "#8899aa", True, "control session, part/battery-latch b59b2dc")
 P("mount + legs (Scout)", union([MOUNT] + LEGS), "receiver", "#9aa8b8", True, "envelope, own topology next")
-P("pogo pads + carrier", union(pad + [carrier]), "receiver", "#c9a227", True)
+if pad: P("pogo pads + carrier", union(pad + [carrier]), "receiver", "#c9a227", True)
 P("cage rods", trimesh.util.concatenate(bands["rods"]), "cage", "#202020", False, "3.0 carbon, LP layout")
 nodes_m = [trimesh.creation.icosphere(1, 4.0).apply_translation(N[i]) for i in used if kind[i] != "C"]
 P("cage nodes", trimesh.util.concatenate(nodes_m), "cage", "#aab4c0", True, "printed PETG, topology per node next")
@@ -818,7 +839,7 @@ for sx, sy in itertools.product((1, -1), (1, -1)):
         w.apply_translation([px - (sx / S2 if f == "x" else 0), py - (sy / S2 if f == "y" else 0), RING_LO + 1 / S2]); whe.append(w)
 P("catch wheels", trimesh.util.concatenate(whe), "cage", "#cc6644", True)
 P("cartridge v5 + pack (latch)", CART, "pack", "#7d8a99", True)
-P("belly post (box)", body, "box", "#e07a5f", False, "PR 44 model")
+if body is not None: P("belly post (box)", body, "box", "#e07a5f", False, "PR 44 model")
 fun = []
 for ax in (0, 1):
     for sg in (1, -1):
