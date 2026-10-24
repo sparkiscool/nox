@@ -200,7 +200,7 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Breaking order | in the crash case the frame, every mount and the pack holder stay at ≤ 1 / 1.5 of the worst cage node or foot index (the node goes first) | DEFAULT |
 | Index target | worst as-built index ≤ 1.0 in the crash case, ≤ 0.5 in flight and landing | DEFAULT |
 
-**Mass budget (24 Oct; light is priority 1).** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section; each piece's topology mass target is its slot; `system_check` fails a system over `mass_budget_g` or a part over its `budget_g`. A slot moves only with the same total (one `log.md` line).
+**Mass budget (24 Oct; soft, Spark: "as low as we can but never sacrifice design for weight").** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section as a target, not a limit: each piece's topology aims at its slot, but strength, stiffness, cage first, access and function come first. `system_check` reports mass against `mass_budget_g` / `budget_g` and warns when over; it never fails on mass. An over-budget piece says in its summary what the extra grams buy.
 
 | System | Whole (`mass_budget_g`) | Bought, fixed | Structure allowance (printed + rods + fasteners) | Tag |
 |---|---|---|---|---|
@@ -209,6 +209,24 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Box | no cap (ground station); each piece reports its mass, a new version may not be heavier without a reason in its summary | | | DEFAULT |
 | Scan stick (on the Overseer) | counts inside the Overseer's 2200 g when mounted; its own section sets its slot | | | DEFAULT |
 
+## T. Strength calibration (24 Oct 2026; protocol `docs/tests.md`, coupons `nox/tests/coupons.py`, readings `tools/calibrate.py`)
+**Spark 24 Oct: use assumed numbers, no tests.** Every factor stays 1.0 (E) and the assumed PETG strengths, XT60 forces, glue bond and rod pull-out stay as tagged; the design margins (index × 0.85 / 2.5, the L index targets) carry the uncertainty. The table is kept in case a test is run later.
+Predicted = break load: the load at which the method's stress reaches the material strength (nox/topo as-built index, misuse class, x 0.85 / 2.5 = 1; grid h 1.0 as the parts use). Factor = measured / predicted; use the min factor: a part's real index = its reported index / factor. Until a row reads P every factor is 1.0 (E) and the attachment rule stands (index ≤ 0.5 at attachments, log 17 Oct). PETG allowables behind the predictions (nox/topo `material.py`): Xt 51 (E), **Zt 25.5 (= 0.5 Xt, E)**, S 25.5 (E) MPa; bond 2.0 MPa (E, `box/box-funnel.md` 7). `tools/calibrate.py` reads the Predicted cell of these rows.
+
+| Key | Test (coupon) | Predicted (N) | Measured (N) | Factor | Tag |
+|---|---|---|---|---|---|
+| `post_pull_6x6` | post pull, 6 x 6 post upright, side pull 25 above the root, copy A 100 % (`print/test_post_pull_v1.stl`) | 37.7 (nox/topo FE h 1.0, across layers at the root; h 0.5 26.4; beam 36.7) | to test | 1.0 | E |
+| `post_pull_4x3` | post pull, 4 x 3 post upright (pulled across the 3), side pull 18 above the root, copy A 100 % | 13.3 (nox/topo FE h 1.0; h 0.5 8.4; beam 8.5) | to test | 1.0 | E |
+| `post_pull_6x6_B` | post pull 6 x 6, copy B at the box-part default (4 walls, 15 % gyroid) | 37.7 (as copy A) | to test | 1.0 | E |
+| `post_pull_4x3_B` | post pull 4 x 3, copy B (4 walls, 15 % gyroid) | 13.3 (as copy A) | to test | 1.0 | E |
+| `layer_pull` | layer pull, 3.6 x 3.6 neck upright, straight pull: Zt = F / A, A 12.96 mm² (`print/test_layer_pull_v1.stl`) | 326.8 (nox/topo FE h 1.0, gauge / flare junction; h 0.5 258.0; Zt A 330.5) | to test | 1.0 | E |
+| `glue_epoxy` | glue lap, 2-part epoxy, 24 h, single lap A 60 mm² (`print/test_glue_lap_v1.stl` x 2) | 120 (2.0 MPa x 60, hand) | to test | 1.0 | E |
+| `glue_methacrylate` | glue lap, methacrylate (MMA) adhesive, 24 h, A 60 mm² | 120 (2.0 MPa x 60, hand) | to test | 1.0 | E |
+| `socket_pull` | socket coupon, 3.0 rod epoxied 24 h in the bore the fit picks, pull out; A 88.6 mm² (rod face, `print/test_socket_coupon_v2.stl`) | 177 (2.0 MPa x π x 3.0 x 9.4, hand) | to test | 1.0 | E |
+| `xt60_insert` | XT60 push-in force, new pair and a pack's own plug (D17) | 60 (I "XT60 mate", E) | to test | 1.0 | E |
+| `xt60_pull` | XT60 pull-out force (D17) | 50 (I "XT60 mate", E) | to test | 1.0 | E |
+
+Socket bore fit (no load): the bore a 3.0 rod slides into by hand without wobble, of 3.5 / 3.6 / 3.7 (socket v2 uses 3.6, C): to test.
 
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
 Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.

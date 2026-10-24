@@ -1,0 +1,107 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "file": "print/test_post_pull_v1.stl",
+ "mass_g": 34.56,
+ "mass_tag": "M",
+ "solid_ok": true,
+ "solid": "print/test_post_pull_v1.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [17778.6], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}",
+ "bed_face": "plate bottom (as saved)",
+ "bed_contact_mm2": 3782.0,
+ "extents": [
+  130.0,
+  30.0,
+  39.0
+ ],
+ "predict": {
+  "6x6": {
+   "section": "6 (X) x 6 (Y, pull)",
+   "L_mm": 25.0,
+   "hand_break_N": 36.7,
+   "hand": "sigma_z = 6 F L / (b t^2) at the root = Zt 25.5 (E)",
+   "fe": {
+    "h1.0": {
+     "h": 1.0,
+     "inlayer": 0.321,
+     "across": 0.781,
+     "worst": 0.781,
+     "at": [
+      22.5,
+      12.5,
+      6.5
+     ],
+     "index_at_ref": 0.781,
+     "F_index1_N": 12.8,
+     "F_break_N": 37.7,
+     "governs": "across layers"
+    },
+    "h0.5": {
+     "h": 0.5,
+     "inlayer": 0.437,
+     "across": 1.114,
+     "worst": 1.114,
+     "at": [
+      17.2,
+      12.2,
+      6.2
+     ],
+     "index_at_ref": 1.114,
+     "F_index1_N": 9.0,
+     "F_break_N": 26.4,
+     "governs": "across layers"
+    }
+   },
+   "predicted_N": 37.7
+  },
+  "4x3": {
+   "section": "4 (X) x 3 (Y, pull)",
+   "L_mm": 18.0,
+   "hand_break_N": 8.5,
+   "hand": "sigma_z = 6 F L / (b t^2) at the root = Zt 25.5 (E)",
+   "fe": {
+    "h1.0": {
+     "h": 1.0,
+     "inlayer": 0.99,
+     "across": 2.209,
+     "worst": 2.209,
+     "at": [
+      81.5,
+      13.5,
+      6.5
+     ],
+     "index_at_ref": 2.209,
+     "F_index1_N": 4.5,
+     "F_break_N": 13.3,
+     "governs": "across layers"
+    },
+    "h0.5": {
+     "h": 0.5,
+     "inlayer": 1.425,
+     "across": 3.482,
+     "worst": 3.482,
+     "at": [
+      81.8,
+      13.2,
+      6.2
+     ],
+     "index_at_ref": 3.482,
+     "F_index1_N": 2.9,
+     "F_break_N": 8.4,
+     "governs": "across layers"
+    }
+   },
+   "predicted_N": 13.3
+  }
+ },
+ "calibration": {
+  "post_pull_6x6": {
+   "predicted_N": 37.7,
+   "hand_N": 36.7
+  },
+  "post_pull_4x3": {
+   "predicted_N": 13.3,
+   "hand_N": 8.5
+  }
+ },
+ "note": "drawn test coupon (manifold3d), nox/tests/coupons.py; protocol docs/tests.md; numbers dimensions.md T"
+}
