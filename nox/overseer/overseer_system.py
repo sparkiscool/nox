@@ -265,9 +265,12 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0)   # crash mass: the A system is ~2.95 kg (E), no cap
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
+    sock = 0.0                                                    # rod ends epoxied in printed sockets on the arms, 20 deep (E)
     for name, a, b, group, kind in Mg:
         if kind == "rod":
             sc = sec_of(name, group); rods[name] = (Ng[a], Ng[b], co.SECTIONS[sc]["od"], group, sc)
+            sock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("tipb", "tipt", "armbot", "arm", "root")))
+    g["arm_socket_mm3"] = sock
     ring_nodes = []
     for nm in info["pnodes"]:
         for lvl in ("lo", "hi"):
@@ -432,6 +435,8 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cag
         say(f"wheels z {wz:5.1f}: motors {dm:5.1f} ahead, catch centre x {-dc:5.1f}, L2 base ({xB:5.1f}, {zB:4.0f}), funnel {fd:5.1f}, "
             f"plungers {PLUNGER_CLEAR:4.1f}, below-opening {low:4.1f}, {tot:4.0f} g")
         if fd >= 1.0 and low <= OPEN_HALF - 1.0 and PLUNGER_CLEAR >= 1.0: break
+    else:
+        say("NO FUNNEL FIT in the wheel z range: the last height is kept and the funnel line below FAILS")
     dc = TIP_OFF - dm
     # camera: lowest height on the L2 back plane where the L2 leaves the view (lower edge + 2 deg), aimed at the horizon
     for h in np.arange(20, 160, 2.0):
@@ -573,7 +578,10 @@ say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the
 # system_check manifest (cage first, fit, compact, mass; grouped meshes)
 def tm(m): return m.copy()
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])]
-man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500, parts=[
+man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
+           contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)]],          # designed joint: rod ends 20 deep in the arm sockets
+           openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],
+           access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
@@ -592,6 +600,9 @@ try:
     with contextlib.redirect_stdout(io.StringIO()):
         SYS = system_check_run(man)
     say("system_check: " + SYS["summary"].replace("\n", " | "))
+    for k in ("probes", "access", "fit"):
+        w = (SYS.get(k) or {}).get("worst")
+        if w: say(f"  {k} worst: " + json.dumps(w, default=str)[:600])
 except Exception as e:
     SYS = None; say(f"system_check failed to run: {str(e)[:200]}")
 # the system's assembly file (nox/ASSEMBLY.md: this script is its only writer); SYS_WRITE_ASM=1 on the final run
@@ -613,8 +624,7 @@ if os.environ.get("SYS_WRITE_ASM", "0") == "1":
               "Left out (no pose yet): ESCs as bodies (25 g each in the arm masses), wheel pins, pogo pads, receiver and latch, "
               "scan stick mount (open: its chat sets the mount; loads in dimensions O System Overseer)."),
         cg_ref=[float(dm), 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
-        openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],
-        access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")],
+        openings=man["openings"], access=man["access"], contact_pairs=man["contact_pairs"],
         guard_offsets={"guard rods to prop disks, plan (G)": float(co.GUARD_GAP), "rods under / over the swept band (G)": float(co.GUARD_GAP)})
     asm.save(os.path.join(HERE, "overseer.assembly.json"))
     say(f"assembly: nox/overseer/overseer.assembly.json, {len(aparts)} parts, meshes in {os.path.relpath(ASM_DIR, ROOT)}")
@@ -668,6 +678,8 @@ s.view("top", (60, 0, 1100), (60, 0, 0)); s.view("under", (300, -300, -500), (0,
 os.makedirs(OUT, exist_ok=True)
 s.write(os.path.join(OUT, "motion.html"))
 json.dump({k: (float(v) if not isinstance(v, str) else v) for k, v in P_FINAL.items()}, open(os.path.join(OUT, "params.json"), "w"), indent=1)
+json.dump(dict(topo=CAGE_TOPO, sizes=CAGE_SIZES, mass_g=FRAME["mass_g"], f_l2=FRAME["f_l2"], f_first=FRAME["f_first"], violation=FRAME["violation"]),
+          open(os.path.join(OUT, "cage_final.json"), "w"), indent=1, default=float)
 if os.environ.get("SYS_VIDEO", "0") == "1":                     # iterations skip the video (png still useful: SYS_VIDEO=1 on the final run)
     try:
         s.video(os.path.join(OUT, "motion.mp4"), gif=False)
