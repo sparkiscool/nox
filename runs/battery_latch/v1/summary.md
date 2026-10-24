@@ -20,3 +20,17 @@ Print: cartridge closed end down (bed 1267 / 3125 mm²), receiver closed-end fac
 | receiver strip v1 (TPU, x 2) | 0.98 | 2.07 | 4.8 x 70.6 x 2.4 / 148.6 | 339 / 713 |
 
 Checks: insertion 50 mm every 1.0 (and 0.3 off) 0 mm³, no stuck step; gripped pull-out 0 mm³; squeeze 0..4 0 mm³; asymmetric squeeze ±1.0 0 mm³, short bolt tip 0.7 inside the face; hall 96.7 / 7.2 / 1.0 mT (latched / half in / squeezed); side-hit slider hold x1.27 / x2.07. Concept review: FAIL with 6 findings, all fixed (doc). Wall time 8.5 min (4 cores).
+
+## Previews (rendered from the exact print files)
+| Print file | Preview |
+|---|---|
+| `print/box_battery_cartridge_overseer_v5.stl` | `runs/battery_latch/v1/preview_box_battery_cartridge_overseer_v5.png` |
+| `print/box_battery_cartridge_scout_v5.stl` | `runs/battery_latch/v1/preview_box_battery_cartridge_scout_v5.png` |
+| `print/box_battery_receiver_lid_overseer_v1.stl` | `runs/battery_latch/v1/preview_box_battery_receiver_lid_overseer_v1.png` |
+| `print/box_battery_receiver_lid_scout_v1.stl` | `runs/battery_latch/v1/preview_box_battery_receiver_lid_scout_v1.png` |
+| `print/box_battery_receiver_overseer_v1.stl` | `runs/battery_latch/v1/preview_box_battery_receiver_overseer_v1.png` |
+| `print/box_battery_receiver_scout_v1.stl` | `runs/battery_latch/v1/preview_box_battery_receiver_scout_v1.png` |
+| `print/box_battery_receiver_strip_overseer_v1.stl` | `runs/battery_latch/v1/preview_box_battery_receiver_strip_overseer_v1.png` |
+| `print/box_battery_receiver_strip_scout_v1.stl` | `runs/battery_latch/v1/preview_box_battery_receiver_strip_scout_v1.png` |
+| `print/box_battery_slider_overseer_v5.stl` | `runs/battery_latch/v1/preview_box_battery_slider_overseer_v5.png` |
+| `print/box_battery_slider_scout_v5.stl` | `runs/battery_latch/v1/preview_box_battery_slider_scout_v5.png` |
