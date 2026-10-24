@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (hub, Spark: "only use tokens when absolutely needed"): no timed 30 min digests; the hub messages Spark only for ready-to-print files or his decisions (`CLAUDE.md` Quiet workers, `docs/sessions.md` Reporting).
 - 24 Oct (hub, Spark: "no need for that"): belt connector measurement dropped from the Spark list; swap arm heads A / B v5 HOLD, superseded by heads v7 (rack and pinion, no belt connector).
 - 24 Oct (box structure system session, box electronics): pack-out hold (catch PR 93, DEFAULT): latch never retracts with the pack out; aborts keep it OUT and K1 closed; A4 always holds (alt: drone bus voltage); A12 reads seat sense first; MATE_CHECK needs I > 100 mA during INSERT first. box-electronics.md.
 - 24 Oct (box catch chat): **funnel panel v9 plain READY** (±x): 2 keep-alive spring probes per A panel (u 12/22, z 33), −x pair notched r ≥ 161 (2.0 off the arm lane, DEFAULT); FE 0.80 (C); catch + probes + 74 N stall: all seated, worst 0.91 (C). DEFAULT: latch never retracts while the pack is out (alt B− at y +12/+22). `runs/funnel_panel/v9_plain/`.
