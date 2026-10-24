@@ -627,8 +627,9 @@ def frame_eval(N, kind, members, cases):
     K = coo_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(6 * nn, 6 * nn)).tocsc()
     used = sorted(set(i for e in members for i in e))
     act = np.array([d for i in list(used) + list(range(len(N), nn)) if i >= len(N) or kind[i] != "C" for d in range(6 * i, 6 * i + 6)])
-    for _, F, _ in cases:
-        if any(i not in used for i in F): return None
+    cases = load_cases(N, kind, set(used))                                # the cases follow the cage being evaluated: a crash meets
+    for _, F, _ in cases:                                                 # its outermost nodes, landings its keel / crown (review PR 94:
+        if any(i not in used for i in F): return None                     # cases fixed on candidate nodes kept loaded stubs alive)
     used_set = set(used)
     try:
         lu = splu(K[act][:, act].tocsc())
