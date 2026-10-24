@@ -10,3 +10,4 @@ fem: grid (64, 48, 88) = 270,336 elements, 394,779 active dofs; backend direct (
 layout: resumed from /home/user/nox/runs/scan_stick_spine/v2/ck.npz at it 42, beta 32 (already stopped: grey)
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 71 s, peak 6.832072 GB
+build: organic surface at pitch 0.333 mm (x6), skins 265.05 cm3, field 368.27 cm3, in env - cuts 328.71 cm3 (layout 327.48, level offset -1.000 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,872,560 faces, 376 s
