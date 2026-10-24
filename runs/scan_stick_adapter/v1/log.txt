@@ -16,3 +16,9 @@ it   7 beta    1 J   1.1966 vol 0.0772 (dil 0.0880 g -0.010) grey 21.8% ch 0.100
 it   8 beta    1 J   1.1107 vol 0.0778 (dil 0.0882 g -0.007) grey 21.4% ch 0.100 worst cage bump low back 100 N 14.1 1.6s
 it   9 beta    1 J   1.0420 vol 0.0782 (dil 0.0883 g -0.006) grey 21.0% ch 0.100 worst L2 drop -z 150 N 13 1.7s
 it  10 beta    1 J   0.9842 vol 0.0785 (dil 0.0884 g -0.005) grey 20.5% ch 0.100 worst L2 drop -z 150 N 12.4 1.5s
+it  11 beta    1 J   0.9506 vol 0.0788 (dil 0.0886 g +0.013) grey 20.0% ch 0.100 worst L2 drop -z 150 N 12 2.0s
+it  12 beta    1 J   0.9477 vol 0.0776 (dil 0.0873 g -0.002) grey 19.8% ch 0.100 worst L2 drop -z 150 N 11.8 2.0s
+it  13 beta    1 J   0.9333 vol 0.0777 (dil 0.0873 g -0.002) grey 19.8% ch 0.100 worst cage bump low back 100 N 11.7 1.6s
+it  14 beta    1 J   0.9217 vol 0.0777 (dil 0.0874 g -0.001) grey 19.8% ch 0.100 worst cage bump low back 100 N 11.8 1.7s
+it  15 beta    1 J   0.9118 vol 0.0777 (dil 0.0874 g -0.001) grey 19.8% ch 0.100 worst cage bump low back 100 N 11.9 1.5s
+it  16 beta    1 J   0.9026 vol 0.0778 (dil 0.0874 g +0.011) grey 19.9% ch 0.100 worst cage bump low back 100 N 12 1.5s

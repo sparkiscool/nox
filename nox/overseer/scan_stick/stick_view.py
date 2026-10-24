@@ -10,7 +10,7 @@ import trimesh as T
 from motion import Scene
 
 HEAD = sys.argv[1] if len(sys.argv) > 1 else "runs/scan_stick_head/v17"
-BASE = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else "runs/scan_stick_base/v27"
+BASE = sys.argv[2] if len(sys.argv) > 2 and not sys.argv[2].startswith("-") else "runs/scan_stick_spine/v1"
 OUT = sys.argv[3] if len(sys.argv) > 3 else os.path.join(ROOT, "runs", "scan_stick_system", "v3")
 os.makedirs(OUT, exist_ok=True)
 def bx(b):
@@ -32,9 +32,10 @@ s = Scene("Scan stick assembly", f"Generated so far: head {hv} and base {bv} are
 if base is not None and "--drawn-base" not in sys.argv:
     s.part(f"base {bv} (generated)", base, group="printed", color="#8899aa", printed=True, note=f"{BASE}: spine, pack pocket, thread boss with the 27 sleeve down the pole")
 s.part(f"head {hv} (generated)", head, group="printed", color="#c0cad6", printed=True, note=f"{HEAD}: front module, L2 ring + bosses, camera posts")
-Sb = U.spine_bodies()
-s.part("base v27 drawn (running)", U.tm(Sb["drawn"] - Sb["cuts"]), group="printed", color="#e0592a", printed=True,
-       note="drawn interfaces of the base the v27 run is built on: closed pocket tube (side walls y ±26..32), no switch panel (Spark 24 Oct), 27 sleeve down the pole; the generated web replaces this when v27 is done")
+import unit_topo_v6 as U6
+for nm, B, col, nt in (("spine v1 drawn (running)", U6.spine_bodies(), "#e0592a", "the spine the v1 run is built on: z 28..199 (171, prints upright), closed pocket tube, no controls; 4x M3 inserts in its floor"),
+                       ("pole adapter v1 drawn (running)", U6.adapter_bodies(), "#2a9d8f", "z -25..31: Ø28.3 sleeve 27 over the pole + 26 thread (open top), low cage sleeves, flange with 4x M3 x 12 from below")):
+    s.part(nm, U.tm(B["drawn"] - B["cuts"]), group="printed", color=col, printed=True, note=nt)
 s.part("cage rods", rods, group="bought", color="#111111", printed=False, note="3 mm carbon")
 s.part("TPU nodes", nodes, group="printed", color="#d4a017", printed=False, note="runs/scan_stick_nodes/v1 (nodes_v5.py): 8 drawn TPU nodes, Ø3.2 sockets 3 wall, solid_check PASS each" if NODES else "12 mm placeholders")
 for n, b, col in (("pack", U.PACK, "#2f4fbf"), ("Pi 5", U.PI_KEEP, "#2e7d32"), ("UBEC + buck", U.EL_KEEP, "#b07d2b"),
@@ -42,7 +43,7 @@ for n, b, col in (("pack", U.PACK, "#2f4fbf"), ("Pi 5", U.PI_KEEP, "#2e7d32"), (
     s.part(n, bx(b), group="bought", color=col, printed=False)
 s.part("Unitree L2", l2, group="bought", color="#222222", printed=False)
 s.part("pole", pole, group="bought", color="#777777", printed=False)
-names = [p["name"] for p in s.parts if p["name"] in (f"base {bv} (generated)", f"head {hv} (generated)", "base v27 drawn (running)", "cage rods", "TPU nodes", "pack", "Pi 5", "UBEC + buck", "camera", "Unitree L2", "pole")]
+names = [p["name"] for p in s.parts if p["name"] in (f"base {bv} (generated)", f"head {hv} (generated)", "spine v1 drawn (running)", "pole adapter v1 drawn (running)", "cage rods", "TPU nodes", "pack", "Pi 5", "UBEC + buck", "camera", "Unitree L2", "pole")]
 s.timeline(lambda t: {n: T.transformations.rotation_matrix(2 * math.pi * t / 16, [0, 0, 1]) for n in names}, duration_s=16, fps=30)
 s.view("iso", (420, -480, 300), (20, 0, 90)); s.view("side", (0, -700, 90), (20, 0, 90)); s.view("front", (700, 0, 90), (20, 0, 90))
 s.view("back", (-700, 0, 90), (20, 0, 90))
