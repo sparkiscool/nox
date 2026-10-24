@@ -41,7 +41,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | Unitree L2 4D lidar | 1 | mapping, at the nose | on hand | M: L2, O |
 | DECXIN 2633V2 camera | 2 | front (lidar colouring by yaw) + underside | 1 on hand, 1 to buy | A (P), O |
 | RC receiver | 1 | RC (CRSF) | CHECK (model not recorded) | |
-| Belly frame, 8 PETG wheels, steel belly plate, pogo pads | 1 set | box catch (section G) | to design | G |
+| Belly frame, 8 PETG wheels, pogo pads (no steel plate since 23 Oct) | 1 set | box catch (section G) | to design | G |
 
 ## Scan stick (hand-held L2 scanner, 23 Oct; `nox/overseer/scan_stick/scan_stick.md`)
 Shares the Overseer's L2, camera and 4S 6000 pack (above); the Pi 5 is the Overseer's companion computer (resume, P).
@@ -83,8 +83,10 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | M5 x 25 socket head + nyloc | 6 | arm v5 wheel axles | CHECK on hand | box-arm.md v5 |
 | Bay contacts: copper-clad sheet, AA spring contacts | 0 | retired 23 Oct (XT60 back) | on hand, not used | |
 | XT60E1-M panel mount (the half that mates the packs' plug; gender CHECK, D17) | 3 now (drone receiver + 2 live bays; +1 per later bay) | swap and bay power, on the float carrier | to buy | M: XT60; dimensions I "XT60 mate" |
-| 24 V P20/15 electromagnet (listed as Heschen HS-P20x15) | 4 (DEFAULT, hold ≥ 85 N for the XT60 push; alt 2 x 5 kg P25/20) | drone hold-down | to buy | M: electromagnet; dimensions G |
-| Mild steel plate ≥ 3 thick (belly plate; replaces the 1/16 strip) | 1 (size from the Scout v3 bottom layout) | magnet target | to buy | dimensions G |
+| MG90S micro servo (hook latch) | 4 | hook latch plungers | to buy (CHECK: 2 may be on hand, D9) | D18; `box/box-hook-latch.md` |
+| M2 x 12 screws + nuts | 12 (8 ear screws + nuts, 4 yoke pins) | hook latch | CHECK on hand | `box/box-hook-latch.md` |
+| M3 x 10 + M3 x 5.7 heat-set inserts | 16 + 16 | hook latch housings on the panel v7 bosses | on hand (CHECK count) | M: inserts |
+| A3144 hall switch + Ø3 x 2 magnet | 4 + 4 | hook latch: plunger fully out | to buy (A3144 pack priced below; Ø3 x 2 magnets CHECK) | `box/box-hook-latch.md` |
 | KW11 microswitch | per bay (CHECK) | drone seated | to buy (CHECK) | M: KW11 |
 | Pogo pins (Mill-Max 0854 class) | per bay (CHECK) | keep-alive power | to buy (CHECK) | M: pogo pin |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |
@@ -97,7 +99,6 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 ## Box: priced for later (not ordered)
 | Part | Qty | Role | Mount data |
 |---|---|---|---|
-| 15N20 steel strip 1/16 x 1.5 x 12 in | 1 | belly strips (too thin for the XT60 hold, 23 Oct: the ≥ 3 plate above) | |
 | A3144 hall module | 1 pack | axle index | M: A3144 |
 | 5 x 2 magnets | 1 pack | axle index | |
 | M6 ball plungers | 1 pack | axle detent | |
@@ -121,6 +122,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | Pinion v4 | 2 | `print/box_pinion_v4.stl` |
 | Fingers v4 (A and B, for heads A and B) | 4 | `print/box_finger_*_v4.stl` |
 | Arm heads A / B v5 (v5b with the connector pad) | 1 + 1 | not in `print/` yet |
+| Hook latch housing A / B v1, plunger v1 | 2 + 2, 4 | `print/box_hook_latch_housing_A_v1.stl`, `..._B_v1.stl`, `print/box_hook_latch_plunger_v1.stl` |
 | Arm v5: rail A / B v1, V-wheel v1 (x6), pinion 16T v1 (x2), hub v6, heads A / B v6 with the carriages | 2, 6, 2, 1, 2 | design (`box-arm.md` v5); replaces the 2040 bars, idler ends, glides, belt clamp |
 | Belt clamp coupon set v2 | 1 (on hold, decision 27) | `print/belt_clamp_coupon_set_v2.stl` |
 | Mast v6 | 1 | `print/box_mast_v6.stl` |
