@@ -355,20 +355,38 @@ def receiver(r, clip=None):
     # side plate windows (DEFAULT, mass): between the latch leg and the ends, y foot + 3 .. rail - 2
     # side frame (DEFAULT, mass): a top band (rails' locating face) full length and three legs down to the feet per side
     # (both ends and the latch leg); the feet lead-ins at those stations capture the rigid cartridge
-    wy0, wy1 = Y_RB - 1.0, r["RAIL_Y0"] - 2.0
+    wy0, wy1 = (r["FOOT_Y1"] if WINDOWS == "truss" else Y_RB - 1.0), r["RAIL_Y0"] - 2.0     # truss: the feet stay a bottom chord
     for (za, zb) in ((r["Z_E0"] + LEG_L_BY[r["pack"]], zt - r["PK_HZ"] - PK_WALL - 2), (zt + r["PK_HZ"] + PK_WALL + 2, r["Z_E1"] - LEG_L_BY[r["pack"]])):
         if zb - za > 8:
             for s in (-1, 1):
                 a0, a1 = sorted((s * (rf - 0.5), s * (xw + 1)))
-                cuts.append(box(a0, a1, wy0, wy1, za, zb))
+                if WINDOWS == "box":
+                    cuts.append(box(a0, a1, wy0, wy1, za, zb))
+                    continue
+                # truss (guide moment, arm PR 79): one diagonal strut STRUT wide per window, from its top end-side
+                # corner to its bottom tab-side corner, so the side plate carries the couple in-plane
+                W_, H_ = zb - za, wy1 - wy0
+                L_ = math.hypot(W_, H_); dz_, dy_ = STRUT / 2 * L_ / H_, STRUT / 2 * L_ / W_
+                end_side = za if za < zt else zb
+                tab_side = zb if za < zt else za
+                sg_ = 1 if tab_side > end_side else -1
+                t1 = [(end_side, wy1), (tab_side - sg_ * dz_, wy1), (end_side, wy0 + dy_)]     # diagonal: end-leg bottom
+                t2 = [(tab_side, wy0), (end_side + sg_ * dz_, wy0), (tab_side, wy1 - dy_)]     # to the tab-side top band
+                for tri in (t1, t2):
+                    if abs(tri[1][0] - tri[0][0]) > 3 and abs(tri[2][1] - tri[0][1]) > 3:
+                        cuts.append(prism_zy(tri, a0, a1))
     R = R - U(*cuts) - cart_path(r) - end_relief(r)
     return R if clip is None else R ^ clip
 
-END_GAP = 0.15                     # end faces to the cartridge's ends (was 0.3): both print along the printer's Z (the
-                                   # cartridge closed end down, the receiver closed-end face down), the A1 mini's best axis
-GUIDE = True                       # pitch guidance before the XT60's first contact (hub 24 Oct, arm v7 PR 79): the end
-                                   # faces become corner posts down to the feet, so the cartridge's pitch is set by the
-                                   # receiver (2 x 0.3 gaps over the engaged height), not by the arm's stiffness
+END_GAP = 0.3                      # end faces to the cartridge's ends; option B (GUIDE) uses 0.15 (both print along Z)
+WINDOWS = "box"                    # side plate windows: "box" (open) or "truss" (a diagonal strut each, option B)
+STRUT = 6.0
+GUIDE = False                      # pitch guidance (hub ask 24 Oct, arm PR 79). DEFAULT off: the XT60E1-M's float carrier
+                                   # tilts +-2.37 deg in pitch (0.5 play over its 12.1 flange depth; the +-1.06 is roll over
+                                   # 27.1), which covers the arm's free mate (1.33 / 1.14 deg with RSS). Option B (True, with
+                                   # END_GAP 0.15, WINDOWS "truss"): corner guide posts, pitch at first contact 0.47 / 0.38 deg;
+                                   # the Overseer carries the arm's 3.5 / 6.1 N m (index 0.49 / 0.54, +12 g), the Scout's
+                                   # clipped posts cannot (0.85 / 0.97 at +19.5 g)
 END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 1: the cartridge's end bears at its corners
                                    # (its side walls), so a +-z crash goes into the side frames, not the deck beside the
                                    # XT60 pocket (FE v1: Overseer +z 1.56 -> see result.json)
@@ -654,6 +672,12 @@ def pitch_at_contact(B, d=6.0, tmax=4.0):
             else: lo = mid
         out[sgn] = round(lo, 2)
     return dict(d_below_seat=d, pitch_pos_deg=out[1], pitch_neg_deg=out[-1])
+
+
+def float_tilt():
+    """free tilt of the XT60E1-M on its float carrier (deg): the 0.5 axial play over the flange's depth (z, 12.1) for pitch
+    about the cartridge's x (the arm's slide-tangential axis) and over its width (x, 27.1) for roll about z."""
+    return dict(pitch_deg=round(math.degrees(math.atan(AX_PLAY / XM_FD)), 2), roll_deg=round(math.degrees(math.atan(AX_PLAY / XM_FW)), 2))
 
 
 # ======================================================================== latched-state read (hall under the tab magnet)
@@ -1105,6 +1129,7 @@ def main():
         R["hall"] = hall_read(g)
         R["hall_sweep"] = hall_sweep(g)
         R["pitch_at_contact"] = pitch_at_contact(B)
+        R["float_tilt"] = float_tilt()
         import battery_latch_topo as BLT
         fe = BLT.fe_v1(pack, 1.0, log=lambda s_: None)
         R["fe_v1"] = dict(worst=fe["worst"], worst_case=fe["worst_case"], worst_at=fe["worst_at"],
@@ -1122,7 +1147,9 @@ def main():
             ms[nm] = round(vol(m) / 1000 * RHO[mat], 2)
         if B["skids"]: ms["skids"] = round(sum(vol(m) for m in B["skids"]) / 1000 * RHO["TPU"], 2)
         R["mass_g"] = ms
-        R["pitch_guidance"] = dict(end_gap=END_GAP, y_end0=round(r["Y_END0"], 2), note="corner guide posts; pitch at the XT60's first contact")
+        R["pitch_guidance"] = dict(guide=GUIDE, end_gap=END_GAP, y_end0=round(r["Y_END0"], 2),
+                                  note=("corner guide posts; pitch at the XT60's first contact" if GUIDE else
+                                        "no guide posts: the XT60E1-M float takes the pitch (float_tilt)"))
         A = U(B["cart"], B["recv"], B["lid"], slider(g, 0, 1), slider(g, 0, -1))
         bb = tm(A).bounds; ext = bb[1] - bb[0]
         R["bbox"] = dict(extents=np.round(ext, 1).tolist(), volume_L=round(float(np.prod(ext)) / 1e6, 4), largest=round(float(ext.max()), 1))

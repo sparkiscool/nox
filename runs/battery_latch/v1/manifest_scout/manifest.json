@@ -74,7 +74,7 @@
    "mesh": "drone_rest_standin.stl",
    "role": "structure",
    "tag": "E",
-   "mass_g": 240.7,
+   "mass_g": 242.43,
    "cg": [
     0.0,
     0.0,

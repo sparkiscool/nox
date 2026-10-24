@@ -140,6 +140,22 @@ def add_cases(p, Q, h, reg=lambda m: m):
     p.load_multi("swap insert 60 N", [(lips, (0, 45.0, 0)), (stop, (0, 15.0, 0))], cls=fn)
     p.load("swap pull 50 N", lips, (0, -45.0, 0), cls=fn)
     p.load("handling 50 N on a foot", reg(U(*D["feet"][:1])), (0, 0, 50.0))
+    if BL.GUIDE:                       # the arm's guide moment on the corner guide posts (arm PR 79: 3.5 N m at the box's
+        xa, xb = r["X_IN"] - 1.0, r["XW"]                     # 5 mrad stub, functional; 6.1 N m measured, misuse)
+        Rv = Q["B"]["recv"]
+        def post(zf, sg, yr):
+            return U(*[box(*sorted((s * xa, s * xb)), yr[0], yr[1], *sorted((zf, zf + sg * 2.0))) for s in (-1, 1)])
+        bands = {}
+        for key, zf, sg in (("1", r["Z_E1"], 1), ("0", r["Z_E0"], -1)):   # each post's real extent (the Scout's are clipped)
+            bb = (post(zf, sg, (r["Y_END0"], r["Y_DK0"])) ^ Rv).bounding_box()
+            y0, y1 = max(bb[1], r["Y_END0"] + BL.HCAP), bb[4]
+            bands[key] = ((y0, y0 + 6.0), (y1 - 8.0, y1 - 2.0))
+        arm = min((bands[k][1][0] + bands[k][1][1]) / 2 - (bands[o][0][0] + bands[o][0][1]) / 2 for k, o in (("1", "0"), ("0", "1")))
+        for nm, M, cls in (("guide moment 3.5 N m", 3500.0, "flight"), ("guide moment 6.1 N m", 6100.0, "misuse")):
+            F = M / arm
+            for sense, (b1, b0) in (("+", (0, 1)), ("-", (1, 0))):
+                p.load_multi(f"{nm} {sense}", [(reg(post(r["Z_E1"], 1, bands["1"][b1])), (0, 0, F)),
+                                                (reg(post(r["Z_E0"], -1, bands["0"][b0])), (0, 0, -F))], cls=cls)
     return p
 
 
