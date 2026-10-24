@@ -775,7 +775,7 @@ def power_cut_head_out():
                 t_park = G * (mh * (z["park"] + 18.0) + co["mass"] * r_p) * abs(math.sin(math.radians(th))) / 1e3
                 T = t_out + t_park + DET_OTHER
                 r = dict(pack=pk, bay=th, carrying=carry, z0=round(z_out, 1), gravity_Nm=round(t_out + t_park, 3), margin=round(DET_HOLD / T, 2),
-                         scale_for_1_25=round(1.25 * T / (2 * 0.390), 2))
+                         scale_for_1_25=round(1.25 * T / (2 * HOLD_X1), 2))
                 rows.append(r)
                 if worst is None or r["margin"] < worst["margin"]: worst = r
     # the alternative to springs x scale (which eat the axle motor's 2.36 N.m index margin): the axle motor on the head brake's NC relay
@@ -797,7 +797,7 @@ def power_cut_head_out():
                  note="the two parked heads are 90 apart: their gravity torques add as a cos + b sin <= hypot(a, b)")
     scales = []
     for sc in (1.0, 1.25, 1.3, 1.5, 1.8):
-        hold = 2 * 0.390 * sc; ex = max(0.0, worst["gravity_Nm"] + DET_OTHER - hold); w_ = ex / b_arm
+        hold = 2 * HOLD_X1 * sc; ex = max(0.0, worst["gravity_Nm"] + DET_OTHER - hold); w_ = ex / b_arm
         scales.append(dict(scale=sc, hold_Nm=round(hold, 3), index_margin=round(T_AXLE_INDEX / (hold + t_park + DET_OTHER), 2),
                            index_margin_holding=round(T_AXLE_STALL / (hold + t_park + DET_OTHER), 2),
                            parked_margin=round(hold / (t_park + DET_OTHER), 2), head_out_margin=round(hold / (worst["gravity_Nm"] + DET_OTHER), 2),
@@ -1241,7 +1241,8 @@ def write_assembly(t=0.0, mode=None, path=None):
     return a
 
 
-DET_HOLD = 2 * 0.390 * (S7.DETENT_SPRING_SCALE if STACK == "v7" else 1.0)   # N.m, two springs (detent CHOSEN_V5 / V6, E; v7 springs x1.8)
+DET_HOLD = 1.065 if STACK == "v7" else 2 * 0.390   # N.m, two springs: v7 detent v6 (CHOSEN_V8, springs x1.3: detent_v6.holding, E); v6 CHOSEN_V6 (E)
+HOLD_X1 = DET_HOLD / 2 / (S7.DETENT_SPRING_SCALE if STACK == "v7" else 1.0)   # one spring at x1 (the scale table's base)
 DET_OTHER = 0.06 + 0.088 / 4.0 * AXLE_RATIO   # seals + the unpowered axle motor's cogging through the ratio (detent.disturbance at 4:1, E)
 
 

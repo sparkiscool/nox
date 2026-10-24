@@ -3,23 +3,23 @@
   "ROLLER_R": 5.0,
   "ROLLER_W": 4.0,
   "ROLLER_BORE": 3.0,
-  "RING_R_OUT": 25.0,
+  "RING_R_OUT": 26.5,
   "RIM_Y0": 65.9,
   "ROLLER_Y": [
    65.9,
    69.9
   ],
   "ARM_Y": [
-   70.5,
-   74.0
+   70.9,
+   74.4
   ],
   "ARM_BOSS_R": 6.0
  },
- "R_SEAT": 28.5,
- "R_APEX": 18.5,
+ "R_SEAT": 30.0,
+ "R_APEX": 20.0,
  "target_hold_Nm": 1.014,
  "chosen_v7_levers": {
-  "hold_Nm": 1.135,
+  "hold_Nm": 1.194,
   "hook_N": 10.9,
   "roller_N": 28.3,
   "hertz_MPa": 32.7,
@@ -29,8 +29,58 @@
   "arm_MPa": 9.4,
   "arm_index": 0.21
  },
- "search": {
-  "tried": 0,
-  "best": null
+ "chosen_v8": {
+  "hold_Nm": 1.065,
+  "hook_N": 10.6,
+  "roller_N": 24.7,
+  "hertz_MPa": 30.6,
+  "hertz_index": 0.45,
+  "contact_w": 4.0,
+  "arm_M_Nmm": 332.0,
+  "arm_MPa": 7.4,
+  "arm_index": 0.16,
+  "gap_arm": 1.0,
+  "gap_tower": 1.0,
+  "ring": {
+   "n_notches": 12,
+   "capture_deg": 8.1,
+   "wall_notch_to_bolt": 2.34,
+   "r_seat": 30.0,
+   "r_apex": 20.0
+  },
+  "walls": {
+   "pocket_to_notch": 2.24,
+   "pocket_to_rim": 5.4
+  }
+ },
+ "box_detent_ring_v4": {
+  "file": "runs/detent/v6/box_detent_ring_v4.stl",
+  "mass_g": 8.69,
+  "extents": [
+   53.0,
+   53.0,
+   5.9
+  ],
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  }
+ },
+ "box_detent_arm_v3": {
+  "file": "runs/detent/v6/box_detent_arm_v3.stl",
+  "mass_g": 3.3,
+  "extents": [
+   51.6,
+   27.6,
+   3.5
+  ],
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  }
  }
 }

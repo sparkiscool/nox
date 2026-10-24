@@ -97,6 +97,8 @@ def use():
         L.Y_C = Y_C7
         _DONE = True
     _patch_v5()
+    import detent as DT                                                        # detent v6 parts with the v7 stack (the piece pass, CHOSEN_V8)
+    DT.use_v6()
     return strokes()
 
 

@@ -113,12 +113,18 @@ def ring_v2(th):
 POCKET = dict(r=3.1, depth=1.9)   # over a Ø5.7 x 1.65 head (E, CHECK on arrival): 0.25 / 0.25 clearance (C); larger breaks the 2.0 wall
 
 
+def notch_y0():
+    """the notches' floor: 0.5 under the rim, or cut through when that floor would be under the 2.0 rule (ring v4: rim from Y 65.9)"""
+    y = RIM_Y0 - 0.5
+    return y if y - RING_Y[0] >= 2.0 else RING_Y[0] - 1.0
+
+
 def ring_v3(th):
     """detent ring v3 (PETG, fixed), W coords: annulus r RING_R_IN..RING_R_OUT, Y RING_Y, notched rim from RIM_Y0, keyed on the 80T's
     bolt heads from below."""
     r = cylY(0, 0, RING_Y[0], RING_Y[1], RING_R_OUT, 180) - cylY(0, 0, RING_Y[0] - 1, RING_Y[1] + 1, RING_R_IN, 96)
     for a in notch_angles(th):
-        r -= _notch_prism(a, RIM_Y0 - 0.5, RING_Y[1] + 1)
+        r -= _notch_prism(a, notch_y0(), RING_Y[1] + 1)
     for a in L.SUN_BOLT_ANG:
         x, z = L.part_angle_pos(L.SUN_BC_R, a)
         r -= cylY(x, z, RING_Y[0] - 1, RING_Y[0] + POCKET["depth"], POCKET["r"], 48)
@@ -136,7 +142,7 @@ def ring_walls(th, ring_fn=None):
     """thinnest walls of the ring (C): notch to bolt feature, bolt feature to the bore / rim, magnet to a notch."""
     nt = None
     for a in notch_angles(th):
-        p = _notch_prism(a, RIM_Y0 - 0.5, RING_Y[1] + 1); nt = p if nt is None else nt + p
+        p = _notch_prism(a, notch_y0(), RING_Y[1] + 1); nt = p if nt is None else nt + p
     pk = None
     for a in L.SUN_BOLT_ANG:
         x, z = L.part_angle_pos(L.SUN_BC_R, a); c = cylY(x, z, RING_Y[0] - 1, RING_Y[0] + POCKET["depth"], POCKET["r"], 48)
@@ -254,10 +260,31 @@ CHOSEN_V7 = dict(CHOSEN_V5, Q=(31.11, -31.11))   # arm v7 (24 Oct, swap arm syst
                                                 # -45 deg (arm parts 1.0, tower 1.0, C). Springs x1.18 for the Overseer (bought, E)
 
 
+CHOSEN_V8 = dict(th=-105, s=1, a=13.0, b=31.2, phi_d=-75.0, psi=315.0, Q=(21.92, -28.56))   # detent v6 (24 Oct, swap arm system worker, the
+                                                # v7 piece pass): detent_v6.search_free on the v7 obstacles with the 623ZZ roller, ring v4 and arm v3:
+                                                # two springs x1.3 hold 1.065 N.m; rim Hertz index 0.45, arm 0.16; arm parts and tower 1.0 (C / E)
+V6_PARTS = dict(ROLLER_R=5.0, ROLLER_W=4.0, ROLLER_BORE=3.0, RING_R_OUT=26.5, RIM_Y0=65.9, ROLLER_Y=(65.9, 69.9), ARM_Y=(70.9, 74.4), ARM_BOSS_R=6.0)
+V6_ON = False
+
+
+def use_v6():
+    """detent v6 parts (623ZZ roller Ø10 x 4 on the 3.0 carbon axle, ring v4 r_out 26.5 with a rim the roller's width, arm v3 3.5 thick with
+    r 6 bosses, tower webs from Y 65.5) in place of v5's; arm_v7_layout.use() calls it. Idempotent."""
+    global R_SEAT, R_APEX, SPRING_Y, WEB_Y, V6_ON
+    g = globals()
+    for k, v in V6_PARTS.items(): g[k] = v
+    R_SEAT = RING_R_OUT + ROLLER_R - ROLL_LIFT                                   # 30.0
+    R_APEX = R_SEAT - ROLLER_R / math.sin(math.radians(NOTCH_HALF))              # 20.0
+    SPRING_Y = (ARM_Y[1] + 3.0, ARM_Y[1] + 9.0)
+    WEB_Y = (65.5, ARM_Y[0] - 0.3)                                               # 1.5 over the 80T top (Y 64)
+    _RC.clear(); V6_ON = True
+
+
 def chosen():
-    """the detent placement of the stack in use: v7 when arm_v7_layout is active, else v6."""
+    """the detent placement of the stack in use: v7 (detent v6 parts when on) when arm_v7_layout is active, else v6."""
     import arm_v7_layout as S7
-    return CHOSEN_V7 if S7._DONE else CHOSEN_V6
+    if not S7._DONE: return CHOSEN_V6
+    return CHOSEN_V8 if V6_ON else CHOSEN_V7
 
 
 SPRING_LS = 38.0               # working length seated (hook centres): 3.4 N; on the land 1.5 x ratio longer, kept <= 42
