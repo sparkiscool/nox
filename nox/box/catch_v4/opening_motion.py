@@ -3,7 +3,7 @@ the box catch assembly in box W (nox/box/box_catch.assembly.json: panels v7 on +
 plungers out) and the Overseer latch v1 set (receiver + lid on the drone, cartridge; runs/box_system/v2/latch_ctx, M)
 centred on the catch centre, stepping yaw -5 .. +5 deg at lift 0 and 5.7, then the cartridge down the swap path. The
 series strip reads the gap from the set to the +x / -x panels per frame (manifold3d min_gap, C on M meshes; the swept
-check in opening_sets.py gives 3.15 / 3.27 over the whole sweep).
+check in opening_sets.py gives 3.42 / 3.42 over the whole sweep with the latch_ctx meshes on main after PR 86; 3.15 / 3.27 with the earlier ones).
 python3 opening_motion.py [--no-video] -> runs/funnel_panel/v8_plain/motion.html (+ .mp4 / .gif / .png)"""
 import os, sys
 import numpy as np, trimesh
