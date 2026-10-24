@@ -452,6 +452,7 @@ def balance(dc_unused, dm0):
     return dm, xB, zB, g, tot, cg
 
 
+SCR_DBG = os.environ.get("SYS_DEBUG_DIR", "/tmp")
 if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 base sits where it does
     set_wheel(-48.0); zB_ = math.ceil(l2_low_zB())
     for x_ in [float(v) for v in os.environ["SYS_DEBUG_XB"].split(",")]:
@@ -460,6 +461,7 @@ if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 
                  ("arms", trimesh.util.concatenate(g_["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g_["apex"]),
                  ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("wheels", trimesh.util.concatenate(g_["wheels"]))]
         print(x_, zB_, l2_clear_margin(g_, g_["B"], items), guard_v_gap(g_))
+    json.dump(g_["P"], open(os.path.join(SCR_DBG, "P_debug.json"), "w"), indent=1, default=float)
     sys.exit(0)
 say(f"cage (cage_opt level {os.environ.get('V3_LEVEL', '160')} Hz): " + " ".join(k for k, v in CAGE_TOPO.items() if v)
     + " | " + " ".join(f"{k}:{v}" for k, v in CAGE_SIZES.items()))

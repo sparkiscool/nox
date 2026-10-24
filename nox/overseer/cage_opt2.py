@@ -273,7 +273,9 @@ def geometry(p, topo, sizes=None):
     if topo["top_spider"]:
         for r in vx:
             mem(f"spider {r[0]}", "TN", f"{r[0]}hi", "top")
-        mem("spider nose+", "TN", "NT+1", "top"); mem("spider nose-", "TN", "NT-1", "top")
+        for sy in (1, -1):                                            # only where it stays clear of the swept band (a low nose top dives through it)
+            if prop_clear(N["TN"], N[f"NT{sy:+d}"], 3.0, mot) >= GUARD_GAP:
+                mem(f"spider nose{'+' if sy > 0 else '-'}", "TN", f"NT{sy:+d}", "top")
     # wheel ring: corner nodes (rigid blocks), ring rods on the wheel lines, struts to the arms (+ optional to the hub)
     for sx, sy, sr, k, t in corners:
         cn = node(f"corner{sx:+d}{sy:+d}", (xc + 106 * sx, 106 * sy, wz))
