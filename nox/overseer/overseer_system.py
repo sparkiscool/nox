@@ -515,7 +515,7 @@ for it_fin in range(3):                                            # final sizes
     fr_ = co.evaluate(g["P"], CAGE_TOPO, CAGE_SIZES)
     say(f"final pass {it_fin + 1}: motors {dm:.1f} ahead, CG {cg[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
     if fr_["violation"] == 0: break
-    new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES)
+    new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, iters=0, init=CAGE_SIZES)   # stiffen / strengthen only from the settled sizes
     if not ok_: say("   touch-up sizing infeasible: the frame line below reports it"); break
     CAGE_SIZES = new_
 tot, cg = cg_of(g)                                                    # the layout drawn with the final sizes (the checks below read this one)
