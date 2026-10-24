@@ -20,9 +20,11 @@ WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it 
                                         # its shorter tail clears the detent's springs and tower web (the full -63 tail met them, sweep C)
 Y_C7 = 138.0                            # the common grip for both packs (DEFAULT): the Overseer gripped 30 toward its closed end needs Y_C >= 136.8,
                                         # the Scout >= 129.1; 138 brings the free mate pitch to 0.64 / 0.56 deg (175: 1.10 / 1.01) and the box 37 shorter
-DETENT_SPRING_SCALE = 1.8               # the hub (structure v2 bays): two Overseer bays sit horizontal; x1.8 holds the parked arm with margin 1.36
-                                        # and a head out at a horizontal Overseer bay to 0.04 N.m of excess (the axle motor on the brake relay takes it,
-                                        # swap_system.power_cut_head_out); every insert and pull keeps the axle driver on (the detent sags past the lead-ins)
+DETENT_SPRING_SCALE = 1.5               # round 3 (DEFAULT; the hub's x1.8 leaves the axle motor 1.29 to index past a notch): with the 5:1 axle the
+                                        # parked arm holds 1.31, indexing 1.43, a head out at a horizontal Overseer bay 0.80: the axle motor on the brake
+                                        # relay lets it creep ~21 deg/s onto the neighbour's seated pack (~71 N, E; swap_system.power_cut_head_out)
+AXLE_RATIO = 5.0                        # round 3: a GT2 16T on the axle motor (80:16, DEFAULT): x1.25 the stall torque and x1.56 the shorted-coil
+                                        # damping, so the springs can hold the Overseer and the motor still indexes past them (swap_system.power_cut_head_out)
 XT60_Z = 7.0                            # the cartridge's XT60 axis 7 from its closed end (DEFAULT, asked of the latch; plug face at its y as before)
 OV_GRIP_OFFSET = 30.0                   # the Overseer's tab line 30 toward the closed end from its swap CG = its drone's thrust axis (Spark B)
 BAYS = dict(overseer=(0.0, -60.0, -120.0, -180.0), scout=(30.0, -30.0, -90.0, -150.0, -210.0), drone=90.0, pitch=30.0)   # box structure v2's set

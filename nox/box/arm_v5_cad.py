@@ -182,7 +182,10 @@ def carriage(h="A", rack_teeth=True):
         s += cylY(x, u, V.NUT_Y[0], V.NUT_Y[1], V.NUT_R, 6)                                     # nyloc
         top = V.ECC["flange_y"][1] if (x, u) == (V.ECC["x"], V.ECC["u"]) else V.PLATE_Y[1]
         bl = getattr(V, "AXLE_BOLT_L", dict(fixed=25.0, ecc=25.0))["ecc" if (x, u) == (V.ECC["x"], V.ECC["u"]) else "fixed"]
-        s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - bl, top, 2.5, 24)        # socket head + its real shank (v5: M5 x 25, tail Y 73 / 75.5)
+        if "countersunk" in getattr(V, "AXLE_BOLT_L", {}).get("head", ""):            # v7 round 3: ISO 10642 heads flush in the plate top (cone in the plate)
+            s += cylY(x, u, top - 2.8, top, 5.2, 32) + cylY(x, u, top - bl, top, 2.5, 24)
+        else:
+            s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - bl, top, 2.5, 24)    # socket head + its real shank (v5: M5 x 25, tail Y 73 / 75.5)
         stack = s if stack is None else stack + s
     bush = ecc_bush(V.ECC["x"], V.ECC["u"], 90.0)
     out = dict(printed=printed, wheels=wheels, stack=stack, bush=bush)
