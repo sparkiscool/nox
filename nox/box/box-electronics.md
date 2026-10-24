@@ -144,10 +144,10 @@ The research's ~600 W of nonstop 2C charging does not fit the LRS-350; the 6.5 A
 | PULL | head B rises to 89.6, closes, retracts with the dead pack (XT60 unmates) | full stroke, no stall, I > 100 mA at its end | 2 s | A4 |
 | TURN | axle 90°: head A to the top, ≤ 100 full steps/s through each notch, step target + the bay's gravity offset | no stall, hall matches phi | 1.1 s (E: ~0.5 s for the slow notch pass) | A5 |
 | INSERT | head A extends, last 12 at ≤ 20 mm/s, to the bolt seat, 1 over-travel into the TPU strip | full stroke | 2 s | A5 |
-| MATE_CHECK | hold the stroke, read INA 0x41 | I < 50 mA | 1.0 s | A6 |
+| MATE_CHECK | hold the stroke, read INA 0x41 | I > 100 mA seen during INSERT (the pins carried the drone), then I < 50 mA (the new pack took over); CHECK: also the drone's bus voltage ≥ 14.0 V (E) over the mission link | 1.0 s | A6 |
 | RELEASE | gripper opens, head A to park | park, no stall | 1 s | A5 |
 | KA_OFF | open K1 at ~0 A | I < 50 mA before, bus < 1 V after | 0.3 s | A3 |
-| LATCH_IN | PCA ch 0..3 to IN | all 4 halls high | 0.5 s | A11 |
+| LATCH_IN | PCA ch 0..3 to IN, only with a pack mated (MATE_CHECK passed) | all 4 halls high | 0.5 s | A11 |
 | READY | SWAP_DONE to the mission (it arms the drone); take-off | seat sense high | 60 s | mission decides |
 | STORE | axle to the free bay (the live bay when free); head B inserts the dead pack, bay relay open | full stroke | 4 s | A5 |
 | BAY_MATE | read the bay INA bus voltage, relay open | 13.0..17.0 V | 1.0 s | A7 |
@@ -156,22 +156,25 @@ The research's ~600 W of nonstop 2C charging does not fit the LRS-350; the 6.5 A
 The box never arms or disarms the drone: it disarms on the kill and the mission script arms it after SWAP_DONE. The swap request comes from the mission script over the network (Moonraker JSON-RPC, DEFAULT).
 
 ## Aborts
+**Pack-out hold (box catch PR 93, DEFAULT):** the hook latch never retracts while the drone's pack is out. With the pack out the face pins' spring force lifts 2.8 of a Scout's 3.3 N and puts a 48 N·mm yaw couple on it (C, `box-hook-latch.md`), so only the latch holds the drone. Every abort after PULL keeps the latch OUT and K1 closed until a pack mates (mate check passes; then the normal KA_OFF, LATCH_IN) or a person lifts the drone off (A12). LATCH_IN runs only after MATE_CHECK has passed (or before PULL, with the old pack still in). Alt: the B− pins at y +12 / +22 (C, catch), which moves the Scout's −x pad.
+
 | Abort | Trigger | Action |
 |---|---|---|
 | A1 latch not out | a hall still high 0.5 s after OUT | all 4 IN, OUT once more; second fail: IN, SWAP_FAIL, the drone keeps its pack (nothing has moved) |
 | A2 latch lost mid-swap | a hall goes high between LATCH_OUT and LATCH_IN | stop all motion, K1 as it is, alarm (the plungers self-lock under load) |
-| A3 keep-alive fault | bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s (ALERT) with the old pack in, or K1 will not open at 0 A | open K1; before PULL: SWAP_FAIL with the old pack in; after PULL: alarm, K1 never opens while the drone runs on it |
-| A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm |
-| A5 stall | TMC2209 DIAG on a fast head move, Klipper shutdown, E-stop, or the axle hall out of its window | stop all motion, latch stays out, K1 as it is (the drone stays powered), alarm; Spark clears by hand, heads re-home before the next cycle |
+| A3 keep-alive fault | bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s (ALERT) with the old pack in, or K1 will not open at 0 A | open K1; before PULL: SWAP_FAIL with the old pack in; after PULL: alarm, K1 and the latch stay as they are (pack-out hold) |
+| A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds; the keep-alive current cannot prove a mate here (the pins were not carrying), so always the pack-out hold (latch OUT, K1 closed), SWAP_FAIL, alarm; Spark clears it (DEFAULT; alt: LATCH_IN on the drone's bus voltage ≥ 14.0 V (E) over the mission link, CHECK) |
+| A5 stall | TMC2209 DIAG on a fast head move, Klipper shutdown, E-stop, or the axle hall out of its window | stop all motion, latch stays out, K1 as it is (closed with the pack out: the drone stays powered), alarm; Spark clears by hand, heads re-home before the next cycle |
 | A6 mate fail | I ≥ 50 mA 1.0 s after the full stroke | back off 5, push again once at 10 mm/s; still ≥ 50 mA: pull the pack back into head A, the drone stays on keep-alive (no time limit), alarm |
 | A7 bay mate fail | bay bus not 13.0..17.0 V with the relay open | re-insert once; then leave the pack uncharged, alarm (off the flight path) |
 | A8 charge fault | charger error, bay I > 7 A, pack over 45 °C (charger probe, CHECK), or no current 5 s after the start | stop the channel, wait I < 50 mA, open the relay, mark the pack |
 | A9 bay interlock | a head move into a live bay with its relay closed or I ≥ 50 mA | refused before the move |
 | A10 seat lost | seat sense high before LATCH_OUT | back to WAIT_SEAT |
 | A11 latch stuck out | a hall still low 0.5 s after IN | OUT, IN once more; then alarm, no SWAP_DONE: the drone sits disarmed on its new pack |
+| A12 keep-alive at 0 A, pack out | after PULL, no pack mated, keep-alive I < 50 mA for 2 s (E) | open K1 (~0 A by then) and read seat sense: high (no 10 kΩ, the drone was lifted off) → latch IN, SWAP_FAIL, alarm; low (the drone is still seated: pins lost contact, or K1 / buck / F3 failed) → latch stays OUT, alarm "keep-alive lost" (DEFAULT, catch PR 93) |
 
 ## Interfaces other parts use (`dimensions.md` I "Box electronics v1")
-- Face pins (box catch, panel v9 plain): 2 spring pins per plain ±x face, ~1.5 A each (concept), 13.0 V CC 3.0 A behind K1 on +x, GND on −x; one 18 AWG conductor per panel (+ on +x, − on −x) from the sheet top, a 3.5 mm bullet pair inline at the sheet; seat sense on the + line (GPIO 24 through 1 kΩ and a BAT54).
+- Face pins (box catch PR 93, panel v9 plain): 2 brass spring probes in each ±x A panel, ~1.5 A a pin (catch), 13.0 V CC 3.0 A behind K1 on +x, GND on −x; one 18 AWG conductor per panel (+ on +x, − on −x) from the sheet top, a 3.5 mm bullet pair inline at the sheet; seat sense on the + line (GPIO 24 through 1 kΩ and a BAT54).
 - Drone (Scout v3, Overseer): an ideal diode (LM74700) + bulk capacitance on the + pad; 10 kΩ across its two pads (seat sense); 22 x 12 copper pads on the lower ring (concept), dead unless K1 is closed; runs from ~12.9 V during a swap.
 - Arm (v5 rails): a park hard stop per head for sensorless homing; drivers at 2.0 A.
 - Hook latch: per unit one 3-core 22 AWG servo extension (stock plug) + one 3-core 28 AWG hall lead; plunger OUT = hall low.

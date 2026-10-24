@@ -55,23 +55,45 @@ No voxel FE (drawn part, hand calc only).
 
 
 ## System pass: the catch (`nox/box/catch_system.py`, CLAUDE.md "System first, then cut"; C unless tagged)
-The seated drone (rigid, 4.9 N E, its 8 catch wheels on the faces), the collar, the 4 latches and the cartridge push as one assembly; supports unilateral (8 face normals, 4 plungers along the slope), equal stiffness (DEFAULT), least-norm non-negative reactions. The latch pieces take these joint reactions:
-| System case (E loads) | Worst plunger (along the slope) | Worst face wheel | Plunger / guide index (class) |
-|---|---|---|---|
-| XT60 insert 60 N up, anywhere on the cartridge footprint | 28.3 N | 7.2 N | 0.23 / 0.14 (flight) |
-| pull-out 50 N down | 1.7 N | 17.0 N | 0.01 / 0.01 (flight) |
-| hand lift 100 N at a cage corner | 85.8 N | 46.3 N | 0.44 / 0.26 (misuse) |
-| catch, 6 g floor landing on the faces | 0 | 6.1 N | 0 |
-**Assembled worst 0.44 on the latch load path (hand lift; max over plunger, guide, panel v7 FE and bosses)**; the panels' own handling case (press u60 v90) stays theirs at 0.91 / 0.93 (C, `runs/funnel_panel/v7/summary.md`), so the whole catch's worst is 0.93 (under 1.0), for the Scout; the Overseer's 175 N hand lift (0.89, below) is above the piece's own 100 N misuse check (0.51, C hand calc), so the system load is the one that sizes it. Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 as-built FE under these system reactions: util 0.10 / 0.08, boss deflection 0.31 / 0.63 mm in insert / hand lift, boss hand calc 0.07 / 0.13, C from `runs/funnel_panel/v7/result.json`).
-- **Overseer at both CGs (hub 24 Oct, layout B; run v1B, E):** pack in 2850 g, CG 29.7 ahead of the catch centre; pack out 2065 g, CG 41.0 ahead (drone x along the latched faces).
-| Overseer case | Worst plunger | Plunger / guide index | Panel FE / bosses (linear, C) |
-|---|---|---|---|
-| landing on the faces, latch in (seat and 6 g) | 0 (all 8 wheels loaded, min 0.6 / 4.5 N) | 0 | 0 |
-| insert 60 N, pack out | 33.7 N | 0.28 / 0.16 (flight) | 0.12 / 0.08, boss 0.37 mm |
-| pull 50 N, pack in | 5.3 N | 0.04 / 0.03 | 0.02 / 0.01 |
-| hand lift 100 N at a guard corner (300, 200) | 175 N | 0.89 / 0.53 (misuse) | 0.15 / 0.26, boss 1.28 mm |
-| panel skin at the seated wheel (FE press u100 v40, linear) | v7: 55.2 N at 6 g, 122.5 N hand lift | | v7 0.41 / 0.91, v7 plain 0.40 / 0.58 (19.5 MPa) |
-The Overseer's long lever (guard corner 360 from the catch centre) doubles the Scout's misuse load: catch worst 0.91 (panel v7 skin at the seated wheel, hand lift; latch pieces 0.89; ≤ 1.0), the Overseer's 4 latched wheel nodes need 175 N along the slope (G (7), was 100).
+**v9 plain run (24 Oct, `runs/box_catch/v9_plain/system.json`, `system_table.md`; v8 plain and before: `runs/hook_latch/v2/system.json`).** The seated drone (rigid, its 8 catch wheels on the faces), the collar (v7 on ±y, v9 plain on ±x), the 4 latches, the 4 keep-alive probes (≤ 1.0 N each along the ±x face normals, on every case: 2.8 N up and a 48 N·mm yaw couple on the drone, C) and the cartridge push as one assembly; supports unilateral (8 face normals, 4 plungers along the slope), equal stiffness (DEFAULT), least-norm non-negative reactions. Per drone: Scout 4.9 N with its pack, 3.3 N without (165 g pack, P), CG (0, 0, 20) (E); Overseer 2850 / 2065 g (E) at CG 25 / 36.3 (hub 24 Oct) and 29.7 / 41.0 (run v1B) ahead of the catch centre. Cases: seat and 6 g with the latch in, pull 50 N (pack in) or insert 60 N and the latched seat (pack out), **head stall 74 N up (every insert ends on stall detection, arm PR 79: swap class, flight index)**, hand lift 100 N (misuse). The receiver pitch couple is not a case (dropped: the XT60 float takes it; reference run: plunger 55.5 N, index 0.45, Overseer pack out). Panel v7 FE and bosses scale linearly from the v7 run's system cases; skins at the seated wheel are the 20 N press (v7 u100 v40, v9 plain u ±100 v43.6) scaled, 19.5 MPa rule (C).
+
+| Drone, case | Plunger max N | Plunger / guide index (class) | Panel v7 FE / bosses | Face wheel v7 / plain N | Skin v7 / v9 plain index | Wheels loaded | Residual N | Worst |
+|---|---|---|---|---|---|---|---|---|
+| Scout pack in: seat (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 0.45 / 0.45 | 0.003 / 0.002 | 8 | 0.0 | 0.003 |
+| Scout pack in: catch 6 g (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 5.65 / 5.65 | 0.042 / 0.027 | 8 | 0.0 | 0.042 |
+| Scout pack in: hand lift 100 N | 86.76 | 0.442 / 0.26 (misuse) | 0.076 / 0.129 | 47.33 / 9.61 | 0.352 / 0.047 | 4 | 0.0 | 0.442 |
+| Scout pack in: pull 50 N | 1.9 | 0.015 / 0.009 (flight) | 0.007 / 0.005 | 16.63 / 11.9 | 0.124 / 0.058 | 8 | 0.0 | 0.124 |
+| Scout pack in: stall 74 N | 36.46 | 0.297 / 0.175 (flight) | 0.13 / 0.088 | 8.93 / 0.0 | 0.066 / 0.0 | 1 | 0.0 | 0.297 |
+| Scout pack out: seat (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 0.17 / 0.17 | 0.001 / 0.001 | 4 | 0.028 | 0.001 |
+| Scout pack out: catch 6 g (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 3.65 / 3.65 | 0.027 / 0.018 | 8 | 0.0 | 0.027 |
+| Scout pack out: hand lift 100 N | 87.28 | 0.444 / 0.262 (misuse) | 0.076 / 0.13 | 47.85 / 8.47 | 0.356 / 0.041 | 4 | 0.0 | 0.444 |
+| Scout pack out: insert 60 N | 30.03 | 0.245 / 0.144 (flight) | 0.107 / 0.072 | 7.24 / 0.0 | 0.054 / 0.0 | 1 | 0.0 | 0.245 |
+| Scout pack out: stall 74 N | 37.03 | 0.302 / 0.178 (flight) | 0.132 / 0.089 | 8.93 / 0.0 | 0.066 / 0.0 | 1 | 0.0 | 0.302 |
+| Scout pack out: seat (latch out) | 0.01 | 0.0 / 0.0 (flight) | 0.0 / 0.0 | 0.17 / 0.17 | 0.001 / 0.001 | 4 | 0.0 | 0.001 |
+| Overseer CG 25 / 36.3, pack in: seat (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 7.0 / 4.68 | 0.052 / 0.023 | 8 | 0.0 | 0.052 |
+| Overseer CG 25 / 36.3, pack in: catch 6 g (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 51.48 / 35.22 | 0.383 / 0.171 | 8 | 0.0 | 0.383 |
+| Overseer CG 25 / 36.3, pack in: hand lift 100 N | 174.55 | 0.889 / 0.523 (misuse) | 0.153 / 0.26 | 122.7 / 50.76 | 0.912 / 0.246 | 6 | 0.0 | 0.912 |
+| Overseer CG 25 / 36.3, pack in: pull 50 N | 5.32 | 0.043 / 0.026 (flight) | 0.019 / 0.013 | 31.25 / 17.29 | 0.232 / 0.084 | 7 | 0.0 | 0.232 |
+| Overseer CG 25 / 36.3, pack in: stall 74 N | 40.46 | 0.33 / 0.194 (flight) | 0.144 / 0.097 | 18.52 / 0.0 | 0.138 / 0.0 | 2 | 0.0 | 0.33 |
+| Overseer CG 25 / 36.3, pack out: seat (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 5.77 / 3.27 | 0.043 / 0.016 | 8 | 0.0 | 0.043 |
+| Overseer CG 25 / 36.3, pack out: catch 6 g (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 42.85 / 25.4 | 0.319 / 0.123 | 8 | 0.0 | 0.319 |
+| Overseer CG 25 / 36.3, pack out: hand lift 100 N | 175.8 | 0.895 / 0.527 (misuse) | 0.154 / 0.262 | 121.94 / 49.34 | 0.907 / 0.239 | 6 | 0.0 | 0.907 |
+| Overseer CG 25 / 36.3, pack out: insert 60 N | 34.47 | 0.281 / 0.165 (flight) | 0.123 / 0.083 | 14.52 / 0.0 | 0.108 / 0.0 | 2 | 0.0 | 0.281 |
+| Overseer CG 25 / 36.3, pack out: stall 74 N | 43.31 | 0.353 / 0.208 (flight) | 0.155 / 0.104 | 15.85 / 0.0 | 0.118 / 0.0 | 2 | 0.0 | 0.353 |
+| Overseer CG 25 / 36.3, pack out: seat (latch out) | 0.0 | 0 / 0 (flight) | 0 / 0 | 5.77 / 3.27 | 0.043 / 0.016 | 8 | 0.0 | 0.043 |
+| Overseer CG 29.7 / 41.0, pack in: seat (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 7.46 / 4.68 | 0.055 / 0.023 | 8 | 0.0 | 0.055 |
+| Overseer CG 29.7 / 41.0, pack in: catch 6 g (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 54.73 / 35.22 | 0.407 / 0.171 | 8 | 0.0 | 0.407 |
+| Overseer CG 29.7 / 41.0, pack in: hand lift 100 N | 174.08 | 0.886 / 0.522 (misuse) | 0.152 / 0.26 | 122.31 / 50.61 | 0.909 / 0.245 | 6 | 0.0 | 0.909 |
+| Overseer CG 29.7 / 41.0, pack in: pull 50 N | 5.65 | 0.046 / 0.027 (flight) | 0.02 / 0.014 | 31.75 / 17.43 | 0.236 / 0.084 | 7 | 0.0 | 0.236 |
+| Overseer CG 29.7 / 41.0, pack in: stall 74 N | 40.94 | 0.333 / 0.196 (flight) | 0.146 / 0.098 | 18.95 / 0.03 | 0.141 / 0.0 | 2 | 0.0 | 0.333 |
+| Overseer CG 29.7 / 41.0, pack out: seat (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 6.1 / 3.27 | 0.045 / 0.016 | 8 | 0.0 | 0.045 |
+| Overseer CG 29.7 / 41.0, pack out: catch 6 g (latch in) | 0.0 | 0 / 0 (flight) | 0 / 0 | 45.21 / 25.4 | 0.336 / 0.123 | 8 | 0.0 | 0.336 |
+| Overseer CG 29.7 / 41.0, pack out: hand lift 100 N | 175.46 | 0.893 / 0.526 (misuse) | 0.153 / 0.262 | 121.65 / 49.23 | 0.905 / 0.239 | 6 | 0.0 | 0.905 |
+| Overseer CG 29.7 / 41.0, pack out: insert 60 N | 34.81 | 0.284 / 0.167 (flight) | 0.124 / 0.084 | 14.85 / 0.0 | 0.11 / 0.0 | 2 | 0.0 | 0.284 |
+| Overseer CG 29.7 / 41.0, pack out: stall 74 N | 43.65 | 0.356 / 0.209 (flight) | 0.156 / 0.105 | 16.19 / 0.0 | 0.12 / 0.0 | 2 | 0.0 | 0.356 |
+| Overseer CG 29.7 / 41.0, pack out: seat (latch out) | 0.06 | 0.0 / 0.0 (flight) | 0.0 / 0.0 | 6.1 / 3.24 | 0.045 / 0.016 | 8 | 0.0 | 0.045 |
+
+**Every operating case keeps the drone seated (residual 0) and every landing (latch in, pack in) loads all 8 wheels, both drones (C).** The Scout without its pack and with the latch in is not held on the model (residual 0.03 N; the probes lift 2.8 of its 3.3 N and make a 48 N·mm yaw couple, C): DEFAULT the latch never retracts while the pack is out, so the state does not occur (`dimensions.md` System Box catch).
 - **Compact:** one latch unit (housing + servo + plunger out) 57.5 x 49.8 x 44.4 (C), 127.2 cm³ box, 28.7 cm³ solid; nested in the panel's rib field behind the face, nothing stacked.
 - **Cage first:** the collar and the plungers meet only cage members (the catch wheels and their nodes). The catch-interface drone keeps its node cheeks 1.0 off the faces (G (1)) and everything else ≥ 19 off them (plate 30.6, props 19.0, receiver 25.2, C); the 3 mm rule for the cheeks is a shared-number question for the Scout v3 / Overseer chats.
 
@@ -80,12 +102,12 @@ Rule checks on the layout: `system_check` on `box_catch.assembly.json` passes la
 - **Chosen: 4 face plungers behind the seated wheels.** Wins: nothing on the drone, self-locking under load with the servos off, fits the panel rib field (127 cm³ per unit); loses: 4 servos and 4 halls (110 g set M).
 - **Alt 1, belly hook on a post:** 1 actuator instead of 4 (−3 servos, about −80 g E); loses: a keeper on both drones (about 5 g E each, Scout v3 and Overseer bellies) and a post standing in the swap opening the head must pass. Rejected.
 - **Alt 2, rim swing hook:** a hook on the collar rim swinging over the upper cage ring; its tip arc r 75.6 about the pivot (166, 95.3) passes 5.8 from the upper-ring rod (112, 51), under rod r 1.5 + hook half-thickness 4 + clearance 0.5 = 6.0 (C): it clashes with the cage. Rejected.
-- **Keep-alive through the plungers (Scout v3 chat, 24 Oct): rejected, the belly post stays (DEFAULT).** The wheel is 0.5..4.0 off the plunger along the slope except under the XT60 push (C): a contact needs ≥ 5.5 travel inside the 8 thick plunger (pogo 2.3 stroke: no), a node pad beside the wheel leaves the 12 wide plunger at ±4.5 sideways, and the halls cannot sense a seat (`dimensions.md` G (6)).
+- **Keep-alive through the plungers (Scout v3 chat, 24 Oct): rejected (DEFAULT); keep-alive goes through face probes in the plain panels (Spark 24 Oct, panel v9 plain), not the belly post.** The wheel is 0.5..4.0 off the plunger along the slope except under the XT60 push (C): a contact needs ≥ 5.5 travel inside the 8 thick plunger (pogo 2.3 stroke: no), a node pad beside the wheel leaves the 12 wide plunger at ±4.5 sideways, and the halls cannot sense a seat (`dimensions.md` G (6)).
 - **Node cheeks 1.0 off the faces (G (1)): DEFAULT compliant**, they are cage members, so the 3 mm cage-first margin does not apply to them; alt: a 3 mm rule for cheeks via G (1), owned by the Scout v3 / Overseer chats.
 Review agent in concept mode on this layout (PR 66 round 2); layout artifact: the v2 motion artifact.
 
 ## Sequence (box)
-Drone seated (KW11) → 4 servos out (0.1 s E) → all 4 halls out, else retract and abort → swap: the XT60 push lifts the drone 2.1 (up to 5.7 at the band's edge, C) onto the plungers, so the drone's insert stroke ends up to 6 further (E, `dimensions.md` I) → head clear → 4 servos in → spin-up, take off. During the push the belly rises off the post: the pogo pads need ≥ 6 of travel (E) to stay made, and the box ignores the KW11 between latch-out and latch-in. A servo that fails out keeps the drone held (it cannot leave).
+Drone seated (seat sense: the box reads the drone's 10 kΩ across the keep-alive probes, G (6); the KW11 and the belly post are gone) → 4 servos out (0.1 s E) → all 4 halls out, else retract and abort → swap: the XT60 push lifts the drone 2.1 (up to 5.7 at the band's edge, C) onto the plungers, so the drone's insert stroke ends up to 6 further (E, `dimensions.md` I) → head clear → 4 servos in → spin-up, take off. During the push the pads move 4.0 off the face and the probes follow (travel 7.5, ≥ 0.59 N, C; funnel panel v9 plain). A servo that fails out keeps the drone held (it cannot leave).
 
 ## Problems
 1. **Wheel position is the interface's (rod centre on the outline, 4.0 off the face, C), not a measured seat.** First fit: seat the real drone in the printed collar, latch out (all 4 halls on), push up by hand: the drone lifts ≤ 6 before it is held. A cage oversize at the wheels by more than 1.0 stalls the plungers: move the panel v7 window uphill by the excess (one number, `GAP`).
@@ -93,4 +115,4 @@ Drone seated (KW11) → 4 servos out (0.1 s E) → all 4 halls out, else retract
 3. **Load share is E:** 4 plungers under a 35 (E) off-centre push. If the drone tilts on the push, add the XT60 offset as a placement case.
 4. **Cage keep-out:** the v3 cage and the Overseer belly frame keep 1.0 off each extended plunger (Catch interface (7)); no corner post straight up from a ±y-face wheel node.
 5. **Servo and hall wiring:** 4 PWM + 4 hall inputs + 5 V from the box controller (box electronics worker).
-6. **Pogo travel and KW11 during the lift:** the pogo pins (section M Q20) must take the 2.1 .. 5.7 lift with preload (≥ 6 travel, E); CHECK when the pogo pins are chosen.
+6. **Keep-alive through the lift:** solved by the face probes in panel v9 plain (travel 7.5, the pad 1.0 .. 7.0 off the face, 0.59 .. 0.86 N, C); the pogo post and KW11 are gone.

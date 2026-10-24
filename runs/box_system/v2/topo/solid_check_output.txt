@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/user/nox/.claude/worktrees/agent-a1b7fd4f119c73011/nox/solid_check.py", line 140, in <module>
+    ok, info = solid_check(trimesh.load(p, force="mesh"), pitch=pt, erode_mm=er)
+               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/nox/.claude/worktrees/agent-a1b7fd4f119c73011/nox/solid_check.py", line 66, in solid_check
+    lab0, n0 = ndi.label(V, st)
+               ~~~~~~~~~^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/scipy/ndimage/_measurements.py", line 199, in label
+    output = np.empty(input.shape, np.intp if need_64bits else np.int32)
+numpy._core._exceptions._ArrayMemoryError: Unable to allocate 29.4 GiB for an array with shape (1604, 1477, 1668) and data type int64

@@ -1,0 +1,76 @@
+{
+ "overseer": {
+  "placement": "tab line Z_T on Y_C (box_layout_v2.place, PR 86)",
+  "z_c_on_catch_centre": 85.5,
+  "receiver_W_Y": [
+   75.4,
+   254.7
+  ],
+  "receiver_mid_off_Y_C": 0.0,
+  "receiver_len": 179.3,
+  "receiver_w": 66.8,
+  "receiver_seat_z": [
+   -42.1,
+   26.5
+  ],
+  "yaws_deg": [
+   -5.0,
+   5.0,
+   0.5
+  ],
+  "lift_mm": [
+   0.0,
+   1.9,
+   3.8,
+   5.7
+  ],
+  "swept_down_mm": 120.0,
+  "overlap_mm3": 0.0,
+  "min_gap_mm": {
+   "+x": 3.42,
+   "-x": 3.42,
+   "+y": 40.0,
+   "-y": 40.0
+  },
+  "max_abs_seat_x": 92.08,
+  "passes_3_a_side": true
+ },
+ "scout": {
+  "placement": "tab line Z_T on Y_C (box_layout_v2.place, PR 86)",
+  "z_c_on_catch_centre": 42.55,
+  "receiver_W_Y": [
+   110.4,
+   211.7
+  ],
+  "receiver_mid_off_Y_C": -3.95,
+  "receiver_len": 101.3,
+  "receiver_w": 61.2,
+  "receiver_seat_z": [
+   -42.1,
+   11.8
+  ],
+  "yaws_deg": [
+   -5.0,
+   5.0,
+   0.5
+  ],
+  "lift_mm": [
+   0.0,
+   1.9,
+   3.8,
+   5.7
+  ],
+  "swept_down_mm": 120.0,
+  "overlap_mm3": 0.0,
+  "min_gap_mm": {
+   "+x": 40.0,
+   "-x": 38.99,
+   "+y": 40.0,
+   "-y": 40.0
+  },
+  "max_abs_seat_x": 56.51,
+  "passes_3_a_side": true
+ },
+ "note": "min_gap = least distance from the set (receiver + lid on the drone, cartridge swept down 120) to that face's panels (assembly file meshes) over the yaw (0.5 deg steps) and lift sweep (manifold3d min_gap, C on M meshes); 40.0 = nothing within the 40 search",
+ "sides_include": "funnel panels per face (v7 on +-y, v9 plain on +-x) + on +-x the probe caps and pins at free"
+}

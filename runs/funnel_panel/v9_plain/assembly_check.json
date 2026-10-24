@@ -1,0 +1,47 @@
+{
+ "seated, latch in": {
+  "pass_": true,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +x/funnel panel B +y), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 689 g (E), CG [-0.0, 165.0, 197.4] (E, no cg_ref)",
+  "probe_pairs_with_overlap": []
+ },
+ "seated, latch out": {
+  "pass_": true,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +x/funnel panel B +y), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 689 g (E), CG [-0.0, 165.0, 197.6] (E, no cg_ref)",
+  "probe_pairs_with_overlap": []
+ },
+ "pins free": {
+  "pass_": false,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 9.6 mm\u00b3 (E) (drone cage ring (seated)/probe pin +x u12) FAIL, bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 689 g (E), CG [-0.0, 165.0, 197.4] (E, no cg_ref)",
+  "probe_pairs_with_overlap": [
+   [
+    "drone cage ring (seated)",
+    "probe pin +x u12",
+    9.62,
+    false
+   ],
+   [
+    "drone cage ring (seated)",
+    "probe pin +x u22",
+    9.62,
+    false
+   ],
+   [
+    "drone cage ring (seated)",
+    "probe pin -x u12",
+    9.62,
+    false
+   ],
+   [
+    "drone cage ring (seated)",
+    "probe pin -x u22",
+    9.62,
+    false
+   ]
+  ]
+ },
+ "pins solid, latch out": {
+  "pass_": true,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +x/funnel panel B +y), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 689 g (E), CG [-0.0, 165.0, 197.5] (E, no cg_ref)",
+  "probe_pairs_with_overlap": []
+ }
+}
