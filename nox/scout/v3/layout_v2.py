@@ -772,8 +772,11 @@ def _handling_all(N, kind, members, els, lu, act, nn, nodes, name, cls):
                 reac={}, peak=None, stroke_lim=None, node_idx={nodes[k]: float(idx_n[:, k].max()) for k in range(nl)})
 
 
+HEAD = [float(os.environ.get("HEADROOM", "0.93"))]   # the ESO / warm start leave this much of each index for the probe repair (1.0 after)
+
+
 def feasible(fe):
-    return fe is not None and all(r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]]) for r in fe)
+    return fe is not None and all(r["worst"] <= IDX_LIM[r["cls"]] * HEAD[0] and r["defl"] <= (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]]) for r in fe)
 
 
 def cage_mass(N, kind, members):
@@ -1261,6 +1264,7 @@ for opt in PAD_OPTIONS:
         bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f} at rod {np.round(N[chosen[r['el']][0]]).astype(int).tolist()}-{np.round(N[chosen[r['el']][1]]).astype(int).tolist()}"
                                      for r in fe if r["worst"] > IDX_LIM[r["cls"]] or r["defl"] > (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]])]
         say(f"   ESO: {note}; failing cases: {bad[:6]}"); continue
+    HEAD[0] = 1.0                                                      # the probe repair and the reduction use the full index
     chosen, fe, pnote = probe_repair(N, kind, chosen, members, CASES, contact_ok, fe)
     say(f"   probe repair: {pnote}")
     if os.environ.get("REDUCE", "1") == "1":
