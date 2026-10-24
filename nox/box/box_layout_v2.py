@@ -90,8 +90,9 @@ def seat_landings(R):
     pts = []
     for k in range(4):
         c, s = math.cos(k * math.pi / 2), math.sin(k * math.pi / 2); Rz = np.array([[c, -s, 0], [s, c, 0], [0, 0, 1.0]])
-        for sy in (1, -1):
-            p = land * np.array([1, sy, 1]); pts.append((Rz @ p, Rz @ n))
+        up = FUNNEL_V8_GROW_Y * np.array([1.0, 0, 1.0]) if k % 2 == 0 else 0.0   # funnel v8 plain (catch PR 81): the +-x landings 11.5 out
+        for sy in (1, -1):                                                           # and 11.5 up the 45 deg face, (109.6, +-36, 18.5) seat frame (C)
+            p = land * np.array([1, sy, 1]) + up; pts.append((Rz @ p, Rz @ n))
     T = B.SEAT_TO_W.copy(); T[2, 3] += R - 100.0; T[1, 3] = Y_FUN
     out = []
     for p, nn in pts:
