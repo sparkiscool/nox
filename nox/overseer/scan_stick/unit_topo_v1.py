@@ -1,6 +1,6 @@
 """Scan stick unit v1: the whole stick structure as one nox/topo optimisation (Spark 24 Oct: "even though we have different
 parts, we should have the whole structure as one optimisation since they will be bolted together"), split after the build
-at the bolted joint (z 168, C) into two prints: base v18 (below) and head v14 (above; the camera mount is part of it, the
+at the bolted joint (z 168, C) into two prints: base v19 (below; v18 was a failed rebuild) and head v14 (above; the camera mount is part of it, the
 separate camera bracket is retired).
 
 Spark 24 Oct: (1) the Unitree L2 mounts forward, turned 90° from up-facing, looking the same way as the camera (+X), 15° down
@@ -214,7 +214,7 @@ def check():
 def split():
     m = man(trimesh.load(os.path.join(OUT, "scan_stick_unit.stl"), force="mesh"))
     lo, hi = m.trim_by_plane([0, 0, -1], -TOP), m.trim_by_plane([0, 0, 1], TOP)
-    for name, part in (("scan_stick_base_v18", lo), ("scan_stick_head_v14", hi.translate([0, 0, -TOP]))):
+    for name, part in (("scan_stick_base_v19", lo), ("scan_stick_head_v14", hi.translate([0, 0, -TOP]))):
         t = tm(part); t.export(os.path.join(OUT, name + ".stl"))
         print(name, round(t.volume / 1e3 * 1.27, 2), "g PETG (1.27, E)", np.round(t.bounds, 1).tolist(), "bodies", len(t.split(only_watertight=False)))
 
