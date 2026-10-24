@@ -509,6 +509,19 @@ def funnel_clear(a, b, od, p):
     return c
 
 
+MOTOR_R, MOTOR_Z0, MOTOR_ZH = 13.85, ROOT_H, ROOT_H + 26.0           # X2216 bell on the arm pad (E, as the system model)
+
+
+def motor_clear(a, b, od, motors):
+    """smallest clearance (mm) of a rod to the motor bells"""
+    t = np.linspace(0, 1, 80)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float))
+    inz = (q[:, 2] > MOTOR_Z0 - od / 2) & (q[:, 2] < MOTOR_ZH + od / 2); c = np.inf
+    if inz.any():
+        for mx, my in motors:
+            c = min(c, float((np.hypot(q[inz, 0] - mx, q[inz, 1] - my) - MOTOR_R - od / 2).min()))
+    return c
+
+
 def guard_caps(m):
     """largest section index (ORDER) per rod that keeps the prop clearance (12) and the funnel clearance (1.0);
     -1 = no section does (the layout fails)"""
@@ -520,6 +533,7 @@ def guard_caps(m):
             od = SECTIONS[sec]["od"]
             if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
+            if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
             cap = i
         caps[e["name"]] = cap
     return caps
@@ -637,6 +651,8 @@ def evaluate(p, topo, sizes, detail=False):
     if p.get("seat_dz") is not None:                                 # funnel (G): every rod 1.0 off the faces, inside the opening below it
         wf = min(funnel_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], p) for e in m.el if e["kind"] == "rod")
         res["funnel_clear"] = float(wf); g["funnel"] = 1.0 - wf if np.isfinite(wf) else -1.0
+    wm = min(motor_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], m.info["motors"]) for e in m.el if e["kind"] == "rod")
+    res["motor_clear"] = float(wm); g["motor clear"] = 1.0 - wm if np.isfinite(wm) else -1.0
     res["g"] = g
     res["violation"] = float(sum(max(0.0, v) for v in g.values()))
     return (res, m) if detail else res
@@ -722,7 +738,7 @@ def size_fsd(p, topo, iters=30, log=False):
     for it in range(30):
         prev = list(sec)
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel")}
+        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel", "motor clear")}
         if not bad: break
         stepped = False
         for key, mk in (("L2 mode", "_l2_mode"), ("belly mode", "_belly_mode")):
