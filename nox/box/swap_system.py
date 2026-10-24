@@ -19,7 +19,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, ".."))
 import arm_v6_layout as S6
 S6.use("v6")
-import arm_layout as L, arm_v5_layout as V, detent as DT
+import arm_layout as L, arm_v5_layout as V, detent as DT, arm_cad as A_
 
 REPO = os.path.normpath(os.path.join(HERE, "..", "..")); OUT = os.path.join(REPO, "runs", "arm", "v6"); os.makedirs(OUT, exist_ok=True)
 G = 9.81e-3                               # N per g (mass in g)
@@ -702,54 +702,148 @@ def overseer():
     return rows
 
 
-# ================================================================== the system_check manifests
-def manifests(stack="v6"):
-    """one manifest per pose (park, drone insert, bay) from arm_kinematics' v6 parts; returns paths"""
+# ================================================================== the assembly file and its system_check per pose
+ASM = os.path.join(HERE, "box_swap_arm.assembly.json")
+ASM_DIR = os.path.join(OUT, "asm")
+POSES = dict(park=0.0, bay_pick=3.0, drone_insert=11.5, bay_return=18.5, turn_carrying=9.5)     # arm_kinematics v6 cycle times (s)
+BOUGHT_G = dict(motor=400.0, brg=110.0, stub_bolts=8.0, p20_axle=8.0, p80=30.0, belt_axle=8.0, wheels=8.4, axles=20.0, servo=60.0, detent_roller=1.0,
+                detent_springs=1.0, detent_tower=0.5, shaft=0.0)
+
+
+def _bought_g(nm):
+    for k, g in BOUGHT_G.items():
+        if nm.startswith(k): return g
+    return 5.0
+
+
+def pose_at(s, part):
+    """assembly 'moves' function: the part's world pose at swap-cycle time s (s, arm_kinematics v6 keys)."""
+    import arm_kinematics as K
+    if not K.PARTS_CACHE: K.KEYS = K._keys_v6(); K.build_parts("v6")
+    T, carts, _ = K.transforms(float(s))
+    nm = part["name"]
+    if nm in T: return T[nm]
+    if nm in carts: return carts[nm][0]
+    if nm.startswith("pack"): return K.trans(0, 0, L.R + 5.0)               # the dead pack before the drone lands: in the drone at the seat
+    return np.eye(4)
+
+
+def write_assembly(t=0.0):
+    """nox/box/box_swap_arm.assembly.json (this session owns it): every arm part in its pose at cycle time t (park), meshes exported
+    once to runs/arm/v6/asm/ (W, decimated), the bay modules as one mesh posed 9 times, the carried cartridges (latch v1) as bought."""
+    import arm_kinematics as K, assembly as AS, trimesh
+    K.KEYS = K._keys_v6(); P = K.build_parts("v6")
+    os.makedirs(ASM_DIR, exist_ok=True)
+    T, carts, st = K.transforms(t)
+    parts = []
+    for nm, p in P.items():
+        if nm.startswith("bay") and nm != f"bay{K.demo_idx()}":
+            k = int(nm[3:]); a = L.SCOUT_BAYS[k]
+            parts.append(dict(name=nm, role="structure", mesh="models/box_baymod_v4i_W.obj", pose=K.rotY(90.0 - a).tolist(), material="PETG", tag="M",
+                              owner="box bay modules", version="v4i", note="context (fixed)")); continue
+        path = os.path.join(ASM_DIR, f"{nm}.stl"); m = p.mesh
+        if len(m.faces) > 40000:
+            import fast_simplification as fsimp, trimesh
+            v_, f_ = fsimp.simplify(np.asarray(m.vertices, np.float32), np.asarray(m.faces), 1.0 - 40000.0 / len(m.faces)); m = trimesh.Trimesh(v_, f_)
+        m.export(path)
+        role = "bought" if not p.printed else "structure"
+        d = dict(name=nm, role=role, mesh=os.path.relpath(path, HERE), pose=np.asarray(T.get(nm, np.eye(4))).tolist(), material="TPU" if nm.startswith("strip") else "PETG",
+                 tag="M" if p.printed else "C", owner="swap arm system" if not nm.startswith(("bay", "strip")) else "box bay modules",
+                 source="nox/box/arm_kinematics.py build_parts_v6", moves="nox/box/swap_system.py:pose_at", note=p.name)
+        if not p.printed: d["mass_g"] = _bought_g(nm)
+        parts.append(d)
+    for cn in ("pack charged", "pack dead"):                               # both always (the dead one sits in the drone until it lands)
+        path = os.path.join(ASM_DIR, f"{cn.replace(' ', '_')}.stl"); K.tm(K.CART_LOCAL(4.0)).export(path)   # gripped: bolts in (the sweep has every squeeze)
+        own = carts[cn][2] if cn in carts else "drone (before landing)"
+        parts.append(dict(name=cn, role="bought", swap=True, mesh=os.path.relpath(path, HERE), pose=np.asarray(pose_at(t, dict(name=cn))).tolist(),
+                          mass_g=CART["scout"]["mass"], tag="E", owner="battery latch (latch_assembly)", source=LATCH["source"],
+                          moves="nox/box/swap_system.py:pose_at", note=own))
+    carts = {"pack charged": None, "pack dead": None}
+    contact = [[a, b, 1e9] for a, b in K.ALLOWED if a in P and b in P]
+    for cn in carts:
+        for h in "AB": contact += [[cn, f"fingA_{h}", 1e9], [cn, f"fingB_{h}", 1e9]]
+        contact += [[cn, f"bay{K.demo_idx()}", 0.5]]
+    a = AS.new("box swap arm v6", "box", parts, note="the swap arm at cycle time t (park at t 0, phi -90); meshes runs/arm/v6/asm (W). Context: the 9 bay "
+               "modules (v4i, the demo bay as the latch receiver). Not in: stand, funnel, drone (their owners' files). Pose any state with a.at(**{name: t}) "
+               "(swap_system.pose_at). No cage (a ground station's arm): cage first and probes do not apply. The CG line includes the fixed parts (report only, "
+               "cg_tol 1000): the arm's balance is the turning parts' unbalance about the axle, swap_system.run_checks.",
+               cg_ref=[0.0, 0.0, 0.0], thrust_axis=[0.0, 1.0, 0.0], cg_tol_mm=1000.0, fit_tol_mm3=0.5, contact_pairs=contact, probes=False)
+    a.save(ASM)
+    return a
+
+
+DET_HOLD = 2 * 0.390                       # N.m, two springs (detent CHOSEN_V5 / V6, E)
+DET_OTHER = 0.06 + 0.088                   # seals + the unpowered axle motor's cogging through the 4:1 (detent.disturbance, E)
+
+
+def arm_only(a, t):
+    """compact and balance of the turning arm alone (no bays, stub, post, bearings, 80T, ring): AABB, largest extent, hull volume, and the
+    unbalance about the axle (g.m) of the turning parts + carried cartridges, vs the 10.1 g.m the detent was sized for (E)."""
     import arm_kinematics as K, trimesh
-    K.KEYS = K.KEYS_V5
-    P = K.build_parts("v6")
-    poses = dict(park=0.0, bay_pick=2.6, drone_insert=11.6)
-    paths = []
-    for pn, t in poses.items():
-        T, carts, st = K.transforms(t)
-        parts = []
-        for nm, p in P.items():
-            if nm.startswith(("bay", "strip")) and not nm.startswith(f"bay{K.demo_idx()}") and nm != f"strip{K.demo_idx()}": continue
-            m = p.mesh.copy(); m.apply_transform(T.get(nm, np.eye(4)))
-            role = "bought" if not p.printed else ("context" if p.group == "fixed" and nm.startswith(("bay", "strip")) else "structure")
-            parts.append(dict(name=nm, trimesh=m, role=role if role != "context" else "structure", material="PETG", tag="M" if p.printed else "C",
-                              **({} if p.printed else {"mass_g": BOUGHT_G.get(nm.split("_")[0] if nm.startswith(("motor", "brg")) else nm, 5.0)})))
-        for cn, (Tc, sq, own) in carts.items():
-            m = K.tm(K.cartridge_local(sq)); m.apply_transform(Tc)
-            parts.append(dict(name=cn, trimesh=m, role="bought", mass_g=CART["scout"]["mass"], tag="E", swap=True))
-        contact = [[a, b, 1e9] for a, b in K.ALLOWED]
-        for cn, (Tc, sq, own) in carts.items():
-            holder = own.split("@")[0]
-            if holder.startswith("head"):
-                h = holder[-1]; contact += [[cn, f"fingA_{h}", 1e9], [cn, f"fingB_{h}", 1e9]]
-            contact += [[cn, f"bay{K.demo_idx()}", 1e9], [cn, f"strip{K.demo_idx()}", 1e9]]
-        man = dict(name=f"box swap arm {stack} {pn}", parts=parts, contact_pairs=contact, fit_tol_mm3=0.5)
-        paths.append((pn, man))
-    return paths
+    fixed = {nm for nm, p in K.PARTS_CACHE.items() if p.group == "fixed"} | {"stub_bolts"}
+    _, carts, _ = K.transforms(t)
+    held = {cn for cn, (_, _, own) in carts.items() if own.startswith("head")}
+    ms, mx, mz, M = [], 0.0, 0.0, 0.0
+    for p in a.parts:
+        nm = p["name"]
+        if nm in fixed or (nm.startswith("pack") and nm not in held): continue
+        m = a.mesh(nm); ms.append(m)
+        g = p.get("mass_g", m.volume / 1000 * 1.27 if m.is_volume else 0.0)
+        c = m.center_mass if m.is_volume else m.centroid
+        mx += g * c[0]; mz += g * c[2]; M += g
+    allm = trimesh.util.concatenate(ms); lo, hi = allm.bounds; ex = hi - lo
+    return dict(aabb_L=round(float(np.prod(ex)) / 1e6, 2), extents_mm=np.round(ex, 1).tolist(), largest_mm=round(float(ex.max()), 1),
+                hull_L=round(float(allm.convex_hull.volume) / 1e6, 2), turning_g=round(M, 0), unbalance_gm=round(math.hypot(mx, mz) / 1e3, 2),
+                cg_off_axis_mm=round(math.hypot(mx, mz) / M, 2), detent_sized_gm=10.1, gravity_Nm=round(9.81e-6 * abs(mx), 3),
+                detent_margin_2_springs=round(DET_HOLD / (9.81e-6 * abs(mx) + DET_OTHER), 2))
 
 
-BOUGHT_G = dict(motor=400.0, brg=110.0, stub_bolts=8.0, p20_axle=8.0, p80=30.0, belt_axle=8.0)
+def access_paths(t, heads=("A", "B")):
+    """the key lines that must be free at cycle time t (rule 2): each rail's two M5 socket heads (Ø6 tool from the counterbore floor,
+    100 along +Y) and each motor's 4 M3 screws on the plate top (Ø6 from Y 55); world frame from arm_kinematics.transforms (C)."""
+    import arm_kinematics as K
+    T, _, _ = K.transforms(t); Ta = T["hub"]
+    w = lambda p: (Ta @ np.r_[p, 1.0])[:3].round(3).tolist()
+    out = []
+    for h in heads:
+        for r in V.RAIL_BOLTS["r_" + h]:
+            p = (0.0, V.RAIL_BOLTS["cbore_y"] + 0.5, r) if h == "A" else (-r, V.RAIL_BOLTS["cbore_y"] + 0.5, 0.0)
+            out.append(dict(name=f"M5 key, rail {h} r {r:g}", part=f"rail{h}", **{"from": w(p)}, dir=[0, 1, 0], length_mm=100.0,
+                            tool=dict(type="cylinder", d=6.0), ignore=["hub"]))
+    import hub_v6 as HV
+    for nm, M in HV.MOTORS6.items():
+        if nm in ("A", "B") and nm not in heads: continue
+        for sx in (-1, 1):
+            for sz in (-1, 1):
+                if (nm, sx, sz) in HV.SEAT_SKIP: continue
+                hx, hz = A_.rot_pt(M, sx * L.NEMA_HOLES / 2, sz * L.NEMA_HOLES / 2)
+                out.append(dict(name=f"M3 key, motor {nm} ({sx:+d}, {sz:+d})", part="hub", **{"from": w((hx, L.Y_PLATE1 + 1.0, hz))}, dir=[0, 1, 0],
+                                length_mm=100.0, tool=dict(type="cylinder", d=6.0), ignore=[f"motor_{nm}"]))
+    return out
+
+
+ACCESS_AT = dict(bay_pick=("A",), bay_return=("B",))   # head A is out at the bay pick (z0 84.6), head B at the bay return: their keys are free there
 
 
 def run_checks():
-    sys.path.insert(0, os.path.join(REPO, "nox"))
-    import system_check as SC
+    """system_check on the assembly file at every pose (fit, compact, mass / CG; the CG offset from the axle is the arm's unbalance)."""
+    import assembly as AS
+    a = write_assembly(0.0)
     out = {}
-    for pn, man in manifests():
-        res = SC.run(man, n_dirs=200)
-        txt = SC.report(res)
-        open(os.path.join(OUT, f"system_check_{pn}.txt"), "w").write(txt)
+    for pn, t in POSES.items():
+        b = a.at(**{nm: t for nm in a.names if a.part(nm).get("moves")}) if t else a
+        if pn in ACCESS_AT: b.data["access"] = access_paths(t, ACCESS_AT[pn])
+        res = b.check(n_dirs=200)
+        if pn in ACCESS_AT:
+            print(" ", pn, "access", {p["name"]: (p.get("pass_"), p.get("blocked_by")) for p in res["access"]["paths"]} if res["access"].get("paths") else res["access"])
+        open(os.path.join(OUT, f"system_check_{pn}.txt"), "w").write(__import__("system_check").report(res))
         keep = {k: res[k] for k in ("name", "pass", "summary", "compact")}
-        keep["fit_worst"] = res["fit"]["worst"]; keep["fit_fail"] = [p for p in res["fit"]["pairs"] if not p["pass_"]]
+        keep["fit_fail"] = [p for p in res["fit"]["pairs"] if not p["pass_"]]
         keep["mass_g"] = res["mass_cg"]["mass_g"]; keep["cg"] = res["mass_cg"]["cg"]
+        keep["arm_only"] = arm_only(b, t)
         json.dump(keep, open(os.path.join(OUT, f"system_check_{pn}.json"), "w"), indent=1, default=float)
         out[pn] = keep
-        print(res["summary"], "PASS" if res["pass"] else "FAIL")
+        print(pn, res["summary"], "PASS" if res["pass"] else "FAIL", keep["arm_only"])
     return out
 
 

@@ -57,6 +57,11 @@ SEAL_R, SEAL_Y = 37.5, 41.0           # the shoulder on bearing 2's outer race o
 SH_R = 43.0                           # shoulder / cavity wall outer r (= the sleeve)
 
 
+SEAT_SKIP = {("axle", -1, -1)}      # the axle motor's (-1, -1) M3 sits under the detent springs (key line blocked, swap_system access): 3 x M3
+                                    # hold it (85 N + 0.6 N.m worst, E) and its tension slide stays free (DEFAULT; turning the square 40 deg to
+                                    # clear it puts a corner at r 39.6 into the sleeve r 43)
+
+
 def pads():
     """[(head, r, pad Manifold, insert hole)] in the arm frame (A along +Z, B along -X)"""
     out = []
@@ -102,6 +107,7 @@ def hub_v6_parts():
         c += body_k if sl == 0 else (body_k.translate([-sl * ux, 0, -sl * uz]) + body_k.translate([sl * ux, 0, sl * uz]))
         for sx in (-1, 1):
             for sz in (-1, 1):
+                if (nm, sx, sz) in SEAT_SKIP: continue
                 hx, hz = rot_pt(M, sx * L.NEMA_HOLES / 2, sz * L.NEMA_HOLES / 2)
                 c += slot(lambda dx, dz: cylY(hx + dx, hz + dz, L.Y_PLATE0 - 1, L.Y_PLATE1 + 1, 1.7))
                 s += slot(lambda dx, dz: cylY(hx + dx, hz + dz, L.Y_PLATE0, L.Y_PLATE1, 4.5))
