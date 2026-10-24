@@ -100,3 +100,31 @@ it  14 beta    4 J   1.8220 vol 0.0471 (dil 0.0897 g -0.006) grey  8.5% ch 0.100
 it  15 beta    4 J   1.6600 vol 0.0475 (dil 0.0898 g -0.005) grey  8.5% ch 0.100 worst misuse: knocked over onto +X 1.91e+03 30.1s
 it  16 beta    4 J   1.4858 vol 0.0477 (dil 0.0898 g +0.015) grey  8.5% ch 0.100 worst misuse: knocked over onto +X 1.66e+03 30.2s
 it  17 beta    4 J   1.4041 vol 0.0465 (dil 0.0881 g -0.004) grey  8.4% ch 0.100 worst all bays: 43.5 N across 1.53e+03 32.3s
+it  18 beta    4 J   1.3341 vol 0.0468 (dil 0.0882 g -0.003) grey  8.4% ch 0.100 worst all bays: 43.5 N across 1.48e+03 32.2s
+it  19 beta    4 J   1.2894 vol 0.0471 (dil 0.0882 g -0.003) grey  8.3% ch 0.100 worst all bays: 43.5 N across 1.43e+03 30.8s
+it  20 beta    4 J   1.2591 vol 0.0475 (dil 0.0883 g -0.002) grey  8.3% ch 0.100 worst misuse: knocked over onto +X 1.39e+03 32.8s
+it  21 beta    4 J   1.2307 vol 0.0477 (dil 0.0883 g +0.016) grey  8.3% ch 0.100 worst misuse: knocked over onto +X 1.38e+03 28.7s
+it  22 beta    4 J   1.2388 vol 0.0465 (dil 0.0867 g -0.002) grey  8.1% ch 0.100 worst misuse: knocked over onto +X 1.39e+03 34.8s
+it  23 beta    4 J   1.2153 vol 0.0467 (dil 0.0867 g -0.002) grey  8.1% ch 0.100 worst misuse: knocked over onto +X 1.38e+03 34.6s
+it  24 beta    4 J   1.1862 vol 0.0468 (dil 0.0867 g -0.001) grey  8.0% ch 0.100 worst misuse: knocked over onto +X 1.36e+03 31.2s
+it  25 beta    4 J   1.1447 vol 0.0468 (dil 0.0867 g -0.001) grey  8.0% ch 0.100 worst misuse: knocked over onto +X 1.34e+03 33.8s
+it  26 beta    4 J   1.1160 vol 0.0468 (dil 0.0867 g +0.013) grey  8.0% ch 0.100 worst misuse: knocked over onto +X 1.31e+03 33.1s
+it  27 beta    4 J   1.1257 vol 0.0459 (dil 0.0855 g -0.002) grey  8.0% ch 0.100 worst misuse: knocked over onto +X 1.31e+03 32.6s
+it  28 beta    4 J   1.1129 vol 0.0460 (dil 0.0855 g -0.001) grey  8.0% ch 0.100 worst misuse: knocked over onto +X 1.3e+03 31.7s
+it  29 beta    4 J   1.1005 vol 0.0461 (dil 0.0856 g -0.001) grey  8.0% ch 0.100 worst misuse: knocked over onto +X 1.29e+03 32.6s
+it  30 beta    4 J   1.0907 vol 0.0462 (dil 0.0856 g -0.001) grey  7.9% ch 0.100 worst misuse: knocked over onto +X 1.28e+03 32.7s
+it  31 beta    4 J   1.0836 vol 0.0463 (dil 0.0856 g +0.009) grey  7.9% ch 0.100 worst misuse: knocked over onto +X 1.27e+03 35.1s
+it  32 beta    4 J   1.0918 vol 0.0457 (dil 0.0847 g -0.001) grey  7.9% ch 0.100 worst misuse: knocked over onto +X 1.27e+03 33.7s
+layout: beta 4 done: eroded design 62 bodies, main 44.6%; drawn bodies outside the main body: 37
+it  33 beta    8 J   2.5406 vol 0.0414 (dil 0.0888 g -0.075) grey  3.5% ch 0.100 worst misuse: Overseer motors cut 2.9e+03 29.0s
+it  34 beta    8 J   1.4496 vol 0.0447 (dil 0.0946 g -0.015) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.46e+03 32.9s
+it  35 beta    8 J   1.2197 vol 0.0454 (dil 0.0951 g -0.009) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.38e+03 32.8s
+it  36 beta    8 J   1.1489 vol 0.0460 (dil 0.0955 g +0.002) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.33e+03 33.4s
+it  37 beta    8 J   1.1298 vol 0.0459 (dil 0.0950 g -0.003) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.31e+03 32.6s
+it  38 beta    8 J   1.1111 vol 0.0463 (dil 0.0951 g -0.002) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.3e+03 36.5s
+it  39 beta    8 J   1.0985 vol 0.0466 (dil 0.0951 g -0.002) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.29e+03 37.5s
+it  40 beta    8 J   1.0889 vol 0.0469 (dil 0.0952 g -0.001) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.28e+03 46.4s
+it  41 beta    8 J   1.0815 vol 0.0471 (dil 0.0952 g +0.013) grey  3.7% ch 0.100 worst misuse: knocked over onto +X 1.28e+03 36.6s
+it  42 beta    8 J   1.0965 vol 0.0460 (dil 0.0938 g -0.001) grey  3.6% ch 0.100 worst misuse: knocked over onto +X 1.28e+03 36.8s
+layout: beta 8 done: eroded design 70 bodies, main 80.3%; drawn bodies outside the main body: 36
+it  43 beta   16 J   1.1781 vol 0.0456 (dil 0.0919 g +0.020) grey  1.9% ch 0.100 worst misuse: knocked over onto +X 1.33e+03 39.3s
