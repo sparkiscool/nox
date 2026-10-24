@@ -3,8 +3,9 @@ so the part is rebuilt from the same layout instead of a new run. The layout's d
 the organic finish opens) is rebuilt for the old and the new setup; densities move cell by cell, a cell that leaves the design
 drops, a cell that joins it starts at 0. Only for small changes: it refuses when more than 1 % of the design cells differ.
     python3 tools/topo_remap.py <module.py> <setup_fn> <piece> <h> <old_ck.npz> <new_ck.npz> NAME=OLD_VALUE [NAME=OLD ...]
-NAME=OLD_VALUE sets module globals for the old setup (e.g. ROD_R=1.6); the new setup uses the module as it is now."""
-import sys, os, importlib.util
+NAME=OLD_VALUE sets module globals for the old setup (a Python literal; ROD_R=1.6, or V.ROD_R=1.6 for a module the target imports as V);
+the new setup uses the module as it is now."""
+import sys, os, ast, importlib.util
 import numpy as np
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
@@ -33,12 +34,16 @@ def main():
     m = load(os.path.join(ROOT, mod) if not os.path.isabs(mod) else mod)
     setup = getattr(m, fn)
     new = setup(piece, float(h)); dn = layout_design(new)
-    cur = {k: getattr(m, k) for k in sets}
+    def owner(k):                                       # "V.ROD_R": a global of a module the target imports as V
+        o = m
+        for a in k.split(".")[:-1]: o = getattr(o, a)
+        return o, k.split(".")[-1]
+    cur = {k: getattr(*owner(k)) for k in sets}
     for k, v in sets.items():
-        setattr(m, k, type(cur[k])(v))
+        setattr(*owner(k), ast.literal_eval(v))
     old = setup(piece, float(h)); do = layout_design(old)
     for k, v in cur.items():
-        setattr(m, k, v)
+        setattr(*owner(k), v)
     assert new.shape == old.shape, "grid changed: run the layout again"
     changed = int((do ^ dn).sum())
     print(f"remap: old design {int(do.sum()):,}, new {int(dn.sum()):,}, cells changed {changed}")

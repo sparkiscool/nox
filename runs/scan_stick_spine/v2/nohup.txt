@@ -1,0 +1,16 @@
+=== scan_stick_spine: h 2.0, generated 60.0 cm3, min member 3.2 mm, cores 4
+scan_stick_spine: grid (64, 48, 88) h 2.0 = 270,336 cells; design 79,574 (636.6 cm3), drawn 33,438, void 157,324
+  support default: 254 cells, 758 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_spine: grid (64, 48, 88) h 2.0 = 270,336 cells; design 79,574 (636.6 cm3), drawn 33,438, void 157,324
+  support default: 254 cells, 758 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (267.50 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.094 of 79,574 design cells
+layout: WARNING nearly mirrored in y (0.4% of passive cells differ): no symmetry
+layout: 1 drawn bodies (33,438 cells), held solid in every realization; eroded filter: masked
+layout: 34 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 88) = 270,336 elements, 394,779 active dofs; backend direct (direct estimate 5.0 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/scan_stick_spine/v2/ck.npz at it 42, beta 32 (already stopped: grey)
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 71 s, peak 6.832072 GB
