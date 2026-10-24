@@ -51,3 +51,20 @@ it  27 beta    2 J   0.0463 vol 0.0391 (dil 0.0630 g -0.025) grey 16.5% ch 0.100
 it  28 beta    2 J   0.0436 vol 0.0405 (dil 0.0635 g -0.018) grey 16.3% ch 0.100 worst cage bump back 100 N (spine  117 2.4s
 it  29 beta    2 J   0.0420 vol 0.0416 (dil 0.0641 g -0.008) grey 16.2% ch 0.100 worst cage bump back 100 N (spine  112 2.4s
 it  30 beta    2 J   0.0410 vol 0.0421 (dil 0.0643 g -0.005) grey 16.1% ch 0.100 worst cage bump back 100 N (spine  109 2.4s
+git push failed: fatal: The current branch run/scan_stick_base-v21 has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin run/scan_stick_base-v21
+
+To
+it  31 beta    2 J   0.0401 vol 0.0424 (dil 0.0644 g +0.016) grey 16.0% ch 0.100 worst cage bump front 100 N (modul 106 2.4s
+it  32 beta    2 J   0.0401 vol 0.0414 (dil 0.0631 g -0.004) grey 15.8% ch 0.100 worst cage bump front 100 N (modul 106 2.4s
+it  33 beta    2 J   0.0396 vol 0.0414 (dil 0.0631 g -0.004) grey 15.7% ch 0.100 worst cage bump front 100 N (modul 105 2.4s
+it  34 beta    2 J   0.0391 vol 0.0417 (dil 0.0632 g -0.002) grey 15.7% ch 0.100 worst cage bump front 100 N (modul 104 2.2s
+it  35 beta    2 J   0.0387 vol 0.0418 (dil 0.0633 g -0.001) grey 15.7% ch 0.100 worst cage bump front 100 N (modul 103 2.3s
+it  36 beta    2 J   0.0384 vol 0.0419 (dil 0.0633 g +0.016) grey 15.6% ch 0.100 worst cage bump front 100 N (modul 103 2.4s
+it  37 beta    2 J   0.0390 vol 0.0408 (dil 0.0621 g -0.003) grey 15.6% ch 0.100 worst cage bump front 100 N (modul 103 2.6s
+layout: beta 2 done: eroded design 5 bodies, main 98.5%; drawn bodies outside the main body: 4
+it  38 beta    4 J   0.7657 vol 0.0296 (dil 0.0726 g -0.252) grey  3.9% ch 0.100 worst switch panel push 50 N 2.46e+03 2.7s
+it  39 beta    4 J   0.1250 vol 0.0332 (dil 0.0812 g -0.163) grey  4.2% ch 0.100 worst switch panel push 50 N 385 2.4s
+it  40 beta    4 J   0.0398 vol 0.0374 (dil 0.0901 g -0.071) grey  5.2% ch 0.100 worst cage bump front 100 N (modul 104 2.4s
