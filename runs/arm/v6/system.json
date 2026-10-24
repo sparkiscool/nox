@@ -1,0 +1,4522 @@
+{
+ "alternatives": [
+  {
+   "stack": "v5",
+   "variant": "as drawn",
+   "Y_C": 175.0,
+   "pitch_deg": 2.68,
+   "xt60_lag_mm": 8.46,
+   "length_y": 233.5,
+   "bbox_L": 23.99,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v5",
+   "variant": "as drawn",
+   "Y_C": 144.0,
+   "pitch_deg": 2.12,
+   "xt60_lag_mm": 5.87,
+   "length_y": 202.5,
+   "bbox_L": 20.8,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v6",
+   "variant": "as drawn",
+   "Y_C": 175.0,
+   "pitch_deg": 2.61,
+   "xt60_lag_mm": 7.44,
+   "length_y": 233.5,
+   "bbox_L": 23.99,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v6",
+   "variant": "as drawn",
+   "Y_C": 124.0,
+   "pitch_deg": 1.67,
+   "xt60_lag_mm": 3.52,
+   "length_y": 182.5,
+   "bbox_L": 18.75,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v6",
+   "variant": "+ carbon ties",
+   "Y_C": 175.0,
+   "pitch_deg": 1.85,
+   "xt60_lag_mm": 5.36,
+   "length_y": 233.5,
+   "bbox_L": 23.99,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v6",
+   "variant": "+ carbon ties",
+   "Y_C": 124.0,
+   "pitch_deg": 1.18,
+   "xt60_lag_mm": 2.61,
+   "length_y": 182.5,
+   "bbox_L": 18.75,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v6",
+   "variant": "+ ties + XT60 on the tab line",
+   "Y_C": 175.0,
+   "pitch_deg": 1.36,
+   "xt60_lag_mm": 2.97,
+   "length_y": 233.5,
+   "bbox_L": 23.99,
+   "largest_mm": 320.5
+  },
+  {
+   "stack": "v6",
+   "variant": "+ ties + XT60 on the tab line",
+   "Y_C": 124.0,
+   "pitch_deg": 0.75,
+   "xt60_lag_mm": 1.2,
+   "length_y": 182.5,
+   "bbox_L": 18.75,
+   "largest_mm": 320.5
+  }
+ ],
+ "constants": {
+  "mass": {
+   "hub": 210.0,
+   "motor": 400.0,
+   "rail": 50.0,
+   "carriage": 60.0,
+   "head": 120.0,
+   "stub": 47.7,
+   "sun_post": 30.4,
+   "ring": 5.0,
+   "det_arm": 2.3
+  },
+  "mass_tag": {
+   "hub": "E (hub v5 214.2 M; v6 from its run)",
+   "motor": "E (17HS19 48-long class, datasheet ~0.4 kg)",
+   "rail": "M (rail v1 49.7 / 50.0)",
+   "carriage": "E (3 wheels 8.4 M + 6 x 625ZZ ~30 + M5 stacks ~20)",
+   "head": "E (head v5 56 M + servo 60 E)",
+   "stub": "C",
+   "sun_post": "C"
+  },
+  "targets": {
+   "pack_x": 0.5,
+   "tilt_deg": 0.5
+  },
+  "index_targets": {
+   "swap": 0.5,
+   "sustained": 0.5,
+   "misuse": 1.0,
+   "handling": 1.0
+  },
+  "K": {
+   "brg_r": 20000.0,
+   "brg_a": 10000.0,
+   "wheel": 2000.0,
+   "tooth_t": 470.0,
+   "tooth_n": 2000.0,
+   "belt": 200.0,
+   "detent_rot": 9000.0
+  },
+  "sections": {
+   "stub": "tube 49.9/40",
+   "hub_axis": "tube 86/80",
+   "hub_arm": "rect 36 x 30",
+   "pad": "rect 32 x 20",
+   "rail": "rail 18 x 19 + ridges",
+   "m5": "tube 5/0",
+   "shaft": "tube 5/0",
+   "plate": "rect 40 x 8",
+   "web": "rect 30 x 6",
+   "head": "rect 30 x 30",
+   "rigid": "rect 60 x 60",
+   "motor": "rect 42.3 x 42.3",
+   "post": "tube 43.5/8.5"
+  },
+  "forces": {
+   "xt60": 45.0,
+   "preload": 12.0,
+   "leadin": 3.0,
+   "pull": 50.0,
+   "stall": 74.0,
+   "axle_stall_Nm": 2.36,
+   "drop": 200.0,
+   "handle_g": [
+    3.0,
+    2.0
+   ],
+   "hand": 50.0
+  }
+ },
+ "frame": [
+  {
+   "case": "insert at the drone 60 N",
+   "cls": "swap",
+   "note": "head A at the drone insert z0 95.6, B parked carrying; 45 N at the XT60 (cartridge lead end) + 12 N seat preload + 3 N lead-in, axle driver off",
+   "phi": 90.0,
+   "zA": 95.6,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "detent",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -3.0,
+      -0.0,
+      79.4
+     ],
+     "M_Nm": [
+      13.78,
+      -0.41,
+      0.53
+     ],
+     "bolt_N": 128.0
+    },
+    "bearing 1": {
+     "radial_N": 695.0,
+     "axial_N": 0.6
+    },
+    "bearing 2": {
+     "radial_N": 769.6,
+     "axial_N": 0.6
+    },
+    "rail pad A r40": {
+     "bolt_N": 4.8,
+     "shear_N": 42.2,
+     "M_Nm": 0.41
+    },
+    "rail pad A r78": {
+     "bolt_N": 155.0,
+     "shear_N": 165.8,
+     "M_Nm": 0.58
+    },
+    "rail pad B r40": {
+     "bolt_N": -1.6,
+     "shear_N": 1.2,
+     "M_Nm": 0.22
+    },
+    "rail pad B r78": {
+     "bolt_N": 1.6,
+     "shear_N": 3.4,
+     "M_Nm": 0.17
+    },
+    "wheel A0": {
+     "across_N": -11.6,
+     "axial_N": -313.2
+    },
+    "wheel A1": {
+     "across_N": -20.4,
+     "axial_N": 300.1
+    },
+    "wheel A2": {
+     "across_N": -7.7,
+     "axial_N": 13.0
+    },
+    "wheel B0": {
+     "across_N": -2.3,
+     "axial_N": -7.5
+    },
+    "wheel B1": {
+     "across_N": 1.0,
+     "axial_N": -7.5
+    },
+    "wheel B2": {
+     "across_N": 3.4,
+     "axial_N": 14.9
+    },
+    "rack on pinion A": {
+     "tangential_N": -60.8,
+     "separating_N": 22.1
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 60.2,
+     "M_Nm": 8.15
+    },
+    "carriage to head B": {
+     "F_N": 3.2,
+     "M_Nm": 0.32
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "detent (driver off)": {
+     "F_N": 5.9,
+     "torque_Nm": 0.411
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.08,
+     "elem": "stub 0-16",
+     "sigma": 2.0
+    },
+    "hub": {
+     "index": 0.019,
+     "elem": "hub arm to seat A",
+     "sigma": 0.87
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.02
+    },
+    "shaft": {
+     "index": 0.348,
+     "elem": "motor shaft A",
+     "sigma": 139.07
+    },
+    "rail A": {
+     "index": 0.073,
+     "elem": "rail A 78-100",
+     "sigma": 3.3
+    },
+    "pad joint A": {
+     "index": 0.018,
+     "elem": "pad joint A 78",
+     "sigma": 0.83
+    },
+    "carbon tie": {
+     "index": 0.074,
+     "elem": "carbon tie A",
+     "sigma": 74.24
+    },
+    "M5 axle": {
+     "index": 0.446,
+     "elem": "M5 axle A1",
+     "sigma": 285.36
+    },
+    "carriage A": {
+     "index": 0.201,
+     "elem": "plate A0",
+     "sigma": 9.03
+    },
+    "head A": {
+     "index": 0.075,
+     "elem": "head body A",
+     "sigma": 1.88
+    },
+    "rail B": {
+     "index": 0.002,
+     "elem": "rail B 40-50",
+     "sigma": 0.08
+    },
+    "pad joint B": {
+     "index": 0.003,
+     "elem": "pad joint B 40",
+     "sigma": 0.13
+    },
+    "carriage B": {
+     "index": 0.015,
+     "elem": "plate B2",
+     "sigma": 0.66
+    },
+    "head B": {
+     "index": 0.003,
+     "elem": "head body B",
+     "sigma": 0.07
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.775,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.467,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.573,
+     "elem": "pinion A",
+     "sigma": 25.8
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.155,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.492,
+    "du_mm": -4.527,
+    "dy_mm": 1.236,
+    "tilt_deg": 1.596
+   },
+   "hub_turn_deg": 3.514,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.775,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "insert at a bay 60 N",
+   "cls": "swap",
+   "note": "head A into the -90 bay z0 86.1 (arm horizontal, gravity along the rail), axle driver off",
+   "phi": -90.0,
+   "zA": 86.1,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "detent",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -3.0,
+      0.0,
+      36.6
+     ],
+     "M_Nm": [
+      10.86,
+      -0.36,
+      0.52
+     ],
+     "bolt_N": 104.0
+    },
+    "bearing 1": {
+     "radial_N": 599.0,
+     "axial_N": 0.8
+    },
+    "bearing 2": {
+     "radial_N": 631.4,
+     "axial_N": 0.8
+    },
+    "rail pad A r40": {
+     "bolt_N": 14.8,
+     "shear_N": 51.6,
+     "M_Nm": 0.43
+    },
+    "rail pad A r78": {
+     "bolt_N": 87.4,
+     "shear_N": 101.3,
+     "M_Nm": 1.6
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.6,
+     "shear_N": 1.1,
+     "M_Nm": 0.11
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.6,
+     "shear_N": 0.6,
+     "M_Nm": 0.05
+    },
+    "wheel A0": {
+     "across_N": -2.6,
+     "axial_N": -288.7
+    },
+    "wheel A1": {
+     "across_N": -26.7,
+     "axial_N": 275.7
+    },
+    "wheel A2": {
+     "across_N": -7.5,
+     "axial_N": 13.1
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": 2.8
+    },
+    "wheel B1": {
+     "across_N": 0.3,
+     "axial_N": 2.8
+    },
+    "wheel B2": {
+     "across_N": -1.4,
+     "axial_N": -5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": -53.2,
+     "separating_N": 19.4
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 53.9,
+     "M_Nm": 7.52
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "detent (driver off)": {
+     "F_N": 5.2,
+     "torque_Nm": 0.364
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.064,
+     "elem": "stub 0-16",
+     "sigma": 1.59
+    },
+    "hub": {
+     "index": 0.016,
+     "elem": "hub arm to seat A",
+     "sigma": 0.73
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.02
+    },
+    "shaft": {
+     "index": 0.313,
+     "elem": "motor shaft A",
+     "sigma": 125.08
+    },
+    "rail A": {
+     "index": 0.073,
+     "elem": "rail A 90-104",
+     "sigma": 3.29
+    },
+    "pad joint A": {
+     "index": 0.016,
+     "elem": "pad joint A 78",
+     "sigma": 0.73
+    },
+    "carbon tie": {
+     "index": 0.075,
+     "elem": "carbon tie A",
+     "sigma": 75.38
+    },
+    "M5 axle": {
+     "index": 0.418,
+     "elem": "M5 axle A1",
+     "sigma": 267.3
+    },
+    "carriage A": {
+     "index": 0.181,
+     "elem": "plate A0",
+     "sigma": 8.15
+    },
+    "head A": {
+     "index": 0.069,
+     "elem": "head body A",
+     "sigma": 1.74
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.03
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.06
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.739,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.431,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.501,
+     "elem": "pinion A",
+     "sigma": 22.5
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.087,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.457,
+    "du_mm": -4.24,
+    "dy_mm": 1.179,
+    "tilt_deg": 1.503
+   },
+   "hub_turn_deg": 3.116,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.739,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "pull at the drone 50 N",
+   "cls": "swap",
+   "note": "head B's pick (here on A's geometry) at z0 89.6: 45 N XT60 + 5 N latch wedge outward",
+   "phi": 90.0,
+   "zA": 89.6,
+   "zB": 81.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -0.0,
+      -0.0,
+      -29.6
+     ],
+     "M_Nm": [
+      -9.64,
+      -0.0,
+      -0.0
+     ],
+     "bolt_N": 80.0
+    },
+    "bearing 1": {
+     "radial_N": 532.9,
+     "axial_N": 0.6
+    },
+    "bearing 2": {
+     "radial_N": 556.7,
+     "axial_N": 0.6
+    },
+    "rail pad A r40": {
+     "bolt_N": -10.3,
+     "shear_N": 43.0,
+     "M_Nm": 0.37
+    },
+    "rail pad A r78": {
+     "bolt_N": -90.6,
+     "shear_N": 106.2,
+     "M_Nm": 1.22
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.1,
+     "shear_N": 0.6,
+     "M_Nm": 0.03
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.3,
+     "shear_N": 1.8,
+     "M_Nm": 0.13
+    },
+    "wheel A0": {
+     "across_N": 1.3,
+     "axial_N": 255.2
+    },
+    "wheel A1": {
+     "across_N": 23.6,
+     "axial_N": -255.9
+    },
+    "wheel A2": {
+     "across_N": 9.3,
+     "axial_N": 0.7
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": -2.8
+    },
+    "wheel B1": {
+     "across_N": 0.2,
+     "axial_N": -2.8
+    },
+    "wheel B2": {
+     "across_N": 1.5,
+     "axial_N": 5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 46.2,
+     "separating_N": 16.8
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 46.8,
+     "M_Nm": 6.82
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 9.7,
+     "torque_Nm": 0.673
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.054,
+     "elem": "stub 0-16",
+     "sigma": 1.35
+    },
+    "hub": {
+     "index": 0.014,
+     "elem": "hub arm to seat A",
+     "sigma": 0.63
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.03
+    },
+    "shaft": {
+     "index": 0.27,
+     "elem": "motor shaft A",
+     "sigma": 108.1
+    },
+    "rail A": {
+     "index": 0.064,
+     "elem": "rail A 94-108",
+     "sigma": 2.88
+    },
+    "pad joint A": {
+     "index": 0.016,
+     "elem": "pad joint A 78",
+     "sigma": 0.71
+    },
+    "carbon tie": {
+     "index": 0.071,
+     "elem": "carbon tie A",
+     "sigma": 70.99
+    },
+    "M5 axle": {
+     "index": 0.387,
+     "elem": "M5 axle A1",
+     "sigma": 247.39
+    },
+    "carriage A": {
+     "index": 0.16,
+     "elem": "plate A0",
+     "sigma": 7.18
+    },
+    "head A": {
+     "index": 0.061,
+     "elem": "head body A",
+     "sigma": 1.52
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 78-85",
+     "sigma": 0.06
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 78",
+     "sigma": 0.06
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.71,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.382,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.435,
+     "elem": "pinion A",
+     "sigma": 19.6
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.091,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 0.716,
+    "du_mm": 3.856,
+    "dy_mm": -1.062,
+    "tilt_deg": 1.379
+   },
+   "hub_turn_deg": 0.084,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.71,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "pull at a bay 50 N",
+   "cls": "swap",
+   "note": "head A picks the charged pack from the -90 bay",
+   "phi": -90.0,
+   "zA": 86.1,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -0.0,
+      -0.0,
+      -70.4
+     ],
+     "M_Nm": [
+      -12.21,
+      0.09,
+      0.0
+     ],
+     "bolt_N": 102.0
+    },
+    "bearing 1": {
+     "radial_N": 608.6,
+     "axial_N": 0.7
+    },
+    "bearing 2": {
+     "radial_N": 670.9,
+     "axial_N": 0.7
+    },
+    "rail pad A r40": {
+     "bolt_N": -14.6,
+     "shear_N": 51.7,
+     "M_Nm": 0.43
+    },
+    "rail pad A r78": {
+     "bolt_N": -87.3,
+     "shear_N": 104.5,
+     "M_Nm": 1.67
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.6,
+     "shear_N": 0.6,
+     "M_Nm": 0.09
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.7,
+     "shear_N": 1.4,
+     "M_Nm": 0.07
+    },
+    "wheel A0": {
+     "across_N": -4.1,
+     "axial_N": 279.6
+    },
+    "wheel A1": {
+     "across_N": 32.4,
+     "axial_N": -280.5
+    },
+    "wheel A2": {
+     "across_N": 11.0,
+     "axial_N": 0.9
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": 2.8
+    },
+    "wheel B1": {
+     "across_N": 0.3,
+     "axial_N": 2.8
+    },
+    "wheel B2": {
+     "across_N": -1.4,
+     "axial_N": -5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 53.8,
+     "separating_N": 19.6
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 53.2,
+     "M_Nm": 7.45
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 11.6,
+     "torque_Nm": 0.808
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.068,
+     "elem": "stub 0-16",
+     "sigma": 1.7
+    },
+    "hub": {
+     "index": 0.017,
+     "elem": "hub arm to seat A",
+     "sigma": 0.78
+    },
+    "sun post": {
+     "index": 0.002,
+     "elem": "sun post",
+     "sigma": 0.04
+    },
+    "shaft": {
+     "index": 0.313,
+     "elem": "motor shaft A",
+     "sigma": 125.12
+    },
+    "rail A": {
+     "index": 0.077,
+     "elem": "rail A 78-90",
+     "sigma": 3.46
+    },
+    "pad joint A": {
+     "index": 0.02,
+     "elem": "pad joint A 78",
+     "sigma": 0.88
+    },
+    "carbon tie": {
+     "index": 0.08,
+     "elem": "carbon tie A",
+     "sigma": 79.54
+    },
+    "M5 axle": {
+     "index": 0.43,
+     "elem": "M5 axle A1",
+     "sigma": 275.38
+    },
+    "carriage A": {
+     "index": 0.174,
+     "elem": "plate A0",
+     "sigma": 7.82
+    },
+    "head A": {
+     "index": 0.066,
+     "elem": "head body A",
+     "sigma": 1.66
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.03
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.05
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.747,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.419,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.507,
+     "elem": "pinion A",
+     "sigma": 22.8
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.087,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 0.809,
+    "du_mm": 4.267,
+    "dy_mm": -1.168,
+    "tilt_deg": 1.518
+   },
+   "hub_turn_deg": 0.091,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.747,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "head stall into a jammed pack 74 N",
+   "cls": "misuse",
+   "note": "the 16T at 2 A stall drives the cartridge's XT60 into a jam at the drone insert",
+   "phi": 90.0,
+   "zA": 95.6,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "detent",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -3.0,
+      -0.0,
+      96.4
+     ],
+     "M_Nm": [
+      18.16,
+      -0.41,
+      0.53
+     ],
+     "bolt_N": 164.0
+    },
+    "bearing 1": {
+     "radial_N": 934.3,
+     "axial_N": 0.8
+    },
+    "bearing 2": {
+     "radial_N": 1025.7,
+     "axial_N": 0.8
+    },
+    "rail pad A r40": {
+     "bolt_N": 6.5,
+     "shear_N": 57.3,
+     "M_Nm": 0.55
+    },
+    "rail pad A r78": {
+     "bolt_N": 213.2,
+     "shear_N": 226.8,
+     "M_Nm": 0.83
+    },
+    "rail pad B r40": {
+     "bolt_N": -1.6,
+     "shear_N": 1.3,
+     "M_Nm": 0.22
+    },
+    "rail pad B r78": {
+     "bolt_N": 1.6,
+     "shear_N": 3.5,
+     "M_Nm": 0.17
+    },
+    "wheel A0": {
+     "across_N": -16.2,
+     "axial_N": -427.7
+    },
+    "wheel A1": {
+     "across_N": -25.5,
+     "axial_N": 415.0
+    },
+    "wheel A2": {
+     "across_N": -11.0,
+     "axial_N": 12.7
+    },
+    "wheel B0": {
+     "across_N": -2.2,
+     "axial_N": -7.5
+    },
+    "wheel B1": {
+     "across_N": 1.0,
+     "axial_N": -7.5
+    },
+    "wheel B2": {
+     "across_N": 3.4,
+     "axial_N": 14.9
+    },
+    "rack on pinion A": {
+     "tangential_N": -77.8,
+     "separating_N": 28.3
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 77.2,
+     "M_Nm": 11.23
+    },
+    "carriage to head B": {
+     "F_N": 3.2,
+     "M_Nm": 0.32
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "detent (driver off)": {
+     "F_N": 5.9,
+     "torque_Nm": 0.412
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.104,
+     "elem": "stub 0-16",
+     "sigma": 2.61
+    },
+    "hub": {
+     "index": 0.025,
+     "elem": "hub arm to seat A",
+     "sigma": 1.11
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.02
+    },
+    "shaft": {
+     "index": 0.449,
+     "elem": "motor shaft A",
+     "sigma": 179.51
+    },
+    "rail A": {
+     "index": 0.099,
+     "elem": "rail A 78-100",
+     "sigma": 4.45
+    },
+    "pad joint A": {
+     "index": 0.025,
+     "elem": "pad joint A 78",
+     "sigma": 1.1
+    },
+    "carbon tie": {
+     "index": 0.105,
+     "elem": "carbon tie A",
+     "sigma": 104.72
+    },
+    "M5 axle": {
+     "index": 0.614,
+     "elem": "M5 axle A1",
+     "sigma": 392.8
+    },
+    "carriage A": {
+     "index": 0.274,
+     "elem": "plate A0",
+     "sigma": 12.34
+    },
+    "head A": {
+     "index": 0.103,
+     "elem": "head body A",
+     "sigma": 2.56
+    },
+    "rail B": {
+     "index": 0.002,
+     "elem": "rail B 40-50",
+     "sigma": 0.08
+    },
+    "pad joint B": {
+     "index": 0.003,
+     "elem": "pad joint B 40",
+     "sigma": 0.13
+    },
+    "carriage B": {
+     "index": 0.015,
+     "elem": "plate B2",
+     "sigma": 0.66
+    },
+    "head B": {
+     "index": 0.003,
+     "elem": "head body B",
+     "sigma": 0.07
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.906,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.638,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.733,
+     "elem": "pinion A",
+     "sigma": 33.0
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.213,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.778,
+    "du_mm": -6.21,
+    "dy_mm": 1.707,
+    "tilt_deg": 2.21
+   },
+   "hub_turn_deg": 3.476,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.906,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "axle stall, head in a bay",
+   "cls": "misuse",
+   "note": "the axle motor stalls (0.59 N.m x 4 = 2.36 N.m) with head A held in the -90 bay: the bay holds the cartridge tangentially",
+   "phi": -90.0,
+   "zA": 86.1,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "none",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      100.5,
+      -0.0,
+      -56.6
+     ],
+     "M_Nm": [
+      -3.42,
+      0.0,
+      -7.69
+     ],
+     "bolt_N": 221.0
+    },
+    "bearing 1": {
+     "radial_N": 297.4,
+     "axial_N": 0.3
+    },
+    "bearing 2": {
+     "radial_N": 411.5,
+     "axial_N": 0.3
+    },
+    "rail pad A r40": {
+     "bolt_N": -1.6,
+     "shear_N": 3.5,
+     "M_Nm": 0.19
+    },
+    "rail pad A r78": {
+     "bolt_N": -0.6,
+     "shear_N": 25.4,
+     "M_Nm": 1.73
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.5,
+     "shear_N": 1.2,
+     "M_Nm": 0.1
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.4,
+     "shear_N": 1.5,
+     "M_Nm": 0.06
+    },
+    "wheel A0": {
+     "across_N": 5.7,
+     "axial_N": 47.7
+    },
+    "wheel A1": {
+     "across_N": -8.3,
+     "axial_N": 23.2
+    },
+    "wheel A2": {
+     "across_N": -19.3,
+     "axial_N": -70.9
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": 2.8
+    },
+    "wheel B1": {
+     "across_N": 0.3,
+     "axial_N": 2.8
+    },
+    "wheel B2": {
+     "across_N": -1.4,
+     "axial_N": -5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 3.8,
+     "separating_N": 1.4
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 15.5,
+     "M_Nm": 1.67
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.062,
+     "elem": "stub 0-16",
+     "sigma": 1.55
+    },
+    "hub": {
+     "index": 0.012,
+     "elem": "hub arm to seat axle",
+     "sigma": 0.52
+    },
+    "sun post": {
+     "index": 0.0,
+     "elem": "sun post",
+     "sigma": 0.0
+    },
+    "shaft": {
+     "index": 0.173,
+     "elem": "axle shaft",
+     "sigma": 69.31
+    },
+    "rail A": {
+     "index": 0.023,
+     "elem": "rail A 78-90",
+     "sigma": 1.02
+    },
+    "pad joint A": {
+     "index": 0.019,
+     "elem": "pad joint A 78",
+     "sigma": 0.85
+    },
+    "carbon tie": {
+     "index": 0.024,
+     "elem": "carbon tie A",
+     "sigma": 24.11
+    },
+    "M5 axle": {
+     "index": 0.12,
+     "elem": "M5 axle A2",
+     "sigma": 76.83
+    },
+    "carriage A": {
+     "index": 0.069,
+     "elem": "plate A2",
+     "sigma": 3.1
+    },
+    "head A": {
+     "index": 0.015,
+     "elem": "head body A",
+     "sigma": 0.39
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.04
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.05
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.389,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.106,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.036,
+     "elem": "pinion A",
+     "sigma": 1.6
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.002,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -1.687,
+    "du_mm": 0.005,
+    "dy_mm": -0.068,
+    "tilt_deg": 0.588
+   },
+   "hub_turn_deg": 0.615,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.389,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "dropped pack 200 N",
+   "cls": "misuse",
+   "note": "a cartridge falls back onto head A's seat at the drone (204 g from 50, ~0.5 stop, E)",
+   "phi": 90.0,
+   "zA": 95.6,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -0.0,
+      0.0,
+      220.4
+     ],
+     "M_Nm": [
+      36.29,
+      -0.09,
+      0.0
+     ],
+     "bolt_N": 302.0
+    },
+    "bearing 1": {
+     "radial_N": 1790.0,
+     "axial_N": 1.4
+    },
+    "bearing 2": {
+     "radial_N": 1988.7,
+     "axial_N": 1.4
+    },
+    "rail pad A r40": {
+     "bolt_N": 11.7,
+     "shear_N": 114.8,
+     "M_Nm": 1.03
+    },
+    "rail pad A r78": {
+     "bolt_N": 391.8,
+     "shear_N": 448.1,
+     "M_Nm": 2.59
+    },
+    "rail pad B r40": {
+     "bolt_N": -0.7,
+     "shear_N": 0.6,
+     "M_Nm": 0.07
+    },
+    "rail pad B r78": {
+     "bolt_N": 0.7,
+     "shear_N": 2.3,
+     "M_Nm": 0.09
+    },
+    "wheel A0": {
+     "across_N": -23.8,
+     "axial_N": -771.4
+    },
+    "wheel A1": {
+     "across_N": -82.1,
+     "axial_N": 774.5
+    },
+    "wheel A2": {
+     "across_N": -38.3,
+     "axial_N": -3.1
+    },
+    "wheel B0": {
+     "across_N": 0.2,
+     "axial_N": -2.8
+    },
+    "wheel B1": {
+     "across_N": -0.2,
+     "axial_N": -2.8
+    },
+    "wheel B2": {
+     "across_N": 1.4,
+     "axial_N": 5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": -203.8,
+     "separating_N": 74.2
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 203.2,
+     "M_Nm": 20.2
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 34.0,
+     "torque_Nm": 2.357
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.203,
+     "elem": "stub 0-16",
+     "sigma": 5.07
+    },
+    "hub": {
+     "index": 0.063,
+     "elem": "hub arm to seat A",
+     "sigma": 2.86
+    },
+    "sun post": {
+     "index": 0.005,
+     "elem": "sun post",
+     "sigma": 0.11
+    },
+    "shaft": {
+     "index": 1.17,
+     "elem": "motor shaft A",
+     "sigma": 467.84
+    },
+    "rail A": {
+     "index": 0.233,
+     "elem": "rail A 78-100",
+     "sigma": 10.49
+    },
+    "pad joint A": {
+     "index": 0.045,
+     "elem": "pad joint A 78",
+     "sigma": 2.04
+    },
+    "carbon tie": {
+     "index": 0.21,
+     "elem": "carbon tie A",
+     "sigma": 210.24
+    },
+    "M5 axle": {
+     "index": 1.181,
+     "elem": "M5 axle A1",
+     "sigma": 755.65
+    },
+    "carriage A": {
+     "index": 0.492,
+     "elem": "plate A0",
+     "sigma": 22.13
+    },
+    "head A": {
+     "index": 0.18,
+     "elem": "head body A",
+     "sigma": 4.5
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.04
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.04
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 1.239,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 1.156,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 1.919,
+     "elem": "pinion A",
+     "sigma": 86.4
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.392,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -2.54,
+    "du_mm": -11.701,
+    "dy_mm": 3.01,
+    "tilt_deg": 4.002
+   },
+   "hub_turn_deg": -0.286,
+   "worst": {
+    "piece": "pinion 16T (Lewis, in-layer)",
+    "index": 1.919,
+    "elem": "pinion A"
+   }
+  },
+  {
+   "case": "box handling 3 g down + 2 g side",
+   "cls": "handling",
+   "note": "the box set down hard / carried, both heads parked and carrying, arm at phi 0 (A horizontal)",
+   "phi": 0.0,
+   "zA": 32.0,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -67.1,
+      0.0,
+      -44.7
+     ],
+     "M_Nm": [
+      -3.27,
+      -0.47,
+      4.91
+     ],
+     "bolt_N": 150.0
+    },
+    "bearing 1": {
+     "radial_N": 216.9,
+     "axial_N": 0.1
+    },
+    "bearing 2": {
+     "radial_N": 303.2,
+     "axial_N": 0.1
+    },
+    "rail pad A r40": {
+     "bolt_N": -20.4,
+     "shear_N": 8.0,
+     "M_Nm": 0.44
+    },
+    "rail pad A r78": {
+     "bolt_N": 20.4,
+     "shear_N": 12.0,
+     "M_Nm": 0.65
+    },
+    "rail pad B r40": {
+     "bolt_N": 26.5,
+     "shear_N": 10.9,
+     "M_Nm": 0.16
+    },
+    "rail pad B r78": {
+     "bolt_N": -26.4,
+     "shear_N": 12.4,
+     "M_Nm": 0.61
+    },
+    "wheel A0": {
+     "across_N": -19.4,
+     "axial_N": 2.1
+    },
+    "wheel A1": {
+     "across_N": 12.6,
+     "axial_N": -46.8
+    },
+    "wheel A2": {
+     "across_N": 9.3,
+     "axial_N": 44.7
+    },
+    "wheel B0": {
+     "across_N": 23.1,
+     "axial_N": -21.8
+    },
+    "wheel B1": {
+     "across_N": -17.5,
+     "axial_N": 51.6
+    },
+    "wheel B2": {
+     "across_N": -5.7,
+     "axial_N": -29.8
+    },
+    "rack on pinion A": {
+     "tangential_N": 7.5,
+     "separating_N": 2.7
+    },
+    "rack on pinion B": {
+     "tangential_N": -11.3,
+     "separating_N": 4.1
+    },
+    "carriage to head A": {
+     "F_N": 11.4,
+     "M_Nm": 1.15
+    },
+    "carriage to head B": {
+     "F_N": 11.4,
+     "M_Nm": 1.15
+    },
+    "motor seat A": {
+     "F_N": 14.1,
+     "M_Nm": 0.368
+    },
+    "motor seat B": {
+     "F_N": 14.1,
+     "M_Nm": 0.368
+    },
+    "motor seat axle": {
+     "F_N": 14.1,
+     "M_Nm": 0.368
+    },
+    "axle loop": {
+     "F_N": 7.2,
+     "torque_Nm": 0.502
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.046,
+     "elem": "stub 0-16",
+     "sigma": 1.14
+    },
+    "hub": {
+     "index": 0.005,
+     "elem": "hub arm to seat axle",
+     "sigma": 0.24
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.02
+    },
+    "shaft": {
+     "index": 0.063,
+     "elem": "motor shaft B",
+     "sigma": 25.12
+    },
+    "rail A": {
+     "index": 0.006,
+     "elem": "rail A 64-78",
+     "sigma": 0.28
+    },
+    "pad joint A": {
+     "index": 0.008,
+     "elem": "pad joint A 78",
+     "sigma": 0.36
+    },
+    "carbon tie": {
+     "index": 0.001,
+     "elem": "carbon tie A",
+     "sigma": 0.89
+    },
+    "M5 axle": {
+     "index": 0.091,
+     "elem": "M5 axle B1",
+     "sigma": 58.14
+    },
+    "carriage A": {
+     "index": 0.045,
+     "elem": "plate A2",
+     "sigma": 2.0
+    },
+    "head A": {
+     "index": 0.014,
+     "elem": "head body A",
+     "sigma": 0.35
+    },
+    "rail B": {
+     "index": 0.008,
+     "elem": "rail B 55-64",
+     "sigma": 0.35
+    },
+    "pad joint B": {
+     "index": 0.008,
+     "elem": "pad joint B 78",
+     "sigma": 0.35
+    },
+    "carriage B": {
+     "index": 0.031,
+     "elem": "plate B1",
+     "sigma": 1.37
+    },
+    "head B": {
+     "index": 0.014,
+     "elem": "head body B",
+     "sigma": 0.35
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.337,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.077,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.106,
+     "elem": "pinion B",
+     "sigma": 4.8
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.026,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 0.817,
+    "du_mm": 0.39,
+    "dy_mm": -0.065,
+    "tilt_deg": 0.317
+   },
+   "hub_turn_deg": 0.097,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.337,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "hand on rail A tip 50 N",
+   "cls": "misuse",
+   "note": "50 N in -X (tangential), worst of +-X / +-Y",
+   "phi": 90.0,
+   "zA": 32.0,
+   "zB": 32.0,
+   "carry": [],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      50.0,
+      0.0,
+      18.4
+     ],
+     "M_Nm": [
+      0.94,
+      6.61,
+      -3.19
+     ],
+     "bolt_N": 88.0
+    },
+    "bearing 1": {
+     "radial_N": 244.3,
+     "axial_N": 0.0
+    },
+    "bearing 2": {
+     "radial_N": 386.1,
+     "axial_N": 0.0
+    },
+    "rail pad A r40": {
+     "bolt_N": 3.0,
+     "shear_N": 35.3,
+     "M_Nm": 0.35
+    },
+    "rail pad A r78": {
+     "bolt_N": -3.0,
+     "shear_N": 76.0,
+     "M_Nm": 0.82
+    },
+    "rail pad B r40": {
+     "bolt_N": -0.7,
+     "shear_N": 0.5,
+     "M_Nm": 0.1
+    },
+    "rail pad B r78": {
+     "bolt_N": 0.8,
+     "shear_N": 1.2,
+     "M_Nm": 0.06
+    },
+    "wheel A0": {
+     "across_N": 4.4,
+     "axial_N": -4.7
+    },
+    "wheel A1": {
+     "across_N": 1.7,
+     "axial_N": 4.6
+    },
+    "wheel A2": {
+     "across_N": 1.2,
+     "axial_N": 0.2
+    },
+    "wheel B0": {
+     "across_N": 0.1,
+     "axial_N": -2.8
+    },
+    "wheel B1": {
+     "across_N": -0.3,
+     "axial_N": -2.8
+    },
+    "wheel B2": {
+     "across_N": 1.4,
+     "axial_N": 5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": -1.8,
+     "separating_N": 0.6
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 95.9,
+     "torque_Nm": 6.657
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.023,
+     "elem": "stub 0-16",
+     "sigma": 0.58
+    },
+    "hub": {
+     "index": 0.024,
+     "elem": "hub arm to seat axle",
+     "sigma": 1.07
+    },
+    "sun post": {
+     "index": 0.012,
+     "elem": "sun post",
+     "sigma": 0.31
+    },
+    "shaft": {
+     "index": 0.189,
+     "elem": "axle shaft",
+     "sigma": 75.51
+    },
+    "rail A": {
+     "index": 0.061,
+     "elem": "rail A 78-134",
+     "sigma": 2.75
+    },
+    "pad joint A": {
+     "index": 0.009,
+     "elem": "pad joint A 78",
+     "sigma": 0.39
+    },
+    "carbon tie": {
+     "index": 0.022,
+     "elem": "carbon tie A",
+     "sigma": 21.8
+    },
+    "M5 axle": {
+     "index": 0.011,
+     "elem": "M5 axle A0",
+     "sigma": 7.17
+    },
+    "carriage A": {
+     "index": 0.007,
+     "elem": "rack web A",
+     "sigma": 0.33
+    },
+    "head A": {
+     "index": 0.001,
+     "elem": "head body A",
+     "sigma": 0.03
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.03
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.05
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.114,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.009,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.017,
+     "elem": "pinion A",
+     "sigma": 0.8
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.003,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.221,
+    "du_mm": 0.0,
+    "dy_mm": -0.001,
+    "tilt_deg": 0.261,
+    "at": "rail A tip"
+   },
+   "hub_turn_deg": -0.735,
+   "worst": {
+    "piece": "shaft",
+    "index": 0.189,
+    "elem": "axle shaft"
+   }
+  },
+  {
+   "case": "gravity, A horizontal carrying",
+   "cls": "sustained",
+   "note": "self weight, the worst stop for the axle",
+   "phi": 0.0,
+   "zA": 32.0,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -22.4,
+      0.0,
+      0.0
+     ],
+     "M_Nm": [
+      0.0,
+      -0.11,
+      1.64
+     ],
+     "bolt_N": 41.0
+    },
+    "bearing 1": {
+     "radial_N": 57.1,
+     "axial_N": 0.1
+    },
+    "bearing 2": {
+     "radial_N": 79.3,
+     "axial_N": 0.1
+    },
+    "rail pad A r40": {
+     "bolt_N": -1.6,
+     "shear_N": 1.0,
+     "M_Nm": 0.23
+    },
+    "rail pad A r78": {
+     "bolt_N": 1.6,
+     "shear_N": 2.9,
+     "M_Nm": 0.15
+    },
+    "rail pad B r40": {
+     "bolt_N": 7.8,
+     "shear_N": 3.7,
+     "M_Nm": 0.14
+    },
+    "rail pad B r78": {
+     "bolt_N": -7.7,
+     "shear_N": 2.8,
+     "M_Nm": 0.1
+    },
+    "wheel A0": {
+     "across_N": -2.3,
+     "axial_N": -7.5
+    },
+    "wheel A1": {
+     "across_N": 1.0,
+     "axial_N": -7.5
+    },
+    "wheel A2": {
+     "across_N": 3.4,
+     "axial_N": 14.9
+    },
+    "wheel B0": {
+     "across_N": 6.2,
+     "axial_N": -12.2
+    },
+    "wheel B1": {
+     "across_N": -5.2,
+     "axial_N": 12.2
+    },
+    "wheel B2": {
+     "across_N": 0.4,
+     "axial_N": 0.0
+    },
+    "rack on pinion A": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "rack on pinion B": {
+     "tangential_N": -3.8,
+     "separating_N": 1.4
+    },
+    "carriage to head A": {
+     "F_N": 3.2,
+     "M_Nm": 0.32
+    },
+    "carriage to head B": {
+     "F_N": 3.2,
+     "M_Nm": 0.32
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 2.3,
+     "torque_Nm": 0.158
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.009,
+     "elem": "stub 0-16",
+     "sigma": 0.23
+    },
+    "hub": {
+     "index": 0.001,
+     "elem": "hub arm to seat axle",
+     "sigma": 0.06
+    },
+    "sun post": {
+     "index": 0.0,
+     "elem": "sun post",
+     "sigma": 0.01
+    },
+    "shaft": {
+     "index": 0.017,
+     "elem": "motor shaft B",
+     "sigma": 6.89
+    },
+    "rail A": {
+     "index": 0.002,
+     "elem": "rail A 40-50",
+     "sigma": 0.08
+    },
+    "pad joint A": {
+     "index": 0.003,
+     "elem": "pad joint A 40",
+     "sigma": 0.13
+    },
+    "carbon tie": {
+     "index": 0.0,
+     "elem": "carbon tie B",
+     "sigma": 0.14
+    },
+    "M5 axle": {
+     "index": 0.025,
+     "elem": "M5 axle A2",
+     "sigma": 15.76
+    },
+    "carriage A": {
+     "index": 0.015,
+     "elem": "plate A2",
+     "sigma": 0.66
+    },
+    "head A": {
+     "index": 0.003,
+     "elem": "head body A",
+     "sigma": 0.07
+    },
+    "rail B": {
+     "index": 0.002,
+     "elem": "rail B 64-78",
+     "sigma": 0.1
+    },
+    "pad joint B": {
+     "index": 0.002,
+     "elem": "pad joint B 40",
+     "sigma": 0.09
+    },
+    "carriage B": {
+     "index": 0.007,
+     "elem": "plate B1",
+     "sigma": 0.32
+    },
+    "head B": {
+     "index": 0.003,
+     "elem": "head body B",
+     "sigma": 0.07
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.177,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.022,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.036,
+     "elem": "pinion B",
+     "sigma": 1.6
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.008,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 0.26,
+    "du_mm": 0.008,
+    "dy_mm": 0.008,
+    "tilt_deg": 0.094
+   },
+   "hub_turn_deg": 0.02,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.177,
+    "elem": "worst wheel"
+   }
+  }
+ ],
+ "frame_overseer": [
+  {
+   "case": "insert at the drone 60 N",
+   "cls": "swap",
+   "note": "head A at the drone insert z0 95.6, B parked carrying; 45 N at the XT60 (cartridge lead end) + 12 N seat preload + 3 N lead-in, axle driver off",
+   "phi": 90.0,
+   "zA": 95.6,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "detent",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -3.0,
+      0.0,
+      89.5
+     ],
+     "M_Nm": [
+      16.5,
+      -0.01,
+      0.52
+     ],
+     "bolt_N": 151.0
+    },
+    "bearing 1": {
+     "radial_N": 852.5,
+     "axial_N": 0.7
+    },
+    "bearing 2": {
+     "radial_N": 941.8,
+     "axial_N": 0.7
+    },
+    "rail pad A r40": {
+     "bolt_N": 5.6,
+     "shear_N": 48.6,
+     "M_Nm": 0.47
+    },
+    "rail pad A r78": {
+     "bolt_N": 181.9,
+     "shear_N": 192.9,
+     "M_Nm": 0.67
+    },
+    "rail pad B r40": {
+     "bolt_N": -4.2,
+     "shear_N": 4.4,
+     "M_Nm": 0.55
+    },
+    "rail pad B r78": {
+     "bolt_N": 4.2,
+     "shear_N": 8.7,
+     "M_Nm": 0.42
+    },
+    "wheel A0": {
+     "across_N": -14.0,
+     "axial_N": -366.2
+    },
+    "wheel A1": {
+     "across_N": -20.9,
+     "axial_N": 353.2
+    },
+    "wheel A2": {
+     "across_N": -8.7,
+     "axial_N": 12.9
+    },
+    "wheel B0": {
+     "across_N": -9.4,
+     "axial_N": -19.2
+    },
+    "wheel B1": {
+     "across_N": 5.1,
+     "axial_N": -19.2
+    },
+    "wheel B2": {
+     "across_N": 8.5,
+     "axial_N": 38.4
+    },
+    "rack on pinion A": {
+     "tangential_N": -65.8,
+     "separating_N": 24.0
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 65.3,
+     "M_Nm": 9.59
+    },
+    "carriage to head B": {
+     "F_N": 8.2,
+     "M_Nm": 0.85
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "detent (driver off)": {
+     "F_N": 0.2,
+     "torque_Nm": 0.016
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.095,
+     "elem": "stub 0-16",
+     "sigma": 2.38
+    },
+    "hub": {
+     "index": 0.021,
+     "elem": "hub arm to seat A",
+     "sigma": 0.94
+    },
+    "sun post": {
+     "index": 0.0,
+     "elem": "sun post",
+     "sigma": 0.0
+    },
+    "shaft": {
+     "index": 0.378,
+     "elem": "motor shaft A",
+     "sigma": 151.15
+    },
+    "rail A": {
+     "index": 0.083,
+     "elem": "rail A 78-100",
+     "sigma": 3.73
+    },
+    "pad joint A": {
+     "index": 0.021,
+     "elem": "pad joint A 78",
+     "sigma": 0.96
+    },
+    "carbon tie": {
+     "index": 0.088,
+     "elem": "carbon tie A",
+     "sigma": 88.15
+    },
+    "M5 axle": {
+     "index": 0.522,
+     "elem": "M5 axle A1",
+     "sigma": 333.84
+    },
+    "carriage A": {
+     "index": 0.235,
+     "elem": "plate A0",
+     "sigma": 10.56
+    },
+    "head A": {
+     "index": 0.088,
+     "elem": "head body A",
+     "sigma": 2.2
+    },
+    "rail B": {
+     "index": 0.005,
+     "elem": "rail B 40-50",
+     "sigma": 0.21
+    },
+    "pad joint B": {
+     "index": 0.007,
+     "elem": "pad joint B 40",
+     "sigma": 0.33
+    },
+    "carriage B": {
+     "index": 0.038,
+     "elem": "plate B2",
+     "sigma": 1.71
+    },
+    "head B": {
+     "index": 0.007,
+     "elem": "head body B",
+     "sigma": 0.19
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.838,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.547,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.62,
+     "elem": "pinion A",
+     "sigma": 27.9
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.182,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.676,
+    "du_mm": -5.976,
+    "dy_mm": 1.752,
+    "tilt_deg": 1.885
+   },
+   "hub_turn_deg": -0.05,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.838,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "insert at a bay 60 N",
+   "cls": "swap",
+   "note": "head A into the -90 bay z0 86.1 (arm horizontal, gravity along the rail), axle driver off",
+   "phi": -90.0,
+   "zA": 86.1,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "detent",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -3.0,
+      0.0,
+      31.6
+     ],
+     "M_Nm": [
+      10.92,
+      -0.39,
+      0.52
+     ],
+     "bolt_N": 104.0
+    },
+    "bearing 1": {
+     "radial_N": 612.2,
+     "axial_N": 0.8
+    },
+    "bearing 2": {
+     "radial_N": 639.3,
+     "axial_N": 0.8
+    },
+    "rail pad A r40": {
+     "bolt_N": 15.6,
+     "shear_N": 53.6,
+     "M_Nm": 0.45
+    },
+    "rail pad A r78": {
+     "bolt_N": 91.9,
+     "shear_N": 102.3,
+     "M_Nm": 1.67
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.6,
+     "shear_N": 1.1,
+     "M_Nm": 0.11
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.6,
+     "shear_N": 0.6,
+     "M_Nm": 0.05
+    },
+    "wheel A0": {
+     "across_N": -4.7,
+     "axial_N": -303.3
+    },
+    "wheel A1": {
+     "across_N": -22.2,
+     "axial_N": 290.1
+    },
+    "wheel A2": {
+     "across_N": -6.5,
+     "axial_N": 13.2
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": 2.8
+    },
+    "wheel B1": {
+     "across_N": 0.3,
+     "axial_N": 2.8
+    },
+    "wheel B2": {
+     "across_N": -1.4,
+     "axial_N": -5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": -48.2,
+     "separating_N": 17.5
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 48.9,
+     "M_Nm": 7.96
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "detent (driver off)": {
+     "F_N": 5.6,
+     "torque_Nm": 0.391
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.064,
+     "elem": "stub 0-16",
+     "sigma": 1.6
+    },
+    "hub": {
+     "index": 0.015,
+     "elem": "hub arm to seat A",
+     "sigma": 0.66
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.02
+    },
+    "shaft": {
+     "index": 0.284,
+     "elem": "motor shaft A",
+     "sigma": 113.75
+    },
+    "rail A": {
+     "index": 0.073,
+     "elem": "rail A 78-90",
+     "sigma": 3.27
+    },
+    "pad joint A": {
+     "index": 0.016,
+     "elem": "pad joint A 78",
+     "sigma": 0.73
+    },
+    "carbon tie": {
+     "index": 0.079,
+     "elem": "carbon tie A",
+     "sigma": 79.37
+    },
+    "M5 axle": {
+     "index": 0.434,
+     "elem": "M5 axle A1",
+     "sigma": 277.47
+    },
+    "carriage A": {
+     "index": 0.191,
+     "elem": "plate A0",
+     "sigma": 8.6
+    },
+    "head A": {
+     "index": 0.073,
+     "elem": "head body A",
+     "sigma": 1.83
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.03
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.06
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.758,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.453,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.454,
+     "elem": "pinion A",
+     "sigma": 20.4
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.092,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.5,
+    "du_mm": -5.005,
+    "dy_mm": 1.503,
+    "tilt_deg": 1.596
+   },
+   "hub_turn_deg": 3.354,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.758,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "pull at the drone 50 N",
+   "cls": "swap",
+   "note": "head B's pick (here on A's geometry) at z0 89.6: 45 N XT60 + 5 N latch wedge outward",
+   "phi": 90.0,
+   "zA": 89.6,
+   "zB": 81.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -0.0,
+      -0.0,
+      -24.6
+     ],
+     "M_Nm": [
+      -9.7,
+      -0.0,
+      -0.0
+     ],
+     "bolt_N": 81.0
+    },
+    "bearing 1": {
+     "radial_N": 546.5,
+     "axial_N": 0.6
+    },
+    "bearing 2": {
+     "radial_N": 565.1,
+     "axial_N": 0.6
+    },
+    "rail pad A r40": {
+     "bolt_N": -10.9,
+     "shear_N": 44.7,
+     "M_Nm": 0.39
+    },
+    "rail pad A r78": {
+     "bolt_N": -95.7,
+     "shear_N": 108.8,
+     "M_Nm": 1.25
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.1,
+     "shear_N": 0.5,
+     "M_Nm": 0.03
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.3,
+     "shear_N": 1.8,
+     "M_Nm": 0.13
+    },
+    "wheel A0": {
+     "across_N": 3.4,
+     "axial_N": 269.7
+    },
+    "wheel A1": {
+     "across_N": 19.6,
+     "axial_N": -270.4
+    },
+    "wheel A2": {
+     "across_N": 8.5,
+     "axial_N": 0.7
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": -2.8
+    },
+    "wheel B1": {
+     "across_N": 0.2,
+     "axial_N": -2.8
+    },
+    "wheel B2": {
+     "across_N": 1.5,
+     "axial_N": 5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 41.2,
+     "separating_N": 15.0
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 41.8,
+     "M_Nm": 7.26
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 9.9,
+     "torque_Nm": 0.685
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.054,
+     "elem": "stub 0-16",
+     "sigma": 1.35
+    },
+    "hub": {
+     "index": 0.013,
+     "elem": "hub arm to seat A",
+     "sigma": 0.56
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.03
+    },
+    "shaft": {
+     "index": 0.244,
+     "elem": "motor shaft A",
+     "sigma": 97.58
+    },
+    "rail A": {
+     "index": 0.064,
+     "elem": "rail A 122-134",
+     "sigma": 2.88
+    },
+    "pad joint A": {
+     "index": 0.016,
+     "elem": "pad joint A 78",
+     "sigma": 0.71
+    },
+    "carbon tie": {
+     "index": 0.075,
+     "elem": "carbon tie A",
+     "sigma": 74.87
+    },
+    "M5 axle": {
+     "index": 0.403,
+     "elem": "M5 axle A1",
+     "sigma": 257.87
+    },
+    "carriage A": {
+     "index": 0.17,
+     "elem": "plate A0",
+     "sigma": 7.63
+    },
+    "head A": {
+     "index": 0.065,
+     "elem": "head body A",
+     "sigma": 1.62
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 78-85",
+     "sigma": 0.06
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 78",
+     "sigma": 0.06
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.726,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.404,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.388,
+     "elem": "pinion A",
+     "sigma": 17.5
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.096,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 0.798,
+    "du_mm": 4.572,
+    "dy_mm": -1.364,
+    "tilt_deg": 1.471
+   },
+   "hub_turn_deg": 0.085,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.726,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "pull at a bay 50 N",
+   "cls": "swap",
+   "note": "head A picks the charged pack from the -90 bay",
+   "phi": -90.0,
+   "zA": 86.1,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -0.0,
+      0.0,
+      -75.4
+     ],
+     "M_Nm": [
+      -14.04,
+      0.09,
+      -0.0
+     ],
+     "bolt_N": 117.0
+    },
+    "bearing 1": {
+     "radial_N": 711.0,
+     "axial_N": 0.9
+    },
+    "bearing 2": {
+     "radial_N": 777.3,
+     "axial_N": 0.9
+    },
+    "rail pad A r40": {
+     "bolt_N": -17.3,
+     "shear_N": 61.0,
+     "M_Nm": 0.5
+    },
+    "rail pad A r78": {
+     "bolt_N": -103.8,
+     "shear_N": 121.6,
+     "M_Nm": 1.96
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.7,
+     "shear_N": 0.6,
+     "M_Nm": 0.09
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.7,
+     "shear_N": 1.5,
+     "M_Nm": 0.07
+    },
+    "wheel A0": {
+     "across_N": -3.1,
+     "axial_N": 332.6
+    },
+    "wheel A1": {
+     "across_N": 34.6,
+     "axial_N": -333.5
+    },
+    "wheel A2": {
+     "across_N": 12.2,
+     "axial_N": 0.9
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": 2.8
+    },
+    "wheel B1": {
+     "across_N": 0.2,
+     "axial_N": 2.8
+    },
+    "wheel B2": {
+     "across_N": -1.4,
+     "axial_N": -5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 58.8,
+     "separating_N": 21.4
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 58.2,
+     "M_Nm": 8.9
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 13.5,
+     "torque_Nm": 0.936
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.078,
+     "elem": "stub 0-16",
+     "sigma": 1.96
+    },
+    "hub": {
+     "index": 0.019,
+     "elem": "hub arm to seat A",
+     "sigma": 0.85
+    },
+    "sun post": {
+     "index": 0.002,
+     "elem": "sun post",
+     "sigma": 0.04
+    },
+    "shaft": {
+     "index": 0.344,
+     "elem": "motor shaft A",
+     "sigma": 137.78
+    },
+    "rail A": {
+     "index": 0.089,
+     "elem": "rail A 78-90",
+     "sigma": 3.99
+    },
+    "pad joint A": {
+     "index": 0.023,
+     "elem": "pad joint A 78",
+     "sigma": 1.02
+    },
+    "carbon tie": {
+     "index": 0.095,
+     "elem": "carbon tie A",
+     "sigma": 94.53
+    },
+    "M5 axle": {
+     "index": 0.508,
+     "elem": "M5 axle A1",
+     "sigma": 324.92
+    },
+    "carriage A": {
+     "index": 0.207,
+     "elem": "plate A0",
+     "sigma": 9.31
+    },
+    "head A": {
+     "index": 0.079,
+     "elem": "head body A",
+     "sigma": 1.98
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.03
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.05
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.813,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.498,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.554,
+     "elem": "pinion A",
+     "sigma": 24.9
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.104,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 1.054,
+    "du_mm": 5.704,
+    "dy_mm": -1.678,
+    "tilt_deg": 1.814
+   },
+   "hub_turn_deg": 0.107,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.813,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "head stall into a jammed pack 74 N",
+   "cls": "misuse",
+   "note": "the 16T at 2 A stall drives the cartridge's XT60 into a jam at the drone insert",
+   "phi": 90.0,
+   "zA": 95.6,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "detent",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -3.0,
+      0.0,
+      106.5
+     ],
+     "M_Nm": [
+      21.49,
+      -0.01,
+      0.52
+     ],
+     "bolt_N": 192.0
+    },
+    "bearing 1": {
+     "radial_N": 1129.8,
+     "axial_N": 0.9
+    },
+    "bearing 2": {
+     "radial_N": 1236.1,
+     "axial_N": 0.9
+    },
+    "rail pad A r40": {
+     "bolt_N": 7.6,
+     "shear_N": 66.2,
+     "M_Nm": 0.64
+    },
+    "rail pad A r78": {
+     "bolt_N": 251.0,
+     "shear_N": 264.4,
+     "M_Nm": 0.94
+    },
+    "rail pad B r40": {
+     "bolt_N": -4.2,
+     "shear_N": 4.5,
+     "M_Nm": 0.55
+    },
+    "rail pad B r78": {
+     "bolt_N": 4.2,
+     "shear_N": 8.9,
+     "M_Nm": 0.42
+    },
+    "wheel A0": {
+     "across_N": -19.8,
+     "axial_N": -502.4
+    },
+    "wheel A1": {
+     "across_N": -25.3,
+     "axial_N": 489.8
+    },
+    "wheel A2": {
+     "across_N": -12.0,
+     "axial_N": 12.6
+    },
+    "wheel B0": {
+     "across_N": -9.4,
+     "axial_N": -19.2
+    },
+    "wheel B1": {
+     "across_N": 5.2,
+     "axial_N": -19.2
+    },
+    "wheel B2": {
+     "across_N": 8.5,
+     "axial_N": 38.4
+    },
+    "rack on pinion A": {
+     "tangential_N": -82.8,
+     "separating_N": 30.1
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 82.3,
+     "M_Nm": 13.29
+    },
+    "carriage to head B": {
+     "F_N": 8.2,
+     "M_Nm": 0.85
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "detent (driver off)": {
+     "F_N": 0.3,
+     "torque_Nm": 0.018
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.123,
+     "elem": "stub 0-16",
+     "sigma": 3.07
+    },
+    "hub": {
+     "index": 0.026,
+     "elem": "hub arm to seat A",
+     "sigma": 1.18
+    },
+    "sun post": {
+     "index": 0.0,
+     "elem": "sun post",
+     "sigma": 0.0
+    },
+    "shaft": {
+     "index": 0.48,
+     "elem": "motor shaft A",
+     "sigma": 192.19
+    },
+    "rail A": {
+     "index": 0.111,
+     "elem": "rail A 78-100",
+     "sigma": 4.99
+    },
+    "pad joint A": {
+     "index": 0.029,
+     "elem": "pad joint A 78",
+     "sigma": 1.28
+    },
+    "carbon tie": {
+     "index": 0.124,
+     "elem": "carbon tie A",
+     "sigma": 124.23
+    },
+    "M5 axle": {
+     "index": 0.72,
+     "elem": "M5 axle A1",
+     "sigma": 460.51
+    },
+    "carriage A": {
+     "index": 0.322,
+     "elem": "plate A0",
+     "sigma": 14.51
+    },
+    "head A": {
+     "index": 0.121,
+     "elem": "head body A",
+     "sigma": 3.02
+    },
+    "rail B": {
+     "index": 0.005,
+     "elem": "rail B 40-50",
+     "sigma": 0.21
+    },
+    "pad joint B": {
+     "index": 0.007,
+     "elem": "pad joint B 40",
+     "sigma": 0.32
+    },
+    "carriage B": {
+     "index": 0.038,
+     "elem": "plate B2",
+     "sigma": 1.71
+    },
+    "head B": {
+     "index": 0.007,
+     "elem": "head body B",
+     "sigma": 0.19
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.982,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.75,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.78,
+     "elem": "pinion A",
+     "sigma": 35.1
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.251,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -1.035,
+    "du_mm": -8.233,
+    "dy_mm": 2.433,
+    "tilt_deg": 2.622
+   },
+   "hub_turn_deg": -0.094,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.982,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "axle stall, head in a bay",
+   "cls": "misuse",
+   "note": "the axle motor stalls (0.59 N.m x 4 = 2.36 N.m) with head A held in the -90 bay: the bay holds the cartridge tangentially",
+   "phi": -90.0,
+   "zA": 86.1,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "none",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      99.6,
+      -0.0,
+      -61.7
+     ],
+     "M_Nm": [
+      -4.31,
+      0.0,
+      -7.54
+     ],
+     "bolt_N": 224.0
+    },
+    "bearing 1": {
+     "radial_N": 308.8,
+     "axial_N": 0.3
+    },
+    "bearing 2": {
+     "radial_N": 425.8,
+     "axial_N": 0.3
+    },
+    "rail pad A r40": {
+     "bolt_N": -2.5,
+     "shear_N": 6.6,
+     "M_Nm": 0.19
+    },
+    "rail pad A r78": {
+     "bolt_N": -6.8,
+     "shear_N": 21.8,
+     "M_Nm": 1.62
+    },
+    "rail pad B r40": {
+     "bolt_N": 0.5,
+     "shear_N": 1.2,
+     "M_Nm": 0.1
+    },
+    "rail pad B r78": {
+     "bolt_N": -0.4,
+     "shear_N": 1.5,
+     "M_Nm": 0.06
+    },
+    "wheel A0": {
+     "across_N": 5.2,
+     "axial_N": 64.9
+    },
+    "wheel A1": {
+     "across_N": -6.3,
+     "axial_N": 1.9
+    },
+    "wheel A2": {
+     "across_N": -17.7,
+     "axial_N": -66.8
+    },
+    "wheel B0": {
+     "across_N": -0.1,
+     "axial_N": 2.8
+    },
+    "wheel B1": {
+     "across_N": 0.3,
+     "axial_N": 2.8
+    },
+    "wheel B2": {
+     "across_N": -1.4,
+     "axial_N": -5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 8.8,
+     "separating_N": 3.2
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 16.5,
+     "M_Nm": 1.78
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.066,
+     "elem": "stub 0-16",
+     "sigma": 1.65
+    },
+    "hub": {
+     "index": 0.012,
+     "elem": "hub arm to seat axle",
+     "sigma": 0.52
+    },
+    "sun post": {
+     "index": 0.0,
+     "elem": "sun post",
+     "sigma": 0.0
+    },
+    "shaft": {
+     "index": 0.173,
+     "elem": "axle shaft",
+     "sigma": 69.31
+    },
+    "rail A": {
+     "index": 0.021,
+     "elem": "rail A 78-90",
+     "sigma": 0.97
+    },
+    "pad joint A": {
+     "index": 0.019,
+     "elem": "pad joint A 78",
+     "sigma": 0.84
+    },
+    "carbon tie": {
+     "index": 0.022,
+     "elem": "carbon tie A",
+     "sigma": 21.56
+    },
+    "M5 axle": {
+     "index": 0.113,
+     "elem": "M5 axle A2",
+     "sigma": 72.1
+    },
+    "carriage A": {
+     "index": 0.065,
+     "elem": "plate A2",
+     "sigma": 2.93
+    },
+    "head A": {
+     "index": 0.019,
+     "elem": "head body A",
+     "sigma": 0.48
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.04
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.05
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.377,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.1,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.083,
+     "elem": "pinion A",
+     "sigma": 3.7
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.007,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -1.764,
+    "du_mm": 0.353,
+    "dy_mm": -0.165,
+    "tilt_deg": 0.556
+   },
+   "hub_turn_deg": 0.549,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.377,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "dropped pack 200 N",
+   "cls": "misuse",
+   "note": "a cartridge falls back onto head A's seat at the drone (204 g from 50, ~0.5 stop, E)",
+   "phi": 90.0,
+   "zA": 95.6,
+   "zB": 32.0,
+   "carry": [
+    "A"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -0.0,
+      0.0,
+      225.4
+     ],
+     "M_Nm": [
+      37.17,
+      -0.09,
+      0.0
+     ],
+     "bolt_N": 310.0
+    },
+    "bearing 1": {
+     "radial_N": 1834.4,
+     "axial_N": 1.5
+    },
+    "bearing 2": {
+     "radial_N": 2037.6,
+     "axial_N": 1.5
+    },
+    "rail pad A r40": {
+     "bolt_N": 12.0,
+     "shear_N": 117.7,
+     "M_Nm": 1.06
+    },
+    "rail pad A r78": {
+     "bolt_N": 401.6,
+     "shear_N": 459.2,
+     "M_Nm": 2.65
+    },
+    "rail pad B r40": {
+     "bolt_N": -0.7,
+     "shear_N": 0.6,
+     "M_Nm": 0.07
+    },
+    "rail pad B r78": {
+     "bolt_N": 0.7,
+     "shear_N": 2.3,
+     "M_Nm": 0.09
+    },
+    "wheel A0": {
+     "across_N": -24.4,
+     "axial_N": -790.6
+    },
+    "wheel A1": {
+     "across_N": -84.1,
+     "axial_N": 793.8
+    },
+    "wheel A2": {
+     "across_N": -39.3,
+     "axial_N": -3.2
+    },
+    "wheel B0": {
+     "across_N": 0.2,
+     "axial_N": -2.8
+    },
+    "wheel B1": {
+     "across_N": -0.2,
+     "axial_N": -2.8
+    },
+    "wheel B2": {
+     "across_N": 1.4,
+     "axial_N": 5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": -208.8,
+     "separating_N": 76.0
+    },
+    "rack on pinion B": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 208.2,
+     "M_Nm": 20.7
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 34.8,
+     "torque_Nm": 2.415
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.208,
+     "elem": "stub 0-16",
+     "sigma": 5.19
+    },
+    "hub": {
+     "index": 0.065,
+     "elem": "hub arm to seat A",
+     "sigma": 2.93
+    },
+    "sun post": {
+     "index": 0.005,
+     "elem": "sun post",
+     "sigma": 0.12
+    },
+    "shaft": {
+     "index": 1.199,
+     "elem": "motor shaft A",
+     "sigma": 479.48
+    },
+    "rail A": {
+     "index": 0.239,
+     "elem": "rail A 78-100",
+     "sigma": 10.75
+    },
+    "pad joint A": {
+     "index": 0.046,
+     "elem": "pad joint A 78",
+     "sigma": 2.09
+    },
+    "carbon tie": {
+     "index": 0.215,
+     "elem": "carbon tie A",
+     "sigma": 215.48
+    },
+    "M5 axle": {
+     "index": 1.21,
+     "elem": "M5 axle A1",
+     "sigma": 774.48
+    },
+    "carriage A": {
+     "index": 0.504,
+     "elem": "plate A0",
+     "sigma": 22.69
+    },
+    "head A": {
+     "index": 0.185,
+     "elem": "head body A",
+     "sigma": 4.62
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.04
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.04
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 1.254,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 1.185,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 1.966,
+     "elem": "pinion A",
+     "sigma": 88.5
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.402,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -2.947,
+    "du_mm": -13.449,
+    "dy_mm": 3.709,
+    "tilt_deg": 4.102
+   },
+   "hub_turn_deg": -0.294,
+   "worst": {
+    "piece": "pinion 16T (Lewis, in-layer)",
+    "index": 1.966,
+    "elem": "pinion A"
+   }
+  },
+  {
+   "case": "box handling 3 g down + 2 g side",
+   "cls": "handling",
+   "note": "the box set down hard / carried, both heads parked and carrying, arm at phi 0 (A horizontal)",
+   "phi": 0.0,
+   "zA": 32.0,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -97.5,
+      0.0,
+      -65.0
+     ],
+     "M_Nm": [
+      -6.82,
+      -2.59,
+      10.23
+     ],
+     "bolt_N": 312.0
+    },
+    "bearing 1": {
+     "radial_N": 590.7,
+     "axial_N": 0.3
+    },
+    "bearing 2": {
+     "radial_N": 742.0,
+     "axial_N": 0.3
+    },
+    "rail pad A r40": {
+     "bolt_N": -52.6,
+     "shear_N": 26.5,
+     "M_Nm": 1.04
+    },
+    "rail pad A r78": {
+     "bolt_N": 52.5,
+     "shear_N": 32.6,
+     "M_Nm": 1.7
+    },
+    "rail pad B r40": {
+     "bolt_N": 68.3,
+     "shear_N": 30.4,
+     "M_Nm": 0.39
+    },
+    "rail pad B r78": {
+     "bolt_N": -68.1,
+     "shear_N": 31.9,
+     "M_Nm": 1.57
+    },
+    "wheel A0": {
+     "across_N": -58.0,
+     "axial_N": 5.4
+    },
+    "wheel A1": {
+     "across_N": 39.1,
+     "axial_N": -120.6
+    },
+    "wheel A2": {
+     "across_N": 23.3,
+     "axial_N": 115.1
+    },
+    "wheel B0": {
+     "across_N": 62.8,
+     "axial_N": -56.2
+    },
+    "wheel B1": {
+     "across_N": -48.1,
+     "axial_N": 132.9
+    },
+    "wheel B2": {
+     "across_N": -14.7,
+     "axial_N": -76.7
+    },
+    "rack on pinion A": {
+     "tangential_N": 17.7,
+     "separating_N": 6.4
+    },
+    "rack on pinion B": {
+     "tangential_N": -26.5,
+     "separating_N": 9.6
+    },
+    "carriage to head A": {
+     "F_N": 29.7,
+     "M_Nm": 3.06
+    },
+    "carriage to head B": {
+     "F_N": 29.7,
+     "M_Nm": 3.02
+    },
+    "motor seat A": {
+     "F_N": 14.1,
+     "M_Nm": 0.368
+    },
+    "motor seat B": {
+     "F_N": 14.1,
+     "M_Nm": 0.368
+    },
+    "motor seat axle": {
+     "F_N": 14.1,
+     "M_Nm": 0.368
+    },
+    "axle loop": {
+     "F_N": 38.3,
+     "torque_Nm": 2.658
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.095,
+     "elem": "stub 0-16",
+     "sigma": 2.38
+    },
+    "hub": {
+     "index": 0.013,
+     "elem": "hub web 32-52",
+     "sigma": 0.59
+    },
+    "sun post": {
+     "index": 0.005,
+     "elem": "sun post",
+     "sigma": 0.12
+    },
+    "shaft": {
+     "index": 0.148,
+     "elem": "motor shaft B",
+     "sigma": 59.34
+    },
+    "rail A": {
+     "index": 0.017,
+     "elem": "rail A 55-64",
+     "sigma": 0.75
+    },
+    "pad joint A": {
+     "index": 0.021,
+     "elem": "pad joint A 78",
+     "sigma": 0.94
+    },
+    "carbon tie": {
+     "index": 0.002,
+     "elem": "carbon tie B",
+     "sigma": 2.12
+    },
+    "M5 axle": {
+     "index": 0.237,
+     "elem": "M5 axle B1",
+     "sigma": 151.79
+    },
+    "carriage A": {
+     "index": 0.115,
+     "elem": "plate A2",
+     "sigma": 5.17
+    },
+    "head A": {
+     "index": 0.037,
+     "elem": "head body A",
+     "sigma": 0.92
+    },
+    "rail B": {
+     "index": 0.021,
+     "elem": "rail B 55-64",
+     "sigma": 0.93
+    },
+    "pad joint B": {
+     "index": 0.02,
+     "elem": "pad joint B 78",
+     "sigma": 0.91
+    },
+    "carriage B": {
+     "index": 0.078,
+     "elem": "plate B1",
+     "sigma": 3.53
+    },
+    "head B": {
+     "index": 0.037,
+     "elem": "head body B",
+     "sigma": 0.92
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.544,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.198,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.25,
+     "elem": "pinion B",
+     "sigma": 11.2
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.068,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 2.447,
+    "du_mm": 1.14,
+    "dy_mm": -0.215,
+    "tilt_deg": 0.831
+   },
+   "hub_turn_deg": 0.386,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.544,
+    "elem": "worst wheel"
+   }
+  },
+  {
+   "case": "hand on rail A tip 50 N",
+   "cls": "misuse",
+   "note": "50 N in -X (tangential), worst of +-X / +-Y",
+   "phi": 90.0,
+   "zA": 32.0,
+   "zB": 32.0,
+   "carry": [],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      50.0,
+      0.0,
+      18.4
+     ],
+     "M_Nm": [
+      0.94,
+      6.61,
+      -3.19
+     ],
+     "bolt_N": 88.0
+    },
+    "bearing 1": {
+     "radial_N": 244.3,
+     "axial_N": 0.0
+    },
+    "bearing 2": {
+     "radial_N": 386.1,
+     "axial_N": 0.0
+    },
+    "rail pad A r40": {
+     "bolt_N": 3.0,
+     "shear_N": 35.3,
+     "M_Nm": 0.35
+    },
+    "rail pad A r78": {
+     "bolt_N": -3.0,
+     "shear_N": 76.0,
+     "M_Nm": 0.82
+    },
+    "rail pad B r40": {
+     "bolt_N": -0.7,
+     "shear_N": 0.5,
+     "M_Nm": 0.1
+    },
+    "rail pad B r78": {
+     "bolt_N": 0.8,
+     "shear_N": 1.2,
+     "M_Nm": 0.06
+    },
+    "wheel A0": {
+     "across_N": 4.4,
+     "axial_N": -4.7
+    },
+    "wheel A1": {
+     "across_N": 1.7,
+     "axial_N": 4.6
+    },
+    "wheel A2": {
+     "across_N": 1.2,
+     "axial_N": 0.2
+    },
+    "wheel B0": {
+     "across_N": 0.1,
+     "axial_N": -2.8
+    },
+    "wheel B1": {
+     "across_N": -0.3,
+     "axial_N": -2.8
+    },
+    "wheel B2": {
+     "across_N": 1.4,
+     "axial_N": 5.7
+    },
+    "rack on pinion A": {
+     "tangential_N": -1.8,
+     "separating_N": 0.6
+    },
+    "rack on pinion B": {
+     "tangential_N": 0.0,
+     "separating_N": 0.0
+    },
+    "carriage to head A": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "carriage to head B": {
+     "F_N": 1.2,
+     "M_Nm": 0.12
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 95.9,
+     "torque_Nm": 6.657
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.023,
+     "elem": "stub 0-16",
+     "sigma": 0.58
+    },
+    "hub": {
+     "index": 0.024,
+     "elem": "hub arm to seat axle",
+     "sigma": 1.07
+    },
+    "sun post": {
+     "index": 0.012,
+     "elem": "sun post",
+     "sigma": 0.31
+    },
+    "shaft": {
+     "index": 0.189,
+     "elem": "axle shaft",
+     "sigma": 75.51
+    },
+    "rail A": {
+     "index": 0.061,
+     "elem": "rail A 78-134",
+     "sigma": 2.75
+    },
+    "pad joint A": {
+     "index": 0.009,
+     "elem": "pad joint A 78",
+     "sigma": 0.39
+    },
+    "carbon tie": {
+     "index": 0.022,
+     "elem": "carbon tie A",
+     "sigma": 21.8
+    },
+    "M5 axle": {
+     "index": 0.011,
+     "elem": "M5 axle A0",
+     "sigma": 7.17
+    },
+    "carriage A": {
+     "index": 0.007,
+     "elem": "rack web A",
+     "sigma": 0.33
+    },
+    "head A": {
+     "index": 0.001,
+     "elem": "head body A",
+     "sigma": 0.03
+    },
+    "rail B": {
+     "index": 0.001,
+     "elem": "rail B 40-50",
+     "sigma": 0.03
+    },
+    "pad joint B": {
+     "index": 0.001,
+     "elem": "pad joint B 40",
+     "sigma": 0.05
+    },
+    "carriage B": {
+     "index": 0.006,
+     "elem": "plate B2",
+     "sigma": 0.25
+    },
+    "head B": {
+     "index": 0.001,
+     "elem": "head body B",
+     "sigma": 0.03
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.114,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.009,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.017,
+     "elem": "pinion A",
+     "sigma": 0.8
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.003,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": -0.221,
+    "du_mm": 0.0,
+    "dy_mm": -0.001,
+    "tilt_deg": 0.261,
+    "at": "rail A tip"
+   },
+   "hub_turn_deg": -0.735,
+   "worst": {
+    "piece": "shaft",
+    "index": 0.189,
+    "elem": "axle shaft"
+   }
+  },
+  {
+   "case": "gravity, A horizontal carrying",
+   "cls": "sustained",
+   "note": "self weight, the worst stop for the axle",
+   "phi": 0.0,
+   "zA": 32.0,
+   "zB": 32.0,
+   "carry": [
+    "A",
+    "B"
+   ],
+   "axle": "belt",
+   "joints": {
+    "stub to post (4 x M5)": {
+     "F": [
+      -32.5,
+      0.0,
+      -0.0
+     ],
+     "M_Nm": [
+      0.0,
+      -0.53,
+      3.41
+     ],
+     "bolt_N": 85.0
+    },
+    "bearing 1": {
+     "radial_N": 151.4,
+     "axial_N": 0.3
+    },
+    "bearing 2": {
+     "radial_N": 186.1,
+     "axial_N": 0.3
+    },
+    "rail pad A r40": {
+     "bolt_N": -4.2,
+     "shear_N": 3.9,
+     "M_Nm": 0.57
+    },
+    "rail pad A r78": {
+     "bolt_N": 4.2,
+     "shear_N": 8.2,
+     "M_Nm": 0.41
+    },
+    "rail pad B r40": {
+     "bolt_N": 20.0,
+     "shear_N": 8.6,
+     "M_Nm": 0.35
+    },
+    "rail pad B r78": {
+     "bolt_N": -19.9,
+     "shear_N": 6.5,
+     "M_Nm": 0.25
+    },
+    "wheel A0": {
+     "across_N": -9.4,
+     "axial_N": -19.2
+    },
+    "wheel A1": {
+     "across_N": 5.1,
+     "axial_N": -19.2
+    },
+    "wheel A2": {
+     "across_N": 8.5,
+     "axial_N": 38.4
+    },
+    "wheel B0": {
+     "across_N": 14.7,
+     "axial_N": -31.5
+    },
+    "wheel B1": {
+     "across_N": -12.6,
+     "axial_N": 31.5
+    },
+    "wheel B2": {
+     "across_N": 0.8,
+     "axial_N": 0.1
+    },
+    "rack on pinion A": {
+     "tangential_N": -0.0,
+     "separating_N": 0.0
+    },
+    "rack on pinion B": {
+     "tangential_N": -8.8,
+     "separating_N": 3.2
+    },
+    "carriage to head A": {
+     "F_N": 8.2,
+     "M_Nm": 0.85
+    },
+    "carriage to head B": {
+     "F_N": 8.2,
+     "M_Nm": 0.82
+    },
+    "motor seat A": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat B": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "motor seat axle": {
+     "F_N": 3.9,
+     "M_Nm": 0.102
+    },
+    "axle loop": {
+     "F_N": 8.8,
+     "torque_Nm": 0.612
+    }
+   },
+   "pieces": {
+    "stub": {
+     "index": 0.019,
+     "elem": "stub 0-16",
+     "sigma": 0.48
+    },
+    "hub": {
+     "index": 0.003,
+     "elem": "hub sleeve 16-32",
+     "sigma": 0.12
+    },
+    "sun post": {
+     "index": 0.001,
+     "elem": "sun post",
+     "sigma": 0.02
+    },
+    "shaft": {
+     "index": 0.039,
+     "elem": "motor shaft B",
+     "sigma": 15.63
+    },
+    "rail A": {
+     "index": 0.005,
+     "elem": "rail A 40-50",
+     "sigma": 0.21
+    },
+    "pad joint A": {
+     "index": 0.007,
+     "elem": "pad joint A 40",
+     "sigma": 0.33
+    },
+    "carbon tie": {
+     "index": 0.001,
+     "elem": "carbon tie A",
+     "sigma": 0.55
+    },
+    "M5 axle": {
+     "index": 0.063,
+     "elem": "M5 axle A2",
+     "sigma": 40.38
+    },
+    "carriage A": {
+     "index": 0.038,
+     "elem": "plate A2",
+     "sigma": 1.71
+    },
+    "head A": {
+     "index": 0.007,
+     "elem": "head body A",
+     "sigma": 0.19
+    },
+    "rail B": {
+     "index": 0.006,
+     "elem": "rail B 55-64",
+     "sigma": 0.25
+    },
+    "pad joint B": {
+     "index": 0.005,
+     "elem": "pad joint B 40",
+     "sigma": 0.23
+    },
+    "carriage B": {
+     "index": 0.018,
+     "elem": "plate B1",
+     "sigma": 0.83
+    },
+    "head B": {
+     "index": 0.007,
+     "elem": "head body B",
+     "sigma": 0.18
+    },
+    "V-wheel (flank Hertz)": {
+     "index": 0.283,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "625ZZ (axial / C0 670 N)": {
+     "index": 0.057,
+     "elem": "worst wheel",
+     "sigma": null
+    },
+    "pinion 16T (Lewis, in-layer)": {
+     "index": 0.083,
+     "elem": "pinion B",
+     "sigma": 3.7
+    },
+    "rail pad insert (pull-out 1000 N E)": {
+     "index": 0.02,
+     "elem": "worst pad",
+     "sigma": null
+    }
+   },
+   "pack": {
+    "dx_mm": 0.779,
+    "du_mm": 0.032,
+    "dy_mm": 0.021,
+    "tilt_deg": 0.246
+   },
+   "hub_turn_deg": 0.075,
+   "worst": {
+    "piece": "V-wheel (flank Hertz)",
+    "index": 0.283,
+    "elem": "worst wheel"
+   }
+  }
+ ],
+ "overseer": {
+  "cartridge": {
+   "x": 26.0,
+   "h": 57.0,
+   "l": 153.0,
+   "l_boss": 3.0,
+   "tab": 76.5,
+   "xt60_z": 145.8,
+   "xt60_y": 55.0,
+   "cg": [
+    0.0,
+    35.0,
+    76.5
+   ],
+   "mass": 720.0,
+   "tag": "E"
+  },
+  "stroke": {
+   "bay_z0": 86.1,
+   "drone_z0": 89.6,
+   "insert_z0": 95.6,
+   "note": "bottom-referenced like the Scout (one catch interface): the same bay / drone strokes",
+   "ok": true
+  },
+  "park": {
+   "top_r": 104.4,
+   "corner_r": 107.6,
+   "limit_r": 97.5,
+   "z0_needed": 21.6,
+   "z0_min_reachable": 31.0,
+   "short_mm": 9.4,
+   "ok": false,
+   "note": "carried at park its top corner crosses the seated packs' faces (R 100): the arm cannot turn with it"
+  },
+  "axial": {
+   "Y_C": 175.0,
+   "cart_y": [
+    98.5,
+    254.5
+   ],
+   "hw_top_v6": 85.5,
+   "clear_v6": 13.0,
+   "hw_top_v5": 105.5,
+   "clear_v5": -7.0,
+   "module_y": [
+    94.0,
+    255.0
+   ],
+   "fits_module": true
+  },
+  "sector": {
+   "width": 52.0,
+   "chord_30deg_at_R": 51.8,
+   "ok": false,
+   "note": "needs two sectors (60 deg) or a narrower cartridge"
+  },
+  "detent": {
+   "pack_torque_Nm": 0.582,
+   "scout_torque_Nm": 0.157,
+   "disturbance_scout_Nm": 0.422,
+   "disturbance_overseer_Nm": 0.847,
+   "holding_2_springs_Nm": 0.78,
+   "margin": 0.92
+  },
+  "mass_ratio_vs_scout": 3.54
+ }
+}

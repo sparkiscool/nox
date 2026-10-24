@@ -37,7 +37,7 @@ MOTORS6 = motors()
 
 # detent v5 placement: the mechanism worker's search result if it is on main, else the box-arm.md v5 candidate (DEFAULT)
 DET_CAND = dict(th=-45.0, s=-1, a=15.0, b=39.0, phi_d=45.0, psi=90.0, Q=(16.0, -38.0))
-DET6 = dict(getattr(V, "DETENT", None) or getattr(DT, "CHOSEN_V5", None) or DET_CAND)
+DET6 = dict(DT.CHOSEN_V6)                     # roller -135 (arm v2), tower (21.2, -30.3) on the v6 stack with ring v2
 
 def detent6():
     c = DET6

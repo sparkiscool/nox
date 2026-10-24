@@ -81,6 +81,29 @@ def ring(th):
     return r
 
 
+# ---------------- ring v2 (24 Oct, swap arm system worker): ring v1 failed solid_check (blobs on 1.8..3.0 necks between the notches, the
+# Ø6 x 2.2 counterbores and the r 21 lower step). v2 has no lower step (the roller's washer + thin nut are gone: the 683ZZ sits on a 3.0
+# carbon rod stub epoxied in arm v2's Ø3.2 roller hole, nothing below the roller), through holes for M3 x 20 ISO 7380 button heads
+# (Ø5.7 x 1.65, E) on Ø6.1 x 1.0 spot faces: head top Y 70.55, 1.05 under the arm. Same notches (ring v1's, CHOSEN_V5), same magnet.
+ROLLER_AXLE = "carbon"            # "nut" (v1: M3 x 8 + washer + thin nut under the roller) or "carbon" (v2: 3.0 rod, 6.8 long, epoxied)
+SPOT = dict(r=3.05, depth=1.0)    # button head spot face (C)
+
+
+def ring_v2(th):
+    """detent ring v2 (PETG, fixed), W coords: one annulus r RING_R_IN..RING_R_OUT, Y RING_Y, notched rim from RIM_Y0."""
+    r = cylY(0, 0, RING_Y[0], RING_Y[1], RING_R_OUT, 180) - cylY(0, 0, RING_Y[0] - 1, RING_Y[1] + 1, RING_R_IN, 96)
+    for a in notch_angles(th):
+        r -= _notch_prism(a, RIM_Y0 - 0.5, RING_Y[1] + 1)
+    for a in L.SUN_BOLT_ANG:
+        x, z = L.part_angle_pos(L.SUN_BC_R, a)
+        r -= cylY(x, z, RING_Y[0] - 1, RING_Y[1] + 1, 1.7) + cylY(x, z, RING_Y[1] - SPOT["depth"], RING_Y[1] + 1, SPOT["r"])
+    t = math.radians(HALL_TH + MAGNET_PHI - 90.0)
+    ym = (RIM_Y0 + RING_Y[1]) / 2
+    mag = mf.Manifold.cylinder(2.3, HALL["magnet"][0] / 2 + 0.05, HALL["magnet"][0] / 2 + 0.05, 24).rotate([0, 90, 0]) \
+        .translate([RING_R_OUT - 2.2, 0, 0]).rotate([0, -math.degrees(t), 0]).translate([0, ym, 0])
+    return r - mag
+
+
 def _notch_prism(a_deg, y0, y1):
     t = math.radians(a_deg); u = np.array([math.cos(t), math.sin(t)]); n = np.array([-u[1], u[0]])
     k = math.tan(math.radians(NOTCH_HALF)); far = RING_R_OUT + 5.0
@@ -183,6 +206,9 @@ def design(th, s, a, b, phi_d, psi=0.0):
 
 CHOSEN = dict(th=-105, s=1, a=15.0, b=39.0, phi_d=-105 + 270, psi=90.0, Q=(17.0, -29.4))   # search() result (C), see box-arm.md
 CHOSEN_V5 = dict(th=-135, s=1, a=15.0, b=39.0, phi_d=-90.0, psi=315.0, Q=(18.5, -28.4))   # arm v5 (24 Oct, arm-mech): search(v5=True) on obstacles_v5(); ring v1 unchanged (th = -105 - 30), lever lengths as v1 (15 / 39), hook along the tangent (psi 315); tower gap 1.0, arm parts 1.14 (C); holding margin 1.85 with two springs vs the v5 unbalance (E)
+CHOSEN_V6 = dict(CHOSEN_V5, Q=(21.2, -30.3))   # arm v6 (24 Oct, swap arm system worker): CHOSEN_V5's levers and roller (arm v2), ring v2;
+                                                # tower re-placed (r 37 at -55 deg, the shortest webs with every gap >= 1.0 on the v6 stack: ring v2
+                                                # has no lower step, so v5's tower web sat 0.4 off it)
 SPRING_LS = 38.0               # working length seated (hook centres): 3.4 N; on the land 1.5 x ratio longer, kept <= 42
 
 
@@ -197,7 +223,8 @@ def arm_solids(D, Q=None):
     spacer = cylY(C[0], C[1], ROLLER_Y[1], y0 + 0.01, SPACER_R, 32)
     hook = cylY(H[0], H[1], y1 - 0.01, y1 + 12.0, 1.5)
     roller = cylY(C[0], C[1], ROLLER_Y[0], ROLLER_Y[1], ROLLER_R, 48)
-    nut = cylY(C[0], C[1], ROLLER_Y[0] - WASHER_T - NUT_T, ROLLER_Y[0], NUT_R, 6)
+    nut = cylY(C[0], C[1], ROLLER_Y[0] - WASHER_T - NUT_T, ROLLER_Y[0], NUT_R, 6) if ROLLER_AXLE == "nut" else \
+        cylY(C[0], C[1], ROLLER_Y[0] + 0.01, ARM_Y[1], 1.5, 24)                      # v2: the 3.0 carbon axle (inside the roller and the arm)
     springs = [hull([[x, yy, z] for p in (H, Aa) for (x, z) in circ(p, SPRING_OD / 2, 12) for yy in (ys - 2.5, ys + 2.5)])
                for ys in SPRING_Y]
     anchor = cylY(Aa[0], Aa[1], SPRING_Y[0] - 3.6, SPRING_Y[1] + 3.0, 1.5)
@@ -240,7 +267,7 @@ def evaluate(D, fixed, turn):
 
 _RC = {}
 def _ring_cache(th):
-    if th not in _RC: _RC[th] = ring(th)
+    if th not in _RC: _RC[th] = ring(th) if ROLLER_AXLE == "nut" else ring_v2(th)
     return _RC[th]
 
 

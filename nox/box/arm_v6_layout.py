@@ -10,7 +10,7 @@ import arm_layout as L
 import arm_v5_layout as V
 
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
-_KEYS = ("RAIL_Y", "RAIL_R", "RAIL_STOP", "RIDGE_Y", "RAIL_CHAN", "RAIL_BOLTS", "RAIL_INSERTS", "WHEEL_Y", "NUT_Y", "TAIL_Y", "SPACER_Y",
+_KEYS = ("Z0S", "RACK_TEETH_Y", "PIN_TEETH_Y", "PIN_BOSS_Y", "WEB_U", "RAIL_Y", "RAIL_R", "RAIL_STOP", "RIDGE_Y", "RAIL_CHAN", "RAIL_BOLTS", "RAIL_INSERTS", "WHEEL_Y", "NUT_Y", "TAIL_Y", "SPACER_Y",
          "PLATE_Y", "ECC", "AXLE_KEEP", "ECC_KEEP", "WEB_Y", "POSTS_A", "POSTS_B", "POST_Y", "ALLOWED")
 V5 = {k: copy.deepcopy(getattr(V, k)) for k in _KEYS}
 STACK = "v5"
@@ -19,6 +19,17 @@ STACK = "v5"
 PLATE_TOP = L.Y_PLATE1                 # 54: hub motor plate top = rail foot face
 P80_CLR = 1.5                          # rail inner end off the 80T flange (r 27.5) and the loop (r 27.0) at Y 54..64
 NUT_H = 5.0                            # DIN 985 M5 nyloc (E): 5.0 (v5 drew 4)
+PIN_V2 = dict(teeth_y=(62.0, 72.5), boss_y=(56.5, 60.5), flat_y0=59.0)   # pinion v2 (C): 10.5 face (Lewis 0.44 at 60 N, v1 8 face 0.57, swap_system),
+                                       # boss under it; the NEMA D-flat is the shaft's last 15 (dimensions M: Y 59..74), so the bore is round below Y 59.5
+RACK_V2_Y = (61.5, 73.0)               # rack teeth (heads v6): 0.5 past the pinion face each side; web Y 61.5..78
+WEB_U_V2 = (-50.0, 30.0)               # rack tail u -50 (was -47): the XT60 lag at the drone insert (swap_system: 3 mm at 60 N with ties) stays inside the
+                                       # rack: pinion u at z0 99 = -44 >= -50 + 6
+Z0_INSERT_MAX = 97.6                   # the commanded drone insert may run 2 past 95.6 for the arm's lag under the 60 N (swap_system; DEFAULT):
+                                       # wheel rim r 143.3 at X 22, 2.2 inside the stand's r 145.5 arm lane
+# carbon tie under each rail (swap_system alternatives: cartridge pitch 2.61 -> 1.85 deg at Y_C 175): 2 x 3.0 carbon rods at X +-8 in the
+# rail's frame from a socket in the hub's lower rim into the rail's bottom face near its outer end (mouth Y 54 at r 120, 36.9 deg up the
+# rail); rod ends 10 deep in Ø3.3 bores, epoxied (CLAUDE.md). X +-5: 2.35 wall to the rail's sides, 6.7 between the bores (C)
+TIE = dict(x=5.0, hub=(22.5, 78.0), rail=(60.0, 128.0), depth=10.0, bore_d=3.3, rod_d=3.0, wall=3.0)   # (Y, r) of the rod ends (C); rod 62.5
 RAIL_BOLT_R = (40.0, 78.0)             # one M5 per pad, A and B the same (DEFAULT): inner r 40 (insert hole Ø6.4 inside the cavity wall
                                        # r 36..43, solid below); outer r 78 (pad to r 88 = the plate's edge). Span 38 (v5 posts 41 / 37.25)
 
@@ -37,7 +48,11 @@ def v6_values(dy=-20.0):
     v["TAIL_Y"] = (v["PLATE_Y"][1] + 2.5 - 25.0, w0 - NUT_H)                                # the eccentric's tail (the lowest), Y 55.5..58
     e = dict(V5["ECC"]); e["flange_y"] = (v["PLATE_Y"][1], v["PLATE_Y"][1] + 2.5); v["ECC"] = e
     v["AXLE_KEEP"] = dict(r=5.0, y=(v["PLATE_Y"][1], v["PLATE_Y"][1] + 8.0)); v["ECC_KEEP"] = dict(r=13.0, y=(v["PLATE_Y"][1], v["PLATE_Y"][1] + 3.0))
-    v["WEB_Y"] = (V5["WEB_Y"][0], v["PLATE_Y"][1])                                          # rack teeth stay at Y 64..73; web to the plate top
+    v["RACK_TEETH_Y"] = RACK_V2_Y if dy < -9.0 else V5["RACK_TEETH_Y"]
+    v["PIN_TEETH_Y"] = PIN_V2["teeth_y"] if dy < -9.0 else V5["PIN_TEETH_Y"]; v["PIN_BOSS_Y"] = PIN_V2["boss_y"] if dy < -9.0 else V5["PIN_BOSS_Y"]
+    v["WEB_U"] = WEB_U_V2 if dy < -9.0 else V5["WEB_U"]
+    v["Z0S"] = tuple(V5["Z0S"]) + ((Z0_INSERT_MAX,) if dy < -9.0 else ())
+    v["WEB_Y"] = (v["RACK_TEETH_Y"][0], v["PLATE_Y"][1])                                    # rack web from its teeth to the plate top
     b = copy.deepcopy(V5["RAIL_BOLTS"])
     on_plate = V5["RAIL_Y"][0] + dy <= PLATE_TOP + 1e-6
     v["POST_Y"] = (V5["POST_Y"][0], V5["POST_Y"][1] + dy)                                  # posts shrink with the rails (gone on the plate)
@@ -54,6 +69,13 @@ def v6_values(dy=-20.0):
             al.add((f"rail{h}:foot{r:g}", f"post{h}"))
     v["ALLOWED"] = al
     return v
+
+
+def tie_rod(h="A", side=1):
+    """(p0, p1) rod ends in the arm frame (hub end, rail end) for head h, side +-1 (rail X)"""
+    x = side * TIE["x"]; (yh, rh), (yr, rr) = TIE["hub"], TIE["rail"]
+    f = (lambda X, Y, R: (X, Y, R)) if h == "A" else (lambda X, Y, R: (-R, Y, -X))
+    return f(x, yh, rh), f(x, yr, rr)
 
 
 def use(stack="v6", dy=-20.0):

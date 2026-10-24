@@ -55,7 +55,8 @@ F_XT60, F_PRELOAD, F_LEADIN = 45.0, 12.0, 3.0      # dimensions I XT60 mate: ins
 F_PULL = 50.0                             # pull-out 50 (E): 45 XT60 + 5 latch wedge
 F_STALL = 74.0                            # head motor stall at 2 A on the 16T (E)
 T_AXLE_STALL = 0.59 * 4.0                 # N.m at the arm: 17HS19 0.59 N.m holding (E) x 4:1
-F_DROP = 200.0                            # a 204 g pack dropped 50 onto the head, stopped in ~0.5 (E), DEFAULT misuse
+DROP_H = 50.0                             # a cartridge falls 50 back onto head A's seat at the drone (E, DEFAULT misuse): F = sqrt(2 m g h k_seat)
+F_ECC_PRE = 30.0                          # eccentric wheel preload across the rail (E, arm_v5_cad)
 G_HANDLE = (3.0, 2.0)                     # box handling: 3 g vertical + 2 g sideways on every arm mass (E, DEFAULT; set down hard, carried)
 F_HAND = 50.0                             # a hand on a rail tip, any direction (misuse, as hub v5's per-post pushes)
 TARGET = dict(pack_x=0.5, tilt_deg=0.5)   # pack shift at the XT60 across the insert axis and tilt under the 60 N insert (DEFAULT: half the
@@ -176,7 +177,9 @@ def stress(e, fl):
 
 
 # ------------------------------------------------------------------ the assembled arm
-OPTS = dict(rail_sec=SEC["rail"], edge_r=None, cart={})      # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60 place)
+OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie="TIE")    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
+                                                              # place, a carbon tie under each rail); rail_sec None = rail_section() of the stack in use
+TIE = dict(r_rail=S6.TIE["rail"][1], y_rail=S6.TIE["rail"][0], y_hub=S6.TIE["hub"][0], r_hub=S6.TIE["hub"][1], n=2, x=S6.TIE["x"])   # arm_v6_layout.TIE
 YC_RAIL = SEC["rail"]["yc"]               # rail section centroid Y
 Y_WHEEL = 0.5 * (V.WHEEL_Y[0] + V.WHEEL_Y[1])
 Y_PLATE = 0.5 * (V.PLATE_Y[0] + V.PLATE_Y[1])
@@ -197,7 +200,11 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
     """the frame at the stroke states (zA, zB), carried cartridges on the heads in `carry`. axle: 'belt' (driver on) or 'detent'
     (driver off: the insert strokes, box-arm Problem 17). Returns (Frame, info)."""
     o = dict(OPTS); o.update(opts or {})
+    if o["tie"] == "TIE": o["tie"] = TIE
     F = Frame(); c = dict(CART[cart]); c.update(o.get("cart", {}))
+    rsec = o["rail_sec"] or rail_section(); YC_RAIL = rsec["yc"]
+    Y_WHEEL = 0.5 * (V.WHEEL_Y[0] + V.WHEEL_Y[1]); Y_PLATE = 0.5 * (V.PLATE_Y[0] + V.PLATE_Y[1]); Y_RACK = 0.5 * (V.RACK_TEETH_Y[0] + V.RACK_TEETH_Y[1])
+    posts = bool(V.POSTS_A)
     F.node("ground", (0, 0, 0)); F.fixed.add("ground")
     # stub on the post face, bearings at their centres, hub axis
     for y in (16.0, 32.0, 40.0):
@@ -229,22 +236,24 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
         kv = np.abs(t_ax) * kb
         F.spring("axle loop" if axle == "belt" else "detent (driver off)", "ax20T", "ax20T g", (kv[0], 0, kv[2], 0, 0, 0), piece="loop")
     # detent tower on the hub (pivot / anchor loads)
-    Q = DT.CHOSEN_V5["Q"]; F.node("tower", (Q[0], 70.0, Q[1])); F.beam("tower", "H52", "tower", SEC["hub_arm"], piece="hub")
+    Q = DT.CHOSEN_V6["Q"]; F.node("tower", (Q[0], 70.0, Q[1])); F.beam("tower", "H52", "tower", SEC["hub_arm"], piece="hub")
     F.mass["H32"] = MASS["hub"] + MASS["ring"] * 0 + MASS["det_arm"]
     info = dict(zA=zA, zB=zB, Y_C=Y_C, cart=cart, carry=carry, axle=axle, pads={}, wheels={}, rack={}, head_root={}, xt60={}, pack_seat={})
     for h, z0 in (("A", zA), ("B", zB)):
         # rail pads on the hub plate (Y 52) and the rail centroid line
         rb = V.RAIL_BOLTS["r_" + h]
-        rs = sorted(set([V.RAIL_R[0] + 2.0, *rb, V.RAIL_R[1]] + [z0 + u for _, u in V.WHEELS] + [V.PIN_Z] + ([o["edge_r"]] if o["edge_r"] else [])))
+        rs = sorted(set([V.RAIL_R[0] + 2.0, *rb, V.RAIL_R[1]] + [z0 + u for _, u in V.WHEELS] + [V.PIN_Z] + ([o["edge_r"]] if o["edge_r"] else [])
+                        + ([o["tie"]["r_rail"]] if o["tie"] else [])))
         for r in rs:
             F.node(f"rail{h} {r:.1f}", rail_pt(h, 0, YC_RAIL, r))
         for a, b in zip(rs[:-1], rs[1:]):
-            F.beam(f"rail {h} {a:.0f}-{b:.0f}", f"rail{h} {a:.1f}", f"rail{h} {b:.1f}", o["rail_sec"], piece=f"rail {h}", allow=S_IN,
+            F.beam(f"rail {h} {a:.0f}-{b:.0f}", f"rail{h} {a:.1f}", f"rail{h} {b:.1f}", rsec, piece=f"rail {h}", allow=S_IN,
                    up=(0, 1, 0))
         for r in rb:
             F.node(f"pad{h} {r:g}", rail_pt(h, 0, 52.0, r))
             F.beam(f"hub arm to pad {h} {r:g}", "H52", f"pad{h} {r:g}", SEC["hub_arm"], piece="hub")
-            F.beam(f"pad joint {h} {r:g}", f"pad{h} {r:g}", f"rail{h} {r:.1f}", SEC["pad"], piece=f"pad joint {h}")
+            F.beam(f"pad joint {h} {r:g}", f"pad{h} {r:g}", f"rail{h} {r:.1f}", rect(32.0, 12.0) if posts else SEC["pad"], piece=f"pad joint {h}",
+                   up=(1.0, 0, 0) if h == "A" else (0, 0, 1.0))                  # v5: the 32 x 12 post (C) + foot; v6: the foot on its pad
             info["pads"][f"{h} r{r:g}"] = f"pad joint {h} {r:g}"
         F.beam(f"hub plate pads {h}", f"pad{h} {rb[0]:g}", f"pad{h} {rb[1]:g}", SEC["hub_arm"], piece="hub")
         if o["edge_r"]:                                                       # the rail bears on the plate's outer pad edge (contact in Y only)
@@ -254,6 +263,14 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
             F.spring(f"pad edge contact {h}", f"edge{h}", f"edge{h} r", (0, 5.0e3, 0, 0, 0, 0), piece="pad joint")
             info.setdefault("edges", {})[h] = f"pad edge contact {h}"
         F.mass[f"rail{h} {rb[1]:.1f}"] = MASS["rail"]
+        if o["tie"]:                                                          # carbon tie: rail bottom near the tip -> hub lower rim
+            t = o["tie"]; rn = min(rs, key=lambda q: abs(q - t["r_rail"]))
+            F.node(f"tie rail {h}", rail_pt(h, 0, t.get("y_rail", V.RAIL_Y[0]), rn)); F.beam(f"rail tie lug {h}", f"rail{h} {rn:.1f}", f"tie rail {h}", SEC["rigid"], piece=f"rail {h}")
+            F.node(f"tie hub {h}", rail_pt(h, 0, t["y_hub"], t["r_hub"]))
+            F.beam(f"hub to tie {h}", "H16", f"tie hub {h}", SEC["hub_arm"], piece="hub"); F.beam(f"hub to tie 2 {h}", f"pad{h} {rb[1]:g}", f"tie hub {h}", SEC["hub_arm"], piece="hub")
+            ts = dict(tube(1.5, 0.0)); ts.update(A=ts["A"] * t["n"], Iy=ts["Iy"] * t["n"], Iz=ts["Iz"] * t["n"], J=ts["J"] * t["n"])
+            F.beam(f"carbon tie {h}", f"tie hub {h}", f"tie rail {h}", ts, E=120000.0, G_=5000.0, piece="carbon tie", allow=1000.0)
+            info.setdefault("ties", {})[h] = f"carbon tie {h}"
         # carriage: wheels on the ridges, axles to the plate, the plate star, the rack web, the head body, the cartridge
         cx = head_pt(h, 9.0, Y_PLATE, 18.0, z0); F.node(f"carriage {h}", cx); F.mass[f"carriage {h}"] = MASS["carriage"]
         for k, (x, u) in enumerate(V.WHEELS):
@@ -318,8 +335,8 @@ def head_dir(h, v):
 def cases(Y_C=L.Y_C, cart="scout"):
     """[(name, class, (zA, zB), carry, axle, phi, loads builder, note)]: every case acts where it acts on the real machine (C positions, E forces)."""
     z = dict(park=L.Z0_A_HOME, wait=L.Z0_B_WAIT, bay=L.Z0_BAY + 1.5, drone=L.Z0_BAY + 5.0, insert=L.Z0_BAY + 5.0 + V.DRONE_PUSH)
-    def swap(F_main, F_seat, sign, lead=True):
-        def f(Fr, info, h="A"):
+    def swap(F_main, F_seat, sign, lead=True, h="A"):
+        def f(Fr, info):
             ld = {}
             add(ld, info["xt60"][h], sign * F_main * head_dir(h, (0, 0, 1)))
             add(ld, f"pack top {h}", sign * F_seat * head_dir(h, (0, 0, 1)))
@@ -335,12 +352,16 @@ def cases(Y_C=L.Y_C, cart="scout"):
          "head B's pick (here on A's geometry) at z0 89.6: 45 N XT60 + 5 N latch wedge outward"),
         ("pull at a bay 50 N", "swap", (z["bay"], z["park"]), ("A",), "belt", -90.0, swap(F_XT60, F_PULL - F_XT60, 1.0, lead=False),
          "head A picks the charged pack from the -90 bay"),
+        ("B insert at a bay 60 N", "swap", (z["park"], z["bay"]), ("A", "B"), "detent", -180.0, swap(F_XT60, F_PRELOAD, -1.0, h="B"),
+         "head B returns the dead pack into the -90 bay (phi -180), A parked carrying"),
+        ("B pull at the drone 50 N", "swap", (z["park"], z["drone"]), ("A", "B"), "belt", 0.0, swap(F_XT60, F_PULL - F_XT60, 1.0, lead=False, h="B"),
+         "head B picks the dead pack at the drone (phi 0), A parked carrying the charged one"),
         ("head stall into a jammed pack 74 N", "misuse", (z["insert"], z["park"]), ("A", "B"), "detent", 90.0, swap(F_STALL, 0.0, -1.0),
          "the 16T at 2 A stall drives the cartridge's XT60 into a jam at the drone insert"),
         ("axle stall, head in a bay", "misuse", (z["bay"], z["park"]), ("A",), "none", -90.0, None,
          "the axle motor stalls (0.59 N.m x 4 = 2.36 N.m) with head A held in the -90 bay: the bay holds the cartridge tangentially"),
-        ("dropped pack 200 N", "misuse", (z["insert"], z["park"]), ("A",), "belt", 90.0, None,
-         "a cartridge falls back onto head A's seat at the drone (204 g from 50, ~0.5 stop, E)"),
+        ("dropped pack", "misuse", (z["insert"], z["park"]), ("A",), "belt", 90.0, None,
+         "a cartridge falls 50 back onto head A's seat at the drone: F = sqrt(2 m g h k) with the assembled seat stiffness (E)"),
         ("box handling 3 g down + 2 g side", "handling", (z["park"], z["park"]), ("A", "B"), "belt", 0.0, None,
          "the box set down hard / carried, both heads parked and carrying, arm at phi 0 (A horizontal)"),
         ("hand on rail A tip 50 N", "misuse", (z["park"], z["park"]), (), "belt", 90.0, None, "50 N in -X (tangential), worst of +-X / +-Y"),
@@ -369,7 +390,10 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True):
             m_need = math.copysign(1e3 * T_AXLE_STALL, m_pt if abs(m_pt) > 1e-9 else 1.0)
             add(ld, "ax20T", np.r_[fb, 0, m_need - m_pt, 0])
         if nm.startswith("dropped"):
-            add(ld, "cseat A", F_DROP * head_dir("A", (0, 0, -1)))
+            u1, _, _, _ = Fr.solve({"cseat A": np.r_[head_dir("A", (0, 0, -1)), 0, 0, 0]})
+            k_seat = 1.0 / max(float(np.dot(u1[Fr.idx["cseat A"]][:3], head_dir("A", (0, 0, -1)))), 1e-6)     # N/mm along the drop
+            F_drop = math.sqrt(2 * CART["scout"]["mass"] * 1e-3 * 9.81 * DROP_H * 1e-3 * k_seat * 1e3)
+            add(ld, "cseat A", F_drop * head_dir("A", (0, 0, -1)))
         if nm.startswith("box handling"):
             ld = gravity_loads(Fr, phi, gx=G_HANDLE[1], gz=-G_HANDLE[0])
         if nm.startswith("hand on rail"):
@@ -383,11 +407,40 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True):
             fs = abs(ft) * math.tan(math.radians(20.0)); sep[h] = (ft, fs)
             add(ld, f"rack {h}", -fs * head_dir(h, (1, 0, 0))); add(ld, f"pinion {h}", fs * head_dir(h, (1, 0, 0)))
         u, ef, sf, reac = Fr.solve(ld)
-        res.append(dict(case=nm, cls=cls, note=note, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep)))
+        extra = {}
+        if nm.startswith("dropped"): extra = dict(F_drop_N=round(F_drop, 1), k_seat_N_mm=round(k_seat, 1))
+        extra["hub"] = hub_interfaces(Fr, u, ef, sf)
+        extra["hub_mass"] = {nm: dict(p=Fr.P[Fr.idx[nm]].round(2).tolist(), g=m) for nm, m in Fr.mass.items() if nm in ("H32",)}
+        res.append(dict(case=nm, cls=cls, note=note, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep)))
         if verbose:
             r = res[-1]
             print(f"{nm:38s} pack dX {r['pack']['dx_mm']:6.3f} tilt {r['pack']['tilt_deg']:6.3f} | worst {r['worst']['piece']} {r['worst']['index']:.2f} ({r['worst']['elem']})")
     return res
+
+
+HUB_IFACE = ("seat A", "seat B", "seat axle", "tower")    # + pads and tie sockets per head (build adds them)
+
+
+def hub_interfaces(Fr, u, ef, sf):
+    """loads (F N, M N.mm, arm frame, about the node) that the neighbours put on the hub at each interface node; the 6010 springs are
+    the supports. The hub = every element with piece 'hub' and the nodes they touch."""
+    hub_nodes = set()
+    for e in Fr.beams:
+        if e["piece"] == "hub": hub_nodes |= {e["a"], e["b"]}
+    out = {}
+    for e, fl in zip(Fr.beams, ef):
+        if e["piece"] == "hub": continue
+        L_, T = Fr._T(e); fg = T.T @ fl
+        for end, nm in ((0, e["a"]), (6, e["b"])):
+            if nm in hub_nodes:
+                out.setdefault(nm, np.zeros(6)); out[nm] -= fg[end:end + 6]       # the element pushes the node with -(its end force)
+    for s_, f in zip(Fr.springs, sf):
+        if s_["piece"] == "6010": continue
+        for nm, sg in ((s_["a"], 1.0), (s_["b"], -1.0)):
+            if nm in hub_nodes:
+                out.setdefault(nm, np.zeros(6)); out[nm] += sg * f
+    return {nm: dict(p=Fr.P[Fr.idx[nm]].round(2).tolist(), F=v[:3].round(2).tolist(), M=v[3:].round(1).tolist()) for nm, v in out.items()
+            if np.abs(v).max() > 1e-6}
 
 
 def summarise(Fr, info, u, ef, sf, reac, sep):
@@ -446,7 +499,7 @@ def summarise(Fr, info, u, ef, sf, reac, sep):
     worst_w = 0.0; worst_brg = 0.0
     for k in info["wheels"]:
         j = out["joints"][f"wheel {k}"]; Fy = abs(j["axial_N"]); Fx = abs(j["across_N"])
-        Fn = (Fy + Fx) * math.sqrt(0.5) + max(Fy, Fx) * math.sqrt(0.5)       # both on one 45 deg flank (worst)
+        Fn = (Fx + F_ECC_PRE + Fy) / math.sqrt(2.0)                            # 90 deg V: the worse flank takes (Fx + Fy) / sqrt 2, + the eccentric preload
         band = (V.WHEEL_OD / 2 - (22.0 - V.RIDGE_FLAT_X)) * math.sqrt(2); Rw = (V.WHEEL_OD / 2 + 10.5) / 2 * math.sqrt(2)
         Es = E_PETG / (2 * (1 - 0.4 ** 2)); a = math.sqrt(4 * max(Fn, 1e-6) * Rw / (math.pi * band * Es)); pm = 2 * Fn / (math.pi * a * band)
         worst_w = max(worst_w, pm / p0); worst_brg = max(worst_brg, Fy / 670.0)
@@ -462,6 +515,32 @@ def summarise(Fr, info, u, ef, sf, reac, sep):
     w = max(out["pieces"].items(), key=lambda kv: kv[1]["index"])
     out["worst"] = dict(piece=w[0], index=w[1]["index"], elem=w[1]["elem"])
     return out
+
+
+def pitch(stack="v6", Y_C=L.Y_C, opts=None, F=(F_XT60, F_PRELOAD)):
+    """cartridge pitch (deg) and XT60 lag along the push (mm) under the insert at the drone, head A at the drone insert (E)."""
+    S6.use(stack)
+    try:
+        Fr, info = build(max(V.Z0S), L.Z0_A_HOME, Y_C, "scout", ("A",), "belt", 90.0, opts)
+        ld = {}; add(ld, "xt60 A", (0, 0, -F[0])); add(ld, "pack top A", (0, 0, -F[1]))
+        u, ef, sf, reac = Fr.solve(ld); i = Fr.idx["xt60 A"]
+        return round(math.degrees(float(np.linalg.norm(u[i][3:]))), 2), round(float(-u[i][2]), 2)
+    finally:
+        S6.use("v6")
+
+
+def alternatives():
+    """the concept check's alternatives with numbers (E loads, C geometry): the stack (posts / plate), the carbon tie, the XT60 place,
+    at the demo Y_C 175 and at the lowest Y_C each stack's carriage hardware allows."""
+    rows = []
+    yc = {r["dy"]: r["yc_min"] for r in S6.stack_search()}
+    for stack, ycm in (("v5", yc[0.0]), ("v6", yc[-20.0])):
+        for nm, o in (("as drawn", dict(tie=None)), ("+ carbon ties", dict(tie=TIE)), ("+ ties + XT60 on the tab line", dict(tie=TIE, cart=dict(xt60_z=37.5)))):
+            if stack == "v5" and nm != "as drawn": continue
+            for Y in (L.Y_C, ycm):
+                t, d = pitch(stack, Y, o); ex = arm_extent(stack, Y)
+                rows.append(dict(stack=stack, variant=nm, Y_C=Y, pitch_deg=t, xt60_lag_mm=d, length_y=ex["length_y"], bbox_L=ex["bbox_L"], largest_mm=ex["largest_mm"]))
+    return rows
 
 
 # ================================================================== stack and bounding volume
@@ -586,6 +665,9 @@ def main(what="all"):
         res["stack"] = stack_report()
         for k in ("demo", "compact_modules"):
             for st, r in res["stack"][k].items(): print(k, st, r)
+    if what in ("alt", "all"):
+        res["alternatives"] = alternatives()
+        for r in res["alternatives"]: print(r)
     if what in ("frame", "all"):
         res["frame"] = run_frame()
         res["frame_overseer"] = run_frame(cart="overseer", verbose=False)
@@ -596,7 +678,7 @@ def main(what="all"):
     res["constants"] = dict(mass=MASS, mass_tag=MASS_TAG, targets=TARGET, index_targets=INDEX_TARGET, K=dict(brg_r=K_BRG_R, brg_a=K_BRG_A, wheel=K_WHEEL,
                             tooth_t=K_TOOTH_T, tooth_n=K_TOOTH_N, belt=K_BELT, detent_rot=K_DETENT_ROT),
                             sections={k: v["kind"] for k, v in SEC.items()}, forces=dict(xt60=F_XT60, preload=F_PRELOAD, leadin=F_LEADIN, pull=F_PULL,
-                            stall=F_STALL, axle_stall_Nm=T_AXLE_STALL, drop=F_DROP, handle_g=G_HANDLE, hand=F_HAND))
+                            stall=F_STALL, axle_stall_Nm=T_AXLE_STALL, drop_h=DROP_H, handle_g=G_HANDLE, hand=F_HAND))
     json.dump(res, open(path, "w"), indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
     print("->", path)
     return res
