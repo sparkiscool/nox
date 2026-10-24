@@ -198,3 +198,128 @@ t 15.40 phi    6.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') over
 t 15.43 phi    4.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
 t 15.47 phi    2.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
 t 15.50 phi    0.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.53 phi   -2.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.57 phi   -4.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.60 phi   -6.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.63 phi   -8.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.67 phi  -10.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.70 phi  -12.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.73 phi  -14.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.77 phi  -16.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.80 phi  -18.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.83 phi  -20.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.87 phi  -22.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.90 phi  -24.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.93 phi  -26.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 15.97 phi  -28.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.00 phi  -30.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.03 phi  -32.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.07 phi  -34.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.10 phi  -36.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.13 phi  -38.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.17 phi  -40.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.20 phi  -42.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.23 phi  -44.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.27 phi  -46.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.30 phi  -48.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.33 phi  -50.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.37 phi  -52.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.40 phi  -54.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.43 phi  -56.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.47 phi  -58.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.50 phi  -60.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.53 phi  -62.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.57 phi  -64.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.60 phi  -66.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.63 phi  -68.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.67 phi  -70.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.70 phi  -72.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.73 phi  -74.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.77 phi  -76.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.80 phi  -78.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.83 phi  -80.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.87 phi  -82.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.90 phi  -84.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.93 phi  -86.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 16.97 phi  -88.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 17.00 phi  -90.0 zA  32.0 zB  32.0 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 17.90 phi  -90.0 zA  32.0 zB  85.6 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 18.00 phi  -90.0 zA  32.0 zB  87.6 clearance   0.30 ('hub', 'detent_arm') overlaps []
+t 18.50 phi  -90.0 zA  32.0 zB  97.6 clearance   0.00 ('pack dead|4.0', 'rec0') overlaps []
+t 19.00 phi  -90.0 zA  32.0 zB  97.6 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 20.00 phi  -90.0 zA  32.0 zB  53.9 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 20.50 phi  -90.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.00 phi  -90.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.02 phi  -92.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.04 phi  -94.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.07 phi  -96.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.09 phi  -98.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.11 phi -100.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.13 phi -102.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.16 phi -104.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.18 phi -106.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.20 phi -108.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.22 phi -110.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.24 phi -112.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.27 phi -114.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.29 phi -116.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.31 phi -118.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.33 phi -120.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.36 phi -122.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.38 phi -124.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.40 phi -126.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.42 phi -128.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.44 phi -130.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.47 phi -132.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.49 phi -134.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.51 phi -136.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.53 phi -138.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.56 phi -140.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.58 phi -142.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.60 phi -144.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.62 phi -146.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.64 phi -148.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.67 phi -150.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.69 phi -152.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.71 phi -154.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.73 phi -156.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.76 phi -158.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.78 phi -160.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.80 phi -162.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.82 phi -164.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.84 phi -166.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.87 phi -168.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.89 phi -170.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.91 phi -172.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.93 phi -174.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.96 phi -176.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.98 phi -178.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 22.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+sweep 297 states in 137 s
+states with overlaps: 0 min clearance 0.0
+closest pairs over the cycle:
+    0.000  pack charged / rec-180  (t 0.0)
+    0.000  pack dead / rec0  (t 18.5)
+    0.300  detent_arm / hub  (t 22.0)
+    0.300  fingA_A / servo_A  (t 0.0)
+    0.300  fingB_A / servo_A  (t 0.0)
+    0.300  fingA_B / servo_B  (t 0.0)
+    0.300  fingB_B / servo_B  (t 0.0)
+    0.500  fingA_A / fingB_A  (t 21.933)
+    0.500  fingA_B / fingB_B  (t 21.978)
+    0.504  detent_arm / detent_ring  (t 22.0)
+    0.750  axlesA / hub  (t 21.911)
+    0.750  axlesB / hub  (t 21.911)
+    0.991  hub / p80  (t 4.633)
+    0.993  hub / post  (t 4.522)
+    1.000  belt_axle / headA  (t 21.911)
+    1.000  p80 / railA  (t 0.0)
+    1.000  headA / railA  (t 21.933)
+    1.000  p80 / railB  (t 0.0)
+    1.000  headB / railB  (t 21.933)
+    1.000  headA / wheelsA  (t 0.0)
+    1.000  headB / wheelsB  (t 0.0)
+    1.621  hub / stub  (t 21.978)
+    1.977  detent_arm / p80  (t 4.567)
+    2.000  belt_axle / hub  (t 21.911)
+    2.000  belt_axle / railA  (t 21.933)
