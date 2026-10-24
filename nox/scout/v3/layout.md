@@ -1,4 +1,8 @@
-# Scout v3 layout v1 (24 Oct 2026): the whole drone before the topology runs
+# Scout v3 layout (24 Oct 2026): the whole drone before the topology runs
+
+**v2 = the system pass (Spark 24 Oct: "this design seems very flimsy ... structurally secure while light as possible ... the cage should be touching first").** `layout_v2.py`, `runs/scout_layout/v2/` (`checks.txt` has every case), numbers in `dimensions.md` "System Scout v3". The v1 stick cage below is superseded: the v2 cage comes from a ground structure of 3.0 rods trimmed by greedy mass removal on a frame model over 28 system cases, with PR 44's bottom (receiver interface, cartridge v4, pogo / KW11, Radxa, flow) as DEFAULT. Pass 1: 116 rods, 67 printed nodes, ~268 g, worst index 0.98, deflections ≤ 1.96 mm (F / E). Open: the receiver must sit ≥ 7.0 inside the funnel planes for the cage to touch first at the tail-bottom (control session); fewer joints; CG (−1.8, −1.8).
+
+## v1 (superseded by v2 where they differ)
 
 Spark 24 Oct: "design it to the latest updates and then show me the design as a whole before the topology runs". This is v3 part 1 (bottom layout) laid out with the rest of the drone around it, so every box and funnel keep-out is checked on one model. Rough shapes: the receiver is the design space for its topology run, the cage is a stick model for part 2. Nothing here is saved or printed.
 

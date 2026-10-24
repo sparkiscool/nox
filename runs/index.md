@@ -1,6 +1,6 @@
 # Runs
 
-_73 runs · rebuilt 2026-10-24 02:40_
+_74 runs · rebuilt 2026-10-24 03:12_
 
 ## Latest per part
 
@@ -21,12 +21,13 @@ _73 runs · rebuilt 2026-10-24 02:40_
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
-| scout_layout | v1 | DONE | 517.0 (E) | ·  | · | [runs/scout_layout/v1](runs/scout_layout/v1/summary.md) |
+| scout_layout | v2 | DONE | 744 (E) | 0.98 in top corner 135 | · | [runs/scout_layout/v2](runs/scout_layout/v2/summary.md) |
 
 ## All runs, newest first
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-24T22:00 | scout_layout | [v2](runs/scout_layout/v2/summary.md) | DONE | 744 (E) | 0.98 | · | · | · GB | · min | · |
 | 2026-10-24T20:00 | scout_layout | [v1](runs/scout_layout/v1/summary.md) | DONE | 517.0 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 02:14 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |

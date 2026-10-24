@@ -1,0 +1,713 @@
+"""Scout v3 layout v2 = the Scout v3 system pass (24 Oct 2026).
+
+Spark 24 Oct: "this design seems very flimsy ... as structurally secure while light as possible ... a full cage, in all
+contact points the cage should be touching first" (CLAUDE.md "Cage first, strong and light"), and the rule "System first,
+then cut" (docs/generative.md The rule, 0). v1 had a stick cage drawn by hand; v2 lays the cage out by optimisation on the
+assembled drone and checks it there:
+
+1. Assembled drone: frame, props, FC, camera, PR 44's receiver interface and cartridge v4 (the control session's latch
+   standard from now on; its numbers are DEFAULT until "System box swap" lands), Radxa and flow from PR 44, UBEC and XR2,
+   the box's keep-outs (head, carriage, cartridge path), the funnel planes at +-5 deg yaw / +-2 deg tilt, the hook latch
+   plungers, the belly post with its landing cones.
+2. Cage ground structure: candidate 3.0 carbon rods between candidate nodes (rings, crown, glove down the faces, keel
+   under the pack, joints into the core), every rod that breaks a keep-out dropped. Mass-minimum layout over the system
+   load cases (hits, top, landing, swap pull, latch hold, handling) by linear programming (plastic truss design: each rod
+   carries at most its joint / buckling capacity). Rings are mandatory (prop guard).
+3. Frame model (rigid printed nodes, Euler beams) of the chosen cage on the core: every case, every rod's index, the
+   deflection at the load, the joint reactions into the core (the requirements for the receiver, plate hubs and nodes).
+4. Contact-first: support distance over 2562 directions, cage vs everything else; the cage must lead by >= 3 mm.
+5. Pogo pad height is searched with all of the above (the post's pins sweep 45 deg cones the cage must stay out of).
+
+python3 nox/scout/v3/layout_v2.py [--novideo]       (~10 min)
+Drone frame = seat frame (PR 44): x nose, y left, z up, plate underside 18.5. Numbers: nox/dimensions.md "System Scout v3".
+"""
+import io, json, math, os, sys, itertools, time
+import numpy as np, trimesh
+from scipy.sparse import lil_matrix, csr_matrix, vstack as svstack, hstack as shstack, identity
+
+HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
+sys.path.insert(0, os.path.join(ROOT, "nox"))
+from motion import Scene
+from topo.part import man
+
+OUT = os.path.join(ROOT, "runs", "scout_layout", "v2")
+VIDEO = "--novideo" not in sys.argv
+S2 = math.sqrt(2.0)
+LOG = io.StringIO()
+
+
+def say(*a):
+    print(*a, flush=True); print(*a, file=LOG)
+
+
+# ================================================================ numbers (tags in dimensions.md "System Scout v3")
+PLATE_BOT, PLATE_TOP, PLATE_TAIL = 18.5, 22.0, -50.0
+MOTOR, PROP_R, PROP_Z, SWEEP = 54.1, 44.45, 41.2, 4.0
+BELL_R, BELL_H = 12.4, 15.0
+FACE_K, FACE_Z0, FACE_Z1 = 84.8, -0.8, 75.1
+RING_LO = (112 - FACE_K) + 4.0 * S2          # 32.86: lower-ring rod centre 4.0 off the face at the outline (seat = drone)
+RING_HI = 49.2
+TOP_Z = 66.0                                 # crown nodes (dome over the props; centre strips carry posts to the plate)
+BOT_Z = -47.5                                # keel nodes: 3.0 under the cartridge bottom (-44.5)
+ROD_R, ROD_A, ROD_I = 1.5, 7.069, 3.976      # 3.0 solid carbon (C)
+E_ROD, G_ROD = 100000.0, 38000.0             # MPa (E, pultruded; D21 bend test replaces)
+SIG_ROD = 750.0                              # MPa, bending + axial allowable (1500 E / 2)
+CAP_JOINT = 150.0                            # N, epoxied socket pull-out design value (E; socket coupon pull, item 23)
+NODE_G, SOCKET_G, ROD_GPM = 1.5, 0.57, 0.011  # printed node body, per socket (cage v2 doc, M), rod g/mm (G)
+CG = np.array([0.0, 0.0, 4.2])
+CONTACT_MARGIN = 3.0                         # cage ahead of everything else (CLAUDE.md, DEFAULT)
+KEEP = 1.0                                   # every keep-out, plus the rod radius
+
+
+# ================================================================ helpers
+def box(x0, x1, y0, y1, z0, z1):
+    b = trimesh.creation.box([x1 - x0, y1 - y0, z1 - z0]); b.apply_translation([(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2]); return b
+
+
+def cyl(r, z0, z1, x=0.0, y=0.0, n=40):
+    c = trimesh.creation.cylinder(r, z1 - z0, sections=n); c.apply_translation([x, y, (z0 + z1) / 2]); return c
+
+
+def rod(p0, p1, r=ROD_R, n=10):
+    return trimesh.creation.cylinder(r, segment=[p0, p1], sections=n)
+
+
+def rotz(deg):
+    return trimesh.transformations.rotation_matrix(math.radians(deg), [0, 0, 1])
+
+
+def union(ms):
+    out = man(ms[0])
+    for m in ms[1:]:
+        out = out + man(m)
+    mm = out.to_mesh(); return trimesh.Trimesh(mm.vert_properties[:, :3], mm.tri_verts)
+
+
+def pts(m, n=3000, seed=1):
+    return np.vstack([m.vertices, trimesh.sample.sample_surface(m, n, seed=seed)[0]])
+
+
+def in_box(p, lo, hi, pad=0.0):
+    return np.all((p >= np.array(lo) - pad) & (p <= np.array(hi) + pad), axis=1)
+
+
+def box_dist(p, lo, hi):
+    d = np.maximum(np.maximum(np.array(lo) - p, p - np.array(hi)), 0); return np.sqrt((d ** 2).sum(1))
+
+
+# ================================================================ assembled drone (fixed)
+def plate():
+    body = union([box(PLATE_TAIL, 51, -30, 30, PLATE_BOT, PLATE_TOP), box(-12, 20, -47, 47, PLATE_BOT, PLATE_TOP)])
+    arms = []
+    for sx, sy in itertools.product((1, -1), (1, -1)):
+        a = box(0, MOTOR * S2, -7, 7, PLATE_BOT, PLATE_TOP); a.apply_transform(rotz(math.degrees(math.atan2(sy, sx))))
+        arms += [a, cyl(11, PLATE_BOT, PLATE_TOP, sx * MOTOR, sy * MOTOR)]
+    b = man(union([body] + arms)) - man(box(PLATE_TAIL - 1, PLATE_TAIL + 10, -9, 9, PLATE_BOT - 1, PLATE_TOP + 1))
+    b = b.to_mesh(); return trimesh.Trimesh(b.vert_properties[:, :3], b.tri_verts)
+
+
+PLATE = plate()
+MOTORS_XY = [(sx * MOTOR, sy * MOTOR) for sx in (1, -1) for sy in (1, -1)]
+BELLS = [cyl(BELL_R, PLATE_TOP, PLATE_TOP + BELL_H, x, y) for x, y in MOTORS_XY]
+FC = box(-18, 18, -18, 18, 9.5, 17.5); FC.apply_transform(rotz(45)); FC.apply_translation([1.9, 0, 0])
+
+
+def c2d(m):
+    """PR 44 cartridge coords -> drone: d = (37.5 - z_c, -x_c, y_c - 44.5)"""
+    T = np.array([[0, 0, -1, 37.5], [-1, 0, 0, 0], [0, 1, 0, -44.5], [0, 0, 0, 1.0]])
+    m = m.copy(); m.apply_transform(T); return m
+
+
+PR44 = os.path.join(OUT, "pr44")
+IFACE = c2d(trimesh.load(os.path.join(PR44, "interface_v4_cart_coords.stl")))     # receiver interface (control session's)
+CART = c2d(trimesh.load(os.path.join(PR44, "cartridge_v4_cart_coords.stl")))      # cartridge v4, 93 long
+RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # PR 44: standing, -y side, parts outward (E)
+RADXA_STANDOFF = box(-33, 32, -30.3, -21.3, -35, -5)
+FLOW = box(-45, -23, 23, 39, -33.5, -25.5); FLOW_LENS = np.array([-29.0, 29.0, -33.5])
+UBEC = box(-22.5, 22.5, -10, 10, PLATE_TOP + 0.5, PLATE_TOP + 8.5)               # plate top centre (DEFAULT)
+XR2 = box(-48, -36, 10, 26, PLATE_TOP + 0.5, PLATE_TOP + 6.5)
+XT_M = box(-48 - 4.5, -48 + 4.5, -14, 14, 3.5, 19.3)                              # drone XT60 + lid region (E)
+CAM_Z = (RING_LO + RING_HI) / 2
+CAM = union([box(94, 96, -19, 19, CAM_Z - 19, CAM_Z + 19), cyl(7, 96, 108).apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0], [96, 0, 96])) if False else box(96, 108, -7, 7, CAM_Z - 7, CAM_Z + 7)])
+LENS = np.array([108.0, 0, CAM_Z])
+
+# box keep-outs at the drone station (PR 44 K1..K3, C / E)
+KO = {"cartridge path": ([-60, -23, -200], [41, 23, -42]), "head |y|<=19 to r105": ([-60, -19, -200], [77, -19 + 38, -39.5]),
+      "head r<=98.5": ([-60, -50, -200], [77, 50, -46]), "carriage plate": ([77, -28, -200], [81, 28, -8.9]),
+      "carriage wings": ([77, -46.5, -200], [81, 46.5, -24.9]), "rail + bar": ([81, -20, -200], [101, 20, -10.5])}
+
+
+def prop_dist(p):
+    d = np.full(len(p), np.inf)
+    for x, y in MOTORS_XY:
+        rho = np.hypot(p[:, 0] - x, p[:, 1] - y)
+        d = np.minimum(d, np.hypot(np.maximum(rho - PROP_R, 0), np.maximum(np.abs(p[:, 2] - PROP_Z) - SWEEP, 0)))
+    return d
+
+
+def face_margin(p, yaw=5.0, tilt=2.0):
+    """distance inside the funnel planes extended (max(|x|,|y|) = 84.8 + z), worst over +-yaw / +-tilt about the CG"""
+    worst = np.full(len(p), np.inf)
+    for a in (-yaw, 0.0, yaw):
+        for tx in (-tilt, 0.0, tilt):
+            for ty in (-tilt, 0.0, tilt):
+                R = trimesh.transformations.euler_matrix(math.radians(tx), math.radians(ty), math.radians(a), "sxyz")[:3, :3]
+                q = (p - CG) @ R.T + CG
+                worst = np.minimum(worst, (FACE_K + q[:, 2] - np.maximum(np.abs(q[:, 0]), np.abs(q[:, 1]))) / S2)
+    return worst
+
+
+def seated_face(p):
+    return (FACE_K + p[:, 2] - np.maximum(np.abs(p[:, 0]), np.abs(p[:, 1]))) / S2
+
+
+def plunger_clear(p):
+    best = np.full(len(p), np.inf)
+    for sy in (1, -1):
+        y = sy * p[:, 1]; z = p[:, 2]
+        s_up = ((y - 84.0) + (z - FACE_Z0)) / S2; off = (z + FACE_K - y) / S2
+        for sx in (1, -1):
+            dx = np.maximum(np.abs(p[:, 0] - sx * 100.0) - 6.0, 0)
+            ds = np.maximum(np.maximum(50.1 - s_up, s_up - 58.1), 0); do = np.maximum(np.maximum(-off, off - 12.0), 0)
+            best = np.minimum(best, np.sqrt(dx ** 2 + ds ** 2 + do ** 2))
+    return best
+
+
+# ================================================================ pogo pads + belly post (PR 44 model, C / E)
+PIN_FREE, POST_DROP = 8.0, 2.0
+PAD_DX = 12.0
+
+
+def pads(yp, zp):
+    """PR 44 model (C): carrier bottom = KW11 target plane zp; pads 10 x 6 at (+-12, yp) in 1.0 recesses, face zp - 0.6;
+    carrier section (21.3, zp) -> (yp + 3.5, zp) -> (yp + 7.5, zp + 4) -> (21.3, top), x +-20.5; post body under the pads"""
+    top = zp + 4.0 + (yp + 7.5 - 21.3)
+    sec = [(21.3, zp), (yp + 3.5, zp), (yp + 7.5, zp + 4.0), (21.3, top)]
+    carrier = trimesh.Trimesh(np.array([[x, y, z] for (y, z) in sec for x in (-20.5, 20.5)])).convex_hull
+    pad = [box(sx * PAD_DX - 5, sx * PAD_DX + 5, yp - 3, yp + 3, zp + 1.0 - 1.6, zp + 1.0) for sx in (-1, 1)]
+    zf = zp - 0.6
+    body = box(-21.0, 21.0, yp - 5.0, yp + 5.0, zf - POST_DROP - 10.0, zf - POST_DROP)
+    tips = np.array([(sx * PAD_DX + dx, yp, zf + PIN_FREE) for sx in (-1, 1) for dx in (-2.0, 2.0)] + [(0, yp, zf + 3.0)])
+    return pad, carrier, body, tips
+
+
+def cone_gap(Q, P, rmax=40.0):
+    """min (lateral - depth)/sqrt2 of drone points P below post points Q (< 0 = the post hits P in a landing slide)"""
+    worst = np.inf
+    for q in Q:
+        lat = np.hypot(P[:, 0] - q[0], P[:, 1] - q[1]); dep = q[2] - P[:, 2]
+        m = (dep > 0) & (lat <= rmax)
+        if m.any():
+            worst = min(worst, float(((lat[m] - dep[m]) / S2).min()))
+    return worst
+
+
+# ================================================================ cage ground structure
+def ring_nodes(z):
+    n = [(112, -100), (112, 100), (100, 112), (-100, 112), (-112, 100), (-112, -100), (-100, -112), (100, -112)]
+    loop = []
+    for i in range(8):
+        a, b = np.array(n[i], float), np.array(n[(i + 1) % 8], float)
+        loop.append(a)
+        if np.linalg.norm(b - a) > 100:                                       # the flats: points at -50, 0, 50
+            for t in (0.25, 0.5, 0.75):
+                loop.append(a + t * (b - a))
+    return [np.array([p[0], p[1], z]) for p in loop]
+
+
+def candidate_nodes():
+    N, kind = [], []
+    L = ring_nodes(RING_LO); U = ring_nodes(RING_HI)
+    N += L; kind += ["L"] * len(L); N += U; kind += ["U"] * len(U)
+    for x, y in [(0, 0), (45, 0), (-45, 0), (0, 45), (0, -45), (36, 36), (36, -36), (-36, 36), (-36, -36)]:
+        N.append(np.array([x, y, TOP_Z], float)); kind.append("T")
+    for x, y in [(76, 0), (-76, 0), (0, 76), (0, -76), (74, 40), (74, -40), (-74, 40), (-74, -40), (40, 74), (-40, 74), (40, -74), (-40, -74),
+                 (66, 66), (66, -66), (-66, 66), (-66, -66)]:
+        N.append(np.array([x, y, 0.0])); kind.append("G")                   # glove knees along the faces at z 0
+    for x, y, z in [(52, 44, -24), (52, -44, -24), (-52, 44, -24), (-52, -44, -24), (20, -46, -24), (-20, -46, -24), (20, 46, -24),
+                    (-20, 46, -24), (44, 29, -32), (44, -29, -32), (-44, 29, -32), (-44, -29, -32), (52, 29, -18), (52, -29, -18),
+                    (-52, 29, -18), (-52, -29, -18)]:
+        N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
+    for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5), (0, 28.5), (14, -28.5), (-14, -28.5)]:
+        N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
+    core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
+            (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
+            (34, 0, 24.0), (-30, 0, 24.0), (0, 26, 24.0), (0, -26, 24.0),
+            (38, 27.6, -32.0), (38, -27.6, -32.0), (-56, 27.6, -30.0), (-56, -27.6, -30.0), (38, 27.6, 4.0), (38, -27.6, 4.0),
+            (-56, 27.6, 4.0), (-56, -27.6, 4.0)]
+    for c in core:
+        N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
+    return np.array(N), kind
+
+
+# ================================================================ feasibility of a rod
+BODIES = {"plate": PLATE, "FC": FC, "receiver": IFACE, "cartridge": CART, "Radxa": union([RADXA, RADXA_STANDOFF]), "flow": FLOW,
+          "UBEC": UBEC, "XR2": XR2, "XT60": XT_M, "camera": CAM, **{f"bell{i}": b for i, b in enumerate(BELLS)}}
+
+
+def rod_samples(p0, p1):
+    n = max(6, int(np.linalg.norm(p1 - p0) / 2.0))
+    t = np.linspace(0, 1, n)[:, None]; P = p0 * (1 - t) + p1 * t
+    inner = P[(t[:, 0] > 0.04) & (t[:, 0] < 0.96)]                           # rod ends sit in nodes
+    return inner if len(inner) else P
+
+
+def rod_pad_ok(inner, padb, tips, post_pts):
+    for nm, m in padb.items():
+        lo, hi = m.bounds
+        if (box_dist(inner, lo, hi) < KEEP + ROD_R).any(): return nm
+    if cone_gap(tips, inner) < ROD_R / S2 + 0.3 or cone_gap(post_pts, inner) < ROD_R / S2 + 0.3: return "post cones"
+    return None
+
+
+def rod_ok(p0, p1, kinds, B, is_ring, core_ends=()):
+    inner = rod_samples(p0, p1)
+    body_pts = inner
+    for c in core_ends:                                                       # the hub at a core joint is its own body
+        body_pts = body_pts[np.linalg.norm(body_pts - c, axis=1) > 7.0]
+    if (prop_dist(inner) - ROD_R < 12.0 - 0.05).any(): return "props"           # the rings sit at 12.0 (C)
+    for nm, (lo, hi) in KO.items():
+        if nm == "head r<=98.5":                                               # the heads sweep r <= 98.5 about the axle
+            inx = (inner[:, 0] > lo[0]) & (inner[:, 0] < hi[0])
+            if (inx & (np.hypot(inner[:, 1], inner[:, 2] + 144.5) < 98.5 + KEEP + ROD_R)).any(): return nm
+            continue
+        if (box_dist(inner, lo, hi) < KEEP + ROD_R).any(): return nm
+    for nm, m in B.items():
+        lo, hi = m.bounds
+        near = box_dist(body_pts, lo, hi) < KEEP + ROD_R + 0.01
+        if near.any():
+            q = body_pts[near]
+            if nm in ("receiver", "cartridge", "plate"):
+                d = np.abs(trimesh.proximity.signed_distance(m, q))
+                inside = m.contains(q)
+                if (inside | (d < KEEP + ROD_R)).any(): return nm
+            else:
+                return nm
+    above = inner[:, 2] > FACE_Z0
+    if above.any() and not is_ring and (seated_face(inner[above]) < KEEP + ROD_R).any(): return "funnel seated"
+    low = inner[:, 2] < 20.0
+    if low.any() and (face_margin(inner[low]) < KEEP + ROD_R).any(): return "funnel planes +-5/+-2"
+    if (plunger_clear(inner) < KEEP + ROD_R).any(): return "plungers"
+    d = inner - FLOW_LENS; dz = -d[:, 2]
+    if ((dz > 0) & (np.degrees(np.arctan2(np.hypot(d[:, 0], d[:, 1]), np.maximum(dz, 1e-6))) < 23.0 + 3.0)).any(): return "flow view"
+    d = inner - LENS; fx = d[:, 0] > 0.5
+    az = np.degrees(np.arctan2(np.abs(d[:, 1]), np.maximum(d[:, 0], 1e-6))); el = np.degrees(np.arctan2(np.abs(d[:, 2]), np.maximum(d[:, 0], 1e-6)))
+    if (fx & (az < 45) & (el < 37)).any(): return "camera view"
+    return None
+
+
+# ================================================================ load cases (E): name, {node index: force}, class
+def load_cases(N, kind, live=None):
+    cases = []
+    idx = {k: [i for i, kk in enumerate(kind) if kk == k and (live is None or i in live)] for k in set(kind)}
+    def outer(ks, d):
+        cand = [i for k in ks for i in idx[k]]; return max(cand, key=lambda i: N[i] @ d)
+    for a in range(0, 360, 45):
+        d = np.array([math.cos(math.radians(a)), math.sin(math.radians(a)), 0])
+        for ring in ("L", "U"):
+            cases.append((f"hit {ring} {a}", {outer([ring], d): -80.0 * d}, "crash"))
+    if idx["T"]:
+        c0 = min(idx["T"], key=lambda i: np.hypot(*N[i][:2]))
+        cases.append(("top hit 80 N at the crown centre", {c0: np.array([0, 0, -80.0])}, "crash"))
+        cases.append(("upside-down landing 6 g on the crown", {i: np.array([0, 0, -33.0 / len(idx["T"])]) for i in idx["T"]}, "flight"))
+    for a in (45, 135):
+        d = np.array([math.cos(math.radians(a)), math.sin(math.radians(a)), 1.0]) / S2
+        cases.append((f"top corner {a}", {outer(["U", "T"], d): -80.0 * d}, "crash"))
+    B = idx["B"]
+    cases.append(("landing 6 g", {i: np.array([0, 0, 33.0 / len(B)]) for i in B}, "flight"))
+    for i in sorted(B, key=lambda i: (-N[i][0], -N[i][1]))[:1] + sorted(B, key=lambda i: (N[i][0], -N[i][1]))[:1]:
+        cases.append((f"landing on one keel node {tuple(N[i][:2].astype(int))}", {i: np.array([13.5, 13.5 * np.sign(N[i][1] or 1), 27.0])}, "flight"))
+    # wheels: corners of the lower ring
+    W = {tuple(np.round(N[i][:2]).astype(int)): i for i in [j for j, k in enumerate(kind) if k == "L"]}
+    nrm = lambda x, y: (np.array([-np.sign(x), 0, 1.0]) if abs(x) == 112 else np.array([0, -np.sign(y), 1.0])) / S2
+    for pair in (((112, 100), (-112, -100)), ((100, 112), (-100, -112))):
+        cases.append((f"swap pull 50 N on wheels {pair}", {W[p]: 25 * S2 * nrm(*p) for p in pair}, "functional"))
+    yw = [(100, 112), (-100, 112), (100, -112), (-100, -112)]
+    down = lambda x, y: np.array([0, -np.sign(y), -1.0]) / S2
+    cases.append(("latch hold 4 x 30 N", {W[p]: 30.0 * down(*p) for p in yw}, "functional"))
+    cases.append(("latch misuse 100 N on one wheel", {W[yw[0]]: 100.0 * down(*yw[0])}, "misuse"))
+    si = [outer(["L"], np.array([0, 1.0, 0])), outer(["L"], np.array([0, -1.0, 0]))]
+    cases.append(("hand squeeze 20 N", {si[0]: np.array([0, -20.0, 0]), si[1]: np.array([0, 20.0, 0])}, "handling"))
+    return cases
+
+
+def capacity(L):
+    """rod capacity (N): tension = the epoxied socket, compression = the socket or 0.7 x Euler buckling (E)"""
+    pcr = 0.7 * math.pi ** 2 * E_ROD * ROD_I / L ** 2
+    return CAP_JOINT, min(CAP_JOINT, pcr)
+
+
+# ================================================================ frame FE (Euler beams, rigid printed nodes, core joints fixed)
+DEFL_LIM = {"crash": 6.0, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 1.5}   # mm at the load (E, DEFAULT)
+_ELC = {}
+
+
+def _elem(N, a, b):
+    key = (a, b)
+    if key in _ELC: return _ELC[key]
+    d = N[b] - N[a]; L = np.linalg.norm(d); ex = d / L
+    ref = np.array([0, 0, 1.0]) if abs(ex[2]) < 0.9 else np.array([1.0, 0, 0])
+    ey = np.cross(ref, ex); ey /= np.linalg.norm(ey); ez = np.cross(ex, ey)
+    T = np.kron(np.eye(4), np.vstack([ex, ey, ez]))
+    E, G, A, I, J = E_ROD, G_ROD, ROD_A, ROD_I, 2 * ROD_I
+    k = np.zeros((12, 12))
+    k[0, 0] = k[6, 6] = E * A / L; k[0, 6] = k[6, 0] = -E * A / L
+    k[3, 3] = k[9, 9] = G * J / L; k[3, 9] = k[9, 3] = -G * J / L
+    c1, c2, c3, c4 = 12 * E * I / L ** 3, 6 * E * I / L ** 2, 4 * E * I / L, 2 * E * I / L
+    for (v, th, sg) in ((1, 5, 1), (2, 4, -1)):
+        k[v, v] = k[v + 6, v + 6] = c1; k[v, v + 6] = k[v + 6, v] = -c1
+        k[v, th] = k[th, v] = sg * c2; k[v, th + 6] = k[th + 6, v] = sg * c2
+        k[v + 6, th] = k[th, v + 6] = -sg * c2; k[v + 6, th + 6] = k[th + 6, v + 6] = -sg * c2
+        k[th, th] = k[th + 6, th + 6] = c3; k[th, th + 6] = k[th + 6, th] = c4
+    _ELC[key] = (L, T, k, T.T @ k @ T); return _ELC[key]
+
+
+def frame_eval(N, kind, members, cases):
+    """per case: index of every rod (max of bending + axial stress / 750, tension / joint, compression / buckling), the
+    deflection at the load, the reactions at the core joints. None if the frame is singular (a loaded node cut off)."""
+    from scipy.sparse import coo_matrix
+    from scipy.sparse.linalg import splu
+    nn = len(N); rows, cols, vals = [], [], []
+    for a, b in members:
+        L, T, k, kg = _elem(N, a, b)
+        dofs = np.r_[6 * a:6 * a + 6, 6 * b:6 * b + 6]
+        rows.append(np.repeat(dofs, 12)); cols.append(np.tile(dofs, 12)); vals.append(kg.ravel())
+    K = coo_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=(6 * nn, 6 * nn)).tocsc()
+    used = sorted(set(i for e in members for i in e))
+    act = np.array([d for i in used if kind[i] != "C" for d in range(6 * i, 6 * i + 6)])
+    for _, F, _ in cases:
+        if any(i not in used for i in F): return None
+    try:
+        lu = splu(K[act][:, act].tocsc())
+    except RuntimeError:
+        return None
+    out = []
+    for name, F, cls in cases:
+        f = np.zeros(6 * nn)
+        for i, v in F.items(): f[6 * i:6 * i + 3] += v
+        u = np.zeros(6 * nn); u[act] = lu.solve(f[act])
+        if not np.isfinite(u).all() or np.abs(u).max() > 1e3: return None
+        idx = np.zeros(len(members)); reac = {}
+        for e, (a, b) in enumerate(members):
+            L, T, k, kg = _elem(N, a, b)
+            fl = k @ (T @ np.concatenate([u[6 * a:6 * a + 6], u[6 * b:6 * b + 6]]))
+            Nax = fl[6]; M = max(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
+            Tc, Cc = capacity(L)
+            idx[e] = max((abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, Nax / Tc if Nax > 0 else -Nax / Cc)
+            for node, sl in ((a, slice(0, 6)), (b, slice(6, 12))):
+                if kind[node] == "C":
+                    reac[node] = reac.get(node, np.zeros(6)) + (T.T @ fl)[sl]
+        defl = max(np.linalg.norm(u[6 * i:6 * i + 3]) for i in F)
+        out.append(dict(case=name, cls=cls, idx=idx, worst=float(idx.max()), el=int(idx.argmax()), defl=float(defl), reac=reac))
+    return out
+
+
+def feasible(fe):
+    return fe is not None and all(r["worst"] <= 1.0 and r["defl"] <= DEFL_LIM[r["cls"]] for r in fe)
+
+
+def cage_mass(N, kind, members):
+    """rods 11 g/m + every printed node (body + a socket per rod end); a ring node a straight ring rod runs through
+    with nothing else on it is no node at all (C / E)"""
+    g = sum(ROD_GPM * np.linalg.norm(N[b] - N[a]) for a, b in members)
+    deg = {}
+    for a, b in members:
+        for i, j in ((a, b), (b, a)): deg.setdefault(i, []).append(j)
+    for i, nb in deg.items():
+        if kind[i] == "C": g += SOCKET_G * len(nb); continue                 # sockets in the core hubs
+        if len(nb) == 2 and kind[i] in "LU":
+            u = [(N[j] - N[i]) / np.linalg.norm(N[j] - N[i]) for j in nb]
+            if np.dot(u[0], u[1]) < -0.999: continue                         # straight through
+        g += NODE_G + SOCKET_G * len(nb)
+    return g
+
+
+def mirror_groups(N, members):
+    """pair every rod with its mirror in y (the drone is symmetric but for the pogo side), so removals keep the cage
+    symmetric; a rod whose mirror is not feasible stays alone"""
+    key = {tuple(np.round(N[i], 2)): i for i in range(len(N))}
+    mset = {frozenset(m): m for m in members}; done, groups = set(), []
+    for m in members:
+        if frozenset(m) in done: continue
+        mi = tuple(key.get(tuple(np.round(N[i] * [1, -1, 1], 2)), -1) for i in m)
+        g = [m]
+        if -1 not in mi and frozenset(mi) in mset and frozenset(mi) != frozenset(m): g.append(mset[frozenset(mi)])
+        for x in g: done.add(frozenset(x))
+        groups.append(tuple(g))
+    return groups
+
+
+def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
+    """greedy mass removal on the frame model, mirror pairs together: repeatedly drop the group that saves the most mass
+    per unit of use, while every case stays at index <= 1 inside its deflection limit and the contact-first margin holds"""
+    cur = list(members); fe = frame_eval(N, kind, cur, cases)
+    if not feasible(fe) or not contact_ok(cur):
+        return cur, fe, "full ground structure fails"
+    groups = [g for g in mirror_groups(N, members) if not any(m in mandatory for m in g)]
+    tried, steps = set(), 0
+    while True:
+        pos = {m: j for j, m in enumerate(cur)}
+        util = np.max([r["idx"] for r in fe], axis=0)
+        m0 = cage_mass(N, kind, cur)
+        gain = []
+        for g in groups:
+            if g in tried or any(m not in pos for m in g): continue
+            rest = [m for m in cur if m not in g]
+            gain.append(((m0 - cage_mass(N, kind, rest)) / (max(util[pos[m]] for m in g) + 0.05), g))
+        if not gain: break
+        gain.sort(key=lambda t: -t[0]); moved = False
+        for _, g in gain[:30]:
+            trial = [m for m in cur if m not in g]
+            fe2 = frame_eval(N, kind, trial, cases); steps += 1
+            if feasible(fe2) and contact_ok(trial):
+                cur, fe, moved = trial, fe2, True; tried.clear(); break
+            tried.add(g)
+        if not moved and all(g in tried for _, g in gain): break
+    return cur, fe, f"{steps} trials"
+
+
+def frame_solve(N, kind, members, cases):
+    return frame_eval(N, kind, members, cases)
+
+
+# ================================================================ contact-first
+def fib_sphere(n=2562):
+    i = np.arange(n) + 0.5; phi = np.arccos(1 - 2 * i / n); th = math.pi * (1 + 5 ** 0.5) * i
+    return np.stack([np.cos(th) * np.sin(phi), np.sin(th) * np.sin(phi), np.cos(phi)], 1)
+
+
+def prop_points():
+    out = []
+    for x, y in MOTORS_XY:
+        a = np.linspace(0, 2 * math.pi, 180, endpoint=False)
+        for z in (PROP_Z - 1.0, PROP_Z + 1.0):
+            out.append(np.stack([x + PROP_R * np.cos(a), y + PROP_R * np.sin(a), np.full_like(a, z)], 1))
+    return np.vstack(out)
+
+
+def contact_first(cage_pts, cage_r, others):
+    D = fib_sphere()
+    sc = (D @ cage_pts.T).max(1) + cage_r
+    worst = (np.inf, None, None)
+    for nm, p in others.items():
+        so = (D @ p.T).max(1)
+        k = int(np.argmin(sc - so))
+        if sc[k] - so[k] < worst[0]: worst = (float(sc[k] - so[k]), nm, D[k])
+    return worst
+
+
+# ================================================================ wheels (R 5 at the catch points) for the contact set
+def wheel_pts():
+    out = []
+    for sx, sy in itertools.product((1, -1), (1, -1)):
+        for px, py, f in ((112 * sx, 100 * sy, "x"), (100 * sx, 112 * sy, "y")):
+            c = np.array([px - (sx / S2 if f == "x" else 0), py - (sy / S2 if f == "y" else 0), RING_LO + 1 / S2])
+            a = np.linspace(0, 2 * math.pi, 36, endpoint=False)
+            if f == "x": ring = np.stack([5 * np.cos(a), np.zeros_like(a), 5 * np.sin(a)], 1)
+            else: ring = np.stack([np.zeros_like(a), 5 * np.cos(a), 5 * np.sin(a)], 1)
+            for dw in (-1.5, 1.5):
+                off = np.array([0, dw, 0]) if f == "x" else np.array([dw, 0, 0])
+                out.append(c + ring + off)
+    return np.vstack(out)
+
+
+# ================================================================ run: pad heights x (members -> LP -> frame -> contact)
+t0 = time.time()
+N, kind = candidate_nodes()
+say(f"candidate nodes: {len(N)} ({', '.join(f'{k} {kind.count(k)}' for k in 'LUTGMBC')})")
+CASES = load_cases(N, kind)
+say(f"load cases: {len(CASES)}")
+fixed_pts = {"props": prop_points(), "bells": np.vstack([pts(b, 400) for b in BELLS]), "plate": pts(PLATE, 3000), "FC": pts(FC, 500),
+             "receiver": pts(IFACE, 6000), "cartridge": pts(CART, 4000), "Radxa": pts(RADXA, 600), "flow": pts(FLOW, 400),
+             "UBEC": pts(UBEC, 400), "XR2": pts(XR2, 200), "XT60": pts(XT_M, 400), "camera": pts(CAM, 800)}
+BASE, why0 = [], {}
+nn = len(N)
+for a in range(nn):
+    for b in range(a + 1, nn):
+        if kind[a] == "C" and kind[b] == "C": continue
+        L = np.linalg.norm(N[b] - N[a])
+        if L < 8 or L > 160: continue
+        ring = (kind[a] == kind[b] and kind[a] in "LU" and L < 101 and abs(N[a][2] - N[b][2]) < 0.1)
+        r = rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"])
+        if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
+        else: why0[r] = why0.get(r, 0) + 1
+say(f"rods feasible before the pads: {len(BASE)}; dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why0.items(), key=lambda kv: -kv[1])))
+PAD_OPTIONS = [(38.5, -36.5), (39.5, -36.5), (37.5, -37.0), (38.5, -38.0), (40.0, -37.0)]   # PR 44 best and its neighbours
+if os.environ.get('PADS'): PAD_OPTIONS = [tuple(map(float, p.split(','))) for p in os.environ['PADS'].split(';')]
+runs = []
+for yp, zp in PAD_OPTIONS:
+    pp = pads(yp, zp)
+    pad, carrier, body, tips = pp
+    post_pts = pts(body, 400)
+    # the pad carrier and post themselves: funnel planes and the r >= 101 rule
+    fm = float(face_margin(pts(union(pad + [carrier]), 600)).min())
+    rmin = float(np.hypot(body.vertices[:, 1], body.vertices[:, 2] + 144.5).min())
+    drone_base = np.vstack([fixed_pts["receiver"], fixed_pts["cartridge"], fixed_pts["Radxa"], fixed_pts["flow"]])
+    cg_base = min(cone_gap(tips, drone_base), cone_gap(post_pts, drone_base))
+    if fm < 1.0 or rmin < 101.0 or cg_base < 0:
+        say(f"pads ({yp}, {zp}): out (funnel {fm:.2f}, post r {rmin:.1f}, cones vs receiver {cg_base:.2f})"); continue
+    say(f"pads ({yp}, {zp}): funnel {fm:.2f}, post r {rmin:.1f}, cones vs receiver {cg_base:.2f}")
+    padb = {"pads": union(pad + [carrier]), "post": body}
+    members, why = [], {}
+    for a_, b_, inner in BASE:
+        r = rod_pad_ok(inner, padb, tips, post_pts)
+        if r is None: members.append((a_, b_))
+        else: why[r] = why.get(r, 0) + 1
+    # keep the part of the ground structure connected to the core; cases on live nodes only
+    live = set(i for i, k in enumerate(kind) if k == "C"); grow = True
+    while grow:
+        grow = False
+        for a_, b_ in members:
+            if (a_ in live) != (b_ in live): live |= {a_, b_}; grow = True
+    members = [m for m in members if m[0] in live and m[1] in live]
+    CASES = load_cases(N, kind, live)
+    ring_members = [j for j, (a, b) in enumerate(members) if kind[a] == kind[b] and kind[a] in "LU"
+                    and abs(N[a][2] - N[b][2]) < 0.1 and np.linalg.norm(N[b] - N[a]) < 60]
+    say(f"pads ({yp}, {zp}): {len(members)} feasible rods ({len(ring_members)} ring), dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why.items(), key=lambda kv: -kv[1])))
+    others = dict(fixed_pts); others["pads"] = pts(union(pad + [carrier]), 600)
+    WP = wheel_pts(); DIRS = fib_sphere(1200)
+    so_all = np.max(np.stack([(DIRS @ p.T).max(1) for p in others.values()]), 0)
+    def cage_support(ms):
+        P_ = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 12)]) for a_, b_ in ms] + [WP])
+        return (DIRS @ P_.T).max(1) + ROD_R
+    base_margin = cage_support(members) - so_all                      # per direction, the full ground structure
+    target = np.minimum(base_margin, CONTACT_MARGIN)
+    contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all())
+    chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
+    if fe is None or not feasible(fe):
+        bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f}" for r in fe if r["worst"] > 1.0 or r["defl"] > DEFL_LIM[r["cls"]]]
+        say(f"   ESO: {note}; failing cases: {bad[:6]}"); continue
+    used = sorted(set([i for e in chosen for i in e]))
+    cage_pts = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 25)]) for a_, b_ in chosen] + [N[[i for i in used if kind[i] != "C"]]])
+    cage_all = np.vstack([cage_pts, wheel_pts()])
+    cf = contact_first(cage_all, ROD_R, others)
+    mass = cage_mass(N, kind, chosen) + 8 * 0.2                                    # + 8 wheels (M, cage v2)
+    worst = max(fe, key=lambda r: r["worst"])
+    say(f"   ESO {note}: {len(chosen)} rods, cage {mass:.1f} g (E); worst index {worst['worst']:.2f} "
+        f"({worst['case']}); max deflection at a load {max(r['defl'] for r in fe):.2f} mm; contact-first {cf[0]:.2f} mm (worst vs {cf[1]})")
+    runs.append(dict(yp=yp, zp=zp, chosen=chosen, fe=fe, cf=cf, mass=mass, members=members, pp=pp, fm=fm, rmin=rmin, why=why))
+
+ok = [r for r in runs if r["cf"][0] >= CONTACT_MARGIN and max(x["worst"] for x in r["fe"]) <= 1.0]
+best = min(ok, key=lambda r: r["mass"]) if ok else max(runs, key=lambda r: (min(r["cf"][0], CONTACT_MARGIN), -r["mass"]))
+say(f"\nchosen pads ({best['yp']}, {best['zp']}){'' if ok else '  (no option met every rule: best contact-first margin kept)'}")
+say(f"elapsed {time.time() - t0:.0f} s")
+
+# ================================================================ report the chosen system
+chosen, fe = best["chosen"], best["fe"]
+used = sorted(set([i for e in chosen for i in e]))
+say(f"cage: {len(chosen)} rods, {sum(np.linalg.norm(N[b] - N[a]) for a, b in chosen) / 1000:.2f} m, "
+    f"{len([i for i in used if kind[i] != 'C'])} printed nodes, {len([i for i in used if kind[i] == 'C'])} joints into the core; ~{best['mass']:.0f} g (E)")
+say("cases (frame model, F): worst rod index / deflection at the load")
+for r in fe:
+    a, b = chosen[r["el"]]
+    say(f"   {r['case']:44s} {r['cls']:10s} index {r['worst']:.2f} (rod {tuple(N[a].round(0).astype(int))}-{tuple(N[b].round(0).astype(int))}), "
+        f"deflection {r['defl']:.2f} mm")
+say(f"contact-first: cage ahead by {best['cf'][0]:.2f} mm at worst (vs {best['cf'][1]}, direction {np.round(best['cf'][2], 2).tolist()})")
+REAC = {}
+for r in fe:
+    for i, f in r["reac"].items():
+        F = float(np.linalg.norm(f[:3])); M = float(np.linalg.norm(f[3:]))
+        if F > REAC.get(i, (0, 0, ""))[0]: REAC[i] = (F, M, r["case"])
+say("joint reactions into the core (max over cases; the receiver and plate hubs carry these):")
+for i, (F, M, c) in sorted(REAC.items()):
+    say(f"   core joint {tuple(N[i].round(1))}: {F:.0f} N, {M:.0f} N.mm ({c})")
+NODE_REQ = {}
+for i in used:
+    if kind[i] == "C": continue
+    deg = sum(1 for e in chosen if i in e)
+    NODE_REQ[i] = deg
+say("printed nodes (sockets): " + ", ".join(f"{kind[i]}{tuple(N[i].round(0).astype(int))}:{d}" for i, d in sorted(NODE_REQ.items())))
+
+# mass and CG of the whole drone (E)
+PACK_BOX = box(-35, 35, -16, 16, -44.5 + 14.4, -44.5 + 14.4 + 33)          # pack centred on the tab line (x 0), PR 44 cavity
+items = [("pack", 165, PACK_BOX), ("cartridge v4 (PR 44, M)", 42.4, CART), ("receiver v4 (PR 44, M)", 79.9, IFACE), ("FC", 10, FC),
+         ("Radxa", 10, RADXA), ("UBEC", 15, UBEC), ("XR2", 1, XR2), ("flow", 1.5, FLOW), ("camera + mount", 16, CAM), ("plate", 28, PLATE),
+         ("wires", 20, FC), ("XT60E1-M", 8, XT_M)] + [(f"motor {i}", 19.8, b) for i, b in enumerate(BELLS)]
+tot, mom = 0.0, np.zeros(3)
+for _, g_, m in items:
+    tot += g_; mom += g_ * m.bounding_box.centroid
+cage_cent = np.mean([(N[a] + N[b]) / 2 for a, b in chosen], 0)
+tot += best["mass"]; mom += best["mass"] * cage_cent
+cg = mom / tot
+say(f"drone ~{tot:.0f} g (E), CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f})")
+
+R = dict(date="2026-10-24T22:00", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
+         worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
+         pads=dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]), cage_mass=best["mass"], contact_first=best["cf"][0],
+         contact_vs=best["cf"][1], rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
+         cases=[dict(case=r["case"], cls=r["cls"], index=r["worst"], defl=r["defl"]) for r in fe],
+         core_reactions=[dict(at=N[i].tolist(), F=F, M=M, case=c) for i, (F, M, c) in REAC.items()],
+         options=[dict(y=r["yp"], z=r["zp"], mass=r["mass"], worst=max(x["worst"] for x in r["fe"]), contact=r["cf"][0], vs=r["cf"][1]) for r in runs],
+         cg=cg.tolist())
+os.makedirs(OUT, exist_ok=True)
+json.dump(R, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
+
+# ================================================================ motion artifact
+pad, carrier, body, tips = best["pp"]
+s = Scene("Scout v3 system v2", "cage laid out by optimisation on the whole drone; the cage touches first in every direction")
+P = lambda n, m, grp, col, pr, note="": s.part(n, m, group=grp, color=col, printed=pr, note=note)
+bands = {"rods": [rod(N[a], N[b]) for a, b in chosen]}
+P("plate", PLATE, "frame", "#3a3a3a", False)
+P("motors", trimesh.util.concatenate(BELLS), "frame", "#b0b0b0", False)
+pv = []
+for i, (x, y) in enumerate(MOTORS_XY):
+    ring = man(cyl(PROP_R, PROP_Z - 0.4, PROP_Z + 0.4, x, y, 72)) - man(cyl(PROP_R - 2.0, PROP_Z - 1, PROP_Z + 1, x, y, 72))
+    ring = ring.to_mesh(); pv.append(trimesh.Trimesh(ring.vert_properties[:, :3], ring.tri_verts))
+    bl = box(-PROP_R, PROP_R, -6, 6, PROP_Z - 1, PROP_Z + 1); bl.apply_transform(rotz(30 + 45 * i)); bl.apply_translation([x, y, 0]); pv.append(bl)
+P("props (swept)", trimesh.util.concatenate(pv), "frame", "#d9a400", False)
+P("FC", FC, "electronics", "#1b5e20", False)
+P("Radxa (PR 44)", RADXA, "electronics", "#2e7d32", False)
+P("flow (PR 44)", FLOW, "electronics", "#2d5a2d", False)
+P("UBEC", UBEC, "electronics", "#444488", False)
+P("XR2", XR2, "electronics", "#6a1b9a", False)
+P("camera", CAM, "electronics", "#2d5a2d", False)
+P("receiver v4 interface (PR 44)", IFACE, "receiver", "#8899aa", True, "latch standard: control session")
+P("pogo pads + carrier", union(pad + [carrier]), "receiver", "#c9a227", True)
+P("cage rods", trimesh.util.concatenate(bands["rods"]), "cage", "#202020", False, "3.0 carbon, LP layout")
+nodes_m = [trimesh.creation.icosphere(1, 4.0).apply_translation(N[i]) for i in used if kind[i] != "C"]
+P("cage nodes", trimesh.util.concatenate(nodes_m), "cage", "#aab4c0", True, "printed PETG, topology per node next")
+whe = []
+for sx, sy in itertools.product((1, -1), (1, -1)):
+    for px, py, f in ((112 * sx, 100 * sy, "x"), (100 * sx, 112 * sy, "y")):
+        w = trimesh.creation.cylinder(5.0, 3.0, sections=32)
+        w.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [1, 0, 0] if f == "x" else [0, 1, 0]))
+        w.apply_translation([px - (sx / S2 if f == "x" else 0), py - (sy / S2 if f == "y" else 0), RING_LO + 1 / S2]); whe.append(w)
+P("catch wheels", trimesh.util.concatenate(whe), "cage", "#cc6644", True)
+P("cartridge v4 (PR 44)", CART, "pack", "#7d8a99", True)
+P("belly post (box)", body, "box", "#e07a5f", False, "PR 44 model")
+fun = []
+for ax in (0, 1):
+    for sg in (1, -1):
+        pl = []
+        for z, half in ((FACE_Z0, FACE_K + FACE_Z0), (FACE_Z1, FACE_K + FACE_Z1)):
+            for lat in (-half, half):
+                for off in (0.0, 1.6 * S2):
+                    p = [0.0, 0.0, z]; p[ax] = sg * (half + off); p[1 - ax] = lat; pl.append(p)
+        fun.append(trimesh.Trimesh(np.array(pl)).convex_hull)
+P("funnel faces", trimesh.util.concatenate(fun), "box", "#c8d6e5", False)
+drone_names = [p["name"] for p in s.parts if p["group"] not in ("box", "pack")]
+
+
+def smooth(t, a, b):
+    u = min(max((t - a) / (b - a), 0.0), 1.0); return u * u * (3 - 2 * u)
+
+
+def pose(t):
+    dz = 140 * (1 - smooth(t, 0, 3)) + 160 * smooth(t, 9, 12); dx = 30 * (1 - smooth(t, 0, 3))
+    Td = np.eye(4); Td[:3, 3] = [dx, 0, dz]
+    Tp = Td.copy(); Tp[2, 3] += -70 * (smooth(t, 4, 5.5) - smooth(t, 6.5, 8))
+    out = {n: Td for n in drone_names}; out["cartridge v4 (PR 44)"] = Tp
+    return out
+
+
+s.timeline(pose, duration_s=12, fps=30)
+s.view("iso", (330, -380, 260), (0, 0, 0)); s.view("side", (0, -560, 10), (0, 0, 0)); s.view("front", (560, 0, 10), (0, 0, 0))
+s.view("top", (0, 0, 620), (0, 0, 0)); s.view("under", (180, -220, -300), (0, 0, -20))
+s.write(os.path.join(OUT, "motion.html"))
+if VIDEO:
+    try:
+        s.video(os.path.join(OUT, "motion.mp4"))
+    except Exception as e:
+        say("video skipped:", str(e)[:200])
+open(os.path.join(OUT, "checks.txt"), "w").write(LOG.getvalue())
+print("wrote", OUT)

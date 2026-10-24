@@ -1,0 +1,63 @@
+candidate nodes: 111 (L 20, U 20, T 9, G 16, M 16, B 8, C 22)
+load cases: 28
+rods feasible before the pads: 723; dropped: props 1904, receiver 498, plate 366, cartridge path 233, funnel planes +-5/+-2 183, Radxa 74, flow 49, camera 37, FC 30, plungers 8, camera view 7, flow view 6, funnel seated 4, UBEC 2
+pads (38.5, -36.5): funnel 2.71, post r 101.1, cones vs receiver 0.56
+pads (38.5, -36.5): 640 feasible rods (40 ring), dropped: pads 77, post cones 6
+   ESO 1137 trials: 116 rods, cage 270.2 g (E); worst index 0.99 (top corner 135); max deflection at a load 2.24 mm; contact-first -16.41 mm (worst vs receiver)
+pads (39.5, -36.5): funnel 1.98, post r 101.4, cones vs receiver 1.26
+pads (39.5, -36.5): 636 feasible rods (40 ring), dropped: pads 84, post cones 3
+   ESO 1066 trials: 116 rods, cage 267.7 g (E); worst index 0.98 (top corner 135); max deflection at a load 1.96 mm; contact-first -16.41 mm (worst vs receiver)
+pads (37.5, -37.0): out (funnel 3.10, post r 100.3, cones vs receiver 0.21)
+pads (38.5, -38.0): out (funnel 1.69, post r 99.7, cones vs receiver 1.62)
+pads (40.0, -37.0): funnel 1.28, post r 101.1, cones vs receiver 1.96
+pads (40.0, -37.0): 635 feasible rods (40 ring), dropped: pads 86, post cones 2
+   ESO 1064 trials: 116 rods, cage 267.7 g (E); worst index 0.98 (top corner 135); max deflection at a load 1.96 mm; contact-first -16.41 mm (worst vs receiver)
+
+chosen pads (39.5, -36.5)  (no option met every rule: best contact-first margin kept)
+elapsed 312 s
+cage: 116 rods, 6.63 m, 67 printed nodes, 12 joints into the core; ~268 g (E)
+cases (frame model, F): worst rod index / deflection at the load
+   hit L 0                                      crash      index 0.45 (rod (np.int64(112), np.int64(-100), np.int64(33))-(np.int64(100), np.int64(-112), np.int64(33))), deflection 0.30 mm
+   hit U 0                                      crash      index 0.44 (rod (np.int64(0), np.int64(-112), np.int64(49))-(np.int64(52), np.int64(-44), np.int64(-24))), deflection 0.49 mm
+   hit L 45                                     crash      index 0.41 (rod (np.int64(100), np.int64(112), np.int64(33))-(np.int64(0), np.int64(112), np.int64(49))), deflection 0.43 mm
+   hit U 45                                     crash      index 0.60 (rod (np.int64(0), np.int64(112), np.int64(49))-(np.int64(52), np.int64(44), np.int64(-24))), deflection 0.85 mm
+   hit L 90                                     crash      index 0.54 (rod (np.int64(100), np.int64(112), np.int64(33))-(np.int64(52), np.int64(-29), np.int64(-18))), deflection 0.59 mm
+   hit U 90                                     crash      index 0.52 (rod (np.int64(0), np.int64(112), np.int64(33))-(np.int64(38), np.int64(28), np.int64(4))), deflection 0.90 mm
+   hit L 135                                    crash      index 0.44 (rod (np.int64(0), np.int64(112), np.int64(33))-(np.int64(-50), np.int64(112), np.int64(33))), deflection 0.17 mm
+   hit U 135                                    crash      index 0.47 (rod (np.int64(-112), np.int64(0), np.int64(33))-(np.int64(-56), np.int64(28), np.int64(4))), deflection 0.37 mm
+   hit L 180                                    crash      index 0.40 (rod (np.int64(0), np.int64(112), np.int64(33))-(np.int64(-50), np.int64(112), np.int64(33))), deflection 0.27 mm
+   hit U 180                                    crash      index 0.42 (rod (np.int64(-100), np.int64(112), np.int64(49))-(np.int64(-112), np.int64(100), np.int64(49))), deflection 0.36 mm
+   hit L 225                                    crash      index 0.48 (rod (np.int64(-112), np.int64(0), np.int64(33))-(np.int64(-56), np.int64(-28), np.int64(4))), deflection 0.18 mm
+   hit U 225                                    crash      index 0.56 (rod (np.int64(-112), np.int64(0), np.int64(33))-(np.int64(-56), np.int64(-28), np.int64(4))), deflection 0.40 mm
+   hit L 270                                    crash      index 0.68 (rod (np.int64(-112), np.int64(0), np.int64(33))-(np.int64(-56), np.int64(28), np.int64(4))), deflection 0.22 mm
+   hit U 270                                    crash      index 0.74 (rod (np.int64(-112), np.int64(0), np.int64(33))-(np.int64(-56), np.int64(28), np.int64(4))), deflection 0.28 mm
+   hit L 315                                    crash      index 0.43 (rod (np.int64(0), np.int64(-112), np.int64(49))-(np.int64(52), np.int64(-44), np.int64(-24))), deflection 0.33 mm
+   hit U 315                                    crash      index 0.63 (rod (np.int64(0), np.int64(-112), np.int64(49))-(np.int64(52), np.int64(-44), np.int64(-24))), deflection 0.71 mm
+   top hit 80 N at the crown centre             crash      index 0.31 (rod (np.int64(0), np.int64(0), np.int64(66))-(np.int64(0), np.int64(26), np.int64(24))), deflection 0.00 mm
+   upside-down landing 6 g on the crown         flight     index 0.33 (rod (np.int64(0), np.int64(-112), np.int64(49))-(np.int64(0), np.int64(0), np.int64(66))), deflection 1.40 mm
+   top corner 45                                crash      index 0.95 (rod (np.int64(0), np.int64(112), np.int64(33))-(np.int64(38), np.int64(28), np.int64(4))), deflection 1.19 mm
+   top corner 135                               crash      index 0.98 (rod (np.int64(0), np.int64(112), np.int64(33))-(np.int64(-100), np.int64(112), np.int64(49))), deflection 0.79 mm
+   landing 6 g                                  flight     index 0.14 (rod (np.int64(-20), np.int64(-46), np.int64(-24))-(np.int64(-28), np.int64(-28), np.int64(-48))), deflection 0.90 mm
+   landing on one keel node (np.int64(28), np.int64(28)) flight     index 0.43 (rod (np.int64(28), np.int64(28), np.int64(-48))-(np.int64(38), np.int64(28), np.int64(4))), deflection 1.96 mm
+   landing on one keel node (np.int64(-28), np.int64(-28)) flight     index 0.21 (rod (np.int64(-20), np.int64(-46), np.int64(-24))-(np.int64(-28), np.int64(-28), np.int64(-48))), deflection 0.26 mm
+   swap pull 50 N on wheels ((112, 100), (-112, -100)) functional index 0.72 (rod (np.int64(0), np.int64(112), np.int64(49))-(np.int64(52), np.int64(44), np.int64(-24))), deflection 0.89 mm
+   swap pull 50 N on wheels ((100, 112), (-100, -112)) functional index 0.71 (rod (np.int64(0), np.int64(112), np.int64(49))-(np.int64(52), np.int64(44), np.int64(-24))), deflection 0.83 mm
+   latch hold 4 x 30 N                          functional index 0.42 (rod (np.int64(-50), np.int64(112), np.int64(49))-(np.int64(-100), np.int64(112), np.int64(49))), deflection 0.21 mm
+   latch misuse 100 N on one wheel              misuse     index 0.92 (rod (np.int64(100), np.int64(112), np.int64(33))-(np.int64(52), np.int64(-29), np.int64(-18))), deflection 0.89 mm
+   hand squeeze 20 N                            handling   index 0.23 (rod (np.int64(-112), np.int64(0), np.int64(33))-(np.int64(-56), np.int64(28), np.int64(4))), deflection 0.13 mm
+contact-first: cage ahead by -16.41 mm at worst (vs receiver, direction [-0.62, 0.04, -0.79])
+joint reactions into the core (max over cases; the receiver and plate hubs carry these):
+   core joint (np.float64(3.9), np.float64(47.0), np.float64(24.0)): 90 N, 39 N.mm (latch misuse 100 N on one wheel)
+   core joint (np.float64(3.9), np.float64(-47.0), np.float64(24.0)): 78 N, 85 N.mm (swap pull 50 N on wheels ((112, 100), (-112, -100)))
+   core joint (np.float64(3.9), np.float64(-47.0), np.float64(14.0)): 54 N, 23 N.mm (hit L 90)
+   core joint (np.float64(-30.0), np.float64(0.0), np.float64(24.0)): 134 N, 24 N.mm (top corner 135)
+   core joint (np.float64(0.0), np.float64(26.0), np.float64(24.0)): 47 N, 2 N.mm (top hit 80 N at the crown centre)
+   core joint (np.float64(0.0), np.float64(-26.0), np.float64(24.0)): 47 N, 2 N.mm (top hit 80 N at the crown centre)
+   core joint (np.float64(38.0), np.float64(27.6), np.float64(-32.0)): 123 N, 39 N.mm (latch misuse 100 N on one wheel)
+   core joint (np.float64(38.0), np.float64(-27.6), np.float64(-32.0)): 96 N, 114 N.mm (latch misuse 100 N on one wheel)
+   core joint (np.float64(38.0), np.float64(27.6), np.float64(4.0)): 146 N, 63 N.mm (top corner 45)
+   core joint (np.float64(38.0), np.float64(-27.6), np.float64(4.0)): 62 N, 50 N.mm (hit U 90)
+   core joint (np.float64(-56.0), np.float64(27.6), np.float64(4.0)): 109 N, 89 N.mm (hit U 270)
+   core joint (np.float64(-56.0), np.float64(-27.6), np.float64(4.0)): 103 N, 131 N.mm (top corner 135)
+printed nodes (sockets): L(np.int64(112), np.int64(-100), np.int64(33)):2, L(np.int64(112), np.int64(-50), np.int64(33)):2, L(np.int64(112), np.int64(0), np.int64(33)):2, L(np.int64(112), np.int64(50), np.int64(33)):2, L(np.int64(112), np.int64(100), np.int64(33)):2, L(np.int64(100), np.int64(112), np.int64(33)):7, L(np.int64(50), np.int64(112), np.int64(33)):2, L(np.int64(0), np.int64(112), np.int64(33)):8, L(np.int64(-50), np.int64(112), np.int64(33)):2, L(np.int64(-100), np.int64(112), np.int64(33)):2, L(np.int64(-112), np.int64(100), np.int64(33)):4, L(np.int64(-112), np.int64(50), np.int64(33)):2, L(np.int64(-112), np.int64(0), np.int64(33)):8, L(np.int64(-112), np.int64(-50), np.int64(33)):2, L(np.int64(-112), np.int64(-100), np.int64(33)):5, L(np.int64(-100), np.int64(-112), np.int64(33)):2, L(np.int64(-50), np.int64(-112), np.int64(33)):2, L(np.int64(0), np.int64(-112), np.int64(33)):9, L(np.int64(50), np.int64(-112), np.int64(33)):2, L(np.int64(100), np.int64(-112), np.int64(33)):7, U(np.int64(112), np.int64(-100), np.int64(49)):3, U(np.int64(112), np.int64(-50), np.int64(49)):2, U(np.int64(112), np.int64(0), np.int64(49)):2, U(np.int64(112), np.int64(50), np.int64(49)):2, U(np.int64(112), np.int64(100), np.int64(49)):3, U(np.int64(100), np.int64(112), np.int64(49)):2, U(np.int64(50), np.int64(112), np.int64(49)):4, U(np.int64(0), np.int64(112), np.int64(49)):7, U(np.int64(-50), np.int64(112), np.int64(49)):2, U(np.int64(-100), np.int64(112), np.int64(49)):4, U(np.int64(-112), np.int64(100), np.int64(49)):2, U(np.int64(-112), np.int64(50), np.int64(49)):5, U(np.int64(-112), np.int64(0), np.int64(49)):2, U(np.int64(-112), np.int64(-50), np.int64(49)):5, U(np.int64(-112), np.int64(-100), np.int64(49)):2, U(np.int64(-100), np.int64(-112), np.int64(49)):4, U(np.int64(-50), np.int64(-112), np.int64(49)):2, U(np.int64(0), np.int64(-112), np.int64(49)):7, U(np.int64(50), np.int64(-112), np.int64(49)):4, U(np.int64(100), np.int64(-112), np.int64(49)):2, T(np.int64(0), np.int64(0), np.int64(66)):5, T(np.int64(45), np.int64(0), np.int64(66)):1, T(np.int64(-45), np.int64(0), np.int64(66)):1, T(np.int64(0), np.int64(45), np.int64(66)):4, T(np.int64(0), np.int64(-45), np.int64(66)):4, T(np.int64(36), np.int64(36), np.int64(66)):1, T(np.int64(36), np.int64(-36), np.int64(66)):1, T(np.int64(-36), np.int64(36), np.int64(66)):1, T(np.int64(-36), np.int64(-36), np.int64(66)):1, G(np.int64(-74), np.int64(40), np.int64(0)):4, G(np.int64(-74), np.int64(-40), np.int64(0)):4, G(np.int64(-40), np.int64(74), np.int64(0)):4, G(np.int64(-40), np.int64(-74), np.int64(0)):4, M(np.int64(52), np.int64(44), np.int64(-24)):5, M(np.int64(52), np.int64(-44), np.int64(-24)):6, M(np.int64(-52), np.int64(44), np.int64(-24)):1, M(np.int64(-52), np.int64(-44), np.int64(-24)):1, M(np.int64(20), np.int64(-46), np.int64(-24)):4, M(np.int64(-20), np.int64(-46), np.int64(-24)):5, M(np.int64(52), np.int64(29), np.int64(-18)):2, M(np.int64(52), np.int64(-29), np.int64(-18)):2, B(np.int64(28), np.int64(28), np.int64(-48)):1, B(np.int64(28), np.int64(-28), np.int64(-48)):2, B(np.int64(-28), np.int64(-28), np.int64(-48)):2, B(np.int64(0), np.int64(-28), np.int64(-48)):1, B(np.int64(14), np.int64(-28), np.int64(-48)):1, B(np.int64(-14), np.int64(-28), np.int64(-48)):2
+drone ~744 g (E), CG (-1.8, -1.8, 8.9)
