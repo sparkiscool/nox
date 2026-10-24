@@ -184,3 +184,17 @@ it  67 beta   32 J  11.5451 vol 0.1219 (dil 0.2954 g -0.013) grey  4.0% ch 0.100
 it  68 beta   32 J   6.9485 vol 0.1268 (dil 0.2945 g -0.016) grey  3.9% ch 0.100 worst pad push 6.04e+03 23.5s
 it  69 beta   32 J   4.9294 vol 0.1355 (dil 0.2948 g -0.015) grey  3.9% ch 0.100 worst poke cam z 3.93e+03 23.2s
 it  70 beta   32 J   4.2575 vol 0.1453 (dil 0.2961 g -0.011) grey  4.0% ch 0.100 worst grab side 3.52e+03 22.7s
+git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned error: 403
+To https://github.com/sparkiscool/nox
+ ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
+error: failed to p
+it  71 beta   32 J   3.6195 vol 0.1545 (dil 0.2987 g +0.037) grey  4.0% ch 0.100 worst grab side 3.24e+03 24.0s
+it  72 beta   32 J   7.2707 vol 0.1413 (dil 0.2853 g -0.009) grey  3.9% ch 0.100 worst held b6 my 6e+03 22.2s
+it  73 beta   32 J   4.0190 vol 0.1462 (dil 0.2844 g -0.012) grey  3.9% ch 0.100 worst poke cam z 3.39e+03 24.4s
+it  74 beta   32 J   3.2548 vol 0.1488 (dil 0.2856 g -0.008) grey  4.0% ch 0.100 worst grab side 2.93e+03 23.5s
+it  75 beta   32 J   3.0590 vol 0.1512 (dil 0.2867 g -0.004) grey  4.0% ch 0.100 worst grab side 2.74e+03 23.3s
+it  76 beta   32 J   2.8899 vol 0.1522 (dil 0.2870 g +0.047) grey  4.0% ch 0.100 worst grab side 2.62e+03 23.4s
+it  77 beta   32 J 286.8432 vol 0.1240 (dil 0.2691 g -0.018) grey  3.6% ch 0.100 worst held b1 my 2.71e+05 22.2s
+it  78 beta   32 J  20.2536 vol 0.1287 (dil 0.2679 g -0.023) grey  3.9% ch 0.100 worst pad push 1.88e+04 23.2s
+it  79 beta   32 J   5.7367 vol 0.1345 (dil 0.2703 g -0.014) grey  3.8% ch 0.100 worst held b1 mz 4.65e+03 22.7s
+it  80 beta   32 J   4.3777 vol 0.1375 (dil 0.2712 g -0.011) grey  3.8% ch 0.100 worst poke cam z 3.81e+03 22.7s
