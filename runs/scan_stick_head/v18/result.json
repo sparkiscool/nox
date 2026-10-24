@@ -1,0 +1,496 @@
+{
+ "name": "scan_stick_head",
+ "engine": "nox/topo",
+ "solid_ok": true,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   103627.0
+  ],
+  "necks": [],
+  "drawn_not_in_main": [],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": true
+ },
+ "function_check": {
+  "skin_mm3": 94938.1,
+  "skin_missing_mm3": 0.56,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "unit 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.09,
+    "across": 0.075,
+    "at": [
+     47.5,
+     -19.0,
+     100.0
+    ]
+   },
+   {
+    "case": "unit 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.091,
+    "across": 0.073,
+    "at": [
+     47.5,
+     -19.0,
+     100.0
+    ]
+   },
+   {
+    "case": "unit 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.047,
+    "across": 0.044,
+    "at": [
+     35.5,
+     31.0,
+     54.0
+    ]
+   },
+   {
+    "case": "unit 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.046,
+    "across": 0.044,
+    "at": [
+     35.5,
+     -31.0,
+     54.0
+    ]
+   },
+   {
+    "case": "unit 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.058,
+    "across": 0.043,
+    "at": [
+     31.5,
+     -19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "unit 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.038,
+    "across": 0.022,
+    "at": [
+     31.5,
+     -19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "unit 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.08,
+    "across": 0.072,
+    "at": [
+     31.5,
+     -29.0,
+     86.0
+    ]
+   },
+   {
+    "case": "unit 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.065,
+    "across": 0.058,
+    "at": [
+     31.5,
+     -29.0,
+     86.0
+    ]
+   },
+   {
+    "case": "unit 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.077,
+    "across": 0.072,
+    "at": [
+     31.5,
+     15.0,
+     72.0
+    ]
+   },
+   {
+    "case": "unit 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.062,
+    "across": 0.058,
+    "at": [
+     31.5,
+     19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "unit 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.073,
+    "across": 0.072,
+    "at": [
+     31.5,
+     21.0,
+     172.0
+    ]
+   },
+   {
+    "case": "unit 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.065,
+    "across": 0.055,
+    "at": [
+     31.5,
+     15.0,
+     72.0
+    ]
+   },
+   {
+    "case": "unit 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.073,
+    "across": 0.072,
+    "at": [
+     31.5,
+     -19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "unit 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.07,
+    "across": 0.055,
+    "at": [
+     31.5,
+     -29.0,
+     86.0
+    ]
+   },
+   {
+    "case": "unit 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.179,
+    "across": 0.15,
+    "at": [
+     47.5,
+     -19.0,
+     100.0
+    ]
+   },
+   {
+    "case": "unit 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.183,
+    "across": 0.147,
+    "at": [
+     47.5,
+     -19.0,
+     100.0
+    ]
+   },
+   {
+    "case": "unit 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.095,
+    "across": 0.088,
+    "at": [
+     35.5,
+     31.0,
+     54.0
+    ]
+   },
+   {
+    "case": "unit 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.092,
+    "across": 0.088,
+    "at": [
+     35.5,
+     -31.0,
+     54.0
+    ]
+   },
+   {
+    "case": "unit 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.115,
+    "across": 0.086,
+    "at": [
+     31.5,
+     -19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "unit 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.076,
+    "across": 0.044,
+    "at": [
+     31.5,
+     -19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "L2 hit front 100 N",
+    "cls": "misuse",
+    "inlayer": 0.124,
+    "across": 0.117,
+    "at": [
+     47.5,
+     -19.0,
+     100.0
+    ]
+   },
+   {
+    "case": "L2 hit +y 100 N",
+    "cls": "misuse",
+    "inlayer": 0.055,
+    "across": 0.05,
+    "at": [
+     35.5,
+     -3.0,
+     54.0
+    ]
+   },
+   {
+    "case": "L2 hit -y 100 N",
+    "cls": "misuse",
+    "inlayer": 0.057,
+    "across": 0.051,
+    "at": [
+     35.5,
+     31.0,
+     54.0
+    ]
+   },
+   {
+    "case": "L2 drop -z 150 N",
+    "cls": "misuse",
+    "inlayer": 0.041,
+    "across": 0.023,
+    "at": [
+     31.5,
+     -19.0,
+     172.0
+    ]
+   },
+   {
+    "case": "camera hit +y 50 N",
+    "cls": "misuse",
+    "inlayer": 0.028,
+    "across": 0.029,
+    "at": [
+     35.5,
+     31.0,
+     54.0
+    ]
+   },
+   {
+    "case": "camera hit above 50 N",
+    "cls": "misuse",
+    "inlayer": 0.035,
+    "across": 0.034,
+    "at": [
+     31.5,
+     -31.0,
+     164.0
+    ]
+   },
+   {
+    "case": "cage bump front 100 N (module share)",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.074,
+    "at": [
+     47.5,
+     -19.0,
+     100.0
+    ]
+   },
+   {
+    "case": "cage bump +y 100 N (module share)",
+    "cls": "misuse",
+    "inlayer": 0.039,
+    "across": 0.04,
+    "at": [
+     39.5,
+     -29.0,
+     114.0
+    ]
+   },
+   {
+    "case": "cage bump top 100 N (module share)",
+    "cls": "misuse",
+    "inlayer": 0.014,
+    "across": 0.016,
+    "at": [
+     37.5,
+     -31.0,
+     118.0
+    ]
+   }
+  ],
+  "worst": 0.183,
+  "worst_case": "unit 50 g 1",
+  "worst_at": [
+   47.5,
+   -19.0,
+   100.0
+  ]
+ },
+ "mass_g": 167.81,
+ "watertight": false,
+ "bodies": {
+  "bodies_raw": 3,
+  "dropped_specks_mm3": [
+   0.62,
+   0.62
+  ],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 132130.1,
+ "drawn_g": 146.82,
+ "stl": "scan_stick_head.stl",
+ "view_stl": "scan_stick_head_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 3.22128343706268,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.054338966472857686,
+  "nd": 36806,
+  "sym_axes": [],
+  "n_real": 29,
+  "n_ties": 0,
+  "backend": "direct",
+  "iterations": 46,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "scan_stick_head",
+  "h": 2.0,
+  "shape": [
+   32,
+   56,
+   88
+  ],
+  "origin": [
+   20.5,
+   -56.0,
+   27.0
+  ],
+  "cells": 157696,
+  "design": 36806,
+  "drawn": 14599,
+  "cases": [
+   "unit 25 g 0",
+   "unit 25 g 1",
+   "unit 25 g 2",
+   "unit 25 g 3",
+   "unit 25 g 4",
+   "unit 25 g 5",
+   "unit 25 g 6",
+   "unit 25 g 7",
+   "unit 25 g 8",
+   "unit 25 g 9",
+   "unit 25 g 10",
+   "unit 25 g 11",
+   "unit 25 g 12",
+   "unit 25 g 13",
+   "unit 50 g 0",
+   "unit 50 g 1",
+   "unit 50 g 2",
+   "unit 50 g 3",
+   "unit 50 g 4",
+   "unit 50 g 5",
+   "L2 hit front 100 N",
+   "L2 hit +y 100 N",
+   "L2 hit -y 100 N",
+   "L2 drop -z 150 N",
+   "camera hit +y 50 N",
+   "camera hit above 50 N",
+   "cage bump front 100 N (module share)",
+   "cage bump +y 100 N (module share)",
+   "cage bump top 100 N (module share)"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 445.6,
+ "layout_s": 87,
+ "peak_gb": 2.907548,
+ "gen_cm3": 16.0,
+ "h": 2.0,
+ "total_s": 533
+}
