@@ -1,6 +1,6 @@
 # Current parts
 
-One row per part, its state only here. Numbers: `nox/dimensions.md`. History: `nox/log.md`. Pull right before writing, change only your own rows, one cell per fact, no history in a cell.
+One row per part, its state only here. Numbers: `nox/dimensions.md`. History: `nox/log.md`. Pull right before writing, change only your own rows, one cell per fact, no history in a cell (≤ 600 chars; `python3 tools/check_state.py` flags longer ones).
 
 States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in `print/`, the only proof) · PRINTING · PRINTED · TESTED · FAILED · HOLD · ON HAND. The design session moves to BUILT / READY, the print session to PRINTING, Spark's report to PRINTED / TESTED / FAILED. Every file in `print/` was run through `solid_check.py` on 23 Oct; the results are in the rows.
 
