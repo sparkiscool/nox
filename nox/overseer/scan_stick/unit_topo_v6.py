@@ -29,6 +29,7 @@ JBOLTS = [(sx * 22.0, sy * 24.0) for sx in (-1, 1) for sy in (-1, 1)]   # 4x M3 
 INS_R, INS_D, CLR_R = 2.0, 7.0, 1.7                             # Ruthex M3 insert hole Ø4.0 x 7 (spec), M3 clearance Ø3.4
 SPINE_KG, SPINE_CG = 0.40, np.array((-5.0, 0.0, 110.0))         # E (base v27 494.6 g M less the adapter)
 ADAPTER_KG = 0.09                                               # E
+HEAD_CLEAR = True                                               # spine v3: the head plate's space is a spine cut (v2: the finish filled a lip corner, 46.7 mm3 into the head)
 
 def upper(z0=CUT_Z):
     return box(-200, 200, -200, 200, z0, 400)
@@ -43,6 +44,8 @@ def spine_bodies():
     recess = cyl(0, 0, CUT_Z - 1.0, CUT_Z + SPIGOT_H, SPIGOT_R + 0.3, 96)
     drawn = (S["drawn"] ^ upper()) + floor
     cuts = (S["cuts"] ^ upper(CUT_Z - 2.0)) + inserts + recess + lower()
+    if HEAD_CLEAR:
+        cuts += B6(V.BP)
     env = S["env"] ^ upper()
     sleeves = S["sleeves"] ^ upper()
     grip = sum((cyl(x, y, CUT_Z, CUT_Z + INS_D + 1.0, INS_R + 2.5, 24) for x, y in JBOLTS), mf.Manifold()) \
