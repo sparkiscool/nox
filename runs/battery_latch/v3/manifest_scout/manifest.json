@@ -26,6 +26,43 @@
    "swap": true
   },
   {
+   "name": "cartridge_strip_px",
+   "mesh": "cartridge_strip_px.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU",
+   "swap": true
+  },
+  {
+   "name": "cartridge_strip_nx",
+   "mesh": "cartridge_strip_nx.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU",
+   "swap": true
+  },
+  {
+   "name": "receiver_skid_nose_plate",
+   "mesh": "receiver_skid_nose_plate.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU"
+  },
+  {
+   "name": "receiver_skid_side_px",
+   "mesh": "receiver_skid_side_px.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU"
+  },
+  {
+   "name": "receiver_skid_side_nx",
+   "mesh": "receiver_skid_side_nx.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU"
+  },
+  {
    "name": "slider_px",
    "mesh": "slider_px.stl",
    "role": "protected",
@@ -74,7 +111,7 @@
    "mesh": "drone_rest_standin.stl",
    "role": "structure",
    "tag": "E",
-   "mass_g": 185.08,
+   "mass_g": 180.03,
    "cg": [
     0.0,
     0.0,

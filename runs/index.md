@@ -1,6 +1,6 @@
 # Runs
 
-_93 runs · rebuilt 2026-10-24 11:54_
+_93 runs · rebuilt 2026-10-24 12:27_
 
 ## Latest per part
 
@@ -37,7 +37,7 @@ _93 runs · rebuilt 2026-10-24 11:54_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 11:51 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 12:24 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 11:13 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
 | 2026-10-24 11:12 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 10:35 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |

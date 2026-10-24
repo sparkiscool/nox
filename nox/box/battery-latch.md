@@ -109,22 +109,28 @@ Visual: runs/battery_latch/v2/figs/compare_v1_v2.png and fe_swap_insert_74_N_+_a
 ## Cartridge v6 and the Scout skids (run v3, 24 Oct)
 Follow-up to receiver v2. The receiver body is unchanged. Run `runs/battery_latch/v3/`.
 
-**Cartridge v6: a centre rib** (heads v7 ask, DEFAULT).
-- Gripped, the v5 tabs met each other, so the cartridge could slide ±4 on the slider bars against the head, with only friction holding it.
-- The 2.0 rib (x ±1.0, y 0..7.5, under the pen spring; z z_T ± 15.5, rising into the floor plate past the recess) stops each tab.
-- Squeezed faces are ±1.0 / ±7.0, stroke 3.0 per tab (C). The squeezed tabs clamp the cartridge to the head.
-- Both bolts retract 3.0 at any head offset (need 2.6; v5 gave 3.0 / 5.0 at ±1.0).
-- Release 2.6 N (Scout) / 4.1 N (Overseer) per finger, spring 2.0 N squeezed (E). Hall squeezed 2.9 mT (E model).
-- Heads v7 builds to ±7.0.
+**Cartridge v6 + slider v6: a centre rib** (heads v7 ask, DEFAULT):
+- Why: gripped, the v5 tabs met each other, so the cartridge could slide ±4 on the slider bars against the head, with only friction holding it.
+- Rib: x ±2.0 (4.0; 3.0 necked in the gate's erosion), y 0..11.5 along the recess, notched to y 7.9 over z_T ± 2.5 for the pen spring (C).
+- It is fixed between two 6.0 cross walls past the recess (z_T ± 11.5..17.5), frame to frame under the pack (C).
+- Each tab stops on it. The tabs sit at rest at ±5.0 / ±10.0 and squeeze to ±2.0 / ±7.0: stroke 3.0 (C).
+- The spring slots are 3.0 deep, so the gap is still 16 at rest and 10 squeezed: 0.8 / 2.0 N (E).
+- Both bolts retract 3.0 at any head offset (need 2.6, C). The squeezed tabs clamp the cartridge to the head.
+- The rib now carries the head's x load. Hand calc (E): index 0.25 at the 43.5 N across (2.7 MPa), 0.04 / 0.13 at a 3 g carry (Scout / Overseer), 0.05 / 0.16 at 6 g misuse.
+- Release 2.6 / 4.1 N per finger; grip pull 57 N + 1 g index 0.37 / 0.40; side-hit slider hold ×1.42 / ×2.27 (E). Hall squeezed 2.9 mT (E model).
+- Heads v7 builds to the squeezed ±7.0; its blades only touch the outer faces.
 
-**Scout TPU edge skids** (Scout v3 ask, drawn in its system pass as the requirement, cage role, bonded on):
-- Cartridge strips: 2 L strips under the bottom long edges, 2.0 proud of the sliders.
-- Receiver: a nose plate on the lead end wall, and 2 side skids. Each side skid is the strip under the feet's outer edge plus a 3.5 bar along the 45° lower nose chamfer, in one print ending on the plate.
-- All are ≥ 3.8 inside the funnel planes (need 1.0) and clear of the 4 bolt keys (C). Numbers in dimensions, row "Scout TPU edge skids".
-- Insertion with them: 0 mm³, no stuck step (C).
-- My refit-snapshot run reads fit 59.6 mm³ (snapshot cage rods vs the side skid) and probes −43.5 (side windows). That cage predates the skids and the Scout's new layout. The Scout's own pass with these skids reads every latch probe PASS (Scout v3, E). The Scout set stays HOLD until the Scout's layout lands.
+**Scout TPU edge skids** (Scout v3 ask, drawn in its system pass as the requirement, cage role, bonded on). Drawn to the Scout's envelope:
+- Cartridge strips (2): foot |x| 19.2..23.2, y −2.0..0, outboard of the wall bottom (X_OUT 19.0), held by a leg on the wall to y 3.0. Bond 192 mm² each, peel-loaded (E, DEFAULT; alternative: a dovetail rail).
+- Receiver nose plate: ±27, 2.2 on the lead end wall.
+- Receiver side skids (2): Ø3.5 round bar on the Scout's path + the strip |x| 24.6..27 under the feet's outer edge, one print, ending on the plate.
+- The receiver skids are clipped at funnel inset 5.25, so they hold ≥ 1.0 inside the funnel planes at ±5° yaw / ±2° tilt: plate 1.16, side skids 1.86, cartridge strips 3.15 (C). Bolt key lines 13.5 / 5.58 / 10.1 clear (C). Every number is in `result.json` "skids".
+- The receiver skids go on the drone receiver only; bay receivers have none (DEFAULT, the skids are cage). The cartridge strips go everywhere: heads v7 cut its deck and pads to |X| ≤ 18.2 with a keep-out over them.
+- Insertion with every strip and skid: 0 mm³, no stuck step (C).
+- My refit-snapshot run (3595381) reads fit 44.5 mm³: that old cage's rods against a side skid. That snapshot predates both the skids and the Scout's new layout (its own `scout.assembly.json` on its branch is still v4, no skids).
+- So the Scout set stays HOLD until the Scout's own pass loads these exact meshes and reads fit 0 and probes PASS. The meshes went to the Scout session 24 Oct.
 
-Sets: Scout 156.0 g (M), Overseer 331.9 g (M). solid_check PASS on all 18 files (`runs/battery_latch/v3/summary.md`).
+Sets: Scout 159.6 g (M), Overseer 338.5 g (M). The rib and its cross walls are +5.7 / +7.2 g on the cartridge. solid_check PASS on all 18 files (`runs/battery_latch/v3/summary.md`). No carbon rods: every piece is printed.
 
 ## Concept check (24 Oct, before the piece runs)
 Requirements (the brief): hold every L case for both packs; XT60 mates on insert (60 N) and unmates on pull (50 N) on the install axis, XT60E1-M float carrier on the receiver; latched state readable; a half-in pack never reads or stays latched; engages by the insert stroke alone, the grip releases it, releasing the grip locks it; the same grip interface on both packs; no more complex than the v2 squeeze latch; Scout receiver + cartridge ≥ 7.0 inside the collar planes below z 20 with the keel nodes free; pack CG on the thrust axis; breaks after the cage.
@@ -153,11 +159,11 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 ## Pieces
 | Piece | Material, count | Scout g (M) | Overseer g (M) | Print |
 |---|---|---|---|---|
-| `box_battery_cartridge_<pack>_v6` (centre rib) | PETG x 1 | 32.5 | 90.4 | closed end down, tree supports (174 tall for the Overseer) |
+| `box_battery_cartridge_<pack>_v6` (centre rib) | PETG x 1 | 38.2 | 97.6 | closed end down, tree supports (174 tall for the Overseer) |
 | `box_battery_cart_strip_scout_v1` (Scout only) | TPU 95A x 2 (one part) | 1.1 | – | foot down; bonded under the cartridge's bottom long edges |
-| `box_battery_rskid_plate_scout_v1`, `box_battery_rskid_side_{px,nx}_scout_v1` (Scout only) | TPU 95A, 1 each | 2.8 / 1.3 | – | plate flat; side skids strip foot down, the nose bar on tree supports; bonded on the receiver |
+| `box_battery_rskid_plate_scout_v1`, `box_battery_rskid_side_{px,nx}_scout_v1` (Scout drone receiver only) | TPU 95A, 1 each | 2.2 / 0.8 | – | plate flat; side skids strip foot down, the nose bar on tree supports; bonded on the receiver |
 | `box_battery_skid_{closed,lead}_scout_v1` (Scout only) | TPU 95A, 1 each | 1.4 / 3.1 | – | outer (chamfer) face down; bonded on the cartridge's end chamfers (flexible contact adhesive), replaceable |
-| `box_battery_slider_<pack>_v5` | PETG x 2 (one part, both sides) | 3.2 | 4.0 | bar top down (largest face, layers along the bar) |
+| `box_battery_slider_<pack>_v6` (tabs at rest ±5.0, 3.0 spring slots) | PETG x 2 (one part, both sides) | 2.9 | 3.7 | bar top down (largest face, layers along the bar) |
 | `box_battery_receiver_<pack>_v2` (latch block, drone and bays) | PETG x 1 | 93.1 | 216.2 (66.8 wide) | mount plane down (deck down), tree supports; the Overseer's 183.6 goes on the bed's diagonal (needs 177.1 of 180) |
 | `box_battery_xt60_carrier_<pack>_v1` (base: pull lips + ears) | PETG x 1 | 4.6 | 5.0 | ear tops down |
 | `box_battery_receiver_lid_<pack>_v1` (the carrier's cap) | PETG x 1 | 5.3 | 8.1 | top face down |
@@ -167,7 +173,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 - Scout set: HOLD (PR 69 review). Its assembled probe check fails at the Scout's side windows, and its receiver is new.
 - Overseer set: DESIGN (its mount bolts and system, below).
 
-Per set (v3): 156.0 g Scout, 331.9 g Overseer (M); receiver v2 run 147.7 / 331.3; v1 91.0 / 185.9 (M). The grams buy the swap load set: v1's open frame moved 5.4 / 4.4 mm under 43.5 N across, index 2.08 / 1.53. v2 moves 0.35 / 0.78 mm, swap worst 0.51 / 0.55 (all M mesh, E loads).
+Per set (v3): 159.6 g Scout, 338.5 g Overseer (M); receiver v2 run 147.7 / 331.3; v1 91.0 / 185.9 (M). The grams buy the swap load set: v1's open frame moved 5.4 / 4.4 mm under 43.5 N across, index 2.08 / 1.53. v2 moves 0.35 / 0.78 mm, swap worst 0.51 / 0.55 (all M mesh, E loads).
 
 Bought per set:
 - XT60E1-M with a short pigtail and an inline connector (the replaceable XT60 carrier).
@@ -176,7 +182,7 @@ Bought per set:
 
 Assembly: sliders into the cartridge channels from inside, spring into its U-slots, pack in (it closes the slots), plug into its pocket, set screws; XT60E1-M into the carrier base, cap on, carrier into the receiver's notch, receiver up on its bolts.
 
-## Checks (C unless tagged, `runs/battery_latch/v2/result.json`)
+## Checks (C unless tagged, `runs/battery_latch/v3/result.json`)
 - **solid_check PASS on all 18 files** (run v3: Scout 12, Overseer 6; one line each in `summary.md`). print_orient: first-layer islands all over 20 mm² (receivers 3 Scout / 2 Overseer, the rest 1).
 - **Insertion:**
   - Sliders free, from 50 below seat every 1.0: 0 mm³ cartridge vs receiver, no stuck step.
@@ -212,7 +218,7 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
   - Two analog halls on the head at (x ±7.5, y −1.0, z z_T + 8), head x offset ±0.5 at the read.
   - `latch_assembly(pack, "latched" | "gripped" | "free")` now also returns `xt60_carrier`.
   - The swap load set the arm gave (74 / 57 N, 43.5 N, 7.6 N / 1.05 N·m, no guide couple) is what v2 is checked on.
-  - Heads v7: cartridge v6 has the 2.0 centre rib. Tabs stop at ±1.0, stroke 3.0, squeezed outer faces ±7.0 (agreed). Pocket, flat bottom and hall / magnet spots unchanged.
+  - Heads v7: cartridge v6 has the centre rib (x ±2.0). Tabs at rest ±5.0 / ±10.0, squeezed ±2.0 / ±7.0, stroke 3.0 (outer faces as agreed). Pocket, flat bottom and hall / magnet spots unchanged.
 - **Every receiver partner (Scout mount, Overseer sled, bay bodies):**
   - M3 x 5.7 heat-set inserts at the boss positions (unchanged), bolts up from below.
   - The mount plane is unchanged (Scout 54.1, Overseer 68.8). The body's top bears on it except the Scout's 1.0 FC relief.
@@ -236,5 +242,5 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 - Spring rate and the XT60 forces are E; the first latch print checks release force per finger (≤ 15 N), the snap-in at the seat, and that the pack drops 0.8 onto the bolts when let go.
 - Hall part not chosen: an analog hall (DRV5055A4-class, ±169 mT, E): 157 mT latched, 1.7 half in, 3.1 squeezed at nominal; threshold ~62 mT at ±0.5 head offset.
 - The swap load set is E (the arm's). The first receiver coupon checks the stall, the pocket wear over cycles (strike blocks if it wears), and the across stiffness (0.35 / 0.78 mm at 43.5 N).
-- Cartridge v6 and the Scout skids: done in run v3 (above). The skids' crash loads into the receiver come from the Scout's run (E); handling 50 N at any skid point is the receiver's handling case (0.12).
+- Cartridge v6 and the Scout skids: done in run v3 (above). The skids' crash loads into the receiver come from the Scout's run (E); handling 50 N at any skid point is the receiver's handling case (0.12). The Scout confirms fit and probes with these exact meshes.
 - Receiver v2 topology (lighter at the same cases) is a follow-up. The FE peaks sit at the end walls' corners; the side walls carry little except across.
