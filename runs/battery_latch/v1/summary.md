@@ -19,6 +19,8 @@ Print (each saved on its largest flat face): cartridge closed end down (bed 1267
 | receiver lid v1 | 5.34 | 7.85 | 61.2 x 20 x 5.5 / 63.6 x 20 x 7.2 | 1001 / 1049 |
 | receiver strip v1 (TPU, x 2) | 0.98 | 2.07 | 4.8 x 70.6 x 2.4 / 148.6 | 339 / 713 |
 
+Receiver topology attempt (Scout): 34.8 g, solid_check FAIL, worst 25.3, not converged: does not beat v1; the drawn receivers stay (doc, "Receiver topology attempt").
+
 Checks: insertion 50 mm every 1.0 (and 0.3 off) 0 mm³, no stuck step; gripped pull-out 0 mm³; squeeze 0..4 0 mm³; asymmetric squeeze ±1.0 0 mm³, short bolt tip 0.7 inside the face; hall 96.7 / 7.2 / 1.0 mT (latched / half in / squeezed); side-hit slider hold x1.27 / x2.07. Concept review: FAIL with 6 findings, all fixed (doc). Wall time 8.5 min (4 cores).
 
 ## Previews (rendered from the exact print files)

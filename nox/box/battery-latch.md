@@ -56,6 +56,9 @@ Bought per set: XT60E1-M, M3 x 5.7 heat-set x 4 (Overseer 6) + M3 bolts, o 3 x 2
 - **Overseer** (pack 30 behind the thrust axis, Spark: B): the sled cut round the receiver box + 1.0 with the 6-bolt mount plane (bosses on the deck at x ±26.8, mount plane y 68.8; receiver 66.8 wide so Overseer bays alternate with Scout bays at R 113); cage lower vs pack (324 mm³), feet and down camera vs receiver (~87 / ~81 mm³); the CG is the layout's (B's pack-out shift is Spark's accepted exception).
 - **Box structure:** bay bodies give each receiver its mount plane (Scout r 167.1, Overseer r 180.1 at the bay, R 113 + Y_M) and the strip side; the bay receiver is the same print file.
 
+## Receiver topology attempt (24 Oct)
+`battery_latch_topo.py` keeps the receiver's must-haves drawn (locating pads, feet, pocket blocks, end pads, stop seats, XT60 pocket, bosses) and generates the rest on the L cases (Scout crash 15.3 g). Scout run (branch `run/battery_latch_receiver-scout-v1`, h 1.0, 7 cm³, 6.1 GB peak): 34.8 g (v1 41.2) but **solid_check FAIL** (eroded necks 1.8 / 2.4, a 1.5 wall at (−0.1, 45.2, 94.3)), worst index 25.3 (50 N on a foot), crash 7.4; the beta 32 stage ended on a tie-case violation: the 4.0 end pads (the 180 bed holds the Overseer to 4.0) and the small stations split once eroded. It does not beat v1 (rule 6), so **the drawn, FE-checked v1 receivers stay**; the Overseer run on the same setup was stood down (memory: 6.3 GB at h 1.4, 1.65x the engine's estimate). Next setup (follow-up): fewer, thicker drawn stations (≥ 6 everywhere, end pads merged into the side legs), generated volume ≥ 12 cm³ (Scout), tie weights checked on a coarse run first.
+
 ## Open (E)
 - Spring rate and the XT60 forces are E; the first latch print checks release force per finger (≤ 15 N), the snap-in at the seat, and that the pack drops 0.8 onto the bolts when let go.
 - Hall part not chosen (threshold ~50 mT; a switch with B_op 15..60 mT or an analog hall).
