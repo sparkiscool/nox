@@ -530,6 +530,16 @@ def motor_clear(a, b, od, motors):
     return c
 
 
+def obstacle_clear(a, b, od, obstacles):
+    """smallest clearance (mm) of a rod to the obstacle spheres [x, y, z, r] (the front cameras)"""
+    if not obstacles: return np.inf
+    a, b = np.asarray(a, float), np.asarray(b, float); u = b - a; c = np.inf
+    for ox, oy, oz, r in obstacles:
+        w = np.array([ox, oy, oz]) - a; t = np.clip((w @ u) / max(u @ u, 1e-9), 0, 1)
+        c = min(c, float(np.linalg.norm(w - t * u) - r - od / 2))
+    return c
+
+
 def guard_caps(m):
     """largest section index (ORDER) per rod that keeps the prop clearance (12) and the funnel clearance (1.0);
     -1 = no section does (the layout fails)"""
@@ -542,6 +552,7 @@ def guard_caps(m):
             if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
             if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
+            if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, m.p.get("obstacles")) < 1.0: break
             cap = i
         caps[e["name"]] = cap
     return caps
@@ -661,6 +672,9 @@ def evaluate(p, topo, sizes, detail=False):
         res["funnel_clear"] = float(wf); g["funnel"] = 1.0 - wf if np.isfinite(wf) else -1.0
     wm = min(motor_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], m.info["motors"]) for e in m.el if e["kind"] == "rod")
     res["motor_clear"] = float(wm); g["motor clear"] = 1.0 - wm if np.isfinite(wm) else -1.0
+    if p.get("obstacles"):
+        wo = min(obstacle_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], p["obstacles"]) for e in m.el if e["kind"] == "rod")
+        res["obstacle_clear"] = float(wo); g["obstacles"] = 1.0 - wo
     res["g"] = g
     res["violation"] = float(sum(max(0.0, v) for v in g.values()))
     return (res, m) if detail else res
@@ -746,7 +760,7 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
     for it in range(30):
         prev = list(sec)
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel", "motor clear")}
+        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel", "motor clear", "obstacles")}
         if not bad: break
         stepped = False
         for key, mk in (("L2 mode", "_l2_mode"), ("belly mode", "_belly_mode")):
