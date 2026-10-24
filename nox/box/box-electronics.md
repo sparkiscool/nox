@@ -156,14 +156,14 @@ The research's ~600 W of nonstop 2C charging does not fit the LRS-350; the 6.5 A
 The box never arms or disarms the drone: it disarms on the kill and the mission script arms it after SWAP_DONE. The swap request comes from the mission script over the network (Moonraker JSON-RPC, DEFAULT).
 
 ## Aborts
-**Pack-out hold (box catch PR 93, DEFAULT):** the hook latch never retracts while the drone's pack is out. With the pack out the face pins' spring force lifts 2.8 of a Scout's 3.3 N and puts a 48 N·mm yaw couple on it (catch, E), so only the latch holds the drone. Every abort after PULL keeps the latch OUT and K1 closed until a pack mates (mate check passes; then the normal KA_OFF, LATCH_IN) or a person lifts the drone off (A12). LATCH_IN runs only after MATE_CHECK has passed (or before PULL, with the old pack still in). Alt: the B− pins at y +12 / +22, which moves the Scout's −x pad (catch).
+**Pack-out hold (box catch PR 93, DEFAULT):** the hook latch never retracts while the drone's pack is out. With the pack out the face pins' spring force lifts 2.8 of a Scout's 3.3 N and puts a 48 N·mm yaw couple on it (C, `box-hook-latch.md`), so only the latch holds the drone. Every abort after PULL keeps the latch OUT and K1 closed until a pack mates (mate check passes; then the normal KA_OFF, LATCH_IN) or a person lifts the drone off (A12). LATCH_IN runs only after MATE_CHECK has passed (or before PULL, with the old pack still in). Alt: the B− pins at y +12 / +22 (C, catch), which moves the Scout's −x pad.
 
 | Abort | Trigger | Action |
 |---|---|---|
 | A1 latch not out | a hall still high 0.5 s after OUT | all 4 IN, OUT once more; second fail: IN, SWAP_FAIL, the drone keeps its pack (nothing has moved) |
 | A2 latch lost mid-swap | a hall goes high between LATCH_OUT and LATCH_IN | stop all motion, K1 as it is, alarm (the plungers self-lock under load) |
 | A3 keep-alive fault | bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s (ALERT) with the old pack in, or K1 will not open at 0 A | open K1; before PULL: SWAP_FAIL with the old pack in; after PULL: alarm, K1 and the latch stay as they are (pack-out hold) |
-| A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm |
+| A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check; mate passes: KA_OFF, LATCH_IN, SWAP_FAIL; mate fails: pack-out hold (latch OUT, K1 closed), alarm |
 | A5 stall | TMC2209 DIAG on a fast head move, Klipper shutdown, E-stop, or the axle hall out of its window | stop all motion, latch stays out, K1 as it is (closed with the pack out: the drone stays powered), alarm; Spark clears by hand, heads re-home before the next cycle |
 | A6 mate fail | I ≥ 50 mA 1.0 s after the full stroke | back off 5, push again once at 10 mm/s; still ≥ 50 mA: pull the pack back into head A, the drone stays on keep-alive (no time limit), alarm |
 | A7 bay mate fail | bay bus not 13.0..17.0 V with the relay open | re-insert once; then leave the pack uncharged, alarm (off the flight path) |
@@ -171,7 +171,7 @@ The box never arms or disarms the drone: it disarms on the kill and the mission 
 | A9 bay interlock | a head move into a live bay with its relay closed or I ≥ 50 mA | refused before the move |
 | A10 seat lost | seat sense high before LATCH_OUT | back to WAIT_SEAT |
 | A11 latch stuck out | a hall still low 0.5 s after IN | OUT, IN once more; then alarm, no SWAP_DONE: the drone sits disarmed on its new pack |
-| A12 drone lifted, pack out | after PULL, no pack mated, keep-alive I < 50 mA for 2 s (the drone left the pins: a person lifted it) | open K1, latch IN, SWAP_FAIL, alarm (DEFAULT, catch PR 93) |
+| A12 keep-alive at 0 A, pack out | after PULL, no pack mated, keep-alive I < 50 mA for 2 s (E) | open K1 (~0 A by then) and read seat sense: high (no 10 kΩ, the drone was lifted off) → latch IN, SWAP_FAIL, alarm; low (the drone is still seated: pins lost contact, or K1 / buck / F3 failed) → latch stays OUT, alarm "keep-alive lost" (DEFAULT, catch PR 93) |
 
 ## Interfaces other parts use (`dimensions.md` I "Box electronics v1")
 - Face pins (box catch PR 93, panel v9 plain): 2 brass spring probes in each ±x A panel, ~1.5 A a pin (catch), 13.0 V CC 3.0 A behind K1 on +x, GND on −x; one 18 AWG conductor per panel (+ on +x, − on −x) from the sheet top, a 3.5 mm bullet pair inline at the sheet; seat sense on the + line (GPIO 24 through 1 kΩ and a BAT54).

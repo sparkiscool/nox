@@ -1389,7 +1389,7 @@
   [
    "A4 pull / keep-alive lost",
    "INA_KA I < 100 mA at the end of the pull stroke",
-   "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm"
+   "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check; passes: KA_OFF, LATCH_IN, SWAP_FAIL; fails: pack-out hold (latch OUT, K1 closed), alarm"
   ],
   [
    "A5 stall",
@@ -1427,9 +1427,9 @@
    "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"
   ],
   [
-   "A12 drone lifted, pack out",
-   "after PULL, no pack mated, keep-alive I < 50 mA for 2 s (a person lifted the drone off the pins)",
-   "open K1, latch IN, SWAP_FAIL, alarm (catch PR 93)"
+   "A12 keep-alive at 0 A, pack out",
+   "after PULL, no pack mated, keep-alive I < 50 mA for 2 s",
+   "open K1 and read seat sense: high (drone lifted off) -> latch IN, SWAP_FAIL, alarm; low (drone still seated: pins or K1 / buck / F3 lost) -> latch stays OUT, alarm (catch PR 93)"
   ]
  ]
 }
