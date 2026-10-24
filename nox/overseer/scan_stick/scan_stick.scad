@@ -35,12 +35,23 @@ module thread_solid(d_maj, pitch, h, clearance=0, flank=14.5, steps=90) {
     linear_extrude(height=h, twist=-360*h/pitch, slices=ceil(h/pitch*steps/2)) polygon(pts);  // negative twist = right-hand
 }
 
-// small ring to test the thread fit before printing the whole head
-module thread_test() {
+// v2 fit coupon (Spark 24 Oct: the stick fit test): the base's socket exactly, in print pose (thread end on the bed).
+// In use coords (pole enters at z 0): Ø28.3 x 2 shank counterbore, thread cut z 1.5..27.5 with the 1 mm entry chamfer,
+// open top so the tip shows 0.5 under the top face when the shank shoulder seats. Wall 3.1 round the thread, 3.35 round the
+// counterbore; the 45 deg step between them prints without supports.
+shank_r = 14.15; shank_d = 2.0; top_z = 27.5;
+module fit_coupon_use() {
     difference() {
-        cylinder(r=boss_r, h=12, $fn=96);
-        translate([0,0,-eps]) thread_solid(acme_major, acme_pitch, 12 + 2*eps, acme_clear);
+        union() {
+            cylinder(r=17.5, h=4, $fn=96);
+            translate([0,0,4]) cylinder(r1=17.5, r2=13, h=4.5, $fn=96);
+            cylinder(r=13, h=top_z, $fn=96);
+        }
+        translate([0,0,-1]) cylinder(r=shank_r, h=shank_d + 1, $fn=96);
+        translate([0,0,shank_d - 0.5]) thread_solid(acme_major, acme_pitch, top_z - shank_d + 0.5 + eps, acme_clear);
+        translate([0,0,shank_d - 0.5]) cylinder(r1=10.9, r2=9.9, h=1.5, $fn=64);
     }
 }
+module thread_test() { translate([0,0,top_z]) rotate([180,0,0]) fit_coupon_use(); }   // print pose: the thread end on the bed (rotated, never mirrored: keeps the right-hand thread)
 
 if (part == "thread_test") thread_test();

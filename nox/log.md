@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): scan stick thread test v2 READY (Spark: the stick fit coupon): base v22's socket, Ø28.3 x 2 counterbore + 26 thread, 11.8 g, thread end down, supports off; v1 superseded. Script --ver fix (3rd number was gen cm3).
 - 24 Oct (scan stick chat): scan stick socket (Spark, rod in hand: 25 thread then Ø27.5 shank, 27 engaged max): Ø28.3 x 2 counterbore + thread 26 (0.5 past the tip), base v21 stopped for v22. Head v16 solid FAIL: face-to-face L2 bore cuts left a 0 mm film; cuts overlapped 0.5, head v17.
 - 24 Oct (scan stick chat): scan stick v5 concept review 3: joint bearing contacts added (bolts ≈ 40 N, was 8x the load), drawn diagonal nodes, TPU nodes in the check. DEFAULT cage at y ±36 since Spark made the whole L2 an exception (alt ±44 round it: 100 wide); assembled 3.14 L, 183 x 86 x 199, system_check PASS.
 - 24 Oct (scan stick chat): **scan stick v5 concept** (unit_topo_v5.py): 3.46 L, 177 x 100 x 196 mm with the cage (v3 7.45 L); closed 3 mm carbon cage, hook + 2 M3 joint, thread 32 deep (Spark). Spark: the L2 outside the cage as an exception, full view; switches to the back. system_check PASS (cage first 4.1 mm, fit 0). DEFAULT: electronics on the back (alt sides 3.23 L, CG further forward).
