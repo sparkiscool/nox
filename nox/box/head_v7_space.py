@@ -1,6 +1,7 @@
 """Heads v7: the free space each head has, from the assembled arm v7 (24 Oct 2026, heads v7 part session).
 Every part a head can meet over a swap cycle (arm_kinematics v7: all 9 bay receivers with their seated cartridges, the hub, rails,
-motors, detent, the other head and its pack), sampled on its surface and carried into the head's own frame (X tangential, Y along
+motors, detent, the other head's pack; not the heads themselves, whose head-to-head limit is the park bisector X + u >= -32 in the
+head frame, see head_v7_layout.py), sampled on its surface and carried into the head's own frame (X tangential, Y along
 the axle, u radial from the head's z0 datum; head B mirrored in X like its parts) at every state of the cycle. The union is what
 the head body, servo and grabber must stay clear of. Inner bays (two neighbours) are swept as well as the cycle's end bays.
 python3 head_v7_space.py [pack:pick:ret ...]  -> runs/head/v7/space/<pack>_<pick>_<ret>.npz + space.png (X-u maps per Y band)
@@ -43,7 +44,7 @@ def run(cycle):
             inv = np.linalg.inv(Th)
             mir = np.diag([-1.0, 1, 1]) if h == "B" else np.eye(3)
             for nm, p in P.items():
-                if p.group == f"head{h}": continue
+                if p.group in ("headA", "headB"): continue                    # both heads are redesigned: head-to-head is the park bisector (layout)
                 w = pts[nm] @ T[nm][:3, :3].T + T[nm][:3, 3]
                 loc = (w @ inv[:3, :3].T + inv[:3, 3]) @ mir.T
                 mark(h, loc)

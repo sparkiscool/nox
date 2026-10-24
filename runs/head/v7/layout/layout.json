@@ -1,0 +1,673 @@
+{
+ "spring": {
+  "d": 0.7,
+  "OD": 5.5,
+  "ID": 4.1,
+  "L0": 70.0,
+  "n": 37,
+  "k": 0.579,
+  "F_sq": 15.1,
+  "F_open": 20.9,
+  "solid": 27.3,
+  "L_sq": 44.0,
+  "L_open": 34.0,
+  "tau_open": 905.0,
+  "tau_ratio": 0.86,
+  "C": 6.86,
+  "note": "music wire, closed ends, on the 3.0 carbon rod (guided: L0/D > 4)"
+ },
+ "cam": {
+  "turn_deg": 120.0,
+  "rise": 6.0,
+  "pitch_rest": 9.5,
+  "pitch_open": 15.5,
+  "gap_at_rest": 1.0,
+  "max_pressure_deg": 26.5,
+  "peak_torque_Nmm": 225.2,
+  "at_deg": 65.0,
+  "peak_kgcm": 2.3,
+  "margin": {
+   "DS3218": 8.7,
+   "MG995": 3.9
+  },
+  "open_force_N": 20.9,
+  "spline_side_N": "0 (two rollers equal and opposite; pinion keeps them symmetric)",
+  "curve": [
+   [
+    0.0,
+    9.5,
+    0.0
+   ],
+   [
+    4.0,
+    9.5,
+    0.0
+   ],
+   [
+    8.0,
+    9.5,
+    0.0
+   ],
+   [
+    12.0,
+    9.501,
+    0.0
+   ],
+   [
+    16.0,
+    9.515,
+    0.0
+   ],
+   [
+    20.0,
+    9.564,
+    0.0
+   ],
+   [
+    24.0,
+    9.663,
+    0.0
+   ],
+   [
+    28.0,
+    9.815,
+    0.0
+   ],
+   [
+    32.0,
+    10.018,
+    0.0
+   ],
+   [
+    36.0,
+    10.27,
+    0.0
+   ],
+   [
+    40.0,
+    10.567,
+    145.0
+   ],
+   [
+    44.0,
+    10.904,
+    165.7
+   ],
+   [
+    48.0,
+    11.273,
+    184.3
+   ],
+   [
+    52.0,
+    11.667,
+    200.3
+   ],
+   [
+    56.0,
+    12.079,
+    212.8
+   ],
+   [
+    60.0,
+    12.5,
+    221.2
+   ],
+   [
+    64.0,
+    12.921,
+    225.0
+   ],
+   [
+    68.0,
+    13.333,
+    223.7
+   ],
+   [
+    72.0,
+    13.727,
+    217.1
+   ],
+   [
+    76.0,
+    14.096,
+    205.0
+   ],
+   [
+    80.0,
+    14.433,
+    187.7
+   ],
+   [
+    84.0,
+    14.73,
+    165.6
+   ],
+   [
+    88.0,
+    14.982,
+    139.3
+   ],
+   [
+    92.0,
+    15.185,
+    109.8
+   ],
+   [
+    96.0,
+    15.337,
+    78.1
+   ],
+   [
+    100.0,
+    15.436,
+    45.7
+   ],
+   [
+    104.0,
+    15.485,
+    18.0
+   ],
+   [
+    108.0,
+    15.499,
+    2.1
+   ],
+   [
+    112.0,
+    15.5,
+    -0.0
+   ],
+   [
+    116.0,
+    15.5,
+    0.0
+   ],
+   [
+    120.0,
+    15.5,
+    0.0
+   ]
+  ]
+ },
+ "latch": {
+  "rib_tip_open_vs_latched_tab": 0.2,
+  "blade_outer_open_vs_recess": 1.5,
+  "with_head_offset_1": {
+   "rib_tip": -0.8,
+   "outer_vs_recess": 0.5,
+   "note": "a 1.0 offset puts one rib 0.8 inside the latched tab's outer face: the tab's 1.0 x 45 bottom chamfer cams it in 0.8 (the latch's own case: bolt still 1.5 in its pocket)"
+  },
+  "blade_tip_vs_bar": 0.5,
+  "rib_in_pocket": {
+   "depth": 0.8,
+   "u": 19.4,
+   "pocket_u": [
+    17.4,
+    21.4
+   ]
+  },
+  "hall_vs_blade_y": 0.5,
+  "pads_on_flat_bottom": {
+   "pad_x": [
+    16.5,
+    20.0
+   ],
+   "frames": [
+    15.5,
+    19.0
+   ],
+   "worst_offset_contact_mm": 1.5,
+   "note": "both packs have the latch frames x 15.5..19 (Scout) / ..26.5 (Overseer) at the tab line; the 1.0 recess chamfer to 16.5"
+  }
+ },
+ "strength": {
+  "hold": {
+   "per_tab_N": 28.6,
+   "opening_N": 4.91,
+   "spring_N": 15.1,
+   "margin": 3.08
+  },
+  "release": {
+   "scout": 5.0,
+   "overseer": 3.4
+  },
+  "rib_bearing_MPa": 4.65,
+  "blade_root_MPa": {
+   "squeeze": 6.19,
+   "worst": 9.29,
+   "lever": 7.999999999999998
+  },
+  "rods": {
+   "span": 61.0,
+   "per_boss_N": 14.32,
+   "sigma_MPa": 73.0,
+   "index": 0.073,
+   "boss_MPa": 0.4
+  },
+  "anti_rack": {
+   "boss": 12.0,
+   "need_yaw": 7.2,
+   "need_pitch": 6.0,
+   "ok": true
+  },
+  "pads_MPa": {
+   "stall": 1.23,
+   "area_worst_mm2": 60.0
+  },
+  "head_moment_Nm": {
+   "pull": 5.29,
+   "stall": 6.83,
+   "lever": 92.25
+  },
+  "wheel_axial_N_pull": {
+   "rigid": 189.0,
+   "flexible": 378.0
+  },
+  "wheel_axial_N_stall": {
+   "rigid": 244.0,
+   "flexible": 488.0
+  },
+  "spine_MPa_pull": 7.2,
+  "spine_MPa_stall": 9.3,
+  "plate_panel_far_wheel_MPa": {
+   "pull": 11.8,
+   "note": "4.0 plate panel round the far axle between ribs (clamped, central load, E): the topology run's FE decides"
+  },
+  "note": "the 4.0 carriage plate (Y 68.75..72.75, fixed by the low stack) is the weak link for the 5.3 / 6.8 N.m head moment: the topology run gets the room under it between the wheels and beside the rail (spine X 35..46.5, a rib at u 16..20); if its FE index misses, the ask is the plate top to Y 74.35 under the cartridge (1.0 under the Overseer receiver, system number)"
+ },
+ "loads": {
+  "insert at the drone 60 N (swap)": {
+   "at": "deck pads (u 15.4, X +-16.5..20, Y 155..175)",
+   "F": [
+    0,
+    0,
+    -60.0
+   ],
+   "cls": "swap"
+  },
+  "insert stall 74 N (misuse)": {
+   "at": "deck pads",
+   "F": [
+    0,
+    0,
+    -74.0
+   ],
+   "cls": "misuse"
+  },
+  "pull 57.3 N while the XT60 unmates (swap)": {
+   "at": "rod sockets (4 ends, X +-30.5, Y 161 / 169, u 7.5)",
+   "F": [
+    0,
+    0,
+    -57.3
+   ],
+   "cls": "swap",
+   "note": "carriers -> rods: 14.3 N per rod end"
+  },
+  "squeeze reaction (internal)": {
+   "at": "spring between the carriers, cam on the rollers",
+   "F": [
+    0,
+    0,
+    0
+   ],
+   "cls": "swap",
+   "note": "the spring is between the carriers and the cam forces cancel: nothing on the body but the servo torque 0.24 N.m at the ear pads"
+  },
+  "handling 3 g radial + 2 g along X, Overseer cartridge carried": {
+   "at": "pads (radial out) / rib pockets (radial in) and the pinion pin (X)",
+   "F": [
+    14.7,
+    0,
+    22.0
+   ],
+   "cls": "handling",
+   "cg": "cartridge CG at Y 170.2, u 48.5 (latch: swap CG y 33.1, z_T 5.18 off)"
+  },
+  "servo stall on the cam (misuse)": {
+   "at": "ear pads",
+   "T_Nmm": 1961.0,
+   "cls": "misuse",
+   "note": "the servo driven against a jammed blade: 1.96 N.m into the ear pads; the cam / rollers take 2 x 93 N at r 10.5"
+  },
+  "supports": "the three wheel bores (Y reactions both ways, X across: fixed pair + eccentric) and the rack teeth (u)"
+ },
+ "space": {
+  "carrier+": {
+   "arm_overlap_voxels": 68,
+   "min_X_plus_u": -23.1,
+   "park_ok": true,
+   "Z_min_at_drone": 105.3,
+   "X": [
+    -26.0,
+    23.0
+   ],
+   "Y": [
+    157.0,
+    180.0
+   ],
+   "u": [
+    -6.0,
+    21.4
+   ]
+  },
+  "carrier-": {
+   "arm_overlap_voxels": 53,
+   "min_X_plus_u": -24.5,
+   "park_ok": true,
+   "Z_min_at_drone": 105.3,
+   "X": [
+    -23.0,
+    26.0
+   ],
+   "Y": [
+    157.0,
+    180.0
+   ],
+   "u": [
+    -6.0,
+    21.4
+   ]
+  },
+  "roller+": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": 0.93,
+   "park_ok": true,
+   "Z_min_at_drone": 103.8,
+   "X": [
+    5.5,
+    15.5
+   ],
+   "Y": [
+    152.5,
+    156.5
+   ],
+   "u": [
+    -7.5,
+    2.5
+   ]
+  },
+  "roller-": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -20.07,
+   "park_ok": true,
+   "Z_min_at_drone": 103.8,
+   "X": [
+    -15.5,
+    -5.5
+   ],
+   "Y": [
+    152.5,
+    156.5
+   ],
+   "u": [
+    -7.5,
+    2.5
+   ]
+  },
+  "cam": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -16.92,
+   "park_ok": true,
+   "Z_min_at_drone": 98.5,
+   "X": [
+    -5.4,
+    5.4
+   ],
+   "Y": [
+    152.0,
+    157.0
+   ],
+   "u": [
+    -12.8,
+    7.8
+   ]
+  },
+  "horn": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -20.18,
+   "park_ok": true,
+   "Z_min_at_drone": 96.3,
+   "X": [
+    -12.5,
+    12.5
+   ],
+   "Y": [
+    145.5,
+    152.0
+   ],
+   "u": [
+    -15.0,
+    10.0
+   ]
+  },
+  "servo DS3218": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -29.5,
+   "park_ok": true,
+   "Z_min_at_drone": 98.8,
+   "X": [
+    -17.0,
+    37.5
+   ],
+   "Y": [
+    100.8,
+    145.5
+   ],
+   "u": [
+    -12.5,
+    7.5
+   ]
+  },
+  "servo MG995": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -29.2,
+   "park_ok": true,
+   "Z_min_at_drone": 98.9,
+   "X": [
+    -16.9,
+    37.2
+   ],
+   "Y": [
+    102.6,
+    145.5
+   ],
+   "u": [
+    -12.4,
+    7.3
+   ]
+  },
+  "rods": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -26.0,
+   "park_ok": true,
+   "Z_min_at_drone": 117.3,
+   "X": [
+    -32.0,
+    32.0
+   ],
+   "Y": [
+    159.5,
+    170.5
+   ],
+   "u": [
+    6.0,
+    9.0
+   ]
+  },
+  "spring rod": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -27.5,
+   "park_ok": true,
+   "Z_min_at_drone": 115.3,
+   "X": [
+    -31.5,
+    31.5
+   ],
+   "Y": [
+    175.5,
+    178.5
+   ],
+   "u": [
+    4.0,
+    7.0
+   ]
+  },
+  "spring": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -19.25,
+   "park_ok": true,
+   "Z_min_at_drone": 114.0,
+   "X": [
+    -22.0,
+    22.0
+   ],
+   "Y": [
+    174.2,
+    179.8
+   ],
+   "u": [
+    2.8,
+    8.2
+   ]
+  },
+  "pinion": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -8.0,
+   "park_ok": true,
+   "Z_min_at_drone": 111.3,
+   "X": [
+    -8.0,
+    8.0
+   ],
+   "Y": [
+    157.0,
+    173.0
+   ],
+   "u": [
+    0.0,
+    4.5
+   ]
+  },
+  "body (drawn interfaces)": {
+   "arm_overlap_voxels": 0,
+   "min_X_plus_u": -30.5,
+   "park_ok": true,
+   "Z_min_at_drone": 48.3,
+   "X": [
+    -32.0,
+    46.5
+   ],
+   "Y": [
+    59.2,
+    181.0
+   ],
+   "u": [
+    -63.0,
+    40.0
+   ]
+  },
+  "carrier+ open": {
+   "arm_overlap_voxels": 6,
+   "min_X_plus_u": -18.1,
+   "park_ok": true,
+   "Z_min_at_drone": 105.3,
+   "X": [
+    -21.0,
+    28.0
+   ],
+   "Y": [
+    157.0,
+    180.0
+   ],
+   "u": [
+    -6.0,
+    21.4
+   ]
+  },
+  "carrier- open": {
+   "arm_overlap_voxels": 18,
+   "min_X_plus_u": -29.5,
+   "park_ok": true,
+   "Z_min_at_drone": 105.3,
+   "X": [
+    -28.0,
+    21.0
+   ],
+   "Y": [
+    157.0,
+    180.0
+   ],
+   "u": [
+    -6.0,
+    21.4
+   ]
+  }
+ },
+ "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: {'carrier+': (68, -23.1), 'carrier-': (53, -24.5), 'carrier+ open': (6, -18.1), 'carrier- open': (18, -29.5)}; lowest point at the commanded drone insert Z 96.3 (keep-out 111.5)",
+ "internal": {
+  "squeezed": {},
+  "open": {}
+ },
+ "masses": {
+  "printed_parts": {
+   "carrier+": 3.6,
+   "carrier-": 4.5,
+   "cam": 0.7,
+   "pinion": 1.1
+  },
+  "bought": {
+   "servo_DS3218": 60.0,
+   "servo_MG995": 55.0,
+   "horn": 6.0,
+   "rods_carbon": 2.1,
+   "spring": 1.0,
+   "rollers_623ZZ": 3.2,
+   "halls": 1.0,
+   "screws_inserts": 4.0
+  },
+  "body_E": 75.0,
+  "note": "body from the topology run (E 75 g, v5 head 56 M + carriage)"
+ },
+ "alternatives": {
+  "spring": [
+   [
+    "one crossed spring (chosen)",
+    "both blades 15 N squeezed / ~23 N open from one 0.7 wire spring on a rod (L 44 -> 34); the spring force stays inside the carriers; needs two crossing arms"
+   ],
+   [
+    "one spring per blade in the wall",
+    "the -X wall meets the park bisector (X + u >= -30.6): 13 mm of spring at the blade's height; 15 N with a 5 mm stroke there needs a 0.7 wire at ~950 MPa (over 0.45 UTS) or a 2x force rise (servo x2)"
+   ]
+  ],
+  "servo": [
+   [
+    "shaft along Y under the grip (chosen)",
+    "20 thick in u (u -12.5..7.5), long side along +X: inside the bay wedge and the park bisector with 1.1 / 3.5 mm; the cam beside the blades; MG995 x3.8 on 2.4 kg.cm"
+   ],
+   [
+    "shaft along u, cam in the X-Y plane",
+    "the 40.7 body hangs from u ~0 to u -45: crosses the park bisector X + u = -32 by ~25 mm at X -10 (the parked heads collide) unless the heads differ in Y; rejected"
+   ]
+  ],
+  "cut": [
+   [
+    "one print: carriage + body (chosen)",
+    "no joint at the highest moment (5.3 / 6.8 N.m at the plate); 1 part, fits 110 x 90 x 125"
+   ],
+   [
+    "carriage plate + bolted body",
+    "a printed-flat plate (better rack teeth) and 4 M3 inserts at the plate: the joint carries ~190..490 N per bolt pair at the moment, +6 g, one more fit; kept as the fallback if the one-piece print fails the teeth"
+   ]
+  ]
+ },
+ "changes": [
+  "open blade position inner faces +-11.0 (concept 10.5): a 0.8 rib into the grip pocket must clear the latched tab's outer face (10) on the way in (the latch's +-11 open; the tab's 1.0 chamfer cams a 1.0 head offset); stroke 5.0 per blade",
+  "one crossed spring (15 N squeezed per blade, L 44 -> 34) instead of one spring per blade: the -X blade has 13 mm to the park bisector (the two parked heads), where a 15 N spring would need > 950 MPa (alternatives)",
+  "a passive m1 pinion between racks on the two carriers locks their common mode: a lateral load on the cartridge goes to the body, not the cam or the spline (with free blades the cam base would take it)",
+  "blades 12 wide (Y 159..171; the latch's 13): 1.5 clear of the hall package at Y 157 (the tab magnet's spot, z_T + 8); the rib (7.7 wide) is unchanged",
+  "623ZZ roller followers on the carriers (no sliding at the cam: the servo needs 2.4 kg.cm, concept 1.98 with mu 0.3 on 19.5 N)",
+  "head below the insert-lane keep-out's Z 111.5 at the drone (servo bottom u -12.5 -> Z 98.8 at the commanded insert): nothing of the catch (Z >= 154), the mast (Z <= 44) or the bays (60 deg away) is there; the structure keeps Z < 111.5 free (to the hub)"
+ ]
+}
