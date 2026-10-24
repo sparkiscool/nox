@@ -1,8 +1,8 @@
 """Write nox/scout/v3/scout.assembly.json from the Scout v3 system model (24 Oct 2026; nox/ASSEMBLY.md).
 
 Geometry and numbers come from layout_v2.py (its definitions are executed, not retyped); the cage is the system pass's
-chosen rods in runs/scout_layout/v2/result.json (pass 1, commit 1d9279a: 116 rods, E cases). Part meshes the file points
-at are written to runs/scout_layout/v2/assembly/.
+chosen members in runs/scout_layout/v3/result.json (v3: carbon rods + printed short members, rod reduction). Part meshes
+the file points at are written to runs/scout_layout/v3/assembly/.
 
 python3 nox/scout/v3/write_assembly.py && python3 nox/assembly.py nox/scout/v3/scout.assembly.json --check
 """
@@ -17,8 +17,8 @@ L = {"__file__": SRC, "__name__": "layout_v2_defs"}
 exec(compile(src, SRC, "exec"), L)
 from assembly import load
 
-OUT = os.path.join(ROOT, "runs", "scout_layout", "v2", "assembly"); os.makedirs(OUT, exist_ok=True)
-R = json.load(open(os.path.join(ROOT, "runs", "scout_layout", "v2", "result.json")))
+OUT = os.path.join(ROOT, "runs", "scout_layout", "v3", "assembly"); os.makedirs(OUT, exist_ok=True)
+R = json.load(open(os.path.join(ROOT, "runs", "scout_layout", "v3", "result.json")))
 rel = lambda p: os.path.relpath(p, ROOT)
 for p_, q_ in R.get("webs", []): L["WEB"].add(L["_mkey"](np.array(p_), np.array(q_)))   # printed webs (short, by a keep-out)
 for p_, q_ in R.get("short_carbon_clearance", []): L["FORCED_CARBON"].add(L["_mkey"](np.array(p_), np.array(q_)))   # short carbon kept for clearance
@@ -30,7 +30,7 @@ def mesh_part(name, m, **kw):
 
 
 SRC_REL = "nox/scout/v3/layout_v2.py"
-own = dict(owner="scout v3", version=R.get("version", "v2"), source=SRC_REL)
+own = dict(owner="scout v3", version=R.get("version", "v3"), source=SRC_REL)
 parts = []
 parts.append(mesh_part("frame plate", L["PLATE"], role="structure", mass_g=28, tag="E", note="Bee35 cut down, 3.5 carbon (C), tail XT60 cut-out", **own))
 for i, (b, (x, y)) in enumerate(zip(L["BELLS"], L["MOTORS_XY"])):
@@ -76,7 +76,7 @@ parts.append(mesh_part("catch wheels", trimesh.Trimesh(WP).convex_hull if False 
 parts.append(mesh_part("keep-alive pads", trimesh.util.concatenate(L["KA_PADS"]), role="cage", mass_g=2.0, tag="E",
                        note="B+ on the +x lower ring, B- on -x; the box catch's face probes touch them (G (8))", **own))
 a = {"name": "Scout v3", "machine": "scout",
-     "note": ("Scout v3 system pass v2, latch refit (layout.md). Seat frame = drone frame. Battery set = the control session's "
+     "note": ("Scout v3 system pass v3: printed short members (carbon >= 33 mm, Spark), fewest pieces (layout.md). Seat frame = drone frame. Battery set = the control session's "
               "latch standard (part/battery-latch 258becf, interim). No belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT, G (8)). "
               "Left out: wires (20 g E), camera mount, plate hubs, the TPU suspension pads, wheel contact pads."),
      "cg_ref": [0.0, 0.0, L["PROP_Z"]], "thrust_axis": [0, 0, 1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0,

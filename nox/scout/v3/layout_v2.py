@@ -30,9 +30,9 @@ sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 from topo.part import man
 
-OUT = os.environ.get("LAYOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v2")
+OUT = os.environ.get("LAYOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v3")   # v3: printed short members + rod reduction
 LATCH_DIR = os.path.join(ROOT, "runs", "scout_layout", "v2")                  # inputs (latch, pr44) always from the v2 run folder
-ESO_SEED = int(os.environ.get("ESO_SEED", "2"))         # multi-start: seed 2 was the lightest of 4 (latch refit, 24 Oct)
+ESO_SEED = int(os.environ.get("ESO_SEED", "1"))         # multi-start: seed 1 had the fewest pieces of 4 (count objective, 24 Oct)
 VIDEO = "--novideo" not in sys.argv
 S2 = math.sqrt(2.0)
 LOG = io.StringIO()
@@ -601,7 +601,7 @@ def cage_mass(N, kind, members):
     return g
 
 
-OBJ = os.environ.get("OBJ", "mass")           # ESO target: "mass" (grams) or "count" (rod pieces + printed nodes, mass as tiebreak; Spark 24 Oct)
+OBJ = os.environ.get("OBJ", "count")           # ESO target: "mass" (grams) or "count" (rod pieces + printed nodes, mass as tiebreak; Spark 24 Oct)
 
 
 def cage_count(N, kind, members):
@@ -1030,7 +1030,7 @@ for i in used:
             bad8.append(tuple(np.round(N[i], 1)))
 say(f"G (8) keep-alive band: {'clear' if not bad8 else 'nodes in it: ' + str(bad8)}; pads {[np.round(p_.bounds, 1).tolist() for p_ in KA_PADS]}")
 
-R = dict(version="v2 latch refit", date="2026-10-24T23:59", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
+R = dict(version="v3 printed short members, fewest pieces", date="2026-10-24T23:59", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
          pads=(dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]) if best["yp"] is not None else None), belly_post=BELLY_POST,
          keepalive="latch plungers onto the two latched +-y wheel nodes (hub DEFAULT)" if not BELLY_POST else "belly post", cage_mass=best["mass"], contact_first=best["cf"][0],
