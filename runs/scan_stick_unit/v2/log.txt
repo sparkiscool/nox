@@ -115,3 +115,5 @@ build: surface at pitch 0.500 mm (x4), generated field 350.19 cm3, mesh 1,031,55
 build: 28 shells, volumes [377842.7, 8.1, 6.0, 0.2, 0.1, 0.0] mm3; dropped specks [0.0, 6.02, 0.0, 8.1, 0.0, 0.0, 0.02, 0.24, 0.0, 0.11, 0.01, 0.0]; sealed cavities kept [0.06, 0.05, 5.61, 0.01, 0.06, 0.0, 0.0, 1.67, 3.2, 0.02, 1.63, 0.06, 3.3, 0.08, 0.02] mm3
 function check: {'drawn_missing_mm3': 8.19, 'in_cuts_mm3': -5.74, 'outside_env_mm3': 0.0, 'ok': False}
 strength: worst index 10.96 in 'unit 50 g 1' at [-7.0, -19.0, 243.0]
+RESULT {"name": "scan_stick_unit", "mass_g": 479.83, "worst": 10.965, "function_ok": false, "bodies": 7}
+solid_check scan_stick_base_v19: /home/user/nox/runs/scan_stick_unit/v2/scan_stick_base_v19.stl FAIL {'bodies_plain': 59, 'bodies_eroded': 1, 'eroded_volumes_mm3': [207445.3], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 36, 'ok': False}

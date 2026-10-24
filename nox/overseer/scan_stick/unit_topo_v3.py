@@ -11,7 +11,9 @@ ring stand proud of the pack on -x and ±y. A straight-on bump still reaches the
 C): nothing can sit in front of it without being in the lidar's view.
 Pack pocket: ledge, lip, rails, back plate (v2) + 2 corner posts and a top ring (z 150..168, C); the pack drops in from the top
 (a clear path above it, C) and a removable 3 mm carbon pin across the top (y, z 162, C) keeps it in; the XT60 lead exits the top.
-For the clear path the head starts at x -20 (C): the L2 and the camera move 7 forward (O x 37, C), the camera board front at x -2.5.
+Engine: nox/topo default since 24 Oct (organic finish, Settings(); 6.25 mm members); drawn bodies sized for a 2 mm core at the
+gate's 2.0 mm erosion: Ø11 camera posts, Ø12 rod sockets and rails, Ø18 L2 screw bosses, 6 mm plates (docs/generative.md).
+For the clear path the head starts at x -20 (C): the L2 and the camera move 8 forward (O x 38, C), the camera board front at x -1.5.
    python3 unit_topo_v3.py [h] [gen_cm3] [--no-git]   python3 unit_topo_v3.py --rebuild | --check | --node"""
 import sys, os
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
@@ -42,13 +44,13 @@ FLX, FLY = (-20.0, 28.0), 34.0                              # flange x -20..28, 
 BOLTS = [(-8.0, -28.0), (-8.0, 28.0), (16.0, -28.0), (16.0, 28.0)]     # C: M3 x 12 up from below, inserts in the upper flange
 # ---- sensors
 TILT = 15.0                                                 # C: L2 and camera 15° down (Spark 24 Oct)
-O = np.array((37.0, 0.0, 290.0))                            # C, DEFAULT: centre of the L2 base face
+O = np.array((38.0, 0.0, 290.0))                            # C, DEFAULT: centre of the L2 base face
 s, c = np.sin(np.radians(TILT)), np.cos(np.radians(TILT))
 F, U, Y = np.array((c, 0, -s)), np.array((s, 0, c)), np.array((0, 1.0, 0))
 L2_HALF, L2_LEN, L2_PCD = 37.5, 65.0, 51.0                  # spec
-CAM_Z, CAM_XF, CAM_P, BOARD, LENS = 205.0, -2.5, 14.0, 19.0, 16.0   # C: level board, centre z 205, front face x -10; 28 x 28 (P), 38 x 38 (P); lens 16 (E)
-POST_L, POST_R, HOLE_R, CPLATE_T = 10.0, 4.5, 0.9, 5.0      # C: posts Ø9 x 10, E: Ø1.8 for M2, C: back plate 5
-ROD_R, SOCK_R = 1.6, 4.7                                   # C: Ø3.2 rod holes (3.0 carbon + epoxy), Ø9.4 sockets (3.1 wall)
+CAM_Z, CAM_XF, CAM_P, BOARD, LENS = 205.0, -1.5, 14.0, 19.0, 16.0   # C: level board, centre z 205, front face x -10; 28 x 28 (P), 38 x 38 (P); lens 16 (E)
+POST_L, POST_R, HOLE_R, CPLATE_T = 10.0, 5.5, 0.9, 6.0      # C: posts Ø11 x 10 (v3: a 2 mm core at the gate erosion), E: Ø1.8 for M2, C: back plate 6
+ROD_R, SOCK_R = 1.6, 6.0                                   # C: Ø3.2 rod holes (3.0 carbon + epoxy), Ø12 sockets and rails (4.4 wall)
 CAGE_F, CAGE_Y, CAGE_U = -14.0, 52.0, 60.0                  # C: L2 frame plane f -14, rods at y ±52 (14.5 outside the L2 body), top rod at u +60
 RAIL_U = (-100.0, -60.0)                                    # C: the side rods run in drawn rails on the head over u -100..-60
 PI_GUARD = (62.0, 33.0, 5.0, 101.0)                         # C: rods at x 62, y ±33, from z 5 to 101 (top arm z 98..104, under the rocker opening)
@@ -94,9 +96,9 @@ def base_bodies(off=0.5):
         y0 = sy * (BAT_W / 2 + 1); rails += box(BAT_X1 - 10, BAT_X1, min(y0, y0 + sy * 14), max(y0, y0 + sy * 14), 5, BAT_Z0 + BAT_L + 2)
     shelf = box(-SHELF_W / 2, SHELF_W / 2, SHELF_Y[0], SHELF_Y[1], 5, 66)
     back = box(BAT_X1, BAT_X1 + 5, -(BAT_W / 2 + 15), BAT_W / 2 + 15, 5, FL_Z + 2)
-    px0, px1 = BAT_X1 - BAT_H - 7.5, BAT_X1 - BAT_H - 1.5                                      # pocket corner posts x -72.5..-66.5, y ±(24.5..30.5)
-    posts = sum((box(px0, px1, min(sy * 24.5, sy * 30.5), max(sy * 24.5, sy * 30.5), 5, 168) for sy in (-1, 1)), mf.Manifold())
-    ring = box(px0, BAT_X1, -30.5, 30.5, 150, 168) - box(BAT_X1 - BAT_H - 1, BAT_X1 + 1, -BAT_W / 2 - 1, BAT_W / 2 + 1, 149, 169)   # top ring round the opening
+    px0, px1 = BAT_X1 - BAT_H - 7.5, BAT_X1 - BAT_H - 1.5                                      # pocket corner posts x -72.5..-66.5, y ±(24.5..31)
+    posts = sum((box(px0, px1, min(sy * 24.5, sy * 31.0), max(sy * 24.5, sy * 31.0), 5, 168) for sy in (-1, 1)), mf.Manifold())
+    ring = box(px0, BAT_X1, -31.0, 31.0, 150, 168) - box(BAT_X1 - BAT_H - 1, BAT_X1 + 1, -BAT_W / 2 - 1, BAT_W / 2 + 1, 149, 169)   # top ring round the opening
     gx, gy, gz0, gz1 = PI_GUARD
     piguard = mf.Manifold()
     for sy in (-1, 1):
@@ -163,11 +165,11 @@ def head_bodies():
     l2_reg = mf.Manifold()
     for y, u in l2_pads:
         p6 = S(-6.0, y, u)
-        xb = p6[0] - 7.5 * s - 3.0                                                              # boss back face: 3 behind the disc's rearmost point
+        xb = p6[0] - 9.0 * s - 3.0                                                              # boss back face: 3 behind the disc's rearmost point
         tb = (p6[0] - xb) / c                                                                   # along -f from the ring back to that face
         pe = p6 - tb * F
-        drawn += mf.Manifold.batch_hull([loc(cylx(-6.0, 0.0, y, u, 7.5)), cylx(xb - 0.01, xb, pe[1], pe[2], 7.5)])   # Ø15 boss: 3.0 wall round the Ø9 bore
-        l2_reg += loc(cylx(-6.0, 0.5, y, u, 7.5))
+        drawn += mf.Manifold.batch_hull([loc(cylx(-6.0, 0.0, y, u, 9.0)), cylx(xb - 0.01, xb, pe[1], pe[2], 9.0)])   # Ø18 boss: 4.5 wall round the Ø9 bore (v3)
+        l2_reg += loc(cylx(-6.0, 0.5, y, u, 9.0))
         cuts_w += loc(cylx(-7, 1, y, u, 1.7) + cylx(-6.0, -3.0, y, u, 3.0) + cylx(-6.0 - tb - 2.0, -6.0, y, u, 4.5))   # Ø3.4, Ø6 x 3 head pocket, Ø9 bore to the face
         cuts_w += box(-40.0, xb - 0.5, pe[1] - 4.7, pe[1] + 4.7, pe[2] - 4.7, pe[2] + 4.7 + (xb + 40.0) * t15)        # straight driver channel out the back
     # camera (level, world frame): back plate, 4 posts, board + the 10 mm behind it open down to the flange top and forward
@@ -182,9 +184,12 @@ def head_bodies():
     for y, z in cam_posts:
         keep -= cylx(xb_board - POST_L - 1, xb_board + 0.5, y, z, POST_R + 0.5)
     cuts_w += keep
-    zt = CAM_Z + BOARD + (plane_x(CAM_Z + 40) - CAM_XF) * np.tan(np.radians(36.5))            # E: view 89 x 73° (4:3 assumed) up to the L2 base plane
-    hy = BOARD + (plane_x(zt) - CAM_XF) * np.tan(np.radians(44.5))
-    cuts_w += box(CAM_XF, plane_x(zt) + 1, -hy, hy, TOP + UP_T + 0.5, zt)                      # the lens view, a box
+    tv, th = np.tan(np.radians(36.5)), np.tan(np.radians(44.5))                                # E: view 89 x 73° (4:3 assumed)
+    xe = plane_x(CAM_Z + BOARD + 25 * tv) + 1                                                  # the view ends at the L2 base plane
+    for k in range(4):                                                                         # v3: a 4 step frustum, each step as wide as the view at its far end
+        x0, x1 = CAM_XF + (xe - CAM_XF) * k / 4, CAM_XF + (xe - CAM_XF) * (k + 1) / 4
+        d = x1 - CAM_XF
+        cuts_w += box(x0, x1, -(BOARD + d * th), BOARD + d * th, max(TOP + UP_T + 0.5, CAM_Z - BOARD - d * tv), CAM_Z + BOARD + d * tv)
     drawn += cplate + posts
     # the L2 hemisphere: a 2 mm stair of boxes in front of the base plane (behind it within 0.54 mm)
     for z0 in np.arange(TOP + UP_T + 2, 334, 2.0):
@@ -192,7 +197,7 @@ def head_bodies():
     env = box(-20, 57, -46, 46, TOP + UP_T - 2, 332)                                           # v3: the head starts at x -20 (the pack's drop-in path)
     for sy in (-1, 1):                                                                         # L2 frame: drawn rails for the side rods (tilted, drawn: exact)
         y = sy * CAGE_Y
-        drawn += loc(mf.Manifold.cylinder(RAIL_U[1] - RAIL_U[0], SOCK_R + 0.3, SOCK_R + 0.3, 32).translate([CAGE_F, y, RAIL_U[0]]))
+        drawn += loc(mf.Manifold.cylinder(RAIL_U[1] - RAIL_U[0], SOCK_R, SOCK_R, 32).translate([CAGE_F, y, RAIL_U[0]]))
         cuts_w += loc(mf.Manifold.cylinder(RAIL_U[1] - RAIL_U[0] + 2, ROD_R, ROD_R, 24).translate([CAGE_F, y, RAIL_U[0] + 4]))   # rod hole, 4 floor at the bottom
     env += box(-20, 50, -CAGE_Y - 7, CAGE_Y + 7, TOP + UP_T - 2, 250)                         # v3: room to brace the rails
     rail_reg = sum((loc(mf.Manifold.cylinder(RAIL_U[1] - RAIL_U[0], SOCK_R + 0.8, SOCK_R + 0.8, 32).translate([CAGE_F, sy * CAGE_Y, RAIL_U[0]])) for sy in (-1, 1)), mf.Manifold())
@@ -260,7 +265,7 @@ def rebuild_split():
     from topo.build import surface, assemble, function_check, strength, export_view_mesh, render, _json_default
     log = Tee(os.path.join(OUT, "log.txt"))
     t0 = time.time()
-    st = Settings(finish="drawn")
+    st = Settings()
     st = replace(st, min_member_mm=round(gate_member_mm(setup(H), st.min_member_mm, log=log), 2))
     part = setup(H)
     L = Layout(part, gen_cm3=GEN, settings=st, log=log)
@@ -330,7 +335,7 @@ if __name__ == "__main__":
             raise LayoutDone()
         R.build_and_check = _stop
         try:
-            R.optimise(setup, h=H, gen_cm3=GEN, out_dir=OUT, name="scan_stick_unit", settings=Settings(finish="drawn"), git=GIT)
+            R.optimise(setup, h=H, gen_cm3=GEN, out_dir=OUT, name="scan_stick_unit", settings=Settings(), git=GIT)
         except LayoutDone:
             pass
         sys.exit(subprocess.run([sys.executable, os.path.abspath(__file__), "--rebuild"] + ARGS).returncode)
