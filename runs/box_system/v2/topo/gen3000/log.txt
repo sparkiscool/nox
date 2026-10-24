@@ -74,3 +74,31 @@ it  57 beta    4 J   0.0338 vol 0.0822 (dil 0.1195 g -0.002) grey  2.5% ch 0.100
 it  58 beta    4 J   0.0326 vol 0.0825 (dil 0.1195 g -0.001) grey  1.8% ch 0.100 worst all bays: 60 N insert 8.26 1.9s
 it  59 beta    4 J   0.0321 vol 0.0828 (dil 0.1196 g -0.001) grey  1.6% ch 0.100 worst all bays: 60 N insert 8.16 1.9s
 it  60 beta    4 J   0.0318 vol 0.0831 (dil 0.1196 g -0.000) grey  1.3% ch 0.100 worst all bays: 60 N insert 8.1 1.9s
+it  61 beta    4 J   0.0316 vol 0.0832 (dil 0.1196 g +0.007) grey  1.3% ch 0.100 worst all bays: 60 N insert 8.06 1.8s
+it  62 beta    4 J   0.0327 vol 0.0821 (dil 0.1187 g -0.001) grey  1.9% ch 0.100 worst all bays: 60 N insert 8.24 1.8s
+layout: stopped (beta_stop) at it 62, beta 4, 122 s
+layout: beta 4 done: eroded design 3 bodies, main 95.6%; drawn bodies outside the main body: 1
+coarse stage done: 140 s, peak 1.10 GB
+seat posts side/overlap mm3 [(1, 1364.7), (1, 1364.7), (1, 466.9), (1, 466.9), (1, 1364.7), (1, 1364.7), (1, 466.9), (1, 466.9)]
+box_system_topo_v2: grid (56, 56, 64) h 8.0 = 200,704 cells; design 83,215 (42606.1 cm3), drawn 10,148, void 107,341
+  support default: 2600 cells, 5406 nodes
+  support hands: 722 cells, 1600 nodes
+  support side: 2900 cells, 6018 nodes
+  154 cells of 8 design islands cut off by the keep-outs set void
+setup h 8.0: 19 s, 14 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 2.32 cells, erosion depth 4.93 mm; volfrac 0.071 of 83,061 design cells
+layout: WARNING nearly mirrored in x (1.0% of passive cells differ): no symmetry
+layout: 19 drawn bodies (10,148 cells), held solid in every realization; eroded filter: masked
+layout: 14 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (56, 56, 64) = 200,704 elements, 328,308 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 32) grid (h 16.0): mean x 0.179
+it   1 beta    4 J  10.0000 vol 0.1704 (dil 0.2518 g +1.416) grey 23.9% ch 0.100 worst misuse: Overseer motors cut 211 34.1s
+it   2 beta    4 J   8.6631 vol 0.1554 (dil 0.2404 g +1.307) grey 25.4% ch 0.100 worst misuse: Overseer motors cut 174 39.2s
+it   3 beta    4 J  11.4853 vol 0.1385 (dil 0.2277 g +1.184) grey 18.7% ch 0.100 worst misuse: Overseer motors cut 229 42.7s
+it   4 beta    4 J  22.3244 vol 0.1202 (dil 0.2134 g +1.047) grey 19.3% ch 0.100 worst XT60 insert at the -90 bay 6 409 34.6s
+it   5 beta    4 J  39.6775 vol 0.1020 (dil 0.1980 g +0.900) grey 19.2% ch 0.100 worst misuse: Overseer motors cut 795 32.6s
+it   6 beta    4 J  69.2519 vol 0.0862 (dil 0.1827 g +0.614) grey 18.6% ch 0.100 worst XT60 insert at the -120 bay  1.38e+03 31.6s
+it   7 beta    4 J 122.7127 vol 0.0733 (dil 0.1669 g +0.475) grey 17.4% ch 0.100 worst Overseer catch -X-Y diag 2.75e+03 33.2s
+it   8 beta    4 J  89.3916 vol 0.0632 (dil 0.1536 g +0.358) grey 16.8% ch 0.100 worst all bays: 60 N insert 1.82e+03 31.9s
+it   9 beta    4 J 138.2312 vol 0.0528 (dil 0.1359 g +0.201) grey 16.0% ch 0.100 worst Overseer catch -X-Y diag 2.94e+03 31.0s
+it  10 beta    4 J  98.1772 vol 0.0454 (dil 0.1216 g +0.074) grey 15.5% ch 0.100 worst all bays: 60 N insert 1.98e+03 33.4s
