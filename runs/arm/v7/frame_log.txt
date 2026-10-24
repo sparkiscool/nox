@@ -1,68 +1,63 @@
-                                       lag along the insert  -0.46 (max 2.7), receiver {'F_across_N': 18.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at the drone 60 N               pack dX -0.265 tilt  0.268 | worst pinion 16T (Lewis, in-layer) 0.44 (pinion A)
-insert at the drone 60 N (free, no receiver) pack dX -0.254 tilt  0.387 | worst pinion 16T (Lewis, in-layer) 0.44 (pinion A)
-                                       lag along the insert   0.38 (max 2.7), receiver {'F_across_N': 3.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at the drone 50 N                 pack dX  0.266 tilt  0.250 | worst pinion 16T (Lewis, in-layer) 0.33 (pinion A)
-pull at the drone 50 N (free, no receiver) pack dX  0.264 tilt  0.269 | worst pinion 16T (Lewis, in-layer) 0.33 (pinion A)
-                                       lag along the insert   0.38 (max 2.7), receiver {'F_across_N': 2.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B pull at the drone 50 N               pack dX  0.266 tilt  0.255 | worst pinion 16T (Lewis, in-layer) 0.33 (pinion B)
-B pull at the drone 50 N (free, no receiver) pack dX  0.264 tilt  0.269 | worst pinion 16T (Lewis, in-layer) 0.33 (pinion B)
-                                       lag along the insert  -0.56 (max 2.7), receiver {'F_across_N': 20.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-head stall into a jammed pack 74 N     pack dX -0.363 tilt  0.288 | worst pinion 16T (Lewis, in-layer) 0.56 (pinion A)
-head stall into a jammed pack 74 N (free, no receiver) pack dX -0.350 tilt  0.393 | worst pinion 16T (Lewis, in-layer) 0.56 (pinion A)
-axle stall, head in a bay              pack dX -0.536 tilt  0.612 | worst V-wheel (flank Hertz) 0.32 (worst wheel)
-dropped pack                           pack dX -0.477 tilt  0.977 | worst pinion 16T (Lewis, in-layer) 0.57 (pinion A)
-box handling 3 g down + 2 g side       pack dX  0.157 tilt  0.238 | worst V-wheel (flank Hertz) 0.27 (worst wheel)
-power cut carrying: head A falls to the park stop pack dX  0.096 tilt  3.208 | worst 625ZZ (axial / C0 670 N) 0.93 (worst wheel)
+                                       lag along the insert  -0.76 (max 2.7), receiver {'F_across_N': 36.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at the drone 60 N               pack dX -0.294 tilt  0.402 | worst pinion 16T (Lewis, in-layer) 0.44 (pinion A)
+insert at the drone 60 N (free, no receiver) pack dX -0.250 tilt  0.683 | worst pinion 16T (Lewis, in-layer) 0.44 (pinion A)
+                                       lag along the insert   0.61 (max 2.7), receiver {'F_across_N': 18.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at the drone 50 N                 pack dX  0.342 tilt  0.353 | worst V-wheel (flank Hertz) 0.33 (worst wheel)
+pull at the drone 50 N (free, no receiver) pack dX  0.331 tilt  0.479 | worst V-wheel (flank Hertz) 0.38 (worst wheel)
+                                       lag along the insert   0.62 (max 2.7), receiver {'F_across_N': 17.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B pull at the drone 50 N               pack dX  0.353 tilt  0.364 | worst V-wheel (flank Hertz) 0.34 (worst wheel)
+B pull at the drone 50 N (free, no receiver) pack dX  0.331 tilt  0.479 | worst V-wheel (flank Hertz) 0.38 (worst wheel)
+                                       lag along the insert  -0.89 (max 2.7), receiver {'F_across_N': 43.5, 'M_Nm': 0.04, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+head stall into a jammed pack 74 N     pack dX -0.421 tilt  0.439 | worst pinion 16T (Lewis, in-layer) 0.56 (pinion A)
+head stall into a jammed pack 74 N (free, no receiver) pack dX -0.370 tilt  0.762 | worst pinion 16T (Lewis, in-layer) 0.56 (pinion A)
+axle stall, head in a bay              pack dX -1.097 tilt  0.820 | worst V-wheel (flank Hertz) 0.35 (worst wheel)
+dropped pack                           pack dX -0.569 tilt  1.260 | worst V-wheel (flank Hertz) 0.54 (worst wheel)
+box handling 3 g down + 2 g side       pack dX  0.361 tilt  0.336 | worst V-wheel (flank Hertz) 0.29 (worst wheel)
+power cut carrying: head A falls to the park stop pack dX -0.230 tilt  4.798 | worst 625ZZ (axial / C0 670 N) 1.34 (worst wheel)
 hand on rail A tip 50 N                pack dX -0.392 tilt  0.366 | worst shaft 0.21 (axle shaft)
-gravity, A horizontal carrying         pack dX  0.042 tilt  0.069 | worst V-wheel (flank Hertz) 0.21 (worst wheel)
-                                       lag along the insert  -0.45 (max 2.7), receiver {'F_across_N': 16.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay 30 60 N                  pack dX -0.205 tilt  0.264 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion A)
-insert at bay 30 60 N (free, no receiver) pack dX -0.146 tilt  0.363 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion A)
-                                       lag along the insert   0.40 (max 2.7), receiver {'F_across_N': 6.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay 30 50 N                    pack dX  0.296 tilt  0.285 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
-pull at bay 30 50 N (free, no receiver) pack dX  0.346 tilt  0.343 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
-                                       lag along the insert  -0.46 (max 2.7), receiver {'F_across_N': 16.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay 30 60 N                pack dX -0.314 tilt  0.306 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion B)
-B insert at bay 30 60 N (free, no receiver) pack dX -0.303 tilt  0.395 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion B)
-                                       lag along the insert  -0.42 (max 2.7), receiver {'F_across_N': 12.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -30 60 N                 pack dX -0.175 tilt  0.250 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
-insert at bay -30 60 N (free, no receiver) pack dX -0.125 tilt  0.326 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
-                                       lag along the insert   0.43 (max 2.7), receiver {'F_across_N': 10.0, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -30 50 N                   pack dX  0.327 tilt  0.309 | worst pinion 16T (Lewis, in-layer) 0.37 (pinion A)
-pull at bay -30 50 N (free, no receiver) pack dX  0.367 tilt  0.379 | worst pinion 16T (Lewis, in-layer) 0.37 (pinion A)
-                                       lag along the insert  -0.44 (max 2.7), receiver {'F_across_N': 11.5, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -30 60 N               pack dX -0.290 tilt  0.292 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion B)
-B insert at bay -30 60 N (free, no receiver) pack dX -0.282 tilt  0.355 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion B)
-                                       lag along the insert  -0.41 (max 2.7), receiver {'F_across_N': 9.8, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -90 60 N                 pack dX -0.200 tilt  0.245 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
-insert at bay -90 60 N (free, no receiver) pack dX -0.193 tilt  0.307 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
-                                       lag along the insert   0.44 (max 2.7), receiver {'F_across_N': 11.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -90 50 N                   pack dX  0.308 tilt  0.290 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion A)
-pull at bay -90 50 N (free, no receiver) pack dX  0.300 tilt  0.348 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion A)
-                                       lag along the insert  -0.41 (max 2.7), receiver {'F_across_N': 9.0, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -90 60 N               pack dX -0.216 tilt  0.256 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion B)
-B insert at bay -90 60 N (free, no receiver) pack dX -0.193 tilt  0.308 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion B)
-                                       lag along the insert  -0.44 (max 2.7), receiver {'F_across_N': 12.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -150 60 N                pack dX -0.290 tilt  0.290 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
-insert at bay -150 60 N (free, no receiver) pack dX -0.282 tilt  0.355 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
-                                       lag along the insert   0.41 (max 2.7), receiver {'F_across_N': 9.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -150 50 N                  pack dX  0.217 tilt  0.242 | worst pinion 16T (Lewis, in-layer) 0.37 (pinion A)
-pull at bay -150 50 N (free, no receiver) pack dX  0.211 tilt  0.298 | worst pinion 16T (Lewis, in-layer) 0.37 (pinion A)
-                                       lag along the insert  -0.42 (max 2.7), receiver {'F_across_N': 12.0, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -150 60 N              pack dX -0.186 tilt  0.254 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion B)
-B insert at bay -150 60 N (free, no receiver) pack dX -0.125 tilt  0.326 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion B)
-                                       lag along the insert  -0.47 (max 2.7), receiver {'F_across_N': 16.0, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -210 60 N                pack dX -0.313 tilt  0.308 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion A)
-insert at bay -210 60 N (free, no receiver) pack dX -0.303 tilt  0.395 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion A)
-                                       lag along the insert   0.38 (max 2.7), receiver {'F_across_N': 5.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -210 50 N                  pack dX  0.193 tilt  0.226 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
-pull at bay -210 50 N (free, no receiver) pack dX  0.189 tilt  0.259 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
-                                       lag along the insert  -0.44 (max 2.7), receiver {'F_across_N': 16.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -210 60 N              pack dX -0.195 tilt  0.257 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion B)
-B insert at bay -210 60 N (free, no receiver) pack dX -0.146 tilt  0.363 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion B)
-power cut {'hold_N': 2.75, 'weight_N': 1.77, 'holds_at_1g': True, 'holds_at_3g': False, 'fall_mm': 77.6, 'energy_J': 0.137, 'rotor_kg': 0.128, 'petg': {'k_N_mm': 5000.0, 'F_stop_N': 1171.0, 'stop_index': 1.3, 'F_tooth_N': 487.0, 'pinion_index': 3.49}, 'tpu': {'k_N_mm': 281.0, 'F_stop_N': 278.0, 'stop_index': 0.31, 'F_tooth_N': 115.0, 'pinion_index': 0.83}, 'carrying': {'falling_g': 391.0, 'weight_N': 3.83, 'holds_at_1g': False, 'F_bumper_N': 409.0, 'note': 'frame case: carriage to head 24 N.m, 625ZZ 1.23 without a brake'}, 'brake': {'creep_mm_s': 7.8, 'impact_J': 1.6e-05, 'F_bumper_N': 3.0}}
-power cut, head out at a bay {'pack': 'overseer', 'bay': 0.0, 'carrying': True, 'gravity_Nm': 1.29, 'margin': 0.8, 'scale_for_1_25': 2.34}
-xt60 budget {"scout": {"sum_no_stub": 1.024, "float 1.06": {"stub_allowed_mrad_at_margin": -3.1, "stub_allowed_mrad_no_margin": 0.6, "with_measured": 1.889, "with_target": 1.311}, "float 1.5": {"stub_allowed_mrad_at_margin": 3.1, "stub_allowed_mrad_no_margin": 8.3, "with_measured": 1.889, "with_target": 1.311}}, "overseer": {"sum_no_stub": 1.09, "float 1.06": {"stub_allowed_mrad_at_margin": -4.2, "stub_allowed_mrad_no_margin": -0.5, "with_measured": 1.955, "with_target": 1.377}, "float 1.5": {"stub_allowed_mrad_at_margin": 1.9, "stub_allowed_mrad_no_margin": 7.2, "with_measured": 1.955, "with_target": 1.377}}}
-capture {'pack': 'overseer', 'bay': 0.0, 'compensated': False, 'load_turn_deg': 0.498, 'rss_deg': 0.303, 'total_deg': 0.801, 'capture_deg': 1.2, 'ratio': 0.67} {'pack': 'overseer', 'bay': 0.0, 'compensated': True, 'load_turn_deg': 0.149, 'rss_deg': 0.303, 'total_deg': 0.452, 'capture_deg': 1.2, 'ratio': 0.38}
--> /home/user/nox/runs/arm/v7/system.json
+gravity, A horizontal carrying         pack dX  0.109 tilt  0.098 | worst V-wheel (flank Hertz) 0.21 (worst wheel)
+                                       lag along the insert  -0.73 (max 2.7), receiver {'F_across_N': 34.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay 30 60 N                  pack dX -0.210 tilt  0.390 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion A)
+insert at bay 30 60 N (free, no receiver) pack dX -0.048 tilt  0.657 | worst V-wheel (flank Hertz) 0.42 (worst wheel)
+                                       lag along the insert   0.64 (max 2.7), receiver {'F_across_N': 21.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay 30 50 N                    pack dX  0.396 tilt  0.383 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
+pull at bay 30 50 N (free, no receiver) pack dX  0.506 tilt  0.560 | worst V-wheel (flank Hertz) 0.40 (worst wheel)
+                                       lag along the insert  -0.75 (max 2.7), receiver {'F_across_N': 35.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay 30 60 N                pack dX -0.428 tilt  0.434 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion B)
+B insert at bay 30 60 N (free, no receiver) pack dX -0.386 tilt  0.675 | worst V-wheel (flank Hertz) 0.43 (worst wheel)
+                                       lag along the insert  -0.69 (max 2.7), receiver {'F_across_N': 29.5, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -30 60 N                 pack dX -0.165 tilt  0.371 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
+insert at bay -30 60 N (free, no receiver) pack dX -0.021 tilt  0.603 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert   0.68 (max 2.7), receiver {'F_across_N': 26.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -30 50 N                   pack dX  0.442 tilt  0.412 | worst pinion 16T (Lewis, in-layer) 0.37 (pinion A)
+pull at bay -30 50 N (free, no receiver) pack dX  0.533 tilt  0.616 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.72 (max 2.7), receiver {'F_across_N': 28.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -30 60 N               pack dX -0.397 tilt  0.420 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion B)
+B insert at bay -30 60 N (free, no receiver) pack dX -0.359 tilt  0.617 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.67 (max 2.7), receiver {'F_across_N': 26.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -90 60 N                 pack dX -0.212 tilt  0.363 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
+insert at bay -90 60 N (free, no receiver) pack dX -0.177 tilt  0.567 | worst V-wheel (flank Hertz) 0.40 (worst wheel)
+                                       lag along the insert   0.70 (max 2.7), receiver {'F_across_N': 28.8, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -90 50 N                   pack dX  0.405 tilt  0.400 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion A)
+pull at bay -90 50 N (free, no receiver) pack dX  0.377 tilt  0.595 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.69 (max 2.7), receiver {'F_across_N': 25.5, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -90 60 N               pack dX -0.247 tilt  0.378 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion B)
+B insert at bay -90 60 N (free, no receiver) pack dX -0.177 tilt  0.567 | worst V-wheel (flank Hertz) 0.40 (worst wheel)
+                                       lag along the insert  -0.71 (max 2.7), receiver {'F_across_N': 29.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -150 60 N                pack dX -0.397 tilt  0.415 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
+insert at bay -150 60 N (free, no receiver) pack dX -0.359 tilt  0.617 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert   0.66 (max 2.7), receiver {'F_across_N': 26.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -150 50 N                  pack dX  0.228 tilt  0.349 | worst pinion 16T (Lewis, in-layer) 0.37 (pinion A)
+pull at bay -150 50 N (free, no receiver) pack dX  0.194 tilt  0.543 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
+                                       lag along the insert  -0.70 (max 2.7), receiver {'F_across_N': 29.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -150 60 N              pack dX -0.185 tilt  0.376 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion B)
+B insert at bay -150 60 N (free, no receiver) pack dX -0.021 tilt  0.603 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.76 (max 2.7), receiver {'F_across_N': 34.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -210 60 N                pack dX -0.431 tilt  0.439 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion A)
+insert at bay -210 60 N (free, no receiver) pack dX -0.386 tilt  0.675 | worst V-wheel (flank Hertz) 0.43 (worst wheel)
+                                       lag along the insert   0.61 (max 2.7), receiver {'F_across_N': 21.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -210 50 N                  pack dX  0.195 tilt  0.329 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
+pull at bay -210 50 N (free, no receiver) pack dX  0.167 tilt  0.486 | worst V-wheel (flank Hertz) 0.38 (worst wheel)
+                                       lag along the insert  -0.72 (max 2.7), receiver {'F_across_N': 35.4, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -210 60 N              pack dX -0.190 tilt  0.382 | worst pinion 16T (Lewis, in-layer) 0.42 (pinion B)
+B insert at bay -210 60 N (free, no receiver) pack dX -0.048 tilt  0.657 | worst V-wheel (flank Hertz) 0.42 (worst wheel)
