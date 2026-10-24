@@ -266,6 +266,8 @@ def write_concept(od, out, P, env, R):
     A = assembly.new("Box structure v2 layout", "box", parts=parts, probes=False, fit_tol_mm3=0.5, contact_pairs=contact, access=access,
                      note="v2 layout concept (box_layout_v2.py). Bay body envelopes are design spaces (their System-line mass is envelope volume x PETG, not a design mass); each receiver and cartridge sits in its own envelope by design (contact pairs); the arm's turning envelopes overlap each other by construction. Probes off (floor-standing box, DEFAULT).")
     A.save(os.path.join(od, "concept.assembly.json"))
+    if os.path.basename(od) == "layout":   # the DEFAULT layout is the box structure v2 system file the catch and arm check against (hub)
+        A.save(os.path.join(ROOT, "nox", "box", "box_structure_v2.assembly.json"))
     res = A.check(); json.dump(dict(summary=res.get("summary"), access=res.get("access"), fit=res.get("fit")), open(os.path.join(od, "concept_check.json"), "w"), indent=1, default=str)
     A.scene().write(os.path.join(od, "layout.html"))
     return res.get("summary")
