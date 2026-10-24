@@ -1,6 +1,6 @@
 # Runs
 
-_88 runs · rebuilt 2026-10-24 07:47_
+_90 runs · rebuilt 2026-10-24 10:34_
 
 ## Latest per part
 
@@ -19,6 +19,7 @@ _88 runs · rebuilt 2026-10-24 07:47_
 | funnel_panel | v7 | DONE | 80.0 (M) | 0.91 in press u60 v90 | PASS | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
 | holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
 | hook_latch | v1 | · | · | ·  | · | [runs/hook_latch/v1](runs/hook_latch/v1/summary.md) |
+| hub | v6 | · | 188.6 (M) | 3.40 in power cut carrying: head A falls to the park stop [Overseer] [misuse] | FAIL | [runs/hub/v6](runs/hub/v6/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
@@ -35,8 +36,10 @@ _88 runs · rebuilt 2026-10-24 07:47_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 10:33 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
 | 2026-10-24 07:08 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-24 07:08 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
+| 2026-10-24 07:08 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
 | 2026-10-24 07:08 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 07:08 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 07:08 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |
