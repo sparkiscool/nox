@@ -2,7 +2,8 @@
 v6 carriage proxy and the v4 gripper, without editing the arm's files (build_parts is wrapped here). Per head: head<h> = the body
 (the topology body when runs/head/v7/<A|B>/box_head_v7_<A|B>.stl exists, A frame, else the layout's design space: an envelope check, every body inside it
 passes), fingA_<h> / fingB_<h> = the -X / +X carriers with their 623ZZ rollers (moved by the cycle's finger squeeze, inner faces at
-10 - d), servo_<h> = servo + metal horn, grip<h> = the cam's swept disc, the three carbon rods, the spring and the sync pinion.
+10 - d), servo_<h> = servo + metal horn, grip<h> = the cam's swept disc, the three carbon rods and the spring; the bonded rack bar
+rides with the body.
 Head B = head A mirrored in X with the MG995 (its own frame, as the arm's B parts).
 python3 head_v7_sweep.py [dt] [v7:<pack>:<pick>:<ret>] [--space]  -> runs/head/v7/sweep/ (log, json)."""
 import os, sys, math, json
@@ -34,9 +35,9 @@ def head_parts(h, use_space=False):
     fingA = (P0["carrier-"] + P0["roller-"]).translate([-d0, 0, 0])
     fingB = (P0["carrier+"] + P0["roller+"]).translate([d0, 0, 0])
     from arm_cad import cylY
-    grip = cylY(0, H.U_C, *H.CAM["y"], H.CAM["lobe"], 64) + P0["rods"] + P0["spring rod"] + P0["spring"] + P0["pinion"]
+    grip = cylY(0, H.U_C, *H.CAM["y"], H.CAM["lobe"], 64) + P0["rods"] + P0["spring rod"] + P0["spring"]
     servo = P0["servo"] + P0["horn"]
-    body = body_mesh(h, use_space)
+    body = body_mesh(h, use_space) + H.rack_bar(sv)                          # the bonded rack bar rides with the body
     out = {f"head{h}": body, f"fingA_{h}": fingA, f"fingB_{h}": fingB, f"grip{h}": grip, f"servo_{h}": servo}
     if h == "B": out = {k: mirror_x(v) for k, v in out.items()}
     return out
@@ -48,7 +49,7 @@ def build(mode, use_space=False):
         for k in (f"grip{h}", f"fingA_{h}", f"fingB_{h}", f"pinion_{h}", f"servo_{h}", f"head{h}"): P.pop(k, None)
         hp = head_parts(h, use_space)
         names = {f"head{h}": f"head {h} v7 body", f"fingA_{h}": f"carrier -X {h} + roller", f"fingB_{h}": f"carrier +X {h} + roller",
-                 f"grip{h}": f"cam disc, rods, spring, sync pinion {h}", f"servo_{h}": f"{SERVO[h]} + horn {h}"}
+                 f"grip{h}": f"cam disc, rods, spring {h}", f"servo_{h}": f"{SERVO[h]} + horn {h}"}
         for k, m in hp.items():
             P[k] = K.Part(names[k], tm(m), f"head{h}", "#d35400", printed=k.startswith(("head", "fing")))
         K.ALLOWED.update({(f"grip{h}", f"head{h}"), (f"servo_{h}", f"head{h}"), (f"servo_{h}", f"grip{h}"), (f"fingA_{h}", f"grip{h}"),

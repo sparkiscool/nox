@@ -2,45 +2,45 @@
  "box_head_v7_B_carrier_px": {
   "bed_face": "-X down",
   "bed_mm2": 212.1,
-  "mass_g": 5.94,
+  "mass_g": 5.74,
   "bbox": [
    27.4,
    29.8,
    49.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_carrier_px.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2372.1], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_carrier_px.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2336.8], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 1, 'ok': True}"
  },
  "box_head_v7_B_carrier_mx": {
   "bed_face": "+X down",
-  "bed_mm2": 254.0,
-  "mass_g": 6.42,
+  "bed_mm2": 230.6,
+  "mass_g": 5.68,
   "bbox": [
    27.4,
    29.8,
    49.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_carrier_mx.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2582.0], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_carrier_mx.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2263.8], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 1, 'ok': True}"
  },
  "box_head_v7_B_cam": {
   "bed_face": "-Y down",
-  "bed_mm2": 143.7,
-  "mass_g": 1.09,
+  "bed_mm2": 132.7,
+  "mass_g": 1.01,
   "bbox": [
    20.5,
-   10.9,
+   10.7,
    6.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_cam.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [470.5], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_cam.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [419.3], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
  },
- "box_head_v7_B_sync_pinion": {
-  "bed_face": "-u down",
-  "bed_mm2": 106.5,
-  "mass_g": 0.47,
+ "box_head_v7_B_rack_bar": {
+  "bed_face": "+Y down",
+  "bed_mm2": 306.4,
+  "mass_g": 5.2,
   "bbox": [
-   14.0,
-   14.0,
-   3.5
+   84.0,
+   5.0,
+   14.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_sync_pinion.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [87.0], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 8, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_rack_bar.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [1389.8], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 26, 'ok': True}"
  }
 }

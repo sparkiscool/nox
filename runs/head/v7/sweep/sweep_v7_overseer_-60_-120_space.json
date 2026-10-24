@@ -44,16 +44,16 @@
    7.0
   ],
   [
+   "belt_axle",
+   "headA",
+   0.911,
+   0.0
+  ],
+  [
    "detent_arm",
    "headB",
    0.93,
    0.0
-  ],
-  [
-   "belt_axle",
-   "headA",
-   1.0,
-   21.947
   ],
   [
    "headA",
@@ -65,7 +65,7 @@
    "fingA_A",
    "fingB_A",
    1.0,
-   21.947
+   21.907
   ],
   [
    "fingA_A",

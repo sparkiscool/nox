@@ -18,160 +18,160 @@
  },
  "cam": {
   "turn_deg": 120.0,
-  "rise": 6.0,
-  "pitch_rest": 9.5,
+  "rise": 6.5,
+  "pitch_rest": 9.0,
   "pitch_open": 15.5,
-  "gap_at_rest": 1.0,
-  "max_pressure_deg": 26.5,
-  "peak_torque_Nmm": 225.2,
-  "at_deg": 65.0,
-  "peak_kgcm": 2.3,
+  "gap_at_rest": 1.5,
+  "max_pressure_deg": 29.0,
+  "peak_torque_Nmm": 240.8,
+  "at_deg": 65.4,
+  "peak_kgcm": 2.46,
   "margin": {
-   "DS3218": 8.7,
-   "MG995": 3.9
+   "DS3218": 8.1,
+   "MG995": 3.7
   },
   "open_force_N": 20.9,
-  "spline_side_N": "0 (two rollers equal and opposite; pinion keeps them symmetric)",
+  "spline_side_N": "0 (two rollers equal and opposite; the stops take loads across)",
   "curve": [
    [
     0.0,
-    9.5,
+    9.0,
     0.0
    ],
    [
     4.0,
-    9.5,
+    9.0,
     0.0
    ],
    [
     8.0,
-    9.5,
+    9.0,
     0.0
    ],
    [
     12.0,
-    9.501,
+    9.001,
     0.0
    ],
    [
     16.0,
-    9.515,
+    9.016,
     0.0
    ],
    [
     20.0,
-    9.564,
+    9.07,
     0.0
    ],
    [
     24.0,
-    9.663,
+    9.177,
     0.0
    ],
    [
     28.0,
-    9.815,
+    9.341,
     0.0
    ],
    [
     32.0,
-    10.018,
+    9.562,
     0.0
    ],
    [
     36.0,
-    10.27,
+    9.835,
     0.0
    ],
    [
     40.0,
-    10.567,
-    145.0
+    10.156,
+    0.0
    ],
    [
     44.0,
-    10.904,
-    165.7
+    10.52,
+    174.4
    ],
    [
     48.0,
-    11.273,
-    184.3
+    10.92,
+    194.6
    ],
    [
     52.0,
-    11.667,
-    200.3
+    11.348,
+    212.1
    ],
    [
     56.0,
-    12.079,
-    212.8
+    11.794,
+    226.0
    ],
    [
     60.0,
-    12.5,
-    221.2
+    12.25,
+    235.7
    ],
    [
     64.0,
-    12.921,
-    225.0
+    12.706,
+    240.4
    ],
    [
     68.0,
-    13.333,
-    223.7
+    13.152,
+    239.6
    ],
    [
     72.0,
-    13.727,
-    217.1
+    13.58,
+    233.0
    ],
    [
     76.0,
-    14.096,
-    205.0
+    13.98,
+    220.5
    ],
    [
     80.0,
-    14.433,
-    187.7
+    14.344,
+    202.3
    ],
    [
     84.0,
-    14.73,
-    165.6
+    14.665,
+    178.7
    ],
    [
     88.0,
-    14.982,
-    139.3
+    14.938,
+    150.6
    ],
    [
     92.0,
-    15.185,
-    109.8
+    15.159,
+    118.8
    ],
    [
     96.0,
-    15.337,
-    78.1
+    15.323,
+    84.6
    ],
    [
     100.0,
-    15.436,
-    45.7
+    15.43,
+    49.5
    ],
    [
     104.0,
-    15.485,
-    18.0
+    15.484,
+    19.5
    ],
    [
     108.0,
     15.499,
-    2.1
+    2.3
    ],
    [
     112.0,
@@ -234,7 +234,7 @@
   },
   "rib_bearing_MPa": 4.65,
   "blade_root_MPa": {
-   "squeeze": 5.81,
+   "squeeze": 7.55,
    "worst": 10.45,
    "lever": 7.499999999999998
   },
@@ -311,7 +311,7 @@
    "cls": "misuse"
   },
   "pull 57.3 N while the XT60 unmates (swap)": {
-   "at": "rod sockets (4 ends, X +-30.5, Y 161 / 169, u 7.5)",
+   "at": "rod sockets (4 ends, X +-30.5, Y 161 / 169, u 6.75)",
    "F": [
     0,
     0,
@@ -331,7 +331,7 @@
    "note": "the spring is between the carriers and the cam forces cancel: nothing on the body but the servo torque 0.24 N.m at the ear pads"
   },
   "handling 3 g radial + 2 g along X, Overseer cartridge carried": {
-   "at": "pads (radial out) / rib pockets (radial in) and the pinion pin (X)",
+   "at": "pads (radial out) / rib pockets (radial in) and the stops (X)",
    "F": [
     14.7,
     0,
@@ -423,20 +423,20 @@
   },
   "cam": {
    "arm_overlap_voxels": 0,
-   "min_X_plus_u": -16.92,
+   "min_X_plus_u": -16.88,
    "park_ok": true,
-   "Z_min_at_drone": 98.5,
+   "Z_min_at_drone": 98.6,
    "X": [
-    -5.4,
-    5.4
+    -5.3,
+    5.3
    ],
    "Y": [
     148.5,
     154.5
    ],
    "u": [
-    -12.8,
-    7.8
+    -12.7,
+    7.7
    ]
   },
   "horn": {
@@ -547,26 +547,8 @@
     7.2
    ]
   },
-  "pinion": {
-   "arm_overlap_voxels": 0,
-   "min_X_plus_u": -4.5,
-   "park_ok": true,
-   "Z_min_at_drone": 111.3,
-   "X": [
-    -4.5,
-    9.5
-   ],
-   "Y": [
-    160.0,
-    174.0
-   ],
-   "u": [
-    0.0,
-    3.5
-   ]
-  },
   "body (drawn interfaces)": {
-   "arm_overlap_voxels": 0,
+   "arm_overlap_voxels": 105,
    "min_X_plus_u": -30.49,
    "park_ok": true,
    "Z_min_at_drone": 48.3,
@@ -620,7 +602,7 @@
    ]
   }
  },
- "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: yes; lowest point at the commanded drone insert Z 96.3 (keep-out 111.5)",
+ "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: {'body (drawn interfaces)': (105, -30.49)}; lowest point at the commanded drone insert Z 96.3 (keep-out 111.5)",
  "internal": {
   "squeezed": {},
   "open": {}
@@ -633,10 +615,10 @@
    "+y": 1.03,
    "+z": 0.73
   },
-  "plate top 74.35, plate / root grown to u -18 (DEFAULT)": {
+  "plate top 74.35, plate / root grown to u -18, all-direction supports (r2)": {
    "+y": 0.7,
    "+z": 0.61,
-   "in-layer": 0.41
+   "+x": 0.44
   }
  },
  "sweeps": {
@@ -661,13 +643,12 @@
    "min_clearance": 0.0
   }
  },
- "compact": "head A whole (carriage, rack tail, column as its design space, grabber, servo): 88 x 129 x 103 (X, Y, u) incl. the design space; hull 0.60 L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the servo sits in the column under the grip, the grabber on top of it",
+ "compact": "head A whole (carriage, rack tail, column as its design space, grabber, servo): 87 x 129 x 103 (X, Y, u) incl. the design space; hull 0.59 L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the servo sits in the column under the grip, the grabber on top of it",
  "masses": {
   "printed_parts": {
-   "carrier+": 6.0,
-   "carrier-": 6.5,
-   "cam": 0.9,
-   "pinion": 0.6
+   "carrier+": 5.8,
+   "carrier-": 5.7,
+   "cam": 0.7
   },
   "bought": {
    "servo_DS3218": 60.0,
@@ -682,7 +663,7 @@
   "body_E": 75.0,
   "note": "body from the topology run (E 75 g, v5 head 56 M + carriage)"
  },
- "mass_line": "printed grabber parts 14.0 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~166 g (system frame 120 g head + 60 g carriage, E)",
+ "mass_line": "printed grabber parts 12.2 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~164 g (system frame 120 g head + 60 g carriage, E)",
  "alternatives": {
   "spring": [
    [
@@ -716,12 +697,13 @@
   ]
  },
  "changes": [
-  "carriage plate top Y 72.75 -> 74.35 under the cartridge (DEFAULT, asked of the arm system; 1.0 under the Overseer receiver): the upper-bound FE of the whole design space reads 0.73..1.03 at 72.75 and 0.60..0.71 at 74.35 (swap target 0.5); the plate and the column's root also grow below u 0 where the arm leaves room (u -18, the park bisector)",
+  "carriage plate top Y 72.75 -> 74.35 under the cartridge (accepted by the arm system 24 Oct, with M5 x 20 axles): the upper-bound FE of the whole design space reads 0.73..1.03 at 72.75; the plate and the column's root also grow below u 0 where the arm leaves room (to u -18, the park bisector)",
+  "insert-lane keep-out at the drone, lower bound Z 111.5 -> 95.0 (head and grabber) and Z 100 -> 89 (carriage lane), accepted by the arm system 24 Oct (servo bottom u -12.5, horn u -15 -> Z 96.3 at the commanded insert): nothing of the catch (Z >= 154) or the structure is there",
   "open blade position inner faces +-11.0 (concept 10.5): a 0.8 rib into the grip pocket must clear the latched tab's outer face (10) on the way in (the latch's +-11 open; the tab's 1.0 chamfer cams a 1.0 head offset); stroke 5.0 per blade",
   "one crossed spring (15 N squeezed per blade, L 44 -> 34) instead of one spring per blade: the -X blade has 13 mm to the park bisector (the two parked heads), where a 15 N spring would need > 950 MPa (alternatives)",
-  "a passive m1 pinion between racks on the two carriers locks their common mode: a lateral load on the cartridge goes to the body, not the cam or the spline (with free blades the cam base would take it)",
-  "blades 12 wide (Y 159..171; the latch's 13): 1.5 clear of the hall package at Y 157 (the tab magnet's spot, z_T + 8); the rib (7.7 wide) is unchanged",
-  "623ZZ roller followers on the carriers (no sliding at the cam): the servo needs 2.3 kg.cm peak (concept 1.98 average with mu 0.3 on 19.5 N)",
-  "head below the insert-lane keep-out's Z 111.5 at the drone (servo bottom u -12.5 -> Z 98.8 at the commanded insert): nothing of the catch (Z >= 154), the mast (Z <= 44) or the bays (60 deg away) is there; the structure keeps Z < 111.5 free (to the hub)"
+  "two inward stops on the body take a load across the cartridge (43.5 N, receiver gaps closed); the system pass had no X path",
+  "blades 10 wide (Y 160..170; the latch's 13): 1.5 clear of the hall package at Y 157 (the tab magnet's spot, z_T + 8); the rib (7.7 wide) is unchanged",
+  "623ZZ roller followers on the carriers (no sliding at the cam): the servo needs about 2.5 kg.cm peak (concept 1.98 average with mu 0.3 on 19.5 N)",
+  "the m1 rack is its own bar (printed flat, teeth in the layers, epoxied to the web): the body prints on its side (+x), where the column's bending and the plate's lie in the layers"
  ]
 }
