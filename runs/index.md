@@ -1,6 +1,6 @@
 # Runs
 
-_87 runs · rebuilt 2026-10-24 05:58_
+_87 runs · rebuilt 2026-10-24 06:24_
 
 ## Latest per part
 
@@ -36,7 +36,7 @@ _87 runs · rebuilt 2026-10-24 05:58_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 05:53 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 06:18 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | detent | [v3](runs/detent/v3/summary.md) | · | 6.7 (M) | [0.18, 'detent holding 0.55 N.m, keyed bearing (E)'] | · | · | · GB | · min | · |

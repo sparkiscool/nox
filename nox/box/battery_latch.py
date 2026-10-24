@@ -275,7 +275,8 @@ def rgeom(g):
     r["Y_DK1"] = r["Y_DK0"] + DECK_T
     r["LID_T"] = LID_T_BY[g["pack"]]
     r["Y_M"] = r["Y_DK1"] + r["LID_T"]                      # mounting plane = lid top = boss tops
-    r["Z_E0"], r["Z_E1"] = -0.3, g["L_C"] + 0.3
+    r["Z_E0"], r["Z_E1"] = -END_GAP, g["L_C"] + END_GAP
+    r["Y_END0"] = r["FOOT_Y1"] + 1.0 if GUIDE else r["RAIL_Y0"]      # bottom of the end locating faces (pitch guidance)
     r["BX"] = rf + 5.3 if g["pack"] == "scout" else r["XW"] - BOSS_R   # boss / lid bolt x: Scout outboard (v4 25.6, its
     # drone interface); Overseer on the deck inside the feet, so the receiver is no wider than its feet (63.6, was 76.2):
     # its bays alternate with Scout bays at R 113 (arm v7)
@@ -318,6 +319,12 @@ def receiver(r, clip=None):
         y0 = r["RAIL_Y0"]
         pts = [(zf + sg * CAP, y0), (zf + sg * END_T, y0), (zf + sg * END_T, r["Y_DK1"]), (zf, r["Y_DK1"]), (zf, y0 + HCAP)]
         parts.append(prism_zy(pts, -xw, xw))
+        if GUIDE:                                       # corner guide posts: the end faces run down to Y_END0 where the
+            yg = r["Y_END0"]                            # cartridge's corners bear (end_relief), 30 deg lead-in at the bottom
+            pg = [(zf + sg * CAP, yg), (zf + sg * END_T, yg), (zf + sg * END_T, r["Y_DK1"]), (zf, r["Y_DK1"]), (zf, yg + HCAP)]
+            for s in (-1, 1):
+                a0, a1 = sorted((s * (r["X_IN"] - 1.0), s * xw))
+                parts.append(prism_zy(pg, a0, a1))
     parts.append(box(-xw, xw, r["Y_DK0"], r["Y_DK1"], z0, z1))
     if END_RIB_BY[r["pack"]]:                                                                               # end ribs
         de = DECK_END_BY[r["pack"]]
@@ -357,6 +364,11 @@ def receiver(r, clip=None):
     R = R - U(*cuts) - cart_path(r) - end_relief(r)
     return R if clip is None else R ^ clip
 
+END_GAP = 0.15                     # end faces to the cartridge's ends (was 0.3): both print along the printer's Z (the
+                                   # cartridge closed end down, the receiver closed-end face down), the A1 mini's best axis
+GUIDE = True                       # pitch guidance before the XT60's first contact (hub 24 Oct, arm v7 PR 79): the end
+                                   # faces become corner posts down to the feet, so the cartridge's pitch is set by the
+                                   # receiver (2 x 0.3 gaps over the engaged height), not by the arm's stiffness
 END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 1: the cartridge's end bears at its corners
                                    # (its side walls), so a +-z crash goes into the side frames, not the deck beside the
                                    # XT60 pocket (FE v1: Overseer +z 1.56 -> see result.json)
@@ -391,7 +403,8 @@ def cart_path(r):
         poly = [(0, -60), (rf + CAP + 62 * k, -60), (rf + CAP, Y_RB), (rf, Y_RB + HCAP), (0, Y_RB + HCAP)]
         c = c + prism_xy([(s * x, y) for x, y in poly], r["Z_E0"] - CAP - 1, r["Z_E1"] + CAP + 1)
     for zf, sg in ((r["Z_E0"], -1), (r["Z_E1"], 1)):
-        poly = [(lc / 2, -60), (zf + sg * CAP, -60), (zf + sg * CAP, r["RAIL_Y0"]), (zf, r["RAIL_Y0"] + HCAP), (lc / 2, r["RAIL_Y0"] + HCAP)]
+        y0 = r.get("Y_END0", r["RAIL_Y0"])
+        poly = [(lc / 2, -60), (zf + sg * CAP, -60), (zf + sg * CAP, y0), (zf, y0 + HCAP), (lc / 2, y0 + HCAP)]
         c = c + prism_zy(poly, -rf, rf)
     return c
 
@@ -447,12 +460,22 @@ def build(pack, clip_inset=None):
     if key in _CACHE: return _CACHE[key]
     g = place_tab_line(pack)
     r = rgeom(g)
-    clip = None
+    clip = cclip = None
+    skids = []
     if pack == "scout":
         inset = clip_inset if clip_inset is not None else SCOUT_INSET
         clip = collar_clip(g, inset)
-    out = dict(g=g, r=r, clip=clip, cart=cartridge(g, clip), recv=receiver(r, clip), lid=lid(r), strips=strips(r),
-               male=xt60_male(g))
+        cclip = collar_clip(g, inset + SKID_T)
+        band = box(-g["X_OUT"], g["X_OUT"], 0.0, g["Y_TOP"], 0.0, g["L_C"]) ^ clip
+        wrap = box(-g["X_IN"] - WALL, g["X_IN"] + WALL, Y_FL1 - g["FLOOR_T"], Y_FL1 + g["H"] + WALL,     # the pack + its walls:
+                   g["Z_P0"] - WALL, g["Z_P1"] + WALL)                                                  # never cut deeper
+        band = band - cclip - wrap
+        cclip = cclip + (wrap ^ clip)
+        for z0, z1 in ((-1.0, g["L_C"] / 2), (g["L_C"] / 2, g["L_C"] + 4.0)):
+            sk = band ^ box(-50, 50, -1, 100, z0, z1)
+            if not sk.is_empty(): skids.append(sk)
+    out = dict(g=g, r=r, clip=clip, cart=cartridge(g, cclip), recv=receiver(r, clip), lid=lid(r), strips=strips(r),
+               male=xt60_male(g), skids=skids)
     _CACHE[key] = out
     return out
 
@@ -463,6 +486,7 @@ def latch_assembly(pack="scout", state="latched"):
     g = B["g"]
     rt = 0.0 if state in ("latched", "free") else TRAVEL
     d = {"cartridge": B["cart"], "slider_px": slider(g, rt, 1), "slider_nx": slider(g, rt, -1), "pack": pack_body(g),
+         **{f"cartridge_skid_{k}": m for k, m in zip(("closed", "lead"), B["skids"])},
          "xt60_plug": xt60_female(g), "receiver": B["recv"], "receiver_lid": B["lid"], "receiver_strips": B["strips"],
          "xt60e1m": B["male"]}
     if state == "free":
@@ -493,9 +517,10 @@ def swap_cg(g):
     c = sum(a * b for a, b in items) / M
     return M, c, items
 
-TAB_OFF = {"scout": 0.0, "overseer": 30.0}   # tab line from the swap CG toward the XT60 (lead, arm-side) end: the heads grip
-                                              # every cartridge at one Y_C on the drone's thrust axis (arm v6, PR 71), and the
-                                              # Overseer pack sits 30 behind its thrust axis (Spark 24 Oct: B)
+TAB_OFF = {"scout": 0.0, "overseer": 5.18}   # Scout kept on its swap CG (DEFAULT): at 3.71 the pack's tail-bottom corner sits
+                                              # 6.4 inside the collar planes and the cartridge can no longer wrap it at 7.0  # tab line from the swap CG toward the XT60 (lead, arm-side) end: each catch
+                                              # centre and tab line sit on the latch set's centre (arm v7 swap geometry, PR 79,
+                                              # hub DEFAULT 24 Oct; grip Y_C 165); was Overseer + 30 (its thrust axis)
 
 def place_tab_line(pack, it=3):
     g = geom(pack)
@@ -607,6 +632,28 @@ def asym_squeeze(B, off=1.0):
     return dict(off=off, retract=[TRAVEL - off, TRAVEL + off], vs_cart=round(max(vol(a ^ C), vol(b ^ C)), 3),
                 vs_recv=round(max(vol(a ^ R), vol(b ^ R)), 3), vs_each=round(vol(a ^ b), 3),
                 tip_inside_face_mm=round(tip_in, 2), pull_out_mm3=round(pull, 3))
+
+
+def pitch_at_contact(B, d=6.0, tmax=4.0):
+    """largest pitch (deg, about x through the cartridge's middle) the receiver lets the gripped cartridge take d below the
+    seat (d 6.0 = the XT60 noses' first contact, the PR 44 stack), both senses; bisection on overlap with receiver + lid."""
+    g = B["g"]
+    R = B["recv"] + B["lid"]
+    A = B["cart"] + xt60_female(g) + slider(g, TRAVEL, 1) + slider(g, TRAVEL, -1)
+    c = np.array([0.0, g["Y_TOP"] / 2, g["L_C"] / 2])
+    def hit(th):
+        m = A.translate((-c).tolist()).rotate([th, 0, 0]).translate((c + np.array([0, -d, 0])).tolist())
+        return vol(m ^ R) > 0.5
+    out = {}
+    for sgn in (1, -1):
+        lo, hi = 0.0, tmax
+        if not hit(sgn * hi): out[sgn] = f">{tmax}"; continue
+        for _ in range(12):
+            mid = (lo + hi) / 2
+            if hit(sgn * mid): hi = mid
+            else: lo = mid
+        out[sgn] = round(lo, 2)
+    return dict(d_below_seat=d, pitch_pos_deg=out[1], pitch_neg_deg=out[-1])
 
 
 # ======================================================================== latched-state read (hall under the tab magnet)
@@ -802,7 +849,9 @@ def reactions(B, hc):
 
 
 # ======================================================================== collar inset search (Scout)
-SCOUT_INSET = 11.0                # replaced by search_inset() at run time
+SCOUT_INSET = 11.0                # the search's result (search_inset() refreshes it at run time)
+SKID_T = 3.0                      # Scout cartridge ends: clipped SKID_T deeper than the set, a TPU skid fills the band back to
+                                  # the set's clip, so an edge from below meets the skid, not the cartridge (Scout edge probe)
 
 def search_inset(log=print):
     """smallest clip inset (0.5 steps) that gives every receiver + cartridge point >= 7.0 inside the collar planes."""
@@ -836,6 +885,8 @@ PIECES = {   # name: (getter, material, print pose (c -> print), count, version,
     "receiver_lid": (lambda B: B["lid"], "PETG", _rot("x", -90), 1, "v1", "top face down"),
     "receiver_strip": (lambda B: U(*[box(*sorted((B["r"]["X_IN"] - 1.55, B["r"]["RF"] - 0.05)), B["r"]["Y_TOP"], B["r"]["Y_TOP"] + STRIP_T,
                                          B["r"]["Z_P0"] - 0.8, B["r"]["Z_P1"] - 1.2)]), "TPU", _rot("x", 90), 2, "v1", "flat"),
+    "skid_closed": (lambda B: B["skids"][0] if B["skids"] else None, "TPU", _rot("x", -135), 1, "v1", "outer (chamfer) face down"),
+    "skid_lead": (lambda B: B["skids"][1] if B["skids"] else None, "TPU", _rot("x", -45), 1, "v1", "outer (chamfer) face down"),
 }
 
 def save_prints(B, pack, log=print):
@@ -845,7 +896,9 @@ def save_prints(B, pack, log=print):
     d = os.path.join(OUT, "stl"); os.makedirs(d, exist_ok=True)
     out = {}
     for nm, (get, mat, T, n, ver, face) in PIECES.items():
-        t = tm(get(B), T)
+        m = get(B)
+        if m is None: continue
+        t = tm(m, T)
         t.apply_translation([-t.bounds[:, 0].mean(), -t.bounds[:, 1].mean(), -t.bounds[0, 2]])
         fn = f"box_battery_{nm}_{pack}_{ver}.stl"
         path = os.path.join(d, fn); t.export(path)
@@ -979,7 +1032,12 @@ def scout_system(log=print):
                 p.pop("mass_g", None); p["material"] = "TPU"
         elif "mesh" in p:
             p["mesh"] = os.path.join(base, p["mesh"])
-    swap_move = ["pack 4S 1500", "pack XT60 plug", "slider +y (latch)", "slider -y (latch)", "cartridge v5 (latch)"]
+    for k, sk in zip(("closed", "lead"), B["skids"]):                  # the TPU end skids: shield the clipped ends
+        man["parts"].append(dict(name=f"cartridge skid {k} (latch)", trimesh=tm(sk, T), role="cage", material="TPU", swap=True,
+                                 tag="M"))
+        man["contact_pairs"].append([f"cartridge skid {k} (latch)", "cartridge v5 (latch)", 5.0])
+    swap_move = ["pack 4S 1500", "pack XT60 plug", "slider +y (latch)", "slider -y (latch)", "cartridge v5 (latch)",
+                 "cartridge skid closed (latch)", "cartridge skid lead (latch)"]
     acc = [dict(name="cartridge out (swap)", part="cartridge v5 (latch)", dir=[0, 0, -1], length_mm=80, tool="part",
                 ignore=swap_move + ["receiver TPU strips (latch)", "XT60E1-M"]),
            dict(name="pack out with the cartridge", part="pack 4S 1500", dir=[0, 0, -1], length_mm=80, tool="part",
@@ -993,7 +1051,9 @@ def scout_system(log=print):
                     dir=[0, 0, 1], length_mm=8.9, tool=dict(type="box", w=18.5, h=11.1, w_axis=[0, 1, 0]),
                     ignore=["XT60E1-M", "receiver lid (latch)", "receiver v1 (latch)", "mount + nose legs (Scout)"]))
     man["access"] = acc
-    res = sc.run(man)
+    for n in ("receiver v1 (latch)", "receiver lid (latch)", "receiver TPU strips (latch)", "XT60E1-M"):   # the receiver round
+        man["openings"].append(dict(part=n, axis=[0, 0, -1], half_angle_deg=35.0, min_mm=0.0, skip_probes=True))  # the swap
+    res = sc.run(man)                                                # opening, exempt like the cartridge set (DEFAULT)
     mine = set(SCOUT_SWAP)
     clash = [(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in res["fit"]["pairs"] if not p_["pass_"] and ({p_["a"], p_["b"]} & mine)]
     cf = res["cage_first"]["per_part"]
@@ -1044,6 +1104,7 @@ def main():
         R["asym_squeeze"] = [asym_squeeze(B, 1.0), asym_squeeze(B, -1.0)]
         R["hall"] = hall_read(g)
         R["hall_sweep"] = hall_sweep(g)
+        R["pitch_at_contact"] = pitch_at_contact(B)
         import battery_latch_topo as BLT
         fe = BLT.fe_v1(pack, 1.0, log=lambda s_: None)
         R["fe_v1"] = dict(worst=fe["worst"], worst_case=fe["worst_case"], worst_at=fe["worst_at"],
@@ -1059,7 +1120,9 @@ def main():
         for nm, m, mat in (("cartridge", B["cart"], "PETG"), ("slider", slider(g, 0, 1), "PETG"), ("receiver", B["recv"], "PETG"),
                            ("lid", B["lid"], "PETG"), ("strips", B["strips"], "TPU")):
             ms[nm] = round(vol(m) / 1000 * RHO[mat], 2)
+        if B["skids"]: ms["skids"] = round(sum(vol(m) for m in B["skids"]) / 1000 * RHO["TPU"], 2)
         R["mass_g"] = ms
+        R["pitch_guidance"] = dict(end_gap=END_GAP, y_end0=round(r["Y_END0"], 2), note="corner guide posts; pitch at the XT60's first contact")
         A = U(B["cart"], B["recv"], B["lid"], slider(g, 0, 1), slider(g, 0, -1))
         bb = tm(A).bounds; ext = bb[1] - bb[0]
         R["bbox"] = dict(extents=np.round(ext, 1).tolist(), volume_L=round(float(np.prod(ext)) / 1e6, 4), largest=round(float(ext.max()), 1))
@@ -1080,7 +1143,7 @@ def main():
     res["scout_system"] = scout_system(log)
     # Overseer: posed in the Overseer assembly on main, pack on the thrust axis (Overseer DEFAULT A) and 30 behind (alt B)
     man = json.load(open(OV_ASM))
-    for lab, dx in (("B", 0.0), ("A", TAB_OFF["overseer"])):        # B: tab line on the thrust axis, pack 30 aft (Spark)
+    for lab, dx in (("B", TAB_OFF["overseer"] - 30.0), ("A", TAB_OFF["overseer"])):   # B: pack 30 aft of the thrust axis (Spark)
         try:
             xt = float(man["cg_ref"][0]) + dx
             ores, fp, _ = overseer_fit(x_tab=xt)
