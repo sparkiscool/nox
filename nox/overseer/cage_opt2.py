@@ -264,9 +264,9 @@ def geometry(p, topo, sizes=None):
         mem("skirt rail +", "KV3", "KP3_50", "skirt"); mem("skirt rail -", "KP3_50", "KV4", "skirt")
         mem("skirt dg +", "V3lo", "KP3_50", "skirt"); mem("skirt dg -", "V4lo", "KP3_50", "skirt")
         for sy in (1, -1):                                             # rear hub block under the bottom plate (printed, like the front sled)
-            fixed.add(node(f"rhubB{sy:+d}", (p.get("x_rhub", -75.0), 15.0 * sy, -2.0)))
-            mem(f"skirt tie {sy:+d}", f"rhubB{sy:+d}", "KP3_50", "skirt")
-            mem(f"skirt side {sy:+d}", f"rhubB{sy:+d}", "KV3" if sy > 0 else "KV4", "skirt")
+            fixed.add(node(f"rhubB{sy:+d}", (p.get("x_rhub", -75.0), 15.0 * sy, p.get("z_rhub", -2.0))))
+            mem(f"skirt tie {sy:+d}", f"rhubB{sy:+d}", "KP3_50", "skirt_ties")
+            mem(f"skirt side {sy:+d}", f"rhubB{sy:+d}", "KV3" if sy > 0 else "KV4", "skirt_ties")
         if "TR" in N:
             mem("tower post", "KP3_50", "TR", "pyramid")
     if topo["top_spider"]:
@@ -640,7 +640,7 @@ def evaluate(p, topo, sizes, detail=False):
 
 
 def groups_of(topo):
-    gs = ["chords", "posts", "spokes", "V", "keels", "wheel_ring", "struts", "nose", "nose_mount", "pyramid", "skirt"]
+    gs = ["chords", "posts", "spokes", "V", "keels", "wheel_ring", "struts", "nose", "nose_mount", "pyramid", "skirt", "skirt_ties"]
     for k in TOPO_KEYS:
         if topo[k] and k != "arm_spars":
             gs.append("top" if k == "top_spider" else k)

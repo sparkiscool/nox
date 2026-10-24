@@ -31,6 +31,8 @@ if SYS_PICK:
     for row in _LV["table"]:
         if row["feasible"] and {k for k, v in row["topo"].items() if v and k not in co.FIXED_ON} == want:
             CAGE_TOPO, CAGE_SIZES = row["topo"], row["sizes"]; break
+if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
+    CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 TIP_OFF = float(os.environ.get("SYS_TIP_OFF", "0"))     # pack / catch centre behind the thrust axis: 0 = the balance rule (CG ≤ 3 mm pack in and out)
 NOSE_GROUPS = ("nose", "nose_x", "nose_mount")                      # thin rods allowed in the L2 field (blocked share reported)
 
@@ -227,6 +229,9 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["flow_lens"] = np.array([-dc, -42.0, PB + 9.5])
     # skid runners: printed PETG sleeves on the skid rails (cage), 23 tall: a side edge reaching under the feet meets them
     # before the lenses (outside the 45 deg view cone), 2.4 under the down camera board, inside the opening at ±5 deg yaw
+    # hub belly pan: printed PETG skid plate under the bottom plate (cage): the electronics' shield from below; the hub
+    # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
+    g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.6, -2.1)
     g["runners"] = [box(-dc - 67, -dc + 67, 65 if sy > 0 else -71, 71 if sy > 0 else -65, PB - 13, PB + 10) for sy in (1, -1)]
     g["feet"] = [cyl(5, PB - 13, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     g["PB"] = PB
@@ -268,7 +273,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
-             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10"}, seat_dz=float(SEAT_DZ))   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t6"}, seat_dz=float(SEAT_DZ),
+             z_rhub=-5.6, z_skirt=-5.6)                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
@@ -291,6 +297,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)
             for n in Ng if n.startswith(("fhubB", "fhubT", "chin", "rhubB"))]
     g["hubs"] = hubs
+    g["hub_socket_mm3"] = g.get("hub_socket_mm3", 0.0) + sum(overlap(h_, g["pan"]) for h_ in hubs)   # hub blocks seated on the belly pan
     g["cage_N"], g["cage_info"] = Ng, info
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
@@ -341,7 +348,7 @@ def cg_of(g):
             L = float(np.hypot(mx - r0[0], my - r0[1])); items.append((f"spars {i_}", 4 * L * ROD_GPM, trimesh.points.PointCloud([[(mx + r0[0]) / 2, (my + r0[1]) / 2, 22]])))
     printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("ring nodes", g["ring_nodes"], 0.5), ("apex", [g["apex"]], 0.45),
                ("cam plate", [g["cam_plate"]], 0.5),
-               ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5), ("skid runners", g["runners"], 0.4),
+               ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5), ("skid runners", g["runners"], 0.4), ("belly pan", [g["pan"]], 0.5),
                ("cartridge", [g["cart"]], 0.04)]
     tot, mom = 0.0, np.zeros(3)
     for _, gm, m in items:
@@ -386,7 +393,7 @@ def solve_xB(g_fn, zB):
 
 def funnel(g, dc):
     others = trimesh.util.concatenate(g["arms"] + g["motors"] + [g["cage_low"], g["cage_up"], TOP, BOTTOM, FC, PI, DECK, PDB, UBEC, BUCK, RX, g["apex"], g["l2"], g["cam"],
-                                       g["cam_bracket"], g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"])
+                                       g["cam_bracket"], g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"] + [g["pan"]])
     p = pts(others, 30000) + [dc, 0, SEAT_DZ]                     # funnel centre at the catch centre
     d_face = np.full(len(p), np.inf)
     for ax in (0, 1):
@@ -585,7 +592,7 @@ if CAGE_TOPO.get("arm_spars"):
     for i_, (mx, my) in enumerate(g["motors_xy"]):
         r0 = np.array([75 * math.cos(math.radians(MOTOR_DEG[i_])), 75 * math.sin(math.radians(MOTOR_DEG[i_]))]); spar_g += 4 * float(np.hypot(mx - r0[0], my - r0[1])) * ROD_GPM
 cage_g = (rod_g + spar_g + 8 * 0.25 + sum(abs(m.volume) for m in g["nodes"]) * 1.27e-3 * 0.6 + sum(abs(m.volume) for m in g["ring_nodes"]) * 1.27e-3 * 0.5
-          + sum(abs(m.volume) for m in g["runners"]) * 1.27e-3 * 0.4)
+          + sum(abs(m.volume) for m in g["runners"]) * 1.27e-3 * 0.4 + abs(g["pan"].volume) * 1.27e-3 * 0.5)
 say("cage rods (C): " + "; ".join(f"{co.SECTIONS[sec]['label']} {n_} x {Ls / 1000:.2f} m" for sec, (n_, Ls) in sorted(by_sec.items(), key=lambda x: co.SECTIONS[x[0]]['gpm']))
     + f"; {rod_g:.0f} g + arm spars {spar_g:.0f} g; {len(g['ring_nodes'])} ring nodes, 4 corner nodes, 8 wheels; ~{cage_g:.0f} g (E) without the apex")
 # landing: tip-over angle on the 4 feet (the lowest points), CG over the stance
@@ -608,7 +615,7 @@ cg_out = (cg * tot - pk * 650 - g["cart"].centroid * cart_g) / (tot - 650 - cart
 say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the pack, {np.hypot(cg_out[0] - dm, cg_out[1]):.1f} without (≤ 3)")
 # system_check manifest (cage first, fit, compact, mass; grouped meshes)
 def tm(m): return m.copy()
-cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"]
+cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"] + [g["pan"]]
 man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
@@ -723,7 +730,7 @@ s.view("iso", (600, -660, 520), (60, 0, 30)); s.view("side", (60, -1000, 60), (6
 s.view("top", (60, 0, 1100), (60, 0, 0)); s.view("under", (300, -300, -500), (0, 0, -20))
 os.makedirs(OUT, exist_ok=True)
 s.write(os.path.join(OUT, "motion.html"))
-json.dump({k: (float(v) if not isinstance(v, str) else v) for k, v in P_FINAL.items()}, open(os.path.join(OUT, "params.json"), "w"), indent=1)
+json.dump(P_FINAL, open(os.path.join(OUT, "params.json"), "w"), indent=1, default=float)
 json.dump(dict(topo=CAGE_TOPO, sizes=CAGE_SIZES, mass_g=FRAME["mass_g"], f_l2=FRAME["f_l2"], f_first=FRAME["f_first"], violation=FRAME["violation"]),
           open(os.path.join(OUT, "cage_final.json"), "w"), indent=1, default=float)
 if os.environ.get("SYS_VIDEO", "0") == "1":                     # iterations skip the video (png still useful: SYS_VIDEO=1 on the final run)
