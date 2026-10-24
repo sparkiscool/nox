@@ -46,7 +46,7 @@ CART = {
     "overseer": dict(x=26.0, h=57.0, l=153.0, l_boss=3.0, tab=76.5, xt60_z=145.8, xt60_y=55.0, cg=(0.0, 35.0, 76.5), mass=720.0, tag="E"),
 }
 BOT_DZ = L.CART_BOT_DZ                    # 15.4: carried cartridge bottom above z0 (gripper datum, unchanged)
-LATCH_BRANCH = os.environ.get("NOX_LATCH_REF", "0c13edb")   # pinned (hub 24 Oct: round 2 runs on the v7 spans; part/battery-latch a5b764f moved the
+LATCH_BRANCH = os.environ.get("NOX_LATCH_REF", "258becf")   # pinned (hub 24 Oct: round 2 runs on the v7 spans; part/battery-latch a5b764f moved the
                                           # cartridges 8 / 10 toward the hub, the latch shortens them back); NOX_LATCH_REF=origin/part/battery-latch for the tip
 LATCH = dict(source="dimensions E (PR 44, cartridge v4)")
 
@@ -93,8 +93,8 @@ def LATCH_FLIP(BL):
 
 
 _BL = latch_module()
-TAB_ON_SET = os.environ.get("NOX_TAB", "set") == "set"   # round 3b (hub: one funnel, the catch centre on each latch set's centre): the tab line
-SET_TAB_OFF = {}                                        # on the set centre too, so the funnel centre = the grip line Y_C (DEFAULT); "cg30": d0cd1a1's
+TAB_ON_SET = os.environ.get("NOX_TAB", "latch") == "set"   # round 3b put the tab line on each set centre; from latch 258becf the latch carries
+SET_TAB_OFF = {}                                        # TAB_OFF itself (Scout 0: its tail corner vs the collar, hub DEFAULT; Overseer 5.18); "set" re-solves it
 
 
 def tab_on_set_centre(BL):
@@ -110,6 +110,8 @@ def tab_on_set_centre(BL):
 
 if _BL is not None and hasattr(_BL, "TAB_OFF") and TAB_ON_SET:
     tab_on_set_centre(_BL)
+elif _BL is not None and hasattr(_BL, "TAB_OFF"):
+    SET_TAB_OFF.update(_BL.TAB_OFF)
 if _BL is not None:
     for _p in ("scout", "overseer"):
         CART[_p] = cart_from_latch(_BL, _p)
@@ -870,24 +872,28 @@ def mate_pitch_all(opts=None):
     return out
 
 
-GUIDE = dict(gap_deg=math.degrees(GAP_R), tol=dict(receiver_in_drone_or_bay=0.20, drone_on_plungers=0.20))   # the latch's receiver pitch guidance
-                                          # (hub DEFAULT 24 Oct): from first plug contact the receiver sets the cartridge's tilt on both axes to its own
-                                          # guide gap (0.40 deg, E, until the latch reports its guided pitch); the arm's tolerances drop out
+GUIDE = dict(gap_deg=dict(scout=0.47, overseer=0.38), tol=dict(receiver_in_drone_or_bay=0.20, drone_on_plungers=0.20))   # the latch's receiver pitch guidance
+                                          # (hub DEFAULT 24 Oct, latch 258becf): from first plug contact the receiver sets the cartridge's tilt to its guide
+                                          # gap (+-0.47 Scout / +-0.38 Overseer at first XT60 contact, C latch); the arm's tolerances drop out (the hub's
+                                          # conservative budget keeps the arm RSS 0.41 too: both reported)
 
 
 def xt60_guided(rows=None, stub_mrad=(1.9, 5.0, 15.1)):
-    """the XT60 with the receiver's pitch guidance: per axis tilt = guide gap + RSS(receiver, drone) vs the float; the arm's free tilt beyond
-    the gap (+ the stub's) is forced back by the guide: the moment it puts on the receiver = k_tangent x (free - gap) (E)"""
+    """the XT60 with the receiver's pitch guidance: per axis tilt = the guide's pitch at first plug contact (latch) + an RSS vs the float:
+    the receiver and drone terms only (the guide sets the cartridge, the arm's tolerances drop out) and the hub's conservative full 0.41.
+    The arm's free tilt beyond the guide (+ the stub's) is forced back: the moment on the receiver's guide = k_tangent x (free - gap) (E)"""
     rows = rows or mate_pitch_all()
-    rss = math.sqrt(sum(v ** 2 for v in GUIDE["tol"].values())); per_axis = GUIDE["gap_deg"] + rss
-    out = dict(gap_deg=round(GUIDE["gap_deg"], 3), rss_deg=round(rss, 3), per_axis_deg=round(per_axis, 3), float_deg=FLOAT_DEG,
-               margin=round(1 - per_axis / FLOAT_DEG, 2), packs={})
+    rss = math.sqrt(sum(v ** 2 for v in GUIDE["tol"].values())); rss_arm = math.sqrt(sum(v ** 2 for v in XT60_TOL.values()))
+    out = dict(rss_guided_deg=round(rss, 3), rss_full_deg=round(rss_arm, 3), float_deg=FLOAT_DEG, packs={})
     for pk in ("scout", "overseer"):
+        gap = GUIDE["gap_deg"][pk]
         rr = [r for r in rows if r["pack"] == pk]
         w = max(rr, key=lambda r: abs(r["about"]["tangent"]))
-        d = dict(worst_place=f"{w['place']} {w['head']}", free_tangent_deg=abs(w["about"]["tangent"]), k_tangent_Nm_deg=w["k_tangent_Nm_deg"])
+        d = dict(guide_pitch_deg=gap, per_axis_deg=round(gap + rss, 3), margin=round(1 - (gap + rss) / FLOAT_DEG, 2),
+                 per_axis_full_rss_deg=round(gap + rss_arm, 3), margin_full_rss=round(1 - (gap + rss_arm) / FLOAT_DEG, 2),
+                 worst_place=f"{w['place']} {w['head']}", free_tangent_deg=abs(w["about"]["tangent"]), k_tangent_Nm_deg=w["k_tangent_Nm_deg"])
         for sm in stub_mrad:
-            ex = max(0.0, abs(w["about"]["tangent"]) + math.degrees(sm / 1e3) - GUIDE["gap_deg"])
+            ex = max(0.0, abs(w["about"]["tangent"]) + math.degrees(sm / 1e3) - gap)
             d[f"receiver_moment_Nm_stub_{sm:g}"] = round(w["k_tangent_Nm_deg"] * ex, 2)
         out["packs"][pk] = d
     return out
