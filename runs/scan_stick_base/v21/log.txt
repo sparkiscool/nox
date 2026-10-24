@@ -104,3 +104,17 @@ it   7 beta    4 J  12.7843 vol 0.0349 (dil 0.0836 g -0.018) grey  8.2% ch 0.100
 it   8 beta    4 J   8.6041 vol 0.0372 (dil 0.0839 g -0.014) grey  7.9% ch 0.100 worst tie b2 my 250 40.7s
 it   9 beta    4 J   6.9291 vol 0.0392 (dil 0.0842 g -0.010) grey  7.4% ch 0.100 worst tie b2 my 182 40.7s
 it  10 beta    4 J   6.2893 vol 0.0407 (dil 0.0843 g -0.009) grey  7.1% ch 0.100 worst cage bump back 100 N (spine  138 41.4s
+git push failed: fatal: The current branch run/scan_stick_base-v21 has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin run/scan_stick_base-v21
+
+To
+it  11 beta    4 J   6.1191 vol 0.0421 (dil 0.0846 g -0.015) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  136 40.9s
+it  12 beta    4 J   6.0784 vol 0.0431 (dil 0.0855 g -0.004) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  135 39.5s
+it  13 beta    4 J   6.0503 vol 0.0433 (dil 0.0856 g -0.003) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  134 42.4s
+it  14 beta    4 J   6.0245 vol 0.0435 (dil 0.0856 g -0.002) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  134 40.4s
+it  15 beta    4 J   5.9988 vol 0.0437 (dil 0.0856 g -0.002) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  133 40.4s
+it  16 beta    4 J   5.9745 vol 0.0439 (dil 0.0857 g +0.009) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  132 40.7s
+it  17 beta    4 J   5.9682 vol 0.0432 (dil 0.0848 g -0.002) grey  6.7% ch 0.100 worst cage bump back 100 N (spine  132 41.5s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
