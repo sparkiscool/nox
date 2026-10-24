@@ -69,9 +69,11 @@ parts.append(mesh_part("cage (rods + nodes)", cage, role="cage", mass_g=round(R[
 WP = L["wheel_pts"]()
 parts.append(mesh_part("catch wheels", trimesh.Trimesh(WP).convex_hull if False else trimesh.util.concatenate(
     [trimesh.creation.icosphere(1, 5.0).apply_translation(c) for c in WP.reshape(-1, 72, 3).mean(1)]), role="cage", mass_g=1.6, tag="M", **own))
+parts.append(mesh_part("keep-alive pads", trimesh.util.concatenate(L["KA_PADS"]), role="cage", mass_g=2.0, tag="E",
+                       note="B+ on the +x lower ring, B- on -x; the box catch's face probes touch them (G (8))", **own))
 a = {"name": "Scout v3", "machine": "scout",
      "note": ("Scout v3 system pass v2, latch refit (layout.md). Seat frame = drone frame. Battery set = the control session's "
-              "latch standard (part/battery-latch b59b2dc, interim). No belly post: keep-alive through the hook latch (hub DEFAULT). "
+              "latch standard (part/battery-latch b59b2dc, interim). No belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT, G (8)). "
               "Left out: wires (20 g E), camera mount, plate hubs, the TPU suspension pads, wheel contact pads."),
      "cg_ref": [0.0, 0.0, L["PROP_Z"]], "thrust_axis": [0, 0, 1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0,
      "openings": [{"part": n, "axis": [0, 0, -1], "half_angle_deg": 35.0, "min_mm": 0.0, "skip_probes": True}   # the swap path:
@@ -86,7 +88,7 @@ a = {"name": "Scout v3", "machine": "scout",
                        ["mount + nose legs (Scout)", "receiver v1 (latch)", 1e9], ["mount + nose legs (Scout)", "receiver lid (latch)", 1e9],
                        ["mount + nose legs (Scout)", "frame plate", 1e9], ["mount + nose legs (Scout)", "XT60E1-M", 1e9], ["mount + nose legs (Scout)", "FC", 1e9], ["mount + nose legs (Scout)", "UBEC", 1e9],
                        ["cage (rods + nodes)", "frame plate", 1e9], ["cage (rods + nodes)", "mount + nose legs (Scout)", 1e9],
-                       ["cage (rods + nodes)", "catch wheels", 1e9], ["FC", "frame plate", 1e9],
+                       ["cage (rods + nodes)", "catch wheels", 1e9], ["cage (rods + nodes)", "keep-alive pads", 1e9], ["FC", "frame plate", 1e9],
                        ["Radxa Zero 3W", "mount + nose legs (Scout)", 1e9], ["flow MTF-02P", "mount + nose legs (Scout)", 1e9]],
      "parts": parts}
 dst = os.path.join(HERE, "scout.assembly.json")

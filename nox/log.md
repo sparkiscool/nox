@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scout v3 chat): **keep-alive pads on the lower ring** (box catch G (8): ±x face probes, belly post dropped): B+ / B− pads at y ±6..28 on the x-flats, carrier nodes at y ±17. Cage 141 rods ~319 g (E); cage first 4.5, fit 0, CG 1.3 / 1.9 PASS; edge probes FAIL. dimensions System Scout v3.
 - 24 Oct (scout v3 chat): **belly post pad search** (`pad_search.py`): no belly spot passes funnel, post r ≥ 101 and cones with the keel the cage needs (best: keel 4.2 inside the cones, C); asked the box catch for hook latch v3 leaf contacts. layout.md.
 - 24 Oct (scout v3 chat): **latch refit done**: latch standard placed, no belly post (keep-alive through the latch, hub DEFAULT), 4th keel node in, flow mid +y, UBEC in the mount tail. System: cage first 4.5 PASS, fit 0, CG 1.3 / 2.0 PASS, cage ~294 g (E); edge probes FAIL (side windows). layout.md.
 - 24 Oct (scout v3 chat): **refit to the latch standard (WIP)**: receiver v1 / cartridge v5 placed; pogo pads must move to (±12, 40.6) (cones vs the new feet), and then no 4th keel node fits: cage first −5.9, cage ~394 g (E). Proposed: keep-alive through the latch plungers, no belly post. layout.md.

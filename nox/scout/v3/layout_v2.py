@@ -226,21 +226,50 @@ def cone_gap(Q, P, rmax=40.0):
 RING_T = (0.25, 0.5, 0.75) if os.environ.get("COARSE") is None else (0.5,)   # flat nodes every 50 (more sections, Spark 24 Oct)
 
 
-def ring_nodes(z):
+# keep-alive (box catch, 24 Oct, DEFAULT): spring probes in the two plain +-x funnel faces touch a pad on the lower ring; G (8):
+# within 9.0 of each +-x face over y -35..+69 (+x) / -69..+35 (-x), from the face bottom up to the pad top, only the pad, its
+# carrier and round rods >= 1.0 off the face. So the lower ring's x-face flats carry one node each, the pad carrier, at y +17
+# (+x, B+) / -17 (-x, B-), and keep their y -50 / +50 node outside the band; the other flat nodes go (DEFAULT).
+PAD_T_X = (0.25, 0.585)                       # +x flat: y -50, +17; -x flat (runs +100 -> -100): y +50, -17
+RING_EDGES = set()
+
+
+def ring_nodes(z, lower=False):
     n = [(112, -100), (112, 100), (100, 112), (-100, 112), (-112, 100), (-112, -100), (-100, -112), (100, -112)]
     loop = []
     for i in range(8):
         a, b = np.array(n[i], float), np.array(n[(i + 1) % 8], float)
         loop.append(a)
-        if np.linalg.norm(b - a) > 100:                                       # the flats: points at -50, 0, 50
-            for t in RING_T:
+        if np.linalg.norm(b - a) > 100:                                       # the flats
+            ts = PAD_T_X if (lower and abs(a[0]) == 112 and abs(b[0]) == 112) else RING_T
+            for t in ts:
                 loop.append(a + t * (b - a))
-    return [np.array([p[0], p[1], z]) for p in loop]
+    P = [np.array([p[0], p[1], z]) for p in loop]
+    for i in range(len(P)):
+        RING_EDGES.add((tuple(np.round(P[i], 3)), tuple(np.round(P[(i + 1) % len(P)], 3))))
+    return P
+
+
+# the keep-alive pads (catch frame: probe line on each +-x face at panel z 33 = drone z 30.9, x +-115.7)
+PROBE_Z = 33.0 - 2.1
+def keepalive_pads():
+    out = []
+    for sx in (1, -1):
+        u = np.array([sx, 0, 1.0]) / S2; nrm = np.array([-sx, 0, 1.0]) / S2           # up the face / into the funnel
+        p0 = np.array([sx * (FACE_K + PROBE_Z), 0, PROBE_Z])
+        c = p0 + nrm * (2.0 + 0.8) + u * (-2.0) + np.array([0, sx * 17.0, 0])          # face 2.0 off the plane, 1.6 thick
+        b = trimesh.creation.box([12.0, 22.0, 1.6])                                    # along the slope x along y x thick
+        T = np.eye(4); T[:3, 0] = u; T[:3, 1] = [0, 1, 0]; T[:3, 2] = nrm; T[:3, 3] = c
+        b.apply_transform(T); out.append(b)
+    return out
+
+
+KA_PADS = keepalive_pads()
 
 
 def candidate_nodes():
     N, kind = [], []
-    L = ring_nodes(RING_LO); U = ring_nodes(RING_HI)
+    L = ring_nodes(RING_LO, lower=True); U = ring_nodes(RING_HI)
     N += L; kind += ["L"] * len(L); N += U; kind += ["U"] * len(U)
     for x, y in [(0, 0), (45, 0), (-45, 0), (0, 45), (0, -45), (36, 36), (36, -36), (-36, 36), (-36, -36)]:
         N.append(np.array([x, y, TOP_Z], float)); kind.append("T")
@@ -641,7 +670,7 @@ for a in range(nn):
         if kind[a] == "C" and kind[b] == "C": continue
         L = np.linalg.norm(N[b] - N[a])
         if L < 8 or L > 160: continue
-        ring = (kind[a] == kind[b] and kind[a] in "LU" and L < 101 and abs(N[a][2] - N[b][2]) < 0.1)
+        ring = (tuple(np.round(N[a], 3)), tuple(np.round(N[b], 3))) in RING_EDGES or (tuple(np.round(N[b], 3)), tuple(np.round(N[a], 3))) in RING_EDGES
         r = rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"])
         if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
         else: why0[r] = why0.get(r, 0) + 1
@@ -657,7 +686,7 @@ for opt in PAD_OPTIONS:
     if opt is None:
         yp = zp = None; pad, carrier, body, tips = [], None, None, np.zeros((0, 3)); post_pts = np.zeros((0, 3))
         fm, rmin = None, None; padb = {}
-        say("no belly post (keep-alive through the latch, hub DEFAULT)")
+        say("no belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT)")
     else:
         yp, zp = opt
         pp = pads(yp, zp)
@@ -684,8 +713,8 @@ for opt in PAD_OPTIONS:
             if (a_ in live) != (b_ in live): live |= {a_, b_}; grow = True
     members = [m for m in members if m[0] in live and m[1] in live]
     CASES = load_cases(N, kind, live)
-    ring_members = [j for j, (a, b) in enumerate(members) if kind[a] == kind[b] and kind[a] in "LU"
-                    and abs(N[a][2] - N[b][2]) < 0.1 and np.linalg.norm(N[b] - N[a]) < 60]
+    ring_members = [j for j, (a, b) in enumerate(members)
+                    if (tuple(np.round(N[a], 3)), tuple(np.round(N[b], 3))) in RING_EDGES or (tuple(np.round(N[b], 3)), tuple(np.round(N[a], 3))) in RING_EDGES]
     # keel rails along both sides of the pack are mandatory too (edge probes from below found the slider unshielded, refit)
     ring_members += [j for j, (a, b) in enumerate(members) if kind[a] == kind[b] == "B" and abs(N[a][1] - N[b][1]) < 0.1
                      and np.linalg.norm(N[b] - N[a]) < 31]
@@ -694,7 +723,7 @@ for opt in PAD_OPTIONS:
     say(f"pads ({yp}, {zp}): {len(members)} feasible rods ({len(ring_members)} ring), dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why.items(), key=lambda kv: -kv[1])))
     others = dict(fixed_pts)
     if pad: others["pads"] = pts(union(pad + [carrier]), 600)
-    WP = wheel_pts(); DIRS = fib_sphere(1200)
+    WP = np.vstack([wheel_pts()] + [p_.vertices for p_ in KA_PADS]); DIRS = fib_sphere(1200)
     so_all = np.max(np.stack([(DIRS @ p.T).max(1) for p in others.values()]), 0)
     def cage_support(ms):
         P_ = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 12)]) for a_, b_ in ms] + [WP])
@@ -793,6 +822,18 @@ cage_cent = np.mean([(N[a] + N[b]) / 2 for a, b in chosen], 0)
 tot += best["mass"]; mom += best["mass"] * cage_cent
 cg = mom / tot
 say(f"drone ~{tot:.0f} g (E), CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f})")
+# G (8) band check: printed nodes within 9.0 of a +-x face plane over its y band, from the face bottom (panel z 12.8 = drone
+# 10.7) to the pad top, other than the two pad carriers
+pad_top = max(p_.bounds[1][2] for p_ in KA_PADS)
+bad8 = []
+for i in used:
+    if kind[i] == "C": continue
+    x_, y_, z_ = N[i]
+    for sx, ylo, yhi in ((1, -35, 69), (-1, -69, 35)):
+        dface = (FACE_K + z_ - sx * x_) / S2
+        if sx * x_ > 0 and dface <= 9.0 and ylo <= y_ <= yhi and 10.7 <= z_ <= pad_top and not (abs(abs(y_) - 17) < 0.5 and kind[i] == "L"):
+            bad8.append(tuple(np.round(N[i], 1)))
+say(f"G (8) keep-alive band: {'clear' if not bad8 else 'nodes in it: ' + str(bad8)}; pads {[np.round(p_.bounds, 1).tolist() for p_ in KA_PADS]}")
 
 R = dict(version="v2 latch refit", date="2026-10-24T23:59", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
@@ -838,6 +879,7 @@ for sx, sy in itertools.product((1, -1), (1, -1)):
         w.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [1, 0, 0] if f == "x" else [0, 1, 0]))
         w.apply_translation([px - (sx / S2 if f == "x" else 0), py - (sy / S2 if f == "y" else 0), RING_LO + 1 / S2]); whe.append(w)
 P("catch wheels", trimesh.util.concatenate(whe), "cage", "#cc6644", True)
+P("keep-alive pads (B+ nose, B- tail)", trimesh.util.concatenate(KA_PADS), "cage", "#c9a227", False, "box catch probes in the +-x faces")
 P("cartridge v5 + pack (latch)", CART, "pack", "#7d8a99", True)
 if body is not None: P("belly post (box)", body, "box", "#e07a5f", False, "PR 44 model")
 fun = []
