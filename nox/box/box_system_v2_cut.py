@@ -383,7 +383,9 @@ def feature_specs():
     for ang, pk in R2.L2.BAYS.items():
         g = R2.META[pk]; f = T.bay_pose(ang)
         for x, zc in R2.BOLTS[pk]:
-            p0 = np.array([x, g["Y_M"], zc + g["Z_T"]]); a = f(p0); b = f(p0 + np.array([0, 1.0, 0]))
+            # zc is the bolt's z in the cartridge frame (from the closed end), bay_pose maps Y = Y_C - (z - Z_T). Round 2's drawn bosses
+            # used zc + Z_T (shifted by Z_T along Y, off the receiver): the cut draws its own bosses at these points.
+            p0 = np.array([x, g["Y_M"], zc]); a = f(p0); b = f(p0 + np.array([0, 1.0, 0]))
             sp.append(dict(kind="receiver", bay=ang, point=a.tolist(), axis=(b - a).tolist(), x=x, zc=zc))
     D = drawn_inputs()
     J_ = R2.J
@@ -404,7 +406,7 @@ def cyl_at(p, d, r, length, back=0.0, n=32):
     return mf.Manifold.cylinder(length, r, r, n).transform(T.tolist())
 
 
-def foot_sites(S, amin=100.0):
+def foot_sites(S, amin=40.0):
     """floor patches of S in the layer above the foot plane: centroid and area of each patch (Z ZB .. ZB + 4)."""
     sl = S ^ box(-BIG, BIG, -BIG, BIG, ZB, ZB + 4.0)
     out = []
@@ -433,13 +435,16 @@ def add_features(S, log=print):
         holes.append(cyl_at([x, y, ZB - 0.5], [0, 0, 1], FPAD["ins_d"] / 2, FPAD["ins_h"] + 0.5)); prot.append(cyl_at([x, y, ZB], [0, 0, 1], 5.5, 9.0))
     D = drawn_inputs(); KEEP = D["cuts"] - D["drawn"]
     S = S + (union(pads) - KEEP)
+    bosses = []
     for sp in feature_specs():
         p = np.array(sp["point"]); d = np.array(sp["axis"])
         if sp["kind"] == "receiver":
-            h_ = cyl_at(p, d, 2.0, 6.7 + 0.5, back=0.5); pr = cyl_at(p, d, 5.0, 8.0, back=0.0)
+            bosses.append(cyl_at(p, d, 6.0, 11.0, back=0.0))                    # O12 boss on the mount pad, 11 high: 6.7 insert + 4.3 floor
+            h_ = cyl_at(p, d, 2.0, 6.7 + 0.5, back=0.5); pr = cyl_at(p, d, 6.0, 11.0, back=0.0)
         else:
             h_ = cyl_at(p, d, 2.0, 6.7 + 0.5, back=0.5); pr = cyl_at(p, d, 5.0, 8.0, back=0.0)
         holes.append(h_); prot.append(pr)
+    S = S + (union(bosses) - KEEP)
     S = S - union(holes)
     PROT = union(prot)
     log(f"features: {len(feet)} foot pads, {len(holes) - len(feet)} insert holes ({time.time() - t0:.0f} s)")
@@ -639,7 +644,7 @@ def clean(pieces, log=print, vmin=50.0):
     return pieces
 
 
-def finish_piece(m, h=0.5, r=1.2, faces=150000, log=print):
+def finish_piece(m, h=0.5, r=1.2, faces=70000, log=print):
     """the cut's finish: 0.5 mm voxels, opening by r 1.2 (no feature under 2.4 mm before the surface is drawn, the gate's 1.8 plus the
     surface's +-0.25), the largest body, smooth iso-surface (Gaussian 0.7 voxel, level 0.5, Taubin 4), decimated. Holes, laps and
     the cut faces keep their place to +-0.25 mm; the sites in cut.json are the drawn positions (M)."""
@@ -1091,8 +1096,9 @@ def run_cut_fe(P, J, finfo, h=4.0, mode="all", only=None, log=print, tag="", see
                             sup_nodes=fx.tolist() if False else None)
         wk = max(rows, key=lambda k: rows[k]["worst"])
         log(f"{cname:50s} worst {rows[wk]['worst']:.2f} {wk}  stub rot {np.round(rot, 2).tolist()} mrad  feet {len(cases[cname]['feet_in_contact'])}  ({time.time() - t0:.0f} s)")
-    foot_owner = {a: b for (a, b) in Mo.pairs if a.startswith("foot_")}
-    res = dict(h=h, mode=mode, foot_owner=foot_owner, cells=int(sum(len(c) for c in Mo.cells.values())), dofs=int(3 * Mo.nN), cases=cases,
+    import resource
+    foot_owner = {a: b for (a, b) in Mo.pairs if re.fullmatch(r"foot_\d+", a)}
+    res = dict(h=h, mode=mode, foot_owner=foot_owner, peak_rss_GB=round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6, 2), cells=int(sum(len(c) for c in Mo.cells.values())), dofs=int(3 * Mo.nN), cases=cases,
                joint_nodes={f"{a} | {b}": int(len(g)) for (a, b), g in Mo.pairs.items()}, centroids={f"{a} | {b}": np.round(v, 1).tolist() for (a, b), v in jc.items()})
     return res, Mo
 
@@ -1353,6 +1359,41 @@ tr.bad td {{ color:var(--bad) }} .wrap {{ overflow-x:auto }} p {{ max-width:90ch
     open(path, "w").write(page)
 
 
+def report_stage(h=4.0, tag="", t_start=None, peak_gb=None, log=print):
+    """result.json, requirements, assembly file, visual page, summary.md from the saved cut and FE results."""
+    import subprocess, resource
+    P, J, finfo = load_cut()
+    cutd = json.load(open(os.path.join(OUT, "cut.json")))
+    fe = json.load(open(os.path.join(OUT, f"fe_h{h:g}_all{tag}.json")))
+    fb_path = os.path.join(OUT, f"fe_h{h:g}_bolts{tag}.json")
+    fb = json.load(open(fb_path)) if os.path.exists(fb_path) else None
+    scj = json.load(open(os.path.join(OUT, "solid_check.json"))) if os.path.exists(os.path.join(OUT, "solid_check.json")) else {}
+    tab = case_tables(fe); sn = summary_numbers(fe); mc = mass_cg(P, finfo); pp = print_poses(P)
+    snb = summary_numbers(fb) if fb else None
+    A = write_cut_assembly(P, J, finfo, os.path.join(OUT, "box_structure_v2_cut.assembly.json"))
+    chk = A.check(); system_line = chk.get("summary")
+    rz = rear_zone(P); json.dump(rz, open(os.path.join(OUT, "rear_zone.json"), "w"), indent=0)
+    write_requirements(P, J, finfo, fe, fb, tab, mc, pp, scj, OUT)
+    imgs = exploded_views(P, finfo, os.path.join(OUT, "view"))
+    make_page(P, finfo, tab, mc, pp, scj, sn, imgs, os.path.join(OUT, "visual.html"))
+    import shutil; shutil.copy(imgs[("exp", "iso")], os.path.join(OUT, "preview.png"))
+    # box totals with the lumps (E) for the CG
+    lumps = {"arm": (2900.0, (0.0, 60.0, 0.0)), "funnel + latch": (640.0, (0.0, 165.0, 180.0)), "electronics + PSU": (2000.0, (100.0, -50.0, -60.0))}
+    import box_system_topo_v2r2 as R2
+    import box_system_topo_v2 as T
+    for ang, pk in R2.L2.BAYS.items(): lumps[f"cartridge {ang}"] = (R2.MASS[pk], tuple(T.bay_pose(ang)(np.array(R2.META[pk]["SWAP_CG"]))))
+    tg = mc["structure_g"]; cg = np.array(mc["cg"]) * tg
+    for g_, p_ in lumps.values(): tg += g_; cg = cg + g_ * np.array(p_)
+    rec = dict(structure_g=mc["structure_g"], structure_cg=mc["cg"], box_with_lumps_g=round(tg), box_with_lumps_cg=np.round(cg / tg, 1).tolist())
+    res = dict(h=h, pieces=len(P), mass_structure_g_M=mc["structure_g"], cg_structure_M=mc["cg"], mass_box_with_lumps_g_E=rec["box_with_lumps_g"], cg_box_with_lumps_E=rec["box_with_lumps_cg"],
+               worst_index=max(tab.values(), key=lambda t: t["worst"])["worst"], worst_piece=max(tab, key=lambda k: tab[k]["worst"]),
+               worst_case=tab[max(tab, key=lambda k: tab[k]["worst"])]["worst_case"], summary=sn, summary_bolts_only=snb,
+               solid_check_pass=bool(scj and all(v["ok"] for v in scj.values()) and len(scj) >= len(P)), solid_check_n=len(scj), solid_check_pass_n=sum(1 for v in scj.values() if v["ok"]),
+               system_line=system_line, peak_memory_GB=peak_gb, wall_time_s=None if t_start is None else round(time.time() - t_start))
+    json.dump(res, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=float)
+    return dict(P=P, J=J, finfo=finfo, fe=fe, fb=fb, tab=tab, sn=sn, snb=snb, mc=mc, pp=pp, scj=scj, system_line=system_line, rz=rz, rec=rec, res=res, cutd=cutd)
+
+
 def load_cut(tag=""):
     d = json.load(open(os.path.join(OUT, f"cut{tag}.json")))
     P = {k: man(trimesh.load(os.path.join(OUT, "pieces", f"{k}.stl"), force="mesh")) for k in d["pieces"]}
@@ -1388,6 +1429,7 @@ def solid_all(names=None, log=print):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--stage", default="structure"); ap.add_argument("--names", default="")
     ap.add_argument("--h", type=float, default=4.0); ap.add_argument("--mode", default="all"); ap.add_argument("--only", default=""); ap.add_argument("--tag", default="")
+    ap.add_argument("--fe", default=""); ap.add_argument("--sizes", default=""); ap.add_argument("--out-sizes", dest="out_sizes", default="sizes.json")
     a = ap.parse_args()
     if a.stage == "fe":
         P, J, finfo = load_cut()
@@ -1395,8 +1437,22 @@ def main():
         json.dump(res, open(os.path.join(OUT, f"fe_h{a.h:g}_{a.mode}{a.tag}.json"), "w"), indent=1, default=float)
     if a.stage == "solid":
         solid_all(set(a.names.split(",")) - {""} or None, log=log)
+    if a.stage == "sizes":
+        fe = json.load(open(os.path.join(OUT, a.fe)))
+        cd = json.load(open(os.path.join(OUT, "cut.json")))
+        sizes, rows = size_joints(fe, cd["joints"])
+        json.dump({f"{k[0]}|{k[1]}|{k[2]}": v for k, v in sizes.items()}, open(os.path.join(OUT, a.out_sizes), "w"), indent=0)
+        json.dump(rows, open(os.path.join(OUT, a.out_sizes.replace(".json", "_table.json")), "w"), indent=0)
+        log(f"bolt sizing: {sum(1 for r in rows if r['now'] != r['was'])} of {len(rows)} joints change; over target after M5 x 6: {[r['joint'] for r in rows if r['over']]}")
+    if a.stage == "report":
+        t0 = time.time()
+        report_stage(a.h, a.tag, log=log)
+        log("report written")
     if a.stage == "export":
-        P, J, pl, finfo, PROT, KEEP = build_cut(log=log)
+        sizes = None
+        if a.sizes:
+            sizes = {tuple(k.split("|")): tuple(v) for k, v in json.load(open(os.path.join(OUT, a.sizes))).items()}
+        P, J, pl, finfo, PROT, KEEP = build_cut(sizes=sizes, log=log)
         rows = export_cut(P, J, finfo)
         log(f"exported {len(rows)} pieces, {sum(r['mass_g'] for r in rows.values()):.0f} g (M, 1.27 g/cm3)")
         log(f"piece overlaps (mm3): {overlaps(P)}")
