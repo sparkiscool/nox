@@ -236,3 +236,13 @@ layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside 
 it  38 beta   32 J  19.8283 vol 0.0544 (dil 0.1380 g +0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 10.3s
 it  39 beta   32 J  19.8283 vol 0.0544 (dil 0.1379 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 10.8s
 it  40 beta   32 J  19.8283 vol 0.0545 (dil 0.1379 g -0.000) grey  0.9% ch 0.088 worst camera hit above 50 N 3.39e+03 12.2s
+it  41 beta   32 J  19.8282 vol 0.0546 (dil 0.1379 g +0.001) grey  0.9% ch 0.075 worst camera hit above 50 N 3.39e+03 12.4s
+it  42 beta   32 J  19.8282 vol 0.0546 (dil 0.1378 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 13.3s
+it  43 beta   32 J  19.8282 vol 0.0547 (dil 0.1378 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 9.2s
+it  44 beta   32 J  19.8282 vol 0.0548 (dil 0.1378 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 11.7s
+it  45 beta   32 J  19.8281 vol 0.0549 (dil 0.1378 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 12.9s
+it  46 beta   32 J  19.8281 vol 0.0550 (dil 0.1378 g +0.003) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 12.1s
+it  47 beta   32 J  19.8281 vol 0.0548 (dil 0.1374 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 3.39e+03 10.7s
+layout: stopped (grey) at it 47, beta 32, 562 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 706 s, peak 3.0476 GB
