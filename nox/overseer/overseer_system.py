@@ -66,20 +66,29 @@ FLOW_HALF = 23.0
 PACK = (148.0, 48.0, 45.0)               # 4S 6000 (P)
 CART = (157.0, 54.0)                     # cartridge envelope (E, G)
 WHEEL_R, WHEEL_W = 5.0, 3.0               # R 5 (v4 set): the hook latch is laid out on it (G Hook latch v1)
-OPEN_HALF, FACE_TOP = 84.0, 75.1         # funnel (G)
-WHEEL_SEAT = 112 - (OPEN_HALF + 0.8) + WHEEL_R * math.sqrt(2)   # seated wheel centre, seat z 32.9 (C)
-CART_BOT_SEAT = (-7.0 - 45.0 - 2.0) + (WHEEL_SEAT + 12.0)       # cartridge bottom kept at v0's seat z -9.1: the swap wheel's
-                                                                # R 100 sets it for both drones (box-arm.md Ring); matching it
-                                                                # to the Scout's is the cartridge part's job (CHECK)
+OPEN_HALF, FACE_TOP = 84.0, 75.1         # funnel (G): y opening half 84
+FACE_C = 82.7                            # every face plane: half = 82.7 + seat z (v7 y edge 84 at z 1.3, v9 plain x edge 95.5 at z 12.8, G)
+X_EDGE_Z, Y_EDGE_Z, OPEN_X = 12.8, 1.3, 95.5
+WHEEL_SEAT = 112 - FACE_C + WHEEL_R * math.sqrt(2)   # seated wheel centre, seat z 36.4 (C)
+PROBE_Z, PAD_OFF, G8_OFF = 33.0, 2.0, 9.0           # keep-alive probes at seat z 33 on the ±x faces, drone pad 2.0 off the face, G (8) band 9.0
+# latch v1 set (PR 69 @ 258becf via runs/box_system/v2/latch_ctx, M): cartridge coords (x across, y up from the flat bottom,
+# z from the closed end) -> drone: x = catch centre + (z - Z_T) (XT60 end forward: the pack offset points away from the
+# box hub, B), y = x_c, seat z = y_c - 42.3 (R 113, Z_SEAT 155.3, C)
+LATCH_DIR = os.path.join(ROOT, "runs", "box_system", "v2", "latch_ctx")
+LATCH_META = json.load(open(os.path.join(LATCH_DIR, "meta.json")))["overseer"]
+LATCH_MESH = {k: trimesh.load(os.path.join(LATCH_DIR, f"overseer_{k}_c.stl")) for k in ("cartridge", "pack", "receiver", "receiver_lid", "xt60e1m")}
+LATCH_SEAT_Z0 = 113.0 - 155.3
+SWAP_G, RECEIVER_G = LATCH_META["SWAP_M"], 190.0                    # cartridge + pack 748 g (M), receiver set 190.0 g (latch PR 69, E)
+SWAP_FWD = LATCH_META["Z_T"] - LATCH_META["SWAP_CG"][2]              # swap CG 5.18 behind the set centre (the catch centre)
 
 
 def set_wheel(wz):
     """wheel centres at drone z wz: the seat height follows, the cartridge hangs to keep its seat z"""
-    global WHEEL_Z, SEAT_DZ, FUNNEL_TOP_D, PACK_TOP
+    global WHEEL_Z, SEAT_DZ, FUNNEL_TOP_D, CART_BOT
     WHEEL_Z = wz
     SEAT_DZ = WHEEL_SEAT - wz                    # bottom plate top in the seat frame
     FUNNEL_TOP_D = FACE_TOP - SEAT_DZ            # funnel top in the drone frame: the L2 and the arms over the rim stay above it
-    PACK_TOP = CART_BOT_SEAT - SEAT_DZ + 2.0 + PACK[2]
+    CART_BOT = LATCH_SEAT_Z0 - SEAT_DZ           # cartridge flat bottom in the drone frame (the box sets it)
 
 
 set_wheel(-12.0)
@@ -221,26 +230,40 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                 blks.append(box(ox[0], ox[1], oy[0], oy[1], WHEEL_Z - 2, WHEEL_Z + 4))
             nodes.append(hull(*blks))
     g["wheels"], g["nodes"] = wheels, nodes
-    PB = PACK_TOP - PACK[2]
-    g["pack"] = box(-dc - PACK[0] / 2, -dc + PACK[0] / 2, -PACK[1] / 2, PACK[1] / 2, PB, PACK_TOP)
-    g["cart"] = box(-dc - CART[0] / 2, -dc + CART[0] / 2, -CART[1] / 2, CART[1] / 2, PB - 2, -2.11)
-    g["sled"] = box(-dc - 60, -dc + 60, -72, 72, -5.1, -2.1)
-    if PACK_TOP < -7.5:                                                        # hanger walls from the sled to the cartridge rails
-        g["sled"] = union([g["sled"], box(-dc - 60, -dc + 60, 27.5, 31, PACK_TOP, -5.0), box(-dc - 60, -dc + 60, -31, -27.5, PACK_TOP, -5.0)])
-    # down camera 10 and flow 12 up in their pods (system pass, crash probes): the lenses sit inside the skid runners' band
-    g["cam_pod"] = box(-dc - 23, -dc + 23, 29, 69, PB + 14, -5.1)
-    g["flow_pod"] = box(-dc - 15, -dc + 15, -55, -29, PB + 16, -5.1)
-    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 30, 68, PB + 12.4, PB + 14), cyl(6, PB + 4, PB + 12.4, -dc, 49)])
-    g["down_lens"] = np.array([-dc, 49.0, PB + 4]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -50, -34, PB + 9.5, PB + 16)
-    g["flow_lens"] = np.array([-dc, -42.0, PB + 9.5])
-    # skid runners: printed PETG sleeves on the skid rails (cage), 27 tall, the lowest points with the feet: a side edge reaching under the feet meets them
-    # before the lenses (outside the 45 deg view cone), 2.4 under the down camera board, inside the opening at ±5 deg yaw
+    def latch_part(k):
+        m = LATCH_MESH[k].copy(); v = m.vertices
+        m.vertices = np.stack([-dc + (v[:, 2] - LATCH_META["Z_T"]), v[:, 0], v[:, 1] + CART_BOT], 1); return m
+    g["pack"], g["cart"] = latch_part("pack"), latch_part("cartridge")
+    g["receiver"] = trimesh.util.concatenate([latch_part("receiver"), latch_part("receiver_lid"), latch_part("xt60e1m")])
+    g["swap_cg"] = np.array([-dc - SWAP_FWD, LATCH_META["SWAP_CG"][0], LATCH_META["SWAP_CG"][1] + CART_BOT])
+    PB = CART_BOT                                                              # the set's flat bottom (was the pack bottom)
+    RT = CART_BOT + LATCH_META["Y_M"]                                         # receiver mount plane (its top)
+    rb = g["receiver"].bounds
+    # sled: printed PETG plate on the receiver's mount plane (the 6 M3 come up from below into its inserts), 4 thick,
+    # on the belly frame tabs of the 4 corner nodes; the pods hang from it beside the receiver
+    g["sled"] = box(rb[0][0] - 5, rb[1][0] + 5, -76, 76, RT, RT + 4)
+    g["cam_pod"] = box(-dc - 23, -dc + 23, 35, 75, PB + 16, RT)
+    g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
+    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 36, 74, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 55)])
+    g["down_lens"] = np.array([-dc, 55.0, PB + 6]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -58, -36, PB + 9.5, PB + 16)
+    g["flow_lens"] = np.array([-dc, -47.0, PB + 9.5])
+    # skid runners: printed PETG sleeves on the skid rails (cage), the lowest points with the feet: a side edge reaching
+    # under the feet meets them before the lenses; 2.4 under the down camera board, inside the opening at ±5 deg yaw
     # hub belly pan: printed PETG skid plate under the bottom plate (cage): the electronics' shield from below; the hub
     # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
     g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.7, -2.2)
-    g["runners"] = [box(-dc - 67, -dc + 67, 65 if sy > 0 else -71, 71 if sy > 0 else -65, PB - 17, PB + 10) for sy in (1, -1)]
-    g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
-    g["PB"] = PB
+    g["runners"] = [box(-dc - 75, -dc + 75, 61 if sy > 0 else -71, 71 if sy > 0 else -61, PB - 17, PB + 12) for sy in (1, -1)]
+    g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 80, sy * 66) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
+    # keep-alive pads (G (6)): one per ±x lower-ring face, 2.0 off the face at the probe height, over the probe pair
+    # (+x: y +12 / +22 = B+, -x: y -12 / -22 = B-), on the wheel ring rod; 3 thick
+    pads = []
+    for sx in (1, -1):
+        zc = PROBE_Z - SEAT_DZ; xf = FACE_C + PROBE_Z                          # face point at the probe height (seat x)
+        nrm = np.array([-sx, 0, 1]) / math.sqrt(2); c0 = np.array([-dc + sx * xf, 17.0 * sx, zc]) + nrm * (PAD_OFF + 1.5)
+        pd = box(-1.5, 1.5, -9, 9, -6, 6); R = np.eye(4); R[:3, 0] = nrm; R[:3, 1] = [0, 1, 0]; R[:3, 2] = np.cross(nrm, [0, 1, 0]); R[:3, 3] = c0
+        pd.apply_transform(R); pads.append(pd)
+    g["pads"] = pads
+    g["PB"] = PB; g["RT"] = RT
 
     # guard: two octagon rings round the motor square, 12 off the swept disks; the front flat is a V to the L2 apex
     B = np.array([xB, 0.0, zB]); g["B"] = B
@@ -291,7 +314,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
              obstacles=[dict(c=[float(v) for v in cm_["c"] + cm_["fwd"] * xc_], fwd=[float(v) for v in cm_["fwd"]], left=[float(v) for v in cm_["left"]],
                              half=hf_) for cm_ in g["cams"] for xc_, hf_ in ((-1.75, [2.75, 20.0, 20.0]), (5.0, [4.0, 6.0, 6.0]))],   # each camera: plate + board, lens (C)
              m_drone_g=3000.0, rear_x=-102.0, pyramid="rear", x_top=dm, x_tower=-100.0,
-             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8"}, seat_dz=float(SEAT_DZ),
+             feet=(80.0, 66.0, float(g["PB"]) - 3.5), belly=(80.0, 40.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
