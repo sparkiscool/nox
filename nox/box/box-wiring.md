@@ -1,4 +1,4 @@
-# Arm harness v1: one 19-wire bundle through the sun post, servo ribbons folded in the bar slots (17 Oct 2026)
+# Arm harness v1: one 22-wire bundle (19 until heads v7, 24 Oct) through the sun post, servo ribbons folded in the bar slots (17 Oct 2026)
 
 Closes box-arm.md Problem 2's open item (the bundle's arm-side tie and route). **Board end (24 Oct): `nox/box/box-electronics.md`** (SKR, servo rail, fixed tails, connectors at the board). Numbers: `nox/box/arm_wiring.py` (reads nothing; standalone calcs, C unless tagged). Parts + clearance check: `nox/box/wire_parts.py`. Geometry context: `nox/box/arm_layout.py` WIRING block.
 
@@ -33,7 +33,7 @@ The ribbon lies in the 6 x 6 slot, anchored at r 23 (clip), **folds 180° back o
 Continuous conductors from the bay to each load: **no connector inside the bore or on the arm** (DEFAULT). Steppers keep their own pigtails + JST-XH inline right at each motor (service). Servos keep their stock plugs; mate at the servo plate. Hall soldered + heat-shrink at the tower.
 
 ## Cut list (E, +20 % slack)
-**24 Oct, fixed tails from the electronics layout (268 / 152 / 330, grip halls 316, C on E, rerun with the gripper INA226 and the ADS1115; were 174 / 308 / 256):** stepper A 4 x 715 · stepper B 4 x 645 · axle 4 x 655 · hall 3 x 620 · servo ribbons 2 x 240 (each + H, 3.3 V: 5 conductors) · servo power pair 2 x 320 (22 AWG) · servo signals 2 x 535 · grip halls 3 x 520 (28 AWG, E). Was (174 / 308 / 256): stepper A 4 x 600 · stepper B 4 x 530 · axle 4 x 540 · hall 3 x 505 · servo power pair 2 x 505 · servo signals 2 x 445. Totals: 26 AWG ~9.3 m, 28 AWG ~5.8 m (incl. the ribbons' 4 x 240), 22 AWG ~0.5 m (E).
+**24 Oct, fixed tails from the electronics layout (268 / 152 / 330, grip halls 316, C on E, rerun with the gripper INA226 and the ADS1115; were 174 / 308 / 256):** stepper A 4 x 715 · stepper B 4 x 645 · axle 4 x 655 · hall 3 x 620 · servo ribbons 2 x 240 (each + H, 3.3 V: 5 conductors) · servo power pair 2 x 320 (22 AWG) · servo signals 2 x 535 · grip halls 3 x 520 (28 AWG, E). Was (174 / 308 / 256): stepper A 4 x 600 · stepper B 4 x 530 · axle 4 x 540 · hall 3 x 505 · servo power pair 2 x 505 · servo signals 2 x 445. Totals: 26 AWG ~9.3 m, 28 AWG ~5.9 m (incl. the ribbons' S, H, 3.3 V at 240), 22 AWG ~0.6 m (E).
 
 ## Problems
 1. **Wire count was wrong in box-arm.md (15 -> 19):** the head servos were never in the twist count. Fixed here; Problem 3 there updated.
