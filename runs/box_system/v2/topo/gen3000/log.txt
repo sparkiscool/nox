@@ -1,0 +1,24 @@
+=== box_system_topo_v2: h 8.0, gen 3000.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
+seat posts side/overlap mm3 [(1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9), (1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9)]
+box_system_topo_v2: grid (32, 32, 32) h 16.0 = 32,768 cells; design 9,082 (37199.9 cm3), drawn 2,528, void 21,158
+  support default: 624 cells, 1350 nodes
+  support hands: 162 cells, 400 nodes
+  support side: 720 cells, 1550 nodes
+  50 cells of 10 design islands cut off by the keep-outs set void
+setup h 16.0: 14 s, 14 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 1.16 cells, erosion depth 4.93 mm; volfrac 0.081 of 9,032 design cells
+layout: WARNING filter radius 1.16 cells < 2: the grid is too coarse for 18.0 mm members; use h <= 7.42
+layout: WARNING nearly mirrored in x (0.4% of passive cells differ): no symmetry
+layout: 17 drawn bodies (2,528 cells), held solid in every realization; eroded filter: masked
+layout: 14 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 46,137 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0873 (dil 0.1068 g +0.077) grey 25.5% ch 0.100 worst all bays: 43.5 N across 2.97e+03 1.8s
+it   2 beta    1 J  46.8004 vol 0.0715 (dil 0.0864 g -0.129) grey 32.6% ch 0.100 worst misuse: Overseer motors cut 1.32e+04 1.9s
+it   3 beta    1 J   0.9455 vol 0.0748 (dil 0.0900 g -0.094) grey 27.1% ch 0.100 worst XT60 insert at the -120 bay  239 1.7s
+it   4 beta    1 J   0.4001 vol 0.0743 (dil 0.0891 g -0.102) grey 30.7% ch 0.100 worst Overseer catch -X-Y diag 118 1.7s
+it   5 beta    1 J   0.4855 vol 0.0764 (dil 0.0909 g -0.084) grey 27.9% ch 0.100 worst XT60 insert at the -120 bay  141 2.1s
+it   6 beta    1 J   0.4350 vol 0.0703 (dil 0.0841 g -0.146) grey 26.6% ch 0.100 worst misuse: Overseer motors cut 120 1.9s
+it   7 beta    1 J   0.2020 vol 0.0744 (dil 0.0886 g -0.100) grey 27.1% ch 0.100 worst all bays: 60 N insert 51.3 1.7s
+it   8 beta    1 J   0.1311 vol 0.0765 (dil 0.0907 g -0.078) grey 27.0% ch 0.100 worst Overseer catch -X-Y diag 32.7 1.6s
+it   9 beta    1 J   0.0965 vol 0.0809 (dil 0.0952 g -0.033) grey 26.3% ch 0.100 worst all bays: 60 N insert 24.4 1.8s
+it  10 beta    1 J   0.0807 vol 0.0825 (dil 0.0966 g -0.019) grey 25.4% ch 0.100 worst all bays: 60 N insert 20.3 2.0s
