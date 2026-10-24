@@ -35,16 +35,16 @@ module thread_solid(d_maj, pitch, h, clearance=0, flank=14.5, steps=90) {
     linear_extrude(height=h, twist=-360*h/pitch, slices=ceil(h/pitch*steps/2)) polygon(pts);  // negative twist = right-hand
 }
 
-// v2 fit coupon (Spark 24 Oct: the stick fit test): the base's socket exactly, in print pose (thread end on the bed).
-// In use coords (pole enters at z 0): Ø28.3 x 2 shank counterbore, thread cut z 1.5..27.5 with the 1 mm entry chamfer,
-// open top so the tip shows 0.5 under the top face when the shank shoulder seats. Wall 3.1 round the thread, 3.35 round the
-// counterbore; the 45 deg step between them prints without supports.
-shank_r = 14.15; shank_d = 2.0; top_z = 27.5;
+// v3 fit coupon (Spark 24 Oct: the stick fit test, "a section after the screw-in part that fits the thicker cylinder"): the base's
+// socket exactly, in print pose (thread end on the bed). In use coords (pole enters at z 0): Ø28.3 sleeve 27 deep over the
+// Ø27.5 cylinder, the shoulder seats on its floor at z 27; thread cut z 26.5..52.5 with the 1 mm entry chamfer, open top so the
+// tip shows 0.5 under the top face. Wall 3.35 round the sleeve, 3.1 round the thread; the 45 deg step prints without supports.
+shank_r = 14.15; shank_d = 27.0; top_z = shank_d + 25.5;
 module fit_coupon_use() {
     difference() {
         union() {
-            cylinder(r=17.5, h=4, $fn=96);
-            translate([0,0,4]) cylinder(r1=17.5, r2=13, h=4.5, $fn=96);
+            cylinder(r=17.5, h=shank_d + 2, $fn=96);
+            translate([0,0,shank_d + 2]) cylinder(r1=17.5, r2=13, h=4.5, $fn=96);
             cylinder(r=13, h=top_z, $fn=96);
         }
         translate([0,0,-1]) cylinder(r=shank_r, h=shank_d + 1, $fn=96);

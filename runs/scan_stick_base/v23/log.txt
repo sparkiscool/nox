@@ -1,0 +1,12 @@
+=== scan_stick_base: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (238.02 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.039 of 15,617 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: 2 drawn bodies (3,719 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 64) = 49,152 elements, 73,596 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0583 (dil 0.0709 g +0.480) grey 15.6% ch 0.100 worst tie b2 my 3.25e+04 2.4s
+it   2 beta    1 J   2.0115 vol 0.0367 (dil 0.0442 g -0.077) grey 19.0% ch 0.100 worst tie b2 my 6.68e+03 2.2s
+it   3 beta    1 J   1.6674 vol 0.0384 (dil 0.0461 g -0.037) grey 19.5% ch 0.100 worst L2 hit -y 100 N (joint) 5.4e+03 2.3s

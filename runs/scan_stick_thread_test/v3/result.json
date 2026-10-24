@@ -1,0 +1,1 @@
+{"name": "scan_stick_thread_test", "version": "v3", "mass_g": 22.3, "solid_check": "PASS", "bed_face": "thread end", "bed_contact_mm2": 270, "file": "print/scan_stick_thread_test_v3.stl", "drawn": true}

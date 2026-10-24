@@ -10,7 +10,8 @@ DEFAULT; alternative electronics on the sides 3.23 L, 154 x 108 x 194, the CG fu
     (8 under the opening, reachable) into Ruthex inserts in the module plate;
   - the camera lens 1 behind the L2 plane, the top ring front ahead of the lens and outside its view.
 Spark 24 Oct (rod in hand): the tip has 25 of thread then a Ø27.5 plain shank, 27 engaged and no more: a Ø28.3 x 2 counterbore
-takes the shank (its shoulder seats on the floor), the thread is cut 26 at z 1.5..27.5 (0.5 past the tip), 1 mm entry chamfer; boss Ø40 x 38.
+sleeves 27 of the Ø27.5 cylinder (Spark: "overlap by 27, no longer"): a Ø28.3 bore z -25..2 in the boss, which runs down the pole
+to z -25; the shoulder seats at z 2 and the thread is cut 26 at z 1.5..27.5 (0.5 past the 25 mm tip), 1 mm entry chamfer; boss Ø40.
 Pieces: spine = base v21 (prints lying on its back on the bed diagonal), front module = head v16.
    python3 unit_topo_v5.py --check | --manifest | --system [h] [gen] | --piece base|head [h] [gen] [--ver vN] | --reactions"""
 import sys, os, json
@@ -25,8 +26,9 @@ ARGS = [a for a in sys.argv[1:] if not a.startswith("-") and a != VER]
 G = 9.81
 OUT_SYS = os.path.join(ROOT, "runs", "scan_stick_system", "v2")
 # ---------------------------------------------------------------- layout (placement v2 + the drawn interfaces, C)
-BOSS_R, BOSS_H, THREAD = 20.0, 38.0, 27.0                      # THREAD = engagement: 2 shank + 25 thread (P Spark 24 Oct), C
-SHANK_R, SHANK_D = 14.15, 2.0                                    # Ø27.5 shank (P) + 0.4 radial (C), counterbore depth
+BOSS_R, BOSS_H, THREAD = 20.0, 38.0, 27.0                      # THREAD: top of the thread zone (cut z 1.5..27.5), C
+SHANK_R, SHANK_D = 14.15, 27.0                                   # Ø27.5 cylinder (P) + 0.4 radial (C), sleeved 27 (P Spark 24 Oct)
+Z_MOUTH = 2.0 - SHANK_D                                         # the socket mouth, z -25: the boss runs down the pole to here
 PACK = (-23.5, 23.5, -25.5, 25.5, 38.0, 188.0)                 # P + clearance
 SPINE = (-30.0, 30.0, -31.5, 31.5, 0.0, 196.0)
 JX = 30.0
@@ -95,9 +97,13 @@ def cage_rods():
 def sleeve_x(x0, x1, y, z):                                    # drawn Ø12 sleeve round a rod along x, Ø3.2 bore
     return cylx(x0, x1, y, z, SOCK_R), cylx(x0 - 1, x1 + 1, y, z, ROD_R)
 
+def pole_grip():
+    """where the pole holds the base: the boss wall round the sleeve bore (z -24..1) and round the thread (z 2..25)"""
+    return (cyl(0, 0, Z_MOUTH + 1, 1.0, BOSS_R - 1, 64) - cyl(0, 0, Z_MOUTH, 2.0, SHANK_R + 0.75, 64)) + (cyl(0, 0, 2, THREAD - 2, BOSS_R - 1, 64) - cyl(0, 0, 0, BOSS_H, 11.0, 64))
+
 def spine_bodies():
     x0, x1, y0, y1, _, ztop = SPINE
-    drawn = cyl(0, 0, 0, BOSS_H, BOSS_R, 96)
+    drawn = cyl(0, 0, Z_MOUTH, BOSS_H, BOSS_R, 96)
     floor = box(x0, x1, y0, y1, 32.0, PACK[4])
     back = box(x0, PACK[0] - 0.5, y0, y1, 32.0, ztop)
     front = box(PACK[1] + 0.5, x1, y0, y1, 32.0, ztop)
@@ -127,10 +133,10 @@ def spine_bodies():
     if not os.path.exists(tc):
         os.makedirs(os.path.dirname(tc), exist_ok=True)
         os.system(f"openscad -o {tc} {os.path.join(HERE, 'thread_cut.scad')} >/dev/null 2>&1")
-    cuts = man(trimesh.load(tc, force="mesh")).translate([0, 0, SHANK_D - 0.5])                  # thread 26 long at z 1.5..27.5: 0.5 into the counterbore (no coincident faces), 0.5 past the tip
-    cuts += mf.Manifold.cylinder(SHANK_D + 1.0, SHANK_R, SHANK_R, 96).translate([0, 0, -1.0])      # shank counterbore z 0..2
-    cuts += mf.Manifold.cylinder(1.5, 10.9, 9.9, 64).translate([0, 0, SHANK_D - 0.5])              # 1 mm entry chamfer on the thread
-    cuts += box(-100, 100, -100, 100, -10, 0)
+    cuts = man(trimesh.load(tc, force="mesh")).translate([0, 0, 1.5])                            # thread 26 long at z 1.5..27.5: 0.5 into the sleeve bore (no coincident faces), 0.5 past the tip
+    cuts += mf.Manifold.cylinder(SHANK_D + 1.0, SHANK_R, SHANK_R, 96).translate([0, 0, Z_MOUTH - 1.0])   # sleeve bore z -25..2 round the Ø27.5 cylinder
+    cuts += mf.Manifold.cylinder(1.5, 10.9, 9.9, 64).translate([0, 0, 1.5])                        # 1 mm entry chamfer on the thread
+    cuts += box(-100, 100, -100, 100, Z_MOUTH - 10, 0) - cyl(0, 0, Z_MOUTH, 1.0, BOSS_R, 96) - mf.Manifold.cylinder(16.0, BOSS_R, 32.0, 96).translate([0, 0, -15.0])   # below z 0 only the sleeve and a flare to r 32 at z 0 (gussets)
     cuts += B6(PACK) + box(PACK[0], PACK[1], PACK[2], PACK[3], PACK[5] - 0.01, 420)
     cuts += cyly(-40, 40, 0.0, POCKET_PIN, ROD_R)
     for y, z in BOLTS:
@@ -143,7 +149,7 @@ def spine_bodies():
     cuts += box(SW[0] - 1, SW[1] + 1, 16 - 9.7, 16 + 9.7, SWZ - 6.6, SWZ + 6.6) + box(SW[1], PI_X0 - 0.5, 16 - 11, 16 + 11, SWZ - 11, SWZ + 11)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -6, SWZ, 6.15) + cylx(SW[1], PI_X0 - 0.5, -6, SWZ, 7.0)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -20, SWZ, 2.6) + cylx(SW[1], SW[1] + 8, -20, SWZ, 3.5)
-    env = box(-70.0, JX, -44.0, 44.0, 0.0, 200.0)                                             # to the cage sleeves (y ±42), not beyond
+    env = box(-70.0, JX, -44.0, 44.0, Z_MOUTH, 200.0)                                             # to the cage sleeves (y ±42), not beyond
     return dict(drawn=drawn, cuts=cuts, env=env, floor=floor, back=back, front=front, ring=ring, standoffs=standoffs, sleeves=sleeves, ledge=ledge, panel=panel)
 
 def head_bodies():
@@ -281,7 +287,7 @@ def setup_piece(piece, h):
             p.load_multi(name, list(parts) + contact, accel=accel)
         return p
     p = Part("scan_stick_base", h, Sb["drawn"], Sb["cuts"], Sb["env"], build="-x", material="PETG")
-    p.support("default", cyl(0, 0, 2, THREAD - 2, BOSS_R - 1, 64) - cyl(0, 0, 0, BOSS_H, 11.0, 64))
+    p.support("default", pole_grip())
     pads = joint_regions()
     pack_r = Sb["floor"] + Sb["back"] + Sb["front"] + Sb["ring"]
     el_r = box(PI_X0, PI_X0 + 2, -30, 30, 45, 101)
@@ -303,7 +309,7 @@ def setup_piece(piece, h):
 def setup_system(h):
     Sb, Hd = spine_bodies(), head_bodies()
     p = Part("scan_stick_unit", h, Sb["drawn"] + Hd["drawn"], Sb["cuts"] + Hd["cuts"], Sb["env"] + Hd["env"], build="+z", material="PETG")
-    p.support("default", cyl(0, 0, 2, THREAD - 2, BOSS_R - 1, 64) - cyl(0, 0, 0, BOSS_H, 11.0, 64))
+    p.support("default", pole_grip())
     reg = dict(pack=Sb["floor"] + Sb["back"] + Sb["front"] + Sb["ring"], pi=Sb["standoffs"], l2=Hd["regions"]["l2"], cam=Hd["regions"]["cam"], el=box(PI_X0, PI_X0 + 2, -30, 30, 45, 101))
     for gs, ds in ((25, DIRS + DIAG), (50, DIRS)):
         for k, d in enumerate(ds):
