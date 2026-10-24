@@ -227,15 +227,15 @@ def c2d(m):
 PR44 = os.path.join(LATCH_DIR, "pr44")
 # battery latch standard (control session, branch part/battery-latch @ 258becf, dimensions "System box swap: latch"; interim):
 # cartridge v5 93 long with the XT60 at the NOSE, receiver block v1 + lid + 2 TPU strips + XT60E1-M, posed by its T_dc
-LATCH = os.environ.get("LATCH_MESHES") or os.path.join(ROOT, "runs", "scout_layout", "v5", "latch")   # v5: receiver v2 / cartridge
-LATCH_V = "v6" if "v5" in LATCH else "v1"                       # v6 + their skids (latch PR 109 @ b0b0321); v1 meshes stay in v2/latch
+LATCH = os.environ.get("LATCH_MESHES") or os.path.join(ROOT, "runs", "scout_layout", "v5", "latch_v3")   # v5: receiver v3 / cartridge
+LATCH_V = "v6" if "v5" in LATCH else "v1"                       # v6 + their skids (latch PR 109; latch_v3 = receiver v3 @ 90cf7f3); v1 in v2/latch
 LATCH_DX = 0.0                                 # the set stays where the latch's T_dc puts it: its ends are clipped to the funnel planes
                                                # from this catch centre (a 3.7 aft shift cut cage first to 0.83); centring is the latch's
 _LK = ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug", "receiver", "receiver_lid", "receiver_strips", "xt60e1m") + \
-      (("cartridge_strip_px", "cartridge_strip_nx", "receiver_skid_nose_plate", "receiver_skid_side_px", "receiver_skid_side_nx")
+      (("cartridge_strip_px", "cartridge_strip_nx") + tuple(sorted(f_[:-4] for f_ in os.listdir(LATCH) if f_.startswith("receiver_skid")))
        if LATCH_V == "v6" else ("cartridge_skid_closed", "cartridge_skid_lead"))
 _L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_DX, 0, 0]) for k in _LK}
-RECV3 = LATCH_V == "v6" and os.environ.get("RECV3", "1") == "1"
+RECV3 = LATCH_V == "v6" and "latch_v3" not in LATCH and os.environ.get("RECV3", "1") == "1"   # stand-in only on the v2 meshes
 if RECV3:                                      # receiver v3 (asked of the latch 24 Oct, E stand-in): bottom |y| <= 25.5 below z -38 so a
     _cut = trimesh.util.concatenate([box(-60, 60, 25.5, 40, -50, -38), box(-60, 60, -40, -25.5, -50, -38)])   # keel node fits at
     _L["receiver"] = _L["receiver"].difference(_cut, engine="manifold")                                    # y +-29.6; bottom strips
@@ -267,7 +267,7 @@ def latch_skids():
 
 
 REC_SKIDS, CART_SKIDS = latch_skids() if LATCH_V == "v1" else (
-    trimesh.util.concatenate([_L[k] for k in ("receiver_skid_nose_plate", "receiver_skid_side_px", "receiver_skid_side_nx")]),
+    trimesh.util.concatenate([_L[k] for k in _LK if k.startswith("receiver_skid")]),
     trimesh.util.concatenate([_L[k] for k in ("cartridge_strip_px", "cartridge_strip_nx")]))   # v6: the latch's drawn skids (PR 109)
 EDGE_SKIDS = [REC_SKIDS, CART_SKIDS]                 # edge cover for the probes only: cage first and the crash cases stay on the rods
 PACK_PTS = _L["pack"].bounding_box.vertices.copy()
