@@ -112,16 +112,47 @@ def main(video=False):
     sc = Scene("Nox box: whole assembly", "stand, ring, bays, collar with the hook latch, electronics; swap cycle")
     P, sheets, bays = stand_parts()
     for k, m in P.items(): sc.part(k, tm(m), group="stand", color="#8d6e63", printed=True, faces=6000)
-    for k, m in sheets.items(): sc.part(k, tm(m), group="enclosure", color="#dfe9f2", printed=False, faces=200)
+    for k, m in sheets.items():                                  # cut-away: the front and +X sheets are left out of the page
+        if k in ("sheet rear", "sheet side -X"): sc.part(k, tm(m), group="enclosure", color="#dfe9f2", printed=False, faces=200)
     for k, t in bay_modules(bays).items(): sc.part(k, t, group="bays", color="#5b8ac9", printed=True, faces=15000)
     cm, cname = collar(); ct = tm(cm); ct.apply_transform(S2W)
     sc.part(cname, ct, group="collar", color="#b9c2cc", printed=True, faces=30000)
     L, H, lay, HP = latches()
     for k, (t, c, pr) in L.items(): sc.part(k, t, group="hook latch", color=c, printed=pr, faces=4000)
     for k, t in electronics().items(): sc.part(k, t, group="electronics", color="#2e7d32", printed=False, faces=50)
-    sc.view("front", eye=(0, 900, 150), target=(0, 140, 60))
+    # drone (catch-interface model from hook_latch.py, seat frame) + its cartridge; lands, latch out, swap hold, latch in, leaves
+    D = H.drone_parts(); D["cartridge"] = H.cartridge()
+    col = {"wheels": "#44aa66", "cage": "#333333", "plate": "#556677", "props": "#9fb8d0", "receiver": "#778899", "cartridge": "#9955bb"}
+    for k, m in D.items():
+        t = H.to_tm(m, S2W); sc.part(f"drone {k}", t, group="drone", color=col[k], printed=False, faces=8000)
+    lift = H.GAP * math.sqrt(2)
+    def ease(a): a = min(max(a, 0.0), 1.0); return a * a * (3 - 2 * a)
+    def dz(t):
+        if t < 3.0: return 220.0 * (1 - ease(t / 3.0))
+        if 5.0 <= t < 6.5: return lift * ease((t - 5.0) / 0.4)
+        if 6.5 <= t < 7.0: return lift * (1 - ease((t - 6.5) / 0.5))
+        if t >= 8.0: return 260.0 * ease((t - 8.0) / 2.5)
+        return 0.0
+    def rise(t):
+        if t < 3.5: return 0.0
+        if t < 4.0: return ease((t - 3.5) / 0.5)
+        if t < 7.3: return 1.0
+        if t < 7.8: return 1 - ease((t - 7.3) / 0.5)
+        return 0.0
+    UT = {name: S2W @ H.unit_frame(fs, xs)[0] for name, fs, xs in H.UNITS}
+    def poses(t):
+        out = {f"drone {k}": (0, 0, dz(t), 0, 0, 0) for k in D}
+        for name in UT:
+            T = UT[name]
+            out[f"latch plunger {name}"] = T @ trimesh.transformations.translation_matrix([0, 0, H.RISE * rise(t)]) @ np.linalg.inv(T)
+        return out
+    sc.timeline(poses, duration_s=11.0, fps=30)
+    ts = np.arange(330) / 30.0
+    sc.series("plunger out", [H.RISE * rise(t) for t in ts], unit="mm")
+    sc.series("drone height over seat", [dz(t) for t in ts], unit="mm")
+    sc.view("front", eye=(700, 800, 250), target=(0, 140, 40))
     sc.view("collar top", eye=(0, 177, 700), target=(0, 177, 150))
-    sc.timeline(lambda t: {}, duration_s=2.0, fps=10)
+    sc.view("latch", eye=(40, 20, 300), target=(122, 77, 182))
     sc.write(os.path.join(OUT, "motion.html"))
     if video: sc.video(os.path.join(OUT, "motion.mp4"))
 
