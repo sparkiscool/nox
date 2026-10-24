@@ -2,30 +2,27 @@
 
 Inputs:
 - Spark 24 Oct: 9 bays, 4 Overseer + 5 Scout.
-- Hub DEFAULT (arm v7): no two Overseer bays adjacent; Y_C 138 (C).
-- Swap arm v6 (PR 71): R 113, lane ≥ 159 (C).
-- Battery latch v1 (PR 69): receivers in `runs/box_system/v2/latch_ctx/` (M).
+- Hub DEFAULT (arm v7): no two Overseer bays adjacent; common grip line **Y_C 165** (C; alt 138 or 175, `nox/log.md`).
+- Swap arm v6 / v7: R 113, lane ≥ 159, rail disc r 151 at Y 38..73, drone-insert keep-outs from the v7 head (C).
+- Battery latch v1 (PR 69): receivers in `runs/box_system/v2/latch_ctx/` (M); receiver bolts up from below into inserts in the bay bodies.
 
-Bays: Overseer 0, −60, −120, −180; Scout 30, −30, −90, −150, −210 (DEFAULT, set A).
-Funnel centre: Y 140 (C) = both drones' catch centre at Y_C + 2 (C; hub: the Overseer moves its catch centre onto its thrust axis; DEFAULT, alt 177 with Y_C 175). Funnel v8 (catch): the opening must pass the lopsided Overseer set (−66.5 / +113.1 from the catch centre, M): the +Y face out 32.5 with 3 a side (E until funnel v8 has its outline), the −Y face stays; a symmetric ~191 is 17.6 short at +Y (C). The enclosure keeps the 32.5.
-Layout artifact: https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp (`layout.html`).
+Bays: Overseer 0, −60, −120, −180; Scout 30, −30, −90, −150, −210 (DEFAULT, set A). Funnel centre = the grip line, Y 165.
+
+Visuals:
+- Four layouts side by side, sections across and along the axle from the concept meshes: https://claude.ai/artifact/Mn5JGDkjEGSQXyPhjqrpxb (source `runs/box_system/v2/layout_views.html`, `nox/box/box_layout_v2_views.py`).
+- 3D scene of A: https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp (`layout.html`).
+
+System file: `nox/box/box_structure_v2.assembly.json` (= `concept.assembly.json` of A), with both drone-insert keep-outs as parts so the catch and arm can check against them.
 
 ## Concept check (docs/generative.md rule 0)
-- System line (`concept.assembly.json`): System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm³ (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 80.6 L (E), extents 416 x 414 x 468 mm (E), mass 18428 g (E), CG [4.0, 139.5, -35.3] (E, no cg_ref), access 18/18 clear
-  - Its mass and CG count the bay envelopes as solid PETG: an envelope figure, not a design mass. Its bbox is the sheets' (C).
-- **Arm:** the hub, motors, parked heads and drone-insert lane envelopes clear every bay envelope, the catch, the v1 mast and the PSU (0 mm³, M).
-- **Access 18 / 18:**
-  - Every cartridge comes out to park along its install axis.
-  - Every bay body comes out along +Y with the front sheet off (the service door, DEFAULT).
-- **Fit FAIL (Overseer drone set vs the funnel):** the cartridge spans Y 74.8..248.8 against the opening's 56..224 (M).
-  - Its tab line sits ~30 from its catch centre, against the Scout's 2: latch v1 puts it on the thrust axis, which is 29.7 ahead of the catch centre (System Box catch).
-  - Its 171 length is also more than 168.
-  - Hub arbitration (24 Oct): the Overseer moves its catch centre onto its thrust axis (C, within 2); funnel v8 must follow the set (+Y face out 32.5, E); recheck when v8 lands.
-- **Option A (DEFAULT):** alternating bays at R 113: 416 x 414 x 468 mm, 80.6 L (C), 0 mm³ between receivers (M).
-- **Option B:** Overseer at the bottom 4, receivers clipped: 402 x 414 x 475, 79.1 L (-1.5 L, C).
-  - Unclipped, neighbouring Overseer receivers overlap 1020 mm³ (M, `layout_bottom/`); B needs the latch clip.
-- **Option C:** bottom slots at R 128: 430 x 414 x 505, 89.9 L (C); the arm strokes move.
-- Concept review: the `review` agent on PR 74.
-- Next: the coarse system topology over the joined envelope (`runs/box_system/v2/topo/`, worker).
-
-Numbers: `layout.json` (C / M), mirrored in `nox/dimensions.md` System box structure, v2 layout.
+- System line: `concept_check.json` (box 416 x 418 x 468 mm, 81.4 L, access 18/18 clear).
+- **Arm:** hub, motors, parked heads, rail disc and both insert lanes clear every bay envelope, the v1 mast and the PSU (0 mm³, M).
+- **Access 18 / 18:** every cartridge comes out to park along its install axis; every bay body comes out along +Y with the front sheet off (the service door, DEFAULT).
+- **Fit FAILs left, both in the catch's scope:**
+  - Overseer drone set vs the funnel panels v7, 772.6 mm³ (M): funnel v8 (opening 191 x 168) clears it.
+  - −Y plain panel bottom vs the insert lanes: carriage 524.9 + grabber 434.0 mm³ (M, panels v7). With v8 the grabber clears and the carriage band still meets the bottom lip, 2 x 248.7 mm³ (E, no v8 file yet). Hub decision: the catch notches the lip in panel v9 plain (X ±35, Y 54..73, to r 159). Re-measure when v8 / v9 land.
+- **Option A (DEFAULT):** alternating bays at R 113: 81.4 L.
+- **Option B:** Overseer at the bottom 4, receivers clipped: 402 x 418 x 475, 79.8 L (−1.6 L); unclipped (B0) neighbouring receivers overlap 1020 mm³, so B needs the clip.
+- **Option C:** bottom slots at R 128: 430 x 418 x 505, 90.8 L; the arm strokes change.
+- A wins: B saves 1.6 L (2 %) and lowers the CG (Z −52.7 vs −35.2, E), but needs a new receiver clip on the latch and runs every Overseer swap at the bottom; C costs 9.4 L.
+- Next: the coarse system topology over the joined envelope (`runs/box_system/v2/topo/`, worker), then the cut requirements.

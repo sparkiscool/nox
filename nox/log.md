@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session): v2 layout visual, the four variants side by side from the concept meshes (`box_layout_v2_views.py`, artifact Mn5JGDkjEGSQXyPhjqrpxb); system file `nox/box/box_structure_v2.assembly.json` with both insert keep-outs (hub); bay bodies take the receiver inserts from below (latch PR 69); summary at Y_C 165.
 - 24 Oct (organiser): full pass 1: sweep 0 archived (all 9 nox sessions active); check_state clean; CLAUDE.md 12.8 to 11.0 KB (design list and session rules to one line each, detail moved to generative rule 0 and sessions.md, no meaning change); no new slim candidates; docs drift sent to owners.
 - 24 Oct (box catch chat, Spark: "for all future designs when showing me an idea it should always a a visual not just words"): rule: every idea shown to Spark comes with a visual (artifact, source committed). CLAUDE.md Hard rules, `docs/generative.md` The rule 0 Visuals, review checks (concept mode + PR check 10), part skill reply.
 - 24 Oct (box structure system session): **v2 at Y_C 165** (arm / hub; alt 138): funnel on the grip line, room for funnel v8 (±Y 11.5, C), box 81.4 L (C); arm round 3: stub ≤ 5 mrad (E, DEFAULT), bays located to the mast within ±0.15°, rail disc keep-out. New: the −Y funnel panel's bottom meets the carriage wheels at the drone insert (hub).
