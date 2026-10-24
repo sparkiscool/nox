@@ -575,7 +575,7 @@ def brake_svg(standalone=True):
     dot(620, 290); dot(660, 290)
     # relay coil drive
     box(330, 360, 260, 80, "sig", "ULN2003A (bare DIP)", "COM pin 9 to 24 V: the flyback diodes")
-    box(30, 360, 170, 80, "brd", "SKR EXP1 pin", "[output_pin brake_a] (CHECK pins)")
+    box(30, 360, 170, 80, "brd", "SKR EXP1 pin", "[output_pin head_a_brake] (CHECK pins)")
     wire("wsg", [(200, 400), (330, 400)], "high = released", 0, 8, -6)
     wire("w24", [(700, 380), (700, 340), (470, 340), (470, 310)], "24 V to the relay coil + and ULN COM", 0, 6, 16)
     wire("w24", [(700, 380), (590, 380)])
