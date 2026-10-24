@@ -57,3 +57,14 @@ it  37 beta    2 J   0.0131 vol 0.0425 (dil 0.0622 g -0.004) grey  7.9% ch 0.100
 it  38 beta    2 J   0.0127 vol 0.0428 (dil 0.0623 g -0.001) grey  8.2% ch 0.100 worst all bays: 60 N insert 24 1.7s
 it  39 beta    2 J   0.0125 vol 0.0430 (dil 0.0624 g -0.001) grey  8.4% ch 0.100 worst all bays: 60 N insert 23.8 1.5s
 it  40 beta    2 J   0.0125 vol 0.0430 (dil 0.0624 g -0.001) grey  8.5% ch 0.100 worst all bays: 60 N insert 23.7 1.7s
+it  41 beta    2 J   0.0124 vol 0.0431 (dil 0.0624 g +0.018) grey  8.6% ch 0.100 worst all bays: 60 N insert 23.6 1.8s
+it  42 beta    2 J   0.0132 vol 0.0417 (dil 0.0611 g -0.003) grey  7.8% ch 0.100 worst Overseer catch -X-Y diag 25.9 1.7s
+it  43 beta    2 J   0.0129 vol 0.0419 (dil 0.0613 g -0.001) grey  8.1% ch 0.100 worst Overseer catch -X-Y diag 24.9 1.6s
+it  44 beta    2 J   0.0128 vol 0.0420 (dil 0.0613 g -0.000) grey  8.3% ch 0.100 worst Overseer catch -X-Y diag 24.7 1.6s
+it  45 beta    2 J   0.0127 vol 0.0420 (dil 0.0613 g -0.000) grey  8.4% ch 0.100 worst Overseer catch -X-Y diag 24.5 1.6s
+it  46 beta    2 J   0.0127 vol 0.0421 (dil 0.0613 g +0.011) grey  8.5% ch 0.100 worst Overseer catch -X-Y diag 24.3 1.6s
+it  47 beta    2 J   0.0132 vol 0.0413 (dil 0.0606 g -0.001) grey  8.1% ch 0.100 worst Overseer catch -X-Y diag 25.8 1.6s
+it  48 beta    2 J   0.0130 vol 0.0414 (dil 0.0606 g -0.000) grey  8.3% ch 0.100 worst Overseer catch -X-Y diag 25.4 1.8s
+it  49 beta    2 J   0.0130 vol 0.0414 (dil 0.0606 g -0.000) grey  8.3% ch 0.100 worst Overseer catch -X-Y diag 25.2 1.8s
+it  50 beta    2 J   0.0129 vol 0.0415 (dil 0.0606 g -0.000) grey  8.4% ch 0.100 worst Overseer catch -X-Y diag 25 1.9s
+layout: beta 2 done: eroded design 13 bodies, main 95.3%; drawn bodies outside the main body: 5
