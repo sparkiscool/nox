@@ -29,7 +29,7 @@ Loads (DEFAULT, E): the whole unit knocked at 25 g (14 dirs) and 50 g (6 dirs): 
 and the structure's own mass together; hits: 100 N on the L2 from the front and both sides, 150 N drop on the L2, 50 N on the
 camera from the front, both sides, above and below; base: 120 N strap, 50 N hand grabs, 100 N on the ledge. Support: the
 thread boss wall. The joint is modelled bonded (the M3s clamp it); the split is the plane z 168 through the two flanges only.
-   python3 unit_topo_v1.py [h] [gen_cm3] [--no-git]       python3 unit_topo_v1.py --split   (after the run)"""
+   python3 unit_topo_v1.py [h] [gen_cm3] [--no-git]       python3 unit_topo_v1.py --rebuild   (build + split from the layout)"""
 import sys, os
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
@@ -211,16 +211,66 @@ def check():
         print(f"{n}: {np.round(p, 1)}")
     print("unit bbox", np.round(A["drawn"].bounding_box(), 1), "env bbox", np.round((A["env"] + A["drawn"]).bounding_box(), 1))
 
+def rebuild_split():
+    """build from the finished layout (density.npz) without the whole-unit solid check (a 302 mm unit at the gate's 0.25 mm
+    voxels ran out of memory, 14 GB): surface, exact part, function check, as-built strength on the whole bolted unit, STL;
+    then the split, and the gate runs on each print file (python3 nox/solid_check.py, one process each)."""
+    import json, time
+    from dataclasses import replace
+    from topo.run import Tee
+    from topo.layout import Layout, gate_member_mm
+    from topo.build import surface, assemble, function_check, strength, export_view_mesh, render, _json_default
+    log = Tee(os.path.join(OUT, "log.txt"))
+    t0 = time.time()
+    st = Settings(finish="drawn")
+    st = replace(st, min_member_mm=round(gate_member_mm(setup(H), st.min_member_mm, log=log), 2))
+    part = setup(H)
+    L = Layout(part, gen_cm3=GEN, settings=st, log=log)
+    d = np.load(os.path.join(OUT, "density.npz"))
+    assert tuple(d["shape"]) == tuple(part.shape) and np.array_equal(d["design"], L.design)
+    L.x = d["x_full"][L.design]; L.hist = [tuple(r) for r in d["hist"]]
+    L.result = dict(x=L.x, xt=d["xt"], rho_n=d["rho_n"], rho_e=d["rho_e"], beta=float(d["beta"]))
+    gm = surface(L, log=log)
+    P, bod = assemble(L, gm, log=log)
+    PT = tm(P)
+    fc = function_check(P, part, L)
+    log(f"function check: {fc}")
+    sr = strength(L, PT, log=log)
+    mass = P.volume() / 1000.0 * L.mat.density
+    PT.export(os.path.join(OUT, "scan_stick_unit.stl"))
+    export_view_mesh(PT, os.path.join(OUT, "scan_stick_unit_view.stl"))
+    try:
+        render(PT, os.path.join(OUT, "preview.png"), title="scan_stick_unit (nox/topo)", info=f"{mass:.1f} g | worst index {round(sr['worst'], 2)}")
+    except Exception as e:
+        log(f"render failed: {e}")
+    del gm, PT
+    res = dict(name="scan_stick_unit", engine="nox/topo", function_check=fc, strength=sr, mass_g=round(mass, 2), bodies=bod,
+               volume_mm3=round(P.volume(), 1), layout=L.meta(), grid=part.summary(), gen_cm3=GEN, h=H,
+               build_s=round(time.time() - t0, 1), solid="per print file (split)")
+    log("RESULT " + json.dumps(dict(name="scan_stick_unit", mass_g=res["mass_g"], worst=sr["worst"], function_ok=fc["ok"], bodies=bod["bodies"]), default=_json_default))
+    pieces = split()
+    import subprocess
+    res["pieces"] = {}
+    for name in pieces:
+        r = subprocess.run([sys.executable, os.path.join(ROOT, "nox", "solid_check.py"), os.path.join(OUT, name + ".stl")], capture_output=True, text=True)
+        log(f"solid_check {name}: {r.stdout.strip()[-400:]}")
+        res["pieces"][name] = dict(solid=r.stdout.strip()[-400:], ok=" PASS " in r.stdout)
+    with open(os.path.join(OUT, "result.json"), "w") as fh:
+        json.dump(res, fh, indent=1, default=_json_default)
+
 def split():
     m = man(trimesh.load(os.path.join(OUT, "scan_stick_unit.stl"), force="mesh"))
     lo, hi = m.trim_by_plane([0, 0, -1], -TOP), m.trim_by_plane([0, 0, 1], TOP)
     for name, part in (("scan_stick_base_v19", lo), ("scan_stick_head_v14", hi.translate([0, 0, -TOP]))):
         t = tm(part); t.export(os.path.join(OUT, name + ".stl"))
         print(name, round(t.volume / 1e3 * 1.27, 2), "g PETG (1.27, E)", np.round(t.bounds, 1).tolist(), "bodies", len(t.split(only_watertight=False)))
+    return ["scan_stick_base_v19", "scan_stick_head_v14"]
 
 if __name__ == "__main__":
     if "--split" in sys.argv:
         split()
+    elif "--rebuild" in sys.argv:
+        rebuild_split()
     elif "--check" in sys.argv:
         check()
     elif os.environ.get("NOX_SETUP_ONLY"):
