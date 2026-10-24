@@ -1,0 +1,321 @@
+<title>Box Keep-Alive Contacts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; three drawings (top view, section with steps, wiring), each a figure with its own caption */
+:root{
+  --bg:#f3f4f1; --panel:#e6e9e4; --ink:#1d2726; --muted:#5b6866; --line:#b9c2be;
+  --petg:#9fb3ab; --petg-deep:#7f958d; --copper:#b8672d; --pos:#c23b2e; --neg:#2b5f8e; --live:#d9861c;
+  --drone:#3f4a48;
+  --f-display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141a19; --panel:#1d2524; --ink:#e3e8e6; --muted:#98a5a2; --line:#3a4644;
+  --petg:#4f6660; --petg-deep:#6d847d; --copper:#e08a4c; --pos:#ee6a5c; --neg:#6aa3d8; --live:#f2a73c; --drone:#c6d0cd; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141a19; --panel:#1d2524; --ink:#e3e8e6; --muted:#98a5a2; --line:#3a4644;
+  --petg:#4f6660; --petg-deep:#6d847d; --copper:#e08a4c; --pos:#ee6a5c; --neg:#6aa3d8; --live:#f2a73c; --drone:#c6d0cd; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.wrap{max-width:900px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:34px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:700;font-size:clamp(34px,6vw,52px);line-height:1;margin:0;text-wrap:balance}
+h2{font-family:var(--f-display);font-weight:600;font-size:26px;margin:0;text-wrap:balance}
+p{margin:0;max-width:66ch}
+.lede{font-size:17px;color:var(--ink)}
+section{display:flex;flex-direction:column;gap:12px}
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+figcaption{font-size:13px;color:var(--muted);max-width:70ch}
+.draw{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px}
+svg{display:block;width:100%;height:auto;max-width:100%}
+svg text{font-family:var(--f-mono);font-size:11px;fill:currentColor}
+svg .lbl{font-family:var(--f-body);font-size:12px}
+svg .big{font-family:var(--f-display);font-size:16px;font-weight:600}
+.steps{display:flex;flex-wrap:wrap;gap:6px}
+.steps button{font-family:var(--f-body);font-size:13px;border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:6px 10px;border-radius:4px;cursor:pointer}
+.steps button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.steps button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px 18px;font-size:13px}
+.readout div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.readout b{font-family:var(--f-mono);font-weight:500;font-size:15px;font-variant-numeric:tabular-nums}
+.readout span{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.step-text{font-size:15px;min-height:3.2em}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.play{font-family:var(--f-body);font-size:13px;border:1px solid var(--copper);color:var(--copper);background:transparent;padding:6px 12px;border-radius:4px;cursor:pointer}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600;color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl{overflow-x:auto}
+.key{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted)}
+.key i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-2px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Nox box · catch · keep-alive (DEFAULT, 24 Oct)</div>
+  <h1>Box Keep-Alive Contacts</h1>
+  <p class="lede">While the arm swaps the pack, the box feeds the drone 13 V through two spring pins in each plain funnel face. The pins press on a copper pad on the drone's lower ring, so the flight controller and computer never lose power.</p>
+</header>
+
+<section>
+  <h2>Where the contacts are</h2>
+  <figure>
+    <div class="draw">
+    <svg viewBox="0 0 520 420" role="img" aria-label="Top view of the funnel: the two latched faces at plus and minus y carry the hook latch plungers; the two plain faces at plus and minus x carry two spring pins each, B plus at the nose and B minus at the tail, touching pads on the drone's lower ring.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+      </defs>
+      <g transform="translate(260,210)">
+        <!-- mouth 320 square, scale 1.05 px/mm -->
+        <g transform="scale(1.05,-1.05)">
+          <!-- faces: trapezoids from the opening to the mouth -->
+          <polygon points="-160,160 160,160 84,84 -84,84" fill="var(--petg)" stroke="var(--petg-deep)" stroke-width="0.8"/>
+          <polygon points="-160,-160 160,-160 84,-84 -84,-84" fill="var(--petg)" stroke="var(--petg-deep)" stroke-width="0.8"/>
+          <polygon points="160,-160 160,160 95.5,84 95.5,-84" fill="var(--petg)" stroke="var(--petg-deep)" stroke-width="0.8" opacity="0.75"/>
+          <polygon points="-160,-160 -160,160 -95.5,84 -95.5,-84" fill="var(--petg)" stroke="var(--petg-deep)" stroke-width="0.8" opacity="0.75"/>
+          <!-- opening 191 x 168 -->
+          <rect x="-95.5" y="-84" width="191" height="168" fill="var(--bg)" stroke="var(--muted)" stroke-dasharray="3 2" stroke-width="0.8"/>
+          <!-- drone outline: clipped square through the catch points -->
+          <polygon points="-100,112 100,112 112,100 112,-100 100,-112 -100,-112 -112,-100 -112,100" fill="none" stroke="var(--drone)" stroke-width="1.6"/>
+          <!-- wheels -->
+          <g fill="var(--drone)">
+            <rect x="-102" y="108" width="4" height="10"/><rect x="98" y="108" width="4" height="10"/>
+            <rect x="-102" y="-118" width="4" height="10"/><rect x="98" y="-118" width="4" height="10"/>
+            <rect x="108" y="98" width="10" height="4"/><rect x="108" y="-102" width="10" height="4"/>
+            <rect x="-118" y="98" width="10" height="4"/><rect x="-118" y="-102" width="10" height="4"/>
+          </g>
+          <!-- plungers on +-y faces at x +-100 -->
+          <g fill="var(--ink)">
+            <rect x="-106" y="122" width="12" height="8"/><rect x="94" y="122" width="12" height="8"/>
+            <rect x="-106" y="-130" width="12" height="8"/><rect x="94" y="-130" width="12" height="8"/>
+          </g>
+          <!-- pads (drone) y 6..28 at +x, -28..-6 at -x -->
+          <rect x="112.5" y="6" width="3.2" height="22" fill="var(--copper)"/>
+          <rect x="-115.7" y="-28" width="3.2" height="22" fill="var(--copper)"/>
+          <!-- probes -->
+          <circle cx="117.5" cy="12" r="2.6" fill="var(--pos)"/><circle cx="117.5" cy="22" r="2.6" fill="var(--pos)"/>
+          <circle cx="-117.5" cy="-12" r="2.6" fill="var(--neg)"/><circle cx="-117.5" cy="-22" r="2.6" fill="var(--neg)"/>
+        </g>
+        <!-- labels (unflipped) -->
+        <text x="0" y="-188" text-anchor="middle" class="lbl">latched face +y · panel v7 · 2 plungers</text>
+        <text x="0" y="198" text-anchor="middle" class="lbl">latched face −y · panel v7 · 2 plungers</text>
+        <text x="148" y="-62" class="lbl" fill="var(--pos)" style="fill:var(--pos)">B+ pins</text>
+        <text x="148" y="-48" class="lbl">plain face +x</text>
+        <text x="148" y="-34" class="lbl">panel v9 plain</text>
+        <text x="-150" y="66" class="lbl" text-anchor="end" style="fill:var(--neg)">B− pins</text>
+        <text x="-150" y="80" class="lbl" text-anchor="end">plain face −x</text>
+        <line x1="-40" y1="0" x2="40" y2="0" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar)"/>
+        <text x="0" y="-8" text-anchor="middle" class="lbl">drone nose (+x)</text>
+        <text x="0" y="22" text-anchor="middle">opening 191 × 168</text>
+        <line x1="150" y1="-58" x2="128" y2="-20" stroke="currentColor" stroke-width="0.6"/>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Top view, catch frame, mm. Pins sit at y ±12 and ±22 on the two plain faces, away from the wheel track (wheels run 50 to 150 from the face centre). The copper pads ride on the drone's lower ring. Positive at the nose, negative at the tail: 230 mm apart, so one stray part can't bridge them.</figcaption>
+    <div class="key"><span><i style="background:var(--petg)"></i>PETG funnel face</span><span><i style="background:var(--ink)"></i>hook latch plunger</span><span><i style="background:var(--copper)"></i>drone pad</span><span><i style="background:var(--pos)"></i>B+ pin</span><span><i style="background:var(--neg)"></i>B− pin</span></div>
+  </figure>
+</section>
+
+<section>
+  <h2>How a swap runs</h2>
+  <p>Section through one pin, cut across the 45° face. Step through a swap: the pin follows the pad when the XT60 push lifts the drone.</p>
+  <div class="steps" id="steps" role="group" aria-label="Swap steps"></div>
+  <div class="row"><button class="play" id="play" type="button">Play the whole swap</button></div>
+  <p class="step-text" id="stepText" aria-live="polite"></p>
+  <figure>
+    <div class="draw">
+    <svg id="sec" viewBox="0 0 560 440" role="img" aria-label="Section through the plain funnel face at a keep-alive pin: the spring pin sits in a boss behind the 2 mm skin and pokes out of the face along its normal; the drone's copper pad on its lower ring sits 2 mm off the face when seated and up to 6 mm off during the XT60 push, and the pin follows it.">
+      <defs>
+        <pattern id="hatch" width="1.4" height="1.4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="1.4" stroke="var(--petg-deep)" stroke-width="0.18"/></pattern>
+        <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+      </defs>
+      <!-- world mm -> svg: X=(x-70)*7, Y=(62-z)*7 ; face x = 82.7 + z -->
+      <g id="world">
+        <!-- funnel interior label -->
+        <text x="40" y="40" class="lbl">inside the funnel</text>
+        <text x="410" y="420" class="lbl">behind the face (ribs)</text>
+        <!-- skin + rib band drawn in the face frame -->
+        <g id="faceFrame">
+          <rect x="-26" y="-150" width="24" height="300" fill="url(#hatch)" opacity="0.6"/>
+          <rect x="-2" y="-150" width="2" height="300" fill="var(--petg)" stroke="var(--petg-deep)" stroke-width="0.3"/>
+          <!-- boss round the pin -->
+          <rect x="-24" y="-5" width="22" height="10" fill="var(--petg)" stroke="var(--petg-deep)" stroke-width="0.4"/>
+          <!-- barrel -->
+          <rect x="-22" y="-2.2" width="21" height="4.4" fill="var(--bg)" stroke="currentColor" stroke-width="0.35"/>
+          <polyline id="spring" fill="none" stroke="currentColor" stroke-width="0.35"/>
+          <rect id="pin" x="0" y="-1.5" width="22" height="3" rx="1.5" fill="var(--pos)"/>
+          <!-- lead -->
+          <path d="M -22 0 L -30 0 L -38 6" fill="none" stroke="var(--pos)" stroke-width="0.8"/>
+          <!-- drone -->
+          <g id="drone">
+            <rect id="carrier" x="1.6" y="-9" width="7" height="14" fill="var(--drone)" opacity="0.85"/>
+            <circle cx="10.5" cy="-1" r="1.5" fill="var(--drone)"/>
+            <polygon id="pad" points="0,-6.4 0,4 1.6,4 1.6,-8 " fill="var(--copper)"/>
+          </g>
+        </g>
+        <!-- annotations in world space -->
+        <g id="ann" font-size="11"></g>
+      </g>
+    </svg>
+    </div>
+    <figcaption>To scale (7 px per mm). The pin's travel is 7.5 mm: free tip 8.0 mm off the face, bottoms out under 0.5 mm. Seated, the pad sits 2.0 ± 1.0 mm off, so the pin is pressed in about 6 mm. The XT60 push lifts the drone up to 5.7 mm, which moves the pad 4.0 mm off the face and 4.0 mm up the slope: the pin follows to 6.0 mm and the 12 mm pad still covers it.</figcaption>
+  </figure>
+  <div class="readout">
+    <div><span>pin tip off the face</span><b id="rPin">8.0 mm</b></div>
+    <div><span>pad off the face</span><b id="rPad">no drone</b></div>
+    <div><span>relay K1</span><b id="rK1">open</b></div>
+    <div><span>keep-alive current</span><b id="rI">0</b></div>
+  </div>
+</section>
+
+<section>
+  <h2>The circuit</h2>
+  <figure>
+    <div class="draw">
+    <svg id="wire" viewBox="0 0 720 230" role="img" aria-label="Keep-alive circuit: a 13 volt supply with a 3 amp current limit feeds relay K1 and a current sensor, then the B plus pins on the nose face; the drone's pad goes through an ideal diode to its power bus, with a 10 kilohm resistor across the pads for seat sensing; the return runs through the B minus pins on the tail face.">
+      <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+      <text x="14" y="18" class="lbl" style="fill:var(--muted)">BOX</text>
+      <text x="470" y="18" class="lbl" style="fill:var(--muted)">DRONE</text>
+      <line x1="440" y1="8" x2="440" y2="222" stroke="var(--line)" stroke-dasharray="4 3"/>
+      <rect x="14" y="40" width="112" height="56" rx="4" fill="var(--bg)" stroke="currentColor"/>
+      <text x="70" y="62" text-anchor="middle" class="big">13.0 V</text><text x="70" y="80" text-anchor="middle">CC 3.0 A</text>
+      <rect x="160" y="44" width="70" height="48" rx="4" fill="var(--bg)" stroke="currentColor" id="k1box"/>
+      <text x="195" y="66" text-anchor="middle" class="big">K1</text><text x="195" y="82" text-anchor="middle" id="k1t">open</text>
+      <rect x="262" y="44" width="76" height="48" rx="4" fill="var(--bg)" stroke="currentColor"/>
+      <text x="300" y="66" text-anchor="middle" class="big">INA226</text><text x="300" y="82" text-anchor="middle">current</text>
+      <rect x="372" y="44" width="62" height="48" rx="4" fill="var(--bg)" stroke="var(--pos)"/>
+      <text x="403" y="64" text-anchor="middle" class="big" style="fill:var(--pos)">B+ pins</text><text x="403" y="82" text-anchor="middle">+x face</text>
+      <rect x="446" y="44" width="58" height="48" rx="4" fill="var(--copper)" opacity="0.9"/>
+      <text x="475" y="72" text-anchor="middle" class="lbl" style="fill:#fff">pad</text>
+      <rect x="540" y="44" width="78" height="48" rx="4" fill="var(--bg)" stroke="currentColor"/>
+      <text x="579" y="64" text-anchor="middle" class="big">ideal diode</text><text x="579" y="82" text-anchor="middle">box → drone</text>
+      <rect x="642" y="44" width="66" height="48" rx="4" fill="var(--bg)" stroke="currentColor"/>
+      <text x="675" y="64" text-anchor="middle" class="big">bus</text><text x="675" y="82" text-anchor="middle">FC + SBC</text>
+      <!-- forward path -->
+      <g id="fwd" stroke="currentColor" stroke-width="1.6" fill="none">
+        <line x1="126" y1="68" x2="160" y2="68"/><line x1="230" y1="68" x2="262" y2="68"/><line x1="338" y1="68" x2="372" y2="68"/><line x1="434" y1="68" x2="446" y2="68"/><line x1="504" y1="68" x2="540" y2="68" marker-end="url(#ar3)"/><line x1="618" y1="68" x2="642" y2="68" marker-end="url(#ar3)"/>
+      </g>
+      <!-- pack -->
+      <rect x="642" y="150" width="66" height="44" rx="4" fill="var(--bg)" stroke="currentColor"/>
+      <text x="675" y="170" text-anchor="middle" class="big">pack</text><text x="675" y="186" text-anchor="middle">XT60</text>
+      <line x1="675" y1="150" x2="675" y2="92" stroke="currentColor" stroke-width="1.2" marker-end="url(#ar3)"/>
+      <!-- 10k -->
+      <rect x="452" y="124" width="46" height="22" rx="3" fill="var(--bg)" stroke="currentColor"/>
+      <text x="475" y="139" text-anchor="middle">10 kΩ</text>
+      <line x1="475" y1="92" x2="475" y2="124" stroke="currentColor"/>
+      <line x1="475" y1="146" x2="475" y2="176" stroke="var(--neg)"/>
+      <!-- return -->
+      <rect x="372" y="152" width="62" height="48" rx="4" fill="var(--bg)" stroke="var(--neg)"/>
+      <text x="403" y="172" text-anchor="middle" class="big" style="fill:var(--neg)">B− pins</text><text x="403" y="190" text-anchor="middle">−x face</text>
+      <g id="ret" stroke="var(--neg)" stroke-width="1.6" fill="none">
+        <line x1="446" y1="176" x2="434" y2="176"/><line x1="372" y1="176" x2="70" y2="176"/><line x1="70" y1="176" x2="70" y2="96" marker-end="url(#ar3)"/>
+      </g>
+      <line x1="446" y1="176" x2="640" y2="176" stroke="var(--neg)" stroke-width="1.2"/>
+      <text x="548" y="170" text-anchor="middle" style="fill:var(--neg)">drone −</text>
+      <text x="220" y="215" text-anchor="middle" style="fill:var(--muted)">seat sense: 13 V / 10 kΩ = 1.3 mA through the pins</text>
+    </svg>
+    </div>
+    <figcaption>The ideal diode lets current go only from the box into the drone, so the pack never puts voltage on the pads. The 10 kΩ across the pads lets the box see a seated drone (1.3 mA) without the old seated switch. With the pack connected, its 14.8 to 16.8 V sits above the box's 13 V, so the keep-alive carries nothing until the pack is pulled.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Numbers</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Item</th><th>Value</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Pins per face</td><td class="n">2</td><td>about 1.5 A each at the 3 A limit; one spare path if a pin sticks</td></tr>
+      <tr><td>Pin positions</td><td class="n">(±115.7, ±12 / ±22, z 33)</td><td>in the plain face, outside the wheel track, at the lower ring's height (C)</td></tr>
+      <tr><td>Pin travel</td><td class="n">7.5 mm</td><td>pad 1.0 to 7.0 mm off the face over tolerance and the XT60 lift (C)</td></tr>
+      <tr><td>Pin force</td><td class="n">≥ 0.5 N</td><td>a reliable 1.5 A contact; 4 pins push the drone up about 2 to 3 N, under the Scout's 4.9 N (E)</td></tr>
+      <tr><td>Drone pad</td><td class="n">22 × 12 × 1.6</td><td>covers ±4.5 mm sideways cage error and the 4 mm slide up the slope; 45° lower edge so the pin rides on (C)</td></tr>
+      <tr><td>Keep-out on the drone</td><td class="n">9.0 mm band</td><td>near each plain face, y −35 to +69 (mirrored at −x): the pins stick out 8 mm before landing</td></tr>
+      <tr><td>Hook latch</td><td class="n">v2, unchanged</td><td>holds the drone through the push; nothing electrical on it</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</div>
+
+<script>
+(function(){
+  const S=7, X=x=>(x-70)*S, Y=z=>(62-z)*S;
+  const face={x:115.7,z:33};
+  const fx=X(face.x), fy=Y(face.z);
+  // face frame: local +x = outward normal (toward the drone) = svg (-1,-1)/sqrt2 ; local +y = up the slope = svg (+1,-1)/sqrt2
+  const ff=document.getElementById('faceFrame');
+  ff.setAttribute('transform',`translate(${fx},${fy}) rotate(225) scale(${S})`);
+  const STEPS=[
+    {k:'Empty',     d:null, s:40, k1:false, I:'0',            t:'No drone. Both pins stand 8.0 mm out of the face; the relay is open, so they are dead.'},
+    {k:'Landing',   d:2.0,  s:14, k1:false, I:'0',            t:'The drone slides down the faces on its wheels. Its pad arrives from above; the 45° lower edge pushes the pin in.'},
+    {k:'Seated',    d:2.0,  s:0,  k1:false, I:'1.3 mA sense', t:'Seated. The pin presses the pad about 6 mm in. The box reads 1.3 mA through the 10 kΩ: a drone is seated (no seated switch).'},
+    {k:'Latch out', d:2.0,  s:0,  k1:true,  I:'~0 (pack on)', t:'The 4 plungers go out and K1 closes. The pack still feeds the bus, so the keep-alive idles behind the ideal diode.'},
+    {k:'Pull old pack', d:2.0, s:0, k1:true, I:'up to 3 A',   t:'The arm pulls the old pack. The bus drops to 13 V and the keep-alive carries the drone: FC and computer stay on.'},
+    {k:'Push new pack', d:6.0, s:4, k1:true, I:'up to 3 A',   t:'The XT60 push lifts the drone up to 5.7 mm onto the plungers. The pad moves 4 mm off the face and 4 mm up the slope; the pin follows to 6.0 mm and keeps contact.'},
+    {k:'Done',      d:2.0,  s:0,  k1:false, I:'1.3 mA sense', t:'The new pack is on. K1 opens, the plungers retract, the drone settles back and takes off.'}
+  ];
+  let cur={d:20,s:40,op:0,pin:8};
+  const pinEl=document.getElementById('pin'), spring=document.getElementById('spring'), drone=document.getElementById('drone');
+  const rPin=document.getElementById('rPin'), rPad=document.getElementById('rPad'), rK1=document.getElementById('rK1'), rI=document.getElementById('rI');
+  const k1t=document.getElementById('k1t'), fwd=document.getElementById('fwd'), ret=document.getElementById('ret'), k1box=document.getElementById('k1box');
+  function pinTip(d,s,op){ if(op<0.5) return 8; const covered=(0>=s-8 && 0<=s+4); return covered? Math.min(8,d):8; }
+  function draw(st){
+    const tip=st.pin;
+    pinEl.setAttribute('x',(tip-22).toFixed(2));
+    // spring from -21.5 to pin tail
+    const a=-21.5, b=tip-22, n=9; let pts=[];
+    for(let i=0;i<=n*2;i++){const x=a+(b-a)*i/(n*2); pts.push(`${x.toFixed(2)},${(i%2?1.6:-1.6)}`);} spring.setAttribute('points',pts.join(' '));
+    drone.setAttribute('transform',`translate(${st.d.toFixed(2)},${st.s.toFixed(2)})`);
+    drone.style.opacity=st.op;
+  }
+  function setReadout(step){
+    rPin.textContent=(pinTip(step.d??20,step.s,step.d==null?0:1)).toFixed(1)+' mm';
+    rPad.textContent=step.d==null?'no drone':(step.d.toFixed(1)+' mm');
+    rK1.textContent=step.k1?'closed':'open'; k1t.textContent=step.k1?'closed':'open';
+    rI.textContent=step.I;
+    const live=step.k1; const col=live?'var(--live)':'currentColor';
+    fwd.setAttribute('stroke',col); k1box.setAttribute('stroke',live?'var(--live)':'currentColor');
+    ret.setAttribute('stroke',live?'var(--live)':'var(--neg)');
+  }
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let anim=null;
+  function go(i){
+    const st=STEPS[i];
+    document.querySelectorAll('#steps button').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));
+    document.getElementById('stepText').textContent=st.t;
+    setReadout(st);
+    const target={d:st.d??20, s:st.s, op:st.d==null?0:1};
+    target.pin=pinTip(target.d,target.s,target.op);
+    const from={...cur};
+    if(anim) cancelAnimationFrame(anim);
+    if(reduce){cur=target;draw(cur);return;}
+    const t0=performance.now(), dur=700;
+    const stepf=now=>{const u=Math.min(1,(now-t0)/dur), e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+      const d=from.d+(target.d-from.d)*e, s=from.s+(target.s-from.s)*e, op=from.op+(target.op-from.op)*e;
+      cur={d,s,op,pin:pinTip(d,s,op)}; draw(cur); if(u<1) anim=requestAnimationFrame(stepf);};
+    anim=requestAnimationFrame(stepf);
+  }
+  const box=document.getElementById('steps');
+  STEPS.forEach((st,i)=>{const b=document.createElement('button');b.type='button';b.id='step'+i;b.textContent=(i+1)+' · '+st.k;b.addEventListener('click',()=>{stopPlay();go(i);});box.appendChild(b);});
+  let timer=null;
+  function stopPlay(){if(timer){clearInterval(timer);timer=null;document.getElementById('play').textContent='Play the whole swap';}}
+  document.getElementById('play').addEventListener('click',()=>{
+    if(timer){stopPlay();return;}
+    let i=0; go(0); document.getElementById('play').textContent='Stop';
+    timer=setInterval(()=>{i++; if(i>=STEPS.length){stopPlay();return;} go(i);},2200);
+  });
+  // annotations: face line label and normal arrow
+  const ann=document.getElementById('ann');
+  const ns='http://www.w3.org/2000/svg';
+  function t(x,y,s,anchor){const e=document.createElementNS(ns,'text');e.setAttribute('x',x);e.setAttribute('y',y);e.textContent=s;if(anchor)e.setAttribute('text-anchor',anchor);e.setAttribute('class','lbl');ann.appendChild(e);}
+  t(X(140)-6,Y(58),'45° face','end');
+  t(fx+60,fy+14,'pin + spring in a boss');
+  t(fx-235,fy-118,'copper pad on the');
+  t(fx-235,fy-103,'drone’s lower ring');
+  cur={d:20,s:40,op:0,pin:8}; draw(cur); go(2);
+})();
+</script>
