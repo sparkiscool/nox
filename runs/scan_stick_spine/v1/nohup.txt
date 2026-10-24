@@ -231,3 +231,8 @@ it  37 beta   32 J   8.5833 vol 0.0940 (dil 0.1779 g -0.000) grey  0.8% ch 0.100
 it  38 beta   32 J   8.5795 vol 0.0941 (dil 0.1779 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 27.3s
 it  39 beta   32 J   8.5761 vol 0.0942 (dil 0.1779 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 28.7s
 it  40 beta   32 J   8.5732 vol 0.0943 (dil 0.1779 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 22.1s
+it  41 beta   32 J   8.5704 vol 0.0944 (dil 0.1779 g +0.001) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 30.6s
+it  42 beta   32 J   8.5716 vol 0.0943 (dil 0.1777 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 28.2s
+layout: stopped (grey) at it 42, beta 32, 1533 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 1759 s, peak 7.05192 GB
