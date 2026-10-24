@@ -32,6 +32,9 @@ CAM = dict(base=4.5, rise=6.0, turn_deg=90.0, mu=0.3)  # base 4.5 + rise 6.0 = 1
 SERVO = dict(DS3218=dict(kgcm=20.0, body=(40.5, 20.0, 40.7)), MG995=dict(kgcm=9.0, body=(40.7, 19.7, 42.9)))   # 4.8..5 V, seller E
 ROD = dict(d=3.0, span=52.0, sigma=1000.0, E=120000.0, per_blade=2, boss=16.0, offset=25.0, mu=0.3)   # carbon rods along x between the head
                                         # body's walls (x +-26), the blade boss 16 long on both; the tab reaction ~25 off the rods (C / E)
+BOSS_IN = 5.0                            # each guide boss starts 5.0 inboard of its blade's inner face and runs outboard (concept review r3d: centred
+                                         # bosses met at x 0 and the cam): squeezed x 1..17 / -17..-1 (2.0 apart), open 5.5..21.5, inside the walls +-26;
+BOSS_Y = (-11.0, -5.0)                   # boss and rods (y -8) above the cam's top (y -14.5): 3.5 clear
 Y_C, PLATE_TOP = 165.0, 72.75
 XT60_Y = dict(scout=121.75, overseer=86.7)
 
@@ -57,6 +60,9 @@ def numbers():
                       "the friction imbalance (no outboard pin); at squeezed the cam is off the blades (the springs hold, servo unloaded)")
     per_rod = max(HOLD_N.values()) / 2 / ROD["per_blade"]
     M = per_rod * ROD["span"] / 4; W = math.pi * ROD["d"] ** 3 / 32; I = math.pi * ROD["d"] ** 4 / 64
+    r["bosses"] = dict(squeezed_x=(TAB_SQUEEZED[1] - BOSS_IN, TAB_SQUEEZED[1] - BOSS_IN + ROD["boss"]), open_x=(OPEN_X - BOSS_IN, OPEN_X - BOSS_IN + ROD["boss"]),
+                       gap_at_centre=round(2 * (TAB_SQUEEZED[1] - BOSS_IN), 1), y=BOSS_Y, cam_top_y=-19.0 + CAM["base"],
+                       cam_clear=round(BOSS_Y[0] - (-19.0 + CAM["base"]), 1), inside_walls=bool(OPEN_X - BOSS_IN + ROD["boss"] <= 26.0))
     r["rods"] = dict(per_rod_N=round(per_rod, 1), sigma_MPa=round(M / W, 1), index=round(M / W / ROD["sigma"], 3),
                      deflection_mm=round(per_rod * ROD["span"] ** 3 / (48 * ROD["E"] * I), 3), boss_MPa=round(per_rod / (ROD["d"] * ROD["boss"]), 2),
                      anti_rack_boss_min=round(2 * ROD["mu"] * ROD["offset"], 1), boss=ROD["boss"], ok=bool(ROD["boss"] >= 2 * ROD["mu"] * ROD["offset"]))
@@ -69,7 +75,7 @@ def numbers():
                        stall_misuse=dict(scout=0.572, overseer=0.611), note_src="swap_system frame (round 3d), the drone insert on the rack tail",
                        note="research: module 1 is the printable limit; pinion v3 teeth Y 59.75..73.25 on rack teeth Y 59.25..73.25 (grown "
                             "down: the top stays under the carriage-lane keep-out 73.75, concept review r3); on the rack tail (drone insert) "
-                            "the engaged face is 9.75 from the tail's step at Y 63 (swap_system)")
+                            "the engaged face is 10.25 from the tail's step at Y 63 (swap_system)")
     r["alternatives"] = {
         "A sprung blades + servo cam (chosen)": dict(holds_unpowered=True, servo_sees_pull=False, servo_torque_kgcm=round(torque * 10.2, 2),
                                                      parts="2 springs, 2 carbon rods along x, 2 blade guide bosses 16 long, metal horn"),
@@ -103,13 +109,13 @@ def svg_state(x0, title, blade_x, cam_deg, latched, sub):
         bi = sg * blade_x; bo = sg * (blade_x + BLADE["t"])
         a, b = sorted((bi, bo))
         g.append(f'<rect x="{X(a)}" y="{Yp(10)}" width="{(b - a) * s}" height="{(10 + 22) * s}" class="blade"/>')    # blade into the recess
-        bc = sg * (blade_x + 1.5); a2, b2 = sorted((bc - 8.0, bc + 8.0))
-        g.append(f'<rect x="{X(a2)}" y="{Yp(-11)}" width="{16 * s}" height="{6 * s}" class="boss"/>')                  # guide boss 16 long
+        a2, b2 = sorted((sg * (blade_x - BOSS_IN), sg * (blade_x - BOSS_IN + ROD["boss"])))       # boss outboard: x 1..17 squeezed, 5.5..21.5 open
+        g.append(f'<rect x="{X(a2)}" y="{Yp(-5)}" width="{ROD["boss"] * s}" height="{6 * s}" class="boss"/>')          # guide boss 16 long, y -11..-5
         sx = sg * (blade_x + BLADE["t"]); se = sg * 24.0
         a, b = sorted((sx, se))
         g.append(f'<rect x="{X(a)}" y="{Yp(-20)}" width="{(b - a) * s}" height="{4 * s}" class="spring"/>')
     g.append(f'<rect x="{X(-27)}" y="{Yp(-12)}" width="{54 * s}" height="{24 * s}" class="body" fill-opacity="0.18"/>')    # head body
-    g.append(f'<rect x="{X(-26)}" y="{Yp(-13.25)}" width="{52 * s}" height="{1.5 * s}" class="rod"/>')                 # the rods along x
+    g.append(f'<rect x="{X(-26)}" y="{Yp(-7.25)}" width="{52 * s}" height="{1.5 * s}" class="rod"/>')                  # the rods along x at y -8
     g.append(f'<text x="{X(0)}" y="{Yp(-33)}" class="s" text-anchor="middle">head body</text>')
     r0 = CAM["base"] + CAM["rise"] * min(cam_deg, 90) / 90
     g.append(f'<ellipse cx="{X(0)}" cy="{Yp(-19)}" rx="{(r0 if cam_deg else CAM["base"]) * s}" ry="{CAM["base"] * s}" class="cam"/>')
