@@ -1,0 +1,27 @@
+{
+ "note": "E: the catch's -Y face moved -Y by FUNNEL_V8_GROW_Y (funnel v8 plain, catch PR 81) vs the insert keep-outs",
+ "carriage": {
+  "total_mm3": 492.6,
+  "hits": [
+   {
+    "mm3": 492.6,
+    "x": [
+     -34.3,
+     34.3
+    ],
+    "y": [
+     53.8,
+     69.5
+    ],
+    "r": [
+     155.2,
+     159.0
+    ]
+   }
+  ]
+ },
+ "grabber": {
+  "total_mm3": 0,
+  "hits": []
+ }
+}
