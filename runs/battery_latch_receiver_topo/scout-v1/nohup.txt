@@ -198,3 +198,14 @@ it  77 beta   32 J  25.3088 vol 0.1011 (dil 0.2830 g -0.000) grey  3.3% ch 0.100
 it  78 beta   32 J  25.3082 vol 0.1011 (dil 0.2830 g -0.000) grey  3.3% ch 0.100 worst tie b5 mx 3.09e+05 15.6s
 it  79 beta   32 J  25.3077 vol 0.1011 (dil 0.2830 g -0.000) grey  3.3% ch 0.100 worst tie b5 mx 3.09e+05 15.2s
 it  80 beta   32 J  25.3073 vol 0.1011 (dil 0.2830 g -0.000) grey  3.2% ch 0.100 worst tie b4 mx 3.09e+05 15.3s
+it  81 beta   32 J  25.3069 vol 0.1011 (dil 0.2830 g -0.000) grey  3.3% ch 0.100 worst tie b4 mx 3.09e+05 16.3s
+it  82 beta   32 J  25.3050 vol 0.1012 (dil 0.2831 g -0.000) grey  3.3% ch 0.100 worst tie b5 mx 3.09e+05 15.3s
+layout: stopped (max_stage) at it 82, beta 32, 877 s
+layout: beta 32 done: eroded design 41 bodies, main 9.4%; drawn bodies outside the main body: 30
+layout done: 914 s, peak 6.129908 GB
+build: organic surface at pitch 0.333 mm (x3), skins 19.87 cm3, field 33.73 cm3, in env - cuts 27.32 cm3 (layout 27.32, level offset +0.129 mm), fillet 2.5 mm, rims 1.0 mm, mesh 463,672 faces, 62 s
+build: 15 shells, volumes [6460.1, 6459.9, 3367.1, 2045.8, 2045.8, 1796.7] mm3; dropped specks []; sealed cavities kept [] mm3
+solid check: FAIL {"bodies_plain": 15, "bodies_eroded": 22, "eroded_volumes_mm3": [3828.3, 3786.4, 1141.3, 1134.7, 937.3, 895.9], "necks": [{"neck_under_mm": 1.8, "blob_thick_mm": 4.8, "joint_mm2": 23.3, "blob_mm3": 400.3, "at": [-25.5, 46.7, 85.6]}, {"neck_under_mm": 1.8, "blob_thick_mm": 7.4, "joint_mm2": 0.0, "blob_mm3": 1134.7, "at": [-23.7, 46.5, 1.4]}, {"neck_under_mm": 1.8, "blob_thick_mm": 7.4, "joint_mm2": 0.0, "blob_mm3": 895.9, "at": [-19.9, 49.8, 39.6]}, {"neck_under_mm": 1.8, "blob_thick_mm": 7.0, "joint_mm2": 5.6, "blob_mm3": 299.0, "at": [-23.1, 49.1, 69.0]}, {"neck_under_mm": 1.8, "blob_thick_mm
+function check: {'skin_mm3': 8114.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+strength: worst index 25.32 in 'handling 50 N on a foot' at [-19.5, 49.7, 75.5]
+RESULT {"name": "battery_receiver_scout", "solid_ok": false, "mass_g": 34.78, "worst": 25.319, "function_ok": true, "bodies": 15}
