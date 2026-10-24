@@ -93,7 +93,7 @@ def bodies(pack):
     cuts.append(box(-8.5, 8.5, -1.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))
     for (bx, bz) in r["MOUNT"]:
         top = r["Y_DK1"] if abs(bz - zx) < 1e-6 else r["Y_M"]
-        cuts.append(cyl("y", bx, bz, BL.INS_D / 2, top - BL.INS_DEPTH, top + 1))
+        cuts.append(cyl("y", bx, bz, BL.BOLT_D / 2, -5.0, top + 1))
     for s in (-1, 1):
         for zc in (zs[0], zs[2]):
             a0, a1 = sorted((s * (r["X_IN"] - 1.6), s * r["RF"]))
@@ -172,6 +172,47 @@ def fe_v1(pack, h=1.0, log=print):
     return strength(lay, ttm(R), log=log)
 
 
+def first_mode(pack, h=1.0, log=print):
+    """lowest first mode (Hz, E) of the seated swap mass (pack + cartridge + sliders, rigid) on the drawn receiver v1, fixed
+    at its bosses: for each axis a unit load through the regions that carry it (floors -y and +y via the stop seats, the
+    locating pads x, the end pads z), stiffness k = F / mean displacement of the loaded nodes, f = sqrt(k / m) / 2 pi."""
+    from topo import Part
+    from topo.material import MATERIALS, AXES, stiffness
+    from topo.fem import Solver
+    from topo.part import voxelise, tm as ttm
+    Q = bodies(pack); g, r, D = Q["g"], Q["r"], Q["D"]; R = Q["B"]["recv"]
+    far = box(1e4, 1e4 + 1, 0, 1, 0, 1)
+    p = Part(f"battery_receiver_{pack}_v1_mode", h, R, far, R, build="+z", material="PETG", log=lambda s_: None)
+    seats = U(*[cyl("y", bx, bz, BOSS_D / 2, (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) - 1.5 * h,
+                    (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) + 1.0) for (bx, bz) in r["MOUNT"]])
+    p.support("default", seats ^ R)
+    pk = U(*D["pocket"])
+    floors = U(*[box(*sorted((s * r["RF"], s * (r["RF"] + r["PK_D"]))), r["PK_Y0"] - 1.5, r["PK_Y0"],
+                     r["Z_T"] - r["PK_HZ"], r["Z_T"] + r["PK_HZ"]) for s in (-1, 1)]) ^ pk ^ R
+    loc = U(*D["loc"]) ^ R
+    ends = U(*D["endpad"]) ^ R
+    stop = U(*D["stop"]) ^ R
+    p.load("y-", floors, (0, -1.0, 0)); p.load("y+", stop, (0, 1.0, 0))
+    p.load_multi("x", [(U(*[m for m in D["loc"] if m.bounding_box()[0] > 0]) ^ R, (0.5, 0, 0)),
+                       (U(*[m for m in D["loc"] if m.bounding_box()[0] < 0]) ^ R, (0.5, 0, 0))])
+    p.load("z", ends, (0, 0, 1.0))
+    mat = MATERIALS["PETG"]; C = stiffness(mat, AXES["+z"][0])
+    A = voxelise(ttm(R), *p.axes).ravel()
+    sol = Solver(p.shape, p.h, C, p.supports, active=A | p.solid, backend="auto", log=lambda s_: None)
+    F = np.stack([c.F for c in p.cases], 1)
+    Uu = sol.solve(np.where(A, 1.0, 1e-9), F, ["default"] * len(p.cases), keys=[c.name for c in p.cases])
+    m = g["SWAP_M"] / 1000.0
+    out = {}
+    for q, c in enumerate(p.cases):
+        nd = c.nodes; d = np.asarray(F[:, q]).reshape(-1, 3)[nd]; dirv = d.sum(0) / np.linalg.norm(d.sum(0))
+        u = Uu[:, q].reshape(-1, 3)[nd] @ dirv
+        k = 1.0 / max(float(np.mean(u)), 1e-12) * 1000.0            # N/m (u in mm per N)
+        out[c.name] = dict(k_N_per_mm=round(k / 1000.0, 1), f_Hz=round(math.sqrt(k / m) / (2 * math.pi), 0))
+    out["first_mode_Hz"] = min(v["f_Hz"] for v in out.values())
+    log(f"{pack} receiver as a pack mount: first mode ~{out['first_mode_Hz']} Hz (E, rigid pack {g['SWAP_M']:.0f} g)")
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("pack", choices=("scout", "overseer"))
@@ -181,8 +222,13 @@ def main():
     ap.add_argument("--git", action="store_true")
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--fe-v1", action="store_true", help="as-built FE of the drawn receiver v1 on the same cases")
+    ap.add_argument("--mode", action="store_true", help="first mode (Hz) of the seated swap mass on receiver v1")
     ap.add_argument("--time", type=float, default=5.5 * 3600)
     a = ap.parse_args()
+    if a.mode:
+        import json
+        print(json.dumps(first_mode(a.pack, a.h), indent=1))
+        return
     if a.fe_v1:
         import json
         res = fe_v1(a.pack, a.h)

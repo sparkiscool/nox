@@ -252,7 +252,10 @@ PK_GAP = 0.3                       # pocket floor over the lead-in top (v4 0.55)
 REST_GAP = round((OVERLAP + 0.3) * math.tan(UNDER) + 0.05, 2)   # bolt underside over the floor at the seat: >= the
                                    # floor's rise over the retract path (2.6 tan 15 = 0.70), so a seated bolt slides in free
 PK_WALL = 3.0
-BOSS_R, INS_D, INS_DEPTH = 5.0, 4.0, 6.7      # M3 x 5.7 heat-set, hole o 4.0 x 6.7, boss o 10 (wall 3.0)
+BOSS_R, INS_D, INS_DEPTH = 5.0, 4.0, 6.7      # boss o 10; INS_* kept for the boss height (8.7 under the deck top)
+BOLT_D = 3.4                                   # M3 clearance through each boss: the bolts come up from below into M3 heat-set
+                                               # inserts in the partner (drone mount, sled, bay body); from above the frame
+                                               # plate and props block the key (Scout v3 refit access check, 24 Oct)
 LID_T_BY = {"scout": 4.0, "overseer": 5.7}   # deck top to the mount plane; the Overseer's bosses sit on the deck
                                             # (narrow receiver), so its M3 insert hole (6.7) needs 5.7 to keep a 2.0 floor
 STRIP_T, STRIP_REC = 2.4, 0.9
@@ -341,7 +344,7 @@ def receiver(r, clip=None):
     cuts.append(box(-8.5, 8.5, 0.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))                                   # plug / male path
     for (bx, bz) in r["MOUNT"]:
         top = r["Y_DK1"] if abs(bz - zx) < 1e-6 else r["Y_M"]
-        cuts.append(cyl("y", bx, bz, INS_D / 2, top - INS_DEPTH, top + 1))
+        cuts.append(cyl("y", bx, bz, BOLT_D / 2, -5.0, top + 1))                                       # bolt from below
     # side plate windows (DEFAULT, mass): between the latch leg and the ends, y foot + 3 .. rail - 2
     # side frame (DEFAULT, mass): a top band (rails' locating face) full length and three legs down to the feet per side
     # (both ends and the latch leg); the feet lead-ins at those stations capture the rigid cartridge
@@ -950,47 +953,54 @@ def overseer_fit(x_tab=-30.0, lead_aft=False, log=print):
     return res, fit_pairs, T
 
 
-# ======================================================================== Scout v3 system (pass 1 snapshot + this set)
-SCOUT_SYS = os.path.join(OUT, "scout_v3_pass1", "scout.assembly.json")
+# ======================================================================== Scout v3 system (latch refit snapshot + this set)
+SCOUT_SYS = os.path.join(OUT, "scout_v3_refit", "scout.assembly.json")
+SCOUT_SWAP = {   # Scout v3 refit part name -> this set (drone pose via T_dc)
+    "receiver v1 (latch)": "recv", "receiver lid (latch)": "lid", "receiver TPU strips (latch)": "strips",
+    "XT60E1-M": "male", "cartridge v5 (latch)": "cart", "slider +y (latch)": "s_px", "slider -y (latch)": "s_nx",
+    "pack 4S 1500": "pack", "pack XT60 plug": "plug"}
 
-def scout_system(log=print, keel4=False):
-    """system_check on the Scout v3 system pass 1 assembly (snapshot of branch claude/gracious-darwin-ogidvp, its PR 44
-    receiver, cartridge, pack and XT60E1-M removed) with this latch set posed by T_dc. keel4: add a stand-in for the
-    missing 4th keel node (o 8 at (-28, 28.5, -47.5), as the other three) to show what the Scout cage pass needs."""
+def scout_system(log=print):
+    """system_check on the Scout v3 latch refit assembly (snapshot of branch claude/gracious-darwin-ogidvp 3595381: its
+    cage with the 4th keel node, its mount on this set's 4 bosses) with the latch parts swapped for the current ones, plus
+    the access paths the latch owes: cartridge and pack out along the install axis, the 4 receiver bolts, the XT60 rear."""
     import system_check as sc
     man = json.load(open(SCOUT_SYS)); base = os.path.dirname(SCOUT_SYS)
+    B = build("scout"); g, r = B["g"], B["r"]; T = T_dc(g)
+    mesh = dict(recv=B["recv"], lid=B["lid"], strips=B["strips"], male=B["male"], cart=B["cart"], s_px=slider(g, 0, 1),
+                s_nx=slider(g, 0, -1), pack=pack_body(g), plug=xt60_female(g))
     for p in man["parts"]:
-        if "mesh" in p: p["mesh"] = os.path.join(base, p["mesh"])
-    B = build("scout"); g = B["g"]; T = T_dc(g)
-    def P(nm, m, role, mat=None, mass=None, swap=False, tag="M"):
-        d = dict(name=nm, trimesh=tm(m, T), role=role, tag=tag, protect=True)
-        if mat: d["material"] = mat
-        if mass is not None: d["mass_g"] = mass
-        if swap: d["swap"] = True
-        return d
-    man["parts"] += [P("pack", pack_body(g), "protected", mass=g["m"] - g["m_plug"], swap=True, tag="P"),
-                     P("xt60_plug", xt60_female(g), "bought", mass=g["m_plug"], swap=True, tag="E"),
-                     P("cartridge", B["cart"], "protected", "PETG", swap=True),
-                     P("slider_px", slider(g, 0, 1), "protected", "PETG", swap=True),
-                     P("slider_nx", slider(g, 0, -1), "protected", "PETG", swap=True),
-                     P("receiver", B["recv"], "protected", "PETG"), P("receiver_lid", B["lid"], "protected", "PETG"),
-                     P("receiver_strips", B["strips"], "structure", "TPU"), P("xt60e1m", B["male"], "bought", mass=6.0, tag="E")]
-    man["contact_pairs"] += [["cartridge", "receiver_strips", 5.0], ["pack", "cartridge", 1.0], ["xt60_plug", "cartridge", 5.0],
-                             ["xt60e1m", "receiver", 5.0], ["xt60e1m", "receiver_lid", 5.0], ["receiver_strips", "receiver", 5.0],
-                             ["xt60_plug", "xt60e1m", 1.0]]
-    man["openings"] = [dict(part=n, axis=[0, 0, -1], half_angle_deg=20.0, min_mm=0.0)
-                       for n in ("cartridge", "pack", "slider_px", "slider_nx")]
-    if keel4:
-        man["parts"].append(dict(name="keel node 4 (stand-in)", sphere=dict(r=4.0, center=[-28.0, 28.5, -47.5]), role="cage",
-                                 mass_g=1.0, tag="E"))
+        if p["name"] in SCOUT_SWAP:
+            p.pop("mesh", None); p["trimesh"] = tm(mesh[SCOUT_SWAP[p["name"]]], T); p["tag"] = "M"
+            if p["name"] in ("receiver v1 (latch)", "receiver lid (latch)", "cartridge v5 (latch)", "slider +y (latch)",
+                             "slider -y (latch)"):
+                p.pop("mass_g", None); p["material"] = "PETG"
+            elif p["name"] == "receiver TPU strips (latch)":
+                p.pop("mass_g", None); p["material"] = "TPU"
+        elif "mesh" in p:
+            p["mesh"] = os.path.join(base, p["mesh"])
+    swap_move = ["pack 4S 1500", "pack XT60 plug", "slider +y (latch)", "slider -y (latch)", "cartridge v5 (latch)"]
+    acc = [dict(name="cartridge out (swap)", part="cartridge v5 (latch)", dir=[0, 0, -1], length_mm=80, tool="part",
+                ignore=swap_move + ["receiver TPU strips (latch)", "XT60E1-M"]),
+           dict(name="pack out with the cartridge", part="pack 4S 1500", dir=[0, 0, -1], length_mm=80, tool="part",
+                ignore=swap_move + ["receiver TPU strips (latch)", "XT60E1-M"])]
+    for k, (bx, bz) in enumerate(r["MOUNT"]):
+        dp = (T @ np.array([bx, r["Y_M"], bz, 1.0]))[:3]                      # bolt line: from the mount plane down
+        acc.append(dict(name=f"receiver bolt {k + 1} (M3 up from below)", part="receiver v1 (latch)", **{"from": dp.round(2).tolist()},
+                        dir=[0, 0, -1], length_mm=80, tool=dict(type="cylinder", d=3.0)))
+    xp = (T @ np.array([0.0, r["Y_M"], g["Z_X"], 1.0]))[:3]
+    acc.append(dict(name="XT60 rear and leads (up through the mount window)", part="XT60E1-M", **{"from": xp.round(2).tolist()},
+                    dir=[0, 0, 1], length_mm=8.9, tool=dict(type="box", w=18.5, h=11.1, w_axis=[0, 1, 0]),
+                    ignore=["XT60E1-M", "receiver lid (latch)", "receiver v1 (latch)", "mount + nose legs (Scout)"]))
+    man["access"] = acc
     res = sc.run(man)
-    mine = {"pack", "xt60_plug", "cartridge", "slider_px", "slider_nx", "receiver", "receiver_lid", "receiver_strips", "xt60e1m"}
-    clash = [(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in res["fit"]["pairs"]
-             if not p_["pass_"] and ({p_["a"], p_["b"]} & mine)]
+    mine = set(SCOUT_SWAP)
+    clash = [(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in res["fit"]["pairs"] if not p_["pass_"] and ({p_["a"], p_["b"]} & mine)]
     cf = res["cage_first"]["per_part"]
-    log(f"scout v3 system{' + keel node 4' if keel4 else ''}: " + res["summary"])
-    return dict(summary=res["summary"], clashes=clash, balance=res.get("balance"),
-                cage_first={k: cf[k]["min_margin_mm"] for k in cf if k in mine | {"flow MTF-02P", "camera", "pogo pads + carrier"}})
+    log("scout v3 system (refit): " + res["summary"])
+    return dict(summary=res["summary"], pass_=res.get("pass_"), clashes=clash, balance=res.get("balance"),
+                access=res.get("access"), probes={k: v for k, v in (res.get("probes") or {}).items() if k != "rows"},
+                cage_first={k: cf[k]["min_margin_mm"] for k in cf if k in mine})
 
 
 # ======================================================================== main
@@ -1040,6 +1050,7 @@ def main():
                           crash_worst=max(max(x["inlayer"], x["across"]) for x in fe["rows"] if x["case"].startswith("crash")),
                           rows={x["case"]: max(x["inlayer"], x["across"]) for x in fe["rows"]})
         log(f"  FE v1 (h 1.0): worst {fe['worst']} in {fe['worst_case']}; crash worst {R['fe_v1']['crash_worst']}")
+        R["first_mode"] = BLT.first_mode(pack, 1.0, log=log)
         R["plug_vs_male_seat_mm3"] = ov(xt60_female(g), B["male"])
         hc = hand_calc(B); R["hand_calc"] = hc
         rx, pts, ctr = reactions(B, hc); R["reactions"] = rx; R["mount_pts"] = pts
@@ -1067,7 +1078,6 @@ def main():
         R["prints"] = save_prints(B, pack, log)
         R["system_manifest"] = write_manifest(B, pack)
     res["scout_system"] = scout_system(log)
-    res["scout_system_keel4"] = scout_system(log, keel4=True)
     # Overseer: posed in the Overseer assembly on main, pack on the thrust axis (Overseer DEFAULT A) and 30 behind (alt B)
     man = json.load(open(OV_ASM))
     for lab, dx in (("B", 0.0), ("A", TAB_OFF["overseer"])):        # B: tab line on the thrust axis, pack 30 aft (Spark)
