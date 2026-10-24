@@ -1,0 +1,9 @@
+=== scan_stick_unit: h 3.0, generated 50.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (320.65 cm3); 11.83 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.060 of 38,347 design cells
+layout: WARNING nearly mirrored in y (1.8% of passive cells differ): no symmetry
+layout: 4 drawn bodies (11,876 cells), held solid in every realization; eroded filter: masked
+layout: 34 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (56, 40, 80) = 179,200 elements, 184,728 active dofs; backend direct (direct estimate 1.8 GB, budget 11.8 GB)
