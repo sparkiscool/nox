@@ -105,5 +105,10 @@ it   7 beta    4 J  62.1379 vol 0.0438 (dil 0.0967 g -0.040) grey 10.2% ch 0.100
 it   8 beta    4 J  55.1676 vol 0.0429 (dil 0.0943 g -0.063) grey 10.0% ch 0.100 worst tie b5 mz 2.89e+03 31.0s
 it   9 beta    4 J  48.8258 vol 0.0428 (dil 0.0931 g -0.075) grey  9.9% ch 0.100 worst tie b1 mx 2.97e+03 32.8s
 it  10 beta    4 J  31.6536 vol 0.0425 (dil 0.0917 g -0.089) grey  9.7% ch 0.100 worst tie b5 fx 1.62e+03 33.0s
-100 worst tie b1 mx 2.97e+03 32.8s
-it  10 beta    4 J  31.6536 vol 0.0425 (dil 0.0917 g -0.089) grey  9.7% ch 0.100 worst tie b5 fx 1.62e+03 33.0s
+it  11 beta    4 J  20.6869 vol 0.0429 (dil 0.0906 g -0.135) grey  9.5% ch 0.100 worst tie b1 mx 1.15e+03 37.0s
+it  12 beta    4 J  11.5427 vol 0.0464 (dil 0.0944 g -0.098) grey  9.7% ch 0.100 worst dropped pack [Overseer] [mis 499 32.7s
+it  13 beta    4 J   7.2129 vol 0.0506 (dil 0.0990 g -0.055) grey  9.9% ch 0.100 worst tie b2 fz 323 29.6s
+it  14 beta    4 J   4.8108 vol 0.0537 (dil 0.1022 g -0.025) grey  9.9% ch 0.100 worst tie b2 fz 241 31.4s
+it  15 beta    4 J   3.6869 vol 0.0556 (dil 0.1034 g -0.013) grey  9.8% ch 0.100 worst tie b2 fz 185 34.0s
+9.9% ch 0.100 worst tie b2 fz 241 31.4s
+it  15 beta    4 J   3.6869 vol 0.0556 (dil 0.1034 g -0.013) grey  9.8% ch 0.100 worst tie b2 fz 185 34.0s
