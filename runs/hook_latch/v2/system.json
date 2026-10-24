@@ -104,6 +104,196 @@
    "cls": "flight"
   }
  },
+ "panel_v7_result": {
+  "bosses_vs_housing_mm3": 0.0,
+  "fe_mode": "v7 latched",
+  "fe_asbuilt": {
+   "face_g": 151.3,
+   "util": 0.913,
+   "worst": "press u60 v90",
+   "stress_MPa": 6.6,
+   "stress_case": "press u30 v40",
+   "ok": true,
+   "per_case": {
+    "press u0 v15": [
+     0.135,
+     2.1
+    ],
+    "press u30 v15": [
+     0.363,
+     5.7
+    ],
+    "press u60 v15": [
+     0.103,
+     2.3
+    ],
+    "press u0 v40": [
+     0.568,
+     3.3
+    ],
+    "press u30 v40": [
+     0.838,
+     6.6
+    ],
+    "press u60 v40": [
+     0.326,
+     2.6
+    ],
+    "press u90 v40": [
+     0.133,
+     2.3
+    ],
+    "press u0 v65": [
+     0.968,
+     2.9
+    ],
+    "press u30 v65": [
+     1.149,
+     6.5
+    ],
+    "press u60 v65": [
+     0.594,
+     2.7
+    ],
+    "press u90 v65": [
+     0.318,
+     3.3
+    ],
+    "press u120 v65": [
+     0.025,
+     0.8
+    ],
+    "press u0 v90": [
+     1.425,
+     3.0
+    ],
+    "press u30 v90": [
+     1.337,
+     3.6
+    ],
+    "press u60 v90": [
+     0.913,
+     2.8
+    ],
+    "press u90 v90": [
+     0.566,
+     3.0
+    ],
+    "press u120 v90": [
+     0.188,
+     1.9
+    ],
+    "press u100 v40": [
+     0.067,
+     2.9
+    ],
+    "press u100 v65": [
+     0.206,
+     2.3
+    ],
+    "top edge u0": [
+     1.854,
+     3.4
+    ],
+    "top edge u40": [
+     1.585,
+     3.5
+    ],
+    "top edge u80": [
+     1.007,
+     3.6
+    ],
+    "top edge u120": [
+     0.462,
+     4.6
+    ],
+    "top edge u150": [
+     0.035,
+     1.5
+    ],
+    "uniform 20 N": [
+     0.223,
+     1.1
+    ],
+    "latch functional 30 N x 2": [
+     0.107,
+     1.5
+    ],
+    "latch misuse 100 N": [
+     0.261,
+     4.1
+    ]
+   },
+   "latch_boss_defl_mm": {
+    "latch functional 30 N x 2": 0.328,
+    "latch misuse 100 N": 0.733
+   }
+  },
+  "boss_hand_calc": [
+   {
+    "case": "functional 30 N (panel, E)",
+    "boss_shear_N": 7.5,
+    "boss_normal_N": 7.5,
+    "boss_root_MPa": 0.39,
+    "index_across_layers": 0.072,
+    "skin_membrane_MPa": 0.31
+   },
+   {
+    "case": "misuse 100 N (panel, E)",
+    "boss_shear_N": 25.0,
+    "boss_normal_N": 25.2,
+    "boss_root_MPa": 1.29,
+    "index_across_layers": 0.149,
+    "skin_membrane_MPa": 1.04
+   },
+   {
+    "case": "insert 28.3 N (system, C)",
+    "boss_shear_N": 7.1,
+    "boss_normal_N": 7.1,
+    "boss_root_MPa": 0.37,
+    "index_across_layers": 0.068,
+    "skin_membrane_MPa": 0.29
+   },
+   {
+    "case": "hand lift 85.8 N (system, C)",
+    "boss_shear_N": 21.4,
+    "boss_normal_N": 21.6,
+    "boss_root_MPa": 1.11,
+    "index_across_layers": 0.128,
+    "skin_membrane_MPa": 0.89
+   }
+  ],
+  "fe_asbuilt_system_loads": {
+   "insert 28.3 N x 2 (system)": {
+    "mean_defl_mm": 0.101,
+    "util": 0.101,
+    "stress_MPa": 1.42,
+    "boss_defl_mm": 0.309
+   },
+   "hand lift 85.8 N (system)": {
+    "mean_defl_mm": 0.224,
+    "util": 0.075,
+    "stress_MPa": 3.52,
+    "boss_defl_mm": 0.629
+   }
+  },
+  "fe_asbuilt_panel_loads": {
+   "latch functional 30 N x 2": {
+    "mean_defl_mm": 0.107,
+    "util": 0.107,
+    "stress_MPa": 1.5,
+    "boss_defl_mm": 0.328
+   },
+   "latch misuse 100 N": {
+    "mean_defl_mm": 0.261,
+    "util": 0.087,
+    "stress_MPa": 4.1,
+    "boss_defl_mm": 0.733
+   }
+  },
+  "worst_index": 0.913,
+  "worst_case": "press u60 v90"
+ },
  "compact": {
   "latch_unit_bbox_mm": [
    57.5,
@@ -122,179 +312,15 @@
  },
  "cage_first_note": "the node cheeks (part of the cage) sit 1.0 off the faces by the catch interface (G (1)); the rings, plate, props and receiver are the 'everything else' and must be >= 3 mm (Scout v3 / Overseer chats own them)",
  "system_check": {
-  "pass_": false,
-  "summary": "System: box catch (drone seated, latch out), cage first n/a (no protected part), fit 769.2 mm\u00b3 (E) (collar v6/latch housing +y_x+) FAIL, bbox 13.6 L (E), extents 337 x 337 x 120 mm (E), mass 1032 g (E), CG [-0.4, 0.0, 28.4] (E, no cg_ref)",
-  "clearances": [
-   [
-    "collar v6",
-    "drone plate",
-    30.8,
-    true
-   ],
-   [
-    "collar v6",
-    "drone props",
-    19.02,
-    true
-   ],
-   [
-    "collar v6",
-    "drone receiver",
-    39.0,
-    true
-   ],
-   [
-    "collar v6",
-    "cartridge",
-    42.5,
-    true
-   ],
-   [
-    "latch plunger +y_x+",
-    "drone plate",
-    65.21,
-    true
-   ],
-   [
-    "latch plunger +y_x+",
-    "drone props",
-    26.25,
-    true
-   ],
-   [
-    "latch plunger +y_x+",
-    "drone receiver",
-    104.81,
-    true
-   ],
-   [
-    "latch plunger +y_x+",
-    "cartridge",
-    115.64,
-    true
-   ],
-   [
-    "latch plunger +y_x-",
-    "drone plate",
-    65.21,
-    true
-   ],
-   [
-    "latch plunger +y_x-",
-    "drone props",
-    26.25,
-    true
-   ],
-   [
-    "latch plunger +y_x-",
-    "drone receiver",
-    102.85,
-    true
-   ],
-   [
-    "latch plunger +y_x-",
-    "cartridge",
-    113.74,
-    true
-   ],
-   [
-    "latch plunger -y_x+",
-    "drone plate",
-    65.21,
-    true
-   ],
-   [
-    "latch plunger -y_x+",
-    "drone props",
-    26.25,
-    true
-   ],
-   [
-    "latch plunger -y_x+",
-    "drone receiver",
-    102.85,
-    true
-   ],
-   [
-    "latch plunger -y_x+",
-    "cartridge",
-    113.74,
-    true
-   ],
-   [
-    "latch plunger -y_x-",
-    "drone plate",
-    65.21,
-    true
-   ],
-   [
-    "latch plunger -y_x-",
-    "drone props",
-    26.25,
-    true
-   ],
-   [
-    "latch plunger -y_x-",
-    "drone receiver",
-    104.81,
-    true
-   ],
-   [
-    "latch plunger -y_x-",
-    "cartridge",
-    115.64,
-    true
-   ]
-  ],
-  "fit_fail_pairs": [
-   [
-    "collar v6",
-    "latch housing +y_x+",
-    769.24
-   ],
-   [
-    "collar v6",
-    "latch plunger +y_x+",
-    153.6
-   ],
-   [
-    "collar v6",
-    "latch housing +y_x-",
-    769.24
-   ],
-   [
-    "collar v6",
-    "latch plunger +y_x-",
-    153.6
-   ],
-   [
-    "collar v6",
-    "latch housing -y_x+",
-    769.24
-   ],
-   [
-    "collar v6",
-    "latch plunger -y_x+",
-    153.6
-   ],
-   [
-    "collar v6",
-    "latch housing -y_x-",
-    769.24
-   ],
-   [
-    "collar v6",
-    "latch plunger -y_x-",
-    153.6
-   ]
-  ]
- },
- "system_check_full": {
+  "pass_out": true,
+  "pass_in": true,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +y/latch housing +y_x-), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 750 g (E), CG [0.0, 0.0, 42.3] (E, no cg_ref)",
+  "fit_fail_pairs": [],
   "compact": {
    "bbox_min": [
     -168.39,
     -168.39,
-    -42.4
+    -1.2
    ],
    "bbox_max": [
     168.39,
@@ -304,263 +330,12 @@
    "extents_mm": [
     336.8,
     336.8,
-    119.6
+    78.4
    ],
    "largest_extent_mm": 336.8,
-   "bbox_L": 13.565,
-   "hull_L": 7.479,
+   "bbox_L": 8.892,
+   "hull_L": 6.629,
    "guard_offsets_mm": {}
-  },
-  "fit": {
-   "pass_": false,
-   "tol_mm3": 0.5,
-   "worst": {
-    "a": "collar v6",
-    "b": "latch housing +y_x+",
-    "overlap_mm3": 769.24,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
-   },
-   "pairs": [
-    {
-     "a": "drone wheels",
-     "b": "drone cage",
-     "overlap_mm3": 349.01,
-     "limit_mm3": 1000000000.0,
-     "contact": true,
-     "method": "manifold3d",
-     "pass_": true
-    },
-    {
-     "a": "drone wheels",
-     "b": "collar v6",
-     "overlap_mm3": 0.0,
-     "limit_mm3": 2.0,
-     "contact": true,
-     "method": "manifold3d",
-     "pass_": true
-    },
-    {
-     "a": "collar v6",
-     "b": "latch housing +y_x+",
-     "overlap_mm3": 769.24,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch plunger +y_x+",
-     "overlap_mm3": 153.6,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch housing +y_x-",
-     "overlap_mm3": 769.24,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch plunger +y_x-",
-     "overlap_mm3": 153.6,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch housing -y_x+",
-     "overlap_mm3": 769.24,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch plunger -y_x+",
-     "overlap_mm3": 153.6,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch housing -y_x-",
-     "overlap_mm3": 769.24,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    },
-    {
-     "a": "collar v6",
-     "b": "latch plunger -y_x-",
-     "overlap_mm3": 153.6,
-     "limit_mm3": 0.5,
-     "contact": false,
-     "method": "manifold3d",
-     "pass_": false
-    }
-   ],
-   "clearance": [
-    {
-     "a": "collar v6",
-     "b": "drone plate",
-     "clearance_mm": 30.8,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "collar v6",
-     "b": "drone props",
-     "clearance_mm": 19.02,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "collar v6",
-     "b": "drone receiver",
-     "clearance_mm": 39.0,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "collar v6",
-     "b": "cartridge",
-     "clearance_mm": 42.5,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x+",
-     "b": "drone plate",
-     "clearance_mm": 65.21,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x+",
-     "b": "drone props",
-     "clearance_mm": 26.25,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x+",
-     "b": "drone receiver",
-     "clearance_mm": 104.81,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x+",
-     "b": "cartridge",
-     "clearance_mm": 115.64,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x-",
-     "b": "drone plate",
-     "clearance_mm": 65.21,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x-",
-     "b": "drone props",
-     "clearance_mm": 26.25,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x-",
-     "b": "drone receiver",
-     "clearance_mm": 102.85,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger +y_x-",
-     "b": "cartridge",
-     "clearance_mm": 113.74,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x+",
-     "b": "drone plate",
-     "clearance_mm": 65.21,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x+",
-     "b": "drone props",
-     "clearance_mm": 26.25,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x+",
-     "b": "drone receiver",
-     "clearance_mm": 102.85,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x+",
-     "b": "cartridge",
-     "clearance_mm": 113.74,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x-",
-     "b": "drone plate",
-     "clearance_mm": 65.21,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x-",
-     "b": "drone props",
-     "clearance_mm": 26.25,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x-",
-     "b": "drone receiver",
-     "clearance_mm": 104.81,
-     "min_mm": 3.0,
-     "ok": true
-    },
-    {
-     "a": "latch plunger -y_x-",
-     "b": "cartridge",
-     "clearance_mm": 115.64,
-     "min_mm": 3.0,
-     "ok": true
-    }
-   ]
-  },
-  "cage_first": {
-   "applies": false,
-   "pass_": true
   }
  },
  "assembled_worst": [

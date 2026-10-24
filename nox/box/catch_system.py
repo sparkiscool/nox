@@ -136,40 +136,14 @@ def main():
     out["cage_first_face_clearance_mm"] = cl
     out["cage_first_note"] = ("the node cheeks (part of the cage) sit 1.0 off the faces by the catch interface (G (1)); the rings, "
                               "plate, props and receiver are the 'everything else' and must be >= 3 mm (Scout v3 / Overseer chats own them)")
-    # nox/system_check.py on the assembled catch (fit, the catch's cage rule as clearances, compact): drone cage = wheels +
-    # node cheeks + rings; the rest of the drone, the collar, 4 latch housings + plungers out (seated pose, not lifted)
-    sys.path.insert(0, os.path.join(os.path.dirname(HERE)))
-    import system_check as SC
-    try:
-        import funnel_panel_v7 as FV; collar = FV.collar_world(); cname = "collar v7"
-    except Exception:
-        sys.path.insert(0, os.path.join(HERE, "catch_v4")); import funnel_panel as F6; collar = F6.collar_world(); cname = "collar v6"
-    parts = [dict(name="drone wheels", trimesh=H.to_tm(D["wheels"]), role="cage", material="petg", tag="C"),
-             dict(name="drone cage", trimesh=H.to_tm(D["cage"]), role="cage", material="carbon", tag="E"),
-             dict(name="drone plate", trimesh=H.to_tm(D["plate"]), role="structure", material="carbon", tag="E"),
-             dict(name="drone props", trimesh=H.to_tm(D["props"]), role="structure", mass_g=8.0, tag="E"),
-             dict(name="drone receiver", trimesh=H.to_tm(D["receiver"]), role="structure", material="petg", tag="E"),
-             dict(name="cartridge", trimesh=H.to_tm(H.cartridge()), role="structure", material="petg", tag="E", swap=True),
-             dict(name=cname, trimesh=H.to_tm(collar), role="structure", material="petg", tag="M")]
-    for name, fs, xs in H.UNITS:
-        T, _ = H.unit_frame(fs, xs)
-        parts.append(dict(name=f"latch housing {name}", trimesh=H.to_tm(P["housing"], T), role="structure", material="petg", tag="C"))
-        parts.append(dict(name=f"latch plunger {name}", trimesh=H.to_tm(P["plunger"].translate([0, 0, H.RISE]), T), role="structure", material="petg", tag="C"))
-        parts.append(dict(name=f"latch servo {name}", trimesh=H.to_tm(P["servo"], T), role="bought", mass_g=13.4, tag="E"))
-    man = dict(name="box catch (drone seated, latch out)", parts=parts,
-               openings=[dict(axis=[0, 0, -1], half_angle_deg=25.0, min_mm=0.0)],
-               # the catch rule (CLAUDE.md "Every drone design": the funnel and the hook latch meet only cage members):
-               # collar and plungers >= 3 mm from every non-cage drone part; the drone's own cage-first margins are the
-               # drone systems' check (Scout v3 / Overseer), so its parts are "structure" here
-               contact_pairs=[["drone wheels", cname, 2.0], ["drone wheels", "drone cage", 1e9]],
-               clearance_pairs=[[a, b, 3.0] for a in [cname] + [f"latch plunger {u[0]}" for u in H.UNITS]
-                                for b in ("drone plate", "drone props", "drone receiver", "cartridge")],
-               cage_margin_mm=3.0, fit_tol_mm3=0.5, n_dirs=1000)
-    res = SC.run(man)
-    out["system_check"] = dict(pass_=bool(res["pass"]), summary=res["summary"],
-                               clearances=[(q["a"], q["b"], q["clearance_mm"], q["ok"]) for q in res["fit"]["clearance"]],
-                               fit_fail_pairs=[(q["a"], q["b"], q["overlap_mm3"]) for q in res["fit"]["pairs"] if not q["pass_"]])
-    out["system_check_full"] = {k: res[k] for k in ("compact", "fit", "cage_first")}
+    # the assembled check comes from the system's assembly file (nox/ASSEMBLY.md): latch out and in
+    sys.path.insert(0, os.path.dirname(HERE))
+    import assembly as AS
+    a = AS.load(os.path.join(HERE, "box_catch.assembly.json"))
+    r_out = a.at(**{n: 1.0 for n in a.names if n.startswith("latch plunger")}).check(); r_in = a.check()
+    out["system_check"] = dict(pass_out=bool(r_out["pass"]), pass_in=bool(r_in["pass"]), summary=r_out["summary"],
+                               fit_fail_pairs=[(q["a"], q["b"], q["overlap_mm3"]) for r in (r_out, r_in) for q in r["fit"]["pairs"] if not q["pass_"]],
+                               compact=r_out["compact"])
     out["assembled_worst"] = max(((nm, max(v["plunger_index"], v["guide_wall_index"])) for nm, v in out["pieces"].items()), key=lambda t: t[1])
     os.makedirs(H.OUT, exist_ok=True)
     json.dump(out, open(os.path.join(H.OUT, "system.json"), "w"), indent=1)
@@ -216,5 +190,34 @@ def update_assembly(path=None):
     a.data["note"] = a.data["note"].replace("hook latch v1", "hook latch v2").replace(
         "B-unit plungers are posed mirrored as hook_latch.py does (one plunger file x4: CHECK the magnet pocket side).",
         "B units use the mirrored housing and plunger files (plunger A / B v2: the plunger is chiral).")
+    a.save()
+    return a
+
+
+def panels_v7_into_assembly(path=None):
+    """the funnel panels in the catch assembly file: v7 on the seated faces (+-y), v7 plain on the others, seat meshes
+    from funnel_panel_v7.build (print files' geometry) in runs/box_catch_assembly/v1/."""
+    sys.path[:0] = [os.path.dirname(HERE), os.path.join(HERE, "catch_v4")]
+    import assembly as AS, funnel_panel_v7 as FV
+    root = os.path.dirname(os.path.dirname(HERE)); od = os.path.join(root, "runs", "box_catch_assembly", "v1"); os.makedirs(od, exist_ok=True)
+    files = {}
+    for plain in (False, True):
+        pa, pb, _, _ = FV.build(plain=plain)
+        for k, m in (("A", pa), ("B", pb)):
+            nm = f"funnel_panel_{k}_v7{'_plain' if plain else ''}_seat.stl"
+            FV.tm(FV.to_seat(m)).export(os.path.join(od, nm)); files[(k, plain)] = f"runs/box_catch_assembly/v1/{nm}"
+    a = AS.load(path or os.path.join(HERE, "box_catch.assembly.json"))
+    for face in ("+x", "-x", "+y", "-y"):
+        plain = face in ("+x", "-x")
+        for k in ("A", "B"):
+            p = a.part(f"funnel panel {k} {face}")
+            p["mesh"] = files[(k, plain)]; p["version"] = "v7 plain" if plain else "v7"
+            p["source"] = "nox/box/catch_v4/funnel_panel_v7.py (seat mesh by nox/box/catch_system.py:panels_v7_into_assembly)"
+    a.data["note"] = ("Box catch, 24 Oct. Frame: the seat frame of funnel_panel.py / hook_latch.py (drone coordinates of a seated "
+                      "drone, contact face max(|x|, |y|) = 82.7 + z, bottom edge z 1.3). Funnel panels v7 on the seated faces "
+                      "(+-y, latch windows and bosses), v7 plain on +-x. Hook latch v2: B units use the mirrored housing and "
+                      "plunger files. Plunger state via 'moves' (0 retracted, 1 out). Drone wheels and ring: hook_latch.drone_parts "
+                      "context (E; the wheels sit in their cheeks, a contact pair). Left out: funnel hub + corner blocks (DESIGN), "
+                      "MG90S servos and horns (no mass in dimensions.md), the box frame (box structure system), KW11 + pogo post.")
     a.save()
     return a

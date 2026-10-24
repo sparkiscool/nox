@@ -44,7 +44,7 @@ On the 4 panels of the two seated faces (the ones over the 45 / 135° bays):
 - **Moving parts, 0 mm³ overlap:** plunger vs housing at both ends of the stroke; horn + pin vs housing and vs the plunger every 2° of swing; servo body, dome and ears vs housing; bolt head + key cylinders vs housing and servo; housing and plunger vs the panel bosses and gussets.
 - **Drone fit, 0 mm³:** extended plungers vs the R 5 wheels, Ø8 cheeks and both rings of the catch-interface drone (its corner posts lean 8 inward over their 16 rise, E; a post straight up from a wheel node crosses the plunger zone, Catch interface (7)); housings vs the drone.
 - **Placement:** valley margin 5.3 (rule 3.4), highest point 87.1 up the slope (rim 107.3), seat block 28.1 away, ring 9.2 clear, side sheets 23.1 clear.
-- **Fit with the v7 collar (PR 37 review, C):** housing, servo and plunger (in and out) 0 mm³ against `collar_v7_seat_frame.stl` at all 4 units.
+- **Fit with the v7 collar (C):** `nox/box/box_catch.assembly.json` (panels v7 on the seated faces, v7 plain on the others, latch v2) checks 0.0 mm³ for every pair with the plungers in and out (`assembly.py --check`); the PR 37 review found the same against `collar_v7_seat_frame.stl`.
 - **Strength (hand calc, E loads):** functional = 30 N along the slope on one plunger (55 N net up, 67.5 % on the near pair with the XT60 push 35 off centre, rounded up), class flight (SF 4); misuse = 100 N on one plunger (a hand lifting the latched drone), SF 2.5. Load at the highest held wheel centre in the band, 9.0 off the face (C).
 
 | Case | Plunger (in-layer) | Guide top reaction | Guide wall (in-layer as printed) | (if printed flange down: across layers) |
