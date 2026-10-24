@@ -26,7 +26,7 @@ BAYS = {30: "scout", 0: "overseer", -30: "scout", -60: "overseer", -90: "scout",
 BAYS_BOTTOM = {30: "scout", 0: "scout", -30: "scout", -60: "overseer", -90: "overseer", -120: "overseer", -150: "overseer",
                -180: "scout", -210: "scout"}  # the catch preview's placement (alternative, needs clipped receivers or R 128)
 HALF = 15.0; GAP = 0.3                          # sector half angle; each body / receiver stays 0.3 inside its plane
-Y_C = 165.0                                     # common grip line of both cartridges (arm PR 79 DEFAULT, hub 24 Oct; was 175, then 138)
+Y_C = 167.1                                     # common grip line of both cartridges (arm DEFAULT 24 Oct: latch v4's longer Overseer receiver lead end, Y_C_min 167.1 F; was 165, 175, 138)
 Y_FUN = Y_C                                     # funnel centre = the grip line = each drone's catch centre = its latch set's centre (hub)
 
 
@@ -177,7 +177,7 @@ def layout(R=113.0, clip=False, bays=None):
     H = Z_TOP - FLOOR
     out = dict(R=R, clip=clip, bays=rows, neighbours=nb, catch=dict(rim_Z=round(rim, 1), front_Y=round(front, 1), back_Y=round(back, 1),
                                                                      side_X=round(side, 1), seat_W_Z=round(155.3 + T[2, 3] if in_w else T[2, 3], 1),
-                                                                     file="W, funnel v8 plain (catch PR 81)" if in_w else "seat frame, panels v7", v8_allowance_Y=grow),
+                                                                     file="W (the catch file on main)" if in_w else "seat frame, panels v7", v8_allowance_Y=grow),
                landings=[dict(p=np.round(p, 1).tolist(), n=np.round(n, 3).tolist()) for p, n in lands],
                ring=dict(max_abs_X=round(ring_x, 1), min_Z=round(ring_zmin, 1), Y=np.round(rt.bounds[:, 1], 1).tolist()),
                enclosure=dict(X_IN=X_IN, Y_BACK=Y_BACK, Y_FRONT=Y_FRONT, FLOOR=FLOOR, Z_TOP=Z_TOP,
