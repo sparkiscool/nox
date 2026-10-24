@@ -13,7 +13,7 @@ _49 runs · rebuilt 2026-10-24 01:21_
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
 | hook_latch | v1 | · | · | ·  | · | [runs/hook_latch/v1](runs/hook_latch/v1/summary.md) |
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
-| overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
+| overseer_layout | v2 | DONE | 2332 (E) | ·  | · | [runs/overseer_layout/v2](runs/overseer_layout/v2/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
@@ -22,6 +22,7 @@ _49 runs · rebuilt 2026-10-24 01:21_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 00:56 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 00:55 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
