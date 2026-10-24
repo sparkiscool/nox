@@ -26,7 +26,8 @@ GROUPS = dict(arm="arm", armB="arm", headA="head A", headB="head B", fixed="fixe
 hub_nm = P["hub"].name
 s = Scene(f"Nox swap arm {STK}" + (" layout (concept check)" if KIND == "layout" else "") + (f", {PK}" if STK == "v7" else ""),
           (f"one {PK} swap cycle (pick {PI}, return {RE}) at R 113 with every bay's receiver and seated pack; " if STK == "v7" else "one swap cycle at the -90 bay: ")
-          + f"rails on the motor plate, 3-wheel carriages, 16T rack and pinion; {hub_nm}; latch v1 cartridges")
+          + f"rails on the motor plate, 3-wheel carriages, 16T rack and pinion; {hub_nm}; latch v1 cartridges"
+          + (f"; Y_C {L.Y_C:g}, low carriage stack, rails v4 (keel), orange = the insert-lane keep-out at the drone" if STK == "v7" else ""))
 for nm, p in P.items():
     if STK == "v6" and nm.startswith(("bay", "strip")) and nm not in (f"bay{K.demo_idx()}",) and KIND == "layout": continue      # layout: the demo bay only
     s.part(nm, p.mesh, group=GROUPS.get(p.group, p.group), color=p.color, printed=p.printed, note=p.name)
@@ -34,6 +35,14 @@ cart = K.tm(K.CART_LOCAL(4.0))
 for cn in ("pack charged", "pack dead"):
     s.part(cn, cart, group="pack", color="#44aa66" if cn == "pack charged" else "#aa5544", printed=False, note="latch v1 cartridge + Scout pack")
 FAR = K.trans(0, 0, -5000.0)
+KEEPS = {}
+if STK == "v7":                                  # the insert lane at the drone (phi 90, head A along +Z): what the catch's funnel notch and the
+    def _box(x0, x1, y0, y1, z0, z1):            # structure keep clear (dimensions "System box swap: arm", Insert-lane keep-out)
+        return trimesh.creation.box(extents=(x1 - x0, y1 - y0, z1 - z0), transform=K.trans((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2))
+    KEEPS["keep: carriage lane"] = _box(-35.0, 47.5, 53.75, 73.75, 100.0, 159.0)
+    KEEPS["keep: head and grabber"] = _box(-47.5, 47.5, 73.75, L.Y_C + 52.0, 111.5, 159.6)
+    for nm, m in KEEPS.items():
+        s.part(nm, m, group="keep-out (insert lane)", color="#e67e22", printed=False, note="keep clear: catch funnel notch, structure")
 
 
 def poses(t):
@@ -41,6 +50,7 @@ def poses(t):
     out = {nm: T[nm] for nm in P if nm in T}
     for cn in ("pack charged", "pack dead"):
         out[cn] = carts[cn][0] if cn in carts else (K.trans(0, 0, L.R + 5.0) if cn == "pack dead" else FAR)
+    for nm in KEEPS: out[nm] = np.eye(4)
     return out
 
 
