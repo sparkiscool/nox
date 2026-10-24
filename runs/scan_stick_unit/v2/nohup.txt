@@ -88,3 +88,8 @@ it  23 beta    8 J  12.4193 vol 0.0732 (dil 0.1554 g -0.001) grey  4.3% ch 0.100
 layout: beta 8 done: eroded design 3 bodies, main 100.0%; drawn bodies outside the main body: 0
 it  24 beta   16 J  12.4183 vol 0.0701 (dil 0.1587 g +0.023) grey  2.1% ch 0.100 worst camera hit above 50 N 2.43e+03 37.7s
 it  25 beta   16 J  12.4202 vol 0.0670 (dil 0.1544 g -0.005) grey  2.0% ch 0.100 worst camera hit above 50 N 2.43e+03 37.9s
+it  26 beta   16 J  12.4180 vol 0.0677 (dil 0.1544 g -0.009) grey  2.0% ch 0.100 worst camera hit above 50 N 2.43e+03 37.8s
+it  27 beta   16 J  12.4178 vol 0.0682 (dil 0.1549 g -0.006) grey  2.0% ch 0.100 worst camera hit above 50 N 2.43e+03 39.6s
+it  28 beta   16 J  12.4177 vol 0.0685 (dil 0.1553 g -0.004) grey  2.0% ch 0.100 worst camera hit above 50 N 2.43e+03 38.1s
+it  29 beta   16 J  12.4176 vol 0.0689 (dil 0.1557 g -0.001) grey  2.0% ch 0.100 worst camera hit above 50 N 2.43e+03 37.1s
+it  30 beta   16 J  12.4175 vol 0.0691 (dil 0.1558 g -0.000) grey  1.9% ch 0.100 worst camera hit above 50 N 2.43e+03 36.7s
