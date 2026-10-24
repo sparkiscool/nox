@@ -126,7 +126,7 @@ def spine_bodies():
     if not os.path.exists(tc):
         os.makedirs(os.path.dirname(tc), exist_ok=True)
         os.system(f"openscad -o {tc} {os.path.join(HERE, 'thread_cut.scad')} >/dev/null 2>&1")
-    cuts = man(trimesh.load(tc, force="mesh")).translate([0, 0, SHANK_D - 0.5])                  # thread z 1.5..27.5 (overlaps the counterbore: no coincident faces)
+    cuts = man(trimesh.load(tc, force="mesh")).translate([0, 0, SHANK_D - 0.5])                  # thread 26 long at z 1.5..27.5: 0.5 into the counterbore (no coincident faces), 0.5 past the tip
     cuts += mf.Manifold.cylinder(SHANK_D + 1.0, SHANK_R, SHANK_R, 96).translate([0, 0, -1.0])      # shank counterbore z 0..2
     cuts += mf.Manifold.cylinder(1.5, 10.9, 9.9, 64).translate([0, 0, SHANK_D - 0.5])              # 1 mm entry chamfer on the thread
     cuts += box(-100, 100, -100, 100, -10, 0)

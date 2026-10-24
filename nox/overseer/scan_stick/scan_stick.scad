@@ -9,7 +9,7 @@ part = "thread_test";
 acme_major   = 19.05;   // 3/4" ACME major diameter
 acme_pitch   = 5.08;    // 5 TPI
 acme_clear   = 0.40;    // radial print clearance (0.3 tight ... 0.5 loose). Test-print `thread_test` first.
-acme_depth   = 25.5;    // the tip thread is 25 long (P Spark 24 Oct) + 0.5 so the shank shoulder seats first; 27 engaged with the 2 mm shank counterbore
+acme_depth   = 26.0;    // thread cut z 1.5..27.5 in the base: 0.5 into the 2 mm shank counterbore, 0.5 past the tip (25 thread, P Spark 24 Oct); 27 engaged
 boss_r       = 16;      // Ø32 boss
 
 /* [Rendering] */
