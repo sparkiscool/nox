@@ -17,6 +17,7 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_bracket_jB_v7.stl` | 53484 | a48119676bb0 |
 | `box_cradle_keel_v6.stl` | 183384 | c360aed46fc8 |
 | `box_detent_arm_v1.stl` | 48884 | 9d379e57747a |
+| `box_detent_arm_v2.stl` | 42684 | 5c47d20d17f7 |
 | `box_detent_ring_v1.stl` | 156284 | cf619ecdfdf7 |
 | `box_finger_A_for_head_A_v4.stl` | 9084 | 088889b387a2 |
 | `box_finger_A_for_head_B_v4.stl` | 9084 | 466037734cec |

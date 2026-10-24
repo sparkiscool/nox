@@ -1,0 +1,12 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 2.27,
+ "mass_tag": "M",
+ "worst_index": 0.22,
+ "worst_case": "spring 8.4 N (E) at the hook, in-plane bending at the pivot (hand calc, in-layer)",
+ "solid_ok": true,
+ "bed_face": "arm top face (Y 74.1) down",
+ "bed_contact_mm2": 714,
+ "note": "detent.py CHOSEN_V5 (arm v5), python3 detent.py v5"
+}

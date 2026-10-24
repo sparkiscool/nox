@@ -9,7 +9,7 @@ python3 arm_v5_layout.py  -> report + runs/arm/v5-layout/result.json (the artifa
 import math, json, os, itertools
 import arm_layout as L
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "arm", "v5-layout-b"); os.makedirs(OUT, exist_ok=True)
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "arm", "v5-layout-c"); os.makedirs(OUT, exist_ok=True)
 CLR = 1.0                                   # rule: every designed gap >= 1.0 (DEFAULT, = CLR_POST)
 
 # ================================================================== v5 parts (C)
@@ -42,6 +42,7 @@ WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))    # (X, u): fixed pair on t
                                             # 24 Oct: u 10 / 38 / 24 -> 4 / 32 / 18 (wheelbase 28 kept): with the +6 drone push the old set reached r 147.3
                                             # (wheel rim) / 144.3 (plate corner), past the r 143 module keep and the stand's r 145.5 arm lane
 NUT_Y, NUT_R = (79.0, 83.0), 4.6             # M5 nyloc under the wheel (8 AF)
+TAIL_Y, TAIL_R = (73.0, 79.0), 2.5            # 24 Oct: the M5 x 25 tails below the nylocs (fixed wheels to Y 73, the eccentric's to 75.5): hub v6 stays <= Y 72 under the carriage path, X +-24.5
 SPACER_Y = (93.0, 94.0)
 PLATE_Y, PLATE_X, PLATE_U = (94.0, 98.0), (-28.0, 28.0), (0.0, 40.0)   # carriage plate: 2 web beside the M5 holes; the head body generates from Y 98
 # eccentric (24 Oct, arm-mech, DEFAULT printed bush `arm_eccbush` v1, no bought spacer): shank Ø11 in a Ø11.2 plate bore (Y 94..98), hex flange
@@ -116,6 +117,7 @@ def head_bodies(h, z0):
     for k, (x, u) in enumerate(WHEELS):
         add(f"wheel{k}", circ(x, u, WHEEL_OD / 2), WHEEL_Y)
         add(f"nut{k}", circ(x, u, NUT_R), NUT_Y)
+        add(f"tail{k}", circ(x, u, TAIL_R), TAIL_Y)
     return out
 
 def head_envelopes(h):
@@ -127,6 +129,7 @@ def head_envelopes(h):
     add("web", *WEB_X, *WEB_U, WEB_Y)
     add("wheels", -WHEEL_X - WHEEL_OD / 2, WHEEL_X + WHEEL_OD / 2, min(u for _, u in WHEELS) - WHEEL_OD / 2, max(u for _, u in WHEELS) + WHEEL_OD / 2, WHEEL_Y)
     add("nuts", -WHEEL_X - NUT_R, WHEEL_X + NUT_R, min(u for _, u in WHEELS) - NUT_R, max(u for _, u in WHEELS) + NUT_R, NUT_Y)
+    add("tails", -WHEEL_X - TAIL_R, WHEEL_X + TAIL_R, min(u for _, u in WHEELS) - TAIL_R, max(u for _, u in WHEELS) + TAIL_R, TAIL_Y)
     return env
 
 def rail_bodies(h):
@@ -272,11 +275,11 @@ def stacks():
 # ================================================================== parts delta (per arm: both heads)
 PARTS_OUT = [("2040 extrusion 112", 2, "bars"), ("idler end A / B v3 (printed)", 2, ""), ("GT2 toothless idler", 2, ""), ("GT2 6 mm belt cut 445 / 457", 2, "+ 2 belt connectors"),
              ("M5 T-nut", 8, "bar posts + idler ends"), ("GT2 20T 5 bore", 2, "head motors (the axle 20T stays)"), ("glide (in heads A / B v5)", 2, "replaced by the carriage")]
-PARTS_IN = [("rail A / B v1 (PETG, printed)", 2, "52.4 / 52.6 g M (arm_v5_cad): body 18 x 19 full depth, ridges, feet at the posts, park stop, ribbon channel"),
+PARTS_IN = [("rail A / B v1 (PETG, printed)", 2, "49.7 / 50.0 g M (arm_v5_cad): body 18 x 19 full depth, ridges, feet at the posts, park stop, ribbon channel"),
             ("V-wheel v1 (PETG, printed, OD 24 x 10, 90 deg groove)", 6, "2.8 g each M, on 2 x 625ZZ (press + epoxy)"), ("625ZZ bearing 5 x 16 x 5", 12, "~5 g each E"),
             ("M5 x 25 socket head + nyloc", 6, "wheel axles through the plate"), ("M5 precision shim 5 x 10 x 1", 6, "one under each wheel's inner race (Y 93..94)"),
             ("eccentric bush v1 (PETG, printed, 0.8 throw)", 2, "0.8 g each M, in the plate's eccentric bore"),
-            ("pinion 16T m1 v1 (PETG, printed, Ø18 x 16, boss Ø14)", 2, "3.1 g each M, on the NEMA D-shaft, M3 grub"), ("M3 x 4 grub", 2, ""),
+            ("pinion 16T m1 v1 (PETG, printed, Ø18 x 16, boss Ø14)", 2, "3.0 g each M, on the NEMA D-shaft, M3 grub"), ("M3 x 4 grub", 2, ""),
             ("M5 x 16 socket head", 4, "rail to post, one per post from the rail top"), ("M5 heat-set insert (OD 7.0 x 5.8, E)", 4, "one per hub v6 post top"),
             ("rack 77 m1 (printed into each head's carriage web)", 2, "in heads v6")]
 
@@ -313,8 +316,10 @@ def main():
         rc = max(math.hypot(x, zz + u) for x, u in corners)
         rw = math.hypot(WHEEL_X, zz + WHEELS[1][1] + WHEEL_OD / 2)
         ang = max(math.degrees(math.atan2(x, zz + u)) for x, u in corners)
+        need = max(rc, rw, math.hypot(RIDGE_X, RAIL_R[1])) + CLR
         print(f"reach at the {nm}: plate corner r {rc:.1f} (Y 94..98), wheel rim r {rw:.1f} (Y 83..93), {ang:.1f} deg off the head axis; rail tip r {math.hypot(RIDGE_X, RAIL_R[1]):.1f}; "
-              f"bay module keep cylinder (v4i r 136.5 to Y 95.5) needs r >= {max(rc, rw, math.hypot(RIDGE_X, RAIL_R[1])) + CLR:.1f} to Y {PLATE_Y[1]:g}; stand arm lane r 145.5")
+              + (f"no bay module sits in the drone opening (60..120 deg, the carriage spans +-{ang:.1f} deg round 90); stand arm lane r 145.5: {145.5 - max(rc, rw):.1f} clear"
+                 if nm.startswith("drone") else f"bay module keep cylinder (v4i r 136.5 to Y 95.5) needs r >= {need:.1f} to Y {PLATE_Y[1]:g}: r 136.5 holds, Y grows to 98"))
     print(f"wheel on the ridge: outer wheel contact at u {WHEELS[1][1]} -> r {max(Z0S) + WHEELS[1][1]:.1f} at the drone ({RAIL_R[1] - max(Z0S) - WHEELS[1][1]:.1f} of ridge left); inner at park r {min(Z0S) + WHEELS[0][1]:.1f} ({min(Z0S) + WHEELS[0][1] - RAIL_R[0]:.1f} from the rail start)")
     # loads (E)
     F_push = 60.0; lever = (L.Y_C - sum(RACK_TEETH_Y) / 2)                 # the rack takes the push at its teeth (Y 68.5)
@@ -352,7 +357,8 @@ def main():
         "arm v5-layout: layout check, no mesh (pure python, C)\n"
         f"Motors: A ({MOTORS_V5['A']['xc']:.1f}, {MOTORS_V5['A']['zc']:.1f}), B ({MOTORS_V5['B']['xc']:.1f}, {MOTORS_V5['B']['zc']:.1f}), axle ({best['xc']}, {best['zc']}) at {best['th']:.0f} deg (C); unbalance {best['unbal_gmm'] / 1000:.1f} g.m (E)\n"
         f"Clearance: min {best['gmin']:.2f} over {len(Z0S)}x{len(Z0S)} stroke states (wheels to the rail body, designed, C); bisector {bis:.1f} (C)\n"
-        f"Detent: re-place at th -45 (s -1 best, gap {max(d['gmin'] for d in det if d['th'] == -45):.2f} C); ring v1 unchanged\n"
+        "Detent: detent.CHOSEN_V5 = roller at -135 deg, pivot side +1, levers 15 / 39, hook along the tangent (psi 315), tower at (18.5, -28.4) (C); "
+        "detent.py search(v5=True) / `python3 detent.py v5`: arm parts 1.14, tower 1.0 (C); ring v1 unchanged; the 2D lever-only check above uses v1's radial hook\n"
         f"Compaction: {' / '.join(f'{r['length']:.0f}' for r in rows)} long (C; v4 / v5 / +C1 / compact)\n"
         "Solid: n/a (no part built here; rails / wheels / pinion / eccentric bush: nox/box/arm_v5_cad.py, runs/arm_rail/v1/)\n")
     print(f"-> {OUT}/result.json, summary.md")
