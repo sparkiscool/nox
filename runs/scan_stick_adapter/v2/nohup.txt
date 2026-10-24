@@ -250,3 +250,18 @@ it  27 beta   16 J   8.9975 vol 0.1349 (dil 0.2132 g -0.000) grey  2.9% ch 0.100
 it  28 beta   16 J   8.9924 vol 0.1350 (dil 0.2132 g -0.000) grey  2.8% ch 0.100 worst cage bump low back 100 N 3.23 16.1s
 it  29 beta   16 J   8.9885 vol 0.1350 (dil 0.2132 g -0.000) grey  2.8% ch 0.100 worst cage bump low back 100 N 3.22 14.7s
 it  30 beta   16 J   8.9850 vol 0.1351 (dil 0.2132 g -0.000) grey  2.8% ch 0.100 worst cage bump low back 100 N 3.22 15.3s
+git push failed: fatal: The current branch run/scan_stick_adapter-v2 has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin run/scan_stick_adapter-v2
+it  31 beta   16 J   8.9817 vol 0.1351 (dil 0.2132 g +0.001) grey  2.8% ch 0.100 worst cage bump low back 100 N 3.23 15.3s
+it  32 beta   16 J   8.9905 vol 0.1348 (dil 0.2129 g -0.000) grey  2.8% ch 0.100 worst cage bump low back 100 N 3.23 15.3s
+it  33 beta   16 J   8.9876 vol 0.1349 (dil 0.2129 g -0.000) grey  2.9% ch 0.100 worst cage bump low back 100 N 3.23 17.0s
+it  34 beta   16 J   8.9855 vol 0.1349 (dil 0.2129 g -0.000) grey  2.9% ch 0.100 worst cage bump low back 100 N 3.23 14.5s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  35 beta   32 J   8.7825 vol 0.1341 (dil 0.2116 g -0.003) grey  1.2% ch 0.100 worst cage bump low back 100 N 3.14 13.8s
+it  36 beta   32 J   8.7639 vol 0.1346 (dil 0.2121 g -0.000) grey  1.2% ch 0.100 worst cage bump low back 100 N 3.13 14.3s
+it  37 beta   32 J   8.7590 vol 0.1347 (dil 0.2122 g -0.000) grey  1.2% ch 0.100 worst cage bump low back 100 N 3.13 14.0s
+it  38 beta   32 J   8.7557 vol 0.1347 (dil 0.2122 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 14.1s
+it  39 beta   32 J   8.7526 vol 0.1348 (dil 0.2122 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 14.6s
+it  40 beta   32 J   8.7500 vol 0.1348 (dil 0.2122 g -0.000) grey  1.3% ch 0.100 worst cage bump low back 100 N 3.12 13.8s
