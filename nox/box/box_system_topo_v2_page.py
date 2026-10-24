@@ -56,13 +56,13 @@ ul {{ margin:4px 0; padding-left:20px }}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap">
 <main>
 <header><h1>Box structure v2: coarse system topology</h1>
-<p class="mute">One solve over the whole box (h {r["h"]:g}, min member {r["min_member_mm"]:g} mm, {r["gen_cm3"]:g} cm³ generated, about {r["mass_g_PETG"]/1000:.2f} kg PETG, E), 14 load cases, {r["iterations"]} iterations. Blue = density 0.5 surface; orange = the catch; grey = the receivers. 1500 cm³ left 5 bays and 6 seat posts unjoined, so 3000 cm³ is the record.</p>
-<p class="warn">Round 1. The sheets were modelled as 8 mm PETG held rigid at their bottom edge, so they carry much of the box (floor contact 12 cm²). Real sheets are 3 mm acrylic. Round 2 reruns on the final layout with the sheets as cladding before any piece is cut.</p></header>
+<p class="mute">One solve over the whole box (h {r["h"]:g}, min member {r["min_member_mm"]:g} mm, {r["gen_cm3"]:g} cm³ target, {r["generated_cm3"]:.0f} cm³ generated, {r["mass_g"]/1000:.2f} kg PETG for the generated material alone, E), 14 load cases, {r["iterations"]} iterations. Blue = density 0.5 surface; orange = the catch; grey = the receivers. At 1500 cm³ only bays 30 and −210 joined the main body (M), so 3000 cm³ is the record.</p>
+<p class="warn">Round 1. The sheets were modelled as 8 mm PETG held rigid at their bottom edge, so they carry much of the box: 12 cm² of floor contact against 576 cm² on the sheets (M). Real sheets are 3 mm acrylic. Round 2 reruns on the final layout with the sheets as cladding before any piece is cut.</p></header>
 <div class="views">{imgs}</div>
 <section><h2>Per case: compliance (x the full solid) and stub rotation</h2><div class="wrap"><table><tr><th>Case</th><th>Compliance / solid</th><th>Stub rot. max mrad</th></tr>{rows}</table></div>
-<p class="mute">Stub tilt at 57 N + 5.9 N·m: 0.37 mrad against the 10 mrad target (C on the h 8 model).</p></section>
-<section><h2>Cut proposal (from the density field; W mm, mass E)</h2><div class="wrap"><table><tr><th>Piece</th><th>Qty</th><th>Envelope X / Y / Z</th><th>Joint</th><th>Mass</th></tr>{cuts}</table></div>
-<ul><li>The Overseer bay bodies are 188 long (Y 71..259), over the 180 cube: diagonal print or a split.</li>
+<p class="mute">Stub tilt at 57 N + 5.9 N·m: 0.37 mrad against the 10 mrad target (M on the h 8 model).</p></section>
+<section><h2>Cut proposal (from the density field; envelopes W mm, M on the h 8 field; mass E)</h2><div class="wrap"><table><tr><th>Piece</th><th>Qty</th><th>Envelope X / Y / Z</th><th>Joint</th><th>Mass</th></tr>{cuts}</table></div>
+<ul><li>The Overseer bay bodies are 188 long (Y 71..259, M), over the 180 cube: diagonal print or a split.</li>
 <li>The datum ring is added to meet the ±0.15° bay-to-mast datum; the field gives no direct path.</li></ul></section>
 </main>'''
     out = os.path.join(D, "topo_views.html"); open(out, "w").write(page); print(out, f"{os.path.getsize(out)/1e6:.2f} MB")
