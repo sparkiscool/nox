@@ -21,3 +21,13 @@ it   7 beta    1 J   0.7720 vol 0.0421 (dil 0.0506 g -0.096) grey 18.3% ch 0.100
 it   8 beta    1 J   0.4952 vol 0.0445 (dil 0.0533 g -0.047) grey 19.0% ch 0.100 worst tie b5 my 2.02e+03 1.5s
 it   9 beta    1 J   0.5276 vol 0.0455 (dil 0.0543 g -0.030) grey 19.2% ch 0.100 worst L2 frame bump top 100 N 2.09e+03 1.8s
 it  10 beta    1 J   0.3984 vol 0.0450 (dil 0.0536 g -0.042) grey 18.5% ch 0.100 worst tie b5 my 1.62e+03 1.4s
+it  11 beta    1 J   0.4205 vol 0.0458 (dil 0.0544 g -0.020) grey 18.8% ch 0.100 worst L2 frame bump top 100 N 1.65e+03 1.9s
+it  12 beta    1 J   0.3259 vol 0.0452 (dil 0.0537 g -0.033) grey 18.2% ch 0.100 worst tie b5 my 1.32e+03 1.5s
+it  13 beta    1 J   0.3221 vol 0.0459 (dil 0.0544 g -0.020) grey 18.3% ch 0.100 worst L2 frame bump top 100 N 1.2e+03 2.2s
+it  14 beta    1 J   0.2769 vol 0.0457 (dil 0.0542 g -0.024) grey 18.0% ch 0.100 worst tie b5 my 1.12e+03 1.5s
+it  15 beta    1 J   0.2509 vol 0.0463 (dil 0.0547 g -0.014) grey 18.0% ch 0.100 worst tie b5 my 993 1.7s
+it  16 beta    1 J   0.2337 vol 0.0465 (dil 0.0549 g -0.003) grey 17.8% ch 0.100 worst tie b5 my 941 1.6s
+it  17 beta    1 J   0.2221 vol 0.0464 (dil 0.0547 g -0.008) grey 17.6% ch 0.100 worst tie b5 my 882 2.1s
+it  18 beta    1 J   0.2104 vol 0.0465 (dil 0.0548 g -0.006) grey 17.5% ch 0.100 worst tie b5 my 841 1.5s
+it  19 beta    1 J   0.1994 vol 0.0465 (dil 0.0548 g -0.006) grey 17.4% ch 0.100 worst tie b5 my 793 2.0s
+it  20 beta    1 J   0.1899 vol 0.0466 (dil 0.0549 g -0.004) grey 17.4% ch 0.100 worst tie b5 my 755 1.5s
