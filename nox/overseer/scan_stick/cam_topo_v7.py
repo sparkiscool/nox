@@ -8,14 +8,14 @@ footprint above the plate (38 x 38 + 1, z 4..19) as a keep-out round the posts: 
 the board's back have the full 10 mm. v5: nox/topo run (`scan_stick.md`). Spark 23 Oct: the camera sits on 10 mm standoffs (room for the
 plug and parts on the back of the board), the standoffs as thin as the gate allows, M2.5 heat-set inserts in them (the board
 takes M2.5, Spark; section M said M2 x 4 inserts (P), superseded). v5: posts Ø POST_D x 10 above the plate with Ø3.2 holes through
-(E: M2.5 insert OD 3.5 x 5.7, hole 3.2, pressed 7 deep from the top; through so no part of the post is thicker than the plate) on a Ø12 x 4 foot pad in the plate layer; the bolt pads and the plate as v4.
+(E: M2.5 insert OD 3.5 x 5.7, hole 3.2, pressed 7 deep from the top; through so no part of the post is thicker than the plate) on a Ø12 x T foot pad in the plate layer (v7: 6); the bolt pads and the plate as v4.
    python3 cam_topo_v7.py [h] [gen_cm3] [--no-git] [--post-d D]
 v2 / v3 failed the gate: posts under Ø12 round an M2 hole do not survive the 2.0 mm drawn-feature erosion. v4: Ø12 posts
 through both layers (8 tall), 8 wide gussets, 4 + 4 thick.
 Print frame: plate in XY, thickness Z, bed at z = 0. Tab end at +Y (bolts to the head's camera block, 2x M3 20 apart),
-camera board on 4 standoffs on the DECXIN 28 x 28 M2 pattern (section M, P), lens up (+z), USB slot below the board.
-Drawn: 2 bolt pads Ø12 x 4 (rule: pads >= Ø12, 2.0 web), 4 posts Ø12 through plate + standoff (8 tall), an 8 x 10 gusset bar
-from each post toward the tab (rule: a gusset into the body). Cuts: M3 Ø3.4, M2 Ø1.8, USB slot, the board keep-out above the posts.
+camera board on 4 standoffs on the DECXIN 28 x 28 M2.5 pattern (section M, P), lens up (+z), USB slot below the board.
+Drawn (v7): 2 bolt pads Ø12 x 6 (rule: pads >= Ø12, 2.0 web), 4 posts Ø9 x 10 on Ø12 x 6 foot pads, an 8 x 10 gusset bar
+from each post toward the tab (rule: a gusset into the body). Cuts: M3 Ø3.4, M2.5 insert Ø3.2 through, USB slot, the board keep-out above the posts.
 Loads (DEFAULT, E): 30 g camera at 25 g knocks (14 dirs) and 50 g impact (6 dirs), 10 N pokes on each post, 20 N pull on the
 cable slot. Support: the two bolt pads (clamped to the block)."""
 import sys, os
