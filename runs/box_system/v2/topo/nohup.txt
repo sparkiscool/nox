@@ -1,0 +1,28 @@
+=== box_system_topo_v2: h 8.0, gen 1500.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
+seat posts side/overlap mm3 [(1, 1617.0), (1, 1617.0), (1, 862.7), (1, 635.6), (1, 151.2), (1, 151.2), (1, 635.6), (1, 862.7)]
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
+  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
+  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
+box_system_topo_v2: grid (32, 32, 32) h 16.0 = 32,768 cells; design 8,990 (36823.0 cm3), drawn 2,526, void 21,252
+  support default: 624 cells, 1350 nodes
+  support hands: 162 cells, 400 nodes
+  support side: 720 cells, 1550 nodes
+  8 cells of 2 design islands cut off by the keep-outs set void
+setup h 16.0: 10 s, 12 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 1.16 cells, erosion depth 4.93 mm; volfrac 0.041 of 8,982 design cells
+layout: WARNING filter radius 1.16 cells < 2: the grid is too coarse for 18.0 mm members; use h <= 7.42
+layout: WARNING nearly mirrored in x (0.4% of passive cells differ): no symmetry
+layout: 15 drawn bodies (2,526 cells), held solid in every realization; eroded filter: masked
+layout: 12 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 46,500 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0530 (dil 0.0652 g +0.299) grey 21.5% ch 0.100 worst misuse: Overseer motors cut 7.16e+03 2.4s
+it   2 beta    1 J  16.6488 vol 0.0368 (dil 0.0450 g -0.104) grey 13.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.38e+04 2.2s
+it   3 beta    1 J  14.6596 vol 0.0389 (dil 0.0473 g -0.059) grey 12.1% ch 0.100 worst XT60 insert at the -90 bay 6 1.21e+04 2.5s
+it   4 beta    1 J   5.6635 vol 0.0388 (dil 0.0470 g -0.064) grey 11.2% ch 0.100 worst XT60 insert at the -120 bay  4.74e+03 1.9s
+it   5 beta    1 J   1.9520 vol 0.0390 (dil 0.0472 g -0.060) grey 11.3% ch 0.100 worst stub tilt: XT60 at the drone 1.51e+03 1.6s
+it   6 beta    1 J   1.1486 vol 0.0386 (dil 0.0467 g -0.065) grey 11.5% ch 0.100 worst misuse: knocked over onto +X 900 1.6s
+it   7 beta    1 J   0.6289 vol 0.0386 (dil 0.0468 g -0.062) grey 11.9% ch 0.100 worst misuse: knocked over onto +X 515 1.8s
+it   8 beta    1 J   0.5993 vol 0.0394 (dil 0.0475 g -0.048) grey 11.9% ch 0.100 worst XT60 insert at the -90 bay 6 487 2.0s
+it   9 beta    1 J   0.4907 vol 0.0388 (dil 0.0468 g -0.062) grey 11.5% ch 0.100 worst misuse: knocked over onto +X 390 1.9s
+it  10 beta    1 J   0.3661 vol 0.0389 (dil 0.0468 g -0.062) grey 11.3% ch 0.100 worst misuse: knocked over onto +X 296 1.8s
