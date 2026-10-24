@@ -12,3 +12,6 @@ Script `nox/box/hub_v6_topo.py 2.05 62 runs/hub/v7` (`NOX_ARM=v7`), drawn bodies
 - h 2.05, grid 96 x 40 x 96; peak 9.56 GB (engine layout), 10.5 GB RSS sum (poll); wall 2862 s.
 
 System: box swap arm v7, assembled worst index 0.60 in the detent springs, sustained (was 1.08 hub v6 run 3), fit function check ok (skins complete, nothing in cuts or outside the envelope), mass 213.3 g (M), CG n/a (the assembled recheck follows).
+
+## Assembled recheck with hub v7 (24 Oct, swap arm worker)
+`arm_kinematics.py 0.5 v7:scout:-210:30` and `v7:overseer:-180:0` (the hub loads `runs/hub/v7/box_hub_v7.stl`), `swap_system.py all`: the hub's pairs are clean over both cycles: closest detent arm / hub 0.30 (the pivot seat, designed), hub / 80T 0.97, hub / sun post 0.97 (M). The sweeps and the fit now fail elsewhere: main's battery latch v4 (PRs 69 + 109) is on the path, and its Overseer receiver v2 runs from Y 73.2 (was 75.35 at Y_C 165), 1.15 into the carriage lane: head A / B, axles and bush into rec −180 / rec 0, up to 978 mm³ (M), fit 6.6 mm³ at the bay poses; `swap_system` reads Y_C_min 167.1 (F). Not the hub's: the arm's grip line follows in its own PR.
