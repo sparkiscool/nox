@@ -38,3 +38,13 @@ layout: beta 2 done: eroded design 1 bodies, main 100.0%; drawn bodies outside t
 it  28 beta    4 J   0.6818 vol 0.0609 (dil 0.1003 g -0.101) grey  4.6% ch 0.100 worst camera hit above 50 N 442 2.4s
 it  29 beta    4 J   0.1382 vol 0.0629 (dil 0.1049 g -0.060) grey  5.2% ch 0.100 worst camera hit above 50 N 89.6 2.5s
 it  30 beta    4 J   0.0446 vol 0.0650 (dil 0.1093 g -0.021) grey  5.6% ch 0.100 worst tie b3 mz 31 2.5s
+it  31 beta    4 J   0.0423 vol 0.0666 (dil 0.1109 g -0.012) grey  5.5% ch 0.100 worst tie b3 mz 29.7 2.8s
+it  32 beta    4 J   0.0415 vol 0.0678 (dil 0.1118 g -0.004) grey  5.3% ch 0.100 worst tie b3 mz 28.8 2.5s
+it  33 beta    4 J   0.0409 vol 0.0687 (dil 0.1119 g -0.003) grey  5.0% ch 0.100 worst tie b3 mz 28.1 2.4s
+it  34 beta    4 J   0.0404 vol 0.0697 (dil 0.1120 g -0.002) grey  4.9% ch 0.100 worst tie b3 mz 27.5 2.4s
+it  35 beta    4 J   0.0400 vol 0.0706 (dil 0.1121 g -0.002) grey  4.7% ch 0.100 worst tie b3 mz 26.9 2.4s
+it  36 beta    4 J   0.0396 vol 0.0714 (dil 0.1121 g +0.011) grey  4.5% ch 0.100 worst tie b3 mz 26.2 2.6s
+it  37 beta    4 J   0.0396 vol 0.0708 (dil 0.1107 g -0.002) grey  4.4% ch 0.100 worst tie b3 mz 26.1 2.4s
+it  38 beta    4 J   0.0392 vol 0.0713 (dil 0.1108 g -0.001) grey  4.2% ch 0.100 worst tie b3 mz 25.5 2.5s
+it  39 beta    4 J   0.0389 vol 0.0716 (dil 0.1108 g -0.001) grey  4.1% ch 0.100 worst hand push ledge -z 100 N 25.4 2.5s
+it  40 beta    4 J   0.0388 vol 0.0718 (dil 0.1108 g -0.000) grey  4.1% ch 0.100 worst hand push ledge -z 100 N 25.4 2.6s
