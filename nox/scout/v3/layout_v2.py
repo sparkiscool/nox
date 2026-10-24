@@ -235,6 +235,12 @@ _LK = ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug", "receiver", "
       (("cartridge_strip_px", "cartridge_strip_nx", "receiver_skid_nose_plate", "receiver_skid_side_px", "receiver_skid_side_nx")
        if LATCH_V == "v6" else ("cartridge_skid_closed", "cartridge_skid_lead"))
 _L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_DX, 0, 0]) for k in _LK}
+RECV3 = LATCH_V == "v6" and os.environ.get("RECV3", "1") == "1"
+if RECV3:                                      # receiver v3 (asked of the latch 24 Oct, E stand-in): bottom |y| <= 25.5 below z -38 so a
+    _cut = trimesh.util.concatenate([box(-60, 60, 25.5, 40, -50, -38), box(-60, 60, -40, -25.5, -50, -38)])   # keel node fits at
+    _L["receiver"] = _L["receiver"].difference(_cut, engine="manifold")                                    # y +-29.6; bottom strips
+    for k_ in ("receiver_skid_side_px", "receiver_skid_side_nx"):                                          # dropped (the keel covers)
+        _L[k_] = _L[k_].difference(box(-60, 60, -40, 40, -50, -44.0), engine="manifold")
 # set masses (g): v6 141.6 total (latch, E) split by volume: receiver 85, lid 9, strips 2, receiver skids 3.5 (+ XT60E1-M 6);
 # cartridge 35, sliders 5.2, cartridge strips 2.0. v1: receiver set 54.5 (M / E), cartridge + sliders + end skids 43.9
 M_REC, M_CART = (105.5, 42.2) if LATCH_V == "v6" else (54.5, 39.4 + 4.5)
@@ -429,8 +435,9 @@ def candidate_nodes():
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
-    for x, y in ([] if os.environ.get("NOKEEL", "1") == "1" else    # v5 DEFAULT no cage keel: a node (r 4) cannot fit under receiver v2
-                 [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # bottom   # y 29.6 (was 28.5): outboard of the
+    for x, y in ([] if os.environ.get("NOKEEL", "0") == "1" else    # keel (the bottom hit must go through the suspension: latch 24 Oct,
+                                                                   # 4.2 kN on the skids vs 3.2 kN receiver); receiver v3 narrows for it
+                 [(26, 29.6), (26, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # bottom (nose end x 26: clear of the latch nose side bars)   # y 29.6 (was 28.5): outboard of the
                                                                                                # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
