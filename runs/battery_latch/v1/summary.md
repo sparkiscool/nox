@@ -4,7 +4,7 @@ Script `nox/box/battery_latch.py` (+ `battery_latch_topo.py --fe-v1` for the rec
 
 ```
 battery latch v1: ready to print
-System: Scout v3 (pass 1 snapshot), cage first −3.1 mm at the tail-left bottom (Scout cage: missing keel node), fit 2194 mm³ vs the PR 44 pogo carrier (Scout belly frame), collar planes 7.00, mass 689 g (E), CG 0.8 off axis (0.9 pack out)
+System: Scout v3 (pass 1 snapshot, XT60 end at the nose), cage first −4.2 mm at the tail-left bottom (Scout cage: missing keel node; +5.0 with it), fit 2194 mm³ vs the PR 44 pogo carrier (Scout belly frame), collar planes 7.00, mass 689 g (E), CG 2.0 off axis (3.0 pack out: Scout dry-mass rebalance)
 Weight: Scout set 87.9 g (M), was 122.3 (PR 44); Overseer set 187.6 g (M), new
 Strength: receiver FE crash worst 0.36 (Scout, −y) / 0.44 (Overseer, +z), handling 50 N on a foot 0.67 / 0.73; latch hand calc worst 0.35 / 0.39 (grip pull with the XT60)
 Solid: solid_check PASS on all 10 files

@@ -207,6 +207,112 @@
     50.55
    ]
   },
+  "hall_sweep": {
+   "rows": [
+    {
+     "off": -1.0,
+     "gap": -0.7,
+     "latched": 134.7,
+     "half_in": 34.4
+    },
+    {
+     "off": -1.0,
+     "gap": -1.0,
+     "latched": 100.3,
+     "half_in": 38.2
+    },
+    {
+     "off": -1.0,
+     "gap": -1.3,
+     "latched": 75.8,
+     "half_in": 36.1
+    },
+    {
+     "off": -0.5,
+     "gap": -0.7,
+     "latched": 234.9,
+     "half_in": 5.9
+    },
+    {
+     "off": -0.5,
+     "gap": -1.0,
+     "latched": 156.9,
+     "half_in": 12.8
+    },
+    {
+     "off": -0.5,
+     "gap": -1.3,
+     "latched": 108.9,
+     "half_in": 16.0
+    },
+    {
+     "off": 0.0,
+     "gap": -0.7,
+     "latched": 269.7,
+     "half_in": 2.9
+    },
+    {
+     "off": 0.0,
+     "gap": -1.0,
+     "latched": 179.4,
+     "half_in": 2.3
+    },
+    {
+     "off": 0.0,
+     "gap": -1.3,
+     "latched": 122.5,
+     "half_in": 5.7
+    },
+    {
+     "off": 0.5,
+     "gap": -0.7,
+     "latched": 234.9,
+     "half_in": 5.1
+    },
+    {
+     "off": 0.5,
+     "gap": -1.0,
+     "latched": 156.9,
+     "half_in": 1.7
+    },
+    {
+     "off": 0.5,
+     "gap": -1.3,
+     "latched": 108.9,
+     "half_in": 0.9
+    },
+    {
+     "off": 1.0,
+     "gap": -0.7,
+     "latched": 134.7,
+     "half_in": 5.3
+    },
+    {
+     "off": 1.0,
+     "gap": -1.0,
+     "latched": 100.3,
+     "half_in": 3.0
+    },
+    {
+     "off": 1.0,
+     "gap": -1.3,
+     "latched": 75.8,
+     "half_in": 1.2
+    }
+   ],
+   "off_0.5": {
+    "latched_min": 108.9,
+    "half_in_max": 16.0,
+    "threshold_mT": 62.5,
+    "separation": 6.8
+   },
+   "off_1.0": {
+    "latched_min": 75.8,
+    "half_in_max": 38.2,
+    "threshold_mT": 57.0,
+    "separation": 2.0
+   }
+  },
   "fe_v1": {
    "worst": 0.673,
    "worst_case": "handling 50 N on a foot",
@@ -215,19 +321,19 @@
     32.7,
     15.0
    ],
-   "crash_worst": 0.355,
+   "crash_worst": 0.155,
    "rows": {
     "hover 1 g": 0.016,
     "flight 4 g + 2 g x": 0.073,
     "catch 6 g": 0.097,
-    "crash 35 g -y": 0.355,
-    "crash 35 g +y": 0.066,
-    "crash 35 g +x": 0.306,
-    "crash 35 g -x": 0.282,
-    "crash 35 g +z": 0.112,
-    "crash 35 g -z": 0.078,
-    "crash corner (+x -y +z)": 0.293,
-    "crash corner (-x -y -z)": 0.318,
+    "crash -y": 0.155,
+    "crash +y": 0.029,
+    "crash +x": 0.134,
+    "crash -x": 0.123,
+    "crash +z": 0.049,
+    "crash -z": 0.034,
+    "crash corner (+x -y +z)": 0.128,
+    "crash corner (-x -y -z)": 0.139,
     "swap insert 60 N": 0.15,
     "swap pull 50 N": 0.142,
     "handling 50 N on a foot": 0.673
@@ -645,14 +751,14 @@
   },
   "collar_margin": 7.0,
   "keel_node_clearance": [
-   5.4,
    10.12,
-   5.4
+   5.4,
+   10.12
   ],
   "keel_node_surface_dist": [
-   5.28,
    9.96,
-   5.28
+   5.28,
+   9.96
   ],
   "prints": {
    "cartridge": {
@@ -705,8 +811,8 @@
      "acute_edges": 0,
      "ok": true
     },
-    "bed_mm2": 243.0,
-    "overhang_mm2": 15.0,
+    "bed_mm2": 328.0,
+    "overhang_mm2": 63.0,
     "island_run_mm": 0.0
    },
    "receiver": {
@@ -791,113 +897,7 @@
     "island_run_mm": 0.0
    }
   },
-  "system_manifest": "runs/battery_latch/v1/manifest_scout/manifest.json",
-  "hall_sweep": {
-   "rows": [
-    {
-     "off": -1.0,
-     "gap": -0.7,
-     "latched": 134.7,
-     "half_in": 34.4
-    },
-    {
-     "off": -1.0,
-     "gap": -1.0,
-     "latched": 100.3,
-     "half_in": 38.2
-    },
-    {
-     "off": -1.0,
-     "gap": -1.3,
-     "latched": 75.8,
-     "half_in": 36.1
-    },
-    {
-     "off": -0.5,
-     "gap": -0.7,
-     "latched": 234.9,
-     "half_in": 5.9
-    },
-    {
-     "off": -0.5,
-     "gap": -1.0,
-     "latched": 156.9,
-     "half_in": 12.8
-    },
-    {
-     "off": -0.5,
-     "gap": -1.3,
-     "latched": 108.9,
-     "half_in": 16.0
-    },
-    {
-     "off": 0.0,
-     "gap": -0.7,
-     "latched": 269.7,
-     "half_in": 2.9
-    },
-    {
-     "off": 0.0,
-     "gap": -1.0,
-     "latched": 179.4,
-     "half_in": 2.3
-    },
-    {
-     "off": 0.0,
-     "gap": -1.3,
-     "latched": 122.5,
-     "half_in": 5.7
-    },
-    {
-     "off": 0.5,
-     "gap": -0.7,
-     "latched": 234.9,
-     "half_in": 5.1
-    },
-    {
-     "off": 0.5,
-     "gap": -1.0,
-     "latched": 156.9,
-     "half_in": 1.7
-    },
-    {
-     "off": 0.5,
-     "gap": -1.3,
-     "latched": 108.9,
-     "half_in": 0.9
-    },
-    {
-     "off": 1.0,
-     "gap": -0.7,
-     "latched": 134.7,
-     "half_in": 5.3
-    },
-    {
-     "off": 1.0,
-     "gap": -1.0,
-     "latched": 100.3,
-     "half_in": 3.0
-    },
-    {
-     "off": 1.0,
-     "gap": -1.3,
-     "latched": 75.8,
-     "half_in": 1.2
-    }
-   ],
-   "off_0.5": {
-    "latched_min": 108.9,
-    "half_in_max": 16.0,
-    "threshold_mT": 62.5,
-    "separation": 6.8
-   },
-   "off_1.0": {
-    "latched_min": 75.8,
-    "half_in_max": 38.2,
-    "threshold_mT": 57.0,
-    "separation": 2.0
-   }
-  }
+  "system_manifest": "runs/battery_latch/v1/manifest_scout/manifest.json"
  },
  "overseer": {
   "geom": {
@@ -1110,6 +1110,112 @@
     88.27
    ]
   },
+  "hall_sweep": {
+   "rows": [
+    {
+     "off": -1.0,
+     "gap": -0.7,
+     "latched": 134.7,
+     "half_in": 34.4
+    },
+    {
+     "off": -1.0,
+     "gap": -1.0,
+     "latched": 100.3,
+     "half_in": 38.2
+    },
+    {
+     "off": -1.0,
+     "gap": -1.3,
+     "latched": 75.8,
+     "half_in": 36.1
+    },
+    {
+     "off": -0.5,
+     "gap": -0.7,
+     "latched": 234.9,
+     "half_in": 5.9
+    },
+    {
+     "off": -0.5,
+     "gap": -1.0,
+     "latched": 156.9,
+     "half_in": 12.8
+    },
+    {
+     "off": -0.5,
+     "gap": -1.3,
+     "latched": 108.9,
+     "half_in": 16.0
+    },
+    {
+     "off": 0.0,
+     "gap": -0.7,
+     "latched": 269.7,
+     "half_in": 2.9
+    },
+    {
+     "off": 0.0,
+     "gap": -1.0,
+     "latched": 179.4,
+     "half_in": 2.3
+    },
+    {
+     "off": 0.0,
+     "gap": -1.3,
+     "latched": 122.5,
+     "half_in": 5.7
+    },
+    {
+     "off": 0.5,
+     "gap": -0.7,
+     "latched": 234.9,
+     "half_in": 5.1
+    },
+    {
+     "off": 0.5,
+     "gap": -1.0,
+     "latched": 156.9,
+     "half_in": 1.7
+    },
+    {
+     "off": 0.5,
+     "gap": -1.3,
+     "latched": 108.9,
+     "half_in": 0.9
+    },
+    {
+     "off": 1.0,
+     "gap": -0.7,
+     "latched": 134.7,
+     "half_in": 5.3
+    },
+    {
+     "off": 1.0,
+     "gap": -1.0,
+     "latched": 100.3,
+     "half_in": 3.0
+    },
+    {
+     "off": 1.0,
+     "gap": -1.3,
+     "latched": 75.8,
+     "half_in": 1.2
+    }
+   ],
+   "off_0.5": {
+    "latched_min": 108.9,
+    "half_in_max": 16.0,
+    "threshold_mT": 62.5,
+    "separation": 6.8
+   },
+   "off_1.0": {
+    "latched_min": 75.8,
+    "half_in_max": 38.2,
+    "threshold_mT": 57.0,
+    "separation": 2.0
+   }
+  },
   "fe_v1": {
    "worst": 0.732,
    "worst_case": "handling 50 N on a foot",
@@ -1123,12 +1229,12 @@
     "hover 1 g": 0.014,
     "flight 4 g + 2 g x": 0.062,
     "catch 6 g": 0.086,
-    "crash 35 g -y": 0.314,
-    "crash 35 g +y": 0.21,
-    "crash 35 g +x": 0.441,
-    "crash 35 g -x": 0.441,
-    "crash 35 g +z": 0.386,
-    "crash 35 g -z": 0.308,
+    "crash -y": 0.314,
+    "crash +y": 0.21,
+    "crash +x": 0.441,
+    "crash -x": 0.441,
+    "crash +z": 0.386,
+    "crash -z": 0.308,
     "crash corner (+x -y +z)": 0.321,
     "crash corner (-x -y -z)": 0.317,
     "swap insert 60 N": 0.231,
@@ -1647,8 +1753,8 @@
      "acute_edges": 0,
      "ok": true
     },
-    "bed_mm2": 243.0,
-    "overhang_mm2": 15.0,
+    "bed_mm2": 463.0,
+    "overhang_mm2": 63.0,
     "island_run_mm": 0.0
    },
    "receiver": {
@@ -1736,7 +1842,7 @@
   "system_manifest": "runs/battery_latch/v1/manifest_overseer/manifest.json",
   "overseer_assembly_A": {
    "x_tab": 52.099,
-   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 12544.1 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2492 g (E), CG 21.8 mm off thrust axis (E) [+21.8, +1.0, -75.8], 31.2 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
+   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11048.7 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2492 g (E), CG 23.0 mm off thrust axis (E) [+22.9, +1.0, -75.8], 32.8 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
    "balance": {
     "applies": true,
     "ref": [
@@ -1754,28 +1860,28 @@
      "all": {
       "mass_g": 2492.3,
       "cg_offset": [
-       21.81,
+       22.94,
        0.99,
        -75.82
       ],
-      "horizontal_mm": 21.83,
+      "horizontal_mm": 22.97,
       "axial_mm": -75.82,
       "pass_": false
      },
      "no_swap": {
       "mass_g": 1745.28,
       "cg_offset": [
-       31.14,
+       32.77,
        1.42,
        -53.16
       ],
-      "horizontal_mm": 31.17,
+      "horizontal_mm": 32.8,
       "axial_mm": -53.16,
       "pass_": false
      }
     },
     "worst_case": "no_swap",
-    "worst_horizontal_mm": 31.17,
+    "worst_horizontal_mm": 32.8,
     "pass_": false
    },
    "pairs": [
@@ -1787,17 +1893,12 @@
     [
      "belly sled + pods",
      "receiver",
-     12544.13
-    ],
-    [
-     "belly sled + pods",
-     "receiver_lid",
-     1624.19
+     11048.71
     ],
     [
      "belly sled + pods",
      "receiver_strips",
-     56.92
+     68.37
     ],
     [
      "foot 1",
@@ -1812,13 +1913,13 @@
     [
      "down camera",
      "receiver",
-     80.64
+     61.84
     ]
    ]
   },
   "overseer_assembly_B": {
    "x_tab": 22.098999999999997,
-   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11300.4 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2492 g (E), CG 11.7 mm off thrust axis (E) [+11.7, +1.0, -75.8], 29.5 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
+   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11972.9 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2492 g (E), CG 12.8 mm off thrust axis (E) [+12.8, +1.0, -75.8], 31.1 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
    "balance": {
     "applies": true,
     "ref": [
@@ -1836,28 +1937,28 @@
      "all": {
       "mass_g": 2492.3,
       "cg_offset": [
-       11.65,
+       12.79,
        0.99,
        -75.82
       ],
-      "horizontal_mm": 11.7,
+      "horizontal_mm": 12.83,
       "axial_mm": -75.82,
       "pass_": false
      },
      "no_swap": {
       "mass_g": 1745.28,
       "cg_offset": [
-       29.48,
+       31.11,
        1.42,
        -53.16
       ],
-      "horizontal_mm": 29.52,
+      "horizontal_mm": 31.14,
       "axial_mm": -53.16,
       "pass_": false
      }
     },
     "worst_case": "no_swap",
-    "worst_horizontal_mm": 29.52,
+    "worst_horizontal_mm": 31.14,
     "pass_": false
    },
    "pairs": [
@@ -1867,24 +1968,14 @@
      324.0
     ],
     [
-     "cage lower",
-     "receiver",
-     40.5
-    ],
-    [
      "belly sled + pods",
      "receiver",
-     11300.38
-    ],
-    [
-     "belly sled + pods",
-     "receiver_lid",
-     604.56
+     11972.93
     ],
     [
      "belly sled + pods",
      "receiver_strips",
-     92.92
+     104.37
     ],
     [
      "foot 1",
@@ -1899,123 +1990,17 @@
     [
      "down camera",
      "receiver",
-     11.72
+     41.84
     ]
    ]
-  },
-  "hall_sweep": {
-   "rows": [
-    {
-     "off": -1.0,
-     "gap": -0.7,
-     "latched": 134.7,
-     "half_in": 34.4
-    },
-    {
-     "off": -1.0,
-     "gap": -1.0,
-     "latched": 100.3,
-     "half_in": 38.2
-    },
-    {
-     "off": -1.0,
-     "gap": -1.3,
-     "latched": 75.8,
-     "half_in": 36.1
-    },
-    {
-     "off": -0.5,
-     "gap": -0.7,
-     "latched": 234.9,
-     "half_in": 5.9
-    },
-    {
-     "off": -0.5,
-     "gap": -1.0,
-     "latched": 156.9,
-     "half_in": 12.8
-    },
-    {
-     "off": -0.5,
-     "gap": -1.3,
-     "latched": 108.9,
-     "half_in": 16.0
-    },
-    {
-     "off": 0.0,
-     "gap": -0.7,
-     "latched": 269.7,
-     "half_in": 2.9
-    },
-    {
-     "off": 0.0,
-     "gap": -1.0,
-     "latched": 179.4,
-     "half_in": 2.3
-    },
-    {
-     "off": 0.0,
-     "gap": -1.3,
-     "latched": 122.5,
-     "half_in": 5.7
-    },
-    {
-     "off": 0.5,
-     "gap": -0.7,
-     "latched": 234.9,
-     "half_in": 5.1
-    },
-    {
-     "off": 0.5,
-     "gap": -1.0,
-     "latched": 156.9,
-     "half_in": 1.7
-    },
-    {
-     "off": 0.5,
-     "gap": -1.3,
-     "latched": 108.9,
-     "half_in": 0.9
-    },
-    {
-     "off": 1.0,
-     "gap": -0.7,
-     "latched": 134.7,
-     "half_in": 5.3
-    },
-    {
-     "off": 1.0,
-     "gap": -1.0,
-     "latched": 100.3,
-     "half_in": 3.0
-    },
-    {
-     "off": 1.0,
-     "gap": -1.3,
-     "latched": 75.8,
-     "half_in": 1.2
-    }
-   ],
-   "off_0.5": {
-    "latched_min": 108.9,
-    "half_in_max": 16.0,
-    "threshold_mT": 62.5,
-    "separation": 6.8
-   },
-   "off_1.0": {
-    "latched_min": 75.8,
-    "half_in_max": 38.2,
-    "threshold_mT": 57.0,
-    "separation": 2.0
-   }
   }
  },
  "scout_system": {
-  "summary": "System: Scout v3, cage first -3.1 mm (E) at (-0.28, +0.24, -0.93) (cartridge) FAIL, fit 2193.6 mm\u00b3 (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 689 g (E), CG 0.8 mm off thrust axis (E) [+0.8, -0.1, -38.0], 0.9 mm without swap parts, probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL",
+  "summary": "System: Scout v3, cage first -4.2 mm (E) at (-0.28, +0.24, -0.93) (receiver) FAIL, fit 2193.6 mm\u00b3 (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 689 g (E), CG 2.0 mm off thrust axis (E) [+2.0, -0.1, -38.0], 3.0 mm without swap parts FAIL (tol 3), probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL",
   "clashes": [
    [
     "pogo pads + carrier",
-    "slider_nx",
+    "slider_px",
     73.08
    ],
    [
@@ -2026,12 +2011,12 @@
    [
     "cage (rods + nodes)",
     "receiver",
-    335.97
+    174.85
    ],
    [
     "cage (rods + nodes)",
     "receiver_lid",
-    2.12
+    99.61
    ]
   ],
   "balance": {
@@ -2051,51 +2036,51 @@
     "all": {
      "mass_g": 688.91,
      "cg_offset": [
-      0.77,
+      1.98,
       -0.1,
       -38.03
      ],
-     "horizontal_mm": 0.78,
+     "horizontal_mm": 1.98,
      "axial_mm": -38.03,
      "pass_": true
     },
     "no_swap": {
      "mass_g": 484.48,
      "cg_offset": [
-      0.87,
+      3.04,
       -0.15,
       -29.32
      ],
-     "horizontal_mm": 0.88,
+     "horizontal_mm": 3.04,
      "axial_mm": -29.32,
-     "pass_": true
+     "pass_": false
     }
    },
    "worst_case": "no_swap",
-   "worst_horizontal_mm": 0.88,
-   "pass_": true
+   "worst_horizontal_mm": 3.04,
+   "pass_": false
   },
   "cage_first": {
    "flow MTF-02P": -1.84,
    "camera": -1.43,
    "pogo pads + carrier": -0.92,
-   "pack": 7.84,
-   "xt60_plug": 10.11,
+   "pack": 5.55,
+   "xt60_plug": 10.56,
    "cartridge": -3.06,
-   "slider_px": 5.77,
-   "slider_nx": 3.3,
-   "receiver": -1.1,
-   "receiver_lid": 25.98,
-   "receiver_strips": 31.52,
-   "xt60e1m": 22.13
+   "slider_px": 3.3,
+   "slider_nx": 5.77,
+   "receiver": -4.21,
+   "receiver_lid": 26.34,
+   "receiver_strips": 31.16,
+   "xt60e1m": 22.82
   }
  },
  "scout_system_keel4": {
-  "summary": "System: Scout v3, cage first -1.4 mm (E) at (+0.29, -0.00, +0.96) (camera) FAIL, fit 2193.6 mm\u00b3 (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 690 g (E), CG 0.7 mm off thrust axis (E) [+0.7, -0.1, -38.1], 0.8 mm without swap parts, probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL",
+  "summary": "System: Scout v3, cage first -1.4 mm (E) at (+0.29, -0.00, +0.96) (camera) FAIL, fit 2193.6 mm\u00b3 (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 690 g (E), CG 1.9 mm off thrust axis (E) [+1.9, -0.1, -38.1], 3.0 mm without swap parts, probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL",
   "clashes": [
    [
     "pogo pads + carrier",
-    "slider_nx",
+    "slider_px",
     73.08
    ],
    [
@@ -2106,12 +2091,12 @@
    [
     "cage (rods + nodes)",
     "receiver",
-    335.97
+    174.85
    ],
    [
     "cage (rods + nodes)",
     "receiver_lid",
-    2.12
+    99.61
    ]
   ],
   "balance": {
@@ -2129,45 +2114,45 @@
    "tol_mm": 3.0,
    "cases": {
     "all": {
-     "mass_g": 689.56,
+     "mass_g": 689.91,
      "cg_offset": [
-      0.73,
+      1.93,
       -0.06,
-      -38.09
+      -38.11
      ],
-     "horizontal_mm": 0.74,
-     "axial_mm": -38.09,
+     "horizontal_mm": 1.93,
+     "axial_mm": -38.11,
      "pass_": true
     },
     "no_swap": {
-     "mass_g": 485.36,
+     "mass_g": 485.48,
      "cg_offset": [
-      0.81,
+      2.97,
       -0.09,
-      -29.43
+      -29.44
      ],
-     "horizontal_mm": 0.82,
-     "axial_mm": -29.43,
+     "horizontal_mm": 2.98,
+     "axial_mm": -29.44,
      "pass_": true
     }
    },
    "worst_case": "no_swap",
-   "worst_horizontal_mm": 0.82,
+   "worst_horizontal_mm": 2.98,
    "pass_": true
   },
   "cage_first": {
    "flow MTF-02P": 2.59,
    "camera": -1.43,
    "pogo pads + carrier": 2.49,
-   "pack": 7.84,
-   "xt60_plug": 10.11,
-   "cartridge": 5.34,
+   "pack": 7.96,
+   "xt60_plug": 10.56,
+   "cartridge": 5.04,
    "slider_px": 7.0,
    "slider_nx": 7.0,
-   "receiver": 5.37,
-   "receiver_lid": 25.98,
-   "receiver_strips": 31.52,
-   "xt60e1m": 22.13
+   "receiver": 5.1,
+   "receiver_lid": 26.34,
+   "receiver_strips": 31.16,
+   "xt60e1m": 22.82
   }
  }
 }
