@@ -138,3 +138,68 @@ scan_stick_head: grid (32, 56, 88) h 2.0 = 157,696 cells; design 36,796 (294.4 c
   load unit 25 g 5: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
   load unit 25 g 5: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
   load unit 25 g 10: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 10: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 10: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 10: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 11: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 11: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 11: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 13: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 13: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 13: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 2: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 2: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 3: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 3: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 4: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 4: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 5: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 5: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit +y 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit +y 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit -y 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit -y 100 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 drop -z 150 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 drop -z 150 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N: no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share): no cell centre in the region at h 2.0; using the 20 cells it intersects (3 x 3 x 3 samples per cell)
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (117.05 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.054 of 36,796 design cells
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: 1 drawn bodies (14,631 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (32, 56, 88) = 157,696 elements, 181,731 active dofs; backend direct (direct estimate 1.8 GB, budget 11.8 GB)
+layout: warm start from a (16, 32, 48) grid (h 4.0): mean x 0.049
+it   1 beta    4 J  10.0000 vol 0.0614 (dil 0.1242 g +0.131) grey 11.5% ch 0.100 worst camera hit above 50 N 1.71e+03 13.1s
+it   2 beta    4 J  10.3355 vol 0.0574 (dil 0.1204 g +0.096) grey 11.5% ch 0.100 worst camera hit above 50 N 1.77e+03 14.1s
+it   3 beta    4 J  10.7554 vol 0.0530 (dil 0.1163 g +0.059) grey 11.5% ch 0.100 worst camera hit above 50 N 1.84e+03 10.4s
+it   4 beta    4 J  11.3006 vol 0.0486 (dil 0.1119 g +0.019) grey 11.5% ch 0.100 worst camera hit above 50 N 1.93e+03 10.5s
+it   5 beta    4 J  10.6064 vol 0.0466 (dil 0.1092 g -0.006) grey 11.1% ch 0.100 worst camera hit above 50 N 1.82e+03 12.3s
+it   6 beta    4 J  10.0721 vol 0.0476 (dil 0.1092 g -0.049) grey 10.8% ch 0.100 worst camera hit above 50 N 1.72e+03 11.1s
+it   7 beta    4 J   9.7193 vol 0.0512 (dil 0.1130 g -0.016) grey 10.9% ch 0.100 worst camera hit above 50 N 1.66e+03 11.9s
+it   8 beta    4 J   9.6356 vol 0.0531 (dil 0.1144 g -0.003) grey 10.9% ch 0.100 worst camera hit above 50 N 1.65e+03 11.8s
+it   9 beta    4 J   9.5592 vol 0.0538 (dil 0.1146 g -0.002) grey 10.8% ch 0.100 worst camera hit above 50 N 1.64e+03 12.3s
+it  10 beta    4 J   9.4895 vol 0.0543 (dil 0.1147 g -0.001) grey 10.7% ch 0.100 worst camera hit above 50 N 1.62e+03 11.5s
