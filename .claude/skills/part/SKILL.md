@@ -53,4 +53,5 @@ and `git checkout main && git pull`. FAIL: fix the design, re-review; never merg
 permissions, say so with the PR link and stop; do not work around it.
 
 ## Reply (short)
+Not the hub (`docs/sessions.md` Hub)? Send this reply to the hub with send_message as well; no proactive messages or files to Spark.
 The summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.
