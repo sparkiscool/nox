@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (swap arm worker): **hub v6 run 3**: solid PASS, 199.3 g (M), swap 0.523, sustained 1.075 (F): third miss in a row, so a system pass (DEFAULT): detent tower as a frame (legs under pivot and anchor, C), 45° skirt at the sleeve-to-plate corner (C) → hub v7 run (`run/hub-v6r2`). Alt: thicker column (80T blocks) or more volume. `runs/hub/v6r3/`
 - 24 Oct (swap arm worker): **hub v6 run 2 FAILED** (h 2.05: solid FAIL on 15 sub-0.25 mm lips under the plate (M), swap 0.596, sustained 1.33 at the tower column root, F). Run 3 (`run/hub-v6r2`): generated region 1.0 into the plate, column flare r 7.5 → 5 (C), gen 52 cm³; h 3.0 test solid PASS, swap 0.32, sustained 0.76 (F). `runs/hub/v6r2/summary.md`
 - 24 Oct (swap arm worker): **hub v6 run 1 FAILED** (h 2.25: solid FAIL at the drawn hall pocket's 0.8 walls, misuse 3.40 in the unbraked Overseer power cut, swap 0.561, F). Run 2 (`run/hub-v6r2`, h 2.05): power cuts out (brake required, DEFAULT; alt gusset), cases enveloped 15 % (E), pocket walls 2.0 (C). `runs/hub/v6/summary.md`
 - 24 Oct (organiser): light pass 12:04: 8 nox sessions, none to archive; XT60 chat blocked on Spark's go to print funnel v9 plain panels (reported); check_state clean; hub mentions removed from docs/organiser.md and README (no hub since 09:00); tools/sweep_eval.py added.

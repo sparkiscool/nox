@@ -28,3 +28,6 @@ Bed contact only 16 mm2 (render_preview: 3 mm2, overhang > 45 deg 9078 mm2, fits
 
 ## What it says
 The overlap and flare worked: one plain body, solid PASS, sustained 1.33 to 1.08, misuse 0.47. Swap 0.52 now sits at the bay pull case at (37.4, 47.6, 22.1), not under the wheel lanes; sustained is still the detent tower, moved up the column to (21.0, 62.0, -25.1), above the flare. Next: a drawn boss or wider column at Y 55..65 at the detent tower, and a pull-path rib at (37, 48, 22). Checkpoints (npz) are not committed.
+
+## Arm worker's read (24 Oct)
+Third miss in a row (runs 1..3): the hub goes back to its system pass (CLAUDE.md three strikes). Swap 0.523 sits at the sleeve-to-plate corner (r 43.4, Y 47.6: generated material on the drawn wall's outer face), sustained 1.075 on the single tower column above the flare (r 32.7, Y 62). The system pass makes the detent tower a frame (legs under the pivot boss and the anchor post on plate pads) and draws a 45° skirt r 43 → 49 with a 2.5 rim at the corner: hub v7 (`runs/hub/v7/`). Superseded: the meshes are out of git (rerun to recover).

@@ -95,7 +95,7 @@ def envelope(sysres, R):
 
 def setup(h):
     P = HV.hub_v6_parts(); drawn, cuts, env0 = P["drawn"], P["cuts"], P["env0"]
-    pp = Part("box_hub_v6", h, drawn, cuts, env0, build="+y")
+    pp = Part(f"box_hub_{os.environ.get('NOX_HUB_VER', 'v7')}", h, drawn, cuts, env0, build="+y")
     pp.support("default", A.cylY(0, 0, 8, 40, 42.0) - A.cylY(0, 0, 7, 41, 39.5))          # the bearing seats, as v5
     R = regions()
     sysres = json.load(open(SYSTEM))
@@ -118,8 +118,9 @@ def setup(h):
 
 
 if __name__ == "__main__":
-    out = sys.argv[3] if len(sys.argv) > 3 else os.path.join(HV.REPO, "runs", "hub", "v6")
+    VER = os.environ.get("NOX_HUB_VER", "v7")                                  # v7: after the three-strikes system pass (runs v6 1..3)
+    out = sys.argv[3] if len(sys.argv) > 3 else os.path.join(HV.REPO, "runs", "hub", VER)
     if os.environ.get("NOX_SETUP_ONLY"):
         p = setup(H); print(p.summary() if hasattr(p, "summary") else "setup ok"); sys.exit(0)
-    res = optimise(setup, H, GEN, os.path.abspath(out), "box_hub_v6", settings=Settings(), git=bool(os.environ.get("NOX_GIT")))
+    res = optimise(setup, H, GEN, os.path.abspath(out), f"box_hub_{VER}", settings=Settings(), git=bool(os.environ.get("NOX_GIT")))
     print({k: res.get(k) for k in ("name", "solid_ok", "mass_g", "total_s")}, res["strength"]["worst"])

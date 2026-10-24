@@ -58,6 +58,8 @@ SH_R = 43.0                           # shoulder / cavity wall outer r (= the sl
 
 
 COL_FLARE = (7.5, 6.0)                # detent tower column: r 7.5 at the plate top tapering to its r 5 over 6 (hub v6 run 2: the sustained springs 1.33 at the root, F)
+TOWER_LEGS = float(os.environ.get("NOX_TOWER_LEGS", "4.0"))   # leg r (0 = none): the single column bent at 1.08 sustained in run 3 (F)
+SKIRT = float(os.environ.get("NOX_SKIRT", "6.0"))   # 45 deg skirt r 43 -> 49 under the plate (run 3: swap 0.523 at the sleeve-to-plate corner r 43.4, Y 47.6, F)
 ENV_OVERLAP = float(os.environ.get("NOX_ENV_OVERLAP", "1.0"))                     # the generated region runs 1.0 into the plate (runs 1 / 2: the field met the plate's underside edge-on at Y 50
                                       # and left 15 sub-0.25 mm lips there: solid_check's face-connected body count 13 / 16)
 LANE_Y = 53.0                         # arm v7 round 3d: the wheel lanes' floor (the axle tails at Y 54.75 pass 1.75 over it)
@@ -107,6 +109,9 @@ def hub_v6_parts():
     sleeve = cylY(0, 0, y0, L.Y_BRG[1] + L.BRG_W, SH_R) - cylY(0, 0, y0 - 1, 41, L.BRG_OD / 2 + 0.10, 256)
     wall = cylY(0, 0, 40.0, ROOF_Y[0] + 0.01, SH_R) - cylY(0, 0, 39, ROOF_Y[0] + 0.5, CAV_R) - cylY(0, 0, 39, SEAL_Y, SEAL_R, 128)   # outer-race shoulder + cavity wall
     roof = cylY(0, 0, ROOF_Y[0], ROOF_Y[1] + 0.01, SH_R, 128)                                    # cavity roof (v5: generated films)
+    if SKIRT:                                                                                    # system pass: a 45 deg skirt from the sleeve wall to the
+        rg = lambda r, y: [[r * math.cos(t), y, r * math.sin(t)] for t in np.linspace(0, 2 * math.pi, 128, endpoint=False)]   # plate's underside
+        roof += hull(rg(SH_R, ROOF_Y[1] - SKIRT) + rg(SH_R + SKIRT, ROOF_Y[1] - 2.5) + rg(SH_R + SKIRT, ROOF_Y[1]) + rg(SH_R, ROOF_Y[1]))   # 2.5 rim
     plate_c = cylY(0, 0, ROOF_Y[1], L.HUB_RECESS_Y, 30.0)                                        # web disc up to the recess floor Y 53 (v5 to 54: the 1.0 lip)
     for M in MOTORS6.values():                                                                    # spokes 36 wide to each seat (as v5)
         r = math.hypot(M["xc"], M["zc"]); ux, uz = M["xc"] / r, M["zc"] / r; px, pz = -uz, ux
@@ -142,6 +147,10 @@ def hub_v6_parts():
     tower = S["tower"] + cylY(Q[0], Q[1], L.Y_PLATE0, L.Y_PLATE1, 7.0, 48)      # + a plate pad under the column (joins the spoke)
     ring = lambda r, y: [[Q[0] + r * math.cos(t), y, Q[1] + r * math.sin(t)] for t in np.linspace(0, 2 * math.pi, 48, endpoint=False)]
     tower += hull(ring(COL_FLARE[0], L.Y_PLATE1 - 0.5) + ring(5.0, L.Y_PLATE1 + COL_FLARE[1]))   # column base flare (hub v6 run 2: sustained 1.33 at its root)
+    w0 = DT.WEB_Y[0]
+    for pt in ((D["P"], D["A"]) if TOWER_LEGS else ()):                         # system pass (three strikes, runs 1..3): the tower becomes a frame,
+        tower += cylY(pt[0], pt[1], L.Y_PLATE0, w0 + 0.01, TOWER_LEGS, 32) + cylY(pt[0], pt[1], L.Y_PLATE0, L.Y_PLATE1, 6.0, 48)   # legs under the pivot
+                                                                                 # boss and the anchor post, each on a plate pad like the column's
     mov = S["arm"] + S["spacer"] + S["nut"] + S["roller"] + S["springs"][0] + S["springs"][1]
     ties, tie_cuts = tie_sockets()
     drawn = (sleeve + wall + roof + plate_c + seats + pst + tower + (ties if ties is not None else mf.Manifold())) - post_k
