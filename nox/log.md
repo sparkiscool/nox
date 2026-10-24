@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct 16:39 scan stick nodes v2 x8 printed in PETG on Jarvis (Spark: "just use petg", TPU not loaded); rigid test set, against the TPU-nodes rule; reprint in TPU 95A for flight. Row in `nox/print-log.md`.
 - 24 Oct (rule, Spark): carbon rods are 3.0 wherever one passes, thicker solid or tube only where the frame model needs it; CLAUDE.md Hard rules, generative.md rule 0 (Carbon rod size), dimensions.md G row, review_precheck 11 message
 - 24 Oct (usage session, Spark: implement the usage plan): sessions compact at 300k; loops in workers; heavy runs via tools/run_bg.py (one wake); sync by pull (CLAUDE.md rule reworded); Spark notified only when done, print-ready or a decision; review_precheck.py, dim.py, opus-run sweep report; organiser 12 h, cheap exit, paused. `docs/sessions.md` Usage, `docs/usage-plan.html`.
 - 24 Oct (swap arm worker): **swap arm grip line Y_C 165 → 167.1** (DEFAULT, latch session agreed): latch v4's Overseer receiver v2 lead end is 2.15 (M) longer (3.0 capture, C); a trim needs ±0.7 Y (E), the arm holds ±1..1.8 (E). Rerun: 0 overlaps, fit 0.0, access 9/9 (M), swap 0.45 / 0.49, XT60 x 1.28° / 1.07° (F). Shared: latch, catch, structure, heads told. Alt: latch trims.
