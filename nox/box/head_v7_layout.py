@@ -434,6 +434,7 @@ def cradle(servo="DS3218"):
         box(x0 - c - w, x1 + c + w, y0, ye, U_C + s["W"] / 2 + c - 0.01, U_C + s["W"] / 2 + c + w)
     for (xh, uh) in ear_holes(servo):
         sol += cylY(xh, uh, y0, ye, 6.0, 48)
+    sol -= prism_xu([(-100.0, PARK_LINE + CLR * math.sqrt(2) + 0.05 + 100.0), (60.0, PARK_LINE + CLR * math.sqrt(2) + 0.05 - 60.0), (-100.0, -100.0)], 0.0, 300.0)   # the park bisector (r6)
     cuts = box(x0 - c, x1 + c, base - 1.0, Y_SERVO_TOP + 1.0, U_C - s["W"] / 2 - 40.0, U_C + s["W"] / 2 + c)        # case + slide-in from -u
     ec = (x0 + x1) / 2
     cuts += box(ec - s["ear_span"] / 2 - 0.3, ec + s["ear_span"] / 2 + 0.3, ye, ye + s["ear_t"] + 0.3, U_C - s["W"] / 2 - 40.0, U_C + s["W"] / 2 + 0.3)   # the ears' slots (captured in Y)
@@ -770,7 +771,7 @@ BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space fille
 }
 
 ACCESS = [
-    "servo: command OPEN first (the open dwell holds the carriers apart unpowered), then 2 M3 countersunk out of the retainer along +u through the exit window (driver swept), the retainer off, the servo with horn and cam out along -u (swept against the arm and the head's own carriers and rollers); service pose head A t 11.5 (phi 90, A out at z0 108.6), head B t 21.5 (phi -135, both parked)",
+    "servo: command OPEN first (the open dwell holds the carriers apart unpowered), then 2 M3 countersunk out of the retainer along +u through the exit window (driver swept), the retainer off, the servo with horn and cam out along -u (swept against the arm and the head's own carriers and rollers); service pose head A t 11.5 (phi 90, A out at z0 108.6); head B: retainer screws at t 21.5 (phi -135, both parked), the servo out at t 18..19.5 (held by hand between; checked against head A's whole envelope: recheck on the real bodies)",
     "rods: pushed in from +X through the +X walls, through both bosses, into blind sockets in the -X walls, epoxied",
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",

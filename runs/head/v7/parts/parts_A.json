@@ -2,24 +2,24 @@
  "box_head_v7_A_carrier_px": {
   "bed_face": "+X down",
   "bed_mm2": 212.1,
-  "mass_g": 5.74,
+  "mass_g": 5.75,
   "bbox": [
    27.4,
    29.8,
    49.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_carrier_px.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2365.6], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 1, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_carrier_px.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2367.5], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}"
  },
  "box_head_v7_A_carrier_mx": {
   "bed_face": "-X down",
   "bed_mm2": 230.6,
-  "mass_g": 5.68,
+  "mass_g": 5.69,
   "bbox": [
    27.4,
    29.8,
    49.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_carrier_mx.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2239.7], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 1, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_carrier_mx.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2241.6], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}"
  },
  "box_head_v7_A_cam": {
   "bed_face": "-Y down",
@@ -45,13 +45,13 @@
  },
  "box_head_v7_A_servo_retainer": {
   "bed_face": "+u down",
-  "bed_mm2": 712.4,
-  "mass_g": 3.4,
+  "bed_mm2": 886.7,
+  "mass_g": 4.24,
   "bbox": [
-   29.0,
+   31.2,
    70.5,
    3.8
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_servo_retainer.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [1260.7], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_servo_retainer.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [1590.2], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
  }
 }

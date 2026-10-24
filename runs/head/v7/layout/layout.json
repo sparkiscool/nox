@@ -393,8 +393,8 @@
  "space": {
   "body (drawn interfaces) A": {
    "arm_overlap_voxels": 0,
-   "min_X_plus_u": -30.5,
-   "park_ok": true,
+   "min_X_plus_u": -30.74,
+   "park_ok": false,
    "Z_min_at_drone": 48.3,
    "X": [
     -34.0,
@@ -474,7 +474,7 @@
    ],
    "Y": [
     149.5,
-    153.5
+    157.5
    ],
    "u": [
     -7.5,
@@ -492,7 +492,7 @@
    ],
    "Y": [
     149.5,
-    153.5
+    157.5
    ],
    "u": [
     -7.5,
@@ -537,15 +537,15 @@
   },
   "servo DS3218": {
    "arm_overlap_voxels": 0,
-   "min_X_plus_u": -29.5,
+   "min_X_plus_u": -29.75,
    "park_ok": true,
    "Z_min_at_drone": 98.8,
    "X": [
-    -17.0,
-    37.5
+    -17.2,
+    37.2
    ],
    "Y": [
-    97.3,
+    97.6,
     142.0
    ],
    "u": [
@@ -555,20 +555,20 @@
   },
   "servo MG995": {
    "arm_overlap_voxels": 0,
-   "min_X_plus_u": -29.2,
+   "min_X_plus_u": -29.25,
    "park_ok": true,
-   "Z_min_at_drone": 98.9,
+   "Z_min_at_drone": 98.8,
    "X": [
-    -16.9,
+    -16.8,
     37.2
    ],
    "Y": [
-    99.1,
+    101.0,
     142.0
    ],
    "u": [
-    -12.4,
-    7.3
+    -12.5,
+    7.5
    ]
   },
   "rods": {
@@ -662,7 +662,7 @@
    ]
   }
  },
- "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: yes; lowest point at the commanded drone insert Z 96.3 (keep-out 95)",
+ "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: {'body (drawn interfaces) A': (0, -30.74)}; lowest point at the commanded drone insert Z 96.3 (keep-out 95)",
  "internal": {
   "squeezed": {},
   "open": {}
@@ -2121,25 +2121,10 @@
    "blocked_by": []
   },
   "B: servo + horn + cam out -u, commanded OPEN first (MG995)": {
-   "open_states": 45,
+   "open_states": 20,
    "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
-    {
-     "t": 0.0,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 0.5,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 1.0,
-     "z0": 32.0,
-     "phi": -210.0
-    },
     {
      "t": 1.5,
      "z0": 32.0,
@@ -2171,26 +2156,6 @@
      "phi": -210.0
     },
     {
-     "t": 4.5,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 5.0,
-     "z0": 32.0,
-     "phi": -105.0
-    },
-    {
-     "t": 5.5,
-     "z0": 32.0,
-     "phi": 0.0
-    },
-    {
-     "t": 6.0,
-     "z0": 63.0,
-     "phi": 0.0
-    },
-    {
      "t": 6.5,
      "z0": 94.0,
      "phi": 0.0
@@ -2209,26 +2174,6 @@
      "t": 8.0,
      "z0": 79.1,
      "phi": 0.0
-    },
-    {
-     "t": 8.5,
-     "z0": 55.5,
-     "phi": 0.0
-    },
-    {
-     "t": 9.0,
-     "z0": 32.0,
-     "phi": 0.0
-    },
-    {
-     "t": 9.5,
-     "z0": 32.0,
-     "phi": 45.0
-    },
-    {
-     "t": 10.0,
-     "z0": 32.0,
-     "phi": 90.0
     },
     {
      "t": 10.5,
@@ -2261,51 +2206,6 @@
      "phi": 90.0
     },
     {
-     "t": 13.5,
-     "z0": 32.0,
-     "phi": 90.0
-    },
-    {
-     "t": 14.0,
-     "z0": 32.0,
-     "phi": 90.0
-    },
-    {
-     "t": 14.5,
-     "z0": 32.0,
-     "phi": 65.0
-    },
-    {
-     "t": 15.0,
-     "z0": 32.0,
-     "phi": 40.0
-    },
-    {
-     "t": 15.5,
-     "z0": 32.0,
-     "phi": 15.0
-    },
-    {
-     "t": 16.0,
-     "z0": 32.0,
-     "phi": -10.0
-    },
-    {
-     "t": 16.5,
-     "z0": 32.0,
-     "phi": -35.0
-    },
-    {
-     "t": 17.0,
-     "z0": 32.0,
-     "phi": -60.0
-    },
-    {
-     "t": 17.5,
-     "z0": 61.8,
-     "phi": -60.0
-    },
-    {
      "t": 18.0,
      "z0": 87.6,
      "phi": -60.0
@@ -2326,7 +2226,9 @@
      "phi": -60.0
     }
    ],
-   "blocked_by": []
+   "blocked_by": [
+    "headA"
+   ]
   },
   "B: L-key 3 mm, near axle": {
    "open_states": 45,
@@ -3634,7 +3536,8 @@
    "carrier+": 5.8,
    "carrier-": 5.7,
    "cam": 0.7,
-   "rack bar": 5.6
+   "rack bar": 5.6,
+   "servo retainer": 4.2
   },
   "bought": {
    "servo_DS3218": 60.0,
@@ -3649,7 +3552,7 @@
   "body_E": 75.0,
   "note": "body from the topology run (E 75 g, v5 head 56 M + carriage)"
  },
- "mass_line": "printed grabber parts 17.8 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~170 g (system frame 120 g head + 60 g carriage, E)",
+ "mass_line": "printed grabber parts 22.0 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~174 g (system frame 120 g head + 60 g carriage, E)",
  "alternatives": {
   "spring": [
    [
