@@ -12,7 +12,7 @@ DEFAULT; alternative electronics on the sides 3.23 L, 154 x 108 x 194, the CG fu
 Spark 24 Oct (rod in hand): the tip has 25 of thread then a Ø27.5 plain shank, 27 engaged and no more: a Ø28.3 x 2 counterbore
 takes the shank (its shoulder seats on the floor), the thread is cut 26 at z 1.5..27.5 (0.5 past the tip), 1 mm entry chamfer; boss Ø40 x 38.
 Pieces: spine = base v21 (prints lying on its back on the bed diagonal), front module = head v16.
-   python3 unit_topo_v5.py --check | --manifest | --system [h] [gen] | --piece base|head [h] [gen] | --reactions"""
+   python3 unit_topo_v5.py --check | --manifest | --system [h] [gen] | --piece base|head [h] [gen] [--ver vN] | --reactions"""
 import sys, os, json
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
@@ -20,7 +20,8 @@ import numpy as np, trimesh, manifold3d as mf
 from topo import Part, Settings, optimise
 from topo.part import man, tm
 
-ARGS = [a for a in sys.argv[1:] if not a.startswith("-")]
+VER = sys.argv[sys.argv.index("--ver") + 1] if "--ver" in sys.argv else None          # --ver v17: the run folder (the 3rd number is gen cm3)
+ARGS = [a for a in sys.argv[1:] if not a.startswith("-") and a != VER]
 G = 9.81
 OUT_SYS = os.path.join(ROOT, "runs", "scan_stick_system", "v2")
 # ---------------------------------------------------------------- layout (placement v2 + the drawn interfaces, C)
@@ -413,7 +414,8 @@ if __name__ == "__main__":
         piece = ARGS[0]
         h = float(ARGS[1]) if len(ARGS) > 1 else 2.0
         gen = float(ARGS[2]) if len(ARGS) > 2 else (16.0 if piece == "head" else 35.0)
-        name, ver = ("scan_stick_head", "v16") if piece == "head" else ("scan_stick_base", "v21")
+        name, ver = ("scan_stick_head", VER or "v17") if piece == "head" else ("scan_stick_base", VER or "v22")
+        if os.path.exists(os.path.join(ROOT, "runs", name, ver, "result.json")): sys.exit(f"runs/{name}/{ver} is finished: never overwritten, pass --ver")
         out = os.path.join(ROOT, "runs", name, ver)
         if os.environ.get("NOX_SETUP_ONLY"):
             print(setup_piece(piece, h).summary())
