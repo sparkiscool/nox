@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session): **v2 layout** (`box_layout_v2.py`): 9 bays at R 113, latch receivers clipped to their sectors (unclipped Overseer neighbours overlap 1020 mm³, clear at R 128), box 402 x 419 x 475 (80 L). Overseer drone cartridge 171 vs funnel opening 168 (PR 69). DEFAULT: clip + R 113 (alt R 128, 91 L).
 - 24 Oct (box structure system session): **system pass v1** (`nox/box/box_system.py`, `box_structure.assembly.json`, `runs/box_system/v1/`): whole box, 18 cases, joint-loaded piece FE. FAIL: frames (1.65 Overseer catch), kb, mast, cradle_keel, jA, bay v4i; front sheet vs panels v7. DEFAULT (alts in dimensions): targets 0.5 / 1.0, sheet Y 347, top Z 220, probes off (floor), v2 on 9 bays at R 113.
 - 24 Oct (box catch chat, hub: Overseer layout B): `catch_system.py` Overseer pack in / out (2850 / 2065 g, E): lands on all 8 wheels; plunger 33.7 N insert, 175 N hand lift; catch worst 0.91 (panel skin at the wheel, C). G (7) nodes 34 / 175 N both drones (DEFAULT, was 30 / 100; alt per drone). DEFAULT: boss 1.0 mm for flight / swap only (alt stiffer web).
 - 24 Oct (box catch chat, hub): funnel panel v7: one preview per print file (`runs/funnel_panel/v7/preview_A`, `_B`, `_A_plain`, `_B_plain.png`, render_preview on each exact file), named in summary.md (PR 68 picture rule).

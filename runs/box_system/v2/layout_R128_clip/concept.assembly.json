@@ -1,0 +1,18 @@
+{
+ "name": "Box structure v2 layout",
+ "machine": "box",
+ "note": "v2 layout concept (box_layout_v2.py): receivers sit inside their bay envelopes by design; probes off (floor-standing box, DEFAULT)",
+ "fit_tol_mm3": 0.5,
+ "contact_pairs": [["receivers + lids (latch v1, 9 bays)", "bay body envelopes (9)", 1000000000.0]],
+ "probes": false,
+ "parts": [
+  {"name": "receivers + lids (latch v1, 9 bays)", "role": "protected", "protect": true, "mesh": "runs/box_system/v2/layout_R128_clip/receivers_W.stl", "material": "PETG", "tag": "M", "owner": "box swap: latch"},
+  {"name": "bay body envelopes (9)", "role": "structure", "mesh": "runs/box_system/v2/layout_R128_clip/bay_envelopes_W.stl", "material": "PETG", "tag": "C", "owner": "box structure"},
+  {"name": "catch (panels v7, hook latch v2) at the R seat", "role": "structure", "mesh": "runs/box_system/v2/layout_R128_clip/catch_W.stl", "material": "PETG", "tag": "M", "owner": "box catch"},
+  {"name": "drone receivers + paths (keep-out)", "role": "bought", "mesh": "runs/box_system/v2/layout_R128_clip/drone_W.stl", "mass_g": 0.0, "tag": "C", "owner": "drones"},
+  {"name": "sheet+X", "role": "cage", "box": [212, 215, -63.0, 344, -256, 249], "material": "acrylic", "mass_g": 733.8, "tag": "C", "owner": "box structure"},
+  {"name": "sheet-X", "role": "cage", "box": [-215, -212, -63.0, 344, -256, 249], "material": "acrylic", "mass_g": 733.8, "tag": "C", "owner": "box structure"},
+  {"name": "sheetF", "role": "cage", "box": [-209, 209, 347, 350, -256, 249], "material": "acrylic", "mass_g": 753.6, "tag": "C", "owner": "box structure"},
+  {"name": "sheetR", "role": "cage", "box": [-209, 209, -69.0, -66.0, -256, 249], "material": "acrylic", "mass_g": 753.6, "tag": "C", "owner": "box structure"}
+ ]
+}

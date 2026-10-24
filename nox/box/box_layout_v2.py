@@ -174,6 +174,29 @@ def main():
     c = None
     for m in catch.values(): c = m if c is None else c + m
     tm(c).export(os.path.join(od, "catch_W.stl"))
+    print(write_concept(od, out))
+
+
+def write_concept(od, out):
+    """system_check manifest of the v2 layout (concept check) + its motion scene: receivers (latch, protected), bay
+    body envelopes, catch, drone keep-out, the 4 sheets (cage)."""
+    import assembly
+    e = out["enclosure"]; rel = lambda n: os.path.relpath(os.path.join(od, n), ROOT)
+    parts = [dict(name="receivers + lids (latch v1, 9 bays)", role="protected", protect=True, mesh=rel("receivers_W.stl"), material="PETG", tag="M", owner="box swap: latch"),
+             dict(name="bay body envelopes (9)", role="structure", mesh=rel("bay_envelopes_W.stl"), material="PETG", tag="C", owner="box structure"),
+             dict(name="catch (panels v7, hook latch v2) at the R seat", role="structure", mesh=rel("catch_W.stl"), material="PETG", tag="M", owner="box catch"),
+             dict(name="drone receivers + paths (keep-out)", role="bought", mesh=rel("drone_W.stl"), mass_g=0.0, tag="C", owner="drones")]
+    X, YB, YF, FL, ZT = e["X_IN"], e["Y_BACK"], e["Y_FRONT"], e["FLOOR"], e["Z_TOP"]
+    for n, b in {"sheet+X": [X, X + 3, YB + 3, YF - 3, FL, ZT], "sheet-X": [-X - 3, -X, YB + 3, YF - 3, FL, ZT],
+                 "sheetF": [-X + 3, X - 3, YF, YF + 3, FL, ZT], "sheetR": [-X + 3, X - 3, YB - 3, YB, FL, ZT]}.items():
+        parts.append(dict(name=n, role="cage", box=b, material="acrylic", mass_g=round((b[1] - b[0]) * (b[3] - b[2]) * (b[5] - b[4]) * 1.19e-3, 1), tag="C", owner="box structure"))
+    A = assembly.new("Box structure v2 layout", "box", parts=parts, probes=False, fit_tol_mm3=0.5,
+                     contact_pairs=[["receivers + lids (latch v1, 9 bays)", "bay body envelopes (9)", 1e9]],
+                     note="v2 layout concept (box_layout_v2.py): receivers sit inside their bay envelopes by design; probes off (floor-standing box, DEFAULT)")
+    A.save(os.path.join(od, "concept.assembly.json"))
+    res = A.check(); json.dump(dict(summary=res.get("summary")), open(os.path.join(od, "concept_check.json"), "w"), indent=1)
+    A.scene().write(os.path.join(od, "layout.html"))
+    return res.get("summary")
 
 
 if __name__ == "__main__":
