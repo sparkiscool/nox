@@ -90,7 +90,9 @@ def cases():
 # with the pack out, accepted). Numbers from the Overseer system run v1B (runs/overseer_system/v1B/checks.txt, branch of
 # the overseer system chat, E): drone x = catch x (latched faces are drone +-y), catch centre 30 behind the thrust centre,
 # CG 0.3 behind the thrust centre, y +1.5, 13.6 over the bottom plate top at seat z 78.3; 2850 g (system_check, E).
-# Pack out: CG 11.3 further forward (system_check), so the swap parts weigh 2850 x 11.3 / (29.7 + 11.3) = 785 g (E).
+# Pack out: system_check puts the CG 11.3 off the thrust axis without the swap parts (forward, the pack sits behind):
+# 30 + 11.3 = 41.3, taken as 41.0 (E; the run's balance line says 9.2, i.e. 39.2: under 1 N on these loads). The swap
+# parts (pack at catch x 0) then weigh 2850 x (41.0 - 29.7) / 41.0 = 785 g (E).
 OV_M_IN, OV_M_OUT = 2.850, 2.065                              # kg (E)
 OV_CG_IN, OV_CG_OUT = (29.7, 1.5, 91.9), (41.0, 1.5, 91.9)    # catch frame (E)
 OV_FOOT = [(78.5, 27.0), (78.5, -27.0), (-78.5, 27.0), (-78.5, -27.0), (0.0, 0.0)]   # cartridge 157 x 54 on the catch centre (E, G)
@@ -117,8 +119,11 @@ def overseer_cases():
                 S, r, res = solve(F, np.array(p, float), W=W, cg=cg, kinds=kinds)
                 pl = [r[j] for j, s_ in enumerate(S) if s_[0] == "plunger"] or [0.0]
                 fc = [r[j] for j, s_ in enumerate(S) if s_[0] == "face"]
+                f_lat = max(r[j] for j, s_ in enumerate(S) if s_[0] == "face" and s_[1] in (0, 2))   # +-y faces: panels v7
+                f_pln = max(r[j] for j, s_ in enumerate(S) if s_[0] == "face" and s_[1] in (1, 3))   # +-x faces: v7 plain
                 row = dict(at=[round(v, 1) for v in p], plunger_max_N=round(max(pl), 2), plungers_N=[round(v, 2) for v in pl],
                            face_wheel_max_N=round(max(fc), 2), face_wheel_min_N=round(min(fc), 2),
+                           face_wheel_v7_N=round(f_lat, 2), face_wheel_v7_plain_N=round(f_pln, 2),
                            wheels_loaded=int(sum(v > 0.05 for v in fc)), residual_N=round(float(res), 3))
                 if worst is None or (row["residual_N"], row["plunger_max_N"], row["face_wheel_max_N"]) > \
                    (worst["residual_N"], worst["plunger_max_N"], worst["face_wheel_max_N"]):
@@ -210,6 +215,22 @@ def main():
             row.update(panel_fe_util=round(fe[ref[0]]["util"] * k, 3), panel_boss_index=round(bh[ref[1]]["index_across_layers"] * k, 3),
                        panel_boss_defl_mm=round(fe[ref[0]]["boss_defl_mm"] * k, 2))
             row["piece_worst"] = max(row["plunger_index"], row["guide_wall_index"], row["panel_fe_util"], row["panel_boss_index"])
+    # panel skins at the seated wheel spot (u 100, v 40 of the panel FE, 20 N press, linear; C): the Overseer puts up to
+    # 9 x the Scout's face-wheel load on them (6 g landing, hand lift); latched v7 (result.json), plain v7 (result_plain.json)
+    base = os.path.join(os.path.dirname(os.path.dirname(HERE)), "runs", "funnel_panel", "v7")
+    sk = {}
+    for nm_p, fn in (("v7", "result.json"), ("v7 plain", "result_plain.json")):
+        pc = json.load(open(os.path.join(base, fn)))["fe_asbuilt"]["per_case"]["press u100 v40"]
+        sk[nm_p] = pc                                                  # [defl / 1.0 mm, MPa] at 20 N
+    # allowable: the panel's own design rule, 19.5 MPa in-layer (PETG XY 39 / SF 2, box-funnel.md Loads), every case
+    for nm, row in ov.items():
+        cls = "misuse" if "hand" in nm else "flight"
+        row["panel_wheel_spot"] = {}
+        for nm_p, key in (("v7", "face_wheel_v7_N"), ("v7 plain", "face_wheel_v7_plain_N")):
+            F = row[key]; st = sk[nm_p][1] * F / 20.0
+            row["panel_wheel_spot"][nm_p] = dict(load_N=F, stress_MPa=round(st, 1), index=round(st / 19.5, 3),
+                                                 defl_mm=round(sk[nm_p][0] * F / 20.0, 2), cls=cls)
+        row["piece_worst"] = max([row.get("piece_worst", 0.0)] + [v["index"] for v in row["panel_wheel_spot"].values()])
     out["overseer"] = dict(source="runs/overseer_system/v1B/checks.txt (overseer system chat, layout B, E)",
                            mass_kg=dict(pack_in=OV_M_IN, pack_out=OV_M_OUT), cg_catch_frame=dict(pack_in=OV_CG_IN, pack_out=OV_CG_OUT),
                            cases=ov,
