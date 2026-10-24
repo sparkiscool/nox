@@ -594,6 +594,30 @@ try:
     say("system_check: " + SYS["summary"].replace("\n", " | "))
 except Exception as e:
     SYS = None; say(f"system_check failed to run: {str(e)[:200]}")
+# the system's assembly file (nox/ASSEMBLY.md: this script is its only writer); SYS_WRITE_ASM=1 on the final run
+if os.environ.get("SYS_WRITE_ASM", "0") == "1":
+    import re, assembly
+    ASM_VER = os.environ.get("SYS_ASM_VER", "v1")
+    ASM_DIR = os.path.join(ROOT, "runs", "overseer_assembly", ASM_VER); os.makedirs(ASM_DIR, exist_ok=True)
+    aparts = []
+    for pt in man["parts"]:
+        slug = re.sub(r"[^a-z0-9]+", "_", pt["name"].lower()).strip("_")
+        mp = os.path.join(ASM_DIR, slug + ".stl"); pt["trimesh"].export(mp)
+        d = {k: v for k, v in pt.items() if k != "trimesh"}
+        d.update(mesh=os.path.relpath(mp, ROOT), owner="overseer", version=f"system {ASM_VER} (layout A)", source="nox/overseer/overseer_system.py")
+        aparts.append(d)
+    asm = assembly.new("Overseer", "overseer", aparts,
+        note=(f"System {ASM_VER} from nox/overseer/overseer_system.py (layout A: pack on the thrust axis, motors {dm:.1f} ahead of the plate centre, "
+              f"L2 base ({xB:.1f}, 0, {zB:.0f}) 15 deg below +x, wheels z {WHEEL_Z:.0f}; cage runs/overseer_cage/v3 re-sized on this geometry). "
+              "Drone frame: x fwd, y left, z up, z 0 bottom plate top. Parts are grouped as the system pass draws them. "
+              "Left out (no pose yet): ESCs as bodies (25 g each in the arm masses), wheel pins, pogo pads, receiver and latch, "
+              "scan stick mount (open: its chat sets the mount; loads in dimensions O System Overseer)."),
+        cg_ref=[float(dm), 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
+        openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],
+        access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")],
+        guard_offsets={"guard rods to prop disks, plan (G)": float(co.GUARD_GAP), "rods under / over the swept band (G)": float(co.GUARD_GAP)})
+    asm.save(os.path.join(HERE, "overseer.assembly.json"))
+    say(f"assembly: nox/overseer/overseer.assembly.json, {len(aparts)} parts, meshes in {os.path.relpath(ASM_DIR, ROOT)}")
 FLOW_POS = (g["flow_lens"] - cg) * [1, -1, -1] / 1000
 say(f"PX4 flow position from the CG (FRD, m): x {FLOW_POS[0]:+.3f}, y {FLOW_POS[1]:+.3f}, z {FLOW_POS[2]:+.3f}; "
     f"IMU (FC centre) from the CG: x {(0 - cg[0]) / 1000:+.3f}, z {-(9.75 - cg[2]) / 1000:+.3f}")
