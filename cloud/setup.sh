@@ -10,7 +10,7 @@ set -euo pipefail
 
 echo "== Nox engine packages"
 pip install --break-system-packages -q \
-  pymoto pypardiso mkl trimesh rtree manifold3d scikit-image scikit-fmm \
+  pymoto pypardiso mkl trimesh rtree manifold3d python-fcl scikit-image scikit-fmm \
   matplotlib cadquery sparse_dot_mkl psutil numpy scipy \
   shapely fast_simplification playwright \
   2>&1 | grep -v "running pip as the 'root'" || true

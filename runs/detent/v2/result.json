@@ -1,0 +1,13 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 2.27,
+ "mass_tag": "M",
+ "worst_index": 0.22,
+ "worst_case": "spring 8.4 N (E) at the hook, in-plane bending at the pivot (hand calc, in-layer)",
+ "solid_ok": true,
+ "bed_face": "arm top face (Y 74.1) down",
+ "bed_contact_mm2": 714,
+ "note": "detent.py CHOSEN_V6 (arm v6: tower (21.2, -30.3), ring v3); drawn for CHOSEN_V5 (same roller and levers)",
+ "state": "DESIGN (v6 concept check FAIL x2), mesh runs/arm_v6_parts/detent_arm_v2_print_pose.stl"
+}
