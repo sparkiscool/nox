@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): Spark: no controls on the scan stick (power = plug the pack, the Pi talks to the computer): switch panel, its cuts and load removed from unit_topo_v5. Base v26 stopped, base v27 = closed pocket tube, no panel, gen 70.
 - 24 Oct (scan stick chat): base v25 (gen 100, run/scan_stick_base-v25 9c0027d) solid PASS 420 g, worst 1.38 in unit 50 g +x at the open back corner (-33.5, 31, 156.5): more volume alone does not reach 0.5; v26 (closed tube) decides.
 - 24 Oct (scan stick chat): base v24 (gen 70) solid PASS 381 g, worst 1.74 (strike 2): the pocket is an open U (front / back walls only). System change DEFAULT: drawn 6 mm side walls close it into a tube (also hold the pack sideways), base v26 gen 70; alt: more volume only (v25 gen 100, running).
 - 24 Oct (scan stick chat): base v23 solid PASS, 336.8 g, but worst index 2.48 in unit 50 g +x (target ≤ 0.5): gen 35 cm3 left only the front / back walls at mid height. Strike 1. Base v24 gen 70 and v25 gen 100 in parallel; the lightest that meets 0.5 is kept.

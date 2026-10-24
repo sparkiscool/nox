@@ -51,7 +51,7 @@ Shares the Overseer's L2, camera and 4S 6000 pack (above); the Pi 5 is the Overs
 | Raspberry Pi 5 + microSD ≥ 64 GB (E: ~1 GB/min) | 1 | recorder | on hand (resume) | M: Pi 5 (58 x 49, Ø2.7) |
 | 5 V 5 A UBEC | 1 | Pi + camera, taped to the shelf side (Spark 23 Oct) | CHECK (box has one) | M: UBEC |
 | 12 V 2 A buck (Pololu D24V22F12 class) | 1 | L2 supply | to buy | S |
-| KCD1 rocker switch | 1 | main power | on hand (Parts & Resource sheet) | S |
+| KCD1 rocker switch | 0 | not used: no controls on the scan stick, power = plug the pack (Spark 24 Oct) | on hand (Parts & Resource sheet) | S |
 | 12 mm momentary button + 5 mm LED + 330 Ω (typical) | 1 + 1 | record start / stop | to buy | S |
 | 20 mm hook-and-loop strap, 450 mm (E) | 2 | pack | to buy | S |
 | M3 heat-set inserts (Ruthex 5.7 long, Ø4.0 hole, 7 deep) | 2 | camera bracket to the head | on hand | M: inserts |

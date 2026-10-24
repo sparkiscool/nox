@@ -47,11 +47,9 @@ F, U, Y = np.array((c, 0, -s)), np.array((s, 0, c)), np.array((0, 1.0, 0))
 L2_HALF, L2_LEN, L2_PCD, L2_BODY, L2_DOME = 37.5, 65.0, 51.0, 39.0, 26.0   # spec / E (box 39 + dome 26)
 CAM_Z, CAM_PLATE, POST_L, POST_R, HOLE_R, BOARD, LENS = 163.0, (JX, 36.0), 10.0, 5.5, 0.9, 19.0, 16.0
 CAM_XF = CAM_PLATE[1] + POST_L + 1.6                           # 47.6
-SWZ = 30.0                                                    # switch row centre (C): on the back, under the UBEC / buck, inside the cage (Spark: nothing in front of the L2)
-SW = (-57.0, -51.0, -30.0, 30.0, SWZ - 12.0, SWZ + 12.0)      # panel x -57..-51 facing back, the bodies inside it in x -51..-30
 ROD_R, SOCK_R = 1.6, 6.0
 YC = 36.0                                                     # cage half width (C): 3 + rod outside the Pi (±29), clear of the joint side lips (34.5); the L2 (±37.5) is Spark's exception (DEFAULT; alt ±44 round the L2, 100 wide)
-Z_LOW, Z_TOP = 8.0, 192.0                                     # lower ring just above the pole tip (under the switches), upper ring over the camera (C)
+Z_LOW, Z_TOP = 8.0, 192.0                                     # lower ring just above the pole tip, upper ring over the camera (C)
 X_BACK = -66.0                                                # back verticals: their 12 nodes clear the Pi (C)
 DIAG_END = (10.0, 0.0, Z_TOP)                                 # the back diagonal ends in a drawn node on the top front spine sleeve (C)
 Z_MID = 108.0                                                 # mid support of the back verticals and the diagonals: over the UBEC (101), C
@@ -128,8 +126,7 @@ def spine_bodies():
         sleeves += mf.Manifold.sphere(7.0, 32).translate(pe.tolist())
         bores += mf.Manifold.cylinder(10.0, ROD_R, ROD_R, 24).rotate([0, float(np.degrees(np.arctan2(dd[0], dd[2]))) + 180, 0]).translate(pe.tolist())
         bores += cyl(X_BACK, y, Z_MID - 7, Z_MID + 7, ROD_R, 24)
-    panel = box(SW[0], SW[1], SW[2], SW[3], SW[4], SW[5])                                       # rocker y +16, button y -6, LED y -20 (E), facing -x
-    drawn += floor + back + front + sides + ring + standoffs + ledge + sleeves + panel
+    drawn += floor + back + front + sides + ring + standoffs + ledge + sleeves                     # no switch panel (Spark 24 Oct: power = plug the pack, the Pi talks to the computer)
     tc = os.path.join(HERE, "out", "thread_cut.stl")
     if not os.path.exists(tc):
         os.makedirs(os.path.dirname(tc), exist_ok=True)
@@ -147,11 +144,8 @@ def spine_bodies():
     cuts += B6(PI_KEEP) + B6(EL_KEEP)
     cuts += box(PI_X0 - PI_SO, PI_X0 - 0.01, -29.0, 29.0, 102.0, 190.0) - sum((cylx(PI_X0 - PI_SO - 1, PI_X0 + 1, y, z, POST_R + 0.5) for y, z in PI_HOLES), mf.Manifold())
     cuts += bores
-    cuts += box(SW[0] - 1, SW[1] + 1, 16 - 9.7, 16 + 9.7, SWZ - 6.6, SWZ + 6.6) + box(SW[1], PI_X0 - 0.5, 16 - 11, 16 + 11, SWZ - 11, SWZ + 11)
-    cuts += cylx(SW[0] - 1, SW[1] + 1, -6, SWZ, 6.15) + cylx(SW[1], PI_X0 - 0.5, -6, SWZ, 7.0)
-    cuts += cylx(SW[0] - 1, SW[1] + 1, -20, SWZ, 2.6) + cylx(SW[1], SW[1] + 8, -20, SWZ, 3.5)
     env = box(-70.0, JX, -44.0, 44.0, Z_MOUTH, 200.0)                                             # to the cage sleeves (y ±42), not beyond
-    return dict(drawn=drawn, cuts=cuts, env=env, floor=floor, back=back, front=front + sides, ring=ring, standoffs=standoffs, sleeves=sleeves, ledge=ledge, panel=panel)
+    return dict(drawn=drawn, cuts=cuts, env=env, floor=floor, back=back, front=front + sides, ring=ring, standoffs=standoffs, sleeves=sleeves, ledge=ledge)
 
 def head_bodies():
     drawn = B6(BP)
@@ -303,7 +297,6 @@ def setup_piece(piece, h):
     for nm, v in (("cage bump back 100 N (spine share)", (50.0, 0, 0)), ("cage bump +y 100 N (spine share)", (0, -50.0, 0)),
                   ("cage bump top 100 N (spine share)", (0, 0, -50.0)), ("cage bump front 100 N (spine share)", (-50.0, 0, 0))):
         p.load(nm, Sb["sleeves"], np.array(v))
-    p.load("switch panel push 50 N", Sb["panel"], np.array((50.0, 0, 0)))
     p.load("hand push top ring -z 100 N", Sb["ring"], np.array((0, 0, -100.0)))
     return p
 
@@ -338,7 +331,6 @@ def manifest():
              dict(name="l2", mesh=os.path.relpath(os.path.join(OUT_SYS, "l2.stl"), ROOT), role="protected", mass_g=230, tag="P"),
              dict(name="camera", box=[CAM_PLATE[1], CAM_XF, -19, 19, CAM_Z - 19, CAM_Z + 19], role="protected", mass_g=25, tag="E"),
              dict(name="lens", cylinder=dict(r=6.0, p0=[CAM_XF, 0, CAM_Z], p1=[CAM_XF + LENS, 0, CAM_Z]), role="protected", mass_g=5, tag="E"),
-             dict(name="switches", box=[SW[0], PI_X0 - 0.5, -23.0, 27.0, SW[4], SW[5]], role="protected", mass_g=20, tag="E"),
              dict(name="spine", mesh=os.path.relpath(os.path.join(OUT_SYS, "spine_drawn.stl"), ROOT), role="cage", mass_g=230, tag="E"),   # PETG walls guard the pack and the Pi top
              dict(name="head", mesh=os.path.relpath(os.path.join(OUT_SYS, "head_drawn.stl"), ROOT), role="structure", mass_g=90, tag="E")]
     for name, p0, p1 in cage_rods():
@@ -347,7 +339,7 @@ def manifest():
         for nm, x, z in (("low back", X_BACK, Z_LOW), ("top back", X_BACK, Z_TOP), ("frame foot", frame_x(Z_LOW), Z_LOW), ("top front", frame_x(Z_TOP), Z_TOP)):
             parts.append(dict(name=f"node {nm} {sy:+d}", box=[x - 6, x + 6, sy * YC - 6, sy * YC + 6, z - 6, z + 6], role="cage", material="tpu", mass_g=2, tag="E"))
     contacts = [["pack", "spine", 1e9], ["pi", "spine", 1e9], ["ubec_buck", "spine", 1e9], ["head", "spine", 1e9], ["camera", "head", 1e9],
-                ["switches", "spine", 1e9], ["camera", "lens", 1e9]]
+                ["camera", "lens", 1e9]]
     names = [n for n, _, _ in cage_rods()] + [p["name"] for p in parts if p["name"].startswith("node")]
     contacts += [[a, b, 600] for i, a in enumerate(names) for b in names[i + 1:]]               # rods meet in the nodes
     m = dict(name="scan stick v5 (compact, closed cage)", parts=parts,
@@ -441,7 +433,7 @@ def render():
     pole = T.creation.cylinder(12.7, 300, sections=48); pole.apply_translation([0, 0, -150])
     s = Scene("Scan stick v5 concept", "compact layout (placement v2, 3.25 L, 182 x 91 x 196 mm with the cage): spine (base v21) + front module (head v16) drawn interfaces, bought parts, closed 3 mm carbon cage; system_check PASS (cage first 4.1 mm, fit 0). The generated web between the drawn parts comes from the piece runs.")
     s.part("spine drawn", tm(Sb["drawn"] - Sb["cuts"]), group="printed", color="#8899aa", printed=True, note="thread boss Ø40 x 38 (32 deep thread), pocket walls, top ring + pin, Pi standoffs, ledge + hook lips, cage sleeves")
-    s.part("module drawn", tm(Hd["drawn"] - Hd["cuts"]), group="printed", color="#9aa8b8", printed=True, note="back plate, L2 ring + bosses, camera posts, switch panel, cage rails / sleeves")
+    s.part("module drawn", tm(Hd["drawn"] - Hd["cuts"]), group="printed", color="#9aa8b8", printed=True, note="back plate, L2 ring + bosses, camera posts, cage rails / sleeves")
     s.part("cage", rods, group="bought", color="#111111", printed=False, note="3 mm carbon rods on TPU nodes")
     for n, b, col in (("pack", PACK, "#2f4fbf"), ("Pi 5", PI_KEEP, "#2e7d32"), ("UBEC + buck", EL_KEEP, "#b07d2b"), ("camera", (CAM_PLATE[1], CAM_XF + LENS, -19, 19, CAM_Z - 19, CAM_Z + 19), "#2d5a2d")):
         s.part(n, bx(b), group="bought", color=col, printed=False)
