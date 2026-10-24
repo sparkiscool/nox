@@ -1,0 +1,415 @@
+######## g2000
+--- box_system_topo_v2r2_analyse.txt
+components 13 largest cm3 [np.float64(2830.8), np.float64(28.7), np.float64(1.5), np.float64(1.5), np.float64(1.5), np.float64(1.5)] total cm3 2872.8
+components on the floor: [1, 10] main 1
+bay30 bosses: comps [1, 11] JOINED to floor (main)
+bay0 bosses: comps [1, 13] JOINED to floor (main)
+bay-30 bosses: comps [1, 9, 12] JOINED to floor (main)
+bay-60 bosses: comps [1, 8] JOINED to floor (main)
+bay-90 bosses: comps [1] JOINED to floor (main)
+bay-120 bosses: comps [1] JOINED to floor (main)
+bay-150 bosses: comps [1, 3] JOINED to floor (main)
+bay-180 bosses: comps [1] JOINED to floor (main)
+bay-210 bosses: comps [1, 4] JOINED to floor (main)
+bay30 pad: comps [1] JOINED to floor (main)
+bay0 pad: comps [1] JOINED to floor (main)
+bay-30 pad: comps [1] JOINED to floor (main)
+bay-60 pad: comps [1] JOINED to floor (main)
+bay-90 pad: comps [1] JOINED to floor (main)
+bay-120 pad: comps [1] JOINED to floor (main)
+bay-150 pad: comps [1] JOINED to floor (main)
+bay-180 pad: comps [1] JOINED to floor (main)
+bay-210 pad: comps [1] JOINED to floor (main)
+post0: comps [1] JOINED to floor (main)
+post1: comps [1] JOINED to floor (main)
+post2: comps [1] JOINED to floor (main)
+post3: comps [1] JOINED to floor (main)
+post4: comps [1] JOINED to floor (main)
+post5: comps [1] JOINED to floor (main)
+post6: comps [1] JOINED to floor (main)
+post7: comps [1] JOINED to floor (main)
+stub: comps [1] JOINED to floor (main)
+elec boss0: comps [7] FLOATING 
+elec boss1: comps [10] JOINED to floor 
+elec boss2: comps [1] JOINED to floor (main)
+elec boss3: comps [1] JOINED to floor (main)
+elec boss4: comps [2] FLOATING 
+elec boss5: comps [5] FLOATING 
+elec boss6: comps [1] JOINED to floor (main)
+elec boss7: comps [6] FLOATING 
+floor contact (main body, Z<-228 layer): 8 cells = 5.1 cm2
+floor contact, any material: 5.8 cm2
+floor patches: 3
+  patch 1: 3 cells (2 cm2) X -72..-56 Y 146..162
+  patch 3: 4 cells (3 cm2) X 48..64 Y 146..162
+main body on the +X face layer: 6.4 cm2 (knocked-over support)
+r 110..200: 2296.8  r>=200: 126.0  r<=110: 450.0
+Y slabs (cm3): {'-66': np.float64(236.0), '-16': np.float64(700.4), '34': np.float64(246.8), '84': np.float64(309.2), '134': np.float64(604.7), '184': np.float64(490.5), '234': np.float64(284.2), '284': np.float64(1.0), '334': np.float64(0.0)}
+Z slabs (cm3): {'-240': np.float64(76.8), '-190': np.float64(562.2), '-140': np.float64(280.1), '-90': np.float64(305.7), '-40': np.float64(406.0), '10': np.float64(392.7), '60': np.float64(280.6), '110': np.float64(521.2), '160': np.float64(47.6), '210': np.float64(0.0)}
+X slabs (cm3): {'-206': np.float64(272.4), '-156': np.float64(326.7), '-106': np.float64(334.8), '-56': np.float64(335.4), '-6': np.float64(323.1), '44': np.float64(480.3), '94': np.float64(351.2), '144': np.float64(422.4), '194': np.float64(26.6)}
+rear zone Y<-6 (behind the stub face): 408.6  mast zone -6<Y<0: 324.6  Y<74: 1130.5
+top frame Z>110: 568.8  base Z<-150: 484.9
+bay -210 material in sector r>110: 117.2
+bay -180 material in sector r>110: 256.5
+bay -150 material in sector r>110: 108.0
+bay -120 material in sector r>110: 328.7
+bay -90 material in sector r>110: 129.0
+bay -60 material in sector r>110: 322.0
+bay -30 material in sector r>110: 152.1
+bay 0 material in sector r>110: 301.1
+bay 30 material in sector r>110: 131.6
+bay -> stub connection without the floor layer:
+  bay 30: joined to the stub body
+  bay 0: joined to the stub body
+  bay -30: joined to the stub body
+  bay -60: joined to the stub body
+  bay -90: joined to the stub body
+  bay -120: joined to the stub body
+  bay -150: joined to the stub body
+  bay -180: joined to the stub body
+  bay -210: joined to the stub body
+link band r 150..200 per 15 deg wedge (cm3): {-225: 78.8, -210: 49.2, -195: 60.9, -180: 80.9, -165: 67.1, -150: 55.8, -135: 72.2, -120: 114.2, -105: 50.7, -90: 51.7, -75: 64.0, -60: 108.5, -45: 66.0, -30: 70.7, -15: 69.6, 0: 82.4, 15: 66.6, 30: 50.2, 45: 113.7, 60: 71.7}
+area cm2 vs Z (Y<8, mast zone): {-240: 0.3, -224: 4.5, -208: 7.0, -192: 9.6, -176: 4.8, -160: 5.8, -144: 9.3, -128: 13.4, -112: 21.4, -96: 22.1, -80: 30.4, -64: 35.8, -48: 39.4, -32: 43.8, -16: 26.9, 0: 14.7, 16: 24.3, 32: 41.0, 48: 43.2, 64: 25.0, 80: 15.7, 96: 13.1, 112: 6.4, 128: 0.3}
+area cm2 vs Z (Y<8, mast zone) by X: {-192: 4.5, -176: 18.9, -160: 2.6, -144: 0.0, -128: 4.8, -112: 7.4, -96: 5.1, -80: 8.3, -64: 14.7, -48: 27.2, -32: 53.8, -16: 47.4, 0: 38.7, 16: 42.6, 32: 40.0, 48: 24.6, 64: 19.5, 80: 17.0, 96: 11.5, 112: 8.3, 128: 5.1, 144: 4.5, 160: 27.5, 176: 20.5, 192: 3.8}
+top frame front beam (Y>285, Z>90) area vs X: {-48: 0.3, -32: 0.0, -16: 0.0, 0: 0.0, 16: 0.0, 32: 0.3}
+top frame X>60 (Z>110) area vs Y: {0: 1.0, 16: 4.8, 32: 4.8, 48: 6.4, 64: 10.2, 80: 7.7, 96: 4.5, 112: 9.0, 128: 9.0, 144: 3.5, 160: 3.8, 176: 5.4, 192: 14.4, 208: 13.1, 224: 11.5, 240: 8.0, 256: 5.1}
+top frame X<-60 (Z>110) area vs Y: {48: 0.6, 64: 4.2, 80: 9.9, 96: 11.2, 112: 4.8, 128: 5.1, 144: 3.2, 160: 3.5, 176: 6.4, 192: 13.8, 208: 8.6, 224: 9.0, 240: 6.4, 256: 0.3}
+all: area vs Y {-96: 6.4, -64: 17.4, -32: 173.3, 0: 95.5, 32: 49.4, 64: 58.4, 96: 65.9, 128: 83.0, 160: 146.6, 192: 97.4, 224: 74.7, 256: 29.6}
+9 of 9 bays, 8 of 8 seat posts, stub joined, 4 of 8 electronics bosses joined to the floor-supported body (M); floating: ['elec boss0', 'elec boss4', 'elec boss5', 'elec boss7']; floor contact 5.1 cm2 (M), +X face 6.4 cm2 (M); generated 2047.9 cm3 = 2601 g PETG (E)
+
+--- cuts.txt
+Base + feet (Z < -150): 8.7 cm3 = 11 g (E); X [-96, 96] Y [10, 58] Z [-169, -153]; longest 192 OVER 180; 4 islands
+Bay body -120 (O): 230.9 cm3 = 293 g (E); X [-136, -48] Y [58, 258] Z [-233, -121]; longest 200 OVER 180; 1 islands
+Bay body -150 (S): 108.0 cm3 = 137 g (E); X [-184, -120] Y [74, 218] Z [-129, -41]; longest 144; 2 islands
+Bay body -180 (O): 163.3 cm3 = 207 g (E); X [-192, -160] Y [58, 258] Z [-49, 47]; longest 200 OVER 180; 1 islands
+Bay body -210 (S): 108.5 cm3 = 138 g (E); X [-184, -104] Y [74, 218] Z [47, 127]; longest 144; 2 islands
+Bay body -30 (S): 129.0 cm3 = 164 g (E); X [120, 200] Y [74, 210] Z [-137, -41]; longest 136; 3 islands
+Bay body -60 (O): 210.9 cm3 = 268 g (E); X [48, 144] Y [58, 258] Z [-225, -113]; longest 200 OVER 180; 1 islands
+Bay body -90 (S): 112.1 cm3 = 142 g (E); X [-64, 64] Y [74, 210] Z [-233, -161]; longest 136; 3 islands
+Bay body 0 (O): 176.1 cm3 = 224 g (E); X [160, 208] Y [58, 258] Z [-57, 55]; longest 200 OVER 180; 1 islands
+Bay body 30 (S): 121.3 cm3 = 154 g (E); X [88, 200] Y [74, 218] Z [47, 135]; longest 144; 2 islands
+Hub links (rest, r < 110 or between): 256.0 cm3 = 325 g (E); X [-184, 184] Y [10, 266] Z [-153, 111]; longest 368 OVER 180; 8 islands
+Mast + stub face (Y < 8, |X| < 70): 485.9 cm3 = 617 g (E); X [-72, 72] Y [-70, 10] Z [-217, 135]; longest 352 OVER 180; 5 islands
+Rear frame +X (Y < 8, X > 70): 173.1 cm3 = 220 g (E); X [72, 208] Y [-70, 10] Z [-233, 63]; longest 296 OVER 180; 5 islands
+Rear frame -X (Y < 8, X < -70): 74.2 cm3 = 94 g (E); X [-192, -72] Y [-70, 10] Z [-217, 71]; longest 288 OVER 180; 6 islands
+Seat-post bridge (Y > 270): 41.5 cm3 = 53 g (E); X [-48, 96] Y [266, 290] Z [111, 175]; longest 144; 2 islands
+Top frame +X half (Z > 110): 259.6 cm3 = 330 g (E); X [0, 128] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
+Top frame -X half (Z > 110): 213.5 cm3 = 271 g (E); X [-128, 0] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
+
+--- box_system_topo_v2r2_newlanes.txt
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 1862)
+
+######## g3000
+--- box_system_topo_v2r2_analyse.txt
+components 2 largest cm3 [np.float64(3853.8), np.float64(25.1), np.float64(0.0)] total cm3 3878.9
+components on the floor: [1, 2] main 1
+bay30 bosses: comps [1] JOINED to floor (main)
+bay0 bosses: comps [1] JOINED to floor (main)
+bay-30 bosses: comps [1] JOINED to floor (main)
+bay-60 bosses: comps [1] JOINED to floor (main)
+bay-90 bosses: comps [1] JOINED to floor (main)
+bay-120 bosses: comps [1] JOINED to floor (main)
+bay-150 bosses: comps [1] JOINED to floor (main)
+bay-180 bosses: comps [1] JOINED to floor (main)
+bay-210 bosses: comps [1] JOINED to floor (main)
+bay30 pad: comps [1] JOINED to floor (main)
+bay0 pad: comps [1] JOINED to floor (main)
+bay-30 pad: comps [1] JOINED to floor (main)
+bay-60 pad: comps [1] JOINED to floor (main)
+bay-90 pad: comps [1] JOINED to floor (main)
+bay-120 pad: comps [1] JOINED to floor (main)
+bay-150 pad: comps [1] JOINED to floor (main)
+bay-180 pad: comps [1] JOINED to floor (main)
+bay-210 pad: comps [1] JOINED to floor (main)
+post0: comps [1] JOINED to floor (main)
+post1: comps [1] JOINED to floor (main)
+post2: comps [1] JOINED to floor (main)
+post3: comps [1] JOINED to floor (main)
+post4: comps [1] JOINED to floor (main)
+post5: comps [1] JOINED to floor (main)
+post6: comps [1] JOINED to floor (main)
+post7: comps [1] JOINED to floor (main)
+stub: comps [1] JOINED to floor (main)
+elec boss0: comps [1] JOINED to floor (main)
+elec boss1: comps [2] JOINED to floor 
+elec boss2: comps [1] JOINED to floor (main)
+elec boss3: comps [1] JOINED to floor (main)
+elec boss4: comps [1] JOINED to floor (main)
+elec boss5: comps [1] JOINED to floor (main)
+elec boss6: comps [1] JOINED to floor (main)
+elec boss7: comps [1] JOINED to floor (main)
+floor contact (main body, Z<-228 layer): 14 cells = 9.0 cm2
+floor contact, any material: 9.6 cm2
+floor patches: 7
+  patch 1: 2 cells (1 cm2) X -200..-192 Y 186..202
+  patch 2: 2 cells (1 cm2) X -72..-64 Y 74..90
+  patch 4: 3 cells (2 cm2) X -48..-32 Y -62..-46
+  patch 5: 2 cells (1 cm2) X 32..48 Y 154..162
+  patch 6: 2 cells (1 cm2) X 192..200 Y 106..122
+  patch 7: 2 cells (1 cm2) X 192..200 Y 194..210
+main body on the +X face layer: 57.6 cm2 (knocked-over support)
+r 110..200: 2812.9  r>=200: 461.3  r<=110: 604.7
+Y slabs (cm3): {'-66': np.float64(436.2), '-16': np.float64(896.5), '34': np.float64(385.0), '84': np.float64(538.1), '134': np.float64(559.1), '184': np.float64(738.3), '234': np.float64(324.6), '284': np.float64(1.0), '334': np.float64(0.0)}
+Z slabs (cm3): {'-240': np.float64(179.7), '-190': np.float64(716.3), '-140': np.float64(408.6), '-90': np.float64(388.6), '-40': np.float64(438.8), '10': np.float64(573.4), '60': np.float64(374.3), '110': np.float64(743.9), '160': np.float64(55.3), '210': np.float64(0.0)}
+X slabs (cm3): {'-206': np.float64(380.9), '-156': np.float64(484.9), '-106': np.float64(474.6), '-56': np.float64(517.1), '-6': np.float64(385.0), '44': np.float64(519.2), '94': np.float64(387.6), '144': np.float64(582.1), '194': np.float64(147.5)}
+rear zone Y<-6 (behind the stub face): 664.1  mast zone -6<Y<0: 411.6  Y<74: 1639.9
+top frame Z>110: 799.2  base Z<-150: 671.7
+bay -210 material in sector r>110: 171.0
+bay -180 material in sector r>110: 265.7
+bay -150 material in sector r>110: 231.4
+bay -120 material in sector r>110: 407.6
+bay -90 material in sector r>110: 240.6
+bay -60 material in sector r>110: 305.7
+bay -30 material in sector r>110: 302.1
+bay 0 material in sector r>110: 360.4
+bay 30 material in sector r>110: 195.6
+bay -> stub connection without the floor layer:
+  bay 30: joined to the stub body
+  bay 0: joined to the stub body
+  bay -30: joined to the stub body
+  bay -60: joined to the stub body
+  bay -90: joined to the stub body
+  bay -120: joined to the stub body
+  bay -150: joined to the stub body
+  bay -180: joined to the stub body
+  bay -210: joined to the stub body
+link band r 150..200 per 15 deg wedge (cm3): {-225: 128.5, -210: 57.3, -195: 83.5, -180: 70.7, -165: 78.3, -150: 51.2, -135: 89.6, -120: 104.4, -105: 70.1, -90: 45.6, -75: 68.1, -60: 89.6, -45: 75.3, -30: 44.0, -15: 105.0, 0: 81.4, 15: 101.4, 30: 78.8, 45: 96.8, 60: 125.4}
+area cm2 vs Z (Y<8, mast zone): {-240: 1.3, -224: 29.4, -208: 18.9, -192: 23.0, -176: 14.1, -160: 12.8, -144: 20.8, -128: 19.2, -112: 20.5, -96: 26.6, -80: 34.9, -64: 39.7, -48: 43.2, -32: 56.3, -16: 36.2, 0: 27.5, 16: 41.0, 32: 53.8, 48: 60.5, 64: 40.0, 80: 29.1, 96: 16.6, 112: 7.0}
+area cm2 vs Z (Y<8, mast zone) by X: {-192: 4.5, -176: 17.9, -160: 12.2, -144: 12.5, -128: 16.6, -112: 18.6, -96: 8.3, -80: 12.8, -64: 28.5, -48: 65.9, -32: 100.5, -16: 67.2, 0: 45.4, 16: 44.5, 32: 49.3, 48: 32.0, 64: 34.6, 80: 21.8, 96: 14.4, 112: 8.3, 128: 2.2, 144: 3.5, 160: 28.2, 176: 19.5, 192: 3.2}
+top frame front beam (Y>285, Z>90) area vs X: {-48: 0.3, -32: 0.0, -16: 0.0, 0: 0.0, 16: 0.0, 32: 0.3}
+top frame X>60 (Z>110) area vs Y: {0: 3.2, 16: 9.9, 32: 9.9, 48: 10.6, 64: 7.4, 80: 9.9, 96: 6.7, 112: 5.8, 128: 5.4, 144: 5.1, 160: 5.1, 176: 8.0, 192: 20.5, 208: 22.4, 224: 17.3, 240: 11.5, 256: 3.5}
+top frame X<-60 (Z>110) area vs Y: {-16: 0.3, 0: 4.2, 16: 10.6, 32: 10.6, 48: 13.4, 64: 10.9, 80: 10.6, 96: 11.2, 112: 9.6, 128: 6.7, 144: 5.4, 160: 6.7, 176: 13.4, 192: 18.9, 208: 18.2, 224: 17.3, 240: 8.3, 256: 1.0}
+all: area vs Y {-96: 10.4, -64: 52.6, -32: 229.4, 0: 124.0, 32: 81.8, 64: 94.6, 96: 112.2, 128: 77.1, 160: 162.1, 192: 148.5, 224: 79.0, 256: 40.5}
+9 of 9 bays, 8 of 8 seat posts, stub joined, 8 of 8 electronics bosses joined to the floor-supported body (M); floating: none; floor contact 9.0 cm2 (M), +X face 57.6 cm2 (M); generated 3059.5 cm3 = 3886 g PETG (E)
+
+--- cuts.txt
+Base + feet (Z < -150): 14.8 cm3 = 19 g (E); X [-96, 96] Y [10, 58] Z [-177, -153]; longest 192 OVER 180; 3 islands
+Bay body -120 (O): 247.3 cm3 = 314 g (E); X [-208, -48] Y [58, 258] Z [-233, -113]; longest 200 OVER 180; 2 islands
+Bay body -150 (S): 207.4 cm3 = 263 g (E); X [-208, -120] Y [74, 218] Z [-201, -49]; longest 152; 1 islands
+Bay body -180 (O): 163.8 cm3 = 208 g (E); X [-200, -160] Y [74, 258] Z [-49, 47]; longest 184 OVER 180; 1 islands
+Bay body -210 (S): 143.4 cm3 = 182 g (E); X [-184, -104] Y [58, 218] Z [39, 135]; longest 160; 1 islands
+Bay body -30 (S): 282.1 cm3 = 358 g (E); X [120, 208] Y [66, 210] Z [-201, -41]; longest 160; 1 islands
+Bay body -60 (O): 210.9 cm3 = 268 g (E); X [48, 208] Y [58, 258] Z [-233, -121]; longest 200 OVER 180; 3 islands
+Bay body -90 (S): 131.1 cm3 = 166 g (E); X [-48, 56] Y [74, 210] Z [-233, -161]; longest 136; 1 islands
+Bay body 0 (O): 208.4 cm3 = 265 g (E); X [144, 208] Y [58, 258] Z [-49, 55]; longest 200 OVER 180; 1 islands
+Bay body 30 (S): 167.9 cm3 = 213 g (E); X [104, 200] Y [58, 218] Z [39, 135]; longest 160; 1 islands
+Hub links (rest, r < 110 or between): 291.3 cm3 = 370 g (E); X [-184, 200] Y [10, 218] Z [-153, 111]; longest 384 OVER 180; 6 islands
+Mast + stub face (Y < 8, |X| < 70): 733.7 cm3 = 932 g (E); X [-72, 72] Y [-70, 10] Z [-233, 127]; longest 360 OVER 180; 2 islands
+Rear frame +X (Y < 8, X > 70): 188.9 cm3 = 240 g (E); X [72, 208] Y [-70, 10] Z [-233, 119]; longest 352 OVER 180; 4 islands
+Rear frame -X (Y < 8, X < -70): 153.1 cm3 = 194 g (E); X [-192, -72] Y [-70, 10] Z [-225, 127]; longest 352 OVER 180; 5 islands
+Seat-post bridge (Y > 270): 76.3 cm3 = 97 g (E); X [-56, 72] Y [266, 290] Z [111, 175]; longest 128; 1 islands
+Top frame +X half (Z > 110): 313.9 cm3 = 399 g (E); X [0, 136] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
+Top frame -X half (Z > 110): 344.6 cm3 = 438 g (E); X [-128, 0] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
+
+--- box_system_topo_v2r2_newlanes.txt
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 1862)
+
+######## g3000_ring
+--- box_system_topo_v2r2_analyse.txt
+components 2 largest cm3 [np.float64(4679.7), np.float64(26.6), np.float64(0.0)] total cm3 4706.3
+components on the floor: [1, 2] main 1
+bay30 bosses: comps [1] JOINED to floor (main)
+bay0 bosses: comps [1] JOINED to floor (main)
+bay-30 bosses: comps [1] JOINED to floor (main)
+bay-60 bosses: comps [1] JOINED to floor (main)
+bay-90 bosses: comps [1] JOINED to floor (main)
+bay-120 bosses: comps [1] JOINED to floor (main)
+bay-150 bosses: comps [1] JOINED to floor (main)
+bay-180 bosses: comps [1] JOINED to floor (main)
+bay-210 bosses: comps [1] JOINED to floor (main)
+bay30 pad: comps [1] JOINED to floor (main)
+bay0 pad: comps [1] JOINED to floor (main)
+bay-30 pad: comps [1] JOINED to floor (main)
+bay-60 pad: comps [1] JOINED to floor (main)
+bay-90 pad: comps [1] JOINED to floor (main)
+bay-120 pad: comps [1] JOINED to floor (main)
+bay-150 pad: comps [1] JOINED to floor (main)
+bay-180 pad: comps [1] JOINED to floor (main)
+bay-210 pad: comps [1] JOINED to floor (main)
+post0: comps [1] JOINED to floor (main)
+post1: comps [1] JOINED to floor (main)
+post2: comps [1] JOINED to floor (main)
+post3: comps [1] JOINED to floor (main)
+post4: comps [1] JOINED to floor (main)
+post5: comps [1] JOINED to floor (main)
+post6: comps [1] JOINED to floor (main)
+post7: comps [1] JOINED to floor (main)
+stub: comps [1] JOINED to floor (main)
+elec boss0: comps [1] JOINED to floor (main)
+elec boss1: comps [2] JOINED to floor 
+elec boss2: comps [1] JOINED to floor (main)
+elec boss3: comps [1] JOINED to floor (main)
+elec boss4: comps [1] JOINED to floor (main)
+elec boss5: comps [1] JOINED to floor (main)
+elec boss6: comps [1] JOINED to floor (main)
+elec boss7: comps [1] JOINED to floor (main)
+ring: comps [1] JOINED to floor (main)
+floor contact (main body, Z<-228 layer): 13 cells = 8.3 cm2
+floor contact, any material: 9.0 cm2
+floor patches: 5
+  patch 1: 3 cells (2 cm2) X -88..-72 Y 74..90
+  patch 2: 2 cells (1 cm2) X -72..-64 Y 218..234
+  patch 3: 2 cells (1 cm2) X -40..-24 Y -62..-54
+  patch 4: 2 cells (1 cm2) X 64..80 Y 218..226
+  patch 5: 4 cells (3 cm2) X 88..104 Y 74..90
+main body on the +X face layer: 10.9 cm2 (knocked-over support)
+r 110..200: 3865.1  r>=200: 253.4  r<=110: 587.8
+Y slabs (cm3): {'-66': np.float64(462.8), '-16': np.float64(774.7), '34': np.float64(730.6), '84': np.float64(1020.9), '134': np.float64(437.2), '184': np.float64(846.8), '234': np.float64(420.9), '284': np.float64(12.3), '334': np.float64(0.0)}
+Z slabs (cm3): {'-240': np.float64(184.3), '-190': np.float64(804.9), '-140': np.float64(456.2), '-90': np.float64(503.3), '-40': np.float64(592.4), '10': np.float64(768.5), '60': np.float64(449.0), '110': np.float64(866.3), '160': np.float64(81.4), '210': np.float64(0.0)}
+X slabs (cm3): {'-206': np.float64(429.1), '-156': np.float64(720.9), '-106': np.float64(543.2), '-56': np.float64(582.7), '-6': np.float64(505.9), '44': np.float64(555.0), '94': np.float64(630.8), '144': np.float64(689.7), '194': np.float64(49.2)}
+rear zone Y<-6 (behind the stub face): 698.4  mast zone -6<Y<0: 354.8  Y<74: 1613.8
+top frame Z>110: 947.7  base Z<-150: 764.9
+bay -210 material in sector r>110: 313.9
+bay -180 material in sector r>110: 355.8
+bay -150 material in sector r>110: 274.4
+bay -120 material in sector r>110: 492.0
+bay -90 material in sector r>110: 348.2
+bay -60 material in sector r>110: 362.0
+bay -30 material in sector r>110: 300.0
+bay 0 material in sector r>110: 474.1
+bay 30 material in sector r>110: 289.3
+bay -> stub connection without the floor layer:
+  bay 30: joined to the stub body
+  bay 0: joined to the stub body
+  bay -30: joined to the stub body
+  bay -60: joined to the stub body
+  bay -90: joined to the stub body
+  bay -120: joined to the stub body
+  bay -150: joined to the stub body
+  bay -180: joined to the stub body
+  bay -210: joined to the stub body
+link band r 150..200 per 15 deg wedge (cm3): {-225: 145.4, -210: 117.2, -195: 124.4, -180: 95.2, -165: 120.3, -150: 113.7, -135: 128.5, -120: 124.4, -105: 88.6, -90: 100.4, -75: 82.9, -60: 109.6, -45: 103.9, -30: 117.8, -15: 129.5, 0: 97.3, 15: 136.7, 30: 113.2, 45: 122.4, 60: 146.4}
+area cm2 vs Z (Y<8, mast zone): {-240: 1.0, -224: 28.2, -208: 21.4, -192: 25.6, -176: 15.4, -160: 19.2, -144: 20.2, -128: 18.2, -112: 18.9, -96: 20.2, -80: 25.9, -64: 32.0, -48: 40.6, -32: 62.4, -16: 46.4, 0: 46.4, 16: 70.7, 32: 62.7, 48: 43.2, 64: 15.0, 80: 9.0, 96: 7.0, 112: 6.4, 128: 2.2}
+area cm2 vs Z (Y<8, mast zone) by X: {-192: 4.8, -176: 25.6, -160: 13.8, -144: 5.1, -128: 8.3, -112: 10.6, -96: 8.0, -80: 12.5, -64: 18.6, -48: 48.6, -32: 91.2, -16: 75.2, 0: 55.0, 16: 35.8, 32: 34.9, 48: 25.0, 64: 27.2, 80: 44.2, 96: 31.7, 112: 14.1, 128: 10.9, 144: 7.0, 160: 18.6, 176: 18.6, 192: 13.1}
+top frame front beam (Y>285, Z>90) area vs X: {-48: 1.3, -32: 1.3, -16: 1.3, 0: 1.3, 16: 1.3, 32: 1.3}
+top frame X>60 (Z>110) area vs Y: {48: 3.5, 64: 9.6, 80: 11.8, 96: 11.8, 112: 7.4, 128: 4.8, 144: 4.2, 160: 3.8, 176: 8.3, 192: 25.6, 208: 32.6, 224: 23.7, 240: 16.6, 256: 6.4, 272: 0.6}
+top frame X<-60 (Z>110) area vs Y: {48: 3.2, 64: 7.7, 80: 12.2, 96: 10.6, 112: 9.3, 128: 5.4, 144: 4.5, 160: 5.1, 176: 12.8, 192: 33.0, 208: 27.2, 224: 12.8, 240: 20.8, 256: 12.8, 272: 0.6}
+all: area vs Y {-96: 10.6, -64: 52.2, -32: 238.6, 0: 85.4, 32: 86.1, 64: 372.8, 96: 88.5, 128: 58.7, 160: 124.8, 192: 188.5, 224: 102.4, 256: 62.2}
+9 of 9 bays, 8 of 8 seat posts, stub joined, 8 of 8 electronics bosses joined to the floor-supported body (M); floating: none; floor contact 8.3 cm2 (M), +X face 10.9 cm2 (M); generated 3016.7 cm3 = 3831 g PETG (E)
+
+--- cuts.txt
+Base + feet (Z < -150): 8.2 cm3 = 10 g (E); X [-104, -48] Y [10, 58] Z [-169, -153]; longest 56; 2 islands
+Bay body -120 (O): 325.1 cm3 = 413 g (E); X [-144, -32] Y [58, 258] Z [-233, -89]; longest 200 OVER 180; 1 islands
+Bay body -150 (S): 274.4 cm3 = 349 g (E); X [-192, -88] Y [58, 210] Z [-137, -33]; longest 152; 1 islands
+Bay body -180 (O): 233.5 cm3 = 297 g (E); X [-200, -128] Y [58, 258] Z [-49, 47]; longest 200 OVER 180; 1 islands
+Bay body -210 (S): 298.0 cm3 = 378 g (E); X [-192, -88] Y [58, 242] Z [31, 143]; longest 184 OVER 180; 1 islands
+Bay body -30 (S): 278.5 cm3 = 354 g (E); X [88, 192] Y [58, 210] Z [-137, -33]; longest 152; 1 islands
+Bay body -60 (O): 294.4 cm3 = 374 g (E); X [32, 144] Y [66, 258] Z [-233, -89]; longest 192 OVER 180; 1 islands
+Bay body -90 (S): 245.2 cm3 = 311 g (E); X [-48, 48] Y [66, 210] Z [-201, -113]; longest 144; 1 islands
+Bay body 0 (O): 258.0 cm3 = 328 g (E); X [128, 208] Y [58, 258] Z [-49, 55]; longest 200 OVER 180; 1 islands
+Bay body 30 (S): 279.0 cm3 = 354 g (E); X [96, 192] Y [58, 226] Z [31, 143]; longest 168; 1 islands
+Hub links (rest, r < 110 or between): 313.3 cm3 = 398 g (E); X [-176, 192] Y [10, 266] Z [-153, 111]; longest 368 OVER 180; 6 islands
+Mast + stub face (Y < 8, |X| < 70): 649.2 cm3 = 825 g (E); X [-72, 72] Y [-70, 10] Z [-233, 143]; longest 376 OVER 180; 2 islands
+Rear frame +X (Y < 8, X > 70): 274.9 cm3 = 349 g (E); X [72, 208] Y [-70, 10] Z [-233, 63]; longest 296 OVER 180; 2 islands
+Rear frame -X (Y < 8, X < -70): 129.0 cm3 = 164 g (E); X [-192, -72] Y [-70, 10] Z [-225, 63]; longest 288 OVER 180; 4 islands
+Seat-post bridge (Y > 270): 126.5 cm3 = 161 g (E); X [-96, 80] Y [266, 290] Z [103, 175]; longest 176; 1 islands
+Top frame +X half (Z > 110): 352.8 cm3 = 448 g (E); X [0, 136] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
+Top frame -X half (Z > 110): 366.1 cm3 = 465 g (E); X [-136, 0] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
+
+--- box_system_topo_v2r2_newlanes.txt
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 89.6 cm3 (lane 1862)
+
+######## g4000
+--- box_system_topo_v2r2_analyse.txt
+components 2 largest cm3 [np.float64(4804.6), np.float64(28.2), np.float64(0.0)] total cm3 4832.8
+components on the floor: [1, 2] main 1
+bay30 bosses: comps [1] JOINED to floor (main)
+bay0 bosses: comps [1] JOINED to floor (main)
+bay-30 bosses: comps [1] JOINED to floor (main)
+bay-60 bosses: comps [1] JOINED to floor (main)
+bay-90 bosses: comps [1] JOINED to floor (main)
+bay-120 bosses: comps [1] JOINED to floor (main)
+bay-150 bosses: comps [1] JOINED to floor (main)
+bay-180 bosses: comps [1] JOINED to floor (main)
+bay-210 bosses: comps [1] JOINED to floor (main)
+bay30 pad: comps [1] JOINED to floor (main)
+bay0 pad: comps [1] JOINED to floor (main)
+bay-30 pad: comps [1] JOINED to floor (main)
+bay-60 pad: comps [1] JOINED to floor (main)
+bay-90 pad: comps [1] JOINED to floor (main)
+bay-120 pad: comps [1] JOINED to floor (main)
+bay-150 pad: comps [1] JOINED to floor (main)
+bay-180 pad: comps [1] JOINED to floor (main)
+bay-210 pad: comps [1] JOINED to floor (main)
+post0: comps [1] JOINED to floor (main)
+post1: comps [1] JOINED to floor (main)
+post2: comps [1] JOINED to floor (main)
+post3: comps [1] JOINED to floor (main)
+post4: comps [1] JOINED to floor (main)
+post5: comps [1] JOINED to floor (main)
+post6: comps [1] JOINED to floor (main)
+post7: comps [1] JOINED to floor (main)
+stub: comps [1] JOINED to floor (main)
+elec boss0: comps [1] JOINED to floor (main)
+elec boss1: comps [2] JOINED to floor 
+elec boss2: comps [1] JOINED to floor (main)
+elec boss3: comps [1] JOINED to floor (main)
+elec boss4: comps [1] JOINED to floor (main)
+elec boss5: comps [1] JOINED to floor (main)
+elec boss6: comps [1] JOINED to floor (main)
+elec boss7: comps [1] JOINED to floor (main)
+floor contact (main body, Z<-228 layer): 15 cells = 9.6 cm2
+floor contact, any material: 10.2 cm2
+floor patches: 7
+  patch 1: 3 cells (2 cm2) X -200..-192 Y 66..90
+  patch 2: 2 cells (1 cm2) X -200..-192 Y 218..234
+  patch 5: 4 cells (3 cm2) X 40..56 Y 146..162
+  patch 6: 2 cells (1 cm2) X 192..200 Y 106..122
+  patch 7: 2 cells (1 cm2) X 192..200 Y 194..210
+main body on the +X face layer: 89.6 cm2 (knocked-over support)
+r 110..200: 3361.3  r>=200: 639.5  r<=110: 832.0
+Y slabs (cm3): {'-66': np.float64(609.8), '-16': np.float64(1020.4), '34': np.float64(484.9), '84': np.float64(613.9), '134': np.float64(808.4), '184': np.float64(891.9), '234': np.float64(394.2), '284': np.float64(9.2), '334': np.float64(0.0)}
+Z slabs (cm3): {'-240': np.float64(218.6), '-190': np.float64(853.5), '-140': np.float64(524.3), '-90': np.float64(435.7), '-40': np.float64(604.7), '10': np.float64(693.8), '60': np.float64(436.7), '110': np.float64(995.8), '160': np.float64(69.6), '210': np.float64(0.0)}
+X slabs (cm3): {'-206': np.float64(611.3), '-156': np.float64(463.4), '-106': np.float64(557.6), '-56': np.float64(657.9), '-6': np.float64(507.9), '44': np.float64(731.6), '94': np.float64(465.9), '144': np.float64(653.8), '194': np.float64(183.3)}
+rear zone Y<-6 (behind the stub face): 887.3  mast zone -6<Y<0: 440.8  Y<74: 2008.6
+top frame Z>110: 1065.5  base Z<-150: 806.4
+bay -210 material in sector r>110: 171.0
+bay -180 material in sector r>110: 336.4
+bay -150 material in sector r>110: 341.5
+bay -120 material in sector r>110: 439.3
+bay -90 material in sector r>110: 303.1
+bay -60 material in sector r>110: 363.5
+bay -30 material in sector r>110: 307.7
+bay 0 material in sector r>110: 419.3
+bay 30 material in sector r>110: 259.1
+bay -> stub connection without the floor layer:
+  bay 30: joined to the stub body
+  bay 0: joined to the stub body
+  bay -30: joined to the stub body
+  bay -60: joined to the stub body
+  bay -90: joined to the stub body
+  bay -120: joined to the stub body
+  bay -150: joined to the stub body
+  bay -180: joined to the stub body
+  bay -210: joined to the stub body
+link band r 150..200 per 15 deg wedge (cm3): {-225: 119.3, -210: 53.8, -195: 107.5, -180: 73.2, -165: 117.8, -150: 54.3, -135: 106.5, -120: 103.9, -105: 90.1, -90: 52.2, -75: 81.4, -60: 96.3, -45: 82.9, -30: 48.6, -15: 106.0, 0: 89.1, 15: 116.7, 30: 107.5, 45: 131.1, 60: 187.4}
+area cm2 vs Z (Y<8, mast zone): {-240: 0.6, -224: 33.0, -208: 23.7, -192: 25.9, -176: 19.8, -160: 19.2, -144: 22.1, -128: 23.4, -112: 29.8, -96: 32.0, -80: 38.4, -64: 41.3, -48: 45.8, -32: 71.4, -16: 62.7, 0: 57.3, 16: 61.8, 32: 69.4, 48: 55.4, 64: 34.6, 80: 31.4, 96: 23.4, 112: 7.4, 128: 0.6}
+area cm2 vs Z (Y<8, mast zone) by X: {-192: 4.8, -176: 21.8, -160: 7.7, -144: 3.8, -128: 9.0, -112: 12.8, -96: 11.5, -80: 23.0, -64: 33.3, -48: 81.6, -32: 117.4, -16: 90.6, 0: 69.1, 16: 65.6, 32: 62.4, 48: 39.4, 64: 33.6, 80: 35.5, 96: 25.3, 112: 12.8, 128: 5.1, 144: 4.5, 160: 30.7, 176: 23.0, 192: 5.8}
+top frame front beam (Y>285, Z>90) area vs X: {-48: 0.6, -32: 1.0, -16: 0.6, 0: 1.0, 16: 1.0, 32: 1.6}
+top frame X>60 (Z>110) area vs Y: {0: 2.2, 16: 11.8, 32: 11.2, 48: 11.8, 64: 12.8, 80: 14.4, 96: 11.5, 112: 8.3, 128: 8.3, 144: 7.7, 160: 8.3, 176: 22.1, 192: 32.3, 208: 30.7, 224: 22.1, 240: 13.4, 256: 5.4}
+top frame X<-60 (Z>110) area vs Y: {0: 2.9, 16: 8.0, 32: 7.0, 48: 9.9, 64: 15.0, 80: 14.4, 96: 15.4, 112: 17.6, 128: 13.1, 144: 7.4, 160: 7.4, 176: 12.5, 192: 23.0, 208: 25.9, 224: 18.6, 240: 10.9, 256: 2.6}
+all: area vs Y {-96: 10.4, -64: 72.2, -32: 293.0, 0: 133.9, 32: 91.4, 64: 134.6, 96: 117.4, 128: 104.5, 160: 208.3, 192: 183.0, 224: 108.0, 256: 53.6}
+9 of 9 bays, 8 of 8 seat posts, stub joined, 8 of 8 electronics bosses joined to the floor-supported body (M); floating: none; floor contact 9.6 cm2 (M), +X face 89.6 cm2 (M); generated 4004.9 cm3 = 5086 g PETG (E)
+
+--- cuts.txt
+Base + feet (Z < -150): 12.8 cm3 = 16 g (E); X [-80, 96] Y [10, 58] Z [-169, -153]; longest 176; 3 islands
+Bay body -120 (O): 271.4 cm3 = 345 g (E); X [-208, -40] Y [58, 258] Z [-233, -113]; longest 200 OVER 180; 3 islands
+Bay body -150 (S): 341.5 cm3 = 434 g (E); X [-208, -112] Y [66, 242] Z [-201, -41]; longest 176; 1 islands
+Bay body -180 (O): 207.9 cm3 = 264 g (E); X [-208, -152] Y [58, 258] Z [-57, 47]; longest 200 OVER 180; 2 islands
+Bay body -210 (S): 160.3 cm3 = 204 g (E); X [-192, -104] Y [58, 218] Z [39, 135]; longest 160; 2 islands
+Bay body -30 (S): 294.4 cm3 = 374 g (E); X [120, 208] Y [58, 210] Z [-201, -41]; longest 160; 1 islands
+Bay body -60 (O): 243.2 cm3 = 309 g (E); X [48, 208] Y [58, 258] Z [-233, -121]; longest 200 OVER 180; 3 islands
+Bay body -90 (S): 161.3 cm3 = 205 g (E); X [-48, 56] Y [58, 210] Z [-233, -153]; longest 152; 1 islands
+Bay body 0 (O): 241.2 cm3 = 306 g (E); X [144, 208] Y [58, 258] Z [-57, 55]; longest 200 OVER 180; 1 islands
+Bay body 30 (S): 235.0 cm3 = 298 g (E); X [96, 200] Y [58, 226] Z [39, 143]; longest 168; 1 islands
+Hub links (rest, r < 110 or between): 368.6 cm3 = 468 g (E); X [-184, 192] Y [10, 266] Z [-153, 111]; longest 376 OVER 180; 8 islands
+Mast + stub face (Y < 8, |X| < 70): 944.6 cm3 = 1200 g (E); X [-72, 72] Y [-70, 10] Z [-233, 135]; longest 368 OVER 180; 1 islands
+Rear frame +X (Y < 8, X > 70): 254.0 cm3 = 323 g (E); X [72, 208] Y [-70, 10] Z [-233, 87]; longest 320 OVER 180; 5 islands
+Rear frame -X (Y < 8, X < -70): 129.5 cm3 = 165 g (E); X [-192, -72] Y [-70, 10] Z [-225, 103]; longest 328 OVER 180; 7 islands
+Seat-post bridge (Y > 270): 110.1 cm3 = 140 g (E); X [-72, 72] Y [266, 290] Z [103, 175]; longest 144; 1 islands
+Top frame +X half (Z > 110): 433.7 cm3 = 551 g (E); X [0, 136] Y [10, 266] Z [111, 183]; longest 256 OVER 180; 1 islands
+Top frame -X half (Z > 110): 423.4 cm3 = 538 g (E); X [-128, 0] Y [10, 266] Z [111, 183]; longest 256 OVER 180; 1 islands
+
+--- box_system_topo_v2r2_newlanes.txt
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.5 cm3 (lane 1862)
+

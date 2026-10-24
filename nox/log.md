@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box_system v2 topo round 2, run-part): sheets as cladding, floor only support: 3000 cm3 stands alone (9/9 bays, 8/8 posts, stub tilt 0.41 mrad, bay rot 1.8 mrad, 9 cm2 floor, 3886 g generated E); 2000 too soft, 4000 2x stiffer +1.2 kg; datum ring not needed; Overseer bays 200 long. `runs/box_system/v2/topo_r2/`.
 - 24 Oct (box_system v2 coarse topology, run-part, PR 96): one connected body at 3000 cm3 (1500 left 5 bays and 6 posts loose): top frame under the funnel 57 %, mast on the rear sheet, Overseer end walls to the side sheets, only 12 cm2 on the floor (sheets carry the box); stub tilt 0.37 mrad; a datum ring to the stub is needed (runs/box_system/v2/topo/, PR body = summary).
 - 24 Oct (hub, Spark: "no need for that"): belt connector measurement dropped from the Spark list; swap arm heads A / B v5 HOLD, superseded by heads v7 (rack and pinion, no belt connector).
 - 24 Oct (box structure system session, box electronics): pack-out hold (catch PR 93, DEFAULT): latch never retracts with the pack out; aborts keep it OUT and K1 closed; A4 always holds (alt: drone bus voltage); A12 reads seat sense first; MATE_CHECK needs I > 100 mA during INSERT first. box-electronics.md.

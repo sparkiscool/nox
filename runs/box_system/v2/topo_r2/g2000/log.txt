@@ -149,3 +149,27 @@ it  64 beta   32 J   1.1005 vol 0.0446 (dil 0.0885 g -0.014) grey  0.9% ch 0.100
 it  65 beta   32 J   1.0907 vol 0.0454 (dil 0.0893 g -0.005) grey  0.9% ch 0.100 worst misuse: knocked over onto +X 1.29e+03 37.7s
 it  66 beta   32 J   1.0816 vol 0.0457 (dil 0.0895 g +0.003) grey  0.9% ch 0.100 worst misuse: knocked over onto +X 1.28e+03 35.7s
 it  67 beta   32 J   1.0799 vol 0.0455 (dil 0.0891 g -0.002) grey  0.9% ch 0.100 worst misuse: knocked over onto +X 1.28e+03 35.9s
+it  68 beta   32 J   1.0771 vol 0.0457 (dil 0.0891 g -0.001) grey  0.9% ch 0.100 worst misuse: knocked over onto +X 1.27e+03 42.2s
+it  69 beta   32 J   1.0747 vol 0.0457 (dil 0.0891 g -0.001) grey  0.9% ch 0.100 worst misuse: knocked over onto +X 1.27e+03 43.1s
+layout: stopped (grey) at it 69, beta 32, 2437 s
+layout: beta 32 done: eroded design 32 bodies, main 97.2%; drawn bodies outside the main body: 27
+{
+ "standing, Overseer seated": 369.18313891344536,
+ "Overseer catch +X+Y diag": 225.64617000564365,
+ "Overseer catch -X-Y diag": 246.1310288286441,
+ "misuse: Overseer motors cut": 222.93224987792783,
+ "XT60 insert at the drone 60 N": 231.1279446639205,
+ "misuse: head stall at the drone 74 N": 195.85772282296176,
+ "XT60 insert at the -90 bay 60 N": 337.50883153225226,
+ "XT60 pull at the -90 bay 50 N": 232.54697635350672,
+ "misuse: head stall at the -90 bay 74 N": 286.86810580015407,
+ "centring at the -90 bay 7.6 N + 1.05 N.m": 406.2790688329477,
+ "XT60 insert at the -120 bay 60 N": 319.0988473372394,
+ "centring at the -120 bay 7.6 N + 1.05 N.m": 414.081402283063,
+ "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 329.42449903449733,
+ "all bays: 60 N insert": 146.89216043446658,
+ "all bays: 43.5 N across": 897.8690146155145,
+ "lifted from below 2 g (sheets no longer carry)": 423.2536751527911,
+ "misuse: set down hard 5 g": 423.25367514965956,
+ "misuse: knocked over onto +X 5 g": 1180.4980689009385
+}

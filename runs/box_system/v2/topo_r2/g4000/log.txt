@@ -147,3 +147,41 @@ it  63 beta   16 J   0.0967 vol 0.0897 (dil 0.1477 g -0.000) grey  2.7% ch 0.100
 it  64 beta   16 J   0.0963 vol 0.0897 (dil 0.1478 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.8 33.7s
 it  65 beta   16 J   0.0959 vol 0.0898 (dil 0.1478 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.6 44.1s
 it  66 beta   16 J   0.0955 vol 0.0898 (dil 0.1478 g +0.001) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.5 33.8s
+it  67 beta   16 J   0.0954 vol 0.0897 (dil 0.1476 g -0.000) grey  2.7% ch 0.100 worst Overseer catch -X-Y diag 42.4 35.7s
+layout: beta 16 done: eroded design 33 bodies, main 98.4%; drawn bodies outside the main body: 24
+it  68 beta   32 J   0.1153 vol 0.0905 (dil 0.1464 g +0.012) grey  1.4% ch 0.100 worst misuse: knocked over onto +X 59.3 40.7s
+it  69 beta   32 J   0.1057 vol 0.0871 (dil 0.1441 g -0.005) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 44.7 43.7s
+it  70 beta   32 J   0.1121 vol 0.0882 (dil 0.1444 g -0.002) grey  1.5% ch 0.100 worst all bays: 43.5 N across 49.8 40.2s
+it  71 beta   32 J   0.1000 vol 0.0878 (dil 0.1443 g -0.006) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 42.5 37.4s
+it  72 beta   32 J   0.0950 vol 0.0889 (dil 0.1450 g -0.002) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 40.3 21.9s
+it  73 beta   32 J   0.0989 vol 0.0889 (dil 0.1451 g -0.001) grey  1.5% ch 0.100 worst misuse: knocked over onto +X 46.2 21.4s
+it  74 beta   32 J   0.0912 vol 0.0891 (dil 0.1452 g -0.001) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 39.9 21.3s
+it  75 beta   32 J   0.0904 vol 0.0891 (dil 0.1452 g -0.001) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 39.7 20.5s
+it  76 beta   32 J   0.0889 vol 0.0891 (dil 0.1451 g -0.002) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 39.5 19.8s
+it  77 beta   32 J   0.0879 vol 0.0894 (dil 0.1454 g -0.000) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 39.2 20.4s
+it  78 beta   32 J   0.0873 vol 0.0895 (dil 0.1454 g -0.000) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 39 21.6s
+it  79 beta   32 J   0.0868 vol 0.0896 (dil 0.1454 g -0.000) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 38.8 22.1s
+it  80 beta   32 J   0.0865 vol 0.0896 (dil 0.1454 g -0.000) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 38.7 21.9s
+it  81 beta   32 J   0.0869 vol 0.0896 (dil 0.1454 g +0.000) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 38.7 20.8s
+layout: stopped (grey) at it 81, beta 32, 2732 s
+layout: beta 32 done: eroded design 23 bodies, main 98.7%; drawn bodies outside the main body: 19
+{
+ "standing, Overseer seated": 2.431359133054891,
+ "Overseer catch +X+Y diag": 11.417967939827395,
+ "Overseer catch -X-Y diag": 14.680975020498511,
+ "misuse: Overseer motors cut": 13.293574322713043,
+ "XT60 insert at the drone 60 N": 4.885086775103123,
+ "misuse: head stall at the drone 74 N": 5.468868803812375,
+ "XT60 insert at the -90 bay 60 N": 6.649838920474377,
+ "XT60 pull at the -90 bay 50 N": 4.800044297380649,
+ "misuse: head stall at the -90 bay 74 N": 7.852049663006805,
+ "centring at the -90 bay 7.6 N + 1.05 N.m": 2.5537782773053177,
+ "XT60 insert at the -120 bay 60 N": 7.138167708149977,
+ "centring at the -120 bay 7.6 N + 1.05 N.m": 2.195507175661079,
+ "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 3.86610686696805,
+ "all bays: 60 N insert": 9.500205337246696,
+ "all bays: 43.5 N across": 7.303790961862789,
+ "lifted from below 2 g (sheets no longer carry)": 1.8866451778687032,
+ "misuse: set down hard 5 g": 1.8866451778689368,
+ "misuse: knocked over onto +X 5 g": 7.940041579248525
+}
