@@ -26,3 +26,13 @@ it   7 beta    1 J   0.4653 vol 0.0390 (dil 0.0470 g -0.054) grey 11.6% ch 0.100
 it   8 beta    1 J   0.1870 vol 0.0367 (dil 0.0444 g -0.107) grey 11.1% ch 0.100 worst Overseer catch -X-Y diag 406 1.8s
 it   9 beta    1 J   0.1542 vol 0.0389 (dil 0.0469 g -0.057) grey 11.8% ch 0.100 worst XT60 insert at the -90 bay 6 365 1.7s
 it  10 beta    1 J   0.1633 vol 0.0370 (dil 0.0446 g -0.103) grey 11.1% ch 0.100 worst Overseer catch -X-Y diag 356 1.7s
+it  11 beta    1 J   0.1030 vol 0.0382 (dil 0.0460 g -0.070) grey 11.3% ch 0.100 worst all bays: 43.5 N across 216 1.8s
+it  12 beta    1 J   0.0775 vol 0.0387 (dil 0.0465 g -0.060) grey 11.4% ch 0.100 worst Overseer catch -X-Y diag 163 1.6s
+it  13 beta    1 J   0.0591 vol 0.0397 (dil 0.0476 g -0.039) grey 11.4% ch 0.100 worst XT60 insert at the -120 bay  128 1.5s
+it  14 beta    1 J   0.0464 vol 0.0403 (dil 0.0482 g -0.026) grey 11.3% ch 0.100 worst Overseer catch -X-Y diag 97 1.8s
+it  15 beta    1 J   0.0393 vol 0.0410 (dil 0.0490 g -0.010) grey 11.4% ch 0.100 worst Overseer catch -X-Y diag 79.9 1.7s
+it  16 beta    1 J   0.0354 vol 0.0412 (dil 0.0492 g +0.000) grey 11.2% ch 0.100 worst Overseer catch -X-Y diag 72.5 1.7s
+it  17 beta    1 J   0.0335 vol 0.0411 (dil 0.0489 g -0.005) grey 11.0% ch 0.100 worst Overseer catch -X-Y diag 68.4 1.8s
+it  18 beta    1 J   0.0310 vol 0.0411 (dil 0.0489 g -0.005) grey 10.8% ch 0.100 worst Overseer catch -X-Y diag 63.3 1.8s
+it  19 beta    1 J   0.0288 vol 0.0412 (dil 0.0489 g -0.005) grey 10.6% ch 0.100 worst Overseer catch -X-Y diag 58.6 1.7s
+it  20 beta    1 J   0.0267 vol 0.0412 (dil 0.0489 g -0.005) grey 10.5% ch 0.100 worst Overseer catch -X-Y diag 54.4 1.6s
