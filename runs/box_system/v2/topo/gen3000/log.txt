@@ -165,3 +165,29 @@ it  68 beta   16 J  50.7153 vol 0.0715 (dil 0.1564 g -0.001) grey  1.9% ch 0.100
 layout: beta 16 done: eroded design 6 bodies, main 99.3%; drawn bodies outside the main body: 5
 it  69 beta   32 J 332.3819 vol 0.0718 (dil 0.1597 g +0.018) grey  0.8% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 30.1s
 it  70 beta   32 J 332.4015 vol 0.0675 (dil 0.1562 g -0.004) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 30.8s
+it  71 beta   32 J 332.3591 vol 0.0687 (dil 0.1565 g -0.014) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 38.4s
+it  72 beta   32 J 332.3325 vol 0.0708 (dil 0.1583 g -0.003) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 31.0s
+it  73 beta   32 J 332.3205 vol 0.0711 (dil 0.1585 g -0.002) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 31.9s
+it  74 beta   32 J 332.3111 vol 0.0713 (dil 0.1586 g -0.001) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 37.0s
+it  75 beta   32 J 332.3024 vol 0.0714 (dil 0.1586 g -0.001) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 33.5s
+it  76 beta   32 J 332.2973 vol 0.0716 (dil 0.1586 g +0.003) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 36.2s
+it  77 beta   32 J 332.2959 vol 0.0709 (dil 0.1580 g -0.000) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 32.3s
+it  78 beta   32 J 332.2916 vol 0.0711 (dil 0.1580 g -0.000) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 35.4s
+layout: stopped (grey) at it 78, beta 32, 2517 s
+layout: beta 32 done: eroded design 6 bodies, main 99.3%; drawn bodies outside the main body: 5
+{
+ "standing, Overseer seated": 2.351010989576919,
+ "Overseer catch +X+Y diag": 6.48928837702852,
+ "Overseer catch -X-Y diag": 16.265402547430483,
+ "misuse: Overseer motors cut": 7.287211106423746,
+ "XT60 insert at the drone 60 N": 10.015794596086558,
+ "XT60 insert at the -90 bay 60 N": 8.459964249387077,
+ "XT60 pull at the -90 bay 50 N": 9.740337882058228,
+ "XT60 insert at the -120 bay 60 N": 14.571549793658242,
+ "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 5.576388414059869,
+ "all bays: 60 N insert": 17.97654958513525,
+ "all bays: 43.5 N across": 16.564867657543246,
+ "lifted by the side sheets 2 g": 1.7994485850749218,
+ "misuse: set down hard 5 g": 1.8632001306369441,
+ "misuse: knocked over onto +X 5 g": 14.260158339838997
+}
