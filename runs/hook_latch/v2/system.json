@@ -136,17 +136,17 @@
  "system_check": {
   "pass_out": true,
   "pass_in": true,
-  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +x/funnel panel B +y), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 665 g (E), CG [-0.0, 167.0, 198.2] (E, no cg_ref)",
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +x/funnel panel B +y), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 665 g (E), CG [-0.0, 165.0, 198.2] (E, no cg_ref)",
   "fit_fail_pairs": [],
   "compact": {
    "bbox_min": [
     -168.39,
-    -1.39,
+    -3.39,
     154.1
    ],
    "bbox_max": [
     168.39,
-    335.39,
+    333.39,
     232.5
    ],
    "extents_mm": [
