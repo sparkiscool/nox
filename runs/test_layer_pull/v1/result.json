@@ -1,0 +1,62 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "file": "print/test_layer_pull_v1.stl",
+ "mass_g": 28.57,
+ "mass_tag": "M",
+ "solid_ok": true,
+ "solid": "print/test_layer_pull_v1.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [14759.1], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}",
+ "bed_face": "plate bottom (as saved)",
+ "bed_contact_mm2": 2605.0,
+ "extents": [
+  90.0,
+  30.0,
+  38.2
+ ],
+ "predict": {
+  "section": "3.6 x 3.6 gauge, 8.0 long",
+  "hand_break_N": 330.5,
+  "hand": "F = Zt A = 25.5 x 12.96 (E)",
+  "fe": {
+   "h1.0": {
+    "h": 1.0,
+    "inlayer": 0.037,
+    "across": 0.09,
+    "worst": 0.09,
+    "at": [
+     43.5,
+     16.5,
+     17.5
+    ],
+    "index_at_ref": 0.09,
+    "F_index1_N": 111.1,
+    "F_break_N": 326.8,
+    "governs": "across layers"
+   },
+   "h0.5": {
+    "h": 0.5,
+    "inlayer": 0.046,
+    "across": 0.114,
+    "worst": 0.114,
+    "at": [
+     43.2,
+     16.8,
+     8.8
+    ],
+    "index_at_ref": 0.114,
+    "F_index1_N": 87.7,
+    "F_break_N": 258.0,
+    "governs": "across layers"
+   }
+  },
+  "predicted_N": 326.8
+ },
+ "calibration": {
+  "layer_pull": {
+   "predicted_N": 326.8,
+   "hand_N": 330.5,
+   "area_mm2": 12.96
+  }
+ },
+ "note": "drawn test coupon (manifold3d), nox/tests/coupons.py; protocol docs/tests.md; numbers dimensions.md T"
+}
