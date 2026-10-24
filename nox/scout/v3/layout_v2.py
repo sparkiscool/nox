@@ -208,7 +208,7 @@ def cone_gap(Q, P, rmax=40.0):
 
 
 # ================================================================ cage ground structure
-RING_T = (0.5,) if os.environ.get("FINE") is None else (0.25, 0.5, 0.75)   # flat nodes: mid only (pass 2, fewer joints)
+RING_T = (0.25, 0.5, 0.75) if os.environ.get("COARSE") is None else (0.5,)   # flat nodes every 50 (more sections, Spark 24 Oct)
 
 
 def ring_nodes(z):
@@ -392,8 +392,8 @@ def _beam(p0, p1, E, G, A, I, J):
 
 
 TPU_NODES = os.environ.get("TPU_NODES") == "1"     # test: TPU socket joints everywhere (too soft for the swap, 24 Oct sweep)
-F_PLATEAU = float(os.environ.get("F_PLATEAU", "110"))   # N, preloaded TPU suspension between cage and core starts to give
-                                                      # (DEFAULT: above swap 60, latch 85, misuse 100 N, so every static case sees it rigid)
+F_PLATEAU = float(os.environ.get("F_PLATEAU", "100"))   # N, preloaded TPU suspension between cage and core starts to give
+                                                      # (DEFAULT: above swap 60 and latch 85 N, so the box sees it rigid; 80 N saves 23 g but sags in the latch)
 
 
 def _members_elems(N, kind, members):
