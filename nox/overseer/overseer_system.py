@@ -90,7 +90,7 @@ _CC = os.path.join(ROOT, "runs", "overseer_cams", "v1", "cam_cover.json")
 _PAIR = json.load(open(_CC))["pairs"][0] if os.path.exists(_CC) else None
 _MIR = [r_ for r_ in json.load(open(_CC))["pairs"] if r_["kind"] == "mirror" and not r_["portrait"]][0] if _PAIR else None
 CAM_YAW, CAM_PITCH = (abs(_MIR["x"][0]), _MIR["x"][1]) if _MIR else (46.8, -13.6)   # mirror landscape pair (DEFAULT; ties the ceiling 54.8 %)
-CAM_Y, CAM_H2 = 66.0, 0.0                # camera centres beside the L2 (outside the socket lugs), at its mid height (DEFAULT)
+CAM_Y, CAM_H2 = 69.0, 0.0                # camera centres beside the L2 (clear of the socket lugs), at its mid height (DEFAULT)
 ROD_R = 1.5                              # 3.0 carbon rods everywhere (G Carbon rods), 11.0 g/m (C)
 ROD_GPM = 11.0e-3
 GUARD_GAP = 12.0                         # guard rods 12 off the swept disks in plan, like the Scout's (G Guard outline)
@@ -271,7 +271,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         cams.append(dict(c=C, fwd=fwd, up=cup, left=Rc[:3, 1].copy(), lens=C + fwd * 9, back=back_, sy=sy))
         cam_meshes.append(cm); plates.append(pl)
         lugp = B - A * (co.SOCK_BACK + 3) + np.array([0, sy * 46.0, 0])            # printed arm from the socket lug to the plate back
-        arms_.append(rod(lugp, C - fwd * 4.5, 6.0))                # printed with the apex block, ends on the plate back
+        ax_ = C - lugp; ax_ /= np.linalg.norm(ax_); sphi = float(np.linalg.norm(np.cross(ax_, fwd)))
+        arms_.append(rod(lugp, C - fwd * (2.0 + 6.0 * sphi), 6.0))  # printed with the apex block: its end disc stops inside the 3 plate
     g["cams"] = cams
     g["cam"] = trimesh.util.concatenate(cam_meshes)
     g["cam_lens"] = cams[0]["lens"]; g["cam_fwd"] = cams[0]["fwd"]; g["cam_up_v"] = cams[0]["up"]
@@ -463,6 +464,8 @@ if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 
                  ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("wheels", trimesh.util.concatenate(g_["wheels"]))]
         print(x_, zB_, l2_clear_margin(g_, g_["B"], items), guard_v_gap(g_))
     json.dump(g_["P"], open(os.path.join(SCR_DBG, "P_debug.json"), "w"), indent=1, default=float)
+    print("camera x arms", [round(overlap(g_["cam"], a__), 1) for a__ in g_["cam_arms"]], "camera x apex", round(overlap(g_["cam"], g_["apex"]), 1),
+          "camera x lugs+seat", round(overlap(g_["cam"], union([c__ for c__ in [g_["apex"]]])), 1))
     sys.exit(0)
 say(f"cage (cage_opt level {os.environ.get('V3_LEVEL', '160')} Hz): " + " ".join(k for k, v in CAGE_TOPO.items() if v)
     + " | " + " ".join(f"{k}:{v}" for k, v in CAGE_SIZES.items()))

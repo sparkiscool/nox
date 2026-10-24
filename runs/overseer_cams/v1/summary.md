@@ -15,4 +15,4 @@ Spark 24 Oct: "two cameras on the overseer that are both pointing forward angled
 
 All pair families reach the ceiling: the two frusta just must not overlap and must stay inside the field. The mirror landscape pair is chosen because it matches the brief (both forward, angled) and needs no roll; it spans 178° across and 73° up/down round 13.6° below the horizon. Alternative: the stacked pair (one up, one down) for more vertical reach when colouring by yaw.
 
-Placement (system model, `nox/overseer/overseer_system.py`, `runs/overseer_system/v2A`): beside the L2 at its mid height (centres y ±66), each set back behind the L2 base plane until it is out of the L2 field (17.4 mm), on a printed arm from its apex socket lug. Rods block 0.6 % of each image (C); props, arms, motors and the L2 are out of both views.
+Placement (system model, `nox/overseer/overseer_system.py`, `runs/overseer_system/v2A`): beside the L2 at its mid height (centres y ±69), each set back behind the L2 base plane until it is out of the L2 field (17.4 mm), on a printed arm from its apex socket lug. Rods block 0.6 % of each image (C); props, arms, motors and the L2 are out of both views.
