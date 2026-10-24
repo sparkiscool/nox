@@ -1,10 +1,10 @@
 {
  "rail_A_v4": {
   "file": "runs/arm_rail/v4/box_arm_rail_A_v4.stl",
-  "mass_g": 58.06,
+  "mass_g": 57.99,
   "extents": [
    23.0,
-   124.0,
+   123.5,
    34.0
   ],
   "bodies": 1,
@@ -19,10 +19,10 @@
  },
  "rail_B_v4": {
   "file": "runs/arm_rail/v4/box_arm_rail_B_v4.stl",
-  "mass_g": 58.06,
+  "mass_g": 57.98,
   "extents": [
    23.0,
-   124.0,
+   123.5,
    34.0
   ],
   "bodies": 1,

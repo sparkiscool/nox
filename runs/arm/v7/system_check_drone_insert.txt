@@ -24,9 +24,9 @@ system_check box swap arm v7: PASS
     post / p80: 424.16 mm³ (E) limit 1000000000.0 contact [manifold3d]
     post / brg1: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     motor_A / shaft_A: 3.79 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    shaft_A / pin16_A: 9.36 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    shaft_A / pin16_A: 9.76 mm³ (E) limit 1000000000.0 contact [manifold3d]
     motor_B / shaft_B: 3.79 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    shaft_B / pin16_B: 9.36 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    shaft_B / pin16_B: 9.76 mm³ (E) limit 1000000000.0 contact [manifold3d]
     motor_axle / shaft_axle: 3.79 mm³ (E) limit 1000000000.0 contact [manifold3d]
     motor_axle / p20_axle: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     shaft_axle / p20_axle: 196.03 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -40,7 +40,7 @@ system_check box swap arm v7: PASS
     railB / wheelsB: 3.81 mm³ (E) limit 1000000000.0 contact [manifold3d]
     railB / tiesB: 2.3 mm³ (E) limit 1000000000.0 contact [manifold3d]
     pin16_A / headA: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    pin16_B / headB: 22.2 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    pin16_B / headB: 23.09 mm³ (E) limit 1000000000.0 contact [manifold3d]
     headA / axlesA: 339.14 mm³ (E) limit 1000000000.0 contact [manifold3d]
     headA / bushA: 130.5 mm³ (E) limit 1000000000.0 contact [manifold3d]
     headA / servo_A: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
@@ -74,7 +74,7 @@ system_check box swap arm v7: PASS
     fingB_B / pack dead: 39.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     pinion_B / servo_B: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     detent_ring / detent_roller: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    detent_arm / detent_roller: 20.89 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    detent_arm / detent_roller: 27.88 mm³ (E) limit 1000000000.0 contact [manifold3d]
     detent_arm / detent_springs: 70.57 mm³ (E) limit 1000000000.0 contact [manifold3d]
     detent_arm / detent_tower: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     detent_springs / detent_tower: 70.57 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -132,8 +132,8 @@ system_check box swap arm v7: PASS
     rec-120 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack charged: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-  mass 5579.72 g (E), CG [-0.13, 120.57, -30.12], offset [-0.13, 120.57, -30.12] = 124.28 mm from [0.0, 0.0, 0.0]
-    hub: 132.41 g (M) at [-4.06, 40.3, 4.56]
+  mass 5580.07 g (E), CG [-0.12, 120.58, -30.13], offset [-0.12, 120.58, -30.13] = 124.29 mm from [0.0, 0.0, 0.0]
+    hub: 129.55 g (M) at [-4.06, 40.45, 4.56]
     stub: 47.68 g (M) at [0.47, 15.91, -0.0]
     stub_bolts: 8.0 g (C) at [0.0, 2.23, -0.0]
     post: 30.36 g (M) at [-0.0, 46.24, 0.0]
@@ -150,8 +150,8 @@ system_check box swap arm v7: PASS
     brg1: 110.0 g (C) at [-0.0, 32.0, -0.0]
     railA: 58.06 g (M) at [-0.0, 54.85, 101.53]
     railB: 58.06 g (M) at [-101.53, 54.85, 0.0]
-    pin16_A: 3.57 g (M) at [53.52, 64.33, 55.02]
-    pin16_B: 3.57 g (M) at [-54.97, 64.33, -53.49]
+    pin16_A: 3.67 g (M) at [53.52, 64.59, 55.02]
+    pin16_B: 3.67 g (M) at [-54.97, 64.59, -53.49]
     headA: 19.77 g (M) at [18.87, 69.22, 116.4]
     wheelsA: 8.35 g (M) at [7.33, 62.75, 126.6]
     axlesA: 20.0 g (C) at [7.33, 65.12, 126.6]
@@ -170,11 +170,11 @@ system_check box swap arm v7: PASS
     fingB_B: 3.89 g (M) at [-32.67, 161.47, -13.69]
     pinion_B: 0.59 g (M) at [-25.0, 165.0, -33.5]
     servo_B: 60.0 g (C) at [-1.05, 176.41, -33.5]
-    detent_ring: 6.74 g (M) at [0.05, 66.87, 0.03]
-    detent_arm: 2.43 g (M) at [5.64, 73.12, -25.18]
-    detent_roller: 1.0 g (C) at [-18.03, 68.8, -18.03]
-    detent_springs: 1.0 g (C) at [31.58, 80.1, -47.64]
-    detent_tower: 0.5 g (C) at [31.58, 79.8, -66.64]
+    detent_ring: 8.69 g (M) at [0.05, 67.0, 0.03]
+    detent_arm: 3.48 g (M) at [12.05, 72.84, -24.56]
+    detent_roller: 1.0 g (C) at [-7.76, 67.9, -28.98]
+    detent_springs: 1.0 g (C) at [36.73, 80.4, -35.1]
+    detent_tower: 0.5 g (C) at [41.65, 80.1, -53.45]
     tiesA: 5.0 g (C) at [0.0, 32.05, 103.0]
     tiesB: 5.0 g (C) at [-103.0, 32.05, -0.0]
     rec30: 53.24 g (M) at [130.5, 157.74, 75.34]
@@ -189,7 +189,7 @@ system_check box swap arm v7: PASS
     pack charged: 210.8 g (E) at [-0.0, 166.36, 150.36] swap
     pack dead: 210.8 g (E) at [-73.76, 166.36, -0.0] swap
   balance PASS (horizontal CG offset <= 1000.0 mm, thrust axis [0.0, 1.0, 0.0]):
-    all: 30.13 mm horizontal, 120.57 mm axial, 5579.72 g
-    no_swap: 38.84 mm horizontal, 116.83 mm axial, 5158.12 g
+    all: 30.13 mm horizontal, 120.58 mm axial, 5580.07 g
+    no_swap: 38.84 mm horizontal, 116.84 mm axial, 5158.47 g
   crash probes: skipped
 System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 259 x 343 mm (E), mass 5580 g (E), CG 30.1 mm off thrust axis (E) [-0.1, +120.6, -30.1], 38.8 mm without swap parts

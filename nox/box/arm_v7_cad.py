@@ -35,6 +35,41 @@ def rail_v4(h="A"):
     return m
 
 
+def pinion_v3(xc=0.0, zc=0.0):
+    """16T m1 v3 (round 3d, concept review r3): v2's involute on the 13.5 face (teeth Y 59.75..73.25, fully on the rack grown down to Y 59.25;
+    10.25 on the rack tail from its step at Y 63), boss Y 55..59.25 (Ø14) with the M3 grub on the round shaft at Y 57.1 for axial hold only:
+    the D-bore on the NEMA's flat (Y 59..74) carries the torque."""
+    import manifold3d as mf
+    from arm_cad import cylY, box
+    import arm_cad as A
+    cs, g = C5.involute_gear_cs(V.PIN_T, V.PIN_M)
+    t0, t1 = V.PIN_TEETH_Y; b0, b1 = V.PIN_BOSS_Y
+    ef = 0.3
+    gear = mf.Manifold.extrude(cs, t1 - t0 - ef).rotate([-90, 0, 0]).translate([0, t0, 0])
+    gear += mf.Manifold.extrude(cs.offset(-0.3, mf.JoinType.Round), ef + 0.01).rotate([-90, 0, 0]).translate([0, t1 - ef - 0.01, 0])
+    p = gear + cylY(0, 0, b0, t0 + 0.01, V.PIN_BOSS_R, 96)                      # the boss runs up into the teeth (one body)
+    r = C5.SHAFT_D / 2 + C5.BORE_CLR / 2; fd = C5.SHAFT_FLAT - C5.SHAFT_D / 2 + C5.BORE_CLR / 2
+    yf = 59.0 + 0.5                                                          # the D-flat from Y 59 (dimensions M), +0.5
+    p -= cylY(0, 0, b0 - 1, t1 + 1, r, 48) - (cylY(0, 0, yf, t1 + 2, r + 1, 48) - box(-fd, r + 2, yf - 1, t1 + 3, -r - 2, r + 2))
+    yg = 0.5 * (b0 + b1)
+    p -= A.cylX(yg, 0, -V.PIN_BOSS_R - 1, 0, C5.GRUB_TAP_D / 2, 24)             # M3 grub from -X onto the round shaft (axial hold)
+    return p.translate([xc, 0, zc]), g
+
+
+def pinion_v3_main(checks=True):
+    from solid_check import solid_check
+    run = os.path.join(ROOT, "runs", "arm_pinion16", "v3"); os.makedirs(run, exist_ok=True)
+    m = pinion_v3()[0]; tm(m).export(os.path.join(run, "arm_pinion16_v3_W.stl"))
+    t = C5.pose_axisY(m, top_down=True); path = os.path.join(run, "box_arm_pinion16_v3.stl"); t.export(path)
+    r = dict(file=os.path.relpath(path, ROOT), mass_g=round(t.volume / 1000 * 1.27, 2), extents=np.round(t.extents, 1).tolist(),
+             face=round(V.PIN_TEETH_Y[1] - V.PIN_TEETH_Y[0], 2), boss=V.PIN_BOSS_Y)
+    if checks:
+        ok, info = solid_check(trimesh.load(path, force="mesh"), pitch=0.1)
+        r["solid_check"] = "PASS" if ok else "FAIL"; r["solid_info"] = {k: info[k] for k in ("bodies_eroded", "necks", "thin_walls") if k in info}
+    json.dump(r, open(os.path.join(run, "checks.json"), "w"), indent=1, default=str); print(r)
+    return r
+
+
 def tie_rods(h="A"):
     """the two rods of rail h in head A's frame (B is mirrored with its rail)"""
     m = None
@@ -62,4 +97,5 @@ def main(checks=False):
 
 
 if __name__ == "__main__":
-    main("checks" in sys.argv)
+    if "pinion" in sys.argv: pinion_v3_main()
+    else: main("checks" in sys.argv)
