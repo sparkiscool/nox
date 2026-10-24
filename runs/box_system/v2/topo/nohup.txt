@@ -77,3 +77,21 @@ it  37 beta    2 J   0.0944 vol 0.0404 (dil 0.0643 g -0.003) grey 19.5% ch 0.100
 it  38 beta    2 J   0.0927 vol 0.0406 (dil 0.0645 g -0.001) grey 19.6% ch 0.100 worst misuse: Overseer motors cut 109 4.8s
 it  39 beta    2 J   0.0920 vol 0.0407 (dil 0.0645 g -0.001) grey 19.7% ch 0.100 worst misuse: Overseer motors cut 108 4.9s
 it  40 beta    2 J   0.0915 vol 0.0407 (dil 0.0645 g -0.001) grey 19.7% ch 0.100 worst misuse: Overseer motors cut 107 4.7s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  41 beta    2 J   0.0910 vol 0.0407 (dil 0.0645 g +0.015) grey 19.7% ch 0.100 worst misuse: Overseer motors cut 107 4.8s
+it  42 beta    2 J   0.0940 vol 0.0398 (dil 0.0634 g -0.002) grey 19.5% ch 0.100 worst misuse: Overseer motors cut 109 5.1s
+it  43 beta    2 J   0.0931 vol 0.0399 (dil 0.0635 g -0.001) grey 19.6% ch 0.100 worst misuse: Overseer motors cut 109 4.9s
+it  44 beta    2 J   0.0927 vol 0.0399 (dil 0.0635 g -0.000) grey 19.7% ch 0.100 worst misuse: Overseer motors cut 108 4.9s
+it  45 beta    2 J   0.0925 vol 0.0399 (dil 0.0635 g -0.000) grey 19.7% ch 0.100 worst misuse: Overseer motors cut 108 4.9s
+it  46 beta    2 J   0.0922 vol 0.0399 (dil 0.0635 g +0.009) grey 19.7% ch 0.100 worst misuse: Overseer motors cut 108 5.0s
+layout: beta 2 done: eroded design 16 bodies, main 96.7%; drawn bodies outside the main body: 12
+it  47 beta    4 J   0.1643 vol 0.0263 (dil 0.0737 g -0.320) grey  3.8% ch 0.100 worst Overseer catch -X-Y diag 213 5.1s
+it  48 beta    4 J   0.1117 vol 0.0299 (dil 0.0814 g -0.250) grey  4.3% ch 0.100 worst misuse: Overseer motors cut 125 5.1s
+it  49 beta    4 J   0.0964 vol 0.0340 (dil 0.0894 g -0.175) grey  5.8% ch 0.100 worst misuse: Overseer motors cut 112 4.9s
+it  50 beta    4 J   0.0882 vol 0.0390 (dil 0.0974 g -0.102) grey  6.1% ch 0.100 worst misuse: Overseer motors cut 105 5.0s
