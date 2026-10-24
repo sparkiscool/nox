@@ -211,6 +211,7 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Scan stick (on the Overseer) | counts inside the Overseer's 2200 g when mounted; its own section sets its slot | | | DEFAULT |
 
 ## T. Strength calibration (24 Oct 2026; protocol `docs/tests.md`, coupons `nox/tests/coupons.py`, readings `tools/calibrate.py`)
+**Spark 24 Oct: use assumed numbers, no tests.** Every factor stays 1.0 (E) and the assumed PETG strengths, XT60 forces, glue bond and rod pull-out stay as tagged; the design margins (index × 0.85 / 2.5, the L index targets) carry the uncertainty. The table is kept in case a test is run later.
 Predicted = break load: the load at which the method's stress reaches the material strength (nox/topo as-built index, misuse class, x 0.85 / 2.5 = 1; grid h 1.0 as the parts use). Factor = measured / predicted; use the min factor: a part's real index = its reported index / factor. Until a row reads P every factor is 1.0 (E) and the attachment rule stands (index ≤ 0.5 at attachments, log 17 Oct). PETG allowables behind the predictions (nox/topo `material.py`): Xt 51 (E), **Zt 25.5 (= 0.5 Xt, E)**, S 25.5 (E) MPa; bond 2.0 MPa (E, `box/box-funnel.md` 7). `tools/calibrate.py` reads the Predicted cell of these rows.
 
 | Key | Test (coupon) | Predicted (N) | Measured (N) | Factor | Tag |
