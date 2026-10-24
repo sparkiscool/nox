@@ -46,7 +46,8 @@ CART = {
     "overseer": dict(x=26.0, h=57.0, l=153.0, l_boss=3.0, tab=76.5, xt60_z=145.8, xt60_y=55.0, cg=(0.0, 35.0, 76.5), mass=720.0, tag="E"),
 }
 BOT_DZ = L.CART_BOT_DZ                    # 15.4: carried cartridge bottom above z0 (gripper datum, unchanged)
-LATCH_BRANCH = "origin/part/battery-latch"
+LATCH_BRANCH = os.environ.get("NOX_LATCH_REF", "bc69935")   # pinned (hub 24 Oct: round 2 runs on the v7 spans; part/battery-latch a5b764f moved the
+                                          # cartridges 8 / 10 toward the hub, the latch shortens them back); NOX_LATCH_REF=origin/part/battery-latch for the tip
 LATCH = dict(source="dimensions E (PR 44, cartridge v4)")
 
 
