@@ -69,3 +69,21 @@ it  57 beta    4 J   1.7301 vol 0.0640 (dil 0.1548 g -0.074) grey 13.6% ch 0.100
 it  58 beta    4 J   1.5623 vol 0.0617 (dil 0.1499 g -0.104) grey 12.4% ch 0.100 worst L2 frame bump +y 100 N 1.88e+03 1.2s
 it  59 beta    4 J   1.2732 vol 0.0621 (dil 0.1506 g -0.100) grey 13.0% ch 0.100 worst switch panel push 100 N 1.7e+03 1.5s
 it  60 beta    4 J   0.8008 vol 0.0632 (dil 0.1516 g -0.094) grey 12.7% ch 0.100 worst L2 frame bump +y 100 N 880 1.5s
+it  61 beta    4 J   0.6306 vol 0.0669 (dil 0.1571 g -0.051) grey 12.8% ch 0.100 worst camera hit +y 50 N 696 1.7s
+it  62 beta    4 J   0.5878 vol 0.0700 (dil 0.1617 g -0.023) grey 13.1% ch 0.100 worst camera hit +y 50 N 667 1.2s
+it  63 beta    4 J   0.5671 vol 0.0719 (dil 0.1641 g -0.009) grey 13.5% ch 0.100 worst camera hit +y 50 N 648 1.5s
+it  64 beta    4 J   0.5560 vol 0.0729 (dil 0.1648 g -0.005) grey 13.5% ch 0.100 worst camera hit +y 50 N 638 1.6s
+it  65 beta    4 J   0.5500 vol 0.0735 (dil 0.1650 g -0.004) grey 13.5% ch 0.100 worst camera hit +y 50 N 632 1.3s
+it  66 beta    4 J   0.5471 vol 0.0742 (dil 0.1650 g +0.024) grey 13.5% ch 0.100 worst camera hit +y 50 N 629 1.2s
+it  67 beta    4 J   0.5486 vol 0.0710 (dil 0.1596 g -0.009) grey 13.1% ch 0.100 worst camera hit +y 50 N 628 1.5s
+it  68 beta    4 J   0.5465 vol 0.0722 (dil 0.1604 g -0.004) grey 13.0% ch 0.100 worst camera hit +y 50 N 628 1.5s
+layout: stopped (beta_stop) at it 68, beta 4, 100 s
+layout: beta 4 done: eroded design 14 bodies, main 95.1%; drawn bodies outside the main body: 10
+coarse stage done: 68 iterations, 104 s, peak 0.555208 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (114.32 cm3); 10.38 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.076 of 43,381 design cells
+layout: WARNING nearly mirrored in y (3.8% of passive cells differ): no symmetry
+layout: 4 drawn bodies (14,290 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (32, 56, 96) = 172,032 elements, 203,550 active dofs; backend direct (direct estimate 2.1 GB, budget 11.8 GB)
