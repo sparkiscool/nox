@@ -178,5 +178,6 @@ solid check: FAIL {"bodies_plain": 16, "bodies_eroded": 1, "eroded_volumes_mm3":
 function check: {'skin_mm3': 80405.9, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
 strength: worst index 1.33 in 'detent springs (pivot 22 N, anchor 8.4 N)' at [25.1, 55.8, -25.1]
 RESULT {"name": "box_hub_v6", "solid_ok": false, "mass_g": 184.37, "worst": 1.329, "function_ok": true, "bodies": 1}
-: worst index 1.33 in 'detent springs (pivot 22 N, anchor 8.4 N)' at [25.1, 55.8, -25.1]
+{'name': 'box_hub_v6', 'solid_ok': False, 'mass_g': 184.37, 'total_s': 3671} 1.329
+25.1]
 RESULT {"name": "box_hub_v6", "solid_ok": false, "mass_g": 184.37, "worst": 1.329, "function_ok": true, "bodies": 1}
