@@ -295,7 +295,8 @@ def candidate_nodes():
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
             (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
             (34, 0, 24.0), (-30, 0, 24.0), (0, 26, 24.0), (0, -26, 24.0),
-            (33.3, 33, -32.0), (33.3, -33, -32.0), (33.3, 33, 4.0), (33.3, -33, 4.0),
+            (35.0, 33, -32.0), (35.0, -33, -32.0), (35.0, 33, 4.0), (35.0, -33, 4.0),   # in the nose legs' face (x 34): 33.3 put rod ends 1.0 off the Radxa (fit 0.4, reduction pass)
+           
             (50.3, 31, 14.0), (50.3, -31, 14.0), (-49.7, 31, 14.0), (-49.7, -31, 14.0)]   # moved with the set (LATCH_DX)   # nose legs and the mount's corners
     for c in core:
         N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
@@ -339,7 +340,7 @@ def rod_ok(p0, p1, kinds, B, is_ring, core_ends=()):
         if (box_dist(inner, lo, hi) < KEEP + ROD_R).any(): return nm
     for nm, m in B.items():
         lo, hi = m.bounds
-        bp = inner if nm in STRICT else body_pts                         # electronics: no rod near them, even at a joint
+        bp = np.vstack([p0, p1, inner, rod_samples(p0, p0 + 0.08 * (p1 - p0)), rod_samples(p1, p1 + 0.08 * (p0 - p1))]) if nm in STRICT else body_pts   # electronics: no rod near them, ends included
         near = box_dist(bp, lo, hi) < KEEP + ROD_R + 0.01
         if near.any():
             q = bp[near]
@@ -556,6 +557,34 @@ def cage_mass(N, kind, members):
     return g
 
 
+OBJ = os.environ.get("OBJ", "mass")           # ESO target: "mass" (grams) or "count" (rod pieces + printed nodes, mass as tiebreak; Spark 24 Oct)
+
+
+def cage_count(N, kind, members):
+    """(rod pieces, printed nodes): two members meeting straight at a node are one rod running through it (a through-socket);
+    a node with nothing but one straight rod through it is no node"""
+    deg = {}
+    for a, b in members:
+        for i, j in ((a, b), (b, a)): deg.setdefault(i, []).append(j)
+    merges, nodes = 0, 0
+    for i, nb in deg.items():
+        u = [(N[j] - N[i]) / np.linalg.norm(N[j] - N[i]) for j in nb]
+        free = list(range(len(nb)))
+        while free:
+            k = free.pop(0)
+            m = next((q for q in free if np.dot(u[k], u[q]) < -0.998), None)
+            if m is not None: free.remove(m); merges += kind[i] != "C"
+        if kind[i] != "C" and not (len(nb) == 2 and np.dot(u[0], u[1]) < -0.998): nodes += 1
+    return len(members) - merges, nodes
+
+
+def cage_cost(N, kind, members):
+    if OBJ == "count":
+        pc, nc = cage_count(N, kind, members)
+        return pc + nc + 0.02 * cage_mass(N, kind, members)
+    return cage_mass(N, kind, members)
+
+
 def mirror_groups(N, members):
     """pair every rod with its mirror in y (the drone is symmetric but for the pogo side), so removals keep the cage
     symmetric; a rod whose mirror is not feasible stays alone"""
@@ -598,12 +627,12 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
     while True:
         pos = {m: j for j, m in enumerate(cur)}
         util = np.max([r["idx"] for r in fe], axis=0)
-        m0 = cage_mass(N, kind, cur)
+        m0 = cage_cost(N, kind, cur)
         gain = []
         for g in groups:
             if g in tried or any(m not in pos for m in g): continue
             rest = [m for m in cur if m not in g]
-            gain.append(((m0 - cage_mass(N, kind, rest)) / (max(util[pos[m]] for m in g) + 0.05), g))
+            gain.append(((m0 - cage_cost(N, kind, rest)) / (max(util[pos[m]] for m in g) + 0.05), g))
         if not gain: break
         if ESO_SEED:                                                       # multi-start: jitter the order (seeded)
             rng_ = np.random.default_rng(ESO_SEED * 100003 + len(cur))
@@ -678,6 +707,29 @@ def probe_repair(N, kind, chosen, members, cases, contact_ok, fe, max_add=40):
         cur, fe = trial, fe2; added += 1
     pr = run_probes(cur)
     return cur, fe, ("PASS" if pr["pass_"] else f"FAIL {pr['worst']['part']} {pr['worst']['margin_mm']} mm dir {pr['worst']['dir_label']}") + f" after {added} added rods"
+
+
+def reduce_pass(N, kind, chosen, mandatory, cases, contact_ok, fe):
+    """final pass (Spark 24 Oct: fewer rods at the end): drop any mirror group whose removal keeps every case feasible,
+    contact-first and the edge probes no worse; fewest pieces + nodes first, then grams"""
+    cur = list(chosen); p0 = run_probes(cur); worst0 = p0["worst"]["margin_mm"] if p0["worst"] else 99.0
+    c0 = cage_count(N, kind, cur); n_try = 0
+    while True:
+        groups = [g for g in mirror_groups(N, cur) if not any(m in mandatory for m in g)]
+        base = cage_cost(N, kind, cur) if OBJ == "count" else sum(cage_count(N, kind, cur))
+        ranked = sorted(groups, key=lambda g: -(base - sum(cage_count(N, kind, [m for m in cur if m not in g]))
+                                                + 0.02 * (cage_mass(N, kind, cur) - cage_mass(N, kind, [m for m in cur if m not in g]))))
+        moved = False
+        for g in ranked:
+            trial = [m for m in cur if m not in g]; n_try += 1
+            f2 = frame_eval(N, kind, trial, cases)
+            if not (feasible(f2) and contact_ok(trial)): continue
+            pr = run_probes(trial); w = pr["worst"]["margin_mm"] if pr["worst"] else 99.0
+            if (p0["pass_"] and not pr["pass_"]) or w < worst0 - 0.05: continue
+            cur, fe, moved = trial, f2, True; break
+        if not moved: break
+    c1 = cage_count(N, kind, cur)
+    return cur, fe, f"{n_try} trials: {len(chosen)} -> {len(cur)} rods, pieces {c0[0]} -> {c1[0]}, printed nodes {c0[1]} -> {c1[1]}"
 
 
 # ================================================================ contact-first
@@ -838,6 +890,9 @@ for opt in PAD_OPTIONS:
         say(f"   ESO: {note}; failing cases: {bad[:6]}"); continue
     chosen, fe, pnote = probe_repair(N, kind, chosen, members, CASES, contact_ok, fe)
     say(f"   probe repair: {pnote}")
+    if os.environ.get("REDUCE", "1") == "1":
+        chosen, fe, rnote = reduce_pass(N, kind, chosen, set(members[j] for j in ring_members), CASES, contact_ok, fe)
+        say(f"   reduction: {rnote}")
     used = sorted(set([i for e in chosen for i in e]))
     cage_pts = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 25)]) for a_, b_ in chosen] + [N[[i for i in used if kind[i] != "C"]]])
     cage_all = np.vstack([cage_pts, wheel_pts()])
@@ -856,7 +911,8 @@ say(f"elapsed {time.time() - t0:.0f} s")
 # ================================================================ report the chosen system
 chosen, fe = best["chosen"], best["fe"]
 used = sorted(set([i for e in chosen for i in e]))
-say(f"cage: {len(chosen)} rods, {sum(np.linalg.norm(N[b] - N[a]) for a, b in chosen) / 1000:.2f} m, "
+PIECES, PNODES = cage_count(N, kind, chosen)
+say(f"cage: {len(chosen)} rods = {PIECES} pieces (straight runs through a node are one rod), {PNODES} printed nodes (count); {sum(np.linalg.norm(N[b] - N[a]) for a, b in chosen) / 1000:.2f} m, "
     f"{len([i for i in used if kind[i] != 'C'])} printed nodes, {len([i for i in used if kind[i] == 'C'])} joints into the core; ~{best['mass']:.0f} g (E)")
 say("cases (frame model, F): worst rod index / deflection at the load")
 for r in fe:
@@ -909,7 +965,7 @@ R = dict(version="v2 latch refit", date="2026-10-24T23:59", status="DONE", mass_
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
          pads=(dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]) if best["yp"] is not None else None), belly_post=BELLY_POST,
          keepalive="latch plungers onto the two latched +-y wheel nodes (hub DEFAULT)" if not BELLY_POST else "belly post", cage_mass=best["mass"], contact_first=best["cf"][0],
-         contact_vs=best["cf"][1], rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
+         contact_vs=best["cf"][1], pieces=PIECES, printed_nodes=PNODES, obj=OBJ, eso_seed=ESO_SEED, rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
          cases=[dict(case=r["case"], cls=r["cls"], index=r["worst"], defl=r["defl"]) for r in fe],
          core_reactions=[dict(at=N[i].tolist(), F=F, M=M, case=c) for i, (F, M, c) in REAC.items()],
          options=[dict(y=r["yp"], z=r["zp"], mass=r["mass"], worst=max(x["worst"] for x in r["fe"]), contact=r["cf"][0], vs=r["cf"][1]) for r in runs],
