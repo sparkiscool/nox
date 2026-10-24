@@ -1,0 +1,83 @@
+components 2 largest cm3 [np.float64(4804.6), np.float64(28.2), np.float64(0.0)] total cm3 4832.8
+components on the floor: [1, 2] main 1
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
+  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
+  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
+bay30 bosses: comps [1] JOINED to floor (main)
+bay0 bosses: comps [1] JOINED to floor (main)
+bay-30 bosses: comps [1] JOINED to floor (main)
+bay-60 bosses: comps [1] JOINED to floor (main)
+bay-90 bosses: comps [1] JOINED to floor (main)
+bay-120 bosses: comps [1] JOINED to floor (main)
+bay-150 bosses: comps [1] JOINED to floor (main)
+bay-180 bosses: comps [1] JOINED to floor (main)
+bay-210 bosses: comps [1] JOINED to floor (main)
+bay30 pad: comps [1] JOINED to floor (main)
+bay0 pad: comps [1] JOINED to floor (main)
+bay-30 pad: comps [1] JOINED to floor (main)
+bay-60 pad: comps [1] JOINED to floor (main)
+bay-90 pad: comps [1] JOINED to floor (main)
+bay-120 pad: comps [1] JOINED to floor (main)
+bay-150 pad: comps [1] JOINED to floor (main)
+bay-180 pad: comps [1] JOINED to floor (main)
+bay-210 pad: comps [1] JOINED to floor (main)
+post0: comps [1] JOINED to floor (main)
+post1: comps [1] JOINED to floor (main)
+post2: comps [1] JOINED to floor (main)
+post3: comps [1] JOINED to floor (main)
+post4: comps [1] JOINED to floor (main)
+post5: comps [1] JOINED to floor (main)
+post6: comps [1] JOINED to floor (main)
+post7: comps [1] JOINED to floor (main)
+stub: comps [1] JOINED to floor (main)
+elec boss0: comps [1] JOINED to floor (main)
+elec boss1: comps [2] JOINED to floor 
+elec boss2: comps [1] JOINED to floor (main)
+elec boss3: comps [1] JOINED to floor (main)
+elec boss4: comps [1] JOINED to floor (main)
+elec boss5: comps [1] JOINED to floor (main)
+elec boss6: comps [1] JOINED to floor (main)
+elec boss7: comps [1] JOINED to floor (main)
+floor contact (main body, Z<-228 layer): 15 cells = 9.6 cm2
+floor contact, any material: 10.2 cm2
+floor patches: 7
+  patch 1: 3 cells (2 cm2) X -200..-192 Y 66..90
+  patch 2: 2 cells (1 cm2) X -200..-192 Y 218..234
+  patch 5: 4 cells (3 cm2) X 40..56 Y 146..162
+  patch 6: 2 cells (1 cm2) X 192..200 Y 106..122
+  patch 7: 2 cells (1 cm2) X 192..200 Y 194..210
+main body on the +X face layer: 89.6 cm2 (knocked-over support)
+r 110..200: 3361.3  r>=200: 639.5  r<=110: 832.0
+Y slabs (cm3): {'-66': np.float64(609.8), '-16': np.float64(1020.4), '34': np.float64(484.9), '84': np.float64(613.9), '134': np.float64(808.4), '184': np.float64(891.9), '234': np.float64(394.2), '284': np.float64(9.2), '334': np.float64(0.0)}
+Z slabs (cm3): {'-240': np.float64(218.6), '-190': np.float64(853.5), '-140': np.float64(524.3), '-90': np.float64(435.7), '-40': np.float64(604.7), '10': np.float64(693.8), '60': np.float64(436.7), '110': np.float64(995.8), '160': np.float64(69.6), '210': np.float64(0.0)}
+X slabs (cm3): {'-206': np.float64(611.3), '-156': np.float64(463.4), '-106': np.float64(557.6), '-56': np.float64(657.9), '-6': np.float64(507.9), '44': np.float64(731.6), '94': np.float64(465.9), '144': np.float64(653.8), '194': np.float64(183.3)}
+rear zone Y<-6 (behind the stub face): 887.3  mast zone -6<Y<0: 440.8  Y<74: 2008.6
+top frame Z>110: 1065.5  base Z<-150: 806.4
+bay -210 material in sector r>110: 171.0
+bay -180 material in sector r>110: 336.4
+bay -150 material in sector r>110: 341.5
+bay -120 material in sector r>110: 439.3
+bay -90 material in sector r>110: 303.1
+bay -60 material in sector r>110: 363.5
+bay -30 material in sector r>110: 307.7
+bay 0 material in sector r>110: 419.3
+bay 30 material in sector r>110: 259.1
+bay -> stub connection without the floor layer:
+  bay 30: joined to the stub body
+  bay 0: joined to the stub body
+  bay -30: joined to the stub body
+  bay -60: joined to the stub body
+  bay -90: joined to the stub body
+  bay -120: joined to the stub body
+  bay -150: joined to the stub body
+  bay -180: joined to the stub body
+  bay -210: joined to the stub body
+link band r 150..200 per 15 deg wedge (cm3): {-225: 119.3, -210: 53.8, -195: 107.5, -180: 73.2, -165: 117.8, -150: 54.3, -135: 106.5, -120: 103.9, -105: 90.1, -90: 52.2, -75: 81.4, -60: 96.3, -45: 82.9, -30: 48.6, -15: 106.0, 0: 89.1, 15: 116.7, 30: 107.5, 45: 131.1, 60: 187.4}
+area cm2 vs Z (Y<8, mast zone): {-240: 0.6, -224: 33.0, -208: 23.7, -192: 25.9, -176: 19.8, -160: 19.2, -144: 22.1, -128: 23.4, -112: 29.8, -96: 32.0, -80: 38.4, -64: 41.3, -48: 45.8, -32: 71.4, -16: 62.7, 0: 57.3, 16: 61.8, 32: 69.4, 48: 55.4, 64: 34.6, 80: 31.4, 96: 23.4, 112: 7.4, 128: 0.6}
+area cm2 vs Z (Y<8, mast zone) by X: {-192: 4.8, -176: 21.8, -160: 7.7, -144: 3.8, -128: 9.0, -112: 12.8, -96: 11.5, -80: 23.0, -64: 33.3, -48: 81.6, -32: 117.4, -16: 90.6, 0: 69.1, 16: 65.6, 32: 62.4, 48: 39.4, 64: 33.6, 80: 35.5, 96: 25.3, 112: 12.8, 128: 5.1, 144: 4.5, 160: 30.7, 176: 23.0, 192: 5.8}
+top frame front beam (Y>285, Z>90) area vs X: {-48: 0.6, -32: 1.0, -16: 0.6, 0: 1.0, 16: 1.0, 32: 1.6}
+top frame X>60 (Z>110) area vs Y: {0: 2.2, 16: 11.8, 32: 11.2, 48: 11.8, 64: 12.8, 80: 14.4, 96: 11.5, 112: 8.3, 128: 8.3, 144: 7.7, 160: 8.3, 176: 22.1, 192: 32.3, 208: 30.7, 224: 22.1, 240: 13.4, 256: 5.4}
+top frame X<-60 (Z>110) area vs Y: {0: 2.9, 16: 8.0, 32: 7.0, 48: 9.9, 64: 15.0, 80: 14.4, 96: 15.4, 112: 17.6, 128: 13.1, 144: 7.4, 160: 7.4, 176: 12.5, 192: 23.0, 208: 25.9, 224: 18.6, 240: 10.9, 256: 2.6}
+all: area vs Y {-96: 10.4, -64: 72.2, -32: 293.0, 0: 133.9, 32: 91.4, 64: 134.6, 96: 117.4, 128: 104.5, 160: 208.3, 192: 183.0, 224: 108.0, 256: 53.6}
+9 of 9 bays, 8 of 8 seat posts, stub joined, 8 of 8 electronics bosses joined to the floor-supported body (M); floating: none; floor contact 9.6 cm2 (M), +X face 89.6 cm2 (M); generated 4004.9 cm3 = 5086 g PETG (E)

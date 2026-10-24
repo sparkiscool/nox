@@ -132,7 +132,7 @@ system_check box swap arm v7: PASS
     rec-120 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack charged: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-  mass 5592.42 g (E), CG [-0.15, 120.48, -29.94], offset [-0.15, 120.48, -29.94] = 124.14 mm from [0.0, 0.0, 0.0]
+  mass 5589.41 g (E), CG [-0.13, 120.52, -29.98], offset [-0.13, 120.52, -29.98] = 124.19 mm from [0.0, 0.0, 0.0]
     hub: 129.55 g (M) at [-4.06, 40.45, 4.56]
     stub: 47.68 g (M) at [0.47, 15.91, -0.0]
     stub_bolts: 8.0 g (C) at [0.0, 2.23, -0.0]
@@ -148,8 +148,8 @@ system_check box swap arm v7: PASS
     belt_axle: 8.0 g (C) at [16.37, 59.0, -13.26]
     brg0: 110.0 g (C) at [-0.0, 16.0, -0.0]
     brg1: 110.0 g (C) at [-0.0, 32.0, -0.0]
-    railA: 57.99 g (M) at [-0.0, 54.83, 101.63]
-    railB: 57.98 g (M) at [-101.63, 54.83, 0.0]
+    railA: 56.48 g (M) at [-0.0, 54.6, 102.04]
+    railB: 56.48 g (M) at [-102.04, 54.6, 0.0]
     pin16_A: 3.67 g (M) at [53.52, 64.59, 55.02]
     pin16_B: 3.67 g (M) at [-54.97, 64.59, -53.49]
     headA: 25.92 g (M) at [17.25, 70.25, 117.68]
@@ -189,7 +189,7 @@ system_check box swap arm v7: PASS
     pack charged: 210.8 g (E) at [-0.0, 166.36, 150.36] swap
     pack dead: 210.8 g (E) at [-73.76, 166.36, -0.0] swap
   balance PASS (horizontal CG offset <= 1000.0 mm, thrust axis [0.0, 1.0, 0.0]):
-    all: 29.94 mm horizontal, 120.48 mm axial, 5592.42 g
-    no_swap: 38.61 mm horizontal, 116.74 mm axial, 5170.82 g
+    all: 29.98 mm horizontal, 120.52 mm axial, 5589.41 g
+    no_swap: 38.66 mm horizontal, 116.77 mm axial, 5167.81 g
   crash probes: skipped
-System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 259 x 343 mm (E), mass 5592 g (E), CG 29.9 mm off thrust axis (E) [-0.1, +120.5, -29.9], 38.6 mm without swap parts
+System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 259 x 343 mm (E), mass 5589 g (E), CG 30.0 mm off thrust axis (E) [-0.1, +120.5, -30.0], 38.7 mm without swap parts

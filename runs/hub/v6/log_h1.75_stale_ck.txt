@@ -1,0 +1,30 @@
+=== box_hub_v6: h 1.75, generated 40.0 cm3, min member 3.2 mm, cores 4
+box_hub_v6: grid (104, 48, 104) h 1.75 = 519,168 cells; design 144,140 (772.5 cm3), drawn 20,670, void 354,358
+  support default: 3021 cells, 6940 nodes
+  82 system cases from runs/arm/v7/system.json + the detent springs
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+box_hub_v6: grid (56, 24, 56) h 3.5 = 75,264 cells; design 19,146 (820.9 cm3), drawn 2,472, void 53,646
+  support default: 387 cells, 1270 nodes
+  82 system cases from runs/arm/v7/system.json + the detent springs
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (103.24 cm3); 2.74 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.84 cells, erosion depth 1.71 mm; volfrac 0.052 of 19,210 design cells
+layout: WARNING filter radius 1.84 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: 5 drawn bodies (2,408 cells), held solid in every realization; eroded filter: masked
+layout: 83 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (56, 24, 56) = 75,264 elements, 82,587 active dofs; backend direct (direct estimate 0.6 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/.claude/worktrees/agent-ac1296bdad6d13aca/runs/hub/v6/coarse_ck.npz at it 71, beta 4 (already stopped: beta_stop)
+Traceback (most recent call last):
+  File "/home/user/nox/.claude/worktrees/agent-ac1296bdad6d13aca/nox/box/hub_v6_topo.py", line 98, in <module>
+    res = optimise(setup, H, GEN, os.path.abspath(out), "box_hub_v6", settings=Settings(), git=bool(os.environ.get("NOX_GIT")))
+  File "/home/user/nox/.claude/worktrees/agent-ac1296bdad6d13aca/nox/box/../topo/run.py", line 77, in optimise
+    Lc.run(maxit=maxit, checkpoint=ckc, resume=ckc, beta_stop=2, on_checkpoint=hook)
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/nox/.claude/worktrees/agent-ac1296bdad6d13aca/nox/box/../topo/layout.py", line 797, in run
+    return self.final(bi)
+           ~~~~~~~~~~^^^^
+  File "/home/user/nox/.claude/worktrees/agent-ac1296bdad6d13aca/nox/box/../topo/layout.py", line 925, in final
+    f = self.fields(x, beta)
+  File "/home/user/nox/.claude/worktrees/agent-ac1296bdad6d13aca/nox/box/../topo/layout.py", line 569, in fields
+    xh[self.design] = x
+    ~~^^^^^^^^^^^^^
+ValueError: NumPy boolean array indexing assignment cannot assign 28820 input values to the 19210 output values where the mask is true
