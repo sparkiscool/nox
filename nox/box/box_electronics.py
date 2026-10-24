@@ -41,7 +41,7 @@ FIXED = {
 BOARDS = {
     "SKR":     (103.75, 70.25, 25, "spec", "BTT SKR Mini E3 V3: 3 x TMC2209 (heads A, B, axle), Klipper MCU"),
     "PI":      (85.0, 56.0, 35, "spec", "Raspberry Pi 4 B 2 GB + GPIO screw-terminal HAT (stack 35 E)"),
-    "PCA":     (62.5, 25.4, 15, "spec", "PCA9685 16-ch PWM (Adafruit 815 class), I2C 0x40"),
+    "PCA":     (62.5, 25.4, 15, "spec", "PCA9685 16-ch PWM (Adafruit 815 class), I2C 0x60 (A5 bridged)"),
     "RELAY":   (75.0, 55.0, 20, "E", "4-ch 5 V opto relay board, SRD-05VDC-SL-C 10 A 30 VDC"),
     "INA_KA":  (32.0, 22.0, 10, "E", "INA226 module, shunt R010 (2512), I2C 0x41: keep-alive"),
     "INA_S":   (32.0, 22.0, 10, "E", "INA226 module, shunt R010, I2C 0x44: Scout bay -90"),
@@ -51,8 +51,8 @@ BOARDS = {
     "BUCK_5V": (41.0, 26.0, 10, "E", "24 -> 5.1 V 5 A buck (Pololu D36V50F5 class): Pi + logic"),
     "FUSE":    (105.0, 60.0, 35, "E", "6-way blade fuse box with negative bus (12/24 V)"),
     "BUS":     (70.0, 30.0, 20, "E", "3 x Wago 221-415 on tape: 6.0 V servo bus, 5 V logic bus, GND"),
-    "INA_GR":  (32.0, 22.0, 10, "E", "INA226 module, shunt R010, I2C 0x46: gripper servo pair behind K4 (stall cut, heads v7)"),
-    "ADC":     (28.0, 18.0, 8, "E", "ADS1115 16-bit 4-ch ADC module, I2C 0x48: the 4 grip halls (DRV5055A4, 2 per head)"),
+    "INA_GR":  (32.0, 22.0, 10, "E", "INA226 module, shunt R010, I2C 0x40: gripper servo pair behind K4 (stall cut, heads v7)"),
+    "ADC":     (28.0, 18.0, 8, "E", "ADS1115 16-bit 4-ch ADC module at 3.3 V, I2C 0x48: one grip-hall line per head (2 DRV5055A4 at 3.3 V, 3:1 sum)"),
 }
 
 # off-sheet endpoints: name -> ((x, y, z) W, detour E, route)
@@ -124,7 +124,7 @@ NETS = [
     ("steppers A, B, axle", "SKR", "ARM", 12, 26, 1.4, 2.0, 24, "stepper"),
     ("axle hall", "SKR", "ARM", 3, 28, 0.01, 0.01, 5.0, "signal"),
     ("gripper PWM", "PCA", "ARM", 2, 28, 0.01, 0.01, 6.0, "signal"),
-    ("grip halls", "ADC", "ARM", 4, 28, 0.01, 0.01, 5.0, "signal"),   # heads v7: 2 analog halls per head; their 5 V from an LDO on the head off the 6.0 V pair
+    ("grip halls", "ADC", "ARM", 3, 28, 0.01, 0.01, 3.3, "signal"),   # heads v7: H_A, H_B (each head's 2 halls summed 3:1 on the head) + their own 3.3 V, upstream of K4
     ("GND bus to star", "BUS", "FUSE", 1, 18, 1.2, 8.0, 0, "power"),
 ]
 # arm-side lengths of the bundle conductors past the stub exit: box-wiring.md cut list / 1.2 less its 250 E fixed tail
@@ -437,7 +437,7 @@ def schematic_svg(standalone=True):
         "BKA": (190, 260, 150, 50, "pwr", "Keep-alive buck", "13.0 V, CC 3.0 A"),
         "B5": (20, 260, 140, 50, "pwr", "Logic buck", "5.1 V 5 A"),
         "PI": (20, 420, 160, 70, "brd", "Raspberry Pi 4", "Klipper host + boxd"),
-        "PCA": (390, 420, 150, 50, "sig", "PCA9685", "I2C 0x40, OE GPIO4"),
+        "PCA": (390, 420, 150, 50, "sig", "PCA9685", "I2C 0x60, OE GPIO4"),
         "RELAY": (190, 560, 150, 60, "pwr", "Relay 4-ch", "K1 KA, K2 bay S, K3 bay O, K4 grippers"),
         "INAKA": (390, 560, 110, 40, "sig", "INA226 0x41", "keep-alive"),
         "INAS": (520, 560, 110, 40, "sig", "INA226 0x44", "bay S"),
@@ -448,8 +448,8 @@ def schematic_svg(standalone=True):
         "ARM": (850, 150, 160, 120, "off", "Arm (twist bundle)", "3 NEMA17, 2 gripper servos, axle hall"),
         "LATCH": (850, 330, 160, 90, "off", "Hook latch x4", "MG90S + A3144 each"),
         "DRONE": (1040, 600, 120, 120, "off", "Drone", "ideal diode + caps"),
-        "INAGR": (390, 720, 110, 40, "sig", "INA226 0x46", "gripper pair"),
-        "ADC": (560, 720, 110, 40, "sig", "ADS1115 0x48", "4 grip halls"),
+        "INAGR": (390, 720, 110, 40, "sig", "INA226 0x40", "gripper pair"),
+        "ADC": (560, 720, 110, 40, "sig", "ADS1115 0x48", "grip halls, 3.3 V"),
     }
     b = []
 
@@ -500,8 +500,8 @@ def schematic_svg(standalone=True):
     wire("wch", [(1010, 670), (1040, 670)], None)
     wire("w6", [(300, 620), (300, 740), (390, 740)], "K4: 6.0 V gripper pair (twist), stall cut", 1)
     wire("w6", [(500, 740), (520, 740), (520, 712), (820, 712), (820, 262), (850, 262)], None)
-    wire("wsg", [(670, 740), (835, 740), (835, 268), (850, 268)], "4 grip halls (DRV5055, 2 per head)", 0)
-    wire("wsg", [(180, 480), (200, 480), (200, 765), (615, 765), (615, 760)], "I2C to 0x46, 0x48", 1)
+    wire("wsg", [(670, 740), (835, 740), (835, 268), (850, 268)], "grip halls: H per head + 3.3 V (DRV5055 x2 per head)", 0)
+    wire("wsg", [(180, 480), (200, 480), (200, 765), (615, 765), (615, 760)], "I2C to 0x40, 0x48", 1)
     for k in B:
         box(k)
     b.append('<text class="tb" x="20" y="22">Box electronics v1: power and signal (C / E, DEFAULT)</text>')

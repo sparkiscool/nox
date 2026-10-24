@@ -8,177 +8,177 @@
  "mass_g": null,
  "placement": {
   "SKR": {
-   "x": -15.0,
-   "z": 190.0,
+   "x": -22.5,
+   "z": 185.0,
    "turned": false,
    "rect": [
-    -66.9,
-    36.9,
-    154.9,
-    225.1
+    -74.4,
+    29.4,
+    149.9,
+    220.1
    ]
   },
   "PI": {
-   "x": 52.5,
-   "z": 120.0,
+   "x": -117.5,
+   "z": 115.0,
    "turned": false,
    "rect": [
-    10.0,
-    95.0,
-    92.0,
-    148.0
+    -160.0,
+    -75.0,
+    87.0,
+    143.0
    ]
   },
   "PCA": {
-   "x": 115.0,
-   "z": 150.0,
+   "x": -95.0,
+   "z": 182.5,
    "turned": true,
    "rect": [
-    102.3,
-    127.7,
-    118.8,
-    181.2
+    -107.7,
+    -82.3,
+    151.2,
+    213.8
    ]
   },
   "RELAY": {
-   "x": -92.5,
-   "z": 72.5,
+   "x": -112.5,
+   "z": 10.0,
    "turned": false,
    "rect": [
-    -130.0,
-    -55.0,
-    45.0,
-    100.0
+    -150.0,
+    -75.0,
+    -17.5,
+    37.5
    ]
   },
   "INA_KA": {
-   "x": -52.5,
-   "z": 120.0,
-   "turned": false,
+   "x": -82.5,
+   "z": 62.5,
+   "turned": true,
    "rect": [
-    -68.5,
-    -36.5,
-    109.0,
-    131.0
+    -93.5,
+    -71.5,
+    46.5,
+    78.5
    ]
   },
   "INA_S": {
-   "x": -35.0,
-   "z": 72.5,
+   "x": -57.5,
+   "z": 10.0,
    "turned": true,
    "rect": [
-    -46.0,
-    -24.0,
-    56.5,
-    88.5
+    -68.5,
+    -46.5,
+    -6.0,
+    26.0
    ]
   },
   "INA_O": {
-   "x": -147.5,
-   "z": 72.5,
-   "turned": true,
+   "x": -137.5,
+   "z": 55.0,
+   "turned": false,
    "rect": [
-    -158.5,
-    -136.5,
-    56.5,
-    88.5
+    -153.5,
+    -121.5,
+    44.0,
+    66.0
    ]
   },
   "BUCK_KA": {
-   "x": -135.0,
-   "z": 167.5,
-   "turned": true,
+   "x": -5.0,
+   "z": 120.0,
+   "turned": false,
    "rect": [
-    -158.5,
-    -111.5,
-    134.5,
-    200.5
+    -38.0,
+    28.0,
+    96.5,
+    143.5
    ]
   },
   "BUCK_SV": {
    "x": 70.0,
-   "z": 187.5,
-   "turned": true,
+   "z": 185.0,
+   "turned": false,
    "rect": [
-    46.5,
-    93.5,
-    154.5,
-    220.5
+    37.0,
+    103.0,
+    161.5,
+    208.5
    ]
   },
   "BUCK_5V": {
-   "x": -15.0,
-   "z": 120.0,
-   "turned": true,
-   "rect": [
-    -28.0,
-    -2.0,
-    99.5,
-    140.5
-   ]
-  },
-  "FUSE": {
-   "x": -100.0,
-   "z": 7.5,
-   "turned": false,
-   "rect": [
-    -152.5,
-    -47.5,
-    -22.5,
-    37.5
-   ]
-  },
-  "BUS": {
-   "x": -90.0,
+   "x": -127.5,
    "z": 170.0,
    "turned": true,
    "rect": [
-    -105.0,
-    -75.0,
-    135.0,
-    205.0
+    -140.5,
+    -114.5,
+    149.5,
+    190.5
+   ]
+  },
+  "FUSE": {
+   "x": 97.5,
+   "z": 125.0,
+   "turned": false,
+   "rect": [
+    45.0,
+    150.0,
+    95.0,
+    155.0
+   ]
+  },
+  "BUS": {
+   "x": 35.0,
+   "z": 72.5,
+   "turned": false,
+   "rect": [
+    0.0,
+    70.0,
+    57.5,
+    87.5
    ]
   },
   "INA_GR": {
-   "x": -105.0,
-   "z": 117.5,
+   "x": -32.5,
+   "z": 67.5,
    "turned": false,
    "rect": [
-    -121.0,
-    -89.0,
-    106.5,
-    128.5
+    -48.5,
+    -16.5,
+    56.5,
+    78.5
    ]
   },
   "ADC": {
-   "x": 0.0,
-   "z": 70.0,
+   "x": 145.0,
+   "z": 65.0,
    "turned": true,
    "rect": [
-    -9.0,
-    9.0,
-    56.0,
-    84.0
+    136.0,
+    154.0,
+    51.0,
+    79.0
    ]
   }
  },
  "search": {
   "seeds": 12,
-  "best_seed": 4,
-  "best_cost": 38276,
+  "best_seed": 7,
+  "best_cost": 38058,
   "costs": [
-   38276,
-   38734,
-   38806,
-   39135,
-   39145,
-   39534,
-   39536,
-   39697,
-   40218,
-   41613,
-   42009,
-   42258
+   38058,
+   38374,
+   38564,
+   39011,
+   39226,
+   39274,
+   39874,
+   40040,
+   40099,
+   40441,
+   40892,
+   40900
   ],
   "objective": "sum over nets of conductors x (0.25 + I_cont) x route length (DEFAULT)"
  },
@@ -312,7 +312,7 @@
   "min_gap_mm": 6.0,
   "min_gap_pair": [
    "ADC",
-   "mast + kb"
+   "PSU"
   ],
   "ampacity_fail": [],
   "drop_flags": []
@@ -344,14 +344,14 @@
    "I_peak": 11.9,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 274,
-   "cut_mm": 370,
+   "route_mm": 194,
+   "cut_mm": 275,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.034,
-    "peak_V": 0.054,
-    "cont_pct": 0.14,
-    "peak_pct": 0.23
+    "cont_V": 0.024,
+    "peak_V": 0.038,
+    "cont_pct": 0.1,
+    "peak_pct": 0.16
    },
    "fixed_tail_mm": null
   },
@@ -365,14 +365,14 @@
    "I_peak": 6.5,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 144,
-   "cut_mm": 215,
+   "route_mm": 460,
+   "cut_mm": 595,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.025,
-    "peak_V": 0.025,
-    "cont_pct": 0.1,
-    "peak_pct": 0.1
+    "cont_V": 0.079,
+    "peak_V": 0.079,
+    "cont_pct": 0.33,
+    "peak_pct": 0.33
    },
    "fixed_tail_mm": null
   },
@@ -386,14 +386,14 @@
    "I_peak": 5.2,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 445,
-   "cut_mm": 575,
+   "route_mm": 130,
+   "cut_mm": 200,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.06,
-    "peak_V": 0.097,
-    "cont_pct": 0.25,
-    "peak_pct": 0.4
+    "cont_V": 0.017,
+    "peak_V": 0.028,
+    "cont_pct": 0.07,
+    "peak_pct": 0.12
    },
    "fixed_tail_mm": null
   },
@@ -407,14 +407,14 @@
    "I_peak": 3.0,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 178,
-   "cut_mm": 255,
+   "route_mm": 190,
+   "cut_mm": 270,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.022,
+    "cont_V": 0.008,
+    "peak_V": 0.024,
     "cont_pct": 0.03,
-    "peak_pct": 0.09
+    "peak_pct": 0.1
    },
    "fixed_tail_mm": null
   },
@@ -428,13 +428,13 @@
    "I_peak": 2.2,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 95,
-   "cut_mm": 155,
+   "route_mm": 98,
+   "cut_mm": 160,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.001,
     "peak_V": 0.009,
-    "cont_pct": 0.0,
+    "cont_pct": 0.01,
     "peak_pct": 0.04
    },
    "fixed_tail_mm": null
@@ -449,14 +449,14 @@
    "I_peak": 1.8,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 195,
-   "cut_mm": 275,
+   "route_mm": 108,
+   "cut_mm": 170,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.015,
-    "cont_pct": 0.03,
-    "peak_pct": 0.06
+    "cont_V": 0.004,
+    "peak_V": 0.008,
+    "cont_pct": 0.02,
+    "peak_pct": 0.03
    },
    "fixed_tail_mm": null
   },
@@ -470,14 +470,14 @@
    "I_peak": 1.0,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 198,
-   "cut_mm": 280,
+   "route_mm": 270,
+   "cut_mm": 365,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.013,
-    "cont_pct": 0.03,
-    "peak_pct": 0.05
+    "cont_V": 0.009,
+    "peak_V": 0.018,
+    "cont_pct": 0.04,
+    "peak_pct": 0.07
    },
    "fixed_tail_mm": null
   },
@@ -491,14 +491,14 @@
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 138,
-   "cut_mm": 205,
+   "route_mm": 218,
+   "cut_mm": 305,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.009,
-    "cont_pct": 0.02,
-    "peak_pct": 0.07
+    "cont_V": 0.005,
+    "peak_V": 0.014,
+    "cont_pct": 0.04,
+    "peak_pct": 0.11
    },
    "fixed_tail_mm": null
   },
@@ -512,12 +512,12 @@
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 88,
-   "cut_mm": 145,
+   "route_mm": 82,
+   "cut_mm": 140,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.002,
-    "peak_V": 0.006,
+    "peak_V": 0.005,
     "cont_pct": 0.01,
     "peak_pct": 0.04
    },
@@ -533,14 +533,14 @@
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 484,
-   "cut_mm": 625,
+   "route_mm": 571,
+   "cut_mm": 730,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.01,
-    "peak_V": 0.03,
-    "cont_pct": 0.08,
-    "peak_pct": 0.23
+    "cont_V": 0.012,
+    "peak_V": 0.036,
+    "cont_pct": 0.09,
+    "peak_pct": 0.28
    },
    "fixed_tail_mm": null
   },
@@ -554,14 +554,14 @@
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 334,
-   "cut_mm": 445,
+   "route_mm": 236,
+   "cut_mm": 325,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.021,
-    "cont_pct": 0.05,
-    "peak_pct": 0.16
+    "cont_V": 0.005,
+    "peak_V": 0.015,
+    "cont_pct": 0.04,
+    "peak_pct": 0.11
    },
    "fixed_tail_mm": null
   },
@@ -575,14 +575,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 217,
-   "cut_mm": 305,
+   "route_mm": 154,
+   "cut_mm": 225,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.009,
-    "peak_V": 0.019,
-    "cont_pct": 0.05,
-    "peak_pct": 0.11
+    "cont_V": 0.006,
+    "peak_V": 0.013,
+    "cont_pct": 0.04,
+    "peak_pct": 0.08
    },
    "fixed_tail_mm": null
   },
@@ -596,7 +596,7 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 58,
+   "route_mm": 55,
    "cut_mm": 110,
    "ampacity_ok": true,
    "drop": {
@@ -617,14 +617,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 608,
-   "cut_mm": 775,
+   "route_mm": 568,
+   "cut_mm": 725,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.024,
-    "peak_V": 0.052,
-    "cont_pct": 0.14,
-    "peak_pct": 0.31
+    "cont_V": 0.023,
+    "peak_V": 0.049,
+    "cont_pct": 0.13,
+    "peak_pct": 0.29
    },
    "fixed_tail_mm": null
   },
@@ -659,14 +659,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 217,
-   "cut_mm": 305,
+   "route_mm": 154,
+   "cut_mm": 225,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.017,
-    "peak_V": 0.019,
-    "cont_pct": 0.1,
-    "peak_pct": 0.11
+    "cont_V": 0.012,
+    "peak_V": 0.013,
+    "cont_pct": 0.07,
+    "peak_pct": 0.08
    },
    "fixed_tail_mm": null
   },
@@ -680,14 +680,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 55,
-   "cut_mm": 110,
+   "route_mm": 70,
+   "cut_mm": 125,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.004,
-    "peak_V": 0.005,
+    "cont_V": 0.006,
+    "peak_V": 0.006,
     "cont_pct": 0.03,
-    "peak_pct": 0.03
+    "peak_pct": 0.04
    },
    "fixed_tail_mm": null
   },
@@ -701,14 +701,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 366,
-   "cut_mm": 480,
+   "route_mm": 358,
+   "cut_mm": 475,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.029,
+    "cont_V": 0.028,
     "peak_V": 0.031,
     "cont_pct": 0.17,
-    "peak_pct": 0.19
+    "peak_pct": 0.18
    },
    "fixed_tail_mm": null
   },
@@ -743,14 +743,14 @@
    "I_peak": 8.0,
    "rail_V": 6.0,
    "kind": "power",
-   "route_mm": 178,
-   "cut_mm": 255,
+   "route_mm": 148,
+   "cut_mm": 220,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.06,
-    "cont_pct": 0.12,
-    "peak_pct": 0.99
+    "cont_V": 0.006,
+    "peak_V": 0.05,
+    "cont_pct": 0.1,
+    "peak_pct": 0.83
    },
    "fixed_tail_mm": null
   },
@@ -764,14 +764,14 @@
    "I_peak": 3.2,
    "rail_V": 6.0,
    "kind": "power",
-   "route_mm": 225,
-   "cut_mm": 310,
+   "route_mm": 240,
+   "cut_mm": 330,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.003,
-    "peak_V": 0.03,
+    "peak_V": 0.032,
     "cont_pct": 0.05,
-    "peak_pct": 0.5
+    "peak_pct": 0.54
    },
    "fixed_tail_mm": null
   },
@@ -785,14 +785,14 @@
    "I_peak": 5.0,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 100,
-   "cut_mm": 160,
+   "route_mm": 210,
+   "cut_mm": 295,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
-    "peak_V": 0.053,
-    "cont_pct": 0.09,
-    "peak_pct": 0.88
+    "cont_V": 0.011,
+    "peak_V": 0.111,
+    "cont_pct": 0.19,
+    "peak_pct": 1.85
    },
    "fixed_tail_mm": null
   },
@@ -806,14 +806,14 @@
    "I_peak": 5.0,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 58,
-   "cut_mm": 110,
+   "route_mm": 138,
+   "cut_mm": 205,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.03,
-    "cont_pct": 0.05,
-    "peak_pct": 0.51
+    "cont_V": 0.007,
+    "peak_V": 0.073,
+    "cont_pct": 0.12,
+    "peak_pct": 1.21
    },
    "fixed_tail_mm": null
   },
@@ -827,16 +827,16 @@
    "I_peak": 5.0,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 387,
-   "cut_mm": 505,
+   "route_mm": 264,
+   "cut_mm": 360,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.021,
-    "peak_V": 0.205,
-    "cont_pct": 0.34,
-    "peak_pct": 3.42
+    "cont_V": 0.014,
+    "peak_V": 0.14,
+    "cont_pct": 0.23,
+    "peak_pct": 2.34
    },
-   "fixed_tail_mm": 274
+   "fixed_tail_mm": 152
   },
   {
    "net": "latch servo L1",
@@ -848,14 +848,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 460,
-   "cut_mm": 595,
+   "route_mm": 218,
+   "cut_mm": 305,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
-    "peak_V": 0.039,
-    "cont_pct": 0.08,
-    "peak_pct": 0.65
+    "cont_V": 0.002,
+    "peak_V": 0.019,
+    "cont_pct": 0.04,
+    "peak_pct": 0.31
    },
    "fixed_tail_mm": null
   },
@@ -869,14 +869,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 660,
-   "cut_mm": 835,
+   "route_mm": 418,
+   "cut_mm": 545,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.056,
-    "cont_pct": 0.12,
-    "peak_pct": 0.93
+    "cont_V": 0.004,
+    "peak_V": 0.035,
+    "cont_pct": 0.07,
+    "peak_pct": 0.59
    },
    "fixed_tail_mm": null
   },
@@ -890,14 +890,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 230,
-   "cut_mm": 320,
+   "route_mm": 408,
+   "cut_mm": 535,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.002,
-    "peak_V": 0.02,
-    "cont_pct": 0.04,
-    "peak_pct": 0.33
+    "cont_V": 0.004,
+    "peak_V": 0.035,
+    "cont_pct": 0.07,
+    "peak_pct": 0.58
    },
    "fixed_tail_mm": null
   },
@@ -911,14 +911,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 430,
-   "cut_mm": 560,
+   "route_mm": 608,
+   "cut_mm": 775,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
-    "peak_V": 0.036,
-    "cont_pct": 0.08,
-    "peak_pct": 0.61
+    "cont_V": 0.006,
+    "peak_V": 0.052,
+    "cont_pct": 0.11,
+    "peak_pct": 0.86
    },
    "fixed_tail_mm": null
   },
@@ -932,8 +932,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 428,
-   "cut_mm": 555,
+   "route_mm": 262,
+   "cut_mm": 355,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -948,8 +948,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 628,
-   "cut_mm": 795,
+   "route_mm": 462,
+   "cut_mm": 595,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -964,8 +964,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 322,
-   "cut_mm": 430,
+   "route_mm": 498,
+   "cut_mm": 640,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -980,8 +980,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 522,
-   "cut_mm": 670,
+   "route_mm": 698,
+   "cut_mm": 880,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -996,8 +996,8 @@
    "I_peak": 0.001,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 105,
-   "cut_mm": 170,
+   "route_mm": 88,
+   "cut_mm": 145,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1012,14 +1012,14 @@
    "I_peak": 3.5,
    "rail_V": 5.1,
    "kind": "power",
-   "route_mm": 68,
-   "cut_mm": 125,
+   "route_mm": 65,
+   "cut_mm": 120,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.016,
+    "cont_V": 0.006,
+    "peak_V": 0.015,
     "cont_pct": 0.13,
-    "peak_pct": 0.31
+    "peak_pct": 0.3
    },
    "fixed_tail_mm": null
   },
@@ -1033,14 +1033,14 @@
    "I_peak": 0.5,
    "rail_V": 5.1,
    "kind": "power",
-   "route_mm": 125,
-   "cut_mm": 190,
+   "route_mm": 260,
+   "cut_mm": 355,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.002,
-    "peak_V": 0.004,
-    "cont_pct": 0.03,
-    "peak_pct": 0.08
+    "cont_V": 0.003,
+    "peak_V": 0.009,
+    "cont_pct": 0.07,
+    "peak_pct": 0.17
    },
    "fixed_tail_mm": null
   },
@@ -1054,14 +1054,14 @@
    "I_peak": 0.3,
    "rail_V": 5.1,
    "kind": "power",
-   "route_mm": 100,
-   "cut_mm": 160,
+   "route_mm": 210,
+   "cut_mm": 295,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.002,
-    "peak_V": 0.003,
-    "cont_pct": 0.03,
-    "peak_pct": 0.06
+    "cont_V": 0.003,
+    "peak_V": 0.007,
+    "cont_pct": 0.07,
+    "peak_pct": 0.13
    },
    "fixed_tail_mm": null
   },
@@ -1075,8 +1075,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 192,
-   "cut_mm": 275,
+   "route_mm": 110,
+   "cut_mm": 175,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1091,8 +1091,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 92,
-   "cut_mm": 155,
+   "route_mm": 90,
+   "cut_mm": 150,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1107,8 +1107,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 198,
-   "cut_mm": 280,
+   "route_mm": 132,
+   "cut_mm": 200,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1123,8 +1123,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 65,
-   "cut_mm": 120,
+   "route_mm": 78,
+   "cut_mm": 135,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1139,8 +1139,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 112,
-   "cut_mm": 175,
+   "route_mm": 125,
+   "cut_mm": 190,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1155,8 +1155,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 88,
-   "cut_mm": 145,
+   "route_mm": 118,
+   "cut_mm": 185,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1171,8 +1171,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 152,
-   "cut_mm": 225,
+   "route_mm": 180,
+   "cut_mm": 260,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1187,8 +1187,8 @@
    "I_peak": 0.1,
    "rail_V": 5.0,
    "kind": "cable",
-   "route_mm": 138,
-   "cut_mm": 205,
+   "route_mm": 165,
+   "cut_mm": 240,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1203,16 +1203,16 @@
    "I_peak": 2.0,
    "rail_V": 24,
    "kind": "stepper",
-   "route_mm": 569,
-   "cut_mm": 725,
+   "route_mm": 557,
+   "cut_mm": 710,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.213,
-    "peak_V": 0.305,
-    "cont_pct": 0.89,
-    "peak_pct": 1.27
+    "cont_V": 0.209,
+    "peak_V": 0.298,
+    "cont_pct": 0.87,
+    "peak_pct": 1.24
    },
-   "fixed_tail_mm": 281
+   "fixed_tail_mm": 268
   },
   {
    "net": "axle hall",
@@ -1224,11 +1224,11 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 527,
-   "cut_mm": 675,
+   "route_mm": 514,
+   "cut_mm": 660,
    "ampacity_ok": true,
    "drop": null,
-   "fixed_tail_mm": 281
+   "fixed_tail_mm": 268
   },
   {
    "net": "gripper PWM",
@@ -1240,27 +1240,27 @@
    "I_peak": 0.01,
    "rail_V": 6.0,
    "kind": "signal",
-   "route_mm": 484,
-   "cut_mm": 625,
+   "route_mm": 442,
+   "cut_mm": 575,
    "ampacity_ok": true,
    "drop": null,
-   "fixed_tail_mm": 371
+   "fixed_tail_mm": 330
   },
   {
    "net": "grip halls",
    "a": "ADC",
    "b": "ARM",
-   "conductors": 4,
+   "conductors": 3,
    "awg": 28,
    "I_cont": 0.01,
    "I_peak": 0.01,
-   "rail_V": 5.0,
+   "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 288,
-   "cut_mm": 390,
+   "route_mm": 428,
+   "cut_mm": 555,
    "ampacity_ok": true,
    "drop": null,
-   "fixed_tail_mm": 176
+   "fixed_tail_mm": 316
   },
   {
    "net": "GND bus to star",
@@ -1272,21 +1272,21 @@
    "I_peak": 8.0,
    "rail_V": 0,
    "kind": "power",
-   "route_mm": 172,
-   "cut_mm": 250,
+   "route_mm": 115,
+   "cut_mm": 180,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
   }
  ],
  "wire_totals_mm_by_awg": {
-  "18": 5935,
-  "14": 740,
-  "16": 3680,
-  "20": 1190,
-  "22": 8530,
-  "28": 12355,
-  "26": 14475
+  "18": 4995,
+  "14": 550,
+  "16": 4240,
+  "20": 1680,
+  "22": 8290,
+  "28": 12350,
+  "26": 13875
  },
  "budget": {
   "rows": [
