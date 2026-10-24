@@ -1309,7 +1309,7 @@
   [
    "MATE_CHECK",
    "hold the stroke; read INA_KA",
-   "I < 50 mA within 1.0 s (the new pack carries the drone)",
+   "I > 100 mA seen during INSERT, then I < 50 mA within 1.0 s (the new pack carries the drone)",
    1.0,
    "A6 mate fail"
   ],
@@ -1329,7 +1329,7 @@
   ],
   [
    "LATCH_IN",
-   "PCA ch 0..3 to IN",
+   "PCA ch 0..3 to IN, only with a pack mated (pack-out hold)",
    "all 4 halls high within 0.5 s",
    0.5,
    "A11 latch stuck out"
@@ -1384,12 +1384,12 @@
   [
    "A3 keep-alive fault",
    "bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s with the old pack in, or K1 will not open at 0 A",
-   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, never open K1 with the drone on keep-alive"
+   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, K1 and the latch stay as they are (pack-out hold)"
   ],
   [
    "A4 pull / keep-alive lost",
    "INA_KA I < 100 mA at the end of the pull stroke",
-   "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm"
+   "either the pack did not come out or the pads did not make: head B re-inserts what it holds; always the pack-out hold (latch OUT, K1 closed), SWAP_FAIL, alarm (the current cannot prove a mate here)"
   ],
   [
    "A5 stall",
@@ -1425,6 +1425,11 @@
    "A11 latch stuck out",
    "a hall still low 0.5 s after IN",
    "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"
+  ],
+  [
+   "A12 keep-alive at 0 A, pack out",
+   "after PULL, no pack mated, keep-alive I < 50 mA for 2 s",
+   "open K1 and read seat sense: high (drone lifted off) -> latch IN, SWAP_FAIL, alarm; low (drone still seated: pins or K1 / buck / F3 lost) -> latch stays OUT, alarm (catch PR 93)"
   ]
  ]
 }

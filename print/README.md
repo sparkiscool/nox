@@ -22,6 +22,11 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_funnel_panel_B_v7.stl` | 287684 | 363001539b9c |
 | `box_funnel_panel_A_v7_plain.stl` | 154084 | 8021dea5c6a2 |
 | `box_funnel_panel_B_v7_plain.stl` | 154484 | 43190158f0f8 |
+| `box_funnel_panel_A_v9_plain_nx.stl` | 240684 | c40204963433 |
+| `box_funnel_panel_A_v9_plain_px.stl` | 240284 | b5db231cf5d0 |
+| `box_funnel_panel_B_v9_plain_nx.stl` | 149484 | 4f033466db81 |
+| `box_funnel_panel_B_v9_plain_px.stl` | 149084 | 34eef1c9ddc9 |
+| `box_funnel_probe_cap_v9_plain.stl` | 42684 | 3ce3102a8313 |
 | `box_finger_A_for_head_A_v4.stl` | 9084 | 088889b387a2 |
 | `box_finger_A_for_head_B_v4.stl` | 9084 | 466037734cec |
 | `box_finger_B_for_head_A_v4.stl` | 9284 | 5db3beea23f7 |
