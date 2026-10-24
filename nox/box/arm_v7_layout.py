@@ -20,10 +20,12 @@ WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it 
                                         # its shorter tail clears the detent's springs and tower web (the full -63 tail met them, sweep C)
 Y_C7 = 138.0                            # the common grip for both packs (DEFAULT): the Overseer gripped 30 toward its closed end needs Y_C >= 136.8,
                                         # the Scout >= 129.1; 138 brings the free mate pitch to 0.64 / 0.56 deg (175: 1.10 / 1.01) and the box 37 shorter
-DETENT_SPRING_SCALE = 1.18              # the Overseer's 0.59 N.m at a horizontal stop with two springs at 1.25 margin (swap_system, E)
+DETENT_SPRING_SCALE = 1.25              # round 2: the detent only holds the parked arm with the driver off (the Overseer's 0.47..0.59 N.m, E;
+                                        # margin 1.32); every insert and pull keeps the axle driver on (the detent sagged ~2.4 deg under 1 N.m)
 XT60_Z = 7.0                            # the cartridge's XT60 axis 7 from its closed end (DEFAULT, asked of the latch; plug face at its y as before)
 OV_GRIP_OFFSET = 30.0                   # the Overseer's tab line 30 toward the closed end from its swap CG = its drone's thrust axis (Spark B)
-BAYS = dict(overseer=(-60.0, -90.0, -120.0, -150.0), scout=(30.0, 0.0, -30.0, -180.0, -210.0), drone=90.0, pitch=30.0)
+BAYS = dict(overseer=(30.0, -30.0, -90.0, -150.0), scout=(0.0, -60.0, -120.0, -180.0, -210.0), drone=90.0, pitch=30.0)   # round 2 (DEFAULT, to
+                                        # the structure): alternating Overseer / Scout (two Overseer receivers side by side overlap 937 mm3 at R 113)
 PHI_WINDOW = (-300.0, 90.0)             # head A at any bay or the drone, head B at any bay or the drone: one axle window (390 of the loop's 422)
 TIE7 = dict(S6.TIE)                     # the tie rods as v6's alternative (rail end r 128: the stand's arm lane at low Y keeps them inside r 135)
 _DONE = False

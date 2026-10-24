@@ -104,6 +104,10 @@ K_WHEEL = 2.0e3                           # V-wheel on the PETG ridge, per direc
 K_TOOTH_T = 470.0                         # rack on pinion along the rack: NEMA17 holding stiffness ~30 N.m/rad at r 8 (E)
 K_TOOTH_N = 2.0e3                         # separating direction, N/mm (E)
 K_BELT = 200.0                            # axle loop (6 mm GT2, ~140 mm runs), tangential at the 20T, N/mm (E)
+K_AXLE_MOTOR = 472.0e3                    # the powered axle motor's holding stiffness at the arm, N.mm/rad: 17HS19 0.59 N.m x (pi/2) / 1.8 deg x 4^2 (E)
+DETENT_SCALE = 1.25 if STACK == "v7" else 1.0   # v7 springs x1.25 (the parked Overseer, driver off; round 2 DEFAULT)
+AXLE_INSERT = "belt" if STACK == "v7" else "detent"   # v7: the axle driver stays on for inserts and pulls (the detent sags past the lead-ins)
+LEADIN_MM = 3.0                           # the receiver's lead-ins catch +-3 at the cartridge (C, latch); the arm's turn under load must stay inside
 K_DETENT_ROT = 9.0e3                      # detent restoring stiffness 0.55 N.m over ~3.5 deg, N.mm/rad (C/E, detent_kin)
 F_XT60, F_PRELOAD, F_LEADIN = 45.0, 12.0, 3.0      # dimensions I XT60 mate: insert 60 = 45 XT60 + 12 preload + 3 lead-ins (E)
 F_PULL = 50.0                             # pull-out 50 (E): 45 XT60 + 5 latch wedge
@@ -297,7 +301,7 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
     F.node("ax20T", (ax["xc"], 59.0, ax["zc"])); F.beam("axle shaft", "seat axle", "ax20T", SEC["shaft"], E=E_STEEL, G_=G_STEEL, piece="shaft", allow=400.0)
     F.node("ax20T g", (ax["xc"], 59.0, ax["zc"])); F.beam("80T to loop (rigid)", "P80", "ax20T g", SEC["rigid"], E=E_STEEL, G_=G_STEEL, piece="fixed")
     if axle != "none":                                                        # 'none': the stall case, the loop force is applied as a load
-        kb = K_BELT if axle == "belt" else K_DETENT_ROT / r_ax ** 2
+        kb = (1.0 / (1.0 / K_BELT + r_ax ** 2 / K_AXLE_MOTOR)) if axle == "belt" else K_DETENT_ROT * DETENT_SCALE / r_ax ** 2
         kv = np.abs(t_ax) * kb
         F.spring("axle loop" if axle == "belt" else "detent (driver off)", "ax20T", "ax20T g", (kv[0], 0, kv[2], 0, 0, 0), piece="loop")
     # detent tower on the hub (pivot / anchor loads)
@@ -441,6 +445,17 @@ def cases(Y_C=L.Y_C, cart="scout"):
         ("hand on rail A tip 50 N", "misuse", (z["park"], z["park"]), (), "belt", 90.0, None, "50 N in -X (tangential), worst of +-X / +-Y"),
         ("gravity, A horizontal carrying", "sustained", (z["park"], z["park"]), ("A", "B"), "belt", 0.0, None, "self weight, the worst stop for the axle"),
     ]
+    if STACK == "v7":                                                   # round 2 (concept review 3): every bay case at the real bays of this pack,
+        ax = AXLE_INSERT                                                # the axle driver on for every insert and pull (DEFAULT), the drone cases too
+        out = [c if not (c[0].startswith(("insert at a bay", "pull at a bay", "B insert at a bay"))) else None for c in out]
+        out = [c[:4] + ((ax,) if c[4] == "detent" and not c[0].startswith("power cut") else (c[4],)) + c[5:] for c in out if c is not None]
+        for th in S7.BAYS[cart]:
+            out += [(f"insert at bay {th:g} 60 N", "swap", (z["bay"], z["park"]), ("A",), ax, th, swap(F_XT60, F_PRELOAD, -1.0),
+                     f"head A into the bay at {th:g} deg (phi {th:g}), driver on"),
+                    (f"pull at bay {th:g} 50 N", "swap", (z["bay"], z["park"]), ("A",), ax, th, swap(F_XT60, F_PULL - F_XT60, 1.0, lead=False),
+                     f"head A picks the pack at {th:g} deg"),
+                    (f"B insert at bay {th:g} 60 N", "swap", (z["park"], z["bay"]), ("A", "B"), ax, th - 90.0, swap(F_XT60, F_PRELOAD, -1.0, h="B"),
+                     f"head B returns the dead pack into the bay at {th:g} deg (phi {th - 90:g}), A parked carrying")]
     return out
 
 
@@ -524,7 +539,11 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True, guided=True):
         if nm.startswith("power cut"): extra["power_cut"] = pc
         extra["hub"] = hub_interfaces(Fr, u, ef, sf)
         extra["hub_mass"] = {nm: dict(p=Fr.P[Fr.idx[nm]].round(2).tolist(), g=m) for nm, m in Fr.mass.items() if nm in ("H32",)}
-        res.append(dict(case=nm, cls=cls, note=note, mode=mode, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep, gh or "A")))
+        sm = summarise(Fr, info, u, ef, sf, reac, sep, gh or "A")
+        h_ = gh or "A"; r_c = L.Z0_BAY + 5.0 + BOT_DZ + CART[cart]["h"] / 2      # the cartridge's mid radius at a seat
+        turn = abs(sm.get("hub_turn_deg", 0.0)); cap = math.degrees(LEADIN_MM / r_c)
+        extra["arm_turn"] = dict(deg=round(turn, 3), capture_deg=round(cap, 2), at_cartridge_mm=round(math.radians(turn) * r_c, 2), ok=bool(turn <= cap))
+        res.append(dict(case=nm, cls=cls, note=note, mode=mode, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **sm))
         if verbose:
             r = res[-1]
             if "receiver" in r: print(f"{'':38s} lag along the insert {r['pack']['du_mm']:6.2f} (max {LAG_MAX:.1f}), receiver {r['receiver']}")
@@ -793,12 +812,13 @@ def overseer_layout():
     # (30 off the cartridge's own swap CG) or the arm cannot reach it. Both signs (the drone's "behind" in W is the structure's to fix):
     seat = {}
     for sgn, nm in ((1, "+Y (away from the hub)"), (-1, "-Y (toward the hub)")):
-        y0 = L.Y_C - ov["tab"] + sgn * 30.0; y1 = y0 + ov["l"]
+        tab_cg = ov["tab"] + (S7.OV_GRIP_OFFSET if STACK == "v7" else 0.0)            # the tab line on the swap CG (the latch's own)
+        y0 = L.Y_C - tab_cg + sgn * 30.0; y1 = y0 + ov["l"]                              # the grip on the drone's thrust axis, 30 from the CG
         seat[nm] = dict(cartridge_y=(round(y0, 1), round(y1, 1)), closed_end_clear=round(y0 - (85.5 + 1.0), 1), ok=bool(y0 >= 86.5),
                         module_y_end=round(y1 + 1.0, 1), grip_off_cg_mm=30.0, grip_couple_Nm_1g=round(ov["mass"] * G * 30.0 / 1e3, 3),
                         grip_couple_Nm_3g=round(3 * ov["mass"] * G * 30.0 / 1e3, 3), xt60_closed_end_y=round(y0 + 7.0, 1))
     out["drone_seat_offset_30"] = dict(radial_strokes="unchanged (the offset is axial)", Y_C_head=L.Y_C, **seat,
-                                       note="only +Y works at Y_C 175; -Y needs Y_C >= 196.8, which moves the Scout's seat too")
+                                       note=f"only +Y works at Y_C {L.Y_C:g}; -Y puts the closed end inside the carriage hardware")
     r_cg = z["park"] + BOT_DZ + ov["cg"][1]; t_ov = ov["mass"] * G * r_cg / 1e3
     need = 1.25 * (t_ov + DET_OTHER)
     out["detent"] = dict(overseer_gravity_Nm=round(t_ov, 3), hold_2_springs=DET_HOLD, margin_now=round(DET_HOLD / (t_ov + DET_OTHER), 2),
@@ -883,7 +903,8 @@ def _bought_g(nm):
     return 5.0
 
 
-ASM_MODE = "v7:scout:-210:30" if STACK == "v7" else "v6"     # the cycle the assembly file is posed through (arm_kinematics build mode)
+ASM_MODE = "v7:scout:-210:0" if STACK == "v7" else "v6"
+ASM_MODES = (ASM_MODE, "v7:overseer:-150:30") if STACK == "v7" else (ASM_MODE,)   # round 2: the Overseer cycle checked too     # the cycle the assembly file is posed through (arm_kinematics build mode)
 
 
 def kin_setup(mode=None):
@@ -910,12 +931,15 @@ def pose_at(s, part):
     return np.eye(4)
 
 
-def write_assembly(t=0.0):
+def write_assembly(t=0.0, mode=None, path=None):
     """nox/box/box_swap_arm.assembly.json (this session owns it): every arm part in its pose at cycle time t (park), meshes exported
     once to runs/arm/v6/asm/ (W, decimated), the bay modules as one mesh posed 9 times, the carried cartridges (latch v1) as bought."""
     import assembly as AS, trimesh
-    K, P = kin_setup()
-    os.makedirs(ASM_DIR, exist_ok=True)
+    global ASM_MODE
+    mode = mode or ASM_MODE; ASM_MODE = mode; pack = mode.split(":")[1] if mode.startswith("v7") else "scout"
+    K, P = kin_setup(mode)
+    adir = ASM_DIR if pack == "scout" else ASM_DIR + "_" + pack
+    os.makedirs(adir, exist_ok=True)
     T, carts, st = K.transforms(t)
     parts = []
     for nm, p in P.items():
@@ -923,27 +947,27 @@ def write_assembly(t=0.0):
             k = int(nm[3:]); a = L.SCOUT_BAYS[k]
             parts.append(dict(name=nm, role="structure", mesh="models/box_baymod_v4i_W.obj", pose=K.rotY(90.0 - a).tolist(), material="PETG", tag="M",
                               owner="box bay modules", version="v4i", note="context (fixed)")); continue
-        path = os.path.join(ASM_DIR, f"{nm}.stl"); m = p.mesh
+        path_ = os.path.join(adir, f"{nm}.stl"); m = p.mesh
         if len(m.faces) > 40000:
             import fast_simplification as fsimp, trimesh
             v_, f_ = fsimp.simplify(np.asarray(m.vertices, np.float32), np.asarray(m.faces), 1.0 - 40000.0 / len(m.faces)); m = trimesh.Trimesh(v_, f_)
-        m.export(path)
+        m.export(path_)
         role = "bought" if not p.printed else "structure"
-        d = dict(name=nm, role=role, mesh=os.path.relpath(path, HERE), pose=np.asarray(T.get(nm, np.eye(4))).tolist(), material="TPU" if nm.startswith("strip") else "PETG",
+        d = dict(name=nm, role=role, mesh=os.path.relpath(path_, HERE), pose=np.asarray(T.get(nm, np.eye(4))).tolist(), material="TPU" if nm.startswith("strip") else "PETG",
                  tag="M" if p.printed else "C", owner="swap arm system" if not nm.startswith(("bay", "strip")) else "box bay modules",
                  source="nox/box/arm_kinematics.py build_parts_v6", moves="nox/box/swap_system.py:pose_at", note=p.name)
         if not p.printed: d["mass_g"] = _bought_g(nm)
         parts.append(d)
     for cn in ("pack charged", "pack dead"):                               # both always (the dead one sits in the drone until it lands)
-        path = os.path.join(ASM_DIR, f"{cn.replace(' ', '_')}.stl"); K.tm(K.CART_LOCAL(4.0)).export(path)   # gripped: bolts in (the sweep has every squeeze)
+        path_ = os.path.join(adir, f"{cn.replace(' ', '_')}.stl"); K.tm(K.CART_LOCAL(4.0)).export(path_)   # gripped: bolts in (the sweep has every squeeze)
         own = carts[cn][2] if cn in carts else "drone (before landing)"
-        parts.append(dict(name=cn, role="bought", swap=True, mesh=os.path.relpath(path, HERE), pose=np.asarray(pose_at(t, dict(name=cn))).tolist(),
-                          mass_g=CART["scout"]["mass"], tag="E", owner="battery latch (latch_assembly)", source=LATCH["source"],
+        parts.append(dict(name=cn, role="bought", swap=True, mesh=os.path.relpath(path_, HERE), pose=np.asarray(pose_at(t, dict(name=cn))).tolist(),
+                          mass_g=CART[pack]["mass"], tag="E", owner="battery latch (latch_assembly)", source=LATCH["source"],
                           moves="nox/box/swap_system.py:pose_at", note=own))
     carts = {"pack charged": None, "pack dead": None}
     contact = [[a, b, 1e9] for a, b in K.ALLOWED if a in P and b in P]
     recs = sorted(nm for nm in P if nm.startswith("rec"))                   # bay to bay: the box structure's fit, reported apart (receivers 76 wide at 30 deg)
-    contact += [[a_, b_, 1e9] for i, a_ in enumerate(recs) for b_ in recs[i + 1:]]
+    contact += [[a_, b_, 0.5] for i, a_ in enumerate(recs) for b_ in recs[i + 1:]]   # round 2: bay to bay held to the fit tolerance
     for cn in carts:
         for h in "AB": contact += [[cn, f"fingA_{h}", 1e9], [cn, f"fingB_{h}", 1e9]]
         contact += ([[cn, f"bay{K.demo_idx()}", 0.5]] if f"bay{K.demo_idx()}" in P else []) + [[cn, nm, 0.5] for nm in P if nm.startswith("rec")]
@@ -954,11 +978,11 @@ def write_assembly(t=0.0):
                "(swap_system.pose_at). No cage (a ground station's arm): cage first and probes do not apply. The CG line includes the fixed parts (report only, "
                "cg_tol 1000): the arm's balance is the turning parts' unbalance about the axle, swap_system.run_checks.",
                cg_ref=[0.0, 0.0, 0.0], thrust_axis=[0.0, 1.0, 0.0], cg_tol_mm=1000.0, fit_tol_mm3=0.5, contact_pairs=contact, probes=False)
-    a.save(ASM)
+    a.save(path or (ASM if pack == "scout" else os.path.join(OUT, f"box_swap_arm_{pack}.assembly.json")))
     return a
 
 
-DET_HOLD = 2 * 0.390 * (S7.DETENT_SPRING_SCALE if STACK == "v7" else 1.0)   # N.m, two springs (detent CHOSEN_V5 / V6, E; v7 springs x1.18)
+DET_HOLD = 2 * 0.390 * (S7.DETENT_SPRING_SCALE if STACK == "v7" else 1.0)   # N.m, two springs (detent CHOSEN_V5 / V6, E; v7 springs x1.25)
 DET_OTHER = 0.06 + 0.088                   # seals + the unpowered axle motor's cogging through the 4:1 (detent.disturbance, E)
 
 
@@ -1014,24 +1038,28 @@ ACCESS_AT = dict(bay_pick=("A",), bay_return=("B",))   # head A is out at the ba
 
 
 def run_checks():
-    """system_check on the assembly file at every pose (fit, compact, mass / CG; the CG offset from the axle is the arm's unbalance)."""
-    import assembly as AS
-    a = write_assembly(0.0)
+    """system_check on the assembly file at every pose of every cycle in ASM_MODES (fit, compact, access, mass / CG; the arm's own compact and
+    unbalance in arm_only)."""
+    import assembly as AS, system_check as SC
     out = {}
-    for pn, t in POSES.items():
-        b = a.at(**{nm: t for nm in a.names if a.part(nm).get("moves")}) if t else a
-        if pn in ACCESS_AT: b.data["access"] = access_paths(t, ACCESS_AT[pn])
-        res = b.check(n_dirs=200)
-        if pn in ACCESS_AT:
-            print(" ", pn, "access", {p["name"]: (p.get("pass_"), p.get("blocked_by")) for p in res["access"]["paths"]} if res["access"].get("paths") else res["access"])
-        open(os.path.join(OUT, f"system_check_{pn}.txt"), "w").write(__import__("system_check").report(res))
-        keep = {k: res[k] for k in ("name", "pass", "summary", "compact")}
-        keep["fit_fail"] = [p for p in res["fit"]["pairs"] if not p["pass_"]]
-        keep["mass_g"] = res["mass_cg"]["mass_g"]; keep["cg"] = res["mass_cg"]["cg"]
-        keep["arm_only"] = arm_only(b, t)
-        json.dump(keep, open(os.path.join(OUT, f"system_check_{pn}.json"), "w"), indent=1, default=float)
-        out[pn] = keep
-        print(pn, res["summary"], "PASS" if res["pass"] else "FAIL", keep["arm_only"])
+    for mode in ASM_MODES:
+        pack = mode.split(":")[1] if mode.startswith("v7") else "scout"
+        a = write_assembly(0.0, mode)
+        for pn0, t in POSES.items():
+            pn = pn0 if pack == "scout" else f"{pack}_{pn0}"
+            b = a.at(**{nm: t for nm in a.names if a.part(nm).get("moves")}) if t else a
+            if pn0 in ACCESS_AT: b.data["access"] = access_paths(t, ACCESS_AT[pn0])
+            res = b.check(n_dirs=200)
+            if pn0 in ACCESS_AT:
+                print(" ", pn, "access", {p["name"]: (p.get("pass_"), p.get("blocked_by")) for p in res["access"]["paths"]} if res["access"].get("paths") else res["access"])
+            open(os.path.join(OUT, f"system_check_{pn}.txt"), "w").write(SC.report(res))
+            keep = {k: res[k] for k in ("name", "pass", "summary", "compact")}
+            keep["fit_fail"] = [p for p in res["fit"]["pairs"] if not p["pass_"]]
+            keep["mass_g"] = res["mass_cg"]["mass_g"]; keep["cg"] = res["mass_cg"]["cg"]
+            keep["arm_only"] = arm_only(b, t)
+            json.dump(keep, open(os.path.join(OUT, f"system_check_{pn}.json"), "w"), indent=1, default=float)
+            out[pn] = keep
+            print(pn, res["summary"], "PASS" if res["pass"] else "FAIL", keep["arm_only"])
     return out
 
 

@@ -1,0 +1,290 @@
+[
+ {
+  "pack": "overseer",
+  "bay": 30.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": 30.0,
+  "gravity_Nm": 0.972
+ },
+ {
+  "pack": "overseer",
+  "bay": 30.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.465
+ },
+ {
+  "pack": "overseer",
+  "bay": 30.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.425
+ },
+ {
+  "pack": "overseer",
+  "bay": 30.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -60.0,
+  "gravity_Nm": 0.797
+ },
+ {
+  "pack": "overseer",
+  "bay": -30.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -30.0,
+  "gravity_Nm": 0.812
+ },
+ {
+  "pack": "overseer",
+  "bay": -30.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.465
+ },
+ {
+  "pack": "overseer",
+  "bay": -30.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.425
+ },
+ {
+  "pack": "overseer",
+  "bay": -30.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -120.0,
+  "gravity_Nm": 0.917
+ },
+ {
+  "pack": "overseer",
+  "bay": -90.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -90.0,
+  "gravity_Nm": 0.16
+ },
+ {
+  "pack": "overseer",
+  "bay": -90.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.465
+ },
+ {
+  "pack": "overseer",
+  "bay": -90.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.425
+ },
+ {
+  "pack": "overseer",
+  "bay": -90.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -180.0,
+  "gravity_Nm": 0.12
+ },
+ {
+  "pack": "overseer",
+  "bay": -150.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -150.0,
+  "gravity_Nm": 0.972
+ },
+ {
+  "pack": "overseer",
+  "bay": -150.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.465
+ },
+ {
+  "pack": "overseer",
+  "bay": -150.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.425
+ },
+ {
+  "pack": "overseer",
+  "bay": -150.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -240.0,
+  "gravity_Nm": 0.797
+ },
+ {
+  "pack": "scout",
+  "bay": 0.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": 0.0,
+  "gravity_Nm": 0.252
+ },
+ {
+  "pack": "scout",
+  "bay": 0.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.033
+ },
+ {
+  "pack": "scout",
+  "bay": 0.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.008
+ },
+ {
+  "pack": "scout",
+  "bay": 0.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -90.0,
+  "gravity_Nm": 0.212
+ },
+ {
+  "pack": "scout",
+  "bay": -60.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -60.0,
+  "gravity_Nm": 0.012
+ },
+ {
+  "pack": "scout",
+  "bay": -60.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.033
+ },
+ {
+  "pack": "scout",
+  "bay": -60.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.008
+ },
+ {
+  "pack": "scout",
+  "bay": -60.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -150.0,
+  "gravity_Nm": 0.21
+ },
+ {
+  "pack": "scout",
+  "bay": -120.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -120.0,
+  "gravity_Nm": 0.265
+ },
+ {
+  "pack": "scout",
+  "bay": -120.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.033
+ },
+ {
+  "pack": "scout",
+  "bay": -120.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.008
+ },
+ {
+  "pack": "scout",
+  "bay": -120.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -210.0,
+  "gravity_Nm": 0.002
+ },
+ {
+  "pack": "scout",
+  "bay": -180.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -180.0,
+  "gravity_Nm": 0.252
+ },
+ {
+  "pack": "scout",
+  "bay": -180.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.033
+ },
+ {
+  "pack": "scout",
+  "bay": -180.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.008
+ },
+ {
+  "pack": "scout",
+  "bay": -180.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -270.0,
+  "gravity_Nm": 0.212
+ },
+ {
+  "pack": "scout",
+  "bay": -210.0,
+  "t": 3.0,
+  "what": "A grips at the bay",
+  "phi": -210.0,
+  "gravity_Nm": 0.139
+ },
+ {
+  "pack": "scout",
+  "bay": -210.0,
+  "t": 7.0,
+  "what": "B pulls at the drone",
+  "phi": 0.0,
+  "gravity_Nm": 0.033
+ },
+ {
+  "pack": "scout",
+  "bay": -210.0,
+  "t": 11.5,
+  "what": "A inserts at the drone",
+  "phi": 90.0,
+  "gravity_Nm": 0.008
+ },
+ {
+  "pack": "scout",
+  "bay": -210.0,
+  "t": 18.5,
+  "what": "B inserts at the bay",
+  "phi": -300.0,
+  "gravity_Nm": 0.243
+ }
+]
