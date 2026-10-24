@@ -70,6 +70,11 @@ def bay_modules(bays):
 
 
 def collar():
+    """the collar in the seat frame: the funnel panel v7 run's collar mesh (runs/funnel_panel/v7/collar_v7_seat_frame.stl,
+    or COLLAR_STL), else funnel_panel_v7.collar_world, else the v6 collar."""
+    for pth in (os.environ.get("COLLAR_STL"), os.path.join(ROOT, "runs", "funnel_panel", "v7", "collar_v7_seat_frame.stl")):
+        if pth and os.path.exists(pth):
+            return man(trimesh.load(pth, force="mesh")), "collar v7 (4 latched + 4 plain panels)"
     try:
         F = importlib.import_module("funnel_panel_v7")
         m = F.collar_world() if hasattr(F, "collar_world") else None
@@ -132,8 +137,8 @@ def main(video=False):
     sc = Scene("Nox box: whole assembly", "stand, ring, bays, collar + hook latch, arm v5, electronics; one swap cycle")
     P, sheets, bays = stand_parts()
     for k, m in P.items(): sc.part(k, tm(m), group="stand", color="#8d6e63", printed=True, faces=6000)
-    for k, m in sheets.items():                                  # cut-away: the front and +X sheets are left out of the page
-        if k in ("sheet rear", "sheet side -X"): sc.part(k, tm(m), group="enclosure", color="#dfe9f2", printed=False, faces=200)
+    for k, m in sheets.items():                                  # cut-away: only the rear sheet (the electronics board) is drawn
+        if k == "sheet rear": sc.part(k, tm(m), group="enclosure", color="#dfe9f2", printed=False, faces=200)
     for k, t in bay_modules(bays).items(): sc.part(k, t, group="bays", color="#5b8ac9", printed=True, faces=15000)
     cm, cname = collar(); ct = tm(cm); ct.apply_transform(S2W)
     sc.part(cname, ct, group="collar", color="#b9c2cc", printed=True, faces=30000)
@@ -168,7 +173,9 @@ def main(video=False):
         if t < 13.9: return 1 - ease((t - 13.5) / 0.4)
         return 0.0
     UT = {name: S2W @ H.unit_frame(fs, xs)[0] for name, fs, xs in H.UNITS}
-    hide = trimesh.transformations.translation_matrix([0, 0, -2000])
+    # a pack that is nowhere yet is shrunk to a point inside the stand (frame-0 bounds set the floor grid: never park
+    # anything outside the box)
+    hide = trimesh.transformations.translation_matrix([0, 0, -150]) @ np.diag([1e-4, 1e-4, 1e-4, 1.0]) @ trimesh.transformations.translation_matrix([0, -175, -24])
     def poses(t):
         Tk, carts, st = K.transforms(t)
         Tarm = K.rotY(90.0 - st["phi"]); RB = K.RB
@@ -189,6 +196,7 @@ def main(video=False):
     sc.series("arm angle", [K.state(t)["phi"] for t in ts], unit="deg")
     sc.series("plunger out", [H.RISE * rise(t) for t in ts], unit="mm")
     sc.series("drone height over seat", [dz(t) for t in ts], unit="mm")
+    sc.view("iso", eye=(640, 820, 460), target=(0, 135, 10))          # from the open front corner, the rear sheet behind
     sc.view("front", eye=(700, 800, 250), target=(0, 140, 40))
     sc.view("collar top", eye=(0, 177, 700), target=(0, 177, 150))
     sc.view("latch", eye=(40, 20, 300), target=(122, 77, 182))
