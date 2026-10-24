@@ -1,6 +1,6 @@
 # Runs
 
-_79 runs · rebuilt 2026-10-24 04:24_
+_81 runs · rebuilt 2026-10-24 04:24_
 
 ## Latest per part
 
@@ -16,8 +16,9 @@ _79 runs · rebuilt 2026-10-24 04:24_
 | box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
 | box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
+| funnel_panel | v7 | DONE | 80.0 (M) | 0.91 in press u60 v90 | PASS | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
 | holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
-| hook_latch | v1 | · | · | ·  | · | [runs/hook_latch/v1](runs/hook_latch/v1/summary.md) |
+| hook_latch | v2 | · | · | ·  | · | [runs/hook_latch/v2](runs/hook_latch/v2/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
@@ -34,6 +35,7 @@ _79 runs · rebuilt 2026-10-24 04:24_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 04:24 | hook_latch | [v2](runs/hook_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 04:17 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
@@ -72,6 +74,7 @@ _79 runs · rebuilt 2026-10-24 04:24_
 | 2026-10-24 | arm_rail | [v1](runs/arm_rail/v1/summary.md) | DONE | 49.9 (M) | 0.23 | PASS | bottom (Y 74 (C): body + both feet, coplanar) | · GB | · min | · |
 | 2026-10-24 | arm_vwheel | [v1](runs/arm_vwheel/v1/summary.md) | DONE | 2.8 (M) | 0.66 | PASS | either face (symmetric, C) | · GB | · min | · |
 | 2026-10-24 | box_catch_assembly | [v0](runs/box_catch_assembly/v0/summary.md) | DONE | 673 (E) | · | · | · | · GB | 1 min | · |
+| 2026-10-24 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | DONE | 80.0 (M) | 0.91 | PASS | contact face | · GB | · min | · |
 | 2026-10-24 | overseer_assembly | [v0](runs/overseer_assembly/v0/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 8 min | · |
 | 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
