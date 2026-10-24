@@ -1,4 +1,5 @@
 # Rails A / B v2 (box swap arm v6, 24 Oct 2026, swap arm system worker)
+Tags: numbers C geometry (drawn), M from the meshes, E loads, stiffnesses and strengths, unless tagged in place.
 Rail v1 on the v6 stack (`nox/box/arm_v6_cad.py rail_v2`): Y 54..73 (C) straight on the hub v6 motor plate (no posts), r 29..134 (C) (r 27 above Y 65 over the 80T flange), park stop X ±9 x Y 73..77 x r 27..31, one M5 x 16 per pad at r 40 / 78 from the top into the hub's heat-set inserts, ribbon channel X −2..2. A and B differ only in the dimples. No carbon tie sockets (rejected alternative). Loads from the system pass (C geometry, E loads).
 ```
 arm_rail_A_v2 / arm_rail_B_v2: DESIGN (v6 concept check FAIL x2; READY in v7 after its concept check)

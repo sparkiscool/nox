@@ -1,0 +1,8846 @@
+{
+ "mast": {
+  "piece": "mast",
+  "h": 2.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.587,
+  "worst_case": "XT60 insert at the drone 60 N",
+  "at": [
+   17.0,
+   -59.0,
+   -43.0
+  ],
+  "prior": 0.08,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.215,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.121,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "standing, Overseer seated": {
+    "worst": 0.215,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.121,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.215,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.121,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.086,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.049,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.086,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.049,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.086,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.049,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.054,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.03,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.054,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.03,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.04
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.587,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.331,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.262
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.218,
+    "at": [
+     17.0,
+     -3.0,
+     -27.0
+    ],
+    "p99": 0.14,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.146
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.275,
+    "at": [
+     17.0,
+     -3.0,
+     -27.0
+    ],
+    "p99": 0.178,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.183
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.46,
+    "at": [
+     -19.0,
+     -9.0,
+     -33.0
+    ],
+    "p99": 0.264,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.281
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.504,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.284,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.225
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.095,
+    "at": [
+     17.0,
+     -3.0,
+     -33.0
+    ],
+    "p99": 0.067,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.064
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.054,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.03,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.04
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.172,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.097,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.079
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.269,
+    "at": [
+     17.0,
+     -59.0,
+     -43.0
+    ],
+    "p99": 0.152,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.198
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.376,
+    "at": [
+     -19.0,
+     -5.0,
+     -43.0
+    ],
+    "p99": 0.237,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.253
+   }
+  }
+ },
+ "cradle_keel": {
+  "piece": "cradle_keel",
+  "h": 2.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.602,
+  "worst_case": "XT60 pull at the -90 bay 50 N",
+  "at": [
+   -19.0,
+   139.0,
+   -183.0
+  ],
+  "prior": 0.18,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.067,
+    "at": [
+     19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.03,
+    "masked": 0.56,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.003
+   },
+   "standing, Overseer seated": {
+    "worst": 0.092,
+    "at": [
+     19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.038,
+    "masked": 0.48,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.004
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.072,
+    "at": [
+     -19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.031,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.004
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.073,
+    "at": [
+     19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.031,
+    "masked": 0.33,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.016
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.227,
+    "at": [
+     19.0,
+     149.0,
+     -175.0
+    ],
+    "p99": 0.11,
+    "masked": 0.33,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.06
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.536,
+    "at": [
+     -19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.174,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.112
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.148,
+    "at": [
+     19.0,
+     149.0,
+     -175.0
+    ],
+    "p99": 0.072,
+    "masked": 0.33,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.062
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.181,
+    "at": [
+     19.0,
+     149.0,
+     -175.0
+    ],
+    "p99": 0.088,
+    "masked": 0.33,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.077
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.454,
+    "at": [
+     -19.0,
+     139.0,
+     -183.0
+    ],
+    "p99": 0.153,
+    "masked": 0.31,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.15
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.298,
+    "at": [
+     19.0,
+     141.0,
+     -181.0
+    ],
+    "p99": 0.133,
+    "masked": 0.31,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.146
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.416,
+    "at": [
+     19.0,
+     141.0,
+     -181.0
+    ],
+    "p99": 0.215,
+    "masked": 0.31,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.375
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.451,
+    "at": [
+     19.0,
+     141.0,
+     -181.0
+    ],
+    "p99": 0.167,
+    "masked": 0.31,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.366
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.602,
+    "at": [
+     -19.0,
+     139.0,
+     -183.0
+    ],
+    "p99": 0.215,
+    "masked": 0.31,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.229
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.027,
+    "at": [
+     19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.011,
+    "masked": 0.53,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.003
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.104,
+    "at": [
+     19.0,
+     141.0,
+     -181.0
+    ],
+    "p99": 0.042,
+    "masked": 0.31,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.132
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.419,
+    "at": [
+     -19.0,
+     139.0,
+     -183.0
+    ],
+    "p99": 0.144,
+    "masked": 0.31,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.145
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.075,
+    "at": [
+     19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.034,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.016
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.099,
+    "at": [
+     -19.0,
+     191.0,
+     -163.0
+    ],
+    "p99": 0.048,
+    "masked": 0.31,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.154
+   }
+  }
+ },
+ "kb": {
+  "piece": "kb",
+  "h": 2.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 3.775,
+  "worst_case": "misuse: knocked over onto the +X side, 5 g lateral",
+  "at": [
+   -17.0,
+   -57.0,
+   -181.0
+  ],
+  "prior": 0.09,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.316,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.198,
+    "masked": 0.35,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.122
+   },
+   "standing, Overseer seated": {
+    "worst": 0.319,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.198,
+    "masked": 0.35,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.122
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.318,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.198,
+    "masked": 0.35,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.123
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.128,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.079,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.122
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.131,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.079,
+    "masked": 0.33,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.119
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.149,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.082,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.148
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.082,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.049,
+    "masked": 0.33,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.118
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.083,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.049,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.118
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.758,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.511,
+    "masked": 0.26,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 1.637
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.773,
+    "at": [
+     1.0,
+     -1.0,
+     -137.0
+    ],
+    "p99": 0.336,
+    "masked": 0.25,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.243
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 1.038,
+    "at": [
+     -1.0,
+     37.0,
+     -197.0
+    ],
+    "p99": 0.445,
+    "masked": 0.25,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.313
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 1.078,
+    "at": [
+     1.0,
+     37.0,
+     -197.0
+    ],
+    "p99": 0.444,
+    "masked": 0.25,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.469
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.636,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.439,
+    "masked": 0.28,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 1.212
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.335,
+    "at": [
+     -17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.107,
+    "masked": 0.3,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.299
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.114,
+    "at": [
+     17.0,
+     39.0,
+     -183.0
+    ],
+    "p99": 0.064,
+    "masked": 0.25,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.009,
+    "umax_mm": 0.097
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.36,
+    "at": [
+     -1.0,
+     37.0,
+     -197.0
+    ],
+    "p99": 0.215,
+    "masked": 0.25,
+    "cls": "flight",
+    "held": "mast | kb",
+    "held_mismatch": 0.011,
+    "umax_mm": 0.2
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.395,
+    "at": [
+     17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 0.247,
+    "masked": 0.35,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.612
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 3.775,
+    "at": [
+     -17.0,
+     -57.0,
+     -181.0
+    ],
+    "p99": 1.045,
+    "masked": 0.25,
+    "cls": "misuse",
+    "held": "mast | kb",
+    "held_mismatch": 0.014,
+    "umax_mm": 1.36
+   }
+  }
+ },
+ "toe": {
+  "piece": "toe",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.076,
+  "worst_case": "XT60 insert at the -60 bay 60 N",
+  "at": [
+   9.8,
+   330.8,
+   -191.2
+  ],
+  "prior": 0.19,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.009,
+    "at": [
+     17.2,
+     198.8,
+     -194.2
+    ],
+    "p99": 0.003,
+    "masked": 0.24,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.012,
+    "at": [
+     17.2,
+     198.8,
+     -194.2
+    ],
+    "p99": 0.004,
+    "masked": 0.2,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.001
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.019,
+    "at": [
+     11.2,
+     332.2,
+     -198.8
+    ],
+    "p99": 0.009,
+    "masked": 0.16,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.015,
+    "at": [
+     17.2,
+     198.8,
+     -195.8
+    ],
+    "p99": 0.003,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.009
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.044,
+    "at": [
+     12.8,
+     198.8,
+     -198.8
+    ],
+    "p99": 0.014,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.037
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.067,
+    "at": [
+     -17.2,
+     198.8,
+     -194.2
+    ],
+    "p99": 0.024,
+    "masked": 0.18,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.023
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.029,
+    "at": [
+     12.8,
+     198.8,
+     -198.8
+    ],
+    "p99": 0.01,
+    "masked": 0.14,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.048
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.036,
+    "at": [
+     12.8,
+     198.8,
+     -198.8
+    ],
+    "p99": 0.012,
+    "masked": 0.14,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.047
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.033,
+    "at": [
+     -9.8,
+     330.8,
+     -191.2
+    ],
+    "p99": 0.014,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "cradle_keel | toe",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.025
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.011,
+    "at": [
+     -2.2,
+     215.2,
+     -191.2
+    ],
+    "p99": 0.009,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "cradle_keel | toe",
+    "held_mismatch": 0.051,
+    "umax_mm": 0.057
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.048,
+    "at": [
+     -3.8,
+     204.8,
+     -185.2
+    ],
+    "p99": 0.026,
+    "masked": 0.24,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.024
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.076,
+    "at": [
+     9.8,
+     330.8,
+     -191.2
+    ],
+    "p99": 0.037,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.398
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.047,
+    "at": [
+     -2.2,
+     215.2,
+     -191.2
+    ],
+    "p99": 0.032,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "cradle_keel | toe",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.144
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.004,
+    "at": [
+     17.2,
+     198.8,
+     -194.2
+    ],
+    "p99": 0.001,
+    "masked": 0.24,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.046,
+    "at": [
+     -9.8,
+     330.8,
+     -191.2
+    ],
+    "p99": 0.027,
+    "masked": 0.14,
+    "cls": "misuse",
+    "held": "cradle_keel | toe",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.091
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.014,
+    "at": [
+     -3.8,
+     212.2,
+     -189.8
+    ],
+    "p99": 0.01,
+    "masked": 0.14,
+    "cls": "flight",
+    "held": "cradle_keel | toe",
+    "held_mismatch": 0.112,
+    "umax_mm": 0.054
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.01,
+    "at": [
+     17.2,
+     198.8,
+     -194.2
+    ],
+    "p99": 0.003,
+    "masked": 0.24,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.065,
+    "at": [
+     -9.8,
+     330.8,
+     -191.2
+    ],
+    "p99": 0.046,
+    "masked": 0.14,
+    "cls": "misuse",
+    "held": "cradle_keel | toe",
+    "held_mismatch": 0.044,
+    "umax_mm": 0.184
+   }
+  }
+ },
+ "barA": {
+  "piece": "bar_half",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.353,
+  "worst_case": "XT60 insert at the drone 60 N",
+  "at": [
+   14.2,
+   48.8,
+   -198.8
+  ],
+  "prior": 0.38,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.001,
+    "at": [
+     179.2,
+     60.8,
+     -174.8
+    ],
+    "p99": 0.001,
+    "masked": 0.17,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "standing, Overseer seated": {
+    "worst": 0.002,
+    "at": [
+     179.2,
+     60.8,
+     -174.8
+    ],
+    "p99": 0.001,
+    "masked": 0.16,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.003,
+    "at": [
+     183.8,
+     59.2,
+     -194.2
+    ],
+    "p99": 0.001,
+    "masked": 0.15,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.004,
+    "at": [
+     158.2,
+     60.8,
+     -176.2
+    ],
+    "p99": 0.002,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.002
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.025,
+    "at": [
+     158.2,
+     60.8,
+     -176.2
+    ],
+    "p99": 0.014,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "kb | barA",
+    "held_mismatch": 0.061,
+    "umax_mm": 0.008
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.022,
+    "at": [
+     155.2,
+     47.2,
+     -198.8
+    ],
+    "p99": 0.008,
+    "masked": 0.1,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.038
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.018,
+    "at": [
+     158.2,
+     60.8,
+     -176.2
+    ],
+    "p99": 0.009,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "kb | barA",
+    "held_mismatch": 0.055,
+    "umax_mm": 0.008
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.022,
+    "at": [
+     158.2,
+     60.8,
+     -176.2
+    ],
+    "p99": 0.012,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "kb | barA",
+    "held_mismatch": 0.06,
+    "umax_mm": 0.01
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.353,
+    "at": [
+     14.2,
+     48.8,
+     -198.8
+    ],
+    "p99": 0.153,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.747
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.269,
+    "at": [
+     23.2,
+     50.2,
+     -177.8
+    ],
+    "p99": 0.09,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "kb | barA",
+    "held_mismatch": 0.386,
+    "umax_mm": 0.236
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.284,
+    "at": [
+     23.2,
+     50.2,
+     -177.8
+    ],
+    "p99": 0.102,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "kb | barA",
+    "held_mismatch": 0.233,
+    "umax_mm": 0.257
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.343,
+    "at": [
+     23.2,
+     50.2,
+     -177.8
+    ],
+    "p99": 0.11,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "kb | barA",
+    "held_mismatch": 0.331,
+    "umax_mm": 0.301
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.179,
+    "at": [
+     23.2,
+     50.2,
+     -177.8
+    ],
+    "p99": 0.068,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "kb | barA",
+    "held_mismatch": 0.318,
+    "umax_mm": 0.164
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     17.2,
+     51.8,
+     -198.8
+    ],
+    "p99": 0.001,
+    "masked": 0.16,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.002
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.091,
+    "at": [
+     23.2,
+     48.8,
+     -177.8
+    ],
+    "p99": 0.033,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "kb | barA",
+    "held_mismatch": 0.733,
+    "umax_mm": 0.12
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.255,
+    "at": [
+     23.2,
+     50.2,
+     -177.8
+    ],
+    "p99": 0.086,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "kb | barA",
+    "held_mismatch": 0.395,
+    "umax_mm": 0.225
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.001,
+    "at": [
+     -17.2,
+     50.2,
+     -195.8
+    ],
+    "p99": 0.001,
+    "masked": 0.17,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.336,
+    "at": [
+     23.2,
+     50.2,
+     -177.8
+    ],
+    "p99": 0.086,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "kb | barA",
+    "held_mismatch": 0.118,
+    "umax_mm": 0.194
+   }
+  }
+ },
+ "barB": {
+  "piece": "bar_half",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.203,
+  "worst_case": "XT60 insert at the drone 60 N",
+  "at": [
+   -23.2,
+   57.8,
+   -177.8
+  ],
+  "prior": 0.38,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.001,
+    "at": [
+     -179.2,
+     60.8,
+     -174.8
+    ],
+    "p99": 0.0,
+    "masked": 0.17,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "standing, Overseer seated": {
+    "worst": 0.002,
+    "at": [
+     -179.2,
+     60.8,
+     -174.8
+    ],
+    "p99": 0.001,
+    "masked": 0.17,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.001,
+    "at": [
+     -179.2,
+     60.8,
+     -174.8
+    ],
+    "p99": 0.001,
+    "masked": 0.17,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.002,
+    "at": [
+     -17.2,
+     56.2,
+     -183.8
+    ],
+    "p99": 0.001,
+    "masked": 0.1,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.003
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.017,
+    "at": [
+     -17.2,
+     56.2,
+     -183.8
+    ],
+    "p99": 0.008,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.04
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.02,
+    "at": [
+     -155.2,
+     53.2,
+     -179.2
+    ],
+    "p99": 0.01,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.325,
+    "umax_mm": 0.01
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.011,
+    "at": [
+     -17.2,
+     56.2,
+     -183.8
+    ],
+    "p99": 0.005,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.045
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.014,
+    "at": [
+     -17.2,
+     56.2,
+     -183.8
+    ],
+    "p99": 0.007,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.066
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.203,
+    "at": [
+     -23.2,
+     57.8,
+     -177.8
+    ],
+    "p99": 0.09,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.553,
+    "umax_mm": 0.238
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.165,
+    "at": [
+     -23.2,
+     57.8,
+     -177.8
+    ],
+    "p99": 0.074,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.475,
+    "umax_mm": 0.192
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.182,
+    "at": [
+     -23.2,
+     57.8,
+     -177.8
+    ],
+    "p99": 0.083,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.243,
+    "umax_mm": 0.206
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.135,
+    "at": [
+     -23.2,
+     57.8,
+     -177.8
+    ],
+    "p99": 0.076,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.593,
+    "umax_mm": 0.188
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.146,
+    "at": [
+     -123.8,
+     57.8,
+     -167.2
+    ],
+    "p99": 0.065,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.438,
+    "umax_mm": 0.156
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     14.2,
+     56.2,
+     -198.8
+    ],
+    "p99": 0.001,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.009
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.074,
+    "at": [
+     -23.2,
+     57.8,
+     -177.8
+    ],
+    "p99": 0.032,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "barA | barB",
+    "held_mismatch": 0.452,
+    "umax_mm": 0.126
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.15,
+    "at": [
+     -23.2,
+     57.8,
+     -177.8
+    ],
+    "p99": 0.069,
+    "masked": 0.09,
+    "cls": "flight",
+    "held": "barA | barB",
+    "held_mismatch": 0.497,
+    "umax_mm": 0.178
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.001,
+    "at": [
+     -179.2,
+     60.8,
+     -174.8
+    ],
+    "p99": 0.0,
+    "masked": 0.17,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.0
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.099,
+    "at": [
+     -123.8,
+     50.2,
+     -167.2
+    ],
+    "p99": 0.034,
+    "masked": 0.09,
+    "cls": "misuse",
+    "held": "barA | barB",
+    "held_mismatch": 0.462,
+    "umax_mm": 0.122
+   }
+  }
+ },
+ "frame_mid@-30": {
+  "piece": "frame_mid",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.438,
+  "worst_case": "XT60 insert at the -60 bay 60 N",
+  "at": [
+   114.8,
+   203.2,
+   -102.8
+  ],
+  "prior": 0.59,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.036,
+    "at": [
+     131.2,
+     203.2,
+     -120.8
+    ],
+    "p99": 0.018,
+    "masked": 0.35,
+    "cls": "sustained",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.007
+   },
+   "standing, Overseer seated": {
+    "worst": 0.066,
+    "at": [
+     131.2,
+     203.2,
+     -120.8
+    ],
+    "p99": 0.041,
+    "masked": 0.35,
+    "cls": "sustained",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.019
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.072,
+    "at": [
+     131.2,
+     203.2,
+     -120.8
+    ],
+    "p99": 0.041,
+    "masked": 0.35,
+    "cls": "sustained",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.019
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.091,
+    "at": [
+     131.2,
+     198.8,
+     -87.8
+    ],
+    "p99": 0.056,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.059
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.399,
+    "at": [
+     131.2,
+     198.8,
+     -87.8
+    ],
+    "p99": 0.254,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.257
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.206,
+    "at": [
+     113.2,
+     203.2,
+     -101.2
+    ],
+    "p99": 0.111,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.105
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.255,
+    "at": [
+     131.2,
+     198.8,
+     -87.8
+    ],
+    "p99": 0.165,
+    "masked": 0.35,
+    "cls": "misuse",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.263
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.324,
+    "at": [
+     131.2,
+     198.8,
+     -87.8
+    ],
+    "p99": 0.207,
+    "masked": 0.35,
+    "cls": "misuse",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.334
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.231,
+    "at": [
+     113.2,
+     150.8,
+     -101.2
+    ],
+    "p99": 0.115,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.092
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.112,
+    "at": [
+     113.2,
+     150.8,
+     -101.2
+    ],
+    "p99": 0.063,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.063
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.053,
+    "at": [
+     128.2,
+     203.2,
+     -117.8
+    ],
+    "p99": 0.023,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.021
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.438,
+    "at": [
+     114.8,
+     203.2,
+     -102.8
+    ],
+    "p99": 0.137,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.141
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.131,
+    "at": [
+     113.2,
+     203.2,
+     -101.2
+    ],
+    "p99": 0.057,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.054
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.014,
+    "at": [
+     131.2,
+     203.2,
+     -120.8
+    ],
+    "p99": 0.007,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.006
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.164,
+    "at": [
+     114.8,
+     203.2,
+     -102.8
+    ],
+    "p99": 0.071,
+    "masked": 0.35,
+    "cls": "misuse",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.072
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.265,
+    "at": [
+     113.2,
+     150.8,
+     -101.2
+    ],
+    "p99": 0.136,
+    "masked": 0.35,
+    "cls": "flight",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.098
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.043,
+    "at": [
+     114.8,
+     203.2,
+     -102.8
+    ],
+    "p99": 0.019,
+    "masked": 0.35,
+    "cls": "misuse",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.02
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.158,
+    "at": [
+     114.8,
+     200.2,
+     -105.8
+    ],
+    "p99": 0.096,
+    "masked": 0.35,
+    "cls": "misuse",
+    "held": "frame_mid@-30 | frame_mid@0",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.185
+   }
+  }
+ },
+ "frame_mid@0": {
+  "piece": "frame_mid",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 1.602,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   150.8,
+   203.2,
+   -32.2
+  ],
+  "prior": 0.59,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.098,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.036,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.012
+   },
+   "standing, Overseer seated": {
+    "worst": 0.265,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.1,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.033
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.258,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.099,
+    "masked": 0.34,
+    "cls": "sustained",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.034
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.375,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.148,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.122
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 1.602,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.639,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.53
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.322,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.148,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.134
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 1.029,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.411,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.546
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 1.301,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.519,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.689
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.306,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.126,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.107
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.287,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.113,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.098
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.057,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.021,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.021
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.289,
+    "at": [
+     146.2,
+     150.8,
+     -30.8
+    ],
+    "p99": 0.143,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.031,
+    "umax_mm": 0.121
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.108,
+    "at": [
+     149.2,
+     150.8,
+     -32.2
+    ],
+    "p99": 0.037,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.036
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.038,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.014,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.012
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.091,
+    "at": [
+     146.2,
+     203.2,
+     -30.8
+    ],
+    "p99": 0.037,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.059
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.054,
+    "at": [
+     146.2,
+     203.2,
+     -30.8
+    ],
+    "p99": 0.022,
+    "masked": 0.34,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.079,
+    "umax_mm": 0.027
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.063,
+    "at": [
+     150.8,
+     203.2,
+     -32.2
+    ],
+    "p99": 0.023,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.036
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.136,
+    "at": [
+     146.2,
+     150.8,
+     -30.8
+    ],
+    "p99": 0.068,
+    "masked": 0.34,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.071,
+    "umax_mm": 0.084
+   }
+  }
+ },
+ "frame_mid@-120": {
+  "piece": "frame_mid",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.715,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -89.2,
+   203.2,
+   -150.8
+  ],
+  "prior": 0.59,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.048,
+    "at": [
+     -89.2,
+     203.2,
+     -150.8
+    ],
+    "p99": 0.031,
+    "masked": 0.32,
+    "cls": "sustained",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.009,
+    "umax_mm": 0.008
+   },
+   "standing, Overseer seated": {
+    "worst": 0.105,
+    "at": [
+     -89.2,
+     203.2,
+     -150.8
+    ],
+    "p99": 0.068,
+    "masked": 0.32,
+    "cls": "sustained",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.017
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.109,
+    "at": [
+     -104.2,
+     201.8,
+     -113.2
+    ],
+    "p99": 0.068,
+    "masked": 0.32,
+    "cls": "sustained",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.019
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.091,
+    "at": [
+     -102.8,
+     150.8,
+     -113.2
+    ],
+    "p99": 0.029,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.019
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.43,
+    "at": [
+     -102.8,
+     150.8,
+     -113.2
+    ],
+    "p99": 0.144,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.097
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.715,
+    "at": [
+     -89.2,
+     203.2,
+     -150.8
+    ],
+    "p99": 0.472,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.354
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.3,
+    "at": [
+     -102.8,
+     150.8,
+     -113.2
+    ],
+    "p99": 0.105,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.11
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.36,
+    "at": [
+     -102.8,
+     150.8,
+     -113.2
+    ],
+    "p99": 0.123,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.131
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.388,
+    "at": [
+     -99.8,
+     150.8,
+     -114.8
+    ],
+    "p99": 0.183,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.161
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.194,
+    "at": [
+     -98.2,
+     150.8,
+     -111.8
+    ],
+    "p99": 0.127,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.136
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.142,
+    "at": [
+     -102.8,
+     203.2,
+     -114.8
+    ],
+    "p99": 0.058,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.049
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.289,
+    "at": [
+     -104.2,
+     201.8,
+     -113.2
+    ],
+    "p99": 0.15,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.13
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.205,
+    "at": [
+     -101.2,
+     198.8,
+     -113.2
+    ],
+    "p99": 0.08,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.075
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.02,
+    "at": [
+     -104.2,
+     201.8,
+     -113.2
+    ],
+    "p99": 0.012,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.009,
+    "umax_mm": 0.008
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.05,
+    "at": [
+     -102.8,
+     203.2,
+     -114.8
+    ],
+    "p99": 0.028,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.021,
+    "umax_mm": 0.047
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.559,
+    "at": [
+     -99.8,
+     150.8,
+     -114.8
+    ],
+    "p99": 0.213,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.156
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.041,
+    "at": [
+     -117.8,
+     150.8,
+     -129.8
+    ],
+    "p99": 0.026,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.026
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.142,
+    "at": [
+     -101.2,
+     150.8,
+     -113.2
+    ],
+    "p99": 0.061,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-120 | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.088
+   }
+  }
+ },
+ "frame_mid@-150": {
+  "piece": "frame_mid",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.801,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -138.8,
+   203.2,
+   -111.8
+  ],
+  "prior": 0.59,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.056,
+    "at": [
+     -131.2,
+     155.2,
+     -87.8
+    ],
+    "p99": 0.035,
+    "masked": 0.32,
+    "cls": "sustained",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.014
+   },
+   "standing, Overseer seated": {
+    "worst": 0.127,
+    "at": [
+     -131.2,
+     155.2,
+     -87.8
+    ],
+    "p99": 0.079,
+    "masked": 0.32,
+    "cls": "sustained",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.031
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.134,
+    "at": [
+     -131.2,
+     155.2,
+     -87.8
+    ],
+    "p99": 0.08,
+    "masked": 0.32,
+    "cls": "sustained",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.033
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.059,
+    "at": [
+     -113.2,
+     150.8,
+     -99.8
+    ],
+    "p99": 0.035,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.036
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.308,
+    "at": [
+     -111.8,
+     150.8,
+     -98.2
+    ],
+    "p99": 0.149,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.144
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.801,
+    "at": [
+     -138.8,
+     203.2,
+     -111.8
+    ],
+    "p99": 0.546,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.518
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.223,
+    "at": [
+     -111.8,
+     150.8,
+     -98.2
+    ],
+    "p99": 0.1,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.149
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.262,
+    "at": [
+     -111.8,
+     150.8,
+     -98.2
+    ],
+    "p99": 0.124,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.188
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.242,
+    "at": [
+     -111.8,
+     203.2,
+     -98.2
+    ],
+    "p99": 0.134,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.115
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.152,
+    "at": [
+     -131.2,
+     155.2,
+     -87.8
+    ],
+    "p99": 0.096,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.101
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.043,
+    "at": [
+     -132.8,
+     203.2,
+     -119.2
+    ],
+    "p99": 0.025,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.027
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.139,
+    "at": [
+     -131.2,
+     155.2,
+     -87.8
+    ],
+    "p99": 0.077,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.077
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.107,
+    "at": [
+     -114.8,
+     203.2,
+     -99.8
+    ],
+    "p99": 0.046,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.041
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.023,
+    "at": [
+     -138.8,
+     203.2,
+     -111.8
+    ],
+    "p99": 0.015,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.015
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.041,
+    "at": [
+     -126.8,
+     204.8,
+     -114.8
+    ],
+    "p99": 0.026,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.023,
+    "umax_mm": 0.044
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.316,
+    "at": [
+     -111.8,
+     150.8,
+     -99.8
+    ],
+    "p99": 0.135,
+    "masked": 0.32,
+    "cls": "flight",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.1
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.044,
+    "at": [
+     -131.2,
+     155.2,
+     -87.8
+    ],
+    "p99": 0.029,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.044
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.132,
+    "at": [
+     -111.8,
+     150.8,
+     -98.2
+    ],
+    "p99": 0.059,
+    "masked": 0.32,
+    "cls": "misuse",
+    "held": "frame_mid@-150 | frame_mid@-180",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.092
+   }
+  }
+ },
+ "frame_mid@-180": {
+  "piece": "frame_mid",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 1.485,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -150.8,
+   150.8,
+   -29.2
+  ],
+  "prior": 0.59,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.095,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.045,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.146,
+    "umax_mm": 0.017
+   },
+   "standing, Overseer seated": {
+    "worst": 0.23,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.107,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.139,
+    "umax_mm": 0.041
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.233,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.11,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.137,
+    "umax_mm": 0.042
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.069,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.036,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.116,
+    "umax_mm": 0.034
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.24,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.127,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.105,
+    "umax_mm": 0.133
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 1.485,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.646,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.139,
+    "umax_mm": 0.647
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.129,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.072,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.099,
+    "umax_mm": 0.128
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.182,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.099,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.102,
+    "umax_mm": 0.168
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.264,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.132,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.128,
+    "umax_mm": 0.129
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.243,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.122,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.135,
+    "umax_mm": 0.117
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.059,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.027,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.153,
+    "umax_mm": 0.029
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.164,
+    "at": [
+     -149.2,
+     203.2,
+     -27.8
+    ],
+    "p99": 0.081,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.053,
+    "umax_mm": 0.081
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.119,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.048,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.147,
+    "umax_mm": 0.047
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.036,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.017,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.139,
+    "umax_mm": 0.017
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.041,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.016,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.226,
+    "umax_mm": 0.026
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.046,
+    "at": [
+     -146.2,
+     198.8,
+     30.8
+    ],
+    "p99": 0.028,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.421,
+    "umax_mm": 0.036
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.071,
+    "at": [
+     -150.8,
+     150.8,
+     -29.2
+    ],
+    "p99": 0.034,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.154,
+    "umax_mm": 0.051
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.074,
+    "at": [
+     -146.2,
+     150.8,
+     -27.8
+    ],
+    "p99": 0.037,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.161,
+    "umax_mm": 0.06
+   }
+  }
+ },
+ "frame_endR@30": {
+  "piece": "frame_endR",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 1.589,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   132.8,
+   156.8,
+   114.8
+  ],
+  "prior": 0.86,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.123,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.049,
+    "masked": 0.19,
+    "cls": "sustained",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.033,
+    "umax_mm": 0.037
+   },
+   "standing, Overseer seated": {
+    "worst": 0.3,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.117,
+    "masked": 0.19,
+    "cls": "sustained",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.049,
+    "umax_mm": 0.09
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.299,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.117,
+    "masked": 0.19,
+    "cls": "sustained",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.049,
+    "umax_mm": 0.089
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.378,
+    "at": [
+     132.8,
+     156.8,
+     114.8
+    ],
+    "p99": 0.156,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.066,
+    "umax_mm": 0.307
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 1.589,
+    "at": [
+     132.8,
+     156.8,
+     114.8
+    ],
+    "p99": 0.656,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.068,
+    "umax_mm": 1.296
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.778,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.286,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.024,
+    "umax_mm": 0.43
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 1.019,
+    "at": [
+     132.8,
+     156.8,
+     114.8
+    ],
+    "p99": 0.422,
+    "masked": 0.19,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.069,
+    "umax_mm": 1.334
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 1.288,
+    "at": [
+     132.8,
+     156.8,
+     114.8
+    ],
+    "p99": 0.533,
+    "masked": 0.19,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.069,
+    "umax_mm": 1.682
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.291,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.084,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.099,
+    "umax_mm": 0.152
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.261,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.099,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.073,
+    "umax_mm": 0.193
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.047,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.019,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.048,
+    "umax_mm": 0.036
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.053,
+    "at": [
+     141.8,
+     198.8,
+     45.8
+    ],
+    "p99": 0.025,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.218,
+    "umax_mm": 0.03
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.055,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.022,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.105,
+    "umax_mm": 0.045
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.049,
+    "at": [
+     117.8,
+     150.8,
+     99.8
+    ],
+    "p99": 0.02,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.032,
+    "umax_mm": 0.037
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.092,
+    "at": [
+     131.2,
+     155.2,
+     114.8
+    ],
+    "p99": 0.036,
+    "masked": 0.19,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.227,
+    "umax_mm": 0.124
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.042,
+    "at": [
+     132.8,
+     156.8,
+     114.8
+    ],
+    "p99": 0.017,
+    "masked": 0.19,
+    "cls": "flight",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.029,
+    "umax_mm": 0.032
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.091,
+    "at": [
+     132.8,
+     156.8,
+     114.8
+    ],
+    "p99": 0.037,
+    "masked": 0.19,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.112
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.056,
+    "at": [
+     131.2,
+     150.8,
+     114.8
+    ],
+    "p99": 0.019,
+    "masked": 0.19,
+    "cls": "misuse",
+    "held": "frame_mid@0 | frame_endR@30",
+    "held_mismatch": 0.303,
+    "umax_mm": 0.051
+   }
+  }
+ },
+ "frame_endL@-210": {
+  "piece": "frame_endL",
+  "h": 1.5,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 1.65,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -116.2,
+   150.8,
+   98.2
+  ],
+  "prior": 0.9,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.126,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.051,
+    "masked": 0.23,
+    "cls": "sustained",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.039
+   },
+   "standing, Overseer seated": {
+    "worst": 0.3,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.121,
+    "masked": 0.23,
+    "cls": "sustained",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.093
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.301,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.121,
+    "masked": 0.23,
+    "cls": "sustained",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.093
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.203,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.075,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.116
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.806,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.299,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.44
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 1.65,
+    "at": [
+     -116.2,
+     150.8,
+     98.2
+    ],
+    "p99": 0.687,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.013,
+    "umax_mm": 1.336
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.493,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.185,
+    "masked": 0.23,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.412
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.642,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.239,
+    "masked": 0.23,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.551
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.258,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.081,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.14
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.249,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.1,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.188
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.049,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.02,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.009,
+    "umax_mm": 0.038
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.077,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.029,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.02,
+    "umax_mm": 0.054
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.061,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.024,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.025,
+    "umax_mm": 0.05
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.05,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.02,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.039
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.055,
+    "at": [
+     -125.2,
+     150.8,
+     126.8
+    ],
+    "p99": 0.037,
+    "masked": 0.23,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.288,
+    "umax_mm": 0.069
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.04,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.018,
+    "masked": 0.23,
+    "cls": "flight",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.032
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.095,
+    "at": [
+     -117.8,
+     203.2,
+     99.8
+    ],
+    "p99": 0.039,
+    "masked": 0.23,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.12
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.052,
+    "at": [
+     -114.8,
+     156.8,
+     99.8
+    ],
+    "p99": 0.03,
+    "masked": 0.23,
+    "cls": "misuse",
+    "held": "frame_mid@-180 | frame_endL@-210",
+    "held_mismatch": 0.13,
+    "umax_mm": 0.079
+   }
+  }
+ },
+ "post+F0": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.057,
+  "worst_case": "XT60 pull at the -90 bay 50 N",
+  "at": [
+   191.5,
+   342.5,
+   -196.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.008,
+    "at": [
+     187.5,
+     342.5,
+     -75.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.007
+   },
+   "standing, Overseer seated": {
+    "worst": 0.016,
+    "at": [
+     187.5,
+     342.5,
+     -73.5
+    ],
+    "p99": 0.013,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.013
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.005,
+    "at": [
+     187.5,
+     341.5,
+     -56.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.001
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.007,
+    "at": [
+     187.5,
+     341.5,
+     -56.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.003
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.028,
+    "at": [
+     187.5,
+     341.5,
+     -56.5
+    ],
+    "p99": 0.014,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.012
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.015,
+    "at": [
+     191.5,
+     342.5,
+     -196.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.022
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.018,
+    "at": [
+     187.5,
+     341.5,
+     -56.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.013
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.023,
+    "at": [
+     187.5,
+     341.5,
+     -56.5
+    ],
+    "p99": 0.011,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.016
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.008,
+    "at": [
+     180.5,
+     341.5,
+     -199.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.009
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.008,
+    "at": [
+     187.5,
+     342.5,
+     -159.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.015
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.002,
+    "at": [
+     191.5,
+     342.5,
+     -196.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.001
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.015,
+    "at": [
+     187.5,
+     342.5,
+     -171.5
+    ],
+    "p99": 0.012,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.026
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.057,
+    "at": [
+     191.5,
+     342.5,
+     -196.5
+    ],
+    "p99": 0.018,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.087
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     187.5,
+     342.5,
+     -76.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.008
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.025,
+    "at": [
+     187.5,
+     342.5,
+     -199.5
+    ],
+    "p99": 0.015,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.083
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.002,
+    "at": [
+     187.5,
+     335.5,
+     -55.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.001
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.008,
+    "at": [
+     187.5,
+     342.5,
+     -76.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.029
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.002,
+    "at": [
+     190.5,
+     335.5,
+     -199.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F0 | sheetF",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.002
+   }
+  }
+ },
+ "post+F1": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.105,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   187.5,
+   341.5,
+   91.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.008,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.002
+   },
+   "standing, Overseer seated": {
+    "worst": 0.017,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.003
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.017,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.018,
+    "umax_mm": 0.003
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.025,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.013,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.013
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.105,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.057,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.02,
+    "umax_mm": 0.054
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.006,
+    "at": [
+     190.5,
+     335.5,
+     -40.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.02,
+    "umax_mm": 0.004
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.068,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.037,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.056
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.086,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.046,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.071
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.009,
+    "at": [
+     187.5,
+     335.5,
+     89.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.004
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.012,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.006
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.003,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.002
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.016,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.018,
+    "umax_mm": 0.008
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.002,
+    "at": [
+     190.5,
+     335.5,
+     82.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.034,
+    "umax_mm": 0.001
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.001,
+    "at": [
+     187.5,
+     335.5,
+     89.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.021,
+    "umax_mm": 0.001
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.002,
+    "at": [
+     188.5,
+     341.5,
+     -52.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.087,
+    "umax_mm": 0.001
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.007,
+    "at": [
+     187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.005
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.003,
+    "at": [
+     190.5,
+     335.5,
+     -52.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F1 | sheetF",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.003
+   }
+  }
+ },
+ "post+F2": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.069,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   188.5,
+   335.5,
+   94.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.006,
+    "at": [
+     187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.013,
+    "at": [
+     187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.013,
+    "at": [
+     187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.016,
+    "at": [
+     188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.012,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.008
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.069,
+    "at": [
+     188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.049,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.036
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.019,
+    "at": [
+     187.5,
+     335.5,
+     97.5
+    ],
+    "p99": 0.011,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.025,
+    "umax_mm": 0.01
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.045,
+    "at": [
+     188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.032,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.037
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.056,
+    "at": [
+     188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.04,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.046
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.008,
+    "at": [
+     187.5,
+     341.5,
+     94.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.004
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.01,
+    "at": [
+     187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.005
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.003,
+    "at": [
+     187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.001
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.01,
+    "at": [
+     188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.005
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.002,
+    "at": [
+     187.5,
+     335.5,
+     97.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.031,
+    "umax_mm": 0.001
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.002,
+    "at": [
+     187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.0,
+    "at": [
+     187.5,
+     341.5,
+     94.5
+    ],
+    "p99": 0.0,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.049,
+    "umax_mm": 0.0
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.001,
+    "at": [
+     187.5,
+     341.5,
+     94.5
+    ],
+    "p99": 0.0,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.129,
+    "umax_mm": 0.0
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.004,
+    "at": [
+     188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.007,
+    "at": [
+     190.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+F2 | sheetF",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.007
+   }
+  }
+ },
+ "post-F0": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.162,
+  "worst_case": "XT60 pull at the -90 bay 50 N",
+  "at": [
+   -180.5,
+   341.5,
+   -199.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.007,
+    "at": [
+     -187.5,
+     342.5,
+     -71.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.006
+   },
+   "standing, Overseer seated": {
+    "worst": 0.015,
+    "at": [
+     -187.5,
+     342.5,
+     -71.5
+    ],
+    "p99": 0.011,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.011
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.004,
+    "at": [
+     -188.5,
+     341.5,
+     -55.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F0 | sheetF",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.001
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.004,
+    "at": [
+     -191.5,
+     342.5,
+     -196.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.006
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.038,
+    "at": [
+     -172.5,
+     335.5,
+     -131.5
+    ],
+    "p99": 0.033,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.083
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.083,
+    "at": [
+     -187.5,
+     342.5,
+     -70.5
+    ],
+    "p99": 0.059,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.14
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.025,
+    "at": [
+     -172.5,
+     335.5,
+     -131.5
+    ],
+    "p99": 0.022,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.095
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.031,
+    "at": [
+     -172.5,
+     335.5,
+     -131.5
+    ],
+    "p99": 0.027,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.112
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.16,
+    "at": [
+     -176.5,
+     341.5,
+     -199.5
+    ],
+    "p99": 0.04,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.826
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.011,
+    "at": [
+     -187.5,
+     342.5,
+     -143.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.022
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.009,
+    "at": [
+     -191.5,
+     342.5,
+     -196.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.009
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.023,
+    "at": [
+     -191.5,
+     341.5,
+     -196.5
+    ],
+    "p99": 0.013,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.044
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.162,
+    "at": [
+     -180.5,
+     341.5,
+     -199.5
+    ],
+    "p99": 0.037,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.535
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     -187.5,
+     342.5,
+     -69.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.007
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.007,
+    "at": [
+     -190.5,
+     336.5,
+     -55.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F0 | sheetF",
+    "held_mismatch": 0.039,
+    "umax_mm": 0.007
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.001,
+    "at": [
+     -187.5,
+     335.5,
+     -55.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F0 | sheetF",
+    "held_mismatch": 0.029,
+    "umax_mm": 0.001
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.006,
+    "at": [
+     -187.5,
+     342.5,
+     -71.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.021
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.013,
+    "at": [
+     -190.5,
+     336.5,
+     -55.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F0 | sheetF",
+    "held_mismatch": 0.028,
+    "umax_mm": 0.012
+   }
+  }
+ },
+ "post-F1": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.104,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -187.5,
+   341.5,
+   91.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.008,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.036,
+    "umax_mm": 0.002
+   },
+   "standing, Overseer seated": {
+    "worst": 0.017,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.03,
+    "umax_mm": 0.003
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.017,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.003
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.004,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.029,
+    "umax_mm": 0.002
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.012,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.006
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.104,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.055,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.054
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.005,
+    "at": [
+     -187.5,
+     335.5,
+     -51.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.005
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.008,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.007
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.007,
+    "at": [
+     -190.5,
+     336.5,
+     -52.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.016,
+    "umax_mm": 0.004
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.013,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.006
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.004,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.062,
+    "umax_mm": 0.002
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.001,
+    "at": [
+     -187.5,
+     335.5,
+     89.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.001
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.002,
+    "at": [
+     -188.5,
+     341.5,
+     -52.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.001
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.044,
+    "umax_mm": 0.002
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.009,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.008
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.001,
+    "at": [
+     -188.5,
+     341.5,
+     -52.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.018,
+    "umax_mm": 0.001
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.006,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.08,
+    "umax_mm": 0.005
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.019,
+    "at": [
+     -187.5,
+     341.5,
+     91.5
+    ],
+    "p99": 0.012,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F1 | sheetF",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.018
+   }
+  }
+ },
+ "post-F2": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.072,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -188.5,
+   335.5,
+   94.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.006,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.035,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.013,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.013,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.006,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.078,
+    "umax_mm": 0.003
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.02,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.011,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.093,
+    "umax_mm": 0.011
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.072,
+    "at": [
+     -188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.051,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.036
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.011,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.086,
+    "umax_mm": 0.01
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.015,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.092,
+    "umax_mm": 0.014
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.009,
+    "at": [
+     -187.5,
+     341.5,
+     94.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.065,
+    "umax_mm": 0.005
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.011,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.011,
+    "umax_mm": 0.005
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.003,
+    "at": [
+     -187.5,
+     335.5,
+     96.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.001
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.001,
+    "at": [
+     -187.5,
+     335.5,
+     233.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.022,
+    "umax_mm": 0.001
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.003,
+    "at": [
+     -190.5,
+     335.5,
+     238.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.026,
+    "umax_mm": 0.002
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.002,
+    "at": [
+     -188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.038,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.004,
+    "at": [
+     -188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.011,
+    "umax_mm": 0.003
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.0,
+    "at": [
+     -187.5,
+     341.5,
+     94.5
+    ],
+    "p99": 0.0,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.14,
+    "umax_mm": 0.0
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.005,
+    "at": [
+     -188.5,
+     335.5,
+     94.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.053,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.011,
+    "at": [
+     -190.5,
+     335.5,
+     238.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-F2 | sheetF",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.01
+   }
+  }
+ },
+ "post+R0": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.052,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   188.5,
+   -71.5,
+   -102.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.005,
+    "at": [
+     191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.006,
+    "at": [
+     188.5,
+     -71.5,
+     -127.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.005
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.003,
+    "at": [
+     190.5,
+     -64.5,
+     -187.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.001
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.01,
+    "at": [
+     188.5,
+     -71.5,
+     -110.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.025
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.052,
+    "at": [
+     188.5,
+     -71.5,
+     -102.5
+    ],
+    "p99": 0.043,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.128
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.023,
+    "at": [
+     172.5,
+     -64.5,
+     -131.5
+    ],
+    "p99": 0.018,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.042
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.039,
+    "at": [
+     188.5,
+     -71.5,
+     -110.5
+    ],
+    "p99": 0.032,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.149
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.05,
+    "at": [
+     188.5,
+     -71.5,
+     -110.5
+    ],
+    "p99": 0.04,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.189
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.01,
+    "at": [
+     190.5,
+     -64.5,
+     -65.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.006
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.01,
+    "at": [
+     190.5,
+     -64.5,
+     -69.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.006
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.009,
+    "at": [
+     190.5,
+     -64.5,
+     -65.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.005
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.006,
+    "at": [
+     190.5,
+     -64.5,
+     -71.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.004
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.005,
+    "at": [
+     190.5,
+     -64.5,
+     -189.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.003
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.002,
+    "at": [
+     191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.002
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.032,
+    "at": [
+     187.5,
+     -70.5,
+     -199.5
+    ],
+    "p99": 0.017,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.157
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.007,
+    "at": [
+     190.5,
+     -64.5,
+     -199.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.004
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.006,
+    "at": [
+     191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.015
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.005,
+    "at": [
+     187.5,
+     -64.5,
+     -61.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R0 | sheetR",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.003
+   }
+  }
+ },
+ "post+R1": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.046,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   184.5,
+   -70.5,
+   -52.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.006,
+    "at": [
+     184.5,
+     -70.5,
+     -31.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.01,
+    "at": [
+     184.5,
+     -70.5,
+     -52.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.009,
+    "at": [
+     184.5,
+     -70.5,
+     -52.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.012,
+    "at": [
+     184.5,
+     -70.5,
+     -52.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.005
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.046,
+    "at": [
+     184.5,
+     -70.5,
+     -52.5
+    ],
+    "p99": 0.022,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.02
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.018,
+    "at": [
+     184.5,
+     -68.5,
+     89.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.01
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.03,
+    "at": [
+     184.5,
+     -70.5,
+     -52.5
+    ],
+    "p99": 0.014,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.02
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.037,
+    "at": [
+     184.5,
+     -70.5,
+     -52.5
+    ],
+    "p99": 0.018,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.026
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.014,
+    "at": [
+     184.5,
+     -70.5,
+     85.5
+    ],
+    "p99": 0.012,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.007
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.007,
+    "at": [
+     184.5,
+     -68.5,
+     89.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.032,
+    "umax_mm": 0.004
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.002,
+    "at": [
+     184.5,
+     -68.5,
+     89.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.022,
+    "umax_mm": 0.001
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.007,
+    "at": [
+     184.5,
+     -68.5,
+     89.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.122,
+    "umax_mm": 0.004
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.008,
+    "at": [
+     184.5,
+     -70.5,
+     5.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.004
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.003,
+    "at": [
+     184.5,
+     -70.5,
+     -32.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.008,
+    "at": [
+     184.5,
+     -68.5,
+     -51.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.049,
+    "umax_mm": 0.007
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.009,
+    "at": [
+     184.5,
+     -70.5,
+     8.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.005
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.008,
+    "at": [
+     184.5,
+     -70.5,
+     6.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.006
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.005,
+    "at": [
+     184.5,
+     -68.5,
+     89.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R1 | sheet+X",
+    "held_mismatch": 0.048,
+    "umax_mm": 0.004
+   }
+  }
+ },
+ "post+R2": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.111,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   184.5,
+   -70.5,
+   94.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.012,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.021,
+    "umax_mm": 0.002
+   },
+   "standing, Overseer seated": {
+    "worst": 0.022,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.016,
+    "umax_mm": 0.004
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.021,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.009,
+    "umax_mm": 0.004
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.027,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.013,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.013
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.111,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.054,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.052
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.012,
+    "at": [
+     184.5,
+     -68.5,
+     232.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.006
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.072,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.035,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.054
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.09,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.044,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.068
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.005,
+    "at": [
+     184.5,
+     -70.5,
+     229.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.016,
+    "umax_mm": 0.002
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.013,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.006
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.004,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.002
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.016,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.009,
+    "umax_mm": 0.008
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.01,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.011,
+    "umax_mm": 0.005
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.005,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.002
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.015,
+    "at": [
+     184.5,
+     -68.5,
+     99.5
+    ],
+    "p99": 0.012,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.018,
+    "umax_mm": 0.013
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.004,
+    "at": [
+     184.5,
+     -70.5,
+     96.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.001
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.011,
+    "at": [
+     184.5,
+     -70.5,
+     94.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.035,
+    "umax_mm": 0.008
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.022,
+    "at": [
+     184.5,
+     -68.5,
+     238.5
+    ],
+    "p99": 0.014,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post+R2 | sheet+X",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.006
+   }
+  }
+ },
+ "post-R0": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.02,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -188.5,
+   -70.5,
+   -55.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.004,
+    "at": [
+     -188.5,
+     -71.5,
+     -106.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.004
+   },
+   "standing, Overseer seated": {
+    "worst": 0.01,
+    "at": [
+     -188.5,
+     -71.5,
+     -102.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.01
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.011,
+    "at": [
+     -188.5,
+     -71.5,
+     -103.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.01
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.003,
+    "at": [
+     -191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.001
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.01,
+    "at": [
+     -191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.003
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.02,
+    "at": [
+     -188.5,
+     -70.5,
+     -55.5
+    ],
+    "p99": 0.01,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.011
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.007,
+    "at": [
+     -191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.009
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.008,
+    "at": [
+     -191.5,
+     -71.5,
+     -195.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.006
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.011,
+    "at": [
+     -190.5,
+     -64.5,
+     -63.5
+    ],
+    "p99": 0.01,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.007
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.009,
+    "at": [
+     -190.5,
+     -64.5,
+     -189.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.005
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.009,
+    "at": [
+     -190.5,
+     -64.5,
+     -69.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.005
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.009,
+    "at": [
+     -190.5,
+     -64.5,
+     -190.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.005
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.006,
+    "at": [
+     -190.5,
+     -64.5,
+     -189.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.003
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.001,
+    "at": [
+     -190.5,
+     -61.5,
+     -55.5
+    ],
+    "p99": 0.0,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.0
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.005,
+    "at": [
+     -190.5,
+     -64.5,
+     -55.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.05,
+    "umax_mm": 0.005
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.009,
+    "at": [
+     -190.5,
+     -64.5,
+     -199.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.005
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.003,
+    "at": [
+     -188.5,
+     -71.5,
+     -111.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "floor",
+    "held_mismatch": null,
+    "umax_mm": 0.015
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.012,
+    "at": [
+     -190.5,
+     -64.5,
+     -55.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R0 | sheetR",
+    "held_mismatch": 0.017,
+    "umax_mm": 0.011
+   }
+  }
+ },
+ "post-R1": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.055,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -190.5,
+   -64.5,
+   91.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.004,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.008,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.008,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.002,
+    "at": [
+     -190.5,
+     -64.5,
+     -45.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.04,
+    "umax_mm": 0.001
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.007,
+    "at": [
+     -190.5,
+     -64.5,
+     -42.5
+    ],
+    "p99": 0.007,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.039,
+    "umax_mm": 0.004
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.055,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.031,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.014,
+    "umax_mm": 0.032
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.005,
+    "at": [
+     -190.5,
+     -64.5,
+     33.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.04,
+    "umax_mm": 0.004
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.006,
+    "at": [
+     -190.5,
+     -64.5,
+     -40.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.037,
+    "umax_mm": 0.005
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.004,
+    "at": [
+     -190.5,
+     -64.5,
+     -52.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.011,
+    "umax_mm": 0.002
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.006,
+    "at": [
+     -190.5,
+     -64.5,
+     -52.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.036,
+    "umax_mm": 0.004
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.004,
+    "at": [
+     -190.5,
+     -64.5,
+     -52.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.036,
+    "umax_mm": 0.002
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.005,
+    "at": [
+     -190.5,
+     -64.5,
+     -52.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.003
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.002,
+    "at": [
+     -188.5,
+     -70.5,
+     -50.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.001
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.002,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.012,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.008,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.012
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.005,
+    "at": [
+     -190.5,
+     -64.5,
+     -52.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.003
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.004,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.016,
+    "at": [
+     -190.5,
+     -64.5,
+     91.5
+    ],
+    "p99": 0.01,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R1 | sheetR",
+    "held_mismatch": 0.032,
+    "umax_mm": 0.015
+   }
+  }
+ },
+ "post-R2": {
+  "piece": "post_seg",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.058,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -190.5,
+   -64.5,
+   238.5
+  ],
+  "prior": 0.16,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.004,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.033,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.007,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.031,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.007,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.006,
+    "masked": 0.55,
+    "cls": "sustained",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.037,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.003,
+    "at": [
+     -190.5,
+     -64.5,
+     94.5
+    ],
+    "p99": 0.002,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.053,
+    "umax_mm": 0.002
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.016,
+    "at": [
+     -190.5,
+     -64.5,
+     94.5
+    ],
+    "p99": 0.012,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.022,
+    "umax_mm": 0.01
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.058,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.048,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.034
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.01,
+    "at": [
+     -190.5,
+     -64.5,
+     94.5
+    ],
+    "p99": 0.009,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.01
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.013,
+    "at": [
+     -190.5,
+     -64.5,
+     94.5
+    ],
+    "p99": 0.01,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.013
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.006,
+    "at": [
+     -190.5,
+     -64.5,
+     229.5
+    ],
+    "p99": 0.005,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.003
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.004,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.039,
+    "umax_mm": 0.002
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.001,
+    "at": [
+     -190.5,
+     -64.5,
+     231.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.059,
+    "umax_mm": 0.0
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.001,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.033,
+    "umax_mm": 0.001
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.005,
+    "at": [
+     -190.5,
+     -64.5,
+     94.5
+    ],
+    "p99": 0.004,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.003
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.001,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.033,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.014,
+    "at": [
+     -190.5,
+     -64.5,
+     229.5
+    ],
+    "p99": 0.013,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.013
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.001,
+    "at": [
+     -190.5,
+     -63.5,
+     219.5
+    ],
+    "p99": 0.001,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.001
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.003,
+    "at": [
+     -190.5,
+     -64.5,
+     238.5
+    ],
+    "p99": 0.003,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.051,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.013,
+    "at": [
+     -190.5,
+     -64.5,
+     229.5
+    ],
+    "p99": 0.011,
+    "masked": 0.55,
+    "cls": "misuse",
+    "held": "post-R2 | sheetR",
+    "held_mismatch": 0.021,
+    "umax_mm": 0.012
+   }
+  }
+ },
+ "bracket_jA@-15": {
+  "piece": "bracket_jA",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.373,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   168.5,
+   213.5,
+   -64.5
+  ],
+  "prior": 0.05,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.048,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.009,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.097,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.019,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.101,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.02,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.086,
+    "at": [
+     168.5,
+     213.5,
+     -64.5
+    ],
+    "p99": 0.022,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.005
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.373,
+    "at": [
+     168.5,
+     213.5,
+     -64.5
+    ],
+    "p99": 0.092,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.022
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.21,
+    "at": [
+     168.5,
+     140.5,
+     -64.5
+    ],
+    "p99": 0.044,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.015
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.24,
+    "at": [
+     168.5,
+     213.5,
+     -64.5
+    ],
+    "p99": 0.059,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.022
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.303,
+    "at": [
+     168.5,
+     213.5,
+     -64.5
+    ],
+    "p99": 0.074,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.028
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.07,
+    "at": [
+     177.5,
+     140.5,
+     -28.5
+    ],
+    "p99": 0.024,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.007
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.078,
+    "at": [
+     168.5,
+     213.5,
+     -64.5
+    ],
+    "p99": 0.02,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.006
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.042,
+    "at": [
+     177.5,
+     140.5,
+     -28.5
+    ],
+    "p99": 0.013,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.004
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.139,
+    "at": [
+     177.5,
+     140.5,
+     -28.5
+    ],
+    "p99": 0.044,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.038,
+    "umax_mm": 0.02
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.06,
+    "at": [
+     177.5,
+     140.5,
+     -28.5
+    ],
+    "p99": 0.013,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.004
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.017,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.003,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.117,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.016,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.023,
+    "umax_mm": 0.01
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.22,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.032,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.016,
+    "umax_mm": 0.012
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.042,
+    "at": [
+     177.5,
+     213.5,
+     -28.5
+    ],
+    "p99": 0.007,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.091,
+    "at": [
+     177.5,
+     140.5,
+     -28.5
+    ],
+    "p99": 0.034,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@-15 | sheet+X",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.027
+   }
+  }
+ },
+ "bracket_jA@165": {
+  "piece": "bracket_jA",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.622,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -168.5,
+   213.5,
+   64.5
+  ],
+  "prior": 0.05,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.027,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.007,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.063,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.017,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.023,
+    "umax_mm": 0.002
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.06,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.017,
+    "masked": 0.36,
+    "cls": "sustained",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.023,
+    "umax_mm": 0.002
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.026,
+    "at": [
+     -168.5,
+     140.5,
+     64.5
+    ],
+    "p99": 0.007,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.042,
+    "umax_mm": 0.003
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.117,
+    "at": [
+     -168.5,
+     140.5,
+     64.5
+    ],
+    "p99": 0.032,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.042,
+    "umax_mm": 0.014
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.622,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.151,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.034,
+    "umax_mm": 0.053
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.08,
+    "at": [
+     -168.5,
+     140.5,
+     64.5
+    ],
+    "p99": 0.023,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.044,
+    "umax_mm": 0.016
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.097,
+    "at": [
+     -168.5,
+     140.5,
+     64.5
+    ],
+    "p99": 0.027,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.043,
+    "umax_mm": 0.018
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.097,
+    "at": [
+     -177.5,
+     140.5,
+     28.5
+    ],
+    "p99": 0.02,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.028,
+    "umax_mm": 0.005
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.044,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.013,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.003
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.005,
+    "at": [
+     -177.5,
+     140.5,
+     28.5
+    ],
+    "p99": 0.002,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.031,
+    "umax_mm": 0.001
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.035,
+    "at": [
+     -168.5,
+     140.5,
+     64.5
+    ],
+    "p99": 0.008,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.026,
+    "umax_mm": 0.002
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.075,
+    "at": [
+     -177.5,
+     140.5,
+     28.5
+    ],
+    "p99": 0.014,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.027,
+    "umax_mm": 0.005
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.011,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.003,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.012,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.011,
+    "at": [
+     -177.5,
+     140.5,
+     28.5
+    ],
+    "p99": 0.005,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.05,
+    "umax_mm": 0.001
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.055,
+    "at": [
+     -177.5,
+     213.5,
+     28.5
+    ],
+    "p99": 0.009,
+    "masked": 0.36,
+    "cls": "flight",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.019,
+    "umax_mm": 0.003
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.02,
+    "at": [
+     -168.5,
+     213.5,
+     64.5
+    ],
+    "p99": 0.005,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.018,
+    "umax_mm": 0.003
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.128,
+    "at": [
+     -177.5,
+     140.5,
+     28.5
+    ],
+    "p99": 0.021,
+    "masked": 0.36,
+    "cls": "misuse",
+    "held": "bracket_jA@165 | sheet-X",
+    "held_mismatch": 0.059,
+    "umax_mm": 0.012
+   }
+  }
+ },
+ "bracket_jB@15": {
+  "piece": "bracket_jB",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.137,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   173.5,
+   146.5,
+   53.5
+  ],
+  "prior": 0.09,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.016,
+    "at": [
+     177.5,
+     211.5,
+     37.5
+    ],
+    "p99": 0.01,
+    "masked": 0.47,
+    "cls": "sustained",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.209,
+    "umax_mm": 0.004
+   },
+   "standing, Overseer seated": {
+    "worst": 0.032,
+    "at": [
+     174.5,
+     209.5,
+     35.5
+    ],
+    "p99": 0.02,
+    "masked": 0.47,
+    "cls": "sustained",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.217,
+    "umax_mm": 0.008
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.032,
+    "at": [
+     174.5,
+     209.5,
+     35.5
+    ],
+    "p99": 0.021,
+    "masked": 0.47,
+    "cls": "sustained",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.218,
+    "umax_mm": 0.009
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.031,
+    "at": [
+     173.5,
+     146.5,
+     53.5
+    ],
+    "p99": 0.021,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.205,
+    "umax_mm": 0.016
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.137,
+    "at": [
+     173.5,
+     146.5,
+     53.5
+    ],
+    "p99": 0.088,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.201,
+    "umax_mm": 0.062
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.082,
+    "at": [
+     177.5,
+     213.5,
+     37.5
+    ],
+    "p99": 0.05,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.101,
+    "umax_mm": 0.048
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.088,
+    "at": [
+     173.5,
+     147.5,
+     53.5
+    ],
+    "p99": 0.056,
+    "masked": 0.47,
+    "cls": "misuse",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.201,
+    "umax_mm": 0.061
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.111,
+    "at": [
+     173.5,
+     146.5,
+     53.5
+    ],
+    "p99": 0.071,
+    "masked": 0.47,
+    "cls": "misuse",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.201,
+    "umax_mm": 0.079
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.043,
+    "at": [
+     175.5,
+     144.5,
+     57.5
+    ],
+    "p99": 0.023,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.179,
+    "umax_mm": 0.016
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.021,
+    "at": [
+     173.5,
+     142.5,
+     53.5
+    ],
+    "p99": 0.012,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.195,
+    "umax_mm": 0.009
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.004,
+    "at": [
+     174.5,
+     144.5,
+     35.5
+    ],
+    "p99": 0.003,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.199,
+    "umax_mm": 0.003
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.051,
+    "at": [
+     177.5,
+     214.5,
+     37.5
+    ],
+    "p99": 0.028,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.156,
+    "umax_mm": 0.023
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.014,
+    "at": [
+     179.5,
+     209.5,
+     32.5
+    ],
+    "p99": 0.009,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.174,
+    "umax_mm": 0.008
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.006,
+    "at": [
+     174.5,
+     209.5,
+     35.5
+    ],
+    "p99": 0.004,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.202,
+    "umax_mm": 0.004
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.044,
+    "at": [
+     177.5,
+     213.5,
+     37.5
+    ],
+    "p99": 0.023,
+    "masked": 0.47,
+    "cls": "misuse",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.144,
+    "umax_mm": 0.035
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.013,
+    "at": [
+     173.5,
+     148.5,
+     34.5
+    ],
+    "p99": 0.006,
+    "masked": 0.47,
+    "cls": "flight",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.125,
+    "umax_mm": 0.005
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.015,
+    "at": [
+     177.5,
+     211.5,
+     37.5
+    ],
+    "p99": 0.009,
+    "masked": 0.47,
+    "cls": "misuse",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.085,
+    "umax_mm": 0.015
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.019,
+    "at": [
+     177.5,
+     214.5,
+     37.5
+    ],
+    "p99": 0.011,
+    "masked": 0.47,
+    "cls": "misuse",
+    "held": "bracket_jB@15 | sheet+X",
+    "held_mismatch": 0.165,
+    "umax_mm": 0.012
+   }
+  }
+ },
+ "bracket_jB@195": {
+  "piece": "bracket_jB",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.326,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -173.5,
+   208.5,
+   -53.5
+  ],
+  "prior": 0.09,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.022,
+    "at": [
+     -174.5,
+     212.5,
+     -35.5
+    ],
+    "p99": 0.016,
+    "masked": 0.46,
+    "cls": "sustained",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.164,
+    "umax_mm": 0.004
+   },
+   "standing, Overseer seated": {
+    "worst": 0.048,
+    "at": [
+     -173.5,
+     207.5,
+     -53.5
+    ],
+    "p99": 0.036,
+    "masked": 0.46,
+    "cls": "sustained",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.167,
+    "umax_mm": 0.01
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.046,
+    "at": [
+     -173.5,
+     207.5,
+     -53.5
+    ],
+    "p99": 0.035,
+    "masked": 0.46,
+    "cls": "sustained",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.165,
+    "umax_mm": 0.009
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.024,
+    "at": [
+     -173.5,
+     144.5,
+     -53.5
+    ],
+    "p99": 0.015,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.147,
+    "umax_mm": 0.009
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.091,
+    "at": [
+     -173.5,
+     144.5,
+     -53.5
+    ],
+    "p99": 0.06,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.141,
+    "umax_mm": 0.033
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.326,
+    "at": [
+     -173.5,
+     208.5,
+     -53.5
+    ],
+    "p99": 0.225,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.172,
+    "umax_mm": 0.159
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.071,
+    "at": [
+     -171.5,
+     214.5,
+     -56.5
+    ],
+    "p99": 0.037,
+    "masked": 0.46,
+    "cls": "misuse",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.134,
+    "umax_mm": 0.033
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.077,
+    "at": [
+     -171.5,
+     214.5,
+     -56.5
+    ],
+    "p99": 0.048,
+    "masked": 0.46,
+    "cls": "misuse",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.138,
+    "umax_mm": 0.042
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.09,
+    "at": [
+     -171.5,
+     142.5,
+     -56.5
+    ],
+    "p99": 0.034,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.169,
+    "umax_mm": 0.018
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.059,
+    "at": [
+     -169.5,
+     138.5,
+     -54.5
+    ],
+    "p99": 0.033,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.166,
+    "umax_mm": 0.014
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.036,
+    "at": [
+     -169.5,
+     138.5,
+     -54.5
+    ],
+    "p99": 0.02,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.132,
+    "umax_mm": 0.004
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.134,
+    "at": [
+     -171.5,
+     209.5,
+     -56.5
+    ],
+    "p99": 0.061,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.064,
+    "umax_mm": 0.025
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.032,
+    "at": [
+     -169.5,
+     215.5,
+     -54.5
+    ],
+    "p99": 0.018,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.179,
+    "umax_mm": 0.013
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.009,
+    "at": [
+     -173.5,
+     207.5,
+     -53.5
+    ],
+    "p99": 0.006,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.16,
+    "umax_mm": 0.004
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.02,
+    "at": [
+     -169.5,
+     215.5,
+     -54.5
+    ],
+    "p99": 0.009,
+    "masked": 0.46,
+    "cls": "misuse",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.164,
+    "umax_mm": 0.007
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.067,
+    "at": [
+     -178.5,
+     212.5,
+     -33.5
+    ],
+    "p99": 0.041,
+    "masked": 0.46,
+    "cls": "flight",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.107,
+    "umax_mm": 0.032
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.018,
+    "at": [
+     -174.5,
+     212.5,
+     -35.5
+    ],
+    "p99": 0.013,
+    "masked": 0.46,
+    "cls": "misuse",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.161,
+    "umax_mm": 0.015
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.062,
+    "at": [
+     -171.5,
+     138.5,
+     -56.5
+    ],
+    "p99": 0.021,
+    "masked": 0.46,
+    "cls": "misuse",
+    "held": "bracket_jB@195 | sheet-X",
+    "held_mismatch": 0.186,
+    "umax_mm": 0.025
+   }
+  }
+ },
+ "bracket_e@45": {
+  "piece": "bracket_e",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.24,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   136.5,
+   127.5,
+   133.5
+  ],
+  "prior": 0.14,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.012,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.008,
+    "masked": 0.12,
+    "cls": "sustained",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.002
+   },
+   "standing, Overseer seated": {
+    "worst": 0.03,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.019,
+    "masked": 0.12,
+    "cls": "sustained",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.004
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.03,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.019,
+    "masked": 0.12,
+    "cls": "sustained",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.004
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.055,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.034,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.021
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.24,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.148,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.092
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.039,
+    "at": [
+     139.5,
+     124.5,
+     114.5
+    ],
+    "p99": 0.017,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.011
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.156,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.096,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.096
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.196,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.121,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.12
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.038,
+    "at": [
+     139.5,
+     117.5,
+     114.5
+    ],
+    "p99": 0.013,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.006
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.026,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.015,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.009
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.005,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.003,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.002
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.024,
+    "at": [
+     177.5,
+     236.5,
+     141.5
+    ],
+    "p99": 0.014,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.008
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.009,
+    "at": [
+     178.5,
+     215.5,
+     113.5
+    ],
+    "p99": 0.005,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.015,
+    "umax_mm": 0.002
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.005,
+    "at": [
+     136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.003,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.002
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.018,
+    "at": [
+     139.5,
+     124.5,
+     114.5
+    ],
+    "p99": 0.006,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.011,
+    "umax_mm": 0.006
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.009,
+    "at": [
+     141.5,
+     118.5,
+     134.5
+    ],
+    "p99": 0.006,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.01,
+    "umax_mm": 0.004
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.009,
+    "at": [
+     177.5,
+     136.5,
+     141.5
+    ],
+    "p99": 0.006,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.005
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.016,
+    "at": [
+     139.5,
+     118.5,
+     114.5
+    ],
+    "p99": 0.005,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@45 | sheet+X",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.004
+   }
+  }
+ },
+ "bracket_e@135": {
+  "piece": "bracket_e",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.195,
+  "worst_case": "Overseer catch, 30 off toward -X -Y (237 N)",
+  "at": [
+   -136.5,
+   236.5,
+   133.5
+  ],
+  "prior": 0.14,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.009,
+    "at": [
+     -136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.006,
+    "masked": 0.12,
+    "cls": "sustained",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.001
+   },
+   "standing, Overseer seated": {
+    "worst": 0.025,
+    "at": [
+     -136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.016,
+    "masked": 0.12,
+    "cls": "sustained",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.003
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.025,
+    "at": [
+     -136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.015,
+    "masked": 0.12,
+    "cls": "sustained",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.003
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.011,
+    "at": [
+     -139.5,
+     227.5,
+     114.5
+    ],
+    "p99": 0.004,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.003
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.055,
+    "at": [
+     -139.5,
+     227.5,
+     114.5
+    ],
+    "p99": 0.018,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.009
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.195,
+    "at": [
+     -136.5,
+     236.5,
+     133.5
+    ],
+    "p99": 0.121,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.076
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.041,
+    "at": [
+     -139.5,
+     227.5,
+     114.5
+    ],
+    "p99": 0.013,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.008
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.047,
+    "at": [
+     -139.5,
+     227.5,
+     114.5
+    ],
+    "p99": 0.016,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.011
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.031,
+    "at": [
+     -139.5,
+     124.5,
+     114.5
+    ],
+    "p99": 0.01,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.018,
+    "umax_mm": 0.007
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.022,
+    "at": [
+     -136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.013,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.007
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.004,
+    "at": [
+     -136.5,
+     127.5,
+     133.5
+    ],
+    "p99": 0.003,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.001
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.006,
+    "at": [
+     -178.5,
+     216.5,
+     113.5
+    ],
+    "p99": 0.003,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.001
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.014,
+    "at": [
+     -178.5,
+     138.5,
+     113.5
+    ],
+    "p99": 0.006,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.026,
+    "umax_mm": 0.004
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.004,
+    "at": [
+     -177.5,
+     236.5,
+     141.5
+    ],
+    "p99": 0.003,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.001
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.018,
+    "at": [
+     -136.5,
+     126.5,
+     133.5
+    ],
+    "p99": 0.01,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.013,
+    "umax_mm": 0.009
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.008,
+    "at": [
+     -141.5,
+     128.5,
+     134.5
+    ],
+    "p99": 0.006,
+    "masked": 0.12,
+    "cls": "flight",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.004
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.007,
+    "at": [
+     -177.5,
+     235.5,
+     141.5
+    ],
+    "p99": 0.004,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.004
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.019,
+    "at": [
+     -178.5,
+     138.5,
+     113.5
+    ],
+    "p99": 0.011,
+    "masked": 0.12,
+    "cls": "misuse",
+    "held": "bracket_e@135 | sheet-X",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.011
+   }
+  }
+ },
+ "baymod@-90": {
+  "piece": "baymod",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.493,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   32.5,
+   151.5,
+   -151.5
+  ],
+  "prior": 0.05,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.057,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.019,
+    "masked": 0.51,
+    "cls": "sustained",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.015
+   },
+   "standing, Overseer seated": {
+    "worst": 0.102,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.034,
+    "masked": 0.51,
+    "cls": "sustained",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.026
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.09,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.03,
+    "masked": 0.51,
+    "cls": "sustained",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.023
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.127,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.039,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.081
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.493,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.152,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.31
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.108,
+    "at": [
+     -34.5,
+     202.5,
+     -154.5
+    ],
+    "p99": 0.054,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.044
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.316,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.097,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.319
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.397,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.122,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.4
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.4,
+    "at": [
+     31.5,
+     152.5,
+     -150.5
+    ],
+    "p99": 0.113,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.251
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.331,
+    "at": [
+     31.5,
+     152.5,
+     -150.5
+    ],
+    "p99": 0.095,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.213
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.185,
+    "at": [
+     28.5,
+     137.5,
+     -148.5
+    ],
+    "p99": 0.054,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.112
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.391,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.141,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.27
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.172,
+    "at": [
+     30.5,
+     206.5,
+     -151.5
+    ],
+    "p99": 0.063,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.077
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.021,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.007,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.014
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.165,
+    "at": [
+     31.5,
+     152.5,
+     -150.5
+    ],
+    "p99": 0.048,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.167
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.329,
+    "at": [
+     28.5,
+     137.5,
+     -148.5
+    ],
+    "p99": 0.089,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.19
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.055,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.019,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.007,
+    "umax_mm": 0.06
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.123,
+    "at": [
+     32.5,
+     151.5,
+     -151.5
+    ],
+    "p99": 0.043,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "cradle_keel | baymod@-90",
+    "held_mismatch": 0.008,
+    "umax_mm": 0.106
+   }
+  }
+ },
+ "baymod@-60": {
+  "piece": "baymod",
+  "h": 1.0,
+  "bodies_in_grid": 1,
+  "lost_mm3": 0.0,
+  "worst": 0.547,
+  "worst_case": "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)",
+  "at": [
+   103.5,
+   202.5,
+   -116.5
+  ],
+  "prior": 0.05,
+  "cases": {
+   "standing, Scout seated": {
+    "worst": 0.059,
+    "at": [
+     93.5,
+     206.5,
+     -121.5
+    ],
+    "p99": 0.03,
+    "masked": 0.51,
+    "cls": "sustained",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.052
+   },
+   "standing, Overseer seated": {
+    "worst": 0.105,
+    "at": [
+     93.5,
+     205.5,
+     -121.5
+    ],
+    "p99": 0.054,
+    "masked": 0.51,
+    "cls": "sustained",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.077
+   },
+   "uneven floor (front-right corner off), Overseer seated": {
+    "worst": 0.109,
+    "at": [
+     93.5,
+     205.5,
+     -121.5
+    ],
+    "p99": 0.055,
+    "masked": 0.51,
+    "cls": "sustained",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.087
+   },
+   "Scout catch, 30 off toward +X +Y at 0.15 m/s (53 N)": {
+    "worst": 0.131,
+    "at": [
+     93.5,
+     206.5,
+     -121.5
+    ],
+    "p99": 0.07,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.003,
+    "umax_mm": 0.262
+   },
+   "Overseer catch, 30 off toward +X +Y at 0.15 m/s (237 N)": {
+    "worst": 0.547,
+    "at": [
+     103.5,
+     202.5,
+     -116.5
+    ],
+    "p99": 0.286,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.004,
+    "umax_mm": 1.052
+   },
+   "Overseer catch, 30 off toward -X -Y (237 N)": {
+    "worst": 0.101,
+    "at": [
+     101.5,
+     205.5,
+     -116.5
+    ],
+    "p99": 0.039,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.111
+   },
+   "misuse: Scout free fall 0.15 m (255 N)": {
+    "worst": 0.352,
+    "at": [
+     103.5,
+     202.5,
+     -116.5
+    ],
+    "p99": 0.185,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.004,
+    "umax_mm": 1.104
+   },
+   "misuse: Overseer motors cut at the gate (314 N)": {
+    "worst": 0.444,
+    "at": [
+     103.5,
+     202.5,
+     -116.5
+    ],
+    "p99": 0.232,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.004,
+    "umax_mm": 1.369
+   },
+   "XT60 insert at the drone 60 N": {
+    "worst": 0.2,
+    "at": [
+     103.5,
+     202.5,
+     -116.5
+    ],
+    "p99": 0.076,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.004,
+    "umax_mm": 0.141
+   },
+   "XT60 pull at the drone 50 N": {
+    "worst": 0.173,
+    "at": [
+     101.5,
+     205.5,
+     -116.5
+    ],
+    "p99": 0.07,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.002,
+    "umax_mm": 0.238
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "worst": 0.074,
+    "at": [
+     101.5,
+     205.5,
+     -116.5
+    ],
+    "p99": 0.027,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.095
+   },
+   "XT60 insert at the -60 bay 60 N": {
+    "worst": 0.324,
+    "at": [
+     87.5,
+     135.5,
+     -120.5
+    ],
+    "p99": 0.192,
+    "masked": 0.55,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.003,
+    "umax_mm": 1.307
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "worst": 0.089,
+    "at": [
+     52.5,
+     205.5,
+     -143.5
+    ],
+    "p99": 0.045,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.006,
+    "umax_mm": 0.173
+   },
+   "axle motor stall 1.8 N.m": {
+    "worst": 0.023,
+    "at": [
+     93.5,
+     206.5,
+     -121.5
+    ],
+    "p99": 0.012,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.05
+   },
+   "misuse: 50 N sideways on the funnel rim": {
+    "worst": 0.079,
+    "at": [
+     103.5,
+     202.5,
+     -116.5
+    ],
+    "p99": 0.039,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.187
+   },
+   "lifted by the side sheets, 2 g": {
+    "worst": 0.106,
+    "at": [
+     53.5,
+     142.5,
+     -142.5
+    ],
+    "p99": 0.048,
+    "masked": 0.51,
+    "cls": "flight",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.0,
+    "umax_mm": 0.147
+   },
+   "misuse: set down hard, 5 g": {
+    "worst": 0.057,
+    "at": [
+     93.5,
+     206.5,
+     -121.5
+    ],
+    "p99": 0.029,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.001,
+    "umax_mm": 0.226
+   },
+   "misuse: knocked over onto the +X side, 5 g lateral": {
+    "worst": 0.097,
+    "at": [
+     54.5,
+     213.5,
+     -141.5
+    ],
+    "p99": 0.056,
+    "masked": 0.51,
+    "cls": "misuse",
+    "held": "baymod@-90 | baymod@-60",
+    "held_mismatch": 0.005,
+    "umax_mm": 0.334
+   }
+  }
+ }
+}

@@ -1,4 +1,5 @@
 # Pinion 16T v2 (box swap arm v6, x2, 24 Oct 2026)
+Tags: numbers C geometry (drawn), M from the meshes, E loads, stiffnesses and strengths, unless tagged in place.
 16T m1 involute 20° (v1's profile, tip relief), face 10.5 (C) (Y 62..72.5, C; v1 8), boss Ø14 Y 56.5..60.5 (C), round bore below Y 59.5 (C) (the NEMA's D-flat is only the shaft's last 15: v1's D-bore from 55.5 met the round part), M3 grub onto the flat at Y 60 (`arm_v6_cad.pinion_v2`).
 ```
 arm_pinion16_v2: DESIGN (v6 concept check FAIL x2; READY in v7 after its concept check)

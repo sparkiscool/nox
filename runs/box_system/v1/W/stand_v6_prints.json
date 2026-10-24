@@ -1,0 +1,13 @@
+{
+ "frame_mid": {
+  "g": 47.6,
+  "qty": 5,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   51.2,
+   84.0,
+   89.4
+  ]
+ }
+}

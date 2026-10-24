@@ -10,3 +10,6 @@ nohup.out
 .claude/worktrees/
 .cache/
 nox/box/out/
+
+# box_system: regenerable piece-pass inputs (req/*.json carry them)
+runs/box_system/*/*.pkl

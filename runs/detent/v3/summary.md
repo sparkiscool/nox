@@ -1,4 +1,5 @@
 # Detent v5: ring v3 (24 Oct 2026, swap arm system worker)
+Tags: numbers C geometry (drawn), M from the meshes, E loads, stiffnesses and strengths, unless tagged in place.
 Ring v1 failed solid_check; ring v2 passed it but broke the 2.0 rule (1.54 from the button-head spot faces to the notches, 1.05 from the Ø3.4 holes to the bore on the 80T boss, M): strike 2. **Ring v3** (`detent.ring_v3`): no bolt through it; three Ø6.2 x 1.9 pockets in its underside key it on the 80T's own M3 ISO 7380 heads (Ø5.7 x 1.65, E: CHECK on arrival), epoxied on the Ø30 boss (DEFAULT); the pockets open into the bore, 2.4 inside the rim and 2.05 (3D) from the nearest notch flank (C). Same 12 notches (roller at −135°, `CHOSEN_V6`), same magnet. Detent arm v2 unchanged (2 x DIN 988 3 x 5 x 0.5 shims). Tower in hub v6 at (21.2, −30.3): every gap ≥ 1.0 on the v6 stack (C; `detent.tower_gap`).
 ```
 detent_ring_v3: DESIGN (v6 concept check FAIL x2; READY in v7 after its concept check)
