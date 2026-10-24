@@ -231,11 +231,12 @@ def centre_rib(g):
 # adhesive), the foot under the edge, the leg on the outer face
 CSTRIP = dict(x0=19.2, x1=23.2, y0=-2.0, leg=(19.0, 21.0, 3.0), dz=32.0)      # cartridge v6: under its bottom long edges
 NOSE_BAR = 3.5                                     # o 3.5 (spec), along the 45 deg lower nose chamfer
-NOSE_PTS = [(59.2, 31.5, -16.0), (35.2, 31.5, -40.0)]   # drone frame (+y side; mirrored): Scout spec, its axis 1.0 off the
+NOSE_PTS = [(59.2, 34.0, -16.0), (35.2, 34.0, -40.0)]   # drone frame (+y side; mirrored): Scout spec (y 31), its axis 1.0 off the
                                                    # 45 deg chamfer (a 2.9 flat bonds and prints), above z -40 only (keel)
 NOSE_PLATE = dict(t=2.2, y=27.0, z0=-22.0, z1=-6.0)    # drone frame (spec y +-27), 2.2 on the lead end wall's face
-TAIL_PTS = [(-49.95, 31.5, -25.25), (-35.2, 31.5, -40.0)]   # tail bars on the same chamfer line, from the tail wall face
-EAR = dict(y0=26.0, y1=33.25, dz=(-27.0, -12.0))   # each plate's ears out to the bar line, so plate + bars are one print
+TAIL_PTS = [(-49.95, 34.0, -25.25), (-35.2, 34.0, -40.0)]   # tail bars on the same chamfer line, from the tail wall face;
+                                                   # y 34 (spec 31): outboard of the bolt rings (r 6.2 at y 26.55), at 31 / 31.5 they left 0.5 skins
+EAR = dict(y0=26.0, y1=34.5, dz=(-27.0, -12.0))   # each plate's ears out to the bar line, so plate + bars are one print
 TAIL_PLATE = dict(t=2.2, y=27.0, z0=-31.5, z1=-6.0, key_r=4.5)   # drone frame (Scout v3 ask 24 Oct, no-keel cage): 2.2 on
                                                    # the tail end wall's face and 45 deg chamfer, o 9 round each bolt key;
                                                    # down to z -31.5 (below it the side bars and strips cover)
@@ -1227,7 +1228,7 @@ def reactions(B, hc):
 
 
 # ======================================================================== collar inset search (Scout)
-SCOUT_INSET = 11.0                # the search's result (search_inset() refreshes it at run time)
+SCOUT_INSET = 11.5                # the search's result (search_inset() refreshes it at run time; 11.0 before the 26.55 bolts)
 SKID_T = 3.0                      # Scout cartridge ends: clipped SKID_T deeper than the set, a TPU skid fills the band back to
                                   # the set's clip, so an edge from below meets the skid, not the cartridge (Scout edge probe)
 
