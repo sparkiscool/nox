@@ -1,6 +1,6 @@
 # Runs
 
-_97 runs · rebuilt 2026-10-24 18:38_
+_97 runs · rebuilt 2026-10-24 18:51_
 
 ## Latest per part
 
@@ -20,7 +20,7 @@ _97 runs · rebuilt 2026-10-24 18:38_
 | funnel_panel | v7 | DONE | 80.0 (M) | 0.91 in press u60 v90 | PASS | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
 | holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
 | hook_latch | v2 | · | · | ·  | · | [runs/hook_latch/v2](runs/hook_latch/v2/summary.md) |
-| hub | v7 | · | 213.3 (M) | ·  | FAIL | [runs/hub/v7](runs/hub/v7/summary.md) |
+| hub | v7 | · | 213.3 (M) | ·  | PASS | [runs/hub/v7](runs/hub/v7/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
@@ -36,7 +36,7 @@ _97 runs · rebuilt 2026-10-24 18:38_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-24 18:36 | hub | [v7](runs/hub/v7/summary.md) | · | 213.3 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 18:51 | hub | [v7](runs/hub/v7/summary.md) | · | 213.3 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 17:44 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 17:44 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
