@@ -743,7 +743,7 @@ say(f"PX4 flow position from the CG (FRD, m): x {FLOW_POS[0]:+.3f}, y {FLOW_POS[
     f"IMU (FC centre) from the CG: x {(0 - cg[0]) / 1000:+.3f}, z {-(9.75 - cg[2]) / 1000:+.3f}")
 
 # ---------------------------------------------------------------- motion artifact + run record
-s = Scene("Overseer system v1", f"full cage (frame model): L2 mode {FRAME['f_l2']:.0f} Hz, crash {co.CRASH_G:.0f} g, tip-over ≥ {min(tips.values()):.0f} deg; pack {TIP_OFF:.0f} behind the thrust axis, motors {dm:.0f} ahead of the plates")
+s = Scene("Overseer system v2", f"full cage (frame model): L2 mode {FRAME['f_l2']:.0f} Hz, crash {co.CRASH_G:.0f} g, tip-over ≥ {min(tips.values()):.0f} deg; pack {TIP_OFF:.0f} behind the thrust axis, motors {dm:.0f} ahead of the plates")
 P = lambda n, m, grp, c, pr, note="": s.part(n, m, group=grp, color=c, printed=pr, note=note)
 
 
