@@ -1,6 +1,6 @@
 # Runs
 
-_43 runs · rebuilt 2026-10-23 20:00_
+_46 runs · rebuilt 2026-10-24 00:20 (scan_stick_cam rows added by hand: the tool sorts by file time, which the checkout reset)_
 
 ## Latest per part
 
@@ -13,12 +13,15 @@ _43 runs · rebuilt 2026-10-23 20:00_
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v17 | DONE | 340.1 (M) | 0.26  | PASS | [runs/scan_stick_base/v17](runs/scan_stick_base/v17/summary.md) |
-| scan_stick_cam | v4 | DONE | 12.6 (M) | 0.28 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v4](runs/scan_stick_cam/v4/summary.md) |
+| scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
 
 ## All runs, newest first
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
+| 2026-10-23 | scan_stick_cam | [v6](runs/scan_stick_cam/v6/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
+| 2026-10-23 23:31 | scan_stick_cam | [v5](runs/scan_stick_cam/v5/summary.md) | FAILED | 13.0 (M) | 0.31 | PASS | · | 5.7 (P) GB | 44 min | · |
 | 2026-10-23 19:52 | scan_stick | [v13](runs/scan_stick/v13/summary.md) | DONE | 42.0 (M) | 0.30 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
 | 2026-10-23 18:46 | scan_stick_base | [v17](runs/scan_stick_base/v17/summary.md) | DONE | 340.1 (M) | 0.26 | PASS | -z (bottom) | 5.6 (P) GB | 6 min | · |
 | 2026-10-23 18:38 | scan_stick | [v12](runs/scan_stick/v12/summary.md) | RETIRED | 42.8 (M) | 0.28 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |

@@ -13,6 +13,7 @@ Spark's drone project: the **box** (funnel, magnet hold, vertical swap wheel, tw
 - **Solid check gates everything.** Nothing is saved, called BUILT or READY, or shown unless `python3 nox/solid_check.py <mesh>` reads PASS on the exact file. A FAIL is fixed in the design, never on the mesh. Every other check is reported, never blocks.
 - **Attachments are drawn**, never generated: pads ≥ Ø12 with ≥ 2.0 web, posts ≥ 6 x 6, a gusset into the body, a boss wall ≥ 3 round every counterbore or access cut.
 - **Tag every number:** P measured, M mesh, C CAD, E estimate, F frame model. A number lives only in `nox/dimensions.md`.
+- **Ready to print = a slicing prompt.** Every reply that says a file is ready to print ends with the laptop slicing-session prompt (`docs/generative.md`, Save and print), filled in, in a code block.
 - **PETG rigid, TPU feet and nodes, no PLA.** Nothing under 2.0 mm (flexures excepted). Rods 3.0 carbon, epoxied. Bambu A1 mini, 180 cube, tree supports, largest flat face down.
 - **No old designs** (slide swap, slider, pusher, turret, turntable, carousel, groove seat, Z stage, top-mounted battery) unless Spark asks fresh. Simplest design wins; every placement comes from an optimization.
 - **Never wait on Spark.** Decide, mark DEFAULT, write the choice and the alternative in one `log.md` line, continue; a shared number changes the same way (its `dimensions.md` row + the log line). Spark reverts what he disagrees with. A session never spends money (Spark orders from the cart link) or deletes work on `main` alone. Replies short, no em dashes.
