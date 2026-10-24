@@ -578,22 +578,49 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cag
     if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
     if ok_sz and nchg <= 3: FINAL_PASS = True                         # settled: one more layout pass with these sizes
-for it_fin in range(5):                                            # final sizes: re-balance at this wheel height, touch up the sizes (warm), repeat
-    dm, xB, zB, g, tot, cg = balance(None, dm); dc = TIP_OFF - dm
-    fr_ = co.evaluate(g["P"], CAGE_TOPO, CAGE_SIZES)
-    say(f"final pass {it_fin + 1}: motors {dm:.1f} ahead, CG {cg[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
-    if fr_["violation"] == 0: break
-    new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, iters=0, init=CAGE_SIZES)   # stiffen / strengthen only from the settled sizes
-    if not ok_: new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES)  # else a full warm-started sizing
-    if not ok_ and os.environ.get("SYS_SEARCH", "1") == "1":           # else every topology again on this geometry
-        from multiprocessing import Pool
-        with Pool(4) as pool:
-            table_, best_, abl_ = co.search(g["P"], co.F_L2_MIN, pool)
-        say(f"   final search: {sum(t['feasible'] for t in table_)} of {len(table_)} topologies feasible"
-            + (f"; best {best_[2]['mass_g']:.0f} g: " + " ".join(k for k, v in best_[0].items() if v and k not in co.FIXED_ON) if best_ else ""))
-        if best_: CAGE_TOPO, new_, ok_ = best_[0], best_[1], True
-    if not ok_: say("   touch-up sizing infeasible: the frame line below reports it"); break
-    CAGE_SIZES = new_
+# final: the motor square position with the cage sized on its own geometry. Moving the square moves the cage, the L2 and the
+# set with it; only the plates and their electronics (~0.3 kg) stay, so a 1.5 mm shift of the moving parts' CG moves the
+# balance point ~16 mm and a plain re-balance / re-size loop swings. Bracket instead: e(dm) = CG x - dm with the cage sized
+# cold at dm, bisect until |e| <= BAL_TOL and the frame passes (the balance gate is 3, DEFAULT L).
+BAL_TOL = 1.5
+def at_dm(dm_):
+    global CAGE_SIZES, M_DRONE
+    zB_ = math.ceil(l2_low_zB()); dc_ = TIP_OFF - dm_
+    xB_ = solve_xB(lambda x: build(dm_, dc_, x, zB_), zB_)
+    g_ = build(dm_, dc_, xB_, zB_)
+    s_, r_, ok_ = co.size_fsd(g_["P"], CAGE_TOPO)
+    CAGE_SIZES = s_
+    g_ = build(dm_, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+    say(f"final: motors {dm_:.1f} ahead, cage {r_['mass_g']:.0f} g sized here, CG {cg_[0] - dm_:+.1f} in x, frame violation {r_['violation']:.3f}")
+    return dict(e=float(cg_[0] - dm_), ok=ok_, dm=dm_, sizes=s_, xB=xB_, zB=zB_)
+tries = [at_dm(dm)]
+if not (tries[0]["ok"] and abs(tries[0]["e"]) <= BAL_TOL):
+    dm_b = balance(None, dm)[0]                                       # exact balance with these sizes: the far side of the bracket
+    tries.append(at_dm(dm_b))
+    a_, b_ = sorted(tries[:2], key=lambda t: t["dm"])
+    for _ in range(7):
+        if any(t["ok"] and abs(t["e"]) <= BAL_TOL for t in tries): break
+        if (a_["e"] > 0) == (b_["e"] > 0):                            # no sign change: step past the end with the smaller |e|
+            t_ = min((a_, b_), key=lambda t: abs(t["e"])); dm_n = t_["dm"] + (8.0 if t_["e"] > 0 else -8.0)
+        else:
+            dm_n = (a_["dm"] + b_["dm"]) / 2
+        tn = at_dm(dm_n); tries.append(tn)
+        if (a_["e"] > 0) != (b_["e"] > 0):
+            if (tn["e"] > 0) == (a_["e"] > 0): a_ = tn
+            else: b_ = tn
+        else:
+            a_, b_ = sorted([min((a_, b_), key=lambda t: abs(t["e"])), tn], key=lambda t: t["dm"])
+best = min(tries, key=lambda t: (not t["ok"], abs(t["e"]) > BAL_TOL, abs(t["e"])))
+dm, xB, zB, CAGE_SIZES = best["dm"], best["xB"], best["zB"], best["sizes"]; dc = TIP_OFF - dm
+g = build(dm, dc, xB, zB); tot, cg = cg_of(g); M_DRONE = float(tot)
+if not best["ok"] and os.environ.get("SYS_SEARCH", "1") == "1":       # no passing sizing at any point tried: every topology here
+    from multiprocessing import Pool
+    with Pool(4) as pool:
+        table_, best_, abl_ = co.search(g["P"], co.F_L2_MIN, pool)
+    say(f"   final search: {sum(t['feasible'] for t in table_)} of {len(table_)} topologies feasible"
+        + (f"; best {best_[2]['mass_g']:.0f} g: " + " ".join(k for k, v in best_[0].items() if v and k not in co.FIXED_ON) if best_ else ""))
+    if best_: CAGE_TOPO, CAGE_SIZES = best_[0], best_[1]; g = build(dm, dc, xB, zB)
+say(f"final choice: motors {dm:.1f} ahead, CG {cg_of(g)[1][0] - dm:+.1f} in x ({len(tries)} points tried)")
 tot, cg = cg_of(g)                                                    # the layout drawn with the final sizes (the checks below read this one)
 CAM_DESC = f"two, yaw ±{CAM_YAW:.1f}, pitch {CAM_PITCH:.1f}, landscape"
 
