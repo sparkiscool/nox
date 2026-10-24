@@ -41,6 +41,16 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 | Scan stick cam bracket | `nox/overseer/scan_stick/scan_stick.md`, `cam_topo_v7.py` (nox/topo) | v7 (topology, 24 Oct: 10 mm standoffs, M2.5 inserts, 6 mm plate; v1 drawn retired, v2 / v3 FAILED the gate, v4 4 mm posts superseded, v5 web wrapped the posts, v6 stopped) | **READY** | `print/scan_stick_cam_v7.stl` | 13.35 (M) | 2x M3 x 12 to the head, 4x M2.5 x 6 for the camera; camera lens / board thickness (Q3) |
 | Scan stick base | `nox/overseer/scan_stick/scan_stick.md`, `base_topo_v7.py` (nox/topo layout) + `base_topo_v17.py` (rebuild: exact cuts, Ø40 boss, Pi tray, UBEC bay, switch strip beside the tube) | v17 (23 Oct; cradle v1 and base v2-v16 retired, runs in `runs/scan_stick_base/`) | **READY** | `print/scan_stick_base_v17.stl` | 340.1 (M) | print first (thread test ring before it), then the head; UBEC / buck bodies (Q4, bay 28 wide), pack mass (Q9) |
 
+## System recheck (Spark 24 Oct: every READY, BUILT, HOLD and DESIGN part, `docs/generative.md` The rule, 0)
+| System | Pieces (rows above) | System pass + recheck (owner) |
+|---|---|---|
+| Scout v3 | frame, every printed Scout part, where the receiver sits on the drone (pogo pads, KW11, underside stack) | Scout v3 chat |
+| Overseer | layout, arms, cage, lidar mount, scan stick mount, where its receiver sits | Overseer arms chat |
+| Scan stick | head, cam bracket, base, thread test | scan stick chat (its mount loads from the Overseer section) |
+| Box catch | funnel panels, hub + corner blocks, hook latch | XT60 / hook latch chat |
+| Box swap (arm + battery latch) | arm set, hub / detent / pinion, arm v5 (hub, heads + grabber, detent, rails, wheels, pinions, bushes), heads A / B, belt clamp coupons; **battery latch and cartridge, one standard for every pack (Scout and Overseer): cartridge, receiver latch block used in the drone and in every bay, XT60 float carrier**; the grabber follows the latch | control session (Spark 24 Oct) |
+| Box structure | stand, ring frames, enclosure, bay module bodies (the latch block from Box swap), box electronics, the whole-box model (`box_system.py`, from `box_assembly.py`) the other box systems hang on | box structure system session |
+
 ## Spark
 Each line carries its best answer; a session that cannot wait takes it as DEFAULT.
 - **Measure** (caliper, into `dimensions.md`): belt connector (gates the heads); idler bore, slip-ring flange OD + holes, MG90S ear spacing, 80T body width.
