@@ -39,3 +39,17 @@ it  27 beta    4 J   0.3359 vol 0.0786 (dil 0.1645 g -0.001) grey 12.3% ch 0.079
 it  28 beta    4 J   0.3359 vol 0.0793 (dil 0.1647 g -0.000) grey 12.2% ch 0.065 worst Pi guard bump side 100 N 220 10.6s
 it  29 beta    4 J   0.3359 vol 0.0797 (dil 0.1647 g -0.000) grey 12.1% ch 0.066 worst Pi guard bump side 100 N 220 9.5s
 it  30 beta    4 J   0.3359 vol 0.0801 (dil 0.1647 g -0.000) grey 12.0% ch 0.069 worst Pi guard bump side 100 N 220 9.6s
+it  31 beta    4 J   0.3359 vol 0.0805 (dil 0.1647 g +0.039) grey 11.9% ch 0.068 worst Pi guard bump side 100 N 220 9.6s
+it  32 beta    4 J   0.3359 vol 0.0764 (dil 0.1583 g -0.002) grey 11.3% ch 0.100 worst Pi guard bump side 100 N 220 10.2s
+it  33 beta    4 J   0.3359 vol 0.0770 (dil 0.1584 g -0.001) grey 11.4% ch 0.100 worst Pi guard bump side 100 N 220 10.3s
+layout: stopped (beta_stop) at it 33, beta 4, 331 s
+layout: beta 4 done: eroded design 18 bodies, main 98.7%; drawn bodies outside the main body: 8
+coarse stage done: 33 iterations, 353 s, peak 2.05432 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (365.06 cm3); 20.29 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.077 of 138,633 design cells
+layout: WARNING nearly mirrored in y (6.6% of passive cells differ): no symmetry
+layout: 5 drawn bodies (45,632 cells), held solid in every realization; eroded filter: masked
+layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (80, 64, 168) = 860,160 elements, 650,337 active dofs; backend mg (direct estimate 9.8 GB, budget 11.8 GB)
+fem: multigrid 4 levels [(np.int64(80), np.int64(64), np.int64(168)), (np.int64(40), np.int64(32), np.int64(84)), (np.int64(20), np.int64(16), np.int64(42)), (np.int64(10), np.int64(8), np.int64(21))], coarsest 6,534 dofs (direct)

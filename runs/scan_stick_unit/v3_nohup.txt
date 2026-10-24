@@ -1,0 +1,61 @@
+=== scan_stick_unit: h 2.0, generated 65.0 cm3, min member 3.2 mm, cores 4
+scan_stick_unit: grid (80, 64, 168) h 2.0 = 860,160 cells; design 136,097 (1088.8 cm3), drawn 48,168, void 675,895
+  support default: 2600 cells, 3598 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_unit: grid (40, 40, 88) h 4.0 = 140,800 cells; design 16,123 (1031.9 cm3), drawn 5,791, void 118,886
+  support default: 288 cells, 532 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (362.24 cm3); 8.38 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.071 of 16,254 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (4.6% of passive cells differ): no symmetry
+layout: 5 drawn bodies (5,660 cells), held solid in every realization; eroded filter: masked
+layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (40, 40, 88) = 140,800 elements, 90,297 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0895 (dil 0.1082 g +0.269) grey 20.1% ch 0.100 worst tie b5 my 5.5e+03 4.6s
+it   2 beta    1 J  27.2552 vol 0.0634 (dil 0.0760 g -0.108) grey 33.1% ch 0.100 worst tie b5 my 2e+04 6.2s
+it   3 beta    1 J   9.9804 vol 0.0675 (dil 0.0810 g -0.050) grey 32.0% ch 0.100 worst tie b5 my 7.33e+03 8.2s
+it   4 beta    1 J   1.6378 vol 0.0681 (dil 0.0816 g -0.043) grey 32.1% ch 0.100 worst tie b5 my 1.17e+03 9.3s
+it   5 beta    1 J   0.5758 vol 0.0689 (dil 0.0821 g -0.037) grey 31.1% ch 0.100 worst tie b4 mz 353 11.0s
+it   6 beta    1 J   0.3911 vol 0.0699 (dil 0.0830 g -0.023) grey 30.7% ch 0.100 worst tie b5 my 236 12.3s
+it   7 beta    1 J   0.3673 vol 0.0705 (dil 0.0834 g -0.018) grey 30.4% ch 0.100 worst Pi guard bump side 100 N 220 10.6s
+it   8 beta    1 J   0.3544 vol 0.0699 (dil 0.0826 g -0.027) grey 29.9% ch 0.100 worst Pi guard bump side 100 N 220 11.5s
+it   9 beta    1 J   0.3406 vol 0.0706 (dil 0.0831 g -0.021) grey 29.6% ch 0.100 worst Pi guard bump side 100 N 220 9.9s
+it  10 beta    1 J   0.3377 vol 0.0708 (dil 0.0834 g -0.018) grey 29.4% ch 0.100 worst Pi guard bump side 100 N 220 10.9s
+it  11 beta    1 J   0.3364 vol 0.0719 (dil 0.0843 g +0.000) grey 29.1% ch 0.100 worst Pi guard bump side 100 N 220 10.6s
+it  12 beta    1 J   0.3363 vol 0.0718 (dil 0.0842 g -0.002) grey 28.8% ch 0.100 worst Pi guard bump side 100 N 220 10.8s
+it  13 beta    1 J   0.3361 vol 0.0720 (dil 0.0842 g -0.001) grey 28.6% ch 0.100 worst Pi guard bump side 100 N 220 9.7s
+layout: beta 1 done: eroded design 20 bodies, main 95.6%; drawn bodies outside the main body: 13
+it  14 beta    2 J   0.3844 vol 0.0622 (dil 0.1005 g -0.118) grey 25.1% ch 0.100 worst Pi guard bump side 100 N 220 9.5s
+it  15 beta    2 J   0.3370 vol 0.0707 (dil 0.1110 g -0.026) grey 26.4% ch 0.100 worst Pi guard bump side 100 N 220 8.8s
+it  16 beta    2 J   0.3366 vol 0.0733 (dil 0.1127 g -0.003) grey 26.1% ch 0.100 worst Pi guard bump side 100 N 220 10.0s
+it  17 beta    2 J   0.3361 vol 0.0725 (dil 0.1119 g -0.009) grey 25.9% ch 0.100 worst Pi guard bump side 100 N 220 9.9s
+it  18 beta    2 J   0.3360 vol 0.0737 (dil 0.1127 g -0.002) grey 25.8% ch 0.073 worst Pi guard bump side 100 N 220 9.5s
+it  19 beta    2 J   0.3359 vol 0.0741 (dil 0.1129 g -0.000) grey 25.7% ch 0.065 worst Pi guard bump side 100 N 220 10.8s
+it  20 beta    2 J   0.3359 vol 0.0743 (dil 0.1129 g -0.000) grey 25.6% ch 0.064 worst Pi guard bump side 100 N 220 11.1s
+it  21 beta    2 J   0.3359 vol 0.0745 (dil 0.1130 g +0.016) grey 25.6% ch 0.077 worst Pi guard bump side 100 N 220 10.4s
+it  22 beta    2 J   0.3359 vol 0.0732 (dil 0.1111 g -0.001) grey 25.3% ch 0.094 worst Pi guard bump side 100 N 220 10.7s
+it  23 beta    2 J   0.3359 vol 0.0734 (dil 0.1112 g -0.000) grey 25.2% ch 0.085 worst Pi guard bump side 100 N 220 9.3s
+layout: beta 2 done: eroded design 21 bodies, main 94.4%; drawn bodies outside the main body: 11
+it  24 beta    4 J   0.5409 vol 0.0563 (dil 0.1336 g -0.202) grey 10.1% ch 0.100 worst L2 frame bump top 100 N 348 9.2s
+it  25 beta    4 J   0.3578 vol 0.0676 (dil 0.1519 g -0.092) grey 11.4% ch 0.100 worst Pi guard bump side 100 N 220 9.8s
+it  26 beta    4 J   0.3360 vol 0.0772 (dil 0.1640 g -0.004) grey 12.3% ch 0.100 worst Pi guard bump side 100 N 220 11.1s
+it  27 beta    4 J   0.3359 vol 0.0786 (dil 0.1645 g -0.001) grey 12.3% ch 0.079 worst Pi guard bump side 100 N 220 9.5s
+it  28 beta    4 J   0.3359 vol 0.0793 (dil 0.1647 g -0.000) grey 12.2% ch 0.065 worst Pi guard bump side 100 N 220 10.6s
+it  29 beta    4 J   0.3359 vol 0.0797 (dil 0.1647 g -0.000) grey 12.1% ch 0.066 worst Pi guard bump side 100 N 220 9.5s
+it  30 beta    4 J   0.3359 vol 0.0801 (dil 0.1647 g -0.000) grey 12.0% ch 0.069 worst Pi guard bump side 100 N 220 9.6s
+it  31 beta    4 J   0.3359 vol 0.0805 (dil 0.1647 g +0.039) grey 11.9% ch 0.068 worst Pi guard bump side 100 N 220 9.6s
+it  32 beta    4 J   0.3359 vol 0.0764 (dil 0.1583 g -0.002) grey 11.3% ch 0.100 worst Pi guard bump side 100 N 220 10.2s
+it  33 beta    4 J   0.3359 vol 0.0770 (dil 0.1584 g -0.001) grey 11.4% ch 0.100 worst Pi guard bump side 100 N 220 10.3s
+layout: stopped (beta_stop) at it 33, beta 4, 331 s
+layout: beta 4 done: eroded design 18 bodies, main 98.7%; drawn bodies outside the main body: 8
+coarse stage done: 33 iterations, 353 s, peak 2.05432 GB
+scan_stick_unit: grid (80, 64, 168) h 2.0 = 860,160 cells; design 136,097 (1088.8 cm3), drawn 48,168, void 675,895
+  support default: 2600 cells, 3598 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (365.06 cm3); 20.29 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.077 of 138,633 design cells
+layout: WARNING nearly mirrored in y (6.6% of passive cells differ): no symmetry
+layout: 5 drawn bodies (45,632 cells), held solid in every realization; eroded filter: masked
+layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (80, 64, 168) = 860,160 elements, 650,337 active dofs; backend mg (direct estimate 9.8 GB, budget 11.8 GB)
+fem: multigrid 4 levels [(np.int64(80), np.int64(64), np.int64(168)), (np.int64(40), np.int64(32), np.int64(84)), (np.int64(20), np.int64(16), np.int64(42)), (np.int64(10), np.int64(8), np.int64(21))], coarsest 6,534 dofs (direct)
