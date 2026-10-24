@@ -1,6 +1,6 @@
 """Heads v7 in the arm v7 sweep (24 Oct 2026, heads v7 part session): arm_kinematics' v7 cycle with the v7 head meshes in place of the
 v6 carriage proxy and the v4 gripper, without editing the arm's files (build_parts is wrapped here). Per head: head<h> = the body
-(the topology body when runs/head/v7/<A|B>/body_W.stl exists, else the layout's design space: an envelope check, every body inside it
+(the topology body when runs/head/v7/<A|B>/box_head_v7_<A|B>.stl exists, A frame, else the layout's design space: an envelope check, every body inside it
 passes), fingA_<h> / fingB_<h> = the -X / +X carriers with their 623ZZ rollers (moved by the cycle's finger squeeze, inner faces at
 10 - d), servo_<h> = servo + metal horn, grip<h> = the cam's swept disc, the three carbon rods, the spring and the sync pinion.
 Head B = head A mirrored in X with the MG995 (its own frame, as the arm's B parts).
@@ -20,7 +20,7 @@ _ORIG_BUILD = K.build_parts
 
 
 def body_mesh(h, use_space=False):
-    p = os.path.join(ROOT, "runs", "head", "v7", h, "body_A_frame.stl")
+    p = os.path.join(ROOT, "runs", "head", "v7", h, f"box_head_v7_{h}.stl")          # the topology body, A frame (B mirrored below)
     if not use_space and os.path.exists(p):
         return man(trimesh.load(p, force="mesh"))
     return H.design_space(SERVO[h])
