@@ -1,0 +1,17 @@
+=== scan_stick_cam: h 0.75, generated 4.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 3.44 cells, erosion depth 1.37 mm; volfrac 0.357 of 3,320 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: 6 drawn bodies (2,008 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'default') + 0 gate ties
+fem: grid (32, 48, 16) = 24,576 elements, 21,747 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.2857 (dil 0.3321 g -0.200) grey 99.8% ch 0.100 worst cable pull -y 20 N 91.5 0.8s
+it   2 beta    1 J   4.3976 vol 0.3463 (dil 0.3970 g -0.043) grey 99.8% ch 0.100 worst cable pull -y 20 N 40.2 0.8s
+it   3 beta    1 J   2.7908 vol 0.3571 (dil 0.4076 g -0.018) grey 99.4% ch 0.100 worst cable pull -y 20 N 26.3 0.6s
+it   4 beta    1 J   1.9955 vol 0.3584 (dil 0.4075 g -0.018) grey 97.7% ch 0.100 worst cable pull -y 20 N 18.2 0.6s
+it   5 beta    1 J   1.4864 vol 0.3612 (dil 0.4082 g -0.016) grey 93.9% ch 0.100 worst cable pull -y 20 N 13 0.6s
+it   6 beta    1 J   1.1540 vol 0.3647 (dil 0.4090 g -0.006) grey 89.0% ch 0.100 worst tie b1 fx 10.2 0.7s
+it   7 beta    1 J   0.9527 vol 0.3657 (dil 0.4071 g -0.010) grey 85.2% ch 0.100 worst tie b1 fx 8.51 0.8s
+it   8 beta    1 J   0.8456 vol 0.3693 (dil 0.4085 g -0.007) grey 80.5% ch 0.100 worst tie b1 fx 7.34 0.7s
+it   9 beta    1 J   0.8004 vol 0.3718 (dil 0.4094 g -0.005) grey 77.5% ch 0.100 worst tie b2 fx 6.74 0.7s
+it  10 beta    1 J   0.7731 vol 0.3736 (dil 0.4102 g -0.003) grey 75.6% ch 0.100 worst tie b6 fx 6.54 0.6s
