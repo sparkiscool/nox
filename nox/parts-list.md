@@ -39,7 +39,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | 4S 6000 LiPo, XT60 | 3 | flight pack | on hand | O, M |
 | MicoAir MTF-02P | 1 | optical flow + ToF | on hand | M, O |
 | Unitree L2 4D lidar | 1 | mapping, at the nose | on hand | M: L2, O |
-| DECXIN 2633V2 camera | 2 | front (lidar colouring by yaw) + underside | 1 on hand, 1 to buy | A (P), O |
+| DECXIN 2633V2 camera | 3 | front pair (yaw ±46.8, Spark 24 Oct: two forward cameras on the lidar view) + underside | 1 on hand, 2 to buy | A (P), O Camera |
 | RC receiver | 1 | RC (CRSF) | CHECK (model not recorded) | |
 | Belly frame, 8 PETG wheels, pogo pads (no steel plate since 23 Oct) | 1 set | box catch (section G) | to design | G |
 
