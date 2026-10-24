@@ -420,3 +420,17 @@ it  47 beta   32 J   7.2326 vol 0.0813 (dil 0.1612 g +0.004) grey  0.7% ch 0.100
 it  48 beta   32 J   7.2528 vol 0.0807 (dil 0.1605 g -0.001) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.19 40.6s
 it  49 beta   32 J   7.2385 vol 0.0808 (dil 0.1606 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.18 41.7s
 it  50 beta   32 J   7.2296 vol 0.0808 (dil 0.1606 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.18 40.1s
+it  51 beta   32 J   7.2231 vol 0.0809 (dil 0.1606 g -0.001) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.17 40.8s
+it  52 beta   32 J   7.2133 vol 0.0810 (dil 0.1607 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.17 37.7s
+it  53 beta   32 J   7.2074 vol 0.0810 (dil 0.1607 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.17 40.1s
+it  54 beta   32 J   7.2028 vol 0.0810 (dil 0.1607 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.16 40.7s
+it  55 beta   32 J   7.1988 vol 0.0811 (dil 0.1607 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.16 39.8s
+it  56 beta   32 J   7.1953 vol 0.0811 (dil 0.1607 g +0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 5.16 38.5s
+layout: stopped (grey) at it 56, beta 32, 2274 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 2399 s, peak 9.505596 GB
+build: organic surface at pitch 0.400 mm (x5), skins 308.69 cm3, field 419.19 cm3, in env - cuts 388.71 cm3 (layout 379.21, level offset -1.000 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,476,208 faces, 264 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [308013.7], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 33, "ok": true}
+function check: {'skin_mm3': 219338.2, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.41 in 'unit 50 g 1' at [22.5, -1.0, 24.5]
+RESULT {"name": "scan_stick_base", "solid_ok": true, "mass_g": 494.65, "worst": 0.408, "function_ok": true, "bodies": 1}
