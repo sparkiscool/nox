@@ -100,14 +100,7 @@
   },
   {
    "name": "spine",
-   "box": [
-    -30.0,
-    30.0,
-    -31.5,
-    31.5,
-    0.0,
-    196.0
-   ],
+   "mesh": "runs/scan_stick_system/v2/spine_drawn.stl",
    "role": "cage",
    "mass_g": 230,
    "tag": "E"
@@ -124,13 +117,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      8.0
     ],
     "p1": [
      21.607978325472793,
-     -44.0,
+     -36.0,
      8.0
     ]
    },
@@ -143,13 +136,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      192.0
     ],
     "p1": [
      70.91062973279936,
-     -44.0,
+     -36.0,
      192.0
     ]
    },
@@ -162,13 +155,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      8.0
     ],
     "p1": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      192.0
     ]
    },
@@ -182,12 +175,12 @@
     "r": 1.5,
     "p0": [
      21.607978325472793,
-     -44.0,
+     -36.0,
      8.0
     ],
     "p1": [
      70.91062973279936,
-     -44.0,
+     -36.0,
      192.0
     ]
    },
@@ -200,13 +193,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      8.0
     ],
     "p1": [
-     26.0,
-     -44.0,
+     10.0,
+     -36.0,
      192.0
     ]
    },
@@ -219,13 +212,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      8.0
     ],
     "p1": [
      21.607978325472793,
-     44.0,
+     36.0,
      8.0
     ]
    },
@@ -238,13 +231,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      192.0
     ],
     "p1": [
      70.91062973279936,
-     44.0,
+     36.0,
      192.0
     ]
    },
@@ -257,13 +250,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      8.0
     ],
     "p1": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      192.0
     ]
    },
@@ -277,12 +270,12 @@
     "r": 1.5,
     "p0": [
      21.607978325472793,
-     44.0,
+     36.0,
      8.0
     ],
     "p1": [
      70.91062973279936,
-     44.0,
+     36.0,
      192.0
     ]
    },
@@ -295,13 +288,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      8.0
     ],
     "p1": [
-     26.0,
-     44.0,
+     10.0,
+     36.0,
      192.0
     ]
    },
@@ -314,13 +307,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      8.0
     ],
     "p1": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      8.0
     ]
    },
@@ -333,13 +326,13 @@
    "cylinder": {
     "r": 1.5,
     "p0": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      192.0
     ],
     "p1": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      192.0
     ]
    },
@@ -353,18 +346,138 @@
     "r": 1.5,
     "p0": [
      70.91062973279936,
-     -44.0,
+     -36.0,
      192.0
     ],
     "p1": [
      70.91062973279936,
-     44.0,
+     36.0,
      192.0
     ]
    },
    "role": "cage",
    "material": "carbon",
    "tag": "C"
+  },
+  {
+   "name": "node low back -1",
+   "box": [
+    -72.0,
+    -60.0,
+    -42.0,
+    -30.0,
+    2.0,
+    14.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node top back -1",
+   "box": [
+    -72.0,
+    -60.0,
+    -42.0,
+    -30.0,
+    186.0,
+    198.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node frame foot -1",
+   "box": [
+    15.607978325472793,
+    27.607978325472793,
+    -42.0,
+    -30.0,
+    2.0,
+    14.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node top front -1",
+   "box": [
+    64.91062973279936,
+    76.91062973279936,
+    -42.0,
+    -30.0,
+    186.0,
+    198.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node low back +1",
+   "box": [
+    -72.0,
+    -60.0,
+    30.0,
+    42.0,
+    2.0,
+    14.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node top back +1",
+   "box": [
+    -72.0,
+    -60.0,
+    30.0,
+    42.0,
+    186.0,
+    198.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node frame foot +1",
+   "box": [
+    15.607978325472793,
+    27.607978325472793,
+    30.0,
+    42.0,
+    2.0,
+    14.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
+  },
+  {
+   "name": "node top front +1",
+   "box": [
+    64.91062973279936,
+    76.91062973279936,
+    30.0,
+    42.0,
+    186.0,
+    198.0
+   ],
+   "role": "cage",
+   "material": "tpu",
+   "mass_g": 2,
+   "tag": "E"
   }
  ],
  "openings": [
@@ -453,392 +566,1052 @@
   [
    "low side -1",
    "top side -1",
-   50
+   600
   ],
   [
    "low side -1",
    "back vertical -1",
-   50
+   600
   ],
   [
    "low side -1",
    "frame -1",
-   50
+   600
   ],
   [
    "low side -1",
    "back diagonal -1",
-   50
+   600
   ],
   [
    "low side -1",
    "low side +1",
-   50
+   600
   ],
   [
    "low side -1",
    "top side +1",
-   50
+   600
   ],
   [
    "low side -1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "low side -1",
    "frame +1",
-   50
+   600
   ],
   [
    "low side -1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "low side -1",
    "low back",
-   50
+   600
   ],
   [
    "low side -1",
    "top back",
-   50
+   600
   ],
   [
    "low side -1",
    "top front",
-   50
+   600
+  ],
+  [
+   "low side -1",
+   "node low back -1",
+   600
+  ],
+  [
+   "low side -1",
+   "node top back -1",
+   600
+  ],
+  [
+   "low side -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "low side -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "low side -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "low side -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "low side -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "low side -1",
+   "node top front +1",
+   600
   ],
   [
    "top side -1",
    "back vertical -1",
-   50
+   600
   ],
   [
    "top side -1",
    "frame -1",
-   50
+   600
   ],
   [
    "top side -1",
    "back diagonal -1",
-   50
+   600
   ],
   [
    "top side -1",
    "low side +1",
-   50
+   600
   ],
   [
    "top side -1",
    "top side +1",
-   50
+   600
   ],
   [
    "top side -1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "top side -1",
    "frame +1",
-   50
+   600
   ],
   [
    "top side -1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "top side -1",
    "low back",
-   50
+   600
   ],
   [
    "top side -1",
    "top back",
-   50
+   600
   ],
   [
    "top side -1",
    "top front",
-   50
+   600
+  ],
+  [
+   "top side -1",
+   "node low back -1",
+   600
+  ],
+  [
+   "top side -1",
+   "node top back -1",
+   600
+  ],
+  [
+   "top side -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "top side -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "top side -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "top side -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "top side -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "top side -1",
+   "node top front +1",
+   600
   ],
   [
    "back vertical -1",
    "frame -1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "back diagonal -1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "low side +1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "top side +1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "frame +1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "back vertical -1",
    "low back",
-   50
+   600
   ],
   [
    "back vertical -1",
    "top back",
-   50
+   600
   ],
   [
    "back vertical -1",
    "top front",
-   50
+   600
+  ],
+  [
+   "back vertical -1",
+   "node low back -1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node top back -1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "back vertical -1",
+   "node top front +1",
+   600
   ],
   [
    "frame -1",
    "back diagonal -1",
-   50
+   600
   ],
   [
    "frame -1",
    "low side +1",
-   50
+   600
   ],
   [
    "frame -1",
    "top side +1",
-   50
+   600
   ],
   [
    "frame -1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "frame -1",
    "frame +1",
-   50
+   600
   ],
   [
    "frame -1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "frame -1",
    "low back",
-   50
+   600
   ],
   [
    "frame -1",
    "top back",
-   50
+   600
   ],
   [
    "frame -1",
    "top front",
-   50
+   600
+  ],
+  [
+   "frame -1",
+   "node low back -1",
+   600
+  ],
+  [
+   "frame -1",
+   "node top back -1",
+   600
+  ],
+  [
+   "frame -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "frame -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "frame -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "frame -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "frame -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "frame -1",
+   "node top front +1",
+   600
   ],
   [
    "back diagonal -1",
    "low side +1",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "top side +1",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "frame +1",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "low back",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "top back",
-   50
+   600
   ],
   [
    "back diagonal -1",
    "top front",
-   50
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node low back -1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node top back -1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "back diagonal -1",
+   "node top front +1",
+   600
   ],
   [
    "low side +1",
    "top side +1",
-   50
+   600
   ],
   [
    "low side +1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "low side +1",
    "frame +1",
-   50
+   600
   ],
   [
    "low side +1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "low side +1",
    "low back",
-   50
+   600
   ],
   [
    "low side +1",
    "top back",
-   50
+   600
   ],
   [
    "low side +1",
    "top front",
-   50
+   600
+  ],
+  [
+   "low side +1",
+   "node low back -1",
+   600
+  ],
+  [
+   "low side +1",
+   "node top back -1",
+   600
+  ],
+  [
+   "low side +1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "low side +1",
+   "node top front -1",
+   600
+  ],
+  [
+   "low side +1",
+   "node low back +1",
+   600
+  ],
+  [
+   "low side +1",
+   "node top back +1",
+   600
+  ],
+  [
+   "low side +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "low side +1",
+   "node top front +1",
+   600
   ],
   [
    "top side +1",
    "back vertical +1",
-   50
+   600
   ],
   [
    "top side +1",
    "frame +1",
-   50
+   600
   ],
   [
    "top side +1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "top side +1",
    "low back",
-   50
+   600
   ],
   [
    "top side +1",
    "top back",
-   50
+   600
   ],
   [
    "top side +1",
    "top front",
-   50
+   600
+  ],
+  [
+   "top side +1",
+   "node low back -1",
+   600
+  ],
+  [
+   "top side +1",
+   "node top back -1",
+   600
+  ],
+  [
+   "top side +1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "top side +1",
+   "node top front -1",
+   600
+  ],
+  [
+   "top side +1",
+   "node low back +1",
+   600
+  ],
+  [
+   "top side +1",
+   "node top back +1",
+   600
+  ],
+  [
+   "top side +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "top side +1",
+   "node top front +1",
+   600
   ],
   [
    "back vertical +1",
    "frame +1",
-   50
+   600
   ],
   [
    "back vertical +1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "back vertical +1",
    "low back",
-   50
+   600
   ],
   [
    "back vertical +1",
    "top back",
-   50
+   600
   ],
   [
    "back vertical +1",
    "top front",
-   50
+   600
+  ],
+  [
+   "back vertical +1",
+   "node low back -1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node top back -1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node top front -1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node low back +1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node top back +1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "back vertical +1",
+   "node top front +1",
+   600
   ],
   [
    "frame +1",
    "back diagonal +1",
-   50
+   600
   ],
   [
    "frame +1",
    "low back",
-   50
+   600
   ],
   [
    "frame +1",
    "top back",
-   50
+   600
   ],
   [
    "frame +1",
    "top front",
-   50
+   600
+  ],
+  [
+   "frame +1",
+   "node low back -1",
+   600
+  ],
+  [
+   "frame +1",
+   "node top back -1",
+   600
+  ],
+  [
+   "frame +1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "frame +1",
+   "node top front -1",
+   600
+  ],
+  [
+   "frame +1",
+   "node low back +1",
+   600
+  ],
+  [
+   "frame +1",
+   "node top back +1",
+   600
+  ],
+  [
+   "frame +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "frame +1",
+   "node top front +1",
+   600
   ],
   [
    "back diagonal +1",
    "low back",
-   50
+   600
   ],
   [
    "back diagonal +1",
    "top back",
-   50
+   600
   ],
   [
    "back diagonal +1",
    "top front",
-   50
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node low back -1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node top back -1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node top front -1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node low back +1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node top back +1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "back diagonal +1",
+   "node top front +1",
+   600
   ],
   [
    "low back",
    "top back",
-   50
+   600
   ],
   [
    "low back",
    "top front",
-   50
+   600
+  ],
+  [
+   "low back",
+   "node low back -1",
+   600
+  ],
+  [
+   "low back",
+   "node top back -1",
+   600
+  ],
+  [
+   "low back",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "low back",
+   "node top front -1",
+   600
+  ],
+  [
+   "low back",
+   "node low back +1",
+   600
+  ],
+  [
+   "low back",
+   "node top back +1",
+   600
+  ],
+  [
+   "low back",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "low back",
+   "node top front +1",
+   600
   ],
   [
    "top back",
    "top front",
-   50
+   600
+  ],
+  [
+   "top back",
+   "node low back -1",
+   600
+  ],
+  [
+   "top back",
+   "node top back -1",
+   600
+  ],
+  [
+   "top back",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "top back",
+   "node top front -1",
+   600
+  ],
+  [
+   "top back",
+   "node low back +1",
+   600
+  ],
+  [
+   "top back",
+   "node top back +1",
+   600
+  ],
+  [
+   "top back",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "top back",
+   "node top front +1",
+   600
+  ],
+  [
+   "top front",
+   "node low back -1",
+   600
+  ],
+  [
+   "top front",
+   "node top back -1",
+   600
+  ],
+  [
+   "top front",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "top front",
+   "node top front -1",
+   600
+  ],
+  [
+   "top front",
+   "node low back +1",
+   600
+  ],
+  [
+   "top front",
+   "node top back +1",
+   600
+  ],
+  [
+   "top front",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "top front",
+   "node top front +1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node top back -1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "node low back -1",
+   "node top front +1",
+   600
+  ],
+  [
+   "node top back -1",
+   "node frame foot -1",
+   600
+  ],
+  [
+   "node top back -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "node top back -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "node top back -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "node top back -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "node top back -1",
+   "node top front +1",
+   600
+  ],
+  [
+   "node frame foot -1",
+   "node top front -1",
+   600
+  ],
+  [
+   "node frame foot -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "node frame foot -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "node frame foot -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "node frame foot -1",
+   "node top front +1",
+   600
+  ],
+  [
+   "node top front -1",
+   "node low back +1",
+   600
+  ],
+  [
+   "node top front -1",
+   "node top back +1",
+   600
+  ],
+  [
+   "node top front -1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "node top front -1",
+   "node top front +1",
+   600
+  ],
+  [
+   "node low back +1",
+   "node top back +1",
+   600
+  ],
+  [
+   "node low back +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "node low back +1",
+   "node top front +1",
+   600
+  ],
+  [
+   "node top back +1",
+   "node frame foot +1",
+   600
+  ],
+  [
+   "node top back +1",
+   "node top front +1",
+   600
+  ],
+  [
+   "node frame foot +1",
+   "node top front +1",
+   600
   ]
  ],
  "cg_ref": [

@@ -4,99 +4,99 @@
  "cage_first": {
   "applies": true,
   "pass_": true,
-  "worst_part": "pi",
+  "worst_part": "l2",
   "worst_dir": [
-   -0.113,
-   0.012,
-   0.994
+   0.0,
+   1.0,
+   0.0
   ],
-  "worst_dir_label": "+Z",
-  "margin_mm": 4.12,
+  "worst_dir_label": "+Y",
+  "margin_mm": 5.5,
   "required_mm": 3.0,
   "n_dirs": 2006,
   "cage_margin_mm": 3.0,
   "per_part": {
    "pack": {
-    "min_margin_mm": 8.0,
+    "min_margin_mm": 11.0,
     "worst_dir": [
      0.0,
      0.0,
      1.0
     ],
-    "worst_slack_mm": 8.0,
-    "min_margin_outside_openings_mm": 12.16,
+    "worst_slack_mm": 11.0,
+    "min_margin_outside_openings_mm": 15.67,
     "dirs_in_openings": 122,
     "pass_": true
    },
    "pi": {
-    "min_margin_mm": 4.12,
+    "min_margin_mm": 8.89,
     "worst_dir": [
-     -0.113,
-     0.012,
-     0.994
+     -0.049,
+     -0.024,
+     0.999
     ],
-    "worst_slack_mm": 1.12,
-    "min_margin_outside_openings_mm": 4.12,
+    "worst_slack_mm": 5.89,
+    "min_margin_outside_openings_mm": 8.89,
     "dirs_in_openings": 61,
     "pass_": true
    },
    "ubec_buck": {
-    "min_margin_mm": 15.5,
+    "min_margin_mm": 13.0,
     "worst_dir": [
      0.0,
      1.0,
      0.0
     ],
-    "worst_slack_mm": 12.5,
-    "min_margin_outside_openings_mm": 15.5,
+    "worst_slack_mm": 10.0,
+    "min_margin_outside_openings_mm": 13.0,
     "dirs_in_openings": 61,
     "pass_": true
    },
    "l2": {
-    "min_margin_mm": -58.62,
+    "min_margin_mm": -52.91,
     "worst_dir": [
      0.0,
      1.0,
      0.0
     ],
-    "worst_slack_mm": 5.0,
-    "min_margin_outside_openings_mm": 8.0,
+    "worst_slack_mm": 2.5,
+    "min_margin_outside_openings_mm": 5.5,
     "dirs_in_openings": 1007,
     "pass_": true
    },
    "camera": {
-    "min_margin_mm": 13.55,
+    "min_margin_mm": 17.0,
     "worst_dir": [
-     0.068,
-     -0.02,
-     0.998
+     0.0,
+     0.0,
+     1.0
     ],
-    "worst_slack_mm": 10.55,
-    "min_margin_outside_openings_mm": 13.55,
+    "worst_slack_mm": 14.0,
+    "min_margin_outside_openings_mm": 17.0,
     "dirs_in_openings": 347,
     "pass_": true
    },
    "lens": {
-    "min_margin_mm": 2.84,
+    "min_margin_mm": 8.29,
     "worst_dir": [
      0.984,
      0.006,
      -0.175
     ],
-    "worst_slack_mm": 2.84,
-    "min_margin_outside_openings_mm": 24.02,
+    "worst_slack_mm": 8.29,
+    "min_margin_outside_openings_mm": 30.0,
     "dirs_in_openings": 347,
     "pass_": true
    },
    "switches": {
-    "min_margin_mm": 8.5,
+    "min_margin_mm": 15.0,
     "worst_dir": [
      -1.0,
      -0.0,
      -0.0
     ],
-    "worst_slack_mm": 5.5,
-    "min_margin_outside_openings_mm": 8.5,
+    "worst_slack_mm": 12.0,
+    "min_margin_outside_openings_mm": 15.0,
     "dirs_in_openings": 61,
     "pass_": true
    }
@@ -104,23 +104,23 @@
  },
  "compact": {
   "bbox_min": [
-   -65.5,
-   -50.0,
+   -72.0,
+   -43.0,
    0.0
   ],
   "bbox_max": [
    111.26,
-   50.0,
-   196.0
+   43.0,
+   199.0
   ],
   "extents_mm": [
-   176.8,
-   100.0,
-   196.0
+   183.3,
+   86.0,
+   199.0
   ],
-  "largest_extent_mm": 196.0,
-  "bbox_L": 3.464,
-  "hull_L": 2.671,
+  "largest_extent_mm": 199.0,
+  "bbox_L": 3.136,
+  "hull_L": 2.605,
   "guard_offsets_mm": {}
  },
  "fit": {
@@ -139,7 +139,7 @@
    {
     "a": "pack",
     "b": "spine",
-    "overlap_mm3": 359550.0,
+    "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -151,7 +151,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -160,7 +160,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -193,26 +193,26 @@
    {
     "a": "switches",
     "b": "spine",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 4825.56,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "spine",
     "b": "head",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 46.67,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "low side -1",
     "b": "top side -1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -221,7 +221,7 @@
     "a": "low side -1",
     "b": "back vertical -1",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -230,7 +230,7 @@
     "a": "low side -1",
     "b": "frame -1",
     "overlap_mm3": 3.44,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -238,8 +238,8 @@
    {
     "a": "low side -1",
     "b": "back diagonal -1",
-    "overlap_mm3": 7.19,
-    "limit_mm3": 50.0,
+    "overlap_mm3": 6.71,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -248,7 +248,7 @@
     "a": "low side -1",
     "b": "low side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -257,7 +257,7 @@
     "a": "low side -1",
     "b": "top side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -266,7 +266,7 @@
     "a": "low side -1",
     "b": "back vertical +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -275,7 +275,7 @@
     "a": "low side -1",
     "b": "frame +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -284,7 +284,7 @@
     "a": "low side -1",
     "b": "back diagonal +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -293,7 +293,7 @@
     "a": "low side -1",
     "b": "low back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -302,7 +302,7 @@
     "a": "low side -1",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -311,7 +311,79 @@
     "a": "low side -1",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node low back -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -320,7 +392,7 @@
     "a": "top side -1",
     "b": "back vertical -1",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -329,7 +401,7 @@
     "a": "top side -1",
     "b": "frame -1",
     "overlap_mm3": 5.85,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -337,8 +409,8 @@
    {
     "a": "top side -1",
     "b": "back diagonal -1",
-    "overlap_mm3": 9.99,
-    "limit_mm3": 50.0,
+    "overlap_mm3": 9.71,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -347,7 +419,7 @@
     "a": "top side -1",
     "b": "low side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -356,7 +428,7 @@
     "a": "top side -1",
     "b": "top side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -365,7 +437,7 @@
     "a": "top side -1",
     "b": "back vertical +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -374,7 +446,7 @@
     "a": "top side -1",
     "b": "frame +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -383,7 +455,7 @@
     "a": "top side -1",
     "b": "back diagonal +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -392,7 +464,7 @@
     "a": "top side -1",
     "b": "low back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -401,7 +473,7 @@
     "a": "top side -1",
     "b": "top back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -410,16 +482,88 @@
     "a": "top side -1",
     "b": "top front",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node top back -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node top front -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
     "pass_": true
    },
    {
     "a": "back vertical -1",
     "b": "frame -1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -427,8 +571,8 @@
    {
     "a": "back vertical -1",
     "b": "back diagonal -1",
-    "overlap_mm3": 19.39,
-    "limit_mm3": 50.0,
+    "overlap_mm3": 22.63,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -437,7 +581,7 @@
     "a": "back vertical -1",
     "b": "low side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -446,7 +590,7 @@
     "a": "back vertical -1",
     "b": "top side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -455,7 +599,7 @@
     "a": "back vertical -1",
     "b": "back vertical +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -464,7 +608,7 @@
     "a": "back vertical -1",
     "b": "frame +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -473,7 +617,7 @@
     "a": "back vertical -1",
     "b": "back diagonal +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -482,7 +626,7 @@
     "a": "back vertical -1",
     "b": "low back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -491,7 +635,7 @@
     "a": "back vertical -1",
     "b": "top back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -500,7 +644,79 @@
     "a": "back vertical -1",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node low back -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node top back -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -509,16 +725,16 @@
     "a": "frame -1",
     "b": "back diagonal -1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
-    "method": "manifold3d",
+    "method": "aabb",
     "pass_": true
    },
    {
     "a": "frame -1",
     "b": "low side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -527,7 +743,7 @@
     "a": "frame -1",
     "b": "top side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -536,7 +752,7 @@
     "a": "frame -1",
     "b": "back vertical +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -545,7 +761,7 @@
     "a": "frame -1",
     "b": "frame +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -554,7 +770,7 @@
     "a": "frame -1",
     "b": "back diagonal +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -563,7 +779,7 @@
     "a": "frame -1",
     "b": "low back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -572,7 +788,7 @@
     "a": "frame -1",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -581,16 +797,88 @@
     "a": "frame -1",
     "b": "top front",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 43.84,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node top front -1",
+    "overlap_mm3": 43.84,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
     "pass_": true
    },
    {
     "a": "back diagonal -1",
     "b": "low side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -599,7 +887,7 @@
     "a": "back diagonal -1",
     "b": "top side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -608,7 +896,7 @@
     "a": "back diagonal -1",
     "b": "back vertical +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -617,7 +905,7 @@
     "a": "back diagonal -1",
     "b": "frame +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -626,7 +914,7 @@
     "a": "back diagonal -1",
     "b": "back diagonal +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -635,7 +923,7 @@
     "a": "back diagonal -1",
     "b": "low back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -644,7 +932,7 @@
     "a": "back diagonal -1",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -653,7 +941,79 @@
     "a": "back diagonal -1",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node low back -1",
+    "overlap_mm3": 45.81,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -662,7 +1022,7 @@
     "a": "low side +1",
     "b": "top side +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -671,7 +1031,7 @@
     "a": "low side +1",
     "b": "back vertical +1",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -680,7 +1040,7 @@
     "a": "low side +1",
     "b": "frame +1",
     "overlap_mm3": 3.44,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -688,8 +1048,8 @@
    {
     "a": "low side +1",
     "b": "back diagonal +1",
-    "overlap_mm3": 7.19,
-    "limit_mm3": 50.0,
+    "overlap_mm3": 6.71,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -698,7 +1058,7 @@
     "a": "low side +1",
     "b": "low back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -707,7 +1067,7 @@
     "a": "low side +1",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -716,7 +1076,79 @@
     "a": "low side +1",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node low back +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -725,7 +1157,7 @@
     "a": "top side +1",
     "b": "back vertical +1",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -734,7 +1166,7 @@
     "a": "top side +1",
     "b": "frame +1",
     "overlap_mm3": 5.85,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -742,8 +1174,8 @@
    {
     "a": "top side +1",
     "b": "back diagonal +1",
-    "overlap_mm3": 9.99,
-    "limit_mm3": 50.0,
+    "overlap_mm3": 9.71,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -752,7 +1184,7 @@
     "a": "top side +1",
     "b": "low back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -761,7 +1193,7 @@
     "a": "top side +1",
     "b": "top back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -770,7 +1202,79 @@
     "a": "top side +1",
     "b": "top front",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node top back +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "node top front +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -779,7 +1283,7 @@
     "a": "back vertical +1",
     "b": "frame +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -787,8 +1291,8 @@
    {
     "a": "back vertical +1",
     "b": "back diagonal +1",
-    "overlap_mm3": 19.39,
-    "limit_mm3": 50.0,
+    "overlap_mm3": 22.63,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -797,7 +1301,7 @@
     "a": "back vertical +1",
     "b": "low back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -806,7 +1310,7 @@
     "a": "back vertical +1",
     "b": "top back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -815,7 +1319,79 @@
     "a": "back vertical +1",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node low back +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node top back +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -824,16 +1400,16 @@
     "a": "frame +1",
     "b": "back diagonal +1",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
-    "method": "manifold3d",
+    "method": "aabb",
     "pass_": true
    },
    {
     "a": "frame +1",
     "b": "low back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -842,7 +1418,7 @@
     "a": "frame +1",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -851,7 +1427,79 @@
     "a": "frame +1",
     "b": "top front",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 43.84,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "node top front +1",
+    "overlap_mm3": 43.84,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -860,7 +1508,7 @@
     "a": "back diagonal +1",
     "b": "low back",
     "overlap_mm3": 4.49,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -869,7 +1517,7 @@
     "a": "back diagonal +1",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -878,7 +1526,79 @@
     "a": "back diagonal +1",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node low back +1",
+    "overlap_mm3": 45.81,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back diagonal +1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -887,7 +1607,7 @@
     "a": "low back",
     "b": "top back",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -896,7 +1616,79 @@
     "a": "low back",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node low back -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node low back +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -905,7 +1697,403 @@
     "a": "top back",
     "b": "top front",
     "overlap_mm3": 0.0,
-    "limit_mm3": 50.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node top back -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node top back +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node low back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node top front -1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top front",
+    "b": "node top front +1",
+    "overlap_mm3": 42.34,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node top back -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back -1",
+    "b": "node frame foot -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back -1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node frame foot -1",
+    "b": "node top front -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node frame foot -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node frame foot -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node frame foot -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node frame foot -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top front -1",
+    "b": "node low back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top front -1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top front -1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top front -1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back +1",
+    "b": "node top back +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node low back +1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back +1",
+    "b": "node frame foot +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node top back +1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node frame foot +1",
+    "b": "node top front +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 600.0,
     "contact": true,
     "method": "aabb",
     "pass_": true
@@ -914,11 +2102,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 1351.04,
+  "mass_g": 1366.46,
   "cg": [
-   10.93,
+   8.21,
    0.03,
-   105.7
+   105.88
   ],
   "parts": [
    {
@@ -1002,9 +2190,9 @@
     "name": "spine",
     "mass_g": 230.0,
     "cg": [
+     -14.5,
      0.0,
-     0.0,
-     98.0
+     99.5
     ],
     "tag": "E",
     "swap": false
@@ -1022,10 +2210,10 @@
    },
    {
     "name": "low side -1",
-    "mass_g": 0.97,
+    "mass_g": 0.99,
     "cg": [
-     -21.2,
-     -44.0,
+     -22.2,
+     -36.0,
      8.0
     ],
     "tag": "C",
@@ -1033,10 +2221,10 @@
    },
    {
     "name": "top side -1",
-    "mass_g": 1.52,
+    "mass_g": 1.55,
     "cg": [
-     3.46,
-     -44.0,
+     2.46,
+     -36.0,
      192.0
     ],
     "tag": "C",
@@ -1046,8 +2234,8 @@
     "name": "back vertical -1",
     "mass_g": 2.08,
     "cg": [
-     -64.0,
-     -44.0,
+     -66.0,
+     -36.0,
      100.0
     ],
     "tag": "C",
@@ -1058,7 +2246,7 @@
     "mass_g": 2.15,
     "cg": [
      46.26,
-     -44.0,
+     -36.0,
      100.0
     ],
     "tag": "C",
@@ -1066,10 +2254,10 @@
    },
    {
     "name": "back diagonal -1",
-    "mass_g": 2.31,
+    "mass_g": 2.25,
     "cg": [
-     -19.0,
-     -44.0,
+     -28.0,
+     -36.0,
      100.0
     ],
     "tag": "C",
@@ -1077,10 +2265,10 @@
    },
    {
     "name": "low side +1",
-    "mass_g": 0.97,
+    "mass_g": 0.99,
     "cg": [
-     -21.2,
-     44.0,
+     -22.2,
+     36.0,
      8.0
     ],
     "tag": "C",
@@ -1088,10 +2276,10 @@
    },
    {
     "name": "top side +1",
-    "mass_g": 1.52,
+    "mass_g": 1.55,
     "cg": [
-     3.46,
-     44.0,
+     2.46,
+     36.0,
      192.0
     ],
     "tag": "C",
@@ -1101,8 +2289,8 @@
     "name": "back vertical +1",
     "mass_g": 2.08,
     "cg": [
-     -64.0,
-     44.0,
+     -66.0,
+     36.0,
      100.0
     ],
     "tag": "C",
@@ -1113,7 +2301,7 @@
     "mass_g": 2.15,
     "cg": [
      46.26,
-     44.0,
+     36.0,
      100.0
     ],
     "tag": "C",
@@ -1121,10 +2309,10 @@
    },
    {
     "name": "back diagonal +1",
-    "mass_g": 2.31,
+    "mass_g": 2.25,
     "cg": [
-     -19.0,
-     44.0,
+     -28.0,
+     36.0,
      100.0
     ],
     "tag": "C",
@@ -1132,10 +2320,10 @@
    },
    {
     "name": "low back",
-    "mass_g": 0.99,
+    "mass_g": 0.81,
     "cg": [
-     -64.0,
-     0.0,
+     -66.0,
+     -0.0,
      8.0
     ],
     "tag": "C",
@@ -1143,9 +2331,9 @@
    },
    {
     "name": "top back",
-    "mass_g": 0.99,
+    "mass_g": 0.81,
     "cg": [
-     -64.0,
+     -66.0,
      -0.0,
      192.0
     ],
@@ -1154,13 +2342,101 @@
    },
    {
     "name": "top front",
-    "mass_g": 0.99,
+    "mass_g": 0.81,
     "cg": [
      70.91,
      -0.0,
      192.0
     ],
     "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "node low back -1",
+    "mass_g": 2.0,
+    "cg": [
+     -66.0,
+     -36.0,
+     8.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node top back -1",
+    "mass_g": 2.0,
+    "cg": [
+     -66.0,
+     -36.0,
+     192.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node frame foot -1",
+    "mass_g": 2.0,
+    "cg": [
+     21.61,
+     -36.0,
+     8.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node top front -1",
+    "mass_g": 2.0,
+    "cg": [
+     70.91,
+     -36.0,
+     192.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node low back +1",
+    "mass_g": 2.0,
+    "cg": [
+     -66.0,
+     36.0,
+     8.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node top back +1",
+    "mass_g": 2.0,
+    "cg": [
+     -66.0,
+     36.0,
+     192.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node frame foot +1",
+    "mass_g": 2.0,
+    "cg": [
+     21.61,
+     36.0,
+     8.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node top front +1",
+    "mass_g": 2.0,
+    "cg": [
+     70.91,
+     36.0,
+     192.0
+    ],
+    "tag": "E",
     "swap": false
    }
   ],
@@ -1171,11 +2447,11 @@
    0
   ],
   "cg_offset": [
-   10.93,
+   8.21,
    0.03,
-   105.7
+   105.88
   ],
-  "cg_offset_mm": 106.26
+  "cg_offset_mm": 106.2
  },
  "balance": {
   "applies": true,
@@ -1192,33 +2468,33 @@
   "tol_mm": 30.0,
   "cases": {
    "all": {
-    "mass_g": 1351.04,
+    "mass_g": 1366.46,
     "cg_offset": [
-     10.93,
+     8.21,
      0.03,
-     105.7
+     105.88
     ],
-    "horizontal_mm": 10.93,
-    "axial_mm": 105.7,
+    "horizontal_mm": 8.21,
+    "axial_mm": 105.88,
     "pass_": true
    },
    "no_swap": {
-    "mass_g": 761.04,
+    "mass_g": 776.46,
     "cg_offset": [
-     19.4,
+     14.45,
      0.05,
-     100.05
+     100.47
     ],
-    "horizontal_mm": 19.4,
-    "axial_mm": 100.05,
+    "horizontal_mm": 14.45,
+    "axial_mm": 100.47,
     "pass_": true
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 19.4,
+  "worst_horizontal_mm": 14.45,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: scan stick v5 (compact, closed cage), cage first 4.1 mm (E) at +Z (pi), fit 0.0 mm\u00b3 (E) (l2/head), bbox 3.46 L (E), extents 177 x 100 x 196 mm (E), mass 1351 g (E), CG 10.9 mm off thrust axis (E) [+10.9, +0.0, +105.7], 19.4 mm without swap parts",
+ "summary": "System: scan stick v5 (compact, closed cage), cage first 5.5 mm (E) at +Y (l2), fit 0.0 mm\u00b3 (E) (l2/head), bbox 3.14 L (E), extents 183 x 86 x 199 mm (E), mass 1366 g (E), CG 8.2 mm off thrust axis (E) [+8.2, +0.0, +105.9], 14.4 mm without swap parts",
  "pass": true
 }

@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): scan stick v5 concept review 3: joint bearing contacts added (bolts ≈ 40 N, was 8x the load), drawn diagonal nodes, TPU nodes in the check. DEFAULT cage at y ±36 since Spark made the whole L2 an exception (alt ±44 round it: 100 wide); assembled 3.14 L, 183 x 86 x 199, system_check PASS.
 - 24 Oct (scan stick chat): **scan stick v5 concept** (unit_topo_v5.py): 3.46 L, 177 x 100 x 196 mm with the cage (v3 7.45 L); closed 3 mm carbon cage, hook + 2 M3 joint, thread 32 deep (Spark). Spark: the L2 outside the cage as an exception, full view; switches to the back. system_check PASS (cage first 4.1 mm, fit 0). DEFAULT: electronics on the back (alt sides 3.23 L, CG further forward).
 - 24 Oct (scan stick chat): DEFAULT the scan stick's balance limit is 30 mm (hand-held: 10.9 / 19.4 mm pack in / out, E); alternative: the drone 3 mm rule with the thread moved 11 mm forward.
 - 24 Oct (scan stick chat, Spark: keep every parallel session a main session controls up to date, all projects): **rule: children stay in sync** (on main, PR 49). Scan stick: its one child (base v19 run) got the stop, recorded it on run/scan_stick_base-v19 (751e92d, no run started) and is archived.

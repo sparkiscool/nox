@@ -31,7 +31,7 @@ JX = 30.0
 BP = (JX, 40.0, -31.5, 31.5, 36.0, 196.0)                      # module back plate (C)
 BOLTS = [(sy * 20.0, 180.0) for sy in (-1, 1)]                 # 2x M3 x 12 at z 180 (C)
 LEDGE = (JX, 43.0, -31.5, 31.5, 30.0, 36.0)                    # spine ledge under the module plate (C)
-LIPS = [(40.0, 43.0, min(sy * 28.0, sy * 34.5), max(sy * 28.0, sy * 34.5), 36.0, 44.0) for sy in (-1, 1)] + [(JX, 43.0, min(sy * 31.5, sy * 34.5), max(sy * 31.5, sy * 34.5), 36.0, 44.0) for sy in (-1, 1)]   # front lips + side lips: the plate's bottom edge located in x and y (C)   # hook lips in front of the plate's bottom edge (C)
+LIPS = [(40.0, 43.0, min(sy * 28.0, sy * 34.0), max(sy * 28.0, sy * 34.0), 36.0, 44.0) for sy in (-1, 1)] + [(JX, 43.0, min(sy * 31.5, sy * 34.0), max(sy * 31.5, sy * 34.0), 36.0, 44.0) for sy in (-1, 1)]   # front lips + side lips: the plate's bottom edge located in x and y (C)   # hook lips in front of the plate's bottom edge (C)
 PI_X0, PI_SO = -30.0, 7.0
 PI_HOLES = [(sy * 24.5, z) for sy in (-1, 1) for z in (106.5, 164.5)]
 PI_KEEP = (-60.0, PI_X0 - PI_SO + 0.5, -29.0, 29.0, 102.0, 190.0)
@@ -46,9 +46,11 @@ CAM_XF = CAM_PLATE[1] + POST_L + 1.6                           # 47.6
 SWZ = 30.0                                                    # switch row centre (C): on the back, under the UBEC / buck, inside the cage (Spark: nothing in front of the L2)
 SW = (-57.0, -51.0, -30.0, 30.0, SWZ - 12.0, SWZ + 12.0)      # panel x -57..-51 facing back, the bodies inside it in x -51..-30
 ROD_R, SOCK_R = 1.6, 6.0
-YC = 44.0                                                     # cage half width (C)
+YC = 36.0                                                     # cage half width (C): 3 + rod outside the Pi (±29), clear of the joint side lips (34.5); the L2 (±37.5) is Spark's exception (DEFAULT; alt ±44 round the L2, 100 wide)
 Z_LOW, Z_TOP = 8.0, 192.0                                     # lower ring just above the pole tip (under the switches), upper ring over the camera (C)
-X_BACK = -64.0                                                # back verticals (3 + rod outside the Pi)
+X_BACK = -66.0                                                # back verticals: their 12 nodes clear the Pi (C)
+DIAG_END = (10.0, 0.0, Z_TOP)                                 # the back diagonal ends in a drawn node on the top front spine sleeve (C)
+Z_MID = 108.0                                                 # mid support of the back verticals and the diagonals: over the UBEC (101), C
 CAGE_F = -3.0                                                 # the climbing segment 3 behind the L2 base plane
 POCKET_PIN = 192.0
 KG = dict(pack=0.59, pi=0.08, l2=0.23, cam=0.03, el=0.06)       # E
@@ -83,7 +85,7 @@ def cage_rods():
         y = sy * YC
         R += [(f"low side {sy:+d}", (X_BACK, y, Z_LOW), (frame_x(Z_LOW), y, Z_LOW)), (f"top side {sy:+d}", (X_BACK, y, Z_TOP), (frame_x(Z_TOP), y, Z_TOP)),
               (f"back vertical {sy:+d}", (X_BACK, y, Z_LOW), (X_BACK, y, Z_TOP)), (f"frame {sy:+d}", (frame_x(Z_LOW), y, Z_LOW), (frame_x(Z_TOP), y, Z_TOP)),
-              (f"back diagonal {sy:+d}", (X_BACK, y, Z_LOW), (26.0, y, Z_TOP))]                 # concept review 2: no racking
+              (f"back diagonal {sy:+d}", (X_BACK, y, Z_LOW), (DIAG_END[0], y, DIAG_END[2]))]   # concept review 2: no racking; ends in a drawn node
     R += [("low back", (X_BACK, -YC, Z_LOW), (X_BACK, YC, Z_LOW)), ("top back", (X_BACK, -YC, Z_TOP), (X_BACK, YC, Z_TOP)),
           ("top front", (frame_x(Z_TOP), -YC, Z_TOP), (frame_x(Z_TOP), YC, Z_TOP))]
     return R
@@ -102,14 +104,21 @@ def spine_bodies():
     ledge = B6(LEDGE) + sum((B6(l) for l in LIPS), mf.Manifold())
     sleeves, bores = mf.Manifold(), mf.Manifold()
     for sy in (-1, 1):                                                                         # the cage on the spine: 4 sleeves on boss arms (low), 4 on the top ring (high)
-        for xs, z, yin in ((-14.0, Z_LOW, 14.0), (14.0, Z_LOW, 14.0), (-24.0, Z_TOP, y1 - 0.5), (18.0, Z_TOP, y1 - 0.5)):
+        for xs, z, yin in ((-14.0, Z_LOW, 14.0), (4.0, Z_LOW, 14.0), (-24.0, Z_TOP, y1 - 0.5), (10.0, Z_TOP, y1 - 0.5)):   # >= node r + 1 from every TPU node (review 3)
             sl, bo = sleeve_x(xs - 6, xs + 6, sy * YC, z)
             sleeves += sl + box(xs - 3, xs + 3, min(sy * yin, sy * YC), max(sy * yin, sy * YC), z - 3, z + 3)   # 6 x 6 arm to the boss / the wall
             bores += bo
         y = sy * YC                                                                            # concept review 2: mid-height support of the back vertical
-        sleeves += cyl(X_BACK, y, 94.0, 106.0, SOCK_R) + box(-27.0, -21.0, min(sy * (y1 - 0.5), sy * 47.0), max(sy * (y1 - 0.5), sy * 47.0), 97.0, 103.0)
-        sleeves += box(X_BACK, -13.0, min(sy * 41.0, sy * 47.0), max(sy * 41.0, sy * 47.0), 97.0, 103.0)   # also carries the back diagonal (TPU clip at x -19)
-        bores += cyl(X_BACK, y, 93.0, 107.0, ROD_R, 24)
+        sleeves += cyl(X_BACK, y, Z_MID - 6, Z_MID + 6, SOCK_R) + box(-27.0, -21.0, min(sy * (y1 - 0.5), y), max(sy * (y1 - 0.5), y), Z_MID - 3, Z_MID + 3)
+        sleeves += box(X_BACK, -14.0, y - 3, y + 3, Z_MID - 3, Z_MID + 3)                       # also carries the back diagonal
+        dd = np.array(DIAG_END) - np.array((X_BACK, 0, Z_LOW)); dd[1] = 0; dd /= np.linalg.norm(dd)
+        tc = (Z_MID - Z_LOW) / dd[2]; pc = np.array((X_BACK, y, Z_LOW)) + tc * dd               # where the diagonal crosses the arm
+        sleeves += mf.Manifold.sphere(7.0, 32).translate(pc.tolist())                           # drawn PETG node on the arm: the diagonal passes through it
+        bores += mf.Manifold.cylinder(30.0, ROD_R, ROD_R, 24).translate([0, 0, -15.0]).rotate([0, float(np.degrees(np.arctan2(dd[0], dd[2]))), 0]).translate(pc.tolist())
+        pe = np.array((DIAG_END[0], y, DIAG_END[2]))                                             # the diagonal ends in a drawn node at the top front sleeve
+        sleeves += mf.Manifold.sphere(7.0, 32).translate(pe.tolist())
+        bores += mf.Manifold.cylinder(10.0, ROD_R, ROD_R, 24).rotate([0, float(np.degrees(np.arctan2(dd[0], dd[2]))) + 180, 0]).translate(pe.tolist())
+        bores += cyl(X_BACK, y, Z_MID - 7, Z_MID + 7, ROD_R, 24)
     panel = box(SW[0], SW[1], SW[2], SW[3], SW[4], SW[5])                                       # rocker y +16, button y -6, LED y -20 (E), facing -x
     drawn += floor + back + front + ring + standoffs + ledge + sleeves + panel
     tc = os.path.join(HERE, "out", "thread_cut.stl")
@@ -218,7 +227,8 @@ def head_cases(Hd):
 JOINT_CONTACTS = [("bolt", np.array((JX, y, z)), None) for y, z in BOLTS] + \
                  [("ledge", np.array((35.0, sy * 20.0, 36.0)), np.array((0, 0, -1.0))) for sy in (-1, 1)] + \
                  [("front lip", np.array((41.5, sy * 29.75, 40.0)), np.array((1.0, 0, 0))) for sy in (-1, 1)] + \
-                 [("side lip", np.array((36.0, sy * 33.0, 40.0)), np.array((0, sy * 1.0, 0))) for sy in (-1, 1)]
+                 [("side lip", np.array((36.0, sy * 33.0, 40.0)), np.array((0, sy * 1.0, 0))) for sy in (-1, 1)] + \
+                 [("face", np.array((JX, sy * 28.0, z)), np.array((-1.0, 0, 0))) for sy in (-1, 1) for z in (40.0, 190.0)]   # the plate bearing on the spine face (review 3)
 
 def joint_forces(Fv, Mv):
     from scipy.optimize import minimize
@@ -243,6 +253,15 @@ def joint_regions():
     reg = [cylx(PACK[1] + 0.5, JX + 0.5, y, z, 6.0) - cylx(PACK[1], JX + 1, y, z, 1.7) for y, z in BOLTS]
     reg += [box(30.0, 40.0, sy * 20.0 - 6, sy * 20.0 + 6, 34.0, 36.0) for sy in (-1, 1)]
     reg += [B6(l) for l in LIPS]
+    reg += [box(JX - 1.5, JX, sy * 28.0 - 3.5, sy * 28.0 + 3.5, z - 4, z + 4) for sy in (-1, 1) for z in (40.0, 190.0)]
+    return reg
+
+def head_contact_regions():
+    """where the spine's contacts act on the module (same order as JOINT_CONTACTS after the 2 bolts)"""
+    reg = [box(30.0, 40.0, sy * 20.0 - 6, sy * 20.0 + 6, BP[4], BP[4] + 1.5) for sy in (-1, 1)]                 # plate bottom on the ledge
+    reg += [box(BP[1] - 1.5, BP[1], min(sy * 28.0, sy * 31.5), max(sy * 28.0, sy * 31.5), BP[4], BP[4] + 8) for sy in (-1, 1)]   # front face bottom on the front lips
+    reg += [box(30.0, 40.0, min(sy * 30.0, sy * 31.5), max(sy * 30.0, sy * 31.5), BP[4], BP[4] + 8) for sy in (-1, 1)]       # side faces on the side lips
+    reg += [box(JX, JX + 1.5, sy * 28.0 - 3.5, sy * 28.0 + 3.5, z - 4, z + 4) for sy in (-1, 1) for z in (40.0, 190.0)]   # back face on the spine face
     return reg
 
 def setup_piece(piece, h):
@@ -250,12 +269,12 @@ def setup_piece(piece, h):
     hc = head_cases(Hd)
     if piece == "head":
         p = Part("scan_stick_head", h, Hd["drawn"], Hd["cuts"], Hd["env"], build="+x", material="PETG")
-        p.support("default", box(JX - 1, JX + 1.5, BP[2], BP[3], BP[4], BP[5]) + box(BP[0], BP[1], BP[2], BP[3], BP[4] - 1, BP[4] + 1.5))   # the plate on the spine face + ledge
-        for name, parts, accel, Fv, Mv in hc:
-            if accel is None:
-                p.load(name, parts[0][0], parts[0][1])
-            else:
-                p.load_multi(name, parts, accel=accel)
+        p.support("default", sum((cylx(JX - 0.5, JX + 9.0, y, z, 5.0) for y, z in BOLTS), mf.Manifold()))   # held at the 2 bolt bosses only (review 3)
+        creg = head_contact_regions()
+        for name, parts, accel, Fv, Mv in hc:                                                   # + the push-only contact forces the spine puts on it
+            jf, err = joint_forces(Fv, Mv)
+            contact = [(r, -f) for r, f in zip(creg, jf[2:]) if np.linalg.norm(f) > 1e-6]
+            p.load_multi(name, list(parts) + contact, accel=accel)
         return p
     p = Part("scan_stick_base", h, Sb["drawn"], Sb["cuts"], Sb["env"], build="-x", material="PETG")
     p.support("default", cyl(0, 0, 2, THREAD - 2, BOSS_R - 1, 64) - cyl(0, 0, 0, BOSS_H, 11.0, 64))
@@ -296,6 +315,7 @@ def manifest():
     import trimesh as T
     os.makedirs(OUT_SYS, exist_ok=True)
     Hd = head_bodies(); tm(Hd["drawn"] - Hd["cuts"]).export(os.path.join(OUT_SYS, "head_drawn.stl"))   # the module's drawn interfaces as built
+    Sb = spine_bodies(); tm(Sb["drawn"] - Sb["cuts"]).export(os.path.join(OUT_SYS, "spine_drawn.stl"))
     body = T.creation.box([L2_BODY, 75, 75]); body.apply_translation([L2_BODY / 2, 0, 0])
     dome = T.creation.icosphere(3, 35.5); dome.apply_scale([L2_DOME / 35.5, 1, 1]); dome.apply_translation([L2_BODY, 0, 0])
     dome = dome.slice_plane([L2_BODY, 0, 0], [1, 0, 0], cap=True)
@@ -308,14 +328,17 @@ def manifest():
              dict(name="camera", box=[CAM_PLATE[1], CAM_XF, -19, 19, CAM_Z - 19, CAM_Z + 19], role="protected", mass_g=25, tag="E"),
              dict(name="lens", cylinder=dict(r=6.0, p0=[CAM_XF, 0, CAM_Z], p1=[CAM_XF + LENS, 0, CAM_Z]), role="protected", mass_g=5, tag="E"),
              dict(name="switches", box=[SW[0], PI_X0 - 0.5, -23.0, 27.0, SW[4], SW[5]], role="protected", mass_g=20, tag="E"),
-             dict(name="spine", box=list(SPINE), role="cage", mass_g=230, tag="E"),   # PETG walls guard the pack and the Pi top (Spark: carbon or PETG guards)
+             dict(name="spine", mesh=os.path.relpath(os.path.join(OUT_SYS, "spine_drawn.stl"), ROOT), role="cage", mass_g=230, tag="E"),   # PETG walls guard the pack and the Pi top
              dict(name="head", mesh=os.path.relpath(os.path.join(OUT_SYS, "head_drawn.stl"), ROOT), role="structure", mass_g=90, tag="E")]
     for name, p0, p1 in cage_rods():
         parts.append(dict(name=name, cylinder=dict(r=1.5, p0=list(p0), p1=list(p1)), role="cage", material="carbon", tag="C"))
+    for sy in (-1, 1):                                                                         # 8 TPU nodes, 16 cube (E)
+        for nm, x, z in (("low back", X_BACK, Z_LOW), ("top back", X_BACK, Z_TOP), ("frame foot", frame_x(Z_LOW), Z_LOW), ("top front", frame_x(Z_TOP), Z_TOP)):
+            parts.append(dict(name=f"node {nm} {sy:+d}", box=[x - 6, x + 6, sy * YC - 6, sy * YC + 6, z - 6, z + 6], role="cage", material="tpu", mass_g=2, tag="E"))
     contacts = [["pack", "spine", 1e9], ["pi", "spine", 1e9], ["ubec_buck", "spine", 1e9], ["head", "spine", 1e9], ["camera", "head", 1e9],
                 ["switches", "spine", 1e9], ["camera", "lens", 1e9]]
-    names = [n for n, _, _ in cage_rods()]
-    contacts += [[a, b, 50] for i, a in enumerate(names) for b in names[i + 1:]]
+    names = [n for n, _, _ in cage_rods()] + [p["name"] for p in parts if p["name"].startswith("node")]
+    contacts += [[a, b, 600] for i, a in enumerate(names) for b in names[i + 1:]]               # rods meet in the nodes
     m = dict(name="scan stick v5 (compact, closed cage)", parts=parts,
              openings=[dict(part="l2", axis=F.tolist(), half_angle_deg=90.0, min_mm=-80.0),   # Spark 24 Oct: the L2 keeps its full view and sits outside the cage as an exception
                        dict(part="lens", axis=[1, 0, 0], half_angle_deg=44.5), dict(part="camera", axis=[1, 0, 0], half_angle_deg=44.5),
@@ -328,7 +351,7 @@ E_ROD, I_ROD = 120e3, np.pi * 3.0 ** 4 / 64                     # E: pultruded c
 
 def rod_spans():
     """longest unsupported span of every rod (supports: its ends and the sleeves / rails on it) and its mid-span deflection at 50 N"""
-    sup = [(-14.0, None, Z_LOW, 12), (14.0, None, Z_LOW, 12), (-24.0, None, Z_TOP, 12), (18.0, None, Z_TOP, 12), ]   # x-sleeves (x, -, z, length)
+    sup = [(-14.0, None, Z_LOW, 12), (4.0, None, Z_LOW, 12), (-24.0, None, Z_TOP, 12), (10.0, None, Z_TOP, 12), ]   # x-sleeves (x, -, z, length)
     out = []
     for name, p0, p1 in cage_rods():
         p0, p1 = np.array(p0, float), np.array(p1, float); L = np.linalg.norm(p1 - p0); d = (p1 - p0) / L
@@ -340,9 +363,9 @@ def rod_spans():
                     if 0 < t < L and np.linalg.norm(p0 + t * d - q) < 0.5:
                         ts.append(t)
         if "back vertical" in name:
-            ts += [94.0 - Z_LOW, 106.0 - Z_LOW]
+            ts += [Z_MID - 6 - Z_LOW, Z_MID + 6 - Z_LOW]
         if "back diagonal" in name:
-            ts.append((100.0 - p0[2]) / d[2])                                                   # TPU clip on the mid-height arm
+            ts.append((Z_MID - p0[2]) / d[2])                                                   # the drawn node on the mid-height arm
         if name.startswith("frame"):
             for zz in (80.0, 140.0):
                 ts.append((zz - p0[2]) / d[2])
@@ -361,8 +384,10 @@ def check():
     print("rods: total length", round(sum(r[1] for r in sp)), "mm; worst 50 N span deflection", max(sp, key=lambda r: r[3]))
     for r in sp:
         print("   ", r)
-    jf, err = joint_forces(np.array((0, -192.8, 0.0)), np.array((17.4e3, 0, 2.8e3)))
-    print("joint check (50 g side knock): equilibrium error", round(err, 3), "N / N mm; forces", [np.round(f, 1).tolist() for f in jf])
+    for name, parts, accel, Fv, Mv in head_cases(Hd):
+        if name in ("unit 50 g 2", "unit 50 g 0", "L2 hit front 100 N", "L2 drop -z 150 N"):
+            jf, err = joint_forces(Fv, Mv)
+            print(f"joint {name}: F {np.round(Fv, 1).tolist()} N, M {np.round(Mv / 1e3, 2).tolist()} N m; bolts {[np.round(f, 0).tolist() for f in jf[:2]]} N, max contact {max(np.linalg.norm(f) for f in jf[2:]):.0f} N, error {err:.2g}")
     A = Sb["drawn"] + Hd["drawn"]
     print("drawn bbox", np.round(A.bounding_box(), 1), "spine", np.round(Sb["drawn"].bounding_box(), 1), "head", np.round(Hd["drawn"].bounding_box(), 1))
 
