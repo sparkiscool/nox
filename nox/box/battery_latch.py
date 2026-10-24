@@ -1249,6 +1249,8 @@ def write_manifest(B, pack):
     add("cartridge", B["cart"], "protected", mat="PETG", swap=True)
     for k, m in zip(("px", "nx"), B.get("cstrips", [])):
         add(f"cartridge_strip_{k}", m, "cage", mat="TPU", swap=True)
+    for k, m in zip(("closed", "lead"), B.get("skids") or []):         # TPU end skids: shield the clipped cartridge ends
+        add(f"cartridge_skid_{k}", m, "cage", mat="TPU", swap=True)
     for k, m in zip(("nose_plate", "side_px", "side_nx"), B.get("rskids", [])):
         add(f"receiver_skid_{k}", m, "cage", mat="TPU")
     add("slider_px", slider(g, 0, 1), "protected", mat="PETG", swap=True)
@@ -1270,6 +1272,9 @@ def write_manifest(B, pack):
         zb, zt_ = -47.5, 20.0
         pts = [[sx * (COLLAR_K + z - 1.0), sy * (COLLAR_K + z - 1.0), z] for z in (zb, zt_) for sx in (-1, 1) for sy in (-1, 1)]
         cage = hullp(pts) - hullp([[sx * (COLLAR_K + z - 4.0), sy * (COLLAR_K + z - 4.0), z] for z in (zb + 3.0, zt_ + 1) for sx in (-1, 1) for sy in (-1, 1)])
+        for m in list(B.get("cstrips") or []) + list(B.get("skids") or []) + list(B.get("rskids") or []):
+            lo, hi = tm(m, T).bounds                         # the TPU skids are the cage there: the stand-in band clears them by 0.5
+            cage = cage - box(lo[0] - 0.5, hi[0] + 0.5, lo[1] - 0.5, hi[1] + 0.5, lo[2] - 0.5, hi[2] + 0.5)
     else:
         Ad = tm(U(B["cart"], B["recv"], B["lid"]), T); lo, hi = Ad.bounds
         cage = box(lo[0] - 6, hi[0] + 6, lo[1] - 6, hi[1] + 6, lo[2] - 3.0, hi[2] + 6) - box(lo[0] - 3, hi[0] + 3, lo[1] - 3, hi[1] + 3, lo[2], hi[2] + 3)
@@ -1278,7 +1283,8 @@ def write_manifest(B, pack):
                openings=[dict(axis=[0, 0, -1], half_angle_deg=20.0, min_mm=0.0)],
                contact_pairs=[["cartridge", "receiver_strips", 5.0], ["pack", "cartridge", 1.0], ["xt60_plug", "cartridge", 5.0],
                               ["xt60e1m", "receiver", 5.0], ["xt60e1m", "receiver_lid", 5.0], ["receiver_strips", "receiver", 5.0],
-                              ["drone_rest_standin", "receiver_lid", 1.0], ["drone_rest_standin", "receiver", 1.0]],
+                              ["drone_rest_standin", "receiver_lid", 1.0], ["drone_rest_standin", "receiver", 1.0]]
+                             + [[p["name"], "cartridge", 5.0] for p in parts if p["name"].startswith("cartridge_s")],
                cg_ref=[0.0, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, fit_tol_mm3=0.5)
     fn = os.path.join(d, "manifest.json")
     with open(fn, "w") as f: json.dump(man, f, indent=1)

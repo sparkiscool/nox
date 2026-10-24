@@ -128,7 +128,7 @@ Follow-up to receiver v2. The receiver body is unchanged. Run `runs/battery_latc
 - The receiver skids go on the drone receiver only; bay receivers have none (DEFAULT, the skids are cage). The cartridge strips go everywhere: heads v7 cut its deck and pads to |X| ≤ 18.2 with a keep-out over them.
 - Insertion with every strip and skid: 0 mm³, no stuck step (C).
 - My refit-snapshot run (3595381) reads fit 44.5 mm³: that old cage's rods against a side skid. That snapshot predates both the skids and the Scout's new layout (its own `scout.assembly.json` on its branch is still v4, no skids).
-- So the Scout set stays HOLD until the Scout's own pass loads these exact meshes and reads fit 0 and probes PASS. The meshes went to the Scout session 24 Oct.
+- So the Scout set stays HOLD until the Scout's own pass loads these exact meshes and reads fit 0 and probes PASS. The Scout manifest (`runs/battery_latch/v3/manifest_scout/`) carries every strip and skid, the cartridge end skids included (cage, swap); on its own collar-band stand-in it reads `fit 0.0 mm³ (E), mass 511 g (E), CG 1.4 / 2.6 mm (E), probes 2.9 mm (E)` (the stand-in band is relieved 0.5 round the skids, which are the cage there). The meshes went to the Scout session 24 Oct.
 
 Sets: Scout 159.6 g (M), Overseer 338.5 g (M). The rib and its cross walls are +5.7 / +7.2 g on the cartridge. solid_check PASS on all 18 files (`runs/battery_latch/v3/summary.md`). No carbon rods: every piece is printed.
 
