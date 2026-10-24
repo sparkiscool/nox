@@ -1329,7 +1329,7 @@
   ],
   [
    "LATCH_IN",
-   "PCA ch 0..3 to IN",
+   "PCA ch 0..3 to IN, only with a pack mated (pack-out hold)",
    "all 4 halls high within 0.5 s",
    0.5,
    "A11 latch stuck out"
@@ -1384,7 +1384,7 @@
   [
    "A3 keep-alive fault",
    "bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s with the old pack in, or K1 will not open at 0 A",
-   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, never open K1 with the drone on keep-alive"
+   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, K1 and the latch stay as they are (pack-out hold)"
   ],
   [
    "A4 pull / keep-alive lost",
@@ -1425,6 +1425,11 @@
    "A11 latch stuck out",
    "a hall still low 0.5 s after IN",
    "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"
+  ],
+  [
+   "A12 drone lifted, pack out",
+   "after PULL, no pack mated, keep-alive I < 50 mA for 2 s (a person lifted the drone off the pins)",
+   "open K1, latch IN, SWAP_FAIL, alarm (catch PR 93)"
   ]
  ]
 }

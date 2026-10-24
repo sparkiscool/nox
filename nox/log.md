@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session, box electronics): pack-out hold (catch PR 93, DEFAULT): latch never retracts with the pack out; aborts after PULL keep latch OUT and K1 closed until a pack mates or a person lifts the drone (new A12); LATCH_IN only after MATE_CHECK (alt: B− pins at y +12 / +22). box-electronics.md.
 - 24 Oct (box structure system session): funnel v8 file (catch PR 81) loaded as is: fit 0.0 mm³, both arm insert lanes clear the −Y panel (r 159.61 vs 159, C on M), v9 notch not needed for fit; v8 needs no Y room, box 418 x 407 x 470 (80.0 L). `box_layout_v2.py`, dimensions System box structure.
 - 24 Oct (rule): carbon where its length earns it (Spark): short cage members printed, break-even 33 mm DEFAULT; CLAUDE.md Hard rules, generative.md The rule 0, review check 11.
 - 24 Oct (box structure system session, box electronics): from arm v7 (PR 79): per-bay gravity offset in the axle step target (commissioning) + sag check ≤ ±0.55° (E, arm budget), ≤ 100 full steps/s through each notch, TURN 1.1 s; detent now holds (x1.3, index 1.04), KB3 stays. box-electronics.md, dimensions I.

@@ -328,7 +328,7 @@ STATES = [
     ("MATE_CHECK", "hold the stroke; read INA_KA", "I < 50 mA within 1.0 s (the new pack carries the drone)", 1.0, "A6 mate fail"),
     ("RELEASE", "gripper opens (bolts into the drone pockets), head A retracts to park", "park, no stall", 1.0, "A5 stall"),
     ("KA_OFF", "open K1 (0 A: pack higher)", "INA_KA I < 50 mA before and bus < 1 V after", 0.3, "A3 keep-alive fault"),
-    ("LATCH_IN", "PCA ch 0..3 to IN", "all 4 halls high within 0.5 s", 0.5, "A11 latch stuck out"),
+    ("LATCH_IN", "PCA ch 0..3 to IN, only with a pack mated (pack-out hold)", "all 4 halls high within 0.5 s", 0.5, "A11 latch stuck out"),
     ("READY", "SWAP_DONE to the mission; the mission arms the drone; take off", "seat sense high (drone gone)", 60.0, "drone stays: mission decides"),
     ("STORE", "axle to the free bay (the live bay when free); head B extends with the dead pack, bay relay open", "full stroke, no stall", 4.0, "A5 stall"),
     ("BAY_MATE", "relay open: read the bay INA226 bus voltage", "13.0..17.0 V within 1.0 s", 1.0, "A7 bay mate fail"),
@@ -338,7 +338,7 @@ STATES = [
 ABORTS = [
     ("A1 latch not out", "a hall still high 0.5 s after OUT", "all 4 IN, retry OUT once; second fail: latch IN, SWAP_FAIL, the drone keeps its pack (no motion yet)"),
     ("A2 latch lost mid-swap", "any hall goes high between LATCH_OUT and LATCH_IN", "stop all motion where it is, keep K1 as it is, alarm; the plungers self-lock under load, so a drone cannot be released by this"),
-    ("A3 keep-alive fault", "bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s with the old pack in, or K1 will not open at 0 A", "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, never open K1 with the drone on keep-alive"),
+    ("A3 keep-alive fault", "bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s with the old pack in, or K1 will not open at 0 A", "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, K1 and the latch stay as they are (pack-out hold)"),
     ("A4 pull / keep-alive lost", "INA_KA I < 100 mA at the end of the pull stroke", "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm"),
     ("A5 stall", "TMC2209 DIAG (StallGuard) on X / Y during a fast move, a Klipper shutdown, the E-stop, or the axle hall out of its window", "stop all motion, latch stays OUT, K1 stays as it is (the drone stays powered), alarm; Spark clears by hand; heads re-home before the next cycle"),
     ("A6 mate fail", "INA_KA I >= 50 mA 1.0 s after the full stroke", "back off 5, push again once at 10 mm/s; still >= 50 mA: pull the pack back into head A, drone stays on keep-alive, alarm (no time limit: the box powers it)"),
@@ -347,6 +347,7 @@ ABORTS = [
     ("A9 bay interlock", "a head move into a live bay with its relay closed or I >= 50 mA", "refused in software before the move; stop the charger first"),
     ("A10 seat lost before latch", "seat sense high before LATCH_OUT", "back to WAIT_SEAT"),
     ("A11 latch stuck out", "a hall still low 0.5 s after IN", "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"),
+    ("A12 drone lifted, pack out", "after PULL, no pack mated, keep-alive I < 50 mA for 2 s (a person lifted the drone off the pins)", "open K1, latch IN, SWAP_FAIL, alarm (catch PR 93)"),
 ]
 
 
