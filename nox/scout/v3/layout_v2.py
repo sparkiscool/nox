@@ -235,7 +235,8 @@ def candidate_nodes():
     for x, y in [(76, 0), (-76, 0), (0, 76), (0, -76), (66, 66), (66, -66), (-66, 66), (-66, -66)]:
         N.append(np.array([x, y, 0.0])); kind.append("G")                   # glove knees along the faces at z 0
     for x, y, z in [(20, -46, -24), (-20, -46, -24), (20, 46, -24), (-20, 46, -24), (44, 29, -32), (44, -29, -32), (-44, 29, -32),
-                    (-44, -29, -32)]:
+                    (-44, -29, -32), (30, 62, -12), (30, -62, -12), (-30, 62, -12), (-30, -62, -12), (60, 40, -12), (60, -40, -12),
+                    (-60, 40, -12), (-60, -40, -12)]:
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
     for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5)]:
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
@@ -337,8 +338,8 @@ def load_cases(N, kind, live=None):
         cases.append((f"swap pull 50 N on wheels {pair}", {W[p]: 25 * S2 * nrm(*p) for p in pair}, "flight"))
     yw = [(100, 112), (-100, 112), (100, -112), (-100, -112)]
     down = lambda x, y: np.array([0, -np.sign(y), -1.0]) / S2
-    cases.append(("latch hold 4 x 30 N", {W[p]: 30.0 * down(*p) for p in yw}, "flight"))
-    cases.append(("latch misuse 100 N on one wheel", {W[yw[0]]: 100.0 * down(*yw[0])}, "misuse"))
+    cases.append(("latch hold 4 x 34 N", {W[p]: 34.0 * down(*p) for p in yw}, "flight"))           # G (7), box catch PR 70
+    cases.append(("latch misuse 175 N on one wheel", {W[yw[0]]: 175.0 * down(*yw[0])}, "misuse"))
     # handling 50 N: one node, inward / down / up at the side flat, the nose flat, the crown, a keel node
     for ring in ("L", "U"):
         for d in (np.array([0, 1.0, 0]), np.array([1.0, 0, 0])):
@@ -392,8 +393,8 @@ def _beam(p0, p1, E, G, A, I, J):
 
 
 TPU_NODES = os.environ.get("TPU_NODES") == "1"     # test: TPU socket joints everywhere (too soft for the swap, 24 Oct sweep)
-F_PLATEAU = float(os.environ.get("F_PLATEAU", "100"))   # N, preloaded TPU suspension between cage and core starts to give
-                                                      # (DEFAULT: above swap 60 and latch 85 N, so the box sees it rigid; 80 N saves 23 g but sags in the latch)
+F_PLATEAU = float(os.environ.get("F_PLATEAU", "120"))   # N, preloaded TPU suspension between cage and core starts to give
+                                                      # (DEFAULT: 1.25 x the 96 N vertical of the latch hold (4 x 34 N, G (7)), so the box sees it rigid)
 
 
 def _members_elems(N, kind, members):
@@ -455,6 +456,9 @@ def frame_eval(N, kind, members, cases):
                 scale = F_PLATEAU
                 stroke = F_PLATEAU / kc + (E_CRASH - 0.5 * F_PLATEAU ** 2 / kc) / F_PLATEAU
             stroke_lim = STROKE.get(tuple(np.round(-d, 3)), 9.0)
+        if cls == "misuse":                                               # the suspension may stroke: the cage sees <= F_PLATEAU
+            tot = np.linalg.norm(sum(F.values()))
+            if tot > F_PLATEAU: scale = F_PLATEAU / tot
         u *= scale
         idx = np.zeros(len(members)); reac = {}
         for e, typ, i, j, (L, T, k, kg) in els:

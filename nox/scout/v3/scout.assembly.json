@@ -29,7 +29,7 @@
   {"name": "XT60E1-M + lid", "role": "bought", "protect": true, "mesh": "runs/scout_layout/v2/assembly/XT60E1-M_+_lid.stl", "mass_g": 8, "tag": "E", "owner": "scout v3", "version": "v2 pass 1", "source": "nox/scout/v3/layout_v2.py"},
   {"name": "camera", "role": "bought", "protect": true, "mesh": "runs/scout_layout/v2/assembly/camera.stl", "mass_g": 10, "tag": "E", "owner": "scout v3", "version": "v2 pass 1", "source": "nox/scout/v3/layout_v2.py"},
   {"name": "pogo pads + carrier", "role": "structure", "protect": true, "mesh": "runs/scout_layout/v2/assembly/pogo_pads_+_carrier.stl", "mass_g": 6, "tag": "E", "owner": "scout v3", "version": "v2 pass 1", "source": "nox/scout/v3/layout_v2.py", "note": "PR 44 position"},
-  {"name": "cage (rods + nodes)", "role": "cage", "mesh": "runs/scout_layout/v2/assembly/cage_(rods_+_nodes).stl", "material": "carbon rod", "mass_g": 267.7, "tag": "E", "owner": "scout v3", "version": "v2 pass 1", "source": "nox/scout/v3/layout_v2.py", "note": "system pass v2 pass 1: 116 x 3.0 rods, printed nodes; F frame model"},
+  {"name": "cage (rods + nodes)", "role": "cage", "mesh": "runs/scout_layout/v2/assembly/cage_(rods_+_nodes).stl", "material": "carbon rod", "mass_g": 290.4, "tag": "E", "owner": "scout v3", "version": "v2 pass 1", "source": "nox/scout/v3/layout_v2.py", "note": "system pass v2 pass 1: 116 x 3.0 rods, printed nodes; F frame model"},
   {"name": "catch wheels", "role": "cage", "mesh": "runs/scout_layout/v2/assembly/catch_wheels.stl", "mass_g": 1.6, "tag": "M", "owner": "scout v3", "version": "v2 pass 1", "source": "nox/scout/v3/layout_v2.py"}
  ]
 }

@@ -1,1 +1,1 @@
-System: Scout v3, cage first -13.4 mm (E) at (-0.66, +0.06, -0.75) (receiver v4 interface) FAIL, fit 0.0 mm³ (E), bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 725 g (E), CG 0.9 mm off thrust axis (E) [-0.9, -0.1, -38.2], 0.5 mm without swap parts
+System: Scout v3, cage first -18.3 mm (E) at (-0.43, +0.27, -0.86) (receiver v4 interface) FAIL, fit 0.0 mm³ (E), bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 748 g (E), CG 0.9 mm off thrust axis (E) [-0.9, -0.1, -36.9], 0.6 mm without swap parts
