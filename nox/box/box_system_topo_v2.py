@@ -148,6 +148,8 @@ def setup_factory(log, info):
         pd = pads(max(3.0, h))
         stub = cylY(45.0, -T, 0.0)
         cuts = [load_grown(n) for n in ("receivers", "cartridge_paths", "drone", "catch")]
+        gy = getattr(L2, "FUNNEL_V8_GROW_Y", 0.0)                       # funnel v8: opening 11.5 wider at each Y face
+        cuts[3] = cuts[3] + cuts[3].translate([0, gy, 0]) + cuts[3].translate([0, -gy, 0])
         hub = cylY(88.0 + GROW, 7.0 - GROW, 74.0 + GROW)
         motor = cylY(106.5 + GROW, 2.0 - GROW, 50.0 + GROW)
         park = cylY(R - L2.ARM_PARK_R, 74.0, 300.0)
@@ -156,9 +158,9 @@ def setup_factory(log, info):
         lane = mf.Manifold.extrude(mf.CrossSection([pts]), LANE_Y[1] - LANE_Y[0]).rotate([90, 0, 0]).translate([0, LANE_Y[1], 0]) \
             ^ cylY(159.0, LANE_Y[0], LANE_Y[1])
         zt = Z1 + 5
-        a0 = 84.0; a1 = a0 + (zt - Z_EDGE)
-        sq = mf.CrossSection([[(-a0, -a0), (a0, -a0), (a0, a0), (-a0, a0)]])
-        fun = mf.Manifold.extrude(sq, zt - Z_EDGE, 0, 0.0, (a1 / a0, a1 / a0)).translate([0, Y_FUN, Z_EDGE])
+        a0 = 84.0; b0 = 84.0 + gy; dz = zt - Z_EDGE
+        sq = mf.CrossSection([[(-a0, -b0), (a0, -b0), (a0, b0), (-a0, b0)]])
+        fun = mf.Manifold.extrude(sq, dz, 0, 0.0, ((a0 + dz) / a0, (b0 + dz) / b0)).translate([0, Y_FUN, Z_EDGE])
         elec = box(42 - GROW, 157 + GROW, Y0 + T, -36 + GROW, -170 - GROW, 45 + GROW)
         cuts += [hub, motor, park, lane, fun, elec]
         sweeps = service_sweeps(Y1)
