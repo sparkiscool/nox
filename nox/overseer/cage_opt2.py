@@ -42,17 +42,17 @@ H_TIP = {"front": 38.0, "rear": 16.0}
 W_ARM = {"front": (34.0, 28.0), "rear": (26.0, 22.0)}
 ARM_WALL = 2.4
 GUARD_GAP, ROD_R3 = 12.0, 1.5
-RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - 5.0, PROP_Z + 22.0   # 60 / 104: spokes reach the lower ring 12 under the swept band with a 10 tube
+RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - 7.0, PROP_Z + 22.0   # 58 / 104: spokes reach the lower ring 12 under the swept band with a 14 tube
 Z_TOP = 116.0                                               # top node over the thrust centre (DEFAULT)
 NOSE_Y, NOSE_GAP = 58.0, 3.0 + 2.0                          # nose box half width; ahead of the L2 / camera by 3 + rod
-ROD_RMAX = 5.0                                              # guard offset for the largest catalog rod (10/8 tube), so any size keeps 12
-F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 283.5
-C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 482.6
+ROD_RMAX = 7.0                                              # guard offset for the largest catalog rod (14/12 tube), so any size keeps 12
+F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 285.5
+C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 485.4
 L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
 MOTOR_DEG = (45, 135, 225, 315)
-SOCK_BACK = 8.0                                             # socket centres behind the L2 base plane: 10 tube radius 5 + 3
+SOCK_BACK = 10.0                                            # socket centres behind the L2 base plane: 14 tube radius 7 + 3
 APEX_SPAN = 56.0                                            # socket spread on the apex lugs (DEFAULT, inside the L2's 75)
 
 # sections (carbon, C): A mm2, I mm4, J mm4, g/m, OD
@@ -63,6 +63,8 @@ SECTIONS = {
     "r5": dict(A=19.63, I=30.68, J=61.4, gpm=30.4, od=5.0, label="5.0 solid"),
     "t8": dict(A=21.99, I=137.4, J=274.9, gpm=34.1, od=8.0, label="8/6 tube"),
     "t10": dict(A=28.27, I=289.8, J=579.6, gpm=43.8, od=10.0, label="10/8 tube"),
+    "t12": dict(A=34.56, I=527.0, J=1054.0, gpm=53.6, od=12.0, label="12/10 tube"),   # weight no cap (Spark 24 Oct): stiffer tubes allowed
+    "t14": dict(A=40.84, I=867.9, J=1735.8, gpm=63.3, od=14.0, label="14/12 tube"),
 }
 E_C, G_C, E_P, G_P = 120000.0, 5000.0, 2780.0, 1000.0
 SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
@@ -291,13 +293,18 @@ def geometry(p, topo, sizes=None):
         mem(f"wring x{sx:+d}", f"WAi{sx:+d}+1", f"WAi{sx:+d}-1", "wheel_ring")
     for sy in (1, -1):
         mem(f"wring y{sy:+d}", f"WBi+1{sy:+d}", f"WBi-1{sy:+d}", "wheel_ring")
-    if p.get("feet") is not None:                                     # belly skid: legs from the corner nodes to the feet, side rails
-        fx, fy, fz = p["feet"]                                        # (no rails across the ends: the pack drops out the bottom)
+    if p.get("feet") is not None:                                     # belly frame + skid (layout A: the catch sits under the motor square)
+        fx, fy, fz = p["feet"]
         for sx in (1, -1):
             for sy in (1, -1):
+                # printed belly frame tab on each corner block at wheel height: carries the cartridge receiver, the pods
+                # and the pack (720 g, E, a quarter each); vertical skid leg inside the 168 opening down to the foot
+                node(f"BF{sx:+d}{sy:+d}", (xc + fx * sx, fy * sy, wz)); mem(f"belly tab {sx:+d}{sy:+d}", f"corner{sx:+d}{sy:+d}", f"BF{sx:+d}{sy:+d}", None, "link")
+                mass[f"BF{sx:+d}{sy:+d}"] = 180e-6
                 node(f"FT{sx:+d}{sy:+d}", (xc + fx * sx, fy * sy, fz))
-                mem(f"skid leg {sx:+d}{sy:+d}", f"corner{sx:+d}{sy:+d}", f"FT{sx:+d}{sy:+d}", "skid_belly")
-        for sy in (1, -1):
+                mem(f"skid leg {sx:+d}{sy:+d}", f"BF{sx:+d}{sy:+d}", f"FT{sx:+d}{sy:+d}", "skid_belly")
+        for sy in (1, -1):                                            # side bar + rail close each side; no rail across the ends (the pack drops out the bottom)
+            mem(f"belly bar {sy:+d}", f"BF+1{sy:+d}", f"BF-1{sy:+d}", "skid_belly")
             mem(f"skid rail {sy:+d}", f"FT+1{sy:+d}", f"FT-1{sy:+d}", "skid_belly")
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
@@ -400,7 +407,13 @@ class Model:
         f = 1.0 / np.sqrt(np.maximum(lam, 1e-30)) / (2 * math.pi)
         ia = [list(self.free).index(6 * self.idx["apexM"] + j) for j in range(6)]
         frac = np.array([float((Y[ia, m] ** 2).sum()) for m in range(Y.shape[1])])
+        self.mode_f, self.mode_Y = f, Y
         return f, frac
+
+    def mode_share(self, names):
+        """share of each mode's kinetic energy on the given nodes (translations)"""
+        fr = list(self.free); ib = [fr.index(6 * self.idx[n] + j) for n in names for j in range(3)]
+        return np.array([float((self.mode_Y[ib, m] ** 2).sum()) for m in range(self.mode_Y.shape[1])])
 
     def member_results(self, U):
         """per element: axial N (tension +), max bending stress, end axial forces"""
@@ -483,6 +496,19 @@ def guard_caps(m):
     return caps
 
 
+MODE_SHARE = 0.10                                                  # a mode is the L2's (or the belly's) from 10 % of its kinetic energy there
+
+
+def mode_energy_runs(m, k, runs):
+    """share of mode k's strain energy in each run (the rods to stiffen for that mode)"""
+    U = np.zeros(m.K.shape[0]); mh = np.sqrt(m.Mm[m.free]); U[m.free] = m.mode_Y[:, k] / mh
+    se = np.zeros(len(m.el))
+    for ie, e in enumerate(m.el):
+        ue = e["T"] @ U[e["dofs"]]; se[ie] = 0.5 * float(ue @ (e["kl"] @ ue))
+    tot = se.sum() or 1.0
+    return np.array([se[run].sum() / tot for run in runs])
+
+
 def crash_dirs():
     d = [np.array(v, float) for v in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))]
     d += [np.array((sx, sy, sz), float) / math.sqrt(3) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]
@@ -510,10 +536,15 @@ def evaluate(p, topo, sizes, detail=False):
     res = dict(mass_g=m.rod_mass_g(), cases={})
     g = {}
     f, frac = m.modes()
-    l2 = [fi for fi, fr in zip(f, frac) if fr >= 0.2]
-    f_l2 = float(l2[0]) if l2 else float(f[-1])
+    l2 = [i for i, fr in enumerate(frac) if fr >= MODE_SHARE]
+    f_l2 = float(f[l2[0]]) if l2 else float(f[-1]); res["_l2_mode"] = l2[0] if l2 else len(f) - 1
     res["f_first"], res["f_l2"] = float(f[0]), f_l2
     g["L2 mode"] = F_L2_MIN / f_l2 - 1
+    bf = [n for n in m.names if n.startswith("BF")]
+    if bf:                                                            # the down camera and flow ride the belly frame: a sensor mount too
+        sh = m.mode_share(bf); bm = [i for i, s_ in enumerate(sh) if s_ >= MODE_SHARE]
+        res["f_belly"] = float(f[bm[0]]) if bm else float(f[-1]); res["_belly_mode"] = bm[0] if bm else len(f) - 1
+        g["belly mode"] = F_L2_MIN / res["f_belly"] - 1
     m_drone = p.get("m_drone_g", 2200.0) * 1e-6                       # t (g -> t)
     cage_nodes = [n for n in m.names if n not in m.fixed and (n.endswith(("lo", "hi")) and not n.startswith(("S", "Vmid"))
                                                               or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP", "FT")))]
@@ -661,11 +692,16 @@ def size_fsd(p, topo, iters=30, log=False):
         bad = {k: v for k, v in res["g"].items() if v > 0 and k != "prop guard"}
         if not bad: break
         stepped = False
-        if any(k == "L2 mode" for k in bad):
-            for i, gname in enumerate(run_group):
-                if gname in l2_groups and ORDER.index(sec[i]) < len(ORDER) - 1: sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
+        for key, mk in (("L2 mode", "_l2_mode"), ("belly mode", "_belly_mode")):
+            if key not in bad: continue
+            share = mode_energy_runs(m, res[mk], runs)                     # step the runs holding half the mode's strain energy
+            order_ = np.argsort(-share); acc = 0.0
+            for i in order_:
+                if acc >= 0.5: break
+                acc += share[i]
+                if ORDER.index(sec[i]) < len(ORDER) - 1: sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
         for k in bad:
-            if k.endswith(" defl") or (k != "L2 mode" and bad[k] > 0):
+            if k.endswith(" defl") or (k not in ("L2 mode", "belly mode") and bad[k] > 0):
                 hn = k.split(" at ")[-1].split(" ")[0] if " at " in k else None
                 for i, names in enumerate(run_names):
                     els = [e for e in m.el if e["name"] in names]
