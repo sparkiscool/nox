@@ -40,3 +40,4 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 ### Open (DEFAULT in brackets, work goes on)
 - How the box mates the XT60: straight push on the drone axis, sized by the box chat (`dimensions.md` I "XT60 mate"); drone side placed in layout v1 (`layout.md`).
 - PX4 multi-vehicle ids: none set yet (Spark 23 Oct) [Scout `MAV_SYS_ID` 2, Overseer 1 at the next bench session; `claude/research/2026-10-11-multi-drone-coordination.md`].
+- Bus voltage in telemetry (for box electronics' second XT60 mate signal, PR 95): PX4 on the MicoAir743 reads the bus through its voltage divider (`BAT1_V_DIV`) and sends MAVLink `SYS_STATUS.voltage_battery` (mV, ~1 Hz) and `BATTERY_STATUS.voltages[0]` (~0.5 Hz) on the mission link in the default stream (E, PX4 normal mode rates; raise with `MAV_x_RATE` / `mavlink stream` if boxd needs faster). With the pack out it reads the keep-alive feed (pads + LM74700). Check on the bench.
