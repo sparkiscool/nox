@@ -263,3 +263,14 @@ layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default')
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (64, 48, 120) = 368,640 elements, 499,026 active dofs; backend direct (direct estimate 6.9 GB, budget 11.8 GB)
 layout: resumed from /home/user/nox/runs/scan_stick_base/v23/ck.npz at it 40, beta 16
+it  41 beta   16 J   5.3057 vol 0.0408 (dil 0.0977 g -0.007) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 151 36.3s
+it  42 beta   16 J   6.2144 vol 0.0416 (dil 0.0976 g -0.008) grey  1.2% ch 0.100 worst switch panel push 50 N 192 38.2s
+it  43 beta   16 J   5.2702 vol 0.0408 (dil 0.0974 g -0.010) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 151 37.9s
+it  44 beta   16 J   5.6018 vol 0.0414 (dil 0.0973 g -0.011) grey  1.2% ch 0.100 worst switch panel push 50 N 156 37.6s
+it  45 beta   16 J   5.2477 vol 0.0408 (dil 0.0970 g -0.014) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 151 36.9s
+it  46 beta   16 J   5.2134 vol 0.0416 (dil 0.0975 g -0.010) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 150 36.9s
+it  47 beta   16 J   5.1997 vol 0.0421 (dil 0.0981 g -0.004) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 150 37.5s
+it  48 beta   16 J   5.1904 vol 0.0422 (dil 0.0982 g -0.003) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 150 38.2s
+it  49 beta   16 J   5.1820 vol 0.0424 (dil 0.0983 g -0.002) grey  1.2% ch 0.100 worst cage bump top 100 N (spine s 150 37.0s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  50 beta   32 J  12.1232 vol 0.0419 (dil 0.0970 g +0.009) grey  0.5% ch 0.100 worst switch panel push 50 N 403 37.0s
