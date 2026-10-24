@@ -22,7 +22,7 @@ import numpy as np, trimesh, manifold3d as mf
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path[:0] = [os.path.join(ROOT, "nox")]
-OUT = os.path.join(ROOT, "runs", "battery_latch", "v2")         # v1: the first set (receiver v1), kept
+OUT = os.path.join(ROOT, "runs", "battery_latch", "v3")         # v3: cartridge v6 + skids; v2: receiver v2; v1: the first set
 
 
 # ======================================================================== helpers (scout_bottom.py style)
@@ -62,9 +62,13 @@ WALL = 2.0
 Y_FL1 = 12.0                      # pack bottom (v4 14.4): set by the slider top 11.5 + 0.5
 REC_X = 15.5                      # finger recess half width: blades open 11..14 + 1.5 (head offset +-1.0)
 REC_Z = 11.5                      # recess half length about z_T (tab +-11 + 0.5)
-TAB_IN, TAB_OUT = 4.0, 10.0       # tab faces at rest; squeezed 0 / 6 (the tabs meet at x 0 = the stop): stroke 4.0
+TAB_IN, TAB_OUT = 4.0, 10.0       # tab faces at rest; squeezed 1 / 7 on the centre rib (v5: 0 / 6, the tabs met at x 0)
 TAB_HZ = 11.0                     # tab z +-11 (22 wide: the 13 wide blades + the magnet ear)
-TRAVEL = 4.0
+RIB_HX, RIB_Y1, RIB_EXT = 1.0, 7.5, 4.0   # cartridge v6 centre rib (heads v7 ask, 24 Oct, DEFAULT): x +-1.0 (2.0, nothing
+                                  # under 2.0), y 0..7.5 (under the pen spring at y 8.0..11.2), the recess's length + 4.0 each
+                                  # end where it rises into the floor plate. Each tab stops on it, so the squeezed tabs clamp
+                                  # the cartridge to the head and both bolts retract 3.0 whatever the head offset (need 2.6)
+TRAVEL = TAB_IN - RIB_HX          # 3.0 (v5 4.0)
 BOLT_Y0, BOLT_T, BOLT_HZ = 6.5, 5.0, 9.0      # bar = bolt section: y 6.5..11.5, z +-9 (18 wide, the grip pull lever)
 BOLT_Y1 = BOLT_Y0 + BOLT_T                   # 11.5
 OVERLAP = 2.3                     # bolt into the pocket past the locating face (v4 3.0): a +-1.0 head offset still retracts
@@ -203,7 +207,68 @@ def cartridge(g, clip=None):
         t = t - cyl("z", sx * 4.0, ss_y, 1.25, g["Z_EW0"] - 0.5, lc + 4.0, 24)
     t = t + box(-xo, xo, 0, 4.0, 0, g["Z_P0"] + 2.0) + box(-xo, xo, 0, 4.0, lc - 4.0, lc)
     t = t + box(-xo, -(xi - 2.0), 0, 4.0, 0, lc) + box(xi - 2.0, xo, 0, 4.0, 0, lc)
+    t = t + centre_rib(g)
     return t if clip is None else t ^ clip
+
+def centre_rib(g):
+    """cartridge v6 centre rib: the tab stop in the recess, tied up into the floor plate beyond the recess's ends."""
+    zt = g["Z_T"]
+    return U(box(-RIB_HX, RIB_HX, 0.0, RIB_Y1, zt - REC_Z - RIB_EXT, zt + REC_Z + RIB_EXT),
+             *[box(-RIB_HX, RIB_HX, 0.0, Y_FL1 - 0.01, *sorted((zt + sg * REC_Z, zt + sg * (REC_Z + RIB_EXT)))) for sg in (-1, 1)])
+
+# ---- TPU edge strips (Scout v3 ask 24 Oct, its system pass `nox/scout/v3/layout_v2.py latch_skids()`: cage role, E;
+# drone frame limits, >= 1.0 inside the funnel planes, clear of the 4 bolt keys): L sections bonded on (flexible contact
+# adhesive), the foot under the edge, the leg on the outer face
+CSTRIP = dict(x0=19.2, x1=23.2, y0=-2.0, leg=(19.0, 21.0, 3.0), dz=32.0)      # cartridge v6: under its bottom long edges
+RSTRIP = dict(x0=24.6, x1=27.3, y0=-2.0, leg_t=2.0, leg_h=3.0, dz=32.0)        # receiver v2: under the feet's outer edges
+NOSE_BAR = 3.5                                                                 # square, along the 45 deg lower nose chamfer
+NOSE_PTS = [(60.0, 31.0, -16.0), (36.0, 31.0, -40.0), (31.0, 25.8, -45.4)]     # drone frame (+y side; mirrored), Scout spec
+NOSE_PLATE = dict(t=2.2, y=32.75, z0=-22.0, z1=-6.0)                           # drone frame, on the lead end wall's face
+
+def cart_strips(g):
+    """cartridge v6 TPU strips (Scout only): foot x 19.2..23.2 under the flat bottom (y -2..0, 2.0 proud of the sliders),
+    leg on the wall's outer face x 19..21, y 0..3 (0.68 off the receiver's lead-in at the seat); z = z_T +- 32."""
+    zt, c = g["Z_T"], CSTRIP
+    out = []
+    for s in (-1, 1):
+        def X(a, b): return sorted((s * a, s * b))
+        out.append(U(box(*X(c["x0"], c["x1"]), c["y0"], 0.0, zt - c["dz"], zt + c["dz"]),
+                     box(*X(c["leg"][0], c["leg"][1]), c["y0"], c["leg"][2], zt - c["dz"], zt + c["dz"])))
+    return out
+
+def _trim_skids(sk, recv):
+    """skids clear of the receiver: [nose plate, side skid +x, side skid -x]; each side skid is its strip and its nose bar
+    in one TPU print (trimmed by the plate it butts against; each bonded on)."""
+    sk = [m - recv for m in sk]
+    plate, bp, bn, sp, sn = sk
+    z_in = plate.bounding_box()[2]                                  # the plate's inner face: the bars end on it
+    keep = box(-500, 500, RSTRIP["y0"], 500, -500, z_in)             # and no lower than the strip's foot (its bed face)
+    return [plate, U(sp, bp) ^ keep, U(sn, bn) ^ keep]
+
+def recv_skids(g, r):
+    """receiver v2 TPU skids (Scout only), cartridge coords: [nose plate, nose bar +x, nose bar -x, side strip +x, -x]."""
+    T = T_dc(g); Ti = np.linalg.inv(T)
+    to_c = lambda P: (Ti @ np.array([*P, 1.0]))[:3]
+    zt = g["Z_T"]
+    nose = r["Z_E1"] + r["END_T"]                                   # lead end wall face, cartridge z
+    p = NOSE_PLATE
+    yc0, yc1 = p["z0"] - SCOUT_Z0, p["z1"] - SCOUT_Z0               # drone z -> cartridge y
+    plate = box(-p["y"], p["y"], yc0, yc1, nose, nose + p["t"])
+    bars = []
+    for s in (1, -1):
+        pts = [to_c((x, s * y, z)) for (x, y, z) in NOSE_PTS]
+        h = NOSE_BAR / 2
+        segs = [hullp([q + np.array([dx, dy, 0.0]) for q in (a, b) for dx in (-h, h) for dy in (-h, h)] +
+                      [q + np.array([dx, 0.0, dz]) for q in (a, b) for dx in (-h, h) for dz in (-h, h)])
+                for a, b in zip(pts[:-1], pts[1:])]
+        bars.append(U(*segs))
+    c = RSTRIP; xw = r["XW"]
+    strips = []
+    for s in (1, -1):
+        def X(a, b): return sorted((s * a, s * b))
+        strips.append(U(box(*X(c["x0"], c["x1"]), c["y0"], Y_RB, zt - c["dz"], zt + c["dz"]),
+                        box(*X(xw, xw + c["leg_t"]), c["y0"], Y_RB + c["leg_h"], zt - c["dz"], zt + c["dz"])))
+    return [plate] + bars + strips
 
 
 # ======================================================================== XT60 (bought; v4 numbers, spec / E)
@@ -650,8 +715,11 @@ def build(pack, clip_inset=None):
     if RECV_V == 2:
         cb, cc = xt60_carrier(r)
         if clip is not None: cb, cc = cb ^ clip, cc ^ clip
-        out = dict(g=g, r=r, r1=r1, clip=clip, cart=cartridge(g, cclip), recv=receiver_v2(r, clip), carrier=cb, cap=cc,
-                   lid=U(cb, cc), strips=strips(r), male=xt60_male(g), skids=skids, recv_v1=receiver(r1, clip))
+        out_recv = receiver_v2(r, clip)
+        out = dict(g=g, r=r, r1=r1, clip=clip, cart=cartridge(g, cclip), recv=out_recv, carrier=cb, cap=cc,
+                   lid=U(cb, cc), strips=strips(r), male=xt60_male(g), skids=skids, recv_v1=receiver(r1, clip),
+                   cstrips=cart_strips(g) if pack == "scout" else [],
+                   rskids=_trim_skids(recv_skids(g, r), out_recv) if pack == "scout" else [])
         # lid = the clamped XT60 carrier (base + cap) wherever the set is checked as one; cap / carrier are the prints
     else:
         out = dict(g=g, r=r, r1=r1, clip=clip, cart=cartridge(g, cclip), recv=receiver(r, clip), lid=lid(r), strips=strips(r),
@@ -667,11 +735,15 @@ def latch_assembly(pack="scout", state="latched"):
     rt = 0.0 if state in ("latched", "free") else TRAVEL
     d = {"cartridge": B["cart"], "slider_px": slider(g, rt, 1), "slider_nx": slider(g, rt, -1), "pack": pack_body(g),
          **{f"cartridge_skid_{k}": m for k, m in zip(("closed", "lead"), B["skids"])},
+         **{f"cartridge_strip_{k}": m for k, m in zip(("px", "nx"), B.get("cstrips", []))},
          "xt60_plug": xt60_female(g), "receiver": B["recv"], "receiver_lid": B.get("cap", B["lid"]), "receiver_strips": B["strips"],
          "xt60e1m": B["male"]}
     if B.get("carrier") is not None: d["xt60_carrier"] = B["carrier"]
+    for k, m in zip(("nose_plate", "side_px", "side_nx"), B.get("rskids", [])):
+        d[f"receiver_skid_{k}"] = m
     if state == "free":
-        for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m", "xt60_carrier"): d.pop(k, None)
+        for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m", "xt60_carrier") + tuple(
+                k_ for k_ in d if k_.startswith("receiver_skid_")): d.pop(k, None)
     return d
 
 def pack_body(g):
@@ -716,8 +788,8 @@ def place_tab_line(pack, it=3):
 def insertion_sweep(B, side_off=0.0, dz=1.0, depth=50.0):
     """cartridge from `depth` below seat to the seat. Sliders free: at each step the least retraction (bisection) that
     clears the receiver = what the feet lead-ins cam them to. Returns rows (d, retract) and the worst overlap."""
-    g, R = B["g"], B["recv"] + B["lid"] + B["strips"] + B["male"]
-    C = B["cart"] + xt60_female(g)
+    g, R = B["g"], U(B["recv"], B["lid"], B["strips"], B["male"], *B.get("rskids", []))
+    C = U(B["cart"], xt60_female(g), *B.get("cstrips", []))
     rows, worst_c = [], 0.0
     d = -depth
     while d <= 1e-6:
@@ -779,7 +851,7 @@ def bearing_drop(B):
 
 def finger_model(g, open_=True, off=0.0, reach=6.0):
     """two v4 blades (3 thick, 13 wide in z) at their open (11..14) or squeezed (6..9) inner faces, head offset off in x."""
-    xi = 11.0 if open_ else 6.0
+    xi = 11.0 if open_ else TAB_OUT - TRAVEL
     return U(*[box(*sorted((s * xi + off, s * (xi + 3.0) + off)), -20.0, reach, g["Z_T"] - 6.5, g["Z_T"] + 6.5) for s in (-1, 1)])
 
 def grip_checks(B):
@@ -790,10 +862,10 @@ def grip_checks(B):
         Fo = finger_model(g, True, off)
         res[f"open_vs_cart_off{off:+.0f}"] = ov(Fo, C)
         res[f"open_vs_tabs_rest_off{off:+.0f}"] = round(vol(Fo ^ (slider(g, 0, 1) + slider(g, 0, -1))), 3)
-        # squeezed: the tabs meet at the fingers' centre, so the side with the shorter push retracts TRAVEL - |off|
-        res[f"min_retract_off{off:+.0f}"] = TRAVEL - abs(off)
+        # squeezed: each tab stops on the centre rib, so both retract TRAVEL whatever the offset (v5: TRAVEL - |off|)
+        res[f"min_retract_off{off:+.0f}"] = TRAVEL
     res["retract_needed"] = OVERLAP + 0.3
-    res["retract_margin_at_1mm"] = round(TRAVEL - 1.0 - (OVERLAP + 0.3), 2)
+    res["retract_margin_at_1mm"] = round(TRAVEL - (OVERLAP + 0.3), 2)
     Fs = finger_model(g, False, 0.0)
     res["squeezed_vs_cart"] = ov(Fs, C)
     res["squeezed_vs_sliders_squeezed"] = round(vol(Fs ^ (slider(g, TRAVEL, 1) + slider(g, TRAVEL, -1))), 3)
@@ -801,16 +873,16 @@ def grip_checks(B):
 
 
 def asym_squeeze(B, off=1.0):
-    """head offset `off` in x: the coupled fingers close about x = off, the tabs meet at x = off, so one slider retracts
-    TRAVEL - off and the other TRAVEL + off. Overlaps (mm3) and the worst bolt's tip vs the locating face (C)."""
+    """head offset `off` in x: the blades close about x = off, each tab stops on the centre rib (cartridge v6), so both
+    sliders retract TRAVEL (v5: TRAVEL -+ off). Overlaps (mm3) and the worst bolt's tip vs the locating face (C)."""
     g = B["g"]; R = B["recv"] + B["lid"] + B["strips"] + B["male"]; C = B["cart"]
-    a, b = slider(g, TRAVEL - off, 1), slider(g, TRAVEL + off, -1)
-    tip_in = (TRAVEL - abs(off)) - OVERLAP               # how far the short-stroke bolt's tip sits inside the locating face
+    a, b = slider(g, TRAVEL, 1), slider(g, TRAVEL, -1)
+    tip_in = TRAVEL - OVERLAP                            # how far each bolt's tip sits inside the locating face
     A = C + xt60_female(g) + a + b
     pull = 0.0
     for k in range(0, 51, 2):
         pull = max(pull, vol(A.translate([0, -k, 0]) ^ R))
-    return dict(off=off, retract=[TRAVEL - off, TRAVEL + off], vs_cart=round(max(vol(a ^ C), vol(b ^ C)), 3),
+    return dict(off=off, retract=[TRAVEL, TRAVEL], vs_cart=round(max(vol(a ^ C), vol(b ^ C)), 3),
                 vs_recv=round(max(vol(a ^ R), vol(b ^ R)), 3), vs_each=round(vol(a ^ b), 3),
                 tip_inside_face_mm=round(tip_in, 2), pull_out_mm3=round(pull, 3))
 
@@ -1071,7 +1143,14 @@ def _rot(axis, deg):
     T = np.eye(4); T[:3, :3] = R; return T
 
 PIECES = {   # name: (getter, material, print pose (c -> print), count, version, bed face)
-    "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, "v5", "closed end (z 0) down"),
+    "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, "v6", "closed end (z 0) down"),
+    "cart_strip": (lambda B: B["cstrips"][0] if B.get("cstrips") else None, "TPU", _rot("x", 90), 2, "v1",
+                   "foot down (one part, both sides)"),
+    "rskid_plate": (lambda B: B["rskids"][0] if B.get("rskids") else None, "TPU", np.eye(4), 1, "v1", "flat, wall face down"),
+    "rskid_side_px": (lambda B: B["rskids"][1] if B.get("rskids") else None, "TPU", _rot("x", 90), 1, "v1",
+                      "strip foot down, the nose bar on tree supports"),
+    "rskid_side_nx": (lambda B: B["rskids"][2] if B.get("rskids") else None, "TPU", _rot("x", 90), 1, "v1",
+                      "strip foot down, the nose bar on tree supports (mirror of px)"),
     "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v5", "bar top (y 11.5) down: largest face, bar layers along its length"),
     "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, "v2", "mount plane (deck top) down: layers across the install axis"),
     "xt60_carrier": (lambda B: B["carrier"], "PETG", _rot("x", -90), 1, "v1", "ear tops down (pocket open to the bed)"),
@@ -1229,8 +1308,19 @@ def scout_system(log=print):
         man["parts"].append(dict(name=f"cartridge skid {k} (latch)", trimesh=tm(sk, T), role="cage", material="TPU", swap=True,
                                  tag="M"))
         man["contact_pairs"].append([f"cartridge skid {k} (latch)", "cartridge v5 (latch)", 5.0])
+    for k, sk in zip(("px", "nx"), B.get("cstrips", [])):             # cartridge v6 bottom-edge strips (Scout ask)
+        man["parts"].append(dict(name=f"cartridge strip {k} (latch)", trimesh=tm(sk, T), role="cage", material="TPU", swap=True,
+                                 tag="M"))
+        man["contact_pairs"].append([f"cartridge strip {k} (latch)", "cartridge v5 (latch)", 5.0])
+    for k, sk in zip(("nose plate", "side px", "side nx"), B.get("rskids", [])):
+        man["parts"].append(dict(name=f"receiver skid {k} (latch)", trimesh=tm(sk, T), role="cage", material="TPU", tag="M"))
+        man["contact_pairs"].append([f"receiver skid {k} (latch)", "receiver v1 (latch)", 5.0])
+        man["contact_pairs"].append([f"receiver skid {k} (latch)", "receiver lid (latch)", 5.0])
+    for a_ in ("side px", "side nx"):
+        man["contact_pairs"].append([f"receiver skid {a_} (latch)", "receiver skid nose plate (latch)", 5.0])
     swap_move = ["pack 4S 1500", "pack XT60 plug", "slider +y (latch)", "slider -y (latch)", "cartridge v5 (latch)",
-                 "cartridge skid closed (latch)", "cartridge skid lead (latch)"]
+                 "cartridge skid closed (latch)", "cartridge skid lead (latch)", "cartridge strip px (latch)",
+                 "cartridge strip nx (latch)"]
     acc = [dict(name="cartridge out (swap)", part="cartridge v5 (latch)", dir=[0, 0, -1], length_mm=80, tool="part",
                 ignore=swap_move + ["receiver TPU strips (latch)", "XT60E1-M"]),
            dict(name="pack out with the cartridge", part="pack 4S 1500", dir=[0, 0, -1], length_mm=80, tool="part",
@@ -1324,6 +1414,8 @@ def main():
         for nm, m, mat in mlist:
             ms[nm] = round(vol(m) / 1000 * RHO[mat], 2)
         if B["skids"]: ms["skids"] = round(sum(vol(m) for m in B["skids"]) / 1000 * RHO["TPU"], 2)
+        if B.get("cstrips"): ms["cart_strips"] = round(sum(vol(m) for m in B["cstrips"]) / 1000 * RHO["TPU"], 2)
+        if B.get("rskids"): ms["recv_skids"] = round(sum(vol(m) for m in B["rskids"]) / 1000 * RHO["TPU"], 2)
         R["mass_g"] = ms
         gd = r.get("GUIDE", GUIDE)
         R["pitch_guidance"] = dict(guide=gd, end_gap=round(r["Z_E1"] - g["L_C"], 2), y_end0=round(r["Y_END0"], 2),

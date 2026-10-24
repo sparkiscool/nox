@@ -415,7 +415,7 @@ def main():
         v = 1 if a.swap_v1 else 2
         res = fe_swap_v(a.pack, v, a.h, a.build)
         F = res.pop("_fields")
-        d = os.path.join(ROOT, "runs", "battery_latch", "v2", "fe"); os.makedirs(d, exist_ok=True)
+        d = os.path.join(BL.OUT, "fe"); os.makedirs(d, exist_ok=True)
         np.savez_compressed(os.path.join(d, f"field_{a.pack}_v{v}.npz"), origin=F["origin"], h=F["h"],
                             **{k.replace(" ", "_"): u for k, u in F["u"].items()})
         with open(os.path.join(d, f"fe_{a.pack}_receiver_v{v}.json"), "w") as f_:

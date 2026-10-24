@@ -1,0 +1,41 @@
+collar inset search (Scout, >= 7.0 inside the planes below z 20, +-5 yaw, +-2 tilt):
+  inset 8.0: collar margin 4.16
+  inset 8.5: collar margin 4.64
+  inset 9.0: collar margin 5.12
+  inset 9.5: collar margin 5.60
+  inset 10.0: collar margin 6.08
+  inset 10.5: collar margin 6.56
+  inset 11.0: collar margin 7.04
+== scout: z_T 42.55 (swap CG), swap 211.5 g, cartridge 93.0 x 40.0 x 45.6
+  FE receiver v2 (h 1.0, build +y): worst 0.512 in swap across 43.5 N +x; crash worst 0.073; swap worst 0.512; deflection {'swap insert 74 N on the XT60 seat': 0.0008, 'swap insert 74 N on the stops': 0.0031, 'swap pull 57 N on the XT60 lips': 0.0144, 'swap pull 57 N on the bolts': 0.0965, 'swap insert 74 N + across 43.5 N': 0.2998, 'swap across 43.5 N +x': 0.3496, 'swap across 43.5 N -x': 0.3496, 'swap centring 7.6 N + 1.05 N m': 0.1424}
+scout receiver as a pack mount: first mode ~559.0 Hz (E, rigid pack 211 g)
+{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 32.52, "slider": 3.18, "receiver": 93.1, "lid": 5.34, "strips": 1.97, "xt60_carrier": 4.62, "skids": 4.5, "cart_strips": 2.23, "recv_skids": 5.36}, "bbox": {"extents": [63.6, 54.1, 105.6], "volume_L": 0.3633, "largest": 105.6}}
+  insert free: cart 0.0 mm3, stuck []; off 0.3 stuck []
+  hand calc worst index 0.365; grip pull {'total_N': np.float64(59.1), 'per_tab_N': np.float64(29.5), 'bar_MPa': np.float64(3.94), 'index': np.float64(0.365), 'lever_mm': 10.0}
+  box_battery_cartridge_scout_v6.stl: solid_check PASS, 32.52 g, bed 1248 mm2, overhang 1778 mm2
+  box_battery_cart_strip_scout_v1.stl: solid_check PASS, 1.12 g, bed 269 mm2, overhang 0 mm2
+  box_battery_rskid_plate_scout_v1.stl: solid_check PASS, 2.79 g, bed 1048 mm2, overhang 0 mm2
+  box_battery_rskid_side_px_scout_v1.stl: solid_check PASS, 1.29 g, bed 174 mm2, overhang 138 mm2
+  box_battery_rskid_side_nx_scout_v1.stl: solid_check PASS, 1.29 g, bed 174 mm2, overhang 138 mm2
+  box_battery_slider_scout_v5.stl: solid_check PASS, 3.18 g, bed 328 mm2, overhang 63 mm2
+  box_battery_receiver_scout_v2.stl: solid_check PASS, 93.1 g, bed 1318 mm2, overhang 3616 mm2
+  box_battery_xt60_carrier_scout_v1.stl: solid_check PASS, 4.62 g, bed 796 mm2, overhang 247 mm2
+  box_battery_receiver_lid_scout_v1.stl: solid_check PASS, 5.34 g, bed 1001 mm2, overhang 0 mm2
+  box_battery_receiver_strip_scout_v1.stl: solid_check PASS, 0.98 g, bed 339 mm2, overhang 0 mm2
+  box_battery_skid_closed_scout_v1.stl: solid_check PASS, 1.38 g, bed 537 mm2, overhang 114 mm2
+  box_battery_skid_lead_scout_v1.stl: solid_check PASS, 3.12 g, bed 1298 mm2, overhang 0 mm2
+== overseer: z_T 85.5 (swap CG), swap 748.9 g, cartridge 171.0 x 55.0 x 58.6
+  FE receiver v2 (h 1.5, build +y): worst 0.548 in swap across 43.5 N +x; crash worst 0.392; swap worst 0.548; deflection {'swap insert 74 N on the XT60 seat': 0.001, 'swap insert 74 N on the stops': 0.0039, 'swap pull 57 N on the XT60 lips': 0.016, 'swap pull 57 N on the bolts': 0.0213, 'swap insert 74 N + across 43.5 N': 0.6092, 'swap across 43.5 N +x': 0.7805, 'swap across 43.5 N -x': 0.7805, 'swap centring 7.6 N + 1.05 N m': 0.2144}
+overseer receiver as a pack mount: first mode ~460.0 Hz (E, rigid pack 749 g)
+{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 90.35, "slider": 4.04, "receiver": 216.24, "lid": 8.14, "strips": 4.14, "xt60_carrier": 4.95}, "bbox": {"extents": [66.8, 68.8, 183.6], "volume_L": 0.8438, "largest": 183.6}}
+  insert free: cart 0.0 mm3, stuck []; off 0.3 stuck []
+  hand calc worst index 0.397; grip pull {'total_N': np.float64(64.3), 'per_tab_N': np.float64(32.2), 'bar_MPa': np.float64(4.29), 'index': np.float64(0.397), 'lever_mm': 10.0}
+  box_battery_cartridge_overseer_v6.stl: solid_check PASS, 90.35 g, bed 3125 mm2, overhang 4291 mm2
+  box_battery_slider_overseer_v5.stl: solid_check PASS, 4.04 g, bed 463 mm2, overhang 63 mm2
+  box_battery_receiver_overseer_v2.stl: solid_check PASS, 216.24 g, bed 2626 mm2, overhang 8492 mm2
+  box_battery_xt60_carrier_overseer_v1.stl: solid_check PASS, 4.95 g, bed 884 mm2, overhang 247 mm2
+  box_battery_receiver_lid_overseer_v1.stl: solid_check PASS, 8.14 g, bed 1089 mm2, overhang 0 mm2
+  box_battery_receiver_strip_overseer_v1.stl: solid_check PASS, 2.07 g, bed 713 mm2, overhang 0 mm2
+scout v3 system (refit): System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 59.6 mm³ (E) (cage (rods + nodes)/receiver skid side px (latch)) FAIL, bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 803 g (E), CG 1.6 mm off thrust axis (E) [+1.6, +0.0, -38.0], 2.3 mm without swap parts, probes -43.5 mm (E) edge at (-0.82, -0.29, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear
+overseer in overseer.assembly.json (B): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 27792.2 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2637 g (E), CG 10.7 mm off thrust axis (E) [+10.6, +0.9, -78.4], 26.8 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL
+overseer in overseer.assembly.json (A): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 18040.1 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2637 g (E), CG 21.9 mm off thrust axis (E) [+21.9, +0.9, -78.4], 30.6 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL

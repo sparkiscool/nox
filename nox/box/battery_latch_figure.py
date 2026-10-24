@@ -19,7 +19,8 @@ COL = dict(receiver="#5b6b7a", cartridge="#c9a227", slider="#c0392b", pack="#9aa
            strips="#3b3b3b", xt60="#e0a020", skid="#1f6fb2")
 KEYCOL = dict(cartridge="cartridge", slider_px="slider", slider_nx="slider", pack="pack", cartridge_skid_closed="skid",
               cartridge_skid_lead="skid", xt60_plug="xt60", receiver="receiver", receiver_lid="lid", receiver_strips="strips",
-              xt60e1m="xt60", xt60_carrier="xt60")
+              xt60e1m="xt60", xt60_carrier="xt60", cartridge_strip_px="skid", cartridge_strip_nx="skid",
+              receiver_skid_nose_plate="skid", receiver_skid_side_px="skid", receiver_skid_side_nx="skid")
 T_ISO = np.array([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1.0]])    # plot (z, x, y): pack along, across, up
 
 
@@ -49,7 +50,10 @@ def section(pack, ax, state):
         draw(ax, BL.finger_model(g, open_=(state == "latched")), zt, COL["finger"], 0.85)
     ax.set_aspect("equal"); ax.set_xlim(-45, 45); ax.set_ylim(-14, B["r"]["Y_M"] + 4)
     ax.axhline(0, color="#888", lw=0.6, ls=":")
-    ttl = dict(latched="latched, fingers open", gripped="gripped: tabs squeezed 4.0, bolts in",
+    for m in B.get("cstrips", []): draw(ax, m, zt, COL["skid"])
+    if state != "free":
+        for m in B.get("rskids", []): draw(ax, m, zt, COL["skid"])
+    ttl = dict(latched="latched, fingers open", gripped=f"gripped: tabs squeezed {BL.TRAVEL:.1f} onto the rib, bolts in",
                free="free: out of the receiver, tabs at rest")[state]
     ax.set_title(f"{pack}: {ttl}", fontsize=9)
     ax.set_xlabel("x (mm), cartridge coords at the tab line z_T", fontsize=7); ax.tick_params(labelsize=7)
@@ -73,7 +77,8 @@ def iso(ax, meshes, T=T_ISO, title="", el=22, az=-60):
 def assembly(pack, state, drop=0.0, skip=()):
     A = BL.latch_assembly(pack, state)
     return [(m.translate([0, -drop, 0]) if k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug",
-                                                  "cartridge_skid_closed", "cartridge_skid_lead") else m, COL[KEYCOL[k]])
+                                                  "cartridge_skid_closed", "cartridge_skid_lead", "cartridge_strip_px",
+                                                  "cartridge_strip_nx") else m, COL[KEYCOL[k]])
             for k, m in A.items() if k not in skip and not m.is_empty()]
 
 

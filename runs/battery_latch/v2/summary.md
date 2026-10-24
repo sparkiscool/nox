@@ -1,3 +1,5 @@
+**Superseded by `runs/battery_latch/v3/` (cartridge v6 centre rib + the Scout TPU skids; receiver v2 unchanged). Meshes recoverable from git.**
+
 # battery latch v2 (24 Oct 2026): receiver latch block v2, XT60 carrier v1, with cartridge v5, sliders v5, Scout end skids
 
 Script `nox/box/battery_latch.py`; FE `battery_latch_topo.py --swap-v1 / --swap-v2` (outputs in `fe/`); figures `battery_latch_figure.py` (`figs/compare_v1_v2.png`, `figs/fe_swap_insert_74_N_+_across_43.5_N.png`, sets, sections). Layout artifact: https://claude.ai/artifact/MX2dpRcjHegntjHvqp6U8x. Doc `nox/box/battery-latch.md`. Numbers `nox/dimensions.md` "System box swap: latch". Tags: M mesh, C CAD, E estimate, F frame model. Supersedes `runs/battery_latch/v1/` (receiver v1).
