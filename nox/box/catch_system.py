@@ -114,6 +114,28 @@ def main():
     pr = os.path.join(os.path.dirname(os.path.dirname(HERE)), "runs", "funnel_panel", "v7", "result.json")
     if os.path.exists(pr):
         out["panel_v7_result"] = {k: v for k, v in json.load(open(pr)).items() if any(s in k for s in ("fe", "worst", "boss", "index"))}
+    # compact (CLAUDE.md "Compact by default"): one latch unit's bounding volume and largest extent (housing + servo +
+    # plunger out), and the catch assembly (collar + 4 latches) bounding box (C)
+    import manifold3d as mf
+    lay = H.servo_layout(13.0, 1, -1); P = H.build(lay)
+    unit = P["housing"] + P["servo"] + P["plunger"].translate([0, 0, H.RISE])
+    b = np.array(unit.bounding_box()).reshape(2, 3); ext = b[1] - b[0]
+    out["compact"] = dict(latch_unit_bbox_mm=[round(float(v), 1) for v in ext], latch_unit_bbox_cm3=round(float(np.prod(ext)) / 1000, 1),
+                          latch_unit_largest_extent_mm=round(float(ext.max()), 1),
+                          latch_unit_solid_cm3=round(float(unit.volume()) / 1000, 1))
+    # cage first (CLAUDE.md, Spark 24 Oct): the collar and the plungers meet only cage members (the catch wheels / nodes);
+    # everything else of the drone >= 3 mm off them. Here: the catch-interface drone of hook_latch.py (wheels R 5, node
+    # cheeks r 4 round the pin, rings, plate, props, receiver), its distance to the contact face planes and the plungers.
+    D = H.drone_parts()
+    import trimesh
+    cl = {}
+    for k in ("cage", "plate", "props", "receiver"):
+        t = H.to_tm(D[k]); v = t.vertices
+        dist = np.min([(np.abs(v[:, i]) * 0 + (H.K0 + v[:, 2] - np.abs(v[:, i])) / S2) for i in (0, 1)], axis=0)  # to the nearer face plane
+        cl[k] = round(float(dist.min()), 2)
+    out["cage_first_face_clearance_mm"] = cl
+    out["cage_first_note"] = ("the node cheeks (part of the cage) sit 1.0 off the faces by the catch interface (G (1)); the rings, "
+                              "plate, props and receiver are the 'everything else' and must be >= 3 mm (Scout v3 / Overseer chats own them)")
     out["assembled_worst"] = max(((nm, max(v["plunger_index"], v["guide_wall_index"])) for nm, v in out["pieces"].items()), key=lambda t: t[1])
     os.makedirs(H.OUT, exist_ok=True)
     json.dump(out, open(os.path.join(H.OUT, "system.json"), "w"), indent=1)

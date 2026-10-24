@@ -104,6 +104,23 @@
    "cls": "flight"
   }
  },
+ "compact": {
+  "latch_unit_bbox_mm": [
+   57.5,
+   49.8,
+   44.4
+  ],
+  "latch_unit_bbox_cm3": 127.2,
+  "latch_unit_largest_extent_mm": 57.5,
+  "latch_unit_solid_cm3": 28.7
+ },
+ "cage_first_face_clearance_mm": {
+  "cage": 1.0,
+  "plate": 30.62,
+  "props": 19.02,
+  "receiver": 25.24
+ },
+ "cage_first_note": "the node cheeks (part of the cage) sit 1.0 off the faces by the catch interface (G (1)); the rings, plate, props and receiver are the 'everything else' and must be >= 3 mm (Scout v3 / Overseer chats own them)",
  "assembled_worst": [
   "hand lift 100 N at a corner",
   0.437
