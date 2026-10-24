@@ -219,12 +219,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["sled"] = box(-dc - 60, -dc + 60, -72, 72, -5.1, -2.1)
     if PACK_TOP < -7.5:                                                        # hanger walls from the sled to the cartridge rails
         g["sled"] = union([g["sled"], box(-dc - 60, -dc + 60, 27.5, 31, PACK_TOP, -5.0), box(-dc - 60, -dc + 60, -31, -27.5, PACK_TOP, -5.0)])
-    g["cam_pod"] = box(-dc - 23, -dc + 23, 29, 72, PB + 4, -5.1)
+    g["cam_pod"] = box(-dc - 23, -dc + 23, 29, 69, PB + 4, -5.1)
     g["flow_pod"] = box(-dc - 15, -dc + 15, -55, -29, PB + 4, -5.1)
     g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 30, 68, PB + 2.4, PB + 4), cyl(6, PB - 6, PB + 2.4, -dc, 49)])
     g["down_lens"] = np.array([-dc, 49.0, PB - 6]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -50, -34, PB - 2.5, PB + 4)
     g["flow_lens"] = np.array([-dc, -42.0, PB - 2.5])
-    g["feet"] = [cyl(5, PB - 9, PB + 4, -dc + sx * 72, sy * 66) for sx in (1, -1) for sy in (1, -1)]   # widest inside the opening at ±5 deg yaw
+    g["feet"] = [cyl(5, PB - 13, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
+    g["PB"] = PB
 
     # guard: two octagon rings round the motor square, 12 off the swept disks; the front flat is a V to the L2 apex
     B = np.array([xB, 0.0, zB]); g["B"] = B
@@ -259,10 +260,11 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     lugs = []
     for sy in (1, -1):                                             # lugs spanning the socket spread (local x = -up_b)
         h = co.APEX_SPAN / 2 + 6
-        lug = box(-h, h, 36 if sy > 0 else -50, 50 if sy > 0 else -36, -8, -2); lug.apply_transform(T); lugs.append(lug)
+        lug = box(-h, h, 36 if sy > 0 else -50, 50 if sy > 0 else -36, -co.SOCK_BACK - 6, -2); lug.apply_transform(T); lugs.append(lug)
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
-             m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0)   # crash mass: the A system is ~2.95 kg (E), no cap
+             m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
+             feet=(72.0, 68.0, float(g["PB"]) - 3.5))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = 0.0                                                    # rod ends epoxied in printed sockets on the arms, 20 deep (E)
@@ -288,7 +290,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
     g["apex"] = union([seat, back] + lugs + hubs)
-    low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring")]
+    low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring", "skid_belly")]
     nose_keys = [k for k, v in rods.items() if v[3] in NOSE_GROUPS or k in ("spider nose+", "spider nose-")]
     g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
     g["cage_up"] = trimesh.util.concatenate([n_ for n_ in ring_nodes[:-5]] + [g["rod_meshes"][k] for k in rods if k not in low_keys and k not in nose_keys])
@@ -364,7 +366,7 @@ def guard_v_gap(g):
 
 def solve_xB(g_fn, zB):
     """smallest base x with the drone behind the L2 field (bisection on x)"""
-    lo, hi = 150.0, 500.0
+    lo, hi = 150.0, 620.0
     for _ in range(12):
         mid = (lo + hi) / 2; g = g_fn(mid)
         items = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.util.concatenate(g["motors"])),
@@ -422,10 +424,20 @@ def balance(dc_unused, dm0):
     return dm, xB, zB, g, tot, cg
 
 
+if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 base sits where it does
+    set_wheel(-48.0); zB_ = math.ceil(l2_low_zB())
+    for x_ in [float(v) for v in os.environ["SYS_DEBUG_XB"].split(",")]:
+        g_ = build(197.6, -197.6, x_, zB_)
+        items = [("props", trimesh.util.concatenate(g_["props"])), ("motors", trimesh.util.concatenate(g_["motors"])),
+                 ("arms", trimesh.util.concatenate(g_["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g_["apex"]),
+                 ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("wheels", trimesh.util.concatenate(g_["wheels"]))]
+        print(x_, zB_, l2_clear_margin(g_, g_["B"], items), guard_v_gap(g_))
+    sys.exit(0)
 say(f"cage (cage_opt level {os.environ.get('V3_LEVEL', '160')} Hz): " + " ".join(k for k, v in CAGE_TOPO.items() if v)
     + " | " + " ".join(f"{k}:{v}" for k, v in CAGE_SIZES.items()))
 dm = 80.0
 CAM_UP = CAM_UP_DEFAULT
+SCR = OUT; os.makedirs(SCR, exist_ok=True)
 for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cage sizing until the sizes stop changing
     for wz in np.arange(float(os.environ.get("V3_WZ0", "-30")), -60.0, -2.0):
         set_wheel(wz)
@@ -448,9 +460,21 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cag
     g = build(dm, dc, xB, zB, CAM_UP, CAM_H)
     tot, cg = cg_of(g)
     new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO)            # re-size the cage on this geometry (F)
+    if not ok_sz and os.environ.get("SYS_SEARCH", "1") == "1":         # the layout no longer passes here: search every topology again
+        from multiprocessing import Pool
+        with Pool(4) as pool:
+            table_, best_, abl_ = co.search(g["P"], co.F_L2_MIN, pool)
+        nf = sum(t["feasible"] for t in table_)
+        json.dump(dict(params=g["P"], table=[{k: v for k, v in t.items() if k != "sizes"} for t in table_], ablation=abl_,
+                       topo=best_[0] if best_ else None, sizes=best_[1] if best_ else None),
+                  open(os.path.join(SCR, f"cage_search_pass{it_sz + 1}.json"), "w"), indent=1, default=float)
+        say(f"cage search pass {it_sz + 1}: {nf} of {len(table_)} topologies feasible on this geometry"
+            + (f"; best {best_[2]['mass_g']:.0f} g, L2 mode {best_[2]['f_l2']:.0f} Hz: " + " ".join(k for k, v in best_[0].items() if v and k not in co.FIXED_ON) if best_ else ""))
+        if best_:
+            CAGE_TOPO, new_sizes, r_sz, ok_sz = best_[0], best_[1], best_[2], True
     say(f"cage sizing pass {it_sz + 1}: {r_sz['mass_g']:.0f} g, L2 mode {r_sz['f_l2']:.0f} Hz, feasible {ok_sz}, "
         f"{sum(new_sizes.get(k) != v for k, v in CAGE_SIZES.items())} rods changed")
-    if new_sizes == CAGE_SIZES: break
+    if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
 CAM_DESC = f"{CAM_UP:.0f} deg up, portrait"
 
@@ -580,7 +604,9 @@ def tm(m): return m.copy()
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])]
 man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)]],          # designed joint: rod ends 20 deep in the arm sockets
-           openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],
+           openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
+                     dict(part="pack", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),                    # the cartridge path: it drops out the bottom, its cartridge guards it below the wheels
+                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=45.0, min_mm=0.0, skip_probes=True)],         # their views
            access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),

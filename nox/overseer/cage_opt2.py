@@ -52,6 +52,7 @@ L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
 MOTOR_DEG = (45, 135, 225, 315)
+SOCK_BACK = 8.0                                             # socket centres behind the L2 base plane: 10 tube radius 5 + 3
 APEX_SPAN = 56.0                                            # socket spread on the apex lugs (DEFAULT, inside the L2's 75)
 
 # sections (carbon, C): A mm2, I mm4, J mm4, g/m, OD
@@ -79,9 +80,10 @@ def motors(dm):
 
 def sockets(xB, zB):
     B = np.array([xB, 0.0, zB])
-    # apex sockets on lugs either side of the L2 body (y ±46), 5 behind its base plane, 56 apart along the base plane:
-    # V lower to the lower pair; V upper, keels and arm braces to the upper pair, so they climb to the L2 (bounce, pitch)
-    return {(lvl, sy): B - A * 5 + UP_B * (APEX_SPAN / 2 if lvl == "hi" else -APEX_SPAN / 2) + np.array([0, 46.0 * sy, 0])
+    # apex sockets on lugs either side of the L2 body (y ±46), SOCK_BACK behind its base plane (the largest rod stays 3 out
+    # of the field), 56 apart along the base plane: V lower to the lower pair; V upper, keels and arm braces to the upper
+    # pair, so they climb to the L2 (bounce, pitch)
+    return {(lvl, sy): B - A * SOCK_BACK + UP_B * (APEX_SPAN / 2 if lvl == "hi" else -APEX_SPAN / 2) + np.array([0, 46.0 * sy, 0])
             for lvl in ("hi", "lo") for sy in (1, -1)}
 
 
@@ -289,6 +291,14 @@ def geometry(p, topo, sizes=None):
         mem(f"wring x{sx:+d}", f"WAi{sx:+d}+1", f"WAi{sx:+d}-1", "wheel_ring")
     for sy in (1, -1):
         mem(f"wring y{sy:+d}", f"WBi+1{sy:+d}", f"WBi-1{sy:+d}", "wheel_ring")
+    if p.get("feet") is not None:                                     # belly skid: legs from the corner nodes to the feet, side rails
+        fx, fy, fz = p["feet"]                                        # (no rails across the ends: the pack drops out the bottom)
+        for sx in (1, -1):
+            for sy in (1, -1):
+                node(f"FT{sx:+d}{sy:+d}", (xc + fx * sx, fy * sy, fz))
+                mem(f"skid leg {sx:+d}{sy:+d}", f"corner{sx:+d}{sy:+d}", f"FT{sx:+d}{sy:+d}", "skid_belly")
+        for sy in (1, -1):
+            mem(f"skid rail {sy:+d}", f"FT+1{sy:+d}", f"FT-1{sy:+d}", "skid_belly")
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
 
@@ -408,7 +418,7 @@ class Model:
         g = 0.0
         for e in self.el:
             if e["kind"] == "rod": g += SECTIONS[e["P"]["sec"]]["gpm"] * e["L"] / 1000.0
-        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1 + sum(n.startswith("K") or n == "TR" for n in self.N)) + CORNER_G * 4   # ring lo + hi, nose 4, top, skirt, tower
+        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1 + sum(n.startswith(("K", "FT")) or n == "TR" for n in self.N)) + CORNER_G * 4   # ring lo + hi, nose 4, top, skirt, tower
         if self.topo.get("arm_spars"):
             g += sum(4 * SECTIONS["r3"]["gpm"] * e["L"] / 1000.0 for e in self.el if e["kind"] == "arm")
         return g
@@ -506,7 +516,7 @@ def evaluate(p, topo, sizes, detail=False):
     g["L2 mode"] = F_L2_MIN / f_l2 - 1
     m_drone = p.get("m_drone_g", 2200.0) * 1e-6                       # t (g -> t)
     cage_nodes = [n for n in m.names if n not in m.fixed and (n.endswith(("lo", "hi")) and not n.startswith(("S", "Vmid"))
-                                                              or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP")))]
+                                                              or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP", "FT")))]
     P_ = np.array([m.N[n] for n in cage_nodes])
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
     for d in crash_dirs():
@@ -514,12 +524,15 @@ def evaluate(p, topo, sizes, detail=False):
         cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -CRASH_G * G_ACC * m_drone * d}, 1.0, "crash", n_, d))
     for d in crash_dirs():
         cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": CRASH_G * G_ACC * 266e-6 * d}, 1.0, "l2", None, d))
-    real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP"))]
+    real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP", "FT"))]
     for n_ in real_nodes:
         for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
             cases.append((f"handling {n_} {d}", {n_: 50.0 * np.array(d, float)}, 1.0, "handling", None, None))   # misuse-type (DEFAULT)
     wheels = [f"W{a}{sx:+d}{sy:+d}" for a in ("A", "B") for sx in (1, -1) for sy in (1, -1)]
     cases.append(("catch landing 6 g", {w: np.array([0, 0, 6.0 * G_ACC * m_drone / 8]) for w in wheels}, 0.5, "landing", None, None))
+    feet = [n for n in m.names if n.startswith("FT")]
+    if feet:                                                          # floor landing on the 4 feet (dimensions G (5): 6 g)
+        cases.append(("floor landing 6 g", {f_: np.array([0, 0, 6.0 * G_ACC * m_drone / len(feet)]) for f_ in feet}, 0.5, "landing", None, None))
     for sx in (1, -1):
         for sy in (1, -1):
             cases.append((f"latch WB{sx:+d}{sy:+d}", {f"WB{sx:+d}{sy:+d}": 100.0 * np.array([0, -sy, -1]) / math.sqrt(2)}, 1.0, "latch", None, None))
