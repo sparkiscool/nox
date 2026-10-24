@@ -1,0 +1,12 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 0.76,
+ "mass_tag": "M",
+ "worst_index": 0.1,
+ "worst_case": "preload + separating 21.8 N on a 2.05 wall (hand calc, E)",
+ "solid_ok": true,
+ "bed_face": "hex flange face down",
+ "bed_contact_mm2": 123.0,
+ "note": "drawn (manifold3d), nox/box/arm_v5_cad.py"
+}

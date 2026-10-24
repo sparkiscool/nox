@@ -5,6 +5,11 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | File | Bytes | sha256[:12] |
 |---|---|---|
 | `belt_clamp_coupon_set_v2.stl` | 188984 | 631789a3a0d4 |
+| `box_arm_eccbush_v1.stl` | 32484 | 56d7cf047327 |
+| `box_arm_pinion16_v1.stl` | 103684 | 4a0cf6e6c669 |
+| `box_arm_rail_A_v1.stl` | 51884 | 359f6dfe2f55 |
+| `box_arm_rail_B_v1.stl` | 54284 | 0b568f120828 |
+| `box_arm_vwheel_v1.stl` | 153684 | cc313523122a |
 | `box_bar_half_v8.stl` | 13473184 | aacd009b7ae1 |
 | `box_baymod_v4i.stl` | 2996384 | 472f8808ea9c |
 | `box_bracket_e_v7c.stl` | 78484 | 55f717ab05f8 |

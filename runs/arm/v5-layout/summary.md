@@ -1,6 +1,6 @@
 arm v5-layout: layout check, no mesh (pure python, C)
 Motors: A (53.5, 55.0), B (-55.0, -53.5), axle (53.93, -43.67) at -39 deg (C); unbalance 10.1 g.m (E)
-Clearance: min 1.00 over 4x4 stroke states (wheels to the rail body, designed, C); bisector 4.0 (C)
-Detent: re-place at th -45 (s -1 best, gap 2.93 C); ring v1 unchanged
+Clearance: min 1.00 over 5x5 stroke states (wheels to the rail body, designed, C); bisector 4.0 (C)
+Detent: re-place at th -45 (s -1 best, gap -1.32 C); ring v1 unchanged
 Compaction: 403 / 403 / 366 / 346 long (C; v4 / v5 / +C1 / compact)
-Solid: n/a (no part built here; rails, wheels, pinions and heads v6 are drawn in their own chats)
+Solid: n/a (no part built here; rails / wheels / pinion / eccentric bush: nox/box/arm_v5_cad.py, runs/arm_rail/v1/)

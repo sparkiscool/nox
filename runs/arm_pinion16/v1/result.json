@@ -1,0 +1,12 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 3.09,
+ "mass_tag": "M",
+ "worst_index": 0.56,
+ "worst_case": "insert 60 N at r 8, Lewis 25.4 MPa (stall 74 N: 0.7)",
+ "solid_ok": true,
+ "bed_face": "gear face (Y 72.5) down, boss up",
+ "bed_contact_mm2": 173.0,
+ "note": "drawn (manifold3d), nox/box/arm_v5_cad.py"
+}
