@@ -4,7 +4,7 @@ the closed end), plus meta.json (tab line, sizes, swap mass / CG, mount plane). 
 merges, so this reads a checkout of it:
 
   git worktree add --detach <dir> <latch sha>
-  python3 nox/box/latch_ctx_export.py <dir> <latch sha>
+  python3 nox/box/latch_ctx_export.py <dir> <latch sha>     (or this checkout: . <main sha>, once the latch is on main)
 """
 import json, os, sys
 
@@ -16,6 +16,7 @@ OUT = os.path.join(ROOT, "runs", "box_system", "v2", "latch_ctx")
 
 
 def main(src, sha):
+    src = os.path.abspath(src)
     sys.path[:0] = [os.path.join(src, "nox", "box"), os.path.join(src, "nox")]
     import battery_latch as BL
     meta = {}
@@ -28,7 +29,7 @@ def main(src, sha):
         y_m = r.get("Y_M", g.get("Y_M"))
         meta[pk] = dict(Z_T=g["Z_T"], L_C=g["L_C"], W=g["W"], H=g["H"], Y_TOP=g["Y_TOP"], Z_X=g["Z_X"], SWAP_M=float(M),
                         SWAP_CG=[float(v) for v in c], Y_M=None if y_m is None else float(y_m), RF=g["RF"])
-    meta["source"] = (f"battery_latch.latch_assembly(pack, 'latched'), PR 69 branch part/battery-latch @ {sha} (24 Oct); "
+    meta["source"] = (f"battery_latch.latch_assembly(pack, 'latched') @ {sha} ({'main' if src == ROOT else os.path.basename(src)}); "
                       "cartridge coords c (x across, y up the install axis from the flat bottom, z from the closed end)")
     json.dump(meta, open(os.path.join(OUT, "meta.json"), "w"), indent=1)
     print(json.dumps(meta, indent=1))
