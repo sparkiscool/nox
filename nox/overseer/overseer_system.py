@@ -504,6 +504,7 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cag
     if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
     if ok_sz and nchg <= 3: FINAL_PASS = True                         # settled: one more layout pass with these sizes
+g = build(dm, dc, xB, zB); tot, cg = cg_of(g)                     # the layout drawn with the final sizes (the checks below read this one)
 CAM_DESC = f"two, yaw ±{CAM_YAW:.1f}, pitch {CAM_PITCH:.1f}, landscape"
 
 # ---------------------------------------------------------------- checks on the chosen layout
@@ -660,7 +661,7 @@ man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
-                          ["apex + hubs", "cam brackets", round(sum(abs(a_.intersection(p_).volume) for a_, p_ in zip(g["cam_arms"], g["cam_plates"])) * 1.05 + 1.0, 1)]],  # camera arms bonded into the camera plates
+                          ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True),                   # the cartridge path: it drops out the bottom and fills the 168 opening under the wheels, where nothing else may go; its cartridge walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
