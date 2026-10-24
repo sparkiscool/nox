@@ -425,7 +425,7 @@ def layout_svg(place, standalone=True):
 
 
 def schematic_svg(standalone=True):
-    W, H = 1180, 760
+    W, H = 1180, 820
     B = {  # name: (x, y, w, h, class, label, sub)
         "MAINS": (20, 40, 120, 50, "fix", "Mains", "IEC C14, switch + fuse"),
         "PSU": (190, 30, 150, 70, "fix", "LRS-350-24", "24 V 14.6 A"),
@@ -442,12 +442,14 @@ def schematic_svg(standalone=True):
         "INAKA": (390, 560, 110, 40, "sig", "INA226 0x41", "keep-alive"),
         "INAS": (520, 560, 110, 40, "sig", "INA226 0x44", "bay S"),
         "INAO": (650, 560, 110, 40, "sig", "INA226 0x45", "bay O"),
-        "POST": (850, 640, 160, 60, "off", "Panel probes", "2 per plain +-x panel"),
+        "POST": (850, 640, 160, 60, "off", "Face pins", "2 per +-x A panel (v9 plain)"),
         "BAYS": (850, 540, 160, 50, "off", "Bay -90 (Scout)", "XT60E1-M, float carrier"),
         "BAYO": (850, 470, 160, 50, "off", "Bay 180 (Overseer)", "reserved, wired later"),
         "ARM": (850, 150, 160, 120, "off", "Arm (twist bundle)", "3 NEMA17, 2 gripper servos, axle hall"),
         "LATCH": (850, 330, 160, 90, "off", "Hook latch x4", "MG90S + A3144 each"),
-        "DRONE": (1040, 600, 120, 120, "off", "Drone", "ORing diode + caps"),
+        "DRONE": (1040, 600, 120, 120, "off", "Drone", "ideal diode + caps"),
+        "INAGR": (390, 720, 110, 40, "sig", "INA226 0x46", "gripper pair"),
+        "ADC": (560, 720, 110, 40, "sig", "ADS1115 0x48", "4 grip halls"),
     }
     b = []
 
@@ -474,7 +476,6 @@ def schematic_svg(standalone=True):
     wire("w5", [(90, 310), (90, 420)], "5.1 V 20 AWG", 0)
     wire("w5", [(130, 310), (130, 380), (230, 380), (230, 560)], "5 V JD-VCC", 1)
     wire("w6", [(540, 285), (580, 285), (580, 445), (540, 445)], "6.0 V 18 AWG", 0)
-    wire("w6", [(580, 285), (700, 285), (700, 250), (850, 250)], "6.0 V pair 22 AWG (twist)", 2)
     wire("w13", [(265, 310), (265, 560)], "13.0 V 18 AWG", 0)
     wire("w13", [(340, 580), (390, 580)], None)
     wire("w13", [(445, 600), (445, 670), (850, 670)], "pad + 18 AWG, pad - to buck -", 1)
@@ -497,6 +498,10 @@ def schematic_svg(standalone=True):
     wire("wsg", [(180, 430), (300, 430), (300, 220), (620, 220), (620, 205)], "USB", 1)
     wire("wsg", [(790, 200), (850, 205)], None)
     wire("wch", [(1010, 670), (1040, 670)], None)
+    wire("w6", [(300, 620), (300, 740), (390, 740)], "K4: 6.0 V gripper pair (twist), stall cut", 1)
+    wire("w6", [(500, 740), (520, 740), (520, 712), (820, 712), (820, 262), (850, 262)], None)
+    wire("wsg", [(670, 740), (835, 740), (835, 268), (850, 268)], "4 grip halls (DRV5055, 2 per head)", 0)
+    wire("wsg", [(180, 480), (200, 480), (200, 765), (615, 765), (615, 760)], "I2C to 0x46, 0x48", 1)
     for k in B:
         box(k)
     b.append('<text class="tb" x="20" y="22">Box electronics v1: power and signal (C / E, DEFAULT)</text>')
@@ -504,7 +509,7 @@ def schematic_svg(standalone=True):
            ("wch", "charge"), ("wst", "stepper"), ("wsg", "signal")]
     for i, (c, t) in enumerate(leg):
         x = 20 + i * 140
-        b.append(f'<path class="{c}" d="M{x},740 L{x+30},740"/><text class="ts" x="{x+36}" y="744">{t}</text>')
+        b.append(f'<path class="{c}" d="M{x},800 L{x+30},800"/><text class="ts" x="{x+36}" y="804">{t}</text>')
     return svg_wrap("".join(b), W, H, standalone)
 
 
