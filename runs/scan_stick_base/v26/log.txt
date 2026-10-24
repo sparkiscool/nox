@@ -49,3 +49,7 @@ layout: beta 2 done: eroded design 2 bodies, main 99.9%; drawn bodies outside th
 it  38 beta    4 J   1.0323 vol 0.0678 (dil 0.1381 g -0.166) grey  7.0% ch 0.100 worst L2 hit -y 100 N (joint) 340 2.1s
 it  39 beta    4 J   0.1667 vol 0.0721 (dil 0.1462 g -0.118) grey  7.2% ch 0.100 worst L2 hit -y 100 N (joint) 58.7 2.1s
 it  40 beta    4 J   0.0890 vol 0.0762 (dil 0.1529 g -0.077) grey  7.9% ch 0.100 worst cage bump top 100 N (spine s 32.1 2.5s
+it  41 beta    4 J   0.0885 vol 0.0796 (dil 0.1570 g -0.048) grey  8.2% ch 0.100 worst cage bump top 100 N (spine s 32 2.8s
+it  42 beta    4 J   0.0882 vol 0.0821 (dil 0.1597 g -0.032) grey  8.4% ch 0.100 worst cage bump top 100 N (spine s 31.9 2.2s
+it  43 beta    4 J   0.0880 vol 0.0846 (dil 0.1624 g -0.016) grey  8.5% ch 0.100 worst cage bump top 100 N (spine s 31.8 2.1s
+it  44 beta    4 J   0.0877 vol 0.0870 (dil 0.1647 g -0.002) grey  8.5% ch 0.100 worst cage bump top 100 N (spine s 31.7 2.2s
