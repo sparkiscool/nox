@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (workflow chat): **CI** `.github/workflows/checks.yml` on every PR: state, tests (topo stays local), solid_check on changed print/*.stl, log lines ≤ 400. `tools/pr.py merge` refuses on red CI, waits ≤ 15 min on pending. solid_check: noxopt-free voxeliser (contains fallback ran OOM).
 - 24 Oct (workflow chat, Spark: clean up sessions whose use is over, autonomously): `docs/sessions.md` lifecycle + sweep rules; CLAUDE.md rule; 10 finished idle sessions archived; scheduled sweep every 6 h (fresh session). DEFAULT idle 6 h before archive (alt 24 h).
 - 24 Oct (workflow chat, Spark: light, compact and accessible, cage first, balanced, mounted for what it carries): CLAUDE.md **Every drone design** ordered list 1-9 (6-9 added DEFAULT: sensor modes, breaking order, air / view / wiring, fits the box); `dimensions.md` L standard cases + targets; generative rule 0 mount rule; review check 4.
 - 24 Oct (workflow chat): **system_check.py**: one manifest of the assembled system (parts, poses, roles, openings, contact pairs) gates cage first (≥ 3 mm, 0 in openings), fit (≤ 0.5 mm³/pair), CG ≤ 3 mm off thrust axis with and without swap parts; reports bbox, extents, mass; System line.

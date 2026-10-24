@@ -29,3 +29,4 @@ Every session runs in the cloud "Nox" environment with this repo selected. Paste
 ## Housekeeping
 - `python3 tools/check_state.py` lints the state: missing or orphan print files, cells and log lines too long. `--branches` lists branches merged into main (safe to delete) and idle ones with unmerged work.
 - Cloud boxes cannot delete branches: the session gives Spark a Claude in Chrome prompt for that.
+- CI (`.github/workflows/checks.yml`) runs on every PR to main: `state` (check_state), `tests` (system_check, assembly; a warning when `nox/topo/` changed, since topo.test_topo needs pypardiso and runs locally), `solid` (solid_check on every added or modified `print/*.stl`), `lint-new-lines` (new log.md lines ≤ 400 chars). CI must be green before merge; `tools/pr.py merge` refuses otherwise (waits up to 15 min while pending; deps in `requirements-ci.txt`).
