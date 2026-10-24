@@ -233,10 +233,10 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     back = box(-22, 22, -16, 16, -11, -5); back.apply_transform(T)               # apex block behind the seat (L2 local z -11..-5)
     # apex rod sockets on side lugs beside the L2 body (y ±46), just behind the base plane, so the V never bends back
     # inside the front flat (the guard keeps 12 off the front disks)
-    sock = {(lvl, sy): B - A * 3 + up_b * (12 if lvl == "hi" else -12) + np.array([0, 46.0 * sy, 0]) for lvl in ("hi", "lo") for sy in (1, -1)}
+    sock = {(lvl, sy): B - A * 5 + up_b * (16 if lvl == "hi" else 2) + np.array([0, 46.0 * sy, 0]) for lvl in ("hi", "lo") for sy in (1, -1)}
     lugs = []
     for sy in (1, -1):
-        lug = box(-16, 16, 36 * sy if sy > 0 else -50, 50 if sy > 0 else -36, -6, 0); lug.apply_transform(T); lugs.append(lug)
+        lug = box(-22, 4, 36 if sy > 0 else -50, 50 if sy > 0 else -36, -8, -2); lug.apply_transform(T); lugs.append(lug)   # local x -22..4 = up_b -4..22
     F = HALF + PROP_R + GUARD_GAP + ROD_R                          # 280: flats from the motor-square centre
     Cf = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_R)    # chamfer line x + y = 477.7
     V = [(F, Cf - F), (Cf - F, F), (-(Cf - F), F), (-F, Cf - F), (-F, -(Cf - F)), (-(Cf - F), -F), (Cf - F, -F), (F, -(Cf - F))]
@@ -329,6 +329,17 @@ def l2_low_zB():
     m = l2_mesh(np.zeros(3)); return FUNNEL_TOP_D + 1.0 - m.bounds[0][2]
 
 
+def guard_v_gap(g):
+    """plan gap of the V rods to the front disks (≥ GUARD_GAP)"""
+    worst = np.inf
+    for k, (a, b) in g["rods"].items():
+        if not k.startswith("V "): continue
+        t = np.linspace(0, 1, 200)[:, None]; q = np.asarray(a, float) + t * (np.subtract(b, a))
+        for mx, my in g["motors_xy"]:
+            worst = min(worst, float((np.hypot(q[:, 0] - mx, q[:, 1] - my) - PROP_R - ROD_R).min()))
+    return worst
+
+
 def solve_xB(g_fn, zB):
     """smallest base x with the drone behind the L2 field (bisection on x)"""
     lo, hi = 150.0, 500.0
@@ -338,7 +349,7 @@ def solve_xB(g_fn, zB):
                  ("arms", trimesh.util.concatenate(g["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g["apex"]),
                  ("cage up", g["cage_up"]), ("cage low", g["cage_low"]), ("wheels", trimesh.util.concatenate(g["wheels"]))]
         _, mg = l2_clear_margin(g, g["B"], items)
-        if mg >= 1.0: hi = mid
+        if mg >= 1.0 and guard_v_gap(g) >= GUARD_GAP - 0.05: hi = mid
         else: lo = mid
     return hi
 
