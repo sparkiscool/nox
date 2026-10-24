@@ -158,5 +158,15 @@ it  57 beta   32 J  13.3215 vol 0.0504 (dil 0.1049 g -0.023) grey  0.9% ch 0.100
 it  58 beta   32 J  10.4641 vol 0.0502 (dil 0.1043 g -0.028) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 470 30.1s
 it  59 beta   32 J   9.1951 vol 0.0498 (dil 0.1041 g -0.031) grey  0.9% ch 0.100 worst dropped pack [Overseer] [mis 468 31.2s
 it  60 beta   32 J   8.4294 vol 0.0495 (dil 0.1034 g -0.037) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 381 38.8s
-seer] [mis 468 31.2s
-it  60 beta   32 J   8.4294 vol 0.0495 (dil 0.1034 g -0.037) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 381 38.8s
+it  61 beta   32 J   4.0986 vol 0.0493 (dil 0.1031 g -0.050) grey  0.9% ch 0.100 worst dropped pack [Overseer] [mis 205 33.7s
+it  62 beta   32 J   2.0416 vol 0.0506 (dil 0.1045 g -0.037) grey  0.9% ch 0.100 worst tie b5 fx 98.1 30.3s
+it  63 beta   32 J   1.7428 vol 0.0523 (dil 0.1067 g -0.017) grey  0.9% ch 0.100 worst tie b1 fz 81.3 31.0s
+it  64 beta   32 J   1.6355 vol 0.0533 (dil 0.1079 g -0.006) grey  0.9% ch 0.100 worst tie b2 fz 75.2 30.1s
+it  65 beta   32 J   1.5804 vol 0.0537 (dil 0.1082 g -0.003) grey  0.9% ch 0.100 worst tie b2 fz 73.3 30.2s
+it  66 beta   32 J   1.5467 vol 0.0539 (dil 0.1083 g +0.001) grey  0.9% ch 0.100 worst tie b2 fz 71.8 29.3s
+it  67 beta   32 J   1.5318 vol 0.0539 (dil 0.1080 g -0.002) grey  0.9% ch 0.100 worst tie b2 fz 70.9 30.8s
+it  68 beta   32 J   1.5108 vol 0.0541 (dil 0.1080 g -0.001) grey  0.9% ch 0.100 worst tie b2 fz 69.8 28.1s
+it  69 beta   32 J   1.4931 vol 0.0543 (dil 0.1081 g -0.001) grey  0.9% ch 0.100 worst tie b2 fz 68.8 30.7s
+it  70 beta   32 J   1.4780 vol 0.0544 (dil 0.1081 g -0.001) grey  0.9% ch 0.100 worst tie b2 fz 67.9 29.1s
+9% ch 0.100 worst tie b2 fz 68.8 30.7s
+it  70 beta   32 J   1.4780 vol 0.0544 (dil 0.1081 g -0.001) grey  0.9% ch 0.100 worst tie b2 fz 67.9 29.1s
