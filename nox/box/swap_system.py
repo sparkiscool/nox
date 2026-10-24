@@ -35,6 +35,45 @@ CART = {
     "overseer": dict(x=26.0, h=57.0, l=153.0, l_boss=3.0, tab=76.5, xt60_z=145.8, xt60_y=55.0, cg=(0.0, 35.0, 76.5), mass=720.0, tag="E"),
 }
 BOT_DZ = L.CART_BOT_DZ                    # 15.4: carried cartridge bottom above z0 (gripper datum, unchanged)
+LATCH_BRANCH = "origin/part/battery-latch"
+LATCH = dict(source="dimensions E (PR 44, cartridge v4)")
+
+
+def latch_module():
+    """nox/box/battery_latch.py (the latch child's; never edited here): on the path when it is on main, else staged read-only from its
+    branch into .cache/box/ (gitignored). None when neither exists."""
+    try:
+        import battery_latch as BL
+        LATCH["source"] = "nox/box/battery_latch.py"
+        return BL
+    except ImportError:
+        pass
+    import subprocess, importlib.util
+    cache = os.path.join(REPO, ".cache", "box"); os.makedirs(cache, exist_ok=True); path = os.path.join(cache, "battery_latch.py")
+    try:
+        src = subprocess.run(["git", "-C", REPO, "show", f"{LATCH_BRANCH}:nox/box/battery_latch.py"], capture_output=True, text=True, check=True).stdout
+        sha = subprocess.run(["git", "-C", REPO, "rev-parse", "--short", LATCH_BRANCH], capture_output=True, text=True, check=True).stdout.strip()
+    except Exception:
+        return None
+    open(path, "w").write(src)
+    sp = importlib.util.spec_from_file_location("battery_latch", path); BL = importlib.util.module_from_spec(sp); sys.modules["battery_latch"] = BL
+    sp.loader.exec_module(BL)
+    LATCH["source"] = f"{LATCH_BRANCH} @ {sha} (battery_latch.latch_assembly, staged read-only)"
+    return BL
+
+
+def cart_from_latch(BL, pack):
+    """the carried cartridge from the latch standard (cartridge coords: x across, y up from the flat bottom, z along, 0 = closed end)."""
+    b = BL.build(pack); g = b["g"]
+    M, c, _ = BL.swap_cg(g)
+    return dict(x=g["X_RAIL"], x_tip=g["X_TIP"], h=g["Y_TOP"], l=g["L_C"], l_boss=0.0, tab=g["Z_T"], xt60_z=g["Z_X"], xt60_y=g["Y_XF_FACE"],
+                cg=(0.0, round(float(c[1]), 2), round(float(c[2]), 2)), mass=round(float(M), 1), tag="C geometry / M + P mass (latch v1)")
+
+
+_BL = latch_module()
+if _BL is not None:
+    for _p in ("scout", "overseer"):
+        CART[_p] = cart_from_latch(_BL, _p)
 
 # ================================================================== masses (g) and their CGs (arm frame / head frame)
 MASS = dict(hub=210.0, motor=400.0, rail=50.0, carriage=60.0, head=120.0, stub=47.7, sun_post=30.4, ring=5.0, det_arm=2.3)
@@ -62,6 +101,13 @@ F_HAND = 50.0                             # a hand on a rail tip, any direction 
 TARGET = dict(pack_x=0.5, tilt_deg=0.5)   # pack shift at the XT60 across the insert axis and tilt under the 60 N insert (DEFAULT: half the
                                           # receiver XT60 float carrier's +-1.0 / +-1.06 deg)
 INDEX_TARGET = dict(swap=0.5, sustained=0.5, misuse=1.0, handling=1.0)
+K_RECV_T, K_RECV_R = 2.0e3, 2.0e6         # the receiver's rails on a cartridge in them: across N/mm, tilt N.mm/rad (E); free along the insert
+LAG_MAX = S6.Z0_INSERT_MAX - (L.Z0_BAY + 5.0 + V.DRONE_PUSH)   # 2.0: the commanded drone insert's over-travel (arm_v6_layout)
+M_HEAD_FALL = 180.0                       # head + carriage that fall to the park stop on a power cut at the drone insert (g, E)
+BUMPER = dict(x=(-9.5, 9.5), u=(0.0, 5.0), t=5.0, contact_mm2=18.0 * 3.0, E_MPa=26.0)   # head v6: TPU 95A pad in a notch of the carriage plate's
+                                          # inner edge (X +-10 x u 0..5, no axle there), glued; meets the rail's park stop (X +-9, Y 73..77) over Y 74..77 (C)
+K_STOP = dict(petg=5.0e3, tpu=round(BUMPER["E_MPa"] * BUMPER["contact_mm2"] / BUMPER["t"], 0))   # N/mm: PETG on PETG (E) / the bumper (E 26 MPa)
+STOP_SHEAR_N = 0.5 * S_ACROSS * 18.0 * 4.0                # the stop block on the rail top, across layers (C area, E strength): 900 N
 
 
 # ================================================================== frame model
@@ -177,7 +223,7 @@ def stress(e, fl):
 
 
 # ------------------------------------------------------------------ the assembled arm
-OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie="TIE")    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
+OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie=None, guided=None)   # guided: the head whose cartridge sits in a receiver's rails    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
                                                               # place, a carbon tie under each rail); rail_sec None = rail_section() of the stack in use
 TIE = dict(r_rail=S6.TIE["rail"][1], y_rail=S6.TIE["rail"][0], y_hub=S6.TIE["hub"][0], r_hub=S6.TIE["hub"][1], n=2, x=S6.TIE["x"])   # arm_v6_layout.TIE
 YC_RAIL = SEC["rail"]["yc"]               # rail section centroid Y
@@ -200,7 +246,7 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
     """the frame at the stroke states (zA, zB), carried cartridges on the heads in `carry`. axle: 'belt' (driver on) or 'detent'
     (driver off: the insert strokes, box-arm Problem 17). Returns (Frame, info)."""
     o = dict(OPTS); o.update(opts or {})
-    if o["tie"] == "TIE": o["tie"] = TIE
+    if o["tie"] == "TIE": o["tie"] = TIE                  # carbon ties: rejected alternative (guided: -3 % receiver moment for 4 rods + 8 sockets)
     F = Frame(); c = dict(CART[cart]); c.update(o.get("cart", {}))
     rsec = o["rail_sec"] or rail_section(); YC_RAIL = rsec["yc"]
     Y_WHEEL = 0.5 * (V.WHEEL_Y[0] + V.WHEEL_Y[1]); Y_PLATE = 0.5 * (V.PLATE_Y[0] + V.PLATE_Y[1]); Y_RACK = 0.5 * (V.RACK_TEETH_Y[0] + V.RACK_TEETH_Y[1])
@@ -311,6 +357,11 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
                 F.beam(f"cartridge {h} {nn}", f"cseat {h}", nn, SEC["rigid"], piece="cartridge")
             F.mass[f"pack cg {h}"] = c["mass"]
             info["xt60"][h] = f"xt60 {h}"
+            if o["guided"] == h:                                              # the receiver's rails: across and tilt held, free along the insert
+                F.node(f"receiver {h}", F.P[F.idx[f"xt60 {h}"]]); F.fixed.add(f"receiver {h}")
+                ax_ = np.abs(head_dir(h, (1, 0, 0))) + np.array([0, 1.0, 0])
+                F.spring(f"receiver rails {h}", f"xt60 {h}", f"receiver {h}", (*(ax_ * K_RECV_T), K_RECV_R, K_RECV_R, K_RECV_R), piece="receiver")
+                info["receiver"] = f"receiver rails {h}"
     return F, info
 
 
@@ -342,6 +393,7 @@ def cases(Y_C=L.Y_C, cart="scout"):
             add(ld, f"pack top {h}", sign * F_seat * head_dir(h, (0, 0, 1)))
             if lead: add(ld, f"pack top {h}", F_LEADIN * head_dir(h, (1, 0, 0)))
             return ld
+        f.h = h
         return f
     out = [
         ("insert at the drone 60 N", "swap", (z["insert"], z["park"]), ("A", "B"), "detent", 90.0, swap(F_XT60, F_PRELOAD, -1.0),
@@ -370,10 +422,11 @@ def cases(Y_C=L.Y_C, cart="scout"):
     return out
 
 
-def run_frame(Y_C=L.Y_C, cart="scout", verbose=True):
+def run_frame(Y_C=L.Y_C, cart="scout", verbose=True, guided=True):
     res = []
     for nm, cls, (zA, zB), carry, axle, phi, fn, note in cases(Y_C, cart):
-        Fr, info = build(zA, zB, Y_C, cart, carry, axle, phi)
+        gh = getattr(fn, "h", None)
+        Fr, info = build(zA, zB, Y_C, cart, carry, axle, phi, dict(guided=gh) if guided and gh else None)
         ld = gravity_loads(Fr, phi)
         if fn is not None:
             for k, v in fn(Fr, info).items(): add(ld, k, v)
@@ -392,7 +445,12 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True):
         if nm.startswith("dropped"):
             u1, _, _, _ = Fr.solve({"cseat A": np.r_[head_dir("A", (0, 0, -1)), 0, 0, 0]})
             k_seat = 1.0 / max(float(np.dot(u1[Fr.idx["cseat A"]][:3], head_dir("A", (0, 0, -1)))), 1e-6)     # N/mm along the drop
-            F_drop = math.sqrt(2 * CART["scout"]["mass"] * 1e-3 * 9.81 * DROP_H * 1e-3 * k_seat * 1e3)
+            F_drop = math.sqrt(2 * CART[cart]["mass"] * 1e-3 * 9.81 * DROP_H * 1e-3 * k_seat * 1e3)
+            # the head motor (powered) holds the rack only to its stall force: past it the rotor skips and the head gives way, so the
+            # pinion and everything behind it see at most F_STALL; the rest of the energy goes into the slip (E)
+            F_hold = F_STALL + (MASS["head"] + MASS["carriage"]) * G
+            slip_mm = CART[cart]["mass"] * 1e-3 * 9.81 * DROP_H / max(F_hold - CART[cart]["mass"] * G, 1e-6) if F_drop > F_hold else 0.0
+            F_drop_raw = F_drop; F_drop = min(F_drop, F_hold)
             add(ld, "cseat A", F_drop * head_dir("A", (0, 0, -1)))
         if nm.startswith("box handling"):
             ld = gravity_loads(Fr, phi, gx=G_HANDLE[1], gz=-G_HANDLE[0])
@@ -408,12 +466,17 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True):
             add(ld, f"rack {h}", -fs * head_dir(h, (1, 0, 0))); add(ld, f"pinion {h}", fs * head_dir(h, (1, 0, 0)))
         u, ef, sf, reac = Fr.solve(ld)
         extra = {}
-        if nm.startswith("dropped"): extra = dict(F_drop_N=round(F_drop, 1), k_seat_N_mm=round(k_seat, 1))
+        if nm.startswith("dropped"): extra = dict(F_drop_rigid_N=round(F_drop_raw, 1), F_drop_N=round(F_drop, 1), k_seat_N_mm=round(k_seat, 1), slip_mm=round(slip_mm, 2))
+        if "receiver" in info:
+            k = [s_["nm"] for s_ in Fr.springs].index(info["receiver"]); fr = sf[k]
+            extra["receiver"] = dict(F_across_N=round(float(np.linalg.norm(fr[:3])), 1), M_Nm=round(float(np.linalg.norm(fr[3:])) / 1e3, 2),
+                                     note="what the receiver's rails hold while the cartridge is in them (latch requirement)")
         extra["hub"] = hub_interfaces(Fr, u, ef, sf)
         extra["hub_mass"] = {nm: dict(p=Fr.P[Fr.idx[nm]].round(2).tolist(), g=m) for nm, m in Fr.mass.items() if nm in ("H32",)}
         res.append(dict(case=nm, cls=cls, note=note, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep)))
         if verbose:
             r = res[-1]
+            if "receiver" in r: print(f"{'':38s} lag along the insert {r['pack']['du_mm']:6.2f} (max {LAG_MAX:.1f}), receiver {r['receiver']}")
             print(f"{nm:38s} pack dX {r['pack']['dx_mm']:6.3f} tilt {r['pack']['tilt_deg']:6.3f} | worst {r['worst']['piece']} {r['worst']['index']:.2f} ({r['worst']['elem']})")
     return res
 
@@ -524,7 +587,11 @@ def pitch(stack="v6", Y_C=L.Y_C, opts=None, F=(F_XT60, F_PRELOAD)):
         Fr, info = build(max(V.Z0S), L.Z0_A_HOME, Y_C, "scout", ("A",), "belt", 90.0, opts)
         ld = {}; add(ld, "xt60 A", (0, 0, -F[0])); add(ld, "pack top A", (0, 0, -F[1]))
         u, ef, sf, reac = Fr.solve(ld); i = Fr.idx["xt60 A"]
-        return round(math.degrees(float(np.linalg.norm(u[i][3:]))), 2), round(float(-u[i][2]), 2)
+        free = (round(math.degrees(float(np.linalg.norm(u[i][3:]))), 2), round(float(-u[i][2]), 2))
+        og = dict(opts or {}); og["guided"] = "A"
+        Fg, ig = build(max(V.Z0S), L.Z0_A_HOME, Y_C, "scout", ("A",), "belt", 90.0, og)
+        ug, efg, sfg, _ = Fg.solve(ld); k = [s_["nm"] for s_ in Fg.springs].index(ig["receiver"])
+        return free + (round(float(-ug[Fg.idx["xt60 A"]][2]), 2), round(float(np.linalg.norm(sfg[k][3:])) / 1e3, 2))
     finally:
         S6.use("v6")
 
@@ -533,14 +600,43 @@ def alternatives():
     """the concept check's alternatives with numbers (E loads, C geometry): the stack (posts / plate), the carbon tie, the XT60 place,
     at the demo Y_C 175 and at the lowest Y_C each stack's carriage hardware allows."""
     rows = []
-    yc = {r["dy"]: r["yc_min"] for r in S6.stack_search()}
+    yc = {r["dy"]: r["yc_min"] for r in S6.stack_search(CART["scout"]["tab"])}
     for stack, ycm in (("v5", yc[0.0]), ("v6", yc[-20.0])):
-        for nm, o in (("as drawn", dict(tie=None)), ("+ carbon ties", dict(tie=TIE)), ("+ ties + XT60 on the tab line", dict(tie=TIE, cart=dict(xt60_z=37.5)))):
+        for nm, o in (("as drawn", dict(tie=None)), ("+ carbon ties", dict(tie=TIE)), ("+ ties + XT60 on the tab line", dict(tie=TIE, cart=dict(xt60_z=CART["scout"]["tab"])))):
             if stack == "v5" and nm != "as drawn": continue
             for Y in (L.Y_C, ycm):
-                t, d = pitch(stack, Y, o); ex = arm_extent(stack, Y)
-                rows.append(dict(stack=stack, variant=nm, Y_C=Y, pitch_deg=t, xt60_lag_mm=d, length_y=ex["length_y"], bbox_L=ex["bbox_L"], largest_mm=ex["largest_mm"]))
+                t, d, dg, mr = pitch(stack, Y, o); ex = arm_extent(stack, Y)
+                rows.append(dict(stack=stack, variant=nm, Y_C=Y, pitch_free_deg=t, lag_free_mm=d, lag_guided_mm=dg, receiver_M_Nm=mr,
+                                 length_y=ex["length_y"], bbox_L=ex["bbox_L"], largest_mm=ex["largest_mm"]))
     return rows
+
+
+def power_cut():
+    """misuse: power cut with head A at the drone insert (arm vertical), then a bump. Unpowered, the stepper's cogging (0.022 N.m E,
+    detent.disturbance) holds the head at r 8 against its weight; a 3 g bump beats it and head + carriage fall 64.6 to the park stop,
+    driving the rotor (17HS19 rotor 82 g.cm2, E: 0.128 kg at r 8). F at the stop = sqrt(2 E k); the rotor's share goes through the 16T."""
+    m_h = M_HEAD_FALL * 1e-3; m_r = 82e-7 / (V.PIN_R * 1e-3) ** 2
+    hold_N = DT.disturbance()["cogging"] / 4.0 / (V.PIN_R * 1e-3)
+    w = m_h * 9.81; h = (L.Z0_BAY + 5.0 + V.DRONE_PUSH - V.RAIL_STOP["z0_home"]) * 1e-3
+    E_ = w * h
+    lew = lambda F: F / ((V.PIN_TEETH_Y[1] - V.PIN_TEETH_Y[0]) * V.PIN_M * 0.295) / S_IN
+    out = dict(hold_N=round(hold_N, 2), weight_N=round(w, 2), holds_at_1g=bool(hold_N > w), holds_at_3g=bool(hold_N > 3 * w), fall_mm=round(h * 1e3, 1),
+               energy_J=round(E_, 3), rotor_kg=round(m_r, 3))
+    for nm, k in K_STOP.items():
+        F = math.sqrt(2 * E_ * k * 1e3); Ft = F * m_r / (m_h + m_r)
+        out[nm] = dict(k_N_mm=k, F_stop_N=round(F, 0), stop_index=round(F / STOP_SHEAR_N, 2), F_tooth_N=round(Ft, 0), pinion_index=round(lew(Ft), 2))
+    return out
+
+
+def overseer_radius():
+    """the ring radius R that would let the arm carry the Overseer cartridge (latch v1) with the Scout's park rule (corners 2.5 inside
+    the seated faces) at the current park z0, and the sector it needs at that R (C)."""
+    c = CART["overseer"]; z = V.RAIL_STOP["z0_home"] + 1.0
+    top = z + BOT_DZ + c["h"]; xw = c["x"]                           # gripped: the bolts are in (tips 4 inside), the rails set the width
+    R_park = math.hypot(xw, top) + 2.5
+    sec = math.degrees(2 * math.asin((xw + 0.3) / R_park))
+    return dict(park_z0=z, top_r=round(top, 1), R_needed=round(R_park, 1), R_now=L.R, sector_deg_at_R=round(sec, 1), pitch_deg=L.PITCH,
+                note="every bay, the stand lane and the funnel scale with R; the Scout swap would pay for it")
 
 
 # ================================================================== stack and bounding volume
@@ -562,7 +658,7 @@ def arm_extent(stack="v6", Y_C=L.Y_C, cart="scout"):
 
 
 def stack_report():
-    rows = S6.stack_search()
+    rows = S6.stack_search(CART["scout"]["tab"])
     v5 = next(r for r in rows if r["dy"] == 0.0); v6 = next(r for r in rows if r["dy"] == -20.0)
     out = dict(search=rows, chosen="v6 (dy -20: rails on the motor plate)")
     out["demo"] = dict(v5=arm_extent("v5", L.Y_C), v6=arm_extent("v6", L.Y_C))
@@ -672,7 +768,10 @@ def main(what="all"):
         res["frame"] = run_frame()
         res["frame_overseer"] = run_frame(cart="overseer", verbose=False)
     if what in ("overseer", "all"):
-        res["overseer"] = overseer(); print(json.dumps(res["overseer"], indent=1, default=str))
+        res["overseer"] = overseer(); res["overseer"]["radius"] = overseer_radius(); print(json.dumps(res["overseer"], indent=1, default=str))
+    if what in ("frame", "all"):
+        res["power_cut"] = power_cut(); print("power cut", res["power_cut"])
+        res["latch_source"] = LATCH["source"]; res["cart"] = CART
     if what in ("check", "all"):
         res["system_check"] = run_checks()
     res["constants"] = dict(mass=MASS, mass_tag=MASS_TAG, targets=TARGET, index_targets=INDEX_TARGET, K=dict(brg_r=K_BRG_R, brg_a=K_BRG_A, wheel=K_WHEEL,

@@ -88,7 +88,7 @@ def use(stack="v6", dy=-20.0):
     return vals
 
 
-def stack_search():
+def stack_search(tab=L.Z_TABC):
     """the axial-stack optimisation: the rail / carriage block moved down from the posts (dy 0) to the plate (dy -20) in 1 mm steps; for
     each, the 2D clearance over 5 x 5 stroke states (arm_v5_layout.clearance_sweep), the tail-to-plate gap and the extent of the arm at
     the demo Y_C and with modules at the lowest Y_C the carriage hardware allows. Returns rows (C)."""
@@ -100,7 +100,7 @@ def stack_search():
         gmin = min(w.values()); worst = min(w, key=w.get)
         plate_ok = (V.TAIL_Y[0] - PLATE_TOP) >= 1.0                                            # the wheel tails over the hub plate
         hw_top = max(V.AXLE_KEEP["y"][1] - 3.0, V.ECC["flange_y"][1] + 5.0)                     # socket head 5 tall on the plate / on the bush flange
-        yc_min = hw_top + 1.0 + L.Z_TABC                                                       # cartridge closed end 1.0 over the carriage hardware
+        yc_min = hw_top + 1.0 + tab                                                            # cartridge closed end 1.0 over the carriage hardware (tab: closed end to the tab line)
         rows.append(dict(dy=dy, rail_y=V.RAIL_Y, plate_y=V.PLATE_Y, gmin=round(gmin, 2), worst=list(worst), tail_to_plate=round(V.TAIL_Y[0] - PLATE_TOP, 2),
                          posts=bool(V.POSTS_A), ok=bool(gmin >= 1.0 - 1e-6 and plate_ok), hw_top=hw_top, yc_min=round(yc_min, 1)))
     use("v5")

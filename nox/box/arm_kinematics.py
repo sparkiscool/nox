@@ -20,6 +20,7 @@ import arm_layout as L, arm_cad as A
 from arm_cad import box, cylY, tm, man, rsquare
 
 OUT = "out"
+HERE_K = os.path.dirname(os.path.abspath(__file__))
 YC = L.Y_C
 MODE = "all"
 
@@ -122,8 +123,63 @@ def build_parts_v5():
     return P
 
 
+def latch_cartridge_local(squeeze=0.0, pack="scout"):
+    """the latch standard's cartridge (battery_latch.latch_assembly via swap_system's loader: cartridge, both sliders pulled in by
+    `squeeze`, pack, XT60 plug) in cartridge_local's frame: X = -x, Y = Y_C + (z - z_T), Z = y (bottom at 0); a proper rotation."""
+    import swap_system as SS
+    BL = SS._BL
+    if BL is None: return cartridge_local(squeeze)
+    b = BL.build(pack); g = b["g"]
+    m = b["cart"] + BL.slider(g, squeeze, 1) + BL.slider(g, squeeze, -1) + BL.pack_body(g) + BL.xt60_female(g)
+    R = np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"]], [0, 1.0, 0, 0]])
+    return m.transform(R)
+
+
+CART_LOCAL = cartridge_local                   # v6: latch_cartridge_local
+
+
+def build_parts_v6():
+    """arm v6 (24 Oct, swap arm system worker; swap_system.py): the v5 mechanism on the compact stack (arm_v6_layout: rails on the hub
+    motor plate), rails A / B v2, 16T pinions v2, detent ring v3 at detent.CHOSEN_V6, hub v6 (the topo mesh runs/hub/v6/box_hub_v6.stl
+    when it exists, else hub_v6's drawn bodies), carriages drawn from the layout (heads v6 do not exist: carriage proxy + v4 gripper),
+    the latch standard's cartridge (CART_LOCAL). Bay modules v4i (M) at all 9 angles."""
+    import arm_v6_layout as S6
+    S6.use("v6")
+    import arm_v5_layout as V, arm_v5_cad as C5, detent as DT, arm_v6_cad as C6, hub_v6 as HV
+    global CART_LOCAL
+    CART_LOCAL = latch_cartridge_local
+    P = build_parts_v5()                                                   # the shared parts (stub, motors, belt, bearings, bays, grippers)
+    hp = os.path.normpath(os.path.join(HERE_K, "..", "..", "runs", "hub", "v6", "box_hub_v6.stl"))
+    H = HV.hub_v6_parts()
+    if os.path.exists(hp):
+        P["hub"] = Part("hub v6 (topo)", load_dec(hp, 120000), "arm", "#7f8c8d")
+    else:
+        P["hub"] = Part("hub v6 (drawn bodies: sleeve, wall, roof, plate, seats, pads, tower)", tm(H["drawn"] - H["cuts"]), "arm", "#7f8c8d")
+    P["railA"] = Part("rail A v2", tm(C6.rail_v2("A")), "arm", "#95a5a6")
+    P["railB"] = Part("rail B v2", tm(A.mirror_x(C6.rail_v2("B"))), "armB", "#95a5a6")
+    pin = C6.pinion_v2()[0]
+    P["pin16_A"] = Part("16T pinion A v2", tm(pin), "arm", "#f5b041")
+    P["pin16_B"] = Part("16T pinion B v2", tm(A.mirror_x(pin)), "armB", "#f5b041")
+    for h in ("A", "B"):                                                   # carriages on the v6 stack (the layout constants are patched)
+        Cc = C5.carriage(h)
+        P[f"head{h}"] = Part(f"carriage {h} (drawn proxy: plate, wing, rack web)", tm(Cc["printed"]), f"head{h}", "#d35400")
+        P[f"wheels{h}"] = Part(f"V-wheels {h} v1 x3", tm(Cc["wheels"]), f"head{h}", "#e67e22")
+        P[f"axles{h}"] = Part(f"axle stacks {h} (M5, shims, nylocs)", tm(Cc["stack"]), f"head{h}", "#2c3e50", printed=False)
+        P[f"bush{h}"] = Part(f"eccentric bush {h} v1", tm(Cc["bush"]), f"head{h}", "#e59866")
+    c = DT.CHOSEN_V6
+    Dc = DT.design(c["th"], c["s"], c["a"], c["b"], c["phi_d"], c["psi"]); Sd = DT.arm_solids(Dc, np.array(c["Q"]))
+    P["detent_ring"] = Part("detent ring v3", tm(DT.ring_v3(c["th"])), "fixed", "#3d5a80")
+    P["detent_arm"] = Part("detent arm v2 + carbon roller axle + hook pin", tm(Sd["arm"] + Sd["nut"] + Sd["hook"]), "arm", "#e8914f")
+    P["detent_roller"] = Part("683ZZ roller", tm(Sd["roller"]), "arm", "#aab4be", printed=False)
+    P["detent_springs"] = Part("extension springs x2", tm(Sd["springs"][0] + Sd["springs"][1]), "arm", "#c0392b", printed=False)
+    P["detent_tower"] = Part("detent anchor pin (the tower is hub v6's)", tm(Sd["anchor"]), "arm", "#e8914f", printed=False)
+    PARTS_CACHE.clear(); PARTS_CACHE.update(P)
+    return P
+
+
 def build_parts(mode="all"):
     if mode == "v5": return build_parts_v5()
+    if mode == "v6": return build_parts_v6()
     P = {}
     hub_path = f"{OUT}/box_hub_v5.stl" if getattr(L, "HUB_DETENT", False) else f"{OUT}/box_hub_v4.stl"   # generated hub, W coords (arm_run_hub.py)
     P["hub"] = Part("hub", load_dec(hub_path) if os.path.exists(hub_path) else tm(A.hub_parts()["drawn"] - A.hub_parts()["cuts"]), "arm", "#7f8c8d")
@@ -209,6 +265,7 @@ KEYS = [  # t, phi, zA, zB, fA, fB   (phi = head A's direction; head B points at
     (13.5, DB + 180, ZP, ZP, -1, 4), (14.0, DB + 180, ZP, ZP, 4, 4), (17.0, DB - 90, ZP, ZP, 4, 4), (18.5, DB - 90, ZP, ZBAY, 4, 4),
     (19.0, DB - 90, ZP, ZBAY, 4, -1), (20.5, DB - 90, ZP, ZP, 4, -1), (21.0, DB - 90, ZP, ZP, 4, 4), (22.0, DB, ZP, ZP, 4, 4)]
 T_END = 22.0
+KEYS_V4 = KEYS
 # v5 (24 Oct, arm-mech): XT60 + hook latch: the drone insert pushes 6 further (E) and the last 12 of every insert run at 20 mm/s (E)
 ZDRI = ZDR + 6.0; ZBAY_SLOW = ZBAY - 12.0
 KEYS_V5 = [
@@ -218,6 +275,11 @@ KEYS_V5 = [
     (12.0, DB + 180, ZDRI, ZP, -1, 4), (13.5, DB + 180, ZP, ZP, -1, 4), (14.0, DB + 180, ZP, ZP, 4, 4), (17.0, DB - 90, ZP, ZP, 4, 4),
     (17.9, DB - 90, ZP, ZBAY_SLOW, 4, 4), (18.5, DB - 90, ZP, ZBAY, 4, 4),
     (19.0, DB - 90, ZP, ZBAY, 4, -1), (20.5, DB - 90, ZP, ZP, 4, -1), (21.0, DB - 90, ZP, ZP, 4, 4), (22.0, DB, ZP, ZP, 4, 4)]
+# v6 (swap_system): the commanded drone insert runs to arm_v6_layout.Z0_INSERT_MAX (2 over 95.6 for the arm's lag under the 60 N)
+def _keys_v6():
+    import arm_v6_layout as S6
+    zi = S6.Z0_INSERT_MAX
+    return [(t, ph, (zi - 12.0 if za == ZDRI - 12.0 else zi if za == ZDRI else za), zb, fa, fb) for t, ph, za, zb, fa, fb in KEYS_V5]
 T_LAND = 6.5                                   # the drone lands (its dead pack appears at the top) while B waits open under the seat
 PHASES = [(0, "both heads open: A at the -90 deg bay, B at the 0 deg position"), (1, "A extends into the bay"), (2.5, "A grips the charged pack"),
           (3, "A retracts with it"), (4.5, "arm turns +90: B under the drone, A (carrying) at 0 deg"), (5.5, "B rises to wait 1 mm under the seat"),
@@ -285,7 +347,7 @@ def transforms(t):
     # cartridges: local = top position with the bottom at Z 0
     ch, de = pack_owner(t); carts = {}
     def at_bay0(): return rotY(90.0 - DB) @ trans(0, 0, L.R)                       # the demo bay (-90; "bay0" = the pick / return bay)
-    lift = 6.0 if (KEYS is KEYS_V5 and t >= 11.5) else 0.0             # v5: the drone is held up on the hook-latch plungers after the insert (E)
+    lift = 6.0 if (KEYS is not KEYS_V4 and t >= 11.5) else 0.0             # v5: the drone is held up on the hook-latch plungers after the insert (E)
     def at_drone(): return trans(0, 0, L.R + 5.0 + lift)  # the latched pack sits 5 above the bay seat (the head's over-travel)
     def in_head(h):
         Th = TA if h == "A" else TB; d = s["fA"] if h == "A" else s["fB"]
@@ -327,7 +389,7 @@ for i in range(len(L.SCOUT_BAYS)):
 for k in range(2): ALLOWED |= {(f"brg{k}", "stub"), (f"brg{k}", "hub"), ("brg0", "brg1")}
 ALLOWED |= {("brg1", "post")}
 ALLOWED |= {("detent_ring", "p80"), ("detent_roller", "detent_ring"), ("detent_arm", "detent_roller"), ("detent_arm", "detent_tower"),
-            ("detent_arm", "detent_springs"), ("detent_springs", "detent_tower"), ("detent_tower", "hub")}   # detent: bolted / pinned / rolling                                         # the post's flange clamps bearing 2's inner race
+            ("detent_arm", "detent_springs"), ("detent_springs", "detent_tower"), ("detent_tower", "hub"), ("detent_springs", "hub")}   # detent: bolted / pinned / rolling                                         # the post's flange clamps bearing 2's inner race
 
 for h in ("A", "B"):                                                     # v5: bolted / meshing / rolling pairs
     ALLOWED |= {("hub", f"rail{h}"), (f"shaft_{h}", f"pin16_{h}"), (f"pin16_{h}", f"head{h}"), (f"rail{h}", f"wheels{h}"), (f"wheels{h}", f"axles{h}"),
@@ -358,7 +420,7 @@ def sweep(dt=0.1, log=print, mode="all"):
     focus = set(FOCUS.get(mode, ())) & set(names)
     mgr = tc.CollisionManager()
     for nm in names: mgr.add_object(nm, P[nm].mesh, np.eye(4))
-    cart_meshes = {sq: tm(cartridge_local(sq)) for sq in SQ_STEPS}
+    cart_meshes = {sq: tm(CART_LOCAL(sq)) for sq in SQ_STEPS}
     for cn in ("pack charged", "pack dead"):
         for sq in SQ_STEPS: mgr.add_object(f"{cn}|{sq}", cart_meshes[sq], FAR)
     moving = [n for n in names if P[n].group != "fixed"]
@@ -438,6 +500,7 @@ if __name__ == "__main__":
     dt = float(sys.argv[1]) if len(sys.argv) > 1 else 0.1
     MODE = sys.argv[2] if len(sys.argv) > 2 else "all"
     if MODE == "v5": KEYS = KEYS_V5
+    if MODE == "v6": KEYS = _keys_v6()
     rows = sweep(dt, mode=MODE)
     worst = [r for r in rows if r["overlaps"]]
     print("states with overlaps:", len(worst), "min clearance", min(r["clearance"] for r in rows))

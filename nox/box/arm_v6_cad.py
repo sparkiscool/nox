@@ -1,6 +1,6 @@
 """Box swap arm v6 drawn parts (24 Oct 2026, swap arm system worker): the pieces the v6 system pass (swap_system.py) changes.
   - rail A / B v2: rail v1 (arm_v5_cad.rail) on the v6 stack (arm_v6_layout: rail Y 54..73 on the hub plate, r 29..134, one M5 per
-    pad at r 40 / 78 from the top) + a lug under the outer end with two Ø3.3 x 10 sockets for the carbon tie rods (2 x 3.0 x ~62 per rail);
+    pad at r 40 / 78 from the top), the inner end stepped over the 80T (no carbon tie sockets: TIES False, rejected alternative);
   - pinion 16T v2: 10.5 face (teeth Y 62..72.5; v1 8), boss Y 56.5..60.5, round bore below Y 59.5 (the NEMA's D-flat is only the last 15,
     dimensions M: v1's D-bore from Y 55.5 met the round shaft), grub on the flat at Y 60;
   - detent ring v3 (detent.ring_v3): no lower step, no bolt through it: keyed by three underside pockets on the 80T's M3 heads, epoxied
@@ -18,6 +18,7 @@ from arm_cad import box, cylY, hull, tm
 ROOT = os.path.normpath(os.path.join(HERE, "..", "..")); PRINT = os.path.join(ROOT, "print"); RUN = os.path.join(ROOT, "runs", "arm_v6_parts")
 os.makedirs(RUN, exist_ok=True)
 T = S6.TIE
+TIES = False                     # carbon ties under the rails: rejected (with the receiver guiding, 3 % less receiver moment for 4 rods + 8 sockets)
 
 
 def cyl_between(p0, p1, r, n=32):
@@ -50,9 +51,10 @@ def rail_v2(h="A"):
     m += box(-V.RAIL_BODY_X, V.RAIL_BODY_X, y_step, V.RAIL_Y[1], V.RAIL_STOP["r"][0], V.RAIL_R[0] + 0.01)
     ch = V.RAIL_CHAN
     m -= box(ch["x"][0], ch["x"][1], ch["y"][0], ch["y"][1] + 0.01, V.RAIL_STOP["r"][0] - 1.0, V.RAIL_R[0] + 1.0)   # the ribbon tunnel stays open
-    for p0, p1, d in tie_geom(h):
-        mouth = p1 - T["depth"] * d
-        m -= cyl_between(mouth - 2.0 * d, p1 + 0.01 * d, T["bore_d"] / 2, 32)
+    if TIES:                                                                    # rejected alternative (swap_system alternatives): off
+        for p0, p1, d in tie_geom(h):
+            mouth = p1 - T["depth"] * d
+            m -= cyl_between(mouth - 2.0 * d, p1 + 0.01 * d, T["bore_d"] / 2, 32)
     return m
 
 
@@ -139,9 +141,9 @@ def main(checks=False):
     if checks:
         res["ring_walls"] = DT.ring_walls(DT.CHOSEN_V6["th"]); print("ring v3 walls", res["ring_walls"])
         res["roll"] = roll_check(); print("roll pinion v2 on the rack", res["roll"])
-        f, seat = fit(); res["fit"] = f; res["rods_in_rail_mm3"] = seat
+        f, seat = fit(); res["fit"] = f; res["rods_in_rail_mm3"] = seat if TIES else None
         for row in f: print("fit", row)
-        print("rod in the rail lug (should be 0: rods sit in the bores)", seat)
+        if TIES: print("rod in the rail lug (should be 0: rods sit in the bores)", seat)
     json.dump(res, open(os.path.join(RUN, "checks.json"), "w"), indent=1, default=str)
     return res
 

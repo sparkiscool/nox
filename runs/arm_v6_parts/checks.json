@@ -1,7 +1,7 @@
 {
  "arm_rail_A_v2": {
   "file": "print/box_arm_rail_A_v2.stl",
-  "mass_g": 49.2,
+  "mass_g": 49.42,
   "prev_g": 49.7,
   "qty": 1,
   "extents": [
@@ -17,7 +17,7 @@
    "necks": [],
    "thin_walls": []
   },
-  "bed_mm2": 2375.0,
+  "bed_mm2": 2403.0,
   "first_layer": [
    1,
    0.0
@@ -25,7 +25,7 @@
  },
  "arm_rail_B_v2": {
   "file": "print/box_arm_rail_B_v2.stl",
-  "mass_g": 49.2,
+  "mass_g": 49.41,
   "prev_g": 50.0,
   "qty": 1,
   "extents": [
@@ -41,7 +41,7 @@
    "necks": [],
    "thin_walls": []
   },
-  "bed_mm2": 2375.0,
+  "bed_mm2": 2403.0,
   "first_layer": [
    1,
    0.0
@@ -73,7 +73,7 @@
  },
  "detent_ring_v3": {
   "file": "print/box_detent_ring_v3.stl",
-  "mass_g": 6.71,
+  "mass_g": 6.74,
   "prev_g": 5.0,
   "qty": 1,
   "extents": [
@@ -96,9 +96,8 @@
   ]
  },
  "ring_walls": {
-  "pocket_to_notch": 1.87,
-  "pocket_to_rim": 2.25,
-  "floor_over_pocket_to_notch": 1.3
+  "pocket_to_notch": 2.05,
+  "pocket_to_rim": 2.4
  },
  "roll": [
   0.0,
@@ -154,5 +153,5 @@
    "carriage_to_rods": 4.81
   }
  ],
- "rods_in_rail_mm3": 0.0
+ "rods_in_rail_mm3": null
 }

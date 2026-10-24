@@ -5,7 +5,8 @@ every number C unless tagged E:
     A (53.5, 55) 45.8 deg, B (-55, -53.5) -135.8 deg, axle (53.9, -43.7) -39 deg, axle seat slotted +-1 for the loop as before;
   - no posts (compact stack): 4 rail pads on the plate top (X +-16 x +-10 along the rail, Y 50..54) at r 40 / 78 on head A's and
     head B's axes, each with ONE M5 heat-set insert hole Ø6.4 x 7 at X 0 in a boss r 6.5 from Y 44 (the rail bolts down from its top);
-  - detent tower at detent.CHOSEN_V5 (roller -135, tower (18.5, -28.4); clears the v6 stack, swap_system.py);
+  - detent tower at detent.CHOSEN_V6 (roller -135, tower (21.2, -30.3); clears the v6 stack with ring v3 at 1.0, C);
+  - the harness drop lane (arm_v5_layout.DROP, r 34 at 135 deg) goes through the plate: a Ø9 hole (C);
   - the hub v5 solid_check FAIL fixed in the design: the 1.0 lip (r 29..30, Y 53..54) is gone (web disc top at Y 53), the bore
     cavity gets a drawn roof (Y 47.5..50) and wall (r 33..43, Y 41..47.5) instead of the generated 0.3 films (box-arm Problem 9);
     the wall sits on bearing 2's outer race only (relief r 37.5 to Y 41: 6010 housing shoulder <= Ø75.4, spec; v5's r 36 sat on the seal).
@@ -116,9 +117,10 @@ def hub_v6_parts():
     rails = None                                                                 # the rails sit on the pads: keep the hub off them elsewhere
     for nm, poly, yy in V.rail_bodies("A") + V.rail_bodies("B"):
         m = prism(poly, *yy); rails = m if rails is None else rails + m
-    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails
+    drop = cylY(V.DROP["x"], V.DROP["z"], L.Y_PLATE0 - 6.0, L.Y_PLATE1 + 1, V.DROP["r"] + 0.5, 32)   # harness drop through the plate (box-wiring: Ø9, C)
+    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop
     env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
-    env -= bore + cav + holes
+    env -= bore + cav + holes + drop
     env -= seat_cuts
     env0 = env - post_k                                                          # the generated region as given (topo organic finish)
     env = (env + pst + plate_c + seats + tower + roof + wall) - post_k
