@@ -69,3 +69,35 @@ it  47 beta    4 J  22.9511 vol 0.1288 (dil 0.2873 g -0.106) grey 30.8% ch 0.100
 it  48 beta    4 J  19.7254 vol 0.1319 (dil 0.2921 g -0.092) grey 31.4% ch 0.100 worst crash 35 g +z 4.88e+03 3.0s
 it  49 beta    4 J  17.1843 vol 0.1356 (dil 0.2974 g -0.075) grey 32.1% ch 0.100 worst crash 35 g +z 4.25e+03 2.2s
 it  50 beta    4 J  15.1006 vol 0.1394 (dil 0.3028 g -0.058) grey 32.9% ch 0.100 worst crash 35 g +z 3.74e+03 2.9s
+it  51 beta    4 J  13.3759 vol 0.1434 (dil 0.3082 g -0.027) grey 33.5% ch 0.100 worst crash 35 g +z 3.31e+03 2.5s
+it  52 beta    4 J  11.9908 vol 0.1476 (dil 0.3137 g -0.010) grey 34.2% ch 0.100 worst crash 35 g +z 2.97e+03 1.8s
+it  53 beta    4 J  10.8990 vol 0.1504 (dil 0.3164 g -0.001) grey 34.5% ch 0.100 worst crash 35 g +z 2.7e+03 2.2s
+it  54 beta    4 J  10.1377 vol 0.1514 (dil 0.3163 g -0.001) grey 34.3% ch 0.100 worst crash 35 g +z 2.51e+03 2.8s
+it  55 beta    4 J   9.5414 vol 0.1532 (dil 0.3163 g -0.001) grey 34.0% ch 0.100 worst crash 35 g +z 2.36e+03 3.0s
+it  56 beta    4 J   9.5386 vol 0.1547 (dil 0.3165 g +0.025) grey 33.2% ch 0.100 worst crash 35 g +z 2.36e+03 2.9s
+it  57 beta    4 J   9.5363 vol 0.1498 (dil 0.3082 g -0.002) grey 32.4% ch 0.100 worst crash 35 g +z 2.36e+03 2.6s
+it  58 beta    4 J   9.5339 vol 0.1510 (dil 0.3083 g -0.002) grey 32.1% ch 0.100 worst crash 35 g +z 2.36e+03 2.7s
+layout: stopped (beta_stop) at it 58, beta 4, 158 s
+layout: beta 4 done: eroded design 25 bodies, main 17.7%; drawn bodies outside the main body: 22
+coarse stage done: 58 iterations, 164 s, peak 0.877036 GB
+battery_receiver_scout: grid (72, 56, 112) h 1.0 = 451,584 cells; design 70,290 (70.3 cm3), drawn 20,322, void 360,972
+  support default: 800 cells, 1584 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (20.20 cm3); 0.12 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.144 of 70,414 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (5.7% of passive cells differ): no symmetry
+layout: 7 drawn bodies (20,198 cells), held solid in every realization; eroded filter: masked
+layout: 14 load cases + 36 tie cases (6 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (72, 56, 112) = 451,584 elements, 327,222 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
+layout: warm start from a (40, 32, 56) grid (h 2.0): mean x 0.208
+it   1 beta    4 J  10.0000 vol 0.1523 (dil 0.3072 g +0.059) grey 32.3% ch 0.100 worst tie b4 fy 3.11e+04 34.1s
+it   2 beta    4 J  11.2890 vol 0.1331 (dil 0.2895 g -0.002) grey 31.2% ch 0.100 worst tie b5 fy 3.51e+04 33.3s
+it   3 beta    4 J   6.0625 vol 0.1304 (dil 0.2852 g -0.017) grey 31.0% ch 0.100 worst tie b4 fy 1.85e+04 35.7s
+it   4 beta    4 J   4.0260 vol 0.1324 (dil 0.2853 g -0.016) grey 31.0% ch 0.100 worst crash 35 g +z 1.12e+04 32.2s
+it   5 beta    4 J   3.1696 vol 0.1355 (dil 0.2864 g -0.013) grey 30.8% ch 0.100 worst crash 35 g +z 9.66e+03 34.9s
+it   6 beta    4 J   2.9953 vol 0.1386 (dil 0.2876 g -0.022) grey 30.6% ch 0.100 worst crash 35 g +z 9.3e+03 33.5s
+it   7 beta    4 J   2.8781 vol 0.1439 (dil 0.2929 g -0.004) grey 30.9% ch 0.100 worst crash 35 g +z 8.95e+03 34.0s
+it   8 beta    4 J   2.7688 vol 0.1456 (dil 0.2938 g -0.001) grey 30.9% ch 0.100 worst crash 35 g +z 8.61e+03 35.6s
+it   9 beta    4 J   2.6615 vol 0.1463 (dil 0.2940 g -0.000) grey 30.8% ch 0.100 worst crash 35 g +z 8.28e+03 26.5s
+it  10 beta    4 J   2.5560 vol 0.1467 (dil 0.2940 g -0.000) grey 30.8% ch 0.100 worst crash 35 g +z 7.95e+03 29.8s
