@@ -53,3 +53,9 @@ it  41 beta    4 J   0.0885 vol 0.0796 (dil 0.1570 g -0.048) grey  8.2% ch 0.100
 it  42 beta    4 J   0.0882 vol 0.0821 (dil 0.1597 g -0.032) grey  8.4% ch 0.100 worst cage bump top 100 N (spine s 31.9 2.2s
 it  43 beta    4 J   0.0880 vol 0.0846 (dil 0.1624 g -0.016) grey  8.5% ch 0.100 worst cage bump top 100 N (spine s 31.8 2.1s
 it  44 beta    4 J   0.0877 vol 0.0870 (dil 0.1647 g -0.002) grey  8.5% ch 0.100 worst cage bump top 100 N (spine s 31.7 2.2s
+it  45 beta    4 J   0.0874 vol 0.0882 (dil 0.1648 g -0.001) grey  8.4% ch 0.100 worst cage bump top 100 N (spine s 31.6 2.3s
+it  46 beta    4 J   0.0871 vol 0.0894 (dil 0.1648 g +0.024) grey  8.2% ch 0.100 worst cage bump top 100 N (spine s 31.5 2.0s
+it  47 beta    4 J   0.0868 vol 0.0883 (dil 0.1607 g -0.002) grey  7.6% ch 0.100 worst cage bump top 100 N (spine s 31.4 2.1s
+layout: stopped (beta_stop) at it 47, beta 4, 115 s
+layout: beta 4 done: eroded design 2 bodies, main 99.9%; drawn bodies outside the main body: 1
+coarse stage done: 47 iterations, 163 s, peak 1.268392 GB
