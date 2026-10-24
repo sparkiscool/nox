@@ -1,0 +1,250 @@
+{
+ "low_back_neg": {
+  "at": [
+   -66.0,
+   -36.0,
+   8.0
+  ],
+  "rods": [
+   {
+    "rod": "low side -1",
+    "start_mm": 6.8,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "back vertical -1",
+    "start_mm": 19.5,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "back diagonal -1",
+    "start_mm": 19.5,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "low back",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 8.92,
+  "extents": [
+   20.2,
+   17.4,
+   31.5
+  ]
+ },
+ "top_back_neg": {
+  "at": [
+   -66.0,
+   -36.0,
+   192.0
+  ],
+  "rods": [
+   {
+    "rod": "top side -1",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "back vertical -1",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "top back",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 4.31,
+  "extents": [
+   17.4,
+   17.4,
+   17.4
+  ]
+ },
+ "low_back_pos": {
+  "at": [
+   -66.0,
+   36.0,
+   8.0
+  ],
+  "rods": [
+   {
+    "rod": "low side +1",
+    "start_mm": 6.8,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "back vertical +1",
+    "start_mm": 19.5,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "back diagonal +1",
+    "start_mm": 19.5,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "low back",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 8.92,
+  "extents": [
+   20.2,
+   17.4,
+   31.5
+  ]
+ },
+ "top_back_pos": {
+  "at": [
+   -66.0,
+   36.0,
+   192.0
+  ],
+  "rods": [
+   {
+    "rod": "top side +1",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "back vertical +1",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "top back",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 4.31,
+  "extents": [
+   17.4,
+   17.4,
+   17.4
+  ]
+ },
+ "low_front_neg": {
+  "at": [
+   16.949,
+   -36.0,
+   8.0
+  ],
+  "rods": [
+   {
+    "rod": "low side -1",
+    "start_mm": 4.8,
+    "insertion_mm": 4.0
+   },
+   {
+    "rod": "frame -1",
+    "start_mm": 4.8,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 3.08,
+  "extents": [
+   16.2,
+   12.0,
+   17.7
+  ]
+ },
+ "low_front_pos": {
+  "at": [
+   16.949,
+   36.0,
+   8.0
+  ],
+  "rods": [
+   {
+    "rod": "low side +1",
+    "start_mm": 4.8,
+    "insertion_mm": 4.0
+   },
+   {
+    "rod": "frame +1",
+    "start_mm": 4.8,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 3.08,
+  "extents": [
+   16.2,
+   12.0,
+   17.7
+  ]
+ },
+ "top_front_neg": {
+  "at": [
+   66.252,
+   -36.0,
+   192.0
+  ],
+  "rods": [
+   {
+    "rod": "top side -1",
+    "start_mm": 6.2,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "frame -1",
+    "start_mm": 6.2,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "top front",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 4.65,
+  "extents": [
+   18.2,
+   17.4,
+   19.1
+  ]
+ },
+ "top_front_pos": {
+  "at": [
+   66.252,
+   36.0,
+   192.0
+  ],
+  "rods": [
+   {
+    "rod": "top side +1",
+    "start_mm": 6.2,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "frame +1",
+    "start_mm": 6.2,
+    "insertion_mm": 6.0
+   },
+   {
+    "rod": "top front",
+    "start_mm": 5.4,
+    "insertion_mm": 6.0
+   }
+  ],
+  "clash_mm3": 0.0,
+  "g_tpu": 4.65,
+  "extents": [
+   18.2,
+   17.4,
+   19.1
+  ]
+ }
+}

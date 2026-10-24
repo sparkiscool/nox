@@ -2,8 +2,8 @@
 fits the A1 mini (180 cube). Base v27 passed strength (worst 0.41) but stood 224 tall (z -25..199): no pose fits the bed.
 Cut at z 28 (DEFAULT, 24 Oct; alt: split the spine at mid height, a joint in the most bent section):
   - pole adapter (z -25..31): the Ø28.3 sleeve 27 over the Ø27.5 pole cylinder, the thread cut 26 (open at the top: the tip
-    stops 1 under the spine floor), the low cage sleeves, a 6 mm flange z 22..28 and a Ø36 x 3 spigot into the spine floor;
-    4x M3 x 12 from below through the flange into Ruthex M3 inserts (Ø4.0 x 7) in the spine floor. Reprinting the adapter alone
+    stops 1 under the spine floor), the low cage sleeves, a 10 mm flange z 18..28 and a Ø36 x 3 spigot into the spine floor;
+    4x M3 x 12 from below (heads sunk 4 into the 10 mm flange) into Ruthex M3 inserts (Ø4.0 x 7) in the spine floor. Reprinting the adapter alone
     retunes the thread (the fit coupon v3 is this socket).
   - spine (z 28..199, 171 tall, prints upright on its floor): pocket tube, top ring + pin, Pi standoffs, ledge + lips, top and
     mid cage sleeves; floor z 28..38 (10: the inserts + 3 over them), a Ø36.6 x 3 recess for the spigot.
@@ -23,7 +23,7 @@ V.HEAD_KG = 0.168                                               # head v17 (M)
 VER = sys.argv[sys.argv.index("--ver") + 1] if "--ver" in sys.argv else None
 ARGS = [a for a in sys.argv[1:] if not a.startswith("-") and a != VER]
 CUT_Z = 28.0                                                    # the cut plane (C)
-FLANGE = (-30.0, 30.0, -31.5, 31.5, CUT_Z - 6.0, CUT_Z)         # adapter flange = the spine footprint (C)
+FLANGE = (-30.0, 30.0, -31.5, 31.5, CUT_Z - 10.0, CUT_Z)        # adapter flange = the spine footprint, 10 thick (adapter v1: 6, worst 1.77 at its root), C
 SPIGOT_R, SPIGOT_H = 18.0, 3.0                                  # Ø36 x 3 into a Ø36.6 recess (0.3 radial, C)
 JBOLTS = [(sx * 22.0, sy * 24.0) for sx in (-1, 1) for sy in (-1, 1)]   # 4x M3 x 12 (C): 6 flange + 5.7 insert
 INS_R, INS_D, CLR_R = 2.0, 7.0, 1.7                             # Ruthex M3 insert hole Ø4.0 x 7 (spec), M3 clearance Ø3.4
@@ -55,7 +55,7 @@ def adapter_bodies():
     spigot = cyl(0, 0, CUT_Z - 1.0, CUT_Z + SPIGOT_H, SPIGOT_R, 96)
     drawn = (S["drawn"] ^ lower()) + flange + spigot
     holes = sum((cyl(x, y, FLANGE[4] - 1.0, CUT_Z + 1.0, CLR_R, 24) for x, y in JBOLTS), mf.Manifold())
-    heads = sum((cyl(x, y, FLANGE[4] - 30.0, FLANGE[4], 3.2, 24) for x, y in JBOLTS), mf.Manifold())   # bolt head + driver access from below
+    heads = sum((cyl(x, y, FLANGE[4] - 30.0, FLANGE[4] + 4.0, 3.2, 24) for x, y in JBOLTS), mf.Manifold())   # head counterbore 4 deep (M3 x 12: 6 clamp + 5.7 insert) + driver access from below
     top = cyl(0, 0, 26.0, CUT_Z + SPIGOT_H + 1.0, 10.4, 64)                                      # the thread runs out open at the top
     cuts = (S["cuts"] ^ lower(CUT_Z + SPIGOT_H + 1.0)) + holes + heads + top + (upper(CUT_Z) - cyl(0, 0, CUT_Z - 1, CUT_Z + SPIGOT_H, SPIGOT_R, 96))
     env = (S["env"] ^ lower()) + spigot
@@ -146,7 +146,7 @@ if __name__ == "__main__":
     elif "--piece" in sys.argv:
         piece = ARGS[0]
         h = float(ARGS[1]) if len(ARGS) > 1 else 2.0
-        gen = float(ARGS[2]) if len(ARGS) > 2 else (60.0 if piece == "spine" else 15.0)
+        gen = float(ARGS[2]) if len(ARGS) > 2 else (60.0 if piece == "spine" else 25.0)
         name = "scan_stick_" + piece
         ver = VER or "v1"
         out = os.path.join(ROOT, "runs", name, ver)

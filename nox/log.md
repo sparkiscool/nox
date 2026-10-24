@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): rod bores Ø3.2 → Ø3.6 everywhere (Spark: Scout v2's 3.3 had to be drilled): nodes v2 (solid PASS, 41.9 g TPU), spine / head / adapter sleeves and the pack pin. Adapter v1 solid PASS 105 g but worst 1.77 at the 6 mm flange root: adapter v2 flange 10 mm, heads sunk 4, gen 25.
 - 24 Oct (scan stick chat): Spark: "no need to make this too strict": the adapter joint keeps 4x M3 (~700 N each at 50 g E); alt 8x M3 not taken.
 - 24 Oct (scan stick chat): fit coupon v3 printed, Spark: "perfect": acme_clear 0.40 and the Ø28.3 x 27 sleeve confirmed (P); the pole adapter keeps that cut.
 - 24 Oct (scan stick chat): base v27 (closed tube, no panel, gen 70) solid PASS, worst 0.41 (unit 50 g +y at the boss), 494.6 g, but 224 tall (z -25..199): no fit on the A1 mini 180 bed in any pose (199 did not fit either: my concept miss). System change DEFAULT: cut at z 28 into pole adapter (sleeve + thread) + spine (171 tall, upright), 4x M3; alt: split the spine at mid height.

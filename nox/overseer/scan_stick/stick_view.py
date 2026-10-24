@@ -20,7 +20,7 @@ BP = os.path.join(ROOT, BASE, "scan_stick_base_view.stl"); base = T.load(BP) if 
 l2 = T.load(os.path.join(U.OUT_SYS, "l2.stl"))
 rods = T.util.concatenate([T.creation.cylinder(1.5, segment=[p0, p1], sections=12) for _, p0, p1 in U.cage_rods()])
 import glob
-NODES = sorted(glob.glob(os.path.join(ROOT, "runs", "scan_stick_nodes", "v1", "*.stl")))
+NODES = sorted(glob.glob(os.path.join(ROOT, "runs", "scan_stick_nodes", "v2", "*.stl")))
 nodes = T.util.concatenate([T.load(f) for f in NODES]) if NODES else T.util.concatenate([bx((x - 6, x + 6, sy * U.YC - 6, sy * U.YC + 6, z - 6, z + 6)) for sy in (-1, 1)
                             for x, z in ((U.X_BACK, U.Z_LOW), (U.X_BACK, U.Z_TOP), (U.frame_x(U.Z_LOW), U.Z_LOW), (U.frame_x(U.Z_TOP), U.Z_TOP))])
 pole = T.creation.cylinder(13.75, 300, sections=48); pole.apply_translation([0, 0, 2.0 - 150])          # Ø27.5 cylinder, shoulder at z 2
@@ -37,7 +37,7 @@ for nm, B, col, nt in (("spine v1 drawn (running)", U6.spine_bodies(), "#e0592a"
                        ("pole adapter v1 drawn (running)", U6.adapter_bodies(), "#2a9d8f", "z -25..31: Ø28.3 sleeve 27 over the pole + 26 thread (open top), low cage sleeves, flange with 4x M3 x 12 from below")):
     s.part(nm, U.tm(B["drawn"] - B["cuts"]), group="printed", color=col, printed=True, note=nt)
 s.part("cage rods", rods, group="bought", color="#111111", printed=False, note="3 mm carbon")
-s.part("TPU nodes", nodes, group="printed", color="#d4a017", printed=False, note="runs/scan_stick_nodes/v1 (nodes_v5.py): 8 drawn TPU nodes, Ø3.2 sockets 3 wall, solid_check PASS each" if NODES else "12 mm placeholders")
+s.part("TPU nodes", nodes, group="printed", color="#d4a017", printed=False, note="runs/scan_stick_nodes/v2 (nodes_v5.py): 8 drawn TPU nodes, Ø3.6 sockets 3 wall, solid_check PASS each" if NODES else "12 mm placeholders")
 for n, b, col in (("pack", U.PACK, "#2f4fbf"), ("Pi 5", U.PI_KEEP, "#2e7d32"), ("UBEC + buck", U.EL_KEEP, "#b07d2b"),
                   ("camera", (U.CAM_PLATE[1], U.CAM_XF + U.LENS, -19, 19, U.CAM_Z - 19, U.CAM_Z + 19), "#2d5a2d")):
     s.part(n, bx(b), group="bought", color=col, printed=False)

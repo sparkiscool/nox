@@ -1,6 +1,6 @@
 """Scan stick v5 cage corner nodes (TPU, drawn, Spark rule: TPU nodes). One node per rod corner of the v5 cage (unit_topo_v5.cage_rods):
 low back, top back, frame foot, top front, each side. A node is the convex hull of a 12 cube on the corner point and one socket
-per rod (Ø9.2 = 3 wall round the Ø3.2 bore (C)); each bore starts where it clears the others by a 2.0 wall (two rods 22° apart
+per rod (Ø9.6 = 3 wall round the Ø3.6 bore (C)); each bore starts where it clears the others by a 2.0 wall (two rods 22° apart
 start 13.6 out), insertion 6 (C) or less where the socket would run into a printed part; trimmed 1.0 clear of the Pi, UBEC / buck and pack.
    python3 nodes_v5.py [out_dir]"""
 import os, sys, json
@@ -10,8 +10,8 @@ sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, "nox"))
 _argv = sys.argv; sys.argv = [sys.argv[0]]
 import unit_topo_v5 as U
 sys.argv = _argv
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scan_stick_nodes", "v1")
-R_BORE, WALL, CUBE, INS, GAP = 1.6, 3.0, 12.0, 6.0, 1.0
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scan_stick_nodes", "v2")
+R_BORE, WALL, CUBE, INS, GAP = 1.8, 3.0, 12.0, 6.0, 1.0           # Ø3.6 bores (Spark 24 Oct: 3.3 had to be drilled)
 
 def cyl_along(p, d, s0, s1, r, n=32):
     """cylinder of radius r on the line p + s d, s in [s0, s1]"""
