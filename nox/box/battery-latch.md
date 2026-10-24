@@ -64,16 +64,16 @@ Supports: the bolt seats, and for +y the mount face bearing on the partner. The 
    - Wear parts: sliders (3 to 4 g), TPU strips, XT60 carrier; the body comes off with its bolts.
    - Alternative: separate strike blocks at the tab line (the pocket block, keyed into a wall notch, one M3 from below), if the first coupon shows wear.
 5. Print orientation: deck down (mount plane on the bed) kept.
-   - print_orient, Scout body: bed 1418 mm² deck down vs 257 feet down (M).
+   - print_orient `--all`, Scout body: deck down 1318 mm², end down 1823 mm² (105.6 tall), feet down 257 (M). Deck down is kept, though it is not the largest face: it is the orientation the FE checked (layers across the install axis). End down is the closed-end-down (+z) layer set that put a z pull across layers in the earlier guide case (1.11, M mesh, E loads); without the guide cases it is unchecked.
    - The pocket floors and the deck top between ribs print on tree supports.
    - Lowering the mount plane to the deck top would move the interface every partner is built to. Not taken.
 6. Lighter: truss windows in the Overseer's walls save 34 g but move 1.15 mm across, past the float. Not taken; a v2 topology pass is the follow-up.
    - The walls are 5.0 because the 3.0 lead-in capture leaves 1.0 of foot tip on a 4.0 wall (solid_check FAIL).
 
 **More found while fixing:**
-- **Scout bolts.** On the 5.0 wall a head access channel cut the closed-end corner (across 0.96). Each Scout bolt now runs in a full-height column (r 5) beside the wall, the head on a flat at y 14.0 above the collar clip, with 3.0 round its counterbore: M3 x 45 (E). The bolt pattern ±25.6 is unchanged. Widening to ±28.6 instead hit the cage rods (29 mm³).
+- **Scout bolts.** On the 5.0 wall a head access channel cut the closed-end corner (across 0.96, M mesh, E loads). Each Scout bolt now runs in a full-height column (r 5) beside the wall, the head on a flat at y 14.0 above the collar clip, with 3.0 round its counterbore: M3 x 45 (E). The bolt pattern ±25.6 (C) is unchanged. Widening to ±28.6 (C) instead hit the cage rods (29 mm³, M).
 - **Scout FC.** The FC sits 0.1 under the mount plane, so the body has a 1.0 relief there (tab line −5..+9). The rest of the top bears on the partner and is the bed face.
-- **End walls.** Ending at the rails without posts left the Overseer's 43.5 N across case 1.20 mm, index 0.92, at that corner. They now run to the feet, set back 3.3 below the rails (6.0 thick), with a slot for the cartridge's set-screw boss at the lead end. Pitch at the XT60's first contact stays > 4° (C).
+- **End walls.** Ending at the rails without posts left the Overseer's 43.5 N across case at 1.20 mm, index 0.92 (M mesh, E loads), at that corner. They now run to the feet, set back 3.3 below the rails (6.0 thick), with a slot for the cartridge's set-screw boss at the lead end. Pitch at the XT60's first contact stays > 4° (C).
 - **Overseer mount bolts (open, v1 too).** At x ±26.8 / 27.8 they come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options for the Overseer and box sessions:
   - (a) Bolts from above into heat-set inserts in deck bosses: 8.7 above the deck's underside fits a 6.7 insert and a 2.0 floor.
   - (b) Outboard bosses, 76.2 wide.
@@ -145,7 +145,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 - Scout set: HOLD (PR 69 review). Its assembled probe check fails at the Scout's side windows, and its receiver is new.
 - Overseer set: DESIGN (its mount bolts and system, below).
 
-Per set: 147.7 g Scout, 331.3 g Overseer (M); v1 was 91.0 / 185.9. The grams buy the swap load set: v1's open frame moved 5.4 / 4.4 mm under 43.5 N across, index 2.08 / 1.53. v2 moves 0.35 / 0.78 mm, swap worst 0.51 / 0.55.
+Per set: 147.7 g Scout, 331.3 g Overseer (M); v1 was 91.0 / 185.9 (M). The grams buy the swap load set: v1's open frame moved 5.4 / 4.4 mm under 43.5 N across, index 2.08 / 1.53. v2 moves 0.35 / 0.78 mm, swap worst 0.51 / 0.55 (all M mesh, E loads).
 
 Bought per set:
 - XT60E1-M with a short pigtail and an inline connector (the replaceable XT60 carrier).
@@ -155,7 +155,7 @@ Bought per set:
 Assembly: sliders into the cartridge channels from inside, spring into its U-slots, pack in (it closes the slots), plug into its pocket, set screws; XT60E1-M into the carrier base, cap on, carrier into the receiver's notch, receiver up on its bolts.
 
 ## Checks (C unless tagged, `runs/battery_latch/v2/result.json`)
-- **solid_check PASS on all 14 files** (Scout 8, Overseer 6; one line each in `summary.md`). print_orient: one first-layer island each.
+- **solid_check PASS on all 14 files** (Scout 8, Overseer 6; one line each in `summary.md`). print_orient: first-layer islands all over 20 mm² (receivers 3 Scout / 2 Overseer, the rest 1).
 - **Insertion:**
   - Sliders free, from 50 below seat every 1.0: 0 mm³ cartridge vs receiver, no stuck step.
   - 0.3 off in x: receiver 0 mm³. The rigid-modelled XT60 male meets the plug 10.6 mm³ in the last 4; its float takes ±1.0.
@@ -172,7 +172,9 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 - **Sliders at the 74 N stall** (a bolt jammed on its lead-in, fault): 2.4 MPa, index 0.22. Grip pull 57 N + 1 g: tab bar 4.3 / 4.7 MPa, index 0.40 / 0.44 (E, hand calc).
 - **Scout v3 system** (the refit snapshot `runs/battery_latch/v1/scout_v3_refit/`, current latch parts, skids as cage):
   - `System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, −0.75) (flow MTF-02P), fit 0.0 mm³ (E), bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 794 g (E), CG 1.4 mm off thrust axis (E), 2.0 mm without swap parts, probes −47.0 mm (E) edge at (−0.78, −0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear`. The "receiver v1 (latch)" label is the snapshot's part name; the mesh is v2.
-  - **The probe FAIL is the receiver reached from the side through the Scout cage's side windows.** The cartridge set and the receiver round the swap opening are exempt from the probe to 40° (DEFAULT, as the Scout's own check; was 35°; alternative: no exemption, which needs the receiver recessed ≥ 3 inside the cage's bottom plane). The exemption does not cover this edge, so the Scout set is HOLD until the Scout chat closes its side windows and a rerun reads probes PASS.
+  - **Probe FAIL: edges from the side and low, through the Scout cage's side windows and under its keel, reach the latch parts.** Receiver −47.0, cartridge v5 −25.9, receiver cap −7.3, sliders −2.2 / −1.4 (E). The Scout's own flow, camera and Radxa fail too.
+  - The whole swap set round the swap opening is exempt to 40° (DEFAULT, as the Scout's own check; was 35°; alternative: no exemption, which needs the receiver recessed ≥ 3 inside the cage's bottom plane). These edges come from outside that cone.
+  - So the Scout set is HOLD until the Scout's new layout and the receiver / cartridge v6 skids (follow-up) give a rerun with probes PASS.
   - Collar planes 7.04 (clip inset 11.0; v2's 5.0 walls needed 0.5 more inset). Keel nodes 4.8 clear.
 - **Assembled worst index per case (Scout, one set of numbers everywhere):**
   - The Scout frame model gives every flight / crash / landing case ≤ 0.98 (F).
@@ -196,7 +198,7 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
   - A higher-cycle connector is the hub's / Spark's call.
 - **Scout v3:**
   - The mount takes 4 x M3 x 45 from below (heads on the receiver's flats at y 14.0, reached with the cartridge out).
-  - Close the side windows so the edge probe reads PASS (the set stays HOLD until then).
+  - The edge probes reach the receiver (−47.0), cartridge (−25.9), cap (−7.3) and sliders (−2.2 / −1.4) through the side windows and under the keel. Close the windows; the receiver and cartridge v6 skids come in the follow-up. The set stays HOLD until a rerun reads PASS.
   - The skids are swap parts (cage role) in its assembly.
 - **Overseer (open, v1 too):** the receiver's mount bolts at x ±26.8 (v2 ±27.8) come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options:
   - (a) Bolts from above (through the sled) into heat-set inserts in the receiver's deck bosses: 8.7 above the deck's underside, room for a 6.7 insert and a 2.0 floor.

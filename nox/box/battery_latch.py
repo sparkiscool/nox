@@ -1244,6 +1244,8 @@ def scout_system(log=print):
                     dir=[0, 0, 1], length_mm=8.9, tool=dict(type="box", w=18.5, h=11.1, w_axis=[0, 1, 0]),
                     ignore=["XT60E1-M", "receiver lid (latch)", "receiver v1 (latch)", "mount + nose legs (Scout)"]))
     man["access"] = acc
+    for o in man["openings"]:                                        # the snapshot's cartridge-set cones (35) to ours
+        if o.get("skip_probes"): o["half_angle_deg"] = PROBE_EXEMPT_DEG
     for n in ("receiver v1 (latch)", "receiver lid (latch)", "receiver TPU strips (latch)", "XT60E1-M"):   # the receiver round
         man["openings"].append(dict(part=n, axis=[0, 0, -1], half_angle_deg=PROBE_EXEMPT_DEG, min_mm=0.0, skip_probes=True))  # the swap
     res = sc.run(man)                                                # opening, exempt like the cartridge set (DEFAULT)
@@ -1323,8 +1325,9 @@ def main():
             ms[nm] = round(vol(m) / 1000 * RHO[mat], 2)
         if B["skids"]: ms["skids"] = round(sum(vol(m) for m in B["skids"]) / 1000 * RHO["TPU"], 2)
         R["mass_g"] = ms
-        R["pitch_guidance"] = dict(guide=(RECV_V == 2 or GUIDE), end_gap=END_GAP, y_end0=round(r["Y_END0"], 2),
-                                  note=("corner guide posts; pitch at the XT60's first contact" if (RECV_V == 2 or GUIDE) else
+        gd = r.get("GUIDE", GUIDE)
+        R["pitch_guidance"] = dict(guide=gd, end_gap=round(r["Z_E1"] - g["L_C"], 2), y_end0=round(r["Y_END0"], 2),
+                                  note=("corner guide posts; pitch at the XT60's first contact" if gd else
                                         "no guide posts: the XT60E1-M float takes the pitch (float_tilt)"))
         A = U(B["cart"], B["recv"], B["lid"], slider(g, 0, 1), slider(g, 0, -1))
         bb = tm(A).bounds; ext = bb[1] - bb[0]

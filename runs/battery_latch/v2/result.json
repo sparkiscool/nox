@@ -1074,10 +1074,10 @@
    "skids": 4.5
   },
   "pitch_guidance": {
-   "guide": true,
+   "guide": false,
    "end_gap": 0.3,
    "y_end0": 35.6,
-   "note": "corner guide posts; pitch at the XT60's first contact"
+   "note": "no guide posts: the XT60E1-M float takes the pitch (float_tilt)"
   },
   "bbox": {
    "extents": [
@@ -2446,10 +2446,10 @@
    "xt60_carrier": 4.95
   },
   "pitch_guidance": {
-   "guide": true,
+   "guide": false,
    "end_gap": 0.3,
    "y_end0": 48.6,
-   "note": "corner guide posts; pitch at the XT60's first contact"
+   "note": "no guide posts: the XT60E1-M float takes the pitch (float_tilt)"
   },
   "bbox": {
    "extents": [
