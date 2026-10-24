@@ -5,7 +5,7 @@ spokes from the arm tips; a lower wheel ring at the catch points with 4 corner n
 on struts up to the arms; the L2 sits on the cage's front apex, axis 15 deg below +x, every rod behind its field; the
 front camera on the same apex node. Balance as v1: the printed arms carry the motor square forward, the catch sits aft.
 
-python3 nox/overseer/layout_v2.py [out_dir]      (~25 min: catch-offset and wheel-height search, balance, artifact;
+python3 nox/overseer/layout_v2.py [out_dir]      (~30 min: catch-offset and wheel-height search, balance, artifact;
 V2_CASES="30,-30" reruns only that case)
 
 Drone frame: x forward, y left, z up; z 0 = bottom plate top face; plate centre at x 0. Numbers from `nox/dimensions.md`
