@@ -178,7 +178,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                 else:
                     oy = (cy - 3, cy + 1) if sy > 0 else (cy - 1, cy + 3)
                     ox = (cx - 5.5, cx - 1.6) if sx > 0 else (cx + 1.6, cx + 5.5)
-                blk = box(ox[0], ox[1], oy[0], oy[1], WHEEL_Z - 2, WHEEL_Z + 6)
+                blk = box(ox[0], ox[1], oy[0], oy[1], WHEEL_Z - 2, WHEEL_Z + (4 if axis == "x" else 6))
                 # nearest point on the nearest arm's centreline, leg up to its underside
                 best = None
                 for r0, m1, ht in axes:
@@ -187,7 +187,14 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                     if best is None or dd < best[0]: best = (dd, q, t, ht)
                 _, q, t, ht = best
                 zb = t * (ROOT_H - ht) + 1.0
-                legs.append(hull(blk, box(q[0] - 5, q[0] + 5, q[1] - 5, q[1] + 5, zb - 1, zb)))
+                top_pad = box(q[0] - 5, q[0] + 5, q[1] - 5, q[1] + 5, zb - 1, zb)
+                if axis == "x":   # ±y-face wheel: the hook latch plunger sits uphill of it (G (7)), so the leg knees
+                    ky = cy - 15.0 * sy                                     # 15 inboard at axle height first, then up
+                    knee = box(ox[0], ox[1], min(ky, cy - 1.6 * sy) - 2, max(ky, cy - 1.6 * sy) + 2, WHEEL_Z - 2, WHEEL_Z + 4)
+                    post = box(ox[0], ox[1], ky - 2, ky + 2, WHEEL_Z - 2, WHEEL_Z + 4)
+                    legs.append(union([blk, knee, hull(post, top_pad)]))
+                else:
+                    legs.append(hull(blk, top_pad))
     g["wheels"], g["legs"] = wheels, legs
     PB = PACK_TOP - PACK[2]
     g["pack"] = box(-dc - PACK[0] / 2, -dc + PACK[0] / 2, -PACK[1] / 2, PACK[1] / 2, PB, PACK_TOP)
