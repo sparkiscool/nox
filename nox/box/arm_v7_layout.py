@@ -2,7 +2,7 @@
 motor plate) carrying both packs, Scout and Overseer, to 9 bays at 30 deg (Spark 24 Oct): one ring radius R 113 for every seated face (drone
 seat and bays; a parked Overseer cartridge passes them), strokes +13, rails to r 151, rack tail to u -63, carbon ties under the rails back
 in, the XT60 at each cartridge's closed (arm-side) end (the latch's change; the only option inside the float carrier for both packs), the
-Overseer gripped on its drone's thrust axis (30 off its swap CG, body toward +Y), detent springs x1.18.
+Overseer gripped on its drone's thrust axis (30 off its swap CG, body toward +Y), detent springs x1.25.
 `use()` applies arm_v6_layout's v6 values and then patches arm_v5_layout (rails, rack, strokes) and arm_layout (R and the strokes derived
 from it) in place, so every script that reads them builds v7. Import and call it before arm_kinematics (its stroke constants are read at
 import). Numbers C unless tagged."""
@@ -20,13 +20,15 @@ WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it 
                                         # its shorter tail clears the detent's springs and tower web (the full -63 tail met them, sweep C)
 Y_C7 = 138.0                            # the common grip for both packs (DEFAULT): the Overseer gripped 30 toward its closed end needs Y_C >= 136.8,
                                         # the Scout >= 129.1; 138 brings the free mate pitch to 0.64 / 0.56 deg (175: 1.10 / 1.01) and the box 37 shorter
-DETENT_SPRING_SCALE = 1.25              # round 2: the detent only holds the parked arm with the driver off (the Overseer's 0.47..0.59 N.m, E;
-                                        # margin 1.32); every insert and pull keeps the axle driver on (the detent sagged ~2.4 deg under 1 N.m)
+DETENT_SPRING_SCALE = 1.8               # the hub (structure v2 bays): two Overseer bays sit horizontal; x1.8 holds the parked arm with margin 1.36
+                                        # and a head out at a horizontal Overseer bay to 0.04 N.m of excess (the axle motor on the brake relay takes it,
+                                        # swap_system.power_cut_head_out); every insert and pull keeps the axle driver on (the detent sags past the lead-ins)
 XT60_Z = 7.0                            # the cartridge's XT60 axis 7 from its closed end (DEFAULT, asked of the latch; plug face at its y as before)
 OV_GRIP_OFFSET = 30.0                   # the Overseer's tab line 30 toward the closed end from its swap CG = its drone's thrust axis (Spark B)
-BAYS = dict(overseer=(30.0, -30.0, -90.0, -150.0), scout=(0.0, -60.0, -120.0, -180.0, -210.0), drone=90.0, pitch=30.0)   # round 2 (DEFAULT, to
-                                        # the structure): alternating Overseer / Scout (two Overseer receivers side by side overlap 937 mm3 at R 113)
+BAYS = dict(overseer=(0.0, -60.0, -120.0, -180.0), scout=(30.0, -30.0, -90.0, -150.0, -210.0), drone=90.0, pitch=30.0)   # box structure v2's set
+                                        # (via the hub): alternating Overseer / Scout (two Overseer receivers side by side overlap 937 mm3 at R 113)
 PHI_WINDOW = (-300.0, 90.0)             # head A at any bay or the drone, head B at any bay or the drone: one axle window (390 of the loop's 422)
+STACK3 = __import__("os").environ.get("NOX_ARM_STACK", "low")   # round 3: "low" (DEFAULT) or "v6" (the round 2 carriage, for comparison)
 TIE7 = dict(S6.TIE)                     # the tie rods as v6's alternative (rail end r 128: the stand's arm lane at low Y keeps them inside r 135)
 _DONE = False
 
@@ -37,12 +39,41 @@ def strokes():
     return z
 
 
+# round 3 (concept review r2 + latch d0cd1a1: the XT60 end faces the arm, the Overseer's arm-side end at Y 74.76 at Y_C 138; the hub: Y_C stays,
+# the arm clears it): the LOW carriage stack. Everything under a cartridge (carriage plate X +-28, wheels, nuts, bolt heads, eccentric) ends
+# at Y 72.75, 2.0 under the Overseer's end; the rack and pinion (X 40.5.. beside the cartridge) stay. The rail loses 6.25 of depth on top and
+# gains a keel under it outboard of the hub plate (r >= 89, Y 38..54), which brings the free XT60 pitch back (swap_system.mate_pitch). C.
+LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.75, 68.75), PLATE_Y=(68.75, 72.75),
+           NUT_Y=(55.05, 57.75),                # DIN 439 M5 thin nut 2.7 + threadlocker (E) under each wheel; the hub plate's wheel lanes at Y 53
+           AXLE_BOLT_L=dict(fixed=18.0, ecc=18.0, head="ISO 10642 countersunk, flush in the plate top"),   # tails Y 54.75
+           ECC_FLANGE=(70.25, 72.75),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
+           KEEL=dict(x=9.0, y=(38.0, 54.0), r0=89.0),   # rail keel X +-9 under the body from r 89 (1.0 off the hub plate's edge r 88) to the tip
+           CBORE_Y=61.0, RAIL_BOLT="M5 x 12 ISO 4762 (head Y 61..66, in the rail)", STOP_Y=(66.75, 72.0), CHAN_Y=(62.75, 66.75),
+           TIE_RAIL=(41.6, 128.0))              # the tie rod end 10 up its own axis from the keel bottom at r 128 (mouth on the face)
+
+
+def _patch_low():
+    lo = LOW
+    V.RAIL_Y = (V.RAIL_Y[0], lo["RAIL_TOP"]); V.RIDGE_Y = lo["RIDGE_Y"]; V.WHEEL_Y = lo["WHEEL_Y"]; V.SPACER_Y = lo["SPACER_Y"]; V.PLATE_Y = lo["PLATE_Y"]
+    V.NUT_Y = lo["NUT_Y"]; V.TAIL_Y = (lo["PLATE_Y"][1] - lo["AXLE_BOLT_L"]["fixed"], lo["NUT_Y"][0]); V.AXLE_BOLT_L = dict(lo["AXLE_BOLT_L"])
+    e = dict(V.ECC); e["flange_y"] = lo["ECC_FLANGE"]; V.ECC = e
+    V.AXLE_KEEP = dict(r=5.0, y=(lo["PLATE_Y"][1], lo["PLATE_Y"][1] + 8.0)); V.ECC_KEEP = dict(r=13.0, y=(lo["PLATE_Y"][1], lo["PLATE_Y"][1] + 1.0))
+    V.WEB_Y = (V.RACK_TEETH_Y[0], lo["PLATE_Y"][1])
+    st = dict(V.RAIL_STOP); st["y"] = lo["STOP_Y"]; V.RAIL_STOP = st
+    ch = dict(V.RAIL_CHAN); ch["y"] = lo["CHAN_Y"]; V.RAIL_CHAN = ch
+    b = dict(V.RAIL_BOLTS); b["cbore_y"] = lo["CBORE_Y"]; b["bolt"] = lo["RAIL_BOLT"]; V.RAIL_BOLTS = b; V.RAIL_INSERTS = b
+    V.RAIL_FOOT_X = V.RAIL_BODY_X                # no feet: the wheels (Y 57.75..) pass over the pads; the bolts sit in the body
+    V.RAIL_KEEL = dict(lo["KEEL"])
+    S6.TIE["rail"] = lo["TIE_RAIL"]
+
+
 def _patch_v5():
     z = strokes()
     V.RAIL_R = (V.RAIL_R[0], RAIL_END)
     V.WEB_U = WEB_U7; V.WEB_U_B = WEB_U7_B
     V.Z0S = (z["park"], z["wait"], z["bay"], z["drone"], z["insert"], z["bay_cmd"], z["insert_cmd"])
     S6.Z0_INSERT_MAX = z["insert_cmd"]; S6.Z0_BAY_INSERT = z["bay_cmd"]
+    if STACK3 == "low": _patch_low()
 
 
 def use():

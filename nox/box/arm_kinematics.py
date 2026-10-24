@@ -132,8 +132,14 @@ def latch_cartridge_local(squeeze=0.0, pack=None, grip_off=None):
     pack = pack or CYCLE["pack"]; grip_off = CYCLE["grip_off"] if grip_off is None else grip_off
     b = BL.build(pack); g = b["g"]
     m = b["cart"] + BL.slider(g, squeeze, 1) + BL.slider(g, squeeze, -1) + BL.pack_body(g) + BL.xt60_female(g)
-    R = np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"] + grip_off], [0, 1.0, 0, 0]])   # grip_off: the grip 'off' toward the closed end
-    return m.transform(R)
+    return m.transform(latch_rot(BL, g, grip_off))
+
+
+def latch_rot(BL, g, grip_off=0.0):
+    """cartridge coords -> cartridge_local: latch d0cd1a1 on (TAB_OFF) the XT60 end faces the arm (-Y): X = x, Y = Y_C + Z_T - z, Z = y
+    (the Overseer's 30 grip offset is in its Z_T); older latch: X = -x, Y = Y_C + (z - Z_T) + grip_off, Z = y. Proper rotations."""
+    if hasattr(BL, "TAB_OFF"): return np.array([[1.0, 0, 0, 0], [0, 0, -1.0, YC + g["Z_T"]], [0, 1.0, 0, 0]])
+    return np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"] + grip_off], [0, 1.0, 0, 0]])
 
 
 CYCLE = dict(pack="scout", grip_off=0.0, pick=None, ret=None)   # v7: the pack and the bays of the cycle being swept (None = DB)
@@ -195,7 +201,7 @@ def latch_receiver_local(pack="scout", grip_off=0.0, state="latched", with_pack=
     d = BL.latch_assembly(pack, state); g = BL.build(pack)["g"]
     m = d["receiver"] + d["receiver_lid"] + d["receiver_strips"] + d["xt60e1m"]
     if with_pack: m = m + d["cartridge"] + d["slider_px"] + d["slider_nx"] + d["pack"] + d["xt60_plug"]
-    return m.transform(np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"] + grip_off], [0, 1.0, 0, 0]]))
+    return m.transform(latch_rot(BL, g, grip_off))
 
 
 def build_parts_v7(pack="scout", pick=-210.0, ret=30.0):
