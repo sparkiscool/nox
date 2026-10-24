@@ -8,3 +8,4 @@ runs/**/tmp/
 *.log.tmp
 nohup.out
 .claude/worktrees/
+.cache/
