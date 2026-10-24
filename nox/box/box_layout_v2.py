@@ -31,17 +31,17 @@ Y_FUN = Y_C                                     # funnel centre = the grip line 
 
 
 def grip_z(pk, meta):
-    """the grip line in cartridge z: the latch set's centre (hub 24 Oct: each drone's catch centre on its set's centre,
-    the arm grips there), taken as the receiver's z mid (C from the latch v1 meshes; E until the latch republishes)."""
-    t = trimesh.load(os.path.join(CTX, f"{pk}_receiver_c.stl"), force="mesh"); return float(t.bounds[:, 2].mean())
+    """the grip line in cartridge z: the latch's tab line Z_T (hub DEFAULT 24 Oct: the arm grips there and fixes Y_C; the
+    Scout set's mid then sits 5.4 off the funnel centre, inside the 191 x 168 opening; was the receiver's z mid)."""
+    return float(meta[pk]["Z_T"])
 PATH = 70.0                                     # cartridge install path kept clear, radially inward from the seat (E: park r ~ R - 15)
 ARM_PARK_R = 1.5                                # turning envelope of the parked heads + cartridges: r <= R - 1.5 (arm v6: limit R - 2.5)
-LANE = dict(r=159.0, half_deg=25.0, y=(53.75, 86.5))   # drone opening: nothing inside r 159 within 90 +- 25 over the carriage's Y (arm v7
-                                                # low carriage stack: axle tails Y 54.75, nuts 55.05..57.75, wheels 57.75..67.75, - 1; hardware to 85.5 + 1, C)
+LANE = dict(r=159.0, x=(-35.0, 47.5), y=(53.75, 73.75))  # drone insert, carriage: r <= 159 over X -35..47.5, Y 53.75..73.75 (arm PR 79
+                                                # 70c3c33, measured from the swept meshes, C; was 90 +- 25 deg over Y 53.75..86.5)
 MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_system)
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
-GRIP_LANE = dict(r0=111.5, r=159.6, x=47.5, y0=77.0, dy1=52.0)  # the head's grabber beside the cartridge at the drone insert: X to 46.5 (the
-                                                # rack web X 40.5..46.5) + 1, from the parked heads' r 111.5 to the cartridge top r 158.6 + 1, Y 78..Y_C + 51 (+1) (arm v7 asm, C)
+GRIP_LANE = dict(r0=111.5, r=159.6, x=47.5, y0=73.75, dy1=52.0)  # the head's grabber beside the cartridge at the drone insert: X to 46.5 (the
+                                                # rack web X 40.5..46.5) + 1, from the parked heads' r 111.5 to the cartridge top r 158.6 + 1, Y 73.75..Y_C + 52 (arm PR 79 70c3c33, C)
 RAIL_DISC = dict(r=151.0, y=(38.0, 73.0))       # arm round 3 (24 Oct): the rails' keel sweeps Y 38..73 out to r 151 (C)
 BRACKET = 12.0                                  # ring envelope to sheet inner face (U-clip + flange, v1 brackets 3.5..10)
 CRADLE = 48.1                                   # bottom bay's outer face to the floor (v1 cradle_keel: Z_TOP -152.9 to -201)
@@ -90,8 +90,9 @@ def seat_landings(R):
     pts = []
     for k in range(4):
         c, s = math.cos(k * math.pi / 2), math.sin(k * math.pi / 2); Rz = np.array([[c, -s, 0], [s, c, 0], [0, 0, 1.0]])
-        for sy in (1, -1):
-            p = land * np.array([1, sy, 1]); pts.append((Rz @ p, Rz @ n))
+        up = FUNNEL_V8_GROW_Y * np.array([1.0, 0, 1.0]) if k % 2 == 0 else 0.0   # funnel v8 plain (catch PR 81): the +-x landings 11.5 out
+        for sy in (1, -1):                                                           # and 11.5 up the 45 deg face, (109.6, +-36, 18.5) seat frame (C)
+            p = land * np.array([1, sy, 1]) + up; pts.append((Rz @ p, Rz @ n))
     T = B.SEAT_TO_W.copy(); T[2, 3] += R - 100.0; T[1, 3] = Y_FUN
     out = []
     for p, nn in pts:
@@ -169,12 +170,14 @@ def layout(R=113.0, clip=False, bays=None):
     X_IN = math.ceil(max(ring_x, side) + BRACKET)
     FLOOR = math.floor(ring_zmin - CRADLE)
     Z_TOP = math.ceil(rim + 0.5)
-    Y_FRONT = math.ceil(max(front + FUNNEL_V8_GROW_Y + 1.0, float(rt.bounds[1, 1]) + BRACKET))
+    grow = 0.0 if in_w else FUNNEL_V8_GROW_Y                              # the W file is funnel v8 itself (catch PR 81): no allowance on top
+    Y_FRONT = math.ceil(max(front + grow + 1.0, float(rt.bounds[1, 1]) + BRACKET))
     Y_BACK = -66.0
-    assert back - FUNNEL_V8_GROW_Y > Y_BACK + 1.0, "funnel v8 reaches the rear sheet"
+    assert back - grow > Y_BACK + 1.0, "funnel v8 reaches the rear sheet"
     H = Z_TOP - FLOOR
     out = dict(R=R, clip=clip, bays=rows, neighbours=nb, catch=dict(rim_Z=round(rim, 1), front_Y=round(front, 1), back_Y=round(back, 1),
-                                                                     side_X=round(side, 1), seat_W_Z=round(T[2, 3], 1)),
+                                                                     side_X=round(side, 1), seat_W_Z=round(155.3 + T[2, 3] if in_w else T[2, 3], 1),
+                                                                     file="W, funnel v8 plain (catch PR 81)" if in_w else "seat frame, panels v7", v8_allowance_Y=grow),
                landings=[dict(p=np.round(p, 1).tolist(), n=np.round(n, 3).tolist()) for p, n in lands],
                ring=dict(max_abs_X=round(ring_x, 1), min_Z=round(ring_zmin, 1), Y=np.round(rt.bounds[:, 1], 1).tolist()),
                enclosure=dict(X_IN=X_IN, Y_BACK=Y_BACK, Y_FRONT=Y_FRONT, FLOOR=FLOOR, Z_TOP=Z_TOP,
@@ -208,13 +211,15 @@ def main():
     for m in catch.values(): c = m if c is None else c + m
     tm(c).export(os.path.join(od, "catch_W.stl"))
     print(write_concept(od, out, P, env, a.R))
+    print("v8 lane check (E):", json.dumps(v8_lane_check(od)))
 
 
 def arm_envelopes(R):
     """the swap arm's turning envelopes (arm v6 numbers at the top of this file, C): hub + rails, motors on the arm,
     parked heads with cartridges, the drone-insert lane."""
     cyl = lambda r, y0, y1: mf.Manifold.cylinder(y1 - y0, r, r, 96).rotate([-90, 0, 0]).translate([0, y0, 0])
-    lane = wedge(90, 1.0, LANE["r"], LANE["y"][0], LANE["y"][1], gap=0.0, half=LANE["half_deg"])
+    (x0, x1), (y0, y1) = LANE["x"], LANE["y"]
+    lane = cyl(LANE["r"], y0, y1) ^ mf.Manifold.cube([x1 - x0, y1 - y0 + 2, LANE["r"] + 1]).translate([x0, y0 - 1, 0])
     grab = (cyl(GRIP_LANE["r"], GRIP_LANE["y0"], Y_C + GRIP_LANE["dy1"]) - cyl(GRIP_LANE["r0"], GRIP_LANE["y0"] - 1, Y_C + GRIP_LANE["dy1"] + 1)) ^ \
         mf.Manifold.cube([2 * GRIP_LANE["x"], Y_C + GRIP_LANE["dy1"] - GRIP_LANE["y0"] + 2, GRIP_LANE["r"] + 1]).translate([-GRIP_LANE["x"], GRIP_LANE["y0"] - 1, 0])
     return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]) + cyl(RAIL_DISC["r"], *RAIL_DISC["y"]),
@@ -266,9 +271,36 @@ def write_concept(od, out, P, env, R):
     A = assembly.new("Box structure v2 layout", "box", parts=parts, probes=False, fit_tol_mm3=0.5, contact_pairs=contact, access=access,
                      note="v2 layout concept (box_layout_v2.py). Bay body envelopes are design spaces (their System-line mass is envelope volume x PETG, not a design mass); each receiver and cartridge sits in its own envelope by design (contact pairs); the arm's turning envelopes overlap each other by construction. Probes off (floor-standing box, DEFAULT).")
     A.save(os.path.join(od, "concept.assembly.json"))
+    if os.path.basename(od) == "layout":   # the DEFAULT layout is the box structure v2 system file the catch and arm check against (hub)
+        A.save(os.path.join(ROOT, "nox", "box", "box_structure_v2.assembly.json"))
     res = A.check(); json.dump(dict(summary=res.get("summary"), access=res.get("access"), fit=res.get("fit")), open(os.path.join(od, "concept_check.json"), "w"), indent=1, default=str)
     A.scene().write(os.path.join(od, "layout.html"))
     return res.get("summary")
+
+
+def v8_lane_check(od):
+    """the catch against both drone-insert keep-outs: as is once the catch file is funnel v8 (catch PR 81, M); with a v7 file
+    moved FUNNEL_V8_GROW_Y along -Y as the v8 estimate (E; catch_W is one connected body, so all of it moves, only its -Y
+    face reaches the lanes); -> v8_lane_check.json."""
+    cat = trimesh.load(os.path.join(od, "catch_W.stl"), force="mesh")
+    shift = json.load(open(os.path.join(od, "layout.json")))["catch"]["v8_allowance_Y"]   # 0 once the catch file is v8 itself
+    lanes = {k: trimesh.load(os.path.join(od, "parts", f), force="mesh") for k, f in (("carriage", "drone_30.stl"), ("grabber", "drone_31.stl"))}
+    M = lambda t: mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
+    out = {}
+    for k, L in lanes.items():
+        hits = []
+        for b in cat.split(only_watertight=False):
+            if b.bounds[0][1] > Y_FUN - 45.0:                       # the -Y face only
+                continue
+            t = b.copy(); t.apply_translation([0, -shift, 0]); i = M(t) ^ M(L)
+            if i.volume() > 0.5:
+                v = np.asarray(i.to_mesh().vert_properties)[:, :3]; r = np.hypot(v[:, 0], v[:, 2])
+                hits.append(dict(mm3=round(i.volume(), 1), x=[round(float(v[:, 0].min()), 1), round(float(v[:, 0].max()), 1)],
+                                 y=[round(float(v[:, 1].min()), 1), round(float(v[:, 1].max()), 1)], r=[round(float(r.min()), 1), round(float(r.max()), 1)]))
+        out[k] = dict(total_mm3=round(sum(h["mm3"] for h in hits), 1), hits=hits)
+    json.dump(dict(note=f"the catch's -Y side moved -Y by {shift} (0 = the v8 file as is, M; else the v7 file shifted, E) vs the insert keep-outs", **out),
+              open(os.path.join(od, "v8_lane_check.json"), "w"), indent=1)
+    return out
 
 if __name__ == "__main__":
     main()

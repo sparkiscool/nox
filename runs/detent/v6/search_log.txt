@@ -1,0 +1,2 @@
+CHOSEN_V7 levers on v6 parts: {'hold_Nm': 1.194, 'hook_N': 10.9, 'roller_N': 28.3, 'hertz_MPa': 32.7, 'hertz_index': 0.48, 'contact_w': 4.0, 'arm_M_Nmm': 424.0, 'arm_MPa': 9.4, 'arm_index': 0.21}
+search {'tried': 1469, 'best': None}

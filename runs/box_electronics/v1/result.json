@@ -8,155 +8,155 @@
  "mass_g": null,
  "placement": {
   "SKR": {
-   "x": -100.0,
-   "z": 12.5,
+   "x": -25.0,
+   "z": 92.5,
    "turned": false,
    "rect": [
-    -151.9,
-    -48.1,
-    -22.6,
-    47.6
+    -76.9,
+    26.9,
+    57.4,
+    127.6
    ]
   },
   "PI": {
-   "x": -115.0,
-   "z": 180.0,
+   "x": -22.5,
+   "z": 182.5,
    "turned": true,
    "rect": [
-    -143.0,
-    -87.0,
-    137.5,
-    222.5
+    -50.5,
+    5.5,
+    140.0,
+    225.0
    ]
   },
   "PCA": {
-   "x": -10.0,
-   "z": 180.0,
-   "turned": false,
+   "x": 47.5,
+   "z": 102.5,
+   "turned": true,
    "rect": [
-    -41.2,
-    21.2,
-    167.3,
-    192.7
+    34.8,
+    60.2,
+    71.2,
+    133.8
    ]
   },
   "RELAY": {
-   "x": -80.0,
-   "z": 92.5,
-   "turned": true,
+   "x": -122.5,
+   "z": 102.5,
+   "turned": false,
    "rect": [
-    -107.5,
-    -52.5,
-    55.0,
+    -160.0,
+    -85.0,
+    75.0,
     130.0
    ]
   },
   "INA_KA": {
-   "x": 10.0,
-   "z": 95.0,
+   "x": -80.0,
+   "z": 147.5,
    "turned": false,
    "rect": [
-    -6.0,
-    26.0,
-    84.0,
-    106.0
+    -96.0,
+    -64.0,
+    136.5,
+    158.5
    ]
   },
   "INA_S": {
-   "x": -25.0,
-   "z": 87.5,
-   "turned": true,
+   "x": -122.5,
+   "z": 147.5,
+   "turned": false,
    "rect": [
-    -36.0,
-    -14.0,
-    71.5,
-    103.5
+    -138.5,
+    -106.5,
+    136.5,
+    158.5
    ]
   },
   "INA_O": {
-   "x": -135.0,
-   "z": 85.0,
-   "turned": true,
+   "x": -132.5,
+   "z": 57.5,
+   "turned": false,
    "rect": [
-    -146.0,
-    -124.0,
-    69.0,
-    101.0
+    -148.5,
+    -116.5,
+    46.5,
+    68.5
    ]
   },
   "BUCK_KA": {
-   "x": 65.0,
-   "z": 182.5,
+   "x": -100.0,
+   "z": 190.0,
    "turned": false,
    "rect": [
-    32.0,
-    98.0,
-    159.0,
-    206.0
+    -133.0,
+    -67.0,
+    166.5,
+    213.5
    ]
   },
   "BUCK_SV": {
-   "x": -10.0,
-   "z": 137.5,
-   "turned": false,
+   "x": 112.5,
+   "z": 147.5,
+   "turned": true,
    "rect": [
-    -43.0,
-    23.0,
-    114.0,
-    161.0
+    89.0,
+    136.0,
+    114.5,
+    180.5
    ]
   },
   "BUCK_5V": {
-   "x": -67.5,
-   "z": 180.0,
-   "turned": true,
+   "x": 32.5,
+   "z": 190.0,
+   "turned": false,
    "rect": [
-    -80.5,
-    -54.5,
-    159.5,
-    200.5
+    12.0,
+    53.0,
+    177.0,
+    203.0
    ]
   },
   "FUSE": {
-   "x": 97.5,
-   "z": 122.5,
+   "x": -100.0,
+   "z": 7.5,
    "turned": false,
    "rect": [
-    45.0,
-    150.0,
-    92.5,
-    152.5
+    -152.5,
+    -47.5,
+    -22.5,
+    37.5
    ]
   },
   "BUS": {
-   "x": -10.0,
-   "z": 215.0,
+   "x": 47.5,
+   "z": 155.0,
    "turned": false,
    "rect": [
-    -45.0,
-    25.0,
-    200.0,
-    230.0
+    12.5,
+    82.5,
+    140.0,
+    170.0
    ]
   }
  },
  "search": {
   "seeds": 12,
-  "best_seed": 7,
-  "best_cost": 36631,
+  "best_seed": 6,
+  "best_cost": 36433,
   "costs": [
+   36433,
    36631,
-   36842,
-   36881,
-   37582,
-   38125,
-   38140,
-   38274,
-   38349,
-   38514,
-   38517,
-   39334,
-   40426
+   36748,
+   37738,
+   37851,
+   38353,
+   38391,
+   38481,
+   38922,
+   39200,
+   39599,
+   39901
   ],
   "objective": "sum over nets of conductors x (0.25 + I_cont) x route length (DEFAULT)"
  },
@@ -248,14 +248,23 @@
    "detour_E": 60.0,
    "route": "hook latch unit, +X face, Y_C + 100"
   },
-  "POST": {
+  "PANEL_P": {
    "pos": [
-    40.0,
-    175.0,
-    120.0
+    0.0,
+    275.0,
+    160.0
    ],
-   "detour_E": 80.0,
-   "route": "pogo + KW11 post under the belly (box chat): along Y at r >= 150 over the arm sweep, under the funnel's back face"
+   "detour_E": 60.0,
+   "route": "2 spring probes in the +x plain funnel panel (B+), Y_C + 100: up the corner post, over the sheet top, down the panel (hub DEFAULT 24 Oct, was the pogo post)"
+  },
+  "PANEL_M": {
+   "pos": [
+    0.0,
+    75.0,
+    160.0
+   ],
+   "detour_E": 60.0,
+   "route": "2 spring probes in the -x plain funnel panel (B-), Y_C - 100: same route"
   },
   "BAY_S": {
    "pos": [
@@ -278,10 +287,10 @@
  },
  "checks": {
   "depth_ok": true,
-  "min_gap_mm": 6.3,
+  "min_gap_mm": 6.2,
   "min_gap_pair": [
    "PCA",
-   "BUCK_SV"
+   "BUS"
   ],
   "ampacity_fail": [],
   "drop_flags": []
@@ -313,14 +322,14 @@
    "I_peak": 11.9,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 192,
-   "cut_mm": 275,
+   "route_mm": 274,
+   "cut_mm": 370,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.024,
-    "peak_V": 0.038,
-    "cont_pct": 0.1,
-    "peak_pct": 0.16
+    "cont_V": 0.034,
+    "peak_V": 0.054,
+    "cont_pct": 0.14,
+    "peak_pct": 0.23
    },
    "fixed_tail_mm": null
   },
@@ -334,14 +343,14 @@
    "I_peak": 6.5,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 457,
-   "cut_mm": 590,
+   "route_mm": 144,
+   "cut_mm": 215,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.078,
-    "peak_V": 0.078,
-    "cont_pct": 0.33,
-    "peak_pct": 0.33
+    "cont_V": 0.025,
+    "peak_V": 0.025,
+    "cont_pct": 0.1,
+    "peak_pct": 0.1
    },
    "fixed_tail_mm": null
   },
@@ -355,14 +364,14 @@
    "I_peak": 5.2,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 132,
-   "cut_mm": 200,
+   "route_mm": 445,
+   "cut_mm": 575,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.018,
-    "peak_V": 0.029,
-    "cont_pct": 0.07,
-    "peak_pct": 0.12
+    "cont_V": 0.06,
+    "peak_V": 0.097,
+    "cont_pct": 0.25,
+    "peak_pct": 0.4
    },
    "fixed_tail_mm": null
   },
@@ -376,14 +385,14 @@
    "I_peak": 3.0,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 440,
-   "cut_mm": 570,
+   "route_mm": 285,
+   "cut_mm": 385,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.018,
-    "peak_V": 0.055,
-    "cont_pct": 0.08,
-    "peak_pct": 0.23
+    "cont_V": 0.012,
+    "peak_V": 0.036,
+    "cont_pct": 0.05,
+    "peak_pct": 0.15
    },
    "fixed_tail_mm": null
   },
@@ -397,14 +406,14 @@
    "I_peak": 2.2,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 225,
-   "cut_mm": 310,
+   "route_mm": 92,
+   "cut_mm": 155,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.021,
-    "cont_pct": 0.01,
-    "peak_pct": 0.09
+    "cont_V": 0.001,
+    "peak_V": 0.009,
+    "cont_pct": 0.0,
+    "peak_pct": 0.04
    },
    "fixed_tail_mm": null
   },
@@ -418,14 +427,14 @@
    "I_peak": 1.8,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 92,
-   "cut_mm": 155,
+   "route_mm": 182,
+   "cut_mm": 260,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.007,
-    "cont_pct": 0.01,
-    "peak_pct": 0.03
+    "cont_V": 0.007,
+    "peak_V": 0.014,
+    "cont_pct": 0.03,
+    "peak_pct": 0.06
    },
    "fixed_tail_mm": null
   },
@@ -439,14 +448,14 @@
    "I_peak": 1.0,
    "rail_V": 24,
    "kind": "power",
-   "route_mm": 222,
-   "cut_mm": 310,
+   "route_mm": 315,
+   "cut_mm": 420,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.007,
-    "peak_V": 0.015,
-    "cont_pct": 0.03,
-    "peak_pct": 0.06
+    "cont_V": 0.01,
+    "peak_V": 0.021,
+    "cont_pct": 0.04,
+    "peak_pct": 0.09
    },
    "fixed_tail_mm": null
   },
@@ -460,14 +469,14 @@
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 235,
-   "cut_mm": 325,
+   "route_mm": 110,
+   "cut_mm": 175,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
-    "peak_V": 0.015,
-    "cont_pct": 0.04,
-    "peak_pct": 0.11
+    "cont_V": 0.002,
+    "peak_V": 0.007,
+    "cont_pct": 0.02,
+    "peak_pct": 0.05
    },
    "fixed_tail_mm": null
   },
@@ -481,8 +490,8 @@
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 92,
-   "cut_mm": 155,
+   "route_mm": 88,
+   "cut_mm": 145,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.002,
@@ -493,44 +502,44 @@
    "fixed_tail_mm": null
   },
   {
-   "net": "KA + pad",
+   "net": "KA + probes",
    "a": "INA_KA",
-   "b": "POST",
+   "b": "PANEL_P",
    "conductors": 1,
    "awg": 18,
    "I_cont": 1.0,
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 366,
-   "cut_mm": 480,
+   "route_mm": 484,
+   "cut_mm": 625,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.008,
-    "peak_V": 0.023,
-    "cont_pct": 0.06,
-    "peak_pct": 0.18
+    "cont_V": 0.01,
+    "peak_V": 0.03,
+    "cont_pct": 0.08,
+    "peak_pct": 0.23
    },
    "fixed_tail_mm": null
   },
   {
-   "net": "KA - pad",
+   "net": "KA - probes",
    "a": "BUCK_KA",
-   "b": "POST",
+   "b": "PANEL_M",
    "conductors": 1,
    "awg": 18,
    "I_cont": 1.0,
    "I_peak": 3.0,
    "rail_V": 13,
    "kind": "power",
-   "route_mm": 398,
-   "cut_mm": 520,
+   "route_mm": 321,
+   "cut_mm": 430,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.008,
-    "peak_V": 0.025,
-    "cont_pct": 0.06,
-    "peak_pct": 0.19
+    "cont_V": 0.007,
+    "peak_V": 0.02,
+    "cont_pct": 0.05,
+    "peak_pct": 0.16
    },
    "fixed_tail_mm": null
   },
@@ -544,12 +553,12 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 250,
-   "cut_mm": 340,
+   "route_mm": 256,
+   "cut_mm": 350,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.01,
-    "peak_V": 0.021,
+    "peak_V": 0.022,
     "cont_pct": 0.06,
     "peak_pct": 0.13
    },
@@ -565,14 +574,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 60,
-   "cut_mm": 115,
+   "route_mm": 45,
+   "cut_mm": 95,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.002,
-    "peak_V": 0.005,
+    "peak_V": 0.004,
     "cont_pct": 0.01,
-    "peak_pct": 0.03
+    "peak_pct": 0.02
    },
    "fixed_tail_mm": null
   },
@@ -586,14 +595,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 614,
-   "cut_mm": 780,
+   "route_mm": 771,
+   "cut_mm": 970,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.024,
-    "peak_V": 0.053,
-    "cont_pct": 0.14,
-    "peak_pct": 0.31
+    "cont_V": 0.031,
+    "peak_V": 0.066,
+    "cont_pct": 0.18,
+    "peak_pct": 0.39
    },
    "fixed_tail_mm": null
   },
@@ -628,12 +637,12 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 250,
-   "cut_mm": 340,
+   "route_mm": 256,
+   "cut_mm": 350,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.02,
-    "peak_V": 0.021,
+    "peak_V": 0.022,
     "cont_pct": 0.12,
     "peak_pct": 0.13
    },
@@ -649,11 +658,11 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 62,
-   "cut_mm": 115,
+   "route_mm": 55,
+   "cut_mm": 110,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
+    "cont_V": 0.004,
     "peak_V": 0.005,
     "cont_pct": 0.03,
     "peak_pct": 0.03
@@ -670,14 +679,14 @@
    "I_peak": 6.5,
    "rail_V": 16.8,
    "kind": "power",
-   "route_mm": 391,
-   "cut_mm": 510,
+   "route_mm": 366,
+   "cut_mm": 480,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.031,
-    "peak_V": 0.034,
-    "cont_pct": 0.18,
-    "peak_pct": 0.2
+    "cont_V": 0.029,
+    "peak_V": 0.031,
+    "cont_pct": 0.17,
+    "peak_pct": 0.19
    },
    "fixed_tail_mm": null
   },
@@ -712,14 +721,14 @@
    "I_peak": 8.0,
    "rail_V": 6.0,
    "kind": "power",
-   "route_mm": 78,
-   "cut_mm": 135,
+   "route_mm": 72,
+   "cut_mm": 130,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.003,
-    "peak_V": 0.026,
+    "peak_V": 0.024,
     "cont_pct": 0.05,
-    "peak_pct": 0.43
+    "peak_pct": 0.41
    },
    "fixed_tail_mm": null
   },
@@ -733,14 +742,14 @@
    "I_peak": 3.2,
    "rail_V": 6.0,
    "kind": "power",
-   "route_mm": 35,
-   "cut_mm": 85,
+   "route_mm": 52,
+   "cut_mm": 105,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.0,
-    "peak_V": 0.005,
+    "cont_V": 0.001,
+    "peak_V": 0.007,
     "cont_pct": 0.01,
-    "peak_pct": 0.08
+    "peak_pct": 0.12
    },
    "fixed_tail_mm": null
   },
@@ -754,16 +763,16 @@
    "I_peak": 5.0,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 424,
+   "route_mm": 421,
    "cut_mm": 550,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.022,
-    "peak_V": 0.224,
+    "peak_V": 0.223,
     "cont_pct": 0.37,
-    "peak_pct": 3.74
+    "peak_pct": 3.72
    },
-   "fixed_tail_mm": 311
+   "fixed_tail_mm": 308
   },
   {
    "net": "latch servo L1",
@@ -775,14 +784,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 305,
-   "cut_mm": 410,
+   "route_mm": 440,
+   "cut_mm": 570,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.026,
-    "cont_pct": 0.05,
-    "peak_pct": 0.43
+    "cont_V": 0.005,
+    "peak_V": 0.037,
+    "cont_pct": 0.08,
+    "peak_pct": 0.62
    },
    "fixed_tail_mm": null
   },
@@ -796,14 +805,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 505,
-   "cut_mm": 650,
+   "route_mm": 640,
+   "cut_mm": 810,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
-    "peak_V": 0.043,
-    "cont_pct": 0.09,
-    "peak_pct": 0.71
+    "cont_V": 0.007,
+    "peak_V": 0.054,
+    "cont_pct": 0.11,
+    "peak_pct": 0.9
    },
    "fixed_tail_mm": null
   },
@@ -817,14 +826,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 325,
-   "cut_mm": 430,
+   "route_mm": 345,
+   "cut_mm": 455,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.028,
+    "cont_V": 0.004,
+    "peak_V": 0.029,
     "cont_pct": 0.06,
-    "peak_pct": 0.46
+    "peak_pct": 0.49
    },
    "fixed_tail_mm": null
   },
@@ -838,14 +847,14 @@
    "I_peak": 0.8,
    "rail_V": 6.0,
    "kind": "servo",
-   "route_mm": 525,
-   "cut_mm": 670,
+   "route_mm": 545,
+   "cut_mm": 695,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.006,
-    "peak_V": 0.045,
-    "cont_pct": 0.09,
-    "peak_pct": 0.74
+    "peak_V": 0.046,
+    "cont_pct": 0.1,
+    "peak_pct": 0.77
    },
    "fixed_tail_mm": null
   },
@@ -859,8 +868,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 200,
-   "cut_mm": 280,
+   "route_mm": 291,
+   "cut_mm": 390,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -875,8 +884,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 400,
-   "cut_mm": 520,
+   "route_mm": 491,
+   "cut_mm": 630,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -891,8 +900,8 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 430,
-   "cut_mm": 560,
+   "route_mm": 336,
+   "cut_mm": 445,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -907,24 +916,24 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 630,
-   "cut_mm": 800,
+   "route_mm": 536,
+   "cut_mm": 685,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
   },
   {
-   "net": "KW11",
+   "net": "seat sense",
    "a": "PI",
-   "b": "POST",
-   "conductors": 2,
+   "b": "INA_KA",
+   "conductors": 1,
    "awg": 28,
    "I_cont": 0.001,
    "I_peak": 0.001,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 526,
-   "cut_mm": 675,
+   "route_mm": 92,
+   "cut_mm": 155,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -939,14 +948,14 @@
    "I_peak": 3.5,
    "rail_V": 5.1,
    "kind": "power",
-   "route_mm": 48,
-   "cut_mm": 100,
+   "route_mm": 62,
+   "cut_mm": 115,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.005,
-    "peak_V": 0.011,
-    "cont_pct": 0.09,
-    "peak_pct": 0.22
+    "cont_V": 0.006,
+    "peak_V": 0.015,
+    "cont_pct": 0.12,
+    "peak_pct": 0.29
    },
    "fixed_tail_mm": null
   },
@@ -960,14 +969,14 @@
    "I_peak": 0.5,
    "rail_V": 5.1,
    "kind": "power",
-   "route_mm": 92,
-   "cut_mm": 155,
+   "route_mm": 50,
+   "cut_mm": 100,
    "ampacity_ok": true,
    "drop": {
     "cont_V": 0.001,
-    "peak_V": 0.003,
-    "cont_pct": 0.02,
-    "peak_pct": 0.06
+    "peak_V": 0.002,
+    "cont_pct": 0.01,
+    "peak_pct": 0.03
    },
    "fixed_tail_mm": null
   },
@@ -981,14 +990,14 @@
    "I_peak": 0.3,
    "rail_V": 5.1,
    "kind": "power",
-   "route_mm": 192,
-   "cut_mm": 275,
+   "route_mm": 222,
+   "cut_mm": 310,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.003,
-    "peak_V": 0.006,
-    "cont_pct": 0.06,
-    "peak_pct": 0.12
+    "cont_V": 0.004,
+    "peak_V": 0.007,
+    "cont_pct": 0.07,
+    "peak_pct": 0.14
    },
    "fixed_tail_mm": null
   },
@@ -1002,8 +1011,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 122,
-   "cut_mm": 190,
+   "route_mm": 180,
+   "cut_mm": 260,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1018,8 +1027,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 105,
-   "cut_mm": 170,
+   "route_mm": 150,
+   "cut_mm": 220,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1034,8 +1043,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 105,
-   "cut_mm": 170,
+   "route_mm": 172,
+   "cut_mm": 250,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1066,8 +1075,8 @@
    "I_peak": 0.01,
    "rail_V": 3.3,
    "kind": "signal",
-   "route_mm": 112,
-   "cut_mm": 175,
+   "route_mm": 100,
+   "cut_mm": 160,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1082,8 +1091,8 @@
    "I_peak": 0.1,
    "rail_V": 5.0,
    "kind": "cable",
-   "route_mm": 182,
-   "cut_mm": 260,
+   "route_mm": 92,
+   "cut_mm": 155,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
@@ -1098,16 +1107,16 @@
    "I_peak": 2.0,
    "rail_V": 24,
    "kind": "stepper",
-   "route_mm": 453,
-   "cut_mm": 585,
+   "route_mm": 462,
+   "cut_mm": 595,
    "ampacity_ok": true,
    "drop": {
-    "cont_V": 0.17,
-    "peak_V": 0.243,
-    "cont_pct": 0.71,
-    "peak_pct": 1.01
+    "cont_V": 0.173,
+    "peak_V": 0.247,
+    "cont_pct": 0.72,
+    "peak_pct": 1.03
    },
-   "fixed_tail_mm": 164
+   "fixed_tail_mm": 174
   },
   {
    "net": "axle hall",
@@ -1119,11 +1128,11 @@
    "I_peak": 0.01,
    "rail_V": 5.0,
    "kind": "signal",
-   "route_mm": 410,
-   "cut_mm": 535,
+   "route_mm": 419,
+   "cut_mm": 545,
    "ampacity_ok": true,
    "drop": null,
-   "fixed_tail_mm": 164
+   "fixed_tail_mm": 174
   },
   {
    "net": "gripper PWM",
@@ -1135,11 +1144,11 @@
    "I_peak": 0.01,
    "rail_V": 6.0,
    "kind": "signal",
-   "route_mm": 388,
-   "cut_mm": 510,
+   "route_mm": 368,
+   "cut_mm": 485,
    "ampacity_ok": true,
    "drop": null,
-   "fixed_tail_mm": 276
+   "fixed_tail_mm": 256
   },
   {
    "net": "GND bus to star",
@@ -1151,21 +1160,21 @@
    "I_peak": 8.0,
    "rail_V": 0,
    "kind": "power",
-   "route_mm": 200,
-   "cut_mm": 280,
+   "route_mm": 295,
+   "cut_mm": 395,
    "ampacity_ok": true,
    "drop": null,
    "fixed_tail_mm": null
   }
  ],
  "wire_totals_mm_by_awg": {
-  "18": 5285,
-  "14": 550,
-  "16": 4545,
-  "20": 1130,
-  "22": 8130,
-  "28": 10455,
-  "26": 10410
+  "18": 5605,
+  "14": 740,
+  "16": 3950,
+  "20": 1270,
+  "22": 9310,
+  "28": 9210,
+  "26": 11340
  },
  "budget": {
   "rows": [
@@ -1258,13 +1267,13 @@
   [
    "WAIT_SEAT",
    "drone lands under its own landing mode; kill at first touch",
-   "KW11 low for 100 ms",
+   "seat sense low for 100 ms",
    30.0,
    "no seat: mission retries the landing"
   ],
   [
    "LATCH_OUT",
-   "PCA ch 0..3 to OUT (servo pulse per unit from calibration), KW11 ignored from here",
+   "PCA ch 0..3 to OUT (servo pulse per unit from calibration), seat sense ignored from here",
    "all 4 halls low within 0.5 s",
    0.5,
    "A1 latch not out"
@@ -1285,9 +1294,9 @@
   ],
   [
    "TURN",
-   "axle 90 deg: head A to the top",
+   "axle 90 deg: head A to the top; <= 100 full steps/s through each notch; step target + the bay's gravity offset",
    "no stall; hall state matches phi",
-   0.6,
+   1.1,
    "A5 stall"
   ],
   [
@@ -1300,7 +1309,7 @@
   [
    "MATE_CHECK",
    "hold the stroke; read INA_KA",
-   "I < 50 mA within 1.0 s (the new pack carries the drone)",
+   "I > 100 mA seen during INSERT, then I < 50 mA within 1.0 s (the new pack carries the drone)",
    1.0,
    "A6 mate fail"
   ],
@@ -1320,7 +1329,7 @@
   ],
   [
    "LATCH_IN",
-   "PCA ch 0..3 to IN",
+   "PCA ch 0..3 to IN, only with a pack mated (pack-out hold)",
    "all 4 halls high within 0.5 s",
    0.5,
    "A11 latch stuck out"
@@ -1328,7 +1337,7 @@
   [
    "READY",
    "SWAP_DONE to the mission; the mission arms the drone; take off",
-   "KW11 high (drone gone)",
+   "seat sense high (drone gone)",
    60.0,
    "drone stays: mission decides"
   ],
@@ -1375,12 +1384,12 @@
   [
    "A3 keep-alive fault",
    "bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s with the old pack in, or K1 will not open at 0 A",
-   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, never open K1 with the drone on keep-alive"
+   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, K1 and the latch stay as they are (pack-out hold)"
   ],
   [
    "A4 pull / keep-alive lost",
    "INA_KA I < 100 mA at the end of the pull stroke",
-   "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm"
+   "either the pack did not come out or the pads did not make: head B re-inserts what it holds; always the pack-out hold (latch OUT, K1 closed), SWAP_FAIL, alarm (the current cannot prove a mate here)"
   ],
   [
    "A5 stall",
@@ -1409,13 +1418,18 @@
   ],
   [
    "A10 seat lost before latch",
-   "KW11 high before LATCH_OUT",
+   "seat sense high before LATCH_OUT",
    "back to WAIT_SEAT"
   ],
   [
    "A11 latch stuck out",
    "a hall still low 0.5 s after IN",
    "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"
+  ],
+  [
+   "A12 keep-alive at 0 A, pack out",
+   "after PULL, no pack mated, keep-alive I < 50 mA for 2 s",
+   "open K1 and read seat sense: high (drone lifted off) -> latch IN, SWAP_FAIL, alarm; low (drone still seated: pins or K1 / buck / F3 lost) -> latch stays OUT, alarm (catch PR 93)"
   ]
  ]
 }

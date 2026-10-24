@@ -81,6 +81,8 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | GT2 belt connectors | per head | belt clamp (decision 27) | on hand | box-arm.md |
 | GT2 toothless idler (bore 3 or 5) | 2 | head belt turnarounds (v4 demo; out in arm v5) | on hand (kit; bore CHECK) | M: idler |
 | 625ZZ bearing 5 x 16 x 5 | 12 | arm v5 carriage V-wheels (2 per wheel) | to buy | box-arm.md v5 |
+| 623ZZ bearing 3 x 10 x 4 | 1 | detent v6 roller on the 3.0 carbon axle (arm v7) | to buy | box-arm.md v7, runs/detent/v6/summary.md |
+| GT2 16T pulley, 6 mm belt, 5 mm bore | 1 | arm v7 axle motor (5:1 on the fixed 80T; replaces the 20T) | to buy | box-arm.md v7 |
 | M5 precision shim 5 x 10 x 1 | 6 | arm v5: one under each V-wheel (Y 93..94), the eccentric bush sits on one | to buy | box-arm.md v5 mechanism drawn |
 | M5 x 16 socket head (ISO 4762) + M5 heat-set insert (OD 7.0 x 5.8, E) | 4 + 4 | arm v5 rail to hub post, one per post (the inserts go in hub v6's post tops) | CHECK on hand | box-arm.md v5 mechanism drawn |
 | M3 x 4 grub screw | 2 | arm v5 16T pinions on the D-shafts (tapped in the printed boss) | CHECK on hand | box-arm.md v5 mechanism drawn |
@@ -92,8 +94,11 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | M2 x 12 screws + nuts | 12 (8 ear screws + nuts, 4 yoke pins) | hook latch | CHECK on hand | `box/box-hook-latch.md` |
 | M3 x 10 + M3 x 5.7 heat-set inserts | 16 + 16 | hook latch housings on the panel v7 bosses | on hand (CHECK count) | M: inserts |
 | A3144 hall switch + Ø3 x 2 magnet | 4 + 4 | hook latch: plunger fully out | to buy (A3144 pack priced below; Ø3 x 2 magnets CHECK) | `box/box-hook-latch.md` |
-| KW11 microswitch | 1 (on the pogo post, not per bay) | drone seated, Pi GPIO 24 | to buy (CHECK on hand) | M: KW11 |
-| Pogo pins, travel ≥ 8, ≥ 1.5 A each | 4 (2 pads x 2 pins, on the post) | keep-alive 13.0 V | to buy (CHECK model, Q20; the 0854's 2.3 stroke is too short) | M: pogo pin; `box/box-electronics.md` |
+| BAT54 Schottky + 5 V TVS ≤ 1 µA at 3.3 V (ESD9L5.0 class, CHECK) + SMBJ15A + 1 kΩ / 100 kΩ resistors | 1 + 1 + 1 + 1 / 1 | seat sense on GPIO 24 (replaces the KW11) | to buy | `box/box-electronics.md` I/O |
+| Keep-alive probe pins (DIY, panel v9 plain, `box/box-funnel.md` v9 plain): brass rod Ø3.0 (C360) cut to 4 x 36.5, tip domed + brass tube 4.0 OD / 3.0 ID cut to 4 x 3.0, soldered 14.0 from the tip | 1 rod ≥ 300 + 1 tube ≥ 300 | keep-alive 13.0 V, 2 per plain ±x face (replaces the pogo post) | to buy | `box/box-funnel.md` v9 plain; dimensions G Keep-alive probes |
+| Compression spring, music wire, OD 4.0 x wire 0.25 x free length 25, ~16 active coils, rate ~0.045 N/mm (E): reads 0.54 N (55 g) at 13.0 long, 0.88 N (90 g) at 5.5 | 4 (+2 spare; an OD 4 / 0.25 wire assortment, rate checked on a kitchen scale) | keep-alive probe springs | to buy | dimensions G Keep-alive probes |
+| Silicone wire 20 AWG, red (+x, B+) / black (−x, B−) | 4 x 0.15 m (one per pin, joined at the panel's 3.5 mm bullet) | keep-alive probe leads | to buy (or from the 20 AWG row below) | `box/box-electronics.md` |
+| M2 x 6 pan head self-tapping (PT / plastite) + 2.5 mm cable ties | 2 + 4 | probe caps; lead strain relief in the boss groove | to buy (CHECK on hand) | `box/box-funnel.md` v9 plain |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |
 | Clear sheet, 3.0 (enclosure) | 4 | stand v7 walls | CHECK | box-stand.md |
 | Brass heat-set inserts M3 / M5 | as drawn | printed-part threads | on hand | M: inserts |
@@ -102,13 +107,13 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | Taidacent 12-wire slip ring | 1 | (retired: bounded-travel harness instead) | ordered, not used | |
 | **Box electronics v1 (24 Oct, `box/box-electronics.md`)** | | | | |
 | Raspberry Pi 4 B 2 GB + microSD ≥ 32 GB | 1 | box computer: Klipper host + `boxd` (DEFAULT; alt Pi 5) | to buy | M: Pi 4 85 x 56 (spec) |
-| GPIO screw-terminal HAT for the Pi 4 | 1 | halls, KW11, relay inputs, I2C, pull-ups | to buy | |
+| GPIO screw-terminal HAT for the Pi 4 | 1 | halls, seat sense, relay inputs, I2C, pull-ups | to buy | |
 | PCA9685 16-ch PWM board (Adafruit 815 class) | 1 | 4 latch MG90S + 2 gripper servos | to buy | 62.5 x 25.4 (spec) |
 | INA226 module + R010 2512 shunt (swap the R100) | 3 + 3 | keep-alive and 2 live bays: current + bus voltage | to buy (CHECK: INA226 on hand?) | E 32 x 22 |
 | XL4016-class CC/CV buck, 8 A | 2 | keep-alive 13.0 V CC 3.0 A; servo rail 6.0 V | to buy | E 66 x 47 |
 | 24 → 5.1 V 5 A buck (Pololu D36V50F5 class) | 1 | Pi + logic (or the on-hand 5 V buck if ≥ 4 A) | to buy (CHECK) | E 41 x 26 |
-| DPDT relay 24 VDC coil, 8 A contacts (Omron G2RL-2 DC24 class, spec) + PCB socket | 2 | head brake KB1 / KB2: NC shorts each head-motor coil on itself when the brake pin is low (`box-electronics.md` Head brake) | to buy | E 29 x 13 each |
-| ULN2003A (DIP-16, bare chip) + small perfboard | 1 | head brake relay coils at 24 V from 2 SKR pins (not a 28BYJ-48 LED module: 5..12 V) | to buy | E 30 x 20 |
+| DPDT relay 24 VDC coil, 8 A contacts (Omron G2RL-2 DC24 class, spec) + PCB socket | 3 | brake KB1 / KB2 (heads) / KB3 (axle): NC shorts each motor coil on itself when its brake pin is low (`box-electronics.md` Head brake) | to buy | E 29 x 13 each |
+| ULN2003A (DIP-16, bare chip) + small perfboard | 1 | brake relay coils at 24 V from 3 SKR pins (not a 28BYJ-48 LED module: 5..12 V) | to buy | E 30 x 20 |
 | 4-ch 5 V opto relay board (SRD-05VDC-SL-C, 10 A 30 VDC) | 1 | K1 keep-alive, K2 / K3 live bays, K4 spare (replaces the 7 x 8-ch mux, priced) | to buy | E 75 x 55 |
 | 6-way blade fuse box with negative bus + blade fuses 10 / 5 / 3 / 2 A | 1 + 1 set | 24 V distribution | to buy | E 105 x 60 |
 | IEC C14 fused switched inlet + mains cord | 1 + 1 | mains in, on the rear sheet | to buy (cord CHECK on hand) | cut-out 48 x 28 (E, CHECK) |
@@ -117,7 +122,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | Nylon M3 standoffs 10 F-F + M3 x 6 + nuts; M2.5 set for the Pi / PCA | ~50 | boards on the rear sheet | CHECK on hand | |
 | M4 x 6 pan head + fender washers | 4 + 4 | PSU on the rear sheet | CHECK on hand | M: LRS-350 |
 | Wago 221-415 lever connectors | 3 | 6.0 V, 5.1 V, GND buses | CHECK on hand | |
-| XT60 pairs; XT30 pair; JST-XH 2 / 3 / 4-pin housings + crimps; bootlace ferrules; fork crimps M3.5 | 2; 1; 1 / 1 / 3; ~60; 5 | sheet disconnects, board ends | CHECK on hand | |
+| XT60 pairs; 3.5 mm bullet pairs; JST-XH 3 / 4-pin housings + crimps; bootlace ferrules; fork crimps M3.5 | 2; 2; 1 / 3; ~60; 5 | sheet disconnects, board ends | CHECK on hand | |
 | 22 AWG 3-core servo extension, 1 m | 4 | hook latch servos | to buy | |
 | Silicone wire 14 / 16 / 18 / 20 AWG red + black | 0.6 / 4.5 / 5.3 / 1.1 m (totals) | power nets (cut list in the doc) | CHECK on hand | |
 | 10 kΩ resistors | 8 | GPIO pull-ups | CHECK on hand | |
@@ -138,7 +143,9 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 ## Box: printed parts (state only in `nox/current-parts.md`)
 | Part | Qty | Print file |
 |---|---|---|
-| Funnel panels A + B | 8 (A / B split in `box-funnel.md`) | not in `print/` |
+| Funnel panels A + B v7 (seated ±y faces) | 2 + 2 | `print/box_funnel_panel_A_v7.stl`, `print/box_funnel_panel_B_v7.stl` |
+| Funnel panels v9 plain (±x faces): A px, B px, A nx, B nx | 1 each | `print/box_funnel_panel_{A,B}_v9_plain_{px,nx}.stl` |
+| Funnel probe cap v9 plain | 2 | `print/box_funnel_probe_cap_v9_plain.stl` |
 | Funnel hub + corner blocks | 1 + CHECK | design |
 | Bay module v4i | 2 | `print/box_baymod_v4i.stl` |
 | Hub v5 | 1 | `print/box_hub_v5.stl` |

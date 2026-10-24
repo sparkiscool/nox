@@ -154,7 +154,8 @@ def carriage(h="A", rack_teeth=True):
     printed (plate + boss + wing + rack web) and bought (wheels shown printed, bearings, bolts, nuts, shims, bush)."""
     pl = box(*V.PLATE_X, *V.PLATE_Y, *V.PLATE_U) + cylY(V.ECC["x"], V.ECC["u"], *V.PLATE_Y, V.ECC["plate_boss_r"], 64)
     pl += box(*V.WING_X, *V.PLATE_Y, *V.WING_U)
-    web = box(*V.WEB_X, *V.WEB_Y, *V.WEB_U)
+    wu = getattr(V, "WEB_U_B", None) if h == "B" else None                 # v7: head B's shorter rack tail (B never inserts at the drone)
+    web = box(*V.WEB_X, *V.WEB_Y, *(wu or V.WEB_U))                         # the tooth phase stays A's (from V.WEB_U)
     if rack_teeth:                                                    # m1 rack along u on the web's +X face: tips 46.5, root 44.25
         p = math.pi * V.PIN_M; xt, xr = V.WEB_X[1], V.RACK_PITCH_X - 1.25 * V.PIN_M
         u = V.WEB_U[0] + p / 2
@@ -181,7 +182,10 @@ def carriage(h="A", rack_teeth=True):
         s += cylY(x, u, V.NUT_Y[0], V.NUT_Y[1], V.NUT_R, 6)                                     # nyloc
         top = V.ECC["flange_y"][1] if (x, u) == (V.ECC["x"], V.ECC["u"]) else V.PLATE_Y[1]
         bl = getattr(V, "AXLE_BOLT_L", dict(fixed=25.0, ecc=25.0))["ecc" if (x, u) == (V.ECC["x"], V.ECC["u"]) else "fixed"]
-        s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - bl, top, 2.5, 24)        # socket head + its real shank (v5: M5 x 25, tail Y 73 / 75.5)
+        if "countersunk" in getattr(V, "AXLE_BOLT_L", {}).get("head", ""):            # v7 round 3: ISO 10642 heads flush in the plate top (cone in the plate)
+            s += cylY(x, u, top - 2.8, top, 5.2, 32) + cylY(x, u, top - bl, top, 2.5, 24)
+        else:
+            s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - bl, top, 2.5, 24)    # socket head + its real shank (v5: M5 x 25, tail Y 73 / 75.5)
         stack = s if stack is None else stack + s
     bush = ecc_bush(V.ECC["x"], V.ECC["u"], 90.0)
     out = dict(printed=printed, wheels=wheels, stack=stack, bush=bush)
