@@ -1,6 +1,6 @@
 # Print files
 
-Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. `scan_stick_cam_v4.stl` is superseded by `scan_stick_cam_v7.stl` (10 mm standoffs, M2.5); do not print it.
+Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. `scan_stick_cam_v4.stl` is superseded by `scan_stick_cam_v7.stl` (10 mm standoffs, M2.5); do not print it. `box_hook_latch_*_v1.stl` are superseded by v2 (funnel panel v7 skin 2.0); do not print them.
 
 | File | Bytes | sha256[:12] |
 |---|---|---|
@@ -29,6 +29,13 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_frame_endL_v7b.stl` | 143384 | 35d3bdd29e25 |
 | `box_frame_endR_v7b.stl` | 137484 | 5bdbb4a9a085 |
 | `box_frame_mid_v6.stl` | 120984 | 01ff810f6f31 |
+| `box_hook_latch_housing_A_v1.stl` | 47784 | dd7251ea8694 |
+| `box_hook_latch_housing_A_v2.stl` | 47984 | af8e6a21b624 |
+| `box_hook_latch_housing_B_v1.stl` | 47784 | b1820a2637ba |
+| `box_hook_latch_housing_B_v2.stl` | 47984 | 4d9ee42f4490 |
+| `box_hook_latch_plunger_A_v2.stl` | 8684 | 2047342632fe |
+| `box_hook_latch_plunger_B_v2.stl` | 8684 | a54921baf061 |
+| `box_hook_latch_plunger_v1.stl` | 8684 | e3a62391d276 |
 | `box_hub_v5.stl` | 10335384 | 6d6b9344e7f6 |
 | `box_idler_end_A_v3.stl` | 60284 | 83a90e7a20c5 |
 | `box_idler_end_B_v3.stl` | 60084 | e2912f039297 |
