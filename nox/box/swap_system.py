@@ -441,7 +441,7 @@ def cases(Y_C=L.Y_C, cart="scout"):
         ("box handling 3 g down + 2 g side", "handling", (z["park"], z["park"]), ("A", "B"), "belt", 0.0, None,
          "the box set down hard / carried, both heads parked and carrying, arm at phi 0 (A horizontal)"),
         ("power cut carrying: head A falls to the park stop", "misuse", (z["park"], z["park"]), ("A",), "detent", 90.0, None,
-         "power cut with head A up carrying a cartridge at the drone insert: head + carriage + cartridge outweigh the cogging and fall 63.6 onto the "
+         "power cut with head A up carrying a cartridge at the drone insert: head + carriage + cartridge outweigh the cogging and fall 64.6 onto the "
          "TPU bumper; the bumper force decelerates them and the free rotor (through the 16T); static equivalent at the stop"),
         ("hand on rail A tip 50 N", "misuse", (z["park"], z["park"]), (), "belt", 90.0, None, "50 N in -X (tangential), worst of +-X / +-Y"),
         ("gravity, A horizontal carrying", "sustained", (z["park"], z["park"]), ("A", "B"), "belt", 0.0, None, "self weight, the worst stop for the axle"),

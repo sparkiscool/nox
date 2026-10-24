@@ -1,0 +1,194 @@
+{
+ "pieces": {
+  "mast": {
+   "source": "stand_v6_parts VTAG=v6",
+   "sha": "1fa9e08c17d0",
+   "generated_sha": "1fa9e08c17d0",
+   "exact": true
+  },
+  "cradle_keel": {
+   "source": "stand_v6_parts VTAG=v6",
+   "sha": "c360aed46fc8",
+   "generated_sha": "c360aed46fc8",
+   "exact": true
+  },
+  "frame_mid": {
+   "source": "stand_v6_parts VTAG=v6",
+   "sha": "01ff810f6f31",
+   "generated_sha": "01ff810f6f31",
+   "exact": true
+  },
+  "kb": {
+   "source": "stand_v7_parts VTAG=v7b",
+   "sha": "f718facc8b4c",
+   "generated_sha": "f718facc8b4c",
+   "exact": true
+  },
+  "toe": {
+   "source": "stand_v7_parts VTAG=v7b",
+   "sha": "74892913179a",
+   "generated_sha": "74892913179a",
+   "exact": true
+  },
+  "frame_endR": {
+   "source": "stand_v7_parts VTAG=v7b",
+   "sha": "5bdbb4a9a085",
+   "generated_sha": "5bdbb4a9a085",
+   "exact": true
+  },
+  "frame_endL": {
+   "source": "stand_v7_parts VTAG=v7b",
+   "sha": "35d3bdd29e25",
+   "generated_sha": "35d3bdd29e25",
+   "exact": true
+  },
+  "post_seg": {
+   "source": "stand_v7_parts VTAG=v7",
+   "sha": "5cab526b8391",
+   "generated_sha": "5cab526b8391",
+   "exact": true
+  },
+  "bracket_jB": {
+   "source": "stand_v7_parts VTAG=v7",
+   "sha": "a48119676bb0",
+   "generated_sha": "a48119676bb0",
+   "exact": true
+  },
+  "bracket_e": {
+   "source": "stand_v7_parts VTAG=v7c",
+   "sha": "55f717ab05f8",
+   "generated_sha": "55f717ab05f8",
+   "exact": true
+  },
+  "bar_half": {
+   "source": "print/box_bar_half_v8.stl mapped to W",
+   "fit": {
+    "shift": [
+     -37.071,
+     0.0,
+     -191.0567
+    ],
+    "drawn_missing_mm3": 0.0,
+    "in_cuts_mm3": 0.0,
+    "outside_env_mm3": 0.0,
+    "angle_deg": 45.12
+   },
+   "sha": "aacd009b7ae1"
+  },
+  "bracket_jA": {
+   "source": "print/box_bracket_jA_v8.stl mapped to W",
+   "fit": {
+    "shift": [
+     186.0,
+     135.0,
+     -67.0013
+    ],
+    "drawn_missing_mm3": 0.0,
+    "in_cuts_mm3": 0.0,
+    "outside_env_mm3": 0.0
+   },
+   "sha": "21af8faad391"
+  },
+  "baymod": {
+   "source": "models/box_baymod_v4i_W.obj",
+   "print_g": 83.4,
+   "W_g": 83.4,
+   "same_volume": true
+  }
+ },
+ "fit": {
+  "piece_and_bought_overlaps_mm3": {
+   "cradle_keel ^ baymod@-90": 0.15,
+   "frame_endR@30 ^ catch: funnel panel A -y": 319.63,
+   "frame_endR@30 ^ catch: funnel panel B -y": 319.63,
+   "frame_endL@-210 ^ catch: funnel panel A +y": 319.63,
+   "frame_endL@-210 ^ catch: funnel panel B +y": 319.63,
+   "sheetF ^ catch: funnel panel A +x": 4794.23,
+   "sheetF ^ catch: funnel panel B +x": 4794.23,
+   "sheetF ^ catch: funnel panel B +y": 89.37,
+   "sheetF ^ catch: funnel panel A -y": 89.37
+  },
+  "keepout_overlaps_mm3": {}
+ },
+ "mass": {
+  "rows_g": {
+   "mast": 99.1,
+   "cradle_keel": 70.1,
+   "kb": 115.0,
+   "toe": 52.7,
+   "barA": 77.6,
+   "barB": 77.6,
+   "frame_mid@-30": 47.6,
+   "frame_mid@0": 47.6,
+   "frame_mid@-120": 47.6,
+   "frame_mid@-150": 47.6,
+   "frame_mid@-180": 47.6,
+   "frame_endR@30": 89.2,
+   "frame_endL@-210": 88.7,
+   "post+F0": 42.5,
+   "post+F1": 42.5,
+   "post+F2": 42.5,
+   "post-F0": 42.5,
+   "post-F1": 42.5,
+   "post-F2": 42.5,
+   "post+R0": 42.5,
+   "post+R1": 42.5,
+   "post+R2": 42.5,
+   "post-R0": 42.5,
+   "post-R1": 42.5,
+   "post-R2": 42.5,
+   "bracket_jA@-15": 38.4,
+   "bracket_jA@165": 38.4,
+   "bracket_jB@15": 23.0,
+   "bracket_jB@195": 23.0,
+   "bracket_e@45": 109.8,
+   "bracket_e@135": 109.8,
+   "baymod@-90": 83.4,
+   "baymod@-60": 83.4,
+   "sheet+X": 625.0,
+   "sheet-X": 625.0,
+   "sheetF": 576.2,
+   "sheetR": 576.2,
+   "psu": 750.0,
+   "arm": 2900.0,
+   "funnel": 640.0,
+   "electronics": 1250.0,
+   "bay_packs": 440.0
+  },
+  "total_g": 10310.0,
+  "cg": [
+   19.5,
+   82.4,
+   -6.7
+  ],
+  "with Scout": {
+   "total_g": 10830.0,
+   "cg": [
+    18.6,
+    86.9,
+    2.5
+   ],
+   "tip_deg": {
+    "+X": 39.9,
+    "-X": 45.6,
+    "+Y": 51.2,
+    "-Y": 37.5
+   }
+  },
+  "with Overseer": {
+   "total_g": 12640.0,
+   "cg": [
+    15.9,
+    99.8,
+    28.6
+   ],
+   "tip_deg": {
+    "+X": 37.0,
+    "-X": 41.8,
+    "+Y": 46.3,
+    "-Y": 36.3
+   }
+  }
+ },
+ "system_check": "System: Box structure, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.2 mm\u00b3 (E) (cradle_keel/barB), bbox 70.4 L (E), extents 384 x 415 x 441 mm (E), mass 5080 g (E), CG [15.2, 107.8, -10.6] (E, no cg_ref), access 2/3 clear (bay swap -90: module out along +Y 100 blocked by cradle_keel 75 mm\u00b3) FAIL"
+}

@@ -62,7 +62,16 @@ The seated drone (rigid, 4.9 N E, its 8 catch wheels on the faces), the collar, 
 | pull-out 50 N down | 1.7 N | 17.0 N | 0.01 / 0.01 (flight) |
 | hand lift 100 N at a cage corner | 85.8 N | 46.3 N | 0.44 / 0.26 (misuse) |
 | catch, 6 g floor landing on the faces | 0 | 6.1 N | 0 |
-**Assembled worst 0.44 on the latch load path (hand lift; max over plunger, guide, panel v7 FE and bosses)**; the panels' own handling case (press u60 v90) stays theirs at 0.91 / 0.93 (C, `runs/funnel_panel/v7/summary.md`), so the whole catch's worst is 0.93 (under 1.0), under the piece's own 100 N misuse check (0.51, C hand calc). Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 as-built FE under these system reactions: util 0.10 / 0.08, boss deflection 0.31 / 0.63 mm in insert / hand lift, boss hand calc 0.07 / 0.13, C from `runs/funnel_panel/v7/result.json`).
+**Assembled worst 0.44 on the latch load path (hand lift; max over plunger, guide, panel v7 FE and bosses)**; the panels' own handling case (press u60 v90) stays theirs at 0.91 / 0.93 (C, `runs/funnel_panel/v7/summary.md`), so the whole catch's worst is 0.93 (under 1.0), for the Scout; the Overseer's 175 N hand lift (0.89, below) is above the piece's own 100 N misuse check (0.51, C hand calc), so the system load is the one that sizes it. Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 as-built FE under these system reactions: util 0.10 / 0.08, boss deflection 0.31 / 0.63 mm in insert / hand lift, boss hand calc 0.07 / 0.13, C from `runs/funnel_panel/v7/result.json`).
+- **Overseer at both CGs (hub 24 Oct, layout B; run v1B, E):** pack in 2850 g, CG 29.7 ahead of the catch centre; pack out 2065 g, CG 41.0 ahead (drone x along the latched faces).
+| Overseer case | Worst plunger | Plunger / guide index | Panel FE / bosses (linear, C) |
+|---|---|---|---|
+| landing on the faces, latch in (seat and 6 g) | 0 (all 8 wheels loaded, min 0.6 / 4.5 N) | 0 | 0 |
+| insert 60 N, pack out | 33.7 N | 0.28 / 0.16 (flight) | 0.12 / 0.08, boss 0.37 mm |
+| pull 50 N, pack in | 5.3 N | 0.04 / 0.03 | 0.02 / 0.01 |
+| hand lift 100 N at a guard corner (300, 200) | 175 N | 0.89 / 0.53 (misuse) | 0.15 / 0.26, boss 1.28 mm |
+| panel skin at the seated wheel (FE press u100 v40, linear) | v7: 55.2 N at 6 g, 122.5 N hand lift | | v7 0.41 / 0.91, v7 plain 0.40 / 0.58 (19.5 MPa) |
+The Overseer's long lever (guard corner 360 from the catch centre) doubles the Scout's misuse load: catch worst 0.91 (panel v7 skin at the seated wheel, hand lift; latch pieces 0.89; ≤ 1.0), the Overseer's 4 latched wheel nodes need 175 N along the slope (G (7), was 100).
 - **Compact:** one latch unit (housing + servo + plunger out) 57.5 x 49.8 x 44.4 (C), 127.2 cm³ box, 28.7 cm³ solid; nested in the panel's rib field behind the face, nothing stacked.
 - **Cage first:** the collar and the plungers meet only cage members (the catch wheels and their nodes). The catch-interface drone keeps its node cheeks 1.0 off the faces (G (1)) and everything else ≥ 19 off them (plate 30.6, props 19.0, receiver 25.2, C); the 3 mm rule for the cheeks is a shared-number question for the Scout v3 / Overseer chats.
 
@@ -71,6 +80,7 @@ Rule checks on the layout: `system_check` on `box_catch.assembly.json` passes la
 - **Chosen: 4 face plungers behind the seated wheels.** Wins: nothing on the drone, self-locking under load with the servos off, fits the panel rib field (127 cm³ per unit); loses: 4 servos and 4 halls (110 g set M).
 - **Alt 1, belly hook on a post:** 1 actuator instead of 4 (−3 servos, about −80 g E); loses: a keeper on both drones (about 5 g E each, Scout v3 and Overseer bellies) and a post standing in the swap opening the head must pass. Rejected.
 - **Alt 2, rim swing hook:** a hook on the collar rim swinging over the upper cage ring; its tip arc r 75.6 about the pivot (166, 95.3) passes 5.8 from the upper-ring rod (112, 51), under rod r 1.5 + hook half-thickness 4 + clearance 0.5 = 6.0 (C): it clashes with the cage. Rejected.
+- **Keep-alive through the plungers (Scout v3 chat, 24 Oct): rejected, the belly post stays (DEFAULT).** The wheel is 0.5..4.0 off the plunger along the slope except under the XT60 push (C): a contact needs ≥ 5.5 travel inside the 8 thick plunger (pogo 2.3 stroke: no), a node pad beside the wheel leaves the 12 wide plunger at ±4.5 sideways, and the halls cannot sense a seat (`dimensions.md` G (6)).
 - **Node cheeks 1.0 off the faces (G (1)): DEFAULT compliant**, they are cage members, so the 3 mm cage-first margin does not apply to them; alt: a 3 mm rule for cheeks via G (1), owned by the Scout v3 / Overseer chats.
 Review agent in concept mode on this layout (PR 66 round 2); layout artifact: the v2 motion artifact.
 
