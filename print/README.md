@@ -39,3 +39,7 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `scan_stick_cam_v7.stl` | 2173084 | cf092d1aba74 |
 | `scan_stick_head_v13.stl` | 10370984 | 249eec82eca0 |
 | `scan_stick_thread_test_v1.stl` | 3905473 | 7b35ab438606 |
+| `test_glue_lap_v1.stl` | 20484 | 588cd8a923d4 |
+| `test_layer_pull_v1.stl` | 98684 | 2b4685484f5f |
+| `test_post_pull_v1.stl` | 131284 | eb2934d4a73f |
+| `test_socket_coupon_v2.stl` | 414884 | 25725f258d52 |

@@ -77,7 +77,7 @@ def main(branches=False):
 
 def print_branches():
     git = lambda *a: subprocess.run(["git", "-C", str(ROOT), *a], capture_output=True, text=True).stdout
-    git("fetch", "-q", "origin")
+    git("fetch", "-q", "--prune", "origin")
     now = time.time()
     for b in git("branch", "-r", "--format=%(refname:short)").split():
         if b in ("origin/main", "origin/HEAD", "origin"):

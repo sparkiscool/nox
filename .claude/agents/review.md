@@ -19,7 +19,7 @@ Check, in this order, and stop at the first hard failure:
 4. Every drone design (CLAUDE.md list, `dimensions.md` L): a drone, cage or mount PR reports, on the assembled model, the cage-first margin (≥ 3 mm every direction, openings recessed), bounding volume and largest extent, CG offset pack in and pack out (≤ 3 mm), the access check, and for a mount its loads at the payload's CG (a one-sided heavy payload such as the L2 with the full moment) and its first mode. The cage layout came from an optimisation on the L cases. Missing or failed: FAIL.
 5. Every number in `summary.md` and the doc diff carries a tag (P, M, C, E, F). Untagged: list them.
 6. `print_orient.py` pass, and the saved face is the largest bed contact or the summary says why not.
-7. Mass vs the previous version is stated; a drone part got lighter or the summary says why not.
+7. Mass vs the previous version and vs its `budget_g` slot (`dimensions.md` L Mass budget) is stated; over its slot or heavier than the previous version without a reason saying what the grams buy: list it (never a FAIL on weight alone, Spark: never sacrifice design for weight). A part made lighter by dropping below a strength, stiffness, cage, access or function target: FAIL.
 8. Simplicity: name any drawn geometry that is not mounting or a must-have.
 9. `python3 tools/check_state.py` shows no ERROR, and no warning from this PR's rows or log line. Three strikes (`docs/generative.md` The rule, 0): a fourth version of a piece whose last three failed, without a new system pass: FAIL.
 
