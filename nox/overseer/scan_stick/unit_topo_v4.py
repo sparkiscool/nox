@@ -42,9 +42,9 @@ CAM_Z, CAM_PLATE, POST_L, POST_R, HOLE_R, BOARD, LENS = O[2] + 60.0, (JX, 36.0),
 CAM_XF = CAM_PLATE[1] + POST_L + 1.6                           # board front x 47.6
 SW = (61.0, 67.0, -30.0, 30.0, 48.0, 78.0)                    # switch panel x 61..67 (C): the bodies behind it in x 40.5..61 clear the plate (E)
 ROD_R, SOCK_R = 1.6, 6.0
-CAGE_F, CAGE_Y, CAGE_U = -14.0, 42.5, 92.0                     # C: L2 frame plane, side rods y ±42.5, top rod at u +92 (over the camera)
+CAGE_F, CAGE_Y, CAGE_U = -3.0, 42.5, 92.0                      # C: L2 frame plane 3 behind the L2 base plane (normal 90° mode), rods y ±42.5, top rod at u +92: 9 ahead of the camera lens, above its view
 RAIL_U = (-20.0, 40.0)
-BACK_GUARD = (-65.0, 24.0, 41.0, 194.0)                        # x, ±y, z0, z1 (C)
+BACK_GUARD = (-65.0, 32.0, 41.0, 194.0)                        # x, ±y, z0, z1 (C): 3 outside the Pi (y ±29) so the rods touch first on the sides too
 POCKET_PIN = 192.0                                            # z, along y at x 0 (C)
 KG = dict(pack=0.59, pi=0.08, l2=0.23, cam=0.03, el=0.06)       # E
 
@@ -138,7 +138,8 @@ def head_bodies():
     cuts += box(SW[0] - 1, SW[1] + 1, 16 - 9.7, 16 + 9.7, 63 - 6.6, 63 + 6.6) + box(BP[1] + 0.5, SW[0], 16 - 11, 16 + 11, 63 - 11, 63 + 11)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -6, 63, 6.15) + cylx(BP[1] + 0.5, SW[0], -6, 63, 7.0)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -20, 63, 2.6) + cylx(SW[0] - 8, SW[0], -20, 63, 3.5)
-    drawn += panel
+    bumpers = sum((box(SW[0] - 3, SW[1] + 3, sy * 34.0 - 3, sy * 34.0 + 3, SW[4] - 2, SW[5]) for sy in (-1, 1)), mf.Manifold())   # 6 x 6 PETG bumpers beside the panel, 3 proud (C)
+    drawn += panel + bumpers
     # L2 frame rails
     rails = mf.Manifold()
     for sy in (-1, 1):
@@ -152,7 +153,7 @@ def head_bodies():
     env = box(JX, 75.0, -49.0, 49.0, 42.0, 226.0)
     reg = dict(l2=l2_reg, cam=sum((cylx(CAM_XF - 4, CAM_XF - 1.0, y, z, POST_R + 0.5) for y, z in cam_posts), mf.Manifold()),
                rails=sum((loc(mf.Manifold.cylinder(RAIL_U[1] - RAIL_U[0], SOCK_R + 0.8, SOCK_R + 0.8, 32).translate([CAGE_F, sy * CAGE_Y, RAIL_U[0]])) for sy in (-1, 1)), mf.Manifold()),
-               panel=panel)
+               panel=panel + bumpers)
     return dict(drawn=drawn, cuts=cuts, env=env, regions=reg)
 
 DIRS = [np.array(v, float) for v in [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]]
@@ -275,3 +276,48 @@ if __name__ == "__main__":
             print(setup_piece(piece, h).summary())
         else:
             optimise(lambda hh: setup_piece(piece, hh), h=h, gen_cm3=gen, out_dir=out, name=name, settings=Settings(), git="--no-git" not in sys.argv)
+
+def manifest(spine_stl=None, head_stl=None):
+    """system_check.py manifest of the assembled stick: bought parts protected, guard rods + spine walls as the cage; the L2
+    view cone and the camera view are openings (nothing may sit in front of them, so they only need margin >= 0); the pack's
+    lift-out opening on +z. Masses E (parts list) unless a piece mesh is given."""
+    import trimesh as T
+    out = os.path.join(ROOT, "runs", "scan_stick_system", "v1"); os.makedirs(out, exist_ok=True)
+    l2 = T.creation.box([65, 75, 75]); l2.apply_translation([32.5, 0, 0])
+    M = T.transformations.rotation_matrix(np.radians(TILT), [0, 1, 0]); M[:3, 3] = O; l2.apply_transform(M)
+    l2.export(os.path.join(out, "l2_box.stl"))
+    parts = [
+        dict(name="pack", box=list(PACK), role="protected", mass_g=590, tag="P", swap=True),
+        dict(name="pi", box=list(PI_KEEP), role="protected", mass_g=80, tag="E"),
+        dict(name="ubec_buck", box=list(EL_KEEP), role="protected", mass_g=60, tag="E"),
+        dict(name="l2", mesh="runs/scan_stick_system/v1/l2_box.stl", role="protected", mass_g=230, tag="P"),
+        dict(name="camera", box=[CAM_PLATE[1], CAM_XF + LENS, -19, 19, CAM_Z - 19, CAM_Z + 19], role="protected", mass_g=30, tag="E"),
+        dict(name="switches", box=[BP[1] + 0.5, SW[1], SW[2], SW[3], SW[4], SW[5]], role="protected", mass_g=20, tag="E"),
+    ]
+    if spine_stl:
+        parts.append(dict(name="spine", mesh=spine_stl, role="cage", material="petg", tag="M"))
+    else:
+        parts.append(dict(name="spine", box=list(SPINE), role="cage", mass_g=220, tag="E"))
+    if head_stl:
+        parts.append(dict(name="head", mesh=head_stl, pose={"t": [0, 0, 0], "rpy_deg": [0, 0, 0]}, role="structure", material="petg", tag="M"))
+    else:
+        parts.append(dict(name="head", box=list(BP), role="structure", mass_g=90, tag="E"))
+    gx, gy, gz0, gz1 = BACK_GUARD
+    for sy in (-1, 1):
+        parts.append(dict(name=f"back rod {sy:+d}", cylinder=dict(r=1.5, p0=[gx, sy * gy, gz0], p1=[gx, sy * gy, gz1]), role="cage", material="carbon", tag="C"))
+        parts.append(dict(name=f"L2 side rod {sy:+d}", cylinder=dict(r=1.5, p0=S(CAGE_F, sy * CAGE_Y, RAIL_U[0] - 40).tolist(), p1=S(CAGE_F, sy * CAGE_Y, CAGE_U).tolist()), role="cage", material="carbon", tag="C"))
+    for sy in (-1, 1):
+        parts.append(dict(name=f"switch bumper {sy:+d}", box=[SW[0] - 3, SW[1] + 3, sy * 34.0 - 3, sy * 34.0 + 3, SW[4] - 2, SW[5]], role="cage", material="petg", tag="C"))
+    parts.append(dict(name="L2 top rod", cylinder=dict(r=1.5, p0=S(CAGE_F, -CAGE_Y, CAGE_U).tolist(), p1=S(CAGE_F, CAGE_Y, CAGE_U).tolist()), role="cage", material="carbon", tag="C"))
+    m = dict(name="scan stick v4 (compact)", parts=parts,
+             openings=[dict(part="l2", axis=F.tolist(), half_angle_deg=90.0, min_mm=-80.0),   # Spark 24 Oct: nothing in the lidar's way, so its dome is the front-most point dict(part="camera", axis=[1, 0, 0], half_angle_deg=44.5),
+                       dict(part="switches", axis=[1, 0, 0], half_angle_deg=60.0), dict(part="pack", axis=[0, 0, 1], half_angle_deg=20.0)],
+             contact_pairs=[["pack", "spine", 1e9], ["pi", "spine", 1e9], ["ubec_buck", "spine", 1e9], ["head", "spine", 1e9], ["camera", "head", 1e9],
+                            ["switches", "head", 1e9], ["l2", "head", 1e9], ["L2 side rod -1", "L2 top rod", 10], ["L2 side rod +1", "L2 top rod", 10],
+                            ["switch bumper -1", "head", 1e9], ["switch bumper +1", "head", 1e9]],
+             cg_ref=[0, 0, 0], thrust_axis=[0, 0, 1], cg_tol_mm=30.0, cage_margin_mm=3.0)   # DEFAULT: hand-held, CG within 30 of the pole axis (0.2 N m at the wrist); alt the drone 3 mm with the thread 14 forward
+    path = os.path.join(out, "system_manifest.json"); json.dump(m, open(path, "w"), indent=1)
+    return path
+
+if __name__ == "__main__" and "--manifest" in sys.argv:
+    print(manifest())

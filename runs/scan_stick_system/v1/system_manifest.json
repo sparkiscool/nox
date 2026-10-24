@@ -1,0 +1,333 @@
+{
+ "name": "scan stick v4 (compact)",
+ "parts": [
+  {
+   "name": "pack",
+   "box": [
+    -23.5,
+    23.5,
+    -25.5,
+    25.5,
+    38.0,
+    188.0
+   ],
+   "role": "protected",
+   "mass_g": 590,
+   "tag": "P",
+   "swap": true
+  },
+  {
+   "name": "pi",
+   "box": [
+    -60.0,
+    -36.5,
+    -29.0,
+    29.0,
+    102.0,
+    190.0
+   ],
+   "role": "protected",
+   "mass_g": 80,
+   "tag": "E"
+  },
+  {
+   "name": "ubec_buck",
+   "box": [
+    -46.0,
+    -30.5,
+    -30.0,
+    30.0,
+    45.0,
+    101.0
+   ],
+   "role": "protected",
+   "mass_g": 60,
+   "tag": "E"
+  },
+  {
+   "name": "l2",
+   "mesh": "runs/scan_stick_system/v1/l2_box.stl",
+   "role": "protected",
+   "mass_g": 230,
+   "tag": "P"
+  },
+  {
+   "name": "camera",
+   "box": [
+    36.0,
+    63.6,
+    -19,
+    19,
+    165.5,
+    203.5
+   ],
+   "role": "protected",
+   "mass_g": 30,
+   "tag": "E"
+  },
+  {
+   "name": "switches",
+   "box": [
+    40.5,
+    67.0,
+    -30.0,
+    30.0,
+    48.0,
+    78.0
+   ],
+   "role": "protected",
+   "mass_g": 20,
+   "tag": "E"
+  },
+  {
+   "name": "spine",
+   "box": [
+    -30.0,
+    30.0,
+    -31.5,
+    31.5,
+    0.0,
+    196.0
+   ],
+   "role": "cage",
+   "mass_g": 220,
+   "tag": "E"
+  },
+  {
+   "name": "head",
+   "box": [
+    30.0,
+    40.0,
+    -31.5,
+    31.5,
+    44.0,
+    196.0
+   ],
+   "role": "structure",
+   "mass_g": 90,
+   "tag": "E"
+  },
+  {
+   "name": "back rod -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -65.0,
+     -32.0,
+     41.0
+    ],
+    "p1": [
+     -65.0,
+     -32.0,
+     194.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "L2 side rod -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     31.673079814981552,
+     -42.5,
+     67.32090755796347
+    ],
+    "p1": [
+     71.01357467056471,
+     -42.5,
+     214.14163315390186
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "back rod +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -65.0,
+     32.0,
+     41.0
+    ],
+    "p1": [
+     -65.0,
+     32.0,
+     194.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "L2 side rod +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     31.673079814981552,
+     42.5,
+     67.32090755796347
+    ],
+    "p1": [
+     71.01357467056471,
+     42.5,
+     214.14163315390186
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "switch bumper -1",
+   "box": [
+    58.0,
+    70.0,
+    -37.0,
+    -31.0,
+    46.0,
+    78.0
+   ],
+   "role": "cage",
+   "material": "petg",
+   "tag": "C"
+  },
+  {
+   "name": "switch bumper +1",
+   "box": [
+    58.0,
+    70.0,
+    31.0,
+    37.0,
+    46.0,
+    78.0
+   ],
+   "role": "cage",
+   "material": "petg",
+   "tag": "C"
+  },
+  {
+   "name": "L2 top rod",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     71.01357467056471,
+     -42.5,
+     214.14163315390186
+    ],
+    "p1": [
+     71.01357467056471,
+     42.5,
+     214.14163315390186
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  }
+ ],
+ "openings": [
+  {
+   "part": "l2",
+   "axis": [
+    0.9659258262890683,
+    0.0,
+    -0.25881904510252074
+   ],
+   "half_angle_deg": 90.0,
+   "min_mm": -80.0
+  },
+  {
+   "part": "switches",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "half_angle_deg": 60.0
+  },
+  {
+   "part": "pack",
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "half_angle_deg": 20.0
+  }
+ ],
+ "contact_pairs": [
+  [
+   "pack",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "pi",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "ubec_buck",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "head",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "camera",
+   "head",
+   1000000000.0
+  ],
+  [
+   "switches",
+   "head",
+   1000000000.0
+  ],
+  [
+   "l2",
+   "head",
+   1000000000.0
+  ],
+  [
+   "L2 side rod -1",
+   "L2 top rod",
+   10
+  ],
+  [
+   "L2 side rod +1",
+   "L2 top rod",
+   10
+  ],
+  [
+   "switch bumper -1",
+   "head",
+   1000000000.0
+  ],
+  [
+   "switch bumper +1",
+   "head",
+   1000000000.0
+  ]
+ ],
+ "cg_ref": [
+  0,
+  0,
+  0
+ ],
+ "thrust_axis": [
+  0,
+  0,
+  1
+ ],
+ "cg_tol_mm": 30.0,
+ "cage_margin_mm": 3.0
+}
