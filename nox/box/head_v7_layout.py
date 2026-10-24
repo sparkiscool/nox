@@ -385,7 +385,7 @@ def keepouts(servo="DS3218"):
     K.append(cylY(WHEELS[0][0], WHEELS[0][1], PLATE["y"][1], yk, 3.5, 32) + box(WHEELS[0][0] - 3.5, 60, PLATE["y"][1], yk, WHEELS[0][1] - 3.5, WHEELS[0][1] + 3.5) +
              cylX(yk, WHEELS[0][1], WHEELS[0][0], 60, 3.5, 32))                                     # key to the near axle (L-key from +X), round top
     K.append(cylY(WHEELS[2][0], WHEELS[2][1], PLATE["y"][1], 100.0, 8.0, 32))                        # pin spanner on the eccentric flange
-    K.append(cylY(0.0, 8.0, PLATE["y"][0] - 1, 100.0, 3.0, 24))                                       # wires down to the rail's ribbon channel
+    K.append(box(-4.1, 4.1, PLATE["y"][0] - 1, 100.0, 7.0, 10.3))                                    # the 5-wire ribbon (6.1 x 1.3 + 1.0) to the rail's 5.0 mouth at X 0
     for yr in RODS["y"]:                                                                              # the rods go in from +X
         K.append(cylX(yr, RODS["u"], RODS["wall_out"], 70.0, ROD_D / 2 + 1.0, 24))
     K.append(cylX(SPRING_ROD["y"], SPRING_ROD["u"], SPRING_ROD["wall_out"], 70.0, ROD_D / 2 + 1.0, 24))
@@ -629,7 +629,7 @@ ACCESS = [
     "rods: pushed in from +X through the +X walls, through both bosses, into blind sockets in the -X walls, epoxied",
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
-    "wires: servo + 2 hall leads down a 6 mm channel to the plate hole at (0, u 8) over the rail's ribbon channel",
+    "wires: the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
 ]
 
 
