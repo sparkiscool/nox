@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box catch chat, hub: Overseer layout B): `catch_system.py` Overseer pack in / out (2850 / 2065 g, E): lands on all 8 wheels; plunger 33.7 N insert, 175 N hand lift; catch worst 0.91 (panel skin at the wheel, C). G (7) nodes 34 / 175 N both drones (DEFAULT, was 30 / 100; alt per drone). DEFAULT: boss 1.0 mm for flight / swap only (alt stiffer web).
 - 24 Oct (box catch chat, hub): funnel panel v7: one preview per print file (`runs/funnel_panel/v7/preview_A`, `_B`, `_A_plain`, `_B_plain.png`, render_preview on each exact file), named in summary.md (PR 68 picture rule).
 - 24 Oct (box catch chat, Spark: "for all future print ready parts i expect to see a picture of the part"): rule: every ready-to-print reply shows a picture of each print file (preview PNG per file, SendUserFile render). CLAUDE.md Hard rules, `docs/generative.md` Save and print, check in the `review` agent (6).
 - 24 Oct (box catch chat): **hook latch v2 READY** on panel v7 skin 2.0 (v1 do not print). `catch_system.py`: plunger 28.3 N insert, 85.8 N hand lift (E loads), assembled worst 0.44 over plunger, guide, panel FE, bosses (C); `dimensions.md` System Box catch. Concept: belly hook and rim swing hook (clash 5.8 < 6.0) rejected. DEFAULTs: equal joint stiffness (alt panel FE); node cheeks 1.0 (alt 3mm).
