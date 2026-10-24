@@ -247,3 +247,14 @@ it  47 beta    8 J   7.6879 vol 0.0790 (dil 0.1472 g -0.000) grey  4.0% ch 0.100
 it  48 beta    8 J   7.6493 vol 0.0790 (dil 0.1472 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 59.6 38.1s
 it  49 beta    8 J   7.6134 vol 0.0790 (dil 0.1472 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 59.3 38.8s
 it  50 beta    8 J   7.5812 vol 0.0789 (dil 0.1472 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 59 39.6s
+it  51 beta    8 J   7.5517 vol 0.0789 (dil 0.1472 g -0.001) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 58.7 40.7s
+it  52 beta    8 J   7.5179 vol 0.0789 (dil 0.1472 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 58.4 36.9s
+it  53 beta    8 J   7.4823 vol 0.0789 (dil 0.1472 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 58.1 36.8s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  54 beta   16 J  36.5160 vol 0.0766 (dil 0.1450 g -0.030) grey  1.8% ch 0.100 worst switch panel push 50 N 305 38.3s
+it  55 beta   16 J  12.9897 vol 0.0785 (dil 0.1485 g -0.007) grey  1.8% ch 0.100 worst switch panel push 50 N 108 38.3s
+it  56 beta   16 J   7.2476 vol 0.0783 (dil 0.1485 g -0.007) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 56.5 38.0s
+it  57 beta   16 J   7.3538 vol 0.0792 (dil 0.1487 g -0.005) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 55.7 39.8s
+it  58 beta   16 J   7.1137 vol 0.0794 (dil 0.1489 g -0.004) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 55.5 39.8s
+it  59 beta   16 J   7.0958 vol 0.0798 (dil 0.1491 g -0.003) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 55.2 39.2s
+it  60 beta   16 J   7.0423 vol 0.0798 (dil 0.1490 g -0.003) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 54.9 40.3s
