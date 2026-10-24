@@ -3864,3 +3864,102 @@ piece overlaps (mm3): {'bridge ^ topP_2': 0.5, 'bay30 ^ bay0_b': 0.9, 'bay-30 ^ 
 peak RSS 2.34 GB (M, ru_maxrss), children 0.00 GB, wall 435 s, PID 14767
 report written
 peak RSS 1.72 GB (M, ru_maxrss), children 0.00 GB, wall 52 s, PID 15042
+voxels: 117696 cells over 64 bodies at h 4.0 (22 s)
+nodes: 190327 piece nodes -> 166994 after joins, 96 joints (28 s)
+solid_check bay-120_a: PASS (132 s) 
+K: 500982 dofs, 29.0 M nonzeros (14 s)
+standing, Overseer seated                          worst 0.13 bay-120_a  stub rot [-0.06, -0.0, 0.06] mrad  feet 8  (72 s)
+Overseer catch +X+Y diag                           worst 0.21 bay-120_b  stub rot [0.24, -0.27, 0.9] mrad  feet 7  (86 s)
+solid_check bay-120_b: PASS (190 s) 
+Overseer catch -X-Y diag                           worst 0.25 bay-210  stub rot [-0.63, 0.13, -0.39] mrad  feet 8  (69 s)
+misuse: Overseer motors cut                        worst 0.17 bay-120_b  stub rot [0.34, -0.36, 1.19] mrad  feet 7  (75 s)
+solid_check bay-150: FAIL (159 s) 
+solid_check bay-180_a: PASS (17 s) 
+voxels: 117696 cells over 64 bodies at h 4.0 (22 s)
+nodes: 190327 piece nodes -> 174659 after joins, 96 joints (28 s)
+K: 523977 dofs, 29.9 M nonzeros (14 s)
+solid_check bay-180_b: PASS (75 s) 
+standing, Overseer seated                          worst 0.14 bay-120_a  stub rot [-0.13, 0.01, 0.07] mrad  feet 8  (68 s)
+XT60 insert at the drone 60 N                      worst 0.25 mast_mid  stub rot [-1.27, -0.04, 0.07] mrad  feet 7  (70 s)
+stub tilt: XT60 at the drone 57 N + 5.9 N.m        worst 0.17 mast_top  stub rot [-0.7, -0.01, 0.05] mrad  feet 8  (61 s)
+all bays: 60 N insert                              worst 0.41 mast_top  stub rot [2.96, 0.16, 0.04] mrad  feet 5  (11 s)
+all bays: 43.5 N across                            worst 0.51 mast_low  stub rot [0.27, 1.93, 3.14] mrad  feet 8  (7 s)
+peak RSS 3.91 GB (M, ru_maxrss), children 0.00 GB, wall 266 s, PID 15407
+voxels: 117696 cells over 64 bodies at h 4.0 (21 s)
+nodes: 190327 piece nodes -> 166994 after joins, 96 joints (27 s)
+K: 500982 dofs, 29.0 M nonzeros (15 s)
+standing, Overseer seated                          worst 0.13 bay-120_a  stub rot [-0.06, -0.0, 0.06] mrad  feet 8  (55 s)
+Overseer catch +X+Y diag                           worst 0.21 bay-120_b  stub rot [0.24, -0.27, 0.9] mrad  feet 7  (69 s)
+Overseer catch -X-Y diag                           worst 0.25 bay-210  stub rot [-0.63, 0.13, -0.39] mrad  feet 8  (62 s)
+misuse: Overseer motors cut                        worst 0.17 bay-120_b  stub rot [0.34, -0.36, 1.19] mrad  feet 7  (61 s)
+XT60 insert at the drone 60 N                      worst 0.11 bay-120_a  stub rot [-0.65, -0.05, 0.03] mrad  feet 8  (54 s)
+misuse: head stall at the drone 74 N               worst 0.08 bay-120_a  stub rot [-0.79, -0.07, 0.03] mrad  feet 8  (58 s)
+XT60 insert at the -90 bay 60 N                    worst 0.09 bay-90  stub rot [0.66, 0.09, 0.06] mrad  feet 7  (59 s)
+XT60 pull at the -90 bay 50 N                      worst 0.14 bay-120_a  stub rot [-0.63, -0.06, 0.07] mrad  feet 7  (57 s)
+misuse: head stall at the -90 bay 74 N             worst 0.07 bay-90  stub rot [0.83, 0.11, 0.07] mrad  feet 6  (88 s)
+centring at the -90 bay 7.6 N + 1.05 N.m           worst 0.05 bay-90  stub rot [-0.04, -0.01, 0.2] mrad  feet 7  (60 s)
+XT60 insert at the -120 bay 60 N                   worst 0.08 bay-120_a  stub rot [0.64, 0.16, -0.7] mrad  feet 8  (61 s)
+centring at the -120 bay 7.6 N + 1.05 N.m          worst 0.04 bay-120_a  stub rot [-0.03, -0.0, 0.13] mrad  feet 8  (63 s)
+stub tilt: XT60 at the drone 57 N + 5.9 N.m        worst 0.09 mast_top  stub rot [-0.32, -0.02, 0.04] mrad  feet 8  (60 s)
+all bays: 60 N insert                              worst 0.20 bay-180_b  stub rot [1.67, 0.17, 0.13] mrad  feet 7  (11 s)
+all bays: 43.5 N across                            worst 0.34 rearP_up  stub rot [0.3, 1.08, 2.13] mrad  feet 7  (7 s)
+lifted from below 2 g                              worst 0.09 bay-120_a  stub rot [-0.07, 0.01, 0.11] mrad  feet 8  (56 s)
+misuse: set down hard 5 g                          worst 0.14 bay-120_a  stub rot [-0.17, 0.03, 0.28] mrad  feet 8  (60 s)
+misuse: knocked over onto +X 5 g                   worst 0.17 rearP_low  stub rot [-0.18, -0.04, -1.09] mrad  feet 0  (117 s)
+peak RSS 4.04 GB (M, ru_maxrss), children 0.00 GB, wall 1106 s, PID 15656
+report written
+peak RSS 1.72 GB (M, ru_maxrss), children 0.00 GB, wall 47 s, PID 16340
+solid_check bay-150: PASS (270 s) 
+peak RSS 0.14 GB (M, ru_maxrss), children 0.21 GB, wall 200 s, PID 16545
+solid_check bay-210: PASS (217 s) 
+solid_check bay-30: PASS (324 s) 
+solid_check bay-60_a: PASS (67 s) 
+solid_check bay-60_b: PASS (150 s) 
+solid_check bay-90: PASS (159 s) 
+solid_check bay0_a: PASS (80 s) 
+solid_check bay0_b: PASS (80 s) 
+solid_check bay30: PASS (250 s) 
+solid_check bridge: PASS (58 s) 
+solid_check epost: PASS (5 s) 
+solid_check floorbar: PASS (11 s) 
+solid_check foot_1: PASS (1 s) 
+solid_check foot_2: PASS (1 s) 
+solid_check foot_3: PASS (1 s) 
+solid_check foot_4: PASS (1 s) 
+solid_check foot_5: PASS (1 s) 
+solid_check foot_6: PASS (1 s) 
+solid_check foot_7: PASS (1 s) 
+solid_check foot_8: PASS (1 s) 
+solid_check foot_leg_1: PASS (5 s) 
+solid_check foot_leg_2: PASS (4 s) 
+solid_check foot_leg_3: PASS (4 s) 
+solid_check link_1: PASS (38 s) 
+solid_check link_2: PASS (46 s) 
+solid_check link_3: PASS (39 s) 
+solid_check link_4: PASS (12 s) 
+solid_check link_5: PASS (2 s) 
+solid_check mast_leg: PASS (14 s) 
+solid_check mast_low: PASS (188 s) 
+solid_check mast_mid: PASS (241 s) 
+solid_check mast_top: PASS (129 s) 
+solid_check rearN_low: PASS (16 s) 
+solid_check rearN_up: PASS (174 s) 
+solid_check rearP_low: PASS (69 s) 
+solid_check rearP_lug: PASS (6 s) 
+solid_check rearP_up: PASS (42 s) 
+solid_check rearP_up_b: PASS (20 s) 
+solid_check topN_1: PASS (200 s) 
+solid_check topN_2: PASS (143 s) 
+solid_check topP_1: PASS (213 s) 
+solid_check topP_2: PASS (123 s) 
+peak RSS 0.14 GB (M, ru_maxrss), children 11.61 GB, wall 3407 s, PID 16317
+report written
+peak RSS 1.72 GB (M, ru_maxrss), children 1.72 GB, wall 47 s, PID 19699
+report written
+peak RSS 1.72 GB (M, ru_maxrss), children 1.72 GB, wall 48 s, PID 19771
+report written
+peak RSS 1.72 GB (M, ru_maxrss), children 1.72 GB, wall 47 s, PID 19824
+report written
+peak RSS 1.87 GB (M, ru_maxrss), children 1.87 GB, wall 51 s, PID 19912
+report written
+peak RSS 1.87 GB (M, ru_maxrss), children 1.87 GB, wall 48 s, PID 20001

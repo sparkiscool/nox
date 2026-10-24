@@ -27,7 +27,7 @@
      ],
      "p99": 0.022
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.008,
      "at": [
       78.0,
@@ -362,7 +362,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.07,
       0.01,
@@ -714,7 +714,7 @@
      ],
      "bolt_worst": 0.173
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.08,
       -0.05,
@@ -2486,7 +2486,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -3153,7 +3153,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.009,
      "at": [
       78.0,
@@ -3488,7 +3488,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.41,
       -1.31,
@@ -3840,7 +3840,7 @@
      ],
      "bolt_worst": 0.025
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.53,
       -1.28,
@@ -5614,7 +5614,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -6280,7 +6280,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.02,
      "at": [
       78.0,
@@ -6615,7 +6615,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.75,
       0.64,
@@ -6967,7 +6967,7 @@
      ],
      "bolt_worst": 0.451
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.85,
       0.42,
@@ -8739,7 +8739,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -9406,7 +9406,7 @@
      ],
      "p99": 0.005
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.008,
      "at": [
       78.0,
@@ -9741,7 +9741,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.58,
       -1.81,
@@ -10093,7 +10093,7 @@
      ],
      "bolt_worst": 0.026
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.74,
       -1.75,
@@ -11867,7 +11867,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -12533,7 +12533,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.007,
      "at": [
       78.0,
@@ -12868,7 +12868,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.14,
       -0.16,
@@ -13220,7 +13220,7 @@
      ],
      "bolt_worst": 0.33
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.15,
       -0.2,
@@ -14992,7 +14992,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -15659,7 +15659,7 @@
      ],
      "p99": 0.005
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.005,
      "at": [
       78.0,
@@ -15994,7 +15994,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.19,
       -0.21,
@@ -16346,7 +16346,7 @@
      ],
      "bolt_worst": 0.246
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.21,
       -0.25,
@@ -18118,7 +18118,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -18785,7 +18785,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.005,
      "at": [
       78.0,
@@ -19120,7 +19120,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.13,
       0.26,
@@ -19472,7 +19472,7 @@
      ],
      "bolt_worst": 0.125
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.12,
       0.24,
@@ -21244,7 +21244,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -21911,7 +21911,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.009,
      "at": [
       78.0,
@@ -22246,7 +22246,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.04,
       -0.28,
@@ -22598,7 +22598,7 @@
      ],
      "bolt_worst": 0.345
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.02,
       -0.37,
@@ -24373,7 +24373,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -25038,7 +25038,7 @@
      ],
      "p99": 0.005
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.004,
      "at": [
       78.0,
@@ -25373,7 +25373,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.14,
       0.31,
@@ -25725,7 +25725,7 @@
      ],
      "bolt_worst": 0.099
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.13,
       0.31,
@@ -27497,7 +27497,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -28164,7 +28164,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.002,
      "at": [
       90.0,
@@ -28499,7 +28499,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.18,
       -0.33,
@@ -28851,7 +28851,7 @@
      ],
      "bolt_worst": 0.031
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.24,
       -0.51,
@@ -30625,7 +30625,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -31291,7 +31291,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.007,
      "at": [
       82.0,
@@ -31626,7 +31626,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       1.14,
       1.71,
@@ -31978,7 +31978,7 @@
      ],
      "bolt_worst": 0.075
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       1.47,
       2.25,
@@ -33750,7 +33750,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -34417,7 +34417,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.002,
      "at": [
       78.0,
@@ -34752,7 +34752,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -0.04,
       -0.13,
@@ -35104,7 +35104,7 @@
      ],
      "bolt_worst": 0.034
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -0.06,
       -0.24,
@@ -36876,7 +36876,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -37543,7 +37543,7 @@
      ],
      "p99": 0.009
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.005,
      "at": [
       78.0,
@@ -37878,7 +37878,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.07,
       0.05,
@@ -38230,7 +38230,7 @@
      ],
      "bolt_worst": 0.172
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.09,
       0.04,
@@ -40002,7 +40002,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -40669,7 +40669,7 @@
      ],
      "p99": 0.01
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.009,
      "at": [
       78.0,
@@ -41004,7 +41004,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.46,
       0.19,
@@ -41356,7 +41356,7 @@
      ],
      "bolt_worst": 0.244
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.47,
       -0.0,
@@ -43130,7 +43130,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -43796,7 +43796,7 @@
      ],
      "p99": 0.01
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.034,
      "at": [
       90.0,
@@ -44131,7 +44131,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       -3.35,
       -4.96,
@@ -44483,7 +44483,7 @@
      ],
      "bolt_worst": 0.722
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       -4.41,
       -8.99,
@@ -46258,7 +46258,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -46923,7 +46923,7 @@
      ],
      "p99": 0.017
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.005,
      "at": [
       78.0,
@@ -47258,7 +47258,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.13,
       0.06,
@@ -47610,7 +47610,7 @@
      ],
      "bolt_worst": 0.112
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.15,
       -0.03,
@@ -49382,7 +49382,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -50049,7 +50049,7 @@
      ],
      "p99": 0.027
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.008,
      "at": [
       78.0,
@@ -50384,7 +50384,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       0.33,
       0.14,
@@ -50736,7 +50736,7 @@
      ],
      "bolt_worst": 0.176
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       0.38,
       -0.07,
@@ -52508,7 +52508,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.0,
       0.0,
@@ -53175,7 +53175,7 @@
      ],
      "p99": 0.014
     },
-    "rearP~2": {
+    "rearP_lug": {
      "worst": 0.012,
      "at": [
       78.0,
@@ -53510,7 +53510,7 @@
     }
    },
    "joints": {
-    "rearP~2 | link_4": {
+    "rearP_lug | link_4": {
      "F": [
       1.29,
       3.78,
@@ -53862,7 +53862,7 @@
      ],
      "bolt_worst": 1.002
     },
-    "mast_leg | rearP~2": {
+    "mast_leg | rearP_lug": {
      "F": [
       2.73,
       5.13,
@@ -55634,7 +55634,7 @@
       -193.3
      ]
     },
-    "rearP~2": {
+    "rearP_lug": {
      "F": [
       0.79,
       0.0,
@@ -56282,7 +56282,7 @@
   }
  },
  "joint_nodes": {
-  "rearP~2 | link_4": 88,
+  "rearP_lug | link_4": 88,
   "mast_top | link_5": 153,
   "mast_top | topP_1": 83,
   "mast_top | topN_1": 163,
@@ -56296,7 +56296,7 @@
   "rearN_up | link_3": 164,
   "mast_top | rearP_up": 154,
   "mast_mid | rearP_low": 94,
-  "mast_leg | rearP~2": 77,
+  "mast_leg | rearP_lug": 77,
   "floorbar | mast_low": 89,
   "rearN_up | mast_mid": 94,
   "topP_2 | bridge": 535,
@@ -56380,7 +56380,7 @@
   "foot_8 | bay-120_b": 56
  },
  "centroids": {
-  "rearP~2 | link_4": [
+  "rearP_lug | link_4": [
    97.1,
    25.3,
    -134.5
@@ -56450,7 +56450,7 @@
    -7.6,
    -48.9
   ],
-  "mast_leg | rearP~2": [
+  "mast_leg | rearP_lug": [
    82.5,
    11.4,
    -134.0

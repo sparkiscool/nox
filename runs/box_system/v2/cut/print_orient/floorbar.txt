@@ -1,0 +1,7 @@
+/home/user/nox/.claude/worktrees/agent-a24c66574aeffb552/runs/box_system/v2/cut/pieces/floorbar.stl extents [139.9  28.4  25.5] g PETG 41.39 watertight True
+   saved: bed    117 mm2  overhang   2573 mm2  height  25.5  first layer 1 islands [155.5] (total 155.5)  thin-island run 0 mm
+ +x down: bed     44 mm2  overhang    475 mm2  height 139.9  first layer 1 islands [66.3] (total 66.3)  thin-island run 0 mm
+ -x down: bed     34 mm2  overhang    588 mm2  height 139.9  first layer 1 islands [39.4] (total 39.4)  thin-island run 0 mm
+ +y down: bed     29 mm2  overhang   3234 mm2  height  28.4  first layer 1 islands [62.6] (total 62.6)  thin-island run 0 mm
+ -y down: bed   1315 mm2  overhang   1617 mm2  height  28.4  first layer 1 islands [1369.6] (total 1369.6)  thin-island run 0 mm
+ +z down: bed    317 mm2  overhang   2345 mm2  height  25.5  first layer 1 islands [464.0] (total 464.0)  thin-island run 0 mm

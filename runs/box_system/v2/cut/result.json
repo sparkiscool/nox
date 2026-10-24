@@ -1,0 +1,345 @@
+{
+ "h": 4.0,
+ "pieces": 38,
+ "mass_structure_g_M": 5144.0,
+ "cg_structure_M": [
+  7.5,
+  104.2,
+  -20.1
+ ],
+ "mass_box_with_lumps_g_E": 14731,
+ "cg_box_with_lumps_E": [
+  16.2,
+  95.0,
+  -22.2
+ ],
+ "worst_index": 0.34,
+ "worst_piece": "rearP_up",
+ "worst_case": "all bays: 43.5 N across",
+ "summary": {
+  "stub_tilt_mrad": 0.321,
+  "stub_k_Nm_per_mrad": 18.37,
+  "stub_rot_max_any_case_mrad": 2.126,
+  "bay_rot_worst_mrad": 2.58,
+  "bay_rot_worst_case": "misuse: Overseer motors cut",
+  "bay_rot_by_case": {
+   "standing, Overseer seated": 0.229,
+   "Overseer catch +X+Y diag": 1.982,
+   "Overseer catch -X-Y diag": 2.494,
+   "misuse: Overseer motors cut": 2.58,
+   "XT60 insert at the drone 60 N": 0.174,
+   "misuse: head stall at the drone 74 N": 0.236,
+   "XT60 insert at the -90 bay 60 N": 0.196,
+   "XT60 pull at the -90 bay 50 N": 0.317,
+   "misuse: head stall at the -90 bay 74 N": 0.255,
+   "centring at the -90 bay 7.6 N + 1.05 N.m": 0.419,
+   "XT60 insert at the -120 bay 60 N": 0.377,
+   "centring at the -120 bay 7.6 N + 1.05 N.m": 0.163,
+   "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 0.085,
+   "all bays: 60 N insert": 0.646,
+   "all bays: 43.5 N across": 1.644,
+   "lifted from below 2 g": 0.195,
+   "misuse: set down hard 5 g": 0.487,
+   "misuse: knocked over onto +X 5 g": 1.46
+  },
+  "uplift": {
+   "Overseer catch +X+Y diag": [
+    "foot_8"
+   ],
+   "misuse: Overseer motors cut": [
+    "foot_8"
+   ],
+   "XT60 insert at the -90 bay 60 N": [
+    "foot_8"
+   ],
+   "XT60 pull at the -90 bay 50 N": [
+    "foot_4"
+   ],
+   "misuse: head stall at the -90 bay 74 N": [
+    "foot_5",
+    "foot_8"
+   ],
+   "centring at the -90 bay 7.6 N + 1.05 N.m": [
+    "foot_8"
+   ],
+   "all bays: 60 N insert": [
+    "foot_8"
+   ]
+  },
+  "foot_N": {
+   "standing, Overseer seated": {
+    "foot_1": 37.4,
+    "foot_2": 30.7,
+    "foot_3": 36.7,
+    "foot_4": 13.0,
+    "foot_5": 28.3,
+    "foot_6": 22.3,
+    "foot_7": 4.5,
+    "foot_8": 2.2
+   },
+   "Overseer catch +X+Y diag": {
+    "foot_1": 127.9,
+    "foot_2": 48.8,
+    "foot_3": 128.8,
+    "foot_4": 10.1,
+    "foot_5": 73.5,
+    "foot_6": 18.2,
+    "foot_7": 4.5,
+    "foot_8": 0.0
+   },
+   "Overseer catch -X-Y diag": {
+    "foot_1": 1.8,
+    "foot_2": 94.6,
+    "foot_3": 134.6,
+    "foot_4": 2.3,
+    "foot_5": 115.8,
+    "foot_6": 3.7,
+    "foot_7": 4.5,
+    "foot_8": 54.8
+   },
+   "misuse: Overseer motors cut": {
+    "foot_1": 156.7,
+    "foot_2": 53.7,
+    "foot_3": 156.6,
+    "foot_4": 12.0,
+    "foot_5": 87.0,
+    "foot_6": 17.4,
+    "foot_7": 4.5,
+    "foot_8": 0.0
+   },
+   "XT60 insert at the drone 60 N": {
+    "foot_1": 44.8,
+    "foot_2": 16.7,
+    "foot_3": 15.8,
+    "foot_4": 23.3,
+    "foot_5": 22.5,
+    "foot_6": 13.8,
+    "foot_7": 4.5,
+    "foot_8": 16.0
+   },
+   "misuse: head stall at the drone 74 N": {
+    "foot_1": 46.8,
+    "foot_2": 14.3,
+    "foot_3": 13.0,
+    "foot_4": 25.5,
+    "foot_5": 22.5,
+    "foot_6": 11.9,
+    "foot_7": 4.5,
+    "foot_8": 19.0
+   },
+   "XT60 insert at the -90 bay 60 N": {
+    "foot_1": 29.2,
+    "foot_2": 28.0,
+    "foot_3": 7.2,
+    "foot_4": 33.4,
+    "foot_5": 4.5,
+    "foot_6": 50.7,
+    "foot_7": 4.5,
+    "foot_8": -0.0
+   },
+   "XT60 pull at the -90 bay 50 N": {
+    "foot_1": 40.9,
+    "foot_2": 25.2,
+    "foot_3": 44.4,
+    "foot_4": 0.1,
+    "foot_5": 38.0,
+    "foot_6": 0.9,
+    "foot_7": 4.5,
+    "foot_8": 3.4
+   },
+   "misuse: head stall at the -90 bay 74 N": {
+    "foot_1": 27.9,
+    "foot_2": 28.1,
+    "foot_3": 1.9,
+    "foot_4": 37.8,
+    "foot_5": 0.3,
+    "foot_6": 57.1,
+    "foot_7": 4.5,
+    "foot_8": 0.0
+   },
+   "centring at the -90 bay 7.6 N + 1.05 N.m": {
+    "foot_1": 38.8,
+    "foot_2": 24.3,
+    "foot_3": 30.1,
+    "foot_4": 20.8,
+    "foot_5": 23.6,
+    "foot_6": 15.3,
+    "foot_7": 4.5,
+    "foot_8": 0.0
+   },
+   "XT60 insert at the -120 bay 60 N": {
+    "foot_1": 29.1,
+    "foot_2": 42.5,
+    "foot_3": 8.3,
+    "foot_4": 2.4,
+    "foot_5": 3.1,
+    "foot_6": 64.5,
+    "foot_7": 4.5,
+    "foot_8": 3.1
+   },
+   "centring at the -120 bay 7.6 N + 1.05 N.m": {
+    "foot_1": 35.8,
+    "foot_2": 25.1,
+    "foot_3": 24.3,
+    "foot_4": 16.4,
+    "foot_5": 22.0,
+    "foot_6": 24.6,
+    "foot_7": 4.5,
+    "foot_8": 4.7
+   },
+   "stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+    "foot_1": 38.7,
+    "foot_2": 23.4,
+    "foot_3": 23.8,
+    "foot_4": 16.2,
+    "foot_5": 23.3,
+    "foot_6": 20.9,
+    "foot_7": 4.5,
+    "foot_8": 6.7
+   },
+   "all bays: 60 N insert": {
+    "foot_1": 8.4,
+    "foot_2": 50.6,
+    "foot_3": 47.4,
+    "foot_4": 6.2,
+    "foot_5": 15.1,
+    "foot_6": 53.9,
+    "foot_7": 4.5,
+    "foot_8": -28.8
+   },
+   "all bays: 43.5 N across": {
+    "foot_1": 38.1,
+    "foot_2": 49.7,
+    "foot_3": 38.5,
+    "foot_4": -0.2,
+    "foot_5": 10.7,
+    "foot_6": 6.8,
+    "foot_7": 4.5,
+    "foot_8": 9.3
+   },
+   "lifted from below 2 g": {
+    "foot_1": 72.3,
+    "foot_2": 52.0,
+    "foot_3": 50.3,
+    "foot_4": 27.7,
+    "foot_5": 42.6,
+    "foot_6": 44.2,
+    "foot_7": 9.1,
+    "foot_8": 6.6
+   },
+   "misuse: set down hard 5 g": {
+    "foot_1": 180.6,
+    "foot_2": 130.0,
+    "foot_3": 125.8,
+    "foot_4": 69.4,
+    "foot_5": 106.4,
+    "foot_6": 110.5,
+    "foot_7": 22.7,
+    "foot_8": 16.4
+   },
+   "misuse: knocked over onto +X 5 g": {
+    "foot_1": 0.0,
+    "foot_2": 0.0,
+    "foot_3": 0.0,
+    "foot_4": 0.0,
+    "foot_5": 0.0,
+    "foot_6": 0.0,
+    "foot_7": 0.0,
+    "foot_8": 0.0
+   }
+  }
+ },
+ "summary_bolts_only": {
+  "stub_tilt_mrad": 0.699,
+  "stub_k_Nm_per_mrad": 8.44,
+  "stub_rot_max_any_case_mrad": 3.138,
+  "bay_rot_worst_mrad": 2.603,
+  "bay_rot_worst_case": "all bays: 43.5 N across",
+  "bay_rot_by_case": {
+   "standing, Overseer seated": 0.33,
+   "XT60 insert at the drone 60 N": 0.314,
+   "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 0.083,
+   "all bays: 60 N insert": 0.838,
+   "all bays: 43.5 N across": 2.603
+  },
+  "uplift": {
+   "XT60 insert at the drone 60 N": [
+    "foot_6"
+   ],
+   "all bays: 60 N insert": [
+    "foot_1",
+    "foot_5",
+    "foot_8"
+   ]
+  },
+  "foot_N": {
+   "standing, Overseer seated": {
+    "foot_1": 40.1,
+    "foot_2": 29.5,
+    "foot_3": 38.3,
+    "foot_4": 12.0,
+    "foot_5": 30.4,
+    "foot_6": 18.0,
+    "foot_7": 4.5,
+    "foot_8": 2.4
+   },
+   "XT60 insert at the drone 60 N": {
+    "foot_1": 55.7,
+    "foot_2": 7.4,
+    "foot_3": 16.1,
+    "foot_4": 21.8,
+    "foot_5": 31.3,
+    "foot_6": 0.4,
+    "foot_7": 4.5,
+    "foot_8": 20.4
+   },
+   "stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+    "foot_1": 45.9,
+    "foot_2": 17.4,
+    "foot_3": 24.1,
+    "foot_4": 16.2,
+    "foot_5": 28.6,
+    "foot_6": 11.4,
+    "foot_7": 4.5,
+    "foot_8": 9.5
+   },
+   "all bays: 60 N insert": {
+    "foot_1": -17.1,
+    "foot_2": 73.5,
+    "foot_3": 51.1,
+    "foot_4": 4.0,
+    "foot_5": -2.1,
+    "foot_6": 85.6,
+    "foot_7": 4.5,
+    "foot_8": -42.3
+   },
+   "all bays: 43.5 N across": {
+    "foot_1": 33.4,
+    "foot_2": 48.8,
+    "foot_3": 36.0,
+    "foot_4": 0.5,
+    "foot_5": 10.3,
+    "foot_6": 16.5,
+    "foot_7": 4.5,
+    "foot_8": 7.3
+   }
+  }
+ },
+ "solid_check_pass": true,
+ "solid_check_n": 46,
+ "solid_check_pass_n": 46,
+ "system_line": "System: Box structure v2 cut, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.5 mm\u00b3 (E) (topP_2/topN_2), bbox 80 L (E), extents 418 x 407 x 470 mm (E), mass 13890 g (E), CG [8.1, 122.6, -18.7] (E, no cg_ref), access 9/9 clear",
+ "peak_memory_GB": 11.61,
+ "peak_memory_detail": {
+  "fe_h4": 4.04,
+  "cut_export": 2.34,
+  "solid_check_largest_piece": 11.61,
+  "method": "resource.getrusage ru_maxrss of the process (children for solid_check), logged at exit; M"
+ },
+ "wall_time_s": 17971,
+ "bed_face_best": "-Y face down",
+ "bed_contact_mm2_range": [
+  47.0,
+  5295.0
+ ]
+}
