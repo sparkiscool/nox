@@ -531,12 +531,14 @@ def motor_clear(a, b, od, motors):
 
 
 def obstacle_clear(a, b, od, obstacles):
-    """smallest clearance (mm) of a rod to the obstacle spheres [x, y, z, r] (the front cameras)"""
+    """smallest clearance (mm) of a rod to the obstacle boxes {c, fwd, left, half} (the front cameras in their own frame)"""
     if not obstacles: return np.inf
-    a, b = np.asarray(a, float), np.asarray(b, float); u = b - a; c = np.inf
-    for ox, oy, oz, r in obstacles:
-        w = np.array([ox, oy, oz]) - a; t = np.clip((w @ u) / max(u @ u, 1e-9), 0, 1)
-        c = min(c, float(np.linalg.norm(w - t * u) - r - od / 2))
+    t = np.linspace(0, 1, 100)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float)); c = np.inf
+    for o in obstacles:
+        f, l = np.asarray(o["fwd"], float), np.asarray(o["left"], float); u = np.cross(f, l)
+        d = q - np.asarray(o["c"], float); loc = np.stack([d @ f, d @ l, d @ u], 1)
+        out = np.maximum(np.abs(loc) - np.asarray(o["half"], float), 0)
+        c = min(c, float(np.linalg.norm(out, axis=1).min() - od / 2))
     return c
 
 
