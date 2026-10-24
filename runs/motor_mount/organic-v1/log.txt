@@ -1,0 +1,219 @@
+<frozen runpy>:130: RuntimeWarning: 'topo.run' found in sys.modules after import of package 'topo', but prior to execution of 'topo.run'; this may result in unpredictable behaviour
+=== motor_mount: h 0.8, generated 7.0 cm3, min member 3.2 mm, cores 4
+motor_mount: grid (56, 56, 56) h 0.8 = 175,616 cells; design 83,384 (42.7 cm3), drawn 13,728, void 78,504
+  support default: 1536 cells, 2784 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+motor_mount: grid (32, 32, 32) h 1.6 = 32,768 cells; design 10,304 (42.2 cm3), drawn 1,632, void 20,832
+  support default: 352 cells, 816 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.69 cm3); 1.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.03 cells, erosion depth 1.71 mm; volfrac 0.185 of 10,548 design cells
+layout: drawn bodies and keep-outs mirror about x, y: the design is held symmetric there
+layout: WARNING nearly mirrored in z (7.9% of passive cells differ): no symmetry
+layout: 5 drawn bodies (1,388 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 44,904 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1597 (dil 0.1913 g -0.137) grey 84.4% ch 0.100 worst held b1 fz 718 1.8s
+it   2 beta    1 J   4.8165 vol 0.1807 (dil 0.2149 g -0.031) grey 86.5% ch 0.100 worst held b1 fz 332 1.7s
+it   3 beta    1 J   3.6244 vol 0.1838 (dil 0.2177 g -0.018) grey 79.6% ch 0.100 worst held b1 fx 254 1.7s
+it   4 beta    1 J   2.8843 vol 0.1854 (dil 0.2186 g -0.014) grey 74.0% ch 0.100 worst held b4 fx 206 1.7s
+it   5 beta    1 J   2.3729 vol 0.1863 (dil 0.2189 g -0.013) grey 68.9% ch 0.100 worst held b5 fx 167 1.7s
+it   6 beta    1 J   1.9995 vol 0.1871 (dil 0.2189 g -0.007) grey 65.7% ch 0.100 worst held b1 fx 145 2.0s
+it   7 beta    1 J   1.7669 vol 0.1868 (dil 0.2179 g -0.012) grey 62.4% ch 0.100 worst held b1 fx 120 1.7s
+it   8 beta    1 J   1.5804 vol 0.1875 (dil 0.2181 g -0.010) grey 60.5% ch 0.100 worst held b2 fx 114 1.8s
+it   9 beta    1 J   1.4387 vol 0.1884 (dil 0.2187 g -0.008) grey 59.4% ch 0.100 worst held b5 fx 96.8 1.7s
+it  10 beta    1 J   1.3260 vol 0.1891 (dil 0.2191 g -0.006) grey 58.8% ch 0.100 worst held b2 fx 93.2 2.0s
+it  11 beta    1 J   1.2446 vol 0.1899 (dil 0.2197 g +0.005) grey 58.2% ch 0.100 worst held b1 fx 85 1.9s
+it  12 beta    1 J   1.2349 vol 0.1887 (dil 0.2181 g -0.002) grey 57.5% ch 0.100 worst held b2 fx 85.1 1.8s
+it  13 beta    1 J   1.1937 vol 0.1889 (dil 0.2182 g -0.002) grey 56.9% ch 0.100 worst held b4 fx 81.9 1.9s
+it  14 beta    1 J   1.1611 vol 0.1892 (dil 0.2183 g -0.002) grey 56.6% ch 0.100 worst held b1 fx 79.7 1.7s
+it  15 beta    1 J   1.1358 vol 0.1893 (dil 0.2183 g -0.001) grey 56.5% ch 0.100 worst held b5 fx 78 1.9s
+it  16 beta    1 J   1.1128 vol 0.1895 (dil 0.2183 g +0.006) grey 56.4% ch 0.100 worst held b5 fx 76.2 1.8s
+it  17 beta    1 J   1.1218 vol 0.1882 (dil 0.2168 g -0.001) grey 56.0% ch 0.100 worst held b4 fx 76.6 2.0s
+it  18 beta    1 J   1.1021 vol 0.1883 (dil 0.2168 g -0.001) grey 56.0% ch 0.100 worst held b2 fx 74.8 1.9s
+it  19 beta    1 J   1.0834 vol 0.1884 (dil 0.2168 g -0.001) grey 55.7% ch 0.100 worst held b1 fz 73.5 1.7s
+it  20 beta    1 J   1.0657 vol 0.1885 (dil 0.2168 g -0.001) grey 55.4% ch 0.100 worst held b1 fz 72.4 1.9s
+it  21 beta    1 J   1.0496 vol 0.1887 (dil 0.2169 g +0.005) grey 55.2% ch 0.100 worst held b1 fz 71.5 1.8s
+it  22 beta    1 J   1.0585 vol 0.1876 (dil 0.2157 g -0.001) grey 55.0% ch 0.100 worst held b1 fz 72.3 1.8s
+it  23 beta    1 J   1.0464 vol 0.1877 (dil 0.2157 g -0.001) grey 54.7% ch 0.100 worst held b1 fz 71.6 1.9s
+it  24 beta    1 J   1.0355 vol 0.1878 (dil 0.2157 g -0.001) grey 54.6% ch 0.100 worst held b1 fz 71 1.7s
+it  25 beta    1 J   1.0258 vol 0.1879 (dil 0.2157 g -0.001) grey 54.5% ch 0.100 worst held b1 fz 70.4 1.9s
+layout: beta 1 done: eroded design 9 bodies, main 52.9%; drawn bodies outside the main body: 4
+it  26 beta    2 J   3.3777 vol 0.1728 (dil 0.2606 g -0.067) grey 48.8% ch 0.100 worst held b1 fz 228 1.6s
+it  27 beta    2 J   2.4830 vol 0.1864 (dil 0.2764 g -0.010) grey 50.8% ch 0.084 worst held b1 fz 171 1.8s
+it  28 beta    2 J   2.3222 vol 0.1889 (dil 0.2788 g -0.002) grey 50.8% ch 0.083 worst held b1 fz 161 1.7s
+it  29 beta    2 J   2.2783 vol 0.1894 (dil 0.2790 g -0.001) grey 50.6% ch 0.100 worst held b1 fz 159 1.9s
+it  30 beta    2 J   2.2453 vol 0.1897 (dil 0.2791 g -0.001) grey 50.5% ch 0.100 worst held b1 fz 157 1.8s
+it  31 beta    2 J   2.2138 vol 0.1900 (dil 0.2791 g +0.007) grey 50.4% ch 0.100 worst held b1 fz 155 1.9s
+it  32 beta    2 J   2.2738 vol 0.1884 (dil 0.2769 g -0.001) grey 49.9% ch 0.100 worst held b1 fz 158 1.8s
+it  33 beta    2 J   2.2370 vol 0.1887 (dil 0.2770 g -0.001) grey 49.8% ch 0.100 worst held b1 fz 156 2.0s
+it  34 beta    2 J   2.2003 vol 0.1890 (dil 0.2770 g -0.001) grey 49.7% ch 0.100 worst held b1 fz 154 1.8s
+it  35 beta    2 J   2.1642 vol 0.1893 (dil 0.2770 g -0.001) grey 49.6% ch 0.100 worst held b1 fz 151 1.9s
+it  36 beta    2 J   2.1282 vol 0.1897 (dil 0.2770 g +0.006) grey 49.4% ch 0.100 worst held b1 fz 149 1.9s
+it  37 beta    2 J   2.1721 vol 0.1883 (dil 0.2751 g -0.001) grey 49.2% ch 0.100 worst tie b3 mz 152 1.9s
+it  38 beta    2 J   2.1386 vol 0.1886 (dil 0.2751 g -0.001) grey 49.1% ch 0.100 worst tie b3 mz 150 1.7s
+it  39 beta    2 J   2.1107 vol 0.1889 (dil 0.2751 g -0.000) grey 48.9% ch 0.100 worst tie b3 mz 149 1.7s
+layout: beta 2 done: eroded design 9 bodies, main 52.6%; drawn bodies outside the main body: 4
+it  40 beta    4 J  26.5719 vol 0.1624 (dil 0.3438 g -0.123) grey 37.8% ch 0.100 worst tie b3 mz 1.99e+03 1.8s
+it  41 beta    4 J  11.9075 vol 0.1925 (dil 0.3817 g -0.026) grey 40.7% ch 0.100 worst yaw torque 0.35 Nm 868 2.1s
+it  42 beta    4 J   8.5480 vol 0.2032 (dil 0.3883 g -0.009) grey 41.0% ch 0.100 worst yaw torque 0.35 Nm 683 1.7s
+it  43 beta    4 J   7.1686 vol 0.2083 (dil 0.3902 g -0.005) grey 41.0% ch 0.100 worst yaw torque 0.35 Nm 585 1.9s
+it  44 beta    4 J   6.2903 vol 0.2111 (dil 0.3908 g -0.003) grey 40.8% ch 0.100 worst yaw torque 0.35 Nm 496 1.6s
+it  45 beta    4 J   5.6624 vol 0.2131 (dil 0.3911 g -0.002) grey 40.7% ch 0.100 worst yaw torque 0.35 Nm 424 1.7s
+it  46 beta    4 J   5.1571 vol 0.2149 (dil 0.3913 g +0.042) grey 40.7% ch 0.100 worst yaw torque 0.35 Nm 371 1.7s
+it  47 beta    4 J   8.4575 vol 0.1959 (dil 0.3732 g -0.006) grey 39.3% ch 0.100 worst tie b3 mz 603 1.8s
+it  48 beta    4 J   7.3726 vol 0.1999 (dil 0.3748 g -0.002) grey 39.3% ch 0.100 worst yaw torque 0.35 Nm 563 1.6s
+it  49 beta    4 J   6.8631 vol 0.2013 (dil 0.3750 g -0.001) grey 39.0% ch 0.100 worst yaw torque 0.35 Nm 503 1.9s
+it  50 beta    4 J   6.4045 vol 0.2026 (dil 0.3750 g -0.001) grey 38.6% ch 0.100 worst yaw torque 0.35 Nm 475 1.7s
+it  51 beta    4 J   5.9657 vol 0.2040 (dil 0.3751 g +0.026) grey 38.8% ch 0.100 worst tie b3 mz 435 1.9s
+it  52 beta    4 J   7.8572 vol 0.1933 (dil 0.3643 g -0.003) grey 37.7% ch 0.100 worst tie b3 mz 594 1.7s
+it  53 beta    4 J   7.1454 vol 0.1956 (dil 0.3648 g -0.002) grey 37.6% ch 0.100 worst tie b3 mz 542 2.0s
+it  54 beta    4 J   6.7114 vol 0.1969 (dil 0.3649 g -0.001) grey 37.6% ch 0.100 worst tie b3 mz 513 1.8s
+it  55 beta    4 J   6.3099 vol 0.1982 (dil 0.3649 g -0.001) grey 37.4% ch 0.100 worst tie b3 mz 486 1.9s
+it  56 beta    4 J   5.9475 vol 0.1994 (dil 0.3650 g +0.020) grey 37.3% ch 0.100 worst tie b3 mz 461 1.9s
+it  57 beta    4 J   7.0952 vol 0.1923 (dil 0.3572 g -0.002) grey 36.4% ch 0.100 worst tie b3 mz 552 2.0s
+it  58 beta    4 J   6.7048 vol 0.1937 (dil 0.3575 g -0.001) grey 36.6% ch 0.100 worst tie b3 mz 530 1.7s
+it  59 beta    4 J   6.4592 vol 0.1944 (dil 0.3576 g -0.001) grey 36.4% ch 0.100 worst tie b3 mz 513 2.1s
+it  60 beta    4 J   6.2531 vol 0.1951 (dil 0.3576 g -0.001) grey 36.3% ch 0.100 worst tie b3 mz 497 1.9s
+it  61 beta    4 J   6.0495 vol 0.1957 (dil 0.3576 g +0.015) grey 36.3% ch 0.100 worst tie b3 mz 483 2.0s
+it  62 beta    4 J   6.8963 vol 0.1904 (dil 0.3517 g -0.002) grey 35.5% ch 0.100 worst tie b3 mz 548 1.8s
+it  63 beta    4 J   6.6182 vol 0.1914 (dil 0.3520 g -0.001) grey 35.5% ch 0.100 worst tie b3 mz 533 2.2s
+it  64 beta    4 J   6.4251 vol 0.1920 (dil 0.3520 g -0.001) grey 35.6% ch 0.100 worst tie b3 mz 519 1.8s
+layout: stopped (beta_stop) at it 64, beta 4, 130 s
+layout: beta 4 done: eroded design 17 bodies, main 56.4%; drawn bodies outside the main body: 4
+coarse stage done: 64 iterations, 136 s, peak 0.762676 GB
+motor_mount: grid (56, 56, 56) h 0.8 = 175,616 cells; design 83,384 (42.7 cm3), drawn 13,728, void 78,504
+  support default: 1536 cells, 2784 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.69 cm3); 1.34 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 8.05 cells, erosion depth 1.71 mm; volfrac 0.189 of 86,003 design cells
+layout: WARNING nearly mirrored in x (0.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: 5 drawn bodies (11,109 cells), held solid in every realization; eroded filter: masked
+layout: 9 load cases + 6 tie cases (1 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (56, 56, 56) = 175,616 elements, 325,635 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 32) grid (h 1.6): mean x 0.224
+it   1 beta    4 J  10.0000 vol 0.1902 (dil 0.3525 g +0.004) grey 36.3% ch 0.100 worst tie b3 mz 708 45.9s
+it   2 beta    4 J  10.0537 vol 0.1890 (dil 0.3504 g -0.002) grey 36.1% ch 0.100 worst tie b3 mz 733 47.1s
+it   3 beta    4 J   9.6069 vol 0.1899 (dil 0.3506 g -0.001) grey 36.0% ch 0.100 worst tie b3 mz 702 44.1s
+it   4 beta    4 J   9.1939 vol 0.1907 (dil 0.3505 g -0.001) grey 35.9% ch 0.100 worst tie b3 mz 670 42.0s
+it   5 beta    4 J   8.7771 vol 0.1915 (dil 0.3505 g -0.001) grey 35.8% ch 0.100 worst tie b3 mz 636 41.3s
+it   6 beta    4 J   8.3621 vol 0.1923 (dil 0.3505 g +0.002) grey 35.6% ch 0.100 worst tie b3 mz 603 43.8s
+it   7 beta    4 J   8.2148 vol 0.1920 (dil 0.3493 g -0.001) grey 35.4% ch 0.100 worst tie b3 mz 588 42.7s
+it   8 beta    4 J   7.7906 vol 0.1929 (dil 0.3493 g -0.001) grey 35.2% ch 0.100 worst tie b3 mz 556 43.1s
+it   9 beta    4 J   7.3794 vol 0.1939 (dil 0.3493 g -0.001) grey 35.1% ch 0.100 worst tie b3 mz 525 43.3s
+it  10 beta    4 J   6.9870 vol 0.1948 (dil 0.3493 g -0.001) grey 34.9% ch 0.100 worst tie b3 mz 496 41.2s
+it  11 beta    4 J   6.6210 vol 0.1958 (dil 0.3494 g +0.008) grey 34.7% ch 0.100 worst tie b3 mz 469 40.9s
+it  12 beta    4 J   6.8371 vol 0.1937 (dil 0.3463 g -0.001) grey 34.3% ch 0.100 worst tie b3 mz 483 41.6s
+it  13 beta    4 J   6.5569 vol 0.1944 (dil 0.3464 g -0.001) grey 34.0% ch 0.100 worst tie b3 mz 462 40.8s
+it  14 beta    4 J   6.3461 vol 0.1950 (dil 0.3465 g -0.001) grey 33.7% ch 0.100 worst tie b3 mz 448 42.5s
+it  15 beta    4 J   6.1808 vol 0.1955 (dil 0.3465 g -0.001) grey 33.5% ch 0.100 worst tie b3 mz 435 40.8s
+it  16 beta    4 J   6.0430 vol 0.1959 (dil 0.3465 g +0.009) grey 33.3% ch 0.100 worst tie b3 mz 424 42.1s
+it  17 beta    4 J   6.4456 vol 0.1931 (dil 0.3431 g -0.001) grey 33.1% ch 0.100 worst tie b3 mz 451 43.2s
+it  18 beta    4 J   6.3097 vol 0.1935 (dil 0.3432 g -0.000) grey 33.0% ch 0.100 worst tie b3 mz 440 42.5s
+it  19 beta    4 J   6.2078 vol 0.1938 (dil 0.3432 g -0.000) grey 32.8% ch 0.100 worst tie b3 mz 433 42.5s
+it  20 beta    4 J   6.1128 vol 0.1941 (dil 0.3432 g -0.000) grey 32.7% ch 0.100 worst tie b3 mz 426 41.9s
+it  21 beta    4 J   6.0234 vol 0.1944 (dil 0.3432 g +0.007) grey 32.5% ch 0.100 worst tie b3 mz 419 41.9s
+it  22 beta    4 J   6.3342 vol 0.1922 (dil 0.3406 g -0.001) grey 32.4% ch 0.100 worst tie b3 mz 439 42.3s
+it  23 beta    4 J   6.2409 vol 0.1925 (dil 0.3407 g -0.000) grey 32.3% ch 0.100 worst tie b3 mz 432 41.3s
+it  24 beta    4 J   6.1711 vol 0.1927 (dil 0.3407 g -0.000) grey 32.3% ch 0.100 worst tie b3 mz 427 43.2s
+it  25 beta    4 J   6.1040 vol 0.1929 (dil 0.3407 g -0.000) grey 32.2% ch 0.100 worst tie b3 mz 421 44.5s
+it  26 beta    4 J   6.0384 vol 0.1930 (dil 0.3407 g +0.005) grey 32.1% ch 0.100 worst tie b3 mz 416 41.7s
+it  27 beta    4 J   6.2547 vol 0.1915 (dil 0.3388 g -0.000) grey 32.0% ch 0.100 worst tie b3 mz 428 42.7s
+it  28 beta    4 J   6.1879 vol 0.1917 (dil 0.3389 g -0.000) grey 32.0% ch 0.100 worst tie b3 mz 423 43.6s
+it  29 beta    4 J   6.1334 vol 0.1918 (dil 0.3389 g -0.000) grey 31.9% ch 0.100 worst tie b3 mz 417 42.4s
+it  30 beta    4 J   6.0762 vol 0.1920 (dil 0.3389 g -0.000) grey 31.9% ch 0.100 worst tie b3 mz 412 40.4s
+it  31 beta    4 J   6.0166 vol 0.1922 (dil 0.3389 g +0.004) grey 31.8% ch 0.100 worst tie b3 mz 406 42.9s
+it  32 beta    4 J   6.1550 vol 0.1910 (dil 0.3375 g -0.000) grey 31.7% ch 0.100 worst tie b3 mz 414 41.5s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  33 beta    8 J  16.5736 vol 0.1799 (dil 0.3572 g -0.050) grey 16.2% ch 0.100 worst yaw torque 0.35 Nm 1.3e+03 42.2s
+it  34 beta    8 J  12.6996 vol 0.1914 (dil 0.3715 g -0.012) grey 16.5% ch 0.100 worst yaw torque 0.35 Nm 1.07e+03 42.8s
+it  35 beta    8 J  11.5853 vol 0.1946 (dil 0.3743 g -0.005) grey 16.5% ch 0.100 worst yaw torque 0.35 Nm 974 42.7s
+it  36 beta    8 J  11.0537 vol 0.1963 (dil 0.3752 g +0.007) grey 16.4% ch 0.100 worst yaw torque 0.35 Nm 927 42.3s
+it  37 beta    8 J  11.2384 vol 0.1939 (dil 0.3717 g -0.002) grey 16.4% ch 0.100 worst yaw torque 0.35 Nm 927 41.6s
+it  38 beta    8 J  10.8995 vol 0.1949 (dil 0.3720 g -0.001) grey 16.2% ch 0.100 worst yaw torque 0.35 Nm 904 41.8s
+it  39 beta    8 J  10.6100 vol 0.1954 (dil 0.3720 g -0.001) grey 16.2% ch 0.100 worst yaw torque 0.35 Nm 877 42.0s
+it  40 beta    8 J  10.3099 vol 0.1960 (dil 0.3720 g -0.001) grey 16.1% ch 0.100 worst yaw torque 0.35 Nm 848 42.1s
+it  41 beta    8 J   9.9766 vol 0.1965 (dil 0.3721 g +0.009) grey 16.1% ch 0.100 worst yaw torque 0.35 Nm 814 42.9s
+it  42 beta    8 J  10.3647 vol 0.1928 (dil 0.3679 g -0.002) grey 16.0% ch 0.100 worst yaw torque 0.35 Nm 816 43.1s
+it  43 beta    8 J   9.8695 vol 0.1934 (dil 0.3682 g -0.001) grey 16.0% ch 0.100 worst yaw torque 0.35 Nm 770 39.9s
+it  44 beta    8 J   9.4758 vol 0.1937 (dil 0.3682 g -0.001) grey 16.0% ch 0.100 worst yaw torque 0.35 Nm 722 41.0s
+it  45 beta    8 J   9.1021 vol 0.1938 (dil 0.3682 g -0.001) grey 16.0% ch 0.100 worst yaw torque 0.35 Nm 678 41.7s
+it  46 beta    8 J   8.7946 vol 0.1940 (dil 0.3682 g +0.006) grey 16.0% ch 0.100 worst yaw torque 0.35 Nm 647 42.7s
+it  47 beta    8 J   9.0485 vol 0.1920 (dil 0.3656 g -0.001) grey 15.9% ch 0.100 worst yaw torque 0.35 Nm 661 42.3s
+it  48 beta    8 J   8.7891 vol 0.1924 (dil 0.3657 g -0.001) grey 15.8% ch 0.100 worst yaw torque 0.35 Nm 649 45.5s
+it  49 beta    8 J   8.5618 vol 0.1929 (dil 0.3657 g -0.001) grey 15.8% ch 0.100 worst yaw torque 0.35 Nm 639 41.0s
+it  50 beta    8 J   8.3625 vol 0.1933 (dil 0.3657 g -0.001) grey 15.8% ch 0.100 worst yaw torque 0.35 Nm 630 41.7s
+it  51 beta    8 J   8.1908 vol 0.1938 (dil 0.3657 g +0.006) grey 15.7% ch 0.100 worst yaw torque 0.35 Nm 623 41.3s
+it  52 beta    8 J   8.4543 vol 0.1921 (dil 0.3634 g -0.001) grey 15.7% ch 0.100 worst yaw torque 0.35 Nm 639 41.8s
+it  53 beta    8 J   8.3003 vol 0.1925 (dil 0.3635 g -0.000) grey 15.6% ch 0.100 worst yaw torque 0.35 Nm 629 41.6s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  54 beta   16 J   9.5950 vol 0.1905 (dil 0.3584 g +0.005) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 799 40.5s
+it  55 beta   16 J   9.6707 vol 0.1867 (dil 0.3550 g -0.004) grey  7.8% ch 0.100 worst yaw torque 0.35 Nm 731 41.0s
+it  56 beta   16 J   8.9955 vol 0.1878 (dil 0.3560 g -0.005) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 701 40.2s
+it  57 beta   16 J   8.5364 vol 0.1889 (dil 0.3572 g -0.001) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 654 40.7s
+it  58 beta   16 J   8.3799 vol 0.1890 (dil 0.3574 g -0.001) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 633 40.4s
+it  59 beta   16 J   8.2712 vol 0.1892 (dil 0.3574 g -0.000) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 627 39.5s
+it  60 beta   16 J   8.1808 vol 0.1894 (dil 0.3574 g -0.000) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 621 40.4s
+it  61 beta   16 J   8.0931 vol 0.1895 (dil 0.3574 g -0.000) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 616 43.7s
+it  62 beta   16 J   8.0071 vol 0.1897 (dil 0.3574 g -0.000) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 611 39.2s
+it  63 beta   16 J   7.9208 vol 0.1899 (dil 0.3574 g -0.000) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 606 40.1s
+it  64 beta   16 J   7.8379 vol 0.1901 (dil 0.3574 g -0.000) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 602 39.6s
+it  65 beta   16 J   7.7576 vol 0.1903 (dil 0.3574 g -0.000) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 598 39.6s
+it  66 beta   16 J   7.6805 vol 0.1905 (dil 0.3574 g +0.001) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 592 41.4s
+it  67 beta   16 J   7.6737 vol 0.1902 (dil 0.3569 g -0.000) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 591 40.2s
+it  68 beta   16 J   7.6106 vol 0.1904 (dil 0.3569 g -0.000) grey  7.8% ch 0.100 worst yaw torque 0.35 Nm 586 40.0s
+it  69 beta   16 J   7.5540 vol 0.1906 (dil 0.3569 g -0.000) grey  7.8% ch 0.100 worst yaw torque 0.35 Nm 583 40.8s
+it  70 beta   16 J   7.5013 vol 0.1908 (dil 0.3570 g -0.000) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 580 40.7s
+it  71 beta   16 J   7.4511 vol 0.1910 (dil 0.3570 g +0.002) grey  7.7% ch 0.100 worst yaw torque 0.35 Nm 577 41.8s
+it  72 beta   16 J   7.4975 vol 0.1904 (dil 0.3562 g -0.000) grey  7.6% ch 0.100 worst yaw torque 0.35 Nm 578 40.7s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  73 beta   32 J   7.5279 vol 0.1902 (dil 0.3531 g +0.004) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 608 40.6s
+it  74 beta   32 J   7.4804 vol 0.1872 (dil 0.3506 g -0.003) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 581 41.9s
+it  75 beta   32 J   7.2800 vol 0.1880 (dil 0.3513 g -0.001) grey  3.7% ch 0.100 worst yaw torque 0.35 Nm 573 40.3s
+it  76 beta   32 J   7.2053 vol 0.1879 (dil 0.3514 g -0.003) grey  3.7% ch 0.100 worst yaw torque 0.35 Nm 563 39.5s
+it  77 beta   32 J   7.1018 vol 0.1888 (dil 0.3522 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 557 40.2s
+it  78 beta   32 J   7.0723 vol 0.1890 (dil 0.3523 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 555 40.7s
+it  79 beta   32 J   7.0478 vol 0.1891 (dil 0.3523 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 553 40.6s
+it  80 beta   32 J   7.0230 vol 0.1892 (dil 0.3523 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 551 40.8s
+it  81 beta   32 J   6.9985 vol 0.1892 (dil 0.3523 g -0.001) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 549 41.3s
+it  82 beta   32 J   6.9671 vol 0.1894 (dil 0.3524 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 548 40.9s
+it  83 beta   32 J   6.9447 vol 0.1895 (dil 0.3524 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 546 41.4s
+it  84 beta   32 J   6.9238 vol 0.1895 (dil 0.3524 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 544 41.0s
+it  85 beta   32 J   6.9048 vol 0.1896 (dil 0.3524 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 543 41.0s
+it  86 beta   32 J   6.8870 vol 0.1896 (dil 0.3524 g +0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 542 40.3s
+it  87 beta   32 J   6.8774 vol 0.1896 (dil 0.3523 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 541 40.1s
+it  88 beta   32 J   6.8616 vol 0.1896 (dil 0.3523 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 540 41.0s
+it  89 beta   32 J   6.8464 vol 0.1897 (dil 0.3523 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 538 40.0s
+it  90 beta   32 J   6.8315 vol 0.1897 (dil 0.3523 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 537 41.3s
+it  91 beta   32 J   6.8146 vol 0.1897 (dil 0.3523 g +0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 536 39.6s
+it  92 beta   32 J   6.8056 vol 0.1896 (dil 0.3521 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 535 40.1s
+it  93 beta   32 J   6.7848 vol 0.1896 (dil 0.3521 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 533 39.6s
+it  94 beta   32 J   6.7661 vol 0.1896 (dil 0.3521 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 532 38.5s
+it  95 beta   32 J   6.7500 vol 0.1896 (dil 0.3521 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 531 39.7s
+it  96 beta   32 J   6.7368 vol 0.1897 (dil 0.3521 g +0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 530 40.2s
+it  97 beta   32 J   6.7327 vol 0.1896 (dil 0.3520 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 530 40.8s
+it  98 beta   32 J   6.7222 vol 0.1897 (dil 0.3520 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 529 39.3s
+it  99 beta   32 J   6.7121 vol 0.1898 (dil 0.3520 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 528 40.7s
+it 100 beta   32 J   6.7014 vol 0.1899 (dil 0.3520 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 527 40.3s
+it 101 beta   32 J   6.6908 vol 0.1900 (dil 0.3520 g +0.001) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 526 40.1s
+it 102 beta   32 J   6.6964 vol 0.1898 (dil 0.3518 g -0.000) grey  3.6% ch 0.100 worst yaw torque 0.35 Nm 526 39.0s
+it 103 beta   32 J   6.6867 vol 0.1899 (dil 0.3518 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 525 38.9s
+it 104 beta   32 J   6.6776 vol 0.1899 (dil 0.3518 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 525 39.8s
+it 105 beta   32 J   6.6692 vol 0.1900 (dil 0.3518 g -0.000) grey  3.5% ch 0.100 worst yaw torque 0.35 Nm 524 38.4s
+it 106 beta   32 J   6.6611 vol 0.1900 (dil 0.3518 g +0.001) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 523 39.1s
+it 107 beta   32 J   6.6706 vol 0.1897 (dil 0.3515 g -0.000) grey  3.4% ch 0.100 worst yaw torque 0.35 Nm 524 37.8s
+layout: stopped (max_stage) at it 107, beta 32, 4443 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 4645 s, peak 6.305596 GB
+build: organic surface at pitch 0.267 mm (x3), skins 5.24 cm3, field 15.96 cm3, in env - cuts 14.04 cm3 (layout 14.04, level offset +0.139 mm), fillet 2.5 mm, rims 1.0 mm, mesh 264,080 faces, 26 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [9008.4], "necks": [], "drawn_not_in_main": [["0.0", 0.753, "erode 2.0"], ["0.1", 0.762, "erode 2.0"], ["0.2", 0.765, "erode 2.0"], ["0.3", 0.782, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 2405.1, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.14 in 'crash push 40 N -X on the motor' at [12.4, 7.6, 7.4]
+RESULT {"name": "motor_mount", "solid_ok": false, "mass_g": 17.94, "worst": 0.143, "function_ok": true, "bodies": 1}
+{
+ "name": "motor_mount",
+ "solid_ok": false,
+ "mass_g": 17.94,
+ "worst": 0.143,
+ "total_s": 4693
+}

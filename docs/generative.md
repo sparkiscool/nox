@@ -1,43 +1,38 @@
 # Generative parts, heavy runs, save and print
 
-Every generated part runs the whole `nox/noxopt_demo.py` pipeline, in order, nothing skipped. A part script is a copy of the demo with the part's own loads, drawn features, cuts and envelope. Layout and smooth build: `noxopt.py` (`noxopt_local.py` with `backend="gmg"` above ~60k design cells or ~450k dof). FE kernel and strength checker: `printopt.py`. Tags: T measured in a cloud run, E estimate.
+Every generated part uses the topology engine `nox/topo` (default since 24 Oct, Spark). The old `noxopt.py`, `noxopt_local.py`, `printopt.py` and `noxopt_demo.py` stay in the repo for history and old part scripts only; no new part uses them. Method, settings and test results: `nox/topo/README.md`. Tags: T measured in a cloud run, E estimate.
 
 ## The rule
-1. **Drawn = mounting + must-haves only:** fastener seats with their boss walls, mating and contact faces, pin bores, rod sockets, connector seats, flexures, hooks, windows, TPU feet, each at its smallest volume. Everything else is generated. Every drawn body lies inside the envelope and the design space can reach it over its whole length. Access cuts for bolt heads and tools are never wider than the pad they serve.
-2. **Layout:** stiffness run to a mass target, every load case plus a tie load on every drawn feature (noxopt adds those). Members come out at the filter radius. Symmetric mounting gives a symmetric part (auto-detected; centre the grid on the mirror plane). Pick the bed face first: the drawn mounting pads, usually.
-3. **Stop** at ≤ 2 % grey and settled. Hard cap 6 h, then build from the last checkpoint. Too big means coarser or in pieces.
-4. **No thin rods:** `prune_thin` after the layout; `thin_check` reads 0 after the build. A thin member goes back to `prune_thin`, never thickened by hand.
-5. **Build:** `smooth_surface` polish (fillets where members meet, holes stay holes, nothing under 2.0, off every keep-out), then exact drawn bodies, envelope trim, exact cuts. `function_check` reads 0 / 0 / 0. Report `wrinkle` and look at close-ups; lumpy means a finer layout, not more flow.
-6. **No patching:** no grey fill, dilation, member growing or "keep the largest body". A detached feature means rerun. `solid_check` PASS or the part does not exist.
-7. **Strength:** as-built recheck of every case with `printopt.py`. A must-hold case over 1.0 gets `smooth_surface(..., reinforce=points)`, at most 3 passes. A topology part replaces a drawn one only if it beats the drawn part's worst index on the same FE grid and passes the solid check; the FE grid is at most a third of the smallest neck it judges.
+1. **Drawn = mounting + must-haves only:** fastener seats with their boss walls, mating and contact faces, pin bores, rod sockets, connector seats, flexures, hooks, windows, TPU feet, each at its smallest volume. Everything else is generated. Every drawn body lies inside the envelope and the design space can reach it. Access cuts for bolt heads and tools are never wider than the pad they serve. A drawn body must keep a 2 mm core at the solid gate's 2.0 mm erosion (bosses about 12 mm round on an M3, plates at least 6 mm under 6.25 mm members); `topo` checks reachability before the first solve and raises if a body cannot be joined.
+2. **Organic finish (default, Spark 23 Oct):** the whole part is one smooth field of round members blended with fillets; only holes, bores and flat contact faces stay geometric. Drawn bodies stay only as 2.5 mm functional skins next to cuts and the envelope's outside; the mounting features the main support holds stay whole. Do not switch it off (`finish="drawn"`) without Spark.
+3. **Layout:** robust (eroded / nominal / dilated) stiffness design to a mass target over every load case plus tie loads on every drawn body (`topo` adds those). Minimum member in mm; the engine raises it to what the solid gate needs (6.25 mm). Pick the bed face first.
+4. **Stop** at ≤ 2 % grey or the end of the beta 32 stage. Hard cap 6 h, then build from the last checkpoint.
+5. **No patching:** no grey fill, dilation, member growing or "keep the largest body". A detached feature means a setup or engine fix and a rerun. `solid_check` PASS or the part does not exist.
+6. **Strength:** `topo` writes every case's as-built index. A topology part replaces a drawn or older one only if it beats the old part's worst index on the same FE grid (`python3 -m topo.compare`) and passes the solid check.
+7. **Engine first:** a fix that would help every part goes in `nox/topo`, never in one part's script or mesh. One session edits the engine at a time.
 
 ## How-to
-Copy `noxopt_demo.py`; swap in the part's `printopt.Problem`, drawn bodies, cuts, envelope and mirror plane; keep every step. Worked parts: `nox/box/arm_topo.py` + `arm_run_*.py`, `nox/box/stand/stand_v7_topo.py` + `stand_v7_topo_build.py`.
+Worked parts: `nox/topo/demos/holder.py` (strut frame, the look test part), `nox/topo/demos/stand.py` (box stand parts), `nox/overseer/scan_stick/*_topo_*.py`.
 ```python
-import noxopt as NO
-L = NO.Layout(pb, volfrac)                                   # pb.R filter radius in cells; pb.sym, pb.overhang as before
-dens = L.run(checkpoint="ck.npz", resume="ck.npz")
-L, dens, removed = NO.prune_thin(L, dens, floor_mm=2.0, margin_mm=0.75)
-NO.connectivity(dens, pb)                                    # one body, every drawn body in it
-part = NO.smooth_surface(rho, solid, void, shape, h, origin, keep_mesh=drawn, clip_mesh=allowed, floor_mm=2.0)
-NO.function_check(part, drawn, cuts, allowed)               # 0 / 0 / 0
-NO.thin_check(part, drawn, floor_mm=2.0)                     # 0 members
-NO.wrinkle(part, drawn=drawn, allowed=allowed)              # p95 / p99, reported
+from topo import Part, Settings, optimise
+def setup(h):
+    p = Part("my_part", h, drawn, cuts, env, build="+z", material="PETG")
+    p.support("default", region); p.load("case", region, (fx, fy, fz), cls="misuse")
+    return p
+optimise(setup, h=1.0, gen_cm3=6.0, out_dir="runs/my_part/v1", name="my_part", settings=Settings(), git=True)
 ```
-Then the as-built recheck (pattern: end of `noxopt_demo.py`, `nox/box/arm_recheck.py`), `solid_check.py`, `print_orient.py`, `render_preview.py`.
+The run writes `runs/<part>/<version>/` with the STL, `<part>_view.stl`, `preview.png`, `log.txt`, `result.json` (mass, worst index per case, solid check, function check), checkpoints. Then `print_orient.py` and the save steps below. Any `Settings` field can be set per run: `python3 -m topo.run <demo> --set key=value`.
 
 | Default | Value |
 |---|---|
-| Grid | h 1.0 or finer; small parts 0.5; members at least 2 cells wide |
-| Filter radius `pb.R` | 2.0 cells, and at least wall class / h |
-| Robust thresholds | 0.7 / 0.5 / 0.3 |
-| Case weighting | p-mean, P 4; tie cases x 0.25 |
-| Mass target | generated volume from the part's budget (`GEN_CM3`); lower it while the as-built worst index stays ≤ 1.0 |
-| Overhang filter | off (tree supports are allowed everywhere); on only for a part that prints flat with no supports |
-| Smooth build | fine grid h / 4, sigma ~0.6 x h, volume preserved; polish on, `floor_mm` 2.0 (2.4 TPU), `clip_margin` 0.5 |
-| Envelope | faces that are not real restrictions go out until the layout stops touching them; skin 2.0 from each face void; report any sliced flat area |
+| Grid | h 1.0 (a coarse 2h stage runs first); small parts 0.5 to 0.8 |
+| Minimum member | 3.2 mm asked, raised to 6.25 mm for the solid gate |
+| Finish | `organic`: 2.5 mm skins, 2.5 mm fillets, 1.0 mm rounded rims |
+| Case weighting | p-mean, P 6, cases over the full solid's compliance; ties weight 0.5 |
+| Mass target | `gen_cm3`, generated volume; lower it while the as-built worst index stays at target |
+| Solver | Pardiso on active dofs; multigrid CG beyond the RAM budget, chosen automatically |
 
-Known limits (T): the layout is a stiffness design, strength is fixed locally; a one-voxel peak with p99.9 well under 1.0 is a flag, not a failure; waves along a long member or a crease between two close members mean a finer layout (gripper head v3 at h 1.32 came out smoother and 9 % lighter than h 2.0). Engine edit: `python3 nox/test_noxopt.py` once, commit, one `log.md` line.
+Known limits (T): the layout is a stiffness design; strength is reported per case, not optimised. A keep-out with a sharp edge that members must bend round sets the worst index (holder: rounding the battery channel edge r 3 mm took 0.569 to 0.493 at 11.7 g). Engine edit: `cd nox && python3 -m topo.test_topo` once, commit, one `log.md` line.
 
 ## Heavy runs (cloud box)
 - Branch `run/<part>-<version>`, one run per box. Start in the background (`nohup python3 <script> > runs/<part>/<version>/log.txt 2>&1 &`): a run lives only while a command runs. Checkpoint every ~10 iterations and commit + push each checkpoint (`ckpt <n>`); a reclaimed box keeps the branch, not the files.
