@@ -139,7 +139,7 @@ def spine_bodies():
     cuts += box(SW[0] - 1, SW[1] + 1, 16 - 9.7, 16 + 9.7, SWZ - 6.6, SWZ + 6.6) + box(SW[1], PI_X0 - 0.5, 16 - 11, 16 + 11, SWZ - 11, SWZ + 11)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -6, SWZ, 6.15) + cylx(SW[1], PI_X0 - 0.5, -6, SWZ, 7.0)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -20, SWZ, 2.6) + cylx(SW[1], SW[1] + 8, -20, SWZ, 3.5)
-    env = box(-68.0, JX, -50.0, 50.0, 0.0, 198.0)
+    env = box(-70.0, JX, -44.0, 44.0, 0.0, 200.0)                                             # to the cage sleeves (y ±42), not beyond
     return dict(drawn=drawn, cuts=cuts, env=env, floor=floor, back=back, front=front, ring=ring, standoffs=standoffs, sleeves=sleeves, ledge=ledge, panel=panel)
 
 def head_bodies():
