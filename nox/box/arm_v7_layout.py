@@ -42,14 +42,14 @@ def strokes():
     return z
 
 
-# round 3 (concept review r2 + latch d0cd1a1: the XT60 end faces the arm, the Overseer's arm-side end at Y 74.76 at Y_C 138; the hub: Y_C stays,
+# round 3 (concept review r2 + latch d0cd1a1: the XT60 end faces the arm; heads v7 24 Oct: the plate top 74.35, 1.0 under the Overseer receiver at Y_C 165;
 # the arm clears it): the LOW carriage stack. Everything under a cartridge (carriage plate X +-28, wheels, nuts, bolt heads, eccentric) ends
 # at Y 72.75, 2.0 under the Overseer's end; the rack and pinion (X 40.5.. beside the cartridge) stay. The rail loses 6.25 of depth on top and
 # gains a keel under it outboard of the hub plate (r >= 89, Y 38..54), which brings the free XT60 pitch back (swap_system.mate_pitch). C.
-LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.75, 68.75), PLATE_Y=(68.75, 72.75),
+LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.75, 68.75), PLATE_Y=(68.75, 74.35),   # plate top 74.35 (heads v7: 1.0 under the Overseer receiver at Y_C 165; was 72.75)
            NUT_Y=(55.05, 57.75),                # DIN 439 M5 thin nut 2.7 + threadlocker (E) under each wheel; the hub plate's wheel lanes at Y 53
-           AXLE_BOLT_L=dict(fixed=18.0, ecc=18.0, head="ISO 10642 countersunk, flush in the plate top"),   # tails Y 54.75
-           ECC_FLANGE=(70.25, 72.75),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
+           AXLE_BOLT_L=dict(fixed=20.0, ecc=20.0, head="ISO 10642 countersunk, flush in the plate top"),   # tails Y 54.35 (1.35 over the hub's wheel lanes)
+           ECC_FLANGE=(71.85, 74.35),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
            KEEL=dict(x=9.0, y=(38.0, 54.0), r0=89.0),   # rail keel X +-9 under the body from r 89 (1.0 off the hub plate's edge r 88) to the tip
            CBORE_Y=61.0, RAIL_BOLT="M5 x 12 ISO 4762 (head Y 61..66, in the rail)", STOP_Y=(66.75, 72.0), CHAN_Y=(62.75, 66.75),
            STOP_R=(27.5, 31.0),                 # the rail's inner step and park stop from r 27.5: 1.0 off detent ring v4 (r 26.5); the bumper face r 31 kept
