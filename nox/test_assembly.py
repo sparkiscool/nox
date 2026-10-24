@@ -6,6 +6,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SEEDED = ["overseer/overseer.assembly.json", "box/box_catch.assembly.json", "scout/v3/scout.assembly.json"]
 
 
+ACCESS = [{"part": "pack", "name": "pack out", "dir": [1, 0, 0], "length_mm": 10, "tool": "part", "ignore": ["motor"]}]
+PROBES = {"n_dirs": 100}                                       # system_check keys, kept as given
+
+
 def tiny(d):
     """cage shell mesh + a protected box + a bought cylinder with a moves function, saved in d."""
     o = trimesh.creation.box([100] * 3); i = trimesh.creation.box([92] * 3)
@@ -20,7 +24,7 @@ def tiny(d):
         {"name": "pack", "role": "protected", "box": [-30, 30, -30, 30, -30, 30], "mass_g": 100, "swap": True, "tag": "E"},
         {"name": "motor", "role": "bought", "protect": True, "cylinder": {"r": 5, "h": 10, "center": [0, 0, 0], "axis": "z"}, "mass_g": 20,
          "moves": os.path.join(d, "kin.py") + ":lift"},
-    ], cg_ref=[0, 0, 0], contact_pairs=[["pack", "motor"]], access={"future": [1, 2]}, probes=[{"keep": "me"}], custom_key="kept")
+    ], cg_ref=[0, 0, 0], contact_pairs=[["pack", "motor"]], access=ACCESS, probes=PROBES, custom_key="kept")
     return a
 
 
@@ -28,7 +32,7 @@ def test_load_save_roundtrip():
     d = tempfile.mkdtemp(); a = tiny(d); p = a.save(os.path.join(d, "tiny.assembly.json"))
     b = load(p)
     assert b.names == ["cage", "pack", "motor"] and b.validate() == []
-    assert b.data["access"] == {"future": [1, 2]} and b.data["probes"] == [{"keep": "me"}] and b.data["custom_key"] == "kept"
+    assert b.data["access"] == ACCESS and b.data["probes"] == PROBES and b.data["custom_key"] == "kept"
     assert b.part("cage")["owner"] == "test" and b.part("motor")["moves"].endswith(":lift")
     txt = open(p).read()
     assert txt.count('{"name": ') == 3                              # one part per line

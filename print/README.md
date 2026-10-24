@@ -18,6 +18,10 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_cradle_keel_v6.stl` | 183384 | c360aed46fc8 |
 | `box_detent_arm_v1.stl` | 48884 | 9d379e57747a |
 | `box_detent_ring_v1.stl` | 156284 | cf619ecdfdf7 |
+| `box_funnel_panel_A_v7.stl` | 287284 | 5ff1a1f036d7 |
+| `box_funnel_panel_B_v7.stl` | 287684 | 363001539b9c |
+| `box_funnel_panel_A_v7_plain.stl` | 154084 | 8021dea5c6a2 |
+| `box_funnel_panel_B_v7_plain.stl` | 154484 | 43190158f0f8 |
 | `box_finger_A_for_head_A_v4.stl` | 9084 | 088889b387a2 |
 | `box_finger_A_for_head_B_v4.stl` | 9084 | 466037734cec |
 | `box_finger_B_for_head_A_v4.stl` | 9284 | 5db3beea23f7 |
@@ -46,3 +50,7 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `scan_stick_cam_v7.stl` | 2173084 | cf092d1aba74 |
 | `scan_stick_head_v13.stl` | 10370984 | 249eec82eca0 |
 | `scan_stick_thread_test_v1.stl` | 3905473 | 7b35ab438606 |
+| `test_glue_lap_v1.stl` | 20484 | 588cd8a923d4 |
+| `test_layer_pull_v1.stl` | 98684 | 2b4685484f5f |
+| `test_post_pull_v1.stl` | 131284 | eb2934d4a73f |
+| `test_socket_coupon_v2.stl` | 414884 | 25725f258d52 |
