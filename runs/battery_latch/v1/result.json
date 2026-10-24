@@ -1,0 +1,1442 @@
+{
+ "scout_collar": {
+  "inset": 10.5,
+  "margin": 7.0,
+  "need": 7.0
+ },
+ "scout": {
+  "geom": {
+   "pack": "scout",
+   "W": 33.0,
+   "H": 32.0,
+   "L": 70.0,
+   "m": 165.0,
+   "m_tag": "P",
+   "m_plug": 10.0,
+   "X_IN": 17.0,
+   "X_OUT": 19.0,
+   "X_RAIL": 20.0,
+   "RF": 20.3,
+   "X_TIP": 22.8,
+   "Y_LIP": 45.0,
+   "Y_TOP": 45.6,
+   "RAIL_Y0": 35.6,
+   "Z_P0": 2.0,
+   "Z_P1": 73.0,
+   "Z_STOP": 76.0,
+   "Z_CW0": 79.6,
+   "Z_CW1": 81.6,
+   "Z_X": 85.8,
+   "Z_EW0": 90.0,
+   "L_C": 93.0,
+   "Y_XF_FACE": 43.6,
+   "Y_XF_REAR": 27.6,
+   "Y_SH0": 25.1,
+   "Y_SH1": 27.6,
+   "Y_PW1": 37.6,
+   "Y_ZONE": 41.8,
+   "FLOOR_T": 2.0,
+   "Z_T": 42.55,
+   "SWAP_M": 210.865
+  },
+  "rgeom": {
+   "PLATE_T": 2.5,
+   "XW": 24.3,
+   "FOOT_Y1": 7.396,
+   "PK_Y0": 5.95,
+   "PK_Y1": 11.85,
+   "PK_D": 2.8,
+   "PK_HZ": 9.8,
+   "Y_DK0": 47.1,
+   "Y_DK1": 50.1,
+   "Y_M": 54.1,
+   "Z_E0": -0.3,
+   "Z_E1": 93.3,
+   "BX": 25.6,
+   "Y_XM": 45.1,
+   "PKX_XW": 14.55,
+   "PKX_ZW": 7.05,
+   "Y_PCEIL": 48.6,
+   "LIP_Y0": 43.1
+  },
+  "mount": [
+   [
+    -25.6,
+    0.7
+   ],
+   [
+    -25.6,
+    85.8
+   ],
+   [
+    25.6,
+    0.7
+   ],
+   [
+    25.6,
+    85.8
+   ]
+  ],
+  "static_fit_mm3": {},
+  "squeeze": {
+   "vs_cart": 0.0,
+   "vs_recv": 0.0,
+   "vs_each": 0.0
+  },
+  "gripped_pull_mm3": 0.0,
+  "insert_free": {
+   "cart_vs_recv_mm3": 0.0,
+   "stuck": [],
+   "retract_profile": [
+    [
+     -9.0,
+     [
+      0.18,
+      0.18
+     ]
+    ],
+    [
+     -8.0,
+     [
+      0.77,
+      0.77
+     ]
+    ],
+    [
+     -7.0,
+     [
+      1.37,
+      1.37
+     ]
+    ],
+    [
+     -6.0,
+     [
+      1.96,
+      1.96
+     ]
+    ],
+    [
+     -5.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -4.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -3.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -2.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -1.0,
+     [
+      2.5,
+      2.5
+     ]
+    ]
+   ]
+  },
+  "insert_free_off0.3": {
+   "cart_vs_recv_mm3": 10.62,
+   "stuck": []
+  },
+  "bearing_drop": [
+   0.6,
+   0.6
+  ],
+  "grip": {
+   "open_vs_cart_off-1": 0.0,
+   "open_vs_tabs_rest_off-1": 0.0,
+   "min_retract_off-1": 3.0,
+   "open_vs_cart_off+0": 0.0,
+   "open_vs_tabs_rest_off+0": 0.0,
+   "min_retract_off+0": 4.0,
+   "open_vs_cart_off+1": 0.0,
+   "open_vs_tabs_rest_off+1": 0.0,
+   "min_retract_off+1": 3.0,
+   "retract_needed": 2.8,
+   "retract_margin_at_1mm": 0.2,
+   "squeezed_vs_cart": 0.0,
+   "squeezed_vs_sliders_squeezed": 0.0
+  },
+  "plug_vs_male_seat_mm3": 0.0,
+  "hand_calc": {
+   "mass_swap_g": 210.9,
+   "cases": {
+    "hover 1 g": {
+     "pull_N": 2.1,
+     "per_bolt_N": 1.0,
+     "bolt_MPa": 0.04,
+     "ledge_MPa": 0.02,
+     "cls": "functional",
+     "index": 0.003,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "flight 4 g + 2 g lateral": {
+     "pull_N": 8.3,
+     "per_bolt_N": 4.1,
+     "bolt_MPa": 0.14,
+     "ledge_MPa": 0.06,
+     "cls": "functional",
+     "index": 0.013,
+     "Fx_N": 4.1,
+     "Fz_N": 0.0
+    },
+    "catch 6 g": {
+     "pull_N": 12.4,
+     "per_bolt_N": 6.2,
+     "bolt_MPa": 0.21,
+     "ledge_MPa": 0.09,
+     "cls": "functional",
+     "index": 0.02,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "crash 35 g -y (drop on the belly)": {
+     "pull_N": 72.4,
+     "per_bolt_N": 36.2,
+     "bolt_MPa": 1.23,
+     "ledge_MPa": 0.53,
+     "cls": "misuse",
+     "index": 0.071,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "crash 35 g corner (-y share 35/sqrt3)": {
+     "pull_N": 41.8,
+     "per_bolt_N": 20.9,
+     "bolt_MPa": 0.71,
+     "ledge_MPa": 0.31,
+     "cls": "misuse",
+     "index": 0.041,
+     "Fx_N": 41.8,
+     "Fz_N": 41.8
+    },
+    "crash 35 g +y (top hit, into the deck)": {
+     "pull_N": 0.0,
+     "per_bolt_N": 0.0,
+     "bolt_MPa": 0.0,
+     "ledge_MPa": 0.0,
+     "cls": "misuse",
+     "index": 0.0,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "crash 35 g side x (into the plates)": {
+     "pull_N": 0.0,
+     "per_bolt_N": 0.0,
+     "bolt_MPa": 0.0,
+     "ledge_MPa": 0.0,
+     "cls": "misuse",
+     "index": 0.0,
+     "Fx_N": 72.4,
+     "Fz_N": 0.0
+    }
+   },
+   "side_hit_couple_per_bolt_N": 25.7,
+   "grip_pull": {
+    "total_N": 52.1,
+    "per_tab_N": 26.0,
+    "bar_MPa": 3.82,
+    "index": 0.354,
+    "lever_mm": 11.0
+   },
+   "floor_35g": {
+    "MPa": 4.99,
+    "index": 0.289
+   },
+   "wall_35g": {
+    "MPa": 1.1,
+    "index": 0.063
+   },
+   "slider_inertia_35g_N": 1.1,
+   "bolt_friction_lock_corner_N": 6.3,
+   "spring": {
+    "rate_N_mm": 0.17,
+    "free_mm": 20.0,
+    "rest_N": 0.68,
+    "squeezed_N": 2.04,
+    "length_squeezed_mm": 8.0
+   },
+   "release_force_per_finger_N": 2.53,
+   "plate_side_hit_35g": {
+    "MPa": 4.86,
+    "index": 0.281
+   },
+   "bolt_side_hit_couple": {
+    "MPa": 0.87,
+    "index": 0.051
+   },
+   "worst_index": 0.354
+  },
+  "reactions": {
+   "hover 1 g": {
+    "F_N": [
+     0.0,
+     -2.1,
+     0.0
+    ],
+    "M_Nmm": [
+     -1.0,
+     -0.0,
+     -0.0
+    ],
+    "boss_axial_N": [
+     -0.5,
+     -0.5,
+     -0.5,
+     -0.5
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 0.5
+   },
+   "flight 4 g up + 2 g lateral": {
+    "F_N": [
+     4.1,
+     -8.3,
+     0.0
+    ],
+    "M_Nmm": [
+     -6.0,
+     -3.0,
+     116.0
+    ],
+    "boss_axial_N": [
+     -0.9,
+     -1.0,
+     -3.2,
+     -3.2
+    ],
+    "boss_shear_N": [
+     1.0,
+     1.0,
+     1.0,
+     1.0
+    ],
+    "max_tension_N": 3.2
+   },
+   "catch 6 g": {
+    "F_N": [
+     0.0,
+     -12.4,
+     0.0
+    ],
+    "M_Nmm": [
+     -9.0,
+     -0.0,
+     -0.0
+    ],
+    "boss_axial_N": [
+     -3.1,
+     -3.2,
+     -3.1,
+     -3.2
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 3.2
+   },
+   "crash 35 g -y": {
+    "F_N": [
+     0.0,
+     -72.4,
+     0.0
+    ],
+    "M_Nmm": [
+     -50.0,
+     -0.0,
+     -0.0
+    ],
+    "boss_axial_N": [
+     -17.8,
+     -18.4,
+     -17.8,
+     -18.4
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 18.4
+   },
+   "crash 35 g +y": {
+    "F_N": [
+     0.0,
+     72.4,
+     0.0
+    ],
+    "M_Nmm": [
+     50.0,
+     -0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     17.8,
+     18.4,
+     17.8,
+     18.4
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 0.0
+   },
+   "crash 35 g +x": {
+    "F_N": [
+     72.4,
+     0.0,
+     0.0
+    ],
+    "M_Nmm": [
+     0.0,
+     -50.0,
+     2022.0
+    ],
+    "boss_axial_N": [
+     19.7,
+     19.7,
+     -19.7,
+     -19.7
+    ],
+    "boss_shear_N": [
+     17.9,
+     18.3,
+     17.9,
+     18.3
+    ],
+    "max_tension_N": 19.7
+   },
+   "crash 35 g +z": {
+    "F_N": [
+     0.0,
+     0.0,
+     72.4
+    ],
+    "M_Nmm": [
+     -2022.0,
+     -0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     11.9,
+     -11.9,
+     11.9,
+     -11.9
+    ],
+    "boss_shear_N": [
+     18.1,
+     18.1,
+     18.1,
+     18.1
+    ],
+    "max_tension_N": 11.9
+   },
+   "crash 35 g corner (+x -y +z)": {
+    "F_N": [
+     41.8,
+     -41.8,
+     41.8
+    ],
+    "M_Nmm": [
+     -1196.0,
+     -29.0,
+     1167.0
+    ],
+    "boss_axial_N": [
+     8.0,
+     -6.1,
+     -14.8,
+     -28.9
+    ],
+    "boss_shear_N": [
+     14.7,
+     14.9,
+     14.6,
+     14.8
+    ],
+    "max_tension_N": 28.9
+   },
+   "swap insert 60 N": {
+    "F_N": [
+     0.0,
+     60.0,
+     0.0
+    ],
+    "M_Nmm": [
+     42.0,
+     -0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     14.8,
+     15.2,
+     14.8,
+     15.2
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 0.0
+   },
+   "swap pull 50 N (XT60)": {
+    "F_N": [
+     0.0,
+     -50.0,
+     0.0
+    ],
+    "M_Nmm": [
+     2128.0,
+     0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     -25.0,
+     0.0,
+     -25.0,
+     0.0
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 25.0
+   }
+  },
+  "mount_pts": [
+   [
+    -25.6,
+    54.1,
+    0.7000000000000002
+   ],
+   [
+    -25.6,
+    54.1,
+    85.8
+   ],
+   [
+    25.6,
+    54.1,
+    0.7000000000000002
+   ],
+   [
+    25.6,
+    54.1,
+    85.8
+   ]
+  ],
+  "mass_g": {
+   "cartridge": 33.09,
+   "slider": 3.2,
+   "receiver": 38.39,
+   "lid": 5.34,
+   "strips": 1.97
+  },
+  "bbox": {
+   "extents": [
+    61.2,
+    54.1,
+    101.6
+   ],
+   "volume_L": 0.3364,
+   "largest": 101.6
+  },
+  "collar_margin": 7.0,
+  "keel_node_clearance": [
+   8.82,
+   10.12,
+   8.82
+  ],
+  "keel_node_surface_dist": [
+   8.82,
+   9.96,
+   8.82
+  ],
+  "prints": {
+   "cartridge": {
+    "file": "box_battery_cartridge_scout_v5.stl",
+    "material": "PETG",
+    "count": 1,
+    "version": "v5",
+    "bed_face": "closed end (z 0) down",
+    "mass_g": 33.09,
+    "extents": [
+     40.0,
+     45.6,
+     96.0
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[8769.7]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 6,
+     "ok": true
+    },
+    "bed_mm2": 1267.0,
+    "overhang_mm2": 1865.0,
+    "island_run_mm": 0.0
+   },
+   "slider": {
+    "file": "box_battery_slider_scout_v5.stl",
+    "material": "PETG",
+    "count": 2,
+    "version": "v5",
+    "bed_face": "inner tab face down",
+    "mass_g": 3.2,
+    "extents": [
+     22.0,
+     11.5,
+     18.8
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[1454.5]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 0,
+     "ok": true
+    },
+    "bed_mm2": 243.0,
+    "overhang_mm2": 15.0,
+    "island_run_mm": 0.0
+   },
+   "receiver": {
+    "file": "box_battery_receiver_scout_v1.stl",
+    "material": "PETG",
+    "count": 1,
+    "version": "v1",
+    "bed_face": "lead-end face down",
+    "mass_g": 38.39,
+    "extents": [
+     61.2,
+     53.9,
+     101.6
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[13682.6]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 9,
+     "ok": true
+    },
+    "bed_mm2": 758.0,
+    "overhang_mm2": 1971.0,
+    "island_run_mm": 0.0
+   },
+   "receiver_lid": {
+    "file": "box_battery_receiver_lid_scout_v1.stl",
+    "material": "PETG",
+    "count": 1,
+    "version": "v1",
+    "bed_face": "top face down",
+    "mass_g": 5.34,
+    "extents": [
+     61.2,
+     20.0,
+     5.5
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[2182.8]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 0,
+     "ok": true
+    },
+    "bed_mm2": 1001.0,
+    "overhang_mm2": 0.0,
+    "island_run_mm": 0.0
+   },
+   "receiver_strip": {
+    "file": "box_battery_receiver_strip_scout_v1.stl",
+    "material": "TPU",
+    "count": 2,
+    "version": "v1",
+    "bed_face": "flat",
+    "mass_g": 0.98,
+    "extents": [
+     4.8,
+     70.6,
+     2.4
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[224.2]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 0,
+     "ok": true
+    },
+    "bed_mm2": 339.0,
+    "overhang_mm2": 0.0,
+    "island_run_mm": 0.0
+   }
+  },
+  "system_manifest": "runs/battery_latch/v1/manifest_scout/manifest.json"
+ },
+ "overseer": {
+  "geom": {
+   "pack": "overseer",
+   "W": 48.0,
+   "H": 45.0,
+   "L": 148.0,
+   "m": 650.0,
+   "m_tag": "E",
+   "m_plug": 15.0,
+   "X_IN": 24.5,
+   "X_OUT": 26.5,
+   "X_RAIL": 27.5,
+   "RF": 27.8,
+   "X_TIP": 30.3,
+   "Y_LIP": 58.0,
+   "Y_TOP": 58.6,
+   "RAIL_Y0": 48.6,
+   "Z_P0": 2.0,
+   "Z_P1": 151.0,
+   "Z_STOP": 154.0,
+   "Z_CW0": 157.6,
+   "Z_CW1": 159.6,
+   "Z_X": 163.8,
+   "Z_EW0": 168.0,
+   "L_C": 171.0,
+   "Y_XF_FACE": 56.6,
+   "Y_XF_REAR": 40.6,
+   "Y_SH0": 38.1,
+   "Y_SH1": 40.6,
+   "Y_PW1": 50.6,
+   "Y_ZONE": 54.8,
+   "FLOOR_T": 3.0,
+   "Z_T": 80.27,
+   "SWAP_M": 747.508
+  },
+  "rgeom": {
+   "PLATE_T": 3.0,
+   "XW": 31.8,
+   "FOOT_Y1": 7.396,
+   "PK_Y0": 5.95,
+   "PK_Y1": 11.85,
+   "PK_D": 2.8,
+   "PK_HZ": 9.8,
+   "Y_DK0": 60.1,
+   "Y_DK1": 63.1,
+   "Y_M": 67.1,
+   "Z_E0": -0.3,
+   "Z_E1": 171.3,
+   "BX": 33.1,
+   "Y_XM": 58.1,
+   "PKX_XW": 14.55,
+   "PKX_ZW": 7.05,
+   "Y_PCEIL": 61.6,
+   "LIP_Y0": 56.1
+  },
+  "mount": [
+   [
+    -33.1,
+    0.7
+   ],
+   [
+    -33.1,
+    163.8
+   ],
+   [
+    33.1,
+    0.7
+   ],
+   [
+    33.1,
+    163.8
+   ]
+  ],
+  "static_fit_mm3": {},
+  "squeeze": {
+   "vs_cart": 0.0,
+   "vs_recv": 0.0,
+   "vs_each": 0.0
+  },
+  "gripped_pull_mm3": 0.0,
+  "insert_free": {
+   "cart_vs_recv_mm3": 0.0,
+   "stuck": [],
+   "retract_profile": [
+    [
+     -9.0,
+     [
+      0.18,
+      0.18
+     ]
+    ],
+    [
+     -8.0,
+     [
+      0.77,
+      0.77
+     ]
+    ],
+    [
+     -7.0,
+     [
+      1.37,
+      1.37
+     ]
+    ],
+    [
+     -6.0,
+     [
+      1.96,
+      1.96
+     ]
+    ],
+    [
+     -5.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -4.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -3.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -2.0,
+     [
+      2.5,
+      2.5
+     ]
+    ],
+    [
+     -1.0,
+     [
+      2.5,
+      2.5
+     ]
+    ]
+   ]
+  },
+  "insert_free_off0.3": {
+   "cart_vs_recv_mm3": 10.62,
+   "stuck": []
+  },
+  "bearing_drop": [
+   0.6,
+   0.6
+  ],
+  "grip": {
+   "open_vs_cart_off-1": 0.0,
+   "open_vs_tabs_rest_off-1": 0.0,
+   "min_retract_off-1": 3.0,
+   "open_vs_cart_off+0": 0.0,
+   "open_vs_tabs_rest_off+0": 0.0,
+   "min_retract_off+0": 4.0,
+   "open_vs_cart_off+1": 0.0,
+   "open_vs_tabs_rest_off+1": 0.0,
+   "min_retract_off+1": 3.0,
+   "retract_needed": 2.8,
+   "retract_margin_at_1mm": 0.2,
+   "squeezed_vs_cart": 0.0,
+   "squeezed_vs_sliders_squeezed": 0.0
+  },
+  "plug_vs_male_seat_mm3": 0.0,
+  "hand_calc": {
+   "mass_swap_g": 747.5,
+   "cases": {
+    "hover 1 g": {
+     "pull_N": 7.3,
+     "per_bolt_N": 3.7,
+     "bolt_MPa": 0.12,
+     "ledge_MPa": 0.05,
+     "cls": "functional",
+     "index": 0.012,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "flight 4 g + 2 g lateral": {
+     "pull_N": 29.3,
+     "per_bolt_N": 14.7,
+     "bolt_MPa": 0.5,
+     "ledge_MPa": 0.21,
+     "cls": "functional",
+     "index": 0.046,
+     "Fx_N": 14.7,
+     "Fz_N": 0.0
+    },
+    "catch 6 g": {
+     "pull_N": 44.0,
+     "per_bolt_N": 22.0,
+     "bolt_MPa": 0.75,
+     "ledge_MPa": 0.32,
+     "cls": "functional",
+     "index": 0.069,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "crash 35 g -y (drop on the belly)": {
+     "pull_N": 256.7,
+     "per_bolt_N": 128.3,
+     "bolt_MPa": 4.36,
+     "ledge_MPa": 1.88,
+     "cls": "misuse",
+     "index": 0.252,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "crash 35 g corner (-y share 35/sqrt3)": {
+     "pull_N": 148.2,
+     "per_bolt_N": 74.1,
+     "bolt_MPa": 2.52,
+     "ledge_MPa": 1.08,
+     "cls": "misuse",
+     "index": 0.146,
+     "Fx_N": 148.2,
+     "Fz_N": 148.2
+    },
+    "crash 35 g +y (top hit, into the deck)": {
+     "pull_N": 0.0,
+     "per_bolt_N": 0.0,
+     "bolt_MPa": 0.0,
+     "ledge_MPa": 0.0,
+     "cls": "misuse",
+     "index": 0.0,
+     "Fx_N": 0.0,
+     "Fz_N": 0.0
+    },
+    "crash 35 g side x (into the plates)": {
+     "pull_N": 0.0,
+     "per_bolt_N": 0.0,
+     "bolt_MPa": 0.0,
+     "ledge_MPa": 0.0,
+     "cls": "misuse",
+     "index": 0.0,
+     "Fx_N": 256.7,
+     "Fz_N": 0.0
+    }
+   },
+   "side_hit_couple_per_bolt_N": 94.5,
+   "grip_pull": {
+    "total_N": 57.3,
+    "per_tab_N": 28.7,
+    "bar_MPa": 4.2,
+    "index": 0.389,
+    "lever_mm": 11.0
+   },
+   "floor_35g": {
+    "MPa": 6.14,
+    "index": 0.355
+   },
+   "wall_35g": {
+    "MPa": 4.24,
+    "index": 0.245
+   },
+   "slider_inertia_35g_N": 1.39,
+   "bolt_friction_lock_corner_N": 22.2,
+   "spring": {
+    "rate_N_mm": 0.17,
+    "free_mm": 20.0,
+    "rest_N": 0.68,
+    "squeezed_N": 2.04,
+    "length_squeezed_mm": 8.0
+   },
+   "release_force_per_finger_N": 3.79,
+   "plate_side_hit_35g": {
+    "MPa": 6.5,
+    "index": 0.376
+   },
+   "bolt_side_hit_couple": {
+    "MPa": 3.21,
+    "index": 0.186
+   },
+   "worst_index": 0.389
+  },
+  "reactions": {
+   "hover 1 g": {
+    "F_N": [
+     0.0,
+     -7.3,
+     0.0
+    ],
+    "M_Nmm": [
+     -15.0,
+     -0.0,
+     -0.0
+    ],
+    "boss_axial_N": [
+     -1.8,
+     -1.9,
+     -1.8,
+     -1.9
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 1.9
+   },
+   "flight 4 g up + 2 g lateral": {
+    "F_N": [
+     14.7,
+     -29.3,
+     0.0
+    ],
+    "M_Nmm": [
+     -58.0,
+     -29.0,
+     498.0
+    ],
+    "boss_axial_N": [
+     -3.4,
+     -3.7,
+     -10.9,
+     -11.3
+    ],
+    "boss_shear_N": [
+     3.6,
+     3.7,
+     3.6,
+     3.7
+    ],
+    "max_tension_N": 11.3
+   },
+   "catch 6 g": {
+    "F_N": [
+     0.0,
+     -44.0,
+     0.0
+    ],
+    "M_Nmm": [
+     -87.0,
+     -0.0,
+     -0.0
+    ],
+    "boss_axial_N": [
+     -10.7,
+     -11.3,
+     -10.7,
+     -11.3
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 11.3
+   },
+   "crash 35 g -y": {
+    "F_N": [
+     0.0,
+     -256.7,
+     0.0
+    ],
+    "M_Nmm": [
+     -509.0,
+     -0.0,
+     -0.0
+    ],
+    "boss_axial_N": [
+     -62.6,
+     -65.7,
+     -62.6,
+     -65.7
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 65.7
+   },
+   "crash 35 g +y": {
+    "F_N": [
+     0.0,
+     256.7,
+     0.0
+    ],
+    "M_Nmm": [
+     509.0,
+     -0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     62.6,
+     65.7,
+     62.6,
+     65.7
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 0.0
+   },
+   "crash 35 g +x": {
+    "F_N": [
+     256.7,
+     0.0,
+     0.0
+    ],
+    "M_Nmm": [
+     0.0,
+     -509.0,
+     8720.0
+    ],
+    "boss_axial_N": [
+     65.9,
+     65.9,
+     -65.9,
+     -65.9
+    ],
+    "boss_shear_N": [
+     62.8,
+     65.5,
+     62.8,
+     65.5
+    ],
+    "max_tension_N": 65.9
+   },
+   "crash 35 g +z": {
+    "F_N": [
+     0.0,
+     0.0,
+     256.7
+    ],
+    "M_Nmm": [
+     -8720.0,
+     -0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     26.7,
+     -26.7,
+     26.7,
+     -26.7
+    ],
+    "boss_shear_N": [
+     64.2,
+     64.2,
+     64.2,
+     64.2
+    ],
+    "max_tension_N": 26.7
+   },
+   "crash 35 g corner (+x -y +z)": {
+    "F_N": [
+     148.2,
+     -148.2,
+     148.2
+    ],
+    "M_Nmm": [
+     -5328.0,
+     -294.0,
+     5035.0
+    ],
+    "boss_axial_N": [
+     17.3,
+     -15.4,
+     -58.7,
+     -91.4
+    ],
+    "boss_shear_N": [
+     52.1,
+     53.2,
+     51.6,
+     52.7
+    ],
+    "max_tension_N": 91.4
+   },
+   "swap insert 60 N": {
+    "F_N": [
+     0.0,
+     60.0,
+     0.0
+    ],
+    "M_Nmm": [
+     119.0,
+     -0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     14.6,
+     15.4,
+     14.6,
+     15.4
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 0.0
+   },
+   "swap pull 50 N (XT60)": {
+    "F_N": [
+     0.0,
+     -50.0,
+     0.0
+    ],
+    "M_Nmm": [
+     4078.0,
+     0.0,
+     0.0
+    ],
+    "boss_axial_N": [
+     -25.0,
+     0.0,
+     -25.0,
+     0.0
+    ],
+    "boss_shear_N": [
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "max_tension_N": 25.0
+   }
+  },
+  "mount_pts": [
+   [
+    -33.1,
+    67.1,
+    0.7000000000000002
+   ],
+   [
+    -33.1,
+    67.1,
+    163.8
+   ],
+   [
+    33.1,
+    67.1,
+    0.7000000000000002
+   ],
+   [
+    33.1,
+    67.1,
+    163.8
+   ]
+  ],
+  "mass_g": {
+   "cartridge": 88.96,
+   "slider": 4.06,
+   "receiver": 66.69,
+   "lid": 6.87,
+   "strips": 4.14
+  },
+  "bbox": {
+   "extents": [
+    76.2,
+    67.1,
+    179.6
+   ],
+   "volume_L": 0.9183,
+   "largest": 179.6
+  },
+  "prints": {
+   "cartridge": {
+    "file": "box_battery_cartridge_overseer_v5.stl",
+    "material": "PETG",
+    "count": 1,
+    "version": "v5",
+    "bed_face": "closed end (z 0) down",
+    "mass_g": 88.96,
+    "extents": [
+     55.0,
+     58.6,
+     174.0
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[29269.4]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 2,
+     "ok": true
+    },
+    "bed_mm2": 3125.0,
+    "overhang_mm2": 4120.0,
+    "island_run_mm": 0.0
+   },
+   "slider": {
+    "file": "box_battery_slider_overseer_v5.stl",
+    "material": "PETG",
+    "count": 2,
+    "version": "v5",
+    "bed_face": "inner tab face down",
+    "mass_g": 4.06,
+    "extents": [
+     22.0,
+     11.5,
+     26.3
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[1887.6]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 0,
+     "ok": true
+    },
+    "bed_mm2": 243.0,
+    "overhang_mm2": 15.0,
+    "island_run_mm": 0.0
+   },
+   "receiver": {
+    "file": "box_battery_receiver_overseer_v1.stl",
+    "material": "PETG",
+    "count": 1,
+    "version": "v1",
+    "bed_face": "lead-end face down",
+    "mass_g": 66.69,
+    "extents": [
+     76.2,
+     66.9,
+     179.6
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[25192.3]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 10,
+     "ok": true
+    },
+    "bed_mm2": 1211.0,
+    "overhang_mm2": 2338.0,
+    "island_run_mm": 0.0
+   },
+   "receiver_lid": {
+    "file": "box_battery_receiver_lid_overseer_v1.stl",
+    "material": "PETG",
+    "count": 1,
+    "version": "v1",
+    "bed_face": "top face down",
+    "mass_g": 6.87,
+    "extents": [
+     76.2,
+     20.0,
+     5.5
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[2876.6]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 0,
+     "ok": true
+    },
+    "bed_mm2": 1301.0,
+    "overhang_mm2": 0.0,
+    "island_run_mm": 0.0
+   },
+   "receiver_strip": {
+    "file": "box_battery_receiver_strip_overseer_v1.stl",
+    "material": "TPU",
+    "count": 2,
+    "version": "v1",
+    "bed_face": "flat",
+    "mass_g": 2.07,
+    "extents": [
+     4.8,
+     148.6,
+     2.4
+    ],
+    "solid_check": "PASS",
+    "solid_info": {
+     "bodies_plain": 1,
+     "bodies_eroded": 1,
+     "eroded_volumes_mm3": "[477.8]",
+     "necks": "[]",
+     "drawn_not_in_main": "[]",
+     "thin_walls": "[]",
+     "acute_edges": 0,
+     "ok": true
+    },
+    "bed_mm2": 713.0,
+    "overhang_mm2": 0.0,
+    "island_run_mm": 0.0
+   }
+  },
+  "system_manifest": "runs/battery_latch/v1/manifest_overseer/manifest.json"
+ }
+}
