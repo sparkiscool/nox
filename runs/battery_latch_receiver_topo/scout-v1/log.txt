@@ -53,3 +53,21 @@ it  27 beta    2 J   1.3022 vol 0.1645 (dil 0.2595 g -0.024) grey 55.0% ch 0.100
 it  28 beta    2 J   1.1983 vol 0.1684 (dil 0.2617 g -0.015) grey 53.8% ch 0.100 worst tie b13 my 532 13.7s
 it  29 beta    2 J   1.1810 vol 0.1683 (dil 0.2598 g -0.023) grey 52.6% ch 0.100 worst tie b18 fx 536 16.1s
 it  30 beta    2 J   1.1805 vol 0.1678 (dil 0.2592 g -0.025) grey 52.5% ch 0.100 worst tie b15 mx 548 14.2s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/battery-latch
+
+To pu
+it  31 beta    2 J   1.0012 vol 0.1698 (dil 0.2601 g -0.008) grey 51.5% ch 0.100 worst held b2 fx 451 10.8s
+it  32 beta    2 J   0.9348 vol 0.1695 (dil 0.2594 g -0.011) grey 51.4% ch 0.100 worst tie b4 mx 375 12.1s
+it  33 beta    2 J   0.8674 vol 0.1714 (dil 0.2607 g -0.006) grey 50.7% ch 0.100 worst tie b16 mx 354 15.2s
+it  34 beta    2 J   0.8245 vol 0.1726 (dil 0.2617 g -0.003) grey 50.6% ch 0.100 worst held b11 fx 331 13.9s
+it  35 beta    2 J   0.7987 vol 0.1733 (dil 0.2619 g -0.002) grey 50.2% ch 0.100 worst tie b8 mx 318 11.0s
+it  36 beta    2 J   0.7770 vol 0.1738 (dil 0.2619 g +0.014) grey 49.8% ch 0.100 worst tie b8 mx 310 13.4s
+it  37 beta    2 J   0.8165 vol 0.1707 (dil 0.2576 g -0.002) grey 49.2% ch 0.100 worst tie b8 mx 333 12.7s
+layout: beta 2 done: eroded design 28 bodies, main 13.9%; drawn bodies outside the main body: 17
+it  38 beta    4 J  21.3993 vol 0.1370 (dil 0.3245 g -0.168) grey 36.9% ch 0.100 worst held b11 fx 9.24e+03 10.0s
+it  39 beta    4 J   9.5453 vol 0.1742 (dil 0.3747 g -0.039) grey 41.9% ch 0.100 worst gate b6 fx 5.8e+03 17.4s
+it  40 beta    4 J   6.3314 vol 0.1889 (dil 0.3821 g -0.020) grey 42.2% ch 0.100 worst gate b6 fx 3.82e+03 11.5s
