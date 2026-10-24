@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box catch chat, Spark: "for all future print ready parts i expect to see a picture of the part"): rule: every ready-to-print reply shows a picture of each print file (preview PNG per file, SendUserFile render). CLAUDE.md Hard rules, `docs/generative.md` Save and print, check in the `review` agent (6).
 - 24 Oct (box catch chat): **hook latch v2 READY** on panel v7 skin 2.0 (v1 do not print). `catch_system.py`: plunger 28.3 N insert, 85.8 N hand lift (E loads), assembled worst 0.44 over plunger, guide, panel FE, bosses (C); `dimensions.md` System Box catch. Concept: belly hook and rim swing hook (clash 5.8 < 6.0) rejected. DEFAULTs: equal joint stiffness (alt panel FE); node cheeks 1.0 (alt 3mm).
 - 24 Oct (funnel chat): **funnel panel A / B v7 + v7 plain READY**: skin 2.0 (C), latch window + 4 Ø12 bosses on the 4 seated-face panels, plain on the other 4; 80.0 / 79.9 and 75.1 / 75.0 g (M); plate FE 0.913 / 0.933 (C); collar 1 body, hook latch v2 fit 0 mm³ (C). The 3 printed v6 panels fail the gate: reprint as v7 plain (DEFAULT, alt keep).
 - 24 Oct (workflow chat, Spark: "just use assumed numbers for all those"): strength / XT60 calibration tests dropped; coupons HOLD (files kept), `dimensions.md` T factors 1.0 (E) stand, Spark Tests line trimmed.
