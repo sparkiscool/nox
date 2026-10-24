@@ -64,7 +64,10 @@ E_PET, G_PET, SIG_PET, PET_GPM = 2000.0, 740.0, 25.0, 0.0457   # MPa (E), MPa (E
 PET_R = PET_W / 2 * 2 ** 0.5                 # strut corner radius for the keep-outs
 
 
-FORCED_CARBON = set()                        # short members where a 6 x 6 strut misses a keep-out: carbon, reason = clearance
+WEB = set()                                  # short members where a 6 x 6 strut misses a keep-out: a printed web 3 thick across
+WEB_T, WEB_W = 3.0, 12.0                     # the keep-out, 12 wide along it (same 36 mm2; weak axis I 27 both ways, E); no carbon
+WEB_I, WEB_J = WEB_W * WEB_T ** 3 / 12, 90.0
+FORCED_CARBON = set()                        # (unused: a web fits wherever a 3.0 rod does)
 
 
 def _mkey(p0, p1):
@@ -106,7 +109,8 @@ def strut(p0, p1, w=PET_W):
 
 
 def member_mesh(p0, p1):
-    return strut(p0, p1) if printed(p0, p1) else rod(p0, p1)
+    if not printed(p0, p1): return rod(p0, p1)
+    return rod(p0, p1, WEB_T / 2, 12) if _mkey(p0, p1) in WEB else strut(p0, p1)     # a web drawn as its 3.0 thick envelope
 
 
 def rotz(deg):
@@ -492,7 +496,8 @@ def _members_elems(N, kind, members):
     nn = len(N); X = [N]; els = []
     if not TPU_NODES:
         for e, (a, b) in enumerate(members):
-            if printed(N[a], N[b]): els.append((e, "pet", a, b, _beam(N[a], N[b], E_PET, G_PET, PET_A, PET_I, PET_J)))
+            if printed(N[a], N[b]) and _mkey(N[a], N[b]) in WEB: els.append((e, "web", a, b, _beam(N[a], N[b], E_PET, G_PET, PET_A, WEB_I, WEB_J)))
+            elif printed(N[a], N[b]): els.append((e, "pet", a, b, _beam(N[a], N[b], E_PET, G_PET, PET_A, PET_I, PET_J)))
             else: els.append((e, "rod", a, b, _beam(N[a], N[b], E_ROD, G_ROD, ROD_A, ROD_I, 2 * ROD_I)))
         return N, els
     for e, (a, b) in enumerate(members):
@@ -558,10 +563,11 @@ def frame_eval(N, kind, members, cases):
                 Nax = fl[6]; M = max(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
                 Tc, Cc = capacity(L + 2 * CONN_L)
                 v = max((abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, Nax / Tc if Nax > 0 else -Nax / Cc)
-            elif typ == "pet":                                            # printed strut: stress at the corner, buckling
+            elif typ in ("pet", "web"):                                   # printed: stress at the corner, buckling
                 Nax = fl[6]; Ms = max(abs(fl[4]) + abs(fl[5]), abs(fl[10]) + abs(fl[11]))
-                pcr = 0.7 * math.pi ** 2 * E_PET * PET_I / L ** 2
-                v = max((abs(Nax) / PET_A + Ms * PET_W / 2 / PET_I) / SIG_PET, -Nax / pcr if Nax < 0 else 0.0)
+                I_, c_ = (PET_I, PET_W / 2) if typ == "pet" else (WEB_I, WEB_T / 2)      # web: weak axis both ways (conservative)
+                pcr = 0.7 * math.pi ** 2 * E_PET * I_ / L ** 2
+                v = max((abs(Nax) / PET_A + Ms * c_ / I_) / SIG_PET, -Nax / pcr if Nax < 0 else 0.0)
             else:
                 v = np.linalg.norm(fl[6:9]) / CAP_TPU
             idx[e] = max(idx[e], v)
@@ -849,7 +855,7 @@ for a in range(nn):
         ring = (tuple(np.round(N[a], 3)), tuple(np.round(N[b], 3))) in RING_EDGES or (tuple(np.round(N[b], 3)), tuple(np.round(N[a], 3))) in RING_EDGES
         r = rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"], PET_R if L < L_CARBON else ROD_R)
         if r is not None and L < L_CARBON and rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"]) is None:
-            FORCED_CARBON.add(_mkey(N[a], N[b])); r = None              # a strut does not fit there, a 3.0 rod does
+            WEB.add(_mkey(N[a], N[b])); r = None                       # a 6 x 6 strut does not fit there: a 3 x 12 web does
         if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
         else: why0[r] = why0.get(r, 0) + 1
 say(f"rods feasible before the pads: {len(BASE)}; dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why0.items(), key=lambda kv: -kv[1])))
@@ -972,7 +978,8 @@ used = sorted(set([i for e in chosen for i in e]))
 PIECES, PNODES = cage_count(N, kind, chosen)
 CARB = [np.linalg.norm(N[b] - N[a]) for a, b in chosen if not printed(N[a], N[b])]; NPET = len(chosen) - len(CARB)
 SHORT_C = [(N[a], N[b]) for a, b in chosen if _mkey(N[a], N[b]) in FORCED_CARBON]
-say(f"members: {len(CARB)} carbon (shortest {min(CARB):.1f} mm, L_CARBON {L_CARBON:.0f}), {NPET} printed PETG struts 6 x 6 (in their nodes); "
+NWEB = sum(1 for a, b in chosen if printed(N[a], N[b]) and _mkey(N[a], N[b]) in WEB)
+say(f"members: {len(CARB)} carbon (shortest {min(CARB):.1f} mm, L_CARBON {L_CARBON:.0f}), {NPET} printed (6 x 6 struts {NPET - NWEB}, 3 x 12 webs {NWEB}, part of their nodes); "
     f"short carbon where a strut misses a keep-out: {len(SHORT_C)}: " + ", ".join(f"{np.round(p, 0).astype(int).tolist()}-{np.round(q, 0).astype(int).tolist()}" for p, q in SHORT_C))
 say(f"cage: {len(chosen)} members = {PIECES} carbon rod pieces (straight runs through a node are one rod), {PNODES} printed parts (count); {sum(np.linalg.norm(N[b] - N[a]) for a, b in chosen) / 1000:.2f} m, "
     f"{len([i for i in used if kind[i] != 'C'])} printed nodes, {len([i for i in used if kind[i] == 'C'])} joints into the core; ~{best['mass']:.0f} g (E)")
@@ -1027,7 +1034,7 @@ R = dict(version="v2 latch refit", date="2026-10-24T23:59", status="DONE", mass_
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
          pads=(dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]) if best["yp"] is not None else None), belly_post=BELLY_POST,
          keepalive="latch plungers onto the two latched +-y wheel nodes (hub DEFAULT)" if not BELLY_POST else "belly post", cage_mass=best["mass"], contact_first=best["cf"][0],
-         contact_vs=best["cf"][1], pieces=PIECES, printed_nodes=PNODES, carbon_members=len(CARB), printed_struts=NPET, shortest_carbon=min(CARB), short_carbon_clearance=[[p.tolist(), q.tolist()] for p, q in SHORT_C], l_carbon=L_CARBON, obj=OBJ, eso_seed=ESO_SEED, rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
+         contact_vs=best["cf"][1], pieces=PIECES, printed_nodes=PNODES, carbon_members=len(CARB), printed_struts=NPET, shortest_carbon=min(CARB), short_carbon_clearance=[[p.tolist(), q.tolist()] for p, q in SHORT_C], webs=[[N[a].tolist(), N[b].tolist()] for a, b in chosen if printed(N[a], N[b]) and _mkey(N[a], N[b]) in WEB], l_carbon=L_CARBON, obj=OBJ, eso_seed=ESO_SEED, rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
          cases=[dict(case=r["case"], cls=r["cls"], index=r["worst"], defl=r["defl"]) for r in fe],
          core_reactions=[dict(at=N[i].tolist(), F=F, M=M, case=c) for i, (F, M, c) in REAC.items()],
          options=[dict(y=r["yp"], z=r["zp"], mass=r["mass"], worst=max(x["worst"] for x in r["fe"]), contact=r["cf"][0], vs=r["cf"][1]) for r in runs],
@@ -1039,7 +1046,7 @@ json.dump(R, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=lamb
 pad, carrier, body, tips = best["pp"]
 s = Scene("Scout v3 system v2", "cage laid out by optimisation on the whole drone; the cage touches first in every direction")
 P = lambda n, m, grp, col, pr, note="": s.part(n, m, group=grp, color=col, printed=pr, note=note)
-bands = {"rods": [rod(N[a], N[b]) for a, b in chosen if not printed(N[a], N[b])], "struts": [strut(N[a], N[b]) for a, b in chosen if printed(N[a], N[b])]}
+bands = {"rods": [rod(N[a], N[b]) for a, b in chosen if not printed(N[a], N[b])], "struts": [member_mesh(N[a], N[b]) for a, b in chosen if printed(N[a], N[b])]}
 P("plate", PLATE, "frame", "#3a3a3a", False)
 P("motors", trimesh.util.concatenate(BELLS), "frame", "#b0b0b0", False)
 pv = []

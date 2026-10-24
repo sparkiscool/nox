@@ -20,6 +20,7 @@ from assembly import load
 OUT = os.path.join(ROOT, "runs", "scout_layout", "v2", "assembly"); os.makedirs(OUT, exist_ok=True)
 R = json.load(open(os.path.join(ROOT, "runs", "scout_layout", "v2", "result.json")))
 rel = lambda p: os.path.relpath(p, ROOT)
+for p_, q_ in R.get("webs", []): L["WEB"].add(L["_mkey"](np.array(p_), np.array(q_)))   # printed webs (short, by a keep-out)
 for p_, q_ in R.get("short_carbon_clearance", []): L["FORCED_CARBON"].add(L["_mkey"](np.array(p_), np.array(q_)))   # short carbon kept for clearance
 
 
