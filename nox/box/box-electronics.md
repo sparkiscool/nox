@@ -1,6 +1,6 @@
 # Box electronics v1 (24 Oct 2026)
 
-The box's electrical system end to end: mains to the 24 V supply, four rails, the box computer and its I/O, the stepper board, the keep-alive to the funnel panel probes, the two live bays and their charger, the swap state machine with every abort, wire gauges, connectors and the cut list. Numbers: `nox/box/box_electronics.py` (placement search, nets, drops, budget, cut list, diagrams); run `runs/box_electronics/v1/` (`result.json`, `diagram.html` with `schematic.svg`, `brake.svg` (the brake relay wiring and the keep-alive / seat-sense circuit), `layout.svg`, `states.svg`). Interface numbers: `nox/dimensions.md` I "Box electronics v1". Arm harness (the 19-wire twist bundle): `nox/box/box-wiring.md`. Buy rows: `nox/parts-list.md` Box. C unless tagged; board sizes spec or E; **DEFAULT** = chosen without Spark, alternative in `nox/log.md`.
+The box's electrical system end to end: mains to the 24 V supply, four rails, the box computer and its I/O, the stepper board, the keep-alive to the funnel panel probes, the two live bays and their charger, the swap state machine with every abort, wire gauges, connectors and the cut list. Numbers: `nox/box/box_electronics.py` (placement search, nets, drops, budget, cut list, diagrams); run `runs/box_electronics/v1/` (`result.json`, `diagram.html` with `schematic.svg`, `brake.svg` (the brake relay wiring and the keep-alive / seat-sense circuit), `layout.svg`, `states.svg`). Interface numbers: `nox/dimensions.md` I "Box electronics v1". Arm harness (the 22-wire twist bundle): `nox/box/box-wiring.md`. Buy rows: `nox/parts-list.md` Box. C unless tagged; board sizes spec or E; **DEFAULT** = chosen without Spark, alternative in `nox/log.md`.
 
 No printed part: every board sits on nylon standoffs on the rear clear sheet, so nothing here goes through `solid_check`.
 
@@ -15,21 +15,27 @@ No printed part: every board sits on nylon standoffs on the rear clear sheet, so
 | Logic rail | 24 → 5.1 V 5 A buck (Pololu D36V50F5 class): Pi on its 5 V pins, relay JD-VCC, the 5 hall switches | DEFAULT |
 | Box computer | **Raspberry Pi 4 B 2 GB** + GPIO screw-terminal HAT: Klipper host + Moonraker + `boxd` (the swap state machine, Python) | DEFAULT |
 | Steppers | BTT SKR Mini E3 V3 (on hand), Klipper MCU over USB: X = head A, Y = head B, Z = axle, E spare | DEFAULT |
-| Servos | PCA9685 (I2C 0x40) on the Pi: ch 0..3 latch L1, L2, R1, R2; ch 4 gripper A (DS3218), ch 5 gripper B (MG995); 50 Hz | DEFAULT |
+| Servos | PCA9685 (I2C 0x60, A5 bridged) on the Pi: ch 0..3 latch L1, L2, R1, R2; ch 4 gripper A (DS3218), ch 5 gripper B (MG995); 50 Hz | DEFAULT |
 | Current sense | 3 x INA226 modules, shunt replaced by **R010 2512** (full scale 8.19 A, LSB 0.25 mA): keep-alive 0x41, bay S 0x44, bay O 0x45 | DEFAULT |
-| Relays | one 4-ch 5 V opto board (SRD-05VDC-SL-C, 10 A 30 VDC): K1 keep-alive, K2 bay S, K3 bay O, K4 spare | DEFAULT |
+| Relays | one 4-ch 5 V opto board (SRD-05VDC-SL-C, 10 A 30 VDC): K1 keep-alive, K2 bay S, K3 bay O, K4 gripper servo power (stall cut) | DEFAULT |
 | **Head and axle brake (arm v6 / v7 requirement, 24 Oct)** | **3 DPDT 24 V relays KB1 / KB2 / KB3 (Omron G2RL-2 DC24 class, 8 A contacts, spec), one per head motor and one on the axle motor, one pole per coil: de-energised (NC) each coil is shorted on itself, energised (NO) it is on its TMC2209; coils on the motion branch after the E-stop, switched by a bare ULN2003A from one SKR `output_pin` per motor, sequenced against the driver enable; self-test at every boot** (section Head brake) | DEFAULT / CHECK |
 | Charger | dual-channel DC charger on the 24 V bus, **iCharger 456DUO class (MODBUS over USB to the Pi, CHECK that the 456DUO speaks the 4010DUO map before buying)**, input limit 6.5 A, end 4.15 V per cell, starts below 35 °C | DEFAULT / CHECK |
 | Live bays | 2 (Spark 16 Oct: one per drone size): **Scout bay at −90°**, **Overseer bay at 180° (= −180°)**, both bays of that type in the v2 ring (box structure v2 layout, `dimensions.md` System box structure; arm v7 BAYS); 9 bays built (Spark 24 Oct), the other 7 bench-charged until more charger channels (Spark); each bay's XT60E1-M (float carrier) through its relay | DEFAULT |
 
 **Why 6.0 V and not 6.8 V for the servos:** the MG90S is rated 4.8..6.0 V (E); one rail at 6.0 V serves all six with one buck. The grippers need ~0.18 N·m (E, `dimensions.md` I XT60 mate) against ≥ 1.0 N·m available at 6.0 V (E), so the 6.8 V of `box-wiring.md` bought nothing. Alternative: 6.8 V gripper rail + 5 V latch rail (two bucks).
 
+## Gripper servos (heads v7, 24 Oct)
+The head grabber's servo (DS3218 on head A, MG995 on head B) opens the blades with a printed cam on two 623ZZ rollers and needs only 2.3 kg·cm (C, heads v7). A DS3218 stalled on a jammed blade puts ~163 N on a roller (76 MPa Hertz on the PETG cam, it dents; heads v7, E). So (heads v7 ask, DEFAULT here):
+- **Two dwell positions only:** `boxd` commands each gripper to open or rest, nothing between, and moves one gripper at a time.
+- **Stall cut:** the shared 6.0 V gripper pair runs through relay K4 (the spare channel) and an INA226 (0x40; the PCA9685 moves to 0x60, A5 bridged, so every INA226 address is a plain A0 / A1 jumper, CHECK the modules). During a move the idle gripper's PWM channel is off and `boxd` reads the pair's baseline for 100 ms first (E); a rise over the stall threshold for 0.5 s (E) opens K4 and aborts the move (A5): DS3218 1.8 A, MG995 1.0 A (E, CHECK on the bench against the running current at 2.3 kg·cm). K4 cuts both grippers: in PRESTAGE head B waits open under the seat, so its gripper must hold open unpowered, or a stall on head A lets it shut (CHECK with heads v7).
+- **Grip halls:** two analog halls per head (DRV5055A4 class, at 3.3 V) at the grip, as in the latch's seat check. Their 3.3 V comes from the rear sheet upstream of K4 (an AP2112K-3.3 on the 5.1 V bus, also feeding the ADS1115 at 3.3 V, so no hall output exceeds the ADC's VDD and the I2C pull-ups stay at 3.3 V), so they stay live through a stall cut and at boot. On each head the two outputs are summed 3:1 through resistors (10 k / 30 k, E) onto one line (DEFAULT): open / squeezed on either side give 4 distinct levels (E, CHECK on the bench); the ADS1115 (0x48) reads H_A and H_B single-ended against the ribbon's servo ground, so `boxd` samples them only with that head's servo idle (no current in the return, DEFAULT; alt: a hall ground of their own, a 6th ribbon conductor). Each head ribbon gains 2 wires (H, 3.3 V) and the twist bundle 3 (19 → 22, `box-wiring.md`). Alt: both hall lines per head (ribbon 6, bundle 24).
+
 ## Box computer I/O (Pi 4, BCM numbers)
 | Pin | Use | Notes |
 |---|---|---|
-| GPIO 2 / 3 | I2C1 SDA / SCL, 100 kHz | PCA9685 0x40, INA226 0x41 / 0x44 / 0x45 (A0 / A1 straps); avoid 0x70 (PCA all-call) |
+| GPIO 2 / 3 | I2C1 SDA / SCL, 100 kHz | PCA9685 0x60 (A5 bridged), INA226 0x40 / 0x41 / 0x44 / 0x45 (A0 / A1 jumpers, CHECK), ADS1115 0x48 (ADDR to GND, at 3.3 V); avoid 0x70 (PCA all-call) |
 | GPIO 4 | PCA9685 OE | 10 kΩ pull-up to 3.3 V: servo outputs off until `boxd` pulls it low (no twitch at boot) |
-| GPIO 5, 6, 7, 8 | relay IN1..IN4 (K1 keep-alive, K2 bay S, K3 bay O, K4 spare) | active low; these pins boot pulled up (relays off); SPI0 disabled; board VCC = Pi 3.3 V, JD-VCC = 5.1 V bus, JD jumper removed |
+| GPIO 5, 6, 7, 8 | relay IN1..IN4 (K1 keep-alive, K2 bay S, K3 bay O, K4 gripper servo power) | active low; these pins boot pulled up (relays off); SPI0 disabled; board VCC = Pi 3.3 V, JD-VCC = 5.1 V bus, JD jumper removed |
 | GPIO 17, 27, 22, 23 | hook-latch halls L1, L2, R1, R2 | A3144 open collector on 5 V, 10 kΩ pull-up to 3.3 V at the HAT; **low = plunger fully out** |
 | GPIO 24 | seat sense (replaces the KW11) | 100 kΩ (E) pull-up to 3.3 V at the HAT, a 1 kΩ series resistor, a 5 V TVS leaking ≤ 1 µA at 3.3 V (ESD9L5.0 class, CHECK) from the BAT54 side of the 1 kΩ to GND, then a BAT54 Schottky (anode toward the GPIO, cathode on the B+ line at the INA226 out, downstream of K1); an SMBJ15A on the B+ line takes ESD from the exposed pins. With K1 open a seated drone's **10 kΩ** (concept) pulls the pin to ~0.52 V (E, CHECK: 0.29 pull-up current on 10 kΩ + 0.03 on the 1 kΩ + ~0.2 BAT54 at 30 µA) = low = seated; **this needs an ideal diode on both drones** (concept: LM74700, reverse leakage ~µA); a Schottky ORing diode leaks up to ~100 µA warm (PMEG4050EP class, E), 1.0 V on 10 kΩ, over the Pi's 0.8 V low (then 2.2 kΩ, the alternative). The INA226 cannot read the concept's 1.3 mA with K1 closed: its ±10 µV offset on R010 is ±1 mA (spec). No drone = high; with K1 closed the line is at 13.0 V, the diode blocks and the pin reads high (`boxd` ignores it from LATCH_OUT to LATCH_IN, as the KW11 was) |
 | GPIO 25 | INA226 0x41 ALERT | open drain, 10 kΩ pull-up; set at 2.5 A: fast trip for A3 |
@@ -74,24 +80,24 @@ Everything electrical sits on the **rear clear sheet's inner face (Y −66)** an
 - **PSU on the sheet:** X 42..157, Z −170..45, its bottom face on the sheet with 4 x M4 x 6 through the 3.0 sheet (3.0 thread engagement = the spec max), terminal end up, air out the bottom end 31 over the floor. **The floor spot in `box-stand.md` (X 25..89, Y −50..−10, kb keep-out) is 64 x 40 and cannot take a 215 x 115 x 30 PSU**; it is released (stand part: "kept").
 - **Charger** standing on the floor against the sheet, X −162..−44, Z −200..−29, Y −66..−7 (5 to the stub face), strapped through 2 sheet holes. IEC inlet over the PSU (X 78..128, Z 56..86, cut-out 48 x 28 E); E-stop X 112..152, Z 188..228 (hole 22.5).
 - Keep-out: mast + kb X ±40, Z ≤ 50 (mast X ±30, head top Z 40, + 10). The arm bundle leaves the stub v3 lead channel at X −27 and drops beside the mast to the SKR.
-- **Search:** 12 boards placed by simulated annealing over centres (2.5 grid) and 90° turns, legal moves only (sheet X ±160, Z −195..232, 6 board-to-board, keep-outs), objective Σ conductors x (0.25 + I cont) x route length; 12 seeds, best taken (`result.json` `search`). Result (centres, W X / Z): SKR (−25, 92.5) beside the bundle; relay (−122.5, 102.5), INA226s keep-alive (−80, 147.5), bay S (−122.5, 147.5), bay O (−132.5, 57.5); fuse box (−100, 7.5) over the charger; keep-alive buck (−100, 190); servo buck (112.5, 147.5); Wago bus (47.5, 155); PCA9685 (47.5, 102.5); 5 V buck (32.5, 190); Pi (−22.5, 182.5). Closest pair 6.2 (PCA9685 to Wago bus, C); every board inside Y −2 (C).
+- **Search:** 14 boards placed by simulated annealing over centres (2.5 grid) and 90° turns, legal moves only (sheet X ±160, Z −195..232, 6 board-to-board, keep-outs), objective Σ conductors x (0.25 + I cont) x route length; 12 seeds, best taken (`result.json` `search`). Result (centres, W X / Z): SKR (−22.5, 185); relay (−112.5, 10); INA226s keep-alive (−82.5, 62.5), bay S (−57.5, 10), bay O (−137.5, 55), gripper (−32.5, 67.5); ADS1115 (145, 65); fuse box (97.5, 125); keep-alive buck (−5, 120); servo buck (70, 185); Wago bus (35, 72.5); PCA9685 (−95, 182.5); 5 V buck (−127.5, 170); Pi (−117.5, 115). Closest pair 6.0 (ADC to PSU, C); every board inside Y −2 (C).
 
 ## Nets, gauges, drops (`result.json` `nets`; E resistance and ampacity tables in the script)
 | Net | Wire | Peak A | Drop at peak (C on E lengths) |
 |---|---|---|---|
 | Mains (IEC → PSU) | 3 x 18 AWG, fork crimps, PE to the PSU FG | 6.8 (115 VAC, spec) | |
-| PSU → fuse box | 2 x 14 AWG | 11.9 | 0.23 % |
-| F1 → charger | 2 x 16 AWG (charger input plug CHECK) | 6.5 | 0.10 % |
-| F2 → E-stop → SKR, servo buck | 2 x 18 AWG | 5.2 | ≤ 0.40 % |
-| F3 → keep-alive buck; F4 → logic buck | 2 x 18 / 2 x 20 AWG | 1.8 / 1.0 | ≤ 0.09 % |
-| Keep-alive → K1 → INA → +x panel probes, −x panel probes | 18 AWG | 3.0 | 0.23 + 0.16 % |
-| Charger → K2 / K3 → INA → bay XT60, CH − → bay | 16 AWG | 6.5 | ≤ 0.39 % |
-| 6.0 V servo bus; → PCA9685 V+ | 2 x 18 AWG | 8.0 / 3.2 | 0.41 % |
-| 6.0 V gripper pair (in the twist) | 2 x 22 AWG | 5.0 (both stalled) | 3.7 % (servo rail rule 10 %) |
-| Latch servos (PCA ch 0..3 → unit) | 3 x 22 AWG servo extension, stock plug at the servo | 0.8 | ≤ 0.90 % |
+| PSU → fuse box | 2 x 14 AWG | 11.9 | 0.16 % |
+| F1 → charger | 2 x 16 AWG (charger input plug CHECK) | 6.5 | 0.33 % |
+| F2 → E-stop → SKR, servo buck | 2 x 18 AWG | 5.2 | ≤ 0.12 % |
+| F3 → keep-alive buck; F4 → logic buck | 2 x 18 / 2 x 20 AWG | 1.8 / 1.0 | ≤ 0.07 % |
+| Keep-alive → K1 → INA → +x panel probes, −x panel probes | 18 AWG | 3.0 | 0.28 + 0.11 % |
+| Charger → K2 / K3 → INA → bay XT60, CH − → bay | 16 AWG | 6.5 | ≤ 0.29 % |
+| 6.0 V servo bus; → PCA9685 V+ | 2 x 18 AWG | 8.0 / 3.2 | 0.83 % |
+| 6.0 V gripper pair (in the twist) | 2 x 22 AWG | 5.0 (both stalled) | 2.3 % via K4 and INA226 0x40 (servo rail rule 10 %) |
+| Latch servos (PCA ch 0..3 → unit) | 3 x 22 AWG servo extension, stock plug at the servo | 0.8 | ≤ 0.86 % |
 | Latch halls, seat sense, axle hall, PWM | 3 / 2 x 28 AWG | signal | |
 | Steppers (SKR → motor, through the twist) | 4 x 26 AWG each (`box-wiring.md`) | 2.0 | 1.0 % |
-| 5.1 V → Pi pins 2 / 4, 6 / 9; → 5 V bus | 2 x 20 AWG | 3.5 | 0.29 % |
+| 5.1 V → Pi pins 2 / 4, 6 / 9; → 5 V bus | 2 x 20 AWG | 3.5 | 0.30 % |
 | I2C chain Pi → PCA → INA x3; relay IN | 4 / 5 x 26 AWG | signal | |
 | GND bus → fuse box negative bus (star) | 18 AWG | 8.0 | |
 Every net is inside its E ampacity (`result.json` `checks`).
@@ -112,14 +118,14 @@ Every net is inside its E ampacity (`result.json` `checks`).
 | Pi → SKR | USB-A to USB-C, 0.3 m | 1 |
 
 ## Cut list (sheet side; +20 % and 2 x 20 strip, E; arm side in `box-wiring.md`)
-- **14 AWG** red / black: PSU → fuse box 2 x 370.
-- **16 AWG** red / black: F1 → charger 2 x 215; CH1 + → K2 350, K2 → INA 95, INA → bay S 970, CH1 − → bay S 605; CH2 + → K3 350, K3 → INA 110, INA → bay O 480, CH2 − → bay O 560.
-- **18 AWG** red / black: F2 → E-stop 2 x 575; E-stop → SKR 2 x 385; E-stop → servo buck 2 x 155; F3 → keep-alive buck 2 x 260; buck → K1 175, K1 → INA 145, INA → +x panel probes 625, buck − → −x panel probes 430; servo buck → bus 2 x 130; bus → PCA V+ 2 x 105; GND bus → star 395; mains 3 x 205 (3-core cord).
-- **20 AWG**: F4 → 5 V buck 2 x 420; 5 V buck → Pi 2 x 115; → 5 V bus 2 x 100.
-- **22 AWG**: latch servo extensions 3-core L1 570, L2 810, R1 455, R2 695; relay JD-VCC 2 x 310.
-- **26 AWG**: relay IN + VCC 5 x 260; I2C 4-core 220 + 250 + 95 + 160; INA 0x41 ALERT to GPIO 25, 1 x 300 (E, laid with the I2C chain).
-- **28 AWG**: latch halls 3-core L1 390, L2 630, R1 445, R2 685; seat sense 1 x 155 (GPIO 24 → 1 kΩ → BAT54 at the INA226 out).
-- **Arm bundle fixed tails (stub exit → board), now from the layout:** steppers and axle hall 174, servo pair 308, servo signals 256 (C on E positions; were 164 / 311 / 276 before the board placement moved with the panel probe ends). Totals per gauge, every net end to end incl. the bundle: 14 AWG 0.7 m, 16 AWG 4.0 m, 18 AWG 5.6 m, 20 AWG 1.3 m, 22 AWG 9.3 m, 26 AWG 11.3 m, 28 AWG 9.2 m (`result.json` `wire_totals_mm_by_awg`).
+- **14 AWG** red / black: PSU → fuse box 2 x 275.
+- **16 AWG** red / black: F1 → charger 2 x 595; CH1 + → K2 225, K2 → INA 110, INA → bay S 725, CH1 − → bay S 605; CH2 + → K3 225, K3 → INA 125, INA → bay O 475, CH2 − → bay O 560.
+- **18 AWG** red / black: F2 → E-stop 2 x 200; E-stop → SKR 2 x 270; E-stop → servo buck 2 x 160; F3 → keep-alive buck 2 x 170; buck → K1 305, K1 → INA 140, INA → +x face pins 730, buck − → −x face pins 325; servo buck → bus 2 x 220; bus → PCA V+ 2 x 330; GND bus → star 180; mains 3 x 205 (3-core cord).
+- **20 AWG**: F4 → 5 V buck 2 x 365; 5 V buck → Pi 2 x 120; → 5 V bus 2 x 355.
+- **22 AWG**: latch servo extensions 3-core L1 305, L2 545, R1 535, R2 775; relay JD-VCC 2 x 295; gripper 6.0 V bus → K4 295, K4 → INA 0x40 205.
+- **26 AWG**: relay IN + VCC 5 x 175; I2C 4-core 150 + 200 + 135 + 190 + 185 + 260; INA 0x41 ALERT to GPIO 25, 1 x 300 (E, laid with the I2C chain).
+- **28 AWG**: latch halls 3-core L1 355, L2 595, R1 640, R2 880; seat sense 1 x 145 (GPIO 24 → 1 kΩ → BAT54 at the INA226 out); grip halls 3 x 555 (H_A, H_B, 3.3 V) to the stub exit (board end; arm side in `box-wiring.md`).
+- **Arm bundle fixed tails (stub exit → board), now from the layout:** steppers and axle hall 268, servo pair 152, servo signals 330, grip halls 316 (C on E positions; the placement moved with the gripper INA226 and the ADS1115). Totals per gauge, every net end to end incl. the bundle: 14 AWG 0.6 m, 16 AWG 4.2 m, 18 AWG 5.0 m, 20 AWG 1.7 m, 22 AWG 8.3 m, 26 AWG 13.9 m, 28 AWG 12.3 m (`result.json` `wire_totals_mm_by_awg`).
 
 ## Power budget (E; `result.json` `budget`)
 | Load | Rail | W cont | W peak |
@@ -164,7 +170,7 @@ The box never arms or disarms the drone: it disarms on the kill and the mission 
 | A2 latch lost mid-swap | a hall goes high between LATCH_OUT and LATCH_IN | stop all motion, K1 as it is, alarm (the plungers self-lock under load) |
 | A3 keep-alive fault | bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s (ALERT) with the old pack in, or K1 will not open at 0 A | open K1; before PULL: SWAP_FAIL with the old pack in; after PULL: alarm, K1 and the latch stay as they are (pack-out hold) |
 | A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds; the keep-alive current cannot prove a mate here (the pins were not carrying), so always the pack-out hold (latch OUT, K1 closed), SWAP_FAIL, alarm; Spark clears it (DEFAULT; alt: LATCH_IN on the drone's bus voltage ≥ 14.0 V (E) over the mission link, CHECK) |
-| A5 stall | TMC2209 DIAG on a fast head move, Klipper shutdown, E-stop, or the axle hall out of its window | stop all motion, latch stays out, K1 as it is (closed with the pack out: the drone stays powered), alarm; Spark clears by hand, heads re-home before the next cycle |
+| A5 stall | TMC2209 DIAG on a fast head move, Klipper shutdown, E-stop, the axle hall out of its window, or the gripper pair (INA226 0x40) over its stall threshold for 0.5 s | stop all motion, latch stays out, K1 as it is (closed with the pack out: the drone stays powered); a gripper stall also opens K4 (both grippers unpowered); alarm; Spark clears by hand, heads re-home before the next cycle |
 | A6 mate fail | I ≥ 50 mA 1.0 s after the full stroke | back off 5, push again once at 10 mm/s; still ≥ 50 mA: pull the pack back into head A, the drone stays on keep-alive (no time limit), alarm |
 | A7 bay mate fail | bay bus not 13.0..17.0 V with the relay open | re-insert once; then leave the pack uncharged, alarm (off the flight path) |
 | A8 charge fault | charger error, bay I > 7 A, pack over 45 °C (charger probe, CHECK), or no current 5 s after the start | stop the channel, wait I < 50 mA, open the relay, mark the pack |
