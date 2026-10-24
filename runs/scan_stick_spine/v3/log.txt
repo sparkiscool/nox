@@ -11,3 +11,7 @@ layout: resumed from /home/user/nox/runs/scan_stick_spine/v3/ck.npz at it 42, be
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 68 s, peak 6.827436 GB
 build: organic surface at pitch 0.333 mm (x6), skins 265.05 cm3, field 368.27 cm3, in env - cuts 328.71 cm3 (layout 327.48, level offset -1.000 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,872,560 faces, 394 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [256433.5], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 2, "ok": true}
+function check: {'skin_mm3': 181527.8, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+strength: worst index 0.32 in 'unit 50 g 2' at [42.5, 25.0, 35.0]
+RESULT {"name": "scan_stick_spine", "solid_ok": true, "mass_g": 419.04, "worst": 0.315, "function_ok": true, "bodies": 1}
