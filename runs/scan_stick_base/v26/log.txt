@@ -1,2 +1,19 @@
 === scan_stick_base: h 2.0, generated 70.0 cm3, min member 3.2 mm, cores 4
 layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (323.26 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.081 of 14,285 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (2.1% of passive cells differ): no symmetry
+layout: 2 drawn bodies (5,051 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 64) = 49,152 elements, 73,596 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1063 (dil 0.1282 g +0.308) grey 24.1% ch 0.100 worst tie b2 my 3.62e+03 2.2s
+it   2 beta    1 J  14.6773 vol 0.0722 (dil 0.0867 g -0.116) grey 38.6% ch 0.100 worst L2 hit -y 100 N (joint) 5.3e+03 2.7s
+it   3 beta    1 J  14.6714 vol 0.0746 (dil 0.0896 g -0.087) grey 39.3% ch 0.100 worst L2 hit -y 100 N (joint) 5.3e+03 2.2s
+it   4 beta    1 J  14.6474 vol 0.0780 (dil 0.0935 g -0.047) grey 40.2% ch 0.100 worst L2 hit -y 100 N (joint) 5.29e+03 2.3s
+it   5 beta    1 J  14.5382 vol 0.0814 (dil 0.0973 g -0.008) grey 40.8% ch 0.100 worst L2 hit -y 100 N (joint) 5.25e+03 2.3s
+it   6 beta    1 J  13.4822 vol 0.0812 (dil 0.0969 g -0.010) grey 39.9% ch 0.100 worst L2 hit -y 100 N (joint) 4.87e+03 2.0s
+it   7 beta    1 J   2.7361 vol 0.0809 (dil 0.0961 g -0.018) grey 35.2% ch 0.100 worst tie b2 my 962 2.2s
+it   8 beta    1 J   0.5767 vol 0.0795 (dil 0.0946 g -0.033) grey 37.5% ch 0.100 worst tie b2 mx 208 2.3s
+it   9 beta    1 J   2.2748 vol 0.0801 (dil 0.0949 g -0.030) grey 35.7% ch 0.100 worst L2 hit -y 100 N (joint) 822 2.2s
+it  10 beta    1 J   0.2776 vol 0.0814 (dil 0.0964 g -0.014) grey 36.4% ch 0.100 worst tie b2 mx 100 2.0s
