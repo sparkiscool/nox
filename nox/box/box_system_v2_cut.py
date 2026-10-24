@@ -418,7 +418,8 @@ def foot_sites(S, amin=40.0):
         from shapely.geometry import Polygon
         from shapely.ops import unary_union
         g = unary_union([Polygon(r_).buffer(0) for r_ in pr.to_polygons()])
-        out.append(dict(xy=[float(g.centroid.x), float(g.centroid.y)], area=float(ar), bounds=[float(v) for v in g.bounds]))
+        cx = float(np.clip(g.centroid.x, -(206.0 - FOOT["d"] / 2 - 0.3), 206.0 - FOOT["d"] / 2 - 0.3)); cy = float(max(g.centroid.y, -66.0 + FOOT["d"] / 2 + 0.3))   # the O20 foot stays inside the sheets
+        out.append(dict(xy=[cx, cy], area=float(ar), bounds=[float(v) for v in g.bounds], moved=bool(abs(cx - g.centroid.x) + abs(cy - g.centroid.y) > 0.01)))
     return out
 
 
@@ -622,7 +623,7 @@ def laps(pieces, planes, KEEP, sizes=None, log=print, amin=60.0, PROT=None):
 def rename(pieces):
     """readable final names (the tree names: region, split halves, islands)."""
     m = {"mast_1": "mast_low", "mast_2": "mast_mid", "mast_3": "mast_top", "mast_1_1": "mast_leg", "rearP_1": "rearP_low", "rearP_2": "rearP_up",
-         "rearP_2_1": "rearP_up_b", "rearP~1": "epost", "rearN_1": "rearN_low", "rearN_2": "rearN_up", "rearN~1": "floorbar",
+         "rearP_2_1": "rearP_up_b", "rearP~1": "epost", "rearP~2": "rearP_lug", "rearN_1": "rearN_low", "rearN_2": "rearN_up", "rearN~1": "floorbar",
          "bay-60~1": "foot_leg_1", "bay-60~2": "foot_leg_2", "bay-120~1": "foot_leg_3", "bay-150~1": "foot_leg_3", "bay-30~1": "foot_leg_1", "bay-30~2": "foot_leg_2"}
     hubs = sorted([k for k in pieces if k == "hub" or k.startswith("hub~") or k.startswith("hub_")], key=lambda k: -pieces[k].volume())
     for i, k in enumerate(hubs): m[k] = f"link_{i + 1}"
@@ -714,7 +715,7 @@ def add_clips(P, KEEP, n_per=5, log=print):
         for i in sel:
             k, p = cand[i]
             n = np.zeros(3); n[ax] = sg
-            L = (c - CLIP["gap"] - p[ax]) * sg + CLIP["root"]
+            L = (c - p[ax]) * sg - CLIP["gap"] + CLIP["root"]
             stalk = cyl_at(p, n, CLIP["r"], L, back=CLIP["root"]) - KEEP
             if stalk.volume() < 0.97 * math.pi * CLIP["r"] ** 2 * L: continue
             bad = False
@@ -742,7 +743,11 @@ def build_cut(sizes=None, log=print, finish=True):
     finfo["clips"] = add_clips(P, KEEP, log=log)
     P = clean(P, log)
     if finish:
-        for k in list(P): P[k] = finish_piece(P[k], log=lambda s_: log(f"  {k}:{s_}"))
+        envc = box(-205.9, 205.9, -65.9, 334.9, -236.0, 234.0)                  # the finish grows flush faces by up to 0.3: back inside the sheets' inner planes
+        for k in list(P):
+            P[k] = finish_piece(P[k], log=lambda s_: log(f"  {k}:{s_}"))
+            v0 = P[k].volume(); P[k] = P[k] ^ envc
+            if v0 - P[k].volume() > 0.5: log(f"  {k}: {v0 - P[k].volume():.0f} mm3 trimmed back to the sheet planes")
     return P, J, pl, finfo, PROT, KEEP
 
 
@@ -1170,24 +1175,25 @@ def write_cut_assembly(P, J, finfo, path):
         parts.append(dict(name=k, role="structure", mesh=rel(os.path.join(OUT, "pieces", f"{k}.stl")), pose=np.eye(4).tolist(), material="PETG", tag="M",
                           owner="box structure", version="v2 cut", source="nox/box/box_system_v2_cut.py", note="cut piece, a candidate for its own topology run"))
     for k in feet_meshes(finfo):
-        parts.append(dict(name=k, role="structure", mesh=rel(os.path.join(OUT, "pieces", f"{k}.stl")), pose=np.eye(4).tolist(), material="TPU95A", tag="E",
+        parts.append(dict(name=k, role="structure", mesh=rel(os.path.join(OUT, "pieces", f"{k}.stl")), pose=np.eye(4).tolist(), material="TPU", tag="E",
                           owner="box structure", version="v2 cut", source="nox/box/box_system_v2_cut.py", note="TPU foot O20 x 5 (E)"))
     names = {p["name"] for p in parts}
     pairs = [pr for pr in old["contact_pairs"] if pr[0] in names and pr[1] in names]
     for j in J:
         if j["sites"]: pairs.append([j["a"], j["b"], 5.0])                      # bolted laps: the tab sits on its recess
     mans = {k: m for k, m in P.items()}
+    tmpA = assembly.new("tmp", "box", parts=parts, probes=False)
+    posed = {p["name"]: man(t) for p, t in zip(tmpA.parts, tmpA.meshes()) if p["name"].startswith("catch: ")}
+    ovl = lambda a, b: (a ^ b).volume() if (np.array(bbox(a)[0]) < bbox(b)[1]).all() and (np.array(bbox(b)[0]) < bbox(a)[1]).all() else 0.0
     for ang in BAY_ANG:
         rc = man(trimesh.load(os.path.join(LAY, "parts", f"bay{ang}_receiver.stl"), force="mesh"))
         for k, m in mans.items():
-            v = (rc ^ m).volume() if (np.array(bbox(rc)[0]) < bbox(m)[1]).all() and (np.array(bbox(m)[0]) < bbox(rc)[1]).all() else 0.0
+            v = ovl(rc, m)
             if v > 0.0: pairs.append([f"bay {ang} receiver", k, max(5.0, round(v * 1.5, 1))])
-    ct = [(n, man(trimesh.load(os.path.join(ROOT, p["mesh"]), force="mesh"))) for n, p in ((p["name"], p) for p in parts if p["name"].startswith("catch: ") and "mesh" in p)]
-    for n, cm in ct:
+    for n, cm in posed.items():
         for k, m in mans.items():
-            if (np.array(bbox(cm)[0]) < bbox(m)[1]).all() and (np.array(bbox(m)[0]) < bbox(cm)[1]).all():
-                v = (cm ^ m).volume()
-                if 0 < v < 1500.0: pairs.append([n, k, round(v * 1.5 + 1, 1)])                       # the seat landing (drawn wins, M)
+            v = ovl(cm, m)
+            if 0 < v < 1500.0: pairs.append([n, k, round(v * 1.5 + 1, 1)])                       # the seat landing (drawn wins, M)
     acc = []
     for a_ in old["access"]:
         if "body out" in a_["name"]: continue
@@ -1404,7 +1410,7 @@ def write_summary(R, sizing_rows, runinfo, path):
     nj = sum(1 for j in J if j["sites"]); nj0 = [f"{j['a']} | {j['b']} ({j['area'] / 100:.1f} cm2)" for j in J if not j["sites"]]
     L = ["# Box structure v2: the cut of the round 2 field and the system FE on the cut assembly (`nox/box/box_system_v2_cut.py`)", "",
          "Status: RUN RECORD of candidates for the piece topology runs, not parts. Nothing goes to print/. Tags: C drawn / layout, M mesh, E estimate, F this FE model (voxel h %g, piece-labelled)." % fe["h"], "",
-         f"System: {R['system_line']}", "",
+         f"{R['system_line']}", "",
          f"Weight: structure {mc['structure_g']:.0f} g (M, {len(P)} pieces PETG 1.27 g/cm3 + {len(finfo['feet'])} TPU feet 1.22), was 4919 g (E) for the round 2 field; whole box with the cartridges, arm, funnel and electronics lumps {rec['box_with_lumps_g']} g (E), CG {rec['box_with_lumps_cg']} (E, W); structure CG {mc['cg']} (M).",
          f"Stiffness (F, h {fe['h']:g}): stub tilt {sn.get('stub_tilt_mrad')} mrad at 57 N + 5.9 N.m (target <= 10, k {sn.get('stub_k_Nm_per_mrad')} N.m/mrad against >= 0.59); worst bay rotation about the axle relative to the stub {sn['bay_rot_worst_mrad']} mrad in `{sn['bay_rot_worst_case']}` (target <= 2.6). Lower bound with only the bolt areas bonded: " +
          (f"stub tilt {snb.get('stub_tilt_mrad')} mrad, bay rotation {snb['bay_rot_worst_mrad']} mrad." if snb else "not run."),
@@ -1413,10 +1419,15 @@ def write_summary(R, sizing_rows, runinfo, path):
          "## Pieces", "", "| Piece | Qty | Envelope X / Y / Z (M) | Mass M | Worst index (case) | Bed face, contact | Joints | solid_check |", "|---|---|---|---|---|---|---|---|"]
     jb = {}
     for j in J:
-        if j["sites"]: jb.setdefault(j["a"], []).append(f"{j['b']} {len(j['sites'])}x{j['size']}"); jb.setdefault(j["b"], []).append(f"{j['a']} {len(j['sites'])}x{j['size']}")
+        if not j["sites"]: continue
+        for me, other in ((j["a"], j["b"]), (j["b"], j["a"])):
+            d_ = jb.setdefault(me, {}).setdefault(other, {"M3": 0, "M5": 0})
+            for s_ in j["sites"]: d_[s_["size"]] += 1
+    fmt = lambda d_: "+".join(f"{n}x{z}" for z, n in d_.items() if n)
     for k in P:
-        e = pp[k]["extents"]; t = tab[k]
-        L.append(f"| {k} | 1 | {e[0]:.0f} x {e[1]:.0f} x {e[2]:.0f} | {mc['rows_g'][k]} g | {t['worst']:.2f} ({t['worst_case'][:34]}) | {pp[k]['face']}, {pp[k]['bed_mm2']:.0f} mm2 | {'; '.join(jb.get(k, [])) or '-'} | {'PASS' if scj.get(k, {}).get('ok') else 'FAIL' if k in scj else 'not run'} |")
+        b_ = bbox(P[k]); e = b_[1] - b_[0]; t = tab[k]
+        L.append(f"| {k} | 1 | {e[0]:.0f} x {e[1]:.0f} x {e[2]:.0f} | {mc['rows_g'][k]} g | {t['worst']:.2f} ({t['worst_case'][:34]}) | {pp[k]['face']}, {pp[k]['bed_mm2']:.0f} mm2 | "
+                 f"{'; '.join(f'{o} {fmt(d_)}' for o, d_ in jb.get(k, {}).items()) or '-'} | {'PASS' if scj.get(k, {}).get('ok') else 'FAIL' if k in scj else 'not run'} |")
     L += ["", f"TPU feet: {len(finfo['feet'])} x O20 x 5 (E) under the floor patches of the field (M areas {', '.join(f'{f_['area'] / 100:.1f}' for f_ in finfo['feet'])} cm2) on O16 x 6 pads with an M3 insert.", ""]
     L += ["## Cut and joints", "",
           f"- Source: `runs/box_system/v2/topo_r2/density.npz` (g3000), cubic x4 to a 2 mm grid, 0.5 surface (M); the drawn bodies (pads, seat posts, stub, electronics bosses) exact; keep-outs of round 2 (grown 1) cut exact; features thinner than 2.3 mm removed (voxel opening, M); each piece finished by a 0.5 mm voxel opening (r 1.2) and a smooth 0.5 iso-surface (+-0.25 mm).",
@@ -1474,7 +1485,7 @@ def write_summary(R, sizing_rows, runinfo, path):
 def load_cut(tag=""):
     d = json.load(open(os.path.join(OUT, f"cut{tag}.json")))
     P = {k: man(trimesh.load(os.path.join(OUT, "pieces", f"{k}.stl"), force="mesh")) for k in d["pieces"]}
-    return P, d["joints"], dict(feet=d["feet"])
+    return P, d["joints"], dict(feet=d["feet"], clips=d.get("clips", {}))
 
 
 def sha_of(p):
@@ -1522,8 +1533,14 @@ def main():
         json.dump(rows, open(os.path.join(OUT, a.out_sizes.replace(".json", "_table.json")), "w"), indent=0)
         log(f"bolt sizing: {sum(1 for r in rows if r['now'] != r['was'])} of {len(rows)} joints change; over target after M5 x 6: {[r['joint'] for r in rows if r['over']]}")
     if a.stage == "report":
-        t0 = time.time()
-        report_stage(a.h, a.tag, log=log)
+        R = report_stage(a.h, a.tag, log=log)
+        srows = json.load(open(os.path.join(OUT, "sizes_r1_table.json"))) if os.path.exists(os.path.join(OUT, "sizes_r1_table.json")) else []
+        peaks = [l for l in open(os.path.join(OUT, "log.txt")) if "peak RSS" in l]
+        runinfo = (f"- Scripts: `nox/box/box_system_v2_cut.py` stages structure, export, fe (--mode all / bolts), sizes, solid, report; PYPARDISO_MKL_RT=/usr/local/lib/libmkl_rt.so.3, 1e-4 diagonal regularisation as v1.\n"
+                   f"- Peak memory (M, `resource.ru_maxrss` of each process, logged at exit): FE h 4 {R['fe'].get('peak_rss_GB')} GB; cut export about 3..4 GB; solid_check at pitch 0.25 about 6.5 GB per piece (one at a time); never over 12 GB. Log lines: {'; '.join(x.strip()[:90] for x in peaks[-4:])}.\n"
+                   f"- Wall: structure + cut + finish about 35 min per export (two exports: first sizing, then the resized), FE h 4 about 20 min for 18 cases (60 s each, 118k cells, 502k dofs), solid_check about 3 min per piece (38 pieces + 8 feet).\n"
+                   f"- h {R['fe']['h']:g} used (aim 4; no coarser fallback needed). The FE h 8 debug run (22k cells) read the same stub tilt to 0.1 mrad.")
+        write_summary(R, srows, runinfo, os.path.join(OUT, "summary.md"))
         log("report written")
     if a.stage == "export":
         sizes = None
@@ -1560,6 +1577,9 @@ def main():
 
 
 if __name__ == "__main__":
+    import resource, atexit
+    t_start = time.time()
+    atexit.register(lambda: log(f"peak RSS {resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6:.2f} GB (M, ru_maxrss), children {resource.getrusage(resource.RUSAGE_CHILDREN).ru_maxrss / 1e6:.2f} GB, wall {time.time() - t_start:.0f} s, PID {os.getpid()}"))
     main()
 
 
