@@ -772,7 +772,7 @@ def _handling_all(N, kind, members, els, lu, act, nn, nodes, name, cls):
                 reac={}, peak=None, stroke_lim=None, node_idx={nodes[k]: float(idx_n[:, k].max()) for k in range(nl)})
 
 
-HEAD = [float(os.environ.get("HEADROOM", "0.93"))]   # the ESO / warm start leave this much of each index for the probe repair (1.0 after)
+HEAD = [float(os.environ.get("HEADROOM", "1.0"))]   # the ESO / warm start leave this much of each index for the probe repair (1.0 after)
 
 
 def feasible(fe):
@@ -924,23 +924,21 @@ def close_ends(N, kind, cur, add, members):
     return out
 
 
-def warm_start(N, kind, members, path, cases, contact_ok, mandatory=(), max_add=60):
-    """additive (v4): a previous cage's rods that still fit, then the member (and its mirror) that cuts the case violation
-    most, until every case holds; the probe repair and the reduction pass follow"""
-    Wk = {_mkey(np.array(a), np.array(b)) for a, b in json.load(open(path))["rods"]}
-    cur = drop_bad(N, kind, [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or m in set(mandatory)]); n0 = len(cur)
+def fix_cases(N, kind, members, cur, cases, contact_ok, max_add=60):
+    """add the member (and its mirror, and what closes its free ends) that cuts the case violation (+ the cage-first
+    shortfall) most, until every case holds and the cage is first, or nothing helps; -> (members, frame result, additions)"""
     def violation(f):
         if f is None: return np.inf
         return sum(max(r["worst"] / (IDX_LIM[r["cls"]] * HEAD[0]) - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
+    cdef = getattr(contact_ok, "deficit", lambda ms: 0.0 if contact_ok(ms) else 1.0)
     fe = frame_eval(N, kind, cur, cases); added = 0; mset = set(members)
     while not (feasible(fe) and contact_ok(cur)) and added < max_add:
-        cdef = getattr(contact_ok, "deficit", lambda ms: 0.0 if contact_ok(ms) else 1.0)
         used = {i for m in cur for i in m}; v0 = violation(fe) + 0.05 * cdef(cur); best = None
         hot = set()                                                       # nodes of the failing cases: worst handling nodes, worst members
         for r in fe or []:
             if r["worst"] <= IDX_LIM[r["cls"]] * HEAD[0] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
             if r.get("node_idx"): hot |= set(sorted(r["node_idx"], key=lambda i: -r["node_idx"][i])[:4])
-            hot |= set(cur[r["el"]]) | set(F_i for F_i in r.get("loaded", ()))
+            hot |= set(cur[r["el"]])
         for m in members:
             if m in cur or not (m[0] in used or m[1] in used): continue
             if hot and not (m[0] in hot or m[1] in hot): continue
@@ -952,6 +950,14 @@ def warm_start(N, kind, members, path, cases, contact_ok, mandatory=(), max_add=
             if v < v0 - 1e-6 and (best is None or (v, cage_mass(N, kind, add)) < best[0]): best = ((v, cage_mass(N, kind, add)), trial, f2)
         if best is None: break
         cur, fe = best[1], best[2]; added += 1
+    return cur, fe, added
+
+
+def warm_start(N, kind, members, path, cases, contact_ok, mandatory=(), max_add=60):
+    """additive (v4): a previous cage's rods that still fit, then fix_cases; the probe repair and the reduction follow"""
+    Wk = {_mkey(np.array(a), np.array(b)) for a, b in json.load(open(path))["rods"]}
+    cur = drop_bad(N, kind, [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or m in set(mandatory)]); n0 = len(cur)
+    cur, fe, added = fix_cases(N, kind, members, cur, cases, contact_ok, max_add)
     return cur, fe, f"warm start {os.path.basename(os.path.dirname(path))}: {n0} rods kept, {added} additions"
 
 
@@ -1029,7 +1035,9 @@ def probe_repair(N, kind, chosen, members, cases, contact_ok, fe, max_add=30, n_
             trial = drop_bad(N, kind, cur + add)
             if m not in trial: continue
             fe2 = frame_eval(N, kind, trial, cases)
-            if not (feasible(fe2) and contact_ok(trial)): continue
+            if not (feasible(fe2) and contact_ok(trial)):                  # the shield overloads something: brace it (<= 8 additions)
+                trial, fe2, _ = fix_cases(N, kind, members, trial, cases, contact_ok, 8)
+                if not (feasible(fe2) and contact_ok(trial)) or m not in trial: continue
             pr2 = run_probes(trial); d2 = probe_deficit(pr2)
             if d2[1] > d0[1] + 0.3 and d2[0] <= d0[0]:
                 cur, fe, pr, d0, fixed = trial, fe2, pr2, d2, True; added += len(add); break
