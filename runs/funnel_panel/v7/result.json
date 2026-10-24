@@ -1,0 +1,290 @@
+{
+ "part": "funnel_panel",
+ "version": "v7",
+ "skin": 2.0,
+ "rib_h": 9.0,
+ "rib_vf": 0.2,
+ "A": {
+  "cm3": 63.6,
+  "g_PETG": 80.8,
+  "bbox": [
+   109.0,
+   170.6,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 12935,
+  "overhang_mm2": 55.4,
+  "watertight_after_stl_reload": true
+ },
+ "B": {
+  "cm3": 63.5,
+  "g_PETG": 80.7,
+  "bbox": [
+   109.0,
+   168.4,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 12935,
+  "overhang_mm2": 57.7,
+  "watertight_after_stl_reload": true
+ },
+ "assembly": {
+  "overlap_mm3": 0.0,
+  "bodies": 1,
+  "g_PETG": 594.5,
+  "bbox": [
+   336.8,
+   336.8,
+   78.4
+  ]
+ },
+ "latch_fit_v7_skin": {
+  "+y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "+y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  }
+ },
+ "latch_fit_v1_as_merged": {
+  "+y_x+": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "+y_x-": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x+": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x-": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  }
+ },
+ "window": {
+  "grown_0.45_mm3": 0.0,
+  "grown_0.55_mm3": 16.796,
+  "window_centre_slope_lateral": [
+   54.1,
+   100.0
+  ],
+  "plunger_axis_slope_lateral": [
+   54.1,
+   100.0
+  ]
+ },
+ "bosses_vs_housing_mm3": 0.0,
+ "wheel_path": {
+  "face k0": {
+   "rays": 15298,
+   "hits": 15298,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k1 (seated)": {
+   "rays": 15298,
+   "hits": 15046,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k2": {
+   "rays": 15298,
+   "hits": 15298,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k3 (seated)": {
+   "rays": 15298,
+   "hits": 15046,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "fe_asbuilt": {
+  "face_g": 151.5,
+  "util": 0.893,
+  "worst": "press u60 v90",
+  "stress_MPa": 6.6,
+  "stress_case": "press u30 v40",
+  "ok": true,
+  "per_case": {
+   "press u0 v15": [
+    0.134,
+    2.1
+   ],
+   "press u30 v15": [
+    0.363,
+    5.7
+   ],
+   "press u60 v15": [
+    0.103,
+    2.3
+   ],
+   "press u0 v40": [
+    0.564,
+    3.3
+   ],
+   "press u30 v40": [
+    0.834,
+    6.6
+   ],
+   "press u60 v40": [
+    0.324,
+    2.6
+   ],
+   "press u90 v40": [
+    0.133,
+    2.3
+   ],
+   "press u0 v65": [
+    0.956,
+    2.9
+   ],
+   "press u30 v65": [
+    1.139,
+    6.5
+   ],
+   "press u60 v65": [
+    0.588,
+    2.7
+   ],
+   "press u90 v65": [
+    0.314,
+    3.3
+   ],
+   "press u120 v65": [
+    0.025,
+    0.8
+   ],
+   "press u0 v90": [
+    1.4,
+    3.0
+   ],
+   "press u30 v90": [
+    1.313,
+    3.6
+   ],
+   "press u60 v90": [
+    0.893,
+    2.1
+   ],
+   "press u90 v90": [
+    0.551,
+    3.0
+   ],
+   "press u120 v90": [
+    0.18,
+    1.3
+   ],
+   "press u100 v40": [
+    0.066,
+    2.9
+   ],
+   "press u100 v65": [
+    0.203,
+    2.3
+   ],
+   "top edge u0": [
+    1.819,
+    3.4
+   ],
+   "top edge u40": [
+    1.551,
+    3.3
+   ],
+   "top edge u80": [
+    0.978,
+    2.3
+   ],
+   "top edge u120": [
+    0.443,
+    4.6
+   ],
+   "top edge u150": [
+    0.033,
+    1.0
+   ],
+   "uniform 20 N": [
+    0.218,
+    1.0
+   ],
+   "latch functional 30 N x 2": [
+    0.104,
+    1.5
+   ],
+   "latch misuse 100 N": [
+    0.256,
+    4.1
+   ]
+  },
+  "latch_boss_defl_mm": {
+   "latch functional 30 N x 2": 0.319,
+   "latch misuse 100 N": 0.716
+  }
+ },
+ "boss_hand_calc": [
+  {
+   "case": "functional 30 N",
+   "boss_shear_N": 7.5,
+   "boss_normal_N": 7.5,
+   "boss_root_MPa": 0.39,
+   "index_across_layers": 0.072,
+   "skin_membrane_MPa": 0.31
+  },
+  {
+   "case": "misuse 100 N",
+   "boss_shear_N": 25.0,
+   "boss_normal_N": 25.2,
+   "boss_root_MPa": 1.29,
+   "index_across_layers": 0.149,
+   "skin_membrane_MPa": 1.04
+  }
+ ]
+}
