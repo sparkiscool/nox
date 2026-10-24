@@ -46,7 +46,7 @@ CART = {
     "overseer": dict(x=26.0, h=57.0, l=153.0, l_boss=3.0, tab=76.5, xt60_z=145.8, xt60_y=55.0, cg=(0.0, 35.0, 76.5), mass=720.0, tag="E"),
 }
 BOT_DZ = L.CART_BOT_DZ                    # 15.4: carried cartridge bottom above z0 (gripper datum, unchanged)
-LATCH_BRANCH = os.environ.get("NOX_LATCH_REF", "d0cd1a1")   # pinned (hub 24 Oct: round 2 runs on the v7 spans; part/battery-latch a5b764f moved the
+LATCH_BRANCH = os.environ.get("NOX_LATCH_REF", "0c13edb")   # pinned (hub 24 Oct: round 2 runs on the v7 spans; part/battery-latch a5b764f moved the
                                           # cartridges 8 / 10 toward the hub, the latch shortens them back); NOX_LATCH_REF=origin/part/battery-latch for the tip
 LATCH = dict(source="dimensions E (PR 44, cartridge v4)")
 
@@ -93,6 +93,23 @@ def LATCH_FLIP(BL):
 
 
 _BL = latch_module()
+TAB_ON_SET = os.environ.get("NOX_TAB", "set") == "set"   # round 3b (hub: one funnel, the catch centre on each latch set's centre): the tab line
+SET_TAB_OFF = {}                                        # on the set centre too, so the funnel centre = the grip line Y_C (DEFAULT); "cg30": d0cd1a1's
+
+
+def tab_on_set_centre(BL):
+    """latch TAB_OFF (tab line from the swap CG toward the XT60 end) put on each receiver set's centre (C, from latch_assembly)"""
+    for pk in ("scout", "overseer"):
+        for _ in range(3):
+            g = BL.build(pk)["g"]; _, c, _ = BL.swap_cg(g)
+            v = np.asarray(BL.latch_assembly(pk, "latched")["receiver"].to_mesh().vert_properties)[:, 2]
+            BL.TAB_OFF[pk] = round(0.5 * (float(v.min()) + float(v.max())) - float(c[2]), 2)
+            getattr(BL, "_CACHE", {}).clear()                   # the latch caches build(); its tab line moves with TAB_OFF
+        SET_TAB_OFF[pk] = BL.TAB_OFF[pk]
+
+
+if _BL is not None and hasattr(_BL, "TAB_OFF") and TAB_ON_SET:
+    tab_on_set_centre(_BL)
 if _BL is not None:
     for _p in ("scout", "overseer"):
         CART[_p] = cart_from_latch(_BL, _p)

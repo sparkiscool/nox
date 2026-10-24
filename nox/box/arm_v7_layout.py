@@ -18,8 +18,9 @@ RAIL_END = 151.0                        # the outer wheel's contact at the comma
 WEB_U7 = (-63.0, 30.0)                  # head A's rack tail: the pinion (u = 55 - z0) stays 6 inside it at the commanded drone insert z0 111.3
 WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it pulls there at 102.6 and inserts at bays, 101.8 commanded): 6.4 inside;
                                         # its shorter tail clears the detent's springs and tower web (the full -63 tail met them, sweep C)
-Y_C7 = 138.0                            # the common grip for both packs (DEFAULT): the Overseer gripped 30 toward its closed end needs Y_C >= 136.8,
-                                        # the Scout >= 129.1; 138 brings the free mate pitch to 0.64 / 0.56 deg (175: 1.10 / 1.01) and the box 37 shorter
+Y_C7 = float(__import__("os").environ.get("NOX_YC", "165"))   # round 3b (DEFAULT, hub: one funnel centred on each drone's catch centre = its
+                                        # latch set's centre, the tab line there too): the Overseer set (179.6) clears the low stack's plate top 72.75
+                                        # by 2.45 at Y_C 165 (Y 75.2..254.8, its cartridge from 76.5); round 3 had 138 with the tab 30 off (d0cd1a1)
 DETENT_SPRING_SCALE = 1.5               # round 3 (DEFAULT; the hub's x1.8 leaves the axle motor 1.29 to index past a notch): with the 5:1 axle the
                                         # parked arm holds 1.31, indexing 1.43, a head out at a horizontal Overseer bay 0.80: the axle motor on the brake
                                         # relay lets it creep ~21 deg/s onto the neighbour's seated pack (~71 N, E; swap_system.power_cut_head_out)
