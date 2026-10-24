@@ -147,5 +147,16 @@ it  47 beta   16 J   1.6705 vol 0.0535 (dil 0.1070 g -0.000) grey  1.8% ch 0.100
 it  48 beta   16 J   1.6592 vol 0.0535 (dil 0.1070 g -0.000) grey  1.8% ch 0.100 worst tie b2 fz 76.3 30.2s
 it  49 beta   16 J   1.6509 vol 0.0535 (dil 0.1070 g -0.000) grey  1.8% ch 0.100 worst tie b2 fz 75.6 30.0s
 it  50 beta   16 J   1.6445 vol 0.0536 (dil 0.1070 g -0.000) grey  1.8% ch 0.100 worst tie b2 fz 75 33.2s
-1.8% ch 0.100 worst tie b2 fz 75.6 30.0s
-it  50 beta   16 J   1.6445 vol 0.0536 (dil 0.1070 g -0.000) grey  1.8% ch 0.100 worst tie b2 fz 75 33.2s
+it  51 beta   16 J   1.6393 vol 0.0536 (dil 0.1070 g +0.001) grey  1.8% ch 0.100 worst tie b2 fz 74.4 31.5s
+it  52 beta   16 J   1.6461 vol 0.0534 (dil 0.1069 g -0.000) grey  1.8% ch 0.100 worst tie b2 fz 74.3 31.6s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  53 beta   32 J   5.7862 vol 0.0532 (dil 0.1065 g -0.003) grey  0.9% ch 0.100 worst dropped pack [Overseer] [mis 292 31.4s
+it  54 beta   32 J   2.0833 vol 0.0519 (dil 0.1060 g -0.008) grey  0.9% ch 0.100 worst tie b1 fz 107 33.7s
+it  55 beta   32 J   6.2210 vol 0.0518 (dil 0.1056 g -0.011) grey  0.9% ch 0.100 worst hand on rail A tip 50 N [mis 286 33.6s
+it  56 beta   32 J   8.8106 vol 0.0511 (dil 0.1054 g -0.018) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 414 30.3s
+it  57 beta   32 J  13.3215 vol 0.0504 (dil 0.1049 g -0.023) grey  0.9% ch 0.100 worst dropped pack [Overseer] [mis 647 30.2s
+it  58 beta   32 J  10.4641 vol 0.0502 (dil 0.1043 g -0.028) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 470 30.1s
+it  59 beta   32 J   9.1951 vol 0.0498 (dil 0.1041 g -0.031) grey  0.9% ch 0.100 worst dropped pack [Overseer] [mis 468 31.2s
+it  60 beta   32 J   8.4294 vol 0.0495 (dil 0.1034 g -0.037) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 381 38.8s
+seer] [mis 468 31.2s
+it  60 beta   32 J   8.4294 vol 0.0495 (dil 0.1034 g -0.037) grey  0.9% ch 0.100 worst B insert at bay -210 60 N (f 381 38.8s
