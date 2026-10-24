@@ -640,25 +640,33 @@ def laps(pieces, planes, KEEP, sizes=None, log=print, amin=60.0, PROT=None):
     joints = []; rej = {}
     for k, itf in enumerate(C):
         sz, nn = ((sizes or {}).get((itf["a"], itf["b"], itf["plane"].name)) or ("M3", n_sites(itf["area"])))
-        spec = BOLT[sz]
-        cand = candidates(itf["P"], spec["hw"], spec["Lt"] + spec["boss"])
-        got = []; tried = 0; rj = {}
-        for level in (0, 1):
-          if level == 1 and len(got) >= min(nn, 2): break
-          tried = 0
-          for c in sorted(cand, key=lambda c: -c["fill"]):
-            if len(got) >= nn or tried >= 60: break
-            if any(np.linalg.norm(c["q"] - g[0]["q"]) < 26.0 for g in got): continue
-            tried += 1
-            owner_a = (len(got) % 2 == 0)
-            r, why = apply_site(pieces, KEEP, itf, c, owner_a, spec, log, level, PROT)
-            if r is None:
-                r, why2 = apply_site(pieces, KEEP, itf, c, not owner_a, spec, log, level, PROT)
+        snap = dict(pieces)
+        for attempt in (0, 1):
+            spec = BOLT[sz]
+            cand = candidates(itf["P"], spec["hw"], spec["Lt"] + spec["boss"])
+            got = []; tried = 0; rj = {}
+            for level in (0, 1):
+              if level == 1 and len(got) >= min(nn, 2): break
+              tried = 0
+              for c in sorted(cand, key=lambda c: -c["fill"]):
+                if len(got) >= nn or tried >= 60: break
+                if any(np.linalg.norm(c["q"] - g[0]["q"]) < 2 * spec["hw"] + 4.0 for g in got): continue
+                tried += 1
+                owner_a = (len(got) % 2 == 0)
+                r, why = apply_site(pieces, KEEP, itf, c, owner_a, spec, log, level, PROT)
                 if r is None:
-                    key = re.sub(r"(blocked by|piece|falls?|would fall|in the way)\s*\S*", "", why2).strip() or why2
-                    key = re.sub(r"^\S+ would", "piece would", why2) if "would" in why2 else re.sub(r"(piece|by) \S+", r"\1 X", why2)
-                    rej[key] = rej.get(key, 0) + 1; rj[key] = rj.get(key, 0) + 1; continue
-            r['relaxed'] = level; got.append((c, r))
+                    r, why2 = apply_site(pieces, KEEP, itf, c, not owner_a, spec, log, level, PROT)
+                    if r is None:
+                        key = re.sub(r"(blocked by|piece|falls?|would fall|in the way)\s*\S*", "", why2).strip() or why2
+                        key = re.sub(r"^\S+ would", "piece would", why2) if "would" in why2 else re.sub(r"(piece|by) \S+", r"\1 X", why2)
+                        rej[key] = rej.get(key, 0) + 1; rj[key] = rj.get(key, 0) + 1; continue
+                r['relaxed'] = level; got.append((c, r))
+            if sz == "M5" and len(got) < min(nn, 2) and attempt == 0:           # M5 does not fit here: back to M3 with the capacity-equivalent count
+                pieces.clear(); pieces.update(snap)
+                sz, nn = "M3", min(6, int(math.ceil(nn * 2.2)))
+                log(f"  lap {itf['a']} | {itf['b']} on {itf['plane'].name}: M5 does not fit, M3 x {nn}")
+                continue
+            break
         joints.append(dict(a=itf["a"], b=itf["b"], plane=itf["plane"].name, plane_n=itf["plane"].n.tolist(), plane_p0=itf["plane"].p0.tolist(),
                            area=itf["area"], want=nn, size=sz, sites=[r for _, r in got]))
         log(f"  lap {itf['a']} | {itf['b']} on {itf['plane'].name}: {itf['area'] / 100:.1f} cm2, {len(got)}/{nn} {sz} sites ({len(cand)} candidates){' rejected ' + str(rj) if len(got) < nn else ''}")
@@ -821,7 +829,7 @@ def datum_fixings(P, KEEP, PROT, planes, log=print):
         order = list(np.argsort(-np.linalg.norm(xs - xs.mean(0), axis=1)))
         for idx in order:
             q = xs[idx]
-            if any(np.linalg.norm(q - c_) < 18.0 for c_ in chosen): continue
+            if any(np.linalg.norm(q - c_) < 14.0 for c_ in chosen): continue
             w = pl.to_world([q[0], q[1], 0.0])
             cb = cyl_at([w[0], Yh, w[2]], [0, 1, 0], 6.0, 9.0)
             if (cb ^ PROT).volume() > 3.0: continue
@@ -829,14 +837,17 @@ def datum_fixings(P, KEEP, PROT, planes, log=print):
             if ring_f < 0.7: continue
             bay_f = (cb ^ P[b]).volume() / cb.volume()
             access = cyl_at([w[0], Yl - 0.3, w[2]], [0, -1, 0], 5.0, 10.0)
-            if (access ^ KEEP).volume() > 40.0 or any((access ^ m).volume() > 40.0 for m in P.values()): continue
+            can_screw = not ((access ^ KEEP).volume() > 40.0 or any((access ^ m).volume() > 40.0 for m in P.values()))
             chosen.append(q)
-            out.append(dict(ring=a, bay=b, x=round(float(w[0]), 2), z=round(float(w[2]), 2), bay_fill=round(float(bay_f), 2), ring_fill=round(float(ring_f), 2)))
-            if len(chosen) >= 4: break
+            out.append(dict(ring=a, bay=b, x=round(float(w[0]), 2), z=round(float(w[2]), 2), bay_fill=round(float(bay_f), 2), ring_fill=round(float(ring_f), 2), can_screw=bool(can_screw)))
+            if len(chosen) >= 6: break
         # assign kinds alternately along the chosen points: 0, 2 bolts; 1, 3 dowels (spread order)
         mine = [o for o in out if o["ring"] == a and o["bay"] == b]
+        ns_ = 0
         for n_, o in enumerate(mine):
-            o["kind"] = "M3 screw from below" if n_ % 2 == 0 else "dowel O4 x 12"
+            scr = o.pop("can_screw") and (ns_ == 0 or ns_ < (len(mine) + 1) // 2) and (n_ % 2 == 0 or ns_ < 2)
+            ns_ += int(scr)
+            o["kind"] = "M3 screw from below" if scr else "dowel O4 x 12"
             x, z = o["x"], o["z"]
             boss = cyl_at([x, Yh, z], [0, 1, 0], 5.5, 9.0) - KEEP
             if o["bay_fill"] < 0.85: P[b] = P[b] + boss
@@ -955,10 +966,10 @@ def joint_defs(J, P, mode="all", h=4.0):
     for j in J:
         if not j["sites"]: continue
         zs = []
-        full = mode == "all" or ("ringlaps" in EXP and j["a"].startswith("ring") and j["b"].startswith("ring")) or ("baylaps" in EXP and j["a"].startswith("bay") and j["b"].startswith("bay")) or ("linklaps" in EXP and (j["a"].startswith("link") or j["b"].startswith("link")))
+        full = mode == "all" or ("ringlaps" in EXP and j["a"].startswith("ring") and j["b"].startswith("ring")) or ("baylaps" in EXP and j["a"].startswith("bay") and j["b"].startswith("bay")) or ("linklaps" in EXP and (j["a"].startswith("link") or j["b"].startswith("link"))) or ("toplaps" in EXP and (j["a"].startswith(("top", "bridge")) or j["b"].startswith(("top", "bridge")))) or ("mastlaps" in EXP and (j["a"].startswith(("mast", "rear", "epost", "floorbar")) or j["b"].startswith(("mast", "rear", "epost", "floorbar"))))
         for s in j["sites"]:
             spec = BOLT[s["size"]]
-            r = (9.0 if "bigdisc" in EXP else 6.0) if mode == "bolts" else spec["hw"] + 1.0
+            r = (9.0 if "bigdisc" in EXP else spec["hw"] - 2.0) if mode == "bolts" else spec["hw"] + 1.0
             zs.append(bolt_zone(s["pos"], s["axis_in"], r, -1.0 - spec["cb_h"], spec["Lt"] + (3.0 if mode == "bolts" else spec["boss"])))
         if full:
             n = np.array(j["plane_n"]); p0 = np.array(j["plane_p0"])
@@ -1268,7 +1279,7 @@ def run_cut_fe(P, J, finfo, h=4.0, mode="all", only=None, log=print, tag="", see
 
 
 # ================================================================================================ sizing, assembly, requirements
-def size_joints(fe, J, target=0.8, nmax=6):
+def size_joints(fe, J, target=0.8, nmax=6, m5_above=9.9):
     """bolt size and count per joint from the FE: the worst bolt index over the cases, scaled by the bolts there are; M3 up to nmax
     bolts, else M5 (about 2.2 x the capacity). -> {(a, b, plane): (size, n)} for laps(); log of what changed."""
     worst = {}
@@ -1282,7 +1293,10 @@ def size_joints(fe, J, target=0.8, nmax=6):
         jk = f"{j['a']} | {j['b']} | {j['plane']}"; w = worst.get(jk, 0.0); n0 = len(j["sites"]); s0 = j["size"]
         cap = 1.0 if s0 == "M3" else 2.2
         need = w * n0 * cap                                          # index x bolts, in M3 units
-        if need / target <= nmax: size, n = "M3", max(int(math.ceil(need / target)), min(2, n0), 1)
+        nfloor = min(n_sites(j["area"]), nmax)                       # stiffness: the area count is a floor (the bay rotation runs on the bolt discs)
+        if w >= m5_above and j["area"] >= 600.0:                     # a loaded lap with room: M5 (about 1.8 x the disc area, 2.2 x the capacity), falls back to M3 in laps() if it does not fit
+            size, n = "M5", min(max(int(math.ceil(need / (target * 2.2))), 2), nmax)
+        elif need / target <= nmax: size, n = "M3", max(int(math.ceil(need / target)), nfloor, min(2, n0), 1)
         else: size, n = "M5", min(max(int(math.ceil(need / (target * 2.2))), 2), nmax)
         sizes[(j["a"], j["b"], j["plane"])] = (size, n)
         rows.append(dict(joint=jk, plane=j["plane"], worst_index=round(w, 3), was=f"{n0} x {s0}", now=f"{n} x {size}", over=bool(size == "M5" and need / (target * 2.2) > nmax)))
@@ -1856,7 +1870,7 @@ def solid_all(names=None, log=print):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--stage", default="structure"); ap.add_argument("--names", default="")
     ap.add_argument("--h", type=float, default=4.0); ap.add_argument("--mode", default="all"); ap.add_argument("--only", default=""); ap.add_argument("--tag", default="")
-    ap.add_argument("--fe", default=""); ap.add_argument("--sizes", default=""); ap.add_argument("--out-sizes", dest="out_sizes", default="sizes.json")
+    ap.add_argument("--fe", default=""); ap.add_argument("--sizes", default=""); ap.add_argument("--out-sizes", dest="out_sizes", default="sizes.json"); ap.add_argument("--target", type=float, default=0.8); ap.add_argument("--m5-above", dest="m5_above", type=float, default=9.9)
     a = ap.parse_args()
     if a.stage == "fe":
         P, J, finfo = load_cut()
@@ -1869,7 +1883,7 @@ def main():
     if a.stage == "sizes":
         fe = [json.load(open(os.path.join(OUT, f_))) for f_ in a.fe.split(",")]
         cd = json.load(open(os.path.join(OUT, "cut.json")))
-        sizes, rows = size_joints(fe, cd["joints"])
+        sizes, rows = size_joints(fe, cd["joints"], target=a.target, m5_above=a.m5_above)
         json.dump({f"{k[0]}|{k[1]}|{k[2]}": v for k, v in sizes.items()}, open(os.path.join(OUT, a.out_sizes), "w"), indent=0)
         json.dump(rows, open(os.path.join(OUT, a.out_sizes.replace(".json", "_table.json")), "w"), indent=0)
         log(f"bolt sizing: {sum(1 for r in rows if r['now'] != r['was'])} of {len(rows)} joints change; over target after M5 x 6: {[r['joint'] for r in rows if r['over']]}")
@@ -1878,11 +1892,14 @@ def main():
         srows = json.load(open(os.path.join(OUT, "sizes_r1_table.json"))) if os.path.exists(os.path.join(OUT, "sizes_r1_table.json")) else []
         peaks = [l for l in open(os.path.join(OUT, "log.txt")) if "peak RSS" in l]
         slv = [v_ for v_ in R["scj"].values()]
-        runinfo = (f"- Scripts: `nox/box/box_system_v2_cut.py` stages structure, export, fe (--mode all / bolts), sizes, solid, orient, report; PYPARDISO_MKL_RT=/usr/local/lib/libmkl_rt.so.3, 1e-4 diagonal regularisation as v1. Branch `run/box_system-v2-cut`.\n"
-                   f"- Peak memory (M, `resource.getrusage` ru_maxrss of the process, logged at exit in `log.txt`): FE h 4 {R['fe'].get('peak_rss_GB')} GB; cut export 2.34 GB; solid_check at pitch 0.25 up to {max(v_.get('peak_child_GB', 0) for v_ in slv)} GB for the largest piece, one at a time (an earlier run was killed by the 12 GB memory cgroup when an FE ran beside it: never two together). Largest total 11.6 GB, under the 12 GB stop.\n"
-                   f"- Wall (this box, 4 cores): about {R['res']['wall_time_s'] / 3600:.1f} h from the first run to the PR, of it: one cut export 7 min alone (laps 2.5 min, finish 4 min), FE h 4 18 min for the 18 cases alone (60 s each, {R['fe']['cells']} cells, {R['fe']['dofs']} dofs), solid_check {sum(v_['s'] for v_ in slv) / 60:.0f} min for the 46 files.\n"
-                   f"- h {R['fe']['h']:g} used (aim 4; no coarser fallback needed). An h 8 debug run (22k cells) read the same stub tilt (0.31 against {R['sn'].get('stub_tilt_mrad')} mrad).\n"
-                   f"- Iterations: FE 1 on the first cut (bolt counts by area) -> bolt sizing -> cut 2 -> FE 2 (all numbers above); after FE 2 only the finish was touched (clips and feet kept inside the sheets, pieces clipped to the sheet planes, 0.3 mm), the FE ran again on that last cut.")
+        exp_peaks = [float(re.search(r"peak RSS ([\d.]+) GB", l_).group(1)) for l_ in peaks if "wall" in l_]
+        fbk = R["fb"] or {}
+        runinfo = (f"- Scripts: `nox/box/box_system_v2_cut.py` stages structure, export, fe (--mode all / bolts), sizes, solid, orient, report; PYPARDISO_MKL_RT=/usr/local/lib/libmkl_rt.so.3, diagonal regularisation {R['reg']:g} (was 1e-4, v1). Branch `run/box_system-v2-cut`.\n"
+                   f"- Peak memory (M, `resource.getrusage` ru_maxrss of the process, logged at exit in `log.txt`): FE h 4 {R['fe'].get('peak_rss_GB')} GB bonded and {fbk.get('peak_rss_GB')} GB bolt-disc; cut export about 2.6 GB; solid_check at pitch 0.25 up to {max(v_.get('peak_child_GB', 0) for v_ in slv)} GB for the largest piece, one at a time (an FE beside it was killed once by the 12 GB memory cgroup: never two together). Largest total {max(max(v_.get('peak_child_GB', 0) for v_ in slv), R['fe'].get('peak_rss_GB') or 0):.1f} GB, under the 12 GB stop.\n"
+                   f"- Wall (this box, 4 cores, M): one cut export 9 min alone, FE h 4 15 min per model for the 18 cases alone ({R['fe']['cells']} cells, {R['fe']['dofs']} dofs), solid_check {sum(v_['s'] for v_ in slv) / 60:.0f} min for the {len(slv)} files; whole follow-up about {R['res']['wall_time_s'] / 3600:.1f} h from the first run.\n"
+                   f"- h {R['fe']['h']:g} used (aim 4; no coarser fallback needed). The bolt-disc model is mesh-dependent (the 6 mm lug is 1.5 voxels at h 4); no h 2 check was run (8 x the cells, over the memory share).\n"
+                   "- Iterations of this follow-up: (1) ring + island rib + per-lap keys, FE both models on the cut with default bolt counts: bolt-disc bay rotation 3.59 / 3.55 mrad (F, catch -X-Y / motors cut); (2) denser datum fixings + bolt sizing from both models: 3.30 / 3.09; (3) sizing at index 0.55 with the area count as a floor: 3.20 / 3.08; (4) M5 for loaded laps (32 laps): 3.14 / 3.19 (not kept; the same). The cut in this folder is (3), re-run in full on 18 cases in both models.\n"
+                   "- Sensitivity runs (F, bolt-disc model, two cases motors cut / catch -X-Y, bay rotation of the worst bay in mrad; baseline of the cut they ran on in brackets): cut (1) [3.59 / 3.55]: ring laps bonded 3.57 / 3.49, bay-to-bay laps bonded 3.01 / 2.98, link laps bonded 3.45 / 3.48, bolt disc O18 instead of O12 3.05 / 2.95; cut (2) [3.30 / 3.09]: top-frame laps bonded 2.66 / 2.73, mast and rear laps bonded 3.17 / 2.97. So the ring adds nothing to the rotation of the end bays 30 and -210, which load the top frame and the bridge (bay30 / topP_2 154 N, bay-210 / topN_2 204 N in motors cut) through laps in series with 1 to 3 bolts each (mast_top / topP_1: 3.3 cm2, 1 bolt). Reproduce: `NOX_EXP=<ringlaps|baylaps|linklaps|toplaps|mastlaps|bigdisc> python3 nox/box/box_system_v2_cut.py --stage fe --mode bolts --only 'motors cut,catch -X-Y' --tag _exp` on the cut of the day (the experiment files were not kept).")
         write_summary(R, srows, runinfo, os.path.join(OUT, "summary.md"))
         log("report written")
     if a.stage == "export":
