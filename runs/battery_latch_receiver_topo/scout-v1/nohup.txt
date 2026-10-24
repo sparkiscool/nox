@@ -1,0 +1,29 @@
+=== battery_receiver_scout: h 1.0, generated 10.0 cm3, min member 3.2 mm, cores 4
+battery_receiver_scout: grid (72, 56, 112) h 1.0 = 451,584 cells; design 70,290 (70.3 cm3), drawn 20,322, void 360,972
+  support default: 800 cells, 1584 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+battery_receiver_scout: grid (40, 32, 56) h 2.0 = 71,680 cells; design 10,126 (81.0 cm3), drawn 2,398, void 59,156
+  support default: 102 cells, 332 nodes
+  load hover 1 g: no cell centre in the region at h 2.0; using the 46 cells it intersects (3 x 3 x 3 samples per cell)
+  load flight 4 g + 2 g x: no cell centre in the region at h 2.0; using the 46 cells it intersects (3 x 3 x 3 samples per cell)
+  load catch 6 g: no cell centre in the region at h 2.0; using the 46 cells it intersects (3 x 3 x 3 samples per cell)
+  load crash 35 g -y: no cell centre in the region at h 2.0; using the 46 cells it intersects (3 x 3 x 3 samples per cell)
+  load crash corner (+x -y +z): no cell centre in the region at h 2.0; using the 46 cells it intersects (3 x 3 x 3 samples per cell)
+  load crash corner (-x -y -z): no cell centre in the region at h 2.0; using the 46 cells it intersects (3 x 3 x 3 samples per cell)
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (17.54 cm3); 1.65 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.141 of 10,332 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (4.4% of passive cells differ): no symmetry
+layout: 7 drawn bodies (2,192 cells), held solid in every realization; eroded filter: masked
+layout: 14 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (40, 32, 56) = 71,680 elements, 51,057 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1438 (dil 0.1717 g +0.020) grey 57.3% ch 0.100 worst tie b3 mx 2.01e+03 1.9s
+it   2 beta    1 J  12.0154 vol 0.1325 (dil 0.1582 g -0.060) grey 57.7% ch 0.100 worst crash 35 g +y 2.97e+03 2.2s
+it   3 beta    1 J   4.5036 vol 0.1344 (dil 0.1606 g -0.045) grey 53.2% ch 0.100 worst handling 50 N on a foot 895 2.1s
+it   4 beta    1 J  12.1308 vol 0.1314 (dil 0.1564 g -0.070) grey 54.9% ch 0.100 worst crash 35 g +y 2.97e+03 1.7s
+it   5 beta    1 J   3.8187 vol 0.1280 (dil 0.1527 g -0.093) grey 50.7% ch 0.100 worst tie b7 mx 729 1.9s
+it   6 beta    1 J  12.0542 vol 0.1281 (dil 0.1521 g -0.096) grey 52.2% ch 0.100 worst crash 35 g +y 2.97e+03 1.8s
+it   7 beta    1 J   4.9409 vol 0.1115 (dil 0.1330 g -0.210) grey 44.8% ch 0.100 worst handling 50 N on a foot 1.03e+03 1.6s
+it   8 beta    1 J   2.8290 vol 0.1227 (dil 0.1458 g -0.133) grey 50.2% ch 0.100 worst crash 35 g +z 681 1.9s
+it   9 beta    1 J   1.3587 vol 0.1323 (dil 0.1565 g -0.069) grey 52.7% ch 0.100 worst handling 50 N on a foot 263 2.2s
+it  10 beta    1 J   0.9805 vol 0.1378 (dil 0.1624 g -0.034) grey 53.3% ch 0.100 worst tie b2 fz 184 2.0s
