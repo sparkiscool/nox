@@ -10,7 +10,7 @@ import arm_layout as L
 import arm_v5_layout as V
 
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
-_KEYS = ("AXLE_BOLT_L", "RACK_TAIL", "Z0S", "RACK_TEETH_Y", "PIN_TEETH_Y", "PIN_BOSS_Y", "WEB_U", "RAIL_Y", "RAIL_R", "RAIL_STOP", "RIDGE_Y", "RAIL_CHAN", "RAIL_BOLTS", "RAIL_INSERTS", "WHEEL_Y", "NUT_Y", "TAIL_Y", "SPACER_Y",
+_KEYS = ("AXLE_BOLT_L", "RACK_TAIL", "WEB_U_B", "Z0S", "RACK_TEETH_Y", "PIN_TEETH_Y", "PIN_BOSS_Y", "WEB_U", "RAIL_Y", "RAIL_R", "RAIL_STOP", "RIDGE_Y", "RAIL_CHAN", "RAIL_BOLTS", "RAIL_INSERTS", "WHEEL_Y", "NUT_Y", "TAIL_Y", "SPACER_Y",
          "PLATE_Y", "ECC", "AXLE_KEEP", "ECC_KEEP", "WEB_Y", "POSTS_A", "POSTS_B", "POST_Y", "ALLOWED")
 V5 = {k: copy.deepcopy(getattr(V, k)) for k in _KEYS}
 STACK = "v5"
@@ -86,13 +86,18 @@ def tie_rod(h="A", side=1):
     return f(x, yh, rh), f(x, yr, rr)
 
 
+POST_V6 = []                           # overlays that build on v6 (arm_v7_layout registers its patch): re-applied after every use("v6")
+
+
 def use(stack="v6", dy=-20.0):
-    """patch arm_v5_layout in place: 'v5' restores the posts stack, 'v6' the compact one (rails on the plate)."""
+    """patch arm_v5_layout in place: 'v5' restores the posts stack, 'v6' the compact one (rails on the plate) plus any overlay in POST_V6."""
     global STACK
     vals = V5 if stack == "v5" else v6_values(dy)
     for k, val in vals.items():
         setattr(V, k, copy.deepcopy(val))
     STACK = stack
+    if stack == "v6" and dy == -20.0:
+        for f in POST_V6: f()
     return vals
 
 

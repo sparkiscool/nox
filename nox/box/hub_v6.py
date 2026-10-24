@@ -5,7 +5,7 @@ every number C unless tagged E:
     A (53.5, 55) 45.8 deg, B (-55, -53.5) -135.8 deg, axle (53.9, -43.7) -39 deg, axle seat slotted +-1 for the loop as before;
   - no posts (compact stack): 4 rail pads on the plate top (X +-16 x +-10 along the rail, Y 50..54) at r 40 / 78 on head A's and
     head B's axes, each with ONE M5 heat-set insert hole Ø6.4 x 7 at X 0 in a boss r 6.5 from Y 44 (the rail bolts down from its top);
-  - detent tower at detent.CHOSEN_V6 (roller -135, tower (21.2, -30.3); clears the v6 stack with ring v3 at 1.0, C);
+  - detent tower at detent.chosen(): v6 (21.2, -30.3), v7 (31.1, -31.1) (roller -135, ring v3; every gap 1.0, C);
   - the harness drop lane (arm_v5_layout.DROP, r 34 at 135 deg) goes through the plate: a Ø9 hole (C);
   - the hub v5 solid_check FAIL fixed in the design: the 1.0 lip (r 29..30, Y 53..54) is gone (web disc top at Y 53), the bore
     cavity gets a drawn roof (Y 47.5..50) and wall (r 33..43, Y 41..47.5) instead of the generated 0.3 films (box-arm Problem 9);
@@ -38,10 +38,10 @@ MOTORS6 = motors()
 
 # detent v5 placement: the mechanism worker's search result if it is on main, else the box-arm.md v5 candidate (DEFAULT)
 DET_CAND = dict(th=-45.0, s=-1, a=15.0, b=39.0, phi_d=45.0, psi=90.0, Q=(16.0, -38.0))
-DET6 = dict(DT.CHOSEN_V6)                     # roller -135 (arm v2), tower (21.2, -30.3) on the v6 stack with ring v2
+DET6 = dict(DT.CHOSEN_V6)                     # roller -135 (arm v2), tower (21.2, -30.3) on the v6 stack; v7: DT.chosen() (tower (31.1, -31.1))
 
 def detent6():
-    c = DET6
+    c = DT.chosen()
     D = DT.design(c["th"], c["s"], c["a"], c["b"], c["phi_d"], c["psi"])
     S = DT.arm_solids(D, np.array(c["Q"]))
     return D, S
@@ -76,6 +76,25 @@ def pads():
                 hole = cylY(-r, 0, L.Y_PLATE1 - INSERT["depth"], L.Y_PLATE1 + 1, INSERT["d"] / 2, 48)
             out.append((h, r, p, hole))
     return out
+
+TIE_BOSS_R = 5.0                    # boss round each Ø3.3 tie bore (1.85 + a 3.15 wall, the boss rule), from 3 behind the rod end to its 10 deep end
+
+
+def tie_sockets(heads=("A", "B")):
+    """v7 (arm_v7_layout active): the carbon tie rods' hub ends (arm_v6_layout.TIE, Y 22.5, r 78, X +-5 on each head's axis): a boss and a
+    Ø3.3 x 10 bore along each rod, and a 1.0 keep-out round the rest of the rod. Returns (bosses, cuts) or (None, None) without v7."""
+    import arm_v7_layout as S7
+    if not S7._DONE: return None, None
+    import arm_v6_cad as C6
+    T = S6.TIE; bosses = cuts = None
+    for h in heads:
+        for sd in (-1, 1):
+            p0, p1 = (np.asarray(p, float) for p in S6.tie_rod(h, sd)); d = (p1 - p0) / np.linalg.norm(p1 - p0)
+            b = C6.cyl_between(p0 - 3.0 * d, p0 + T["depth"] * d, TIE_BOSS_R, 32)
+            c = C6.cyl_between(p0 - 0.5 * d, p0 + T["depth"] * d, T["bore_d"] / 2, 24) + C6.cyl_between(p0 + T["depth"] * d, p1 + 2 * d, T["rod_d"] / 2 + 1.0, 24)
+            bosses = b if bosses is None else bosses + b; cuts = c if cuts is None else cuts + c
+    return bosses, cuts
+
 
 def hub_v6_parts():
     """(drawn, cuts, env, allowed, ...) in W (arm at phi 90). Same build as hub v5: bed at Y 7 (sleeve end), plate up."""
@@ -115,22 +134,23 @@ def hub_v6_parts():
         seat_cuts = c if seat_cuts is None else seat_cuts + c
     post_k = cylY(0, 0, 39.0, 56.0, L.POST_HOLE_R, 128) + cylY(0, 0, L.HUB_RECESS_Y, 80.0, L.HUB_RECESS_R, 128)
     D, S = detent6()
-    Q = DET6["Q"]
+    Q = DT.chosen()["Q"]
     tower = S["tower"] + cylY(Q[0], Q[1], L.Y_PLATE0, L.Y_PLATE1, 7.0, 48)      # + a plate pad under the column (joins the spoke)
     mov = S["arm"] + S["spacer"] + S["nut"] + S["roller"] + S["springs"][0] + S["springs"][1]
-    drawn = (sleeve + wall + roof + plate_c + seats + pst + tower) - post_k
+    ties, tie_cuts = tie_sockets()
+    drawn = (sleeve + wall + roof + plate_c + seats + pst + tower + (ties if ties is not None else mf.Manifold())) - post_k
     cav = cylY(0, 0, 39.9, ROOF_Y[0], CAV_R, 128) + cylY(0, 0, 39.9, SEAL_Y, SEAL_R, 128)
     rails = None                                                                 # the rails sit on the pads: keep the hub off them elsewhere
     for nm, poly, yy in V.rail_bodies("A") + V.rail_bodies("B"):
         m = prism(poly, *yy); rails = m if rails is None else rails + m
     drop = cylY(V.DROP["x"], V.DROP["z"], L.Y_PLATE0 - 6.0, L.Y_PLATE1 + 1, V.DROP["r"] + 0.5, 32)   # harness drop through the plate (box-wiring: Ø9, C)
-    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop
+    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop + (tie_cuts if tie_cuts is not None else mf.Manifold())
     env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
     env -= bore + cav + holes + drop
     env -= seat_cuts
     env0 = env - post_k                                                          # the generated region as given (topo organic finish)
-    env = (env + pst + plate_c + seats + tower + roof + wall) - post_k
-    return dict(drawn=drawn, cuts=cuts, env=env, env0=env0, allowed=env - cuts, pads=P, rails=rails, seat_cuts=seat_cuts, detent=(D, S), tower=tower)
+    env = (env + pst + plate_c + seats + tower + roof + wall + (ties if ties is not None else mf.Manifold())) - post_k
+    return dict(ties=ties, drawn=drawn, cuts=cuts, env=env, env0=env0, allowed=env - cuts, pads=P, rails=rails, seat_cuts=seat_cuts, detent=(D, S), tower=tower)
 
 # ------------------------------------------------------------------ v5 parts as solids (arm frame), for the checks
 def prism(poly, y0, y1):

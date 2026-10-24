@@ -248,6 +248,17 @@ CHOSEN_V5 = dict(th=-135, s=1, a=15.0, b=39.0, phi_d=-90.0, psi=315.0, Q=(18.5, 
 CHOSEN_V6 = dict(CHOSEN_V5, Q=(21.2, -30.3))   # arm v6 (24 Oct, swap arm system worker): CHOSEN_V5's levers and roller (arm v2), ring v2;
                                                 # tower re-placed (r 37 at -55 deg, the shortest webs with every gap >= 1.0 on the v6 stack: ring v2
                                                 # has no lower step, so v5's tower web sat 0.4 off it)
+CHOSEN_V7 = dict(CHOSEN_V5, Q=(31.11, -31.11))   # arm v7 (24 Oct, swap arm system worker): search(v5=True) on the v7 obstacles (R 113 strokes, head A's
+                                                # rack tail to u -63, head B's to -54): the same roller, levers and ring v3; the tower moves to r 44 at
+                                                # -45 deg (arm parts 1.0, tower 1.0, C). Springs x1.18 for the Overseer (bought, E)
+
+
+def chosen():
+    """the detent placement of the stack in use: v7 when arm_v7_layout is active, else v6."""
+    import arm_v7_layout as S7
+    return CHOSEN_V7 if S7._DONE else CHOSEN_V6
+
+
 SPRING_LS = 38.0               # working length seated (hook centres): 3.4 N; on the land 1.5 x ratio longer, kept <= 42
 
 

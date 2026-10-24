@@ -18,10 +18,21 @@ import os, sys, json, math, copy
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, ".."))
 import arm_v6_layout as S6
-S6.use("v6")
+STACK = os.environ.get("NOX_ARM", "v7")          # v7 (both packs, R 113; hub decisions 24 Oct) by default; NOX_ARM=v6 rebuilds the v6 results
+import arm_v7_layout as S7
+
+
+def use_stack(stack=None):
+    """apply a stack ('v5', 'v6' or 'v7'; None = STACK). v7 patches arm_layout's R and strokes once (see arm_v7_layout)."""
+    st = stack or STACK
+    if st == "v7": S7.use()
+    else: S6.use(st)
+
+
+use_stack()
 import arm_layout as L, arm_v5_layout as V, detent as DT, arm_cad as A_
 
-REPO = os.path.normpath(os.path.join(HERE, "..", "..")); OUT = os.path.join(REPO, "runs", "arm", "v6"); os.makedirs(OUT, exist_ok=True)
+REPO = os.path.normpath(os.path.join(HERE, "..", "..")); OUT = os.path.join(REPO, "runs", "arm", STACK if STACK in ("v6", "v7") else "v6"); os.makedirs(OUT, exist_ok=True)
 G = 9.81e-3                               # N per g (mass in g)
 
 # ================================================================== cartridges (envelopes, cartridge coords x_c, y_c up, z_c along the pack)
@@ -74,6 +85,10 @@ _BL = latch_module()
 if _BL is not None:
     for _p in ("scout", "overseer"):
         CART[_p] = cart_from_latch(_BL, _p)
+if STACK == "v7":                                # the XT60 at each cartridge's closed end (asked of the latch); the Overseer gripped on its drone's
+    for _p in ("scout", "overseer"):             # thrust axis, 30 toward its closed end from its swap CG (its body runs +Y; Spark B)
+        CART[_p]["xt60_z"] = S7.XT60_Z
+    CART["overseer"]["tab"] = round(CART["overseer"]["tab"] - S7.OV_GRIP_OFFSET, 2)
 
 # ================================================================== masses (g) and their CGs (arm frame / head frame)
 MASS = dict(hub=210.0, motor=400.0, rail=50.0, carriage=60.0, head=120.0, stub=47.7, sun_post=30.4, ring=5.0, det_arm=2.3)
@@ -227,7 +242,7 @@ def stress(e, fl):
 
 
 # ------------------------------------------------------------------ the assembled arm
-OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie=None, guided=None)   # guided: the head whose cartridge sits in a receiver's rails    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
+OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie="TIE" if STACK == "v7" else None, guided=None)   # guided: the head whose cartridge sits in a receiver's rails    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
                                                               # place, a carbon tie under each rail); rail_sec None = rail_section() of the stack in use
 TIE = dict(r_rail=S6.TIE["rail"][1], y_rail=S6.TIE["rail"][0], y_hub=S6.TIE["hub"][0], r_hub=S6.TIE["hub"][1], n=2, x=S6.TIE["x"])   # arm_v6_layout.TIE
 YC_RAIL = SEC["rail"]["yc"]               # rail section centroid Y
@@ -286,7 +301,7 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
         kv = np.abs(t_ax) * kb
         F.spring("axle loop" if axle == "belt" else "detent (driver off)", "ax20T", "ax20T g", (kv[0], 0, kv[2], 0, 0, 0), piece="loop")
     # detent tower on the hub (pivot / anchor loads)
-    Q = DT.CHOSEN_V6["Q"]; F.node("tower", (Q[0], 70.0, Q[1])); F.beam("tower", "H52", "tower", SEC["hub_arm"], piece="hub")
+    Q = DT.chosen()["Q"]; F.node("tower", (Q[0], 70.0, Q[1])); F.beam("tower", "H52", "tower", SEC["hub_arm"], piece="hub")
     F.mass["H32"] = MASS["hub"] + MASS["ring"] * 0 + MASS["det_arm"]
     info = dict(zA=zA, zB=zB, Y_C=Y_C, cart=cart, carry=carry, axle=axle, pads={}, wheels={}, rack={}, head_root={}, xt60={}, pack_seat={})
     for h, z0 in (("A", zA), ("B", zB)):
@@ -619,7 +634,7 @@ def summarise(Fr, info, u, ef, sf, reac, sep, h_push="A"):
 
 def pitch(stack="v6", Y_C=L.Y_C, opts=None, F=(F_XT60, F_PRELOAD)):
     """cartridge pitch (deg) and XT60 lag along the push (mm) under the insert at the drone, head A at the drone insert (E)."""
-    S6.use(stack)
+    use_stack(stack)
     try:
         Fr, info = build(max(V.Z0S), L.Z0_A_HOME, Y_C, "scout", ("A",), "belt", 90.0, opts)
         ld = {}; add(ld, "xt60 A", (0, 0, -F[0])); add(ld, "pack top A", (0, 0, -F[1]))
@@ -630,7 +645,7 @@ def pitch(stack="v6", Y_C=L.Y_C, opts=None, F=(F_XT60, F_PRELOAD)):
         ug, efg, sfg, _, frec = solve_gap(Fg, ig, ld)                       # the receiver with its 0.3 gaps
         return free + (round(float(-ug[Fg.idx["xt60 A"]][2]), 2), round(float(np.linalg.norm(frec[3:])) / 1e3, 2))
     finally:
-        S6.use("v6")
+        use_stack()
 
 
 def alternatives():
@@ -735,6 +750,21 @@ def options():
     return rows
 
 
+def options_v7():
+    """v7 alternatives with numbers (free pitch at the mate vs the float, seat state is in the frame): ties on / off for both packs at R 113,
+    and the two-radii alternative (Scout bays at R 100, Overseer at R 113): a carried Overseer passing a seated Scout bay."""
+    rows = []
+    for nm, o in (("v7 (ties, XT60 at the closed end)", dict(tie=TIE)), ("v7 without ties", dict(tie=None))):
+        r = dict(option=nm)
+        for cart in ("scout", "overseer"):
+            p, d = mate_pitch(cart, o); r[cart] = dict(pitch_deg=p, lag_mm=d, in_float=bool(p <= FLOAT_DEG))
+        rows.append(r)
+    ov = CART["overseer"]; corner = math.hypot(ov["x"], L.Z0_A_HOME + BOT_DZ + ov["h"])
+    rows.append(dict(option="two radii: Scout bays R 100, Overseer R 113", overseer_corner_r=round(corner, 1), scout_seated_face_limit=100.0 - 2.5,
+                     feasible=bool(corner <= 97.5), note="every cycle turns a carried Overseer past Scout bays (30..-30 or -180..-210): it would hit their seated packs"))
+    return rows
+
+
 def overseer_layout():
     """what carrying the Overseer cartridge (and 9 bays at 30 deg: Overseer -60..-150, Scout 30, 0, -30, -180, -210; Spark 24 Oct via the
     hub) asks of the arm at R_OV (C geometry, E loads)."""
@@ -780,14 +810,14 @@ def overseer_layout():
 def arm_extent(stack="v6", Y_C=L.Y_C, cart="scout"):
     """assembled arm (both heads, carried cartridges, motors, hub, stub) axis-aligned extents in the arm frame over the stroke, from the
     layout numbers (C): X / Z = the turning envelope (2 x the reach at the drone insert), Y = stub face 0 .. cartridge far end."""
-    S6.use(stack)
+    use_stack(stack)
     c = CART[cart]
     zmax = max(V.Z0S)
     reach = max(math.hypot(V.WHEEL_X, zmax + V.WHEELS[1][1] + V.WHEEL_OD / 2), math.hypot(V.PLATE_X[1], zmax + V.PLATE_U[1]),
                 math.hypot(c["x"], zmax + BOT_DZ + c["h"]), math.hypot(V.RIDGE_X, V.RAIL_R[1]))
     y1 = Y_C - c["tab"] + c["l"] + c["l_boss"]
     y0 = 0.0                                                     # stub spider face on the post (motor bodies from Y 2)
-    S6.use("v6")
+    use_stack()
     turn_d = 2 * reach
     return dict(stack=stack, Y_C=Y_C, reach_r=round(reach, 1), y=(y0, round(y1, 1)), length_y=round(y1 - y0, 1),
                 swept_cyl_L=round(math.pi * reach ** 2 * (y1 - y0) / 1e6, 2), bbox_L=round(turn_d ** 2 * (y1 - y0) / 1e6, 2),
@@ -818,7 +848,7 @@ def overseer():
                         short_mm=round(z["home"] - z_park_need, 1), ok=bool(z_park_need >= z["home"]),
                         note="carried at park its top corner crosses the seated packs' faces (R 100): the arm cannot turn with it")
     # axial: closed end vs the carriage hardware (v6 top 85.5 inside the cartridge footprint) and the bay module length
-    S6.use("v6")
+    use_stack()
     hw_top = max(V.AXLE_KEEP["y"][1] - 3.0, V.ECC["flange_y"][1] + 5.0)
     end0 = L.Y_C - c["tab"]; end1 = end0 + c["l"] + c["l_boss"]
     rows["axial"] = dict(Y_C=L.Y_C, cart_y=(end0, end1), hw_top_v6=hw_top, clear_v6=round(end0 - hw_top, 1),
@@ -853,10 +883,25 @@ def _bought_g(nm):
     return 5.0
 
 
-def pose_at(s, part):
-    """assembly 'moves' function: the part's world pose at swap-cycle time s (s, arm_kinematics v6 keys)."""
+ASM_MODE = "v7:scout:-210:30" if STACK == "v7" else "v6"     # the cycle the assembly file is posed through (arm_kinematics build mode)
+
+
+def kin_setup(mode=None):
+    """arm_kinematics parts and keys for a mode ('v6' or 'v7:<pack>:<pick>:<ret>')."""
     import arm_kinematics as K
-    if not K.PARTS_CACHE: K.KEYS = K._keys_v6(); K.build_parts("v6")
+    mode = mode or ASM_MODE
+    P = K.build_parts(mode)
+    if mode.startswith("v7"):
+        _, pk, pi, re_ = mode.split(":"); K.ZP = L.Z0_A_HOME; K.KEYS = K.keys_v7(float(pi), float(re_))
+    else:
+        K.KEYS = K._keys_v6()
+    return K, P
+
+
+def pose_at(s, part):
+    """assembly 'moves' function: the part's world pose at swap-cycle time s (s, arm_kinematics keys of ASM_MODE)."""
+    import arm_kinematics as K
+    if not K.PARTS_CACHE: kin_setup()
     T, carts, _ = K.transforms(float(s))
     nm = part["name"]
     if nm in T: return T[nm]
@@ -868,13 +913,13 @@ def pose_at(s, part):
 def write_assembly(t=0.0):
     """nox/box/box_swap_arm.assembly.json (this session owns it): every arm part in its pose at cycle time t (park), meshes exported
     once to runs/arm/v6/asm/ (W, decimated), the bay modules as one mesh posed 9 times, the carried cartridges (latch v1) as bought."""
-    import arm_kinematics as K, assembly as AS, trimesh
-    K.KEYS = K._keys_v6(); P = K.build_parts("v6")
+    import assembly as AS, trimesh
+    K, P = kin_setup()
     os.makedirs(ASM_DIR, exist_ok=True)
     T, carts, st = K.transforms(t)
     parts = []
     for nm, p in P.items():
-        if nm.startswith("bay") and nm != f"bay{K.demo_idx()}":
+        if STACK != "v7" and nm.startswith("bay") and nm != f"bay{K.demo_idx()}":
             k = int(nm[3:]); a = L.SCOUT_BAYS[k]
             parts.append(dict(name=nm, role="structure", mesh="models/box_baymod_v4i_W.obj", pose=K.rotY(90.0 - a).tolist(), material="PETG", tag="M",
                               owner="box bay modules", version="v4i", note="context (fixed)")); continue
@@ -897,11 +942,15 @@ def write_assembly(t=0.0):
                           moves="nox/box/swap_system.py:pose_at", note=own))
     carts = {"pack charged": None, "pack dead": None}
     contact = [[a, b, 1e9] for a, b in K.ALLOWED if a in P and b in P]
+    recs = sorted(nm for nm in P if nm.startswith("rec"))                   # bay to bay: the box structure's fit, reported apart (receivers 76 wide at 30 deg)
+    contact += [[a_, b_, 1e9] for i, a_ in enumerate(recs) for b_ in recs[i + 1:]]
     for cn in carts:
         for h in "AB": contact += [[cn, f"fingA_{h}", 1e9], [cn, f"fingB_{h}", 1e9]]
-        contact += [[cn, f"bay{K.demo_idx()}", 0.5]]
-    a = AS.new("box swap arm v6", "box", parts, note="the swap arm at cycle time t (park at t 0, phi -90); meshes runs/arm/v6/asm (W). Context: the 9 bay "
-               "modules (v4i, the demo bay as the latch receiver). Not in: stand, funnel, drone (their owners' files). Pose any state with a.at(**{name: t}) "
+        contact += ([[cn, f"bay{K.demo_idx()}", 0.5]] if f"bay{K.demo_idx()}" in P else []) + [[cn, nm, 0.5] for nm in P if nm.startswith("rec")]
+    ctx = ("the 9 bays at R 113 as latch receivers (Scout 30, 0, -30, -180, -210; Overseer -60..-150), a seated cartridge in each but the pick and "
+           "return bays; cycle " + ASM_MODE) if STACK == "v7" else "the 9 bay modules (v4i, the demo bay as the latch receiver)"
+    a = AS.new(f"box swap arm {STACK}", "box", parts, note=f"the swap arm at cycle time t (park at t 0); meshes {os.path.relpath(ASM_DIR, REPO)} (W). Context: {ctx}. "
+               "Not in: stand, funnel, drone (their owners' files). Pose any state with a.at(**{name: t}) "
                "(swap_system.pose_at). No cage (a ground station's arm): cage first and probes do not apply. The CG line includes the fixed parts (report only, "
                "cg_tol 1000): the arm's balance is the turning parts' unbalance about the axle, swap_system.run_checks.",
                cg_ref=[0.0, 0.0, 0.0], thrust_axis=[0.0, 1.0, 0.0], cg_tol_mm=1000.0, fit_tol_mm3=0.5, contact_pairs=contact, probes=False)
@@ -909,7 +958,7 @@ def write_assembly(t=0.0):
     return a
 
 
-DET_HOLD = 2 * 0.390                       # N.m, two springs (detent CHOSEN_V5 / V6, E)
+DET_HOLD = 2 * 0.390 * (S7.DETENT_SPRING_SCALE if STACK == "v7" else 1.0)   # N.m, two springs (detent CHOSEN_V5 / V6, E; v7 springs x1.18)
 DET_OTHER = 0.06 + 0.088                   # seals + the unpowered axle motor's cogging through the 4:1 (detent.disturbance, E)
 
 
@@ -917,7 +966,7 @@ def arm_only(a, t):
     """compact and balance of the turning arm alone (no bays, stub, post, bearings, 80T, ring): AABB, largest extent, hull volume, and the
     unbalance about the axle (g.m) of the turning parts + carried cartridges, vs the 10.1 g.m the detent was sized for (E)."""
     import arm_kinematics as K, trimesh
-    fixed = {nm for nm, p in K.PARTS_CACHE.items() if p.group == "fixed"} | {"stub_bolts"}
+    fixed = {nm for nm, p in K.PARTS_CACHE.items() if p.group == "fixed"} | {"stub_bolts"} | {nm for nm in K.PARTS_CACHE if nm.startswith("rec")}
     _, carts, _ = K.transforms(t)
     held = {cn for cn, (_, _, own) in carts.items() if own.startswith("head")}
     ms, mx, mz, M = [], 0.0, 0.0, 0.0
@@ -955,10 +1004,12 @@ def access_paths(t, heads=("A", "B")):
                 if (nm, sx, sz) in HV.SEAT_SKIP: continue
                 hx, hz = A_.rot_pt(M, sx * L.NEMA_HOLES / 2, sz * L.NEMA_HOLES / 2)
                 out.append(dict(name=f"M3 key, motor {nm} ({sx:+d}, {sz:+d})", part="hub", **{"from": w((hx, L.Y_PLATE1 + 1.0, hz))}, dir=[0, 1, 0],
-                                length_mm=100.0, tool=dict(type="cylinder", d=6.0), ignore=[f"motor_{nm}"]))
+                                length_mm=KEY_LEN_M3, tool=dict(type="cylinder", d=6.0), ignore=[f"motor_{nm}"]))
     return out
 
 
+KEY_LEN_M3 = 70.0 if STACK == "v7" else 100.0   # v7 (Y_C 138): the heads' servos start 74 above the plate over the motor screws: a 2.5 hex bit
+                                                 # on a 70 shaft (DEFAULT; heads v7 keep Y 55..125 free over each motor screw at the bay stroke)
 ACCESS_AT = dict(bay_pick=("A",), bay_return=("B",))   # head A is out at the bay pick (z0 84.6), head B at the bay return: their keys are free there
 
 
@@ -997,10 +1048,12 @@ def main(what="all"):
         for r in res["alternatives"]: print(r)
     if what in ("frame", "all"):
         res["frame"] = run_frame()
-        res["frame_overseer"] = run_frame(cart="overseer", verbose=False)
+        if STACK == "v7": res["frame_overseer"] = run_frame(cart="overseer", verbose=False)
     if what in ("options", "all"):
-        res["options"] = options(); res["overseer_layout"] = overseer_layout()
-        for r in res["options"]: print(r)
+        if STACK == "v7": res["options_v7"] = options_v7(); print(json.dumps(res["options_v7"], indent=1))
+        else: res["options"] = options()
+        res["overseer_layout"] = overseer_layout()
+        for r in res.get("options", []): print(r)
         print(json.dumps(res["overseer_layout"], indent=1, default=str))
     if what in ("overseer", "all"):
         res["overseer"] = overseer(); res["overseer"]["radius"] = overseer_radius(); print(json.dumps(res["overseer"], indent=1, default=str))

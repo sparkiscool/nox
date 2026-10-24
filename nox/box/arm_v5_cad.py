@@ -154,7 +154,8 @@ def carriage(h="A", rack_teeth=True):
     printed (plate + boss + wing + rack web) and bought (wheels shown printed, bearings, bolts, nuts, shims, bush)."""
     pl = box(*V.PLATE_X, *V.PLATE_Y, *V.PLATE_U) + cylY(V.ECC["x"], V.ECC["u"], *V.PLATE_Y, V.ECC["plate_boss_r"], 64)
     pl += box(*V.WING_X, *V.PLATE_Y, *V.WING_U)
-    web = box(*V.WEB_X, *V.WEB_Y, *V.WEB_U)
+    wu = getattr(V, "WEB_U_B", None) if h == "B" else None                 # v7: head B's shorter rack tail (B never inserts at the drone)
+    web = box(*V.WEB_X, *V.WEB_Y, *(wu or V.WEB_U))                         # the tooth phase stays A's (from V.WEB_U)
     if rack_teeth:                                                    # m1 rack along u on the web's +X face: tips 46.5, root 44.25
         p = math.pi * V.PIN_M; xt, xr = V.WEB_X[1], V.RACK_PITCH_X - 1.25 * V.PIN_M
         u = V.WEB_U[0] + p / 2

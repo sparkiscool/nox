@@ -1,0 +1,2 @@
+search {'T': 0.43, 'candidates': 480, 'tried': 21} 85 s
+best None
