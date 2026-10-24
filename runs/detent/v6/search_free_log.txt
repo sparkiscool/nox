@@ -1,0 +1,2 @@
+CHOSEN_V7 levers on v6 parts: {'hold_Nm': 1.194, 'hook_N': 10.9, 'roller_N': 28.3, 'hertz_MPa': 32.7, 'hertz_index': 0.48, 'contact_w': 4.0, 'arm_M_Nmm': 424.0, 'arm_MPa': 9.4, 'arm_index': 0.21}
+search_free {'tried': 120, 'best': {'hold_Nm': 1.065, 'th': -105, 's': 1, 'a': 13, 'br': 2.4, 'phi_d': 30, 'psi': 315, 'gap_arm': 1.0, 'gap_tower': 1.0, 'cost': np.float64(49.3), 'stresses': {'hook_N': 10.6, 'roller_N': 24.7, 'hertz_MPa': 30.6, 'hertz_index': 0.45, 'contact_w': 4.0, 'arm_M_Nmm': 332.0, 'arm_MPa': 7.4, 'arm_index': 0.16}, 'Q': [21.92, -28.56]}}

@@ -170,12 +170,14 @@ def layout(R=113.0, clip=False, bays=None):
     X_IN = math.ceil(max(ring_x, side) + BRACKET)
     FLOOR = math.floor(ring_zmin - CRADLE)
     Z_TOP = math.ceil(rim + 0.5)
-    Y_FRONT = math.ceil(max(front + FUNNEL_V8_GROW_Y + 1.0, float(rt.bounds[1, 1]) + BRACKET))
+    grow = 0.0 if in_w else FUNNEL_V8_GROW_Y                              # the W file is funnel v8 itself (catch PR 81): no allowance on top
+    Y_FRONT = math.ceil(max(front + grow + 1.0, float(rt.bounds[1, 1]) + BRACKET))
     Y_BACK = -66.0
-    assert back - FUNNEL_V8_GROW_Y > Y_BACK + 1.0, "funnel v8 reaches the rear sheet"
+    assert back - grow > Y_BACK + 1.0, "funnel v8 reaches the rear sheet"
     H = Z_TOP - FLOOR
     out = dict(R=R, clip=clip, bays=rows, neighbours=nb, catch=dict(rim_Z=round(rim, 1), front_Y=round(front, 1), back_Y=round(back, 1),
-                                                                     side_X=round(side, 1), seat_W_Z=round(T[2, 3], 1)),
+                                                                     side_X=round(side, 1), seat_W_Z=round(155.3 + T[2, 3] if in_w else T[2, 3], 1),
+                                                                     file="W, funnel v8 plain (catch PR 81)" if in_w else "seat frame, panels v7", v8_allowance_Y=grow),
                landings=[dict(p=np.round(p, 1).tolist(), n=np.round(n, 3).tolist()) for p, n in lands],
                ring=dict(max_abs_X=round(ring_x, 1), min_Z=round(ring_zmin, 1), Y=np.round(rt.bounds[:, 1], 1).tolist()),
                enclosure=dict(X_IN=X_IN, Y_BACK=Y_BACK, Y_FRONT=Y_FRONT, FLOOR=FLOOR, Z_TOP=Z_TOP,
@@ -277,10 +279,11 @@ def write_concept(od, out, P, env, R):
 
 
 def v8_lane_check(od):
-    """funnel v8 estimate (E, until the catch's v8 file lands): the catch moved FUNNEL_V8_GROW_Y along -Y (catch_W is one
-    connected body, so all of it moves; only its -Y face reaches the lanes), against both drone-insert keep-outs;
-    -> v8_lane_check.json."""
+    """the catch against both drone-insert keep-outs: as is once the catch file is funnel v8 (catch PR 81, M); with a v7 file
+    moved FUNNEL_V8_GROW_Y along -Y as the v8 estimate (E; catch_W is one connected body, so all of it moves, only its -Y
+    face reaches the lanes); -> v8_lane_check.json."""
     cat = trimesh.load(os.path.join(od, "catch_W.stl"), force="mesh")
+    shift = json.load(open(os.path.join(od, "layout.json")))["catch"]["v8_allowance_Y"]   # 0 once the catch file is v8 itself
     lanes = {k: trimesh.load(os.path.join(od, "parts", f), force="mesh") for k, f in (("carriage", "drone_30.stl"), ("grabber", "drone_31.stl"))}
     M = lambda t: mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
     out = {}
@@ -289,13 +292,13 @@ def v8_lane_check(od):
         for b in cat.split(only_watertight=False):
             if b.bounds[0][1] > Y_FUN - 45.0:                       # the -Y face only
                 continue
-            t = b.copy(); t.apply_translation([0, -FUNNEL_V8_GROW_Y, 0]); i = M(t) ^ M(L)
+            t = b.copy(); t.apply_translation([0, -shift, 0]); i = M(t) ^ M(L)
             if i.volume() > 0.5:
                 v = np.asarray(i.to_mesh().vert_properties)[:, :3]; r = np.hypot(v[:, 0], v[:, 2])
                 hits.append(dict(mm3=round(i.volume(), 1), x=[round(float(v[:, 0].min()), 1), round(float(v[:, 0].max()), 1)],
                                  y=[round(float(v[:, 1].min()), 1), round(float(v[:, 1].max()), 1)], r=[round(float(r.min()), 1), round(float(r.max()), 1)]))
         out[k] = dict(total_mm3=round(sum(h["mm3"] for h in hits), 1), hits=hits)
-    json.dump(dict(note="E: the catch's -Y face moved -Y by FUNNEL_V8_GROW_Y (funnel v8 plain, catch PR 81) vs the insert keep-outs", **out),
+    json.dump(dict(note=f"the catch's -Y side moved -Y by {shift} (0 = the v8 file as is, M; else the v7 file shifted, E) vs the insert keep-outs", **out),
               open(os.path.join(od, "v8_lane_check.json"), "w"), indent=1)
     return out
 

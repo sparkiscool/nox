@@ -156,7 +156,7 @@ svg polygon {{ stroke-width:.8; stroke-linejoin:round }}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=IBM+Plex+Mono&family=IBM+Plex+Sans:wght@400;500&display=swap">
 <main>
 <header><h1>Box structure v2: four layouts</h1>
-<p class="lede">Nine bays (4 Overseer, 5 Scout) on the swap arm's ring, grip line Y {Y_C:g}, each variant cut through its own concept meshes (to scale, mm, W frame). Bay bodies are design spaces for the topology run, not final shapes. A is the DEFAULT. The clash lists come from system_check; the catch's −Y panel notch (panel v9, hub) and funnel v8 clear the catch pairs.</p></header>
+<p class="lede">Nine bays (4 Overseer, 5 Scout) on the swap arm's ring, grip line Y {Y_C:g}, each variant cut through its own concept meshes (to scale, mm, W frame). Bay bodies are design spaces for the topology run, not final shapes. A is the DEFAULT. The clash lists come from system_check, with the catch's funnel v8 plain file as it is on main.</p></header>
 <ul class="legend">{legend}</ul>
 {"".join(cards)}
 </main>'''

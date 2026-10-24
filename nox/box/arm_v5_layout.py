@@ -64,6 +64,7 @@ MOTORS_V5 = {"A": dict(xc=PIN_X, zc=PIN_Z, rot=math.degrees(math.atan2(PIN_Z, PI
 # --- stroke (unchanged from v4) ---
 AXLE_BOLT_L = dict(fixed=25.0, ecc=25.0)   # M5 x 25 on every wheel (v5); arm_v6_layout sets the v6 stack's
 RACK_TAIL = None                            # v6: the rack tail stepped up (arm_v6_layout)
+WEB_U_B = None                              # v7: head B's rack web u range when it differs from A's (arm_v7_layout)
 DRONE_PUSH = 6.0                            # E (24 Oct, hook latch): the drone rises 2.1..5.7 (C) onto the plungers during the insert, so the insert runs up to 6 further
 SLOW_LAST, SLOW_V = 12.0, 20.0              # last 12 of every insert at <= 20 mm/s (E, XT60 mate at 2 A)
 Z0S = (L.Z0_A_HOME, L.Z0_B_WAIT, L.Z0_BAY + 1.5, L.Z0_BAY + 5.0, L.Z0_BAY + 5.0 + DRONE_PUSH)      # park 32, wait 81, bay 86.1, drone 89.6, drone insert 95.6
@@ -115,7 +116,12 @@ def head_bodies(h, z0):
     add("plate", rect(*PLATE_X, *PLATE_U), PLATE_Y)
     add("eccboss", circ(ECC["x"], ECC["u"], ECC["plate_boss_r"]), PLATE_Y)
     add("wing", rect(*WING_X, *WING_U), PLATE_Y)
-    add("web", rect(*WEB_X, *WEB_U), WEB_Y)
+    wu = WEB_U_B if (h == "B" and WEB_U_B) else WEB_U
+    if RACK_TAIL:                                   # v6: the tail below u_max has its teeth from y0 (over the axle loop)
+        add("web", rect(WEB_X[0], WEB_X[1], RACK_TAIL["u_max"], wu[1]), WEB_Y)
+        add("webtail", rect(WEB_X[0], WEB_X[1], wu[0], RACK_TAIL["u_max"]), (RACK_TAIL["y0"], WEB_Y[1]))
+    else:
+        add("web", rect(*WEB_X, *WEB_U), WEB_Y)
     for k, (x, u) in enumerate(WHEELS):
         add(f"wheel{k}", circ(x, u, WHEEL_OD / 2), WHEEL_Y)
         add(f"nut{k}", circ(x, u, NUT_R), NUT_Y)
@@ -128,7 +134,11 @@ def head_envelopes(h):
     env = []
     def add(nm, x0, x1, u0, u1, y): env.append((f"{h}:{nm}", to_arm(h, rect(x0, x1, u0 + z0s, u1 + z1s)), y))
     add("plate+wing", min(PLATE_X[0], ECC["x"] - ECC["plate_boss_r"]), WING_X[1], PLATE_U[0], PLATE_U[1], PLATE_Y)
-    add("web", *WEB_X, *WEB_U, WEB_Y)
+    wu = WEB_U_B if (h == "B" and WEB_U_B) else WEB_U
+    if RACK_TAIL:
+        add("web", WEB_X[0], WEB_X[1], RACK_TAIL["u_max"], wu[1], WEB_Y); add("webtail", WEB_X[0], WEB_X[1], wu[0], RACK_TAIL["u_max"], (RACK_TAIL["y0"], WEB_Y[1]))
+    else:
+        add("web", *WEB_X, *WEB_U, WEB_Y)
     add("wheels", -WHEEL_X - WHEEL_OD / 2, WHEEL_X + WHEEL_OD / 2, min(u for _, u in WHEELS) - WHEEL_OD / 2, max(u for _, u in WHEELS) + WHEEL_OD / 2, WHEEL_Y)
     add("nuts", -WHEEL_X - NUT_R, WHEEL_X + NUT_R, min(u for _, u in WHEELS) - NUT_R, max(u for _, u in WHEELS) + NUT_R, NUT_Y)
     add("tails", -WHEEL_X - TAIL_R, WHEEL_X + TAIL_R, min(u for _, u in WHEELS) - TAIL_R, max(u for _, u in WHEELS) + TAIL_R, TAIL_Y)
@@ -163,7 +173,7 @@ def fixed_bodies():
     return [("80T", circ(0, 0, P80_FL_R, 48), P80_Y), ("collar", circ(0, 0, COLLAR_R), COLLAR_Y), ("ring", circ(0, 0, RING_R, 48), RING_Y)]
 
 # pairs that touch by design (mesh / mount) are skipped
-ALLOWED = {("A:web", "pinionA"), ("B:web", "pinionB"), ("A:wheel0", "railA:ridges"), ("A:wheel1", "railA:ridges"), ("A:wheel2", "railA:ridges"),
+ALLOWED = {("A:web", "pinionA"), ("B:web", "pinionB"), ("A:webtail", "pinionA"), ("B:webtail", "pinionB"), ("A:wheel0", "railA:ridges"), ("A:wheel1", "railA:ridges"), ("A:wheel2", "railA:ridges"),
            ("B:wheel0", "railB:ridges"), ("B:wheel1", "railB:ridges"), ("B:wheel2", "railB:ridges"), ("railA:foot35", "postA"), ("railA:foot76", "postA"),
            ("railB:foot38.75", "postB"), ("railB:foot76", "postB"), ("loop", "80T"), ("ax20T", "loop"), ("collar", "ring")}
 

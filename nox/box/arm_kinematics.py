@@ -123,16 +123,26 @@ def build_parts_v5():
     return P
 
 
-def latch_cartridge_local(squeeze=0.0, pack="scout"):
+def latch_cartridge_local(squeeze=0.0, pack=None, grip_off=None):
     """the latch standard's cartridge (battery_latch.latch_assembly via swap_system's loader: cartridge, both sliders pulled in by
     `squeeze`, pack, XT60 plug) in cartridge_local's frame: X = -x, Y = Y_C + (z - z_T), Z = y (bottom at 0); a proper rotation."""
     import swap_system as SS
     BL = SS._BL
     if BL is None: return cartridge_local(squeeze)
+    pack = pack or CYCLE["pack"]; grip_off = CYCLE["grip_off"] if grip_off is None else grip_off
     b = BL.build(pack); g = b["g"]
     m = b["cart"] + BL.slider(g, squeeze, 1) + BL.slider(g, squeeze, -1) + BL.pack_body(g) + BL.xt60_female(g)
-    R = np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"]], [0, 1.0, 0, 0]])
-    return m.transform(R)
+    return m.transform(latch_rot(BL, g, grip_off))
+
+
+def latch_rot(BL, g, grip_off=0.0):
+    """cartridge coords -> cartridge_local: latch d0cd1a1 on (TAB_OFF) the XT60 end faces the arm (-Y): X = x, Y = Y_C + Z_T - z, Z = y
+    (the Overseer's 30 grip offset is in its Z_T); older latch: X = -x, Y = Y_C + (z - Z_T) + grip_off, Z = y. Proper rotations."""
+    if hasattr(BL, "TAB_OFF"): return np.array([[1.0, 0, 0, 0], [0, 0, -1.0, YC + g["Z_T"]], [0, 1.0, 0, 0]])
+    return np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"] + grip_off], [0, 1.0, 0, 0]])
+
+
+CYCLE = dict(pack="scout", grip_off=0.0, pick=None, ret=None)   # v7: the pack and the bays of the cycle being swept (None = DB)
 
 
 CART_LOCAL = cartridge_local                   # v6: latch_cartridge_local
@@ -166,7 +176,7 @@ def build_parts_v6():
         P[f"wheels{h}"] = Part(f"V-wheels {h} v1 x3", tm(Cc["wheels"]), f"head{h}", "#e67e22")
         P[f"axles{h}"] = Part(f"axle stacks {h} (M5, shims, nylocs)", tm(Cc["stack"]), f"head{h}", "#2c3e50", printed=False)
         P[f"bush{h}"] = Part(f"eccentric bush {h} v1", tm(Cc["bush"]), f"head{h}", "#e59866")
-    c = DT.CHOSEN_V6
+    c = DT.chosen()
     Dc = DT.design(c["th"], c["s"], c["a"], c["b"], c["phi_d"], c["psi"]); Sd = DT.arm_solids(Dc, np.array(c["Q"]))
     P["detent_ring"] = Part("detent ring v3", tm(DT.ring_v3(c["th"])), "fixed", "#3d5a80")
     P["detent_arm"] = Part("detent arm v2 + carbon roller axle + hook pin", tm(Sd["arm"] + Sd["nut"] + Sd["hook"]), "arm", "#e8914f")
@@ -183,19 +193,67 @@ def build_parts_v6():
     return P
 
 
-def latch_receiver_local(pack="scout"):
+def latch_receiver_local(pack="scout", grip_off=0.0, state="latched", with_pack=False):
     """the latch receiver set (seated cartridge coords) in cartridge_local's frame, bottom face of the seated cartridge at Z 0."""
     import swap_system as SS
     BL = SS._BL
     if BL is None: return None
-    d = BL.latch_assembly(pack, "latched"); g = BL.build(pack)["g"]
+    d = BL.latch_assembly(pack, state); g = BL.build(pack)["g"]
     m = d["receiver"] + d["receiver_lid"] + d["receiver_strips"] + d["xt60e1m"]
-    return m.transform(np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"]], [0, 1.0, 0, 0]]))
+    if with_pack: m = m + d["cartridge"] + d["slider_px"] + d["slider_nx"] + d["pack"] + d["xt60_plug"]
+    return m.transform(latch_rot(BL, g, grip_off))
+
+
+def build_parts_v7(pack="scout", pick=-210.0, ret=30.0):
+    """arm v7 (swap_system, hub decisions 24 Oct): the v6 parts on the v7 stack (arm_v7_layout: R 113, rails to r 151, rack tail u -63,
+    strokes +13), the cartridge of `pack` (the Overseer gripped 30 toward its closed end), and every one of the 9 bays at R 113 as its latch
+    receiver; every bay but the pick and return bays also holds a seated cartridge (what a turning arm must clear). v4i modules out."""
+    import arm_v7_layout as S7
+    S7.use()
+    global CART_LOCAL, YC
+    YC = L.Y_C                                                              # v7: the common grip Y_C (arm_v7_layout)
+    CYCLE.update(pack=pack, grip_off=S7.OV_GRIP_OFFSET if pack == "overseer" else 0.0, pick=pick, ret=ret)
+    P = build_parts_v6()
+    for nm in [n for n in P if n.startswith(("bay", "strip"))]: P.pop(nm)
+    CART_LOCAL = latch_cartridge_local
+    import arm_v7_cad as C7                                                # rails v3 (r 151, tie sockets) and the carbon tie rods
+    P["railA"] = Part("rail A v3", tm(C7.rail_v3("A")), "arm", "#95a5a6")
+    P["railB"] = Part("rail B v3", tm(A.mirror_x(C7.rail_v3("B"))), "armB", "#95a5a6")
+    P["tiesA"] = Part("carbon tie rods A (2 x 3.0)", tm(C7.tie_rods("A")), "arm", "#222222", printed=False)
+    P["tiesB"] = Part("carbon tie rods B (2 x 3.0)", tm(A.mirror_x(C7.tie_rods("B"))), "armB", "#222222", printed=False)
+    ALLOWED.update({("tiesA", "railA"), ("tiesB", "railB"), ("tiesA", "hub"), ("tiesB", "hub")})
+    for kind in ("scout", "overseer"):
+        go = S7.OV_GRIP_OFFSET if kind == "overseer" else 0.0
+        rec = latch_receiver_local(kind, go); full = latch_receiver_local(kind, go, with_pack=True)
+        for a in S7.BAYS[kind]:
+            T = (rotY(90.0 - a) @ trans(0, 0, L.R))[:3]
+            nm = f"rec{int(a)}"
+            seated = a not in (pick, ret)
+            P[nm] = Part(f"{kind} bay at {a:g} deg: latch receiver" + (" + a seated cartridge" if seated else ""), tm((full if seated else rec).transform(T)),
+                         "fixed", "#5b8ac9" if kind == "scout" else "#9955bb")
+    PARTS_CACHE.clear(); PARTS_CACHE.update(P)
+    return P
+
+
+def keys_v7(pick, ret, zbay=None, zdr=None, zdri=None, zw=None):
+    """the v5 swap cycle for any pick and return bay: A picks at phi = pick, B under the drone at phi 0, A inserts at phi 90, B returns the
+    dead pack at phi = ret - 90, home at phi = pick. Strokes from arm_layout (v7-patched)."""
+    zbay = zbay or L.Z0_BAY; zdr = zdr or L.Z0_DRONE; zw = zw or L.Z0_B_WAIT; zdri = zdri or (zdr + 6.0)
+    zs = zbay - 12.0; rb = ret - 90.0
+    return [(0.0, pick, ZP, ZP, 4, 4), (1.0, pick, ZP, ZP, -1, -1), (2.5, pick, zbay, ZP, -1, -1), (3.0, pick, zbay, ZP, 4, -1), (4.5, pick, ZP, ZP, 4, -1),
+            (5.5, 0.0, ZP, ZP, 4, -1), (6.5, 0.0, ZP, zw, 4, -1), (7.0, 0.0, ZP, zdr, 4, -1), (7.5, 0.0, ZP, zdr, 4, 4),
+            (9.0, 0.0, ZP, ZP, 4, 4), (10.0, 90.0, ZP, ZP, 4, 4), (10.9, 90.0, zdri - 12.0, ZP, 4, 4), (11.5, 90.0, zdri, ZP, 4, 4),
+            (12.0, 90.0, zdri, ZP, -1, 4), (13.5, 90.0, ZP, ZP, -1, 4), (14.0, 90.0, ZP, ZP, 4, 4), (17.0, rb, ZP, ZP, 4, 4),
+            (17.9, rb, ZP, zs, 4, 4), (18.5, rb, ZP, zbay, 4, 4), (19.0, rb, ZP, zbay, 4, -1), (20.5, rb, ZP, ZP, 4, -1), (21.0, rb, ZP, ZP, 4, 4),
+            (22.0, pick, ZP, ZP, 4, 4)]
 
 
 def build_parts(mode="all"):
     if mode == "v5": return build_parts_v5()
     if mode == "v6": return build_parts_v6()
+    if mode.startswith("v7"):                                               # v7:<pack>:<pick>:<ret>, e.g. v7:overseer:-150:-60
+        _, pk, pi, re_ = (mode.split(":") + ["scout", "-210", "30"])[:4]
+        return build_parts_v7(pk, float(pi), float(re_))
     P = {}
     hub_path = f"{OUT}/box_hub_v5.stl" if getattr(L, "HUB_DETENT", False) else f"{OUT}/box_hub_v4.stl"   # generated hub, W coords (arm_run_hub.py)
     P["hub"] = Part("hub", load_dec(hub_path) if os.path.exists(hub_path) else tm(A.hub_parts()["drawn"] - A.hub_parts()["cuts"]), "arm", "#7f8c8d")
@@ -360,7 +418,9 @@ def transforms(t):
         T[f"pinion_{h}"] = Th @ trans(sg * L.P_SH, L.Y_C, 0) @ trimesh.transformations.rotation_matrix(-sg * d / 6.0, [0, 0, 1])
     # cartridges: local = top position with the bottom at Z 0
     ch, de = pack_owner(t); carts = {}
-    def at_bay0(): return rotY(90.0 - DB) @ trans(0, 0, L.R)                       # the demo bay (-90; "bay0" = the pick / return bay)
+    def at_bay0(which="pick"):                                              # the pick / return bay (v5 / v6: the demo bay -90)
+        a = CYCLE.get(which) if CYCLE.get(which) is not None else DB
+        return rotY(90.0 - a) @ trans(0, 0, L.R)
     lift = 6.0 if (KEYS is not KEYS_V4 and t >= 11.5) else 0.0             # v5: the drone is held up on the hook-latch plungers after the insert (E)
     def at_drone(): return trans(0, 0, L.R + 5.0 + lift)  # the latched pack sits 5 above the bay seat (the head's over-travel)
     def in_head(h):
@@ -375,7 +435,7 @@ def transforms(t):
         return 0.0, None
     for nm, own in (("pack charged", ch), ("pack dead", de)):
         if own is None: continue
-        if own == "bay0": Tc = at_bay0(); sq, eh = engaged(Tc); carts[nm] = (Tc, sq, (eh or "bay0") + "@bay0")
+        if own == "bay0": Tc = at_bay0("pick" if nm == "pack charged" else "ret"); sq, eh = engaged(Tc); carts[nm] = (Tc, sq, (eh or "bay0") + "@bay0")
         elif own == "drone": Tc = at_drone(); sq, eh = engaged(Tc); carts[nm] = (Tc, sq, (eh or "drone") + "@drone")
         else:
             Tc, sq = in_head(own); carts[nm] = (Tc, sq, f"head{own}@head{own}")
@@ -413,6 +473,7 @@ for h in ("A", "B"):                                                     # v5: b
 
 def allowed(a, b, owners):
     if (a, b) in ALLOWED or (b, a) in ALLOWED: return True
+    if a.startswith("rec") and b.startswith("rec"): return True          # v7: bay to bay is the box structure's fit (reported apart), not the arm's
     for c, ownp in owners.items():                    # a pack may touch what holds it: "<holder>@<place>"
         if c in (a, b):
             o = b if a == c else a; own, place = ownp.split("@")
@@ -487,8 +548,9 @@ def sweep(dt=0.1, log=print, mode="all"):
                          clearance=round(dmin, 2), pair=list(dpair) if dpair else None, overlaps=overlaps, contacts=contacts))
         log(f"t {t:5.2f} phi {s['phi']:6.1f} zA {s['zA']:5.1f} zB {s['zB']:5.1f} clearance {dmin:6.2f} {dpair} overlaps {overlaps}")
     log(f"sweep {len(rows)} states in {time.time() - t0:.0f} s")
-    json.dump(rows, open(f"{OUT}/arm_sweep{'' if mode == 'all' else '_' + mode}.json", "w"))
-    json.dump(sorted([[a, b, d, t] for (a, b), (d, t) in PAIR_MIN.items()], key=lambda r: r[2]), open(f"{OUT}/arm_sweep_pairs{'' if mode == 'all' else '_' + mode}.json", "w"))
+    tag = '' if mode == 'all' else '_' + mode.replace(':', '_')
+    json.dump(rows, open(f"{OUT}/arm_sweep{tag}.json", "w"))
+    json.dump(sorted([[a, b, d, t] for (a, b), (d, t) in PAIR_MIN.items()], key=lambda r: r[2]), open(f"{OUT}/arm_sweep_pairs{tag}.json", "w"))
     return rows
 
 def gear_slots(width=6.0, y_lo=50.0, y_hi=80.0, step=1.0):
@@ -518,6 +580,10 @@ if __name__ == "__main__":
     MODE = sys.argv[2] if len(sys.argv) > 2 else "all"
     if MODE == "v5": KEYS = KEYS_V5
     if MODE == "v6": KEYS = _keys_v6()
+    if MODE.startswith("v7"):
+        import arm_v7_layout as S7; S7.use()
+        _, pk, pi, re_ = (MODE.split(":") + ["scout", "-210", "30"])[:4]
+        ZP = L.Z0_A_HOME; KEYS = keys_v7(float(pi), float(re_)); T_END = 22.0
     rows = sweep(dt, mode=MODE)
     worst = [r for r in rows if r["overlaps"]]
     print("states with overlaps:", len(worst), "min clearance", min(r["clearance"] for r in rows))
