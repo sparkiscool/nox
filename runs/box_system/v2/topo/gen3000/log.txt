@@ -64,3 +64,13 @@ it  47 beta    4 J   0.0321 vol 0.0840 (dil 0.1226 g -0.001) grey  2.3% ch 0.100
 it  48 beta    4 J   0.0316 vol 0.0846 (dil 0.1227 g -0.001) grey  2.0% ch 0.100 worst all bays: 60 N insert 8.08 1.7s
 it  49 beta    4 J   0.0313 vol 0.0850 (dil 0.1227 g -0.000) grey  1.7% ch 0.100 worst all bays: 60 N insert 7.99 1.9s
 it  50 beta    4 J   0.0311 vol 0.0852 (dil 0.1227 g -0.000) grey  1.6% ch 0.100 worst all bays: 60 N insert 7.93 1.9s
+it  51 beta    4 J   0.0310 vol 0.0854 (dil 0.1228 g +0.015) grey  1.6% ch 0.100 worst all bays: 60 N insert 7.87 1.9s
+it  52 beta    4 J   0.0336 vol 0.0830 (dil 0.1207 g -0.002) grey  2.6% ch 0.100 worst all bays: 60 N insert 8.42 1.9s
+it  53 beta    4 J   0.0322 vol 0.0836 (dil 0.1208 g -0.001) grey  1.8% ch 0.100 worst all bays: 60 N insert 8.16 1.8s
+it  54 beta    4 J   0.0318 vol 0.0839 (dil 0.1209 g -0.001) grey  1.6% ch 0.100 worst all bays: 60 N insert 8.08 1.8s
+it  55 beta    4 J   0.0316 vol 0.0841 (dil 0.1209 g -0.000) grey  1.5% ch 0.100 worst all bays: 60 N insert 8.03 1.8s
+it  56 beta    4 J   0.0314 vol 0.0841 (dil 0.1209 g +0.011) grey  1.4% ch 0.100 worst all bays: 60 N insert 7.99 1.8s
+it  57 beta    4 J   0.0338 vol 0.0822 (dil 0.1195 g -0.002) grey  2.5% ch 0.100 worst all bays: 60 N insert 8.47 1.8s
+it  58 beta    4 J   0.0326 vol 0.0825 (dil 0.1195 g -0.001) grey  1.8% ch 0.100 worst all bays: 60 N insert 8.26 1.9s
+it  59 beta    4 J   0.0321 vol 0.0828 (dil 0.1196 g -0.001) grey  1.6% ch 0.100 worst all bays: 60 N insert 8.16 1.9s
+it  60 beta    4 J   0.0318 vol 0.0831 (dil 0.1196 g -0.000) grey  1.3% ch 0.100 worst all bays: 60 N insert 8.1 1.9s
