@@ -378,7 +378,7 @@ def receiver(r, clip=None):
     R = R - U(*cuts) - cart_path(r) - end_relief(r)
     return R if clip is None else R ^ clip
 
-END_GAP = 0.15                     # end faces to the cartridge's ends: 0.15 with the guide posts (receiver v2; v1 had 0.3)
+END_GAP = 0.3                      # end faces to the cartridge's ends (v1; receiver v2: END_GAP2_BY)
 WINDOWS = "box"                    # side plate windows: "box" (open) or "truss" (a diagonal strut each, option B)
 STRUT = 6.0
 GUIDE = False                      # pitch guidance (hub ask 24 Oct, arm PR 79). DEFAULT off: the XT60E1-M's float carrier
@@ -399,15 +399,25 @@ END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 
 # XT60E1-M float pocket leaves the block for a replaceable XT60 carrier (base + cap) clamped by the two lead-end bolts.
 RECV_V = 2
 RECV_BUILD = "+y"                               # print deck down (FE: +z put the guide posts' pull across layers, 1.11)
-W2_BY = {"scout": 5.0, "overseer": 4.0}         # side wall = foot width (v1: 2.5 / 3.0 plates over 4.0 feet, windows)
+GUIDE2_BY = {"scout": False, "overseer": True}   # corner guide posts (pitch at the XT60's first contact). Scout off
+                                                # (DEFAULT): the collar planes clip its posts to a 13 mm lever, ~265 N a
+                                                # post at 3.5 N m every swap; its XT60 float (+-2.37 deg) takes the arm's
+                                                # 1.33 deg and the seat's couple goes to the stops and bolts (review 24 Oct)
+END_GAP2_BY = {"scout": 0.3, "overseer": 0.15}  # end faces to the cartridge's ends (0.15 with posts)
+W2_BY = {"scout": 5.0, "overseer": 5.0}         # side wall = foot width: 5.0 leaves 2.0 under the 3.0 lead-in capture (v1: 2.5 / 3.0 plates over 4.0 feet with a 1.0 tip, windows)
 DECK2_BY = {"scout": 3.0, "overseer": 3.0}
-END2_BY = {"scout": 5.5, "overseer": 4.0}       # end walls (+z print: the Overseer's 179.6 fits the 180 bed at 4.0)
+END2_BY = {"scout": 5.0, "overseer": 5.0}       # end walls: 5.0 keeps 2.3 of the lead-end wall past the carrier notch (deck-down print: the Overseer fits the 180 bed on its diagonal)
 RIB2 = 4.0                                      # cross ribs deck -> mount plane (tab line, closed end of the carrier)
 CARRIER_HZ = 10.0                               # carrier ears / cap half length in z (v1 lid +-10)
 FIT = 0.2                                       # carrier in its notch, per side
 GUSSET = 6.0                                    # lead-end window corner gussets
-WIN2_BY = {"scout": False, "overseer": False}   # side wall truss windows (mass), FE decides
+WIN2_BY = {"scout": False, "overseer": "truss"}  # side wall truss windows (mass; the Scout's bays are 12 long), FE decides
 STRUT2 = 8.0
+GUSSET2 = 0.0                                   # end-wall corner gussets where there are no posts (FE: 8.0 moved the
+                                                # across peak to the gusset tip, 1.31; off)
+TOP_GAP = 1.0                                   # body (but bosses) under the mount plane
+HEAD_Y = 14.0                                   # Scout bolt head seat (the collar clip leaves the columns from y ~13.5)
+HEAD_R = 3.2                                    # M3 socket head o 5.5 + 0.45 a side
 
 def rgeom2(g):
     r = rgeom(g)
@@ -415,7 +425,9 @@ def rgeom2(g):
     r["END_T"] = END2_BY[p]
     r["XW"] = g["RF"] + W2_BY[p]
     r["Y_DK1"] = r["Y_DK0"] + DECK2_BY[p]
-    r["Y_END0"] = r["FOOT_Y1"] + 1.0                         # guide posts always (v2)
+    r["GUIDE"] = GUIDE2_BY[p]
+    r["Z_E0"], r["Z_E1"] = -END_GAP2_BY[p], g["L_C"] + END_GAP2_BY[p]
+    r["Y_END0"] = r["FOOT_Y1"] + 1.0 if r["GUIDE"] else r["RAIL_Y0"]
     if p != "scout":
         r["BX"] = r["XW"] - BOSS_R
     zs_m = [r["Z_E0"] - r["END_T"] + BOSS_R, g["Z_X"]] + ([g["Z_T"]] if MID_MOUNT[p] else [])
@@ -432,8 +444,8 @@ def carrier_zone(r, fit=0.0):
 
 def receiver_v2(r, clip=None):
     """receiver latch block v2 (body): +x half drawn, mirrored; cartridge coords."""
-    rf, xw, zt, ym = r["RF"], r["XW"], r["Z_T"], r["Y_M"]
-    END_T = r["END_T"]
+    rf, xw, zt, ym = r["RF"], r["XW"], r["Z_T"], r["Y_M"] - TOP_GAP    # walls, end walls, ribs stop TOP_GAP under the
+    END_T = r["END_T"]                                                 # mount plane (the Scout's FC sits 0.1 under it)
     z0, z1 = r["Z_E0"] - END_T, r["Z_E1"] + END_T
     parts = []
     for s in (-1, 1):
@@ -448,6 +460,12 @@ def receiver_v2(r, clip=None):
         parts.append(prism_zy(pts, -xw, xw))
         yg = r["Y_END0"]                                                                                   # corner guide posts
         pg = [(zf + sg * CAP, yg), (zf + sg * END_T, yg), (zf + sg * END_T, ym), (zf, ym), (zf, yg + HCAP)]
+        if not r["GUIDE"]:                 # no posts: gussets in the end wall's bottom corners at the side walls (FE v2:
+            for s in (-1, 1) if GUSSET2 > 0 else ():   # the 43.5 N across case peaked in that re-entrant corner)
+                xg = s * rf
+                parts.append(hullp([[x, y, z] for (x, y) in ((xg, y0 - GUSSET2), (xg - s * GUSSET2, y0), (xg, y0))
+                                    for z in sorted((zf + sg * HCAP / 3.0, zf + sg * END_T))]))
+            continue
         if sg < 0:                         # closed end: the end wall runs full width down to the posts' bottom (FE v2:
             parts.append(prism_zy(pg, -xw, xw))     # the window corner carried 1.2 in the across case, deck-down print)
             continue
@@ -462,8 +480,12 @@ def receiver_v2(r, clip=None):
     parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, ym, zc, zc + RIB2))                                     # carrier rib
     zx = r["Z_X"]
     for (bx, bz) in r["MOUNT"]:
-        top = r["Y_DK0"] - FIT if abs(bz - zx) < 1e-6 else ym          # lead end: the carrier's ears sit on these
+        top = r["Y_DK0"] if abs(bz - zx) < 1e-6 else r["Y_M"]          # lead end: the carrier's ears sit on these
         bot = r["Y_DK1"] - INS_DEPTH - 2.0
+        if abs(bx) > rf:                   # Scout (bolts outboard, v1's 25.6): a full-height column beside the wall, the
+            parts.append(cyl("y", bx, bz, BOSS_R, Y_RB, top))           # head seated on a flat at HEAD_Y from below
+            parts.append(cyl("y", bx, bz, HEAD_R + 3.0, Y_RB, HEAD_Y + 3.0))   # 3.0 round the head counterbore
+                                           # (an access channel instead cut the wall's corner: across 0.96, FE v2)
         parts.append(cyl("y", bx, bz, BOSS_R, bot, top))
         parts.append(box(min(bx, np.sign(bx) * rf), max(bx, np.sign(bx) * rf), bot, min(top, r["Y_DK1"]), bz - 3, bz + 3))
     R = U(*parts)
@@ -474,7 +496,10 @@ def receiver_v2(r, clip=None):
         cuts.append(box(a0, a1, r["Y_DK0"] - 1, r["Y_DK0"] + STRIP_REC, r["Z_P0"] - 1, r["Z_P1"] - 1))   # strip recesses
     cuts.append(box(-8.5, 8.5, 0.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))                                # plug / male path
     for (bx, bz) in r["MOUNT"]:
-        cuts.append(cyl("y", bx, bz, BOLT_D / 2, -5.0, ym + 1))                                           # bolts from below
+        cuts.append(cyl("y", bx, bz, BOLT_D / 2, -5.0, r["Y_M"] + 1))                                     # bolts from below
+        if abs(bx) > rf:                   # head counterbore from below to a flat above the collar clip
+            cuts.append(cyl("y", bx, bz, HEAD_R, -5.0, HEAD_Y))
+    R = R - U(*cuts) - cart_path(r) - end_relief(r)
     if WIN2_BY[r["pack"]]:                       # lightening (DEFAULT where FE allows): truss windows in the side walls
         wy0, wy1 = r["FOOT_Y1"] + 1.0, r["RAIL_Y0"] - 2.0          # between the feet chord and the top band
         for (za, zb) in ((r["Z_E0"] + LEG_L_BY[r["pack"]], zt - r["PK_HZ"] - PK_WALL - 2),

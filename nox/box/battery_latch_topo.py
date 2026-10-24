@@ -211,16 +211,24 @@ def add_swap_cases(p, r, reg):
     p.load("swap insert 74 N on the stops", reg["stops"], (0, S["insert"], 0), cls="flight", support=sup)
     p.load("swap pull 57 N on the XT60 lips", reg["xt60_lips"], (0, -S["pull"], 0), cls="flight")
     p.load("swap pull 57 N on the bolts", reg["floors"], (0, -S["pull"], 0), cls="flight")
-    bands, arm = guide_bands(reg)
+    if r.get("GUIDE", True):           # guide posts: a z couple on the end faces (top band of one end, bottom of the other)
+        bands, arm = guide_bands(reg)
+        pieces = lambda M, b1, b0: [(band("end1", bands["end1"][b1]), (0, 0, M / arm)),
+                                    (band("end0", bands["end0"][b0]), (0, 0, -M / arm))]
+        senses = (("+", (1, 0)), ("-", (0, 1)))
+    else:                              # no posts: the seated cartridge's couple, one end's stops (+y) against the bolts (-y)
+        zt = r["Z_T"]
+        ends = {"end1": (r["Z_P1"] - 15.0, r["Z_P1"]), "end0": (r["Z_P0"], r["Z_P0"] + 15.0)}
+        st = {k: reg["stops"] ^ box(-400, 400, -400, 400, *v) for k, v in ends.items()}
+        lev = {k: abs(sum(v) / 2 - zt) for k, v in ends.items()}
+        arm = min(lev.values())
+        pieces = lambda M, k, _: [(st[k], (0, M / lev[k], 0)), (reg["floors"], (0, -M / lev[k], 0))]
+        senses = (("+", ("end1", None)), ("-", ("end0", None)))
     for nm, M, cls in (("swap guide 3.5 N m", S["guide"], "flight"), ("swap guide 6.1 N m", S["guide_misuse"], "misuse")):
-        F = M / arm
-        for sense, (b1, b0) in (("+", (1, 0)), ("-", (0, 1))):
-            p.load_multi(f"{nm} {sense}", [(band("end1", bands["end1"][b1]), (0, 0, F)),
-                                            (band("end0", bands["end0"][b0]), (0, 0, -F))], cls=cls)
-    F = S["guide"] / arm
-    p.load_multi("swap insert 74 N + guide 3.5 N m", [(reg["xt60_seat"], (0, S["insert"], 0)),
-                                                      (band("end1", bands["end1"][1]), (0, 0, F)),
-                                                      (band("end0", bands["end0"][0]), (0, 0, -F))], cls="flight", support=sup)
+        for sense, (b1, b0) in senses:
+            p.load_multi(f"{nm} {sense}", pieces(M, b1, b0), cls=cls)
+    p.load_multi("swap insert 74 N + guide 3.5 N m", [(reg["xt60_seat"], (0, S["insert"], 0))] + pieces(S["guide"], *senses[0][1]),
+                 cls="flight", support=sup)
     p.load("swap across 43.5 N +x", reg["feet+"], (S["across"], 0, 0), cls="flight")
     p.load("swap across 43.5 N -x", reg["feet-"], (-S["across"], 0, 0), cls="flight")
     zl = r["L_C"]
@@ -296,9 +304,12 @@ def fe_swap_v(pack, v, h=1.0, build="+z", log=print, fields=FIELD_CASES):
         return fe_swap(pack, B["recv_v1"] if B.get("recv_v1") is not None else B["recv"], B.get("r1", Q["r"]), h,
                        build=build, Q=dict(Q, r=B.get("r1", Q["r"])), log=log, fields=fields)
     r = Q["r"]
-    R = U(B["recv"], B["carrier"], B["lid"])
-    contact = box(-200, 200, r["Y_M"] - 1.5 * h, r["Y_M"] + 1.0, -200, 400)
-    return fe_swap(pack, R, r, h, build=build, contact=contact, Q=Q, log=log, seat_top=True, fields=fields)
+    R = U(B["recv"], B["lid"])                     # body + carrier base + cap, clamped by the bolts (fused here)
+    contact = box(-200, 200, r["Y_M"] - 1.5 * h, r["Y_M"] + 1.0, -200, 400)   # boss tops + cap (the rest is 1.0 under)
+    zx = r["Z_X"]                                  # the 74 N insert: the male's flange on the cap's ceiling
+    seat = box(-r["PKX_XW"], r["PKX_XW"], r["Y_PCEIL"] - 0.3, r["Y_PCEIL"] + 1.7, zx - r["PKX_ZW"], zx + r["PKX_ZW"]) ^ R
+    return fe_swap(pack, R, r, h, build=build, contact=contact, Q=Q, log=log, seat_top=True, fields=fields,
+                   over=dict(xt60_seat=seat))
 
 
 def setup_for(pack):
