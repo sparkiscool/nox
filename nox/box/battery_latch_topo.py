@@ -159,6 +159,148 @@ def add_cases(p, Q, h, reg=lambda m: m):
     return p
 
 
+# ---------------------------------------------------------------- swap load set (hub 24 Oct, from the arm: plug and unplug)
+SWAP = dict(insert=74.0,          # N, +y: 60 N XT60 mate, up to 74 N at head stall (the insert ends on stall detection)
+            pull=57.0,            # N, -y: 50 N XT60 unmate, 57 N with the grabber holding
+            guide=3500.0,         # N mm about x on the end guide faces (functional); misuse 6100 at the measured stub
+            guide_misuse=6100.0,
+            across=43.5,          # N, x, once the gaps close
+            centre=7.6, centre_M=1050.0)   # N and N mm (about y) from the lead-ins centring the cartridge (all E)
+
+
+def swap_regions(r, R, over=None):
+    """contact regions of the swap load set on a receiver mesh R (cartridge coords); `over` replaces any by name."""
+    rf, zx, xw = r["RF"], r["Z_X"], r["XW"]
+    big = 400.0
+    k = {}
+    k["xt60_seat"] = box(-r["PKX_XW"] - 2.0, r["PKX_XW"] + 2.0, r["LIP_Y0"] - 0.5, r["Y_XM"] + 0.5,
+                         zx - r["PKX_ZW"] - 2.0, zx + r["PKX_ZW"] + 2.0) ^ R
+    k["xt60_lips"] = k["xt60_seat"]
+    yb = r["PK_Y0"] - r["PK_D"] * math.tan(BL.UNDER)
+    k["floors"] = U(*[box(*sorted((s * rf, s * (rf + r["PK_D"] + 0.5))), yb - 1.5, r["PK_Y0"] + 0.3,
+                          r["Z_T"] - r["PK_HZ"], r["Z_T"] + r["PK_HZ"]) for s in (-1, 1)]) ^ R
+    k["stops"] = U(*[box(*sorted((s * (r["X_IN"] - 1.6), s * rf)), r["Y_DK0"] - 0.2, r["Y_DK0"] + BL.STRIP_REC + 1.5,
+                         r["Z_P0"], r["Z_P1"]) for s in (-1, 1)]) ^ R
+    for key, zf, sg in (("end1", r["Z_E1"], 1), ("end0", r["Z_E0"], -1)):
+        k[key] = box(-xw, xw, BL.Y_RB, r["Y_DK0"], *sorted((zf - sg * 0.2, zf + sg * 2.0))) ^ R
+    for key, s in (("feet+", 1), ("feet-", -1)):
+        k[key] = box(*sorted((s * rf, s * (rf + 2.0))), BL.Y_RB, r["FOOT_Y1"] + 0.5, -big, big) ^ R
+        k["lead" + key[-1]] = box(*sorted((s * rf, s * (rf + BL.CAP + 1.0))), BL.Y_RB, BL.Y_RB + BL.HCAP + 0.5, -big, big) ^ R
+    if over: k.update(over)
+    return k
+
+
+def guide_bands(reg):
+    """(bottom, top) y bands on each end face from its real extent; returns bands and the couple's lever (mm)."""
+    bands = {}
+    for key in ("end0", "end1"):
+        bb = reg[key].bounding_box()
+        y0, y1 = bb[1] + BL.HCAP, bb[4]
+        bands[key] = ((y0, y0 + 6.0), (y1 - 8.0, y1 - 1.0))
+    arm = min((bands[a][1][0] + bands[a][1][1]) / 2 - (bands[b][0][0] + bands[b][0][1]) / 2 for a, b in (("end1", "end0"), ("end0", "end1")))
+    return bands, arm
+
+
+def add_swap_cases(p, r, reg):
+    """the swap load set (SWAP) on Part p; every swap case is per-swap (cyclic): class flight (SF 4: in-layer allowable
+    10.8 MPa, across 5.4, = the ~10 MPa PETG fatigue limit), the 6.1 N m guide case misuse."""
+    S = SWAP
+    sup = "contact" if "contact" in p.supports else "default"
+    band = lambda key, b: reg[key] ^ box(-400, 400, b[0], b[1], -400, 400)
+    p.load("swap insert 74 N on the XT60 seat", reg["xt60_seat"], (0, S["insert"], 0), cls="flight", support=sup)
+    p.load("swap insert 74 N on the stops", reg["stops"], (0, S["insert"], 0), cls="flight", support=sup)
+    p.load("swap pull 57 N on the XT60 lips", reg["xt60_lips"], (0, -S["pull"], 0), cls="flight")
+    p.load("swap pull 57 N on the bolts", reg["floors"], (0, -S["pull"], 0), cls="flight")
+    bands, arm = guide_bands(reg)
+    for nm, M, cls in (("swap guide 3.5 N m", S["guide"], "flight"), ("swap guide 6.1 N m", S["guide_misuse"], "misuse")):
+        F = M / arm
+        for sense, (b1, b0) in (("+", (1, 0)), ("-", (0, 1))):
+            p.load_multi(f"{nm} {sense}", [(band("end1", bands["end1"][b1]), (0, 0, F)),
+                                            (band("end0", bands["end0"][b0]), (0, 0, -F))], cls=cls)
+    F = S["guide"] / arm
+    p.load_multi("swap insert 74 N + guide 3.5 N m", [(reg["xt60_seat"], (0, S["insert"], 0)),
+                                                      (band("end1", bands["end1"][1]), (0, 0, F)),
+                                                      (band("end0", bands["end0"][0]), (0, 0, -F))], cls="flight", support=sup)
+    p.load("swap across 43.5 N +x", reg["feet+"], (S["across"], 0, 0), cls="flight")
+    p.load("swap across 43.5 N -x", reg["feet-"], (-S["across"], 0, 0), cls="flight")
+    zl = r["L_C"]
+    Fc = S["centre_M"] / zl
+    lp = reg["lead+"]
+    lo, hi = lp ^ box(-400, 400, -400, 400, -400, zl * 0.25), lp ^ box(-400, 400, -400, 400, zl * 0.75, 400)
+    p.load_multi("swap centring 7.6 N + 1.05 N m", [(reg["lead+"], (S["centre"], 0, 0)), (hi, (Fc, 0, 0)), (lo, (-Fc, 0, 0))],
+                 cls="flight")
+    return arm
+
+
+def fe_swap(pack, R, r, h=1.0, build="+z", contact=None, over=None, Q=None, log=print, with_l=True, seat_top=False,
+            fields=()):
+    """as-built FE of a receiver mesh R on the L cases (add_cases) and the swap load set: worst index per case
+    (topo.build.strength; flight index x 10.8 = in-layer MPa) and the swap cases' deflection (max |u| over the loaded
+    nodes, mm). Supports: the boss seats ("default"); `contact` (the mount face bearing on the partner) for the +y cases."""
+    from types import SimpleNamespace as NS
+    from topo import Part
+    from topo.part import tm as ttm, voxelise
+    from topo.material import MATERIALS, AXES, stiffness
+    from topo.build import strength
+    from topo.fem import Solver
+    Q = Q or bodies(pack)
+    far = box(1e4, 1e4 + 1, 0, 1, 0, 1)
+    p = Part(f"battery_receiver_{pack}_fe", h, R, far, R, build=build, material="PETG", log=lambda s_: None)
+    ytop = lambda bz: r["Y_M"] if (seat_top or abs(bz - r["Z_X"]) > 1e-6) else r["Y_DK1"]
+    seats = U(*[cyl("y", bx, bz, BOSS_D / 2, ytop(bz) - 1.5 * h, ytop(bz) + 1.0) for (bx, bz) in r["MOUNT"]])
+    p.support("default", seats ^ R)
+    if contact is not None:
+        p.support("contact", contact ^ R)
+    if with_l:
+        add_cases(p, dict(Q, r=r), h, reg=lambda m: m ^ R)
+    n_l = len(p.cases)
+    reg = swap_regions(r, R, over)
+    arm = add_swap_cases(p, r, reg)
+    mat = MATERIALS["PETG"]; ax = AXES[build][0]
+    C = stiffness(mat, ax)
+    cases = [NS(name=c.name, F=c.F, cls=c.cls, support=c.support, nodes=c.nodes, tie=False, fe=None) for c in p.cases]
+    lay = NS(part=p, cases=cases, mat=mat, build_axis=ax, C=C, solid=p.solid)
+    import topo.build as TB
+    cap = {}
+    class _Keep(TB.Solver):                       # one solve: keep strength()'s displacements for the deflections
+        def solve(self, *a_, **k_):
+            cap["U"] = super().solve(*a_, **k_)
+            return cap["U"]
+    TB.Solver, keep = _Keep, TB.Solver
+    try:
+        st = strength(lay, ttm(R), log=log)
+    finally:
+        TB.Solver = keep
+    sw = p.cases[n_l:]
+    Uu = cap["U"][:, n_l:]                        # strength() solves every case of p, in order (none tied)
+    defl = {}
+    for q, c in enumerate(sw):
+        u = Uu[:, q].reshape(-1, 3)[c.nodes]
+        defl[c.name] = round(float(np.linalg.norm(u, axis=1).max()), 4)
+    rows = {x["case"]: max(x["inlayer"], x["across"]) for x in st["rows"]}
+    fld = {c.name: np.linalg.norm(Uu[:, q].reshape(-1, 3), axis=1).reshape(p.nshape).astype(np.float32)
+           for q, c in enumerate(sw) if c.name in fields}
+    return dict(worst=st["worst"], worst_case=st["worst_case"], worst_at=st["worst_at"], rows=rows,
+                rows_full=st["rows"], deflection_mm=defl, guide_lever_mm=round(arm, 1), build=build,
+                _fields=dict(u=fld, origin=np.asarray(p.origin), h=h, nshape=p.nshape))
+
+
+FIELD_CASES = ("swap insert 74 N + guide 3.5 N m", "swap across 43.5 N +x")
+
+def fe_swap_v(pack, v, h=1.0, build="+z", log=print, fields=FIELD_CASES):
+    """FE of the receiver v1 (alone, as before) or v2 (body + carrier + cap as one clamped stack, the mount face bearing on
+    the partner for the +y cases) on the L cases and the swap load set."""
+    Q = bodies(pack)
+    B = Q["B"]
+    if v == 1:
+        return fe_swap(pack, B["recv_v1"] if B.get("recv_v1") is not None else B["recv"], B.get("r1", Q["r"]), h,
+                       build=build, Q=dict(Q, r=B.get("r1", Q["r"])), log=log, fields=fields)
+    r = Q["r"]
+    R = U(B["recv"], B["carrier"], B["lid"])
+    contact = box(-200, 200, r["Y_M"] - 1.5 * h, r["Y_M"] + 1.0, -200, 400)
+    return fe_swap(pack, R, r, h, build=build, contact=contact, Q=Q, log=log, seat_top=True, fields=fields)
+
+
 def setup_for(pack):
     from topo import Part
 
@@ -196,7 +338,8 @@ def first_mode(pack, h=1.0, log=print):
     from topo.material import MATERIALS, AXES, stiffness
     from topo.fem import Solver
     from topo.part import voxelise, tm as ttm
-    Q = bodies(pack); g, r, D = Q["g"], Q["r"], Q["D"]; R = Q["B"]["recv"]
+    Q = bodies(pack); g, r, D = Q["g"], Q["r"], Q["D"]
+    R = U(Q["B"]["recv"], Q["B"]["lid"]) if Q["B"].get("carrier") is not None else Q["B"]["recv"]   # v2: + the clamped carrier
     far = box(1e4, 1e4 + 1, 0, 1, 0, 1)
     p = Part(f"battery_receiver_{pack}_v1_mode", h, R, far, R, build="+z", material="PETG", log=lambda s_: None)
     seats = U(*[cyl("y", bx, bz, BOSS_D / 2, (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) - 1.5 * h,
@@ -212,7 +355,7 @@ def first_mode(pack, h=1.0, log=print):
     p.load_multi("x", [(U(*[m for m in D["loc"] if m.bounding_box()[0] > 0]) ^ R, (0.5, 0, 0)),
                        (U(*[m for m in D["loc"] if m.bounding_box()[0] < 0]) ^ R, (0.5, 0, 0))])
     p.load("z", ends, (0, 0, 1.0))
-    mat = MATERIALS["PETG"]; C = stiffness(mat, AXES["+z"][0])
+    mat = MATERIALS["PETG"]; C = stiffness(mat, AXES[getattr(BL, "RECV_BUILD", "+z")][0])
     A = voxelise(ttm(R), *p.axes).ravel()
     sol = Solver(p.shape, p.h, C, p.supports, active=A | p.solid, backend="auto", log=lambda s_: None)
     F = np.stack([c.F for c in p.cases], 1)
@@ -239,11 +382,26 @@ def main():
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--fe-v1", action="store_true", help="as-built FE of the drawn receiver v1 on the same cases")
     ap.add_argument("--mode", action="store_true", help="first mode (Hz) of the seated swap mass on receiver v1")
+    ap.add_argument("--swap-v1", action="store_true", help="receiver v1 on the L cases + the swap load set (SWAP)")
+    ap.add_argument("--swap-v2", action="store_true", help="receiver v2 (body + XT60 carrier + cap, clamped) on the same")
+    ap.add_argument("--build", default="+z")
     ap.add_argument("--time", type=float, default=5.5 * 3600)
     a = ap.parse_args()
     if a.mode:
         import json
         print(json.dumps(first_mode(a.pack, a.h), indent=1))
+        return
+    if a.swap_v1 or a.swap_v2:
+        import json
+        v = 1 if a.swap_v1 else 2
+        res = fe_swap_v(a.pack, v, a.h, a.build)
+        F = res.pop("_fields")
+        d = os.path.join(ROOT, "runs", "battery_latch", "v2", "fe"); os.makedirs(d, exist_ok=True)
+        np.savez_compressed(os.path.join(d, f"field_{a.pack}_v{v}.npz"), origin=F["origin"], h=F["h"],
+                            **{k.replace(" ", "_"): u for k, u in F["u"].items()})
+        with open(os.path.join(d, f"fe_{a.pack}_receiver_v{v}.json"), "w") as f_:
+            json.dump(res, f_, indent=1, default=float)
+        print(json.dumps(res, indent=1, default=float))
         return
     if a.fe_v1:
         import json

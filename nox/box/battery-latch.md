@@ -10,6 +10,65 @@ Spark 24 Oct: "design the new latch system for all batteries so the grabber can 
 - **Wheel W** (dimensions I, arm v7 PR 79): X = x, Y = Y_C − (z − z_T), Z radial = R + y, R 113 for every seated face, common grip Y_C 165. Arm-side ends at Y_C 165: Scout Y 111.6 (set-screw boss) .. 207.6, Overseer Y 76.5..250.5.
 - **XT60 pitch (hub ask, arm PR 79):** the XT60E1-M floats ±2.37° in pitch (about the cartridge's x, the arm's slide-tangential axis: 0.5 axial play over its 12.1 flange depth; the PR 44 ±1.06° is roll, over the 27.1 width), so the arm's free mate (Scout 1.33 / Overseer 1.14° with RSS) fits without guidance: DEFAULT no guide posts. Option B (`GUIDE` in the script): corner guide posts with a 0.15 end gap, pitch at the XT60's first contact ±0.47 / ±0.38°; the Overseer then carries the arm's guide moment (3.5 / 6.1 N·m, index 0.49 / 0.54, +12 g, truss side windows), the Scout's collar-clipped posts cannot (0.85 / 0.97 at +19.5 g).
 
+## Receiver v2: durability (24 Oct)
+Spark (24 Oct, via the arm and the hub): "since now we need to unplug and plug in the battery we need to redesign the arm and the latches so they can handle the extra load" and "the latch system for the charging bays ... dosent seem to hold in repetitoon and seems to bend since its just thin plastic". This is receiver v2. The cartridge v5 and sliders v5 are unchanged.
+
+**Requirements (hub DEFAULT from the arm, E):**
+1. Loads on every swap: insert 60 N, ending at up to 74 N at head stall; pull 50 N (57 N with the grabber holding); pitch guide ≤ 3.5 N·m (6.1 N·m misuse); 43.5 N across; 7.6 N / 1.05 N·m centring.
+2. Life ≥ 5,000 cycles per bay and ≥ 10,000 at the drone.
+3. Cyclic stress ≤ ~10 MPa in every printed member at 74 N + 3.5 N·m. Printed walls ≥ 3 at loaded faces.
+4. Hold and spring from bought steel. Wear faces replaceable or metal-backed.
+5. Deflection ≤ 0.1 mm at 74 N.
+6. XT60 carrier replaceable if the XT60's life sets the service interval.
+7. A section of v2 beside v1 under the 74 N case.
+
+**Load set in the FE** (`battery_latch_topo.SWAP`, `add_swap_cases`). Every swap case is class flight, SF 4: allowables 10.8 MPa in-layer and 5.4 MPa across layers, which is the ~10 MPa fatigue line. The 6.1 N·m case is misuse.
+
+| Case | Load |
+|---|---|
+| 74 N insert | +y on the XT60 seat, or on the TPU stops |
+| 57 N pull | −y on the XT60 lips, or on the pocket floors (bolts in, a fault) |
+| Guide 3.5 / 6.1 N·m | z couple on the end faces: the top band of one end against the bottom band of the other, from each face's real extent |
+| 74 N + 3.5 N·m | both together |
+| 43.5 N across | x on one side's feet, both senses |
+| Centring | 7.6 N on one side's lead-ins + a 1.05 N·m yaw couple |
+
+Supports: the boss seats. For the +y cases (v2) the mount face bears on the partner.
+
+**v1 on that set (FE h 1.0, `--swap-v1`, M mesh, E loads):** guide 3.5 N·m index 3.59 (Scout) / 1.72 (Overseer); 43.5 N across 2.02 / 1.53, the feet move 5.3 / 4.4 mm; centring 1.09 / 0.81. Everything else ≤ 0.45. Spark's "bends" is the open frame: windowed 2.5 / 3.0 plates on 4.0 feet, and no guide faces below the rails.
+
+**Concepts weighed:**
+| | **A: closed channel + replaceable XT60 carrier (chosen)** | B: v1 frame stiffened | C: steel strike pins in the pockets | D: steel leaf / ball plungers in the receiver |
+|---|---|---|---|---|
+| How | Solid side walls from the feet to the mount plane (Scout 5.0, Overseer 4.0); full deck; end walls to the mount plane (closed end full width down to the guide posts' bottom, lead end posts + 6 gussets round the XT60 window); cross ribs at the tab line and the carrier. The XT60E1-M float pocket leaves the block: an XT60 carrier base (pull lips + ears) + cap (the v1 lid), clamped by the two lead-end M3 bolts. Printed deck down. | Plates 4.0 with truss windows, guide posts, pockets and XT60 pocket in the block, lid | A, plus a Ø3 dowel pin as each pocket floor | Hold in the receiver by bought springs, the cartridge sliders gone |
+| Steel in the hold | the pen spring (steel); bolts from below; XT60 pull goes lips → carrier → body boss (compression) → bolt head → partner insert | as v1 | pins on the bolt | leaf / plungers |
+| Wear parts | sliders (3 to 4 g), XT60 carrier + XT60E1-M + pigtail, TPU strips; the body (bolts from below) | the whole receiver | pins | springs |
+| Fails | heavier (below) | 43.5 N across at the feet (open bays); the XT60 not replaceable without the block | **no room**: the 30° lead-in sits 0.55 under the pocket floor at the mouth, so a pin breaks through the cam face unless the slider / grip numbers change (Spark's squeeze latch, locked 15 Oct) | changes the grabber interface; a ball plunger is a detent, not a lock, so it fails the crash hold |
+
+**Chosen: A (DEFAULT).** B is lighter but leaves the open bays that bend. C and D do not fit the locked latch.
+
+Wear on the printed pockets:
+- 1.4 MPa plane contact (18 x 2.3) at the 57 N fault pull.
+- At each swap a bolt cams in on the 30° foot at the pen spring's force (~0.7 N rest, ~15 N squeezed, E).
+- PETG on PETG wear over 10,000 cycles at that force is small (E). The first coupon checks it.
+- Sliders and the body are the replaceable wear parts (alternative: replaceable strike blocks at the tab line, +2 parts and +4 mm per side there, past the Overseer's 66.8).
+
+**XT60 life (requirement 6):**
+- Most Amass XT60 listings give 100 mating cycles (GB/T 5095.1). One Amass sheet gives 1,000, unconfirmed (E, CHECK the datasheet for the exact part).
+- Either way the XT60 sets the service interval, far under 5,000 / 10,000.
+- So the XT60 carrier with its XT60E1-M and a short pigtail (inline connector to the bay or drone harness) is a replaceable part in every bay and the drone. Replacing it: 6 M3 from below (cartridge out), receiver down, carrier swapped.
+- Alternative: a carrier fed from below (2 screws, the receiver stays up), which needs counterbored heads under the plug zone. Next version if the swap count calls for it.
+- The pack's own female XT60 sits in the cartridge (set screws) and ages with the pack.
+- A higher-cycle connector is the hub's / Spark's call.
+
+**v2 on the swap set (FE h 1.0, deck-down print, body + carrier + cap clamped, `--swap-v2`, M mesh, E loads):**
+- Scout, walls 5.0, end walls 5.5: worst 0.84 (43.5 N across: 9.1 MPa in-layer, 4.5 across layers), guide 3.5 N·m 0.65, 6.1 N·m 0.71, 74 N + 3.5 N·m 0.64, centring 0.35, every other case ≤ 0.10, crash ≤ 0.03.
+- Scout deflection: 74 N insert 0.012 mm (XT60 seat), 0.002 (stops); 57 N pull 0.014; guide 3.5 N·m 0.24 mm at the load band; 43.5 N across 0.48 mm.
+- The Scout's guide lever is 13.3 mm, not ~30: the collar planes clip its end posts (lead end from y 21, closed end from y 13), so each post carries ~265 N at 3.5 N·m. Its 0.24 mm costs ~0.6° of guidance, inside the float's ±2.37°.
+- Pitch at the XT60's first contact (end gap 0.15): Scout ±0.47° (C).
+- Print orientation was set by FE. Closed-end face down (+z, as v1) put the posts' z pull across layers: guide 1.11. Deck down: 0.65. Deck-down first put the 43.5 N across case on the open end wall's window corner (1.20); so the closed end runs full width and the lead end got gussets (0.84 with the 5.0 walls).
+- Overseer: (FE running).
+
 ## Concept check (24 Oct, before the piece runs)
 Requirements (the brief): hold every L case for both packs; XT60 mates on insert (60 N) and unmates on pull (50 N) on the install axis, XT60E1-M float carrier on the receiver; latched state readable; a half-in pack never reads or stays latched; engages by the insert stroke alone, the grip releases it, releasing the grip locks it; the same grip interface on both packs; no more complex than the v2 squeeze latch; Scout receiver + cartridge ≥ 7.0 inside the collar planes below z 20 with the keel nodes free; pack CG on the thrust axis; breaks after the cage.
 

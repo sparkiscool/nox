@@ -76,6 +76,99 @@ def assembly(pack, state, drop=0.0, skip=()):
             for k, m in A.items() if k not in skip and not m.is_empty()]
 
 
+def side(ax, m, x, c, a=1.0):
+    """section of m at plane x (draws z horizontal, y up)."""
+    t = BL.tm(m)
+    p = t.section(plane_origin=[x, 0, 0], plane_normal=[1, 0, 0])
+    if p is None: return
+    for poly in p.discrete:
+        ax.add_patch(Polygon(poly[:, [2, 1]], closed=True, fc=c, ec="none", alpha=a))
+
+
+def compare(out=None):
+    """receiver v1 vs v2 (body + XT60 carrier + cap), both packs: tab-line section and the wall's side section."""
+    fig, axs = plt.subplots(4, 2, figsize=(13, 15), dpi=120, gridspec_kw=dict(width_ratios=[1, 2.2]))
+    for i, pack in enumerate(("scout", "overseer")):
+        B = BL.build(pack); g = B["g"]; zt = g["Z_T"] + 6.0      # beside the tab-line bolt, through the pockets
+        for j, (lab, R, lid_) in enumerate((("v1", B["recv_v1"], BL.lid(B["r1"])), ("v2", B["recv"], B["lid"]))):
+            ax = axs[2 * i + j, 0]
+            draw(ax, BL.pack_body(g), zt, COL["pack"]); draw(ax, B["cart"], zt, COL["cartridge"])
+            draw(ax, R, zt, COL["receiver"])
+            for sg in (1, -1): draw(ax, BL.slider(g, 0.0, sg), zt, COL["slider"])
+            ax.set_aspect("equal"); ax.set_xlim(-42, 42); ax.set_ylim(-4, B["r"]["Y_M"] + 4)
+            ax.set_title(f"{pack} receiver {lab}: section at the tab line + 6", fontsize=9); ax.tick_params(labelsize=7)
+            ax = axs[2 * i + j, 1]
+            xs = B["r"]["RF"] + 1.5
+            side(ax, BL.pack_body(g), 0.0, COL["pack"], 0.35); side(ax, B["cart"], xs - 3.0, COL["cartridge"], 0.5)
+            side(ax, R, xs, COL["receiver"]); side(ax, lid_, 0.0, COL["lid"])
+            if lab == "v2": side(ax, B["carrier"], 0.0, COL["xt60"])
+            ax.set_aspect("equal"); ax.set_xlim(-12, g["L_C"] + 12); ax.set_ylim(-4, B["r"]["Y_M"] + 4)
+            ax.set_title(f"{pack} receiver {lab}: side section through the wall (x {xs:.1f}); carrier and cap at x 0",
+                         fontsize=9)
+            ax.set_xlabel("z (mm), closed end left, XT60 end right", fontsize=7); ax.tick_params(labelsize=7)
+    fig.tight_layout(); fig.savefig(out or os.path.join(OUT, "compare_v1_v2.png")); plt.close(fig)
+
+
+def _clip_image(ax, img, extent, polys, vmax, cmap="viridis"):
+    from matplotlib.path import Path
+    from matplotlib.patches import PathPatch
+    verts, codes = [], []
+    for p in polys:
+        if len(p) < 3: continue
+        verts += list(p) + [p[0]]; codes += [Path.MOVETO] + [Path.LINETO] * (len(p) - 1) + [Path.CLOSEPOLY]
+    if not verts: return None
+    patch = PathPatch(Path(verts, codes), fc="none", ec="#222", lw=0.4)
+    ax.add_patch(patch)
+    im = ax.imshow(img, origin="lower", extent=extent, cmap=cmap, vmin=0, vmax=vmax, interpolation="bilinear")
+    im.set_clip_path(patch)
+    return im
+
+
+def fe_sections(case="swap insert 74 N + guide 3.5 N m", out=None):
+    """|u| (mm) of receiver v1 and v2 under one swap case (battery_latch_topo --swap-v1 / --swap-v2 saved the node fields
+    in runs/battery_latch/v2/fe/), on the tab-line section and the side section through the wall, same colour scale."""
+    import trimesh as T_
+    d = os.path.join(BL.OUT, "fe")
+    key = case.replace(" ", "_")
+    fig, axs = plt.subplots(4, 2, figsize=(13, 15), dpi=120, gridspec_kw=dict(width_ratios=[1, 2.2]))
+    for i, pack in enumerate(("scout", "overseer")):
+        if not all(os.path.exists(os.path.join(d, f"field_{pack}_v{v}.npz")) for v in (1, 2)):
+            continue
+        B = BL.build(pack); g = B["g"]
+        F = {v: np.load(os.path.join(d, f"field_{pack}_v{v}.npz")) for v in (1, 2)}
+        meshes = {1: B["recv_v1"] + BL.lid(B["r1"]), 2: BL.U(B["recv"], B["lid"])}
+        sl = {}
+        for v in (1, 2):
+            o, h = F[v]["origin"], float(F[v]["h"]); u = F[v][key]
+            zt = g["Z_T"] + 6.0; xs = B["r"]["RF"] + 1.5
+            kz = int(round((zt - o[2]) / h)); kx = int(round((xs - o[0]) / h))
+            n = u.shape
+            sl[v] = dict(xy=(u[:, :, kz].T, [o[0], o[0] + (n[0] - 1) * h, o[1], o[1] + (n[1] - 1) * h]),
+                         zy=(u[kx, :, :], [o[2], o[2] + (n[2] - 1) * h, o[1], o[1] + (n[1] - 1) * h]), zt=zt, xs=xs)
+        # colour scale: the 95th percentile of |u| inside the material on both versions' sections
+        vals = [np.percentile(sl[v][k][0][sl[v][k][0] > 0], 99) for v in (1, 2) for k in ("xy", "zy")]
+        vmax = float(max(vals))
+        for j, v in enumerate((1, 2)):
+            t = BL.tm(meshes[v])
+            ax = axs[2 * i + j, 0]
+            sec = t.section(plane_origin=[0, 0, sl[v]["zt"]], plane_normal=[0, 0, 1])
+            polys = [p[:, :2] for p in sec.discrete] if sec is not None else []
+            im = _clip_image(ax, *sl[v]["xy"], polys, vmax)
+            draw(ax, B["cart"], sl[v]["zt"], COL["cartridge"], 0.25)
+            ax.set_aspect("equal"); ax.set_xlim(-42, 42); ax.set_ylim(-4, B["r"]["Y_M"] + 4); ax.tick_params(labelsize=7)
+            ax.set_title(f"{pack} receiver v{v}: |u| at the tab line + 6", fontsize=9)
+            ax = axs[2 * i + j, 1]
+            sec = t.section(plane_origin=[sl[v]["xs"], 0, 0], plane_normal=[1, 0, 0])
+            polys = [p[:, [2, 1]] for p in sec.discrete] if sec is not None else []
+            im = _clip_image(ax, *sl[v]["zy"], polys, vmax)
+            ax.set_aspect("equal"); ax.set_xlim(-12, g["L_C"] + 12); ax.set_ylim(-4, B["r"]["Y_M"] + 4); ax.tick_params(labelsize=7)
+            ax.set_title(f"{pack} receiver v{v}: |u| through the wall (x {sl[v]['xs']:.1f}), {case}", fontsize=9)
+            if im is not None:
+                cb = fig.colorbar(im, ax=ax, fraction=0.025, pad=0.01); cb.set_label("|u| mm (E loads)", fontsize=7)
+                cb.ax.tick_params(labelsize=6)
+    fig.tight_layout(); fig.savefig(out or os.path.join(OUT, f"fe_{key}.png")); plt.close(fig)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     fig, axs = plt.subplots(2, 3, figsize=(14, 8.4), dpi=130)
@@ -123,6 +216,7 @@ def main():
         ax.tick_params(labelsize=7)
     axs[0].set_title("Scout: collar planes (black), 7.0 inside (red), keel nodes (green)", fontsize=9)
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "scout_collar.png")); plt.close(fig)
+    compare()
     print("figures in", OUT)
 
 

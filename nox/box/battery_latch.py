@@ -22,7 +22,7 @@ import numpy as np, trimesh, manifold3d as mf
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path[:0] = [os.path.join(ROOT, "nox")]
-OUT = os.path.join(ROOT, "runs", "battery_latch", "v1")
+OUT = os.path.join(ROOT, "runs", "battery_latch", "v2")         # v1: the first set (receiver v1), kept
 
 
 # ======================================================================== helpers (scout_bottom.py style)
@@ -378,7 +378,7 @@ def receiver(r, clip=None):
     R = R - U(*cuts) - cart_path(r) - end_relief(r)
     return R if clip is None else R ^ clip
 
-END_GAP = 0.3                      # end faces to the cartridge's ends; option B (GUIDE) uses 0.15 (both print along Z)
+END_GAP = 0.15                     # end faces to the cartridge's ends: 0.15 with the guide posts (receiver v2; v1 had 0.3)
 WINDOWS = "box"                    # side plate windows: "box" (open) or "truss" (a diagonal strut each, option B)
 STRUT = 6.0
 GUIDE = False                      # pitch guidance (hub ask 24 Oct, arm PR 79). DEFAULT off: the XT60E1-M's float carrier
@@ -390,6 +390,121 @@ GUIDE = False                      # pitch guidance (hub ask 24 Oct, arm PR 79).
 END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 1: the cartridge's end bears at its corners
                                    # (its side walls), so a +-z crash goes into the side frames, not the deck beside the
                                    # XT60 pocket (FE v1: Overseer +z 1.56 -> see result.json)
+
+# ======================================================================== receiver latch block v2 (24 Oct: Spark "the latch
+# for the charging bays ... dosent seem to hold in repetition and seems to bend since its just thin plastic"; the swap load
+# set: 74 N stall insert, 57 N pull, 3.5 N m pitch guide, 43.5 N across, battery_latch_topo.SWAP). v1 failed it (guide
+# index 3.6 / 1.7, 43.5 N across bent the feet 5.4 / 4.4 mm). v2 = a closed channel: solid side walls from the feet to the
+# mount plane (no windows), a full deck, end walls to the mount plane with corner guide posts (GUIDE), cross ribs; the
+# XT60E1-M float pocket leaves the block for a replaceable XT60 carrier (base + cap) clamped by the two lead-end bolts.
+RECV_V = 2
+RECV_BUILD = "+y"                               # print deck down (FE: +z put the guide posts' pull across layers, 1.11)
+W2_BY = {"scout": 5.0, "overseer": 4.0}         # side wall = foot width (v1: 2.5 / 3.0 plates over 4.0 feet, windows)
+DECK2_BY = {"scout": 3.0, "overseer": 3.0}
+END2_BY = {"scout": 5.5, "overseer": 4.0}       # end walls (+z print: the Overseer's 179.6 fits the 180 bed at 4.0)
+RIB2 = 4.0                                      # cross ribs deck -> mount plane (tab line, closed end of the carrier)
+CARRIER_HZ = 10.0                               # carrier ears / cap half length in z (v1 lid +-10)
+FIT = 0.2                                       # carrier in its notch, per side
+GUSSET = 6.0                                    # lead-end window corner gussets
+WIN2_BY = {"scout": False, "overseer": False}   # side wall truss windows (mass), FE decides
+STRUT2 = 8.0
+
+def rgeom2(g):
+    r = rgeom(g)
+    p = g["pack"]
+    r["END_T"] = END2_BY[p]
+    r["XW"] = g["RF"] + W2_BY[p]
+    r["Y_DK1"] = r["Y_DK0"] + DECK2_BY[p]
+    r["Y_END0"] = r["FOOT_Y1"] + 1.0                         # guide posts always (v2)
+    if p != "scout":
+        r["BX"] = r["XW"] - BOSS_R
+    zs_m = [r["Z_E0"] - r["END_T"] + BOSS_R, g["Z_X"]] + ([g["Z_T"]] if MID_MOUNT[p] else [])
+    r["MOUNT"] = [(sx * r["BX"], z) for sx in (-1, 1) for z in zs_m]
+    return r
+
+def carrier_zone(r, fit=0.0):
+    """the XT60 carrier's envelope (base + cap), cartridge coords; fit grows it (the body's notch)."""
+    zx, bx = r["Z_X"], r["BX"]
+    px, pz = r["PKX_XW"] + 2.0 + fit, r["PKX_ZW"] + 2.0 + fit
+    ex = bx + BOSS_R + fit
+    return U(box(-px, px, r["LIP_Y0"] - fit, r["Y_M"] + 1.0, zx - pz, zx + pz),
+             box(-ex, ex, r["Y_DK0"] - fit, r["Y_M"] + 1.0, zx - CARRIER_HZ - fit, zx + CARRIER_HZ + fit))
+
+def receiver_v2(r, clip=None):
+    """receiver latch block v2 (body): +x half drawn, mirrored; cartridge coords."""
+    rf, xw, zt, ym = r["RF"], r["XW"], r["Z_T"], r["Y_M"]
+    END_T = r["END_T"]
+    z0, z1 = r["Z_E0"] - END_T, r["Z_E1"] + END_T
+    parts = []
+    for s in (-1, 1):
+        def X(a, b): return sorted((s * a, s * b))
+        a0, a1 = X(rf, xw); parts.append(box(a0, a1, Y_RB, ym, z0, z1))                                  # side wall
+        a0, a1 = X(rf, rf + r["PK_D"] + PK_WALL)                                                          # pocket block
+        parts.append(box(a0, a1, Y_RB, r["PK_Y1"] + PK_WALL, zt - r["PK_HZ"] - PK_WALL, zt + r["PK_HZ"] + PK_WALL))
+    parts.append(box(-xw, xw, r["Y_DK0"], r["Y_DK1"], z0, z1))                                             # deck
+    for zf, sg in ((r["Z_E0"], -1), (r["Z_E1"], 1)):                                                      # end walls
+        y0 = r["RAIL_Y0"]
+        pts = [(zf + sg * CAP, y0), (zf + sg * END_T, y0), (zf + sg * END_T, ym), (zf, ym), (zf, y0 + HCAP)]
+        parts.append(prism_zy(pts, -xw, xw))
+        yg = r["Y_END0"]                                                                                   # corner guide posts
+        pg = [(zf + sg * CAP, yg), (zf + sg * END_T, yg), (zf + sg * END_T, ym), (zf, ym), (zf, yg + HCAP)]
+        if sg < 0:                         # closed end: the end wall runs full width down to the posts' bottom (FE v2:
+            parts.append(prism_zy(pg, -xw, xw))     # the window corner carried 1.2 in the across case, deck-down print)
+            continue
+        for s in (-1, 1):
+            a0, a1 = sorted((s * (r["X_IN"] - 1.0), s * xw))
+            parts.append(prism_zy(pg, a0, a1))
+            xg = s * (r["X_IN"] - 1.0)     # lead end: gussets in the XT60 window's top corners (set screws, rear access)
+            parts.append(hullp([[x, y, z] for (x, y) in ((xg, y0 - GUSSET), (xg - s * GUSSET, y0), (xg, y0))
+                                for z in sorted((zf + sg * HCAP / 3.0, zf + sg * END_T))]))
+    parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, ym, zt - RIB2 / 2, zt + RIB2 / 2))                       # tab-line rib
+    zc = r["Z_X"] - CARRIER_HZ - FIT - RIB2
+    parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, ym, zc, zc + RIB2))                                     # carrier rib
+    zx = r["Z_X"]
+    for (bx, bz) in r["MOUNT"]:
+        top = r["Y_DK0"] - FIT if abs(bz - zx) < 1e-6 else ym          # lead end: the carrier's ears sit on these
+        bot = r["Y_DK1"] - INS_DEPTH - 2.0
+        parts.append(cyl("y", bx, bz, BOSS_R, bot, top))
+        parts.append(box(min(bx, np.sign(bx) * rf), max(bx, np.sign(bx) * rf), bot, min(top, r["Y_DK1"]), bz - 3, bz + 3))
+    R = U(*parts)
+    cuts = [carrier_zone(r, FIT)]
+    for s in (-1, 1):
+        pk, _ = pocket_cut(r); cuts.append(pk if s > 0 else mirx(pk))
+        a0, a1 = sorted((s * (r["X_IN"] - 1.6), s * rf))
+        cuts.append(box(a0, a1, r["Y_DK0"] - 1, r["Y_DK0"] + STRIP_REC, r["Z_P0"] - 1, r["Z_P1"] - 1))   # strip recesses
+    cuts.append(box(-8.5, 8.5, 0.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))                                # plug / male path
+    for (bx, bz) in r["MOUNT"]:
+        cuts.append(cyl("y", bx, bz, BOLT_D / 2, -5.0, ym + 1))                                           # bolts from below
+    if WIN2_BY[r["pack"]]:                       # lightening (DEFAULT where FE allows): truss windows in the side walls
+        wy0, wy1 = r["FOOT_Y1"] + 1.0, r["RAIL_Y0"] - 2.0          # between the feet chord and the top band
+        for (za, zb) in ((r["Z_E0"] + LEG_L_BY[r["pack"]], zt - r["PK_HZ"] - PK_WALL - 2),
+                         (zt + r["PK_HZ"] + PK_WALL + 2, r["Z_X"] - CARRIER_HZ - FIT - RIB2 - 2)):
+            if zb - za < 12: continue
+            W_, H_ = zb - za, wy1 - wy0
+            L_ = math.hypot(W_, H_); dz_, dy_ = STRUT2 / 2 * L_ / H_, STRUT2 / 2 * L_ / W_
+            end_side, tab_side = (za, zb) if za < zt else (zb, za)
+            sg_ = 1 if tab_side > end_side else -1
+            for s in (-1, 1):
+                a0, a1 = sorted((s * (rf - 0.5), s * (xw + 1)))
+                for tri in ([(end_side, wy1), (tab_side - sg_ * dz_, wy1), (end_side, wy0 + dy_)],
+                            [(tab_side, wy0), (end_side + sg_ * dz_, wy0), (tab_side, wy1 - dy_)]):
+                    R = R - prism_zy(tri, a0, a1)
+    return R if clip is None else R ^ clip
+
+def xt60_carrier(r):
+    """XT60 carrier v1 (replaceable with the XT60E1-M and its pigtail): base = the float pocket with the pull lips and
+    two ears on the lead-end bosses; cap = the v1 lid (the float ceiling). Both clamped by the two lead-end M3 bolts
+    (from below: body boss -> base ear -> cap -> partner insert)."""
+    zx, bx = r["Z_X"], r["BX"]
+    px, pz = r["PKX_XW"] + 2.0, r["PKX_ZW"] + 2.0
+    base = U(box(-px, px, r["LIP_Y0"], r["Y_DK1"], zx - pz, zx + pz),
+             box(-(bx + BOSS_R), bx + BOSS_R, r["Y_DK0"], r["Y_DK1"], zx - CARRIER_HZ, zx + CARRIER_HZ))
+    base = base - box(-r["PKX_XW"], r["PKX_XW"], r["Y_XM"], r["Y_DK1"] + 1, zx - r["PKX_ZW"], zx + r["PKX_ZW"])
+    base = base - box(-8.5, 8.5, r["LIP_Y0"] - 1, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8)
+    for s in (-1, 1):
+        base = base - cyl("y", s * bx, zx, BOLT_D / 2, r["Y_DK0"] - 1, r["Y_DK1"] + 1, 24)
+    return base, lid(r)
+
 
 def end_relief(r):
     xr = r["X_IN"] - 1.0
@@ -477,7 +592,8 @@ def build(pack, clip_inset=None):
     key = (pack, clip_inset)
     if key in _CACHE: return _CACHE[key]
     g = place_tab_line(pack)
-    r = rgeom(g)
+    r1 = rgeom(g)
+    r = rgeom2(g) if RECV_V == 2 else r1
     clip = cclip = None
     skids = []
     if pack == "scout":
@@ -492,8 +608,15 @@ def build(pack, clip_inset=None):
         for z0, z1 in ((-1.0, g["L_C"] / 2), (g["L_C"] / 2, g["L_C"] + 4.0)):
             sk = band ^ box(-50, 50, -1, 100, z0, z1)
             if not sk.is_empty(): skids.append(sk)
-    out = dict(g=g, r=r, clip=clip, cart=cartridge(g, cclip), recv=receiver(r, clip), lid=lid(r), strips=strips(r),
-               male=xt60_male(g), skids=skids)
+    if RECV_V == 2:
+        cb, cc = xt60_carrier(r)
+        if clip is not None: cb, cc = cb ^ clip, cc ^ clip
+        out = dict(g=g, r=r, r1=r1, clip=clip, cart=cartridge(g, cclip), recv=receiver_v2(r, clip), carrier=cb, cap=cc,
+                   lid=U(cb, cc), strips=strips(r), male=xt60_male(g), skids=skids, recv_v1=receiver(r1, clip))
+        # lid = the clamped XT60 carrier (base + cap) wherever the set is checked as one; cap / carrier are the prints
+    else:
+        out = dict(g=g, r=r, r1=r1, clip=clip, cart=cartridge(g, cclip), recv=receiver(r, clip), lid=lid(r), strips=strips(r),
+                   male=xt60_male(g), skids=skids, carrier=None, recv_v1=None)
     _CACHE[key] = out
     return out
 
@@ -505,10 +628,11 @@ def latch_assembly(pack="scout", state="latched"):
     rt = 0.0 if state in ("latched", "free") else TRAVEL
     d = {"cartridge": B["cart"], "slider_px": slider(g, rt, 1), "slider_nx": slider(g, rt, -1), "pack": pack_body(g),
          **{f"cartridge_skid_{k}": m for k, m in zip(("closed", "lead"), B["skids"])},
-         "xt60_plug": xt60_female(g), "receiver": B["recv"], "receiver_lid": B["lid"], "receiver_strips": B["strips"],
+         "xt60_plug": xt60_female(g), "receiver": B["recv"], "receiver_lid": B.get("cap", B["lid"]), "receiver_strips": B["strips"],
          "xt60e1m": B["male"]}
+    if B.get("carrier") is not None: d["xt60_carrier"] = B["carrier"]
     if state == "free":
-        for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m"): d.pop(k)
+        for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m", "xt60_carrier"): d.pop(k, None)
     return d
 
 def pack_body(g):
@@ -771,13 +895,15 @@ def hand_calc(B):
     add("crash 35 g corner (-y share 35/sqrt3)", 35 * W1 / math.sqrt(3), "misuse", Fx=35 * W1 / math.sqrt(3), Fz=35 * W1 / math.sqrt(3))
     add("crash 35 g +y (top hit, into the deck)", 0.0, "misuse")
     add("crash 35 g side x (into the plates)", 0.0, "misuse", Fx=35 * W1)
+    add("swap pull 57 N, bolts in (arm pulls before the squeeze, fault)", 57.0, "functional")
+    add("swap stall 74 N on one bolt tip (a bolt jammed on its lead-in, fault)", 2 * 74.0, "functional")
     out["cases"] = cases
     # overturning couple in a side hit: top rails bear on the plate at y ~ rail mid, CG at pack centre -> vertical on bolts
     y_rail = g["Y_TOP"] - 5.0; y_cg = float(g["SWAP_CG"][1])
     Fx = 35 * W1
     out["side_hit_couple_per_bolt_N"] = round(Fx * abs(y_rail - y_cg) / (2 * g["RF"]), 1)
     # grip pull while the XT60 unmates: 50 N + 1 g of the swap mass, through the two tabs (bolts in, squeezed)
-    Fg = 50.0 + W1; Ft = Fg / 2
+    Fg = 57.0 + W1; Ft = Fg / 2                                   # 57 N: the arm's hold while the XT60 unmates (24 Oct)
     lever_t = REC_X - (TAB_OUT - TRAVEL - GP_D / 2)               # frame edge to the pocket centre, squeezed
     s_tab = Ft * lever_t / Zb
     out["grip_pull"] = dict(total_N=round(Fg, 1), per_tab_N=round(Ft, 1), bar_MPa=round(s_tab, 2),
@@ -905,8 +1031,9 @@ def _rot(axis, deg):
 PIECES = {   # name: (getter, material, print pose (c -> print), count, version, bed face)
     "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, "v5", "closed end (z 0) down"),
     "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v5", "bar top (y 11.5) down: largest face, bar layers along its length"),
-    "receiver": (lambda B: B["recv"], "PETG", np.eye(4), 1, "v1", "closed-end face down"),
-    "receiver_lid": (lambda B: B["lid"], "PETG", _rot("x", -90), 1, "v1", "top face down"),
+    "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, "v2", "mount plane (deck top) down: layers across the install axis"),
+    "xt60_carrier": (lambda B: B["carrier"], "PETG", _rot("x", -90), 1, "v1", "ear tops down (pocket open to the bed)"),
+    "receiver_lid": (lambda B: B["cap"], "PETG", _rot("x", -90), 1, "v1", "top face down (the XT60 carrier's cap, = v1 lid)"),
     "receiver_strip": (lambda B: U(*[box(*sorted((B["r"]["X_IN"] - 1.55, B["r"]["RF"] - 0.05)), B["r"]["Y_TOP"], B["r"]["Y_TOP"] + STRIP_T,
                                          B["r"]["Z_P0"] - 0.8, B["r"]["Z_P1"] - 1.2)]), "TPU", _rot("x", 90), 2, "v1", "flat"),
     "skid_closed": (lambda B: B["skids"][0] if B["skids"] else None, "TPU", _rot("x", -135), 1, "v1", "outer (chamfer) face down"),
@@ -1031,7 +1158,7 @@ def overseer_fit(x_tab=-30.0, lead_aft=False, log=print):
 
 
 # ======================================================================== Scout v3 system (latch refit snapshot + this set)
-SCOUT_SYS = os.path.join(OUT, "scout_v3_refit", "scout.assembly.json")
+SCOUT_SYS = os.path.join(ROOT, "runs", "battery_latch", "v1", "scout_v3_refit", "scout.assembly.json")
 SCOUT_SWAP = {   # Scout v3 refit part name -> this set (drone pose via T_dc)
     "receiver v1 (latch)": "recv", "receiver lid (latch)": "lid", "receiver TPU strips (latch)": "strips",
     "XT60E1-M": "male", "cartridge v5 (latch)": "cart", "slider +y (latch)": "s_px", "slider -y (latch)": "s_nx",
@@ -1131,24 +1258,31 @@ def main():
         R["pitch_at_contact"] = pitch_at_contact(B)
         R["float_tilt"] = float_tilt()
         import battery_latch_topo as BLT
-        fe = BLT.fe_v1(pack, 1.0, log=lambda s_: None)
-        R["fe_v1"] = dict(worst=fe["worst"], worst_case=fe["worst_case"], worst_at=fe["worst_at"],
-                          crash_worst=max(max(x["inlayer"], x["across"]) for x in fe["rows"] if x["case"].startswith("crash")),
-                          rows={x["case"]: max(x["inlayer"], x["across"]) for x in fe["rows"]})
-        log(f"  FE v1 (h 1.0): worst {fe['worst']} in {fe['worst_case']}; crash worst {R['fe_v1']['crash_worst']}")
+        fe_fn = os.path.join(OUT, "fe", f"fe_{pack}_receiver_v{RECV_V}.json")   # written by battery_latch_topo --swap-v2
+        if os.path.exists(fe_fn) and os.path.getmtime(fe_fn) > os.path.getmtime(__file__):  # (+ the |u| fields), newer
+            fe = json.load(open(fe_fn))                                                 # than this script: reused
+        else:
+            fe = BLT.fe_swap_v(pack, RECV_V, 1.0, build=RECV_BUILD, log=lambda s_: None, fields=())
+            fe.pop("_fields", None)
+        R["fe"] = dict(fe, crash_worst=max(v for k, v in fe["rows"].items() if k.startswith("crash")),
+                       swap_worst=max(v for k, v in fe["rows"].items() if k.startswith("swap")))
+        log(f"  FE receiver v{RECV_V} (h 1.0, build {RECV_BUILD}): worst {fe['worst']} in {fe['worst_case']}; crash worst "
+            f"{R['fe']['crash_worst']}; swap worst {R['fe']['swap_worst']}; deflection {fe['deflection_mm']}")
         R["first_mode"] = BLT.first_mode(pack, 1.0, log=log)
         R["plug_vs_male_seat_mm3"] = ov(xt60_female(g), B["male"])
         hc = hand_calc(B); R["hand_calc"] = hc
         rx, pts, ctr = reactions(B, hc); R["reactions"] = rx; R["mount_pts"] = pts
         # masses and bounding volume
         ms = {}
-        for nm, m, mat in (("cartridge", B["cart"], "PETG"), ("slider", slider(g, 0, 1), "PETG"), ("receiver", B["recv"], "PETG"),
-                           ("lid", B["lid"], "PETG"), ("strips", B["strips"], "TPU")):
+        mlist = [("cartridge", B["cart"], "PETG"), ("slider", slider(g, 0, 1), "PETG"), ("receiver", B["recv"], "PETG"),
+                 ("lid", B.get("cap", B["lid"]), "PETG"), ("strips", B["strips"], "TPU")]
+        if B.get("carrier") is not None: mlist.append(("xt60_carrier", B["carrier"], "PETG"))
+        for nm, m, mat in mlist:
             ms[nm] = round(vol(m) / 1000 * RHO[mat], 2)
         if B["skids"]: ms["skids"] = round(sum(vol(m) for m in B["skids"]) / 1000 * RHO["TPU"], 2)
         R["mass_g"] = ms
-        R["pitch_guidance"] = dict(guide=GUIDE, end_gap=END_GAP, y_end0=round(r["Y_END0"], 2),
-                                  note=("corner guide posts; pitch at the XT60's first contact" if GUIDE else
+        R["pitch_guidance"] = dict(guide=(RECV_V == 2 or GUIDE), end_gap=END_GAP, y_end0=round(r["Y_END0"], 2),
+                                  note=("corner guide posts; pitch at the XT60's first contact" if (RECV_V == 2 or GUIDE) else
                                         "no guide posts: the XT60E1-M float takes the pitch (float_tilt)"))
         A = U(B["cart"], B["recv"], B["lid"], slider(g, 0, 1), slider(g, 0, -1))
         bb = tm(A).bounds; ext = bb[1] - bb[0]
