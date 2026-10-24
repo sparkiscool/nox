@@ -4,7 +4,7 @@ Script `nox/overseer/layout_v1.py`; rerun the chosen case with `V1_CASES="30,-34
 Numbers: `nox/dimensions.md` O Layout v1. Status: DESIGN, rough shapes, nothing saved or printed.
 
 - `checks.txt`: every check of the chosen layout (L2 field, camera views, overlaps, funnel, mass, CG, PX4 offsets).
-- `search_before_arm_fix.txt`: the catch-offset search (0 / 10 / 20 / 30 aft) with the first arm sizes (front 22 deep, E) and the misfacing L2 back block; it set the choice (30 aft: shortest front arms). The chosen case was rerun with the fixed geometry (front 30 deep, 32 wide, E).
+- `search_before_arm_fix.txt`: the catch-offset search (0 / 10 / 20 / 30 aft) with the first arm sizes (front 22 deep, E) and the misfacing L2 back block; it set the choice (30 aft: shortest front arms). The chosen case was rerun with the final geometry (front 38 deep, 34 wide, E; no steel plate, R 5 wheels, kneed ±y legs for the hook latch).
 - `motion.html` (artifact), `motion.mp4` / `.gif` / `.png`.
 
-Open: front arm first mode ~161 Hz (E) sits between 1P full and 2P hover, frame model when drawn; cartridge seat height vs the Scout's (CHECK); camera bracket 74 up the L2 back plane (C); wheel legs up to 81 in plan (C).
+Open: front arm first mode ~164 Hz (E) sits between 1P full and 2P hover, frame model when drawn; cartridge seat height vs the Scout's (CHECK); camera bracket 74 up the L2 back plane (C); wheel legs up to 89 in plan (C); pogo pads not placed.
