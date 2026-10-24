@@ -36,7 +36,7 @@ Layout v1 (24 Oct, Spark: L2 at the nose, axis 15° below forward, balanced): `l
 0. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors placed per layout v1, the catch wheel legs under them.
 1. Nose boom + L2 seat + front camera bracket (rigid to the L2 for the calibration).
 2. Pi deck between the plates (4 posts over the FC stack).
-3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it, steel belly plate, 4 TPU feet.
+3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it, 2 pogo pads (G (6)), 4 TPU feet.
 4. Overseer cartridge + latch block for the bays; its bottom face seat height must match the Scout's (swap wheel R 100); it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
 
 ### Open for Spark (DEFAULT in brackets, work goes on)
