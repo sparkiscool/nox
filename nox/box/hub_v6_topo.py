@@ -67,7 +67,7 @@ def setup(h):
     sysres = json.load(open(SYSTEM))
     n = 0
     for case in sysres["frame"]:
-        if case["case"].startswith("power cut"): continue                  # the head motors brake on a power cut (shorted coils, box electronics)
+        # every case, the power cut carrying included: the fallback until the head brake (box electronics) is built and bench-tested
         parts = []
         for node, v in case["hub"].items():
             if node not in R: continue

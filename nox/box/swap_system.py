@@ -509,7 +509,7 @@ def run_frame(Y_C=L.Y_C, cart="scout", verbose=True, guided=True):
         if nm.startswith("power cut"): extra["power_cut"] = pc
         extra["hub"] = hub_interfaces(Fr, u, ef, sf)
         extra["hub_mass"] = {nm: dict(p=Fr.P[Fr.idx[nm]].round(2).tolist(), g=m) for nm, m in Fr.mass.items() if nm in ("H32",)}
-        res.append(dict(case=nm, cls=cls, note=note, mode=mode, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep)))
+        res.append(dict(case=nm, cls=cls, note=note, mode=mode, **extra, phi=phi, zA=zA, zB=zB, carry=list(carry), axle=axle, **summarise(Fr, info, u, ef, sf, reac, sep, gh or "A")))
         if verbose:
             r = res[-1]
             if "receiver" in r: print(f"{'':38s} lag along the insert {r['pack']['du_mm']:6.2f} (max {LAG_MAX:.1f}), receiver {r['receiver']}")
@@ -542,7 +542,7 @@ def hub_interfaces(Fr, u, ef, sf):
             if np.abs(v).max() > 1e-6}
 
 
-def summarise(Fr, info, u, ef, sf, reac, sep):
+def summarise(Fr, info, u, ef, sf, reac, sep, h_push="A"):
     out = dict(joints={}, pieces={}, pack={})
     snames = [s["nm"] for s in Fr.springs]; bnames = [b["nm"] for b in Fr.beams]
     def bf(nm):
@@ -577,12 +577,13 @@ def summarise(Fr, info, u, ef, sf, reac, sep):
     def rel(i):                                                           # relative to the hub's rigid motion (the arm's float on the detent is not deflection)
         return np.r_[u[i][:3] - uh[:3] - np.cross(uh[3:], Fr.P[i] - ph), u[i][3:] - uh[3:]]
     out["hub_turn_deg"] = round(math.degrees(float(uh[4])), 3)
-    if "A" in info["xt60"]:
-        i = Fr.idx[info["xt60"]["A"]]; d = rel(i)
-        tx = head_dir("A", (1, 0, 0)); tu = head_dir("A", (0, 0, 1))
+    hp = h_push if h_push in info["xt60"] else "A"                            # the pushing head's cartridge (A when only A carries)
+    if hp in info["xt60"]:
+        i = Fr.idx[info["xt60"][hp]]; d = rel(i)
+        tx = head_dir(hp, (1, 0, 0)); tu = head_dir(hp, (0, 0, 1))
         rot = d[3:]
         out["pack"] = dict(dx_mm=round(float(np.dot(d[:3], tx)), 3), du_mm=round(float(np.dot(d[:3], tu)), 3), dy_mm=round(float(d[1]), 3),
-                           tilt_deg=round(math.degrees(float(np.linalg.norm(rot))), 3))
+                           tilt_deg=round(math.degrees(float(np.linalg.norm(rot))), 3), head=hp)
     else:
         i = Fr.idx[f"rail{'A'} {V.RAIL_R[1]:.1f}"]; d = rel(i)
         out["pack"] = dict(dx_mm=round(float(d[0]), 3), du_mm=round(float(d[2]), 3), dy_mm=round(float(d[1]), 3), tilt_deg=round(math.degrees(float(np.linalg.norm(d[3:]))), 3),
@@ -703,6 +704,64 @@ def overseer_radius():
     sec = math.degrees(2 * math.asin((xw + 0.3) / R_park))
     return dict(park_z0=z, top_r=round(top, 1), R_needed=round(R_park, 1), R_now=L.R, sector_deg_at_R=round(sec, 1), pitch_deg=L.PITCH,
                 note="every bay, the stand lane and the funnel scale with R; the Scout swap would pay for it")
+
+
+# ================================================================== concept options after review round 2 (the mate runs free)
+FLOAT_DEG = 1.06                          # the receiver's XT60 float carrier (dimensions I XT60 mate): what the free pitch at the mate must stay in
+R_OV = 113.0                              # ring radius that lets a parked Overseer cartridge pass the seated faces (overseer_radius 112.0 + 1.0, DEFAULT)
+
+
+def mate_pitch(cart="scout", opts=None, dz=0.0, Y_C=L.Y_C):
+    """free pitch (deg) and lag (mm) of the cartridge at the XT60 mate (45 N at the XT60 + 12 N preload, no receiver: the latch receiver
+    gives no pitch guidance until the deck at the seat, concept review round 2), head A at the drone insert (+ dz for a larger ring)."""
+    Fr, info = build(L.Z0_BAY + 5.0 + V.DRONE_PUSH + dz, L.Z0_A_HOME, Y_C, cart, ("A",), "detent", 90.0, opts)
+    ld = {}; add(ld, "xt60 A", (0, 0, -F_XT60)); add(ld, "pack top A", (0, 0, -F_PRELOAD))
+    u, ef, sf, reac = Fr.solve(ld); i = Fr.idx["xt60 A"]
+    return round(math.degrees(float(np.linalg.norm(u[i][3:]))), 2), round(float(-u[i][2]), 2)
+
+
+def options():
+    """the concept options with numbers: free pitch at the mate vs the float carrier, Scout at Y_C 175 / 129.1, Overseer at R 113 (Y_C 175)."""
+    rows = []
+    for nm, o in (("v6 as drawn", {}), ("+ carbon ties", dict(tie=TIE)), ("XT60 on the tab line", dict(cart=dict(xt60_z="tab"))),
+                  ("XT60 at the closed end (z 7)", dict(cart=dict(xt60_z=7.0))), ("ties + XT60 at the closed end", dict(tie=TIE, cart=dict(xt60_z=7.0)))):
+        r = dict(option=nm)
+        for cart, dz, Y in (("scout", 0.0, L.Y_C), ("scout", 0.0, 129.1), ("overseer", R_OV - L.R, L.Y_C)):
+            oo = copy.deepcopy(o)
+            if oo.get("cart", {}).get("xt60_z") == "tab": oo["cart"]["xt60_z"] = CART[cart]["tab"]
+            p, d = mate_pitch(cart, oo, dz, Y)
+            r[f"{cart} Y_C {Y:g}" + (f" R {R_OV:g}" if dz else "")] = dict(pitch_deg=p, lag_mm=d, in_float=bool(p <= FLOAT_DEG))
+        rows.append(r)
+    return rows
+
+
+def overseer_layout():
+    """what carrying the Overseer cartridge (and 9 bays at 30 deg: Overseer -60..-150, Scout 30, 0, -30, -180, -210; Spark 24 Oct via the
+    hub) asks of the arm at R_OV (C geometry, E loads)."""
+    dz = R_OV - L.R; ov, sc = CART["overseer"], CART["scout"]
+    z = dict(park=L.Z0_A_HOME, bay=L.Z0_BAY + 1.5 + dz, drone=L.Z0_BAY + 5.0 + dz, insert=L.Z0_BAY + 5.0 + V.DRONE_PUSH + dz)
+    cmd = z["insert"] + S6.OVERTRAVEL
+    rim = math.hypot(V.WHEEL_X, cmd + V.WHEELS[1][1] + V.WHEEL_OD / 2)
+    out = dict(R=R_OV, strokes=z, insert_cmd=round(cmd, 1), wheel_rim_r=round(rim, 1), stand_lane_r_now=145.5,
+               rail_end_r_needed=round(cmd + V.WHEELS[1][1] + 6.4 + 1.0, 1), rail_end_r_now=V.RAIL_R[1],
+               rack_tail_u_needed=round(V.PIN_Z - cmd - 6.0, 1), rack_tail_u_now=V.WEB_U[0])
+    top = z["park"] + BOT_DZ + ov["h"]
+    out["park"] = dict(overseer_corner_r=round(math.hypot(ov["x"], top), 1), scout_corner_r=round(math.hypot(sc["x"], z["park"] + BOT_DZ + sc["h"]), 1),
+                       limit_r=R_OV - 2.5)
+    out["sector"] = dict(chord_30deg=round(2 * R_OV * math.sin(math.radians(15)), 1), overseer_width=2 * ov["x"] + 0.6)
+    yc_min = 85.5 + 1.0 + ov["tab"]
+    out["axial"] = dict(Y_C_min_common_grip=round(yc_min, 1), Y_C=L.Y_C, overseer_y=(round(L.Y_C - ov["tab"], 1), round(L.Y_C - ov["tab"] + ov["l"], 1)),
+                        scout_y=(round(L.Y_C - sc["tab"], 1), round(L.Y_C - sc["tab"] + sc["l"], 1)), module_len_overseer=round(ov["l"] + 1.0, 1))
+    bays = dict(overseer=[-60, -90, -120, -150], scout=[30, 0, -30, -180, -210], drone=90)
+    phiA = [a for a in bays["overseer"] + bays["scout"]] + [90]; phiB = [a - 90 for a in bays["overseer"] + bays["scout"]] + [0]
+    out["bays"] = dict(**bays, pitch=30.0, phi_head_A=(min(phiA), max(phiA)), phi_head_B=(min(phiB), max(phiB)),
+                       phi_window=(min(phiA + phiB), max(phiA + phiB)), window_deg=max(phiA + phiB) - min(phiA + phiB), loop_free_deg=422,
+                       note="every bay by either head inside one window: the loop's splice moves so the lap sits outside it (DEFAULT)")
+    r_cg = z["park"] + BOT_DZ + ov["cg"][1]; t_ov = ov["mass"] * G * r_cg / 1e3
+    need = 1.25 * (t_ov + DET_OTHER)
+    out["detent"] = dict(overseer_gravity_Nm=round(t_ov, 3), hold_2_springs=DET_HOLD, margin_now=round(DET_HOLD / (t_ov + DET_OTHER), 2),
+                         per_spring_needed_Nm=round(need / 2, 3), spring_scale=round(need / DET_HOLD, 2))
+    return out
 
 
 # ================================================================== stack and bounding volume
@@ -927,6 +986,10 @@ def main(what="all"):
     if what in ("frame", "all"):
         res["frame"] = run_frame()
         res["frame_overseer"] = run_frame(cart="overseer", verbose=False)
+    if what in ("options", "all"):
+        res["options"] = options(); res["overseer_layout"] = overseer_layout()
+        for r in res["options"]: print(r)
+        print(json.dumps(res["overseer_layout"], indent=1, default=str))
     if what in ("overseer", "all"):
         res["overseer"] = overseer(); res["overseer"]["radius"] = overseer_radius(); print(json.dumps(res["overseer"], indent=1, default=str))
     if what in ("frame", "all"):
