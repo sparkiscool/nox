@@ -101,8 +101,11 @@ passive = passive_grid[active]; ribfree = ribfree_grid[active]; boss = boss_grid
 SEAT_U, SEAT_V, LAND_R, FLARE_R, CLAMP = 36.0, 14.0, 8.0, 13.0, 6.0   # funnel_panel.py seat block (C)
 # v8 plain: the seat block is passive plate (the panel hangs on it): skin + the block's depth, 6.0 inside the landing r 8
 # falling to 0.5 at the flare r 13 (C); no ribs on it (the post room cuts them behind the landing)
+# NOX_FUNNEL_SUPPORT=seat: the v8 plain support model on any panel (the v7 recheck, PR 81 round 2: nothing of box structure
+# v2 sits under the collar foot at z 1.3 either): bottom edge free, landings clamped, seat block passive. v8 plain: always.
+SEAT_SUP = V8 or os.environ.get("NOX_FUNNEL_SUPPORT") == "seat"
 seatblk = np.zeros(len(ec), bool); T_SEAT = np.zeros(len(ec))
-if V8:
+if SEAT_SUP:
     for su in (SEAT_U, -SEAT_U):
         r_ = np.hypot(ec[:, 0] - su, ec[:, 1] - V_BOT - SEAT_V)
         inn = r_ <= FLARE_R
@@ -118,7 +121,7 @@ fixedT = T_PASS > 0
 # NOX_FUNNEL_VALLEY_V0: valley support only from that slant up (the v7 recheck with its partner flange ending at z 12.8).
 VALLEY_V0 = float(os.environ.get("NOX_FUNNEL_VALLEY_V0", "0"))
 valley = (np.abs(NX) >= HW(NY) - 0.5 * H) & (NY >= VALLEY_V0 - 1e-6)
-if V8:
+if SEAT_SUP:
     seat_patch = np.zeros(nn, bool)
     for su in (SEAT_U, -SEAT_U):
         seat_patch |= (NX - su) ** 2 + (NY - V_BOT - SEAT_V) ** 2 <= LAND_R ** 2

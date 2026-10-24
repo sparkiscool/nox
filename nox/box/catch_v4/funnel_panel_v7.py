@@ -23,7 +23,7 @@ v8 plain (24 Oct, box catch DEFAULT): v7 plain with its bottom edge at seat z 12
 only), 16.26 up the slope from the v7 edge: skin, ribs and flanges end square on the new edge, the seat block and its M3
 stay 14 up the slope from it (v 30.26), its tie redrawn; ribs from panel_opt_v7.py with NOX_FUNNEL_ZBOT=12.8
 (rib_mask_v8_plain.json). Mouth, top edge, face plane, keys and every v7 file unchanged.
-python3 funnel_panel_v7.py --v8        -> runs/funnel_panel/v8_plain/ (STLs, result.json: plain FE + system wheel loads), print/box_funnel_panel_*_v8_plain.stl"""
+python3 funnel_panel_v7.py --v8        -> runs/funnel_panel/v8_plain/ (STLs, result.json: plain FE + system wheel loads; DESIGN, not copied to print/)"""
 import math, json, os, sys, shutil
 import numpy as np, trimesh, manifold3d as mf
 
@@ -444,5 +444,6 @@ if __name__ == "__main__":
     ft.export(os.path.join(RUN, "collar_v8_seat_frame.stl" if V8 else "collar_v7_seat_frame.stl"))
     print(json.dumps({k: v for k, v in res.items() if k not in ("fe_asbuilt",)}, indent=1, default=str))
     print("fe as-built:", res["fe_mode"], {k: v for k, v in res["fe_asbuilt"].items() if k != "per_case"})
-    for name, p in names.items(): shutil.copy(p, os.path.join(ROOT, "print", os.path.basename(p)))
+    if not V8:                                                   # v8 plain is DESIGN (v9 plain next): its files stay in the run
+        for name, p in names.items(): shutil.copy(p, os.path.join(ROOT, "print", os.path.basename(p)))
     if "--motion" in sys.argv: make_motion(pa, pb)
