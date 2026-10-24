@@ -120,3 +120,13 @@ it  38 beta    8 J   5.2911 vol 0.0421 (dil 0.0970 g -0.002) grey  2.6% ch 0.100
 layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 it  39 beta   16 J  26.5750 vol 0.0398 (dil 0.0946 g -0.042) grey  1.1% ch 0.100 worst switch panel push 50 N 884 37.4s
 it  40 beta   16 J   9.5209 vol 0.0416 (dil 0.0979 g -0.007) grey  1.2% ch 0.100 worst switch panel push 50 N 315 37.0s
+=== scan_stick_base: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (224.21 cm3); 3.73 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.042 of 116,618 design cells
+layout: WARNING nearly mirrored in y (1.0% of passive cells differ): no symmetry
+layout: 2 drawn bodies (28,026 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 120) = 368,640 elements, 499,026 active dofs; backend direct (direct estimate 6.9 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/scan_stick_base/v23/ck.npz at it 40, beta 16
