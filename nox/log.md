@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scout v3 chat): **v5 WIP** after review 2 FAIL: no stubs, cases follow the cage, handling on every node, webs, view / node filters; refit to latch receiver v2 / v3 (PR 109): keel kept (bottom hit ~4.2 kN on skids alone), receiver v3 narrowed for it. Best 94 rods + 29 parts ~343 g, probes 8 rows open. layout.md v5.
 - 24 Oct (scout v3 chat): **v4 layout** after review FAIL (3rd strike on probes): Radxa up 8, nose / belly shields, bolt keys clear, access 8 / 8, carbon by rod length, warm start: 98 rods + 37 printed parts ~374 g; probes 6 rows (latch skids asked, flow −1.4). runs/scout_layout/v4, dimensions System Scout v3.
 - 24 Oct (scout v3 chat): **v3 cage**: carbon only ≥ 33 mm (Spark, PR 91), short members printed struts / webs, fewest-pieces optimiser: 62 carbon pieces + 23 printed parts ~318 g (was 99 + 57, 297 g); checks as v2, fit 0. runs/scout_layout/v3, dimensions System Scout v3.
 - 24 Oct (scout v3 chat): Scout mount loads from the XT60 arm redesign (60 / 74 N insert, 50 N pull, 3.5 N·m couple), LM74700 ideal diode on the keep-alive feed, catch centre on the tab line (0.0 mm, C). dimensions System Scout v3, parts-list Scout.
