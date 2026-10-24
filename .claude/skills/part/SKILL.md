@@ -10,7 +10,7 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
 
 ## 1. Load (read only what the row names)
 - `git pull` on `main`; `git checkout -b part/<part>` (or `run/<part>-<version>` if the brief needs a generative run).
-- The part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` sections it names. Numbers in the brief
+- The part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` sections it names (`python3 tools/dim.py <section>`). Numbers in the brief
   that change a shared number: DEFAULT, its `dimensions.md` row + one `log.md` line, and continue (never wait on Spark).
 
 ## 2. Design (system first, then cut)
@@ -48,7 +48,7 @@ Follow `docs/generative.md` "Save and print" exactly: `print/<part>_<version>.st
 `python3 tools/runs_index.py`, `python3 tools/check_state.py` (no ERROR), commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
 
 ## 6. Review and merge (same turn)
-Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `python3 tools/pr.py merge <n>` (REST; `gh pr merge` fails in cloud boxes)
+`python3 tools/review_precheck.py` (FAIL: fix first), then run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `python3 tools/pr.py merge <n>` (REST; `gh pr merge` fails in cloud boxes)
 and `git checkout main && git pull`. FAIL: fix the design, re-review; never merge a FAIL. If the merge is refused by
 permissions, say so with the PR link and stop; do not work around it.
 
