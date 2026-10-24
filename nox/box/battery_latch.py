@@ -22,7 +22,7 @@ import numpy as np, trimesh, manifold3d as mf
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path[:0] = [os.path.join(ROOT, "nox")]
-OUT = os.path.join(ROOT, "runs", "battery_latch", "v4")         # v4: + tail skids; v3: cartridge v6 + skids; v2: receiver v2
+OUT = os.path.join(ROOT, "runs", "battery_latch", "v5")         # v5: Overseer receiver v3 (arm lane); v4: Scout receiver v3 + end pieces
 
 
 # ======================================================================== helpers (scout_bottom.py style)
@@ -242,6 +242,9 @@ TAIL_PLATE = dict(t=2.2, y=27.0, z0=-31.5, z1=-6.0, key_r=4.5)   # drone frame (
                                                    # down to z -31.5 (below it the side bars and strips cover)
 SKID_FUNNEL = 1.0                                  # every receiver skid >= 1.0 inside the funnel planes at +-5 yaw / +-2 tilt
 RSKID_NAMES = ("nose", "tail")    # each: the end plate + its two bars + the ears joining them, one TPU print bonded on
+ARM_LANE = dict(dz=89.65, y1=46.0)   # swap arm carriage lane (dimensions "System box swap: arm", insert-lane keep-out: Y >=
+                                     # Y_C - 89.65 over r 89..159, i.e. z <= z_T + 89.65 below y 159 - R 113): the lead end wall
+                                     # stops there (Overseer v3: 3.9 of its 6.0 below y 46; the Scout's ends sit 33 short of it)
 NARROW = dict(x=25.5, y=6.5)    # receiver v3 (Scout, keel back 24 Oct): |x| <= 25.5 below y 6.5 (drone z -38), clear of the
                                 # keel nodes; the collar clip already held the columns inside 25.9 there, so this shaves
                                 # the pocket blocks' outer 0.4 for y 5.75..6.5 (wall 2.6 over that band)
@@ -541,6 +544,9 @@ GUIDE2_BY = {"scout": False, "overseer": False}  # corner guide posts (pitch at 
 END_GAP2_BY = {"scout": 0.3, "overseer": 0.3}   # end faces to the cartridge's ends (0.15 with posts)
 W2_BY = {"scout": 5.0, "overseer": 5.0}         # side wall = foot width: 5.0 leaves 2.0 under the 3.0 lead-in capture (v1: 2.5 / 3.0 plates over 4.0 feet with a 1.0 tip, windows)
 DECK2_BY = {"scout": 3.0, "overseer": 3.0}
+LEAD_SET2_BY = {"scout": CAP, "overseer": 1.0}   # lead end wall below the rails, off the cartridge end (+ the 0.3 gap): the
+                                               # Overseer's sits in the arm lane (ARM_LANE: outer face <= 175.2), so 1.0
+                                               # (pitch free 1.5 deg at the feet; the arm's free mate 1.03, PR 79; DEFAULT)
 END2_BY = {"scout": 6.0, "overseer": 6.0}       # end walls: 6.0 leaves 3.0 below the rails behind the 3.0 capture and 3.3 of the lead-end wall past the carrier notch (deck-down print: the Overseer fits the 180 bed on its diagonal)
 RIB2 = 4.0                                      # cross ribs deck -> mount plane (tab line, closed end of the carrier)
 CARRIER_HZ = 10.0                               # carrier ears / cap half length in z (v1 lid +-10)
@@ -602,8 +608,9 @@ def receiver_v2(r, clip=None):
         yg = r["Y_END0"]                                                                                   # corner guide posts
         pg = [(zf + sg * CAP, yg), (zf + sg * END_T, yg), (zf + sg * END_T, ym), (zf, ym), (zf, yg + HCAP)]
         if not r["GUIDE"]:                 # no posts: the end wall runs on down to the feet set back CAP + gap from the
-            parts.append(prism_zy([(zf + sg * CAP, Y_RB), (zf + sg * END_T, Y_RB), (zf + sg * END_T, y0),   # cartridge
-                                   (zf + sg * CAP, y0)], -xw, xw))   # end (3.3: pitch free to ~3 deg, no guide couple;
+            cp = LEAD_SET2_BY[r["pack"]] if sg > 0 else CAP           # (the lead end in the arm's lane: LEAD_SET2_BY)
+            parts.append(prism_zy([(zf + sg * cp, Y_RB), (zf + sg * END_T, Y_RB), (zf + sg * END_T, y0),     # cartridge
+                                   (zf + sg * cp, y0)], -xw, xw))    # end (3.3: pitch free to ~3 deg, no guide couple;
                                            # only the top band at 0.3 locates z). FE v2: ending at the rails left the
                                            # Overseer's 43.5 N across case 1.20 mm, index 0.92, at that corner
         if not r["GUIDE"]:                 # no posts: gussets in the end wall's bottom corners at the side walls (FE v2:
@@ -819,6 +826,7 @@ def build(pack, clip_inset=None):
         cb, cc = xt60_carrier(r)
         if clip is not None: cb, cc = cb ^ clip, cc ^ clip
         out_recv = receiver_v2(r, clip)
+        out_recv = out_recv - box(-200, 200, -50, ARM_LANE["y1"], g["Z_T"] + ARM_LANE["dz"], 400)   # the arm's lane
         if pack == "scout":                                          # receiver v3: narrowed under the keel
             out_recv = out_recv - U(*[box(*sorted((s * NARROW["x"], s * 200)), -50, NARROW["y"], -200, 400) for s in (-1, 1)])
         cart = cartridge(g, cclip)
@@ -1274,7 +1282,7 @@ PIECES = {   # name: (getter, material, print pose (c -> print), count, version,
     "rskid_tail": (lambda B: B["rskids"][1] if B.get("rskids") else None, "TPU", np.eye(4), 1, "v1",
                    "plate's outer face down, the chamfer and bars on tree supports"),
     "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v6", "bar top (y 11.5) down: largest face, bar layers along its length"),
-    "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, {"scout": "v3", "overseer": "v2"},
+    "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, {"scout": "v3", "overseer": "v3"},
                  "mount plane (deck top) down: layers across the install axis"),
     "xt60_carrier": (lambda B: B["carrier"], "PETG", _rot("x", -90), 1, {"scout": "v2", "overseer": "v1"}, "ear tops down (pocket open to the bed)"),
     "receiver_lid": (lambda B: B["cap"], "PETG", _rot("x", -90), 1, {"scout": "v2", "overseer": "v1"}, "top face down (the XT60 carrier's cap, = v1 lid)"),
