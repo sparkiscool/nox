@@ -57,6 +57,7 @@ SIG_ROD = 750.0                              # MPa, bending + axial allowable (1
 CAP_JOINT = 150.0 * int(os.environ.get("NROD", "1"))                            # N, epoxied socket pull-out design value (E; socket coupon pull, item 23)
 NODE_G, SOCKET_G, ROD_GPM = 1.5, 0.57, 0.011  # printed node body, per socket (cage v2 doc, M), rod g/mm (G)
 CG = np.array([0.0, 0.0, 4.2])
+CG_TOL = 3.0                                 # mm, balance (dimensions L)
 CONTACT_MARGIN = 3.0                         # cage ahead of everything else (CLAUDE.md, DEFAULT)
 KEEP = 1.0                                   # every keep-out, plus the rod radius
 
@@ -363,7 +364,7 @@ CONN_L = 8.0                                  # socket depth (E)
 CONN_A, CONN_I = 42.0, 187.0                  # socket ring OD 7.9 / rod 3.0 section, mm2 / mm4 (C)
 MOUNT_SCALE = float(os.environ.get("MOUNT_SCALE", "1.0"))   # cage-to-core TPU mounts relative to a node socket
 CAP_TPU = 150.0                               # N, rod in a TPU socket, axial + shear (E; socket coupon)
-V_CRASH = float(os.environ.get("V_CRASH", "2.0"))   # m/s, design hit speed (DEFAULT; PX4 cap 1.0 m/s planned; alt 3.0)
+V_CRASH = float(os.environ.get("V_CRASH", "1.5"))   # m/s, design hit speed (DEFAULT: 1.5x the planned PX4 cap 1.0; Elios 2 sharp-object rating; alt 2.0 needs more top / bottom / nose stroke)
 M_DRONE = 0.72                                # kg (E, system pass v2)
 E_CRASH = 0.5 * M_DRONE * V_CRASH ** 2 * 1000.0      # N.mm
 IDX_LIM = {"crash": 1.0, "flight": 0.5, "functional": 0.5, "misuse": 1.0, "handling": 1.0}   # dimensions L index targets
@@ -672,7 +673,26 @@ for yp, zp in PAD_OPTIONS:
         oth = np.vstack([v for k_, v in others.items() if not (k_ in ("cartridge", "receiver") and d[2] < -0.5)] + ([PACK_PTS] if d[2] < -0.5 else []))
         STROKE[tuple(np.round(d, 3))] = max(float((Pc @ d).max() + ROD_R - (oth @ d).max()) - 1.0, 0.5)
     say("   crash stroke limits (mm): " + ", ".join(f"{list(k)}: {v:.1f}" for k, v in STROKE.items()))
-    contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all())
+    # balance (CLAUDE.md, dimensions L): whole-drone CG within 3 mm of the thrust axis, pack in and out
+    fixed_items = [(165, np.array([0, 0, -13.6]), True), (42.4, CART.bounding_box.centroid, True), (79.9, IFACE.centroid, False),
+                   (10, FC.bounding_box.centroid, False), (10, RADXA.bounding_box.centroid, False), (15, UBEC.bounding_box.centroid, False),
+                   (1, XR2.bounding_box.centroid, False), (1.5, FLOW.bounding_box.centroid, False), (16, CAM.bounding_box.centroid, False),
+                   (28, PLATE.centroid, False), (20, FC.bounding_box.centroid, False), (8, XT_M.bounding_box.centroid, False)] + \
+                  [(19.8, b_.bounding_box.centroid, False) for b_ in BELLS]
+    def cg_ok(ms):
+        cm, cmom = 0.0, np.zeros(3)
+        for a_, b_ in ms:
+            g_ = ROD_GPM * np.linalg.norm(N[b_] - N[a_]) + 2 * SOCKET_G; cm += g_; cmom += g_ * (N[a_] + N[b_]) / 2
+        for i_ in set(i for e in ms for i in e):
+            if kind[i_] != "C": cm += NODE_G; cmom += NODE_G * N[i_]
+        for with_swap in (True, False):
+            m_, mom_ = cm, cmom.copy()
+            for g_, c_, sw in fixed_items:
+                if sw and not with_swap: continue
+                m_ += g_; mom_ += g_ * c_
+            if np.hypot(*(mom_ / m_)[:2]) > CG_TOL: return False
+        return True
+    contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all()) and (cg_ok(ms) or not cg_ok(members))
     chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
     if fe is None or not feasible(fe):
         bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f} at rod {np.round(N[chosen[r['el']][0]]).astype(int).tolist()}-{np.round(N[chosen[r['el']][1]]).astype(int).tolist()}"
