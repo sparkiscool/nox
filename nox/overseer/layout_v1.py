@@ -208,7 +208,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     up_b = np.array([-A[2], 0, A[0]])                            # in the base plane, toward +z: (0.259, 0, 0.966)
     seat = cyl(37.5, -5, 0, 0, 0); T = trimesh.transformations.rotation_matrix(math.radians(L2_TILT), [0, 1, 0]); T[:3, 3] = B
     seat.apply_transform(T)
-    back = box(-6, 0, -16, 16, -22, 22); back.apply_transform(T)                 # stiff block behind the seat
+    back = box(-22, 22, -16, 16, -11, -5); back.apply_transform(T)               # stiff block behind the seat (L2 local z -11..-5)
     beam = hull(box(80, 98, -15, 15, FUNNEL_TOP_D + 1.5, ROOT_H), back)
     g["boom"] = union([BOOM_ROOT, beam, seat])
     # front camera: board centre CAM on the base plane's back side, aimed cam_up above the horizon
@@ -238,7 +238,7 @@ def l2_clear_margin(g, B, solid_items):
         d = p - B; depth = d @ A; dist = np.linalg.norm(d, axis=1)
         if name == "boom":
             radial = np.linalg.norm(d - np.outer(depth, A), axis=1)
-            keep = ~((depth > -8.0) & (radial < 40.0)); d, depth, dist = d[keep], depth[keep], dist[keep]
+            keep = ~((depth > -5.5) & (radial < 40.0)); d, depth, dist = d[keep], depth[keep], dist[keep]   # the seat itself
         margin = -depth - math.sin(math.radians(L2_NEG)) * dist
         i = int(np.argmin(margin))
         if margin[i] < worst[1]: worst = (name, margin[i])
