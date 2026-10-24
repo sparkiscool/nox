@@ -1,86 +1,84 @@
-=== box_system_topo_v2: h 8.0, gen 1500.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
+=== box_system_topo_v2: h 8.0, gen 3000.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
 seat posts side/overlap mm3 [(1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9), (1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9)]
 box_system_topo_v2: grid (32, 32, 32) h 16.0 = 32,768 cells; design 9,082 (37199.9 cm3), drawn 2,528, void 21,158
   support default: 624 cells, 1350 nodes
   support hands: 162 cells, 400 nodes
   support side: 720 cells, 1550 nodes
   50 cells of 10 design islands cut off by the keep-outs set void
-setup h 16.0: 12 s, 14 cases
-layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 1.16 cells, erosion depth 4.93 mm; volfrac 0.041 of 9,032 design cells
+setup h 16.0: 14 s, 14 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 1.16 cells, erosion depth 4.93 mm; volfrac 0.081 of 9,032 design cells
 layout: WARNING filter radius 1.16 cells < 2: the grid is too coarse for 18.0 mm members; use h <= 7.42
 layout: WARNING nearly mirrored in x (0.4% of passive cells differ): no symmetry
 layout: 17 drawn bodies (2,528 cells), held solid in every realization; eroded filter: masked
 layout: 14 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
 fem: grid (32, 32, 32) = 32,768 elements, 46,137 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
-it   1 beta    1 J  10.0000 vol 0.0526 (dil 0.0648 g +0.298) grey 21.2% ch 0.100 worst all bays: 43.5 N across 2.45e+04 1.8s
-it   2 beta    1 J  33.6803 vol 0.0367 (dil 0.0447 g -0.104) grey 14.8% ch 0.100 worst misuse: Overseer motors cut 7.78e+04 1.7s
-it   3 beta    1 J  21.0934 vol 0.0375 (dil 0.0457 g -0.086) grey 11.3% ch 0.100 worst misuse: Overseer motors cut 4.9e+04 1.6s
-it   4 beta    1 J  14.2285 vol 0.0377 (dil 0.0458 g -0.084) grey 12.2% ch 0.100 worst misuse: Overseer motors cut 3.3e+04 1.7s
-it   5 beta    1 J   9.3710 vol 0.0387 (dil 0.0469 g -0.060) grey 12.7% ch 0.100 worst misuse: Overseer motors cut 2.18e+04 1.8s
-it   6 beta    1 J   4.2865 vol 0.0395 (dil 0.0476 g -0.041) grey 12.4% ch 0.100 worst misuse: Overseer motors cut 9.95e+03 1.8s
-it   7 beta    1 J   0.4653 vol 0.0390 (dil 0.0470 g -0.054) grey 11.6% ch 0.100 worst all bays: 60 N insert 960 1.6s
-it   8 beta    1 J   0.1870 vol 0.0367 (dil 0.0444 g -0.107) grey 11.1% ch 0.100 worst Overseer catch -X-Y diag 406 1.8s
-it   9 beta    1 J   0.1542 vol 0.0389 (dil 0.0469 g -0.057) grey 11.8% ch 0.100 worst XT60 insert at the -90 bay 6 365 1.7s
-it  10 beta    1 J   0.1633 vol 0.0370 (dil 0.0446 g -0.103) grey 11.1% ch 0.100 worst Overseer catch -X-Y diag 356 1.7s
-it  11 beta    1 J   0.1030 vol 0.0382 (dil 0.0460 g -0.070) grey 11.3% ch 0.100 worst all bays: 43.5 N across 216 1.8s
-it  12 beta    1 J   0.0775 vol 0.0387 (dil 0.0465 g -0.060) grey 11.4% ch 0.100 worst Overseer catch -X-Y diag 163 1.6s
-it  13 beta    1 J   0.0591 vol 0.0397 (dil 0.0476 g -0.039) grey 11.4% ch 0.100 worst XT60 insert at the -120 bay  128 1.5s
-it  14 beta    1 J   0.0464 vol 0.0403 (dil 0.0482 g -0.026) grey 11.3% ch 0.100 worst Overseer catch -X-Y diag 97 1.8s
-it  15 beta    1 J   0.0393 vol 0.0410 (dil 0.0490 g -0.010) grey 11.4% ch 0.100 worst Overseer catch -X-Y diag 79.9 1.7s
-it  16 beta    1 J   0.0354 vol 0.0412 (dil 0.0492 g +0.000) grey 11.2% ch 0.100 worst Overseer catch -X-Y diag 72.5 1.7s
-it  17 beta    1 J   0.0335 vol 0.0411 (dil 0.0489 g -0.005) grey 11.0% ch 0.100 worst Overseer catch -X-Y diag 68.4 1.8s
-it  18 beta    1 J   0.0310 vol 0.0411 (dil 0.0489 g -0.005) grey 10.8% ch 0.100 worst Overseer catch -X-Y diag 63.3 1.8s
-it  19 beta    1 J   0.0288 vol 0.0412 (dil 0.0489 g -0.005) grey 10.6% ch 0.100 worst Overseer catch -X-Y diag 58.6 1.7s
-it  20 beta    1 J   0.0267 vol 0.0412 (dil 0.0489 g -0.005) grey 10.5% ch 0.100 worst Overseer catch -X-Y diag 54.4 1.6s
-it  21 beta    1 J   0.0249 vol 0.0413 (dil 0.0489 g +0.002) grey 10.4% ch 0.100 worst Overseer catch -X-Y diag 50.5 1.7s
-it  22 beta    1 J   0.0240 vol 0.0411 (dil 0.0486 g -0.004) grey 10.1% ch 0.100 worst Overseer catch -X-Y diag 48.5 1.8s
-it  23 beta    1 J   0.0225 vol 0.0412 (dil 0.0486 g -0.004) grey 10.0% ch 0.100 worst Overseer catch -X-Y diag 45.3 1.7s
-it  24 beta    1 J   0.0212 vol 0.0412 (dil 0.0486 g -0.004) grey  9.7% ch 0.100 worst Overseer catch -X-Y diag 42.3 1.8s
-it  25 beta    1 J   0.0200 vol 0.0413 (dil 0.0486 g -0.004) grey  9.4% ch 0.100 worst Overseer catch -X-Y diag 39.5 1.7s
-layout: beta 1 done: eroded design 31 bodies, main 91.7%; drawn bodies outside the main body: 15
-it  26 beta    2 J   0.0343 vol 0.0348 (dil 0.0566 g -0.142) grey  8.4% ch 0.100 worst Overseer catch -X-Y diag 76.8 1.7s
-it  27 beta    2 J   0.0210 vol 0.0407 (dil 0.0641 g -0.029) grey  9.4% ch 0.100 worst Overseer catch -X-Y diag 41.4 1.8s
-it  28 beta    2 J   0.0173 vol 0.0425 (dil 0.0649 g -0.017) grey  8.9% ch 0.100 worst all bays: 43.5 N across 34.5 1.7s
-it  29 beta    2 J   0.0154 vol 0.0436 (dil 0.0653 g -0.010) grey  8.7% ch 0.100 worst all bays: 43.5 N across 31.8 1.7s
-it  30 beta    2 J   0.0143 vol 0.0444 (dil 0.0655 g -0.007) grey  8.5% ch 0.100 worst all bays: 43.5 N across 29.7 1.7s
-it  31 beta    2 J   0.0134 vol 0.0449 (dil 0.0657 g +0.024) grey  8.6% ch 0.100 worst all bays: 43.5 N across 27.9 1.9s
-it  32 beta    2 J   0.0137 vol 0.0433 (dil 0.0638 g -0.005) grey  8.4% ch 0.100 worst all bays: 43.5 N across 27 1.9s
-it  33 beta    2 J   0.0131 vol 0.0437 (dil 0.0639 g -0.004) grey  8.3% ch 0.100 worst all bays: 43.5 N across 25.9 1.8s
-it  34 beta    2 J   0.0127 vol 0.0440 (dil 0.0640 g -0.002) grey  8.5% ch 0.100 worst all bays: 43.5 N across 24.7 1.7s
-it  35 beta    2 J   0.0124 vol 0.0442 (dil 0.0640 g -0.001) grey  8.5% ch 0.100 worst all bays: 60 N insert 23.7 1.6s
-it  36 beta    2 J   0.0121 vol 0.0444 (dil 0.0640 g +0.026) grey  8.6% ch 0.100 worst all bays: 60 N insert 23.4 1.8s
-it  37 beta    2 J   0.0131 vol 0.0425 (dil 0.0622 g -0.004) grey  7.9% ch 0.100 worst Overseer catch -X-Y diag 25.6 1.7s
-it  38 beta    2 J   0.0127 vol 0.0428 (dil 0.0623 g -0.001) grey  8.2% ch 0.100 worst all bays: 60 N insert 24 1.7s
-it  39 beta    2 J   0.0125 vol 0.0430 (dil 0.0624 g -0.001) grey  8.4% ch 0.100 worst all bays: 60 N insert 23.8 1.5s
-it  40 beta    2 J   0.0125 vol 0.0430 (dil 0.0624 g -0.001) grey  8.5% ch 0.100 worst all bays: 60 N insert 23.7 1.7s
-it  41 beta    2 J   0.0124 vol 0.0431 (dil 0.0624 g +0.018) grey  8.6% ch 0.100 worst all bays: 60 N insert 23.6 1.8s
-it  42 beta    2 J   0.0132 vol 0.0417 (dil 0.0611 g -0.003) grey  7.8% ch 0.100 worst Overseer catch -X-Y diag 25.9 1.7s
-it  43 beta    2 J   0.0129 vol 0.0419 (dil 0.0613 g -0.001) grey  8.1% ch 0.100 worst Overseer catch -X-Y diag 24.9 1.6s
-it  44 beta    2 J   0.0128 vol 0.0420 (dil 0.0613 g -0.000) grey  8.3% ch 0.100 worst Overseer catch -X-Y diag 24.7 1.6s
-it  45 beta    2 J   0.0127 vol 0.0420 (dil 0.0613 g -0.000) grey  8.4% ch 0.100 worst Overseer catch -X-Y diag 24.5 1.6s
-it  46 beta    2 J   0.0127 vol 0.0421 (dil 0.0613 g +0.011) grey  8.5% ch 0.100 worst Overseer catch -X-Y diag 24.3 1.6s
-it  47 beta    2 J   0.0132 vol 0.0413 (dil 0.0606 g -0.001) grey  8.1% ch 0.100 worst Overseer catch -X-Y diag 25.8 1.6s
-it  48 beta    2 J   0.0130 vol 0.0414 (dil 0.0606 g -0.000) grey  8.3% ch 0.100 worst Overseer catch -X-Y diag 25.4 1.8s
-it  49 beta    2 J   0.0130 vol 0.0414 (dil 0.0606 g -0.000) grey  8.3% ch 0.100 worst Overseer catch -X-Y diag 25.2 1.8s
-it  50 beta    2 J   0.0129 vol 0.0415 (dil 0.0606 g -0.000) grey  8.4% ch 0.100 worst Overseer catch -X-Y diag 25 1.9s
-layout: beta 2 done: eroded design 13 bodies, main 95.3%; drawn bodies outside the main body: 5
-it  51 beta    4 J   0.0190 vol 0.0327 (dil 0.0646 g -0.195) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 41.2 1.9s
-it  52 beta    4 J   0.0151 vol 0.0359 (dil 0.0742 g -0.076) grey  2.0% ch 0.100 worst Overseer catch -X-Y diag 30.9 1.6s
-it  53 beta    4 J   0.0134 vol 0.0381 (dil 0.0791 g -0.013) grey  3.4% ch 0.100 worst Overseer catch -X-Y diag 25.9 2.0s
-it  54 beta    4 J   0.0127 vol 0.0389 (dil 0.0796 g -0.007) grey  3.2% ch 0.100 worst all bays: 60 N insert 24.2 1.8s
-it  55 beta    4 J   0.0123 vol 0.0398 (dil 0.0798 g -0.005) grey  3.2% ch 0.100 worst all bays: 60 N insert 23.8 1.7s
-it  56 beta    4 J   0.0121 vol 0.0407 (dil 0.0799 g -0.008) grey  2.9% ch 0.100 worst all bays: 60 N insert 23.5 1.7s
-it  57 beta    4 J   0.0117 vol 0.0418 (dil 0.0803 g -0.003) grey  2.8% ch 0.100 worst all bays: 60 N insert 23.1 1.8s
-it  58 beta    4 J   0.0115 vol 0.0427 (dil 0.0804 g -0.002) grey  2.7% ch 0.100 worst all bays: 60 N insert 22.7 1.8s
-it  59 beta    4 J   0.0111 vol 0.0437 (dil 0.0804 g -0.002) grey  2.6% ch 0.100 worst all bays: 60 N insert 22.2 1.8s
-it  60 beta    4 J   0.0107 vol 0.0446 (dil 0.0804 g -0.002) grey  2.3% ch 0.100 worst all bays: 60 N insert 21.5 1.5s
-it  61 beta    4 J   0.0102 vol 0.0454 (dil 0.0804 g +0.028) grey  1.9% ch 0.100 worst all bays: 60 N insert 20.7 1.8s
-it  62 beta    4 J   0.0106 vol 0.0439 (dil 0.0781 g -0.002) grey  1.7% ch 0.100 worst all bays: 60 N insert 21.1 1.7s
-it  63 beta    4 J   0.0103 vol 0.0445 (dil 0.0781 g -0.001) grey  1.5% ch 0.100 worst all bays: 60 N insert 20.9 1.6s
-it  64 beta    4 J   0.0101 vol 0.0449 (dil 0.0782 g -0.001) grey  1.3% ch 0.100 worst all bays: 60 N insert 20.6 1.5s
-layout: stopped (beta_stop) at it 64, beta 4, 123 s
-layout: beta 4 done: eroded design 6 bodies, main 95.7%; drawn bodies outside the main body: 2
-coarse stage done: 139 s, peak 0.95 GB
+it   1 beta    1 J  10.0000 vol 0.0873 (dil 0.1068 g +0.077) grey 25.5% ch 0.100 worst all bays: 43.5 N across 2.97e+03 1.8s
+it   2 beta    1 J  46.8004 vol 0.0715 (dil 0.0864 g -0.129) grey 32.6% ch 0.100 worst misuse: Overseer motors cut 1.32e+04 1.9s
+it   3 beta    1 J   0.9455 vol 0.0748 (dil 0.0900 g -0.094) grey 27.1% ch 0.100 worst XT60 insert at the -120 bay  239 1.7s
+it   4 beta    1 J   0.4001 vol 0.0743 (dil 0.0891 g -0.102) grey 30.7% ch 0.100 worst Overseer catch -X-Y diag 118 1.7s
+it   5 beta    1 J   0.4855 vol 0.0764 (dil 0.0909 g -0.084) grey 27.9% ch 0.100 worst XT60 insert at the -120 bay  141 2.1s
+it   6 beta    1 J   0.4350 vol 0.0703 (dil 0.0841 g -0.146) grey 26.6% ch 0.100 worst misuse: Overseer motors cut 120 1.9s
+it   7 beta    1 J   0.2020 vol 0.0744 (dil 0.0886 g -0.100) grey 27.1% ch 0.100 worst all bays: 60 N insert 51.3 1.7s
+it   8 beta    1 J   0.1311 vol 0.0765 (dil 0.0907 g -0.078) grey 27.0% ch 0.100 worst Overseer catch -X-Y diag 32.7 1.6s
+it   9 beta    1 J   0.0965 vol 0.0809 (dil 0.0952 g -0.033) grey 26.3% ch 0.100 worst all bays: 60 N insert 24.4 1.8s
+it  10 beta    1 J   0.0807 vol 0.0825 (dil 0.0966 g -0.019) grey 25.4% ch 0.100 worst all bays: 60 N insert 20.3 2.0s
+it  11 beta    1 J   0.0710 vol 0.0834 (dil 0.0971 g -0.002) grey 24.5% ch 0.100 worst all bays: 60 N insert 18.1 1.7s
+it  12 beta    1 J   0.0653 vol 0.0830 (dil 0.0963 g -0.011) grey 23.7% ch 0.100 worst all bays: 60 N insert 16.6 1.8s
+it  13 beta    1 J   0.0593 vol 0.0834 (dil 0.0963 g -0.011) grey 22.8% ch 0.100 worst all bays: 60 N insert 15.3 1.8s
+it  14 beta    1 J   0.0541 vol 0.0838 (dil 0.0963 g -0.011) grey 21.8% ch 0.100 worst all bays: 60 N insert 14.1 1.6s
+it  15 beta    1 J   0.0497 vol 0.0842 (dil 0.0963 g -0.011) grey 21.0% ch 0.100 worst all bays: 60 N insert 13 1.8s
+it  16 beta    1 J   0.0459 vol 0.0847 (dil 0.0963 g +0.004) grey 19.9% ch 0.100 worst all bays: 60 N insert 12 1.8s
+it  17 beta    1 J   0.0438 vol 0.0839 (dil 0.0950 g -0.009) grey 18.9% ch 0.100 worst all bays: 60 N insert 11.4 1.8s
+it  18 beta    1 J   0.0413 vol 0.0844 (dil 0.0951 g -0.009) grey 17.9% ch 0.100 worst all bays: 60 N insert 10.8 1.7s
+it  19 beta    1 J   0.0393 vol 0.0849 (dil 0.0952 g -0.007) grey 17.2% ch 0.100 worst all bays: 60 N insert 10.3 1.8s
+it  20 beta    1 J   0.0378 vol 0.0854 (dil 0.0953 g -0.006) grey 16.5% ch 0.100 worst all bays: 60 N insert 9.87 1.7s
+it  21 beta    1 J   0.0365 vol 0.0857 (dil 0.0954 g +0.012) grey 15.9% ch 0.100 worst all bays: 60 N insert 9.54 1.6s
+it  22 beta    1 J   0.0361 vol 0.0845 (dil 0.0938 g -0.005) grey 15.2% ch 0.100 worst all bays: 60 N insert 9.42 1.7s
+it  23 beta    1 J   0.0352 vol 0.0848 (dil 0.0939 g -0.004) grey 14.9% ch 0.100 worst all bays: 60 N insert 9.19 1.7s
+it  24 beta    1 J   0.0344 vol 0.0850 (dil 0.0940 g -0.003) grey 14.6% ch 0.100 worst all bays: 60 N insert 8.98 1.6s
+it  25 beta    1 J   0.0337 vol 0.0852 (dil 0.0940 g -0.003) grey 14.2% ch 0.100 worst all bays: 60 N insert 8.81 1.6s
+layout: beta 1 done: eroded design 5 bodies, main 95.5%; drawn bodies outside the main body: 1
+it  26 beta    2 J   0.0369 vol 0.0804 (dil 0.1053 g -0.009) grey 12.6% ch 0.100 worst all bays: 60 N insert 9.39 1.8s
+it  27 beta    2 J   0.0358 vol 0.0813 (dil 0.1059 g -0.004) grey 12.5% ch 0.100 worst all bays: 60 N insert 9.16 1.8s
+it  28 beta    2 J   0.0351 vol 0.0817 (dil 0.1060 g -0.003) grey 12.5% ch 0.100 worst all bays: 60 N insert 8.98 1.8s
+it  29 beta    2 J   0.0345 vol 0.0821 (dil 0.1061 g -0.002) grey 12.7% ch 0.100 worst all bays: 60 N insert 8.83 1.7s
+it  30 beta    2 J   0.0341 vol 0.0823 (dil 0.1061 g -0.001) grey 12.7% ch 0.100 worst all bays: 60 N insert 8.71 2.0s
+it  31 beta    2 J   0.0337 vol 0.0825 (dil 0.1062 g +0.004) grey 12.9% ch 0.100 worst all bays: 60 N insert 8.61 1.8s
+it  32 beta    2 J   0.0337 vol 0.0821 (dil 0.1056 g -0.001) grey 12.9% ch 0.100 worst all bays: 60 N insert 8.57 1.8s
+it  33 beta    2 J   0.0335 vol 0.0822 (dil 0.1057 g -0.001) grey 13.0% ch 0.100 worst all bays: 60 N insert 8.5 1.8s
+it  34 beta    2 J   0.0333 vol 0.0823 (dil 0.1057 g -0.000) grey 13.1% ch 0.100 worst all bays: 60 N insert 8.46 1.9s
+it  35 beta    2 J   0.0332 vol 0.0824 (dil 0.1057 g -0.000) grey 13.1% ch 0.100 worst all bays: 60 N insert 8.44 1.7s
+it  36 beta    2 J   0.0331 vol 0.0824 (dil 0.1057 g +0.004) grey 13.2% ch 0.100 worst all bays: 60 N insert 8.42 1.8s
+it  37 beta    2 J   0.0333 vol 0.0820 (dil 0.1052 g -0.000) grey 13.1% ch 0.100 worst all bays: 60 N insert 8.45 1.8s
+layout: beta 2 done: eroded design 2 bodies, main 95.5%; drawn bodies outside the main body: 1
+it  38 beta    4 J   0.0383 vol 0.0744 (dil 0.1124 g -0.082) grey  2.0% ch 0.100 worst Overseer catch -X-Y diag 9.42 1.8s
+it  39 beta    4 J   0.0359 vol 0.0775 (dil 0.1213 g -0.010) grey  2.9% ch 0.100 worst all bays: 60 N insert 8.87 1.8s
+it  40 beta    4 J   0.0351 vol 0.0784 (dil 0.1220 g -0.004) grey  3.3% ch 0.100 worst all bays: 60 N insert 8.79 1.9s
+it  41 beta    4 J   0.0347 vol 0.0790 (dil 0.1222 g -0.011) grey  3.2% ch 0.100 worst all bays: 60 N insert 8.73 1.7s
+it  42 beta    4 J   0.0341 vol 0.0802 (dil 0.1233 g -0.002) grey  3.2% ch 0.100 worst all bays: 60 N insert 8.62 1.7s
+it  43 beta    4 J   0.0337 vol 0.0810 (dil 0.1234 g -0.002) grey  3.0% ch 0.100 worst all bays: 60 N insert 8.54 1.7s
+it  44 beta    4 J   0.0333 vol 0.0820 (dil 0.1234 g -0.001) grey  2.9% ch 0.100 worst all bays: 60 N insert 8.45 1.9s
+it  45 beta    4 J   0.0329 vol 0.0828 (dil 0.1235 g -0.001) grey  2.8% ch 0.100 worst all bays: 60 N insert 8.35 1.8s
+it  46 beta    4 J   0.0324 vol 0.0837 (dil 0.1235 g +0.006) grey  2.7% ch 0.100 worst all bays: 60 N insert 8.26 2.0s
+it  47 beta    4 J   0.0321 vol 0.0840 (dil 0.1226 g -0.001) grey  2.3% ch 0.100 worst all bays: 60 N insert 8.19 1.9s
+it  48 beta    4 J   0.0316 vol 0.0846 (dil 0.1227 g -0.001) grey  2.0% ch 0.100 worst all bays: 60 N insert 8.08 1.7s
+it  49 beta    4 J   0.0313 vol 0.0850 (dil 0.1227 g -0.000) grey  1.7% ch 0.100 worst all bays: 60 N insert 7.99 1.9s
+it  50 beta    4 J   0.0311 vol 0.0852 (dil 0.1227 g -0.000) grey  1.6% ch 0.100 worst all bays: 60 N insert 7.93 1.9s
+it  51 beta    4 J   0.0310 vol 0.0854 (dil 0.1228 g +0.015) grey  1.6% ch 0.100 worst all bays: 60 N insert 7.87 1.9s
+it  52 beta    4 J   0.0336 vol 0.0830 (dil 0.1207 g -0.002) grey  2.6% ch 0.100 worst all bays: 60 N insert 8.42 1.9s
+it  53 beta    4 J   0.0322 vol 0.0836 (dil 0.1208 g -0.001) grey  1.8% ch 0.100 worst all bays: 60 N insert 8.16 1.8s
+it  54 beta    4 J   0.0318 vol 0.0839 (dil 0.1209 g -0.001) grey  1.6% ch 0.100 worst all bays: 60 N insert 8.08 1.8s
+it  55 beta    4 J   0.0316 vol 0.0841 (dil 0.1209 g -0.000) grey  1.5% ch 0.100 worst all bays: 60 N insert 8.03 1.8s
+it  56 beta    4 J   0.0314 vol 0.0841 (dil 0.1209 g +0.011) grey  1.4% ch 0.100 worst all bays: 60 N insert 7.99 1.8s
+it  57 beta    4 J   0.0338 vol 0.0822 (dil 0.1195 g -0.002) grey  2.5% ch 0.100 worst all bays: 60 N insert 8.47 1.8s
+it  58 beta    4 J   0.0326 vol 0.0825 (dil 0.1195 g -0.001) grey  1.8% ch 0.100 worst all bays: 60 N insert 8.26 1.9s
+it  59 beta    4 J   0.0321 vol 0.0828 (dil 0.1196 g -0.001) grey  1.6% ch 0.100 worst all bays: 60 N insert 8.16 1.9s
+it  60 beta    4 J   0.0318 vol 0.0831 (dil 0.1196 g -0.000) grey  1.3% ch 0.100 worst all bays: 60 N insert 8.1 1.9s
+it  61 beta    4 J   0.0316 vol 0.0832 (dil 0.1196 g +0.007) grey  1.3% ch 0.100 worst all bays: 60 N insert 8.06 1.8s
+it  62 beta    4 J   0.0327 vol 0.0821 (dil 0.1187 g -0.001) grey  1.9% ch 0.100 worst all bays: 60 N insert 8.24 1.8s
+layout: stopped (beta_stop) at it 62, beta 4, 122 s
+layout: beta 4 done: eroded design 3 bodies, main 95.6%; drawn bodies outside the main body: 1
+coarse stage done: 140 s, peak 1.10 GB
 seat posts side/overlap mm3 [(1, 1364.7), (1, 1364.7), (1, 466.9), (1, 466.9), (1, 1364.7), (1, 1364.7), (1, 466.9), (1, 466.9)]
 box_system_topo_v2: grid (56, 56, 64) h 8.0 = 200,704 cells; design 83,215 (42606.1 cm3), drawn 10,148, void 107,341
   support default: 2600 cells, 5406 nodes
@@ -88,87 +86,108 @@ box_system_topo_v2: grid (56, 56, 64) h 8.0 = 200,704 cells; design 83,215 (4260
   support side: 2900 cells, 6018 nodes
   154 cells of 8 design islands cut off by the keep-outs set void
 setup h 8.0: 19 s, 14 cases
-layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 2.32 cells, erosion depth 4.93 mm; volfrac 0.035 of 83,061 design cells
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 2.32 cells, erosion depth 4.93 mm; volfrac 0.071 of 83,061 design cells
 layout: WARNING nearly mirrored in x (1.0% of passive cells differ): no symmetry
 layout: 19 drawn bodies (10,148 cells), held solid in every realization; eroded filter: masked
 layout: 14 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
 fem: grid (56, 56, 64) = 200,704 elements, 328,308 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
-layout: warm start from a (32, 32, 32) grid (h 16.0): mean x 0.148
-it   1 beta    4 J  10.0000 vol 0.1402 (dil 0.2155 g +2.975) grey 22.4% ch 0.100 worst misuse: Overseer motors cut 5e+03 29.6s
-it   2 beta    4 J   5.7431 vol 0.1272 (dil 0.2047 g +2.776) grey 23.2% ch 0.100 worst misuse: Overseer motors cut 2.87e+03 30.0s
-it   3 beta    4 J   4.1788 vol 0.1130 (dil 0.1931 g +2.563) grey 15.9% ch 0.100 worst misuse: Overseer motors cut 2.07e+03 29.5s
-it   4 beta    4 J   6.6574 vol 0.0979 (dil 0.1804 g +2.329) grey 16.0% ch 0.100 worst misuse: Overseer motors cut 3.04e+03 29.0s
-it   5 beta    4 J  16.2860 vol 0.0824 (dil 0.1664 g +2.070) grey 15.7% ch 0.100 worst misuse: Overseer motors cut 7.45e+03 29.0s
-it   6 beta    4 J  32.9416 vol 0.0676 (dil 0.1510 g +1.568) grey 15.1% ch 0.100 worst Overseer catch -X-Y diag 1.57e+04 29.9s
-it   7 beta    4 J 109.9834 vol 0.0543 (dil 0.1348 g +1.291) grey 14.1% ch 0.100 worst all bays: 43.5 N across 5.78e+04 29.5s
-it   8 beta    4 J 105.4815 vol 0.0437 (dil 0.1186 g +1.017) grey 12.8% ch 0.100 worst misuse: Overseer motors cut 5.11e+04 29.9s
-it   9 beta    4 J 121.3089 vol 0.0340 (dil 0.1017 g +0.729) grey 12.2% ch 0.100 worst all bays: 43.5 N across 6.18e+04 28.9s
-it  10 beta    4 J  81.8139 vol 0.0282 (dil 0.0877 g +0.492) grey 11.9% ch 0.100 worst misuse: Overseer motors cut 3.92e+04 29.4s
-it  11 beta    4 J 121.2772 vol 0.0206 (dil 0.0696 g -0.019) grey 11.3% ch 0.100 worst all bays: 43.5 N across 6.2e+04 31.1s
-it  12 beta    4 J  97.3256 vol 0.0211 (dil 0.0699 g -0.014) grey 11.3% ch 0.100 worst misuse: Overseer motors cut 4.62e+04 34.3s
-it  13 beta    4 J 115.1194 vol 0.0206 (dil 0.0700 g -0.013) grey 11.4% ch 0.100 worst all bays: 43.5 N across 5.96e+04 28.1s
-it  14 beta    4 J  97.8387 vol 0.0205 (dil 0.0692 g -0.025) grey 11.3% ch 0.100 worst misuse: Overseer motors cut 4.64e+04 27.8s
-it  15 beta    4 J  79.7472 vol 0.0206 (dil 0.0700 g -0.013) grey 11.4% ch 0.100 worst misuse: Overseer motors cut 3.7e+04 33.6s
-it  16 beta    4 J  72.4710 vol 0.0210 (dil 0.0706 g -0.150) grey 11.4% ch 0.100 worst misuse: Overseer motors cut 3.4e+04 31.4s
-it  17 beta    4 J  59.7026 vol 0.0238 (dil 0.0777 g -0.064) grey 11.9% ch 0.100 worst misuse: Overseer motors cut 2.83e+04 31.2s
-it  18 beta    4 J  48.1077 vol 0.0255 (dil 0.0814 g -0.019) grey 12.3% ch 0.100 worst misuse: Overseer motors cut 2.24e+04 33.9s
-it  19 beta    4 J  39.9461 vol 0.0260 (dil 0.0823 g -0.008) grey 12.5% ch 0.100 worst Overseer catch -X-Y diag 1.8e+04 29.3s
-it  20 beta    4 J  33.8669 vol 0.0262 (dil 0.0824 g -0.007) grey 12.6% ch 0.100 worst Overseer catch -X-Y diag 1.59e+04 28.4s
-it  21 beta    4 J  30.3537 vol 0.0264 (dil 0.0824 g -0.090) grey 12.7% ch 0.100 worst Overseer catch -X-Y diag 1.39e+04 32.8s
-it  22 beta    4 J  27.3789 vol 0.0300 (dil 0.0886 g -0.022) grey 13.2% ch 0.100 worst XT60 insert at the -90 bay 6 1.37e+04 28.2s
-it  23 beta    4 J  26.4254 vol 0.0310 (dil 0.0896 g -0.011) grey 13.3% ch 0.100 worst XT60 insert at the -90 bay 6 1.36e+04 27.9s
-it  24 beta    4 J  26.2159 vol 0.0315 (dil 0.0897 g -0.009) grey 13.3% ch 0.100 worst XT60 insert at the -90 bay 6 1.36e+04 28.4s
-it  25 beta    4 J  26.1553 vol 0.0320 (dil 0.0897 g -0.010) grey 13.2% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 27.6s
-it  26 beta    4 J  26.1280 vol 0.0327 (dil 0.0897 g -0.035) grey 13.1% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 28.2s
-it  27 beta    4 J  26.1077 vol 0.0345 (dil 0.0918 g -0.012) grey 13.1% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 27.3s
-layout: beta 4 done: eroded design 30 bodies, main 89.6%; drawn bodies outside the main body: 28
-it  28 beta    8 J  39.5440 vol 0.0226 (dil 0.0990 g -0.064) grey  2.1% ch 0.100 worst Overseer catch -X-Y diag 2.01e+04 31.9s
-it  29 beta    8 J  26.7104 vol 0.0261 (dil 0.1040 g -0.017) grey  2.5% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 38.8s
-it  30 beta    8 J  26.0934 vol 0.0277 (dil 0.1045 g -0.012) grey  2.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 31.7s
-it  31 beta    8 J  26.0847 vol 0.0295 (dil 0.1051 g -0.006) grey  2.6% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 38.1s
-it  32 beta    8 J  26.0848 vol 0.0287 (dil 0.1051 g -0.006) grey  2.6% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 29.4s
-it  33 beta    8 J  26.0769 vol 0.0300 (dil 0.1052 g -0.006) grey  2.5% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 30.4s
-it  34 beta    8 J  26.0794 vol 0.0292 (dil 0.1051 g -0.006) grey  2.6% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 31.6s
-it  35 beta    8 J  26.0713 vol 0.0302 (dil 0.1050 g -0.007) grey  2.5% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 51.0s
-it  36 beta    8 J  26.0702 vol 0.0298 (dil 0.1053 g -0.005) grey  2.6% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 28.5s
-it  37 beta    8 J  26.0656 vol 0.0306 (dil 0.1053 g -0.005) grey  2.5% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 29.3s
-layout: beta 8 done: eroded design 29 bodies, main 89.6%; drawn bodies outside the main body: 26
-it  38 beta   16 J  31.3517 vol 0.0281 (dil 0.1064 g +0.005) grey  1.5% ch 0.100 worst Overseer catch -X-Y diag 1.51e+04 28.8s
-it  39 beta   16 J  26.1370 vol 0.0276 (dil 0.1049 g -0.008) grey  1.5% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 28.6s
-it  40 beta   16 J  26.0860 vol 0.0285 (dil 0.1053 g -0.005) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 27.5s
-it  41 beta   16 J  26.0898 vol 0.0283 (dil 0.1054 g -0.004) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 31.1s
-it  42 beta   16 J  26.0772 vol 0.0288 (dil 0.1053 g -0.005) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 30.1s
-it  43 beta   16 J  26.1560 vol 0.0282 (dil 0.1053 g -0.005) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 30.6s
-it  44 beta   16 J  26.0759 vol 0.0283 (dil 0.1047 g -0.010) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 28.7s
-it  45 beta   16 J  26.1647 vol 0.0280 (dil 0.1050 g -0.008) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 32.0s
-it  46 beta   16 J  26.0708 vol 0.0283 (dil 0.1046 g -0.011) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 36.8s
-it  47 beta   16 J  26.0819 vol 0.0284 (dil 0.1053 g -0.005) grey  1.4% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 30.6s
-layout: beta 16 done: eroded design 26 bodies, main 93.5%; drawn bodies outside the main body: 23
-it  48 beta   32 J  26.3912 vol 0.0288 (dil 0.1089 g +0.029) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 29.9s
-it  49 beta   32 J  39.0974 vol 0.0250 (dil 0.1059 g +0.001) grey  0.7% ch 0.100 worst Overseer catch -X-Y diag 1.89e+04 31.5s
-it  50 beta   32 J  26.6401 vol 0.0244 (dil 0.1052 g -0.005) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 29.4s
-it  51 beta   32 J  26.3910 vol 0.0254 (dil 0.1054 g -0.004) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 31.4s
-it  52 beta   32 J  26.3585 vol 0.0258 (dil 0.1053 g -0.005) grey  0.6% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 31.7s
-it  53 beta   32 J  26.4511 vol 0.0262 (dil 0.1054 g -0.004) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 35.7s
-it  54 beta   32 J  26.3434 vol 0.0266 (dil 0.1051 g -0.006) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 36.3s
-it  55 beta   32 J  26.3830 vol 0.0268 (dil 0.1054 g -0.004) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 29.3s
-it  56 beta   32 J  26.3287 vol 0.0270 (dil 0.1051 g -0.006) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 29.3s
-it  57 beta   32 J  26.3310 vol 0.0272 (dil 0.1054 g -0.004) grey  0.7% ch 0.100 worst XT60 insert at the -90 bay 6 1.35e+04 30.9s
-layout: stopped (grey) at it 57, beta 32, 1775 s
-layout: beta 32 done: eroded design 37 bodies, main 88.7%; drawn bodies outside the main body: 23
+layout: warm start from a (32, 32, 32) grid (h 16.0): mean x 0.179
+it   1 beta    4 J  10.0000 vol 0.1704 (dil 0.2518 g +1.416) grey 23.9% ch 0.100 worst misuse: Overseer motors cut 211 34.1s
+it   2 beta    4 J   8.6631 vol 0.1554 (dil 0.2404 g +1.307) grey 25.4% ch 0.100 worst misuse: Overseer motors cut 174 39.2s
+it   3 beta    4 J  11.4853 vol 0.1385 (dil 0.2277 g +1.184) grey 18.7% ch 0.100 worst misuse: Overseer motors cut 229 42.7s
+it   4 beta    4 J  22.3244 vol 0.1202 (dil 0.2134 g +1.047) grey 19.3% ch 0.100 worst XT60 insert at the -90 bay 6 409 34.6s
+it   5 beta    4 J  39.6775 vol 0.1020 (dil 0.1980 g +0.900) grey 19.2% ch 0.100 worst misuse: Overseer motors cut 795 32.6s
+it   6 beta    4 J  69.2519 vol 0.0862 (dil 0.1827 g +0.614) grey 18.6% ch 0.100 worst XT60 insert at the -120 bay  1.38e+03 31.6s
+it   7 beta    4 J 122.7127 vol 0.0733 (dil 0.1669 g +0.475) grey 17.4% ch 0.100 worst Overseer catch -X-Y diag 2.75e+03 33.2s
+it   8 beta    4 J  89.3916 vol 0.0632 (dil 0.1536 g +0.358) grey 16.8% ch 0.100 worst all bays: 60 N insert 1.82e+03 31.9s
+it   9 beta    4 J 138.2312 vol 0.0528 (dil 0.1359 g +0.201) grey 16.0% ch 0.100 worst Overseer catch -X-Y diag 2.94e+03 31.0s
+it  10 beta    4 J  98.1772 vol 0.0454 (dil 0.1216 g +0.074) grey 15.5% ch 0.100 worst all bays: 60 N insert 1.98e+03 33.4s
+it  11 beta    4 J  73.1536 vol 0.0416 (dil 0.1087 g -0.176) grey 15.2% ch 0.100 worst Overseer catch -X-Y diag 1.64e+03 34.2s
+it  12 beta    4 J  22.8893 vol 0.0491 (dil 0.1196 g -0.093) grey 16.1% ch 0.100 worst misuse: knocked over onto +X 471 29.1s
+it  13 beta    4 J  12.3453 vol 0.0551 (dil 0.1252 g -0.051) grey 16.4% ch 0.100 worst misuse: knocked over onto +X 267 31.5s
+it  14 beta    4 J   7.8704 vol 0.0594 (dil 0.1284 g -0.027) grey 16.3% ch 0.100 worst misuse: knocked over onto +X 168 29.5s
+it  15 beta    4 J   5.7252 vol 0.0622 (dil 0.1298 g -0.016) grey 16.0% ch 0.100 worst misuse: knocked over onto +X 120 30.8s
+it  16 beta    4 J   4.5350 vol 0.0641 (dil 0.1306 g -0.042) grey 15.7% ch 0.100 worst misuse: knocked over onto +X 91.5 34.7s
+it  17 beta    4 J   3.5565 vol 0.0684 (dil 0.1345 g -0.013) grey 15.7% ch 0.100 worst misuse: knocked over onto +X 69.5 32.0s
+it  18 beta    4 J   3.1428 vol 0.0702 (dil 0.1356 g -0.005) grey 15.5% ch 0.100 worst all bays: 60 N insert 62.6 31.9s
+it  19 beta    4 J   2.9187 vol 0.0710 (dil 0.1359 g -0.003) grey 15.4% ch 0.100 worst all bays: 60 N insert 58.9 31.2s
+it  20 beta    4 J   2.7553 vol 0.0716 (dil 0.1360 g -0.003) grey 15.3% ch 0.100 worst all bays: 60 N insert 55.8 32.2s
+it  21 beta    4 J   2.6239 vol 0.0720 (dil 0.1360 g +0.003) grey 15.3% ch 0.100 worst all bays: 60 N insert 53.2 33.7s
+it  22 beta    4 J   2.5666 vol 0.0717 (dil 0.1354 g -0.002) grey 15.2% ch 0.100 worst all bays: 60 N insert 51.5 32.8s
+it  23 beta    4 J   2.4866 vol 0.0720 (dil 0.1354 g -0.002) grey 15.2% ch 0.100 worst all bays: 60 N insert 49.6 31.9s
+it  24 beta    4 J   2.4233 vol 0.0722 (dil 0.1355 g -0.001) grey 15.2% ch 0.100 worst all bays: 60 N insert 48 32.0s
+it  25 beta    4 J   2.3716 vol 0.0724 (dil 0.1355 g -0.001) grey 15.2% ch 0.100 worst all bays: 60 N insert 46.7 33.7s
+it  26 beta    4 J   2.3285 vol 0.0725 (dil 0.1355 g +0.007) grey 15.2% ch 0.100 worst all bays: 60 N insert 45.6 32.9s
+it  27 beta    4 J   2.3590 vol 0.0716 (dil 0.1344 g -0.001) grey 15.1% ch 0.100 worst all bays: 60 N insert 45.9 31.5s
+it  28 beta    4 J   2.3280 vol 0.0717 (dil 0.1345 g -0.001) grey 15.1% ch 0.100 worst all bays: 60 N insert 45.2 32.1s
+it  29 beta    4 J   2.3046 vol 0.0718 (dil 0.1345 g -0.000) grey 15.1% ch 0.100 worst all bays: 60 N insert 44.6 31.6s
+it  30 beta    4 J   2.2844 vol 0.0719 (dil 0.1345 g -0.000) grey 15.1% ch 0.100 worst all bays: 60 N insert 44.1 31.4s
+it  31 beta    4 J   2.2667 vol 0.0719 (dil 0.1345 g +0.005) grey 15.1% ch 0.100 worst all bays: 60 N insert 43.7 32.7s
+it  32 beta    4 J   2.2957 vol 0.0712 (dil 0.1337 g -0.001) grey 15.0% ch 0.100 worst all bays: 60 N insert 44.1 31.1s
+layout: beta 4 done: eroded design 6 bodies, main 99.2%; drawn bodies outside the main body: 5
+it  33 beta    8 J   2.6663 vol 0.0612 (dil 0.1428 g -0.133) grey  3.4% ch 0.100 worst misuse: Overseer motors cut 51.7 30.0s
+it  34 beta    8 J   2.3839 vol 0.0668 (dil 0.1537 g -0.067) grey  3.8% ch 0.100 worst misuse: Overseer motors cut 45.2 30.1s
+it  35 beta    8 J   2.1590 vol 0.0724 (dil 0.1621 g -0.016) grey  4.1% ch 0.100 worst misuse: Overseer motors cut 40.2 32.7s
+it  36 beta    8 J   1.9923 vol 0.0748 (dil 0.1630 g +0.002) grey  4.1% ch 0.100 worst all bays: 60 N insert 36.4 31.3s
+it  37 beta    8 J   1.8859 vol 0.0752 (dil 0.1615 g -0.007) grey  4.1% ch 0.100 worst all bays: 60 N insert 35 31.2s
+it  38 beta    8 J   1.7844 vol 0.0767 (dil 0.1620 g -0.004) grey  4.1% ch 0.100 worst all bays: 60 N insert 33.5 31.0s
+it  39 beta    8 J   1.7115 vol 0.0778 (dil 0.1622 g -0.002) grey  4.1% ch 0.100 worst all bays: 60 N insert 32.4 31.4s
+it  40 beta    8 J   1.6555 vol 0.0785 (dil 0.1623 g -0.002) grey  4.0% ch 0.100 worst all bays: 60 N insert 31.5 30.8s
+it  41 beta    8 J   1.6085 vol 0.0791 (dil 0.1624 g +0.032) grey  4.0% ch 0.100 worst all bays: 60 N insert 30.7 33.8s
+it  42 beta    8 J   2.1374 vol 0.0720 (dil 0.1571 g -0.002) grey  4.2% ch 0.100 worst Overseer catch -X-Y diag 41.6 32.5s
+it  43 beta    8 J   1.7782 vol 0.0733 (dil 0.1567 g -0.004) grey  4.0% ch 0.100 worst all bays: 60 N insert 34.2 31.9s
+it  44 beta    8 J   1.7130 vol 0.0743 (dil 0.1571 g -0.002) grey  3.9% ch 0.100 worst all bays: 60 N insert 32.8 29.5s
+it  45 beta    8 J   1.6773 vol 0.0747 (dil 0.1572 g -0.001) grey  3.8% ch 0.100 worst all bays: 60 N insert 32.1 30.6s
+it  46 beta    8 J   1.6579 vol 0.0750 (dil 0.1573 g +0.017) grey  3.8% ch 0.100 worst all bays: 60 N insert 31.6 31.8s
+it  47 beta    8 J   1.7767 vol 0.0717 (dil 0.1543 g -0.002) grey  3.8% ch 0.100 worst all bays: 60 N insert 33.6 30.5s
+it  48 beta    8 J   1.7355 vol 0.0722 (dil 0.1545 g -0.001) grey  3.8% ch 0.100 worst all bays: 60 N insert 32.9 31.0s
+it  49 beta    8 J   1.7193 vol 0.0725 (dil 0.1546 g -0.000) grey  3.8% ch 0.100 worst all bays: 60 N insert 32.6 31.6s
+it  50 beta    8 J   1.7090 vol 0.0726 (dil 0.1546 g -0.000) grey  3.7% ch 0.100 worst all bays: 60 N insert 32.3 31.1s
+it  51 beta    8 J   1.7009 vol 0.0727 (dil 0.1546 g +0.008) grey  3.8% ch 0.100 worst all bays: 60 N insert 32.2 33.1s
+it  52 beta    8 J   1.7501 vol 0.0712 (dil 0.1532 g -0.001) grey  3.7% ch 0.100 worst all bays: 60 N insert 33 34.9s
+it  53 beta    8 J   1.7385 vol 0.0714 (dil 0.1533 g -0.000) grey  3.7% ch 0.100 worst all bays: 60 N insert 32.8 31.4s
+it  54 beta    8 J   1.7326 vol 0.0714 (dil 0.1533 g -0.000) grey  3.7% ch 0.100 worst all bays: 60 N insert 32.7 30.6s
+it  55 beta    8 J   1.7274 vol 0.0715 (dil 0.1533 g -0.000) grey  3.7% ch 0.100 worst all bays: 60 N insert 32.6 31.4s
+it  56 beta    8 J   1.7223 vol 0.0715 (dil 0.1533 g +0.004) grey  3.7% ch 0.100 worst all bays: 60 N insert 32.4 29.6s
+layout: beta 8 done: eroded design 6 bodies, main 99.3%; drawn bodies outside the main body: 5
+it  57 beta   16 J  52.5281 vol 0.0688 (dil 0.1538 g -0.025) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.15e+03 30.2s
+it  58 beta   16 J  52.3314 vol 0.0711 (dil 0.1568 g -0.005) grey  1.8% ch 0.100 worst misuse: Overseer motors cut 1.15e+03 29.9s
+it  59 beta   16 J  52.1750 vol 0.0711 (dil 0.1570 g -0.004) grey  1.8% ch 0.100 worst misuse: Overseer motors cut 1.14e+03 31.4s
+it  60 beta   16 J  52.0421 vol 0.0712 (dil 0.1572 g -0.003) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.14e+03 30.9s
+it  61 beta   16 J  51.8959 vol 0.0712 (dil 0.1573 g +0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.14e+03 32.1s
+it  62 beta   16 J  51.7354 vol 0.0707 (dil 0.1567 g -0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.13e+03 31.0s
+it  63 beta   16 J  51.5469 vol 0.0708 (dil 0.1568 g -0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.13e+03 28.6s
+it  64 beta   16 J  51.3397 vol 0.0710 (dil 0.1568 g -0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.13e+03 29.7s
+it  65 beta   16 J  51.1376 vol 0.0712 (dil 0.1568 g -0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.12e+03 29.6s
+it  66 beta   16 J  50.9273 vol 0.0714 (dil 0.1568 g +0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.12e+03 29.9s
+it  67 beta   16 J  50.7276 vol 0.0712 (dil 0.1564 g -0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.11e+03 30.6s
+it  68 beta   16 J  50.7153 vol 0.0715 (dil 0.1564 g -0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.11e+03 30.0s
+layout: beta 16 done: eroded design 6 bodies, main 99.3%; drawn bodies outside the main body: 5
+it  69 beta   32 J 332.3819 vol 0.0718 (dil 0.1597 g +0.018) grey  0.8% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 30.1s
+it  70 beta   32 J 332.4015 vol 0.0675 (dil 0.1562 g -0.004) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 30.8s
+it  71 beta   32 J 332.3591 vol 0.0687 (dil 0.1565 g -0.014) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 38.4s
+it  72 beta   32 J 332.3325 vol 0.0708 (dil 0.1583 g -0.003) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 31.0s
+it  73 beta   32 J 332.3205 vol 0.0711 (dil 0.1585 g -0.002) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 31.9s
+it  74 beta   32 J 332.3111 vol 0.0713 (dil 0.1586 g -0.001) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 37.0s
+it  75 beta   32 J 332.3024 vol 0.0714 (dil 0.1586 g -0.001) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 33.5s
+it  76 beta   32 J 332.2973 vol 0.0716 (dil 0.1586 g +0.003) grey  0.9% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 36.2s
+it  77 beta   32 J 332.2959 vol 0.0709 (dil 0.1580 g -0.000) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 32.3s
+it  78 beta   32 J 332.2916 vol 0.0711 (dil 0.1580 g -0.000) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 35.4s
+layout: stopped (grey) at it 78, beta 32, 2517 s
+layout: beta 32 done: eroded design 6 bodies, main 99.3%; drawn bodies outside the main body: 5
 {
- "standing, Overseer seated": 429.6230483995375,
- "Overseer catch +X+Y diag": 392.44486861808645,
- "Overseer catch -X-Y diag": 2449.350409031632,
- "misuse: Overseer motors cut": 403.46003873798014,
- "XT60 insert at the drone 60 N": 296.17640359056065,
- "XT60 insert at the -90 bay 60 N": 13526.23117300767,
- "XT60 pull at the -90 bay 50 N": 5758.974591522566,
- "XT60 insert at the -120 bay 60 N": 9004.348242645097,
- "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 1669.5507041466967,
- "all bays: 60 N insert": 6190.40517149093,
- "all bays: 43.5 N across": 3663.480399687919,
- "lifted by the side sheets 2 g": 1142.7592227487153,
- "misuse: set down hard 5 g": 403.9932637377428,
- "misuse: knocked over onto +X 5 g": 1107.073815394649
+ "standing, Overseer seated": 2.351010989576919,
+ "Overseer catch +X+Y diag": 6.48928837702852,
+ "Overseer catch -X-Y diag": 16.265402547430483,
+ "misuse: Overseer motors cut": 7.287211106423746,
+ "XT60 insert at the drone 60 N": 10.015794596086558,
+ "XT60 insert at the -90 bay 60 N": 8.459964249387077,
+ "XT60 pull at the -90 bay 50 N": 9.740337882058228,
+ "XT60 insert at the -120 bay 60 N": 14.571549793658242,
+ "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 5.576388414059869,
+ "all bays: 60 N insert": 17.97654958513525,
+ "all bays: 43.5 N across": 16.564867657543246,
+ "lifted by the side sheets 2 g": 1.7994485850749218,
+ "misuse: set down hard 5 g": 1.8632001306369441,
+ "misuse: knocked over onto +X 5 g": 14.260158339838997
 }

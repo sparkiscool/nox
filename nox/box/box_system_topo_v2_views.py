@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
-OUT = os.path.join(ROOT, "runs", "box_system", "v2", "topo"); LAY = os.path.join(ROOT, "runs", "box_system", "v2", "layout")
+OUT = os.environ.get("TOPO_OUT") or os.path.join(ROOT, "runs", "box_system", "v2", "topo"); LAY = os.path.join(ROOT, "runs", "box_system", "v2", "layout")
 
 
 def field():

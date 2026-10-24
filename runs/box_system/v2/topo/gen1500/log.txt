@@ -1,9 +1,5 @@
 === box_system_topo_v2: h 8.0, gen 1500.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
 seat posts side/overlap mm3 [(1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9), (1, 1447.7), (1, 1447.7), (1, 466.9), (1, 466.9)]
-/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
-  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
-/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
-  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
 box_system_topo_v2: grid (32, 32, 32) h 16.0 = 32,768 cells; design 9,082 (37199.9 cm3), drawn 2,528, void 21,158
   support default: 624 cells, 1350 nodes
   support hands: 162 cells, 400 nodes
@@ -86,10 +82,6 @@ layout: stopped (beta_stop) at it 64, beta 4, 123 s
 layout: beta 4 done: eroded design 6 bodies, main 95.7%; drawn bodies outside the main body: 2
 coarse stage done: 139 s, peak 0.95 GB
 seat posts side/overlap mm3 [(1, 1364.7), (1, 1364.7), (1, 466.9), (1, 466.9), (1, 1364.7), (1, 1364.7), (1, 466.9), (1, 466.9)]
-/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
-  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
-/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
-  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
 box_system_topo_v2: grid (56, 56, 64) h 8.0 = 200,704 cells; design 83,215 (42606.1 cm3), drawn 10,148, void 107,341
   support default: 2600 cells, 5406 nodes
   support hands: 722 cells, 1600 nodes

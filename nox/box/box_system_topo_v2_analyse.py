@@ -7,7 +7,7 @@ sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, ".."))
 import box_system_topo_v2 as T
 from topo.part import tm, voxelise
 
-OUT = os.path.join(T.ROOT, "runs", "box_system", "v2", "topo")
+OUT = os.environ.get("TOPO_OUT") or os.path.join(T.ROOT, "runs", "box_system", "v2", "topo")
 d = np.load(os.path.join(OUT, "density.npz")); h = float(d["h"]); sh = tuple(d["shape"]); o = np.asarray(d["origin"])
 rho = d["rho_n"].reshape(sh); solid = d["solid"].reshape(sh)
 ax = [o[k] + (np.arange(sh[k]) + 0.5) * h for k in range(3)]
@@ -18,11 +18,14 @@ anysheet = sheet["+X"] | sheet["-X"] | sheet["rear"]
 floor = Z < Z0 + h
 mat_struct = ((rho > 0.5) | solid) & ~anysheet
 st = ndi.generate_binary_structure(3, 1)
-lab, n = ndi.label(mat_struct, st)
+mat_all = mat_struct | (solid & anysheet)
+lab, n = ndi.label(mat_all, st)
 sizes = np.bincount(lab.ravel()); sizes[0] = 0
 order = np.argsort(sizes)[::-1]
 print("components", n, "largest cm3", [round(sizes[i] * h ** 3 / 1e3, 1) for i in order[:6]], "total struct cm3", round(mat_struct.sum() * h ** 3 / 1e3, 1))
 main = int(order[0])
+fl = np.unique(lab[(mat_all & (floor | anysheet))]); fl = fl[fl > 0]
+print('components touching floor/sheets (supported):', fl.tolist(), 'main is', main)
 setup, G = T.setup_factory(lambda *a: None, {})
 setup(h)
 bod = {}
@@ -31,7 +34,7 @@ for i, m in enumerate(G["posts"]): bod[f"post{i}"] = voxelise(tm(m), *ax)
 bod["stub"] = voxelise(tm(G["stub"]), *ax)
 for k, m in bod.items():
     ids = np.unique(lab[m & (lab > 0)])
-    print(k, ids.tolist(), "main" if main in ids else "NOT IN MAIN", "cells", int(m.sum()))
+    print(k, ids.tolist(), "SUPPORTED" if np.isin(ids, fl).any() else "FLOATING (grey/eroded only)", "cells", int(m.sum()))
 M = lab == main
 for nm, m in list(sheet.items()) + [("floor", floor)]:
     near = ndi.binary_dilation(m, st, iterations=1) & M
