@@ -68,3 +68,39 @@ layout: beta 2 done: eroded design 5 bodies, main 98.5%; drawn bodies outside th
 it  38 beta    4 J   0.7657 vol 0.0296 (dil 0.0726 g -0.252) grey  3.9% ch 0.100 worst switch panel push 50 N 2.46e+03 2.7s
 it  39 beta    4 J   0.1250 vol 0.0332 (dil 0.0812 g -0.163) grey  4.2% ch 0.100 worst switch panel push 50 N 385 2.4s
 it  40 beta    4 J   0.0398 vol 0.0374 (dil 0.0901 g -0.071) grey  5.2% ch 0.100 worst cage bump front 100 N (modul 104 2.4s
+git push failed: fatal: The current branch run/scan_stick_base-v21 has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin run/scan_stick_base-v21
+
+To
+it  41 beta    4 J   0.0381 vol 0.0414 (dil 0.0957 g -0.009) grey  5.9% ch 0.100 worst cage bump front 100 N (modul 102 2.5s
+it  42 beta    4 J   0.0375 vol 0.0428 (dil 0.0960 g -0.006) grey  5.7% ch 0.100 worst cage bump front 100 N (modul 101 2.5s
+it  43 beta    4 J   0.0369 vol 0.0441 (dil 0.0961 g -0.004) grey  5.7% ch 0.100 worst cage bump front 100 N (modul 100 2.4s
+it  44 beta    4 J   0.0364 vol 0.0454 (dil 0.0962 g -0.004) grey  5.3% ch 0.100 worst cage bump front 100 N (modul 99.3 2.3s
+it  45 beta    4 J   0.0359 vol 0.0468 (dil 0.0962 g -0.003) grey  5.2% ch 0.100 worst cage bump front 100 N (modul 98.3 2.3s
+it  46 beta    4 J   0.0354 vol 0.0482 (dil 0.0963 g +0.050) grey  5.1% ch 0.100 worst cage bump front 100 N (modul 97.3 2.5s
+it  47 beta    4 J   0.0489 vol 0.0448 (dil 0.0913 g -0.005) grey  4.9% ch 0.100 worst switch panel push 50 N 154 2.5s
+it  48 beta    4 J   0.0381 vol 0.0441 (dil 0.0912 g -0.005) grey  4.8% ch 0.100 worst L2 hit -y 100 N (joint) 101 2.5s
+it  49 beta    4 J   0.0354 vol 0.0452 (dil 0.0915 g -0.003) grey  4.7% ch 0.100 worst cage bump front 100 N (modul 97 2.5s
+layout: stopped (beta_stop) at it 49, beta 4, 120 s
+layout: beta 4 done: eroded design 2 bodies, main 99.8%; drawn bodies outside the main body: 1
+coarse stage done: 49 iterations, 171 s, peak 1.272244 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (209.98 cm3); 3.90 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.042 of 115,000 design cells
+layout: WARNING nearly mirrored in y (1.2% of passive cells differ): no symmetry
+layout: 2 drawn bodies (26,248 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 104) = 319,488 elements, 486,918 active dofs; backend direct (direct estimate 6.7 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 56) grid (h 4.0): mean x 0.055
+it   1 beta    4 J  10.0000 vol 0.0580 (dil 0.1079 g +0.371) grey  8.9% ch 0.100 worst switch panel push 50 N 268 40.6s
+it   2 beta    4 J   8.3938 vol 0.0527 (dil 0.1029 g +0.308) grey  9.0% ch 0.100 worst tie b2 my 222 41.3s
+it   3 beta    4 J  13.5983 vol 0.0470 (dil 0.0976 g +0.241) grey  9.1% ch 0.100 worst switch panel push 50 N 354 42.2s
+it   4 beta    4 J  16.4515 vol 0.0413 (dil 0.0923 g +0.173) grey  9.0% ch 0.100 worst tie b2 my 448 43.2s
+it   5 beta    4 J  26.8475 vol 0.0358 (dil 0.0865 g +0.099) grey  8.6% ch 0.100 worst switch panel push 50 N 684 43.0s
+it   6 beta    4 J  31.1250 vol 0.0317 (dil 0.0813 g -0.044) grey  8.2% ch 0.100 worst tie b2 mx 858 42.7s
+it   7 beta    4 J  12.7843 vol 0.0349 (dil 0.0836 g -0.018) grey  8.2% ch 0.100 worst tie b2 my 369 40.9s
+it   8 beta    4 J   8.6041 vol 0.0372 (dil 0.0839 g -0.014) grey  7.9% ch 0.100 worst tie b2 my 250 40.7s
+it   9 beta    4 J   6.9291 vol 0.0392 (dil 0.0842 g -0.010) grey  7.4% ch 0.100 worst tie b2 my 182 40.7s
+it  10 beta    4 J   6.2893 vol 0.0407 (dil 0.0843 g -0.009) grey  7.1% ch 0.100 worst cage bump back 100 N (spine  138 41.4s
