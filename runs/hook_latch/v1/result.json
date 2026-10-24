@@ -334,7 +334,7 @@
    "side": 1,
    "body_dir": 1,
    "theta": 20.1,
-   "g_unit": 31.25,
+   "g_unit": 31.26,
    "footprint": [
     73.2,
     49.8
@@ -403,7 +403,7 @@
    "side": -1,
    "body_dir": -1,
    "theta": 20.1,
-   "g_unit": 31.25,
+   "g_unit": 31.26,
    "footprint": [
     73.2,
     49.8

@@ -79,6 +79,7 @@ GUSSET = 8.0                           # ear post gusset: reach along the flange
 BOSS_R, BOSS_GUSSET = 6.0, 6.0         # panel v7 bosses o 12 (pad rule) and their 2 gussets, 2.0 thick, reach 6 (C)
 MAG_D, MAG_L = 3.0, 2.0                # hall magnet o 3 x 2 in the plunger's valley-side face (E, the A3144 kit's)
 HALL_W, HALL_H, HALL_T = 4.4, 3.4, 1.0 # A3144 (TO-92S 4 x 3 x 1.5, E) locating recess in the guide's valley-side face
+MAG_UP = 4.0                           # magnet centre over the plunger bottom: 2.45 under the pocket, 2.3 under the recess (C)
 
 # ---------------------------------------------------------------- loads (E) and allowables (printopt PETG)
 F_FUNC = 30.0      # N along the slope on one plunger: 55 N net up (60 push - 4.9 Scout), the two plungers on the near
@@ -219,7 +220,7 @@ def build(lay):
         box((b0 + b1) / 2 - SV_EAR_SPAN / 2 - 0.3, (b0 + b1) / 2 + SV_EAR_SPAN / 2 + 0.3, ev0 - 4, ev1, body_w[0] - 0.3, body_w[1] + 0.3)
     housing = gb + fl + frame
     housing = housing - bore - win - horn_keep - keep
-    w_mag_out = g_bot + 3.0                                    # magnet centre when the plunger is out (3 over its bottom)
+    w_mag_out = g_bot + MAG_UP                                 # magnet centre when the plunger is out
     housing = housing - box(-HALL_W / 2, HALL_W / 2, v_lo - 1, v_lo + HALL_T, w_mag_out - HALL_H / 2, w_mag_out + HALL_H / 2)
     for (bu, bv) in bolts: housing = housing - cyl_w(1.7, bu, bv, W_FL1 - 1, W_FL0 + 1)      # M3 clearance o 3.4
     # M2 x 12 through each post into a nut on the ear: o 2.4 slot open toward the servo body (the hole sits 2.45 from the
@@ -229,11 +230,11 @@ def build(lay):
     for hu in lay["holes"]: housing = housing - cyl_v(1.2, hu, ws, ev0 - 1, ev1 + POST_V + 1)
     # plunger (retracted: top flush with the face at w 0)
     pl = box(-PL_U / 2, PL_U / 2, -PL_V / 2, PL_V / 2, -L_pl, 0.0)
-    pk = PIN_D / 2 + dr / 2 + 0.3                              # pocket half length along u (pin + drift + 0.3)
+    pk = PIN_D / 2 + dr / 2 + 0.25                             # pocket half length along u (pin + drift + 0.25: walls >= 2.0)
     pocket = box(-pk, pk, PL_V / 2 - 5.5, PL_V / 2 + 1, pin_lo - POCKET_W / 2, pin_lo + POCKET_W / 2)   # 5.5 deep
     pl = pl - pocket
     pl = pl - mf.Manifold.cylinder(MAG_L + 0.2, MAG_D / 2 + 0.05, MAG_D / 2 + 0.05, 32).rotate([-90, 0, 0]) \
-        .translate([0, -PL_V / 2 - 0.01, -L_pl + 3.0])          # magnet pocket, valley-side face, 3 over the bottom
+        .translate([0, -PL_V / 2 - 0.01, -L_pl + MAG_UP])       # magnet pocket, valley-side face, MAG_UP over the bottom
     ch = 0.8                                                    # uphill top edge (a wheel rolling down meets it)
     pl = pl - mf.Manifold.batch_hull([box(PL_U / 2 - ch, PL_U / 2 + 1, -PL_V, PL_V, -0.01, 1),
                                       box(PL_U / 2 + 0.5, PL_U / 2 + 1, -PL_V, PL_V, -ch - 0.6, 1)])

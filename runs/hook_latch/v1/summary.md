@@ -8,5 +8,5 @@ Design: `nox/box/hook_latch.py` (drawn, manifold3d); doc `nox/box/box-hook-latch
 Placement: plunger axis from the wheel interface (54.1 C up the slope at x ±100 C); servo pose from a 20-case search (horn r 11.5 .. 17.5 C, shaft up / downhill, body direction): r 13 (C) the lightest, taken.
 DEFAULT: gap 1.5 (C) to the R 5 wheel; stroke 12 (C); lead-in 2.0 (C); plunger 8 x 12 (C); MG90S dims E (D18); loads E (30 N functional per plunger, 100 N misuse); hall switch per plunger.
 Open: funnel panel v7 (skin windows + bosses on the 4 seated-face panels, funnel chat); first fit with the real drone; pogo travel; servo and hall wiring.
-Review rounds 1 and 2 (FAIL) fixed: bolt access, ear-post webs, plunger pocket walls, held wheel height vs plunger top, panel boss pads and their clash with the guide block, the lead-in band claim.
+Review rounds 1, 2 and 3 (FAIL) fixed: walls under 2.0 at the hall recess, magnet and yoke pockets; bolt access, ear-post webs, plunger pocket walls, held wheel height vs plunger top, panel boss pads and their clash with the guide block, the lead-in band claim.
 Previews: preview.png (housing A), preview_housing_B.png, preview_plunger.png; motion.html / .mp4 / .gif / .png (latch close-up view).
