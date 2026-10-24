@@ -1,0 +1,443 @@
+[
+ {
+  "dy": 0.0,
+  "rail_y": [
+   74.0,
+   93.0
+  ],
+  "plate_y": [
+   94.0,
+   98.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 19.0,
+  "posts": true,
+  "ok": true,
+  "hw_top": 105.5,
+  "yc_min": 144.0
+ },
+ {
+  "dy": -1.0,
+  "rail_y": [
+   73.0,
+   92.0
+  ],
+  "plate_y": [
+   93.0,
+   97.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 20.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 104.5,
+  "yc_min": 143.0
+ },
+ {
+  "dy": -2.0,
+  "rail_y": [
+   72.0,
+   91.0
+  ],
+  "plate_y": [
+   92.0,
+   96.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 19.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 103.5,
+  "yc_min": 142.0
+ },
+ {
+  "dy": -3.0,
+  "rail_y": [
+   71.0,
+   90.0
+  ],
+  "plate_y": [
+   91.0,
+   95.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 18.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 102.5,
+  "yc_min": 141.0
+ },
+ {
+  "dy": -4.0,
+  "rail_y": [
+   70.0,
+   89.0
+  ],
+  "plate_y": [
+   90.0,
+   94.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 17.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 101.5,
+  "yc_min": 140.0
+ },
+ {
+  "dy": -5.0,
+  "rail_y": [
+   69.0,
+   88.0
+  ],
+  "plate_y": [
+   89.0,
+   93.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 16.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 100.5,
+  "yc_min": 139.0
+ },
+ {
+  "dy": -6.0,
+  "rail_y": [
+   68.0,
+   87.0
+  ],
+  "plate_y": [
+   88.0,
+   92.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 15.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 99.5,
+  "yc_min": 138.0
+ },
+ {
+  "dy": -7.0,
+  "rail_y": [
+   67.0,
+   86.0
+  ],
+  "plate_y": [
+   87.0,
+   91.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 14.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 98.5,
+  "yc_min": 137.0
+ },
+ {
+  "dy": -8.0,
+  "rail_y": [
+   66.0,
+   85.0
+  ],
+  "plate_y": [
+   86.0,
+   90.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 13.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 97.5,
+  "yc_min": 136.0
+ },
+ {
+  "dy": -9.0,
+  "rail_y": [
+   65.0,
+   84.0
+  ],
+  "plate_y": [
+   85.0,
+   89.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 12.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 96.5,
+  "yc_min": 135.0
+ },
+ {
+  "dy": -10.0,
+  "rail_y": [
+   64.0,
+   83.0
+  ],
+  "plate_y": [
+   84.0,
+   88.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 11.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 95.5,
+  "yc_min": 134.0
+ },
+ {
+  "dy": -11.0,
+  "rail_y": [
+   63.0,
+   82.0
+  ],
+  "plate_y": [
+   83.0,
+   87.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 10.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 94.5,
+  "yc_min": 133.0
+ },
+ {
+  "dy": -12.0,
+  "rail_y": [
+   62.0,
+   81.0
+  ],
+  "plate_y": [
+   82.0,
+   86.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 9.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 93.5,
+  "yc_min": 132.0
+ },
+ {
+  "dy": -13.0,
+  "rail_y": [
+   61.0,
+   80.0
+  ],
+  "plate_y": [
+   81.0,
+   85.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 8.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 92.5,
+  "yc_min": 131.0
+ },
+ {
+  "dy": -14.0,
+  "rail_y": [
+   60.0,
+   79.0
+  ],
+  "plate_y": [
+   80.0,
+   84.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 7.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 91.5,
+  "yc_min": 130.0
+ },
+ {
+  "dy": -15.0,
+  "rail_y": [
+   59.0,
+   78.0
+  ],
+  "plate_y": [
+   79.0,
+   83.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 6.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 90.5,
+  "yc_min": 129.0
+ },
+ {
+  "dy": -16.0,
+  "rail_y": [
+   58.0,
+   77.0
+  ],
+  "plate_y": [
+   78.0,
+   82.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 5.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 89.5,
+  "yc_min": 128.0
+ },
+ {
+  "dy": -17.0,
+  "rail_y": [
+   57.0,
+   76.0
+  ],
+  "plate_y": [
+   77.0,
+   81.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 4.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 88.5,
+  "yc_min": 127.0
+ },
+ {
+  "dy": -18.0,
+  "rail_y": [
+   56.0,
+   75.0
+  ],
+  "plate_y": [
+   76.0,
+   80.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 3.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 87.5,
+  "yc_min": 126.0
+ },
+ {
+  "dy": -19.0,
+  "rail_y": [
+   55.0,
+   74.0
+  ],
+  "plate_y": [
+   75.0,
+   79.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 2.5,
+  "posts": true,
+  "ok": true,
+  "hw_top": 86.5,
+  "yc_min": 125.0
+ },
+ {
+  "dy": -20.0,
+  "rail_y": [
+   54.0,
+   73.0
+  ],
+  "plate_y": [
+   74.0,
+   78.0
+  ],
+  "gmin": 1.0,
+  "worst": [
+   "railA:body",
+   "A:wheel0"
+  ],
+  "tail_to_plate": 1.5,
+  "posts": false,
+  "ok": true,
+  "hw_top": 85.5,
+  "yc_min": 124.0
+ }
+]
