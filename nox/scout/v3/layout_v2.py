@@ -1150,11 +1150,20 @@ for opt in PAD_OPTIONS:
     if pad: others["pads"] = pts(union(pad + [carrier]), 600)
     WP = np.vstack([wheel_pts()] + [p_.vertices for p_ in KA_PADS + SKIDS]); DIRS = fib_sphere(1200)
     so_all = np.max(np.stack([(DIRS @ p.T).max(1) for p in others.values()]), 0)
+    # the swap opening (40 deg about straight down): there the receiver / cartridge need margin >= 0 (openings rule), met by the
+    # rods or the swap set's own edge skids; everywhere else the rods lead every part by CONTACT_MARGIN (review PR 94)
+    so_swap = np.max(np.stack([(DIRS @ others[k].T).max(1) for k in ("receiver", "cartridge")]), 0)
+    so_rest = np.max(np.stack([(DIRS @ p.T).max(1) for k, p in others.items() if k not in ("receiver", "cartridge")]), 0)
+    IN_CONE = DIRS @ np.array([0, 0, -1.0]) >= math.cos(math.radians(SWAP_CONE))
+    SK_SUP = (DIRS @ np.vstack([pts(m_, 800) for m_ in EDGE_SKIDS]).T).max(1)
     def cage_support(ms):
         P_ = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 12)]) for a_, b_ in ms] + [WP])
         return (DIRS @ P_.T).max(1) + ROD_R
-    base_margin = cage_support(members) - so_all                      # per direction, the full ground structure
-    target = np.minimum(base_margin, CONTACT_MARGIN)
+    def _marg(ms):
+        cs = cage_support(ms)
+        return cs - so_rest, np.where(IN_CONE, np.maximum(cs, SK_SUP) - so_swap, cs - so_swap)
+    base_r, base_s = _marg(members)                                    # per direction, the full ground structure
+    tgt_r = np.minimum(base_r, CONTACT_MARGIN); tgt_s = np.minimum(base_s, np.where(IN_CONE, 0.0, CONTACT_MARGIN))
     # crash stroke per hit direction = how far the cage leads everything else there, less 1.0 (full ground structure)
     allo = np.vstack(list(others.values()))
     Pc = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 12)]) for a_, b_ in members] + [WP])
@@ -1187,8 +1196,13 @@ for opt in PAD_OPTIONS:
                 m_ += g_; mom_ += g_ * c_
             if np.hypot(*(mom_ / m_)[:2]) > CG_TOL: return False
         return True
-    contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all()) and (cg_ok(ms) or not cg_ok(members))
-    contact_ok.deficit = lambda ms: float(np.maximum(target - (cage_support(ms) - so_all), 0).sum())   # mm short, summed over directions
+    def contact_ok(ms):
+        mr, ms_ = _marg(ms)
+        return bool((mr >= tgt_r - 1e-6).all() and (ms_ >= tgt_s - 1e-6).all()) and (cg_ok(ms) or not cg_ok(members))
+    def _cdef(ms):
+        mr, ms_ = _marg(ms)
+        return float(np.maximum(tgt_r - mr, 0).sum() + np.maximum(tgt_s - ms_, 0).sum())   # mm short, summed over directions
+    contact_ok.deficit = _cdef
     if os.environ.get("WARM"):
         chosen, fe, note = warm_start(N, kind, members, os.environ["WARM"], CASES, contact_ok)
     else:
@@ -1205,14 +1219,21 @@ for opt in PAD_OPTIONS:
     used = sorted(set([i for e in chosen for i in e]))
     cage_pts = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 25)]) for a_, b_ in chosen] + [N[[i for i in used if kind[i] != "C"]]])
     cage_all = np.vstack([cage_pts, wheel_pts()])
-    cf = contact_first(cage_all, ROD_R, others)
+    cf_all = contact_first(cage_all, ROD_R, others)
+    mr_, ms2_ = _marg(chosen)                                          # rods vs everything outside the swap set; the swap set with the
+    out_ = np.where(IN_CONE, np.inf, ms2_)                             # cone rule (in the cone, rods or its own skids, >= 0)
+    k_ = int(np.argmin(np.minimum(mr_, out_))); kc_ = int(np.argmin(np.where(IN_CONE, ms2_, np.inf)))
+    cf = (float(min(mr_.min(), out_.min())), "receiver / cartridge" if out_[k_] < mr_[k_] else "rest", DIRS[k_],
+          float(ms2_[kc_]) if IN_CONE.any() else None)
+    say(f"   cage first: rods ahead by {cf[0]:.2f} mm at worst outside the swap cone (vs {cf[1]}), swap set in the {SWAP_CONE:.0f} deg cone "
+        f"{cf[3]:.2f} mm (>= 0, rods or its skids); plain support check over everything {cf_all[0]:.2f} (vs {cf_all[1]})")
     mass = cage_mass(N, kind, chosen) + 8 * 0.2                                    # + 8 wheels (M, cage v2)
     worst = max(fe, key=lambda r: r["worst"])
     say(f"   ESO {note}: {len(chosen)} rods, cage {mass:.1f} g (E); worst index {worst['worst']:.2f} "
         f"({worst['case']}); max deflection at a load {max(r['defl'] for r in fe):.2f} mm; contact-first {cf[0]:.2f} mm (worst vs {cf[1]})")
     runs.append(dict(yp=yp, zp=zp, chosen=chosen, fe=fe, cf=cf, mass=mass, members=members, pp=(pad, carrier, body, tips), fm=fm, rmin=rmin, why=why))
 
-ok = [r for r in runs if r["cf"][0] >= CONTACT_MARGIN and feasible(r["fe"])]
+ok = [r for r in runs if r["cf"][0] >= CONTACT_MARGIN - 1e-6 and (r["cf"][3] is None or r["cf"][3] >= -1e-6) and feasible(r["fe"])]
 best = min(ok, key=lambda r: r["mass"]) if ok else max(runs, key=lambda r: (min(r["cf"][0], CONTACT_MARGIN), -r["mass"]))
 say(f"\nchosen: {'pads (%s, %s)' % (best['yp'], best['zp']) if best['yp'] is not None else 'no belly post'}{'' if ok else '  (not every rule met: best contact-first margin kept)'}")
 say(f"elapsed {time.time() - t0:.0f} s")
