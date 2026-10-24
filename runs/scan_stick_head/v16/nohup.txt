@@ -246,3 +246,9 @@ it  47 beta   32 J  19.8281 vol 0.0548 (dil 0.1374 g -0.000) grey  0.9% ch 0.100
 layout: stopped (grey) at it 47, beta 32, 562 s
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 706 s, peak 3.0476 GB
+build: organic surface at pitch 0.286 mm (x7), skins 115.75 cm3, field 149.77 cm3, in env - cuts 133.19 cm3 (layout 133.19, level offset -0.794 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,046,068 faces, 324 s
+build: 13 shells, volumes [132715.9, 0.6, 0.6, 0.0, 0.0, 0.0] mm3; dropped specks [0.63, 0.0, 0.0, 0.0, 0.0, 0.63, 0.0, 0.0, 0.0]; sealed cavities kept [0.0, 0.0, 0.0] mm3
+solid check: FAIL {"bodies_plain": 12, "bodies_eroded": 1, "eroded_volumes_mm3": [102261.0], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 14, "ok": false}
+function check: {'skin_mm3': 95158.7, 'skin_missing_mm3': 170.82, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.24 in 'L2 hit front 100 N' at [43.5, 21.0, 158.0]
+RESULT {"name": "scan_stick_head", "solid_ok": false, "mass_g": 168.55, "worst": 0.236, "function_ok": true, "bodies": 2}
