@@ -169,3 +169,20 @@ it  17 beta    4 J  26.1894 vol 0.0257 (dil 0.0813 g -0.044) grey 12.3% ch 0.100
 it  18 beta    4 J  23.8355 vol 0.0276 (dil 0.0839 g -0.014) grey 12.6% ch 0.100 worst Overseer catch -X-Y diag 6.6e+04 34.0s
 it  19 beta    4 J  21.0814 vol 0.0272 (dil 0.0841 g -0.011) grey 12.8% ch 0.100 worst Overseer catch -X-Y diag 5.83e+04 30.7s
 it  20 beta    4 J  17.6596 vol 0.0269 (dil 0.0842 g -0.009) grey 13.0% ch 0.100 worst Overseer catch -X-Y diag 4.86e+04 32.9s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  21 beta    4 J  15.2201 vol 0.0270 (dil 0.0844 g -0.085) grey 13.0% ch 0.100 worst Overseer catch -X-Y diag 4.19e+04 27.5s
+it  22 beta    4 J  13.4130 vol 0.0313 (dil 0.0910 g -0.014) grey 13.7% ch 0.100 worst Overseer catch -X-Y diag 3.7e+04 27.3s
+it  23 beta    4 J  12.2973 vol 0.0318 (dil 0.0914 g -0.009) grey 13.7% ch 0.100 worst Overseer catch -X-Y diag 3.39e+04 26.8s
+it  24 beta    4 J  11.5193 vol 0.0327 (dil 0.0915 g -0.007) grey 13.6% ch 0.100 worst Overseer catch -X-Y diag 3.17e+04 27.1s
+it  25 beta    4 J  10.6716 vol 0.0335 (dil 0.0916 g -0.007) grey 13.5% ch 0.100 worst Overseer catch -X-Y diag 2.93e+04 27.0s
+it  26 beta    4 J   9.6426 vol 0.0343 (dil 0.0917 g -0.022) grey 13.3% ch 0.100 worst Overseer catch -X-Y diag 2.63e+04 27.6s
+it  27 beta    4 J   8.9900 vol 0.0360 (dil 0.0931 g -0.007) grey 13.3% ch 0.100 worst Overseer catch -X-Y diag 2.44e+04 27.9s
+it  28 beta    4 J   8.4539 vol 0.0365 (dil 0.0933 g -0.005) grey 13.2% ch 0.100 worst Overseer catch -X-Y diag 2.28e+04 28.0s
+it  29 beta    4 J   7.7423 vol 0.0367 (dil 0.0933 g -0.004) grey 13.2% ch 0.100 worst Overseer catch -X-Y diag 2.06e+04 28.4s
+it  30 beta    4 J   6.4810 vol 0.0366 (dil 0.0933 g -0.004) grey 13.1% ch 0.100 worst Overseer catch -X-Y diag 1.63e+04 29.3s
