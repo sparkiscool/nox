@@ -1,0 +1,57 @@
+{
+ "overseer": {
+  "set_centre_z_c": 85.5,
+  "receiver_len": 179.6,
+  "receiver_w": 76.2,
+  "receiver_seat_z": [
+   -42.1,
+   24.8
+  ],
+  "yaws_deg": [
+   -5.0,
+   5.0
+  ],
+  "lift_mm": [
+   0.0,
+   5.7
+  ],
+  "swept_down_mm": 120.0,
+  "overlap_mm3": 0.0,
+  "min_gap_mm": {
+   "+x": 3.26,
+   "-x": 3.36,
+   "+y": 40.0,
+   "-y": 40.0
+  },
+  "max_abs_seat_x": 92.35,
+  "passes_3_a_side": true
+ },
+ "scout": {
+  "set_centre_z_c": 46.5,
+  "receiver_len": 101.6,
+  "receiver_w": 61.2,
+  "receiver_seat_z": [
+   -42.1,
+   11.8
+  ],
+  "yaws_deg": [
+   -5.0,
+   5.0
+  ],
+  "lift_mm": [
+   0.0,
+   5.7
+  ],
+  "swept_down_mm": 120.0,
+  "overlap_mm3": 0.0,
+  "min_gap_mm": {
+   "+x": 40.0,
+   "-x": 40.0,
+   "+y": 40.0,
+   "-y": 40.0
+  },
+  "max_abs_seat_x": 52.84,
+  "passes_3_a_side": true
+ },
+ "note": "min_gap = least distance from the set (receiver + lid on the drone, cartridge swept down 120) to that face's panels over the yaw and lift sweep (manifold3d min_gap, C on M meshes)"
+}

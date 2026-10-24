@@ -1,0 +1,28 @@
+{
+ "case": "panel v7 (latched, +-y) as-built plate FE with its valley support only above z 12.8 (v >= 16.26; the v8 plain partner flange ends there), bottom edge supported as before (PR 81 review item 3), C",
+ "before": {
+  "valley_from_v": 0.0,
+  "util": 0.913,
+  "worst": "press u60 v90",
+  "stress_MPa": 6.6,
+  "boss_defl_mm": {
+   "latch functional 30 N x 2": 0.328,
+   "latch misuse 100 N": 0.733
+  }
+ },
+ "after": {
+  "valley_from_v": 16.26,
+  "util": 0.959,
+  "worst": "press u60 v90",
+  "stress_MPa": 6.6,
+  "boss_defl_mm": {
+   "latch functional 30 N x 2": 0.34,
+   "latch misuse 100 N": 0.751
+  },
+  "press_u100_v40": [
+   0.071,
+   2.8
+  ]
+ },
+ "how": "NOX_FUNNEL_VALLEY_V0=16.2635 with funnel_panel_v7 asbuilt_mask() + panel_opt_v7.report() (latched mode)"
+}

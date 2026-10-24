@@ -40,168 +40,168 @@
   ]
  },
  "skin_only": {
-  "face_g": 64.5,
-  "util": 16.132,
+  "face_g": 70.0,
+  "util": 5.265,
   "worst": "press u60 v90",
-  "stress_MPa": 22.9
+  "stress_MPa": 19.0
  },
  "sweep": [
   {
    "vf": 0.4,
-   "face_g": 171.2,
-   "util": 0.483,
+   "face_g": 172.6,
+   "util": 0.228,
    "worst": "press u60 v90",
-   "stress_MPa": 6.7,
+   "stress_MPa": 3.2,
    "ok": true
   },
   {
    "vf": 0.2,
-   "face_g": 118.3,
-   "util": 0.867,
+   "face_g": 121.4,
+   "util": 0.393,
    "worst": "press u60 v90",
-   "stress_MPa": 7.0,
+   "stress_MPa": 6.2,
    "ok": true
   },
   {
    "vf": 0.1,
-   "face_g": 91.5,
-   "util": 1.693,
-   "worst": "press u60 v90",
-   "stress_MPa": 15.5,
-   "ok": false
-  },
-  {
-   "vf": 0.15,
-   "face_g": 104.9,
-   "util": 1.177,
-   "worst": "press u60 v90",
-   "stress_MPa": 10.5,
-   "ok": false
-  },
-  {
-   "vf": 0.175,
-   "face_g": 111.3,
-   "util": 1.003,
-   "worst": "press u60 v90",
-   "stress_MPa": 7.0,
-   "ok": false
-  },
-  {
-   "vf": 0.1875,
-   "face_g": 114.4,
-   "util": 0.951,
-   "worst": "press u60 v90",
-   "stress_MPa": 7.0,
+   "face_g": 96.2,
+   "util": 0.67,
+   "worst": "press u90 v65",
+   "stress_MPa": 14.0,
    "ok": true
   },
   {
-   "vf": 0.1813,
-   "face_g": 112.9,
+   "vf": 0.05,
+   "face_g": 83.1,
+   "util": 1.099,
+   "worst": "press u90 v90",
+   "stress_MPa": 14.6,
+   "ok": false
+  },
+  {
+   "vf": 0.075,
+   "face_g": 89.3,
+   "util": 0.949,
+   "worst": "top edge u0",
+   "stress_MPa": 13.8,
+   "ok": true
+  },
+  {
+   "vf": 0.0625,
+   "face_g": 86.2,
    "util": 0.968,
-   "worst": "press u60 v90",
-   "stress_MPa": 7.0,
+   "worst": "top edge u0",
+   "stress_MPa": 12.1,
    "ok": true
+  },
+  {
+   "vf": 0.0563,
+   "face_g": 84.6,
+   "util": 1.01,
+   "worst": "press u90 v90",
+   "stress_MPa": 12.5,
+   "ok": false
   }
  ],
  "chosen": {
-  "face_g": 112.9,
+  "face_g": 86.2,
   "util": 0.968,
-  "worst": "press u60 v90",
-  "stress_MPa": 7.0,
-  "stress_case": "press u30 v65",
+  "worst": "top edge u0",
+  "stress_MPa": 12.1,
+  "stress_case": "top edge u40",
   "ok": true,
   "per_case": {
    "press u0 v40": [
-    0.313,
-    2.8
-   ],
-   "press u30 v40": [
-    0.76,
-    7.0
-   ],
-   "press u60 v40": [
-    0.424,
-    5.5
-   ],
-   "press u90 v40": [
-    0.061,
-    1.0
-   ],
-   "press u0 v65": [
-    0.832,
-    3.1
-   ],
-   "press u30 v65": [
-    1.167,
-    7.0
-   ],
-   "press u60 v65": [
-    0.584,
-    4.5
-   ],
-   "press u90 v65": [
-    0.337,
-    4.2
-   ],
-   "press u120 v65": [
-    0.086,
-    3.2
-   ],
-   "press u0 v90": [
-    1.462,
-    3.2
-   ],
-   "press u30 v90": [
-    1.403,
-    3.8
-   ],
-   "press u60 v90": [
-    0.968,
-    2.6
-   ],
-   "press u90 v90": [
-    0.727,
-    4.3
-   ],
-   "press u120 v90": [
-    0.295,
-    3.7
-   ],
-   "press u100 v40": [
-    0.039,
-    1.9
-   ],
-   "press u100 v65": [
-    0.343,
-    5.4
-   ],
-   "press u100 v43.6": [
-    0.069,
-    2.9
-   ],
-   "top edge u0": [
-    2.005,
-    3.8
-   ],
-   "top edge u40": [
-    1.736,
-    3.3
-   ],
-   "top edge u80": [
-    1.211,
+    0.235,
     3.9
    ],
+   "press u30 v40": [
+    0.006,
+    0.5
+   ],
+   "press u60 v40": [
+    0.206,
+    6.0
+   ],
+   "press u90 v40": [
+    0.513,
+    6.5
+   ],
+   "press u0 v65": [
+    0.544,
+    3.9
+   ],
+   "press u30 v65": [
+    0.252,
+    4.6
+   ],
+   "press u60 v65": [
+    0.431,
+    5.2
+   ],
+   "press u90 v65": [
+    0.816,
+    7.2
+   ],
+   "press u120 v65": [
+    0.173,
+    4.5
+   ],
+   "press u0 v90": [
+    1.664,
+    6.9
+   ],
+   "press u30 v90": [
+    1.255,
+    8.5
+   ],
+   "press u60 v90": [
+    0.922,
+    7.7
+   ],
+   "press u90 v90": [
+    0.912,
+    8.5
+   ],
+   "press u120 v90": [
+    0.692,
+    8.5
+   ],
+   "press u100 v40": [
+    0.257,
+    5.2
+   ],
+   "press u100 v65": [
+    0.698,
+    7.0
+   ],
+   "press u100 v43.6": [
+    0.333,
+    5.7
+   ],
+   "top edge u0": [
+    2.904,
+    8.9
+   ],
+   "top edge u40": [
+    2.865,
+    12.1
+   ],
+   "top edge u80": [
+    2.038,
+    9.8
+   ],
    "top edge u120": [
-    0.593,
-    4.0
+    1.551,
+    11.3
    ],
    "top edge u150": [
-    0.075,
-    4.8
+    0.254,
+    9.0
    ],
    "uniform 20 N": [
-    0.228,
-    1.1
+    0.099,
+    1.8
    ]
   },
   "latch_boss_defl_mm": {}

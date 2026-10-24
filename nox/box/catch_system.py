@@ -252,7 +252,7 @@ if __name__ == "__main__":
 # The file is posed in the box W frame of box structure v2 (hub 24 Oct: the arm v7 sweep needs the funnel in the box
 # frame); the analytic loads above stay in the seat frame. Every pose in the file = SEAT_TO_W @ its seat pose; change the
 # 4 numbers here (box structure v2, C; Y_C may move once more) and rerun update_assembly() + panels_v7_into_assembly().
-Y_C, Y_FUN, Z_SEAT, R_RING = 138.0, 140.0, 155.3, 113.0     # tab line, funnel centre (Y_C + 2), seat z 0 in W, bay ring R (C)
+Y_C, Y_FUN, Z_SEAT, R_RING = 165.0, 167.0, 155.3, 113.0     # tab line (arm DEFAULT, hub 24 Oct), funnel centre (Y_C + 2), seat z 0 in W, bay ring R (box structure v2, C)
 SEAT_TO_W = np.array([[0, -1.0, 0, 0], [1.0, 0, 0, Y_FUN], [0, 0, 1.0, Z_SEAT], [0, 0, 0, 1.0]])   # seat y -> W -X, seat x -> W Y
                                                             # (box_system.py convention: the seated faces +-y face W -+X)
 FRAME_NOTE = (f"Frame: box W of box structure v2 (Y_C {Y_C:g}, Y_FUN {Y_FUN:g}, Z_SEAT {Z_SEAT:g}, R_RING {R_RING:g}, C; "

@@ -4,7 +4,7 @@
  "skin": 2.0,
  "rib_h": 9.0,
  "rib_vf": 0.2,
- "rib_vf_plain": 0.18125000000000002,
+ "rib_vf_plain": 0.0625,
  "unlatched_faces": "v8 plain",
  "v8_geometry": {
   "z_bottom": 12.8,
@@ -31,8 +31,8 @@
   "wheel_contact_v_from_new_edge": 27.34
  },
  "A_v8_plain": {
-  "cm3": 51.1,
-  "g_PETG": 64.9,
+  "cm3": 42.4,
+  "g_PETG": 53.8,
   "bbox": [
    91.1,
    167.8,
@@ -46,8 +46,8 @@
   "watertight_after_stl_reload": true
  },
  "B_v8_plain": {
-  "cm3": 51.0,
-  "g_PETG": 64.7,
+  "cm3": 42.3,
+  "g_PETG": 53.7,
   "bbox": [
    91.1,
    165.6,
@@ -64,7 +64,7 @@
   "unlatched": "v8 plain",
   "overlap_mm3": 0.0,
   "bodies": "1",
-  "g_PETG": 579.0,
+  "g_PETG": 534.8,
   "bbox": [
    336.8,
    336.8,
@@ -187,76 +187,76 @@
  "wheel_spot_system": {
   "case": "press u100 v43.6 (20 N)",
   "per_20N": [
-   0.064,
-   2.8
+   0.12,
+   1.9
   ],
   "allow_MPa": 19.5,
   "rows": {
    "Scout insert 60 N": {
     "load_N": 7.24,
-    "stress_MPa": 1.01,
-    "index": 0.052,
-    "defl_mm": 0.023
+    "stress_MPa": 0.69,
+    "index": 0.035,
+    "defl_mm": 0.043
    },
    "Scout pull 50 N": {
     "load_N": 17.04,
-    "stress_MPa": 2.39,
-    "index": 0.122,
-    "defl_mm": 0.055
+    "stress_MPa": 1.62,
+    "index": 0.083,
+    "defl_mm": 0.102
    },
    "Scout hand lift 100 N at a corner": {
     "load_N": 46.25,
-    "stress_MPa": 6.47,
-    "index": 0.332,
-    "defl_mm": 0.148
+    "stress_MPa": 4.39,
+    "index": 0.225,
+    "defl_mm": 0.277
    },
    "Scout catch 6 g": {
     "load_N": 6.06,
-    "stress_MPa": 0.85,
-    "index": 0.044,
-    "defl_mm": 0.019
+    "stress_MPa": 0.58,
+    "index": 0.03,
+    "defl_mm": 0.036
    },
    "Overseer pack in: seat (latch in)": {
     "load_N": 5.09,
-    "stress_MPa": 0.71,
-    "index": 0.037,
-    "defl_mm": 0.016
+    "stress_MPa": 0.48,
+    "index": 0.025,
+    "defl_mm": 0.031
    },
    "Overseer pack in: catch 6 g (latch in)": {
     "load_N": 35.63,
-    "stress_MPa": 4.99,
-    "index": 0.256,
-    "defl_mm": 0.114
+    "stress_MPa": 3.38,
+    "index": 0.174,
+    "defl_mm": 0.214
    },
    "Overseer pack in: hand lift 100 N": {
     "load_N": 51.21,
-    "stress_MPa": 7.17,
-    "index": 0.368,
-    "defl_mm": 0.164
+    "stress_MPa": 4.86,
+    "index": 0.249,
+    "defl_mm": 0.307
    },
    "Overseer pack in: pull 50 N": {
     "load_N": 17.9,
-    "stress_MPa": 2.51,
-    "index": 0.129,
-    "defl_mm": 0.057
+    "stress_MPa": 1.7,
+    "index": 0.087,
+    "defl_mm": 0.107
    },
    "Overseer pack out: seat (latch in)": {
     "load_N": 3.69,
-    "stress_MPa": 0.52,
-    "index": 0.026,
-    "defl_mm": 0.012
+    "stress_MPa": 0.35,
+    "index": 0.018,
+    "defl_mm": 0.022
    },
    "Overseer pack out: catch 6 g (latch in)": {
     "load_N": 25.82,
-    "stress_MPa": 3.61,
-    "index": 0.185,
-    "defl_mm": 0.083
+    "stress_MPa": 2.45,
+    "index": 0.126,
+    "defl_mm": 0.155
    },
    "Overseer pack out: hand lift 100 N": {
     "load_N": 49.83,
-    "stress_MPa": 6.98,
-    "index": 0.358,
-    "defl_mm": 0.159
+    "stress_MPa": 4.73,
+    "index": 0.243,
+    "defl_mm": 0.299
    },
    "Overseer pack out: insert 60 N": {
     "load_N": 0.17,
@@ -267,7 +267,7 @@
   },
   "worst": [
    "Overseer pack in: hand lift 100 N",
-   0.368
+   0.249
   ]
  },
  "solid_check": {
@@ -286,12 +286,12 @@
  },
  "date": "2026-10-24",
  "status": "DONE",
- "mass_g": 64.9,
+ "mass_g": 53.8,
  "mass_tag": "M",
- "worst_index": 0.949,
- "worst_case": "press u60 v90",
+ "worst_index": 0.911,
+ "worst_case": "top edge u0",
  "solid_ok": true,
  "bed_face": "contact face",
  "bed_contact_mm2": 11592
 }
-fe as-built: v8 plain {'face_g': np.float64(120.7), 'util': 0.949, 'worst': 'press u60 v90', 'stress_MPa': 7.0, 'stress_case': 'press u30 v65', 'ok': True, 'latch_boss_defl_mm': {}}
+fe as-built: v8 plain {'face_g': np.float64(102.9), 'util': 0.911, 'worst': 'top edge u0', 'stress_MPa': 12.8, 'stress_case': 'top edge u40', 'ok': True, 'latch_boss_defl_mm': {}}

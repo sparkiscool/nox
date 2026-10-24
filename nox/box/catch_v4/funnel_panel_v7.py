@@ -49,7 +49,7 @@ WIN_U, WIN_V = PO.WIN_U, PO.WIN_V
 RIB_GROW_V7 = 1.25                                               # least outline grow whose as-built FE passes (sweep 1.0 .. 2.5, C)
 RIB_GROW_PLAIN = 1.25                                            # the same for v7 plain (C)
 V8, V_BOT = PO.V8, PO.V_BOT                                      # v8 plain: the plain build ends at v V_BOT (16.26, C)
-RIB_GROW_V8 = 0.5                                                # v8 plain (C): as-built FE sweep 0 .. 1.25 reads 1.023 / 0.991 / 0.949 / 0.897 / 0.879 / 0.859; 0.5 keeps 5 % margin (DEFAULT; 0.25 passes at 0.991)
+RIB_GROW_V8 = 1.0                                                # v8 plain (C, DEFAULT): as-built FE on the seat-landing supports, grow 0 / 0.25 / 0.5 / 0.75 / 1.0 / 1.25 / 1.5 reads 1.165 / 1.076 / 1.039 / 0.970 / 0.923 / 0.904 / 0.903; alt 0.75
 SEAT_V7, P_FACE7 = F.SEAT_V, F.P_FACE.copy()                     # v6 / v7 seat block: 14 up the slope from the z 1.3 edge
 SEAT_V8 = F.SEAT_V + V_BOT                                       # v8 plain: 14 up the slope from its own edge (30.26, C)
 MODE = dict(plain=False)                                         # which panel the build functions draw
@@ -94,11 +94,12 @@ TIES_FACE = [((142.0, 101.0), (139.0, 89.0))]                   # rim corner pie
 TIE_SEAT_PLAIN = TIE_SEAT                                        # v7 plain: seat block to its nearest rib (set from its layout)
 TIES_FACE_PLAIN = [((65.5, 66.0), (63.0, 82.0)),              # v7 plain: wheel-track strut up into the rim stub
                    ((139.0, 101.0), (139.0, 87.0))]             # rim corner piece to the valley diagonal
-TIE_SEAT_V8 = ((F.SEAT_Y, SEAT_V8), (84.0, SEAT_V8))            # v8 plain: seat block into the strut (its edge at u ~80, v 30)
-TIES_FACE_V8 = [((139.0, 101.0), (139.0, 87.0)),               # v8 plain: rim corner piece to the valley diagonal
-                ((98.0, 103.5), (126.0, 103.0))]                # rim beam into the rim corner piece (it joined the rest only
-                                                                 # through the 2.4 valley flange: solid_check neck). The strut
-                                                                 # now runs whole from the rim to the edge: no strut tie
+TIE_SEAT_V8 = ((F.SEAT_Y, SEAT_V8), (40.0, 50.0))              # v8 plain: seat block up into the strut (its root at v ~40)
+TIES_FACE_V8 = [((47.0, 79.0), (56.0, 89.0)),                  # v8 plain: strut top into the rim beam (the opened outline
+                ((98.0, 103.5), (152.0, 103.0)),               # left a gap), rim beam out into the valley flange (u 157 at v 103),
+                ((100.0, 28.0), (100.0, 98.0))]                # wheel-track strut under the seated wheel (u 100, v 43.6) into the
+                                                                 # rim beam: Overseer 6 g wheel 0.52 -> 0.17 (flight target 0.5),
+                                                                 # +3.2 g a panel (DEFAULT; alt stub v 30..60, 0.40, +1.6 g)
 
 def ties_cs(seat=True):
     """drawn tie ribs (face coordinates): the 4 latch bosses, the strut under the wheel track, the rim beam and the seat block
