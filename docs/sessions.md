@@ -6,6 +6,7 @@ Spark 24 Oct: no session stays alive or keeps getting updates after its work is 
 - **Start:** a session or worker has one job, one branch, and an owner row (`current-parts.md` System recheck or the part row) or a controller.
 - **Done** = its PRs are merged or closed, its branch has no unmerged commits, nothing it started is still running (runs, workers, children), and its last reply says what is left for whom.
 - **End:** a controller archives each child the turn it reports done or is superseded (CLAUDE.md Children stay in sync). A session that is not a child ends its last turn with the done line; the sweep below archives it.
+- **Controllers:** before reporting, a controller checks each child (`get_session`) and says its state in one line; a child that finishes or is superseded is archived the same turn.
 - **Updates go only to live sessions:** before a `send_message`, `get_session` the target; never send to an ARCHIVED one, and never to one whose job is done (archive it instead).
 
 ## Hub and reporting (Spark 24 Oct: no status updates from running parts; one session reports everything about every 30 min)
