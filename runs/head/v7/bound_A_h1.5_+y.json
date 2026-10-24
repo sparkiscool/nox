@@ -1,0 +1,124 @@
+{
+ "h": 1.5,
+ "mass_g": 237.3,
+ "worst": 1.034,
+ "worst_case": "insert at the drone 60 N [swap]",
+ "worst_at": [
+  26.9,
+  73.4,
+  14.8
+ ],
+ "rows": [
+  {
+   "case": "insert at the drone 60 N [swap]",
+   "cls": "flight",
+   "inlayer": 0.558,
+   "across": 1.034,
+   "at": [
+    26.9,
+    73.4,
+    14.8
+   ]
+  },
+  {
+   "case": "insert at the drone, stall 74 N [misuse]",
+   "cls": "misuse",
+   "inlayer": 0.43,
+   "across": 0.797,
+   "at": [
+    26.9,
+    73.4,
+    14.8
+   ]
+  },
+  {
+   "case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
+   "cls": "flight",
+   "inlayer": 0.531,
+   "across": 0.686,
+   "at": [
+    19.4,
+    74.9,
+    -0.2
+   ]
+  },
+  {
+   "case": "insert at a bay 60 N [swap]",
+   "cls": "flight",
+   "inlayer": 0.543,
+   "across": 1.027,
+   "at": [
+    26.9,
+    73.4,
+    14.8
+   ]
+  },
+  {
+   "case": "insert at a bay, stall 74 N [misuse]",
+   "cls": "misuse",
+   "inlayer": 0.419,
+   "across": 0.792,
+   "at": [
+    26.9,
+    73.4,
+    14.8
+   ]
+  },
+  {
+   "case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
+   "cls": "flight",
+   "inlayer": 0.516,
+   "across": 0.662,
+   "at": [
+    19.4,
+    74.9,
+    -0.2
+   ]
+  },
+  {
+   "case": "handling 3 g in + 2 g along +X, Overseer cartridge carried [handling]",
+   "cls": "misuse",
+   "inlayer": 0.126,
+   "across": 0.251,
+   "at": [
+    -13.6,
+    73.4,
+    14.8
+   ]
+  },
+  {
+   "case": "handling 3 g in + 2 g along -X, Overseer cartridge carried [handling]",
+   "cls": "misuse",
+   "inlayer": 0.135,
+   "across": 0.332,
+   "at": [
+    26.9,
+    73.4,
+    14.8
+   ]
+  },
+  {
+   "case": "handling 3 g out, Overseer cartridge carried (on the rods) [handling]",
+   "cls": "misuse",
+   "inlayer": 0.129,
+   "across": 0.177,
+   "at": [
+    19.4,
+    74.9,
+    -0.2
+   ]
+  },
+  {
+   "case": "DS3218 stall torque 1.96 N.m on the ear pads [misuse]",
+   "cls": "misuse",
+   "inlayer": 0.087,
+   "across": 0.129,
+   "at": [
+    37.4,
+    94.4,
+    8.8
+   ]
+  }
+ ],
+ "build": "+y"
+}

@@ -1,0 +1,123 @@
+{
+ "h": 1.5,
+ "mass_g": 245.8,
+ "worst": 3.96,
+ "worst_case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
+ "worst_at": [
+  17.9,
+  73.9,
+  1.2
+ ],
+ "rows": [
+  {
+   "case": "insert at the drone 60 N [swap]",
+   "cls": "flight",
+   "inlayer": 1.902,
+   "across": 2.094,
+   "at": [
+    -13.6,
+    73.9,
+    14.8
+   ]
+  },
+  {
+   "case": "insert at the drone, stall 74 N [misuse]",
+   "cls": "misuse",
+   "inlayer": 1.466,
+   "across": 1.614,
+   "at": [
+    -13.6,
+    73.9,
+    14.8
+   ]
+  },
+  {
+   "case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
+   "cls": "flight",
+   "inlayer": 1.827,
+   "across": 3.959,
+   "at": [
+    17.9,
+    73.9,
+    1.2
+   ]
+  },
+  {
+   "case": "insert at a bay 60 N [swap]",
+   "cls": "flight",
+   "inlayer": 1.902,
+   "across": 2.094,
+   "at": [
+    -13.6,
+    73.9,
+    14.8
+   ]
+  },
+  {
+   "case": "insert at a bay, stall 74 N [misuse]",
+   "cls": "misuse",
+   "inlayer": 1.466,
+   "across": 1.614,
+   "at": [
+    -13.6,
+    73.9,
+    14.8
+   ]
+  },
+  {
+   "case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
+   "cls": "flight",
+   "inlayer": 1.827,
+   "across": 3.96,
+   "at": [
+    17.9,
+    73.9,
+    1.2
+   ]
+  },
+  {
+   "case": "handling 3 g in + 2 g along +X, Overseer cartridge carried [handling]",
+   "cls": "misuse",
+   "inlayer": 0.444,
+   "across": 0.487,
+   "at": [
+    -13.6,
+    73.9,
+    14.8
+   ]
+  },
+  {
+   "case": "handling 3 g in + 2 g along -X, Overseer cartridge carried [handling]",
+   "cls": "misuse",
+   "inlayer": 0.435,
+   "across": 0.538,
+   "at": [
+    26.9,
+    73.9,
+    14.8
+   ]
+  },
+  {
+   "case": "handling 3 g out, Overseer cartridge carried (on the rods) [handling]",
+   "cls": "misuse",
+   "inlayer": 0.442,
+   "across": 0.955,
+   "at": [
+    17.9,
+    73.9,
+    1.2
+   ]
+  },
+  {
+   "case": "DS3218 stall torque 1.96 N.m on the ear pads [misuse]",
+   "cls": "misuse",
+   "inlayer": 0.085,
+   "across": 0.138,
+   "at": [
+    16.4,
+    73.9,
+    1.2
+   ]
+  }
+ ]
+}

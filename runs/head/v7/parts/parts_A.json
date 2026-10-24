@@ -1,0 +1,46 @@
+{
+ "box_head_v7_A_carrier_px": {
+  "bed_face": "+X down",
+  "bed_mm2": 212.1,
+  "mass_g": 5.94,
+  "bbox": [
+   27.4,
+   29.8,
+   49.0
+  ],
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_carrier_px.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2400.8], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}"
+ },
+ "box_head_v7_A_carrier_mx": {
+  "bed_face": "-X down",
+  "bed_mm2": 254.0,
+  "mass_g": 6.42,
+  "bbox": [
+   27.4,
+   29.8,
+   49.0
+  ],
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_carrier_mx.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2559.3], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}"
+ },
+ "box_head_v7_A_cam": {
+  "bed_face": "-Y down",
+  "bed_mm2": 143.7,
+  "mass_g": 1.09,
+  "bbox": [
+   20.5,
+   10.9,
+   6.0
+  ],
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_cam.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [470.2], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
+ },
+ "box_head_v7_A_sync_pinion": {
+  "bed_face": "-u down",
+  "bed_mm2": 106.5,
+  "mass_g": 0.47,
+  "bbox": [
+   14.0,
+   14.0,
+   3.5
+  ],
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_sync_pinion.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [87.0], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 8, 'ok': True}"
+ }
+}
