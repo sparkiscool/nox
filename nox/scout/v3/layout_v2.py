@@ -391,8 +391,8 @@ def candidate_nodes():
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
     for x, y, z in [(60, 0, -14), (60, 30, -14), (60, -30, -14), (-60, 0, -14), (-60, 30, -14), (-60, -30, -14),
                     (30, -40, -32), (-30, -40, -32), (0, -40, -34), (30, 48, -30), (-30, 48, -30), (0, 48, -30),
-                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42),   # lower belly, ahead of
-                    (106, 24, 26), (106, -24, 26)]:                                                                # the flow / Radxa; camera chin
+                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42)]:   # lower belly, ahead
+                                                                                   # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
     for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5), (0, 28.5)]:
@@ -405,7 +405,16 @@ def candidate_nodes():
             (50.3, 31, 14.0), (50.3, -31, 14.0), (-49.7, 31, 14.0), (-49.7, -31, 14.0)]   # moved with the set (LATCH_DX)   # nose legs and the mount's corners
     for c in core:
         N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
-    return np.array(N), kind
+    keep = [i for i in range(len(N)) if kind[i] in "CL" or not in_band8(N[i])]          # G (8): no printed node in the probe band
+    return np.array(N)[keep], [kind[i] for i in keep]
+
+
+def in_band8(p):
+    """G (8) keep-alive band: within 9.0 of a +-x face over its y band, from the face bottom (drone z 10.7) to the pad top"""
+    x_, y_, z_ = p; pad_top = max(p_.bounds[1][2] for p_ in KA_PADS)
+    for sx, ylo, yhi in ((1, -35, 69), (-1, -69, 35)):
+        if sx * x_ > 0 and (FACE_K + z_ - sx * x_) / S2 <= 9.0 and ylo <= y_ <= yhi and 10.7 <= z_ <= pad_top: return True
+    return False
 
 
 # ================================================================ feasibility of a rod
