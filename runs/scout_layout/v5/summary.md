@@ -1,13 +1,14 @@
-# Scout v3 system pass v5 (WIP): second review fixes, receiver v3 refit (24 Oct)
+# Scout v3 system pass v5: review 2 fixes, refit to the latch's receiver v3 (24 Oct)
 
-Candidates on the latch's receiver v3 + skids (part/battery-latch-v6 @ 90cf7f3; bolt pattern moving to (-42.65 / 43.25, +-26.55), refit pending), keel kept (y +-29.6), every rule on. Picture: compare.html (https://claude.ai/artifact/Dm8HQfFbyDoDSPbs6wmzNe).
+`python3 nox/scout/v3/layout_v2.py` (OBJ mass, ESO_SEED 2, latch meshes `runs/scout_layout/v5/latch_v3/` = part/battery-latch-v6 @ 4f76d3a, merged to main as PR 109; ~75 min), then `python3 nox/scout/v3/write_assembly.py && python3 nox/system_check.py nox/scout/v3/scout.assembly.json`. Doc `nox/scout/v3/layout.md` v5; numbers `nox/dimensions.md` "System Scout v3", "Scout fit". Status: DESIGN (WIP); nothing saved or printed.
 
-| | v3 (seen) | warm (from v4) | cold (DEFAULT) |
-|---|---|---|---|
-| carbon rods / printed parts | 62 / 23 | 97 / 33 | 127 / 52 |
-| cage g (E) | 318 | 352 | 443 |
-| cage first (system_check) | 4.5 (latch v1) | 3.9 PASS, rods -0.97 in the swap cone | 4.2 PASS |
-| probes (500 axes) | 12 rows (v1) | 6 rows, worst -29.1 | 6 rows, worst -15.5 |
+```
+System: see system_line.txt: cage first 4.6 mm, fit 0.0, CG 1.5 mm, access 8 / 8, mass 1007 g (E, budget 500 soft); probes FAIL 2 rows
+Cage: 212 members: 142 x 3.0 carbon rods (straight runs; shortest 33.7 mm) + 40 printed (6 x 6 struts / 3 x 12 webs) in 54 printed parts; keel y +-29.6; ~474 g (E)
+Strength: every case <= 1.00 (F); handling 50 N on any node (strength); crash 1.5 m/s through the TPU suspension
+```
 
-Cold open rows: receiver nose top above the nose plate (56.8, 25.3, -0.1) -15.5; flow -4.2; receiver lid corner -4.1; camera -4.1. Fit 0, access PASS, every case <= 1.00 (F).
-`cold/`, `warm/`: result.json, checks.txt. DEFAULT cold (the rules win, weight soft); alt warm (lighter, 1 mm short in the swap cone).
+Open probe rows: receiver v3 tail-bottom corner (-29.0, -24.3, -44.3), edge from 41 deg off straight down (the swap opening is 40), -3.1; camera lower corner (92, 19, 22), edge from 45 deg below the front, -1.4 (its corner sits under the lower ring: a rod there runs into the camera).
+Candidates weighed (all on the final meshes): cold mass seed 2 474 g (kept), seed 1 479 g; with keel tail x -29.5 + camera underside nodes 493 / 501 g, same 2 rows; earlier on receiver v2 / stand-ins: warm from v4 352 g but the rods 1 mm short in the swap cone; fewest-pieces cold 560 g.
+Grams: the full cage is ~474 g against the 500 g whole-drone budget (bought + latch set ~530 g already): the extra buys cage first everywhere, every probe but 2, 50 N on any node and the keel that takes a bottom hit through the suspension.
+- `checks.txt`, `result.json`, `system_line.txt`, `compare.html` / `.png` (v3 / v5, https://claude.ai/artifact/Dm8HQfFbyDoDSPbs6wmzNe), `cold/`, `warm/`, `cold_f9/` (candidates), `latch/`, `latch_v3/` (the latch meshes used).

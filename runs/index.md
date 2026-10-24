@@ -1,6 +1,6 @@
 # Runs
 
-_98 runs · rebuilt 2026-10-24 17:18_
+_99 runs · rebuilt 2026-10-24 18:09_
 
 ## Latest per part
 
@@ -40,6 +40,7 @@ _98 runs · rebuilt 2026-10-24 17:18_
 | 2026-10-24T23:59 | scout_layout | [v2](runs/scout_layout/v2/summary.md) | DONE | 770 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T23:59 | scout_layout | [v3](runs/scout_layout/v3/summary.md) | DONE | 791 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T23:59 | scout_layout | [v4](runs/scout_layout/v4/summary.md) | DONE | 847 (E) | 1.00 | · | · | · GB | · min | · |
+| 2026-10-24T23:59 | scout_layout | [v5](runs/scout_layout/v5/summary.md) | DONE | 1001 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T20:00 | scout_layout | [v1](runs/scout_layout/v1/summary.md) | DONE | 517.0 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 17:18 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |

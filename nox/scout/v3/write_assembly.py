@@ -17,7 +17,7 @@ L = {"__file__": SRC, "__name__": "layout_v2_defs"}
 exec(compile(src, SRC, "exec"), L)
 from assembly import load
 
-RES = os.environ.get("SCOUT_RESULT") or os.path.join(ROOT, "runs", "scout_layout", "v4", "result.json")   # a candidate run's result
+RES = os.environ.get("SCOUT_RESULT") or os.path.join(ROOT, "runs", "scout_layout", "v5", "result.json")   # a candidate run's result
 OUT = os.path.join(os.path.dirname(os.path.abspath(RES)), "assembly"); os.makedirs(OUT, exist_ok=True)
 R = json.load(open(RES))
 rel = lambda p: os.path.relpath(p, ROOT)
@@ -40,7 +40,7 @@ for i, (b, (x, y)) in enumerate(zip(L["BELLS"], L["MOTORS_XY"])):
 parts.append(mesh_part("FC", L["FC"], role="bought", protect=True, mass_g=10, tag="P", **own))
 Lm = L["_L"]                                                  # battery latch standard meshes (control session, 258becf), drone frame
 V6 = L["LATCH_V"] == "v6"
-RN, CN = ("receiver v2 (latch)", "cartridge v6 (latch)") if V6 else ("receiver v1 (latch)", "cartridge v5 (latch)")
+RN, CN = (("receiver v3 (latch)" if "latch_v3" in L["LATCH"] else "receiver v2 (latch)"), "cartridge v6 (latch)") if V6 else ("receiver v1 (latch)", "cartridge v5 (latch)")
 latch_parts = [("receiver", RN, "protected", 85.0 if V6 else 41.2, False, "E" if V6 else "M"), ("receiver_lid", "receiver lid (latch)", "protected", 9.0 if V6 else 5.3, False, "E" if V6 else "M"),
                ("receiver_strips", "receiver TPU strips (latch)", "structure", 2.0, False, "M"), ("xt60e1m", "XT60E1-M", "bought", 6.0, False, "E"),
                ("cartridge", CN, "protected", 35.0 if V6 else 35.5, True, "E" if V6 else "M"), ("slider_px", "slider +y (latch)", "protected", 2.6 if V6 else 1.95, True, "M"),

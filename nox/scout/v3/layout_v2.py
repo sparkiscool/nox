@@ -32,7 +32,7 @@ from topo.part import man
 
 OUT = os.environ.get("LAYOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v5")   # v5: receiver v2 / cartridge v6 (latch PR 109), review PR 94 fixes
 LATCH_DIR = os.path.join(ROOT, "runs", "scout_layout", "v2")                  # inputs (latch, pr44) always from the v2 run folder
-ESO_SEED = int(os.environ.get("ESO_SEED", "1"))         # multi-start: seed 1 had the fewest pieces of 4 (count objective, 24 Oct)
+ESO_SEED = int(os.environ.get("ESO_SEED", "2"))         # multi-start: seed 1 had the fewest pieces of 4 (count objective, 24 Oct)
 VIDEO = "--novideo" not in sys.argv
 S2 = math.sqrt(2.0)
 LOG = io.StringIO()
@@ -432,14 +432,13 @@ def candidate_nodes():
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
     for x, y, z in [(60, 0, -14), (60, 30, -14), (60, -30, -14), (-60, 0, -14), (-60, 30, -14), (-60, -30, -14),
                     (30, -40, -32), (-30, -40, -32), (0, -40, -34), (30, 48, -30), (-30, 48, -30), (0, 48, -30),
-                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42),
-                    (80, 14, 4), (80, -14, 4)]:                     # under the camera, below the G (8) band (its lower corners)   # lower belly, ahead
+                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42)]:   # lower belly, ahead
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
     for x, y in ([] if os.environ.get("NOKEEL", "0") == "1" else    # keel (the bottom hit must go through the suspension: latch 24 Oct,
                                                                    # 4.2 kN on the skids vs 3.2 kN receiver); receiver v3 narrows for it
-                 [(26, 29.6), (26, -29.6), (-29.5, 29.6), (-29.5, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # tail x -29.5: covers the receiver's tail-bottom corners   # bottom (nose end x 26: clear of the latch nose side bars)   # y 29.6 (was 28.5): outboard of the
+                 [(26, 29.6), (26, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # bottom (nose end x 26: clear of the latch nose side bars)   # y 29.6 (was 28.5): outboard of the
                                                                                                # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
@@ -799,7 +798,7 @@ def cage_mass(N, kind, members):
     return g
 
 
-OBJ = os.environ.get("OBJ", "count")           # ESO target: "mass" (grams) or "count" (rod pieces + printed nodes, mass as tiebreak; Spark 24 Oct)
+OBJ = os.environ.get("OBJ", "mass")           # ESO target: "mass" (grams) or "count" (rod pieces + printed nodes, mass as tiebreak; Spark 24 Oct)
 
 
 def cage_count(N, kind, members):
@@ -1373,7 +1372,7 @@ for i in used:
             bad8.append(tuple(np.round(N[i], 1)))
 say(f"G (8) keep-alive band: {'clear' if not bad8 else 'nodes in it: ' + str(bad8)}; pads {[np.round(p_.bounds, 1).tolist() for p_ in KA_PADS]}")
 
-R = dict(version="v4 layout change, warm start from v3", date="2026-10-24T23:59", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
+R = dict(version="v5 receiver v3 refit, keel, review 2 fixes", date="2026-10-24T23:59", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
          pads=(dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]) if best["yp"] is not None else None), belly_post=BELLY_POST,
          keepalive="latch plungers onto the two latched +-y wheel nodes (hub DEFAULT)" if not BELLY_POST else "belly post", cage_mass=best["mass"], contact_first=best["cf"][0],
