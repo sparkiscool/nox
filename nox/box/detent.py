@@ -41,6 +41,7 @@ MAGNET_PHI = 0.0               # home: head A at the 0 deg bay (cycle start)
 HALL_TH = -60.0                # hall switch at arm angle -60: a land (notches at the roller angle +-30 k), on the tower's web
 
 # ---------------- roller arm (turns) ----------------
+ARM_BOSS_R = 4.5               # the arm's bosses round the roller axle, pivot and hook (detent_v6: 6.0)
 ARM_Y = (71.6, 74.1)           # arm plate; roller Y 67.3..70.3 under it on a Ø4.5 spacer (inner race only), washer + thin nut Y 65.0..67.3
 ROLLER_Y = (67.3, 70.3)
 SPACER_R = 2.25
@@ -268,7 +269,7 @@ def arm_solids(D, Q=None):
     C, P, H, Aa = D["C"], D["P"], D["H"], D["A"]
     y0, y1 = ARM_Y
     circ = lambda p, r, n=16: [(p[0] + r * math.cos(q), p[1] + r * math.sin(q)) for q in np.linspace(0, 2 * math.pi, n, endpoint=False)]
-    arm = hull([[x, y, z] for p in (C, P, H) for (x, z) in circ(p, 4.5) for y in (y0, y1)])
+    arm = hull([[x, y, z] for p in (C, P, H) for (x, z) in circ(p, ARM_BOSS_R) for y in (y0, y1)])
     arm -= cylY(P[0], P[1], y0 - 1, y1 + 1, 1.6) + cylY(C[0], C[1], y0 - 1, y1 + 1, 1.6) + cylY(H[0], H[1], y0 - 1, y1 + 1, 1.45)
     spacer = cylY(C[0], C[1], ROLLER_Y[1], y0 + 0.01, SPACER_R, 32)
     hook = cylY(H[0], H[1], y1 - 0.01, y1 + 12.0, 1.5)

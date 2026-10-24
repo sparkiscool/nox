@@ -1,0 +1,36 @@
+{
+ "v6": {
+  "ROLLER_R": 5.0,
+  "ROLLER_W": 4.0,
+  "ROLLER_BORE": 3.0,
+  "RING_R_OUT": 25.0,
+  "RIM_Y0": 65.9,
+  "ROLLER_Y": [
+   65.9,
+   69.9
+  ],
+  "ARM_Y": [
+   70.5,
+   74.0
+  ],
+  "ARM_BOSS_R": 6.0
+ },
+ "R_SEAT": 28.5,
+ "R_APEX": 18.5,
+ "target_hold_Nm": 1.014,
+ "chosen_v7_levers": {
+  "hold_Nm": 1.135,
+  "hook_N": 10.9,
+  "roller_N": 28.3,
+  "hertz_MPa": 32.7,
+  "hertz_index": 0.48,
+  "contact_w": 4.0,
+  "arm_M_Nmm": 424.0,
+  "arm_MPa": 9.4,
+  "arm_index": 0.21
+ },
+ "search": {
+  "tried": 0,
+  "best": null
+ }
+}
