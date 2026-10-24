@@ -488,5 +488,16 @@
  "peak_gb": 3.136684,
  "gen_cm3": 4.0,
  "h": 0.75,
- "total_s": 985
+ "total_s": 985,
+ "status": "DONE",
+ "mass_tag": "M",
+ "worst_index": 0.323,
+ "worst_case": "impact 50 g 4",
+ "bed_face": "plate bottom",
+ "bed_contact_mm2": 840,
+ "peak_mem_gb": 3.136684,
+ "wall_time_min": 16,
+ "file": "print/scan_stick_cam_v7.stl",
+ "sha12": "cf092d1aba74",
+ "date": "2026-10-24"
 }
