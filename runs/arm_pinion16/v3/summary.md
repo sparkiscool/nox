@@ -2,7 +2,7 @@
 
 **DESIGN**, not in `print/` until the v7 piece pass's assembled recheck. Script: `nox/box/arm_v7_cad.py pinion` (`pinion_v3`). Requirements: `nox/dimensions.md` "System box swap: arm", row Pinion16 v3.
 
-- 16T module 1 (C), the v2 involute. Teeth Y 59.75..73.25 (face 13.5, C), fully engaged on the rack, which is grown down to Y 59.25..73.25 (C, concept review r3). On the rack tail (the drone insert, from its step at Y 63) 10.25 engages.
+- 16T module 1 (C), the v2 involute. Teeth Y 59.75..73.25 (face 13.5, C), fully engaged on the rack, which is grown down to Y 59.25..73.25 (C, concept review r3). On the rack tail (the drone insert, from its step at Y 63, C) 10.25 engages (C).
 - D-bore on the NEMA 17HS19's flat (Y 59..74, P datasheet / dimensions M) carries the torque. Boss Ø14, Y 55..59.25 (C), runs into the teeth. M3 grub from −X at Y 57.1 (C) on the round shaft, for axial hold only.
 - Lewis (frame, E): 0.45 / 0.49 (Scout / Overseer) at the 60 N drone insert (swap ≤ 0.5); 0.57 / 0.61 at the 74 N stall; 0.66 dropped Overseer (misuse ≤ 1.0).
 - 3.7 g (M), extents 17.8 x 17.8 x 18.2, printed with the boss face down: bed 143 mm², overhang 44 mm² (print_orient, M).

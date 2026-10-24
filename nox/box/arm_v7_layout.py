@@ -19,8 +19,8 @@ WEB_U7 = (-63.0, 30.0)                  # head A's rack tail: the pinion (u = 55
 WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it pulls there at 102.6 and inserts at bays, 101.8 commanded): 6.4 inside;
                                         # its shorter tail clears the detent's springs and tower web (the full -63 tail met them, sweep C)
 Y_C7 = float(__import__("os").environ.get("NOX_YC", "165"))   # round 3b (DEFAULT, hub: one funnel centred on each drone's catch centre = its
-                                        # latch set's centre, the tab line there too): the Overseer set (179.6) clears the low stack's plate top 72.75
-                                        # by 2.45 at Y_C 165 (Y 75.2..254.8, its cartridge from 76.5); round 3 had 138 with the tab 30 off (d0cd1a1)
+                                        # latch set's centre, the tab line there too): the Overseer set (179.6) clears the low stack's plate top 74.35
+                                        # by 1.0 at Y_C 165 (sweep, M); round 3 had 138 with the tab 30 off (d0cd1a1)
 DETENT_SPRING_SCALE = 1.3               # concept review r3 (DEFAULT): passing a notch at a slow step rate (0.5 N.m pull-out, E) with both parked
                                         # heads carrying: 1.31 (1.55 on holding torque); a power cut mid-swap, both parked carrying: 1.14; a head
                                         # just out of a horizontal Overseer bay's side faces: 1.04 (swap_system.power_cut_head_out); x1.5: 1.21 / 1.31 / 1.20
@@ -42,21 +42,21 @@ def strokes():
     return z
 
 
-# round 3 (concept review r2 + latch d0cd1a1: the XT60 end faces the arm, the Overseer's arm-side end at Y 74.76 at Y_C 138; the hub: Y_C stays,
+# round 3 (concept review r2 + latch d0cd1a1: the XT60 end faces the arm; heads v7 24 Oct: the plate top 74.35, 1.0 under the Overseer receiver at Y_C 165;
 # the arm clears it): the LOW carriage stack. Everything under a cartridge (carriage plate X +-28, wheels, nuts, bolt heads, eccentric) ends
-# at Y 72.75, 2.0 under the Overseer's end; the rack and pinion (X 40.5.. beside the cartridge) stay. The rail loses 6.25 of depth on top and
+# at Y 74.35 (heads v7), 1.0 under the Overseer's end; the rack and pinion (X 40.5.. beside the cartridge) stay. The rail loses 6.25 of depth on top and
 # gains a keel under it outboard of the hub plate (r >= 89, Y 38..54), which brings the free XT60 pitch back (swap_system.mate_pitch). C.
-LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.75, 68.75), PLATE_Y=(68.75, 72.75),
+LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.75, 68.75), PLATE_Y=(68.75, 74.35),   # plate top 74.35 (heads v7: 1.0 under the Overseer receiver at Y_C 165; was 72.75)
            NUT_Y=(55.05, 57.75),                # DIN 439 M5 thin nut 2.7 + threadlocker (E) under each wheel; the hub plate's wheel lanes at Y 53
-           AXLE_BOLT_L=dict(fixed=18.0, ecc=18.0, head="ISO 10642 countersunk, flush in the plate top"),   # tails Y 54.75
-           ECC_FLANGE=(70.25, 72.75),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
+           AXLE_BOLT_L=dict(fixed=20.0, ecc=20.0, head="ISO 10642 countersunk, flush in the plate top"),   # tails Y 54.35 (1.35 over the hub's wheel lanes)
+           ECC_FLANGE=(71.85, 74.35),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
            KEEL=dict(x=9.0, y=(38.0, 54.0), r0=89.0),   # rail keel X +-9 under the body from r 89 (1.0 off the hub plate's edge r 88) to the tip
            CBORE_Y=61.0, RAIL_BOLT="M5 x 12 ISO 4762 (head Y 61..66, in the rail)", STOP_Y=(66.75, 72.0), CHAN_Y=(62.75, 66.75),
            STOP_R=(27.5, 31.0),                 # the rail's inner step and park stop from r 27.5: 1.0 off detent ring v4 (r 26.5); the bumper face r 31 kept
            TIE_RAIL=(41.6, 128.0))              # the tie rod end 10 up its own axis from the keel bottom at r 128 (mouth on the face)
 
 
-RACK_V3_Y = (59.25, 73.25)              # concept review r3: rack teeth grow down (the top stays 0.5 under the keep-out's 73.75)
+RACK_V3_Y = (59.25, 73.25)              # concept review r3: rack teeth grow down (the top stays 1.1 under the plate top 74.35)
 PIN_V3 = dict(teeth_y=(59.75, 73.25), boss_y=(55.0, 59.25))   # pinion16 v3: face 13.5 fully engaged on the rack, 10.25 on its tail (from Y 63); D-bore on the
                                         # shaft's flat (Y 59..74), boss Y 55..59.25 with an M3 grub on the round shaft for axial hold only
 
