@@ -8,107 +8,103 @@ Spark 24 Oct: "design the new latch system for all batteries so the grabber can 
 - **Scout drone frame d** = (z − z_T, x, y − 44.5): tab line at drone x 0, XT60 end at the nose (+x), flat bottom at drone z −44.5.
 - **Tab line:** z_T = swap CG + TAB_OFF toward the XT60 end. Overseer 5.18 (arm v7 PR 79: tab line and catch centre on the latch set's centre; grip moment 0.04 / 0.11 N·m at 1 / 3 g, index 0.04 / 0.11). Scout 0 (DEFAULT; the arm's 3.71 puts the pack's tail-bottom corner 6.4 inside the collar planes, where the cartridge can't wrap it at 7.0; the Scout set, 101.3 long, sits 3.7 off its catch centre inside the 191 opening).
 - **Wheel W** (dimensions I, arm v7 PR 79): X = x, Y = Y_C − (z − z_T), Z radial = R + y, R 113 for every seated face, common grip Y_C 165. Arm-side ends at Y_C 165: Scout Y 111.6 (set-screw boss) .. 207.6, Overseer Y 76.5..250.5.
-- **XT60 pitch (hub ask, arm PR 79; receiver v2):**
-  - The XT60E1-M floats ±2.37° in pitch, about the cartridge's x (the arm's slide-tangential axis): 0.5 axial play over its 12.1 flange depth. The PR 44 ±1.06° is roll, over the 27.1 width.
-  - **Overseer:** corner guide posts on both end walls, end gap 0.15. Pitch at the XT60's first contact is ±0.36° (C).
-  - **Scout:** no posts (DEFAULT). The collar planes clip its posts to a 13 mm lever (~265 N a post at 3.5 N·m), and the float takes the arm's 1.33° free mate (C).
+- **XT60 pitch (hub ask, arm PR 79; receiver v2):** the XT60E1-M floats ±2.37° in pitch (about the cartridge's x: 0.5 axial play over its 12.1 flange; ±1.06° is roll, over the 27.1 width). The arm's free mate about x is 1.23° (Scout) / 1.03° (Overseer), inside it, so **no guide posts on either pack** (arm, 24 Oct). Pitch at the XT60's first contact > 4° (C). The x side faces (gap 0.3, the cartridge's full length) engage before the XT60's first contact and hold its roll to 0.40° (arm).
 
 ## Receiver v2: durability (24 Oct)
-Spark (24 Oct, via the arm and the hub): "since now we need to unplug and plug in the battery we need to redesign the arm and the latches so they can handle the extra load" and "the latch system for the charging bays ... dosent seem to hold in repetitoon and seems to bend since its just thin plastic". This is receiver v2. The cartridge v5 and sliders v5 are unchanged.
+Spark (24 Oct, via the arm): "since now we need to unplug and plug in the battery we need to redesign the arm and the latches so they can handle the extra load", and "the latch system for the charging bays ... dosent seem to hold in repetitoon and seems to bend since its just thin plastic". This is receiver v2. The cartridge v5 and sliders v5 are unchanged.
 
 **Requirements (hub DEFAULT from the arm, E):**
-1. Loads on every swap: insert 60 N, ending at up to 74 N at head stall; pull 50 N (57 N with the grabber holding); pitch guide ≤ 3.5 N·m (6.1 N·m misuse); 43.5 N across; 7.6 N / 1.05 N·m centring.
-2. Life ≥ 5,000 cycles per bay and ≥ 10,000 at the drone.
-3. Cyclic stress ≤ ~10 MPa in every printed member at 74 N + 3.5 N·m. Printed walls ≥ 3 at loaded faces.
+1. Loads on every swap: insert 60 N, ending at up to 74 N at head stall; pull 50 N (57 N with the grabber holding); 43.5 N across; 7.6 N / 1.05 N·m centring.
+   - The arm later dropped the 3.5 / 6.1 N·m pitch guide: about the cartridge x its free mate is 1.23 / 1.03°, inside the float's ±2.37°. So no guide posts and no guide couple.
+   - It added: the x side faces engage before the XT60's first contact, gap ≤ 0.3. Here 0.3, engaged over the whole cartridge length.
+2. Life ≥ 5,000 insert / pull cycles per bay and ≥ 10,000 at the drone.
+3. Cyclic stress ≤ ~10 MPa in printed members. Printed walls ≥ 3 at loaded faces.
 4. Hold and spring from bought steel. Wear faces replaceable or metal-backed.
 5. Deflection ≤ 0.1 mm at 74 N.
 6. XT60 carrier replaceable if the XT60's life sets the service interval.
 7. A section of v2 beside v1 under the 74 N case.
 
-**Load set in the FE** (`battery_latch_topo.SWAP`, `add_swap_cases`). Every swap case is class flight, SF 4: allowables 10.8 MPa in-layer and 5.4 MPa across layers, which is the ~10 MPa fatigue line. The 6.1 N·m case is misuse.
+**FE load set** (`battery_latch_topo.SWAP`, `add_swap_cases`). Every swap case is class flight, SF 4: 10.8 MPa in-layer, 5.4 MPa across layers, which is the fatigue line.
 
 | Case | Load |
 |---|---|
-| 74 N insert | +y on the XT60 seat, or on the TPU stops |
-| 57 N pull | −y on the XT60 lips, or on the pocket floors (bolts in, a fault) |
-| Guide 3.5 / 6.1 N·m | z couple on the end faces: the top band of one end against the bottom band of the other, from each face's real extent |
-| 74 N + 3.5 N·m | both together |
+| 74 N insert | +y on the cap's float ceiling, or on the TPU stops |
+| 57 N pull | −y on the carrier's lips, or on the pocket floors (bolts in, a fault) |
+| 74 N + 43.5 N | both together |
 | 43.5 N across | x on one side's feet, both senses |
-| Centring | 7.6 N on one side's lead-ins + a 1.05 N·m yaw couple |
+| Centring | 7.6 N on the lead-ins + a 1.05 N·m yaw couple |
 
-Supports: the boss seats. For the +y cases (v2) the mount face bears on the partner.
+Supports: the bolt seats, and for +y the mount face bearing on the partner. The guide cases stay in the script behind `SWAP_GUIDE`.
 
-**v1 on that set (FE h 1.0, `--swap-v1`, M mesh, E loads):** guide 3.5 N·m index 3.59 (Scout) / 1.72 (Overseer); 43.5 N across 2.02 / 1.53, the feet move 5.3 / 4.4 mm; centring 1.09 / 0.81. Everything else ≤ 0.45. Spark's "bends" is the open frame: windowed 2.5 / 3.0 plates on 4.0 feet, and no guide faces below the rails.
+**v1 on that set** (FE h 1.0, `--swap-v1`, M mesh, E loads):
+- 43.5 N across: index 2.08 (Scout) / 1.53 (Overseer). The feet move 5.4 / 4.4 mm.
+- 74 N + across: 2.05 / 1.53. 74 N insert alone: 0.30 / 0.32.
+- Spark's "bends" is the open frame: windowed 2.5 / 3.0 plates on 4.0 feet.
 
 **Concepts weighed:**
 | | **A: closed channel + replaceable XT60 carrier (chosen)** | B: v1 frame stiffened | C: steel strike pins in the pockets | D: steel leaf / ball plungers in the receiver |
 |---|---|---|---|---|
-| How | Side walls 5.0 from the feet to 1.0 under the mount plane (Overseer: truss windows between the stations); full deck; end walls 5.0 (Overseer: closed end full width down to its guide posts' bottom, lead end posts + 6 gussets round the XT60 window; Scout: no posts); cross ribs at the tab line and the carrier. The XT60E1-M float pocket leaves the block: an XT60 carrier base (pull lips + ears) + cap (the v1 lid), clamped by the two lead-end M3 bolts. Printed deck down. | Plates 4.0 with truss windows, guide posts, pockets and XT60 pocket in the block, lid | A, plus a Ø3 dowel pin as each pocket floor | Hold in the receiver by bought springs, the cartridge sliders gone |
-| Steel in the hold | the pen spring (steel); bolts from below; XT60 pull goes lips → carrier → body boss (compression) → bolt head → partner insert | as v1 | pins on the bolt | leaf / plungers |
-| Wear parts | sliders (3 to 4 g), XT60 carrier + XT60E1-M + pigtail, TPU strips; the body (bolts from below) | the whole receiver | pins | springs |
-| Fails | heavier (Scout set 140 g vs 91, Overseer 289 vs 186, M) | 43.5 N across at the feet (open bays); the XT60 not replaceable without the block | **no room**: the 30° lead-in sits 0.55 under the pocket floor at the mouth, so a pin breaks through the cam face unless the slider / grip numbers change (Spark's squeeze latch, locked 15 Oct) | changes the grabber interface; a ball plunger is a detent, not a lock, so it fails the crash hold |
+| How | Side walls 5.0 from the feet to the mount plane, no windows; full deck; end walls 6.0 to the mount plane, below the rails set back 3.3 from the cartridge end down to the feet; cross ribs at the tab line and the carrier. The XT60E1-M float pocket leaves the block: an XT60 carrier base (pull lips + ears) + cap (the v1 lid), clamped by the two lead-end M3 bolts. Printed deck down. | Plates 4.0 with truss windows, the XT60 pocket in the block, lid | A, plus a Ø3 dowel pin as each pocket floor | Hold in the receiver by bought springs, the cartridge sliders gone |
+| Fails | heavier: set 147.7 / 331.3 g vs 91.0 / 185.9 (M) | 43.5 N across at the feet (open bays); the XT60 not replaceable without the block | **no room**: the 30° lead-in sits 0.55 under the pocket floor at the mouth, so a pin breaks the cam face unless the slider / grip numbers change (Spark's squeeze latch, locked 15 Oct) | changes the grabber interface; a ball plunger is a detent, not a lock, so it fails the crash hold |
 
-**Chosen: A (DEFAULT).** B is lighter but leaves the open bays that bend. C and D do not fit the locked latch.
-
-Wear on the printed pockets:
-- 1.4 MPa plane contact (18 x 2.3) at the 57 N fault pull.
-- At each swap a bolt cams in on the 30° foot at the pen spring's force (~0.7 N rest, ~15 N squeezed, E).
-- PETG on PETG wear over 10,000 cycles at that force is small (E). The first coupon checks it.
-- Sliders and the body are the replaceable wear parts (alternative: replaceable strike blocks at the tab line, +2 parts and +4 mm per side there, past the Overseer's 66.8).
-
-**XT60 life (requirement 6):**
-- Most Amass XT60 listings give 100 mating cycles (GB/T 5095.1). One Amass sheet gives 1,000, unconfirmed (E, CHECK the datasheet for the exact part).
-- Either way the XT60 sets the service interval, far under 5,000 / 10,000.
-- So the XT60 carrier with its XT60E1-M and a short pigtail (inline connector to the bay or drone harness) is a replaceable part in every bay and the drone. Replacing it: 6 M3 from below (cartridge out), receiver down, carrier swapped.
-- Alternative: a carrier fed from below (2 screws, the receiver stays up), which needs counterbored heads under the plug zone. Next version if the swap count calls for it.
-- The pack's own female XT60 sits in the cartridge (set screws) and ages with the pack.
-- A higher-cycle connector is the hub's / Spark's call.
+**Chosen: A (DEFAULT).**
 
 **Concept review (concept mode, 24 Oct): FAIL, 6 findings, all taken or answered:**
-1. The v2 mesh had lost its cuts: pockets, lead-ins, bolt holes, carrier notch. That was an edit slip of mine. Restored. The FE, figures and files were rerun from the corrected mesh.
+1. The v2 mesh had lost its cuts (pockets, lead-ins, bolt holes, carrier notch). That was an edit slip of mine. Restored; FE, figures and files rerun from the corrected mesh.
 2. XT60 carrier:
    - The 0.2 gap under the ears is closed: the lead-end boss tops are at Y_DK0.
-   - The 74 N insert now loads the cap's ceiling (Y_PCEIL), not the lips.
-   - A carrier fed from below (2 screws, the receiver stays up) does not fit. The cartridge's plug zone sits 1.3 under the lips (Y_ZONE 41.8 vs LIP_Y0 43.1, Scout), so a screw head or ear has no room.
-   - Service stays DEFAULT: cartridge out, 4 to 6 M3 from below, receiver down, carrier swapped. Retorque the clamp then (printed stack ~12.5).
-3. Guide posts per pack. **Scout: none (DEFAULT).**
-   - The collar planes clip the Scout's posts to a 13 mm lever, so each post takes ~265 N at 3.5 N·m on every swap.
-   - Its XT60 float (±2.37°) takes the arm's free mate (1.33°).
-   - The seat's couple goes to one end's stops against the bolts (lever 23 mm, ~152 N on the bolts, FE case).
-   - END_GAP stays 0.3.
-   - **Overseer: posts** (lever 47 mm, END_GAP 0.15), pitch at the XT60's first contact ±0.36° (C).
-4. Requirement 4 (steel in the hold, metal-backed wear faces), **relaxed for the latch pockets, DEFAULT.**
-   - The pocket floors see ~0.1 MPa in flight and 1.4 MPa at the 57 N fault pull (E).
-   - At each swap a bolt cams in at the pen spring's 0.7 to 2.4 N (E). Steel pins have no room (concept C).
+   - The 74 N insert loads the cap's ceiling, not the lips.
+   - A carrier fed from below (receiver stays up) has no room: the cartridge's plug zone sits 1.3 under the lips (Scout).
+   - Service DEFAULT: cartridge out, receiver bolts out, carrier swapped. Retorque the printed clamp stack (~12.5) then.
+3. Guide posts: dropped on both packs (the arm's answer above). END_GAP 0.3.
+4. Requirement 4 is **relaxed for the latch pockets (DEFAULT)**:
+   - The floors see ~0.1 MPa in flight and 1.4 MPa at the 57 N fault pull (E). At each swap a bolt cams in at the pen spring's 0.7 to 2.4 N (E).
+   - Steel pins have no room (C).
    - Steel in the latch: the pen spring and the M3 bolts. The XT60 pull goes lips → carrier → body boss → bolt head → partner insert.
-   - Wear parts: sliders (3 to 4 g), TPU strips, XT60 carrier; the body comes off with its bolts from below.
-   - Alternative: separate strike blocks at the tab line (the pocket block, rf..rf + 5.6, keyed into a wall notch, one M3 from below), if the first coupon shows wear.
+   - Wear parts: sliders (3 to 4 g), TPU strips, XT60 carrier; the body comes off with its bolts.
+   - Alternative: separate strike blocks at the tab line (the pocket block, keyed into a wall notch, one M3 from below), if the first coupon shows wear.
 5. Print orientation: deck down (mount plane on the bed) kept.
    - print_orient, Scout body: bed 1418 mm² deck down vs 257 feet down (M).
    - The pocket floors and the deck top between ribs print on tree supports.
-   - A lower mount plane (Y_M = deck top) would make the deck the bed face, but it moves the interface every partner is built to (Scout mount, Overseer sled, bay bodies). Not taken; the owners can ask.
-6. Lighter: the Overseer's side walls got truss windows between the stations.
-   - A thinner wall fails the foot tip: the 3.0 lead-in capture leaves 1.0 on a 4.0 wall, a solid_check FAIL, so the walls are 5.0.
-   - A topology pass on the v2 envelope is the follow-up.
+   - Lowering the mount plane to the deck top would move the interface every partner is built to. Not taken.
+6. Lighter: truss windows in the Overseer's walls save 34 g but move 1.15 mm across, past the float. Not taken; a v2 topology pass is the follow-up.
+   - The walls are 5.0 because the 3.0 lead-in capture leaves 1.0 of foot tip on a 4.0 wall (solid_check FAIL).
 
 **More found while fixing:**
-- With v1's thin plates the Scout's bolt heads came up outside the plate. On the 5.0 wall an access channel would cut the closed-end corner (across 0.96). Each Scout bolt now runs in a full-height column (r 5) beside the wall. The head sits on a flat at y 14.0, above the collar clip, in a counterbore with 3.0 round it: M3 x 45 (E). The bolt pattern (±25.6) is unchanged.
-- The body (not the bosses or the carrier cap) stops 1.0 under the mount plane: the Scout's FC sits 0.1 under it.
-- **Overseer mount bolts (open, v1 too):** at x ±26.8 they come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), and their heads land inside the cartridge path.
-  - Options, for the Overseer and box sessions: (a) bolts from above into heat-set inserts in deck bosses (needs 8.7 above the deck's underside, which it has); (b) outboard bosses, 76.2 wide (no longer 66.8).
+- **Scout bolts.** On the 5.0 wall a head access channel cut the closed-end corner (across 0.96). Each Scout bolt now runs in a full-height column (r 5) beside the wall, the head on a flat at y 14.0 above the collar clip, with 3.0 round its counterbore: M3 x 45 (E). The bolt pattern ±25.6 is unchanged. Widening to ±28.6 instead hit the cage rods (29 mm³).
+- **Scout FC.** The FC sits 0.1 under the mount plane, so the body has a 1.0 relief there (tab line −5..+9). The rest of the top bears on the partner and is the bed face.
+- **End walls.** Ending at the rails without posts left the Overseer's 43.5 N across case 1.20 mm, index 0.92, at that corner. They now run to the feet, set back 3.3 below the rails (6.0 thick), with a slot for the cartridge's set-screw boss at the lead end. Pitch at the XT60's first contact stays > 4° (C).
+- **Overseer mount bolts (open, v1 too).** At x ±26.8 / 27.8 they come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options for the Overseer and box sessions:
+  - (a) Bolts from above into heat-set inserts in deck bosses: 8.7 above the deck's underside fits a 6.7 insert and a 2.0 floor.
+  - (b) Outboard bosses, 76.2 wide.
   - The Overseer set stays DESIGN.
+- **Probe exemption** for the swap set round the opening: 40°, matching the Scout's system_check (DEFAULT; was 35. Alternative: none, the receiver ≥ 3 inside the cage's bottom plane).
 
-**v2 on the swap set (FE h 1.0, deck-down print, body + carrier + cap clamped, `--swap-v2`, M mesh, E loads):**
-- Scout (walls 5.0, ends 5.0, no posts): every swap case ≤ 0.61. 43.5 N across 0.61, guide 3.5 N·m 0.56 (6.1 misuse 0.61), 74 N + 3.5 N·m 0.56, 57 N on the bolts 0.21. Every other swap case ≤ 0.07, crash ≤ 0.07 (15.3 g).
-- In MPa: index ≤ 0.61 is ≤ 6.6 in-layer and ≤ 3.3 across layers (flight allowables 10.8 / 5.4).
-- Scout deflection: 74 N insert 0.001 (XT60 seat) / 0.003 mm (stops); 57 N pull 0.015; guide 0.27 mm at the bolts; across 0.40 mm (was 5.3 on v1).
-- Overseer (walls 5.0 solid, ends 5.0, posts; h 1.5: at 1.0 the iterative solve runs > 2 h):
-  - Every swap case ≤ 0.46. 43.5 N across 0.46, guide 3.5 N·m 0.10 (6.1 misuse 0.11), 74 N + 3.5 N·m 0.10, centring 0.20; crash ≤ 0.39 (35 g).
-  - Deflection: 74 N insert 0.001 mm, guide 0.015 mm, across 0.77 mm.
-  - Truss windows (34 g lighter) moved 1.15 mm across, past the float; not taken.
-  - A window between the lead-end posts first put the across peak on its corner (1.14). The lead end now runs full width with a slot for the set-screw boss.
-- Pitch at the XT60's first contact: Scout > 4° (no posts; the float's ±2.37° takes the 1.33° mate); Overseer ±0.36° (C).
-- Print orientation: closed-end face down (+z, as v1) put the posts' z pull across layers (guide 1.11), so deck down.
+**v2 on the swap set** (FE, deck-down print, body + carrier + cap clamped, `--swap-v2`, M mesh, E loads):
+
+| | Scout (h 1.0) | Overseer (h 1.5; h 1.0 runs > 2 h) |
+|---|---|---|
+| Worst swap index | 0.51, 43.5 N across: 4.6 MPa in-layer, 2.8 across layers | 0.55, 43.5 N across: 2.7 / 3.0 MPa |
+| 74 N + 43.5 N | 0.41 | 0.45 |
+| Centring | 0.24 | 0.25 |
+| 57 N on the bolts | 0.21 | 0.12 |
+| Every other swap case | ≤ 0.07 | ≤ 0.06 |
+| Crash | ≤ 0.07 (15.3 g) | ≤ 0.39 (35 g) |
+| Handling | 0.12 | 0.07 |
+| Deflection, 74 N insert | 0.001 mm (seat) / 0.003 (stops) | 0.001 / 0.004 mm |
+| Deflection, 57 N pull | 0.014 mm | 0.016 mm |
+| Deflection, 43.5 N across | 0.35 mm (v1 5.4) | 0.78 mm (v1 4.4) |
+
+All inside the XT60 float's ±1.0.
+
+**XT60 life (requirement 6):**
+- Most Amass XT60 listings give 100 mating cycles (GB/T 5095.1). One Amass sheet gives 1,000, unconfirmed (E, CHECK the datasheet).
+- The XT60 sets the service interval, far under 5,000 / 10,000.
+- So the XT60 carrier with its XT60E1-M and a short pigtail (inline connector to the bay or drone harness) is a replaceable part in every bay and the drone.
+- The pack's own female XT60 (cartridge, set screws) ages with the pack.
+- A higher-cycle connector is the hub's / Spark's call.
+
+Visual: runs/battery_latch/v2/figs/compare_v1_v2.png and fe_swap_insert_74_N_+_across_43.5_N.png (v1 beside v2 under 74 N + 43.5 N, one colour scale), in the layout artifact.
 
 ## Concept check (24 Oct, before the piece runs)
 Requirements (the brief): hold every L case for both packs; XT60 mates on insert (60 N) and unmates on pull (50 N) on the install axis, XT60E1-M float carrier on the receiver; latched state readable; a half-in pack never reads or stays latched; engages by the insert stroke alone, the grip releases it, releasing the grip locks it; the same grip interface on both packs; no more complex than the v2 squeeze latch; Scout receiver + cartridge ≥ 7.0 inside the collar planes below z 20 with the keel nodes free; pack CG on the thrust axis; breaks after the cage.
@@ -140,7 +136,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 | `box_battery_cartridge_<pack>_v5` | PETG x 1 | 31.9 | 89.7 | closed end down, tree supports (174 tall for the Overseer) |
 | `box_battery_skid_{closed,lead}_scout_v1` (Scout only) | TPU 95A, 1 each | 1.4 / 3.1 | – | outer (chamfer) face down; bonded on the cartridge's end chamfers (flexible contact adhesive), replaceable |
 | `box_battery_slider_<pack>_v5` | PETG x 2 (one part, both sides) | 3.2 | 4.0 | bar top down (largest face, layers along the bar) |
-| `box_battery_receiver_<pack>_v2` (latch block, drone and bays) | PETG x 1 | 86.9 | 218.2 (66.8 wide) | mount plane down (deck down), tree supports; the Overseer's 181.3 goes on the bed's diagonal (needs 175.5 of 180) |
+| `box_battery_receiver_<pack>_v2` (latch block, drone and bays) | PETG x 1 | 93.1 | 216.2 (66.8 wide) | mount plane down (deck down), tree supports; the Overseer's 183.6 goes on the bed's diagonal (needs 177.1 of 180) |
 | `box_battery_xt60_carrier_<pack>_v1` (base: pull lips + ears) | PETG x 1 | 4.6 | 5.0 | ear tops down |
 | `box_battery_receiver_lid_<pack>_v1` (the carrier's cap) | PETG x 1 | 5.3 | 8.1 | top face down |
 | `box_battery_receiver_strip_<pack>_v1` | TPU 95A x 2 | 1.0 | 2.1 | flat |
@@ -149,7 +145,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 - Scout set: HOLD (PR 69 review). Its assembled probe check fails at the Scout's side windows, and its receiver is new.
 - Overseer set: DESIGN (its mount bolts and system, below).
 
-Per set: 141.6 g Scout, 333.2 g Overseer (M); v1 was 91.0 / 185.9. The grams buy the swap load set: v1's open frame moved 5.3 / 4.4 mm under 43.5 N across and reached index 3.6 / 1.7 in the guide case. v2 moves 0.40 / 0.77 mm, swap worst 0.61 / 0.46.
+Per set: 147.7 g Scout, 331.3 g Overseer (M); v1 was 91.0 / 185.9. The grams buy the swap load set: v1's open frame moved 5.4 / 4.4 mm under 43.5 N across, index 2.08 / 1.53. v2 moves 0.35 / 0.78 mm, swap worst 0.51 / 0.55.
 
 Bought per set:
 - XT60E1-M with a short pigtail and an inline connector (the replaceable XT60 carrier).
@@ -168,30 +164,31 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 
   | Pack | Swap | Crash | Handling 50 N | Flight |
   |---|---|---|---|---|
-  | Scout | 0.61 | 0.07 (15.3 g) | 0.10 | 0.03 |
-  | Overseer | 0.46 | 0.39 (35 g) | 0.07 | 0.07 |
+  | Scout | 0.51 | 0.07 (15.3 g) | 0.12 | 0.03 |
+  | Overseer | 0.55 | 0.39 (35 g) | 0.07 | 0.07 |
 
   Every case and deflection is in `runs/battery_latch/v2/fe/` and the dimensions row.
-- **First mode of the seated pack: 559 Hz (Scout) / 461 Hz (Overseer)** (E: rigid swap mass, partner rigid; ≥ 100 Hz target).
+- **First mode of the seated pack: 560 Hz (Scout) / 460 Hz (Overseer)** (E: rigid swap mass, partner rigid; ≥ 100 Hz target).
 - **Sliders at the 74 N stall** (a bolt jammed on its lead-in, fault): 2.4 MPa, index 0.22. Grip pull 57 N + 1 g: tab bar 4.3 / 4.7 MPa, index 0.40 / 0.44 (E, hand calc).
 - **Scout v3 system** (the refit snapshot `runs/battery_latch/v1/scout_v3_refit/`, current latch parts, skids as cage):
-  - `System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, −0.75) (flow MTF-02P), fit 0.0 mm³ (E), bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 788 g (E), CG 1.5 mm off thrust axis (E), 2.1 mm without swap parts, probes −46.1 mm (E) edge at (−0.78, −0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear`. The "receiver v1 (latch)" label is the snapshot's part name; the mesh is v2.
-  - **The probe FAIL is the receiver reached from the side through the Scout cage's side windows.** The cartridge set and the receiver round the swap opening are exempt from the probe to 35° (DEFAULT; alternative: no exemption, which needs the receiver recessed ≥ 3 inside the cage's bottom plane). The exemption does not cover this edge, so the Scout set is HOLD until the Scout chat closes its side windows and a rerun reads probes PASS.
-  - Collar planes 7.08 (clip inset 11.0; v2's 5.0 walls needed 0.5 more inset). Keel nodes 4.8 clear.
+  - `System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, −0.75) (flow MTF-02P), fit 0.0 mm³ (E), bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 794 g (E), CG 1.4 mm off thrust axis (E), 2.0 mm without swap parts, probes −47.0 mm (E) edge at (−0.78, −0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear`. The "receiver v1 (latch)" label is the snapshot's part name; the mesh is v2.
+  - **The probe FAIL is the receiver reached from the side through the Scout cage's side windows.** The cartridge set and the receiver round the swap opening are exempt from the probe to 40° (DEFAULT, as the Scout's own check; was 35°; alternative: no exemption, which needs the receiver recessed ≥ 3 inside the cage's bottom plane). The exemption does not cover this edge, so the Scout set is HOLD until the Scout chat closes its side windows and a rerun reads probes PASS.
+  - Collar planes 7.04 (clip inset 11.0; v2's 5.0 walls needed 0.5 more inset). Keel nodes 4.8 clear.
 - **Assembled worst index per case (Scout, one set of numbers everywhere):**
   - The Scout frame model gives every flight / crash / landing case ≤ 0.98 (F).
-  - The latch parts under them, receiver v2 FE: crash ≤ 0.07 at 15.3 g (0.08 at the suspension's ~16.7 g, scaled), flight 0.03, landing (catch 6 g) 0.05, handling 0.10.
-  - The swap set ≤ 0.61. Sliders ≤ 0.40, grip pull. Cartridge floor 0.14 at ~16.7 g (E, hand calc scaled).
-- **Overseer** (`overseer.assembly.json` on main, pose B, cartridge, pack and receiver replaced): `System: Overseer, cage first −59.0 mm (E) at (+0.91, −0.01, −0.41) (Unitree L2) FAIL, fit 27630.3 mm³ (E) (belly sled + pods / receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2638 g (E), CG 10.6 mm off thrust axis (E), 26.7 mm without swap parts FAIL (tol 3), probes −0.0 mm (E) edge at (+0.71, −0.06, +0.70) (Unitree L2, unshielded) FAIL`.
-  - The sled was cut for the v1 receiver. The Overseer set is 66.8 x 68.8 x 181.3 (0.83 L, M).
+  - The latch parts under them, receiver v2 FE: crash ≤ 0.07 at 15.3 g (0.08 at the suspension's ~16.7 g, scaled), flight 0.03, landing (catch 6 g) 0.05, handling 0.12.
+  - The swap set ≤ 0.51. Sliders ≤ 0.40, grip pull. Cartridge floor 0.14 at ~16.7 g (E, hand calc scaled).
+- **Overseer** (`overseer.assembly.json` on main, pose B, cartridge, pack and receiver replaced): `System: Overseer, cage first −59.0 mm (E) at (+0.91, −0.01, −0.41) (Unitree L2) FAIL, fit 27792.2 mm³ (E) (belly sled + pods / receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2636 g (E), CG 10.7 mm off thrust axis (E), 26.8 mm without swap parts FAIL (tol 3), probes −0.0 mm (E) edge at (+0.71, −0.06, +0.70) (Unitree L2, unshielded) FAIL`.
+  - The sled was cut for the v1 receiver. The Overseer set is 66.8 x 68.8 x 183.6 (0.84 L, M).
 
 ## Handoffs (other sessions own these)
 - **Swap arm** (`swap_system.py`):
-  - XT60 at the arm-side end. Scout: no guide posts, the float's ±2.37° takes the mate, and the seat's couple goes to the stops and bolts. Overseer: posts, ±0.36° at first contact.
+  - XT60 at the arm-side end. No guide posts on either pack (your per-axis answer). The x side faces (gap 0.3, full length) engage before the XT60's first contact.
   - Scout TAB_OFF 0 (not 3.71, above). Grabber interface and forces in dimensions "System box swap: latch".
   - Two analog halls on the head at (x ±7.5, y −1.0, z z_T + 8), head x offset ±0.5 at the read.
   - `latch_assembly(pack, "latched" | "gripped" | "free")` now also returns `xt60_carrier`.
-  - The swap load set the arm gave (74 / 57 N, 3.5 / 6.1 N·m, 43.5 N, 7.6 N / 1.05 N·m) is what v2 is checked on.
+  - The swap load set the arm gave (74 / 57 N, 43.5 N, 7.6 N / 1.05 N·m, no guide couple) is what v2 is checked on.
+  - Heads v7: the grabber interface is unchanged. Cartridge v6 (follow-up PR) adds a 2.0 centre rib: tabs stop at ±1.0, stroke 3.0, squeezed outer faces ±7.0 (agreed with heads v7).
 - **Every receiver partner (Scout mount, Overseer sled, bay bodies):**
   - M3 x 5.7 heat-set inserts at the boss positions (unchanged), bolts up from below.
   - The mount plane is unchanged (Scout 54.1, Overseer 68.8). The body's top bears on it except the Scout's 1.0 FC relief.
@@ -201,11 +198,11 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
   - The mount takes 4 x M3 x 45 from below (heads on the receiver's flats at y 14.0, reached with the cartridge out).
   - Close the side windows so the edge probe reads PASS (the set stays HOLD until then).
   - The skids are swap parts (cage role) in its assembly.
-- **Overseer (open, v1 too):** the receiver's mount bolts at x ±26.8 come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options:
+- **Overseer (open, v1 too):** the receiver's mount bolts at x ±26.8 (v2 ±27.8) come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options:
   - (a) Bolts from above (through the sled) into heat-set inserts in the receiver's deck bosses: 8.7 above the deck's underside, room for a 6.7 insert and a 2.0 floor.
   - (b) Outboard bosses from below, 76.2 wide.
-  - Plus: the sled cut round the v2 receiver (fit 27630 mm³ now), and its 6-bolt pattern.
-- **Catch:** funnel v8 opening ≥ 190.7 along the drone fore-aft for the Overseer set (dimensions, row "Overseer vs the funnel opening"). The set is 1.7 longer (181.3).
+  - Plus: the sled cut round the v2 receiver (fit 27792 mm³ now), and its 6-bolt pattern.
+- **Catch:** funnel v8 opening ≥ 190.7 along the drone fore-aft for the Overseer set (dimensions, row "Overseer vs the funnel opening"). The set is 4.0 longer (183.6).
 - **Box structure:** bay bodies give each receiver its mount plane (Scout r 167.1, Overseer r 181.8 at the bay, R 113 + Y_M) and the strip side. The bay receiver is the same print file. The Scout receiver is 63.6 wide (was 61.2).
 
 ## Receiver topology attempt (24 Oct)
@@ -214,5 +211,6 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 ## Open (E)
 - Spring rate and the XT60 forces are E; the first latch print checks release force per finger (≤ 15 N), the snap-in at the seat, and that the pack drops 0.8 onto the bolts when let go.
 - Hall part not chosen: an analog hall (DRV5055A4-class, ±169 mT, E): 157 mT latched, 1.7 half in, 3.1 squeezed at nominal; threshold ~62 mT at ±0.5 head offset.
-- The swap load set is E (the arm's). The first receiver coupon checks the stall, the pocket wear over cycles (strike blocks if it wears), and the across stiffness (0.40 / 0.77 mm at 43.5 N).
+- The swap load set is E (the arm's). The first receiver coupon checks the stall, the pocket wear over cycles (strike blocks if it wears), and the across stiffness (0.35 / 0.78 mm at 43.5 N).
+- Follow-up PR (this owner): cartridge v6 (2.0 centre rib for the heads; TPU skid / lip along the bottom long edges ≥ 2 proud of the sliders) and receiver TPU skids on the 4 lower end corners and lower side edges (Scout v3 ask, cage role).
 - Receiver v2 topology (lighter at the same cases) is a follow-up. The FE peaks sit at the end walls' corners; the side walls carry little except across.

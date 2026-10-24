@@ -400,14 +400,19 @@ END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 
 RECV_V = 2
 FE_H = {"scout": 1.0, "overseer": 1.5}          # FE voxel size: the Overseer's solid v2 at 1.0 runs > 2 h (iterative)
 RECV_BUILD = "+y"                               # print deck down (FE: +z put the guide posts' pull across layers, 1.11)
-GUIDE2_BY = {"scout": False, "overseer": True}   # corner guide posts (pitch at the XT60's first contact). Scout off
+PROBE_EXEMPT_DEG = 40.0                         # the swap set round the swap opening is exempt from the edge probes to
+                                                # this cone (DEFAULT, as the Scout's system_check; was 35. Alt: no
+                                                # exemption, the receiver >= 3 inside the cage's bottom plane)
+GUIDE2_BY = {"scout": False, "overseer": False}  # corner guide posts (pitch at the XT60's first contact). Off for both
+                                                # (arm, 24 Oct: about the cartridge x its free mate is 1.23 / 1.03 deg
+                                                # inside the float's +-2.37, so no posts and no guide couple). Scout off
                                                 # (DEFAULT): the collar planes clip its posts to a 13 mm lever, ~265 N a
                                                 # post at 3.5 N m every swap; its XT60 float (+-2.37 deg) takes the arm's
                                                 # 1.33 deg and the seat's couple goes to the stops and bolts (review 24 Oct)
-END_GAP2_BY = {"scout": 0.3, "overseer": 0.15}  # end faces to the cartridge's ends (0.15 with posts)
+END_GAP2_BY = {"scout": 0.3, "overseer": 0.3}   # end faces to the cartridge's ends (0.15 with posts)
 W2_BY = {"scout": 5.0, "overseer": 5.0}         # side wall = foot width: 5.0 leaves 2.0 under the 3.0 lead-in capture (v1: 2.5 / 3.0 plates over 4.0 feet with a 1.0 tip, windows)
 DECK2_BY = {"scout": 3.0, "overseer": 3.0}
-END2_BY = {"scout": 5.0, "overseer": 5.0}       # end walls: 5.0 keeps 2.3 of the lead-end wall past the carrier notch (deck-down print: the Overseer fits the 180 bed on its diagonal)
+END2_BY = {"scout": 6.0, "overseer": 6.0}       # end walls: 6.0 leaves 3.0 below the rails behind the 3.0 capture and 3.3 of the lead-end wall past the carrier notch (deck-down print: the Overseer fits the 180 bed on its diagonal)
 RIB2 = 4.0                                      # cross ribs deck -> mount plane (tab line, closed end of the carrier)
 CARRIER_HZ = 10.0                               # carrier ears / cap half length in z (v1 lid +-10)
 FIT = 0.2                                       # carrier in its notch, per side
@@ -461,6 +466,11 @@ def receiver_v2(r, clip=None):
         parts.append(prism_zy(pts, -xw, xw))
         yg = r["Y_END0"]                                                                                   # corner guide posts
         pg = [(zf + sg * CAP, yg), (zf + sg * END_T, yg), (zf + sg * END_T, ym), (zf, ym), (zf, yg + HCAP)]
+        if not r["GUIDE"]:                 # no posts: the end wall runs on down to the feet set back CAP + gap from the
+            parts.append(prism_zy([(zf + sg * CAP, Y_RB), (zf + sg * END_T, Y_RB), (zf + sg * END_T, y0),   # cartridge
+                                   (zf + sg * CAP, y0)], -xw, xw))   # end (3.3: pitch free to ~3 deg, no guide couple;
+                                           # only the top band at 0.3 locates z). FE v2: ending at the rails left the
+                                           # Overseer's 43.5 N across case 1.20 mm, index 0.92, at that corner
         if not r["GUIDE"]:                 # no posts: gussets in the end wall's bottom corners at the side walls (FE v2:
             for s in (-1, 1) if GUSSET2 > 0 else ():   # the 43.5 N across case peaked in that re-entrant corner)
                 xg = s * rf
@@ -490,12 +500,12 @@ def receiver_v2(r, clip=None):
         a0, a1 = sorted((s * (r["X_IN"] - 1.6), s * rf))
         cuts.append(box(a0, a1, r["Y_DK0"] - 1, r["Y_DK0"] + STRIP_REC, r["Z_P0"] - 1, r["Z_P1"] - 1))   # strip recesses
     cuts.append(box(-8.5, 8.5, 0.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))                                # plug / male path
-    if r["GUIDE"]:                         # lead end wall: slot for the cartridge's set-screw boss (x +-8.25, 3.0 proud),
+    if True:                               # lead end wall: slot for the cartridge's set-screw boss (x +-8.25, 3.0 proud),
         ss_top = r["Y_XF_REAR"] + 2.0 + 4.25 + 1.0       # 1.0 clear, open from below with a 30 deg lead-in each side
         sx = 8.25 + 1.0; z0s, z1s = r["Z_E1"] - 0.5, r["Z_E1"] + END_T + 1.0
+        ym_ = r["Y_END0"] if r["GUIDE"] else Y_RB
         cuts.append(box(-sx, sx, -5.0, ss_top, z0s, z1s))
-        cuts.append(prism_xy([(-sx - CAP, r["Y_END0"] - 0.01), (sx + CAP, r["Y_END0"] - 0.01), (sx, r["Y_END0"] + HCAP),
-                              (-sx, r["Y_END0"] + HCAP)], z0s, z1s))
+        cuts.append(prism_xy([(-sx - CAP, ym_ - 0.01), (sx + CAP, ym_ - 0.01), (sx, ym_ + HCAP), (-sx, ym_ + HCAP)], z0s, z1s))
     for (bx, bz) in r["MOUNT"]:
         cuts.append(cyl("y", bx, bz, BOLT_D / 2, -5.0, r["Y_M"] + 1))                                     # bolts from below
         if abs(bx) > rf:                   # head counterbore from below to a flat above the collar clip
@@ -1235,7 +1245,7 @@ def scout_system(log=print):
                     ignore=["XT60E1-M", "receiver lid (latch)", "receiver v1 (latch)", "mount + nose legs (Scout)"]))
     man["access"] = acc
     for n in ("receiver v1 (latch)", "receiver lid (latch)", "receiver TPU strips (latch)", "XT60E1-M"):   # the receiver round
-        man["openings"].append(dict(part=n, axis=[0, 0, -1], half_angle_deg=35.0, min_mm=0.0, skip_probes=True))  # the swap
+        man["openings"].append(dict(part=n, axis=[0, 0, -1], half_angle_deg=PROBE_EXEMPT_DEG, min_mm=0.0, skip_probes=True))  # the swap
     res = sc.run(man)                                                # opening, exempt like the cartridge set (DEFAULT)
     mine = set(SCOUT_SWAP)
     clash = [(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in res["fit"]["pairs"] if not p_["pass_"] and ({p_["a"], p_["b"]} & mine)]

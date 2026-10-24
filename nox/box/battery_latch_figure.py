@@ -125,7 +125,7 @@ def _clip_image(ax, img, extent, polys, vmax, cmap="viridis"):
     return im
 
 
-def fe_sections(case="swap insert 74 N + guide 3.5 N m", out=None):
+def fe_sections(case="swap insert 74 N + across 43.5 N", out=None):
     """|u| (mm) of receiver v1 and v2 under one swap case (battery_latch_topo --swap-v1 / --swap-v2 saved the node fields
     in runs/battery_latch/v2/fe/), on the tab-line section and the side section through the wall, same colour scale."""
     import trimesh as T_
@@ -208,7 +208,7 @@ def main():
     axs[0].set_title("Scout: collar planes (black), 7.0 inside (red), keel nodes (green)", fontsize=9)
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "scout_collar.png")); plt.close(fig)
     compare()
-    for c in ("swap insert 74 N + guide 3.5 N m", "swap across 43.5 N +x"):
+    for c in ("swap insert 74 N + across 43.5 N", "swap across 43.5 N +x"):
         if os.path.isdir(os.path.join(BL.OUT, "fe")): fe_sections(c)
     print("figures in", OUT)
 

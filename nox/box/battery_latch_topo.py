@@ -166,6 +166,9 @@ SWAP = dict(insert=74.0,          # N, +y: 60 N XT60 mate, up to 74 N at head st
             guide_misuse=6100.0,
             across=43.5,          # N, x, once the gaps close
             centre=7.6, centre_M=1050.0)   # N and N mm (about y) from the lead-ins centring the cartridge (all E)
+SWAP_GUIDE = False                 # the guide couple cases (3.5 / 6.1 N m): dropped by the arm 24 Oct (no posts, the float
+                                   # takes pitch); True runs them (posts: z couple on the end faces; none: stops vs bolts)
+
 
 
 def swap_regions(r, R, over=None):
@@ -203,7 +206,7 @@ def guide_bands(reg):
 
 def add_swap_cases(p, r, reg):
     """the swap load set (SWAP) on Part p; every swap case is per-swap (cyclic): class flight (SF 4: in-layer allowable
-    10.8 MPa, across 5.4, = the ~10 MPa PETG fatigue limit), the 6.1 N m guide case misuse."""
+    10.8 MPa, across 5.4, = the ~10 MPa PETG fatigue limit), the 6.1 N m guide case misuse (SWAP_GUIDE only)."""
     S = SWAP
     sup = "contact" if "contact" in p.supports else "default"
     band = lambda key, b: reg[key] ^ box(-400, 400, b[0], b[1], -400, 400)
@@ -211,7 +214,11 @@ def add_swap_cases(p, r, reg):
     p.load("swap insert 74 N on the stops", reg["stops"], (0, S["insert"], 0), cls="flight", support=sup)
     p.load("swap pull 57 N on the XT60 lips", reg["xt60_lips"], (0, -S["pull"], 0), cls="flight")
     p.load("swap pull 57 N on the bolts", reg["floors"], (0, -S["pull"], 0), cls="flight")
-    if r.get("GUIDE", True):           # guide posts: a z couple on the end faces (top band of one end, bottom of the other)
+    arm = None
+    if not SWAP_GUIDE:                 # arm 24 Oct: no guide posts, no guide couple (the float takes pitch)
+        p.load_multi("swap insert 74 N + across 43.5 N", [(reg["xt60_seat"], (0, S["insert"], 0)),
+                                                          (reg["feet+"], (S["across"], 0, 0))], cls="flight", support=sup)
+    elif r.get("GUIDE", True):         # guide posts: a z couple on the end faces (top band of one end, bottom of the other)
         bands, arm = guide_bands(reg)
         pieces = lambda M, b1, b0: [(band("end1", bands["end1"][b1]), (0, 0, M / arm)),
                                     (band("end0", bands["end0"][b0]), (0, 0, -M / arm))]
@@ -224,11 +231,12 @@ def add_swap_cases(p, r, reg):
         arm = min(lev.values())
         pieces = lambda M, k, _: [(st[k], (0, M / lev[k], 0)), (reg["floors"], (0, -M / lev[k], 0))]
         senses = (("+", ("end1", None)), ("-", ("end0", None)))
-    for nm, M, cls in (("swap guide 3.5 N m", S["guide"], "flight"), ("swap guide 6.1 N m", S["guide_misuse"], "misuse")):
-        for sense, (b1, b0) in senses:
-            p.load_multi(f"{nm} {sense}", pieces(M, b1, b0), cls=cls)
-    p.load_multi("swap insert 74 N + guide 3.5 N m", [(reg["xt60_seat"], (0, S["insert"], 0))] + pieces(S["guide"], *senses[0][1]),
-                 cls="flight", support=sup)
+    if SWAP_GUIDE:
+        for nm, M, cls in (("swap guide 3.5 N m", S["guide"], "flight"), ("swap guide 6.1 N m", S["guide_misuse"], "misuse")):
+            for sense, (b1, b0) in senses:
+                p.load_multi(f"{nm} {sense}", pieces(M, b1, b0), cls=cls)
+        p.load_multi("swap insert 74 N + guide 3.5 N m", [(reg["xt60_seat"], (0, S["insert"], 0))] + pieces(S["guide"], *senses[0][1]),
+                     cls="flight", support=sup)
     p.load("swap across 43.5 N +x", reg["feet+"], (S["across"], 0, 0), cls="flight")
     p.load("swap across 43.5 N -x", reg["feet-"], (-S["across"], 0, 0), cls="flight")
     zl = r["L_C"]
@@ -289,11 +297,11 @@ def fe_swap(pack, R, r, h=1.0, build="+z", contact=None, over=None, Q=None, log=
     fld = {c.name: np.linalg.norm(Uu[:, q].reshape(-1, 3), axis=1).reshape(p.nshape).astype(np.float32)
            for q, c in enumerate(sw) if c.name in fields}
     return dict(worst=st["worst"], worst_case=st["worst_case"], worst_at=st["worst_at"], rows=rows,
-                rows_full=st["rows"], deflection_mm=defl, guide_lever_mm=round(arm, 1), build=build,
+                rows_full=st["rows"], deflection_mm=defl, guide_lever_mm=None if arm is None else round(arm, 1), build=build,
                 _fields=dict(u=fld, origin=np.asarray(p.origin), h=h, nshape=p.nshape))
 
 
-FIELD_CASES = ("swap insert 74 N + guide 3.5 N m", "swap across 43.5 N +x")
+FIELD_CASES = ("swap insert 74 N + across 43.5 N", "swap across 43.5 N +x", "swap insert 74 N + guide 3.5 N m")
 
 def fe_swap_v(pack, v, h=1.0, build="+z", log=print, fields=FIELD_CASES):
     """FE of the receiver v1 (alone, as before) or v2 (body + carrier + cap as one clamped stack, the mount face bearing on

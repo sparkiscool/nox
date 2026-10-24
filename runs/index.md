@@ -1,6 +1,6 @@
 # Runs
 
-_91 runs · rebuilt 2026-10-24 10:36_
+_91 runs · rebuilt 2026-10-24 10:58_
 
 ## Latest per part
 
@@ -36,8 +36,8 @@ _91 runs · rebuilt 2026-10-24 10:36_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 10:55 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 10:35 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
-| 2026-10-24 10:31 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 06:41 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
