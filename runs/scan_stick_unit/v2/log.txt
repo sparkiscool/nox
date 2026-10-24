@@ -6,3 +6,13 @@ layout: WARNING nearly mirrored in y (3.1% of passive cells differ): no symmetry
 layout: 3 drawn bodies (5,192 cells), held solid in every realization; eroded filter: masked
 layout: 33 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties
 fem: grid (32, 32, 88) = 90,112 elements, 70,776 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0751 (dil 0.0918 g +0.074) grey 15.9% ch 0.100 worst tie b3 fz 5.44e+03 3.0s
+it   2 beta    1 J   3.7874 vol 0.0608 (dil 0.0736 g -0.139) grey 30.8% ch 0.100 worst tie b3 mx 2.54e+03 3.1s
+it   3 beta    1 J   0.5363 vol 0.0664 (dil 0.0799 g -0.066) grey 26.0% ch 0.100 worst tie b3 my 331 3.0s
+it   4 beta    1 J   0.2479 vol 0.0678 (dil 0.0810 g -0.053) grey 24.6% ch 0.100 worst tie b3 my 148 2.8s
+it   5 beta    1 J   0.1496 vol 0.0699 (dil 0.0825 g -0.034) grey 22.8% ch 0.100 worst tie b3 my 86.4 2.9s
+it   6 beta    1 J   0.1084 vol 0.0715 (dil 0.0837 g -0.010) grey 21.0% ch 0.100 worst tie b3 my 62.2 2.8s
+it   7 beta    1 J   0.0877 vol 0.0717 (dil 0.0832 g -0.016) grey 19.2% ch 0.100 worst tie b3 my 49.4 2.7s
+it   8 beta    1 J   0.0724 vol 0.0724 (dil 0.0834 g -0.014) grey 17.7% ch 0.100 worst tie b3 my 40.5 2.5s
+it   9 beta    1 J   0.0633 vol 0.0732 (dil 0.0836 g -0.012) grey 16.8% ch 0.100 worst tie b3 my 33.5 2.6s
+it  10 beta    1 J   0.0584 vol 0.0740 (dil 0.0838 g -0.009) grey 15.9% ch 0.100 worst hand push ledge -z 100 N 32.2 2.7s
