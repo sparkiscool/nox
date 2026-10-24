@@ -44,7 +44,7 @@ DOWN_HFOV, DOWN_VFOV = 89.0, 73.0
 FLOW_HALF = 23.0
 PACK = (148.0, 48.0, 45.0)               # 4S 6000 (P)
 CART = (157.0, 54.0)                     # cartridge envelope (E, G)
-WHEEL_R, WHEEL_W = 4.0, 3.0
+WHEEL_R, WHEEL_W = 5.0, 3.0               # R 5 (v4 set): the hook latch is laid out on it (G Hook latch v1)
 OPEN_HALF, FACE_TOP = 84.0, 75.1         # funnel (G)
 WHEEL_SEAT = 112 - (OPEN_HALF + 0.8) + WHEEL_R * math.sqrt(2)   # seated wheel centre, seat z 32.9 (C)
 CART_BOT_SEAT = (-7.0 - 45.0 - 2.0) + (WHEEL_SEAT + 12.0)       # cartridge bottom kept at v0's seat z -9.1: the swap wheel's
@@ -162,7 +162,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["props"] = [cyl(PROP_R, PROP_Z - 0.5, PROP_Z + 0.5, mx, my, 96) for mx, my in motors_xy]
     g["motors_xy"] = motors_xy
 
-    # catch, centred at x = -dc: wheels on legs from the nearest arm, cartridge, pods, feet, steel belly plate
+    # catch, centred at x = -dc: wheels on legs from the nearest arm, cartridge, pods, feet (no steel plate: the hook latch holds, 24 Oct)
     wheels, legs = [], []
     for sx in (1, -1):
         for sy in (1, -1):
@@ -192,7 +192,6 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     PB = PACK_TOP - PACK[2]
     g["pack"] = box(-dc - PACK[0] / 2, -dc + PACK[0] / 2, -PACK[1] / 2, PACK[1] / 2, PB, PACK_TOP)
     g["cart"] = box(-dc - CART[0] / 2, -dc + CART[0] / 2, -CART[1] / 2, CART[1] / 2, PB - 2, -2.11)
-    g["steel"] = box(-dc - 50, -dc + 50, -20, 20, PB - 5, PB - 2)              # steel belly plate under the cartridge (G (6), position open)
     g["sled"] = box(-dc - 60, -dc + 60, -72, 72, -5.1, -2.1)
     if PACK_TOP < -7.5:                                                        # hanger walls from the sled to the cartridge rails
         g["sled"] = union([g["sled"], box(-dc - 60, -dc + 60, 27.5, 31, PACK_TOP, -5.0), box(-dc - 60, -dc + 60, -31, -27.5, PACK_TOP, -5.0)])
@@ -249,8 +248,7 @@ def l2_clear_margin(g, B, solid_items):
 def cg_of(g):
     items = [("L2", 230, g["l2"]), ("front camera", 15, g["cam"]), ("down camera", 15, g["down_cam"]), ("Pi 5 + cooler", 55, PI),
              ("FC", 10, FC), ("PDB", 21, PDB), ("UBEC", 15, UBEC), ("buck", 6, BUCK), ("RX", 2, RX), ("pack", 650, g["pack"]),
-             ("flow", 2, g["flow"]), ("top plate", 23, TOP), ("bottom plate", 61, BOTTOM), ("wires", 80, FC),
-             ("steel belly plate", 94, g["steel"])]
+             ("flow", 2, g["flow"]), ("top plate", 23, TOP), ("bottom plate", 61, BOTTOM), ("wires", 80, FC)]
     items += [(f"motor + prop {i}", 81 + 10, m) for i, m in enumerate(g["motors"])]
     items += [(f"ESC {i}", 25, g["arms"][i]) for i in range(4)]                  # on the arms (model open, E)
     printed = [("arms", g["arms"], 0.45), ("legs", g["legs"], 0.6), ("boom", [g["boom"]], 0.45), ("cam bracket", [g["cam_bracket"]], 0.5),
@@ -286,7 +284,7 @@ def solve_xB(g_fn, zB):
 
 def funnel(g, dc):
     others = trimesh.util.concatenate(g["arms"] + g["motors"] + g["legs"] + [TOP, BOTTOM, FC, PI, DECK, PDB, UBEC, BUCK, RX, g["boom"], g["l2"], g["cam"],
-                                       g["cam_bracket"], g["cart"], g["steel"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"])
+                                       g["cam_bracket"], g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"])
     p = pts(others, 30000) + [dc, 0, SEAT_DZ]                     # funnel centre at the catch centre
     d_face = np.full(len(p), np.inf)
     for ax in (0, 1):
@@ -294,6 +292,18 @@ def funnel(g, dc):
             x = sg * p[:, ax]; z = p[:, 2]; in_z = (z > -0.8) & (z < FACE_TOP) & (np.abs(p[:, 1 - ax]) < OPEN_HALF + 0.8 + z)
             d_face = np.where(in_z, np.minimum(d_face, (z + OPEN_HALF + 0.8 - x) / math.sqrt(2)), d_face)
     i = int(np.argmin(d_face))
+    # hook latch (G (7)): extended plunger uphill of each ±y-face wheel, 12 wide at x ±100, slope 50.1..58.1 from the
+    # bottom edge, 12 off the face; nothing of the drone within 1.0 of it
+    global PLUNGER_CLEAR
+    PLUNGER_CLEAR = np.inf
+    for sy in (1, -1):
+        y = sy * p[:, 1]; z = p[:, 2]
+        s_up = ((y - OPEN_HALF) + (z + 0.8)) / math.sqrt(2); off = (z + OPEN_HALF + 0.8 - y) / math.sqrt(2)
+        for sx in (1, -1):
+            dx = np.maximum(np.abs(p[:, 0] - sx * 100.0) - 6.0, 0)
+            ds = np.maximum(np.maximum(50.1 - s_up, s_up - 58.1), 0)
+            do = np.maximum(np.maximum(-off, off - 12.0), 0)
+            PLUNGER_CLEAR = min(PLUNGER_CLEAR, float(np.sqrt(dx ** 2 + ds ** 2 + do ** 2).min()))
     low = p[p[:, 2] < -0.8]; worst = 0.0
     for yaw in np.radians(np.linspace(-5, 5, 11)):
         c, s = math.cos(yaw), math.sin(yaw); q = low[:, :2] @ np.array([[c, -s], [s, c]]).T; worst = max(worst, np.abs(q).max())
@@ -325,11 +335,11 @@ for dc, wz0 in CASES:
         set_wheel(wz)
         dm, xB, zB, g, tot, cg = balance(dc, dm)
         fd, fp, low = funnel(g, dc)
-        if fd >= 1.0 and low <= OPEN_HALF - 1.0: break
+        if fd >= 1.0 and low <= OPEN_HALF - 1.0 and PLUNGER_CLEAR >= 1.0: break
     reach = leg_reach(g)
-    results.append(dict(dc=dc, wz=wz, dm=dm, xB=xB, zB=zB, fd=fd, low=low, tot=tot, cg=cg, reach=reach, ok=fd >= 1.0))
+    results.append(dict(dc=dc, wz=wz, dm=dm, xB=xB, zB=zB, fd=fd, low=low, tot=tot, cg=cg, reach=reach, ok=fd >= 1.0 and PLUNGER_CLEAR >= 1.0))
     say(f"catch {dc:4.1f} aft: wheels z {wz:5.1f} (seat dz {SEAT_DZ:5.1f}), motors {dm:5.1f} ahead, L2 base ({xB:5.1f}, {zB:4.0f}), "
-        f"funnel {fd:5.1f}, leg reach {reach:4.0f}, {tot:4.0f} g")
+        f"funnel {fd:5.1f}, plunger {PLUNGER_CLEAR:5.1f}, leg reach {reach:4.0f}, {tot:4.0f} g")
 ok = [r for r in results if r["ok"]]
 best = min(ok, key=lambda r: r["dm"])                              # shortest front arms that pass the funnel (DEFAULT; the legs grow)
 dc, dm, xB, zB = best["dc"], best["dm"], best["xB"], best["zB"]
@@ -360,7 +370,7 @@ allitems = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.
             ("top plate", TOP), ("bottom plate", BOTTOM), ("boom", g["boom"]), ("legs", trimesh.util.concatenate(g["legs"])),
             ("wheels", trimesh.util.concatenate(g["wheels"])), ("front camera", g["cam"]), ("cam bracket", g["cam_bracket"]),
             ("cartridge", g["cart"]), ("pods", trimesh.util.concatenate([g["cam_pod"], g["flow_pod"]])), ("feet", trimesh.util.concatenate(g["feet"])),
-            ("steel plate", g["steel"]), ("Pi", PI), ("rear wing", trimesh.util.concatenate([PDB, UBEC, BUCK, RX]))]
+            ("Pi", PI), ("rear wing", trimesh.util.concatenate([PDB, UBEC, BUCK, RX]))]
 nm, mg = l2_clear_margin(g, g["B"], allitems)
 say(f"L2 field (96 deg, negative-angle mode, kept clear in both modes): closest {nm} {mg:.1f} behind it (C, > 0 = clear)")
 nose = max(g["l2"].bounds[1][0], g["cam"].bounds[1][0])
@@ -376,7 +386,7 @@ for name, m in (("props", trimesh.util.concatenate(g["props"])), ("arms", trimes
 say("front camera view: checked (lines above list anything in view)")
 dn = np.array([0, 0, -1.0])
 for name, m in (("feet", trimesh.util.concatenate(g["feet"])), ("cartridge", g["cart"]), ("wheels", trimesh.util.concatenate(g["wheels"])),
-                ("legs", trimesh.util.concatenate(g["legs"])), ("steel plate", g["steel"]), ("arms", trimesh.util.concatenate(g["arms"]))):
+                ("legs", trimesh.util.concatenate(g["legs"])), ("arms", trimesh.util.concatenate(g["arms"]))):
     for lens, half_h, half_v, label in ((g["down_lens"], DOWN_HFOV / 2, DOWN_VFOV / 2, "down camera"), (g["flow_lens"], FLOW_HALF, FLOW_HALF, "flow")):
         d = pts(m) - lens; zz = -d[:, 2]
         h = np.degrees(np.arctan2(d[:, 0], np.maximum(zz, 1e-6))); v = np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))
@@ -399,8 +409,9 @@ for p_, nmp in ((g["props"][i], f"prop {i}") for i in range(4)):
 say("overlaps (M, > 0.5 mm3):", "none" if not bad else "; ".join(f"{a} x {b} {v:.0f}" for a, b, v in bad))
 fd, fp, low = funnel(g, dc)
 say(f"funnel seated (catch centre on the funnel axis, bottom plate top at seat z {SEAT_DZ:.1f}): closest non-wheel point {fd:.1f} "
-    f"at seat ({fp[0]:.0f}, {fp[1]:.0f}, {fp[2]:.0f}) (G ≥ 1.0); below seat z -0.8 (cartridge incl.) {low:.1f} at ±5 deg yaw vs {OPEN_HALF:.0f}")
-say(f"mass ~{tot:.0f} g (E: FC 10 g alone + 4 ESCs on the arms; record 2.0 kg P was the stock frame and gear), "
+    f"at seat ({fp[0]:.0f}, {fp[1]:.0f}, {fp[2]:.0f}) (G ≥ 1.0); hook latch plungers {PLUNGER_CLEAR:.1f} (G (7) ≥ 1.0); "
+    f"below seat z -0.8 (cartridge incl.) {low:.1f} at ±5 deg yaw vs {OPEN_HALF:.0f}")
+say(f"mass ~{tot:.0f} g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), "
     f"CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}) vs thrust centre ({dm:.1f}, 0): {cg[0] - dm:+.1f} in x")
 FLOW_POS = (g["flow_lens"] - cg) * [1, -1, -1] / 1000
 say(f"PX4 flow position from the CG (FRD, m): x {FLOW_POS[0]:+.3f}, y {FLOW_POS[1]:+.3f}, z {FLOW_POS[2]:+.3f}; "
@@ -439,7 +450,6 @@ P("PDB + UBEC + buck + RX", trimesh.util.concatenate([PDB, UBEC, BUCK, RX]), "bo
 P("motors", trimesh.util.concatenate(g["motors"]), "bought", "#b0b0b0", False)
 P("props", trimesh.util.concatenate([prop_view(i, *xy) for i, xy in enumerate(g["motors_xy"])]), "bought", "#d9a400", False)
 P("4S 6000", g["pack"], "bought", "#2f4fbf", False)
-P("steel belly plate", g["steel"], "bought", "#6b6b6b", False, "magnet hold, position open")
 names = [p["name"] for p in s.parts]
 s.timeline(lambda t: {n: rotz(360 * t / 20) for n in names}, duration_s=20, fps=30)
 s.view("iso", (600, -660, 520), (60, 0, 30)); s.view("side", (60, -1000, 60), (60, 0, 40)); s.view("front", (1000, 0, 60), (0, 0, 40))
