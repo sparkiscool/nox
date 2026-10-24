@@ -323,7 +323,7 @@ STATES = [
     ("LATCH_OUT", "PCA ch 0..3 to OUT (servo pulse per unit from calibration), seat sense ignored from here", "all 4 halls low within 0.5 s", 0.5, "A1 latch not out"),
     ("KA_ON", "close K1 while the old pack is higher than 13.0 V (0 A through the pads)", "INA_KA bus 12.8..13.2 V and I < 0.5 A for 0.2 s", 0.5, "A3 keep-alive fault"),
     ("PULL", "head B rises to 89.6, closes, retracts with the dead pack: the drone XT60 unmates under the pull", "stroke done, no stall, INA_KA I > 100 mA at the end of the stroke (pads carry the drone)", 2.0, "A4 pull / keep-alive lost"),
-    ("TURN", "axle 90 deg: head A to the top", "no stall; hall state matches phi", 0.6, "A5 stall"),
+    ("TURN", "axle 90 deg: head A to the top; <= 100 full steps/s through each notch; step target + the bay's gravity offset", "no stall; hall state matches phi", 1.1, "A5 stall"),
     ("INSERT", "head A extends, last 12 at <= 20 mm/s, cartridge to the bolt seat, 1 over-travel into the TPU strip", "full stroke, no stall", 2.0, "A5 stall"),
     ("MATE_CHECK", "hold the stroke; read INA_KA", "I < 50 mA within 1.0 s (the new pack carries the drone)", 1.0, "A6 mate fail"),
     ("RELEASE", "gripper opens (bolts into the drone pockets), head A retracts to park", "park, no stall", 1.0, "A5 stall"),

@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session, box electronics): from arm v7 (PR 79): per-bay gravity offset in the axle step target (commissioning) + sag check ≤ ±0.85° (DEFAULT), ≤ 100 full steps/s through each notch, TURN 1.1 s; detent now holds (x1.3, index 1.04), KB3 stays. box-electronics.md, dimensions I.
 - 24 Oct (box structure system session): stub tilt ≤ 10 mrad at the mast face, k ≥ 0.59 N·m/mrad (arm worker DEFAULT: XT60 float ±2.37° at 20 % margin leaves 11.6 / 15.2 mrad; replaces 1.9 mrad, merged an hour ago). dimensions System box structure.
 - 24 Oct (box structure system session): stub tilt back to ≤ 1.9 mrad, k ≥ 3.1 N·m/mrad (DEFAULT, arm: the pitch guide that allowed 5 mrad is gone; alt 5 mrad); across load kept at 43.5 N (hub) over the arm's 40.7. dimensions System box structure.
 - 24 Oct (box structure system session): the receiver pitch-guide couple (3.5 / 6.1 N·m) leaves the bay-body and stub cases and the guide posts leave the bay-body clearances (hub: the XT60 float takes ±2.37°, the latch drops its guide posts). dimensions System box structure.
