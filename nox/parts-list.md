@@ -55,6 +55,8 @@ Shares the Overseer's L2, camera and 4S 6000 pack (above); the Pi 5 is the Overs
 | 12 mm momentary button + 5 mm LED + 330 Ω (typical) | 1 + 1 | record start / stop | to buy | S |
 | 20 mm hook-and-loop strap, 450 mm (E) | 2 | pack | to buy | S |
 | M3 heat-set inserts (Ruthex 5.7 long, Ø4.0 hole, 7 deep) | 2 | camera bracket to the head | on hand | M: inserts |
+| M3 heat-set inserts (Ruthex 5.7 long, Ø4.0 hole, 7 deep) + M3 x 12 socket head | 6 + 6 | scan stick v6 joints: 4 pole adapter to spine (from below), 2 head to spine at z 180 | CHECK on hand | S |
+| Carbon rod Ø3.0, scan stick cage | 13 pieces, 1.60 m total (cut list in `runs/scan_stick_nodes/v1/summary.md`) | scan stick cage, epoxied into the TPU nodes | on hand (length CHECK) | S |
 | M4 heat-set inserts (Ruthex RX-M4x8.1, Ø5.6 hole, 9.5 deep) + M4 x 12 | 4 + 4 | head to base flange | CHECK | S, M: inserts |
 | M3 x 8, M3 x 12, M2.5 x 6, M2.5 x 6 | 4, 2, 4, 4 | L2 (3 under the head + 5 in the L2), camera bracket (6 pad + 6 in the insert, v7), camera (1.6 board + 4.4 in the post insert), Pi | on hand / CHECK | S |
 | Cat5e 0.5 m, XT60 pigtail, DC 3.5 x 1.35 plug lead | 1 each | wiring | CHECK | |

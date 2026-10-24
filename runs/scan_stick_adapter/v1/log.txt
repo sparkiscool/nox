@@ -114,3 +114,4 @@ it  48 beta   32 J  12.8473 vol 0.0768 (dil 0.1542 g -0.001) grey  0.9% ch 0.100
 it  49 beta   32 J  12.8321 vol 0.0768 (dil 0.1542 g -0.000) grey  0.9% ch 0.100 worst unit 25 g 6 11.6 19.2s
 it  50 beta   32 J  12.8174 vol 0.0769 (dil 0.1542 g -0.000) grey  0.9% ch 0.100 worst unit 25 g 6 11.6 22.1s
 it  51 beta   32 J  12.8034 vol 0.0769 (dil 0.1542 g +0.002) grey  0.9% ch 0.100 worst unit 25 g 6 11.6 24.4s
+it  52 beta   32 J  12.7977 vol 0.0766 (dil 0.1538 g -0.001) grey  0.9% ch 0.100 worst unit 25 g 6 11.5 20.6s
