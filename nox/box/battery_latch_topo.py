@@ -47,7 +47,7 @@ def bodies(pack):
     g, r = B["g"], B["r"]
     rf, zt = r["RF"], r["Z_T"]
     xe = rf + ENV_X
-    z0, z1 = r["Z_E0"] - T_MIN, r["Z_E1"] + T_MIN
+    z0, z1 = r["Z_E0"] - r["END_T"], r["Z_E1"] + r["END_T"]          # v1's length: the Overseer's 179.6 fits the 180 bed
     yt = r["Y_DK0"] + T_MIN                                         # top of the stop seats = the deck line
     zs = stations(r)
     D = {k: [] for k in ("loc", "feet", "pocket", "endpad", "stop", "xt60", "boss")}
@@ -70,10 +70,11 @@ def bodies(pack):
         for zc in (zs[0], zs[2]):                                   # stop pad seats over the cartridge top (TPU pads)
             a0, a1 = X(r["X_IN"] - 1.6, rf + T_MIN)
             D["stop"].append(box(a0, a1, r["Y_DK0"], yt, zc - STN / 2, zc + STN / 2))
-    for zf, sg in ((r["Z_E0"], -1), (r["Z_E1"], 1)):                # end pads with the z lead-in, x +-12
-        y0 = r["RAIL_Y0"]
-        pts = [(zf + sg * BL.CAP, y0), (zf + sg * T_MIN, y0), (zf + sg * T_MIN, yt), (zf, yt), (zf, y0 + BL.HCAP)]
-        D["endpad"].append(prism_zy(pts, -12.0, 12.0))
+    for zf, sg in ((r["Z_E0"], -1), (r["Z_E1"], 1)):                # end pads with the z lead-in at the cartridge corners
+        y0 = r["RAIL_Y0"]                                           # (its end bears there only: battery_latch.end_relief)
+        et = r["END_T"]                                             # thinner than T_MIN: held by its cover (gate ties)
+        pts = [(zf + sg * BL.CAP, y0), (zf + sg * et, y0), (zf + sg * et, yt), (zf, yt), (zf, y0 + BL.HCAP)]
+        D["endpad"].append(U(prism_zy(pts, r["X_IN"] - 1.0, rf + T_MIN), prism_zy(pts, -(rf + T_MIN), -(r["X_IN"] - 1.0))))
     zx = r["Z_X"]                                                    # XT60E1-M float pocket body (lid inserts in it)
     D["xt60"].append(box(-r["PKX_XW"] - 2.0, r["PKX_XW"] + 2.0, r["LIP_Y0"], r["Y_DK1"], zx - r["PKX_ZW"] - 2.0, zx + r["PKX_ZW"] + 2.0))
     for (bx, bz) in r["MOUNT"]:
@@ -82,7 +83,7 @@ def bodies(pack):
     drawn = U(*[m for v in D.values() for m in v])
     # cuts: the cartridge path (exact, with the capture), the pockets, the XT60 pocket and male path, insert holes,
     # the stop pad recesses, and the space over the pack above the deck line between the stations (partner side)
-    cuts = [BL.cart_path(r)]
+    cuts = [BL.cart_path(r), BL.end_relief(r)]
     for s in (-1, 1):
         pk, _ = BL.pocket_cut(r); cuts.append(pk if s > 0 else BL.mirx(pk))
     cuts.append(box(-r["PKX_XW"], r["PKX_XW"], r["Y_XM"], r["Y_DK1"] + 10, zx - r["PKX_ZW"], zx + r["PKX_ZW"]))
