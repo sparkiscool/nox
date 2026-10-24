@@ -13,7 +13,14 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
 - The part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` sections it names. Numbers in the brief
   that change a shared number: DEFAULT, its `dimensions.md` row + one `log.md` line, and continue (never wait on Spark).
 
-## 2. Design (the part's own script, nothing else)
+## 2. Design (system first, then cut)
+- Read the part's system requirements (`dimensions.md` "System <name>", `docs/generative.md` The rule, 0): envelope,
+  interfaces, joint reactions per case, stiffness and worst index the assembled system needs. Those are the run's loads,
+  supports and targets. No section yet: run the system pass first (or hand it to its own worker) and design from its output.
+  After the piece: put it back in the system model and run the assembled recheck.
+- Concept check before any run or detailed CAD (`docs/generative.md` The rule, 0): rule checks on the layout, two
+  alternatives in one line each, the `review` agent in concept mode, the layout artifact and one line to Spark; then go on.
+  Third failed version in a row of this piece: stop and redo the system pass (three strikes).
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
   `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent (background, own worktree)
   and carry on with anything that does not need its mesh; it checkpoints, checks, and opens the PR itself. Several variants or
@@ -26,7 +33,7 @@ python3 nox/solid_check.py <mesh.stl>            # the only gate; FAIL = fix the
 python3 nox/print_orient.py <mesh.stl> --all     # saved face must be the largest bed contact, or say why
 python3 nox/render_preview.py <mesh.stl> --mat PETG --prev <last g> --out runs/<part>/<version>/preview.png
 ```
-The three commands, the strength recheck and the motion artifact only need the mesh: run them in parallel.
+The three commands, the strength recheck, the assembled-system check (fit, worst index, mass, CG) and the motion artifact only need the meshes: run them in parallel.
 Strength recheck when the part carries a load case (pattern: `nox/box/arm_recheck.py`). Report, do not block.
 
 ## 4. Motion artifact (every part that moves or sits in a mechanism)
@@ -38,7 +45,7 @@ Artifact tool (icon "gear") and send the mp4 with SendUserFile. A static part ge
 ## 5. Done = saved (same turn, automatic)
 Follow `docs/generative.md` "Save and print" exactly: `print/<part>_<version>.stl`, State READY and the File cell in
 `current-parts.md`, one `log.md` line, `summary.md` in the fixed form beside `preview.png` and `motion.*`,
-`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
+`python3 tools/runs_index.py`, `python3 tools/check_state.py` (no ERROR), commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
 
 ## 6. Review and merge (same turn)
 Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `python3 tools/pr.py merge <n>` (REST; `gh pr merge` fails in cloud boxes)
@@ -46,4 +53,5 @@ and `git checkout main && git pull`. FAIL: fix the design, re-review; never merg
 permissions, say so with the PR link and stop; do not work around it.
 
 ## Reply (short)
+Not the hub (`docs/sessions.md` Hub)? Send this reply to the hub with send_message as well; no proactive messages or files to Spark.
 The summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.
