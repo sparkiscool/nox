@@ -131,11 +131,15 @@ def member_types(N, kind, members):
 
 
 def drop_bad(N, kind, members):
+    """drop short runs with no room for a strut, and any member left with a free end at a printed node (no sticks)"""
     cur = list(members)
     while True:
-        T = member_types(N, kind, cur); bad = [m for m in cur if T[m] == "bad"]
+        T = member_types(N, kind, cur); deg = {}
+        for a, b in cur:
+            deg[a] = deg.get(a, 0) + 1; deg[b] = deg.get(b, 0) + 1
+        bad = [m for m in cur if T[m] == "bad" or any(deg[i] == 1 and kind[i] != "C" for i in m)]
         if not bad: return cur
-        cur = [m for m in cur if T[m] != "bad"]
+        cur = [m for m in cur if m not in set(bad)]
 
 
 CAP_JOINT = 150.0 * int(os.environ.get("NROD", "1"))                            # N, epoxied socket pull-out design value (E; socket coupon pull, item 23)
@@ -230,6 +234,25 @@ _L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_
 IFACE = trimesh.util.concatenate([_L[k] for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m")])   # receiver set (M)
 CART = trimesh.util.concatenate([_L[k] for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug")])   # swap set (M)
 SKIDS = [_L["cartridge_skid_closed"], _L["cartridge_skid_lead"]]   # the latch's TPU end skids: sacrificial contacts, counted as cage
+
+
+def latch_skids():
+    """the TPU skids this pass requires of the latch (review PR 94: draw them here, E; receiver v2 / cartridge v6): the
+    receiver's lower nose face, bars along its 45 deg lower nose chamfer (outboard of the nose bolt key lines) and strips
+    under its bottom side edges; strips under the cartridge's bottom long edges, proud of the sliders (move with the
+    cartridge). Every piece >= 1.0 inside the funnel planes (+-5 / +-2), clear of the bolt keys; placed by the probes."""
+    bar = lambda p0, p1, r: trimesh.creation.cylinder(r, segment=[p0, p1], sections=16)
+    rec = [box(54.8, 57.0, -27.0, 27.0, -22.0, -6.0)]                                  # lower nose face, 2.2 thick
+    for sy in (1, -1):
+        rec += [bar([60.0, sy * 31.0, -16.0], [36.0, sy * 31.0, -40.0], 1.75),             # along the nose chamfer, y +-31
+                bar([36.0, sy * 31.0, -40.0], [31.0, sy * 25.8, -45.4], 1.75),             # down to the bottom strip
+                box(-32.0, 32.0, 24.6 if sy > 0 else -27.0, 27.0 if sy > 0 else -24.6, -46.5, -44.4)]   # under the bottom side edge
+    cart = [box(-32.0, 32.0, 19.2 if sy > 0 else -23.2, 23.2 if sy > 0 else -19.2, -46.5, -44.5) for sy in (1, -1)]   # 2.0 proud
+    return union(rec), union(cart)
+
+
+REC_SKIDS, CART_SKIDS = latch_skids()
+SKIDS = SKIDS + [REC_SKIDS, CART_SKIDS]
 PACK_PTS = _L["pack"].bounding_box.vertices.copy()
 # the Scout's own mount (partner part): receiver bosses (z 9.6) up to the plate (18.5) round the FC and the XT60 lead window,
 # legs down outside the receiver plates carrying the suspension joints, the Radxa plate (-y), the flow seat and pogo carrier (+y)
@@ -418,7 +441,7 @@ def in_band8(p):
 
 
 # ================================================================ feasibility of a rod
-BODIES = {"plate": PLATE, "FC": FC, "receiver": IFACE, "cartridge": CART, "mount": MOUNT, **{f"leg{i}": l for i, l in enumerate(LEGS)}, "Radxa": union([RADXA, RADXA_STANDOFF]), "flow": FLOW,
+BODIES = {"plate": PLATE, "FC": FC, "receiver": trimesh.util.concatenate([IFACE, REC_SKIDS]), "cartridge": trimesh.util.concatenate([CART, CART_SKIDS]), "mount": MOUNT, **{f"leg{i}": l for i, l in enumerate(LEGS)}, "Radxa": union([RADXA, RADXA_STANDOFF]), "flow": FLOW,
           "UBEC": UBEC, "XR2": XR2, "XT60": XT_M, "camera": CAM, **{f"bell{i}": b for i, b in enumerate(BELLS)}}
 
 
@@ -512,12 +535,9 @@ def load_cases(N, kind, live=None):
     down = lambda x, y: np.array([0, -np.sign(y), -1.0]) / S2
     cases.append(("latch hold 4 x 34 N", {W[p]: 34.0 * down(*p) for p in yw}, "flight"))           # G (7), box catch PR 70
     cases.append(("latch misuse 175 N on one wheel", {W[yw[0]]: 175.0 * down(*yw[0])}, "misuse"))
-    # handling 50 N: one node, inward / down / up at the side flat, the nose flat, the crown, a keel node
-    for ring in ("L", "U"):
-        for d in (np.array([0, 1.0, 0]), np.array([1.0, 0, 0])):
-            i = max(idx[ring], key=lambda i: N[i] @ d)
-            cases.append((f"handling 50 N on {ring} {np.round(N[i][:2]).astype(int).tolist()}", {i: -50.0 * d}, "handling"))
-            cases.append((f"handling 50 N down on {ring} {np.round(N[i][:2]).astype(int).tolist()}", {i: np.array([0, 0, -50.0])}, "handling"))
+    # handling 50 N on ANY printed node in any direction (L; review PR 94): one batch case over every node the cage uses,
+    # unit loads along x, y, z combined root-sum-square (E); frame_eval builds it from the current members
+    cases.append(("handling 50 N on any node, any direction", {}, "handling"))
     return cases
 
 
@@ -609,12 +629,15 @@ def frame_eval(N, kind, members, cases):
     act = np.array([d for i in list(used) + list(range(len(N), nn)) if i >= len(N) or kind[i] != "C" for d in range(6 * i, 6 * i + 6)])
     for _, F, _ in cases:
         if any(i not in used for i in F): return None
+    used_set = set(used)
     try:
         lu = splu(K[act][:, act].tocsc())
     except RuntimeError:
         return None
     out = []
     for name, F, cls in cases:
+        if not F:                                                         # handling on every printed node (batch)
+            out.append(_handling_all(N, kind, members, els, lu, act, nn, [i for i in used if kind[i] != "C"], name, cls)); continue
         f = np.zeros(6 * nn)
         for i, v in F.items(): f[6 * i:6 * i + 3] += v
         u = np.zeros(6 * nn); u[act] = lu.solve(f[act])
@@ -658,6 +681,39 @@ def frame_eval(N, kind, members, cases):
         out.append(dict(case=name, cls=cls, idx=idx, worst=float(idx.max()), el=int(idx.argmax()), defl=float(defl), reac=reac,
                         peak=scale if cls == "crash" else None, stroke_lim=stroke_lim))
     return out
+
+
+HAND_F = 50.0
+
+
+def _handling_all(N, kind, members, els, lu, act, nn, nodes, name, cls):
+    """50 N at each printed node along x, y, z (3 solves per node, one factorisation); per node the element index and the
+    node's deflection are combined root-sum-square over the three directions (E: any direction); worst over nodes"""
+    nl = len(nodes); Fm = np.zeros((6 * nn, 3 * nl))
+    for k, i in enumerate(nodes):
+        for d in range(3): Fm[6 * i + d, 3 * k + d] = HAND_F
+    U = np.zeros_like(Fm); U[act] = lu.solve(Fm[act])
+    idx2 = np.zeros((len(members), nl))
+    for e, typ, i, j, (L, T, k, kg) in els:
+        fl = k @ (T @ np.vstack([U[6 * i:6 * i + 6], U[6 * j:6 * j + 6]]))           # 12 x 3nl
+        if typ == "rod":
+            Nax = fl[6]; M = np.maximum(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
+            Tc, Cc = capacity(L + 2 * CONN_L)
+            v = np.maximum((np.abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, np.where(Nax > 0, Nax / Tc, -Nax / Cc))
+        elif typ == "pet":
+            Nax = fl[6]; Ms = np.maximum(np.abs(fl[4]) + np.abs(fl[5]), np.abs(fl[10]) + np.abs(fl[11]))
+            pcr = 0.7 * math.pi ** 2 * E_PET * PET_I / L ** 2
+            v = np.maximum((np.abs(Nax) / PET_A + Ms * PET_W / 2 / PET_I) / SIG_PET, np.where(Nax < 0, -Nax / pcr, 0.0))
+        else:
+            v = np.linalg.norm(fl[6:9], axis=0) / CAP_TPU
+        v2 = (v ** 2).reshape(nl, 3).sum(1)
+        idx2[e] = np.maximum(idx2[e], v2)
+    idx_n = np.sqrt(idx2)                                                   # members x nodes
+    dfl = np.array([math.sqrt(sum(float(np.linalg.norm(U[6 * i:6 * i + 3, 3 * k + d])) ** 2 for d in range(3))) for k, i in enumerate(nodes)])
+    idx = idx_n.max(1) if nl else np.zeros(len(members)); wn = int(np.argmax(idx_n.max(0))) if nl else 0
+    return dict(case=name + (f" (worst at {np.round(N[nodes[wn]]).astype(int).tolist()})" if nl else ""), cls=cls, idx=idx,
+                worst=float(idx.max()) if len(idx) else 0.0, el=int(idx.argmax()) if len(idx) else 0, defl=float(dfl.max()) if nl else 0.0,
+                reac={}, peak=None, stroke_lim=None, node_idx={nodes[k]: float(idx_n[:, k].max()) for k in range(nl)})
 
 
 def feasible(fe):
@@ -783,6 +839,32 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
     return cur, fe, f"{steps} trials"
 
 
+_INC = {}
+
+
+def close_ends(N, kind, cur, add, members):
+    """members to add with `add` so no printed node is left with one member: for each free end, the lightest candidate to
+    a node already in use (and its mirror)"""
+    if not _INC or _INC.get("n") != len(members):
+        _INC.clear(); _INC["n"] = len(members)
+        for m in members:
+            for i in m: _INC.setdefault(i, []).append(m)
+    out = list(add); mset = set(members)
+    for _ in range(4):
+        allm = cur + out; deg = {}
+        for a, b in allm:
+            deg[a] = deg.get(a, 0) + 1; deg[b] = deg.get(b, 0) + 1
+        free = [i for m in out for i in m if deg[i] == 1 and kind[i] != "C"]
+        if not free: break
+        used = set(deg)
+        for i in free:
+            opts = [m for m in _INC.get(i, []) if m not in allm and (m[0] if m[1] == i else m[1]) in used]
+            if not opts: continue
+            m = min(opts, key=lambda m: LEN.get(m, np.linalg.norm(N[m[1]] - N[m[0]])))
+            mm = _mirror(N, m); out += [m] + ([mm] if mm is not None and mm in mset and mm not in allm and mm not in out else [])
+    return out
+
+
 def warm_start(N, kind, members, path, cases, contact_ok, max_add=40):
     """additive (v4): a previous cage's rods that still fit, then the member (and its mirror) that cuts the case violation
     most, until every case holds; the probe repair and the reduction pass follow"""
@@ -796,8 +878,10 @@ def warm_start(N, kind, members, path, cases, contact_ok, max_add=40):
         used = {i for m in cur for i in m}; v0 = violation(fe) + (0 if contact_ok(cur) else 1.0); best = None
         for m in members:
             if m in cur or not (m[0] in used or m[1] in used): continue
-            mm = _mirror(N, m); add = [m] + ([mm] if mm is not None and mm in mset and mm not in cur else [])
-            trial = drop_bad(N, kind, cur + add); f2 = frame_eval(N, kind, trial, cases)
+            mm = _mirror(N, m); add = close_ends(N, kind, cur, [m] + ([mm] if mm is not None and mm in mset and mm not in cur else []), members)
+            trial = drop_bad(N, kind, cur + add)
+            if m not in trial: continue
+            f2 = frame_eval(N, kind, trial, cases)
             v = violation(f2) + (0 if contact_ok(trial) else 1.0)
             if v < v0 - 1e-6 and (best is None or (v, cage_mass(N, kind, add)) < best[0]): best = ((v, cage_mass(N, kind, add)), trial, f2)
         if best is None: break
@@ -874,9 +958,9 @@ def probe_repair(N, kind, chosen, members, cases, contact_ok, fe, max_add=30, n_
             if ((lat <= rr + 2.5) & (ahead > ROD_R + 0.5)).any(): cands.append((cage_mass(N, kind, [m]), m))
         cands.sort(key=lambda t: t[0]); fixed = False
         for _, m in cands[:n_try]:
-            mm = _mirror(N, m); add = [m] + ([mm] if mm is not None and mm in mset and mm not in cur else [])
+            mm = _mirror(N, m); add = close_ends(N, kind, cur, [m] + ([mm] if mm is not None and mm in mset and mm not in cur else []), members)
             trial = drop_bad(N, kind, cur + add)
-            if any(a not in trial for a in add): continue
+            if m not in trial: continue
             fe2 = frame_eval(N, kind, trial, cases)
             if not (feasible(fe2) and contact_ok(trial)): continue
             pr2 = run_probes(trial); d2 = probe_deficit(pr2)
@@ -1123,6 +1207,19 @@ for r in fe:
 say("joint reactions into the core (max over cases; the receiver and plate hubs carry these):")
 for i, (F, M, c) in sorted(REAC.items()):
     say(f"   core joint {tuple(N[i].round(1))}: {F:.0f} N, {M:.0f} N.mm ({c})")
+# breaking order (L item 7, review PR 94): per crash case, scale to the load at which the first member reaches its limit;
+# the core joints must hold 1.5 x their reaction there, so the cage member (a printed node strut or a rod) goes first
+TYP0 = member_types(N, kind, chosen); BREAK = {}; first = []
+for r in fe:
+    if r["cls"] != "crash" or r["worst"] <= 0: continue
+    s_ = 1.0 / r["worst"]; m_ = chosen[r["el"]]; first.append((r["case"], TYP0[m_], m_))
+    for i, f in r["reac"].items():
+        F = 1.5 * s_ * float(np.linalg.norm(f[:3]))
+        if F > BREAK.get(i, (0, ""))[0]: BREAK[i] = (F, r["case"])
+say("breaking order: first member to reach its limit per crash case: " + ", ".join(sorted({f"{t}" for _, t, _ in first})) +
+    f" ({sum(1 for _, t, _ in first if t == 'pet')} of {len(first)} cases a printed node strut)")
+say("   core joints must hold (1.5 x the reaction when the first cage member gives): " +
+    ", ".join(f"{tuple(np.round(N[i], 1))} {F:.0f} N" for i, (F, c) in sorted(BREAK.items())))
 NODE_REQ = {}
 for i in used:
     if kind[i] == "C": continue
@@ -1163,6 +1260,8 @@ R = dict(version="v4 layout change, warm start from v3", date="2026-10-24T23:59"
          contact_vs=best["cf"][1], pieces=PIECES, printed_nodes=PNODES, carbon_members=len(chosen) - NPET, printed_struts=NPET, shortest_carbon=CARB[0], types=[TYP[m] for m in chosen], l_carbon=L_CARBON, obj=OBJ, eso_seed=ESO_SEED, rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
          cases=[dict(case=r["case"], cls=r["cls"], index=r["worst"], defl=r["defl"]) for r in fe],
          core_reactions=[dict(at=N[i].tolist(), F=F, M=M, case=c) for i, (F, M, c) in REAC.items()],
+         core_break_req=[dict(at=N[i].tolist(), F=F, case=c) for i, (F, c) in BREAK.items()],
+         first_to_give=[dict(case=c, type=t, member=[N[m_[0]].tolist(), N[m_[1]].tolist()]) for c, t, m_ in first],
          options=[dict(y=r["yp"], z=r["zp"], mass=r["mass"], worst=max(x["worst"] for x in r["fe"]), contact=r["cf"][0], vs=r["cf"][1]) for r in runs],
          cg=cg.tolist())
 os.makedirs(OUT, exist_ok=True)

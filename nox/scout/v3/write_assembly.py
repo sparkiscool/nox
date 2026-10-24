@@ -50,6 +50,10 @@ for key, nm, role, g, swap, t in latch_parts:
     d = dict(role=role, protect=(role != "cage"), mass_g=g, tag=t, note="battery latch standard, part/battery-latch 258becf (control session)", **own)
     if swap: d["swap"] = True
     parts.append(mesh_part(nm, Lm[key], **d))
+parts.append(mesh_part("receiver v2 skids (latch, E)", L["REC_SKIDS"], role="cage", mass_g=4.0, tag="E", material="TPU",
+                       note="this pass's requirement for receiver v2 (latch follow-up PR): lower nose face, chamfer bars, bottom side strips", **own))
+parts.append(mesh_part("cartridge v6 skids (latch, E)", L["CART_SKIDS"], role="cage", mass_g=1.2, tag="E", material="TPU", swap=True,
+                       note="requirement for cartridge v6: strips under the bottom long edges, 2.0 proud of the sliders", **own))
 parts.append(mesh_part("mount + nose legs (Scout)", L["union"]([L["MOUNT"]] + L["LEGS"]), role="structure", mass_g=25, tag="E",
                        note="the Scout's receiver mount: bosses z 9.6 to the plate, Radxa plate, flow seat, suspension joints; envelope", **own))
 for nm, key, g, t in (("Radxa Zero 3W", "RADXA", 10, "E"), ("flow MTF-02P", "FLOW", 1.5, "P"), ("UBEC", "UBEC", 15, "E"), ("XR2", "XR2", 1, "P"),
@@ -95,7 +99,9 @@ a = {"name": "Scout v3", "machine": "scout",
                   # landings (J) (DEFAULT, Scout refit; alt: a cartridge end skid, control session)
                   for n in ("cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug",
                             "receiver v1 (latch)", "receiver lid (latch)")],
-     "contact_pairs": [[f"motor {i}", f"prop {i}", 1e9] for i in range(1, 5)] + [[f"motor {i}", "frame plate", 1e9] for i in range(1, 5)] +
+     "mass_budget_g": 500,
+     "contact_pairs": [["receiver v2 skids (latch, E)", n_, 1e9] for n_ in ("receiver v1 (latch)", "receiver lid (latch)", "receiver TPU strips (latch)", "cage (rods + nodes)", "mount + nose legs (Scout)", "cartridge v6 skids (latch, E)")] +
+                      [["cartridge v6 skids (latch, E)", n_, 1e9] for n_ in ("cartridge v5 (latch)", "slider +y (latch)", "slider -y (latch)", "pack 4S 1500")] + [[f"motor {i}", f"prop {i}", 1e9] for i in range(1, 5)] + [[f"motor {i}", "frame plate", 1e9] for i in range(1, 5)] +
                       [["cartridge v5 (latch)", "receiver TPU strips (latch)", 5.0], ["pack 4S 1500", "cartridge v5 (latch)", 1.0],
                        ["pack XT60 plug", "cartridge v5 (latch)", 5.0], ["XT60E1-M", "receiver v1 (latch)", 5.0], ["XT60E1-M", "receiver lid (latch)", 5.0],
                        ["receiver TPU strips (latch)", "receiver v1 (latch)", 5.0], ["pack XT60 plug", "XT60E1-M", 1.0],
@@ -119,6 +125,10 @@ a = {"name": "Scout v3", "machine": "scout",
                  "tool": {"type": "box", "w": 12, "h": 7, "w_axis": [0.7071, -0.7071, 0]}, "ignore": ["mount + nose legs (Scout)", "wires"]}],
 
      "parts": parts}
+BUDGET = {"cage (rods + nodes)": 300, "mount + nose legs (Scout)": 20, "camera mount": 5, "plate hubs + TPU suspension": 8,
+          "catch wheels": 1.6, "keep-alive pads": 2.0}          # soft targets (dimensions L Mass budget; the 500 g whole leaves 62 g after
+for p_ in a["parts"]:                                           # the 438 g fixed: the full cage is over it, reported, Spark 24 Oct)
+    if p_["name"] in BUDGET: p_["budget_g"] = BUDGET[p_["name"]]
 dst = os.environ.get("SCOUT_MANIFEST") or os.path.join(HERE, "scout.assembly.json")
 json.dump(a, open(dst, "w"), indent=1)
 load(dst).save()                                              # one part per line, the assembly.py format
