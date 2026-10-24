@@ -76,5 +76,34 @@ it  57 beta    4 J   0.0310 vol 0.0574 (dil 0.0963 g -0.001) grey  7.1% ch 0.100
 it  58 beta    4 J   0.0306 vol 0.0576 (dil 0.0964 g -0.000) grey  7.1% ch 0.100 worst tie b5 fx 48.9 2.6s
 it  59 beta    4 J   0.0304 vol 0.0577 (dil 0.0964 g -0.000) grey  7.1% ch 0.100 worst tie b5 fx 48.4 2.5s
 it  60 beta    4 J   0.0303 vol 0.0577 (dil 0.0964 g -0.000) grey  7.1% ch 0.100 worst tie b1 fz 48.3 2.2s
-7.1% ch 0.100 worst tie b5 fx 48.4 2.5s
-it  60 beta    4 J   0.0303 vol 0.0577 (dil 0.0964 g -0.000) grey  7.1% ch 0.100 worst tie b1 fz 48.3 2.2s
+it  61 beta    4 J   0.0302 vol 0.0578 (dil 0.0964 g +0.010) grey  7.2% ch 0.100 worst tie b1 fz 48.2 3.4s
+it  62 beta    4 J   0.0314 vol 0.0568 (dil 0.0953 g -0.001) grey  7.1% ch 0.100 worst tie b1 fz 50.6 2.0s
+it  63 beta    4 J   0.0311 vol 0.0570 (dil 0.0954 g -0.000) grey  7.0% ch 0.100 worst tie b1 fz 50.2 2.8s
+it  64 beta    4 J   0.0310 vol 0.0570 (dil 0.0954 g -0.000) grey  7.0% ch 0.100 worst tie b1 fz 50.1 2.3s
+it  65 beta    4 J   0.0310 vol 0.0570 (dil 0.0954 g -0.000) grey  7.1% ch 0.100 worst tie b1 fz 49.9 2.5s
+it  66 beta    4 J   0.0309 vol 0.0570 (dil 0.0954 g +0.006) grey  7.1% ch 0.100 worst tie b1 fz 49.8 2.5s
+layout: stopped (beta_stop) at it 66, beta 4, 168 s
+layout: beta 4 done: eroded design 6 bodies, main 99.7%; drawn bodies outside the main body: 5
+coarse stage done: 66 iterations, 472 s, peak 1.330288 GB
+box_hub_v6: grid (96, 40, 96) h 2.05 = 368,640 cells; design 90,703 (781.4 cm3), drawn 12,290, void 265,647
+  support default: 1776 cells, 4607 nodes
+  68 system cases from runs/arm/v7/system.json (envelope 0.15, power cuts out) + the detent springs
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (104.14 cm3); 1.74 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.14 cells, erosion depth 1.71 mm; volfrac 0.053 of 90,905 design cells
+layout: 5 drawn bodies (12,088 cells), held solid in every realization; eroded filter: masked
+layout: 69 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (96, 40, 96) = 368,640 elements, 359,904 active dofs; backend direct (direct estimate 4.5 GB, budget 11.8 GB)
+layout: warm start from a (48, 24, 48) grid (h 4.1): mean x 0.067
+it   1 beta    4 J  10.0000 vol 0.0658 (dil 0.1160 g +0.234) grey 10.7% ch 0.100 worst dropped pack [Overseer] [mis 494 39.3s
+it   2 beta    4 J  13.3029 vol 0.0587 (dil 0.1103 g +0.173) grey 10.9% ch 0.100 worst tie b4 fx 697 36.9s
+it   3 beta    4 J  23.9635 vol 0.0515 (dil 0.1041 g +0.108) grey 11.2% ch 0.100 worst tie b2 fz 1.39e+03 35.8s
+it   4 beta    4 J  41.6443 vol 0.0459 (dil 0.0985 g +0.048) grey 10.6% ch 0.100 worst tie b4 fx 2.08e+03 35.9s
+it   5 beta    4 J  78.1618 vol 0.0426 (dil 0.0942 g +0.002) grey 10.1% ch 0.100 worst tie b1 mx 4.47e+03 31.5s
+it   6 beta    4 J  81.1464 vol 0.0412 (dil 0.0920 g -0.086) grey  9.7% ch 0.100 worst tie b5 fx 4.11e+03 33.2s
+it   7 beta    4 J  62.1379 vol 0.0438 (dil 0.0967 g -0.040) grey 10.2% ch 0.100 worst tie b1 mx 3.73e+03 33.9s
+it   8 beta    4 J  55.1676 vol 0.0429 (dil 0.0943 g -0.063) grey 10.0% ch 0.100 worst tie b5 mz 2.89e+03 31.0s
+it   9 beta    4 J  48.8258 vol 0.0428 (dil 0.0931 g -0.075) grey  9.9% ch 0.100 worst tie b1 mx 2.97e+03 32.8s
+it  10 beta    4 J  31.6536 vol 0.0425 (dil 0.0917 g -0.089) grey  9.7% ch 0.100 worst tie b5 fx 1.62e+03 33.0s
+100 worst tie b1 mx 2.97e+03 32.8s
+it  10 beta    4 J  31.6536 vol 0.0425 (dil 0.0917 g -0.089) grey  9.7% ch 0.100 worst tie b5 fx 1.62e+03 33.0s
