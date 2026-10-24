@@ -86,6 +86,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | MG90S micro servo (hook latch) | 4 | hook latch plungers | to buy (CHECK: 2 may be on hand, D9) | D18; `box/box-hook-latch.md` |
 | M2 x 12 screws + nuts | 12 (8 ear screws + nuts, 4 yoke pins) | hook latch | CHECK on hand | `box/box-hook-latch.md` |
 | M3 x 10 + M3 x 5.7 heat-set inserts | 16 + 16 | hook latch housings on the panel v7 bosses | on hand (CHECK count) | M: inserts |
+| A3144 hall switch + Ø3 x 2 magnet | 4 + 4 | hook latch: plunger fully out | to buy (A3144 pack priced below; Ø3 x 2 magnets CHECK) | `box/box-hook-latch.md` |
 | KW11 microswitch | per bay (CHECK) | drone seated | to buy (CHECK) | M: KW11 |
 | Pogo pins (Mill-Max 0854 class) | per bay (CHECK) | keep-alive power | to buy (CHECK) | M: pogo pin |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |

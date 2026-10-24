@@ -1,6 +1,6 @@
 # Runs
 
-_44 runs · rebuilt 2026-10-24 00:24_
+_44 runs · rebuilt 2026-10-24 00:41_
 
 ## Latest per part
 
@@ -20,7 +20,7 @@ _44 runs · rebuilt 2026-10-24 00:24_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-24 00:16 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 00:33 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-23 22:46 | bracket_jA | [organic-v2](runs/bracket_jA/organic-v2/summary.md) | · | 34.6 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-23 22:46 | bracket_jA | [organic-v3](runs/bracket_jA/organic-v3/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-23 22:46 | bracket_jA | [topo-v2](runs/bracket_jA/topo-v2/summary.md) | · | 35.9 (M) | · | FAIL | · | · GB | · min | · |

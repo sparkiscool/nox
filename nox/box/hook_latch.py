@@ -35,22 +35,23 @@ ROD_OUT, ROD_OFF = 112.0, 4.0          # lower-ring rod centre on the guard outl
 R_WHEEL = (4.0, 5.0)                   # v3.2 printed R 4 / v4 set R 5 (G, C); the latch is set by the larger
 X_WHEEL = 100.0                        # wheel points (+-100, +-112) on the +-y faces (G Catch interface (1), C)
 T_C = (ROD_OUT + ROD_OFF / S2 - (K0 + ZB)) * S2      # wheel contact point up the slope from the bottom edge, 43.6 (C)
-GAP = 1.0                              # plunger downhill face to the R 5 wheel's uphill side (DEFAULT; R 4: 2.0)
+GAP = 1.5                              # plunger downhill face to the R 5 wheel's uphill side (DEFAULT; R 4: 2.5)
 
 # ---------------------------------------------------------------- plunger (C unless tagged)
 # Error tolerance (Spark 24 Oct: "a bit more error tolerance"). The wheel may sit off its interface point by e along the
-# slope (+ = uphill, toward the plunger) from cage build, panel print and seat scatter. The plunger rises clean for
-# e < GAP; a 45 deg lead-in on its downhill top edge cams a wheel that sits up to LEAD further uphill back down toward
-# the seat; a wheel that sits downhill is held higher on the face, and the plunger keeps 1.0 of face above the wheel
-# centre for e down to -(RISE - LEAD - 1 - R - GAP). Sideways the 12 wide plunger keeps the whole 3 wide rim on it for
-# +-4.5. v1 as first drawn (8 wide, rise 7, no lead-in) took e 0..+1 only.
+# slope (+ = uphill, toward the plunger) from cage build, panel print and seat scatter. The plunger rises with 0.5
+# clearance for e <= GAP - 0.5; a wheel that sits downhill is held higher on the face, and the plunger keeps 1.0 of flat
+# face above the wheel centre for e down to -(RISE - LEAD - 1 - R - GAP). A seated drone cannot move down the slope (the
+# opposite face holds it), so the 45 deg lead-in on the downhill top edge only helps a drone resting above its seat; a
+# plunger that meets a wheel stalls, its hall switch stays off and the box aborts the swap. Sideways the 12 wide plunger
+# keeps the whole 3 wide rim on it for +-4.5. v1 as first drawn (8 wide, rise 7, gap 1.0) took e 0..+1 only.
 PL_U, PL_V = 8.0, 12.0                 # section: 8 across the load (along the slope) x 12 along the face edge (DEFAULT)
 PL = PL_U
-RISE = 11.0                            # stroke (DEFAULT, from the tolerance band below)
+RISE = 12.0                            # stroke (DEFAULT, from the tolerance band below)
 LEAD = 2.0                             # 45 deg lead-in on the downhill top edge (DEFAULT)
 U0 = T_C + max(R_WHEEL) + GAP + PL_U / 2   # plunger axis up the slope, 53.6 (C)
-E_UP = GAP + LEAD                      # uphill wheel error taken (clean + lead-in), 3.0 (C)
-E_DOWN = RISE - LEAD - 1.0 - max(R_WHEEL) - GAP   # downhill wheel error taken, 2.0 (C)
+E_UP = GAP - 0.5                       # uphill wheel error with 0.5 rise clearance, 1.0 (C)
+E_DOWN = RISE - LEAD - 1.0 - max(R_WHEEL) - GAP   # downhill wheel error taken, 2.5 (C)
 E_SIDE = PL_V / 2 - 1.5                # sideways error with the whole rim on the plunger, 4.5 (C)
 CL_GUIDE, CL_SKIN = 0.2, 0.5           # plunger in the guide bore / in the panel's skin window, per side (DEFAULT)
 GUIDE_TOP = -SKIN - 0.3                # guide block top 0.3 under the skin's back
@@ -75,6 +76,9 @@ POST_V = 8.0                           # ear posts, thickness along v; the M2 sl
 BOLT_PAD = 6.0                         # flange pad radius round each M3 (o 12)
 BOLT_CLEAR = 3.5                       # M3 axis to any housing wall beside the head / hex key (head o 5.5, key o 3, C)
 GUSSET = 8.0                           # ear post gusset: reach along the flange
+BOSS_R, BOSS_GUSSET = 6.0, 6.0         # panel v7 bosses o 12 (pad rule) and their 2 gussets, 2.0 thick, reach 6 (C)
+MAG_D, MAG_L = 3.0, 2.0                # hall magnet o 3 x 2 in the plunger's valley-side face (E, the A3144 kit's)
+HALL_W, HALL_H, HALL_T = 4.4, 3.4, 1.0 # A3144 (TO-92S 4 x 3 x 1.5, E) locating recess in the guide's valley-side face
 
 # ---------------------------------------------------------------- loads (E) and allowables (printopt PETG)
 F_FUNC = 30.0      # N along the slope on one plunger: 55 N net up (60 push - 4.9 Scout), the two plungers on the near
@@ -190,14 +194,15 @@ def build(lay):
     # bolts, every axis BOLT_CLEAR from any wall below the flange so the head and the hex key reach it (checked):
     # row 1 on the valley side, just either side of the guide block; row 2 past the posts (v), either side of the servo body
     v_lo = -gv - WALL_VN
-    gx = gu + WALL_U + BOLT_CLEAR
-    v_b = (v_lo + BOLT_PAD, ev1 + POST_V + BOLT_CLEAR)
+    gx = gu + WALL_U + BOSS_R + 0.3                           # the panel boss (r 6, on the skin side) clears the guide
+    v_b = (0.0, ev1 + POST_V + BOLT_CLEAR)                    # valley row at v 0: its pads stay off the valley corner
     bolts = [(-gx, v_b[0]), (gx, v_b[0]), (min(-gx, b0 - BOLT_CLEAR), v_b[1]), (max(gx, b1 + BOLT_CLEAR), v_b[1])]
     u_lo = min(min(b[0] for b in bolts) - BOLT_PAD, po[0] - GUSSET)
     u_hi = max(max(b[0] for b in bolts) + BOLT_PAD, po[1] + GUSSET)
     v_hi = v_b[1] + BOLT_PAD
     u_b = sorted(set(b[0] for b in bolts))
-    fl = box(u_lo, u_hi, v_lo, v_hi, W_FL1, W_FL0)
+    # flange: full width over the guide block, from the valley-row pads' edge (v -6) outside it (valley corner kept clear)
+    fl = box(-gu - WALL_U, gu + WALL_U, v_lo, v_hi, W_FL1, W_FL0) + box(u_lo, u_hi, v_b[0] - BOLT_PAD, v_hi, W_FL1, W_FL0)
     # horn sweep keep-out (the arm at every angle + hub) and the servo body keep-out, both cut from the housing
     horn_keep = mf.Manifold()
     for a in np.linspace(-lay["theta"] - 4, lay["theta"] + 4, 13):
@@ -214,6 +219,8 @@ def build(lay):
         box((b0 + b1) / 2 - SV_EAR_SPAN / 2 - 0.3, (b0 + b1) / 2 + SV_EAR_SPAN / 2 + 0.3, ev0 - 4, ev1, body_w[0] - 0.3, body_w[1] + 0.3)
     housing = gb + fl + frame
     housing = housing - bore - win - horn_keep - keep
+    w_mag_out = g_bot + 3.0                                    # magnet centre when the plunger is out (3 over its bottom)
+    housing = housing - box(-HALL_W / 2, HALL_W / 2, v_lo - 1, v_lo + HALL_T, w_mag_out - HALL_H / 2, w_mag_out + HALL_H / 2)
     for (bu, bv) in bolts: housing = housing - cyl_w(1.7, bu, bv, W_FL1 - 1, W_FL0 + 1)      # M3 clearance o 3.4
     # M2 x 12 through each post into a nut on the ear: o 2.4 slot open toward the servo body (the hole sits 2.45 from the
     # body end, a closed hole would leave a 0.95 web)
@@ -225,6 +232,8 @@ def build(lay):
     pk = PIN_D / 2 + dr / 2 + 0.3                              # pocket half length along u (pin + drift + 0.3)
     pocket = box(-pk, pk, PL_V / 2 - 5.5, PL_V / 2 + 1, pin_lo - POCKET_W / 2, pin_lo + POCKET_W / 2)   # 5.5 deep
     pl = pl - pocket
+    pl = pl - mf.Manifold.cylinder(MAG_L + 0.2, MAG_D / 2 + 0.05, MAG_D / 2 + 0.05, 32).rotate([-90, 0, 0]) \
+        .translate([0, -PL_V / 2 - 0.01, -L_pl + 3.0])          # magnet pocket, valley-side face, 3 over the bottom
     ch = 0.8                                                    # uphill top edge (a wheel rolling down meets it)
     pl = pl - mf.Manifold.batch_hull([box(PL_U / 2 - ch, PL_U / 2 + 1, -PL_V, PL_V, -0.01, 1),
                                       box(PL_U / 2 + 0.5, PL_U / 2 + 1, -PL_V, PL_V, -ch - 0.6, 1)])
@@ -235,7 +244,7 @@ def build(lay):
     pin = cyl_v(PIN_D / 2, -lay["side"] * lay["r_h"], 0, -(lay["v_horn0"] - (PL_V / 2 - 5.0)), HORN_T + 1.2)
     return dict(housing=housing, plunger=pl, servo=servo + ears + dome, horn=horn, pin=pin, bolts=bolts,
                 L_pl=L_pl, g_bot=g_bot, pin_lo=pin_lo, pin_hi=pin_hi, u_range=(u_lo, u_hi), v_range=(v_lo, v_hi),
-                bore=(gu, gv), keep=keep, horn_keep=horn_keep, u_b=u_b, v_b=v_b)
+                bore=(gu, gv), keep=keep, horn_keep=horn_keep, u_b=u_b, v_b=v_b, w_mag_out=w_mag_out)
 
 
 def check_place(lay, parts):
@@ -248,14 +257,20 @@ def check_place(lay, parts):
     valley = (P[:, 1] - lat).min()                                            # >= 0 inside the +y face's own half
     rim = t.max()
     seat_clear = np.hypot(lat - 36.0, t - 14.0).min()
+    # the box round it (W: seated faces = W +-X = drone +-y, W Z = 144.5 + z with the panel frame's +2.1, E): the ring
+    # and its brackets reach rho 183.6 (bracket_jA, C), the side sheets' inner faces X +-186 (box-stand.md, C)
+    XW = P[:, 1]; ZW = 144.5 + P[:, 2] - 2.1
+    ring_gap = float(np.hypot(XW, ZW).min() - 183.6)
+    sheet_gap = float(186.0 - np.abs(XW).max())
     return dict(valley_margin=round(float(valley), 2), t_max=round(float(rim), 1), t_min=round(float(t.min()), 1),
                 lateral=(round(float(lat.min()), 1), round(float(lat.max()), 1)), seat_block_dist=round(float(seat_clear), 1),
-                ok=bool(valley >= 2.4 + 1.0 and rim <= T_TOP - 4.0 and seat_clear > 20.0))
+                ring_gap=round(ring_gap, 1), sheet_gap=round(sheet_gap, 1),
+                ok=bool(valley >= 2.4 + 1.0 and rim <= T_TOP - 4.0 and seat_clear > 20.0 and ring_gap > 3.0 and sheet_gap > 3.0))
 
 
 def search():
     rows = []
-    for r_h in (10.0, 11.5, 13.0, 14.5, 16.0):
+    for r_h in (11.5, 13.0, 14.5, 16.0, 17.5):
         for side in (1, -1):
             for bd in (1, -1):
                 lay = servo_layout(r_h, side, bd)
@@ -306,7 +321,7 @@ def clearances(lay, parts):
     res["plunger_top_proud"] = RISE
     res["drone_lift_mm"] = round(res["gap_R5"] * S2, 2)       # vertical lift until the wheel meets the plunger (R 5)
     res["held_wheel_centre_off_face"] = max(R_WHEEL) + GAP   # a vertical lift moves the wheel off the face too (45 deg)
-    res["tolerance_along_slope"] = dict(uphill_clean=GAP, uphill_with_lead_in=E_UP, downhill=E_DOWN,
+    res["tolerance_along_slope"] = dict(uphill_with_0p5_clearance=E_UP, uphill_touch=GAP, downhill=E_DOWN,
                                         drone_lift_max=round((GAP + E_DOWN) * S2, 2))
     res["tolerance_sideways_full_rim"] = E_SIDE
     # bolt access: head + key cylinder (r BOLT_CLEAR - 0.3) from the flange's far face 30 deep, vs housing and servo
@@ -315,6 +330,11 @@ def clearances(lay, parts):
         c = cyl_w(BOLT_CLEAR - 0.3, bu, bv, W_FL1 - 30, W_FL1 - 0.01)
         acc.append(round(vol(c ^ (parts["housing"] + parts["keep"])), 3))
     res["bolt_access_mm3"] = acc
+    res["housing_vs_panel_bosses_mm3"] = round(vol(parts["housing"] ^ bosses_local(parts)), 3)
+    res["plunger_vs_panel_bosses_mm3"] = round(max(vol(parts["plunger"] ^ bosses_local(parts)),
+                                                   vol(parts["plunger"].translate([0, 0, RISE]) ^ bosses_local(parts))), 3)
+    # hall: the magnet (out) faces the recess; gap magnet face -> recess floor (C)
+    res["hall_gap_mm"] = round((parts["bore"][1] - PL_V / 2) + (WALL_VN - HALL_T), 2)
     res["plunger_engaged_at_rise"] = round(GUIDE_TOP - parts["g_bot"], 1)
     res["swing_deg"] = round(lay["theta"], 1)
     res["pin_drift_u"] = round(lay["drift"], 2)
@@ -343,7 +363,7 @@ def tolerance_sweep(parts):
     off the face must stay 1.0 under the top of the plunger's flat face (RISE - LEAD)."""
     R = max(R_WHEEL); u_c = T_C - U0
     out = []
-    for e in (-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 3.5):
+    for e in (-3.0, -2.5, -2.0, -1.0, 0.0, 1.0, 1.5, 2.0):
         for d in (0.0, E_SIDE):
             wheel = mf.Manifold.cylinder(3.0, R, R, 48).rotate([-90, 0, 0]).translate([u_c + e, d - 1.5, R])
             hit = None
@@ -354,8 +374,8 @@ def tolerance_sweep(parts):
             if hit is None:
                 h = R + GAP - e
                 state = "held" if h <= RISE - LEAD - 1.0 + 1e-6 else "held too high"
-            else:
-                state = "lead-in" if hit[1] <= -PL_U / 2 + LEAD else "jam"
+            else:                                               # a seated wheel cannot move down the slope
+                state = "stall: hall off, swap aborts"
             out.append(dict(e=e, d=d, state=state, first_contact=hit, held_centre=None if hit else round(R + GAP - e, 2)))
     return out
 
@@ -365,11 +385,23 @@ def to_mf(m, T):
     return m.transform(np.asarray(T)[:3, :4].tolist())    # a left-handed T mirrors (housing A -> B), winding kept by manifold
 
 
-def bosses(parts, T):
+def bosses_local(parts):
+    """panel v7 bosses in the unit frame (C): o 12 x 7 from the skin's back, insert hole o 4.0, 2 gussets each 2.0 thick
+    pointing away from the guide block along u (full boss height at the boss, 0 at 6 out)."""
     b = mf.Manifold()
     for (bu, bv) in parts["bolts"]:
-        b = b + (cyl_w(5.0, bu, bv, W_FL0, -SKIN + 0.01) - cyl_w(2.0, bu, bv, W_FL0 - 1, -SKIN - 0.5))
-    return to_mf(b, T)
+        sg = 1.0 if bu > 0 else -1.0
+        b = b + cyl_w(BOSS_R, bu, bv, W_FL0, -SKIN + 0.01)
+        for dv in (-3.0, 3.0):
+            b = b + mf.Manifold.batch_hull([box(bu - 0.01 if sg > 0 else bu - BOSS_R - BOSS_GUSSET, bu + BOSS_R + BOSS_GUSSET if sg > 0 else bu + 0.01,
+                                                bv + dv - 1.0, bv + dv + 1.0, -SKIN - 0.5, -SKIN + 0.01),
+                                            box(bu - 0.5, bu + 0.5, bv + dv - 1.0, bv + dv + 1.0, W_FL0, -SKIN + 0.01)])
+        b = b - cyl_w(2.0, bu, bv, W_FL0 - 1, -SKIN - 0.5)
+    return b
+
+
+def bosses(parts, T):
+    return to_mf(bosses_local(parts), T)
 
 
 def drone_parts():
