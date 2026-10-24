@@ -327,7 +327,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
             sock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("tipb", "tipt", "armbot", "arm", "root")))
             hsock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc")))
     g["arm_socket_mm3"] = sock; g["hub_socket_mm3"] = hsock
-    g["pod_clamp_mm3"] = sum(math.pi * (v[2] / 2) ** 2 * 46.0 for k, v in rods.items() if k.startswith("belly bar"))   # pods clamp on the belly bars (E)
+    g["pod_clamp_mm3"] = (sum(math.pi * (v[2] / 2) ** 2 * 46.0 for k, v in rods.items() if k.startswith("belly bar"))   # pods clamp on the belly bars (E)
+                          + sum(overlap(rod(v[0], v[1], v[2] / 2), g["sled"]) for k, v in rods.items() if k.startswith("skid leg")) * 1.05 + 1.0)   # skid legs through the sled bosses
     ring_nodes = []
     for nm in info["pnodes"]:
         for lvl in ("lo", "hi"):
@@ -575,6 +576,7 @@ for it_fin in range(3):                                            # final sizes
     say(f"final pass {it_fin + 1}: motors {dm:.1f} ahead, CG {cg[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
     if fr_["violation"] == 0: break
     new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, iters=0, init=CAGE_SIZES)   # stiffen / strengthen only from the settled sizes
+    if not ok_: new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES)  # else a full warm-started sizing
     if not ok_: say("   touch-up sizing infeasible: the frame line below reports it"); break
     CAGE_SIZES = new_
 tot, cg = cg_of(g)                                                    # the layout drawn with the final sizes (the checks below read this one)
@@ -740,7 +742,7 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
-                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
+                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=105.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
            access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver"])], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),

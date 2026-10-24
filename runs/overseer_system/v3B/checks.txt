@@ -1,0 +1,63 @@
+cage (cage_opt level 160 Hz): spine chin arm_spars nose_x top_spider | post V0:t10 post V1:t10 post V2:t8 post V3:t10 post V4:t10 post V5:t8 post V6:t10 post V7:t10 chord V0-P0_50 lo:t10 chord P0_50-V1 lo:t10 chord V0-P0_50 hi:t10 chord P0_50-V1 hi:t10 chord V1-P1_25 lo:t10 chord P1_25-P1_50 lo:t10 chord P1_50-P1_75 lo:t10 chord P1_75-V2 lo:t10 chord V1-P1_25 hi:t10 chord P1_25-P1_50 hi:t10 chord P1_50-P1_75 hi:t10 chord P1_75-V2 hi:t10 chord V2-P2_50 lo:r5 chord P2_50-V3 lo:r5 chord V2-P2_50 hi:t10 chord P2_50-V3 hi:t10 chord V3-P3_25 lo:t8 chord P3_25-P3_50 lo:t8 chord V3-P3_25 hi:t10 chord P3_25-P3_50 hi:t10 chord P3_50-P3_75 hi:t10 chord P3_75-V4 hi:t10 chord P3_50-P3_75 lo:t8 chord P3_75-V4 lo:t8 chord V4-P4_50 lo:r5 chord P4_50-V5 lo:r5 chord V4-P4_50 hi:t10 chord P4_50-V5 hi:t10 chord V5-P5_25 lo:t10 chord P5_25-P5_50 lo:t10 chord P5_50-P5_75 lo:t10 chord P5_75-V6 lo:t10 chord V5-P5_25 hi:t10 chord P5_25-P5_50 hi:t10 chord P5_50-P5_75 hi:t10 chord P5_75-V6 hi:t10 chord V6-P6_50 lo:t10 chord P6_50-V7 lo:t10 chord V6-P6_50 hi:t10 chord P6_50-V7 hi:t10 spoke m0-V0:t10 spoke m0-V1:t10 spoke m1-V2:t8 spoke m1-V3:t10 spoke m2-V5:t8 spoke m2-V4:t10 spoke m3-V6:t10 spoke m3-V7:t10 spokehi m0-V0:t10 spokehi m0-V1:t10 spokehi m1-V2:t8 spokehi m1-V3:t8 spokehi m2-V5:t8 spokehi m2-V4:t8 spokehi m3-V6:t10 spokehi m3-V7:t10 V V0lo a:t10 V V0lo b:t10 V V0hi a:t10 V V0hi b:t10 V V7lo a:t10 V V7lo b:t10 V V7hi a:t10 V V7hi b:t10 keello +1:t10 keeldg +1:t10 keelx +1:t10 keello -1:t10 keeldg -1:t10 keelx -1:t10 nose vert +1:t6 nose vert -1:t6 nose top:r5 nose bot:r5 longeron hi +1:r5 longeron lo +1:t10 nose side dg +1:t8 mount hi +1:r5 mount lo +1:t6 mount dg +1:t6 longeron hi -1:r5 longeron lo -1:t10 nose side dg -1:t8 mount hi -1:r5 mount lo -1:t6 mount dg -1:t6 pyramid -1+1:r5 pyramid -1-1:r5 top bar:t10 skirt post V3:t10 skirt post P3_50:t6 skirt post V4:t10 skirt rail +:t10 skirt rail -:t10 skirt dg +:t10 skirt dg -:t10 skirt tie +1:t10 skirt side +1:t10 skirt tie -1:t10 skirt side -1:t10 tower post:r5 spider V0:t10 spider V1:t10 spider V2:t10 spider V3:t10 spider V4:t10 spider V5:t10 spider V6:t10 spider V7:t10 spider nose+:t10 spider nose-:t10 strut +1+1:t10 strut +1-1:t10 strut -1+1:r5 strut -1-1:r5 wring x+1:r5 wring x-1:t6 wring y+1:t6 wring y-1:t6
+wheels z -30.0: motors 163.3 ahead, catch centre x 138.5, L2 base (462.9,   64), funnel -94.2, plungers  2.0, G (8) 11.4, below the edges  -2.1 (≤ 0), 3394 g
+wheels z -32.0: motors 170.0 ahead, catch centre x 145.2, L2 base (469.1,   62), funnel -92.8, plungers  2.0, G (8) 11.9, below the edges  -2.1 (≤ 0), 3408 g
+wheels z -34.0: motors 170.2 ahead, catch centre x 145.3, L2 base (468.6,   60), funnel -91.4, plungers  2.0, G (8) 13.8, below the edges  -2.1 (≤ 0), 3408 g
+wheels z -36.0: motors 170.2 ahead, catch centre x 145.4, L2 base (468.2,   58), funnel -90.0, plungers  2.0, G (8) 11.2, below the edges  -2.1 (≤ 0), 3409 g
+wheels z -38.0: motors 170.2 ahead, catch centre x 145.4, L2 base (467.7,   56), funnel -88.5, plungers  2.0, G (8) 10.0, below the edges  -2.1 (≤ 0), 3409 g
+wheels z -40.0: motors 170.2 ahead, catch centre x 145.4, L2 base (467.2,   54), funnel -87.1, plungers  2.0, G (8) 11.8, below the edges  -2.1 (≤ 0), 3409 g
+wheels z -42.0: motors 170.1 ahead, catch centre x 145.3, L2 base (466.8,   52), funnel -85.7, plungers  2.0, G (8) 11.4, below the edges  -2.1 (≤ 0), 3410 g
+wheels z -44.0: motors 170.1 ahead, catch centre x 145.3, L2 base (466.8,   50), funnel -84.3, plungers  2.0, G (8) 13.5, below the edges  -2.1 (≤ 0), 3410 g
+wheels z -46.0: motors 163.3 ahead, catch centre x 138.5, L2 base (459.9,   48), funnel -82.9, plungers  2.0, G (8) 11.2, below the edges  -2.1 (≤ 0), 3364 g
+wheels z -48.0: motors 163.1 ahead, catch centre x 138.3, L2 base (459.7,   46), funnel -81.5, plungers  2.0, G (8) 11.9, below the edges  -2.1 (≤ 0), 3364 g
+wheels z -50.0: motors 162.9 ahead, catch centre x 138.1, L2 base (459.6,   44), funnel -80.1, plungers  2.0, G (8) 12.5, below the edges  -2.1 (≤ 0), 3364 g
+wheels z -52.0: motors 162.8 ahead, catch centre x 138.0, L2 base (459.6,   42), funnel   2.1, plungers  2.0, G (8) 11.1, below the edges  -2.1 (≤ 0), 3365 g
+cage sizing pass 1: 996 g, L2 mode 104 Hz, feasible True, 118 rods changed
+wheels z -30.0: motors 197.7 ahead, catch centre x 172.9, L2 base (499.7,   64), funnel -102.1, plungers  2.0, G (8)  9.1, below the edges  -2.1 (≤ 0), 3796 g
+wheels z -32.0: motors 198.2 ahead, catch centre x 173.4, L2 base (499.7,   62), funnel -101.1, plungers  2.0, G (8) 10.1, below the edges  -2.1 (≤ 0), 3797 g
+wheels z -34.0: motors 198.3 ahead, catch centre x 173.5, L2 base (499.3,   60), funnel -99.7, plungers  2.0, G (8)  9.0, below the edges  -2.1 (≤ 0), 3798 g
+wheels z -36.0: motors 198.3 ahead, catch centre x 173.5, L2 base (498.7,   58), funnel -98.3, plungers  2.0, G (8)  8.7, below the edges  -2.1 (≤ 0), 3798 g
+wheels z -38.0: motors 198.2 ahead, catch centre x 173.4, L2 base (498.1,   56), funnel -96.8, plungers  2.0, G (8)  9.8, below the edges  -2.1 (≤ 0), 3798 g
+wheels z -40.0: motors 198.1 ahead, catch centre x 173.3, L2 base (497.5,   54), funnel -95.4, plungers  2.0, G (8)  8.9, below the edges  -2.1 (≤ 0), 3798 g
+wheels z -42.0: motors 198.0 ahead, catch centre x 173.2, L2 base (496.8,   52), funnel -93.9, plungers  2.0, G (8)  8.4, below the edges  -2.1 (≤ 0), 3798 g
+wheels z -44.0: motors 197.9 ahead, catch centre x 173.1, L2 base (496.2,   50), funnel -92.3, plungers  2.0, G (8)  8.7, below the edges  -2.1 (≤ 0), 3798 g
+wheels z -46.0: motors 196.7 ahead, catch centre x 171.9, L2 base (494.4,   48), funnel -90.1, plungers  2.0, G (8)  8.9, below the edges  -2.1 (≤ 0), 3787 g
+wheels z -48.0: motors 196.4 ahead, catch centre x 171.6, L2 base (493.7,   46), funnel -88.5, plungers  2.0, G (8)  8.4, below the edges  -2.1 (≤ 0), 3787 g
+wheels z -50.0: motors 196.2 ahead, catch centre x 171.4, L2 base (492.9,   44), funnel -86.9, plungers  2.0, G (8)  8.8, below the edges  -2.1 (≤ 0), 3787 g
+wheels z -52.0: motors 196.0 ahead, catch centre x 171.2, L2 base (492.1,   42), funnel   2.1, plungers  2.0, G (8)  8.7, below the edges  -2.1 (≤ 0), 3787 g
+wheels z -54.0: motors 195.8 ahead, catch centre x 171.0, L2 base (491.4,   40), funnel   2.1, plungers  2.0, G (8)  8.4, below the edges  -2.1 (≤ 0), 3787 g
+wheels z -56.0: motors 195.6 ahead, catch centre x 170.8, L2 base (490.7,   38), funnel   2.1, plungers  2.0, G (8)  8.7, below the edges  -2.1 (≤ 0), 3787 g
+wheels z -58.0: motors 195.4 ahead, catch centre x 170.6, L2 base (490.0,   36), funnel   2.1, plungers  2.0, G (8)  8.9, below the edges  -2.1 (≤ 0), 3787 g
+NO FUNNEL FIT in the wheel z range: the last height is kept and the funnel line below FAILS
+cage search pass 2: 214 of 512 topologies feasible on this geometry; best 714 g, L2 mode 101 Hz: spine ring_diag keels_lo keels_x chin
+cage sizing pass 2: 714 g, L2 mode 101 Hz, feasible True, 103 rods changed
+final pass 1: motors 164.7 ahead, CG -0.5 in x, frame violation 4.321
+   touch-up sizing infeasible: the frame line below reports it
+
+chosen: catch centre x 139.8 (24.8 behind the thrust centre, swap CG 30 behind, layout B), motor square 164.7 ahead of the plate centre; motors at (304.2, ±139.5) and (25.2, ±139.5)
+arms: front r 335 (stock 243), rear r 142; tip gaps 25 all round (square kept)
+frame model on the final geometry (F, dimensions L cases): L2 mode 112 Hz (≥ 100), cage first mode 112 Hz; crash 757 N (energy: 2.0 m/s x 3787 g over a 10 stroke) in 14 directions: worst rod 0.98, buckling 5.09, sockets 0.94, arm 0.10 (≤ 1.0), touching node moves ≤ 4.0 (≤ 9); L2 at 35 g: worst 0.11; handling 50 N: 0.77; latch 0.14; violation 4.321; breaking order: node 0.94 vs member 5.09
+L2: base centre (456.7, 0, 36), axis 15 deg below +x; body lowest z -10.3 vs funnel top -19.3 (drone frame)
+L2 field (90 deg, normal mode kept clear): closest cage up 1.0 behind it (C, > 0 = clear)
+L2 field blocked by the thin nose rods: 0.1 % of the hemisphere (C, rays from the L2 head)
+length: rear prop tips x -102 to the nose x 531 (632); width 533; height 236
+front camera left: two, yaw ±46.8, pitch -13.6, landscape, lens at (446, 75, 38), 17.4 behind the L2 base plane
+   cage rods block 0.6 % of its image (C): post V0 0.4, V V0lo b 0.2, V V0lo a 0.1, longeron lo +1 0.1
+front camera right: two, yaw ±46.8, pitch -13.6, landscape, lens at (446, -75, 38), 17.4 behind the L2 base plane
+   cage rods block 0.6 % of its image (C): post V7 0.4, V V7lo b 0.2, V V7lo a 0.1, longeron lo -1 0.1
+front cameras: together 54.7 % of the L2 field in view (C, cam_cover.py; one camera at best 27.6 %)
+   cage low in the down camera view: 10 points
+down camera and flow views: checked (lines above list anything in view)
+overlaps (M, > 0.5 mm3): apex x arm 0 2; apex x arm 3 2
+guard: ring and V rods 12.8 off the disks in plan (≥ 12); rods under a disk 18.8 off the swept band (≥ 12)
+cage rods (C): 3.0 solid 54 x 4.76 m; 4.0 solid 37 x 4.61 m; 6/4 tube 10 x 2.35 m; 5.0 solid 8 x 0.61 m; 8/6 tube 46 x 7.12 m; 10/8 tube 7 x 0.49 m; 12/10 tube 7 x 0.50 m; 14/12 tube 1 x 0.29 m; 20/18 tube 1 x 0.07 m; 534 g + arm spars 34 g; 52 ring nodes, 4 corner nodes, 8 wheels; ~701 g (E) without the apex
+landing: feet at z -154 (lowest points), stance x 55..225, y -71..71; CG 144 above the floor; tip-over forward 22.9 deg, back 37.2 deg, left 26.1 deg, right 26.5 deg (worst 22.9, DEFAULT ≥ 30)
+funnel seated (catch centre on the funnel axis, bottom plate top at seat z 94.4): closest non-wheel point 2.6 at seat (-92, -20, 13) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); keep-alive band G (8) 9.3 (≥ 9); below the face edges -2.1 past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0); the latch set (receiver + cartridge, the battery latch's: its check vs the real panels 3.42 a side): G (8) 2.6, past the 3 a side box +1.9 (receiver guide posts 183.6 long here vs 179.3 in its check)
+mass ~3394 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (164.1, 0.6, -9.8) vs thrust centre (164.7, 0): -0.5 in x
+balance: CG 0.8 off the thrust axis with the pack (≤ 3), 8.0 without (layout B, Spark 24 Oct: accepted, reported)
+system_check: System: overseer_system_v3, cage first 9.5 mm (E) at +X (L2), fit 805.5 mm³ (E) (cage/sled + pods + deck) FAIL, bbox 110 L (E), extents 660 x 589 x 284 mm (E), mass 3396 g (E), CG 0.8 mm off thrust axis (E) [+0.7, +0.4, -8.8], 10.0 mm without swap parts, probes -41.5 mm (E) edge at (-0.79, +0.57, +0.23) (receiver) FAIL, access 1/1 clear
+  probes worst: {"probe": "edge", "r_mm": 0.0, "part": "receiver", "margin_mm": -41.48, "unshielded": false, "dir": [-0.79, 0.566, 0.234], "dir_label": "(-0.79, +0.57, +0.23)", "axis": [-0.438, -0.789, 0.431], "roll_deg": 75.0, "lateral_mm": 172.3, "contact": [48.0, 11.9, -136.5], "pass_": false}
+  access worst: {"name": "pack swap", "part": "cartridge", "tool": "part", "dir": [0.0, 0.0, -1.0], "length_mm": 80.0, "steps": 20, "blocked_by": [], "touches": [], "overlap_mm3": 0.0, "pass_": true}
+  fit worst: {"a": "cage", "b": "sled + pods + deck", "overlap_mm3": 805.53, "limit_mm3": 650.3, "contact": true, "method": "manifold3d", "pass_": false}
+  cage rods in that pair: skid leg -1-1 201, skid leg -1+1 201, skid leg +1-1 201, skid leg +1+1 201
+assembly: nox/overseer/overseer.assembly.json, 15 parts, meshes in runs/overseer_assembly/v3
+PX4 flow position from the CG (FRD, m): x -0.024, y +0.048, z +0.117; IMU (FC centre) from the CG: x -0.164, z -0.020
