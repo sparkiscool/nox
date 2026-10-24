@@ -1,12 +1,12 @@
 {
- "name": "battery_latch_scout",
+ "name": "battery_latch_overseer",
  "parts": [
   {
    "name": "pack",
    "mesh": "pack.stl",
    "role": "protected",
-   "tag": "P",
-   "mass_g": 155.0,
+   "tag": "E",
+   "mass_g": 635.0,
    "swap": true
   },
   {
@@ -14,7 +14,7 @@
    "mesh": "xt60_plug.stl",
    "role": "bought",
    "tag": "E",
-   "mass_g": 10.0,
+   "mass_g": 15.0,
    "swap": true
   },
   {
@@ -24,80 +24,6 @@
    "tag": "M",
    "material": "PETG",
    "swap": true
-  },
-  {
-   "name": "cartridge_strip_px",
-   "mesh": "cartridge_strip_px.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU",
-   "swap": true
-  },
-  {
-   "name": "cartridge_strip_nx",
-   "mesh": "cartridge_strip_nx.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU",
-   "swap": true
-  },
-  {
-   "name": "cartridge_skid_closed",
-   "mesh": "cartridge_skid_closed.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU",
-   "swap": true
-  },
-  {
-   "name": "cartridge_skid_lead",
-   "mesh": "cartridge_skid_lead.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU",
-   "swap": true
-  },
-  {
-   "name": "receiver_skid_nose_plate",
-   "mesh": "receiver_skid_nose_plate.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU"
-  },
-  {
-   "name": "receiver_skid_nose_bar_px",
-   "mesh": "receiver_skid_nose_bar_px.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU"
-  },
-  {
-   "name": "receiver_skid_nose_bar_nx",
-   "mesh": "receiver_skid_nose_bar_nx.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU"
-  },
-  {
-   "name": "receiver_skid_tail_plate",
-   "mesh": "receiver_skid_tail_plate.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU"
-  },
-  {
-   "name": "receiver_skid_tail_bar_px",
-   "mesh": "receiver_skid_tail_bar_px.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU"
-  },
-  {
-   "name": "receiver_skid_tail_bar_nx",
-   "mesh": "receiver_skid_tail_bar_nx.stl",
-   "role": "cage",
-   "tag": "M",
-   "material": "TPU"
   },
   {
    "name": "slider_px",
@@ -148,11 +74,11 @@
    "mesh": "drone_rest_standin.stl",
    "role": "structure",
    "tag": "E",
-   "mass_g": 180.19,
+   "mass_g": 1205.49,
    "cg": [
     0.0,
     0.0,
-    24.6
+    39.3
    ]
   },
   {
@@ -214,26 +140,6 @@
    "drone_rest_standin",
    "receiver",
    1.0
-  ],
-  [
-   "cartridge_strip_px",
-   "cartridge",
-   5.0
-  ],
-  [
-   "cartridge_strip_nx",
-   "cartridge",
-   5.0
-  ],
-  [
-   "cartridge_skid_closed",
-   "cartridge",
-   5.0
-  ],
-  [
-   "cartridge_skid_lead",
-   "cartridge",
-   5.0
   ]
  ],
  "cg_ref": [
