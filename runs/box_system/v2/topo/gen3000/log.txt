@@ -154,3 +154,14 @@ it  57 beta   16 J  52.5281 vol 0.0688 (dil 0.1538 g -0.025) grey  1.9% ch 0.100
 it  58 beta   16 J  52.3314 vol 0.0711 (dil 0.1568 g -0.005) grey  1.8% ch 0.100 worst misuse: Overseer motors cut 1.15e+03 29.9s
 it  59 beta   16 J  52.1750 vol 0.0711 (dil 0.1570 g -0.004) grey  1.8% ch 0.100 worst misuse: Overseer motors cut 1.14e+03 31.4s
 it  60 beta   16 J  52.0421 vol 0.0712 (dil 0.1572 g -0.003) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.14e+03 30.9s
+it  61 beta   16 J  51.8959 vol 0.0712 (dil 0.1573 g +0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.14e+03 32.1s
+it  62 beta   16 J  51.7354 vol 0.0707 (dil 0.1567 g -0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.13e+03 31.0s
+it  63 beta   16 J  51.5469 vol 0.0708 (dil 0.1568 g -0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.13e+03 28.6s
+it  64 beta   16 J  51.3397 vol 0.0710 (dil 0.1568 g -0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.13e+03 29.7s
+it  65 beta   16 J  51.1376 vol 0.0712 (dil 0.1568 g -0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.12e+03 29.6s
+it  66 beta   16 J  50.9273 vol 0.0714 (dil 0.1568 g +0.002) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.12e+03 29.9s
+it  67 beta   16 J  50.7276 vol 0.0712 (dil 0.1564 g -0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.11e+03 30.6s
+it  68 beta   16 J  50.7153 vol 0.0715 (dil 0.1564 g -0.001) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 1.11e+03 30.0s
+layout: beta 16 done: eroded design 6 bodies, main 99.3%; drawn bodies outside the main body: 5
+it  69 beta   32 J 332.3819 vol 0.0718 (dil 0.1597 g +0.018) grey  0.8% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 30.1s
+it  70 beta   32 J 332.4015 vol 0.0675 (dil 0.1562 g -0.004) grey  1.0% ch 0.100 worst misuse: Overseer motors cut 7.28e+03 30.8s
