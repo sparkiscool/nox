@@ -23,6 +23,15 @@ Each head rides a **printed PETG V-rail** bolted to hub v5's four posts (same bo
 - **Parts:** out 2 x 2040, 2 idler ends, 2 idlers, 2 belts + connectors, 8 T-nuts, 2 x 20T, 2 glides; in 2 rails, 6 V-wheels, 12 x 625ZZ, 6 x M5 x 25 + nylocs, 2 eccentric spacers, 2 pinions, 2 grubs, 8 M5 inserts, 2 racks (in the heads). Per arm about −120 g (E).
 - **Next:** rails A / B v1 + V-wheel v1 + pinion v1 drawn (`arm_cad`, solid check, print pose); detent re-placed; hub v6 generated (v5 seats, tower at the new place, 1.0 under the 80T kept); heads A / B v6 with the carriage (plate, wing, web, wheel bores, the wiring entry moved to X −6) replacing the glide and the clamp; `arm_kinematics.py 1.0 all` with the v5 meshes; artifact "Nox Box Mechanism" shows v4 / v5 / v5-compact.
 
+## XT60 swap (23 Oct 2026, Spark: XT60 back, contact pads retired; numbers `nox/dimensions.md` I "XT60 mate")
+Every insert now pushes an XT60 home and every pick pulls one apart: **insert 60 N, pull-out 50 N (E; were 15 to 20 N and ~8 N).** What that changes on the arm (next sessions, DEFAULT):
+- **Head drive:** the v5 16T pinion (r 8) needs 0.48 N·m at 60 N; stall ~74 N at 2 A (E), 1.2x. The last 12 of every insert run at ≤ 20 mm/s (E) with the drivers at 2 A; `box-wiring.md`'s 1.2 A heat fallback (~56 N at r 6.37, less at r 8) no longer pushes it home. If the first coupon push stalls: a 12T m1 pinion (r 6, ~99 N stall E).
+- **Carriage, rails, V-wheels:** draw and check them at insert 60 N and pull 50 N (the v5 layout's 20 N gave 1.5 N·m and 55 N on a wheel flank; 60 N gives ~4.5 N·m and ~165 N, E).
+- **Gripper:** spring ≥ 15 N per finger (was 8 N): a 50 N pull through the 10° tab pockets splays each finger ~8.3 N (E). The servo opens against it (~0.18 N·m at the 12T, E, both servos fine).
+- **Heads A / B v6:** load cases insert 60 N through the pack face, pull 50 N through the fingers (were 20 N).
+- **Axle:** no change: the push is radial (no torque on the wheel); with the axle driver off for the insert (Problem 17) the lead-ins float the arm easier at 60 N.
+- **Sequence:** unchanged steps; the pick also unmates, the insert also mates (`box.md` Swap sequence). Mate check = box keep-alive current under 50 mA (E).
+
 ## Wheel coordinates (W)
 Origin on the axle at the stub flange's mounting face (the 2040 stub post's front face, `nox/box/box-stand.md` v5e). **Y** along the axle (+ away from that face) = the cartridge's length (z), closed end toward −Y. **Z** radial, up at the drone position. **X** tangential at the top = the cartridge's slide axis (X = −x: a proper rotation, B+ / B− on the two long sides; a wheel turn never mirrors them). phi = the direction head A's bar points; head B's bar points at phi + 90. Each head has its own frame: bar along +Z, glide inner end at u = 0; s = Y − Y_C.
 
@@ -109,6 +118,7 @@ Overhang filter off on the heads and the hub; on for the bay module.
 11. **Rib only 0.8 deep**: test on the swap test print first (Spark 17 Oct 01:37: test print yes); widen the cartridge recess to 31 only if it slips.
 14. **Servo stands radially:** its body hangs to u −51.7, 19.7 past the axle when parked (at Y 166..207, where nothing else is). The glide-to-servo body is now a ~110 long cantilever along Y (Y_C 175).
 15. **Overseer:** not designed now (Spark 17 Oct 02:02: Scout only). Its cartridge (pack 148 x 48 x 45 P, est. 153 x 51 x 57 E) carried at park would reach r ~107 and hit the seated packs at R 100: grow R ~9 or make its cartridge lower when it is designed. A 51 wide Overseer cartridge also only just fits the 30° sector at r 100.
+26. **XT60 forces are E (section XT60 swap):** Amass gives 18 to 44 N for the XT60L; a worn plug pulls lighter, a new one may push harder. Fix: D17 on the scale, then the swap coupon at 2 A; if the head stalls, the 12T pinion.
 17. **Capture float (`archive/scout-v2/s2-cartridge.md` Problem 8, now reoriented):** a receiver's lead-ins move the cartridge up to 3.3 in x (tangential now) and z (along the axle). x: de-energise the axle motor for every insert stroke (3.3 at r 150 = 1.3°, DEFAULT). z: the head is stiff along Y; a ±1.5 TPU float under the rack guide block (not drawn). Check on the swap test print.
 16. **Head A and B are mirror variants** with mirrored fingers: print the right set for each head.
 18. **Belt clamp v2 hold is untested:** meshed pair 2.01 is from the belt spec (E), belt 7.6 g/m (E), idler pitch = the 20T's (E). Fix: the coupon set picks the slot (P); weigh the spare belt; measure the idler (D13).
