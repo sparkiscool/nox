@@ -51,7 +51,7 @@ Z_LOW, Z_TOP = 8.0, 192.0                                     # lower ring just 
 X_BACK = -66.0                                                # back verticals: their 12 nodes clear the Pi (C)
 DIAG_END = (10.0, 0.0, Z_TOP)                                 # the back diagonal ends in a drawn node on the top front spine sleeve (C)
 Z_MID = 108.0                                                 # mid support of the back verticals and the diagonals: over the UBEC (101), C
-CAGE_F = -3.0                                                 # the climbing segment 3 behind the L2 base plane
+CAGE_F = -7.5                                                 # the climbing cage segment 7.5 behind the L2 base plane: 4 mm rail wall in front of the bore, its top nodes behind the plane (concept review 4)
 POCKET_PIN = 192.0
 KG = dict(pack=0.59, pi=0.08, l2=0.23, cam=0.03, el=0.06)       # E
 
@@ -104,7 +104,7 @@ def spine_bodies():
     ledge = B6(LEDGE) + sum((B6(l) for l in LIPS), mf.Manifold())
     sleeves, bores = mf.Manifold(), mf.Manifold()
     for sy in (-1, 1):                                                                         # the cage on the spine: 4 sleeves on boss arms (low), 4 on the top ring (high)
-        for xs, z, yin in ((-14.0, Z_LOW, 14.0), (4.0, Z_LOW, 14.0), (-24.0, Z_TOP, y1 - 0.5), (10.0, Z_TOP, y1 - 0.5)):   # >= node r + 1 from every TPU node (review 3)
+        for xs, z, yin in ((-14.0, Z_LOW, 14.0), (2.0, Z_LOW, 14.0), (-24.0, Z_TOP, y1 - 0.5), (10.0, Z_TOP, y1 - 0.5)):   # >= node r + 1 from every TPU node (review 3)
             sl, bo = sleeve_x(xs - 6, xs + 6, sy * YC, z)
             sleeves += sl + box(xs - 3, xs + 3, min(sy * yin, sy * YC), max(sy * yin, sy * YC), z - 3, z + 3)   # 6 x 6 arm to the boss / the wall
             bores += bo
@@ -332,7 +332,7 @@ def manifest():
              dict(name="head", mesh=os.path.relpath(os.path.join(OUT_SYS, "head_drawn.stl"), ROOT), role="structure", mass_g=90, tag="E")]
     for name, p0, p1 in cage_rods():
         parts.append(dict(name=name, cylinder=dict(r=1.5, p0=list(p0), p1=list(p1)), role="cage", material="carbon", tag="C"))
-    for sy in (-1, 1):                                                                         # 8 TPU nodes, 16 cube (E)
+    for sy in (-1, 1):                                                                         # 8 TPU nodes, 12 cube (E)
         for nm, x, z in (("low back", X_BACK, Z_LOW), ("top back", X_BACK, Z_TOP), ("frame foot", frame_x(Z_LOW), Z_LOW), ("top front", frame_x(Z_TOP), Z_TOP)):
             parts.append(dict(name=f"node {nm} {sy:+d}", box=[x - 6, x + 6, sy * YC - 6, sy * YC + 6, z - 6, z + 6], role="cage", material="tpu", mass_g=2, tag="E"))
     contacts = [["pack", "spine", 1e9], ["pi", "spine", 1e9], ["ubec_buck", "spine", 1e9], ["head", "spine", 1e9], ["camera", "head", 1e9],
@@ -351,7 +351,7 @@ E_ROD, I_ROD = 120e3, np.pi * 3.0 ** 4 / 64                     # E: pultruded c
 
 def rod_spans():
     """longest unsupported span of every rod (supports: its ends and the sleeves / rails on it) and its mid-span deflection at 50 N"""
-    sup = [(-14.0, None, Z_LOW, 12), (4.0, None, Z_LOW, 12), (-24.0, None, Z_TOP, 12), (10.0, None, Z_TOP, 12), ]   # x-sleeves (x, -, z, length)
+    sup = [(-14.0, None, Z_LOW, 12), (2.0, None, Z_LOW, 12), (-24.0, None, Z_TOP, 12), (10.0, None, Z_TOP, 12), ]   # x-sleeves (x, -, z, length)
     out = []
     for name, p0, p1 in cage_rods():
         p0, p1 = np.array(p0, float), np.array(p1, float); L = np.linalg.norm(p1 - p0); d = (p1 - p0) / L
