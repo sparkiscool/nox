@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (workflow chat, Spark: "just use assumed numbers for all those"): strength / XT60 calibration tests dropped; coupons HOLD (files kept), `dimensions.md` T factors 1.0 (E) stand, Spark Tests line trimmed.
 - 24 Oct (workflow chat, Spark: weight is a soft limit, never sacrifice design for weight): system_check `mass_budget_g` / `budget_g` never FAIL or change the exit code; System line keeps "mass <g> of <budget> g (<pct> %)" + "over budget (...)", report adds a WARN line.
 - 24 Oct (workflow chat, Spark: "weight a soft limit, as low as we can, never sacrifice design for weight"): mass budget soft: reported + warned, never a gate; CLAUDE.md design list item 1, dimensions L, review check 7 (FAIL only if lightening broke a target), generative mass target.
 - 24 Oct (workflow chat): **system_check v2**: `access` paths (swept cylinder / box / the part itself vs every part, ≤ 0.5 mm³, names the blocker), crash probes (infinite edge + r10 post, 12000 orientations, cage ahead ≥ 0 DEFAULT, ~6 s at 73k tris), `mass_budget_g` / `budget_g`; all gate.
