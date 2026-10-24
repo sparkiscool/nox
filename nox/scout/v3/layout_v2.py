@@ -71,8 +71,37 @@ def _mkey(p0, p1):
     return frozenset((tuple(np.round(p0, 2)), tuple(np.round(p1, 2))))
 
 
+COLLIN, LEN = {}, {}                         # static: member -> collinear partner members through printed nodes; member -> length
+
+
+def set_collinear(N, kind, members):
+    """precompute, once per run, which candidate members continue each other straight through a printed node"""
+    COLLIN.clear(); LEN.clear(); inc = {}
+    for m in members:
+        a, b = m; LEN[m] = float(np.linalg.norm(N[b] - N[a]))
+        inc.setdefault(a, []).append((m, (N[b] - N[a]) / LEN[m])); inc.setdefault(b, []).append((m, (N[a] - N[b]) / LEN[m]))
+    for i, lst in inc.items():
+        if kind[i] == "C": continue
+        for x in range(len(lst)):
+            for y in range(x + 1, len(lst)):
+                if np.dot(lst[x][1], lst[y][1]) < -0.998:
+                    COLLIN.setdefault(lst[x][0], []).append(lst[y][0]); COLLIN.setdefault(lst[y][0], []).append(lst[x][0])
+
+
 def _runs(N, kind, members):
     """straight runs: members meeting collinear at a printed node are one rod through it; -> (root per member, run length per root)"""
+    if LEN and all(m in LEN for m in members):                              # fast path (set_collinear)
+        idx = {m: e for e, m in enumerate(members)}; par = list(range(len(members)))
+        def g(x):
+            while par[x] != x: par[x] = par[par[x]]; x = par[x]
+            return x
+        for e, m in enumerate(members):
+            for q in COLLIN.get(m, ()):
+                j = idx.get(q)
+                if j is not None: par[g(e)] = g(j)
+        root = [g(e) for e in range(len(members))]; tot = {}
+        for e, r_ in enumerate(root): tot[r_] = tot.get(r_, 0.0) + LEN[members[e]]
+        return root, tot
     Ls = [float(np.linalg.norm(N[b] - N[a])) for a, b in members]
     par = list(range(len(members)))
     def f(x):
@@ -949,6 +978,7 @@ for opt in PAD_OPTIONS:
         for a_, b_ in members:
             if (a_ in live) != (b_ in live): live |= {a_, b_}; grow = True
     members = [m for m in members if m[0] in live and m[1] in live]
+    set_collinear(N, kind, members)
     CASES = load_cases(N, kind, live)
     ring_members = [j for j, (a, b) in enumerate(members)
                     if (tuple(np.round(N[a], 3)), tuple(np.round(N[b], 3))) in RING_EDGES or (tuple(np.round(N[b], 3)), tuple(np.round(N[a], 3))) in RING_EDGES]
