@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (swap arm worker): **swap arm v7 round 3b**: Y_C 165 = funnel = catch = latch set centre (DEFAULT, hub), TAB_OFF Scout 3.71 / Overseer 5.18; XT60 on the latch's receiver pitch guidance: 0.68° vs ±1.06°, guide ≤ 3.5 N·m; brake needed for both packs; insert-lane keep-out published. Shared: L Swap row. `box-arm.md` v7
 - 24 Oct (swap arm worker): **swap arm v7 round 3** (review r2 FAIL; latch d0cd1a1, Y_C 138): low carriage stack + rail v4 keel, 5:1 axle, detent x1.5 (DEFAULT, alt x1.8), bays v2; still out: XT60 1.09° vs ±1.06° (latch, structure), funnel at Y_C 138 (catch). Shared: L Swap receiver row. `box-arm.md` v7
 - 24 Oct (organiser): full pass 1: sweep 0 archived (all 9 nox sessions active); check_state clean; CLAUDE.md 12.8 to 11.0 KB (design list and session rules to one line each, detail moved to generative rule 0 and sessions.md, no meaning change); no new slim candidates; docs drift sent to owners.
 - 24 Oct (box catch chat, Spark: "for all future designs when showing me an idea it should always a a visual not just words"): rule: every idea shown to Spark comes with a visual (artifact, source committed). CLAUDE.md Hard rules, `docs/generative.md` The rule 0 Visuals, review checks (concept mode + PR check 10), part skill reply.

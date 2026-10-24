@@ -1012,6 +1012,17 @@ def overseer_layout():
                         grip_couple_Nm_3g=round(3 * ov["mass"] * G * 30.0 / 1e3, 3), xt60_closed_end_y=round(y0 + 7.0, 1))
     out["drone_seat_offset_30"] = dict(radial_strokes="unchanged (the offset is axial)", Y_C_head=L.Y_C, **seat,
                                        note=f"only +Y works at Y_C {L.Y_C:g}; -Y puts the closed end inside the carriage hardware")
+    if LATCH_FLIP(_BL):                          # round 3b: the tab line on each latch set's centre (= the catch centre = the funnel centre)
+        out.pop("drone_seat_offset_30")
+        sets = {}
+        for pk in ("scout", "overseer"):
+            c = CART[pk]; v = np.asarray(_BL.latch_assembly(pk, "latched")["receiver"].to_mesh().vert_properties)[:, 2]
+            zt = _BL.build(pk)["g"]["Z_T"]; Y = lambda z: L.Y_C + zt - z                       # cartridge z -> wheel Y (XT60 end at -Y)
+            sets[pk] = dict(tab_off_from_cg=SET_TAB_OFF.get(pk), receiver_y=(round(Y(float(v.max())), 2), round(Y(float(v.min())), 2)),
+                            cartridge_body_y=(round(L.Y_C - c["tab"], 2), round(L.Y_C - c["tab"] + c["l"], 2)),
+                            xt60_y=round(L.Y_C - c["tab"] + c["xt60_z"], 2), plate_top=V.PLATE_Y[1],
+                            receiver_clear=round(Y(float(v.max())) - V.PLATE_Y[1], 2))
+        out["sets_on_the_grip"] = dict(Y_C=L.Y_C, **sets, note="the funnel centre = each catch centre = each latch set centre = the grip line")
     r_cg = z["park"] + BOT_DZ + ov["cg"][1]; t_ov = ov["mass"] * G * r_cg / 1e3
     need = 1.25 * (t_ov + DET_OTHER)
     out["detent"] = dict(overseer_gravity_Nm=round(t_ov, 3), hold_2_springs=DET_HOLD, margin_now=round(DET_HOLD / (t_ov + DET_OTHER), 2),
