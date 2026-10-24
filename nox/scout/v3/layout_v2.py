@@ -721,7 +721,7 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
         gain = []
         for g in groups:
             if g in tried or any(m not in pos for m in g): continue
-            rest = drop_bad(N, kind, [m for m in cur if m not in g])
+            rest = [m for m in cur if m not in g]                          # ranking only (the trial drops short runs below)
             gain.append(((m0 - cage_cost(N, kind, rest)) / (max(util[pos[m]] for m in g) + 0.05), g))
         if not gain: break
         if ESO_SEED:                                                       # multi-start: jitter the order (seeded)
