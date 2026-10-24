@@ -25,6 +25,12 @@ from system_check import run as system_check_run
 _CJ = json.load(open(os.environ.get("SYS_CAGE", os.path.join(ROOT, "runs", "overseer_cage", "v2", "cage_opt2.json"))))
 _LV = _CJ["levels"][os.environ.get("SYS_LEVEL", "100Hz_35g")]
 CAGE_TOPO, CAGE_SIZES = _LV["topo"], _LV["sizes"]
+SYS_PICK = os.environ.get("SYS_PICK", "mid_spokes")        # DEFAULT: +10 g over the lightest for a 178 Hz cage (Spark: "way too flimsy")
+if SYS_PICK:
+    want = set(SYS_PICK.split(",")) if SYS_PICK != "none" else set()
+    for row in _LV["table"]:
+        if row["feasible"] and {k for k, v in row["topo"].items() if v and k not in co.FIXED_ON} == want:
+            CAGE_TOPO, CAGE_SIZES = row["topo"], row["sizes"]; break
 TIP_OFF = 0.0                            # the pack and catch on the thrust axis (balance rule: CG ≤ 3 mm pack in and out)
 NOSE_GROUPS = ("nose", "nose_x", "nose_mount")                      # thin rods allowed in the L2 field (blocked share reported)
 
