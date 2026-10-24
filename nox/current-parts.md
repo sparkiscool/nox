@@ -46,7 +46,7 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 | Scan stick cam bracket | `nox/overseer/scan_stick/scan_stick.md`, `cam_topo_v7.py` (nox/topo) | v7 (topology, 24 Oct: 10 mm standoffs, M2.5 inserts, 6 mm plate; v1 drawn retired, v2 / v3 FAILED the gate, v4 4 mm posts superseded, v5 web wrapped the posts, v6 stopped) | DESIGN | `print/scan_stick_cam_v7.stl` **do not print** (superseded 24 Oct: L2 forward 15° down, guards, pack pocket, M2 / M3; system pass `unit_topo_v3.py`, pieces `scan_stick_pieces_v1.py`) | 13.35 (M) | retired into head v14 (the camera mount is part of the head) |
 | Scan stick base | `nox/overseer/scan_stick/unit_topo_v6.py` (cut into adapter + spine, 24 Oct) | v27 | SUPERSEDED | none (224 tall, no fit on the 180 bed; do not print v17) | 494.6 (M) | replaced by the pole adapter + spine rows |
 | Scan stick pole adapter | `unit_topo_v6.py` (piece adapter) | v2 | **READY** | `print/scan_stick_adapter_v2.stl` | 131.6 (M) | sleeve + thread on the pole, 4x M3 x 12 into the spine floor; worst 0.61 |
-| Scan stick spine | `unit_topo_v6.py` (piece spine) | v3 | DESIGN | v3 rebuilding (v2: fillet 46.7 mm3 into the head) | 419 (M) | pack pocket tube, Pi, head joint, top cage; worst 0.32 |
+| Scan stick spine | `unit_topo_v6.py` (piece spine) | v3 | **READY** | `print/scan_stick_spine_v3.zip` | 419.0 (M) | pack pocket tube, Pi 5 on 4 posts, head joint, top cage; prints upright; worst 0.32 |
 | Scan stick cage nodes | `nox/overseer/scan_stick/nodes_v5.py` | v2 | **READY** | `print/scan_stick_node_*_v2.stl` (8 files) | 41.9 TPU (E) | Ø3.6 sockets; rod cut list `runs/scan_stick_nodes/v2/summary.md` |
 
 ## System recheck (Spark 24 Oct: every READY, BUILT, HOLD and DESIGN part, `docs/generative.md` The rule, 0)

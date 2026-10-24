@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): scan stick v6 set READY: spine v3 (419.0 g, worst 0.32), head v18 (167.8 g, 0.18), pole adapter v2 (131.6 g, 0.61), 8 TPU nodes v2 (41.9 g); all solid PASS, assembled fit 0 mm³; Ø3.6 rod bores; tools/topo_remap.py rebuilds a layout after small cut changes.
 - 24 Oct (scan stick chat): rod bores Ø3.2 → Ø3.6 everywhere (Spark: Scout v2's 3.3 had to be drilled): nodes v2 (solid PASS, 41.9 g TPU), spine / head / adapter sleeves and the pack pin. Adapter v1 solid PASS 105 g but worst 1.77 at the 6 mm flange root: adapter v2 flange 10 mm, heads sunk 4, gen 25.
 - 24 Oct (scan stick chat): Spark: "no need to make this too strict": the adapter joint keeps 4x M3 (~700 N each at 50 g E); alt 8x M3 not taken.
 - 24 Oct (scan stick chat): fit coupon v3 printed, Spark: "perfect": acme_clear 0.40 and the Ø28.3 x 27 sleeve confirmed (P); the pole adapter keeps that cut.

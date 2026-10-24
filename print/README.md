@@ -1,6 +1,6 @@
 # Print files
 
-Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. Scan stick (24 Oct): `scan_stick_base_v17.stl`, `scan_stick_head_v13.stl`, `scan_stick_cam_v7.stl` and `scan_stick_cam_v4.stl` are superseded by the redesign (L2 forward 15° down, guards, pack pocket, M2 / M3); do not print them. `scan_stick_thread_test_v1.stl` and `_v2.stl` are superseded by `scan_stick_thread_test_v3.stl` (24 Oct: the 27 mm sleeve over the Ø27.5 cylinder + the thread); print v3 only. `box_hook_latch_*_v1.stl` are superseded by v2 (funnel panel v7 skin 2.0); do not print them.
+Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved from the "Nox Print Files" artifact 22 Oct 2026; sha256[:12] matches the Saved file cells. Live state of each part: `nox/current-parts.md` (only place). Not carried over: `s2_camera_mount_v1` (superseded) and `s2_cartridge_v11_v4_plate.gcode.3mf` (no supports, do not print). Scout v2 files (`s2_*`) moved to `archive/scout-v2/print/` on 22 Oct 2026 (Scout v2 retired); do not print them. Scan stick (24 Oct): `scan_stick_base_v17.stl`, `scan_stick_head_v13.stl`, `scan_stick_cam_v7.stl` and `scan_stick_cam_v4.stl` are superseded by the redesign (L2 forward 15° down, guards, pack pocket, M2 / M3); do not print them. `scan_stick_thread_test_v1.stl` and `_v2.stl` are superseded by `scan_stick_thread_test_v3.stl` (24 Oct: the 27 mm sleeve over the Ø27.5 cylinder + the thread); print v3 only. Scan stick v6 set (24 Oct): `scan_stick_spine_v3.zip`, `scan_stick_head_v18.stl`, `scan_stick_adapter_v2.stl` (PETG) and `scan_stick_node_*_v2.stl` (8, TPU); base v17, head v13 and the cam brackets are superseded. `box_hook_latch_*_v1.stl` are superseded by v2 (funnel panel v7 skin 2.0); do not print them.
 
 | File | Bytes | sha256[:12] |
 |---|---|---|
@@ -52,6 +52,17 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `scan_stick_thread_test_v1.stl` | 3905473 | 7b35ab438606 |
 | `scan_stick_thread_test_v2.stl` | 8072762 | 57ceee0d2049 |
 | `scan_stick_thread_test_v3.stl` | 8072762 | 97156bb47eed |
+| `scan_stick_spine_v3.zip` | 15049858 | d5ed924779a0 |
+| `scan_stick_head_v18.stl` | 28122784 | 8824f4e64ae6 |
+| `scan_stick_adapter_v2.stl` | 17572184 | 3d2d0e1c37cf |
+| `scan_stick_node_low_back_neg_v2.stl` | 38284 | a3218e316787 |
+| `scan_stick_node_low_back_pos_v2.stl` | 38284 | 0ed800c301b0 |
+| `scan_stick_node_low_front_neg_v2.stl` | 19884 | 68dcc0c62f5a |
+| `scan_stick_node_low_front_pos_v2.stl` | 19884 | 1845b1e0c4b9 |
+| `scan_stick_node_top_back_neg_v2.stl` | 30384 | 76c5464d6b79 |
+| `scan_stick_node_top_back_pos_v2.stl` | 30384 | faf4d8857ddd |
+| `scan_stick_node_top_front_neg_v2.stl` | 29384 | 8cde870e018e |
+| `scan_stick_node_top_front_pos_v2.stl` | 29384 | 64be19706da2 |
 | `test_glue_lap_v1.stl` | 20484 | 588cd8a923d4 |
 | `test_layer_pull_v1.stl` | 98684 | 2b4685484f5f |
 | `test_post_pull_v1.stl` | 131284 | eb2934d4a73f |
