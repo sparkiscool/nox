@@ -26,6 +26,7 @@ Unknown keys are kept on save. The file is written one part per line so a diff r
 - The system's owner session is the only writer of its file. Another session that needs a part moved puts it in its PR description, as for any part it does not own.
 - Bought parts carry `mass_g` and `protect` where CLAUDE.md lists them (pack, cartridge, receiver, electronics, props, motors, camera).
 - `contact_pairs` hold only designed joints (sockets, seats, press fits, a part inside its envelope), each one the owner can name; a real interference stays a FAIL.
+- Crash probes (system_check `probes`): a probe stops at the first solid, so protected parts shadow each other (a part hidden behind another protected part, an exempt one included, is not reached there); a part shadowed in every probe gets no probe row.
 - Every tool that needs the assembled system (system_check, the motion artifact via `.scene()`, renders via `.export_glb()` / `.export_stl()`, FE setups) loads this file.
 
 `python3 nox/assembly_seed.py <system>` wrote the first files (24 Oct) from the layout scripts on main; it is history, not a second writer.
