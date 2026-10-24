@@ -21,9 +21,9 @@ WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it 
 Y_C7 = float(__import__("os").environ.get("NOX_YC", "165"))   # round 3b (DEFAULT, hub: one funnel centred on each drone's catch centre = its
                                         # latch set's centre, the tab line there too): the Overseer set (179.6) clears the low stack's plate top 72.75
                                         # by 2.45 at Y_C 165 (Y 75.2..254.8, its cartridge from 76.5); round 3 had 138 with the tab 30 off (d0cd1a1)
-DETENT_SPRING_SCALE = 1.5               # round 3 (DEFAULT; the hub's x1.8 leaves the axle motor 1.29 to index past a notch): with the 5:1 axle the
-                                        # parked arm holds 1.31, indexing 1.43, a head out at a horizontal Overseer bay 0.80: the axle motor on the brake
-                                        # relay lets it creep ~21 deg/s onto the neighbour's seated pack (~71 N, E; swap_system.power_cut_head_out)
+DETENT_SPRING_SCALE = 1.3               # concept review r3 (DEFAULT): passing a notch at a slow step rate (0.5 N.m pull-out, E) with both parked
+                                        # heads carrying: 1.31 (1.55 on holding torque); a power cut mid-swap, both parked carrying: 1.14; a head
+                                        # just out of a horizontal Overseer bay's side faces: 1.04 (swap_system.power_cut_head_out); x1.5: 1.21 / 1.31 / 1.20
 AXLE_RATIO = float(__import__("os").environ.get("NOX_AXLE_RATIO", "5.0"))                          # round 3: a GT2 16T on the axle motor (80:16, DEFAULT): x1.25 the stall torque and x1.56 the shorted-coil
                                         # damping, so the springs can hold the Overseer and the motor still indexes past them (swap_system.power_cut_head_out)
 XT60_Z = 7.0                            # the cartridge's XT60 axis 7 from its closed end (DEFAULT, asked of the latch; plug face at its y as before)
@@ -55,12 +55,18 @@ LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.7
            TIE_RAIL=(41.6, 128.0))              # the tie rod end 10 up its own axis from the keel bottom at r 128 (mouth on the face)
 
 
+RACK_V3_Y = (59.25, 73.25)              # concept review r3: rack teeth grow down (the top stays 0.5 under the keep-out's 73.75)
+PIN_V3 = dict(teeth_y=(59.75, 72.75), boss_y=(55.0, 59.25))   # pinion16 v3: face 13 fully engaged (Lewis 0.45 at the stall); D-bore on the
+                                        # shaft's flat (Y 59..74), boss Y 55..59.25 with an M3 grub on the round shaft for axial hold only
+
+
 def _patch_low():
     lo = LOW
     V.RAIL_Y = (V.RAIL_Y[0], lo["RAIL_TOP"]); V.RIDGE_Y = lo["RIDGE_Y"]; V.WHEEL_Y = lo["WHEEL_Y"]; V.SPACER_Y = lo["SPACER_Y"]; V.PLATE_Y = lo["PLATE_Y"]
     V.NUT_Y = lo["NUT_Y"]; V.TAIL_Y = (lo["PLATE_Y"][1] - lo["AXLE_BOLT_L"]["fixed"], lo["NUT_Y"][0]); V.AXLE_BOLT_L = dict(lo["AXLE_BOLT_L"])
     e = dict(V.ECC); e["flange_y"] = lo["ECC_FLANGE"]; V.ECC = e
     V.AXLE_KEEP = dict(r=5.0, y=(lo["PLATE_Y"][1], lo["PLATE_Y"][1] + 8.0)); V.ECC_KEEP = dict(r=13.0, y=(lo["PLATE_Y"][1], lo["PLATE_Y"][1] + 1.0))
+    V.RACK_TEETH_Y = RACK_V3_Y; V.PIN_TEETH_Y = PIN_V3["teeth_y"]; V.PIN_BOSS_Y = PIN_V3["boss_y"]
     V.WEB_Y = (V.RACK_TEETH_Y[0], lo["PLATE_Y"][1])
     st = dict(V.RAIL_STOP); st["y"] = lo["STOP_Y"]; V.RAIL_STOP = st
     ch = dict(V.RAIL_CHAN); ch["y"] = lo["CHAN_Y"]; V.RAIL_CHAN = ch

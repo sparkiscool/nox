@@ -1,4 +1,11 @@
 {
+ "cam": {
+  "base": 4.5,
+  "rise": 6.0,
+  "open_reach": 10.5,
+  "open_x": 10.5,
+  "ok": true
+ },
  "blade": {
   "open_x": 10.5,
   "squeezed_x": 6.0,
@@ -27,21 +34,25 @@
   }
  },
  "servo": {
-  "cam_lever_mm": 3.18,
-  "torque_Nm": 0.161,
-  "torque_kgcm": 1.65,
+  "cam_lever_mm": 3.82,
+  "torque_Nm": 0.194,
+  "torque_kgcm": 1.98,
   "margin": {
-   "DS3218": 12.1,
-   "MG995": 5.5
+   "DS3218": 10.1,
+   "MG995": 4.6
   },
   "spline_side_N": 5.8,
-  "note": "the two blades load the cam equal and opposite: the spline sees only the friction imbalance, carried by the 625ZZ pin; at squeezed the cam is off the blades (the springs hold, servo unloaded)"
+  "note": "the two blades load the cam equal and opposite: the spline sees only the friction imbalance (no outboard pin); at squeezed the cam is off the blades (the springs hold, servo unloaded)"
  },
  "rods": {
   "per_rod_N": 14.3,
-  "sigma_MPa": 27.0,
-  "index": 0.027,
-  "bush_MPa": 0.95
+  "sigma_MPa": 70.3,
+  "index": 0.07,
+  "deflection_mm": 0.088,
+  "boss_MPa": 0.3,
+  "anti_rack_boss_min": 15.0,
+  "boss": 16.0,
+  "ok": true
  },
  "head_body": {
   "grip_lever_mm": 92.2,
@@ -60,14 +71,14 @@
   "lewis_stall_v3": 0.45,
   "lewis_dropped_now": 0.61,
   "lewis_dropped_v3": 0.49,
-  "note": "research: module 1 is the printable limit; widen the face (teeth Y 62..75, 1.0 past the D-shaft end) and keep the stall detection ending every insert at 60..74 N"
+  "note": "research: module 1 is the printable limit; pinion v3 teeth Y 59.75..72.75 on rack teeth Y 59.25..73.25 (grown down: the top stays under the carriage-lane keep-out 73.75, concept review r3); on the rack tail (drone insert) the engaged face is 9.75 from the tail's step at Y 63 (swap_system)"
  },
  "alternatives": {
   "A sprung blades + servo cam (chosen)": {
    "holds_unpowered": true,
    "servo_sees_pull": false,
-   "servo_torque_kgcm": 1.65,
-   "parts": "2 springs, 4 carbon rods, 1 625ZZ + pin, metal horn"
+   "servo_torque_kgcm": 1.98,
+   "parts": "2 springs, 2 carbon rods along x, 2 blade guide bosses 16 long, metal horn"
   },
   "B servo toggle fingers": {
    "holds_unpowered": true,

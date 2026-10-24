@@ -145,6 +145,9 @@ F_XT60, F_PRELOAD, F_LEADIN = 45.0, 12.0, 3.0      # dimensions I XT60 mate: ins
 F_PULL = 50.0                             # pull-out 50 (E): 45 XT60 + 5 latch wedge
 F_STALL = 74.0                            # head motor stall at 2 A on the 16T (E)
 T_AXLE_STALL = 0.59 * AXLE_RATIO          # N.m at the arm: 17HS19 0.59 N.m holding (E) x the ratio
+T_AXLE_INDEX = 0.50 * AXLE_RATIO          # passing a detent notch at a slow step rate (<= 100 full steps/s near each notch, DEFAULT): ~0.5 N.m pull-out (E)
+SIDE_FACE_Y0 = 5.4                        # the receiver's side faces start at cartridge y 5.4 (latch 258becf receiver(), C)
+PIN_ENGAGE = 9.0                          # the XT60's pins touch in the last ~9 of the stroke (dimensions I, E)
 DROP_H = 50.0                             # a cartridge falls 50 back onto head A's seat at the drone (E, DEFAULT misuse): F = sqrt(2 m g h k_seat)
 F_ECC_PRE = 30.0                          # eccentric wheel preload across the rail (E, arm_v5_cad)
 G_HANDLE = (3.0, 2.0)                     # box handling: 3 g vertical + 2 g sideways on every arm mass (E, DEFAULT; set down hard, carried)
@@ -685,7 +688,10 @@ def summarise(Fr, info, u, ef, sf, reac, sep, h_push="A"):
     out["pieces"]["625ZZ (axial / C0 670 N)"] = dict(index=round(worst_brg, 3), elem="worst wheel", sigma=None)
     for h in info["rack"]:
         ft = abs(out["joints"][f"rack on pinion {h}"]["tangential_N"])
-        lew = ft / ((V.PIN_TEETH_Y[1] - V.PIN_TEETH_Y[0]) * V.PIN_M * 0.295)
+        z0h = info["zA"] if h == "A" else info["zB"]; tail = getattr(V, "RACK_TAIL", None)
+        y0 = max(V.PIN_TEETH_Y[0], V.RACK_TEETH_Y[0], tail["y0"] if tail and (V.PIN_Z - z0h) < tail["u_max"] else -1e9)
+        face = min(V.PIN_TEETH_Y[1], V.RACK_TEETH_Y[1]) - y0               # engaged face (on the rack tail only from its step, concept review r3)
+        lew = ft / (face * V.PIN_M * 0.295)
         q = out["pieces"].setdefault("pinion 16T (Lewis, in-layer)", dict(index=0.0, elem=None, sigma=0.0))
         if lew / S_IN > q["index"]: q.update(index=round(lew / S_IN, 3), elem=f"pinion {h}", sigma=round(lew, 1))
     ins = max(abs(out["joints"][k]["bolt_N"]) for k in out["joints"] if k.startswith("rail pad"))
@@ -756,38 +762,44 @@ def power_cut_head_out():
     z = S7.strokes() if STACK == "v7" else dict(park=L.Z0_A_HOME, bay=L.Z0_BAY + 1.5)
     mh = MASS["head"] + MASS["carriage"]
     rows, worst = [], None
+    # concept review r3: while any of the cartridge is inside the receiver's side faces (from y 5.4) the bay holds the arm; the exposure is a
+    # cut just past them: carrying, the head at z0 = bay - (cartridge top - 5.4); empty (after an insert), the blades leave at the bay stroke
     for pk in ("scout", "overseer"):
         other = "overseer" if pk == "scout" else "scout"
         for th in (S7.BAYS[pk] if STACK == "v7" else (-90.0,)):
             for carry in (True, False):
-                c = CART[pk]; r_h = z["bay"] + 18.0; r_c = z["bay"] + BOT_DZ + c["cg"][1]
+                c = CART[pk]; z_out = z["bay"] - (c["h"] - SIDE_FACE_Y0) if carry else z["bay"]
+                r_h = z_out + 18.0; r_c = z_out + BOT_DZ + c["cg"][1]
                 t_out = G * (mh * r_h + (c["mass"] * r_c if carry else 0.0)) * abs(math.cos(math.radians(th))) / 1e3
                 co = CART[other]; r_p = z["park"] + BOT_DZ + co["cg"][1]
                 t_park = G * (mh * (z["park"] + 18.0) + co["mass"] * r_p) * abs(math.sin(math.radians(th))) / 1e3
                 T = t_out + t_park + DET_OTHER
-                r = dict(pack=pk, bay=th, carrying=carry, gravity_Nm=round(t_out + t_park, 3), margin=round(DET_HOLD / T, 2),
+                r = dict(pack=pk, bay=th, carrying=carry, z0=round(z_out, 1), gravity_Nm=round(t_out + t_park, 3), margin=round(DET_HOLD / T, 2),
                          scale_for_1_25=round(1.25 * T / (2 * 0.390), 2))
                 rows.append(r)
                 if worst is None or r["margin"] < worst["margin"]: worst = r
     # the alternative to springs x scale (which eat the axle motor's 2.36 N.m index margin): the axle motor on the head brake's NC relay
     # (coils shorted when its driver is not enabled). Shorted-coil damping at the arm b = 16 Kt^2 / R (E, one phase pair), the arm settles at
     # w = excess / b and lands on the neighbour bay's seated pack ~4 deg away (C: 58.5 chord at R 113 - half widths): impact F = w sqrt(I k)
-    I_arm = 1e-9 * (mh * (z["bay"] + 18.0) ** 2 + CART[worst["pack"]]["mass"] * (z["bay"] + BOT_DZ + CART[worst["pack"]]["cg"][1]) ** 2)  # kg m2
+    zw = worst["z0"]
+    I_arm = 1e-9 * (mh * (zw + 18.0) ** 2 + CART[worst["pack"]]["mass"] * (zw + BOT_DZ + CART[worst["pack"]]["cg"][1]) ** 2)  # kg m2
     b_arm = AXLE_RATIO ** 2 * KT_HEAD ** 2 / R_PHASE; excess = max(0.0, worst["gravity_Nm"] + DET_OTHER - DET_HOLD)
-    w = excess / b_arm; r_imp = (z["bay"] + BOT_DZ + CART[worst["pack"]]["h"]) * 1e-3; k_imp = K_RECV_T * 1e3     # N/m, the packs' faces (E)
+    w = excess / b_arm; r_imp = (zw + BOT_DZ + CART[worst["pack"]]["h"]) * 1e-3; k_imp = K_RECV_T * 1e3     # N/m, the packs' faces (E)
     F_imp = w * r_imp * math.sqrt(I_arm / r_imp ** 2 * k_imp)
     brake = dict(excess_Nm=round(excess, 3), damping_Nm_s_rad=round(b_arm, 2), arm_speed_deg_s=round(math.degrees(w), 1), inertia_kg_m2=round(I_arm, 4),
                  impact_N=round(F_imp, 0), resting_N=round(excess / r_imp, 1), to_neighbour_deg=4.0,
                  note="the arm turns slowly onto the neighbour's seated pack and rests on it; the next power-up re-homes (E)")
     # indexing: the axle motor turns the arm with both heads parked and carrying (the worst sign of each) over the detent's peak
     t_park = G * math.hypot(*[(mh * (z["park"] + 18.0) + CART[p]["mass"] * (z["park"] + BOT_DZ + CART[p]["cg"][1])) for p in ("scout", "overseer")]) / 1e3
-    index = dict(stall_Nm=T_AXLE_STALL, detent_peak_Nm=round(DET_HOLD, 3), parked_gravity_Nm=round(t_park, 3), other_Nm=DET_OTHER,
-                 margin=round(T_AXLE_STALL / (DET_HOLD + t_park + DET_OTHER), 2), parked_hold_margin=round(DET_HOLD / (t_park + DET_OTHER), 2),
+    index = dict(stall_Nm=T_AXLE_STALL, slow_pass_Nm=round(T_AXLE_INDEX, 3), detent_peak_Nm=round(DET_HOLD, 3), parked_gravity_Nm=round(t_park, 3),
+                 other_Nm=DET_OTHER, margin_holding=round(T_AXLE_STALL / (DET_HOLD + t_park + DET_OTHER), 2),
+                 margin=round(T_AXLE_INDEX / (DET_HOLD + t_park + DET_OTHER), 2), parked_hold_margin=round(DET_HOLD / (t_park + DET_OTHER), 2),
                  note="the two parked heads are 90 apart: their gravity torques add as a cos + b sin <= hypot(a, b)")
     scales = []
-    for sc in (1.0, 1.25, 1.5, 1.8):
+    for sc in (1.0, 1.25, 1.3, 1.5, 1.8):
         hold = 2 * 0.390 * sc; ex = max(0.0, worst["gravity_Nm"] + DET_OTHER - hold); w_ = ex / b_arm
-        scales.append(dict(scale=sc, hold_Nm=round(hold, 3), index_margin=round(T_AXLE_STALL / (hold + t_park + DET_OTHER), 2),
+        scales.append(dict(scale=sc, hold_Nm=round(hold, 3), index_margin=round(T_AXLE_INDEX / (hold + t_park + DET_OTHER), 2),
+                           index_margin_holding=round(T_AXLE_STALL / (hold + t_park + DET_OTHER), 2),
                            parked_margin=round(hold / (t_park + DET_OTHER), 2), head_out_margin=round(hold / (worst["gravity_Nm"] + DET_OTHER), 2),
                            head_out_creep_deg_s=round(math.degrees(w_), 1), impact_N=round(w_ * r_imp * math.sqrt(I_arm / r_imp ** 2 * k_imp), 0)))
     index["spring_scales"] = scales
@@ -906,14 +918,42 @@ def xt60_guided(rows=None, stub_mrad=(1.9, 5.0, 15.1)):
     return out
 
 
+FLOAT_AXES = dict(x=2.37, z=1.06)      # the XT60E1-M float carrier: about the cartridge x axis (= the arm's tangent) / about z (roll), deg (latch, C)
+
+
+def xt60_axes(rows=None, stub_mrad=(0.0, 5.0, 15.1)):
+    """the XT60 per axis (concept review r3): about x the free tilt + the stub's + the arm RSS vs the +-2.37 float (no pitch guide); about z
+    the roll held by the receiver's x side faces over the engaged cartridge height, after the per-bay gravity offset, + RSS vs +-1.06"""
+    rows = rows or mate_pitch_all()
+    xt60_budget(rows)                                   # fills roll_deg on the rows
+    rss = math.sqrt(sum(v ** 2 for v in XT60_TOL.values()))
+    out = dict(rss_deg=round(rss, 3), float=FLOAT_AXES, margin_target=MARGIN, packs={})
+    for pk in ("scout", "overseer"):
+        rr = [r for r in rows if r["pack"] == pk]
+        wx = max(rr, key=lambda r: abs(r["about"]["tangent"])); wz = max(rr, key=lambda r: r["roll_deg"])
+        tx = abs(wx["about"]["tangent"]) + rss
+        d = dict(x=dict(place=f"{wx['place']} {wx['head']}", free_deg=abs(wx["about"]["tangent"]),
+                        **{f"stub_{sm:g}": dict(deg=round(tx + math.degrees(sm / 1e3), 3), margin=round(1 - (tx + math.degrees(sm / 1e3)) / FLOAT_AXES["x"], 2))
+                           for sm in stub_mrad},
+                        stub_allowed_mrad_at_margin=round(math.radians(FLOAT_AXES["x"] * (1 - MARGIN) - tx) * 1e3, 1)),
+                 z=dict(place=f"{wz['place']} {wz['head']}", free_deg=abs(wz["about"]["axle"]), after_gravity_offset_deg=wz["roll_free_comp_deg"],
+                        cap_deg=wz["roll_cap_deg"], held_deg=wz["roll_deg"], deg=round(wz["roll_deg"] + rss, 3),
+                        margin=round(1 - (wz["roll_deg"] + rss) / FLOAT_AXES["z"], 2)))
+        out["packs"][pk] = d
+    return out
+
+
 def xt60_budget(rows=None):
     """the XT60 float budget: worst absolute pitch at the mate (mate_pitch_all) + the stub tilt (linear: a load deflection) + the RSS stack,
     against the latch's float carrier (+-1.06, E) and the wider alternative (+-1.5); the stub tilt each allows at MARGIN."""
     rows = rows or mate_pitch_all()
-    cap = math.degrees(GAP_R)
-    for r in rows:                              # the receiver's X faces (0.3 gaps over the ~87 engaged) hold the tilt about the axle to GAP_R
-        r["mate_deg"] = round(math.hypot(r["about"]["tangent"], min(abs(r["about"]["axle"]), cap)), 3)   # before the XT60; nothing guides
-    rows = [dict(r, pitch_deg=r["mate_deg"]) for r in rows]                                                # the tilt about the tangent
+    for r in rows:                              # the receiver's x side faces hold the roll (about the axle = cartridge z) to 2 gaps over the
+        c = CART[r["pack"]]; eng = c["h"] - SIDE_FACE_Y0 - PIN_ENGAGE                     # cartridge height engaged at first pin contact
+        cap = math.degrees(2 * GAP_T / eng)                                                # (concept review r3: the lever is the height, not 87)
+        z_free = r["about"]["axle"] - (1.0 - GRAV_COMP) * r["gravity_about"]["axle"]      # the per-bay gravity offset in the step target
+        r["roll_deg"] = round(min(abs(z_free), cap), 3); r["roll_cap_deg"] = round(cap, 3); r["roll_free_comp_deg"] = round(abs(z_free), 3)
+        r["mate_deg"] = round(math.hypot(r["about"]["tangent"], r["roll_deg"]), 3)
+    rows = [dict(r, pitch_deg=r["mate_deg"]) for r in rows]
     rss = math.sqrt(sum(v ** 2 for v in XT60_TOL.values()))
     out = dict(rss_deg=round(rss, 3), tolerances=XT60_TOL, stub_tilt_mrad=STUB_TILT_MRAD, margin=MARGIN, packs={})
     for pk in ("scout", "overseer"):
@@ -1035,7 +1075,9 @@ def overseer_layout():
                             cartridge_body_y=(round(L.Y_C - c["tab"], 2), round(L.Y_C - c["tab"] + c["l"], 2)),
                             xt60_y=round(L.Y_C - c["tab"] + c["xt60_z"], 2), plate_top=V.PLATE_Y[1],
                             receiver_clear=round(Y(float(v.max())) - V.PLATE_Y[1], 2))
-        out["sets_on_the_grip"] = dict(Y_C=L.Y_C, **sets, note="the funnel centre = each catch centre = each latch set centre = the grip line")
+        yc_min = max(L.Y_C - sets[pk]["receiver_y"][0] for pk in sets) + V.PLATE_Y[1] + 1.0   # the receivers' arm-side ends 1.0 over the plate top
+        out["axial"]["Y_C_min_common_grip"] = round(yc_min, 1)
+        out["sets_on_the_grip"] = dict(Y_C=L.Y_C, Y_C_min=round(yc_min, 1), **sets, note="the grip line = each cartridge's tab line = the funnel centre")
     r_cg = z["park"] + BOT_DZ + ov["cg"][1]; t_ov = ov["mass"] * G * r_cg / 1e3
     need = 1.25 * (t_ov + DET_OTHER)
     out["detent"] = dict(overseer_gravity_Nm=round(t_ov, 3), hold_2_springs=DET_HOLD, margin_now=round(DET_HOLD / (t_ov + DET_OTHER), 2),
@@ -1309,6 +1351,7 @@ def main(what="all"):
     if what in ("xt60", "frame", "all"):
         res["xt60_mate"] = mate_pitch_all(); res["xt60_budget"] = xt60_budget(res["xt60_mate"]); res["capture"] = capture_budget()
         res["xt60_guided"] = xt60_guided(res["xt60_mate"]); print("xt60 guided", json.dumps(res["xt60_guided"]))
+        res["xt60_axes"] = xt60_axes(res["xt60_mate"]); print("xt60 axes", json.dumps(res["xt60_axes"]))
         print("xt60 budget", json.dumps({k: {kk: vv for kk, vv in v.items() if kk != "worst"} for k, v in res["xt60_budget"]["packs"].items()}))
         print("capture", res["capture"]["worst"], res["capture"]["worst_compensated"])
     if what in ("check", "all"):
