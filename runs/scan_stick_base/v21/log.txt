@@ -1,0 +1,18 @@
+=== scan_stick_base: h 2.0, generated 22.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (212.93 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.026 of 15,543 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (1.1% of passive cells differ): no symmetry
+layout: 2 drawn bodies (3,327 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 56) = 43,008 elements, 71,469 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+=== scan_stick_base: h 2.0, generated 22.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (212.93 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.026 of 15,543 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (1.1% of passive cells differ): no symmetry
+layout: 2 drawn bodies (3,327 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 56) = 43,008 elements, 71,469 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
