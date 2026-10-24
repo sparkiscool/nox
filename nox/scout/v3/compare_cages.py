@@ -1,7 +1,7 @@
-"""Before / after picture of two Scout v3 cages (rod reduction pass, 24 Oct 2026).
+"""Side-by-side picture of Scout v3 cages (rod reduction pass and the alternatives, 24 Oct 2026).
 
-python3 nox/scout/v3/compare_cages.py <before result.json> <after result.json> <out dir>
-Writes compare.png (iso, side, top for each) and compare.html (the picture and the counts).
+python3 nox/scout/v3/compare_cages.py <out dir> <title> <lead> <label>=<result.json>[:<carbon pieces>,<printed parts>] ...
+Writes compare.png (iso, side, top for each cage, one row each) and compare.html (the picture and the counts).
 """
 import base64, json, os, sys
 import numpy as np
@@ -9,7 +9,11 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-A, B, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
+OUT, TITLE, LEAD = sys.argv[1], sys.argv[2], sys.argv[3]
+CAGES = []                                                        # (label, result, override (carbon pieces, printed parts) or None)
+for arg in sys.argv[4:]:
+    lab, rest = arg.split("=", 1); path, _, ov = rest.partition(":")
+    CAGES.append((lab, json.load(open(path)), tuple(int(x) for x in ov.split(",")) if ov else None))
 os.makedirs(OUT, exist_ok=True)
 CORE = [((-46.85, -30.6, 9.6), (54.75, 30.6, 18.5), "#8899aa"),          # mount
         ((-50, -30, -44.5), (50, 30, 9.6), "#7d8a99"),                     # receiver + cartridge envelope (E)
@@ -37,12 +41,12 @@ def draw(ax, R, view):
     ax.set_xlim(-120, 120); ax.set_ylim(-120, 120); ax.set_zlim(-60, 75)
 
 
-Ra, Rb = json.load(open(A)), json.load(open(B))
-fig = plt.figure(figsize=(15, 10), dpi=110)
+nr = len(CAGES)
+fig = plt.figure(figsize=(15, 5 * nr), dpi=110)
 views = [("iso", (24, -55)), ("side", (0, -90)), ("top", (90, -90))]
-for r, (R, lab) in enumerate(((Ra, "before"), (Rb, "after"))):
+for r, (lab, R, _) in enumerate(CAGES):
     for c, (vn, v) in enumerate(views):
-        ax = fig.add_subplot(2, 3, 3 * r + c + 1, projection="3d"); draw(ax, R, v)
+        ax = fig.add_subplot(nr, 3, 3 * r + c + 1, projection="3d"); draw(ax, R, v)
         ax.set_title(f"{lab}: {vn}", fontsize=11)
 fig.tight_layout(); png = os.path.join(OUT, "compare.png"); fig.savefig(png); plt.close(fig)
 
@@ -56,14 +60,11 @@ def row(R, over=None):
             round(R["contact_first"], 2), round(R["worst_index"], 2)]
 
 
-over = tuple(int(x) for x in sys.argv[4].split(",")) if len(sys.argv) > 4 and sys.argv[4] else None   # before: (carbon pieces, printed parts)
-TITLE = sys.argv[5] if len(sys.argv) > 5 else "before and after"
-LEAD = sys.argv[6] if len(sys.argv) > 6 else ""
-ra, rb = row(Ra, over), row(Rb)
+rows_ = [row(R, ov) for _, R, ov in CAGES]
 img = base64.b64encode(open(png, "rb").read()).decode()
 hdr = ["members", "carbon segments", "shortest carbon rod, mm", "printed struts / webs", "carbon pieces to cut (straight runs = 1)",
        "separate printed parts", "cage g (E)", "member length, m", "cage first, mm (F)", "worst load index (F)"]
-trs = "".join(f"<tr><th scope=\"row\">{h}</th><td>{a}</td><td>{b}</td></tr>" for h, a, b in zip(hdr, ra, rb))
+trs = "".join(f"<tr><th scope=\"row\">{h}</th>" + "".join(f"<td>{rw[k]}</td>" for rw in rows_) + "</tr>" for k, h in enumerate(hdr))
 html = f"""<title>Scout cage reduction</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -87,9 +88,9 @@ figcaption{{color:#555;font-size:.85rem;padding-top:6px}}
 <main>
 <h1>Scout v3 cage, {TITLE}</h1>
 <p>{LEAD}</p>
-<div class="t"><table><thead><tr><th></th><th>before</th><th>after</th></tr></thead><tbody>{trs}</tbody></table></div>
+<div class="t"><table><thead><tr><th></th>{"".join(f"<th>{lab}</th>" for lab, _, _ in CAGES)}</tr></thead><tbody>{trs}</tbody></table></div>
 <figure><img src="data:image/png;base64,{img}" alt="before and after cage, iso, side and top views">
-<figcaption>Top row before, bottom row after. Black = 3.0 carbon rods, thick grey = printed struts, blue dots = joints, grey boxes = mount and receiver envelope, yellow = prop disks.</figcaption></figure>
+<figcaption>One row per cage, in the table's order. Black = 3.0 carbon rods, thick grey = printed struts, blue dots = joints, grey boxes = mount and receiver envelope, yellow = prop disks.</figcaption></figure>
 </main>"""
 open(os.path.join(OUT, "compare.html"), "w").write(html)
-print("wrote", OUT, ra, rb)
+print("wrote", OUT, rows_)
