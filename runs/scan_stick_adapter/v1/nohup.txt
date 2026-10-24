@@ -210,3 +210,13 @@ it   7 beta    4 J  28.8572 vol 0.0600 (dil 0.1357 g +0.028) grey 14.1% ch 0.100
 it   8 beta    4 J  25.1876 vol 0.0581 (dil 0.1307 g -0.010) grey 13.1% ch 0.100 worst cage bump low back 100 N 29.4 20.5s
 it   9 beta    4 J  22.5622 vol 0.0605 (dil 0.1304 g -0.012) grey 12.6% ch 0.100 worst cage bump low back 100 N 24.7 20.5s
 it  10 beta    4 J  20.4303 vol 0.0637 (dil 0.1306 g -0.011) grey 12.2% ch 0.100 worst cage bump low back 100 N 20.7 22.6s
+it  11 beta    4 J  18.6574 vol 0.0672 (dil 0.1309 g -0.058) grey 11.5% ch 0.100 worst cage bump low back 100 N 17.5 18.5s
+it  12 beta    4 J  17.2914 vol 0.0739 (dil 0.1374 g -0.010) grey 11.6% ch 0.100 worst cage bump low back 100 N 15 22.1s
+it  13 beta    4 J  16.3637 vol 0.0766 (dil 0.1381 g -0.005) grey 11.1% ch 0.100 worst unit 25 g 6 14.1 17.9s
+it  14 beta    4 J  15.7884 vol 0.0779 (dil 0.1385 g -0.003) grey 10.8% ch 0.100 worst unit 25 g 6 13.7 22.6s
+it  15 beta    4 J  15.3618 vol 0.0788 (dil 0.1386 g -0.002) grey 10.6% ch 0.100 worst unit 25 g 6 13.4 17.8s
+it  16 beta    4 J  15.1020 vol 0.0794 (dil 0.1387 g +0.009) grey 10.4% ch 0.100 worst unit 25 g 6 13.2 25.3s
+it  17 beta    4 J  14.9693 vol 0.0783 (dil 0.1372 g -0.002) grey 10.2% ch 0.100 worst unit 25 g 6 13.1 18.6s
+it  18 beta    4 J  14.8127 vol 0.0787 (dil 0.1373 g -0.001) grey 10.1% ch 0.100 worst unit 25 g 6 13 25.5s
+it  19 beta    4 J  14.6880 vol 0.0789 (dil 0.1373 g -0.001) grey 10.1% ch 0.100 worst unit 25 g 6 12.9 18.8s
+it  20 beta    4 J  14.5971 vol 0.0790 (dil 0.1374 g -0.001) grey 10.1% ch 0.100 worst unit 25 g 6 12.8 23.7s
