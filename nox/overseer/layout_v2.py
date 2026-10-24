@@ -231,7 +231,12 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     seat = cyl(37.5, -5, 0, 0, 0); T = trimesh.transformations.rotation_matrix(math.radians(L2_TILT), [0, 1, 0]); T[:3, 3] = B
     seat.apply_transform(T)
     back = box(-22, 22, -16, 16, -11, -5); back.apply_transform(T)               # apex block behind the seat (L2 local z -11..-5)
-    p_up, p_lo = B + up_b * 20 - A * 8, B - up_b * 20 - A * 8                  # apex rod sockets, upper and lower V
+    # apex rod sockets on side lugs beside the L2 body (y ±46), just behind the base plane, so the V never bends back
+    # inside the front flat (the guard keeps 12 off the front disks)
+    sock = {(lvl, sy): B - A * 3 + up_b * (12 if lvl == "hi" else -12) + np.array([0, 46.0 * sy, 0]) for lvl in ("hi", "lo") for sy in (1, -1)}
+    lugs = []
+    for sy in (1, -1):
+        lug = box(-16, 16, 36 * sy if sy > 0 else -50, 50 if sy > 0 else -36, -6, 0); lug.apply_transform(T); lugs.append(lug)
     F = HALF + PROP_R + GUARD_GAP + ROD_R                          # 280: flats from the motor-square centre
     Cf = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_R)    # chamfer line x + y = 477.7
     V = [(F, Cf - F), (Cf - F, F), (-(Cf - F), F), (-F, Cf - F), (-F, -(Cf - F)), (-(Cf - F), -F), (Cf - F, -F), (F, -(Cf - F))]
@@ -243,8 +248,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     for k in range(8):
         a, b = V[k], V[(k + 1) % 8]
         if k == 7:                                                   # front flat -> V to the apex
-            for zr, pa in ((RING_LO, p_lo), (RING_HI, p_up)):
-                rods[f"V L{zr:.0f}"] = ((V[0][0], V[0][1], zr), pa); rods[f"V R{zr:.0f}"] = ((V[7][0], V[7][1], zr), pa)
+            for zr, lvl in ((RING_LO, "lo"), (RING_HI, "hi")):
+                rods[f"V L{zr:.0f}"] = ((V[0][0], V[0][1], zr), sock[(lvl, 1)]); rods[f"V R{zr:.0f}"] = ((V[7][0], V[7][1], zr), sock[(lvl, -1)])
             continue
         for zr in (RING_LO, RING_HI):
             rods[f"ring {k} z{zr:.0f}"] = ((a[0], a[1], zr), (b[0], b[1], zr))
@@ -254,11 +259,11 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         for n_, (vx, vy) in enumerate(near):
             rods[f"spoke {i_m}{n_}"] = ((mx, my, ROOT_H - ht), (vx, vy, RING_LO - 5))
     for sy in (1, -1):                                             # 2 keels from the front hub to the apex
-        rods[f"keel {sy:+d}"] = ((96, 12 * sy, 8), p_lo + [0, 0, -2])
+        rods[f"keel {sy:+d}"] = ((96, 12 * sy, 8), sock[("lo", sy)])
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(*v) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
-    g["apex"] = union([seat, back, FRONT_HUB])
+    g["apex"] = union([seat, back, FRONT_HUB] + lugs)
     low_keys = [k for k in rods if k.startswith(("strut", "ring x", "ring y"))]
     g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
     g["cage_up"] = trimesh.util.concatenate(ring_nodes + [g["rod_meshes"][k] for k in rods if k not in low_keys])
