@@ -97,7 +97,7 @@ Top frame +X half (Z > 110): 259.6 cm3 = 330 g (E); X [0, 128] Y [10, 266] Z [11
 Top frame -X half (Z > 110): 213.5 cm3 = 271 g (E); X [-128, 0] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
 
 --- box_system_topo_v2r2_newlanes.txt
-carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 1862)
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 922)
 
 ######## g3000
 --- box_system_topo_v2r2_analyse.txt
@@ -202,7 +202,7 @@ Top frame +X half (Z > 110): 313.9 cm3 = 399 g (E); X [0, 136] Y [10, 266] Z [11
 Top frame -X half (Z > 110): 344.6 cm3 = 438 g (E); X [-128, 0] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
 
 --- box_system_topo_v2r2_newlanes.txt
-carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 1862)
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 922)
 
 ######## g3000_ring
 --- box_system_topo_v2r2_analyse.txt
@@ -307,7 +307,7 @@ Top frame +X half (Z > 110): 352.8 cm3 = 448 g (E); X [0, 136] Y [10, 266] Z [11
 Top frame -X half (Z > 110): 366.1 cm3 = 465 g (E); X [-136, 0] Y [10, 266] Z [111, 175]; longest 256 OVER 180; 1 islands
 
 --- box_system_topo_v2r2_newlanes.txt
-carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 89.6 cm3 (lane 1862)
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 922)
 
 ######## g4000
 --- box_system_topo_v2r2_analyse.txt
@@ -411,5 +411,5 @@ Top frame +X half (Z > 110): 433.7 cm3 = 551 g (E); X [0, 136] Y [10, 266] Z [11
 Top frame -X half (Z > 110): 423.4 cm3 = 538 g (E); X [-128, 0] Y [10, 266] Z [111, 183]; longest 256 OVER 180; 1 islands
 
 --- box_system_topo_v2r2_newlanes.txt
-carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.5 cm3 (lane 1862)
+carriage lane overlap 0.0 cm3 (M, lane volume 135); head+grabber overlap 0.0 cm3 (lane 922)
 

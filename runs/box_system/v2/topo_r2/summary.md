@@ -4,11 +4,11 @@ Status: RUN RECORD, not a part. Nothing goes to print/. `iso05.stl` is a density
 Visual: https://claude.ai/artifact/NsZR5e2h5UQPktp3rb7wRH (`topo_views.html`, `nox/box/box_system_topo_v2r2_page.py`). Tags as CLAUDE.md: C CAD (layout and drawn inputs), M measured on the mesh or field (h 8 model), E estimate. Every number below carries one.
 
 ## Setup (what changed from round 1)
-- Sheets are cladding: not drawn, not held. Support = the floor layer Z -236..-228 anywhere in the footprint (fixed, bilateral); the knocked-over case lies on the +X face layer. The structure stands on its own. The 3 mm acrylic comparison (E 3.2 GPa) was not run (open item 3).
+- Sheets are cladding: not drawn, not held. Support = the floor layer Z -236..-228 anywhere in the footprint (fixed, bilateral); the knocked-over case lies on the +X face layer. The structure stands on its own. The 3 mm acrylic comparison (modulus 3.2 GPa, E) was not run (open item 3).
 - Final layout from main (front Y 335, enclosure X +-206, Z -236..234, C). Catch = `catch_W.stl` as it is (funnel v8 plain, no +-11.5 copies).
-- Keep-outs (grown 1 mm): receivers, cartridge paths, drone, catch; arm hub / motors / parked heads and both drone insert lanes (`drone_30`, `drone_31`) from the layout meshes; rail disc; each bay envelope swept +Y (service door); electronics: 12 boards (`result.json` placement, Y -66 + 10 standoff + depth + 6), PSU X 42..157 Y -66..-36 Z -170..45, charger X -162..-44 Y -66..-7 Z -200..-29, IEC inlet and E-stop.
+- Keep-outs (grown 1 mm): receivers, cartridge paths, drone, catch; arm hub / motors / parked heads and both drone insert lanes (`drone_30`, `drone_31`) from the layout meshes; rail disc; each bay envelope swept +Y (service door); electronics: 12 boards (`runs/box_electronics/v1/result.json` placement as of PR 95, C on E sizes; Y -66 + 10 standoff + depth + 6, C), PSU X 42..157 Y -66..-36 Z -170..45 (C), charger X -162..-44 Y -66..-7 Z -200..-29 (C), IEC inlet and E-stop (C).
 - **Lanes used: the layout files on main when the run started (carriage Y 53.75..73.75, grabber r >= 111.5).** The heads v7 change (carriage Y to 75.35, Z >= 89; head + grabber r 95..159.6) came after. Checked on the finished fields (`box_system_topo_v2r2_newlanes.py`): material inside the new carriage / head lanes (above the axle, Z > 0) 0.0 / 0.0 cm3 (M) in all four runs (cell centres also checked against main's `drone_30.stl` / `drone_31.stl`). The no-ring result stands against the new lanes without a rerun. The catch is funnel v8 plain; main now has panel v9 plain: not rerun (open item 2).
-- 18 cases: round 1's 14 (lifted case now supported on the floor at 2 g: the sheets no longer carry it) + head stall 74 N (E) at the drone insert and at the -90 bay, centring 7.6 N + 1.05 N.m (E) at the -90 and -120 bays (tangential force, moment about the axle, DEFAULT reading), reacted at the stub face. Receiver loads and cartridge weights go to the M3 bolt bosses (Scout 4 at z_c 0.85 / 85.8, x +-25.6; Overseer 6 at z_c 0.85 / 85.5 / 163.8, x +-26.8): drawn bosses O12, wall 3.8 (C). Stub case 57 N + 5.9 N.m kept.
+- 18 cases: round 1's 14 (lifted case now supported on the floor at 2 g: the sheets no longer carry it) + head stall 74 N (E) at the drone insert and at the -90 bay, centring 7.6 N + 1.05 N.m (E) at the -90 and -120 bays (tangential force, moment about the axle, DEFAULT reading), reacted at the stub face. Receiver loads and cartridge weights go to the M3 bolt bosses (Scout 4 at z_c 0.85 / 85.8, x +-25.6; Overseer 6 at z_c 0.85 / 85.5 / 163.8, x +-26.8): drawn bosses O12, wall 3.8 (C). Stub case 57 N + 5.9 N.m (E, arm) kept.
 - Electronics weight (2000 g, E) goes to 8 drawn O14 bosses on the rear face just outside the PSU and charger corners (DEFAULT).
 - Seat landings: the 8 O16 x 8 drawn discs at the `layout.json` landings. Datum ring variant: r 115..200, Y 74..98, -210..30 deg (C), minus the keep-outs, 953 cm3 drawn (M; the drawn total grows 860 cm3, M, = 1.09 kg at 1.27 g/cm3, E).
 - h 8 (C), 2h coarse stage, min member 18 (C), `finish="drawn"`, ties off. Four runs: 2000, 3000, 3000 + ring, 4000 cm3 generated. Peak RSS 4.7..4.9 GB each (M, `ru_maxrss`), two at a time; wall 45..50 min each.
@@ -16,7 +16,7 @@ Visual: https://claude.ai/artifact/NsZR5e2h5UQPktp3rb7wRH (`topo_views.html`, `n
 ## Result (3000 cm3 chosen, no ring)
 - **Generated material only: 3059 cm3 (M) = 3886 g PETG at 1.27 g/cm3 (E).** Drawn pads, bosses, posts, stub, rear bosses 814 cm3 (M); total incl. drawn 4919 g (E).
 - Connectivity (generated from `connectivity.json`): 9 of 9 bays, 8 of 8 seat posts, stub joined, 8 of 8 electronics bosses joined to the floor-supported body (M; boss 1 is a separate 25 cm3 island that also touches the floor); floating none. All 9 bays also join the stub body without passing the floor layer: the field builds its own bay-to-mast paths.
-- **Contact areas (M, main-body cells in the support layer x h² = 0.64 cm2 each): floor 9.0 cm2 in the Z < -228 layer (14 cells, 7 patches of 1..2 cm2; 9.6 cm2 counting any material); +X face 57.6 cm2 (knocked-over support only).** The floor patches belong to the bay -60 / -120 bodies (X ±192..200), the bay -90 body (X -72..48, Y 74..162) and the mast (X -48..-32, Y -62..-46) (M, `analysis.txt`).
+- **Contact areas (M, main-body cells in the support layer x h² = 0.64 cm2 each): floor 9.0 cm2 in the Z < -228 layer (14 cells, 7 patches of 1..2 cm2; 9.6 cm2 counting any material); +X face 57.6 cm2 (knocked-over support only).** The floor patches belong to the bay -60 / -120 bodies (X ±192..200), the bay -120 body (X -72..-64, Y 74..90), the bay -90 body (X 32..48, Y 154..162) and the mast (X -48..-32, Y -62..-46) (M, `analysis.txt`).
 - Compliance / full solid (M, h 8): standing 2.9; Overseer catch 22.8 / 24.1; motors cut 27.0 (worst); XT60 at the drone 8.3; stall 74 N at the drone 9.5, at the -90 bay 12.0; XT60 at -90 / -120 9.9 / 10.7; pull 7.3; centring 3.6 / 2.4; stub case 5.9; all bays insert 18.9 / across 14.5; lifted 2.1; set down 2.1; knocked over 13.1.
 - **Stub tilt 0.41 mrad at 57 N + 5.9 N.m (M on the h 8 model)** against <= 10 mrad (C, arm): k about 14.5 N.m/mrad against the 0.59 target (C, arm). Largest stub rotation in any case 2.28 mrad (all bays across).
 - **Bay rotation about the axle, relative to the stub (M on the h 8 model): all bays 60 N insert max 1.8 mrad (0.10 deg), 43.5 N across 1.8 mrad.** The +-0.15 deg datum is 2.6 mrad (C). With the ring: 0.76 / 1.30. At 4000: 0.69 / 0.88.
@@ -49,12 +49,12 @@ The field builds its own bay-to-mast paths in both runs. The drawn ring (953 cm3
 Total about 4.9 kg (E).
 
 ## Verdict
-The structure stands on its own: 18 cases carried, 9/9 bays and 8/8 posts joined, stub tilt 0.41 mrad. Not cut from yet: bilateral floor (uplift not checked), lanes pre-heads v7 (0 overlap after), v9 catch and acrylic comparison open.
+The structure stands on its own: 18 cases carried, 9/9 bays and 8/8 posts joined, stub tilt 0.41 mrad (M). Not cut from yet: bilateral floor (uplift not checked), lanes pre-heads v7 (0 overlap after), v9 catch and acrylic comparison open.
 
 ## Open
 1. Overseer bay bodies 200 long: split or diagonal.
 2. Rerun on funnel panel v9 plain and heads v7 lanes before the cut requirements are written.
-3. Acrylic-sheet comparison (3 mm, E 3.2 GPa) not run.
+3. Acrylic-sheet comparison (3 mm, modulus 3.2 GPa, E) not run.
 4. Floor contact is bilateral; a unilateral check of the feet belongs in the cut.
-5. Seat landings overlap the grown funnel keep-out (439 / 151 mm3, drawn wins); clamp not resolved at h 8.
+5. Seat landings overlap the grown funnel keep-out (439 / 151 mm3, M; drawn wins); clamp not resolved at h 8.
 6. The rear frame (1.4 kg E) is tied to the electronics layout.
