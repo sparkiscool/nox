@@ -61,7 +61,7 @@ SIG_ROD = 750.0                              # MPa, bending + axial allowable (1
 L_CARBON = float(os.environ.get("L_CARBON", "33.0"))
 PET_W, PET_A, PET_I, PET_J = 6.0, 36.0, 108.0, 182.5     # 6 x 6 PETG strut (C; posts >= 6 x 6, CLAUDE.md)
 E_PET, G_PET, SIG_PET, PET_GPM = 2000.0, 740.0, 25.0, 0.0457   # MPa (E), MPa (E), MPa allowable (E, 50 / 2), g/mm (C, 1.27 g/cm3)
-PET_R = PET_W / 2 * 2 ** 0.5                 # strut corner radius for the keep-outs
+PET_R = PET_W / 2                            # strut half width: the node turns it flat to the nearest keep-out (C)
 
 
 WEB = set()                                  # short members where a 6 x 6 strut misses a keep-out: a printed web 3 thick across
