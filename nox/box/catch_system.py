@@ -15,8 +15,8 @@ Solve:   rigid drone on unilateral supports (4 plungers + 8 face normals), equal
          non-negative reactions that balance force and moment (scipy nnls on the 6 equilibrium rows).
 Load path checked (each joint's reaction from the solve): wheel -> plunger -> housing guide -> 4 M3 into the panel v7
 bosses -> panel skin and ribs -> panel seat blocks -> end-frame pads. Pieces: plunger and guide (hook_latch.py
-strength(), hand calc), bosses and panel (funnel panel v7's as-built FE at its latch cases, read from its result.json
-when on main), assembled worst index = max over the pieces per case.
+strength(), hand calc), bosses and panel (funnel panel v7's as-built FE and boss hand calc under these reactions,
+runs/funnel_panel/v7/result.json), assembled worst index = max over every piece per case.
 python3 nox/box/catch_system.py -> runs/hook_latch/<VER>/system.json"""
 import json, math, os, sys
 import numpy as np
@@ -110,10 +110,17 @@ def main():
         out["pieces"][nm] = dict(plunger_N=F, plunger_index=round(s_pl / allow, 3), guide_wall_index=round(s_w / allow, 3),
                                  guide_top_N=round(R_top, 1), boss_bolt_shear_N=round(F / 4, 2),
                                  face_wheel_max_N=row["face_wheel_max_N"], cls=cls)
-    # panel v7 (funnel worker's as-built plate FE, when its result.json is on main)
+    # panel v7 pieces under the same joint reactions (funnel panel v7's as-built plate FE and boss hand calc,
+    # runs/funnel_panel/v7/result.json, C): the assembled worst is the max over every piece in the load path
     pr = os.path.join(os.path.dirname(os.path.dirname(HERE)), "runs", "funnel_panel", "v7", "result.json")
-    if os.path.exists(pr):
-        out["panel_v7_result"] = {k: v for k, v in json.load(open(pr)).items() if any(s in k for s in ("fe", "worst", "boss", "index"))}
+    R = json.load(open(pr))
+    fe = R["fe_asbuilt_system_loads"]; bh = {r["case"]: r for r in R["boss_hand_calc"]}
+    panel = {"insert 60 N": (fe["insert 28.3 N x 2 (system)"]["util"], bh["insert 28.3 N (system, C)"]["index_across_layers"]),
+             "hand lift 100 N at a corner": (fe["hand lift 85.8 N (system)"]["util"], bh["hand lift 85.8 N (system, C)"]["index_across_layers"])}
+    for nm, v in out["pieces"].items():
+        pu, bi = panel.get(nm, (0.0, 0.0))
+        v["panel_fe_util"] = pu; v["panel_boss_index"] = bi
+        v["piece_worst"] = max(v["plunger_index"], v["guide_wall_index"], pu, bi)
     # compact (CLAUDE.md "Compact by default"): one latch unit's bounding volume and largest extent (housing + servo +
     # plunger out), and the catch assembly (collar + 4 latches) bounding box (C)
     import manifold3d as mf
@@ -144,7 +151,7 @@ def main():
     out["system_check"] = dict(pass_out=bool(r_out["pass"]), pass_in=bool(r_in["pass"]), summary=r_out["summary"],
                                fit_fail_pairs=[(q["a"], q["b"], q["overlap_mm3"]) for r in (r_out, r_in) for q in r["fit"]["pairs"] if not q["pass_"]],
                                compact=r_out["compact"])
-    out["assembled_worst"] = max(((nm, max(v["plunger_index"], v["guide_wall_index"])) for nm, v in out["pieces"].items()), key=lambda t: t[1])
+    out["assembled_worst"] = max(((nm, v["piece_worst"]) for nm, v in out["pieces"].items()), key=lambda t: t[1])
     os.makedirs(H.OUT, exist_ok=True)
     json.dump(out, open(os.path.join(H.OUT, "system.json"), "w"), indent=1)
     print(json.dumps(out, indent=1))

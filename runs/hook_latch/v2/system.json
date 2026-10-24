@@ -74,7 +74,10 @@
    "guide_top_N": 45.4,
    "boss_bolt_shear_N": 7.07,
    "face_wheel_max_N": 7.24,
-   "cls": "flight"
+   "cls": "flight",
+   "panel_fe_util": 0.101,
+   "panel_boss_index": 0.068,
+   "piece_worst": 0.23
   },
   "pull 50 N": {
    "plunger_N": 1.71,
@@ -83,7 +86,10 @@
    "guide_top_N": 2.7,
    "boss_bolt_shear_N": 0.43,
    "face_wheel_max_N": 17.04,
-   "cls": "flight"
+   "cls": "flight",
+   "panel_fe_util": 0.0,
+   "panel_boss_index": 0.0,
+   "piece_worst": 0.014
   },
   "hand lift 100 N at a corner": {
    "plunger_N": 85.81,
@@ -92,7 +98,10 @@
    "guide_top_N": 137.8,
    "boss_bolt_shear_N": 21.45,
    "face_wheel_max_N": 46.25,
-   "cls": "misuse"
+   "cls": "misuse",
+   "panel_fe_util": 0.075,
+   "panel_boss_index": 0.128,
+   "piece_worst": 0.437
   },
   "catch 6 g": {
    "plunger_N": 0.0,
@@ -101,198 +110,11 @@
    "guide_top_N": 0.0,
    "boss_bolt_shear_N": 0.0,
    "face_wheel_max_N": 6.06,
-   "cls": "flight"
+   "cls": "flight",
+   "panel_fe_util": 0.0,
+   "panel_boss_index": 0.0,
+   "piece_worst": 0.0
   }
- },
- "panel_v7_result": {
-  "bosses_vs_housing_mm3": 0.0,
-  "fe_mode": "v7 latched",
-  "fe_asbuilt": {
-   "face_g": 151.3,
-   "util": 0.913,
-   "worst": "press u60 v90",
-   "stress_MPa": 6.6,
-   "stress_case": "press u30 v40",
-   "ok": true,
-   "per_case": {
-    "press u0 v15": [
-     0.135,
-     2.1
-    ],
-    "press u30 v15": [
-     0.363,
-     5.7
-    ],
-    "press u60 v15": [
-     0.103,
-     2.3
-    ],
-    "press u0 v40": [
-     0.568,
-     3.3
-    ],
-    "press u30 v40": [
-     0.838,
-     6.6
-    ],
-    "press u60 v40": [
-     0.326,
-     2.6
-    ],
-    "press u90 v40": [
-     0.133,
-     2.3
-    ],
-    "press u0 v65": [
-     0.968,
-     2.9
-    ],
-    "press u30 v65": [
-     1.149,
-     6.5
-    ],
-    "press u60 v65": [
-     0.594,
-     2.7
-    ],
-    "press u90 v65": [
-     0.318,
-     3.3
-    ],
-    "press u120 v65": [
-     0.025,
-     0.8
-    ],
-    "press u0 v90": [
-     1.425,
-     3.0
-    ],
-    "press u30 v90": [
-     1.337,
-     3.6
-    ],
-    "press u60 v90": [
-     0.913,
-     2.8
-    ],
-    "press u90 v90": [
-     0.566,
-     3.0
-    ],
-    "press u120 v90": [
-     0.188,
-     1.9
-    ],
-    "press u100 v40": [
-     0.067,
-     2.9
-    ],
-    "press u100 v65": [
-     0.206,
-     2.3
-    ],
-    "top edge u0": [
-     1.854,
-     3.4
-    ],
-    "top edge u40": [
-     1.585,
-     3.5
-    ],
-    "top edge u80": [
-     1.007,
-     3.6
-    ],
-    "top edge u120": [
-     0.462,
-     4.6
-    ],
-    "top edge u150": [
-     0.035,
-     1.5
-    ],
-    "uniform 20 N": [
-     0.223,
-     1.1
-    ],
-    "latch functional 30 N x 2": [
-     0.107,
-     1.5
-    ],
-    "latch misuse 100 N": [
-     0.261,
-     4.1
-    ]
-   },
-   "latch_boss_defl_mm": {
-    "latch functional 30 N x 2": 0.328,
-    "latch misuse 100 N": 0.733
-   }
-  },
-  "boss_hand_calc": [
-   {
-    "case": "functional 30 N (panel, E)",
-    "boss_shear_N": 7.5,
-    "boss_normal_N": 7.5,
-    "boss_root_MPa": 0.39,
-    "index_across_layers": 0.072,
-    "skin_membrane_MPa": 0.31
-   },
-   {
-    "case": "misuse 100 N (panel, E)",
-    "boss_shear_N": 25.0,
-    "boss_normal_N": 25.2,
-    "boss_root_MPa": 1.29,
-    "index_across_layers": 0.149,
-    "skin_membrane_MPa": 1.04
-   },
-   {
-    "case": "insert 28.3 N (system, C)",
-    "boss_shear_N": 7.1,
-    "boss_normal_N": 7.1,
-    "boss_root_MPa": 0.37,
-    "index_across_layers": 0.068,
-    "skin_membrane_MPa": 0.29
-   },
-   {
-    "case": "hand lift 85.8 N (system, C)",
-    "boss_shear_N": 21.4,
-    "boss_normal_N": 21.6,
-    "boss_root_MPa": 1.11,
-    "index_across_layers": 0.128,
-    "skin_membrane_MPa": 0.89
-   }
-  ],
-  "fe_asbuilt_system_loads": {
-   "insert 28.3 N x 2 (system)": {
-    "mean_defl_mm": 0.101,
-    "util": 0.101,
-    "stress_MPa": 1.42,
-    "boss_defl_mm": 0.309
-   },
-   "hand lift 85.8 N (system)": {
-    "mean_defl_mm": 0.224,
-    "util": 0.075,
-    "stress_MPa": 3.52,
-    "boss_defl_mm": 0.629
-   }
-  },
-  "fe_asbuilt_panel_loads": {
-   "latch functional 30 N x 2": {
-    "mean_defl_mm": 0.107,
-    "util": 0.107,
-    "stress_MPa": 1.5,
-    "boss_defl_mm": 0.328
-   },
-   "latch misuse 100 N": {
-    "mean_defl_mm": 0.261,
-    "util": 0.087,
-    "stress_MPa": 4.1,
-    "boss_defl_mm": 0.733
-   }
-  },
-  "worst_index": 0.913,
-  "worst_case": "press u60 v90"
  },
  "compact": {
   "latch_unit_bbox_mm": [

@@ -62,9 +62,17 @@ The seated drone (rigid, 4.9 N E, its 8 catch wheels on the faces), the collar, 
 | pull-out 50 N down | 1.7 N | 17.0 N | 0.01 / 0.01 (flight) |
 | hand lift 100 N at a cage corner | 85.8 N | 46.3 N | 0.44 / 0.26 (misuse) |
 | catch, 6 g floor landing on the faces | 0 | 6.1 N | 0 |
-**Assembled worst 0.44 (hand lift)**, under the piece's own 100 N misuse check (0.51). Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 FE: boss deflection 0.32 / 0.72 mm at 30 N x 2 / 100 N, M from its result).
+**Assembled worst 0.44 (hand lift; max over plunger, guide, panel FE and bosses)**, under the piece's own 100 N misuse check (0.51). Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 as-built FE under these system reactions: util 0.10 / 0.08, boss deflection 0.31 / 0.63 mm in insert / hand lift, boss hand calc 0.07 / 0.13, C from `runs/funnel_panel/v7/result.json`).
 - **Compact:** one latch unit (housing + servo + plunger out) 57.5 x 49.8 x 44.4 (C), 127.2 cm³ box, 28.7 cm³ solid; nested in the panel's rib field behind the face, nothing stacked.
 - **Cage first:** the collar and the plungers meet only cage members (the catch wheels and their nodes). The catch-interface drone keeps its node cheeks 1.0 off the faces (G (1)) and everything else ≥ 19 off them (plate 30.6, props 19.0, receiver 25.2, C); the 3 mm rule for the cheeks is a shared-number question for the Scout v3 / Overseer chats.
+
+## Concept check (docs/generative.md The rule, 0; 24 Oct)
+Rule checks on the layout: `system_check` on `box_catch.assembly.json` passes latch out and in (fit 0.0 mm³ M, compact 8.89 L, extents 337 x 337 x 78 E); access: all 16 housing bolts reachable with the plunger in (C); cage first: only cage members (wheels, nodes) touch the collar and plungers.
+- **Chosen: 4 face plungers behind the seated wheels.** Wins: nothing on the drone, self-locking under load with the servos off, fits the panel rib field (127 cm³ per unit); loses: 4 servos and 4 halls (110 g set M).
+- **Alt 1, belly hook on a post:** 1 actuator instead of 4 (−3 servos, about −80 g E); loses: a keeper on both drones (about 5 g E each, Scout v3 and Overseer bellies) and a post standing in the swap opening the head must pass. Rejected.
+- **Alt 2, rim swing hook:** a hook on the collar rim swinging over the upper cage ring; its tip arc r 75.6 about the pivot (166, 95.3) passes 5.8 from the upper-ring rod (112, 51), under rod r 1.5 + hook half-thickness 4 + clearance 0.5 = 6.0 (C): it clashes with the cage. Rejected.
+- **Node cheeks 1.0 off the faces (G (1)): DEFAULT compliant**, they are cage members, so the 3 mm cage-first margin does not apply to them; alt: a 3 mm rule for cheeks via G (1), owned by the Scout v3 / Overseer chats.
+Review agent in concept mode on this layout (PR 66 round 2); layout artifact: the v2 motion artifact.
 
 ## Sequence (box)
 Drone seated (KW11) → 4 servos out (0.1 s E) → all 4 halls out, else retract and abort → swap: the XT60 push lifts the drone 2.1 (up to 5.7 at the band's edge, C) onto the plungers, so the drone's insert stroke ends up to 6 further (E, `dimensions.md` I) → head clear → 4 servos in → spin-up, take off. During the push the belly rises off the post: the pogo pads need ≥ 6 of travel (E) to stay made, and the box ignores the KW11 between latch-out and latch-in. A servo that fails out keeps the drone held (it cannot leave).
