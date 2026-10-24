@@ -92,13 +92,29 @@ def rib_section_full(seat=True):
     cs = F.rib_section()
     return ties_cs(seat) if cs is None else cs + ties_cs(seat)
 
-def extrude_face(cs):
-    """face-coordinate section -> rib solid behind the skin (full height), panel A world."""
+def extrude_face(cs, h=None):
+    """face-coordinate section -> rib solid behind the skin (full height, or h), panel A world."""
+    h = F.RIB_H if h is None else h
     p0 = np.array(F.to_print_pt((84.0, 0.0, F.ZB))); p1 = np.array(F.to_print_pt((84.0 + 10 / S2, 0.0, F.ZB + 10 / S2)))
     dv = (p1 - p0) / 10
     polys = [[(p0[0] + v * dv[0], u) for (u, v) in poly] for poly in cs.to_polygons()]
-    rb = mf.Manifold.extrude(mf.CrossSection(polys, mf.FillRule.EvenOdd), F.RIB_H + 0.01).translate([0, 0, p0[2] + F.T - 0.01])
+    rb = mf.Manifold.extrude(mf.CrossSection(polys, mf.FillRule.EvenOdd), h + 0.01).translate([0, 0, p0[2] + F.T - 0.01])
     return rb.rotate([0, -F.ROT, 0]).trim_by_plane([0.0, 0.0, 1.0], F.ZP)
+
+OPEN_R = 1.0                                                     # 2D opening of every rib section: nothing under 2.0 wide
+
+def opened(cs):
+    return cs.offset(-OPEN_R, mf.JoinType.Round).offset(OPEN_R, mf.JoinType.Round)
+
+def rib_sections(seat=True):
+    """(full-height section, low section) in face coordinates. Full: the rib outline outside the housing footprint + 1.0;
+    low: inside it, less the guide block + 1.0. Each opened by 1.0, so the cut at the footprint edge leaves no lip under
+    2.0 (review 1: 1.1 wide full-height lips where the outline ended just past the edge)."""
+    cs = rib_section_full(seat) ^ mf.CrossSection([[(-1.0, 0.3), (400.0, 0.3), (400.0, 200.0), (-1.0, 200.0)]])
+    # ribs stop 0.3 above the skin's square bottom end (flush faces there gave non-manifold edges in the STL)
+    if MODE["plain"]: return opened(cs), mf.CrossSection()
+    box = unit_rect(FREE_U, FREE_V)
+    return opened(cs - box), opened((cs ^ box) - unit_rect(*GUIDE_UV))
 
 def seat_tie():
     """the seat block's tie rib: through the block, kept 0.1 short of the landing plane inside the post room's radius."""
@@ -108,17 +124,17 @@ def seat_tie():
         - room - F.screw_hole()
 
 def rib_section_v7():
-    """the rib outline (optimizer mask, smoothed, grown, + ties) without the guide block keep-out."""
-    return rib_section_full() if MODE["plain"] else rib_section_full() - unit_rect(*GUIDE_UV)
+    """the built rib outline (full + low sections) in face coordinates, for the as-built FE."""
+    full, low = rib_sections()
+    return full + low
 
 def ribs_world_v7():
     """full ribs (9) outside the housing footprint + 1.0, low ribs (6.7, 0.3 under the housing flange) inside it, none
     over the guide block + 1.0."""
-    rb = extrude_face(rib_section_full(seat=False)) - F.post_room() - F.screw_hole() + seat_tie()
-    if MODE["plain"]: return rb
-    low = to_mf(HL.box(FREE_U[0], FREE_U[1], FREE_V[0], FREE_V[1], -60.0, -SKIN - PO.H_LOW), T_A)
-    guide = to_mf(HL.box(GUIDE_UV[0][0], GUIDE_UV[0][1], GUIDE_UV[1][0], GUIDE_UV[1][1], -60.0, -SKIN), T_A)
-    return rb - low - guide
+    full, low = rib_sections(seat=False)
+    rb = extrude_face(full)
+    if not MODE["plain"]: rb = rb + extrude_face(low, PO.H_LOW)
+    return rb - F.post_room() - F.screw_hole() + seat_tie()
 
 def latch_features():
     """bosses + gussets (hook_latch.bosses_local, 2.0 skin), skin window and rib-free box, in panel A world."""
@@ -127,14 +143,26 @@ def latch_features():
     # they end in this panel's valley flange (the bosses themselves and everything the housing touches are unchanged)
     bos = F.plane_keep(bos, (1, -1, 0), 0.0)
     win = to_mf(HL.box(-WIN_U / 2, WIN_U / 2, -WIN_V / 2, WIN_V / 2, -40.0, 1.0), T_A)
+    # the insert holes, cut after every union (review 1: the low ribs and the boss ties refilled them): o 4.0 from the boss
+    # face (w -9.0) to 0.5 under the skin's back, as bosses_local()
+    for (bu, bv) in P7["bolts"]:
+        win = win + to_mf(HL.cyl_w(2.0, bu, bv, HL.W_FL0 - 1, -SKIN - 0.5), T_A)
     return bos, win
+
+def edge_cuts(m):
+    """square ends (review 1): the skin ends square to the face at the bottom edge (v >= 0; v6 ran a 2.5 lip under it,
+    cut horizontal and by the drafted opening wall: a 48 deg feather), and the valley flange ends square to the valley
+    line at the rim corner (the rim plane met it obliquely: a 0.7 wedge)."""
+    m = F.plane_keep(m, F.E_V, float(F.E_V @ np.array([84.0, 0.0, F.ZB])))
+    n = np.array([1.0, 1.0, 1.0]) / math.sqrt(3); pc = np.array([F.K0 + F.ZT, F.K0 + F.ZT, F.ZT])
+    return F.plane_keep(m, -n, float(-n @ pc))
 
 def panel_A_world():
     J = v7_globals()
     base = F.panel_world()                                        # v6 body at the 2.0 skin: skin, flanges, seat block
-    if MODE["plain"]: return base + ribs_world_v7(), J
+    if MODE["plain"]: return edge_cuts(base + ribs_world_v7()), J
     bos, win = latch_features()
-    return (base + ribs_world_v7() + bos) - win, J
+    return edge_cuts((base + ribs_world_v7() + bos) - win), J
 
 def build(plain=False):
     MODE["plain"] = plain
@@ -228,13 +256,20 @@ def wheel_path_steps(col_tm):
             face_depth_range_off_window=[round(float(np.nanmin(dep)), 3), round(float(np.nanmax(np.where(np.isnan(dep), 0, dep))), 3)])
     return res
 
+# catch system pass (lead, nox/box/catch_system.py on part/hook_latch_v2, C): per-plunger joint reaction along the slope
+# at the worst plunger, insert 28.3 N and hand lift 85.8 N (the panel's own cases were 30 / 100 N E)
+SYS_INSERT, SYS_LIFT = 28.3, 85.8
+
 def boss_hand_calc():
     """in-plane share of the latch load on the panel (the plate FE has the normal boss forces): the bosses carry F / 4 each
     as shear at the flange face, bending at the boss root 7 below; boss axis = print z, so across layers (C geometry, E load)."""
     out = []
     D, d = 2 * HL.BOSS_R, 4.0
     Z = math.pi * (D ** 4 - d ** 4) / (32 * D); A = math.pi * (D ** 2 - d ** 2) / 4
-    for name, Fl, cls, N in (("functional 30 N", HL.F_FUNC, "flight", np.abs(PO.N_fun).max()), ("misuse 100 N", HL.F_MIS, "misuse", np.abs(PO.N_mis).max())):
+    nf, nm = np.abs(PO.N_fun).max(), np.abs(PO.N_mis).max()
+    for name, Fl, cls, N in (("functional 30 N (panel, E)", HL.F_FUNC, "flight", nf), ("misuse 100 N (panel, E)", HL.F_MIS, "misuse", nm),
+                             ("insert 28.3 N (system, C)", SYS_INSERT, "flight", nf * SYS_INSERT / HL.F_FUNC),
+                             ("hand lift 85.8 N (system, C)", SYS_LIFT, "misuse", nm * SYS_LIFT / HL.F_MIS)):
         s = Fl / 4 * HL.BOSS_H / Z + N / A
         allow = HL.ZT_ / HL.SF[cls]
         out.append(dict(case=name, boss_shear_N=round(Fl / 4, 1), boss_normal_N=round(float(N), 1), boss_root_MPa=round(s, 2),
@@ -311,7 +346,36 @@ if __name__ == "__main__":
     MODE["plain"] = PO.PLAIN; v7_globals()
     res["fe_mode"] = "v7 plain" if PO.PLAIN else "v7 latched"
     res["fe_asbuilt"] = {k: v for k, v in PO.report(asbuilt_mask()).items()}
-    if not PO.PLAIN: res["boss_hand_calc"] = boss_hand_calc()
+    if not PO.PLAIN:
+        res["boss_hand_calc"] = boss_hand_calc()
+        # the system loads on the same as-built model (linear: the latch cases scale with the load)
+        pc = res["fe_asbuilt"]["per_case"]; bd = res["fe_asbuilt"]["latch_boss_defl_mm"]
+        sc = {"latch functional 30 N x 2": ("insert 28.3 N x 2 (system)", SYS_INSERT / HL.F_FUNC, 1.0),
+              "latch misuse 100 N": ("hand lift 85.8 N (system)", SYS_LIFT / HL.F_MIS, 3.0)}
+        res["fe_asbuilt_system_loads"] = {nm: dict(mean_defl_mm=round(pc[k][0] * f, 3), util=round(pc[k][0] * f / lim, 3),
+                                                   stress_MPa=round(pc[k][1] * f, 2), boss_defl_mm=round(bd[k] * f, 3))
+                                          for k, (nm, f, lim) in sc.items()}
+        res["fe_asbuilt_panel_loads"] = {k: dict(mean_defl_mm=pc[k][0], util=round(pc[k][0] / sc[k][2], 3), stress_MPa=pc[k][1],
+                                                 boss_defl_mm=bd[k]) for k in sc}
+    # insert holes clear (review 1): panel material inside the 4 hole cylinders, panel A world
+    if not PO.PLAIN:
+        MODE["plain"] = False; v7_globals()
+        holes = mf.Manifold()
+        for (bu, bv) in P7["bolts"]: holes = holes + to_mf(HL.cyl_w(2.0 - 0.05, bu, bv, HL.W_FL0 - 0.05, -SKIN - 0.55), T_A)
+        res["insert_holes_material_mm3"] = round(HL.vol(wA ^ holes), 3)
+    # solid gate on the exported files, and the index row (runs_index.py)
+    from solid_check import solid_check
+    sol = {}
+    for name, p in names.items():
+        ok, info = solid_check(trimesh.load(p, force="mesh"))
+        sol[name] = dict(ok=bool(ok), bodies_eroded=info.get("bodies_eroded"), necks=len(info.get("necks", [])),
+                         thin_walls=len(info.get("thin_walls", [])))
+    res["solid_check"] = sol
+    fe = res["fe_asbuilt"]
+    res.update(date=__import__("datetime").date.today().isoformat(), status="DONE",
+               mass_g=res["A_v7_plain" if PO.PLAIN else "A_v7"]["g_PETG"], mass_tag="M",
+               worst_index=fe["util"], worst_case=fe["worst"], solid_ok=all(v["ok"] for v in sol.values()),
+               bed_face="contact face", bed_contact_mm2=res["A_v7_plain" if PO.PLAIN else "A_v7"]["bed_mm2"])
     json.dump(res, open(os.path.join(RUN, "result_plain.json" if PO.PLAIN else "result.json"), "w"), indent=1,
               default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
     ft.export(os.path.join(RUN, "collar_v7_seat_frame.stl"))

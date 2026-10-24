@@ -53,35 +53,40 @@ Mindlin plate FE of one full face (2 mm quads, 6 596 el). Supports: bottom edge 
 Build: print 4 A + 4 B. Scuff the flanges. Glue each A + B pair face-down on a flat table (4 faces). Stand the 4 faces mouth-down, glue the valley flanges, clip, cure. Sand the valley seams flush. Press an M3 heat-set insert into each of the 4 bay posts' 45° seats. Set the collar on the posts (landings on the seats), 4 x M3 x 12 countersunk from inside the funnel.
 
 ## Part: funnel panel A / B v7 (PETG, 2 + 2; the two seated faces, 24 Oct)
-The 4 panels of the faces over the 45 / 135° bays (drone ±y) carry the hook latch; the other 4 are **v7 plain** (below). Script `catch_v4/funnel_panel_v7.py` (builds on `funnel_panel.py`, which stays the v6 source), rib run `catch_v4/panel_opt_v7.py`, results `runs/funnel_panel/v7/` (`result.json` holds every number below). C unless tagged.
-| Feature | Value | Source |
+The 4 panels of the faces over the 45 / 135° bays (drone ±y) carry the hook latch; the other 4 are **v7 plain** (below). Script `catch_v4/funnel_panel_v7.py` (builds on `funnel_panel.py`, which stays the v6 source), rib run `catch_v4/panel_opt_v7.py`, results `runs/funnel_panel/v7/` (`result.json` holds every number below).
+| Feature | Value | Tag |
 |---|---|---|
-| Unchanged from v6 | faces, 45°, 168 / 320, centre seam + valley flanges (2.4 x 12), keys, seat block (36 from the centre line, 14 up the slope), M3 x 12 countersunk from above into the bay post insert | v6 |
-| Skin | **2.0** (v6 1.6 reads thin walls in solid_check: the 2.0 floor) | DEFAULT |
-| Skin window | 9.0 along the slope x 13.0 along the edge, centred at its wheel, lateral 100, 54.1 up the slope: plunger 8 x 12 + 0.5 a side (checked: the plunger section grown 0.45 a side clears, 0.55 touches) | hook latch spec |
-| Latch bosses | 4 per panel, Ø12 x 7 behind the skin (w −2.0 .. −9.0), M3 x 5.7 heat-set, hole Ø4.0 x 6.5 (2.5 floor), 2 gussets 2.0 thick each: exactly `hook_latch.bosses_local()` at the 2.0 skin. The downhill valley-side boss's gussets ran 1.3 past the valley plane: trimmed there, they end in the valley flange. Housing flange face lands at w −9.0 | hook latch spec |
-| Ribs | 9 behind the skin; **low ribs 6.7 over the housing footprint + 1.0** (unit frame u −25.5 .. 34.0, v −10.2 .. 41.6), 0.3 under the housing flange; **none over the guide block + 1.0** (u ±13.2, v −10.2 .. 11.2). The spec's rib-free window left the bosses and the strut under the wheel track as islands on the skin (solid_check necks) | DEFAULT |
-| Rib optimization | `panel_opt_v7.py`: v6 plate model, cases and limits + the window as a hole, bosses as 9.0 plate, 2 presses beside the window (u 100, v 40 / 65), latch functional 30 N on both plungers (≤ 1.0) and misuse 100 N on one (≤ 3.0): the housing as a rigid body, F x (9.0 + 9.0) as normal boss forces (7.6 N / 25.2 N max, conservative). ts 2.0, h 9 fixed; lightest feasible rib fraction 0.20, 134.5 g a face (plate model) | C (FE) |
-| Drawn tie ribs | 4.4 wide (survive every solid_check erosion): boss to boss along the slope and on both sides of the guide, the uphill bosses up into the rim beam, the downhill one into the strut under the wheel track, the seat block into that strut (it sat on skin only in v6), the rim corner piece into the valley diagonal | DEFAULT |
-| As built (FE) | outline smoothed as v6, grown 1.25 (the least that passes): worst 0.893 of the 1.0 limit at press u 60 v 90, 6.6 MPa max (limit 19.5), boss deflection 0.32 (functional) / 0.72 (misuse) | C (FE) |
-| Bosses in plane (hand calc) | misuse: 25 N shear per boss at the flange face + 25.2 N normal: 1.29 MPa at the boss root, across layers (boss axis = print z), index 0.15 (misuse SF 2.5); functional 0.07; skin membrane 1.0 MPa | C / E |
-| Mass | A 80.8 g, B 80.7 g (M, solid); collar 4 x v7 + 4 x v7 plain: 624.3 g | M |
-| Bed | 109.0 x 170.6 x 12.0, contact face down (12 935 mm² on the plate), 14 mm² over 45° (key undersides; countersink cone at 45°), no supports | M |
-| Checks | solid_check PASS on A and B; collar of 4 v7 + 4 v7 plain: 0.000 mm³ between panels, 1 body; wheel track (lateral 50 .. 150, every face): 0 steps over 0.2, face depth 0.000 off the windows | C |
+| Unchanged from v6 | faces at 45°, opening 168 / mouth 320, centre seam + valley flanges 2.4 x 12, keys, seat block (36 from the centre line, 14 up the slope), M3 x 12 countersunk from above into the bay post insert | C |
+| Skin | **2.0** (v6: 1.6, which reads 1.5 thin walls in solid_check, `v6_gate/`) | C, DEFAULT |
+| Square ends (review 1) | the skin ends square to the face at the bottom edge (v6 ran a 2.5 lip under it, cut horizontal and by the drafted opening: a 48° feather); the valley flange ends square to the valley line at the rim corner (the rim plane met it obliquely: a 0.7 wedge). Lowest point of the collar stays z −1.2 (rib ends) | C, DEFAULT |
+| Skin window | 9.0 along the slope x 13.0 along the edge, centred at its wheel, lateral 100, 54.1 up the slope: plunger 8 x 12 + 0.5 a side (the plunger section grown 0.45 a side clears, 0.55 touches) | C (hook latch spec) |
+| Latch bosses | 4 per panel, Ø12 x 7 behind the skin (w −2.0 .. −9.0), M3 x 5.7 heat-set, hole Ø4.0 x 6.5 (2.5 floor), cut after every union (0.000 mm³ of panel inside the 4 holes), 2 gussets 2.0 thick each: `hook_latch.bosses_local()` at the 2.0 skin. The downhill valley-side boss's gussets ran 1.3 past the valley plane: trimmed there, they end in the valley flange. Housing flange face at w −9.0 | C (hook latch spec) |
+| Ribs | 9 behind the skin; **low ribs 6.7 over the housing footprint + 1.0** (unit frame u −25.5 .. 34.0, v −10.2 .. 41.6), 0.3 under the housing flange; **none over the guide block + 1.0** (u ±13.2, v −10.2 .. 11.2). Each section opened by 1.0 so no piece under 2.0 wide is left at the footprint edge; ribs stop 0.3 above the skin's bottom end. The spec's rib-free window left the bosses and the wheel-track strut as islands on the skin (solid_check necks) | C, DEFAULT |
+| Rib optimization | `panel_opt_v7.py`: the v6 plate model, cases and limits, plus the window as a hole, bosses as 9.0 plate, 2 presses beside the window (u 100, v 40 / 65) and the latch: functional 30 N (E) on both plungers (limit 1.0) and misuse 100 N (E) on one (limit 3.0), the housing a rigid body, F x (9.0 + 9.0) as normal boss forces (7.6 / 25.2 N max, C, conservative). ts 2.0, h 9 fixed; lightest feasible rib fraction 0.20, 134.5 g a face (plate model) | C |
+| Drawn tie ribs | 4.4 wide (survive every solid_check erosion): boss to boss along the slope and on both sides of the guide, the uphill bosses into the rim beam, the downhill one into the wheel-track strut, the seat block into that strut (it sat on skin only in v6), the rim corner piece into the valley diagonal | C, DEFAULT |
+| As built (plate FE) | outline smoothed as v6, grown 1.25 (the least that passes): worst 0.913 of the 1.0 limit at press u 60 v 90; 6.6 MPa max (limit 19.5) | C |
+| Latch loads, panel vs system | panel cases (E): 30 N x 2: mean 0.107 mm, boss 0.33 mm, 1.5 MPa; 100 N: 0.261 mm (0.087 of 3.0), boss 0.73 mm, 4.1 MPa. **Catch system pass** (lead, `nox/box/catch_system.py`, worst plunger, C): insert 28.3 N x 2: 0.101 mm, boss 0.31 mm, 1.4 MPa; hand lift 85.8 N: 0.224 mm (0.075 of 3.0), boss 0.63 mm, 3.5 MPa (C, linear plate FE) | E / C |
+| Bosses in plane (hand calc) | shear F / 4 at the flange face + normal boss force, boss axis = print z (across layers): misuse 100 N 1.29 MPa, index 0.149 (SF 2.5); hand lift 85.8 N 1.11 MPa, 0.128; functional 30 N 0.072; insert 28.3 N 0.068; skin membrane ≤ 1.04 MPa | C (geometry) / E, C (loads) |
+| Mass | A 80.0 g, B 79.9 g (M, solid); collar 4 x v7 + 4 x v7 plain 620.0 g (M) | M |
+| Bed | 107.3 x 167.8 x 12.0 (M), contact face down, 12 935 mm² on the plate (M). print_orient overhang (faces over 30° from vertical) 336 / 340 mm² A / B (M): rib ends cut at 45° by the lowest-point plane, flange ends, the countersink cone; faces under 30° from horizontal 9 / 11 mm² (M, key undersides): tree supports at Bambu's 30° threshold ~0 g (E) | M / E |
+| Checks | solid_check PASS on A and B; collar of 4 v7 + 4 v7 plain: 0.000 mm³ between panels, 1 body; wheel track (lateral 50 .. 150, every face): 0 steps over 0.2, face depth 0.000 off the windows (C) | C |
 
-**Hook latch fit:** with the guide top 0.3 under the 2.0 skin (−2.3) and the flange on the 7 bosses (−9.0): housings, plungers in and out vs the collar 0 mm³ at all 4 units. **The merged hook latch v1 (`SKIN = 1.6`) overlaps the v7 panel 242 mm³ per unit** (guide top 0.1 into the skin, flange 0.4 into the bosses): `hook_latch.py` must take `SKIN = 2.0` (its frame constants follow; a housing v2) before the housings are printed.
+**Hook latch fit:** with the guide top 0.3 under the 2.0 skin (−2.3) and the flange on the 7 bosses (−9.0): housings, plungers in and out vs the collar 0.000 mm³ at all 4 units (C). **The merged hook latch v1 (`SKIN = 1.6`) overlaps the v7 panel 242 mm³ per unit (C)** (guide top 0.1 into the skin, flange 0.4 into the bosses): `hook_latch.py` takes `SKIN = 2.0` (hook latch v2, lead) before the housings are printed.
 
 Build: as v6, plus press 4 M3 x 5.7 heat-set inserts into each v7 panel's bosses before gluing. The v7 pair goes on the seated faces (over the 45 / 135° bays, drone ±y), each panel's window toward its own valley.
 
 ## Part: funnel panel A / B v7 plain (PETG, 2 + 2; the two unlatched faces, 24 Oct)
-v7 without the latch: the same skin 2.0, ribs 9, flanges, keys, seat block and its tie rib; no window, bosses or low ribs. Ribs from `panel_opt_v7.py` run plain (`NOX_FUNNEL_PLAIN=1`, v6 cases and limits + the 2 presses beside the wheel point, no latch cases; `rib_mask_v7_plain.json`): lightest feasible rib fraction 0.20, 132.6 g a face (plate model). Drawn tie ribs 4.4 wide: the wheel-track strut up into the rim stub, the rim corner piece into the valley diagonal, the seat block into the strut. Build: `funnel_panel_v7.py --plain` (C unless tagged).
-| Item | Value |
-|---|---|
-| As built (FE) | grown 1.25 (the least that passes): worst 0.91 of the 1.0 limit at press u 60 v 90, 6.9 MPa max |
-| Mass | A 75.4 g, B 75.3 g (M, solid) |
-| Bed | 109.0 x 170.6 x 12.0, contact face down, 13 052 mm² (M), 14 mm² over 45°, no supports |
-| Checks | solid_check PASS on A and B; in the collar with the 4 v7: 0.000 mm³, 1 body; wheel track 0 steps over 0.2 |
-**The 3 printed v6 panels:** the v6 file fails solid_check (1.6 skin thin walls, seat block and a rim piece on skin-only necks), so they are reprinted as v7 plain (DEFAULT; alternative: keep them on the unlatched faces as printed, their 1.6 skin is under the 2.0 floor). They can serve as fit and glue coupons.
+v7 without the latch: the same skin 2.0, ribs 9, flanges, keys, square ends, seat block and its tie rib; no window, bosses or low ribs. Ribs from `panel_opt_v7.py` run plain (`NOX_FUNNEL_PLAIN=1`, v6 cases and limits + the 2 presses beside the wheel point, no latch cases; `rib_mask_v7_plain.json`): lightest feasible rib fraction 0.20, 132.6 g a face (plate model, C). Drawn tie ribs 4.4 wide: the wheel-track strut into the rim stub, the rim corner piece into the valley diagonal, the seat block into the strut. Build: `funnel_panel_v7.py --plain`.
+| Item | Value | Tag |
+|---|---|---|
+| As built (plate FE) | grown 1.25 (the least that passes): worst 0.933 of the 1.0 limit at press u 60 v 90, 6.9 MPa max (limit 19.5) | C |
+| Mass | A 75.1 g, B 75.0 g (solid) | M |
+| Bed | 107.3 x 167.8 x 12.0, contact face down, 13 052 mm² on the plate; print_orient overhang 709 / 712 mm² A / B (45° rib ends and flange ends), under 30° from horizontal 9 / 11 mm²: tree supports ~0 g (E) | M / E |
+| Checks | solid_check PASS on A and B; in the collar with the 4 v7: 0.000 mm³, 1 body; wheel track 0 steps over 0.2 | C |
+**The 3 printed v6 panels:** the v6 file fails solid_check (`runs/funnel_panel/v7/v6_gate/`: 1.5 thin walls from the 1.6 skin, the seat block on a 0 mm² joint at (38.9, −47.1), a rim piece on a 2.4 neck, M), so they are reprinted as v7 plain (DEFAULT; alternative: keep them on the unlatched faces as printed, their 1.6 skin is under the 2.0 floor). They can serve as fit and glue coupons.
+
+## Cage first (Spark 24 Oct rule, CLAUDE.md)
+The collar may meet only cage members: the catch wheels in the corner nodes (Catch interface (1)); everything else of either drone stays ≥ 3 off the faces (the cage-first rule's 3, DEFAULT). **Today's shared number is 1.0** (dimensions G Catch interface (1): "nothing else of the drone within 1.0 of a face", and (7) 1.0 off the extended plungers): **a shared-number question for the Scout v3 and Overseer chats** (raise to 3 so the cage touches first by the rule's margin); this part does not change it. The collar itself has nothing inside the mouth above the faces but the 4 plungers, which only meet the wheels (hook latch fit).
 
 ## Sequence
 1. Drone descends inside ±40, ±5° yaw, ≤ 0.15 m/s.
@@ -90,7 +95,7 @@ v7 without the latch: the same skin 2.0, ribs 9, flanges, keys, seat block and i
 4. Swap (`nox/box/box.md`): the XT60 push lifts the drone 2.1 .. 5.7 (C) onto the plungers. Leaving: plungers in, spin-up, take off. Miss (no switch within 1.0 s): climb, retry.
 
 ## Problems
-0. **The v6 file fails solid_check** (24 Oct, M): 1.5 thin walls (the 1.6 skin), the seat block on skin only, a rim piece on a 2.4 neck. Fixed by v7 plain on the unlatched faces; the 3 printed v6 panels are reprinted (DEFAULT).
+0. **The v6 file fails solid_check** (24 Oct, M, `runs/funnel_panel/v7/v6_gate/`): 1.5 thin walls (the 1.6 skin), the seat block on skin only, a rim piece on a 2.4 neck. Fixed by v7 plain on the unlatched faces; the 3 printed v6 panels are reprinted (DEFAULT).
 1. **Wheel coupon gate** (dimensions D14): a corner node's wheel turns free after printing and slides sideways on a 45° PETG face at μ ≤ 0.4. Test on a panel's bed-side face.
 2. **Valley seams are in the wheel path:** sand flush, step ≤ 0.2, and round the glue line so a wheel can't catch.
 3. **The 2 bays the collar bolts to (45° and 135°) aren't drawn** (Overseer bays, wait on D10). Their posts (45° seat + insert) are the bay ring chat's job (spec in `nox/box/box-case.md` "To add" 2). Best fix: draw those two modules now as bay envelopes with the posts, so the collar has something to bolt to; Overseer receivers later.

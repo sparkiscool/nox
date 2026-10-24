@@ -7,11 +7,11 @@
  "rib_vf_plain": 0.2,
  "unlatched_faces": "v7 plain",
  "A_v7_plain": {
-  "cm3": 59.4,
-  "g_PETG": 75.4,
+  "cm3": 59.2,
+  "g_PETG": 75.1,
   "bbox": [
-   109.0,
-   170.6,
+   107.3,
+   167.8,
    12.0
   ],
   "watertight": true,
@@ -22,11 +22,11 @@
   "watertight_after_stl_reload": true
  },
  "B_v7_plain": {
-  "cm3": 59.3,
-  "g_PETG": 75.3,
+  "cm3": 59.0,
+  "g_PETG": 75.0,
   "bbox": [
-   109.0,
-   168.4,
+   107.3,
+   165.6,
    12.0
   ],
   "watertight": true,
@@ -37,11 +37,11 @@
   "watertight_after_stl_reload": true
  },
  "A_v7": {
-  "cm3": 63.6,
-  "g_PETG": 80.8,
+  "cm3": 63.0,
+  "g_PETG": 80.0,
   "bbox": [
-   109.0,
-   170.6,
+   107.3,
+   167.8,
    12.0
   ],
   "watertight": true,
@@ -52,11 +52,11 @@
   "watertight_after_stl_reload": true
  },
  "B_v7": {
-  "cm3": 63.5,
-  "g_PETG": 80.7,
+  "cm3": 62.9,
+  "g_PETG": 79.9,
   "bbox": [
-   109.0,
-   168.4,
+   107.3,
+   165.6,
    12.0
   ],
   "watertight": true,
@@ -68,9 +68,9 @@
  },
  "assembly": {
   "unlatched": "v7 plain",
-  "overlap_mm3": -0.0,
+  "overlap_mm3": 0.0,
   "bodies": "1",
-  "g_PETG": 624.3,
+  "g_PETG": 620.0,
   "bbox": [
    336.8,
    336.8,
@@ -101,22 +101,22 @@
  },
  "latch_fit_v1_as_merged": {
   "+y_x+": {
-   "housing_mm3": 242.442,
+   "housing_mm3": 240.983,
    "plunger_in_mm3": 0.0,
    "plunger_out_mm3": 0.0
   },
   "+y_x-": {
-   "housing_mm3": 242.442,
+   "housing_mm3": 240.983,
    "plunger_in_mm3": 0.0,
    "plunger_out_mm3": 0.0
   },
   "-y_x+": {
-   "housing_mm3": 242.442,
+   "housing_mm3": 240.983,
    "plunger_in_mm3": 0.0,
    "plunger_out_mm3": 0.0
   },
   "-y_x-": {
-   "housing_mm3": 242.442,
+   "housing_mm3": 240.983,
    "plunger_in_mm3": 0.0,
    "plunger_out_mm3": 0.0
   }
@@ -183,7 +183,7 @@
  "fe_mode": "v7 latched",
  "boss_hand_calc": [
   {
-   "case": "functional 30 N",
+   "case": "functional 30 N (panel, E)",
    "boss_shear_N": 7.5,
    "boss_normal_N": 7.5,
    "boss_root_MPa": 0.39,
@@ -191,17 +191,97 @@
    "skin_membrane_MPa": 0.31
   },
   {
-   "case": "misuse 100 N",
+   "case": "misuse 100 N (panel, E)",
    "boss_shear_N": 25.0,
    "boss_normal_N": 25.2,
    "boss_root_MPa": 1.29,
    "index_across_layers": 0.149,
    "skin_membrane_MPa": 1.04
+  },
+  {
+   "case": "insert 28.3 N (system, C)",
+   "boss_shear_N": 7.1,
+   "boss_normal_N": 7.1,
+   "boss_root_MPa": 0.37,
+   "index_across_layers": 0.068,
+   "skin_membrane_MPa": 0.29
+  },
+  {
+   "case": "hand lift 85.8 N (system, C)",
+   "boss_shear_N": 21.4,
+   "boss_normal_N": 21.6,
+   "boss_root_MPa": 1.11,
+   "index_across_layers": 0.128,
+   "skin_membrane_MPa": 0.89
   }
- ]
+ ],
+ "fe_asbuilt_system_loads": {
+  "insert 28.3 N x 2 (system)": {
+   "mean_defl_mm": 0.101,
+   "util": 0.101,
+   "stress_MPa": 1.42,
+   "boss_defl_mm": 0.309
+  },
+  "hand lift 85.8 N (system)": {
+   "mean_defl_mm": 0.224,
+   "util": 0.075,
+   "stress_MPa": 3.52,
+   "boss_defl_mm": 0.629
+  }
+ },
+ "fe_asbuilt_panel_loads": {
+  "latch functional 30 N x 2": {
+   "mean_defl_mm": 0.107,
+   "util": 0.107,
+   "stress_MPa": 1.5,
+   "boss_defl_mm": 0.328
+  },
+  "latch misuse 100 N": {
+   "mean_defl_mm": 0.261,
+   "util": 0.087,
+   "stress_MPa": 4.1,
+   "boss_defl_mm": 0.733
+  }
+ },
+ "insert_holes_material_mm3": 0.0,
+ "solid_check": {
+  "A_v7_plain": {
+   "ok": true,
+   "bodies_eroded": 1,
+   "necks": 0,
+   "thin_walls": 0
+  },
+  "B_v7_plain": {
+   "ok": true,
+   "bodies_eroded": 1,
+   "necks": 0,
+   "thin_walls": 0
+  },
+  "A_v7": {
+   "ok": true,
+   "bodies_eroded": 1,
+   "necks": 0,
+   "thin_walls": 0
+  },
+  "B_v7": {
+   "ok": true,
+   "bodies_eroded": 1,
+   "necks": 0,
+   "thin_walls": 0
+  }
+ },
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 80.0,
+ "mass_tag": "M",
+ "worst_index": 0.913,
+ "worst_case": "press u60 v90",
+ "solid_ok": true,
+ "bed_face": "contact face",
+ "bed_contact_mm2": 12935
 }
-fe as-built: v7 latched {'face_g': np.float64(151.5), 'util': 0.893, 'worst': 'press u60 v90', 'stress_MPa': 6.6, 'stress_case': 'press u30 v40', 'ok': True, 'latch_boss_defl_mm': {'latch functional 30 N x 2': 0.319, 'latch misuse 100 N': 0.716}}
-motion: /home/user/nox/.claude/worktrees/agent-a7459f9e321f177cd/runs/funnel_panel/v7/motion.html 0.97 MB, 20 parts, 180 frames
+fe as-built: v7 latched {'face_g': np.float64(151.3), 'util': 0.913, 'worst': 'press u60 v90', 'stress_MPa': 6.6, 'stress_case': 'press u30 v40', 'ok': True, 'latch_boss_defl_mm': {'latch functional 30 N x 2': 0.328, 'latch misuse 100 N': 0.733}}
+motion: /home/user/nox/.claude/worktrees/agent-a7459f9e321f177cd/runs/funnel_panel/v7/motion.html 1.13 MB, 20 parts, 180 frames
 motion: /home/user/nox/.claude/worktrees/agent-a7459f9e321f177cd/runs/funnel_panel/v7/motion.mp4 0.09 MB
 motion: /home/user/nox/.claude/worktrees/agent-a7459f9e321f177cd/runs/funnel_panel/v7/motion.gif 0.08 MB
-motion: /home/user/nox/.claude/worktrees/agent-a7459f9e321f177cd/runs/funnel_panel/v7/motion.png 0.14 MB
+motion: /home/user/nox/.claude/worktrees/agent-a7459f9e321f177cd/runs/funnel_panel/v7/motion.png 0.15 MB
