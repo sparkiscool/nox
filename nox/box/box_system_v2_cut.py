@@ -94,12 +94,26 @@ def field_mesh(K=4):
     return m
 
 
+DY = 2.1                                              # grip line Y_C 165 -> 167.1 (PR 114): bay side +DY (M)
+YS = 40.0                                             # the stretch plane of the round 2 field: the mast, hub and rear frames (Y < 40) stay, the bay side moves
+
+
+def stretch_y(F, ys=YS, dy=DY):
+    """the field on the old layout moved to the new one: material below Y = ys stays, above it moves +dy, the section at ys is extended by dy (the laps
+    to the mast and the rear frame get longer by dy)."""
+    Fr = F.rotate([90, 0, 0])                                           # new z = old y
+    lo = Fr ^ box(-BIG, BIG, -BIG, BIG, -BIG, ys)
+    hi = (Fr ^ box(-BIG, BIG, -BIG, BIG, ys, BIG)).translate([0, 0, dy])
+    sl = mf.Manifold.extrude(Fr.slice(ys), dy).translate([0, 0, ys])
+    return (lo + sl + hi).rotate([-90, 0, 0])
+
+
 def structure(force=False):
     """S = (field surface U drawn) - (keep-outs - drawn), one manifold, specks dropped. Cached as an STL."""
     fn = os.path.join(CACHE, "v2cut_structure.stl")
     if os.path.exists(fn) and not force: return man(trimesh.load(fn, force="mesh"))
     t0 = time.time(); D = drawn_inputs()
-    F = man(field_mesh())
+    F = stretch_y(man(field_mesh()))
     log(f"field surface {F.volume() / 1e3:.0f} cm3 ({time.time() - t0:.0f} s)")
     S = ((F + D["drawn"]) ^ D["env"]) - (D["cuts"] - D["drawn"])
     parts = S.decompose()
@@ -169,7 +183,7 @@ BAY_ANG = [30, 0, -30, -60, -90, -120, -150, -180, -210]
 BAY_KIND = {30: "S", 0: "O", -30: "S", -60: "O", -90: "S", -120: "O", -150: "S", -180: "O", -210: "S"}   # box_layout_v2.BAYS (S Scout, O Overseer)
 BIG = 900.0
 Y0_, Y1_ = -90.0, 360.0
-PAR = dict(Ym=20.0, XmP=88.0, XmN=-80.0, Ybr=266.0, Yb=60.0, c_r=140.0, Ztop=110.0,
+PAR = dict(Ym=20.0, XmP=88.0, XmN=-80.0, Ybr=266.0 + 2.1, Yb=60.0 + 2.1, c_r=140.0, Ztop=110.0,
            phi={15: 15.0, -15: -15.0, -45: -45.0, -75: -75.0, -105: -105.0, -135: -135.0, -165: -165.0, -195: -195.0},
            outer=(45.0, -225.0))
 
@@ -198,7 +212,7 @@ def radial_plane(name, phi):
     return Plane(name, [-math.sin(p), 0, math.cos(p)], [0, 1, 0], [0, 0, 0])
 
 
-RING_Y = (74.0, 98.0)                                 # the datum ring (round 2: r 115..200, Y 74..98, -210..30 deg)
+RING_Y = (74.0 + 2.1, 98.0 + 2.1)                                 # the datum ring (round 2: r 115..200, Y 76.1..100.1, -210..30 deg)
 RING_GROUPS = [(0, 2), (2, 4), (4, 5), (5, 7), (7, 9)]   # edge indices of the 5 segments: bays {30, 0}, {-30, -60}, {-90}, {-120, -150}, {-180, -210}
 
 
@@ -310,6 +324,8 @@ def fold(parts, planes, vmin=50.0, vfold=8000.0, log=print):
                 if not near_plane(m, pl): continue
                 ar = contact_area(c, m, pl)
                 if ar > best: best, bk = ar, k
+        if bk is None and c.volume() < 1500.0:
+            log(f"  isolated component {rn}{i} ({c.volume() / 1e3:.2f} cm3) dropped (a sliver the keep-outs left, no neighbour)"); continue
         if bk is None:
             log(f"  isolated component {rn}{i} ({c.volume() / 1e3:.1f} cm3) kept as a piece of its own"); pieces[f"{rn}~{i}"] = c; continue
         pieces[bk] = pieces[bk] + c
@@ -333,12 +349,12 @@ SPLITS = [("mast", "Z mast 2", "z", 66.0, 12.0, ("mast_12", "mast_3")),         
           ("mast_12", "Z mast 1", "z", -80.0, 12.0, ("mast_1", "mast_2")),
           ("rearP", "Z rearP", "z", 28.0, 14.0, ("rearP_1", "rearP_2")),
           ("rearN", "Z rearN", "z", -48.0, 14.0, ("rearN_1", "rearN_2")),
-          ("topP", "Y topP", "y", 138.0, 14.0, ("topP_1", "topP_2")),
-          ("topN", "Y topN", "y", 138.0, 14.0, ("topN_1", "topN_2")),
-          ("bay0", "Y bay0", "y", 128.0, 20.0, ("bay0_a", "bay0_b")),
-          ("bay-60", "Y bay-60", "y", 128.0, 20.0, ("bay-60_a", "bay-60_b")),
-          ("bay-120", "Y bay-120", "y", 128.0, 20.0, ("bay-120_a", "bay-120_b")),
-          ("bay-180", "Y bay-180", "y", 128.0, 20.0, ("bay-180_a", "bay-180_b"))]
+          ("topP", "Y topP", "y", 138.0 + 2.1, 14.0, ("topP_1", "topP_2")),
+          ("topN", "Y topN", "y", 138.0 + 2.1, 14.0, ("topN_1", "topN_2")),
+          ("bay0", "Y bay0", "y", 128.0 + 2.1, 20.0, ("bay0_a", "bay0_b")),
+          ("bay-60", "Y bay-60", "y", 128.0 + 2.1, 20.0, ("bay-60_a", "bay-60_b")),
+          ("bay-120", "Y bay-120", "y", 128.0 + 2.1, 20.0, ("bay-120_a", "bay-120_b")),
+          ("bay-180", "Y bay-180", "y", 128.0 + 2.1, 20.0, ("bay-180_a", "bay-180_b"))]
 
 
 SPLIT_LOG = []
@@ -478,8 +494,8 @@ def add_features(S, log=print):
     S = S + (union(pads) - KEEP)
     S, rib_info = join_islands(S, KEEP, log)
     info["ribs"] = rib_info
-    ring = (R2.datum_ring() ^ D["env"]) - KEEP
-    S = S + ring; info["ring_cm3"] = round(ring.volume() / 1e3, 1); log(f"datum ring (drawn r 115..200, Y 74..98, minus keep-outs): {info['ring_cm3']} cm3")
+    ring = (R2.datum_ring().translate([0, DY, 0]) ^ D["env"]) - KEEP
+    S = S + ring; info["ring_cm3"] = round(ring.volume() / 1e3, 1); log(f"datum ring (drawn r 115..200, Y 76.1..100.1, minus keep-outs): {info['ring_cm3']} cm3")
     bosses = []
     for sp in feature_specs():
         p = np.array(sp["point"]); d = np.array(sp["axis"])
@@ -744,7 +760,7 @@ def overlaps(pieces):
 
 
 # the 4 sheets (cladding, bought; box_structure_v2.assembly.json): inner plane coordinate along the axis and the outward direction
-SHEETS = {"sheet+X": (0, 206.0, 1.0), "sheet-X": (0, -206.0, -1.0), "sheetR": (1, -66.0, -1.0), "sheetF": (1, 335.0, 1.0)}
+SHEETS = {"sheet+X": (0, 206.0, 1.0), "sheet-X": (0, -206.0, -1.0), "sheetR": (1, -66.0, -1.0), "sheetF": (1, 337.0, 1.0)}
 CLIP = dict(post=10.0, root=8.0, pad_d=14.0, pad_t=3.0, gus_b=12.0, gus_h=14.0, gus_t=3.0, ins_d=4.0, ins_h=6.7, gap=0.2)
 
 
@@ -890,7 +906,7 @@ def build_cut(sizes=None, log=print, finish=True):
     finfo["clips"] = add_clips(P, KEEP, log=log)
     P = clean(P, log)
     if finish:
-        envc = box(-205.9, 205.9, -65.9, 334.9, -236.0, 234.0)                  # the finish grows flush faces by up to 0.3: back inside the sheets' inner planes
+        envc = box(-205.9, 205.9, -65.9, 336.9, -236.0, 234.0)                  # the finish grows flush faces by up to 0.3: back inside the sheets' inner planes
         for k in list(P):
             P[k] = finish_piece(P[k], log=lambda s_: log(f"  {k}:{s_}"))
             v0 = P[k].volume(); P[k] = P[k] ^ envc
@@ -1647,7 +1663,7 @@ def report_stage(h=4.0, tag="", t_start=None, peak_gb=None, log=print):
     make_page(P, finfo, tab, mc, pp, scj, sn, imgs, os.path.join(OUT, "visual.html"))
     import shutil; shutil.copy(imgs[("exp", "iso")], os.path.join(OUT, "preview.png"))
     # box totals with the lumps (E) for the CG
-    lumps = {"arm": (2900.0, (0.0, 60.0, 0.0)), "funnel + latch": (640.0, (0.0, 165.0, 180.0)), "electronics + PSU": (2000.0, (100.0, -50.0, -60.0))}
+    lumps = {"arm": (2900.0, (0.0, 60.0, 0.0)), "funnel + latch": (640.0, (0.0, 165.0 + DY, 180.0)), "electronics + PSU": (2000.0, (100.0, -50.0, -60.0))}
     import box_system_topo_v2r2 as R2
     import box_system_topo_v2 as T
     for ang, pk in R2.L2.BAYS.items(): lumps[f"cartridge {ang}"] = (R2.MASS[pk], tuple(T.bay_pose(ang)(np.array(R2.META[pk]["SWAP_CG"]))))
@@ -1712,7 +1728,7 @@ def write_summary(R, sizing_rows, runinfo, path):
          f"Result (F, h {fe['h']:g} mm, 18 cases, both joint models): stub tilt at 57 N + 5.9 N.m: bonded {sn.get('stub_tilt_mrad')} mrad, bolt-disc {snb.get('stub_tilt_mrad') if snb else 'not run'} mrad (target <= 10, E). "
          f"Worst bay rotation about the axle relative to the stub over all 18 cases: bonded {sn['bay_rot_worst_mrad']} mrad (`{sn['bay_rot_worst_case']}`), bolt-disc {snb['bay_rot_worst_mrad'] if snb else 'not run'} mrad"
          f"{' (`' + snb['bay_rot_worst_case'] + '`)' if snb else ''} (target <= 2.6, E). The design is held to the bolt-disc bound.",
-         f"Datum (DEFAULT): a drawn ring of {len(R['ring_names'])} segments (C) r 115..200 (C) on Y 74..98 (C), {finfo.get('ring_cm3', 0):.0f} cm3 drawn (M), bolted to the mast and links, carries every bay body on {len(dat)} fixings (M, detail below). Alternative not used: a bolted hub link per bay to the mast.",
+         f"Datum (DEFAULT): a drawn ring of {len(R['ring_names'])} segments (C) r 115..200 (C) on Y 76.1..100.1 (C), {finfo.get('ring_cm3', 0):.0f} cm3 drawn (M), bolted to the mast and links, carries every bay body on {len(dat)} fixings (M, detail below). Alternative not used: a bolted hub link per bay to the mast.",
          f"Weight (M unless E): frame (the {len(P)} PETG pieces) {mg['frame_g']:.0f} g, feet {mg['feet_g']:.0f} g, structure {mc['structure_g']:.0f} g; was 4919 g (E) for the round 2 field. Two totals that differ by design: {mg['sysline_g']:.0f} g in the System line (E) = pieces + feet + receivers + cartridges + PSU + charger + sheets + catch parts, CG {mg['sysline_cg']} (E); and {rec['box_with_lumps_g']} g (E) = structure + cartridges + arm 2900 g (E) + funnel and latch 640 g (E) + electronics 2000 g (E), CG {rec['box_with_lumps_cg']} (E, W). The first has no arm, funnel or electronics lump; the second has no sheets, receivers or PSU. Structure CG {mc['cg']} (M).",
          "Mass groups of the System line (g, tag): " + "; ".join(f"{k_} {v_['g']:.0f} ({v_['tag']})" for k_, v_ in mg["groups"].items()) + ".",
          f"Equilibrium (F): lateral reaction + applied sum under {R['resid_max_axis']:.2f} % of the largest load on every axis in every case and both models (diagonal regularisation {R['reg']:g}, was 1e-4 with 6 % lost in the motors-cut lateral reaction); per-case table below.",
@@ -1727,7 +1743,7 @@ def write_summary(R, sizing_rows, runinfo, path):
                  f"{'; '.join(lp) or '-'} | {'PASS' if scj.get(k, {}).get('ok') else 'FAIL' if k in scj else 'not run'} |")
     L += ["", f"TPU feet: {len(finfo['feet'])} x O20 x 5 (E) under the floor patches of the field (M areas {', '.join(f'{f_['area'] / 100:.1f}' for f_ in finfo['feet'])} cm2) on O16 x 6 (C) pads with an M3 insert.", ""]
     L += ["## Datum ring (the bay rotation fix)", "",
-          f"Round 2's ring (r 115..200, Y 74..98, minus its keep-outs) is drawn into the structure ({finfo.get('ring_cm3', 0):.0f} cm3, M) and cut in {len(R['ring_names'])} segments (5, not the 3 or 4 asked: a 60 deg arc at r 200 is a 200 mm chord, over the 180 cube, M). "
+          f"Round 2's ring (r 115..200, Y 76.1..100.1, minus its keep-outs) is drawn into the structure ({finfo.get('ring_cm3', 0):.0f} cm3, M) and cut in {len(R['ring_names'])} segments (5, not the 3 or 4 asked: a 60 deg arc at r 200 is a 200 mm chord, over the 180 cube, M). "
           "Each segment is bolted to the mast, the links or the neighbour segment by laps; each bay body sits on its ring segment on the Y 98 face with M3 screws from below (Y 74, through the ring, counterbore, insert in a bay boss) and O4 dowel seats (6.5 deep each side, E), in the clear of the receiver bolt access. Fixings (M, positions in `cut.json` `datum`):", "",
           "| Ring segment | Bay body | M3 | Dowels |", "|---|---|---|---|"]
     dk = {}
@@ -1745,7 +1761,7 @@ def write_summary(R, sizing_rows, runinfo, path):
         L.append(f"| {d_['case'][:46]} | {bdl(b_ and b_['tilt'])} / {bdl(k_ and k_['tilt'])} | {bdl(b_ and b_['bay'])} / {bdl(k_ and k_['bay'])} | {(k_ or b_)['bay_at'] if k_ or b_ else ''} | {bdl(b_ and b_['resid'])} / {bdl(k_ and k_['resid'])} ({bdl(b_ and b_['axis'])} / {bdl(k_ and k_['axis'])}) |")
     L += ["", "## Cut and joints", "",
           f"- Source: `runs/box_system/v2/topo_r2/density.npz` (g3000), cubic x4 to a 2 mm grid (C), 0.5 surface (M); the drawn bodies (pads, seat posts, stub, electronics bosses, datum ring, island ribs) exact; keep-outs of round 2 (grown 1 mm, C) cut exact; features thinner than 2.3 mm (E) removed (voxel opening, M); each piece finished by a 0.5 mm voxel opening (r 1.2, C) and a smooth 0.5 iso-surface (+-0.25 mm, M). After the finish two pieces that meet flush on an oblique plane overlap by a film of up to 0.25 mm (M): the larger gives it up, the overlap list is in the System line.",
-          f"- Regions (DEFAULT, planes and wedges): mast |X| < ~85, Y < 20 (C); rear frames; seat-post bridge Y > 266 (C); the datum ring segments (r 115..200, Y 74..98) before the bay bodies; 9 bay bodies (30 deg wedges, r > 140, Y > 60); top frame Z > 110 split at X 0; links = the rest. Size splits (180 cube): {'; '.join(f"{s_['piece']} on {s_['plane']} at {s_['axis']} {s_['at']:g} ({s_['section_cm2']} cm2)" for s_ in cutd.get('splits', [])) or 'see log'} (M); the Overseer bay bodies are cut between their bolt rows. ring4 is 161 x 52 x 189 mm in W and prints 176 x 176 mm turned 8 deg in its plane (M).",
+          f"- Regions (DEFAULT, planes and wedges): mast |X| < ~85, Y < 20 (C); rear frames; seat-post bridge Y > 268.1 (C); the datum ring segments (r 115..200, Y 76.1..100.1) before the bay bodies; 9 bay bodies (30 deg wedges, r > 140, Y > 60); top frame Z > 110 split at X 0; links = the rest. Size splits (180 cube): {'; '.join(f"{s_['piece']} on {s_['plane']} at {s_['axis']} {s_['at']:g} ({s_['section_cm2']} cm2)" for s_ in cutd.get('splits', [])) or 'see log'} (M); the Overseer bay bodies are cut between their bolt rows. ring4 is 161 x 52 x 189 mm in W and prints 176 x 176 mm turned 8 deg in its plane (M).",
           f"- Islands: a floor island (epost, 20.8 cm3) is joined to the rear frame by an O18 rib of {R['ribs'][0]['length_mm']:.0f} mm (C) drawn into the structure ({R['ribs'][0]['volume_cm3']:.1f} cm3, M), so it is one piece with `rearP_low` and no longer floats (round 1 showed umax 2.3 mm in every unilateral case)." if R['ribs'] else "- Islands: none joined.",
           f"- Joints: {len(recs)} laps ({nj} bolted: {nbolt['M3']} x M3 + {nbolt['M5']} x M5 heat-set inserts; {len(ub)} unbolted); each lap = a lug of one piece on a pocket of the other (pocket 0.3 mm (E) bigger per side; overlap 14 for M3 / 18 for M5 (C), lug 16 / 20 wide (C) with O12 / O16 pad (C) and >= 2.0 web, 6 / 8 thick (C), insert boss wall >= 4 (C)), screw access O10 x 10 clear (C). Unbolted interfaces: " + ", ".join(f"{r['a']} / {r['b']} / {r['plane']} ({r['area_cm2']} cm2, {r['wanted']} wanted)" for r in sorted(ub, key=lambda q: -q["area_cm2"])[:30]) + (f" ... {len(ub)} in all" if len(ub) > 30 else "") + ". The FE carries nothing through them; `requirements.md` lists each with the bolts to place.",
           "- Bolt count and size iterated from the joint wrenches of both models of the previous FE (M3 up to 6, else M5, index aim 0.8 (E); capacities E: heat-set pull-out 300 / 700 N, lug bearing 600 / 1300 N at SF 1):", ""]
