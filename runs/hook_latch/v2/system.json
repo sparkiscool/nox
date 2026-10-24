@@ -1,0 +1,111 @@
+{
+ "system": "catch: seated drone + 8 wheels + collar + 4 hook latches + cartridge push",
+ "cases": {
+  "insert 60 N": {
+   "at": [
+    -41.5,
+    -19.0,
+    -41.1
+   ],
+   "plunger_max_N": 28.28,
+   "plungers_N": [
+    10.68,
+    28.28,
+    28.28,
+    17.92
+   ],
+   "face_wheel_max_N": 7.24,
+   "residual_N": 0.0
+  },
+  "pull 50 N": {
+   "at": [
+    -41.5,
+    -19.0,
+    -41.1
+   ],
+   "plunger_max_N": 1.71,
+   "plungers_N": [
+    1.71,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "face_wheel_max_N": 17.04,
+   "residual_N": 0.0
+  },
+  "hand lift 100 N at a corner": {
+   "at": [
+    112,
+    100,
+    50
+   ],
+   "plunger_max_N": 85.81,
+   "plungers_N": [
+    85.81,
+    46.21,
+    0.0,
+    79.16
+   ],
+   "face_wheel_max_N": 46.25,
+   "residual_N": 0.0
+  },
+  "catch 6 g": {
+   "at": [
+    0,
+    0,
+    20
+   ],
+   "plunger_max_N": 0.0,
+   "plungers_N": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "face_wheel_max_N": 6.06,
+   "residual_N": 0.0
+  }
+ },
+ "pieces": {
+  "insert 60 N": {
+   "plunger_N": 28.28,
+   "plunger_index": 0.23,
+   "guide_wall_index": 0.136,
+   "guide_top_N": 45.4,
+   "boss_bolt_shear_N": 7.07,
+   "face_wheel_max_N": 7.24,
+   "cls": "flight"
+  },
+  "pull 50 N": {
+   "plunger_N": 1.71,
+   "plunger_index": 0.014,
+   "guide_wall_index": 0.008,
+   "guide_top_N": 2.7,
+   "boss_bolt_shear_N": 0.43,
+   "face_wheel_max_N": 17.04,
+   "cls": "flight"
+  },
+  "hand lift 100 N at a corner": {
+   "plunger_N": 85.81,
+   "plunger_index": 0.437,
+   "guide_wall_index": 0.257,
+   "guide_top_N": 137.8,
+   "boss_bolt_shear_N": 21.45,
+   "face_wheel_max_N": 46.25,
+   "cls": "misuse"
+  },
+  "catch 6 g": {
+   "plunger_N": 0.0,
+   "plunger_index": 0.0,
+   "guide_wall_index": 0.0,
+   "guide_top_N": 0.0,
+   "boss_bolt_shear_N": 0.0,
+   "face_wheel_max_N": 6.06,
+   "cls": "flight"
+  }
+ },
+ "assembled_worst": [
+  "hand lift 100 N at a corner",
+  0.437
+ ]
+}
