@@ -35,6 +35,8 @@ MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_syst
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
 BRACKET = 12.0                                  # ring envelope to sheet inner face (U-clip + flange, v1 brackets 3.5..10)
 CRADLE = 48.1                                   # bottom bay's outer face to the floor (v1 cradle_keel: Z_TOP -152.9 to -201)
+FUNNEL_V8_GROW_Y = 11.5                         # hub 24 Oct: funnel v8 widens the opening fore-aft 168 -> ~191 (E): the +-Y faces
+                                                # move out (191 - 168) / 2; the enclosure keeps room for it until G (2) has the number
 
 
 def man(t): return B.man(t)
@@ -151,7 +153,7 @@ def layout(R=113.0, clip=False, bays=None):
     X_IN = math.ceil(max(ring_x, side) + BRACKET)
     FLOOR = math.floor(ring_zmin - CRADLE)
     Z_TOP = math.ceil(rim + 0.5)
-    Y_FRONT = math.ceil(max(front + 1.0, float(rt.bounds[1, 1]) + BRACKET))
+    Y_FRONT = math.ceil(max(front + FUNNEL_V8_GROW_Y + 1.0, float(rt.bounds[1, 1]) + BRACKET))
     Y_BACK = -66.0
     H = Z_TOP - FLOOR
     out = dict(R=R, clip=clip, bays=rows, neighbours=nb, catch=dict(rim_Z=round(rim, 1), front_Y=round(front, 1), back_Y=round(back, 1),
@@ -223,7 +225,7 @@ def write_concept(od, out, P, env, R):
         d = [-math.cos(math.radians(ang)), 0.0, -math.sin(math.radians(ang))]
         access.append(dict(name=f"bay {ang}: cartridge out to park ({PATH:g} along -r)", part=f"bay {ang} cartridge", dir=d, length_mm=PATH, tool="part",
                            ignore=[f"bay {ang} receiver", f"bay {ang} body envelope", "arm: parked heads + cartridges (turning)"]))
-        access.append(dict(name=f"bay {ang}: body out along +Y, front sheet off (service)", part=f"bay {ang} body envelope", dir=[0, 1, 0], length_mm=200.0, tool="part",
+        access.append(dict(name=f"bay {ang}: body out along +Y, front sheet off (service)", part=f"bay {ang} body envelope", dir=[0, 1, 0], length_mm=270.0, tool="part",
                            ignore=[f"bay {ang} receiver", f"bay {ang} cartridge", "sheetF"]))
     for n, m in arm_envelopes(R).items():
         fn = f"parts/{n.split(':')[1].strip().split(' ')[0]}_{len(parts)}.stl"; tm(m).export(os.path.join(od, fn))
