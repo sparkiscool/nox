@@ -212,14 +212,14 @@
   "hall_vs_blade_y": 1.5,
   "pads_on_flat_bottom": {
    "pad_x": [
-    16.5,
-    20.0
+    16.0,
+    18.2
    ],
    "frames": [
     15.5,
     19.0
    ],
-   "worst_offset_contact_mm": 1.5,
+   "worst_offset_contact_mm": 2.0,
    "note": "both packs have the latch frames x 15.5..19 (Scout) / ..26.5 (Overseer) at the tab line; the 1.0 recess chamfer to 16.5"
   }
  },
@@ -255,8 +255,8 @@
    "ok": false
   },
   "pads_MPa": {
-   "stall": 1.23,
-   "area_worst_mm2": 60.0
+   "stall": 0.93,
+   "area_worst_mm2": 80.0
   },
   "head_moment_Nm": {
    "pull": 5.19,

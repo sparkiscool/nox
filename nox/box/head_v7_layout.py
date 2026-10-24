@@ -36,7 +36,7 @@ WING = dict(x=(28.0, 46.5), u=(0.0, 30.0))
 # axle belt (Y <= 62), X out to the arm's free space (space map, >= 1.0): head A clear to X 28.5 the whole tail, head B beside the hub
 # and the detent at park; stops at u -11.5, clear of the near wheel
 TAIL_RIB = dict(   # (polygon X, u; Y range) per head; free space from the per-head space map (>= 1.0)
-    A=[([(31.5, -62.0), (39.6, -62.0), (39.6, -11.5), (29.5, -11.5), (29.5, -60.1)], (63.0, 68.76)),                  # over the belt (X + u >= -30.6)
+    A=[([(31.5, -62.0), (39.6, -62.0), (39.6, -11.5), (29.5, -11.5), (29.5, -59.9)], (63.0, 68.76)),                  # over the belt (X + u >= -30.4)
        ([(29.5, -37.0), (36.5, -40.5), (39.6, -40.5), (39.6, -11.5), (29.5, -11.5)], (68.75, 74.35)),    # up to the plate top (the detent arm at u -46 at park)
        ([(33.5, -31.0), (39.6, -31.0), (39.6, -11.5), (29.5, -11.5), (29.5, -25.0)], (59.25, 63.01))],                 # the root, under Y 63
     B=[([(37.5, -52.0), (39.6, -52.0), (39.6, -11.5), (32.5, -11.5), (32.5, -17.2), (35.5, -17.2), (35.5, -31.5), (37.5, -33.5)], (63.0, 68.76)),
