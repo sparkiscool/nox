@@ -29,36 +29,17 @@ WIRE_DU, WIRE_D = 8.0, 4.5                                    # as v5: Ø4.5 at 
 AXLE_R = 2.75                                                 # M5 clearance Ø5.5
 GUSSET = dict(x=(35.0, WEB_X[0]), y=(74.5, PLATE_Y[0]))       # generated stiffener room on the web's inner face: wheels end X 34 (+1),
                                                               # the detent arm tops out at Y 74.1 (B side, mirrored)
-M1 = 1.0
-
-def rack_u(x_root, x_tip, pitch_x, y0, y1, u0, u1, m=M1):
-    """m1 teeth along u on the +X face of the web: pitch line at pitch_x, root at x_root (pitch - 1.25 m), tips at x_tip (pitch + m);
-    20 deg flanks, tooth 0.2 thinner than half the pitch (backlash, as the gripper racks)."""
-    p = math.pi * m; t_p = p / 2 - 0.2; k = math.tan(math.radians(20))
-    def w(x): return t_p + 2 * (pitch_x - x) * k
-    teeth = None; u = u0 + p / 2
-    while u < u1 - p / 2 + 1e-9:
-        pts = [[x, y, u + s * w(x) / 2] for x in (x_root - 0.01, x_tip) for y in (y0, y1) for s in (-1, 1)]
-        t = hull(pts); teeth = t if teeth is None else teeth + t
-        u += p
-    return teeth
-
 def carriage():
     """drawn carriage of head A (plate + eccentric boss + wing + web with teeth) and its cuts (axle bores, bush bore, keep-outs)"""
     y0, y1 = PLATE_Y
-    plate = box(*PLATE_X, y0, y1, *PLATE_U) + cylY(ECC["x"], ECC["u"], y0, y1, ECC["plate_boss_r"], 64)
-    plate = plate.hull() if False else plate
-    wing = box(*WING_X, y0, y1, *WING_U)
-    xr = RACK_PITCH_X - 1.25 * M1
-    web = box(WEB_X[0], WEB_X[1], RACK_TEETH_Y[1], WEB_Y[1] + 0.01, *WEB_U) + box(WEB_X[0], xr, WEB_Y[0], RACK_TEETH_Y[1] + 0.01, *WEB_U)
-    teeth = rack_u(xr, RACK_PITCH_X + M1, RACK_PITCH_X, WEB_Y[0], RACK_TEETH_Y[1], *WEB_U)
-    drawn = plate + wing + web + teeth
-    bk = V.PIN_BOSS_R + 1.0                                     # pinion boss (Y 56.5..64) + 1: the teeth tips over it start 1 higher
-    drawn -= box(V.PIN_X - bk, WEB_X[1] + 1, WEB_Y[0] - 1, V.PIN_BOSS_Y[1] + 1.0, WEB_U[0] - 1, WEB_U[1] + 1)
+    import arm_v5_cad as V5C                                     # the arm-mechanism worker's carriage (one source for the head and its sweep)
+    K = V5C.carriage("A", rack_teeth=True)
+    drawn = K["printed"]                                         # plate + eccentric boss + wing + rack web with m1 teeth, axle / bush bores
     cuts = None
     for x, u in WHEELS:
         if abs(x - ECC["x"]) < 1e-6 and abs(u - ECC["u"]) < 1e-6:
-            c = cylY(x, u, y0 - 1, y1 + 0.01, ECC["bore_in_plate_r"], 64) + cylY(x, u, *ECC_KEEP["y"], ECC_KEEP["r"], 64)
+            c = cylY(x, u, y0 - 1, y1 + 0.01, ECC["bore_in_plate_r"], 64) + cylY(x, u, *ECC_KEEP["y"], ECC_KEEP["r"], 64) + \
+                cylY(x, u, ECC["flange_y"][1] - 0.01, AXLE_KEEP["y"][1] + ECC["flange_y"][1] - y1, AXLE_KEEP["r"], 48)   # bush hex (13 AF wrench) + the bolt head on it
         else:
             c = cylY(x, u, y0 - 1, y1 + 0.01, AXLE_R, 32) + cylY(x, u, *AXLE_KEEP["y"], AXLE_KEEP["r"], 48)
         cuts = c if cuts is None else cuts + c
@@ -68,7 +49,7 @@ def carriage():
     fx = WIRE_X + WIRE_D / 2 + 0.75
     fin = box(fx, fx + 2.0, y1 - 0.01, y1 + 5.0, WIRE_DU - 4.0, WIRE_DU + 4.0)
     fin -= box(fx - 0.5, fx + 2.5, y1 + 1.0, y1 + 1.0 + zw, WIRE_DU - zl / 2, WIRE_DU + zl / 2)
-    return dict(plate=plate, wing=wing, web=web, teeth=teeth, drawn=drawn + fin, fin=fin, cuts=cuts, wire=wire)
+    return dict(printed=drawn, drawn=drawn + fin, fin=fin, cuts=cuts, wire=wire)
 
 def head_env(y0, y1):
     """v4 / v5 envelope rule (arm_cad.head_env_region) from the plate top up: park bisector, r 98.5 at the drone outside the own mouth,
