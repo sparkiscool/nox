@@ -15,14 +15,12 @@ Visuals:
 System file: `nox/box/box_structure_v2.assembly.json` (= `concept.assembly.json` of A), with both drone-insert keep-outs as parts so the catch and arm can check against them.
 
 ## Concept check (docs/generative.md rule 0)
-- System line (`concept_check.json`): System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 980.6 mm³ (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 82.1 L (E), extents 418 x 418 x 470 mm (E), mass 18594 g (E), CG [4.0, 149.3, -35.8] (E, no cg_ref), access 18/18 clear
+- System line (`concept_check.json`): System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.0 mm³ (E) (bay -30 body envelope/bay -60 receiver), bbox 80 L (E), extents 418 x 407 x 470 mm (E), mass 18472 g (E), CG [4.0, 148.4, -36.9] (E, no cg_ref), access 18/18 clear
 - **Arm:** hub, motors, parked heads, rail disc and both insert lanes clear every bay envelope, the v1 mast and the PSU (0 mm³, M).
 - **Access 18 / 18:** every cartridge comes out to park along its install axis; every bay body comes out along +Y with the front sheet off (the service door, DEFAULT).
-- **Fit FAILs left, both in the catch's scope:**
-  - Overseer drone set vs the funnel panels v7, 980.6 mm³ (E): funnel v8 (opening 191 x 168, C) clears it.
-  - −Y plain panel bottom vs the insert lanes: carriage 123.5 + grabber 512.3 mm³ (E, panels v7; lanes from arm PR 79 70c3c33: carriage X −35..47.5, Y 53.75..73.75, r ≤ 159; head + grabber X ±47.5, Y 73.75..217, r 111.5..159.6, C). With v8 the grabber clears and the carriage still meets the bottom lip, 492.6 mm³ (E, `v8_lane_check.json`: the −Y face moved out 11.5, no v8 file yet). Hub decision: the catch notches the lip in panel v9 plain (X ±35, Y 53.75..73.75 = the lane, to r 159, C; the hub said 54..73). Re-measure when v8 / v9 land.
-- **Option A (DEFAULT):** alternating bays at R 113 (C): 418 x 418 x 470 mm, 82.1 L (E).
-- **Option B:** Overseer at the bottom 4, receivers clipped: 406 x 418 x 476 mm, 80.8 L (−1.3 L) (E); unclipped (B0) neighbouring receivers overlap 981.7 mm³ (E), so B needs the clip.
-- **Option C:** bottom slots at R 128 (C): 434 x 418 x 506 mm, 91.8 L (E); the arm strokes change. C has no lane clash with v7 or v8 (`layout_R128_bottom/v8_lane_check.json`): the −Y lip clears without the v9 notch.
-- A wins: B saves 1.3 L (2 %, E) and lowers the CG (Z −53.6 vs −35.8, E), but needs a new receiver clip on the latch and runs every Overseer swap at the bottom; C avoids the panel notch but costs 9.7 L (E) and new arm strokes, where the notch is one panel edit (hub).
+- **Fit PASS with funnel v8 plain** (catch PR 81, the catch file now in W, loaded as is): the Overseer drone set passes the 191 x 168 opening and both drone-insert lanes (arm PR 79 70c3c33: carriage X −35..47.5, Y 53.75..73.75, r ≤ 159; head + grabber X ±47.5, Y 73.75..217, r 111.5..159.6, C) clear the −Y plain panel: its raised bottom edge is at r ≥ 159.61 over the carriage band (0.61 over the lane, C on M). `v8_lane_check.json` reads 0 mm³ (M). The panel v9 notch is no longer needed for fit. With panels v7 it read 980.6 (drone set) and 123.5 / 512.3 mm³ (lanes) (E).
+- **Option A (DEFAULT):** alternating bays at R 113 (C): 418 x 407 x 470 mm, 80.0 L (E); v8 needs no extra Y room (its opening grows by raising the panel bottom).
+- **Option B:** Overseer at the bottom 4, receivers clipped: 406 x 407 x 476 mm, 78.7 L (−1.3 L) (E); unclipped (B0) neighbouring receivers overlap 981.7 mm³ (E), so B needs the clip.
+- **Option C:** bottom slots at R 128 (C): 434 x 407 x 506 mm, 89.4 L (E); the arm strokes change.
+- A wins: B saves 1.3 L (2 %, E) and lowers the CG (Z −54.8 vs −36.9, E), but needs a new receiver clip on the latch and runs every Overseer swap at the bottom; C costs 9.4 L (E) and new arm strokes for nothing now that v8 clears the lanes.
 - Next: the coarse system topology over the joined envelope (`runs/box_system/v2/topo/`, worker), then the cut requirements.
