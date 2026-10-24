@@ -1,0 +1,22 @@
+=== box_hub_v6: h 1.5, generated 40.0 cm3, min member 3.2 mm, cores 4
+box_hub_v6: grid (128, 48, 128) h 1.5 = 786,432 cells; design 224,357 (757.2 cm3), drawn 31,047, void 531,028
+  support default: 4686 cells, 9913 nodes
+  82 system cases from runs/arm/v7/system.json + the detent springs
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+box_hub_v6: grid (64, 32, 64) h 3.0 = 131,072 cells; design 28,734 (775.8 cm3), drawn 4,322, void 98,016
+  support default: 649 cells, 2004 nodes
+  82 system cases from runs/arm/v7/system.json + the detent springs
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (114.59 cm3); 2.11 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.054 of 28,812 design cells
+layout: 5 drawn bodies (4,244 cells), held solid in every realization; eroded filter: masked
+layout: 83 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (64, 32, 64) = 131,072 elements, 123,150 active dofs; backend direct (direct estimate 1.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0579 (dil 0.0707 g +0.070) grey  7.5% ch 0.100 worst tie b1 mz 1.92e+04 10.0s
+it   2 beta    1 J   0.6484 vol 0.0480 (dil 0.0577 g -0.127) grey 24.3% ch 0.100 worst tie b1 fz 1.53e+03 11.7s
+it   3 beta    1 J   0.2344 vol 0.0529 (dil 0.0629 g -0.048) grey 23.3% ch 0.100 worst tie b5 fx 552 9.9s
+it   4 beta    1 J   0.1732 vol 0.0538 (dil 0.0636 g -0.038) grey 21.1% ch 0.100 worst tie b1 fz 457 8.2s
+it   5 beta    1 J   0.3277 vol 0.0526 (dil 0.0620 g -0.062) grey 20.1% ch 0.100 worst tie b5 fx 836 6.2s
+it   6 beta    1 J   0.1791 vol 0.0516 (dil 0.0610 g -0.068) grey 20.2% ch 0.100 worst tie b1 fz 469 5.9s
+ 20.1% ch 0.100 worst tie b5 fx 836 6.2s
+it   6 beta    1 J   0.1791 vol 0.0516 (dil 0.0610 g -0.068) grey 20.2% ch 0.100 worst tie b1 fz 469 5.9s
+STOPPED by coordinator: detent v6 moves the tower
