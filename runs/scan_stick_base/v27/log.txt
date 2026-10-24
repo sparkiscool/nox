@@ -69,3 +69,18 @@ it  57 beta    4 J   0.9146 vol 0.0762 (dil 0.1410 g -0.004) grey  6.4% ch 0.100
 it  58 beta    4 J   0.8877 vol 0.0770 (dil 0.1411 g -0.002) grey  5.9% ch 0.100 worst cage bump top 100 N (spine s 5.13 2.4s
 it  59 beta    4 J   0.8819 vol 0.0774 (dil 0.1413 g -0.001) grey  5.9% ch 0.100 worst cage bump top 100 N (spine s 5.08 2.2s
 it  60 beta    4 J   0.8793 vol 0.0775 (dil 0.1414 g -0.001) grey  5.8% ch 0.100 worst cage bump top 100 N (spine s 5.07 2.0s
+it  61 beta    4 J   0.8774 vol 0.0776 (dil 0.1414 g +0.010) grey  5.8% ch 0.100 worst cage bump top 100 N (spine s 5.06 2.5s
+it  62 beta    4 J   0.8895 vol 0.0760 (dil 0.1398 g -0.002) grey  5.8% ch 0.100 worst cage bump top 100 N (spine s 5.18 2.0s
+layout: stopped (beta_stop) at it 62, beta 4, 149 s
+layout: beta 4 done: eroded design 2 bodies, main 99.9%; drawn bodies outside the main body: 1
+coarse stage done: 62 iterations, 199 s, peak 1.226236 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (309.15 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.081 of 108,026 design cells
+layout: WARNING nearly mirrored in y (0.4% of passive cells differ): no symmetry
+layout: 1 drawn bodies (38,644 cells), held solid in every realization; eroded filter: masked
+layout: 34 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 120) = 368,640 elements, 503,298 active dofs; backend direct (direct estimate 7.0 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 64) grid (h 4.0): mean x 0.077
+it   1 beta    4 J  10.0000 vol 0.0877 (dil 0.1480 g +0.082) grey 11.7% ch 0.100 worst cage bump top 100 N (spine s 7.33 46.0s
+it   2 beta    4 J  12.0785 vol 0.0828 (dil 0.1439 g +0.053) grey 11.9% ch 0.100 worst cage bump top 100 N (spine s 9.24 39.6s
