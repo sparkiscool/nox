@@ -2,8 +2,8 @@
 """Evaluate a saved list_sessions result against the sweep rules (docs/sessions.md Sweep).
 
 python3 tools/sweep_eval.py <list_sessions output file> [self_session_id]
-Prints one line per non-archived nox session: ARCHIVE (all sweep conditions hold), REPORT (failed / blocked, or idle
-over 24 h with unmerged work or an open PR) or keep, with age, bucket, tags and each branch's unmerged count.
+Prints one line per non-archived nox session: ARCHIVE (all sweep conditions hold), REPORT (failed / blocked, idle
+over 24 h with unmerged work or an open PR, or a heavy-run session on opus: docs/sessions.md Usage) or keep, with age, bucket, tags and each branch's unmerged count.
 Only reads; archiving is done with archive_session by the session running the sweep.
 """
 import datetime, json, subprocess, sys
@@ -38,7 +38,10 @@ for x in d["ccr"]["data"]:
             info.append(f"{b}:+{n}{' PR' if b in prs else ''}")
         else:
             info.append(f"{b}:gone")
-    if bucket in ("FAILED", "BLOCKED") or (age > 24 and unmerged):
+    opus_run = "opus" in (sc.get("model") or "") and " run" in (x.get("title") or "").lower()
+    if opus_run:
+        info.append("opus-run (heavy runs take model sonnet)")
+    if bucket in ("FAILED", "BLOCKED") or (age > 24 and unmerged) or opus_run:
         verdict = "REPORT"
     elif status != "RUNNING" and age > 6 and bucket == "COMPLETED" and not unmerged and "keep" not in tags:
         verdict = "ARCHIVE"   # live-child check: the sweeping session confirms it controls no non-archived session
