@@ -93,7 +93,10 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | M3 x 10 + M3 x 5.7 heat-set inserts | 16 + 16 | hook latch housings on the panel v7 bosses | on hand (CHECK count) | M: inserts |
 | A3144 hall switch + Ø3 x 2 magnet | 4 + 4 | hook latch: plunger fully out | to buy (A3144 pack priced below; Ø3 x 2 magnets CHECK) | `box/box-hook-latch.md` |
 | BAT54 Schottky + 5 V TVS ≤ 1 µA at 3.3 V (ESD9L5.0 class, CHECK) + SMBJ15A + 1 kΩ / 100 kΩ resistors | 1 + 1 + 1 + 1 / 1 | seat sense on GPIO 24 (replaces the KW11) | to buy | `box/box-electronics.md` I/O |
-| Spring pins, ~1.5 A each, travel 7.5 (keep-alive concept; model the catch's) | 4 (2 per plain ±x face, panel v9 plain) | keep-alive 13.0 V (replaces the pogo post) | to buy (CHECK model, Q20) | `box/box-electronics.md` |
+| Keep-alive probe pins (DIY, panel v9 plain, `box/box-funnel.md` v9 plain): brass rod Ø3.0 (C360) cut to 4 x 36.5, tip domed + brass tube 4.0 OD / 3.0 ID cut to 4 x 3.0, soldered 14.0 from the tip | 1 rod ≥ 300 + 1 tube ≥ 300 | keep-alive 13.0 V, 2 per plain ±x face (replaces the pogo post) | to buy | `box/box-funnel.md` v9 plain; dimensions G Keep-alive probes |
+| Compression spring, music wire, OD 4.0 x wire 0.25 x free length 25, ~16 active coils, rate ~0.045 N/mm (E): reads 0.54 N (55 g) at 13.0 long, 0.88 N (90 g) at 5.5 | 4 (+2 spare; an OD 4 / 0.25 wire assortment, rate checked on a kitchen scale) | keep-alive probe springs | to buy | dimensions G Keep-alive probes |
+| Silicone wire 20 AWG, red (+x, B+) / black (−x, B−) | 4 x 0.15 m (one per pin, joined at the panel's 3.5 mm bullet) | keep-alive probe leads | to buy (or from the 20 AWG row below) | `box/box-electronics.md` |
+| M2 x 6 pan head self-tapping (PT / plastite) + 2.5 mm cable ties | 2 + 4 | probe caps; lead strain relief in the boss groove | to buy (CHECK on hand) | `box/box-funnel.md` v9 plain |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |
 | Clear sheet, 3.0 (enclosure) | 4 | stand v7 walls | CHECK | box-stand.md |
 | Brass heat-set inserts M3 / M5 | as drawn | printed-part threads | on hand | M: inserts |
@@ -138,7 +141,9 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 ## Box: printed parts (state only in `nox/current-parts.md`)
 | Part | Qty | Print file |
 |---|---|---|
-| Funnel panels A + B | 8 (A / B split in `box-funnel.md`) | not in `print/` |
+| Funnel panels A + B v7 (seated ±y faces) | 2 + 2 | `print/box_funnel_panel_A_v7.stl`, `print/box_funnel_panel_B_v7.stl` |
+| Funnel panels v9 plain (±x faces): A px, B px, A nx, B nx | 1 each | `print/box_funnel_panel_{A,B}_v9_plain_{px,nx}.stl` |
+| Funnel probe cap v9 plain | 2 | `print/box_funnel_probe_cap_v9_plain.stl` |
 | Funnel hub + corner blocks | 1 + CHECK | design |
 | Bay module v4i | 2 | `print/box_baymod_v4i.stl` |
 | Hub v5 | 1 | `print/box_hub_v5.stl` |

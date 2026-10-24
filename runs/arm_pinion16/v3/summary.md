@@ -8,6 +8,6 @@
 - 3.7 g (M), extents 17.8 x 17.8 x 18.2, printed with the boss face down: bed 143 mm², overhang 44 mm² (print_orient, M).
 - solid_check (`python3 nox/solid_check.py runs/arm_pinion16/v3/box_arm_pinion16_v3.stl`): **PASS** (bodies 1, no necks, no thin walls).
 - Preview: `preview_box_arm_pinion16_v3.png`.
-- Mass 3.7 g (M) vs pinion v2 3.1 g (M): +0.6 g buys the 13.5 face (Lewis at the drone insert 0.51 → 0.49 on the rack tail). No budget_g slot for the pinion in "System box swap: arm" (soft; v2's 3.1 g the reference).
+- Mass 3.7 g (M) vs pinion v2 3.1 g (M): +0.6 g buys the 13.5 face (on the rack tail at the drone insert 9.5 → 10.25 engaged: Lewis ~0.52 → 0.49, E). No budget_g slot for the pinion in "System box swap: arm" (soft; v2's 3.1 g the reference).
 
 System: box swap arm v7, assembled worst index 0.49 in the Overseer insert at the drone 60 N (this pinion on the rack tail; was v2's 0.44 in the Scout drone insert, round 2), fit 0.0 mm³ at 10 poses (M), mass 3.7 g (M), CG on the motor shaft (C); sweeps 0 overlaps with the v3 tooth band on both cycles (C).
