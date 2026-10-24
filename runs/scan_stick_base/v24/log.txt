@@ -104,3 +104,7 @@ it  33 beta    8 J   8.1911 vol 0.0798 (dil 0.1479 g -0.001) grey  4.0% ch 0.100
 it  34 beta    8 J   8.1516 vol 0.0798 (dil 0.1479 g -0.001) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 64.1 38.9s
 it  35 beta    8 J   8.1160 vol 0.0798 (dil 0.1479 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 63.8 38.9s
 it  36 beta    8 J   8.0819 vol 0.0798 (dil 0.1479 g +0.003) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 63.5 38.2s
+it  37 beta    8 J   8.0578 vol 0.0794 (dil 0.1474 g -0.001) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 63.3 40.3s
+it  38 beta    8 J   8.0092 vol 0.0794 (dil 0.1475 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 62.9 40.1s
+it  39 beta    8 J   7.9706 vol 0.0794 (dil 0.1475 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 62.5 39.4s
+it  40 beta    8 J   7.9361 vol 0.0794 (dil 0.1475 g -0.000) grey  4.0% ch 0.100 worst cage bump front 100 N (modul 62.2 39.1s
