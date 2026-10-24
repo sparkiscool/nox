@@ -74,3 +74,21 @@ it  37 beta    2 J   0.4380 vol 0.0364 (dil 0.0640 g -0.004) grey 22.4% ch 0.100
 it  38 beta    2 J   0.4220 vol 0.0365 (dil 0.0640 g -0.004) grey 22.3% ch 0.100 worst misuse: knocked over onto +X 833 5.9s
 it  39 beta    2 J   0.4053 vol 0.0365 (dil 0.0639 g -0.005) grey 22.3% ch 0.100 worst misuse: knocked over onto +X 802 5.7s
 it  40 beta    2 J   0.3873 vol 0.0366 (dil 0.0640 g -0.005) grey 22.2% ch 0.100 worst misuse: knocked over onto +X 766 5.8s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  41 beta    2 J   0.3186 vol 0.0366 (dil 0.0639 g +0.001) grey 22.1% ch 0.100 worst misuse: knocked over onto +X 607 6.2s
+it  42 beta    2 J   0.2805 vol 0.0364 (dil 0.0635 g -0.005) grey 21.9% ch 0.100 worst misuse: knocked over onto +X 524 6.6s
+layout: beta 2 done: eroded design 27 bodies, main 92.0%; drawn bodies outside the main body: 22
+it  43 beta    4 J   3.4147 vol 0.0199 (dil 0.0754 g -0.302) grey  3.9% ch 0.100 worst XT60 insert at the -90 bay 6 6.78e+03 7.4s
+it  44 beta    4 J   0.8491 vol 0.0254 (dil 0.0887 g -0.179) grey  5.1% ch 0.100 worst XT60 insert at the -90 bay 6 1.69e+03 5.4s
+it  45 beta    4 J   0.2599 vol 0.0328 (dil 0.1039 g -0.038) grey  6.9% ch 0.100 worst misuse: knocked over onto +X 501 6.0s
+it  46 beta    4 J   0.1987 vol 0.0373 (dil 0.1054 g -0.023) grey  7.3% ch 0.100 worst misuse: knocked over onto +X 397 5.7s
+it  47 beta    4 J   0.1496 vol 0.0405 (dil 0.1062 g -0.016) grey  6.8% ch 0.100 worst misuse: knocked over onto +X 295 6.0s
+it  48 beta    4 J   0.1150 vol 0.0429 (dil 0.1067 g -0.011) grey  6.5% ch 0.100 worst misuse: knocked over onto +X 218 7.3s
+it  49 beta    4 J   0.0977 vol 0.0442 (dil 0.1069 g -0.010) grey  6.3% ch 0.100 worst misuse: knocked over onto +X 174 5.8s
+it  50 beta    4 J   0.0879 vol 0.0448 (dil 0.1070 g -0.009) grey  6.2% ch 0.100 worst misuse: knocked over onto +X 149 8.5s
