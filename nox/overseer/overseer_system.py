@@ -236,7 +236,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         m = LATCH_MESH[k].copy(); v = m.vertices
         m.vertices = np.stack([-dc + (v[:, 2] - LATCH_META["Z_T"]), v[:, 0], v[:, 1] + CART_BOT], 1); return m
     g["pack"], g["cart"] = latch_part("pack"), latch_part("cartridge")
-    g["receiver"] = trimesh.util.concatenate([latch_part("receiver"), latch_part("receiver_lid"), latch_part("xt60e1m")])
+    g["receiver"] = trimesh.util.concatenate([latch_part("receiver"), latch_part("receiver_lid")])   # printed latch frame (structure, like the sled)
+    g["xt60"] = latch_part("xt60e1m")                                          # the contact inside it (protected)
     g["swap_cg"] = np.array([-dc - SWAP_FWD, LATCH_META["SWAP_CG"][0], LATCH_META["SWAP_CG"][1] + CART_BOT])
     PB = CART_BOT                                                              # the set's flat bottom (was the pack bottom)
     RT = CART_BOT + LATCH_META["Y_M"]                                         # receiver mount plane (its top)
@@ -255,7 +256,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
     g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.7, -2.2)
     g["runners"] = [union([box(-dc - 72, -dc + 72, 62 if sy > 0 else -74, 74 if sy > 0 else -62, PB - 17, PB + 12),     # sleeve on the skid rail
-                           box(-dc - 72, -dc + 72, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 18)])     # outer lip: shields the camera board / flow window edge
+                           box(-dc - 72, -dc + 72, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 26)])     # outer lip: shields the camera board / flow window edge (to 10 over the board: a side edge 15..60 deg up meets it first)
                     for sy in (1, -1)]
     g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 77, sy * 66) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     # keep-alive pads (G (6)): one per ±x lower-ring face, 2.0 off the face at the probe height, over the probe pair
@@ -317,9 +318,11 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
              cam_bot=float(min(cb[0][2], g["cam_bracket"].bounds[0][2])), nose_y=float(max(co.NOSE_Y, np.abs(cb[:, 1]).max() + co.NOSE_GAP)),
              obstacles=[dict(c=[float(v) for v in cm_["c"] + cm_["fwd"] * xc_], fwd=[float(v) for v in cm_["fwd"]], left=[float(v) for v in cm_["left"]],
                              half=hf_) for cm_ in g["cams"] for xc_, hf_ in ((-1.75, [2.75, 20.0, 20.0]), (5.0, [4.0, 6.0, 6.0]))]
-                       + [dict(c=[2.5, 0.0, 22.25], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[98.0, 60.2, 24.4], skip_fixed=True)],   # cameras (plate + board, lens) and the plate sandwich (C)
+                       + [dict(c=[2.5, 0.0, 22.25], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[98.0, 60.2, 24.4], skip_fixed=True, skip_nodes=["arm"]),   # cameras (plate + board, lens) and the plate sandwich (C)
+                          dict(c=[float(v) for v in B + A * 19.5], fwd=[float(v) for v in A], left=[0.0, 1.0, 0.0], half=[19.5, 37.5, 37.5], skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # the L2 body (75 x 75 x 39, M)
+                          dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"])],   # and its dome (vertices)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
-             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 40.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8"}, seat_dz=float(SEAT_DZ),
+             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 40.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose_x": "t8"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
@@ -580,6 +583,13 @@ for it_fin in range(5):                                            # final sizes
     if fr_["violation"] == 0: break
     new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, iters=0, init=CAGE_SIZES)   # stiffen / strengthen only from the settled sizes
     if not ok_: new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES)  # else a full warm-started sizing
+    if not ok_ and os.environ.get("SYS_SEARCH", "1") == "1":           # else every topology again on this geometry
+        from multiprocessing import Pool
+        with Pool(4) as pool:
+            table_, best_, abl_ = co.search(g["P"], co.F_L2_MIN, pool)
+        say(f"   final search: {sum(t['feasible'] for t in table_)} of {len(table_)} topologies feasible"
+            + (f"; best {best_[2]['mass_g']:.0f} g: " + " ".join(k for k, v in best_[0].items() if v and k not in co.FIXED_ON) if best_ else ""))
+        if best_: CAGE_TOPO, new_, ok_ = best_[0], best_[1], True
     if not ok_: say("   touch-up sizing infeasible: the frame line below reports it"); break
     CAGE_SIZES = new_
 tot, cg = cg_of(g)                                                    # the layout drawn with the final sizes (the checks below read this one)
@@ -741,13 +751,13 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
                           ["arms", "apex + hubs", round(g["hub_arm_mm3"], 1)],             # front hub blocks seated on the front arm roots,
-                          ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5],
+                          ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "receiver XT60", round(abs(g["receiver"].intersection(g["xt60"]).volume) * 1.05 + 1.0, 1)],   # the XT60 panel mount in its receiver pocket
                           ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
-                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=105.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
+                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=105.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
-           access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver"])], parts=[
+           access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver", "receiver XT60"])], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
@@ -755,7 +765,8 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
     dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
     dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="P", swap=True),
     dict(name="cartridge", trimesh=g["cart"], role="protected", mass_g=round(SWAP_G - 650, 1), tag="M", swap=True),
-    dict(name="receiver", trimesh=g["receiver"], role="protected", mass_g=RECEIVER_G, tag="E"),
+    dict(name="receiver", trimesh=g["receiver"], role="structure", mass_g=RECEIVER_G - 10, tag="E"),   # printed latch frame: its ends sit at the pit walls (0.7 to the opening), no cage member fits past them (DEFAULT, alt protected: needs a shorter receiver, latch session)
+    dict(name="receiver XT60", trimesh=g["xt60"], role="protected", mass_g=10, tag="E"),
     dict(name="electronics", trimesh=trimesh.util.concatenate([FC, PI, PDB, UBEC, BUCK, RX]), role="protected", mass_g=110 + 80, tag="E"),
     dict(name="down cam + flow", trimesh=trimesh.util.concatenate([g["down_cam"], g["flow"]]), role="protected", mass_g=17, tag="E"),
     dict(name="arms", trimesh=trimesh.util.concatenate(g["arms"]), role="structure", mass_g=sum(abs(a.volume) for a in g["arms"]) * 1.27e-3 * 0.45 + 100, tag="E"),

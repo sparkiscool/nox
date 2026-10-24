@@ -1,18 +1,18 @@
 {
  "name": "Overseer",
  "machine": "overseer",
- "note": "System v3 from nox/overseer/overseer_system.py (layout A: pack on the thrust axis, motors 159.4 ahead of the plate centre, L2 base (453.0, 0, 42) 15 deg below +x, wheels z -52; cage runs/overseer_cage/v3 re-sized on this geometry). Drone frame: x fwd, y left, z up, z 0 bottom plate top. Parts are grouped as the system pass draws them. Left out (no pose yet): ESCs as bodies (25 g each in the arm masses), wheel pins, pogo pads, receiver and latch, scan stick mount (open: its chat sets the mount; loads in dimensions O System Overseer).",
- "cg_ref": [159.3831490711352, 0.0, 0.0],
+ "note": "System v3 from nox/overseer/overseer_system.py (layout A: pack on the thrust axis, motors 193.6 ahead of the plate centre, L2 base (489.6, 0, 42) 15 deg below +x, wheels z -52; cage runs/overseer_cage/v3 re-sized on this geometry). Drone frame: x fwd, y left, z up, z 0 bottom plate top. Parts are grouped as the system pass draws them. Left out (no pose yet): ESCs as bodies (25 g each in the arm masses), wheel pins, pogo pads, receiver and latch, scan stick mount (open: its chat sets the mount; loads in dimensions O System Overseer).",
+ "cg_ref": [193.5613520310694, 0.0, 0.0],
  "thrust_axis": [0, 0, 1],
  "cg_tol_mm": 3.0,
  "cage_margin_mm": 3.0,
  "n_dirs": 1500,
  "openings": [{"part": "L2", "axis": [0.9659258262890683, 0.0, -0.25881904510252085], "half_angle_deg": 90.0, "min_mm": 0.0, "skip_probes": true}, {"part": "pack", "axis": [0, 0, -1], "half_angle_deg": 105.0, "min_mm": 0.0, "skip_probes": true}, {"part": "cartridge", "axis": [0, 0, -1], "half_angle_deg": 105.0, "min_mm": 0.0, "skip_probes": true}, {"part": "receiver", "axis": [0, 0, -1], "half_angle_deg": 105.0, "min_mm": 0.0, "skip_probes": true}, {"part": "down cam + flow", "axis": [0, 0, -1], "half_angle_deg": 90.0, "min_mm": 0.0, "skip_probes": true}],
- "contact_pairs": [["cage", "arms", 19226.5], ["cage", "sled + pods + deck", 1497.1], ["cage", "apex + hubs", 24982.0], ["plates", "apex + hubs", 54.0], ["arms", "apex + hubs", 7.3], ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "sled + pods + deck", 75.5], ["apex + hubs", "cam brackets", 185.5]],
+ "contact_pairs": [["cage", "arms", 12063.7], ["cage", "sled + pods + deck", 5471.2], ["cage", "apex + hubs", 40972.8], ["plates", "apex + hubs", 54.0], ["arms", "apex + hubs", 7.3], ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "sled + pods + deck", 75.5], ["apex + hubs", "cam brackets", 185.5]],
  "guard_offsets": {"guard rods to prop disks, plan (G)": 12.0, "rods under / over the swept band (G)": 12.0},
  "access": [{"name": "pack swap", "part": "cartridge", "dir": [0, 0, -1], "length_mm": 80, "tool": "part", "ignore": ["pack", "receiver"]}],
  "parts": [
-  {"name": "cage", "role": "cage", "mesh": "runs/overseer_assembly/v3/cage.stl", "mass_g": 688.0262356998553, "cg": [174.73659079658572, 2.694908605579372e-15, 32.18206317672153], "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
+  {"name": "cage", "role": "cage", "mesh": "runs/overseer_assembly/v3/cage.stl", "mass_g": 1032.2673843786797, "cg": [232.64411246078674, 5.929861581827412e-15, 42.34976100627827], "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "props", "role": "protected", "mesh": "runs/overseer_assembly/v3/props.stl", "mass_g": 40, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "motors", "role": "protected", "mesh": "runs/overseer_assembly/v3/motors.stl", "mass_g": 324, "tag": "P", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "L2", "role": "protected", "mesh": "runs/overseer_assembly/v3/l2.stl", "mass_g": 230, "tag": "P", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
@@ -22,10 +22,10 @@
   {"name": "receiver", "role": "protected", "mesh": "runs/overseer_assembly/v3/receiver.stl", "mass_g": 190.0, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "electronics", "role": "protected", "mesh": "runs/overseer_assembly/v3/electronics.stl", "mass_g": 190, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "down cam + flow", "role": "protected", "mesh": "runs/overseer_assembly/v3/down_cam_flow.stl", "mass_g": 17, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
-  {"name": "arms", "role": "structure", "mesh": "runs/overseer_assembly/v3/arms.stl", "mass_g": 665.2296505464317, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
+  {"name": "arms", "role": "structure", "mesh": "runs/overseer_assembly/v3/arms.stl", "mass_g": 732.1458308779241, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "plates", "role": "structure", "mesh": "runs/overseer_assembly/v3/plates.stl", "mass_g": 84, "tag": "C", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
-  {"name": "sled + pods + deck", "role": "structure", "mesh": "runs/overseer_assembly/v3/sled_pods_deck.stl", "mass_g": 102.43860640000001, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
-  {"name": "apex + hubs", "role": "structure", "mesh": "runs/overseer_assembly/v3/apex_hubs.stl", "mass_g": 45.052798887738874, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
+  {"name": "sled + pods + deck", "role": "structure", "mesh": "runs/overseer_assembly/v3/sled_pods_deck.stl", "mass_g": 101.42069632000008, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
+  {"name": "apex + hubs", "role": "structure", "mesh": "runs/overseer_assembly/v3/apex_hubs.stl", "mass_g": 46.588990887738824, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"},
   {"name": "cam brackets", "role": "structure", "mesh": "runs/overseer_assembly/v3/cam_brackets.stl", "mass_g": 6.1, "tag": "E", "owner": "overseer", "version": "system v3 (layout A)", "source": "nox/overseer/overseer_system.py"}
  ]
 }

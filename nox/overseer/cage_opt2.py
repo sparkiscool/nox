@@ -45,7 +45,7 @@ GUARD_GAP, ROD_R3 = 12.0, 1.5
 ROD_RMAX = 10.0                                             # guard offset for the largest catalog rod (20/18 tube), so any size keeps 12
 RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - ROD_RMAX, PROP_Z + BLADE + 12.0 + ROD_RMAX   # 55 / 109: spokes and spiders keep 12 off the swept band with a 20 tube
 Z_TOP = 124.0                                               # top node over the thrust centre (DEFAULT)
-NOSE_Y, NOSE_GAP = 58.0, 3.0 + 2.0                          # nose box half width; ahead of the L2 / camera by 3 + rod
+NOSE_Y, NOSE_GAP = 58.0, 3.0 + 4.0                          # nose box half width; ahead of the L2 / camera by 3 + rod (nose plane rods ≤ 8 od: cap group nose_x t8)
 F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 288.5
 C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 489.6
 L2_TILT = 105.0
@@ -558,10 +558,15 @@ def motor_clear(a, b, od, motors):
 
 
 def obstacle_clear(a, b, od, obstacles):
-    """smallest clearance (mm) of a rod to the obstacle boxes {c, fwd, left, half} (the front cameras in their own frame)"""
+    """smallest clearance (mm) of a rod to the obstacle boxes {c, fwd, left, half} (the front cameras in their own frame)
+    and point sets {pts} (a curved surface's vertices, the L2 dome)"""
     if not obstacles: return np.inf
     t = np.linspace(0, 1, 100)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float)); c = np.inf
     for o in obstacles:
+        if "pts" in o:
+            P_ = np.asarray(o["pts"], float); ab = np.asarray(b, float) - np.asarray(a, float)
+            s_ = np.clip((P_ - a) @ ab / max(ab @ ab, 1e-9), 0, 1)
+            c = min(c, float(np.linalg.norm(P_ - (np.asarray(a, float) + s_[:, None] * ab), axis=1).min() - od / 2)); continue
         f, l = np.asarray(o["fwd"], float), np.asarray(o["left"], float); u = np.cross(f, l)
         d = q - np.asarray(o["c"], float); loc = np.stack([d @ f, d @ l, d @ u], 1)
         out = np.maximum(np.abs(loc) - np.asarray(o["half"], float), 0)
@@ -597,9 +602,12 @@ def wash_len(a, b, motors):
 
 
 def obstacles_for(m, e):
-    """the obstacles a rod must clear: all, except the hub box for a rod that ends in a hub (fixed) node"""
+    """the obstacles a rod must clear: all, except a box the rod is attached to: skip_fixed (a rod ending in a hub
+    node) and skip_nodes (name prefixes of the nodes on that body: arm roots on the plates, the L2 apex sockets)"""
     ends_fixed = e["a"] in m.fixed or e["b"] in m.fixed
-    return [o for o in (m.p.get("obstacles") or []) if not (o.get("skip_fixed") and ends_fixed)]
+    def attached(o):
+        return (o.get("skip_fixed") and ends_fixed) or any(n.startswith(tuple(o.get("skip_nodes", ()))) for n in (e["a"], e["b"]) if o.get("skip_nodes"))
+    return [o for o in (m.p.get("obstacles") or []) if not attached(o)]
 
 
 def guard_caps(m):
