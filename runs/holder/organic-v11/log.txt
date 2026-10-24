@@ -51,3 +51,37 @@ git push failed: error: RPC failed; HTTP 403 curl 22 The requested URL returned 
 To https://github.com/sparkiscool/nox
  ! [rejected]        topo/new-engine -> topo/new-engine (fetch first)
 error: failed to p
+=== holder: h 1.0, generated 5.4 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (3.30 cm3); 0.74 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.123 of 6,223 design cells
+layout: WARNING nearly mirrored in x (0.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: 8 drawn bodies (413 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (300 cells) count by their cover; 3 bodies tied to body 3
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts') + 18 gate ties + 24 held ties
+fem: grid (32, 24, 24) = 18,432 elements, 26,283 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/holder/organic-v11/coarse_ck.npz at it 70, beta 4
+it  71 beta    4 J   6.4771 vol 0.1270 (dil 0.2580 g +0.008) grey 27.2% ch 0.100 worst pad push 2.61e+03 2.5s
+layout: stopped (beta_stop) at it 71, beta 4, 3 s
+layout: beta 4 done: eroded design 15 bodies, main 34.2%; drawn bodies outside the main body: 6
+coarse stage done: 71 iterations, 7 s, peak 0.65162 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (3.52 cm3); 0.29 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.117 of 48,804 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (0.6% of passive cells differ): no symmetry
+layout: 8 drawn bodies (3,516 cells), held solid in every realization; eroded filter: masked
+layout: 28 load cases + 24 tie cases (4 bodies tied, 4 held by support 'bolts') + 0 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 32) = 98,304 elements, 183,174 active dofs; backend direct (direct estimate 1.8 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 24) grid (h 2.0): mean x 0.175
+it   1 beta    4 J  10.0000 vol 0.1106 (dil 0.2489 g -0.052) grey 27.2% ch 0.100 worst pad push 1.77e+04 21.4s
+it   2 beta    4 J   5.2508 vol 0.1179 (dil 0.2582 g -0.016) grey 28.1% ch 0.100 worst pad push 9.58e+03 20.7s
+it   3 beta    4 J   3.7597 vol 0.1215 (dil 0.2602 g -0.009) grey 28.2% ch 0.100 worst pad push 6.87e+03 20.8s
+it   4 beta    4 J   2.9800 vol 0.1241 (dil 0.2609 g -0.006) grey 28.2% ch 0.100 worst pad push 5.4e+03 22.3s
+it   5 beta    4 J   2.4707 vol 0.1263 (dil 0.2612 g -0.005) grey 28.1% ch 0.100 worst pad push 4.45e+03 22.3s
+it   6 beta    4 J   2.1039 vol 0.1283 (dil 0.2614 g +0.022) grey 28.1% ch 0.100 worst pad push 3.76e+03 21.9s
+it   7 beta    4 J   2.3648 vol 0.1241 (dil 0.2550 g -0.003) grey 27.4% ch 0.100 worst pad push 4.26e+03 22.6s
+it   8 beta    4 J   2.1740 vol 0.1251 (dil 0.2554 g -0.002) grey 27.3% ch 0.100 worst pad push 3.89e+03 22.1s
+it   9 beta    4 J   2.0571 vol 0.1258 (dil 0.2555 g -0.001) grey 27.3% ch 0.100 worst pad push 3.67e+03 22.9s
+it  10 beta    4 J   1.9770 vol 0.1262 (dil 0.2556 g -0.001) grey 27.3% ch 0.100 worst pad push 3.52e+03 20.8s
