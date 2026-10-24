@@ -269,3 +269,17 @@ it  67 beta   32 J   6.9692 vol 0.0768 (dil 0.1457 g -0.008) grey  1.0% ch 0.100
 it  68 beta   32 J   6.8100 vol 0.0780 (dil 0.1462 g -0.005) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 52.9 40.5s
 it  69 beta   32 J   7.1037 vol 0.0785 (dil 0.1466 g -0.002) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 52.1 43.4s
 it  70 beta   32 J   6.6951 vol 0.0781 (dil 0.1464 g -0.003) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 51.9 41.8s
+it  71 beta   32 J   6.7002 vol 0.0785 (dil 0.1466 g -0.005) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 51.6 42.7s
+it  72 beta   32 J   6.6453 vol 0.0786 (dil 0.1468 g -0.003) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 51.5 39.1s
+it  73 beta   32 J   6.6233 vol 0.0790 (dil 0.1471 g -0.001) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 51.3 40.9s
+it  74 beta   32 J   6.6096 vol 0.0791 (dil 0.1472 g -0.001) grey  1.0% ch 0.100 worst cage bump front 100 N (modul 51.2 39.3s
+it  75 beta   32 J   6.6012 vol 0.0791 (dil 0.1472 g -0.001) grey  0.9% ch 0.100 worst cage bump front 100 N (modul 51.2 40.6s
+layout: stopped (grey) at it 75, beta 32, 3004 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 3242 s, peak 9.621008 GB
+build: organic surface at pitch 0.400 mm (x5), skins 224.10 cm3, field 328.56 cm3, in env - cuts 298.01 cm3 (layout 298.01, level offset -0.645 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,387,804 faces, 346 s
+build: 2 shells, volumes [300535.7, -554.1] mm3; dropped specks []; sealed cavities kept [554.1] mm3
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [228163.3], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 30, "ok": true}
+function check: {'skin_mm3': 164085.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 1.74 in 'unit 50 g 0' at [-33.5, 31.0, 134.5]
+RESULT {"name": "scan_stick_base", "solid_ok": true, "mass_g": 380.98, "worst": 1.735, "function_ok": true, "bodies": 1}
