@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (tooling, from scout v3): system_check crash probes: protected parts shadow each other (a probe stops at the first solid); failing probe rows Scout v3 (live layout) 21 -> 12, Overseer 28 -> 24, worst margins unchanged (-27.8, -0.0 unshielded); box manifests have no probes. `system_check.py`, `ASSEMBLY.md`.
 - 24 Oct (hub, Spark: "only use tokens when absolutely needed"): no timed 30 min digests; the hub messages Spark only for ready-to-print files or his decisions (`CLAUDE.md` Quiet workers, `docs/sessions.md` Reporting).
 - 24 Oct (box_system v2 coarse topology round 1, PR 96, run record): 3000 cm³ (3.84 kg generated, E) joins every bay and post (M; at 1500 only bays 30 / −210 join); top frame under the funnel, mast on the rear sheet, sheets carry the box (floor 12 cm², M); stub tilt 0.37 mrad (M). Not cut from: round 2 with the sheets as cladding. runs/box_system/v2/topo/summary.md.
 - 24 Oct (hub, Spark: "no need for that"): belt connector measurement dropped from the Spark list; swap arm heads A / B v5 HOLD, superseded by heads v7 (rack and pinion, no belt connector).
