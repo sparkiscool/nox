@@ -22,7 +22,7 @@ from topo.part import man, tm
 
 ARGS = [a for a in sys.argv[1:] if not a.startswith("-")]
 H = float(ARGS[0]) if len(ARGS) > 0 else 2.0
-GEN = float(ARGS[1]) if len(ARGS) > 1 else 55.0             # cm3 generated (DEFAULT, E: base 25 + head 20 for the cantilevered L2 and the hits + camera 5 + 5)
+GEN = float(ARGS[1]) if len(ARGS) > 1 else 65.0             # cm3 generated (DEFAULT, E: v2 55 + 10 for bracing the guards and the pocket)
 GIT = "--no-git" not in sys.argv
 OUT = os.path.join(ROOT, "runs", "scan_stick_unit", "v3")
 
