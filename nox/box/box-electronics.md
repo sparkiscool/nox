@@ -18,6 +18,7 @@ No printed part: every board sits on nylon standoffs on the rear clear sheet, so
 | Servos | PCA9685 (I2C 0x40) on the Pi: ch 0..3 latch L1, L2, R1, R2; ch 4 gripper A (DS3218), ch 5 gripper B (MG995); 50 Hz | DEFAULT |
 | Current sense | 3 x INA226 modules, shunt replaced by **R010 2512** (full scale 8.19 A, LSB 0.25 mA): keep-alive 0x41, bay S 0x44, bay O 0x45 | DEFAULT |
 | Relays | one 4-ch 5 V opto board (SRD-05VDC-SL-C, 10 A 30 VDC): K1 keep-alive, K2 bay S, K3 bay O, K4 spare | DEFAULT |
+| **Head brake (arm v6 requirement, 24 Oct)** | **4 DPDT 24 V relays KB1..KB4 (Omron G2RL-2 DC24 class, 8 A contacts), one per head-motor coil: de-energised (NC) they short the coil, energised (NO) they connect it to its TMC2209; coils on the motion branch after the E-stop, switched by a 2-ch ULN2003 module from one SKR pin per head that Klipper drives with the driver's enable (`multi_pin`)** (section Head brake) | DEFAULT / CHECK |
 | Charger | dual-channel DC charger on the 24 V bus, **iCharger 456DUO class (MODBUS over USB to the Pi, CHECK that the 456DUO speaks the 4010DUO map before buying)**, input limit 6.5 A, end 4.15 V per cell, starts below 35 °C | DEFAULT / CHECK |
 | Live bays | 2 (Spark 16 Oct: one per drone size): **Scout bay at −90°** (the bottom module on the cradle), **Overseer bay at 180°** (reserved, wired when built); each bay's XT60E1-M (float carrier) through its relay | DEFAULT |
 
@@ -41,6 +42,15 @@ Unit naming: L = the W −X seated face, R = +X; 1 = Y_C − 100 (stub side), 2 
 - Axle: `rotation_distance` 90 (degrees per motor turn at 4:1); home on the axle A3144 at Z-STOP (PC2, `^`, Z DIAG jumper off), then the detent picks the notch (`box-arm.md` Homing).
 - Stall: TMC2209 StallGuard on X / Y reported through `[gcode_button]` on the DIAG pins during fast moves; `boxd` aborts (A5). StallGuard is unreliable at the slow insert speed, so the gate there is the outcome check (mate current, full stroke).
 - Hold: `SET_STEPPER_ENABLE` off while idle (the detent holds the arm, `box-wiring.md`).
+
+## Head brake (arm v6 / v7 requirement, hub 24 Oct)
+**Why:** unpowered, a head carrying a cartridge (391 g, E) outweighs the NEMA17's cogging and falls 63.6 at 1 g onto its park stop (373 N, `dimensions.md` System box swap: arm, Power cut). With both coils shorted, the back-EMF brakes it to a creep of ~8 mm/s and it lands at ~3 N (17HS19 Kt 0.21 N·m/A, 1.4 Ω, E). The arm's wheels and bushes stay DESIGN until this is built and passes the bench drop, and every Overseer swap needs it (index 2.43 without, E).
+- **Contacts (per head motor, 2 relays):** each coil (A1 / A2, B1 / B2) goes through one DPDT relay. Pole 1 common = coil wire 1, NO = driver output 1, NC = the shorting link. Pole 2 common = coil wire 2, NO = driver output 2, NC = the same link. **De-energised = the coil shorted on itself, the driver side open.** A form C pole opens NO before NC closes (break before make, the relay's own action), so the driver never sees a shorted output. Head A: KB1 (coil A), KB2 (coil B) between the arm bundle's head A leads and the SKR X driver header; head B: KB3, KB4 on the Y driver. The axle motor has none (the detent holds the arm, Hold).
+- **Coils:** 24 V, ~17 mA each (E), from the motion branch after the E-stop (F2), through a 2-channel ULN2003 module (open collector, built-in flyback diodes, 24 V on its COM): channel 1 drives KB1 + KB2, channel 2 KB3 + KB4. **E-stop, power off, fuse F2 open or a dead ULN input = relays drop = brake on.**
+- **Signal:** one free 3.3 V SKR header pin per head (EXP1, DEFAULT; which pin: CHECK on the SKR Mini E3 V3 pinout), driven by Klipper together with the driver's enable: `[multi_pin head_a_en] pins: !PB14, <pin A>` and `enable_pin: multi_pin:head_a_en` (same for head B on Y's !PB11). Klipper drops the enables on every shutdown, MCU reset or fault and when `boxd` disables the stepper, so the brake follows the driver exactly (CHECK in the Klipper config docs: `multi_pin` accepts mixed polarity; else an inverted copy pin).
+- **Timing:** relay operate ~10 ms, release ~5 ms (E): `boxd` waits 20 ms after enabling a head before its first step (DEFAULT). Holding a head still with the driver enabled is unchanged; the brake only acts with the driver off.
+- **Wiring:** the 8 head-motor wires come off the arm bundle at the rear sheet onto the relay board's commons, short 22 AWG pigtails from NO to the SKR's X / Y motor headers (the arm bundle stays 26 AWG, `box-wiring.md`); 2 x 24 AWG for the ULN COM and its 2 inputs from the SKR. Board on 2 nylon standoffs beside the SKR (placement rerun with the real size, Problem 5).
+- **Bench drop test (current-parts Spark, Tests):** a head carrying a loaded cartridge (391 g) at the wait height, driver off, brake on: let go; it must creep (≤ ~8 mm/s, E: 63.6 in ≥ 8 s) and land without a bang. Repeat with the relays unpowered by the E-stop.
 
 ## Keep-alive and mate check (no current is ever switched by the XT60 or the pogo pins)
 1. K1 closes only after the latch is out, while the drone's old pack is above 13.0 V: 0 A through the pads (the drone's ORing diode is reverse biased).
@@ -172,7 +182,9 @@ The box never arms or disarms the drone: it disarms on the kill and the mission 
 5. **Board sizes E** (relay, INA226, bucks, fuse box, Wago strip): the placement keeps 6 between boards; re-run `box_electronics.py` with the real sizes when they arrive (a minute), then drill.
 6. **Route lengths are E** off the sheet (latch, post, bays): cut long, trim at fit.
 7. **PSU on 3.0 acrylic:** 0.76 kg on 4 x M4 with 3 of thread; add 2 fender washers outside (E). The 115 / 230 V selector: CHECK before first power.
+9. **Head brake pins and `multi_pin` polarity (CHECK):** the free SKR pins and whether Klipper's `multi_pin` takes an inverted and a non-inverted pin together; fallback: drive the ULN inputs from the TMC2209 EN nets through 10 kΩ (needs a pad on the board) or from a Pi GPIO that `boxd` holds in step with the enables (does not follow an MCU fault: weaker).
 8. **Charger output and input grounds:** measure (Live bays section) before wiring the bay − leads.
 
 ## Status
+24 Oct (box structure system session, hub ask): head brake added (section Head brake): 4 DPDT relays, ULN2003, signal from the SKR with the enables; bench drop test in the Spark Tests line.
 24 Oct: v1 designed (docs + `box_electronics.py` + `runs/box_electronics/v1/`). Next: Spark buys (`parts-list.md` Box, status to buy); bench-wire the rear sheet; first power with no loads (rails 13.0 / 6.0 / 5.1, K1 at 0 A); latch calibration (OUT / IN pulse per unit until its hall reads); mate check on the bench with a pack and the drone receiver.

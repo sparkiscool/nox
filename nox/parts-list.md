@@ -104,6 +104,8 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | INA226 module + R010 2512 shunt (swap the R100) | 3 + 3 | keep-alive and 2 live bays: current + bus voltage | to buy (CHECK: INA226 on hand?) | E 32 x 22 |
 | XL4016-class CC/CV buck, 8 A | 2 | keep-alive 13.0 V CC 3.0 A; servo rail 6.0 V | to buy | E 66 x 47 |
 | 24 → 5.1 V 5 A buck (Pololu D36V50F5 class) | 1 | Pi + logic (or the on-hand 5 V buck if ≥ 4 A) | to buy (CHECK) | E 41 x 26 |
+| DPDT relay 24 VDC coil, 8 A contacts (Omron G2RL-2 DC24 class) + PCB socket or a 4-ch DPDT 24 V module | 4 | head brake KB1..KB4: NC shorts each head-motor coil when its driver is off (`box-electronics.md` Head brake) | to buy | E 29 x 13 each |
+| ULN2003 driver module (7-ch, flyback diodes) | 1 | head brake relay coils from 2 SKR pins | to buy | E 35 x 32 |
 | 4-ch 5 V opto relay board (SRD-05VDC-SL-C, 10 A 30 VDC) | 1 | K1 keep-alive, K2 / K3 live bays, K4 spare (replaces the 7 x 8-ch mux, priced) | to buy | E 75 x 55 |
 | 6-way blade fuse box with negative bus + blade fuses 10 / 5 / 3 / 2 A | 1 + 1 set | 24 V distribution | to buy | E 105 x 60 |
 | IEC C14 fused switched inlet + mains cord | 1 + 1 | mains in, on the rear sheet | to buy (cord CHECK on hand) | cut-out 48 x 28 (E, CHECK) |
