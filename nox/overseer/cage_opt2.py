@@ -22,7 +22,7 @@ front hub, sled) fixed. Carbon E 120 GPa, G 5 GPa (pultruded UD, E); PETG E 2780
 Cases (dimensions L, DEFAULT unless tagged) and limits:
 - L2 mount: lowest mode with ≥ 20 % of its kinetic energy on the L2 group ≥ 100 Hz (L Sensor mounts).
 - Crash, 35 g x the whole drone in 14 directions (6 faces, 8 corners), on the cage node that touches first in that
-  direction (largest support), hub fixed: rod index σ/600 MPa, buckling 1.5 x Euler, sockets (600 N per 3.0 rod, scaled
+  direction (largest support) and on every node within CRASH_TIE (3) of it, hub fixed: rod index σ/600 MPa, buckling 1.5 x Euler, sockets (600 N per 3.0 rod, scaled
   with OD), arm PETG σ/51 MPa, all ≤ 1.0; the touching node moves ≤ 9 toward the drone (12 prop gap, 3 kept).
 - L2 crash: 35 g x the L2 group at its CG in 14 directions: the same indices ≤ 1.0.
 - Handling: 50 N on every real cage node in ±x, ±y, ±z: indices ≤ 1.0 (DEFAULT: a misuse load; L gives 0.5 to flight and landing).
@@ -76,6 +76,7 @@ SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
 DEFL_ALLOW, F_L2_MIN = 9.0, 100.0                              # crash deflection, L2 mode (L Sensor mounts)
 F_FIRST_MIN = 0.0                                           # cage's own lowest mode floor (set below after the trade)
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
+CRASH_TIE = 3.0                                             # nodes this close to the leading one in a crash direction get their own case (the cage margin, L)
 CARBON_MIN = 33.0                                           # carbon break-even (CLAUDE.md): a shorter link is printed into its node
 NODE_G, CORNER_G = 2.0, 6.0                                 # printed ring node / corner node (E, g)
 
@@ -698,9 +699,11 @@ def evaluate(p, topo, sizes, detail=False):
                                                               or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT")))]
     P_ = np.array([m.N[n] for n in cage_nodes])
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
-    for d in crash_dirs():
-        k = int(np.argmax(P_ @ d)); n_ = cage_nodes[k]
-        cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -crash_force(m_drone) * d}, 1.0, "crash", n_, d))
+    for d in crash_dirs():                                           # every node within CRASH_TIE of the leading support may touch first
+        sup = P_ @ d
+        for k in np.flatnonzero(sup >= sup.max() - CRASH_TIE):
+            n_ = cage_nodes[k]
+            cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -crash_force(m_drone) * d}, 1.0, "crash", n_, d))
     for d in crash_dirs():
         cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": crash_force(m_drone) / m_drone * 266e-6 * d}, 1.0, "l2", None, d))
     real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT"))]
