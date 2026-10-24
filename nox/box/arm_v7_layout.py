@@ -52,6 +52,7 @@ LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.7
            ECC_FLANGE=(70.25, 72.75),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
            KEEL=dict(x=9.0, y=(38.0, 54.0), r0=89.0),   # rail keel X +-9 under the body from r 89 (1.0 off the hub plate's edge r 88) to the tip
            CBORE_Y=61.0, RAIL_BOLT="M5 x 12 ISO 4762 (head Y 61..66, in the rail)", STOP_Y=(66.75, 72.0), CHAN_Y=(62.75, 66.75),
+           STOP_R=(27.5, 31.0),                 # the rail's inner step and park stop from r 27.5: 1.0 off detent ring v4 (r 26.5); the bumper face r 31 kept
            TIE_RAIL=(41.6, 128.0))              # the tie rod end 10 up its own axis from the keel bottom at r 128 (mouth on the face)
 
 
@@ -68,7 +69,7 @@ def _patch_low():
     V.AXLE_KEEP = dict(r=5.0, y=(lo["PLATE_Y"][1], lo["PLATE_Y"][1] + 8.0)); V.ECC_KEEP = dict(r=13.0, y=(lo["PLATE_Y"][1], lo["PLATE_Y"][1] + 1.0))
     V.RACK_TEETH_Y = RACK_V3_Y; V.PIN_TEETH_Y = PIN_V3["teeth_y"]; V.PIN_BOSS_Y = PIN_V3["boss_y"]
     V.WEB_Y = (V.RACK_TEETH_Y[0], lo["PLATE_Y"][1])
-    st = dict(V.RAIL_STOP); st["y"] = lo["STOP_Y"]; V.RAIL_STOP = st
+    st = dict(V.RAIL_STOP); st["y"] = lo["STOP_Y"]; st["r"] = lo["STOP_R"]; V.RAIL_STOP = st
     ch = dict(V.RAIL_CHAN); ch["y"] = lo["CHAN_Y"]; V.RAIL_CHAN = ch
     b = dict(V.RAIL_BOLTS); b["cbore_y"] = lo["CBORE_Y"]; b["bolt"] = lo["RAIL_BOLT"]; V.RAIL_BOLTS = b; V.RAIL_INSERTS = b
     V.RAIL_FOOT_X = V.RAIL_BODY_X                # no feet: the wheels (Y 57.75..) pass over the pads; the bolts sit in the body

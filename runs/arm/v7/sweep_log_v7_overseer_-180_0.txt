@@ -295,7 +295,7 @@ t 21.93 phi -174.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') 
 t 21.96 phi -176.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.98 phi -178.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 22.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
-sweep 297 states in 125 s
+sweep 297 states in 111 s
 states with overlaps: 0 min clearance 0.0
 closest pairs over the cycle:
     0.000  pack charged / rec-180  (t 0.0)
@@ -305,20 +305,20 @@ closest pairs over the cycle:
     0.300  fingB_A / servo_A  (t 0.0)
     0.300  fingA_B / servo_B  (t 0.0)
     0.300  fingB_B / servo_B  (t 0.0)
-    0.500  detent_ring / railA  (t 21.956)
-    0.500  detent_ring / railB  (t 21.956)
     0.500  fingA_A / fingB_A  (t 21.933)
     0.500  fingA_B / fingB_B  (t 21.978)
     0.991  hub / p80  (t 4.633)
     0.993  hub / post  (t 4.522)
     1.000  belt_axle / headA  (t 21.911)
-    1.000  p80 / railA  (t 0.0)
     1.000  headA / railA  (t 21.933)
-    1.000  p80 / railB  (t 0.0)
+    1.000  detent_ring / railA  (t 21.956)
     1.000  headB / railB  (t 21.933)
+    1.000  detent_ring / railB  (t 21.956)
     1.000  headA / wheelsA  (t 0.0)
     1.000  headB / wheelsB  (t 0.0)
     1.000  detent_arm / detent_ring  (t 0.0)
+    1.003  p80 / railA  (t 21.956)
+    1.003  p80 / railB  (t 21.956)
     1.621  hub / stub  (t 21.978)
     1.750  axlesA / hub  (t 21.911)
     1.750  axlesB / hub  (t 21.911)
