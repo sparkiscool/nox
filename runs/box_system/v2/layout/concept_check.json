@@ -617,16 +617,34 @@
    },
    {
     "a": "arm: hub + rails (turning)",
-    "b": "arm: drone insert lane",
-    "overlap_mm3": 112729.25,
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 194744.13,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
+    "a": "arm: hub + rails (turning)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
     "a": "arm: motors (turning)",
-    "b": "arm: drone insert lane",
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: motors (turning)",
+    "b": "arm: drone insert lane (grabber)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -635,8 +653,17 @@
    },
    {
     "a": "arm: parked heads + cartridges (turning)",
-    "b": "arm: drone insert lane",
-    "overlap_mm3": 435574.76,
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 67753.02,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm: parked heads + cartridges (turning)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -652,18 +679,45 @@
     "pass_": true
    },
    {
-    "a": "arm: drone insert lane",
+    "a": "arm: drone insert lane (carriage)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 43842.11,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm: drone insert lane (carriage)",
     "b": "catch (panels v7, hook latch v2) at the R seat",
-    "overlap_mm3": 609.47,
+    "overlap_mm3": 524.86,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
     "pass_": false
    },
    {
-    "a": "arm: drone insert lane",
+    "a": "arm: drone insert lane (carriage)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 722583.92,
+    "overlap_mm3": 56886.12,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm: drone insert lane (grabber)",
+    "b": "catch (panels v7, hook latch v2) at the R seat",
+    "overlap_mm3": 434.01,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
+    "a": "arm: drone insert lane (grabber)",
+    "b": "drone receivers + paths (keep-out)",
+    "overlap_mm3": 387626.37,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
