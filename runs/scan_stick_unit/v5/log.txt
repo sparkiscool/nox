@@ -75,3 +75,5 @@ it  60 beta   32 J   1.0582 vol 0.0428 (dil 0.1238 g -0.000) grey  0.9% ch 0.083
 layout: stopped (grey) at it 60, beta 32, 893 s
 layout: beta 32 done: eroded design 12 bodies, main 99.5%; drawn bodies outside the main body: 11
 layout done: 927 s, peak 3.777628 GB
+build: organic surface at pitch 0.429 mm (x7), skins 319.99 cm3, field 412.20 cm3, in env - cuts 384.66 cm3 (layout 384.66, level offset -0.582 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,240,976 faces, 343 s
+build: 13 shells, volumes [383974.8, 0.4, 0.0, 0.0, 0.0, 0.0] mm3; dropped specks [0.0, 0.0, 0.0, 0.0, 0.0, 0.37, 0.0, 0.0, 0.0, 0.0]; sealed cavities kept [0.0, 0.0] mm3

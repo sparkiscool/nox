@@ -117,3 +117,13 @@ solid check: FAIL {"bodies_plain": 12, "bodies_eroded": 1, "eroded_volumes_mm3":
 function check: {'skin_mm3': 95158.7, 'skin_missing_mm3': 170.82, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
 strength: worst index 0.24 in 'L2 hit front 100 N' at [43.5, 21.0, 158.0]
 RESULT {"name": "scan_stick_head", "solid_ok": false, "mass_g": 168.55, "worst": 0.236, "function_ok": true, "bodies": 2}
+=== scan_stick_head: h 2.0, generated 17.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (117.05 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.058 of 36,814 design cells
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: 1 drawn bodies (14,631 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (32, 56, 88) = 157,696 elements, 181,668 active dofs; backend direct (direct estimate 1.8 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/scan_stick_head/v16/ck.npz at it 47, beta 32 (already stopped: grey)
