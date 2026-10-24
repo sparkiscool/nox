@@ -22,3 +22,5 @@ it  12 beta    1 J   0.1521 vol 0.0596 (dil 0.0702 g -0.019) grey 21.5% ch 0.100
 it  13 beta    1 J   0.1390 vol 0.0600 (dil 0.0705 g -0.014) grey 21.5% ch 0.100 worst camera hit front 50 N 75.6 14.6s
 it  14 beta    1 J   0.1293 vol 0.0605 (dil 0.0709 g -0.009) grey 21.5% ch 0.100 worst camera hit front 50 N 69.5 15.5s
 it  15 beta    1 J   0.1218 vol 0.0607 (dil 0.0710 g -0.007) grey 21.2% ch 0.100 worst camera hit front 50 N 64.5 17.8s
+it  16 beta    1 J   0.1163 vol 0.0608 (dil 0.0710 g -0.000) grey 20.7% ch 0.100 worst camera hit front 50 N 61 8.6s
+it  17 beta    1 J   0.1115 vol 0.0605 (dil 0.0705 g -0.007) grey 20.1% ch 0.100 worst tie b2 fx 59.1 9.4s
