@@ -115,3 +115,7 @@ it  49 beta   32 J  12.8321 vol 0.0768 (dil 0.1542 g -0.000) grey  0.9% ch 0.100
 it  50 beta   32 J  12.8174 vol 0.0769 (dil 0.1542 g -0.000) grey  0.9% ch 0.100 worst unit 25 g 6 11.6 22.1s
 it  51 beta   32 J  12.8034 vol 0.0769 (dil 0.1542 g +0.002) grey  0.9% ch 0.100 worst unit 25 g 6 11.6 24.4s
 it  52 beta   32 J  12.7977 vol 0.0766 (dil 0.1538 g -0.001) grey  0.9% ch 0.100 worst unit 25 g 6 11.5 20.6s
+it  53 beta   32 J  12.7849 vol 0.0766 (dil 0.1538 g -0.000) grey  0.9% ch 0.100 worst unit 25 g 6 11.5 26.0s
+layout: stopped (grey) at it 53, beta 32, 1149 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 1331 s, peak 4.48804 GB
