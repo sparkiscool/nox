@@ -104,3 +104,43 @@ scan_stick_base: grid (32, 24, 64) h 4.0 = 49,152 cells; design 14,596 (934.1 cm
   load L2 drop -z 150 N (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
   load L2 drop -z 150 N (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
   load L2 drop -z 150 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 drop -z 150 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 12 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (319.04 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.075 of 14,596 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (1.5% of passive cells differ): no symmetry
+layout: 1 drawn bodies (4,985 cells), held solid in every realization; eroded filter: masked
+layout: 34 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 64) = 49,152 elements, 73,944 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0996 (dil 0.1202 g +0.329) grey 22.5% ch 0.100 worst L2 hit -y 100 N (joint) 68.2 2.2s
+it   2 beta    1 J   4.3256 vol 0.0676 (dil 0.0809 g -0.105) grey 33.1% ch 0.100 worst cage bump top 100 N (spine s 29.5 2.7s
+it   3 beta    1 J   2.6587 vol 0.0722 (dil 0.0860 g -0.049) grey 33.5% ch 0.100 worst cage bump top 100 N (spine s 17.9 2.2s
+it   4 beta    1 J   2.0377 vol 0.0741 (dil 0.0877 g -0.031) grey 32.7% ch 0.100 worst cage bump top 100 N (spine s 13.1 2.3s
+it   5 beta    1 J   1.8148 vol 0.0755 (dil 0.0888 g -0.019) grey 31.4% ch 0.100 worst cage bump top 100 N (spine s 11.2 2.1s
+it   6 beta    1 J   1.6936 vol 0.0763 (dil 0.0891 g -0.007) grey 30.3% ch 0.100 worst cage bump top 100 N (spine s 10 2.4s
+it   7 beta    1 J   1.6136 vol 0.0764 (dil 0.0887 g -0.011) grey 29.5% ch 0.100 worst cage bump top 100 N (spine s 9.35 2.1s
+it   8 beta    1 J   1.5449 vol 0.0770 (dil 0.0889 g -0.009) grey 28.9% ch 0.100 worst cage bump top 100 N (spine s 8.75 2.5s
+it   9 beta    1 J   1.4875 vol 0.0777 (dil 0.0891 g -0.007) grey 28.5% ch 0.100 worst cage bump top 100 N (spine s 8.27 2.0s
+it  10 beta    1 J   1.4375 vol 0.0782 (dil 0.0892 g -0.006) grey 27.7% ch 0.100 worst cage bump top 100 N (spine s 7.87 2.4s
