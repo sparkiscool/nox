@@ -6,6 +6,7 @@ Spark 24 Oct: "design the new latch system for all batteries so the grabber can 
 - **Cartridge frame c** (as the Scout bottom layout, PR 44): x across the pack, y up the install axis (0 = flat bottom = ring R 113 in a bay, arm v6), z along the pack (0 = closed end). The tab line z_T is the swap assembly's CG (pack + plug + cartridge + sliders), so the gripper holds the pack at its CG and the drone puts it on the thrust axis.
 - **XT60 end = arm side (hub 24 Oct, from the arm v6 system pass, PR 71, DEFAULT):** the receiver gives no pitch guidance before its deck at the seat, so the XT60 mates on the arm's own pitch stiffness. Free pitch at the mate vs the float carrier's ±1.06°: XT60 at the far end 2.56 / 1.71 / 3.47° (Scout at Y_C 175 / Scout 129.1 / Overseer, R 113), at the arm-side end with carbon ties on the arm 1.03 / 0.52 / 0.70° (arm v6 numbers). So the whole latch set is turned 180° about the install axis: the cartridge's lead (XT60) end faces the arm (−Y); no geometry changed. Alt (not taken): receiver pitch guidance before the mate, which needs z-locating faces engaged over ~25 before the seat at both ends, still ~0.7° on 0.3 gaps.
 - **Scout drone frame d** = (z − z_T, x, y − 44.5): tab line at drone x 0, XT60 end at the nose (+x), flat bottom at drone z −44.5.
+- **Tab line:** the heads grip every cartridge at one Y_C on the drone's thrust axis (arm v6). Scout: z_T = its swap CG (42.55). Overseer: z_T 110.76 = swap CG 80.76 + 30 toward the XT60 end, because its pack sits 30 behind its thrust axis (Spark: B); the grip then carries 0.22 N·m at 1 g / 0.66 at 3 g, rib-pocket index 0.21 / 0.64 (E).
 - **Wheel W** (dimensions I, arm v6): X = x, Y = Y_C − (z − z_T), Z radial = R + y, R 113 for every seated face (arm v6; was r 100); common grip at Y_C 175 for both packs.
 
 ## Concept check (24 Oct, before the piece runs)
@@ -35,7 +36,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 ## Pieces
 | Piece | Material, count | Scout g (M) | Overseer g (M) | Print |
 |---|---|---|---|---|
-| `box_battery_cartridge_<pack>_v5` | PETG x 1 | 33.1 | 88.9 | closed end down, tree supports (174 tall for the Overseer) |
+| `box_battery_cartridge_<pack>_v5` | PETG x 1 | 33.1 | 89.7 | closed end down, tree supports (174 tall for the Overseer) |
 | `box_battery_slider_<pack>_v5` | PETG x 2 (one part, both sides) | 3.2 | 4.0 | bar top down (largest face, layers along the bar) |
 | `box_battery_receiver_<pack>_v1` (latch block, drone and bays) | PETG x 1 | 41.2 | 79.5 | closed-end face down, tree supports |
 | `box_battery_receiver_lid_<pack>_v1` | PETG x 1 | 5.3 | 6.9 | top face down |

@@ -486,11 +486,15 @@ def swap_cg(g):
     c = sum(a * b for a, b in items) / M
     return M, c, items
 
+TAB_OFF = {"scout": 0.0, "overseer": 30.0}   # tab line from the swap CG toward the XT60 (lead, arm-side) end: the heads grip
+                                              # every cartridge at one Y_C on the drone's thrust axis (arm v6, PR 71), and the
+                                              # Overseer pack sits 30 behind its thrust axis (Spark 24 Oct: B)
+
 def place_tab_line(pack, it=3):
     g = geom(pack)
     for _ in range(it):
         M, c, _ = swap_cg(g)
-        g["Z_T"] = round(float(c[2]), 2)
+        g["Z_T"] = round(float(c[2]) + TAB_OFF[pack], 2)
     g["SWAP_M"], g["SWAP_CG"] = M, c
     return g
 
@@ -700,6 +704,17 @@ def hand_calc(B):
     s_tab = Ft * lever_t / Zb
     out["grip_pull"] = dict(total_N=round(Fg, 1), per_tab_N=round(Ft, 1), bar_MPa=round(s_tab, 2),
                             index=round(s_tab / ALLOW["functional"], 3), lever_mm=round(lever_t, 2))
+    # grip moment about x when the tab line is off the swap CG (Overseer: 30): each tab's rib bears on its pocket's y-walls
+    # at the pocket's z ends (couple arm GP_W), on ~2 x GP_D mm2 per corner (E)
+    off = abs(g["Z_T"] - float(g["SWAP_CG"][2]))
+    gm = {}
+    for ng in (1, 3):
+        Mt = W1 * ng * off / 2.0                                     # N mm per tab
+        Fc = Mt / GP_W
+        sc = Fc / (2.0 * GP_D)
+        gm[f"{ng}g"] = dict(moment_Nm=round(2 * Mt / 1000, 3), per_tab_corner_N=round(Fc, 1), MPa=round(sc, 2),
+                            index=round(sc / ALLOW["functional"], 3))
+    out["grip_moment"] = dict(offset_mm=round(off, 2), **gm)
     # floor plate under the pack, 35 g, simply supported strip over the cavity width
     p = (g["m"] - g["m_plug"]) / 1000 * 35 * G0 / (g["W"] * g["L"])
     Mf = p * (2 * g["X_IN"]) ** 2 / 8; s_f = 6 * Mf / g["FLOOR_T"] ** 2
@@ -1051,7 +1066,7 @@ def main():
     res["scout_system_keel4"] = scout_system(log, keel4=True)
     # Overseer: posed in the Overseer assembly on main, pack on the thrust axis (Overseer DEFAULT A) and 30 behind (alt B)
     man = json.load(open(OV_ASM))
-    for lab, dx in (("A", 0.0), ("B", -30.0)):
+    for lab, dx in (("B", 0.0), ("A", TAB_OFF["overseer"])):        # B: tab line on the thrust axis, pack 30 aft (Spark)
         try:
             xt = float(man["cg_ref"][0]) + dx
             ores, fp, _ = overseer_fit(x_tab=xt)

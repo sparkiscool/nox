@@ -422,6 +422,21 @@
     "index": 0.354,
     "lever_mm": 11.0
    },
+   "grip_moment": {
+    "offset_mm": 0.0,
+    "1g": {
+     "moment_Nm": 0.0,
+     "per_tab_corner_N": 0.0,
+     "MPa": 0.0,
+     "index": 0.0
+    },
+    "3g": {
+     "moment_Nm": 0.0,
+     "per_tab_corner_N": 0.0,
+     "MPa": 0.0,
+     "index": 0.0
+    }
+   },
    "floor_35g": {
     "MPa": 4.99,
     "index": 0.289
@@ -931,8 +946,8 @@
    "Y_PW1": 50.6,
    "Y_ZONE": 54.8,
    "FLOOR_T": 3.0,
-   "Z_T": 80.27,
-   "SWAP_M": 747.442
+   "Z_T": 110.76,
+   "SWAP_M": 748.206
   },
   "rgeom": {
    "PLATE_T": 3.0,
@@ -966,7 +981,7 @@
    ],
    [
     -33.1,
-    80.27
+    110.76
    ],
    [
     33.1,
@@ -978,7 +993,7 @@
    ],
    [
     33.1,
-    80.27
+    110.76
    ]
   ],
   "static_fit_mm3": {},
@@ -1107,7 +1122,7 @@
    "hall_at": [
     7.5,
     -1.0,
-    88.27
+    118.76
    ]
   },
   "hall_sweep": {
@@ -1217,34 +1232,34 @@
    }
   },
   "fe_v1": {
-   "worst": 0.732,
+   "worst": 0.704,
    "worst_case": "handling 50 N on a foot",
    "worst_at": [
     -29.5,
     47.2,
     24.0
    ],
-   "crash_worst": 0.441,
+   "crash_worst": 0.437,
    "rows": {
     "hover 1 g": 0.014,
-    "flight 4 g + 2 g x": 0.062,
+    "flight 4 g + 2 g x": 0.063,
     "catch 6 g": 0.086,
-    "crash -y": 0.314,
-    "crash +y": 0.21,
-    "crash +x": 0.441,
-    "crash -x": 0.441,
-    "crash +z": 0.386,
-    "crash -z": 0.308,
-    "crash corner (+x -y +z)": 0.321,
-    "crash corner (-x -y -z)": 0.317,
-    "swap insert 60 N": 0.231,
-    "swap pull 50 N": 0.227,
-    "handling 50 N on a foot": 0.732
+    "crash -y": 0.315,
+    "crash +y": 0.177,
+    "crash +x": 0.437,
+    "crash -x": 0.437,
+    "crash +z": 0.368,
+    "crash -z": 0.296,
+    "crash corner (+x -y +z)": 0.332,
+    "crash corner (-x -y -z)": 0.321,
+    "swap insert 60 N": 0.229,
+    "swap pull 50 N": 0.224,
+    "handling 50 N on a foot": 0.704
    }
   },
   "plug_vs_male_seat_mm3": 0.0,
   "hand_calc": {
-   "mass_swap_g": 747.4,
+   "mass_swap_g": 748.2,
    "cases": {
     "hover 1 g": {
      "pull_N": 7.3,
@@ -1257,7 +1272,7 @@
      "Fz_N": 0.0
     },
     "flight 4 g + 2 g lateral": {
-     "pull_N": 29.3,
+     "pull_N": 29.4,
      "per_bolt_N": 14.7,
      "bolt_MPa": 0.48,
      "ledge_MPa": 0.22,
@@ -1277,24 +1292,24 @@
      "Fz_N": 0.0
     },
     "crash 35 g -y (drop on the belly)": {
-     "pull_N": 256.6,
-     "per_bolt_N": 128.3,
-     "bolt_MPa": 4.19,
+     "pull_N": 256.9,
+     "per_bolt_N": 128.4,
+     "bolt_MPa": 4.2,
      "ledge_MPa": 1.89,
      "cls": "misuse",
-     "index": 0.242,
+     "index": 0.243,
      "Fx_N": 0.0,
      "Fz_N": 0.0
     },
     "crash 35 g corner (-y share 35/sqrt3)": {
-     "pull_N": 148.2,
-     "per_bolt_N": 74.1,
+     "pull_N": 148.3,
+     "per_bolt_N": 74.2,
      "bolt_MPa": 2.42,
      "ledge_MPa": 1.09,
      "cls": "misuse",
      "index": 0.14,
-     "Fx_N": 148.2,
-     "Fz_N": 148.2
+     "Fx_N": 148.3,
+     "Fz_N": 148.3
     },
     "crash 35 g +y (top hit, into the deck)": {
      "pull_N": 0.0,
@@ -1313,11 +1328,11 @@
      "ledge_MPa": 0.0,
      "cls": "misuse",
      "index": 0.0,
-     "Fx_N": 256.6,
+     "Fx_N": 256.9,
      "Fz_N": 0.0
     }
    },
-   "side_hit_couple_per_bolt_N": 94.5,
+   "side_hit_couple_per_bolt_N": 94.6,
    "grip_pull": {
     "total_N": 57.3,
     "per_tab_N": 28.7,
@@ -1325,16 +1340,31 @@
     "index": 0.389,
     "lever_mm": 11.0
    },
+   "grip_moment": {
+    "offset_mm": 30.0,
+    "1g": {
+     "moment_Nm": 0.22,
+     "per_tab_corner_N": 13.8,
+     "MPa": 2.29,
+     "index": 0.212
+    },
+    "3g": {
+     "moment_Nm": 0.661,
+     "per_tab_corner_N": 41.3,
+     "MPa": 6.88,
+     "index": 0.637
+    }
+   },
    "floor_35g": {
     "MPa": 6.14,
     "index": 0.355
    },
    "wall_35g": {
-    "MPa": 4.24,
-    "index": 0.245
+    "MPa": 5.18,
+    "index": 0.299
    },
    "slider_inertia_35g_N": 1.39,
-   "bolt_friction_lock_corner_N": 22.2,
+   "bolt_friction_lock_corner_N": 22.3,
    "spring": {
     "rate_N_mm": 0.2,
     "free_mm": 20.0,
@@ -1346,19 +1376,19 @@
    "side_hit_slider": {
     "inertia_N": 1.39,
     "hold_N": 2.88,
-    "ratio": 2.07,
+    "ratio": 2.08,
     "no_hang_hold_N": 0.8,
     "no_hang_ratio": 0.58,
     "one_bolt_corner_index": 0.28,
     "note": "the outboard bolt is pushed further in, so at most one bolt moves for the pulse; with no hang (inverted, free fall) nothing pulls the pack out, and in a corner hit the -y share's friction lock holds it; one bolt alone carries the corner case at the index given"
    },
    "plate_side_hit_35g": {
-    "MPa": 6.5,
+    "MPa": 6.51,
     "index": 0.376
    },
    "bolt_side_hit_couple": {
     "MPa": 3.09,
-    "index": 0.178
+    "index": 0.179
    },
    "worst_index": 0.389
   },
@@ -1370,17 +1400,17 @@
      0.0
     ],
     "M_Nmm": [
-     -10.0,
+     -81.0,
      -0.0,
      -0.0
     ],
     "boss_axial_N": [
-     -1.8,
+     -1.6,
+     -2.0,
      -1.9,
-     -1.8,
-     -1.8,
-     -1.9,
-     -1.8
+     -1.6,
+     -2.0,
+     -1.9
     ],
     "boss_shear_N": [
      0.0,
@@ -1390,36 +1420,36 @@
      0.0,
      0.0
     ],
-    "max_tension_N": 1.9
+    "max_tension_N": 2.0
    },
    "flight 4 g up + 2 g lateral": {
     "F_N": [
      14.7,
-     -29.3,
+     -29.4,
      0.0
     ],
     "M_Nmm": [
-     -39.0,
-     -19.0,
-     498.0
+     -323.0,
+     -161.0,
+     499.0
     ],
     "boss_axial_N": [
-     -4.7,
-     -4.9,
-     -4.8,
-     -9.7,
-     -10.0,
-     -9.8
+     -3.8,
+     -5.7,
+     -5.0,
+     -8.8,
+     -10.7,
+     -10.1
     ],
     "boss_shear_N": [
-     3.6,
-     3.7,
-     3.7,
-     3.6,
-     3.7,
-     3.7
+     3.2,
+     4.0,
+     3.8,
+     3.2,
+     4.0,
+     3.8
     ],
-    "max_tension_N": 10.0
+    "max_tension_N": 10.7
    },
    "catch 6 g": {
     "F_N": [
@@ -1428,17 +1458,17 @@
      0.0
     ],
     "M_Nmm": [
-     -58.0,
+     -484.0,
      -0.0,
      -0.0
     ],
     "boss_axial_N": [
-     -10.8,
-     -11.2,
-     -11.0,
-     -10.8,
-     -11.2,
-     -11.0
+     -9.4,
+     -12.3,
+     -11.3,
+     -9.4,
+     -12.3,
+     -11.3
     ],
     "boss_shear_N": [
      0.0,
@@ -1448,26 +1478,26 @@
      0.0,
      0.0
     ],
-    "max_tension_N": 11.2
+    "max_tension_N": 12.3
    },
    "crash 35 g -y": {
     "F_N": [
      0.0,
-     -256.6,
+     -256.9,
      0.0
     ],
     "M_Nmm": [
-     -339.0,
+     -2824.0,
      -0.0,
      -0.0
     ],
     "boss_axial_N": [
-     -63.1,
-     -65.2,
-     -64.1,
-     -63.1,
-     -65.2,
-     -64.1
+     -54.9,
+     -71.6,
+     -66.2,
+     -54.9,
+     -71.6,
+     -66.2
     ],
     "boss_shear_N": [
      0.0,
@@ -1477,26 +1507,26 @@
      0.0,
      0.0
     ],
-    "max_tension_N": 65.2
+    "max_tension_N": 71.6
    },
    "crash 35 g +y": {
     "F_N": [
      0.0,
-     256.6,
+     256.9,
      0.0
     ],
     "M_Nmm": [
-     339.0,
+     2824.0,
      -0.0,
      0.0
     ],
     "boss_axial_N": [
-     63.1,
-     65.2,
-     64.1,
-     63.1,
-     65.2,
-     64.1
+     54.9,
+     71.6,
+     66.2,
+     54.9,
+     71.6,
+     66.2
     ],
     "boss_shear_N": [
      0.0,
@@ -1510,51 +1540,51 @@
    },
    "crash 35 g +x": {
     "F_N": [
-     256.6,
+     256.9,
      0.0,
      0.0
     ],
     "M_Nmm": [
      0.0,
-     -339.0,
-     8719.0
+     -2824.0,
+     8730.0
     ],
     "boss_axial_N": [
-     43.9,
-     43.9,
-     43.9,
-     -43.9,
-     -43.9,
-     -43.9
+     44.0,
+     44.0,
+     44.0,
+     -44.0,
+     -44.0,
+     -44.0
     ],
     "boss_shear_N": [
-     63.3,
-     65.0,
-     64.1,
-     63.3,
-     65.0,
-     64.1
+     56.8,
+     70.2,
+     65.8,
+     56.8,
+     70.2,
+     65.8
     ],
-    "max_tension_N": 43.9
+    "max_tension_N": 44.0
    },
    "crash 35 g +z": {
     "F_N": [
      0.0,
      0.0,
-     256.6
+     256.9
     ],
     "M_Nmm": [
-     -8719.0,
+     -8730.0,
      -0.0,
      0.0
     ],
     "boss_axial_N": [
-     26.5,
-     -26.9,
-     0.4,
-     26.5,
-     -26.9,
-     0.4
+     28.7,
+     -22.7,
+     -6.0,
+     28.7,
+     -22.7,
+     -6.0
     ],
     "boss_shear_N": [
      64.2,
@@ -1564,36 +1594,36 @@
      64.2,
      64.2
     ],
-    "max_tension_N": 26.9
+    "max_tension_N": 22.7
    },
    "crash 35 g corner (+x -y +z)": {
     "F_N": [
-     148.2,
-     -148.2,
-     148.2
+     148.3,
+     -148.3,
+     148.3
     ],
     "M_Nmm": [
-     -5230.0,
-     -196.0,
-     5034.0
+     -6670.0,
+     -1630.0,
+     5040.0
     ],
     "boss_axial_N": [
-     4.2,
-     -27.9,
-     -11.4,
-     -46.5,
-     -78.5,
-     -62.1
+     10.2,
+     -29.1,
+     -16.3,
+     -40.5,
+     -79.8,
+     -67.0
     ],
     "boss_shear_N": [
-     52.2,
-     52.9,
-     52.5,
-     51.9,
-     52.6,
-     52.2
+     50.7,
+     56.0,
+     54.2,
+     48.3,
+     53.9,
+     52.0
     ],
-    "max_tension_N": 78.5
+    "max_tension_N": 79.8
    },
    "swap insert 60 N": {
     "F_N": [
@@ -1602,17 +1632,17 @@
      0.0
     ],
     "M_Nmm": [
-     79.0,
-     -0.0,
+     -1140.0,
+     0.0,
      0.0
     ],
     "boss_axial_N": [
-     14.8,
-     15.2,
-     15.0,
-     14.8,
-     15.2,
-     15.0
+     18.8,
+     12.0,
+     14.2,
+     18.8,
+     12.0,
+     14.2
     ],
     "boss_shear_N": [
      0.0,
@@ -1631,17 +1661,17 @@
      0.0
     ],
     "M_Nmm": [
-     4111.0,
+     3602.0,
      0.0,
      -0.0
     ],
     "boss_axial_N": [
-     -25.0,
-     0.2,
-     -12.7,
-     -25.0,
-     0.2,
-     -12.7
+     -24.3,
+     -3.1,
+     -10.0,
+     -24.3,
+     -3.1,
+     -10.0
     ],
     "boss_shear_N": [
      0.0,
@@ -1651,7 +1681,7 @@
      0.0,
      0.0
     ],
-    "max_tension_N": 25.0
+    "max_tension_N": 24.3
    }
   },
   "mount_pts": [
@@ -1668,7 +1698,7 @@
    [
     -33.1,
     67.1,
-    80.27
+    110.76
    ],
    [
     33.1,
@@ -1683,11 +1713,11 @@
    [
     33.1,
     67.1,
-    80.27
+    110.76
    ]
   ],
   "mass_g": {
-   "cartridge": 88.94,
+   "cartridge": 89.7,
    "slider": 4.04,
    "receiver": 79.54,
    "lid": 6.87,
@@ -1709,7 +1739,7 @@
     "count": 1,
     "version": "v5",
     "bed_face": "closed end (z 0) down",
-    "mass_g": 88.94,
+    "mass_g": 89.7,
     "extents": [
      55.0,
      58.6,
@@ -1719,7 +1749,7 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[29237.1]",
+     "eroded_volumes_mm3": "[29342.3]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
@@ -1727,7 +1757,7 @@
      "ok": true
     },
     "bed_mm2": 3125.0,
-    "overhang_mm2": 4121.0,
+    "overhang_mm2": 4271.0,
     "island_run_mm": 0.0
    },
    "slider": {
@@ -1773,7 +1803,7 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[30155.9]",
+     "eroded_volumes_mm3": "[30154.4]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
@@ -1840,9 +1870,9 @@
    }
   },
   "system_manifest": "runs/battery_latch/v1/manifest_overseer/manifest.json",
-  "overseer_assembly_A": {
+  "overseer_assembly_B": {
    "x_tab": 52.099,
-   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11048.7 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2492 g (E), CG 23.0 mm off thrust axis (E) [+22.9, +1.0, -75.8], 32.8 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
+   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11741.1 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2493 g (E), CG 13.0 mm off thrust axis (E) [+12.9, +1.0, -75.8], 31.4 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
    "balance": {
     "applies": true,
     "ref": [
@@ -1858,30 +1888,30 @@
     "tol_mm": 3.0,
     "cases": {
      "all": {
-      "mass_g": 2492.3,
+      "mass_g": 2493.06,
       "cg_offset": [
-       22.94,
+       12.94,
        0.99,
-       -75.82
+       -75.84
       ],
-      "horizontal_mm": 22.97,
-      "axial_mm": -75.82,
+      "horizontal_mm": 12.98,
+      "axial_mm": -75.84,
       "pass_": false
      },
      "no_swap": {
       "mass_g": 1745.28,
       "cg_offset": [
-       32.77,
+       31.35,
        1.42,
        -53.16
       ],
-      "horizontal_mm": 32.8,
+      "horizontal_mm": 31.38,
       "axial_mm": -53.16,
       "pass_": false
      }
     },
     "worst_case": "no_swap",
-    "worst_horizontal_mm": 32.8,
+    "worst_horizontal_mm": 31.38,
     "pass_": false
    },
    "pairs": [
@@ -1893,12 +1923,12 @@
     [
      "belly sled + pods",
      "receiver",
-     11048.71
+     11741.11
     ],
     [
      "belly sled + pods",
      "receiver_strips",
-     68.37
+     104.95
     ],
     [
      "foot 1",
@@ -1913,13 +1943,13 @@
     [
      "down camera",
      "receiver",
-     61.84
+     40.43
     ]
    ]
   },
-  "overseer_assembly_B": {
-   "x_tab": 22.098999999999997,
-   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11972.9 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2492 g (E), CG 12.8 mm off thrust axis (E) [+12.8, +1.0, -75.8], 31.1 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
+  "overseer_assembly_A": {
+   "x_tab": 82.09899999999999,
+   "summary": "System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11173.3 mm\u00b3 (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2493 g (E), CG 23.1 mm off thrust axis (E) [+23.1, +1.0, -75.8], 33.0 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL",
    "balance": {
     "applies": true,
     "ref": [
@@ -1935,30 +1965,30 @@
     "tol_mm": 3.0,
     "cases": {
      "all": {
-      "mass_g": 2492.3,
+      "mass_g": 2493.06,
       "cg_offset": [
-       12.79,
+       23.1,
        0.99,
-       -75.82
+       -75.84
       ],
-      "horizontal_mm": 12.83,
-      "axial_mm": -75.82,
+      "horizontal_mm": 23.12,
+      "axial_mm": -75.84,
       "pass_": false
      },
      "no_swap": {
       "mass_g": 1745.28,
       "cg_offset": [
-       31.11,
+       33.01,
        1.42,
        -53.16
       ],
-      "horizontal_mm": 31.14,
+      "horizontal_mm": 33.04,
       "axial_mm": -53.16,
       "pass_": false
      }
     },
     "worst_case": "no_swap",
-    "worst_horizontal_mm": 31.14,
+    "worst_horizontal_mm": 33.04,
     "pass_": false
    },
    "pairs": [
@@ -1968,29 +1998,29 @@
      324.0
     ],
     [
+     "cage lower",
+     "cartridge",
+     27.0
+    ],
+    [
+     "cage lower",
+     "receiver",
+     81.0
+    ],
+    [
      "belly sled + pods",
      "receiver",
-     11972.93
+     11173.3
     ],
     [
      "belly sled + pods",
      "receiver_strips",
-     104.37
-    ],
-    [
-     "foot 1",
-     "receiver",
-     46.53
-    ],
-    [
-     "foot 2",
-     "receiver",
-     46.53
+     68.95
     ],
     [
      "down camera",
      "receiver",
-     41.84
+     63.25
     ]
    ]
   }
