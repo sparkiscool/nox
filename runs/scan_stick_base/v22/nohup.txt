@@ -187,3 +187,14 @@ layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside t
 it  18 beta    8 J 106.9545 vol 0.0358 (dil 0.0877 g -0.154) grey  2.3% ch 0.100 worst switch panel push 50 N 2.16e+03 41.8s
 it  19 beta    8 J  37.1905 vol 0.0392 (dil 0.0947 g -0.086) grey  2.5% ch 0.100 worst switch panel push 50 N 750 42.1s
 it  20 beta    8 J   8.7889 vol 0.0430 (dil 0.1022 g -0.013) grey  2.8% ch 0.100 worst switch panel push 50 N 169 41.2s
+it  21 beta    8 J   6.9686 vol 0.0437 (dil 0.1022 g -0.005) grey  2.7% ch 0.100 worst cage bump top 100 N (spine s 117 43.0s
+it  22 beta    8 J   6.9352 vol 0.0448 (dil 0.1017 g -0.010) grey  2.7% ch 0.100 worst cage bump top 100 N (spine s 116 41.4s
+it  23 beta    8 J   6.9023 vol 0.0458 (dil 0.1016 g -0.011) grey  2.7% ch 0.100 worst cage bump top 100 N (spine s 116 43.0s
+it  24 beta    8 J   6.8736 vol 0.0467 (dil 0.1018 g -0.008) grey  2.6% ch 0.100 worst cage bump top 100 N (spine s 115 42.1s
+it  25 beta    8 J   6.8697 vol 0.0474 (dil 0.1019 g -0.008) grey  2.7% ch 0.100 worst cage bump top 100 N (spine s 115 41.2s
+it  26 beta    8 J   6.8318 vol 0.0471 (dil 0.1018 g +0.029) grey  2.6% ch 0.100 worst cage bump top 100 N (spine s 115 40.7s
+it  27 beta    8 J   7.7400 vol 0.0439 (dil 0.0978 g -0.011) grey  2.6% ch 0.100 worst switch panel push 50 N 140 42.2s
+it  28 beta    8 J   6.9088 vol 0.0426 (dil 0.0970 g -0.020) grey  2.6% ch 0.100 worst cage bump top 100 N (spine s 116 41.4s
+it  29 beta    8 J   6.8375 vol 0.0444 (dil 0.0981 g -0.008) grey  2.6% ch 0.100 worst cage bump top 100 N (spine s 115 41.6s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  30 beta   16 J  45.5416 vol 0.0428 (dil 0.0958 g +0.012) grey  1.1% ch 0.100 worst switch panel push 50 N 918 42.5s
