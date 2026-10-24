@@ -1,7 +1,7 @@
 {
  "h": 1.5,
- "mass_g": 251.0,
- "worst": 0.407,
+ "mass_g": 250.5,
+ "worst": 0.415,
  "worst_case": "insert at the drone 60 N [swap]",
  "worst_at": [
   27.5,
@@ -12,8 +12,8 @@
   {
    "case": "insert at the drone 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.39,
-   "across": 0.407,
+   "inlayer": 0.4,
+   "across": 0.415,
    "at": [
     27.5,
     74.9,
@@ -23,8 +23,8 @@
   {
    "case": "insert at the drone, stall 74 N [misuse]",
    "cls": "misuse",
-   "inlayer": 0.301,
-   "across": 0.314,
+   "inlayer": 0.308,
+   "across": 0.32,
    "at": [
     27.5,
     74.9,
@@ -34,19 +34,19 @@
   {
    "case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.371,
-   "across": 0.406,
+   "inlayer": 0.373,
+   "across": 0.394,
    "at": [
-    29.0,
-    73.4,
-    34.2
+    9.5,
+    74.9,
+    -1.8
    ]
   },
   {
    "case": "insert at a bay 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.384,
-   "across": 0.403,
+   "inlayer": 0.394,
+   "across": 0.411,
    "at": [
     27.5,
     74.9,
@@ -56,8 +56,8 @@
   {
    "case": "insert at a bay, stall 74 N [misuse]",
    "cls": "misuse",
-   "inlayer": 0.296,
-   "across": 0.31,
+   "inlayer": 0.304,
+   "across": 0.317,
    "at": [
     27.5,
     74.9,
@@ -67,12 +67,12 @@
   {
    "case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.362,
-   "across": 0.395,
+   "inlayer": 0.373,
+   "across": 0.386,
    "at": [
-    29.0,
-    73.4,
-    34.2
+    9.5,
+    74.9,
+    -1.8
    ]
   },
   {
@@ -89,8 +89,8 @@
   {
    "case": "handling 3 g in + 2 g along -X, Overseer cartridge carried (CG 5.2 off in Y) [handling]",
    "cls": "misuse",
-   "inlayer": 0.111,
-   "across": 0.119,
+   "inlayer": 0.114,
+   "across": 0.123,
    "at": [
     29.0,
     73.4,
@@ -100,8 +100,8 @@
   {
    "case": "handling 3 g out, Overseer cartridge carried (on the rods; CG 5.2 off in Y) [handling]",
    "cls": "misuse",
-   "inlayer": 0.095,
-   "across": 0.085,
+   "inlayer": 0.098,
+   "across": 0.082,
    "at": [
     27.5,
     74.9,
@@ -133,8 +133,8 @@
   {
    "case": "across +X 43.5 N at a seat, receiver gaps closed (+ rib-to-stop couple) [swap]",
    "cls": "flight",
-   "inlayer": 0.211,
-   "across": 0.124,
+   "inlayer": 0.209,
+   "across": 0.125,
    "at": [
     -26.5,
     71.9,
@@ -144,7 +144,7 @@
   {
    "case": "across -X 43.5 N at a seat, receiver gaps closed (+ rib-to-stop couple) [swap]",
    "cls": "flight",
-   "inlayer": 0.211,
+   "inlayer": 0.209,
    "across": 0.132,
    "at": [
     -26.5,
@@ -156,7 +156,7 @@
    "case": "centring +X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
    "cls": "flight",
    "inlayer": 0.294,
-   "across": 0.223,
+   "across": 0.221,
    "at": [
     15.5,
     175.4,
@@ -167,7 +167,7 @@
    "case": "centring -X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
    "cls": "flight",
    "inlayer": 0.294,
-   "across": 0.233,
+   "across": 0.215,
    "at": [
     15.5,
     175.4,
@@ -177,12 +177,12 @@
   {
    "case": "DS3218 stall torque 1.96 N.m on the ear pads, reacted at the rod sockets through the rollers [misuse]",
    "cls": "misuse",
-   "inlayer": 0.179,
-   "across": 0.219,
+   "inlayer": 0.162,
+   "across": 0.273,
    "at": [
-    -19.0,
-    187.4,
-    11.8
+    33.5,
+    95.9,
+    -9.2
    ]
   }
  ],

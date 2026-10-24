@@ -326,4 +326,4 @@ t 21.96 phi -204.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30')
 t 21.97 phi -206.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
 t 21.99 phi -208.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
 t 22.00 phi -210.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec30') overlaps []
-sweep 328 states in 1496 s
+sweep 328 states in 1448 s

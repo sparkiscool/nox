@@ -472,7 +472,7 @@ def keepouts(servo="DS3218"):
     for nm in ("carrier+", "carrier-", "roller+", "roller-"):
         sg = 1 if nm.endswith("+") else -1
         K.append(swept_grown(servo, nm, -sg * din, sg * STROKE) - stops())   # 1.0 everywhere but the stop faces (r4)
-    K.append(cylY(0, U_C, CAM["y"][0] - CLR, CAM["y"][1] + CLR, CAM["lobe"] + CLR, 64))             # the cam's swept disc
+    K.append(cylY(0, U_C, CAM["y"][0] - CLR, CAM["y"][1] + CLR, CAM["lobe"] + CLR + 0.05, 64))      # the cam's swept disc (+0.05: polygons)
     K.append(cylY(0, U_C, Y_SERVO_TOP + 4.0 - CLR, Y_SERVO_TOP + 4.0 + HORN["hub_h"] + HORN["disc_t"] + CLR, HORN["disc_d"] / 2 + CLR, 64))  # horn + 1.0 (r4: its top face)
     sv_ = SERVOS[servo]                                                        # the servo: its pocket is the cradle's cut (0.2 fit, slide-in to -u,
     K.append(cylY(0.0, U_C, Y_SERVO_TOP - 0.01, Y_SERVO_TOP + sv_["boss"][1] + CLR, sv_["boss"][0] / 2 + CLR, 48))   # ear slots; r5); its spline boss
