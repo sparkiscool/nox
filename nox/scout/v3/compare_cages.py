@@ -33,7 +33,7 @@ def draw(ax, R, view):
     for x, y in MOTORS: ax.plot(x + 44.45 * np.cos(t), y + 44.45 * np.sin(t), np.full_like(t, 41.2), color="#d9a400", lw=0.8)
     lc = R.get("l_carbon", 0.0); T = R.get("types")
     for k, (a, b) in enumerate(R["rods"]):
-        pr = T[k] == "pet" if T else np.linalg.norm(np.subtract(b, a)) < lc
+        pr = T[k] in ("pet", "web") if T else np.linalg.norm(np.subtract(b, a)) < lc
         ax.plot(*zip(a, b), color="#9aa6b2" if pr else "#202020", lw=3.2 if pr else 1.3)
     ends = np.array([p for ab in R["rods"] for p in ab])
     ax.scatter(*ends.T, s=6, color="#4477aa")

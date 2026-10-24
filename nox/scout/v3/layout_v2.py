@@ -64,7 +64,9 @@ E_PET, G_PET, SIG_PET, PET_GPM = 2000.0, 740.0, 25.0, 0.0457   # MPa (E), MPa (E
 PET_R = PET_W / 2                            # strut half width: the node turns it flat to the nearest keep-out (C)
 
 
-NOPRINT = set()                              # short members where a 6 x 6 strut misses a keep-out: carbon only as part of a long straight rod
+NOPRINT = set()                              # short members where a 6 x 6 strut misses a keep-out: a 3 x 12 printed web there (>= 2.0 floor)
+WEB_T, WEB_W = 3.0, 12.0                     # web 3 thick across the keep-out, 12 along it (36 mm2), weak axis I 27 taken both ways (E)
+WEB_I, WEB_J = WEB_W * WEB_T ** 3 / 12, 90.0
 
 
 def _mkey(p0, p1):
@@ -122,11 +124,11 @@ def _runs(N, kind, members):
 
 
 def member_types(N, kind, members):
-    """{member: "rod" | "pet" | "bad"} (Spark 24 Oct, carbon where its length earns it): carbon when its straight run is >= L_CARBON,
-    else a 6 x 6 PETG strut in its node; "bad" = a short run where no strut fits (dropped)"""
+    """{member: "rod" | "pet" | "web"} (Spark 24 Oct, carbon where its length earns it): carbon when its straight run is >= L_CARBON,
+    else printed in its node: a 6 x 6 PETG strut, or a 3 x 12 web where a 6 x 6 misses a keep-out"""
     root, tot = _runs(N, kind, members); out = {}
     for e, m in enumerate(members):
-        out[m] = "rod" if tot[root[e]] >= L_CARBON else ("bad" if _mkey(N[m[0]], N[m[1]]) in NOPRINT else "pet")
+        out[m] = "rod" if tot[root[e]] >= L_CARBON else ("web" if _mkey(N[m[0]], N[m[1]]) in NOPRINT else "pet")
     return out
 
 
@@ -173,7 +175,7 @@ def strut(p0, p1, w=PET_W):
 
 
 def member_mesh(p0, p1, typ):
-    return rod(p0, p1) if typ == "rod" else strut(p0, p1)
+    return rod(p0, p1) if typ == "rod" else (rod(p0, p1, WEB_T / 2, 12) if typ == "web" else strut(p0, p1))   # a web drawn as its 3.0 envelope
 
 
 def rotz(deg):
@@ -600,6 +602,7 @@ def _members_elems(N, kind, members):
         for e, (a, b) in enumerate(members):
             if T[(a, b)] == "bad": return N, None
             if T[(a, b)] == "pet": els.append((e, "pet", a, b, _beam(N[a], N[b], E_PET, G_PET, PET_A, PET_I, PET_J)))
+            elif T[(a, b)] == "web": els.append((e, "web", a, b, _beam(N[a], N[b], E_PET, G_PET, PET_A, WEB_I, WEB_J)))
             else: els.append((e, "rod", a, b, _beam(N[a], N[b], E_ROD, G_ROD, ROD_A, ROD_I, 2 * ROD_I)))
         return N, els
     for e, (a, b) in enumerate(members):
@@ -670,9 +673,9 @@ def frame_eval(N, kind, members, cases):
                 Nax = fl[6]; M = max(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
                 Tc, Cc = capacity(L + 2 * CONN_L)
                 v = max((abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, Nax / Tc if Nax > 0 else -Nax / Cc)
-            elif typ == "pet":                                            # printed strut: stress at the corner, buckling
+            elif typ in ("pet", "web"):                                   # printed strut / web: stress at the corner, buckling
                 Nax = fl[6]; Ms = max(abs(fl[4]) + abs(fl[5]), abs(fl[10]) + abs(fl[11]))
-                I_, c_ = PET_I, PET_W / 2
+                I_, c_ = (PET_I, PET_W / 2) if typ == "pet" else (WEB_I, WEB_T / 2)
                 pcr = 0.7 * math.pi ** 2 * E_PET * I_ / L ** 2
                 v = max((abs(Nax) / PET_A + Ms * c_ / I_) / SIG_PET, -Nax / pcr if Nax < 0 else 0.0)
             else:
@@ -704,10 +707,11 @@ def _handling_all(N, kind, members, els, lu, act, nn, nodes, name, cls):
             Nax = fl[6]; M = np.maximum(np.hypot(fl[4], fl[5]), np.hypot(fl[10], fl[11]))
             Tc, Cc = capacity(L + 2 * CONN_L)
             v = np.maximum((np.abs(Nax) / ROD_A + M * ROD_R / ROD_I) / SIG_ROD, np.where(Nax > 0, Nax / Tc, -Nax / Cc))
-        elif typ == "pet":
+        elif typ in ("pet", "web"):
             Nax = fl[6]; Ms = np.maximum(np.abs(fl[4]) + np.abs(fl[5]), np.abs(fl[10]) + np.abs(fl[11]))
-            pcr = 0.7 * math.pi ** 2 * E_PET * PET_I / L ** 2
-            v = np.maximum((np.abs(Nax) / PET_A + Ms * PET_W / 2 / PET_I) / SIG_PET, np.where(Nax < 0, -Nax / pcr, 0.0))
+            I_, c_ = (PET_I, PET_W / 2) if typ == "pet" else (WEB_I, WEB_T / 2)
+            pcr = 0.7 * math.pi ** 2 * E_PET * I_ / L ** 2
+            v = np.maximum((np.abs(Nax) / PET_A + Ms * c_ / I_) / SIG_PET, np.where(Nax < 0, -Nax / pcr, 0.0))
         else:
             v = np.linalg.norm(fl[6:9], axis=0) / CAP_TPU
         v2 = (v ** 2).reshape(nl, 3).sum(1)
@@ -728,7 +732,7 @@ def cage_mass(N, kind, members):
     """rods 11 g/m + every printed node (body + a socket per rod end); a ring node a straight ring rod runs through
     with nothing else on it is no node at all (C / E)"""
     T = member_types(N, kind, members)
-    g = sum((PET_GPM if T[(a, b)] == "pet" else ROD_GPM) * np.linalg.norm(N[b] - N[a]) for a, b in members)
+    g = sum((PET_GPM if T[(a, b)] in ("pet", "web") else ROD_GPM) * np.linalg.norm(N[b] - N[a]) for a, b in members)
     deg, typ = {}, {}
     for a, b in members:
         for i, j in ((a, b), (b, a)): deg.setdefault(i, []).append(j); typ[(i, j)] = T[(a, b)]
@@ -757,7 +761,7 @@ def cage_count(N, kind, members):
         return x
     deg = {}
     for a, b in members:
-        if T[(a, b)] == "pet": par[f(a)] = f(b)
+        if T[(a, b)] in ("pet", "web"): par[f(a)] = f(b)
         else:
             for i, j in ((a, b), (b, a)): deg.setdefault(i, []).append(j)
     nodes = set(i for e in members for i in e); comps = {}
@@ -1219,9 +1223,9 @@ used = sorted(set([i for e in chosen for i in e]))
 PIECES, PNODES = cage_count(N, kind, chosen)
 TYP = member_types(N, kind, chosen); _root, _tot = _runs(N, kind, chosen)
 CARB = sorted({round(_tot[_root[e]], 1) for e, m in enumerate(chosen) if TYP[m] == "rod"})          # carbon rod (straight run) lengths
-NPET = sum(1 for m in chosen if TYP[m] == "pet")
+NPET = sum(1 for m in chosen if TYP[m] in ("pet", "web")); NWEB = sum(1 for m in chosen if TYP[m] == "web")
 say(f"members: {len(chosen) - NPET} carbon segments in {len(CARB)} distinct rod lengths (shortest rod {CARB[0]:.1f} mm, L_CARBON {L_CARBON:.0f}), "
-    f"{NPET} printed 6 x 6 PETG struts (part of their nodes); short members with no room for a strut were dropped ({len(NOPRINT)} candidates)")
+    f"{NPET} printed (6 x 6 struts {NPET - NWEB}, 3 x 12 webs {NWEB} where a 6 x 6 misses a keep-out; part of their nodes)")
 say(f"cage: {len(chosen)} members = {PIECES} carbon rod pieces (straight runs through a node are one rod), {PNODES} printed parts (count); {sum(np.linalg.norm(N[b] - N[a]) for a, b in chosen) / 1000:.2f} m, "
     f"{len([i for i in used if kind[i] != 'C'])} printed nodes, {len([i for i in used if kind[i] == 'C'])} joints into the core; ~{best['mass']:.0f} g (E)")
 say("cases (frame model, F): worst rod index / deflection at the load")
@@ -1302,7 +1306,7 @@ json.dump(R, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=lamb
 pad, carrier, body, tips = best["pp"]
 s = Scene("Scout v3 system v2", "cage laid out by optimisation on the whole drone; the cage touches first in every direction")
 P = lambda n, m, grp, col, pr, note="": s.part(n, m, group=grp, color=col, printed=pr, note=note)
-bands = {"rods": [rod(N[a], N[b]) for a, b in chosen if TYP[(a, b)] == "rod"], "struts": [strut(N[a], N[b]) for a, b in chosen if TYP[(a, b)] == "pet"]}
+bands = {"rods": [rod(N[a], N[b]) for a, b in chosen if TYP[(a, b)] == "rod"], "struts": [member_mesh(N[a], N[b], TYP[(a, b)]) for a, b in chosen if TYP[(a, b)] in ("pet", "web")]}
 P("plate", PLATE, "frame", "#3a3a3a", False)
 P("motors", trimesh.util.concatenate(BELLS), "frame", "#b0b0b0", False)
 pv = []
