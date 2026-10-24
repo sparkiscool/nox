@@ -53,12 +53,17 @@ def sha12(p):
     return hashlib.sha256(open(p, "rb").read()).hexdigest()[:12]
 
 
-def piece_meshes(log=print):
+def piece_meshes(log=print, swap=None):
     """W meshes of every piece, regenerated from the part scripts (sha checked against print/) or mapped back from the
-    print file (topology parts, topo.compare.old_in_w: drawn bodies fitted, 0 mm3 missing)."""
+    print file (topology parts, topo.compare.old_in_w: drawn bodies fitted, 0 mm3 missing). swap = {piece key: W stl}
+    puts a new version in its place (the piece pass's assembled recheck: same placement as the piece it replaces)."""
     out, proof = {}, {}
+    swap = swap or {}
+    for key, path in swap.items():
+        out[key] = trimesh.load(path, force="mesh"); proof[key] = dict(source=f"swap {os.path.relpath(path, ROOT)}", sha=sha12(path))
     env = dict(os.environ, PYTHONPATH=os.pathsep.join([STAND, HERE, NOX]))
     for key, (n, ver, tag, pf, qty, ax) in PIECES.items():
+        if key in swap: continue
         w = os.path.join(CACHE, f"box_{n}_{ver}_W.stl")
         pr = os.path.join(ROOT, "print", pf)
         if tag == "obj":
@@ -157,6 +162,21 @@ def collar(off0, off1):
     return pyr(off1) - pyr(off0, Z_EDGE - 1, Z_RIM + 1)
 
 
+Z_SEAT = 142.3                                    # catch seat frame z 0 in W: panel contact face 82.7 + z (box_catch.assembly.json) on the pads' plane 84 + (Z - 143.6)
+SEAT_TO_W = np.array([[0, -1.0, 0, 0], [1.0, 0, 0, Y_FUN], [0, 0, 1.0, Z_SEAT], [0, 0, 0, 1.0]])   # seat y -> W -X (the seated faces), seat x -> W Y
+
+
+def catch_parts():
+    """the box catch system's own assembly (funnel panels v7, hook latch v2 out), posed in W."""
+    import assembly
+    a = assembly.load(os.path.join(HERE, "box_catch.assembly.json"))
+    out = {}
+    for p, t in zip(a.parts, a.meshes()):
+        if p["name"].startswith("drone"): continue
+        t = t.copy(); t.apply_transform(SEAT_TO_W); out["catch: " + p["name"]] = man(t)
+    return out
+
+
 def context():
     """name -> (owner, manifold, mass g, tag). Bought parts in pose and the other systems' parts as envelopes."""
     C = {}
@@ -166,8 +186,7 @@ def context():
     C["arm_hub_sweep"] = ("swap arm (hub r 86, Y 7..74, turning)", cyl_y(86, 7, 74), 0.0, "C")
     C["arm_motor_sweep"] = ("swap arm (3 NEMA17 on the arm, r 106, Y 2..50, turning)", cyl_y(106.5, 2, 50) - cyl_y(86, 2, 50), 0.0, "C")
     C["arm_park_sweep"] = ("swap arm (heads + packs parked, r 98.5, Y 74..222, turning)", cyl_y(98.5, 74, 222) - cyl_y(86, 74, 74.5), 0.0, "C")
-    C["collar_skin"] = ("box catch (funnel collar skin)", collar(0.0, 4.4), 475.0, "E")
-    C["collar_ribs"] = ("box catch (funnel panel v6 ribs, 9 deep, where drawn)", collar(4.4, 15.0), 0.0, "E")
+    for k, m in catch_parts().items(): C[k] = ("box catch (assembly file)", m, 0.0, "M")
     C["psu"] = ("box electronics (LRS-350-24 on the rear sheet)", S.box(42, 157, -66, -36, -170, 45), 750.0, "E")
     return C
 
@@ -186,7 +205,7 @@ def fit_check(I, C, log=print):
     names = list(I) + list(C)
     body = {k: I[k][1] for k in I}; body.update({k: C[k][1] for k in C})
     bb = {k: np.array(body[k].bounding_box()).reshape(2, 3) for k in names}
-    sweeps = [k for k in C if k.startswith("arm_") or k.startswith("collar")]
+    sweeps = [k for k in C if k.startswith("arm_") or k.startswith("collar") or k == "stub"]
     ov, sw = {}, {}
     for i, a in enumerate(names):
         for b in names[i + 1:]:
@@ -207,7 +226,7 @@ def mass_cg(I, C, M):
         g = m.volume() * MATERIALS["PETG"].density * 1e-3
         cen = np.array(tmesh(m).center_mass); rows[k] = round(g, 1); mt += g; mc += g * cen
     for k, (own, m, g, tag) in C.items():
-        if g <= 0 or k in ("collar_skin", "stub"): continue
+        if g <= 0 or k == "stub": continue
         cen = np.array(tmesh(m).center_mass); rows[k] = round(g, 1); mt += g; mc += g * cen
     for k, (g, p, _) in LUMPS.items():
         rows[k] = g; mt += g; mc += g * np.array(p)
@@ -353,7 +372,7 @@ class Model:
         key = fixed.tobytes().__hash__()
         if getattr(self, "_fkey", None) != key:
             if getattr(self, "_ps", None) is not None: self._ps.free_memory(everything=True)
-            self._Kf = sp.triu(self.K[free][:, free], format="csr"); self._ps = pypardiso.PyPardisoSolver(); self._ps.set_matrix_type(2)
+            self._Kf = sp.triu(self.K[free][:, free] + sp.identity(len(free)) * 1e-4, format="csr"); self._ps = pypardiso.PyPardisoSolver(); self._ps.set_matrix_type(2)
             self._fkey = key; self._free = free
         U = np.zeros(3 * self.nN); U[free] = self._ps.solve(self._Kf, F.ravel()[free])
         return U.reshape(-1, 3)
@@ -405,6 +424,7 @@ def E_catch(m_g, v=0.15, drop=0.030):
 
 STOP = 3.0                                    # mm: impact force = energy / 3 mm (box-stand.md weak-spot 4: Scout drop 64 N per pad)
 P_LAND = (60.0, Y_FUN + 30.0, 175.0)          # the drone comes in 30 off on the diagonal (toward the +X, +Y pad), E
+P_LAND_M = (-60.0, Y_FUN - 30.0, 175.0)       # and its mirror (toward the -X, -Y pad)
 ARM_TIP = lambda ang, r=140.0: np.array([r * math.cos(math.radians(ang)), Y_C, r * math.sin(math.radians(ang))])
 
 
@@ -419,8 +439,11 @@ def cases():
     C["uneven floor (front-right corner off), Overseer seated"] = dict(cls="sustained", acc=(0, 0, -1), drone="Overseer", loads=[], support="uneven")
     for dn in ("Scout", "Overseer"):
         F = e(DRONES[dn])
-        C[f"{dn} catch, 30 off at 0.15 m/s ({F:.0f} N)"] = dict(cls="flight", acc=(0, 0, -1), drone=dn,
+        C[f"{dn} catch, 30 off toward +X +Y at 0.15 m/s ({F:.0f} N)"] = dict(cls="flight", acc=(0, 0, -1), drone=dn,
                                                               loads=[("funnel", (-0.25 * F, -0.25 * F, -F), (0, 0, 0), P_LAND)])
+    F = e(DRONES["Overseer"])
+    C[f"Overseer catch, 30 off toward -X -Y ({F:.0f} N)"] = dict(cls="flight", acc=(0, 0, -1), drone="Overseer",
+                                                               loads=[("funnel", (0.25 * F, 0.25 * F, -F), (0, 0, 0), P_LAND_M)])
     F = e(DRONES["Scout"], 0.0, 0.150)
     C[f"misuse: Scout free fall 0.15 m ({F:.0f} N)"] = dict(cls="misuse", acc=(0, 0, -1), drone="Scout",
                                                           loads=[("funnel", (-0.25 * F, -0.25 * F, -F), (0, 0, 0), P_LAND)])
@@ -550,7 +573,7 @@ def run_fe(I, h=4.0, log=print, seed=None, max_it=30):
             rn = Rm[Mo.comp[fx]] @ nrm                                          # support push along its normal (K u - F = reaction)
             cm = np.zeros(Mo.nN); np.add.at(cm, Mo.comp[fx], 1)
             pull = rn / cm[Mo.comp[fx]] < -0.01
-            if not pull.any(): break
+            if not pull.any() or (~pull).sum() < 30: break
             fx = fx[~pull]
         hot[fx] = True
         rows = {}
@@ -571,6 +594,18 @@ def run_fe(I, h=4.0, log=print, seed=None, max_it=30):
             if len(q): reac[k] = np.round(fj[q].sum(0), 1).tolist(); sup[k] = Mo.xyz_p(q)
         pin["cases"][cname] = dict(cls=c["cls"], acc=acc, ext=ext, sup=sup, bilateral=nrm is None)
         dfl = {rn: np.round(U[Mo.comp[rnodes(rn)[0]]].mean(0), 3).tolist() for rn in ("stub", "funnel", "backplate@-90", "backplate@-60")}
+        def rigid(rn):
+            p, X = rnodes(rn); u = U[Mo.comp[p]]; c0 = X.mean(0); r = X - c0
+            A = np.zeros((3 * len(X), 6)); A[:, :3] = np.tile(np.eye(3), (len(X), 1))
+            for i in range(3):
+                e = np.zeros(3); e[i] = 1.0; A[:, 3 + i] = np.cross(e[None], r).ravel()
+            x = np.linalg.lstsq(A, u.ravel(), rcond=None)[0]
+            return lambda P: x[:3] + np.cross(x[3:], np.asarray(P) - c0), x[3:]
+        arm, th = rigid("stub")                                               # the arm rides the stub face as a rigid body
+        fun, _ = rigid("funnel"); bay, _ = rigid("backplate@-90")
+        dfl["stub rotation mrad"] = np.round(th * 1000, 3).tolist()
+        dfl["arm tip at the drone minus funnel"] = np.round(arm(ARM_TIP(90, 140)) - fun(ARM_TIP(90, 140)), 3).tolist()
+        dfl["arm tip at -90 minus bay -90"] = np.round(arm(ARM_TIP(-90, 140)) - bay(ARM_TIP(-90, 140)), 3).tolist()
         dfl["bay -90 minus stub"] = np.round(np.array(dfl["backplate@-90"]) - np.array(dfl["stub"]), 3).tolist()
         dfl["funnel minus stub"] = np.round(np.array(dfl["funnel"]) - np.array(dfl["stub"]), 3).tolist()
         res["cases"][cname] = dict(cls=c["cls"], rows=rows, support_reactions_N=reac, deflection_mm=dfl, contact_iterations=it + 1,
@@ -586,17 +621,233 @@ def run_fe(I, h=4.0, log=print, seed=None, max_it=30):
     return res, Mo
 
 
+# ======================================================================= piece rechecks (F)
+H_FINE = dict(mast=2.0, kb=2.0, cradle_keel=2.0, bar_half=1.5, toe=1.5, frame_mid=1.5, frame_endR=1.5, frame_endL=1.5,
+              post_seg=1.0, bracket_jA=1.0, bracket_jB=1.0, bracket_e=1.0, baymod=1.0)     # the stand FE grids (box-stand.md)
+PRIOR = dict(mast=0.08, kb=0.09, cradle_keel=0.18, bar_half=0.38, toe=0.19, frame_mid=0.59, frame_endR=0.86, frame_endL=0.90,
+             post_seg=0.16, bracket_jA=0.05, bracket_jB=0.09, bracket_e=0.14, baymod=0.05)   # each piece's own FE worst (box-stand.md, box-case.md)
+
+
+def piece_model(t, hf, axis):
+    from scipy import ndimage
+    b0 = np.floor(t.bounds[0] / hf) * hf - hf; n = np.ceil((t.bounds[1] - b0) / hf).astype(int) + 1
+    A = voxelise(t, *[b0[d] + (np.arange(n[d]) + 0.5) * hf for d in range(3)])
+    lab, nl = ndimage.label(A); sizes = np.bincount(lab.ravel())[1:]
+    keep = lab == (1 + int(np.argmax(sizes)))
+    cells = np.argwhere(keep); L = np.array(LOCAL)
+    g = ((cells[:, None, :] + L[None]) * np.array([(n[1] + 1) * (n[2] + 1), n[2] + 1, 1])).sum(-1)
+    u, inv = np.unique(g, return_inverse=True); en = inv.reshape(g.shape)
+    ijk = np.stack([u // ((n[1] + 1) * (n[2] + 1)), (u // (n[2] + 1)) % (n[1] + 1), u % (n[2] + 1)], 1)
+    X = ijk * hf + b0
+    C = stiffness(MATERIALS["PETG"], axis); KE, B0 = hex_ke(hf, C)
+    dof = (en[:, :, None] * 3 + np.arange(3)).reshape(len(en), 24)
+    K = sp.coo_matrix((np.tile(KE.ravel(), len(en)), (np.repeat(dof, 24, 1).ravel(), np.tile(dof, (1, 24)).ravel())),
+                      shape=(3 * len(u),) * 2).tocsr()
+    return dict(X=X, en=en, dof=dof, K=K, B0=B0, C=C, cells=cells, b0=b0, h=hf, bodies=int(nl), lost_mm3=float((A.sum() - keep.sum()) * hf ** 3))
+
+
+def piece_pass(I, pin, log=print, only=None):
+    import pypardiso
+    from scipy.spatial import cKDTree
+    hc = pin["h"]; out = {}
+    for k, (pk, m) in I.items():
+        if only and pk not in only and k not in only: continue
+        t0 = time.time(); axis = PIECES[pk][5]; hf = H_FINE[pk]
+        P = piece_model(tmesh(m), hf, axis); X = P["X"]; tree = cKDTree(X); nn = len(X)
+        me = np.full(len(P["en"]), hf ** 3 * MATERIALS["PETG"].density * 1e-3)
+        surf = np.bincount(P["en"].ravel(), minlength=nn) < 8                 # loads and holds act on the piece's surface
+        def near(Xc):
+            r = np.unique(np.concatenate([np.array(q, int) for q in tree.query_ball_point(Xc, hc * 1.01)] + [np.zeros(0, int)]))
+            return r[surf[r]]
+        js = [(ab, ab[0] == k) for ab in pin["joints"] if k in ab]
+        jreg = {ab: near(pin["joint_nodes"][ab]) for ab, _ in js}
+        mag = {ab: np.mean([np.linalg.norm(v[0]) for v in pin["joints"][ab].values()]) for ab, _ in js}
+        held = max(mag, key=mag.get) if mag else None
+        rows = {}
+        for cname, c in pin["cases"].items():
+            F = np.zeros((nn, 3)); hot = np.zeros(nn, bool)
+            np.add.at(F, P["en"].ravel(), np.repeat(me[:, None] * c["acc"][None] / 8.0, 8, 0))
+            if k in c["sup"]: fixn = near(c["sup"][k]); hj = None
+            else: fixn = jreg[held]; hj = held
+            for ab, isa in js:
+                if ab == hj: continue
+                Fa, Ma = pin["joints"][ab][cname]; sg = 1.0 if isa else -1.0
+                r = jreg[ab]
+                if len(r) == 0: continue
+                F[r] += wrench(X[r], sg * Fa, sg * Ma, pin["jc"][ab]); hot[r] = True
+            for (kk, rn), (Xc, Fe, Me, cc) in c["ext"].items():
+                if kk != k: continue
+                r = near(Xc); F[r] += wrench(X[r], Fe, Me, cc); hot[r] = True
+            hot[fixn] = True
+            fixed = np.zeros(nn, bool); fixed[fixn] = True
+            free = np.where(~np.repeat(fixed, 3))[0]
+            Kf = sp.triu(P["K"][free][:, free], format="csr"); ps = pypardiso.PyPardisoSolver(); ps.set_matrix_type(2)
+            U = np.zeros(3 * nn); U[free] = ps.solve(Kf, F.ravel()[free]); ps.free_memory(everything=True)
+            s = (U[P["dof"]] @ P["B0"].T) @ P["C"].T
+            idx = failure(s, "PETG", c["cls"], axis)
+            ok = ~hot[P["en"]].any(1)
+            iw = np.where(ok, idx, 0); e = int(np.argmax(iw))
+            Rf = -(F.sum(0))                                                  # what the held region must give
+            mis = None
+            if hj is not None:
+                Fh = pin["joints"][hj][cname][0] * (1.0 if hj[0] == k else -1.0)
+                mis = round(float(np.linalg.norm(Rf - Fh) / max(np.linalg.norm(Fh), 1.0)), 3)
+            rows[cname] = dict(worst=round(float(iw[e]), 3), at=np.round(P["b0"] + (P["cells"][e] + 0.5) * hf, 1).tolist(),
+                               p99=round(float(np.quantile(idx[ok], 0.99)), 3) if ok.any() else None, masked=round(float(1 - ok.mean()), 2),
+                               cls=c["cls"], held="floor" if hj is None else " | ".join(hj),
+                               held_mismatch=mis, umax_mm=round(float(np.abs(U).max()), 3))
+        wc = max(rows, key=lambda q: rows[q]["worst"])
+        out[k] = dict(piece=pk, h=hf, bodies_in_grid=P["bodies"], lost_mm3=round(P["lost_mm3"], 1), worst=rows[wc]["worst"], worst_case=wc,
+                      at=rows[wc]["at"], prior=PRIOR[pk], cases=rows)
+        log(f"piece {k:18s} worst {rows[wc]['worst']:.2f} in {wc} at {rows[wc]['at']} (own FE {PRIOR[pk]}) ({time.time() - t0:.0f} s)")
+    return out
+
+
+def export_requirements(I, pin, pieces, out_dir):
+    """one JSON per piece instance: its joints (partner, coarse contact points W, F and M on this piece about the joint
+    centroid per case), its external loads, its floor contact per case, the case class and acceleration. These are the
+    piece's topo parameters (docs/generative.md The rule 0): loads = the joint reactions, supports = the neighbours."""
+    os.makedirs(out_dir, exist_ok=True)
+    for k, (pk, m) in I.items():
+        js = {}
+        for ab in pin["joints"]:
+            if k not in ab: continue
+            sg = 1.0 if ab[0] == k else -1.0; other = ab[1] if ab[0] == k else ab[0]
+            js[other] = dict(points=np.round(pin["joint_nodes"][ab], 1).tolist(), centroid=np.round(pin["jc"][ab], 2).tolist(),
+                             cases={cn: dict(F_N=np.round(sg * v[0], 2).tolist(), M_Nmm=np.round(sg * v[1], 1).tolist())
+                                    for cn, v in pin["joints"][ab].items()})
+        cs = {}
+        for cn, c in pin["cases"].items():
+            ext = {rn: dict(points=np.round(v[0], 1).tolist(), F_N=np.round(v[1], 2).tolist(), M_Nmm=np.round(v[2], 1).tolist(),
+                            centroid=np.round(v[3], 2).tolist()) for (kk, rn), v in c["ext"].items() if kk == k}
+            cs[cn] = dict(cls=c["cls"], acc_N_per_g=np.round(c["acc"], 6).tolist(), external=ext,
+                          floor_points=np.round(c["sup"][k], 1).tolist() if k in c["sup"] else None)
+        r = dict(instance=k, piece=pk, version=PIECES[pk][1], file=f"print/{PIECES[pk][3]}", build_axis="XYZ"[PIECES[pk][5]],
+                 system_h=pin["h"], note="W coordinates (box-arm.md); forces act ON this piece; F x M sign: right hand; "
+                 "index target <= 1.0 at the case class (topo.material SAFETY)", assembled=pieces.get(k), joints=js, cases=cs)
+        json.dump(r, open(os.path.join(out_dir, f"{k}.json"), "w"), indent=0, default=float)
+
+
+def report(h=4.0):
+    """runs/box_system/v1/summary.md from the json results."""
+    fm = json.load(open(os.path.join(OUT, "fit_mass.json"))); fe = json.load(open(os.path.join(OUT, f"fe_h{h:g}.json")))
+    pp = json.load(open(os.path.join(OUT, f"pieces_h{h:g}.json")))
+    L = ["# Box structure system pass v1 (`nox/box/box_system.py`)", "",
+         f"System FE h {h:g} (F): {fe['cells']} cells, {fe['dofs']} dofs; pieces at their own grids (box-stand.md FE grids). "
+         "Index 1.0 = allowable at the case class (sustained SF 10, flight = functional SF 4, misuse SF 2.5).", "",
+         "## Fit (C / M)", "", "| Pair | mm3 |", "|---|---|"]
+    for k, v in {**fm["fit"]["piece_and_bought_overlaps_mm3"], **fm["fit"]["keepout_overlaps_mm3"]}.items(): L.append(f"| {k} | {v} |")
+    m = fm["mass"]
+    L += ["", f"## Mass and CG (M pieces, E bought / lumps)", "", f"Box {m['total_g'] / 1000:.2f} kg, CG {m['cg']}; "
+          f"with the Scout {m['with Scout']['total_g'] / 1000:.2f} kg, CG {m['with Scout']['cg']}, tip {m['with Scout']['tip_deg']}; "
+          f"with the Overseer {m['with Overseer']['total_g'] / 1000:.2f} kg, CG {m['with Overseer']['cg']}, tip {m['with Overseer']['tip_deg']} (deg).", "",
+          "## Assembled worst index per piece (piece FE with the system's joint reactions)", "",
+          "| Instance | Piece | Own FE worst | Assembled worst | Case | At (W) |", "|---|---|---|---|---|---|"]
+    for k, v in sorted(pp.items(), key=lambda kv: -kv[1]["worst"]):
+        L.append(f"| {k} | {v['piece']} | {v['prior']} | **{v['worst']:.2f}** | {v['worst_case']} | {v['at']} |")
+    L += ["", "## Per case: worst piece, interface deflections (F)", "", "| Case | Class | Worst piece | Index | Stub face mm | Bay -90 minus stub mm | Funnel pads minus stub mm |", "|---|---|---|---|---|---|---|"]
+    for cn, c in fe["cases"].items():
+        wk = max(pp, key=lambda k: pp[k]["cases"][cn]["worst"])
+        d = c["deflection_mm"]
+        L.append(f"| {cn} | {c['cls']} | {wk} | {pp[wk]['cases'][cn]['worst']:.2f} | {d['stub']} | {d['bay -90 minus stub']} | {d['funnel minus stub']} |")
+    L += ["", "## Concept check (docs/generative.md rule 0)", "",
+          f"- System line (`python3 nox/assembly.py nox/box/box_structure.assembly.json --check`): {fm.get('system_check')}",
+          "- Alternative A (DEFAULT): box structure v2 on the 9-bay ring at R 113 (arm v6 ask): Overseer bays fit the 30 deg sector, "
+          "every ring and base piece is redrawn once from v2 requirements; costs +13 mm on every radius (sheets ~+26 wide, floor -13).",
+          "- Alternative B: keep R 100, the Overseer cartridge lowered 13 (latch / Overseer sessions): keeps the stand envelopes, "
+          "but box-case Problem 1 (Overseer cartridge at r ~107 in a 30 deg sector at r 100) is still open and arm v6 reads FAIL.",
+          "- Index targets: 0.5 functional / 1.0 misuse (as System Box catch, DEFAULT) vs 1.0 everywhere: the strict set fails mast, "
+          "cradle_keel, bracket_jA and the bay module in addition to kb and the frames."]
+    open(os.path.join(OUT, "summary.md"), "w").write("\n".join(L) + "\n")
+
+
+TARGET = 0.8                                   # assembled worst index a new piece must reach (DEFAULT: 1.0 rule less 20 % for the coarse system FE)
+
+
+def requirements_md(h=4.0):
+    """runs/box_system/v1/requirements.md: per piece type its envelope, joints with the largest reaction over the cases,
+    the assembled worst index now and the target. Full per-case reactions: req/<instance>.json."""
+    pp = json.load(open(os.path.join(OUT, f"pieces_h{h:g}.json")))
+    L = ["| Piece | Instances | Envelope W (now, C) | Joints: partner, centroid W, max abs F N / M N.m (case) | Assembled worst (case) | Target |", "|---|---|---|---|---|---|"]
+    by = {}
+    for k, v in pp.items(): by.setdefault(v["piece"], []).append(k)
+    for pk, ks in by.items():
+        js, bbs = [], []
+        for k in ks:
+            r = json.load(open(os.path.join(OUT, "req", f"{k}.json")))
+            for other, j in r["joints"].items():
+                cF = max(j["cases"], key=lambda c: np.linalg.norm(j["cases"][c]["F_N"]))
+                js.append((np.linalg.norm(j["cases"][cF]["F_N"]), f"{other} ({', '.join(f'{x:.0f}' for x in j['centroid'])}) "
+                           f"{np.linalg.norm(j['cases'][cF]['F_N']):.0f} / {max(np.linalg.norm(c['M_Nmm']) for c in j['cases'].values()) / 1000:.1f} ({cF})", k))
+        js.sort(key=lambda t: -t[0])
+        wk = max(ks, key=lambda k: pp[k]["worst"])
+        top = "; ".join(f"{k}: {t}" for _, t, k in js[:4])
+        L.append(f"| {pk} {PIECES[pk][1]} | {', '.join(ks)} | see req/{ks[0]}.json | {top} | {pp[wk]['worst']:.2f} on {wk} ({pp[wk]['worst_case']}) | <= {TARGET} |")
+    open(os.path.join(OUT, "requirements.md"), "w").write("\n".join(L) + "\n")
+
+
+ASM = os.path.join(HERE, "box_structure.assembly.json")
+
+
+def write_assembly(I, M, proof):
+    """nox/box/box_structure.assembly.json (nox/ASSEMBLY.md): every structure piece as its W mesh + pose, sheets and
+    PSU as bought boxes, the bay-swap access paths. The catch (box_catch.assembly.json) and the arm
+    (box_swap_arm.assembly.json) keep their own files; box_system.py loads them as context."""
+    import assembly
+    rel = lambda p: os.path.relpath(p, ROOT)
+    parts = []
+    for k, (pk, m) in I.items():
+        n, ver, tag, pf, qty, ax = PIECES[pk]
+        src = os.path.join(HERE, "models", "box_baymod_v4i_W.obj") if tag == "obj" else os.path.join(CACHE, f"box_{n}_{ver}_W.stl")
+        if k.startswith("baymod@"):
+            T = trimesh.transformations.rotation_matrix(math.radians(90 - int(k.split("@")[1])), [0, 1, 0])
+        else:
+            a = np.asarray(man(M[pk]).to_mesh().vert_properties)[:, :3]; b = np.asarray(m.to_mesh().vert_properties)[:, :3]
+            ca, cb = a.mean(0), b.mean(0); U, _, Vt = np.linalg.svd((a - ca).T @ (b - cb))
+            R = Vt.T @ np.diag([1, 1, np.sign(np.linalg.det(Vt.T @ U.T))]) @ U.T
+            T = np.eye(4); T[:3, :3] = R; T[:3, 3] = cb - R @ ca
+        parts.append(dict(name=k, role="structure", mesh=rel(src), pose=np.round(T, 6).tolist(), material="PETG", tag="M",
+                          owner="box structure", version=ver, source=f"nox/box/box_system.py ({proof[pk]['source']})",
+                          note=f"print/{pf}"))
+    for n_, b in SHEETS.items():
+        parts.append(dict(name=n_, role="cage", box=list(b), material="acrylic", mass_g=round(S.box(*b).volume() * 1.19e-3, 1),
+                          tag="C", owner="box structure", version="3.0 acrylic (DEFAULT)", source="stand_v7_parts.py X_IN / Y_BACK / Y_FRONT / Z_TOP"))
+    parts.append(dict(name="PSU LRS-350-24", role="bought", protect=True, box=[42, 157, -66, -36, -170, 45], mass_g=750.0, tag="E",
+                      owner="box electronics", version="v1", source="dimensions.md I Box electronics v1"))
+    access = [dict(name=f"bay swap {a}: module out along +Y 100", part=f"baymod@{a}", dir=[0, 1, 0], length_mm=100, tool="part")
+              for a in BAYS]
+    access.append(dict(name="stub M5 key from the arm side", part="mast", **{"from": [10.0, 0.5, 30.0]}, dir=[0, 1, 0], length_mm=60,
+                       tool={"type": "cylinder", "d": 8}, ignore=["sheetF"]))
+    A = assembly.new("Box structure", "box", parts=parts, note=(
+        "Box structure system v1 (24 Oct, box_system.py), the built demo: stand, 2 bay modules v4i (-90, -60), 5 mid + 2 end "
+        "frames, enclosure. W frame (box-arm.md). Left out: the swap arm (box_swap_arm.assembly.json, its owner), the catch "
+        "(box_catch.assembly.json, posed in W by box_system.SEAT_TO_W), bolts and nuts, the electronics boards (lumped in "
+        "box_system.LUMPS). The 4 sheets are the cage (role cage) round the PSU; the top is the funnel mouth. Crash probes off: a "
+        "floor-standing box (DEFAULT; the floor shields the open bottom)."), fit_tol_mm3=0.5,
+        access=access, contact_pairs=[[f"post-{e}{k}", s_, 2.0] for e in "FR" for k in range(3) for s_ in ("sheetF" if e == "F" else "sheetR", "sheet-X")]
+        + [[f"post+{e}{k}", s_, 2.0] for e in "FR" for k in range(3) for s_ in ("sheetF" if e == "F" else "sheetR", "sheet+X")]
+        + [["cradle_keel", "baymod@-90", 0.5]], probes=False)
+    A.save(ASM)
+    return A
+
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--h", type=float, default=4.0); ap.add_argument("--only", default="all")
+    ap.add_argument("--pieces", default="")
+    ap.add_argument("--swap", default="", help="piece=W.stl,... : a new version in the assembled model")
+    ap.add_argument("--out", default="", help="results folder (default runs/box_system/v1)")
     a = ap.parse_args()
+    global OUT
+    if a.out: OUT = os.path.abspath(a.out); os.makedirs(OUT, exist_ok=True)
     lg = open(os.path.join(OUT, "log.txt"), "a")
     def log(s): print(s, flush=True); lg.write(s + "\n"); lg.flush()
     log(f"== box_system {time.strftime('%Y-%m-%d %H:%M')} h {a.h}")
-    M, proof = piece_meshes(log); I = instances(M); C = context()
+    M, proof = piece_meshes(log, swap=dict(kv.split("=") for kv in a.swap.split(",") if "=" in kv)); I = instances(M); C = context()
     out = dict(pieces=proof)
     if a.only in ("all", "fit"):
         out["fit"] = fit_check(I, C, log); out["mass"] = mass_cg(I, C, M)
-        json.dump(out, open(os.path.join(OUT, "fit_mass.json"), "w"), indent=1, default=float); log(json.dumps(out["fit"]))
+        A = write_assembly(I, M, proof); chk = A.check(); out["system_check"] = chk.get("summary")
+        json.dump(out, open(os.path.join(OUT, "fit_mass.json"), "w"), indent=1, default=float); log(json.dumps(out["fit"])); log(str(chk.get("summary")))
     if a.only in ("all", "fe"):
         seed = None
         if a.h < 6.0:
@@ -604,6 +855,15 @@ def main():
             import pickle; seed = pickle.load(open(os.path.join(OUT, "fe_h6_piece_inputs.pkl"), "rb"))
         res, Mo = run_fe(I, a.h, log, seed=seed, max_it=10)
         json.dump(res, open(os.path.join(OUT, f"fe_h{a.h:g}.json"), "w"), indent=1, default=float)
+    if a.only in ("all", "pieces"):
+        import pickle
+        pin = pickle.load(open(os.path.join(OUT, f"fe_h{a.h:g}_piece_inputs.pkl"), "rb"))
+        pp = piece_pass(I, pin, log, only=set(a.pieces.split(",")) - {""} or None)
+        fn = os.path.join(OUT, f"pieces_h{a.h:g}.json")
+        old = json.load(open(fn)) if os.path.exists(fn) and a.pieces else {}
+        old.update(pp); json.dump(old, open(fn, "w"), indent=1, default=float)
+        export_requirements(I, pin, old, os.path.join(OUT, "req"))
+    if a.only in ("all", "report"): report(a.h); requirements_md(a.h)
 
 
 if __name__ == "__main__":
