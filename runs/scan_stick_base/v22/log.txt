@@ -17,3 +17,13 @@ it   7 beta    1 J   1.6153 vol 0.0397 (dil 0.0474 g -0.010) grey 19.3% ch 0.100
 it   8 beta    1 J   1.4348 vol 0.0394 (dil 0.0471 g -0.016) grey 19.0% ch 0.100 worst L2 hit -y 100 N (joint) 4.41e+03 2.5s
 it   9 beta    1 J   0.8229 vol 0.0393 (dil 0.0469 g -0.021) grey 19.0% ch 0.100 worst switch panel push 50 N 2.44e+03 2.6s
 it  10 beta    1 J   1.4350 vol 0.0387 (dil 0.0462 g -0.036) grey 18.6% ch 0.100 worst L2 hit -y 100 N (joint) 4.41e+03 2.4s
+it  11 beta    1 J   0.2600 vol 0.0391 (dil 0.0467 g -0.023) grey 19.0% ch 0.100 worst tie b2 my 822 2.8s
+it  12 beta    1 J   0.5468 vol 0.0382 (dil 0.0455 g -0.047) grey 18.4% ch 0.100 worst L2 hit -y 100 N (joint) 1.68e+03 2.4s
+it  13 beta    1 J   0.1400 vol 0.0384 (dil 0.0458 g -0.041) grey 18.7% ch 0.100 worst tie b2 my 440 2.3s
+it  14 beta    1 J   0.2014 vol 0.0382 (dil 0.0455 g -0.047) grey 18.0% ch 0.100 worst L2 hit -y 100 N (joint) 619 2.5s
+it  15 beta    1 J   0.1109 vol 0.0369 (dil 0.0441 g -0.077) grey 17.9% ch 0.100 worst tie b2 my 342 2.5s
+it  16 beta    1 J   0.0759 vol 0.0384 (dil 0.0457 g -0.039) grey 17.9% ch 0.100 worst tie b2 my 233 2.3s
+it  17 beta    1 J   0.0630 vol 0.0393 (dil 0.0467 g -0.019) grey 18.0% ch 0.100 worst tie b2 my 190 2.5s
+it  18 beta    1 J   0.0558 vol 0.0397 (dil 0.0470 g -0.013) grey 18.1% ch 0.100 worst tie b2 my 161 2.6s
+it  19 beta    1 J   0.0514 vol 0.0399 (dil 0.0472 g -0.009) grey 18.1% ch 0.100 worst tie b2 my 141 2.5s
+it  20 beta    1 J   0.0487 vol 0.0401 (dil 0.0473 g -0.005) grey 18.1% ch 0.100 worst tie b2 my 127 2.5s
