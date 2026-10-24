@@ -959,8 +959,9 @@ def probe_set():
     """protected parts for the probes, as meshes; the swap set and the receiver are exempt to 35 deg round the swap opening"""
     pv = [cyl(PROP_R, PROP_Z - SWEEP, PROP_Z + SWEEP, x, y, 48) for x, y in MOTORS_XY]
     prot = [("props", trimesh.util.concatenate(pv)), ("motors", trimesh.util.concatenate(BELLS)), ("FC", FC), ("Radxa", RADXA), ("flow", FLOW),
-            ("UBEC", UBEC), ("XR2", XR2), ("camera", CAM), ("receiver", IFACE), ("cartridge", CART)]
-    openings = [dict(part=n, axis=[0, 0, -1], half_angle_deg=SWAP_CONE, skip_probes=True) for n in ("receiver", "cartridge")]
+            ("UBEC", UBEC), ("XR2", XR2), ("camera", CAM), ("receiver", trimesh.util.concatenate([_L[k] for k in ("receiver", "receiver_strips", "xt60e1m")])),
+            ("receiver lid", _L["receiver_lid"]), ("cartridge", CART)]   # the lid on its own: the repair sets a part aside by name
+    openings = [dict(part=n, axis=[0, 0, -1], half_angle_deg=SWAP_CONE, skip_probes=True) for n in ("receiver", "receiver lid", "cartridge")]
     return prot, openings
 
 
