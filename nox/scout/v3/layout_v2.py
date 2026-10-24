@@ -296,8 +296,9 @@ LENS = np.array([CAM_X, 0, CAM_Z])
 KO = {"cartridge path": ([-47, -23.5, -200], [58, 23.5, -42]), "head |y|<=19 to r105": ([-60, -19, -200], [77, -19 + 38, -39.5]),
       "head r<=98.5": ([-60, -50, -200], [77, 50, -46]), "carriage plate": ([77, -28, -200], [81, 28, -8.9]),
       "carriage wings": ([77, -46.5, -200], [81, 46.5, -24.9]), "rail + bar": ([81, -20, -200], [101, 20, -10.5])}
-for _x in (-41.7, 43.25):                                                  # receiver bolt key lines, M3 up from below with the pack
-    for _y in (-25.6, 25.6):                                               # out (access, review PR 94): a 4.0 hex key clear to z -90
+BOLTS_X, BOLTS_Y = ((-42.65, 43.25), 26.55) if LATCH_V == "v6" else ((-41.7, 43.25), 25.6)   # receiver v3 (latch 24 Oct, PR 109 review)
+for _x in BOLTS_X:                                                         # receiver bolt key lines, M3 up from below with the pack
+    for _y in (-BOLTS_Y, BOLTS_Y):                                         # out (access, review PR 94): a 4.0 hex key clear to z -90
         KO[f"receiver bolt key ({_x:+.1f}, {_y:+.1f})"] = ([_x - 2.0, _y - 2.0, -200], [_x + 2.0, _y + 2.0, 9.6])
 
 

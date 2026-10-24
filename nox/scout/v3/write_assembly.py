@@ -126,7 +126,7 @@ a = {"name": "Scout v3", "machine": "scout",
                 for n in (CN, "pack 4S 1500", "pack XT60 plug")] +
                [{"name": f"M3 key, receiver bolt ({x:+.1f}, {y:+.1f})", "part": RN, "from": [x, y, 9.6], "dir": [0, 0, -1],
                  "length_mm": 90, "tool": {"type": "cylinder", "d": 4}, "ignore": SWAPSET + ["receiver lid (latch)", "mount + nose legs (Scout)", "XT60E1-M"]}
-                for x in (-41.7, 43.25) for y in (-25.6, 25.6)] +
+                for x in L["BOLTS_X"] for y in (-L["BOLTS_Y"], L["BOLTS_Y"])] +
                [{"name": "FC USB-C (edge to the tail-left, E)", "part": "FC", "from": [-10.8, -12.7, 13.5], "dir": [-0.7071, -0.7071, 0], "length_mm": 70,
                  "tool": {"type": "box", "w": 12, "h": 7, "w_axis": [0.7071, -0.7071, 0]}, "ignore": ["mount + nose legs (Scout)", "wires"]}],
 
