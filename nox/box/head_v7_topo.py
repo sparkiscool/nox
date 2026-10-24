@@ -73,7 +73,8 @@ def drawn_and_cuts():
     cuts.append(cylX(H.SPRING_ROD["y"], H.SPRING_ROD["u"], -H.SPRING_ROD["wall_out"] + 1.0, H.SPRING_ROD["wall_out"] + 1.0, H.ROD_D / 2 + 0.05, 24))
     for (xh, yh) in H.HALL_POS:
         cuts.append(box(xh - 1.6, xh + 1.6, yh - 1.6, yh + 1.6, H.DECK["u"][0] - 1.0, H.U_BOT - H.LATCH["hall"]["gap"]))
-        cuts.append(box(xh - 2.5, xh + 2.5, yh - 3.5, yh + 1.0, H.DECK["u"][0] - 6.0, H.DECK["u"][0] + 0.01))   # the hall board (5 x 6.5) under the deck
+        a_, b_ = sorted((xh - math.copysign(2.9, xh), xh + math.copysign(1.3, xh)))
+        cuts.append(box(a_, b_, yh - 3.5, yh + 1.0, H.DECK["u"][0] - 6.0, H.DECK["u"][0] + 0.01))   # the hall board (4.2 x 4.5) under the deck, 1.0 off the carriers at their stops
     cuts.append(pad_cuts)
     cuts.append(rc)                                                           # the retainer's heat-set insert holes
     cuts.append(box(*H.BUMPER["x"], P["y"][0] - 1, P["y"][1] + 1, H.BUMPER["u"][0] - 1, H.BUMPER["u"][1]))
@@ -193,6 +194,16 @@ def bound(h=1.0):
     return out
 
 
+def split_bar(out):
+    """the print: the optimised body less the rack bar (its own print, head_v7_parts.py); the bonded pair is kept as _bonded.stl"""
+    import trimesh
+    from arm_cad import tm, man
+    p = os.path.join(out, f"box_head_v7_{HEAD}.stl")
+    whole = trimesh.load(p, force="mesh"); whole.export(os.path.join(out, f"box_head_v7_{HEAD}_bonded.stl"))
+    body = tm(man(whole) - H.rack_bar(SERVO)); body.export(p)
+    print("split: body", round(body.volume * 1.27e-3, 1), "g")
+
+
 if __name__ == "__main__":
     out = sys.argv[4] if len(sys.argv) > 4 else os.path.join(H.ROOT, "runs", "head", "v7", HEAD)
     if os.environ.get("NOX_BOUND"):
@@ -203,12 +214,3 @@ if __name__ == "__main__":
     print({k: res.get(k) for k in ("name", "solid_ok", "mass_g", "total_s")}, res["strength"]["worst"])
     split_bar(os.path.abspath(out))
 
-
-def split_bar(out):
-    """the print: the optimised body less the rack bar (its own print, head_v7_parts.py); the bonded pair is kept as _bonded.stl"""
-    import trimesh
-    from arm_cad import tm, man
-    p = os.path.join(out, f"box_head_v7_{HEAD}.stl")
-    whole = trimesh.load(p, force="mesh"); whole.export(os.path.join(out, f"box_head_v7_{HEAD}_bonded.stl"))
-    body = tm(man(whole) - H.rack_bar(SERVO)); body.export(p)
-    print("split: body", round(body.volume * 1.27e-3, 1), "g")

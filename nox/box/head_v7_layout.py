@@ -43,8 +43,8 @@ TAIL_RIB = dict(   # (polygon X, u; Y range) per head; free space from the per-h
        ([(32.5, -31.0), (39.6, -31.0), (39.6, -11.5), (32.5, -11.5)], (59.25, 63.01))])    # B: the detent arm and roller sit above / beside it at park
 # the servo retainer (r4: the ear screws had no driver path on the arm): a printed bar under the servo's bottom face (u -16.3..-12.5,
 # flush with the column bottom on the head lane) from (10, 90) to (27, 148.5), Ø12 ends with M3 countersunk screws driven along +u
-# through the exit window into heat-set inserts in drawn Ø10 bosses; the ears sit captured in their slots on the pads
-RETAINER = dict(ends=((10.0, 90.0), (27.0, 148.5)), w=10.0, u=(-16.3, -12.5), end_r=6.0, boss_r=5.0, insert=dict(d=4.0, depth=6.7))
+# through the exit window into heat-set inserts in drawn Ø12 bosses; the ears sit captured in their slots on the pads
+RETAINER = dict(ends=((10.0, 90.0), (27.0, 148.5)), w=10.0, u=(-16.3, -12.5), end_r=6.0, boss_r=6.0, insert=dict(d=4.0, depth=6.7))
 FILLET = [(28.0, 30.0), (40.5, 30.0), (40.5, 32.5), (28.0, 40.0)]   # plate / wing inside corner (bound r3: the pull peak sat in the sharp corner)
 WEB = dict(x=(40.5, 46.5), body_x=(39.5, 41.5), bar_x=(41.5, 46.5), y=(59.25, 72.75), uA=(-63.0, 30.0), uB=(-54.0, 30.0), teeth_y=(59.25, 73.25), tail_u=-39.0, tail_y0=63.0)
 WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))      # (X, u); the last is the eccentric
@@ -71,13 +71,13 @@ SERVOS = {   # body L x W, base-to-case-top H, spline boss d x h, shaft from the
 HORN = dict(hub_d=10.0, hub_h=3.5, disc_d=25.0, disc_t=3.0, bolt_circle=16.0, tag="metal 25T disc horn, E (CHECK on hand)")
 ROD_D = 3.0
 B623 = dict(od=10.0, id=3.0, w=4.0, g=1.6)        # 623ZZ roller followers (C, catalogue)
-HALL = dict(pkg=(3.0, 3.0, 1.5), board=(5.0, 6.5, 1.6), tag="DRV5055A4 SOT-23 on a 5 x 6.5 strip, E")
+HALL = dict(pkg=(3.0, 3.0, 1.5), board=(4.2, 4.5, 1.6), tag="DRV5055A4 SOT-23 on a 4.2 x 4.5 strip (r5: 1.0 off the carriers at their stops), E")
 
 # ============================================================== layout (DEFAULT, this session)
 Y_SERVO_TOP = 138.0                              # case top; spline boss to 142, horn hub 142..145.5, disc 145.5..148.5, cam 148.5..153.5
 U_C = -2.5                                       # servo shaft / cam / roller axis level
 CAM = dict(y=(148.5, 154.5), base=4.0, lobe=10.5, rise_deg=100.0, dwell0=10.0, dwell1=10.0, law="modified sine")
-ROLLER = dict(x_sq=10.5, y=(149.5, 153.5), pin_y=(149.0, 161.0))   # roller centre X at squeezed; open + 5.0
+ROLLER = dict(x_sq=10.5, y=(149.5, 153.5), pin_y=(149.5, 161.0))   # roller centre X at squeezed; open + 5.0
 BLADE = dict(t=3.0, y=(160.0, 170.0), inner_sq=6.0, inner_open=11.0, tip_u=U_BOT + 6.0, rib=dict(d=0.8, u=U_BOT + 4.0))
 STROKE = BLADE["inner_open"] - BLADE["inner_sq"]  # 5.0 per blade (the mechanism's datum: inner 6.0)
 CLAMP = 7.0                                       # blade inner face on the squeezed tabs of cartridge v6 (latch 24 Oct: a 2.0 centre rib, tabs stop
@@ -170,13 +170,22 @@ def spring_pick():
     return best
 
 
+def rack_factor(mu=0.3):
+    """the cam force over the spring force needed to slide a carrier against its own guide friction (r5): the cam acts at the roller
+    (Y 151.5, u -2.5), the spring at the seat (Y 181.25, u 4.5); the couples go into the guides as cross forces over the guide length,
+    the boss on the two rods to the seat's bore on the spring rod (X 17 to -24: 41); yaw and pitch offsets added (conservative)"""
+    a = (BOSS["x_sq"][0] + BOSS["x_sq"][1]) / 2; Lg = a + SEAT_SQ + 2.0
+    e_yaw = SPRING_ROD["y"] - (ROLLER["y"][0] + ROLLER["y"][1]) / 2; e_pitch = SPRING_ROD["u"] - U_C
+    return 1.0 + 2 * mu * (e_yaw + e_pitch) / Lg
+
+
 def cam_numbers(sp):
     th = np.linspace(0, CAM["dwell0"] + CAM["rise_deg"] + CAM["dwell1"], 601)
     rho = np.array([pitch(t) for t in th]); drho = np.gradient(rho, np.radians(th))
     contact = rho >= ROLLER["x_sq"] - 1e-9                       # the roller is touched once the pitch passes its squeezed position
     s_eff = np.clip(rho - ROLLER["x_sq"], 0, None)
     F = np.where(contact, sp["F_sq"] + sp["k"] * 2 * s_eff, 0.0)  # the crossed spring shortens by both carriers' travel
-    T = 2 * F * drho * 1.05                                      # two rollers; 5 % for the rods and the roller bearings (E)
+    T = 2 * F * drho * 1.03 * rack_factor()                      # two rollers; 3 % roller bearings (E); the carrier racking on its guides (r5)
     alpha = np.degrees(np.arctan2(drho, rho))
     i = int(np.argmax(T))
     out = dict(turn_deg=float(th[-1]), rise=CAM["lobe"] - CAM["base"], pitch_rest=round(float(rho[0]), 2), pitch_open=round(float(rho[-1]), 2),
@@ -354,7 +363,7 @@ def retainer(filled=False):
 
 
 def retainer_bosses():
-    """the drawn Ø10 bosses over the retainer's ends (heat-set M3 x 5.7) and their insert holes (solid, cuts)"""
+    """the drawn Ø12 bosses over the retainer's ends (heat-set M3 x 5.7) and their insert holes (solid, cuts)"""
     sol = None; cut = None; u1 = RETAINER["u"][1] + 0.2
     for (x, y) in RETAINER["ends"]:
         b = cylZ(x, y, u1 - 0.01, u1 + RETAINER["insert"]["depth"] + 1.5, RETAINER["boss_r"], 32)
@@ -427,9 +436,14 @@ def keepouts(servo="DS3218"):
         K.append(swept_grown(servo, nm, -sg * din, sg * STROKE) - stops())   # 1.0 everywhere but the stop faces (r4)
     K.append(cylY(0, U_C, CAM["y"][0] - CLR, CAM["y"][1] + CLR, CAM["lobe"] + CLR, 64))             # the cam's swept disc
     K.append(cylY(0, U_C, Y_SERVO_TOP + 4.0 - CLR, CAM["y"][1] + CLR, HORN["disc_d"] / 2 + CLR, 64))  # horn, over the cam's Y too (r4: its top face had 0)
-    K.append(grow_box(servo_solid(servo), CLR))
-    sb = tm(servo_solid(servo)).bounds                                         # the servo's way out: straight down -u under its footprint (concept review r3)
-    K.append(box(sb[0][0] - CLR, sb[1][0] + CLR, sb[0][1] - CLR, sb[1][1] + CLR, -40.0, sb[0][2] + CLR))
+    sv_ = SERVOS[servo]                                                        # the servo: its pocket is the cradle's cut (0.2 fit, slide-in to -u,
+    K.append(cylY(0.0, U_C, Y_SERVO_TOP - 0.01, Y_SERVO_TOP + sv_["boss"][1] + CLR, sv_["boss"][0] / 2 + CLR, 48))   # ear slots; r5); its spline boss
+    # wiring (r5): the two hall boards linked under the deck (u 11.2..12.9 over the horn), down the column's -X side above the servo to the
+    # ribbon slot; the servo lead to a connector pocket open to -u at Y 86..96.3 (unplugged from below once the retainer is off)
+    K.append(box(-8.8, 8.8, 153.0, 157.5, 11.2, DECK["u"][0] + 0.01))                               # hall link (|X| <= 8.8: 1.0 off the carriers at their stops)
+    K.append(box(-8.8, -5.3, 96.0, 155.0, 10.6, DECK["u"][0] + 0.01))                               # down the column above the servo
+    K.append(box(-8.8, 4.1, 96.0, 100.0, 7.0, DECK["u"][0] + 0.01))                                 # into the ribbon slot
+    K.append(box(-9.0, 3.0, 86.0, 97.0, -17.3, 10.3))                                               # the servo lead's connector pocket, open to -u
     K.append(cylX(SPRING_ROD["y"], SPRING_ROD["u"], -SEAT_SQ, SEAT_SQ, spring_pick()["OD"] / 2 + CLR, 32))
     K.append(box(-HORN["disc_d"] / 2 - CLR, HORN["disc_d"] / 2 + CLR, Y_SERVO_TOP + 3.0, CAM["y"][1] + CLR, -40.0, U_C))   # horn + cam out with the servo (-u)
     for s_ in (-1, 1):                                                         # cartridge v6 (Scout): TPU strips |x| 19.2..23.2, 2.0 under the flat bottom, z_T +-32
@@ -643,8 +657,13 @@ def strength(sp):
                      boss_MPa=round(P / (ROD_D * (BOSS["x_sq"][1] - BOSS["x_sq"][0])), 2))
     Lb = BOSS["x_sq"][1] - BOSS["x_sq"][0]
     e_yaw = max(SPRING_ROD["y"] - Y_C, Y_C - (CAM["y"][0] + CAM["y"][1]) / 2); e_pitch = RODS["u"] - U_C
-    r["anti_rack"] = dict(boss=Lb, need_yaw=round(2 * 0.3 * e_yaw, 1), need_pitch=round(2 * 0.3 * e_pitch, 1), ok=bool(Lb >= 1.3 * 2 * 0.3 * max(e_yaw, e_pitch)))
-    pad_area = 2 * (DECK["pad"]["y"][1] - DECK["pad"]["y"][0]) * (LATCH["frames"][1] - DECK["pad"]["x"][0] - LATCH["head_offset"])
+    a_ = (BOSS["x_sq"][0] + BOSS["x_sq"][1]) / 2; Lg = a_ + SEAT_SQ + 2.0
+    e_y = SPRING_ROD["y"] - (ROLLER["y"][0] + ROLLER["y"][1]) / 2; e_p = SPRING_ROD["u"] - U_C
+    r["anti_rack"] = dict(guide_length=round(Lg, 1), note="the boss on the two rods and the seat's bore on the spring rod guide the carrier (r5)",
+                          need=round(2 * 0.3 * (e_y + e_p), 1), ok=bool(Lg >= 1.3 * 2 * 0.3 * (e_y + e_p)), cam_over_spring=round(rack_factor(), 2))
+    o = LATCH["head_offset"]; f0, f1 = 15.5, LATCH["frames"][1]; p0, p1 = DECK["pad"]["x"]
+    ov = min(min(p1 + d, f1) - max(p0 + d, f0) for d in (-o, o))                # the worse pad at a 1.0 head offset either way
+    pad_area = 2 * (DECK["pad"]["y"][1] - DECK["pad"]["y"][0]) * ov
     r["pads_MPa"] = dict(stall=round(LOADS["stall"] / pad_area, 2), area_worst_mm2=round(pad_area, 1))
     lev = Y_C - PLATE["y"][1]
     r["head_moment_Nm"] = dict(pull=round(LOADS["pull_unmate"] * lev / 1e3, 2), stall=round(LOADS["stall"] * lev / 1e3, 2), lever=lev)
@@ -685,7 +704,7 @@ def loads_table():
     """loads per case at the head's interfaces (head A frame, N and N.mm; E), the topology run's load cases"""
     pull = LOADS["pull_unmate"]; Ov = LOADS["cart_g"]["overseer"] / 1000 * 9.81
     return {
-        "insert at the drone 60 N (swap)": dict(at="deck pads (u 15.4, X +-16.5..20, Y 155..175)", F=[0, 0, -60.0], cls="swap"),
+        "insert at the drone 60 N (swap)": dict(at="deck pads (u 15.4, X +-16.0..18.2, Y 155..175)", F=[0, 0, -60.0], cls="swap"),
         "insert stall 74 N (misuse)": dict(at="deck pads", F=[0, 0, -74.0], cls="misuse"),
         "pull 57.3 N while the XT60 unmates (swap)": dict(at="rod sockets (4 ends, X +-30.5, Y 161 / 169, u 6.75)", F=[0, 0, pull], cls="swap",
                                                           note="carriers -> rods: 14.3 N per rod end"),
@@ -730,7 +749,8 @@ ACCESS = [
     "rods: pushed in from +X through the +X walls, through both bosses, into blind sockets in the -X walls, epoxied",
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
-    "wires: the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
+    "servo in: rest orientation, pushed in along +u; the cam's flanks spread the rollers off their stops by 1.1 each against the spring (~18 N, a hand push), then the retainer",
+    "wires: the hall boards linked under the deck and run down the column's -X side above the servo into the ribbon slot; the servo lead to a connector pocket open to -u at Y 86..96 (unplugged from below with the retainer off); the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
 ]
 
 
@@ -868,7 +888,7 @@ def page(R, P_sq, P_op):
                           f"pressure angle <= {cm['max_pressure_deg']} deg; peak {cm['peak_kgcm']} kg·cm: DS3218 x{cm['margin']['DS3218']}, MG995 x{cm['margin']['MG995']}; spline side load {cm['spline_side_N']}"),
         ("Pull path", f"pocket -> rib -> blade -> boss 12 long -> 2 x 3.0 carbon rods (span {st['rods']['span']:g}: {st['rods']['sigma_MPa']} MPa, index {st['rods']['index']}) -> body walls; "
                       f"anti-rack: boss 12 vs {st['anti_rack']['need_yaw']} needed"),
-        ("Push path", f"deck pads on the latch frames (x 16.5..20, both packs): {st['pads_MPa']['stall']} MPa at the 74 N stall (worst offset)"),
+        ("Push path", f"deck pads X +-{DECK['pad']['x'][0]:g}..{DECK['pad']['x'][1]:g} on the latch frames (both packs; 1.0 off the Scout v6 TPU strips): {st['pads_MPa']['stall']} MPa at the 74 N stall (worst offset)"),
         ("Head moment", f"{st['head_moment_Nm']['pull']} N·m pull / {st['head_moment_Nm']['stall']} N·m stall at the plate (lever {st['head_moment_Nm']['lever']:g}); wheel axial "
                         f"{st['wheel_axial_N_pull']['rigid']:.0f}..{st['wheel_axial_N_pull']['flexible']:.0f} N (pull); spine + plate {st['spine_MPa_pull']} / {st['spine_MPa_stall']} MPa"),
         ("Space (C)", R["space_summary"]),
