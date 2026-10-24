@@ -149,7 +149,7 @@ def setup_factory(log, info):
         stub = cylY(45.0, -T, 0.0)
         cuts = [load_grown(n) for n in ("receivers", "cartridge_paths", "drone", "catch")]
         gy = getattr(L2, "FUNNEL_V8_GROW_Y", 0.0)                       # funnel v8: opening 11.5 wider at each Y face
-        cuts[3] = cuts[3] + cuts[3].translate([0, gy, 0]) + cuts[3].translate([0, -gy, 0])
+        cuts[3] = cuts[3] + cuts[3].translate([0, gy, 0])               # asymmetric: only the +Y face moves out
         hub = cylY(88.0 + GROW, 7.0 - GROW, 74.0 + GROW)
         motor = cylY(106.5 + GROW, 2.0 - GROW, 50.0 + GROW)
         park = cylY(R - L2.ARM_PARK_R, 74.0, 300.0)
@@ -158,11 +158,12 @@ def setup_factory(log, info):
         lane = mf.Manifold.extrude(mf.CrossSection([pts]), LANE_Y[1] - LANE_Y[0]).rotate([90, 0, 0]).translate([0, LANE_Y[1], 0]) \
             ^ cylY(159.0, LANE_Y[0], LANE_Y[1])
         zt = Z1 + 5
-        a0 = 84.0; b0 = 84.0 + gy; dz = zt - Z_EDGE
+        a0 = 84.0; b0 = 84.0 + gy / 2; dz = zt - Z_EDGE
         sq = mf.CrossSection([[(-a0, -b0), (a0, -b0), (a0, b0), (-a0, b0)]])
-        fun = mf.Manifold.extrude(sq, dz, 0, 0.0, ((a0 + dz) / a0, (b0 + dz) / b0)).translate([0, Y_FUN, Z_EDGE])
+        fun = mf.Manifold.extrude(sq, dz, 0, 0.0, ((a0 + dz) / a0, (b0 + dz) / b0)).translate([0, Y_FUN + gy / 2, Z_EDGE])
+        rail = cylY(151.0 + GROW, 38.0 - GROW, 73.0 + GROW)                 # arm rail disc (round 3)
         elec = box(42 - GROW, 157 + GROW, Y0 + T, -36 + GROW, -170 - GROW, 45 + GROW)
-        cuts += [hub, motor, park, lane, fun, elec]
+        cuts += [hub, motor, park, lane, fun, elec, rail]
         sweeps = service_sweeps(Y1)
         cuts += sweeps
         posts, side = seat_posts(6.0 if h <= 6 else h, cuts[3] + fun)
@@ -240,6 +241,9 @@ def _cases(p, h, T, pd, posts, stub, sheets, log):
         if ang == -90:
             add_case(p, "XT60 pull at the -90 bay 50 N", "flight", "default", down,
                      lumps(down, "Scout") + [(pd[ang], -50 * d, None, P_), (stub, 50 * d, None, tip(ang))])
+    add_case(p, "stub tilt: XT60 at the drone 57 N + 5.9 N.m", "flight", "default", down,
+             lumps(down, "Scout") + [(stub, (0, 0, -57.0), (5900.0, 0, 0), (0, Y_C, 0)),
+                                     (posts_m, (0, 0, 57.0), (-5900.0, 0, 0), (0, Y_C, 144.5))])
     a2 = (0, 0, -2); a5 = (0, 0, -5); al = (5, 0, 0)
     add_case(p, "lifted by the side sheets 2 g", "flight", "hands", a2, lumps(a2, None))
     add_case(p, "misuse: set down hard 5 g", "misuse", "default", a5, lumps(a5, None))
@@ -254,7 +258,7 @@ def peak_gb():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--h", type=float, default=6.0); ap.add_argument("--gen", type=float, default=1500.0)
+    ap.add_argument("--h", type=float, default=8.0); ap.add_argument("--gen", type=float, default=1500.0)
     ap.add_argument("--min-member", type=float, default=18.0)
     ap.add_argument("--out", default=os.path.join(ROOT, "runs", "box_system", "v2", "topo"))
     ap.add_argument("--git", action="store_true"); ap.add_argument("--time-limit", type=float, default=5.5 * 3600)
@@ -287,7 +291,22 @@ def main():
     Ly.run(maxit=400, checkpoint=ck, resume=ck, beta_start=2, on_checkpoint=hook)
     Ly.save(os.path.join(a.out, "density.npz"))
     comp, _ = Ly._compliance(Ly.result["rho_n"], need_grad=False)
-    res = dict(h=a.h, grid=list(part.shape), cells=part.nel, design_cells=int(part.design.sum()),
+    stub_rot = {}
+    try:
+        _, (U, E_) = Ly._compliance(Ly.result["rho_n"], need_grad=True)
+        el = part.elems(geom["stub"], part.solid | part.design, what="stub")
+        nd = part.nodes_of(el); X = np.asarray(part.origin) + np.stack(np.unravel_index(nd, part.nshape), 1) * part.h
+        c0 = X.mean(0); r = X - c0
+        A = np.zeros((3 * len(nd), 6)); A[:, :3] = np.tile(np.eye(3), (len(nd), 1))
+        for i in range(3):
+            e = np.zeros(3); e[i] = 1.0; A[:, 3 + i] = np.cross(e[None], r).ravel()
+        for q, c in enumerate(Ly.cases):
+            u = np.stack([U[3 * nd + k, q] for k in range(3)], 1)
+            x = np.linalg.lstsq(A, u.ravel(), rcond=None)[0]
+            stub_rot[c.name] = dict(trans_mm=x[:3].round(4).tolist(), rot_mrad=(x[3:] * 1000).round(4).tolist())
+    except Exception as ex:
+        log(f"stub rotation failed: {ex}")
+    res = dict(stub_rotation=stub_rot, h=a.h, grid=list(part.shape), cells=part.nel, design_cells=int(part.design.sum()),
                min_member_mm=a.min_member, gen_cm3=a.gen,
                generated_cm3=float(Ly.result["rho_n"][Ly.design].sum() * a.h ** 3 / 1000.0),
                drawn_cm3=float(part.solid.sum() * a.h ** 3 / 1000.0),
