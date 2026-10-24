@@ -76,6 +76,7 @@ SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
 DEFL_ALLOW, F_L2_MIN = 9.0, 100.0                              # crash deflection, L2 mode (L Sensor mounts)
 F_FIRST_MIN = 0.0                                           # cage's own lowest mode floor (set below after the trade)
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
+CARBON_MIN = 33.0                                           # carbon break-even (CLAUDE.md): a shorter link is printed into its node
 NODE_G, CORNER_G = 2.0, 6.0                                 # printed ring node / corner node (E, g)
 
 TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
@@ -342,8 +343,9 @@ def geometry(p, topo, sizes=None):
                 for sy in (1, -1):
                     mem(f"sled link {sx:+d}{sy:+d}", "MB", f"BF{sx:+d}{sy:+d}", None, "link")
             chain = ["MB"] + sorted(SPINE_X, key=lambda n_: N[n_][2]) + ["TN"]   # through the spine crossings
-            for i_ in range(len(chain) - 1):
-                mem(f"mast {i_}", chain[i_], chain[i_ + 1], "pyramid")
+            for i_ in range(len(chain) - 1):                          # a link under the carbon break-even is printed into the mast node block
+                short_ = np.linalg.norm(N[chain[i_ + 1]] - N[chain[i_]]) < CARBON_MIN
+                mem(f"mast {i_}", chain[i_], chain[i_ + 1], "pyramid", "link" if short_ else "rod")
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
 
@@ -469,7 +471,8 @@ class Model:
         g = 0.0
         for e in self.el:
             if e["kind"] == "rod": g += SECTIONS[e["P"]["sec"]]["gpm"] * e["L"] / 1000.0
-        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1 + sum(n.startswith(("K", "FT")) or n == "TR" for n in self.N)) + CORNER_G * 4   # ring lo + hi, nose 4, top, skirt, tower
+        g += NODE_G * (2 * len(self.info["pnodes"]) + 4 + 1 + sum(n.startswith(("K", "FT")) or n == "TR" for n in self.N)) + CORNER_G * 4
+        g += NODE_G * 2 * any(n.startswith("MX") for n in self.N)                          # mast node block (the spine crossings, printed)   # ring lo + hi, nose 4, top, skirt, tower
         if self.topo.get("arm_spars"):
             g += sum(4 * SECTIONS["r3"]["gpm"] * e["L"] / 1000.0 for e in self.el if e["kind"] == "arm")
         return g

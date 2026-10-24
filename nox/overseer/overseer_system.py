@@ -343,6 +343,9 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
             q = Ng[f"{nm}{lvl}"]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
     for n in [n_ for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]:   # rear tower and skirt nodes (cage up)
         q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
+    mx_ = [Ng[n_] for n_ in Ng if n_.startswith("MX")]
+    if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print
+        mx_ = np.array(mx_); ring_nodes.append(box(mx_[:, 0].min() - 7, mx_[:, 0].max() + 7, -7, 7, mx_[:, 2].min() - 7, mx_[:, 2].max() + 7))
     for n in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN"):     # nose nodes (the last 7)
         q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
