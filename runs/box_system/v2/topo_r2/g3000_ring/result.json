@@ -1,0 +1,560 @@
+{
+ "stub_rotation": {
+  "standing, Overseer seated": {
+   "trans_mm": [
+    0.0177,
+    0.0317,
+    -0.0117
+   ],
+   "rot_mrad": [
+    -0.3434,
+    0.0317,
+    -0.0368
+   ]
+  },
+  "Overseer catch +X+Y diag": {
+   "trans_mm": [
+    -0.0633,
+    0.0955,
+    -0.0047
+   ],
+   "rot_mrad": [
+    -1.1944,
+    -0.4164,
+    -0.0309
+   ]
+  },
+  "Overseer catch -X-Y diag": {
+   "trans_mm": [
+    0.0787,
+    0.153,
+    -0.0255
+   ],
+   "rot_mrad": [
+    -1.3777,
+    0.229,
+    -0.2235
+   ]
+  },
+  "misuse: Overseer motors cut": {
+   "trans_mm": [
+    -0.0893,
+    0.116,
+    -0.0024
+   ],
+   "rot_mrad": [
+    -1.4677,
+    -0.5603,
+    -0.029
+   ]
+  },
+  "XT60 insert at the drone 60 N": {
+   "trans_mm": [
+    0.0086,
+    0.0383,
+    -0.0178
+   ],
+   "rot_mrad": [
+    -0.9323,
+    -0.0411,
+    -0.0359
+   ]
+  },
+  "misuse: head stall at the drone 74 N": {
+   "trans_mm": [
+    0.0062,
+    0.0414,
+    -0.0193
+   ],
+   "rot_mrad": [
+    -1.0861,
+    -0.0605,
+    -0.0369
+   ]
+  },
+  "XT60 insert at the -90 bay 60 N": {
+   "trans_mm": [
+    0.0317,
+    -0.0122,
+    -0.0046
+   ],
+   "rot_mrad": [
+    0.6303,
+    0.1593,
+    -0.0203
+   ]
+  },
+  "XT60 pull at the -90 bay 50 N": {
+   "trans_mm": [
+    0.0074,
+    0.0557,
+    -0.0172
+   ],
+   "rot_mrad": [
+    -1.0262,
+    -0.0556,
+    -0.0416
+   ]
+  },
+  "misuse: head stall at the -90 bay 74 N": {
+   "trans_mm": [
+    0.0348,
+    -0.0209,
+    -0.003
+   ],
+   "rot_mrad": [
+    0.8412,
+    0.1867,
+    -0.0176
+   ]
+  },
+  "centring at the -90 bay 7.6 N + 1.05 N.m": {
+   "trans_mm": [
+    0.0058,
+    0.0225,
+    -0.0093
+   ],
+   "rot_mrad": [
+    -0.2923,
+    0.0018,
+    0.0863
+   ]
+  },
+  "XT60 insert at the -120 bay 60 N": {
+   "trans_mm": [
+    0.0705,
+    0.0044,
+    -0.0138
+   ],
+   "rot_mrad": [
+    0.5748,
+    0.2987,
+    -0.6276
+   ]
+  },
+  "centring at the -120 bay 7.6 N + 1.05 N.m": {
+   "trans_mm": [
+    0.0143,
+    0.0217,
+    -0.0102
+   ],
+   "rot_mrad": [
+    -0.247,
+    0.0335,
+    0.0405
+   ]
+  },
+  "stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+   "trans_mm": [
+    0.0145,
+    0.0375,
+    -0.0155
+   ],
+   "rot_mrad": [
+    -0.6188,
+    -0.0061,
+    -0.0463
+   ]
+  },
+  "all bays: 60 N insert": {
+   "trans_mm": [
+    0.0527,
+    -0.0121,
+    0.0059
+   ],
+   "rot_mrad": [
+    1.5749,
+    0.323,
+    -0.0348
+   ]
+  },
+  "all bays: 43.5 N across": {
+   "trans_mm": [
+    -0.0007,
+    -0.0447,
+    0.0104
+   ],
+   "rot_mrad": [
+    0.0041,
+    1.1642,
+    2.094
+   ]
+  },
+  "lifted from below 2 g (sheets no longer carry)": {
+   "trans_mm": [
+    0.0374,
+    0.0457,
+    -0.0228
+   ],
+   "rot_mrad": [
+    -0.5062,
+    0.0902,
+    -0.0611
+   ]
+  },
+  "misuse: set down hard 5 g": {
+   "trans_mm": [
+    0.0934,
+    0.1143,
+    -0.057
+   ],
+   "rot_mrad": [
+    -1.2655,
+    0.2255,
+    -0.1528
+   ]
+  },
+  "misuse: knocked over onto +X 5 g": {
+   "trans_mm": [
+    0.0425,
+    0.1683,
+    -0.16
+   ],
+   "rot_mrad": [
+    0.3724,
+    -0.9941,
+    -2.6264
+   ]
+  }
+ },
+ "bay_rotation": {
+  "standing, Overseer seated": {
+   "30": {
+    "rot_mrad": [
+     -0.4392,
+     -0.2416,
+     -0.1121
+    ],
+    "rel_to_stub_Y_mrad": -0.2734
+   },
+   "0": {
+    "rot_mrad": [
+     -0.2459,
+     -0.0724,
+     -0.3129
+    ],
+    "rel_to_stub_Y_mrad": -0.1042
+   },
+   "-30": {
+    "rot_mrad": [
+     -0.1565,
+     0.4464,
+     -0.2851
+    ],
+    "rel_to_stub_Y_mrad": 0.4146
+   },
+   "-60": {
+    "rot_mrad": [
+     0.046,
+     0.1221,
+     0.0855
+    ],
+    "rel_to_stub_Y_mrad": 0.0904
+   },
+   "-90": {
+    "rot_mrad": [
+     -0.0379,
+     -0.027,
+     -0.0238
+    ],
+    "rel_to_stub_Y_mrad": -0.0587
+   },
+   "-120": {
+    "rot_mrad": [
+     -0.0595,
+     -0.0557,
+     0.0033
+    ],
+    "rel_to_stub_Y_mrad": -0.0875
+   },
+   "-150": {
+    "rot_mrad": [
+     -0.2692,
+     -0.2437,
+     0.351
+    ],
+    "rel_to_stub_Y_mrad": -0.2754
+   },
+   "-180": {
+    "rot_mrad": [
+     -0.3577,
+     0.2803,
+     0.2426
+    ],
+    "rel_to_stub_Y_mrad": 0.2486
+   },
+   "-210": {
+    "rot_mrad": [
+     -0.469,
+     0.3598,
+     0.0426
+    ],
+    "rel_to_stub_Y_mrad": 0.3281
+   }
+  },
+  "all bays: 60 N insert": {
+   "30": {
+    "rot_mrad": [
+     -0.1355,
+     -0.3225,
+     -0.4231
+    ],
+    "rel_to_stub_Y_mrad": -0.6456
+   },
+   "0": {
+    "rot_mrad": [
+     -0.0581,
+     0.2316,
+     -0.6375
+    ],
+    "rel_to_stub_Y_mrad": -0.0915
+   },
+   "-30": {
+    "rot_mrad": [
+     -0.4112,
+     0.8765,
+     -1.061
+    ],
+    "rel_to_stub_Y_mrad": 0.5535
+   },
+   "-60": {
+    "rot_mrad": [
+     -0.028,
+     1.0859,
+     -0.8817
+    ],
+    "rel_to_stub_Y_mrad": 0.7629
+   },
+   "-90": {
+    "rot_mrad": [
+     -0.7993,
+     -0.1632,
+     -0.0938
+    ],
+    "rel_to_stub_Y_mrad": -0.4862
+   },
+   "-120": {
+    "rot_mrad": [
+     -0.1526,
+     -0.139,
+     0.121
+    ],
+    "rel_to_stub_Y_mrad": -0.4621
+   },
+   "-150": {
+    "rot_mrad": [
+     -0.5511,
+     -0.2199,
+     1.2595
+    ],
+    "rel_to_stub_Y_mrad": -0.5429
+   },
+   "-180": {
+    "rot_mrad": [
+     0.0328,
+     0.5714,
+     0.8291
+    ],
+    "rel_to_stub_Y_mrad": 0.2484
+   },
+   "-210": {
+    "rot_mrad": [
+     -0.0006,
+     0.7527,
+     0.4882
+    ],
+    "rel_to_stub_Y_mrad": 0.4296
+   }
+  },
+  "all bays: 43.5 N across": {
+   "30": {
+    "rot_mrad": [
+     0.1295,
+     0.4473,
+     -0.1114
+    ],
+    "rel_to_stub_Y_mrad": -0.717
+   },
+   "0": {
+    "rot_mrad": [
+     0.3837,
+     0.3903,
+     -0.3418
+    ],
+    "rel_to_stub_Y_mrad": -0.774
+   },
+   "-30": {
+    "rot_mrad": [
+     0.1339,
+     0.4915,
+     -0.1285
+    ],
+    "rel_to_stub_Y_mrad": -0.6727
+   },
+   "-60": {
+    "rot_mrad": [
+     0.1379,
+     1.9655,
+     -2.1116
+    ],
+    "rel_to_stub_Y_mrad": 0.8013
+   },
+   "-90": {
+    "rot_mrad": [
+     -0.0164,
+     0.0202,
+     -0.0522
+    ],
+    "rel_to_stub_Y_mrad": -1.144
+   },
+   "-120": {
+    "rot_mrad": [
+     -0.0058,
+     -0.1387,
+     -0.2913
+    ],
+    "rel_to_stub_Y_mrad": -1.3029
+   },
+   "-150": {
+    "rot_mrad": [
+     -0.1659,
+     0.159,
+     0.2518
+    ],
+    "rel_to_stub_Y_mrad": -1.0052
+   },
+   "-180": {
+    "rot_mrad": [
+     -0.2588,
+     0.9486,
+     0.2006
+    ],
+    "rel_to_stub_Y_mrad": -0.2157
+   },
+   "-210": {
+    "rot_mrad": [
+     -0.1579,
+     0.7284,
+     0.1611
+    ],
+    "rel_to_stub_Y_mrad": -0.4359
+   }
+  }
+ },
+ "ring": true,
+ "h": 8.0,
+ "grid": [
+  56,
+  56,
+  64
+ ],
+ "cells": 200704,
+ "design_cells": 85623,
+ "min_member_mm": 18.0,
+ "gen_cm3": 3000.0,
+ "generated_cm3": 3016.665582109673,
+ "drawn_cm3": 1674.24,
+ "compliance_nominal": {
+  "standing, Overseer seated": 6.860135498331992,
+  "Overseer catch +X+Y diag": 112.6059275326714,
+  "Overseer catch -X-Y diag": 148.90417451111387,
+  "misuse: Overseer motors cut": 177.17614132780832,
+  "XT60 insert at the drone 60 N": 12.639662524627019,
+  "misuse: head stall at the drone 74 N": 17.13143930366502,
+  "XT60 insert at the -90 bay 60 N": 8.48710020760251,
+  "XT60 pull at the -90 bay 50 N": 17.255517553505076,
+  "misuse: head stall at the -90 bay 74 N": 12.55750190417895,
+  "centring at the -90 bay 7.6 N + 1.05 N.m": 4.304406040440795,
+  "XT60 insert at the -120 bay 60 N": 11.80842172281743,
+  "centring at the -120 bay 7.6 N + 1.05 N.m": 3.9697384321360167,
+  "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 7.803413565892563,
+  "all bays: 60 N insert": 90.73188766180631,
+  "all bays: 43.5 N across": 117.48084736549126,
+  "lifted from below 2 g (sheets no longer carry)": 14.8521866694236,
+  "misuse: set down hard 5 g": 92.82616668395143,
+  "misuse: knocked over onto +X 5 g": 171.15068904145227
+ },
+ "compliance_ref_solid": {
+  "standing, Overseer seated": 0.764456822142833,
+  "Overseer catch +X+Y diag": 3.364803891886318,
+  "Overseer catch -X-Y diag": 3.4897156211835445,
+  "misuse: Overseer motors cut": 4.736208758492789,
+  "XT60 insert at the drone 60 N": 1.3499581887653043,
+  "misuse: head stall at the drone 74 N": 1.683478375830622,
+  "XT60 insert at the -90 bay 60 N": 0.8779972562407466,
+  "XT60 pull at the -90 bay 50 N": 1.396289436932515,
+  "misuse: head stall at the -90 bay 74 N": 1.0968237468147726,
+  "centring at the -90 bay 7.6 N + 1.05 N.m": 0.6811820671373264,
+  "XT60 insert at the -120 bay 60 N": 0.9779426519765286,
+  "centring at the -120 bay 7.6 N + 1.05 N.m": 0.65803346150551,
+  "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 0.8688744976408002,
+  "all bays: 60 N insert": 4.747050208618068,
+  "all bays: 43.5 N across": 9.528908962856196,
+  "lifted from below 2 g (sheets no longer carry)": 2.571044302480016,
+  "misuse: set down hard 5 g": 16.069026890500226,
+  "misuse: knocked over onto +X 5 g": 10.195393932881432
+ },
+ "ratio_to_full_solid": {
+  "standing, Overseer seated": 8.973869157322044,
+  "Overseer catch +X+Y diag": 33.46582182819107,
+  "Overseer catch -X-Y diag": 42.6694294535704,
+  "misuse: Overseer motors cut": 37.40885386652411,
+  "XT60 insert at the drone 60 N": 9.36300296543812,
+  "misuse: head stall at the drone 74 N": 10.176215833608454,
+  "XT60 insert at the -90 bay 60 N": 9.66643135531092,
+  "XT60 pull at the -90 bay 50 N": 12.358123679151678,
+  "misuse: head stall at the -90 bay 74 N": 11.448969755301636,
+  "centring at the -90 bay 7.6 N + 1.05 N.m": 6.31902430803867,
+  "XT60 insert at the -120 bay 60 N": 12.074758881772182,
+  "centring at the -120 bay 7.6 N + 1.05 N.m": 6.032730346346948,
+  "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 8.981059505234274,
+  "all bays: 60 N insert": 19.113319572033685,
+  "all bays: 43.5 N across": 12.328887580250063,
+  "lifted from below 2 g (sheets no longer carry)": 5.776713631537683,
+  "misuse: set down hard 5 g": 5.776713631540993,
+  "misuse: knocked over onto +X 5 g": 16.7870599378676
+ },
+ "peak_gb": 4.850988,
+ "wall_s": 2765,
+ "stopped": "grey",
+ "iterations": 72,
+ "setup": {
+  "ring_cm3": 953.0,
+  "posts_side": [
+   [
+    1,
+    439.5
+   ],
+   [
+    1,
+    439.5
+   ],
+   [
+    1,
+    151.2
+   ],
+   [
+    1,
+    151.2
+   ],
+   [
+    1,
+    439.5
+   ],
+   [
+    1,
+    439.5
+   ],
+   [
+    1,
+    151.2
+   ],
+   [
+    1,
+    151.2
+   ]
+  ],
+  "T": 8.0
+ },
+ "mass_g_PETG": 5957.450089279284
+}
