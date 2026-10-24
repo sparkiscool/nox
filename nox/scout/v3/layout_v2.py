@@ -814,7 +814,7 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
     def violation(f):
         if f is None: return np.inf
         return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
-    for _ in range(40):                                                    # start: drop rods that attract load past a limit
+    for _ in range(300):                                                   # start: drop rods that attract load past a limit
         if fe is not None and feasible(fe): break
         v0 = violation(fe); best_ = None
         for r in fe or []:
