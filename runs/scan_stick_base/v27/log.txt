@@ -140,3 +140,14 @@ it  27 beta    8 J   8.1757 vol 0.0826 (dil 0.1595 g -0.005) grey  3.6% ch 0.100
 it  28 beta    8 J   7.8265 vol 0.0842 (dil 0.1596 g -0.004) grey  3.4% ch 0.100 worst cage bump top 100 N (spine s 5.5 40.0s
 it  29 beta    8 J   7.7408 vol 0.0849 (dil 0.1600 g -0.001) grey  3.4% ch 0.100 worst cage bump top 100 N (spine s 5.46 37.7s
 it  30 beta    8 J   7.6847 vol 0.0853 (dil 0.1601 g -0.001) grey  3.3% ch 0.100 worst cage bump top 100 N (spine s 5.44 37.0s
+it  31 beta    8 J   7.6622 vol 0.0854 (dil 0.1602 g +0.015) grey  3.3% ch 0.100 worst cage bump top 100 N (spine s 5.43 41.1s
+it  32 beta    8 J   8.0631 vol 0.0816 (dil 0.1570 g -0.005) grey  3.4% ch 0.100 worst cage bump top 100 N (spine s 5.75 39.2s
+it  33 beta    8 J   7.8391 vol 0.0827 (dil 0.1574 g -0.002) grey  3.3% ch 0.100 worst cage bump top 100 N (spine s 5.57 42.4s
+it  34 beta    8 J   7.7900 vol 0.0831 (dil 0.1576 g -0.001) grey  3.3% ch 0.100 worst cage bump top 100 N (spine s 5.53 40.0s
+it  35 beta    8 J   7.7740 vol 0.0833 (dil 0.1577 g -0.000) grey  3.3% ch 0.100 worst cage bump top 100 N (spine s 5.52 39.9s
+it  36 beta    8 J   7.7654 vol 0.0833 (dil 0.1577 g +0.008) grey  3.3% ch 0.100 worst cage bump top 100 N (spine s 5.52 39.8s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  37 beta   16 J   7.6123 vol 0.0781 (dil 0.1575 g -0.036) grey  1.5% ch 0.100 worst cage bump top 100 N (spine s 5.4 37.5s
+it  38 beta   16 J   7.4458 vol 0.0816 (dil 0.1620 g -0.008) grey  1.5% ch 0.100 worst cage bump top 100 N (spine s 5.27 39.1s
+it  39 beta   16 J   7.3845 vol 0.0826 (dil 0.1629 g -0.002) grey  1.5% ch 0.100 worst cage bump top 100 N (spine s 5.23 39.4s
+it  40 beta   16 J   7.3528 vol 0.0830 (dil 0.1631 g -0.001) grey  1.5% ch 0.100 worst cage bump top 100 N (spine s 5.21 40.6s
