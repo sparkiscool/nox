@@ -1,0 +1,38 @@
+components 2 largest cm3 [np.float64(8194.6), np.float64(47.1), np.float64(0.0)] total struct cm3 3787.3
+components touching floor/sheets (supported): [1] main is 1
+pad30(S) [1] SUPPORTED cells 84
+pad0(O) [1] SUPPORTED cells 230
+pad-30(S) [1] SUPPORTED cells 96
+pad-60(O) [1, 2] SUPPORTED cells 207
+pad-90(S) [1] SUPPORTED cells 96
+pad-120(O) [1] SUPPORTED cells 207
+pad-150(S) [1] SUPPORTED cells 96
+pad-180(O) [1] SUPPORTED cells 230
+pad-210(S) [1] SUPPORTED cells 84
+post0 [1] SUPPORTED cells 1
+post1 [1] SUPPORTED cells 1
+post2 [1] SUPPORTED cells 4
+post3 [1] SUPPORTED cells 4
+post4 [1] SUPPORTED cells 1
+post5 [1] SUPPORTED cells 1
+post6 [1] SUPPORTED cells 4
+post7 [1] SUPPORTED cells 4
+stub [1] SUPPORTED cells 98
+main body touches +X : 3304 cells ( 2114.6 cm2 of faces)
+main body touches -X : 3257 cells ( 2084.5 cm2 of faces)
+main body touches rear : 3388 cells ( 2168.3 cm2 of faces)
+main body touches floor : 325 cells ( 208.0 cm2 of faces)
+r 110..200: 2748.4  r>=200: 502.8  r<=110: 536.1
+Y slabs (cm3): {'-66': np.float64(483.8), '-16': np.float64(335.4), '34': np.float64(153.6), '84': np.float64(588.8), '134': np.float64(905.2), '184': np.float64(517.6), '234': np.float64(402.4), '284': np.float64(400.4), '334': np.float64(0.0)}
+Z slabs (cm3): {'-240': np.float64(46.6), '-190': np.float64(434.2), '-140': np.float64(187.9), '-90': np.float64(260.6), '-40': np.float64(400.4), '10': np.float64(472.6), '60': np.float64(275.5), '110': np.float64(1507.3), '160': np.float64(202.2), '210': np.float64(0.0)}
+base Z<-150: 358.4  Y<74: 925.2  Y<20: 748.5
+bay -210 material in sector r>110: 226.3
+bay -180 material in sector r>110: 264.7
+bay -150 material in sector r>110: 139.8
+bay -120 material in sector r>110: 230.9
+bay -90 material in sector r>110: 92.7
+bay -60 material in sector r>110: 152.1
+bay -30 material in sector r>110: 156.7
+bay 0 material in sector r>110: 279.6
+bay 30 material in sector r>110: 331.3
+Y 0..74 (mast zone) material cm3: 250.4  X>200: 654.8
