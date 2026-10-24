@@ -47,7 +47,8 @@ def stand_parts():
     if os.environ.get("BOX_DEMO_FRAMES"):
         fm = S.BUILD["frame_mid"]()
         for p in S.POS["frame_mid"]: P[f"frame_mid @{p}"] = S.place(fm, p)
-    P["frame_endR @30"] = S.place(V.BUILD["frame_endR"](), 30); P["frame_endL @-210"] = S.place(V.BUILD["frame_endL"](), -210)
+    if os.environ.get("BOX_DEMO_FRAMES"):
+        P["frame_endR @30"] = S.place(V.BUILD["frame_endR"](), 30); P["frame_endL @-210"] = S.place(V.BUILD["frame_endL"](), -210)
     ps = V.BUILD["post_seg"]()
     for c in ((1, 1), (-1, 1), (1, -1), (-1, -1)):
         for k in range(3):
@@ -58,8 +59,13 @@ def stand_parts():
               "sheet side -X": S.box(-V.X_IN - 3, -V.X_IN, V.Y_BACK + 3, V.Y_FRONT - 3, S.FLOOR, V.Z_TOP),
               "sheet front": S.box(-V.X_IN + 3, V.X_IN - 3, V.Y_FRONT, V.Y_FRONT + 3, S.FLOOR, V.Z_TOP),
               "sheet rear": S.box(-V.X_IN + 3, V.X_IN - 3, V.Y_BACK - 3, V.Y_BACK, S.FLOOR, V.Z_TOP)}
-    bays = list(S.BAYS) if os.environ.get("BOX_DEMO_FRAMES") else sorted(set(S.BAYS) | set(S.POS["frame_mid"]))
+    # Spark 24 Oct: "9 slots ... 4 overseer and 5 scouts": every position 30 .. -210 is a bay (the end bays take over
+    # the funnel seat pads; structure session). DEFAULT placement (preview): Overseer at the 4 bottom slots.
+    bays = list(S.BAYS) if os.environ.get("BOX_DEMO_FRAMES") else [30, 0, -30, -60, -90, -120, -150, -180, -210]
     return P, sheets, bays
+
+
+OVERSEER_BAYS = (-60, -90, -120, -150)                 # DEFAULT preview placement (Spark 24 Oct: 4 Overseer + 5 Scout)
 
 
 def bay_modules(bays):
@@ -69,7 +75,8 @@ def bay_modules(bays):
     out = {}
     for a in bays:
         t = m.copy(); t.apply_transform(trimesh.transformations.rotation_matrix(math.radians(90 - a), [0, 1, 0]))
-        out[f"bay module @{a} ({os.path.basename(src)})"] = t
+        kind = "Overseer (Scout module shown, Overseer bay not drawn)" if a in OVERSEER_BAYS else "Scout"
+        out[f"bay {kind} @{a}"] = t
     return out
 
 
@@ -138,12 +145,13 @@ def electronics():
 def main(video=False):
     from motion import Scene
     os.makedirs(OUT, exist_ok=True)
-    sc = Scene("Nox box: whole assembly", "stand, ring, bays, collar + hook latch, arm v5, electronics; one swap cycle")
+    sc = Scene("Nox box: whole assembly", "9 bays (blue Scout x5, amber Overseer x4), collar + hook latch, arm v5, electronics; one swap cycle")
     P, sheets, bays = stand_parts()
     for k, m in P.items(): sc.part(k, tm(m), group="stand", color="#8d6e63", printed=True, faces=6000)
     for k, m in sheets.items():                                  # cut-away: only the rear sheet (the electronics board) is drawn
         if k == "sheet rear": sc.part(k, tm(m), group="enclosure", color="#dfe9f2", printed=False, faces=200)
-    for k, t in bay_modules(bays).items(): sc.part(k, t, group="bays", color="#5b8ac9", printed=True, faces=15000)
+    for k, t in bay_modules(bays).items():
+        sc.part(k, t, group="bays", color="#e0a43a" if "Overseer" in k else "#5b8ac9", printed=True, faces=12000)
     cm, cname = collar(); ct = tm(cm); ct.apply_transform(S2W)
     sc.part(cname, ct, group="collar", color="#b9c2cc", printed=True, faces=30000)
     L, H, lay, HP = latches()
