@@ -245,6 +245,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # sled: printed PETG plate on the receiver's mount plane (the 6 M3 come up from below into its inserts), 4 thick,
     # on the belly frame tabs of the 4 corner nodes; the pods hang from it beside the receiver
     g["sled"] = box(-dc - 89.65, -dc + 89.65, -76, 76, RT, RT + 4)          # over the receiver body (179.3), its bolts at x -84.7 / 0 / +78.3; 13.8 off the ±x faces (G (8) ≥ 9)
+    xb_ = g["xt60"].bounds
+    g["sled"] = g["sled"].difference(box(xb_[0][0] - 1, xb_[1][0] + 1, xb_[0][1] - 1, xb_[1][1] + 1, RT - 1, RT + 5))   # XT60 lead window (its top stands 3.5 over the mount plane)
     g["cam_pod"] = box(-dc - 23, -dc + 23, 33.6, 72.5, PB + 16, RT)
     g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
     g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 34, 72, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 53)])
@@ -322,7 +324,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(c=[float(v) for v in B + A * 19.5], fwd=[float(v) for v in A], left=[0.0, 1.0, 0.0], half=[19.5, 37.5, 37.5], skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # the L2 body (75 x 75 x 39, M)
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"])],   # and its dome (vertices)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
-             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 40.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose_x": "t8"}, seat_dz=float(SEAT_DZ),
+             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose_x": "t8"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
@@ -759,6 +761,7 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=105.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
+                     *[dict(part=pt_, axis=[sx_, 0, 0], half_angle_deg=45.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60") for sx_ in (1, -1)],   # the set's ends face the funnel pit walls (0.7 to the opening): a member shielding them up to 45 deg would sit in the wall (DEFAULT, alt a shorter set, latch session)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
            access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver", "receiver XT60"])], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
@@ -808,15 +811,17 @@ if os.environ.get("SYS_WRITE_ASM", "0") == "1":
         slug = re.sub(r"[^a-z0-9]+", "_", pt["name"].lower()).strip("_")
         mp = os.path.join(ASM_DIR, slug + ".stl"); pt["trimesh"].export(mp)
         d = {k: v for k, v in pt.items() if k != "trimesh"}
-        d.update(mesh=os.path.relpath(mp, ROOT), owner="overseer", version=f"system {ASM_VER} (layout A)", source="nox/overseer/overseer_system.py")
+        d.update(mesh=os.path.relpath(mp, ROOT), owner="overseer", version=f"system {ASM_VER} (layout B)", source="nox/overseer/overseer_system.py")
         aparts.append(d)
     asm = assembly.new("Overseer", "overseer", aparts,
-        note=(f"System {ASM_VER} from nox/overseer/overseer_system.py (layout A: pack on the thrust axis, motors {dm:.1f} ahead of the plate centre, "
-              f"L2 base ({xB:.1f}, 0, {zB:.0f}) 15 deg below +x, wheels z {WHEEL_Z:.0f}; cage runs/overseer_cage/v3 re-sized on this geometry). "
+        note=(f"System {ASM_VER} from nox/overseer/overseer_system.py (layout B, Spark 24 Oct: swap CG {SWAP_BACK:.0f} behind the thrust axis, no tail, "
+              f"motors {dm:.1f} ahead of the plate centre, L2 base ({xB:.1f}, 0, {zB:.0f}) 15 deg below +x, wheels z {WHEEL_Z:.0f}; cage sized on this geometry, "
+              f"runs/overseer_system/{os.path.basename(OUT.rstrip('/'))}). "
               "Drone frame: x fwd, y left, z up, z 0 bottom plate top. Parts are grouped as the system pass draws them. "
-              "Left out (no pose yet): ESCs as bodies (25 g each in the arm masses), wheel pins, pogo pads, receiver and latch, "
+              "Battery latch set v1 (cartridge, pack, receiver frame, XT60) from runs/box_system/v2/latch_ctx. "
+              "Left out (no pose yet): ESCs as bodies (25 g each in the arm masses), wheel pins, keep-alive pads as bodies, "
               "scan stick mount (open: its chat sets the mount; loads in dimensions O System Overseer)."),
-        cg_ref=[float(dm), 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
+        cg_ref=[float(dm), 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cg_tol_no_swap_mm=man["cg_tol_no_swap_mm"], cage_margin_mm=3.0, n_dirs=1500,
         openings=man["openings"], access=man["access"], contact_pairs=man["contact_pairs"],
         guard_offsets={"guard rods to prop disks, plan (G)": float(co.GUARD_GAP), "rods under / over the swept band (G)": float(co.GUARD_GAP)})
     asm.save(os.path.join(HERE, "overseer.assembly.json"))

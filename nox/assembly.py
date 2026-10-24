@@ -36,7 +36,7 @@ import system_check as sc
 GEOM = ("mesh", "box", "cylinder", "sphere", "trimesh")
 ROLES = ("cage", "protected", "structure", "bought")
 TAGS = ("P", "M", "C", "E", "F")
-TOP_ORDER = ("name", "machine", "note", "cg_ref", "thrust_axis", "cg_tol_mm", "cage_margin_mm", "fit_tol_mm3", "n_dirs",
+TOP_ORDER = ("name", "machine", "note", "cg_ref", "thrust_axis", "cg_tol_mm", "cg_tol_no_swap_mm", "cage_margin_mm", "fit_tol_mm3", "n_dirs",
              "openings", "contact_pairs", "clearance_pairs", "guard_offsets", "access", "probes", "parts")
 PART_ORDER = ("name", "role", "protect", "swap", "mesh", "box", "cylinder", "sphere", "pose", "material", "mass_g", "cg",
               "tag", "owner", "version", "source", "moves", "note")
