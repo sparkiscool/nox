@@ -1,0 +1,19 @@
+mesh 5890 el (0 window hole, 0 low-rib, 0 guide, 0 boss), 18291 dof, 23 cases
+boss forces N (functional, misuse): [-6.97, 6.4, -6.97, 7.55] [-23.25, 21.34, -23.25, 25.16]
+skin only: {'face_g': np.float64(70.0), 'util': 5.265, 'worst': 'press u60 v90', 'stress_MPa': 19.0}
+vf 0.400: util 0.228 (press u60 v90), stress 3.2 MPa, face 172.6 g  OK  [39s]
+vf 0.200: util 0.393 (press u60 v90), stress 6.2 MPa, face 121.4 g  OK  [76s]
+vf 0.100: util 0.670 (press u90 v65), stress 14.0 MPa, face 96.2 g  OK  [112s]
+vf 0.050: util 1.099 (press u90 v90), stress 14.6 MPa, face 83.1 g  --  [148s]
+vf 0.075: util 0.949 (top edge u0), stress 13.8 MPa, face 89.3 g  OK  [185s]
+vf 0.062: util 0.968 (top edge u0), stress 12.1 MPa, face 86.2 g  OK  [221s]
+vf 0.056: util 1.010 (press u90 v90), stress 12.5 MPa, face 84.6 g  --  [260s]
+{
+ "face_g": 86.2,
+ "util": 0.968,
+ "worst": "top edge u0",
+ "stress_MPa": 12.1,
+ "stress_case": "top edge u40",
+ "ok": true,
+ "latch_boss_defl_mm": {}
+}

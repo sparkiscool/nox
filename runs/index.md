@@ -1,6 +1,6 @@
 # Runs
 
-_89 runs · rebuilt 2026-10-24 08:03_
+_91 runs · rebuilt 2026-10-24 08:03_
 
 ## Latest per part
 
@@ -9,7 +9,7 @@ _89 runs · rebuilt 2026-10-24 08:03_
 | arm | v5 | DONE | · | ·  | PASS | [runs/arm/v5](runs/arm/v5/summary.md) |
 | arm_eccbush | v1 | DONE | 0.8 (M) | 0.11 in eccentric wheel load 52 N (E: preload 30 + separating) bending the shank, 2.8 MPa (E, hand calc) vs 25 across layers (E) | PASS | [runs/arm_eccbush/v1](runs/arm_eccbush/v1/summary.md) |
 | arm_pinion16 | v2 | · | 3.1 (M) | [0.76, 'power cut, bumped head']  | · | [runs/arm_pinion16/v2](runs/arm_pinion16/v2/summary.md) |
-| arm_rail | v2 | · | 49.4 (M) | [0.28, 'head stall free']  | · | [runs/arm_rail/v2](runs/arm_rail/v2/summary.md) |
+| arm_rail | v3 | · | 56.6 (M) | [0.11, 'dropped Overseer']  | · | [runs/arm_rail/v3](runs/arm_rail/v3/summary.md) |
 | arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
 | box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
@@ -39,6 +39,7 @@ _89 runs · rebuilt 2026-10-24 08:03_
 | 2026-10-24T23:59 | scout_layout | [v3](runs/scout_layout/v3/summary.md) | DONE | 791 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T20:00 | scout_layout | [v1](runs/scout_layout/v1/summary.md) | DONE | 517.0 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 08:03 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
 | 2026-10-24 05:42 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-24 05:42 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
 | 2026-10-24 05:42 | detent | [v3](runs/detent/v3/summary.md) | · | 6.7 (M) | [0.18, 'detent holding 0.55 N.m, keyed bearing (E)'] | · | · | · GB | · min | · |
@@ -71,6 +72,7 @@ _89 runs · rebuilt 2026-10-24 08:03_
 | 2026-10-24 | box_catch_assembly | [v0](runs/box_catch_assembly/v0/summary.md) | DONE | 673 (E) | · | · | · | · GB | 1 min | · |
 | 2026-10-24 | detent | [v2](runs/detent/v2/summary.md) | DONE | 2.3 (M) | 0.22 | PASS | arm top face (Y 74.1) down | · GB | · min | · |
 | 2026-10-24 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | DONE | 80.0 (M) | 0.91 | PASS | contact face | · GB | · min | · |
+| 2026-10-24 | funnel_panel | [v8_plain](runs/funnel_panel/v8_plain/summary.md) | DONE | 53.8 (M) | 0.91 | PASS | contact face | · GB | · min | · |
 | 2026-10-24 | overseer_assembly | [v0](runs/overseer_assembly/v0/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 8 min | · |
 | 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
