@@ -1,0 +1,12 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 49.86,
+ "mass_tag": "M",
+ "worst_index": 0.23,
+ "worst_case": "insert 60 N (E): couple 6.39 N.m (E), rail bending at the outer post 5.7 MPa (E, hand calc, across layers vs 25 E)",
+ "solid_ok": true,
+ "bed_face": "bottom (Y 74 (C): body + both feet, coplanar)",
+ "bed_contact_mm2": 2411.0,
+ "note": "drawn (manifold3d), nox/box/arm_v5_cad.py"
+}

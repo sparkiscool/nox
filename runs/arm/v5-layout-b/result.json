@@ -1,0 +1,845 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_tag": "C",
+ "note": "arm v5 layout (pure python): rails + 3-wheel carriages + rack and pinion; min gap 1.00 over the stroke; axle motor at -39 deg, unbalance 10.1 g.m E",
+ "motors": {
+  "A": {
+   "xc": 53.5,
+   "zc": 55.0,
+   "rot": 45.792057092162395
+  },
+  "B": {
+   "xc": -55.0,
+   "zc": -53.5,
+   "rot": -135.7920570921624
+  },
+  "axle": {
+   "xc": 53.93,
+   "zc": -43.67,
+   "rot": -39.0
+  }
+ },
+ "unbal_gmm": 10065.0,
+ "gmin": 1.0,
+ "worst": [
+  {
+   "pair": [
+    "railA:body",
+    "A:wheel0"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railA:body",
+    "A:wheel1"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railA:body",
+    "A:wheel2"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railA:stop",
+    "A:plate"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railB:body",
+    "B:wheel0"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railB:body",
+    "B:wheel1"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railB:body",
+    "B:wheel2"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railB:stop",
+    "B:plate"
+   ],
+   "gap": 1.0
+  },
+  {
+   "pair": [
+    "railA:foot35",
+    "A:nut0"
+   ],
+   "gap": 1.4
+  },
+  {
+   "pair": [
+    "railA:foot76",
+    "A:nut0"
+   ],
+   "gap": 1.4
+  },
+  {
+   "pair": [
+    "railB:foot38.75",
+    "B:nut0"
+   ],
+   "gap": 1.4
+  },
+  {
+   "pair": [
+    "railB:foot76",
+    "B:nut0"
+   ],
+   "gap": 1.4
+  },
+  {
+   "pair": [
+    "postA",
+    "80T"
+   ],
+   "gap": 1.5
+  },
+  {
+   "pair": [
+    "railB:foot38.75",
+    "B:nut2"
+   ],
+   "gap": 1.55
+  },
+  {
+   "pair": [
+    "railA:foot76",
+    "A:nut1"
+   ],
+   "gap": 1.75
+  },
+  {
+   "pair": [
+    "railB:foot76",
+    "B:nut1"
+   ],
+   "gap": 1.75
+  },
+  {
+   "pair": [
+    "drop",
+    "80T"
+   ],
+   "gap": 2.49
+  },
+  {
+   "pair": [
+    "railA:foot35",
+    "A:nut2"
+   ],
+   "gap": 3.24
+  },
+  {
+   "pair": [
+    "A:plate",
+    "B:plate"
+   ],
+   "gap": 4.0
+  },
+  {
+   "pair": [
+    "railA:foot35",
+    "drop"
+   ],
+   "gap": 4.6
+  },
+  {
+   "pair": [
+    "postB",
+    "80T"
+   ],
+   "gap": 5.25
+  },
+  {
+   "pair": [
+    "railB:foot38.75",
+    "drop"
+   ],
+   "gap": 5.28
+  },
+  {
+   "pair": [
+    "postA",
+    "drop"
+   ],
+   "gap": 5.43
+  },
+  {
+   "pair": [
+    "postA",
+    "ring"
+   ],
+   "gap": 5.5
+  },
+  {
+   "pair": [
+    "drop",
+    "ring"
+   ],
+   "gap": 6.49
+  },
+  {
+   "pair": [
+    "postB",
+    "drop"
+   ],
+   "gap": 7.84
+  },
+  {
+   "pair": [
+    "railA:body",
+    "A:nut0"
+   ],
+   "gap": 8.4
+  },
+  {
+   "pair": [
+    "railA:body",
+    "A:nut1"
+   ],
+   "gap": 8.4
+  },
+  {
+   "pair": [
+    "railA:body",
+    "A:nut2"
+   ],
+   "gap": 8.4
+  },
+  {
+   "pair": [
+    "railB:body",
+    "B:nut0"
+   ],
+   "gap": 8.4
+  }
+ ],
+ "rail": {
+  "y": [
+   74.0,
+   93.0
+  ],
+  "r": [
+   27.0,
+   134.0
+  ],
+  "foot_x": 16.0,
+  "foot_h": 6.0,
+  "body_x": 9.0,
+  "ridge_x": 12.0,
+  "ridge_y": 88.0,
+  "ridge_half_h": 3.0,
+  "chan": {
+   "x": [
+    -2.0,
+    2.0
+   ],
+   "y": [
+    89.0,
+    93.0
+   ],
+   "mouth": 3.2
+  },
+  "bolts": {
+   "x": 0.0,
+   "r_A": [
+    35.0,
+    76.0
+   ],
+   "r_B": [
+    38.75,
+    76.0
+   ],
+   "cbore_r": 4.5,
+   "cbore_y": 84.0,
+   "hole_r": 2.75,
+   "bolt": "M5 x 16 ISO 4762",
+   "post_insert": {
+    "hole_d": 6.4,
+    "depth": 8.0,
+    "insert": "M5 x 5.8 heat-set (OD 7.0, E)"
+   }
+  },
+  "stop": {
+   "x": [
+    -9.0,
+    9.0
+   ],
+   "y": [
+    93.0,
+    97.0
+   ],
+   "r": [
+    27.0,
+    31.0
+   ],
+   "z0_home": 31.0
+  }
+ },
+ "stroke": {
+  "z0s": [
+   32.0,
+   81.0,
+   86.1,
+   89.6,
+   95.6
+  ],
+  "drone_push": 6.0,
+  "slow_last": 12.0,
+  "slow_v": 20.0
+ },
+ "ecc": {
+  "x": -22.0,
+  "u": 18.0,
+  "shank_r": 5.5,
+  "bore_in_plate_r": 5.6,
+  "plate_boss_r": 8.6,
+  "flange_af": 13.0,
+  "flange_y": [
+   98.0,
+   100.5
+  ],
+  "throw": 0.8,
+  "bolt_r": 2.65
+ },
+ "axle_keep": {
+  "r": 5.0,
+  "y": [
+   98.0,
+   106.0
+  ]
+ },
+ "ecc_keep": {
+  "r": 13.0,
+  "y": [
+   98.0,
+   101.0
+  ]
+ },
+ "carriage": {
+  "wheel_od": 24.0,
+  "wheel_w": 10.0,
+  "wheel_y": [
+   83.0,
+   93.0
+  ],
+  "wheels": [
+   [
+    22.0,
+    4.0
+   ],
+   [
+    22.0,
+    32.0
+   ],
+   [
+    -22.0,
+    18.0
+   ]
+  ],
+  "nut_y": [
+   79.0,
+   83.0
+  ],
+  "plate_y": [
+   94.0,
+   98.0
+  ],
+  "plate_x": [
+   -28.0,
+   28.0
+  ],
+  "plate_u": [
+   0.0,
+   40.0
+  ],
+  "wing_x": [
+   28.0,
+   46.5
+  ],
+  "wing_u": [
+   0.0,
+   30.0
+  ],
+  "web_x": [
+   40.5,
+   46.5
+  ],
+  "web_y": [
+   64.0,
+   94.0
+  ],
+  "web_u": [
+   -47.0,
+   30.0
+  ],
+  "rack_pitch_x": 45.5,
+  "rack_teeth_y": [
+   64.0,
+   73.0
+  ]
+ },
+ "pinion": {
+  "T": 16,
+  "m": 1.0,
+  "r": 8.0,
+  "tip_r": 9.0,
+  "boss_r": 7.0,
+  "teeth_y": [
+   64.5,
+   72.5
+  ],
+  "boss_y": [
+   56.5,
+   63.0
+  ],
+  "x": 53.5,
+  "z": 55.0
+ },
+ "detent": [
+  {
+   "th": -45.0,
+   "s": 1,
+   "gmin": -1.32,
+   "at": [
+    "arm",
+    "A:web"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     18.0,
+     -18.0
+    ],
+    "P": [
+     28.6,
+     -7.4
+    ],
+    "H": [
+     56.2,
+     -35.0
+    ],
+    "A": [
+     29.3,
+     -61.9
+    ]
+   }
+  },
+  {
+   "th": -45.0,
+   "s": -1,
+   "gmin": -1.32,
+   "at": [
+    "arm",
+    "B:web"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     18.0,
+     -18.0
+    ],
+    "P": [
+     7.4,
+     -28.6
+    ],
+    "H": [
+     35.0,
+     -56.2
+    ],
+    "A": [
+     61.9,
+     -29.3
+    ]
+   }
+  },
+  {
+   "th": -75.0,
+   "s": 1,
+   "gmin": -1.93,
+   "at": [
+    "arm",
+    "B:web"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     6.6,
+     -24.6
+    ],
+    "P": [
+     21.1,
+     -20.7
+    ],
+    "H": [
+     31.2,
+     -58.4
+    ],
+    "A": [
+     -5.5,
+     -68.3
+    ]
+   }
+  },
+  {
+   "th": -75.0,
+   "s": -1,
+   "gmin": -23.35,
+   "at": [
+    "arm",
+    "B:web"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     6.6,
+     -24.6
+    ],
+    "P": [
+     -7.9,
+     -28.5
+    ],
+    "H": [
+     2.2,
+     -66.2
+    ],
+    "A": [
+     38.9,
+     -56.3
+    ]
+   }
+  },
+  {
+   "th": -135.0,
+   "s": 1,
+   "gmin": -20.21,
+   "at": [
+    "arm",
+    "B:web"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     -18.0,
+     -18.0
+    ],
+    "P": [
+     -7.4,
+     -28.6
+    ],
+    "H": [
+     -35.0,
+     -56.2
+    ],
+    "A": [
+     -61.9,
+     -29.3
+    ]
+   }
+  },
+  {
+   "th": -135.0,
+   "s": -1,
+   "gmin": -13.27,
+   "at": [
+    "springs",
+    "B:web"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     -18.0,
+     -18.0
+    ],
+    "P": [
+     -28.6,
+     -7.4
+    ],
+    "H": [
+     -56.2,
+     -35.0
+    ],
+    "A": [
+     -29.3,
+     -61.9
+    ]
+   }
+  },
+  {
+   "th": -165.0,
+   "s": 1,
+   "gmin": -40.17,
+   "at": [
+    "springs",
+    "B:wheels"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     -24.6,
+     -6.6
+    ],
+    "P": [
+     -20.7,
+     -21.1
+    ],
+    "H": [
+     -58.4,
+     -31.2
+    ],
+    "A": [
+     -68.3,
+     5.5
+    ]
+   }
+  },
+  {
+   "th": -165.0,
+   "s": -1,
+   "gmin": -33.3,
+   "at": [
+    "hook",
+    "B:wheels"
+   ],
+   "ok": false,
+   "pts": {
+    "C": [
+     -24.6,
+     -6.6
+    ],
+    "P": [
+     -28.5,
+     7.9
+    ],
+    "H": [
+     -66.2,
+     -2.2
+    ],
+    "A": [
+     -56.3,
+     -38.9
+    ]
+   }
+  }
+ ],
+ "stacks": [
+  {
+   "stack": "v4 (belts, universal modules)",
+   "rail_y": [
+    74.0,
+    94.0
+   ],
+   "Y_C": 175.0,
+   "pack_y": [
+    137.5,
+    216.5
+   ],
+   "modules_y": [
+    94.0,
+    255.0
+   ],
+   "funnel_y": [
+    15.0,
+    335.0
+   ],
+   "enclosure_y": [
+    -66.0,
+    337.0
+   ],
+   "length": 403.0,
+   "note": "glide top 97.3, pack from 98.5; universal module (Overseer length), Scout receiver centred"
+  },
+  {
+   "stack": "v5 (rails on the posts, universal modules)",
+   "rail_y": [
+    74.0,
+    94.0
+   ],
+   "Y_C": 175.0,
+   "pack_y": [
+    137.5,
+    216.5
+   ],
+   "modules_y": [
+    94.0,
+    255.0
+   ],
+   "funnel_y": [
+    15.0,
+    335.0
+   ],
+   "enclosure_y": [
+    -66.0,
+    337.0
+   ],
+   "length": 403.0,
+   "note": "carriage plate Y 94..98; head body from 98; the sliced v4i modules stay"
+  },
+  {
+   "stack": "v5 + C1 (Scout-length modules)",
+   "rail_y": [
+    74.0,
+    94.0
+   ],
+   "Y_C": 138.0,
+   "pack_y": [
+    100.5,
+    179.5
+   ],
+   "modules_y": [
+    94.0,
+    184.0
+   ],
+   "funnel_y": [
+    -22.0,
+    298.0
+   ],
+   "enclosure_y": [
+    -66.0,
+    300.0
+   ],
+   "length": 366.0,
+   "note": "pack Y 100.5..179.5 (2.5 over the plate); needs a new module version (receiver Y 96..184)"
+  },
+  {
+   "stack": "v5-compact = C1 + C2 (rails on the plate)",
+   "rail_y": [
+    54.0,
+    74.0
+   ],
+   "Y_C": 118.0,
+   "pack_y": [
+    80.5,
+    159.5
+   ],
+   "modules_y": [
+    74.0,
+    164.0
+   ],
+   "funnel_y": [
+    -42.0,
+    278.0
+   ],
+   "enclosure_y": [
+    -66.0,
+    280.0
+   ],
+   "length": 346.0,
+   "note": "hub v6 without posts, rail foot on the plate Y 54; pinion plane Y 55..63; carriage plate 74..78; pack Y 80.5..159.5"
+  }
+ ],
+ "parts_out": [
+  [
+   "2040 extrusion 112",
+   2,
+   "bars"
+  ],
+  [
+   "idler end A / B v3 (printed)",
+   2,
+   ""
+  ],
+  [
+   "GT2 toothless idler",
+   2,
+   ""
+  ],
+  [
+   "GT2 6 mm belt cut 445 / 457",
+   2,
+   "+ 2 belt connectors"
+  ],
+  [
+   "M5 T-nut",
+   8,
+   "bar posts + idler ends"
+  ],
+  [
+   "GT2 20T 5 bore",
+   2,
+   "head motors (the axle 20T stays)"
+  ],
+  [
+   "glide (in heads A / B v5)",
+   2,
+   "replaced by the carriage"
+  ]
+ ],
+ "parts_in": [
+  [
+   "rail A / B v1 (PETG, printed)",
+   2,
+   "52.4 / 52.6 g M (arm_v5_cad): body 18 x 19 full depth, ridges, feet at the posts, park stop, ribbon channel"
+  ],
+  [
+   "V-wheel v1 (PETG, printed, OD 24 x 10, 90 deg groove)",
+   6,
+   "2.8 g each M, on 2 x 625ZZ (press + epoxy)"
+  ],
+  [
+   "625ZZ bearing 5 x 16 x 5",
+   12,
+   "~5 g each E"
+  ],
+  [
+   "M5 x 25 socket head + nyloc",
+   6,
+   "wheel axles through the plate"
+  ],
+  [
+   "M5 precision shim 5 x 10 x 1",
+   6,
+   "one under each wheel's inner race (Y 93..94)"
+  ],
+  [
+   "eccentric bush v1 (PETG, printed, 0.8 throw)",
+   2,
+   "0.8 g each M, in the plate's eccentric bore"
+  ],
+  [
+   "pinion 16T m1 v1 (PETG, printed, \u00d818 x 16, boss \u00d814)",
+   2,
+   "3.1 g each M, on the NEMA D-shaft, M3 grub"
+  ],
+  [
+   "M3 x 4 grub",
+   2,
+   ""
+  ],
+  [
+   "M5 x 16 socket head",
+   4,
+   "rail to post, one per post from the rail top"
+  ],
+  [
+   "M5 heat-set insert (OD 7.0 x 5.8, E)",
+   4,
+   "one per hub v6 post top"
+  ],
+  [
+   "rack 77 m1 (printed into each head's carriage web)",
+   2,
+   "in heads v6"
+  ]
+ ]
+}
