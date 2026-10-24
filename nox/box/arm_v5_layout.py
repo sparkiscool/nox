@@ -92,7 +92,7 @@ def band(ax, az, bx, bz, hw):
     dx, dz = bx - ax, bz - az; ln = math.hypot(dx, dz); nx, nz = -dz / ln * hw, dx / ln * hw
     return [(ax + nx, az + nz), (bx + nx, bz + nz), (bx - nx, bz - nz), (ax - nx, az - nz)]
 AX_TEETH = 20                                       # the axle motor's pulley on the GT2 loop round the 80T sun (arm_v7_layout: 80 / AXLE_RATIO)
-def loop_strands(ax, az, t_in=-0.75, t_out=0.63):
+def loop_strands(ax, az, t_in=-1.0, t_out=0.63):   # GT2: tooth tips ~1.0 inside the pitch line (0.254 + 0.75), back 0.63 out
     """the axle loop's two tangent strands (80T sun at the axis, AX_TEETH on the axle motor), GT2 pitch line t_in..t_out across it
     (teeth inward, back outward): [(name, polygon)]. The loop's inside is free space (the old band(LOOP_HW) on the centreline filled it)."""
     R1, R2 = 80 * 2 / (2 * math.pi), AX_TEETH * 2 / (2 * math.pi)

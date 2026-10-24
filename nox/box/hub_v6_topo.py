@@ -20,7 +20,7 @@ from arm_cad import box
 from topo import Part, Settings, optimise
 
 H = float(sys.argv[1]) if len(sys.argv) > 1 else 2.05
-GEN = float(sys.argv[2]) if len(sys.argv) > 2 else 58.0   # hub v7: swap 0.5 at ~56 by the run 2 -> 3 slope (0.596 @ 40, 0.523 @ 52, F); budget 210 g
+GEN = float(sys.argv[2]) if len(sys.argv) > 2 else 62.0   # hub v7: swap ~0.46 at 62 by the run 2 -> 3 slope (0.596 @ 40, 0.523 @ 52, F; 0.5 at ~56); budget 215 g
 SYSTEM = os.path.join(HV.REPO, "runs", "arm", os.environ.get("NOX_ARM", "v7"), "system.json")
 CLS = dict(swap="flight", misuse="misuse", handling="misuse", sustained="sustained")
 BIG = 400.0

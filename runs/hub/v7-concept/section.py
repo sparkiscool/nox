@@ -40,11 +40,11 @@ legs = [circle(Q, 5.0), circle(D["P"], 4.0), circle(D["A"], 4.0)]
 p1, W, Hh = panel(10, "Run 3: one Ø10 column at Q, flared", [col_r3], "flare touches the strand (0.0 gap); sustained 1.08 above it (F)", bad=(0,))
 p2, _, _ = panel(10 + W + 30, "Rejected: legs under P and A", legs, "legs close a window round the strand: the spliced loop cannot go on (review FAIL)", bad=(1, 2))
 p3, _, _ = panel(10 + 2 * (W + 30), "Chosen: 14 x 14 column inside the loop", [HV.column_foot(HV.COLUMN["len"], HV.COLUMN["w"])],
-                 "1.05 off the strand, loop slides on past the free web ends; sustained ~0.5 (E)")
+                 "1.05 off the tooth tips, loop slides on past the free web ends; sustained ≤ 0.5 (E)")
 TW, TH = 3 * W + 80, 40 + Hh + 20
 runs = [("v6 run 2", 40, 184.4, 0.596), ("v6 run 3", 52, 199.3, 0.523)]
 tab = "".join(f"<tr><td>{n}</td><td>{g:g} cm³</td><td>{m:g} g (M)</td><td>{i:g} (F)</td></tr>" for n, g, m, i in runs)
-tab += "<tr><td><b>v7 (chosen)</b></td><td>58 cm³</td><td>~207 g (E)</td><td>~0.48 (E, the run 2 → 3 slope)</td></tr>"
+tab += "<tr><td><b>v7 (chosen)</b></td><td>62 cm³</td><td>~212 g (E)</td><td>~0.46 (E, the run 2 → 3 slope; 0.5 at ~56)</td></tr>"
 html = f"""<title>Hub v7 system pass</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -62,7 +62,7 @@ svg .h {{ font-weight:600; font-size:13px; fill:var(--fg) }} svg .s {{ font-size
 <main><header><h1>Hub v7 system pass</h1><p>Nox swap arm hub. Three hub v6 runs missed a check, so the hub went back to its system pass. Plan at the axle belt (Y 56..62), to scale ({S:g} px per mm): the GT2 loop runs from the fixed 80T sun to the axle motor's 16T, and the detent tower's column stands inside it. The loop is lap-spliced, so it goes on by sliding under the tower's free web ends.</p></header>
 <section class="card"><h2 style="margin:0 0 8px;font-size:1.05rem">Detent tower: three options</h2><div class="scroll"><svg viewBox="0 0 {TW:.0f} {TH:.0f}" width="{TW:.0f}" height="{TH:.0f}" role="img" aria-label="tower options in plan">{p1}{p2}{p3}</svg></div></section>
 <section class="card"><h2 style="margin:0 0 8px;font-size:1.05rem">Swap 0.5 at a stated mass</h2><div class="scroll"><table><tr><th>Run</th><th>Generated</th><th>Mass</th><th>Swap worst</th></tr>{tab}</table></div>
-<p style="margin-top:8px">Alternatives to more volume: a drawn skirt at the sleeve corner (a structural member, not mounting: rejected, The rule 1), a stiffer plate (no room: the wheel lanes and motor seats). Mass is soft (budget 210 g DEFAULT, hub v5 214 g M).</p></section>
+<p style="margin-top:8px">Alternatives to more volume: a drawn skirt at the sleeve corner (a structural member, not mounting: rejected, The rule 1), a stiffer plate (no room: the wheel lanes and motor seats). Mass is soft (budget 215 g DEFAULT, hub v5 214 g M).</p></section>
 <section class="card"><p>Source <code>runs/hub/v7-concept/section.py</code>; numbers <code>nox/dimensions.md</code> "System box swap: arm", Hub row.</p></section></main>
 """
 open(os.path.join(HERE, "section.html"), "w").write(html)

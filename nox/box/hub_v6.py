@@ -57,7 +57,7 @@ SEAL_R, SEAL_Y = 37.5, 41.0           # the shoulder on bearing 2's outer race o
 SH_R = 43.0                           # shoulder / cavity wall outer r (= the sleeve)
 
 
-COLUMN = dict(len=14.0, w=14.0, pad=3.0, clr=1.1, s0=33.0)   # hub v7 system pass (runs v6 1..3: the r 5 column bent, sustained 1.33 / 1.08, F):
+COLUMN = dict(len=14.0, w=14.0, pad=3.0, clr=1.1, s0=33.0)   # clr along t: 1.05 perpendicular to the strand's tooth tips (the splice lap is on the belt's back, outside the loop)   # hub v7 system pass (runs v6 1..3: the r 5 column bent, sustained 1.33 / 1.08, F):
 # the detent tower's column is a 14 x 14 block inside the axle loop, 1.0 (perpendicular) off the strand's tooth face (the loop goes on past the tower's free
 # web ends, so no leg may stand outside the loop), from s 33 (1.0 + its pad off the 80T flange) along the strand; its plate pad grows 3.0
 # all round (the gusset into the body, the attachment rule). Alt rejected: legs under P / A (close a window round the strand, review FAIL).
@@ -70,7 +70,7 @@ def column_foot(ln, w, grow=0.0):
     tp = lambda s_: R1 * cb + (s_ - R1 * sb) / (C - (R1 - R2) * sb) * (R2 * cb - R1 * cb)   # the strand's pitch line |t| at s (tangent points)
     s0 = COLUMN["s0"]; s1 = s0 + ln
     pts = []
-    for s_, t_ in ((s0, -tp(s0) + 0.75 + COLUMN["clr"]), (s1, -tp(s1) + 0.75 + COLUMN["clr"])):
+    for s_, t_ in ((s0, -tp(s0) + 1.0 + COLUMN["clr"]), (s1, -tp(s1) + 1.0 + COLUMN["clr"])):   # off the tooth tips (1.0 inside the pitch line)
         pts.append((s_ - grow, t_ - grow)) if s_ == s0 else pts.append((s_ + grow, t_ - grow))
     pts += [(s1 + grow, pts[1][1] + grow + w + grow), (s0 - grow, pts[0][1] + grow + w + grow)]
     return [(a * ux + b * nx, a * uz + b * nz) for a, b in pts]
@@ -244,6 +244,8 @@ def checks(H=None, verbose=True):
     return gaps
 
 if __name__ == "__main__":
+    if os.environ.get("NOX_ARM", "v7") == "v7":                               # the v7 stack by default (hub v7), as hub_v6_topo.py
+        import arm_v7_layout as S7; S7.use()
     H = hub_v6_parts()
     d = H["drawn"] - H["cuts"]
     print("motors v6", {k: (round(v["xc"], 2), round(v["zc"], 2), round(v["rot"], 1)) for k, v in MOTORS6.items()})
