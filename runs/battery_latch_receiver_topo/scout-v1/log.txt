@@ -18,3 +18,20 @@ it   7 beta    1 J   1.5749 vol 0.1540 (dil 0.1833 g -0.072) grey 72.1% ch 0.100
 it   8 beta    1 J   1.1466 vol 0.1594 (dil 0.1895 g -0.041) grey 74.6% ch 0.100 worst gate b15 mz 477 12.2s
 it   9 beta    1 J   0.9401 vol 0.1640 (dil 0.1945 g -0.015) grey 75.0% ch 0.100 worst tie b7 fx 414 11.7s
 it  10 beta    1 J   0.8526 vol 0.1657 (dil 0.1964 g -0.006) grey 75.2% ch 0.100 worst held b11 fz 359 10.8s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/battery-latch
+
+To pu
+it  11 beta    1 J   0.8074 vol 0.1662 (dil 0.1969 g +0.000) grey 74.9% ch 0.100 worst held b11 fz 342 12.3s
+it  12 beta    1 J   0.7848 vol 0.1658 (dil 0.1963 g -0.003) grey 74.3% ch 0.100 worst held b11 fz 334 11.6s
+it  13 beta    1 J   0.7549 vol 0.1659 (dil 0.1963 g -0.003) grey 73.8% ch 0.100 worst held b11 fz 321 12.8s
+it  14 beta    1 J   0.7262 vol 0.1660 (dil 0.1963 g -0.003) grey 73.0% ch 0.100 worst held b11 fz 307 12.4s
+it  15 beta    1 J   0.6970 vol 0.1661 (dil 0.1962 g -0.003) grey 72.2% ch 0.100 worst held b11 fz 293 11.2s
+it  16 beta    1 J   0.6670 vol 0.1662 (dil 0.1962 g +0.000) grey 71.3% ch 0.100 worst held b11 fz 277 10.4s
+it  17 beta    1 J   0.6451 vol 0.1657 (dil 0.1954 g -0.003) grey 70.0% ch 0.100 worst held b11 fz 266 12.8s
+it  18 beta    1 J   0.6136 vol 0.1659 (dil 0.1954 g -0.004) grey 68.6% ch 0.100 worst tie b14 mz 247 15.6s
+it  19 beta    1 J   0.5829 vol 0.1661 (dil 0.1954 g -0.004) grey 67.1% ch 0.100 worst tie b18 fx 237 11.2s
+it  20 beta    1 J   0.5587 vol 0.1662 (dil 0.1952 g -0.004) grey 65.8% ch 0.100 worst tie b3 mz 226 9.4s
