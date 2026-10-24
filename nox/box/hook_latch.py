@@ -79,7 +79,7 @@ GUSSET = 8.0                           # ear post gusset: reach along the flange
 BOSS_R, BOSS_GUSSET = 6.0, 6.0         # panel v7 bosses o 12 (pad rule) and their 2 gussets, 2.0 thick, reach 6 (C)
 MAG_D, MAG_L = 3.0, 2.0                # hall magnet o 3 x 2 in the plunger's valley-side face (E, the A3144 kit's)
 HALL_W, HALL_H, HALL_T = 4.4, 3.4, 1.0 # A3144 (TO-92S 4 x 3 x 1.5, E) locating recess in the guide's valley-side face
-MAG_UP = 4.0                           # magnet centre over the plunger bottom: 2.45 under the pocket, 2.3 under the recess (C)
+MAG_UP = 4.0                           # magnet centre over the plunger end: pocket 2.45 above the end, recess 2.3 above the guide bottom (C)
 
 # ---------------------------------------------------------------- loads (E) and allowables (printopt PETG)
 F_FUNC = 30.0      # N along the slope on one plunger: 55 N net up (60 push - 4.9 Scout), the two plungers on the near
