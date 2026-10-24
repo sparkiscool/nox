@@ -209,6 +209,7 @@ def main():
     for m in catch.values(): c = m if c is None else c + m
     tm(c).export(os.path.join(od, "catch_W.stl"))
     print(write_concept(od, out, P, env, a.R))
+    print("v8 lane check (E):", json.dumps(v8_lane_check(od)))
 
 
 def arm_envelopes(R):
@@ -273,6 +274,29 @@ def write_concept(od, out, P, env, R):
     res = A.check(); json.dump(dict(summary=res.get("summary"), access=res.get("access"), fit=res.get("fit")), open(os.path.join(od, "concept_check.json"), "w"), indent=1, default=str)
     A.scene().write(os.path.join(od, "layout.html"))
     return res.get("summary")
+
+
+def v8_lane_check(od):
+    """funnel v8 estimate (E, until the catch's v8 file lands): the -Y face's bodies of the catch moved out FUNNEL_V8_GROW_Y
+    along -Y, against both drone-insert keep-outs; -> v8_lane_check.json."""
+    cat = trimesh.load(os.path.join(od, "catch_W.stl"), force="mesh")
+    lanes = {k: trimesh.load(os.path.join(od, "parts", f), force="mesh") for k, f in (("carriage", "drone_30.stl"), ("grabber", "drone_31.stl"))}
+    M = lambda t: mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
+    out = {}
+    for k, L in lanes.items():
+        hits = []
+        for b in cat.split(only_watertight=False):
+            if b.bounds[0][1] > Y_FUN - 45.0:                       # the -Y face only
+                continue
+            t = b.copy(); t.apply_translation([0, -FUNNEL_V8_GROW_Y, 0]); i = M(t) ^ M(L)
+            if i.volume() > 0.5:
+                v = np.asarray(i.to_mesh().vert_properties)[:, :3]; r = np.hypot(v[:, 0], v[:, 2])
+                hits.append(dict(mm3=round(i.volume(), 1), x=[round(float(v[:, 0].min()), 1), round(float(v[:, 0].max()), 1)],
+                                 y=[round(float(v[:, 1].min()), 1), round(float(v[:, 1].max()), 1)], r=[round(float(r.min()), 1), round(float(r.max()), 1)]))
+        out[k] = dict(total_mm3=round(sum(h["mm3"] for h in hits), 1), hits=hits)
+    json.dump(dict(note="E: the catch's -Y face moved -Y by FUNNEL_V8_GROW_Y (funnel v8 plain, catch PR 81) vs the insert keep-outs", **out),
+              open(os.path.join(od, "v8_lane_check.json"), "w"), indent=1)
+    return out
 
 if __name__ == "__main__":
     main()
