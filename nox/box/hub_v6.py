@@ -57,6 +57,7 @@ SEAL_R, SEAL_Y = 37.5, 41.0           # the shoulder on bearing 2's outer race o
 SH_R = 43.0                           # shoulder / cavity wall outer r (= the sleeve)
 
 
+LANE_Y = 53.0                         # arm v7 round 3d: the wheel lanes' floor (the axle tails at Y 54.75 pass 1.75 over it)
 SEAT_SKIP = {("axle", -1, -1)}      # the axle motor's (-1, -1) M3 sits under the detent springs (key line blocked, swap_system access): 3 x M3
                                     # hold it (85 N + 0.6 N.m worst, E) and its tension slide stays free (DEFAULT; turning the square 40 deg to
                                     # clear it puts a corner at r 39.6 into the sleeve r 43)
@@ -144,7 +145,15 @@ def hub_v6_parts():
     for nm, poly, yy in V.rail_bodies("A") + V.rail_bodies("B"):
         m = prism(poly, *yy); rails = m if rails is None else rails + m
     drop = cylY(V.DROP["x"], V.DROP["z"], L.Y_PLATE0 - 6.0, L.Y_PLATE1 + 1, V.DROP["r"] + 0.5, 32)   # harness drop through the plate (box-wiring: Ø9, C)
-    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop + (tie_cuts if tie_cuts is not None else mf.Manifold())
+    lanes = None                                                                 # arm v7 round 3d (low stack): the wheel-axle tails (Y 54.75) and thin
+    if getattr(V, "RAIL_KEEL", None):                                            # nuts pass over the plate: lanes X +-(13..31) along each rail at Y 53
+        for h in ("A", "B"):
+            for sx in (-1, 1):
+                x0, x1 = sorted((sx * 13.0, sx * 31.0))
+                m = prism(V.to_arm(h, V.rect(x0, x1, V.RAIL_R[0] - 10.0, 92.0)), LANE_Y, L.Y_PLATE1 + 6.0)
+                lanes = m if lanes is None else lanes + m
+    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop + (tie_cuts if tie_cuts is not None else mf.Manifold()) + (lanes if lanes is not None else mf.Manifold())
+    if lanes is not None: drawn -= lanes
     env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
     env -= bore + cav + holes + drop
     env -= seat_cuts
