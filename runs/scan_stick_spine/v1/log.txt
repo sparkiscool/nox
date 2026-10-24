@@ -101,3 +101,4 @@ it  36 beta   32 J   8.5910 vol 0.0937 (dil 0.1777 g -0.002) grey  0.8% ch 0.100
 it  37 beta   32 J   8.5833 vol 0.0940 (dil 0.1779 g -0.000) grey  0.8% ch 0.100 worst cage bump top 100 N (spine s 2.61 24.3s
 it  38 beta   32 J   8.5795 vol 0.0941 (dil 0.1779 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 27.3s
 it  39 beta   32 J   8.5761 vol 0.0942 (dil 0.1779 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 28.7s
+it  40 beta   32 J   8.5732 vol 0.0943 (dil 0.1779 g -0.000) grey  0.7% ch 0.100 worst cage bump top 100 N (spine s 2.6 22.1s
