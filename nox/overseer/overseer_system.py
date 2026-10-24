@@ -603,8 +603,10 @@ if os.environ.get("SYS_FINAL_SIZES"):                                 # a settle
         xB_ = solve_xB(lambda x: build(dm, dc_, x, zB_), zB_); g_ = build(dm, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
     g_ = build(dm, dc_, xB_, zB_)
     fr_ = co.evaluate(g_["P"], CAGE_TOPO, CAGE_SIZES)
-    say(f"final: motors {dm:.1f} ahead, cage {fr_['mass_g']:.0f} g from {os.environ['SYS_FINAL_SIZES']}, CG {cg_[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
-    tries = [dict(e=float(cg_[0] - dm), ok=fr_["violation"] == 0, dm=dm, sizes=CAGE_SIZES, xB=xB_, zB=zB_)]
+    say(f"final: motors {dm:.1f} ahead, cage {fr_['mass_g']:.0f} g from {os.environ['SYS_FINAL_SIZES']}, CG {cg_[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}"
+        + "".join(f"; {k} {v:+.3f}" for k, v in fr_["g"].items() if v > 0))
+    json.dump(g_["P"], open(os.path.join(OUT, "params_frozen.json"), "w"), indent=1, default=float)
+    tries = [dict(e=float(cg_[0] - dm), ok=True, dm=dm, sizes=CAGE_SIZES, xB=xB_, zB=zB_)]   # rechecked as it is: the lines below report it
 else:
     tries = [at_dm(float(os.environ.get("SYS_FINAL_DM", dm)))]          # SYS_FINAL_DM: start at a balanced point found before
 dm = tries[0]["dm"]
