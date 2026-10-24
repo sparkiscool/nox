@@ -163,5 +163,199 @@
  "assembled_worst": [
   "hand lift 100 N at a corner",
   0.437
- ]
+ ],
+ "overseer": {
+  "source": "runs/overseer_system/v1B/checks.txt (overseer system chat, layout B, E)",
+  "mass_kg": {
+   "pack_in": 2.85,
+   "pack_out": 2.065
+  },
+  "cg_catch_frame": {
+   "pack_in": [
+    29.7,
+    1.5,
+    91.9
+   ],
+   "pack_out": [
+    41.0,
+    1.5,
+    91.9
+   ]
+  },
+  "cases": {
+   "pack in: seat (latch in)": {
+    "at": [
+     29.7,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 7.88,
+    "face_wheel_min_N": 2.01,
+    "wheels_loaded": 8,
+    "residual_N": 0.0
+   },
+   "pack in: catch 6 g (latch in)": {
+    "at": [
+     29.7,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 55.15,
+    "face_wheel_min_N": 14.05,
+    "wheels_loaded": 8,
+    "residual_N": 0.0
+   },
+   "pack in: hand lift 100 N": {
+    "at": [
+     300.0,
+     200.0,
+     100.0
+    ],
+    "plunger_max_N": 173.62,
+    "plungers_N": [
+     173.62,
+     65.42,
+     0.0,
+     149.14
+    ],
+    "face_wheel_max_N": 122.54,
+    "face_wheel_min_N": 0.0,
+    "wheels_loaded": 6,
+    "residual_N": 0.0,
+    "cls": "misuse",
+    "plunger_index": 0.884,
+    "guide_wall_index": 0.521,
+    "guide_top_N": 278.8,
+    "boss_bolt_shear_N": 43.4,
+    "panel_fe_util": 0.152,
+    "panel_boss_index": 0.259,
+    "panel_boss_defl_mm": 1.27,
+    "piece_worst": 0.884
+   },
+   "pack in: pull 50 N": {
+    "at": [
+     78.5,
+     27.0,
+     -41.1
+    ],
+    "plunger_max_N": 5.29,
+    "plungers_N": [
+     0.0,
+     1.47,
+     5.29,
+     0.0
+    ],
+    "face_wheel_max_N": 32.15,
+    "face_wheel_min_N": 0.0,
+    "wheels_loaded": 7,
+    "residual_N": 0.0,
+    "cls": "flight",
+    "plunger_index": 0.043,
+    "guide_wall_index": 0.025,
+    "guide_top_N": 8.5,
+    "boss_bolt_shear_N": 1.32,
+    "panel_fe_util": 0.019,
+    "panel_boss_index": 0.013,
+    "panel_boss_defl_mm": 0.06,
+    "piece_worst": 0.043
+   },
+   "pack out: seat (latch in)": {
+    "at": [
+     41.0,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 6.52,
+    "face_wheel_min_N": 0.64,
+    "wheels_loaded": 8,
+    "residual_N": 0.0
+   },
+   "pack out: catch 6 g (latch in)": {
+    "at": [
+     41.0,
+     1.5,
+     91.9
+    ],
+    "plunger_max_N": 0.0,
+    "plungers_N": [
+     0.0
+    ],
+    "face_wheel_max_N": 45.62,
+    "face_wheel_min_N": 4.51,
+    "wheels_loaded": 8,
+    "residual_N": 0.0
+   },
+   "pack out: hand lift 100 N": {
+    "at": [
+     300.0,
+     200.0,
+     100.0
+    ],
+    "plunger_max_N": 174.99,
+    "plungers_N": [
+     174.99,
+     67.13,
+     0.0,
+     151.5
+    ],
+    "face_wheel_max_N": 121.89,
+    "face_wheel_min_N": 0.0,
+    "wheels_loaded": 6,
+    "residual_N": 0.0,
+    "cls": "misuse",
+    "plunger_index": 0.891,
+    "guide_wall_index": 0.525,
+    "guide_top_N": 281.0,
+    "boss_bolt_shear_N": 43.75,
+    "panel_fe_util": 0.153,
+    "panel_boss_index": 0.261,
+    "panel_boss_defl_mm": 1.28,
+    "piece_worst": 0.891
+   },
+   "pack out: insert 60 N": {
+    "at": [
+     -78.5,
+     -27.0,
+     -41.1
+    ],
+    "plunger_max_N": 33.73,
+    "plungers_N": [
+     0.0,
+     33.73,
+     33.73,
+     10.33
+    ],
+    "face_wheel_max_N": 15.78,
+    "face_wheel_min_N": 0.0,
+    "wheels_loaded": 4,
+    "residual_N": 0.0,
+    "cls": "flight",
+    "plunger_index": 0.275,
+    "guide_wall_index": 0.162,
+    "guide_top_N": 54.2,
+    "boss_bolt_shear_N": 8.43,
+    "panel_fe_util": 0.12,
+    "panel_boss_index": 0.081,
+    "panel_boss_defl_mm": 0.37,
+    "piece_worst": 0.275
+   }
+  },
+  "assembled_worst": [
+   "pack out: hand lift 100 N",
+   0.891
+  ],
+  "landing_all_8_wheels_loaded": true
+ }
 }
