@@ -1,6 +1,6 @@
 # Runs
 
-_89 runs · rebuilt 2026-10-24 10:16_
+_88 runs · rebuilt 2026-10-24 07:47_
 
 ## Latest per part
 
@@ -35,42 +35,41 @@ _89 runs · rebuilt 2026-10-24 10:16_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [organic-v1](runs/bracket_jA/organic-v1/summary.md) | · | 43.5 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [organic-v2](runs/bracket_jA/organic-v2/summary.md) | · | 34.6 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [organic-v3](runs/bracket_jA/organic-v3/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [organic-v4](runs/bracket_jA/organic-v4/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [organic-v5](runs/bracket_jA/organic-v5/summary.md) | · | 36.9 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [topo-v2](runs/bracket_jA/topo-v2/summary.md) | · | 35.9 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [topo-v3](runs/bracket_jA/topo-v3/summary.md) | · | 36.0 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | bracket_jA | [topo-v4](runs/bracket_jA/topo-v4/summary.md) | · | 36.0 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | detent | [v3](runs/detent/v3/summary.md) | · | 6.7 (M) | [0.18, 'detent holding 0.55 N.m, keyed bearing (E)'] | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v1](runs/holder/organic-v1/summary.md) | · | 10.2 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v10](runs/holder/organic-v10/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v11](runs/holder/organic-v11/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v12](runs/holder/organic-v12/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v2](runs/holder/organic-v2/summary.md) | · | 10.9 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v3](runs/holder/organic-v3/summary.md) | · | 12.5 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v4](runs/holder/organic-v4/summary.md) | · | 10.8 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v5](runs/holder/organic-v5/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v6](runs/holder/organic-v6/summary.md) | · | 11.3 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v7](runs/holder/organic-v7/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v8](runs/holder/organic-v8/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [organic-v9](runs/holder/organic-v9/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | holder | [topo-v1](runs/holder/topo-v1/summary.md) | · | 10.3 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | hook_latch | [v2](runs/hook_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 08:29 | motor_mount | [organic-v1](runs/motor_mount/organic-v1/summary.md) | · | 17.9 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | motor_mount | [organic-v2](runs/motor_mount/organic-v2/summary.md) | · | 18.0 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | motor_mount | [topo-v1](runs/motor_mount/topo-v1/summary.md) | · | 13.1 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | motor_mount | [topo-v3](runs/motor_mount/topo-v3/summary.md) | · | 17.2 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 08:29 | scan_stick_base | [v13](runs/scan_stick_base/v13/summary.md) | · | 328.1 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 08:29 | scan_stick_base | [v14](runs/scan_stick_base/v14/summary.md) | · | 296.6 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
+| 2026-10-24 07:08 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
+| 2026-10-24 07:08 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [organic-v1](runs/bracket_jA/organic-v1/summary.md) | · | 43.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [organic-v2](runs/bracket_jA/organic-v2/summary.md) | · | 34.6 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [organic-v3](runs/bracket_jA/organic-v3/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [organic-v4](runs/bracket_jA/organic-v4/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [organic-v5](runs/bracket_jA/organic-v5/summary.md) | · | 36.9 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [topo-v2](runs/bracket_jA/topo-v2/summary.md) | · | 35.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [topo-v3](runs/bracket_jA/topo-v3/summary.md) | · | 36.0 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | bracket_jA | [topo-v4](runs/bracket_jA/topo-v4/summary.md) | · | 36.0 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | detent | [v3](runs/detent/v3/summary.md) | · | 6.7 (M) | [0.18, 'detent holding 0.55 N.m, keyed bearing (E)'] | · | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v1](runs/holder/organic-v1/summary.md) | · | 10.2 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v10](runs/holder/organic-v10/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v11](runs/holder/organic-v11/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v12](runs/holder/organic-v12/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v2](runs/holder/organic-v2/summary.md) | · | 10.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v3](runs/holder/organic-v3/summary.md) | · | 12.5 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v4](runs/holder/organic-v4/summary.md) | · | 10.8 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v5](runs/holder/organic-v5/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v6](runs/holder/organic-v6/summary.md) | · | 11.3 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v7](runs/holder/organic-v7/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v8](runs/holder/organic-v8/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [organic-v9](runs/holder/organic-v9/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | holder | [topo-v1](runs/holder/topo-v1/summary.md) | · | 10.3 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 07:08 | hook_latch | [v2](runs/hook_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 07:08 | motor_mount | [organic-v1](runs/motor_mount/organic-v1/summary.md) | · | 17.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | motor_mount | [organic-v2](runs/motor_mount/organic-v2/summary.md) | · | 18.0 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | motor_mount | [topo-v1](runs/motor_mount/topo-v1/summary.md) | · | 13.1 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | motor_mount | [topo-v3](runs/motor_mount/topo-v3/summary.md) | · | 17.2 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 07:08 | scan_stick_base | [v13](runs/scan_stick_base/v13/summary.md) | · | 328.1 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 07:08 | scan_stick_base | [v14](runs/scan_stick_base/v14/summary.md) | · | 296.6 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-24 | arm | [v5](runs/arm/v5/summary.md) | DONE | · | · | PASS | · | · GB | · min | · |
 | 2026-10-24 | arm | [v5-layout-b](runs/arm/v5-layout-b/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 | arm | [v5-layout-c](runs/arm/v5-layout-c/summary.md) | DONE | · | · | · | · | · GB | · min | · |
