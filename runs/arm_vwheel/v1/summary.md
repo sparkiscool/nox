@@ -1,5 +1,7 @@
-arm_vwheel v1: ready to print
+arm_vwheel v1: DESIGN (do not print: v6 recheck, head brake)
 Weight: 2.8 g (M), was ~3 (E) (v5 layout)
 Strength: worst index 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc); weakest spot the groove flank contact (rolling, PETG on PETG)   [box part: fits (C, drawn): wheels on the ridge 0 mm3 (C) at every stroke state, rim 1.0 (C) to the rail body, axle stack 1.4 (C), plate 1.0 (C), rack and pinion 0 mm3 (C) through a full pitch of rolling, closest 0.06 (C); no supports]
 Solid: solid_check PASS
 Print: either face (symmetric, C), bed contact 192 mm2 (M), brim 5 mm (bed < 400 mm2), no supports (groove flanks 45 deg, C); 100 % infill (small, rolling contact); print 6; file print/box_arm_vwheel_v1.stl
+
+System: box swap arm v6 (`nox/box/swap_system.py`, `nox/box/box_swap_arm.assembly.json`), assembled worst index 1.23 in the power cut carrying (625ZZ axial, the head falling onto the park stop; V-wheel flank 0.92, M5 axle 1.17; in the swap and the other misuse cases 0.66 flank, 0.63 625ZZ, 0.60 M5, all E; was 0.66 / 0.33 in v5), fit 0.0 mm³ at 5 poses (M), mass 3232 g (E: printed parts from their meshes, M; bought parts from their data, E), CG 7.0 mm off the axle (E; the turning parts' unbalance 22.5 g·m at park). **DESIGN, do not print** until the head brake passes its bench drop or the axle stack is sized for the fall
