@@ -1,3 +1,0 @@
-=== scan_stick_head: rebuild from /home/user/nox/runs/scan_stick/v8/density.npz (layout not rerun)
-scan_stick_head: grid (64, 64, 32) h 1.5 = 131,072 cells; design 56,720 (191.4 cm3), drawn 5,584, void 68,768
-  support default: 2128 cells, 3192 nodes
