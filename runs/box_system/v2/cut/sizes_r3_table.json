@@ -1,0 +1,738 @@
+[
+{
+"joint": "epost | link_5 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.077,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "mast_top | link_6 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.379,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "mast_top | topP_1 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.432,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "mast_top | topN_1 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.615,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "mast_low | link_3 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.371,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "mast_leg | link_5 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.323,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "rearP_low | link_2 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.619,
+"was": "3 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "rearP_up | link_2 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.502,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "rearP_up | link_6 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.543,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "rearP_up | topP_1 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.499,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "rearN_low | link_3 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.736,
+"was": "3 x M3",
+"now": "5 x M3",
+"over": false
+},
+{
+"joint": "rearN_up | link_4 | Y rear",
+"plane": "Y rear",
+"worst_index": 0.211,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "mast_top | rearP_up | X mast +",
+"plane": "X mast +",
+"worst_index": 1.287,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "mast_mid | rearP_low | X mast +",
+"plane": "X mast +",
+"worst_index": 0.952,
+"was": "2 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "mast_leg | epost | X mast +",
+"plane": "X mast +",
+"worst_index": 0.196,
+"was": "2 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "floorbar | mast_low | X mast -",
+"plane": "X mast -",
+"worst_index": 0.069,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "rearN_up | mast_mid | X mast -",
+"plane": "X mast -",
+"worst_index": 0.898,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "topP_2 | bridge | Y bridge",
+"plane": "Y bridge",
+"worst_index": 1.943,
+"was": "3 x M3",
+"now": "5 x M5",
+"over": false
+},
+{
+"joint": "topN_2 | bridge | Y bridge",
+"plane": "Y bridge",
+"worst_index": 1.987,
+"was": "2 x M3",
+"now": "4 x M5",
+"over": false
+},
+{
+"joint": "bay0_s1 | ring1 | Y ring lo",
+"plane": "Y ring lo",
+"worst_index": 0.569,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-60_s3 | ring2 | Y ring lo",
+"plane": "Y ring lo",
+"worst_index": 0.385,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-120_s1 | ring4 | Y ring lo",
+"plane": "Y ring lo",
+"worst_index": 2.233,
+"was": "2 x M3",
+"now": "4 x M5",
+"over": false
+},
+{
+"joint": "bay-210 | ring5 | Y ring lo",
+"plane": "Y ring lo",
+"worst_index": 0.701,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-210 | ring5_s1 | Y ring lo",
+"plane": "Y ring lo",
+"worst_index": 0.142,
+"was": "2 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "ring1 | bay30 | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.44,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring1 | bay0_a | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.499,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring2 | bay-30 | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.314,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring2 | bay-60_a | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.405,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring3 | bay-90 | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.392,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring4 | bay-150 | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.484,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring4 | bay-120_a | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.225,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring5 | bay-180_a | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.271,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring5_s1 | bay-210 | Y ring hi",
+"plane": "Y ring hi",
+"worst_index": 0.455,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "ring4 | ring5 | R15",
+"plane": "R15",
+"worst_index": 0.156,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay0_s1 | ring1 | R15",
+"plane": "R15",
+"worst_index": 0.139,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-150 | bay-180_a | R15",
+"plane": "R15",
+"worst_index": 0.144,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-150 | bay-180_b | R15",
+"plane": "R15",
+"worst_index": 0.455,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay0_b | bay30 | R15",
+"plane": "R15",
+"worst_index": 0.539,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring2 | ring1 | R-15",
+"plane": "R-15",
+"worst_index": 0.382,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-30 | bay0_a | R-15",
+"plane": "R-15",
+"worst_index": 0.205,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-30 | bay0_b | R-15",
+"plane": "R-15",
+"worst_index": 0.245,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-180_b | bay-210 | R-15",
+"plane": "R-15",
+"worst_index": 0.929,
+"was": "2 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "ring5_s1 | topN_1 | R-45",
+"plane": "R-45",
+"worst_index": 0.403,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "foot_leg_2 | bay-30 | R-45",
+"plane": "R-45",
+"worst_index": 0.316,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "foot_leg_3 | bay-30 | R-45",
+"plane": "R-45",
+"worst_index": 0.421,
+"was": "2 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-210 | topN_1 | R-45",
+"plane": "R-45",
+"worst_index": 0.417,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-210 | topN_2 | R-45",
+"plane": "R-45",
+"worst_index": 0.754,
+"was": "3 x M3",
+"now": "5 x M3",
+"over": false
+},
+{
+"joint": "bay-60_a | bay-30 | R-45",
+"plane": "R-45",
+"worst_index": 0.226,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-60_b | bay-30 | R-45",
+"plane": "R-45",
+"worst_index": 0.497,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring3 | ring2 | R-75",
+"plane": "R-75",
+"worst_index": 0.274,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-90 | bay-60_a | R-75",
+"plane": "R-75",
+"worst_index": 0.215,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-90 | bay-60_b | R-75",
+"plane": "R-75",
+"worst_index": 0.655,
+"was": "3 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "ring4 | ring3 | R-105",
+"plane": "R-105",
+"worst_index": 0.854,
+"was": "2 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "bay-120_b | bay-90 | R-105",
+"plane": "R-105",
+"worst_index": 1.002,
+"was": "2 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "bay-150 | foot_leg_1 | R-135",
+"plane": "R-135",
+"worst_index": 0.486,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-150 | bay-120_a | R-135",
+"plane": "R-135",
+"worst_index": 0.148,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-150 | bay-120_b | R-135",
+"plane": "R-135",
+"worst_index": 0.669,
+"was": "3 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "topP_1 | ring1 | R-135",
+"plane": "R-135",
+"worst_index": 0.759,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "topP_1 | bay30 | R-135",
+"plane": "R-135",
+"worst_index": 0.372,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "topP_2 | bay30 | R-135",
+"plane": "R-135",
+"worst_index": 1.223,
+"was": "2 x M3",
+"now": "5 x M3",
+"over": false
+},
+{
+"joint": "ring1 | bay0_s1 | R-165",
+"plane": "R-165",
+"worst_index": 0.217,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "ring5 | ring4 | R-165",
+"plane": "R-165",
+"worst_index": 0.173,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay30 | bay0_b | R-165",
+"plane": "R-165",
+"worst_index": 0.544,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-180_a | bay-150 | R-165",
+"plane": "R-165",
+"worst_index": 0.141,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "bay-180_b | bay-150 | R-165",
+"plane": "R-165",
+"worst_index": 0.322,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "ring1 | ring2 | R-195",
+"plane": "R-195",
+"worst_index": 0.2,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-210 | bay-180_b | R-195",
+"plane": "R-195",
+"worst_index": 0.523,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay0_a | bay-30 | R-195",
+"plane": "R-195",
+"worst_index": 0.205,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay0_b | bay-30 | R-195",
+"plane": "R-195",
+"worst_index": 0.274,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "link_1 | bay-30_s1 | C-30",
+"plane": "C-30",
+"worst_index": 0.002,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "link_1 | ring3 | C-90",
+"plane": "C-90",
+"worst_index": 0.0,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "link_1 | bay-150_s1 | C-150",
+"plane": "C-150",
+"worst_index": 0.0,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "link_2 | ring1 | Y bay",
+"plane": "Y bay",
+"worst_index": 0.476,
+"was": "1 x M3",
+"now": "1 x M3",
+"over": false
+},
+{
+"joint": "link_2 | bay0_s1 | Y bay",
+"plane": "Y bay",
+"worst_index": 0.619,
+"was": "3 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "link_3 | bay-120_s1 | Y bay",
+"plane": "Y bay",
+"worst_index": 0.618,
+"was": "3 x M3",
+"now": "4 x M3",
+"over": false
+},
+{
+"joint": "link_4 | bay-210 | Y bay",
+"plane": "Y bay",
+"worst_index": 0.407,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "link_5 | bay-60_s3 | Y bay",
+"plane": "Y bay",
+"worst_index": 0.255,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "topN_1 | topP_1 | X top",
+"plane": "X top",
+"worst_index": 0.46,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "mast_mid | mast_top | Z mast 2",
+"plane": "Z mast 2",
+"worst_index": 1.222,
+"was": "2 x M3",
+"now": "5 x M3",
+"over": false
+},
+{
+"joint": "mast_low | mast_mid | Z mast 1",
+"plane": "Z mast 1",
+"worst_index": 1.934,
+"was": "2 x M5",
+"now": "6 x M5",
+"over": true
+},
+{
+"joint": "mast_leg | mast_mid | Z mast 1",
+"plane": "Z mast 1",
+"worst_index": 0.846,
+"was": "1 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "rearP_low | rearP_up | Z rearP",
+"plane": "Z rearP",
+"worst_index": 0.444,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "rearP_low | rearP_up_b | Z rearP",
+"plane": "Z rearP",
+"worst_index": 0.236,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "rearN_low | rearN_up | Z rearN",
+"plane": "Z rearN",
+"worst_index": 0.53,
+"was": "1 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "topP_1 | topP_2 | Y topP",
+"plane": "Y topP",
+"worst_index": 0.197,
+"was": "2 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "topN_1 | topN_2 | Y topP",
+"plane": "Y topP",
+"worst_index": 0.295,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "topP_1 | topP_2 | Y topN",
+"plane": "Y topN",
+"worst_index": 0.197,
+"was": "2 x M3",
+"now": "2 x M3",
+"over": false
+},
+{
+"joint": "topN_1 | topN_2 | Y topN",
+"plane": "Y topN",
+"worst_index": 0.295,
+"was": "2 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay0_a | bay0_b | Y bay0",
+"plane": "Y bay0",
+"worst_index": 0.275,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-60_a | bay-60_b | Y bay-60",
+"plane": "Y bay-60",
+"worst_index": 0.166,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-120_a | bay-120_b | Y bay-120",
+"plane": "Y bay-120",
+"worst_index": 0.342,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+},
+{
+"joint": "bay-180_a | bay-180_b | Y bay-180",
+"plane": "Y bay-180",
+"worst_index": 0.236,
+"was": "3 x M3",
+"now": "3 x M3",
+"over": false
+}
+]

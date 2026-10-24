@@ -1,0 +1,302 @@
+{
+"receivers": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 639.0,
+"pieces": [
+[
+"bay30",
+54.9
+],
+[
+"bay-30",
+43.2
+],
+[
+"bay-90",
+125.6
+],
+[
+"bay-150",
+45.9
+],
+[
+"bay-210",
+62.9
+],
+[
+"bay0_a",
+37.7
+],
+[
+"bay0_b",
+47.8
+],
+[
+"bay-60_a",
+58.1
+],
+[
+"bay-60_b",
+17.2
+],
+[
+"bay-120_a",
+65.4
+],
+[
+"bay-120_b",
+15.1
+],
+[
+"bay-180_b",
+65.2
+]
+]
+},
+"cartridge_paths": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 0,
+"pieces": []
+},
+"drone": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 15.4,
+"pieces": [
+[
+"topP_2",
+5.2
+],
+[
+"topN_2",
+10.2
+]
+]
+},
+"catch": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 113.9,
+"pieces": [
+[
+"bridge",
+10.4
+],
+[
+"topP_1",
+24.2
+],
+[
+"topP_2",
+36.4
+],
+[
+"topN_1",
+14.4
+],
+[
+"topN_2",
+28.5
+]
+]
+},
+"hub_27.stl": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 6.9,
+"pieces": [
+[
+"bay30",
+0.8
+],
+[
+"link_1",
+0.7
+],
+[
+"link_3",
+3.3
+],
+[
+"bay0_a",
+2.1
+]
+]
+},
+"motors_28.stl": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 71.6,
+"pieces": [
+[
+"mast_top",
+21.6
+],
+[
+"mast_low",
+8.5
+],
+[
+"mast_mid",
+27.4
+],
+[
+"rearP_low",
+4.0
+],
+[
+"rearP_up",
+6.6
+],
+[
+"rearN_up",
+3.5
+]
+]
+},
+"parked_29.stl": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 9.8,
+"pieces": [
+[
+"bridge",
+2.8
+],
+[
+"topP_2",
+3.4
+],
+[
+"topN_2",
+3.6
+]
+]
+},
+"drone_30.stl": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 5.5,
+"pieces": [
+[
+"topP_1",
+3.7
+],
+[
+"topN_1",
+1.8
+]
+]
+},
+"drone_31.stl": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 0,
+"pieces": []
+},
+"rail disc": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 83.5,
+"pieces": [
+[
+"bay30",
+4.0
+],
+[
+"bay-210",
+4.9
+],
+[
+"link_1",
+1.9
+],
+[
+"link_2",
+5.0
+],
+[
+"link_3",
+14.9
+],
+[
+"link_4",
+3.1
+],
+[
+"topP_1",
+22.6
+],
+[
+"topN_1",
+23.4
+],
+[
+"bay0_a",
+3.7
+]
+]
+},
+"funnel inside": {
+"kind": "keep-out grown 1 mm",
+"total_mm3": 218.4,
+"pieces": [
+[
+"bridge",
+51.7
+],
+[
+"topP_1",
+56.8
+],
+[
+"topP_2",
+27.8
+],
+[
+"topN_1",
+57.8
+],
+[
+"topN_2",
+24.3
+]
+]
+},
+"PSU X 42..157 Y -66..-36 Z -170..45": {
+"kind": "fixed electronics",
+"total_mm3": 0,
+"pieces": []
+},
+"charger X -162..-44 Y -66..-7 Z -200..-29": {
+"kind": "fixed electronics",
+"total_mm3": 0,
+"pieces": []
+},
+"sheet face strip Y -66..-50": {
+"kind": "fixed electronics",
+"total_mm3": 114220.7,
+"pieces": [
+[
+"epost",
+23948.9
+],
+[
+"floorbar",
+25096.0
+],
+[
+"mast_top",
+1204.7
+],
+[
+"mast_low",
+38228.2
+],
+[
+"mast_mid",
+8395.8
+],
+[
+"rearP_up_b",
+9114.1
+],
+[
+"rearN_up",
+8233.0
+]
+]
+}
+}

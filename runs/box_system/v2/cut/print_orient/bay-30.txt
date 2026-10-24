@@ -1,0 +1,7 @@
+/home/user/nox/.claude/worktrees/agent-a24c66574aeffb552/runs/box_system/v2/cut/pieces/bay-30.stl extents [ 94.9 145.5 174. ] g PETG 364.92 watertight True
+   saved: bed      0 mm2  overhang  13192 mm2  height 174.0  first layer 1 islands [2.6] (total 2.6)  thin-island run 3 mm
+ +x down: bed   3415 mm2  overhang  17116 mm2  height  94.9  first layer 1 islands [3635.3] (total 3635.3)  thin-island run 0 mm
+ -x down: bed      0 mm2  overhang  21701 mm2  height  94.9  first layer 1 islands [2.2] (total 2.2)  thin-island run 2 mm
+ +y down: bed     56 mm2  overhang  14328 mm2  height 145.5  first layer 2 islands [43.8, 44.1] (total 87.9)  thin-island run 0 mm
+ -y down: bed      3 mm2  overhang  14658 mm2  height 145.5  first layer 1 islands [10.2] (total 10.2)  thin-island run 0 mm
+ +z down: bed     11 mm2  overhang  12639 mm2  height 174.0  first layer 1 islands [21.4] (total 21.4)  thin-island run 0 mm

@@ -1,0 +1,370 @@
+{
+"epost|link_5|Y rear": [
+"M3",
+2
+],
+"mast_top|link_6|Y rear": [
+"M3",
+3
+],
+"mast_top|topP_1|Y rear": [
+"M3",
+2
+],
+"mast_top|topN_1|Y rear": [
+"M3",
+3
+],
+"mast_low|link_3|Y rear": [
+"M3",
+3
+],
+"mast_leg|link_5|Y rear": [
+"M3",
+3
+],
+"rearP_low|link_2|Y rear": [
+"M3",
+4
+],
+"rearP_up|link_2|Y rear": [
+"M3",
+2
+],
+"rearP_up|link_6|Y rear": [
+"M3",
+2
+],
+"rearP_up|topP_1|Y rear": [
+"M3",
+2
+],
+"rearN_low|link_3|Y rear": [
+"M3",
+5
+],
+"rearN_up|link_4|Y rear": [
+"M3",
+3
+],
+"mast_top|rearP_up|X mast +": [
+"M3",
+3
+],
+"mast_mid|rearP_low|X mast +": [
+"M3",
+4
+],
+"mast_leg|epost|X mast +": [
+"M3",
+2
+],
+"floorbar|mast_low|X mast -": [
+"M3",
+2
+],
+"rearN_up|mast_mid|X mast -": [
+"M3",
+2
+],
+"topP_2|bridge|Y bridge": [
+"M5",
+5
+],
+"topN_2|bridge|Y bridge": [
+"M5",
+4
+],
+"bay0_s1|ring1|Y ring lo": [
+"M3",
+3
+],
+"bay-60_s3|ring2|Y ring lo": [
+"M3",
+2
+],
+"bay-120_s1|ring4|Y ring lo": [
+"M5",
+4
+],
+"bay-210|ring5|Y ring lo": [
+"M3",
+2
+],
+"bay-210|ring5_s1|Y ring lo": [
+"M3",
+2
+],
+"ring1|bay30|Y ring hi": [
+"M3",
+3
+],
+"ring1|bay0_a|Y ring hi": [
+"M3",
+3
+],
+"ring2|bay-30|Y ring hi": [
+"M3",
+3
+],
+"ring2|bay-60_a|Y ring hi": [
+"M3",
+3
+],
+"ring3|bay-90|Y ring hi": [
+"M3",
+3
+],
+"ring4|bay-150|Y ring hi": [
+"M3",
+3
+],
+"ring4|bay-120_a|Y ring hi": [
+"M3",
+3
+],
+"ring5|bay-180_a|Y ring hi": [
+"M3",
+3
+],
+"ring5_s1|bay-210|Y ring hi": [
+"M3",
+2
+],
+"ring4|ring5|R15": [
+"M3",
+3
+],
+"bay0_s1|ring1|R15": [
+"M3",
+2
+],
+"bay-150|bay-180_a|R15": [
+"M3",
+2
+],
+"bay-150|bay-180_b|R15": [
+"M3",
+3
+],
+"bay0_b|bay30|R15": [
+"M3",
+3
+],
+"ring2|ring1|R-15": [
+"M3",
+3
+],
+"bay-30|bay0_a|R-15": [
+"M3",
+3
+],
+"bay-30|bay0_b|R-15": [
+"M3",
+3
+],
+"bay-180_b|bay-210|R-15": [
+"M3",
+4
+],
+"ring5_s1|topN_1|R-45": [
+"M3",
+2
+],
+"foot_leg_2|bay-30|R-45": [
+"M3",
+3
+],
+"foot_leg_3|bay-30|R-45": [
+"M3",
+2
+],
+"bay-210|topN_1|R-45": [
+"M3",
+3
+],
+"bay-210|topN_2|R-45": [
+"M3",
+5
+],
+"bay-60_a|bay-30|R-45": [
+"M3",
+2
+],
+"bay-60_b|bay-30|R-45": [
+"M3",
+3
+],
+"ring3|ring2|R-75": [
+"M3",
+3
+],
+"bay-90|bay-60_a|R-75": [
+"M3",
+2
+],
+"bay-90|bay-60_b|R-75": [
+"M3",
+4
+],
+"ring4|ring3|R-105": [
+"M3",
+4
+],
+"bay-120_b|bay-90|R-105": [
+"M3",
+4
+],
+"bay-150|foot_leg_1|R-135": [
+"M3",
+3
+],
+"bay-150|bay-120_a|R-135": [
+"M3",
+2
+],
+"bay-150|bay-120_b|R-135": [
+"M3",
+4
+],
+"topP_1|ring1|R-135": [
+"M3",
+2
+],
+"topP_1|bay30|R-135": [
+"M3",
+2
+],
+"topP_2|bay30|R-135": [
+"M3",
+5
+],
+"ring1|bay0_s1|R-165": [
+"M3",
+2
+],
+"ring5|ring4|R-165": [
+"M3",
+3
+],
+"bay30|bay0_b|R-165": [
+"M3",
+3
+],
+"bay-180_a|bay-150|R-165": [
+"M3",
+2
+],
+"bay-180_b|bay-150|R-165": [
+"M3",
+3
+],
+"ring1|ring2|R-195": [
+"M3",
+3
+],
+"bay-210|bay-180_b|R-195": [
+"M3",
+3
+],
+"bay0_a|bay-30|R-195": [
+"M3",
+3
+],
+"bay0_b|bay-30|R-195": [
+"M3",
+3
+],
+"link_1|bay-30_s1|C-30": [
+"M3",
+3
+],
+"link_1|ring3|C-90": [
+"M3",
+3
+],
+"link_1|bay-150_s1|C-150": [
+"M3",
+3
+],
+"link_2|ring1|Y bay": [
+"M3",
+1
+],
+"link_2|bay0_s1|Y bay": [
+"M3",
+4
+],
+"link_3|bay-120_s1|Y bay": [
+"M3",
+4
+],
+"link_4|bay-210|Y bay": [
+"M3",
+3
+],
+"link_5|bay-60_s3|Y bay": [
+"M3",
+3
+],
+"topN_1|topP_1|X top": [
+"M3",
+2
+],
+"mast_mid|mast_top|Z mast 2": [
+"M3",
+5
+],
+"mast_low|mast_mid|Z mast 1": [
+"M5",
+6
+],
+"mast_leg|mast_mid|Z mast 1": [
+"M3",
+3
+],
+"rearP_low|rearP_up|Z rearP": [
+"M3",
+2
+],
+"rearP_low|rearP_up_b|Z rearP": [
+"M3",
+3
+],
+"rearN_low|rearN_up|Z rearN": [
+"M3",
+2
+],
+"topP_1|topP_2|Y topP": [
+"M3",
+2
+],
+"topN_1|topN_2|Y topP": [
+"M3",
+3
+],
+"topP_1|topP_2|Y topN": [
+"M3",
+2
+],
+"topN_1|topN_2|Y topN": [
+"M3",
+3
+],
+"bay0_a|bay0_b|Y bay0": [
+"M3",
+3
+],
+"bay-60_a|bay-60_b|Y bay-60": [
+"M3",
+3
+],
+"bay-120_a|bay-120_b|Y bay-120": [
+"M3",
+3
+],
+"bay-180_a|bay-180_b|Y bay-180": [
+"M3",
+3
+]
+}

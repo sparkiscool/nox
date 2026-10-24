@@ -1,0 +1,1337 @@
+{
+"piece": "topP_2",
+"version": "v2 cut",
+"file": "runs/box_system/v2/cut/pieces/topP_2.stl",
+"frame": "W (box-arm.md): X across, Y along the axle, Z up",
+"envelope": {
+"lo": [
+-0.0,
+152.0,
+110.0
+],
+"hi": [
+136.5,
+280.0,
+167.5
+],
+"extents": [
+136.5,
+128.0,
+57.5
+],
+"print_pose": {
+"bed_mm2": 502.0,
+"face": "-X face down",
+"extents": [
+57.5,
+128.0,
+136.5
+],
+"fits_180": true
+}
+},
+"mass_g_M": 218.5,
+"qty": 1,
+"joints": {
+"bridge": {
+"plane": "Y bridge",
+"plane_normal": [
+0.0,
+1.0,
+0.0
+],
+"area_cm2": 34.32,
+"centroid": [
+37.3,
+267.2,
+136.6
+],
+"sites": [
+{
+"owner": "topP_2",
+"receiver": "bridge",
+"size": "M3",
+"pos": [
+57.93,
+273.0,
+119.24
+],
+"axis_in": [
+-0.4829,
+0.0,
+0.8757
+],
+"plane": "Y bridge",
+"lug_box": [
+[
+48.03,
+259.0,
+115.38
+],
+[
+64.94,
+280.0,
+128.36
+]
+],
+"boss_box": [
+[
+43.44,
+266.0,
+120.63
+],
+[
+62.04,
+280.0,
+136.68
+]
+],
+"screw": "M3 x 10",
+"insert": "M3 x 5.7",
+"relaxed": 0
+},
+{
+"owner": "topP_2",
+"receiver": "bridge",
+"size": "M3",
+"pos": [
+70.44,
+273.0,
+152.8
+],
+"axis_in": [
+-0.7377,
+0.0,
+-0.6751
+],
+"plane": "Y bridge",
+"lug_box": [
+[
+60.61,
+259.0,
+142.85
+],
+[
+75.84,
+280.0,
+158.7
+]
+],
+"boss_box": [
+[
+53.61,
+266.0,
+136.43
+],
+[
+71.42,
+280.0,
+154.65
+]
+],
+"screw": "M3 x 10",
+"insert": "M3 x 5.7",
+"relaxed": 0
+}
+],
+"cases": {
+"standing, Overseer seated": {
+"F_N": [
+4.35,
+0.33,
+-4.73
+],
+"M_Nmm": [
+-67.0,
+551.0,
+32.0
+],
+"bolt_idx_worst": 0.315
+},
+"Overseer catch +X+Y diag": {
+"F_N": [
+17.91,
+-14.18,
+-23.11
+],
+"M_Nmm": [
+-310.0,
+6331.0,
+71.0
+],
+"bolt_idx_worst": 2.11
+},
+"Overseer catch -X-Y diag": {
+"F_N": [
+12.15,
+10.51,
+-51.76
+],
+"M_Nmm": [
+-608.0,
+2524.0,
+-356.0
+],
+"bolt_idx_worst": 0.347
+},
+"misuse: Overseer motors cut": {
+"F_N": [
+21.87,
+-18.83,
+-29.05
+],
+"M_Nmm": [
+-388.0,
+8208.0,
+74.0
+],
+"bolt_idx_worst": 1.723
+},
+"XT60 insert at the drone 60 N": {
+"F_N": [
+-4.7,
+0.42,
+5.65
+],
+"M_Nmm": [
+69.0,
+-507.0,
+-90.0
+],
+"bolt_idx_worst": 0.143
+},
+"misuse: head stall at the drone 74 N": {
+"F_N": [
+-6.55,
+0.42,
+7.53
+],
+"M_Nmm": [
+94.0,
+-692.0,
+-119.0
+],
+"bolt_idx_worst": 0.124
+},
+"XT60 insert at the -90 bay 60 N": {
+"F_N": [
+7.77,
+0.92,
+-2.62
+],
+"M_Nmm": [
+-44.0,
+161.0,
+157.0
+],
+"bolt_idx_worst": 0.044
+},
+"XT60 pull at the -90 bay 50 N": {
+"F_N": [
+-0.81,
+-0.02,
+-2.27
+],
+"M_Nmm": [
+-33.0,
+408.0,
+-76.0
+],
+"bolt_idx_worst": 0.135
+},
+"misuse: head stall at the -90 bay 74 N": {
+"F_N": [
+8.73,
+1.03,
+-2.66
+],
+"M_Nmm": [
+-45.0,
+137.0,
+184.0
+],
+"bolt_idx_worst": 0.027
+},
+"centring at the -90 bay 7.6 N + 1.05 N.m": {
+"F_N": [
+3.23,
+-0.55,
+-1.87
+],
+"M_Nmm": [
+-3.0,
+304.0,
+70.0
+],
+"bolt_idx_worst": 0.076
+},
+"XT60 insert at the -120 bay 60 N": {
+"F_N": [
+6.82,
+5.11,
+-4.3
+],
+"M_Nmm": [
+-200.0,
+115.0,
+-32.0
+],
+"bolt_idx_worst": 0.048
+},
+"centring at the -120 bay 7.6 N + 1.05 N.m": {
+"F_N": [
+3.31,
+-0.06,
+-2.16
+],
+"M_Nmm": [
+-17.0,
+296.0,
+54.0
+],
+"bolt_idx_worst": 0.068
+},
+"stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+"F_N": [
+3.9,
+0.94,
+-6.45
+],
+"M_Nmm": [
+-103.0,
+358.0,
+7.0
+],
+"bolt_idx_worst": 0.058
+},
+"all bays: 60 N insert": {
+"F_N": [
+-27.4,
+-0.12,
+-3.61
+],
+"M_Nmm": [
+-72.0,
+1223.0,
+-799.0
+],
+"bolt_idx_worst": 0.607
+},
+"all bays: 43.5 N across": {
+"F_N": [
+6.48,
+-1.15,
+-10.75
+],
+"M_Nmm": [
+-81.0,
+-144.0,
+288.0
+],
+"bolt_idx_worst": 0.127
+},
+"lifted from below 2 g": {
+"F_N": [
+5.9,
+0.89,
+-3.46
+],
+"M_Nmm": [
+-57.0,
+418.0,
+67.0
+],
+"bolt_idx_worst": 0.083
+},
+"misuse: set down hard 5 g": {
+"F_N": [
+14.76,
+2.23,
+-8.65
+],
+"M_Nmm": [
+-143.0,
+1045.0,
+167.0
+],
+"bolt_idx_worst": 0.129
+},
+"misuse: knocked over onto +X 5 g": {
+"F_N": [
+69.49,
+-0.16,
+2.06
+],
+"M_Nmm": [
+-13.0,
+-1296.0,
+1557.0
+],
+"bolt_idx_worst": 0.235
+}
+},
+"bolts": "2 x M3"
+},
+"bay30": {
+"plane": "R-135",
+"plane_normal": [
+0.7071067811865476,
+0.0,
+-0.7071067811865475
+],
+"area_cm2": 9.66,
+"centroid": [
+120.3,
+205.4,
+127.7
+],
+"sites": [
+{
+"owner": "bay30",
+"receiver": "topP_2",
+"size": "M3",
+"pos": [
+107.45,
+200.62,
+117.35
+],
+"axis_in": [
+0.5923,
+0.5461,
+0.5923
+],
+"plane": "R-135",
+"lug_box": [
+[
+99.41,
+193.92,
+104.36
+],
+[
+124.0,
+210.6,
+128.95
+]
+],
+"boss_box": [
+[
+102.97,
+197.19,
+112.87
+],
+[
+124.67,
+215.78,
+134.57
+]
+],
+"screw": "M3 x 10",
+"insert": "M3 x 5.7",
+"relaxed": 0
+},
+{
+"owner": "bay30",
+"receiver": "topP_2",
+"size": "M3",
+"pos": [
+131.82,
+204.32,
+141.71
+],
+"axis_in": [
+-0.6681,
+0.3277,
+-0.6681
+],
+"plane": "R-135",
+"lug_box": [
+[
+121.0,
+196.76,
+125.95
+],
+[
+143.57,
+213.84,
+148.52
+]
+],
+"boss_box": [
+[
+114.66,
+198.73,
+124.56
+],
+[
+134.61,
+216.96,
+144.51
+]
+],
+"screw": "M3 x 10",
+"insert": "M3 x 5.7",
+"relaxed": 0
+}
+],
+"cases": {
+"standing, Overseer seated": {
+"F_N": [
+-6.02,
+4.07,
+13.4
+],
+"M_Nmm": [
+168.0,
+-24.0,
+44.0
+],
+"bolt_idx_worst": 0.239
+},
+"Overseer catch +X+Y diag": {
+"F_N": [
+-4.47,
+22.45,
+112.68
+],
+"M_Nmm": [
+261.0,
+-2372.0,
+-157.0
+],
+"bolt_idx_worst": 1.274
+},
+"Overseer catch -X-Y diag": {
+"F_N": [
+-36.97,
+30.06,
+70.51
+],
+"M_Nmm": [
+2042.0,
+1245.0,
+251.0
+],
+"bolt_idx_worst": 0.533
+},
+"misuse: Overseer motors cut": {
+"F_N": [
+-3.55,
+28.22,
+144.59
+],
+"M_Nmm": [
+294.0,
+-3141.0,
+-229.0
+],
+"bolt_idx_worst": 1.036
+},
+"XT60 insert at the drone 60 N": {
+"F_N": [
+3.24,
+-9.1,
+-11.72
+],
+"M_Nmm": [
+-116.0,
+-6.0,
+-67.0
+],
+"bolt_idx_worst": 0.118
+},
+"misuse: head stall at the drone 74 N": {
+"F_N": [
+5.07,
+-11.8,
+-16.23
+],
+"M_Nmm": [
+-166.0,
+-8.0,
+-91.0
+],
+"bolt_idx_worst": 0.099
+},
+"XT60 insert at the -90 bay 60 N": {
+"F_N": [
+-8.08,
+8.67,
+7.56
+],
+"M_Nmm": [
+81.0,
+121.0,
+133.0
+],
+"bolt_idx_worst": 0.061
+},
+"XT60 pull at the -90 bay 50 N": {
+"F_N": [
+-1.32,
+-2.75,
+7.73
+],
+"M_Nmm": [
+119.0,
+-108.0,
+-51.0
+],
+"bolt_idx_worst": 0.107
+},
+"misuse: head stall at the -90 bay 74 N": {
+"F_N": [
+-8.78,
+10.09,
+7.53
+],
+"M_Nmm": [
+76.0,
+143.0,
+154.0
+],
+"bolt_idx_worst": 0.042
+},
+"centring at the -90 bay 7.6 N + 1.05 N.m": {
+"F_N": [
+-3.96,
+1.69,
+6.8
+],
+"M_Nmm": [
+65.0,
+-51.0,
+2.0
+],
+"bolt_idx_worst": 0.054
+},
+"XT60 insert at the -120 bay 60 N": {
+"F_N": [
+-9.81,
+11.24,
+10.55
+],
+"M_Nmm": [
+212.0,
+280.0,
+263.0
+],
+"bolt_idx_worst": 0.099
+},
+"centring at the -120 bay 7.6 N + 1.05 N.m": {
+"F_N": [
+-4.3,
+2.22,
+7.22
+],
+"M_Nmm": [
+80.0,
+-23.0,
+23.0
+],
+"bolt_idx_worst": 0.049
+},
+"stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+"F_N": [
+-6.1,
+6.43,
+5.93
+],
+"M_Nmm": [
+367.0,
+106.0,
+38.0
+],
+"bolt_idx_worst": 0.073
+},
+"all bays: 60 N insert": {
+"F_N": [
+32.17,
+-6.37,
+7.74
+],
+"M_Nmm": [
+272.0,
+-512.0,
+-280.0
+],
+"bolt_idx_worst": 0.356
+},
+"all bays: 43.5 N across": {
+"F_N": [
+-11.7,
+-5.72,
+17.13
+],
+"M_Nmm": [
+598.0,
+913.0,
+-154.0
+],
+"bolt_idx_worst": 0.273
+},
+"lifted from below 2 g": {
+"F_N": [
+-8.4,
+4.02,
+11.95
+],
+"M_Nmm": [
+158.0,
+21.0,
+71.0
+],
+"bolt_idx_worst": 0.066
+},
+"misuse: set down hard 5 g": {
+"F_N": [
+-21.0,
+10.04,
+29.87
+],
+"M_Nmm": [
+396.0,
+51.0,
+177.0
+],
+"bolt_idx_worst": 0.103
+},
+"misuse: knocked over onto +X 5 g": {
+"F_N": [
+-90.31,
+39.58,
+-4.17
+],
+"M_Nmm": [
+-222.0,
+146.0,
+1371.0
+],
+"bolt_idx_worst": 0.435
+}
+},
+"bolts": "2 x M3"
+},
+"topP_1": {
+"plane": "Y topN",
+"plane_normal": [
+0.0,
+1.0,
+0.0
+],
+"area_cm2": 4.66,
+"centroid": [
+102.3,
+158.4,
+144.7
+],
+"sites": [
+{
+"owner": "topP_1",
+"receiver": "topP_2",
+"size": "M3",
+"pos": [
+106.34,
+159.0,
+151.87
+],
+"axis_in": [
+-0.605,
+0.0,
+-0.7962
+],
+"plane": "Y topN",
+"lug_box": [
+[
+96.34,
+145.0,
+142.25
+],
+[
+112.7,
+166.0,
+156.71
+]
+],
+"boss_box": [
+[
+90.59,
+152.0,
+134.69
+],
+[
+109.08,
+166.0,
+151.93
+]
+],
+"screw": "M3 x 10",
+"insert": "M3 x 5.7",
+"relaxed": 0
+}
+],
+"cases": {
+"standing, Overseer seated": {
+"F_N": [
+1.67,
+-4.4,
+-3.15
+],
+"M_Nmm": [
+9.0,
+13.0,
+63.0
+],
+"bolt_idx_worst": 0.091
+},
+"Overseer catch +X+Y diag": {
+"F_N": [
+-5.72,
+0.83,
+-22.93
+],
+"M_Nmm": [
+-219.0,
+-69.0,
+153.0
+],
+"bolt_idx_worst": 0.062
+},
+"Overseer catch -X-Y diag": {
+"F_N": [
+15.84,
+-46.28,
+-18.75
+],
+"M_Nmm": [
+430.0,
+244.0,
+222.0
+],
+"bolt_idx_worst": 0.347
+},
+"misuse: Overseer motors cut": {
+"F_N": [
+-8.13,
+2.63,
+-29.29
+],
+"M_Nmm": [
+-291.0,
+-94.0,
+180.0
+],
+"bolt_idx_worst": 0.048
+},
+"XT60 insert at the drone 60 N": {
+"F_N": [
+1.46,
+8.68,
+2.48
+],
+"M_Nmm": [
+41.0,
+-8.0,
+-11.0
+],
+"bolt_idx_worst": 0.096
+},
+"misuse: head stall at the drone 74 N": {
+"F_N": [
+1.48,
+11.38,
+3.47
+],
+"M_Nmm": [
+49.0,
+-11.0,
+-25.0
+],
+"bolt_idx_worst": 0.078
+},
+"XT60 insert at the -90 bay 60 N": {
+"F_N": [
+0.31,
+-9.61,
+-1.49
+],
+"M_Nmm": [
+-54.0,
+5.0,
+78.0
+],
+"bolt_idx_worst": 0.064
+},
+"XT60 pull at the -90 bay 50 N": {
+"F_N": [
+2.13,
+2.79,
+-2.03
+],
+"M_Nmm": [
+52.0,
+12.0,
+26.0
+],
+"bolt_idx_worst": 0.027
+},
+"misuse: head stall at the -90 bay 74 N": {
+"F_N": [
+0.06,
+-11.15,
+-1.41
+],
+"M_Nmm": [
+-68.0,
+4.0,
+84.0
+],
+"bolt_idx_worst": 0.047
+},
+"centring at the -90 bay 7.6 N + 1.05 N.m": {
+"F_N": [
+0.72,
+-1.13,
+-1.49
+],
+"M_Nmm": [
+6.0,
+4.0,
+27.0
+],
+"bolt_idx_worst": 0.012
+},
+"XT60 insert at the -120 bay 60 N": {
+"F_N": [
+3.0,
+-16.38,
+-2.8
+],
+"M_Nmm": [
+-65.0,
+17.0,
+179.0
+],
+"bolt_idx_worst": 0.113
+},
+"centring at the -120 bay 7.6 N + 1.05 N.m": {
+"F_N": [
+0.98,
+-2.16,
+-1.62
+],
+"M_Nmm": [
+3.0,
+6.0,
+39.0
+],
+"bolt_idx_worst": 0.019
+},
+"stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+"F_N": [
+2.2,
+-6.88,
+0.78
+],
+"M_Nmm": [
+107.0,
+38.0,
+37.0
+],
+"bolt_idx_worst": 0.073
+},
+"all bays: 60 N insert": {
+"F_N": [
+-4.77,
+6.45,
+-0.7
+],
+"M_Nmm": [
+144.0,
+42.0,
+-280.0
+],
+"bolt_idx_worst": 0.049
+},
+"all bays: 43.5 N across": {
+"F_N": [
+5.25,
+6.85,
+-2.92
+],
+"M_Nmm": [
+163.0,
+146.0,
+47.0
+],
+"bolt_idx_worst": 0.072
+},
+"lifted from below 2 g": {
+"F_N": [
+2.49,
+-4.91,
+-2.79
+],
+"M_Nmm": [
+2.0,
+13.0,
+95.0
+],
+"bolt_idx_worst": 0.041
+},
+"misuse: set down hard 5 g": {
+"F_N": [
+6.24,
+-12.28,
+-6.99
+],
+"M_Nmm": [
+6.0,
+31.0,
+238.0
+],
+"bolt_idx_worst": 0.064
+},
+"misuse: knocked over onto +X 5 g": {
+"F_N": [
+6.63,
+-39.38,
+3.09
+],
+"M_Nmm": [
+-423.0,
+-13.0,
+570.0
+],
+"bolt_idx_worst": 0.219
+}
+},
+"bolts": "1 x M3"
+}
+},
+"external_by_case": {
+"standing, Overseer seated": {
+"F": [
+0.0,
+-0.0,
+-5.54
+],
+"M_Nmm": [
+98.0,
+82.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"Overseer catch +X+Y diag": {
+"F": [
+-7.89,
+-9.11,
+-66.74
+],
+"M_Nmm": [
+2060.0,
+1336.0,
+-439.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"Overseer catch -X-Y diag": {
+"F": [
+9.12,
+5.79,
+-0.06
+],
+"M_Nmm": [
+-190.0,
+159.0,
+395.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"misuse: Overseer motors cut": {
+"F": [
+-10.43,
+-12.04,
+-86.39
+],
+"M_Nmm": [
+2690.0,
+1738.0,
+-580.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"XT60 insert at the drone 60 N": {
+"F": [
+0.0,
+0.01,
+3.59
+],
+"M_Nmm": [
+-163.0,
+-132.0,
+0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"misuse: head stall at the drone 74 N": {
+"F": [
+0.0,
+0.01,
+5.23
+],
+"M_Nmm": [
+-210.0,
+-170.0,
+0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"XT60 insert at the -90 bay 60 N": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"XT60 pull at the -90 bay 50 N": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"misuse: head stall at the -90 bay 74 N": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"centring at the -90 bay 7.6 N + 1.05 N.m": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"XT60 insert at the -120 bay 60 N": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"centring at the -120 bay 7.6 N + 1.05 N.m": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"stub tilt: XT60 at the drone 57 N + 5.9 N.m": {
+"F": [
+0.0,
+-0.49,
+-0.26
+],
+"M_Nmm": [
+-44.0,
+-42.0,
+-11.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"all bays: 60 N insert": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"all bays: 43.5 N across": {
+"F": [
+0.0,
+-0.0,
+-3.45
+],
+"M_Nmm": [
+39.0,
+33.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"lifted from below 2 g": {
+"F": [
+0.0,
+-0.0,
+-5.71
+],
+"M_Nmm": [
+43.0,
+38.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"misuse: set down hard 5 g": {
+"F": [
+0.0,
+-0.0,
+-14.27
+],
+"M_Nmm": [
+108.0,
+94.0,
+-0.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+},
+"misuse: knocked over onto +X 5 g": {
+"F": [
+14.21,
+-0.04,
+-0.96
+],
+"M_Nmm": [
+28.0,
+112.0,
+105.0
+],
+"c": [
+77.0,
+230.1,
+137.2
+]
+}
+},
+"own_worst_index": {
+"worst": 0.104,
+"case": "Overseer catch +X+Y diag",
+"by_class": {
+"sustained": 0.024,
+"flight": 0.104,
+"misuse": 0.085
+},
+"targets": {
+"flight": 0.5,
+"misuse": 1.0,
+"sustained": 1.0
+},
+"aim": 0.8
+},
+"stiffness_to_keep": {},
+"solid_check": true,
+"note": "forces / moments act ON this piece (N, N.mm about the joint centroid, W); index = the system FE worst cell index at the case class (F, h 4)"
+}
