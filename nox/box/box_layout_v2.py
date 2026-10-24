@@ -26,20 +26,27 @@ BAYS = {30: "scout", 0: "overseer", -30: "scout", -60: "overseer", -90: "scout",
 BAYS_BOTTOM = {30: "scout", 0: "scout", -30: "scout", -60: "overseer", -90: "overseer", -120: "overseer", -150: "overseer",
                -180: "scout", -210: "scout"}  # the catch preview's placement (alternative, needs clipped receivers or R 128)
 HALF = 15.0; GAP = 0.3                          # sector half angle; each body / receiver stays 0.3 inside its plane
-Y_C = 138.0                                     # common grip of both cartridges (arm v7, hub 24 Oct; was 175)
-Y_FUN = Y_C + 2.0                               # funnel centre = the drone's catch centre, 2 past the tab line as in v1 (177 / 175)
+Y_C = 165.0                                     # common grip line of both cartridges (arm PR 79 DEFAULT, hub 24 Oct; was 175, then 138)
+Y_FUN = Y_C                                     # funnel centre = the grip line = each drone's catch centre = its latch set's centre (hub)
+
+
+def grip_z(pk, meta):
+    """the grip line in cartridge z: the latch set's centre (hub 24 Oct: each drone's catch centre on its set's centre,
+    the arm grips there), taken as the receiver's z mid (C from the latch v1 meshes; E until the latch republishes)."""
+    t = trimesh.load(os.path.join(CTX, f"{pk}_receiver_c.stl"), force="mesh"); return float(t.bounds[:, 2].mean())
 PATH = 70.0                                     # cartridge install path kept clear, radially inward from the seat (E: park r ~ R - 15)
 ARM_PARK_R = 1.5                                # turning envelope of the parked heads + cartridges: r <= R - 1.5 (arm v6: limit R - 2.5)
 LANE = dict(r=159.0, half_deg=25.0, y=(62.0, 86.5))   # drone opening: nothing inside r 159 within 90 +- 25 over the carriage's Y (arm v6:
                                                 # wheel rim r 156.9 on wheels Y 63..73, carriage +-20.3 deg, hardware to Y 85.5 (+1); rails below, r 151 (disc), C)
 MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_system)
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
+GRIP_LANE = dict(r=159.6, half_deg=13.0, y0=77.0, dy1=52.0)  # the head's grabber beside the cartridge at the drone insert: X +-33.5,
+                                                # u to 61 (cartridge top) -> r 158.6 at R 113 (+1), Y 78..Y_C + 51 (+1) (arm v6 / v7 head envelope, C)
 RAIL_DISC = dict(r=151.0, y=(38.0, 73.0))       # arm round 3 (24 Oct): the rails' keel sweeps Y 38..73 out to r 151 (C)
 BRACKET = 12.0                                  # ring envelope to sheet inner face (U-clip + flange, v1 brackets 3.5..10)
 CRADLE = 48.1                                   # bottom bay's outer face to the floor (v1 cradle_keel: Z_TOP -152.9 to -201)
-FUNNEL_V8_GROW_Y = 32.5                         # funnel v8 (catch, hub 24 Oct) must pass the Overseer set, which is lopsided about its
-                                                # tab line (= catch centre): -66.5 / +113.1 (M); with 3 a side the +Y face moves out
-                                                # 113.1 + 3 - 84 = 32.1 -> 32.5 (C), the -Y face stays (E until G (2) has the outline)
+FUNNEL_V8_GROW_Y = 11.5                         # funnel v8 plain (catch PR 81): opening 191 along drone x (= W Y) x 168: the +-Y faces move out
+                                                # (191 - 168) / 2 = 11.5 (C); the sets are centred on the grip line now (hub), receiver +-89.8
 
 
 def man(t): return B.man(t)
@@ -98,7 +105,7 @@ def layout(R=113.0, clip=False, bays=None):
     P, rows = {}, {}
     meta = json.load(open(os.path.join(CTX, "meta.json")))
     for ang, pk in BAYS.items():
-        c = load_ctx(pk); zT = meta[pk]["Z_T"]
+        c = load_ctx(pk); zT = grip_z(pk, meta)
         rec = place(c["receiver"] + c["receiver_lid"], zT, ang, R)
         if clip: rec = _sector_planes(rec, ang, GAP, HALF)
         cart = place(c["cartridge"], zT, ang, R)
@@ -113,11 +120,11 @@ def layout(R=113.0, clip=False, bays=None):
     for ang, q in P.items():
         g = meta[q["pack"]]; bx = g["RF"] + 5.3 + 5.0
         pad = mf.Manifold.cube([2 * bx, 3.0, g["L_C"] + 8.6]).translate([-bx, g["Y_M"], -4.3])
-        q["pad"] = place(pad, g["Z_T"], ang, R)
+        q["pad"] = place(pad, grip_z(q["pack"], meta), ang, R)
         if clip: q["pad"] = _sector_planes(q["pad"], ang, GAP, HALF)
     drone = {}
     for pk in ("scout", "overseer"):
-        c = load_ctx(pk); zT = meta[pk]["Z_T"]; cart = place(c["cartridge"], zT, 90, R)
+        c = load_ctx(pk); zT = grip_z(pk, meta); cart = place(c["cartridge"], zT, 90, R)
         drone[pk] = place(c["receiver"] + c["receiver_lid"], zT, 90, R) + mf.Manifold.batch_hull([cart, cart.translate([0, 0, -PATH])])
     # neighbours
     angs = sorted(BAYS); nb = {}
@@ -130,8 +137,10 @@ def layout(R=113.0, clip=False, bays=None):
     import assembly
     A = assembly.load(os.path.join(HERE, "box_catch.assembly.json"))
     ms = [(p, t) for p, t in zip(A.parts, A.meshes()) if not p["name"].startswith("drone")]
-    in_w = min(t.bounds[0][2] for _, t in ms) > 100.0                     # one test per file: seat frame (v7 file) or W (funnel v8 on, at R 113, Y 140)
-    if in_w: T = np.eye(4); T[1, 3] = Y_FUN - 140.0; T[2, 3] = R - 113.0  # a W file is posed for the v2 DEFAULT: shift it to this layout's R / Y_FUN
+    in_w = min(t.bounds[0][2] for _, t in ms) > 100.0                     # one test per file: seat frame (v7 file) or W (funnel v8 on, at R 113)
+    if in_w:                                                              # a W file: shift it to this layout's R and funnel centre (its own centre from the panels)
+        pb = np.array([t.bounds for p, t in ms if "panel" in p["name"]]); yc = (pb[:, 0, 1].min() + pb[:, 1, 1].max()) / 2
+        T = np.eye(4); T[1, 3] = Y_FUN - yc; T[2, 3] = R - 113.0
     catch = {}
     for p, t in ms:
         t = t.copy(); t.apply_transform(T); catch[p["name"]] = man(t)
@@ -162,6 +171,7 @@ def layout(R=113.0, clip=False, bays=None):
     Z_TOP = math.ceil(rim + 0.5)
     Y_FRONT = math.ceil(max(front + FUNNEL_V8_GROW_Y + 1.0, float(rt.bounds[1, 1]) + BRACKET))
     Y_BACK = -66.0
+    assert back - FUNNEL_V8_GROW_Y > Y_BACK + 1.0, "funnel v8 reaches the rear sheet"
     H = Z_TOP - FLOOR
     out = dict(R=R, clip=clip, bays=rows, neighbours=nb, catch=dict(rim_Z=round(rim, 1), front_Y=round(front, 1), back_Y=round(back, 1),
                                                                      side_X=round(side, 1), seat_W_Z=round(T[2, 3], 1)),
@@ -204,7 +214,8 @@ def arm_envelopes(R):
     """the swap arm's turning envelopes (arm v6 numbers at the top of this file, C): hub + rails, motors on the arm,
     parked heads with cartridges, the drone-insert lane."""
     cyl = lambda r, y0, y1: mf.Manifold.cylinder(y1 - y0, r, r, 96).rotate([-90, 0, 0]).translate([0, y0, 0])
-    lane = wedge(90, 1.0, LANE["r"], LANE["y"][0], LANE["y"][1], gap=0.0, half=LANE["half_deg"])
+    lane = wedge(90, 1.0, LANE["r"], LANE["y"][0], LANE["y"][1], gap=0.0, half=LANE["half_deg"]) + \
+        wedge(90, 1.0, GRIP_LANE["r"], GRIP_LANE["y0"], Y_C + GRIP_LANE["dy1"], gap=0.0, half=GRIP_LANE["half_deg"])
     return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]) + cyl(RAIL_DISC["r"], *RAIL_DISC["y"]),
             "arm: motors (turning)": cyl(MOTOR_SWEEP["r"], *MOTOR_SWEEP["y"]) - cyl(HUB["r"] - 0.01, MOTOR_SWEEP["y"][0] - 1, MOTOR_SWEEP["y"][1] + 1),
             "arm: parked heads + cartridges (turning)": cyl(R - ARM_PARK_R, HUB["y"][1], Y_C + 122.0),
