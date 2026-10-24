@@ -86,4 +86,15 @@ print("top frame X>60 (Z>110) area vs Y:", prof(mat & (X > 60) & (Z > 110), 1))
 print("top frame X<-60 (Z>110) area vs Y:", prof(mat & (X < -60) & (Z > 110), 1))
 print("all: area vs Y", prof(mat, 1, 32))
 # electronics: does the field touch the keep-out boards? (it cannot) and how it passes: material in rear zone
-json.dump(res, open(os.path.join(OUT, "connectivity.json"), "w"), indent=1)
+bays = [k for k in res if k.endswith("bosses")]; posts = [k for k in res if k.startswith("post")]
+gen = float((rho[~solid & (rho > 0)]).sum() * h ** 3 / 1e3)
+summ = dict(bays_joined=sum(res[k]["supported"] for k in bays), bays_total=len(bays), posts_joined=sum(res[k]["supported"] for k in posts), posts_total=len(posts),
+            stub_joined=res["stub"]["supported"], elec_bosses_joined=sum(res[k]["supported"] for k in res if k.startswith("elec")),
+            floating=[k for k, v in res.items() if not v["supported"]], components=int(n),
+            floor_contact_cm2_M=round(float(fc.sum() * h * h / 100), 1), side_x_contact_cm2_M=round(float(fs), 1),
+            generated_cm3_M=round(gen, 1), generated_mass_g_E=round(gen * 1.27))
+summ["text"] = (f"{summ['bays_joined']} of {summ['bays_total']} bays, {summ['posts_joined']} of {summ['posts_total']} seat posts, stub {'joined' if summ['stub_joined'] else 'NOT joined'}, "
+                f"{summ['elec_bosses_joined']} of 8 electronics bosses joined to the floor-supported body (M); floating: {summ['floating'] or 'none'}; "
+                f"floor contact {summ['floor_contact_cm2_M']} cm2 (M), +X face {summ['side_x_contact_cm2_M']} cm2 (M); generated {summ['generated_cm3_M']} cm3 = {summ['generated_mass_g_E']} g PETG (E)")
+print(summ["text"])
+json.dump(dict(per_body=res, summary=summ), open(os.path.join(OUT, "connectivity.json"), "w"), indent=1)
