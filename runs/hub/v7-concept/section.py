@@ -1,90 +1,69 @@
-"""Hub v6 (run 3) vs hub v7 (system pass) drawn sections: plan at Y 60 round the detent tower, radial cut through the sleeve-to-plate
-corner at Z 0 (X 30..70). python3 runs/hub/v7-concept/section.py -> runs/hub/v7-concept/section.html (24 Oct 2026, swap arm worker)"""
-import os, sys, json, subprocess
+"""Hub v7 system pass, the detent tower options in plan at the axle belt (Y 56..62), to scale: run 3's single column (with its flare),
+the rejected legs under P and A, and the chosen column inside the loop; plus the swap-vs-volume line from runs v6r2 / v6r3.
+python3 runs/hub/v7-concept/section.py -> runs/hub/v7-concept/section.html (24 Oct 2026, swap arm worker)"""
+import os, sys, math, json
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.normpath(os.path.join(HERE, "..", "..", ".."))
-BOX = os.path.join(ROOT, "nox", "box")
-SNIP = r'''
-import sys, json; sys.path.insert(0, %r)
+sys.path.insert(0, os.path.join(ROOT, "nox", "box")); sys.path.insert(0, os.path.join(ROOT, "nox"))
+os.environ.setdefault("NOX_ARM", "v7")
 import arm_v7_layout as S7; S7.use()
-import hub_v6 as HV, numpy as np
-from arm_cad import tm
-P = HV.hub_v6_parts(); D, S = P["detent"]
-m = tm(P["drawn"] - P["cuts"])
-def sec(o, n, keep):
-    s = m.section(plane_origin=o, plane_normal=n)
-    out = []
-    for e in (s.entities if s is not None else []):
-        pts = s.vertices[e.points][:, keep]; out.append(np.round(pts, 2).tolist())
-    return out
-mov = []
-for k in ("arm", "roller", "springs"):
-    v = S[k] if k != "springs" else S["springs"][0]
-    ms = tm(v).section(plane_origin=[0, 60, 0], plane_normal=[0, 1, 0])
-print(json.dumps(dict(plan=sec([0, 60, 0], [0, 1, 0], [0, 2]), radial=sec([0, 0, 0], [0, 0, 1], [0, 1]),
-                      P=np.round(D["P"], 2).tolist(), A=np.round(D["A"], 2).tolist(), Q=list(HV.DT.chosen()["Q"]))))
-''' % BOX
+import hub_v6 as HV, arm_v5_layout as V, detent as DT
+H = HV.hub_v6_parts(); D, _ = H["detent"]; Q = DT.chosen()["Q"]; ax = HV.MOTORS6["axle"]
+STR = [poly for _, poly in V.loop_strands(ax["xc"], ax["zc"])]
+S = 6.0; X0, Z0, X1, Z1 = -8, -66, 72, -2                  # window (mm): X right, Z down
 
 
-def grab(env):
-    e = dict(os.environ, NOX_ARM="v7", **env)
-    out = subprocess.run([sys.executable, "-c", SNIP], cwd=BOX, env=e, capture_output=True, text=True, check=True).stdout
-    return json.loads(out.strip().splitlines()[-1])
+def circle(c, r, n=40): return [(c[0] + r * math.cos(2 * math.pi * k / n), c[1] + r * math.sin(2 * math.pi * k / n)) for k in range(n)]
 
 
-V6 = grab(dict(NOX_TOWER_LEGS="0", NOX_SKIRT="0")); V7 = grab({})
-S = 7.0                                                  # px per mm
+def panel(ox, title, solids, verdict, bad=()):
+    t = lambda x, z: f"{ox + (x - X0) * S:.1f},{40 + (z - Z0) * S:.1f}"
+    W, Hh = (X1 - X0) * S, (Z1 - Z0) * S
+    cid = f"p{int(ox)}"
+    o = [f'<text x="{ox}" y="18" class="h">{title}</text>', f'<text x="{ox}" y="32" class="s">{verdict}</text>',
+         f'<clipPath id="{cid}"><rect x="{ox}" y="40" width="{W:.0f}" height="{Hh:.0f}"/></clipPath><g clip-path="url(#{cid})">',
+         f'<rect x="{ox}" y="40" width="{W:.0f}" height="{Hh:.0f}" class="frame"/>']
+    o.append('<polygon class="p80" points="' + " ".join(t(*p) for p in circle((0, 0), 27.5, 96)) + '"/>')
+    o.append('<polygon class="p16" points="' + " ".join(t(*p) for p in circle((ax["xc"], ax["zc"]), 6.5)) + '"/>')
+    for poly in STR: o.append('<polygon class="belt" points="' + " ".join(t(*p) for p in poly) + '"/>')
+    for k, poly in enumerate(solids):
+        o.append(f'<polygon class="{"bad" if k in bad else "body"}" points="' + " ".join(t(*p) for p in poly) + '"/>')
+    for k, lab in (("Q", "Q"), ("P", "pivot P"), ("A", "anchor A")):
+        x, z = Q if k == "Q" else D[k]
+        o.append(f'<circle cx="{ox + (x - X0) * S:.1f}" cy="{40 + (z - Z0) * S:.1f}" r="2.2" class="pt"/><text x="{ox + (x - X0) * S + 5:.1f}" '
+                 f'y="{40 + (z - Z0) * S - 5:.1f}" class="s">{lab}</text>')
+    o.append(f'<text x="{ox + 6}" y="{40 + Hh - 8:.0f}" class="s">80T sun (r 27.5)</text></g>')
+    return "".join(o), W, Hh
 
 
-def plan(d, ox, title):
-    x0, z0, x1, z1 = -5, -62, 52, -14                    # window round the tower (X, Z), mm
-    W, H = (x1 - x0) * S, (z1 - z0) * S
-    t = lambda x, z: f"{ox + (x - x0) * S:.1f},{30 + (z - z0) * S:.1f}"
-    out = [f'<text x="{ox}" y="18" class="h">{title}</text>', f'<rect x="{ox}" y="30" width="{W:.0f}" height="{H:.0f}" class="frame"/>']
-    for poly in d["plan"]:
-        if all(x0 - 20 < p[0] < x1 + 20 and z0 - 20 < p[1] < z1 + 20 for p in poly):
-            out.append('<polygon class="body" points="' + " ".join(t(*p) for p in poly) + '"/>')
-    for k, lab in (("Q", "column Q"), ("P", "pivot P"), ("A", "anchor A")):
-        x, z = d[k]; out.append(f'<circle cx="{ox + (x - x0) * S:.1f}" cy="{30 + (z - z0) * S:.1f}" r="2.5" class="pt"/>'
-                                f'<text x="{ox + (x - x0) * S + 6:.1f}" y="{30 + (z - z0) * S - 6:.1f}" class="s">{lab}</text>')
-    return "".join(out), W, H
-
-
-def radial(d, ox, oy, title):
-    x0, y0, x1, y1 = 28, 36, 72, 58
-    W, H = (x1 - x0) * S, (y1 - y0) * S
-    t = lambda x, y: f"{ox + (x - x0) * S:.1f},{oy + (y1 - y) * S:.1f}"
-    cid = f"c{int(ox)}"
-    out = [f'<text x="{ox}" y="{oy - 12}" class="h">{title}</text>', f'<rect x="{ox}" y="{oy}" width="{W:.0f}" height="{H:.0f}" class="frame"/>',
-           f'<clipPath id="{cid}"><rect x="{ox}" y="{oy}" width="{W:.0f}" height="{H:.0f}"/></clipPath><g clip-path="url(#{cid})">']
-    for poly in d["radial"]:
-        pts = [p for p in poly]
-        if any(x0 - 5 < p[0] < x1 + 5 and y0 - 5 < p[1] < y1 + 5 for p in pts):
-            out.append('<polygon class="body" points="' + " ".join(t(*p) for p in pts) + '"/>')
-    out.append('</g>')
-    out.append(f'<text x="{ox + 4}" y="{oy + H + 16:.0f}" class="s">X 28..72 at Z 0, Y 36..58 (sleeve r 43, plate Y 50..54)</text>')
-    return "".join(out), W, H
-
-
-p6, W, H = plan(V6, 10, "Hub v6 run 3: one column at Q (bent, sustained 1.08)")
-p7, _, _ = plan(V7, 10 + W + 40, "Hub v7: legs under P and A on plate pads (a frame)")
-r6, RW, RH = radial(V6, 10, 30 + H + 60, "v6: the sleeve meets the plate square (swap 0.52 there)")
-r7, _, _ = radial(V7, 10 + W + 40, 30 + H + 60, "v7: 45 deg skirt r 43 to 49, 2.5 rim")
-TW, TH = 2 * W + 60, 30 + H + 60 + RH + 40
+col_r3 = circle(Q, 7.5 - 1.5 * 3 / 6)                        # run 3's flare at belt mid-height Y 59: r 7.5 -> 5 over Y 54..60
+legs = [circle(Q, 5.0), circle(D["P"], 4.0), circle(D["A"], 4.0)]
+p1, W, Hh = panel(10, "Run 3: one Ø10 column at Q, flared", [col_r3], "flare touches the strand (0.0 gap); sustained 1.08 above it (F)", bad=(0,))
+p2, _, _ = panel(10 + W + 30, "Rejected: legs under P and A", legs, "legs close a window round the strand: the spliced loop cannot go on (review FAIL)", bad=(1, 2))
+p3, _, _ = panel(10 + 2 * (W + 30), "Chosen: 14 x 14 column inside the loop", [HV.column_foot(HV.COLUMN["len"], HV.COLUMN["w"])],
+                 "1.05 off the strand, loop slides on past the free web ends; sustained ~0.5 (E)")
+TW, TH = 3 * W + 80, 40 + Hh + 20
+runs = [("v6 run 2", 40, 184.4, 0.596), ("v6 run 3", 52, 199.3, 0.523)]
+tab = "".join(f"<tr><td>{n}</td><td>{g:g} cm³</td><td>{m:g} g (M)</td><td>{i:g} (F)</td></tr>" for n, g, m, i in runs)
+tab += "<tr><td><b>v7 (chosen)</b></td><td>58 cm³</td><td>~207 g (E)</td><td>~0.48 (E, the run 2 → 3 slope)</td></tr>"
 html = f"""<title>Hub v7 system pass</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
-:root {{ --bg:#f6f5f1; --fg:#1d232a; --muted:#5d6670; --line:#c9ccd0; --card:#fff; --body:#7d8a96; --pt:#c47a1d }}
-@media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{ --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --card:#1b2026; --body:#8795a3; --pt:#e3a24a; color-scheme:dark }} }}
-:root[data-theme="dark"] {{ --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --card:#1b2026; --body:#8795a3; --pt:#e3a24a; color-scheme:dark }}
+:root {{ --bg:#f6f5f1; --fg:#1d232a; --muted:#5d6670; --line:#c9ccd0; --card:#fff; --body:#5f7f9a; --bad:#c0392b; --belt:#2b2b2b; --p80:#d9d4c7; --pt:#c47a1d }}
+@media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{ --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --card:#1b2026; --body:#7fa3c2; --bad:#e06a5a; --belt:#cfd6dc; --p80:#3b3f45; --pt:#e3a24a; color-scheme:dark }} }}
+:root[data-theme="dark"] {{ --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --card:#1b2026; --body:#7fa3c2; --bad:#e06a5a; --belt:#cfd6dc; --p80:#3b3f45; --pt:#e3a24a; color-scheme:dark }}
 body {{ background:var(--bg); color:var(--fg); font:15px/1.5 system-ui, sans-serif; margin:0; padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); padding-block:20px }}
-main {{ max-width:1100px; margin:0 auto; display:grid; gap:16px }} h1 {{ font-size:1.4rem; margin:0; text-wrap:balance }} p {{ margin:0; color:var(--muted); max-width:70ch }}
+main {{ max-width:1500px; margin:0 auto; display:grid; gap:16px }} h1 {{ font-size:1.4rem; margin:0; text-wrap:balance }} p {{ margin:0; color:var(--muted); max-width:75ch }}
 .card {{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; min-width:0 }} .scroll {{ overflow-x:auto }}
+table {{ border-collapse:collapse; font-size:14px }} th, td {{ text-align:left; padding:6px 10px; border-top:1px solid var(--line) }}
 svg .h {{ font-weight:600; font-size:13px; fill:var(--fg) }} svg .s {{ font-size:11px; fill:var(--muted) }}
-.body {{ fill:var(--body); fill-rule:evenodd }} .frame {{ fill:none; stroke:var(--line) }} .pt {{ fill:var(--pt) }}
+.body {{ fill:var(--body); opacity:.9 }} .bad {{ fill:var(--bad); opacity:.85 }} .belt {{ fill:var(--belt) }} .p80 {{ fill:var(--p80) }} .p16 {{ fill:var(--p80); stroke:var(--belt) }}
+.frame {{ fill:none; stroke:var(--line) }} .pt {{ fill:var(--pt) }}
 </style>
-<main><header><h1>Hub v7 system pass</h1><p>Nox swap arm hub, drawn bodies only (the topology fills below the plate). Three hub v6 runs missed a check, so the hub went back to its system pass: the detent tower becomes a frame and the sleeve gets a skirt where the plate meets it. To scale, {S:g} px per mm.</p></header>
-<section class="card"><div class="scroll"><svg viewBox="0 0 {TW:.0f} {TH:.0f}" width="{TW:.0f}" height="{TH:.0f}" role="img" aria-label="hub v6 and v7 sections">{p6}{p7}{r6}{r7}</svg></div></section>
-<section class="card"><p>Top row: plan at Y 60 round the tower (X right, Z down). Bottom row: radial section at Z 0. Source <code>runs/hub/v7-concept/section.py</code>; numbers <code>nox/dimensions.md</code> "System box swap: arm", Hub row.</p></section></main>
+<main><header><h1>Hub v7 system pass</h1><p>Nox swap arm hub. Three hub v6 runs missed a check, so the hub went back to its system pass. Plan at the axle belt (Y 56..62), to scale ({S:g} px per mm): the GT2 loop runs from the fixed 80T sun to the axle motor's 16T, and the detent tower's column stands inside it. The loop is lap-spliced, so it goes on by sliding under the tower's free web ends.</p></header>
+<section class="card"><h2 style="margin:0 0 8px;font-size:1.05rem">Detent tower: three options</h2><div class="scroll"><svg viewBox="0 0 {TW:.0f} {TH:.0f}" width="{TW:.0f}" height="{TH:.0f}" role="img" aria-label="tower options in plan">{p1}{p2}{p3}</svg></div></section>
+<section class="card"><h2 style="margin:0 0 8px;font-size:1.05rem">Swap 0.5 at a stated mass</h2><div class="scroll"><table><tr><th>Run</th><th>Generated</th><th>Mass</th><th>Swap worst</th></tr>{tab}</table></div>
+<p style="margin-top:8px">Alternatives to more volume: a drawn skirt at the sleeve corner (a structural member, not mounting: rejected, The rule 1), a stiffer plate (no room: the wheel lanes and motor seats). Mass is soft (budget 210 g DEFAULT, hub v5 214 g M).</p></section>
+<section class="card"><p>Source <code>runs/hub/v7-concept/section.py</code>; numbers <code>nox/dimensions.md</code> "System box swap: arm", Hub row.</p></section></main>
 """
 open(os.path.join(HERE, "section.html"), "w").write(html)
 print("->", os.path.join(HERE, "section.html"))

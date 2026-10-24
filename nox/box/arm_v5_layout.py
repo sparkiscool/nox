@@ -91,6 +91,20 @@ def square(xc, zc, rot, half):
 def band(ax, az, bx, bz, hw):
     dx, dz = bx - ax, bz - az; ln = math.hypot(dx, dz); nx, nz = -dz / ln * hw, dx / ln * hw
     return [(ax + nx, az + nz), (bx + nx, bz + nz), (bx - nx, bz - nz), (ax - nx, az - nz)]
+AX_TEETH = 20                                       # the axle motor's pulley on the GT2 loop round the 80T sun (arm_v7_layout: 80 / AXLE_RATIO)
+def loop_strands(ax, az, t_in=-0.75, t_out=0.63):
+    """the axle loop's two tangent strands (80T sun at the axis, AX_TEETH on the axle motor), GT2 pitch line t_in..t_out across it
+    (teeth inward, back outward): [(name, polygon)]. The loop's inside is free space (the old band(LOOP_HW) on the centreline filled it)."""
+    R1, R2 = 80 * 2 / (2 * math.pi), AX_TEETH * 2 / (2 * math.pi)
+    C = math.hypot(ax, az); ux, uz = ax / C, az / C; nx, nz = -uz, ux
+    sb = (R1 - R2) / C; cb = math.sqrt(1 - sb * sb)
+    out = []
+    for side, nm in ((1, "loop+"), (-1, "loop-")):
+        pts = []
+        for (s_, t_), d in (((R1 * sb, R1 * cb), t_in), ((C + R2 * sb, R2 * cb), t_in), ((C + R2 * sb, R2 * cb), t_out), ((R1 * sb, R1 * cb), t_out)):
+            tt = side * (t_ + d); pts.append((s_ * ux + tt * nx, s_ * uz + tt * nz))
+        out.append((nm, pts if side == 1 else pts[::-1]))
+    return out
 def sep(pa, pb):
     """convex polygons: separation >= 0 along the best edge normal (SAT); < 0 = overlap depth (approximate)"""
     best = -1e9
@@ -164,7 +178,7 @@ def arm_bodies(ax):
         out.append((f"boss{h}", circ(m["xc"], m["zc"], PIN_BOSS_R), PIN_BOSS_Y))
     out.append(("ax20T", circ(ax[0], ax[1], AX_P20_R), AX_P20_Y))
     out.append(("axshaft", circ(ax[0], ax[1], AX_SHAFT_R), AX_SHAFT_Y))
-    out.append(("loop", band(0, 0, ax[0], ax[1], LOOP_HW), LOOP_Y))
+    for nm, poly in loop_strands(ax[0], ax[1]): out.append((nm, poly, LOOP_Y))     # 24 Oct: the strands, not a band on the centreline
     out.append(("drop", circ(DROP["x"], DROP["z"], DROP["r"]), DROP["y"]))
     out.append(("saddle", circ(0, 0, SADDLE["r"]), SADDLE["y"]))
     return out
@@ -175,7 +189,7 @@ def fixed_bodies():
 # pairs that touch by design (mesh / mount) are skipped
 ALLOWED = {("A:web", "pinionA"), ("B:web", "pinionB"), ("A:webtail", "pinionA"), ("B:webtail", "pinionB"), ("A:wheel0", "railA:ridges"), ("A:wheel1", "railA:ridges"), ("A:wheel2", "railA:ridges"),
            ("B:wheel0", "railB:ridges"), ("B:wheel1", "railB:ridges"), ("B:wheel2", "railB:ridges"), ("railA:foot35", "postA"), ("railA:foot76", "postA"),
-           ("railB:foot38.75", "postB"), ("railB:foot76", "postB"), ("loop", "80T"), ("ax20T", "loop"), ("collar", "ring")}
+           ("railB:foot38.75", "postB"), ("railB:foot76", "postB"), ("loop+", "80T"), ("loop-", "80T"), ("ax20T", "loop+"), ("ax20T", "loop-"), ("collar", "ring")}
 
 def clearance_sweep(ax):
     """min XZ gap of every pair that shares a Y band, over both heads' strokes. Returns the worst gap per pair (name tuple)."""

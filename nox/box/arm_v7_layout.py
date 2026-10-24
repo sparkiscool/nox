@@ -83,6 +83,8 @@ def _patch_v5():
     z = strokes()
     V.RAIL_R = (V.RAIL_R[0], RAIL_END)
     V.WEB_U = WEB_U7; V.WEB_U_B = WEB_U7_B
+    V.AX_TEETH = int(round(80 / AXLE_RATIO))                                    # the loop strands round the axle motor's 16T
+    L.P20_OD = V.AX_TEETH * 2 / math.pi                                        # the belt models (arm_kinematics belt_axle, detent) on the 16T's pitch d
     V.Z0S = (z["park"], z["wait"], z["bay"], z["drone"], z["insert"], z["bay_cmd"], z["insert_cmd"])
     S6.Z0_INSERT_MAX = z["insert_cmd"]; S6.Z0_BAY_INSERT = z["bay_cmd"]
     if STACK3 == "low": _patch_low()
