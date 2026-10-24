@@ -15,7 +15,10 @@ v7 = v6 (funnel_panel.py: faces, flanges, keys, seat block, M3 countersunk from 
 The other 4 panels (the unlatched faces) stay v6. Frames: world = seat frame of funnel_panel.py; panel A = +x face, y >= 0
 half; in the collar the seated faces are +-y (k = 1, 3 of funnel_panel.assembly). The latch on panel A is hook_latch unit
 "+y_x-" (housing B) turned by -90 deg about z.
-python3 funnel_panel_v7.py [--motion] -> runs/funnel_panel/v7/ (STLs, result.json), print/box_funnel_panel_{A,B}_v7.stl"""
+v7 plain (the 4 panels of the unlatched faces; the v6 file fails solid_check): the same skin 2.0, rib height, flanges,
+keys, seat block and seat tie, ribs from panel_opt_v7.py run plain (rib_mask_v7_plain.json), no window, bosses or low ribs.
+python3 funnel_panel_v7.py [--motion] -> runs/funnel_panel/v7/ (STLs, result.json: latched FE), print/box_funnel_panel_*_v7*.stl
+python3 funnel_panel_v7.py --plain     -> the same files + result_plain.json (plain FE)"""
 import math, json, os, sys, shutil
 import numpy as np, trimesh, manifold3d as mf
 
@@ -30,12 +33,15 @@ S2 = math.sqrt(2)
 # hook latch v1 as merged (SKIN 1.6), kept for the report; then the panel v7 skin (panel_opt_v7.latch_v7 patches HL)
 _LAY = HL.servo_layout(13.0, 1, -1)
 P_V1 = HL.build(_LAY)
+if "--plain" in sys.argv: os.environ["NOX_FUNNEL_PLAIN"] = "1"   # the FE checks run on the plain plate model
 import panel_opt_v7 as PO                                        # patches HL to the 2.0 skin on import
 P7 = HL.build(HL.servo_layout(13.0, 1, -1))
 SKIN = PO.SKIN7
 FREE_U, FREE_V = PO.FREE_U, PO.FREE_V
 WIN_U, WIN_V = PO.WIN_U, PO.WIN_V
 RIB_GROW_V7 = 1.25                                               # least outline grow whose as-built FE passes (sweep 1.0 .. 2.5, C)
+RIB_GROW_PLAIN = 1.25                                            # the same for v7 plain (C)
+MODE = dict(plain=False)                                         # which panel the build functions draw
 
 RZ = np.array([[0, 1, 0, 0], [-1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1.0]])   # seat (+y face) -> panel A world (+x face)
 T_A = RZ @ HL.unit_frame(1, -1)[0]                               # unit frame -> panel A world (left-handed: housing B)
@@ -43,10 +49,10 @@ T_A = RZ @ HL.unit_frame(1, -1)[0]                               # unit frame ->
 def to_mf(m, T): return m.transform(np.asarray(T)[:3, :4].tolist())
 
 def v7_globals():
-    J = json.load(open(os.path.join(HERE, "rib_mask_v7.json")))
+    J = json.load(open(os.path.join(HERE, "rib_mask_v7_plain.json" if MODE["plain"] else "rib_mask_v7.json")))
     F._OPT = dict(ts=J["ts"], h=J["h"], H=J["H"], ec=np.asarray(J["ec"]), mask=np.isin(np.arange(len(J["ec"])), J["mask"]))
     F.T, F.RIB_H = float(J["ts"]), float(J["h"])
-    F.RIB_GROW = RIB_GROW_V7
+    F.RIB_GROW = RIB_GROW_PLAIN if MODE["plain"] else RIB_GROW_V7
     return J
 
 def unit_rect(U, V):
@@ -64,6 +70,9 @@ TIES_UNIT = [((-18.5, 34.6), (21.67, 34.6)),                    # boss to boss a
              ((18.5, 0.0), (48.0, 0.0)), ((21.67, 34.6), (48.0, 34.6))]     # uphill: into the rim beam
 TIE_SEAT = ((F.SEAT_Y, F.SEAT_V), (78.0, F.SEAT_V))             # seat block to the strut (face coordinates)
 TIES_FACE = [((142.0, 101.0), (139.0, 89.0))]                   # rim corner piece to the valley diagonal (a 2.4 neck in v6 / v7)
+TIE_SEAT_PLAIN = TIE_SEAT                                        # v7 plain: seat block to its nearest rib (set from its layout)
+TIES_FACE_PLAIN = [((65.5, 66.0), (63.0, 82.0)),              # v7 plain: wheel-track strut up into the rim stub
+                   ((139.0, 101.0), (139.0, 87.0))]             # rim corner piece to the valley diagonal
 
 def ties_cs(seat=True):
     """drawn tie ribs (face coordinates): the 4 latch bosses, the strut under the wheel track, the rim beam and the seat block
@@ -72,9 +81,10 @@ def ties_cs(seat=True):
         c = lambda p: mf.CrossSection.circle(TIE_W / 2, 24).translate(p)
         return mf.CrossSection.batch_hull([c(a), c(b)])
     f = lambda p: (PO.X_L - p[1], PO.U0 + p[0])
-    out = seg(*TIE_SEAT) if seat else mf.CrossSection()
-    for a, b in TIES_UNIT: out = out + seg(f(a), f(b))
-    for a, b in TIES_FACE: out = out + seg(a, b)
+    pl = MODE["plain"]
+    out = seg(*(TIE_SEAT_PLAIN if pl else TIE_SEAT)) if seat else mf.CrossSection()
+    for a, b in ([] if pl else TIES_UNIT): out = out + seg(f(a), f(b))
+    for a, b in (TIES_FACE_PLAIN if pl else TIES_FACE): out = out + seg(a, b)
     dom = mf.CrossSection([[(0.0, 0.0), (84.0, 0.0), (84.0 + F.SLANT / S2, F.SLANT), (0.0, F.SLANT)]])
     return out ^ dom
 
@@ -93,17 +103,19 @@ def extrude_face(cs):
 def seat_tie():
     """the seat block's tie rib: through the block, kept 0.1 short of the landing plane inside the post room's radius."""
     room = F.at_seat(mf.Manifold.cylinder(40, F.KEEP_R, F.KEEP_R, 64).translate([0, 0, F.CLAMP - 0.1]))
-    return extrude_face(mf.CrossSection.batch_hull([mf.CrossSection.circle(TIE_W / 2, 24).translate(p) for p in TIE_SEAT])) \
+    ts = TIE_SEAT_PLAIN if MODE["plain"] else TIE_SEAT
+    return extrude_face(mf.CrossSection.batch_hull([mf.CrossSection.circle(TIE_W / 2, 24).translate(p) for p in ts])) \
         - room - F.screw_hole()
 
 def rib_section_v7():
     """the rib outline (optimizer mask, smoothed, grown, + ties) without the guide block keep-out."""
-    return rib_section_full() - unit_rect(*GUIDE_UV)
+    return rib_section_full() if MODE["plain"] else rib_section_full() - unit_rect(*GUIDE_UV)
 
 def ribs_world_v7():
     """full ribs (9) outside the housing footprint + 1.0, low ribs (6.7, 0.3 under the housing flange) inside it, none
     over the guide block + 1.0."""
     rb = extrude_face(rib_section_full(seat=False)) - F.post_room() - F.screw_hole() + seat_tie()
+    if MODE["plain"]: return rb
     low = to_mf(HL.box(FREE_U[0], FREE_U[1], FREE_V[0], FREE_V[1], -60.0, -SKIN - PO.H_LOW), T_A)
     guide = to_mf(HL.box(GUIDE_UV[0][0], GUIDE_UV[0][1], GUIDE_UV[1][0], GUIDE_UV[1][1], -60.0, -SKIN), T_A)
     return rb - low - guide
@@ -120,10 +132,12 @@ def latch_features():
 def panel_A_world():
     J = v7_globals()
     base = F.panel_world()                                        # v6 body at the 2.0 skin: skin, flanges, seat block
+    if MODE["plain"]: return base + ribs_world_v7(), J
     bos, win = latch_features()
     return (base + ribs_world_v7() + bos) - win, J
 
-def build():
+def build(plain=False):
+    MODE["plain"] = plain
     w, J = panel_A_world()
     pa = F.to_print(w); pb = F.to_print(w.mirror([0, 1, 0]))
     for p in F.key_points():
@@ -150,8 +164,9 @@ def asbuilt_mask():
     return m
 
 def collar(pa7, pb7):
-    """seat frame collar: v6 panels on the unlatched faces (k 0, 2), v7 on the seated faces (+-y, k 1, 3)."""
-    pa6, pb6 = F_v6
+    """seat frame collar: v7 plain on the unlatched faces (k 0, 2; v6 until the plain mask exists), v7 on the seated faces
+    (+-y, k 1, 3)."""
+    pa6, pb6 = F_U
     out = []
     for k in range(4):
         a, b = (pa7, pb7) if k in (1, 3) else (pa6, pb6)
@@ -232,13 +247,13 @@ def make_motion(pa, pb):
     """assembly render: the collar (v7 on the seated faces, v6 on the others) with the 4 hook latches (housings at the 2.0
     skin, plungers, servos), the plungers going out and back in. Static part: this is the fit view, not a mechanism."""
     from motion import Scene
-    sc = Scene("Funnel panels v7 + hook latch", "seated faces (drone +-y): v7 panels with skin windows, bosses, low ribs; 4 latches")
-    pa6, pb6 = F_v6
+    sc = Scene("Funnel panels v7 + hook latch", "seated faces (drone +-y): v7 panels with skin windows, bosses, low ribs, 4 latches; other faces v7 plain")
+    pa6, pb6 = F_U
     for k in range(4):
         for nm, m in (("A", pa if k in (1, 3) else pa6), ("B", pb if k in (1, 3) else pb6)):
-            v = "v7" if k in (1, 3) else "v6"
+            v = "v7" if k in (1, 3) else U_NAME
             sc.part(f"panel {nm} {v} k{k}", tm(m.rotate([0, -F.ROT, 0]).rotate([0, 0, 90 * k])), group=f"panels {v}",
-                    color="#b9c2cc" if v == "v6" else "#7fa7d9", printed=(v == "v7"), faces=40000)
+                    color="#b9c2cc" if v != "v7" else "#7fa7d9", printed=True, faces=40000)
     Ts = {}
     for name, fs, xs in HL.UNITS:
         T, _ = HL.unit_frame(fs, xs); Ts[name] = T
@@ -262,13 +277,22 @@ def make_motion(pa, pb):
 
 if __name__ == "__main__":
     F_v6 = F.build()                                             # v6 panels (1.6 skin, v6 ribs) before the v7 switch
-    pa, pb, wA, J = build()
-    res = dict(part="funnel_panel", version="v7", skin=SKIN, rib_h=float(J["h"]), rib_vf=J.get("vf"))
+    have_plain = os.path.exists(os.path.join(HERE, "rib_mask_v7_plain.json"))
+    out = {}
+    if have_plain:
+        pua, pub, _, Jp = build(plain=True); F_U, U_NAME = (pua, pub), "v7 plain"
+        out.update({"A_v7_plain": pua, "B_v7_plain": pub})
+    else:
+        F_U, U_NAME = F_v6, "v6"
+    pa, pb, wA, J = build(plain=False)
+    out.update({"A_v7": pa, "B_v7": pb})
+    res = dict(part="funnel_panel", version="v7", skin=SKIN, rib_h=float(J["h"]), rib_vf=J.get("vf"),
+               rib_vf_plain=Jp.get("vf") if have_plain else None, unlatched_faces=U_NAME)
     names = {}
-    for name, m in (("A", pa), ("B", pb)):
+    for name, m in out.items():
         t = tm(m)
         t.apply_translation(-np.array([t.bounds[:, 0].mean(), t.bounds[:, 1].mean(), t.bounds[0, 2]]))
-        p = os.path.join(RUN, f"box_funnel_panel_{name}_v7.stl"); t.export(p); names[name] = p
+        p = os.path.join(RUN, f"box_funnel_panel_{name}.stl"); t.export(p); names[name] = p
         res[name] = F.info_of(t)
         res[name]["watertight_after_stl_reload"] = bool(trimesh.load(p, force="mesh").is_watertight)
     parts = collar(pa, pb)
@@ -276,20 +300,22 @@ if __name__ == "__main__":
     full = parts[0]
     for q in parts[1:]: full = full + q
     ft = tm(full)
-    res["assembly"] = dict(overlap_mm3=round(ov, 3), bodies=sum(abs(b.volume) > 1.0 for b in ft.split(only_watertight=False)), g_PETG=round(ft.volume / 1000 * 1.27, 1),
-                           bbox=[round(v, 1) for v in ft.extents])
+    res["assembly"] = dict(unlatched=U_NAME, overlap_mm3=round(ov, 3), bodies=sum(abs(b.volume) > 1.0 for b in ft.split(only_watertight=False)),
+                           g_PETG=round(ft.volume / 1000 * 1.27, 1), bbox=[round(v, 1) for v in ft.extents])
     res["latch_fit_v7_skin"] = latch_fit(P7, full)                # housing / plunger with the guide top under the 2.0 skin
     res["latch_fit_v1_as_merged"] = latch_fit(P_V1, full)         # hook_latch v1 (SKIN 1.6): guide top 0.1 into the skin
     res["window"] = window_fit(full)
     res["bosses_vs_housing_mm3"] = round(HL.vol(HL.bosses_local(P7) ^ P7["housing"]), 3)
     res["wheel_path"] = wheel_path_steps(ft)
-    # FE: the as-built rib outline on the v7 plate model, every case
-    mk = asbuilt_mask()
-    res["fe_asbuilt"] = {k: v for k, v in PO.report(mk).items()}
-    res["boss_hand_calc"] = boss_hand_calc()
-    json.dump(res, open(os.path.join(RUN, "result.json"), "w"), indent=1, default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
+    # FE: the as-built rib outline on the plate model of this run's mode (latched, or plain with --plain), every case
+    MODE["plain"] = PO.PLAIN; v7_globals()
+    res["fe_mode"] = "v7 plain" if PO.PLAIN else "v7 latched"
+    res["fe_asbuilt"] = {k: v for k, v in PO.report(asbuilt_mask()).items()}
+    if not PO.PLAIN: res["boss_hand_calc"] = boss_hand_calc()
+    json.dump(res, open(os.path.join(RUN, "result_plain.json" if PO.PLAIN else "result.json"), "w"), indent=1,
+              default=lambda o: o.tolist() if hasattr(o, "tolist") else str(o))
     ft.export(os.path.join(RUN, "collar_v7_seat_frame.stl"))
     print(json.dumps({k: v for k, v in res.items() if k not in ("fe_asbuilt",)}, indent=1, default=str))
-    print("fe as-built:", {k: v for k, v in res["fe_asbuilt"].items() if k != "per_case"})
-    for name in ("A", "B"): shutil.copy(names[name], os.path.join(ROOT, "print", f"box_funnel_panel_{name}_v7.stl"))
+    print("fe as-built:", res["fe_mode"], {k: v for k, v in res["fe_asbuilt"].items() if k != "per_case"})
+    for name, p in names.items(): shutil.copy(p, os.path.join(ROOT, "print", os.path.basename(p)))
     if "--motion" in sys.argv: make_motion(pa, pb)

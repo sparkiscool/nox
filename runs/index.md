@@ -1,6 +1,6 @@
 # Runs
 
-_48 runs · rebuilt 2026-10-24 01:51_
+_48 runs · rebuilt 2026-10-24 02:26_
 
 ## Latest per part
 
@@ -21,7 +21,7 @@ _48 runs · rebuilt 2026-10-24 01:51_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-24 01:43 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 02:14 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 00:56 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 00:55 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 00:55 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |

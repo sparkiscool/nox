@@ -1,4 +1,4 @@
-# Box collar funnel v4 / panels v6 + v7 (catcher), shared by the Scout and the Overseer
+# Box collar funnel v4 / panels v7 + v7 plain (catcher), shared by the Scout and the Overseer
 
 The box's catcher: a **static all-PETG collar** of 4 flat 45° faces on top of the box with an **open bottom** (Spark 16 Oct 19:02 / 19:33). The drone lands into it under its own control; the 8 print-in-place PETG wheels in the guard's corner nodes roll down the bare faces and centre it; the pack hangs through the open bottom to the swap wheel's top head; on the two seated faces the hook latch (`nox/box/box-hook-latch.md`) pushes 4 plungers out through the panels to hold the drone for the swap. Nothing else on the funnel moves. Numbers: `nox/dimensions.md` G (the only source; this page explains them). Guard side: `archive/scout-v2/s2-guard.md`. Box system: `nox/box/box.md`. Scripts: `nox/box/catch_v4/` (`funnel_panel.py` v6, `funnel_panel_v7.py` v7, `panel_opt.py` / `panel_opt_v7.py` rib optimizers, `rib_mask.json` / `rib_mask_v7.json`); the catch sims are in `archive/scout-v2/catch_v4/`. Seat frame = drone coordinates of a seated Scout. C / M / E tags; DEFAULT unless marked Spark.
 
@@ -53,7 +53,7 @@ Mindlin plate FE of one full face (2 mm quads, 6 596 el). Supports: bottom edge 
 Build: print 4 A + 4 B. Scuff the flanges. Glue each A + B pair face-down on a flat table (4 faces). Stand the 4 faces mouth-down, glue the valley flanges, clip, cure. Sand the valley seams flush. Press an M3 heat-set insert into each of the 4 bay posts' 45° seats. Set the collar on the posts (landings on the seats), 4 x M3 x 12 countersunk from inside the funnel.
 
 ## Part: funnel panel A / B v7 (PETG, 2 + 2; the two seated faces, 24 Oct)
-The 4 panels of the faces over the 45 / 135° bays (drone ±y) carry the hook latch; the other 4 stay v6. Script `catch_v4/funnel_panel_v7.py` (builds on `funnel_panel.py`, which stays the v6 source), rib run `catch_v4/panel_opt_v7.py`, results `runs/funnel_panel/v7/` (`result.json` holds every number below). C unless tagged.
+The 4 panels of the faces over the 45 / 135° bays (drone ±y) carry the hook latch; the other 4 are **v7 plain** (below). Script `catch_v4/funnel_panel_v7.py` (builds on `funnel_panel.py`, which stays the v6 source), rib run `catch_v4/panel_opt_v7.py`, results `runs/funnel_panel/v7/` (`result.json` holds every number below). C unless tagged.
 | Feature | Value | Source |
 |---|---|---|
 | Unchanged from v6 | faces, 45°, 168 / 320, centre seam + valley flanges (2.4 x 12), keys, seat block (36 from the centre line, 14 up the slope), M3 x 12 countersunk from above into the bay post insert | v6 |
@@ -65,13 +65,23 @@ The 4 panels of the faces over the 45 / 135° bays (drone ±y) carry the hook la
 | Drawn tie ribs | 4.4 wide (survive every solid_check erosion): boss to boss along the slope and on both sides of the guide, the uphill bosses up into the rim beam, the downhill one into the strut under the wheel track, the seat block into that strut (it sat on skin only in v6), the rim corner piece into the valley diagonal | DEFAULT |
 | As built (FE) | outline smoothed as v6, grown 1.25 (the least that passes): worst 0.893 of the 1.0 limit at press u 60 v 90, 6.6 MPa max (limit 19.5), boss deflection 0.32 (functional) / 0.72 (misuse) | C (FE) |
 | Bosses in plane (hand calc) | misuse: 25 N shear per boss at the flange face + 25.2 N normal: 1.29 MPa at the boss root, across layers (boss axis = print z), index 0.15 (misuse SF 2.5); functional 0.07; skin membrane 1.0 MPa | C / E |
-| Mass | A 80.8 g, B 80.7 g (M, solid); collar 4 x v7 + 4 x v6: 594.5 g | M |
+| Mass | A 80.8 g, B 80.7 g (M, solid); collar 4 x v7 + 4 x v7 plain: 624.3 g | M |
 | Bed | 109.0 x 170.6 x 12.0, contact face down (12 935 mm² on the plate), 14 mm² over 45° (key undersides; countersink cone at 45°), no supports | M |
-| Checks | solid_check PASS on A and B; collar of 4 v6 + 4 v7: 0.000 mm³ between panels, 1 body; wheel track (lateral 50 .. 150, every face): 0 steps over 0.2, face depth 0.000 off the windows | C |
+| Checks | solid_check PASS on A and B; collar of 4 v7 + 4 v7 plain: 0.000 mm³ between panels, 1 body; wheel track (lateral 50 .. 150, every face): 0 steps over 0.2, face depth 0.000 off the windows | C |
 
 **Hook latch fit:** with the guide top 0.3 under the 2.0 skin (−2.3) and the flange on the 7 bosses (−9.0): housings, plungers in and out vs the collar 0 mm³ at all 4 units. **The merged hook latch v1 (`SKIN = 1.6`) overlaps the v7 panel 242 mm³ per unit** (guide top 0.1 into the skin, flange 0.4 into the bosses): `hook_latch.py` must take `SKIN = 2.0` (its frame constants follow; a housing v2) before the housings are printed.
 
 Build: as v6, plus press 4 M3 x 5.7 heat-set inserts into each v7 panel's bosses before gluing. The v7 pair goes on the seated faces (over the 45 / 135° bays, drone ±y), each panel's window toward its own valley.
+
+## Part: funnel panel A / B v7 plain (PETG, 2 + 2; the two unlatched faces, 24 Oct)
+v7 without the latch: the same skin 2.0, ribs 9, flanges, keys, seat block and its tie rib; no window, bosses or low ribs. Ribs from `panel_opt_v7.py` run plain (`NOX_FUNNEL_PLAIN=1`, v6 cases and limits + the 2 presses beside the wheel point, no latch cases; `rib_mask_v7_plain.json`): lightest feasible rib fraction 0.20, 132.6 g a face (plate model). Drawn tie ribs 4.4 wide: the wheel-track strut up into the rim stub, the rim corner piece into the valley diagonal, the seat block into the strut. Build: `funnel_panel_v7.py --plain` (C unless tagged).
+| Item | Value |
+|---|---|
+| As built (FE) | grown 1.25 (the least that passes): worst 0.91 of the 1.0 limit at press u 60 v 90, 6.9 MPa max |
+| Mass | A 75.4 g, B 75.3 g (M, solid) |
+| Bed | 109.0 x 170.6 x 12.0, contact face down, 13 052 mm² (M), 14 mm² over 45°, no supports |
+| Checks | solid_check PASS on A and B; in the collar with the 4 v7: 0.000 mm³, 1 body; wheel track 0 steps over 0.2 |
+**The 3 printed v6 panels:** the v6 file fails solid_check (1.6 skin thin walls, seat block and a rim piece on skin-only necks), so they are reprinted as v7 plain (DEFAULT; alternative: keep them on the unlatched faces as printed, their 1.6 skin is under the 2.0 floor). They can serve as fit and glue coupons.
 
 ## Sequence
 1. Drone descends inside ±40, ±5° yaw, ≤ 0.15 m/s.
@@ -80,7 +90,7 @@ Build: as v6, plus press 4 M3 x 5.7 heat-set inserts into each v7 panel's bosses
 4. Swap (`nox/box/box.md`): the XT60 push lifts the drone 2.1 .. 5.7 (C) onto the plungers. Leaving: plungers in, spin-up, take off. Miss (no switch within 1.0 s): climb, retry.
 
 ## Problems
-0. **The v6 file fails solid_check** (24 Oct, M): 1.5 thin walls (the 1.6 skin), the seat block on skin only, a rim piece on a 2.4 neck. The 3 printed v6 panels are kept (unlatched faces); the 4th unlatched panel should not be printed from v6. Fix: a v7 plain panel (`panel_opt_v7.py` with the latch off, the same skin and ties), one run.
+0. **The v6 file fails solid_check** (24 Oct, M): 1.5 thin walls (the 1.6 skin), the seat block on skin only, a rim piece on a 2.4 neck. Fixed by v7 plain on the unlatched faces; the 3 printed v6 panels are reprinted (DEFAULT).
 1. **Wheel coupon gate** (dimensions D14): a corner node's wheel turns free after printing and slides sideways on a 45° PETG face at μ ≤ 0.4. Test on a panel's bed-side face.
 2. **Valley seams are in the wheel path:** sand flush, step ≤ 0.2, and round the glue line so a wheel can't catch.
 3. **The 2 bays the collar bolts to (45° and 135°) aren't drawn** (Overseer bays, wait on D10). Their posts (45° seat + insert) are the bay ring chat's job (spec in `nox/box/box-case.md` "To add" 2). Best fix: draw those two modules now as bay envelopes with the posts, so the collar has something to bolt to; Overseer receivers later.
@@ -90,4 +100,4 @@ Build: as v6, plus press 4 M3 x 5.7 heat-set inserts into each v7 panel's bosses
 7. **Strength on the seats (E):** v5 pads (screw from below) checked on the unribbed collar (`funnel_seat_fe.py`: 2 kg Overseer, 50 mm free fall onto one face, flight SF 4, critical distance 1.5): worst layer-aware index ~2.4 at the top-band corners, pad 2.3, so ~1.6 real margin on PETG, not 4. Glue lines read 5 to 7 against a 2 MPa design bond: the glue coupon (Problem 4) decides it. The ribbed collar hangs the mesher. **v6 seat blocks are not FE-checked:** the landing load is now normal to the face, straight into the post in compression (better than the v5 pads' bending), but the screw-through-the-face region is new. First article: 2 kg press on the face next to a screw. If the coupon is weak: the ±30 landing gate already proposed cuts the hit.
 
 ## Status
-Layout and centring settled 16 Oct 19:50 (sim, all PETG). Flat panel split 16 Oct 21:30. Ribs optimized 16 Oct 22:40. v5 17 Oct 00:35 (pads, screw from below; A v5 sent 00:39, cancelled by Spark). **v6 17 Oct 01:05: seat blocks, M3 countersunk from above into inserts in the bay posts.** Files `funnel_panel_A_v6.stl` / `B_v6.stl` in `dubhacks\`; A v6 sliced, waiting on a clear bed. Next: 1 A + 1 B as the first article (fit, keys, stiffness, countersink), then the other 6; wheel and glue coupons. **v7 24 Oct: the seated faces' 2 A + 2 B with the hook latch windows, bosses and re-optimized ribs (`print/box_funnel_panel_A_v7.stl`, `B_v7.stl`); the 3 printed v6 panels go on the unlatched faces.**
+Layout and centring settled 16 Oct 19:50 (sim, all PETG). Flat panel split 16 Oct 21:30. Ribs optimized 16 Oct 22:40. v5 17 Oct 00:35 (pads, screw from below; A v5 sent 00:39, cancelled by Spark). **v6 17 Oct 01:05: seat blocks, M3 countersunk from above into inserts in the bay posts.** Files `funnel_panel_A_v6.stl` / `B_v6.stl` in `dubhacks\`; A v6 sliced, waiting on a clear bed. Next: 1 A + 1 B as the first article (fit, keys, stiffness, countersink), then the other 6; wheel and glue coupons. **v7 24 Oct: the seated faces' 2 A + 2 B with the hook latch windows, bosses and re-optimized ribs (`print/box_funnel_panel_A_v7.stl`, `B_v7.stl`); the unlatched faces' 2 A + 2 B as v7 plain (`print/box_funnel_panel_A_v7_plain.stl`, `B_v7_plain.stl`); the 3 printed v6 are reprinted (DEFAULT).**

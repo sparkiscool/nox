@@ -1,0 +1,185 @@
+{
+ "part": "funnel_panel",
+ "version": "v7",
+ "skin": 2.0,
+ "rib_h": 9.0,
+ "rib_vf": 0.2,
+ "rib_vf_plain": 0.2,
+ "unlatched_faces": "v7 plain",
+ "A_v7_plain": {
+  "cm3": 59.4,
+  "g_PETG": 75.4,
+  "bbox": [
+   109.0,
+   170.6,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 13052,
+  "overhang_mm2": 55.4,
+  "watertight_after_stl_reload": true
+ },
+ "B_v7_plain": {
+  "cm3": 59.3,
+  "g_PETG": 75.3,
+  "bbox": [
+   109.0,
+   168.4,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 13052,
+  "overhang_mm2": 57.7,
+  "watertight_after_stl_reload": true
+ },
+ "A_v7": {
+  "cm3": 63.6,
+  "g_PETG": 80.8,
+  "bbox": [
+   109.0,
+   170.6,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 12935,
+  "overhang_mm2": 55.4,
+  "watertight_after_stl_reload": true
+ },
+ "B_v7": {
+  "cm3": 63.5,
+  "g_PETG": 80.7,
+  "bbox": [
+   109.0,
+   168.4,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 12935,
+  "overhang_mm2": 57.7,
+  "watertight_after_stl_reload": true
+ },
+ "assembly": {
+  "unlatched": "v7 plain",
+  "overlap_mm3": -0.0,
+  "bodies": "1",
+  "g_PETG": 624.3,
+  "bbox": [
+   336.8,
+   336.8,
+   78.4
+  ]
+ },
+ "latch_fit_v7_skin": {
+  "+y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "+y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x+": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x-": {
+   "housing_mm3": 0.0,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  }
+ },
+ "latch_fit_v1_as_merged": {
+  "+y_x+": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "+y_x-": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x+": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  },
+  "-y_x-": {
+   "housing_mm3": 242.442,
+   "plunger_in_mm3": 0.0,
+   "plunger_out_mm3": 0.0
+  }
+ },
+ "window": {
+  "grown_0.45_mm3": 0.0,
+  "grown_0.55_mm3": 16.796,
+  "window_centre_slope_lateral": [
+   54.1,
+   100.0
+  ],
+  "plunger_axis_slope_lateral": [
+   54.1,
+   100.0
+  ]
+ },
+ "bosses_vs_housing_mm3": 0.0,
+ "wheel_path": {
+  "face k0": {
+   "rays": 15298,
+   "hits": 15298,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k1 (seated)": {
+   "rays": 15298,
+   "hits": 15046,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k2": {
+   "rays": 15298,
+   "hits": 15298,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  },
+  "face k3 (seated)": {
+   "rays": 15298,
+   "hits": 15046,
+   "max_step_off_window": 0.0,
+   "steps_over_0p2_off_window": 0,
+   "max_step_at_window": 0.0,
+   "face_depth_range_off_window": [
+    0.0,
+    0.0
+   ]
+  }
+ },
+ "fe_mode": "v7 plain"
+}
+fe as-built: v7 plain {'face_g': np.float64(142.2), 'util': 0.91, 'worst': 'press u60 v90', 'stress_MPa': 6.9, 'stress_case': 'press u30 v40', 'ok': True, 'latch_boss_defl_mm': {}}

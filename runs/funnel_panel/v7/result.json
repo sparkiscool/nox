@@ -4,7 +4,39 @@
  "skin": 2.0,
  "rib_h": 9.0,
  "rib_vf": 0.2,
- "A": {
+ "rib_vf_plain": 0.2,
+ "unlatched_faces": "v7 plain",
+ "A_v7_plain": {
+  "cm3": 59.4,
+  "g_PETG": 75.4,
+  "bbox": [
+   109.0,
+   170.6,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 13052,
+  "overhang_mm2": 55.4,
+  "watertight_after_stl_reload": true
+ },
+ "B_v7_plain": {
+  "cm3": 59.3,
+  "g_PETG": 75.3,
+  "bbox": [
+   109.0,
+   168.4,
+   12.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "fits_bed": true,
+  "bed_mm2": 13052,
+  "overhang_mm2": 57.7,
+  "watertight_after_stl_reload": true
+ },
+ "A_v7": {
   "cm3": 63.6,
   "g_PETG": 80.8,
   "bbox": [
@@ -19,7 +51,7 @@
   "overhang_mm2": 55.4,
   "watertight_after_stl_reload": true
  },
- "B": {
+ "B_v7": {
   "cm3": 63.5,
   "g_PETG": 80.7,
   "bbox": [
@@ -35,9 +67,10 @@
   "watertight_after_stl_reload": true
  },
  "assembly": {
-  "overlap_mm3": 0.0,
+  "unlatched": "v7 plain",
+  "overlap_mm3": -0.0,
   "bodies": 1,
-  "g_PETG": 594.5,
+  "g_PETG": 624.3,
   "bbox": [
    336.8,
    336.8,
@@ -147,6 +180,7 @@
    ]
   }
  },
+ "fe_mode": "v7 latched",
  "fe_asbuilt": {
   "face_g": 151.5,
   "util": 0.893,

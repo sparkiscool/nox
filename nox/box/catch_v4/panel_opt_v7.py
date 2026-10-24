@@ -16,7 +16,9 @@ supports, wheel / top-edge / uniform cases and limits as panel_opt.py (v6, 16 Oc
 Face coordinates: u across (0 = centre seam), v up the slope (0 = bottom edge). Unit frame of the latch on the u > 0
 half: v_FE = U0 + u_L, u_FE = 100 - v_L (v_L toward the centre line).
 Fixed ts 2.0, h 9 (one panel family with the v6 flanges and keys); bisection on the rib fraction for the lightest feasible.
-python3 panel_opt_v7.py -> rib_mask_v7.json (here) + runs/funnel_panel/v7/panel_opt_v7.json"""
+python3 panel_opt_v7.py -> rib_mask_v7.json (here) + runs/funnel_panel/v7/panel_opt_v7.json
+NOX_FUNNEL_PLAIN=1 python3 panel_opt_v7.py -> the v7 plain panel (unlatched faces): the same skin 2.0, rib height and v6
+cases, no window, bosses, low ribs or latch cases -> rib_mask_v7_plain.json + panel_opt_v7_plain.json"""
 import math, json, time, os, sys
 import numpy as np, scipy.sparse as sp, scipy.sparse.linalg as spl
 from scipy.spatial import cKDTree
@@ -58,16 +60,18 @@ nx, ny = int(round(320 / H)), int(math.ceil(SLANT / H))
 xs = -160 + H * (np.arange(nx) + 0.5); ys = H * (np.arange(ny) + 0.5)
 XC, YC = np.meshgrid(xs, ys, indexing="ij")
 uL_g = YC - U0; vL_g = X_L - np.abs(XC)                         # unit coordinates of every element (both halves)
-hole_g = (np.abs(uL_g) < WIN_U / 2) & (np.abs(vL_g) < WIN_V / 2)
+PLAIN = os.environ.get("NOX_FUNNEL_PLAIN") == "1"              # v7 plain: the unlatched faces (no latch features or cases)
+SUFFIX = "_plain" if PLAIN else ""
+hole_g = (np.abs(uL_g) < WIN_U / 2) & (np.abs(vL_g) < WIN_V / 2) & (not PLAIN)
 active = (np.abs(XC) <= HW(YC)) & ~hole_g
 passive_grid = active & (np.abs(XC) < FL_HALF)
-ribfree_grid = active & (uL_g > FREE_U[0]) & (uL_g < FREE_U[1]) & (vL_g > FREE_V[0]) & (vL_g < FREE_V[1])   # low ribs
+ribfree_grid = active & (not PLAIN) & (uL_g > FREE_U[0]) & (uL_g < FREE_U[1]) & (vL_g > FREE_V[0]) & (vL_g < FREE_V[1])   # low ribs
 GUIDE_U = HL.PL_U / 2 + HL.CL_GUIDE + HL.WALL_U + 1.0                      # guide block + 1.0, unit frame (C)
 GUIDE_V = (-(HL.PL_V / 2 + HL.CL_GUIDE + HL.WALL_VN) - 1.0, HL.PL_V / 2 + HL.CL_GUIDE + HL.WALL_VP + 1.0)
-guide_grid = active & (np.abs(uL_g) < GUIDE_U) & (vL_g > GUIDE_V[0]) & (vL_g < GUIDE_V[1])
+guide_grid = active & (not PLAIN) & (np.abs(uL_g) < GUIDE_U) & (vL_g > GUIDE_V[0]) & (vL_g < GUIDE_V[1])
 H_LOW = -HL.W_FL0 - SKIN7 - 0.3                                              # 6.7 (C)
 boss_grid = np.zeros_like(active)
-for (bu, bv) in BOLTS:
+for (bu, bv) in ([] if PLAIN else BOLTS):
     boss_grid |= active & ((uL_g - bu) ** 2 + (vL_g - bv) ** 2 <= BOSS_R ** 2)
 el_ij = np.argwhere(active); ne = len(el_ij)
 nid_full = -np.ones((nx + 1, ny + 1), int)
@@ -144,8 +148,11 @@ for u in (0, 40, 80, 120, 150):
         cases.append(patch(u, topv, 20.0, r=3.0)); names.append(f"top edge u{u}")
 fu = np.zeros(ndof); inside = np.where(np.abs(NX) < HW(NY) - 0.5 * H)[0]; fu[3 * inside] = 20.0 / len(inside)
 cases.append(fu); names.append("uniform 20 N")
-f_fun, N_fun = latch_forces(HL.F_FUNC, (1, -1)); cases.append(f_fun); names.append("latch functional 30 N x 2")
-f_mis, N_mis = latch_forces(HL.F_MIS, (1,)); cases.append(f_mis); names.append("latch misuse 100 N")
+f_fun, N_fun = latch_forces(HL.F_FUNC, (1, -1))
+f_mis, N_mis = latch_forces(HL.F_MIS, (1,))
+if not PLAIN:
+    cases.append(f_fun); names.append("latch functional 30 N x 2")
+    cases.append(f_mis); names.append("latch misuse 100 N")
 F = np.stack(cases, 1); Pm = np.array([np.abs(f).sum() for f in cases])
 WHEEL_U = (60.0, 140.0)
 def functional(n):
@@ -250,7 +257,7 @@ def report(mask):
     return dict(face_g=round(m, 1), util=round(float(util.max()), 3), worst=names[i], stress_MPa=round(float(sg.max()), 1),
                 stress_case=names[j], ok=bool((util <= 1 + 1e-9).all() and sg.max() <= SIG_ALLOW),
                 per_case={n: [round(float(a), 3), round(float(b), 1)] for n, a, b in zip(names, d, sg)},
-                latch_boss_defl_mm={names[k]: round(float(bd[k]), 3) for k in (len(names) - 2, len(names) - 1)})
+                latch_boss_defl_mm={names[k]: round(float(bd[k]), 3) for k in range(len(names)) if names[k].startswith("latch")})
 
 if __name__ == "__main__":
     t0 = time.time()
@@ -270,8 +277,8 @@ if __name__ == "__main__":
     mask, r, vf = best
     json.dump(dict(ts=TS, h=RIB_H, H=H, ec=np.round(ec, 3).tolist(), mask=np.where(mask)[0].tolist(), vf=vf,
                    window=dict(centre_u=X_L, centre_v=U0, along_slope=WIN_U, along_edge=WIN_V),
-                   lowrib_unit=dict(u=FREE_U, v=FREE_V, h=H_LOW), guide_keep_unit=dict(u=GUIDE_U, v=GUIDE_V)), open(os.path.join(HERE, "rib_mask_v7.json"), "w"))
+                   lowrib_unit=dict(u=FREE_U, v=FREE_V, h=H_LOW), guide_keep_unit=dict(u=GUIDE_U, v=GUIDE_V)), open(os.path.join(HERE, f"rib_mask_v7{SUFFIX}.json"), "w"))
     json.dump(dict(elements=ne, cases=names, boss_forces_N=dict(functional=np.round(N_fun, 2).tolist(), misuse=np.round(N_mis, 2).tolist()),
                    skin_only={k: base[k] for k in ("face_g", "util", "worst", "stress_MPa")}, sweep=sweep, chosen=r,
-                   wall_s=round(time.time() - t0)), open(os.path.join(RUN, "panel_opt_v7.json"), "w"), indent=1)
+                   wall_s=round(time.time() - t0)), open(os.path.join(RUN, f"panel_opt_v7{SUFFIX}.json"), "w"), indent=1)
     print(json.dumps({k: v for k, v in r.items() if k != "per_case"}, indent=1))
