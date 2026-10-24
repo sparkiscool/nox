@@ -857,12 +857,12 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
 
     def violation(f):
         if f is None: return np.inf
-        return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
+        return sum(max(r["worst"] / (IDX_LIM[r["cls"]] * HEAD[0]) - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
     for _ in range(300):                                                   # start: drop rods that attract load past a limit
         if fe is not None and feasible(fe): break
         v0 = violation(fe); best_ = None
         for r in fe or []:
-            if r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
+            if r["worst"] <= IDX_LIM[r["cls"]] * HEAD[0] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
             m = cur[r["el"]]
             g = next((g for g in groups if m in g), None)
             if g is None: continue
@@ -931,14 +931,14 @@ def warm_start(N, kind, members, path, cases, contact_ok, mandatory=(), max_add=
     cur = drop_bad(N, kind, [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or m in set(mandatory)]); n0 = len(cur)
     def violation(f):
         if f is None: return np.inf
-        return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
+        return sum(max(r["worst"] / (IDX_LIM[r["cls"]] * HEAD[0]) - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
     fe = frame_eval(N, kind, cur, cases); added = 0; mset = set(members)
     while not (feasible(fe) and contact_ok(cur)) and added < max_add:
         cdef = getattr(contact_ok, "deficit", lambda ms: 0.0 if contact_ok(ms) else 1.0)
         used = {i for m in cur for i in m}; v0 = violation(fe) + 0.05 * cdef(cur); best = None
         hot = set()                                                       # nodes of the failing cases: worst handling nodes, worst members
         for r in fe or []:
-            if r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
+            if r["worst"] <= IDX_LIM[r["cls"]] * HEAD[0] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
             if r.get("node_idx"): hot |= set(sorted(r["node_idx"], key=lambda i: -r["node_idx"][i])[:4])
             hot |= set(cur[r["el"]]) | set(F_i for F_i in r.get("loaded", ()))
         for m in members:
