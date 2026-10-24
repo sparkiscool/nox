@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (hub, Spark: "only use tokens when absolutely needed"): no timed 30 min digests; the hub messages Spark only for ready-to-print files or his decisions (`CLAUDE.md` Quiet workers, `docs/sessions.md` Reporting).
 - 24 Oct (box_system v2 coarse topology round 1, PR 96, run record): 3000 cm³ (3.84 kg generated, E) joins every bay and post (M; at 1500 only bays 30 / −210 join); top frame under the funnel, mast on the rear sheet, sheets carry the box (floor 12 cm², M); stub tilt 0.37 mrad (M). Not cut from: round 2 with the sheets as cladding. runs/box_system/v2/topo/summary.md.
 - 24 Oct (hub, Spark: "no need for that"): belt connector measurement dropped from the Spark list; swap arm heads A / B v5 HOLD, superseded by heads v7 (rack and pinion, no belt connector).
 - 24 Oct (box structure system session, box electronics): pack-out hold (catch PR 93, DEFAULT): latch never retracts with the pack out; aborts keep it OUT and K1 closed; A4 always holds (alt: drone bus voltage); A12 reads seat sense first; MATE_CHECK needs I > 100 mA during INSERT first. box-electronics.md.
