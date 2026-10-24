@@ -1,8 +1,34 @@
-"""Rule checks on the assembled model (Spark 24 Oct: system first, cage first, compact). One manifest lists every part
-in its assembled pose; the tool reports:
-  cage first  support functions over N Fibonacci directions: margin(d) = h_cage(d) - h_protected(d), h(d) = max v.d.
-              PASS if margin >= cage_margin_mm (3.0 DEFAULT) in every direction for every protected part; inside an
-              opening cone (axis + half-angle, the cartridge path, the head) that part only needs margin >= 0 (recessed).
+"""Rule checks on the assembled model (Spark 24 Oct: system first, cage first, compact, reachable). One manifest lists
+every part in its assembled pose; the tool reports:
+  cage first  flat walls: support functions over N Fibonacci directions: margin(d) = h_cage(d) - h_protected(d),
+              h(d) = max v.d. PASS if margin >= cage_margin_mm (3.0 DEFAULT) in every direction for every protected part;
+              inside an opening cone (axis + half-angle, the cartridge path, the head) that part only needs margin >= 0.
+  probes      crash probes, edges and posts that poke between cage members (default on with a cage and a protected
+              part): an edge probe is an infinite line (table edge, door frame), a post probe an infinite cylinder of
+              radius post_r_mm (10 DEFAULT; pole, branch). 500 Fibonacci probe axes (hemisphere) x 24 approach angles
+              round each (15 deg) = 12000 orientations, every lateral offset. Seen along the axis the line is a point and
+              the post a disc, so the first contact is solved in that plane: each role's surface points (vertices plus
+              edge samples every res_mm, 1.0 DEFAULT: a line first touches a mesh on an edge) are rasterised at res_mm,
+              the outline kept, the furthest point along the approach per 1.5 res lateral bin is the line's contact, the
+              post's is that profile dilated by a semicircle of radius r. margin = cage contact - part contact. PASS if
+              no protected part is met before the cage or with the cage ahead by < probe_margin_mm (0.0 DEFAULT; flat
+              walls keep their 3.0); "unshielded" = no cage member in that probe's path at all, always a FAIL (margin
+              then = minus the probe's reach past the cage envelope). An opening with "skip_probes": true exempts its
+              cone for its part. About 6 s on a 73k-triangle assembly, no decimation needed.
+  access      every path that must be reached (rule 2, without taking another part off): the tool swept from `from`
+              along `dir` for length_mm, intersected with every other part (manifold3d booleans, trimesh / voxel
+              fallback). PASS if each path's overlap <= access_tol_mm3 (0.5). Report: blocked by which part, mm^3.
+              tool {"type": "cylinder", "d"} | {"type": "box", "w", "h"(, "w_axis")} (a w x h section swept) | "part"
+              (the part's own mesh moved along the path: >= 20 steps, step <= half its depth along dir, unioned; only
+              what the move adds counts, the part's overlap at rest is the fit check's). The part itself is always
+              ignored; ignore lists the parts the tool may touch. from / dir are in the assembled frame ("frame": "part"
+              = the part's own frame). Examples:
+                {"name": "pack swap", "part": "pack", "dir": [1,0,0], "length_mm": 120, "tool": "part", "ignore": ["tray"]}
+                {"name": "XT60 unplug", "part": "xt60_f", "dir": [0,-1,0], "length_mm": 30, "tool": "part"}
+                {"name": "M3 key, arm bolt", "part": "hub", "from": [32,0,6], "dir": [0,0,1], "length_mm": 70,
+                 "tool": {"type": "cylinder", "d": 4}}            (d 8 for a driver shaft)
+                {"name": "FC USB-C", "part": "fc", "from": [15,0,4], "dir": [1,0,0], "length_mm": 35,
+                 "tool": {"type": "box", "w": 12, "h": 7}}
   compact     assembled AABB volume (L), extents (mm), largest extent, convex hull volume (L), guard offsets (reported).
   fit         pairwise interference volume (mm^3, manifold3d booleans, trimesh / voxel fallback). PASS if every pair
               <= fit_tol_mm3 (0.5), a contact_pairs entry [a, b, allowed_mm3] lifts that pair's limit. Minimum clearance
@@ -11,21 +37,30 @@ in its assembled pose; the tool reports:
               give mass_g. Whole mass and CG. Balance (Spark 24 Oct, CG in the middle): with cg_ref (the thrust centre)
               the CG offset normal to thrust_axis (+z) must be <= cg_tol_mm (3.0 DEFAULT), with and without the parts
               marked "swap": true (pack, cartridge), so a swap does not move the CG off the axis.
-Cage first, fit and balance gate (exit 1); everything else is reported. Tags: C manifest geometry / mass, M mesh-derived,
-E when any input part is tagged E, P measured.
-Limits: a support function sees each role's convex hull, so it models flat walls only: a post or edge poking between
-cage members, or a protected part inside a concave pocket of the cage, is not seen. Clearance is sampled (surface points).
+  budget      mass_budget_g (whole system) and per-part budget_g (dimensions.md L "Mass budget"): FAIL when exceeded;
+              the System line reads "mass <g> of <budget> g (<pct> %)".
+Cage first, probes, access, fit, balance and mass budget gate (exit 1); everything else is reported. Tags: C manifest
+geometry / mass, M mesh-derived, E when any input part is tagged E, P measured.
+Limits: flat walls see each role's convex hull (a protected part in a concave pocket of the cage is seen only by the
+probes). Probes are infinite lines and cylinders: a short stub or a corner poking through a cage window is not modelled,
+a closed cage window stops every probe; resolution res_mm (contact +-0.7 res, a cage gap narrower than 1.5 res is not
+seen by the edge probe); 24 approach angles per axis. Only role "cage" shields: a frame or plate that is not cage does
+not count. Access paths are straight lines (no tilt or two-step moves); a "part" sweep is sampled. Clearance is sampled.
 
-python3 system_check.py manifest.json [--out runs/<sys>/<ver>/system_check.json] [--report] [--dirs 2000]
-from system_check import run; res = run(manifest_dict_or_path); res["summary"], res["pass"]
+python3 system_check.py manifest.json [--out runs/<sys>/<ver>/system_check.json] [--report] [--dirs 2000] [--no-probes]
+from system_check import run; res = run(manifest_dict_or_path[, probes=False | {settings}]); res["summary"], res["pass"]
 
 Manifest: {"name", "parts": [{"name", "mesh": path (STL/OBJ/PLY, relative to the manifest, cwd or repo root)
   | "box": [x0,x1,y0,y1,z0,z1] | "cylinder": {"r", "p0", "p1"} or {"r", "h", "center", "axis"} | "sphere": {"r", "center"},
   "pose": 4x4 | {"t": [x,y,z], "rpy_deg": [r,p,y]} (R = Rz(y) Ry(p) Rx(r)), "role": cage|protected|structure|bought,
-  "protect": true (any role), "material", "mass_g", "tag": M|C|E|P, "cg": [x,y,z] in part frame (optional), "swap": true (optional)}],
-  "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0}],
+  "protect": true (any role), "material", "mass_g", "budget_g", "tag": M|C|E|P, "cg": [x,y,z] in part frame (optional),
+  "swap": true (optional)}],
+  "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0, "skip_probes": false}],
   "contact_pairs": [[a, b, allowed_mm3]], "clearance_pairs": [[a, b, min_mm]], "guard_offsets": {name: mm},
-  "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000}. From Python a part may carry "trimesh": <Trimesh>."""
+  "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
+  "probes": true | false | {"edge": true, "post": true, "post_r_mm": 10 or [radii], "n_dirs": 500, "n_roll": 24, "res_mm": 1.0},
+  "probe_margin_mm": 0.0, "access": [paths as above], "access_tol_mm3": 0.5, "mass_budget_g": g}.
+From Python a part may carry "trimesh": <Trimesh>."""
 import sys, os, json, argparse, numpy as np, trimesh
 
 DENSITY = {"petg": 1.27, "tpu": 1.21, "carbon": 1.6, "carbon rod": 1.6, "cf": 1.6}   # g/cm^3
@@ -240,8 +275,216 @@ def balance(rows, ref, axis, tol):
                 worst_horizontal_mm=out[w]["horizontal_mm"], pass_=all(c["pass_"] for c in out.values()))
 
 
+# ---------- access (rule 2: reachable without taking another part off)
+def _unit(v):
+    v = np.asarray(v, float); n = np.linalg.norm(v); assert n > 0, "zero direction"; return v / n
+
+
+def _perp(d, hint=None):
+    """unit vector normal to d: the hint made normal to d, else world z made normal to d (x if d is along z)."""
+    for h in ([hint] if hint is not None else []) + [[0, 0, 1], [1, 0, 0]]:
+        h = np.asarray(h, float); u = h - (h @ d) * d
+        if np.linalg.norm(u) > 1e-6: return u / np.linalg.norm(u)
+
+
+def _vol_and(a, b, ma=None, mb=None):
+    """intersection volume of two meshes (manifold3d, trimesh, voxel fallback) -> (mm^3, method)."""
+    lo = np.maximum(a.bounds[0], b.bounds[0]); hi = np.minimum(a.bounds[1], b.bounds[1])
+    if np.any(hi <= lo): return 0.0, "aabb"
+    try:
+        return float(((ma or _manifold(a)) ^ (mb or _manifold(b))).volume()), "manifold3d"
+    except Exception:
+        pass
+    try:
+        return float(trimesh.boolean.intersection([a, b]).volume), "trimesh"
+    except Exception:
+        return _voxel_overlap(a, b, lo, hi), "voxel"
+
+
+def sweep_tool(path, part_mesh, part_pose):
+    """swept solid of an access path -> (trimesh, manifold or None, n_steps, dir).
+    cylinder {d}: a cylinder of diameter d from `from` along dir for length_mm; box {w, h(, w_axis)}: a w x h section
+    (w along w_axis made normal to dir, default world z made normal to dir) extruded the same way; "part": the part's
+    own mesh moved 0..length_mm along dir, sampled in n steps (>= 20, step <= half the part's depth along dir, <= 200)
+    and unioned (manifold3d)."""
+    d = _unit(path["dir"]); L = float(path["length_mm"]); tool = path.get("tool", "part")
+    f = path.get("from")
+    if path.get("frame") == "part":                                   # from / dir given in the part frame
+        d = _unit(part_pose[:3, :3] @ d)
+        if f is not None: f = (part_pose @ np.r_[np.asarray(f, float), 1])[:3]
+    f = None if f is None else np.asarray(f, float)
+    if tool == "part" or (isinstance(tool, dict) and tool.get("type") == "part"):
+        dep = float(np.ptp(part_mesh.vertices @ d)) or 1.0
+        n = int(min(200, max(20, np.ceil(L / (0.5 * dep)))))
+        ts = np.linspace(0, L, n + 1)
+        try:
+            import manifold3d as M3
+            base = _manifold(part_mesh)
+            u = M3.Manifold.batch_boolean([base.translate(tuple(float(x) for x in t * d)) for t in ts], M3.OpType.Add)
+            o = u.to_mesh(); m = trimesh.Trimesh(np.asarray(o.vert_properties)[:, :3], np.asarray(o.tri_verts), process=False)
+            return m, u, n, d
+        except Exception:
+            return trimesh.util.concatenate([part_mesh.copy().apply_translation(t * d) for t in ts]), None, n, d
+    assert f is not None, f"access {path.get('name')}: a cylinder or box tool needs `from`"
+    if tool.get("type") == "cylinder":
+        m = trimesh.creation.cylinder(radius=float(tool["d"]) / 2, segment=[f, f + d * L], sections=48)
+    elif tool.get("type") == "box":
+        u = _perp(d, tool.get("w_axis")); v = np.cross(d, u)
+        m = trimesh.creation.box([float(tool["w"]), float(tool["h"]), L])
+        T = np.eye(4); T[:3, :3] = np.stack([u, v, d], 1); T[:3, 3] = f + d * L / 2; m.apply_transform(T)
+    else:
+        raise ValueError(f"access {path.get('name')}: tool must be cylinder, box or part")
+    try: mm = _manifold(m)
+    except Exception: mm = None
+    return m, mm, 1, d
+
+
+def access(parts, meshes, paths, tol):
+    """every path's swept tool against every other part. A "part" sweep counts only what its moves add (the sweep's
+    overlap minus the part's own overlap at rest, which is the fit check's)."""
+    if not paths: return dict(applies=False, pass_=True, paths=[])
+    idx = {p["name"]: i for i, p in enumerate(parts)}; cache = {}; out = []
+    def man(i):
+        if i not in cache:
+            try: cache[i] = _manifold(meshes[i])
+            except Exception: cache[i] = None
+        return cache[i]
+    for k, pth in enumerate(paths):
+        nm = pth.get("name", f"path{k}"); pi = idx[pth["part"]]; tool = pth.get("tool", "part")
+        sw, swm, n, d = sweep_tool(pth, meshes[pi], pose_matrix(parts[pi].get("pose")))
+        is_part = not isinstance(tool, dict) or tool.get("type") == "part"
+        ign = set(pth.get("ignore", [])) | {pth["part"]}
+        bl = []
+        for j, p in enumerate(parts):
+            if p["name"] in ign: continue
+            v, how = _vol_and(sw, meshes[j], swm, man(j))
+            if is_part and v > 1e-6:
+                v0, _ = _vol_and(meshes[pi], meshes[j], man(pi), man(j)); v = max(0.0, v - v0)
+            if v > 1e-6: bl.append(dict(part=p["name"], overlap_mm3=round(v, 2), method=how))
+        bl.sort(key=lambda b: -b["overlap_mm3"])
+        worst = bl[0]["overlap_mm3"] if bl else 0.0
+        out.append(dict(name=nm, part=pth["part"], tool=tool if isinstance(tool, str) else dict(tool), dir=np.round(d, 4).tolist(),
+                        length_mm=float(pth["length_mm"]), steps=n, blocked_by=[b for b in bl if b["overlap_mm3"] > tol],
+                        touches=bl, overlap_mm3=worst, pass_=bool(worst <= tol)))
+    bad = [p for p in out if not p["pass_"]]
+    return dict(applies=True, pass_=not bad, tol_mm3=tol, paths=out, n_clear=len(out) - len(bad),
+                worst=max(out, key=lambda p: p["overlap_mm3"]))
+
+
+# ---------- crash probes (rule 3 against edges and posts, not only flat walls)
+def surface_points(m, spacing):
+    """vertices plus points every <= spacing along every edge (a line's first contact with a mesh lies on an edge),
+    thinned to one per spacing/2 voxel."""
+    V = np.asarray(m.vertices, float); E = m.edges_unique; a, b = V[E[:, 0]], V[E[:, 1]]
+    n = np.ceil(np.linalg.norm(b - a, axis=1) / spacing).astype(int); lg = np.nonzero(n > 1)[0]
+    reps = n[lg] - 1; ix = np.repeat(lg, reps)
+    t = (np.arange(reps.sum()) - np.repeat(np.cumsum(reps) - reps, reps) + 1) / np.repeat(n[lg], reps)
+    P = np.vstack([V, a[ix] + (b[ix] - a[ix]) * t[:, None]])
+    _, u = np.unique(np.floor(P / (0.5 * spacing)).astype(np.int64), axis=0, return_index=True)
+    return P[u]
+
+
+def _hemi(n):
+    D = fib_dirs(2 * n); return D[D[:, 2] >= 0][:n]
+
+
+def crash_probes(parts, meshes, cfg, req_mm, openings):
+    """Edge probe: an infinite line (table edge, door frame); post probe: an infinite cylinder of radius r (pole,
+    branch). Each probe axis e (n_dirs Fibonacci axes over the hemisphere) meets the drone from n_roll approach
+    directions d normal to e, at every lateral offset. Seen along e the line is a point and the post a disc, so the
+    contact is solved in the plane normal to e: the cage's and each protected part's surface points (edge samples)
+    are rasterised at res_mm, the outline pixels kept, and for each d the furthest point along d per lateral bin
+    (1.5 res wide) is the line's first contact; the post's is that profile dilated by a semicircle of radius r.
+    margin = cage contact - part contact (mm along d). FAIL if a protected part is met before the cage, ahead by less
+    than probe_margin_mm, or with no cage member in that probe's path at all ("unshielded": the margin is then minus
+    the probe's reach past the cage envelope). An opening with "skip_probes": true exempts its cone for its part."""
+    cage = [i for i, p in enumerate(parts) if p.get("role") == "cage"]
+    prot = [i for i, p in enumerate(parts) if p.get("role") == "protected" or p.get("protect")]
+    if not prot or not cage: return dict(applies=False, pass_=True)
+    cfg = {} if cfg is True else dict(cfg)
+    res = float(cfg.get("res_mm", 1.0)); n_ax = int(cfg.get("n_dirs", 500)); n_th = int(cfg.get("n_roll", 24))
+    radii = ([0.0] if cfg.get("edge", True) else []) + ([float(r) for r in np.atleast_1d(cfg.get("post_r_mm", 10.0))] if cfg.get("post", True) else [])
+    pts = [np.vstack([surface_points(meshes[i], res) for i in cage])] + [surface_points(meshes[i], res) for i in prot]
+    allp = np.vstack(pts); c0 = (allp.min(0) + allp.max(0)) / 2; pts = [p - c0 for p in pts]
+    R = float(np.linalg.norm(allp - c0, axis=1).max()) + 2 * res
+    bw = 1.5 * res; nb = int(np.ceil(2 * R / bw)) + 2; nro = len(pts)
+    th = np.arange(n_th) * 2 * np.pi / n_th; Dm = np.stack([np.cos(th), np.sin(th)]); Lm = np.stack([-np.sin(th), np.cos(th)])
+    cut = np.cumsum([0] + [len(p) for p in pts]); P = np.vstack(pts)
+    axes = _hemi(n_ax); names = [parts[i]["name"] for i in prot]
+    skip = [[o for o in openings if o.get("skip_probes") and o.get("part") in (None, nm)] for nm in names]
+    K = {r: np.arange(-int(np.ceil(r / bw)), int(np.ceil(r / bw)) + 1) for r in radii}
+    worst = {(r, j): (np.inf, None) for r in radii for j in range(len(prot))}
+    for e in axes:
+        a1 = _perp(e); a2 = np.cross(e, a1)
+        ij = np.floor((P @ np.stack([a1, a2], 1) + R) / res).astype(np.int64)
+        B = []; Br = []
+        for k in range(nro):                                                         # outline pixels of each role
+            s = ij[cut[k]:cut[k + 1]]; lo = s.min(0) - 1; s = s - lo; n0, n1 = s.max(0) + 2
+            g = np.zeros((n0, n1), bool); g[s[:, 0], s[:, 1]] = True
+            inn = np.zeros_like(g); inn[1:-1, 1:-1] = g[1:-1, 1:-1] & g[:-2, 1:-1] & g[2:, 1:-1] & g[1:-1, :-2] & g[1:-1, 2:]
+            q = np.argwhere(g & ~inn) + lo; B.append((q + 0.5) * res - R); Br.append(np.full(len(q), k))
+        nc = len(B[0]); B = np.vstack(B); Br = np.concatenate(Br)
+        S = B @ Dm; W = np.floor((B @ Lm + R) / bw).astype(np.int64)
+        key = (Br[:, None] * n_th + np.arange(n_th)[None, :]) * nb + W
+        prof = np.full(nro * n_th * nb, -np.inf); np.maximum.at(prof, key.ravel(), S.ravel()); prof = prof.reshape(nro, n_th, nb)
+        dv = np.cos(th)[:, None] * a1 + np.sin(th)[:, None] * a2                    # approach dirs in 3D
+        hull = S[:nc].max(0)                                                         # cage support along each d
+        for r in radii:
+            if r > 0:
+                pr = np.full_like(prof, -np.inf)
+                for kk in K[r]:
+                    add = np.sqrt(max(r * r - (kk * bw) ** 2, 0.0))
+                    dst = pr[:, :, max(0, -kk):nb - max(0, kk)]; np.maximum(dst, prof[:, :, max(0, kk):nb + min(0, kk)] + add, out=dst)
+            else:
+                pr = prof
+            hc = pr[0]; shield = np.isfinite(hc)
+            for j in range(len(prot)):
+                hp = pr[j + 1]; has = np.isfinite(hp)
+                if not has.any(): continue
+                with np.errstate(invalid="ignore"):
+                    mg = np.where(shield, hc - hp, -np.abs(hull[:, None] + r - hp))
+                mg = np.where(has, mg, np.inf)
+                for o in skip[j]:
+                    mg[dv @ _unit(o["axis"]) >= np.cos(np.radians(o["half_angle_deg"]))] = np.inf
+                sc = np.where(has & ~shield, -1e6 - mg, mg)                         # unshielded first, least reach (most exposed) first
+                t = np.unravel_index(int(np.argmin(sc)), sc.shape)
+                if sc[t] < worst[(r, j)][0]:
+                    worst[(r, j)] = (float(sc[t]), dict(axis=e, dir=dv[t[0]], roll=float(np.degrees(th[t[0]])), w=(t[1] + 0.5) * bw - R,
+                                                         margin=float(mg[t]), unshielded=bool(not shield[t])))
+    rows = []
+    for (r, j), (sc, w) in worst.items():
+        if w is None: continue
+        d = w["dir"]; Pp = pts[j + 1]; u = np.cross(w["axis"], d); u /= np.linalg.norm(u)
+        lw = Pp @ u; sel = np.abs(lw - w["w"]) <= r + bw                            # contact point on the part
+        reach = Pp @ d + (np.sqrt(np.maximum(r * r - (lw - w["w"]) ** 2, 0)) if r > 0 else 0)
+        cp = Pp[np.argmax(np.where(sel, reach, -np.inf))] + c0 if sel.any() else None
+        ok = (not w["unshielded"]) and w["margin"] >= req_mm - 1e-9
+        rows.append(dict(probe="edge" if r == 0 else f"post r{r:g}", r_mm=r, part=names[j], margin_mm=round(w["margin"], 2),
+                         unshielded=w["unshielded"], dir=np.round(d, 3).tolist(), dir_label=dir_label(d), axis=np.round(w["axis"], 3).tolist(),
+                         roll_deg=round(w["roll"], 1), lateral_mm=round(float(w["w"]), 1),
+                         contact=None if cp is None else np.round(cp, 1).tolist(), pass_=bool(ok)))
+    rows.sort(key=lambda x: (x["pass_"], not x["unshielded"], -x["margin_mm"] if x["unshielded"] else x["margin_mm"]))
+    return dict(applies=True, pass_=all(x["pass_"] for x in rows), probe_margin_mm=req_mm, worst=rows[0] if rows else None,
+                per_probe_part=rows, n_axes=len(axes), n_roll=n_th, orientations=len(axes) * n_th, res_mm=res, bin_mm=bw,
+                radii_mm=radii, n_points=int(len(P)))
+
+
+# ---------- mass budget
+def mass_budget(parts, rows, total_budget):
+    per = {p["name"]: float(p["budget_g"]) for p in parts if p.get("budget_g") is not None}
+    if total_budget is None and not per: return dict(applies=False, pass_=True)
+    over = [dict(name=r["name"], mass_g=r["mass_g"], budget_g=per[r["name"]]) for r in rows
+            if r["name"] in per and r["mass_g"] > per[r["name"]] + 1e-9]
+    tot = sum(r["mass_g"] for r in rows); out = dict(applies=True, mass_g=round(tot, 2), part_budgets_g=per, over_parts=over)
+    if total_budget is not None:
+        out.update(budget_g=float(total_budget), pct=round(100 * tot / float(total_budget), 1), total_ok=bool(tot <= float(total_budget) + 1e-9))
+    out["pass_"] = bool(out.get("total_ok", True) and not over)
+    return out
+
+
 # ---------- run
-def run(manifest, n_dirs=None):
+def run(manifest, n_dirs=None, probes=None):
+    """probes: None = the manifest's `probes` (default on with a cage), False = skip, dict = override settings."""
     base = "."
     if isinstance(manifest, str):
         base = os.path.dirname(os.path.abspath(manifest)); manifest = json.load(open(manifest))
@@ -254,8 +497,13 @@ def run(manifest, n_dirs=None):
     cf = cage_first(parts, meshes, manifest.get("openings", []), cm, n)
     cp = compact(meshes, manifest.get("guard_offsets"))
     ft = fit(parts, meshes, manifest.get("contact_pairs", []), float(manifest.get("fit_tol_mm3", 0.5)), manifest.get("clearance_pairs", []))
+    pc = manifest.get("probes", True) if probes is None else probes
+    pr = (crash_probes(parts, meshes, pc, float(manifest.get("probe_margin_mm", 0.0)), manifest.get("openings", []))
+          if pc else dict(applies=False, pass_=True, skipped=True))
+    ac = access(parts, meshes, manifest.get("access", []), float(manifest.get("access_tol_mm3", 0.5)))
     mc = mass_cg(parts, meshes)
     if anyE: mc["tag"] = "E"
+    mb = mass_budget(parts, mc["parts"], manifest.get("mass_budget_g"))
     ref = manifest.get("cg_ref")
     if ref is not None:
         off = np.asarray(mc["cg"]) - np.asarray(ref, float)
@@ -277,11 +525,30 @@ def run(manifest, n_dirs=None):
                + (f", {ns['horizontal_mm']:.1f} mm without swap parts" if ns else "") + ("" if bal["pass_"] else f" FAIL (tol {bal['tol_mm']:g})"))
     else:
         cgs = f"CG [{', '.join(f'{x:.1f}' for x in mc['cg'])}] ({mc['tag']}, no cg_ref)"
+    fmt = lambda g: f"{g:.{0 if g >= 100 else 1}f}"
+    if mb["applies"] and "budget_g" in mb:
+        ms = f"mass {fmt(mc['mass_g'])} of {mb['budget_g']:g} g ({mb['pct']:.0f} %) ({mc['tag']})"
+    else:
+        ms = f"mass {fmt(mc['mass_g'])} g ({mc['tag']})"
+    if mb["applies"] and not mb["pass_"]:
+        ov = ", ".join("%s %s of %g g" % (o["name"], fmt(o["mass_g"]), o["budget_g"]) for o in mb["over_parts"])
+        ms += " FAIL" + (f" ({ov})" if ov else "")
+    pw = pr.get("worst")
+    if not pr["applies"]: prs = ""
+    elif pw is None: prs = ", probes n/a"
+    else:
+        prs = (f", probes {pw['margin_mm']:.1f} mm ({gtag}) {pw['probe']} at {pw['dir_label']} ({pw['part']}"
+               + (", unshielded" if pw["unshielded"] else "") + ")" + ("" if pr["pass_"] else " FAIL"))
+    if not ac["applies"]: acs = ""
+    else:
+        bad = [p for p in ac["paths"] if not p["pass_"]]
+        acs = f", access {ac['n_clear']}/{len(ac['paths'])} clear" + (
+            " (" + "; ".join(f"{p['name']} blocked by {', '.join(b['part'] for b in p['blocked_by'])} {p['overlap_mm3']:.0f} mm³" for p in bad) + ") FAIL" if bad else "")
     summary = (f"System: {name}, {cfs}, {fts}, bbox {cp['bbox_L']:.3g} L ({gtag}), extents {ex[0]:.0f} x {ex[1]:.0f} x {ex[2]:.0f} mm ({gtag}), "
-               f"mass {mc['mass_g']:.{0 if mc['mass_g'] >= 100 else 1}f} g ({mc['tag']}), {cgs}")
-    ok = bool(cf["pass_"] and ft["pass_"] and bal["pass_"])
-    return dict(name=name, pass_=ok, cage_first=cf, compact=cp, fit=ft, mass_cg=mc, balance=bal,
-                geometry_tag=gtag, summary=summary, **{"pass": ok})
+               f"{ms}, {cgs}{prs}{acs}")
+    ok = bool(cf["pass_"] and ft["pass_"] and bal["pass_"] and pr["pass_"] and ac["pass_"] and mb["pass_"])
+    return dict(name=name, pass_=ok, cage_first=cf, compact=cp, fit=ft, mass_cg=mc, balance=bal, probes=pr, access=ac,
+                mass_budget=mb, geometry_tag=gtag, summary=summary, **{"pass": ok})
 
 
 def report(res):
@@ -312,6 +579,26 @@ def report(res):
             L.append(f"    {k}: {c['horizontal_mm']} mm horizontal, {c['axial_mm']} mm axial, {c['mass_g']} g{'' if c['pass_'] else ' FAIL'}")
     else:
         L.append("  balance: n/a (no cg_ref)")
+    mb = res["mass_budget"]
+    if mb["applies"]:
+        L.append(f"  mass budget {'PASS' if mb['pass_'] else 'FAIL'}: {mb['mass_g']} g" + (f" of {mb['budget_g']} g ({mb['pct']} %)" if "budget_g" in mb else "")
+                 + "".join(f"; {o['name']} {o['mass_g']} of {o['budget_g']} g OVER" for o in mb["over_parts"]))
+    pr = res["probes"]
+    if pr["applies"]:
+        L.append(f"  crash probes {'PASS' if pr['pass_'] else 'FAIL'} (cage ahead >= {pr['probe_margin_mm']} mm; {pr['n_axes']} axes x {pr['n_roll']} approach "
+                 f"angles, res {pr['res_mm']} mm, bins {pr['bin_mm']} mm, {pr['n_points']} surface points):")
+        for r in pr["per_probe_part"]:
+            L.append(f"    {r['probe']} / {r['part']}: {r['margin_mm']} mm ({t}) from {r['dir_label']}, axis {r['axis']}, roll {r['roll_deg']}, "
+                     f"lateral {r['lateral_mm']} mm, contact {r['contact']}{' unshielded' if r['unshielded'] else ''}{'' if r['pass_'] else ' FAIL'}")
+    else:
+        L.append("  crash probes: " + ("skipped" if pr.get("skipped") else "n/a (no cage or no protected part)"))
+    ac = res["access"]
+    if ac["applies"]:
+        L.append(f"  access {'PASS' if ac['pass_'] else 'FAIL'} (swept tool overlap <= {ac['tol_mm3']} mm³):")
+        for p in ac["paths"]:
+            tl = p["tool"] if isinstance(p["tool"], str) else ", ".join(f"{k} {v}" for k, v in p["tool"].items())
+            L.append(f"    {p['name']} ({p['part']}, {tl}, {p['length_mm']:g} mm along {p['dir']}): {p['overlap_mm3']} mm³ ({t})"
+                     + ("".join(f"; {b['part']} {b['overlap_mm3']} mm³" for b in p["touches"])) + ("" if p["pass_"] else " BLOCKED"))
     L.append(res["summary"])
     return "\n".join(L)
 
@@ -320,8 +607,9 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description="cage first, compact, fit, mass/CG on an assembled manifest")
     ap.add_argument("manifest"); ap.add_argument("--out"); ap.add_argument("--report", action="store_true", help="report only, exit 0")
     ap.add_argument("--dirs", type=int, default=None)
+    ap.add_argument("--no-probes", action="store_true", help="skip the edge / post crash probes")
     a = ap.parse_args(argv)
-    res = run(a.manifest, n_dirs=a.dirs)
+    res = run(a.manifest, n_dirs=a.dirs, probes=False if a.no_probes else None)
     print(report(res))
     if a.out:
         os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)

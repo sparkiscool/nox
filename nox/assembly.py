@@ -22,7 +22,7 @@ Python:
 CLI:
     python3 nox/assembly.py <file> [--list] [--check] [--report] [--out check.json] [--dirs N] [--glb out.glb]
                                    [--stl out.stl] [--html out.html]
---check prints the system_check report and exits 1 on a gate FAIL (cage first, fit, balance) unless --report.
+--check prints the system_check report and exits 1 on a gate FAIL (cage first, probes, access, fit, balance, mass budget) unless --report.
 """
 import copy, importlib, importlib.util, json, os, sys
 import numpy as np, trimesh
