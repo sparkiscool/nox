@@ -1,0 +1,114 @@
+=== scan_stick_base: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+scan_stick_base: grid (64, 48, 104) h 2.0 = 319,488 cells; design 114,512 (916.1 cm3), drawn 26,793, void 178,183
+  support default: 2068 cells, 2952 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_base: grid (32, 24, 56) h 4.0 = 43,008 cells; design 15,475 (990.4 cm3), drawn 3,395, void 24,138
+  support default: 276 cells, 532 nodes
+  load unit 25 g 0: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 0: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 1: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 1: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 1: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 1: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 2: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 2: no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 2: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 2: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 3: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 3: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 3: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 4: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 4: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 4: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 4: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 5: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 5: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 6: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 6: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 6: no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 7: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 7: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 7: no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 8: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 8: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 9: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 9: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 10: no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 10: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 10: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 10: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 10: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 11: no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 25 g 11: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 11: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 11: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 12: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 13: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 13: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 25 g 13: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 0: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 0: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 50 g 1: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 1: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 2: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 2: no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 50 g 2: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 2: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 3: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 50 g 3: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 3: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 4: no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 4: no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load unit 50 g 4: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 4: no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 5: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load unit 50 g 5: no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit front 100 N (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit +y 100 N (joint): no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load L2 hit +y 100 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit +y 100 N (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit -y 100 N (joint): no cell centre in the region at h 4.0; using the 2 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit -y 100 N (joint): no cell centre in the region at h 4.0; using the 15 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load L2 hit -y 100 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 hit -y 100 N (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 drop -z 150 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load L2 drop -z 150 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit +y 50 N (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load camera hit above 50 N (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump front 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it touches (the region lies in the void boundary cells; their part-cell neighbours)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump +y 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 6 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+  load cage bump top 100 N (module share) (joint): no cell centre in the region at h 4.0; using the 4 cells it intersects (3 x 3 x 3 samples per cell)
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (212.93 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.040 of 15,543 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (1.1% of passive cells differ): no symmetry
+layout: 2 drawn bodies (3,327 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (32, 24, 56) = 43,008 elements, 71,469 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0571 (dil 0.0695 g +0.443) grey 14.9% ch 0.100 worst tie b2 my 3.02e+04 2.6s
+it   2 beta    1 J   1.6384 vol 0.0368 (dil 0.0443 g -0.080) grey 19.1% ch 0.100 worst L2 hit -y 100 N (joint) 5.02e+03 2.6s
+it   3 beta    1 J   1.6323 vol 0.0387 (dil 0.0464 g -0.036) grey 19.9% ch 0.100 worst L2 hit -y 100 N (joint) 5.02e+03 2.6s
+it   4 beta    1 J   1.6321 vol 0.0400 (dil 0.0480 g -0.004) grey 20.2% ch 0.100 worst L2 hit -y 100 N (joint) 5.02e+03 2.4s
+it   5 beta    1 J   1.6313 vol 0.0399 (dil 0.0478 g -0.007) grey 20.1% ch 0.100 worst L2 hit -y 100 N (joint) 5.02e+03 2.7s
+it   6 beta    1 J   1.6287 vol 0.0399 (dil 0.0477 g -0.004) grey 19.9% ch 0.100 worst L2 hit -y 100 N (joint) 5.01e+03 2.5s
+it   7 beta    1 J   1.6153 vol 0.0397 (dil 0.0474 g -0.010) grey 19.3% ch 0.100 worst L2 hit -y 100 N (joint) 4.97e+03 2.5s
+it   8 beta    1 J   1.4348 vol 0.0394 (dil 0.0471 g -0.016) grey 19.0% ch 0.100 worst L2 hit -y 100 N (joint) 4.41e+03 2.5s
+it   9 beta    1 J   0.8229 vol 0.0393 (dil 0.0469 g -0.021) grey 19.0% ch 0.100 worst switch panel push 50 N 2.44e+03 2.6s
+it  10 beta    1 J   1.4350 vol 0.0387 (dil 0.0462 g -0.036) grey 18.6% ch 0.100 worst L2 hit -y 100 N (joint) 4.41e+03 2.4s
