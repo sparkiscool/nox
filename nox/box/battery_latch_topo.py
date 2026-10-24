@@ -10,10 +10,10 @@ path (with its lead-in capture) or over the pack between the stop pads above the
 
 Supports: the four boss tops (the mount plane: drone belly frame, Overseer sled or bay body).
 Loads (dimensions L at the swap CG, cartridge coords, Scout 210.9 g / Overseer 747.5 g swap mass, E):
-  pull-out (hover 1 g, flight 4 g + 2 g x, catch 6 g, crash 35 g -y, crash corner 35 g (x, -y, z)/sqrt3): the bolts bear
+  pull-out (hover 1 g, flight 4 g + 2 g x, catch 6 g, crash -y, crash corner (x, -y, z)/sqrt3; crash = CRASH_G): the bolts bear
   on the pocket floors (-y; the corner's x on the locating pads, z on an end pad);
-  crash 35 g +y and swap insert (60 N: 45 on the XT60 lid seat, 15 on the stop pads): +y on the stop seats / XT60 seat;
-  crash 35 g +-x: the rails on one side's locating pads; crash 35 g +-z: an end pad;
+  crash +y and swap insert (60 N: 45 on the XT60 lid seat, 15 on the stop pads): +y on the stop seats / XT60 seat;
+  crash +-x: the rails on one side's locating pads; crash +-z: an end pad;
   swap pull 50 N: 45 N -y on the XT60 pull lips (bolts retracted, the head holds the cartridge).
 
 python3 nox/box/battery_latch_topo.py scout|overseer [--h 1.0] [--gen 14] [--out runs/battery_latch_receiver_topo/<pack>-v1] [--git]
@@ -33,6 +33,9 @@ ENV_X = 7.0                        # envelope half width past the locating face
 STN = 10.0                         # station length in z (locating pads, feet, stop seats)
 BOSS_D = 12.0
 G0 = 9.81
+CRASH_G = {"scout": 15.3, "overseer": 35.0}   # Scout (Spark / Scout v3 24 Oct): the cage's TPU suspension gives above
+                                             # ~110 N, so the core decelerates at ~110 N / 0.72 kg = 15.3 g (E); the
+                                             # Overseer stays on dimensions L (35 g) until its own pass
 
 
 def stations(r):
@@ -113,6 +116,7 @@ def add_cases(p, Q, h, reg=lambda m: m):
                     (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) + 1.0) for (bx, bz) in r["MOUNT"]])
     p.support("default", reg(seats))
     W = g["SWAP_M"] / 1000 * G0
+    cg = CRASH_G[g["pack"]]
     pk = U(*D["pocket"])
     floors = U(*[box(*sorted((s * r["RF"], s * (r["RF"] + r["PK_D"]))), r["PK_Y0"] - 1.5, r["PK_Y0"],
                      r["Z_T"] - r["PK_HZ"], r["Z_T"] + r["PK_HZ"]) for s in (-1, 1)]) ^ pk
@@ -124,13 +128,13 @@ def add_cases(p, Q, h, reg=lambda m: m):
     p.load("hover 1 g", floors, (0, -W, 0), cls=fn)
     p.load_multi("flight 4 g + 2 g x", [(floors, (0, -4 * W, 0)), (locp, (2 * W, 0, 0))], cls=fn)
     p.load("catch 6 g", floors, (0, -6 * W, 0), cls=fn)
-    p.load("crash 35 g -y", floors, (0, -35 * W, 0))
-    p.load("crash 35 g +y", stop, (0, 35 * W, 0))
-    p.load("crash 35 g +x", locp, (35 * W, 0, 0))
-    p.load("crash 35 g -x", locn, (-35 * W, 0, 0))
-    p.load("crash 35 g +z", end1, (0, 0, 35 * W))
-    p.load("crash 35 g -z", end0, (0, 0, -35 * W))
-    c = 35 * W / math.sqrt(3)
+    p.load("crash -y", floors, (0, -cg * W, 0))
+    p.load("crash +y", stop, (0, cg * W, 0))
+    p.load("crash +x", locp, (cg * W, 0, 0))
+    p.load("crash -x", locn, (-cg * W, 0, 0))
+    p.load("crash +z", end1, (0, 0, cg * W))
+    p.load("crash -z", end0, (0, 0, -cg * W))
+    c = cg * W / math.sqrt(3)
     p.load_multi("crash corner (+x -y +z)", [(floors, (0, -c, 0)), (locp, (c, 0, 0)), (end1, (0, 0, c))])
     p.load_multi("crash corner (-x -y -z)", [(floors, (0, -c, 0)), (locn, (-c, 0, 0)), (end0, (0, 0, -c))])
     p.load_multi("swap insert 60 N", [(lips, (0, 45.0, 0)), (stop, (0, 15.0, 0))], cls=fn)

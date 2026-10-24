@@ -1,0 +1,167 @@
+{
+ "system": "catch: seated drone + 8 wheels + collar + 4 hook latches + cartridge push",
+ "cases": {
+  "insert 60 N": {
+   "at": [
+    -41.5,
+    -19.0,
+    -41.1
+   ],
+   "plunger_max_N": 28.28,
+   "plungers_N": [
+    10.68,
+    28.28,
+    28.28,
+    17.92
+   ],
+   "face_wheel_max_N": 7.24,
+   "residual_N": 0.0
+  },
+  "pull 50 N": {
+   "at": [
+    -41.5,
+    -19.0,
+    -41.1
+   ],
+   "plunger_max_N": 1.71,
+   "plungers_N": [
+    1.71,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "face_wheel_max_N": 17.04,
+   "residual_N": 0.0
+  },
+  "hand lift 100 N at a corner": {
+   "at": [
+    112,
+    100,
+    50
+   ],
+   "plunger_max_N": 85.81,
+   "plungers_N": [
+    85.81,
+    46.21,
+    0.0,
+    79.16
+   ],
+   "face_wheel_max_N": 46.25,
+   "residual_N": 0.0
+  },
+  "catch 6 g": {
+   "at": [
+    0,
+    0,
+    20
+   ],
+   "plunger_max_N": 0.0,
+   "plungers_N": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "face_wheel_max_N": 6.06,
+   "residual_N": 0.0
+  }
+ },
+ "pieces": {
+  "insert 60 N": {
+   "plunger_N": 28.28,
+   "plunger_index": 0.23,
+   "guide_wall_index": 0.136,
+   "guide_top_N": 45.4,
+   "boss_bolt_shear_N": 7.07,
+   "face_wheel_max_N": 7.24,
+   "cls": "flight",
+   "panel_fe_util": 0.101,
+   "panel_boss_index": 0.068,
+   "piece_worst": 0.23
+  },
+  "pull 50 N": {
+   "plunger_N": 1.71,
+   "plunger_index": 0.014,
+   "guide_wall_index": 0.008,
+   "guide_top_N": 2.7,
+   "boss_bolt_shear_N": 0.43,
+   "face_wheel_max_N": 17.04,
+   "cls": "flight",
+   "panel_fe_util": "n/a",
+   "panel_boss_index": "n/a",
+   "piece_worst": 0.014
+  },
+  "hand lift 100 N at a corner": {
+   "plunger_N": 85.81,
+   "plunger_index": 0.437,
+   "guide_wall_index": 0.257,
+   "guide_top_N": 137.8,
+   "boss_bolt_shear_N": 21.45,
+   "face_wheel_max_N": 46.25,
+   "cls": "misuse",
+   "panel_fe_util": 0.075,
+   "panel_boss_index": 0.128,
+   "piece_worst": 0.437
+  },
+  "catch 6 g": {
+   "plunger_N": 0.0,
+   "plunger_index": 0.0,
+   "guide_wall_index": 0.0,
+   "guide_top_N": 0.0,
+   "boss_bolt_shear_N": 0.0,
+   "face_wheel_max_N": 6.06,
+   "cls": "flight",
+   "panel_fe_util": "n/a",
+   "panel_boss_index": "n/a",
+   "piece_worst": 0.0
+  }
+ },
+ "compact": {
+  "latch_unit_bbox_mm": [
+   57.5,
+   49.8,
+   44.4
+  ],
+  "latch_unit_bbox_cm3": 127.2,
+  "latch_unit_largest_extent_mm": 57.5,
+  "latch_unit_solid_cm3": 28.7
+ },
+ "cage_first_face_clearance_mm": {
+  "cage": 1.0,
+  "plate": 30.62,
+  "props": 19.02,
+  "receiver": 25.24
+ },
+ "cage_first_note": "the node cheeks (part of the cage) sit 1.0 off the faces by the catch interface (G (1)); the rings, plate, props and receiver are the 'everything else' and must be >= 3 mm (Scout v3 / Overseer chats own them)",
+ "system_check": {
+  "pass_out": true,
+  "pass_in": true,
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +y/latch housing +y_x-), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 750 g (E), CG [0.0, 0.0, 42.3] (E, no cg_ref)",
+  "fit_fail_pairs": [],
+  "compact": {
+   "bbox_min": [
+    -168.39,
+    -168.39,
+    -1.2
+   ],
+   "bbox_max": [
+    168.39,
+    168.39,
+    77.2
+   ],
+   "extents_mm": [
+    336.8,
+    336.8,
+    78.4
+   ],
+   "largest_extent_mm": 336.8,
+   "bbox_L": 8.892,
+   "hull_L": 6.629,
+   "guard_offsets_mm": {}
+  }
+ },
+ "assembled_worst": [
+  "hand lift 100 N at a corner",
+  0.437
+ ]
+}
