@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (swap arm worker): **rails A / B v5** (DESIGN): ribbon channel X ±3.25 / mouth 5.0 for the 5-conductor head ribbon ~6.1 wide (E, box electronics PR 103), M5 x 10 heads sunk under its floor (v4 had them in it). 56.5 g (M), solid PASS, access 9/9, rest unchanged. Bundle 22 wires Ø7.6 fits the Ø8.5 post bore. `runs/arm_rail/v5/`
 - 24 Oct (swap arm worker): **swap arm v7 recheck**: carriage plate top 74.35 and insert-lane keep-out Z 89 / 95 (heads v7 asks, DEFAULT; Y_C_min 165.0); rerun 0 overlaps, swap 0.45 / 0.49, XT60 x 1.25° / z 0.84°; review notes folded. Shared: keep-out row (catch, structure told). `box-arm.md` v7
 - 24 Oct (box structure system session): insert keep-outs per the arm / heads v7: carriage Y to 75.35 (plate top 74.35), Z ≥ 89; grabber from r 95 (was 111.5). Variants rerun: fit 0.0, the lanes clear the catch (panel v9 plain) by 2.0 (C on M), box 80.0 L unchanged. `box_layout_v2.py`, dimensions.
 - 24 Oct (control chat, Spark: "we dont need a digest session"): no hub; one task per session with Agent workers inside it, a new cloud session only for heavy runs or a full box; sessions message Spark only for print-ready files or his decisions (`CLAUDE.md`, `docs/sessions.md`). The control session is archived.

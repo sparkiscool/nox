@@ -132,7 +132,7 @@ system_check box swap arm v7: PASS
     rec-120 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack charged: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-180 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-  mass 5923.84 g (E), CG [0.5, 123.4, -19.56], offset [0.5, 123.4, -19.56] = 124.94 mm from [0.0, 0.0, 0.0]
+  mass 5920.83 g (E), CG [0.5, 123.43, -19.6], offset [0.5, 123.43, -19.6] = 124.98 mm from [0.0, 0.0, 0.0]
     hub: 129.55 g (M) at [0.0, 40.45, -10.99]
     stub: 47.68 g (M) at [0.47, 15.91, -0.0]
     stub_bolts: 8.0 g (C) at [0.0, 2.23, -0.0]
@@ -148,8 +148,8 @@ system_check box swap arm v7: PASS
     belt_axle: 8.0 g (C) at [2.2, 59.0, -20.95]
     brg0: 110.0 g (C) at [-0.0, 16.0, -0.0]
     brg1: 110.0 g (C) at [-0.0, 32.0, -0.0]
-    railA: 57.99 g (M) at [71.86, 54.83, 71.86]
-    railB: 57.98 g (M) at [-71.86, 54.83, 71.86]
+    railA: 56.48 g (M) at [72.15, 54.6, 72.15]
+    railB: 56.48 g (M) at [-72.15, 54.6, 72.15]
     pin16_A: 3.67 g (M) at [76.69, 64.59, 1.05]
     pin16_B: 3.67 g (M) at [-76.69, 64.59, 1.05]
     headA: 25.92 g (M) at [41.25, 70.25, 16.85]
@@ -189,7 +189,7 @@ system_check box swap arm v7: PASS
     pack charged: 748.2 g (E) at [56.39, 170.61, 56.39] swap
     pack dead: 748.2 g (E) at [-56.39, 170.61, 56.39] swap
   balance PASS (horizontal CG offset <= 1000.0 mm, thrust axis [0.0, 1.0, 0.0]):
-    all: 19.56 mm horizontal, 123.4 mm axial, 5923.84 g
-    no_swap: 45.23 mm horizontal, 107.44 mm axial, 4427.44 g
+    all: 19.61 mm horizontal, 123.43 mm axial, 5920.83 g
+    no_swap: 45.3 mm horizontal, 107.47 mm axial, 4424.43 g
   crash probes: skipped
-System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 27.6 L (E), extents 371 x 259 x 287 mm (E), mass 5924 g (E), CG 19.6 mm off thrust axis (E) [+0.5, +123.4, -19.6], 45.2 mm without swap parts
+System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 27.6 L (E), extents 371 x 259 x 287 mm (E), mass 5921 g (E), CG 19.6 mm off thrust axis (E) [+0.5, +123.4, -19.6], 45.3 mm without swap parts
