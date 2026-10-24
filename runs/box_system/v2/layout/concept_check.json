@@ -1,3 +1,3 @@
 {
- "summary": "System: Box structure v2 layout, cage first 26.0 mm (M) at -X (receivers + lids (latch v1, 9 bays)), fit 4984.3 mm\u00b3 (M) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 80 L (M), extents 402 x 419 x 475 mm (M), mass 13608 g (M), CG [-8.6, 178.7, -44.7] (M, no cg_ref)"
+ "summary": "System: Box structure v2 layout, cage first 27.9 mm (M) at +X (receivers + lids (latch v1, 9 bays)), fit 4984.3 mm\u00b3 (M) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 74.4 L (M), extents 416 x 382 x 468 mm (M), mass 13501 g (M), CG [-0.0, 145.6, -29.3] (M, no cg_ref)"
 }

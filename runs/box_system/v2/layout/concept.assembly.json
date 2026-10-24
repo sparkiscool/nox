@@ -10,9 +10,9 @@
   {"name": "bay body envelopes (9)", "role": "structure", "mesh": "runs/box_system/v2/layout/bay_envelopes_W.stl", "material": "PETG", "tag": "C", "owner": "box structure"},
   {"name": "catch (panels v7, hook latch v2) at the R seat", "role": "structure", "mesh": "runs/box_system/v2/layout/catch_W.stl", "material": "PETG", "tag": "M", "owner": "box catch"},
   {"name": "drone receivers + paths (keep-out)", "role": "bought", "mesh": "runs/box_system/v2/layout/drone_W.stl", "mass_g": 0.0, "tag": "C", "owner": "drones"},
-  {"name": "sheet+X", "role": "cage", "box": [198, 201, -63.0, 344, -241, 234], "material": "acrylic", "mass_g": 690.2, "tag": "C", "owner": "box structure"},
-  {"name": "sheet-X", "role": "cage", "box": [-201, -198, -63.0, 344, -241, 234], "material": "acrylic", "mass_g": 690.2, "tag": "C", "owner": "box structure"},
-  {"name": "sheetF", "role": "cage", "box": [-195, 195, 347, 350, -241, 234], "material": "acrylic", "mass_g": 661.3, "tag": "C", "owner": "box structure"},
-  {"name": "sheetR", "role": "cage", "box": [-195, 195, -69.0, -66.0, -241, 234], "material": "acrylic", "mass_g": 661.3, "tag": "C", "owner": "box structure"}
+  {"name": "sheet+X", "role": "cage", "box": [205, 208, -63.0, 307, -234, 234], "material": "acrylic", "mass_g": 618.2, "tag": "C", "owner": "box structure"},
+  {"name": "sheet-X", "role": "cage", "box": [-208, -205, -63.0, 307, -234, 234], "material": "acrylic", "mass_g": 618.2, "tag": "C", "owner": "box structure"},
+  {"name": "sheetF", "role": "cage", "box": [-202, 202, 310, 313, -234, 234], "material": "acrylic", "mass_g": 675.0, "tag": "C", "owner": "box structure"},
+  {"name": "sheetR", "role": "cage", "box": [-202, 202, -69.0, -66.0, -234, 234], "material": "acrylic", "mass_g": 675.0, "tag": "C", "owner": "box structure"}
  ]
 }

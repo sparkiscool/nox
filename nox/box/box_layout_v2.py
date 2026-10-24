@@ -21,10 +21,13 @@ for p in (os.path.join(HERE, "stand"), HERE, os.path.join(ROOT, "nox"), os.path.
 import box_system as B
 
 CTX = os.path.join(ROOT, "runs", "box_system", "v2", "latch_ctx")
-BAYS = {30: "scout", 0: "scout", -30: "scout", -60: "overseer", -90: "overseer", -120: "overseer", -150: "overseer",
-        -180: "scout", -210: "scout"}
+BAYS = {30: "scout", 0: "overseer", -30: "scout", -60: "overseer", -90: "scout", -120: "overseer", -150: "scout",
+        -180: "overseer", -210: "scout"}     # hub DEFAULT 24 Oct (arm v7): no two Overseer bays adjacent; set A (mirror-symmetric, CG on X 0)
+BAYS_BOTTOM = {30: "scout", 0: "scout", -30: "scout", -60: "overseer", -90: "overseer", -120: "overseer", -150: "overseer",
+               -180: "scout", -210: "scout"}  # the catch preview's placement (alternative, needs clipped receivers or R 128)
 HALF = 15.0; GAP = 0.3                          # sector half angle; each body / receiver stays 0.3 inside its plane
-Y_C, Y_FUN = 175.0, 177.0                       # tab line (arm v6, both cartridges); funnel centre (stand, unchanged)
+Y_C = 138.0                                     # common grip of both cartridges (arm v7, hub 24 Oct; was 175)
+Y_FUN = Y_C + 2.0                               # funnel centre = the drone's catch centre, 2 past the tab line as in v1 (177 / 175)
 PATH = 70.0                                     # cartridge install path kept clear, radially inward from the seat (E: park r ~ R - 15)
 ARM_PARK_R = 1.5                                # turning envelope of the parked heads + cartridges: r <= R - 1.5 (arm v6: limit R - 2.5)
 LANE = dict(r=159.0, half_deg=25.0)             # drone opening: nothing inside r 159 within 90 +- 25 (arm v6 wheel rim 156.9, carriage +-20.3)
@@ -77,14 +80,16 @@ def seat_landings(R):
         c, s = math.cos(k * math.pi / 2), math.sin(k * math.pi / 2); Rz = np.array([[c, -s, 0], [s, c, 0], [0, 0, 1.0]])
         for sy in (1, -1):
             p = land * np.array([1, sy, 1]); pts.append((Rz @ p, Rz @ n))
-    T = B.SEAT_TO_W.copy(); T[2, 3] += R - 100.0
+    T = B.SEAT_TO_W.copy(); T[2, 3] += R - 100.0; T[1, 3] = Y_FUN
     out = []
     for p, nn in pts:
         pw = T[:3, :3] @ p + T[:3, 3]; nw = T[:3, :3] @ nn; out.append((pw, nw))
     return out
 
 
-def layout(R=113.0, clip=False):
+def layout(R=113.0, clip=False, bays=None):
+    global BAYS
+    if bays is not None: BAYS = bays
     P, rows = {}, {}
     meta = json.load(open(os.path.join(CTX, "meta.json")))
     for ang, pk in BAYS.items():
@@ -116,7 +121,7 @@ def layout(R=113.0, clip=False):
                                 cart_in_neighbour_mm3=round((P[a]["path"] ^ P[b]["rec"]).volume() + (P[b]["path"] ^ P[a]["rec"]).volume(), 1))
     # catch at the new seat height
     import box_system as BS
-    T = BS.SEAT_TO_W.copy(); T[2, 3] += R - 100.0
+    T = BS.SEAT_TO_W.copy(); T[2, 3] += R - 100.0; T[1, 3] = Y_FUN
     import assembly
     A = assembly.load(os.path.join(HERE, "box_catch.assembly.json"))
     catch = {}
@@ -156,10 +161,12 @@ def layout(R=113.0, clip=False):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("--R", type=float, default=113.0); ap.add_argument("--clip", action="store_true")
+    ap.add_argument("--bottom", action="store_true", help="Overseer bays at the 4 bottom slots (the catch preview), not alternating")
     a = ap.parse_args()
-    od = os.path.join(ROOT, "runs", "box_system", "v2", "layout" + ("" if a.R == 113 and a.clip else f"_R{a.R:g}{'_clip' if a.clip else '_noclip'}"))
+    tag = ("" if a.R == 113 else f"_R{a.R:g}") + ("_clip" if a.clip else "") + ("_bottom" if a.bottom else "")
+    od = os.path.join(ROOT, "runs", "box_system", "v2", "layout" + tag)
     os.makedirs(od, exist_ok=True)
-    out, P, catch, env, lands, drone = layout(a.R, a.clip)
+    out, P, catch, env, lands, drone = layout(a.R, a.clip, BAYS_BOTTOM if a.bottom else None)
     json.dump(out, open(os.path.join(od, "layout.json"), "w"), indent=1, default=float)
     print(json.dumps({k: out[k] for k in ("neighbours", "catch", "ring", "enclosure")}, indent=1, default=float))
     rec = None; path = None; envm = None
