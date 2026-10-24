@@ -12,47 +12,45 @@ wheels z -48.0: motors 201.9 ahead, catch centre x 201.9, L2 base (498.6,   48),
 wheels z -50.0: motors 201.8 ahead, catch centre x 201.8, L2 base (498.5,   46), funnel -108.4, plungers  2.0, below-opening 82.6, 3298 g
 wheels z -52.0: motors 201.8 ahead, catch centre x 201.8, L2 base (498.5,   44), funnel -107.0, plungers  2.0, below-opening 82.6, 3302 g
 wheels z -54.0: motors 201.8 ahead, catch centre x 201.8, L2 base (498.5,   42), funnel   2.1, plungers  2.0, below-opening 82.6, 3306 g
-cage sizing pass 1: 1068 g, L2 mode 114 Hz, feasible True, 105 rods changed
-wheels z -30.0: motors 206.3 ahead, catch centre x 206.3, L2 base (506.5,   66), funnel -125.8, plungers  2.0, below-opening 82.6, 3572 g
-wheels z -32.0: motors 206.4 ahead, catch centre x 206.4, L2 base (506.1,   64), funnel -124.4, plungers  2.0, below-opening 82.6, 3575 g
-wheels z -34.0: motors 206.4 ahead, catch centre x 206.4, L2 base (505.5,   62), funnel -123.0, plungers  2.0, below-opening 82.6, 3579 g
-wheels z -36.0: motors 206.2 ahead, catch centre x 206.2, L2 base (504.8,   60), funnel -121.5, plungers  2.0, below-opening 82.6, 3582 g
-wheels z -38.0: motors 206.1 ahead, catch centre x 206.1, L2 base (504.1,   58), funnel -119.9, plungers  2.0, below-opening 82.6, 3584 g
-wheels z -40.0: motors 205.9 ahead, catch centre x 205.9, L2 base (503.3,   56), funnel -118.4, plungers  2.0, below-opening 82.6, 3587 g
-wheels z -42.0: motors 205.7 ahead, catch centre x 205.7, L2 base (502.6,   54), funnel -116.8, plungers  2.0, below-opening 82.6, 3590 g
-wheels z -44.0: motors 205.5 ahead, catch centre x 205.5, L2 base (501.8,   52), funnel -115.3, plungers  2.0, below-opening 82.6, 3593 g
-wheels z -46.0: motors 205.2 ahead, catch centre x 205.2, L2 base (501.1,   50), funnel -113.7, plungers  2.0, below-opening 82.6, 3595 g
-wheels z -48.0: motors 203.9 ahead, catch centre x 203.9, L2 base (499.2,   48), funnel -111.3, plungers  2.0, below-opening 82.6, 3586 g
-wheels z -50.0: motors 203.6 ahead, catch centre x 203.6, L2 base (498.4,   46), funnel -109.7, plungers  2.0, below-opening 82.6, 3589 g
-wheels z -52.0: motors 203.4 ahead, catch centre x 203.4, L2 base (497.7,   44), funnel -108.1, plungers  2.0, below-opening 82.6, 3592 g
-wheels z -54.0: motors 203.1 ahead, catch centre x 203.1, L2 base (496.9,   42), funnel   2.1, plungers  2.0, below-opening 82.6, 3594 g
-cage search pass 2: 69 of 1024 topologies feasible on this geometry; best 888 g, L2 mode 102 Hz: ring_diag v_diag tip_rails chin nose_x
-cage sizing pass 2: 888 g, L2 mode 102 Hz, feasible True, 91 rods changed
+cage sizing pass 1: 1098 g, L2 mode 114 Hz, feasible True, 102 rods changed
+wheels z -30.0: motors 206.0 ahead, catch centre x 206.0, L2 base (506.2,   66), funnel -125.5, plungers  2.0, below-opening 82.6, 3601 g
+wheels z -32.0: motors 206.0 ahead, catch centre x 206.0, L2 base (505.6,   64), funnel -124.1, plungers  2.0, below-opening 82.6, 3605 g
+wheels z -34.0: motors 206.0 ahead, catch centre x 206.0, L2 base (505.0,   62), funnel -122.7, plungers  2.0, below-opening 82.6, 3608 g
+wheels z -36.0: motors 205.9 ahead, catch centre x 205.9, L2 base (504.5,   60), funnel -121.2, plungers  2.0, below-opening 82.6, 3611 g
+wheels z -38.0: motors 205.7 ahead, catch centre x 205.7, L2 base (503.6,   58), funnel -119.7, plungers  2.0, below-opening 82.6, 3614 g
+wheels z -40.0: motors 205.5 ahead, catch centre x 205.5, L2 base (503.0,   56), funnel -118.1, plungers  2.0, below-opening 82.6, 3616 g
+wheels z -42.0: motors 205.3 ahead, catch centre x 205.3, L2 base (502.3,   54), funnel -116.5, plungers  2.0, below-opening 82.6, 3619 g
+wheels z -44.0: motors 205.1 ahead, catch centre x 205.1, L2 base (501.5,   52), funnel -115.0, plungers  2.0, below-opening 82.6, 3622 g
+wheels z -46.0: motors 204.8 ahead, catch centre x 204.8, L2 base (500.7,   50), funnel -113.4, plungers  2.0, below-opening 82.6, 3624 g
+wheels z -48.0: motors 203.5 ahead, catch centre x 203.5, L2 base (498.8,   48), funnel -111.0, plungers  2.0, below-opening 82.6, 3615 g
+wheels z -50.0: motors 203.2 ahead, catch centre x 203.2, L2 base (498.0,   46), funnel -109.4, plungers  2.0, below-opening 82.6, 3618 g
+wheels z -52.0: motors 203.0 ahead, catch centre x 203.0, L2 base (497.2,   44), funnel -107.8, plungers  2.0, below-opening 82.6, 3621 g
+wheels z -54.0: motors 202.7 ahead, catch centre x 202.7, L2 base (496.4,   42), funnel   2.1, plungers  2.0, below-opening 82.6, 3623 g
+cage sizing pass 2: 991 g, L2 mode 105 Hz, feasible True, 61 rods changed
 
-chosen: catch centre x 203.1 (0 behind the thrust centre), motor square 203.1 ahead of the plate centre; motors at (342.6, ±139.5) and (63.6, ±139.5)
+chosen: catch centre x 202.7 (0 behind the thrust centre), motor square 202.7 ahead of the plate centre; motors at (342.2, ±139.5) and (63.2, ±139.5)
 arms: front r 370 (stock 243), rear r 153; tip gaps 25 all round (square kept)
-frame model on the final geometry (F, dimensions L cases): L2 mode 102 Hz (≥ 100), cage first mode 88 Hz; crash 35 g x 3000 g in 14 directions: worst rod 0.93, buckling 0.88, sockets 0.98, arm 0.10 (≤ 1.0), touching node moves ≤ 7.2 (≤ 9); L2 at 35 g: worst 0.10; handling 50 N: 0.84; latch 0.65; violation 0.000; breaking order: node 0.98 vs member 0.93
-L2: base centre (496.9, 0, 42), axis 15 deg below +x; body lowest z -4.3 vs funnel top -13.2 (drone frame)
-L2 field (90 deg, normal mode kept clear): closest cage up 1.1 behind it (C, > 0 = clear)
+frame model on the final geometry (F, dimensions L cases): L2 mode 105 Hz (≥ 100), cage first mode 102 Hz; crash 35 g x 3000 g in 14 directions: worst rod 0.96, buckling 0.96, sockets 0.87, arm 0.11 (≤ 1.0), touching node moves ≤ 4.9 (≤ 9); L2 at 35 g: worst 0.06; handling 50 N: 0.48; latch 0.65; violation 0.000; breaking order: node 0.87 vs member 0.96
+L2: base centre (496.4, 0, 42), axis 15 deg below +x; body lowest z -4.3 vs funnel top -13.2 (drone frame)
+L2 field (90 deg, normal mode kept clear): closest cage up 1.0 behind it (C, > 0 = clear)
 L2 field blocked by the thin nose rods: 0.1 % of the hemisphere (C, rays from the L2 head)
-length: rear prop tips x -63 to the nose x 571 (634); width 533; height 193
+length: rear prop tips x -64 to the nose x 570 (634); width 533; height 193
 front camera left: two, yaw ±46.8, pitch -13.6, landscape, lens at (486, 75, 44), 17.4 behind the L2 base plane
-   cage rods block 0.6 % of its image (C): V V0lo b 0.3, nose bot 0.1, longeron lo +1 0.1, V V0lo a 0.1
+   cage rods block 0.4 % of its image (C): V V0lo b 0.2, nose bot 0.1, longeron lo +1 0.1, chord V0-P0_50 lo 0.1
 front camera right: two, yaw ±46.8, pitch -13.6, landscape, lens at (486, -75, 44), 17.4 behind the L2 base plane
-   cage rods block 0.6 % of its image (C): V V7lo b 0.4, V V7lo a 0.1, longeron lo -1 0.1, nose rail -1 0.0
+   cage rods block 0.4 % of its image (C): V V7lo b 0.2, post V7 0.1, longeron lo -1 0.1, nose rail -1 0.0
 front cameras: together 54.7 % of the L2 field in view (C, cam_cover.py; one camera at best 27.6 %)
 down camera and flow views: checked (lines above list anything in view)
 overlaps (M, > 0.5 mm3): apex x arm 0 2; apex x arm 3 2
-guard: ring and V rods 12.6 off the disks in plan (≥ 12); rods under a disk 14.6 off the swept band (≥ 12)
-cage rods (C): 3.0 solid 60 x 4.69 m; 4.0 solid 24 x 2.46 m; 6/4 tube 35 x 5.28 m; 8/6 tube 7 x 1.74 m; 10/8 tube 23 x 2.00 m; 12/10 tube 18 x 3.80 m; 14/12 tube 4 x 1.57 m; 16/14 tube 2 x 0.50 m; 715 g + arm spars 39 g; 53 ring nodes, 4 corner nodes, 8 wheels; ~867 g (E) without the apex
-landing: feet at z -111 (lowest points), stance x 126..280, y -73..73; CG 125 above the floor; tip-over forward 31.7 deg, back 31.7 deg, left 30.1 deg, right 30.6 deg (worst 30.1, DEFAULT ≥ 30)
-funnel seated (catch centre on the funnel axis, bottom plate top at seat z 88.3): closest non-wheel point 2.1 at seat (114, 3, 32) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); below seat z -0.8 (cartridge incl.) 82.6 at ±5 deg yaw vs 84
-mass ~3392 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (203.2, 0.7, 13.6) vs thrust centre (203.1, 0): +0.1 in x
-balance: CG 0.7 off the thrust axis with the pack, 0.9 without (≤ 3)
-system_check: System: overseer_system_v1, cage first 9.5 mm (E) at +X (L2), fit 127.7 mm³ (E) (cage/front cameras) FAIL, bbox 96.7 L (E), extents 679 x 589 x 242 mm (E), mass 3354 g (E), CG 1.9 mm off thrust axis (E) [+1.8, +0.6, +15.3], 2.4 mm without swap parts, probes 2.9 mm (E) edge at (-0.97, +0.03, +0.26) (pack), access 1/1 clear
-  probes worst: {"probe": "edge", "r_mm": 0.0, "part": "pack", "margin_mm": 2.9, "unshielded": false, "dir": [-0.966, 0.025, 0.258], "dir_label": "(-0.97, +0.03, +0.26)", "axis": [-0.003, -0.996, 0.085], "roll_deg": 75.0, "lateral_mm": 121.5, "contact": [129.1, 24.0, -90.0], "pass_": true}
+guard: ring and V rods 12.0 off the disks in plan (≥ 12); rods under a disk 12.6 off the swept band (≥ 12)
+cage rods (C): 3.0 solid 13 x 1.47 m; 4.0 solid 18 x 1.68 m; 6/4 tube 25 x 3.15 m; 5.0 solid 1 x 0.28 m; 8/6 tube 19 x 2.65 m; 10/8 tube 27 x 2.57 m; 12/10 tube 6 x 2.14 m; 14/12 tube 7 x 1.02 m; 16/14 tube 6 x 0.75 m; 20/18 tube 16 x 3.22 m; 869 g + arm spars 39 g; 27 ring nodes, 4 corner nodes, 8 wheels; ~992 g (E) without the apex
+landing: feet at z -111 (lowest points), stance x 126..280, y -73..73; CG 126 above the floor; tip-over forward 30.3 deg, back 32.5 deg, left 29.8 deg, right 30.3 deg (worst 29.8, DEFAULT ≥ 30)
+funnel seated (catch centre on the funnel axis, bottom plate top at seat z 88.3): closest non-wheel point 2.1 at seat (114, 57, 32) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); below seat z -0.8 (cartridge incl.) 82.6 at ±5 deg yaw vs 84
+mass ~3517 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (206.1, 0.7, 15.1) vs thrust centre (202.7, 0): +3.4 in x
+balance: CG 3.4 off the thrust axis with the pack, 4.3 without (≤ 3)
+system_check: System: overseer_system_v1, cage first 9.5 mm (E) at +X (L2), fit 0.0 mm³ (E) (L2/apex + hubs), bbox 99.3 L (E), extents 679 x 597 x 245 mm (E), mass 3479 g (E), CG 5.2 mm off thrust axis (E) [+5.1, +0.6, +16.8], 6.4 mm without swap parts FAIL (tol 3), probes 2.9 mm (E) edge at (-0.97, +0.03, +0.26) (pack), access 1/1 clear
+  probes worst: {"probe": "edge", "r_mm": 0.0, "part": "pack", "margin_mm": 2.9, "unshielded": false, "dir": [-0.966, 0.025, 0.258], "dir_label": "(-0.97, +0.03, +0.26)", "axis": [-0.003, -0.996, 0.085], "roll_deg": 75.0, "lateral_mm": 122.5, "contact": [128.7, 24.0, -89.0], "pass_": true}
   access worst: {"name": "pack swap", "part": "pack", "tool": "part", "dir": [0.0, 0.0, -1.0], "length_mm": 80.0, "steps": 20, "blocked_by": [], "touches": [], "overlap_mm3": 0.0, "pass_": true}
-  fit worst: {"a": "cage", "b": "front cameras", "overlap_mm3": 127.72, "limit_mm3": 0.5, "contact": false, "method": "manifold3d", "pass_": false}
-  cage rods in that pair: vdiag V7 64, vdiag V0 64
+  fit worst: {"a": "L2", "b": "apex + hubs", "overlap_mm3": 0.0, "limit_mm3": 0.5, "contact": false, "method": "manifold3d", "pass_": true}
 assembly: nox/overseer/overseer.assembly.json, 13 parts, meshes in runs/overseer_assembly/v1
-PX4 flow position from the CG (FRD, m): x -0.000, y +0.043, z +0.098; IMU (FC centre) from the CG: x -0.203, z +0.004
+PX4 flow position from the CG (FRD, m): x -0.003, y +0.043, z +0.100; IMU (FC centre) from the CG: x -0.206, z +0.005

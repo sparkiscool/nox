@@ -510,7 +510,15 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cag
     if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
     if ok_sz and nchg <= 3: FINAL_PASS = True                         # settled: one more layout pass with these sizes
-g = build(dm, dc, xB, zB); tot, cg = cg_of(g)                     # the layout drawn with the final sizes (the checks below read this one)
+for it_fin in range(3):                                            # final sizes: re-balance at this wheel height, touch up the sizes (warm), repeat
+    dm, xB, zB, g, tot, cg = balance(None, dm); dc = TIP_OFF - dm
+    fr_ = co.evaluate(g["P"], CAGE_TOPO, CAGE_SIZES)
+    say(f"final pass {it_fin + 1}: motors {dm:.1f} ahead, CG {cg[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
+    if fr_["violation"] == 0: break
+    new_, r_, ok_ = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES)
+    if not ok_: say("   touch-up sizing infeasible: the frame line below reports it"); break
+    CAGE_SIZES = new_
+tot, cg = cg_of(g)                                                    # the layout drawn with the final sizes (the checks below read this one)
 CAM_DESC = f"two, yaw ±{CAM_YAW:.1f}, pitch {CAM_PITCH:.1f}, landscape"
 
 # ---------------------------------------------------------------- checks on the chosen layout
