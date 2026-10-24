@@ -48,3 +48,13 @@ it  37 beta    4 J   0.0396 vol 0.0708 (dil 0.1107 g -0.002) grey  4.4% ch 0.100
 it  38 beta    4 J   0.0392 vol 0.0713 (dil 0.1108 g -0.001) grey  4.2% ch 0.100 worst tie b3 mz 25.5 2.5s
 it  39 beta    4 J   0.0389 vol 0.0716 (dil 0.1108 g -0.001) grey  4.1% ch 0.100 worst hand push ledge -z 100 N 25.4 2.5s
 it  40 beta    4 J   0.0388 vol 0.0718 (dil 0.1108 g -0.000) grey  4.1% ch 0.100 worst hand push ledge -z 100 N 25.4 2.6s
+it  41 beta    4 J   0.0387 vol 0.0719 (dil 0.1108 g +0.017) grey  4.1% ch 0.100 worst hand push ledge -z 100 N 25.4 2.9s
+it  42 beta    4 J   0.0409 vol 0.0694 (dil 0.1087 g -0.002) grey  4.5% ch 0.100 worst tie b3 mz 27.3 2.8s
+it  43 beta    4 J   0.0396 vol 0.0700 (dil 0.1088 g -0.002) grey  4.0% ch 0.100 worst tie b3 my 25.9 2.5s
+it  44 beta    4 J   0.0393 vol 0.0704 (dil 0.1089 g -0.001) grey  3.9% ch 0.100 worst tie b3 my 25.4 2.4s
+it  45 beta    4 J   0.0391 vol 0.0705 (dil 0.1090 g -0.000) grey  3.9% ch 0.100 worst hand push ledge -z 100 N 25.4 2.4s
+it  46 beta    4 J   0.0391 vol 0.0706 (dil 0.1090 g +0.012) grey  3.9% ch 0.100 worst hand push ledge -z 100 N 25.4 2.4s
+it  47 beta    4 J   0.0405 vol 0.0688 (dil 0.1075 g -0.002) grey  4.1% ch 0.100 worst tie b3 my 26.9 2.5s
+it  48 beta    4 J   0.0398 vol 0.0692 (dil 0.1076 g -0.001) grey  3.9% ch 0.100 worst tie b3 my 26.1 2.5s
+it  49 beta    4 J   0.0396 vol 0.0694 (dil 0.1077 g -0.000) grey  3.8% ch 0.100 worst tie b3 my 25.8 2.4s
+it  50 beta    4 J   0.0394 vol 0.0696 (dil 0.1077 g -0.000) grey  3.8% ch 0.100 worst tie b3 my 25.7 2.4s
