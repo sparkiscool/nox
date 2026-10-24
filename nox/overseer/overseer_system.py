@@ -304,7 +304,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     for nm in info["pnodes"]:
         for lvl in ("lo", "hi"):
             q = Ng[f"{nm}{lvl}"]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
-    for n in [n_ for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]:   # rear tower and skirt nodes (cage up)
+    for n in [n_ for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP", "NR"))]:   # rear tower, skirt and nose rear-bottom nodes
         q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
     for n in ("NT+1", "NT-1", "NB+1", "NB-1", "TN"):
         q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))

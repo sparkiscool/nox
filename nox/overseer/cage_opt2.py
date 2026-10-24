@@ -232,12 +232,15 @@ def geometry(p, topo, sizes=None):
     xn = max(l2x, p.get("cam_front", xB)) + NOSE_GAP
     ztn = max(l2zmax, p.get("cam_top", zB + 60)) + NOSE_GAP; zbn = min(l2zmin, p.get("cam_bot", l2zmin)) - NOSE_GAP
     ny = p.get("nose_y", NOSE_Y)                                      # wide enough for the two front cameras beside the L2
-    # bottom nodes under the L2's rear-bottom (an edge from behind and below meets them before the L2; edges from
-    # ahead and below come through the L2 field, which stays open)
-    xnb = min(q[0] for q in corners_l2 if q[2] <= l2zmin + 15.0) - NOSE_GAP if p.get("nose_bottom_back", True) else xn
     for sy in (1, -1):
-        node(f"NT{sy:+d}", (xn, ny * sy, ztn)); node(f"NB{sy:+d}", (xnb, ny * sy, zbn))
+        node(f"NT{sy:+d}", (xn, ny * sy, ztn)); node(f"NB{sy:+d}", (xn, ny * sy, zbn))
         mem(f"nose vert {sy:+d}", f"NT{sy:+d}", f"NB{sy:+d}", "nose")
+    # rear-bottom bar under the L2's rear-bottom: an edge from behind and below meets it before the L2
+    xnr = min(q[0] for q in corners_l2 if q[2] <= l2zmin + 15.0) - NOSE_GAP
+    for sy in (1, -1):
+        node(f"NR{sy:+d}", (xnr, ny * sy, zbn)); mem(f"nose rail {sy:+d}", f"NB{sy:+d}", f"NR{sy:+d}", "nose")
+        mem(f"nose rear lo {sy:+d}", f"Slo{sy:+d}", f"NR{sy:+d}", "nose")
+    mem("nose rear bar", "NR+1", "NR-1", "nose")
     mem("nose top", "NT+1", "NT-1", "nose"); mem("nose bot", "NB+1", "NB-1", "nose")
     if topo["nose_x"]:
         mem("nose x1", "NT+1", "NB-1", "nose_x"); mem("nose x2", "NT-1", "NB+1", "nose_x")
@@ -595,7 +598,7 @@ def evaluate(p, topo, sizes, detail=False):
         g["belly mode"] = F_L2_MIN / res["f_belly"] - 1
     m_drone = p.get("m_drone_g", 2200.0) * 1e-6                       # t (g -> t)
     cage_nodes = [n for n in m.names if n not in m.fixed and (n.endswith(("lo", "hi")) and not n.startswith(("S", "Vmid"))
-                                                              or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP", "FT")))]
+                                                              or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT")))]
     P_ = np.array([m.N[n] for n in cage_nodes])
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
     for d in crash_dirs():
@@ -603,7 +606,7 @@ def evaluate(p, topo, sizes, detail=False):
         cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -CRASH_G * G_ACC * m_drone * d}, 1.0, "crash", n_, d))
     for d in crash_dirs():
         cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": CRASH_G * G_ACC * 266e-6 * d}, 1.0, "l2", None, d))
-    real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "TN", "TR", "corner", "KV", "KP", "FT"))]
+    real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT"))]
     for n_ in real_nodes:
         for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
             cases.append((f"handling {n_} {d}", {n_: 50.0 * np.array(d, float)}, 1.0, "handling", None, None))   # misuse-type (DEFAULT)
