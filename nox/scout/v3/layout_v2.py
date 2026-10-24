@@ -432,13 +432,14 @@ def candidate_nodes():
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
     for x, y, z in [(60, 0, -14), (60, 30, -14), (60, -30, -14), (-60, 0, -14), (-60, 30, -14), (-60, -30, -14),
                     (30, -40, -32), (-30, -40, -32), (0, -40, -34), (30, 48, -30), (-30, 48, -30), (0, 48, -30),
-                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42)]:   # lower belly, ahead
+                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42),
+                    (80, 14, 4), (80, -14, 4)]:                     # under the camera, below the G (8) band (its lower corners)   # lower belly, ahead
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
     for x, y in ([] if os.environ.get("NOKEEL", "0") == "1" else    # keel (the bottom hit must go through the suspension: latch 24 Oct,
                                                                    # 4.2 kN on the skids vs 3.2 kN receiver); receiver v3 narrows for it
-                 [(26, 29.6), (26, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # bottom (nose end x 26: clear of the latch nose side bars)   # y 29.6 (was 28.5): outboard of the
+                 [(26, 29.6), (26, -29.6), (-29.5, 29.6), (-29.5, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # tail x -29.5: covers the receiver's tail-bottom corners   # bottom (nose end x 26: clear of the latch nose side bars)   # y 29.6 (was 28.5): outboard of the
                                                                                                # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
