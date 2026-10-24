@@ -22,10 +22,10 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "overseer
 import json
 import cage_opt2 as co
 from system_check import run as system_check_run
-_CJ = json.load(open(os.environ.get("SYS_CAGE", os.path.join(ROOT, "runs", "overseer_cage", "v2", "cage_opt2.json"))))
+_CJ = json.load(open(os.environ.get("SYS_CAGE", os.path.join(ROOT, "runs", "overseer_cage", "v3", "cage_opt2.json"))))
 _LV = _CJ["levels"][os.environ.get("SYS_LEVEL", "100Hz_35g")]
 CAGE_TOPO, CAGE_SIZES = _LV["topo"], _LV["sizes"]
-SYS_PICK = os.environ.get("SYS_PICK", "mid_spokes")        # DEFAULT: +10 g over the lightest for a 178 Hz cage (Spark: "way too flimsy")
+SYS_PICK = os.environ.get("SYS_PICK", "")                 # DEFAULT: the lightest feasible layout of the level (v3: all ~105 Hz); a name list picks that row
 if SYS_PICK:
     want = set(SYS_PICK.split(",")) if SYS_PICK != "none" else set()
     for row in _LV["table"]:
@@ -278,7 +278,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         q = Ng[n]; ring_nodes.append(box(q[0] - 6, q[0] + 6, q[1] - 6, q[1] + 6, q[2] - 6, q[2] + 6))
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)
-            for n in Ng if n.startswith(("fhubB", "fhubT", "chin"))]
+            for n in Ng if n.startswith(("fhubB", "fhubT", "chin", "rhubB"))]
     g["hubs"] = hubs
     g["cage_N"], g["cage_info"] = Ng, info
     g["rods"] = rods
@@ -422,26 +422,31 @@ def balance(dc_unused, dm0):
 say(f"cage (cage_opt level {os.environ.get('V3_LEVEL', '160')} Hz): " + " ".join(k for k, v in CAGE_TOPO.items() if v)
     + " | " + " ".join(f"{k}:{v}" for k, v in CAGE_SIZES.items()))
 dm = 80.0
-for wz in np.arange(float(os.environ.get("V3_WZ0", "-30")), -60.0, -2.0):
-    set_wheel(wz)
-    dm, xB, zB, g, tot, cg = balance(None, dm)
-    dc = TIP_OFF - dm
-    fd, fp, low = funnel(g, dc)
-    say(f"wheels z {wz:5.1f}: motors {dm:5.1f} ahead, catch centre x {-dc:5.1f}, L2 base ({xB:5.1f}, {zB:4.0f}), funnel {fd:5.1f}, "
-        f"plungers {PLUNGER_CLEAR:4.1f}, below-opening {low:4.1f}, {tot:4.0f} g")
-    if fd >= 1.0 and low <= OPEN_HALF - 1.0 and PLUNGER_CLEAR >= 1.0: break
-dc = TIP_OFF - dm
-
-# camera: lowest height on the L2 back plane where the L2 leaves the view (lower edge + 2 deg), aimed at the horizon
 CAM_UP = CAM_UP_DEFAULT
-for h in np.arange(20, 160, 2.0):
-    g = build(dm, dc, xB, zB, CAM_UP, h)
-    d = pts(g["l2"], 4000) - g["cam_lens"]; z = d @ g["cam_fwd"]
-    elev = np.degrees(np.arctan2(d @ g["cam_up_v"], np.maximum(z, 1e-6))); azim = np.degrees(np.arctan2(d[:, 1], np.maximum(z, 1e-6)))
-    inview = (z > 0) & (elev > -CAM_VFOV / 2 - 2.0) & (np.abs(azim) < CAM_HFOV / 2 + 2.0)
-    if not inview.any(): CAM_H = h; break
-g = build(dm, dc, xB, zB, CAM_UP, CAM_H)
-tot, cg = cg_of(g)
+for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cage sizing until the sizes stop changing
+    for wz in np.arange(float(os.environ.get("V3_WZ0", "-30")), -60.0, -2.0):
+        set_wheel(wz)
+        dm, xB, zB, g, tot, cg = balance(None, dm)
+        dc = TIP_OFF - dm
+        fd, fp, low = funnel(g, dc)
+        say(f"wheels z {wz:5.1f}: motors {dm:5.1f} ahead, catch centre x {-dc:5.1f}, L2 base ({xB:5.1f}, {zB:4.0f}), funnel {fd:5.1f}, "
+            f"plungers {PLUNGER_CLEAR:4.1f}, below-opening {low:4.1f}, {tot:4.0f} g")
+        if fd >= 1.0 and low <= OPEN_HALF - 1.0 and PLUNGER_CLEAR >= 1.0: break
+    dc = TIP_OFF - dm
+    # camera: lowest height on the L2 back plane where the L2 leaves the view (lower edge + 2 deg), aimed at the horizon
+    for h in np.arange(20, 160, 2.0):
+        g = build(dm, dc, xB, zB, CAM_UP, h)
+        d = pts(g["l2"], 4000) - g["cam_lens"]; z = d @ g["cam_fwd"]
+        elev = np.degrees(np.arctan2(d @ g["cam_up_v"], np.maximum(z, 1e-6))); azim = np.degrees(np.arctan2(d[:, 1], np.maximum(z, 1e-6)))
+        inview = (z > 0) & (elev > -CAM_VFOV / 2 - 2.0) & (np.abs(azim) < CAM_HFOV / 2 + 2.0)
+        if not inview.any(): CAM_H = h; break
+    g = build(dm, dc, xB, zB, CAM_UP, CAM_H)
+    tot, cg = cg_of(g)
+    new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO)            # re-size the cage on this geometry (F)
+    say(f"cage sizing pass {it_sz + 1}: {r_sz['mass_g']:.0f} g, L2 mode {r_sz['f_l2']:.0f} Hz, feasible {ok_sz}, "
+        f"{sum(new_sizes.get(k) != v for k, v in CAGE_SIZES.items())} rods changed")
+    if new_sizes == CAGE_SIZES: break
+    CAGE_SIZES = new_sizes
 CAM_DESC = f"{CAM_UP:.0f} deg up, portrait"
 
 # ---------------------------------------------------------------- checks on the chosen layout
@@ -638,11 +643,12 @@ s.view("iso", (600, -660, 520), (60, 0, 30)); s.view("side", (60, -1000, 60), (6
 s.view("top", (60, 0, 1100), (60, 0, 0)); s.view("under", (300, -300, -500), (0, 0, -20))
 os.makedirs(OUT, exist_ok=True)
 s.write(os.path.join(OUT, "motion.html"))
-try:
-    s.video(os.path.join(OUT, "motion.mp4"))
-except Exception as e:
-    say("video skipped:", str(e)[:200])
-json.dump({k: float(v) for k, v in P_FINAL.items()}, open(os.path.join(OUT, "params.json"), "w"), indent=1)
+json.dump({k: (float(v) if not isinstance(v, str) else v) for k, v in P_FINAL.items()}, open(os.path.join(OUT, "params.json"), "w"), indent=1)
+if os.environ.get("SYS_VIDEO", "0") == "1":                     # iterations skip the video (png still useful: SYS_VIDEO=1 on the final run)
+    try:
+        s.video(os.path.join(OUT, "motion.mp4"), gif=False)
+    except Exception as e:
+        say("video skipped:", str(e)[:200])
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())
 print("wrote", OUT)

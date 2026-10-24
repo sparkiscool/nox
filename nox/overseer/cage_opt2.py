@@ -42,7 +42,7 @@ H_TIP = {"front": 38.0, "rear": 16.0}
 W_ARM = {"front": (34.0, 28.0), "rear": (26.0, 22.0)}
 ARM_WALL = 2.4
 GUARD_GAP, ROD_R3 = 12.0, 1.5
-RING_LO, RING_HI = PROP_Z - 14.0, PROP_Z + 22.0            # upper ring = top perimeter, 17 over the swept band
+RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - 5.0, PROP_Z + 22.0   # 60 / 104: spokes reach the lower ring 12 under the swept band with a 10 tube
 Z_TOP = 116.0                                               # top node over the thrust centre (DEFAULT)
 NOSE_Y, NOSE_GAP = 58.0, 3.0 + 2.0                          # nose box half width; ahead of the L2 / camera by 3 + rod
 ROD_RMAX = 4.0                                              # guard offset for the largest ring rod (8/6 tube), so any size keeps 12
@@ -70,7 +70,7 @@ F_FIRST_MIN = 0.0                                           # cage's own lowest 
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
 NODE_G, CORNER_G = 2.0, 6.0                                 # printed ring node / corner node (E, g)
 
-TOPO_KEYS = ("mid_spokes", "ring_diag", "l2_braces", "v_diag", "strut2", "spokes_hi", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
+TOPO_KEYS = ("keels", "mid_spokes", "ring_diag", "l2_braces", "v_diag", "strut2", "spokes_hi", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
 
 
 def motors(dm):
@@ -202,7 +202,8 @@ def geometry(p, topo, sizes=None):
         if topo["v_diag"]:
             mem(f"vdiag {vn}", f"{vn}hi", f"Slo{sy:+d}", "v_diag")
     for sy in (1, -1):
-        mem(f"keel {sy:+d}", f"fhubB{sy:+d}", f"Shi{sy:+d}", "keels")       # bottom plate front up to the upper socket (16 deg)
+        if topo.get("keels", 1):
+            mem(f"keel {sy:+d}", f"fhubB{sy:+d}", f"Shi{sy:+d}", "keels")   # bottom plate front up to the upper socket (16 deg)
         if topo["keels_lo"]:                                              # top plate front down to the lower socket: the keels cross (pitch, bounce)
             mem(f"keello {sy:+d}", f"fhubT{sy:+d}", f"Slo{sy:+d}", "keels_lo")
             mem(f"keeldg {sy:+d}", f"fhubB{sy:+d}", f"Slo{sy:+d}", "keels_lo")   # the diagonal: without it the two keels are a four-bar
@@ -250,9 +251,7 @@ def geometry(p, topo, sizes=None):
         for sy in (1, -1):
             fixed.add(node(f"tp-1{sy:+d}", (-40, 40 * sy, ROOT_H + 1.6)))
             mem(f"pyramid -1{sy:+d}", f"tp-1{sy:+d}", "TR", "pyramid")
-            kr = [k for k, d in enumerate(MOTOR_DEG) if math.cos(math.radians(d)) < 0 and math.sin(math.radians(d)) * sy > 0][0]
-            mem(f"pyramid root{kr}", f"root{kr}", "TR", "pyramid")
-        mem("top bar", "TR", "TN", "pyramid")
+        mem("top bar", "TR", "TN", "pyramid")                         # the tower's third leg is the skirt post below
     if p.get("rear_x") is not None:                                   # rear skirt: the rear flat drops to plate level and ties to the rear roots
         zs = p.get("z_skirt", 0.0)
         rv = [r for r in rp if r[0] in ("V3", "P3_50", "V4")]
@@ -260,11 +259,12 @@ def geometry(p, topo, sizes=None):
             node(f"K{r[0]}", (r[1], r[2], zs)); mem(f"skirt post {r[0]}", f"{r[0]}lo", f"K{r[0]}", "skirt")
         mem("skirt rail +", "KV3", "KP3_50", "skirt"); mem("skirt rail -", "KP3_50", "KV4", "skirt")
         mem("skirt dg +", "V3lo", "KP3_50", "skirt"); mem("skirt dg -", "V4lo", "KP3_50", "skirt")
-        for k, d in enumerate(MOTOR_DEG):
-            if math.cos(math.radians(d)) < 0:
-                sy = 1 if math.sin(math.radians(d)) > 0 else -1
-                mem(f"skirt tie root{k}", f"root{k}", "KP3_50", "skirt")
-                mem(f"skirt side root{k}", f"root{k}", "KV3" if sy > 0 else "KV4", "skirt")
+        for sy in (1, -1):                                             # rear hub block under the bottom plate (printed, like the front sled)
+            fixed.add(node(f"rhubB{sy:+d}", (p.get("x_rhub", -75.0), 15.0 * sy, -2.0)))
+            mem(f"skirt tie {sy:+d}", f"rhubB{sy:+d}", "KP3_50", "skirt")
+            mem(f"skirt side {sy:+d}", f"rhubB{sy:+d}", "KV3" if sy > 0 else "KV4", "skirt")
+        if "TR" in N:
+            mem("tower post", "KP3_50", "TR", "pyramid")
     if topo["top_spider"]:
         for r in vx:
             mem(f"spider {r[0]}", "TN", f"{r[0]}hi", "top")
@@ -427,7 +427,7 @@ def structural_members(model):
         for n_ in (model.el[i]["a"], model.el[i]["b"]): by_node.setdefault(n_, []).append(i)
     def is_joint(n_):
         same = [i for i in by_node.get(n_, [])]
-        return deg.get(n_, 0) != 2 or len(same) != 2
+        return n_ in model.fixed or deg.get(n_, 0) != 2 or len(same) != 2   # a hub (fixed) node always ends a run
     for i in rods:
         if i in used: continue
         chain = [i]; used.add(i)
@@ -444,6 +444,33 @@ def structural_members(model):
 
 G_ACC = 9810.0                                                # mm/s2
 CRASH_G = 35.0                                                # dimensions L Crash (DEFAULT, E)
+
+
+PLAN_GROUPS = ("chords", "V", "ring_diag", "posts", "skirt")       # guard rods checked in plan (12 off the disks), the rest under / over the band
+
+
+def prop_clear(a, b, od, motors):
+    """smallest prop clearance (mm) of a rod: within 12 (plan) of a swept disk it must sit 12 under or over the band"""
+    t = np.linspace(0, 1, 120)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float))
+    c = np.inf
+    for mx, my in motors:
+        u = np.hypot(q[:, 0] - mx, q[:, 1] - my) < PROP_R + od / 2 + GUARD_GAP
+        if u.any():
+            zq = q[u, 2]; c = min(c, float(np.maximum(PROP_Z - BLADE - (zq + od / 2), zq - od / 2 - PROP_Z - BLADE).min()))
+    return c
+
+
+def guard_caps(m):
+    """largest section index (ORDER) per rod that keeps the prop clearance; -1 = no section does (the layout fails)"""
+    caps = {}
+    for e in m.el:
+        if e["kind"] != "rod" or e["group"] in PLAN_GROUPS: continue
+        cap = -1
+        for i, sec in enumerate(ORDER):
+            if prop_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[sec]["od"], m.info["motors"]) < GUARD_GAP: break
+            cap = i
+        caps[e["name"]] = cap
+    return caps
 
 
 def crash_dirs():
@@ -528,6 +555,12 @@ def evaluate(p, topo, sizes, detail=False):
             g[f"{cname} {key}"] = ix[key] / lim - 1
     res["breaking_order"] = dict(node=crash_node, member=crash_member, node_first=crash_node * 1.0 >= crash_member * 1.5)
     if detail: res["_U"], res["_names"] = U, [c[0] for c in cases]
+    worst_pc = np.inf                                                # prop guard (C): every rod under / over the swept band by 12
+    for e in m.el:
+        if e["kind"] == "rod" and e["group"] not in PLAN_GROUPS:
+            worst_pc = min(worst_pc, prop_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], m.info["motors"]))
+    res["prop_clear"] = float(worst_pc)
+    g["prop guard"] = (GUARD_GAP - worst_pc) / GUARD_GAP if np.isfinite(worst_pc) else -1.0
     res["g"] = g
     res["violation"] = float(sum(max(0.0, v) for v in g.values()))
     return (res, m) if detail else res
@@ -580,8 +613,12 @@ def size_fsd(p, topo, iters=30, log=False):
     buckling and socket indices pass every case at its limit; then stiffness limits (L2 mode, crash deflection) by
     stepping up the runs that carry them. Returns (sizes per element name, result, feasible)."""
     m0 = Model(p, topo, {}); runs = structural_members(m0)
+    caps = guard_caps(m0)
     run_names = [[m0.el[i]["name"] for i in run] for run in runs]
     run_group = [m0.el[run[0]]["group"] for run in runs]
+    run_cap = [min([caps.get(m0.el[i]["name"], len(ORDER) - 1) for i in run]) for run in runs]
+    def capped(req):
+        return [ORDER[max(0, min(ORDER.index(r_), run_cap[i]))] for i, r_ in enumerate(req)]
     sec = ["r3"] * len(runs)
     # mirror pairs (y -> -y): both sides of a run take the larger section, so the cage is built symmetric
     def rkey(run, sgn):
@@ -595,7 +632,7 @@ def size_fsd(p, topo, iters=30, log=False):
         return {n: s_ for names, s_ in zip(run_names, sec) for n in names}
     for it in range(iters):
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        req = sym(run_required(m, res, runs))                          # smallest passing section at the current forces
+        req = capped(sym(run_required(m, res, runs)))                  # smallest passing section at the current forces, within the prop guard
         changed = False
         for i in range(len(sec)):
             k, kr = ORDER.index(sec[i]), ORDER.index(req[i])
@@ -606,8 +643,9 @@ def size_fsd(p, topo, iters=30, log=False):
     # stiffness: L2 mode and crash deflections, step up the runs on those paths
     l2_groups = ("keels", "keels_lo", "keels_x", "chin", "l2_braces", "nose_mount", "V", "nose", "v_diag")
     for it in range(30):
+        prev = list(sec)
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        bad = {k: v for k, v in res["g"].items() if v > 0}
+        bad = {k: v for k, v in res["g"].items() if v > 0 and k != "prop guard"}
         if not bad: break
         stepped = False
         if any(k == "L2 mode" for k in bad):
@@ -620,11 +658,13 @@ def size_fsd(p, topo, iters=30, log=False):
                     els = [e for e in m.el if e["name"] in names]
                     if hn and any(hn in (e["a"], e["b"]) for e in els) and ORDER.index(sec[i]) < len(ORDER) - 1:
                         sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
-        sec = sym(sec)
+        sec = capped(sym(sec))
         if not stepped:
             for i in range(len(sec)):                                     # last resort: everything one step
                 if ORDER.index(sec[i]) < len(ORDER) - 1: sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
+            sec = capped(sec)
             if not stepped: break
+        if sec == prev: break                                             # capped by the prop guard: nothing left to step
     sizes = sizes_of(sec); res = evaluate(p, topo, sizes)
     return sizes, res, res["violation"] == 0
 
