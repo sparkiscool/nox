@@ -907,7 +907,7 @@ def cut_cases():
             Pp = np.array([cg[0], Y_C, cg[2]])
             loads.append((f"rcv{ang}", F_, None, Pp)); Ft += F_; Mt += np.cross(Pp - P0, F_)
         loads.append(("stub", -Ft, -Mt, P0))
-        add(nm, "flight", down, "Scout", loads)
+        add(nm, "flight", down, "Scout", loads, support="floor_hold")
     add("lifted from below 2 g", "flight", (0, 0, -2), None, [])
     add("misuse: set down hard 5 g", "misuse", (0, 0, -5), None, [])
     add("misuse: knocked over onto +X 5 g", "misuse", (5, 0, 0), None, [], support="side")
@@ -971,11 +971,25 @@ def rigid_fit(Mo, U, p):
     return x[:3], x[3:] * 1000.0                      # translation mm, rotation mrad
 
 
+def group_forces(Xb, F, Mm, c):
+    """forces on pins at Xb (n, 3) from the group's force F and moment Mm about c: F / n + w x r, w from the pseudo-inverse of the polar
+    inertia with the near-singular directions dropped (a row of collinear bolts does not resist the moment about its own line: the lugs'
+    faces and the cut face carry it, the bolts see only the shear and tension that the other directions give)."""
+    r = Xb - c; n = len(Xb)
+    Mc = Mm
+    J = (r * r).sum() * np.eye(3) - r.T @ r
+    ev, V = np.linalg.eigh(J)
+    keep = ev > max(0.05 * ev.max(), 1.0)
+    w = np.zeros(3)
+    if keep.any(): w = V[:, keep] @ ((V[:, keep].T @ Mc) / ev[keep])
+    return F[None] / n + np.cross(w[None], r)
+
+
 def bolt_demands(sites, X, f):
-    """joint forces f on the owner side at nodes X -> per-bolt tension / shear (N): rigid bolt group, force and moment about its centroid."""
-    Xb = np.array([s["pos"] for s in sites]); F = f.sum(0); c = Xb.mean(0) if len(Xb) > 1 else Xb[0]
+    """joint forces f on the piece a at nodes X -> per-bolt tension / shear (N) on the lug owner's bolts: rigid pin group, force and moment about its centroid."""
+    Xb = np.array([s["pos"] for s in sites]); F = f.sum(0); c = Xb.mean(0)
     Mm = np.cross(X - c, f).sum(0)
-    fb = B.wrench(Xb, F, Mm, c) if len(Xb) > 1 else F[None]
+    fb = group_forces(Xb, F, Mm, c)
     out = []
     for s, fv in zip(sites, fb):
         u = np.array(s["axis_in"]); own_is_a = s["owner_is_a"]
@@ -999,7 +1013,7 @@ def run_cut_fe(P, J, finfo, h=4.0, mode="all", only=None, log=print, tag="", see
     for (a, b), g in Mo.pairs.items():
         pc[Mo.pid(a, g)] += 1; pc[Mo.pid(b, g)] += 1
     pieces = list(P)
-    feet = [k for k in Mo.names if k.startswith("foot_")]
+    feet = [k for k in Mo.names if re.fullmatch(r"foot_\d+", k)]
     cases = {}
     jc = {ab: Mo.xyz_p(Mo.pid(ab[0], g)).mean(0) for ab, g in Mo.pairs.items()}
     for cname, c in CS.items():
@@ -1027,6 +1041,7 @@ def run_cut_fe(P, J, finfo, h=4.0, mode="all", only=None, log=print, tag="", see
         if seed is not None and cname in seed: fx = np.intersect1d(fx, seed[cname])
         for it in range(10):
             U = Mo.solve(Fp, fx); fj = Mo.internal(U) - Fp
+            if c["support"] == "floor_hold": break                                  # the all-bays envelope cases: feet held (bilateral), tension reported
             Rm = np.zeros((Mo.nN, 3)); np.add.at(Rm, Mo.comp, fj)
             rn_ = Rm[Mo.comp[fx]] @ nrm
             cm = np.zeros(Mo.nN); np.add.at(cm, Mo.comp[fx], 1)
@@ -1053,24 +1068,289 @@ def run_cut_fe(P, J, finfo, h=4.0, mode="all", only=None, log=print, tag="", see
                 idxb = [SF_CLS[c["cls"]] * (T_ / BOLT_ULT[z]["T"] + V_ / BOLT_ULT[z]["V"]) for (T_, V_), z in zip(dem, sz)]
                 jd.update(bolt_T=[round(d[0], 1) for d in dem], bolt_V=[round(d[1], 1) for d in dem], bolt_idx=[round(v, 3) for v in idxb], bolt_worst=round(max(idxb), 3))
             joints[f"{ab[0]} | {ab[1]}"] = jd
-        # floor reactions
+        # floor reactions: the support's reaction per merged node (K u - F summed over its piece nodes), shared over its fixed piece nodes
         reac = {}
+        cm = np.zeros(Mo.nN); np.add.at(cm, Mo.comp[fx], 1)
+        Rc = np.zeros((Mo.nN, 3)); np.add.at(Rc, Mo.comp, fj)
+        sh = Rc[Mo.comp[fx]] / cm[Mo.comp[fx]][:, None]
         for k in feet:
-            q = np.arange(Mo.poff[k], Mo.poff[k] + len(Mo.pnodes[k])); qa = q[np.isin(q, fx)]
-            reac[k] = round(float(fj[qa][:, 2].sum()), 1) if len(qa) else 0.0
+            q = np.arange(Mo.poff[k], Mo.poff[k] + len(Mo.pnodes[k])); sel = np.isin(fx, q)
+            reac[k] = round(float(sh[sel][:, 2].sum()), 1) if sel.any() else 0.0
+        react_total = np.round(sh.sum(0), 1).tolist(); load_total = np.round(Fp.sum(0), 1).tolist()
+        ext = {}
+        for k in pieces:
+            q = np.arange(Mo.poff[k], Mo.poff[k] + len(Mo.pnodes[k])); Xq = Mo.xyz_p(q); cq = Xq.mean(0)
+            ext[k] = dict(F=np.round(Fp[q].sum(0), 2).tolist(), M_Nmm=np.round(np.cross(Xq - cq, Fp[q]).sum(0), 0).tolist(), c=np.round(cq, 1).tolist())
         trs, rot = rigid_fit(Mo, U, R["stub"])
         bayrot = {}
         for ang in R2.L2.BAYS:
             t_, r_ = rigid_fit(Mo, U, R[f"rcv{ang}"]); bayrot[ang] = round(float(r_[1] - rot[1]), 4)
-        cases[cname] = dict(cls=c["cls"], rows=rows, joints=joints, foot_N=reac, uplift=[k for k, v in reac.items() if v < 0.5 and c["support"] == "floor"],
+        cases[cname] = dict(cls=c["cls"], rows=rows, joints=joints, foot_N=reac, uplift=[k for k, v in reac.items() if (v < 0.5 if c["support"] == "floor" else v < -0.5 if c["support"] == "floor_hold" else False)],
                             stub_trans_mm=np.round(trs, 4).tolist(), stub_rot_mrad=np.round(rot, 4).tolist(), bay_rot_rel_stub_mrad=bayrot,
-                            contact_iterations=it + 1, umax_mm=round(float(np.abs(U).max()), 3), feet_in_contact=[k for k in feet if reac[k] >= 0.5],
+                            ext=ext, reaction_sum_N=react_total, applied_sum_N=load_total, contact_iterations=it + 1, umax_mm=round(float(np.abs(U).max()), 3), feet_in_contact=[k for k in feet if reac[k] >= 0.5], support=c["support"],
                             sup_nodes=fx.tolist() if False else None)
         wk = max(rows, key=lambda k: rows[k]["worst"])
         log(f"{cname:50s} worst {rows[wk]['worst']:.2f} {wk}  stub rot {np.round(rot, 2).tolist()} mrad  feet {len(cases[cname]['feet_in_contact'])}  ({time.time() - t0:.0f} s)")
-    res = dict(h=h, mode=mode, cells=int(sum(len(c) for c in Mo.cells.values())), dofs=int(3 * Mo.nN), cases=cases,
+    foot_owner = {a: b for (a, b) in Mo.pairs if a.startswith("foot_")}
+    res = dict(h=h, mode=mode, foot_owner=foot_owner, cells=int(sum(len(c) for c in Mo.cells.values())), dofs=int(3 * Mo.nN), cases=cases,
                joint_nodes={f"{a} | {b}": int(len(g)) for (a, b), g in Mo.pairs.items()}, centroids={f"{a} | {b}": np.round(v, 1).tolist() for (a, b), v in jc.items()})
     return res, Mo
+
+
+# ================================================================================================ sizing, assembly, requirements
+def size_joints(fe, J, target=0.8, nmax=6):
+    """bolt size and count per joint from the FE: the worst bolt index over the cases, scaled by the bolts there are; M3 up to nmax
+    bolts, else M5 (about 2.2 x the capacity). -> {(a, b, plane): (size, n)} for laps(); log of what changed."""
+    worst = {}
+    for cn, c in fe["cases"].items():
+        for jk, jd in c["joints"].items():
+            if "bolt_worst" in jd: worst[jk] = max(worst.get(jk, 0.0), jd["bolt_worst"])
+    sizes = {}; rows = []
+    for j in J:
+        if not j["sites"]: continue
+        jk = f"{j['a']} | {j['b']}"; w = worst.get(jk, 0.0); n0 = len(j["sites"]); s0 = j["size"]
+        cap = 1.0 if s0 == "M3" else 2.2
+        need = w * n0 * cap                                          # index x bolts, in M3 units
+        if need / target <= nmax: size, n = "M3", max(int(math.ceil(need / target)), min(2, n0), 1)
+        else: size, n = "M5", min(max(int(math.ceil(need / (target * 2.2))), 2), nmax)
+        sizes[(j["a"], j["b"], j["plane"])] = (size, n)
+        rows.append(dict(joint=jk, plane=j["plane"], worst_index=round(w, 3), was=f"{n0} x {s0}", now=f"{n} x {size}", over=bool(size == "M5" and need / (target * 2.2) > nmax)))
+    return sizes, rows
+
+
+def mass_cg(P, finfo):
+    rows, mt, mc = {}, 0.0, np.zeros(3)
+    for k, m in P.items():
+        t = tm(m); g = m.volume() * RHO; c = np.array(t.center_mass); rows[k] = round(g, 1); mt += g; mc += g * c
+    for k, m in feet_meshes(finfo).items():
+        g = m.volume() * 1.22e-3; c = np.array(tm(m).center_mass); rows[k] = round(g, 2); mt += g; mc += g * c
+    return dict(rows_g=rows, structure_g=round(mt, 0), cg=np.round(mc / mt, 1).tolist())
+
+
+def print_poses(P):
+    """largest flat face down: for each of the 6 axis directions the bed contact (print_orient's definition, M)."""
+    import print_orient as PO
+    out = {}
+    for k, m in P.items():
+        t = tm(m); best = None
+        for ax in range(3):
+            for sg in (1, -1):
+                R_ = PO.rot_to_down(ax, sg); tt = t.copy(); tt.apply_transform(R_)
+                n = tt.face_normals; a = tt.area_faces; zc = tt.triangles_center[:, 2]; zmin = tt.bounds[0][2]
+                bed = float(a[(n[:, 2] < -0.99) & (zc < zmin + 0.3)].sum())
+                if best is None or bed > best[0]: best = (bed, f"{'+' if sg > 0 else '-'}{'XYZ'[ax]} face down", np.ptp(tt.bounds, axis=0))
+        out[k] = dict(bed_mm2=round(best[0], 0), face=best[1], extents=np.round(best[2], 1).tolist(), fits_180=bool((best[2] <= 180.0).all()))
+    return out
+
+
+def write_cut_assembly(P, J, finfo, path):
+    """runs/box_system/v2/cut/box_structure_v2_cut.assembly.json: the v2 layout system file (receivers, cartridges, arm envelopes, lanes,
+    PSU, sheets as cage) with the bay body envelopes and the v1 mast replaced by the cut pieces and the catch by the main catch file."""
+    import assembly
+    old = json.load(open(os.path.join(HERE, "box_structure_v2.assembly.json")))
+    rel = lambda p: os.path.relpath(p, ROOT)
+    drop = lambda n: ("body envelope" in n) or n.startswith("mast v6") or n.startswith("catch (panels v7")
+    parts = [p for p in old["parts"] if not drop(p["name"])]
+    ca = assembly.load(os.path.join(HERE, "box_catch.assembly.json"))
+    catch_names = []
+    for p in ca.parts:
+        if p["name"].startswith("drone"): continue
+        q = dict(p); q["name"] = "catch: " + p["name"]
+        if "mesh" in q and not os.path.isabs(q["mesh"]):
+            cand = [os.path.join(ROOT, q["mesh"]), os.path.join(HERE, q["mesh"])]
+            q["mesh"] = rel(next(c for c in cand if os.path.exists(c)))
+        q["owner"] = "box catch"; parts.append(q); catch_names.append(q["name"])
+    for k, m in P.items():
+        parts.append(dict(name=k, role="structure", mesh=rel(os.path.join(OUT, "pieces", f"{k}.stl")), pose=np.eye(4).tolist(), material="PETG", tag="M",
+                          owner="box structure", version="v2 cut", source="nox/box/box_system_v2_cut.py", note="cut piece, a candidate for its own topology run"))
+    for k in feet_meshes(finfo):
+        parts.append(dict(name=k, role="structure", mesh=rel(os.path.join(OUT, "pieces", f"{k}.stl")), pose=np.eye(4).tolist(), material="TPU95A", tag="E",
+                          owner="box structure", version="v2 cut", source="nox/box/box_system_v2_cut.py", note="TPU foot O20 x 5 (E)"))
+    names = {p["name"] for p in parts}
+    pairs = [pr for pr in old["contact_pairs"] if pr[0] in names and pr[1] in names]
+    for j in J:
+        if j["sites"]: pairs.append([j["a"], j["b"], 5.0])                      # bolted laps: the tab sits on its recess
+    mans = {k: m for k, m in P.items()}
+    for ang in BAY_ANG:
+        rc = man(trimesh.load(os.path.join(LAY, "parts", f"bay{ang}_receiver.stl"), force="mesh"))
+        for k, m in mans.items():
+            v = (rc ^ m).volume() if (np.array(bbox(rc)[0]) < bbox(m)[1]).all() and (np.array(bbox(m)[0]) < bbox(rc)[1]).all() else 0.0
+            if v > 0.0: pairs.append([f"bay {ang} receiver", k, max(5.0, round(v * 1.5, 1))])
+    ct = [(n, man(trimesh.load(os.path.join(ROOT, p["mesh"]), force="mesh"))) for n, p in ((p["name"], p) for p in parts if p["name"].startswith("catch: ") and "mesh" in p)]
+    for n, cm in ct:
+        for k, m in mans.items():
+            if (np.array(bbox(cm)[0]) < bbox(m)[1]).all() and (np.array(bbox(m)[0]) < bbox(cm)[1]).all():
+                v = (cm ^ m).volume()
+                if 0 < v < 1500.0: pairs.append([n, k, round(v * 1.5 + 1, 1)])                       # the seat landing (drawn wins, M)
+    acc = []
+    for a_ in old["access"]:
+        if "body out" in a_["name"]: continue
+        a2 = dict(a_); a2["ignore"] = [x for x in a_.get("ignore", []) if x in names]; acc.append(a2)
+    A = assembly.new("Box structure v2 cut", "box", parts=parts, fit_tol_mm3=0.5, contact_pairs=pairs, access=acc, probes=False, note=(
+        "Box structure v2 cut (24 Oct, box_system_v2_cut.py): the round 2 g3000 field cut into the pieces in pieces/ (W), bolted tab laps, "
+        "TPU feet, the 4 sheets as cage with 5 clip tabs each on frame members, receivers and cartridges of the v2 layout in pose, the catch from "
+        "box_catch.assembly.json (panel v9 plain) on its 8 seat posts. Left out: the arm (its envelopes stay as keep-outs), bolts, the "
+        "electronics boards (movable), the bay body service-door access (the bodies are in halves: not checked). Crash probes off (floor-standing box, DEFAULT)."))
+    A.save(path)
+    return A
+
+
+def rear_zone(P, planes_y=(-62.0, -50.0, -30.0, -10.0)):
+    """frame members in the rear zone (the boards sit between the rear sheet Y -66 and the frame): per piece and slice, the section's
+    bounding boxes and area, M. The fixed electronics are the PSU, the charger and the sheet face strip Y -66..-50."""
+    out = {}
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+    for yv in planes_y:
+        rows = []
+        for k, m in P.items():
+            s = (m ^ box(-BIG, BIG, yv - 0.3, yv + 0.3, -BIG, BIG))
+            if s.num_vert() == 0: continue
+            cs = s.rotate([-90, 0, 0]).project()
+            for r_ in cs.to_polygons():
+                pg = Polygon(r_)
+                if pg.area < 20 or not pg.exterior.is_ccw: continue
+                b = pg.bounds; rows.append(dict(piece=k, x=[round(b[0]), round(b[2])], z=[round(b[1]), round(b[3])], area_mm2=round(pg.area)))
+        out[f"Y {yv:g}"] = rows
+    return out
+
+
+def exploded_views(P, finfo, out_prefix, k_exp=0.35):
+    """exploded views of the pieces (one colour each) and the assembled iso: PNGs. Pieces decimated to 2500 faces for the plot."""
+    import matplotlib; matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+    cm = plt.get_cmap("tab20")
+    meshes = {}
+    for k, m in P.items():
+        t = tm(m)
+        try: t = t.simplify_quadric_decimation(face_count=2500)
+        except Exception: pass
+        meshes[k] = t
+    for k, m in feet_meshes(finfo).items(): meshes[k] = tm(m)
+    cen = np.mean([t.centroid for t in meshes.values()], axis=0)
+    names = list(meshes); paths = {}
+    views = dict(iso=(22, -55), front=(0, -90), side=(0, 0), top=(90, -90), back=(22, 125))
+    for exploded in (True, False):
+        for vn, (el, az) in views.items():
+            if not exploded and vn != "iso": continue
+            fig = plt.figure(figsize=(9, 9)); ax = fig.add_subplot(111, projection="3d")
+            for i, k in enumerate(names):
+                t = meshes[k]; off = (t.centroid - cen) * k_exp if exploded else np.zeros(3)
+                tri = t.vertices[t.faces] + off
+                nrm = t.face_normals; col = np.array(cm(i % 20)[:3]); sh = 0.55 + 0.45 * np.clip(nrm @ np.array([0.3, -0.5, 0.8]), -1, 1)
+                pc = Poly3DCollection(tri, linewidths=0.0); pc.set_facecolor(np.c_[np.clip(col[None] * sh[:, None], 0, 1), np.ones(len(sh))]); pc.set_edgecolor("none")
+                ax.add_collection3d(pc)
+            lim = [(-260, 260), (-110, 400), (-300, 280)] if exploded else [(-215, 215), (-70, 340), (-236, 234)]
+            ax.set_xlim(*lim[0]); ax.set_ylim(*lim[1]); ax.set_zlim(*lim[2]); ax.set_box_aspect([lim[k][1] - lim[k][0] for k in range(3)])
+            ax.view_init(el, az); ax.set_xlabel("X"); ax.set_ylabel("Y"); ax.set_zlabel("Z")
+            ax.set_title(("exploded " if exploded else "assembled ") + vn)
+            fig.tight_layout(); pth = out_prefix + f"_{'exp' if exploded else 'asm'}_{vn}.png"; fig.savefig(pth, dpi=100); plt.close(fig); paths[("exp" if exploded else "asm", vn)] = pth
+    return paths
+
+
+TARGETS = dict(flight=0.5, misuse=1.0, sustained=1.0)
+AIM = 0.8
+CASE_CLS = lambda cn, fe: fe["cases"][cn]["cls"]
+
+
+def case_tables(fe):
+    """per piece: worst index per class and overall; per case summaries (stub tilt, bay rotation, uplift)."""
+    pieces = sorted({k for c in fe["cases"].values() for k in c["rows"]})
+    tab = {}
+    for k in pieces:
+        row = dict(by_case={cn: c["rows"][k]["worst"] for cn, c in fe["cases"].items()}, by_class={})
+        for cn, c in fe["cases"].items():
+            cl = c["cls"]; row["by_class"][cl] = max(row["by_class"].get(cl, 0.0), c["rows"][k]["worst"])
+        wc = max(row["by_case"], key=row["by_case"].get)
+        row["worst"], row["worst_case"] = row["by_case"][wc], wc
+        row["over"] = {cl: v for cl, v in row["by_class"].items() if v > TARGETS[cl]}
+        tab[k] = row
+    return tab
+
+
+def summary_numbers(fe):
+    cs = fe["cases"]; out = {}
+    tc = cs.get("stub tilt: XT60 at the drone 57 N + 5.9 N.m")
+    if tc:
+        r = tc["stub_rot_mrad"]; tilt = math.hypot(r[0], r[2]); out["stub_tilt_mrad"] = round(tilt, 3); out["stub_k_Nm_per_mrad"] = round(5.9 / max(tilt, 1e-9), 2)
+    out["stub_rot_max_any_case_mrad"] = round(max(max(abs(v) for v in c["stub_rot_mrad"]) for c in cs.values()), 3)
+    br = {cn: max(abs(v) for v in c["bay_rot_rel_stub_mrad"].values()) for cn, c in cs.items()}
+    cn = max(br, key=br.get); out["bay_rot_worst_mrad"] = round(br[cn], 3); out["bay_rot_worst_case"] = cn
+    out["bay_rot_by_case"] = {k: round(v, 3) for k, v in br.items()}
+    out["uplift"] = {cn: c["uplift"] for cn, c in cs.items() if c["uplift"]}
+    out["foot_N"] = {cn: c["foot_N"] for cn, c in cs.items()}
+    return out
+
+
+def write_requirements(P, J, finfo, fe, fe_b, tab, mc, pp, sc, out_dir):
+    """req/<piece>.json and requirements.md: envelope, interfaces (bolts), joint wrenches per case, own worst index, stiffness to keep, mass."""
+    os.makedirs(os.path.join(out_dir, "req"), exist_ok=True)
+    jby = {}
+    for j in J:
+        if j["sites"]: jby.setdefault(j["a"], []).append(j); jby.setdefault(j["b"], []).append(j)
+    sn = summary_numbers(fe)
+    rows_md = ["| Piece | Qty | Envelope X / Y / Z (W, M) | Mass M | Worst index (case, class) | Over target | Joints (partner: n x size) | solid_check |", "|---|---|---|---|---|---|---|---|"]
+    for k, m in P.items():
+        b = bbox(m); t = tab.get(k, {})
+        js = {}
+        for j in jby.get(k, []):
+            other = j["b"] if j["a"] == k else j["a"]
+            jk = f"{j['a']} | {j['b']}"; sg = 1.0 if j["a"] == k else -1.0
+            cs = {cn: dict(F_N=np.round(sg * np.array(c["joints"][jk]["F"]), 2).tolist(), M_Nmm=np.round(sg * np.array(c["joints"][jk]["M_Nmm"]), 0).tolist(),
+                           bolt_idx_worst=c["joints"][jk].get("bolt_worst")) for cn, c in fe["cases"].items() if jk in c["joints"]}
+            js[other] = dict(plane=j["plane"], plane_normal=j["plane_n"], area_cm2=round(j["area"] / 100, 2), centroid=fe["centroids"].get(jk), sites=j["sites"], cases=cs,
+                             bolts=f"{len(j['sites'])} x {j['size']}")
+        ext = {cn: c["ext"][k] for cn, c in fe["cases"].items() if k in c["ext"]}
+        stiff = {}
+        if k == "mast_mid" or any("mast" in k for _ in [0]):
+            stiff["stub_tilt"] = "<= 10 mrad at 57 N + 5.9 N.m, k >= 0.59 N.m/mrad (arm round 3); this model: %s mrad" % sn.get("stub_tilt_mrad")
+        if k.startswith("bay"): stiff["bay_rotation"] = "receiver mount about the axle relative to the stub <= 2.6 mrad (+-0.15 deg datum); this model, worst bay: %s mrad" % sn["bay_rot_worst_mrad"]
+        r = dict(piece=k, version="v2 cut", file=rel_p(os.path.join(OUT, "pieces", f"{k}.stl")), frame="W (box-arm.md): X across, Y along the axle, Z up",
+                 envelope=dict(lo=np.round(b[0], 1).tolist(), hi=np.round(b[1], 1).tolist(), extents=np.round(b[1] - b[0], 1).tolist(), print_pose=pp.get(k)),
+                 mass_g_M=mc["rows_g"].get(k), qty=1, joints=js, external_by_case=ext, own_worst_index=dict(worst=t.get("worst"), case=t.get("worst_case"), by_class=t.get("by_class"),
+                 targets=TARGETS, aim=AIM), stiffness_to_keep=stiff, solid_check=sc.get(k, {}).get("ok"),
+                 note="forces / moments act ON this piece (N, N.mm about the joint centroid, W); index = the system FE worst cell index at the case class (F, h %g)" % fe["h"])
+        json.dump(r, open(os.path.join(out_dir, "req", f"{k}.json"), "w"), indent=0, default=float)
+        wj = "; ".join(f"{o}: {len(v['sites'])} x {v['sites'][0]['size']}" for o, v in js.items())
+        over = ", ".join(f"{c} {v:.2f}" for c, v in t.get("over", {}).items()) or "-"
+        rows_md.append(f"| {k} | 1 | {' x '.join(f'{e:.0f}' for e in b[1] - b[0])} | {mc['rows_g'].get(k)} g | {t.get('worst', float('nan')):.2f} ({t.get('worst_case')}) | {over} | {wj} | {'PASS' if sc.get(k, {}).get('ok') else 'FAIL' if k in sc else 'not run'} |")
+    open(os.path.join(out_dir, "requirements.md"), "w").write("\n".join(rows_md) + "\n")
+
+
+def rel_p(p):
+    return os.path.relpath(p, ROOT)
+
+
+def make_page(P, finfo, tab, mc, pp, sc, sn, imgs, path, title="Box structure v2: the cut and the system FE"):
+    import base64, html
+    b64 = lambda f: base64.b64encode(open(f, "rb").read()).decode()
+    figs = "".join(f'<figure><img alt="{n}" src="data:image/png;base64,{b64(f)}"><figcaption>{n}</figcaption></figure>' for n, f in
+                   [("exploded, iso", imgs[("exp", "iso")]), ("exploded, front", imgs[("exp", "front")]), ("exploded, side", imgs[("exp", "side")]),
+                    ("exploded, top", imgs[("exp", "top")]), ("exploded, from behind", imgs[("exp", "back")]), ("assembled, iso", imgs[("asm", "iso")])])
+    rows = ""
+    for k in sorted(tab, key=lambda q: -tab[q]["worst"]):
+        t = tab[k]; flag = " class=bad" if t["over"] else ""
+        rows += (f"<tr{flag}><td>{html.escape(k)}</td><td>{mc['rows_g'].get(k)}</td><td>{' x '.join(f'{e:.0f}' for e in pp[k]['extents'])}</td><td>{pp[k]['face']} {pp[k]['bed_mm2']:.0f}</td>"
+                 f"<td>{t['by_class'].get('flight', 0):.2f}</td><td>{t['by_class'].get('misuse', 0):.2f}</td><td>{t['by_class'].get('sustained', 0):.2f}</td>"
+                 f"<td>{t['worst']:.2f}</td><td>{html.escape(t['worst_case'])}</td><td>{'PASS' if sc.get(k, {}).get('ok') else ('FAIL' if k in sc else '-')}</td></tr>")
+    page = f"""<title>{title}</title>
+<style>
+:root {{ --bg:#f4f6f7; --ink:#18232b; --mute:#5d6b75; --rule:#d3dadf; --bad:#a4462d }}
+body {{ background:var(--bg); color:var(--ink); font-family:system-ui,sans-serif; line-height:1.45; margin:0; padding:20px }}
+main {{ max-width:1200px; margin:0 auto }} h1 {{ font-size:1.5rem; margin:0 0 6px }} h2 {{ font-size:1.1rem; margin:20px 0 6px }}
+.views {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:12px }}
+figure {{ margin:0; background:#fff; border:1px solid var(--rule); border-radius:6px; overflow:hidden }} figure img {{ width:100%; display:block }} figcaption {{ font-size:.8rem; color:var(--mute); padding:5px 8px }}
+table {{ border-collapse:collapse; width:100%; font-size:.84rem; background:#fff }} th,td {{ text-align:left; padding:4px 8px; border-bottom:1px solid var(--rule) }}
+tr.bad td {{ color:var(--bad) }} .wrap {{ overflow-x:auto }} p {{ max-width:90ch }}
+</style>
+<main><h1>{title}</h1>
+<p>{len(P)} pieces, structure {mc['structure_g'] / 1000:.2f} kg (M, 1.27 g/cm3 PETG, TPU feet 1.22), CG {mc['cg']} (M, W). Stub tilt {sn.get('stub_tilt_mrad')} mrad at 57 N + 5.9 N.m (target 10); worst bay rotation about the axle against the stub {sn['bay_rot_worst_mrad']} mrad (target 2.6) (F, h 4). Colour = piece.</p>
+<div class="views">{figs}</div>
+<h2>Index per piece (system FE, worst cell, class targets 0.5 functional / 1.0 misuse and sustained, aim 0.8)</h2>
+<div class="wrap"><table><tr><th>Piece</th><th>g (M)</th><th>Extents mm</th><th>Bed face, mm2</th><th>functional</th><th>misuse</th><th>sustained</th><th>worst</th><th>case</th><th>solid_check</th></tr>{rows}</table></div>
+</main>"""
+    open(path, "w").write(page)
 
 
 def load_cut(tag=""):
