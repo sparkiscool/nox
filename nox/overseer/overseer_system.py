@@ -219,11 +219,15 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["sled"] = box(-dc - 60, -dc + 60, -72, 72, -5.1, -2.1)
     if PACK_TOP < -7.5:                                                        # hanger walls from the sled to the cartridge rails
         g["sled"] = union([g["sled"], box(-dc - 60, -dc + 60, 27.5, 31, PACK_TOP, -5.0), box(-dc - 60, -dc + 60, -31, -27.5, PACK_TOP, -5.0)])
-    g["cam_pod"] = box(-dc - 23, -dc + 23, 29, 69, PB + 4, -5.1)
-    g["flow_pod"] = box(-dc - 15, -dc + 15, -55, -29, PB + 4, -5.1)
-    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 30, 68, PB + 2.4, PB + 4), cyl(6, PB - 6, PB + 2.4, -dc, 49)])
-    g["down_lens"] = np.array([-dc, 49.0, PB - 6]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -50, -34, PB - 2.5, PB + 4)
-    g["flow_lens"] = np.array([-dc, -42.0, PB - 2.5])
+    # down camera 10 and flow 12 up in their pods (system pass, crash probes): the lenses sit inside the skid runners' band
+    g["cam_pod"] = box(-dc - 23, -dc + 23, 29, 69, PB + 14, -5.1)
+    g["flow_pod"] = box(-dc - 15, -dc + 15, -55, -29, PB + 16, -5.1)
+    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 30, 68, PB + 12.4, PB + 14), cyl(6, PB + 4, PB + 12.4, -dc, 49)])
+    g["down_lens"] = np.array([-dc, 49.0, PB + 4]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -50, -34, PB + 9.5, PB + 16)
+    g["flow_lens"] = np.array([-dc, -42.0, PB + 9.5])
+    # skid runners: printed PETG sleeves on the skid rails (cage), 23 tall: a side edge reaching under the feet meets them
+    # before the lenses (outside the 45 deg view cone), 2.4 under the down camera board, inside the opening at ±5 deg yaw
+    g["runners"] = [box(-dc - 67, -dc + 67, 65 if sy > 0 else -71, 71 if sy > 0 else -65, PB - 13, PB + 10) for sy in (1, -1)]
     g["feet"] = [cyl(5, PB - 13, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     g["PB"] = PB
 
@@ -264,7 +268,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
-             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10"})   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10"}, seat_dz=float(SEAT_DZ))   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
@@ -337,7 +341,7 @@ def cg_of(g):
             L = float(np.hypot(mx - r0[0], my - r0[1])); items.append((f"spars {i_}", 4 * L * ROD_GPM, trimesh.points.PointCloud([[(mx + r0[0]) / 2, (my + r0[1]) / 2, 22]])))
     printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("ring nodes", g["ring_nodes"], 0.5), ("apex", [g["apex"]], 0.45),
                ("cam plate", [g["cam_plate"]], 0.5),
-               ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5),
+               ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5), ("skid runners", g["runners"], 0.4),
                ("cartridge", [g["cart"]], 0.04)]
     tot, mom = 0.0, np.zeros(3)
     for _, gm, m in items:
@@ -382,7 +386,7 @@ def solve_xB(g_fn, zB):
 
 def funnel(g, dc):
     others = trimesh.util.concatenate(g["arms"] + g["motors"] + [g["cage_low"], g["cage_up"], TOP, BOTTOM, FC, PI, DECK, PDB, UBEC, BUCK, RX, g["apex"], g["l2"], g["cam"],
-                                       g["cam_bracket"], g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"])
+                                       g["cam_bracket"], g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"])
     p = pts(others, 30000) + [dc, 0, SEAT_DZ]                     # funnel centre at the catch centre
     d_face = np.full(len(p), np.inf)
     for ax in (0, 1):
@@ -580,7 +584,8 @@ spar_g = 0.0
 if CAGE_TOPO.get("arm_spars"):
     for i_, (mx, my) in enumerate(g["motors_xy"]):
         r0 = np.array([75 * math.cos(math.radians(MOTOR_DEG[i_])), 75 * math.sin(math.radians(MOTOR_DEG[i_]))]); spar_g += 4 * float(np.hypot(mx - r0[0], my - r0[1])) * ROD_GPM
-cage_g = rod_g + spar_g + 8 * 0.25 + sum(abs(m.volume) for m in g["nodes"]) * 1.27e-3 * 0.6 + sum(abs(m.volume) for m in g["ring_nodes"]) * 1.27e-3 * 0.5
+cage_g = (rod_g + spar_g + 8 * 0.25 + sum(abs(m.volume) for m in g["nodes"]) * 1.27e-3 * 0.6 + sum(abs(m.volume) for m in g["ring_nodes"]) * 1.27e-3 * 0.5
+          + sum(abs(m.volume) for m in g["runners"]) * 1.27e-3 * 0.4)
 say("cage rods (C): " + "; ".join(f"{co.SECTIONS[sec]['label']} {n_} x {Ls / 1000:.2f} m" for sec, (n_, Ls) in sorted(by_sec.items(), key=lambda x: co.SECTIONS[x[0]]['gpm']))
     + f"; {rod_g:.0f} g + arm spars {spar_g:.0f} g; {len(g['ring_nodes'])} ring nodes, 4 corner nodes, 8 wheels; ~{cage_g:.0f} g (E) without the apex")
 # landing: tip-over angle on the 4 feet (the lowest points), CG over the stance
@@ -603,14 +608,14 @@ cg_out = (cg * tot - pk * 650 - g["cart"].centroid * cart_g) / (tot - 650 - cart
 say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the pack, {np.hypot(cg_out[0] - dm, cg_out[1]):.1f} without (≤ 3)")
 # system_check manifest (cage first, fit, compact, mass; grouped meshes)
 def tm(m): return m.copy()
-cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])]
+cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"]
 man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)]],         # rod ends in the hub and apex sockets
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),                    # the cartridge path: it drops out the bottom, its cartridge guards it below the wheels
-                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=45.0, min_mm=0.0, skip_probes=True)],         # their views
+                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=45.0, min_mm=0.0, skip_probes=True)],         # their views (down camera 44.5 / 36.5, flow 23 half angles)
            access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
@@ -633,6 +638,17 @@ try:
     for k in ("probes", "access", "fit"):
         w = (SYS.get(k) or {}).get("worst")
         if w: say(f"  {k} worst: " + json.dumps(w, default=str)[:600])
+    wf = (SYS.get("fit") or {}).get("worst")
+    if wf and not wf["pass_"] and "cage" in (wf["a"], wf["b"]):          # which rods make the cage's overlap
+        other = [pt["trimesh"] for pt in man["parts"] if pt["name"] == (wf["b"] if wf["a"] == "cage" else wf["a"])][0]
+        ov = []
+        for k_, rm in g["rod_meshes"].items():
+            lo_ = np.maximum(rm.bounds[0], other.bounds[0]); hi_ = np.minimum(rm.bounds[1], other.bounds[1])
+            if np.any(hi_ <= lo_): continue
+            try: v_ = abs(rm.intersection(other).volume)
+            except Exception: v_ = -1
+            if v_ > 0.5: ov.append((round(v_), k_))
+        say("  cage rods in that pair: " + ", ".join(f"{k_} {v_}" for v_, k_ in sorted(ov, reverse=True)[:8]))
 except Exception as e:
     SYS = None; say(f"system_check failed to run: {str(e)[:200]}")
 # the system's assembly file (nox/ASSEMBLY.md: this script is its only writer); SYS_WRITE_ASM=1 on the final run
@@ -678,7 +694,7 @@ def prop_view(i, mx, my):
 P("bottom plate", BOTTOM, "frame", "#cfcfcf", False, "S500 stock (Holybro STEP)")
 P("top plate", TOP, "frame", "#d8d8d8", False, "S500 stock")
 for i, a in enumerate(g["arms"]): P(f"arm {i + 1}", a, "printed", "#8899aa", True, "rough")
-SEC_COL = {"r3": "#3a3a3a", "r4": "#2b4f7a", "t6": "#3f7a3f", "r5": "#7a5a2b", "t8": "#8a3f8a", "t10": "#a33a3a"}
+SEC_COL = {"r3": "#3a3a3a", "r4": "#2b4f7a", "t6": "#3f7a3f", "r5": "#7a5a2b", "t8": "#8a3f8a", "t10": "#a33a3a", "t12": "#c0662b", "t14": "#b8a02b"}
 for sec in sorted(set(v[4] for v in g["rods"].values()), key=lambda s_: co.SECTIONS[s_]["gpm"]):
     ks = [k for k, v in g["rods"].items() if v[4] == sec]
     if ks: P(f"rods {co.SECTIONS[sec]['label']}", trimesh.util.concatenate([g["rod_meshes"][k] for k in ks]), "cage", SEC_COL[sec], False,

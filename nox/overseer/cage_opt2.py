@@ -483,14 +483,40 @@ def prop_clear(a, b, od, motors):
     return c
 
 
+OPEN_HALF, FACE_TOP = 84.0, 75.1                                   # box collar funnel (dimensions G)
+
+
+def funnel_clear(a, b, od, p):
+    """smallest clearance (mm) of a rod to the seated funnel (catch centre on the funnel axis, p["seat_dz"] = bottom
+    plate top in the seat frame): 45 deg faces from the 168 opening at seat z -0.8 to the top at 75.1; under the
+    opening the rod stays inside it at ±5 deg yaw with 1.0 (dimensions G (2))"""
+    if p.get("seat_dz") is None: return np.inf
+    t = np.linspace(0, 1, 80)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float))
+    q = q + np.array([-p["xc"], 0.0, p["seat_dz"]]); z = q[:, 2]; c = np.inf
+    for ax in (0, 1):
+        for sg in (1, -1):
+            x = sg * q[:, ax]; inz = (z > -0.8) & (z < FACE_TOP) & (np.abs(q[:, 1 - ax]) < OPEN_HALF + 0.8 + z)
+            if inz.any(): c = min(c, float(((z[inz] + OPEN_HALF + 0.8 - x[inz]) / math.sqrt(2) - od / 2).min()))
+    low = q[z <= -0.8]
+    if len(low):
+        for yaw in np.radians((-5.0, 0.0, 5.0)):
+            cy, sy_ = math.cos(yaw), math.sin(yaw)
+            r = np.abs(np.stack([low[:, 0] * cy - low[:, 1] * sy_, low[:, 0] * sy_ + low[:, 1] * cy], 1)).max()
+            c = min(c, float(OPEN_HALF - r - od / 2))
+    return c
+
+
 def guard_caps(m):
-    """largest section index (ORDER) per rod that keeps the prop clearance; -1 = no section does (the layout fails)"""
+    """largest section index (ORDER) per rod that keeps the prop clearance (12) and the funnel clearance (1.0);
+    -1 = no section does (the layout fails)"""
     caps = {}
     for e in m.el:
-        if e["kind"] != "rod" or e["group"] in PLAN_GROUPS: continue
+        if e["kind"] != "rod": continue
         cap = -1
         for i, sec in enumerate(ORDER):
-            if prop_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[sec]["od"], m.info["motors"]) < GUARD_GAP: break
+            od = SECTIONS[sec]["od"]
+            if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
+            if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
             cap = i
         caps[e["name"]] = cap
     return caps
@@ -605,6 +631,9 @@ def evaluate(p, topo, sizes, detail=False):
             worst_pc = min(worst_pc, prop_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], m.info["motors"]))
     res["prop_clear"] = float(worst_pc)
     g["prop guard"] = (GUARD_GAP - worst_pc) / GUARD_GAP if np.isfinite(worst_pc) else -1.0
+    if p.get("seat_dz") is not None:                                 # funnel (G): every rod 1.0 off the faces, inside the opening below it
+        wf = min(funnel_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], p) for e in m.el if e["kind"] == "rod")
+        res["funnel_clear"] = float(wf); g["funnel"] = 1.0 - wf if np.isfinite(wf) else -1.0
     res["g"] = g
     res["violation"] = float(sum(max(0.0, v) for v in g.values()))
     return (res, m) if detail else res
@@ -690,7 +719,7 @@ def size_fsd(p, topo, iters=30, log=False):
     for it in range(30):
         prev = list(sec)
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        bad = {k: v for k, v in res["g"].items() if v > 0 and k != "prop guard"}
+        bad = {k: v for k, v in res["g"].items() if v > 0 and k not in ("prop guard", "funnel")}
         if not bad: break
         stepped = False
         for key, mk in (("L2 mode", "_l2_mode"), ("belly mode", "_belly_mode")):
