@@ -806,7 +806,7 @@ def _rot(axis, deg):
 
 PIECES = {   # name: (getter, material, print pose (c -> print), count, version, bed face)
     "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, "v5", "closed end (z 0) down"),
-    "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("y", -90), 2, "v5", "inner tab face down"),
+    "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v5", "bar top (y 11.5) down: largest face, bar layers along its length"),
     "receiver": (lambda B: B["recv"], "PETG", np.eye(4), 1, "v1", "closed-end face down"),
     "receiver_lid": (lambda B: B["lid"], "PETG", _rot("x", -90), 1, "v1", "top face down"),
     "receiver_strip": (lambda B: U(*[box(*sorted((B["r"]["X_IN"] - 1.55, B["r"]["RF"] - 0.05)), B["r"]["Y_TOP"], B["r"]["Y_TOP"] + STRIP_T,

@@ -35,7 +35,7 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 | Piece | Material, count | Scout g (M) | Overseer g (M) | Print |
 |---|---|---|---|---|
 | `box_battery_cartridge_<pack>_v5` | PETG x 1 | 33.1 | 88.9 | closed end down, tree supports (174 tall for the Overseer) |
-| `box_battery_slider_<pack>_v5` | PETG x 2 (one part, both sides) | 3.2 | 4.0 | inner tab face down |
+| `box_battery_slider_<pack>_v5` | PETG x 2 (one part, both sides) | 3.2 | 4.0 | bar top down (largest face, layers along the bar) |
 | `box_battery_receiver_<pack>_v1` (latch block, drone and bays) | PETG x 1 | 41.2 | 79.5 | closed-end face down, tree supports |
 | `box_battery_receiver_lid_<pack>_v1` | PETG x 1 | 5.3 | 6.9 | top face down |
 | `box_battery_receiver_strip_<pack>_v1` | TPU 95A x 2 | 1.0 | 2.1 | flat |

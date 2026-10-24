@@ -8,13 +8,13 @@ System: Scout v3 (pass 1 snapshot), cage first −3.1 mm at the tail-left bottom
 Weight: Scout set 87.9 g (M), was 122.3 (PR 44); Overseer set 187.6 g (M), new
 Strength: receiver FE crash worst 0.36 (Scout, −y) / 0.44 (Overseer, +z), handling 50 N on a foot 0.67 / 0.73; latch hand calc worst 0.35 / 0.39 (grip pull with the XT60)
 Solid: solid_check PASS on all 10 files
-Print: cartridge closed end down (bed 1267 / 3125 mm²), receiver closed-end face down (837 / 1251 mm²), lid top down, slider inner tab face down (243 mm², brim), strips flat (TPU); tree supports; files print/box_battery_*
+Print (each saved on its largest flat face): cartridge closed end down (bed 1267 / 3125 mm²), receiver closed-end face down (837 / 1251 mm²), lid top down, slider bar top down (328 / 463 mm², largest face; bar layers along its length), strips flat (TPU); tree supports; files print/box_battery_*
 ```
 
 | Piece | Scout g (M) | Overseer g (M) | Extents (print pose) | Bed mm² |
 |---|---|---|---|---|
 | cartridge v5 | 33.06 | 88.94 | 40 x 45.6 x 96 / 55 x 58.6 x 174 | 1267 / 3125 |
-| slider v5 (x 2) | 3.18 | 4.04 | 22 x 11.5 x 18.6 / 26.1 | 243 / 243 |
+| slider v5 (x 2) | 3.18 | 4.04 | 18.6 / 26.1 x 22 x 11.5 | 328 / 463 |
 | receiver v1 | 41.17 | 79.54 | 61.2 x 53.9 x 101.6 / 76.2 x 66.9 x 179.6 | 837 / 1251 |
 | receiver lid v1 | 5.34 | 6.87 | 61.2 x 20 x 5.5 / 76.2 x 20 x 5.5 | 1001 / 1301 |
 | receiver strip v1 (TPU, x 2) | 0.98 | 2.07 | 4.8 x 70.6 x 2.4 / 148.6 | 339 / 713 |
