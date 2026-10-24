@@ -93,7 +93,7 @@ a = {"name": "Scout v3", "machine": "scout",
                   # may reach the cartridge's chamfered ends (no keel rail fits under them inside the funnel planes); it takes
                   # landings (J) (DEFAULT, Scout refit; alt: a cartridge end skid, control session)
                   for n in ("cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug",
-                            "receiver v1 (latch)")],
+                            "receiver v1 (latch)", "receiver lid (latch)")],
      "contact_pairs": [[f"motor {i}", f"prop {i}", 1e9] for i in range(1, 5)] + [[f"motor {i}", "frame plate", 1e9] for i in range(1, 5)] +
                       [["cartridge v5 (latch)", "receiver TPU strips (latch)", 5.0], ["pack 4S 1500", "cartridge v5 (latch)", 1.0],
                        ["pack XT60 plug", "cartridge v5 (latch)", 5.0], ["XT60E1-M", "receiver v1 (latch)", 5.0], ["XT60E1-M", "receiver lid (latch)", 5.0],
@@ -115,7 +115,7 @@ a = {"name": "Scout v3", "machine": "scout",
                 for x in (-41.7, 43.25) for y in (-25.6, 25.6)] +
                [{"name": "FC USB-C (edge to the tail-left, E)", "part": "FC", "from": [-10.8, -12.7, 13.5], "dir": [-0.7071, -0.7071, 0], "length_mm": 70,
                  "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["mount + nose legs (Scout)", "wires"]},
-                {"name": "Radxa USB-C (bottom edge, E)", "part": "Radxa Zero 3W", "from": [-20.0, -31.9, -35.0], "dir": [0, 0, -1], "length_mm": 50,
+                {"name": "Radxa USB-C (bottom edge, E)", "part": "Radxa Zero 3W", "from": [-20.0, -31.9, -35.0 + L["RADXA_DZ"]], "dir": [0, 0, -1], "length_mm": 50,
                  "tool": {"type": "box", "w": 12, "h": 7}, "ignore": SWAPSET}],
      "parts": parts}
 dst = os.path.join(HERE, "scout.assembly.json")

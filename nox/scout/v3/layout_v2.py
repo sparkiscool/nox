@@ -238,8 +238,9 @@ LEADS = box(37.7 + LATCH_DX, 48.8 + LATCH_DX, -9.25, 9.25, 9.6, 18.5)           
 # legs at the nose only, >= 7.0 inside the funnel planes like the receiver (|x| <= 84.8 + z - 10.5 at their foot); the tail
 # joints sit on the mount's corners (a tail leg would stand outside the cage there, pass 4)
 LEGS = [box(34 + LATCH_DX, 40 + LATCH_DX, sy * 31.0 if sy > 0 else -35.0, 35.0 if sy > 0 else -31.0, -34.0, 9.6) for sy in (1, -1)]
-RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # standing, -y side, parts outward (PR 44, E)
-RADXA_STANDOFF = box(-33, 32, -30.3, -25.5, -35, -5)                              # on the mount's -y plate (1.2 off the receiver)
+RADXA_DZ = 8.0                                # v4 layout (review PR 94): up 8 so its front-bottom corner sits 12 inside the funnel plane, room for a shield
+RADXA = box(-33, 32, -33.5, -30.3, -35 + RADXA_DZ, -5 + RADXA_DZ)                 # standing, -y side, parts outward (PR 44, E)
+RADXA_STANDOFF = box(-33, 32, -30.3, -25.5, -35 + RADXA_DZ, -5 + RADXA_DZ)        # on the mount's -y plate (1.2 off the receiver)
 FLOW = box(-11, 11, 27.5, 43.5, -33.5, -25.5); FLOW_LENS = np.array([5.0, 33.5, -33.5])    # +y mid-length on the mount (DEFAULT; the
 # tail spot blocked the 4th keel node's rods; lens 6 from the nose edge, SENS_FLOW_ROT unchanged)
 UBEC = box(-58, -13, 10.6, 26.0, 10.0, 18.0)                                    # in the mount's tail beside the FC (DEFAULT:
@@ -386,7 +387,9 @@ def candidate_nodes():
                     (-60, 40, -12), (-60, -40, -12)]:
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
     for x, y, z in [(60, 0, -14), (60, 30, -14), (60, -30, -14), (-60, 0, -14), (-60, 30, -14), (-60, -30, -14),
-                    (30, -40, -32), (-30, -40, -32), (0, -40, -34), (30, 48, -30), (-30, 48, -30), (0, 48, -30)]:
+                    (30, -40, -32), (-30, -40, -32), (0, -40, -34), (30, 48, -30), (-30, 48, -30), (0, 48, -30),
+                    (25, 40, -40), (-25, 40, -40), (0, 40, -42), (25, -40, -40), (-25, -40, -40), (0, -40, -42),   # lower belly, ahead of
+                    (106, 24, 26), (106, -24, 26)]:                                                                # the flow / Radxa; camera chin
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
     for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5), (0, 28.5)]:
