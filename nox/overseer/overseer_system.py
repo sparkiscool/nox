@@ -264,15 +264,17 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
-             feet=(72.0, 68.0, float(g["PB"]) - 3.5))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8"})   # 8 tube: the rails clear the down camera board, the legs the opening   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
-    sock = 0.0                                                    # rod ends epoxied in printed sockets on the arms, 20 deep (E)
+    sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
     for name, a, b, group, kind in Mg:
         if kind == "rod":
             sc = sec_of(name, group); rods[name] = (Ng[a], Ng[b], co.SECTIONS[sc]["od"], group, sc)
             sock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("tipb", "tipt", "armbot", "arm", "root")))
-    g["arm_socket_mm3"] = sock
+            hsock += sum(math.pi * (co.SECTIONS[sc]["od"] / 2) ** 2 * 20.0 for n_ in (a, b) if n_.startswith(("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc")))
+    g["arm_socket_mm3"] = sock; g["hub_socket_mm3"] = hsock
+    g["pod_clamp_mm3"] = sum(math.pi * (v[2] / 2) ** 2 * 46.0 for k, v in rods.items() if k.startswith("belly bar"))   # pods clamp on the belly bars (E)
     ring_nodes = []
     for nm in info["pnodes"]:
         for lvl in ("lo", "hi"):
@@ -603,7 +605,9 @@ say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the
 def tm(m): return m.copy()
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])]
 man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
-           contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)]],          # designed joint: rod ends 20 deep in the arm sockets
+           contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
+                          ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
+                          ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)]],         # rod ends in the hub and apex sockets
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),                    # the cartridge path: it drops out the bottom, its cartridge guards it below the wheels
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=45.0, min_mm=0.0, skip_probes=True)],         # their views

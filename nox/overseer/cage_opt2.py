@@ -660,7 +660,8 @@ def size_fsd(p, topo, iters=30, log=False):
     caps = guard_caps(m0)
     run_names = [[m0.el[i]["name"] for i in run] for run in runs]
     run_group = [m0.el[run[0]]["group"] for run in runs]
-    run_cap = [min([caps.get(m0.el[i]["name"], len(ORDER) - 1) for i in run]) for run in runs]
+    gcap = {gname: ORDER.index(sec_) for gname, sec_ in p.get("cap_groups", {}).items()}   # geometric caps (funnel, pods)
+    run_cap = [min([caps.get(m0.el[i]["name"], len(ORDER) - 1) for i in run] + [gcap.get(m0.el[run[0]]["group"], len(ORDER) - 1)]) for run in runs]
     def capped(req):
         return [ORDER[max(0, min(ORDER.index(r_), run_cap[i]))] for i, r_ in enumerate(req)]
     sec = ["r3"] * len(runs)
