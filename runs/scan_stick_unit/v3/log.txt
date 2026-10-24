@@ -17,3 +17,14 @@ it   7 beta    1 J   0.3673 vol 0.0705 (dil 0.0834 g -0.018) grey 30.4% ch 0.100
 it   8 beta    1 J   0.3544 vol 0.0699 (dil 0.0826 g -0.027) grey 29.9% ch 0.100 worst Pi guard bump side 100 N 220 11.5s
 it   9 beta    1 J   0.3406 vol 0.0706 (dil 0.0831 g -0.021) grey 29.6% ch 0.100 worst Pi guard bump side 100 N 220 9.9s
 it  10 beta    1 J   0.3377 vol 0.0708 (dil 0.0834 g -0.018) grey 29.4% ch 0.100 worst Pi guard bump side 100 N 220 10.9s
+it  11 beta    1 J   0.3364 vol 0.0719 (dil 0.0843 g +0.000) grey 29.1% ch 0.100 worst Pi guard bump side 100 N 220 10.6s
+it  12 beta    1 J   0.3363 vol 0.0718 (dil 0.0842 g -0.002) grey 28.8% ch 0.100 worst Pi guard bump side 100 N 220 10.8s
+it  13 beta    1 J   0.3361 vol 0.0720 (dil 0.0842 g -0.001) grey 28.6% ch 0.100 worst Pi guard bump side 100 N 220 9.7s
+layout: beta 1 done: eroded design 20 bodies, main 95.6%; drawn bodies outside the main body: 13
+it  14 beta    2 J   0.3844 vol 0.0622 (dil 0.1005 g -0.118) grey 25.1% ch 0.100 worst Pi guard bump side 100 N 220 9.5s
+it  15 beta    2 J   0.3370 vol 0.0707 (dil 0.1110 g -0.026) grey 26.4% ch 0.100 worst Pi guard bump side 100 N 220 8.8s
+it  16 beta    2 J   0.3366 vol 0.0733 (dil 0.1127 g -0.003) grey 26.1% ch 0.100 worst Pi guard bump side 100 N 220 10.0s
+it  17 beta    2 J   0.3361 vol 0.0725 (dil 0.1119 g -0.009) grey 25.9% ch 0.100 worst Pi guard bump side 100 N 220 9.9s
+it  18 beta    2 J   0.3360 vol 0.0737 (dil 0.1127 g -0.002) grey 25.8% ch 0.073 worst Pi guard bump side 100 N 220 9.5s
+it  19 beta    2 J   0.3359 vol 0.0741 (dil 0.1129 g -0.000) grey 25.7% ch 0.065 worst Pi guard bump side 100 N 220 10.8s
+it  20 beta    2 J   0.3359 vol 0.0743 (dil 0.1129 g -0.000) grey 25.6% ch 0.064 worst Pi guard bump side 100 N 220 11.1s
