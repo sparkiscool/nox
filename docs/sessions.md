@@ -17,7 +17,7 @@ Spark 24 Oct: no session stays alive or keeps getting updates after its work is 
 - **Board:** the organiser refreshes the Nox Board (https://claude.ai/artifact/NKBNkPUSyKgwYrtZZBhMkw) on its 6 h run: `python3 tools/board_data.py <dir>`, upload each JSON as an asset, then one ArtifactData `update` per `datasets/<name>`.
 
 ## Sweep (every 6 h as part of the organiser run, `docs/organiser.md`; any session may run it by hand)
-1. `list_sessions` (mine, limit 100). Consider only sessions whose sources or outcomes name `sparkiscool/nox`, not ARCHIVED, not this session.
+1. `list_sessions` (mine, limit 100). Consider only sessions whose sources or outcomes name `sparkiscool/nox`, not ARCHIVED, not this session. `python3 tools/sweep_eval.py <saved list_sessions output> <this session id>` applies the rules below and prints ARCHIVE / REPORT / keep per session.
 2. Archive a session when all hold:
    - not RUNNING, and last update over 6 h ago;
    - `status_bucket` is completed (never failed or blocked: those are reported, not archived);

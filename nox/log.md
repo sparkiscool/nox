@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (organiser): light pass 12:04: 8 nox sessions, none to archive; XT60 chat blocked on Spark's go to print funnel v9 plain panels (reported); check_state clean; hub mentions removed from docs/organiser.md and README (no hub since 09:00); tools/sweep_eval.py added.
 - 24 Oct (box structure system session, box electronics): heads v7 confirms both gripper dwells hold unpowered, so K4 cutting both grippers is safe if the open command lands inside the 10° open dwell (bench CHECK); the 5-wire ribbon and the 3:1 hall sum are fine on the head. box-electronics.md.
 - 24 Oct (box structure system session): round 2 topology recorded in dimensions System box structure (sheets as cladding, 3000 cm³, no datum ring, DEFAULT; Overseer bay bodies split at Y 158, DEFAULT; boards re-placed round the frame after the cut, DEFAULT; alt: frame round the boards). Cut + system FE worker started.
 - 24 Oct (box_system v2 topo round 2, run-part): sheets as cladding, floor only support: 3000 cm3 stands alone (9/9 bays, 8/8 posts, stub tilt 0.41 mrad, bay rot 1.8 mrad, 9 cm2 floor, 3886 g generated E); 2000 too soft, 4000 2x stiffer +1.2 kg; datum ring not needed; Overseer bays 200 long. `runs/box_system/v2/topo_r2/`.
