@@ -24,10 +24,10 @@
   "guard_offsets_mm": {}
  },
  "fit_fail": [],
- "mass_g": 5579.72,
+ "mass_g": 5580.07,
  "cg": [
-  0.52,
-  120.57,
+  0.53,
+  120.58,
   -35.35
  ],
  "arm_only": {
@@ -39,11 +39,11 @@
   ],
   "largest_mm": 227.7,
   "hull_L": 5.49,
-  "turning_g": 2031.0,
-  "unbalance_gm": 4.3,
-  "cg_off_axis_mm": 2.12,
+  "turning_g": 2033.0,
+  "unbalance_gm": 4.29,
+  "cg_off_axis_mm": 2.11,
   "detent_sized_gm": 10.1,
-  "gravity_Nm": 0.028,
-  "detent_margin_2_springs": 5.11
+  "gravity_Nm": 0.029,
+  "detent_margin_2_springs": 5.36
  }
 }
