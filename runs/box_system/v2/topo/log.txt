@@ -1,0 +1,23 @@
+=== box_system_topo_v2: h 6.0, gen 1500.0 cm3, min member 18.0; body ties off (every drawn body carries a real load)
+seat posts side/overlap mm3 [(1, 1413.9), (1, 1413.9), (1, 466.9), (1, 466.9), (1, 1413.9), (1, 1413.9), (1, 466.9), (1, 466.9)]
+box_system_topo_v2: grid (40, 40, 48) h 12.0 = 76,800 cells; design 22,440 (38776.3 cm3), drawn 4,364, void 49,996
+  support default: 1088 cells, 2310 nodes
+  support hands: 312 cells, 728 nodes
+  support side: 1248 cells, 2640 nodes
+setup h 12.0: 13 s, 11 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 1.55 cells, erosion depth 4.93 mm; volfrac 0.039 of 22,440 design cells
+layout: WARNING filter radius 1.55 cells < 2: the grid is too coarse for 18.0 mm members; use h <= 7.42
+layout: WARNING nearly mirrored in x (0.7% of passive cells differ): no symmetry
+layout: 13 drawn bodies (4,364 cells), held solid in every realization; eroded filter: masked
+layout: 11 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (40, 40, 48) = 76,800 elements, 101,391 active dofs; backend direct (direct estimate 0.8 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0599 (dil 0.0729 g +0.549) grey 18.0% ch 0.100 worst XT60 insert at the drone 60  1.18e+04 6.9s
+it   2 beta    1 J  16.9172 vol 0.0361 (dil 0.0435 g -0.076) grey 20.4% ch 0.100 worst Overseer catch -X-Y diag 2.24e+04 5.2s
+it   3 beta    1 J  12.7635 vol 0.0378 (dil 0.0455 g -0.034) grey 20.3% ch 0.100 worst XT60 insert at the -90 bay 6 1.67e+04 5.2s
+it   4 beta    1 J  12.5804 vol 0.0376 (dil 0.0451 g -0.041) grey 20.3% ch 0.100 worst XT60 insert at the -90 bay 6 1.64e+04 4.8s
+it   5 beta    1 J  10.9158 vol 0.0382 (dil 0.0458 g -0.028) grey 20.0% ch 0.100 worst XT60 insert at the -120 bay  1.36e+04 4.9s
+it   6 beta    1 J   4.1879 vol 0.0381 (dil 0.0457 g -0.025) grey 19.9% ch 0.100 worst XT60 insert at the -120 bay  5.76e+03 5.0s
+it   7 beta    1 J   3.1544 vol 0.0378 (dil 0.0454 g -0.031) grey 20.5% ch 0.100 worst Overseer catch -X-Y diag 4.25e+03 4.8s
+it   8 beta    1 J   3.4513 vol 0.0366 (dil 0.0440 g -0.061) grey 19.9% ch 0.100 worst XT60 insert at the -120 bay  4.75e+03 4.8s
+it   9 beta    1 J   2.8421 vol 0.0372 (dil 0.0447 g -0.045) grey 20.3% ch 0.100 worst Overseer catch -X-Y diag 3.72e+03 4.7s
+it  10 beta    1 J   3.4662 vol 0.0356 (dil 0.0429 g -0.085) grey 19.6% ch 0.100 worst XT60 insert at the -120 bay  4.76e+03 4.3s
