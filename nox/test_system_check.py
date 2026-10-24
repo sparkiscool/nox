@@ -204,16 +204,22 @@ def test_access_key():
 
 
 def test_mass_budget():
+    """soft limit (Spark 24 Oct): reported and warned, never a FAIL or exit 1."""
+    from system_check import report
     a = {"name": "frame", "box": [-5, 5, -5, 5, -5, 5], "mass_g": 60, "budget_g": 70}
     b = {"name": "lidar", "box": [10, 20, -5, 5, -5, 5], "mass_g": 50, "budget_g": 45, "role": "bought"}
     r = run(dict(name="mb", parts=[a, b], mass_budget_g=120))
     mb = r["mass_budget"]
-    assert not mb["pass_"] and not r["pass"] and mb["over_parts"][0]["name"] == "lidar" and mb["total_ok"], mb
-    assert "mass 110 of 120 g (92 %)" in r["summary"] and "FAIL (lidar 50.0 of 45 g)" in r["summary"], r["summary"]
+    assert r["pass"] and mb["pass_"] and mb["over"] and mb["over_parts"][0]["name"] == "lidar" and mb["total_ok"], mb
+    assert "mass 110 of 120 g (92 %)" in r["summary"] and "over budget (lidar 50.0 of 45 g)" in r["summary"] and "FAIL" not in r["summary"], r["summary"]
+    assert "WARN  over budget: lidar 50.0 of 45.0 g" in report(r)
     r2 = run(dict(name="mb", parts=[a, dict(b, budget_g=55)], mass_budget_g=100))
-    assert not r2["mass_budget"]["total_ok"] and "mass 110 of 100 g (110 %)" in r2["summary"]
+    assert r2["pass"] and not r2["mass_budget"]["total_ok"] and "mass 110 of 100 g (110 %) (C) over budget (total)" in r2["summary"], r2["summary"]
+    assert "WARN  over budget: total 110.0 of 100.0 g (110.0 %)" in report(r2)
+    d = tempfile.mkdtemp(); json.dump(dict(name="mb", parts=[a, b], mass_budget_g=100), open(os.path.join(d, "m.json"), "w"))
+    assert main([os.path.join(d, "m.json")]) == 0                          # over budget: exit code unchanged
     r3 = run(dict(name="mb", parts=[a, dict(b, budget_g=55)], mass_budget_g=120))
-    assert r3["pass"] and r3["mass_budget"]["pass_"]
+    assert r3["pass"] and not r3["mass_budget"]["over"] and "over budget" not in r3["summary"] and "WARN" not in report(r3)
     assert run(dict(name="mb", parts=[dict(a, budget_g=None)]))["mass_budget"]["applies"] is False
 
 

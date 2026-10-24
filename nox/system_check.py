@@ -37,9 +37,10 @@ every part in its assembled pose; the tool reports:
               give mass_g. Whole mass and CG. Balance (Spark 24 Oct, CG in the middle): with cg_ref (the thrust centre)
               the CG offset normal to thrust_axis (+z) must be <= cg_tol_mm (3.0 DEFAULT), with and without the parts
               marked "swap": true (pack, cartridge), so a swap does not move the CG off the axis.
-  budget      mass_budget_g (whole system) and per-part budget_g (dimensions.md L "Mass budget"): FAIL when exceeded;
-              the System line reads "mass <g> of <budget> g (<pct> %)".
-Cage first, probes, access, fit, balance and mass budget gate (exit 1); everything else is reported. Tags: C manifest
+  budget      mass_budget_g (whole system) and per-part budget_g (dimensions.md L "Mass budget"). A SOFT limit (Spark
+              24 Oct: as low as we can, never sacrifice design for weight): never FAILs, never changes the exit code;
+              the System line reads "mass <g> of <budget> g (<pct> %)", plus "over budget (...)" and a WARN line.
+Cage first, probes, access, fit and balance gate (exit 1); everything else is reported. Tags: C manifest
 geometry / mass, M mesh-derived, E when any input part is tagged E, P measured.
 Limits: flat walls see each role's convex hull (a protected part in a concave pocket of the cage is seen only by the
 probes). Probes are infinite lines and cylinders: a short stub or a corner poking through a cage window is not modelled,
@@ -478,7 +479,8 @@ def mass_budget(parts, rows, total_budget):
     tot = sum(r["mass_g"] for r in rows); out = dict(applies=True, mass_g=round(tot, 2), part_budgets_g=per, over_parts=over)
     if total_budget is not None:
         out.update(budget_g=float(total_budget), pct=round(100 * tot / float(total_budget), 1), total_ok=bool(tot <= float(total_budget) + 1e-9))
-    out["pass_"] = bool(out.get("total_ok", True) and not over)
+    out["over"] = bool(not out.get("total_ok", True) or over)
+    out["pass_"] = True                                                   # soft limit: reported, never gates
     return out
 
 
@@ -530,9 +532,9 @@ def run(manifest, n_dirs=None, probes=None):
         ms = f"mass {fmt(mc['mass_g'])} of {mb['budget_g']:g} g ({mb['pct']:.0f} %) ({mc['tag']})"
     else:
         ms = f"mass {fmt(mc['mass_g'])} g ({mc['tag']})"
-    if mb["applies"] and not mb["pass_"]:
-        ov = ", ".join("%s %s of %g g" % (o["name"], fmt(o["mass_g"]), o["budget_g"]) for o in mb["over_parts"])
-        ms += " FAIL" + (f" ({ov})" if ov else "")
+    if mb["applies"] and mb["over"]:
+        ov = ", ".join(["total"] * (not mb.get("total_ok", True)) + ["%s %s of %g g" % (o["name"], fmt(o["mass_g"]), o["budget_g"]) for o in mb["over_parts"]])
+        ms += f" over budget ({ov})"
     pw = pr.get("worst")
     if not pr["applies"]: prs = ""
     elif pw is None: prs = ", probes n/a"
@@ -546,7 +548,7 @@ def run(manifest, n_dirs=None, probes=None):
             " (" + "; ".join(f"{p['name']} blocked by {', '.join(b['part'] for b in p['blocked_by'])} {p['overlap_mm3']:.0f} mm³" for p in bad) + ") FAIL" if bad else "")
     summary = (f"System: {name}, {cfs}, {fts}, bbox {cp['bbox_L']:.3g} L ({gtag}), extents {ex[0]:.0f} x {ex[1]:.0f} x {ex[2]:.0f} mm ({gtag}), "
                f"{ms}, {cgs}{prs}{acs}")
-    ok = bool(cf["pass_"] and ft["pass_"] and bal["pass_"] and pr["pass_"] and ac["pass_"] and mb["pass_"])
+    ok = bool(cf["pass_"] and ft["pass_"] and bal["pass_"] and pr["pass_"] and ac["pass_"])      # mass budget is soft
     return dict(name=name, pass_=ok, cage_first=cf, compact=cp, fit=ft, mass_cg=mc, balance=bal, probes=pr, access=ac,
                 mass_budget=mb, geometry_tag=gtag, summary=summary, **{"pass": ok})
 
@@ -581,8 +583,10 @@ def report(res):
         L.append("  balance: n/a (no cg_ref)")
     mb = res["mass_budget"]
     if mb["applies"]:
-        L.append(f"  mass budget {'PASS' if mb['pass_'] else 'FAIL'}: {mb['mass_g']} g" + (f" of {mb['budget_g']} g ({mb['pct']} %)" if "budget_g" in mb else "")
-                 + "".join(f"; {o['name']} {o['mass_g']} of {o['budget_g']} g OVER" for o in mb["over_parts"]))
+        L.append(f"  mass budget (soft): {mb['mass_g']} g" + (f" of {mb['budget_g']} g ({mb['pct']} %)" if "budget_g" in mb else ""))
+        if mb["over"]:
+            L.append("WARN  over budget: " + "; ".join(([f"total {mb['mass_g']} of {mb['budget_g']} g ({mb['pct']} %)"] if not mb.get("total_ok", True) else [])
+                                                        + [f"{o['name']} {o['mass_g']} of {o['budget_g']} g" for o in mb["over_parts"]]))
     pr = res["probes"]
     if pr["applies"]:
         L.append(f"  crash probes {'PASS' if pr['pass_'] else 'FAIL'} (cage ahead >= {pr['probe_margin_mm']} mm; {pr['n_axes']} axes x {pr['n_roll']} approach "
