@@ -30,7 +30,9 @@ sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 from topo.part import man
 
-OUT = os.path.join(ROOT, "runs", "scout_layout", "v2")
+OUT = os.environ.get("LAYOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v2")
+LATCH_DIR = os.path.join(ROOT, "runs", "scout_layout", "v2")                  # inputs (latch, pr44) always from the v2 run folder
+ESO_SEED = int(os.environ.get("ESO_SEED", "2"))         # multi-start: seed 2 was the lightest of 4 (latch refit, 24 Oct)
 VIDEO = "--novideo" not in sys.argv
 S2 = math.sqrt(2.0)
 LOG = io.StringIO()
@@ -121,22 +123,26 @@ def c2d(m):
     m = m.copy(); m.apply_transform(T); return m
 
 
-PR44 = os.path.join(OUT, "pr44")
-# battery latch standard (control session, branch part/battery-latch @ b59b2dc, dimensions "System box swap: latch"; interim):
+PR44 = os.path.join(LATCH_DIR, "pr44")
+# battery latch standard (control session, branch part/battery-latch @ 258becf, dimensions "System box swap: latch"; interim):
 # cartridge v5 93 long with the XT60 at the NOSE, receiver block v1 + lid + 2 TPU strips + XT60E1-M, posed by its T_dc
-LATCH = os.path.join(OUT, "latch")
-_L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")) for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug", "receiver",
-                                                                "receiver_lid", "receiver_strips", "xt60e1m")}
+LATCH = os.path.join(LATCH_DIR, "latch")
+LATCH_DX = 0.0                                 # the set stays where the latch's T_dc puts it: its ends are clipped to the funnel planes
+                                               # from this catch centre (a 3.7 aft shift cut cage first to 0.83); centring is the latch's
+_L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_DX, 0, 0])
+      for k in ("cartridge", "slider_px", "slider_nx", "pack", "cartridge_skid_closed", "cartridge_skid_lead", "xt60_plug", "receiver",
+                "receiver_lid", "receiver_strips", "xt60e1m")}
 IFACE = trimesh.util.concatenate([_L[k] for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m")])   # receiver set (M)
 CART = trimesh.util.concatenate([_L[k] for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug")])   # swap set (M)
+SKIDS = [_L["cartridge_skid_closed"], _L["cartridge_skid_lead"]]   # the latch's TPU end skids: sacrificial contacts, counted as cage
 PACK_PTS = _L["pack"].bounding_box.vertices.copy()
 # the Scout's own mount (partner part): receiver bosses (z 9.6) up to the plate (18.5) round the FC and the XT60 lead window,
 # legs down outside the receiver plates carrying the suspension joints, the Radxa plate (-y), the flow seat and pogo carrier (+y)
-MOUNT = box(-46.85, 54.75, -30.6, 30.6, 9.6, 18.5)
-LEADS = box(37.7, 48.8, -9.25, 9.25, 9.6, 18.5)                                   # keep clear above the lid (latch row)
+MOUNT = box(-46.85 + LATCH_DX, 54.75 + LATCH_DX, -30.6, 30.6, 9.6, 18.5)
+LEADS = box(37.7 + LATCH_DX, 48.8 + LATCH_DX, -9.25, 9.25, 9.6, 18.5)            # keep clear above the lid (latch row)
 # legs at the nose only, >= 7.0 inside the funnel planes like the receiver (|x| <= 84.8 + z - 10.5 at their foot); the tail
 # joints sit on the mount's corners (a tail leg would stand outside the cage there, pass 4)
-LEGS = [box(34, 40, sy * 31.0 if sy > 0 else -35.0, 35.0 if sy > 0 else -31.0, -34.0, 9.6) for sy in (1, -1)]
+LEGS = [box(34 + LATCH_DX, 40 + LATCH_DX, sy * 31.0 if sy > 0 else -35.0, 35.0 if sy > 0 else -31.0, -34.0, 9.6) for sy in (1, -1)]
 RADXA = box(-33, 32, -33.5, -30.3, -35, -5)                                       # standing, -y side, parts outward (PR 44, E)
 RADXA_STANDOFF = box(-33, 32, -30.3, -25.5, -35, -5)                              # on the mount's -y plate (1.2 off the receiver)
 FLOW = box(-11, 11, 27.5, 43.5, -33.5, -25.5); FLOW_LENS = np.array([5.0, 33.5, -33.5])    # +y mid-length on the mount (DEFAULT; the
@@ -273,6 +279,8 @@ def candidate_nodes():
     N += L; kind += ["L"] * len(L); N += U; kind += ["U"] * len(U)
     for x, y in [(0, 0), (45, 0), (-45, 0), (0, 45), (0, -45), (36, 36), (36, -36), (-36, 36), (-36, -36)]:
         N.append(np.array([x, y, TOP_Z], float)); kind.append("T")
+    for y in (-24.0, 0.0, 24.0):                                              # hood over the camera board (its top is at z 60,
+        N.append(np.array([100.0, y, 64.0])); kind.append("T")              # 11 over the upper ring; edge probes found it, refit)
     for sx in (1, -1):                                                        # shoulders over the prop tips: dome the corners
         for sy in (1, -1):
             N.append(np.array([sx * 92.0, sy * 92.0, 0.5 * (RING_HI + TOP_Z) + 2.0])); kind.append("T")
@@ -287,8 +295,8 @@ def candidate_nodes():
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
             (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
             (34, 0, 24.0), (-30, 0, 24.0), (0, 26, 24.0), (0, -26, 24.0),
-            (37, 33, -32.0), (37, -33, -32.0), (37, 33, 4.0), (37, -33, 4.0),
-            (54, 31, 14.0), (54, -31, 14.0), (-46, 31, 14.0), (-46, -31, 14.0)]   # nose legs and the mount's corners
+            (33.3, 33, -32.0), (33.3, -33, -32.0), (33.3, 33, 4.0), (33.3, -33, 4.0),
+            (50.3, 31, 14.0), (50.3, -31, 14.0), (-49.7, 31, 14.0), (-49.7, -31, 14.0)]   # moved with the set (LATCH_DX)   # nose legs and the mount's corners
     for c in core:
         N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
     return np.array(N), kind
@@ -597,6 +605,9 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
             rest = [m for m in cur if m not in g]
             gain.append(((m0 - cage_mass(N, kind, rest)) / (max(util[pos[m]] for m in g) + 0.05), g))
         if not gain: break
+        if ESO_SEED:                                                       # multi-start: jitter the order (seeded)
+            rng_ = np.random.default_rng(ESO_SEED * 100003 + len(cur))
+            gain = [(g_ * (1.0 + 0.6 * rng_.random()), grp) for g_, grp in gain]
         gain.sort(key=lambda t: -t[0]); moved = False
         for _, g in gain[:30]:
             trial = [m for m in cur if m not in g]
@@ -610,6 +621,63 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
 
 def frame_solve(N, kind, members, cases):
     return frame_eval(N, kind, members, cases)
+
+
+# ================================================================ edge / post probes (system_check), repair by adding rods
+SWAP_CONE = 40.0                              # deg, the swap opening's edge-probe exemption for the receiver and cartridge (DEFAULT;
+                                              # the latch uses 35; an edge at 38 deg reached the receiver's nose-bottom corner where
+                                              # no rod fits; alt: a receiver nose skid, latch)
+
+
+def probe_set():
+    """protected parts for the probes, as meshes; the swap set and the receiver are exempt to 35 deg round the swap opening"""
+    pv = [cyl(PROP_R, PROP_Z - SWEEP, PROP_Z + SWEEP, x, y, 48) for x, y in MOTORS_XY]
+    prot = [("props", trimesh.util.concatenate(pv)), ("motors", trimesh.util.concatenate(BELLS)), ("FC", FC), ("Radxa", RADXA), ("flow", FLOW),
+            ("UBEC", UBEC), ("XR2", XR2), ("camera", CAM), ("receiver", IFACE), ("cartridge", CART)]
+    openings = [dict(part=n, axis=[0, 0, -1], half_angle_deg=SWAP_CONE, skip_probes=True) for n in ("receiver", "cartridge")]
+    return prot, openings
+
+
+PROBE_PROT, PROBE_OPEN = probe_set()
+
+
+def cage_mesh(ms):
+    rods_ = [rod(N[a_], N[b_]) for a_, b_ in ms]
+    return trimesh.util.concatenate(rods_ + KA_PADS + SKIDS)
+
+
+def run_probes(ms, cfg=None):
+    import system_check as sc_
+    parts = [dict(name="cage", role="cage")] + [dict(name=n, role="protected") for n, _ in PROBE_PROT]
+    meshes = [cage_mesh(ms)] + [m for _, m in PROBE_PROT]
+    return sc_.crash_probes(parts, meshes, cfg or dict(n_dirs=300, n_roll=24, post=False), 0.0, PROBE_OPEN)
+
+
+def probe_repair(N, kind, chosen, members, cases, contact_ok, fe, max_add=40):
+    """while an edge probe reaches a protected part, add the lightest feasible rod that crosses that probe's line
+    ahead of the part (same lateral bin, further along the approach), keeping every case feasible"""
+    cur = list(chosen); added = 0
+    for it in range(max_add):
+        pr = run_probes(cur)
+        if pr["pass_"]: return cur, fe, f"PASS after {added} added rods"
+        w = pr["worst"]; d = np.array(w["dir"]); e = np.array(w["axis"]); cp = np.array(w["contact"]) if w["contact"] else None
+        if cp is None: break
+        u = np.cross(e, d); u /= np.linalg.norm(u)
+        best = None
+        for m in members:
+            if m in cur: continue
+            P = np.vstack([N[m[0]] * (1 - t) + N[m[1]] * t for t in np.linspace(0, 1, 40)])
+            lat = np.abs((P - cp) @ u); ahead = (P - cp) @ d
+            if not ((lat <= 2.5) & (ahead > ROD_R + 0.5)).any(): continue
+            g = ROD_GPM * np.linalg.norm(N[m[1]] - N[m[0]])
+            if best is None or g < best[0]: best = (g, m)
+        if best is None: return cur, fe, f"stuck: {w['part']} {w['margin_mm']} mm, dir {w['dir_label']}, no feasible rod crosses that line"
+        trial = cur + [best[1]]; fe2 = frame_eval(N, kind, trial, cases)
+        if not feasible(fe2):
+            members = [m for m in members if m != best[1]]; continue
+        cur, fe = trial, fe2; added += 1
+    pr = run_probes(cur)
+    return cur, fe, ("PASS" if pr["pass_"] else f"FAIL {pr['worst']['part']} {pr['worst']['margin_mm']} mm dir {pr['worst']['dir_label']}") + f" after {added} added rods"
 
 
 # ================================================================ contact-first
@@ -723,7 +791,7 @@ for opt in PAD_OPTIONS:
     say(f"pads ({yp}, {zp}): {len(members)} feasible rods ({len(ring_members)} ring), dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why.items(), key=lambda kv: -kv[1])))
     others = dict(fixed_pts)
     if pad: others["pads"] = pts(union(pad + [carrier]), 600)
-    WP = np.vstack([wheel_pts()] + [p_.vertices for p_ in KA_PADS]); DIRS = fib_sphere(1200)
+    WP = np.vstack([wheel_pts()] + [p_.vertices for p_ in KA_PADS + SKIDS]); DIRS = fib_sphere(1200)
     so_all = np.max(np.stack([(DIRS @ p.T).max(1) for p in others.values()]), 0)
     def cage_support(ms):
         P_ = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 12)]) for a_, b_ in ms] + [WP])
@@ -743,7 +811,7 @@ for opt in PAD_OPTIONS:
         STROKE[tuple(np.round(d, 3))] = max(float((Pc @ d).max() + ROD_R - (oth @ d).max()) - 1.0, 0.5)
     say("   crash stroke limits (mm): " + ", ".join(f"{list(k)}: {v:.1f}" for k, v in STROKE.items()))
     # balance (CLAUDE.md, dimensions L): whole-drone CG within 3 mm of the thrust axis, pack in and out
-    fixed_items = [(165, _L["pack"].bounding_box.centroid, True), (39.4, _L["cartridge"].centroid, True), (54.5, IFACE.centroid, False),
+    fixed_items = [(165, _L["pack"].bounding_box.centroid, True), (39.4 + 4.5, _L["cartridge"].centroid, True), (54.5, IFACE.centroid, False),
                    (25, MOUNT.centroid, False),
                    (10, FC.bounding_box.centroid, False), (10, RADXA.bounding_box.centroid, False), (15, UBEC.bounding_box.centroid, False),
                    (1, XR2.bounding_box.centroid, False), (1.5, FLOW.bounding_box.centroid, False), (16, CAM.bounding_box.centroid, False),
@@ -768,6 +836,8 @@ for opt in PAD_OPTIONS:
         bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f} at rod {np.round(N[chosen[r['el']][0]]).astype(int).tolist()}-{np.round(N[chosen[r['el']][1]]).astype(int).tolist()}"
                                      for r in fe if r["worst"] > IDX_LIM[r["cls"]] or r["defl"] > (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]])]
         say(f"   ESO: {note}; failing cases: {bad[:6]}"); continue
+    chosen, fe, pnote = probe_repair(N, kind, chosen, members, CASES, contact_ok, fe)
+    say(f"   probe repair: {pnote}")
     used = sorted(set([i for e in chosen for i in e]))
     cage_pts = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 25)]) for a_, b_ in chosen] + [N[[i for i in used if kind[i] != "C"]]])
     cage_all = np.vstack([cage_pts, wheel_pts()])
@@ -866,7 +936,7 @@ P("flow", FLOW, "electronics", "#2d5a2d", False)
 P("UBEC", UBEC, "electronics", "#444488", False)
 P("XR2", XR2, "electronics", "#6a1b9a", False)
 P("camera", CAM, "electronics", "#2d5a2d", False)
-P("receiver v1 (latch standard)", IFACE, "receiver", "#8899aa", True, "control session, part/battery-latch b59b2dc")
+P("receiver v1 (latch standard)", IFACE, "receiver", "#8899aa", True, "control session, part/battery-latch 258becf")
 P("mount + legs (Scout)", union([MOUNT] + LEGS), "receiver", "#9aa8b8", True, "envelope, own topology next")
 if pad: P("pogo pads + carrier", union(pad + [carrier]), "receiver", "#c9a227", True)
 P("cage rods", trimesh.util.concatenate(bands["rods"]), "cage", "#202020", False, "3.0 carbon, LP layout")

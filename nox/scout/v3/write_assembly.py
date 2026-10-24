@@ -37,14 +37,16 @@ for i, (b, (x, y)) in enumerate(zip(L["BELLS"], L["MOTORS_XY"])):
     parts.append(dict(name=f"prop {i + 1}", role="bought", protect=True, cylinder=dict(r=L["PROP_R"], p0=[x, y, L["PROP_Z"] - L["SWEEP"]], p1=[x, y, L["PROP_Z"] + L["SWEEP"]]),
                       mass_g=1.8, tag="P", note="swept disk +-4", **own))
 parts.append(mesh_part("FC", L["FC"], role="bought", protect=True, mass_g=10, tag="P", **own))
-Lm = L["_L"]                                                  # battery latch standard meshes (control session, b59b2dc), drone frame
+Lm = L["_L"]                                                  # battery latch standard meshes (control session, 258becf), drone frame
 latch_parts = [("receiver", "receiver v1 (latch)", "protected", 41.2, False, "M"), ("receiver_lid", "receiver lid (latch)", "protected", 5.3, False, "M"),
                ("receiver_strips", "receiver TPU strips (latch)", "structure", 2.0, False, "M"), ("xt60e1m", "XT60E1-M", "bought", 6.0, False, "E"),
                ("cartridge", "cartridge v5 (latch)", "protected", 35.5, True, "M"), ("slider_px", "slider +y (latch)", "protected", 1.95, True, "M"),
                ("slider_nx", "slider -y (latch)", "protected", 1.95, True, "M"), ("pack", "pack 4S 1500", "protected", 155.0, True, "P"),
-               ("xt60_plug", "pack XT60 plug", "bought", 10.0, True, "E")]
+               ("xt60_plug", "pack XT60 plug", "bought", 10.0, True, "E"),
+               ("cartridge_skid_closed", "cartridge skid closed end (latch, TPU)", "cage", 1.4, True, "M"),
+               ("cartridge_skid_lead", "cartridge skid lead end (latch, TPU)", "cage", 3.1, True, "M")]
 for key, nm, role, g, swap, t in latch_parts:
-    d = dict(role=role, protect=True, mass_g=g, tag=t, note="battery latch standard, part/battery-latch b59b2dc (control session)", **own)
+    d = dict(role=role, protect=(role != "cage"), mass_g=g, tag=t, note="battery latch standard, part/battery-latch 258becf (control session)", **own)
     if swap: d["swap"] = True
     parts.append(mesh_part(nm, Lm[key], **d))
 parts.append(mesh_part("mount + nose legs (Scout)", L["union"]([L["MOUNT"]] + L["LEGS"]), role="structure", mass_g=25, tag="E",
@@ -73,14 +75,15 @@ parts.append(mesh_part("keep-alive pads", trimesh.util.concatenate(L["KA_PADS"])
                        note="B+ on the +x lower ring, B- on -x; the box catch's face probes touch them (G (8))", **own))
 a = {"name": "Scout v3", "machine": "scout",
      "note": ("Scout v3 system pass v2, latch refit (layout.md). Seat frame = drone frame. Battery set = the control session's "
-              "latch standard (part/battery-latch b59b2dc, interim). No belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT, G (8)). "
+              "latch standard (part/battery-latch 258becf, interim). No belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT, G (8)). "
               "Left out: wires (20 g E), camera mount, plate hubs, the TPU suspension pads, wheel contact pads."),
      "cg_ref": [0.0, 0.0, L["PROP_Z"]], "thrust_axis": [0, 0, 1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0,
-     "openings": [{"part": n, "axis": [0, 0, -1], "half_angle_deg": 35.0, "min_mm": 0.0, "skip_probes": True}   # the swap path:
+     "openings": [{"part": n, "axis": [0, 0, -1], "half_angle_deg": L["SWAP_CONE"], "min_mm": 0.0, "skip_probes": True}   # the swap path:
                   # the box drops the cartridge out through the keel; recessed (margin >= 0); edges inside 35 deg of straight up
                   # may reach the cartridge's chamfered ends (no keel rail fits under them inside the funnel planes); it takes
                   # landings (J) (DEFAULT, Scout refit; alt: a cartridge end skid, control session)
-                  for n in ("cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug")],
+                  for n in ("cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug",
+                            "receiver v1 (latch)")],
      "contact_pairs": [[f"motor {i}", f"prop {i}", 1e9] for i in range(1, 5)] + [[f"motor {i}", "frame plate", 1e9] for i in range(1, 5)] +
                       [["cartridge v5 (latch)", "receiver TPU strips (latch)", 5.0], ["pack 4S 1500", "cartridge v5 (latch)", 1.0],
                        ["pack XT60 plug", "cartridge v5 (latch)", 5.0], ["XT60E1-M", "receiver v1 (latch)", 5.0], ["XT60E1-M", "receiver lid (latch)", 5.0],

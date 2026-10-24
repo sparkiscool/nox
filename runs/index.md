@@ -1,6 +1,6 @@
 # Runs
 
-_88 runs · rebuilt 2026-10-24 06:09_
+_88 runs · rebuilt 2026-10-24 06:49_
 
 ## Latest per part
 
@@ -25,7 +25,7 @@ _88 runs · rebuilt 2026-10-24 06:09_
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
-| scout_layout | v2 | DONE | 791 (E) | 1.00 in latch misuse 175 N on one wheel | · | [runs/scout_layout/v2](runs/scout_layout/v2/summary.md) |
+| scout_layout | v2 | DONE | 770 (E) | 1.00 in crash 1.5 m/s [0.58, 0.58, 0.58] | · | [runs/scout_layout/v2](runs/scout_layout/v2/summary.md) |
 | test_glue_lap | v1 | DONE | 3.9 (M) | ·  | PASS | [runs/test_glue_lap/v1](runs/test_glue_lap/v1/summary.md) |
 | test_layer_pull | v1 | DONE | 28.6 (M) | ·  | PASS | [runs/test_layer_pull/v1](runs/test_layer_pull/v1/summary.md) |
 | test_post_pull | v1 | DONE | 34.6 (M) | ·  | PASS | [runs/test_post_pull/v1](runs/test_post_pull/v1/summary.md) |
@@ -35,7 +35,7 @@ _88 runs · rebuilt 2026-10-24 06:09_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-24T23:59 | scout_layout | [v2](runs/scout_layout/v2/summary.md) | DONE | 791 (E) | 1.00 | · | · | · GB | · min | · |
+| 2026-10-24T23:59 | scout_layout | [v2](runs/scout_layout/v2/summary.md) | DONE | 770 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T20:00 | scout_layout | [v1](runs/scout_layout/v1/summary.md) | DONE | 517.0 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 05:42 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |

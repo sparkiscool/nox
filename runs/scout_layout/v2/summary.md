@@ -4,9 +4,9 @@ Script `nox/scout/v3/layout_v2.py` (~3 min with the video, P on this box). Doc `
 Status: DESIGN; nothing saved or printed.
 
 ```
-System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 0.0 mm³ (E) (receiver v1 (latch)/cage (rods + nodes)), bbox 6.95 L (E), extents 234 x 233 x 128 mm (E), mass 761 g (E), CG 1.3 mm off thrust axis (E) [+1.3, +0.0, -35.9], 1.9 mm without swap parts, probes -76.4 mm (E) edge at (+0.24, +0.68, -0.69) (cartridge v5 (latch)) FAIL
-Cage: 141 x 3.0 rods 8.00 m in PETG sockets, 65 nodes, ~319 g (E), preloaded TPU suspension (gives at 120 N); keep-alive pads on the lower ring (G (8))
-Strength: every case <= 1.00 (F), crash 1.5 m/s peak 120 N, stroke <= 7.4 mm
+System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 0.4 mm³ (E) (Radxa Zero 3W/cage (rods + nodes)), bbox 6.95 L (E), extents 234 x 233 x 128 mm (E), mass 744 g (E), CG 1.4 mm off thrust axis (E) [+1.4, +0.0, -36.4], 2.0 mm without swap parts, probes -29.7 mm (E) edge at (-0.35, -0.64, -0.68) (receiver v1 (latch)) FAIL
+Cage: 125 x 3.0 rods 6.82 m in PETG sockets, 68 nodes, ~297 g (E), preloaded TPU suspension (gives at 120 N); keep-alive pads (G (8)); latch 258becf
+Strength: every case <= 1.00 (F), crash 1.5 m/s peak 120 N, stroke <= 7.8 mm
 ```
 
 - `checks.txt`: candidates, dropped rods by reason, stroke limits, every case, core joint reactions, nodes.
