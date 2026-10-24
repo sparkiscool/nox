@@ -136,7 +136,14 @@ def layout(R=113.0, clip=False, bays=None):
     env = {}
     for ang, q in P.items():
         t = tm(q["rec"]); mr = rows[ang]["mount_r"]
-        env[ang] = wedge(ang, R - ARM_PARK_R, mr + 12.0, t.bounds[0, 1] - 4.0, t.bounds[1, 1] + 4.0)
+        env[ang] = wedge(ang, R - ARM_PARK_R + 0.5, mr + 12.0, t.bounds[0, 1] - 4.0, t.bounds[1, 1] + 4.0)
+    # service: a bay body leaves along +Y with the front sheet off (the door, DEFAULT), so it keeps out of every
+    # neighbour's receiver swept toward -Y (a wider Overseer receiver reaches into its Scout neighbour's sector near r R)
+    angs_ = sorted(P)
+    for i_, ang in enumerate(angs_):
+        for nb_ in (angs_[i_ - 1] if i_ > 0 else None, angs_[i_ + 1] if i_ + 1 < len(angs_) else None):
+            if nb_ is None: continue
+            r_ = P[nb_]["rec"]; env[ang] = env[ang] - mf.Manifold.batch_hull([r_, r_.translate([0, -400.0, 0])])
     ring = None
     for m in env.values(): ring = m if ring is None else ring + m
     rt = tm(ring)
@@ -181,30 +188,63 @@ def main():
     c = None
     for m in catch.values(): c = m if c is None else c + m
     tm(c).export(os.path.join(od, "catch_W.stl"))
-    print(write_concept(od, out))
+    print(write_concept(od, out, P, env, a.R))
 
 
-def write_concept(od, out):
-    """system_check manifest of the v2 layout (concept check) + its motion scene: receivers (latch, protected), bay
-    body envelopes, catch, drone keep-out, the 4 sheets (cage)."""
+def arm_envelopes(R):
+    """the swap arm's turning envelopes (arm v6 numbers at the top of this file, C): hub + rails, motors on the arm,
+    parked heads with cartridges, the drone-insert lane."""
+    cyl = lambda r, y0, y1: mf.Manifold.cylinder(y1 - y0, r, r, 96).rotate([-90, 0, 0]).translate([0, y0, 0])
+    lane = wedge(90, 1.0, LANE["r"], 74.0, Y_C + 122.0, gap=0.0, half=LANE["half_deg"])
+    return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]),
+            "arm: motors (turning)": cyl(MOTOR_SWEEP["r"], *MOTOR_SWEEP["y"]) - cyl(HUB["r"] - 0.01, MOTOR_SWEEP["y"][0] - 1, MOTOR_SWEEP["y"][1] + 1),
+            "arm: parked heads + cartridges (turning)": cyl(R - ARM_PARK_R, HUB["y"][1], Y_C + 122.0),
+            "arm: drone insert lane": lane}
+
+
+def write_concept(od, out, P, env, R):
+    """system_check manifest of the v2 layout (concept check) + its motion scene: per bay its receiver (latch,
+    protected), cartridge (swap part) and body envelope; the catch, the drone keep-out, the arm's turning envelopes,
+    the v1 mast and the PSU (stand and electronics context), the 4 sheets (cage); access paths: every bay's cartridge
+    out along its install axis to park (the head's move) and every bay body out along +Y (service)."""
     import assembly
-    e = out["enclosure"]; rel = lambda n: os.path.relpath(os.path.join(od, n), ROOT)
-    parts = [dict(name="receivers + lids (latch v1, 9 bays)", role="protected", protect=True, mesh=rel("receivers_W.stl"), material="PETG", tag="M", owner="box swap: latch"),
-             dict(name="bay body envelopes (9)", role="structure", mesh=rel("bay_envelopes_W.stl"), material="PETG", tag="C", owner="box structure"),
-             dict(name="catch (panels v7, hook latch v2) at the R seat", role="structure", mesh=rel("catch_W.stl"), material="PETG", tag="M", owner="box catch"),
-             dict(name="drone receivers + paths (keep-out)", role="bought", mesh=rel("drone_W.stl"), mass_g=0.0, tag="C", owner="drones")]
+    e = out["enclosure"]; pd = os.path.join(od, "parts"); os.makedirs(pd, exist_ok=True)
+    rel = lambda n: os.path.relpath(os.path.join(od, n), ROOT)
+    parts, access, contact = [], [], []
+    for ang, q in P.items():
+        for k, m, role in (("receiver", q["rec"], "protected"), ("cartridge", q["cart"], "bought"), ("body envelope", env[ang], "structure")):
+            fn = f"parts/bay{ang}_{k.replace(' ', '_')}.stl"; tm(m).export(os.path.join(od, fn))
+            p = dict(name=f"bay {ang} {k}", role=role, mesh=rel(fn), material="PETG", tag="C" if k == "body envelope" else "M", owner="box structure" if k == "body envelope" else "box swap: latch")
+            if role == "protected": p["protect"] = True
+            if k == "cartridge": p.update(mass_g=round(json.load(open(os.path.join(CTX, "meta.json")))[q["pack"]]["SWAP_M"], 1), swap=True)
+            parts.append(p)
+        contact += [[f"bay {ang} receiver", f"bay {ang} body envelope", 1e9], [f"bay {ang} cartridge", f"bay {ang} body envelope", 1e9],
+                    [f"bay {ang} cartridge", f"bay {ang} receiver", 1e9]]
+        d = [-math.cos(math.radians(ang)), 0.0, -math.sin(math.radians(ang))]
+        access.append(dict(name=f"bay {ang}: cartridge out to park ({PATH:g} along -r)", part=f"bay {ang} cartridge", dir=d, length_mm=PATH, tool="part",
+                           ignore=[f"bay {ang} receiver", f"bay {ang} body envelope", "arm: parked heads + cartridges (turning)"]))
+        access.append(dict(name=f"bay {ang}: body out along +Y, front sheet off (service)", part=f"bay {ang} body envelope", dir=[0, 1, 0], length_mm=200.0, tool="part",
+                           ignore=[f"bay {ang} receiver", f"bay {ang} cartridge", "sheetF"]))
+    for n, m in arm_envelopes(R).items():
+        fn = f"parts/{n.split(':')[1].strip().split(' ')[0]}_{len(parts)}.stl"; tm(m).export(os.path.join(od, fn))
+        parts.append(dict(name=n, role="bought", mesh=rel(fn), mass_g=0.0, tag="C", owner="box swap: arm", note="turning envelope (keep-out)"))
+    parts += [dict(name="catch (panels v7, hook latch v2) at the R seat", role="structure", mesh=rel("catch_W.stl"), material="PETG", tag="M", owner="box catch"),
+              dict(name="drone receivers + paths (keep-out)", role="bought", mesh=rel("drone_W.stl"), mass_g=0.0, tag="C", owner="drones"),
+              dict(name="mast v6 (stand context, v1)", role="structure", mesh="runs/box_system/v1/W/box_mast_v6_W.stl", material="PETG", tag="M", owner="box structure"),
+              dict(name="PSU LRS-350-24", role="bought", protect=True, box=[42, 157, -66, -36, -170, 45], mass_g=750.0, tag="E", owner="box electronics")]
+    contact += [["arm: hub + rails (turning)", "arm: motors (turning)", 1e9], ["arm: hub + rails (turning)", "arm: parked heads + cartridges (turning)", 1e9],
+                ["arm: parked heads + cartridges (turning)", "arm: drone insert lane", 1e9], ["arm: hub + rails (turning)", "arm: drone insert lane", 1e9],
+                ["drone receivers + paths (keep-out)", "arm: drone insert lane", 1e9], ["drone receivers + paths (keep-out)", "arm: parked heads + cartridges (turning)", 1e9]]
     X, YB, YF, FL, ZT = e["X_IN"], e["Y_BACK"], e["Y_FRONT"], e["FLOOR"], e["Z_TOP"]
     for n, b in {"sheet+X": [X, X + 3, YB + 3, YF - 3, FL, ZT], "sheet-X": [-X - 3, -X, YB + 3, YF - 3, FL, ZT],
                  "sheetF": [-X + 3, X - 3, YF, YF + 3, FL, ZT], "sheetR": [-X + 3, X - 3, YB - 3, YB, FL, ZT]}.items():
         parts.append(dict(name=n, role="cage", box=b, material="acrylic", mass_g=round((b[1] - b[0]) * (b[3] - b[2]) * (b[5] - b[4]) * 1.19e-3, 1), tag="C", owner="box structure"))
-    A = assembly.new("Box structure v2 layout", "box", parts=parts, probes=False, fit_tol_mm3=0.5,
-                     contact_pairs=[["receivers + lids (latch v1, 9 bays)", "bay body envelopes (9)", 1e9]],
-                     note="v2 layout concept (box_layout_v2.py): receivers sit inside their bay envelopes by design; probes off (floor-standing box, DEFAULT)")
+    A = assembly.new("Box structure v2 layout", "box", parts=parts, probes=False, fit_tol_mm3=0.5, contact_pairs=contact, access=access,
+                     note="v2 layout concept (box_layout_v2.py). Bay body envelopes are design spaces (their System-line mass is envelope volume x PETG, not a design mass); each receiver and cartridge sits in its own envelope by design (contact pairs); the arm's turning envelopes overlap each other by construction. Probes off (floor-standing box, DEFAULT).")
     A.save(os.path.join(od, "concept.assembly.json"))
-    res = A.check(); json.dump(dict(summary=res.get("summary")), open(os.path.join(od, "concept_check.json"), "w"), indent=1)
+    res = A.check(); json.dump(dict(summary=res.get("summary"), access=res.get("access"), fit=res.get("fit")), open(os.path.join(od, "concept_check.json"), "w"), indent=1, default=str)
     A.scene().write(os.path.join(od, "layout.html"))
     return res.get("summary")
-
 
 if __name__ == "__main__":
     main()
