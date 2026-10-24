@@ -296,7 +296,7 @@ if __name__ == "__main__" and "--assembly-v9" not in sys.argv:
 # The file is posed in the box W frame of box structure v2 (hub 24 Oct: the arm v7 sweep needs the funnel in the box
 # frame); the analytic loads above stay in the seat frame. Every pose in the file = SEAT_TO_W @ its seat pose; change the
 # 4 numbers here (box structure v2, C; Y_C may move once more) and rerun update_assembly() + panels_v7_into_assembly().
-Y_C, Y_FUN, Z_SEAT, R_RING = 165.0, 165.0, 155.3, 113.0     # grip line (arm PR 79 DEFAULT, hub 24 Oct), funnel centre = the
+Y_C, Y_FUN, Z_SEAT, R_RING = 167.1, 167.1, 155.3, 113.0     # grip line (swap arm DEFAULT 24 Oct, latch v4: Y_C_min 167.1; was 165), funnel centre = the
                                                             # grip line = each drone's catch centre = its latch set's centre
                                                             # (dimensions L box structure v2, main 24 Oct), seat z 0 in W, ring R (C)
 SEAT_TO_W = np.array([[0, -1.0, 0, 0], [1.0, 0, 0, Y_FUN], [0, 0, 1.0, Z_SEAT], [0, 0, 0, 1.0]])   # seat y -> W -X, seat x -> W Y

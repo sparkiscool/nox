@@ -6,30 +6,30 @@
   "H": 32.0,
   "Y_TOP": 45.6,
   "Z_X": 85.8,
-  "SWAP_M": 210.7996122800117,
+  "SWAP_M": 216.5235529251703,
   "SWAP_CG": [
-   0.0009964659748073188,
-   26.1781951058832,
-   42.553342561109005
+   0.0009701237500579075,
+   25.623972681874477,
+   42.55325417858837
   ],
   "Y_M": 54.1,
   "RF": 20.3
  },
  "overseer": {
-  "Z_T": 85.5,
+  "Z_T": 85.55,
   "L_C": 171.0,
   "W": 48.0,
   "H": 45.0,
   "Y_TOP": 58.6,
   "Z_X": 163.8,
-  "SWAP_M": 748.2062666459757,
+  "SWAP_M": 755.449126028023,
   "SWAP_CG": [
-   0.00028074434894257154,
-   33.119387099025964,
-   80.31720882222163
+   0.00027805271588421317,
+   32.84683942027417,
+   80.3682511704671
   ],
   "Y_M": 68.8,
   "RF": 27.8
  },
- "source": "battery_latch.latch_assembly(pack, 'latched'), PR 69 branch part/battery-latch @ 258becf (24 Oct); cartridge coords c (x across, y up the install axis from the flat bottom, z from the closed end)"
+ "source": "battery_latch.latch_assembly(pack, 'latched') @ b70e63d (main); cartridge coords c (x across, y up the install axis from the flat bottom, z from the closed end)"
 }

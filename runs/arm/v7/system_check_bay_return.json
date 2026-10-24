@@ -1,49 +1,49 @@
 {
  "name": "box swap arm v7",
  "pass": true,
- "summary": "System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E), bbox 33 L (E), extents 371 x 259 x 343 mm (E), mass 5589 g (E), CG 26.3 mm off thrust axis (E) [+2.4, +120.5, -26.1], 37.3 mm without swap parts, access 9/9 clear",
+ "summary": "System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E), bbox 33.6 L (E), extents 371 x 264 x 343 mm (E), mass 6534 g (E), CG 29.4 mm off thrust axis (E) [+2.1, +127.4, -29.3], 39.2 mm without swap parts, access 9/9 clear",
  "compact": {
   "bbox_min": [
    -185.3,
    -4.75,
-   -173.34
+   -173.84
   ],
   "bbox_max": [
    185.3,
-   254.65,
+   258.95,
    169.6
   ],
   "extents_mm": [
    370.6,
-   259.4,
-   342.9
+   263.7,
+   343.4
   ],
   "largest_extent_mm": 370.6,
-  "bbox_L": 32.968,
-  "hull_L": 20.226,
+  "bbox_L": 33.564,
+  "hull_L": 20.693,
   "guard_offsets_mm": {}
  },
  "fit_fail": [],
- "mass_g": 5589.41,
+ "mass_g": 6534.35,
  "cg": [
-  2.42,
-  120.52,
-  -26.15
+  2.08,
+  127.4,
+  -29.28
  ],
  "arm_only": {
-  "aabb_L": 12.18,
+  "aabb_L": 12.33,
   "extents_mm": [
-   241.9,
-   210.0,
+   242.3,
+   212.1,
    239.8
   ],
-  "largest_mm": 241.9,
-  "hull_L": 5.72,
-  "turning_g": 1831.0,
-  "unbalance_gm": 25.42,
-  "cg_off_axis_mm": 13.88,
+  "largest_mm": 242.3,
+  "hull_L": 5.78,
+  "turning_g": 1837.0,
+  "unbalance_gm": 25.99,
+  "cg_off_axis_mm": 14.15,
   "detent_sized_gm": 10.1,
-  "gravity_Nm": 0.139,
-  "detent_margin_2_springs": 3.44
+  "gravity_Nm": 0.145,
+  "detent_margin_2_springs": 3.39
  }
 }

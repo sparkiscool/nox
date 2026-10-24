@@ -142,7 +142,7 @@ def lead_keepout_local(u):
 CLR = 2.0                                        # margin over the arm's swept keep-outs (DEFAULT, E; hub: >= 2)
 LANE = dict(r=159.0, x=(-35.0, 47.5), y1=73.75)  # carriage (dimensions L v2 layout, box_layout_v2.LANE, C)
 GRAB = dict(r0=111.5, r=159.6, x=47.5, y=(73.75, 217.0))
-Y_C, Z_SEAT = 165.0, 155.3
+Y_C, Z_SEAT = 165.0, 155.3   # the notch as drawn and printed (v9 plain); the catch now sits at Y_C 167.1 (catch_system.py) and the -Y panel still clears the arm lane by 2.0 in r (box structure, C on M)
 
 
 def notch_cut():
