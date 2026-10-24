@@ -28,7 +28,9 @@ Cases (dimensions L, DEFAULT unless tagged) and limits:
 - Handling: 50 N on every real cage node in ±x, ±y, ±z: indices ≤ 1.0 (DEFAULT: a misuse load; L gives 0.5 to flight and landing).
 - Catch landing: 6 g x the drone up through the 8 wheels; latch misuse 100 N down the slope on each ±y-face wheel (≤ 1.0);
   swap pull 50 N into the face on two wheels (≤ 0.5).
-- Breaking order (reported): worst socket index (the node) vs worst rod and arm index in the crash cases.
+- Breaking order (L, reported): in the crash cases the arms stay at <= 1 / 1.5 of the worst cage node socket index; the held
+  joints (hub, L2 apex, belly-frame sockets) get a requirement: a rated strength that keeps their index there too.
+  The worst rod index is reported beside it.
 Objective: cage mass (rods + printed nodes + arm spars); 3.0 solid wherever it passes.
 """
 import json, math, os, sys, itertools
@@ -52,6 +54,7 @@ L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
 MOTOR_DEG = (45, 135, 225, 315)
+HELD_NODES = ("Slo", "Shi", "SP", "apexM", "BF")                  # L2 mount sockets and the belly frame corners (pack holder)
 SOCK_BACK = 13.0                                            # socket centres behind the L2 base plane: 20 tube radius 10 + 3
 APEX_SPAN = 56.0                                            # socket spread on the apex lugs (DEFAULT, inside the L2's 75)
 
@@ -143,7 +146,9 @@ def geometry(p, topo, sizes=None):
                 t = float(np.clip(np.dot(sr[:2] - r0, v) / np.dot(v, v), 0.05, 0.95)); q = r0 + t * v
                 dd = float(np.hypot(*(q - sr[:2])))
                 if best is None or dd < best[0]: best = (dd, k, t)
-            corners.append((sx, sy, sr, best[1], best[2])); arm_pts[best[1]].append(best[2])
+            t_ = round(best[2], 3)
+            t_ = next((q for q in arm_pts[best[1]] if abs(q - t_) < 0.02), t_)   # on a split point already there: share it (no zero / sliver beam)
+            corners.append((sx, sy, sr, best[1], t_)); arm_pts[best[1]].append(t_)
     for k, (mx, my) in enumerate(mot):
         side = "front" if mx > dm else "rear"; ht = H_TIP[side]
         r0 = N[f"root{k}"]; m1 = np.array([mx, my, ROOT_H - ht / 2])
@@ -730,7 +735,15 @@ def evaluate(p, topo, sizes, detail=False):
     for run in runs:
         P = m.el[run[0]]["P"]; L = sum(m.el[i]["L"] for i in run); Pcr = math.pi ** 2 * P["E"] * P["Iy"] / L ** 2
         buck_ix = np.maximum(buck_ix, BUCKLE_SF * np.maximum(-Nax[run], 0).max(axis=0) / Pcr)
-    crash_node = crash_member = 0.0
+    crash_node = crash_member = crash_rod = 0.0
+    # breaking order (L): in the crash cases the frame (arms) stays at <= 1 / 1.5 of the worst cage node socket index, and
+    # every held joint (hub, L2 apex and belly-frame sockets) is rated so its index stays there too: the socket strength
+    # written to those pieces as a requirement (N, F)
+    held = np.array([e["kind"] == "rod" and any(n in m.fixed or n.startswith(HELD_NODES) for n in (e["a"], e["b"])) for e in m.el])
+    is_held_node = lambda n: n in m.fixed or n.startswith(HELD_NODES)
+    cage_rod = np.array([e["kind"] == "rod" and not (is_held_node(e["a"]) and is_held_node(e["b"])) for e in m.el])   # a cage node at one end at least
+    node_ix = (abs(Nax[cage_rod]) / cap[cage_rod, None]).max(axis=0) if cage_rod.any() else np.zeros(nc)
+    held_req = {g_: 0.0 for g_ in ("hub", "apex", "belly")}
     for j, (cname, ld, lim, kind, hn, d) in enumerate(cases):
         u = U[:, j]
         ix = dict(rod=float(rod_ix[j]), socket=float(sock_ix[j]), buckle=float(buck_ix[j]), arm=float(arm_ix[j]))
@@ -738,11 +751,18 @@ def evaluate(p, topo, sizes, detail=False):
         if kind == "crash":
             r["defl"] = float(-(u[6 * m.idx[hn]:6 * m.idx[hn] + 3] @ d))
             g[f"{cname} defl"] = r["defl"] / 9.0 - 1
-            crash_node = max(crash_node, ix["socket"]); crash_member = max(crash_member, ix["rod"], ix["arm"], ix["buckle"])
+            crash_node = max(crash_node, float(node_ix[j])); crash_rod = max(crash_rod, ix["rod"], ix["buckle"])
+            crash_member = max(crash_member, ix["arm"])
+            for i in np.flatnonzero(held):
+                e_ = m.el[i]; ends = (e_["a"], e_["b"])
+                g_ = "hub" if any(n in m.fixed for n in ends) else "belly" if any(n.startswith("BF") for n in ends) else "apex"
+                held_req[g_] = max(held_req[g_], abs(float(Nax[i, j])))
         res["cases"][cname] = r
         for key in ("rod", "socket", "buckle", "arm"):
             g[f"{cname} {key}"] = ix[key] / lim - 1
-    res["breaking_order"] = dict(node=crash_node, member=crash_member, node_first=crash_node * 1.0 >= crash_member * 1.5)
+    res["breaking_order"] = dict(node=crash_node, arm_vs_node=crash_member / max(crash_node, 1e-9), rod=crash_rod,
+                                 node_first=crash_member * 1.5 <= crash_node,
+                                 joint_req_N={k: 1.5 * v / max(crash_node, 1e-9) for k, v in held_req.items()})   # held socket at <= 1 / 1.5 of the worst node index
     if detail: res["_U"], res["_names"] = U, [c[0] for c in cases]
     worst_pc = np.inf                                                # prop guard (C): every rod under / over the swept band by 12
     for e in m.el:

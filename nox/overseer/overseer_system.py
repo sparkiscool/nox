@@ -614,7 +614,10 @@ say(f"frame model on the final geometry (F, dimensions L cases): L2 mode {FRAME[
     f"L2 at {co.CRASH_G:.0f} g: worst {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('L2 crash')):.2f}; "
     f"handling 50 N: {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('handling')):.2f}; "
     f"latch {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('latch')):.2f}; violation {FRAME['violation']:.3f}; "
-    f"breaking order: node {FRAME['breaking_order']['node']:.2f} vs member {FRAME['breaking_order']['member']:.2f}")
+    f"breaking order (L): worst cage node socket {FRAME['breaking_order']['node']:.2f}, arms at {FRAME['breaking_order']['arm_vs_node']:.2f} of it (≤ 0.67) "
+    f"{'PASS' if FRAME['breaking_order']['node_first'] else 'FAIL'}; held sockets rated (≤ 1 / 1.5 of the node index): "
+    + ", ".join(f"{k} {v:.0f} N" for k, v in FRAME['breaking_order']['joint_req_N'].items())
+    + f"; worst rod {FRAME['breaking_order']['rod']:.2f}")
 say(f"L2: base centre ({xB:.1f}, 0, {zB:.0f}), axis 15 deg below +x; body lowest z {g['l2'].bounds[0][2]:.1f} vs funnel top {FUNNEL_TOP_D:.1f} (drone frame)")
 allitems = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.util.concatenate(g["motors"])), ("arms", trimesh.util.concatenate(g["arms"])),
             ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g["apex"]), ("cage up", g["cage_up"]), ("cage low", g["cage_low"]),
