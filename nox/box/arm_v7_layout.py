@@ -51,7 +51,9 @@ LOW = dict(RAIL_TOP=66.75, RIDGE_Y=62.75, WHEEL_Y=(57.75, 67.75), SPACER_Y=(67.7
            AXLE_BOLT_L=dict(fixed=20.0, ecc=20.0, head="ISO 10642 countersunk, flush in the plate top"),   # tails Y 54.35 (1.35 over the hub's wheel lanes)
            ECC_FLANGE=(71.85, 74.35),           # the eccentric bush's flange flush in a plate counterbore (pin spanner from above)
            KEEL=dict(x=9.0, y=(38.0, 54.0), r0=89.0),   # rail keel X +-9 under the body from r 89 (1.0 off the hub plate's edge r 88) to the tip
-           CBORE_Y=61.0, RAIL_BOLT="M5 x 12 ISO 4762 (head Y 61..66, in the rail)", STOP_Y=(66.75, 72.0), CHAN_Y=(62.75, 66.75),
+           CBORE_Y=57.75, RAIL_BOLT="M5 x 10 ISO 4762 (head Y 57.75..62.75, under the channel floor)", STOP_Y=(66.75, 72.0), CHAN_Y=(62.75, 66.75),
+           CHAN_X=(-3.25, 3.25), CHAN_MOUTH=5.0,  # rail v5 (box electronics PR 103: head ribbon 5 conductors ~6.1 wide, E): floor 6.5, mouth 5.0
+                                        # (0.75 lip a side, as v4); the bolt heads sunk under the floor (v4 had them 3.25 up into the channel)
            STOP_R=(27.5, 31.0),                 # the rail's inner step and park stop from r 27.5: 1.0 off detent ring v4 (r 26.5); the bumper face r 31 kept
            TIE_RAIL=(41.6, 128.0))              # the tie rod end 10 up its own axis from the keel bottom at r 128 (mouth on the face)
 
@@ -70,7 +72,7 @@ def _patch_low():
     V.RACK_TEETH_Y = RACK_V3_Y; V.PIN_TEETH_Y = PIN_V3["teeth_y"]; V.PIN_BOSS_Y = PIN_V3["boss_y"]
     V.WEB_Y = (V.RACK_TEETH_Y[0], lo["PLATE_Y"][1])
     st = dict(V.RAIL_STOP); st["y"] = lo["STOP_Y"]; st["r"] = lo["STOP_R"]; V.RAIL_STOP = st
-    ch = dict(V.RAIL_CHAN); ch["y"] = lo["CHAN_Y"]; V.RAIL_CHAN = ch
+    ch = dict(V.RAIL_CHAN); ch["y"] = lo["CHAN_Y"]; ch["x"] = lo["CHAN_X"]; ch["mouth"] = lo["CHAN_MOUTH"]; V.RAIL_CHAN = ch
     b = dict(V.RAIL_BOLTS); b["cbore_y"] = lo["CBORE_Y"]; b["bolt"] = lo["RAIL_BOLT"]; V.RAIL_BOLTS = b; V.RAIL_INSERTS = b
     V.RAIL_FOOT_X = V.RAIL_BODY_X                # no feet: the wheels (Y 57.75..) pass over the pads; the bolts sit in the body
     V.RAIL_KEEL = dict(lo["KEEL"])
