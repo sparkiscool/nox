@@ -11,16 +11,30 @@ import sys, numpy as np, trimesh
 from scipy import ndimage as ndi
 
 
+def _ray_parity(mesh, xs, ys, zs, chunk=20000):
+    """inside test by ray parity along Z, rays in chunks: noxopt._voxelise verbatim, so the check needs no noxopt / pymoto
+    (CI). The old fallback, mesh.contains on every cell centre at once, was killed for memory on a 17 MB part (P)."""
+    XX, YY = np.meshgrid(xs, ys, indexing="ij")
+    org = np.stack([XX.ravel(), YY.ravel(), np.full(XX.size, zs[0] - 5.0)], 1)
+    A = np.zeros((len(xs) * len(ys), len(zs)), bool)
+    for c0 in range(0, len(org), chunk):
+        o = org[c0:c0 + chunk]
+        loc, ray, _ = mesh.ray.intersects_location(o, np.tile([0, 0, 1.0], (len(o), 1)), multiple_hits=True)
+        if not len(ray): continue
+        order = np.argsort(ray, kind="stable"); ray = ray[order] + c0; z = loc[order][:, 2]
+        st = np.r_[0, np.where(np.diff(ray))[0] + 1, len(ray)]
+        for a, b in zip(st[:-1], st[1:]):
+            zz = np.sort(z[a:b]); zz = zz[np.r_[True, np.diff(zz) > 1e-6]]
+            for p, q in zip(zz[0::2], zz[1::2]):
+                A[ray[a], (zs > p) & (zs < q)] = True
+    return A.reshape(len(xs), len(ys), len(zs))
+
+
 def voxels(mesh, pitch, lo, shape):
     """inside test on cell centres by ray parity along Z (one ray per (x, y) column)."""
     xs = lo[0] + (np.arange(shape[0]) + 0.5) * pitch; ys = lo[1] + (np.arange(shape[1]) + 0.5) * pitch
     zs = lo[2] + (np.arange(shape[2]) + 0.5) * pitch
-    try:
-        import noxopt as NO
-        return NO._voxelise(mesh, xs, ys, zs)
-    except Exception:
-        P = np.stack(np.meshgrid(xs, ys, zs, indexing="ij"), -1).reshape(-1, 3)
-        return mesh.contains(P).reshape(shape)
+    return _ray_parity(mesh, xs, ys, zs)
 
 
 NECK_LEVELS = (0.9, 1.2, 1.5)        # erosion depths for the neck test (necks under 1.8 / 2.4 / 3.0 mm); 2.0 flagged 4.0 bolt-down plates joining two thick lumps (plates, not necks)
