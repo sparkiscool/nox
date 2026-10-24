@@ -42,3 +42,21 @@ it  17 beta    1 J   0.7694 vol 0.0386 (dil 0.0462 g -0.011) grey 20.1% ch 0.100
 it  18 beta    1 J   0.7177 vol 0.0385 (dil 0.0461 g -0.013) grey 20.1% ch 0.100 worst misuse: knocked over onto +X 977 4.5s
 it  19 beta    1 J   0.4796 vol 0.0385 (dil 0.0461 g -0.012) grey 20.1% ch 0.100 worst misuse: knocked over onto +X 561 4.5s
 it  20 beta    1 J   0.3639 vol 0.0385 (dil 0.0461 g -0.013) grey 20.2% ch 0.100 worst misuse: Overseer motors cut 408 4.6s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  21 beta    1 J   0.3005 vol 0.0385 (dil 0.0461 g -0.011) grey 20.2% ch 0.100 worst misuse: knocked over onto +X 339 4.7s
+it  22 beta    1 J   0.2576 vol 0.0386 (dil 0.0462 g -0.008) grey 20.3% ch 0.100 worst misuse: Overseer motors cut 289 4.7s
+it  23 beta    1 J   0.2272 vol 0.0387 (dil 0.0463 g -0.006) grey 20.2% ch 0.100 worst misuse: Overseer motors cut 252 4.8s
+it  24 beta    1 J   0.2067 vol 0.0389 (dil 0.0464 g -0.004) grey 20.2% ch 0.100 worst misuse: Overseer motors cut 231 5.0s
+it  25 beta    1 J   0.1925 vol 0.0389 (dil 0.0464 g -0.003) grey 20.2% ch 0.100 worst misuse: Overseer motors cut 213 4.6s
+layout: beta 1 done: eroded design 20 bodies, main 90.7%; drawn bodies outside the main body: 19
+it  26 beta    2 J   0.5442 vol 0.0315 (dil 0.0552 g -0.186) grey 19.1% ch 0.100 worst Overseer catch -X-Y diag 693 4.5s
+it  27 beta    2 J   0.2055 vol 0.0383 (dil 0.0655 g -0.034) grey 20.7% ch 0.100 worst misuse: Overseer motors cut 228 4.8s
+it  28 beta    2 J   0.1448 vol 0.0398 (dil 0.0663 g -0.023) grey 20.6% ch 0.100 worst misuse: knocked over onto +X 172 5.4s
+it  29 beta    2 J   0.1218 vol 0.0410 (dil 0.0670 g -0.013) grey 20.5% ch 0.100 worst misuse: knocked over onto +X 146 4.8s
+it  30 beta    2 J   0.1099 vol 0.0418 (dil 0.0673 g -0.008) grey 20.3% ch 0.100 worst misuse: knocked over onto +X 132 5.1s
