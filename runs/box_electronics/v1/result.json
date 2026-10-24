@@ -1309,7 +1309,7 @@
   [
    "MATE_CHECK",
    "hold the stroke; read INA_KA",
-   "I < 50 mA within 1.0 s (the new pack carries the drone)",
+   "I > 100 mA seen during INSERT, then I < 50 mA within 1.0 s (the new pack carries the drone)",
    1.0,
    "A6 mate fail"
   ],
@@ -1389,7 +1389,7 @@
   [
    "A4 pull / keep-alive lost",
    "INA_KA I < 100 mA at the end of the pull stroke",
-   "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check; passes: KA_OFF, LATCH_IN, SWAP_FAIL; fails: pack-out hold (latch OUT, K1 closed), alarm"
+   "either the pack did not come out or the pads did not make: head B re-inserts what it holds; always the pack-out hold (latch OUT, K1 closed), SWAP_FAIL, alarm (the current cannot prove a mate here)"
   ],
   [
    "A5 stall",

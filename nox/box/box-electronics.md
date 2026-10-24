@@ -144,7 +144,7 @@ The research's ~600 W of nonstop 2C charging does not fit the LRS-350; the 6.5 A
 | PULL | head B rises to 89.6, closes, retracts with the dead pack (XT60 unmates) | full stroke, no stall, I > 100 mA at its end | 2 s | A4 |
 | TURN | axle 90°: head A to the top, ≤ 100 full steps/s through each notch, step target + the bay's gravity offset | no stall, hall matches phi | 1.1 s (E: ~0.5 s for the slow notch pass) | A5 |
 | INSERT | head A extends, last 12 at ≤ 20 mm/s, to the bolt seat, 1 over-travel into the TPU strip | full stroke | 2 s | A5 |
-| MATE_CHECK | hold the stroke, read INA 0x41 | I < 50 mA | 1.0 s | A6 |
+| MATE_CHECK | hold the stroke, read INA 0x41 | I > 100 mA seen during INSERT (the pins carried the drone), then I < 50 mA (the new pack took over); CHECK: also the drone's bus voltage ≥ 14.0 V over the mission link | 1.0 s | A6 |
 | RELEASE | gripper opens, head A to park | park, no stall | 1 s | A5 |
 | KA_OFF | open K1 at ~0 A | I < 50 mA before, bus < 1 V after | 0.3 s | A3 |
 | LATCH_IN | PCA ch 0..3 to IN, only with a pack mated (MATE_CHECK passed) | all 4 halls high | 0.5 s | A11 |
@@ -163,7 +163,7 @@ The box never arms or disarms the drone: it disarms on the kill and the mission 
 | A1 latch not out | a hall still high 0.5 s after OUT | all 4 IN, OUT once more; second fail: IN, SWAP_FAIL, the drone keeps its pack (nothing has moved) |
 | A2 latch lost mid-swap | a hall goes high between LATCH_OUT and LATCH_IN | stop all motion, K1 as it is, alarm (the plungers self-lock under load) |
 | A3 keep-alive fault | bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s (ALERT) with the old pack in, or K1 will not open at 0 A | open K1; before PULL: SWAP_FAIL with the old pack in; after PULL: alarm, K1 and the latch stay as they are (pack-out hold) |
-| A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check; mate passes: KA_OFF, LATCH_IN, SWAP_FAIL; mate fails: pack-out hold (latch OUT, K1 closed), alarm |
+| A4 pull / keep-alive lost | I < 100 mA at the end of the pull | the pack did not come out or the pads did not make: head B re-inserts what it holds; the keep-alive current cannot prove a mate here (the pins were not carrying), so always the pack-out hold (latch OUT, K1 closed), SWAP_FAIL, alarm; Spark clears it (DEFAULT; alt: LATCH_IN on the drone's bus voltage ≥ 14.0 V over the mission link, CHECK) |
 | A5 stall | TMC2209 DIAG on a fast head move, Klipper shutdown, E-stop, or the axle hall out of its window | stop all motion, latch stays out, K1 as it is (closed with the pack out: the drone stays powered), alarm; Spark clears by hand, heads re-home before the next cycle |
 | A6 mate fail | I ≥ 50 mA 1.0 s after the full stroke | back off 5, push again once at 10 mm/s; still ≥ 50 mA: pull the pack back into head A, the drone stays on keep-alive (no time limit), alarm |
 | A7 bay mate fail | bay bus not 13.0..17.0 V with the relay open | re-insert once; then leave the pack uncharged, alarm (off the flight path) |
