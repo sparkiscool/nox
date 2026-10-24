@@ -15,8 +15,9 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
 
 ## 2. Design (the part's own script, nothing else)
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
-  `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent and stop here
-  (it checkpoints, checks, and opens the PR itself).
+  `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent (background, own worktree)
+  and carry on with anything that does not need its mesh; it checkpoints, checks, and opens the PR itself. Several variants or
+  parts in one brief = one worker each, started together.
 - Every number in the script is tagged in the doc; nothing is copied from an older version.
 
 ## 3. Gate and checks (speed first: one blocking gate)
@@ -25,6 +26,7 @@ python3 nox/solid_check.py <mesh.stl>            # the only gate; FAIL = fix the
 python3 nox/print_orient.py <mesh.stl> --all     # saved face must be the largest bed contact, or say why
 python3 nox/render_preview.py <mesh.stl> --mat PETG --prev <last g> --out runs/<part>/<version>/preview.png
 ```
+The three commands, the strength recheck and the motion artifact only need the mesh: run them in parallel.
 Strength recheck when the part carries a load case (pattern: `nox/box/arm_recheck.py`). Report, do not block.
 
 ## 4. Motion artifact (every part that moves or sits in a mechanism)

@@ -4,7 +4,7 @@ Spark's drone project: the **box** (funnel, magnet hold, vertical swap wheel, tw
 
 ## Every session
 1. `git pull` on `main`. Read only your part's row in `nox/current-parts.md`, its part doc and the `nox/dimensions.md` section it uses.
-2. Branch `part/<part>` for design work, `run/<part>-<version>` for a heavy run (one per session, `run-part` agent). One prompt from brief to saved part: `/part <part> <version>: <brief>`.
+2. Branch `part/<part>` for design work, `run/<part>-<version>` for a heavy run (one `run-part` worker per run; several run at once). One prompt from brief to saved part: `/part <part> <version>: <brief>`.
 3. Every turn that changes a design commits and pushes the same turn: script, results, the part's row, one line at the top of `nox/log.md`. Unpushed work does not exist.
 4. End with a small PR to `main`, one part: `python3 tools/pr.py open "<part> <version>: <what>" [body.md]`. Run the `review` agent on it; on PASS merge it yourself, `python3 tools/pr.py merge <n>`; on FAIL fix and re-review, never merge a FAIL. A tooling, docs, config or research PR is merged after the session's own check. A refused merge means main moved: merge `origin/main` into the branch, resolve, push, merge again. No PR waits on Spark.
 5. Never edit another part's script or row; put what it must change in the PR description and say which part you kept.
@@ -16,6 +16,7 @@ Spark's drone project: the **box** (funnel, magnet hold, vertical swap wheel, tw
 - **Ready to print = a slicing prompt.** Every reply that says a file is ready to print ends with the laptop slicing-session prompt (`docs/generative.md`, Save and print), filled in, in a code block.
 - **PETG rigid, TPU feet and nodes, no PLA.** Nothing under 2.0 mm (flexures excepted). Rods 3.0 carbon, epoxied. Bambu A1 mini, 180 cube, tree supports, largest flat face down.
 - **No old designs** (slide swap, slider, pusher, turret, turntable, carousel, groove seat, Z stage, top-mounted battery) unless Spark asks fresh. Simplest design wins; every placement comes from an optimization.
+- **Parallel by default (Spark 24 Oct).** A session never queues work that does not depend on other work: independent jobs (runs, parts, checks, research, reviews of different PRs) go to separate workers at the same time (Agent tool, `isolation: "worktree"` for anything that commits; a sibling cloud session via `create_session` when this box is full). Only a real dependency (needs the other's mesh, number or merge) waits. Each worker keeps its own branch and PR; the session collects the results.
 - **Never wait on Spark.** Decide, mark DEFAULT, write the choice and the alternative in one `log.md` line, continue; a shared number changes the same way (its `dimensions.md` row + the log line). Spark reverts what he disagrees with. A session never spends money (Spark orders from the cart link) or deletes work on `main` alone. Replies short, no em dashes.
 
 ## Model and effort
