@@ -1,0 +1,15 @@
+=== scan_stick_unit: h 2.0, generated 55.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.29 cells, erosion depth 1.37 mm; volfrac 0.068 of 12,675 design cells
+layout: WARNING filter radius 1.29 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in y (2.9% of passive cells differ): no symmetry
+layout: 3 drawn bodies (5,035 cells), held solid in every realization; eroded filter: masked
+layout: 33 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties
+fem: grid (32, 32, 80) = 81,920 elements, 70,944 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0751 (dil 0.0918 g +0.107) grey 18.2% ch 0.100 worst tie b3 fz 6.46e+03 2.9s
+it   2 beta    1 J   1.4421 vol 0.0595 (dil 0.0721 g -0.130) grey 28.4% ch 0.100 worst tie b3 my 1.17e+03 2.6s
+it   3 beta    1 J   0.3668 vol 0.0644 (dil 0.0774 g -0.066) grey 24.2% ch 0.100 worst tie b3 my 293 2.4s
+it   4 beta    1 J   0.1859 vol 0.0669 (dil 0.0796 g -0.040) grey 22.6% ch 0.100 worst tie b3 my 144 2.5s
+it   5 beta    1 J   0.1210 vol 0.0685 (dil 0.0808 g -0.025) grey 20.5% ch 0.100 worst tie b3 my 93.2 2.6s
+it   6 beta    1 J   0.1139 vol 0.0694 (dil 0.0812 g -0.010) grey 18.7% ch 0.100 worst camera hit above 50 N 70.8 2.4s
+it   7 beta    1 J   0.0735 vol 0.0694 (dil 0.0804 g -0.019) grey 16.8% ch 0.100 worst tie b3 my 56 2.4s

@@ -1,0 +1,28 @@
+=== scan_stick_base: rebuild from /home/user/nox/runs/scan_stick_base/v7/density.npz (layout not rerun)
+Traceback (most recent call last):
+  File "/home/user/nox/nox/overseer/scan_stick/base_topo_v18.py", line 189, in <module>
+    rebuild(setup, h=H, gen_cm3=GEN, src_dir=os.path.join(ROOT, "runs", "scan_stick_base", "v7"), out_dir=out, name="scan_stick_base", settings=Settings(finish="drawn"))
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/nox/nox/topo/run.py", line 112, in rebuild
+    s = replace(s, min_member_mm=round(gate_member_mm(setup(h), s.min_member_mm, log=log), 2))
+                                                      ~~~~~^^^
+  File "/home/user/nox/nox/overseer/scan_stick/base_topo_v18.py", line 153, in setup
+    B = bodies(0.0)                                                                    # v7 cuts: the layout's grid and masks
+  File "/home/user/nox/nox/overseer/scan_stick/base_topo_v18.py", line 119, in bodies
+    cuts = man(trimesh.load(tc, force="mesh"))                                               # thread from z 0 up 27
+               ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/dist-packages/trimesh/exchange/load.py", line 112, in load
+    loaded = load_scene(
+        file_obj=file_obj,
+    ...<3 lines>...
+        **kwargs,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/trimesh/exchange/load.py", line 198, in load_scene
+    arg = _parse_file_args(
+        file_obj=file_obj,
+    ...<3 lines>...
+        session=session,
+    )
+  File "/usr/local/lib/python3.13/dist-packages/trimesh/exchange/load.py", line 629, in _parse_file_args
+    raise ValueError(f"string is not a file: `{file_obj}`")
+ValueError: string is not a file: `/home/user/nox/nox/overseer/scan_stick/out/thread_cut.stl`
