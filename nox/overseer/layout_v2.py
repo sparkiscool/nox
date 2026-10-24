@@ -451,7 +451,7 @@ allitems = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.
             ("cartridge", g["cart"]), ("pods", trimesh.util.concatenate([g["cam_pod"], g["flow_pod"]])), ("feet", trimesh.util.concatenate(g["feet"])),
             ("Pi", PI), ("rear wing", trimesh.util.concatenate([PDB, UBEC, BUCK, RX]))]
 nm, mg = l2_clear_margin(g, g["B"], allitems)
-say(f"L2 field (96 deg, negative-angle mode, kept clear in both modes): closest {nm} {mg:.1f} behind it (C, > 0 = clear)")
+say(f"L2 field ({90 + 2 * L2_NEG:.0f} deg, {'negative-angle' if L2_NEG else 'normal'} mode kept clear): closest {nm} {mg:.1f} behind it (C, > 0 = clear)")
 nose = max(g["l2"].bounds[1][0], g["cam"].bounds[1][0])
 say(f"length: rear prop tips x {dm - HALF - PROP_R:.0f} to the nose x {nose:.0f} ({nose - (dm - HALF - PROP_R):.0f}); width 533; "
     f"height {max(g['cam_bracket'].bounds[1][2], g['cam'].bounds[1][2], PROP_Z) - g['feet'][0].bounds[0][2]:.0f}")
