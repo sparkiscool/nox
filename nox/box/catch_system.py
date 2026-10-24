@@ -249,6 +249,22 @@ if __name__ == "__main__":
 
 
 # ---------------------------------------------------------------- the box catch assembly file (nox/ASSEMBLY.md)
+# The file is posed in the box W frame of box structure v2 (hub 24 Oct: the arm v7 sweep needs the funnel in the box
+# frame); the analytic loads above stay in the seat frame. Every pose in the file = SEAT_TO_W @ its seat pose; change the
+# 4 numbers here (box structure v2, C; Y_C may move once more) and rerun update_assembly() + panels_v7_into_assembly().
+Y_C, Y_FUN, Z_SEAT, R_RING = 138.0, 140.0, 155.3, 113.0     # tab line, funnel centre (Y_C + 2), seat z 0 in W, bay ring R (C)
+SEAT_TO_W = np.array([[0, -1.0, 0, 0], [1.0, 0, 0, Y_FUN], [0, 0, 1.0, Z_SEAT], [0, 0, 0, 1.0]])   # seat y -> W -X, seat x -> W Y
+                                                            # (box_system.py convention: the seated faces +-y face W -+X)
+FRAME_NOTE = (f"Frame: box W of box structure v2 (Y_C {Y_C:g}, Y_FUN {Y_FUN:g}, Z_SEAT {Z_SEAT:g}, R_RING {R_RING:g}, C; "
+              "nox/box/catch_system.py SEAT_TO_W): every pose = SEAT_TO_W @ the part's pose in the seat frame of "
+              "funnel_panel.py / hook_latch.py (drone coordinates of a seated drone, contact face max(|x|, |y|) = 82.7 + z, "
+              "bottom edge z 1.3); seat y -> W -X, seat x -> W Y, seat z 0 -> W Z_SEAT. Do not apply SEAT_TO_W again. ")
+
+
+def _set_frame_note(a):
+    n = a.data.get("note", "")
+    k = n.find("Funnel panels")
+    a.data["note"] = "Box catch, 24 Oct. " + FRAME_NOTE + (n[k:] if k >= 0 else "")
 def _print_pose(m, R):
     """4x4 that maps a print file (made by to_tm(m, R) then rezeroed) back to the unit frame of m."""
     t = H.to_tm(m, R); off = -t.bounds[0]
@@ -280,10 +296,11 @@ def update_assembly(path=None):
                                (f"latch plunger {name}", f"print/box_hook_latch_plunger_{k}_{H.VER}.stl", Tp)):
             p = a.part(nm)
             p["mesh"] = mesh; p["version"] = H.VER; p["source"] = "nox/box/hook_latch.py + nox/box/catch_system.py:update_assembly"
-            a.set_pose(nm, pose)
+            a.set_pose(nm, SEAT_TO_W @ pose)                  # box W (the plunger moves function works in any frame)
     a.data["note"] = a.data["note"].replace("hook latch v1", "hook latch v2").replace(
         "B-unit plungers are posed mirrored as hook_latch.py does (one plunger file x4: CHECK the magnet pocket side).",
         "B units use the mirrored housing and plunger files (plunger A / B v2: the plunger is chiral).")
+    _set_frame_note(a)
     a.save()
     return a
 
@@ -304,14 +321,18 @@ def panels_v7_into_assembly(path=None):
             nm = f"funnel_panel_{k}_{'v8_plain' if plain else 'v7'}_seat.stl"
             FV.tm(FV.to_seat(m)).export(os.path.join(od, nm)); files[(k, plain)] = f"runs/box_catch_assembly/v1/{nm}"
     a = AS.load(path or os.path.join(HERE, "box_catch.assembly.json"))
-    for face in ("+x", "-x", "+y", "-y"):
+    for kq, face in enumerate(("+x", "+y", "-x", "-y")):           # seat pose: the k = 0 copy turned 90 k about z
         plain = face in ("+x", "-x")
+        c, s_ = [round(v) for v in (math.cos(math.radians(90 * kq)), math.sin(math.radians(90 * kq)))]
+        Rz = np.array([[c, -s_, 0, 0], [s_, c, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1.0]])
         for k in ("A", "B"):
             p = a.part(f"funnel panel {k} {face}")
             p["mesh"] = files[(k, plain)]; p["version"] = "v8 plain" if plain else "v7"
             p["source"] = "nox/box/catch_v4/funnel_panel_v7.py (seat mesh by nox/box/catch_system.py:panels_v7_into_assembly)"
-    a.data["note"] = ("Box catch, 24 Oct. Frame: the seat frame of funnel_panel.py / hook_latch.py (drone coordinates of a seated "
-                      "drone, contact face max(|x|, |y|) = 82.7 + z, bottom edge z 1.3). Funnel panels v7 on the seated faces "
+            a.set_pose(f"funnel panel {k} {face}", SEAT_TO_W @ Rz)
+    for nm in ("drone wheels (seated)", "drone cage ring (seated)"):     # seat-frame context meshes
+        a.set_pose(nm, SEAT_TO_W)
+    a.data["note"] = ("Box catch, 24 Oct. " + FRAME_NOTE + "Funnel panels v7 on the seated faces "
                       "(+-y, latch windows and bosses), v8 plain on +-x (bottom edge at seat z 12.8: opening 191 along x by 168 along y). Hook latch v2: B units use the mirrored housing and "
                       "plunger files. Plunger state via 'moves' (0 retracted, 1 out). Drone wheels and ring: hook_latch.drone_parts "
                       "context (E; the wheels sit in their cheeks, a contact pair). Left out: funnel hub + corner blocks (DESIGN), "
