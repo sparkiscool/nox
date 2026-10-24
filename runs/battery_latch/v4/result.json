@@ -326,7 +326,7 @@
    "roll_deg": 1.06
   },
   "fe": {
-   "worst": 0.415,
+   "worst": 0.413,
    "worst_case": "swap across 43.5 N +x",
    "worst_at": [
     20.5,
@@ -352,10 +352,10 @@
     "swap insert 74 N on the stops": 0.029,
     "swap pull 57 N on the XT60 lips": 0.066,
     "swap pull 57 N on the bolts": 0.209,
-    "swap insert 74 N + across 43.5 N": 0.391,
-    "swap across 43.5 N +x": 0.415,
-    "swap across 43.5 N -x": 0.413,
-    "swap centring 7.6 N + 1.05 N m": 0.255
+    "swap insert 74 N + across 43.5 N": 0.39,
+    "swap across 43.5 N +x": 0.413,
+    "swap across 43.5 N -x": 0.411,
+    "swap centring 7.6 N + 1.05 N m": 0.256
    },
    "rows_full": [
     {
@@ -560,7 +560,7 @@
      "case": "swap insert 74 N + across 43.5 N",
      "cls": "flight",
      "inlayer": 0.379,
-     "across": 0.391,
+     "across": 0.39,
      "at": [
       20.5,
       46.7,
@@ -571,7 +571,7 @@
      "case": "swap across 43.5 N +x",
      "cls": "flight",
      "inlayer": 0.398,
-     "across": 0.415,
+     "across": 0.413,
      "at": [
       20.5,
       46.7,
@@ -582,7 +582,7 @@
      "case": "swap across 43.5 N -x",
      "cls": "flight",
      "inlayer": 0.399,
-     "across": 0.413,
+     "across": 0.411,
      "at": [
       -20.5,
       46.7,
@@ -592,8 +592,8 @@
     {
      "case": "swap centring 7.6 N + 1.05 N m",
      "cls": "flight",
-     "inlayer": 0.255,
-     "across": 0.2,
+     "inlayer": 0.256,
+     "across": 0.202,
      "at": [
       25.5,
       9.7,
@@ -606,31 +606,31 @@
     "swap insert 74 N on the stops": 0.0031,
     "swap pull 57 N on the XT60 lips": 0.0148,
     "swap pull 57 N on the bolts": 0.0967,
-    "swap insert 74 N + across 43.5 N": 0.2932,
-    "swap across 43.5 N +x": 0.3406,
-    "swap across 43.5 N -x": 0.3315,
-    "swap centring 7.6 N + 1.05 N m": 0.1361
+    "swap insert 74 N + across 43.5 N": 0.2904,
+    "swap across 43.5 N +x": 0.3372,
+    "swap across 43.5 N -x": 0.3281,
+    "swap centring 7.6 N + 1.05 N m": 0.1349
    },
    "guide_lever_mm": null,
    "build": "+y",
    "crash_worst": 0.075,
-   "swap_worst": 0.415
+   "swap_worst": 0.413
   },
   "first_mode": {
    "y-": {
-    "k_N_per_mm": 2547.0,
+    "k_N_per_mm": 2547.3,
     "f_Hz": 546.0
    },
    "y+": {
-    "k_N_per_mm": 46621.4,
+    "k_N_per_mm": 46586.9,
     "f_Hz": 2335.0
    },
    "x": {
-    "k_N_per_mm": 16980.0,
-    "f_Hz": 1409.0
+    "k_N_per_mm": 16994.8,
+    "f_Hz": 1410.0
    },
    "z": {
-    "k_N_per_mm": 81609.2,
+    "k_N_per_mm": 81602.9,
     "f_Hz": 3090.0
    },
    "first_mode_Hz": 546.0
@@ -1093,7 +1093,7 @@
   "mass_g": {
    "cartridge": 37.92,
    "slider": 2.88,
-   "receiver": 94.39,
+   "receiver": 94.41,
    "lid": 5.54,
    "strips": 1.97,
    "xt60_carrier": 4.76,
@@ -1176,10 +1176,10 @@
   ],
   "prints": {
    "cartridge": {
-    "file": "box_battery_cartridge_scout_v6.stl",
+    "file": "box_battery_cartridge_scout_v7.stl",
     "material": "PETG",
     "count": 1,
-    "version": "v6",
+    "version": "v7",
     "bed_face": "closed end (z 0) down",
     "mass_g": 37.92,
     "extents": [
@@ -1272,7 +1272,7 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[1274.0]",
+     "eroded_volumes_mm3": "[1265.5]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
@@ -1316,7 +1316,7 @@
     "count": 1,
     "version": "v3",
     "bed_face": "mount plane (deck top) down: layers across the install axis",
-    "mass_g": 94.39,
+    "mass_g": 94.41,
     "extents": [
      65.5,
      105.6,
@@ -1326,7 +1326,7 @@
     "solid_info": {
      "bodies_plain": 1,
      "bodies_eroded": 1,
-     "eroded_volumes_mm3": "[46072.0]",
+     "eroded_volumes_mm3": "[45986.8]",
      "necks": "[]",
      "drawn_not_in_main": "[]",
      "thin_walls": "[]",
@@ -1338,10 +1338,10 @@
     "island_run_mm": 0.0
    },
    "xt60_carrier": {
-    "file": "box_battery_xt60_carrier_scout_v1.stl",
+    "file": "box_battery_xt60_carrier_scout_v2.stl",
     "material": "PETG",
     "count": 1,
-    "version": "v1",
+    "version": "v2",
     "bed_face": "ear tops down (pocket open to the bed)",
     "mass_g": 4.76,
     "extents": [
@@ -1365,10 +1365,10 @@
     "island_run_mm": 0.0
    },
    "receiver_lid": {
-    "file": "box_battery_receiver_lid_scout_v1.stl",
+    "file": "box_battery_receiver_lid_scout_v2.stl",
     "material": "PETG",
     "count": 1,
-    "version": "v1",
+    "version": "v2",
     "bed_face": "top face down (the XT60 carrier's cap, = v1 lid)",
     "mass_g": 5.54,
     "extents": [
@@ -1419,10 +1419,10 @@
     "island_run_mm": 0.0
    },
    "skid_closed": {
-    "file": "box_battery_skid_closed_scout_v1.stl",
+    "file": "box_battery_skid_closed_scout_v2.stl",
     "material": "TPU",
     "count": 1,
-    "version": "v1",
+    "version": "v2",
     "bed_face": "outer (chamfer) face down",
     "mass_g": 1.38,
     "extents": [
@@ -1446,10 +1446,10 @@
     "island_run_mm": 0.0
    },
    "skid_lead": {
-    "file": "box_battery_skid_lead_scout_v1.stl",
+    "file": "box_battery_skid_lead_scout_v2.stl",
     "material": "TPU",
     "count": 1,
-    "version": "v1",
+    "version": "v2",
     "bed_face": "outer (chamfer) face down",
     "mass_g": 3.19,
     "extents": [
@@ -1479,11 +1479,13 @@
    "receiver": {
     "nose": {
      "funnel_margin_mm": 1.21,
-     "key_line_mm": 9.33
+     "key_line_mm": 5.7,
+     "bond_mm2": 369.0
     },
     "tail": {
      "funnel_margin_mm": 2.24,
-     "key_line_mm": 4.49
+     "key_line_mm": 4.49,
+     "bond_mm2": 1198.0
     }
    },
    "cartridge_strips": {
@@ -1839,15 +1841,15 @@
    "rows": {
     "hover 1 g": 0.018,
     "flight 4 g + 2 g x": 0.072,
-    "catch 6 g": 0.109,
-    "crash -y": 0.396,
-    "crash +y": 0.222,
-    "crash +x": 0.344,
-    "crash -x": 0.344,
+    "catch 6 g": 0.108,
+    "crash -y": 0.392,
+    "crash +y": 0.22,
+    "crash +x": 0.341,
+    "crash -x": 0.341,
     "crash +z": 0.081,
     "crash -z": 0.076,
-    "crash corner (+x -y +z)": 0.229,
-    "crash corner (-x -y -z)": 0.247,
+    "crash corner (+x -y +z)": 0.227,
+    "crash corner (-x -y -z)": 0.245,
     "swap insert 60 N": 0.047,
     "swap pull 50 N": 0.046,
     "handling 50 N on a foot": 0.069,
@@ -1867,9 +1869,9 @@
      "inlayer": 0.008,
      "across": 0.018,
      "at": [
-      30.8,
+      -30.8,
       8.2,
-      89.2
+      81.8
      ]
     },
     {
@@ -1887,29 +1889,29 @@
      "case": "catch 6 g",
      "cls": "flight",
      "inlayer": 0.049,
-     "across": 0.109,
+     "across": 0.108,
      "at": [
       30.8,
       8.2,
-      89.2
+      81.8
      ]
     },
     {
      "case": "crash -y",
      "cls": "misuse",
-     "inlayer": 0.179,
-     "across": 0.396,
+     "inlayer": 0.178,
+     "across": 0.392,
      "at": [
       30.8,
       8.2,
-      89.2
+      81.8
      ]
     },
     {
      "case": "crash +y",
      "cls": "misuse",
-     "inlayer": 0.193,
-     "across": 0.222,
+     "inlayer": 0.191,
+     "across": 0.22,
      "at": [
       -29.2,
       59.2,
@@ -1919,8 +1921,8 @@
     {
      "case": "crash +x",
      "cls": "misuse",
-     "inlayer": 0.334,
-     "across": 0.344,
+     "inlayer": 0.332,
+     "across": 0.341,
      "at": [
       29.2,
       59.2,
@@ -1930,8 +1932,8 @@
     {
      "case": "crash -x",
      "cls": "misuse",
-     "inlayer": 0.334,
-     "across": 0.344,
+     "inlayer": 0.332,
+     "across": 0.341,
      "at": [
       -29.2,
       59.2,
@@ -1944,7 +1946,7 @@
      "inlayer": 0.079,
      "across": 0.081,
      "at": [
-      -29.2,
+      29.2,
       59.2,
       167.2
      ]
@@ -1955,7 +1957,7 @@
      "inlayer": 0.054,
      "across": 0.076,
      "at": [
-      -30.8,
+      30.8,
       45.8,
       -0.8
      ]
@@ -1963,8 +1965,8 @@
     {
      "case": "crash corner (+x -y +z)",
      "cls": "misuse",
-     "inlayer": 0.2,
-     "across": 0.229,
+     "inlayer": 0.198,
+     "across": 0.227,
      "at": [
       -30.8,
       8.2,
@@ -1974,8 +1976,8 @@
     {
      "case": "crash corner (-x -y -z)",
      "cls": "misuse",
-     "inlayer": 0.218,
-     "across": 0.247,
+     "inlayer": 0.217,
+     "across": 0.245,
      "at": [
       -29.2,
       59.2,
@@ -1988,7 +1990,7 @@
      "inlayer": 0.042,
      "across": 0.047,
      "at": [
-      20.2,
+      -20.2,
       63.8,
       161.2
      ]
@@ -2054,9 +2056,9 @@
      "inlayer": 0.052,
      "across": 0.116,
      "at": [
-      30.8,
+      -30.8,
       8.2,
-      89.2
+      81.8
      ]
     },
     {
@@ -2073,7 +2075,7 @@
     {
      "case": "swap across 43.5 N +x",
      "cls": "flight",
-     "inlayer": 0.248,
+     "inlayer": 0.249,
      "across": 0.548,
      "at": [
       9.8,
@@ -2084,7 +2086,7 @@
     {
      "case": "swap across 43.5 N -x",
      "cls": "flight",
-     "inlayer": 0.248,
+     "inlayer": 0.249,
      "across": 0.548,
      "at": [
       -9.8,
@@ -2108,15 +2110,15 @@
     "swap insert 74 N on the XT60 seat": 0.001,
     "swap insert 74 N on the stops": 0.0039,
     "swap pull 57 N on the XT60 lips": 0.016,
-    "swap pull 57 N on the bolts": 0.0214,
+    "swap pull 57 N on the bolts": 0.0213,
     "swap insert 74 N + across 43.5 N": 0.6092,
-    "swap across 43.5 N +x": 0.7794,
-    "swap across 43.5 N -x": 0.7794,
-    "swap centring 7.6 N + 1.05 N m": 0.2141
+    "swap across 43.5 N +x": 0.7805,
+    "swap across 43.5 N -x": 0.7805,
+    "swap centring 7.6 N + 1.05 N m": 0.2144
    },
    "guide_lever_mm": null,
    "build": "+y",
-   "crash_worst": 0.396,
+   "crash_worst": 0.392,
    "swap_worst": 0.548
   },
   "first_mode": {
@@ -3015,7 +3017,7 @@
    "tol_mm": 3.0,
    "cases": {
     "all": {
-     "mass_g": 811.94,
+     "mass_g": 811.95,
      "cg_offset": [
       1.27,
       0.03,
@@ -3026,7 +3028,7 @@
      "pass_": true
     },
     "no_swap": {
-     "mass_g": 596.46,
+     "mass_g": 596.47,
      "cg_offset": [
       1.84,
       0.04,
@@ -4305,7 +4307,7 @@
     0.0,
     10.0
    ],
-   "n_points": 236753
+   "n_points": 237055
   },
   "cage_first": {
    "receiver v1 (latch)": 5.68,

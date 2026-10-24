@@ -149,17 +149,17 @@ So 2 mm of TPU is a scrape layer, not a crash stroke. Holding the hit to the Sco
 
 **Receiver v3** (Scout only; the Overseer stays v2):
 - **Head seats:** v2's flats at y 14.0 sat outside the collar clip, so an M3 head bore on only 44–52 % of its annulus and the 3.0 ring round each counterbore was half gone (PR 109 review). v3 moves:
-  - the flats to y 21.5 (drone z −23.0);
+  - the flats to y 24.5 (drone z −20.0; the head fills y 21.5..24.5 below it);
   - the Scout bolts to x ±26.55 (the ring clear of the cartridge path at 20.35);
   - the tail pair to z −0.1 (the ring inside the tail end wall).
-  - Every seat now reads bearing 1.0 and ring 1.0 (`result.json` head_seats, C).
-- **Bolts:** M3 x 40 from below, 7.4 past the mount plane (DEFAULT, E). The partner needs a hole ≥ 8 deep under each M3 x 5.7 insert.
+  - Every seat now reads bearing 1.0 on the flat and ring 1.0 over the head's whole band (`result.json` head_seats, C; a first try at y 21.5 left the ring 0.9..3.0 down the head, PR 109 review).
+- **Bolts:** M3 x 35 from below, 5.4 past the mount plane (DEFAULT, E). The partner needs a hole ≥ 6 deep under each M3 x 5.7 insert.
 - **Partner inserts** (drone x, y): (−42.65, ±26.55) and (43.25, ±26.55), was (−43.85 / 43.25, ±25.6). This is a Scout frame change, sent to the Scout.
 - **Clip inset:** 11.5 (search: collar 7.45, need 7.0); 11.0 before the 26.55 bolts.
 - **Under the keel:** |x| ≤ 25.5 below y 6.5 (drone z −38). The collar clip already held the columns inside 25.9 there; this shaves the pocket blocks' outer 0.4 for y 5.75..6.5 (wall 2.6 over that 0.75 band, C).
   - The keel's printed nodes (r 4 at drone (x, ±29.6, −47.5)) clear the receiver by 1.2, the end pieces by 5.6 and the cartridge strips by 2.5, nodes and rail line alike (need 1.0; `result.json` keel, C).
 - **FE** on the same swap set (`fe/fe_scout_receiver_v2.json`, run v4; M mesh, E loads):
-  - worst 0.415 (v2 0.51);
+  - worst 0.413 (v2 0.51);
   - 43.5 N across: 0.34 mm;
   - 74 N: 0.001 mm;
   - crash ≤ 0.075, handling 0.123;
@@ -168,14 +168,14 @@ So 2 mm of TPU is a scrape layer, not a crash stroke. Holding the hit to the Sco
 **Receiver TPU end pieces** (drone receiver only, DEFAULT; one print each, bonded on). They replace the v3 nose plate and side skids.
 - The receiver bottom strips are dropped (the keel is there).
 - **Nose:** the 2.2 plate on the lead end wall face, plus 2 Ø3.5 bars along the 45° chamfer at drone y ±34, from (59.2, ±34, −16) to (35.2, ±34, −40). Ears at |y| 26..34.5 join plate and bars. Bonded 369 mm² (M).
-- **Tail:** 2.2 on the tail end wall face and its chamfer, |y| ≤ 27, z −31.5..−6, with a Ø9 hole round each tail bolt key. Bars on the same line from the wall (−49.95, ±34, −25.25) to (−35.2, ±34, −40). Bonded 1197 mm² (M).
+- **Tail:** 2.2 on the tail end wall face and its chamfer, |y| ≤ 27, z −31.5..−6, with a Ø9 hole round each tail bolt key. Bars on the same line from the wall (−49.95, ±34, −25.25) to (−35.2, ±34, −40). Bonded 1198 mm² (M).
 - **Bar placement:**
   - Each bar's axis sits 1.0 off the chamfer, so the bar has a flat where it crosses a bolt column.
   - On their own the bars touched the receiver only there (~6 mm), so they are joined to the plates.
   - y 34, not the Scout's 31: at 31 / 31.5 the bolt rings (r 6.2 at y 26.55) cut the bars to 0.5 skins.
   - The bars stop at z −40 (keel).
   - Below the tail plate's −31.5, the swap path and the key holes leave only slivers; the bars cover there.
-- **Clearances:** clipped at funnel inset 6.25. Margins at ±5° yaw / ±2° tilt: nose 1.21, tail 2.24, cartridge strips 3.15 (need 1.0). Bolt key lines: nose 9.3, tail 4.5 (the Ø9 hole), cartridge strips 11.2 (C).
+- **Clearances:** clipped at funnel inset 6.25. Margins at ±5° yaw / ±2° tilt: nose 1.21, tail 2.24, cartridge strips 3.15 (need 1.0). Bolt key lines (least distance to the surface): nose 5.7, tail 4.5 (the Ø9 hole), cartridge strips 11.2 (C).
 - Insertion with every piece: 0 mm³, no stuck step (C).
 - The cartridge strips and end skids are unchanged (the cartridge ends follow the 11.5 inset).
 
@@ -210,14 +210,14 @@ Requirements (the brief): hold every L case for both packs; XT60 mates on insert
 ## Pieces
 | Piece | Material, count | Scout g (M) | Overseer g (M) | Print |
 |---|---|---|---|---|
-| `box_battery_cartridge_<pack>_v6` (centre rib) | PETG x 1 | 37.9 | 97.6 | closed end down, tree supports (174 tall for the Overseer) |
+| `box_battery_cartridge_scout_v7` / `_overseer_v6` (centre rib; Scout v7 = v6 with its ends at the 11.5 inset) | PETG x 1 | 37.9 | 97.6 | closed end down, tree supports (174 tall for the Overseer) |
 | `box_battery_cart_strip_scout_v1` (Scout only) | TPU 95A x 2 (one part) | 1.1 | – | foot down; bonded under the cartridge's bottom long edges |
 | `box_battery_rskid_nose_scout_v2`, `box_battery_rskid_tail_scout_v1` (Scout drone receiver only: plate + 2 bars each) | TPU 95A, 1 each | 3.2 / 5.0 | – | plate's outer face down, bars on tree supports; bonded on the receiver's end wall and chamfer |
-| `box_battery_skid_{closed,lead}_scout_v1` (Scout only) | TPU 95A, 1 each | 1.4 / 3.1 | – | outer (chamfer) face down; bonded on the cartridge's end chamfers (flexible contact adhesive), replaceable |
+| `box_battery_skid_{closed,lead}_scout_v2` (Scout only) | TPU 95A, 1 each | 1.4 / 3.1 | – | outer (chamfer) face down; bonded on the cartridge's end chamfers (flexible contact adhesive), replaceable |
 | `box_battery_slider_<pack>_v6` (tabs at rest ±5.0, 3.0 spring slots) | PETG x 2 (one part, both sides) | 2.9 | 3.7 | bar top down (largest face, layers along the bar) |
 | `box_battery_receiver_scout_v3` / `_overseer_v2` (latch block, drone and bays) | PETG x 1 | 94.4 | 216.2 (66.8 wide) | mount plane down (deck down), tree supports; the Overseer's 183.6 goes on the bed's diagonal (needs 177.1 of 180) |
-| `box_battery_xt60_carrier_<pack>_v1` (base: pull lips + ears) | PETG x 1 | 4.6 | 5.0 | ear tops down |
-| `box_battery_receiver_lid_<pack>_v1` (the carrier's cap) | PETG x 1 | 5.3 | 8.1 | top face down |
+| `box_battery_xt60_carrier_scout_v2` / `_overseer_v1` (base: pull lips + ears; Scout v2 at x ±26.55) | PETG x 1 | 4.6 | 5.0 | ear tops down |
+| `box_battery_receiver_lid_scout_v2` / `_overseer_v1` (the carrier's cap) | PETG x 1 | 5.3 | 8.1 | top face down |
 | `box_battery_receiver_strip_<pack>_v1` | TPU 95A x 2 | 1.0 | 2.1 | flat |
 
 **Both sets: HOLD / DESIGN, do not print** (files only in `runs/battery_latch/v4/stl/`, previews beside them).
@@ -228,7 +228,7 @@ Per set (v4): 165.3 g Scout drone set (157.1 bay), 338.5 g Overseer (M); v3 159.
 
 Bought per set:
 - XT60E1-M with a short pigtail and an inline connector (the replaceable XT60 carrier).
-- M3 bolts up from below into M3 x 5.7 heat-set inserts in the partner: Scout 4 x M3 x 40 (DEFAULT, E), head on its flat at y 21.5, lead-end pair through ear + cap. Overseer 6, open, see Handoffs.
+- M3 bolts up from below into M3 x 5.7 heat-set inserts in the partner: Scout 4 x M3 x 35 (DEFAULT, E), head on its flat at y 24.5, lead-end pair through ear + cap. Overseer 6, open, see Handoffs.
 - o 3 x 20 compression spring (0.3 wire, k ~0.2), 2 x o 2 x 2 N52 magnets, 2 x M3 x 5 cup-point set screws.
 
 Assembly: sliders into the cartridge channels from inside, spring into its U-slots, pack in (it closes the slots), plug into its pocket, set screws; XT60E1-M into the carrier base, cap on, carrier into the receiver's notch, receiver up on its bolts.
@@ -243,7 +243,7 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 
   | Pack | Swap | Crash | Handling 50 N | Flight |
   |---|---|---|---|---|
-  | Scout (v3) | 0.415 | 0.075 (15.3 g) | 0.123 | 0.03 |
+  | Scout (v3) | 0.413 | 0.075 (15.3 g) | 0.123 | 0.03 |
   | Overseer | 0.55 | 0.39 (35 g) | 0.07 | 0.07 |
 
   Every case and deflection is in `runs/battery_latch/v4/fe/` (Scout v3; the Overseer v2 file carried over) and the dimensions row.
@@ -258,7 +258,7 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 - **Assembled worst index per case (Scout, one set of numbers everywhere):**
   - The Scout frame model gives every flight / crash / landing case ≤ 0.98 (F).
   - The latch parts under them, receiver v3 FE: crash ≤ 0.07 at 15.3 g (0.08 at the suspension's ~16.7 g, scaled), flight 0.03, landing (catch 6 g) 0.05, handling 0.12.
-  - The swap set ≤ 0.415. Sliders ≤ 0.37, grip pull; cartridge v6 rib 0.25. Cartridge floor 0.14 at ~16.7 g (E, hand calc scaled).
+  - The swap set ≤ 0.413. Sliders ≤ 0.37, grip pull; cartridge v6 rib 0.25. Cartridge floor 0.14 at ~16.7 g (E, hand calc scaled).
 - **Overseer** (`overseer.assembly.json` on main, pose B, cartridge, pack and receiver replaced): `System: Overseer, cage first −59.0 mm (E) at (+0.91, −0.01, −0.41) (Unitree L2) FAIL, fit 27792.2 mm³ (E) (belly sled + pods / receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2636 g (E), CG 10.7 mm off thrust axis (E), 26.8 mm without swap parts FAIL (tol 3), probes −0.0 mm (E) edge at (+0.71, −0.06, +0.70) (Unitree L2, unshielded) FAIL`.
   - The sled was cut for the v1 receiver. The Overseer set is 66.8 x 68.8 x 183.6 (0.84 L, M).
 
@@ -271,20 +271,20 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
   - The swap load set the arm gave (74 / 57 N, 43.5 N, 7.6 N / 1.05 N·m, no guide couple) is what v2 is checked on.
   - Heads v7: cartridge v6 has the centre rib (x ±2.0). Tabs at rest ±5.0 / ±10.0, squeezed ±2.0 / ±7.0, stroke 3.0 (outer faces as agreed). Pocket, flat bottom and hall / magnet spots unchanged.
 - **Every receiver partner (Scout mount, Overseer sled, bay bodies):**
-  - M3 x 5.7 heat-set inserts at the boss positions (unchanged), bolts up from below.
+  - M3 x 5.7 heat-set inserts at the boss positions, bolts up from below. The Overseer's are unchanged; the Scout's move with receiver v3 to drone (−42.65 / 43.25, ±26.55) (drone and Scout bays alike).
   - The mount plane is unchanged (Scout 54.1, Overseer 68.8). The body's top bears on it except the Scout's 1.0 FC relief.
   - XT60 service (requirement 6): the Amass XT60 lists ~100 mating cycles (one sheet 1,000, E). Each bay and the drone replace the XT60 carrier with its XT60E1-M and pigtail on that interval: cartridge out, receiver bolts out, carrier swapped.
   - A higher-cycle connector is the hub's / Spark's call.
 - **Scout v3:**
-  - The mount takes 4 x M3 x 40 from below (heads on the receiver's flats at y 21.5, reached with the cartridge out) into inserts at drone (−42.65, ±26.55) and (43.25, ±26.55), each with a hole ≥ 8 deep (receiver v3; was (−43.85 / 43.25, ±25.6)).
-  - Its tail-edge and keel asks (24 Oct) are drawn in run v4: receiver v3 narrowed under the keel, nose and tail end pieces with the bars at y ±31 above z −40, the bottom strips dropped. Its pass on the v4 meshes decides fit and probes; the set stays HOLD until then.
+  - The mount takes 4 x M3 x 35 from below (heads on the receiver's flats at y 24.5, reached with the cartridge out) into inserts at drone (−42.65, ±26.55) and (43.25, ±26.55), each with a hole ≥ 6 deep (receiver v3; was (−43.85 / 43.25, ±25.6)).
+  - Its tail-edge and keel asks (24 Oct) are drawn in run v4: receiver v3 narrowed under the keel, nose and tail end pieces with the bars at y ±34 above z −40, the bottom strips dropped. Its pass on the v4 meshes decides fit and probes; the set stays HOLD until then.
   - The skids are swap parts (cage role) in its assembly.
 - **Overseer (open, v1 too):** the receiver's mount bolts at x ±26.8 (v2 ±27.8) come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options:
   - (a) Bolts from above (through the sled) into heat-set inserts in the receiver's deck bosses: 8.7 above the deck's underside, room for a 6.7 insert and a 2.0 floor.
   - (b) Outboard bosses from below, 76.2 wide.
   - Plus: the sled cut round the v2 receiver (fit 27792 mm³ now), and its 6-bolt pattern.
 - **Catch:** funnel v8 opening ≥ 190.7 along the drone fore-aft for the Overseer set (dimensions, row "Overseer vs the funnel opening"). The set is 4.0 longer (183.6).
-- **Box structure:** bay bodies give each receiver its mount plane (Scout r 167.1, Overseer r 181.8 at the bay, R 113 + Y_M) and the strip side. The bay receiver is the same print file. The Scout receiver is 63.6 wide (was 61.2).
+- **Box structure:** bay bodies give each receiver its mount plane (Scout r 167.1, Overseer r 181.8 at the bay, R 113 + Y_M) and the strip side. The bay receiver is the same print file. The Scout receiver v3 is 65.5 wide (v2 63.6) with its bolts at drone (−42.65 / 43.25, ±26.55), M3 x 35, the partner's hole ≥ 6 deep under each insert: the Scout bay bodies take the same pattern.
 
 ## Receiver topology attempt (24 Oct)
 `battery_latch_topo.py` keeps the receiver's must-haves drawn (locating pads, feet, pocket blocks, end pads, stop seats, XT60 pocket, bosses) and generates the rest on the L cases (Scout crash 15.3 g). Scout run (branch `run/battery_latch_receiver-scout-v1`, h 1.0, 7 cm³, 6.1 GB peak, M): 34.8 g (M) (v1 41.2, M) but **solid_check FAIL** (eroded necks 1.8 / 2.4, a 1.5 wall at (−0.1, 45.2, 94.3), M), worst index 25.3 (M mesh, E loads; 50 N on a foot), crash 7.4; the beta 32 stage ended on a tie-case violation: the 4.0 end pads (the 180 bed holds the Overseer to 4.0) and the small stations split once eroded. It does not beat v1 (rule 6), so **the drawn, FE-checked v1 receivers stay**; the Overseer run on the same setup was stood down (memory: 6.3 GB at h 1.4, 1.65x the engine's estimate, M). Next setup (follow-up): fewer, thicker drawn stations (≥ 6 everywhere, end pads merged into the side legs), generated volume ≥ 12 cm³ (Scout), tie weights checked on a coarse run first.

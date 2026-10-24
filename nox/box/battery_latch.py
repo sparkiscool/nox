@@ -328,7 +328,9 @@ def skid_report(g, r, sk):
     T = T_dc(g); out = {}
     for nm, m in zip(RSKID_NAMES, sk):
         P = tm(m, T).vertices
-        key = min(float(np.min(np.hypot(P[:, 0] - kx, P[:, 1] - ky))) for kx, ky in key_lines(g, r))
+        q = trimesh.proximity.ProximityQuery(tm(m, T))      # the true least distance from each vertical key line
+        key = min(float(np.abs(q.signed_distance(np.array([(kx, ky, z) for z in np.arange(-60.0, 10.01, 0.25)]))).min())
+                  for kx, ky in key_lines(g, r))
         out[nm] = dict(funnel_margin_mm=round(collar_margin(P), 2), key_line_mm=round(key, 2))
     return out
 
@@ -549,9 +551,10 @@ STRUT2 = 8.0
 GUSSET2 = 0.0                                   # end-wall corner gussets where there are no posts (FE: 8.0 moved the
                                                 # across peak to the gusset tip, 1.31; off)
 FC_RELIEF = {"scout": (-5.0, 9.0)}             # z about the tab line (Scout v3 FC footprint, drone x -3.3..7.1, + 1.0)
-HEAD_Y = 21.5                                   # Scout bolt head seat: its 3.0 ring (r 6.2) whole inside the collar clip
-                                                # at both ends (tail key x -43.85 needs y >= 20.75; v2's 14.0 left the
-                                                # seats 44-52 % bearing, PR 109 review); M3 x 40 (DEFAULT, E)
+HEAD_Y = 24.5                                   # Scout bolt head seat (the flat; the head fills y HEAD_Y-3..HEAD_Y below
+                                                # it): the 3.0 ring (r 6.2) round that band whole inside the collar clip
+                                                # at both ends (the nose pair needs HEAD_Y >= 23.65 at inset 11.5; v2's
+                                                # 14.0 left the seats 44-52 %, PR 109 review); M3 x 35 (DEFAULT, E)
 HEAD_R = 3.2                                    # M3 socket head o 5.5 + 0.45 a side
 
 def rgeom2(g):
@@ -773,16 +776,18 @@ def keel_report(B):
     return out
 
 def head_seats(B):
-    """each Scout bolt's head seat (C): the share of the head's bearing annulus (r 1.7..2.75) and of the 3.0 ring round the
-    counterbore (r HEAD_R..HEAD_R + 3) that is receiver, sampled 0.2 above the flat (rule: boss wall >= 3 round it)."""
+    """each Scout bolt's head seat (C): the share of the head's bearing annulus (r 1.75..2.7) on the flat (sampled 0.2 above
+    it), and the least share, over the head's band y HEAD_Y-3..HEAD_Y, of the 3.0 ring round the counterbore
+    (r HEAD_R..HEAD_R + 3) that is receiver (rule: boss wall >= 3 round every counterbore)."""
     r = B["r"]; R_ = tm(B["recv"]); out = []
     for (bx, bz) in r["MOUNT"]:
         if abs(bx) <= r["RF"]: continue
-        def share(r0, r1):
-            P = np.array([(bx + rr * math.cos(a), HEAD_Y + 0.2, bz + rr * math.sin(a))
+        def share(r0, r1, y):
+            P = np.array([(bx + rr * math.cos(a), y, bz + rr * math.sin(a))
                           for rr in np.linspace(r0, r1, 6) for a in np.linspace(0, 2 * math.pi, 72, endpoint=False)])
             return round(float(R_.contains(P).mean()), 3)
-        out.append(dict(at=[bx, bz], bearing=share(1.75, 2.7), ring=share(HEAD_R + 0.05, HEAD_R + 2.95)))
+        out.append(dict(at=[bx, bz], bearing=share(1.75, 2.7, HEAD_Y + 0.2),
+                        ring=min(share(HEAD_R + 0.05, HEAD_R + 2.95, y) for y in np.linspace(HEAD_Y - 2.9, HEAD_Y - 0.1, 8))))
     return out
 
 
@@ -1261,7 +1266,7 @@ def _rot(axis, deg):
     T = np.eye(4); T[:3, :3] = R; return T
 
 PIECES = {   # name: (getter, material, print pose (c -> print), count, version, bed face)
-    "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, "v6", "closed end (z 0) down"),
+    "cartridge": (lambda B: B["cart"], "PETG", np.eye(4), 1, {"scout": "v7", "overseer": "v6"}, "closed end (z 0) down"),
     "cart_strip": (lambda B: B["cstrips"][0] if B.get("cstrips") else None, "TPU", _rot("x", 90), 2, "v1",
                    "foot down (one part, both sides)"),
     "rskid_nose": (lambda B: B["rskids"][0] if B.get("rskids") else None, "TPU", _rot("y", 180), 1, "v2",
@@ -1271,12 +1276,12 @@ PIECES = {   # name: (getter, material, print pose (c -> print), count, version,
     "slider": (lambda B: slider(B["g"], 0, 1), "PETG", _rot("x", -90), 2, "v6", "bar top (y 11.5) down: largest face, bar layers along its length"),
     "receiver": (lambda B: B["recv"], "PETG", _rot("x", -90), 1, {"scout": "v3", "overseer": "v2"},
                  "mount plane (deck top) down: layers across the install axis"),
-    "xt60_carrier": (lambda B: B["carrier"], "PETG", _rot("x", -90), 1, "v1", "ear tops down (pocket open to the bed)"),
-    "receiver_lid": (lambda B: B["cap"], "PETG", _rot("x", -90), 1, "v1", "top face down (the XT60 carrier's cap, = v1 lid)"),
+    "xt60_carrier": (lambda B: B["carrier"], "PETG", _rot("x", -90), 1, {"scout": "v2", "overseer": "v1"}, "ear tops down (pocket open to the bed)"),
+    "receiver_lid": (lambda B: B["cap"], "PETG", _rot("x", -90), 1, {"scout": "v2", "overseer": "v1"}, "top face down (the XT60 carrier's cap, = v1 lid)"),
     "receiver_strip": (lambda B: U(*[box(*sorted((B["r"]["X_IN"] - 1.55, B["r"]["RF"] - 0.05)), B["r"]["Y_TOP"], B["r"]["Y_TOP"] + STRIP_T,
                                          B["r"]["Z_P0"] - 0.8, B["r"]["Z_P1"] - 1.2)]), "TPU", _rot("x", 90), 2, "v1", "flat"),
-    "skid_closed": (lambda B: B["skids"][0] if B["skids"] else None, "TPU", _rot("x", -135), 1, "v1", "outer (chamfer) face down"),
-    "skid_lead": (lambda B: B["skids"][1] if B["skids"] else None, "TPU", _rot("x", -45), 1, "v1", "outer (chamfer) face down"),
+    "skid_closed": (lambda B: B["skids"][0] if B["skids"] else None, "TPU", _rot("x", -135), 1, {"scout": "v2", "overseer": "v1"}, "outer (chamfer) face down"),
+    "skid_lead": (lambda B: B["skids"][1] if B["skids"] else None, "TPU", _rot("x", -45), 1, {"scout": "v2", "overseer": "v1"}, "outer (chamfer) face down"),
 }
 
 def save_prints(B, pack, log=print):
@@ -1570,6 +1575,10 @@ def main():
                               receiver=skid_report(g, r, B["rskids"]),
                               cartridge_strips=skid_report(g, r, [B["cstrips"][0], B["cstrips"][1], B["cstrips"][1]]) )
             R["skids"]["cartridge_strips"] = {k: v for k, v in zip(("px", "nx"), list(R["skids"]["cartridge_strips"].values())[:2])}
+            Rt = tm(B["recv"])                    # bonded area: end-piece faces within 0.05 of the receiver (M)
+            for nm_, m_ in zip(RSKID_NAMES, B["rskids"]):
+                t_ = tm(m_); _, d_, _ = trimesh.proximity.closest_point(Rt, t_.triangles_center)
+                R["skids"]["receiver"][nm_]["bond_mm2"] = round(float(t_.area_faces[d_ < 0.05].sum()), 0)
             log(f"  skids: {R['skids']}")
         R["system_manifest"] = write_manifest(B, pack)
     res["scout_system"] = scout_system(log)

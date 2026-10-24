@@ -1,6 +1,6 @@
 # Runs
 
-_94 runs · rebuilt 2026-10-24 16:46_
+_94 runs · rebuilt 2026-10-24 17:03_
 
 ## Latest per part
 
@@ -37,7 +37,7 @@ _94 runs · rebuilt 2026-10-24 16:46_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 16:43 | battery_latch | [v4](runs/battery_latch/v4/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 17:02 | battery_latch | [v4](runs/battery_latch/v4/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 12:24 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 11:13 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
 | 2026-10-24 11:12 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
