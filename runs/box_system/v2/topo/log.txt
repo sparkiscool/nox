@@ -109,3 +109,38 @@ it  57 beta    4 J   0.0485 vol 0.0412 (dil 0.0744 g -0.004) grey  2.4% ch 0.100
 it  58 beta    4 J   0.0376 vol 0.0417 (dil 0.0744 g -0.004) grey  1.9% ch 0.100 worst misuse: Overseer motors cut 25.5 1.7s
 it  59 beta    4 J   0.0344 vol 0.0422 (dil 0.0745 g -0.003) grey  1.3% ch 0.100 worst misuse: knocked over onto +X 23.5 1.7s
 it  60 beta    4 J   0.0333 vol 0.0425 (dil 0.0747 g -0.001) grey  1.0% ch 0.100 worst misuse: knocked over onto +X 22.7 1.7s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  61 beta    4 J   0.0329 vol 0.0426 (dil 0.0747 g +0.012) grey  0.9% ch 0.100 worst misuse: knocked over onto +X 22.4 1.7s
+it  62 beta    4 J   0.0347 vol 0.0415 (dil 0.0737 g -0.001) grey  1.3% ch 0.100 worst misuse: knocked over onto +X 24 1.9s
+layout: stopped (beta_stop) at it 62, beta 4, 110 s
+layout: beta 4 done: eroded design 2 bodies, main 99.4%; drawn bodies outside the main body: 1
+coarse stage done: 124 s, peak 0.83 GB
+seat posts side/overlap mm3 [(1, 1271.0), (1, 1271.0), (1, 862.7), (1, 635.6), (1, 151.2), (1, 151.2), (1, 635.6), (1, 862.7)]
+box_system_topo_v2: grid (56, 56, 64) h 8.0 = 200,704 cells; design 82,327 (42151.4 cm3), drawn 10,222, void 108,155
+  support default: 2600 cells, 5406 nodes
+  support hands: 684 cells, 1520 nodes
+  support side: 2900 cells, 6018 nodes
+  57 cells of 24 design islands cut off by the keep-outs set void
+setup h 8.0: 13 s, 12 cases
+layout: min member 18.00 mm (rods), plates 16.35 mm, filter radius 18.55 mm = 2.32 cells, erosion depth 4.93 mm; volfrac 0.036 of 82,270 design cells
+layout: WARNING nearly mirrored in x (1.1% of passive cells differ): no symmetry
+layout: 19 drawn bodies (10,222 cells), held solid in every realization; eroded filter: masked
+layout: 12 load cases + 0 tie cases (0 bodies tied, 0 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (56, 56, 64) = 200,704 elements, 332,658 active dofs; backend direct (direct estimate 4.0 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 32) grid (h 16.0): mean x 0.145
+it   1 beta    4 J  10.0000 vol 0.1361 (dil 0.2103 g +2.821) grey 22.2% ch 0.100 worst Overseer catch -X-Y diag 2.67e+04 33.8s
+it   2 beta    4 J  10.1189 vol 0.1237 (dil 0.2001 g +2.636) grey 23.0% ch 0.100 worst Overseer catch -X-Y diag 2.7e+04 34.5s
+it   3 beta    4 J  10.3932 vol 0.1102 (dil 0.1889 g +2.432) grey 15.5% ch 0.100 worst Overseer catch -X-Y diag 2.77e+04 33.6s
+it   4 beta    4 J  11.1992 vol 0.0958 (dil 0.1765 g +2.207) grey 15.5% ch 0.100 worst Overseer catch -X-Y diag 2.97e+04 31.5s
+it   5 beta    4 J  13.8161 vol 0.0810 (dil 0.1629 g +1.960) grey 15.3% ch 0.100 worst Overseer catch -X-Y diag 3.55e+04 32.1s
+it   6 beta    4 J  20.9719 vol 0.0665 (dil 0.1480 g +1.484) grey 14.7% ch 0.100 worst misuse: Overseer motors cut 5.23e+04 31.5s
+it   7 beta    4 J  32.4315 vol 0.0533 (dil 0.1318 g +1.212) grey 13.7% ch 0.100 worst misuse: Overseer motors cut 8.24e+04 30.6s
+it   8 beta    4 J  51.4130 vol 0.0416 (dil 0.1145 g +0.923) grey 12.4% ch 0.100 worst XT60 insert at the drone 60  1.19e+05 35.9s
+it   9 beta    4 J  60.0972 vol 0.0320 (dil 0.0972 g +0.632) grey 11.8% ch 0.100 worst misuse: Overseer motors cut 1.56e+05 36.7s
+it  10 beta    4 J  63.7145 vol 0.0239 (dil 0.0796 g +0.336) grey 11.2% ch 0.100 worst misuse: Overseer motors cut 1.55e+05 30.2s
