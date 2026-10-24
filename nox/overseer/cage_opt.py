@@ -3,7 +3,7 @@
 Spark 24 Oct: "this cage is way too flimsy, make sure the lidar is mounted tight and the cage can take impact and the
 bottom can land without toppling over, run a serious design optimization"; "use the 3mm rods whenever we can".
 
-    python3 nox/overseer/cage_opt.py <params.json> <out.json>
+    python3 nox/overseer/cage_opt.py <params.json> <out.json> [160,130]   (L2 mode floors to search, Hz)
 
 params.json (from layout_v3.py): dm, xc, wz, xB, zB (drone frame mm, see layout_v3.py). out.json: the chosen topology,
 the rod size per group, the frame-model results of every case, and the search table.
@@ -13,8 +13,9 @@ modelled, E), the hub (plates, root blocks, front hub) fixed. Carbon E 120 GPa, 
 E 2780 MPa (nox/topo material), G 1000 (E). Units mm, N, MPa, t (tonne), s.
 
 Cases and limits (DEFAULT, E unless tagged):
-- L2 mount: the lowest mode that moves the L2 (≥ 20 % of the modal kinetic energy on the L2 group) ≥ 200 Hz: over 1P at
-  full throttle (158) and 2P at hover (174) with margin (motor band E, dimensions O Arms and hub).
+- L2 mount: the lowest mode that moves the L2 (≥ 20 % of the modal kinetic energy on the L2 group) ≥ 160 Hz (DEFAULT): over
+  1P at full throttle (158), so the motors' first harmonic never drives it; 200 Hz costs ~600 g of cage (searched 24 Oct);
+  alt 130 Hz (1.5 x hover 1P). Motor band E, dimensions O Arms and hub.
 - Guard hits: the whole drone (2.33 kg E) at 1.0 m/s into a rigid wall, square to the guard, at every ring position and
   the V midpoints: peak force from the local stiffness (F = v sqrt(k m)); guard moves ≤ 8 toward the nearest prop
   (12 gap, 4 kept); rod stress ≤ 600 MPa (pultruded carbon flexural ~1200-1500, E); compressed rods ≥ 1.5 x Euler
@@ -45,6 +46,7 @@ L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
 MOTOR_DEG = (45, 135, 225, 315)
+APEX_SPAN = 56.0                                            # socket spread on the apex lugs (DEFAULT, inside the L2's 75)
 
 # sections (carbon, C): A mm2, I mm4, J mm4, g/m, OD
 SECTIONS = {
@@ -58,10 +60,11 @@ SECTIONS = {
 E_C, G_C, E_P, G_P = 120000.0, 5000.0, 2780.0, 1000.0
 SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
 DEFL_ALLOW, F_L2_MIN = 8.0, 200.0
+F_FIRST_MIN = 0.0                                           # cage's own lowest mode floor (set below after the trade)
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
 NODE_G, CORNER_G = 2.0, 6.0                                 # printed ring node / corner node (E, g)
 
-TOPO_KEYS = ("mid_spokes", "ring_diag", "l2_braces", "v_diag", "strut2")
+TOPO_KEYS = ("mid_spokes", "ring_diag", "l2_braces", "v_diag", "strut2", "spokes_hi", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars")
 
 
 def motors(dm):
@@ -70,7 +73,10 @@ def motors(dm):
 
 def sockets(xB, zB):
     B = np.array([xB, 0.0, zB])
-    return {(lvl, sy): B - A * 5 + UP_B * (16 if lvl == "hi" else 2) + np.array([0, 46.0 * sy, 0]) for lvl in ("hi", "lo") for sy in (1, -1)}
+    # apex sockets on lugs either side of the L2 body (y ±46), 5 behind its base plane, 56 apart along the base plane:
+    # V lower to the lower pair; V upper, keels and arm braces to the upper pair, so they climb to the L2 (bounce, pitch)
+    return {(lvl, sy): B - A * 5 + UP_B * (APEX_SPAN / 2 if lvl == "hi" else -APEX_SPAN / 2) + np.array([0, 46.0 * sy, 0])
+            for lvl in ("hi", "lo") for sy in (1, -1)}
 
 
 def ring_positions(dm):
@@ -104,8 +110,9 @@ def geometry(p, topo, sizes=None):
     for k, d in enumerate(MOTOR_DEG):
         c, s = math.cos(math.radians(d)), math.sin(math.radians(d))
         fixed.add(node(f"root{k}", (75 * c, 75 * s, 22.5)))
-    for sy in (1, -1):
-        fixed.add(node(f"fhub{sy:+d}", (96, 12 * sy, 8)))
+    for sy in (1, -1):                                               # front hub: bottom plate front wing (low) and top plate front edge (high)
+        fixed.add(node(f"fhubB{sy:+d}", (98, 12 * sy, -2))); fixed.add(node(f"fhubT{sy:+d}", (58, 20 * sy, 46)))
+        fixed.add(node(f"chin{sy:+d}", (xc + 62, 20 * sy, -30)))   # front of the belly sled (plate-fixed), inside the funnel
     for sx in (1, -1):
         for sy in (1, -1):
             fixed.add(node(f"hubc{sx:+d}{sy:+d}", (88 * sx, 52 * sy, -1)))
@@ -132,8 +139,11 @@ def geometry(p, topo, sizes=None):
             nm = f"mot{k}" if t == 1.0 else f"arm{k}_{t:.3f}"
             node(nm, r0 + t * (m1 - r0)); names.append(nm)
         for i in range(len(names) - 1):
-            mem(f"arm{k}.{i}", names[i], names[i + 1], (side, k, ts[i], ts[i + 1]), "arm")
+            mem(f"arm{k}.{i}", names[i], names[i + 1], (side, k, ts[i], ts[i + 1], bool(topo.get("arm_spars"))), "arm")
         node(f"tipb{k}", (mx, my, ROOT_H - ht)); mem(f"tiplink{k}", f"mot{k}", f"tipb{k}", None, "link")
+        # arm top just inboard of the motor bell (r 22 from the motor centre, z 45): the upper spokes' socket
+        ui = (r0[:2] - np.array([mx, my])); ui /= np.linalg.norm(ui)
+        node(f"tipt{k}", (mx + 22 * ui[0], my + 22 * ui[1], ROOT_H)); mem(f"tiptlink{k}", f"mot{k}", f"tipt{k}", None, "link")
         mass[f"mot{k}"] = mass.get(f"mot{k}", 0) + 91e-6
         mass[f"arm{k}_0.500"] = mass.get(f"arm{k}_0.500", 0) + 25e-6          # ESC on the arm (E)
     # guard rings
@@ -156,6 +166,14 @@ def geometry(p, topo, sizes=None):
         near = sorted(vx, key=lambda r: math.hypot(r[1] - mx, r[2] - my))[:2]
         for r in near:
             mem(f"spoke m{k}-{r[0]}", f"tipb{k}", f"{r[0]}lo", "spokes")
+    if topo["spokes_hi"]:                                             # second support height: arm top (z 45) to the same ring nodes
+        for k, (mx, my) in enumerate(mot):
+            near = sorted(vx, key=lambda r: math.hypot(r[1] - mx, r[2] - my))[:2]
+            for r in near:
+                mem(f"spokehi m{k}-{r[0]}", f"tipt{k}", f"{r[0]}lo", "spokes_hi")
+    if topo["tip_rails"]:                                             # rails joining adjacent arm tips (the motor square), under the disks
+        for k1, k2 in ((0, 1), (1, 2), (2, 3), (3, 0)):
+            mem(f"rail m{k1}-m{k2}", f"tipb{k1}", f"tipb{k2}", "tip_rails")
     if mid_on:
         for r in rp:
             if not r[4]: continue
@@ -175,14 +193,23 @@ def geometry(p, topo, sizes=None):
             mid = node(f"Vmid {vn}{lvl}", (N[f"{vn}{lvl}"] + N[f"S{lvl}{sy:+d}"]) / 2)
             mem(f"V {vn}{lvl} a", f"{vn}{lvl}", mid, "V"); mem(f"V {vn}{lvl} b", mid, f"S{lvl}{sy:+d}", "V")
         if topo["v_diag"]:
-            mem(f"vdiag {vn}", f"{vn}lo", f"Shi{sy:+d}", "v_diag")
+            mem(f"vdiag {vn}", f"{vn}hi", f"Slo{sy:+d}", "v_diag")
     for sy in (1, -1):
-        mem(f"keel {sy:+d}", f"fhub{sy:+d}", f"Slo{sy:+d}", "keels")
+        mem(f"keel {sy:+d}", f"fhubB{sy:+d}", f"Shi{sy:+d}", "keels")       # bottom plate front up to the upper socket (16 deg)
+        if topo["keels_lo"]:                                              # top plate front down to the lower socket: the keels cross (pitch, bounce)
+            mem(f"keello {sy:+d}", f"fhubT{sy:+d}", f"Slo{sy:+d}", "keels_lo")
+            mem(f"keeldg {sy:+d}", f"fhubB{sy:+d}", f"Slo{sy:+d}", "keels_lo")   # the diagonal: without it the two keels are a four-bar
+        if topo["keels_x"]:                                               # crossed in plan: the hub holds the L2 sideways
+            mem(f"keelx {sy:+d}", f"fhubB{sy:+d}", f"Slo{-sy:+d}", "keels_x")
+        if topo["chin"]:                                                  # from the sled front, 30 under the plates: 23 deg of climb
+            mem(f"chin {sy:+d}", f"chin{sy:+d}", f"Shi{sy:+d}", "chin")
     if topo["l2_braces"]:
         for k, (mx, my) in enumerate(mot):
             if mx > dm:
                 sy = 1 if my > 0 else -1
-                mem(f"brace m{k}", f"tipb{k}", f"Slo{sy:+d}", "l2_braces")
+                mem(f"brace m{k}", f"tipb{k}", f"Shi{sy:+d}", "l2_braces")      # arm tip underside up to the upper socket
+                mem(f"bracelo m{k}", f"tipt{k}", f"Slo{sy:+d}", "l2_braces")    # arm tip top down to the lower socket (crossed)
+                mem(f"bracedg m{k}", f"tipb{k}", f"Slo{sy:+d}", "l2_braces")    # diagonal: no four-bar
     # wheel ring: corner nodes (rigid blocks), ring rods on the wheel lines, struts to the arms (+ optional to the hub)
     for sx, sy, sr, k, t in corners:
         cn = node(f"corner{sx:+d}{sy:+d}", (xc + 106 * sx, 106 * sy, wz))
@@ -208,23 +235,30 @@ def geometry(p, topo, sizes=None):
 
 
 # ---------------------------------------------------------------- beam FE
-def arm_section(side, t0, t1):
+def arm_section(side, t0, t1, spars=False):
+    """PETG box arm; spars: 4 x 3.0 carbon rods epoxied in the box corners (centres 3.5 in from the outer faces),
+    taken into the section as PETG-equivalent area and inertia (E_C / E_P), torsion from the PETG box only"""
     t = (t0 + t1) / 2; ht = H_TIP[side]; b0, b1 = W_ARM[side]
     h = ROOT_H + (ht - ROOT_H) * t; b = b0 + (b1 - b0) * t; w = ARM_WALL
     Iy = (b * h ** 3 - (b - 2 * w) * (h - 2 * w) ** 3) / 12; Iz = (h * b ** 3 - (h - 2 * w) * (b - 2 * w) ** 3) / 12
     Am = (b - w) * (h - w); J = 4 * Am ** 2 * w / (2 * (b - w) + 2 * (h - w)); A_ = b * h - (b - 2 * w) * (h - 2 * w)
-    return dict(A=A_, Iy=Iy, Iz=Iz, J=J, E=E_P, G=G_P, c=max(b, h) / 2, rho=1.27e-9 * 0.45 / 0.45, solid_frac=1.0, h=h, b=b)
+    rho = 1.27e-9
+    if spars:
+        n = E_C / E_P; r = SECTIONS["r3"]; dz, dy = h / 2 - 3.5, b / 2 - 3.5
+        Iy += n * 4 * (r["I"] + r["A"] * dz ** 2); Iz += n * 4 * (r["I"] + r["A"] * dy ** 2); A_ += n * 4 * r["A"]
+        rho = (1.27e-9 * (b * h - (b - 2 * w) * (h - 2 * w)) + 4 * r["gpm"] * 1e-9) / A_
+    return dict(A=A_, Iy=Iy, Iz=Iz, J=J, E=E_P, G=G_P, c=max(b, h) / 2, rho=rho, h=h, b=b, spars=spars)
 
 
 def elem_props(kind, group, sizes):
     if kind == "arm":
-        side = group[0]; s = arm_section(side, group[2], group[3]); s["rho"] = 1.27e-9; return s
+        side = group[0]; return arm_section(side, group[2], group[3], spars=group[4])
     if kind == "link":
         return dict(A=2000.0, Iy=4e5, Iz=4e5, J=8e5, E=E_P * 20, G=G_P * 20, c=20.0, rho=0.0)
     if kind == "pnode":
         return dict(A=100.0, Iy=833.0, Iz=833.0, J=1400.0, E=E_P, G=G_P, c=5.0, rho=0.0)
     s = SECTIONS[sizes[group]]
-    return dict(A=s["A"], Iy=s["I"], Iz=s["I"], J=s["J"], E=E_C, G=G_C, c=s["od"] / 2, rho=s["gpm"] * 1e-9, od=s["od"])
+    return dict(A=s["A"], Iy=s["I"], Iz=s["I"], J=s["J"], E=E_C, G=G_C, c=s["od"] / 2, rho=s["gpm"] * 1e-9 / s["A"], od=s["od"])   # t/mm3
 
 
 def k_local(L, P):
@@ -287,11 +321,16 @@ class Model:
         U = np.zeros_like(R); U[self.free] = sla.cho_solve(self.cho, R[self.free]); return U
 
     def modes(self, n=24):
-        Kf = self.K[np.ix_(self.free, self.free)]; Mf = self.Mm[self.free]
-        w2, V = sla.eigh(Kf, np.diag(Mf), subset_by_index=[0, n - 1])
-        f = np.sqrt(np.maximum(w2, 0)) / (2 * math.pi)
+        """lowest modes from the largest eigenvalues of M^1/2 K^-1 M^1/2 (well conditioned with the near-massless
+        rotations); frac = share of each mode's kinetic energy on the L2 group node"""
+        Mf = self.Mm[self.free]; mh = np.sqrt(Mf)
+        Kinv = sla.cho_solve(self.cho, np.eye(len(self.free)))
+        Asym = (mh[:, None] * Kinv) * mh[None, :]; Asym = (Asym + Asym.T) / 2
+        nn = len(self.free); lam, Y = sla.eigh(Asym, subset_by_index=[nn - n, nn - 1])
+        lam, Y = lam[::-1], Y[:, ::-1]
+        f = 1.0 / np.sqrt(np.maximum(lam, 1e-30)) / (2 * math.pi)
         ia = [list(self.free).index(6 * self.idx["apexM"] + j) for j in range(6)]
-        frac = np.array([float((V[ia, m] ** 2 * Mf[ia]).sum()) for m in range(V.shape[1])])
+        frac = np.array([float((Y[ia, m] ** 2).sum()) for m in range(Y.shape[1])])
         return f, frac
 
     def member_results(self, U):
@@ -311,6 +350,8 @@ class Model:
         for e in self.el:
             if e["kind"] == "rod": g += SECTIONS[self.sizes[e["group"]]]["gpm"] * e["L"] / 1000.0
         g += NODE_G * len(self.info["pnodes"]) + CORNER_G * 4
+        if self.topo.get("arm_spars"):
+            g += sum(4 * SECTIONS["r3"]["gpm"] * e["L"] / 1000.0 for e in self.el if e["kind"] == "arm")
         return g
 
 
@@ -352,6 +393,7 @@ def evaluate(p, topo, sizes, detail=False):
     f_l2 = float(l2[0]) if l2 else float(f[-1])
     res["f_first"], res["f_l2"] = float(f[0]), f_l2
     g["L2 mode"] = F_L2_MIN / f_l2 - 1
+    if F_FIRST_MIN: g["first mode"] = F_FIRST_MIN / max(float(f[0]), 1e-6) - 1
     # hit and latch cases
     cases = []
     rp = m.info["ring"]
@@ -451,32 +493,54 @@ def size_topology(p, topo, log=None):
     return sizes, r, True
 
 
+FIXED_ON = ("keels_lo", "keels_x", "chin", "arm_spars", "l2_braces")   # found by diagnosis; the ablation below re-tests each
+
+
 def _one(args):
-    p, bits = args
-    topo = dict(zip(TOPO_KEYS, bits)); sizes, r, ok = size_topology(p, topo); return bits, topo, sizes, r, ok
+    p, topo, fl2 = args
+    global F_L2_MIN
+    F_L2_MIN = fl2
+    sizes, r, ok = size_topology(p, topo); return topo, sizes, r, ok
 
 
-def main(pin, pout):
+def search(p, fl2, pool):
+    free_keys = [k for k in TOPO_KEYS if k not in FIXED_ON]
+    jobs = []
+    for bits in itertools.product((0, 1), repeat=len(free_keys)):
+        topo = dict(zip(free_keys, bits)); topo.update({k: 1 for k in FIXED_ON}); jobs.append((p, topo, fl2))
+    done = pool.map(_one, jobs)
+    table, best = [], None
+    for topo, sizes, r, ok in done:
+        worst = max(r["g"], key=r["g"].get)
+        table.append(dict(topo=topo, sizes=sizes, feasible=ok, mass_g=r["mass_g"], f_l2=r["f_l2"], f_first=r["f_first"], worst=worst, worst_g=r["g"][worst]))
+        if ok and (best is None or r["mass_g"] < best[2]["mass_g"]): best = (topo, sizes, r)
+    abl = []
+    if best:                                                          # ablation: each fixed option off on the winner
+        for k in FIXED_ON:
+            t2 = dict(best[0], **{k: 0}); _, s2, r2, ok2 = _one((p, t2, fl2))
+            abl.append(dict(off=k, feasible=ok2, mass_g=r2["mass_g"], f_l2=r2["f_l2"]))
+    return table, best, abl
+
+
+def main(pin, pout, levels):
     from multiprocessing import Pool
     p = json.load(open(pin))
-    table = []
-    best = None
+    out = dict(params=p, levels={})
     with Pool(4) as pool:
-        done = pool.map(_one, [(p, bits) for bits in itertools.product((0, 1), repeat=len(TOPO_KEYS))])
-    for bits, topo, sizes, r, ok in done:
-        row = dict(topo=topo, sizes=sizes, feasible=ok, mass_g=r["mass_g"], f_l2=r["f_l2"], violation=r["violation"],
-                   worst=max(r["g"], key=r["g"].get), worst_g=r["g"][max(r["g"], key=r["g"].get)])
-        table.append(row)
-        print(f"{''.join(map(str, bits))} {'OK ' if ok else 'no '} {r['mass_g']:6.1f} g  f_L2 {r['f_l2']:5.0f} Hz  worst {row['worst']} {row['worst_g']:+.2f}  "
-              + " ".join(f"{k}:{v}" for k, v in sizes.items()), flush=True)
-        if ok and (best is None or r["mass_g"] < best[2]["mass_g"]): best = (topo, sizes, r)
-    out = dict(params=p, table=table)
-    if best:
-        topo, sizes, r = best
-        out.update(topo=topo, sizes=sizes, result=r)
-    json.dump(out, open(pout, "w"), indent=1, default=float)
-    print("best:", None if not best else (best[0], best[1], round(best[2]["mass_g"], 1)))
+        for fl2 in levels:
+            table, best, abl = search(p, fl2, pool)
+            ok = [t for t in table if t["feasible"]]
+            print(f"L2 mode ≥ {fl2:.0f} Hz: {len(ok)} of {len(table)} topologies feasible", flush=True)
+            for t in sorted(ok, key=lambda t: t["mass_g"])[:5]:
+                print(f"  {t['mass_g']:6.1f} g  f_L2 {t['f_l2']:5.0f}  f1 {t['f_first']:5.0f}  "
+                      + " ".join(k for k, v in t["topo"].items() if v and k not in FIXED_ON) + "  | " + " ".join(f"{a}:{b}" for a, b in t["sizes"].items()), flush=True)
+            for a in abl:
+                print(f"  ablation {a['off']} off: feasible {a['feasible']}, {a['mass_g']:.1f} g, f_L2 {a['f_l2']:.0f}", flush=True)
+            lv = dict(table=table, ablation=abl)
+            if best: lv.update(topo=best[0], sizes=best[1], result=best[2])
+            out["levels"][str(int(fl2))] = lv
+            json.dump(out, open(pout, "w"), indent=1, default=float)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    main(sys.argv[1], sys.argv[2], [float(x) for x in (sys.argv[3] if len(sys.argv) > 3 else "160,130").split(",")])
