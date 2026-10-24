@@ -133,7 +133,7 @@ def setup_factory(log, info):
         posts, side = seat_posts(6.0 if h <= 6 else h, cuts[3] + fun)
         drawn_all = union(list(sheets.values()) + list(pd.values()) + posts + [stub])
         cutm = union(cuts) - drawn_all                                  # drawn wins where it touches a cut
-        info.update(posts_side=side, T=T)
+        info.update(posts_side=side, T=T); log(f"seat posts side/overlap mm3 {side}")
         geom.update(pads=pd, posts=posts, stub=stub, sheets=sheets, drawn=drawn_all, cuts=cutm, env=env, fun=fun)
         p = Part("box_system_topo_v2", h, drawn_all, cutm, env, build="+z", log=log)
         _cases(p, h, T, pd, posts, stub, sheets, log)
