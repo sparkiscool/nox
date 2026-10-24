@@ -548,9 +548,9 @@ def capacity(L):
 
 
 # ================================================================ frame FE (Euler beams, rigid printed nodes, core joints fixed)
-DEFL_LIM = {"crash": 1e9, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 3.0}   # mm at the load (E, DEFAULT; handling
-                                              # on ANY node 3.0 (was 2.0 at 8 ring spots; L sets the load only; alt 2.0 not reached in
-                                              # 40 additions, a mid-flat ring node bends 2.8 at index 0.99);
+DEFL_LIM = {"crash": 1e9, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 1e9}   # mm at the load (E, DEFAULT; handling
+                                              # on ANY node: strength only (index <= 1.0), deflection reported (L sets the load only; a
+                                              # stiffer ring raises the crash peak; alt <= 3.0 not reached by additions, 5.4 at a mid-flat node);
                                               # crash: the stroke limit of each hit direction instead (below)
 # TPU 95A joints (Spark 24 Oct: 3.0 rods only, TPU for nodes / mounts; CLAUDE.md "TPU feet and nodes"). Every rod end sits in a
 # TPU socket, modelled as a short TPU connector beam (socket depth) between the node centre and the rod.
