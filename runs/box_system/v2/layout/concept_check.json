@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 80.6 L (E), extents 416 x 414 x 468 mm (E), mass 18428 g (E), CG [4.0, 139.5, -35.3] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 980.6 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 82.1 L (E), extents 418 x 418 x 470 mm (E), mass 18594 g (E), CG [4.0, 149.3, -35.8] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -242,7 +242,13 @@
     "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
-    "touches": [],
+    "touches": [
+     {
+      "part": "bay -120 receiver",
+      "overlap_mm3": 0.0,
+      "method": "manifold3d"
+     }
+    ],
     "overlap_mm3": 0.0,
     "pass_": true
    },
@@ -335,7 +341,7 @@
   "worst": {
    "a": "catch (panels v7, hook latch v2) at the R seat",
    "b": "drone receivers + paths (keep-out)",
-   "overlap_mm3": 4984.31,
+   "overlap_mm3": 980.59,
    "limit_mm3": 0.5,
    "contact": false,
    "method": "manifold3d",
@@ -354,7 +360,7 @@
    {
     "a": "bay 30 receiver",
     "b": "bay 30 body envelope",
-    "overlap_mm3": 36526.44,
+    "overlap_mm3": 37889.6,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -363,7 +369,7 @@
    {
     "a": "bay 30 cartridge",
     "b": "bay 30 body envelope",
-    "overlap_mm3": 25850.36,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -381,7 +387,7 @@
    {
     "a": "bay 0 receiver",
     "b": "bay 0 body envelope",
-    "overlap_mm3": 66244.92,
+    "overlap_mm3": 67622.43,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -408,7 +414,7 @@
    {
     "a": "bay -30 receiver",
     "b": "bay -30 body envelope",
-    "overlap_mm3": 36526.44,
+    "overlap_mm3": 37889.59,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -417,9 +423,18 @@
    {
     "a": "bay -30 cartridge",
     "b": "bay -30 body envelope",
-    "overlap_mm3": 25850.36,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "bay -30 body envelope",
+    "b": "bay -60 receiver",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.5,
+    "contact": false,
     "method": "manifold3d",
     "pass_": true
    },
@@ -435,18 +450,9 @@
    {
     "a": "bay -60 receiver",
     "b": "bay -60 body envelope",
-    "overlap_mm3": 66244.9,
+    "overlap_mm3": 67622.42,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "bay -60 receiver",
-    "b": "bay -90 body envelope",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 0.5,
-    "contact": false,
     "method": "manifold3d",
     "pass_": true
    },
@@ -471,7 +477,7 @@
    {
     "a": "bay -90 receiver",
     "b": "bay -90 body envelope",
-    "overlap_mm3": 36526.44,
+    "overlap_mm3": 37889.6,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -480,7 +486,7 @@
    {
     "a": "bay -90 cartridge",
     "b": "bay -90 body envelope",
-    "overlap_mm3": 25850.37,
+    "overlap_mm3": 25074.84,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -507,9 +513,18 @@
    {
     "a": "bay -120 receiver",
     "b": "bay -120 body envelope",
-    "overlap_mm3": 66244.9,
+    "overlap_mm3": 67622.42,
     "limit_mm3": 1000000000.0,
     "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "bay -120 receiver",
+    "b": "bay -150 body envelope",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.5,
+    "contact": false,
     "method": "manifold3d",
     "pass_": true
    },
@@ -534,7 +549,7 @@
    {
     "a": "bay -150 receiver",
     "b": "bay -150 body envelope",
-    "overlap_mm3": 36526.44,
+    "overlap_mm3": 37889.6,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -543,7 +558,7 @@
    {
     "a": "bay -150 cartridge",
     "b": "bay -150 body envelope",
-    "overlap_mm3": 25850.36,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -561,7 +576,7 @@
    {
     "a": "bay -180 receiver",
     "b": "bay -180 body envelope",
-    "overlap_mm3": 66244.92,
+    "overlap_mm3": 67622.43,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -588,7 +603,7 @@
    {
     "a": "bay -210 receiver",
     "b": "bay -210 body envelope",
-    "overlap_mm3": 36526.44,
+    "overlap_mm3": 37889.59,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -597,7 +612,7 @@
    {
     "a": "bay -210 cartridge",
     "b": "bay -210 body envelope",
-    "overlap_mm3": 25850.36,
+    "overlap_mm3": 25074.83,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -606,7 +621,7 @@
    {
     "a": "arm: hub + rails (turning)",
     "b": "arm: motors (turning)",
-    "overlap_mm3": 237.57,
+    "overlap_mm3": 135791.58,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -623,7 +638,34 @@
    },
    {
     "a": "arm: hub + rails (turning)",
-    "b": "arm: drone insert lane",
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 241709.14,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm: hub + rails (turning)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm: motors (turning)",
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: motors (turning)",
+    "b": "arm: drone insert lane (grabber)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -632,8 +674,17 @@
    },
    {
     "a": "arm: parked heads + cartridges (turning)",
-    "b": "arm: drone insert lane",
-    "overlap_mm3": 1008164.91,
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: parked heads + cartridges (turning)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -642,25 +693,52 @@
    {
     "a": "arm: parked heads + cartridges (turning)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 630353.24,
+    "overlap_mm3": 630353.27,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
-    "a": "arm: drone insert lane",
+    "a": "arm: drone insert lane (carriage)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: drone insert lane (carriage)",
     "b": "catch (panels v7, hook latch v2) at the R seat",
-    "overlap_mm3": 524.85,
+    "overlap_mm3": 123.52,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
     "pass_": false
    },
    {
-    "a": "arm: drone insert lane",
+    "a": "arm: drone insert lane (carriage)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 1093457.95,
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: drone insert lane (grabber)",
+    "b": "catch (panels v7, hook latch v2) at the R seat",
+    "overlap_mm3": 512.28,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
+    "a": "arm: drone insert lane (grabber)",
+    "b": "drone receivers + paths (keep-out)",
+    "overlap_mm3": 389621.09,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -669,7 +747,7 @@
    {
     "a": "catch (panels v7, hook latch v2) at the R seat",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 4984.31,
+    "overlap_mm3": 980.59,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
