@@ -860,11 +860,36 @@ def mate_pitch_all(opts=None):
             add(ld, info["xt60"][h], -F_XT60 * np.asarray(head_dir(h, (0, 0, 1)))); add(ld, f"pack top {h}", -F_PRELOAD * np.asarray(head_dir(h, (0, 0, 1))))
             u, *_ = Fr.solve(ld); i = Fr.idx[info["xt60"][h]]
             ug, *_ = Fr.solve(gravity_loads(Fr, phi))
+            uk, *_ = Fr.solve({info["xt60"][h]: np.r_[0, 0, 0, 1e3 * np.asarray(head_dir(h, (1, 0, 0)), float)]})   # 1 N.m about the tangent
+            k_t = 1.0 / max(math.degrees(abs(float(np.dot(uk[i][3:], np.asarray(head_dir(h, (1, 0, 0)), float))))), 1e-9)   # N.m / deg
             ax = {k: np.asarray(head_dir(h, v), float) for k, v in (("tangent", (1, 0, 0)), ("axle", (0, 1, 0)), ("insert", (0, 0, 1)))}
             comp = lambda w: {k: round(math.degrees(float(np.dot(w, a_))), 3) for k, a_ in ax.items()}
             rot = np.asarray(u[i][3:], float)
             out.append(dict(pack=pk, place=nm, head=h, phi=phi, pitch_deg=round(math.degrees(float(np.linalg.norm(rot - np.dot(rot, ax["insert"]) * ax["insert"]))), 3),
-                            about=comp(rot), gravity_only_deg=round(math.degrees(float(np.linalg.norm(ug[i][3:]))), 3), gravity_about=comp(np.asarray(ug[i][3:], float))))
+                            k_tangent_Nm_deg=round(k_t, 3), about=comp(rot), gravity_only_deg=round(math.degrees(float(np.linalg.norm(ug[i][3:]))), 3), gravity_about=comp(np.asarray(ug[i][3:], float))))
+    return out
+
+
+GUIDE = dict(gap_deg=math.degrees(GAP_R), tol=dict(receiver_in_drone_or_bay=0.20, drone_on_plungers=0.20))   # the latch's receiver pitch guidance
+                                          # (hub DEFAULT 24 Oct): from first plug contact the receiver sets the cartridge's tilt on both axes to its own
+                                          # guide gap (0.40 deg, E, until the latch reports its guided pitch); the arm's tolerances drop out
+
+
+def xt60_guided(rows=None, stub_mrad=(1.9, 5.0, 15.1)):
+    """the XT60 with the receiver's pitch guidance: per axis tilt = guide gap + RSS(receiver, drone) vs the float; the arm's free tilt beyond
+    the gap (+ the stub's) is forced back by the guide: the moment it puts on the receiver = k_tangent x (free - gap) (E)"""
+    rows = rows or mate_pitch_all()
+    rss = math.sqrt(sum(v ** 2 for v in GUIDE["tol"].values())); per_axis = GUIDE["gap_deg"] + rss
+    out = dict(gap_deg=round(GUIDE["gap_deg"], 3), rss_deg=round(rss, 3), per_axis_deg=round(per_axis, 3), float_deg=FLOAT_DEG,
+               margin=round(1 - per_axis / FLOAT_DEG, 2), packs={})
+    for pk in ("scout", "overseer"):
+        rr = [r for r in rows if r["pack"] == pk]
+        w = max(rr, key=lambda r: abs(r["about"]["tangent"]))
+        d = dict(worst_place=f"{w['place']} {w['head']}", free_tangent_deg=abs(w["about"]["tangent"]), k_tangent_Nm_deg=w["k_tangent_Nm_deg"])
+        for sm in stub_mrad:
+            ex = max(0.0, abs(w["about"]["tangent"]) + math.degrees(sm / 1e3) - GUIDE["gap_deg"])
+            d[f"receiver_moment_Nm_stub_{sm:g}"] = round(w["k_tangent_Nm_deg"] * ex, 2)
+        out["packs"][pk] = d
     return out
 
 
@@ -1259,6 +1284,7 @@ def main(what="all"):
         res["latch_source"] = LATCH["source"]; res["cart"] = CART
     if what in ("xt60", "frame", "all"):
         res["xt60_mate"] = mate_pitch_all(); res["xt60_budget"] = xt60_budget(res["xt60_mate"]); res["capture"] = capture_budget()
+        res["xt60_guided"] = xt60_guided(res["xt60_mate"]); print("xt60 guided", json.dumps(res["xt60_guided"]))
         print("xt60 budget", json.dumps({k: {kk: vv for kk, vv in v.items() if kk != "worst"} for k, v in res["xt60_budget"]["packs"].items()}))
         print("capture", res["capture"]["worst"], res["capture"]["worst_compensated"])
     if what in ("check", "all"):
