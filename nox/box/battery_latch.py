@@ -231,20 +231,25 @@ def centre_rib(g):
 # adhesive), the foot under the edge, the leg on the outer face
 CSTRIP = dict(x0=19.2, x1=23.2, y0=-2.0, leg=(19.0, 21.0, 3.0), dz=32.0)      # cartridge v6: under its bottom long edges
 NOSE_BAR = 3.5                                     # o 3.5 (spec), along the 45 deg lower nose chamfer
-NOSE_PTS = [(59.2, 31.0, -16.0), (35.2, 31.0, -40.0)]   # drone frame (+y side; mirrored): Scout spec, its axis 1.0 off the
+NOSE_PTS = [(59.2, 31.5, -16.0), (35.2, 31.5, -40.0)]   # drone frame (+y side; mirrored): Scout spec, its axis 1.0 off the
                                                    # 45 deg chamfer (a 2.9 flat bonds and prints), above z -40 only (keel)
 NOSE_PLATE = dict(t=2.2, y=27.0, z0=-22.0, z1=-6.0)    # drone frame (spec y +-27), 2.2 on the lead end wall's face
-TAIL_PTS = [(-49.95, 31.0, -25.25), (-35.2, 31.0, -40.0)]   # tail bars on the same chamfer line, from the tail wall face
-EAR = dict(y0=26.0, y1=32.75, dz=(-27.0, -12.0))   # each plate's ears out to the bar line, so plate + bars are one print
+TAIL_PTS = [(-49.95, 31.5, -25.25), (-35.2, 31.5, -40.0)]   # tail bars on the same chamfer line, from the tail wall face
+EAR = dict(y0=26.0, y1=33.25, dz=(-27.0, -12.0))   # each plate's ears out to the bar line, so plate + bars are one print
 TAIL_PLATE = dict(t=2.2, y=27.0, z0=-31.5, z1=-6.0, key_r=4.5)   # drone frame (Scout v3 ask 24 Oct, no-keel cage): 2.2 on
                                                    # the tail end wall's face and 45 deg chamfer, o 9 round each bolt key;
                                                    # down to z -31.5 (below it the side bars and strips cover)
 SKID_FUNNEL = 1.0                                  # every receiver skid >= 1.0 inside the funnel planes at +-5 yaw / +-2 tilt
 RSKID_NAMES = ("nose", "tail")    # each: the end plate + its two bars + the ears joining them, one TPU print bonded on
-NARROW = dict(x=25.5, y=6.5)    # receiver v3 (Scout, keel back 24 Oct): |y| <= 25.5 below drone z -38 (cartridge y 6.5), so the
-                                # keel's printed nodes (r 4 + 1.0 at (x, +-29.6, -47.5)) clear it by 5.2; only the bolt
-                                # columns' outer halves stood past it there (the bores below the head flats, open from below)
-KEY_LINES = [(-41.85, 25.6), (-41.85, -25.6), (43.25, 25.6), (43.25, -25.6)]   # receiver bolt key lines, drone (x, y), vertical
+NARROW = dict(x=25.5, y=6.5)    # receiver v3 (Scout, keel back 24 Oct): |x| <= 25.5 below y 6.5 (drone z -38), clear of the
+                                # keel nodes; the collar clip already held the columns inside 25.9 there, so this shaves
+                                # the pocket blocks' outer 0.4 for y 5.75..6.5 (wall 2.6 over that band)
+def key_lines(g, r):
+    """the receiver's bolt key lines, drone (x, y), vertical: from its mount points (Scout v2/v3: x -43.85 / 43.25)."""
+    return [(bz - g["Z_T"], bx) for (bx, bz) in r["MOUNT"]]
+KEEL_NODES = [(x, s * 29.6, -47.5) for x in (-28.0, -10.0, 28.0) for s in (1, -1)] + [(0.0, -29.6, -47.5)]
+KEEL_R = 4.0                    # Scout v3 keel (24 Oct): printed nodes r 4 at these points (+y at x 0 is in the flow view), the
+                                # rail between them at y +-29.6, z -47.5, x -28..28; keep 1.0 off every node
 
 def cart_strips(g):
     """cartridge v6 TPU strips (Scout only): foot x 19.2..23.2 under the flat bottom (y -2..0, 2.0 proud of the sliders),
@@ -295,7 +300,7 @@ def recv_skids(g, r, moving=()):
     outer = collar_clip(g, SCOUT_INSET - tp["t"] * math.sqrt(2))   # 2.2 normal to the 45 deg chamfer (receiver at SCOUT_INSET)
     shell = U((box(-tp["y"], tp["y"], *ys, tail - tp["t"], g["Z_T"]) ^ outer) - collar_clip(g, SCOUT_INSET),
               box(-tp["y"], tp["y"], *ys, tail - tp["t"], tail) ^ outer, ears(tail - tp["t"], tail))
-    for kx, ky in KEY_LINES:                                        # bolt keys stay open (driver from below)
+    for kx, ky in key_lines(g, r):                                  # bolt keys stay open (driver from below)
         if kx < 0:
             c = to_c((kx, ky, 0.0))
             shell = shell - cyl("y", c[0], c[2], tp["key_r"], -100, 200)
@@ -317,12 +322,12 @@ def skid_inset(g, r, recv):
             return float(inset)
     return None
 
-def skid_report(g, sk):
+def skid_report(g, r, sk):
     """per skid: funnel margin (mm, +-5 yaw / +-2 tilt) and the least distance to the 4 bolt key lines (drone xy)."""
     T = T_dc(g); out = {}
     for nm, m in zip(RSKID_NAMES, sk):
         P = tm(m, T).vertices
-        key = min(float(np.min(np.hypot(P[:, 0] - kx, P[:, 1] - ky))) for kx, ky in KEY_LINES)
+        key = min(float(np.min(np.hypot(P[:, 0] - kx, P[:, 1] - ky))) for kx, ky in key_lines(g, r))
         out[nm] = dict(funnel_margin_mm=round(collar_margin(P), 2), key_line_mm=round(key, 2))
     return out
 
@@ -543,7 +548,9 @@ STRUT2 = 8.0
 GUSSET2 = 0.0                                   # end-wall corner gussets where there are no posts (FE: 8.0 moved the
                                                 # across peak to the gusset tip, 1.31; off)
 FC_RELIEF = {"scout": (-5.0, 9.0)}             # z about the tab line (Scout v3 FC footprint, drone x -3.3..7.1, + 1.0)
-HEAD_Y = 14.0                                   # Scout bolt head seat (the collar clip leaves the columns from y ~13.5)
+HEAD_Y = 21.5                                   # Scout bolt head seat: its 3.0 ring (r 6.2) whole inside the collar clip
+                                                # at both ends (tail key x -43.85 needs y >= 20.75; v2's 14.0 left the
+                                                # seats 44-52 % bearing, PR 109 review); M3 x 40 (DEFAULT, E)
 HEAD_R = 3.2                                    # M3 socket head o 5.5 + 0.45 a side
 
 def rgeom2(g):
@@ -557,7 +564,10 @@ def rgeom2(g):
     r["Y_END0"] = r["FOOT_Y1"] + 1.0 if r["GUIDE"] else r["RAIL_Y0"]
     if p != "scout":
         r["BX"] = r["XW"] - BOSS_R
-    zs_m = [r["Z_E0"] - r["END_T"] + BOSS_R, g["Z_X"]] + ([g["Z_T"]] if MID_MOUNT[p] else [])
+    else:                                          # the counterbore's 3.0 ring clear of the cartridge path (x 20.35):
+        r["BX"] = round(g["RF"] + 0.05 + HEAD_R + 3.0, 2)   # 26.6 (v1/v2 25.6 left 2.05 there, PR 109 review)
+    e0 = HEAD_R + 3.0 if p == "scout" else BOSS_R   # Scout: the head seat's 3.0 ring stays inside the tail end wall (z -0.1)
+    zs_m = [r["Z_E0"] - r["END_T"] + e0, g["Z_X"]] + ([g["Z_T"]] if MID_MOUNT[p] else [])
     r["MOUNT"] = [(sx * r["BX"], z) for sx in (-1, 1) for z in zs_m]
     return r
 
@@ -742,6 +752,37 @@ def collar_clip(g, inset):
             for sy in (-1, 1): pts.append([sx * h, sy * h, zz])
     Cd = hullp(pts)
     return Cd.transform(np.linalg.inv(T_dc(g))[:3])
+
+
+def keel_report(B):
+    """Scout keel clearance (C): per part, the least distance from a node's surface (r KEEL_R) and from the rail line swept
+    with the node radius (x -28..28 every 0.5, conservative), drone frame; need >= 1.0."""
+    g = B["g"]; T = T_dc(g)
+    parts = dict(receiver=U(B["recv"], B["lid"]), cartridge_strips=U(*B.get("cstrips", [])),
+                 receiver_end_pieces=U(*B.get("rskids", [])), cartridge=B["cart"], cartridge_end_skids=U(*B["skids"]))
+    rail = np.array([(x, s * 29.6, -47.5) for x in np.arange(-28.0, 28.01, 0.5) for s in (1, -1)])
+    out = {}
+    for nm, m in parts.items():
+        if m.is_empty(): continue
+        q = trimesh.proximity.ProximityQuery(tm(m, T))
+        dn = np.abs(q.signed_distance(np.array(KEEL_NODES))) - KEEL_R
+        dr = np.abs(q.signed_distance(rail)) - KEEL_R
+        out[nm] = dict(nodes_mm=round(float(dn.min()), 2), rail_swept_mm=round(float(dr.min()), 2))
+    out["need_mm"] = 1.0
+    return out
+
+def head_seats(B):
+    """each Scout bolt's head seat (C): the share of the head's bearing annulus (r 1.7..2.75) and of the 3.0 ring round the
+    counterbore (r HEAD_R..HEAD_R + 3) that is receiver, sampled 0.2 above the flat (rule: boss wall >= 3 round it)."""
+    r = B["r"]; R_ = tm(B["recv"]); out = []
+    for (bx, bz) in r["MOUNT"]:
+        if abs(bx) <= r["RF"]: continue
+        def share(r0, r1):
+            P = np.array([(bx + rr * math.cos(a), HEAD_Y + 0.2, bz + rr * math.sin(a))
+                          for rr in np.linspace(r0, r1, 6) for a in np.linspace(0, 2 * math.pi, 72, endpoint=False)])
+            return round(float(R_.contains(P).mean()), 3)
+        out.append(dict(at=[bx, bz], bearing=share(1.75, 2.7), ring=share(HEAD_R + 0.05, HEAD_R + 2.95)))
+    return out
 
 
 # ======================================================================== assembly API (for nox/box/swap_system.py)
@@ -1516,11 +1557,8 @@ def main():
         if pack == "scout":
             T = T_dc(g)
             R["collar_margin"] = round(collar_margin(np.vstack([tm(A, T).vertices])), 2)
-            keel = np.array([[28, -28.5, -47.5], [-28, -28.5, -47.5], [28, 28.5, -47.5]])
-            Ad = tm(A, T)
-            R["keel_node_clearance"] = [round(float(np.linalg.norm(Ad.vertices - k, axis=1).min()), 2) for k in keel]
-            q = trimesh.proximity.ProximityQuery(Ad)
-            R["keel_node_surface_dist"] = [round(float(abs(q.signed_distance([k])[0])), 2) for k in keel]
+            R["keel"] = keel_report(B)
+            R["head_seats"] = head_seats(B)
         res[pack] = R
         log(json.dumps({k: R[k] for k in ("static_fit_mm3", "squeeze", "gripped_pull_mm3", "bearing_drop", "mass_g", "bbox")}))
         log(f"  insert free: cart {R['insert_free']['cart_vs_recv_mm3']} mm3, stuck {R['insert_free']['stuck']}; off 0.3 stuck {R['insert_free_off0.3']['stuck']}")
@@ -1528,8 +1566,8 @@ def main():
         R["prints"] = save_prints(B, pack, log)
         if B.get("rskids"):                       # the Scout skids: funnel margin and bolt-key distance each (C)
             R["skids"] = dict(funnel_clip_inset=skid_inset(g, r, B["recv"]), need_mm=SKID_FUNNEL,
-                              receiver=skid_report(g, B["rskids"]),
-                              cartridge_strips=skid_report(g, [B["cstrips"][0], B["cstrips"][1], B["cstrips"][1]]) )
+                              receiver=skid_report(g, r, B["rskids"]),
+                              cartridge_strips=skid_report(g, r, [B["cstrips"][0], B["cstrips"][1], B["cstrips"][1]]) )
             R["skids"]["cartridge_strips"] = {k: v for k, v in zip(("px", "nx"), list(R["skids"]["cartridge_strips"].values())[:2])}
             log(f"  skids: {R['skids']}")
         R["system_manifest"] = write_manifest(B, pack)
