@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): base v27 (closed tube, no panel, gen 70) solid PASS, worst 0.41 (unit 50 g +y at the boss), 494.6 g, but 224 tall (z -25..199): no fit on the A1 mini 180 bed in any pose (199 did not fit either: my concept miss). System change DEFAULT: cut at z 28 into pole adapter (sleeve + thread) + spine (171 tall, upright), 4x M3; alt: split the spine at mid height.
 - 24 Oct (scan stick chat): scan stick cage nodes v1 drawn (nodes_v5.py, runs/scan_stick_nodes/v1): 8 TPU nodes, hull of a 12 cube + Ø9.2 sockets, Ø3.2 bores 6 deep (low front 4, base sleeve), low back 30 tall (diagonal 22° off the vertical); solid PASS each, 39.5 g TPU (E). Base v27 OOM-killed by a check, restarted.
 - 24 Oct (scan stick chat): Spark: no controls on the scan stick (power = plug the pack, the Pi talks to the computer): switch panel, its cuts and load removed from unit_topo_v5. Base v26 stopped, base v27 = closed pocket tube, no panel, gen 70.
 - 24 Oct (scan stick chat): base v25 (gen 100, run/scan_stick_base-v25 9c0027d) solid PASS 420 g, worst 1.38 in unit 50 g +x at the open back corner (-33.5, 31, 156.5): more volume alone does not reach 0.5; v26 (closed tube) decides.
