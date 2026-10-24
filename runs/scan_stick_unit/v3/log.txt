@@ -1,0 +1,19 @@
+=== scan_stick_unit: h 2.0, generated 65.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (362.24 cm3); 8.38 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.071 of 16,254 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (4.6% of passive cells differ): no symmetry
+layout: 5 drawn bodies (5,660 cells), held solid in every realization; eroded filter: masked
+layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (40, 40, 88) = 140,800 elements, 90,297 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0895 (dil 0.1082 g +0.269) grey 20.1% ch 0.100 worst tie b5 my 5.5e+03 4.6s
+it   2 beta    1 J  27.2552 vol 0.0634 (dil 0.0760 g -0.108) grey 33.1% ch 0.100 worst tie b5 my 2e+04 6.2s
+it   3 beta    1 J   9.9804 vol 0.0675 (dil 0.0810 g -0.050) grey 32.0% ch 0.100 worst tie b5 my 7.33e+03 8.2s
+it   4 beta    1 J   1.6378 vol 0.0681 (dil 0.0816 g -0.043) grey 32.1% ch 0.100 worst tie b5 my 1.17e+03 9.3s
+it   5 beta    1 J   0.5758 vol 0.0689 (dil 0.0821 g -0.037) grey 31.1% ch 0.100 worst tie b4 mz 353 11.0s
+it   6 beta    1 J   0.3911 vol 0.0699 (dil 0.0830 g -0.023) grey 30.7% ch 0.100 worst tie b5 my 236 12.3s
+it   7 beta    1 J   0.3673 vol 0.0705 (dil 0.0834 g -0.018) grey 30.4% ch 0.100 worst Pi guard bump side 100 N 220 10.6s
+it   8 beta    1 J   0.3544 vol 0.0699 (dil 0.0826 g -0.027) grey 29.9% ch 0.100 worst Pi guard bump side 100 N 220 11.5s
+it   9 beta    1 J   0.3406 vol 0.0706 (dil 0.0831 g -0.021) grey 29.6% ch 0.100 worst Pi guard bump side 100 N 220 9.9s
+it  10 beta    1 J   0.3377 vol 0.0708 (dil 0.0834 g -0.018) grey 29.4% ch 0.100 worst Pi guard bump side 100 N 220 10.9s
