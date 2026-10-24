@@ -1,0 +1,20 @@
+catch  0.0 aft: wheels z -38.0 (seat dz  72.3), motors  71.4 ahead, L2 base (355.7,   51), funnel   2.9, plunger   2.0, strut   73, 2351 g
+catch 10.0 aft: wheels z -38.0 (seat dz  72.3), motors  65.1 ahead, L2 base (349.3,   51), funnel   2.9, plunger   2.0, strut   78, 2344 g
+catch 20.0 aft: wheels z -38.0 (seat dz  72.3), motors  58.6 ahead, L2 base (342.9,   51), funnel   2.9, plunger   2.0, strut   83, 2338 g
+catch 30.0 aft: wheels z -38.0 (seat dz  72.3), motors  52.1 ahead, L2 base (336.4,   51), funnel   2.9, plunger   2.0, strut   88, 2332 g
+
+chosen: catch 30 aft of the plate centre, motor square 52.1 ahead; motors at (191.6, ±139.5) and (-87.4, ±139.5)
+arms: front r 237 (stock 243), rear r 165; tip gaps 25 all round (square kept)
+first vertical bending (E): front 197 Hz (38 deep at the motor), rear 359 Hz; band 1P 87..158, 2P 174..317
+L2: base centre (336.4, 0, 51), axis 15 deg below +x; body lowest z 4.7 vs funnel top 2.8 (drone frame)
+L2 field (90 deg, normal mode kept clear): closest apex 2.0 behind it (C, > 0 = clear)
+length: rear prop tips x -214 to the nose x 401 (615); width 533; height 237
+front camera: horizon, portrait, lens at (336, 0, 130), 74 up the L2 back plane: the L2 leaves its view 2 deg under the lower edge
+front camera view: checked (lines above list anything in view)
+down camera and flow views: checked (lines above list anything in view)
+overlaps (M, > 0.5 mm3): none
+guard: ring and V rods 12.0 off the disks in plan (≥ 12); spokes, struts and keels under a disk 15.2 below the swept band (≥ 12)
+cage: 36 rods, 6.69 m of 3.0 carbon (74 g C), longest 395 (ring 1 z68); 4 corner nodes + 8 wheels + 8 ring nodes; ~96 g (E) without the apex
+funnel seated (catch centre on the funnel axis, bottom plate top at seat z 72.3): closest non-wheel point 2.9 at seat (113, 94, 32) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); below seat z -0.8 (cartridge incl.) 80.6 at ±5 deg yaw vs 84
+mass ~2332 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (52.1, 1.1, 6.5) vs thrust centre (52.1, 0): -0.0 in x
+PX4 flow position from the CG (FRD, m): x -0.082, y +0.043, z +0.087; IMU (FC centre) from the CG: x -0.052, z -0.003
