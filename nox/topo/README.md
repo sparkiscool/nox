@@ -114,6 +114,3 @@ engine, not in the part scripts, so every part gets it the same way (`Settings.f
 `--set finish=drawn` restores the v1 behaviour (drawn bodies whole and exact). The mass target `--gen` means the same in
 both finishes (volume added to the drawn bodies as given): the layout adds the drawn volume it opened to the design, so
 every part keeps its v1 number (bracket_jA 12 cm3; 20 cm3 filled 85 % of the design space, organic-v1).
-
-## Assembly mode (to build, Spark 24 Oct)
-Every design is now system first, then cut (`docs/generative.md` The rule, 0). Wanted in the engine: several `Part`s of one system on one grid in their assembled pose, joints between them as drawn contact bodies with their own stiffness, system load cases, one layout over the joined envelope, then a cut step that picks split surfaces at low stress, fitting the 180 cube and each piece's bed face, and draws the joint features there. Until then, the workaround in that rule.
