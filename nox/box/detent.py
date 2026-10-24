@@ -137,6 +137,36 @@ def obstacles():
     return fixed, turn
 
 
+def obstacles_v5():
+    """arm v5 (24 Oct, arm-mech): the same fixed parts; turning = the v5 parts from arm_v5_layout (axle loop + 20T + shaft at the
+    v5 axle pose, head motor shafts + 16T pinions, posts, rails A / B, both carriages swept over the whole stroke incl. the +6
+    drone push, the harness drop lane and saddle)."""
+    import arm_v5_layout as V
+    S = A.axle_sun_bodies()
+    fixed = S["p80"] + cylY(0, 0, 40.0, L.POST_Y1, L.POST_R)
+    ax = (V.MOTORS_AX["xc"], V.MOTORS_AX["zc"]) if hasattr(V, "MOTORS_AX") else (53.93, -43.67)
+    y0, y1 = L.Y_AXBELT
+    outer = (cylY(0, 0, y0, y1, L.P80_OD / 2 + 1.2) + cylY(ax[0], ax[1], y0, y1, L.P20_OD / 2 + 1.2)).hull()
+    inner = (cylY(0, 0, y0 - 1, y1 + 1, L.P80_OD / 2) + cylY(ax[0], ax[1], y0 - 1, y1 + 1, L.P20_OD / 2)).hull()
+    turn = (outer - inner) + cylY(ax[0], ax[1], y0 - 2, y1 + 2, L.P20_FL / 2) + cylY(ax[0], ax[1], L.Y_PLATE1, 74.0, 2.5)   # loop, 20T, shaft to Y 74
+    for h, m in V.MOTORS_V5.items():
+        turn += cylY(m["xc"], m["zc"], L.Y_PLATE1, V.PIN_BOSS_Y[0], 2.5) + cylY(m["xc"], m["zc"], *V.PIN_BOSS_Y, V.PIN_BOSS_R) + \
+            cylY(m["xc"], m["zc"], V.PIN_TEETH_Y[0], V.PIN_TEETH_Y[1], V.PIN_TIP_R)
+    def prism(poly, yy):
+        return hull([[x, y, z] for x, z in poly for y in yy])
+    for nm, poly, yy in V.rail_bodies("A") + V.rail_bodies("B") + V.head_envelopes("A") + V.head_envelopes("B"):
+        turn += prism(poly, yy)
+    for nm, poly, yy in V.arm_bodies(ax):
+        if nm.startswith(("post", "drop", "saddle")): turn += prism(poly, yy)
+    return fixed, turn
+
+
+def disturbance_v5():
+    """as disturbance(), with the v5 residual unbalance (arm_v5_layout axle search: 10.1 g.m E, v4 4.4)."""
+    d = disturbance(); d["gravity"] = round(d["gravity"] + (10.1e-3 - 4.4e-3) * 9.81, 3)
+    d["total"] = round(d["gravity"] + d["seals"] + d["cogging"], 3); return d
+
+
 def design(th, s, a, b, phi_d, psi=0.0):
     """roller seated at arm angle th; pivot a along the tangent (side s); bellcrank: hook b from the pivot at psi deg from
     the tangent (0 = straight lever past the pivot, +90 = radially out); spring from the hook toward phi_d (arm frame) to the
@@ -152,6 +182,7 @@ def design(th, s, a, b, phi_d, psi=0.0):
     return dict(th=th, C=C, P=P, H=H, A=Aa, u=u, tn=tn, ratio=lever_h / lever_c if sgn > 0 else -1.0)
 
 CHOSEN = dict(th=-105, s=1, a=15.0, b=39.0, phi_d=-105 + 270, psi=90.0, Q=(17.0, -29.4))   # search() result (C), see box-arm.md
+CHOSEN_V5 = dict(th=-135, s=1, a=15.0, b=39.0, phi_d=-90.0, psi=315.0, Q=(18.5, -28.4))   # arm v5 (24 Oct, arm-mech): search(v5=True) on obstacles_v5(); ring v1 unchanged (th = -105 - 30), lever lengths as v1 (15 / 39), hook along the tangent (psi 315); tower gap 1.0, arm parts 1.14 (C); holding margin 1.85 with two springs vs the v5 unbalance (E)
 SPRING_LS = 38.0               # working length seated (hook centres): 3.4 N; on the land 1.5 x ratio longer, kept <= 42
 
 
@@ -221,11 +252,11 @@ def tower_gap(D, Q, fixed, turn):
                (tw - cylY(D["P"][0], D["P"][1], 0, 200, 6.0)).min_gap(S["arm"], 3.0) + 0.7)   # arm rides on the pivot boss only
 
 
-def search():
-    fixed, turn = obstacles()
-    T = disturbance()["total"]
+def search(v5=False):
+    fixed, turn = obstacles_v5() if v5 else obstacles()
+    T = (disturbance_v5() if v5 else disturbance())["total"]
     cands = []
-    for th, s, a, br, phi_d, psi in itertools.product(range(-165, -14, 30), (-1, 1), (9, 11, 13), (2.2, 2.4, 2.6),
+    for th, s, a, br, phi_d, psi in itertools.product(range(-165, -14, 30), (-1, 1), (9, 11, 13) + ((15, 17) if v5 else ()), (2.2, 2.4, 2.6),
                                                       range(0, 360, 15), (0, 45, 90, 135, 180, 225, 270, 315)):
         D = design(th, s, a, a * br, th + phi_d, psi)
         if D["ratio"] <= 0: continue
@@ -238,7 +269,7 @@ def search():
     for Tmax, th, s, a, br, phi_d, psi, D in cands:
         if D["A"] @ D["A"] > 75.0 ** 2: continue
         g = evaluate(D, fixed, turn)
-        if g < CLR: continue
+        if g < CLR - 1e-6: continue
         tried += 1
         mid = (D["P"] + D["A"]) / 2
         for rq in np.arange(32.0, 72.0, 4.0):
@@ -248,7 +279,7 @@ def search():
                 cost = np.linalg.norm(Q - D["P"]) + np.linalg.norm(Q - D["A"])
                 if best is not None and Tmax < best[0] - 1e-9 and cost > best[-1]: continue
                 gt = tower_gap(D, Q, fixed, turn)
-                if gt < CLR: continue
+                if gt < CLR - 1e-6: continue                                 # the tower and arm sit at exactly CLR by design (float)
                 cand = (Tmax, th, s, a, br, phi_d, psi, round(g, 2), round(gt, 2), Q, cost)
                 if best is None or (Tmax, -cost) > (best[0], -best[-1]): best = cand
         if best is not None and tried > 40: break
@@ -260,7 +291,7 @@ if __name__ == "__main__":
     print("disturbance (E)", disturbance())
     import sys
     if "search" in sys.argv:
-        best, info = search(); print("search", info); print("best", best)
+        best, info = search(v5="v5" in sys.argv); print("search", info); print("best", best)
     c = CHOSEN; Dc = design(c["th"], c["s"], c["a"], c["b"], c["phi_d"], c["psi"]); Q = np.array(c["Q"])
     fixed, turn = obstacles()
     T = disturbance()["total"]; F1 = spring_force(SPRING_LS); N1 = F1 * Dc["ratio"]
@@ -278,3 +309,21 @@ if __name__ == "__main__":
         t = A.tm(m); t.apply_transform(trimesh.transformations.rotation_matrix(math.radians(rot), [1, 0, 0])); t.apply_translation(-t.bounds[0]); t.export(f"{OUT}/{name}")
     ex(rg, "box_detent_ring_v1.stl", 90)                                  # bottom (Y 64 face) on the bed
     ex(S["arm"] + S["spacer"], "box_detent_arm_v1.stl", -90)              # arm top face on the bed, spacer up
+    if "v5" in sys.argv:                                                  # arm v5 (24 Oct): CHOSEN_V5 on the v5 obstacles, detent arm v2 to print/
+        c = CHOSEN_V5; Dc = design(c["th"], c["s"], c["a"], c["b"], c["phi_d"], c["psi"]); Q = np.array(c["Q"])
+        fixed, turn = obstacles_v5(); T = disturbance_v5()["total"]; N1 = F1 * Dc["ratio"]
+        Tm = N1 / math.tan(math.radians(NOTCH_HALF)) * R_SEAT * 1e-3
+        print("v5 chosen", {k: (np.round(v, 1).tolist() if isinstance(v, np.ndarray) else round(v, 3) if isinstance(v, float) else v) for k, v in Dc.items() if k not in ("u", "tn")})
+        print("v5 ring", ring_checks(c["th"]), "(same notches as ring v1)" if set(notch_angles(c["th"])) == set(notch_angles(CHOSEN["th"])) else "RING CHANGES")
+        print(f"v5 holding {Tm:.3f} N.m per spring vs disturbance {T:.3f} (E, v5 unbalance): margin 1 spring {Tm / T:.2f}, 2 springs {2 * Tm / T:.2f}")
+        print("v5 gaps: arm parts", round(evaluate(Dc, fixed, turn), 2), "tower", round(tower_gap(Dc, Q, fixed, turn), 2))
+        S = arm_solids(Dc, Q)
+        for nm, m in (("arm v2", S["arm"]), ("tower (hub v6 drawn)", S["tower"])):
+            print(f"  {nm:22s} {m.volume() / 1000 * 1.27:5.1f} g PETG solid")
+        root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+        # v2: no printed spacer (a 0.65 wall round the M3): 2 x DIN 988 3 x 5 x 0.5 shims under the arm instead (DEFAULT)
+        t = A.tm(S["arm"]); t.apply_transform(trimesh.transformations.rotation_matrix(math.radians(-90), [1, 0, 0])); t.apply_translation(-t.bounds[0])
+        t.export(os.path.join(root, "print", "box_detent_arm_v2.stl"))
+        os.makedirs(os.path.join(root, "runs", "detent", "v2"), exist_ok=True)
+        A.tm(S["tower"] + S["anchor"]).export(os.path.join(root, "runs", "detent", "v2", "detent_tower_v5_W.stl"))
+        A.tm(S["arm"]).export(os.path.join(root, "runs", "detent", "v2", "detent_arm_v2_W.stl"))
