@@ -42,8 +42,11 @@ def stand_parts():
     P["mast v6"] = S.BUILD["mast"](); P["cradle_keel v6"] = S.BUILD["cradle_keel"]()
     P["kb v7b"] = V.BUILD["kb"](); P["toe v7b"] = V.BUILD["toe"]()
     ba = V.BUILD["bar_half"](); P["bar_half A"] = ba; P["bar_half B"] = ba.rotate([0, 0, 180]).translate([0, 2 * 54.0, 0])
-    fm = S.BUILD["frame_mid"]()
-    for p in S.POS["frame_mid"]: P[f"frame_mid @{p}"] = S.place(fm, p)
+    # Spark 24 Oct: "dubhacks is over so we are going to have all cartridge slots built": every mid position becomes a
+    # bay module (preview here; the box structure session owns the bays); the end frames keep the funnel pads
+    if os.environ.get("BOX_DEMO_FRAMES"):
+        fm = S.BUILD["frame_mid"]()
+        for p in S.POS["frame_mid"]: P[f"frame_mid @{p}"] = S.place(fm, p)
     P["frame_endR @30"] = S.place(V.BUILD["frame_endR"](), 30); P["frame_endL @-210"] = S.place(V.BUILD["frame_endL"](), -210)
     ps = V.BUILD["post_seg"]()
     for c in ((1, 1), (-1, 1), (1, -1), (-1, -1)):
@@ -55,7 +58,8 @@ def stand_parts():
               "sheet side -X": S.box(-V.X_IN - 3, -V.X_IN, V.Y_BACK + 3, V.Y_FRONT - 3, S.FLOOR, V.Z_TOP),
               "sheet front": S.box(-V.X_IN + 3, V.X_IN - 3, V.Y_FRONT, V.Y_FRONT + 3, S.FLOOR, V.Z_TOP),
               "sheet rear": S.box(-V.X_IN + 3, V.X_IN - 3, V.Y_BACK - 3, V.Y_BACK, S.FLOOR, V.Z_TOP)}
-    return P, sheets, S.BAYS
+    bays = list(S.BAYS) if os.environ.get("BOX_DEMO_FRAMES") else sorted(set(S.BAYS) | set(S.POS["frame_mid"]))
+    return P, sheets, bays
 
 
 def bay_modules(bays):
