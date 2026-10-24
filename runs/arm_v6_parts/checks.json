@@ -1,0 +1,169 @@
+{
+ "arm_rail_A_v2": {
+  "file": "runs/arm_v6_parts/arm_rail_A_v2_W.stl (W mesh; out of print/ until v7)",
+  "mass_g": 49.42,
+  "prev_g": 49.7,
+  "qty": 1,
+  "extents": [
+   32.0,
+   107.0,
+   23.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  },
+  "bed_mm2": 2403.0,
+  "first_layer": [
+   1,
+   0.0
+  ],
+  "file_was": "print/box_arm_rail_A_v2.stl"
+ },
+ "arm_rail_B_v2": {
+  "file": "runs/arm_v6_parts/arm_rail_B_v2_W.stl (W mesh; out of print/ until v7)",
+  "mass_g": 49.41,
+  "prev_g": 50.0,
+  "qty": 1,
+  "extents": [
+   32.0,
+   107.0,
+   23.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  },
+  "bed_mm2": 2403.0,
+  "first_layer": [
+   1,
+   0.0
+  ],
+  "file_was": "print/box_arm_rail_B_v2.stl"
+ },
+ "arm_pinion16_v2": {
+  "file": "runs/arm_v6_parts/arm_pinion16_v2_W.stl (W mesh; out of print/ until v7)",
+  "mass_g": 3.1,
+  "prev_g": 3.0,
+  "qty": 2,
+  "extents": [
+   17.8,
+   17.8,
+   16.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  },
+  "bed_mm2": 143.0,
+  "first_layer": [
+   1,
+   0.0
+  ],
+  "file_was": "print/box_arm_pinion16_v2.stl"
+ },
+ "detent_ring_v3": {
+  "file": "runs/arm_v6_parts/detent_ring_v3_W.stl (W mesh; out of print/ until v7)",
+  "mass_g": 6.74,
+  "prev_g": 5.0,
+  "qty": 1,
+  "extents": [
+   47.0,
+   47.0,
+   5.9
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  },
+  "bed_mm2": 916.0,
+  "first_layer": [
+   1,
+   0.0
+  ],
+  "file_was": "print/box_detent_ring_v3.stl"
+ },
+ "ring_walls": {
+  "pocket_to_notch": 2.05,
+  "pocket_to_rim": 2.4
+ },
+ "roll": [
+  0.0,
+  0.063
+ ],
+ "fit": [
+  {
+   "z0": 32.0,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 1.4,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 6.0
+  },
+  {
+   "z0": 81.0,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 1.4,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 6.0
+  },
+  {
+   "z0": 86.1,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 2.26,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 6.0
+  },
+  {
+   "z0": 89.6,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 5.6
+  },
+  {
+   "z0": 95.6,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 4.7
+  },
+  {
+   "z0": 88.8,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 5.86
+  },
+  {
+   "z0": 98.3,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 4.9
+  }
+ ],
+ "rods_in_rail_mm3": null
+}
