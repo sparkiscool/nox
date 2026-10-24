@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scan stick chat): base v24 (gen 70) solid PASS 381 g, worst 1.74 (strike 2): the pocket is an open U (front / back walls only). System change DEFAULT: drawn 6 mm side walls close it into a tube (also hold the pack sideways), base v26 gen 70; alt: more volume only (v25 gen 100, running).
 - 24 Oct (scan stick chat): base v23 solid PASS, 336.8 g, but worst index 2.48 in unit 50 g +x (target ≤ 0.5): gen 35 cm3 left only the front / back walls at mid height. Strike 1. Base v24 gen 70 and v25 gen 100 in parallel; the lightest that meets 0.5 is kept.
 - 24 Oct (scan stick chat): scan stick socket fixed (Spark: the 27 overlap is on the Ø27.5 cylinder): Ø28.3 sleeve 27 deep + 26 thread, the base boss runs 25 down the pole (z -25). Thread test v3 READY (22.3 g, v2 superseded); base v22 stopped, base v23 running; head v17 unaffected.
 - 24 Oct (scan stick chat): scan stick thread test v2 READY (Spark: the stick fit coupon): base v22's socket, Ø28.3 x 2 counterbore + 26 thread, 11.8 g, thread end down, supports off; v1 superseded. Script --ver fix (3rd number was gen cm3).

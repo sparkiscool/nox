@@ -107,6 +107,7 @@ def spine_bodies():
     floor = box(x0, x1, y0, y1, 32.0, PACK[4])
     back = box(x0, PACK[0] - 0.5, y0, y1, 32.0, ztop)
     front = box(PACK[1] + 0.5, x1, y0, y1, 32.0, ztop)
+    sides = sum((box(PACK[0] - 0.5, PACK[1] + 0.5, *sorted((sy * (PACK[3] + 0.5), sy * (PACK[3] + 6.5))), 32.0, ztop) for sy in (-1, 1)), mf.Manifold())   # base v26: closed pocket tube (v23 / v24: open U, worst 2.48 / 1.74)
     ring = box(x0, x1, y0, y1, PACK[5] + 1.0, ztop) - box(PACK[0], PACK[1], PACK[2], PACK[3], PACK[5], ztop + 1)
     standoffs = sum((cylx(PI_X0 - PI_SO, PI_X0 + 0.5, y, z, POST_R) for y, z in PI_HOLES), mf.Manifold())
     ledge = B6(LEDGE) + sum((B6(l) for l in LIPS), mf.Manifold())
@@ -128,7 +129,7 @@ def spine_bodies():
         bores += mf.Manifold.cylinder(10.0, ROD_R, ROD_R, 24).rotate([0, float(np.degrees(np.arctan2(dd[0], dd[2]))) + 180, 0]).translate(pe.tolist())
         bores += cyl(X_BACK, y, Z_MID - 7, Z_MID + 7, ROD_R, 24)
     panel = box(SW[0], SW[1], SW[2], SW[3], SW[4], SW[5])                                       # rocker y +16, button y -6, LED y -20 (E), facing -x
-    drawn += floor + back + front + ring + standoffs + ledge + sleeves + panel
+    drawn += floor + back + front + sides + ring + standoffs + ledge + sleeves + panel
     tc = os.path.join(HERE, "out", "thread_cut.stl")
     if not os.path.exists(tc):
         os.makedirs(os.path.dirname(tc), exist_ok=True)
@@ -150,7 +151,7 @@ def spine_bodies():
     cuts += cylx(SW[0] - 1, SW[1] + 1, -6, SWZ, 6.15) + cylx(SW[1], PI_X0 - 0.5, -6, SWZ, 7.0)
     cuts += cylx(SW[0] - 1, SW[1] + 1, -20, SWZ, 2.6) + cylx(SW[1], SW[1] + 8, -20, SWZ, 3.5)
     env = box(-70.0, JX, -44.0, 44.0, Z_MOUTH, 200.0)                                             # to the cage sleeves (y ±42), not beyond
-    return dict(drawn=drawn, cuts=cuts, env=env, floor=floor, back=back, front=front, ring=ring, standoffs=standoffs, sleeves=sleeves, ledge=ledge, panel=panel)
+    return dict(drawn=drawn, cuts=cuts, env=env, floor=floor, back=back, front=front + sides, ring=ring, standoffs=standoffs, sleeves=sleeves, ledge=ledge, panel=panel)
 
 def head_bodies():
     drawn = B6(BP)
