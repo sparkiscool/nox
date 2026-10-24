@@ -17,3 +17,5 @@ it   7 beta    1 J   1.5718 vol 0.0392 (dil 0.0471 g -0.013) grey 19.6% ch 0.100
 it   8 beta    1 J   0.3635 vol 0.0390 (dil 0.0469 g -0.017) grey 19.4% ch 0.100 worst tie b2 my 1.16e+03 2.2s
 it   9 beta    1 J   0.1221 vol 0.0386 (dil 0.0462 g -0.032) grey 18.7% ch 0.100 worst tie b2 mx 399 2.9s
 it  10 beta    1 J   0.3543 vol 0.0394 (dil 0.0468 g -0.020) grey 18.5% ch 0.100 worst L2 hit -y 100 N (joint) 1.15e+03 3.1s
+it  11 beta    1 J   0.0926 vol 0.0393 (dil 0.0469 g -0.011) grey 18.7% ch 0.100 worst tie b2 mx 292 2.9s
+it  12 beta    1 J   0.3543 vol 0.0390 (dil 0.0463 g -0.023) grey 18.2% ch 0.100 worst L2 hit -y 100 N (joint) 1.15e+03 2.5s
