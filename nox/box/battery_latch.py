@@ -611,8 +611,24 @@ def mag_by(px, py, pz, mx, my, mz, d=MAG_D, h=MAG_DEPTH, n=48):
         by += sgn * float((ry / r3 * dA).sum())
     return BR_N52 / (4 * math.pi) * by * 1000.0
 
-def hall_read(g, hall=(7.0, -1.5)):
-    """the head's hall (unipolar, DRV5032-class, E) at x 7.0, 1.5 under the flat bottom, z on the magnet: B_y in mT for the
+def hall_sweep(g, offs=(-1.0, -0.5, 0.0, 0.5, 1.0), gaps=(-0.7, -1.0, -1.3)):
+    """the latched and half-in readings over the head's x offset (the hall rides on the head) and the hall gap: the
+    worst latched reading must stay above the worst half-in one with the threshold between them."""
+    rows = []
+    for o in offs:
+        for gy in gaps:
+            h = hall_read(g, (7.0 + o, gy))
+            rows.append(dict(off=o, gap=gy, latched=h["latched"], half_in=h["half_in"]))
+    out = dict(rows=rows)
+    for tol in (0.5, 1.0):
+        sub = [r_ for r_ in rows if abs(r_["off"]) <= tol + 1e-9]
+        lo = min(r_["latched"] for r_ in sub); hi = max(r_["half_in"] for r_ in sub)
+        out[f"off_{tol}"] = dict(latched_min=lo, half_in_max=hi, threshold_mT=round((lo + hi) / 2, 1), separation=round(lo / hi, 1))
+    return out
+
+def hall_read(g, hall=(7.5, -1.0)):
+    """one hall per tab on the head (analog, DRV5055-class, E) at x +-7.5, 1.0 under the flat bottom, z on the magnet (searched
+    for the best latched / half-in ratio under +-0.5 / +-1.0 head offset and +-0.3 gap): B_y in mT for the
     tab magnet latched (x 7), half in (bolt on the plate face, retract OVERLAP + 0.3) and squeezed (x 3)."""
     zm = g["Z_T"] + MAG_Z; my = MAG_DEPTH / 2
     st = {"latched": 0.0, "half_in": OVERLAP + 0.3, "squeezed": TRAVEL}
@@ -705,7 +721,12 @@ def hand_calc(B):
     hold = out["spring"]["rest_N"] + fr
     out["side_hit_slider"] = dict(inertia_N=out["slider_inertia_35g_N"], hold_N=round(hold, 2),
                                   ratio=round(hold / out["slider_inertia_35g_N"], 2),
-                                  note="the outboard bolt is pushed further in; worst case one bolt transiently, never both")
+                                  no_hang_hold_N=out["spring"]["rest_N"],
+                                  no_hang_ratio=round(out["spring"]["rest_N"] / out["slider_inertia_35g_N"], 2),
+                                  one_bolt_corner_index=round(2 * cases["crash 35 g corner (-y share 35/sqrt3)"]["index"], 3),
+                                  note="the outboard bolt is pushed further in, so at most one bolt moves for the pulse; with no "
+                                       "hang (inverted, free fall) nothing pulls the pack out, and in a corner hit the -y share's "
+                                       "friction lock holds it; one bolt alone carries the corner case at the index given")
     # side hit: rails bear on the side plate near the deck; plate root bending per mm of length, and the overturning
     # couple carried by the bolts (vertical) and the deck strips
     q = 35 * W1 / g["L_C"]; Mp = q * (r["Y_DK0"] - (g["Y_TOP"] - 5.0)); s_p = 6 * Mp / r["PLATE_T"] ** 2
@@ -910,9 +931,10 @@ def overseer_fit(x_tab=-30.0, lead_aft=True, log=print):
 # ======================================================================== Scout v3 system (pass 1 snapshot + this set)
 SCOUT_SYS = os.path.join(OUT, "scout_v3_pass1", "scout.assembly.json")
 
-def scout_system(log=print):
+def scout_system(log=print, keel4=False):
     """system_check on the Scout v3 system pass 1 assembly (snapshot of branch claude/gracious-darwin-ogidvp, its PR 44
-    receiver, cartridge, pack and XT60E1-M removed) with this latch set posed by T_dc."""
+    receiver, cartridge, pack and XT60E1-M removed) with this latch set posed by T_dc. keel4: add a stand-in for the
+    missing 4th keel node (o 8 at (-28, 28.5, -47.5), as the other three) to show what the Scout cage pass needs."""
     import system_check as sc
     man = json.load(open(SCOUT_SYS)); base = os.path.dirname(SCOUT_SYS)
     for p in man["parts"]:
@@ -936,12 +958,15 @@ def scout_system(log=print):
                              ["xt60_plug", "xt60e1m", 1.0]]
     man["openings"] = [dict(part=n, axis=[0, 0, -1], half_angle_deg=20.0, min_mm=0.0)
                        for n in ("cartridge", "pack", "slider_px", "slider_nx")]
+    if keel4:
+        man["parts"].append(dict(name="keel node 4 (stand-in)", sphere=dict(r=4.0, center=[-28.0, 28.5, -47.5]), role="cage",
+                                 mass_g=1.0, tag="E"))
     res = sc.run(man)
     mine = {"pack", "xt60_plug", "cartridge", "slider_px", "slider_nx", "receiver", "receiver_lid", "receiver_strips", "xt60e1m"}
     clash = [(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in res["fit"]["pairs"]
              if not p_["pass_"] and ({p_["a"], p_["b"]} & mine)]
     cf = res["cage_first"]["per_part"]
-    log("scout v3 system: " + res["summary"])
+    log(f"scout v3 system{' + keel node 4' if keel4 else ''}: " + res["summary"])
     return dict(summary=res["summary"], clashes=clash, balance=res.get("balance"),
                 cage_first={k: cf[k]["min_margin_mm"] for k in cf if k in mine | {"flow MTF-02P", "camera", "pogo pads + carrier"}})
 
@@ -986,6 +1011,7 @@ def main():
         R["grip"] = grip_checks(B)
         R["asym_squeeze"] = [asym_squeeze(B, 1.0), asym_squeeze(B, -1.0)]
         R["hall"] = hall_read(g)
+        R["hall_sweep"] = hall_sweep(g)
         import battery_latch_topo as BLT
         fe = BLT.fe_v1(pack, 1.0, log=lambda s_: None)
         R["fe_v1"] = dict(worst=fe["worst"], worst_case=fe["worst_case"], worst_at=fe["worst_at"],
@@ -1019,6 +1045,7 @@ def main():
         R["prints"] = save_prints(B, pack, log)
         R["system_manifest"] = write_manifest(B, pack)
     res["scout_system"] = scout_system(log)
+    res["scout_system_keel4"] = scout_system(log, keel4=True)
     # Overseer: posed in the Overseer assembly on main, pack on the thrust axis (Overseer DEFAULT A) and 30 behind (alt B)
     man = json.load(open(OV_ASM))
     for lab, dx in (("A", 0.0), ("B", -30.0)):
