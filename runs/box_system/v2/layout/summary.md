@@ -7,7 +7,7 @@ Inputs:
 - Battery latch v1 (PR 69): receivers in `runs/box_system/v2/latch_ctx/` (M).
 
 Bays: Overseer 0, −60, −120, −180; Scout 30, −30, −90, −150, −210 (DEFAULT, set A).
-Funnel centre: Y 140 (C) = both drones' catch centre at Y_C + 2 (C; hub: the Overseer moves its catch centre onto its thrust axis; DEFAULT, alt 177 with Y_C 175). Funnel v8 (catch): the opening must pass the lopsided Overseer set (−66.5 / +113.1 from the catch centre, M): the +Y face out 32.5 with 3 a side (C), the −Y face stays; a symmetric ~191 is 17.6 short at +Y (C). The enclosure keeps the 32.5.
+Funnel centre: Y 140 (C) = both drones' catch centre at Y_C + 2 (C; hub: the Overseer moves its catch centre onto its thrust axis; DEFAULT, alt 177 with Y_C 175). Funnel v8 (catch): the opening must pass the lopsided Overseer set (−66.5 / +113.1 from the catch centre, M): the +Y face out 32.5 with 3 a side (E until funnel v8 has its outline), the −Y face stays; a symmetric ~191 is 17.6 short at +Y (C). The enclosure keeps the 32.5.
 Layout artifact: https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp (`layout.html`).
 
 ## Concept check (docs/generative.md rule 0)
@@ -20,7 +20,7 @@ Layout artifact: https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp (`layout.html
 - **Fit FAIL (Overseer drone set vs the funnel):** the cartridge spans Y 74.8..248.8 against the opening's 56..224 (M).
   - Its tab line sits ~30 from its catch centre, against the Scout's 2: latch v1 puts it on the thrust axis, which is 29.7 ahead of the catch centre (System Box catch).
   - Its 171 length is also more than 168.
-  - Hub arbitration (24 Oct): the Overseer moves its catch centre onto its thrust axis (C, within 2); funnel v8 must follow the set (+Y face out 32.5, C); recheck when v8 lands.
+  - Hub arbitration (24 Oct): the Overseer moves its catch centre onto its thrust axis (C, within 2); funnel v8 must follow the set (+Y face out 32.5, E); recheck when v8 lands.
 - **Option A (DEFAULT):** alternating bays at R 113: 416 x 414 x 468 mm, 80.6 L (C), 0 mm³ between receivers (M).
 - **Option B:** Overseer at the bottom 4, receivers clipped: 402 x 414 x 475, 79.1 L (-1.5 L, C).
   - Unclipped, neighbouring Overseer receivers overlap 1020 mm³ (M, `layout_bottom/`); B needs the latch clip.
