@@ -1,0 +1,35 @@
+{
+ "scout": {
+  "Z_T": 42.55,
+  "L_C": 93.0,
+  "W": 33.0,
+  "H": 32.0,
+  "Y_TOP": 45.6,
+  "Z_X": 85.8,
+  "SWAP_M": 210.7996122800117,
+  "SWAP_CG": [
+   0.0009964659748073188,
+   26.1781951058832,
+   42.553342561109005
+  ],
+  "Y_M": 54.1,
+  "RF": 20.3
+ },
+ "overseer": {
+  "Z_T": 110.76,
+  "L_C": 171.0,
+  "W": 48.0,
+  "H": 45.0,
+  "Y_TOP": 58.6,
+  "Z_X": 163.8,
+  "SWAP_M": 748.2062666459757,
+  "SWAP_CG": [
+   0.00028074434894266646,
+   33.119387099025964,
+   80.76230532891601
+  ],
+  "Y_M": 67.1,
+  "RF": 27.8
+ },
+ "source": "battery_latch.latch_assembly(pack, 'latched'), PR 69 branch part/battery-latch @ b59b2dc (24 Oct); cartridge coords c (x across, y up the install axis from the flat bottom, z from the closed end)"
+}

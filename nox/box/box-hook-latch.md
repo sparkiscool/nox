@@ -80,6 +80,7 @@ Rule checks on the layout: `system_check` on `box_catch.assembly.json` passes la
 - **Chosen: 4 face plungers behind the seated wheels.** Wins: nothing on the drone, self-locking under load with the servos off, fits the panel rib field (127 cm³ per unit); loses: 4 servos and 4 halls (110 g set M).
 - **Alt 1, belly hook on a post:** 1 actuator instead of 4 (−3 servos, about −80 g E); loses: a keeper on both drones (about 5 g E each, Scout v3 and Overseer bellies) and a post standing in the swap opening the head must pass. Rejected.
 - **Alt 2, rim swing hook:** a hook on the collar rim swinging over the upper cage ring; its tip arc r 75.6 about the pivot (166, 95.3) passes 5.8 from the upper-ring rod (112, 51), under rod r 1.5 + hook half-thickness 4 + clearance 0.5 = 6.0 (C): it clashes with the cage. Rejected.
+- **Keep-alive through the plungers (Scout v3 chat, 24 Oct): rejected, the belly post stays (DEFAULT).** The wheel is 0.5..4.0 off the plunger along the slope except under the XT60 push (C): a contact needs ≥ 5.5 travel inside the 8 thick plunger (pogo 2.3 stroke: no), a node pad beside the wheel leaves the 12 wide plunger at ±4.5 sideways, and the halls cannot sense a seat (`dimensions.md` G (6)).
 - **Node cheeks 1.0 off the faces (G (1)): DEFAULT compliant**, they are cage members, so the 3 mm cage-first margin does not apply to them; alt: a 3 mm rule for cheeks via G (1), owned by the Scout v3 / Overseer chats.
 Review agent in concept mode on this layout (PR 66 round 2); layout artifact: the v2 motion artifact.
 

@@ -166,6 +166,9 @@ def carriage(h="A", rack_teeth=True):
             gaps = g if gaps is None else gaps + g
             u += p
         web -= gaps
+    tail = getattr(V, "RACK_TAIL", None)                              # v6: the tail below u_max steps up to y0 (clears the axle loop at park)
+    if tail:
+        web -= box(V.WEB_X[0] - 1, V.WEB_X[1] + 1, V.WEB_Y[0] - 1, tail["y0"], V.WEB_U[0] - 1, tail["u_max"])
     holes = None
     for (x, u) in V.WHEELS:
         hr = V.ECC["bore_in_plate_r"] if (x, u) == (V.ECC["x"], V.ECC["u"]) else 2.6
@@ -177,7 +180,8 @@ def carriage(h="A", rack_teeth=True):
         s = cylY(x, u, V.WHEEL_Y[1], V.PLATE_Y[0], 5.0, 32)                                      # 5 x 10 x 1 shim
         s += cylY(x, u, V.NUT_Y[0], V.NUT_Y[1], V.NUT_R, 6)                                     # nyloc
         top = V.ECC["flange_y"][1] if (x, u) == (V.ECC["x"], V.ECC["u"]) else V.PLATE_Y[1]
-        s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - 25.0, top, 2.5, 24)      # M5 x 25 socket head + its real shank (tail Y 73 / 75.5)
+        bl = getattr(V, "AXLE_BOLT_L", dict(fixed=25.0, ecc=25.0))["ecc" if (x, u) == (V.ECC["x"], V.ECC["u"]) else "fixed"]
+        s += cylY(x, u, top, top + 5.0, 4.25, 32) + cylY(x, u, top - bl, top, 2.5, 24)        # socket head + its real shank (v5: M5 x 25, tail Y 73 / 75.5)
         stack = s if stack is None else stack + s
     bush = ecc_bush(V.ECC["x"], V.ECC["u"], 90.0)
     out = dict(printed=printed, wheels=wheels, stack=stack, bush=bush)

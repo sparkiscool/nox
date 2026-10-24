@@ -1,0 +1,11 @@
+{
+ "file": "runs/arm_v6_parts/arm_pinion16_v2_W.stl (out of print/ until v7)",
+ "mass_g": 3.1,
+ "solid_check": true,
+ "bed_mm2": 143.0,
+ "worst_index": [
+  0.76,
+  "power cut, bumped head"
+ ],
+ "tag": "M mesh / E loads"
+}
