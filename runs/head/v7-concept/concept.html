@@ -1,0 +1,102 @@
+<title>Heads v7 grabber concept</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+:root { --bg:#f6f5f1; --fg:#1d232a; --muted:#5d6670; --line:#c9ccd0; --cart:#dfe7d8; --recess:#f6f5f1; --tab:#6c8f5a; --blade:#2f6db3;
+  --rod:#222; --spring:#c47a1d; --body:#7a8794; --cam:#b33a3a; --servo:#3d4a57; --card:#ffffff; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42;
+  --cart:#2b3a2b; --recess:#14181c; --tab:#8fbf74; --blade:#6aa5ec; --rod:#ddd; --spring:#e3a24a; --body:#93a1ae; --cam:#e06a6a;
+  --servo:#4d5d6d; --card:#1b2026; color-scheme: dark } }
+:root[data-theme="dark"] { --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --cart:#2b3a2b; --recess:#14181c; --tab:#8fbf74;
+  --blade:#6aa5ec; --rod:#ddd; --spring:#e3a24a; --body:#93a1ae; --cam:#e06a6a; --servo:#4d5d6d; --card:#1b2026; color-scheme: dark }
+body { background:var(--bg); color:var(--fg); font:15px/1.5 "IBM Plex Sans", system-ui, sans-serif; margin:0;
+  padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); padding-block:20px; }
+main { max-width:1100px; margin:0 auto; display:grid; gap:20px; }
+h1 { font-size:1.5rem; margin:0; text-wrap:balance } h2 { font-size:1.1rem; margin:0 0 8px }
+p { margin:0; color:var(--muted); max-width:70ch }
+.card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px; min-width:0 }
+.scroll { overflow-x:auto }
+svg .h { font-weight:600; font-size:14px; fill:var(--fg) } svg .s { font-size:11px; fill:var(--muted) }
+.cart { fill:var(--cart) } .recess { fill:var(--recess) } .tab { fill:var(--tab) } .bolt { fill:var(--tab); opacity:.6 }
+.blade { fill:var(--blade) } .rod { fill:var(--rod) } .spring { fill:var(--spring) } .body { fill:var(--body) }
+.cam { fill:var(--cam) } .servo { fill:var(--servo) } svg .servo-t { fill:#fff }
+table { border-collapse:collapse; width:100%; font-size:14px } th, td { text-align:left; padding:6px 8px; border-top:1px solid var(--line); vertical-align:top }
+th { font-weight:600; white-space:nowrap } .legend span { display:inline-block; margin-right:14px } .sw { display:inline-block; width:12px; height:12px; border-radius:2px; vertical-align:-1px; margin-right:4px }
+</style>
+<main>
+<header><h1>Heads v7 grabber concept</h1>
+<p>Nox swap arm, both heads. The plug and unplug loads (60 to 74 N push, 50 to 57 N pull) go through the grip pocket, the blades and carbon rods into the head body. Springs hold the grip; the servo only opens it. Section through the tab line, to scale (4 px per mm), latch 258becf grabber interface.</p></header>
+<section class="card"><h2>One swap, three states</h2><div class="scroll"><svg viewBox="0 0 750 520" width="750" height="520" role="img" aria-label="grabber states">
+<g><text x="120" y="22" class="h" text-anchor="middle">1. approach: open</text>
+<text x="120" y="482" class="s" text-anchor="middle">cam on its dwell: blades out</text>
+<text x="120" y="497" class="s" text-anchor="middle">tabs latched in the receiver</text>
+<rect x="20.0" y="90.0" width="200.0" height="160.0" class="cart"/>
+<rect x="58.0" y="202.0" width="124.0" height="48.0" class="recess"/>
+<rect x="80.0" y="204.0" width="24.0" height="46.0" class="tab"/>
+<rect x="70.8" y="214.0" width="9.2" height="12.0" class="bolt"/>
+<rect x="66.0" y="210.0" width="12.0" height="128.0" class="blade"/>
+<circle cx="72.0" cy="306.0" r="6.0" class="rod"/>
+<circle cx="72.0" cy="346.0" r="6.0" class="rod"/>
+<rect x="24.0" y="330.0" width="42.0" height="16.0" class="spring"/>
+<rect x="136.0" y="204.0" width="24.0" height="46.0" class="tab"/>
+<rect x="160.0" y="214.0" width="9.2" height="12.0" class="bolt"/>
+<rect x="162.0" y="210.0" width="12.0" height="128.0" class="blade"/>
+<circle cx="168.0" cy="306.0" r="6.0" class="rod"/>
+<circle cx="168.0" cy="346.0" r="6.0" class="rod"/>
+<rect x="174.0" y="330.0" width="42.0" height="16.0" class="spring"/>
+<rect x="12.0" y="298.0" width="216.0" height="96.0" class="body" fill-opacity="0.18"/>
+<text x="120.0" y="382.0" class="s" text-anchor="middle">head body</text>
+<ellipse cx="120.0" cy="326.0" rx="38.0" ry="18.0" class="cam"/>
+<rect x="32.0" y="410.0" width="176.0" height="56.0" class="servo"/>
+<text x="120.0" y="446.0" class="s servo-t" text-anchor="middle">servo (DS3218 A / MG995 B)</text>
+<text x="120.0" y="130.0" class="s" text-anchor="middle">cartridge</text>
+</g><g><text x="370" y="22" class="h" text-anchor="middle">2. hold: squeezed</text>
+<text x="370" y="482" class="s" text-anchor="middle">springs squeeze the tabs: unlatched</text>
+<text x="370" y="497" class="s" text-anchor="middle">and held; the servo is unloaded</text>
+<rect x="270.0" y="90.0" width="200.0" height="160.0" class="cart"/>
+<rect x="308.0" y="202.0" width="124.0" height="48.0" class="recess"/>
+<rect x="346.0" y="204.0" width="24.0" height="46.0" class="tab"/>
+<rect x="334.0" y="210.0" width="12.0" height="128.0" class="blade"/>
+<circle cx="340.0" cy="306.0" r="6.0" class="rod"/>
+<circle cx="340.0" cy="346.0" r="6.0" class="rod"/>
+<rect x="274.0" y="330.0" width="60.0" height="16.0" class="spring"/>
+<rect x="370.0" y="204.0" width="24.0" height="46.0" class="tab"/>
+<rect x="394.0" y="210.0" width="12.0" height="128.0" class="blade"/>
+<circle cx="400.0" cy="306.0" r="6.0" class="rod"/>
+<circle cx="400.0" cy="346.0" r="6.0" class="rod"/>
+<rect x="406.0" y="330.0" width="60.0" height="16.0" class="spring"/>
+<rect x="262.0" y="298.0" width="216.0" height="96.0" class="body" fill-opacity="0.18"/>
+<text x="370.0" y="382.0" class="s" text-anchor="middle">head body</text>
+<ellipse cx="370.0" cy="326.0" rx="18.0" ry="18.0" class="cam"/>
+<rect x="282.0" y="410.0" width="176.0" height="56.0" class="servo"/>
+<text x="370.0" y="446.0" class="s servo-t" text-anchor="middle">servo (DS3218 A / MG995 B)</text>
+<text x="370.0" y="130.0" class="s" text-anchor="middle">cartridge</text>
+</g><g><text x="620" y="22" class="h" text-anchor="middle">3. release at the seat</text>
+<text x="620" y="482" class="s" text-anchor="middle">cam opens: the tabs spring into</text>
+<text x="620" y="497" class="s" text-anchor="middle">the receiver; the head retracts</text>
+<rect x="520.0" y="90.0" width="200.0" height="160.0" class="cart"/>
+<rect x="558.0" y="202.0" width="124.0" height="48.0" class="recess"/>
+<rect x="580.0" y="204.0" width="24.0" height="46.0" class="tab"/>
+<rect x="570.8" y="214.0" width="9.2" height="12.0" class="bolt"/>
+<rect x="566.0" y="210.0" width="12.0" height="128.0" class="blade"/>
+<circle cx="572.0" cy="306.0" r="6.0" class="rod"/>
+<circle cx="572.0" cy="346.0" r="6.0" class="rod"/>
+<rect x="524.0" y="330.0" width="42.0" height="16.0" class="spring"/>
+<rect x="636.0" y="204.0" width="24.0" height="46.0" class="tab"/>
+<rect x="660.0" y="214.0" width="9.2" height="12.0" class="bolt"/>
+<rect x="662.0" y="210.0" width="12.0" height="128.0" class="blade"/>
+<circle cx="668.0" cy="306.0" r="6.0" class="rod"/>
+<circle cx="668.0" cy="346.0" r="6.0" class="rod"/>
+<rect x="674.0" y="330.0" width="42.0" height="16.0" class="spring"/>
+<rect x="512.0" y="298.0" width="216.0" height="96.0" class="body" fill-opacity="0.18"/>
+<text x="620.0" y="382.0" class="s" text-anchor="middle">head body</text>
+<ellipse cx="620.0" cy="326.0" rx="38.0" ry="18.0" class="cam"/>
+<rect x="532.0" y="410.0" width="176.0" height="56.0" class="servo"/>
+<text x="620.0" y="446.0" class="s servo-t" text-anchor="middle">servo (DS3218 A / MG995 B)</text>
+<text x="620.0" y="130.0" class="s" text-anchor="middle">cartridge</text>
+</g>
+</svg></div>
+<div class="legend"><span><i class="sw" style="background:var(--tab)"></i>cartridge tabs</span><span><i class="sw" style="background:var(--blade)"></i>blades (PETG 3 x 13)</span><span><i class="sw" style="background:var(--rod)"></i>3.0 carbon rods</span><span><i class="sw" style="background:var(--spring)"></i>steel springs</span><span><i class="sw" style="background:var(--cam)"></i>servo cam</span><span><i class="sw" style="background:var(--body)"></i>head body</span></div></section>
+<section class="card"><h2>Numbers</h2><table><tr><th>Spring per blade</th><td>15.0 N squeezed, 19.5 N open (bought steel, k 1.0 N/mm, E)</td></tr><tr><th>Release margin</th><td>Scout x5.0, Overseer x3.3 over the tabs' 3.0 / 4.5 N</td></tr><tr><th>Hold while the XT60 unmates</th><td>Scout 26.1 N per tab, opening 4.68 N, x3.2; Overseer 28.6 N, 4.91 N, x3.1</td></tr><tr><th>Servo</th><td>cam 5.0 rise over 90 deg (lever 3.18 mm): 1.65 kg·cm to open; margin DS3218 x12.1, MG995 x5.5; spline side load ≤ 5.8 N into the 625ZZ pin</td></tr><tr><th>Pull path</th><td>pocket → blade → 2 x 3.0 carbon rods (14.3 N each, 27.0 MPa, index 0.027) → head body</td></tr><tr><th>Head body (to its topology run)</th><td>5.29 N·m pull / 6.83 N·m stall at the grip, lever 92.2 from the plate</td></tr><tr><th>Pinion v3</th><td>face 10.5 → 13.0: Lewis at the stall 0.56 → 0.45, dropped Overseer 0.61 → 0.49</td></tr></table></section>
+<section class="card"><h2>Alternatives</h2><div class="scroll"><table><tr><th>Option</th><th>Holds unpowered</th><th>Servo sees the pull</th><th>Servo kg·cm</th><th>Parts / why not</th></tr><tr><td>A sprung blades + servo cam (chosen)</td><td>yes</td><td>no</td><td>1.65</td><td>2 springs, 4 carbon rods, 1 625ZZ + pin, metal horn</td></tr><tr><td>B servo toggle fingers</td><td>yes</td><td>no</td><td>~0.5 at the squeeze, rises near dead centre</td><td>4 pins + links per finger</td></tr><tr><td>C v4 servo fingers</td><td>no</td><td>yes</td><td></td><td>the servo holds the grip; a power cut drops the pack; the spline takes the pull side load (no published limit)</td></tr><tr><td>D A + push pad</td><td>yes</td><td>no</td><td></td><td>a pad under the XT60 end: the insert moment on the head body drops (Scout 6.8 -> 3.6 N.m) but the pull still loads the grip (5.3) and the mate tilt barely moves (0.822 -> 0.817 deg): an extra contact for little; not taken</td></tr></table></div></section>
+<section class="card"><p>Source: <code>nox/box/head_v7_concept.py</code>; research <code>claude/research/2026-10-24-servo-gripper-head-v7.md</code>; requirements <code>nox/dimensions.md</code> "System box swap: arm". Concept only: the head body comes from its topology run on the frame's reactions after the concept check.</p></section>
+</main>

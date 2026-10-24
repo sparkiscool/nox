@@ -281,7 +281,7 @@ def stress(e, fl):
 
 
 # ------------------------------------------------------------------ the assembled arm
-OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie="TIE" if STACK == "v7" else None, guided=None)   # guided: the head whose cartridge sits in a receiver's rails    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
+OPTS = dict(rail_sec=None, edge_r=None, cart={}, tie="TIE" if STACK == "v7" else None, guided=None, pad=False)   # guided: the head whose cartridge sits in a receiver's rails    # build options: the alternatives (rail section, plate-edge bearing, cartridge XT60
                                                               # place, a carbon tie under each rail); rail_sec None = rail_section() of the stack in use
 TIE = dict(r_rail=S6.TIE["rail"][1], y_rail=S6.TIE["rail"][0], y_hub=S6.TIE["hub"][0], r_hub=S6.TIE["hub"][1], n=2, x=S6.TIE["x"])   # arm_v6_layout.TIE
 YC_RAIL = SEC["rail"]["yc"]               # rail section centroid Y
@@ -417,6 +417,13 @@ def build(zA, zB, Y_C, cart="scout", carry=("A",), axle="belt", phi=90.0, opts=N
                 F.beam(f"cartridge {h} {nn}", f"cseat {h}", nn, SEC["rigid"], piece="cartridge")
             F.mass[f"pack cg {h}"] = c["mass"]
             info["xt60"][h] = f"xt60 {h}"
+            if o.get("pad"):                                                  # heads v7 concept: a push pad on the carriage under the cartridge's
+                yp = Y_C - c["tab"] + c["xt60_z"]                                 # flat bottom at the XT60's Y, bearing in u only (E: PETG pad, 2e4 N/mm)
+                F.node(f"pad {h}", head_pt(h, 0.0, yp, BOT_DZ, z0)); F.node(f"cart pad {h}", head_pt(h, 0.0, yp, BOT_DZ, z0))
+                F.beam(f"push pad post {h}", f"carriage {h}", f"pad {h}", SEC["head"], piece=f"head {h}", allow=S_ACROSS)
+                F.beam(f"cartridge {h} pad", f"cseat {h}", f"cart pad {h}", SEC["rigid"], piece="cartridge")
+                uu = np.abs(np.asarray(head_dir(h, (0, 0, 1)), float))
+                F.spring(f"push pad on the cartridge {h}", f"pad {h}", f"cart pad {h}", (*(uu * 2e4), 0, 0, 0), piece="head")
             if o["guided"] == h:                                              # the receiver's rails: across and tilt held, free along the insert
                 F.node(f"receiver {h}", F.P[F.idx[f"xt60 {h}"]]); F.fixed.add(f"receiver {h}")
                 ax_ = np.abs(head_dir(h, (1, 0, 0))) + np.array([0, 1.0, 0])
