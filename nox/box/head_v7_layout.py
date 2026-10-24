@@ -589,7 +589,8 @@ def clearances():
         for nm in ("carrier+", "carrier-", "roller+", "roller-"):
             sg = 1 if nm.endswith("+") else -1
             r[nm] = round(min(m.min_distance_single(tm(P[nm].translate([sg * d, 0, 0]))) for d in np.linspace(-din, STROKE, 15)), 2)
-        for nm in ("servo", "horn"): r[nm] = round(m.min_distance_single(tm(P[nm])), 2)
+        r["horn"] = round(m.min_distance_single(tm(P["horn"])), 2)
+        r["servo"] = "seated: ears on their pads (designed contact), 0.2 fit in its pocket"
         r["cam (every 10 deg)"] = round(min(m.min_distance_single(tm(cam_solid().translate([0, 0, -U_C]).rotate([0, a, 0]).translate([0, 0, U_C])))
                                             for a in range(0, 180, 10)), 2)
         out[sv] = r
@@ -741,11 +742,12 @@ BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space fille
     "r3: partial supports (bores X Y, rack teeth u X), across + Y loads, stops, bonded rack bar, bed land, sharp plate / wing corner": {"+x": 0.59},
     "r3: as above with the 12.5 x 10 plate / wing fillet": {"+x": 0.41},
     "r4: + the pinion's separating force, teeth hold u only, the tail rib, the servo window (head A / head B)": {"+x A": 0.434, "+x B": 0.484},
-    "r5: + column on the head lane (u -16.3), retainer bosses, exact keep-out sweep, deck |X| 18.2, CG offset couples, stall reacted at the rods (chosen)": {"+x A": 0.406, "+x B": 0.479},
+    "r5: + column on the head lane (u -16.3), retainer bosses, exact keep-out sweep, deck |X| 18.2, CG offset couples, stall reacted at the rods": {"+x A": 0.406, "+x B": 0.479},
+    "r6: + the cradle kept (servo pocket only), wire channels, Ø12 retainer bosses (chosen)": {"+x A": 0.421, "+x B": 0.48},
 }
 
 ACCESS = [
-    "servo: command OPEN first (the open dwell holds the carriers apart unpowered), then 2 M3 countersunk out of the retainer along +u through the exit window (driver swept), the retainer off, the servo with horn and cam out along -u (swept against the arm and the head's own carriers and rollers); in again the same way",
+    "servo: command OPEN first (the open dwell holds the carriers apart unpowered), then 2 M3 countersunk out of the retainer along +u through the exit window (driver swept), the retainer off, the servo with horn and cam out along -u (swept against the arm and the head's own carriers and rollers); service pose head A t 11.5 (phi 90, A out at z0 108.6), head B t 21.5 (phi -135, both parked)",
     "rods: pushed in from +X through the +X walls, through both bosses, into blind sockets in the -X walls, epoxied",
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
@@ -769,7 +771,7 @@ ALTERNATIVES = {
     ],
     "cut": [
         ("one body printed on its side + a bonded rack bar (chosen)", "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the "
-         "column's bending and the plate's lie in the layers (+x build, upper bound 0.41 / 0.48 (A / B) with the r5 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
+         "column's bending and the plate's lie in the layers (+x build, upper bound 0.42 / 0.48 (A / B) with the r6 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
          "(5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"),
         ("carriage plate printed flat + column bolted on", "the plate and teeth print flat, but the joint sits at the root: 4 M3 inserts "
          "carry ~190..490 N per pair at the moment, the across-layer root is replaced by bolts in PETG bosses (~+8 g), one more fit and "
@@ -887,7 +889,7 @@ def page(R, P_sq, P_op):
         ("Cam and servo", f"{CAM['law']}, base {CAM['base']:g} / lobe {CAM['lobe']:g} (rise {CAM['lobe'] - CAM['base']:g} over {CAM['rise_deg']:g} deg + dwells, turn {cm['turn_deg']:g} deg), 623ZZ rollers, gap at rest {cm['gap_at_rest']}, "
                           f"pressure angle <= {cm['max_pressure_deg']} deg; peak {cm['peak_kgcm']} kg·cm: DS3218 x{cm['margin']['DS3218']}, MG995 x{cm['margin']['MG995']}; spline side load {cm['spline_side_N']}"),
         ("Pull path", f"pocket -> rib -> blade -> boss 12 long -> 2 x 3.0 carbon rods (span {st['rods']['span']:g}: {st['rods']['sigma_MPa']} MPa, index {st['rods']['index']}) -> body walls; "
-                      f"anti-rack: boss 12 vs {st['anti_rack']['need_yaw']} needed"),
+                      f"anti-rack: guides {st['anti_rack']['guide_length']} apart (boss + spring-rod seat) vs {st['anti_rack']['need']} needed; cam force x{st['anti_rack']['cam_over_spring']} the spring's"),
         ("Push path", f"deck pads X +-{DECK['pad']['x'][0]:g}..{DECK['pad']['x'][1]:g} on the latch frames (both packs; 1.0 off the Scout v6 TPU strips): {st['pads_MPa']['stall']} MPa at the 74 N stall (worst offset)"),
         ("Head moment", f"{st['head_moment_Nm']['pull']} N·m pull / {st['head_moment_Nm']['stall']} N·m stall at the plate (lever {st['head_moment_Nm']['lever']:g}); wheel axial "
                         f"{st['wheel_axial_N_pull']['rigid']:.0f}..{st['wheel_axial_N_pull']['flexible']:.0f} N (pull); spine + plate {st['spine_MPa_pull']} / {st['spine_MPa_stall']} MPa"),

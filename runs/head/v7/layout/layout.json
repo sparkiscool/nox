@@ -25,12 +25,12 @@
   "pitch_open": 15.5,
   "gap_at_rest": 1.5,
   "max_pressure_deg": 29.0,
-  "peak_torque_Nmm": 240.8,
+  "peak_torque_Nmm": 363.2,
   "at_deg": 65.4,
-  "peak_kgcm": 2.46,
+  "peak_kgcm": 3.7,
   "margin": {
-   "DS3218": 8.1,
-   "MG995": 3.7
+   "DS3218": 5.4,
+   "MG995": 2.4
   },
   "open_force_N": 20.9,
   "spline_side_N": "0 (two rollers equal and opposite; the stops take loads across)",
@@ -93,87 +93,87 @@
    [
     44.0,
     10.52,
-    174.4
+    263.0
    ],
    [
     48.0,
     10.92,
-    194.6
+    293.6
    ],
    [
     52.0,
     11.348,
-    212.1
+    319.9
    ],
    [
     56.0,
     11.794,
-    226.0
+    341.0
    ],
    [
     60.0,
     12.25,
-    235.7
+    355.5
    ],
    [
     64.0,
     12.706,
-    240.4
+    362.6
    ],
    [
     68.0,
     13.152,
-    239.6
+    361.5
    ],
    [
     72.0,
     13.58,
-    233.0
+    351.6
    ],
    [
     76.0,
     13.98,
-    220.5
+    332.7
    ],
    [
     80.0,
     14.344,
-    202.3
+    305.2
    ],
    [
     84.0,
     14.665,
-    178.7
+    269.6
    ],
    [
     88.0,
     14.938,
-    150.6
+    227.2
    ],
    [
     92.0,
     15.159,
-    118.8
+    179.2
    ],
    [
     96.0,
     15.323,
-    84.6
+    127.6
    ],
    [
     100.0,
     15.43,
-    49.5
+    74.6
    ],
    [
     104.0,
     15.484,
-    19.5
+    29.4
    ],
    [
     108.0,
     15.499,
-    2.3
+    3.4
    ],
    [
     112.0,
@@ -249,14 +249,15 @@
    "boss_MPa": 0.4
   },
   "anti_rack": {
-   "boss": 12.0,
-   "need_yaw": 9.8,
-   "need_pitch": 5.5,
-   "ok": false
+   "guide_length": 41.0,
+   "note": "the boss on the two rods and the seat's bore on the spring rod guide the carrier (r5)",
+   "need": 22.1,
+   "ok": true,
+   "cam_over_spring": 1.54
   },
   "pads_MPa": {
-   "stall": 0.93,
-   "area_worst_mm2": 80.0
+   "stall": 1.09,
+   "area_worst_mm2": 68.0
   },
   "head_moment_Nm": {
    "pull": 5.19,
@@ -296,7 +297,7 @@
  },
  "loads": {
   "insert at the drone 60 N (swap)": {
-   "at": "deck pads (u 15.4, X +-16.5..20, Y 155..175)",
+   "at": "deck pads (u 15.4, X +-16.0..18.2, Y 155..175)",
    "F": [
     0,
     0,
@@ -672,8 +673,8 @@
    "carrier-": 1.0,
    "roller+": 1.0,
    "roller-": 1.0,
-   "servo": 1.0,
    "horn": 1.0,
+   "servo": "seated: ears on their pads (designed contact), 0.2 fit in its pocket",
    "cam (every 10 deg)": 1.0
   },
   "MG995": {
@@ -681,8 +682,8 @@
    "carrier-": 1.0,
    "roller+": 1.0,
    "roller-": 1.0,
-   "servo": 1.0,
    "horn": 1.0,
+   "servo": "seated: ears on their pads (designed contact), 0.2 fit in its pocket",
    "cam (every 10 deg)": 1.0
   }
  },
@@ -709,37 +710,21 @@
    "+x A": 0.434,
    "+x B": 0.484
   },
-  "r5: + column on the head lane (u -16.3), retainer bosses, exact keep-out sweep, deck |X| 18.2, CG offset couples, stall reacted at the rods (chosen)": {
+  "r5: + column on the head lane (u -16.3), retainer bosses, exact keep-out sweep, deck |X| 18.2, CG offset couples, stall reacted at the rods": {
    "+x A": 0.406,
    "+x B": 0.479
+  },
+  "r6: + the cradle kept (servo pocket only), wire channels, \u00d812 retainer bosses (chosen)": {
+   "+x A": 0.421,
+   "+x B": 0.48
   }
  },
  "access": {
   "A: servo + horn + cam out -u, commanded OPEN first (DS3218)": {
-   "open_states": 45,
+   "open_states": 20,
    "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
-    {
-     "t": 0.0,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 0.5,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 1.0,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 1.5,
-     "z0": 53.9,
-     "phi": -210.0
-    },
     {
      "t": 2.0,
      "z0": 75.7,
@@ -759,26 +744,6 @@
      "t": 3.5,
      "z0": 75.7,
      "phi": -210.0
-    },
-    {
-     "t": 4.0,
-     "z0": 53.9,
-     "phi": -210.0
-    },
-    {
-     "t": 4.5,
-     "z0": 32.0,
-     "phi": -210.0
-    },
-    {
-     "t": 5.0,
-     "z0": 32.0,
-     "phi": -105.0
-    },
-    {
-     "t": 5.5,
-     "z0": 32.0,
-     "phi": 0.0
     },
     {
      "t": 6.0,
@@ -811,26 +776,6 @@
      "phi": 0.0
     },
     {
-     "t": 9.0,
-     "z0": 32.0,
-     "phi": 0.0
-    },
-    {
-     "t": 9.5,
-     "z0": 32.0,
-     "phi": 45.0
-    },
-    {
-     "t": 10.0,
-     "z0": 32.0,
-     "phi": 90.0
-    },
-    {
-     "t": 10.5,
-     "z0": 67.9,
-     "phi": 90.0
-    },
-    {
      "t": 11.0,
      "z0": 98.6,
      "phi": 90.0
@@ -849,51 +794,6 @@
      "t": 12.5,
      "z0": 83.1,
      "phi": 90.0
-    },
-    {
-     "t": 13.0,
-     "z0": 57.5,
-     "phi": 90.0
-    },
-    {
-     "t": 13.5,
-     "z0": 32.0,
-     "phi": 90.0
-    },
-    {
-     "t": 14.0,
-     "z0": 32.0,
-     "phi": 90.0
-    },
-    {
-     "t": 14.5,
-     "z0": 32.0,
-     "phi": 65.0
-    },
-    {
-     "t": 15.0,
-     "z0": 32.0,
-     "phi": 40.0
-    },
-    {
-     "t": 15.5,
-     "z0": 32.0,
-     "phi": 15.0
-    },
-    {
-     "t": 16.0,
-     "z0": 32.0,
-     "phi": -10.0
-    },
-    {
-     "t": 16.5,
-     "z0": 32.0,
-     "phi": -35.0
-    },
-    {
-     "t": 17.0,
-     "z0": 32.0,
-     "phi": -60.0
     },
     {
      "t": 17.5,
@@ -919,9 +819,16 @@
      "t": 19.5,
      "z0": 32.0,
      "phi": -60.0
+    },
+    {
+     "t": 20.0,
+     "z0": 32.0,
+     "phi": -60.0
     }
    ],
-   "blocked_by": []
+   "blocked_by": [
+    "headB"
+   ]
   },
   "A: L-key 3 mm, near axle": {
    "open_states": 45,
@@ -3767,7 +3674,7 @@
   "cut": [
    [
     "one body printed on its side + a bonded rack bar (chosen)",
-    "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.41 / 0.48 (A / B) with the r5 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
+    "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.42 / 0.48 (A / B) with the r6 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
    ],
    [
     "carriage plate printed flat + column bolted on",
