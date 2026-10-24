@@ -32,12 +32,12 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel and the box swaps its pack.
 
 ### Parts to draw (order DEFAULT)
-Layout v0 (24 Oct, Spark: no cage, everything between the two plates, L2 on top, down camera + flow at the bottom, battery centred under): `layout_v0.py`, `dimensions.md` O Layout v0.
-0. **Printed arms** (Spark 23 Oct; wheelbase, root height and modes in `dimensions.md` O Arms and hub, sweep `arm_reach.py`): tall root between the plates, plate interface from the S500 STEP (`s500/`, `dimensions.md` M S500 row), the catch wheel pair on a short leg under each arm (layout v0, DEFAULT). Row in `nox/current-parts.md`.
-1. L2 mast + front camera: spider on the arm-top screws, column, L2 seat at z 125, camera 30° up on the column face, reusing the scan stick head's L2 pads and camera block where they fit.
+Layout v1 (24 Oct, Spark: L2 at the nose, axis 15° below forward, balanced): `layout_v1.py`, `dimensions.md` O Layout v1 (v0 kept as `layout_v0.py`). Numbers live in that row.
+0. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors placed per layout v1, the catch wheel legs under them.
+1. Nose boom + L2 seat + front camera bracket (rigid to the L2 for the calibration).
 2. Pi deck between the plates (4 posts over the FC stack).
-3. Belly sled: pack cartridge slot centred under the bottom plate, down camera pod and flow pod beside it, 4 TPU feet.
-4. Overseer cartridge + latch block for the bays; it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
+3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it, steel belly plate, 4 TPU feet.
+4. Overseer cartridge + latch block for the bays; its bottom face seat height must match the Scout's (swap wheel R 100); it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
 
 ### Open for Spark (DEFAULT in brackets, work goes on)
 - Centre plate arm bolt pattern and motor centres, measured (P) [generic S500].
