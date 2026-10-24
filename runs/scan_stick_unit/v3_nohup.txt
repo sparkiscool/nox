@@ -59,3 +59,9 @@ layout: 42 load cases + 24 tie cases (4 bodies tied, 1 held by support 'default'
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (80, 64, 168) = 860,160 elements, 650,337 active dofs; backend mg (direct estimate 9.8 GB, budget 11.8 GB)
 fem: multigrid 4 levels [(np.int64(80), np.int64(64), np.int64(168)), (np.int64(40), np.int64(32), np.int64(84)), (np.int64(20), np.int64(16), np.int64(42)), (np.int64(10), np.int64(8), np.int64(21))], coarsest 6,534 dofs (direct)
+=== scan_stick_unit: h 2.0, generated 65.0 cm3, min member 3.2 mm, cores 4
+scan_stick_unit: grid (80, 64, 168) h 2.0 = 860,160 cells; design 136,097 (1088.8 cm3), drawn 48,168, void 675,895
+  support default: 2600 cells, 3598 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scan_stick_unit: grid (40, 40, 88) h 4.0 = 140,800 cells; design 16,123 (1031.9 cm3), drawn 5,791, void 118,886
+  support default: 288 cells, 532 nodes
