@@ -119,3 +119,4 @@ it  36 beta   16 J  11.9194 vol 0.0974 (dil 0.2804 g -0.006) grey  6.3% ch 0.100
 it  37 beta   16 J   4.8621 vol 0.0980 (dil 0.2803 g -0.007) grey  6.4% ch 0.100 worst tie b5 mx 5.69e+04 16.6s
 it  38 beta   16 J   3.5899 vol 0.0994 (dil 0.2807 g -0.005) grey  6.3% ch 0.100 worst tie b5 mx 4.25e+04 15.9s
 it  39 beta   16 J   2.8540 vol 0.1001 (dil 0.2809 g -0.005) grey  6.3% ch 0.100 worst tie b5 mx 3.44e+04 22.0s
+it  40 beta   16 J   2.5119 vol 0.1010 (dil 0.2814 g -0.003) grey  6.3% ch 0.100 worst tie b4 mx 3.01e+04 26.7s
