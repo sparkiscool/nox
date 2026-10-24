@@ -1,0 +1,22 @@
+== contact with +X: 346 cells = 221 cm2, 4 patches
+   patch 1: 294 cells, X 192..200 Y 72..256 Z -89..79
+   patch 2: 20 cells, X 192..200 Y 128..176 Z 135..167
+   patch 3: 16 cells, X 192..200 Y 160..192 Z -161..-121
+   patch 4: 16 cells, X 192..200 Y 280..312 Z 111..151
+== contact with -X: 299 cells = 191 cm2, 4 patches
+   patch 1: 246 cells, X -200..-192 Y 72..248 Z -73..71
+   patch 2: 21 cells, X -200..-192 Y 72..120 Z 135..167
+   patch 3: 12 cells, X -200..-192 Y 160..192 Z -145..-113
+   patch 4: 20 cells, X -200..-192 Y 280..312 Z 95..143
+== contact with rear: 256 cells = 164 cm2, 2 patches
+   patch 1: 240 cells, X -64..40 Y -56..-48 Z -113..159
+   patch 2: 16 cells, X 8..48 Y -56..-48 Z 135..167
+== contact with floor: 19 cells = 12 cm2, 2 patches
+   patch 1: 11 cells, X -88..-56 Y 104..136 Z -225..-217
+   patch 2: 8 cells, X 32..56 Y 120..152 Z -225..-217
+mast zone Y<0: 675 cm3, X -60..44 Y -52..-4 Z -109..163
+hub zone 0<Y<74 r>110: 247 cm3, X -44..116 Y 4..68 Z 107..179
+top frame Z>110: 1710 cm3, X -196..196 Y -52..308 Z 115..179
+bottom Z<-150: 358 cm3, X -148..196 Y 76..252 Z -229..-157
+ring band r 150..200, material per 15 deg wedge (cm3) [angle: vol]:
+{-225: 84.0, -210: 47.6, -195: 85.5, -180: 138.2, -165: 84.5, -150: 47.6, -135: 74.8, -120: 96.8, -105: 48.1, -90: 36.9, -75: 49.2, -60: 73.2, -45: 67.1, -30: 51.2, -15: 75.3, 0: 142.8, 15: 114.2, 30: 52.7, 45: 244.7, 60: 152.1}
