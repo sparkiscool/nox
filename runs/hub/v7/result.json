@@ -1,0 +1,979 @@
+{
+ "name": "box_hub_v7",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   117710.2
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.997,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 1,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 79499.2,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "box handling 3 g down + 2 g side [Overseer] [handling]",
+    "cls": "misuse",
+    "inlayer": 0.183,
+    "across": 0.159,
+    "at": [
+     49.7,
+     53.8,
+     -18.9
+    ]
+   },
+   {
+    "case": "box handling 3 g down + 2 g side [handling]",
+    "cls": "misuse",
+    "inlayer": 0.173,
+    "across": 0.122,
+    "at": [
+     49.7,
+     53.8,
+     -18.9
+    ]
+   },
+   {
+    "case": "dropped pack [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.35,
+    "across": 0.256,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "hand on rail A tip 50 N [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.468,
+    "across": 0.224,
+    "at": [
+     49.7,
+     51.7,
+     -18.9
+    ]
+   },
+   {
+    "case": "head stall into a jammed pack 74 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.31,
+    "across": 0.227,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "axle stall, head in a bay [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.422,
+    "across": 0.254,
+    "at": [
+     29.2,
+     53.8,
+     -45.6
+    ]
+   },
+   {
+    "case": "head stall into a jammed pack 74 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.323,
+    "across": 0.239,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B insert at bay 0 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.26,
+    "across": 0.227,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "pull at bay 0 50 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.241,
+    "across": 0.331,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at bay -180 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.272,
+    "across": 0.205,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B insert at bay 30 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.267,
+    "across": 0.201,
+    "at": [
+     -30.3,
+     51.7,
+     -53.8
+    ]
+   },
+   {
+    "case": "insert at bay -210 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.282,
+    "across": 0.203,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "pull at bay -60 50 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.258,
+    "across": 0.344,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at the drone 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.244,
+    "across": 0.176,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "head stall into a jammed pack 74 N [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.318,
+    "across": 0.237,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "pull at bay -30 50 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.248,
+    "across": 0.327,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at the drone 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.259,
+    "across": 0.189,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "head stall into a jammed pack 74 N [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.306,
+    "across": 0.226,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "pull at bay -90 50 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.227,
+    "across": 0.303,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "B insert at bay -210 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.206,
+    "across": 0.162,
+    "at": [
+     -30.3,
+     51.7,
+     -53.8
+    ]
+   },
+   {
+    "case": "insert at bay 30 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.219,
+    "across": 0.166,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B insert at bay -90 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.22,
+    "across": 0.173,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "insert at bay -90 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.222,
+    "across": 0.174,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B insert at bay -150 60 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.195,
+    "across": 0.156,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "pull at bay -150 50 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.185,
+    "across": 0.275,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "B insert at bay -60 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.217,
+    "across": 0.168,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "B pull at the drone 50 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.19,
+    "across": 0.29,
+    "at": [
+     -22.1,
+     47.6,
+     -37.4
+    ]
+   },
+   {
+    "case": "pull at the drone 50 N (free, no receiver) [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.185,
+    "across": 0.291,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "pull at bay -120 50 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.219,
+    "across": 0.309,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at bay -120 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.216,
+    "across": 0.17,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B insert at bay -180 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.184,
+    "across": 0.153,
+    "at": [
+     -30.3,
+     51.7,
+     -53.8
+    ]
+   },
+   {
+    "case": "insert at bay 0 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.196,
+    "across": 0.156,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B pull at the drone 50 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.166,
+    "across": 0.255,
+    "at": [
+     -22.1,
+     47.6,
+     -37.4
+    ]
+   },
+   {
+    "case": "B insert at bay -120 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.176,
+    "across": 0.143,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "pull at the drone 50 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.16,
+    "across": 0.256,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "pull at bay -180 50 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.165,
+    "across": 0.26,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at bay -60 60 N (free, no receiver) [Overseer] [misuse]",
+    "cls": "misuse",
+    "inlayer": 0.179,
+    "across": 0.143,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "gravity, A horizontal carrying [Overseer] [sustained]",
+    "cls": "sustained",
+    "inlayer": 0.223,
+    "across": 0.144,
+    "at": [
+     49.7,
+     53.8,
+     -18.9
+    ]
+   },
+   {
+    "case": "gravity, A horizontal carrying [sustained]",
+    "cls": "sustained",
+    "inlayer": 0.202,
+    "across": 0.133,
+    "at": [
+     49.7,
+     53.8,
+     -18.9
+    ]
+   },
+   {
+    "case": "B insert at bay 0 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.385,
+    "across": 0.329,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "insert at bay -180 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.406,
+    "across": 0.306,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "pull at bay -60 50 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.388,
+    "across": 0.524,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "B insert at bay 30 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.42,
+    "across": 0.359,
+    "at": [
+     -30.3,
+     51.7,
+     -53.8
+    ]
+   },
+   {
+    "case": "insert at bay -210 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.445,
+    "across": 0.324,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "insert at the drone 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.408,
+    "across": 0.3,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "pull at bay 0 50 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.343,
+    "across": 0.483,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "B insert at bay -60 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.347,
+    "across": 0.269,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "B insert at bay -30 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.395,
+    "across": 0.316,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "pull at bay -90 50 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.356,
+    "across": 0.481,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at the drone 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.384,
+    "across": 0.279,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "insert at bay 30 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.353,
+    "across": 0.266,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B insert at bay -210 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.329,
+    "across": 0.265,
+    "at": [
+     -30.3,
+     51.7,
+     -53.8
+    ]
+   },
+   {
+    "case": "B insert at bay -180 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.332,
+    "across": 0.271,
+    "at": [
+     -30.3,
+     51.7,
+     -53.8
+    ]
+   },
+   {
+    "case": "B insert at bay -90 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.353,
+    "across": 0.277,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "pull at bay 30 50 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.352,
+    "across": 0.504,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "B insert at bay -150 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.32,
+    "across": 0.26,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "B pull at the drone 50 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.301,
+    "across": 0.463,
+    "at": [
+     -22.1,
+     47.6,
+     -37.4
+    ]
+   },
+   {
+    "case": "B insert at bay -120 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.322,
+    "across": 0.253,
+    "at": [
+     -30.3,
+     53.8,
+     -53.8
+    ]
+   },
+   {
+    "case": "pull at bay -120 50 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.353,
+    "across": 0.498,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at bay -120 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.339,
+    "across": 0.267,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "insert at bay -90 60 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.35,
+    "across": 0.277,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "pull at the drone 50 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.292,
+    "across": 0.463,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "pull at bay -150 50 N [swap]",
+    "cls": "flight",
+    "inlayer": 0.291,
+    "across": 0.437,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at bay 0 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.351,
+    "across": 0.268,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "B pull at the drone 50 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.269,
+    "across": 0.412,
+    "at": [
+     -22.1,
+     47.6,
+     -37.4
+    ]
+   },
+   {
+    "case": "pull at bay -180 50 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.287,
+    "across": 0.443,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "pull at the drone 50 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.256,
+    "across": 0.409,
+    "at": [
+     37.4,
+     47.6,
+     22.1
+    ]
+   },
+   {
+    "case": "insert at bay -60 60 N [Overseer] [swap]",
+    "cls": "flight",
+    "inlayer": 0.306,
+    "across": 0.243,
+    "at": [
+     53.8,
+     51.7,
+     30.3
+    ]
+   },
+   {
+    "case": "detent springs (pivot 22 N, anchor 8.4 N)",
+    "cls": "sustained",
+    "inlayer": 0.596,
+    "across": 0.588,
+    "at": [
+     18.9,
+     64.0,
+     -25.1
+    ]
+   }
+  ],
+  "worst": 0.596,
+  "worst_case": "detent springs (pivot 22 N, anchor 8.4 N)",
+  "worst_at": [
+   18.9,
+   64.0,
+   -25.1
+  ]
+ },
+ "mass_g": 213.32,
+ "watertight": false,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 167969.7,
+ "drawn_g": 131.58,
+ "stl": "box_hub_v7.stl",
+ "view_stl": "box_hub_v7_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 3.1427155483538343,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.08138876227521098,
+  "nd": 90905,
+  "sym_axes": [],
+  "n_real": 69,
+  "n_ties": 24,
+  "backend": "direct",
+  "iterations": 57,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "box_hub_v7",
+  "h": 2.05,
+  "shape": [
+   96,
+   40,
+   96
+  ],
+  "origin": [
+   -98.9626,
+   -0.55,
+   -97.8371
+  ],
+  "cells": 368640,
+  "design": 90703,
+  "drawn": 12445,
+  "cases": [
+   "box handling 3 g down + 2 g side [Overseer] [handling]",
+   "box handling 3 g down + 2 g side [handling]",
+   "dropped pack [Overseer] [misuse]",
+   "hand on rail A tip 50 N [misuse]",
+   "head stall into a jammed pack 74 N (free, no receiver) [misuse]",
+   "axle stall, head in a bay [misuse]",
+   "head stall into a jammed pack 74 N (free, no receiver) [Overseer] [misuse]",
+   "B insert at bay 0 60 N (free, no receiver) [Overseer] [misuse]",
+   "pull at bay 0 50 N (free, no receiver) [Overseer] [misuse]",
+   "insert at bay -180 60 N (free, no receiver) [Overseer] [misuse]",
+   "B insert at bay 30 60 N (free, no receiver) [misuse]",
+   "insert at bay -210 60 N (free, no receiver) [misuse]",
+   "pull at bay -60 50 N (free, no receiver) [Overseer] [misuse]",
+   "insert at the drone 60 N (free, no receiver) [misuse]",
+   "head stall into a jammed pack 74 N [Overseer] [misuse]",
+   "pull at bay -30 50 N (free, no receiver) [misuse]",
+   "insert at the drone 60 N (free, no receiver) [Overseer] [misuse]",
+   "head stall into a jammed pack 74 N [misuse]",
+   "pull at bay -90 50 N (free, no receiver) [misuse]",
+   "B insert at bay -210 60 N (free, no receiver) [misuse]",
+   "insert at bay 30 60 N (free, no receiver) [misuse]",
+   "B insert at bay -90 60 N (free, no receiver) [misuse]",
+   "insert at bay -90 60 N (free, no receiver) [misuse]",
+   "B insert at bay -150 60 N (free, no receiver) [misuse]",
+   "pull at bay -150 50 N (free, no receiver) [misuse]",
+   "B insert at bay -60 60 N (free, no receiver) [Overseer] [misuse]",
+   "B pull at the drone 50 N (free, no receiver) [misuse]",
+   "pull at the drone 50 N (free, no receiver) [misuse]",
+   "pull at bay -120 50 N (free, no receiver) [Overseer] [misuse]",
+   "insert at bay -120 60 N (free, no receiver) [Overseer] [misuse]",
+   "B insert at bay -180 60 N (free, no receiver) [Overseer] [misuse]",
+   "insert at bay 0 60 N (free, no receiver) [Overseer] [misuse]",
+   "B pull at the drone 50 N (free, no receiver) [Overseer] [misuse]",
+   "B insert at bay -120 60 N (free, no receiver) [Overseer] [misuse]",
+   "pull at the drone 50 N (free, no receiver) [Overseer] [misuse]",
+   "pull at bay -180 50 N (free, no receiver) [Overseer] [misuse]",
+   "insert at bay -60 60 N (free, no receiver) [Overseer] [misuse]",
+   "gravity, A horizontal carrying [Overseer] [sustained]",
+   "gravity, A horizontal carrying [sustained]",
+   "B insert at bay 0 60 N [Overseer] [swap]",
+   "insert at bay -180 60 N [Overseer] [swap]",
+   "pull at bay -60 50 N [Overseer] [swap]",
+   "B insert at bay 30 60 N [swap]",
+   "insert at bay -210 60 N [swap]",
+   "insert at the drone 60 N [Overseer] [swap]",
+   "pull at bay 0 50 N [Overseer] [swap]",
+   "B insert at bay -60 60 N [Overseer] [swap]",
+   "B insert at bay -30 60 N [swap]",
+   "pull at bay -90 50 N [swap]",
+   "insert at the drone 60 N [swap]",
+   "insert at bay 30 60 N [swap]",
+   "B insert at bay -210 60 N [swap]",
+   "B insert at bay -180 60 N [Overseer] [swap]",
+   "B insert at bay -90 60 N [swap]",
+   "pull at bay 30 50 N [swap]",
+   "B insert at bay -150 60 N [swap]",
+   "B pull at the drone 50 N [swap]",
+   "B insert at bay -120 60 N [Overseer] [swap]",
+   "pull at bay -120 50 N [Overseer] [swap]",
+   "insert at bay -120 60 N [Overseer] [swap]",
+   "insert at bay -90 60 N [swap]",
+   "pull at the drone 50 N [swap]",
+   "pull at bay -150 50 N [swap]",
+   "insert at bay 0 60 N [Overseer] [swap]",
+   "B pull at the drone 50 N [Overseer] [swap]",
+   "pull at bay -180 50 N [Overseer] [swap]",
+   "pull at the drone 50 N [Overseer] [swap]",
+   "insert at bay -60 60 N [Overseer] [swap]",
+   "detent springs (pivot 22 N, anchor 8.4 N)"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 588.3,
+ "layout_s": 2273,
+ "peak_gb": 9.5626,
+ "gen_cm3": 62.0,
+ "h": 2.05,
+ "total_s": 2862
+}
