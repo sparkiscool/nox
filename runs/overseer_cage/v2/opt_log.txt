@@ -8,3 +8,14 @@ crash 35 g, L2 mode ≥ 100 Hz: 512 of 512 topologies feasible
   ablation keels_x off: feasible False, 717.6 g, f_L2 105
   ablation arm_spars off: feasible True, 573.5 g, f_L2 101
   ablation top_spider off: feasible False, 590.9 g, f_L2 116
+crash 20 g, L2 mode ≥ 100 Hz: 512 of 512 topologies feasible
+   431.9 g  f_L2   129  f1   129  l2_braces nose_x  | t6 x53 r4 x25 r3 x37 t8 x3
+   434.2 g  f_L2   130  f1   130  l2_braces  | r4 x26 t6 x48 r3 x34 t8 x8
+   435.1 g  f_L2   129  f1   129  l2_braces v_diag  | t6 x53 r4 x28 r3 x34 t8 x3
+   435.9 g  f_L2   129  f1   129  l2_braces strut2 nose_x  | t6 x53 r4 x23 r3 x43 t8 x3
+   436.8 g  f_L2   104  f1   104  spokes_hi nose_x  | r4 x30 t6 x50 r3 x36 t8 x4
+  ablation keels_lo off: feasible True, 425.8 g, f_L2 127
+  ablation keels_x off: feasible True, 440.7 g, f_L2 119
+  ablation arm_spars off: feasible True, 679.7 g, f_L2 109
+  ablation top_spider off: feasible True, 566.2 g, f_L2 138
+exit 0
