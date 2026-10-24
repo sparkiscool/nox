@@ -1,0 +1,624 @@
+{
+ "name": "Scout v3",
+ "machine": "scout",
+ "note": "Snapshot (24 Oct) of the Scout v3 latch refit, branch claude/gracious-darwin-ogidvp 3595381 (nox/scout/v3/scout.assembly.json, runs/scout_layout/v2/assembly); battery_latch.scout_system() swaps the latch parts for the current ones. Owner of the source: Scout v3 session. Scout v3 system pass v2, latch refit (layout.md). Seat frame = drone frame. Battery set = the control session's latch standard (part/battery-latch b59b2dc, interim). No belly post: keep-alive through the hook latch (hub DEFAULT). Left out: wires (20 g E), camera mount, plate hubs, the TPU suspension pads, wheel contact pads.",
+ "cg_ref": [
+  0.0,
+  0.0,
+  41.2
+ ],
+ "thrust_axis": [
+  0,
+  0,
+  1
+ ],
+ "cg_tol_mm": 3.0,
+ "cage_margin_mm": 3.0,
+ "openings": [
+  {
+   "part": "cartridge v5 (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 35.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "pack 4S 1500",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 35.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "slider +y (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 35.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "slider -y (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 35.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "pack XT60 plug",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 35.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  }
+ ],
+ "contact_pairs": [
+  [
+   "motor 1",
+   "prop 1",
+   1000000000.0
+  ],
+  [
+   "motor 2",
+   "prop 2",
+   1000000000.0
+  ],
+  [
+   "motor 3",
+   "prop 3",
+   1000000000.0
+  ],
+  [
+   "motor 4",
+   "prop 4",
+   1000000000.0
+  ],
+  [
+   "motor 1",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "motor 2",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "motor 3",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "motor 4",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "cartridge v5 (latch)",
+   "receiver TPU strips (latch)",
+   5.0
+  ],
+  [
+   "pack 4S 1500",
+   "cartridge v5 (latch)",
+   1.0
+  ],
+  [
+   "pack XT60 plug",
+   "cartridge v5 (latch)",
+   5.0
+  ],
+  [
+   "XT60E1-M",
+   "receiver v1 (latch)",
+   5.0
+  ],
+  [
+   "XT60E1-M",
+   "receiver lid (latch)",
+   5.0
+  ],
+  [
+   "receiver TPU strips (latch)",
+   "receiver v1 (latch)",
+   5.0
+  ],
+  [
+   "pack XT60 plug",
+   "XT60E1-M",
+   1.0
+  ],
+  [
+   "mount + nose legs (Scout)",
+   "receiver v1 (latch)",
+   1000000000.0
+  ],
+  [
+   "mount + nose legs (Scout)",
+   "receiver lid (latch)",
+   1000000000.0
+  ],
+  [
+   "mount + nose legs (Scout)",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "mount + nose legs (Scout)",
+   "XT60E1-M",
+   1000000000.0
+  ],
+  [
+   "mount + nose legs (Scout)",
+   "FC",
+   1000000000.0
+  ],
+  [
+   "mount + nose legs (Scout)",
+   "UBEC",
+   1000000000.0
+  ],
+  [
+   "cage (rods + nodes)",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "cage (rods + nodes)",
+   "mount + nose legs (Scout)",
+   1000000000.0
+  ],
+  [
+   "cage (rods + nodes)",
+   "catch wheels",
+   1000000000.0
+  ],
+  [
+   "FC",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "Radxa Zero 3W",
+   "mount + nose legs (Scout)",
+   1000000000.0
+  ],
+  [
+   "flow MTF-02P",
+   "mount + nose legs (Scout)",
+   1000000000.0
+  ]
+ ],
+ "parts": [
+  {
+   "name": "frame plate",
+   "role": "structure",
+   "mesh": "frame_plate.stl",
+   "mass_g": 28,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "Bee35 cut down, 3.5 carbon (C), tail XT60 cut-out"
+  },
+  {
+   "name": "motor 1",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     54.1,
+     54.1,
+     22.0
+    ],
+    "p1": [
+     54.1,
+     54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 1",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     54.1,
+     54.1,
+     37.2
+    ],
+    "p1": [
+     54.1,
+     54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "motor 2",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     54.1,
+     -54.1,
+     22.0
+    ],
+    "p1": [
+     54.1,
+     -54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 2",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     54.1,
+     -54.1,
+     37.2
+    ],
+    "p1": [
+     54.1,
+     -54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "motor 3",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     -54.1,
+     54.1,
+     22.0
+    ],
+    "p1": [
+     -54.1,
+     54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 3",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     -54.1,
+     54.1,
+     37.2
+    ],
+    "p1": [
+     -54.1,
+     54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "motor 4",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     -54.1,
+     -54.1,
+     22.0
+    ],
+    "p1": [
+     -54.1,
+     -54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 4",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     -54.1,
+     -54.1,
+     37.2
+    ],
+    "p1": [
+     -54.1,
+     -54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "FC",
+   "role": "bought",
+   "protect": true,
+   "mesh": "FC.stl",
+   "mass_g": 10,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "receiver v1 (latch)",
+   "role": "protected",
+   "protect": true,
+   "mesh": "receiver_v1_(latch).stl",
+   "mass_g": 41.2,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "receiver lid (latch)",
+   "role": "protected",
+   "protect": true,
+   "mesh": "receiver_lid_(latch).stl",
+   "mass_g": 5.3,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "receiver TPU strips (latch)",
+   "role": "structure",
+   "protect": true,
+   "mesh": "receiver_TPU_strips_(latch).stl",
+   "mass_g": 2.0,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "XT60E1-M",
+   "role": "bought",
+   "protect": true,
+   "mesh": "XT60E1-M.stl",
+   "mass_g": 6.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "cartridge v5 (latch)",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "cartridge_v5_(latch).stl",
+   "mass_g": 35.5,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "slider +y (latch)",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "slider_+y_(latch).stl",
+   "mass_g": 1.95,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "slider -y (latch)",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "slider_-y_(latch).stl",
+   "mass_g": 1.95,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "pack 4S 1500",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "pack_4S_1500.stl",
+   "mass_g": 155.0,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "pack XT60 plug",
+   "role": "bought",
+   "protect": true,
+   "swap": true,
+   "mesh": "pack_XT60_plug.stl",
+   "mass_g": 10.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "battery latch standard, part/battery-latch b59b2dc (control session)"
+  },
+  {
+   "name": "mount + nose legs (Scout)",
+   "role": "structure",
+   "mesh": "mount_+_nose_legs_(Scout).stl",
+   "mass_g": 25,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "the Scout's receiver mount: bosses z 9.6 to the plate, Radxa plate, flow seat, suspension joints; envelope"
+  },
+  {
+   "name": "Radxa Zero 3W",
+   "role": "bought",
+   "protect": true,
+   "mesh": "Radxa_Zero_3W.stl",
+   "mass_g": 10,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "flow MTF-02P",
+   "role": "bought",
+   "protect": true,
+   "mesh": "flow_MTF-02P.stl",
+   "mass_g": 1.5,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "UBEC",
+   "role": "bought",
+   "protect": true,
+   "mesh": "UBEC.stl",
+   "mass_g": 15,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "XR2",
+   "role": "bought",
+   "protect": true,
+   "mesh": "XR2.stl",
+   "mass_g": 1,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "camera",
+   "role": "bought",
+   "protect": true,
+   "mesh": "camera.stl",
+   "mass_g": 10,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "cage (rods + nodes)",
+   "role": "cage",
+   "mesh": "cage_(rods_+_nodes).stl",
+   "material": "carbon rod",
+   "mass_g": 294.3,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "130 x 3.0 rods in PETG sockets on a preloaded TPU suspension; F frame model"
+  },
+  {
+   "name": "catch wheels",
+   "role": "cage",
+   "mesh": "catch_wheels.stl",
+   "mass_g": 1.6,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 latch refit",
+   "source": "nox/scout/v3/layout_v2.py"
+  }
+ ]
+}

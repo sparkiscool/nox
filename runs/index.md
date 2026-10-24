@@ -1,6 +1,6 @@
 # Runs
 
-_93 runs · rebuilt 2026-10-24 16:24_
+_98 runs · rebuilt 2026-10-24 17:18_
 
 ## Latest per part
 
@@ -12,6 +12,7 @@ _93 runs · rebuilt 2026-10-24 16:24_
 | arm_rail | v3 | · | 56.6 (M) | [0.11, 'dropped Overseer']  | · | [runs/arm_rail/v3](runs/arm_rail/v3/summary.md) |
 | arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
+| battery_latch | v1 | · | · | ·  | · | [runs/battery_latch/v1](runs/battery_latch/v1/summary.md) |
 | box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
 | box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
 | bracket_jA | organic-v4 | · | 36.8 (M) | ·  | PASS | [runs/bracket_jA/organic-v4](runs/bracket_jA/organic-v4/summary.md) |
@@ -19,6 +20,7 @@ _93 runs · rebuilt 2026-10-24 16:24_
 | funnel_panel | v7 | DONE | 80.0 (M) | 0.91 in press u60 v90 | PASS | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
 | holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
 | hook_latch | v2 | · | · | ·  | · | [runs/hook_latch/v2](runs/hook_latch/v2/summary.md) |
+| hub | v6 | · | 188.6 (M) | 3.40 in power cut carrying: head A falls to the park stop [Overseer] [misuse] | FAIL | [runs/hub/v6](runs/hub/v6/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
@@ -40,6 +42,11 @@ _93 runs · rebuilt 2026-10-24 16:24_
 | 2026-10-24T23:59 | scout_layout | [v4](runs/scout_layout/v4/summary.md) | DONE | 847 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T20:00 | scout_layout | [v1](runs/scout_layout/v1/summary.md) | DONE | 517.0 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 17:18 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 17:18 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 17:18 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 17:18 | battery_latch | [v4](runs/battery_latch/v4/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 17:18 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
 | 2026-10-24 08:03 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
 | 2026-10-24 05:42 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-24 05:42 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
