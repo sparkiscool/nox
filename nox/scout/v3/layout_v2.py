@@ -1058,19 +1058,38 @@ fixed_pts = {"props": prop_points(), "bells": np.vstack([pts(b, 400) for b in BE
              "receiver": pts(IFACE, 6000), "cartridge": pts(CART, 4000), "Radxa": pts(RADXA, 600), "flow": pts(FLOW, 400),
              "UBEC": pts(UBEC, 400), "XR2": pts(XR2, 200), "XT60": pts(XT_M, 400), "camera": pts(CAM, 800),
              "mount": np.vstack([pts(m_, 300) for m_ in [MOUNT] + LEGS])}
-BASE, why0 = [], {}
-nn = len(N)
-for a in range(nn):
-    for b in range(a + 1, nn):
-        if kind[a] == "C" and kind[b] == "C": continue
-        L = np.linalg.norm(N[b] - N[a])
-        if L < 8 or L > 160: continue
-        ring = (tuple(np.round(N[a], 3)), tuple(np.round(N[b], 3))) in RING_EDGES or (tuple(np.round(N[b], 3)), tuple(np.round(N[a], 3))) in RING_EDGES
-        r = rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"], PET_R if L < L_CARBON else ROD_R)
-        if r is not None and L < L_CARBON and rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"]) is None:
-            NOPRINT.add(_mkey(N[a], N[b])); r = None                   # no room for a 6 x 6 strut: carbon only inside a long straight rod
-        if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
-        else: why0[r] = why0.get(r, 0) + 1
+def build_base(N, kind):
+    BASE, why0 = [], {}; NOPRINT.clear()
+    nn = len(N)
+    for a in range(nn):
+        for b in range(a + 1, nn):
+            if kind[a] == "C" and kind[b] == "C": continue
+            L = np.linalg.norm(N[b] - N[a])
+            if L < 8 or L > 160: continue
+            ring = (tuple(np.round(N[a], 3)), tuple(np.round(N[b], 3))) in RING_EDGES or (tuple(np.round(N[b], 3)), tuple(np.round(N[a], 3))) in RING_EDGES
+            r = rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"], PET_R if L < L_CARBON else ROD_R)
+            if r is not None and L < L_CARBON and rod_ok(N[a], N[b], kind, BODIES, ring, [N[i] for i in (a, b) if kind[i] == "C"]) is None:
+                NOPRINT.add(_mkey(N[a], N[b])); r = None               # no room for a 6 x 6 strut: carbon only inside a long straight rod
+            if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
+            else: why0[r] = why0.get(r, 0) + 1
+    return BASE, why0
+
+
+BASE, why0 = build_base(N, kind)
+# a short member with no room for a strut can still be carbon as part of a longer straight rod: add a candidate node that
+# carries it on in a straight line to >= L_CARBON + 2 (either end), where the longer rod fits (review PR 94, tail-bottom corner)
+ext, ekeys = [], {tuple(np.round(p_, 1)) for p_ in N}
+for a, b, _ in BASE:
+    if _mkey(N[a], N[b]) not in NOPRINT: continue
+    for p0, p1 in ((N[a], N[b]), (N[b], N[a])):
+        u = (p1 - p0) / np.linalg.norm(p1 - p0); q = p0 + u * (L_CARBON + 2.0)
+        if tuple(np.round(q, 1)) in ekeys or min(np.linalg.norm(N - q, axis=1)) < 6.0 or any(np.linalg.norm(e_ - q) < 6.0 for e_ in ext): continue
+        if in_band8(q) or rod_ok(p0, q, kind, BODIES, False) is not None: continue
+        ext.append(q); ekeys.add(tuple(np.round(q, 1)))
+if ext:
+    N = np.vstack([N, np.array(ext)]); kind = kind + ["X"] * len(ext)
+    BASE, why0 = build_base(N, kind)
+say(f"straight-rod extension nodes for short members: {len(ext)}")
 say(f"rods feasible before the pads: {len(BASE)}; dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why0.items(), key=lambda kv: -kv[1])))
 BELLY_POST = os.environ.get("BELLY_POST") == "1"
 # Hub DEFAULT 24 Oct (Scout proposal, box catch to confirm): keep-alive through two hook latch plungers onto contact pads on the
