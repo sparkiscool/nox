@@ -277,8 +277,9 @@ def write_concept(od, out, P, env, R):
 
 
 def v8_lane_check(od):
-    """funnel v8 estimate (E, until the catch's v8 file lands): the -Y face's bodies of the catch moved out FUNNEL_V8_GROW_Y
-    along -Y, against both drone-insert keep-outs; -> v8_lane_check.json."""
+    """funnel v8 estimate (E, until the catch's v8 file lands): the catch moved FUNNEL_V8_GROW_Y along -Y (catch_W is one
+    connected body, so all of it moves; only its -Y face reaches the lanes), against both drone-insert keep-outs;
+    -> v8_lane_check.json."""
     cat = trimesh.load(os.path.join(od, "catch_W.stl"), force="mesh")
     lanes = {k: trimesh.load(os.path.join(od, "parts", f), force="mesh") for k, f in (("carriage", "drone_30.stl"), ("grabber", "drone_31.stl"))}
     M = lambda t: mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
