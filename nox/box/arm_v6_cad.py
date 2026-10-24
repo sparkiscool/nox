@@ -83,7 +83,7 @@ PARTS = {  # name -> (builder, pose, material, qty, prev mass g)
     "arm_rail_A_v2": (lambda: rail_v2("A"), pose_rail, "PETG", 1, 49.7),
     "arm_rail_B_v2": (lambda: rail_v2("B"), pose_rail, "PETG", 1, 50.0),
     "arm_pinion16_v2": (lambda: pinion_v2()[0], lambda m: C5.pose_axisY(m, top_down=True), "PETG", 2, 3.0),
-    "detent_ring_v3": (lambda: DT.ring_v3(DT.CHOSEN_V6["th"]), lambda m: C5.pose_axisY(m, top_down=True), "PETG", 1, 5.0),
+    "detent_ring_v3": (lambda: DT.ring_v3(DT.CHOSEN_V6["th"]), lambda m: C5.pose_axisY(m, top_down=False), "PETG", 1, 5.0),
 }
 
 
