@@ -42,9 +42,9 @@
   {"name": "drone receivers + paths (keep-out)", "role": "bought", "mesh": "runs/box_system/v2/layout/drone_W.stl", "mass_g": 0.0, "tag": "C", "owner": "drones"},
   {"name": "mast v6 (stand context, v1)", "role": "structure", "mesh": "runs/box_system/v1/W/box_mast_v6_W.stl", "material": "PETG", "tag": "M", "owner": "box structure"},
   {"name": "PSU LRS-350-24", "role": "bought", "protect": true, "box": [42, 157, -66, -36, -170, 45], "mass_g": 750.0, "tag": "E", "owner": "box electronics"},
-  {"name": "sheet+X", "role": "cage", "box": [205, 208, -63.0, 318, -234, 234], "material": "acrylic", "mass_g": 636.6, "tag": "C", "owner": "box structure"},
-  {"name": "sheet-X", "role": "cage", "box": [-208, -205, -63.0, 318, -234, 234], "material": "acrylic", "mass_g": 636.6, "tag": "C", "owner": "box structure"},
-  {"name": "sheetF", "role": "cage", "box": [-202, 202, 321, 324, -234, 234], "material": "acrylic", "mass_g": 675.0, "tag": "C", "owner": "box structure"},
+  {"name": "sheet+X", "role": "cage", "box": [205, 208, -63.0, 339, -234, 234], "material": "acrylic", "mass_g": 671.6, "tag": "C", "owner": "box structure"},
+  {"name": "sheet-X", "role": "cage", "box": [-208, -205, -63.0, 339, -234, 234], "material": "acrylic", "mass_g": 671.6, "tag": "C", "owner": "box structure"},
+  {"name": "sheetF", "role": "cage", "box": [-202, 202, 342, 345, -234, 234], "material": "acrylic", "mass_g": 675.0, "tag": "C", "owner": "box structure"},
   {"name": "sheetR", "role": "cage", "box": [-202, 202, -69.0, -66.0, -234, 234], "material": "acrylic", "mass_g": 675.0, "tag": "C", "owner": "box structure"}
  ]
 }
