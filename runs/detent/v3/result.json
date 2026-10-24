@@ -1,0 +1,11 @@
+{
+ "file": "print/box_detent_ring_v3.stl",
+ "mass_g": 6.74,
+ "solid_check": true,
+ "bed_mm2": 830.0,
+ "worst_index": [
+  null,
+  "keyed, hand calc"
+ ],
+ "tag": "M mesh / E loads"
+}

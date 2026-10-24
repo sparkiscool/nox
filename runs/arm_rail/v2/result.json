@@ -1,0 +1,11 @@
+{
+ "file": "print/box_arm_rail_A_v2.stl",
+ "mass_g": 49.42,
+ "solid_check": true,
+ "bed_mm2": 2403.0,
+ "worst_index": [
+  0.28,
+  "head stall free"
+ ],
+ "tag": "M mesh / E loads"
+}

@@ -89,7 +89,7 @@
    "necks": [],
    "thin_walls": []
   },
-  "bed_mm2": 830.0,
+  "bed_mm2": 916.0,
   "first_layer": [
    1,
    0.0
@@ -145,12 +145,20 @@
    "carriage_to_rods": 4.7
   },
   {
-   "z0": 97.6,
+   "z0": 88.8,
    "wheel_rail_overlap_mm3": 0.0,
    "wheel_body_gap": 1.0,
    "stack_rail_gap": 3.0,
    "plate_rail_gap": 1.0,
-   "carriage_to_rods": 4.81
+   "carriage_to_rods": 5.86
+  },
+  {
+   "z0": 98.3,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "carriage_to_rods": 4.9
   }
  ],
  "rods_in_rail_mm3": null
