@@ -10,7 +10,7 @@ import arm_layout as L
 import arm_v5_layout as V
 
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
-_KEYS = ("Z0S", "RACK_TEETH_Y", "PIN_TEETH_Y", "PIN_BOSS_Y", "WEB_U", "RAIL_Y", "RAIL_R", "RAIL_STOP", "RIDGE_Y", "RAIL_CHAN", "RAIL_BOLTS", "RAIL_INSERTS", "WHEEL_Y", "NUT_Y", "TAIL_Y", "SPACER_Y",
+_KEYS = ("AXLE_BOLT_L", "RACK_TAIL", "Z0S", "RACK_TEETH_Y", "PIN_TEETH_Y", "PIN_BOSS_Y", "WEB_U", "RAIL_Y", "RAIL_R", "RAIL_STOP", "RIDGE_Y", "RAIL_CHAN", "RAIL_BOLTS", "RAIL_INSERTS", "WHEEL_Y", "NUT_Y", "TAIL_Y", "SPACER_Y",
          "PLATE_Y", "ECC", "AXLE_KEEP", "ECC_KEEP", "WEB_Y", "POSTS_A", "POSTS_B", "POST_Y", "ALLOWED")
 V5 = {k: copy.deepcopy(getattr(V, k)) for k in _KEYS}
 STACK = "v5"
@@ -24,6 +24,10 @@ PIN_V2 = dict(teeth_y=(62.0, 72.5), boss_y=(56.5, 60.5), flat_y0=59.0)   # pinio
 RACK_V2_Y = (61.5, 73.0)               # rack teeth (heads v6): 0.5 past the pinion face each side; web Y 61.5..78
 WEB_U_V2 = (-50.0, 30.0)               # rack tail u -50 (was -47): the XT60 lag at the drone insert (swap_system: 3 mm at 60 N with ties) stays inside the
                                        # rack: pinion u at z0 99 = -44 >= -50 + 6
+AXLE_BOLT_L = dict(fixed=20.0, ecc=25.0)  # M5 socket heads (C): fixed wheels plate 4 + shim 1 + wheel 10 + nyloc 5 = 20 (tail flush Y 58);
+                                       # the eccentric from its bush flange (Y 80.5): x 25, tail Y 55.5, 1.5 over the hub plate
+RACK_TAIL = dict(u_max=-40.0, y0=63.0)  # heads v6: the rack below u -40 has its teeth from Y 63 (1.0 over the axle loop's top Y 62, which its
+                                       # tail crosses at park, X 40.5..45.3, sweep C); only the drone insert meshes there (pinion face 9.5 of 10.5)
 Z0_INSERT_MAX = 97.6                   # the commanded drone insert may run 2 past 95.6 for the arm's lag under the 60 N (swap_system; DEFAULT):
                                        # wheel rim r 143.3 at X 22, 2.2 inside the stand's r 145.5 arm lane
 # carbon tie under each rail (swap_system alternatives: cartridge pitch 2.61 -> 1.85 deg at Y_C 175): 2 x 3.0 carbon rods at X +-8 in the
@@ -52,6 +56,7 @@ def v6_values(dy=-20.0):
     v["PIN_TEETH_Y"] = PIN_V2["teeth_y"] if dy < -9.0 else V5["PIN_TEETH_Y"]; v["PIN_BOSS_Y"] = PIN_V2["boss_y"] if dy < -9.0 else V5["PIN_BOSS_Y"]
     v["WEB_U"] = WEB_U_V2 if dy < -9.0 else V5["WEB_U"]
     v["Z0S"] = tuple(V5["Z0S"]) + ((Z0_INSERT_MAX,) if dy < -9.0 else ())
+    v["AXLE_BOLT_L"] = AXLE_BOLT_L if dy < -9.0 else V5["AXLE_BOLT_L"]; v["RACK_TAIL"] = RACK_TAIL if dy < -9.0 else V5["RACK_TAIL"]
     v["WEB_Y"] = (v["RACK_TEETH_Y"][0], v["PLATE_Y"][1])                                    # rack web from its teeth to the plate top
     b = copy.deepcopy(V5["RAIL_BOLTS"])
     on_plate = V5["RAIL_Y"][0] + dy <= PLATE_TOP + 1e-6

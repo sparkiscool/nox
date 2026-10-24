@@ -62,6 +62,8 @@ PIN_X = RACK_PITCH_X + PIN_R                 # 53.5
 MOTORS_V5 = {"A": dict(xc=PIN_X, zc=PIN_Z, rot=math.degrees(math.atan2(PIN_Z, PIN_X))),          # (53.5, 55), edge toward the axle
              "B": dict(xc=-PIN_Z, zc=-PIN_X, rot=math.degrees(math.atan2(-PIN_X, -PIN_Z)))}     # B mirrored: rack on B's -X = arm -Z: (-55, -53.5)
 # --- stroke (unchanged from v4) ---
+AXLE_BOLT_L = dict(fixed=25.0, ecc=25.0)   # M5 x 25 on every wheel (v5); arm_v6_layout sets the v6 stack's
+RACK_TAIL = None                            # v6: the rack tail stepped up (arm_v6_layout)
 DRONE_PUSH = 6.0                            # E (24 Oct, hook latch): the drone rises 2.1..5.7 (C) onto the plungers during the insert, so the insert runs up to 6 further
 SLOW_LAST, SLOW_V = 12.0, 20.0              # last 12 of every insert at <= 20 mm/s (E, XT60 mate at 2 A)
 Z0S = (L.Z0_A_HOME, L.Z0_B_WAIT, L.Z0_BAY + 1.5, L.Z0_BAY + 5.0, L.Z0_BAY + 5.0 + DRONE_PUSH)      # park 32, wait 81, bay 86.1, drone 89.6, drone insert 95.6
