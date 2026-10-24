@@ -59,3 +59,32 @@ it  47 beta    4 J   9.4722 vol 0.1161 (dil 0.2761 g -0.002) grey 29.7% ch 0.100
 it  48 beta    4 J   7.5837 vol 0.1171 (dil 0.2761 g -0.002) grey 29.8% ch 0.100 worst crash +z 4.76e+03 1.2s
 it  49 beta    4 J   6.1538 vol 0.1195 (dil 0.2760 g -0.002) grey 30.0% ch 0.100 worst crash +z 3.86e+03 1.1s
 it  50 beta    4 J   5.2724 vol 0.1223 (dil 0.2760 g -0.002) grey 30.0% ch 0.100 worst crash +z 3.31e+03 1.2s
+it  51 beta    4 J   4.6005 vol 0.1249 (dil 0.2760 g +0.047) grey 30.0% ch 0.100 worst crash +z 2.89e+03 1.6s
+it  52 beta    4 J   4.1454 vol 0.1158 (dil 0.2622 g -0.006) grey 28.2% ch 0.100 worst crash +z 2.6e+03 1.5s
+it  53 beta    4 J   3.7676 vol 0.1183 (dil 0.2628 g -0.004) grey 28.0% ch 0.100 worst crash +z 2.36e+03 1.2s
+it  54 beta    4 J   3.7680 vol 0.1184 (dil 0.2625 g -0.005) grey 27.9% ch 0.100 worst crash +z 2.36e+03 1.2s
+it  55 beta    4 J   3.7665 vol 0.1186 (dil 0.2622 g -0.006) grey 27.7% ch 0.100 worst crash +z 2.36e+03 1.1s
+it  56 beta    4 J   3.7654 vol 0.1187 (dil 0.2620 g +0.033) grey 28.0% ch 0.100 worst crash +z 2.36e+03 1.1s
+it  57 beta    4 J   3.7874 vol 0.1094 (dil 0.2518 g -0.007) grey 26.9% ch 0.100 worst crash +z 2.36e+03 1.1s
+layout: stopped (beta_stop) at it 57, beta 4, 77 s
+layout: beta 4 done: eroded design 31 bodies, main 17.1%; drawn bodies outside the main body: 22
+coarse stage done: 57 iterations, 85 s, peak 0.876724 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (20.20 cm3); 0.12 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.101 of 70,414 design cells
+layout: drawn bodies and keep-outs mirror about x: the design is held symmetric there
+layout: WARNING nearly mirrored in z (5.7% of passive cells differ): no symmetry
+layout: 7 drawn bodies (20,198 cells), held solid in every realization; eroded filter: masked
+layout: 14 load cases + 36 tie cases (6 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (72, 56, 112) = 451,584 elements, 327,222 active dofs; backend direct (direct estimate 3.9 GB, budget 11.8 GB)
+layout: warm start from a (40, 32, 56) grid (h 2.0): mean x 0.147
+it   1 beta    4 J  10.0000 vol 0.1135 (dil 0.2542 g +0.121) grey 27.5% ch 0.100 worst tie b5 fy 1.22e+05 22.8s
+it   2 beta    4 J  12.4599 vol 0.0997 (dil 0.2414 g +0.065) grey 26.6% ch 0.100 worst tie b4 fy 1.52e+05 22.8s
+it   3 beta    4 J  15.8146 vol 0.0870 (dil 0.2283 g +0.007) grey 25.4% ch 0.100 worst tie b5 fy 1.92e+05 23.8s
+it   4 beta    4 J   8.3349 vol 0.0822 (dil 0.2230 g -0.016) grey 24.9% ch 0.100 worst tie b5 fy 1.02e+05 21.3s
+it   5 beta    4 J   8.2675 vol 0.0837 (dil 0.2238 g -0.013) grey 24.8% ch 0.100 worst tie b7 mx 1e+05 22.6s
+it   6 beta    4 J   3.6194 vol 0.0855 (dil 0.2242 g -0.062) grey 24.8% ch 0.100 worst tie b4 fy 4.38e+04 22.6s
+it   7 beta    4 J   1.7281 vol 0.0955 (dil 0.2338 g -0.022) grey 25.6% ch 0.100 worst tie b4 fy 1.94e+04 21.5s
+it   8 beta    4 J   1.4458 vol 0.0996 (dil 0.2365 g -0.011) grey 25.8% ch 0.100 worst crash +z 1.72e+04 19.3s
+it   9 beta    4 J   1.3233 vol 0.1017 (dil 0.2373 g -0.007) grey 25.8% ch 0.100 worst crash +z 1.61e+04 22.9s
+it  10 beta    4 J   1.1919 vol 0.1031 (dil 0.2383 g -0.003) grey 25.8% ch 0.100 worst crash +z 1.45e+04 30.7s
