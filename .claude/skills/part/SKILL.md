@@ -18,6 +18,9 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
   interfaces, joint reactions per case, stiffness and worst index the assembled system needs. Those are the run's loads,
   supports and targets. No section yet: run the system pass first (or hand it to its own worker) and design from its output.
   After the piece: put it back in the system model and run the assembled recheck.
+- Concept check before any run or detailed CAD (`docs/generative.md` The rule, 0): rule checks on the layout, two
+  alternatives in one line each, the `review` agent in concept mode, the layout artifact and one line to Spark; then go on.
+  Third failed version in a row of this piece: stop and redo the system pass (three strikes).
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
   `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent (background, own worktree)
   and carry on with anything that does not need its mesh; it checkpoints, checks, and opens the PR itself. Several variants or
@@ -42,7 +45,7 @@ Artifact tool (icon "gear") and send the mp4 with SendUserFile. A static part ge
 ## 5. Done = saved (same turn, automatic)
 Follow `docs/generative.md` "Save and print" exactly: `print/<part>_<version>.stl`, State READY and the File cell in
 `current-parts.md`, one `log.md` line, `summary.md` in the fixed form beside `preview.png` and `motion.*`,
-`python3 tools/runs_index.py`, commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
+`python3 tools/runs_index.py`, `python3 tools/check_state.py` (no ERROR), commit (`<part> <version>: <what>`), push, `python3 tools/pr.py open "<part> <version>: <what>"`.
 
 ## 6. Review and merge (same turn)
 Run the `review` agent on the PR. PASS: fix any findings worth fixing, push, then `python3 tools/pr.py merge <n>` (REST; `gh pr merge` fails in cloud boxes)
