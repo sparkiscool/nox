@@ -8,3 +8,6 @@ runs/**/tmp/
 *.log.tmp
 nohup.out
 .claude/worktrees/
+
+# box_system: regenerable piece-pass inputs (req/*.json carry them)
+runs/box_system/*/*.pkl
