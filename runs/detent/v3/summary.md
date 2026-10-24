@@ -8,3 +8,5 @@ Strength: keyed torque 0.55 N·m at r 18 over three pockets ~10 N each (E, beari
 Solid: solid_check PASS (print/box_detent_ring_v3.stl)
 Print: bottom (pocket side) down, bed contact 916 mm² (M), pockets bridged 6.2, no supports; file print/box_detent_ring_v3.stl
 ```
+
+Previews: `runs/detent/v3/preview_box_detent_ring_v3.png` (from `print/box_detent_ring_v3.stl`)

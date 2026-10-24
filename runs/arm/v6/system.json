@@ -8139,6 +8139,37 @@
    "loop_free_deg": 422,
    "note": "every bay by either head inside one window: the loop's splice moves so the lap sits outside it (DEFAULT)"
   },
+  "drone_seat_offset_30": {
+   "radial_strokes": "unchanged (the offset is axial)",
+   "Y_C_head": 175.0,
+   "+Y (away from the hub)": {
+    "cartridge_y": [
+     124.7,
+     295.7
+    ],
+    "closed_end_clear": 38.2,
+    "ok": true,
+    "module_y_end": 296.7,
+    "grip_off_cg_mm": 30.0,
+    "grip_couple_Nm_1g": 0.22,
+    "grip_couple_Nm_3g": 0.66,
+    "xt60_closed_end_y": 131.7
+   },
+   "-Y (toward the hub)": {
+    "cartridge_y": [
+     64.7,
+     235.7
+    ],
+    "closed_end_clear": -21.8,
+    "ok": false,
+    "module_y_end": 236.7,
+    "grip_off_cg_mm": 30.0,
+    "grip_couple_Nm_1g": 0.22,
+    "grip_couple_Nm_3g": 0.66,
+    "xt60_closed_end_y": 71.7
+   },
+   "note": "only +Y works at Y_C 175; -Y needs Y_C >= 196.8, which moves the Scout's seat too"
+  },
   "detent": {
    "overseer_gravity_Nm": 0.59,
    "hold_2_springs": 0.78,

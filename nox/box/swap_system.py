@@ -757,6 +757,18 @@ def overseer_layout():
     out["bays"] = dict(**bays, pitch=30.0, phi_head_A=(min(phiA), max(phiA)), phi_head_B=(min(phiB), max(phiB)),
                        phi_window=(min(phiA + phiB), max(phiA + phiB)), window_deg=max(phiA + phiB) - min(phiA + phiB), loop_free_deg=422,
                        note="every bay by either head inside one window: the loop's splice moves so the lap sits outside it (DEFAULT)")
+    # Spark 24 Oct (B, via the hub): the Overseer's pack, receiver and cartridge path sit 30 behind its thrust axis. The cartridge's long
+    # axis is the drone's fore-aft axis = the wheel's Y, so with the drone centred in the funnel (Y_C 175) the Overseer's swap CG sits at
+    # Y 175 +- 30. The heads grip at one Y_C for both cartridges, so either the latch puts the Overseer's grip tabs on the drone's thrust axis
+    # (30 off the cartridge's own swap CG) or the arm cannot reach it. Both signs (the drone's "behind" in W is the structure's to fix):
+    seat = {}
+    for sgn, nm in ((1, "+Y (away from the hub)"), (-1, "-Y (toward the hub)")):
+        y0 = L.Y_C - ov["tab"] + sgn * 30.0; y1 = y0 + ov["l"]
+        seat[nm] = dict(cartridge_y=(round(y0, 1), round(y1, 1)), closed_end_clear=round(y0 - (85.5 + 1.0), 1), ok=bool(y0 >= 86.5),
+                        module_y_end=round(y1 + 1.0, 1), grip_off_cg_mm=30.0, grip_couple_Nm_1g=round(ov["mass"] * G * 30.0 / 1e3, 3),
+                        grip_couple_Nm_3g=round(3 * ov["mass"] * G * 30.0 / 1e3, 3), xt60_closed_end_y=round(y0 + 7.0, 1))
+    out["drone_seat_offset_30"] = dict(radial_strokes="unchanged (the offset is axial)", Y_C_head=L.Y_C, **seat,
+                                       note="only +Y works at Y_C 175; -Y needs Y_C >= 196.8, which moves the Scout's seat too")
     r_cg = z["park"] + BOT_DZ + ov["cg"][1]; t_ov = ov["mass"] * G * r_cg / 1e3
     need = 1.25 * (t_ov + DET_OTHER)
     out["detent"] = dict(overseer_gravity_Nm=round(t_ov, 3), hold_2_springs=DET_HOLD, margin_now=round(DET_HOLD / (t_ov + DET_OTHER), 2),

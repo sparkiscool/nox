@@ -9,3 +9,5 @@ Solid: solid_check PASS (print/box_arm_rail_A_v2.stl, print/box_arm_rail_B_v2.st
 Print: bottom (Y 54) down, bed contact 2403 mm² (M), no supports (the stop bridges the 3.2 channel mouth); files print/box_arm_rail_A_v2.stl, print/box_arm_rail_B_v2.stl
 ```
 print_orient: saved bed 2403 mm², largest of the 6 faces (+x 240, −y 338), first layer 1 island, thin-island run 0 mm.
+
+Previews: `runs/arm_rail/v2/preview_box_arm_rail_A_v2.png` (from `print/box_arm_rail_A_v2.stl`), `runs/arm_rail/v2/preview_box_arm_rail_B_v2.png` (from `print/box_arm_rail_B_v2.stl`)

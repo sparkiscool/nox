@@ -9,3 +9,5 @@ Solid: solid_check PASS (print/box_arm_pinion16_v2.stl)
 Print: gear face down, bed contact 143 mm² (M), brim 5 mm, 100 % infill; file print/box_arm_pinion16_v2.stl
 ```
 Roll on the drawn rack: 0 mm³, closest 0.063 (C). print_orient: saved 143 mm² is the largest face.
+
+Previews: `runs/arm_pinion16/v2/preview_box_arm_pinion16_v2.png` (from `print/box_arm_pinion16_v2.stl`)
