@@ -2,8 +2,9 @@
  "mode": "v7:scout:-210:30",
  "note": "cartridges left out (service with the packs out); body = the design space",
  "paths": {
-  "A: servo + horn + cam out -u (DS3218)": {
+  "A: servo + horn + cam out -u, commanded OPEN first (DS3218)": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -211,6 +212,7 @@
   },
   "A: L-key 3 mm, near axle": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -418,6 +420,7 @@
   },
   "A: pin spanner, eccentric flange": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -625,6 +628,7 @@
   },
   "A: grip rod in from +X (Y 161)": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -832,6 +836,7 @@
   },
   "A: grip rod in from +X (Y 169)": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -1039,6 +1044,7 @@
   },
   "A: spring rod in from +X": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -1244,10 +1250,68 @@
    ],
    "blocked_by": []
   },
-  "A: ball driver on the two ear screws (-Y, through the plate)": {
-   "open_states": 12,
+  "A: driver on the two retainer screws (along +u, from -u)": {
+   "open_states": 5,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
+    {
+     "t": 5.0,
+     "z0": 32.0,
+     "phi": -105.0
+    },
+    {
+     "t": 11.0,
+     "z0": 98.6,
+     "phi": 90.0
+    },
+    {
+     "t": 11.5,
+     "z0": 108.6,
+     "phi": 90.0
+    },
+    {
+     "t": 12.0,
+     "z0": 108.6,
+     "phi": 90.0
+    },
+    {
+     "t": 21.5,
+     "z0": 32.0,
+     "phi": -135.0
+    }
+   ],
+   "blocked_by": [
+    "rec-120",
+    "rec-150",
+    "rec-180",
+    "rec-210",
+    "rec-30",
+    "rec-60",
+    "rec-90",
+    "rec0"
+   ]
+  },
+  "A: retainer out -u": {
+   "open_states": 45,
+   "own_parts_hit_at_steps": [],
+   "of": 45,
+   "open": [
+    {
+     "t": 0.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 0.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 1.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
     {
      "t": 1.5,
      "z0": 53.9,
@@ -1279,6 +1343,66 @@
      "phi": -210.0
     },
     {
+     "t": 4.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 5.0,
+     "z0": 32.0,
+     "phi": -105.0
+    },
+    {
+     "t": 5.5,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 6.0,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 6.5,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 7.0,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 7.5,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 8.0,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 8.5,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 9.0,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 9.5,
+     "z0": 32.0,
+     "phi": 45.0
+    },
+    {
+     "t": 10.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
      "t": 10.5,
      "z0": 67.9,
      "phi": 90.0
@@ -1307,14 +1431,78 @@
      "t": 13.0,
      "z0": 57.5,
      "phi": 90.0
+    },
+    {
+     "t": 13.5,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 14.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 14.5,
+     "z0": 32.0,
+     "phi": 65.0
+    },
+    {
+     "t": 15.0,
+     "z0": 32.0,
+     "phi": 40.0
+    },
+    {
+     "t": 15.5,
+     "z0": 32.0,
+     "phi": 15.0
+    },
+    {
+     "t": 16.0,
+     "z0": 32.0,
+     "phi": -10.0
+    },
+    {
+     "t": 16.5,
+     "z0": 32.0,
+     "phi": -35.0
+    },
+    {
+     "t": 17.0,
+     "z0": 32.0,
+     "phi": -60.0
+    },
+    {
+     "t": 17.5,
+     "z0": 32.0,
+     "phi": -60.0
+    },
+    {
+     "t": 18.0,
+     "z0": 32.0,
+     "phi": -60.0
+    },
+    {
+     "t": 18.5,
+     "z0": 32.0,
+     "phi": -60.0
+    },
+    {
+     "t": 19.0,
+     "z0": 32.0,
+     "phi": -60.0
+    },
+    {
+     "t": 19.5,
+     "z0": 32.0,
+     "phi": -60.0
     }
    ],
-   "blocked_by": [
-    "p80"
-   ]
+   "blocked_by": []
   },
-  "B: servo + horn + cam out -u (MG995)": {
+  "B: servo + horn + cam out -u, commanded OPEN first (MG995)": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -1522,6 +1710,7 @@
   },
   "B: L-key 3 mm, near axle": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -1729,6 +1918,7 @@
   },
   "B: pin spanner, eccentric flange": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -1936,6 +2126,7 @@
   },
   "B: grip rod in from +X (Y 161)": {
    "open_states": 44,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -2145,6 +2336,7 @@
   },
   "B: grip rod in from +X (Y 169)": {
    "open_states": 44,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -2354,6 +2546,7 @@
   },
   "B: spring rod in from +X": {
    "open_states": 45,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
     {
@@ -2559,10 +2752,96 @@
    ],
    "blocked_by": []
   },
-  "B: ball driver on the two ear screws (-Y, through the plate)": {
-   "open_states": 12,
+  "B: driver on the two retainer screws (along +u, from -u)": {
+   "open_states": 1,
+   "own_parts_hit_at_steps": [],
    "of": 45,
    "open": [
+    {
+     "t": 21.5,
+     "z0": 32.0,
+     "phi": -135.0
+    }
+   ],
+   "blocked_by": [
+    "detent_arm",
+    "detent_springs",
+    "rec-120",
+    "rec-150",
+    "rec-180",
+    "rec-210",
+    "rec-30",
+    "rec-60",
+    "rec-90",
+    "rec0",
+    "rec30"
+   ]
+  },
+  "B: retainer out -u": {
+   "open_states": 45,
+   "own_parts_hit_at_steps": [],
+   "of": 45,
+   "open": [
+    {
+     "t": 0.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 0.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 1.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 1.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 2.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 2.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 3.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 3.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 4.0,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 4.5,
+     "z0": 32.0,
+     "phi": -210.0
+    },
+    {
+     "t": 5.0,
+     "z0": 32.0,
+     "phi": -105.0
+    },
+    {
+     "t": 5.5,
+     "z0": 32.0,
+     "phi": 0.0
+    },
     {
      "t": 6.0,
      "z0": 63.0,
@@ -2594,6 +2873,91 @@
      "phi": 0.0
     },
     {
+     "t": 9.0,
+     "z0": 32.0,
+     "phi": 0.0
+    },
+    {
+     "t": 9.5,
+     "z0": 32.0,
+     "phi": 45.0
+    },
+    {
+     "t": 10.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 10.5,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 11.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 11.5,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 12.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 12.5,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 13.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 13.5,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 14.0,
+     "z0": 32.0,
+     "phi": 90.0
+    },
+    {
+     "t": 14.5,
+     "z0": 32.0,
+     "phi": 65.0
+    },
+    {
+     "t": 15.0,
+     "z0": 32.0,
+     "phi": 40.0
+    },
+    {
+     "t": 15.5,
+     "z0": 32.0,
+     "phi": 15.0
+    },
+    {
+     "t": 16.0,
+     "z0": 32.0,
+     "phi": -10.0
+    },
+    {
+     "t": 16.5,
+     "z0": 32.0,
+     "phi": -35.0
+    },
+    {
+     "t": 17.0,
+     "z0": 32.0,
+     "phi": -60.0
+    },
+    {
      "t": 17.5,
      "z0": 61.8,
      "phi": -60.0
@@ -2617,17 +2981,9 @@
      "t": 19.5,
      "z0": 75.7,
      "phi": -60.0
-    },
-    {
-     "t": 20.0,
-     "z0": 53.9,
-     "phi": -60.0
     }
    ],
-   "blocked_by": [
-    "belt_axle",
-    "p80"
-   ]
+   "blocked_by": []
   }
  }
 }

@@ -4,7 +4,7 @@ system at its joints (docs/generative.md The rule, 0; requirements dimensions "S
   - envelope = the layout's design space (the arm's free space over 4 swap cycles, the park bisector, minus every moving part + 1.0,
     the cartridge zone above u 15.4, the tool and wire paths, the rack bar);
   - drawn = the interfaces: plate + wing + web + spine, the eccentric boss, the deck with the push pads and the hall pockets, the rod
-    walls with blind sockets, the spring rod walls, the carriers' inward stops, the 2 mm bed land at X -34, the servo cradle with its four Ø12 ear pads;
+    walls with blind sockets, the spring rod walls, the carriers' inward stops, the 2 mm bed land at X -34, the tail rib, the retainer's insert bosses, the servo cradle with its four Ø12 ear pads;
   - cuts = axle bores and countersinks, the eccentric bore and flange counterbore, the rod sockets, the hall pockets and boards,
     the ear screw holes, the bumper notch and every keep-out (horn and cam channel, drivers, rod insertion bores, detent);
   - supports = the real interfaces: the three wheel bores hold X and Y, the rack bar's bonded face holds u and X over the pinion's
@@ -30,6 +30,7 @@ HH = float(sys.argv[2]) if len(sys.argv) > 2 else 1.5
 GEN = float(sys.argv[3]) if len(sys.argv) > 3 else 30.0
 CLS = dict(swap="flight", misuse="misuse", handling="misuse")
 PIN_U = dict(drone=55.0 - 111.3, bay=55.0 - 101.8, park=55.0 - 32.0)        # pinion u = PIN_Z - z0 (arm_v5_layout), commanded strokes
+if HEAD == "B": PIN_U["drone"] = -47.6                                      # B only pulls at the drone (the dead pack), at u -47.6 (concept review r4)
 
 
 def web_u():
@@ -55,7 +56,8 @@ def drawn_and_cuts():
         w += box(a, b, H.SPRING_ROD["y"] - 4.5, H.SPRING_ROD["y"] + 4.5, H.SPRING_ROD["u"] - 3.5, H.SPRING_ROD["u"] + 4.0)
         walls = w if walls is None else walls + w
     pads, pad_cuts = H.cradle(SERVO)
-    drawn = plate + web + spine + ecc + deck + walls + pads + H.stops() + H.bed_land() + H.tail_rib(SERVO)
+    rb, rc = H.retainer_bosses()
+    drawn = plate + web + spine + ecc + deck + walls + pads + H.stops() + H.bed_land() + H.tail_rib(SERVO) + rb
     drawn = drawn + H.rack_bar(SERVO)          # the epoxied rack bar rides in the FE as bonded (13.5 x 93 glue line); removed from the print after
     # cuts
     cuts = []
@@ -73,6 +75,7 @@ def drawn_and_cuts():
         cuts.append(box(xh - 1.6, xh + 1.6, yh - 1.6, yh + 1.6, H.DECK["u"][0] - 1.0, H.U_BOT - H.LATCH["hall"]["gap"]))
         cuts.append(box(xh - 2.5, xh + 2.5, yh - 3.5, yh + 1.0, H.DECK["u"][0] - 6.0, H.DECK["u"][0] + 0.01))   # the hall board (5 x 6.5) under the deck
     cuts.append(pad_cuts)
+    cuts.append(rc)                                                           # the retainer's heat-set insert holes
     cuts.append(box(*H.BUMPER["x"], P["y"][0] - 1, P["y"][1] + 1, H.BUMPER["u"][0] - 1, H.BUMPER["u"][1]))
     cuts += H.keepouts(SERVO)
     cut = cuts[0]
@@ -137,11 +140,16 @@ def setup(h):
     padm = box(-H.DECK["pad"]["x"][1], -H.DECK["pad"]["x"][0], *H.DECK["pad"]["y"], H.DECK["u"][1], H.DECK["pad"]["u_top"])
     yc = sum(H.DECK["pad"]["y"]) / 2
     padf = pads ^ box(-50, 50, 0, yc, -50, 50); padb = pads ^ box(-50, 50, yc, 300, -50, 50)   # pad halves along Y
+    dyc = 170.2 - yc                                                          # the Overseer CG sits 5.2 past the pads' / sockets' centre in Y
+    cgp = 3 * Ov * dyc / (yc - H.DECK["pad"]["y"][0])                         # 3 g at the CG: a couple on the pad halves
     for sx in (1, -1):
-        case(f"handling 3 g in + 2 g along {'+' if sx > 0 else '-'}X, Overseer cartridge carried [handling]",
-             [(pads, (0, 0, -3 * Ov)), (stopm if sx > 0 else stopp, (sx * 2 * Ov, 0, 0)), (padp if sx > 0 else padm, (0, 0, -cpl)), (padm if sx > 0 else padp, (0, 0, cpl))],
-             CLS["handling"], "park")
-    case(f"handling 3 g out, Overseer cartridge carried (on the rods; along its CG line, no couple) [handling]", [(sock, (0, 0, 3 * Ov))], CLS["handling"], "park")
+        case(f"handling 3 g in + 2 g along {'+' if sx > 0 else '-'}X, Overseer cartridge carried (CG 5.2 off in Y) [handling]",
+             [(pads, (0, 0, -3 * Ov)), (stopm if sx > 0 else stopp, (sx * 2 * Ov, 0, 0)), (padp if sx > 0 else padm, (0, 0, -cpl)), (padm if sx > 0 else padp, (0, 0, cpl)),
+              (padb, (0, 0, -cgp)), (padf, (0, 0, cgp))], CLS["handling"], "park")
+    sockf = sock ^ box(-60, 60, 0, yc, -50, 50); sockb = sock ^ box(-60, 60, yc, 300, -50, 50)
+    cgs = 3 * Ov * dyc / (H.RODS["y"][1] - H.RODS["y"][0])
+    case(f"handling 3 g out, Overseer cartridge carried (on the rods; CG 5.2 off in Y) [handling]",
+         [(sock, (0, 0, 3 * Ov)), (sockb, (0, 0, cgs)), (sockf, (0, 0, -cgs))], CLS["handling"], "park")
     cy = 2 * Ov * (48.5 - H.RODS["u"]) / (yc - H.DECK["pad"]["y"][0])        # 2 g along Y at the CG (u 48.5) to the sockets (u 6.75): a couple on the pad halves
     for sy in (1, -1):
         case(f"handling 2 g along {'+' if sy > 0 else '-'}Y, Overseer cartridge carried (rib -> blades -> rods, couple on the pads) [handling]",
@@ -160,8 +168,10 @@ def setup(h):
     # (runs/arm/v7/system.json brake), under the handling cases; unbraked (409 / 630 N) is outside the design, gated by the brake self-test
     sv = H.SERVOS[SERVO]; T = sv["kgcm"] * 98.07; ye = H.Y_SERVO_TOP - sv["H"] + sv["ear_y"]
     hs = H.ear_holes(SERVO); f = T / (hs[2][0] - hs[0][0]) / 2
-    pp.load_multi(f"{SERVO} stall torque {T / 1000:.2f} N.m on the ear pads [misuse]",
-                  [(cylY(x, u, ye - 3.0, ye, 5.0, 24), (0, 0, f if x < 10 else -f)) for (x, u) in hs], cls=CLS["misuse"], support="park")
+    fr = T / (2 * H.ROLLER["x_sq"])                                           # the reaction: cam -> rollers -> carriers -> rods -> the wall sockets
+    pp.load_multi(f"{SERVO} stall torque {T / 1000:.2f} N.m on the ear pads, reacted at the rod sockets through the rollers [misuse]",
+                  [(cylY(x, u, ye - 3.0, ye, 5.0, 24), (0, 0, f if x < 10 else -f)) for (x, u) in hs] + [(sockp, (0, 0, fr)), (sockm, (0, 0, -fr))],
+                  cls=CLS["misuse"], support="park")
     pp.log(f"  head {HEAD} ({SERVO}): {len(pp.cases)} cases, supports {list(pp.supports)}")
     return pp
 

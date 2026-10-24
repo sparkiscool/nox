@@ -34,13 +34,17 @@ PLATE = dict(x=(-28.0, 28.0), y=(68.75, float(os.environ.get("NOX_PLATE_TOP", "7
 WING = dict(x=(28.0, 46.5), u=(0.0, 30.0))
 # the rack tail's backing rib (concept review r3: the pinion's separating force 22.1 N at u -56.3 bends the tail; E): Y 63..68.75 over the
 # axle belt (Y <= 62), X out to the arm's free space (space map, >= 1.0): head A clear to X 28.5 the whole tail, head B beside the hub
-# and the detent at park; stops at u -11.5, clear of the near wheel and the +X ear screw's channel
+# and the detent at park; stops at u -11.5, clear of the near wheel
 TAIL_RIB = dict(   # (polygon X, u; Y range) per head; free space from the per-head space map (>= 1.0)
-    A=[([(29.5, -62.0), (39.6, -62.0), (39.6, -11.5), (29.5, -11.5)], (63.0, 68.76)),                                  # over the belt
+    A=[([(31.5, -62.0), (39.6, -62.0), (39.6, -11.5), (29.5, -11.5), (29.5, -60.1)], (63.0, 68.76)),                  # over the belt (X + u >= -30.6)
        ([(29.5, -37.0), (36.5, -40.5), (39.6, -40.5), (39.6, -11.5), (29.5, -11.5)], (68.75, 74.35)),    # up to the plate top (the detent arm at u -46 at park)
        ([(33.5, -31.0), (39.6, -31.0), (39.6, -11.5), (29.5, -11.5), (29.5, -25.0)], (59.25, 63.01))],                 # the root, under Y 63
     B=[([(37.5, -52.0), (39.6, -52.0), (39.6, -11.5), (32.5, -11.5), (32.5, -17.2), (35.5, -17.2), (35.5, -31.5), (37.5, -33.5)], (63.0, 68.76)),
        ([(32.5, -31.0), (39.6, -31.0), (39.6, -11.5), (32.5, -11.5)], (59.25, 63.01))])    # B: the detent arm and roller sit above / beside it at park
+# the servo retainer (r4: the ear screws had no driver path on the arm): a printed bar under the servo's bottom face (u -16.3..-12.5,
+# flush with the column bottom on the head lane) from (10, 90) to (27, 148.5), Ø12 ends with M3 countersunk screws driven along +u
+# through the exit window into heat-set inserts in drawn Ø10 bosses; the ears sit captured in their slots on the pads
+RETAINER = dict(ends=((10.0, 90.0), (27.0, 148.5)), w=10.0, u=(-16.3, -12.5), end_r=6.0, boss_r=5.0, insert=dict(d=4.0, depth=6.7))
 FILLET = [(28.0, 30.0), (40.5, 30.0), (40.5, 32.5), (28.0, 40.0)]   # plate / wing inside corner (bound r3: the pull peak sat in the sharp corner)
 WEB = dict(x=(40.5, 46.5), body_x=(39.5, 41.5), bar_x=(41.5, 46.5), y=(59.25, 72.75), uA=(-63.0, 30.0), uB=(-54.0, 30.0), teeth_y=(59.25, 73.25), tail_u=-39.0, tail_y0=63.0)
 WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))      # (X, u); the last is the eccentric
@@ -49,7 +53,7 @@ WHEEL = dict(od=24.0, y=(57.75, 67.75), nut_y=(55.05, 57.75), shim_y=(67.75, 68.
 BUMPER = dict(x=(-10.0, 10.0), u=(0.0, 5.0))
 KEEPOUT_DRONE = dict(x=(-47.5, 47.5), y=(75.35, 217.0), Z=(95.0, 159.6))    # head + grabber at the drone (W Z = z0 + u); PR 102 (arm, 24 Oct)
 Z0 = dict(park=32.0, bay_cmd=101.8, insert_cmd=111.3)
-LATCH = dict(recess_x=15.5, recess_dy=11.5, recess_h=12.0, tab_latched=(4.0, 10.0), tab_squeezed=(0.0, 6.0), tab_dy=11.0, tab_h=11.5,
+LATCH = dict(recess_x=15.5, recess_dy=11.5, recess_h=12.0, tab_latched=(4.0, 10.0), tab_squeezed=(1.0, 7.0), tab_dy=11.0, tab_h=11.5,
              pocket=dict(y=4.0, h=4.0, w=8.0, d=3.0, wall_deg=5.0), bar_y0=6.5, release_N=dict(scout=3.0, overseer=4.5),
              hold_N=dict(scout=52.1, overseer=57.3), tab_spring_sq=2.4, head_offset=1.0, hall=dict(x=7.5, dz=8.0, gap=1.0),
              flat_rim=dict(scout=(15.0, 19.0), overseer=(22.5, 26.5)), frames=(15.5, 19.0))
@@ -75,7 +79,9 @@ U_C = -2.5                                       # servo shaft / cam / roller ax
 CAM = dict(y=(148.5, 154.5), base=4.0, lobe=10.5, rise_deg=100.0, dwell0=10.0, dwell1=10.0, law="modified sine")
 ROLLER = dict(x_sq=10.5, y=(149.5, 153.5), pin_y=(149.0, 161.0))   # roller centre X at squeezed; open + 5.0
 BLADE = dict(t=3.0, y=(160.0, 170.0), inner_sq=6.0, inner_open=11.0, tip_u=U_BOT + 6.0, rib=dict(d=0.8, u=U_BOT + 4.0))
-STROKE = BLADE["inner_open"] - BLADE["inner_sq"]  # 5.0 per blade
+STROKE = BLADE["inner_open"] - BLADE["inner_sq"]  # 5.0 per blade (the mechanism's datum: inner 6.0)
+CLAMP = 7.0                                       # blade inner face on the squeezed tabs of cartridge v6 (latch 24 Oct: a 2.0 centre rib, tabs stop
+                                                  # at +-1.0, outer faces +-7.0; DEFAULT): the carriers clamp 1.0 out from the datum
 DECK = dict(u=(12.9, 14.9), x=20.0, y=(150.0, 180.0), pad=dict(x=(16.5, 20.0), y=(155.0, 175.0), u_top=U_BOT), slot=(5.5, 14.5, 159.0, 171.0))   # the hall's opening joins the slot
 RODS = dict(y=(161.0, 169.0), u=6.75, wall_in=29.0, wall_out=32.0)
 BOSS = dict(x_sq=(11.0, 23.0), y=(155.85, 174.15), u=(1.6, 11.9))   # 3.2 walls round the rod bores (the gate's 1.5 neck erosion)
@@ -109,8 +115,9 @@ CHANGES = [
     "column's bending and the plate's lie in the layers; the bar is bonded in the FE and the pinion holds its teeth",
     "r3: the rack tail's backing rib (the pinion's separating force 22.1 N bends the tail: index ~1.5 at the root without it, E); the teeth "
     "hold u only, the separating force is a load per case; the detent keep-out clipped to X < 39.5 (the bar and web keep 1.16)",
-    "r3: the servo leaves along -u through a window under its footprint; 2 x M3 x 20 at the -u ear holes from -Y through the plate "
-    "(the +u pair is blocked by the near wheel and the -X roller); every service path swept along the cycle (head_v7_access.py)",
+    "r3 / r4: the servo leaves along -u through a window under its footprint (commanded OPEN first); a printed retainer bar under it, "
+    "2 M3 countersunk along +u into heat-set inserts (no ear screws: no driver path on the arm); the column bottom on the head lane u -16.3; "
+    "every service path swept along the cycle against the arm and the head's own parts (head_v7_access.py)",
     "the body's -X flank is cut flat at X -34 with a 2 mm land (the +x build's bed face, 7.4 x 113); a 12.5 x 10 fillet joins the plate and "
     "the wing (the pull's peak sat in that sharp corner)",
 ]
@@ -154,7 +161,9 @@ def spring_pick():
                     C = D / d; Kw = (4 * C - 1) / (4 * C - 4) + 0.615 / C
                     tau = 8 * Fop * D * Kw / (math.pi * d ** 3); uts = 2211.0 * d ** -0.145
                     if tau > 0.45 * uts: continue
+                    Lcl = Lsq - 2 * (CLAMP - BLADE["inner_sq"])                 # crossed: the carriers apart compress it
                     cand = dict(d=d, OD=OD, ID=round(D - d, 2), L0=L0, n=n, k=round(k, 3), F_sq=round(Fsq, 1), F_open=round(Fop, 1),
+                                F_clamp=round(k * (L0 - Lcl), 1), L_clamp=Lcl,
                                 solid=round(solid, 1), L_sq=Lsq, L_open=Lop, tau_open=round(tau, 0), tau_ratio=round(tau / (0.45 * uts), 2),
                                 C=round(C, 2), note="music wire, closed ends, on the 3.0 carbon rod (guided: L0/D > 4)")
                     if best is None or (cand["F_open"], cand["tau_ratio"]) < (best["F_open"], best["tau_ratio"]): best = cand
@@ -301,7 +310,8 @@ def body_drawn(servo="DS3218"):
     walls -= cylX(SPRING_ROD["y"], SPRING_ROD["u"], -SPRING_ROD["wall_out"] + 1.0, SPRING_ROD["wall_out"] + 1.0, ROD_D / 2 + 0.05, 24)
     pads, pad_cuts = cradle(servo)
     pads = pads - pad_cuts
-    return pl + deck + walls + pads + stops() + bed_land() + tail_rib(servo)
+    rb, rc = retainer_bosses()
+    return pl + deck + walls + pads + stops() + bed_land() + tail_rib(servo) + rb - rc
 
 
 def rack_bar(servo="DS3218"):
@@ -329,6 +339,30 @@ def tail_rib(servo="DS3218"):
     return r
 
 
+def retainer(filled=False):
+    """the servo retainer bar (A frame): its two Ø12 ends plus the 10 wide bar, u -16.3..-12.5, with 2 countersunk M3 holes"""
+    (x0, y0), (x1, y1) = RETAINER["ends"]; u0, u1 = RETAINER["u"]
+    ends = cylZ(x0, y0, u0, u1, RETAINER["end_r"], 32) + cylZ(x1, y1, u0, u1, RETAINER["end_r"], 32)
+    L = math.hypot(x1 - x0, y1 - y0); ang = math.degrees(math.atan2(y1 - y0, x1 - x0))
+    bar = box(0, L, -RETAINER["w"] / 2, RETAINER["w"] / 2, u0, u1).rotate([0, 0, ang]).translate([x0, y0, 0])
+    m = ends + bar
+    if filled: return m
+    for (x, y) in RETAINER["ends"]:
+        m -= cylZ(x, y, u0 - 1, u1 + 1, 1.7, 24)
+        m -= hull([[x + r * math.cos(a), y + r * math.sin(a), uu] for a in np.linspace(0, 2 * math.pi, 24, endpoint=False) for (r, uu) in ((3.1, u0 - 0.01), (1.6, u0 + 1.6))])   # 90 deg csk
+    return m
+
+
+def retainer_bosses():
+    """the drawn Ø10 bosses over the retainer's ends (heat-set M3 x 5.7) and their insert holes (solid, cuts)"""
+    sol = None; cut = None; u1 = RETAINER["u"][1] + 0.2
+    for (x, y) in RETAINER["ends"]:
+        b = cylZ(x, y, u1 - 0.01, u1 + RETAINER["insert"]["depth"] + 1.5, RETAINER["boss_r"], 32)
+        c = cylZ(x, y, u1 - 0.5, u1 + RETAINER["insert"]["depth"], RETAINER["insert"]["d"] / 2, 24)
+        sol = b if sol is None else sol + b; cut = c if cut is None else cut + c
+    return sol, cut
+
+
 def bed_land():
     """the drawn 2 mm land on the column's -X flank at BED_X: the body's flat bed face for the +x build"""
     return prism_xu(COLUMN_POLY, *COLUMN_Y) ^ box(BED_X, BED_X + 2.0, 0.0, 300.0, -100.0, 100.0)
@@ -345,11 +379,6 @@ def stops():
     return st
 
 
-def ear_screws(servo="DS3218"):
-    """the two ear holes that take M3 x 20 screws (the -u pair: from -Y through the plate, clear of the wheels; concept review r3 access)"""
-    return [(x, u) for (x, u) in ear_holes(servo) if u < U_C]
-
-
 def ear_holes(servo="DS3218"):
     s = SERVOS[servo]; ec = (-s["shaft"] + s["L"] - s["shaft"]) / 2
     return [(ec + a * s["holes"][0] / 2, U_C + b * s["holes"][1] / 2) for a in (-1, 1) for b in (-1, 1)]
@@ -357,10 +386,9 @@ def ear_holes(servo="DS3218"):
 
 def cradle(servo="DS3218"):
     """the servo mount (concept review r1: pads round the ear holes wrap the case): a U round the case's upper 12 (open toward -u, the
-    servo slides in from the axle side), Ø12 pads under the four ears (cut by the case pocket: >= 2.6 web); two M3 x 20 from -Y through
-    the -u pair (r3: the driver comes up through Ø7 holes in the plate; the +u pair is blocked by the near wheel and the -X roller),
-    nylocs on the ears held through the servo's exit window. The U and the pads take the torque. Returns (solid, cuts); the cuts include
-    the slide-in channel and the nut space."""
+    servo slides in from the axle side), Ø12 pads under the four ears (cut by the case pocket: >= 2.6 web), the ears in slots 0.3 over
+    their thickness (captured in Y); the retainer bar under the servo holds it in u (r4: no ear screws, their driver had no path on the
+    arm). The U and the pads take the torque. Returns (solid, cuts); the cuts include the slide-in channel and the ear slots."""
     s = SERVOS[servo]; base = Y_SERVO_TOP - s["H"]; ye = base + s["ear_y"]; x0, x1 = -s["shaft"], s["L"] - s["shaft"]
     y0 = ye - 12.0; w, c = 2.2, 0.2
     sol = box(x0 - c - w, x0 - c + 0.01, y0, ye, U_C - s["W"] / 2 - c, U_C + s["W"] / 2 + c + w) + \
@@ -370,15 +398,13 @@ def cradle(servo="DS3218"):
         sol += cylY(xh, uh, y0, ye, 6.0, 48)
     cuts = box(x0 - c, x1 + c, base - 1.0, Y_SERVO_TOP + 1.0, U_C - s["W"] / 2 - 40.0, U_C + s["W"] / 2 + c)        # case + slide-in from -u
     ec = (x0 + x1) / 2
-    cuts += box(ec - s["ear_span"] / 2 - 0.3, ec + s["ear_span"] / 2 + 0.3, ye, ye + s["ear_t"] + 6.0, U_C - s["W"] / 2 - 40.0, U_C + s["W"] / 2 + 0.3)   # ears + nuts
-    for (xh, uh) in ear_screws(servo):
-        cuts += cylY(xh, uh, y0 - 1.0, ye + 0.1, 1.7, 24)
+    cuts += box(ec - s["ear_span"] / 2 - 0.3, ec + s["ear_span"] / 2 + 0.3, ye, ye + s["ear_t"] + 0.3, U_C - s["W"] / 2 - 40.0, U_C + s["W"] / 2 + 0.3)   # the ears' slots (captured in Y)
     return sol, cuts
 
 
 # ============================================================== the body's design space (topology) and keep-outs
-COLUMN_POLY = [(-28.6, 14.9), (28.1, 14.9), (31.5, 13.0), (34.5, 10.5), (38.5, 8.0), (41.5, 6.0), (45.5, 4.0), (48.5, 1.5), (48.5, -12.7), (44.0, -17.2),
-               (-13.4, -17.2), (-38.1, 8.0), (-34.5, 10.5), (-31.5, 13.0)]   # X, u: the bay wedge (map - 1.0), the park bisector (X + u >= -30.6), u -17.2 (flush with the plate edge)
+COLUMN_POLY = [(-28.6, 14.9), (28.1, 14.9), (31.5, 13.0), (34.5, 10.5), (38.5, 8.0), (41.5, 6.0), (45.5, 4.0), (48.5, 1.5), (48.5, -11.8), (44.0, -16.3),
+               (-14.3, -16.3), (-38.1, 8.0), (-34.5, 10.5), (-31.5, 13.0)]   # X, u: the bay wedge (map - 1.0), the park bisector (X + u >= -30.6), u -16.3 (the head lane r >= 95 at the drone insert z0 111.3)
 COLUMN_Y = (74.5, 188.0)
 BED_X = -34.0                                            # the +x build's bed: the column's -X flank cut flat here (u 3.4..10.9 x 113 long)
 
@@ -398,9 +424,9 @@ def keepouts(servo="DS3218"):
     din = BLADE["inner_sq"] - STOP["inner"]                                    # 1.2 inward to the stops (no cartridge)
     for nm in ("carrier+", "carrier-", "roller+", "roller-"):
         sg = 1 if nm.endswith("+") else -1
-        K.append(hull_of(P0[nm].translate([-sg * din, 0, 0]), P1[nm], grow=CLR, sweep_x=(STROKE + din) * sg))
+        K.append(swept_grown(servo, nm, -sg * din, sg * STROKE) - stops())   # 1.0 everywhere but the stop faces (r4)
     K.append(cylY(0, U_C, CAM["y"][0] - CLR, CAM["y"][1] + CLR, CAM["lobe"] + CLR, 64))             # the cam's swept disc
-    K.append(cylY(0, U_C, Y_SERVO_TOP + 4.0 - CLR, CAM["y"][0], HORN["disc_d"] / 2 + CLR, 64))       # horn
+    K.append(cylY(0, U_C, Y_SERVO_TOP + 4.0 - CLR, CAM["y"][1] + CLR, HORN["disc_d"] / 2 + CLR, 64))  # horn, over the cam's Y too (r4: its top face had 0)
     K.append(grow_box(servo_solid(servo), CLR))
     sb = tm(servo_solid(servo)).bounds                                         # the servo's way out: straight down -u under its footprint (concept review r3)
     K.append(box(sb[0][0] - CLR, sb[1][0] + CLR, sb[0][1] - CLR, sb[1][1] + CLR, -40.0, sb[0][2] + CLR))
@@ -420,8 +446,7 @@ def keepouts(servo="DS3218"):
         K.append(cylX(yr, RODS["u"], RODS["wall_out"], 70.0, ROD_D / 2 + 1.0, 24))
     K.append(cylX(SPRING_ROD["y"], SPRING_ROD["u"], SPRING_ROD["wall_out"], 70.0, ROD_D / 2 + 1.0, 24))
     sv = SERVOS[servo]; ye = Y_SERVO_TOP - sv["H"] + sv["ear_y"]
-    for (xh, uh) in ear_screws(servo):                                                                # the ear screws and their driver from -Y,
-        K.append(cylY(xh, uh, 50.0, ye - 12.0, 3.5, 24))                                             # through the plate (M3 head Ø5.5 + 1.5)
+    K.append(_grow(retainer(filled=True), 0.2))                                                       # the retainer in its pockets (+0.2)
     K.append(cradle(servo)[1])
     if servo == "MG995":                                                                              # detent arm by head B at park (+1.0); the web and bar keep 1.16 (sweep)
         K.append(box(15.0, WEB["body_x"][0], 70.0, 77.0, -20.0, -14.0))
@@ -433,19 +458,39 @@ def grow_box(m, d):
     return box(lo[0] - d, hi[0] + d, lo[1] - d, hi[1] + d, lo[2] - d, hi[2] + d)
 
 
+_GROWN = {}
+
+
+def swept_grown(servo, nm, x0, x1):
+    """part nm (squeezed datum pose) grown by CLR (exact Minkowski with a ball, 16 segments scaled to circumscribe) and swept along X from
+    x0 to x1 in 0.25 steps (x 1.03 for the scallop: measured >= 1.0, `clearances`); cached per (servo, part)"""
+    key = (servo, nm, x0, x1)
+    if key not in _GROWN:
+        g = parts(servo, open_=False)[nm].minkowski_sum(mf.Manifold.sphere(1.03 * CLR / math.cos(math.pi / 16), 16))   # 1.03: the 0.25 scallop
+        n = max(1, int(math.ceil(abs(x1 - x0) / 0.25)))
+        m = None
+        for i in range(n + 1):
+            t = g.translate([x0 + (x1 - x0) * i / n, 0, 0]); m = t if m is None else m + t
+        _GROWN[key] = m
+    return _GROWN[key]
+
+
 def hull_of(a, b, grow=0.0, sweep_x=0.0):
-    """the swept volume of a part translating along X between two poses, grown by `grow` (as a union of grown hull pieces is heavy:
-    the Minkowski box approximation)"""
-    m = (a + b).hull() if False else a + b + a.translate([sweep_x / 2, 0, 0])
-    lo, hi = tm(m).bounds
+    """the swept volume of a part translating along X from pose a by sweep_x (b: the end pose, included), a pose every 0.5 mm (r4: three
+    poses left gaps at thin features), grown by `grow`"""
+    n = max(1, int(math.ceil(abs(sweep_x) / 0.5)))
+    m = b
+    for i in range(n + 1):
+        m = m + a.translate([sweep_x * i / n, 0, 0])
     return m if grow <= 0 else _grow(m, grow)
 
 
 def _grow(m, d):
-    """Minkowski with a cube of half side d (8 translated copies hulled per convex part would be exact; the union of 6 axis shifts is
-    within d * (sqrt 3 - 1) of it, enough for a keep-out)"""
+    """Minkowski with a ball of radius d, approximated by the union of 14 shifted copies (6 axes, 8 diagonals at d): every direction is
+    covered to at least 0.88 d (the 26-direction gap), measured on the parts (`clearances` in layout.json)"""
     out = m
-    for v in ((d, 0, 0), (-d, 0, 0), (0, d, 0), (0, -d, 0), (0, 0, d), (0, 0, -d)):
+    for v in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)) + tuple((i, j, k) for i in (-1, 1) for j in (-1, 1) for k in (-1, 1)):
+        v = np.array(v, float); v = v / np.linalg.norm(v) * d
         out = out + m.translate(list(v))
     return out
 
@@ -483,11 +528,12 @@ def design_space(servo="DS3218"):
 
 
 # ============================================================== checks
-def space_grid():
+def space_grid(heads="AB"):
+    """the arm's occupied voxels over the 4 cycles in the head frame, for head A, head B or both (each head is checked on its own map)"""
     import glob
     fs = sorted(glob.glob(os.path.join(ROOT, "runs", "head", "v7", "space", "*.npz")))
     if not fs: return None
-    return np.any(np.stack([dict(np.load(f))[h] for f in fs for h in "AB"]), axis=0)
+    return np.any(np.stack([dict(np.load(f))[h] for f in fs for h in heads]), axis=0)
 
 
 SBOX = dict(x=(-70.0, 70.0), y=(60.0, 230.0), u=(-70.0, 80.0))
@@ -512,6 +558,24 @@ def space_check(P, G):
                        Z_min_at_drone=round(float(Z0["insert_cmd"] + lo[2]), 1),
                        X=(round(float(lo[0]), 1), round(float(hi[0]), 1)), Y=(round(float(lo[1]), 1), round(float(hi[1]), 1)),
                        u=(round(float(lo[2]), 1), round(float(hi[2]), 1)))
+    return out
+
+
+def clearances():
+    """the least distance (C, fcl) from each moving part over its travel to the body's envelope (the design space): the carriers and
+    rollers from their stops (inner 4.8) to open, the stop faces themselves excepted (designed contact); servo, horn; the cam at every turn"""
+    import trimesh.collision as tc
+    out = {}
+    for sv in SERVOS:
+        m = tc.CollisionManager(); m.add_object("ds", tm(design_space(sv) - _grow(stops(), 0.6)))
+        din = BLADE["inner_sq"] - STOP["inner"]; P = parts(sv); r = {}
+        for nm in ("carrier+", "carrier-", "roller+", "roller-"):
+            sg = 1 if nm.endswith("+") else -1
+            r[nm] = round(min(m.min_distance_single(tm(P[nm].translate([sg * d, 0, 0]))) for d in np.linspace(-din, STROKE, 15)), 2)
+        for nm in ("servo", "horn"): r[nm] = round(m.min_distance_single(tm(P[nm])), 2)
+        r["cam (every 10 deg)"] = round(min(m.min_distance_single(tm(cam_solid().translate([0, 0, -U_C]).rotate([0, a, 0]).translate([0, 0, U_C])))
+                                            for a in range(0, 180, 10)), 2)
+        out[sv] = r
     return out
 
 
@@ -561,8 +625,9 @@ def strength(sp):
     r = {}
     per_tab = LOADS["pull_unmate"] / 2
     opening = per_tab * math.tan(math.radians(LATCH["pocket"]["wall_deg"])) + LATCH["tab_spring_sq"]
-    r["hold"] = dict(per_tab_N=round(per_tab, 1), opening_N=round(opening, 2), spring_N=sp["F_sq"], margin=round(sp["F_sq"] / opening, 2))
-    r["release"] = {p: round(sp["F_sq"] / v, 1) for p, v in LATCH["release_N"].items()}
+    r["hold"] = dict(per_tab_N=round(per_tab, 1), opening_N=round(opening, 2), spring_N=sp["F_clamp"], margin=round(sp["F_clamp"] / opening, 2),
+                     note=f"at the clamp (inner {CLAMP:g}, cartridge v6; {sp['F_sq']} N at the datum 6.0, cartridge v5)")
+    r["release"] = {p: round(sp["F_clamp"] / v, 1) for p, v in LATCH["release_N"].items()}
     w0 = LATCH["pocket"]["w"] - 0.3
     r["rib_bearing_MPa"] = round(per_tab / (w0 * BLADE["rib"]["d"]), 2)
     lever = BLADE["rib"]["u"] - BOSS["u"][1]
@@ -607,7 +672,7 @@ def strength(sp):
                                              roller_hertz_MPa=round(math.sqrt((T / 12.0) * 2200.0 / (math.pi * 5.0 * B623["w"])), 0),
                                              note="the roller's line contact on the PETG cam at a full DS3218 stall dents it (PETG ~50 MPa): the box "
                                                   "electronics limits the servo (stall current cut, 0.5 s), the cam is a 1 g spare")
-    r["note"] = ("the carriage plate (low stack) is the weak link for the 5.3 / 6.8 N.m head moment; the upper-bound FE (the whole design "
+    r["note"] = ("the carriage plate (low stack) is the weak link for the 5.2 / 6.7 N.m (lever 90.65 to the plate, C) head moment; the upper-bound FE (the whole design "
                  "space filled solid, runs/head/v7/bound_*.json) decides: plate top 74.35 (DEFAULT, asked of the arm system) and the plate / "
                  "root grown below u 0; the hand numbers above are for the 4.0 plate")
     return r
@@ -653,11 +718,11 @@ BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space fille
     "plate top 74.35, plate / root grown to u -18, all-direction supports (r2)": {"+y": 0.70, "+z": 0.61, "+x": 0.44},
     "r3: partial supports (bores X Y, rack teeth u X), across + Y loads, stops, bonded rack bar, bed land, sharp plate / wing corner": {"+x": 0.59},
     "r3: as above with the 12.5 x 10 plate / wing fillet": {"+x": 0.41},
-    "r4: + the pinion's separating force, teeth hold u only, the tail rib, the servo window, the ear screw holes (head A / head B)": {"+x A": 0.434, "+x B": 0.484},
+    "r4: + the pinion's separating force, teeth hold u only, the tail rib, the servo window (head A / head B)": {"+x A": 0.434, "+x B": 0.484},
 }
 
 ACCESS = [
-    "servo: out along -u through the window under its footprint (swept: open at every state of the cycle), ears on the cradle pads, 2 x M3 x 20 from -Y through Ø7 holes in the plate at the -u ear holes (driver swept), nylocs held through the window; horn and cam come out with it",
+    "servo: command OPEN first (the open dwell holds the carriers apart unpowered), then 2 M3 countersunk out of the retainer along +u through the exit window (driver swept), the retainer off, the servo with horn and cam out along -u (swept against the arm and the head's own carriers and rollers); in again the same way",
     "rods: pushed in from +X through the +X walls, through both bosses, into blind sockets in the -X walls, epoxied",
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
@@ -679,7 +744,7 @@ ALTERNATIVES = {
          "X -10 (the parked heads collide) unless the heads differ in Y; rejected"),
     ],
     "cut": [
-        ("one body printed on its side + a bonded rack bar (chosen)", "no joint at the highest moment (5.3 / 6.8 N.m at the plate); the "
+        ("one body printed on its side + a bonded rack bar (chosen)", "no joint at the highest moment (5.2 / 6.7 N.m (lever 90.65 to the plate, C) at the plate); the "
          "column's bending and the plate's lie in the layers (+x build, upper bound 0.43 / 0.48 (A / B) with the r4 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
          "(5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"),
         ("carriage plate printed flat + column bolted on", "the plate and teeth print flat, but the joint sits at the root: 4 M3 inserts "
@@ -725,7 +790,8 @@ def section_svg(P, axis, at, view, title, colors, scale=3.0, size=(360, 330), ke
 
 COLORS = {"design space": "var(--ds)", "carrier+": "var(--blade)", "carrier-": "var(--blade2)", "roller+": "var(--roll)", "roller-": "var(--roll)", "cam": "var(--cam)",
           "horn": "var(--horn)", "servo": "var(--servo)", "rods": "var(--rod)", "spring rod": "var(--rod)", "spring": "var(--spring)",
-          "stops": "var(--pin)", "body (drawn interfaces)": "var(--body)", "cartridge": "var(--cart)"}
+          "stops": "var(--pin)", "body (drawn interfaces)": "var(--body)", "cartridge": "var(--cart)", "rack bar": "var(--spring)",
+          "tail rib": "var(--cam)", "retainer": "var(--pin)"}
 
 
 def cartridge_solid(pack="scout", squeeze=4.0):
@@ -781,6 +847,12 @@ def page(R, P_sq, P_op):
     sv.append(section_svg(Ps, "y", 125.0, (0, 2), "Section at the servo Y 125 (ears and pads)", COLORS))
     sv.append(section_svg(Ps, "x", 0.0, (1, 2), "Side section at X 0 (Y along the axle, u up)", COLORS, size=(720, 330)))
     sv.append(section_svg(Ps, "u", RODS["u"], (0, 1), f"Plan section at the rods u {RODS['u']:g} (X across, Y up)", COLORS, size=(360, 420)))
+    for h, svn in (("A", "DS3218"), ("B", "MG995")):                         # the rack tail and its rib, per head (r4), each in its own A frame
+        PT = {"design space": design_space(svn), "body (drawn interfaces)": body_drawn(svn), "tail rib": tail_rib(svn), "rack bar": rack_bar(svn)}
+        sv.append(section_svg(PT, "y", 66.0, (0, 2), f"Head {h}: section at Y 66 through the rack tail and its rib (X across, u up; {'B drawn in its own frame, mirrored on the arm' if h == 'B' else 'A frame'})", COLORS, size=(360, 420)))
+        sv.append(section_svg(PT, "x", 36.0, (1, 2), f"Head {h}: section at X 36 along the tail rib (Y across, u up)", COLORS, size=(720, 330)))
+    PR_ = {"design space": design_space(), "servo": servo_solid("DS3218"), "retainer": retainer(), "body (drawn interfaces)": body_drawn()}
+    sv.append(section_svg(PR_, "u", -14.4, (0, 1), "Plan at u -14.4: the retainer bar under the servo, its two M3 into the bosses (X across, Y up)", COLORS, size=(360, 420)))
     sp = R["spring"]; cm = R["cam"]; st = R["strength"]
     nums = [
         ("Grip", f"blades 3 x 10, inner faces 6.0 squeezed / 11.0 open (stroke 5.0), rib 0.8 into the grip pocket at u 19.4; tip u 21.4 under the slider bar (u 21.9)"),
@@ -804,6 +876,9 @@ def page(R, P_sq, P_op):
                  " (swap target 0.5; peaks at the root's re-entrant corners, across layers)"))
     nums.append(("Compact (C)", R["compact"]))
     nums.append(("Access", "; ".join(ACCESS)))
+    if R.get("clearances"):
+        nums.append(("Clearances to the envelope (C)", "; ".join(f"{sv}: " + ", ".join(f"{k} {v}" for k, v in d.items()) for sv, d in R["clearances"].items()) +
+                     " (moving parts over their travel; the carriers' stop faces are the designed contact)"))
     if R.get("access"):
         nums.append(("Access sweep (C)", "; ".join(f"{k}: open at {v['open_states']} / {v['of']} states" for k, v in R["access"].items())))
     nums.append(("Mass (E)", R["mass_line"]))
@@ -925,7 +1000,11 @@ def main():
     G = space_grid()
     if G is not None:
         sc = {}
+        GA, GB = space_grid("A"), space_grid("B")
+        sc["body (drawn interfaces) A"] = space_check({"body": body_drawn("DS3218")}, GA)["body"]      # the bodies differ (rib, servo): each on its own map
+        sc["body (drawn interfaces) B"] = space_check({"body": body_drawn("MG995")}, GB)["body"]
         for nm, m in P_sq.items():
+            if nm.startswith("body"): continue
             if nm in ("servo",):
                 for sv in SERVOS:
                     sc[f"servo {sv}"] = space_check({sv: servo_solid(sv)}, G)[sv]
@@ -941,6 +1020,7 @@ def main():
     else:
         R["space_summary"] = "space map missing (run head_v7_space.py)"
     R["internal"] = internal_checks()
+    R["clearances"] = clearances()
     R["bound"] = BOUND_RESULTS
     import glob
     fa = os.path.join(ROOT, "runs", "head", "v7", "access", "access_v7_scout_-210_30.json")

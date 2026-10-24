@@ -5,7 +5,8 @@
   - cam (PETG): the two-fold profile (base 4.0, lobe 10.5), 6 thick, on a clamping metal 25T disc horn (radial clamp screw), 2 x M2.5 x 10
     at r 7 in the lobes, M2.5 (horn hole pattern E, CHECK on hand: drill the horn if its holes differ);
   - rack bar (PETG): the m1 rack (tips X 46.5, root 44.25), 5.0 x 14 x 93 (A) / 84 (B), printed on its Y 73.25 face (tooth profile in
-    the layers), epoxied along its back face into the body's web (arm_v5_cad tooth phase).
+    the layers), epoxied along its back face into the body's web (arm_v5_cad tooth phase);
+  - servo retainer (PETG): a 10 wide bar 3.8 thick under the servo with Ø12 ends, 2 M3 x 10 countersunk into heat-set inserts in the body.
 Head B uses the same printed parts mirrored (its carriers are A's turned over: carrier +X of B = mirror of A's, printed as the mirror).
 python3 head_v7_parts.py [A|B] -> runs/head/v7/parts/<name>.stl (head frame) and runs/head/v7/parts/print/<name>.stl (print pose),
 solid_check and print_orient per file."""
@@ -66,7 +67,8 @@ def orient(t, force=None):
 
 def main():
     head = sys.argv[1] if len(sys.argv) > 1 else "A"
-    P = {"carrier_px": carrier(+1), "carrier_mx": carrier(-1), "cam": cam(), "rack_bar": H.rack_bar("MG995" if head == "B" else "DS3218")}
+    P = {"carrier_px": carrier(+1), "carrier_mx": carrier(-1), "cam": cam(), "rack_bar": H.rack_bar("MG995" if head == "B" else "DS3218"),
+         "servo_retainer": H.retainer()}
     if head == "B": P = {k: mirror_x(v) for k, v in P.items()}
     FORCE = {"rack_bar": (1, 1)}                 # the bar on its full-length Y 73.25 face: the tooth profile (X-u) in the layers, the tail step on top
     res = {}
