@@ -64,6 +64,13 @@ class Settings:
     erosion: str = "masked"            # "masked" (drawn-masked eroded filter) | "anchored" | "frozen"
     gate_ties: bool = True              # thin held drawn bodies count by their cover + ties to one body (masked only)
     gate_thin_mm: float = 2.0           # the solid gate's erosion cap: held bodies with half thickness under it are thin
+    # case normalisation: "solid" divides every case by the full solid's compliance; "frame" (option) divides by its
+    # own compliance on the first frame the run reaches (the warm start of a warm-started run, else the design at the
+    # first beta step), so each case counts by how much it worsens from a frame. Against the solid, concentrated loads
+    # and ties swamp the distributed cases (holder organic-v7: each misuse case 1e-4 of the objective), but "frame"
+    # did not lower the worst index (organic-v8 0.596 vs v7 0.569) and spiked once at beta 32, so it stays off.
+    case_norm: str = "solid"
+    held_ties: bool = True              # held bodies (each on its own support patch) tied to one hub body (see _cases)
     gate_member: bool = True            # optimise() raises min_member_mm to what the solid gate needs (gate_member_mm)
     collar_mm: float = 0.0              # optional passive collar round every drawn body (off: anchored erosion does it)
     # finish (23 Oct, Spark: the whole part smooth; only flat contact faces and mounting holes geometric).
@@ -197,13 +204,15 @@ def members_reach(part, m_mm):
     return True
 
 
-def gate_member_mm(part, floor_mm, gate_erode_cap=2.0, gate_erode_min=0.9, margin_mm=1.0, log=print):
+def gate_member_mm(part, floor_mm, gate_erode_cap=2.0, gate_erode_min=0.9, margin_mm=2.25, log=print):
     """minimum member that lets the solid gate pass. nox/solid_check.py erodes the part round every drawn body by
     clip(0.8 x its depth, 0.9, 2.0) mm (depth measured in the finished part, where generated material has fused onto
     the body) and requires the body's core to stay in the main eroded body. Members joining such a body must then be
     thicker than twice that depth; a 3.2 mm frame splits into dozens of pieces at 2.0 mm (holder topo-v1: 72).
     Returns the member size (blueprint rod diameter, mm) = 2 x depth + margin, lowered to the largest size the design
-    space can still route to every drawn body (a setup that cannot host it is reported, not refused)."""
+    space can still route to every drawn body (a setup that cannot host it is reported, not refused).
+    margin 2.25 mm (was 1.0): holder organic-v2 with 5.0 mm members built struts of 5.2 to 6.4 mm whose thinnest
+    joints broke at the gate's 2.0 mm erosion; organic-v3 with 6.25 mm members kept a core in every strut."""
     lab, nb = ndi.label(part.solid.reshape(part.shape), S26)
     if nb == 0:
         return floor_mm
@@ -315,6 +324,8 @@ class Layout:
         if bad:
             raise ValueError(f"layout: zero compliance of the full solid for {bad}: the load sits on fixed nodes")
         self.c_ref = c_ref
+        self.normed = False
+        self.warm = False
         self.hist = []
         self.scale = None
         self.vlim = self.volfrac
@@ -468,9 +479,24 @@ class Layout:
                 n_gate = len(self.cases) - n_real - n_tie
                 self.log(f"layout: gate ties: held bodies thinner than {s.gate_thin_mm} mm ({int(self.cover.sum()):,} "
                          f"cells) count by their cover; {len(free_b) - 1} bodies tied to body {a}")
+        # held ties: a body the main support holds on its own patch (a bolt boss on its seat) needs no material to
+        # stay put, so a boss the load cases do not lean on is left loose (holder smoke run: one corner boss never
+        # joined). With two or more held bodies, a third tie set holds one hub body (the largest unheld body, else the
+        # largest held one) and loads every other held body with 3 forces + 3 moments: each must join the hub.
+        n_held = 0
+        if s.held_ties and len(held_b) >= 2:
+            size = lambda b: int((self.body_lab == b).sum())
+            hub = max(free_b, key=size) if free_b else max(held_b, key=size)
+            fx = np.zeros((part.nn, 3), bool)
+            fx[self._node_mask(self.body_lab == hub).ravel()] = True
+            self.supports["_hub"] = fx
+            for b in held_b:
+                if b != hub:
+                    ties(b, "_hub", "held")
+            n_held = len(self.cases) - n_real - n_tie - n_gate
         self.n_real = n_real
         self.log(f"layout: {n_real} load cases + {n_tie} tie cases ({len(free_b)} bodies tied, {len(held_b)} held by "
-                 f"support '{main}') + {n_gate} gate ties")
+                 f"support '{main}') + {n_gate} gate ties + {n_held} held ties")
 
     # -------------------------------------------------------------------------------------- reachability
     def _reach(self):
@@ -724,7 +750,7 @@ class Layout:
         np.savez_compressed(tmp, x=self.x, it=it, bi=bi, since=since, vlim=self.vlim,
                             scale=self.scale if self.scale else 0.0, hist=np.array(self.hist, float),
                             xold1=st["xold1"], xold2=st["xold2"], low=st["low"], upp=st["upp"], k=st["k"],
-                            stopped=stopped)
+                            stopped=stopped, c_ref=self.c_ref, normed=self.normed)
         os.replace(tmp, path)
 
     def _load(self, path):
@@ -733,6 +759,9 @@ class Layout:
         self.vlim = float(ck["vlim"])
         self.scale = float(ck["scale"]) or None
         self.hist = [tuple(r) for r in ck["hist"]]
+        if "c_ref" in ck.files and len(ck["c_ref"]) == len(self.c_ref):
+            self.c_ref = ck["c_ref"].copy()
+            self.normed = bool(ck["normed"])
         self.mma.load_state(dict(xold1=ck["xold1"], xold2=ck["xold2"], low=ck["low"], upp=ck["upp"], k=ck["k"]))
         return int(ck["it"]), int(ck["bi"]), int(ck["since"]), str(ck["stopped"])
 
@@ -746,6 +775,7 @@ class Layout:
             ijk[:, a] = np.clip(ijk[:, a], 0, other_part.shape[a] - 1)
         flat = np.ravel_multi_index(ijk.T, other_part.shape)
         self.x = np.clip(np.asarray(other_x_full)[flat], 0.0, 1.0)
+        self.warm = True
         self.log(f"layout: warm start from a {other_part.shape} grid (h {other_part.h}): mean x {self.x.mean():.3f}")
 
     def x_hat(self):
@@ -778,6 +808,8 @@ class Layout:
             x = self.symmetrise_design(self.x)
             f = self.fields(x, beta)
             comp, (U, E) = self._compliance(f["rho_e"], rho_g=f["rho_g"])
+            if s.case_norm == "frame" and not self.normed and (self.warm or bi > int(beta_start)):
+                self._renorm(comp)
             J, dJdc, r = self._objective(comp)
             if self.scale is None:
                 self.scale = 10.0 / J
@@ -844,6 +876,17 @@ class Layout:
             self._save(checkpoint, it, bi, since, self.stopped)
         log(f"layout: stopped ({self.stopped}) at it {it}, beta {s.betas[bi]}, {time.time() - t0:.0f} s")
         return self.final(bi)
+
+    def _renorm(self, comp):
+        """case_norm "frame": every case from now on counts by its compliance over its value on this design."""
+        r = comp / self.c_ref
+        self.c_ref = comp.copy()
+        self.normed = True
+        self.scale = None
+        self.mma.reset()
+        o = np.argsort(-r)[:3]
+        self.log("layout: cases renormalised on this frame (case_norm frame); largest solid ratios were "
+                 + ", ".join(f"{self.cases[q].name} {r[q]:.3g}" for q in o))
 
     def _reset_vlim(self, beta):
         """V* at the fixed point of the volume-limit update for the current design at this beta. A beta step (or a warm

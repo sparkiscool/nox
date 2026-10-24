@@ -1,0 +1,12 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 2.98,
+ "mass_tag": "M",
+ "worst_index": 0.56,
+ "worst_case": "insert 60 N (E) at r 8 (C), Lewis 25.4 MPa (E) vs 45 in-layer (E); stall 74 N (E): 0.7",
+ "solid_ok": true,
+ "bed_face": "gear face (Y 72.5, C) down with a 0.3 (C) elephant-foot inset step, boss up",
+ "bed_contact_mm2": 143.0,
+ "note": "drawn (manifold3d), nox/box/arm_v5_cad.py"
+}

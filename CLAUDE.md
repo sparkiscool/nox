@@ -31,7 +31,8 @@ Agents carry theirs in `.claude/agents/`; a session takes `.claude/settings.json
 - `nox/current-parts.md`: every part's state, file and next step; open items and Spark questions.
 - `nox/dimensions.md`: every number (section M: bought parts and mounting data). `nox/parts-list.md`: every bought and printed part with qty and status (on hand / ordered / to buy).
 - `docs/generative.md`: heavy runs, the generative rule, save and print, done = saved.
-- `nox/*.py`: the engine (`noxopt`, `noxopt_local`, `printopt`, `solid_check`, `print_orient`, `render_preview`, `motion` for the motion artifact, `interfaces`, `noxopt_demo` the reference pipeline). After an engine edit run `python3 nox/test_noxopt.py` once.
+- `nox/topo/`: the topology engine, the default for every generated part (`from topo import Part, Settings, optimise`; organic finish; `nox/topo/README.md`). After an engine edit run `cd nox && python3 -m topo.test_topo` once.
+- `nox/*.py`: the tools (`solid_check`, `print_orient`, `render_preview`, `motion` for the motion artifact, `interfaces`). `noxopt`, `noxopt_local`, `printopt`, `noxopt_demo` are the retired engine, kept for old part scripts only; no new part uses them.
 - `nox/box/`, `nox/scout/v3/`, `nox/overseer/`: part docs and scripts. `runs/<part>/<version>/`: one folder per run, never overwritten; board `runs/index.md` (`python3 tools/runs_index.py`). `print/<part>_<version>.<ext>`: print files; the File cell in `current-parts.md` points at them.
 - `tools/pr.py`: open and merge PRs over REST. `tools/amazon-parts-mcp/` + `.mcp.json`: Amazon ASINs, prices and cart links (skill `drone-parts`). `cloud/`: environment setup script and the SessionStart hook; start every cloud session in the "Nox" environment with this repo selected.
 - `nox/log.md`, `nox/print-log.md`: history, newest first. `archive/`: Scout v2 and old queues, never a current design. `claude/`: background research; cite it when a task needs it, never read it by default.

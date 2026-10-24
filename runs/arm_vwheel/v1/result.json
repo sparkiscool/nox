@@ -1,0 +1,12 @@
+{
+ "date": "2026-10-24",
+ "status": "DONE",
+ "mass_g": 2.78,
+ "mass_tag": "M",
+ "worst_index": 0.66,
+ "worst_case": "insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc)",
+ "solid_ok": true,
+ "bed_face": "either face (symmetric, C)",
+ "bed_contact_mm2": 192.0,
+ "note": "drawn (manifold3d), nox/box/arm_v5_cad.py"
+}
