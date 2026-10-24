@@ -173,7 +173,9 @@ def catch_parts():
     out = {}
     for p, t in zip(a.parts, a.meshes()):
         if p["name"].startswith("drone"): continue
-        t = t.copy(); t.apply_transform(SEAT_TO_W); out["catch: " + p["name"]] = man(t)
+        t = t.copy()
+        if t.bounds[0][2] < 100.0: t.apply_transform(SEAT_TO_W)           # seat frame (catch file v7); a file already in W is used as is
+        out["catch: " + p["name"]] = man(t)
     return out
 
 

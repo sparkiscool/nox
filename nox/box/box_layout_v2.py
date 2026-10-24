@@ -131,7 +131,9 @@ def layout(R=113.0, clip=False, bays=None):
     catch = {}
     for p, t in zip(A.parts, A.meshes()):
         if p["name"].startswith("drone"): continue
-        t = t.copy(); t.apply_transform(T); catch[p["name"]] = man(t)
+        t = t.copy()
+        if t.bounds[0][2] < 100.0: t.apply_transform(T)                   # seat frame (catch file v7); a file already in W (funnel v8 on) is used as is
+        catch[p["name"]] = man(t)
     cb = np.array([tm(m).bounds for m in catch.values()])
     rim = float(cb[:, 1, 2].max()); front = float(cb[:, 1, 1].max()); back = float(cb[:, 0, 1].min()); side = float(np.abs(cb[:, :, 0]).max())
     lands = seat_landings(R)
