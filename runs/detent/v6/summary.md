@@ -10,8 +10,8 @@
 - **Roller:** 623ZZ (Ø10 x 4, bought, E) on the 3.0 carbon axle (bore 3), as v2.
 - **Ring v4:** r 12.25..26.5, Y 64..69.9 (C). Rim Y 65.9..69.9 = the roller's width (C). Notch apex r 20.0 (C), cut through where the floor would be under 2.0. Walls to the 80T's bolt pockets 2.24 / 2.34 (C).
 - **Arm v3:** plate Y 70.9..74.4 (3.5, C), bosses r 6.0 (C).
-- **Tower:** webs from Y 65.5, 1.5 over the 80T.
-- **Placement CHOSEN_V8:** th −105, a 13, b 31.2, spring toward −75, hook ψ 315. Tower Q (21.92, −28.56), found by `detent_v6.search_free` on the v7 obstacles. Arm parts and tower clear by 1.0 (C).
+- **Tower:** webs from Y 65.5 (C), 1.5 over the 80T (C).
+- **Placement CHOSEN_V8 (C):** th −105, a 13, b 31.2, spring toward −75, hook ψ 315. Tower Q (21.92, −28.56) (C), found by `detent_v6.search_free` on the v7 obstacles. Arm parts and tower clear by 1.0 (C).
 - **Hold:** two springs x1.3 give **1.065 N·m** (E). That is the DET_HOLD in `swap_system`. Index past a notch at the slow pass, the parked carry and the head-out case are in the frame results.
 
 **Stress** (two springs on a land, hook 10.6 N, roller 24.7 N, E):

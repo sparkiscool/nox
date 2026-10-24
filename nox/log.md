@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (swap arm worker): **swap arm v7 recheck**: carriage plate top 74.35 and insert-lane keep-out Z 89 / 95 (heads v7 asks, DEFAULT; Y_C_min 165.0); rerun 0 overlaps, swap 0.45 / 0.49, XT60 x 1.25° / z 0.84°; review notes folded. Shared: keep-out row (catch, structure told). `box-arm.md` v7
 - 24 Oct (box structure system session): insert keep-outs per the arm / heads v7: carriage Y to 75.35 (plate top 74.35), Z ≥ 89; grabber from r 95 (was 111.5). Variants rerun: fit 0.0, the lanes clear the catch (panel v9 plain) by 2.0 (C on M), box 80.0 L unchanged. `box_layout_v2.py`, dimensions.
 - 24 Oct (control chat, Spark: "we dont need a digest session"): no hub; one task per session with Agent workers inside it, a new cloud session only for heavy runs or a full box; sessions message Spark only for print-ready files or his decisions (`CLAUDE.md`, `docs/sessions.md`). The control session is archived.
 - 24 Oct (tooling, from scout v3): system_check crash probes: protected parts shadow each other (a probe stops at the first solid); failing probe rows Scout v3 (live layout) 21 -> 12, Overseer 28 -> 24, worst margins unchanged (-27.8, -0.0 unshielded); box manifests have no probes. `system_check.py`, `ASSEMBLY.md`.
