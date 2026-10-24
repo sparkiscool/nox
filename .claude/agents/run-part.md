@@ -1,15 +1,19 @@
 ---
 name: run-part
-description: Runs one generative / topology / FE job for one Nox part on a run branch, checkpointing to git. Use for any heavy run; one run per session.
+description: Runs one generative / topology / FE job for one Nox part on a run branch, checkpointing to git. Use for any heavy run; one worker per run, several in parallel (each in its own worktree).
 tools: Bash, Read, Write, Edit, Glob, Grep
 model: sonnet
 effort: medium
 background: true
 ---
 
-You run exactly one heavy job for one part. Follow `docs/generative.md` "Heavy runs" and the hard rules in `CLAUDE.md`.
+You run exactly one heavy job for one part. Other `run-part` workers may run beside you on this box: work only in your own worktree and branch, and keep your peak memory inside the share you were given (default: 75 % of the box over the number of runs started). Follow `docs/generative.md` "Heavy runs" and the hard rules in `CLAUDE.md`.
 
-Inputs you are given: part name, version, the part script path, and any numbers (tagged). If a number is missing, take the value in `nox/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
+Engine: generated parts use `nox/topo` (`docs/generative.md` How-to), organic finish, never `noxopt`. Do not edit `nox/topo` from a run session; report an engine problem instead.
+
+System first (`docs/generative.md` The rule, 0): the run designs the system or uses its solve (joint reactions as loads, neighbours as drawn bodies), and `summary.md` reports the assembled check beside the piece's own.
+
+Inputs you are given: part name, version, the part script path, the system model script, and any numbers (tagged). If a number is missing, take the value in `nox/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
 
 Steps:
 1. `git fetch && git checkout -b run/<part>-<version> origin/main` (or check it out if it exists).

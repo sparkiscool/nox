@@ -1,0 +1,213 @@
+{
+ "arm_rail_A_v1": {
+  "file": "print/box_arm_rail_A_v1.stl",
+  "mass_g": 49.74,
+  "qty": 1,
+  "extents": [
+   32.0,
+   107.0,
+   23.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_plain": 1,
+   "bodies_eroded": 1,
+   "eroded_volumes_mm3": [
+    30476.9
+   ],
+   "necks": [],
+   "drawn_not_in_main": [],
+   "thin_walls": [],
+   "acute_edges": 0,
+   "ok": true
+  }
+ },
+ "arm_rail_B_v1": {
+  "file": "print/box_arm_rail_B_v1.stl",
+  "mass_g": 49.97,
+  "qty": 1,
+  "extents": [
+   32.0,
+   107.0,
+   23.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_plain": 1,
+   "bodies_eroded": 1,
+   "eroded_volumes_mm3": [
+    30612.8
+   ],
+   "necks": [],
+   "drawn_not_in_main": [],
+   "thin_walls": [],
+   "acute_edges": 0,
+   "ok": true
+  }
+ },
+ "arm_vwheel_v1": {
+  "file": "print/box_arm_vwheel_v1.stl",
+  "mass_g": 2.78,
+  "qty": 6,
+  "extents": [
+   24.0,
+   24.0,
+   10.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_plain": 1,
+   "bodies_eroded": 1,
+   "eroded_volumes_mm3": [
+    848.0
+   ],
+   "necks": [],
+   "drawn_not_in_main": [],
+   "thin_walls": [],
+   "acute_edges": 0,
+   "ok": true
+  }
+ },
+ "arm_pinion16_v1": {
+  "file": "print/box_arm_pinion16_v1.stl",
+  "mass_g": 2.98,
+  "qty": 2,
+  "extents": [
+   17.8,
+   17.8,
+   16.0
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_plain": 1,
+   "bodies_eroded": 1,
+   "eroded_volumes_mm3": [
+    1017.0
+   ],
+   "necks": [],
+   "drawn_not_in_main": [],
+   "thin_walls": [],
+   "acute_edges": 16,
+   "ok": true
+  }
+ },
+ "arm_eccbush_v1": {
+  "file": "print/box_arm_eccbush_v1.stl",
+  "mass_g": 0.76,
+  "qty": 2,
+  "extents": [
+   15.0,
+   13.0,
+   6.4
+  ],
+  "watertight": true,
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_plain": 1,
+   "bodies_eroded": 1,
+   "eroded_volumes_mm3": [
+    174.4
+   ],
+   "necks": [],
+   "drawn_not_in_main": [],
+   "thin_walls": [],
+   "acute_edges": 0,
+   "ok": true
+  }
+ },
+ "pinion_geometry": {
+  "rp": 8.0,
+  "ra": 8.9,
+  "rf": 6.75,
+  "rb": 7.518
+ },
+ "loads": {
+  "insert_N": 60.0,
+  "pull_N": 50.0,
+  "carriage_couple_Nm": 6.39,
+  "wheel_axial_N": 228.0,
+  "wheel_axial_N_layout_plate_plane": 165.0,
+  "rail_I_mm4": 10744.0,
+  "rail_sigma_MPa": 5.7,
+  "rail_index": 0.23,
+  "rail_slope_deg": 0.47,
+  "pack_shift_mm": 0.63,
+  "post_bolt_N": 156.0,
+  "flank_normal_N": 323.0,
+  "flank_band_mm": 2.12,
+  "flank_contact_MPa": 60.0,
+  "flank_index": 0.66,
+  "brg_axial_N": 228.0,
+  "brg_C0_N": 670,
+  "pinion_torque_Nm": 0.48,
+  "pinion_lewis_MPa": 25.4,
+  "pinion_index": 0.56,
+  "pinion_stall_lewis_MPa": 31.4,
+  "pinion_stall_index": 0.7,
+  "dflat_MPa": 5.0,
+  "stop_stall_MPa": 6.2,
+  "stop_index": 0.25,
+  "bush_load_N": 52.0,
+  "bush_MPa": 2.8,
+  "bush_index": 0.11,
+  "notes": "E: PETG E 2 GPa, in-layer 45 MPa, across 25 MPa, line-contact yield onset p0 = 1.67 x 55 MPa compressive yield = 92 MPa (Tresca, E); rail bends across layers (printed bottom down, the couple bends it in Y = print Z), so its index uses 25 MPa"
+ },
+ "fit": [
+  {
+   "z0": 32.0,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 1.4,
+   "plate_rail_gap": 1.0,
+   "pinion_rack_overlap_mm3": 0.0,
+   "pinion_rack_gap": 0.083
+  },
+  {
+   "z0": 81.0,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 1.4,
+   "plate_rail_gap": 1.0,
+   "pinion_rack_overlap_mm3": 0.0,
+   "pinion_rack_gap": 0.077
+  },
+  {
+   "z0": 86.1,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "pinion_rack_overlap_mm3": 0.0,
+   "pinion_rack_gap": 0.141
+  },
+  {
+   "z0": 89.6,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "pinion_rack_overlap_mm3": 0.0,
+   "pinion_rack_gap": 0.144
+  },
+  {
+   "z0": 95.6,
+   "wheel_rail_overlap_mm3": 0.0,
+   "wheel_body_gap": 1.0,
+   "stack_rail_gap": 3.0,
+   "plate_rail_gap": 1.0,
+   "pinion_rack_overlap_mm3": 0.0,
+   "pinion_rack_gap": 0.149
+  }
+ ],
+ "roll_max_overlap_mm3": 0.0,
+ "roll_min_gap": 0.063
+}
