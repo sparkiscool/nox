@@ -221,3 +221,21 @@ it  47 beta    8 J  12.7653 vol 0.0329 (dil 0.1067 g -0.001) grey  2.2% ch 0.100
 it  48 beta    8 J  12.6859 vol 0.0329 (dil 0.1068 g -0.001) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.33e+04 45.6s
 it  49 beta    8 J  12.6175 vol 0.0329 (dil 0.1068 g -0.001) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.32e+04 29.6s
 it  50 beta    8 J  12.5424 vol 0.0329 (dil 0.1068 g -0.001) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.3e+04 31.4s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  51 beta    8 J  12.4660 vol 0.0329 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.28e+04 29.4s
+it  52 beta    8 J  12.3977 vol 0.0329 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.26e+04 32.7s
+it  53 beta    8 J  12.3344 vol 0.0328 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.24e+04 65.1s
+it  54 beta    8 J  12.2719 vol 0.0328 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.22e+04 30.9s
+it  55 beta    8 J  12.2242 vol 0.0328 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.21e+04 38.5s
+it  56 beta    8 J  12.1940 vol 0.0327 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.2e+04 44.9s
+it  57 beta    8 J  12.1829 vol 0.0327 (dil 0.1068 g -0.000) grey  2.2% ch 0.100 worst misuse: Overseer motors cut 3.2e+04 28.1s
+layout: beta 8 done: eroded design 32 bodies, main 91.6%; drawn bodies outside the main body: 30
+it  58 beta   16 J  28.9901 vol 0.0302 (dil 0.1079 g +0.010) grey  1.4% ch 0.100 worst misuse: Overseer motors cut 7.63e+04 29.9s
+it  59 beta   16 J  28.9940 vol 0.0287 (dil 0.1065 g -0.003) grey  1.4% ch 0.100 worst misuse: Overseer motors cut 7.63e+04 27.7s
+it  60 beta   16 J  28.9791 vol 0.0291 (dil 0.1066 g -0.002) grey  1.4% ch 0.100 worst misuse: Overseer motors cut 7.62e+04 29.7s
