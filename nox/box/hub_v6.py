@@ -57,6 +57,27 @@ SEAL_R, SEAL_Y = 37.5, 41.0           # the shoulder on bearing 2's outer race o
 SH_R = 43.0                           # shoulder / cavity wall outer r (= the sleeve)
 
 
+COLUMN = dict(len=14.0, w=14.0, pad=3.0, clr=1.1, s0=33.0)   # clr along t: 1.05 perpendicular to the strand's tooth tips (the splice lap is on the belt's back, outside the loop)   # hub v7 system pass (runs v6 1..3: the r 5 column bent, sustained 1.33 / 1.08, F):
+# the detent tower's column is a 14 x 14 block inside the axle loop, 1.0 (perpendicular) off the strand's tooth face (the loop goes on past the tower's free
+# web ends, so no leg may stand outside the loop), from s 33 (1.0 + its pad off the 80T flange) along the strand; its plate pad grows 3.0
+# all round (the gusset into the body, the attachment rule). Alt rejected: legs under P / A (close a window round the strand, review FAIL).
+
+
+def column_foot(ln, w, grow=0.0):
+    """the column's footprint in the arm frame: s along the loop (axis -> axle motor), t across it, its -t edge COLUMN clr off the -strand"""
+    ax = MOTORS6["axle"]; C = math.hypot(ax["xc"], ax["zc"]); ux, uz = ax["xc"] / C, ax["zc"] / C; nx, nz = -uz, ux
+    R1, R2 = 80 * 2 / (2 * math.pi), V.AX_TEETH * 2 / (2 * math.pi); sb = (R1 - R2) / C; cb = math.sqrt(1 - sb * sb)
+    tp = lambda s_: R1 * cb + (s_ - R1 * sb) / (C - (R1 - R2) * sb) * (R2 * cb - R1 * cb)   # the strand's pitch line |t| at s (tangent points)
+    s0 = COLUMN["s0"]; s1 = s0 + ln
+    pts = []
+    for s_, t_ in ((s0, -tp(s0) + 1.0 + COLUMN["clr"]), (s1, -tp(s1) + 1.0 + COLUMN["clr"])):   # off the tooth tips (1.0 inside the pitch line)
+        pts.append((s_ - grow, t_ - grow)) if s_ == s0 else pts.append((s_ + grow, t_ - grow))
+    pts += [(s1 + grow, pts[1][1] + grow + w + grow), (s0 - grow, pts[0][1] + grow + w + grow)]
+    return [(a * ux + b * nx, a * uz + b * nz) for a, b in pts]
+
+
+ENV_OVERLAP = float(os.environ.get("NOX_ENV_OVERLAP", "1.0"))                     # the generated region runs 1.0 into the plate (runs 1 / 2: the field met the plate's underside edge-on at Y 50
+                                      # and left 15 sub-0.25 mm lips there: solid_check's face-connected body count 13 / 16)
 LANE_Y = 53.0                         # arm v7 round 3d: the wheel lanes' floor (the axle tails at Y 54.75 pass 1.75 over it)
 SEAT_SKIP = {("axle", -1, -1)}      # the axle motor's (-1, -1) M3 sits under the detent springs (key line blocked, swap_system access): 3 x M3
                                     # hold it (85 N + 0.6 N.m worst, E) and its tension slide stays free (DEFAULT; turning the square 40 deg to
@@ -137,6 +158,9 @@ def hub_v6_parts():
     D, S = detent6()
     Q = DT.chosen()["Q"]
     tower = S["tower"] + cylY(Q[0], Q[1], L.Y_PLATE0, L.Y_PLATE1, 7.0, 48)      # + a plate pad under the column (joins the spoke)
+    if COLUMN:                                                                   # hub v7 system pass: the column fills the room inside the axle loop
+        foot = column_foot(COLUMN["len"], COLUMN["w"])
+        tower += prism(foot, L.Y_PLATE1 - 0.5, DT.WEB_Y[0] + 0.01) + prism(column_foot(COLUMN["len"], COLUMN["w"], grow=COLUMN["pad"]), L.Y_PLATE0, L.Y_PLATE1)
     mov = S["arm"] + S["spacer"] + S["nut"] + S["roller"] + S["springs"][0] + S["springs"][1]
     ties, tie_cuts = tie_sockets()
     drawn = (sleeve + wall + roof + plate_c + seats + pst + tower + (ties if ties is not None else mf.Manifold())) - post_k
@@ -154,7 +178,7 @@ def hub_v6_parts():
                 lanes = m if lanes is None else lanes + m
     cuts = bore + cav + seat_cuts + post_k + mov + holes + rails + drop + (tie_cuts if tie_cuts is not None else mf.Manifold()) + (lanes if lanes is not None else mf.Manifold())
     if lanes is not None: drawn -= lanes
-    env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
+    env = cylY(0, 0, y0, L.Y_PLATE0 + ENV_OVERLAP, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1 + ENV_OVERLAP, -88.0, 88.0)
     env -= bore + cav + holes + drop
     env -= seat_cuts
     env0 = env - post_k                                                          # the generated region as given (topo organic finish)
@@ -220,6 +244,8 @@ def checks(H=None, verbose=True):
     return gaps
 
 if __name__ == "__main__":
+    if os.environ.get("NOX_ARM", "v7") == "v7":                               # the v7 stack by default (hub v7), as hub_v6_topo.py
+        import arm_v7_layout as S7; S7.use()
     H = hub_v6_parts()
     d = H["drawn"] - H["cuts"]
     print("motors v6", {k: (round(v["xc"], 2), round(v["zc"], 2), round(v["rot"], 1)) for k, v in MOTORS6.items()})

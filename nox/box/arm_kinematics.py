@@ -159,12 +159,12 @@ def build_parts_v6():
     global CART_LOCAL
     CART_LOCAL = latch_cartridge_local
     P = build_parts_v5()                                                   # the shared parts (stub, motors, belt, bearings, bays, grippers)
-    hp = os.path.normpath(os.path.join(HERE_K, "..", "..", "runs", "hub", "v6", "box_hub_v6.stl"))
+    hp = os.path.normpath(os.path.join(HERE_K, "..", "..", "runs", "hub", "v7", "box_hub_v7.stl"))   # hub v7 (system pass); v6 runs superseded
     H = HV.hub_v6_parts()
     if os.path.exists(hp):
-        P["hub"] = Part("hub v6 (topo)", load_dec(hp, 120000), "arm", "#7f8c8d")
+        P["hub"] = Part("hub v7 (topo)", load_dec(hp, 120000), "arm", "#7f8c8d")
     else:
-        P["hub"] = Part("hub v6 (drawn bodies: sleeve, wall, roof, plate, seats, pads, tower)", tm(H["drawn"] - H["cuts"]), "arm", "#7f8c8d")
+        P["hub"] = Part("hub v7 (drawn bodies: sleeve, wall, roof, plate, seats, pads, tower)", tm(H["drawn"] - H["cuts"]), "arm", "#7f8c8d")
     P["railA"] = Part("rail A v2", tm(C6.rail_v2("A")), "arm", "#95a5a6")
     P["railB"] = Part("rail B v2", tm(A.mirror_x(C6.rail_v2("B"))), "armB", "#95a5a6")
     pin = C6.pinion_v2()[0]

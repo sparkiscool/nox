@@ -18,9 +18,10 @@ RAIL_END = 151.0                        # the outer wheel's contact at the comma
 WEB_U7 = (-63.0, 30.0)                  # head A's rack tail: the pinion (u = 55 - z0) stays 6 inside it at the commanded drone insert z0 111.3
 WEB_U7_B = (-54.0, 30.0)                # head B never inserts at the drone (it pulls there at 102.6 and inserts at bays, 101.8 commanded): 6.4 inside;
                                         # its shorter tail clears the detent's springs and tower web (the full -63 tail met them, sweep C)
-Y_C7 = float(__import__("os").environ.get("NOX_YC", "165"))   # round 3b (DEFAULT, hub: one funnel centred on each drone's catch centre = its
-                                        # latch set's centre, the tab line there too): the Overseer set (179.6) clears the low stack's plate top 74.35
-                                        # by 1.0 at Y_C 165 (sweep, M); round 3 had 138 with the tab 30 off (d0cd1a1)
+Y_C7 = float(__import__("os").environ.get("NOX_YC", "167.1"))   # round 3b (DEFAULT, hub: one funnel centred on each drone's catch centre = its
+                                        # latch set's centre, the tab line there too); 24 Oct: 165 -> 167.1 for latch v4's Overseer receiver v2 (its
+                                        # lead end 2.15 longer: the 3.0 capture kept, the arm's Y error ~±1..1.8 > the ±0.7 a trim needed), whose
+                                        # arm-side end then clears the low stack's plate top 74.35 by 1.0 (swap_system Y_C_min 167.1, F); round 3 had 138
 DETENT_SPRING_SCALE = 1.3               # concept review r3 (DEFAULT): passing a notch at a slow step rate (0.5 N.m pull-out, E) with both parked
                                         # heads carrying: 1.31 (1.55 on holding torque); a power cut mid-swap, both parked carrying: 1.14; a head
                                         # just out of a horizontal Overseer bay's side faces: 1.04 (swap_system.power_cut_head_out); x1.5: 1.21 / 1.31 / 1.20
@@ -83,6 +84,8 @@ def _patch_v5():
     z = strokes()
     V.RAIL_R = (V.RAIL_R[0], RAIL_END)
     V.WEB_U = WEB_U7; V.WEB_U_B = WEB_U7_B
+    V.AX_TEETH = int(round(80 / AXLE_RATIO))                                    # the loop strands round the axle motor's 16T
+    L.P20_OD = V.AX_TEETH * 2 / math.pi                                        # the belt models (arm_kinematics belt_axle, detent) on the 16T's pitch d
     V.Z0S = (z["park"], z["wait"], z["bay"], z["drone"], z["insert"], z["bay_cmd"], z["insert_cmd"])
     S6.Z0_INSERT_MAX = z["insert_cmd"]; S6.Z0_BAY_INSERT = z["bay_cmd"]
     if STACK3 == "low": _patch_low()
