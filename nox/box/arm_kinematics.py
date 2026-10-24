@@ -173,8 +173,24 @@ def build_parts_v6():
     P["detent_roller"] = Part("683ZZ roller", tm(Sd["roller"]), "arm", "#aab4be", printed=False)
     P["detent_springs"] = Part("extension springs x2", tm(Sd["springs"][0] + Sd["springs"][1]), "arm", "#c0392b", printed=False)
     P["detent_tower"] = Part("detent anchor pin (the tower is hub v6's)", tm(Sd["anchor"]), "arm", "#e8914f", printed=False)
+    rec = latch_receiver_local()                                          # the demo bay: the latch standard's receiver (the v4i module holds
+    if rec is not None:                                                   # a v3 receiver; the next module version carries the latch's)
+        di = demo_idx()
+        P[f"bay{di}"] = Part("demo bay: latch receiver + lid + strips + XT60E1-M (battery_latch v1)", tm(rec.transform((rotY(90.0 - DB) @ trans(0, 0, L.R))[:3])),
+                             "fixed", "#5b8ac9")
+        P.pop(f"strip{di}", None)
     PARTS_CACHE.clear(); PARTS_CACHE.update(P)
     return P
+
+
+def latch_receiver_local(pack="scout"):
+    """the latch receiver set (seated cartridge coords) in cartridge_local's frame, bottom face of the seated cartridge at Z 0."""
+    import swap_system as SS
+    BL = SS._BL
+    if BL is None: return None
+    d = BL.latch_assembly(pack, "latched"); g = BL.build(pack)["g"]
+    m = d["receiver"] + d["receiver_lid"] + d["receiver_strips"] + d["xt60e1m"]
+    return m.transform(np.array([[-1.0, 0, 0, 0], [0, 0, 1.0, YC - g["Z_T"]], [0, 1.0, 0, 0]]))
 
 
 def build_parts(mode="all"):
@@ -275,11 +291,9 @@ KEYS_V5 = [
     (12.0, DB + 180, ZDRI, ZP, -1, 4), (13.5, DB + 180, ZP, ZP, -1, 4), (14.0, DB + 180, ZP, ZP, 4, 4), (17.0, DB - 90, ZP, ZP, 4, 4),
     (17.9, DB - 90, ZP, ZBAY_SLOW, 4, 4), (18.5, DB - 90, ZP, ZBAY, 4, 4),
     (19.0, DB - 90, ZP, ZBAY, 4, -1), (20.5, DB - 90, ZP, ZP, 4, -1), (21.0, DB - 90, ZP, ZP, 4, 4), (22.0, DB, ZP, ZP, 4, 4)]
-# v6 (swap_system): the commanded drone insert runs to arm_v6_layout.Z0_INSERT_MAX (2 over 95.6 for the arm's lag under the 60 N)
+# v6 (swap_system): the head stops at the seat (95.6); the commanded 1.0 over-travel (arm_v6_layout.Z0_INSERT_MAX) is the arm's elastic lag
 def _keys_v6():
-    import arm_v6_layout as S6
-    zi = S6.Z0_INSERT_MAX
-    return [(t, ph, (zi - 12.0 if za == ZDRI - 12.0 else zi if za == ZDRI else za), zb, fa, fb) for t, ph, za, zb, fa, fb in KEYS_V5]
+    return list(KEYS_V5)
 T_LAND = 6.5                                   # the drone lands (its dead pack appears at the top) while B waits open under the seat
 PHASES = [(0, "both heads open: A at the -90 deg bay, B at the 0 deg position"), (1, "A extends into the bay"), (2.5, "A grips the charged pack"),
           (3, "A retracts with it"), (4.5, "arm turns +90: B under the drone, A (carrying) at 0 deg"), (5.5, "B rises to wait 1 mm under the seat"),
@@ -410,6 +424,7 @@ def allowed(a, b, owners):
 FAR = trimesh.transformations.translation_matrix([0, 5000, 0])
 SQ_STEPS = [round(x * 0.5, 1) for x in range(0, 9)]        # 0 .. 4 by 0.5
 
+FIT_TOL = 0.5                                  # mm3: a touching pair at or under it is a contact (system_check fit_tol_mm3)
 PAIR_MIN = {}                                   # (a, b) -> (min distance over the cycle, t): every checked pair, kept per pair
 
 
@@ -466,8 +481,10 @@ def sweep(dt=0.1, log=print, mode="all"):
                 va = man(objs[a][0].copy().apply_transform(objs[a][1])); vb = man(objs[b][0].copy().apply_transform(objs[b][1]))
                 overlaps.append((a, b, round((va ^ vb).volume(), 2)))
             except Exception: overlaps.append((a, b, -1.0))
+        contacts = [o for o in overlaps if 0.0 <= o[2] <= FIT_TOL]            # faces touching (system_check fit_tol 0.5 mm3): contact, not overlap
+        overlaps = [o for o in overlaps if not (0.0 <= o[2] <= FIT_TOL)]
         rows.append(dict(t=round(t, 3), phi=round(s["phi"], 1), zA=round(s["zA"], 1), zB=round(s["zB"], 1), fA=round(s["fA"], 2), fB=round(s["fB"], 2),
-                         clearance=round(dmin, 2), pair=list(dpair) if dpair else None, overlaps=overlaps))
+                         clearance=round(dmin, 2), pair=list(dpair) if dpair else None, overlaps=overlaps, contacts=contacts))
         log(f"t {t:5.2f} phi {s['phi']:6.1f} zA {s['zA']:5.1f} zB {s['zB']:5.1f} clearance {dmin:6.2f} {dpair} overlaps {overlaps}")
     log(f"sweep {len(rows)} states in {time.time() - t0:.0f} s")
     json.dump(rows, open(f"{OUT}/arm_sweep{'' if mode == 'all' else '_' + mode}.json", "w"))
