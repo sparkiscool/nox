@@ -227,13 +227,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 30, 68, PB + 12.4, PB + 14), cyl(6, PB + 4, PB + 12.4, -dc, 49)])
     g["down_lens"] = np.array([-dc, 49.0, PB + 4]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -50, -34, PB + 9.5, PB + 16)
     g["flow_lens"] = np.array([-dc, -42.0, PB + 9.5])
-    # skid runners: printed PETG sleeves on the skid rails (cage), 23 tall: a side edge reaching under the feet meets them
+    # skid runners: printed PETG sleeves on the skid rails (cage), 27 tall, the lowest points with the feet: a side edge reaching under the feet meets them
     # before the lenses (outside the 45 deg view cone), 2.4 under the down camera board, inside the opening at ±5 deg yaw
     # hub belly pan: printed PETG skid plate under the bottom plate (cage): the electronics' shield from below; the hub
     # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
     g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.6, -2.1)
-    g["runners"] = [box(-dc - 67, -dc + 67, 65 if sy > 0 else -71, 71 if sy > 0 else -65, PB - 13, PB + 10) for sy in (1, -1)]
-    g["feet"] = [cyl(5, PB - 13, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
+    g["runners"] = [box(-dc - 67, -dc + 67, 65 if sy > 0 else -71, 71 if sy > 0 else -65, PB - 17, PB + 10) for sy in (1, -1)]
+    g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     g["PB"] = PB
 
     # guard: two octagon rings round the motor square, 12 off the swept disks; the front flat is a V to the L2 apex
@@ -274,7 +274,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
              feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t6"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-5.6, z_skirt=-5.6)                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             z_rhub=-5.6, z_skirt=-5.6, z_fhub=8.0)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
@@ -622,7 +622,7 @@ man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)]],         # rod ends in the hub and apex sockets
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),                    # the cartridge path: it drops out the bottom, its cartridge guards it below the wheels
-                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=45.0, min_mm=0.0, skip_probes=True)],         # their views (down camera 44.5 / 36.5, flow 23 half angles)
+                     dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=50.0, min_mm=0.0, skip_probes=True)],         # their views (down camera 44.5 / 36.5, flow 23 half angles) + 5.5 guard band (DEFAULT)
            access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),

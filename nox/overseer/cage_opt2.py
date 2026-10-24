@@ -122,7 +122,7 @@ def geometry(p, topo, sizes=None):
         c, s = math.cos(math.radians(d)), math.sin(math.radians(d))
         fixed.add(node(f"root{k}", (75 * c, 75 * s, 22.5)))
     for sy in (1, -1):                                               # front hub: bottom plate front wing (low) and top plate front edge (high)
-        fixed.add(node(f"fhubB{sy:+d}", (98, 12 * sy, -2))); fixed.add(node(f"fhubT{sy:+d}", (58, 20 * sy, 46)))
+        fixed.add(node(f"fhubB{sy:+d}", (98, 12 * sy, p.get("z_fhub", -2.0)))); fixed.add(node(f"fhubT{sy:+d}", (58, 20 * sy, 46)))
         fixed.add(node(f"chin{sy:+d}", (xc + 62, 20 * sy, -30)))   # front of the belly sled (plate-fixed), inside the funnel
     for sx in (1, -1):
         for sy in (1, -1):
