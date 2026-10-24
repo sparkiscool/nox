@@ -1,0 +1,531 @@
+{
+ "part": "hook_latch",
+ "version": "v1",
+ "best": {
+  "r_h": 10.0,
+  "side": 1,
+  "body_dir": -1,
+  "theta": 20.5,
+  "g_unit": 18.38,
+  "footprint": [
+   48.5,
+   37.3
+  ],
+  "valley_margin": 6.42,
+  "t_max": 82.3,
+  "t_min": 33.8,
+  "lateral": [
+   70.9,
+   108.2
+  ],
+  "seat_block_dist": 42.4,
+  "ok": true,
+  "why": ""
+ },
+ "search": [
+  {
+   "r_h": 7.0,
+   "side": 1,
+   "body_dir": 1,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 7.0,
+   "side": 1,
+   "body_dir": -1,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 7.0,
+   "side": -1,
+   "body_dir": 1,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 7.0,
+   "side": -1,
+   "body_dir": -1,
+   "ok": false,
+   "why": "swing > 30 deg"
+  },
+  {
+   "r_h": 8.5,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 24.3,
+   "g_unit": 19.88,
+   "footprint": [
+    56.5,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 91.8,
+   "t_min": 35.4,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 43.2,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 8.5,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 24.3,
+   "g_unit": 18.38,
+   "footprint": [
+    48.5,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 80.8,
+   "t_min": 32.3,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 41.6,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 8.5,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 24.3,
+   "g_unit": 18.38,
+   "footprint": [
+    48.5,
+    37.3
+   ],
+   "valley_margin": 3.41,
+   "t_max": 74.8,
+   "t_min": 26.3,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 38.8,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 8.5,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 24.3,
+   "g_unit": 19.88,
+   "footprint": [
+    56.5,
+    37.3
+   ],
+   "valley_margin": -4.37,
+   "t_max": 71.8,
+   "t_min": 15.3,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 35.6,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 10.0,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 20.5,
+   "g_unit": 20.17,
+   "footprint": [
+    58.0,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 93.3,
+   "t_min": 35.4,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 43.2,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 10.0,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 20.5,
+   "g_unit": 18.38,
+   "footprint": [
+    48.5,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 82.3,
+   "t_min": 33.8,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 42.4,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 10.0,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 20.5,
+   "g_unit": 18.38,
+   "footprint": [
+    48.5,
+    37.3
+   ],
+   "valley_margin": 2.35,
+   "t_max": 73.3,
+   "t_min": 24.8,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 38.3,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 10.0,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 20.5,
+   "g_unit": 20.17,
+   "footprint": [
+    58.0,
+    37.3
+   ],
+   "valley_margin": -5.43,
+   "t_max": 71.8,
+   "t_min": 13.8,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 35.3,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 11.5,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 17.7,
+   "g_unit": 20.46,
+   "footprint": [
+    59.5,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 94.8,
+   "t_min": 35.4,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 43.2,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 11.5,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 17.7,
+   "g_unit": 18.38,
+   "footprint": [
+    48.5,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 83.8,
+   "t_min": 35.3,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 43.2,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 11.5,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 17.7,
+   "g_unit": 18.38,
+   "footprint": [
+    48.5,
+    37.3
+   ],
+   "valley_margin": 1.29,
+   "t_max": 71.8,
+   "t_min": 23.3,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 37.7,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 11.5,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 17.7,
+   "g_unit": 20.46,
+   "footprint": [
+    59.5,
+    37.3
+   ],
+   "valley_margin": -6.49,
+   "t_max": 71.8,
+   "t_min": 12.3,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 35.1,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 13.0,
+   "side": 1,
+   "body_dir": 1,
+   "theta": 15.6,
+   "g_unit": 20.74,
+   "footprint": [
+    61.0,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 96.3,
+   "t_min": 35.4,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 43.2,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 13.0,
+   "side": 1,
+   "body_dir": -1,
+   "theta": 15.6,
+   "g_unit": 18.66,
+   "footprint": [
+    50.0,
+    37.3
+   ],
+   "valley_margin": 6.42,
+   "t_max": 85.3,
+   "t_min": 35.4,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 43.2,
+   "ok": true,
+   "why": ""
+  },
+  {
+   "r_h": 13.0,
+   "side": -1,
+   "body_dir": 1,
+   "theta": 15.6,
+   "g_unit": 18.66,
+   "footprint": [
+    50.0,
+    37.3
+   ],
+   "valley_margin": 0.22,
+   "t_max": 71.8,
+   "t_min": 21.8,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 37.2,
+   "ok": false,
+   "why": "placement rule"
+  },
+  {
+   "r_h": 13.0,
+   "side": -1,
+   "body_dir": -1,
+   "theta": 15.6,
+   "g_unit": 20.74,
+   "footprint": [
+    61.0,
+    37.3
+   ],
+   "valley_margin": -7.55,
+   "t_max": 71.8,
+   "t_min": 10.8,
+   "lateral": [
+    70.9,
+    108.2
+   ],
+   "seat_block_dist": 35.0,
+   "ok": false,
+   "why": "placement rule"
+  }
+ ],
+ "layout": {
+  "r_h": 10.0,
+  "side": 1,
+  "body_dir": -1,
+  "theta": 20.487,
+  "u_s": 10.0,
+  "w_s": -19.9,
+  "v_horn0": 9.0,
+  "v_top": 14.6,
+  "body": [
+   -6.899999999999999,
+   15.9
+  ],
+  "holes": [
+   -9.349999999999998,
+   18.35
+  ],
+  "ear_v": [
+   18.6,
+   21.1
+  ],
+  "drift": 0.633
+ },
+ "plunger": {
+  "L": 27.55,
+  "u0_on_slope": 53.6,
+  "t_contact": 43.6,
+  "rise": 7.0,
+  "guide_bottom": -20.55,
+  "pin_retracted": -23.4,
+  "pin_extended": -16.4
+ },
+ "bolts_uv": [
+  [
+   -13.75,
+   -2.2
+  ],
+  [
+   -13.75,
+   23.1
+  ],
+  [
+   22.75,
+   -2.2
+  ],
+  [
+   22.75,
+   23.1
+  ]
+ ],
+ "flange": {
+  "u": [
+   -19.75,
+   28.75
+  ],
+  "v": [
+   -8.2,
+   29.1
+  ],
+  "w": [
+   -12.6,
+   -8.6
+  ]
+ },
+ "placement": {
+  "valley_margin": 6.42,
+  "t_max": 82.3,
+  "t_min": 33.8,
+  "lateral": [
+   70.9,
+   108.2
+  ],
+  "seat_block_dist": 42.4,
+  "ok": true
+ },
+ "strength": [
+  {
+   "case": "functional 30 N",
+   "plunger_MPa": 2.43,
+   "plunger_index": 0.22,
+   "guide_top_N": 41.1,
+   "guide_wall_MPa": 1.57,
+   "guide_wall_index": 0.15,
+   "guide_wall_index_if_across": 0.29
+  },
+  {
+   "case": "misuse 100 N",
+   "plunger_MPa": 8.09,
+   "plunger_index": 0.47,
+   "guide_top_N": 137.0,
+   "guide_wall_MPa": 5.25,
+   "guide_wall_index": 0.3,
+   "guide_wall_index_if_across": 0.61
+  }
+ ],
+ "clearances": {
+  "gap_R4": 2.0,
+  "gap_R5": 1.0,
+  "plunger_top_proud": 7.0,
+  "drone_lift_mm": 1.41,
+  "plunger_engaged_at_rise": 18.6,
+  "swing_deg": 20.5,
+  "pin_drift_u": 0.63,
+  "plunger_vs_housing_mm3": 0.0,
+  "horn_pin_vs_housing_mm3": 0.0,
+  "horn_pin_vs_plunger_mm3": 0.0,
+  "horn_vs_housing_mm3": 0.0,
+  "servo_vs_housing_mm3": -0.0
+ },
+ "mass": {
+  "housing_g": 17.3,
+  "plunger_g": 2.17,
+  "set_of_4_g": 77.9
+ },
+ "fit": {
+  "+y_x+": {
+   "plunger_ext_vs_wheels_mm3": 0.0,
+   "plunger_ext_vs_cage_mm3": 0.0,
+   "housing_vs_drone_mm3": 0.0,
+   "housing_vs_collar_v6_mm3": 433.3
+  },
+  "+y_x-": {
+   "plunger_ext_vs_wheels_mm3": 0.0,
+   "plunger_ext_vs_cage_mm3": 0.0,
+   "housing_vs_drone_mm3": 0.0,
+   "housing_vs_collar_v6_mm3": 433.3
+  },
+  "-y_x+": {
+   "plunger_ext_vs_wheels_mm3": 0.0,
+   "plunger_ext_vs_cage_mm3": 0.0,
+   "housing_vs_drone_mm3": 0.0,
+   "housing_vs_collar_v6_mm3": 433.3
+  },
+  "-y_x-": {
+   "plunger_ext_vs_wheels_mm3": 0.0,
+   "plunger_ext_vs_cage_mm3": 0.0,
+   "housing_vs_drone_mm3": 0.0,
+   "housing_vs_collar_v6_mm3": 433.3
+  }
+ }
+}
