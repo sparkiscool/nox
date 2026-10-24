@@ -984,6 +984,16 @@ for opt in PAD_OPTIONS:
         for a_, b_ in members:
             if (a_ in live) != (b_ in live): live |= {a_, b_}; grow = True
     members = [m for m in members if m[0] in live and m[1] in live]
+    if os.environ.get("WARM"):                                         # warm start (v4): a previous cage, plus every member at
+        Wr = json.load(open(os.environ["WARM"]))["rods"]                # the new shield nodes, plus members between nodes it uses
+        Wk = {_mkey(np.array(a), np.array(b)) for a, b in Wr}
+        Wn = {tuple(np.round(p_, 2)) for ab in Wr for p_ in ab}
+        new_nodes = {i for i in range(len(N)) if kind[i] == "M" and tuple(np.round(N[i], 2)) not in Wn}
+        n_all = len(members)
+        members = [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or m[0] in new_nodes or m[1] in new_nodes
+                   or (tuple(np.round(N[m[0]], 2)) in Wn and tuple(np.round(N[m[1]], 2)) in Wn)]
+        say(f"   warm start from {os.environ['WARM']}: {len(Wk)} rods, {sum(1 for m in members if _mkey(N[m[0]], N[m[1]]) in Wk)} still feasible; "
+            f"ground structure {n_all} -> {len(members)} members")
     set_collinear(N, kind, members)
     CASES = load_cases(N, kind, live)
     ring_members = [j for j, (a, b) in enumerate(members)
