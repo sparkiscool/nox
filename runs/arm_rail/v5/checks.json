@@ -1,0 +1,38 @@
+{
+ "rail_A_v5": {
+  "file": "runs/arm_rail/v5/box_arm_rail_A_v5.stl",
+  "mass_g": 56.48,
+  "extents": [
+   23.0,
+   123.5,
+   34.0
+  ],
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  },
+  "rods_in_rail_mm3": 2.3,
+  "rod_len": 53.5
+ },
+ "rail_B_v5": {
+  "file": "runs/arm_rail/v5/box_arm_rail_B_v5.stl",
+  "mass_g": 56.48,
+  "extents": [
+   23.0,
+   123.5,
+   34.0
+  ],
+  "bodies": 1,
+  "solid_check": "PASS",
+  "solid_info": {
+   "bodies_eroded": 1,
+   "necks": [],
+   "thin_walls": []
+  },
+  "rods_in_rail_mm3": 2.3,
+  "rod_len": 53.5
+ }
+}

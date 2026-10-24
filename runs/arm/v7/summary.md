@@ -1,6 +1,6 @@
 # Swap arm v7 system pass (round 3d, concept check PASS; recheck with heads v7's plate top 74.35; 24 Oct 2026, swap arm system worker)
 
-System: box swap arm v7, assembled worst index 0.49 in the Overseer insert at the drone 60 N (16T on the rack tail; was v6's 0.44 in the Scout drone insert), fit 0.0 mm³ at 10 poses (M), mass 5592 g (E: the assembly at park with all 9 receivers, the seated packs and both carried packs; Overseer cycle 5924 g, E; turning parts 1623 g, Scout cycle, E; v6's 3232 g (E) had the demo bay only, not like for like; no budget_g for the assembly), CG on the axle within 11.57 mm, unbalance 18.78 g·m at park (E; worst over the cycles: the Overseer cycle bay pick, 1.045 N·m).
+System: box swap arm v7, assembled worst index 0.49 in the Overseer insert at the drone 60 N (16T on the rack tail; was v6's 0.44 in the Scout drone insert), fit 0.0 mm³ at 10 poses (M), mass 5589 g (E: the assembly at park with all 9 receivers, the seated packs and both carried packs; Overseer cycle 5921 g, E; turning parts 1620 g, Scout cycle, E; v6's 3232 g (E) had the demo bay only, not like for like; no budget_g for the assembly), CG on the axle within 11.7 mm, unbalance 18.96 g·m at park (E; worst over the cycles: the Overseer cycle bay pick, 1.044 N·m). Rails v5 (wide ribbon channel, bolt heads under it) since the plate 74.35 recheck: −3 g, nothing else moves.
 
 - **Recheck cost (plate top 74.35, DEFAULT):** the margins the plate took are at their floor: Y_C 165 = Y_C_min 165.0 (C), and the sweep's closest pairs axlesA / rec−180 and axlesB / rec0 read 1.000 (M, `sweep_log_v7_overseer_-180_0.txt`; headA / rec−180 and headB / rec0 1.000 in `sweep_log_v7_scout_-210_30.txt`). Any growth of the carriage stack in Y now moves Y_C (alt: keep the plate at 72.75 and give heads v7 1.6 less, its ask refused).
 
@@ -39,7 +39,7 @@ System: box swap arm v7, assembled worst index 0.49 in the Overseer insert at th
 - Heads v7 grabber concept: https://claude.ai/artifact/JWnuGJqAAvRXxATL5hyBya (`head_v7_concept.py`).
 
 **Pieces (DESIGN, piece pass):**
-- rails A / B v4 (`runs/arm_rail/v4/`);
+- rails A / B v5 (`runs/arm_rail/v5/`; v4 superseded);
 - pinion16 v3 (`runs/arm_pinion16/v3/`);
 - detent v6: ring v4, arm v3 (`runs/detent/v6/`);
 - hub v6 topology (run/hub-v6);

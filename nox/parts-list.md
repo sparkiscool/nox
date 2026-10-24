@@ -82,7 +82,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | 623ZZ bearing 3 x 10 x 4 | 1 | detent v6 roller on the 3.0 carbon axle (arm v7) | to buy | box-arm.md v7, runs/detent/v6/summary.md |
 | GT2 16T pulley, 6 mm belt, 5 mm bore | 1 | arm v7 axle motor (5:1 on the fixed 80T; replaces the 20T) | to buy | box-arm.md v7 |
 | M5 precision shim 5 x 10 x 1 | 6 | arm v5: one under each V-wheel (Y 93..94), the eccentric bush sits on one | to buy | box-arm.md v5 mechanism drawn |
-| M5 x 16 socket head (ISO 4762) + M5 heat-set insert (OD 7.0 x 5.8, E) | 4 + 4 | arm v5 rail to hub post, one per post (the inserts go in hub v6's post tops) | CHECK on hand | box-arm.md v5 mechanism drawn |
+| M5 x 10 socket head (ISO 4762) + M5 heat-set insert (OD 7.0 x 5.8, E) | 4 + 4 | arm rail v5 to hub v6, one per pad (the inserts go in hub v6's pads) | CHECK on hand | rails v5 (was M5 x 16, then x 12) |
 | M3 x 4 grub screw | 2 | arm v5 16T pinions on the D-shafts (tapped in the printed boss) | CHECK on hand | box-arm.md v5 mechanism drawn |
 | DIN 988 shim 3 x 5 x 0.5 | 2 | detent arm v2: under the arm on the roller's M3 (replaces v1's printed spacer) | to buy | box-arm.md v5 detent |
 | M5 x 25 socket head + nyloc | 6 | arm v5 wheel axles | CHECK on hand | box-arm.md v5 |
