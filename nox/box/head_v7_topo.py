@@ -140,7 +140,7 @@ def setup(h):
     padm = box(-H.DECK["pad"]["x"][1], -H.DECK["pad"]["x"][0], *H.DECK["pad"]["y"], H.DECK["u"][1], H.DECK["pad"]["u_top"])
     yc = sum(H.DECK["pad"]["y"]) / 2
     padf = pads ^ box(-50, 50, 0, yc, -50, 50); padb = pads ^ box(-50, 50, yc, 300, -50, 50)   # pad halves along Y
-    dyc = 170.2 - yc                                                          # the Overseer CG sits 5.2 past the pads' / sockets' centre in Y
+    dyc = H.Y_C + 5.2 - yc                                                          # the Overseer CG sits 5.2 past the pads' / sockets' centre in Y
     cgp = 3 * Ov * dyc / (yc - H.DECK["pad"]["y"][0])                         # 3 g at the CG: a couple on the pad halves
     for sx in (1, -1):
         case(f"handling 3 g in + 2 g along {'+' if sx > 0 else '-'}X, Overseer cartridge carried (CG 5.2 off in Y) [handling]",

@@ -3,10 +3,25 @@
  "dt": 1.0,
  "body": "design space (envelope)",
  "states": 328,
- "states_with_overlaps": 0,
+ "states_with_overlaps": 4,
  "min_clearance": 0.0,
- "overlaps": {},
+ "overlaps": {
+  "bushA / rec-180": 1.31,
+  "bushB / rec0": 1.31
+ },
  "closest": [
+  [
+   "headA",
+   "rec-180",
+   0.194,
+   2.0
+  ],
+  [
+   "headB",
+   "rec0",
+   0.194,
+   17.9
+  ],
   [
    "headA",
    "pack charged",
@@ -20,6 +35,18 @@
    7.0
   ],
   [
+   "headA",
+   "rec-210",
+   0.7,
+   3.0
+  ],
+  [
+   "headB",
+   "rec30",
+   0.7,
+   19.0
+  ],
+  [
    "belt_axle",
    "headA",
    1.0,
@@ -30,12 +57,6 @@
    "headB",
    1.0,
    21.76
-  ],
-  [
-   "headA",
-   "rec-210",
-   1.0,
-   3.0
   ],
   [
    "fingA_A",
@@ -74,26 +95,8 @@
    0.0
   ],
   [
-   "headB",
-   "rec30",
-   1.0,
-   19.0
-  ],
-  [
    "fingA_A",
    "headA",
-   1.002,
-   1.0
-  ],
-  [
-   "fingB_A",
-   "headA",
-   1.002,
-   1.0
-  ],
-  [
-   "fingA_B",
-   "headB",
    1.002,
    1.0
   ]

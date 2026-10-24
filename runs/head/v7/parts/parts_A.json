@@ -45,13 +45,13 @@
  },
  "box_head_v7_A_servo_retainer": {
   "bed_face": "+u down",
-  "bed_mm2": 1052.2,
-  "mass_g": 5.04,
+  "bed_mm2": 1202.0,
+  "mass_g": 5.77,
   "bbox": [
-   41.5,
+   52.5,
    70.5,
    3.8
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_servo_retainer.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [1927.1], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_A_servo_retainer.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [2216.5], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}"
  }
 }
