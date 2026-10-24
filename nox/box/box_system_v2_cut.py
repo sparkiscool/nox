@@ -1039,7 +1039,7 @@ def run_cut_fe(P, J, finfo, h=4.0, mode="all", only=None, log=print, tag="", see
         # supports: unilateral floor on the feet's bottom nodes, or the +X face
         if c["support"] == "side":
             pn = sel_nodes(Mo, pieces, lambda X: np.ones(len(X), bool)); Xp = Mo.xyz_p(pn)
-            fx = pn[Xp[:, 0] >= Xp[:, 0].max() - 1e-6]; nrm = np.array([-1.0, 0, 0])
+            fx = pn[Xp[:, 0] >= 204.0 - 1e-6]; nrm = np.array([-1.0, 0, 0])             # the +X face layer (sheet inner plane X 206: nodes of the last 2 cells)
         else:
             allp = np.arange(Mo.nP); Xa = Mo.xyz_p(allp)
             fx = np.array([q for k in feet for q in range(Mo.poff[k], Mo.poff[k] + len(Mo.pnodes[k]))]); fx = fx[np.abs(Xa[fx, 2] + 236.0) < 1e-6]; nrm = np.array([0, 0, 1.0])
@@ -1392,6 +1392,83 @@ def report_stage(h=4.0, tag="", t_start=None, peak_gb=None, log=print):
                system_line=system_line, peak_memory_GB=peak_gb, wall_time_s=None if t_start is None else round(time.time() - t_start))
     json.dump(res, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=float)
     return dict(P=P, J=J, finfo=finfo, fe=fe, fb=fb, tab=tab, sn=sn, snb=snb, mc=mc, pp=pp, scj=scj, system_line=system_line, rz=rz, rec=rec, res=res, cutd=cutd)
+
+
+def write_summary(R, sizing_rows, runinfo, path):
+    """summary.md from the report_stage results (tags: C drawn / layout, M mesh, E estimate, F this FE)."""
+    P, J, finfo, fe, fb, tab, sn, snb, mc, pp, scj, rz, rec, res, cutd = (R[k] for k in ("P", "J", "finfo", "fe", "fb", "tab", "sn", "snb", "mc", "pp", "scj", "rz", "rec", "res", "cutd"))
+    nbolt = {"M3": 0, "M5": 0}
+    for j in J:
+        for s in j["sites"]: nbolt[s["size"]] += 1
+    over = {k: t for k, t in tab.items() if t["over"]}
+    nj = sum(1 for j in J if j["sites"]); nj0 = [f"{j['a']} | {j['b']} ({j['area'] / 100:.1f} cm2)" for j in J if not j["sites"]]
+    L = ["# Box structure v2: the cut of the round 2 field and the system FE on the cut assembly (`nox/box/box_system_v2_cut.py`)", "",
+         "Status: RUN RECORD of candidates for the piece topology runs, not parts. Nothing goes to print/. Tags: C drawn / layout, M mesh, E estimate, F this FE model (voxel h %g, piece-labelled)." % fe["h"], "",
+         f"System: {R['system_line']}", "",
+         f"Weight: structure {mc['structure_g']:.0f} g (M, {len(P)} pieces PETG 1.27 g/cm3 + {len(finfo['feet'])} TPU feet 1.22), was 4919 g (E) for the round 2 field; whole box with the cartridges, arm, funnel and electronics lumps {rec['box_with_lumps_g']} g (E), CG {rec['box_with_lumps_cg']} (E, W); structure CG {mc['cg']} (M).",
+         f"Stiffness (F, h {fe['h']:g}): stub tilt {sn.get('stub_tilt_mrad')} mrad at 57 N + 5.9 N.m (target <= 10, k {sn.get('stub_k_Nm_per_mrad')} N.m/mrad against >= 0.59); worst bay rotation about the axle relative to the stub {sn['bay_rot_worst_mrad']} mrad in `{sn['bay_rot_worst_case']}` (target <= 2.6). Lower bound with only the bolt areas bonded: " +
+         (f"stub tilt {snb.get('stub_tilt_mrad')} mrad, bay rotation {snb['bay_rot_worst_mrad']} mrad." if snb else "not run."),
+         f"Strength: worst piece index {res['worst_index']:.2f} ({res['worst_piece']}, {res['worst_case']}); targets 0.5 functional / 1.0 misuse and sustained, aim 0.8: {len(over)} of {len(P)} pieces over target.",
+         f"Solid: solid_check PASS on {res['solid_check_pass_n']} of {len(P)} pieces ({res['solid_check_n']} run); a FAIL is a cut that is not a candidate.", "",
+         "## Pieces", "", "| Piece | Qty | Envelope X / Y / Z (M) | Mass M | Worst index (case) | Bed face, contact | Joints | solid_check |", "|---|---|---|---|---|---|---|---|"]
+    jb = {}
+    for j in J:
+        if j["sites"]: jb.setdefault(j["a"], []).append(f"{j['b']} {len(j['sites'])}x{j['size']}"); jb.setdefault(j["b"], []).append(f"{j['a']} {len(j['sites'])}x{j['size']}")
+    for k in P:
+        e = pp[k]["extents"]; t = tab[k]
+        L.append(f"| {k} | 1 | {e[0]:.0f} x {e[1]:.0f} x {e[2]:.0f} | {mc['rows_g'][k]} g | {t['worst']:.2f} ({t['worst_case'][:34]}) | {pp[k]['face']}, {pp[k]['bed_mm2']:.0f} mm2 | {'; '.join(jb.get(k, [])) or '-'} | {'PASS' if scj.get(k, {}).get('ok') else 'FAIL' if k in scj else 'not run'} |")
+    L += ["", f"TPU feet: {len(finfo['feet'])} x O20 x 5 (E) under the floor patches of the field (M areas {', '.join(f'{f_['area'] / 100:.1f}' for f_ in finfo['feet'])} cm2) on O16 x 6 pads with an M3 insert.", ""]
+    L += ["## Cut and joints", "",
+          f"- Source: `runs/box_system/v2/topo_r2/density.npz` (g3000), cubic x4 to a 2 mm grid, 0.5 surface (M); the drawn bodies (pads, seat posts, stub, electronics bosses) exact; keep-outs of round 2 (grown 1) cut exact; features thinner than 2.3 mm removed (voxel opening, M); each piece finished by a 0.5 mm voxel opening (r 1.2) and a smooth 0.5 iso-surface (+-0.25 mm).",
+          f"- Regions (DEFAULT, planes and wedges): mast |X| < ~85, Y < 20; rear frames; seat-post bridge Y > 266; 9 bay bodies (30 deg wedges, r > 140, Y > 60); top frame Z > 110 split at X 0; links = the rest. Size splits (180 cube): the mast in Z at {', '.join(f'{c}' for c in [s_['at'] for s_ in cutd.get('splits', [])]) or 'see log'}; the top frame at Y ~150; the Overseer bay bodies at Y ~122..148 (DEFAULT 158 put the lap zone Y 150..166 on the middle bolt row at Y 165, so the planes sit between the rows).",
+          f"- Joints: {nj} bolted tab laps ({nbolt['M3']} x M3 + {nbolt['M5']} x M5 heat-set inserts); each lap = a lug of one piece on a recess of the other (overlap 14 for M3 / 18 for M5, lug 16 / 20 wide with O12 / O16 pad and >= 2.0 web, 6 / 8 thick, insert boss wall >= 4), screw access O10 x 10 clear. Interfaces left without a bolt (contact only): {len(nj0)}: {', '.join(nj0[:12])}{' ...' if len(nj0) > 12 else ''}.",
+          "- Bolt count and size iterated once from the joint wrenches of the first FE (M3 up to 6, else M5, index aim 0.8; capacities E: heat-set pull-out 300 / 700 N, lug bearing 600 / 1300 N at SF 1):", ""]
+    ch = [r for r in sizing_rows if r["now"] != r["was"]]
+    L += ["| Joint | Plane | Worst bolt index (first FE) | Was | Now |", "|---|---|---|---|---|"] + [f"| {r['joint']} | {r['plane']} | {r['worst_index']:.2f} | {r['was']} | {r['now']}{' (still over)' if r['over'] else ''} |" for r in ch[:40]]
+    L += ["", f"{len(ch)} of {len(sizing_rows)} joints changed." if sizing_rows else "", ""]
+    # joint wrenches
+    jw = []
+    for jk in {k_ for c in fe["cases"].values() for k_ in c["joints"]}:
+        best = max(((np.linalg.norm(c["joints"][jk]["F"]), cn) for cn, c in fe["cases"].items() if jk in c["joints"]))
+        bm = max(((np.linalg.norm(c["joints"][jk]["M_Nmm"]) / 1000.0, cn) for cn, c in fe["cases"].items() if jk in c["joints"]))
+        bi = max(((c["joints"][jk].get("bolt_worst", 0.0), cn) for cn, c in fe["cases"].items() if jk in c["joints"]))
+        jw.append((best[0], jk, best[1], bm[0], bm[1], bi[0], bi[1]))
+    jw.sort(reverse=True)
+    L += ["## Joint wrenches (F, largest per joint over the 18 cases; every joint and case in `req/<piece>.json`)", "",
+          "| Joint | Max F N (case) | Max M N.m (case) | Worst bolt index (case) |", "|---|---|---|---|"]
+    for f_, jk, cf, m_, cm_, bi_, cb_ in jw[:18]:
+        L.append(f"| {jk} | {f_:.0f} ({cf[:28]}) | {m_:.1f} ({cm_[:28]}) | {bi_:.2f} ({cb_[:28]}) |")
+    nover = [jk for f_, jk, cf, m_, cm_, bi_, cb_ in jw if bi_ > 0.8 and jk.split(" | ")[0] in P and jk.split(" | ")[1] in P]
+    L += ["", f"Joints with a bolt index over the 0.8 aim after the iteration: {len(nover)}" + (": " + ", ".join(f"{k_} {next(x[5] for x in jw if x[1] == k_):.2f}" for k_ in nover[:14]) if nover else "") + ".", ""]
+    # floor
+    feet = sorted(fe["foot_owner"]) if "foot_owner" in fe else sorted(finfo["feet"] and [f"foot_{i + 1}" for i in range(len(finfo["feet"]))])
+    L += ["## Floor (TPU feet, unilateral, active set)", "", "| Foot | On piece | x, y (M) | Area cm2 (M) | Standing N | Max N (case) | Cases lifted |", "|---|---|---|---|---|---|---|"]
+    for i, f_ in enumerate(finfo["feet"]):
+        fn = f"foot_{i + 1}"; mx = max(((c["foot_N"].get(fn, 0.0), cn) for cn, c in fe["cases"].items()))
+        lifted = [cn for cn, c in fe["cases"].items() if fn in c["uplift"]]
+        L.append(f"| {fn} | {fe['foot_owner'].get(fn, '?')} | {f_['xy'][0]:.0f}, {f_['xy'][1]:.0f} | {f_['area'] / 100:.1f} | {fe['cases']['standing, Overseer seated']['foot_N'].get(fn, 0):.1f} | {mx[0]:.0f} ({mx[1][:26]}) | {len(lifted)} |")
+    up = {cn: c["uplift"] for cn, c in fe["cases"].items() if c["uplift"]}
+    L += ["", "Uplift per case (a foot with under 0.5 N in the unilateral solve; the two all-bays cases hold the feet, then it is a foot pulled down by more than 0.5 N): " + ("; ".join(f"{cn}: {', '.join(v)}" for cn, v in up.items()) if up else "none") + ".",
+          "Tipping needs a hold-down? No case lifts more than " + str(max((len(v) for v in up.values()), default=0)) + " of " + str(len(finfo["feet"])) + " feet; the box never leaves the floor in the solves (E).", ""]
+    # over target
+    L += ["## Pieces over a target", ""]
+    if not over: L += ["None: every piece is at or under 0.5 functional / 1.0 misuse / 1.0 sustained in the system FE; the aim for the piece runs is 0.8 of those, so the pieces have slack to lose material (the topology runs set the mass).", ""]
+    for k, t in over.items(): L.append(f"- {k}: {', '.join(f'{c} {v:.2f}' for c, v in t['over'].items())} (worst case {t['worst_case']}).")
+    L += ["", "## Rear zone: frame members the boards sit round (M, sections of the cut at Y; PSU X 42..157 Z -170..45 and charger X -162..-44 Z -200..-29 are fixed; the boards are movable)", "",
+          "| Y | Piece | X range | Z range | Section mm2 |", "|---|---|---|---|---|"]
+    for yk, rows in rz.items():
+        for r_ in sorted(rows, key=lambda q: -q["area_mm2"])[:12]:
+            L.append(f"| {yk} | {r_['piece']} | {r_['x'][0]}..{r_['x'][1]} | {r_['z'][0]}..{r_['z'][1]} | {r_['area_mm2']} |")
+    L += ["", "Full lists: `rear_zone.json`.", "", "## Sheets (cladding clipped to the frame; clips are drawn tabs, not structure)", ""]
+    for sn_, cl in finfo["clips"].items():
+        L.append(f"- {sn_}: {len(cl)} clip tabs (O10 stalk to 0.2 off the sheet, M3 insert): " + "; ".join(f"{c_['piece']} at {tuple(round(v) for v in c_['at'])} stalk {c_['stalk_len']} mm" for c_ in cl))
+    L += ["", "## Findings for the system session", "",
+          "- **Round 2 drawn the receiver bosses at the wrong place.** `box_system_topo_v2r2.bosses()` translated them to z = z_c + Z_T, but z_c (0.85 / 85.8 Scout, 0.85 / 85.5 / 163.8 Overseer) is already the cartridge z from the closed end: the bolt rows sat Z_T (42.55 / 85.5) off, e.g. an Overseer row at Y 1.2, outside the receiver (Y 75..255). The receiver meshes show the bolt holes at Y_C - (z_c - Z_T) (Ø3.4: the points sit 1.70 from the hole wall, M). This cut draws its own O12 x 11 bosses at those points (C) and the FE joins every receiver to its bay body there. The round 2 field is not wrong where the pads carry the load (the pads cover the whole receiver), but the loads of round 2 went through the wrong bosses: its bay rotations (0.4 / 1.8 mrad) are not the rotations of a bolted receiver.",
+          "- The field's own receiver-to-mast paths are real (the bay bodies join the mast through the links); the cut keeps them as laps.",
+          "- Seat posts: the cut keeps the 8 O16 x 8 drawn discs with an M3 insert hole in each (the catch's M3 is tight into it, C); the landing overlap with the v9 catch is reported in the System line (drawn wins, M).",
+          "- One floor patch (the e-boss island, 22 cm3) is not joined to the frame: its piece (`epost`) stands on its own TPU foot and carries 1/8 of the electronics lump straight to the floor.", "",
+          "## Run record", "", runinfo]
+    open(path, "w").write("\n".join(L) + "\n")
 
 
 def load_cut(tag=""):

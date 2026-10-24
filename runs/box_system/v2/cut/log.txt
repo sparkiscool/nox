@@ -3119,3 +3119,184 @@ laps 145 s
   bay-180_b:  finish: 146.7 -> 145.6 cm3, 70000 faces
 exported 38 pieces, 5146 g (M, 1.27 g/cm3)
 piece overlaps (mm3): {'bridge ^ topP_2': 0.5, 'bay30 ^ bay0_b': 0.9, 'bay-30 ^ bay0_a': 3.3, 'bay-30 ^ bay0_b': 2.3, 'bay-90 ^ bay-60_b': 0.6, 'bay-90 ^ bay-120_a': 0.6, 'bay-150 ^ bay-180_a': 0.8, 'bay-150 ^ bay-180_b': 1.7, 'bay-210 ^ bay-180_b': 1.2, 'link_1 ^ rearP_low': 0.6, 'link_2 ^ rearN_low': 0.6, 'mast_top ^ mast_mid': 1.8, 'mast_low ^ mast_mid': 1.0, 'bay0_a ^ bay0_b': 0.9, 'bay-120_a ^ bay-120_b': 0.6, 'bay-180_a ^ bay-180_b': 0.9}
+voxels: 118030 cells over 64 bodies at h 4.0 (23 s)
+nodes: 190971 piece nodes -> 167327 after joins, 96 joints (29 s)
+K: 501981 dofs, 29.0 M nonzeros (14 s)
+standing, Overseer seated                          worst 0.10 foot_leg_3  stub rot [-0.1, 0.0, 0.08] mrad  feet 8  (61 s)
+Overseer catch +X+Y diag                           worst 0.20 bay-120_b  stub rot [0.03, -0.26, 0.85] mrad  feet 7  (89 s)
+Overseer catch -X-Y diag                           worst 0.24 bay-210  stub rot [-0.63, 0.13, -0.38] mrad  feet 8  (61 s)
+misuse: Overseer motors cut                        worst 0.16 bay-120_b  stub rot [0.06, -0.34, 1.14] mrad  feet 7  (62 s)
+XT60 insert at the drone 60 N                      worst 0.09 bay-120_a  stub rot [-0.7, -0.05, 0.06] mrad  feet 8  (62 s)
+misuse: head stall at the drone 74 N               worst 0.06 bay-120_a  stub rot [-0.85, -0.06, 0.06] mrad  feet 8  (61 s)
+XT60 insert at the -90 bay 60 N                    worst 0.09 bay-90  stub rot [0.63, 0.09, 0.06] mrad  feet 8  (59 s)
+XT60 pull at the -90 bay 50 N                      worst 0.14 bay-120_a  stub rot [-0.68, -0.06, 0.09] mrad  feet 6  (59 s)
+misuse: head stall at the -90 bay 74 N             worst 0.07 bay-90  stub rot [0.79, 0.11, 0.06] mrad  feet 8  (61 s)
+centring at the -90 bay 7.6 N + 1.05 N.m           worst 0.04 bay-90  stub rot [-0.09, -0.01, 0.21] mrad  feet 7  (63 s)
+XT60 insert at the -120 bay 60 N                   worst 0.08 bay-120_a  stub rot [0.61, 0.16, -0.67] mrad  feet 8  (60 s)
+centring at the -120 bay 7.6 N + 1.05 N.m          worst 0.03 foot_leg_2  stub rot [-0.06, 0.0, 0.14] mrad  feet 8  (63 s)
+stub tilt: XT60 at the drone 57 N + 5.9 N.m        worst 0.06 rearP_up  stub rot [-0.36, -0.02, 0.06] mrad  feet 8  (61 s)
+all bays: 60 N insert                              worst 0.20 bay-180_b  stub rot [1.66, 0.17, 0.11] mrad  feet 7  (12 s)
+all bays: 43.5 N across                            worst 0.34 rearP_up  stub rot [0.23, 1.08, 2.19] mrad  feet 6  (7 s)
+lifted from below 2 g                              worst 0.07 mast_low  stub rot [-0.15, 0.02, 0.15] mrad  feet 8  (55 s)
+misuse: set down hard 5 g                          worst 0.10 mast_low  stub rot [-0.36, 0.05, 0.37] mrad  feet 8  (61 s)
+misuse: knocked over onto +X 5 g                   worst 0.85 bay-30  stub rot [-8.04, 74.95, 25.87] mrad  feet 0  (74 s)
+bolt sizing: 17 of 68 joints change; over target after M5 x 6: []
+voxels: 118030 cells over 64 bodies at h 4.0 (21 s)
+nodes: 190971 piece nodes -> 167327 after joins, 96 joints (27 s)
+K: 501981 dofs, 29.0 M nonzeros (14 s)
+misuse: knocked over onto +X 5 g                   worst 0.18 rearP_low  stub rot [-0.14, 0.11, -1.08] mrad  feet 0  (116 s)
+bolt sizing: 19 of 68 joints change; over target after M5 x 6: []
+features: 8 foot pads, 52 insert holes (0 s)
+  fold rearN2 (1.6 cm3) into topN over 315 mm2
+  fold hub5 (1.3 cm3) into topN over 370 mm2
+  fold hub6 (1.0 cm3) into topN over 213 mm2
+  fold bay-901 (0.4 cm3) into bay-120 over 270 mm2
+  fold bay-902 (0.2 cm3) into bay-120 over 152 mm2
+  fold hub7 (0.1 cm3) into topP over 74 mm2
+  fold bay-1801 (0.1 cm3) into bay-210 over 38 mm2
+  split mast on Z mast 2 at Z 78 (nominal 66, section 35.1 cm2)
+  split mast_12 on Z mast 1 at Z -92 (nominal -80, section 22.8 cm2)
+  split rearP on Z rearP at Z 14 (nominal 28, section 11.6 cm2)
+  split rearN on Z rearN at Z -62 (nominal -48, section 3.3 cm2)
+  split topP on Y topP at Y 152 (nominal 138, section 4.7 cm2)
+  split topN on Y topN at Y 152 (nominal 138, section 6.0 cm2)
+  split bay0 on Y bay0 at Y 148 (nominal 128, section 8.3 cm2)
+  split bay-60 on Y bay-60 at Y 138 (nominal 128, section 7.4 cm2)
+  split bay-120 on Y bay-120 at Y 122 (nominal 128, section 7.4 cm2)
+  split bay-180 on Y bay-180 at Y 130 (nominal 128, section 8.4 cm2)
+  lap rearP~2 | link_4 on Y rear: 3.6 cm2, 1/1 M3 sites (30 candidates)
+  lap link_2 | rearN_low on Y rear: 4.1 cm2, 0/2 M3 sites (83 candidates) rejected {'screw access blocked by X': 119, 'piece would overlap': 1}
+  lap link_5 | mast_top on Y rear: 4.2 cm2, 0/2 M3 sites (41 candidates) rejected {'screw access blocked by X': 16, 'screw access blocked by X keep-out': 20, 'keep-out clips the pad': 26, 'piece X in the way': 19, 'piece would overlap': 1}
+  lap mast_top | link_5 on Y rear: 7.2 cm2, 2/2 M3 sites (35 candidates)
+  lap mast_top | topP_1 on Y rear: 3.3 cm2, 1/1 M3 sites (27 candidates)
+  lap mast_top | topN_1 on Y rear: 8.5 cm2, 2/2 M3 sites (35 candidates)
+  lap mast_low | link_2 on Y rear: 14.5 cm2, 2/2 M3 sites (49 candidates)
+  lap mast_leg | link_4 on Y rear: 12.9 cm2, 2/2 M3 sites (50 candidates)
+  lap rearP_low | link_1 on Y rear: 19.3 cm2, 3/3 M3 sites (61 candidates)
+  lap rearP_up | link_1 on Y rear: 5.1 cm2, 1/1 M3 sites (25 candidates)
+  lap rearP_up | link_5 on Y rear: 3.3 cm2, 1/1 M3 sites (29 candidates)
+  lap rearP_up | topP_1 on Y rear: 4.7 cm2, 1/1 M3 sites (28 candidates)
+  lap rearN_low | link_2 on Y rear: 11.3 cm2, 3/3 M3 sites (53 candidates)
+  lap rearN_up | link_3 on Y rear: 9.1 cm2, 2/2 M3 sites (40 candidates)
+  lap topP_1 | rearP_up on Y rear: 1.0 cm2, 0/1 M3 sites (16 candidates) rejected {'piece X in the way': 21, 'screw access blocked by X': 11}
+  lap mast_top | rearP_up on X mast +: 9.0 cm2, 1/1 M3 sites (41 candidates)
+  lap mast_mid | rearP_low on X mast +: 6.4 cm2, 1/2 M3 sites (35 candidates) rejected {'screw access blocked by X keep-out': 5, 'screw access blocked by X': 8, 'keep-out clips the pad': 17, 'piece would pass the 180 cube': 16}
+  lap mast_mid | rearP_up on X mast +: 8.5 cm2, 0/3 M3 sites (42 candidates) rejected {'keep-out clips the pad': 58, 'screw access blocked by X keep-out': 12, 'screw access blocked by X': 14}
+  lap mast_leg | rearP~2 on X mast +: 3.8 cm2, 1/1 M3 sites (29 candidates)
+  lap floorbar | mast_low on X mast -: 3.4 cm2, 1/1 M3 sites (23 candidates)
+  lap rearN_low | mast_low on X mast -: 1.4 cm2, 0/1 M3 sites (19 candidates) rejected {'piece X in the way': 31, 'screw access blocked by X': 7}
+  lap rearN_up | mast_mid on X mast -: 4.1 cm2, 1/1 M3 sites (25 candidates)
+  lap topN_1 | mast_top on X mast -: 3.1 cm2, 0/2 M3 sites (28 candidates) rejected {'piece would pass the 180 cube': 34, 'screw access blocked by X': 22}
+  lap bridge | topP_2 on Y bridge: 1.7 cm2, 0/2 M3 sites (26 candidates) rejected {'keep-out clips the pad': 12, 'piece X in the way': 22, 'screw access blocked by X': 18}
+  lap bridge | topN_2 on Y bridge: 7.5 cm2, 0/3 M3 sites (58 candidates) rejected {'screw access blocked by X keep-out': 11, 'screw access blocked by X': 38, 'keep-out clips the pad': 42, 'piece X in the way': 25}
+  lap topP_2 | bridge on Y bridge: 34.3 cm2, 2/6 M3 sites (76 candidates) rejected {'screw access blocked by X': 10, 'keep-out clips the pad': 28, 'screw access blocked by X keep-out': 4, 'piece X in the way': 2}
+  lap topN_2 | bridge on Y bridge: 29.6 cm2, 2/6 M3 sites (71 candidates) rejected {'keep-out clips the pad': 26, 'screw access blocked by X': 10, 'screw access blocked by X keep-out': 3, 'piece X in the way': 2}
+  lap bay-150 | bay-180_a on R15: 4.2 cm2, 1/1 M3 sites (25 candidates)
+  lap bay-150 | bay-180_b on R15: 10.6 cm2, 2/2 M3 sites (40 candidates)
+  lap bay0_a | bay30 on R15: 4.8 cm2, 1/1 M3 sites (28 candidates)
+  lap bay0_b | bay30 on R15: 15.9 cm2, 2/2 M3 sites (50 candidates)
+  lap bay-30 | bay0_a on R-15: 16.4 cm2, 2/2 M3 sites (54 candidates)
+  lap bay-30 | bay0_b on R-15: 9.3 cm2, 2/2 M3 sites (37 candidates)
+  lap bay-180_b | bay-210 on R-15: 13.4 cm2, 2/2 M3 sites (49 candidates)
+  lap foot_leg_1 | bay-30 on R-45: 6.4 cm2, 2/2 M3 sites (32 candidates)
+  lap foot_leg_2 | bay-30 on R-45: 5.5 cm2, 2/2 M3 sites (30 candidates)
+  lap bay-210 | link_3 on R-45: 0.7 cm2, 0/1 M3 sites (14 candidates) rejected {'keep-out clips the pad': 20, 'piece X in the way': 8}
+  lap bay-210 | topN_1 on R-45: 11.8 cm2, 2/2 M3 sites (50 candidates)
+  lap bay-210 | topN_2 on R-45: 12.9 cm2, 2/3 M3 sites (45 candidates) rejected {'insert hole in the way': 7, 'keep-out clips the pad': 9}
+  lap bay-60_a | bay-30 on R-45: 5.8 cm2, 2/2 M3 sites (30 candidates)
+  lap bay-60_b | bay-30 on R-45: 9.9 cm2, 2/2 M3 sites (41 candidates)
+  lap bay-90 | bay-60_a on R-75: 3.7 cm2, 1/1 M3 sites (24 candidates)
+  lap bay-90 | bay-60_b on R-75: 9.6 cm2, 2/2 M3 sites (54 candidates)
+  lap bay-120_a | bay-90 on R-105: 7.7 cm2, 2/2 M3 sites (35 candidates)
+  lap bay-120_b | bay-90 on R-105: 5.2 cm2, 1/2 M3 sites (28 candidates) rejected {'keep-out clips the pad': 1}
+  lap bay-150 | foot_leg_3 on R-135: 6.9 cm2, 2/2 M3 sites (33 candidates)
+  lap bay-150 | bay-120_a on R-135: 6.3 cm2, 2/2 M3 sites (31 candidates)
+  lap bay-150 | bay-120_b on R-135: 9.3 cm2, 2/2 M3 sites (38 candidates)
+  lap topP_1 | bay30 on R-135: 6.0 cm2, 1/1 M3 sites (30 candidates)
+  lap topP_2 | bay30 on R-135: 9.7 cm2, 2/4 M3 sites (39 candidates) rejected {'keep-out clips the pad': 3, 'screw access blocked by X': 3}
+  lap bay30 | bay0_a on R-165: 4.8 cm2, 0/2 M3 sites (28 candidates) rejected {'screw access blocked by X': 24, 'screw access blocked by X keep-out': 6, 'piece X in the way': 11, 'keep-out clips the pad': 12, 'piece would overlap': 3}
+  lap bay30 | bay0_b on R-165: 15.9 cm2, 2/2 M3 sites (50 candidates)
+  lap bay-180_a | bay-150 on R-165: 4.2 cm2, 1/1 M3 sites (25 candidates)
+  lap bay-180_b | bay-150 on R-165: 10.6 cm2, 2/2 M3 sites (40 candidates)
+  lap bay-210 | bay-180_b on R-195: 13.4 cm2, 1/1 M3 sites (49 candidates)
+  lap bay0_a | bay-30 on R-195: 16.4 cm2, 2/2 M3 sites (54 candidates)
+  lap bay0_b | bay-30 on R-195: 9.3 cm2, 2/2 M3 sites (37 candidates)
+  lap bay30 | link_1 on Y bay: 1.1 cm2, 0/1 M3 sites (15 candidates) rejected {'keep-out clips the pad': 14, 'screw access blocked by X': 3, 'piece X in the way': 12, 'piece would overlap': 1}
+  lap bay-210 | link_3 on Y bay: 5.5 cm2, 0/2 M3 sites (28 candidates) rejected {'screw access blocked by X': 28, 'piece would overlap': 10, 'keep-out clips the pad': 16, 'screw access blocked by X keep-out': 2}
+  lap link_1 | bay30 on Y bay: 1.3 cm2, 1/1 M3 sites (17 candidates)
+  lap link_1 | bay0_a on Y bay: 15.9 cm2, 2/2 M3 sites (70 candidates)
+  lap link_2 | bay-120_a on Y bay: 11.0 cm2, 3/5 M3 sites (42 candidates) rejected {'screw access blocked by X keep-out': 1}
+  lap link_3 | bay-210 on Y bay: 16.1 cm2, 2/2 M3 sites (65 candidates)
+  lap link_4 | bay-60_a on Y bay: 6.5 cm2, 2/2 M3 sites (32 candidates)
+  lap topN_1 | bay-210 on Y bay: 1.3 cm2, 0/1 M3 sites (19 candidates) rejected {'piece X in the way': 21, 'screw access blocked by X': 10, 'screw access blocked by X keep-out': 5, 'keep-out clips the pad': 2}
+  lap bay0_a | link_1 on Y bay: 6.2 cm2, 0/3 M3 sites (34 candidates) rejected {'screw access blocked by X': 24, 'piece X in the way': 9, 'screw access blocked by X keep-out': 7, 'piece would overlap': 12, 'keep-out clips the pad': 16}
+  lap link_3 | topN_1 on Z top: 4.7 cm2, 1/1 M3 sites (41 candidates)
+  lap link_5 | topP_1 on Z top: 5.5 cm2, 0/2 M3 sites (31 candidates) rejected {'piece X in the way': 46, 'screw access blocked by X': 10, 'keep-out clips the pad': 6}
+  lap topP_1 | link_5 on Z top: 1.0 cm2, 0/1 M3 sites (16 candidates) rejected {'piece X in the way': 27, 'screw access blocked by X': 5}
+  lap topN_1 | topP_1 on X top: 2.8 cm2, 1/1 M3 sites (22 candidates)
+  lap topN_2 | topP_2 on X top: 6.5 cm2, 0/3 M3 sites (36 candidates) rejected {'piece X in the way': 26, 'keep-out clips the pad': 46}
+  lap mast_top | mast_mid on Z mast 2: 10.4 cm2, 0/3 M3 sites (56 candidates) rejected {'screw access blocked by X': 60, 'screw access blocked by X keep-out': 38, 'keep-out clips the pad': 14}
+  lap mast_mid | mast_top on Z mast 2: 35.1 cm2, 3/5 M3 sites (120 candidates) rejected {'screw access blocked by X keep-out': 46, 'keep-out clips the pad': 8, 'screw access blocked by X': 1, 'piece X in the way': 1, 'piece would pass the 180 cube': 1}
+  lap mast_low | mast_mid on Z mast 1: 16.7 cm2, 2/5 M5 sites (57 candidates) rejected {'screw access blocked by X keep-out': 19, 'screw access blocked by X': 3, 'piece would pass the 180 cube': 9, 'keep-out clips the pad': 4}
+  lap mast_leg | mast_mid on Z mast 1: 6.1 cm2, 1/1 M3 sites (30 candidates)
+  lap rearP_low | rearP_up on Z rearP: 4.3 cm2, 1/1 M3 sites (33 candidates)
+  lap rearP_low | rearP_up_b on Z rearP: 7.3 cm2, 2/2 M3 sites (33 candidates)
+  lap rearN_low | rearN_up on Z rearN: 3.3 cm2, 1/1 M3 sites (23 candidates)
+  lap topP_1 | topP_2 on Y topP: 4.7 cm2, 1/1 M3 sites (27 candidates)
+  lap topN_1 | topN_2 on Y topP: 6.0 cm2, 1/1 M3 sites (31 candidates)
+  lap topP_1 | topP_2 on Y topN: 4.7 cm2, 1/1 M3 sites (27 candidates)
+  lap topN_1 | topN_2 on Y topN: 6.0 cm2, 1/1 M3 sites (31 candidates)
+  lap bay0_a | bay0_b on Y bay0: 8.3 cm2, 2/2 M3 sites (56 candidates)
+  lap bay0_b | bay0_a on Y bay0: 3.4 cm2, 0/2 M3 sites (59 candidates) rejected {'screw access blocked by X': 43, 'screw access blocked by X keep-out': 36, 'piece would overlap': 9, 'keep-out clips the pad': 30}
+  lap bay-60_a | bay-60_b on Y bay-60: 7.4 cm2, 2/2 M3 sites (43 candidates)
+  lap bay-60_b | bay-60_a on Y bay-60: 2.1 cm2, 0/2 M3 sites (47 candidates) rejected {'screw access blocked by X': 42, 'keep-out clips the pad': 28, 'screw access blocked by X keep-out': 18, 'piece would overlap': 6}
+  lap bay-120_a | bay-120_b on Y bay-120: 7.4 cm2, 2/2 M3 sites (42 candidates)
+  lap bay-120_b | bay-120_a on Y bay-120: 1.3 cm2, 0/1 M3 sites (29 candidates) rejected {'screw access blocked by X': 29, 'keep-out clips the pad': 12, 'screw access blocked by X keep-out': 13, 'piece would overlap': 4}
+  lap bay-180_a | bay-180_b on Y bay-180: 8.4 cm2, 2/2 M3 sites (56 candidates)
+  lap bay-180_b | bay-180_a on Y bay-180: 1.6 cm2, 0/2 M3 sites (19 candidates) rejected {'keep-out clips the pad': 10, 'piece X in the way': 17, 'screw access blocked by X keep-out': 8, 'screw access blocked by X': 3}
+  rejected candidates: {'screw access blocked by X': 749, 'piece would overlap': 69, 'screw access blocked by X keep-out': 315, 'keep-out clips the pad': 568, 'piece X in the way': 418, 'piece would pass the 180 cube': 81, 'insert hole in the way': 17}
+laps 135 s
+  clips sheet+X: 5 on ['bay0_a', 'bay30', 'epost', 'rearP_up_b']
+  clips sheet-X: 5 on ['bay-150', 'bay-210', 'floorbar', 'rearN_up']
+  clips sheetR: 5 on ['epost', 'mast_low', 'mast_top', 'rearN_up', 'rearP_low']
+  clips sheetF: 5 on ['bridge']
+  epost:  finish: 25.7 -> 25.5 cm3, 70000 faces
+  rearP~2:  finish: 13.0 -> 12.7 cm3, 46824 faces
+  floorbar:  finish: 34.2 -> 33.9 cm3, 70000 faces
+  bridge:  finish: 103.2 -> 102.3 cm3, 70000 faces
+  bay30:  finish: 180.6 -> 179.1 cm3, 70000 faces
+  bay-30:  finish: 291.2 -> 289.1 cm3, 70000 faces
+  foot_leg_1:  finish: 16.0 -> 15.8 cm3, 49812 faces
+  foot_leg_2:  finish: 14.9 -> 14.7 cm3, 46688 faces
+  bay-90:  finish: 144.9 -> 143.7 cm3, 70000 faces
+  foot_leg_3:  finish: 15.7 -> 15.5 cm3, 49640 faces
+  bay-150:  finish: 220.5 -> 218.9 cm3, 70000 faces
+  bay-210:  finish: 147.8 -> 146.0 cm3, 70000 faces
+  link_1:  finish: 63.9 -> 63.2 cm3, 70000 faces
+  link_2:  finish: 52.3 -> 51.5 cm3, 70000 faces
+  link_3:  finish: 39.3 -> 38.6 cm3, 70000 faces
+  link_4:  finish: 29.0 -> 28.6 cm3, 70000 faces
+  link_5:  finish: 9.4 -> 9.1 cm3, 30720 faces
+  mast_top:  finish: 112.6 -> 111.5 cm3, 70000 faces
+  mast_low:  finish: 193.8 -> 192.8 cm3, 70000 faces
+  mast_mid:  finish: 494.4 -> 493.3 cm3, 70000 faces
+  mast_leg:  finish: 35.5 -> 35.1 cm3, 70000 faces
+  rearP_low:  finish: 84.7 -> 83.8 cm3, 70000 faces
+  rearP_up:  finish: 42.2 -> 41.6 cm3, 70000 faces
+  rearP_up_b:  finish: 36.0 -> 35.7 cm3, 70000 faces
+  rearN_low:  finish: 35.7 -> 35.3 cm3, 70000 faces
+  rearN_up:  finish: 121.4 -> 120.8 cm3, 70000 faces
+  topP_1:  finish: 124.9 -> 124.1 cm3, 70000 faces
+  topP_2:  finish: 172.9 -> 172.0 cm3, 70000 faces
+  topN_1:  finish: 153.1 -> 152.2 cm3, 70000 faces
+  topN_2:  finish: 181.1 -> 180.3 cm3, 70000 faces
+  bay0_a:  finish: 100.4 -> 99.3 cm3, 70000 faces
+  bay0_b:  finish: 141.7 -> 140.9 cm3, 70000 faces
+  bay-60_a:  finish: 69.2 -> 68.2 cm3, 70000 faces
+  bay-60_b:  finish: 127.7 -> 126.8 cm3, 70000 faces
+  bay-120_a:  finish: 106.8 -> 105.5 cm3, 70000 faces
+  bay-120_b:  finish: 146.7 -> 145.6 cm3, 70000 faces
+  bay-180_a:  finish: 50.1 -> 49.7 cm3, 70000 faces
+  bay-180_b:  finish: 145.7 -> 144.8 cm3, 70000 faces
+exported 38 pieces, 5140 g (M, 1.27 g/cm3)
+piece overlaps (mm3): {'bridge ^ topP_2': 0.5, 'bay30 ^ bay0_b': 0.9, 'bay-30 ^ bay0_a': 2.6, 'bay-30 ^ bay0_b': 1.4, 'bay-90 ^ bay-120_a': 0.6, 'bay-150 ^ bay-180_a': 0.8, 'bay-150 ^ bay-180_b': 1.4, 'bay-210 ^ bay-180_b': 1.2, 'link_1 ^ rearP_low': 0.6, 'link_2 ^ rearN_low': 0.6, 'mast_top ^ mast_mid': 1.8, 'mast_low ^ mast_mid': 1.1, 'bay0_a ^ bay0_b': 0.9, 'bay-120_a ^ bay-120_b': 0.6, 'bay-180_a ^ bay-180_b': 0.8}
