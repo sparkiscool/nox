@@ -28,7 +28,7 @@ OUT = os.path.join(ROOT, "runs", "head", "v7", "layout"); os.makedirs(OUT, exist
 from arm_cad import box, cylX, cylY, cylZ, hull, tm, mirror_x
 
 # ============================================================== system inputs (dimensions "System box swap: arm" / "latch"; C unless tagged)
-Y_C = 167.1                                      # the grip line (swap arm 24 Oct, DEFAULT: was 165.0; latch v4 receiver v2 lead end +2.15)
+Y_C = float(os.environ.get("NOX_HEAD_YC", "167.1"))                                      # the grip line (swap arm 24 Oct, DEFAULT: was 165.0; latch v4 receiver v2 lead end +2.15)
 DY = round(Y_C - 165.0, 3)                                 # every grabber Y below was laid out at Y_C 165 and rides with the grip line
 U_BOT = 15.4                                    # carried cartridge flat bottom (gripper datum)
 PLATE = dict(x=(-28.0, 28.0), y=(68.75, float(os.environ.get("NOX_PLATE_TOP", "74.35"))), u=(0.0, 40.0))   # top 74.35 under the cartridge: DEFAULT, asked of the arm system (concept review r1; alt 72.75)
