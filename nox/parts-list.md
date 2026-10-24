@@ -17,7 +17,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | Radxa Zero 3W, RS107-D2E0H0W15 (2 GB, no eMMC, no header) | 1 | companion computer | on hand | M, H |
 | microSD ≥ 32 GB A1 | 1 | Radxa boot | CHECK | |
 | DECXIN 2633V2 USB global-shutter camera, 102° | 1 | camera | on hand | A (P); measure lens |
-| M2 heat-set inserts for the camera | 4 | camera mount | CHECK | A |
+| M2.5 heat-set inserts for the camera (OD 3.5 x 5.7 E, Ø3.2 hole) | 4 | camera mount (Spark 23 Oct: the board takes M2.5) | CHECK | A, M |
 | 4S 1500 LiPo, XT60 | 1 + CHECK spares | flight pack | on hand | A (P) |
 | 220 µF 35 V capacitor | 1 | on the battery pads | on hand | |
 | 5 V 5 A UBEC | 1 | Radxa + camera power | on hand | M (typical; measure) |
@@ -30,7 +30,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 ## Overseer (development starting)
 | Part | Qty | Role | Status | Mount data |
 |---|---|---|---|---|
-| S500 frame (**variant CHECK**: Holybro S500 V2 is 480, generic is 500) | 1 | airframe | on hand | M: S500, O |
+| S500 frame, PCB version with carbon fibre landing gear, 2015 edition (Spark 23 Oct, AliExpress item 2251832276919319; 500 wheelbase, listing; arms replaced by printed ones) | 1 | airframe | on hand | M: S500, O |
 | SunnySky X2216 II 880 KV | 4 | propulsion | on hand | M: X2216 |
 | 1045 prop | 4 + spares | propulsion | on hand | M: 1045 |
 | ESCs | 4 | motor drive | CHECK (not recorded) | |
@@ -49,14 +49,14 @@ Shares the Overseer's L2, camera and 4S 6000 pack (above); the Pi 5 is the Overs
 |---|---|---|---|---|
 | EXTEND-A-REACH 1.5-3 ft extension pole, 3/4-5 ACME tip (B08LL28XZW) | 1 | the stick; the unit screws onto its tip | on hand (Spark 23 Oct) | S |
 | Raspberry Pi 5 + microSD ≥ 64 GB (E: ~1 GB/min) | 1 | recorder | on hand (resume) | M: Pi 5 (58 x 49, Ø2.7) |
-| 5 V 5 A UBEC | 1 | Pi + camera | CHECK (box has one) | M: UBEC, Q4 |
+| 5 V 5 A UBEC | 1 | Pi + camera, taped to the shelf side (Spark 23 Oct) | CHECK (box has one) | M: UBEC |
 | 12 V 2 A buck (Pololu D24V22F12 class) | 1 | L2 supply | to buy | S |
 | KCD1 rocker switch | 1 | main power | on hand (Parts & Resource sheet) | S |
 | 12 mm momentary button + 5 mm LED + 330 Ω (typical) | 1 + 1 | record start / stop | to buy | S |
 | 20 mm hook-and-loop strap, 450 mm (E) | 2 | pack | to buy | S |
 | M3 heat-set inserts (Ruthex 5.7 long, Ø4.0 hole, 7 deep) | 2 | camera bracket to the head | on hand | M: inserts |
 | M4 heat-set inserts (Ruthex RX-M4x8.1, Ø5.6 hole, 9.5 deep) + M4 x 12 | 4 + 4 | head to base flange | CHECK | S, M: inserts |
-| M3 x 8, M3 x 10, M2 x 5, M2.5 x 6 | 4, 2, 4, 4 | L2 (3 under the head + 5 in the L2), camera bracket (4 pad + 6 in the insert), camera, Pi | on hand / CHECK | S |
+| M3 x 8, M3 x 12, M2.5 x 6, M2.5 x 6 | 4, 2, 4, 4 | L2 (3 under the head + 5 in the L2), camera bracket (6 pad + 6 in the insert, v7), camera (1.6 board + 4.4 in the post insert), Pi | on hand / CHECK | S |
 | Cat5e 0.5 m, XT60 pigtail, DC 3.5 x 1.35 plug lead | 1 each | wiring | CHECK | |
 
 Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts) and the thread test ring; files in the current-parts rows.
