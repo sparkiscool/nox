@@ -132,3 +132,4 @@ it  60 beta   16 J   7.0423 vol 0.0798 (dil 0.1490 g -0.003) grey  1.9% ch 0.100
 it  61 beta   16 J   6.9727 vol 0.0800 (dil 0.1492 g +0.002) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 54.3 40.9s
 it  62 beta   16 J   6.9407 vol 0.0796 (dil 0.1488 g -0.001) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 54 38.8s
 it  63 beta   16 J   6.9118 vol 0.0797 (dil 0.1489 g -0.001) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 53.7 39.2s
+it  64 beta   16 J   6.8930 vol 0.0798 (dil 0.1489 g -0.001) grey  1.9% ch 0.100 worst cage bump front 100 N (modul 53.6 40.0s
