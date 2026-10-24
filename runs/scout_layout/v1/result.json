@@ -1,0 +1,680 @@
+{
+ "x_ce": 37.05,
+ "x_lead": -54.95,
+ "cart_L": 92,
+ "cart_z": [
+  -44.15685424949238,
+  3.8431457505076168
+ ],
+ "tab_x": -0.45000000000000284,
+ "xt_x": -48.0,
+ "mass": 517.0434963451123,
+ "cg": [
+  0.04300758490481264,
+  -0.5321556281623512,
+  9.719574779309147
+ ],
+ "rod_prop": 12.552275137329438,
+ "face_min": 2.257359312880717,
+ "opening": 70.13192605229297,
+ "plunger": 1.8648197595511498,
+ "arm": 1.0000007629394503,
+ "head": 2.0000015273244145,
+ "path": 2.0000015273244145,
+ "flow_cone_pts": 0,
+ "flow_lens": [
+  62.349999999999994,
+  -2.0,
+  -0.8568542494923834
+ ],
+ "cam_in": 0,
+ "overlaps": [],
+ "feet": [
+  [
+   29.049999999999997,
+   55.0
+  ],
+  [
+   29.049999999999997,
+   -55.0
+  ],
+  [
+   -46.95,
+   55.0
+  ],
+  [
+   -46.95,
+   -55.0
+  ]
+ ],
+ "pogo": [
+  [
+   -10.0,
+   -63.0
+  ],
+  [
+   10.0,
+   -63.0
+  ]
+ ],
+ "pogo_z": -5.656854249492383,
+ "flow_px4": [
+  0.06230699241509518,
+  0.0014678443718376488,
+  0.01057642902880153
+ ],
+ "search": [
+  {
+   "radxa": "top",
+   "ubec": "top-stack",
+   "pogo": 1,
+   "x_ce": 37.05,
+   "mass": 517.0,
+   "cg": [
+    0.04,
+    0.61,
+    9.72
+   ],
+   "wire": 167.4,
+   "prop": 8.4,
+   "face": 41.7,
+   "opening": 0.0,
+   "arm": 27.1,
+   "head": 66.6,
+   "path": 66.6,
+   "post": 8.2,
+   "overseer_ok": false,
+   "hits": [],
+   "ok": false,
+   "score": 173.6
+  },
+  {
+   "radxa": "top",
+   "ubec": "top-stack",
+   "pogo": -1,
+   "x_ce": 37.05,
+   "mass": 517.0,
+   "cg": [
+    0.04,
+    -0.53,
+    9.72
+   ],
+   "wire": 167.4,
+   "prop": 8.4,
+   "face": 41.7,
+   "opening": 0.0,
+   "arm": 27.1,
+   "head": 66.6,
+   "path": 66.6,
+   "post": 8.2,
+   "overseer_ok": true,
+   "hits": [],
+   "ok": true,
+   "score": 172.8
+  },
+  {
+   "radxa": "top",
+   "ubec": "top-tail",
+   "pogo": 1,
+   "x_ce": 38.22,
+   "mass": 517.0,
+   "cg": [
+    0.05,
+    0.61,
+    9.49
+   ],
+   "wire": 156.3,
+   "prop": 6.7,
+   "face": 41.7,
+   "opening": 0.0,
+   "arm": 27.7,
+   "head": 66.6,
+   "path": 66.6,
+   "post": 9.4,
+   "overseer_ok": false,
+   "hits": [
+    "radxaxubec"
+   ],
+   "ok": false,
+   "score": 162.4
+  },
+  {
+   "radxa": "top",
+   "ubec": "top-tail",
+   "pogo": -1,
+   "x_ce": 38.22,
+   "mass": 517.0,
+   "cg": [
+    0.05,
+    -0.53,
+    9.49
+   ],
+   "wire": 156.3,
+   "prop": 6.7,
+   "face": 41.7,
+   "opening": 0.0,
+   "arm": 27.7,
+   "head": 66.6,
+   "path": 66.6,
+   "post": 9.4,
+   "overseer_ok": true,
+   "hits": [
+    "radxaxubec"
+   ],
+   "ok": false,
+   "score": 161.6
+  },
+  {
+   "radxa": "top",
+   "ubec": "wing+",
+   "pogo": 1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    1.7,
+    9.12
+   ],
+   "wire": 199.0,
+   "prop": 8.4,
+   "face": 31.1,
+   "opening": 0.0,
+   "arm": 27.9,
+   "head": 53.7,
+   "path": 53.9,
+   "post": 9.7,
+   "overseer_ok": false,
+   "hits": [],
+   "ok": false,
+   "score": 216.0
+  },
+  {
+   "radxa": "top",
+   "ubec": "wing+",
+   "pogo": -1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    0.56,
+    9.12
+   ],
+   "wire": 199.0,
+   "prop": 8.4,
+   "face": 31.1,
+   "opening": 0.0,
+   "arm": 27.9,
+   "head": 53.7,
+   "path": 53.9,
+   "post": 9.7,
+   "overseer_ok": true,
+   "hits": [],
+   "ok": true,
+   "score": 204.6
+  },
+  {
+   "radxa": "top",
+   "ubec": "wing-",
+   "pogo": 1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    -0.48,
+    9.12
+   ],
+   "wire": 199.0,
+   "prop": 8.4,
+   "face": 31.1,
+   "opening": 0.0,
+   "arm": 27.9,
+   "head": 53.7,
+   "path": 53.9,
+   "post": 9.7,
+   "overseer_ok": false,
+   "hits": [],
+   "ok": false,
+   "score": 203.7
+  },
+  {
+   "radxa": "top",
+   "ubec": "wing-",
+   "pogo": -1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    -1.62,
+    9.12
+   ],
+   "wire": 199.0,
+   "prop": 8.4,
+   "face": 31.1,
+   "opening": 0.0,
+   "arm": 27.9,
+   "head": 53.7,
+   "path": 53.9,
+   "post": 9.7,
+   "overseer_ok": true,
+   "hits": [],
+   "ok": true,
+   "score": 215.2
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "top-stack",
+   "pogo": 1,
+   "x_ce": 37.05,
+   "mass": 517.0,
+   "cg": [
+    0.04,
+    1.43,
+    9.27
+   ],
+   "wire": 257.5,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 7.0,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 8.2,
+   "overseer_ok": false,
+   "hits": [
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 271.8
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "top-stack",
+   "pogo": -1,
+   "x_ce": 37.05,
+   "mass": 517.0,
+   "cg": [
+    0.04,
+    0.28,
+    9.27
+   ],
+   "wire": 257.5,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 7.0,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 8.2,
+   "overseer_ok": true,
+   "hits": [],
+   "ok": true,
+   "score": 260.4
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "top-tail",
+   "pogo": 1,
+   "x_ce": 38.22,
+   "mass": 517.0,
+   "cg": [
+    0.05,
+    1.43,
+    9.05
+   ],
+   "wire": 235.3,
+   "prop": 6.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.2,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.4,
+   "overseer_ok": false,
+   "hits": [
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 249.6
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "top-tail",
+   "pogo": -1,
+   "x_ce": 38.22,
+   "mass": 517.0,
+   "cg": [
+    0.05,
+    0.28,
+    9.05
+   ],
+   "wire": 235.3,
+   "prop": 6.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.2,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.4,
+   "overseer_ok": true,
+   "hits": [],
+   "ok": true,
+   "score": 238.2
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "wing+",
+   "pogo": 1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    2.52,
+    8.67
+   ],
+   "wire": 226.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": false,
+   "hits": [
+    "radxaxubec",
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 252.1
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "wing+",
+   "pogo": -1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    1.37,
+    8.67
+   ],
+   "wire": 226.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": true,
+   "hits": [
+    "radxaxubec"
+   ],
+   "ok": false,
+   "score": 240.6
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "wing-",
+   "pogo": 1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    0.34,
+    8.67
+   ],
+   "wire": 281.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": false,
+   "hits": [
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 285.3
+  },
+  {
+   "radxa": "wing+",
+   "ubec": "wing-",
+   "pogo": -1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    -0.8,
+    8.67
+   ],
+   "wire": 281.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": true,
+   "hits": [],
+   "ok": true,
+   "score": 289.9
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "top-stack",
+   "pogo": 1,
+   "x_ce": 37.05,
+   "mass": 517.0,
+   "cg": [
+    0.04,
+    -0.2,
+    9.27
+   ],
+   "wire": 257.5,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 7.0,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 8.2,
+   "overseer_ok": false,
+   "hits": [],
+   "ok": false,
+   "score": 259.6
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "top-stack",
+   "pogo": -1,
+   "x_ce": 37.05,
+   "mass": 517.0,
+   "cg": [
+    0.04,
+    -1.35,
+    9.27
+   ],
+   "wire": 257.5,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 7.0,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 8.2,
+   "overseer_ok": true,
+   "hits": [
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 271.0
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "top-tail",
+   "pogo": 1,
+   "x_ce": 38.22,
+   "mass": 517.0,
+   "cg": [
+    0.05,
+    -0.2,
+    9.05
+   ],
+   "wire": 235.3,
+   "prop": 6.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.2,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.4,
+   "overseer_ok": false,
+   "hits": [],
+   "ok": false,
+   "score": 237.4
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "top-tail",
+   "pogo": -1,
+   "x_ce": 38.22,
+   "mass": 517.0,
+   "cg": [
+    0.05,
+    -1.35,
+    9.05
+   ],
+   "wire": 235.3,
+   "prop": 6.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.2,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.4,
+   "overseer_ok": true,
+   "hits": [
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 248.8
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "wing+",
+   "pogo": 1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    0.89,
+    8.67
+   ],
+   "wire": 281.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": false,
+   "hits": [],
+   "ok": false,
+   "score": 290.8
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "wing+",
+   "pogo": -1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    -0.26,
+    8.67
+   ],
+   "wire": 281.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": true,
+   "hits": [
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 284.5
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "wing-",
+   "pogo": 1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    -1.29,
+    8.67
+   ],
+   "wire": 226.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": false,
+   "hits": [
+    "radxaxubec"
+   ],
+   "ok": false,
+   "score": 239.8
+  },
+  {
+   "radxa": "wing-",
+   "ubec": "wing-",
+   "pogo": -1,
+   "x_ce": 38.61,
+   "mass": 517.1,
+   "cg": [
+    -0.01,
+    -2.44,
+    8.67
+   ],
+   "wire": 226.9,
+   "prop": 8.7,
+   "face": 27.4,
+   "opening": 48.0,
+   "arm": 8.6,
+   "head": 31.7,
+   "path": 35.8,
+   "post": 9.7,
+   "overseer_ok": true,
+   "hits": [
+    "radxaxubec",
+    "radxaxreceiver"
+   ],
+   "ok": false,
+   "score": 251.3
+  }
+ ],
+ "chosen": {
+  "radxa": "top",
+  "ubec": "top-stack",
+  "pogo": -1
+ },
+ "date": "2026-10-24T20:00",
+ "status": "DONE",
+ "mass_g": 517.0,
+ "mass_tag": "E",
+ "note": "layout, rough shapes; no part saved"
+}

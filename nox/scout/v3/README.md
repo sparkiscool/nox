@@ -16,7 +16,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - **Props on top** (tractor, Spark 14 Oct); prop plane in `dimensions.md` C.
 - **XT60, not contact pads** (Spark 23 Oct: the touch contacts won't work). Battery under the drone in a cartridge on the bottom latch stays (DEFAULT, Spark 14 Oct); the box swap now has to mate and unmate the XT60 along the drone axis (box chat; alternative: hand swap).
 - **Cartridge long side along the box axle** (Spark 16 Oct 17:34).
-- **Shared collar funnel catch**: electromagnet on a steel belly plate, 2 pogo keep-alive pads (Spark 12 / 14 Oct; `dimensions.md` G).
+- **Shared collar funnel catch**: the box's hook latch holds the drone by its R 5 wheels (Spark 23 / 24 Oct: no magnet, no steel belly plate; `nox/box/box-hook-latch.md`), 2 pogo keep-alive pads on the belly (Spark 12 / 14 Oct; `dimensions.md` G).
 - **Full prop cage**, every printed cage part PETG, every rod 3.0 carbon epoxied (Spark 17 Oct 10:39 / 21:45; 19 Oct 19:12: "v2 worse than v1, keep only the bottom battery + funnel fit, full cage back").
 - PX4 version and switches matched to the Overseer (mode ch 5, kill ch 8); no resoldering without asking (`scout.md` Flight setup brief).
 
@@ -32,11 +32,11 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Live video from the Radxa reaches the box (B7).
 
 ### v3 parts to draw (order DEFAULT)
-1. Bottom layout: pack, receiver with latch pockets, contacts, belly plate, pogo pads, underside stack (FC, Radxa, flow) in one sweep (v2 drew it in `archive/scout-v2/s2-receiver.md`; history only).
+1. Bottom layout: **layout v1 done 24 Oct** (`layout.md`, the whole drone, before the topology runs): cartridge v4 92 long with the XT60 at the lead end, receiver v4 envelope with the float carrier, pogo pads at (±10, −63), Radxa + UBEC on the plate top, flow under the nose, 4 feet. Next: receiver v4 and cartridge v4 topology runs.
 2. Cage around the raised prop plane that rolls into the funnel (catch interface `dimensions.md` G).
 3. Camera mount on the nose, outside the cage keep-outs.
 4. Cartridge (Scout size) matching the bay modules (`nox/box/box-case.md`).
 
 ### Open (DEFAULT in brackets, work goes on)
-- How the box mates the XT60 [straight push on the drone axis; box chat sizes the push, the hold and the plug's float].
+- How the box mates the XT60: straight push on the drone axis, sized by the box chat (`dimensions.md` I "XT60 mate"); drone side placed in layout v1 (`layout.md`).
 - PX4 multi-vehicle ids: none set yet (Spark 23 Oct) [Scout `MAV_SYS_ID` 2, Overseer 1 at the next bench session; `claude/research/2026-10-11-multi-drone-coordination.md`].

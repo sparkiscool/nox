@@ -1,0 +1,51 @@
+# Scout v3 layout v1 (24 Oct 2026): the whole drone before the topology runs
+
+Spark 24 Oct: "design it to the latest updates and then show me the design as a whole before the topology runs". This is v3 part 1 (bottom layout) laid out with the rest of the drone around it, so every box and funnel keep-out is checked on one model. Rough shapes: the receiver is the design space for its topology run, the cage is a stick model for part 2. Nothing here is saved or printed.
+
+Script `nox/scout/v3/layout_v1.py` (~3 min). Run `runs/scout_layout/v1/`: `checks.txt` (search table + every check), `result.json`, `motion.html` (artifact: land, latch, swap the pack, take off), `motion.mp4` / `.gif` / `.png`, `receiver_envelope.stl`, `cartridge_v4_envelope.stl`. Numbers: `nox/dimensions.md` V. Drone frame as `dimensions.md` (x nose, y left, z up, plate top 22); seat frame z_s = z − 0.34 (C).
+
+## Latest updates it follows
+- **XT60, no contact pads** (Spark 23 Oct). The pack keeps its own XT60, fixed in the cartridge facing up; the drone's XT60E1-M sits on a ±1.0 float carrier in the receiver (`dimensions.md` I "XT60 mate").
+- **Hook latch, no magnet, no steel belly plate** (Spark 23 / 24 Oct, `nox/box/box-hook-latch.md`). The drone carries only the R 5 wheels at the catch points and keeps the latch zone clear (G (7)).
+- **Props on top, full cage, every rod 3.0, PETG / TPU only** (README Keep).
+- **Box at the drone:** arm v5 rails (worst case C2, Y_C 118: carriage 2.5 past the cartridge's closed end), head under the pack, cartridge flat bottom at ring R 100.
+
+## What it is (DEFAULT unless tagged; numbers in `dimensions.md` V)
+- **Pack and cartridge v4 (Scout):** pack long side nose to tail on the axis, closed end at the nose (toward the swap arm), XT60 at the lead end (tail). Cartridge v3's section (38 x 48) and latch kept; **13 longer (92, C)** for the XT60 bay: 8 lead loop + the 8.1 housing. The pack's XT60 nose sits flush with the cartridge top, so the plug never stands proud; the drone's male shroud enters a recess in the cartridge top. Tab line unchanged (37.5 from the closed end). **Pack position from a CG solve:** closed end x 37.0, tab line x −0.5, CG x 0.04 (E).
+- **XT60 mate:** pack XT60 at x −48.0, mate face = cartridge top (z 3.84, z_s 3.5). Drone XT60E1-M on the float carrier: shroud into the cartridge, flange 1.5 above the cartridge top under a carrier plate that takes the insert push, rear body and cups up through the plate's tail XT60 cut-out to z 19.3 (C). Leads to the FC battery pads under the plate.
+- **Receiver v4 (envelope for its topology run):** the bay interface as before (30° lead-ins, locating faces 0.3, both latch pockets), ceiling z 5.34..7.34 over a 1.5 TPU preload strip, Ø12 columns to the two side plate bolts and a Ø15 one to the nose bolt, the float carrier at the tail, a flow land on a tongue at the nose, the pogo outrigger on −y, the 4 feet. Side walls stop 1.0 short of the arm carriage; the nose end stop is a top-only tab above the carriage corner (z_s ≥ −5).
+- **Pogo pads (shared, G (6)):** 2 pads 10 x 10 face down at (±10, −63) in the catch frame, face z_s −6.0; a 12 x 12 post column under each is free of the drone; the post rises 66° from the axle (inside the 45..135° opening wedge, outside the head's reach). −y and x ±10 keep them off the Overseer v1 down-camera pod (+y) and flow pod (|x| ≤ 15, y ≥ −55).
+- **Electronics (placement search, 24 cases: Radxa top / +y wing / −y wing x UBEC on the Radxa / plate-top tail / +y wing / −y wing x pogo side; objective wire length + 10 x |CG y|):** FC under the plate as built; **Radxa on the plate top** (component side up, M2.5 standoffs 2.0, 8.4 under the swept props) with the **UBEC stacked over it** (9.8 under the props); XR2 at the plate-top tail corner; camera on the nose; flow MTF-02P under the nose. Best case 167 mm of wire; the next feasible (UBEC under the +y wing) 199.
+- **Camera (part 3, rough mount):** board centre (95, 0, 41.2) level between the rings, lens front x 108 = 4 behind the ring line, so both ring rods sit 63° off the lens axis (outside the 70° vertical field); nose cage columns at y ±22 rise to a crown cross bar, out of the 86° horizontal field. 0 drone points in view (C, lens size E Q3).
+- **Flow:** board on the receiver's nose tongue, lens at (62.3, −2.0, −0.86), z_s −1.2 (1.0 above the arm rim sweep); its 23° cone is clear of every drone part by 7.6° (C). PX4 offsets in `dimensions.md` V.
+- **Feet:** 4 TPU pads R 5 at (29, ±55) and (−47, ±55), bottoms 3 under the cartridge (z −47.16); each on a 3.0 post to z_s −36 and a V of two rods into the receiver wall (outside the head |y| ≤ 47 and the arm sweep). Stance 76 x 110; tip-over 41° side, 27° nose / tail (E).
+- **Cage (part 2, stick model):** rings z 33.2 / 49.2 on the clipped-square outline, 8 R 5 wheels at the catch points, columns only at the x-face wheel nodes (±112, ±100), the sides (0, ±112), the tail and the nose pair (112, ±22) (none straight up from a ±y-face wheel: G (7)); crown of 4 spokes along the axes to a hub r 20 at z 62 (the |x|, |y| ≤ 9.6 strips are never under a disk); 2 side struts from the side hubs, a tail strut from the plate top. 49 rods, 2.91 m (C).
+- **Mass ~517 g (E)** (Spark: about 500), CG (0.04, −0.53, 9.7).
+
+## Checks (C on E sizes; `checks.txt`)
+| Check | Rule | Result |
+|---|---|---|
+| Rods to the swept props | ≥ 12 | 12.6 |
+| Printed / bought parts to the swept props | ≥ 6 | 8.4 (Radxa) |
+| Funnel faces, seated, everything but the wheels | ≥ 1.0 (underside ≥ 3.0) | cage rods 2.6, nodes 2.3; underside 10.7 |
+| Below the bottom edge, ±5° yaw | ≤ 83 | 70.1 |
+| Hook latch plungers out (G (7)) | ≥ 1.0 | 1.9 (rods) |
+| Arm carriage / rail sweep (C2) | ≥ 1.0 | 1.0 (receiver nose stop and walls, designed) |
+| Head under the pack (|y| ≤ 47, E) | ≥ 1.0 | 2.0 |
+| Cartridge path below the receiver mouth | ≥ 1.0 | 2.0 |
+| Flow cone 23°, camera field 86 x 70° | nothing in view | 0 / 0 points |
+| Body overlaps (receiver, FC, cartridge, electronics, cage, plate, XT60) | 0 | none |
+| Pogo post columns | free | free |
+| CG on the thrust centre | x 0 | 0.04 |
+
+## Problems (each with its fix)
+1. **Cartridge 79 → 92 (shared):** the bay modules take a 13 longer cartridge at the lead end (+Y, away from the arm). Box chat: the next bay module version grows 13 at its far end; the v4i modules cannot hold a v4 cartridge. Alternative that keeps 79: the XT60 on top of the pack, which the FC (lowest z 9.5) leaves no room for.
+2. **FC lowest point 9.5 is CHECK** (H): the receiver ceiling top is 7.34, 2.16 under it. Measure before the receiver run; a lower FC moves the ceiling, not the seat.
+3. **Plate tail edge (x −50) and its XT60 cut-out (10 x 18 here) are E:** the drone XT60's rear passes through it. Measure the plate (D1 when it is apart).
+4. **Box numbers taken as E:** seat W Z 144.5 (cartridge bottom z_s −44.5), head half width 47 under the pack, arm carriage from Y_C 118 (C2). With Y_C 175 (the demo build) the carriage is 39.5 further away, so C2 is the tight case.
+5. **Tail hub:** the tail strut roots on the plate top at x −38; the plate has no bolt there. Cage part 2: a clamp on the plate or a hole (CHECK the v1 pocket holes).
+6. **Overseer belly:** its v1 sled (y ±72) covers the shared pogo positions; the Overseer layout opens two windows at (±10, −63).
+7. **Nose / tail tip-over 27° (E)** with the feet inside the head and arm keep-outs; same as v2's 26.6.
+
+## Next (after Spark looks at the layout)
+Topology runs with `nox/topo`, one per session (`run-part`): 1 receiver v4 (this envelope, the drawn interface, the XT60 carrier, the feet, the pogo outrigger), 2 cartridge v4 tray (92 long, XT60 seat), 3 cage parts (nodes with wheels, crown hub, struts), 4 camera mount.
