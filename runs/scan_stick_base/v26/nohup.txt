@@ -144,3 +144,13 @@ it   7 beta    1 J   2.7361 vol 0.0809 (dil 0.0961 g -0.018) grey 35.2% ch 0.100
 it   8 beta    1 J   0.5767 vol 0.0795 (dil 0.0946 g -0.033) grey 37.5% ch 0.100 worst tie b2 mx 208 2.3s
 it   9 beta    1 J   2.2748 vol 0.0801 (dil 0.0949 g -0.030) grey 35.7% ch 0.100 worst L2 hit -y 100 N (joint) 822 2.2s
 it  10 beta    1 J   0.2776 vol 0.0814 (dil 0.0964 g -0.014) grey 36.4% ch 0.100 worst tie b2 mx 100 2.0s
+it  11 beta    1 J   2.2746 vol 0.0805 (dil 0.0949 g -0.025) grey 34.2% ch 0.100 worst L2 hit -y 100 N (joint) 822 2.8s
+it  12 beta    1 J   0.1744 vol 0.0797 (dil 0.0940 g -0.035) grey 34.1% ch 0.100 worst tie b2 mx 63.3 2.3s
+it  13 beta    1 J   0.2397 vol 0.0800 (dil 0.0938 g -0.037) grey 32.5% ch 0.100 worst L2 hit -y 100 N (joint) 86.5 2.1s
+it  14 beta    1 J   0.1241 vol 0.0778 (dil 0.0914 g -0.061) grey 32.3% ch 0.100 worst tie b2 mx 44.2 2.1s
+it  15 beta    1 J   0.1025 vol 0.0810 (dil 0.0946 g -0.029) grey 32.0% ch 0.100 worst cage bump top 100 N (spine s 34.9 2.2s
+it  16 beta    1 J   0.0982 vol 0.0828 (dil 0.0962 g -0.004) grey 31.9% ch 0.100 worst cage bump top 100 N (spine s 34.7 2.2s
+it  17 beta    1 J   0.0971 vol 0.0829 (dil 0.0962 g -0.005) grey 31.8% ch 0.100 worst cage bump top 100 N (spine s 34.6 2.3s
+it  18 beta    1 J   0.0963 vol 0.0832 (dil 0.0963 g -0.003) grey 31.7% ch 0.100 worst cage bump top 100 N (spine s 34.5 2.3s
+it  19 beta    1 J   0.0958 vol 0.0833 (dil 0.0964 g -0.003) grey 31.6% ch 0.100 worst cage bump top 100 N (spine s 34.4 2.5s
+it  20 beta    1 J   0.0954 vol 0.0834 (dil 0.0964 g -0.002) grey 31.5% ch 0.100 worst cage bump top 100 N (spine s 34.3 2.2s
