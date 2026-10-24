@@ -366,3 +366,14 @@ layout: 1 drawn bodies (38,644 cells), held solid in every realization; eroded f
 layout: 34 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (64, 48, 120) = 368,640 elements, 503,298 active dofs; backend direct (direct estimate 7.0 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 64) grid (h 4.0): mean x 0.077
+it   1 beta    4 J  10.0000 vol 0.0877 (dil 0.1480 g +0.082) grey 11.7% ch 0.100 worst cage bump top 100 N (spine s 7.33 39.9s
+it   2 beta    4 J  12.0785 vol 0.0828 (dil 0.1439 g +0.053) grey 11.9% ch 0.100 worst cage bump top 100 N (spine s 9.24 38.9s
+it   3 beta    4 J  15.1618 vol 0.0778 (dil 0.1396 g +0.021) grey 12.0% ch 0.100 worst cage bump top 100 N (spine s 11.9 39.5s
+it   4 beta    4 J  15.1858 vol 0.0738 (dil 0.1357 g -0.007) grey 11.9% ch 0.100 worst cage bump top 100 N (spine s 11.8 39.1s
+it   5 beta    4 J  12.2028 vol 0.0748 (dil 0.1356 g -0.008) grey 11.6% ch 0.100 worst cage bump top 100 N (spine s 9.14 38.7s
+it   6 beta    4 J  10.9319 vol 0.0759 (dil 0.1357 g -0.029) grey 11.2% ch 0.100 worst cage bump top 100 N (spine s 7.91 38.7s
+it   7 beta    4 J  10.0755 vol 0.0792 (dil 0.1385 g -0.008) grey 11.2% ch 0.100 worst cage bump top 100 N (spine s 7.11 37.6s
+it   8 beta    4 J   9.6842 vol 0.0805 (dil 0.1391 g -0.004) grey 11.1% ch 0.100 worst cage bump top 100 N (spine s 6.77 39.4s
+it   9 beta    4 J   9.4168 vol 0.0813 (dil 0.1393 g -0.003) grey 10.9% ch 0.100 worst cage bump top 100 N (spine s 6.54 45.1s
+it  10 beta    4 J   9.1995 vol 0.0820 (dil 0.1394 g -0.002) grey 10.8% ch 0.100 worst cage bump top 100 N (spine s 6.36 51.0s
