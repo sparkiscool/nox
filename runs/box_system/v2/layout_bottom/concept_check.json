@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 72.9 L (E), extents 402 x 382 x 475 mm (E), mass 18305 g (E), CG [-5.8, 137.2, -53.0] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 75 L (E), extents 402 x 393 x 475 mm (E), mass 18342 g (E), CG [-5.8, 138.0, -53.0] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -30,7 +30,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [],
@@ -62,7 +62,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [],
@@ -94,7 +94,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [
@@ -138,7 +138,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [],
@@ -181,7 +181,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [
@@ -235,10 +235,16 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
-    "touches": [],
+    "touches": [
+     {
+      "part": "bay -150 receiver",
+      "overlap_mm3": 0.0,
+      "method": "manifold3d"
+     }
+    ],
     "overlap_mm3": 0.0,
     "pass_": true
    },
@@ -273,16 +279,10 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
-    "touches": [
-     {
-      "part": "bay -120 receiver",
-      "overlap_mm3": 0.0,
-      "method": "manifold3d"
-     }
-    ],
+    "touches": [],
     "overlap_mm3": 0.0,
     "pass_": true
    },
@@ -311,7 +311,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [
@@ -349,7 +349,7 @@
      1.0,
      0.0
     ],
-    "length_mm": 200.0,
+    "length_mm": 270.0,
     "steps": 20,
     "blocked_by": [],
     "touches": [],
