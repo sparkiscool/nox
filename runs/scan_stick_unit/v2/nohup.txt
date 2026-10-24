@@ -20,3 +20,14 @@ it   7 beta    1 J   0.0877 vol 0.0717 (dil 0.0832 g -0.016) grey 19.2% ch 0.100
 it   8 beta    1 J   0.0724 vol 0.0724 (dil 0.0834 g -0.014) grey 17.7% ch 0.100 worst tie b3 my 40.5 2.5s
 it   9 beta    1 J   0.0633 vol 0.0732 (dil 0.0836 g -0.012) grey 16.8% ch 0.100 worst tie b3 my 33.5 2.6s
 it  10 beta    1 J   0.0584 vol 0.0740 (dil 0.0838 g -0.009) grey 15.9% ch 0.100 worst hand push ledge -z 100 N 32.2 2.7s
+it  11 beta    1 J   0.0563 vol 0.0746 (dil 0.0840 g +0.013) grey 15.0% ch 0.100 worst hand push ledge -z 100 N 32.2 3.2s
+it  12 beta    1 J   0.0558 vol 0.0735 (dil 0.0825 g -0.004) grey 14.5% ch 0.100 worst hand push ledge -z 100 N 32.2 2.8s
+it  13 beta    1 J   0.0552 vol 0.0738 (dil 0.0826 g -0.004) grey 14.2% ch 0.100 worst hand push ledge -z 100 N 32.2 2.7s
+it  14 beta    1 J   0.0549 vol 0.0741 (dil 0.0827 g -0.002) grey 13.8% ch 0.100 worst hand push ledge -z 100 N 32.2 2.9s
+it  15 beta    1 J   0.0547 vol 0.0743 (dil 0.0828 g -0.002) grey 13.5% ch 0.100 worst hand push ledge -z 100 N 32.2 2.9s
+it  16 beta    1 J   0.0546 vol 0.0744 (dil 0.0828 g +0.018) grey 13.4% ch 0.100 worst hand push ledge -z 100 N 32.2 2.7s
+it  17 beta    1 J   0.0547 vol 0.0730 (dil 0.0813 g -0.001) grey 13.1% ch 0.100 worst hand push ledge -z 100 N 32.2 2.8s
+layout: beta 1 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  18 beta    2 J   0.0566 vol 0.0686 (dil 0.0928 g -0.018) grey 12.1% ch 0.100 worst hand push ledge -z 100 N 32.2 2.7s
+it  19 beta    2 J   0.0558 vol 0.0701 (dil 0.0942 g -0.004) grey 12.1% ch 0.100 worst hand push ledge -z 100 N 32.2 2.6s
+it  20 beta    2 J   0.0555 vol 0.0706 (dil 0.0944 g -0.001) grey 12.1% ch 0.100 worst hand push ledge -z 100 N 32.2 2.7s
