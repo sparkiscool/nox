@@ -74,7 +74,8 @@ def setup(h):
     sysres = json.load(open(SYSTEM))
     n = 0
     for case in sysres["frame"] + [dict(c, case=c["case"] + " [Overseer]") for c in sysres.get("frame_overseer", [])]:
-        # every case, the power cut carrying included: the fallback until the head brake (box electronics) is built and bench-tested
+        # every case; the Scout's power cut carrying included (the fallback until the head brake is bench-tested); the Overseer's needs the brake
+        if case["case"].startswith("power cut") and case["case"].endswith("[Overseer]"): continue
         parts = []
         for node, v in case["hub"].items():
             if node not in R: continue
