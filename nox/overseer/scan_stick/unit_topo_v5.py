@@ -10,7 +10,7 @@ DEFAULT; alternative electronics on the sides 3.23 L, 154 x 108 x 194, the CG fu
     (8 under the opening, reachable) into Ruthex inserts in the module plate;
   - the camera lens 1 behind the L2 plane, the top ring front ahead of the lens and outside its view.
 Spark 24 Oct (rod in hand): the tip has 25 of thread then a Ø27.5 plain shank, 27 engaged and no more: a Ø28.3 x 2 counterbore
-takes the shank (its shoulder seats on the floor), the thread runs 25.5 above it (0.5 past the tip), 1 mm entry chamfer; boss Ø40 x 38.
+takes the shank (its shoulder seats on the floor), the thread is cut 26 at z 1.5..27.5 (0.5 past the tip), 1 mm entry chamfer; boss Ø40 x 38.
 Pieces: spine = base v21 (prints lying on its back on the bed diagonal), front module = head v16.
    python3 unit_topo_v5.py --check | --manifest | --system [h] [gen] | --piece base|head [h] [gen] | --reactions"""
 import sys, os, json
