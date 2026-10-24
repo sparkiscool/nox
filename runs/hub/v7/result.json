@@ -1,7 +1,7 @@
 {
  "name": "box_hub_v7",
  "engine": "nox/topo",
- "solid_ok": true,
+ "solid_ok": false,
  "solid": {
   "bodies_plain": 1,
   "bodies_eroded": 1,
@@ -975,7 +975,5 @@
  "peak_gb": 9.5626,
  "gen_cm3": 62.0,
  "h": 2.05,
- "total_s": 2862,
- "solid_ok_engine": false,
- "solid_note": "gate: python3 nox/solid_check.py on the exact file reads PASS (1 body); the engine's in-run check with the drawn meshes reads drawn body 0.0 at 0.997 after a 2.0 erosion"
+ "total_s": 2862
 }

@@ -1,6 +1,6 @@
 # Runs
 
-_97 runs · rebuilt 2026-10-24 18:51_
+_94 runs · rebuilt 2026-10-24 17:03_
 
 ## Latest per part
 
@@ -9,10 +9,10 @@ _97 runs · rebuilt 2026-10-24 18:51_
 | arm | v5 | DONE | · | ·  | PASS | [runs/arm/v5](runs/arm/v5/summary.md) |
 | arm_eccbush | v1 | DONE | 0.8 (M) | 0.11 in eccentric wheel load 52 N (E: preload 30 + separating) bending the shank, 2.8 MPa (E, hand calc) vs 25 across layers (E) | PASS | [runs/arm_eccbush/v1](runs/arm_eccbush/v1/summary.md) |
 | arm_pinion16 | v2 | · | 3.1 (M) | [0.76, 'power cut, bumped head']  | · | [runs/arm_pinion16/v2](runs/arm_pinion16/v2/summary.md) |
-| arm_rail | v2 | · | 49.4 (M) | [0.28, 'head stall free']  | · | [runs/arm_rail/v2](runs/arm_rail/v2/summary.md) |
+| arm_rail | v3 | · | 56.6 (M) | [0.11, 'dropped Overseer']  | · | [runs/arm_rail/v3](runs/arm_rail/v3/summary.md) |
 | arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
-| battery_latch | v1 | · | · | ·  | · | [runs/battery_latch/v1](runs/battery_latch/v1/summary.md) |
+| battery_latch | v4 | · | · | ·  | · | [runs/battery_latch/v4](runs/battery_latch/v4/summary.md) |
 | box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
 | box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
@@ -20,7 +20,7 @@ _97 runs · rebuilt 2026-10-24 18:51_
 | funnel_panel | v7 | DONE | 80.0 (M) | 0.91 in press u60 v90 | PASS | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
 | holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
 | hook_latch | v2 | · | · | ·  | · | [runs/hook_latch/v2](runs/hook_latch/v2/summary.md) |
-| hub | v7 | · | 213.3 (M) | ·  | PASS | [runs/hub/v7](runs/hub/v7/summary.md) |
+| hub | v6 | · | 188.6 (M) | 3.40 in power cut carrying: head A falls to the park stop [Overseer] [misuse] | FAIL | [runs/hub/v6](runs/hub/v6/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
@@ -36,19 +36,16 @@ _97 runs · rebuilt 2026-10-24 18:51_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-24 18:51 | hub | [v7](runs/hub/v7/summary.md) | · | 213.3 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 17:44 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 17:44 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 17:44 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 17:44 | battery_latch | [v4](runs/battery_latch/v4/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 15:29 | hub | [v6r3](runs/hub/v6r3/summary.md) | · | 199.3 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 12:24 | hub | [v6r2](runs/hub/v6r2/summary.md) | · | 184.4 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 11:01 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
-| 2026-10-24 05:23 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
-| 2026-10-24 05:23 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
-| 2026-10-24 05:23 | detent | [v3](runs/detent/v3/summary.md) | · | 6.7 (M) | [0.18, 'detent holding 0.55 N.m, keyed bearing (E)'] | · | · | · GB | · min | · |
-| 2026-10-24 04:56 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
+| 2026-10-24 17:02 | battery_latch | [v4](runs/battery_latch/v4/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 12:24 | battery_latch | [v3](runs/battery_latch/v3/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 11:13 | hub | [v6](runs/hub/v6/summary.md) | · | 188.6 (M) | 3.40 | FAIL | +y (sleeve end on the bed, as v5) | · GB | · min | · |
+| 2026-10-24 11:12 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 10:35 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |
+| 2026-10-24 06:41 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-24 05:30 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
+| 2026-10-24 05:30 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
+| 2026-10-24 05:30 | detent | [v3](runs/detent/v3/summary.md) | · | 6.7 (M) | [0.18, 'detent holding 0.55 N.m, keyed bearing (E)'] | · | · | · GB | · min | · |
 | 2026-10-24 04:24 | hook_latch | [v2](runs/hook_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
