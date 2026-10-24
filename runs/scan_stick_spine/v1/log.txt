@@ -39,3 +39,33 @@ it  27 beta    4 J   0.6676 vol 0.0779 (dil 0.1561 g -0.081) grey  7.9% ch 0.100
 it  28 beta    4 J   0.6612 vol 0.0839 (dil 0.1652 g -0.028) grey  8.2% ch 0.100 worst cage bump top 100 N (spine s 3.51 2.3s
 it  29 beta    4 J   0.6556 vol 0.0881 (dil 0.1686 g -0.008) grey  8.3% ch 0.100 worst cage bump top 100 N (spine s 3.46 2.4s
 it  30 beta    4 J   0.6514 vol 0.0904 (dil 0.1691 g -0.005) grey  8.3% ch 0.100 worst cage bump top 100 N (spine s 3.42 2.7s
+it  31 beta    4 J   0.6474 vol 0.0925 (dil 0.1693 g +0.020) grey  8.1% ch 0.100 worst cage bump top 100 N (spine s 3.38 2.8s
+it  32 beta    4 J   0.6477 vol 0.0897 (dil 0.1654 g -0.004) grey  7.7% ch 0.100 worst cage bump top 100 N (spine s 3.38 3.4s
+it  33 beta    4 J   0.6441 vol 0.0913 (dil 0.1656 g -0.002) grey  7.4% ch 0.100 worst cage bump top 100 N (spine s 3.35 2.6s
+it  34 beta    4 J   0.6408 vol 0.0924 (dil 0.1657 g -0.002) grey  7.2% ch 0.100 worst cage bump top 100 N (spine s 3.32 2.3s
+it  35 beta    4 J   0.6376 vol 0.0933 (dil 0.1657 g -0.002) grey  6.9% ch 0.100 worst cage bump top 100 N (spine s 3.29 2.2s
+it  36 beta    4 J   0.6359 vol 0.0940 (dil 0.1658 g +0.031) grey  6.8% ch 0.100 worst cage bump top 100 N (spine s 3.27 2.3s
+it  37 beta    4 J   0.6748 vol 0.0871 (dil 0.1614 g +0.004) grey  8.6% ch 0.100 worst cage bump top 100 N (spine s 3.65 2.2s
+it  38 beta    4 J   0.6449 vol 0.0880 (dil 0.1601 g -0.004) grey  6.6% ch 0.100 worst cage bump top 100 N (spine s 3.36 2.3s
+it  39 beta    4 J   0.6418 vol 0.0890 (dil 0.1605 g -0.001) grey  6.6% ch 0.100 worst cage bump top 100 N (spine s 3.33 2.5s
+layout: stopped (beta_stop) at it 39, beta 4, 109 s
+layout: beta 4 done: eroded design 2 bodies, main 99.9%; drawn bodies outside the main body: 1
+coarse stage done: 39 iterations, 155 s, peak 0.995068 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (267.57 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.094 of 79,830 design cells
+layout: WARNING nearly mirrored in y (0.4% of passive cells differ): no symmetry
+layout: 1 drawn bodies (33,446 cells), held solid in every realization; eroded filter: masked
+layout: 34 load cases + 0 tie cases (0 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 88) = 270,336 elements, 395,913 active dofs; backend direct (direct estimate 5.1 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 48) grid (h 4.0): mean x 0.083
+it   1 beta    4 J  10.0000 vol 0.0932 (dil 0.1581 g -0.008) grey 13.0% ch 0.100 worst cage bump top 100 N (spine s 3.14 38.4s
+it   2 beta    4 J   9.8739 vol 0.0943 (dil 0.1588 g -0.003) grey 12.9% ch 0.100 worst cage bump top 100 N (spine s 3.09 38.9s
+it   3 beta    4 J   9.7794 vol 0.0948 (dil 0.1589 g -0.003) grey 12.9% ch 0.100 worst cage bump top 100 N (spine s 3.06 38.6s
+it   4 beta    4 J   9.6936 vol 0.0953 (dil 0.1590 g -0.002) grey 12.8% ch 0.100 worst cage bump top 100 N (spine s 3.03 38.0s
+it   5 beta    4 J   9.6149 vol 0.0958 (dil 0.1590 g -0.002) grey 12.6% ch 0.100 worst cage bump top 100 N (spine s 3 36.3s
+it   6 beta    4 J   9.5408 vol 0.0963 (dil 0.1591 g +0.005) grey 12.5% ch 0.100 worst cage bump top 100 N (spine s 2.98 39.2s
+it   7 beta    4 J   9.5100 vol 0.0958 (dil 0.1581 g -0.001) grey 12.4% ch 0.100 worst cage bump top 100 N (spine s 2.97 39.4s
+it   8 beta    4 J   9.4444 vol 0.0962 (dil 0.1581 g -0.001) grey 12.3% ch 0.100 worst cage bump top 100 N (spine s 2.94 41.7s
+it   9 beta    4 J   9.3875 vol 0.0967 (dil 0.1582 g -0.001) grey 12.2% ch 0.100 worst cage bump top 100 N (spine s 2.93 40.4s
+it  10 beta    4 J   9.3353 vol 0.0970 (dil 0.1582 g -0.001) grey 12.2% ch 0.100 worst cage bump top 100 N (spine s 2.91 39.9s
