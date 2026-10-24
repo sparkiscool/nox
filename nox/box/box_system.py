@@ -751,7 +751,10 @@ def report(h=4.0):
         d = c["deflection_mm"]
         L.append(f"| {cn} | {c['cls']} | {wk} | {pp[wk]['cases'][cn]['worst']:.2f} | {d['stub']} | {d['bay -90 minus stub']} | {d['funnel minus stub']} |")
     L += ["", "## Concept check (docs/generative.md rule 0)", "",
-          f"- System line (`python3 nox/assembly.py nox/box/box_structure.assembly.json --check`): {fm.get('system_check')}",
+          f"- System line (`python3 nox/assembly.py nox/box/box_structure.assembly.json --check`): {fm.get('system_check')}; "
+          "crash probes skipped (DEFAULT: floor-standing box, the floor shields the open bottom; alt: probes on read -34.0 mm (E) at "
+          "-Z on the PSU). Its 5080 g counts the structure, sheets and PSU only (the arm, catch and lumps are in the mass table above).",
+          "- Concept review: the `review` agent on PR 73. Layout artifact: with the v2 layout (the v1 layout is the built demo).",
           "- Alternative A (DEFAULT): box structure v2 on the 9-bay ring at R 113 (arm v6 ask): Overseer bays fit the 30 deg sector, "
           "every ring and base piece is redrawn once from v2 requirements; costs +13 mm on every radius (sheets ~+26 wide, floor -13).",
           "- Alternative B: keep R 100, the Overseer cartridge lowered 13 (latch / Overseer sessions): keeps the stand envelopes, "

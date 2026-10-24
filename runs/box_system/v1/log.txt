@@ -237,3 +237,4 @@ System: Box structure, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.2 mm�
 System: Box structure, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.2 mm³ (E) (cradle_keel/barB), bbox 70.4 L (E), extents 384 x 415 x 441 mm (E), mass 5080 g (E), CG [15.2, 107.8, -10.6] (E, no cg_ref), access 2/3 clear (bay swap -90: module out along +Y 100 blocked by cradle_keel 75 mm³) FAIL
 == box_system 2026-10-24 04:50 h 4.0
 == box_system 2026-10-24 04:52 h 4.0
+== box_system 2026-10-24 04:56 h 4.0

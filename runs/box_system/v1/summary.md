@@ -83,7 +83,8 @@ Box 10.31 kg, CG [19.5, 82.4, -6.7]; with the Scout 10.83 kg, CG [18.6, 86.9, 2.
 
 ## Concept check (docs/generative.md rule 0)
 
-- System line (`python3 nox/assembly.py nox/box/box_structure.assembly.json --check`): System: Box structure, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.2 mm³ (E) (cradle_keel/barB), bbox 70.4 L (E), extents 384 x 415 x 441 mm (E), mass 5080 g (E), CG [15.2, 107.8, -10.6] (E, no cg_ref), access 2/3 clear (bay swap -90: module out along +Y 100 blocked by cradle_keel 75 mm³) FAIL
+- System line (`python3 nox/assembly.py nox/box/box_structure.assembly.json --check`): System: Box structure, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 0.2 mm³ (E) (cradle_keel/barB), bbox 70.4 L (E), extents 384 x 415 x 441 mm (E), mass 5080 g (E), CG [15.2, 107.8, -10.6] (E, no cg_ref), access 2/3 clear (bay swap -90: module out along +Y 100 blocked by cradle_keel 75 mm³) FAIL; crash probes skipped (DEFAULT: floor-standing box, the floor shields the open bottom; alt: probes on read -34.0 mm (E) at -Z on the PSU). Its 5080 g counts the structure, sheets and PSU only (the arm, catch and lumps are in the mass table above).
+- Concept review: the `review` agent on PR 73. Layout artifact: with the v2 layout (the v1 layout is the built demo).
 - Alternative A (DEFAULT): box structure v2 on the 9-bay ring at R 113 (arm v6 ask): Overseer bays fit the 30 deg sector, every ring and base piece is redrawn once from v2 requirements; costs +13 mm on every radius (sheets ~+26 wide, floor -13).
 - Alternative B: keep R 100, the Overseer cartridge lowered 13 (latch / Overseer sessions): keeps the stand envelopes, but box-case Problem 1 (Overseer cartridge at r ~107 in a 30 deg sector at r 100) is still open and arm v6 reads FAIL.
 - Index targets: 0.5 functional / 1.0 misuse (as System Box catch, DEFAULT) vs 1.0 everywhere: the strict set fails mast, cradle_keel, bracket_jA and the bay module in addition to kb and the frames.
