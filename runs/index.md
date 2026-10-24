@@ -1,6 +1,6 @@
 # Runs
 
-_92 runs · rebuilt 2026-10-24 08:59_
+_93 runs · rebuilt 2026-10-24 11:17_
 
 ## Latest per part
 
@@ -37,6 +37,7 @@ _92 runs · rebuilt 2026-10-24 08:59_
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24T23:59 | scout_layout | [v2](runs/scout_layout/v2/summary.md) | DONE | 770 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T23:59 | scout_layout | [v3](runs/scout_layout/v3/summary.md) | DONE | 791 (E) | 1.00 | · | · | · GB | · min | · |
+| 2026-10-24T23:59 | scout_layout | [v4](runs/scout_layout/v4/summary.md) | DONE | 847 (E) | 1.00 | · | · | · GB | · min | · |
 | 2026-10-24T20:00 | scout_layout | [v1](runs/scout_layout/v1/summary.md) | DONE | 517.0 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 08:03 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |

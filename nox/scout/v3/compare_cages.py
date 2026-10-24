@@ -27,9 +27,9 @@ def draw(ax, R, view):
         for p, q in box_edges(lo, hi): ax.plot(*zip(p, q), color=col, lw=0.8)
     t = np.linspace(0, 2 * np.pi, 60)
     for x, y in MOTORS: ax.plot(x + 44.45 * np.cos(t), y + 44.45 * np.sin(t), np.full_like(t, 41.2), color="#d9a400", lw=0.8)
-    lc = R.get("l_carbon", 0.0)
-    for a, b in R["rods"]:
-        pr = np.linalg.norm(np.subtract(b, a)) < lc
+    lc = R.get("l_carbon", 0.0); T = R.get("types")
+    for k, (a, b) in enumerate(R["rods"]):
+        pr = T[k] == "pet" if T else np.linalg.norm(np.subtract(b, a)) < lc
         ax.plot(*zip(a, b), color="#9aa6b2" if pr else "#202020", lw=3.2 if pr else 1.3)
     ends = np.array([p for ab in R["rods"] for p in ab])
     ax.scatter(*ends.T, s=6, color="#4477aa")
@@ -49,16 +49,19 @@ fig.tight_layout(); png = os.path.join(OUT, "compare.png"); fig.savefig(png); pl
 
 def row(R, over=None):
     L = [np.linalg.norm(np.subtract(b, a)) for a, b in R["rods"]]
-    lc = R.get("l_carbon", 0.0); carb = [x for x in L if x >= lc or not R.get("l_carbon")]
+    lc = R.get("l_carbon", 0.0); T = R.get("types")
+    carb = [x for k, x in enumerate(L) if (T[k] == "rod" if T else (x >= lc or not R.get("l_carbon")))]
     pc, pp = over if over else (R.get("pieces", "-"), R.get("printed_nodes", "-"))
-    return [len(L), len(carb), round(min(carb), 1), len(L) - len(carb), pc, pp, round(R["cage_mass"]), round(sum(L) / 1000, 2),
+    return [len(L), len(carb), round(float(R.get("shortest_carbon", min(carb))), 1), len(L) - len(carb), pc, pp, round(R["cage_mass"]), round(sum(L) / 1000, 2),
             round(R["contact_first"], 2), round(R["worst_index"], 2)]
 
 
-over = tuple(int(x) for x in sys.argv[4].split(",")) if len(sys.argv) > 4 else None   # before: (carbon pieces, printed parts)
+over = tuple(int(x) for x in sys.argv[4].split(",")) if len(sys.argv) > 4 and sys.argv[4] else None   # before: (carbon pieces, printed parts)
+TITLE = sys.argv[5] if len(sys.argv) > 5 else "before and after"
+LEAD = sys.argv[6] if len(sys.argv) > 6 else ""
 ra, rb = row(Ra, over), row(Rb)
 img = base64.b64encode(open(png, "rb").read()).decode()
-hdr = ["members", "carbon rods", "shortest carbon, mm", "printed struts / webs", "carbon pieces to cut (straight runs = 1)",
+hdr = ["members", "carbon segments", "shortest carbon rod, mm", "printed struts / webs", "carbon pieces to cut (straight runs = 1)",
        "separate printed parts", "cage g (E)", "member length, m", "cage first, mm (F)", "worst load index (F)"]
 trs = "".join(f"<tr><th scope=\"row\">{h}</th><td>{a}</td><td>{b}</td></tr>" for h, a, b in zip(hdr, ra, rb))
 html = f"""<title>Scout cage reduction</title>
@@ -82,9 +85,8 @@ figcaption{{color:#555;font-size:.85rem;padding-top:6px}}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <main>
-<h1>Scout v3 cage, before and after the rod reduction</h1>
-<p>Spark 24 Oct: carbon only where its length earns it (33 mm break-even, DEFAULT), then fewest pieces. Same drone, same checks: every load case,
-cage first 3.0 mm, balance, edge probes no worse. Members under 33 mm are now printed 6 x 6 PETG struts or 3 x 12 webs, part of their nodes.</p>
+<h1>Scout v3 cage, {TITLE}</h1>
+<p>{LEAD}</p>
 <div class="t"><table><thead><tr><th></th><th>before</th><th>after</th></tr></thead><tbody>{trs}</tbody></table></div>
 <figure><img src="data:image/png;base64,{img}" alt="before and after cage, iso, side and top views">
 <figcaption>Top row before, bottom row after. Black = 3.0 carbon rods, thick grey = printed struts, blue dots = joints, grey boxes = mount and receiver envelope, yellow = prop disks.</figcaption></figure>

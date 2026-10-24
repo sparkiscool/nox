@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (scout v3 chat): **v4 layout** after review FAIL (3rd strike on probes): Radxa up 8, nose / belly shields, bolt keys clear, access 8 / 8, carbon by rod length, warm start: 98 rods + 37 printed parts ~374 g; probes 6 rows (latch skids asked, flow −1.4). runs/scout_layout/v4, dimensions System Scout v3.
 - 24 Oct (scout v3 chat): **v3 cage**: carbon only ≥ 33 mm (Spark, PR 91), short members printed struts / webs, fewest-pieces optimiser: 62 carbon pieces + 23 printed parts ~318 g (was 99 + 57, 297 g); checks as v2, fit 0. runs/scout_layout/v3, dimensions System Scout v3.
 - 24 Oct (scout v3 chat): Scout mount loads from the XT60 arm redesign (60 / 74 N insert, 50 N pull, 3.5 N·m couple), LM74700 ideal diode on the keep-alive feed, catch centre on the tab line (0.0 mm, C). dimensions System Scout v3, parts-list Scout.
 - 24 Oct (scout v3 chat): **refit to latch 258becf**: skids as cage, camera hood nodes, probe repair, 4-seed optimiser (seed 2): 125 rods ~297 g (E), all cases ≤ 1.00 (F); cage first 4.5, fit 0.4, CG 1.4 / 2.0 PASS; probes FAIL at the receiver lower corners (asked the latch for skids). Set centring stays the latch's.
