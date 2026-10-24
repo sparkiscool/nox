@@ -878,7 +878,8 @@ def warm_start(N, kind, members, path, cases, contact_ok, max_add=60):
         return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
     fe = frame_eval(N, kind, cur, cases); added = 0; mset = set(members)
     while not (feasible(fe) and contact_ok(cur)) and added < max_add:
-        used = {i for m in cur for i in m}; v0 = violation(fe) + (0 if contact_ok(cur) else 1.0); best = None
+        cdef = getattr(contact_ok, "deficit", lambda ms: 0.0 if contact_ok(ms) else 1.0)
+        used = {i for m in cur for i in m}; v0 = violation(fe) + 0.05 * cdef(cur); best = None
         hot = set()                                                       # nodes of the failing cases: worst handling nodes, worst members
         for r in fe or []:
             if r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= (r["stroke_lim"] or DEFL_LIM[r["cls"]]): continue
@@ -891,7 +892,7 @@ def warm_start(N, kind, members, path, cases, contact_ok, max_add=60):
             trial = drop_bad(N, kind, cur + add)
             if m not in trial: continue
             f2 = frame_eval(N, kind, trial, cases)
-            v = violation(f2) + (0 if contact_ok(trial) else 1.0)
+            v = violation(f2) + 0.05 * cdef(trial)
             if v < v0 - 1e-6 and (best is None or (v, cage_mass(N, kind, add)) < best[0]): best = ((v, cage_mass(N, kind, add)), trial, f2)
         if best is None: break
         cur, fe = best[1], best[2]; added += 1
@@ -1163,6 +1164,7 @@ for opt in PAD_OPTIONS:
             if np.hypot(*(mom_ / m_)[:2]) > CG_TOL: return False
         return True
     contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all()) and (cg_ok(ms) or not cg_ok(members))
+    contact_ok.deficit = lambda ms: float(np.maximum(target - (cage_support(ms) - so_all), 0).sum())   # mm short, summed over directions
     if os.environ.get("WARM"):
         chosen, fe, note = warm_start(N, kind, members, os.environ["WARM"], CASES, contact_ok)
     else:
