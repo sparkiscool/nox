@@ -22,5 +22,5 @@ System file: `nox/box/box_structure_v2.assembly.json` (= `concept.assembly.json`
 - **Option A (DEFAULT):** alternating bays at R 113 (C): 418 x 409 x 470 mm, 80.4 L (E); v8 needs no extra Y room (its opening grows by raising the panel bottom).
 - **Option B:** Overseer at the bottom 4, receivers clipped: 406 x 409 x 476 mm, 79.0 L (−1.4 L) (E); unclipped (B0) neighbouring receivers overlap 3324.9 mm³ (E), so B needs the clip.
 - **Option C:** bottom slots at R 128 (C): 434 x 409 x 506 mm, 89.8 L (E); the arm strokes change.
-- A wins: B saves 1.4 L (2 %, E) and lowers the CG (Z −54.8 vs −36.9, E), but needs a new receiver clip on the latch and runs every Overseer swap at the bottom; C costs 9.4 L (E) and new arm strokes for nothing now that v8 clears the lanes.
+- A wins: B saves 1.4 L (2 %, E) and lowers the CG (Z −55.3 vs −37.4, E), but needs a new receiver clip on the latch and runs every Overseer swap at the bottom; C costs 9.4 L (E) and new arm strokes for nothing now that v8 clears the lanes.
 - Next: the coarse system topology over the joined envelope (`runs/box_system/v2/topo/`, worker), then the cut requirements.
