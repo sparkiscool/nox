@@ -30,7 +30,8 @@ Y_C = 138.0                                     # common grip of both cartridges
 Y_FUN = Y_C + 2.0                               # funnel centre = the drone's catch centre, 2 past the tab line as in v1 (177 / 175)
 PATH = 70.0                                     # cartridge install path kept clear, radially inward from the seat (E: park r ~ R - 15)
 ARM_PARK_R = 1.5                                # turning envelope of the parked heads + cartridges: r <= R - 1.5 (arm v6: limit R - 2.5)
-LANE = dict(r=159.0, half_deg=25.0)             # drone opening: nothing inside r 159 within 90 +- 25 (arm v6 wheel rim 156.9, carriage +-20.3)
+LANE = dict(r=159.0, half_deg=25.0, y=(62.0, 86.5))   # drone opening: nothing inside r 159 within 90 +- 25 over the carriage's Y (arm v6:
+                                                # wheel rim r 156.9 on wheels Y 63..73, carriage +-20.3 deg, hardware to Y 85.5 (+1); rails below, r 151 (disc), C)
 MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_system)
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
 RAIL_DISC = dict(r=151.0, y=(38.0, 73.0))       # arm round 3 (24 Oct): the rails' keel sweeps Y 38..73 out to r 151 (C)
@@ -128,12 +129,12 @@ def layout(R=113.0, clip=False, bays=None):
     T = BS.SEAT_TO_W.copy(); T[2, 3] += R - 100.0; T[1, 3] = Y_FUN
     import assembly
     A = assembly.load(os.path.join(HERE, "box_catch.assembly.json"))
+    ms = [(p, t) for p, t in zip(A.parts, A.meshes()) if not p["name"].startswith("drone")]
+    in_w = min(t.bounds[0][2] for _, t in ms) > 100.0                     # one test per file: seat frame (v7 file) or W (funnel v8 on, at R 113, Y 140)
+    if in_w: T = np.eye(4); T[1, 3] = Y_FUN - 140.0; T[2, 3] = R - 113.0  # a W file is posed for the v2 DEFAULT: shift it to this layout's R / Y_FUN
     catch = {}
-    for p, t in zip(A.parts, A.meshes()):
-        if p["name"].startswith("drone"): continue
-        t = t.copy()
-        if t.bounds[0][2] < 100.0: t.apply_transform(T)                   # seat frame (catch file v7); a file already in W (funnel v8 on) is used as is
-        catch[p["name"]] = man(t)
+    for p, t in ms:
+        t = t.copy(); t.apply_transform(T); catch[p["name"]] = man(t)
     cb = np.array([tm(m).bounds for m in catch.values()])
     rim = float(cb[:, 1, 2].max()); front = float(cb[:, 1, 1].max()); back = float(cb[:, 0, 1].min()); side = float(np.abs(cb[:, :, 0]).max())
     lands = seat_landings(R)
@@ -203,7 +204,7 @@ def arm_envelopes(R):
     """the swap arm's turning envelopes (arm v6 numbers at the top of this file, C): hub + rails, motors on the arm,
     parked heads with cartridges, the drone-insert lane."""
     cyl = lambda r, y0, y1: mf.Manifold.cylinder(y1 - y0, r, r, 96).rotate([-90, 0, 0]).translate([0, y0, 0])
-    lane = wedge(90, 1.0, LANE["r"], 74.0, Y_C + 122.0, gap=0.0, half=LANE["half_deg"])
+    lane = wedge(90, 1.0, LANE["r"], LANE["y"][0], LANE["y"][1], gap=0.0, half=LANE["half_deg"])
     return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]) + cyl(RAIL_DISC["r"], *RAIL_DISC["y"]),
             "arm: motors (turning)": cyl(MOTOR_SWEEP["r"], *MOTOR_SWEEP["y"]) - cyl(HUB["r"] - 0.01, MOTOR_SWEEP["y"][0] - 1, MOTOR_SWEEP["y"][1] + 1),
             "arm: parked heads + cartridges (turning)": cyl(R - ARM_PARK_R, HUB["y"][1], Y_C + 122.0),
@@ -242,7 +243,8 @@ def write_concept(od, out, P, env, R):
               dict(name="PSU LRS-350-24", role="bought", protect=True, box=[42, 157, -66, -36, -170, 45], mass_g=750.0, tag="E", owner="box electronics")]
     contact += [["arm: hub + rails (turning)", "arm: motors (turning)", 1e9], ["arm: hub + rails (turning)", "arm: parked heads + cartridges (turning)", 1e9],
                 ["arm: parked heads + cartridges (turning)", "arm: drone insert lane", 1e9], ["arm: hub + rails (turning)", "arm: drone insert lane", 1e9],
-                ["drone receivers + paths (keep-out)", "arm: drone insert lane", 1e9], ["drone receivers + paths (keep-out)", "arm: parked heads + cartridges (turning)", 1e9]]
+                ["drone receivers + paths (keep-out)", "arm: drone insert lane", 1e9], ["drone receivers + paths (keep-out)", "arm: parked heads + cartridges (turning)", 1e9],
+                ["arm: motors (turning)", "arm: drone insert lane", 1e9]]
     X, YB, YF, FL, ZT = e["X_IN"], e["Y_BACK"], e["Y_FRONT"], e["FLOOR"], e["Z_TOP"]
     for n, b in {"sheet+X": [X, X + 3, YB + 3, YF - 3, FL, ZT], "sheet-X": [-X - 3, -X, YB + 3, YF - 3, FL, ZT],
                  "sheetF": [-X + 3, X - 3, YF, YF + 3, FL, ZT], "sheetR": [-X + 3, X - 3, YB - 3, YB, FL, ZT]}.items():
