@@ -1,0 +1,569 @@
+{
+ "name": "scan_stick_spine",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   256988.6
+  ],
+  "necks": [],
+  "drawn_not_in_main": [],
+  "thin_walls": [
+   {
+    "kind": "wall",
+    "thick_mm": 1.0,
+    "core_mm3": 1.72,
+    "at": [
+     -36.1,
+     26.9,
+     101.6
+    ],
+    "span": [
+     2.2,
+     1.1,
+     0.1
+    ]
+   }
+  ],
+  "acute_edges": 4,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 181660.8,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": -0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "unit 25 g 0",
+    "cls": "misuse",
+    "inlayer": 0.055,
+    "across": 0.097,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "unit 25 g 1",
+    "cls": "misuse",
+    "inlayer": 0.051,
+    "across": 0.042,
+    "at": [
+     -33.5,
+     -31.0,
+     41.0
+    ]
+   },
+   {
+    "case": "unit 25 g 2",
+    "cls": "misuse",
+    "inlayer": 0.158,
+    "across": 0.113,
+    "at": [
+     42.5,
+     25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 3",
+    "cls": "misuse",
+    "inlayer": 0.158,
+    "across": 0.108,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 4",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.018,
+    "at": [
+     -21.5,
+     -35.0,
+     57.0
+    ]
+   },
+   {
+    "case": "unit 25 g 5",
+    "cls": "misuse",
+    "inlayer": 0.02,
+    "across": 0.017,
+    "at": [
+     32.5,
+     -23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "unit 25 g 6",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.106,
+    "at": [
+     -27.5,
+     -35.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 7",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.097,
+    "at": [
+     -27.5,
+     -35.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 8",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.095,
+    "at": [
+     -33.5,
+     31.0,
+     45.0
+    ]
+   },
+   {
+    "case": "unit 25 g 9",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.085,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 10",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.057,
+    "at": [
+     42.5,
+     25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 11",
+    "cls": "misuse",
+    "inlayer": 0.088,
+    "across": 0.056,
+    "at": [
+     42.5,
+     25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 12",
+    "cls": "misuse",
+    "inlayer": 0.089,
+    "across": 0.057,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 25 g 13",
+    "cls": "misuse",
+    "inlayer": 0.088,
+    "across": 0.056,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 50 g 0",
+    "cls": "misuse",
+    "inlayer": 0.11,
+    "across": 0.194,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "unit 50 g 1",
+    "cls": "misuse",
+    "inlayer": 0.102,
+    "across": 0.085,
+    "at": [
+     -33.5,
+     -31.0,
+     41.0
+    ]
+   },
+   {
+    "case": "unit 50 g 2",
+    "cls": "misuse",
+    "inlayer": 0.315,
+    "across": 0.226,
+    "at": [
+     42.5,
+     25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 50 g 3",
+    "cls": "misuse",
+    "inlayer": 0.315,
+    "across": 0.216,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "unit 50 g 4",
+    "cls": "misuse",
+    "inlayer": 0.02,
+    "across": 0.035,
+    "at": [
+     -21.5,
+     -35.0,
+     57.0
+    ]
+   },
+   {
+    "case": "unit 50 g 5",
+    "cls": "misuse",
+    "inlayer": 0.039,
+    "across": 0.033,
+    "at": [
+     32.5,
+     -23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "L2 hit front 100 N (joint)",
+    "cls": "misuse",
+    "inlayer": 0.014,
+    "across": 0.012,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "L2 hit +y 100 N (joint)",
+    "cls": "misuse",
+    "inlayer": 0.17,
+    "across": 0.114,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "L2 hit -y 100 N (joint)",
+    "cls": "misuse",
+    "inlayer": 0.17,
+    "across": 0.114,
+    "at": [
+     42.5,
+     25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "L2 drop -z 150 N (joint)",
+    "cls": "misuse",
+    "inlayer": 0.026,
+    "across": 0.022,
+    "at": [
+     32.5,
+     23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "camera hit +y 50 N (joint)",
+    "cls": "misuse",
+    "inlayer": 0.02,
+    "across": 0.016,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "camera hit above 50 N (joint)",
+    "cls": "misuse",
+    "inlayer": 0.009,
+    "across": 0.007,
+    "at": [
+     32.5,
+     23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "cage bump front 100 N (module share) (joint)",
+    "cls": "misuse",
+    "inlayer": 0.008,
+    "across": 0.007,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "cage bump +y 100 N (module share) (joint)",
+    "cls": "misuse",
+    "inlayer": 0.068,
+    "across": 0.046,
+    "at": [
+     42.5,
+     -25.0,
+     35.0
+    ]
+   },
+   {
+    "case": "cage bump top 100 N (module share) (joint)",
+    "cls": "misuse",
+    "inlayer": 0.009,
+    "across": 0.007,
+    "at": [
+     32.5,
+     23.0,
+     31.0
+    ]
+   },
+   {
+    "case": "cage bump back 100 N (spine share)",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.025,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "cage bump +y 100 N (spine share)",
+    "cls": "misuse",
+    "inlayer": 0.015,
+    "across": 0.022,
+    "at": [
+     -23.5,
+     35.0,
+     59.0
+    ]
+   },
+   {
+    "case": "cage bump top 100 N (spine share)",
+    "cls": "misuse",
+    "inlayer": 0.007,
+    "across": 0.005,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "cage bump front 100 N (spine share)",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.01,
+    "at": [
+     -35.5,
+     33.0,
+     49.0
+    ]
+   },
+   {
+    "case": "hand push top ring -z 100 N",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.004,
+    "at": [
+     -27.5,
+     -35.0,
+     117.0
+    ]
+   }
+  ],
+  "worst": 0.315,
+  "worst_case": "unit 50 g 2",
+  "worst_at": [
+   42.5,
+   25.0,
+   35.0
+  ]
+ },
+ "mass_g": 419.69,
+ "watertight": false,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 330467.7,
+ "drawn_g": 337.05,
+ "stl": "scan_stick_spine.stl",
+ "view_stl": "scan_stick_spine_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 3.22128343706268,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.09394964299135664,
+  "nd": 79830,
+  "sym_axes": [],
+  "n_real": 34,
+  "n_ties": 0,
+  "backend": "direct",
+  "iterations": 42,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "scan_stick_spine",
+  "h": 2.0,
+  "shape": [
+   64,
+   48,
+   88
+  ],
+  "origin": [
+   -78.5,
+   -48.0,
+   26.0
+  ],
+  "cells": 270336,
+  "design": 79830,
+  "drawn": 33446,
+  "cases": [
+   "unit 25 g 0",
+   "unit 25 g 1",
+   "unit 25 g 2",
+   "unit 25 g 3",
+   "unit 25 g 4",
+   "unit 25 g 5",
+   "unit 25 g 6",
+   "unit 25 g 7",
+   "unit 25 g 8",
+   "unit 25 g 9",
+   "unit 25 g 10",
+   "unit 25 g 11",
+   "unit 25 g 12",
+   "unit 25 g 13",
+   "unit 50 g 0",
+   "unit 50 g 1",
+   "unit 50 g 2",
+   "unit 50 g 3",
+   "unit 50 g 4",
+   "unit 50 g 5",
+   "L2 hit front 100 N (joint)",
+   "L2 hit +y 100 N (joint)",
+   "L2 hit -y 100 N (joint)",
+   "L2 drop -z 150 N (joint)",
+   "camera hit +y 50 N (joint)",
+   "camera hit above 50 N (joint)",
+   "cage bump front 100 N (module share) (joint)",
+   "cage bump +y 100 N (module share) (joint)",
+   "cage bump top 100 N (module share) (joint)",
+   "cage bump back 100 N (spine share)",
+   "cage bump +y 100 N (spine share)",
+   "cage bump top 100 N (spine share)",
+   "cage bump front 100 N (spine share)",
+   "hand push top ring -z 100 N"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 665.7,
+ "layout_s": 1759,
+ "peak_gb": 7.05192,
+ "gen_cm3": 60.0,
+ "h": 2.0,
+ "total_s": 2424
+}
