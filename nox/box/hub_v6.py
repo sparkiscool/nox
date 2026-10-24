@@ -1,15 +1,14 @@
-"""Hub v6 (24 Oct 2026, hub + heads worker): hub v5 rebuilt for arm v5 (printed V-rails on the posts, rack and pinion heads).
-Changes from hub v5 (arm_cad.hub_parts), every number C unless tagged E:
+"""Hub v6 (24 Oct 2026; swap arm system worker, from the hub + heads worker's PR 43 draft): hub v5 rebuilt for the arm v6 stack
+(swap_system.py, arm_v6_layout.py: printed V-rails on the motor plate, rack and pinion heads). Changes from hub v5 (arm_cad.hub_parts),
+every number C unless tagged E:
   - motor seats at the v5 poses (arm_v5_layout.MOTORS_V5 + the axle pose of its balance search, runs/arm/v5-layout/result.json):
-    A (53.5, 55) 45.8 deg, B (-55, -53.5) -135.8 deg, axle (53.9, -43.7) -39 deg, seats slotted +-1 for the axle loop as before;
-  - detent tower moved for the v5 heads: roller at arm angle -45 (ring v1 unchanged, notches every 30), pivot side -1, the
-    candidate of box-arm.md v5 (until the mechanism worker lands its search: arm_v5_layout.DETENT or detent.CHOSEN_V5 wins);
-  - rail posts as v5 (A r 35 / 76, B r 38.75 / 76, 32 wide, Y 52..74) but 14 long along the rail (+2 outward, the inner faces
-    stay 1.5 off the 80T flange / 1.04 off the loop: 3.8 wall round the insert, DEFAULT) with ONE M5 heat-set insert hole each at
-    X 0 (arm_v5_layout.RAIL_BOLTS, the arm-mechanism worker's 24 Oct interface; v5 had 2 blind M5 holes at X +-10);
-  - the hub v5 solid_check FAIL fixed in the design: the 1.0 lip (r 29..30, Y 53..54, the web disc above the 80T recess floor)
-    is gone (web disc top at Y 53), and the bore cavity gets a drawn roof (Y 47.5..50) and wall (r 36..43, Y 40..47.5) instead
-    of the generated 0.3 films at Y 48..49 (box-arm Problem 9).
+    A (53.5, 55) 45.8 deg, B (-55, -53.5) -135.8 deg, axle (53.9, -43.7) -39 deg, axle seat slotted +-1 for the loop as before;
+  - no posts (compact stack): 4 rail pads on the plate top (X +-16 x +-10 along the rail, Y 50..54) at r 40 / 78 on head A's and
+    head B's axes, each with ONE M5 heat-set insert hole Ø6.4 x 7 at X 0 in a boss r 6.5 from Y 44 (the rail bolts down from its top);
+  - detent tower at detent.CHOSEN_V5 (roller -135, tower (18.5, -28.4); clears the v6 stack, swap_system.py);
+  - the hub v5 solid_check FAIL fixed in the design: the 1.0 lip (r 29..30, Y 53..54) is gone (web disc top at Y 53), the bore
+    cavity gets a drawn roof (Y 47.5..50) and wall (r 33..43, Y 41..47.5) instead of the generated 0.3 films (box-arm Problem 9);
+    the wall sits on bearing 2's outer race only (relief r 37.5 to Y 41: 6010 housing shoulder <= Ø75.4, spec; v5's r 36 sat on the seal).
 python3 hub_v6.py  -> drawn-only checks (solid, mass) + every gap to the v5 parts over the stroke (C)."""
 import math, json, os, itertools
 import numpy as np, manifold3d as mf
@@ -19,19 +18,8 @@ from arm_cad import box, cylY, hull, rsquare, rot_pt
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.normpath(os.path.join(HERE, "..", ".."))
 
-# the arm-mechanism worker's 24 Oct layout changes (relayed by the lead; its PR lands arm_v5_layout.RAIL_BOLTS with them). Until that
-# file is on main the same numbers are set here, so every check below runs on the layout the rails are drawn to.
-if not hasattr(V, "RAIL_BOLTS"):
-    V.RAIL_Y = (74.0, 93.0); V.RAIL_R = (29.0, 140.0)
-    V.RAIL_CHAN = dict(x=(-2.0, 2.0), y=(89.0, 93.0), mouth=3.2)
-    V.RAIL_BOLTS = dict(x=0.0, r_A=(35.0, 76.0), r_B=(38.75, 76.0), cbore_r=4.5, cbore_y=84.0, hole_r=2.75, bolt="M5 x 16 ISO 4762",
-                        post_insert=dict(hole_d=6.4, depth=8.0, insert="M5 x 5.8 heat-set (OD 7.0, E)"))
-    V.RAIL_INSERTS = V.RAIL_BOLTS
-    V.WEB_U = (-47.0, 30.0); V.RACK_LEN = 77.0
-    V.DRONE_PUSH = 6.0
-    V.Z0S = tuple(V.Z0S) + (L.Z0_BAY + 5.0 + 6.0,)
-    V.ECC = dict(x=-22.0, u=24.0, shank_r=5.5, bore_in_plate_r=5.6, plate_boss_r=7.6, flange_af=13.0, flange_y=(98.0, 100.5), throw=0.8, bolt_r=2.65)
-    V.AXLE_KEEP = dict(r=5.0, y=(98.0, 106.0)); V.ECC_KEEP = dict(r=13.0, y=(98.0, 101.0))
+import arm_v6_layout as S6
+S6.use("v6")                          # rails on the motor plate (compact stack, swap_system.py): no posts, rail pads + inserts on the plate
 
 # ------------------------------------------------------------------ v5 poses (read, never copied)
 def motors():
@@ -57,35 +45,30 @@ def detent6():
     S = DT.arm_solids(D, np.array(c["Q"]))
     return D, S
 
-# rail posts (v5 positions, 14 long along the rail, inner face kept)
-POST_W = 16.0                         # X +-16 (as v5)
-POST_Y = (52.0, 74.0)                 # as v5: rail foot on top at Y 74
-POST_U = dict(inner=(-6.0, 8.0), outer=(-7.0, 7.0))    # along the rail about the bolt row (inner: face fixed at r - 6)
-_RB = V.RAIL_BOLTS                    # arm-mech 24 Oct: ONE M5 x 16 per post from the rail top at X 0 into an M5 heat-set in the post top
-RAIL_BOLTS = dict(x=(float(_RB["x"]),), insert_d=float(_RB["post_insert"]["hole_d"]), insert_l=float(_RB["post_insert"]["depth"]))   # hole Ø6.4 x 8 (E)
+# rail pads on the motor plate (v6 stack): one M5 insert per pad at X 0 (A: along +Z, B: along -X), A and B the same radii
+PAD_W, PAD_L = 16.0, 10.0             # X +-16 (the rail foot), +-10 along the rail about the bolt (clipped at r 30: 2.5 off the 80T flange)
+PAD_R0 = 30.0
+BOSS_R, BOSS_Y = 6.5, 44.0            # insert boss r 6.5 (3.3 wall round the Ø6.4 hole) from Y 44 up to the plate top
+INSERT = dict(d=6.4, depth=7.0)       # M5 x 5.8 heat-set (OD 7.0, E) in Ø6.4 x 7 from the plate top Y 54 (Y 47..54)
 ROOF_Y = (47.5, 50.0)                 # drawn roof over the bore cavity (2.5, joins the motor plate)
-CAV_R = 36.0                          # cavity r (sun post flange r 28.5 + bearing 2 inner race), as v5
+CAV_R = 33.0                          # cavity r: sun post flange r 28.5 / bearing 2 inner race shoulder r 29.9 (spec 59.7) + 3.1 (DEFAULT; v5 36)
+SEAL_R, SEAL_Y = 37.5, 41.0           # the shoulder on bearing 2's outer race only: relief r 37.5 to Y 41 (6010 housing shoulder <= Ø75.4, spec; v5's r 36 sat on the seal)
 SH_R = 43.0                           # shoulder / cavity wall outer r (= the sleeve)
 
-def posts():
-    """[(head, r, Manifold, footprint)] posts in the arm frame (A along +Z, B along -X)"""
+
+def pads():
+    """[(head, r, pad Manifold, insert hole)] in the arm frame (A along +Z, B along -X)"""
     out = []
-    for h, rs in (("A", L.POSTS_A), ("B", L.POSTS_B)):
-        for k, r in enumerate(rs):
-            u0, u1 = POST_U["inner" if k == 0 else "outer"]
+    for h in ("A", "B"):
+        for r in V.RAIL_BOLTS["r_" + h]:
+            z0, z1 = max(r - PAD_L, PAD_R0), r + PAD_L
             if h == "A":
-                p = box(-POST_W, POST_W, *POST_Y, r + u0, r + u1)
-                for x in RAIL_BOLTS["x"]:
-                    p -= cylY(x, r, POST_Y[1] - RAIL_BOLTS["insert_l"], POST_Y[1] + 1, RAIL_BOLTS["insert_d"] / 2, 48)
-                fp = hull([[x, y, zz] for x in (-18.0, 18.0) for y in (50.0, 52.0) for zz in (r + u0 - 2.0, r + u1 + 2.0)] +
-                          [[x, y, zz] for x in (-18.0, 18.0) for y in (50.0, 52.0) for zz in (-12.0, 12.0)])
+                p = box(-PAD_W, PAD_W, L.Y_PLATE0, L.Y_PLATE1, z0, z1) + cylY(0, r, BOSS_Y, L.Y_PLATE1, BOSS_R, 48)
+                hole = cylY(0, r, L.Y_PLATE1 - INSERT["depth"], L.Y_PLATE1 + 1, INSERT["d"] / 2, 48)
             else:
-                p = box(-r - u1, -r - u0, *POST_Y, -POST_W, POST_W)
-                for z in RAIL_BOLTS["x"]:
-                    p -= cylY(-r, z, POST_Y[1] - RAIL_BOLTS["insert_l"], POST_Y[1] + 1, RAIL_BOLTS["insert_d"] / 2, 48)
-                fp = hull([[xx, y, z] for xx in (-r - u1 - 2.0, -r - u0 + 2.0) for y in (50.0, 52.0) for z in (-18.0, 18.0)] +
-                          [[xx, y, z] for xx in (-12.0, 12.0) for y in (50.0, 52.0) for z in (-18.0, 18.0)])
-            out.append((h, r, p, fp))
+                p = box(-z1, -z0, L.Y_PLATE0, L.Y_PLATE1, -PAD_W, PAD_W) + cylY(-r, 0, BOSS_Y, L.Y_PLATE1, BOSS_R, 48)
+                hole = cylY(-r, 0, L.Y_PLATE1 - INSERT["depth"], L.Y_PLATE1 + 1, INSERT["d"] / 2, 48)
+            out.append((h, r, p, hole))
     return out
 
 def hub_v6_parts():
@@ -93,18 +76,18 @@ def hub_v6_parts():
     y0 = L.Y_HUB0
     bore = cylY(0, 0, y0 - 1, 40.0, L.BRG_OD / 2 + 0.10, 256)
     sleeve = cylY(0, 0, y0, L.Y_BRG[1] + L.BRG_W, SH_R) - cylY(0, 0, y0 - 1, 41, L.BRG_OD / 2 + 0.10, 256)
-    wall = cylY(0, 0, 40.0, ROOF_Y[0] + 0.01, SH_R) - cylY(0, 0, 39, ROOF_Y[0] + 0.5, CAV_R)     # shoulder + cavity wall (v5: 40..44)
+    wall = cylY(0, 0, 40.0, ROOF_Y[0] + 0.01, SH_R) - cylY(0, 0, 39, ROOF_Y[0] + 0.5, CAV_R) - cylY(0, 0, 39, SEAL_Y, SEAL_R, 128)   # outer-race shoulder + cavity wall
     roof = cylY(0, 0, ROOF_Y[0], ROOF_Y[1] + 0.01, SH_R, 128)                                    # cavity roof (v5: generated films)
     plate_c = cylY(0, 0, ROOF_Y[1], L.HUB_RECESS_Y, 30.0)                                        # web disc up to the recess floor Y 53 (v5 to 54: the 1.0 lip)
     for M in MOTORS6.values():                                                                    # spokes 36 wide to each seat (as v5)
         r = math.hypot(M["xc"], M["zc"]); ux, uz = M["xc"] / r, M["zc"] / r; px, pz = -uz, ux
         plate_c += hull([[s * px * 18.0, y, s * pz * 18.0] for s in (-1, 1) for y in (50.0, 54.0)] +
                         [[M["xc"] + s * px * 18.0, y, M["zc"] + s * pz * 18.0] for s in (-1, 1) for y in (50.0, 54.0)])
-    P = posts()
-    pst = None
-    for h, r, p, fp in P:
-        plate_c += fp
+    P = pads()
+    pst = None; holes = None
+    for h, r, p, hole in P:
         pst = p if pst is None else pst + p
+        holes = hole if holes is None else holes + hole
     seats = None; seat_cuts = None
     for nm, M in MOTORS6.items():
         xc, zc = M["xc"], M["zc"]
@@ -129,14 +112,17 @@ def hub_v6_parts():
     tower = S["tower"] + cylY(Q[0], Q[1], L.Y_PLATE0, L.Y_PLATE1, 7.0, 48)      # + a plate pad under the column (joins the spoke)
     mov = S["arm"] + S["spacer"] + S["nut"] + S["roller"] + S["springs"][0] + S["springs"][1]
     drawn = (sleeve + wall + roof + plate_c + seats + pst + tower) - post_k
-    cav = cylY(0, 0, 39.9, ROOF_Y[0], CAV_R, 128)
-    cuts = bore + cav + seat_cuts + post_k + mov
+    cav = cylY(0, 0, 39.9, ROOF_Y[0], CAV_R, 128) + cylY(0, 0, 39.9, SEAL_Y, SEAL_R, 128)
+    rails = None                                                                 # the rails sit on the pads: keep the hub off them elsewhere
+    for nm, poly, yy in V.rail_bodies("A") + V.rail_bodies("B"):
+        m = prism(poly, *yy); rails = m if rails is None else rails + m
+    cuts = bore + cav + seat_cuts + post_k + mov + holes + rails
     env = cylY(0, 0, y0, L.Y_PLATE0, 110.0) ^ box(-88.0, 88.0, y0 - 1, L.Y_PLATE0 + 1, -88.0, 88.0)
-    env -= bore + cav
+    env -= bore + cav + holes
     env -= seat_cuts
     env0 = env - post_k                                                          # the generated region as given (topo organic finish)
     env = (env + pst + plate_c + seats + tower + roof + wall) - post_k
-    return dict(drawn=drawn, cuts=cuts, env=env, env0=env0, allowed=env - cuts, posts=P, seat_cuts=seat_cuts, detent=(D, S), tower=tower)
+    return dict(drawn=drawn, cuts=cuts, env=env, env0=env0, allowed=env - cuts, pads=P, rails=rails, seat_cuts=seat_cuts, detent=(D, S), tower=tower)
 
 # ------------------------------------------------------------------ v5 parts as solids (arm frame), for the checks
 def prism(poly, y0, y1):
@@ -172,8 +158,8 @@ def checks(H=None, verbose=True):
     det = dict(arm=S["arm"] + S["spacer"], hook=S["hook"], springs=S["springs"][0] + S["springs"][1], anchor=S["anchor"],
                roller=S["roller"] + S["nut"])
     st = v5_static()
-    touch = {("hub", "railA:foot35"), ("hub", "railA:foot76"), ("hub", "railB:foot38.75"), ("hub", "railB:foot76"),
-             ("roller", "ring"), ("hub", "motorA"), ("hub", "motorB"), ("hub", "motoraxle")}   # seats carry the motors, posts the rail feet
+    touch = {("roller", "ring"), ("hub", "motorA"), ("hub", "motorB"), ("hub", "motoraxle"), ("hub", "railA:body"), ("hub", "railB:body")}
+    touch |= {("hub", f"rail{h}:foot{r:g}") for h in "AB" for r in V.RAIL_BOLTS["r_" + h]}   # seats carry the motors, pads the rails (contact at Y 54)
     gaps = {}
     def rec(a, b, g):
         k = (a, b); gaps[k] = min(gaps.get(k, 1e9), g)
@@ -204,6 +190,7 @@ if __name__ == "__main__":
           "H", np.round(H["detent"][0]["H"], 1), "anchor", np.round(H["detent"][0]["A"], 1))
     print(f"drawn {d.volume() * 1.27e-3:.1f} g, bodies {len(d.decompose())}, env {H['env'].volume() / 1000:.0f} cm3")
     import trimesh
+    import sys; sys.path.insert(0, os.path.join(REPO, "nox"))
     from solid_check import solid_check
     t = A.tm(d)
     ok, info = solid_check(t)
