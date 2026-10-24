@@ -69,3 +69,26 @@ it  57 beta    4 J   0.1953 vol 0.1068 (dil 0.1688 g -0.002) grey  8.5% ch 0.100
 it  58 beta    4 J   0.1936 vol 0.1076 (dil 0.1689 g -0.002) grey  8.2% ch 0.100 worst cage bump front 100 N (modul 28 2.3s
 it  59 beta    4 J   0.1921 vol 0.1082 (dil 0.1690 g -0.001) grey  8.1% ch 0.100 worst cage bump front 100 N (modul 27.8 2.3s
 it  60 beta    4 J   0.1905 vol 0.1088 (dil 0.1690 g -0.001) grey  8.0% ch 0.100 worst cage bump front 100 N (modul 27.5 2.3s
+it  61 beta    4 J   0.1891 vol 0.1092 (dil 0.1691 g +0.012) grey  7.9% ch 0.100 worst cage bump front 100 N (modul 27.2 3.0s
+it  62 beta    4 J   0.1906 vol 0.1072 (dil 0.1668 g -0.002) grey  7.9% ch 0.100 worst cage bump front 100 N (modul 27.3 2.3s
+layout: stopped (beta_stop) at it 62, beta 4, 160 s
+layout: beta 4 done: eroded design 2 bodies, main 99.9%; drawn bodies outside the main body: 1
+coarse stage done: 62 iterations, 214 s, peak 1.27058 GB
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (224.21 cm3); 3.73 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.111 of 116,618 design cells
+layout: WARNING nearly mirrored in y (1.0% of passive cells differ): no symmetry
+layout: 2 drawn bodies (28,026 cells), held solid in every realization; eroded filter: masked
+layout: 35 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 48, 120) = 368,640 elements, 499,026 active dofs; backend direct (direct estimate 6.9 GB, budget 11.8 GB)
+layout: warm start from a (32, 24, 64) grid (h 4.0): mean x 0.123
+it   1 beta    4 J  10.0000 vol 0.1212 (dil 0.1900 g +0.090) grey 14.1% ch 0.100 worst cage bump front 100 N (modul 47.1 40.1s
+it   2 beta    4 J  11.6967 vol 0.1117 (dil 0.1823 g +0.046) grey 14.6% ch 0.100 worst cage bump front 100 N (modul 52.5 41.2s
+it   3 beta    4 J  13.7803 vol 0.1014 (dil 0.1740 g -0.002) grey 15.1% ch 0.100 worst cage bump front 100 N (modul 61.1 41.5s
+it   4 beta    4 J  11.5362 vol 0.1032 (dil 0.1724 g -0.011) grey 13.6% ch 0.100 worst cage bump front 100 N (modul 53 41.8s
+it   5 beta    4 J  10.5087 vol 0.1058 (dil 0.1723 g -0.012) grey 12.9% ch 0.100 worst cage bump front 100 N (modul 49 41.6s
+it   6 beta    4 J  10.1375 vol 0.1078 (dil 0.1730 g -0.019) grey 12.6% ch 0.100 worst cage bump front 100 N (modul 47.6 40.5s
+it   7 beta    4 J   9.8314 vol 0.1106 (dil 0.1749 g -0.008) grey 12.5% ch 0.100 worst cage bump front 100 N (modul 46.3 39.3s
+it   8 beta    4 J   9.5995 vol 0.1122 (dil 0.1755 g -0.005) grey 12.3% ch 0.100 worst cage bump front 100 N (modul 45.3 39.5s
+it   9 beta    4 J   9.3998 vol 0.1134 (dil 0.1757 g -0.004) grey 12.1% ch 0.100 worst cage bump front 100 N (modul 44.4 39.3s
+it  10 beta    4 J   9.2125 vol 0.1146 (dil 0.1758 g -0.003) grey 11.9% ch 0.100 worst cage bump front 100 N (modul 43.5 42.1s
