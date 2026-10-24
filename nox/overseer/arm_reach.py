@@ -8,12 +8,12 @@ only does the arithmetic (C) on top of them and the estimates marked E below.
 import math
 
 PROP_D = 254.0            # 1045 prop (C, dimensions O Props)
-STOCK_WB = (500.0, 480.0)  # generic S500 / Holybro-class 480 (dimensions O, M Q7)
+STOCK_WB = (486.4, 500.0)  # S500 CAD motor centres (derived, s500/s500_cad.py) / listing 500
 
 # Arm beam (E, DEFAULT until the plate is measured)
 E_PETG = 2780.0           # MPa, nox/topo/material.py
 RHO_PETG = 1.27e-6        # kg/mm3
-R_CLAMP = 70.0            # arm leaves the plates at r 70 (E, plate outline Q7)
+R_CLAMP = 75.0            # stock arm root block ends at u 75 (derived, s500/s500_cad.py)
 M_TIP = 0.081 + 0.010 + 0.005  # motor + parts 81 g (spec) + prop ~10 (Q8) + screws (E), kg
 WALL = 2.4                # box-section wall (E)
 W_ROOT, W_TIP = 26.0, 22.0  # section width at the clamp / under the motor (E)
@@ -54,13 +54,13 @@ def first_bending_hz(wb, h_root, n=400):
 
 
 def roll_authority(wb):
-    """Roll torque per inertia relative to the 500 wheelbase (E body masses)."""
+    """Roll torque per inertia relative to the stock 486 wheelbase (E body masses)."""
     def ratio(w):
         r = w / (2 * math.sqrt(2))  # motor offset from the roll axis, mm
         i_motors = 4 * M_TIP * (r / 1000) ** 2
         i_body = 0.0015 + 0.0002 + 0.0023 + 0.0008  # pack low, pack self, L2 high, hub (E)
         return r / (i_motors + i_body)
-    return ratio(wb) / ratio(500.0)
+    return ratio(wb) / ratio(486.4)
 
 
 def hub_under_disks(wb, half):
@@ -84,15 +84,15 @@ if __name__ == "__main__":
           f"2P {2*RPM_HOVER/60:.0f} .. {2*RPM_FULL/60:.0f} Hz")
     for wb in STOCK_WB:
         print(f"stock {wb:.0f}: tip gap {tip_gap(wb):.1f}, motor r {wb/2:.0f}")
-    print("\ngap  wheelbase  motor r  span   shorter/arm vs 500 / 480  roll authority")
+    print("\ngap  wheelbase  motor r  span   shorter/arm vs 486 / 500  roll authority")
     for gap in (0, 10, 15, 25, 40):
         wb = wheelbase(gap)
         span = wb / math.sqrt(2) + PROP_D
         print(f"{gap:3d}  {wb:7.1f}  {wb/2:7.1f}  {span:5.0f}   "
-              f"{250-wb/2:5.1f} / {240-wb/2:5.1f}            x{roll_authority(wb):.2f}")
-    print("\nfirst vertical bending, PETG box arm (E), clamp r 70:")
-    for wb in (wheelbase(25), 480.0):
-        for h_root in (19.0, 32.0, 48.0):
+              f"{243.2-wb/2:5.1f} / {250-wb/2:5.1f}            x{roll_authority(wb):.2f}")
+    print("\nfirst vertical bending, PETG box arm (E), clamp r 75:")
+    for wb in (wheelbase(25), 486.4):
+        for h_root in (18.0, 32.0, 45.0):
             f, L, m = first_bending_hz(wb, h_root)
             print(f"  wb {wb:5.1f}  free {L:5.1f}  root {h_root:4.0f} tall: "
                   f"{f:4.0f} Hz, arm {m*1000:4.0f} g")
