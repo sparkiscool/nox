@@ -240,7 +240,10 @@ _L = {k: trimesh.load(os.path.join(LATCH, k + ".stl")).apply_translation([LATCH_
 M_REC, M_CART = (105.5, 42.2) if LATCH_V == "v6" else (54.5, 39.4 + 4.5)
 IFACE = trimesh.util.concatenate([_L[k] for k in ("receiver", "receiver_lid", "receiver_strips", "xt60e1m")])   # receiver set (M)
 CART = trimesh.util.concatenate([_L[k] for k in ("cartridge", "slider_px", "slider_nx", "pack", "xt60_plug")])   # swap set (M)
-SKIDS = [_L["cartridge_skid_closed"], _L["cartridge_skid_lead"]] if LATCH_V == "v1" else []   # v1 TPU end skids (cage); v6 has none
+SKIDS = [_L["cartridge_skid_closed"], _L["cartridge_skid_lead"]] if LATCH_V == "v1" else \
+    [trimesh.load(os.path.join(LATCH_DIR, "latch", k + ".stl")) for k in ("cartridge_skid_closed", "cartridge_skid_lead")]
+# TPU end skids (cage, move with the cartridge): v6's Scout manifest left them out; the v1 ones at the v1 pose (same cartridge
+# length) stand in until the latch confirms (asked 24 Oct): without them edges along x from 45..60 deg below reach the sliders
 
 
 def latch_skids():
