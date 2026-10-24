@@ -1,7 +1,7 @@
 """Box swap arm v7 drawn parts (24 Oct 2026, swap arm system worker): rails A / B v3 = rail v2 (arm_v6_cad.rail_v2) on the v7 stack
 (arm_v7_layout: r 29..151) with the carbon tie sockets (two Ø3.3 x 10 bores rising into the bottom face at r 128, arm_v6_layout.TIE), and
 the tie rods (2 x 3.0 carbon per rail, from the hub's lower rim at Y 22.5, r 78). Pinion16 v2, detent ring v3, V-wheel v1 and bush v1 carry
-over unchanged. Round 3 (arm_v7_layout.LOW): rail v4 with the keel. python3 arm_v7_cad.py [checks] -> runs/arm_rail/v4/ (W and print-posed
+over unchanged. Round 3 (arm_v7_layout.LOW): rail v4 with the keel; v5 widens the ribbon channel and sinks the bolt heads. python3 arm_v7_cad.py [checks] -> runs/arm_rail/v5/ (W and print-posed
 meshes, checks.json; v4 goes to print/ only once READY); NOX_ARM_STACK=v6 draws v3 (print/box_arm_rail_{A,B}_v3.stl)"""
 import os, sys, math, json
 import numpy as np, trimesh
@@ -11,7 +11,7 @@ S7.use()
 import arm_v6_cad as C6, arm_v5_cad as C5, arm_v5_layout as V
 from arm_cad import tm
 C6.TIES = True
-ROOT = os.path.normpath(os.path.join(HERE, "..", "..")); VER = "v4" if getattr(V, "RAIL_KEEL", None) else "v3"
+ROOT = os.path.normpath(os.path.join(HERE, "..", "..")); VER = "v5" if getattr(V, "RAIL_KEEL", None) else "v3"   # v5: the wide ribbon channel, bolt heads under its floor
 RUN = os.path.join(ROOT, "runs", "arm_rail", VER); os.makedirs(RUN, exist_ok=True)
 
 

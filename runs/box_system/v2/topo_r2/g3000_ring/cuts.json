@@ -1,0 +1,342 @@
+[
+ {
+  "piece": "Base + feet (Z < -150)",
+  "vol_cm3": 8.2,
+  "mass_g_E": 10,
+  "x": [
+   -104,
+   -48
+  ],
+  "y": [
+   10,
+   58
+  ],
+  "z": [
+   -169,
+   -153
+  ],
+  "longest_mm": 56,
+  "over_180": false,
+  "islands": 2
+ },
+ {
+  "piece": "Bay body -120 (O)",
+  "vol_cm3": 325.1,
+  "mass_g_E": 413,
+  "x": [
+   -144,
+   -32
+  ],
+  "y": [
+   58,
+   258
+  ],
+  "z": [
+   -233,
+   -89
+  ],
+  "longest_mm": 200,
+  "over_180": true,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body -150 (S)",
+  "vol_cm3": 274.4,
+  "mass_g_E": 349,
+  "x": [
+   -192,
+   -88
+  ],
+  "y": [
+   58,
+   210
+  ],
+  "z": [
+   -137,
+   -33
+  ],
+  "longest_mm": 152,
+  "over_180": false,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body -180 (O)",
+  "vol_cm3": 233.5,
+  "mass_g_E": 297,
+  "x": [
+   -200,
+   -128
+  ],
+  "y": [
+   58,
+   258
+  ],
+  "z": [
+   -49,
+   47
+  ],
+  "longest_mm": 200,
+  "over_180": true,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body -210 (S)",
+  "vol_cm3": 298.0,
+  "mass_g_E": 378,
+  "x": [
+   -192,
+   -88
+  ],
+  "y": [
+   58,
+   242
+  ],
+  "z": [
+   31,
+   143
+  ],
+  "longest_mm": 184,
+  "over_180": true,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body -30 (S)",
+  "vol_cm3": 278.5,
+  "mass_g_E": 354,
+  "x": [
+   88,
+   192
+  ],
+  "y": [
+   58,
+   210
+  ],
+  "z": [
+   -137,
+   -33
+  ],
+  "longest_mm": 152,
+  "over_180": false,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body -60 (O)",
+  "vol_cm3": 294.4,
+  "mass_g_E": 374,
+  "x": [
+   32,
+   144
+  ],
+  "y": [
+   66,
+   258
+  ],
+  "z": [
+   -233,
+   -89
+  ],
+  "longest_mm": 192,
+  "over_180": true,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body -90 (S)",
+  "vol_cm3": 245.2,
+  "mass_g_E": 311,
+  "x": [
+   -48,
+   48
+  ],
+  "y": [
+   66,
+   210
+  ],
+  "z": [
+   -201,
+   -113
+  ],
+  "longest_mm": 144,
+  "over_180": false,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body 0 (O)",
+  "vol_cm3": 258.0,
+  "mass_g_E": 328,
+  "x": [
+   128,
+   208
+  ],
+  "y": [
+   58,
+   258
+  ],
+  "z": [
+   -49,
+   55
+  ],
+  "longest_mm": 200,
+  "over_180": true,
+  "islands": 1
+ },
+ {
+  "piece": "Bay body 30 (S)",
+  "vol_cm3": 279.0,
+  "mass_g_E": 354,
+  "x": [
+   96,
+   192
+  ],
+  "y": [
+   58,
+   226
+  ],
+  "z": [
+   31,
+   143
+  ],
+  "longest_mm": 168,
+  "over_180": false,
+  "islands": 1
+ },
+ {
+  "piece": "Hub links (rest, r < 110 or between)",
+  "vol_cm3": 313.3,
+  "mass_g_E": 398,
+  "x": [
+   -176,
+   192
+  ],
+  "y": [
+   10,
+   266
+  ],
+  "z": [
+   -153,
+   111
+  ],
+  "longest_mm": 368,
+  "over_180": true,
+  "islands": 6
+ },
+ {
+  "piece": "Mast + stub face (Y < 8, |X| < 70)",
+  "vol_cm3": 649.2,
+  "mass_g_E": 825,
+  "x": [
+   -72,
+   72
+  ],
+  "y": [
+   -70,
+   10
+  ],
+  "z": [
+   -233,
+   143
+  ],
+  "longest_mm": 376,
+  "over_180": true,
+  "islands": 2
+ },
+ {
+  "piece": "Rear frame +X (Y < 8, X > 70)",
+  "vol_cm3": 274.9,
+  "mass_g_E": 349,
+  "x": [
+   72,
+   208
+  ],
+  "y": [
+   -70,
+   10
+  ],
+  "z": [
+   -233,
+   63
+  ],
+  "longest_mm": 296,
+  "over_180": true,
+  "islands": 2
+ },
+ {
+  "piece": "Rear frame -X (Y < 8, X < -70)",
+  "vol_cm3": 129.0,
+  "mass_g_E": 164,
+  "x": [
+   -192,
+   -72
+  ],
+  "y": [
+   -70,
+   10
+  ],
+  "z": [
+   -225,
+   63
+  ],
+  "longest_mm": 288,
+  "over_180": true,
+  "islands": 4
+ },
+ {
+  "piece": "Seat-post bridge (Y > 270)",
+  "vol_cm3": 126.5,
+  "mass_g_E": 161,
+  "x": [
+   -96,
+   80
+  ],
+  "y": [
+   266,
+   290
+  ],
+  "z": [
+   103,
+   175
+  ],
+  "longest_mm": 176,
+  "over_180": false,
+  "islands": 1
+ },
+ {
+  "piece": "Top frame +X half (Z > 110)",
+  "vol_cm3": 352.8,
+  "mass_g_E": 448,
+  "x": [
+   0,
+   136
+  ],
+  "y": [
+   10,
+   266
+  ],
+  "z": [
+   111,
+   175
+  ],
+  "longest_mm": 256,
+  "over_180": true,
+  "islands": 1
+ },
+ {
+  "piece": "Top frame -X half (Z > 110)",
+  "vol_cm3": 366.1,
+  "mass_g_E": 465,
+  "x": [
+   -136,
+   0
+  ],
+  "y": [
+   10,
+   266
+  ],
+  "z": [
+   111,
+   175
+  ],
+  "longest_mm": 256,
+  "over_180": true,
+  "islands": 1
+ }
+]
