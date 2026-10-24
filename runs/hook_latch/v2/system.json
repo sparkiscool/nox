@@ -136,18 +136,18 @@
  "system_check": {
   "pass_out": true,
   "pass_in": true,
-  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +y/latch housing +y_x-), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 750 g (E), CG [0.0, 0.0, 42.3] (E, no cg_ref)",
+  "summary": "System: Box catch, cage first n/a (no protected part), fit 0.0 mm\u00b3 (E) (funnel panel A +x/funnel panel B +y), bbox 8.89 L (E), extents 337 x 337 x 78 mm (E), mass 665 g (E), CG [-0.0, 165.0, 198.2] (E, no cg_ref)",
   "fit_fail_pairs": [],
   "compact": {
    "bbox_min": [
     -168.39,
-    -168.39,
-    -1.2
+    -3.39,
+    154.1
    ],
    "bbox_max": [
     168.39,
-    168.39,
-    77.2
+    333.39,
+    232.5
    ],
    "extents_mm": [
     336.8,
@@ -156,7 +156,7 @@
    ],
    "largest_extent_mm": 336.8,
    "bbox_L": 8.892,
-   "hull_L": 6.629,
+   "hull_L": 6.624,
    "guard_offsets_mm": {}
   }
  },
@@ -196,7 +196,7 @@
     "face_wheel_max_N": 7.88,
     "face_wheel_min_N": 2.01,
     "face_wheel_v7_N": 7.88,
-    "face_wheel_v7_plain_N": 5.09,
+    "face_wheel_plain_N": 5.09,
     "wheels_loaded": 8,
     "residual_N": 0.0,
     "panel_wheel_spot": {
@@ -207,11 +207,11 @@
       "defl_mm": 0.03,
       "cls": "flight"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 5.09,
-      "stress_MPa": 1.1,
-      "index": 0.057,
-      "defl_mm": 0.04,
+      "stress_MPa": 0.5,
+      "index": 0.025,
+      "defl_mm": 0.03,
       "cls": "flight"
      }
     },
@@ -230,7 +230,7 @@
     "face_wheel_max_N": 55.15,
     "face_wheel_min_N": 14.05,
     "face_wheel_v7_N": 55.15,
-    "face_wheel_v7_plain_N": 35.63,
+    "face_wheel_plain_N": 35.63,
     "wheels_loaded": 8,
     "residual_N": 0.0,
     "panel_wheel_spot": {
@@ -241,11 +241,11 @@
       "defl_mm": 0.18,
       "cls": "flight"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 35.63,
-      "stress_MPa": 7.8,
-      "index": 0.402,
-      "defl_mm": 0.25,
+      "stress_MPa": 3.4,
+      "index": 0.174,
+      "defl_mm": 0.21,
       "cls": "flight"
      }
     },
@@ -267,7 +267,7 @@
     "face_wheel_max_N": 122.54,
     "face_wheel_min_N": 0.0,
     "face_wheel_v7_N": 122.54,
-    "face_wheel_v7_plain_N": 51.21,
+    "face_wheel_plain_N": 51.21,
     "wheels_loaded": 6,
     "residual_N": 0.0,
     "cls": "misuse",
@@ -287,11 +287,11 @@
       "defl_mm": 0.41,
       "cls": "misuse"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 51.21,
-      "stress_MPa": 11.3,
-      "index": 0.578,
-      "defl_mm": 0.36,
+      "stress_MPa": 4.9,
+      "index": 0.249,
+      "defl_mm": 0.31,
       "cls": "misuse"
      }
     }
@@ -312,7 +312,7 @@
     "face_wheel_max_N": 32.15,
     "face_wheel_min_N": 0.0,
     "face_wheel_v7_N": 32.15,
-    "face_wheel_v7_plain_N": 17.9,
+    "face_wheel_plain_N": 17.9,
     "wheels_loaded": 7,
     "residual_N": 0.0,
     "cls": "flight",
@@ -332,11 +332,11 @@
       "defl_mm": 0.11,
       "cls": "flight"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 17.9,
-      "stress_MPa": 3.9,
-      "index": 0.202,
-      "defl_mm": 0.13,
+      "stress_MPa": 1.7,
+      "index": 0.087,
+      "defl_mm": 0.11,
       "cls": "flight"
      }
     }
@@ -354,7 +354,7 @@
     "face_wheel_max_N": 6.52,
     "face_wheel_min_N": 0.64,
     "face_wheel_v7_N": 6.52,
-    "face_wheel_v7_plain_N": 3.69,
+    "face_wheel_plain_N": 3.69,
     "wheels_loaded": 8,
     "residual_N": 0.0,
     "panel_wheel_spot": {
@@ -365,11 +365,11 @@
       "defl_mm": 0.02,
       "cls": "flight"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 3.69,
-      "stress_MPa": 0.8,
-      "index": 0.042,
-      "defl_mm": 0.03,
+      "stress_MPa": 0.4,
+      "index": 0.018,
+      "defl_mm": 0.02,
       "cls": "flight"
      }
     },
@@ -388,7 +388,7 @@
     "face_wheel_max_N": 45.62,
     "face_wheel_min_N": 4.51,
     "face_wheel_v7_N": 45.62,
-    "face_wheel_v7_plain_N": 25.82,
+    "face_wheel_plain_N": 25.82,
     "wheels_loaded": 8,
     "residual_N": 0.0,
     "panel_wheel_spot": {
@@ -399,11 +399,11 @@
       "defl_mm": 0.15,
       "cls": "flight"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 25.82,
-      "stress_MPa": 5.7,
-      "index": 0.291,
-      "defl_mm": 0.18,
+      "stress_MPa": 2.5,
+      "index": 0.126,
+      "defl_mm": 0.15,
       "cls": "flight"
      }
     },
@@ -425,7 +425,7 @@
     "face_wheel_max_N": 121.89,
     "face_wheel_min_N": 0.0,
     "face_wheel_v7_N": 121.89,
-    "face_wheel_v7_plain_N": 49.83,
+    "face_wheel_plain_N": 49.83,
     "wheels_loaded": 6,
     "residual_N": 0.0,
     "cls": "misuse",
@@ -445,11 +445,11 @@
       "defl_mm": 0.41,
       "cls": "misuse"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 49.83,
-      "stress_MPa": 11.0,
-      "index": 0.562,
-      "defl_mm": 0.35,
+      "stress_MPa": 4.7,
+      "index": 0.243,
+      "defl_mm": 0.3,
       "cls": "misuse"
      }
     }
@@ -470,7 +470,7 @@
     "face_wheel_max_N": 15.78,
     "face_wheel_min_N": 0.0,
     "face_wheel_v7_N": 15.78,
-    "face_wheel_v7_plain_N": 0.17,
+    "face_wheel_plain_N": 0.17,
     "wheels_loaded": 4,
     "residual_N": 0.0,
     "cls": "flight",
@@ -490,10 +490,10 @@
       "defl_mm": 0.05,
       "cls": "flight"
      },
-     "v7 plain": {
+     "v8 plain": {
       "load_N": 0.17,
       "stress_MPa": 0.0,
-      "index": 0.002,
+      "index": 0.001,
       "defl_mm": 0.0,
       "cls": "flight"
      }

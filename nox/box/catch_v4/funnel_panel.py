@@ -132,15 +132,16 @@ def rib_section():
     from scipy import ndimage
     from skimage import measure
     ec, mask, Hm = _OPT["ec"], _OPT["mask"], float(_OPT["H"])
+    v0 = float(_OPT.get("v0", 0.0))                               # grid start up the slope (v8 plain: its raised bottom edge)
     if not mask.any(): return None
-    iu = np.round((ec[:, 0] + 160 - Hm / 2) / Hm).astype(int); iv = np.round((ec[:, 1] - Hm / 2) / Hm).astype(int)
+    iu = np.round((ec[:, 0] + 160 - Hm / 2) / Hm).astype(int); iv = np.round((ec[:, 1] - v0 - Hm / 2) / Hm).astype(int)
     img = np.zeros((iu.max() + 3, iv.max() + 3)); img[iu + 1, iv + 1] = mask
     img = ndimage.gaussian_filter(img, RIB_SMOOTH)
     up = 4; fine = ndimage.zoom(img, up, order=1)
     polys = []
     for cnt in measure.find_contours(fine, 0.5):
         u = (cnt[:, 0] / up - 1) * Hm - 160 + Hm / 2
-        v = (cnt[:, 1] / up - 1) * Hm + Hm / 2
+        v = (cnt[:, 1] / up - 1) * Hm + Hm / 2 + v0
         if len(u) > 8: polys.append(list(zip(u.tolist(), v.tolist())))
     cs = mf.CrossSection(polys, mf.FillRule.EvenOdd)
     dom = mf.CrossSection([[(0.0, 0.0), (84.0, 0.0), (84.0 + SLANT / S2, SLANT), (0.0, SLANT)]])

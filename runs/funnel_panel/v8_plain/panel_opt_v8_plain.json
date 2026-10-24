@@ -1,0 +1,210 @@
+{
+ "elements": 5890,
+ "cases": [
+  "press u0 v40",
+  "press u30 v40",
+  "press u60 v40",
+  "press u90 v40",
+  "press u0 v65",
+  "press u30 v65",
+  "press u60 v65",
+  "press u90 v65",
+  "press u120 v65",
+  "press u0 v90",
+  "press u30 v90",
+  "press u60 v90",
+  "press u90 v90",
+  "press u120 v90",
+  "press u100 v40",
+  "press u100 v65",
+  "press u100 v43.6",
+  "top edge u0",
+  "top edge u40",
+  "top edge u80",
+  "top edge u120",
+  "top edge u150",
+  "uniform 20 N"
+ ],
+ "boss_forces_N": {
+  "functional": [
+   -6.97,
+   6.4,
+   -6.97,
+   7.55
+  ],
+  "misuse": [
+   -23.25,
+   21.34,
+   -23.25,
+   25.16
+  ]
+ },
+ "skin_only": {
+  "face_g": 70.0,
+  "util": 5.265,
+  "worst": "press u60 v90",
+  "stress_MPa": 19.0
+ },
+ "sweep": [
+  {
+   "vf": 0.4,
+   "face_g": 172.6,
+   "util": 0.228,
+   "worst": "press u60 v90",
+   "stress_MPa": 3.2,
+   "ok": true
+  },
+  {
+   "vf": 0.2,
+   "face_g": 121.4,
+   "util": 0.393,
+   "worst": "press u60 v90",
+   "stress_MPa": 6.2,
+   "ok": true
+  },
+  {
+   "vf": 0.1,
+   "face_g": 96.2,
+   "util": 0.67,
+   "worst": "press u90 v65",
+   "stress_MPa": 14.0,
+   "ok": true
+  },
+  {
+   "vf": 0.05,
+   "face_g": 83.1,
+   "util": 1.099,
+   "worst": "press u90 v90",
+   "stress_MPa": 14.6,
+   "ok": false
+  },
+  {
+   "vf": 0.075,
+   "face_g": 89.3,
+   "util": 0.949,
+   "worst": "top edge u0",
+   "stress_MPa": 13.8,
+   "ok": true
+  },
+  {
+   "vf": 0.0625,
+   "face_g": 86.2,
+   "util": 0.968,
+   "worst": "top edge u0",
+   "stress_MPa": 12.1,
+   "ok": true
+  },
+  {
+   "vf": 0.0563,
+   "face_g": 84.6,
+   "util": 1.01,
+   "worst": "press u90 v90",
+   "stress_MPa": 12.5,
+   "ok": false
+  }
+ ],
+ "chosen": {
+  "face_g": 86.2,
+  "util": 0.968,
+  "worst": "top edge u0",
+  "stress_MPa": 12.1,
+  "stress_case": "top edge u40",
+  "ok": true,
+  "per_case": {
+   "press u0 v40": [
+    0.235,
+    3.9
+   ],
+   "press u30 v40": [
+    0.006,
+    0.5
+   ],
+   "press u60 v40": [
+    0.206,
+    6.0
+   ],
+   "press u90 v40": [
+    0.513,
+    6.5
+   ],
+   "press u0 v65": [
+    0.544,
+    3.9
+   ],
+   "press u30 v65": [
+    0.252,
+    4.6
+   ],
+   "press u60 v65": [
+    0.431,
+    5.2
+   ],
+   "press u90 v65": [
+    0.816,
+    7.2
+   ],
+   "press u120 v65": [
+    0.173,
+    4.5
+   ],
+   "press u0 v90": [
+    1.664,
+    6.9
+   ],
+   "press u30 v90": [
+    1.255,
+    8.5
+   ],
+   "press u60 v90": [
+    0.922,
+    7.7
+   ],
+   "press u90 v90": [
+    0.912,
+    8.5
+   ],
+   "press u120 v90": [
+    0.692,
+    8.5
+   ],
+   "press u100 v40": [
+    0.257,
+    5.2
+   ],
+   "press u100 v65": [
+    0.698,
+    7.0
+   ],
+   "press u100 v43.6": [
+    0.333,
+    5.7
+   ],
+   "top edge u0": [
+    2.904,
+    8.9
+   ],
+   "top edge u40": [
+    2.865,
+    12.1
+   ],
+   "top edge u80": [
+    2.038,
+    9.8
+   ],
+   "top edge u120": [
+    1.551,
+    11.3
+   ],
+   "top edge u150": [
+    0.254,
+    9.0
+   ],
+   "uniform 20 N": [
+    0.099,
+    1.8
+   ]
+  },
+  "latch_boss_defl_mm": {}
+ },
+ "wall_s": 260
+}
