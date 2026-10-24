@@ -1,0 +1,107 @@
+{
+ "mode": "v7:scout:-90:-150",
+ "dt": 1.0,
+ "body": "design space (envelope)",
+ "states": 358,
+ "states_with_overlaps": 0,
+ "min_clearance": 0.0,
+ "overlaps": {},
+ "closest": [
+  [
+   "fingA_A",
+   "headA",
+   0.0,
+   0.0
+  ],
+  [
+   "fingB_A",
+   "headA",
+   0.0,
+   0.0
+  ],
+  [
+   "fingA_B",
+   "headB",
+   0.0,
+   0.0
+  ],
+  [
+   "fingB_B",
+   "headB",
+   0.0,
+   0.0
+  ],
+  [
+   "detent_arm",
+   "headB",
+   0.256,
+   22.0
+  ],
+  [
+   "fingA_A",
+   "servo_A",
+   0.5,
+   0.0
+  ],
+  [
+   "fingB_A",
+   "servo_A",
+   0.5,
+   0.0
+  ],
+  [
+   "fingA_B",
+   "servo_B",
+   0.5,
+   0.0
+  ],
+  [
+   "fingB_B",
+   "servo_B",
+   0.5,
+   0.0
+  ],
+  [
+   "headA",
+   "pack charged",
+   0.5,
+   2.5
+  ],
+  [
+   "headB",
+   "pack dead",
+   0.5,
+   7.0
+  ],
+  [
+   "headA",
+   "rec-90",
+   0.7,
+   3.0
+  ],
+  [
+   "headB",
+   "rec-150",
+   0.7,
+   19.0
+  ],
+  [
+   "belt_axle",
+   "headA",
+   1.0,
+   21.907
+  ],
+  [
+   "fingA_A",
+   "fingB_A",
+   1.0,
+   0.0
+  ],
+  [
+   "fingA_B",
+   "fingB_B",
+   1.0,
+   0.0
+  ]
+ ]
+}

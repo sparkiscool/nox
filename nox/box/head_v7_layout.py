@@ -74,6 +74,7 @@ RACK = dict(plus=dict(x_sq=(-5.0, 11.0), y=(157.4, 160.4)), minus=dict(x_sq=(-11
 HALL_POS = [(s * LATCH["hall"]["x"], Y_C - LATCH["hall"]["dz"]) for s in (-1, 1)]
 PARK_LINE = -32.0                                # X + u = -32: the bisector between the parked heads (head frame, both heads alike)
 CLR = 1.0
+MOTION_URL = "https://claude.ai/artifact/F8ukGCJC6oA8hBZ7Tbnr7N"            # motion_A.html, published
 
 CHANGES = [
     "open blade position inner faces +-11.0 (concept 10.5): a 0.8 rib into the grip pocket must clear the latched tab's outer face (10) on the "
@@ -83,7 +84,7 @@ CHANGES = [
     "a passive m1 pinion between racks on the two carriers locks their common mode: a lateral load on the cartridge goes to the body, not the "
     "cam or the spline (with free blades the cam base would take it)",
     "blades 12 wide (Y 159..171; the latch's 13): 1.5 clear of the hall package at Y 157 (the tab magnet's spot, z_T + 8); the rib (7.7 wide) is unchanged",
-    "623ZZ roller followers on the carriers (no sliding at the cam: the servo needs 2.4 kg.cm, concept 1.98 with mu 0.3 on 19.5 N)",
+    "623ZZ roller followers on the carriers (no sliding at the cam): the servo needs 2.3 kg.cm peak (concept 1.98 average with mu 0.3 on 19.5 N)",
     "head below the insert-lane keep-out's Z 111.5 at the drone (servo bottom u -12.5 -> Z 98.8 at the commanded insert): nothing of the "
     "catch (Z >= 154), the mast (Z <= 44) or the bays (60 deg away) is there; the structure keeps Z < 111.5 free (to the hub)",
 ]
@@ -375,6 +376,8 @@ def space_check(P, G):
     for nm, m in P.items():
         t = tm(m); lo, hi = t.bounds
         pts = t.voxelized(pitch=1.0).fill().points                          # the part's 1 mm voxel centres
+        if nm.startswith("carrier"):                                        # blade tips in the own cartridge's recess: the map is state-blind
+            pts = pts[~((pts[:, 2] > U_BOT) & (np.abs(pts[:, 0]) < LATCH["recess_x"]))]   # (a released pack's tabs); the arm sweep checks them
         if nm.startswith("body"):                                           # the rack web meshes with pinion16 (in the map): not a clash
             pts = pts[~((pts[:, 0] > WEB["x"][0] - 1) & (pts[:, 1] < WEB["teeth_y"][1] + 1))]
         i = np.floor(pts - o).astype(int); ok = np.all((i >= 0) & (i < np.array(G.shape)), axis=1); i = i[ok]
@@ -500,16 +503,25 @@ def masses():
     return dict(printed_parts=pc, bought=bought, body_E=75.0, note="body from the topology run (E 75 g, v5 head 56 M + carriage)")
 
 
+ACCESS = [
+    "servo: in from the axle side (-u) through the body's lower window, ears on their pads, 2 x M3 into heat-set inserts from -Y (driver channels kept in the body)",
+    "rods: pushed in from +X through the +X walls, through both bosses, into blind sockets in the -X walls, epoxied",
+    "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
+    "near axle (22, 4): L-key from +X over the plate (window kept Y 72.75..95); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
+    "wires: servo + 2 hall leads down a 6 mm channel to the plate hole at (0, u 8) over the rail's ribbon channel",
+]
+
+
 ALTERNATIVES = {
     "spring": [
-        ("one crossed spring (chosen)", "both blades 15 N squeezed / ~23 N open from one 0.7 wire spring on a rod (L 44 -> 34); the spring force "
+        ("one crossed spring (chosen)", "both blades 15 N squeezed / 21 N open from one 0.7 wire spring on a rod (L 44 -> 34); the spring force "
          "stays inside the carriers; needs two crossing arms"),
         ("one spring per blade in the wall", "the -X wall meets the park bisector (X + u >= -30.6): 13 mm of spring at the blade's height; "
          "15 N with a 5 mm stroke there needs a 0.7 wire at ~950 MPa (over 0.45 UTS) or a 2x force rise (servo x2)"),
     ],
     "servo": [
         ("shaft along Y under the grip (chosen)", "20 thick in u (u -12.5..7.5), long side along +X: inside the bay wedge and the park bisector "
-         "with 1.1 / 3.5 mm; the cam beside the blades; MG995 x3.8 on 2.4 kg.cm"),
+         "with 1.1 / 3.5 mm; the cam beside the blades; MG995 x3.9 on 2.3 kg.cm"),
         ("shaft along u, cam in the X-Y plane", "the 40.7 body hangs from u ~0 to u -45: crosses the park bisector X + u = -32 by ~25 mm at "
          "X -10 (the parked heads collide) unless the heads differ in Y; rejected"),
     ],
@@ -555,7 +567,7 @@ def section_svg(P, axis, at, view, title, colors, scale=3.0, size=(360, 330), ke
     return "\n".join(g)
 
 
-COLORS = {"carrier+": "var(--blade)", "carrier-": "var(--blade2)", "roller+": "var(--roll)", "roller-": "var(--roll)", "cam": "var(--cam)",
+COLORS = {"design space": "var(--ds)", "carrier+": "var(--blade)", "carrier-": "var(--blade2)", "roller+": "var(--roll)", "roller-": "var(--roll)", "cam": "var(--cam)",
           "horn": "var(--horn)", "servo": "var(--servo)", "rods": "var(--rod)", "spring rod": "var(--rod)", "spring": "var(--spring)",
           "pinion": "var(--pin)", "body (drawn interfaces)": "var(--body)", "cartridge": "var(--cart)"}
 
@@ -573,7 +585,8 @@ def cartridge_solid(pack="scout", squeeze=4.0):
 
 def page(R, P_sq, P_op):
     cart = cartridge_solid()
-    Ps = dict(P_sq); Po = dict(P_op)
+    ds = design_space()
+    Ps = dict({"design space": ds}, **P_sq); Po = dict({"design space": ds}, **P_op)
     if cart is not None: Ps = dict(Ps, cartridge=cart)
     sv = []
     sv.append(section_svg(Ps, "y", Y_C, (0, 2), "Section at the tab line Y 165 (X across, u up): squeezed", COLORS))
@@ -586,7 +599,7 @@ def page(R, P_sq, P_op):
     sv.append(section_svg(Ps, "u", RODS["u"], (0, 1), "Plan section at the rods u 7.5 (X across, Y up)", COLORS, size=(360, 420)))
     sp = R["spring"]; cm = R["cam"]; st = R["strength"]
     nums = [
-        ("Grip", f"blades 3 x 13, inner faces 6.0 squeezed / 11.0 open (stroke 5.0), rib 0.8 into the grip pocket at u 19.4; tip u 21.4 under the slider bar (u 21.9)"),
+        ("Grip", f"blades 3 x 12, inner faces 6.0 squeezed / 11.0 open (stroke 5.0), rib 0.8 into the grip pocket at u 19.4; tip u 21.4 under the slider bar (u 21.9)"),
         ("Spring (one, crossed)", f"music wire {sp['d']} x OD {sp['OD']} (ID {sp['ID']} on the 3.0 rod), L0 {sp['L0']:g}, {sp['n']} coils, k {sp['k']} N/mm: "
                                   f"{sp['F_sq']} N squeezed (L {sp['L_sq']:g}), {sp['F_open']} N open (L {sp['L_open']:g}), solid {sp['solid']}, tau {sp['tau_open']:.0f} MPa ({sp['tau_ratio']} of 0.45 UTS) (E)"),
         ("Hold and release", f"hold while the XT60 unmates: {st['hold']['per_tab_N']} N per tab opens with {st['hold']['opening_N']} N vs {st['hold']['spring_N']} N: x{st['hold']['margin']}; "
@@ -600,19 +613,26 @@ def page(R, P_sq, P_op):
                         f"{st['wheel_axial_N_pull']['rigid']:.0f}..{st['wheel_axial_N_pull']['flexible']:.0f} N (pull); spine + plate {st['spine_MPa_pull']} / {st['spine_MPa_stall']} MPa"),
         ("Space (C)", R["space_summary"]),
     ]
+    sw = R.get("sweeps", {})
+    nums.append(("Arm sweep (C)", "; ".join(f"{k}: {v['states']} states, {v['states_with_overlaps']} with overlaps, min clearance {v['min_clearance']}"
+                                           for k, v in sw.items()) or "not run"))
+    nums.append(("Compact (C)", R["compact"]))
+    nums.append(("Access", "; ".join(ACCESS)))
+    nums.append(("Mass (E)", R["mass_line"]))
     nrows = "".join(f"<tr><th>{a}</th><td>{b}</td></tr>" for a, b in nums)
     alts = "".join(f"<tr><td>{grp}</td><td><b>{a[0][0]}</b>: {a[0][1]}</td><td>{a[1][0]}: {a[1][1]}</td></tr>" for grp, a in ALTERNATIVES.items())
     chg = "".join(f"<li>{c}</li>" for c in CHANGES)
     return f"""<title>Heads v7 layout</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono&display=swap">
 <style>
 :root {{ --bg:#f6f5f1; --fg:#1d232a; --muted:#5d6670; --line:#c9ccd0; --card:#fff; --blade:#2f6db3; --blade2:#5a8fd0; --roll:#8a6d1f;
-  --cam:#b33a3a; --horn:#9aa3ab; --servo:#3d4a57; --rod:#222; --spring:#c47a1d; --pin:#7a4fb3; --body:#a9b4be; --cart:#cfe0c3; }}
+  --cam:#b33a3a; --horn:#9aa3ab; --servo:#3d4a57; --rod:#222; --spring:#c47a1d; --pin:#7a4fb3; --body:#a9b4be; --cart:#cfe0c3; --ds:#ece6d6; }}
 @media (prefers-color-scheme: dark) {{ :root:not([data-theme="light"]) {{ --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --card:#1b2026;
   --blade:#6aa5ec; --blade2:#8fbdf3; --roll:#d2b25c; --cam:#e06a6a; --horn:#6c757d; --servo:#56687a; --rod:#ddd; --spring:#e3a24a; --pin:#b18be6;
-  --body:#55626e; --cart:#344a33; color-scheme: dark }} }}
+  --body:#55626e; --cart:#344a33; --ds:#2b2a24; color-scheme: dark }} }}
 :root[data-theme="dark"] {{ --bg:#14181c; --fg:#e7eaee; --muted:#9aa4ad; --line:#323a42; --card:#1b2026; --blade:#6aa5ec; --blade2:#8fbdf3;
-  --roll:#d2b25c; --cam:#e06a6a; --horn:#6c757d; --servo:#56687a; --rod:#ddd; --spring:#e3a24a; --pin:#b18be6; --body:#55626e; --cart:#344a33; color-scheme: dark }}
+  --roll:#d2b25c; --cam:#e06a6a; --horn:#6c757d; --servo:#56687a; --rod:#ddd; --spring:#e3a24a; --pin:#b18be6; --body:#55626e; --cart:#344a33; --ds:#2b2a24; color-scheme: dark }}
 body {{ background:var(--bg); color:var(--fg); font:15px/1.5 "IBM Plex Sans", system-ui, sans-serif; margin:0;
   padding-left:max(16px, env(safe-area-inset-left, 0px)); padding-right:max(16px, env(safe-area-inset-right, 0px)); padding-block:20px; }}
 main {{ max-width:1120px; margin:0 auto; display:grid; gap:18px; }}
@@ -634,12 +654,12 @@ th {{ font-weight:600; white-space:nowrap }} ul {{ margin:0; padding-left:18px }
 <span><i class="sw" style="background:var(--horn)"></i>metal horn</span><span><i class="sw" style="background:var(--servo)"></i>servo</span>
 <span><i class="sw" style="background:var(--rod)"></i>3.0 carbon rods</span><span><i class="sw" style="background:var(--spring)"></i>spring</span>
 <span><i class="sw" style="background:var(--pin)"></i>sync pinion</span><span><i class="sw" style="background:var(--body)"></i>body, drawn interfaces</span>
-<span><i class="sw" style="background:var(--cart)"></i>Scout cartridge</span></div>
+<span><i class="sw" style="background:var(--cart)"></i>Scout cartridge</span><span><i class="sw" style="background:var(--ds)"></i>body design space (topology)</span></div>
 <div class="grid">{''.join(f'<div class="scroll">{s}</div>' for s in sv)}</div></section>
 <section class="card"><h2>Numbers</h2><table>{nrows}</table></section>
 <section class="card"><h2>Alternatives</h2><div class="scroll"><table><tr><th></th><th>Chosen</th><th>Alternative</th></tr>{alts}</table></div></section>
 <section class="card"><h2>Changes from the system pass's concept</h2><ul>{chg}</ul></section>
-<section class="card"><p>Source: <code>nox/box/head_v7_layout.py</code> (space map <code>head_v7_space.py</code>); requirements: <code>nox/dimensions.md</code> "System box swap: arm" and "latch". The body between the drawn interfaces comes from its topology run after the concept check.</p></section>
+<section class="card"><p>3D grip cycle (the same solids): <a href="{MOTION_URL}">head A motion view</a>. Source: <code>nox/box/head_v7_layout.py</code> (space map <code>head_v7_space.py</code>); requirements: <code>nox/dimensions.md</code> "System box swap: arm" and "latch". The body between the drawn interfaces comes from its topology run after the concept check.</p></section>
 </main>"""
 
 
@@ -737,7 +757,24 @@ def main():
     else:
         R["space_summary"] = "space map missing (run head_v7_space.py)"
     R["internal"] = internal_checks()
-    R["masses"] = masses()
+    import glob
+    R["sweeps"] = {}
+    for f in sorted(glob.glob(os.path.join(ROOT, "runs", "head", "v7", "sweep", "sweep_v7_*_space.json"))):
+        d = json.load(open(f)); R["sweeps"][d["mode"] + " (envelope)"] = {k: d[k] for k in ("states", "states_with_overlaps", "min_clearance")}
+    allm = None
+    for nm, m in P_sq.items():
+        if nm == "body (drawn interfaces)": continue
+        allm = m if allm is None else allm + m
+    allm = allm + design_space()
+    t = tm(allm); ext = t.bounds[1] - t.bounds[0]
+    R["compact"] = (f"head A whole (carriage, rack tail, column as its design space, grabber, servo): {ext[0]:.0f} x {ext[1]:.0f} x {ext[2]:.0f} (X, Y, u) incl. the design "
+                    f"space; hull {t.convex_hull.volume / 1e6:.2f} L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the "
+                    f"servo sits in the column under the grip, the grabber on top of it")
+    mm = masses(); R["masses"] = mm
+    R["mass_line"] = (f"printed grabber parts {sum(mm['printed_parts'].values()):.1f} g, body ~{mm['body_E']:.0f} g (topology, E), bought "
+                      f"{sum(v for k, v in mm['bought'].items() if not k.startswith('servo')) + mm['bought']['servo_DS3218']:.0f} g with the DS3218: head ~"
+                      f"{sum(mm['printed_parts'].values()) + mm['body_E'] + sum(v for k, v in mm['bought'].items() if not k.startswith('servo')) + mm['bought']['servo_DS3218']:.0f} g "
+                      f"(system frame 120 g head + 60 g carriage, E)")
     R["alternatives"] = ALTERNATIVES; R["changes"] = CHANGES
     json.dump(R, open(os.path.join(OUT, "layout.json"), "w"), indent=1, default=float)
     try:

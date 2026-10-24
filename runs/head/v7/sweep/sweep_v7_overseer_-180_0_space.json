@@ -1,0 +1,101 @@
+{
+ "mode": "v7:overseer:-180:0",
+ "dt": 1.0,
+ "body": "design space (envelope)",
+ "states": 297,
+ "states_with_overlaps": 0,
+ "min_clearance": 0.0,
+ "overlaps": {},
+ "closest": [
+  [
+   "fingA_A",
+   "headA",
+   0.0,
+   0.0
+  ],
+  [
+   "fingB_A",
+   "headA",
+   0.0,
+   0.0
+  ],
+  [
+   "fingA_B",
+   "headB",
+   0.0,
+   0.0
+  ],
+  [
+   "fingB_B",
+   "headB",
+   0.0,
+   0.0
+  ],
+  [
+   "detent_arm",
+   "headB",
+   0.256,
+   22.0
+  ],
+  [
+   "fingA_A",
+   "servo_A",
+   0.5,
+   0.0
+  ],
+  [
+   "fingB_A",
+   "servo_A",
+   0.5,
+   0.0
+  ],
+  [
+   "fingA_B",
+   "servo_B",
+   0.5,
+   0.0
+  ],
+  [
+   "fingB_B",
+   "servo_B",
+   0.5,
+   0.0
+  ],
+  [
+   "headA",
+   "pack charged",
+   0.5,
+   2.5
+  ],
+  [
+   "headB",
+   "pack dead",
+   0.5,
+   7.0
+  ],
+  [
+   "belt_axle",
+   "headA",
+   1.0,
+   21.911
+  ],
+  [
+   "fingA_A",
+   "fingB_A",
+   1.0,
+   0.0
+  ],
+  [
+   "fingA_B",
+   "fingB_B",
+   1.0,
+   0.0
+  ],
+  [
+   "headA",
+   "railA",
+   1.414,
+   0.0
+  ]
+ ]
+}
