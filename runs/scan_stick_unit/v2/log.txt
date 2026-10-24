@@ -1,0 +1,8 @@
+=== scan_stick_unit: h 2.0, generated 55.0 cm3, min member 3.2 mm, cores 4
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 1.29 cells, erosion depth 1.37 mm; volfrac 0.070 of 12,298 design cells
+layout: WARNING filter radius 1.29 cells < 2: the grid is too coarse for 5.0 mm members; use h <= 2.06
+layout: WARNING nearly mirrored in y (3.1% of passive cells differ): no symmetry
+layout: 3 drawn bodies (5,192 cells), held solid in every realization; eroded filter: masked
+layout: 33 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties
+fem: grid (32, 32, 88) = 90,112 elements, 70,776 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
