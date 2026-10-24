@@ -15,8 +15,8 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 
 ### Keep (on hand, decided)
 - S500 centre plates (2015 edition, Spark 23 Oct, CHECK), SunnySky X2216 II, 1045 props, MicoAir743-Lite, Matek FCHUB-12S, 4S 6000 packs (3), MTF-02P, Unitree L2, Pi 5 companion (`dimensions.md` O, `nox/parts-list.md`).
-- **L2 top-mounted**, above the collar faces (log 23 Oct; `dimensions.md` O, G).
-- 2 x DECXIN 2633V2: front portrait 30° up (decided 23 Oct, Spark left it to us: keeps the forward view and still covers the L2 field incl. wide mode), rigid to the L2 for the camera-lidar calibration; underside straight down (Spark 23 Oct).
+- **L2 at the nose, axis 15° below forward** (Spark 24 Oct; was top-mounted), above the collar faces (`dimensions.md` O Lidar, Layout v1, G).
+- 2 x DECXIN 2633V2: front portrait at the horizon behind the L2 (DEFAULT 24 Oct with the forward-down L2; alt 30° up, the 23 Oct choice), rigid to the L2 for the camera-lidar calibration; underside straight down (Spark 23 Oct). Pointing in `dimensions.md` O Camera.
 - PX4 1.18.0rc, airframe 4001, DShot, CRSF; flies perfectly in Position mode (Spark 23 Oct); tune backup `claude/overseer_params_2026-09-26.params`, never delete. Switches matched to the Scout (mode ch 5, kill ch 8).
 - Printed mounts generated with the `nox/topo` engine, not `noxopt` (Spark 23 Oct, lidar mount row).
 

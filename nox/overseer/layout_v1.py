@@ -3,7 +3,8 @@
 the printed arms carry the motor square forward of the plates (front pair longer) and the catch (wheels, cartridge,
 pods, feet) sits aft of the plate centre as far as the funnel allows, so the CG lands on the thrust centre.
 
-python3 nox/overseer/layout_v1.py [out_dir]      (~3 min: reads the S500 STEP, solves the balance, writes the artifact)
+python3 nox/overseer/layout_v1.py [out_dir]      (~25 min: reads the S500 STEP, searches the catch offset and wheel height,
+solves the balance, writes the artifact; V1_CASES="30,-34" reruns only the chosen case, ~8 min)
 
 Drone frame: x forward, y left, z up; z 0 = bottom plate top face; plate centre at x 0. Numbers from `nox/dimensions.md`
 O / M / G (tagged there); E where marked here. v0 (`layout_v0.py`) is kept as it was.
@@ -317,7 +318,7 @@ def balance(dc, dm0):
 
 results = []
 CASES = [(float(a), float(b)) for a, b in (c.split(",") for c in os.environ["V1_CASES"].split(";"))] if os.environ.get("V1_CASES") \
-    else [(dc_, -12.0) for dc_ in (0.0, 10.0, 20.0, 30.0)]      # V1_CASES="30,-30" reruns one case from that wheel height
+    else [(dc_, -12.0) for dc_ in (0.0, 10.0, 20.0, 30.0)]      # V1_CASES="30,-34" reruns one case from that wheel height
 for dc, wz0 in CASES:
     dm = 60.0
     for wz in np.arange(wz0, -52.0, -2.0):

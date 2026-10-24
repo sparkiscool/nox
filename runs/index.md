@@ -1,6 +1,6 @@
 # Runs
 
-_46 runs · rebuilt 2026-10-24 00:20 (scan_stick_cam rows added by hand: the tool sorts by file time, which the checkout reset)_
+_46 runs · rebuilt 2026-10-24 00:20 (scan_stick_cam and overseer_layout rows added by hand: the tool sorts by file time, which the checkout reset)_
 
 ## Latest per part
 
@@ -11,6 +11,7 @@ _46 runs · rebuilt 2026-10-24 00:20 (scan_stick_cam rows added by hand: the too
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
 | holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
 | motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
+| overseer_layout | v1 | DONE | 2555 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v17 | DONE | 340.1 (M) | 0.26  | PASS | [runs/scan_stick_base/v17](runs/scan_stick_base/v17/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
@@ -19,6 +20,7 @@ _46 runs · rebuilt 2026-10-24 00:20 (scan_stick_cam rows added by hand: the too
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2555 (E) | · | · | · | · GB | 25 min | #34 |
 | 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
 | 2026-10-23 | scan_stick_cam | [v6](runs/scan_stick_cam/v6/summary.md) | FAILED | · | · | · | · | · GB | · min | · |
 | 2026-10-23 23:31 | scan_stick_cam | [v5](runs/scan_stick_cam/v5/summary.md) | FAILED | 13.0 (M) | 0.31 | PASS | · | 5.7 (P) GB | 44 min | · |
