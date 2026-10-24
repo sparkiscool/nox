@@ -276,8 +276,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["cam"] = trimesh.util.concatenate(cam_meshes)
     g["cam_lens"] = cams[0]["lens"]; g["cam_fwd"] = cams[0]["fwd"]; g["cam_up_v"] = cams[0]["up"]
     g["cam_rods"] = []
-    g["cam_plate"] = trimesh.util.concatenate(plates); g["cam_arms"] = arms_
-    g["cam_joint_mm3"] = sum(overlap(a_, p_) for a_, p_ in zip(arms_, plates)) + 1.0   # each arm bonded into its plate
+    g["cam_plate"] = trimesh.util.concatenate(plates); g["cam_arms"] = arms_; g["cam_plates"] = plates
+    g["cam_joint_mm3"] = None                                     # each arm bonded into its plate: exact volume set on the final layout
     g["cam_bracket"] = g["cam_plate"]
     sock = co.sockets(xB, zB)
     lugs = []
@@ -469,7 +469,8 @@ say(f"cage (cage_opt level {os.environ.get('V3_LEVEL', '160')} Hz): " + " ".join
 dm = 80.0
 CAM_UP = CAM_UP_DEFAULT
 SCR = OUT; os.makedirs(SCR, exist_ok=True)
-for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cage sizing until the sizes stop changing
+FINAL_PASS = False
+for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cage sizing until the sizes stop changing
     for wz in np.arange(float(os.environ.get("V3_WZ0", "-30")), -60.0, -2.0):
         set_wheel(wz)
         dm, xB, zB, g, tot, cg = balance(None, dm)
@@ -483,7 +484,8 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cag
     dc = TIP_OFF - dm
     g = build(dm, dc, xB, zB)
     tot, cg = cg_of(g)
-    new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO)            # re-size the cage on this geometry (F)
+    if FINAL_PASS: break                                              # the layout drawn with the settled sizes
+    new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES if it_sz else None)   # re-size the cage on this geometry (F), warm start
     if not ok_sz and os.environ.get("SYS_SEARCH", "1") == "1":         # the layout no longer passes here: search every topology again
         from multiprocessing import Pool
         with Pool(4) as pool:
@@ -498,8 +500,10 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "4"))):     # layout <-> cag
             CAGE_TOPO, new_sizes, r_sz, ok_sz = best_[0], best_[1], best_[2], True
     say(f"cage sizing pass {it_sz + 1}: {r_sz['mass_g']:.0f} g, L2 mode {r_sz['f_l2']:.0f} Hz, feasible {ok_sz}, "
         f"{sum(new_sizes.get(k) != v for k, v in CAGE_SIZES.items())} rods changed")
+    nchg = sum(new_sizes.get(k) != v for k, v in CAGE_SIZES.items())
     if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
+    if ok_sz and nchg <= 3: FINAL_PASS = True                         # settled: one more layout pass with these sizes
 CAM_DESC = f"two, yaw ±{CAM_YAW:.1f}, pitch {CAM_PITCH:.1f}, landscape"
 
 # ---------------------------------------------------------------- checks on the chosen layout
@@ -656,7 +660,7 @@ man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
-                          ["apex + hubs", "cam brackets", round(g["cam_joint_mm3"], 1)]],  # camera arms bonded into the camera plates
+                          ["apex + hubs", "cam brackets", round(sum(abs(a_.intersection(p_).volume) for a_, p_ in zip(g["cam_arms"], g["cam_plates"])) * 1.05 + 1.0, 1)]],  # camera arms bonded into the camera plates
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True),                   # the cartridge path: it drops out the bottom and fills the 168 opening under the wheels, where nothing else may go; its cartridge walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)

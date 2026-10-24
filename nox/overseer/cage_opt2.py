@@ -708,7 +708,7 @@ def size_topology(p, topo, log=None):
 FIXED_ON = ("keels_lo", "keels_x", "arm_spars", "top_spider")   # found by diagnosis / needed by cage first; the ablation re-tests each
 
 
-def size_fsd(p, topo, iters=30, log=False):
+def size_fsd(p, topo, iters=30, log=False, init=None):
     """fully stressed design per physical rod (a run between joints): each run gets the smallest section whose stress,
     buckling and socket indices pass every case at its limit; then stiffness limits (L2 mode, crash deflection) by
     stepping up the runs that carry them. Returns (sizes per element name, result, feasible)."""
@@ -720,7 +720,7 @@ def size_fsd(p, topo, iters=30, log=False):
     run_cap = [min([caps.get(m0.el[i]["name"], len(ORDER) - 1) for i in run] + [gcap.get(m0.el[run[0]]["group"], len(ORDER) - 1)]) for run in runs]
     def capped(req):
         return [ORDER[max(0, min(ORDER.index(r_), run_cap[i]))] for i, r_ in enumerate(req)]
-    sec = ["r3"] * len(runs)
+    sec = [(init or {}).get(names[0], "r3") if (init or {}).get(names[0]) in SECTIONS else "r3" for names in run_names]   # warm start (system loop)
     # mirror pairs (y -> -y): both sides of a run take the larger section, so the cage is built symmetric
     def rkey(run, sgn):
         pts = sorted({tuple(np.round(np.asarray(m0.N[m0.el[i][e]], float) * [1, sgn, 1], 1)) for i in run for e in ("a", "b")})
