@@ -7,25 +7,25 @@ collar inset search (Scout, >= 7.0 inside the planes below z 20, +-5 yaw, +-2 ti
   inset 10.5: collar margin 7.00
 == scout: z_T 42.55 (swap CG), swap 210.8 g, cartridge 93.0 x 40.0 x 45.6
   FE v1 (h 1.0): worst 0.673 in handling 50 N on a foot; crash worst 0.155
-{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 33.06, "slider": 3.18, "receiver": 41.17, "lid": 5.34, "strips": 1.97}, "bbox": {"extents": [61.2, 54.1, 101.6], "volume_L": 0.3364, "largest": 101.6}}
+{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 33.06, "slider": 3.18, "receiver": 40.87, "lid": 5.34, "strips": 1.97}, "bbox": {"extents": [61.2, 54.1, 101.6], "volume_L": 0.3364, "largest": 101.6}}
   insert free: cart 0.0 mm3, stuck []; off 0.3 stuck []
   hand calc worst index 0.354; grip pull {'total_N': np.float64(52.1), 'per_tab_N': np.float64(26.0), 'bar_MPa': np.float64(3.82), 'index': np.float64(0.354), 'lever_mm': 11.0}
   box_battery_cartridge_scout_v5.stl: solid_check PASS, 33.06 g, bed 1267 mm2, overhang 1866 mm2
   box_battery_slider_scout_v5.stl: solid_check PASS, 3.18 g, bed 328 mm2, overhang 63 mm2
-  box_battery_receiver_scout_v1.stl: solid_check PASS, 41.17 g, bed 837 mm2, overhang 1940 mm2
+  box_battery_receiver_scout_v1.stl: solid_check PASS, 40.87 g, bed 837 mm2, overhang 1900 mm2
   box_battery_receiver_lid_scout_v1.stl: solid_check PASS, 5.34 g, bed 1001 mm2, overhang 0 mm2
   box_battery_receiver_strip_scout_v1.stl: solid_check PASS, 0.98 g, bed 339 mm2, overhang 0 mm2
 == overseer: z_T 110.76 (swap CG), swap 748.2 g, cartridge 171.0 x 55.0 x 58.6
-  FE v1 (h 1.0): worst 0.704 in handling 50 N on a foot; crash worst 0.437
-{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 89.7, "slider": 4.04, "receiver": 79.54, "lid": 6.87, "strips": 4.14}, "bbox": {"extents": [76.2, 67.1, 179.6], "volume_L": 0.9183, "largest": 179.6}}
+  FE v1 (h 1.0): worst 0.692 in handling 50 N on a foot; crash worst 0.481
+{"static_fit_mm3": {}, "squeeze": {"vs_cart": 0.0, "vs_recv": 0.0, "vs_each": 0.0}, "gripped_pull_mm3": 0.0, "bearing_drop": [0.8, 0.8], "mass_g": {"cartridge": 89.7, "slider": 4.04, "receiver": 76.58, "lid": 7.85, "strips": 4.14}, "bbox": {"extents": [66.8, 68.8, 179.6], "volume_L": 0.8254, "largest": 179.6}}
   insert free: cart 0.0 mm3, stuck []; off 0.3 stuck []
   hand calc worst index 0.389; grip pull {'total_N': np.float64(57.3), 'per_tab_N': np.float64(28.7), 'bar_MPa': np.float64(4.2), 'index': np.float64(0.389), 'lever_mm': 11.0}
   box_battery_cartridge_overseer_v5.stl: solid_check PASS, 89.7 g, bed 3125 mm2, overhang 4271 mm2
   box_battery_slider_overseer_v5.stl: solid_check PASS, 4.04 g, bed 463 mm2, overhang 63 mm2
-  box_battery_receiver_overseer_v1.stl: solid_check PASS, 79.54 g, bed 1251 mm2, overhang 2522 mm2
-  box_battery_receiver_lid_overseer_v1.stl: solid_check PASS, 6.87 g, bed 1301 mm2, overhang 0 mm2
+  box_battery_receiver_overseer_v1.stl: solid_check PASS, 76.58 g, bed 1229 mm2, overhang 2220 mm2
+  box_battery_receiver_lid_overseer_v1.stl: solid_check PASS, 7.85 g, bed 1049 mm2, overhang 0 mm2
   box_battery_receiver_strip_overseer_v1.stl: solid_check PASS, 2.07 g, bed 713 mm2, overhang 0 mm2
-scout v3 system: System: Scout v3, cage first -4.2 mm (E) at (-0.28, +0.24, -0.93) (receiver) FAIL, fit 2193.6 mm³ (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 689 g (E), CG 2.0 mm off thrust axis (E) [+2.0, -0.1, -38.0], 3.0 mm without swap parts FAIL (tol 3), probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL
-scout v3 system + keel node 4: System: Scout v3, cage first -1.4 mm (E) at (+0.29, -0.00, +0.96) (camera) FAIL, fit 2193.6 mm³ (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 690 g (E), CG 1.9 mm off thrust axis (E) [+1.9, -0.1, -38.1], 3.0 mm without swap parts, probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL
-overseer in overseer.assembly.json (B): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11741.1 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2493 g (E), CG 13.0 mm off thrust axis (E) [+12.9, +1.0, -75.8], 31.4 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL
-overseer in overseer.assembly.json (A): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11173.3 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2493 g (E), CG 23.1 mm off thrust axis (E) [+23.1, +1.0, -75.8], 33.0 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL
+scout v3 system: System: Scout v3, cage first -4.2 mm (E) at (-0.28, +0.24, -0.93) (receiver) FAIL, fit 2133.8 mm³ (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 689 g (E), CG 2.0 mm off thrust axis (E) [+2.0, -0.1, -38.0], 3.0 mm without swap parts FAIL (tol 3), probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL
+scout v3 system + keel node 4: System: Scout v3, cage first -1.4 mm (E) at (+0.29, -0.00, +0.96) (camera) FAIL, fit 2133.8 mm³ (E) (pogo pads + carrier/receiver) FAIL, bbox 6.57 L (E), extents 233 x 233 x 122 mm (E), mass 690 g (E), CG 1.9 mm off thrust axis (E) [+1.9, -0.1, -38.1], 3.0 mm without swap parts, probes -34.0 mm (E) edge at (+0.96, -0.09, -0.26) (camera, unshielded) FAIL
+overseer in overseer.assembly.json (B): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 11873.2 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2491 g (E), CG 13.0 mm off thrust axis (E) [+13.0, +1.0, -75.8], 31.5 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL
+overseer in overseer.assembly.json (A): System: Overseer, cage first -59.0 mm (E) at (+0.91, -0.01, -0.41) (Unitree L2) FAIL, fit 10100.4 mm³ (E) (belly sled + pods/receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2491 g (E), CG 23.1 mm off thrust axis (E) [+23.1, +1.0, -75.8], 33.1 mm without swap parts FAIL (tol 3), probes -0.0 mm (E) edge at (+0.71, -0.06, +0.70) (Unitree L2, unshielded) FAIL

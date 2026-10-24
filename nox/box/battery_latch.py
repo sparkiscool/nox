@@ -253,7 +253,8 @@ REST_GAP = round((OVERLAP + 0.3) * math.tan(UNDER) + 0.05, 2)   # bolt underside
                                    # floor's rise over the retract path (2.6 tan 15 = 0.70), so a seated bolt slides in free
 PK_WALL = 3.0
 BOSS_R, INS_D, INS_DEPTH = 5.0, 4.0, 6.7      # M3 x 5.7 heat-set, hole o 4.0 x 6.7, boss o 10 (wall 3.0)
-LID_T = 4.0
+LID_T_BY = {"scout": 4.0, "overseer": 5.7}   # deck top to the mount plane; the Overseer's bosses sit on the deck
+                                            # (narrow receiver), so its M3 insert hole (6.7) needs 5.7 to keep a 2.0 floor
 STRIP_T, STRIP_REC = 2.4, 0.9
 
 def rgeom(g):
@@ -269,9 +270,12 @@ def rgeom(g):
     r["PK_HZ"] = BOLT_HZ + 0.8
     r["Y_DK0"] = g["Y_TOP"] + STRIP_T - STRIP_REC           # deck underside (strip face = cartridge top)
     r["Y_DK1"] = r["Y_DK0"] + DECK_T
-    r["Y_M"] = r["Y_DK1"] + LID_T                           # mounting plane = lid top = boss tops
+    r["LID_T"] = LID_T_BY[g["pack"]]
+    r["Y_M"] = r["Y_DK1"] + r["LID_T"]                      # mounting plane = lid top = boss tops
     r["Z_E0"], r["Z_E1"] = -0.3, g["L_C"] + 0.3
-    r["BX"] = rf + 5.3                                      # boss / lid bolt x (v4 25.6 on the Scout)
+    r["BX"] = rf + 5.3 if g["pack"] == "scout" else r["XW"] - BOSS_R   # boss / lid bolt x: Scout outboard (v4 25.6, its
+    # drone interface); Overseer on the deck inside the feet, so the receiver is no wider than its feet (63.6, was 76.2):
+    # its bays alternate with Scout bays at R 113 (arm v7)
     r["END_T"] = END_T_BY[g["pack"]]
     zs_m = [r["Z_E0"] - r["END_T"] + BOSS_R, g["Z_X"]] + ([g["Z_T"]] if MID_MOUNT[g["pack"]] else [])
     r["MOUNT"] = [(sx * r["BX"], z) for sx in (-1, 1) for z in zs_m]   # closed end flush
@@ -306,7 +310,7 @@ def receiver(r, clip=None):
         a0, a1 = X(rf, rf + r["PK_D"] + PK_WALL)
         parts.append(box(a0, a1, Y_RB, r["PK_Y1"] + PK_WALL, zt - r["PK_HZ"] - PK_WALL, zt + r["PK_HZ"] + PK_WALL))
         # leg rib: pocket block to the deck, 6 x 6 post outside the plate at the tab line (pull-out path)
-        a0, a1 = X(rf, rf + 6.0); parts.append(box(a0, a1, Y_RB, r["Y_DK1"], zt - 3.0, zt + 3.0))
+        a0, a1 = X(rf, rf + r["PK_D"] + PK_WALL); parts.append(box(a0, a1, Y_RB, r["Y_DK1"], zt - 3.0, zt + 3.0))
     for zf, sg in ((r["Z_E0"], -1), (r["Z_E1"], 1)):                                                      # end plates
         y0 = r["RAIL_Y0"]
         pts = [(zf + sg * CAP, y0), (zf + sg * END_T, y0), (zf + sg * END_T, r["Y_DK1"]), (zf, r["Y_DK1"]), (zf, y0 + HCAP)]
@@ -362,13 +366,13 @@ def end_relief(r):
 def lid(r):
     zx, bx = r["Z_X"], r["BX"]
     hz = max(BOSS_R + 1.0, 10.0)                                            # v4 lid: +-10 (3.0 bands neck-fail)
-    l = box(-(bx + BOSS_R), bx + BOSS_R, r["Y_DK1"], r["Y_DK1"] + LID_T, zx - hz, zx + hz)
+    l = box(-(bx + BOSS_R), bx + BOSS_R, r["Y_DK1"], r["Y_M"], zx - hz, zx + hz)
     for s in (-1, 1):
         a0, a1 = sorted((s * 9.26, s * (r["PKX_XW"] - 0.25)))
         l = l + box(a0, a1, r["Y_PCEIL"], r["Y_DK1"] + 0.01, zx - r["PKX_ZW"] + 0.25, zx + r["PKX_ZW"] - 0.25)
-    l = l - box(-9.25, 9.25, r["Y_PCEIL"] - 1, r["Y_DK1"] + LID_T + 1, zx - 5.55, zx + 5.55)
+    l = l - box(-9.25, 9.25, r["Y_PCEIL"] - 1, r["Y_M"] + 1, zx - 5.55, zx + 5.55)
     for s in (-1, 1):
-        l = l - cyl("y", s * bx, zx, 1.7, r["Y_DK1"] - 1, r["Y_DK1"] + LID_T + 1, 24)
+        l = l - cyl("y", s * bx, zx, 1.7, r["Y_DK1"] - 1, r["Y_M"] + 1, 24)
     return l
 
 def strips(r):
