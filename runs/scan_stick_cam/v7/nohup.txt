@@ -129,3 +129,11 @@ it  62 beta   32 J 196.4711 vol 0.3842 (dil 0.5678 g -0.000) grey  4.5% ch 0.078
 it  63 beta   32 J 196.4711 vol 0.3842 (dil 0.5678 g -0.000) grey  4.5% ch 0.078 worst cable pull -y 20 N 5.62e+04 11.6s
 it  64 beta   32 J 196.4711 vol 0.3842 (dil 0.5678 g -0.000) grey  4.4% ch 0.079 worst cable pull -y 20 N 5.62e+04 12.3s
 it  65 beta   32 J 196.4711 vol 0.3842 (dil 0.5678 g -0.000) grey  4.5% ch 0.080 worst cable pull -y 20 N 5.62e+04 12.6s
+it  66 beta   32 J 196.4711 vol 0.3842 (dil 0.5678 g -0.000) grey  4.5% ch 0.079 worst cable pull -y 20 N 5.62e+04 13.0s
+it  67 beta   32 J 196.4711 vol 0.3843 (dil 0.5678 g -0.000) grey  4.4% ch 0.072 worst cable pull -y 20 N 5.62e+04 12.9s
+it  68 beta   32 J 196.4711 vol 0.3843 (dil 0.5678 g -0.000) grey  4.4% ch 0.069 worst cable pull -y 20 N 5.62e+04 12.6s
+it  69 beta   32 J 196.4711 vol 0.3843 (dil 0.5678 g -0.000) grey  4.4% ch 0.069 worst cable pull -y 20 N 5.62e+04 12.6s
+layout: stopped (max_stage) at it 69, beta 32, 901 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 964 s, peak 3.136684 GB
+build: surface at pitch 0.375 mm (x2), generated field 8.47 cm3, mesh 93,752 faces, 3 s
