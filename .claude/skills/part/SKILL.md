@@ -53,5 +53,5 @@ and `git checkout main && git pull`. FAIL: fix the design, re-review; never merg
 permissions, say so with the PR link and stop; do not work around it.
 
 ## Reply (short)
-Not the hub (`docs/sessions.md` Hub)? Send this reply to the hub with send_message as well; no proactive messages or files to Spark.
-The summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.
+A child session (`docs/sessions.md`)? Send this reply to its live parent with send_message as well; no proactive messages or files to Spark.
+The visual of the design (CLAUDE.md "Every idea comes with a visual"), the pictures of the print files (CLAUDE.md "Ready to print"), the summary block, the artifact link, the PR link, any DEFAULT taken. Problems first, each with its fix.

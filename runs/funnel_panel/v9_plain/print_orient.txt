@@ -1,0 +1,5 @@
+   saved: bed  11576 mm2  overhang    800 mm2  height  22.0  first layer 1 islands [11601.6] (total 11601.6)  thin-island run 0 mm
+   saved: bed  11592 mm2  overhang    802 mm2  height  12.0  first layer 1 islands [11617.6] (total 11617.6)  thin-island run 0 mm
+   saved: bed  11576 mm2  overhang    800 mm2  height  22.0  first layer 1 islands [11601.6] (total 11601.6)  thin-island run 0 mm
+   saved: bed  11592 mm2  overhang    802 mm2  height  12.0  first layer 1 islands [11617.6] (total 11617.6)  thin-island run 0 mm
+   saved: bed    268 mm2  overhang      0 mm2  height   2.4  first layer 1 islands [267.6] (total 267.6)  thin-island run 0 mm

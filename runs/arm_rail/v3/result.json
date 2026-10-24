@@ -1,0 +1,14 @@
+{
+ "file": [
+  "print/box_arm_rail_A_v3.stl",
+  "print/box_arm_rail_B_v3.stl"
+ ],
+ "mass_g": 56.65,
+ "solid_check": true,
+ "bed_mm2": 2681,
+ "worst_index": [
+  0.11,
+  "dropped Overseer"
+ ],
+ "tag": "M mesh / E loads"
+}

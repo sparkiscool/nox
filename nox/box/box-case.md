@@ -30,4 +30,5 @@ Through each bay's XT60 (23 Oct; was the main contacts, 17 Oct 01:18), no balanc
 7. **Module dovetail flanks have 0 clearance** (found 19 Oct): `arm_cad._dovetail(-1, 0.2)` grows width and depth by 0.2 together, which slides the groove's 45° flank along itself, so it lies on the nominal tongue's flank (C). Fix: sand / file the −90 module's tongue flanks ~0.2 before joining the −60 module; next module version grows the groove width only (as `stand_v6_parts.groove_frame`).
 
 ## Status
+24 Oct (box structure system session): system pass v1 (`box_system.py`): bay module v4i assembled worst 0.55 (Overseer catch, target 0.5), frames 1.49..1.65: both DESIGN; Spark 24 Oct every slot is a bay, so the next pieces are Scout v5 / Overseer v1 / end-bay modules from the v2 system pass (`nox/dimensions.md` System box structure).
 19 Oct 19:40 (stand chat): ring frames drawn and READY (frame_mid x5, frame_endR, frame_endL; `box-stand.md`); the end adapters of the 18:05 layout are merged into the end frames. 17 Oct 09:30: bay module v4i 83.4 g (M), one body. Nothing printed.

@@ -14,7 +14,9 @@ every part in its assembled pose; the tool reports:
               no protected part is met before the cage or with the cage ahead by < probe_margin_mm (0.0 DEFAULT; flat
               walls keep their 3.0); "unshielded" = no cage member in that probe's path at all, always a FAIL (margin
               then = minus the probe's reach past the cage envelope). An opening with "skip_probes": true exempts its
-              cone for its part. About 6 s on a 73k-triangle assembly, no decimation needed.
+              cone for its part. Protected parts shadow each other: a probe stops at the first solid, so a part
+              behind another protected part (an exempt one included) is not reached there. About 6 s on a
+              73k-triangle assembly, no decimation needed.
   access      every path that must be reached (rule 2, without taking another part off): the tool swept from `from`
               along `dir` for length_mm, intersected with every other part (manifold3d booleans, trimesh / voxel
               fallback). PASS if each path's overlap <= access_tol_mm3 (0.5). Report: blocked by which part, mm^3.
@@ -398,7 +400,10 @@ def crash_probes(parts, meshes, cfg, req_mm, openings):
     (1.5 res wide) is the line's first contact; the post's is that profile dilated by a semicircle of radius r.
     margin = cage contact - part contact (mm along d). FAIL if a protected part is met before the cage, ahead by less
     than probe_margin_mm, or with no cage member in that probe's path at all ("unshielded": the margin is then minus
-    the probe's reach past the cage envelope). An opening with "skip_probes": true exempts its cone for its part."""
+    the probe's reach past the cage envelope). An opening with "skip_probes": true exempts its cone for its part.
+    A probe stops at the first solid: protected parts shadow each other, so in each (axis, approach, bin) only the
+    protected part(s) met first count (ties count for all); a part behind another (exempt ones included) is +inf there
+    (no row if it is shadowed or exempt in every probe)."""
     cage = [i for i, p in enumerate(parts) if p.get("role") == "cage"]
     prot = [i for i, p in enumerate(parts) if p.get("role") == "protected" or p.get("protect")]
     if not prot or not cage: return dict(applies=False, pass_=True)
@@ -438,16 +443,16 @@ def crash_probes(parts, meshes, cfg, req_mm, openings):
                     dst = pr[:, :, max(0, -kk):nb - max(0, kk)]; np.maximum(dst, prof[:, :, max(0, kk):nb + min(0, kk)] + add, out=dst)
             else:
                 pr = prof
-            hc = pr[0]; shield = np.isfinite(hc)
+            hc = pr[0]; shield = np.isfinite(hc); front = pr[1:].max(0)              # first protected solid per bin
             for j in range(len(prot)):
-                hp = pr[j + 1]; has = np.isfinite(hp)
+                hp = pr[j + 1]; has = np.isfinite(hp) & (hp >= front)              # met first (ties: both); else shadowed
                 if not has.any(): continue
                 with np.errstate(invalid="ignore"):
                     mg = np.where(shield, hc - hp, -np.abs(hull[:, None] + r - hp))
                 mg = np.where(has, mg, np.inf)
                 for o in skip[j]:
                     mg[dv @ _unit(o["axis"]) >= np.cos(np.radians(o["half_angle_deg"]))] = np.inf
-                sc = np.where(has & ~shield, -1e6 - mg, mg)                         # unshielded first, least reach (most exposed) first
+                sc = np.where(np.isfinite(mg) & ~shield, -1e6 - mg, mg)             # unshielded first, least reach (most exposed) first
                 t = np.unravel_index(int(np.argmin(sc)), sc.shape)
                 if sc[t] < worst[(r, j)][0]:
                     worst[(r, j)] = (float(sc[t]), dict(axis=e, dir=dv[t[0]], roll=float(np.degrees(th[t[0]])), w=(t[1] + 0.5) * bw - R,

@@ -99,10 +99,14 @@ def test_seeded_files_load():
     sc = load(os.path.join(HERE, "scout/v3/scout.assembly.json")).check(n_dirs=300)
     assert sc["summary"].startswith("System: Scout v3")
     bc = load(os.path.join(HERE, "box/box_catch.assembly.json"))
-    pl = [p["name"] for p in bc.parts if p.get("moves")]
+    pl = [p["name"] for p in bc.parts if p.get("moves") and p["name"].startswith("latch plunger")]
     assert len(pl) == 4
     m0, m1 = bc.mesh(pl[0]), bc.at(**{pl[0]: 1.0}).mesh(pl[0])
     assert abs(np.linalg.norm(m1.centroid - m0.centroid) - 12.0) < 1e-4           # hook latch RISE
+    pp = [p["name"] for p in bc.parts if p.get("moves") and p["name"].startswith("probe pin")]
+    assert len(pp) == 4                                                           # keep-alive probes (panel v9 plain)
+    m0, m1 = bc.mesh(pp[0]), bc.at(**{pp[0]: -6.0}).mesh(pp[0])
+    assert abs(np.linalg.norm(m1.centroid - m0.centroid) - 6.0) < 1e-4            # seated -> free
 
 
 if __name__ == "__main__":

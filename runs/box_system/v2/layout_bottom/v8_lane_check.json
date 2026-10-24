@@ -1,0 +1,11 @@
+{
+ "note": "the catch's -Y side moved -Y by 0.0 (0 = the v8 file as is, M; else the v7 file shifted, E) vs the insert keep-outs",
+ "carriage": {
+  "total_mm3": 0,
+  "hits": []
+ },
+ "grabber": {
+  "total_mm3": 0,
+  "hits": []
+ }
+}
