@@ -13,7 +13,11 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
 - The part's row in `nox/current-parts.md`, its part doc, the `nox/dimensions.md` sections it names. Numbers in the brief
   that change a shared number: DEFAULT, its `dimensions.md` row + one `log.md` line, and continue (never wait on Spark).
 
-## 2. Design (the part's own script, nothing else)
+## 2. Design (system first, then cut)
+- Load or build the part's system model (`docs/generative.md` The rule, 0): the assembled machine or sub-assembly, every
+  neighbour and bought part in place, the system's load cases. Design and check the part there, never alone; its loads
+  are the joint reactions from the system solve. A brief that touches several pieces of one system designs them as one and
+  cuts them after.
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
   `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent (background, own worktree)
   and carry on with anything that does not need its mesh; it checkpoints, checks, and opens the PR itself. Several variants or
@@ -26,7 +30,7 @@ python3 nox/solid_check.py <mesh.stl>            # the only gate; FAIL = fix the
 python3 nox/print_orient.py <mesh.stl> --all     # saved face must be the largest bed contact, or say why
 python3 nox/render_preview.py <mesh.stl> --mat PETG --prev <last g> --out runs/<part>/<version>/preview.png
 ```
-The three commands, the strength recheck and the motion artifact only need the mesh: run them in parallel.
+The three commands, the strength recheck, the assembled-system check (fit, worst index, mass, CG) and the motion artifact only need the meshes: run them in parallel.
 Strength recheck when the part carries a load case (pattern: `nox/box/arm_recheck.py`). Report, do not block.
 
 ## 4. Motion artifact (every part that moves or sits in a mechanism)
