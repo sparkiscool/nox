@@ -1294,9 +1294,9 @@
   ],
   [
    "TURN",
-   "axle 90 deg: head A to the top",
+   "axle 90 deg: head A to the top; <= 100 full steps/s through each notch; step target + the bay's gravity offset",
    "no stall; hall state matches phi",
-   0.6,
+   1.1,
    "A5 stall"
   ],
   [
