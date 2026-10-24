@@ -26,3 +26,20 @@ it   7 beta    1 J   7.4502 vol 0.0418 (dil 0.0500 g -0.015) grey 21.7% ch 0.100
 it   8 beta    1 J   7.1655 vol 0.0418 (dil 0.0501 g -0.013) grey 21.8% ch 0.100 worst XT60 insert at the -90 bay 6 1.34e+04 5.7s
 it   9 beta    1 J   5.5746 vol 0.0412 (dil 0.0496 g -0.024) grey 21.7% ch 0.100 worst XT60 insert at the -120 bay  1.11e+04 4.8s
 it  10 beta    1 J   2.0057 vol 0.0411 (dil 0.0495 g -0.024) grey 21.8% ch 0.100 worst Overseer catch -X-Y diag 3.64e+03 4.6s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  11 beta    1 J   3.8570 vol 0.0400 (dil 0.0482 g -0.050) grey 21.5% ch 0.100 worst XT60 insert at the -90 bay 6 7.35e+03 4.5s
+it  12 beta    1 J   2.0692 vol 0.0401 (dil 0.0483 g -0.047) grey 21.6% ch 0.100 worst Overseer catch -X-Y diag 3.87e+03 4.2s
+it  13 beta    1 J   3.9014 vol 0.0392 (dil 0.0473 g -0.068) grey 21.1% ch 0.100 worst XT60 insert at the -90 bay 6 7.39e+03 4.3s
+it  14 beta    1 J   1.8543 vol 0.0390 (dil 0.0470 g -0.072) grey 21.3% ch 0.100 worst Overseer catch -X-Y diag 3.47e+03 4.6s
+it  15 beta    1 J   3.0190 vol 0.0388 (dil 0.0467 g -0.078) grey 20.9% ch 0.100 worst XT60 insert at the -120 bay  5.5e+03 4.5s
+it  16 beta    1 J   1.5311 vol 0.0386 (dil 0.0465 g -0.081) grey 20.9% ch 0.100 worst Overseer catch -X-Y diag 2.87e+03 5.8s
+it  17 beta    1 J   1.0961 vol 0.0393 (dil 0.0474 g -0.064) grey 21.1% ch 0.100 worst XT60 insert at the -120 bay  1.96e+03 4.5s
+it  18 beta    1 J   0.8413 vol 0.0407 (dil 0.0490 g -0.033) grey 21.5% ch 0.100 worst misuse: knocked over onto +X 1.48e+03 4.5s
+it  19 beta    1 J   0.7480 vol 0.0412 (dil 0.0496 g -0.021) grey 21.7% ch 0.100 worst misuse: knocked over onto +X 1.44e+03 4.4s
+it  20 beta    1 J   0.6675 vol 0.0418 (dil 0.0503 g -0.006) grey 22.0% ch 0.100 worst misuse: knocked over onto +X 1.29e+03 5.1s
