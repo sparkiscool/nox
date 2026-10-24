@@ -9,3 +9,11 @@ layout: 32 load cases + 18 tie cases (3 bodies tied, 1 held by support 'default'
 fem: grid (16, 32, 48) = 24,576 elements, 27,864 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
 it   1 beta    1 J  10.0000 vol 0.0878 (dil 0.1063 g +0.303) grey 21.6% ch 0.100 worst camera hit front 50 N 1.11e+04 1.1s
 it   2 beta    1 J  77.6034 vol 0.0613 (dil 0.0736 g -0.097) grey 30.1% ch 0.100 worst tie b2 my 1.09e+05 1.2s
+it   3 beta    1 J  15.3505 vol 0.0629 (dil 0.0756 g -0.073) grey 24.0% ch 0.100 worst switch panel push 100 N 2.06e+04 1.2s
+it   4 beta    1 J  77.6712 vol 0.0606 (dil 0.0727 g -0.108) grey 29.4% ch 0.100 worst tie b2 my 1.09e+05 1.2s
+it   5 beta    1 J  20.5892 vol 0.0574 (dil 0.0689 g -0.155) grey 23.0% ch 0.100 worst tie b4 mz 2.56e+04 1.0s
+it   6 beta    1 J  77.6552 vol 0.0568 (dil 0.0682 g -0.161) grey 26.5% ch 0.100 worst tie b2 my 1.09e+05 1.1s
+it   7 beta    1 J  41.1345 vol 0.0484 (dil 0.0580 g -0.287) grey 21.1% ch 0.100 worst tie b4 mx 5.07e+04 1.1s
+it   8 beta    1 J  38.2776 vol 0.0533 (dil 0.0641 g -0.212) grey 22.8% ch 0.100 worst tie b2 my 4.8e+04 1.2s
+it   9 beta    1 J  30.1092 vol 0.0489 (dil 0.0586 g -0.280) grey 20.9% ch 0.100 worst tie b4 mx 3.84e+04 1.2s
+it  10 beta    1 J  15.4838 vol 0.0524 (dil 0.0630 g -0.226) grey 21.5% ch 0.100 worst L2 frame bump +y 100 N 1.75e+04 1.2s
