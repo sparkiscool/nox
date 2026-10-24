@@ -29,8 +29,9 @@ Every print-ready file, at `print/<part>_<version>.<ext>`, in print pose. Moved 
 | `box_hook_latch_housing_A_v2.stl` | 47984 | af8e6a21b624 |
 | `box_hook_latch_housing_B_v1.stl` | 47784 | b1820a2637ba |
 | `box_hook_latch_housing_B_v2.stl` | 47984 | 4d9ee42f4490 |
+| `box_hook_latch_plunger_A_v2.stl` | 8684 | 2047342632fe |
+| `box_hook_latch_plunger_B_v2.stl` | 8684 | a54921baf061 |
 | `box_hook_latch_plunger_v1.stl` | 8684 | e3a62391d276 |
-| `box_hook_latch_plunger_v2.stl` | 8684 | 2047342632fe |
 | `box_hub_v5.stl` | 10335384 | 6d6b9344e7f6 |
 | `box_idler_end_A_v3.stl` | 60284 | 83a90e7a20c5 |
 | `box_idler_end_B_v3.stl` | 60084 | e2912f039297 |

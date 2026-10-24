@@ -473,7 +473,10 @@ def main(motion=False):
     RB = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, -1, 0, 0], [0, 0, 0, 1.0]])   # mirrored copy: its v+ face down
     tB = to_tm(hB, RB); tB.apply_translation(-tB.bounds[0]); tB.export(os.path.join(OUT, f"box_hook_latch_housing_B_{VER}.stl"))
     RP = np.array([[0, 0, -1, 0], [0, 1, 0, 0], [1, 0, 0, 0], [0, 0, 0, 1.0]])   # plunger: u- (downhill, contact) face on the bed
-    tP = to_tm(P["plunger"], RP); tP.apply_translation(-tP.bounds[0]); tP.export(os.path.join(OUT, f"box_hook_latch_plunger_{VER}.stl"))
+    # plunger A / B: the pockets (yoke on the servo side, magnet on the valley side) and the two top chamfers make it
+    # chiral, so the B units (A mirrored in v) need the mirrored plunger (workflow chat check, 24 Oct)
+    tP = to_tm(P["plunger"], RP); tP.apply_translation(-tP.bounds[0]); tP.export(os.path.join(OUT, f"box_hook_latch_plunger_A_{VER}.stl"))
+    tPB = to_tm(P["plunger"].mirror([0, 1, 0]), RP); tPB.apply_translation(-tPB.bounds[0]); tPB.export(os.path.join(OUT, f"box_hook_latch_plunger_B_{VER}.stl"))
     # seat-frame copies for the fit check
     mass = dict(housing_g=round(vol(hA) * 1.27e-3, 2), plunger_g=round(vol(P["plunger"]) * 1.27e-3, 2))
     mass["set_of_4_g"] = round(4 * (mass["housing_g"] + mass["plunger_g"]), 1)
