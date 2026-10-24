@@ -66,3 +66,5 @@ it   5 beta    4 J  10.7118 vol 0.0451 (dil 0.1085 g -0.007) grey 11.4% ch 0.100
 it   6 beta    4 J  10.1526 vol 0.0460 (dil 0.1086 g -0.058) grey 11.1% ch 0.100 worst camera hit above 50 N 1.71e+03 7.2s
 it   7 beta    4 J   9.7906 vol 0.0503 (dil 0.1130 g -0.020) grey 11.2% ch 0.100 worst camera hit above 50 N 1.65e+03 7.6s
 it   8 beta    4 J   9.6896 vol 0.0529 (dil 0.1147 g -0.005) grey 11.0% ch 0.100 worst camera hit above 50 N 1.63e+03 8.1s
+it   9 beta    4 J   9.6151 vol 0.0541 (dil 0.1149 g -0.003) grey 10.8% ch 0.100 worst camera hit above 50 N 1.62e+03 7.9s
+it  10 beta    4 J   9.5555 vol 0.0547 (dil 0.1151 g -0.002) grey 10.7% ch 0.100 worst camera hit above 50 N 1.61e+03 8.5s
