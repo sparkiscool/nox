@@ -171,9 +171,12 @@ def catch_parts():
     import assembly
     a = assembly.load(os.path.join(HERE, "box_catch.assembly.json"))
     out = {}
-    for p, t in zip(a.parts, a.meshes()):
-        if p["name"].startswith("drone"): continue
-        t = t.copy(); t.apply_transform(SEAT_TO_W); out["catch: " + p["name"]] = man(t)
+    ms = [(p, t) for p, t in zip(a.parts, a.meshes()) if not p["name"].startswith("drone")]
+    T = SEAT_TO_W
+    if min(t.bounds[0][2] for _, t in ms) > 100.0:                        # the file is in W at the v2 seat (R 113, Y 140): back to the v1 demo's
+        T = np.eye(4); T[1, 3] = Y_FUN - 140.0; T[2, 3] = Z_SEAT - 155.3
+    for p, t in ms:
+        t = t.copy(); t.apply_transform(T); out["catch: " + p["name"]] = man(t)
     return out
 
 
