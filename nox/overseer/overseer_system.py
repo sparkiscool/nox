@@ -237,7 +237,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # before the lenses (outside the 45 deg view cone), 2.4 under the down camera board, inside the opening at ±5 deg yaw
     # hub belly pan: printed PETG skid plate under the bottom plate (cage): the electronics' shield from below; the hub
     # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
-    g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.6, -2.1)
+    g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.7, -2.2)
     g["runners"] = [box(-dc - 67, -dc + 67, 65 if sy > 0 else -71, 71 if sy > 0 else -65, PB - 17, PB + 10) for sy in (1, -1)]
     g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 72, sy * 68) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     g["PB"] = PB
@@ -288,7 +288,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              cam_bot=float(min(cb[0][2], g["cam_bracket"].bounds[0][2])), nose_y=float(max(co.NOSE_Y, np.abs(cb[:, 1]).max() + co.NOSE_GAP)),
-             m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
+             m_drone_g=3000.0, rear_x=-102.0, pyramid="rear", x_top=dm, x_tower=-100.0,
              feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
