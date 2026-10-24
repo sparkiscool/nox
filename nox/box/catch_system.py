@@ -118,9 +118,10 @@ def main():
     panel = {"insert 60 N": (fe["insert 28.3 N x 2 (system)"]["util"], bh["insert 28.3 N (system, C)"]["index_across_layers"]),
              "hand lift 100 N at a corner": (fe["hand lift 85.8 N (system)"]["util"], bh["hand lift 85.8 N (system, C)"]["index_across_layers"])}
     for nm, v in out["pieces"].items():
-        pu, bi = panel.get(nm, (0.0, 0.0))
+        # pull and catch put no plunger load on the panel v7 bosses: not evaluated there (n/a, not 0)
+        pu, bi = panel.get(nm, ("n/a", "n/a"))
         v["panel_fe_util"] = pu; v["panel_boss_index"] = bi
-        v["piece_worst"] = max(v["plunger_index"], v["guide_wall_index"], pu, bi)
+        v["piece_worst"] = max(x for x in (v["plunger_index"], v["guide_wall_index"], pu, bi) if x != "n/a")
     # compact (CLAUDE.md "Compact by default"): one latch unit's bounding volume and largest extent (housing + servo +
     # plunger out), and the catch assembly (collar + 4 latches) bounding box (C)
     import manifold3d as mf

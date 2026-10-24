@@ -87,8 +87,8 @@
    "boss_bolt_shear_N": 0.43,
    "face_wheel_max_N": 17.04,
    "cls": "flight",
-   "panel_fe_util": 0.0,
-   "panel_boss_index": 0.0,
+   "panel_fe_util": "n/a",
+   "panel_boss_index": "n/a",
    "piece_worst": 0.014
   },
   "hand lift 100 N at a corner": {
@@ -111,8 +111,8 @@
    "boss_bolt_shear_N": 0.0,
    "face_wheel_max_N": 6.06,
    "cls": "flight",
-   "panel_fe_util": 0.0,
-   "panel_boss_index": 0.0,
+   "panel_fe_util": "n/a",
+   "panel_boss_index": "n/a",
    "piece_worst": 0.0
   }
  },

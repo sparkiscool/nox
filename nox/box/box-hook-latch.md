@@ -36,11 +36,11 @@ Bought per unit: MG90S (E dims, D18); M2 x 12 as the yoke pin, threaded into the
 On the 4 panels of the two seated faces (the ones over the 45 / 135° bays):
 - **Skin window** 9.0 (along the slope) x 13.0 (C: plunger + 0.5 a side), centred at x ±100 (each panel's own wheel), 54.1 up the slope from the bottom edge.
 - **4 bosses** Ø12 x 7 (C; pad rule) behind the skin (w −2.0..−9.0), M3 x 5.7 heat-set, hole Ø4.0 x 7 (wall 4.0), each with 2 gussets 2.0 thick (C) at v ±3 from its axis, running from the boss 6 along u away from the guide block (full boss height at the boss, 0.5 at the skin 6 out), at the bolt points above. Housing and plunger vs bosses + gussets: 0 mm³ (C, `bosses_local()` in the script).
-- **Rib-free window** behind the skin over the housing footprint + 1.0: u −24.5..33.0 (slope 29.6..87.1 from the bottom edge), v −9.2..40.6 (lateral 59.4..109.2) (C); the v6 ribs there are 962 mm³ inside the housing (M). Reroute the strut under the wheel track round it; rerun `panel_opt.py` with it as a hole.
-- The 3 panels already printed are v6: they go on the two unlatched faces.
+- **Rib-free window** behind the skin over the housing footprint + 1.0: u −24.5..33.0 (slope 29.6..87.1 from the bottom edge), v −9.2..40.6 (lateral 59.4..109.2) (C); the v6 ribs there are 962 mm³ inside the housing (M). Done in funnel panel v7 (PR 37): the strut reroutes round it.
+- The 3 printed v6 panels are retired (1.6 skin fails solid_check): reprint as v7 plain (`dimensions.md` G).
 
 ## Checks (C unless tagged; `result.json`)
-- **solid_check PASS** on all 3 files (1 body, 1 eroded body, 0 necks, 0 thin walls).
+- **solid_check PASS** on all 4 files (M: 1 body, 1 eroded body, 0 necks, 0 thin walls).
 - **Moving parts, 0 mm³ overlap:** plunger vs housing at both ends of the stroke; horn + pin vs housing and vs the plunger every 2° of swing; servo body, dome and ears vs housing; bolt head + key cylinders vs housing and servo; housing and plunger vs the panel bosses and gussets.
 - **Drone fit, 0 mm³:** extended plungers vs the R 5 wheels, Ø8 cheeks and both rings of the catch-interface drone (its corner posts lean 8 inward over their 16 rise, E; a post straight up from a wheel node crosses the plunger zone, Catch interface (7)); housings vs the drone.
 - **Placement:** valley margin 5.3 (rule 3.4), highest point 87.1 up the slope (rim 107.3), seat block 28.1 away, ring 9.2 clear, side sheets 23.1 clear.
@@ -62,7 +62,7 @@ The seated drone (rigid, 4.9 N E, its 8 catch wheels on the faces), the collar, 
 | pull-out 50 N down | 1.7 N | 17.0 N | 0.01 / 0.01 (flight) |
 | hand lift 100 N at a cage corner | 85.8 N | 46.3 N | 0.44 / 0.26 (misuse) |
 | catch, 6 g floor landing on the faces | 0 | 6.1 N | 0 |
-**Assembled worst 0.44 (hand lift; max over plunger, guide, panel FE and bosses)**, under the piece's own 100 N misuse check (0.51). Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 as-built FE under these system reactions: util 0.10 / 0.08, boss deflection 0.31 / 0.63 mm in insert / hand lift, boss hand calc 0.07 / 0.13, C from `runs/funnel_panel/v7/result.json`).
+**Assembled worst 0.44 on the latch load path (hand lift; max over plunger, guide, panel v7 FE and bosses)**; the panels' own handling case (press u60 v90) stays theirs at 0.91 / 0.93 (C, `runs/funnel_panel/v7/summary.md`), so the whole catch's worst is 0.93 (under 1.0), under the piece's own 100 N misuse check (0.51, C hand calc). Bolts into the panel bosses: ≤ 21.5 N shear each (hand lift). The panel takes the plunger reactions through its 4 bosses (funnel panel v7 as-built FE under these system reactions: util 0.10 / 0.08, boss deflection 0.31 / 0.63 mm in insert / hand lift, boss hand calc 0.07 / 0.13, C from `runs/funnel_panel/v7/result.json`).
 - **Compact:** one latch unit (housing + servo + plunger out) 57.5 x 49.8 x 44.4 (C), 127.2 cm³ box, 28.7 cm³ solid; nested in the panel's rib field behind the face, nothing stacked.
 - **Cage first:** the collar and the plungers meet only cage members (the catch wheels and their nodes). The catch-interface drone keeps its node cheeks 1.0 off the faces (G (1)) and everything else ≥ 19 off them (plate 30.6, props 19.0, receiver 25.2, C); the 3 mm rule for the cheeks is a shared-number question for the Scout v3 / Overseer chats.
 
