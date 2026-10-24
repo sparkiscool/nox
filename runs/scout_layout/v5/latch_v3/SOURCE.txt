@@ -1,1 +1,1 @@
-battery latch receiver v3 / cartridge v6 Scout meshes, drone frame: part/battery-latch-v6 @ 90cf7f3, runs/battery_latch/v4/manifest_scout/ (latch PR 109)
+battery latch receiver v3 / cartridge v6 Scout meshes, drone frame: part/battery-latch-v6 @ 9c93c71 (final run v4), runs/battery_latch/v4/manifest_scout/ (latch PR 109)
