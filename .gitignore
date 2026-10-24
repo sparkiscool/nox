@@ -7,3 +7,4 @@ CLAUDE.local.md
 runs/**/tmp/
 *.log.tmp
 nohup.out
+.claude/worktrees/
