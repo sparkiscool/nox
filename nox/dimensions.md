@@ -204,7 +204,7 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 
 | System | Whole (`mass_budget_g`) | Bought, fixed | Structure allowance (printed + rods + fasteners) | Tag |
 |---|---|---|---|---|
-| Overseer | 2200 g (DEFAULT, 5 % under the 2330 g cage v0 estimate; alt 2330) | 1649 g: L2 230, pack 650, 4 motor + prop 364, 4 ESC 100, Pi 5 + cooler 55, plates 84, wires 80, cameras 30, PDB 21, UBEC 15, FC 10, buck 6, RX 2, flow 2 (`layout_v2.py` cg_of) | ≤ 551 g: cage rods + nodes, arms, apex / L2 mount, deck, sled + pods, feet, cartridge | E |
+| Overseer | **no cap (Spark 24 Oct: "weight doesn't matter now, just focus on design and keep it light weight, there is no real limit")**; each piece reports its mass and stays as light as its cases allow (was 2200 g DEFAULT) | 1649 g: L2 230, pack 650, 4 motor + prop 364, 4 ESC 100, Pi 5 + cooler 55, plates 84, wires 80, cameras 30, PDB 21, UBEC 15, FC 10, buck 6, RX 2, flow 2 (`layout_v2.py` cg_of) | no cap; reported per piece (cage ~480 g of carbon on the L cases, system pass 24 Oct, E) | E |
 | Scout v3 | 500 g (DEFAULT: never heavier than today's ~500 g; Spark set no target, alt none) | from the Scout v3 bottom layout (pack 165 P, frame 24 to 32 E, ...) | 500 minus bought, split by the Scout v3 system pass | E |
 | Box | no cap (ground station); each piece reports its mass, a new version may not be heavier without a reason in its summary | | | DEFAULT |
 | Scan stick (on the Overseer) | counts inside the Overseer's 2200 g when mounted; its own section sets its slot | | | DEFAULT |
