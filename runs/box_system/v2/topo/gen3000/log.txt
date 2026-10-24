@@ -102,3 +102,13 @@ it   7 beta    4 J 122.7127 vol 0.0733 (dil 0.1669 g +0.475) grey 17.4% ch 0.100
 it   8 beta    4 J  89.3916 vol 0.0632 (dil 0.1536 g +0.358) grey 16.8% ch 0.100 worst all bays: 60 N insert 1.82e+03 31.9s
 it   9 beta    4 J 138.2312 vol 0.0528 (dil 0.1359 g +0.201) grey 16.0% ch 0.100 worst Overseer catch -X-Y diag 2.94e+03 31.0s
 it  10 beta    4 J  98.1772 vol 0.0454 (dil 0.1216 g +0.074) grey 15.5% ch 0.100 worst all bays: 60 N insert 1.98e+03 33.4s
+it  11 beta    4 J  73.1536 vol 0.0416 (dil 0.1087 g -0.176) grey 15.2% ch 0.100 worst Overseer catch -X-Y diag 1.64e+03 34.2s
+it  12 beta    4 J  22.8893 vol 0.0491 (dil 0.1196 g -0.093) grey 16.1% ch 0.100 worst misuse: knocked over onto +X 471 29.1s
+it  13 beta    4 J  12.3453 vol 0.0551 (dil 0.1252 g -0.051) grey 16.4% ch 0.100 worst misuse: knocked over onto +X 267 31.5s
+it  14 beta    4 J   7.8704 vol 0.0594 (dil 0.1284 g -0.027) grey 16.3% ch 0.100 worst misuse: knocked over onto +X 168 29.5s
+it  15 beta    4 J   5.7252 vol 0.0622 (dil 0.1298 g -0.016) grey 16.0% ch 0.100 worst misuse: knocked over onto +X 120 30.8s
+it  16 beta    4 J   4.5350 vol 0.0641 (dil 0.1306 g -0.042) grey 15.7% ch 0.100 worst misuse: knocked over onto +X 91.5 34.7s
+it  17 beta    4 J   3.5565 vol 0.0684 (dil 0.1345 g -0.013) grey 15.7% ch 0.100 worst misuse: knocked over onto +X 69.5 32.0s
+it  18 beta    4 J   3.1428 vol 0.0702 (dil 0.1356 g -0.005) grey 15.5% ch 0.100 worst all bays: 60 N insert 62.6 31.9s
+it  19 beta    4 J   2.9187 vol 0.0710 (dil 0.1359 g -0.003) grey 15.4% ch 0.100 worst all bays: 60 N insert 58.9 31.2s
+it  20 beta    4 J   2.7553 vol 0.0716 (dil 0.1360 g -0.003) grey 15.3% ch 0.100 worst all bays: 60 N insert 55.8 32.2s
