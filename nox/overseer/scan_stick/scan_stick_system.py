@@ -56,12 +56,12 @@ def spine(elec, l2_on, ox, oz, cam_dz):
         B["buck"] = (sx0 - BUCK[0], sx0, 1, 1 + BUCK[1], B["pi"][4] - 4 - BUCK[2], B["pi"][4] - 4)
         if B["ubec"][4] < BOSS_Z:
             return None
-        open_face = "+y"
+        open_face = "top"                                       # Spark 24 Oct: the pack drops in from the top, a 3 mm pin across
     elif elec == "sides":                                       # Pi on +y (its 56 across x sticks out of the 59 face), UBEC + buck on -y
         B["pi"] = (-PI[1] / 2, PI[1] / 2, sy1, sy1 + PI[0], sz1 - WALL - PI[2], sz1 - WALL)
         B["ubec"] = (-UBEC[1] - 1, -1, sy0 - UBEC[0], sy0, z0 + 10, z0 + 10 + UBEC[2])
         B["buck"] = (1, 1 + BUCK[1], sy0 - BUCK[0], sy0, z0 + 10, z0 + 10 + BUCK[2])
-        open_face = "-x"
+        open_face = "top"
     else:
         return None
     if open_face == "+y":
@@ -72,8 +72,9 @@ def spine(elec, l2_on, ox, oz, cam_dz):
     corners = l2_corners(ox, oz)
     B["l2"] = (corners[:, 0].min(), corners[:, 0].max(), -L2_HALF, L2_HALF, corners[:, 1].min(), corners[:, 1].max())
     cz = oz + cam_dz                                            # camera centre height
-    xf = plane_x(ox, oz, cz) - 1.0 - LENS                       # board front: the lens tip 1 behind the L2 base plane
-    B["camera"] = (xf - CAM_D, xf + LENS, -CAM_H / 2, CAM_H / 2, cz - CAM_H / 2, cz + CAM_H / 2)
+    xf = min(plane_x(ox, oz, cz - 6) - 1.0 - LENS, plane_x(ox, oz, cz - CAM_H / 2) - 1.0)   # lens tip and board edge 1 behind the plane
+    B["camera"] = (xf - CAM_D, xf, -CAM_H / 2, CAM_H / 2, cz - CAM_H / 2, cz + CAM_H / 2)   # plate + posts + board
+    B["lens"] = (xf, xf + LENS, -6, 6, cz - 6, cz + 6)                                         # Ø12 lens (E, Q3)
     info = dict(open_face=open_face, cam_xf=xf, cam_z=cz)
     return B, info
 
@@ -90,7 +91,7 @@ def l2_body_hits(B, ox, oz):
             for z in np.linspace(z0, z1, 7):
                 p = np.array((x - ox, z - oz))
                 f, u = p @ F[[0, 2]], p @ U[[0, 2]]
-                if n == "camera":
+                if n in ("camera", "lens"):
                     if f > -0.5:
                         bad += f + 0.5                          # the camera must stay behind the base plane
                     continue
@@ -112,7 +113,7 @@ def camera_hits(B, info, ox, oz):
             if ang < 36.5 - 2.0:
                 bad += 36.5 - 2.0 - ang
     for n, (x0, x1, y0, y1, z0, z1) in B.items():
-        if n in ("camera", "l2"):
+        if n in ("camera", "lens", "l2"):
             continue
         if x1 > lens[0]:
             for x in (max(x0, lens[0]), x1):
@@ -120,6 +121,18 @@ def camera_hits(B, info, ox, oz):
                     d = np.array((x, z)) - lens
                     if d[0] > 0 and abs(d[1]) < d[0] * TV and not (y1 < -60 or y0 > 60):
                         bad += 1.0
+    return bad
+
+def drop_path_hits(B):
+    """the pack lifts straight out of the top: nothing over its footprint above the structure (+1 clearance)"""
+    x0, x1, y0, y1, z0, z1 = B["pack"]
+    bad = 0.0
+    for n, (a0, a1, b0, b1, c0, c1) in B.items():
+        if n in ("pack", "structure"):
+            continue
+        ox_ = min(a1, x1 + 1) - max(a0, x0 - 1); oy_ = min(b1, y1 + 1) - max(b0, y0 - 1)
+        if ox_ > 0 and oy_ > 0 and c1 > z1:
+            bad += ox_ + 0.0 * oy_
     return bad
 
 def extents(B, guard_sides=True):
@@ -145,7 +158,7 @@ def optimise_arrangement(elec, l2_on):
             B, info = r
             if l2_on == "top" and B["l2"][4] < B["structure"][5] - 60:
                 return 1e9
-            pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz)
+            pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz) + drop_path_hits(B)
             if cdz < L2_HALF * c + CAM_H / 2 + 3:                 # the camera sits above the L2's top edge
                 pen += (L2_HALF * c + CAM_H / 2 + 3 - cdz) * 10
             vol, e = score(B)
@@ -156,7 +169,7 @@ def optimise_arrangement(elec, l2_on):
             best = r
     ox, oz, cdz = best.x
     B, info = spine(elec, l2_on, ox, oz, cdz)
-    pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz)
+    pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz) + drop_path_hits(B)
     vol, e = score(B)
     return dict(elec=elec, l2=l2_on, ox=round(ox, 1), oz=round(oz, 1), cam_dz=round(cdz, 1), cam_xf=round(info["cam_xf"], 1),
                 cam_z=round(info["cam_z"], 1), open_face=info["open_face"], penalty=round(pen, 3), volume_L=round(vol, 2),
@@ -184,3 +197,41 @@ if __name__ == "__main__":
     print("best:", best["elec"], best["l2"], best["volume_L"], "L", best["extents"])
     out = os.path.join(ROOT, "runs", "scan_stick_system", "v1"); os.makedirs(out, exist_ok=True)
     json.dump(dict(candidates=res, baseline=dict(volume_L=vb, extents=eb), best=best), open(os.path.join(out, "layout.json"), "w"), indent=1)
+
+def render(best, out):
+    """the chosen placement as a motion artifact: bought parts as boxes, the L2 tilted, the structure envelope ghosted"""
+    import math, trimesh
+    sys.path.insert(0, os.path.join(ROOT, "nox"))
+    from motion import Scene
+    def bx(b):
+        x0, x1, y0, y1, z0, z1 = b
+        m = trimesh.creation.box([x1 - x0, y1 - y0, z1 - z0]); m.apply_translation([(x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2]); return m
+    B = best["boxes"]
+    M = trimesh.transformations.rotation_matrix(TILT, [0, 1, 0]); M[:3, 3] = (best["ox"], 0, best["oz"])
+    l2 = bx((0, 39, -37.5, 37.5, -37.5, 37.5))
+    dome = trimesh.creation.icosphere(3, 35.5); dome.apply_scale([26 / 35.5, 1, 1]); dome.apply_translation([39, 0, 0])
+    dome = dome.slice_plane([39, 0, 0], [1, 0, 0], cap=True)
+    l2 = trimesh.util.concatenate([l2, dome]); l2.apply_transform(M)
+    boss = trimesh.creation.cylinder(20, BOSS_Z, sections=48); boss.apply_translation([0, 0, BOSS_Z / 2])
+    pole = trimesh.creation.cylinder(12.7, 300, sections=48); pole.apply_translation([0, 0, -150])
+    s = Scene("Scan stick compact layout", f"placement optimisation (scan_stick_system.py): {best['volume_L']} L, {best['extents']} mm with guards; unit v3 was 7.45 L, 174 x 122 x 352 mm. Pack on the pole axis, Pi + UBEC + buck on the back, L2 on the front 15° down, camera above it, switches low on the front, pack drops in from the top")
+    cols = dict(pack="#2f4fbf", pi="#2e7d32", ubec="#b07d2b", buck="#b05a2b", switches="#888888", camera="#2d5a2d", lens="#2d5a2d")
+    s.part("structure envelope", bx(B["structure"]), group="printed", color="#c8d0da", printed=True, note="the generated pocket and frame go here (6 mm walls, C)")
+    s.part("thread boss", boss, group="printed", color="#9aa8b8", printed=True)
+    for n, col in cols.items():
+        s.part(n, bx(B[n]), group="bought", color=col, printed=False)
+    s.part("Unitree L2", l2, group="bought", color="#222222", printed=False)
+    s.part("pole", pole, group="bought", color="#777777", printed=False)
+    names = ["structure envelope", "thread boss"] + list(cols) + ["Unitree L2", "pole"]
+    s.timeline(lambda t: {n: trimesh.transformations.rotation_matrix(2 * math.pi * t / 16, [0, 0, 1]) for n in names}, duration_s=16, fps=30)
+    s.view("iso", (420, -480, 300), (20, 0, 110)); s.view("side", (0, -700, 110), (20, 0, 110)); s.view("front", (700, 0, 110), (20, 0, 110))
+    os.makedirs(out, exist_ok=True)
+    s.write(os.path.join(out, "motion.html"))
+    try:
+        s.video(os.path.join(out, "motion.mp4"))
+    except Exception as e:
+        print("video skipped:", str(e)[:200])
+
+if __name__ == "__main__" and "--render" in sys.argv:
+    out = os.path.join(ROOT, "runs", "scan_stick_system", "v1")
+    render(json.load(open(os.path.join(out, "layout.json")))["best"], out)
