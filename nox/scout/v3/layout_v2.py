@@ -774,6 +774,28 @@ def eso(N, kind, members, mandatory, cases, contact_ok, log=print):
     return cur, fe, f"{steps} trials"
 
 
+def warm_start(N, kind, members, path, cases, contact_ok, max_add=40):
+    """additive (v4): a previous cage's rods that still fit, then the member (and its mirror) that cuts the case violation
+    most, until every case holds; the probe repair and the reduction pass follow"""
+    Wk = {_mkey(np.array(a), np.array(b)) for a, b in json.load(open(path))["rods"]}
+    cur = drop_bad(N, kind, [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk]); n0 = len(cur)
+    def violation(f):
+        if f is None: return np.inf
+        return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
+    fe = frame_eval(N, kind, cur, cases); added = 0; mset = set(members)
+    while not (feasible(fe) and contact_ok(cur)) and added < max_add:
+        used = {i for m in cur for i in m}; v0 = violation(fe) + (0 if contact_ok(cur) else 1.0); best = None
+        for m in members:
+            if m in cur or not (m[0] in used or m[1] in used): continue
+            mm = _mirror(N, m); add = [m] + ([mm] if mm is not None and mm in mset and mm not in cur else [])
+            trial = drop_bad(N, kind, cur + add); f2 = frame_eval(N, kind, trial, cases)
+            v = violation(f2) + (0 if contact_ok(trial) else 1.0)
+            if v < v0 - 1e-6 and (best is None or (v, cage_mass(N, kind, add)) < best[0]): best = ((v, cage_mass(N, kind, add)), trial, f2)
+        if best is None: break
+        cur, fe = best[1], best[2]; added += 1
+    return cur, fe, f"warm start {os.path.basename(os.path.dirname(path))}: {n0} rods kept, {added} additions"
+
+
 def frame_solve(N, kind, members, cases):
     return frame_eval(N, kind, members, cases)
 
@@ -984,18 +1006,6 @@ for opt in PAD_OPTIONS:
         for a_, b_ in members:
             if (a_ in live) != (b_ in live): live |= {a_, b_}; grow = True
     members = [m for m in members if m[0] in live and m[1] in live]
-    if os.environ.get("WARM"):                                         # warm start (v4): a previous cage, plus every member at
-        Wr = json.load(open(os.environ["WARM"]))["rods"]                # the new shield nodes and at the ends of its lost rods
-        Wk = {_mkey(np.array(a), np.array(b)) for a, b in Wr}
-        Wn = {tuple(np.round(p_, 2)) for ab in Wr for p_ in ab}
-        new_nodes = {i for i in range(len(N)) if kind[i] == "M" and tuple(np.round(N[i], 2)) not in Wn}
-        n_all = len(members)
-        feas_k = {_mkey(N[a_], N[b_]) for a_, b_ in members}
-        lost_n = {p_ for k_ in Wk - feas_k for p_ in k_}                 # ends of the previous rods that no longer fit
-        near = lambda i: i in new_nodes or tuple(np.round(N[i], 2)) in lost_n
-        members = [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or near(m[0]) or near(m[1])]
-        say(f"   warm start from {os.environ['WARM']}: {len(Wk)} rods, {sum(1 for m in members if _mkey(N[m[0]], N[m[1]]) in Wk)} still feasible; "
-            f"ground structure {n_all} -> {len(members)} members")
     set_collinear(N, kind, members)
     CASES = load_cases(N, kind, live)
     ring_members = [j for j, (a, b) in enumerate(members)
@@ -1051,7 +1061,10 @@ for opt in PAD_OPTIONS:
             if np.hypot(*(mom_ / m_)[:2]) > CG_TOL: return False
         return True
     contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all()) and (cg_ok(ms) or not cg_ok(members))
-    chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
+    if os.environ.get("WARM"):
+        chosen, fe, note = warm_start(N, kind, members, os.environ["WARM"], CASES, contact_ok)
+    else:
+        chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
     if fe is None or not feasible(fe):
         bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f} at rod {np.round(N[chosen[r['el']][0]]).astype(int).tolist()}-{np.round(N[chosen[r['el']][1]]).astype(int).tolist()}"
                                      for r in fe if r["worst"] > IDX_LIM[r["cls"]] or r["defl"] > (r["stroke_lim"] if r["stroke_lim"] is not None else DEFL_LIM[r["cls"]])]
