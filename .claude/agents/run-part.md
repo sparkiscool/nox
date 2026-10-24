@@ -11,7 +11,9 @@ You run exactly one heavy job for one part. Other `run-part` workers may run bes
 
 Engine: generated parts use `nox/topo` (`docs/generative.md` How-to), organic finish, never `noxopt`. Do not edit `nox/topo` from a run session; report an engine problem instead.
 
-Inputs you are given: part name, version, the part script path, and any numbers (tagged). If a number is missing, take the value in `nox/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
+System first (`docs/generative.md` The rule, 0): the run designs the system or uses its solve (joint reactions as loads, neighbours as drawn bodies), and `summary.md` reports the assembled check beside the piece's own.
+
+Inputs you are given: part name, version, the part script path, the system model script, and any numbers (tagged). If a number is missing, take the value in `nox/dimensions.md`; if it is not there, use a DEFAULT, write it in `summary.md`, and continue.
 
 Steps:
 1. `git fetch && git checkout -b run/<part>-<version> origin/main` (or check it out if it exists).
