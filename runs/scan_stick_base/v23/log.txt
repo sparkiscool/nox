@@ -10,3 +10,10 @@ fem: grid (32, 24, 64) = 49,152 elements, 73,596 active dofs; backend direct (di
 it   1 beta    1 J  10.0000 vol 0.0583 (dil 0.0709 g +0.480) grey 15.6% ch 0.100 worst tie b2 my 3.25e+04 2.4s
 it   2 beta    1 J   2.0115 vol 0.0367 (dil 0.0442 g -0.077) grey 19.0% ch 0.100 worst tie b2 my 6.68e+03 2.2s
 it   3 beta    1 J   1.6674 vol 0.0384 (dil 0.0461 g -0.037) grey 19.5% ch 0.100 worst L2 hit -y 100 N (joint) 5.4e+03 2.3s
+it   4 beta    1 J   1.6672 vol 0.0395 (dil 0.0474 g -0.009) grey 19.7% ch 0.100 worst L2 hit -y 100 N (joint) 5.4e+03 2.4s
+it   5 beta    1 J   1.6655 vol 0.0397 (dil 0.0476 g -0.005) grey 19.9% ch 0.100 worst L2 hit -y 100 N (joint) 5.4e+03 2.2s
+it   6 beta    1 J   1.6583 vol 0.0395 (dil 0.0475 g -0.004) grey 19.9% ch 0.100 worst L2 hit -y 100 N (joint) 5.37e+03 2.2s
+it   7 beta    1 J   1.5718 vol 0.0392 (dil 0.0471 g -0.013) grey 19.6% ch 0.100 worst L2 hit -y 100 N (joint) 5.09e+03 2.3s
+it   8 beta    1 J   0.3635 vol 0.0390 (dil 0.0469 g -0.017) grey 19.4% ch 0.100 worst tie b2 my 1.16e+03 2.2s
+it   9 beta    1 J   0.1221 vol 0.0386 (dil 0.0462 g -0.032) grey 18.7% ch 0.100 worst tie b2 mx 399 2.9s
+it  10 beta    1 J   0.3543 vol 0.0394 (dil 0.0468 g -0.020) grey 18.5% ch 0.100 worst L2 hit -y 100 N (joint) 1.15e+03 3.1s
