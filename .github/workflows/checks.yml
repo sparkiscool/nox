@@ -1,0 +1,116 @@
+# Nox gates on every PR to main, so they do not depend on a session remembering them.
+# tools/pr.py merge refuses while any of these check runs failed, and waits while they are pending.
+name: checks
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  BASE: origin/${{ github.base_ref || 'main' }}
+
+jobs:
+  state:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # exit 1 on an ERROR (a File cell naming a missing print/ file); WARN lines are printed, never block
+      - run: python3 tools/check_state.py
+
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-ci.txt
+      - run: pip install -r requirements-ci.txt
+      - name: system_check tests
+        working-directory: nox
+        run: python3 test_system_check.py
+      - name: assembly tests (when present)
+        working-directory: nox
+        run: |
+          if [ -f test_assembly.py ]; then python3 test_assembly.py; else echo "nox/test_assembly.py not on this branch: skipped"; fi
+      # topo self-test (python3 -m topo.test_topo) is NOT run in CI: it needs pypardiso / MKL. Without them (scipy splu
+      # fallback, clean venv 24 Oct) "objective gradient vs finite differences" FAILs (masked 2.9e-03 vs 5.6e-04 with
+      # Pardiso), and the full test takes ~6 min on the cloud box with Pardiso. When nox/topo/ changes this step only
+      # warns; CLAUDE.md already asks for one local run after an engine edit.
+      - name: topo engine tests (warn when nox/topo/ changed)
+        run: |
+          if git diff --quiet "$BASE"...HEAD -- nox/topo/; then
+            echo "nox/topo/ unchanged"
+          else
+            echo "::warning::nox/topo/ changed: run 'cd nox && python3 -m topo.test_topo' on a box with pypardiso (skipped in CI)"
+          fi
+
+  solid:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-ci.txt
+      - run: pip install -r requirements-ci.txt
+      # every print/*.stl the PR adds or modifies must read PASS (CLAUDE.md: solid check gates everything).
+      # Timing (24 Oct, cloud box, clean venv from requirements-ci.txt): print/scan_stick_base_v17.stl (17 MB, 357k faces,
+      # 92 M voxels at the default pitch 0.25) 3 min, ~4 GB RAM; a 9 kB part 1 s. 25 min per file is the safety timeout.
+      - name: solid_check on changed print/*.stl
+        run: |
+          files=$(git diff --name-only --diff-filter=AM "$BASE"...HEAD -- 'print/*.stl')
+          if [ -z "$files" ]; then echo "no print/*.stl added or modified"; exit 0; fi
+          fail=0
+          for f in $files; do
+            echo "::group::$f"
+            start=$(date +%s)
+            rc=0; out=$(timeout 25m python3 nox/solid_check.py "$f" 2>&1) || rc=$?
+            echo "$out" | tail -n 20
+            echo "$(( $(date +%s) - start )) s"
+            echo "::endgroup::"
+            if [ $rc -eq 124 ]; then echo "::error file=$f::solid_check timed out (25 min)"; fail=1
+            elif [ $rc -ne 0 ]; then echo "::error file=$f::solid_check FAIL"; fail=1
+            else echo "$f PASS"; fi
+          done
+          exit $fail
+
+  lint-new-lines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: new nox/log.md lines at most 400 chars
+        run: |
+          git diff -U0 "$BASE"...HEAD -- nox/log.md | python3 -c '
+          import sys
+          bad = [l[1:] for l in sys.stdin.read().splitlines() if l.startswith("+- ") and len(l) - 1 > 400]
+          for l in bad:
+              print(f"::error file=nox/log.md::added log line {len(l)} chars (max 400): {l[:80]}...")
+          print(f"{len(bad)} added log.md line(s) over 400 chars")
+          sys.exit(1 if bad else 0)'
+      - name: current-parts cells (warn only)
+        run: |
+          python3 tools/check_state.py | sed -n 's/^WARN  \(.*cell.*\)$/::warning file=nox\/current-parts.md::\1/p; /^check_state/p' || true
