@@ -445,8 +445,9 @@ def funnel(g, dc):
     others = trimesh.util.concatenate(g["arms"] + g["motors"] + [g["cage_low"], g["cage_up"], TOP, BOTTOM, FC, PI, DECK, PDB, UBEC, BUCK, RX, g["apex"], g["l2"], g["cam"],
                                        g["cam_bracket"], g["sled"], g["cam_pod"], g["flow_pod"]] + g["feet"] + g["runners"] + [g["pan"]])
     latch = trimesh.util.concatenate([g["cart"], g["receiver"]])   # the battery latch's set: its own session's check (3.42 a side to the panels)
-    p = np.vstack([pts(others, 40000), pts(latch, 8000)]) + [dc, 0, SEAT_DZ]   # funnel centre at the catch centre
-    own = np.arange(len(p)) < len(p) - 8000
+    po_, pl_ = pts(others, 40000), pts(latch, 8000)
+    p = np.vstack([po_, pl_]) + [dc, 0, SEAT_DZ]                   # funnel centre at the catch centre
+    own = np.arange(len(p)) < len(po_)
     d_face = np.full(len(p), np.inf); z = p[:, 2]
     for ax, z0 in ((0, X_EDGE_Z), (1, Y_EDGE_Z)):
         for sg in (1, -1):
