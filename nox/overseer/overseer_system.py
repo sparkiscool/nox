@@ -596,7 +596,8 @@ def at_dm(dm_):
     g_ = build(dm_, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
     say(f"final: motors {dm_:.1f} ahead, cage {r_['mass_g']:.0f} g sized here, CG {cg_[0] - dm_:+.1f} in x, frame violation {r_['violation']:.3f}")
     return dict(e=float(cg_[0] - dm_), ok=ok_, dm=dm_, sizes=s_, xB=xB_, zB=zB_)
-tries = [at_dm(dm)]
+tries = [at_dm(float(os.environ.get("SYS_FINAL_DM", dm)))]              # SYS_FINAL_DM: start at a balanced point found before (two runs: 152.2 at 741 g, 178.7 at 1002 g)
+dm = tries[0]["dm"]
 if not (tries[0]["ok"] and abs(tries[0]["e"]) <= BAL_TOL):
     dm_b = balance(None, dm)[0]                                       # exact balance with these sizes: the far side of the bracket
     tries.append(at_dm(dm_b))
