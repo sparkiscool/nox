@@ -1,0 +1,1 @@
+battery latch v6 / receiver v2 Scout meshes, drone frame: branch part/battery-latch-v6 @ b0b0321 (end skids 4d3b167), runs/battery_latch/v3/manifest_scout/ (latch session, PR 109)

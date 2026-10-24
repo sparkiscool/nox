@@ -24,7 +24,11 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | SH1.0 4-pin pigtail | 1 | Radxa UART to FC UART4 | to buy (CHECK) | |
 | 90° USB-C plug or short cable | 1 | camera to Radxa | to buy (CHECK) | |
 | Carbon rod Ø3.0 | per cage design | cage struts, wheel pins (decision 22) | on hand (length CHECK) | G |
-| Catch hardware for the box (hold plate, charging contacts) | 1 set | box catch | to design with v3 | G |
+| Keep-alive pads (copper-clad FR4 or brass, 22 x 12) | 2 | B+ / B− on the lower ring, the box's face probes touch them (G (8)) | to buy (CHECK) | System Scout v3 |
+| LM74700 ideal-diode controller + N-MOSFET (small board) | 1 | keep-alive pad feed to the bus; a Schottky leaks ~100 µA warm and reads "not seated" (box electronics PR 82) | to buy | System Scout v3 |
+| 10 kΩ resistor | 1 | across the pads ahead of the diode: seat sense (alt 2.2 kΩ with a Schottky) | on hand (CHECK) | System Scout v3 |
+| M3 x 5.7 heat-set inserts + M3 x 16 (2) / M3 x 20 (2) | 4 | receiver to the Scout mount, bolts up from below (latch PR 69) | CHECK | System Scout v3 |
+| TPU 95A filament | as needed | cage-to-core suspension pads, cage feet / skids | on hand (Spark: TPU for the AMS) | |
 | M2 / M3 screws, nylocs, standoffs | as built | stack, plate bolts | on hand | H |
 
 ## Overseer (development starting)

@@ -1,0 +1,47 @@
+placement search (Radxa slot x UBEC slot x pogo side; pack x solved for CG x 0):
+radxa   ubec      pogo   x_ce      g   cg y   cg z   wire  prop  face  open   arm  head  post ok score  hits
+top     top-stack   -1   37.0    517  -0.53    9.7    167   8.4  41.7   0.0  27.1  66.6   8.2 Y  172.8  
+top     wing+       -1   38.6    517   0.56    9.1    199   8.4  31.1   0.0  27.9  53.7   9.7 Y  204.6  
+top     wing-       -1   38.6    517  -1.62    9.1    199   8.4  31.1   0.0  27.9  53.7   9.7 Y  215.2  
+wing+   top-tail    -1   38.2    517   0.28    9.1    235   6.7  27.4  48.0   8.2  31.7   9.4 Y  238.2  
+wing+   top-stack   -1   37.0    517   0.28    9.3    258   8.7  27.4  48.0   7.0  31.7   8.2 Y  260.4  
+wing+   wing-       -1   38.6    517  -0.80    8.7    282   8.7  27.4  48.0   8.6  31.7   9.7 Y  289.9  
+top     top-tail    -1   38.2    517  -0.53    9.5    156   6.7  41.7   0.0  27.7  66.6   9.4 -  161.6  radxaxubec
+top     top-tail    +1   38.2    517   0.61    9.5    156   6.7  41.7   0.0  27.7  66.6   9.4 -  162.4  radxaxubec overseer-pod
+top     top-stack   +1   37.0    517   0.61    9.7    167   8.4  41.7   0.0  27.1  66.6   8.2 -  173.6   overseer-pod
+top     wing-       +1   38.6    517  -0.48    9.1    199   8.4  31.1   0.0  27.9  53.7   9.7 -  203.7   overseer-pod
+top     wing+       +1   38.6    517   1.70    9.1    199   8.4  31.1   0.0  27.9  53.7   9.7 -  216.0   overseer-pod
+wing-   top-tail    +1   38.2    517  -0.20    9.1    235   6.7  27.4  48.0   8.2  31.7   9.4 -  237.4   overseer-pod
+wing-   wing-       +1   38.6    517  -1.29    8.7    227   8.7  27.4  48.0   8.6  31.7   9.7 -  239.8  radxaxubec overseer-pod
+wing+   wing+       -1   38.6    517   1.37    8.7    227   8.7  27.4  48.0   8.6  31.7   9.7 -  240.6  radxaxubec
+wing-   top-tail    -1   38.2    517  -1.35    9.1    235   6.7  27.4  48.0   8.2  31.7   9.4 -  248.8  radxaxreceiver
+wing+   top-tail    +1   38.2    517   1.43    9.1    235   6.7  27.4  48.0   8.2  31.7   9.4 -  249.6  radxaxreceiver overseer-pod
+wing-   wing-       -1   38.6    517  -2.44    8.7    227   8.7  27.4  48.0   8.6  31.7   9.7 -  251.3  radxaxubec,radxaxreceiver
+wing+   wing+       +1   38.6    517   2.52    8.7    227   8.7  27.4  48.0   8.6  31.7   9.7 -  252.1  radxaxubec,radxaxreceiver overseer-pod
+wing-   top-stack   +1   37.0    517  -0.20    9.3    258   8.7  27.4  48.0   7.0  31.7   8.2 -  259.6   overseer-pod
+wing-   top-stack   -1   37.0    517  -1.35    9.3    258   8.7  27.4  48.0   7.0  31.7   8.2 -  271.0  radxaxreceiver
+wing+   top-stack   +1   37.0    517   1.43    9.3    258   8.7  27.4  48.0   7.0  31.7   8.2 -  271.8  radxaxreceiver overseer-pod
+wing-   wing+       -1   38.6    517  -0.26    8.7    282   8.7  27.4  48.0   8.6  31.7   9.7 -  284.5  radxaxreceiver
+wing+   wing-       +1   38.6    517   0.34    8.7    282   8.7  27.4  48.0   8.6  31.7   9.7 -  285.3  radxaxreceiver overseer-pod
+wing-   wing+       +1   38.6    517   0.89    8.7    282   8.7  27.4  48.0   8.6  31.7   9.7 -  290.8   overseer-pod
+CG x after the solve: 0.05 worst
+
+chosen: Radxa top, UBEC top-stack, pogo side -y
+cartridge v4 (Scout): 38 x 48 x 92 (was 79: +13 at the lead end for the XT60), x -55.0..37.0, z -44.16..3.84 (z_s -44.5..3.5); tab line x -0.5
+pack x -35.5..34.5; XT60 at x -48.0 (lead end, facing up), mate face z 3.84, male rear + cups to z 19.3 (through the plate XT60 cut-out: plate tail x -50.0, CHECK)
+mass ~517 g (E; receiver envelope at 40 % 44 g), CG (0.04, -0.53, 9.7)
+props (swept r 44.45 z 41.2 +-4.0): rods 12.6 (rule 12); receiver 18.7, Radxa 8.4, UBEC 9.8, XR2 8.7, camera 8.7, wheels+nodes 23.5, XT60E1-M 18.0 (rule 6)
+funnel seated, closest to a face (rule 1.0, underside 3.0): cage rods 2.6, nodes 2.3, receiver 10.7, cartridge 20.6, camera 7.5, plate 26.8, bells 28.3; wheels 0.00 (rim on the face = 0)
+below z_s -0.8 at +-5 deg yaw: widest 70.1 of 84.0 (rule <= 83)
+hook latch plungers (G (7), rule 1.0): closest cage rods 1.9
+arm sweep: closest receiver 1.0 (rule > 1.0)
+head under the pack: closest receiver 2.0 (rule > 1.0)
+cartridge path: closest receiver 2.0 (rule > 1.0)
+flow view cone 23 deg from (62.3, -2.0, -0.86): 0 drone points inside, margin 7.6 deg
+camera view (86 x 70 deg, lens front x 108, z 41.2): 0 drone points in view
+overlaps (M, > 0.5 mm3): none  (receiver x cartridge = 0 means the cartridge seats free)
+receiver ceiling z 5.34..7.34; FC lowest 9.5 -> 2.16 clear (CHECK the FC's lowest point)
+pogo pads: (-10, -63) and (10, -63), face z -5.66 (z_s -6.0), down; post column 12 x 12 below each free; axle angle 66 deg (opening wedge 45..135); travel >= 8.0 (box)
+feet: (29, 55), (29, -55), (-47, 55), (-47, -55), bottoms z -47.16 (3 under the cartridge); stance 76 x 110; tip-over side 41 deg, nose/tail 27 deg
+PX4 flow position from the CG (FRD, m): x +0.062, y +0.001, z +0.011; IMU (FC centre) from the CG: x +0.002, y 0, z -0.004
+rods: 49 x 3.0, 2.91 m axis (C, rough cage)
