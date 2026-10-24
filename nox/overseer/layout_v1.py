@@ -30,7 +30,7 @@ def say(*a):
 # ---------------------------------------------------------------- numbers
 HALF = (254 + 25) / 2                    # 139.5: motor square half side at a 25 tip gap (C, O Frame)
 ROOT_H, TOP_T = 45.0, 1.6                # arm root / plate gap (DEFAULT), top plate (derived)
-H_TIP_REAR, H_TIP_FRONT = 16.0, 22.0     # arm depth under the motor (E); the longer front pair deeper
+H_TIP_REAR, H_TIP_FRONT = 16.0, 30.0     # arm depth under the motor (E); the longer front pair deeper and wider (32 -> 26)
 PAD_Z = ROOT_H
 MOTOR_H = 26.0                           # X2216 body (E)
 PROP_Z = PAD_Z + 37.0                    # prop hub mid plane (E)
@@ -62,6 +62,7 @@ def set_wheel(wz):
 
 set_wheel(-12.0)
 MOTOR_DEG = (45, 135, 225, 315)
+CAM_BACK = 30.0                          # front camera board behind the L2 base plane (clears the 96 deg field)
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -149,9 +150,10 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         c, s = math.cos(math.radians(d)), math.sin(math.radians(d))
         root = box(58, 75, -21, 21, 0, ROOT_H); root.apply_transform(rotz(d))
         r0 = np.array([66.5 * c, 66.5 * s])
-        root_end = box(-6, 6, -13, 13, 0, ROOT_H); ang = math.degrees(math.atan2(my - r0[1], mx - r0[0]))
+        hw = 16 if front else 13                                   # half width at the root end (front 32, rear 26)
+        root_end = box(-6, 6, -hw, hw, 0, ROOT_H); ang = math.degrees(math.atan2(my - r0[1], mx - r0[0]))
         root_end.apply_transform(rotz(ang)); root_end.apply_translation([r0[0], r0[1], 0])
-        tip = cyl(11, ROOT_H - ht, ROOT_H, mx, my)
+        tip = cyl(13 if front else 11, ROOT_H - ht, ROOT_H, mx, my)
         pad = cyl(18, ROOT_H - 4, ROOT_H, mx, my)
         arms.append(union([root, hull(root_end, tip), pad])); axes.append((r0, np.array([mx, my]), ht))
     g["arms"] = arms; g["axes"] = axes
@@ -213,7 +215,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     fwd = np.array([math.cos(math.radians(cam_up)), 0, math.sin(math.radians(cam_up))])
     cup = np.array([-math.sin(math.radians(cam_up)), 0, math.cos(math.radians(cam_up))])
     h = cam_h if cam_h is not None else 60.0
-    C = B + up_b * h - A * 12.0                                   # h along the base plane, 12 behind it
+    C = B + up_b * h - A * CAM_BACK                               # h along the base plane, CAM_BACK behind it
     g["cam_c"], g["cam_fwd"], g["cam_up_v"] = C, fwd, cup
     Rc = np.eye(4); Rc[:3, 0] = fwd; Rc[:3, 1] = [0, 1, 0]; Rc[:3, 2] = cup
     board = box(-1, 1, -19, 19, -19, 19); lens = trimesh.creation.cylinder(6, 8, sections=32)
@@ -314,9 +316,11 @@ def balance(dc, dm0):
 
 
 results = []
-for dc in (0.0, 10.0, 20.0, 30.0):
+CASES = [(float(a), float(b)) for a, b in (c.split(",") for c in os.environ["V1_CASES"].split(";"))] if os.environ.get("V1_CASES") \
+    else [(dc_, -12.0) for dc_ in (0.0, 10.0, 20.0, 30.0)]      # V1_CASES="30,-30" reruns one case from that wheel height
+for dc, wz0 in CASES:
     dm = 60.0
-    for wz in np.arange(-12.0, -52.0, -2.0):
+    for wz in np.arange(wz0, -52.0, -2.0):
         set_wheel(wz)
         dm, xB, zB, g, tot, cg = balance(dc, dm)
         fd, fp, low = funnel(g, dc)
@@ -347,8 +351,8 @@ r_front = math.hypot(*mx_front); r_rear = math.hypot(*g["motors_xy"][1])
 say(f"\nchosen: catch {dc:.0f} aft of the plate centre, motor square {dm:.1f} ahead; motors at ({dm + HALF:.1f}, ±{HALF}) and ({dm - HALF:.1f}, ±{HALF})")
 say(f"arms: front r {r_front:.0f} (stock 243), rear r {r_rear:.0f}; tip gaps 25 all round (square kept)")
 with contextlib.redirect_stdout(io.StringIO()):
-    arm_reach.H_TIP = H_TIP_FRONT; ff, _, mf = arm_reach.first_bending_hz(2 * r_front, ROOT_H)
-    arm_reach.H_TIP = H_TIP_REAR; fr, _, mr = arm_reach.first_bending_hz(2 * r_rear, ROOT_H)
+    arm_reach.H_TIP, arm_reach.W_ROOT, arm_reach.W_TIP = H_TIP_FRONT, 32.0, 26.0; ff, _, mf = arm_reach.first_bending_hz(2 * r_front, ROOT_H)
+    arm_reach.H_TIP, arm_reach.W_ROOT, arm_reach.W_TIP = H_TIP_REAR, 26.0, 22.0; fr, _, mr = arm_reach.first_bending_hz(2 * r_rear, ROOT_H)
 say(f"first vertical bending (E): front {ff:.0f} Hz ({H_TIP_FRONT:.0f} deep at the motor), rear {fr:.0f} Hz; band 1P 87..158, 2P 174..317")
 say(f"L2: base centre ({xB:.1f}, 0, {zB:.0f}), axis 15 deg below +x; body lowest z {g['l2'].bounds[0][2]:.1f} vs funnel top {FUNNEL_TOP_D:.1f} (drone frame)")
 allitems = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.util.concatenate(g["motors"])), ("arms", trimesh.util.concatenate(g["arms"])),
