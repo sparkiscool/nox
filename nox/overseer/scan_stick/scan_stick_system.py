@@ -42,7 +42,7 @@ def l2_corners(ox, oz):
 def plane_x(ox, oz, z):
     return ox + np.tan(TILT) * (z - oz)
 
-def spine(elec, l2_on, ox, oz, cam_dz):
+def spine(elec, l2_on, ox, oz, cam_dz, zs=None):
     """pack on the pole axis; returns (boxes, info) or None if infeasible. boxes: name -> (x0, x1, y0, y1, z0, z1)"""
     px, py, pz = PACK
     z0 = BOSS_Z + 4.0
@@ -67,7 +67,8 @@ def spine(elec, l2_on, ox, oz, cam_dz):
     if open_face == "+y":
         side_open = True
     # switches on the front face low down, in the stick's crop zone, under the L2
-    B["switches"] = (sx1, sx1 + SW[0], -SW[1] / 2, SW[1] / 2, z0 + 20, z0 + 20 + SW[2])
+    zs = z0 + 20 if zs is None else zs                          # v2: the switch height is a variable (concept review 24 Oct)
+    B["switches"] = (sx1, sx1 + SW[0], -SW[1] / 2, SW[1] / 2, zs, zs + SW[2])
     # L2 and camera
     corners = l2_corners(ox, oz)
     B["l2"] = (corners[:, 0].min(), corners[:, 0].max(), -L2_HALF, L2_HALF, corners[:, 1].min(), corners[:, 1].max())
@@ -75,7 +76,16 @@ def spine(elec, l2_on, ox, oz, cam_dz):
     xf = min(plane_x(ox, oz, cz - 6) - 1.0 - LENS, plane_x(ox, oz, cz - CAM_H / 2) - 1.0)   # lens tip and board edge 1 behind the plane
     B["camera"] = (xf - CAM_D, xf, -CAM_H / 2, CAM_H / 2, cz - CAM_H / 2, cz + CAM_H / 2)   # plate + posts + board
     B["lens"] = (xf, xf + LENS, -6, 6, cz - 6, cz + 6)                                         # Ø12 lens (E, Q3)
-    info = dict(open_face=open_face, cam_xf=xf, cam_z=cz)
+    info = dict(open_face=open_face, cam_xf=xf, cam_z=cz, sx1=sx1)
+    if CAGE:                                                    # v2: the closed rod cage (concept review 24 Oct), 3 mm rods as 3 mm boxes
+        yc = L2_HALF + 3.0 + 1.5 + 2.0
+        xb = ox + L2_LEN * c + 3.0 + 1.5                        # lower front bumper 3 ahead of the dome tip
+        xback = min(B["pi"][0], B["ubec"][0], B["buck"][0]) - 3.0 - 1.5
+        ztop = cz + CAM_H / 2 + 3.0 + 1.5                       # upper ring over the camera
+        xfr = plane_x(ox, oz, ztop) - 3.0                       # its front, behind the L2 base plane
+        B["cage_low"] = (xback - 1.5, xb + 1.5, -yc - 1.5, yc + 1.5, z0 - 1.5, z0 + 1.5)
+        B["cage_top"] = (xback - 1.5, xfr + 1.5, -yc - 1.5, yc + 1.5, ztop - 1.5, ztop + 1.5)
+        info.update(xb=xb, xfr=xfr, ztop=ztop, yc=yc)
     return B, info
 
 def l2_body_hits(B, ox, oz):
@@ -135,10 +145,24 @@ def drop_path_hits(B):
             bad += ox_ + 0.0 * oy_
     return bad
 
+CAGE = False
+
+def cage_hits(B, info):
+    """the upper ring's front must be 3 ahead of the lens (outside the view), the camera on the module plate (behind the joint face)"""
+    bad = 0.0
+    if CAGE:
+        lens_tip = B["lens"][1]
+        if info["xfr"] - 1.5 < lens_tip + 3.0:
+            bad += lens_tip + 3.0 - (info["xfr"] - 1.5)
+    if B["camera"][0] < info["sx1"]:
+        bad += info["sx1"] - B["camera"][0]
+    return bad
+
 def extents(B, guard_sides=True):
     a = np.array(list(B.values()))
     lo, hi = a[:, [0, 2, 4]].min(0), a[:, [1, 3, 5]].max(0)
-    lo[:2] -= GUARD; hi[:2] += GUARD                          # guards beyond the outermost part on every side face
+    if not CAGE:
+        lo[:2] -= GUARD; hi[:2] += GUARD                      # v1: guards as a 5 mm allowance (v2 models the cage)
     lo[2] = 0.0
     return lo, hi
 
@@ -151,27 +175,27 @@ def optimise_arrangement(elec, l2_on):
     best = None
     for cam_dz0 in (45.0, 60.0, 80.0):
         def obj(v):
-            ox, oz, cdz = v
-            r = spine(elec, l2_on, ox, oz, cdz)
+            ox, oz, cdz, zs = v
+            r = spine(elec, l2_on, ox, oz, cdz, zs)
             if r is None:
                 return 1e9
             B, info = r
             if l2_on == "top" and B["l2"][4] < B["structure"][5] - 60:
                 return 1e9
-            pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz) + drop_path_hits(B)
+            pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz) + drop_path_hits(B) + cage_hits(B, info) + max(0.0, 2.0 - zs) * 5
             if cdz < L2_HALF * c + CAM_H / 2 + 3:                 # the camera sits above the L2's top edge
                 pen += (L2_HALF * c + CAM_H / 2 + 3 - cdz) * 10
             vol, e = score(B)
             return vol + 0.002 * e.max() + 10.0 * pen
-        x0 = (30.0, 230.0, cam_dz0) if l2_on == "top" else (45.0, 110.0, cam_dz0)
+        x0 = (30.0, 230.0, cam_dz0, 58.0) if l2_on == "top" else (45.0, 110.0, cam_dz0, 40.0)
         r = minimize(obj, x0, method="Nelder-Mead", options=dict(xatol=0.2, fatol=1e-5, maxiter=4000))
         if best is None or r.fun < best.fun:
             best = r
-    ox, oz, cdz = best.x
-    B, info = spine(elec, l2_on, ox, oz, cdz)
-    pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz) + drop_path_hits(B)
+    ox, oz, cdz, zs = best.x
+    B, info = spine(elec, l2_on, ox, oz, cdz, zs)
+    pen = l2_body_hits(B, ox, oz) + camera_hits(B, info, ox, oz) + drop_path_hits(B) + cage_hits(B, info)
     vol, e = score(B)
-    return dict(elec=elec, l2=l2_on, ox=round(ox, 1), oz=round(oz, 1), cam_dz=round(cdz, 1), cam_xf=round(info["cam_xf"], 1),
+    return dict(elec=elec, l2=l2_on, ox=round(ox, 1), oz=round(oz, 1), cam_dz=round(cdz, 1), zs=round(zs, 1), cage={k: round(float(v), 1) for k, v in info.items() if k in ("xb", "xfr", "ztop", "yc")}, cam_xf=round(info["cam_xf"], 1),
                 cam_z=round(info["cam_z"], 1), open_face=info["open_face"], penalty=round(pen, 3), volume_L=round(vol, 2),
                 extents=[round(v) for v in e], boxes={k: [round(t, 1) for t in v] for k, v in B.items()})
 
@@ -183,7 +207,8 @@ def v3_baseline():
     e = hi - lo
     return round(float(np.prod(e)) / 1e6, 2), [round(v) for v in e]
 
-if __name__ == "__main__":
+if __name__ == "__main__" and "--render" not in sys.argv:
+    CAGE = "--v1" not in sys.argv
     res = []
     for elec, l2_on in itertools.product(("back", "sides"), ("top", "front")):
         r = optimise_arrangement(elec, l2_on)
@@ -195,7 +220,7 @@ if __name__ == "__main__":
     ok = [r for r in res if r["penalty"] < 1e-6]
     best = min(ok, key=lambda r: (r["volume_L"], max(r["extents"])))
     print("best:", best["elec"], best["l2"], best["volume_L"], "L", best["extents"])
-    out = os.path.join(ROOT, "runs", "scan_stick_system", "v1"); os.makedirs(out, exist_ok=True)
+    out = os.path.join(ROOT, "runs", "scan_stick_system", "v1" if not CAGE else "v2"); os.makedirs(out, exist_ok=True)
     json.dump(dict(candidates=res, baseline=dict(volume_L=vb, extents=eb), best=best), open(os.path.join(out, "layout.json"), "w"), indent=1)
 
 def render(best, out):

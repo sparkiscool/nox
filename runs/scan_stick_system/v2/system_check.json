@@ -1,0 +1,1635 @@
+{
+ "name": "scan stick v5 (compact, closed cage)",
+ "pass_": true,
+ "cage_first": {
+  "applies": true,
+  "pass_": true,
+  "worst_part": "pi",
+  "worst_dir": [
+   -0.113,
+   0.012,
+   0.994
+  ],
+  "worst_dir_label": "+Z",
+  "margin_mm": 4.12,
+  "required_mm": 3.0,
+  "n_dirs": 2006,
+  "cage_margin_mm": 3.0,
+  "per_part": {
+   "pack": {
+    "min_margin_mm": 8.0,
+    "worst_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "worst_slack_mm": 8.0,
+    "min_margin_outside_openings_mm": 12.16,
+    "dirs_in_openings": 122,
+    "pass_": true
+   },
+   "pi": {
+    "min_margin_mm": 4.12,
+    "worst_dir": [
+     -0.113,
+     0.012,
+     0.994
+    ],
+    "worst_slack_mm": 1.12,
+    "min_margin_outside_openings_mm": 4.12,
+    "dirs_in_openings": 61,
+    "pass_": true
+   },
+   "ubec_buck": {
+    "min_margin_mm": 15.5,
+    "worst_dir": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "worst_slack_mm": 12.5,
+    "min_margin_outside_openings_mm": 15.5,
+    "dirs_in_openings": 61,
+    "pass_": true
+   },
+   "l2": {
+    "min_margin_mm": -5.36,
+    "worst_dir": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "worst_slack_mm": 5.0,
+    "min_margin_outside_openings_mm": 8.0,
+    "dirs_in_openings": 1007,
+    "pass_": true
+   },
+   "camera": {
+    "min_margin_mm": 13.55,
+    "worst_dir": [
+     0.068,
+     -0.02,
+     0.998
+    ],
+    "worst_slack_mm": 10.55,
+    "min_margin_outside_openings_mm": 13.55,
+    "dirs_in_openings": 347,
+    "pass_": true
+   },
+   "lens": {
+    "min_margin_mm": 17.14,
+    "worst_dir": [
+     0.938,
+     -0.019,
+     0.346
+    ],
+    "worst_slack_mm": 17.14,
+    "min_margin_outside_openings_mm": 24.02,
+    "dirs_in_openings": 347,
+    "pass_": true
+   },
+   "switches": {
+    "min_margin_mm": 17.45,
+    "worst_dir": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "worst_slack_mm": 15.5,
+    "min_margin_outside_openings_mm": 18.5,
+    "dirs_in_openings": 61,
+    "pass_": true
+   }
+  }
+ },
+ "compact": {
+  "bbox_min": [
+   -65.5,
+   -50.0,
+   0.0
+  ],
+  "bbox_max": [
+   116.57,
+   50.0,
+   196.0
+  ],
+  "extents_mm": [
+   182.1,
+   100.0,
+   196.0
+  ],
+  "largest_extent_mm": 196.0,
+  "bbox_L": 3.569,
+  "hull_L": 3.045,
+  "guard_offsets_mm": {}
+ },
+ "fit": {
+  "pass_": true,
+  "tol_mm3": 0.5,
+  "worst": {
+   "a": "l2",
+   "b": "head",
+   "overlap_mm3": 0.0,
+   "limit_mm3": 0.5,
+   "contact": false,
+   "method": "manifold3d",
+   "pass_": true
+  },
+  "pairs": [
+   {
+    "a": "pack",
+    "b": "spine",
+    "overlap_mm3": 359550.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "pi",
+    "b": "spine",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "ubec_buck",
+    "b": "spine",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "l2",
+    "b": "head",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "camera",
+    "b": "lens",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "camera",
+    "b": "head",
+    "overlap_mm3": 3758.85,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "switches",
+    "b": "head",
+    "overlap_mm3": 4825.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spine",
+    "b": "head",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "top side -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "back vertical -1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "front vertical -1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "front run -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "frame -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "low side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "back vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "low back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "low front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side -1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "back vertical -1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "front vertical -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "front run -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "frame -1",
+    "overlap_mm3": 5.85,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "low side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "back vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "top back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side -1",
+    "b": "top front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "front vertical -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "front run -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "frame -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "low side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "back vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "low back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "top back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical -1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "front run -1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "frame -1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "low side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "back vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "low front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical -1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "frame -1",
+    "overlap_mm3": 5.85,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "low side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "back vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run -1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "low side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "back vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame -1",
+    "b": "top front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "top side +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "back vertical +1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "front vertical +1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "low back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "low front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low side +1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "back vertical +1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "frame +1",
+    "overlap_mm3": 5.85,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "top back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "top side +1",
+    "b": "top front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "front vertical +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "front run +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "low back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "top back",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "back vertical +1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical +1",
+    "b": "front run +1",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "front vertical +1",
+    "b": "frame +1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical +1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical +1",
+    "b": "low front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "front vertical +1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front vertical +1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run +1",
+    "b": "frame +1",
+    "overlap_mm3": 5.85,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "front run +1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run +1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run +1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "front run +1",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "low back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame +1",
+    "b": "top front",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "low front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low back",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low front",
+    "b": "top back",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "low front",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top back",
+    "b": "top front",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 50.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   }
+  ],
+  "clearance": []
+ },
+ "mass_cg": {
+  "mass_g": 1351.33,
+  "cg": [
+   13.04,
+   0.03,
+   104.92
+  ],
+  "parts": [
+   {
+    "name": "pack",
+    "mass_g": 590.0,
+    "cg": [
+     0.0,
+     0.0,
+     113.0
+    ],
+    "tag": "P",
+    "swap": true
+   },
+   {
+    "name": "pi",
+    "mass_g": 80.0,
+    "cg": [
+     -48.25,
+     0.0,
+     146.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "ubec_buck",
+    "mass_g": 60.0,
+    "cg": [
+     -38.25,
+     0.0,
+     73.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "l2",
+    "mass_g": 230.0,
+    "cg": [
+     72.42,
+     0.0,
+     83.96
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "camera",
+    "mass_g": 25.0,
+    "cg": [
+     41.8,
+     0.0,
+     163.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "lens",
+    "mass_g": 5.0,
+    "cg": [
+     55.6,
+     0.0,
+     163.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "switches",
+    "mass_g": 20.0,
+    "cg": [
+     55.25,
+     2.0,
+     32.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "spine",
+    "mass_g": 230.0,
+    "cg": [
+     0.0,
+     0.0,
+     98.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "head",
+    "mass_g": 90.0,
+    "cg": [
+     48.5,
+     0.0,
+     108.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "low side -1",
+    "mass_g": 2.02,
+    "cg": [
+     25.54,
+     -44.0,
+     8.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "top side -1",
+    "mass_g": 1.52,
+    "cg": [
+     3.46,
+     -44.0,
+     192.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "back vertical -1",
+    "mass_g": 2.08,
+    "cg": [
+     -64.0,
+     -44.0,
+     100.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "front vertical -1",
+    "mass_g": 0.5,
+    "cg": [
+     115.07,
+     -44.0,
+     30.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "front run -1",
+    "mass_g": 0.92,
+    "cg": [
+     74.23,
+     -44.0,
+     52.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "frame -1",
+    "mass_g": 1.64,
+    "cg": [
+     52.15,
+     -44.0,
+     122.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "low side +1",
+    "mass_g": 2.02,
+    "cg": [
+     25.54,
+     44.0,
+     8.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "top side +1",
+    "mass_g": 1.52,
+    "cg": [
+     3.46,
+     44.0,
+     192.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "back vertical +1",
+    "mass_g": 2.08,
+    "cg": [
+     -64.0,
+     44.0,
+     100.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "front vertical +1",
+    "mass_g": 0.5,
+    "cg": [
+     115.07,
+     44.0,
+     30.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "front run +1",
+    "mass_g": 0.92,
+    "cg": [
+     74.23,
+     44.0,
+     52.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "frame +1",
+    "mass_g": 1.64,
+    "cg": [
+     52.15,
+     44.0,
+     122.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "low back",
+    "mass_g": 0.99,
+    "cg": [
+     -64.0,
+     0.0,
+     8.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "low front",
+    "mass_g": 0.99,
+    "cg": [
+     115.07,
+     -0.0,
+     8.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "top back",
+    "mass_g": 0.99,
+    "cg": [
+     -64.0,
+     -0.0,
+     192.0
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "top front",
+    "mass_g": 0.99,
+    "cg": [
+     70.91,
+     -0.0,
+     192.0
+    ],
+    "tag": "C",
+    "swap": false
+   }
+  ],
+  "tag": "E",
+  "cg_ref": [
+   0,
+   0,
+   0
+  ],
+  "cg_offset": [
+   13.04,
+   0.03,
+   104.92
+  ],
+  "cg_offset_mm": 105.73
+ },
+ "balance": {
+  "applies": true,
+  "ref": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "thrust_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tol_mm": 30.0,
+  "cases": {
+   "all": {
+    "mass_g": 1351.33,
+    "cg_offset": [
+     13.04,
+     0.03,
+     104.92
+    ],
+    "horizontal_mm": 13.04,
+    "axial_mm": 104.92,
+    "pass_": true
+   },
+   "no_swap": {
+    "mass_g": 761.33,
+    "cg_offset": [
+     23.15,
+     0.05,
+     98.66
+    ],
+    "horizontal_mm": 23.15,
+    "axial_mm": 98.66,
+    "pass_": true
+   }
+  },
+  "worst_case": "no_swap",
+  "worst_horizontal_mm": 23.15,
+  "pass_": true
+ },
+ "geometry_tag": "E",
+ "summary": "System: scan stick v5 (compact, closed cage), cage first 4.1 mm (E) at +Z (pi), fit 0.0 mm\u00b3 (E) (l2/head), bbox 3.57 L (E), extents 182 x 100 x 196 mm (E), mass 1351 g (E), CG 13.0 mm off thrust axis (E) [+13.0, +0.0, +104.9], 23.1 mm without swap parts",
+ "pass": true
+}

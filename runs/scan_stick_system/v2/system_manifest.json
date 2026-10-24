@@ -1,0 +1,1123 @@
+{
+ "name": "scan stick v5 (compact, closed cage)",
+ "parts": [
+  {
+   "name": "pack",
+   "box": [
+    -23.5,
+    23.5,
+    -25.5,
+    25.5,
+    38.0,
+    188.0
+   ],
+   "role": "protected",
+   "mass_g": 590,
+   "tag": "P",
+   "swap": true
+  },
+  {
+   "name": "pi",
+   "box": [
+    -60.0,
+    -36.5,
+    -29.0,
+    29.0,
+    102.0,
+    190.0
+   ],
+   "role": "protected",
+   "mass_g": 80,
+   "tag": "E"
+  },
+  {
+   "name": "ubec_buck",
+   "box": [
+    -46.0,
+    -30.5,
+    -30.0,
+    30.0,
+    45.0,
+    101.0
+   ],
+   "role": "protected",
+   "mass_g": 60,
+   "tag": "E"
+  },
+  {
+   "name": "l2",
+   "mesh": "runs/scan_stick_system/v2/l2.stl",
+   "role": "protected",
+   "mass_g": 230,
+   "tag": "P"
+  },
+  {
+   "name": "camera",
+   "box": [
+    36.0,
+    47.6,
+    -19,
+    19,
+    144.0,
+    182.0
+   ],
+   "role": "protected",
+   "mass_g": 25,
+   "tag": "E"
+  },
+  {
+   "name": "lens",
+   "cylinder": {
+    "r": 6.0,
+    "p0": [
+     47.6,
+     0,
+     163.0
+    ],
+    "p1": [
+     63.6,
+     0,
+     163.0
+    ]
+   },
+   "role": "protected",
+   "mass_g": 5,
+   "tag": "E"
+  },
+  {
+   "name": "switches",
+   "box": [
+    43.5,
+    67.0,
+    -23.0,
+    27.0,
+    20.0,
+    44.0
+   ],
+   "role": "protected",
+   "mass_g": 20,
+   "tag": "E"
+  },
+  {
+   "name": "spine",
+   "box": [
+    -30.0,
+    30.0,
+    -31.5,
+    31.5,
+    0.0,
+    196.0
+   ],
+   "role": "cage",
+   "mass_g": 230,
+   "tag": "E"
+  },
+  {
+   "name": "head",
+   "mesh": "runs/scan_stick_system/v2/head_drawn.stl",
+   "role": "structure",
+   "mass_g": 90,
+   "tag": "E"
+  },
+  {
+   "name": "low side -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     -44.0,
+     8.0
+    ],
+    "p1": [
+     115.07110722527366,
+     -44.0,
+     8.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "top side -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     -44.0,
+     192.0
+    ],
+    "p1": [
+     70.91062973279936,
+     -44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "back vertical -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     -44.0,
+     8.0
+    ],
+    "p1": [
+     -64.0,
+     -44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "front vertical -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     115.07110722527366,
+     -44.0,
+     8.0
+    ],
+    "p1": [
+     115.07110722527366,
+     -44.0,
+     52.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "front run -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     115.07110722527366,
+     -44.0,
+     52.0
+    ],
+    "p1": [
+     33.39774279244219,
+     -44.0,
+     52.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "frame -1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     33.39774279244219,
+     -44.0,
+     52.0
+    ],
+    "p1": [
+     70.91062973279936,
+     -44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "low side +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     44.0,
+     8.0
+    ],
+    "p1": [
+     115.07110722527366,
+     44.0,
+     8.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "top side +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     44.0,
+     192.0
+    ],
+    "p1": [
+     70.91062973279936,
+     44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "back vertical +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     44.0,
+     8.0
+    ],
+    "p1": [
+     -64.0,
+     44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "front vertical +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     115.07110722527366,
+     44.0,
+     8.0
+    ],
+    "p1": [
+     115.07110722527366,
+     44.0,
+     52.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "front run +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     115.07110722527366,
+     44.0,
+     52.0
+    ],
+    "p1": [
+     33.39774279244219,
+     44.0,
+     52.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "frame +1",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     33.39774279244219,
+     44.0,
+     52.0
+    ],
+    "p1": [
+     70.91062973279936,
+     44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "low back",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     -44.0,
+     8.0
+    ],
+    "p1": [
+     -64.0,
+     44.0,
+     8.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "low front",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     115.07110722527366,
+     -44.0,
+     8.0
+    ],
+    "p1": [
+     115.07110722527366,
+     44.0,
+     8.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "top back",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     -64.0,
+     -44.0,
+     192.0
+    ],
+    "p1": [
+     -64.0,
+     44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  },
+  {
+   "name": "top front",
+   "cylinder": {
+    "r": 1.5,
+    "p0": [
+     70.91062973279936,
+     -44.0,
+     192.0
+    ],
+    "p1": [
+     70.91062973279936,
+     44.0,
+     192.0
+    ]
+   },
+   "role": "cage",
+   "material": "carbon",
+   "tag": "C"
+  }
+ ],
+ "openings": [
+  {
+   "part": "l2",
+   "axis": [
+    0.9659258262890683,
+    0.0,
+    -0.25881904510252074
+   ],
+   "half_angle_deg": 90.0,
+   "min_mm": -60.0
+  },
+  {
+   "part": "lens",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "half_angle_deg": 44.5
+  },
+  {
+   "part": "camera",
+   "axis": [
+    1,
+    0,
+    0
+   ],
+   "half_angle_deg": 44.5
+  },
+  {
+   "part": "pack",
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "half_angle_deg": 20.0
+  },
+  {
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 20.0
+  }
+ ],
+ "contact_pairs": [
+  [
+   "pack",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "pi",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "ubec_buck",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "head",
+   "spine",
+   1000000000.0
+  ],
+  [
+   "camera",
+   "head",
+   1000000000.0
+  ],
+  [
+   "switches",
+   "head",
+   1000000000.0
+  ],
+  [
+   "camera",
+   "lens",
+   1000000000.0
+  ],
+  [
+   "low side -1",
+   "top side -1",
+   50
+  ],
+  [
+   "low side -1",
+   "back vertical -1",
+   50
+  ],
+  [
+   "low side -1",
+   "front vertical -1",
+   50
+  ],
+  [
+   "low side -1",
+   "front run -1",
+   50
+  ],
+  [
+   "low side -1",
+   "frame -1",
+   50
+  ],
+  [
+   "low side -1",
+   "low side +1",
+   50
+  ],
+  [
+   "low side -1",
+   "top side +1",
+   50
+  ],
+  [
+   "low side -1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "low side -1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "low side -1",
+   "front run +1",
+   50
+  ],
+  [
+   "low side -1",
+   "frame +1",
+   50
+  ],
+  [
+   "low side -1",
+   "low back",
+   50
+  ],
+  [
+   "low side -1",
+   "low front",
+   50
+  ],
+  [
+   "low side -1",
+   "top back",
+   50
+  ],
+  [
+   "low side -1",
+   "top front",
+   50
+  ],
+  [
+   "top side -1",
+   "back vertical -1",
+   50
+  ],
+  [
+   "top side -1",
+   "front vertical -1",
+   50
+  ],
+  [
+   "top side -1",
+   "front run -1",
+   50
+  ],
+  [
+   "top side -1",
+   "frame -1",
+   50
+  ],
+  [
+   "top side -1",
+   "low side +1",
+   50
+  ],
+  [
+   "top side -1",
+   "top side +1",
+   50
+  ],
+  [
+   "top side -1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "top side -1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "top side -1",
+   "front run +1",
+   50
+  ],
+  [
+   "top side -1",
+   "frame +1",
+   50
+  ],
+  [
+   "top side -1",
+   "low back",
+   50
+  ],
+  [
+   "top side -1",
+   "low front",
+   50
+  ],
+  [
+   "top side -1",
+   "top back",
+   50
+  ],
+  [
+   "top side -1",
+   "top front",
+   50
+  ],
+  [
+   "back vertical -1",
+   "front vertical -1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "front run -1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "frame -1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "low side +1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "top side +1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "front run +1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "frame +1",
+   50
+  ],
+  [
+   "back vertical -1",
+   "low back",
+   50
+  ],
+  [
+   "back vertical -1",
+   "low front",
+   50
+  ],
+  [
+   "back vertical -1",
+   "top back",
+   50
+  ],
+  [
+   "back vertical -1",
+   "top front",
+   50
+  ],
+  [
+   "front vertical -1",
+   "front run -1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "frame -1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "low side +1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "top side +1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "front run +1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "frame +1",
+   50
+  ],
+  [
+   "front vertical -1",
+   "low back",
+   50
+  ],
+  [
+   "front vertical -1",
+   "low front",
+   50
+  ],
+  [
+   "front vertical -1",
+   "top back",
+   50
+  ],
+  [
+   "front vertical -1",
+   "top front",
+   50
+  ],
+  [
+   "front run -1",
+   "frame -1",
+   50
+  ],
+  [
+   "front run -1",
+   "low side +1",
+   50
+  ],
+  [
+   "front run -1",
+   "top side +1",
+   50
+  ],
+  [
+   "front run -1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "front run -1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "front run -1",
+   "front run +1",
+   50
+  ],
+  [
+   "front run -1",
+   "frame +1",
+   50
+  ],
+  [
+   "front run -1",
+   "low back",
+   50
+  ],
+  [
+   "front run -1",
+   "low front",
+   50
+  ],
+  [
+   "front run -1",
+   "top back",
+   50
+  ],
+  [
+   "front run -1",
+   "top front",
+   50
+  ],
+  [
+   "frame -1",
+   "low side +1",
+   50
+  ],
+  [
+   "frame -1",
+   "top side +1",
+   50
+  ],
+  [
+   "frame -1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "frame -1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "frame -1",
+   "front run +1",
+   50
+  ],
+  [
+   "frame -1",
+   "frame +1",
+   50
+  ],
+  [
+   "frame -1",
+   "low back",
+   50
+  ],
+  [
+   "frame -1",
+   "low front",
+   50
+  ],
+  [
+   "frame -1",
+   "top back",
+   50
+  ],
+  [
+   "frame -1",
+   "top front",
+   50
+  ],
+  [
+   "low side +1",
+   "top side +1",
+   50
+  ],
+  [
+   "low side +1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "low side +1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "low side +1",
+   "front run +1",
+   50
+  ],
+  [
+   "low side +1",
+   "frame +1",
+   50
+  ],
+  [
+   "low side +1",
+   "low back",
+   50
+  ],
+  [
+   "low side +1",
+   "low front",
+   50
+  ],
+  [
+   "low side +1",
+   "top back",
+   50
+  ],
+  [
+   "low side +1",
+   "top front",
+   50
+  ],
+  [
+   "top side +1",
+   "back vertical +1",
+   50
+  ],
+  [
+   "top side +1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "top side +1",
+   "front run +1",
+   50
+  ],
+  [
+   "top side +1",
+   "frame +1",
+   50
+  ],
+  [
+   "top side +1",
+   "low back",
+   50
+  ],
+  [
+   "top side +1",
+   "low front",
+   50
+  ],
+  [
+   "top side +1",
+   "top back",
+   50
+  ],
+  [
+   "top side +1",
+   "top front",
+   50
+  ],
+  [
+   "back vertical +1",
+   "front vertical +1",
+   50
+  ],
+  [
+   "back vertical +1",
+   "front run +1",
+   50
+  ],
+  [
+   "back vertical +1",
+   "frame +1",
+   50
+  ],
+  [
+   "back vertical +1",
+   "low back",
+   50
+  ],
+  [
+   "back vertical +1",
+   "low front",
+   50
+  ],
+  [
+   "back vertical +1",
+   "top back",
+   50
+  ],
+  [
+   "back vertical +1",
+   "top front",
+   50
+  ],
+  [
+   "front vertical +1",
+   "front run +1",
+   50
+  ],
+  [
+   "front vertical +1",
+   "frame +1",
+   50
+  ],
+  [
+   "front vertical +1",
+   "low back",
+   50
+  ],
+  [
+   "front vertical +1",
+   "low front",
+   50
+  ],
+  [
+   "front vertical +1",
+   "top back",
+   50
+  ],
+  [
+   "front vertical +1",
+   "top front",
+   50
+  ],
+  [
+   "front run +1",
+   "frame +1",
+   50
+  ],
+  [
+   "front run +1",
+   "low back",
+   50
+  ],
+  [
+   "front run +1",
+   "low front",
+   50
+  ],
+  [
+   "front run +1",
+   "top back",
+   50
+  ],
+  [
+   "front run +1",
+   "top front",
+   50
+  ],
+  [
+   "frame +1",
+   "low back",
+   50
+  ],
+  [
+   "frame +1",
+   "low front",
+   50
+  ],
+  [
+   "frame +1",
+   "top back",
+   50
+  ],
+  [
+   "frame +1",
+   "top front",
+   50
+  ],
+  [
+   "low back",
+   "low front",
+   50
+  ],
+  [
+   "low back",
+   "top back",
+   50
+  ],
+  [
+   "low back",
+   "top front",
+   50
+  ],
+  [
+   "low front",
+   "top back",
+   50
+  ],
+  [
+   "low front",
+   "top front",
+   50
+  ],
+  [
+   "top back",
+   "top front",
+   50
+  ]
+ ],
+ "cg_ref": [
+  0,
+  0,
+  0
+ ],
+ "thrust_axis": [
+  0,
+  0,
+  1
+ ],
+ "cg_tol_mm": 30.0,
+ "cage_margin_mm": 3.0
+}
