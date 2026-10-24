@@ -921,11 +921,11 @@ def close_ends(N, kind, cur, add, members):
     return out
 
 
-def warm_start(N, kind, members, path, cases, contact_ok, max_add=60):
+def warm_start(N, kind, members, path, cases, contact_ok, mandatory=(), max_add=60):
     """additive (v4): a previous cage's rods that still fit, then the member (and its mirror) that cuts the case violation
     most, until every case holds; the probe repair and the reduction pass follow"""
     Wk = {_mkey(np.array(a), np.array(b)) for a, b in json.load(open(path))["rods"]}
-    cur = drop_bad(N, kind, [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk]); n0 = len(cur)
+    cur = drop_bad(N, kind, [m for m in members if _mkey(N[m[0]], N[m[1]]) in Wk or m in set(mandatory)]); n0 = len(cur)
     def violation(f):
         if f is None: return np.inf
         return sum(max(r["worst"] / IDX_LIM[r["cls"]] - 1, 0) + max(r["defl"] / (r["stroke_lim"] or DEFL_LIM[r["cls"]]) - 1, 0) for r in f)
@@ -1210,7 +1210,8 @@ for opt in PAD_OPTIONS:
         return (DIRS @ P_.T).max(1) + ROD_R
     def _marg(ms):
         cs = cage_support(ms)
-        return cs - so_rest, np.where(IN_CONE, np.maximum(cs, SK_SUP) - so_swap, cs - so_swap)
+        return cs - so_rest, cs - so_swap                              # rods only (the skids are edge cover: a hit on them is ~4 kN into
+                                                                       # the receiver, latch 24 Oct); in the cone the target is >= 0
     base_r, base_s = _marg(members)                                    # per direction, the full ground structure
     tgt_r = np.minimum(base_r, CONTACT_MARGIN); tgt_s = np.minimum(base_s, np.where(IN_CONE, 0.0, CONTACT_MARGIN))
     # crash stroke per hit direction = how far the cage leads everything else there, less 1.0 (full ground structure)
@@ -1253,7 +1254,7 @@ for opt in PAD_OPTIONS:
         return float(np.maximum(tgt_r - mr, 0).sum() + np.maximum(tgt_s - ms_, 0).sum())   # mm short, summed over directions
     contact_ok.deficit = _cdef
     if os.environ.get("WARM"):
-        chosen, fe, note = warm_start(N, kind, members, os.environ["WARM"], CASES, contact_ok)
+        chosen, fe, note = warm_start(N, kind, members, os.environ["WARM"], CASES, contact_ok, [members[j] for j in ring_members])
     else:
         chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
     if fe is None or not feasible(fe):
