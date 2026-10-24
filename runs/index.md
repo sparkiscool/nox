@@ -1,6 +1,6 @@
 # Runs
 
-_87 runs · rebuilt 2026-10-24 06:43_
+_88 runs · rebuilt 2026-10-24 10:33_
 
 ## Latest per part
 
@@ -12,7 +12,7 @@ _87 runs · rebuilt 2026-10-24 06:43_
 | arm_rail | v2 | · | 49.4 (M) | [0.28, 'head stall free']  | · | [runs/arm_rail/v2](runs/arm_rail/v2/summary.md) |
 | arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
-| battery_latch | v1 | · | · | ·  | · | [runs/battery_latch/v1](runs/battery_latch/v1/summary.md) |
+| battery_latch | v2 | · | · | ·  | · | [runs/battery_latch/v2](runs/battery_latch/v2/summary.md) |
 | box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
 | box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
 | bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
@@ -36,6 +36,7 @@ _87 runs · rebuilt 2026-10-24 06:43_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 10:31 | battery_latch | [v2](runs/battery_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 06:41 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-24 05:30 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |

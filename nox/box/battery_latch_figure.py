@@ -1,6 +1,7 @@
-"""Battery latch v1 figures for the layout artifact, all from the script's geometry: tab-line sections (latched / gripped /
-free, both packs), the assembled sets (latch_assembly, Scout end skids), pitch guidance option B (Overseer receiver, GUIDE)
-and the Scout set in the collar planes. python3 nox/box/battery_latch_figure.py -> runs/battery_latch/v1/figs/*.png"""
+"""Battery latch figures for the layout artifact, all from the script's geometry: tab-line sections (latched / gripped /
+free, both packs), the assembled sets (latch_assembly, Scout end skids), receiver v1 vs v2 (compare) and their |u| under
+the swap cases (fe_sections, from battery_latch_topo --swap-v1 / --swap-v2 fields), and the Scout set in the collar planes.
+python3 nox/box/battery_latch_figure.py -> runs/battery_latch/v2/figs/*.png"""
 import os, sys, math
 import numpy as np
 import matplotlib
@@ -18,7 +19,7 @@ COL = dict(receiver="#5b6b7a", cartridge="#c9a227", slider="#c0392b", pack="#9aa
            strips="#3b3b3b", xt60="#e0a020", skid="#1f6fb2")
 KEYCOL = dict(cartridge="cartridge", slider_px="slider", slider_nx="slider", pack="pack", cartridge_skid_closed="skid",
               cartridge_skid_lead="skid", xt60_plug="xt60", receiver="receiver", receiver_lid="lid", receiver_strips="strips",
-              xt60e1m="xt60")
+              xt60e1m="xt60", xt60_carrier="xt60")
 T_ISO = np.array([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1.0]])    # plot (z, x, y): pack along, across, up
 
 
@@ -183,21 +184,11 @@ def main():
         iso(fig.add_subplot(2, 2, 2 * i + 1, projection="3d"), assembly(pack, "latched", skip=("receiver_lid",)),
             title=f"{pack} set latched (lid off)")
         A = BL.latch_assembly(pack, "latched")
-        free = assembly(pack, "free", drop=40.0) + [(A[k], COL[KEYCOL[k]]) for k in ("receiver", "receiver_strips", "xt60e1m")]
+        free = assembly(pack, "free", drop=40.0) + [(A[k], COL[KEYCOL[k]]) for k in ("receiver", "receiver_strips", "xt60e1m",
+                                                                                        "xt60_carrier") if k in A]
         iso(fig.add_subplot(2, 2, 2 * i + 2, projection="3d"), free, title=f"{pack}: cartridge out 40 mm (free)")
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "sets.png")); plt.close(fig)
 
-    # pitch guidance option B (GUIDE, end gap 0.15, truss windows) next to the DEFAULT receiver, Overseer
-    fig = plt.figure(figsize=(12, 5), dpi=130)
-    keep = (BL.GUIDE, BL.END_GAP, BL.WINDOWS)
-    for k, opt in enumerate((False, True)):
-        BL.GUIDE, BL.END_GAP, BL.WINDOWS = (opt, 0.15 if opt else 0.3, "truss" if opt else "box"); BL._CACHE.clear()
-        B = BL.build("overseer")
-        iso(fig.add_subplot(1, 2, k + 1, projection="3d"), [(B["recv"], COL["receiver"]), (B["strips"], COL["strips"])],
-            title="overseer receiver, " + ("option B: corner guide posts, truss windows" if opt else "DEFAULT: no guide posts"),
-            el=18, az=-35)
-    BL.GUIDE, BL.END_GAP, BL.WINDOWS = keep; BL._CACHE.clear()
-    fig.tight_layout(); fig.savefig(os.path.join(OUT, "pitch_option_b.png")); plt.close(fig)
 
     # Scout side view in the drone frame with the collar planes (inset 7.0 line) and the keel nodes
     B = BL.build("scout"); g = B["g"]; T = BL.T_dc(g)
@@ -217,6 +208,8 @@ def main():
     axs[0].set_title("Scout: collar planes (black), 7.0 inside (red), keel nodes (green)", fontsize=9)
     fig.tight_layout(); fig.savefig(os.path.join(OUT, "scout_collar.png")); plt.close(fig)
     compare()
+    for c in ("swap insert 74 N + guide 3.5 N m", "swap across 43.5 N +x"):
+        if os.path.isdir(os.path.join(BL.OUT, "fe")): fe_sections(c)
     print("figures in", OUT)
 
 

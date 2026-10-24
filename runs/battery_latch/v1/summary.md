@@ -1,3 +1,5 @@
+**Superseded by `runs/battery_latch/v2/` (receiver v2, 24 Oct): v1 failed the swap load set (guide 3.59 / 1.72, 43.5 N across moved its feet 5.3 / 4.4 mm). Meshes recoverable from git.**
+
 # battery latch v1 (24 Oct 2026): cartridge v5 (Scout, Overseer), receiver latch block v1, sliders, Scout end skids
 
 Script `nox/box/battery_latch.py` (+ `battery_latch_topo.py --fe-v1 / --mode` for the receiver FE and first mode, `battery_latch_figure.py`). Doc `nox/box/battery-latch.md`. Numbers `nox/dimensions.md` "System box swap: latch". Drawn parts (the latch module and its locating faces are must-haves; the receiver topology attempt failed and v1 stays, doc). Tags: M mesh, C CAD, E estimate, F frame model.

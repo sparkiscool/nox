@@ -1,0 +1,158 @@
+{
+ "name": "battery_latch_overseer",
+ "parts": [
+  {
+   "name": "pack",
+   "mesh": "pack.stl",
+   "role": "protected",
+   "tag": "E",
+   "mass_g": 635.0,
+   "swap": true
+  },
+  {
+   "name": "xt60_plug",
+   "mesh": "xt60_plug.stl",
+   "role": "bought",
+   "tag": "E",
+   "mass_g": 15.0,
+   "swap": true
+  },
+  {
+   "name": "cartridge",
+   "mesh": "cartridge.stl",
+   "role": "protected",
+   "tag": "M",
+   "material": "PETG",
+   "swap": true
+  },
+  {
+   "name": "slider_px",
+   "mesh": "slider_px.stl",
+   "role": "protected",
+   "tag": "M",
+   "material": "PETG",
+   "swap": true
+  },
+  {
+   "name": "slider_nx",
+   "mesh": "slider_nx.stl",
+   "role": "protected",
+   "tag": "M",
+   "material": "PETG",
+   "swap": true
+  },
+  {
+   "name": "receiver",
+   "mesh": "receiver.stl",
+   "role": "protected",
+   "tag": "M",
+   "material": "PETG"
+  },
+  {
+   "name": "receiver_lid",
+   "mesh": "receiver_lid.stl",
+   "role": "protected",
+   "tag": "M",
+   "material": "PETG"
+  },
+  {
+   "name": "receiver_strips",
+   "mesh": "receiver_strips.stl",
+   "role": "structure",
+   "tag": "M",
+   "material": "TPU"
+  },
+  {
+   "name": "xt60e1m",
+   "mesh": "xt60e1m.stl",
+   "role": "bought",
+   "tag": "E",
+   "mass_g": 6.0
+  },
+  {
+   "name": "drone_rest_standin",
+   "mesh": "drone_rest_standin.stl",
+   "role": "structure",
+   "tag": "E",
+   "mass_g": 1210.81,
+   "cg": [
+    0.0,
+    0.0,
+    39.3
+   ]
+  },
+  {
+   "name": "cage_standin",
+   "mesh": "cage_standin.stl",
+   "role": "cage",
+   "tag": "E",
+   "mass_g": 0.0
+  }
+ ],
+ "openings": [
+  {
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 20.0,
+   "min_mm": 0.0
+  }
+ ],
+ "contact_pairs": [
+  [
+   "cartridge",
+   "receiver_strips",
+   5.0
+  ],
+  [
+   "pack",
+   "cartridge",
+   1.0
+  ],
+  [
+   "xt60_plug",
+   "cartridge",
+   5.0
+  ],
+  [
+   "xt60e1m",
+   "receiver",
+   5.0
+  ],
+  [
+   "xt60e1m",
+   "receiver_lid",
+   5.0
+  ],
+  [
+   "receiver_strips",
+   "receiver",
+   5.0
+  ],
+  [
+   "drone_rest_standin",
+   "receiver_lid",
+   1.0
+  ],
+  [
+   "drone_rest_standin",
+   "receiver",
+   1.0
+  ]
+ ],
+ "cg_ref": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "thrust_axis": [
+  0,
+  0,
+  1
+ ],
+ "cg_tol_mm": 3.0,
+ "cage_margin_mm": 3.0,
+ "fit_tol_mm3": 0.5
+}

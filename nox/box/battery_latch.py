@@ -398,6 +398,7 @@ END_RELIEF = 0.5                   # end plate faces set back over |x| < X_IN - 
 # mount plane (no windows), a full deck, end walls to the mount plane with corner guide posts (GUIDE), cross ribs; the
 # XT60E1-M float pocket leaves the block for a replaceable XT60 carrier (base + cap) clamped by the two lead-end bolts.
 RECV_V = 2
+FE_H = {"scout": 1.0, "overseer": 1.5}          # FE voxel size: the Overseer's solid v2 at 1.0 runs > 2 h (iterative)
 RECV_BUILD = "+y"                               # print deck down (FE: +z put the guide posts' pull across layers, 1.11)
 GUIDE2_BY = {"scout": False, "overseer": True}   # corner guide posts (pitch at the XT60's first contact). Scout off
                                                 # (DEFAULT): the collar planes clip its posts to a 13 mm lever, ~265 N a
@@ -411,11 +412,11 @@ RIB2 = 4.0                                      # cross ribs deck -> mount plane
 CARRIER_HZ = 10.0                               # carrier ears / cap half length in z (v1 lid +-10)
 FIT = 0.2                                       # carrier in its notch, per side
 GUSSET = 6.0                                    # lead-end window corner gussets
-WIN2_BY = {"scout": False, "overseer": "truss"}  # side wall truss windows (mass; the Scout's bays are 12 long), FE decides
+WIN2_BY = {"scout": False, "overseer": False}   # side wall truss windows: off (FE v2, Overseer: 43.5 N across moved the truss 1.15 mm, past the XT60 float, solid 0.79; truss 34 g lighter)
 STRUT2 = 8.0
 GUSSET2 = 0.0                                   # end-wall corner gussets where there are no posts (FE: 8.0 moved the
                                                 # across peak to the gusset tip, 1.31; off)
-TOP_GAP = 1.0                                   # body (but bosses) under the mount plane
+FC_RELIEF = {"scout": (-5.0, 9.0)}             # z about the tab line (Scout v3 FC footprint, drone x -3.3..7.1, + 1.0)
 HEAD_Y = 14.0                                   # Scout bolt head seat (the collar clip leaves the columns from y ~13.5)
 HEAD_R = 3.2                                    # M3 socket head o 5.5 + 0.45 a side
 
@@ -444,8 +445,8 @@ def carrier_zone(r, fit=0.0):
 
 def receiver_v2(r, clip=None):
     """receiver latch block v2 (body): +x half drawn, mirrored; cartridge coords."""
-    rf, xw, zt, ym = r["RF"], r["XW"], r["Z_T"], r["Y_M"] - TOP_GAP    # walls, end walls, ribs stop TOP_GAP under the
-    END_T = r["END_T"]                                                 # mount plane (the Scout's FC sits 0.1 under it)
+    rf, xw, zt, ym = r["RF"], r["XW"], r["Z_T"], r["Y_M"]
+    END_T = r["END_T"]
     z0, z1 = r["Z_E0"] - END_T, r["Z_E1"] + END_T
     parts = []
     for s in (-1, 1):
@@ -466,15 +467,9 @@ def receiver_v2(r, clip=None):
                 parts.append(hullp([[x, y, z] for (x, y) in ((xg, y0 - GUSSET2), (xg - s * GUSSET2, y0), (xg, y0))
                                     for z in sorted((zf + sg * HCAP / 3.0, zf + sg * END_T))]))
             continue
-        if sg < 0:                         # closed end: the end wall runs full width down to the posts' bottom (FE v2:
-            parts.append(prism_zy(pg, -xw, xw))     # the window corner carried 1.2 in the across case, deck-down print)
-            continue
-        for s in (-1, 1):
-            a0, a1 = sorted((s * (r["X_IN"] - 1.0), s * xw))
-            parts.append(prism_zy(pg, a0, a1))
-            xg = s * (r["X_IN"] - 1.0)     # lead end: gussets in the XT60 window's top corners (set screws, rear access)
-            parts.append(hullp([[x, y, z] for (x, y) in ((xg, y0 - GUSSET), (xg - s * GUSSET, y0), (xg, y0))
-                                for z in sorted((zf + sg * HCAP / 3.0, zf + sg * END_T))]))
+        parts.append(prism_zy(pg, -xw, xw))  # both ends run full width down to the posts' bottom (FE v2: a window between
+                                           # the lead-end posts put the 43.5 N across peak on its corner, 1.14); the lead
+                                           # end keeps only a slot for the cartridge's set-screw boss (cut below)
     parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, ym, zt - RIB2 / 2, zt + RIB2 / 2))                       # tab-line rib
     zc = r["Z_X"] - CARRIER_HZ - FIT - RIB2
     parts.append(box(-xw, xw, r["Y_DK1"] - 0.01, ym, zc, zc + RIB2))                                     # carrier rib
@@ -495,10 +490,19 @@ def receiver_v2(r, clip=None):
         a0, a1 = sorted((s * (r["X_IN"] - 1.6), s * rf))
         cuts.append(box(a0, a1, r["Y_DK0"] - 1, r["Y_DK0"] + STRIP_REC, r["Z_P0"] - 1, r["Z_P1"] - 1))   # strip recesses
     cuts.append(box(-8.5, 8.5, 0.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))                                # plug / male path
+    if r["GUIDE"]:                         # lead end wall: slot for the cartridge's set-screw boss (x +-8.25, 3.0 proud),
+        ss_top = r["Y_XF_REAR"] + 2.0 + 4.25 + 1.0       # 1.0 clear, open from below with a 30 deg lead-in each side
+        sx = 8.25 + 1.0; z0s, z1s = r["Z_E1"] - 0.5, r["Z_E1"] + END_T + 1.0
+        cuts.append(box(-sx, sx, -5.0, ss_top, z0s, z1s))
+        cuts.append(prism_xy([(-sx - CAP, r["Y_END0"] - 0.01), (sx + CAP, r["Y_END0"] - 0.01), (sx, r["Y_END0"] + HCAP),
+                              (-sx, r["Y_END0"] + HCAP)], z0s, z1s))
     for (bx, bz) in r["MOUNT"]:
         cuts.append(cyl("y", bx, bz, BOLT_D / 2, -5.0, r["Y_M"] + 1))                                     # bolts from below
         if abs(bx) > rf:                   # head counterbore from below to a flat above the collar clip
             cuts.append(cyl("y", bx, bz, HEAD_R, -5.0, HEAD_Y))
+    if r["pack"] in FC_RELIEF:            # the Scout's FC sits 0.1 under the mount plane over the tab line: a 1.0 relief
+        a_, b_ = FC_RELIEF[r["pack"]]     # there (drone x -4..+8), the rest of the top stays on the plane (the bed face)
+        cuts.append(box(-200, 200, ym - 1.0, ym + 1.0, zt + a_, zt + b_))
     R = R - U(*cuts) - cart_path(r) - end_relief(r)
     if WIN2_BY[r["pack"]]:                       # lightening (DEFAULT where FE allows): truss windows in the side walls
         wy0, wy1 = r["FOOT_Y1"] + 1.0, r["RAIL_Y0"] - 2.0          # between the feet chord and the top band
@@ -1035,9 +1039,12 @@ def search_inset(log=print):
     best = None
     for inset in np.arange(8.0, 20.01, 0.5):
         clip = collar_clip(g, inset)
-        r = rgeom(g)
-        P = np.vstack([tm(cartridge(g, clip), T).vertices, tm(receiver(r, clip), T).vertices,
-                       tm(slider(g, 0, 1), T).vertices, tm(slider(g, 0, -1), T).vertices, tm(lid(r), T).vertices])
+        if RECV_V == 2:                    # the current receiver (v2 body + XT60 carrier + cap)
+            r = rgeom2(g); cb, cc = xt60_carrier(r); recv_m = receiver_v2(r, clip); lid_m = U(cb, cc) ^ clip
+        else:
+            r = rgeom(g); recv_m = receiver(r, clip); lid_m = lid(r)
+        P = np.vstack([tm(cartridge(g, clip), T).vertices, tm(recv_m, T).vertices,
+                       tm(slider(g, 0, 1), T).vertices, tm(slider(g, 0, -1), T).vertices, tm(lid_m, T).vertices])
         mg = collar_margin(P)
         log(f"  inset {inset:.1f}: collar margin {mg:.2f}")
         if mg >= COLLAR_NEED:
@@ -1287,13 +1294,13 @@ def main():
         if os.path.exists(fe_fn) and os.path.getmtime(fe_fn) > os.path.getmtime(__file__):  # (+ the |u| fields), newer
             fe = json.load(open(fe_fn))                                                 # than this script: reused
         else:
-            fe = BLT.fe_swap_v(pack, RECV_V, 1.0, build=RECV_BUILD, log=lambda s_: None, fields=())
+            fe = BLT.fe_swap_v(pack, RECV_V, FE_H[pack], build=RECV_BUILD, log=lambda s_: None, fields=())
             fe.pop("_fields", None)
         R["fe"] = dict(fe, crash_worst=max(v for k, v in fe["rows"].items() if k.startswith("crash")),
                        swap_worst=max(v for k, v in fe["rows"].items() if k.startswith("swap")))
-        log(f"  FE receiver v{RECV_V} (h 1.0, build {RECV_BUILD}): worst {fe['worst']} in {fe['worst_case']}; crash worst "
+        log(f"  FE receiver v{RECV_V} (h {FE_H[pack]}, build {RECV_BUILD}): worst {fe['worst']} in {fe['worst_case']}; crash worst "
             f"{R['fe']['crash_worst']}; swap worst {R['fe']['swap_worst']}; deflection {fe['deflection_mm']}")
-        R["first_mode"] = BLT.first_mode(pack, 1.0, log=log)
+        R["first_mode"] = BLT.first_mode(pack, FE_H[pack], log=log)
         R["plug_vs_male_seat_mm3"] = ov(xt60_female(g), B["male"])
         hc = hand_calc(B); R["hand_calc"] = hc
         rx, pts, ctr = reactions(B, hc); R["reactions"] = rx; R["mount_pts"] = pts

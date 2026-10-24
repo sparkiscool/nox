@@ -1,91 +1,91 @@
 {
- "worst": 0.836,
- "worst_case": "swap across 43.5 N +x",
+ "worst": 0.613,
+ "worst_case": "swap guide 6.1 N m +",
  "worst_at": [
-  20.5,
-  13.7,
-  0.0
+  -23.5,
+  6.7,
+  43.0
  ],
  "rows": {
-  "hover 1 g": 0.002,
-  "flight 4 g + 2 g x": 0.01,
-  "catch 6 g": 0.014,
-  "crash -y": 0.022,
-  "crash +y": 0.008,
-  "crash +x": 0.025,
-  "crash -x": 0.025,
-  "crash +z": 0.01,
-  "crash -z": 0.012,
-  "crash corner (+x -y +z)": 0.018,
-  "crash corner (-x -y -z)": 0.021,
-  "swap insert 60 N": 0.06,
-  "swap pull 50 N": 0.057,
-  "handling 50 N on a foot": 0.102,
-  "swap insert 74 N on the XT60 seat": 0.016,
-  "swap insert 74 N on the stops": 0.027,
-  "swap pull 57 N on the XT60 lips": 0.069,
-  "swap pull 57 N on the bolts": 0.067,
-  "swap guide 3.5 N m +": 0.649,
-  "swap guide 3.5 N m -": 0.437,
-  "swap guide 6.1 N m +": 0.707,
-  "swap guide 6.1 N m -": 0.476,
-  "swap insert 74 N + guide 3.5 N m": 0.64,
-  "swap across 43.5 N +x": 0.836,
-  "swap across 43.5 N -x": 0.836,
-  "swap centring 7.6 N + 1.05 N m": 0.35
+  "hover 1 g": 0.008,
+  "flight 4 g + 2 g x": 0.031,
+  "catch 6 g": 0.046,
+  "crash -y": 0.073,
+  "crash +y": 0.009,
+  "crash +x": 0.035,
+  "crash -x": 0.035,
+  "crash +z": 0.011,
+  "crash -z": 0.014,
+  "crash corner (+x -y +z)": 0.042,
+  "crash corner (-x -y -z)": 0.042,
+  "swap insert 60 N": 0.062,
+  "swap pull 50 N": 0.058,
+  "handling 50 N on a foot": 0.1,
+  "swap insert 74 N on the XT60 seat": 0.008,
+  "swap insert 74 N on the stops": 0.029,
+  "swap pull 57 N on the XT60 lips": 0.071,
+  "swap pull 57 N on the bolts": 0.209,
+  "swap guide 3.5 N m +": 0.562,
+  "swap guide 3.5 N m -": 0.389,
+  "swap guide 6.1 N m +": 0.613,
+  "swap guide 6.1 N m -": 0.424,
+  "swap insert 74 N + guide 3.5 N m": 0.563,
+  "swap across 43.5 N +x": 0.608,
+  "swap across 43.5 N -x": 0.608,
+  "swap centring 7.6 N + 1.05 N m": 0.274
  },
  "rows_full": [
   {
    "case": "hover 1 g",
    "cls": "flight",
-   "inlayer": 0.001,
-   "across": 0.002,
+   "inlayer": 0.003,
+   "across": 0.008,
    "at": [
-    -20.5,
-    9.7,
+    -23.5,
+    6.7,
     42.0
    ]
   },
   {
    "case": "flight 4 g + 2 g x",
    "cls": "flight",
-   "inlayer": 0.005,
-   "across": 0.01,
+   "inlayer": 0.013,
+   "across": 0.031,
    "at": [
-    20.5,
-    46.7,
-    82.0
+    -23.5,
+    6.7,
+    42.0
    ]
   },
   {
    "case": "catch 6 g",
    "cls": "flight",
-   "inlayer": 0.006,
-   "across": 0.014,
+   "inlayer": 0.02,
+   "across": 0.046,
    "at": [
-    -20.5,
-    9.7,
+    -23.5,
+    6.7,
     42.0
    ]
   },
   {
    "case": "crash -y",
    "cls": "misuse",
-   "inlayer": 0.01,
-   "across": 0.022,
+   "inlayer": 0.032,
+   "across": 0.073,
    "at": [
-    -20.5,
-    9.7,
+    -23.5,
+    6.7,
     42.0
    ]
   },
   {
    "case": "crash +y",
    "cls": "misuse",
-   "inlayer": 0.007,
-   "across": 0.008,
+   "inlayer": 0.008,
+   "across": 0.009,
    "at": [
-    -20.5,
+    20.5,
     46.7,
     75.0
    ]
@@ -93,30 +93,30 @@
   {
    "case": "crash +x",
    "cls": "misuse",
-   "inlayer": 0.024,
-   "across": 0.025,
+   "inlayer": 0.028,
+   "across": 0.035,
    "at": [
     20.5,
     46.7,
-    75.0
+    82.0
    ]
   },
   {
    "case": "crash -x",
    "cls": "misuse",
-   "inlayer": 0.024,
-   "across": 0.025,
+   "inlayer": 0.028,
+   "across": 0.035,
    "at": [
     -20.5,
     46.7,
-    75.0
+    82.0
    ]
   },
   {
    "case": "crash +z",
    "cls": "misuse",
-   "inlayer": 0.01,
-   "across": 0.01,
+   "inlayer": 0.011,
+   "across": 0.011,
    "at": [
     -21.5,
     48.7,
@@ -127,40 +127,40 @@
    "case": "crash -z",
    "cls": "misuse",
    "inlayer": 0.007,
-   "across": 0.012,
+   "across": 0.014,
    "at": [
     27.5,
     50.7,
-    3.0
+    4.0
    ]
   },
   {
    "case": "crash corner (+x -y +z)",
    "cls": "misuse",
-   "inlayer": 0.014,
-   "across": 0.018,
+   "inlayer": 0.019,
+   "across": 0.042,
    "at": [
-    20.5,
-    46.7,
-    82.0
+    -23.5,
+    6.7,
+    42.0
    ]
   },
   {
    "case": "crash corner (-x -y -z)",
    "cls": "misuse",
-   "inlayer": 0.012,
-   "across": 0.021,
+   "inlayer": 0.019,
+   "across": 0.042,
    "at": [
-    -20.5,
-    46.7,
-    82.0
+    -23.5,
+    6.7,
+    43.0
    ]
   },
   {
    "case": "swap insert 60 N",
    "cls": "flight",
-   "inlayer": 0.052,
-   "across": 0.06,
+   "inlayer": 0.054,
+   "across": 0.062,
    "at": [
     18.5,
     49.7,
@@ -171,18 +171,18 @@
    "case": "swap pull 50 N",
    "cls": "flight",
    "inlayer": 0.05,
-   "across": 0.057,
+   "across": 0.058,
    "at": [
     18.5,
     49.7,
-    84.0
+    83.0
    ]
   },
   {
    "case": "handling 50 N on a foot",
    "cls": "misuse",
-   "inlayer": 0.102,
-   "across": 0.088,
+   "inlayer": 0.1,
+   "across": 0.093,
    "at": [
     -24.5,
     5.7,
@@ -192,19 +192,19 @@
   {
    "case": "swap insert 74 N on the XT60 seat",
    "cls": "flight",
-   "inlayer": 0.015,
-   "across": 0.016,
+   "inlayer": 0.008,
+   "across": 0.002,
    "at": [
-    8.5,
-    45.7,
-    98.0
+    -7.5,
+    50.7,
+    80.0
    ]
   },
   {
    "case": "swap insert 74 N on the stops",
    "cls": "flight",
-   "inlayer": 0.027,
-   "across": 0.024,
+   "inlayer": 0.029,
+   "across": 0.029,
    "at": [
     -20.5,
     50.7,
@@ -214,8 +214,8 @@
   {
    "case": "swap pull 57 N on the XT60 lips",
    "cls": "flight",
-   "inlayer": 0.06,
-   "across": 0.069,
+   "inlayer": 0.062,
+   "across": 0.071,
    "at": [
     18.5,
     49.7,
@@ -225,117 +225,117 @@
   {
    "case": "swap pull 57 N on the bolts",
    "cls": "flight",
-   "inlayer": 0.03,
-   "across": 0.067,
+   "inlayer": 0.092,
+   "across": 0.209,
    "at": [
-    -20.5,
-    9.7,
+    -23.5,
+    6.7,
     42.0
    ]
   },
   {
    "case": "swap guide 3.5 N m +",
    "cls": "flight",
-   "inlayer": 0.649,
-   "across": 0.567,
+   "inlayer": 0.248,
+   "across": 0.562,
    "at": [
-    -0.5,
-    18.7,
-    -5.0
+    -23.5,
+    6.7,
+    43.0
    ]
   },
   {
    "case": "swap guide 3.5 N m -",
    "cls": "flight",
-   "inlayer": 0.299,
-   "across": 0.437,
+   "inlayer": 0.171,
+   "across": 0.389,
    "at": [
-    16.5,
-    29.6,
-    98.0
+    -23.5,
+    6.7,
+    42.0
    ]
   },
   {
    "case": "swap guide 6.1 N m +",
    "cls": "misuse",
-   "inlayer": 0.707,
-   "across": 0.618,
+   "inlayer": 0.27,
+   "across": 0.613,
    "at": [
-    -0.5,
-    18.7,
-    -5.0
+    -23.5,
+    6.7,
+    43.0
    ]
   },
   {
    "case": "swap guide 6.1 N m -",
    "cls": "misuse",
-   "inlayer": 0.326,
-   "across": 0.476,
+   "inlayer": 0.186,
+   "across": 0.424,
    "at": [
-    16.5,
-    29.6,
-    98.0
+    -23.5,
+    6.7,
+    42.0
    ]
   },
   {
    "case": "swap insert 74 N + guide 3.5 N m",
    "cls": "flight",
-   "inlayer": 0.64,
-   "across": 0.573,
+   "inlayer": 0.248,
+   "across": 0.563,
    "at": [
-    -0.5,
-    18.7,
-    -5.0
+    -23.5,
+    6.7,
+    43.0
    ]
   },
   {
    "case": "swap across 43.5 N +x",
    "cls": "flight",
-   "inlayer": 0.665,
-   "across": 0.836,
+   "inlayer": 0.384,
+   "across": 0.608,
    "at": [
     20.5,
-    13.7,
-    0.0
+    46.7,
+    83.0
    ]
   },
   {
    "case": "swap across 43.5 N -x",
    "cls": "flight",
-   "inlayer": 0.665,
-   "across": 0.836,
+   "inlayer": 0.385,
+   "across": 0.608,
    "at": [
     -20.5,
-    13.7,
-    0.0
+    46.7,
+    83.0
    ]
   },
   {
    "case": "swap centring 7.6 N + 1.05 N m",
    "cls": "flight",
-   "inlayer": 0.239,
-   "across": 0.35,
+   "inlayer": 0.206,
+   "across": 0.274,
    "at": [
     20.5,
-    21.7,
-    93.0
+    46.7,
+    83.0
    ]
   }
  ],
  "deflection_mm": {
-  "swap insert 74 N on the XT60 seat": 0.012,
-  "swap insert 74 N on the stops": 0.0021,
-  "swap pull 57 N on the XT60 lips": 0.0136,
-  "swap pull 57 N on the bolts": 0.0129,
-  "swap guide 3.5 N m +": 0.2382,
-  "swap guide 3.5 N m -": 0.0405,
-  "swap guide 6.1 N m +": 0.4151,
-  "swap guide 6.1 N m -": 0.0706,
-  "swap insert 74 N + guide 3.5 N m": 0.2252,
-  "swap across 43.5 N +x": 0.4797,
-  "swap across 43.5 N -x": 0.4797,
-  "swap centring 7.6 N + 1.05 N m": 0.2028
+  "swap insert 74 N on the XT60 seat": 0.0008,
+  "swap insert 74 N on the stops": 0.0031,
+  "swap pull 57 N on the XT60 lips": 0.0146,
+  "swap pull 57 N on the bolts": 0.0954,
+  "swap guide 3.5 N m +": 0.2668,
+  "swap guide 3.5 N m -": 0.1833,
+  "swap guide 6.1 N m +": 0.465,
+  "swap guide 6.1 N m -": 0.3195,
+  "swap insert 74 N + guide 3.5 N m": 0.2553,
+  "swap across 43.5 N +x": 0.4046,
+  "swap across 43.5 N -x": 0.4046,
+  "swap centring 7.6 N + 1.05 N m": 0.15
  },
- "guide_lever_mm": 13.3,
+ "guide_lever_mm": 23.0,
  "build": "+y"
 }
