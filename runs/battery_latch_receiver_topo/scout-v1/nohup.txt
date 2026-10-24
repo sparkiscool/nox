@@ -58,3 +58,14 @@ it  37 beta    2 J   0.5769 vol 0.1449 (dil 0.2169 g -0.002) grey 42.0% ch 0.097
 it  38 beta    2 J   0.5687 vol 0.1453 (dil 0.2171 g -0.001) grey 41.9% ch 0.062 worst tie b2 fz 112 2.9s
 it  39 beta    2 J   0.5640 vol 0.1454 (dil 0.2171 g -0.001) grey 41.9% ch 0.071 worst tie b2 fz 111 2.9s
 it  40 beta    2 J   0.5595 vol 0.1456 (dil 0.2171 g -0.001) grey 41.9% ch 0.085 worst tie b2 fz 110 2.7s
+it  41 beta    2 J   0.5549 vol 0.1457 (dil 0.2171 g +0.009) grey 41.9% ch 0.100 worst tie b2 fz 109 2.8s
+it  42 beta    2 J   0.5713 vol 0.1438 (dil 0.2149 g -0.001) grey 41.7% ch 0.100 worst tie b2 fz 112 2.6s
+it  43 beta    2 J   0.5653 vol 0.1441 (dil 0.2150 g -0.001) grey 41.6% ch 0.100 worst tie b2 fz 111 2.5s
+it  44 beta    2 J   0.5605 vol 0.1442 (dil 0.2150 g -0.001) grey 41.5% ch 0.100 worst tie b2 fz 111 2.5s
+layout: beta 2 done: eroded design 25 bodies, main 10.1%; drawn bodies outside the main body: 24
+it  45 beta    4 J  32.8677 vol 0.1167 (dil 0.2663 g -0.172) grey 28.5% ch 0.100 worst crash 35 g +z 7.98e+03 2.5s
+it  46 beta    4 J  27.1525 vol 0.1243 (dil 0.2794 g -0.131) grey 29.7% ch 0.100 worst crash 35 g +z 6.72e+03 2.3s
+it  47 beta    4 J  22.9511 vol 0.1288 (dil 0.2873 g -0.106) grey 30.8% ch 0.100 worst crash 35 g +z 5.68e+03 2.9s
+it  48 beta    4 J  19.7254 vol 0.1319 (dil 0.2921 g -0.092) grey 31.4% ch 0.100 worst crash 35 g +z 4.88e+03 3.0s
+it  49 beta    4 J  17.1843 vol 0.1356 (dil 0.2974 g -0.075) grey 32.1% ch 0.100 worst crash 35 g +z 4.25e+03 2.2s
+it  50 beta    4 J  15.1006 vol 0.1394 (dil 0.3028 g -0.058) grey 32.9% ch 0.100 worst crash 35 g +z 3.74e+03 2.9s
