@@ -42,6 +42,22 @@
    "swap": true
   },
   {
+   "name": "cartridge_skid_closed",
+   "mesh": "cartridge_skid_closed.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU",
+   "swap": true
+  },
+  {
+   "name": "cartridge_skid_lead",
+   "mesh": "cartridge_skid_lead.stl",
+   "role": "cage",
+   "tag": "M",
+   "material": "TPU",
+   "swap": true
+  },
+  {
    "name": "receiver_skid_nose_plate",
    "mesh": "receiver_skid_nose_plate.stl",
    "role": "cage",
@@ -177,6 +193,26 @@
    "drone_rest_standin",
    "receiver",
    1.0
+  ],
+  [
+   "cartridge_strip_px",
+   "cartridge",
+   5.0
+  ],
+  [
+   "cartridge_strip_nx",
+   "cartridge",
+   5.0
+  ],
+  [
+   "cartridge_skid_closed",
+   "cartridge",
+   5.0
+  ],
+  [
+   "cartridge_skid_lead",
+   "cartridge",
+   5.0
   ]
  ],
  "cg_ref": [

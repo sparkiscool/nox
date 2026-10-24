@@ -48,10 +48,10 @@ latch_parts = [("receiver", RN, "protected", 85.0 if V6 else 41.2, False, "E" if
                ("xt60_plug", "pack XT60 plug", "bought", 10.0, True, "E")] + ([] if V6 else
               [("cartridge_skid_closed", "cartridge skid closed end (latch, TPU)", "cage", 1.4, True, "M"),
                ("cartridge_skid_lead", "cartridge skid lead end (latch, TPU)", "cage", 3.1, True, "M")])
-if V6:                                                        # v1 end skids stand in (the v6 manifest left them out; asked)
+if V6:                                                        # cartridge v6 end skids (latch 4d3b167)
     for k_, nm_, g_ in (("cartridge_skid_closed", "cartridge skid closed end (latch, TPU)", 1.4), ("cartridge_skid_lead", "cartridge skid lead end (latch, TPU)", 3.1)):
         parts.append(mesh_part(nm_, L["SKIDS"][0 if "closed" in k_ else 1], role="cage", protect=False, mass_g=g_, tag="E", swap=True,
-                               note="v1 end skid standing in until the latch confirms v6's", **own))
+                               note="cartridge v6 end skid (latch 4d3b167)", **own))
 for key, nm, role, g, swap, t in latch_parts:
     d = dict(role=role, protect=(role != "cage"), mass_g=g, tag=t, note=("battery latch v6 / receiver v2, part/battery-latch-v6 b0b0321 (latch PR 109)" if V6 else "battery latch standard, part/battery-latch 258becf"), **own)
     if swap: d["swap"] = True
