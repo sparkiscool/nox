@@ -28,7 +28,7 @@ from arm_cad import box, cylX, cylY, cylZ, hull, tm, mirror_x
 # ============================================================== system inputs (dimensions "System box swap: arm" / "latch"; C unless tagged)
 Y_C = 165.0
 U_BOT = 15.4                                    # carried cartridge flat bottom (gripper datum)
-PLATE = dict(x=(-28.0, 28.0), y=(68.75, 72.75), u=(0.0, 40.0))
+PLATE = dict(x=(-28.0, 28.0), y=(68.75, float(os.environ.get("NOX_PLATE_TOP", "74.35"))), u=(0.0, 40.0))   # top 74.35 under the cartridge: DEFAULT, asked of the arm system (concept review r1; alt 72.75)
 WING = dict(x=(28.0, 46.5), u=(0.0, 30.0))
 WEB = dict(x=(40.5, 46.5), y=(59.25, 72.75), uA=(-63.0, 30.0), uB=(-54.0, 30.0), teeth_y=(59.25, 73.25), tail_u=-40.0, tail_y0=63.0)
 WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))      # (X, u); the last is the eccentric
@@ -79,6 +79,9 @@ CLR = 1.0
 MOTION_URL = "https://claude.ai/artifact/F8ukGCJC6oA8hBZ7Tbnr7N"            # motion_A.html, published
 
 CHANGES = [
+    "carriage plate top Y 72.75 -> 74.35 under the cartridge (DEFAULT, asked of the arm system; 1.0 under the Overseer receiver): the "
+    "upper-bound FE of the whole design space reads 0.73..1.03 at 72.75 and 0.60..0.71 at 74.35 (swap target 0.5); the plate and the "
+    "column's root also grow below u 0 where the arm leaves room (u -18, the park bisector)",
     "open blade position inner faces +-11.0 (concept 10.5): a 0.8 rib into the grip pocket must clear the latched tab's outer face (10) on the "
     "way in (the latch's +-11 open; the tab's 1.0 chamfer cams a 1.0 head offset); stroke 5.0 per blade",
     "one crossed spring (15 N squeezed per blade, L 44 -> 34) instead of one spring per blade: the -X blade has 13 mm to the park bisector "
@@ -280,8 +283,8 @@ def body_drawn(servo="DS3218"):
         w += box(a, b, SPRING_ROD["y"] - 4.5, SPRING_ROD["y"] + 4.5, SPRING_ROD["u"] - 3.5, SPRING_ROD["u"] + 4.0)
         walls = w if walls is None else walls + w
     for yr in RODS["y"]:
-        walls -= cylX(yr, RODS["u"], -RODS["wall_out"] + 1.0, RODS["wall_out"] - 1.0, ROD_D / 2 + 0.05, 24)   # blind rod sockets, epoxied
-    walls -= cylX(SPRING_ROD["y"], SPRING_ROD["u"], -SPRING_ROD["wall_out"] + 1.0, SPRING_ROD["wall_out"] - 1.0, ROD_D / 2 + 0.05, 24)
+        walls -= cylX(yr, RODS["u"], -RODS["wall_out"] + 1.0, RODS["wall_out"] + 1.0, ROD_D / 2 + 0.05, 24)   # -X blind, +X open (in from +X), epoxied
+    walls -= cylX(SPRING_ROD["y"], SPRING_ROD["u"], -SPRING_ROD["wall_out"] + 1.0, SPRING_ROD["wall_out"] + 1.0, ROD_D / 2 + 0.05, 24)
     pads, pad_cuts = cradle(servo)
     pads = pads - pad_cuts
     post = cylZ(PINION["x"], PINION["y"], U_C - 9.0, PINION["u"][0] - 0.5, PINION["post_r"]) - cylZ(PINION["x"], PINION["y"], U_C - 6.0, PINION["u"][0], PINION["pin_d"] / 2 + 0.05)   # pin epoxied in the post
@@ -338,7 +341,7 @@ def keepouts(servo="DS3218"):
     K.append(cylX(SPRING_ROD["y"], SPRING_ROD["u"], -SEAT_SQ, SEAT_SQ, spring_pick()["OD"] / 2 + CLR, 32))
     K.append(cylZ(PINION["x"], PINION["y"], PINION["u"][0] - CLR, PINION["u"][1] + CLR, PINION["m"] * (PINION["z"] / 2 + 1) + CLR, 48))
     K.append(box(-DECK["slot"][1] - CLR, DECK["slot"][1] + CLR, DECK["slot"][2] - CLR, DECK["slot"][3] + CLR, DECK["u"][1], 40.0))   # blades above the deck
-    K.append(box(-40, 40, 74.0, 260.0, U_BOT, 80.0))                                                 # the carried cartridge + receivers (above u 15.4)
+    K.append(box(-40, 40, max(PLATE["y"][1], 72.75), 260.0, U_BOT, 80.0))                            # the carried cartridge + receivers (above u 15.4)
     K.append(cylY(WHEELS[0][0], WHEELS[0][1], PLATE["y"][1], 95.0, 4.0, 32) + box(WHEELS[0][0] - 4, 60, PLATE["y"][1], 95.0, WHEELS[0][1] - 4, WHEELS[0][1] + 4))  # key to the near axle (L-key from +X)
     K.append(cylY(WHEELS[2][0], WHEELS[2][1], PLATE["y"][1], 100.0, 8.0, 32))                        # pin spanner on the eccentric flange
     K.append(cylY(0.0, 8.0, PLATE["y"][0] - 1, 100.0, 3.0, 24))                                       # wires down to the rail's ribbon channel
@@ -376,37 +379,19 @@ def _grow(m, d):
 
 
 def plate_ext():
-    """the room below u 0 at the plate and root level (Y 68.75..74.5) the assembled arm leaves free over the four cycles (space map
-    + 1.0, the park bisector): the carriage plate and the column's root grow into it (concept review r1, the root over the 4.0 plate)"""
-    from scipy import ndimage as ndi
-    G = space_grid()
-    o = np.array([SBOX["x"][0], SBOX["y"][0], SBOX["u"][0]])
-    j0, j1 = int(math.floor(PLATE["y"][0] - o[1])), int(math.ceil(COLUMN_Y[0] - o[1]))
-    occ = G[:, j0:j1, :].any(axis=1)                                           # (x, u) over the band
-    occ = ndi.binary_dilation(occ, iterations=2)                               # + 1.0 (voxel 1.0, two steps for the surface-sampled map)
-    m = None
-    for i in range(occ.shape[0]):
-        x0 = o[0] + i
-        if x0 < -40 or x0 > 44: continue
-        k = 0
-        while k < occ.shape[1]:
-            u0 = o[2] + k
-            if -22 <= u0 < 0 and not occ[i, k] and x0 + 1 + u0 >= PARK_LINE + CLR * math.sqrt(2) + 1:
-                k1 = k
-                while k1 + 1 < occ.shape[1] and o[2] + k1 + 1 < 0 and not occ[i, k1 + 1]: k1 += 1
-                b = box(x0, x0 + 1.0, PLATE["y"][0], COLUMN_Y[0] + 0.01, u0, o[2] + k1 + 1 + 0.01)
-                m = b if m is None else m + b
-                k = k1 + 1
-            else:
-                k += 1
-    return m
+    """the room below u 0 at the plate and root level (Y 68.75..74.5) the assembled arm leaves free over the four cycles (space map:
+    outside the detent ring's V |X| >= 4.5 + 1.25 |u| and the rail stop |X| >= 11, + 1.0; the park bisector X + u >= -29.6 on -X;
+    u >= -18 on +X): the carriage plate and the column's root grow into it (concept review r1, the root over the 4.0 plate)"""
+    plus = [(11.0, 0.0), (11.0, -5.2), (27.0, -18.0), (44.0, -18.0), (44.0, 0.0)]
+    minus = [(-11.0, 0.0), (-29.6, 0.0), (-18.5, -11.2), (-11.0, -5.2)]
+    return prism_xu(plus, PLATE["y"][0], COLUMN_Y[0] + 0.01) + prism_xu(minus, PLATE["y"][0], COLUMN_Y[0] + 0.01)
 
 
 def design_space(servo="DS3218"):
     """the envelope the body's topology may fill (A frame), the drawn interfaces included: the column prism, the plate and the room
     under it (spine, a rib between the wheels, ribs beside the eccentric), the root band over the plate and the web lane; minus keep-outs"""
     col = prism_xu(COLUMN_POLY, *COLUMN_Y)
-    root = box(-28.0, 28.0, PLATE["y"][1] - 0.01, COLUMN_Y[0] + 0.01, 0.0, 14.9) + box(28.0, 44.0, PLATE["y"][1] - 0.01, COLUMN_Y[0] + 0.01, 0.0, 13.0)
+    root = prism_xu(COLUMN_POLY, PLATE["y"][1] - 0.01, COLUMN_Y[0] + 0.01) ^ box(-40.0, 44.0, 60.0, 80.0, 0.0, 20.0)   # the column's own section, no step
     web_u = WEB["uB"] if servo == "MG995" else WEB["uA"]
     plate = box(*PLATE["x"], *PLATE["y"], *PLATE["u"]) + box(*WING["x"], *PLATE["y"], *WING["u"]) + box(*WEB["x"], *WEB["y"], *web_u)
     plate = plate - box(WEB["x"][0] - 1, WEB["x"][1] + 1, WEB["y"][0] - 1, WEB["tail_y0"], web_u[0] - 1, WEB["tail_u"])
@@ -547,9 +532,9 @@ def strength(sp):
                                              roller_hertz_MPa=round(math.sqrt((T / 12.0) * 2200.0 / (math.pi * 5.0 * B623["w"])), 0),
                                              note="the roller's line contact on the PETG cam at a full DS3218 stall dents it (PETG ~50 MPa): the box "
                                                   "electronics limits the servo (stall current cut, 0.5 s), the cam is a 1 g spare")
-    r["note"] = ("the 4.0 carriage plate (Y 68.75..72.75, fixed by the low stack) is the weak link for the 5.3 / 6.8 N.m head moment: the "
-                 "topology run gets the room under it between the wheels and beside the rail (spine X 35..46.5, a rib at u 16..20); if its FE "
-                 "index misses, the ask is the plate top to Y 74.35 under the cartridge (1.0 under the Overseer receiver, system number)")
+    r["note"] = ("the carriage plate (low stack) is the weak link for the 5.3 / 6.8 N.m head moment; the upper-bound FE (the whole design "
+                 "space filled solid, runs/head/v7/bound_*.json) decides: plate top 74.35 (DEFAULT, asked of the arm system) and the plate / "
+                 "root grown below u 0; the hand numbers above are for the 4.0 plate")
     return r
 
 
@@ -580,6 +565,12 @@ def masses():
                   rollers_623ZZ=2 * B623["g"], halls=1.0, screws_inserts=4.0)
     return dict(printed_parts=pc, bought=bought, body_E=75.0, note="body from the topology run (E 75 g, v5 head 56 M + carriage)")
 
+
+BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space filled solid, h 1.5, worst index in the swap class, E loads)
+    "plate top 72.75, root over u 0..14.9 only": {"+y": 3.96},
+    "plate top 72.75, plate / root grown to u -18": {"+y": 1.03, "+z": 0.73},
+    "plate top 74.35, plate / root grown to u -18 (DEFAULT)": {"+y": 0.70, "+z": 0.61, "in-layer": 0.41},
+}
 
 ACCESS = [
     "servo: in from the axle side (-u) through the body's lower window, ears on their pads, 2 x M3 into heat-set inserts from -Y (driver channels kept in the body)",
@@ -694,6 +685,8 @@ def page(R, P_sq, P_op):
     sw = R.get("sweeps", {})
     nums.append(("Arm sweep (C)", "; ".join(f"{k}: {v['states']} states, {v['states_with_overlaps']} with overlaps, min clearance {v['min_clearance']}"
                                            for k, v in sw.items()) or "not run"))
+    nums.append(("Upper-bound FE (E)", "; ".join(f"{k}: " + ", ".join(f"{b} {v}" for b, v in d.items()) for k, d in R["bound"].items()) +
+                 " (swap target 0.5; peaks at the root's re-entrant corners, across layers)"))
     nums.append(("Compact (C)", R["compact"]))
     nums.append(("Access", "; ".join(ACCESS)))
     nums.append(("Mass (E)", R["mass_line"]))
@@ -835,6 +828,7 @@ def main():
     else:
         R["space_summary"] = "space map missing (run head_v7_space.py)"
     R["internal"] = internal_checks()
+    R["bound"] = BOUND_RESULTS
     import glob
     R["sweeps"] = {}
     for f in sorted(glob.glob(os.path.join(ROOT, "runs", "head", "v7", "sweep", "sweep_v7_*_space.json"))):

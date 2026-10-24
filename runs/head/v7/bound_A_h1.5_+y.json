@@ -1,118 +1,118 @@
 {
  "h": 1.5,
- "mass_g": 237.3,
- "worst": 1.034,
+ "mass_g": 239.6,
+ "worst": 0.701,
  "worst_case": "insert at the drone 60 N [swap]",
  "worst_at": [
-  26.9,
-  73.4,
+  28.4,
+  74.9,
   14.8
  ],
  "rows": [
   {
    "case": "insert at the drone 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.558,
-   "across": 1.034,
+   "inlayer": 0.41,
+   "across": 0.701,
    "at": [
-    26.9,
-    73.4,
+    28.4,
+    74.9,
     14.8
    ]
   },
   {
    "case": "insert at the drone, stall 74 N [misuse]",
    "cls": "misuse",
-   "inlayer": 0.43,
-   "across": 0.797,
+   "inlayer": 0.316,
+   "across": 0.54,
    "at": [
-    26.9,
-    73.4,
+    28.4,
+    74.9,
     14.8
    ]
   },
   {
    "case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.531,
-   "across": 0.686,
+   "inlayer": 0.388,
+   "across": 0.452,
    "at": [
-    19.4,
-    74.9,
-    -0.2
+    20.9,
+    71.9,
+    -3.2
    ]
   },
   {
    "case": "insert at a bay 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.543,
-   "across": 1.027,
+   "inlayer": 0.402,
+   "across": 0.7,
    "at": [
-    26.9,
-    73.4,
+    28.4,
+    74.9,
     14.8
    ]
   },
   {
    "case": "insert at a bay, stall 74 N [misuse]",
    "cls": "misuse",
-   "inlayer": 0.419,
-   "across": 0.792,
+   "inlayer": 0.31,
+   "across": 0.539,
    "at": [
-    26.9,
-    73.4,
+    28.4,
+    74.9,
     14.8
    ]
   },
   {
    "case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.516,
-   "across": 0.662,
+   "inlayer": 0.38,
+   "across": 0.502,
    "at": [
-    19.4,
-    74.9,
-    -0.2
+    43.4,
+    70.4,
+    -13.8
    ]
   },
   {
    "case": "handling 3 g in + 2 g along +X, Overseer cartridge carried [handling]",
    "cls": "misuse",
-   "inlayer": 0.126,
-   "across": 0.251,
+   "inlayer": 0.093,
+   "across": 0.165,
    "at": [
     -13.6,
-    73.4,
+    74.9,
     14.8
    ]
   },
   {
    "case": "handling 3 g in + 2 g along -X, Overseer cartridge carried [handling]",
    "cls": "misuse",
-   "inlayer": 0.135,
-   "across": 0.332,
+   "inlayer": 0.098,
+   "across": 0.227,
    "at": [
-    26.9,
-    73.4,
+    28.4,
+    74.9,
     14.8
    ]
   },
   {
    "case": "handling 3 g out, Overseer cartridge carried (on the rods) [handling]",
    "cls": "misuse",
-   "inlayer": 0.129,
-   "across": 0.177,
+   "inlayer": 0.094,
+   "across": 0.113,
    "at": [
-    19.4,
-    74.9,
+    20.9,
+    76.4,
     -0.2
    ]
   },
   {
    "case": "DS3218 stall torque 1.96 N.m on the ear pads [misuse]",
    "cls": "misuse",
-   "inlayer": 0.087,
-   "across": 0.129,
+   "inlayer": 0.082,
+   "across": 0.123,
    "at": [
     37.4,
     94.4,

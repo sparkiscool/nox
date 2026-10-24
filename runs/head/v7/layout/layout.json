@@ -234,9 +234,9 @@
   },
   "rib_bearing_MPa": 4.65,
   "blade_root_MPa": {
-   "squeeze": 6.19,
-   "worst": 11.15,
-   "lever": 7.999999999999998
+   "squeeze": 5.81,
+   "worst": 10.45,
+   "lever": 7.499999999999998
   },
   "rods": {
    "span": 61.0,
@@ -248,7 +248,7 @@
   "anti_rack": {
    "boss": 12.0,
    "need_yaw": 9.8,
-   "need_pitch": 6.0,
+   "need_pitch": 5.5,
    "ok": false
   },
   "pads_MPa": {
@@ -256,28 +256,28 @@
    "area_worst_mm2": 60.0
   },
   "head_moment_Nm": {
-   "pull": 5.29,
-   "stall": 6.83,
-   "lever": 92.25
+   "pull": 5.19,
+   "stall": 6.71,
+   "lever": 90.65
   },
   "wheel_axial_N_pull": {
-   "rigid": 189.0,
-   "flexible": 378.0
+   "rigid": 185.0,
+   "flexible": 371.0
   },
   "wheel_axial_N_stall": {
-   "rigid": 244.0,
-   "flexible": 488.0
+   "rigid": 240.0,
+   "flexible": 479.0
   },
-  "spine_MPa_pull": 7.2,
-  "spine_MPa_stall": 9.3,
+  "spine_MPa_pull": 7.0,
+  "spine_MPa_stall": 9.1,
   "plate_panel_far_wheel_MPa": {
-   "pull": 11.8,
+   "pull": 11.6,
    "note": "4.0 plate panel round the far axle between ribs (clamped, central load, E): the topology run's FE decides"
   },
   "spring_arm": {
-   "section": "8 x 3.15",
-   "offset": 5.32,
-   "sigma_MPa": 9.24,
+   "section": "8 x 3.65",
+   "offset": 5.57,
+   "sigma_MPa": 7.28,
    "note": "tension + bending at the arm, F open; the -X carrier's arm (below) the same"
   },
   "cam_stall": {
@@ -289,7 +289,7 @@
    "roller_hertz_MPa": 76.0,
    "note": "the roller's line contact on the PETG cam at a full DS3218 stall dents it (PETG ~50 MPa): the box electronics limits the servo (stall current cut, 0.5 s), the cam is a 1 g spare"
   },
-  "note": "the 4.0 carriage plate (Y 68.75..72.75, fixed by the low stack) is the weak link for the 5.3 / 6.8 N.m head moment: the topology run gets the room under it between the wheels and beside the rail (spine X 35..46.5, a rib at u 16..20); if its FE index misses, the ask is the plate top to Y 74.35 under the cartridge (1.0 under the Overseer receiver, system number)"
+  "note": "the carriage plate (low stack) is the weak link for the 5.3 / 6.8 N.m head moment; the upper-bound FE (the whole design space filled solid, runs/head/v7/bound_*.json) decides: plate top 74.35 (DEFAULT, asked of the arm system) and the plate / root grown below u 0; the hand numbers above are for the 4.0 plate"
  },
  "loads": {
   "insert at the drone 60 N (swap)": {
@@ -495,9 +495,9 @@
   },
   "rods": {
    "arm_overlap_voxels": 0,
-   "min_X_plus_u": -26.0,
+   "min_X_plus_u": -26.75,
    "park_ok": true,
-   "Z_min_at_drone": 117.3,
+   "Z_min_at_drone": 116.5,
    "X": [
     -32.0,
     32.0
@@ -507,8 +507,8 @@
     170.5
    ],
    "u": [
-    6.0,
-    9.0
+    5.2,
+    8.2
    ]
   },
   "spring rod": {
@@ -625,6 +625,20 @@
   "squeezed": {},
   "open": {}
  },
+ "bound": {
+  "plate top 72.75, root over u 0..14.9 only": {
+   "+y": 3.96
+  },
+  "plate top 72.75, plate / root grown to u -18": {
+   "+y": 1.03,
+   "+z": 0.73
+  },
+  "plate top 74.35, plate / root grown to u -18 (DEFAULT)": {
+   "+y": 0.7,
+   "+z": 0.61,
+   "in-layer": 0.41
+  }
+ },
  "sweeps": {
   "v7:overseer:-180:0 (envelope)": {
    "states": 297,
@@ -647,11 +661,11 @@
    "min_clearance": 0.0
   }
  },
- "compact": "head A whole (carriage, rack tail, column as its design space, grabber, servo): 88 x 129 x 103 (X, Y, u) incl. the design space; hull 0.59 L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the servo sits in the column under the grip, the grabber on top of it",
+ "compact": "head A whole (carriage, rack tail, column as its design space, grabber, servo): 88 x 129 x 103 (X, Y, u) incl. the design space; hull 0.60 L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the servo sits in the column under the grip, the grabber on top of it",
  "masses": {
   "printed_parts": {
-   "carrier+": 4.9,
-   "carrier-": 5.5,
+   "carrier+": 6.0,
+   "carrier-": 6.5,
    "cam": 0.9,
    "pinion": 0.6
   },
@@ -668,7 +682,7 @@
   "body_E": 75.0,
   "note": "body from the topology run (E 75 g, v5 head 56 M + carriage)"
  },
- "mass_line": "printed grabber parts 11.9 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~164 g (system frame 120 g head + 60 g carriage, E)",
+ "mass_line": "printed grabber parts 14.0 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~166 g (system frame 120 g head + 60 g carriage, E)",
  "alternatives": {
   "spring": [
    [
@@ -702,6 +716,7 @@
   ]
  },
  "changes": [
+  "carriage plate top Y 72.75 -> 74.35 under the cartridge (DEFAULT, asked of the arm system; 1.0 under the Overseer receiver): the upper-bound FE of the whole design space reads 0.73..1.03 at 72.75 and 0.60..0.71 at 74.35 (swap target 0.5); the plate and the column's root also grow below u 0 where the arm leaves room (u -18, the park bisector)",
   "open blade position inner faces +-11.0 (concept 10.5): a 0.8 rib into the grip pocket must clear the latched tab's outer face (10) on the way in (the latch's +-11 open; the tab's 1.0 chamfer cams a 1.0 head offset); stroke 5.0 per blade",
   "one crossed spring (15 N squeezed per blade, L 44 -> 34) instead of one spring per blade: the -X blade has 13 mm to the park bisector (the two parked heads), where a 15 N spring would need > 950 MPa (alternatives)",
   "a passive m1 pinion between racks on the two carriers locks their common mode: a lateral load on the cartridge goes to the body, not the cam or the spline (with free blades the cam base would take it)",
