@@ -429,7 +429,8 @@ def candidate_nodes():
                                                                                    # of the flow / Radxa (camera chin nodes broke G (8): out)
         N.append(np.array([x, y, z], float)); kind.append("M")               # shields: nose / tail bottom, belly sides outside the
                                                                              # Radxa (-y) and the flow board (+y) (probes, review PR 94)
-    for x, y in [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]:   # (0, +29.6) is in the flow view   # y 29.6 (was 28.5): outboard of the
+    for x, y in ([] if os.environ.get("NOKEEL", "1") == "1" else    # v5 DEFAULT: no cage keel, the swap set's own TPU skids take the
+                 [(28, 29.6), (28, -29.6), (-28, 29.6), (-28, -29.6), (0, -29.6), (0, 29.6), (-10, 29.6), (-10, -29.6)]):   # bottom   # y 29.6 (was 28.5): outboard of the
                                                                                                # receiver v2 bottom skid strips
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
@@ -440,8 +441,23 @@ def candidate_nodes():
             (50.3, 31, 14.0), (50.3, -31, 14.0), (-49.7, 31, 14.0), (-49.7, -31, 14.0)]   # moved with the set (LATCH_DX)   # nose legs and the mount's corners
     for c in core:
         N.append(np.array(c, float)); kind.append("C")                        # joints into the core (plate edge, receiver)
-    keep = [i for i in range(len(N)) if kind[i] in "CL" or not (in_band8(N[i]) or in_view(N[i]))]   # G (8) band, sensor views
+    keep = [i for i in range(len(N)) if kind[i] in "CL" or not (in_band8(N[i]) or in_view(N[i]) or node_clash(N[i]))]   # G (8), views, bodies
     return np.array(N)[keep], [kind[i] for i in keep]
+
+
+NODE_R = 4.0                                  # printed node body radius (E), the write_assembly sphere
+
+
+def node_clash(p):
+    """a printed node within KEEP of the receiver / cartridge set (with the latch's skids) or an electronics box"""
+    q = np.asarray(p, float)[None]
+    for m_ in [IFACE, REC_SKIDS, CART, CART_SKIDS] + SKIDS:
+        lo, hi = m_.bounds
+        if box_dist(q, lo, hi)[0] < NODE_R + KEEP and abs(trimesh.proximity.signed_distance(m_, q)[0]) < NODE_R + KEEP: return True
+    for m_ in (FC, RADXA, FLOW, UBEC, XR2, XT_M, CAM):
+        lo, hi = m_.bounds
+        if box_dist(q, lo, hi)[0] < NODE_R + KEEP: return True
+    return False
 
 
 def in_view(p, pad=ROD_R + 1.0):
@@ -556,6 +572,13 @@ def load_cases(N, kind, live=None):
     down = lambda x, y: np.array([0, -np.sign(y), -1.0]) / S2
     cases.append(("latch hold 4 x 34 N", {W[p]: 34.0 * down(*p) for p in yw}, "flight"))           # G (7), box catch PR 70
     cases.append(("latch misuse 175 N on one wheel", {W[yw[0]]: 175.0 * down(*yw[0])}, "misuse"))
+    if os.environ.get("HANDLE", "all") == "fixed":                     # comparison only: the 8 fixed ring spots of v2 / v3
+        for ring in ("L", "U"):
+            for d in (np.array([0, 1.0, 0]), np.array([1.0, 0, 0])):
+                i = max(idx[ring], key=lambda i: N[i] @ d)
+                cases.append((f"handling 50 N on {ring} {np.round(N[i][:2]).astype(int).tolist()}", {i: -50.0 * d}, "handling"))
+                cases.append((f"handling 50 N down on {ring} {np.round(N[i][:2]).astype(int).tolist()}", {i: np.array([0, 0, -50.0])}, "handling"))
+        return cases
     # handling 50 N on ANY printed node in any direction (L; review PR 94): one batch case over every node the cage uses,
     # unit loads along x, y, z combined root-sum-square (E); frame_eval builds it from the current members
     cases.append(("handling 50 N on any node, any direction", {}, "handling"))
