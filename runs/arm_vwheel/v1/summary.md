@@ -4,4 +4,4 @@ Strength: worst index 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed
 Solid: solid_check PASS
 Print: either face (symmetric, C), bed contact 192 mm2 (M), brim 5 mm (bed < 400 mm2), no supports (groove flanks 45 deg, C); 100 % infill (small, rolling contact); print 6; file print/box_arm_vwheel_v1.stl
 
-System: box swap arm v6 (`nox/box/swap_system.py`, dimensions System box swap: arm), assembled recheck 24 Oct PASS: flank Hertz 0.51 (dropped pack, misuse ≤ 1.0, E), 625ZZ axial 219 N = 0.33 of C0 (E), fit 0.0 mm³ at 5 poses and 0 overlaps in the v6 sweep (298 states, C); keeps READY
+System: box swap arm v6 (`nox/box/swap_system.py`, `nox/box/box_swap_arm.assembly.json`), assembled worst index 0.66 in head stall free (flank Hertz; 625ZZ 0.63 of C0, M5 axle 0.60; was 0.66 / 0.33 at 60 N in v5), fit 0.0 mm³ at 5 poses (M), mass 3232 g (E, the assembly with its context), CG 7.0 mm off the axle (E; the turning parts' unbalance 22.5 g·m at park, M / E). **Conditional on the head brake**: the power cut carrying reads 625ZZ 1.23 without it (box electronics requirement); READY with the brake

@@ -2,10 +2,10 @@
  "file": "print/box_detent_ring_v3.stl",
  "mass_g": 6.74,
  "solid_check": true,
- "bed_mm2": 830.0,
+ "bed_mm2": 916,
  "worst_index": [
-  null,
-  "keyed, hand calc"
+  0.18,
+  "detent holding 0.55 N.m, keyed bearing (E)"
  ],
  "tag": "M mesh / E loads"
 }

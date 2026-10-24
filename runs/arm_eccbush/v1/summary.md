@@ -4,4 +4,4 @@ Strength: worst index 0.11 in eccentric wheel load 52 N (E: preload 30 + separat
 Solid: solid_check PASS
 Print: hex flange face down, bed contact 123 mm2 (M), brim 5 mm, no supports; 100 % infill; print 2; file print/box_arm_eccbush_v1.stl
 
-System: box swap arm v6 (`nox/box/swap_system.py`), assembled recheck 24 Oct PASS: the eccentric wheel sits at the carriage centroid (≤ 72 N, E), shank index ≤ 0.11 (E); fit 0.0 mm³, 0 sweep overlaps (C); keeps READY
+System: box swap arm v6 (`nox/box/swap_system.py`, `nox/box/box_swap_arm.assembly.json`), assembled worst index 0.11 in head stall free (the eccentric wheel at the carriage centroid, ≤ 72 N, shank bending, E; was 0.11), fit 0.0 mm³ at 5 poses (M), mass 3232 g (E, the assembly with its context), CG 7.0 mm off the axle (E; the turning parts' unbalance 22.5 g·m at park, M / E). Conditional on the head brake like the wheels (the power cut carrying loads the same axle stack)
