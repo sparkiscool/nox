@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 89.9 L (E), extents 430 x 414 x 505 mm (E), mass 19685 g (E), CG [-6.9, 140.1, -58.1] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 6123.4 mm\u00b3 (E) (bay -60 body envelope/arm: hub + rails (turning)) FAIL, bbox 89.9 L (E), extents 430 x 414 x 505 mm (E), mass 19685 g (E), CG [-6.9, 140.1, -58.1] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -316,9 +316,9 @@
   "pass_": false,
   "tol_mm3": 0.5,
   "worst": {
-   "a": "catch (panels v7, hook latch v2) at the R seat",
-   "b": "drone receivers + paths (keep-out)",
-   "overlap_mm3": 4984.31,
+   "a": "bay -60 body envelope",
+   "b": "arm: hub + rails (turning)",
+   "overlap_mm3": 6123.36,
    "limit_mm3": 0.5,
    "contact": false,
    "method": "manifold3d",
@@ -434,6 +434,15 @@
     "pass_": true
    },
    {
+    "a": "bay -60 body envelope",
+    "b": "arm: hub + rails (turning)",
+    "overlap_mm3": 6123.36,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
     "a": "bay -90 receiver",
     "b": "bay -90 cartridge",
     "overlap_mm3": 0.0,
@@ -459,6 +468,15 @@
     "contact": true,
     "method": "manifold3d",
     "pass_": true
+   },
+   {
+    "a": "bay -90 body envelope",
+    "b": "arm: hub + rails (turning)",
+    "overlap_mm3": 6123.21,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
    },
    {
     "a": "bay -120 receiver",
@@ -488,6 +506,15 @@
     "pass_": true
    },
    {
+    "a": "bay -120 body envelope",
+    "b": "arm: hub + rails (turning)",
+    "overlap_mm3": 6123.36,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
     "a": "bay -150 receiver",
     "b": "bay -150 cartridge",
     "overlap_mm3": 0.0,
@@ -513,6 +540,15 @@
     "contact": true,
     "method": "manifold3d",
     "pass_": true
+   },
+   {
+    "a": "bay -150 body envelope",
+    "b": "arm: hub + rails (turning)",
+    "overlap_mm3": 6123.36,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
    },
    {
     "a": "bay -180 receiver",
@@ -571,7 +607,7 @@
    {
     "a": "arm: hub + rails (turning)",
     "b": "arm: motors (turning)",
-    "overlap_mm3": 237.57,
+    "overlap_mm3": 135791.58,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",

@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 80.6 L (E), extents 416 x 414 x 468 mm (E), mass 18428 g (E), CG [4.0, 139.5, -35.3] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 80.6 L (E), extents 416 x 414 x 468 mm (E), mass 18365 g (E), CG [4.1, 139.7, -35.2] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,
@@ -381,7 +381,7 @@
    {
     "a": "bay 0 receiver",
     "b": "bay 0 body envelope",
-    "overlap_mm3": 66244.92,
+    "overlap_mm3": 66135.3,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -435,7 +435,7 @@
    {
     "a": "bay -60 receiver",
     "b": "bay -60 body envelope",
-    "overlap_mm3": 66244.9,
+    "overlap_mm3": 66135.34,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -507,7 +507,7 @@
    {
     "a": "bay -120 receiver",
     "b": "bay -120 body envelope",
-    "overlap_mm3": 66244.9,
+    "overlap_mm3": 66135.35,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -561,7 +561,7 @@
    {
     "a": "bay -180 receiver",
     "b": "bay -180 body envelope",
-    "overlap_mm3": 66244.92,
+    "overlap_mm3": 66135.3,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -606,7 +606,7 @@
    {
     "a": "arm: hub + rails (turning)",
     "b": "arm: motors (turning)",
-    "overlap_mm3": 237.57,
+    "overlap_mm3": 135791.58,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",

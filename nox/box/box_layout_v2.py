@@ -33,6 +33,7 @@ ARM_PARK_R = 1.5                                # turning envelope of the parked
 LANE = dict(r=159.0, half_deg=25.0)             # drone opening: nothing inside r 159 within 90 +- 25 (arm v6 wheel rim 156.9, carriage +-20.3)
 MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_system)
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
+RAIL_DISC = dict(r=151.0, y=(38.0, 73.0))       # arm round 3 (24 Oct): the rails' keel sweeps Y 38..73 out to r 151 (C)
 BRACKET = 12.0                                  # ring envelope to sheet inner face (U-clip + flange, v1 brackets 3.5..10)
 CRADLE = 48.1                                   # bottom bay's outer face to the floor (v1 cradle_keel: Z_TOP -152.9 to -201)
 FUNNEL_V8_GROW_Y = 32.5                         # funnel v8 (catch, hub 24 Oct) must pass the Overseer set, which is lopsided about its
@@ -147,6 +148,8 @@ def layout(R=113.0, clip=False, bays=None):
         for nb_ in (angs_[i_ - 1] if i_ > 0 else None, angs_[i_ + 1] if i_ + 1 < len(angs_) else None):
             if nb_ is None: continue
             r_ = P[nb_]["rec"]; env[ang] = env[ang] - mf.Manifold.batch_hull([r_, r_.translate([0, -400.0, 0])])
+    disc = mf.Manifold.cylinder(RAIL_DISC["y"][1] + 1.0 - (RAIL_DISC["y"][0] - 1.0), RAIL_DISC["r"] + 1.0, RAIL_DISC["r"] + 1.0, 128).rotate([-90, 0, 0]).translate([0, RAIL_DISC["y"][0] - 1.0, 0])
+    for ang in env: env[ang] = env[ang] - disc                                  # 1.0 off the arm's rail disc (arm round 3)
     ring = None
     for m in env.values(): ring = m if ring is None else ring + m
     rt = tm(ring)
@@ -199,7 +202,7 @@ def arm_envelopes(R):
     parked heads with cartridges, the drone-insert lane."""
     cyl = lambda r, y0, y1: mf.Manifold.cylinder(y1 - y0, r, r, 96).rotate([-90, 0, 0]).translate([0, y0, 0])
     lane = wedge(90, 1.0, LANE["r"], 74.0, Y_C + 122.0, gap=0.0, half=LANE["half_deg"])
-    return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]),
+    return {"arm: hub + rails (turning)": cyl(HUB["r"], *HUB["y"]) + cyl(RAIL_DISC["r"], *RAIL_DISC["y"]),
             "arm: motors (turning)": cyl(MOTOR_SWEEP["r"], *MOTOR_SWEEP["y"]) - cyl(HUB["r"] - 0.01, MOTOR_SWEEP["y"][0] - 1, MOTOR_SWEEP["y"][1] + 1),
             "arm: parked heads + cartridges (turning)": cyl(R - ARM_PARK_R, HUB["y"][1], Y_C + 122.0),
             "arm: drone insert lane": lane}
