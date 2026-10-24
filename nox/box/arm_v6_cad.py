@@ -3,9 +3,10 @@
     pad at r 40 / 78 from the top) + a lug under the outer end with two Ø3.3 x 10 sockets for the carbon tie rods (2 x 3.0 x ~62 per rail);
   - pinion 16T v2: 10.5 face (teeth Y 62..72.5; v1 8), boss Y 56.5..60.5, round bore below Y 59.5 (the NEMA's D-flat is only the last 15,
     dimensions M: v1's D-bore from Y 55.5 met the round shaft), grub on the flat at Y 60;
-  - detent ring v2 (detent.ring_v2): no lower step, button-head spot faces.
+  - detent ring v3 (detent.ring_v3): no lower step, no bolt through it: keyed by three underside pockets on the 80T's M3 heads, epoxied
+    on the boss (ring v1 failed solid_check, ring v2 the 2.0 rule: 1.54 / 1.05 walls, M).
 V-wheel v1, eccentric bush v1 and detent arm v2 are unchanged (assembled recheck in swap_system / runs/arm/v6).
-python3 arm_v6_cad.py [checks] -> print/box_arm_rail_{A,B}_v2.stl, box_arm_pinion16_v2.stl, box_detent_ring_v2.stl, runs/arm_v6_parts/ (W meshes, checks.json)"""
+python3 arm_v6_cad.py [checks] -> print/box_arm_rail_{A,B}_v2.stl, box_arm_pinion16_v2.stl, box_detent_ring_v3.stl, runs/arm_v6_parts/ (W meshes, checks.json)"""
 import os, sys, math, json
 import numpy as np, trimesh, manifold3d as mf
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(HERE, ".."))
@@ -80,7 +81,7 @@ PARTS = {  # name -> (builder, pose, material, qty, prev mass g)
     "arm_rail_A_v2": (lambda: rail_v2("A"), pose_rail, "PETG", 1, 49.7),
     "arm_rail_B_v2": (lambda: rail_v2("B"), pose_rail, "PETG", 1, 50.0),
     "arm_pinion16_v2": (lambda: pinion_v2()[0], lambda m: C5.pose_axisY(m, top_down=True), "PETG", 2, 3.0),
-    "detent_ring_v2": (lambda: DT.ring_v2(DT.CHOSEN_V6["th"]), lambda m: C5.pose_axisY(m, top_down=False), "PETG", 1, 5.0),
+    "detent_ring_v3": (lambda: DT.ring_v3(DT.CHOSEN_V6["th"]), lambda m: C5.pose_axisY(m, top_down=True), "PETG", 1, 5.0),
 }
 
 
@@ -136,6 +137,7 @@ def main(checks=False):
         res[nm] = r
         print(nm, {k: v for k, v in r.items() if k != "solid_info"}, r.get("solid_info", ""))
     if checks:
+        res["ring_walls"] = DT.ring_walls(DT.CHOSEN_V6["th"]); print("ring v3 walls", res["ring_walls"])
         res["roll"] = roll_check(); print("roll pinion v2 on the rack", res["roll"])
         f, seat = fit(); res["fit"] = f; res["rods_in_rail_mm3"] = seat
         for row in f: print("fit", row)

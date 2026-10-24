@@ -104,6 +104,45 @@ def ring_v2(th):
     return r - mag
 
 
+# ---------------- ring v3 (24 Oct, swap arm system worker): ring v2 passed solid_check but broke the 2.0 rule (M: 1.54 wall from the
+# button-head spot faces to the notches, 1.05 from the Ø3.4 holes to the Ø30.5 bore on the 80T boss; strike 2). v3 has no bolt
+# through it: three pockets in its underside (Ø6.2 x 1.9, Y 64..65.9) fit over the 80T's own M3 ISO 7380 heads (Ø5.7 x 1.65, E) and
+# key it against the detent torque; the bore sits on the 80T boss with a film of epoxy (DEFAULT, as the V-wheels). The pockets open
+# into the bore (no wall there), 2.4 inside the rim and 2.05 (3D) from the nearest notch flank (C). Same notches, same magnet.
+POCKET = dict(r=3.1, depth=1.9)   # over a Ø5.7 x 1.65 head (E, CHECK on arrival): 0.25 / 0.25 clearance (C); larger breaks the 2.0 wall
+
+
+def ring_v3(th):
+    """detent ring v3 (PETG, fixed), W coords: annulus r RING_R_IN..RING_R_OUT, Y RING_Y, notched rim from RIM_Y0, keyed on the 80T's
+    bolt heads from below."""
+    r = cylY(0, 0, RING_Y[0], RING_Y[1], RING_R_OUT, 180) - cylY(0, 0, RING_Y[0] - 1, RING_Y[1] + 1, RING_R_IN, 96)
+    for a in notch_angles(th):
+        r -= _notch_prism(a, RIM_Y0 - 0.5, RING_Y[1] + 1)
+    for a in L.SUN_BOLT_ANG:
+        x, z = L.part_angle_pos(L.SUN_BC_R, a)
+        r -= cylY(x, z, RING_Y[0] - 1, RING_Y[0] + POCKET["depth"], POCKET["r"], 48)
+    t = math.radians(HALL_TH + MAGNET_PHI - 90.0)
+    ym = (RIM_Y0 + RING_Y[1]) / 2
+    mag = mf.Manifold.cylinder(2.3, HALL["magnet"][0] / 2 + 0.05, HALL["magnet"][0] / 2 + 0.05, 24).rotate([0, 90, 0]) \
+        .translate([RING_R_OUT - 2.2, 0, 0]).rotate([0, -math.degrees(t), 0]).translate([0, ym, 0])
+    return r - mag
+
+
+RING_VERSION = 3
+
+
+def ring_walls(th, ring_fn=None):
+    """thinnest walls of the ring (C): notch to bolt feature, bolt feature to the bore / rim, magnet to a notch."""
+    nt = None
+    for a in notch_angles(th):
+        p = _notch_prism(a, RIM_Y0 - 0.5, RING_Y[1] + 1); nt = p if nt is None else nt + p
+    pk = None
+    for a in L.SUN_BOLT_ANG:
+        x, z = L.part_angle_pos(L.SUN_BC_R, a); c = cylY(x, z, RING_Y[0] - 1, RING_Y[0] + POCKET["depth"], POCKET["r"], 48)
+        pk = c if pk is None else pk + c
+    return dict(pocket_to_notch=round(pk.min_gap(nt, 10.0), 2), pocket_to_rim=round(RING_R_OUT - L.SUN_BC_R - POCKET["r"], 2))
+
+
 def _notch_prism(a_deg, y0, y1):
     t = math.radians(a_deg); u = np.array([math.cos(t), math.sin(t)]); n = np.array([-u[1], u[0]])
     k = math.tan(math.radians(NOTCH_HALF)); far = RING_R_OUT + 5.0
@@ -267,7 +306,7 @@ def evaluate(D, fixed, turn):
 
 _RC = {}
 def _ring_cache(th):
-    if th not in _RC: _RC[th] = ring(th) if ROLLER_AXLE == "nut" else ring_v2(th)
+    if th not in _RC: _RC[th] = ring(th) if ROLLER_AXLE == "nut" else ring_v3(th)
     return _RC[th]
 
 
