@@ -596,6 +596,12 @@ def wash_len(a, b, motors):
     return float(inside.mean() * np.linalg.norm(np.subtract(b, a)))
 
 
+def obstacles_for(m, e):
+    """the obstacles a rod must clear: all, except the hub box for a rod that ends in a hub (fixed) node"""
+    ends_fixed = e["a"] in m.fixed or e["b"] in m.fixed
+    return [o for o in (m.p.get("obstacles") or []) if not (o.get("skip_fixed") and ends_fixed)]
+
+
 def guard_caps(m):
     """largest section index (ORDER) per rod that keeps the prop clearance (12) and the funnel clearance (1.0);
     -1 = no section does (the layout fails)"""
@@ -608,7 +614,7 @@ def guard_caps(m):
             if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
             if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
-            if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, m.p.get("obstacles")) < 1.0: break
+            if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, obstacles_for(m, e)) < 1.0: break
             if od > WASH_OD and wash_len(m.N[e["a"]], m.N[e["b"]], m.info["motors"]) >= WASH_LEN: break
             cap = i
         caps[e["name"]] = cap
@@ -744,7 +750,7 @@ def evaluate(p, topo, sizes, detail=False):
     ws = wash_share(m); res["wash_share"] = [float(v) for v in ws]
     if WASH_SHARE: g["prop wash"] = max(ws) / WASH_SHARE - 1
     if p.get("obstacles"):
-        wo = min(obstacle_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], p["obstacles"]) for e in m.el if e["kind"] == "rod")
+        wo = min(obstacle_clear(m.N[e["a"]], m.N[e["b"]], SECTIONS[e["P"]["sec"]]["od"], obstacles_for(m, e)) for e in m.el if e["kind"] == "rod")
         res["obstacle_clear"] = float(wo); g["obstacles"] = 1.0 - wo
     res["g"] = g
     res["violation"] = float(sum(max(0.0, v) for v in g.values()))
