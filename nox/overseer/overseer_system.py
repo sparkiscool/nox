@@ -287,8 +287,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              cam_bot=float(min(cb[0][2], g["cam_bracket"].bounds[0][2])), nose_y=float(max(co.NOSE_Y, np.abs(cb[:, 1]).max() + co.NOSE_GAP)),
              m_drone_g=3000.0, rear_x=-100.0, pyramid="rear", x_top=dm, x_tower=-100.0,
-             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t8", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t6"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-5.6, z_skirt=-5.6, z_fhub=8.0)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             feet=(72.0, 68.0, float(g["PB"]) - 3.5), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8"}, seat_dz=float(SEAT_DZ),
+             z_rhub=-6.6, z_skirt=-6.6, z_fhub=8.0)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
@@ -728,7 +728,7 @@ def prop_view(i, mx, my):
 P("bottom plate", BOTTOM, "frame", "#cfcfcf", False, "S500 stock (Holybro STEP)")
 P("top plate", TOP, "frame", "#d8d8d8", False, "S500 stock")
 for i, a in enumerate(g["arms"]): P(f"arm {i + 1}", a, "printed", "#8899aa", True, "rough")
-SEC_COL = {"r3": "#3a3a3a", "r4": "#2b4f7a", "t6": "#3f7a3f", "r5": "#7a5a2b", "t8": "#8a3f8a", "t10": "#a33a3a", "t12": "#c0662b", "t14": "#b8a02b"}
+SEC_COL = {"r3": "#3a3a3a", "r4": "#2b4f7a", "t6": "#3f7a3f", "r5": "#7a5a2b", "t8": "#8a3f8a", "t10": "#a33a3a", "t12": "#c0662b", "t14": "#b8a02b", "t16": "#2b8a8a", "t20": "#5a2b8a"}
 for sec in sorted(set(v[4] for v in g["rods"].values()), key=lambda s_: co.SECTIONS[s_]["gpm"]):
     ks = [k for k, v in g["rods"].items() if v[4] == sec]
     if ks: P(f"rods {co.SECTIONS[sec]['label']}", trimesh.util.concatenate([g["rod_meshes"][k] for k in ks]), "cage", SEC_COL[sec], False,

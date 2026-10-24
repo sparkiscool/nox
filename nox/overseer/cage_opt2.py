@@ -42,17 +42,17 @@ H_TIP = {"front": 38.0, "rear": 16.0}
 W_ARM = {"front": (34.0, 28.0), "rear": (26.0, 22.0)}
 ARM_WALL = 2.4
 GUARD_GAP, ROD_R3 = 12.0, 1.5
-RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - 7.0, PROP_Z + 22.0   # 58 / 104: spokes reach the lower ring 12 under the swept band with a 14 tube
-Z_TOP = 116.0                                               # top node over the thrust centre (DEFAULT)
+ROD_RMAX = 10.0                                             # guard offset for the largest catalog rod (20/18 tube), so any size keeps 12
+RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - ROD_RMAX, PROP_Z + BLADE + 12.0 + ROD_RMAX   # 55 / 109: spokes and spiders keep 12 off the swept band with a 20 tube
+Z_TOP = 124.0                                               # top node over the thrust centre (DEFAULT)
 NOSE_Y, NOSE_GAP = 58.0, 3.0 + 2.0                          # nose box half width; ahead of the L2 / camera by 3 + rod
-ROD_RMAX = 7.0                                              # guard offset for the largest catalog rod (14/12 tube), so any size keeps 12
-F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 285.5
-C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 485.4
+F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 288.5
+C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 489.6
 L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
 MOTOR_DEG = (45, 135, 225, 315)
-SOCK_BACK = 10.0                                            # socket centres behind the L2 base plane: 14 tube radius 7 + 3
+SOCK_BACK = 13.0                                            # socket centres behind the L2 base plane: 20 tube radius 10 + 3
 APEX_SPAN = 56.0                                            # socket spread on the apex lugs (DEFAULT, inside the L2's 75)
 
 # sections (carbon, C): A mm2, I mm4, J mm4, g/m, OD
@@ -65,6 +65,8 @@ SECTIONS = {
     "t10": dict(A=28.27, I=289.8, J=579.6, gpm=43.8, od=10.0, label="10/8 tube"),
     "t12": dict(A=34.56, I=527.0, J=1054.0, gpm=53.6, od=12.0, label="12/10 tube"),   # weight no cap (Spark 24 Oct): stiffer tubes allowed
     "t14": dict(A=40.84, I=867.9, J=1735.8, gpm=63.3, od=14.0, label="14/12 tube"),
+    "t16": dict(A=47.12, I=1331.5, J=2663.0, gpm=73.0, od=16.0, label="16/14 tube"),
+    "t20": dict(A=59.69, I=2701.0, J=5402.0, gpm=92.5, od=20.0, label="20/18 tube"),
 }
 E_C, G_C, E_P, G_P = 120000.0, 5000.0, 2780.0, 1000.0
 SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
@@ -259,15 +261,15 @@ def geometry(p, topo, sizes=None):
         mem("top bar", "TR", "TN", "pyramid")                         # the tower's third leg is the skirt post below
     if p.get("rear_x") is not None:                                   # rear skirt: the rear flat drops to plate level and ties to the rear roots
         zs = p.get("z_skirt", 0.0)
-        rv = [r for r in rp if r[0] in ("V3", "P3_50", "V4")]
+        rv = [r for r in rp if r[0] in ("P3_25", "P3_50", "P3_75")]       # y ±100 and 0: covers the hub (±59); corner hits land on the ring vertices
         for r in rv:
             node(f"K{r[0]}", (r[1], r[2], zs)); mem(f"skirt post {r[0]}", f"{r[0]}lo", f"K{r[0]}", "skirt")
-        mem("skirt rail +", "KV3", "KP3_50", "skirt"); mem("skirt rail -", "KP3_50", "KV4", "skirt")
-        mem("skirt dg +", "V3lo", "KP3_50", "skirt"); mem("skirt dg -", "V4lo", "KP3_50", "skirt")
+        mem("skirt rail +", "KP3_25", "KP3_50", "skirt"); mem("skirt rail -", "KP3_50", "KP3_75", "skirt")
+        mem("skirt dg +", "P3_25lo", "KP3_50", "skirt"); mem("skirt dg -", "P3_75lo", "KP3_50", "skirt")
         for sy in (1, -1):                                             # rear hub block under the bottom plate (printed, like the front sled)
             fixed.add(node(f"rhubB{sy:+d}", (p.get("x_rhub", -75.0), 15.0 * sy, p.get("z_rhub", -2.0))))
             mem(f"skirt tie {sy:+d}", f"rhubB{sy:+d}", "KP3_50", "skirt_ties")
-            mem(f"skirt side {sy:+d}", f"rhubB{sy:+d}", "KV3" if sy > 0 else "KV4", "skirt_ties")
+            mem(f"skirt side {sy:+d}", f"rhubB{sy:+d}", "KP3_25" if sy > 0 else "KP3_75", "skirt_ties")
         if "TR" in N:
             mem("tower post", "KP3_50", "TR", "pyramid")
     if topo["top_spider"]:
