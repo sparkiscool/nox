@@ -60,7 +60,8 @@ ENDPOINTS = {
     "L2":    ((-122.0, 275.0, 182.0), 60.0, "hook latch unit, -X face, Y_C + 100"),
     "R1":    ((122.0, 75.0, 182.0), 60.0, "hook latch unit, +X face, Y_C - 100"),
     "R2":    ((122.0, 275.0, 182.0), 60.0, "hook latch unit, +X face, Y_C + 100"),
-    "POST":  ((40.0, 175.0, 120.0), 80.0, "pogo + KW11 post under the belly (box chat): along Y at r >= 150 over the arm sweep, under the funnel's back face"),
+    "PANEL_P": ((0.0, 275.0, 160.0), 60.0, "2 spring probes in the +x plain funnel panel (B+), Y_C + 100: up the corner post, over the sheet top, down the panel (hub DEFAULT 24 Oct, was the pogo post)"),
+    "PANEL_M": ((0.0, 75.0, 160.0), 60.0, "2 spring probes in the -x plain funnel panel (B-), Y_C - 100: same route"),
     "BAY_S": ((0.0, 175.0, -150.0), 120.0, "Scout live bay -90 (bottom), XT60E1-M on its float carrier: side corridor, under the ring's -Y edge"),
     "BAY_O": ((-150.0, 175.0, 0.0), 60.0, "Overseer live bay 180 (reserved, wired when built): left side corridor"),
 }
@@ -83,8 +84,8 @@ NETS = [
     ("F4 logic in", "FUSE", "BUCK_5V", 2, 20, 0.5, 1.0, 24, "power"),
     ("KA + to K1", "BUCK_KA", "RELAY", 1, 18, 1.0, 3.0, 13, "power"),
     ("KA + K1 to INA", "RELAY", "INA_KA", 1, 18, 1.0, 3.0, 13, "power"),
-    ("KA + pad", "INA_KA", "POST", 1, 18, 1.0, 3.0, 13, "power"),
-    ("KA - pad", "BUCK_KA", "POST", 1, 18, 1.0, 3.0, 13, "power"),
+    ("KA + probes", "INA_KA", "PANEL_P", 1, 18, 1.0, 3.0, 13, "power"),
+    ("KA - probes", "BUCK_KA", "PANEL_M", 1, 18, 1.0, 3.0, 13, "power"),
     ("CH1 + to K2", "CHARGER", "RELAY", 1, 16, 3.0, 6.5, 16.8, "power"),
     ("CH1 + K2 to INA", "RELAY", "INA_S", 1, 16, 3.0, 6.5, 16.8, "power"),
     ("bay S +", "INA_S", "BAY_S", 1, 16, 3.0, 6.5, 16.8, "power"),
@@ -104,7 +105,7 @@ NETS = [
     ("latch hall L2", "PI", "L2", 3, 28, 0.01, 0.01, 5.0, "signal"),
     ("latch hall R1", "PI", "R1", 3, 28, 0.01, 0.01, 5.0, "signal"),
     ("latch hall R2", "PI", "R2", 3, 28, 0.01, 0.01, 5.0, "signal"),
-    ("KW11", "PI", "POST", 2, 28, 0.001, 0.001, 3.3, "signal"),
+    ("seat sense", "PI", "INA_KA", 1, 28, 0.001, 0.001, 3.3, "signal"),   # GPIO 24 -> 1k -> BAT54 onto the B+ line at the INA226 out
     ("5.1 V to Pi", "BUCK_5V", "PI", 2, 20, 1.5, 3.5, 5.1, "power"),
     ("5.1 V to bus", "BUCK_5V", "BUS", 2, 20, 0.2, 0.5, 5.1, "power"),
     ("relay JD-VCC", "BUS", "RELAY", 2, 22, 0.15, 0.3, 5.1, "power"),
@@ -318,8 +319,8 @@ STATES = [
     # (state, action, pass condition, time limit s, on fail)
     ("IDLE", "drone away; live bays charge; heads parked; K1 open; latch in", "swap request from the mission script", None, None),
     ("PRESTAGE", "head A picks the fullest charged pack (bay relay open and bay I < 50 mA first); head B waits open at 81 under the seat", "both heads at pose, no stall", 6.0, "A5 stall"),
-    ("WAIT_SEAT", "drone lands under its own landing mode; kill at first touch", "KW11 low for 100 ms", 30.0, "no seat: mission retries the landing"),
-    ("LATCH_OUT", "PCA ch 0..3 to OUT (servo pulse per unit from calibration), KW11 ignored from here", "all 4 halls low within 0.5 s", 0.5, "A1 latch not out"),
+    ("WAIT_SEAT", "drone lands under its own landing mode; kill at first touch", "seat sense low for 100 ms", 30.0, "no seat: mission retries the landing"),
+    ("LATCH_OUT", "PCA ch 0..3 to OUT (servo pulse per unit from calibration), seat sense ignored from here", "all 4 halls low within 0.5 s", 0.5, "A1 latch not out"),
     ("KA_ON", "close K1 while the old pack is higher than 13.0 V (0 A through the pads)", "INA_KA bus 12.8..13.2 V and I < 0.5 A for 0.2 s", 0.5, "A3 keep-alive fault"),
     ("PULL", "head B rises to 89.6, closes, retracts with the dead pack: the drone XT60 unmates under the pull", "stroke done, no stall, INA_KA I > 100 mA at the end of the stroke (pads carry the drone)", 2.0, "A4 pull / keep-alive lost"),
     ("TURN", "axle 90 deg: head A to the top", "no stall; hall state matches phi", 0.6, "A5 stall"),
@@ -328,7 +329,7 @@ STATES = [
     ("RELEASE", "gripper opens (bolts into the drone pockets), head A retracts to park", "park, no stall", 1.0, "A5 stall"),
     ("KA_OFF", "open K1 (0 A: pack higher)", "INA_KA I < 50 mA before and bus < 1 V after", 0.3, "A3 keep-alive fault"),
     ("LATCH_IN", "PCA ch 0..3 to IN", "all 4 halls high within 0.5 s", 0.5, "A11 latch stuck out"),
-    ("READY", "SWAP_DONE to the mission; the mission arms the drone; take off", "KW11 high (drone gone)", 60.0, "drone stays: mission decides"),
+    ("READY", "SWAP_DONE to the mission; the mission arms the drone; take off", "seat sense high (drone gone)", 60.0, "drone stays: mission decides"),
     ("STORE", "axle to the free bay (the live bay when free); head B extends with the dead pack, bay relay open", "full stroke, no stall", 4.0, "A5 stall"),
     ("BAY_MATE", "relay open: read the bay INA226 bus voltage", "13.0..17.0 V within 1.0 s", 1.0, "A7 bay mate fail"),
     ("CHARGE", "close the bay relay at 0 A, start the charger channel", "charger done, or I < C/10 and rest voltage >= 4.15 V/cell", None, "A8 charge fault"),
@@ -344,7 +345,7 @@ ABORTS = [
     ("A7 bay mate fail", "bay bus voltage not 13.0..17.0 V with the relay open", "retry the insert once; then leave the pack, no charge, alarm (not on the flight path)"),
     ("A8 charge fault", "charger error, bay I > 7 A, pack over 45 C (charger probe, CHECK), or no current 5 s after start", "stop the channel, wait I < 50 mA, open the relay, mark the pack"),
     ("A9 bay interlock", "a head move into a live bay with its relay closed or I >= 50 mA", "refused in software before the move; stop the charger first"),
-    ("A10 seat lost before latch", "KW11 high before LATCH_OUT", "back to WAIT_SEAT"),
+    ("A10 seat lost before latch", "seat sense high before LATCH_OUT", "back to WAIT_SEAT"),
     ("A11 latch stuck out", "a hall still low 0.5 s after IN", "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"),
 ]
 
@@ -405,7 +406,7 @@ def layout_svg(place, standalone=True):
         b.append(f'<rect class="{cls}" x="{x:.1f}" y="{y:.1f}" width="{(r[1]-r[0])*s:.1f}" height="{(r[3]-r[2])*s:.1f}" rx="3"/>')
         b.append(f'<text class="t" x="{x+4:.1f}" y="{y+13:.1f}">{nm}</text>')
     # harness exits
-    for nm, (xa, za, lab) in {"ARM": (-40, 0, "arm bundle in"), "TOP": (0, 232, "latch x4, post (pogo + KW11) out"),
+    for nm, (xa, za, lab) in {"ARM": (-40, 0, "arm bundle in"), "TOP": (0, 232, "latch x4, panel probes out"),
                               "BAYS": (-160, 60, "bay leads out (side corridors)")}.items():
         x, y = P(xa, za)
         b.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/>')
@@ -433,7 +434,7 @@ def schematic_svg(standalone=True):
         "INAKA": (390, 560, 110, 40, "sig", "INA226 0x41", "keep-alive"),
         "INAS": (520, 560, 110, 40, "sig", "INA226 0x44", "bay S"),
         "INAO": (650, 560, 110, 40, "sig", "INA226 0x45", "bay O"),
-        "POST": (850, 640, 160, 60, "off", "Pogo post", "2 pads x 2 pins, KW11"),
+        "POST": (850, 640, 160, 60, "off", "Panel probes", "2 per plain +-x panel"),
         "BAYS": (850, 540, 160, 50, "off", "Bay -90 (Scout)", "XT60E1-M, float carrier"),
         "BAYO": (850, 470, 160, 50, "off", "Bay 180 (Overseer)", "reserved, wired later"),
         "ARM": (850, 150, 160, 120, "off", "Arm (twist bundle)", "3 NEMA17, 2 gripper servos, axle hall"),
@@ -484,7 +485,7 @@ def schematic_svg(standalone=True):
     wire("wsg", [(540, 430), (760, 430), (760, 360), (850, 360)], "PWM ch 0..3 + 22 AWG servo leads", 1)
     wire("wsg", [(540, 440), (720, 440), (720, 230), (850, 230)], "PWM ch 4, 5", 2)
     wire("wsg", [(180, 470), (300, 470), (300, 500), (830, 500), (830, 400), (850, 400)], "halls GPIO 17, 27, 22, 23", 2)
-    wire("wsg", [(150, 490), (150, 700), (850, 700)], "KW11 GPIO 24", 1)
+    wire("wsg", [(150, 490), (150, 700), (850, 700)], "seat sense GPIO 24 (1k, BAT54)", 1)
     wire("wsg", [(180, 430), (300, 430), (300, 220), (620, 220), (620, 205)], "USB", 1)
     wire("wsg", [(790, 200), (850, 205)], None)
     wire("wch", [(1010, 670), (1040, 670)], None)

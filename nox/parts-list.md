@@ -90,8 +90,8 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | M2 x 12 screws + nuts | 12 (8 ear screws + nuts, 4 yoke pins) | hook latch | CHECK on hand | `box/box-hook-latch.md` |
 | M3 x 10 + M3 x 5.7 heat-set inserts | 16 + 16 | hook latch housings on the panel v7 bosses | on hand (CHECK count) | M: inserts |
 | A3144 hall switch + Ø3 x 2 magnet | 4 + 4 | hook latch: plunger fully out | to buy (A3144 pack priced below; Ø3 x 2 magnets CHECK) | `box/box-hook-latch.md` |
-| KW11 microswitch | 1 (on the pogo post, not per bay) | drone seated, Pi GPIO 24 | to buy (CHECK on hand) | M: KW11 |
-| Pogo pins, travel ≥ 8, ≥ 1.5 A each | 4 (2 pads x 2 pins, on the post) | keep-alive 13.0 V | to buy (CHECK model, Q20; the 0854's 2.3 stroke is too short) | M: pogo pin; `box/box-electronics.md` |
+| BAT54 Schottky + PESD3V3 TVS + 1 kΩ / 100 kΩ resistors | 1 + 1 + 1 / 1 | seat sense on GPIO 24 (replaces the KW11, DEFAULT) | to buy | `box/box-electronics.md` I/O |
+| Spring probes, ≥ 1.5 A each, stroke ≥ the landed to latched rise (the catch's) | 4 (2 per plain ±x funnel panel) | keep-alive 13.0 V (replaces the pogo post, DEFAULT) | to buy (CHECK model, Q20) | `box/box-electronics.md` |
 | Endstops | CHECK | homing (or a hard stop, DEFAULT) | on hand | |
 | Clear sheet, 3.0 (enclosure) | 4 | stand v7 walls | CHECK | box-stand.md |
 | Brass heat-set inserts M3 / M5 | as drawn | printed-part threads | on hand | M: inserts |
@@ -100,7 +100,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | Taidacent 12-wire slip ring | 1 | (retired: bounded-travel harness instead) | ordered, not used | |
 | **Box electronics v1 (24 Oct, `box/box-electronics.md`)** | | | | |
 | Raspberry Pi 4 B 2 GB + microSD ≥ 32 GB | 1 | box computer: Klipper host + `boxd` (DEFAULT; alt Pi 5) | to buy | M: Pi 4 85 x 56 (spec) |
-| GPIO screw-terminal HAT for the Pi 4 | 1 | halls, KW11, relay inputs, I2C, pull-ups | to buy | |
+| GPIO screw-terminal HAT for the Pi 4 | 1 | halls, seat sense, relay inputs, I2C, pull-ups | to buy | |
 | PCA9685 16-ch PWM board (Adafruit 815 class) | 1 | 4 latch MG90S + 2 gripper servos | to buy | 62.5 x 25.4 (spec) |
 | INA226 module + R010 2512 shunt (swap the R100) | 3 + 3 | keep-alive and 2 live bays: current + bus voltage | to buy (CHECK: INA226 on hand?) | E 32 x 22 |
 | XL4016-class CC/CV buck, 8 A | 2 | keep-alive 13.0 V CC 3.0 A; servo rail 6.0 V | to buy | E 66 x 47 |
@@ -115,7 +115,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | Nylon M3 standoffs 10 F-F + M3 x 6 + nuts; M2.5 set for the Pi / PCA | ~50 | boards on the rear sheet | CHECK on hand | |
 | M4 x 6 pan head + fender washers | 4 + 4 | PSU on the rear sheet | CHECK on hand | M: LRS-350 |
 | Wago 221-415 lever connectors | 3 | 6.0 V, 5.1 V, GND buses | CHECK on hand | |
-| XT60 pairs; XT30 pair; JST-XH 2 / 3 / 4-pin housings + crimps; bootlace ferrules; fork crimps M3.5 | 2; 1; 1 / 1 / 3; ~60; 5 | sheet disconnects, board ends | CHECK on hand | |
+| XT60 pairs; 3.5 mm bullet pairs; JST-XH 2 / 3 / 4-pin housings + crimps; bootlace ferrules; fork crimps M3.5 | 2; 2; 1 / 1 / 3; ~60; 5 | sheet disconnects, board ends | CHECK on hand | |
 | 22 AWG 3-core servo extension, 1 m | 4 | hook latch servos | to buy | |
 | Silicone wire 14 / 16 / 18 / 20 AWG red + black | 0.6 / 4.5 / 5.3 / 1.1 m (totals) | power nets (cut list in the doc) | CHECK on hand | |
 | 10 kΩ resistors | 8 | GPIO pull-ups | CHECK on hand | |
