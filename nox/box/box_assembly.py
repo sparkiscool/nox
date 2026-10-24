@@ -95,6 +95,26 @@ def latches():
     return out, H, lay, P
 
 
+def arm_v5():
+    """the v5 arm as merged (PR 36): hub v5 print in W, rails A / B v1, carriage proxies (heads v6 not drawn yet), pinions,
+    motors; groups: fixed (stub, sun post), arm (turns), headA / headB (turn + stroke). Cartridges from arm_kinematics."""
+    import arm_cad as A, arm_layout as L, arm_v5_layout as V, arm_v5_cad as C5, sweep_box as SB
+    tmp = os.path.join(OUT, "_hub_v5_W.stl")
+    hub = SB.hub_from_print(os.path.join(ROOT, "print", "box_hub_v5.stl"), tmp); os.remove(tmp)
+    parts = {"stub v3": (tm(A.stub()), "fixed", "#566573", True), "sun post v1": (tm(A.sun_post()), "fixed", "#566573", True),
+             "hub v5": (hub, "arm", "#7f8c8d", True),
+             "rail A v1": (tm(C5.rail("A")), "arm", "#a569bd", True), "rail B v1": (tm(C5.rail("B")), "armB", "#a569bd", True)}
+    for h, M in V.MOTORS_V5.items():
+        parts[f"NEMA17 {h}"] = (tm(A.rsquare(M, V.NEMA / 2, 2.0, 50.0)), "arm", "#2c3e50", False)
+    parts["NEMA17 axle"] = (tm(A.rsquare(dict(xc=53.9, zc=-43.7, rot=-39.0), V.NEMA / 2, 2.0, 50.0)), "arm", "#2c3e50", False)
+    for h, g in (("A", "arm"), ("B", "armB")):
+        parts[f"pinion16 {h}"] = (tm(C5.pinion16()[0].translate([V.PIN_X, 0, V.PIN_Z])), g, "#f5b041", True)
+        c = C5.carriage("A")
+        parts[f"carriage {h} (head v6 proxy)"] = (tm(c["printed"] + c["bush"]), f"head{h}", "#d35400", True)
+        parts[f"V-wheels {h}"] = (tm(c["wheels"]), f"head{h}", "#c39bd3", True)
+    return parts
+
+
 def electronics():
     p = os.path.join(ROOT, "runs", "box_electronics", "v1", "result.json")
     out = {}
@@ -109,7 +129,7 @@ def electronics():
 def main(video=False):
     from motion import Scene
     os.makedirs(OUT, exist_ok=True)
-    sc = Scene("Nox box: whole assembly", "stand, ring, bays, collar with the hook latch, electronics; swap cycle")
+    sc = Scene("Nox box: whole assembly", "stand, ring, bays, collar + hook latch, arm v5, electronics; one swap cycle")
     P, sheets, bays = stand_parts()
     for k, m in P.items(): sc.part(k, tm(m), group="stand", color="#8d6e63", printed=True, faces=6000)
     for k, m in sheets.items():                                  # cut-away: the front and +X sheets are left out of the page
@@ -120,39 +140,59 @@ def main(video=False):
     L, H, lay, HP = latches()
     for k, (t, c, pr) in L.items(): sc.part(k, t, group="hook latch", color=c, printed=pr, faces=4000)
     for k, t in electronics().items(): sc.part(k, t, group="electronics", color="#2e7d32", printed=False, faces=50)
-    # drone (catch-interface model from hook_latch.py, seat frame) + its cartridge; lands, latch out, swap hold, latch in, leaves
-    D = H.drone_parts(); D["cartridge"] = H.cartridge()
-    col = {"wheels": "#44aa66", "cage": "#333333", "plate": "#556677", "props": "#9fb8d0", "receiver": "#778899", "cartridge": "#9955bb"}
+    # arm v5 through the swap cycle (arm_kinematics KEYS with the v5 strokes), the 2 packs from its pack logic,
+    # the drone landing at T_LAND, latched, lifted onto the plungers by the insert, leaving after the latch opens
+    import arm_kinematics as K
+    zmap = {K.ZP: 32.0, K.ZBAY: 86.1, K.ZDR: 95.6, K.ZW: 81.0}                       # v5 strokes (arm_v5_layout Z0S, C)
+    K.KEYS = [(t, ph, zmap.get(a, a), zmap.get(b, b), fa, fb) for (t, ph, a, b, fa, fb) in K.KEYS]
+    AP = arm_v5()
+    for k, (t, g, c, pr) in AP.items(): sc.part(k, t, group="arm v5", color=c, printed=pr, faces=12000)
+    cart = tm(K.cartridge_local()); sc.part("pack charged", cart, group="packs", color="#44aa99", printed=False)
+    sc.part("pack dead", cart, group="packs", color="#9955bb", printed=False)
+    D = H.drone_parts()
+    col = {"wheels": "#44aa66", "cage": "#333333", "plate": "#556677", "props": "#9fb8d0", "receiver": "#778899"}
     for k, m in D.items():
         t = H.to_tm(m, S2W); sc.part(f"drone {k}", t, group="drone", color=col[k], printed=False, faces=8000)
     lift = H.GAP * math.sqrt(2)
     def ease(a): a = min(max(a, 0.0), 1.0); return a * a * (3 - 2 * a)
-    def dz(t):
-        if t < 3.0: return 220.0 * (1 - ease(t / 3.0))
-        if 5.0 <= t < 6.5: return lift * ease((t - 5.0) / 0.4)
-        if 6.5 <= t < 7.0: return lift * (1 - ease((t - 6.5) / 0.5))
-        if t >= 8.0: return 260.0 * ease((t - 8.0) / 2.5)
+    def dz(t):                                       # drone height over its seat (mm)
+        if t < K.T_LAND: return 220.0 * (1 - ease((t - 3.5) / (K.T_LAND - 3.5))) if t > 3.5 else 220.0
+        if 11.0 <= t < 12.0: return lift * ease((t - 11.0) / 0.4)
+        if 12.0 <= t < 12.5: return lift * (1 - ease((t - 12.0) / 0.5))
+        if t >= 14.0: return 260.0 * ease((t - 14.0) / 2.5)
         return 0.0
-    def rise(t):
-        if t < 3.5: return 0.0
-        if t < 4.0: return ease((t - 3.5) / 0.5)
-        if t < 7.3: return 1.0
-        if t < 7.8: return 1 - ease((t - 7.3) / 0.5)
+    def rise(t):                                     # latch out after the seat, in after the head clears
+        if t < K.T_LAND + 0.1: return 0.0
+        if t < K.T_LAND + 0.5: return ease((t - K.T_LAND - 0.1) / 0.4)
+        if t < 13.5: return 1.0
+        if t < 13.9: return 1 - ease((t - 13.5) / 0.4)
         return 0.0
     UT = {name: S2W @ H.unit_frame(fs, xs)[0] for name, fs, xs in H.UNITS}
+    hide = trimesh.transformations.translation_matrix([0, 0, -2000])
     def poses(t):
-        out = {f"drone {k}": (0, 0, dz(t), 0, 0, 0) for k in D}
-        for name in UT:
-            T = UT[name]
+        Tk, carts, st = K.transforms(t)
+        Tarm = K.rotY(90.0 - st["phi"]); RB = K.RB
+        TA = Tarm @ K.trans(0, 0, st["zA"]); TB = Tarm @ RB @ K.trans(0, 0, st["zB"])
+        out = {}
+        for k, (_, g, _, _) in AP.items():
+            out[k] = {"fixed": np.eye(4), "arm": Tarm, "armB": Tarm @ RB, "headA": TA, "headB": TB}[g]
+        for nm in ("pack charged", "pack dead"):
+            out[nm] = carts[nm][0] if nm in carts else hide
+        if t >= 14.0 and "pack charged" in carts and carts["pack charged"][2].startswith("drone"):
+            out["pack charged"] = K.trans(0, 0, dz(t)) @ carts["pack charged"][0]
+        for k in D: out[f"drone {k}"] = (0, 0, dz(t), 0, 0, 0)
+        for name, T in UT.items():
             out[f"latch plunger {name}"] = T @ trimesh.transformations.translation_matrix([0, 0, H.RISE * rise(t)]) @ np.linalg.inv(T)
         return out
-    sc.timeline(poses, duration_s=11.0, fps=30)
-    ts = np.arange(330) / 30.0
+    sc.timeline(poses, duration_s=K.T_END, fps=30)
+    ts = np.arange(int(K.T_END * 30)) / 30.0
+    sc.series("arm angle", [K.state(t)["phi"] for t in ts], unit="deg")
     sc.series("plunger out", [H.RISE * rise(t) for t in ts], unit="mm")
     sc.series("drone height over seat", [dz(t) for t in ts], unit="mm")
     sc.view("front", eye=(700, 800, 250), target=(0, 140, 40))
     sc.view("collar top", eye=(0, 177, 700), target=(0, 177, 150))
     sc.view("latch", eye=(40, 20, 300), target=(122, 77, 182))
+    sc.view("arm", eye=(380, 520, 40), target=(0, 120, 0))
     sc.write(os.path.join(OUT, "motion.html"))
     if video: sc.video(os.path.join(OUT, "motion.mp4"))
 
