@@ -277,6 +277,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["cam_lens"] = cams[0]["lens"]; g["cam_fwd"] = cams[0]["fwd"]; g["cam_up_v"] = cams[0]["up"]
     g["cam_rods"] = []
     g["cam_plate"] = trimesh.util.concatenate(plates); g["cam_arms"] = arms_
+    g["cam_joint_mm3"] = sum(overlap(a_, p_) for a_, p_ in zip(arms_, plates)) + 1.0   # each arm bonded into its plate
     g["cam_bracket"] = g["cam_plate"]
     sock = co.sockets(xB, zB)
     lugs = []
@@ -641,17 +642,26 @@ cg_out = (cg * tot - pk * 650 - g["cart"].centroid * cart_g) / (tot - 650 - cart
 say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the pack, {np.hypot(cg_out[0] - dm, cg_out[1]):.1f} without (≤ 3)")
 # system_check manifest (cage first, fit, compact, mass; grouped meshes)
 def tm(m): return m.copy()
+# cage CG from the rod model (tubes by g/m, not solid mesh volume) + printed cage pieces by volume
+_cm, _cw = np.zeros(3), 0.0
+for k_, v_ in g["rods"].items():
+    w_ = float(np.linalg.norm(np.subtract(v_[1], v_[0]))) * co.SECTIONS[v_[4]]["gpm"] / 1000; _cm += w_ * (np.asarray(v_[0]) + np.asarray(v_[1])) / 2; _cw += w_
+for ms_, f_ in ((g["nodes"], 0.6), (g["ring_nodes"], 0.5), (g["runners"], 0.4), ([g["pan"]], 0.5), (g["wheels"], 0.5), (g["feet"], 0.5)):
+    for m_ in ms_:
+        w_ = abs(m_.volume) * 1.27e-3 * f_; _cm += w_ * m_.bounding_box.centroid; _cw += w_
+cage_cg = _cm / _cw
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"] + [g["pan"]]
 man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", round(g["arm_socket_mm3"], 1)],           # designed joints: rod ends 20 deep in the arm sockets,
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
-                          ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)]],        # hub blocks clamped on the plates
+                          ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
+                          ["apex + hubs", "cam brackets", round(g["cam_joint_mm3"], 1)]],  # camera arms bonded into the camera plates
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True),                   # the cartridge path: it drops out the bottom and fills the 168 opening under the wheels, where nothing else may go; its cartridge walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
            access=[dict(name="pack swap", part="pack", dir=[0, 0, -1], length_mm=80, tool="part")], parts=[
-    dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, tag="E"),
+    dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
     dict(name="L2", trimesh=g["l2"], role="protected", mass_g=230, tag="P"),
