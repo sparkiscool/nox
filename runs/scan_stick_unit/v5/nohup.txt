@@ -4,3 +4,14 @@ scan_stick_unit: grid (56, 40, 72) h 3.0 = 161,280 cells; design 46,857 (1265.1 
 layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
 scan_stick_unit: grid (56, 40, 72) h 3.0 = 161,280 cells; design 46,857 (1265.1 cm3), drawn 12,355, void 102,068
   support default: 840 cells, 1364 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (330.18 cm3); 3.40 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.042 of 46,983 design cells
+layout: WARNING nearly mirrored in y (1.9% of passive cells differ): no symmetry
+layout: 2 drawn bodies (12,229 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (56, 40, 72) = 161,280 elements, 212,139 active dofs; backend direct (direct estimate 2.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0626 (dil 0.0755 g +0.487) grey 12.9% ch 0.100 worst tie b2 my 2.82e+04 15.5s
+it   2 beta    1 J   1.0842 vol 0.0393 (dil 0.0467 g -0.080) grey 15.9% ch 0.100 worst camera hit above 50 N 2.96e+03 15.6s
+it   3 beta    1 J   1.0587 vol 0.0416 (dil 0.0493 g -0.029) grey 16.8% ch 0.023 worst camera hit above 50 N 2.96e+03 14.8s
+it   4 beta    1 J   1.0587 vol 0.0417 (dil 0.0495 g -0.026) grey 16.8% ch 0.029 worst camera hit above 50 N 2.96e+03 15.2s
