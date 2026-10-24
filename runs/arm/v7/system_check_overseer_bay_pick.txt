@@ -1,22 +1,22 @@
 system_check box swap arm v7: PASS
   cage first: n/a (no protected part)
-  compact: bbox 33.641 L (E), hull 21.255 L (E), extents [370.6, 259.4, 349.9] mm (E), largest 370.6 mm
+  compact: bbox 34.248 L (E), hull 21.725 L (E), extents [370.6, 263.7, 350.4] mm (E), largest 370.6 mm
   fit PASS (tol 0.5 mm³):
-    hub / motor_A: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / motor_A: 0.07 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / shaft_A: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    hub / motor_B: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / motor_B: 0.01 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / shaft_B: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    hub / motor_axle: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / motor_axle: 0.04 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / shaft_axle: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / p20_axle: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / brg0: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    hub / brg1: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    hub / railA: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / brg1: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / railA: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / railB: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     hub / detent_springs: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     hub / detent_tower: 0.05 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    hub / tiesA: 0.04 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    hub / tiesB: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / tiesA: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    hub / tiesB: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     stub / stub_bolts: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     stub / post: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     stub / brg0: -0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -130,10 +130,10 @@ system_check box swap arm v7: PASS
     rec-120 / rec-180: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-120 / pack charged: 0.0 mm³ (E) limit 0.5 contact [aabb]
     rec-120 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-    rec-180 / pack charged: 0.0 mm³ (E) limit 0.5 contact [manifold3d]
+    rec-180 / pack charged: -0.0 mm³ (E) limit 0.5 contact [manifold3d]
     rec-180 / pack dead: 0.0 mm³ (E) limit 0.5 contact [aabb]
-  mass 5922.87 g (E), CG [-18.06, 123.4, -8.95], offset [-18.06, 123.4, -8.95] = 125.04 mm from [0.0, 0.0, 0.0]
-    hub: 131.58 g (M) at [-4.56, 40.45, -4.06]
+  mass 6865.21 g (E), CG [-15.74, 129.68, -14.27], offset [-15.74, 129.68, -14.27] = 131.41 mm from [0.0, 0.0, 0.0]
+    hub: 213.36 g (M) at [-4.46, 40.45, -3.84]
     stub: 47.68 g (M) at [0.47, 15.91, -0.0]
     stub_bolts: 8.0 g (C) at [0.0, 2.23, -0.0]
     post: 30.36 g (M) at [-0.0, 46.24, 0.0]
@@ -156,20 +156,20 @@ system_check box swap arm v7: PASS
     wheelsA: 8.35 g (M) at [-115.6, 62.75, 7.33]
     axlesA: 20.0 g (C) at [-115.6, 65.77, 7.33]
     bushA: 0.67 g (M) at [-114.62, 71.96, -21.99]
-    gripA: 9.98 g (M) at [-85.12, 172.87, 31.19]
-    fingA_A: 4.9 g (M) at [-96.7, 169.66, 4.24]
-    fingB_A: 3.89 g (M) at [-98.27, 161.47, 13.69]
-    pinion_A: 0.59 g (M) at [-90.6, 165.0, 33.5]
-    servo_A: 60.0 g (C) at [-66.65, 176.41, 33.5]
+    gripA: 9.98 g (M) at [-85.12, 174.97, 31.19]
+    fingA_A: 4.9 g (M) at [-96.7, 171.76, 4.24]
+    fingB_A: 3.89 g (M) at [-98.27, 163.57, 13.69]
+    pinion_A: 0.59 g (M) at [-90.6, 167.1, 33.5]
+    servo_A: 60.0 g (C) at [-66.65, 178.51, 33.5]
     headB: 25.31 g (M) at [16.63, 70.28, -42.71]
     wheelsB: 8.35 g (M) at [7.33, 62.75, -50.0]
     axlesB: 20.0 g (C) at [7.33, 65.77, -50.0]
     bushB: 0.67 g (M) at [-21.99, 71.96, -49.02]
-    gripB: 9.98 g (M) at [31.19, 172.87, -19.52]
-    fingA_B: 4.9 g (M) at [-0.76, 169.66, -31.1]
-    fingB_B: 3.89 g (M) at [18.69, 161.47, -32.67]
-    pinion_B: 0.59 g (M) at [33.5, 165.0, -25.0]
-    servo_B: 60.0 g (C) at [33.5, 176.41, -1.05]
+    gripB: 9.98 g (M) at [31.19, 174.97, -19.52]
+    fingA_B: 4.9 g (M) at [-0.76, 171.76, -31.1]
+    fingB_B: 3.89 g (M) at [18.69, 163.57, -32.67]
+    pinion_B: 0.59 g (M) at [33.5, 167.1, -25.0]
+    servo_B: 60.0 g (C) at [33.5, 178.51, -1.05]
     detent_ring: 8.69 g (M) at [0.05, 67.0, 0.03]
     detent_arm: 3.48 g (M) at [24.56, 72.84, 12.05]
     detent_roller: 1.0 g (C) at [28.98, 67.9, -7.76]
@@ -177,20 +177,20 @@ system_check box swap arm v7: PASS
     detent_tower: 0.5 g (C) at [53.45, 80.1, 41.65]
     tiesA: 5.0 g (C) at [-103.0, 32.05, 0.0]
     tiesB: 5.0 g (C) at [0.0, 32.05, -103.0]
-    rec30: 187.3 g (M) at [123.48, 163.91, 71.29]
-    rec-30: 187.3 g (M) at [123.48, 163.91, -71.29]
-    rec-90: 187.3 g (M) at [0.0, 163.91, -142.58]
-    rec-150: 187.3 g (M) at [-123.48, 163.91, -71.29]
-    rec-210: 187.3 g (M) at [-123.48, 163.91, 71.29]
-    rec0: 95.47 g (M) at [158.7, 156.25, 0.0]
-    rec-60: 601.22 g (M) at [73.73, 168.33, -127.71]
-    rec-120: 601.22 g (M) at [-73.73, 168.33, -127.71]
-    rec-180: 95.47 g (M) at [-158.7, 156.25, -0.0]
-    pack charged: 748.2 g (E) at [-145.34, 170.61, -0.0] swap
-    pack dead: 748.2 g (E) at [-0.0, 170.61, 150.34] swap
+    rec30: 244.58 g (M) at [123.56, 166.74, 71.34]
+    rec-30: 244.58 g (M) at [123.56, 166.74, -71.34]
+    rec-90: 244.58 g (M) at [0.0, 166.74, -142.67]
+    rec-150: 244.58 g (M) at [-123.56, 166.74, -71.34]
+    rec-210: 244.58 g (M) at [-123.56, 166.74, 71.34]
+    rec0: 231.79 g (M) at [154.52, 166.99, 0.0]
+    rec-60: 744.78 g (M) at [73.96, 170.91, -128.11]
+    rec-120: 744.78 g (M) at [-73.96, 170.91, -128.11]
+    rec-180: 231.79 g (M) at [-154.52, 166.99, -0.0]
+    pack charged: 755.4 g (E) at [-144.98, 172.69, -0.0] swap
+    pack dead: 755.4 g (E) at [-0.0, 172.69, 149.98] swap
   balance PASS (horizontal CG offset <= 1000.0 mm, thrust axis [0.0, 1.0, 0.0]):
-    all: 20.16 mm horizontal, 123.4 mm axial, 5922.87 g
-    no_swap: 37.39 mm horizontal, 107.44 mm axial, 4426.47 g
+    all: 21.25 mm horizontal, 129.68 mm axial, 6865.21 g
+    no_swap: 39.45 mm horizontal, 117.54 mm axial, 5354.41 g
   crash probes: skipped
   access PASS (swept tool overlap <= 0.5 mm³):
     M5 key, rail A r 40 (railA, type cylinder, d 6.0, 100 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
@@ -202,4 +202,4 @@ system_check box swap arm v7: PASS
     M3 key, motor axle (-1, +1) (hub, type cylinder, d 6.0, 70 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
     M3 key, motor axle (+1, -1) (hub, type cylinder, d 6.0, 70 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
     M3 key, motor axle (+1, +1) (hub, type cylinder, d 6.0, 70 mm along [0.0, 1.0, 0.0]): 0.0 mm³ (E)
-System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33.6 L (E), extents 371 x 259 x 350 mm (E), mass 5923 g (E), CG 20.2 mm off thrust axis (E) [-18.1, +123.4, -8.9], 37.4 mm without swap parts, access 9/9 clear
+System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.2 L (E), extents 371 x 264 x 350 mm (E), mass 6865 g (E), CG 21.2 mm off thrust axis (E) [-15.7, +129.7, -14.3], 39.5 mm without swap parts, access 9/9 clear
