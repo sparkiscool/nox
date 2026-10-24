@@ -221,7 +221,7 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Flight (max thrust, manoeuvre) | 4 g along the thrust axis; 2 g lateral | E (from J Loads) |
 | Landing / catch | 6 g up at the cage feet or catch wheels | E (from J, G) |
 | Crash | 35 g along each of the 6 face directions and the 8 corner directions, the drone hitting through the cage member that touches first | E (from J Loads) |
-| Swap | insert push 60 N, pull-out 50 N on the cartridge and receiver (G XT60 mate); **plus, once the receiver's 0.3 gaps close, ≤ 40.7 N across and ~0 N·m from the arm's compliance; once the lead-ins centre it with the axle driver on, ≤ 7.6 N / 1.05 N·m from the arm's position error; and the pitch guide ≤ 2.9 N·m (stub 5 mrad) forcing the arm's free tilt (v7 round 3c, Y_C 165; System box swap: arm)**. Same receiver in the drone and every bay | E |
+| Swap | insert push 60 N, pull-out 50 N on the cartridge and receiver (G XT60 mate); **plus, once the receiver's 0.3 gaps close, ≤ 40.7 N across and ~0 N·m from the arm's compliance; once the lead-ins centre it with the axle driver on, ≤ 7.6 N / 1.05 N·m from the arm's position error (v7 round 3c, Y_C 165; no pitch guide couple: the XT60's ±2.37° float about x takes the arm's tilt; System box swap: arm)**. Same receiver in the drone and every bay | E |
 | Handling | 50 N on any one cage member or node, any direction | E |
 | Cage first | cage ahead of every protected part by ≥ 3 mm in every direction; box openings ≥ 0 inside their cone | DEFAULT (alt 1 mm) |
 | Balance | CG within 3 mm horizontally of the thrust centre, pack in and pack out | DEFAULT |
