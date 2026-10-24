@@ -35,8 +35,9 @@ MOTOR_SWEEP = dict(r=106.5, y=(2.0, 50.0))      # motors on the arm (v1 box_syst
 HUB = dict(r=88.0, y=(7.0, 74.0))               # hub + rails on the plate (arm v6 hub envelope r 110 clipped to +-88)
 BRACKET = 12.0                                  # ring envelope to sheet inner face (U-clip + flange, v1 brackets 3.5..10)
 CRADLE = 48.1                                   # bottom bay's outer face to the floor (v1 cradle_keel: Z_TOP -152.9 to -201)
-FUNNEL_V8_GROW_Y = 11.5                         # hub 24 Oct: funnel v8 widens the opening fore-aft 168 -> ~191 (E): the +-Y faces
-                                                # move out (191 - 168) / 2; the enclosure keeps room for it until G (2) has the number
+FUNNEL_V8_GROW_Y = 32.5                         # funnel v8 (catch, hub 24 Oct) must pass the Overseer set, which is lopsided about its
+                                                # tab line (= catch centre): -66.5 / +113.1 (M); with 3 a side the +Y face moves out
+                                                # 113.1 + 3 - 84 = 32.1 -> 32.5 (C), the -Y face stays (E until G (2) has the outline)
 
 
 def man(t): return B.man(t)

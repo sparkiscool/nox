@@ -1,5 +1,5 @@
 {
- "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 75 L (E), extents 402 x 393 x 475 mm (E), mass 18368 g (E), CG [-5.8, 138.0, -53.0] (E, no cg_ref), access 18/18 clear",
+ "summary": "System: Box structure v2 layout, cage first 3.0 mm (E) at -Y (PSU LRS-350-24), fit 4984.3 mm\u00b3 (E) (catch (panels v7, hook latch v2) at the R seat/drone receivers + paths (keep-out)) FAIL, bbox 79.1 L (E), extents 402 x 414 x 475 mm (E), mass 18439 g (E), CG [-5.8, 139.5, -52.8] (E, no cg_ref), access 18/18 clear",
  "access": {
   "applies": true,
   "pass_": true,

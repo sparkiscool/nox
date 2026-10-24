@@ -261,12 +261,12 @@
  "enclosure": {
   "X_IN": 205,
   "Y_BACK": -66.0,
-  "Y_FRONT": 321,
+  "Y_FRONT": 342,
   "FLOOR": -234,
   "Z_TOP": 234,
   "sheets_mm": {
    "side x2": [
-    381,
+    402,
     468
    ],
    "front / rear x2": [
@@ -280,10 +280,10 @@
   },
   "outer": [
    416,
-   393.0,
+   414.0,
    468
   ],
-  "volume_L": 76.5
+  "volume_L": 80.6
  },
  "drone_keepout": "drone receivers (Scout, Overseer) + cartridge paths at 90 deg: drone_W.stl"
 }
