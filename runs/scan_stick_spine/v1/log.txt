@@ -89,3 +89,5 @@ it  25 beta   16 J   8.7045 vol 0.0947 (dil 0.1791 g -0.001) grey  1.5% ch 0.100
 it  26 beta   16 J   8.6915 vol 0.0949 (dil 0.1792 g +0.002) grey  1.5% ch 0.100 worst cage bump top 100 N (spine s 2.65 39.7s
 it  27 beta   16 J   8.6917 vol 0.0946 (dil 0.1787 g -0.001) grey  1.5% ch 0.100 worst cage bump top 100 N (spine s 2.65 39.3s
 it  28 beta   16 J   8.6826 vol 0.0948 (dil 0.1788 g -0.000) grey  1.4% ch 0.100 worst cage bump top 100 N (spine s 2.64 37.3s
+it  29 beta   16 J   8.6745 vol 0.0949 (dil 0.1788 g -0.000) grey  1.4% ch 0.100 worst cage bump top 100 N (spine s 2.64 30.6s
+it  30 beta   16 J   8.6664 vol 0.0950 (dil 0.1788 g -0.000) grey  1.4% ch 0.100 worst cage bump top 100 N (spine s 2.64 31.6s
