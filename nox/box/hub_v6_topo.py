@@ -7,6 +7,7 @@ the receiver-guided swap cases both with the receiver's 0.3 gaps and free (no re
   - rail pads A / B at r 40 / 78: force + moment from each rail foot (one M5 + the foot on the pad), moments as couples on the pad halves;
   - the detent: pivot 22 N and anchor 8.4 N (the springs' preload, detent.CHOSEN_V6), sustained.
 Classes: swap -> flight (repeated working load, SF 4), misuse / handling -> misuse (2.5), sustained -> sustained (10).
+Run 2 (24 Oct): envelope() drops the unbraked power cuts and merges cases within NOX_MERGE (0.15); h 2.05 (h 2.0's coarse 4.0 grid loses the tower column).
 python3 hub_v6_topo.py [h] [gen_cm3] [out_dir] -> <out_dir>/box_hub_v6.stl (W) + result.json (topo engine). NOX_SETUP_ONLY=1: setup only."""
 import sys, os, math, json
 import numpy as np
@@ -18,7 +19,7 @@ import hub_v6 as HV
 from arm_cad import box
 from topo import Part, Settings, optimise
 
-H = float(sys.argv[1]) if len(sys.argv) > 1 else 1.5
+H = float(sys.argv[1]) if len(sys.argv) > 1 else 2.05
 GEN = float(sys.argv[2]) if len(sys.argv) > 2 else 40.0
 SYSTEM = os.path.join(HV.REPO, "runs", "arm", os.environ.get("NOX_ARM", "v7"), "system.json")
 CLS = dict(swap="flight", misuse="misuse", handling="misuse", sustained="sustained")
@@ -66,6 +67,32 @@ def regions():
     return out
 
 
+MERGE = float(os.environ.get("NOX_MERGE", "0.15"))
+
+
+def envelope(sysres, R):
+    """the system cases the hub is loaded with (run 2, 24 Oct, DEFAULT): every case of both packs except the unbraked power cuts (the head
+    brake is required for both packs, dimensions.md Head brake: the braked cut creeps down and loads the hub like the gravity case), and per
+    class only the cases not within MERGE (relative, on the vector of every interface's force and couple forces) of a larger kept case
+    (alt: every case at h 2.25, run 1). Fits h 2.0 in the box's 14 GB (run 1: h 1.75 with 83 cases OOM)."""
+    cases = [c for c in sysres["frame"] + [dict(c, case=c["case"] + " [Overseer]") for c in sysres.get("frame_overseer", [])]
+             if "power cut" not in c["case"]]
+    def vec(c):
+        v = []
+        for node in sorted(R):
+            x = c["hub"].get(node); d = R[node][2]
+            v += [0.0] * 6 if x is None else list(x["F"]) + [m / d for m in x["M"]]
+        return np.array(v)
+    kept = []
+    for cls in sorted(set(c["cls"] for c in cases)):
+        k = []
+        for c in sorted([c for c in cases if c["cls"] == cls], key=lambda c: -np.linalg.norm(vec(c))):
+            v = vec(c)
+            if not any(np.linalg.norm(v - vec(q)) <= MERGE * np.linalg.norm(vec(q)) for q in k): k.append(c)
+        kept += k
+    return kept
+
+
 def setup(h):
     P = HV.hub_v6_parts(); drawn, cuts, env0 = P["drawn"], P["cuts"], P["env0"]
     pp = Part("box_hub_v6", h, drawn, cuts, env0, build="+y")
@@ -73,9 +100,7 @@ def setup(h):
     R = regions()
     sysres = json.load(open(SYSTEM))
     n = 0
-    for case in sysres["frame"] + [dict(c, case=c["case"] + " [Overseer]") for c in sysres.get("frame_overseer", [])]:
-        # every case, both power cuts carrying included: the Scout's as the fallback until the head brake passes its bench drop, the Overseer's
-        # as the brake-failed bound (the hub carries it; the wheels' 625ZZ do not: the bench drop gates every Overseer swap)
+    for case in envelope(sysres, R):
         parts = []
         for node, v in case["hub"].items():
             if node not in R: continue
@@ -85,9 +110,10 @@ def setup(h):
             pp.load_multi(f"{case['case']} [{case['cls']}]", parts, cls=CLS[case["cls"]]); n += 1
     D, S = P["detent"]
     Pv, Av = D["P"], D["A"]; dA = (D["H"] - Av) / np.linalg.norm(D["H"] - Av)
-    pp.load_multi("detent springs (pivot 22 N, anchor 8.4 N)", [(A.cylY(Pv[0], Pv[1], 66.3, 71.3, 4.0), (22 * D["u"][0], 0, 22 * D["u"][1])),
-                                                                (A.cylY(Av[0], Av[1], 66.3, 74.1, 4.0), (8.4 * dA[0], 0, 8.4 * dA[1]))], cls="sustained")
-    pp.log(f"  {n} system cases from {os.path.relpath(SYSTEM, HV.REPO)} + the detent springs")
+    tw = P["tower"] - cuts                                                    # run 1 at h 2.0: the bare r 4 cylinders fell on no free node
+    pp.load_multi("detent springs (pivot 22 N, anchor 8.4 N)", [(tw ^ A.cylY(Pv[0], Pv[1], 64.0, 72.0, 6.0), (22 * D["u"][0], 0, 22 * D["u"][1])),
+                                                                (tw ^ A.cylY(Av[0], Av[1], 64.0, 75.0, 6.0), (8.4 * dA[0], 0, 8.4 * dA[1]))], cls="sustained")
+    pp.log(f"  {n} system cases from {os.path.relpath(SYSTEM, HV.REPO)} (envelope {MERGE:g}, power cuts out) + the detent springs")
     return pp
 
 
