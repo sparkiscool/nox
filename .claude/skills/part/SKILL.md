@@ -14,10 +14,10 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
   that change a shared number: DEFAULT, its `dimensions.md` row + one `log.md` line, and continue (never wait on Spark).
 
 ## 2. Design (system first, then cut)
-- Load or build the part's system model (`docs/generative.md` The rule, 0): the assembled machine or sub-assembly, every
-  neighbour and bought part in place, the system's load cases. Design and check the part there, never alone; its loads
-  are the joint reactions from the system solve. A brief that touches several pieces of one system designs them as one and
-  cuts them after.
+- Read the part's system requirements (`dimensions.md` "System <name>", `docs/generative.md` The rule, 0): envelope,
+  interfaces, joint reactions per case, stiffness and worst index the assembled system needs. Those are the run's loads,
+  supports and targets. No section yet: run the system pass first (or hand it to its own worker) and design from its output.
+  After the piece: put it back in the system model and run the assembled recheck.
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
   `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent (background, own worktree)
   and carry on with anything that does not need its mesh; it checkpoints, checks, and opens the PR itself. Several variants or
