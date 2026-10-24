@@ -12,8 +12,9 @@ its m1 teeth, the spine under the wing) and the column that carries the grabber 
   - loads = the head's interface loads per case (head_v7_layout.loads_table, E): insert 60 N (swap) / 74 N stall (misuse) on the
     pads, the pull 57.3 N (swap) on the four rod sockets, handling 3 g + 2 g with the Overseer cartridge (pads + the pinion post),
     the servo's stall torque 1.96 N.m on the ear pads (misuse).
-Classes as hub_v6_topo: swap -> flight (SF 4), misuse / handling -> misuse (2.5). Build +y (the web, spine and rib bottoms Y 59.25 on
-the bed: the rack's tooth profile lies in the layers).
+Classes as hub_v6_topo: swap -> flight (SF 4), misuse / handling -> misuse (2.5). Build +x (the part on its -X flank: the column's
+bending along Y and the plate's along u both lie in the layers; the upper bound reads 0.44 in the swap class against 0.61..0.70 with Y
+or u up; the rack teeth face +X, up). Head B is solved in the A frame with the MG995 cradle and B's shorter rack tail, then mirrored.
 python3 head_v7_topo.py [A|B] [h] [gen_cm3] [out_dir]  -> <out_dir>/box_head_v7_<A|B>.stl (head frame) + result.json. NOX_SETUP_ONLY=1."""
 import sys, os, math, json
 import numpy as np
@@ -98,7 +99,7 @@ def drawn_and_cuts():
 def setup(h):
     drawn, cuts = drawn_and_cuts()
     env = H.design_space(SERVO)
-    pp = Part(f"box_head_v7_{HEAD}", h, drawn, cuts, env, build=os.environ.get("NOX_BUILD", "+y"))
+    pp = Part(f"box_head_v7_{HEAD}", h, drawn, cuts, env, build=os.environ.get("NOX_BUILD", "+x"))
     bores = None
     for (x, u) in H.WHEELS:
         r = H.WHEEL["ecc_bore_r"] if (x, u) == H.WHEELS[2] else H.WHEEL["axle_r"]
@@ -153,7 +154,7 @@ def bound(h=1.0):
     L = Layout(p, volfrac=0.5, settings=Settings(reach_check="off", auto_sym=False, finish="drawn"), log=lambda s_: None)
     st = strength(L, solid)
     out = dict(h=h, mass_g=round(solid.volume * 1.27e-3, 1), worst=st["worst"], worst_case=st["worst_case"], worst_at=st["worst_at"], rows=st["rows"])
-    out["build"] = os.environ.get("NOX_BUILD", "+y")
+    out["build"] = os.environ.get("NOX_BUILD", "+x")
     json.dump(out, open(os.path.join(H.ROOT, "runs", "head", "v7", f"bound_{HEAD}_h{h:g}_{out['build']}.json"), "w"), indent=1)
     return out
 

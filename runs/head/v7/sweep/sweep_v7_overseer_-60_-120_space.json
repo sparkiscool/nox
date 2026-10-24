@@ -32,40 +32,10 @@
    0.0
   ],
   [
-   "detent_arm",
-   "headB",
-   0.256,
-   22.0
-  ],
-  [
    "headA",
    "pack charged",
    0.5,
    2.5
-  ],
-  [
-   "fingA_A",
-   "servo_A",
-   0.5,
-   0.0
-  ],
-  [
-   "fingB_A",
-   "servo_A",
-   0.5,
-   0.0
-  ],
-  [
-   "fingA_B",
-   "servo_B",
-   0.5,
-   0.0
-  ],
-  [
-   "fingB_B",
-   "servo_B",
-   0.5,
-   0.0
   ],
   [
    "headB",
@@ -74,14 +44,38 @@
    7.0
   ],
   [
+   "detent_arm",
+   "headB",
+   0.93,
+   0.0
+  ],
+  [
    "belt_axle",
    "headA",
    1.0,
    21.947
   ],
   [
+   "headA",
+   "rec-60",
+   1.0,
+   2.5
+  ],
+  [
    "fingA_A",
    "fingB_A",
+   1.0,
+   21.947
+  ],
+  [
+   "fingA_A",
+   "servo_A",
+   1.0,
+   0.0
+  ],
+  [
+   "fingB_A",
+   "servo_A",
    1.0,
    0.0
   ],
@@ -89,13 +83,25 @@
    "fingA_B",
    "fingB_B",
    1.0,
+   21.973
+  ],
+  [
+   "fingA_B",
+   "servo_B",
+   1.0,
    0.0
   ],
   [
-   "headA",
-   "railA",
-   1.414,
+   "fingB_B",
+   "servo_B",
+   1.0,
    0.0
+  ],
+  [
+   "headB",
+   "rec-120",
+   1.0,
+   17.9
   ]
  ]
 }
