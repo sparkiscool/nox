@@ -200,8 +200,17 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Breaking order | in the crash case the frame, every mount and the pack holder stay at ≤ 1 / 1.5 of the worst cage node or foot index (the node goes first) | DEFAULT |
 | Index target | worst as-built index ≤ 1.0 in the crash case, ≤ 0.5 in flight and landing | DEFAULT |
 
+**Mass budget (24 Oct; soft, Spark: "as low as we can but never sacrifice design for weight").** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section as a target, not a limit: each piece's topology aims at its slot, but strength, stiffness, cage first, access and function come first. `system_check` reports mass against `mass_budget_g` / `budget_g` and warns when over; it never fails on mass. An over-budget piece says in its summary what the extra grams buy.
+
+| System | Whole (`mass_budget_g`) | Bought, fixed | Structure allowance (printed + rods + fasteners) | Tag |
+|---|---|---|---|---|
+| Overseer | 2200 g (DEFAULT, 5 % under the 2330 g cage v0 estimate; alt 2330) | 1649 g: L2 230, pack 650, 4 motor + prop 364, 4 ESC 100, Pi 5 + cooler 55, plates 84, wires 80, cameras 30, PDB 21, UBEC 15, FC 10, buck 6, RX 2, flow 2 (`layout_v2.py` cg_of) | ≤ 551 g: cage rods + nodes, arms, apex / L2 mount, deck, sled + pods, feet, cartridge | E |
+| Scout v3 | 500 g (DEFAULT: never heavier than today's ~500 g; Spark set no target, alt none) | from the Scout v3 bottom layout (pack 165 P, frame 24 to 32 E, ...) | 500 minus bought, split by the Scout v3 system pass | E |
+| Box | no cap (ground station); each piece reports its mass, a new version may not be heavier without a reason in its summary | | | DEFAULT |
+| Scan stick (on the Overseer) | counts inside the Overseer's 2200 g when mounted; its own section sets its slot | | | DEFAULT |
+
 ## T. Strength calibration (24 Oct 2026; protocol `docs/tests.md`, coupons `nox/tests/coupons.py`, readings `tools/calibrate.py`)
-Predicted = break load: the load at which the method's stress reaches the material strength (nox/topo as-built index, misuse class, x 0.85 / 2.5 = 1; grid h 1.0 as the parts use). Factor = measured / predicted; use the min factor: a part's real index = its reported index / factor. Until a row reads P every factor is 1.0 (E) and the attachment rule stands (index ≤ 0.5 at attachments, log 17 Oct). PETG allowables behind the predictions (nox/topo `material.py`): Xt 51, **Zt 25.5 (= 0.5 Xt, E)**, S 25.5 (E) MPa; bond 2.0 MPa (E, `box/box-funnel.md` 7). `tools/calibrate.py` reads the Predicted cell of these rows.
+Predicted = break load: the load at which the method's stress reaches the material strength (nox/topo as-built index, misuse class, x 0.85 / 2.5 = 1; grid h 1.0 as the parts use). Factor = measured / predicted; use the min factor: a part's real index = its reported index / factor. Until a row reads P every factor is 1.0 (E) and the attachment rule stands (index ≤ 0.5 at attachments, log 17 Oct). PETG allowables behind the predictions (nox/topo `material.py`): Xt 51 (E), **Zt 25.5 (= 0.5 Xt, E)**, S 25.5 (E) MPa; bond 2.0 MPa (E, `box/box-funnel.md` 7). `tools/calibrate.py` reads the Predicted cell of these rows.
 
 | Key | Test (coupon) | Predicted (N) | Measured (N) | Factor | Tag |
 |---|---|---|---|---|---|

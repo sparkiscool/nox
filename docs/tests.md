@@ -25,7 +25,7 @@ Most loads and allowables in `nox/dimensions.md` are E, and the as-built index t
 
 ## 1. Post pull (calibrates the as-built index for attachments)
 **Print:** `print/test_post_pull_v1.stl`, 34.6 g PETG (M), 130 x 30 x 39, plate bottom down, two copies (A 100 %, B 4 walls 15 % gyroid). Two 6 x 6 posts and two 4 x 3 posts, printed upright like real attachment posts, an eye with a Ø8 hole on each top. The side pull bends the post, so it breaks across layers at the root.
-**Predicted** (`dimensions.md` T): 6 x 6: 37.7 N (hook line 25 above the root); 4 x 3: 13.3 N (pulled across the 3, hook line 18). The beam hand calc gives 36.7 / 8.5 N; at h 1.0 the 4 x 3 post is 4 x 3 cells and its root corner is not resolved, so the two sizes split grid error from material error.
+**Predicted** (`dimensions.md` T): 6 x 6: 37.7 N (E) (hook line 25 above the root); 4 x 3: 13.3 N (E) (pulled across the 3, hook line 18). The beam hand calc gives 36.7 / 8.5 N; at h 1.0 the 4 x 3 post is 4 x 3 cells and its root corner is not resolved, so the two sizes split grid error from material error.
 **Steps:**
 1. Screw copy A to the board through the 5 holes (washers under the heads), board clamped to the bench, posts up.
 2. Scale on peak hold, zeroed while hanging free. Hook through the eye of a 6 x 6 post.
@@ -52,7 +52,7 @@ Most loads and allowables in `nox/dimensions.md` are E, and the as-built index t
 
 ## 3. Layer pull (PETG across-layer strength Zt)
 **Print:** `print/test_layer_pull_v1.stl`, 28.6 g PETG (M), 90 x 30 x 38, plate bottom down, 100 %. Three 3.6 x 3.6 x 8 necks printed upright with 45° flares and an eye on top: a straight pull is pure across-layer tension.
-**Predicted:** 326.8 N (nox/topo FE h 1.0, peak at the gauge / flare junction; Zt x A = 330.5 N, A 12.96 mm²), about 33 kgf: use the 50 kg scale.
+**Predicted:** 326.8 N (E) (nox/topo FE h 1.0, peak at the gauge / flare junction; Zt x A = 330.5 N, A 12.96 mm²), about 33 kgf: use the 50 kg scale.
 **Steps:**
 1. Screw the plate to the board through the 4 holes; board on the floor.
 2. Stand on the board either side of the coupon; hook through the eye of one neck.

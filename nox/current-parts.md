@@ -54,7 +54,7 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 ## Tests
 | Part | Doc / scripts | Version | State | File (`print/`) | g | Next (owner) |
 |---|---|---|---|---|---|---|
-| Strength calibration coupons: post pull, layer pull, glue lap, socket | `docs/tests.md`; `nox/tests/coupons.py`; `runs/test_*/`; numbers `dimensions.md` T | post pull v1 (x2: A 100 %, B 4 walls 15 % gyroid), layer pull v1, glue lap v1 (x12), socket coupon v2 | **READY** | `test_post_pull_v1.stl`, `test_layer_pull_v1.stl`, `test_glue_lap_v1.stl`, `test_socket_coupon_v2.stl` | 34.6 / 28.6 / 3.9 / 7.9 (M) | solid_check PASS on all 4 (24 Oct). Predicted break: posts 6x6 37.7 N, 4x3 13.3 N; layer 326.8 N; glue 120 N; socket 177 N. Spark: print + pull, `docs/tests.md` (order: post pull, XT60, layer pull, glue lap, socket); readings via `tools/calibrate.py` |
+| Strength calibration coupons: post pull, layer pull, glue lap, socket | `docs/tests.md`; `nox/tests/coupons.py`; `runs/test_*/`; numbers `dimensions.md` T | post pull v1 (x2: A 100 %, B 4 walls 15 % gyroid), layer pull v1, glue lap v1 (x12), socket coupon v2 | **READY** | `test_post_pull_v1.stl`, `test_layer_pull_v1.stl`, `test_glue_lap_v1.stl`, `test_socket_coupon_v2.stl` | 34.6 / 28.6 / 3.9 / 7.9 (M) | solid_check PASS on all 4 (24 Oct). Predicted break loads: `dimensions.md` T. Spark: print + pull, `docs/tests.md` (order: post pull, XT60, layer pull, glue lap, socket); readings via `tools/calibrate.py` |
 
 ## Spark
 Each line carries its best answer; a session that cannot wait takes it as DEFAULT.
