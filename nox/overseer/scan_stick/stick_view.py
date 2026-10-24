@@ -19,7 +19,9 @@ head = T.load(os.path.join(ROOT, HEAD, "scan_stick_head_view.stl"))
 BP = os.path.join(ROOT, BASE, "scan_stick_base_view.stl"); base = T.load(BP) if os.path.exists(BP) else None
 l2 = T.load(os.path.join(U.OUT_SYS, "l2.stl"))
 rods = T.util.concatenate([T.creation.cylinder(1.5, segment=[p0, p1], sections=12) for _, p0, p1 in U.cage_rods()])
-nodes = T.util.concatenate([bx((x - 6, x + 6, sy * U.YC - 6, sy * U.YC + 6, z - 6, z + 6)) for sy in (-1, 1)
+import glob
+NODES = sorted(glob.glob(os.path.join(ROOT, "runs", "scan_stick_nodes", "v1", "*.stl")))
+nodes = T.util.concatenate([T.load(f) for f in NODES]) if NODES else T.util.concatenate([bx((x - 6, x + 6, sy * U.YC - 6, sy * U.YC + 6, z - 6, z + 6)) for sy in (-1, 1)
                             for x, z in ((U.X_BACK, U.Z_LOW), (U.X_BACK, U.Z_TOP), (U.frame_x(U.Z_LOW), U.Z_LOW), (U.frame_x(U.Z_TOP), U.Z_TOP))])
 pole = T.creation.cylinder(13.75, 300, sections=48); pole.apply_translation([0, 0, 2.0 - 150])          # Ø27.5 cylinder, shoulder at z 2
 tip = T.creation.cylinder(19.05 / 2, 25.0, sections=48); tip.apply_translation([0, 0, 2.0 + 12.5])     # 25 thread to z 27
@@ -34,7 +36,7 @@ Sb = U.spine_bodies()
 s.part("base v27 drawn (running)", U.tm(Sb["drawn"] - Sb["cuts"]), group="printed", color="#e0592a", printed=True,
        note="drawn interfaces of the base the v27 run is built on: closed pocket tube (side walls y ±26..32), no switch panel (Spark 24 Oct), 27 sleeve down the pole; the generated web replaces this when v27 is done")
 s.part("cage rods", rods, group="bought", color="#111111", printed=False, note="3 mm carbon")
-s.part("TPU nodes", nodes, group="printed", color="#d4a017", printed=False, note="drawn 12 mm nodes (model)")
+s.part("TPU nodes", nodes, group="printed", color="#d4a017", printed=False, note="runs/scan_stick_nodes/v1 (nodes_v5.py): 8 drawn TPU nodes, Ø3.2 sockets 3 wall, solid_check PASS each" if NODES else "12 mm placeholders")
 for n, b, col in (("pack", U.PACK, "#2f4fbf"), ("Pi 5", U.PI_KEEP, "#2e7d32"), ("UBEC + buck", U.EL_KEEP, "#b07d2b"),
                   ("camera", (U.CAM_PLATE[1], U.CAM_XF + U.LENS, -19, 19, U.CAM_Z - 19, U.CAM_Z + 19), "#2d5a2d")):
     s.part(n, bx(b), group="bought", color=col, printed=False)
