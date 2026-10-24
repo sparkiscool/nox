@@ -249,3 +249,33 @@ layout: beta 16 done: eroded design 31 bodies, main 91.6%; drawn bodies outside 
 it  68 beta   32 J  32.8119 vol 0.0304 (dil 0.1107 g +0.036) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 8.63e+04 30.0s
 it  69 beta   32 J  42.4938 vol 0.0273 (dil 0.1085 g +0.016) grey  0.7% ch 0.100 worst XT60 insert at the drone 60  1.03e+05 29.5s
 it  70 beta   32 J  41.6339 vol 0.0246 (dil 0.1067 g -0.001) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 1.09e+05 29.8s
+git push failed: fatal: The upstream branch of your current branch does not match
+the name of your current branch.  To push to the upstream branch
+on the remote, use
+
+    git push origin HEAD:part/box_structure_v2
+
+To
+it  71 beta   32 J  37.2295 vol 0.0249 (dil 0.1064 g -0.004) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 8.85e+04 30.4s
+it  72 beta   32 J  33.2725 vol 0.0255 (dil 0.1063 g -0.005) grey  0.6% ch 0.100 worst misuse: Overseer motors cut 8.75e+04 29.7s
+it  73 beta   32 J  33.1750 vol 0.0263 (dil 0.1065 g -0.003) grey  0.6% ch 0.100 worst misuse: Overseer motors cut 8.73e+04 29.8s
+it  74 beta   32 J  33.1480 vol 0.0268 (dil 0.1066 g -0.002) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 8.72e+04 29.4s
+it  75 beta   32 J  32.9887 vol 0.0271 (dil 0.1066 g -0.002) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 8.68e+04 28.7s
+it  76 beta   32 J  32.9770 vol 0.0274 (dil 0.1067 g -0.001) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 8.68e+04 30.4s
+it  77 beta   32 J  32.9759 vol 0.0276 (dil 0.1068 g -0.001) grey  0.7% ch 0.100 worst misuse: Overseer motors cut 8.68e+04 29.4s
+layout: stopped (grey) at it 77, beta 32, 2469 s
+layout: beta 32 done: eroded design 31 bodies, main 91.5%; drawn bodies outside the main body: 30
+{
+ "standing, Overseer seated": 1369.053504607079,
+ "Overseer catch +X+Y diag": 40790.66258437376,
+ "Overseer catch -X-Y diag": 9165.352804252554,
+ "misuse: Overseer motors cut": 47698.35681407337,
+ "XT60 insert at the drone 60 N": 2107.5705793638112,
+ "XT60 insert at the -90 bay 60 N": 15006.6350307579,
+ "XT60 pull at the -90 bay 50 N": 6114.289966825956,
+ "XT60 insert at the -120 bay 60 N": 9174.299072605425,
+ "stub tilt: XT60 at the drone 57 N + 5.9 N.m": 5429.913804827929,
+ "lifted by the side sheets 2 g": 993.5147679421898,
+ "misuse: set down hard 5 g": 407.9337331578701,
+ "misuse: knocked over onto +X 5 g": 1109.0789906604955
+}
