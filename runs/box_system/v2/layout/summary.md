@@ -20,7 +20,7 @@ System file: `nox/box/box_structure_v2.assembly.json` (= `concept.assembly.json`
 - **Access 18 / 18:** every cartridge comes out to park along its install axis; every bay body comes out along +Y with the front sheet off (the service door, DEFAULT).
 - **Fit FAILs left, both in the catch's scope:**
   - Overseer drone set vs the funnel panels v7, 772.6 mm³ (E): funnel v8 (opening 191 x 168, C) clears it.
-  - −Y plain panel bottom vs the insert lanes: carriage 524.9 + grabber 434.0 mm³ (E, panels v7). With v8 the grabber clears and the carriage band still meets the bottom lip, 2 x 248.7 mm³ (E, no v8 file yet). Hub decision: the catch notches the lip in panel v9 plain (X ±35, Y 54..73, to r 159, C; it must start at ≤ Y 53.75, the lane's start, or 0.2 of clash stays, E). Re-measure when v8 / v9 land.
+  - −Y plain panel bottom vs the insert lanes: carriage 123.5 + grabber 512.3 mm³ (E, panels v7; lanes from arm PR 79 70c3c33: carriage X −35..47.5, Y 53.75..73.75, r ≤ 159; head + grabber X ±47.5, Y 73.75..217, r 111.5..159.6, C). With v8 the grabber clears and the carriage still meets the bottom lip, 492.6 mm³ (E, no v8 file yet). Hub decision: the catch notches the lip in panel v9 plain (X ±35, Y 54..73, to r 159, C; it must start at ≤ Y 53.75, the lane's start, or 0.2 of clash stays, E). Re-measure when v8 / v9 land.
 - **Option A (DEFAULT):** alternating bays at R 113 (C): 81.4 L (E).
 - **Option B:** Overseer at the bottom 4, receivers clipped: 402 x 418 x 475 mm, 79.8 L (−1.6 L) (E); unclipped (B0) neighbouring receivers overlap 1020 mm³ (E), so B needs the clip.
 - **Option C:** bottom slots at R 128 (C): 430 x 418 x 505 mm, 90.8 L (E); the arm strokes change. C has no lane clash: its bottom slots move the −Y lip clear without the v9 notch.

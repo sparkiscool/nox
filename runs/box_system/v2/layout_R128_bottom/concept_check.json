@@ -589,7 +589,7 @@
    {
     "a": "arm: hub + rails (turning)",
     "b": "arm: drone insert lane (carriage)",
-    "overlap_mm3": 194744.13,
+    "overlap_mm3": 241709.14,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -601,40 +601,40 @@
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "arm: motors (turning)",
-    "b": "arm: drone insert lane (carriage)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "arm: motors (turning)",
-    "b": "arm: drone insert lane (grabber)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "arm: parked heads + cartridges (turning)",
-    "b": "arm: drone insert lane (carriage)",
-    "overlap_mm3": 87210.29,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
+    "a": "arm: motors (turning)",
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: motors (turning)",
+    "b": "arm: drone insert lane (grabber)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm: parked heads + cartridges (turning)",
+    "b": "arm: drone insert lane (carriage)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
     "a": "arm: parked heads + cartridges (turning)",
     "b": "arm: drone insert lane (grabber)",
-    "overlap_mm3": 205175.61,
+    "overlap_mm3": 209572.24,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -652,25 +652,25 @@
    {
     "a": "arm: drone insert lane (carriage)",
     "b": "arm: drone insert lane (grabber)",
-    "overlap_mm3": 43842.11,
+    "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "manifold3d",
+    "method": "aabb",
     "pass_": true
    },
    {
     "a": "arm: drone insert lane (carriage)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 49155.12,
+    "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
-    "method": "manifold3d",
+    "method": "aabb",
     "pass_": true
    },
    {
     "a": "arm: drone insert lane (grabber)",
     "b": "drone receivers + paths (keep-out)",
-    "overlap_mm3": 381911.39,
+    "overlap_mm3": 382691.97,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
