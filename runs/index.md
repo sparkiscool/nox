@@ -1,6 +1,6 @@
 # Runs
 
-_81 runs · rebuilt 2026-10-24 04:24_
+_81 runs · rebuilt 2026-10-24 05:12_
 
 ## Latest per part
 
@@ -35,8 +35,8 @@ _81 runs · rebuilt 2026-10-24 04:24_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 05:12 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 04:24 | hook_latch | [v2](runs/hook_latch/v2/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 04:17 | battery_latch | [v1](runs/battery_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 03:31 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |

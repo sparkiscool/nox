@@ -1,0 +1,13 @@
+{
+ "bracket_jB": {
+  "g": 23.0,
+  "qty": 2,
+  "bodies": 1,
+  "watertight": true,
+  "bbox": [
+   32.0,
+   80.0,
+   29.5
+  ]
+ }
+}
