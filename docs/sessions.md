@@ -8,6 +8,12 @@ Spark 24 Oct: no session stays alive or keeps getting updates after its work is 
 - **End:** a controller archives each child the turn it reports done or is superseded (CLAUDE.md Children stay in sync). A session that is not a child ends its last turn with the done line; the sweep below archives it.
 - **Updates go only to live sessions:** before a `send_message`, `get_session` the target; never send to an ARCHIVED one, and never to one whose job is done (archive it instead).
 
+## Hub and reporting (Spark 24 Oct: no status updates from running parts; one session reports everything about every 30 min)
+- **Hub:** the control session, "Parallel session execution with workers" (`session_01BEtJ8Y7dCsuQ6ko5SnvzNr`). If it is archived, the newest running session titled as the control session is the hub; a new hub writes its id here in its first PR.
+- **Everyone else reports to the hub, never to Spark:** a worker, run or child session sends the hub one `send_message` when it finishes (PR link, the summary block, DEFAULTs taken), fails (what and why) or is blocked (what it needs). No progress pings, no push notifications, no proactive `SendUserFile`. A session Spark talks to directly answers him when he writes, and still sends its results to the hub.
+- **Digest:** the hub arms `send_later` (30 min) while any work is running, re-arms it after each digest, and stops when nothing runs. Each digest, only if something changed since the last one: done (part, version, key numbers, PR), running (who, on what), waiting on Spark (measure / buy / decide / print, with the slicing prompt for anything ready to print), problems. At most ~12 lines. Nothing changed: no message, re-arm silently.
+- **Board:** with each digest the hub refreshes the Nox Board (https://claude.ai/artifact/NKBNkPUSyKgwYrtZZBhMkw): `python3 tools/board_data.py <dir>`, upload each JSON as an asset of the board (Artifact publish, `asset: true`, `url` the board), then one ArtifactData `update` per changed `datasets/<name>` with the new `source.url` and `updated: {at, by}`.
+
 ## Sweep (scheduled every 6 h; any session may run it by hand)
 1. `list_sessions` (mine, limit 100). Consider only sessions whose sources or outcomes name `sparkiscool/nox`, not ARCHIVED, not this session.
 2. Archive a session when all hold:
