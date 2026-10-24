@@ -184,6 +184,50 @@ Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coup
 | Network | L2 192.168.1.62 → Pi 192.168.1.2, UDP 6101 → 6201 | spec |
 | Masses | base v17 340.1, head v13 42.0, cam v7 13.35 on the unit; thread test ring 8.3 (PETG); unit 395 printed + 230 L2 + ~30 camera + ~50 Pi + 590 pack (E) ≈ 1.30 kg | M / E |
 
+## L. Standard drone cases and design targets (every drone part, Scout and Overseer; CLAUDE.md "Every drone design"; DEFAULT unless tagged)
+Each case acts at the CG of the mass it moves (a mount carries its payload's mass x the case at the payload's CG, never at the bolt face). A part's own section may raise a value, never lower it.
+
+| Case / target | Value | Tag |
+|---|---|---|
+| Hover | 1 g down at every mass | E |
+| Flight (max thrust, manoeuvre) | 4 g along the thrust axis; 2 g lateral | E (from J Loads) |
+| Landing / catch | 6 g up at the cage feet or catch wheels | E (from J, G) |
+| Crash | 35 g along each of the 6 face directions and the 8 corner directions, the drone hitting through the cage member that touches first | E (from J Loads) |
+| Swap | insert push 60 N, pull-out 50 N on the cartridge and receiver (G XT60 mate) | E |
+| Handling | 50 N on any one cage member or node, any direction | E |
+| Cage first | cage ahead of every protected part by ≥ 3 mm in every direction; box openings ≥ 0 inside their cone | DEFAULT (alt 1 mm) |
+| Balance | CG within 3 mm horizontally of the thrust centre, pack in and pack out | DEFAULT |
+| Sensor mounts (FC, camera, lidar) | first mode ≥ 100 Hz, reported in Hz | DEFAULT, E until the vibration log |
+| Breaking order | in the crash case the frame, every mount and the pack holder stay at ≤ 1 / 1.5 of the worst cage node or foot index (the node goes first) | DEFAULT |
+| Index target | worst as-built index ≤ 1.0 in the crash case, ≤ 0.5 in flight and landing | DEFAULT |
+
+**Mass budget (24 Oct; soft, Spark: "as low as we can but never sacrifice design for weight").** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section as a target, not a limit: each piece's topology aims at its slot, but strength, stiffness, cage first, access and function come first. `system_check` reports mass against `mass_budget_g` / `budget_g` and warns when over; it never fails on mass. An over-budget piece says in its summary what the extra grams buy.
+
+| System | Whole (`mass_budget_g`) | Bought, fixed | Structure allowance (printed + rods + fasteners) | Tag |
+|---|---|---|---|---|
+| Overseer | 2200 g (DEFAULT, 5 % under the 2330 g cage v0 estimate; alt 2330) | 1649 g: L2 230, pack 650, 4 motor + prop 364, 4 ESC 100, Pi 5 + cooler 55, plates 84, wires 80, cameras 30, PDB 21, UBEC 15, FC 10, buck 6, RX 2, flow 2 (`layout_v2.py` cg_of) | ≤ 551 g: cage rods + nodes, arms, apex / L2 mount, deck, sled + pods, feet, cartridge | E |
+| Scout v3 | 500 g (DEFAULT: never heavier than today's ~500 g; Spark set no target, alt none) | from the Scout v3 bottom layout (pack 165 P, frame 24 to 32 E, ...) | 500 minus bought, split by the Scout v3 system pass | E |
+| Box | no cap (ground station); each piece reports its mass, a new version may not be heavier without a reason in its summary | | | DEFAULT |
+| Scan stick (on the Overseer) | counts inside the Overseer's 2200 g when mounted; its own section sets its slot | | | DEFAULT |
+
+## T. Strength calibration (24 Oct 2026; protocol `docs/tests.md`, coupons `nox/tests/coupons.py`, readings `tools/calibrate.py`)
+Predicted = break load: the load at which the method's stress reaches the material strength (nox/topo as-built index, misuse class, x 0.85 / 2.5 = 1; grid h 1.0 as the parts use). Factor = measured / predicted; use the min factor: a part's real index = its reported index / factor. Until a row reads P every factor is 1.0 (E) and the attachment rule stands (index ≤ 0.5 at attachments, log 17 Oct). PETG allowables behind the predictions (nox/topo `material.py`): Xt 51 (E), **Zt 25.5 (= 0.5 Xt, E)**, S 25.5 (E) MPa; bond 2.0 MPa (E, `box/box-funnel.md` 7). `tools/calibrate.py` reads the Predicted cell of these rows.
+
+| Key | Test (coupon) | Predicted (N) | Measured (N) | Factor | Tag |
+|---|---|---|---|---|---|
+| `post_pull_6x6` | post pull, 6 x 6 post upright, side pull 25 above the root, copy A 100 % (`print/test_post_pull_v1.stl`) | 37.7 (nox/topo FE h 1.0, across layers at the root; h 0.5 26.4; beam 36.7) | to test | 1.0 | E |
+| `post_pull_4x3` | post pull, 4 x 3 post upright (pulled across the 3), side pull 18 above the root, copy A 100 % | 13.3 (nox/topo FE h 1.0; h 0.5 8.4; beam 8.5) | to test | 1.0 | E |
+| `post_pull_6x6_B` | post pull 6 x 6, copy B at the box-part default (4 walls, 15 % gyroid) | 37.7 (as copy A) | to test | 1.0 | E |
+| `post_pull_4x3_B` | post pull 4 x 3, copy B (4 walls, 15 % gyroid) | 13.3 (as copy A) | to test | 1.0 | E |
+| `layer_pull` | layer pull, 3.6 x 3.6 neck upright, straight pull: Zt = F / A, A 12.96 mm² (`print/test_layer_pull_v1.stl`) | 326.8 (nox/topo FE h 1.0, gauge / flare junction; h 0.5 258.0; Zt A 330.5) | to test | 1.0 | E |
+| `glue_epoxy` | glue lap, 2-part epoxy, 24 h, single lap A 60 mm² (`print/test_glue_lap_v1.stl` x 2) | 120 (2.0 MPa x 60, hand) | to test | 1.0 | E |
+| `glue_methacrylate` | glue lap, methacrylate (MMA) adhesive, 24 h, A 60 mm² | 120 (2.0 MPa x 60, hand) | to test | 1.0 | E |
+| `socket_pull` | socket coupon, 3.0 rod epoxied 24 h in the bore the fit picks, pull out; A 88.6 mm² (rod face, `print/test_socket_coupon_v2.stl`) | 177 (2.0 MPa x π x 3.0 x 9.4, hand) | to test | 1.0 | E |
+| `xt60_insert` | XT60 push-in force, new pair and a pack's own plug (D17) | 60 (I "XT60 mate", E) | to test | 1.0 | E |
+| `xt60_pull` | XT60 pull-out force (D17) | 50 (I "XT60 mate", E) | to test | 1.0 | E |
+
+Socket bore fit (no load): the bore a 3.0 rod slides into by hand without wobble, of 3.5 / 3.6 / 3.7 (socket v2 uses 3.6, C): to test.
+
 ## M. Mounting interfaces of bought parts (22 Oct 2026 web research; for every future mount)
 Maker numbers for every bought part a printed mount bolts to. Tags: **spec** maker datasheet, drawing or CAD; **listing** store page; **typical** one maker of a generic part; **derived** measured off a maker's drawing or CAD. None is P yet: when a part is measured, its P value replaces the cell. **Rule (Spark 22 Oct): where sources agree or differ only slightly, the value is used; where they are not close, or no source has it, the cell says "open, Qn" and the question below is settled by the chat that first designs a mount for that part (measure the part, then write P here).** Sources and the long tables: `claude/research/2026-10-22-mounting-dimensions.md`.
 

@@ -1,6 +1,6 @@
 # Runs
 
-_73 runs · rebuilt 2026-10-24 03:29_
+_79 runs · rebuilt 2026-10-24 03:30_
 
 ## Latest per part
 
@@ -12,16 +12,22 @@ _73 runs · rebuilt 2026-10-24 03:29_
 | arm_rail | v1 | DONE | 49.9 (M) | 0.23 in insert 60 N (E): couple 6.39 N.m (E), rail bending at the outer post 5.7 MPa (E, hand calc, across layers vs 25 E) | PASS | [runs/arm_rail/v1](runs/arm_rail/v1/summary.md) |
 | arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
 | bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
+| box_catch_assembly | v0 | DONE | 673 (E) | ·  | · | [runs/box_catch_assembly/v0](runs/box_catch_assembly/v0/summary.md) |
 | box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
 | bracket_jA | organic-v4 | · | 36.8 (M) | ·  | PASS | [runs/bracket_jA/organic-v4](runs/bracket_jA/organic-v4/summary.md) |
 | funnel_panel | v7 | DONE | 80.0 (M) | 0.91 in press u60 v90 | PASS | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
 | holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
 | hook_latch | v1 | · | · | ·  | · | [runs/hook_latch/v1](runs/hook_latch/v1/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
+| overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
+| test_glue_lap | v1 | DONE | 3.9 (M) | ·  | PASS | [runs/test_glue_lap/v1](runs/test_glue_lap/v1/summary.md) |
+| test_layer_pull | v1 | DONE | 28.6 (M) | ·  | PASS | [runs/test_layer_pull/v1](runs/test_layer_pull/v1/summary.md) |
+| test_post_pull | v1 | DONE | 34.6 (M) | ·  | PASS | [runs/test_post_pull/v1](runs/test_post_pull/v1/summary.md) |
+| test_socket_coupon | v2 | DONE | 7.9 (M) | ·  | PASS | [runs/test_socket_coupon/v2](runs/test_socket_coupon/v2/summary.md) |
 
 ## All runs, newest first
 
@@ -64,10 +70,16 @@ _73 runs · rebuilt 2026-10-24 03:29_
 | 2026-10-24 | arm_pinion16 | [v1](runs/arm_pinion16/v1/summary.md) | DONE | 3.0 (M) | 0.56 | PASS | gear face (Y 72.5, C) down with a 0.3 (C) elephant-foot inset step, boss up | · GB | · min | · |
 | 2026-10-24 | arm_rail | [v1](runs/arm_rail/v1/summary.md) | DONE | 49.9 (M) | 0.23 | PASS | bottom (Y 74 (C): body + both feet, coplanar) | · GB | · min | · |
 | 2026-10-24 | arm_vwheel | [v1](runs/arm_vwheel/v1/summary.md) | DONE | 2.8 (M) | 0.66 | PASS | either face (symmetric, C) | · GB | · min | · |
+| 2026-10-24 | box_catch_assembly | [v0](runs/box_catch_assembly/v0/summary.md) | DONE | 673 (E) | · | · | · | · GB | 1 min | · |
 | 2026-10-24 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | DONE | 80.0 (M) | 0.91 | PASS | contact face | · GB | · min | · |
+| 2026-10-24 | overseer_assembly | [v0](runs/overseer_assembly/v0/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 8 min | · |
 | 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
 | 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
+| 2026-10-24 | test_glue_lap | [v1](runs/test_glue_lap/v1/summary.md) | DONE | 3.9 (M) | · | PASS | flat face (as saved) | · GB | · min | · |
+| 2026-10-24 | test_layer_pull | [v1](runs/test_layer_pull/v1/summary.md) | DONE | 28.6 (M) | · | PASS | plate bottom (as saved) | · GB | · min | · |
+| 2026-10-24 | test_post_pull | [v1](runs/test_post_pull/v1/summary.md) | DONE | 34.6 (M) | · | PASS | plate bottom (as saved) | · GB | · min | · |
+| 2026-10-24 | test_socket_coupon | [v2](runs/test_socket_coupon/v2/summary.md) | DONE | 7.9 (M) | · | PASS | plate bottom (as saved) | · GB | · min | · |
 | 2026-10-23 23:31 | scan_stick_cam | [v5](runs/scan_stick_cam/v5/summary.md) | FAILED | 13.0 (M) | 0.31 | PASS | · | 5.7 (P) GB | 44 min | · |
 | 2026-10-23 19:52 | scan_stick | [v13](runs/scan_stick/v13/summary.md) | DONE | 42.0 (M) | 0.30 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |
 | 2026-10-23 18:46 | scan_stick_base | [v17](runs/scan_stick_base/v17/summary.md) | DONE | 340.1 (M) | 0.26 | PASS | -z (bottom) | 5.6 (P) GB | 6 min | · |
