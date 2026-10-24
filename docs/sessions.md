@@ -9,11 +9,12 @@ Spark 24 Oct: no session stays alive or keeps getting updates after its work is 
 - **Controllers:** before reporting, a controller checks each child (`get_session`) and says its state in one line; a child that finishes or is superseded is archived the same turn.
 - **Updates go only to live sessions:** before a `send_message`, `get_session` the target; never send to an ARCHIVED one, and never to one whose job is done (archive it instead).
 
-## Hub and reporting (Spark 24 Oct: no status updates from running parts; one session reports; 24 Oct later: only for print-ready files or his decisions)
-- **Hub:** the control session, "Parallel session execution with workers" (`session_01BEtJ8Y7dCsuQ6ko5SnvzNr`). If it is archived, the newest running session titled as the control session is the hub; a new hub writes its id here in its first PR.
-- **Everyone else reports to the hub, never to Spark:** a worker, run or child session sends the hub one `send_message` when it finishes (PR link, the summary block, DEFAULTs taken), fails (what and why) or is blocked (what it needs). No progress pings, no push notifications, no proactive `SendUserFile`. A session Spark talks to directly answers him when he writes, and still sends its results to the hub.
-- **Reporting (Spark 24 Oct: "only use tokens when absolutely needed"):** no timed digests and no send_later check-ins. The hub messages Spark only when a file is ready to print (pictures + slicing prompt) or a decision of his is needed (options, DEFAULT, visual). Child reports are acted on (routed, reviewed, merged) without messaging Spark. The board is refreshed by the organiser.
-- **Board:** with each digest the hub refreshes the Nox Board (https://claude.ai/artifact/NKBNkPUSyKgwYrtZZBhMkw): `python3 tools/board_data.py <dir>`, upload each JSON as an asset of the board (Artifact publish, `asset: true`, `url` the board), then one ArtifactData `update` per changed `datasets/<name>` with the new `source.url` and `updated: {at, by}`.
+## Sessions, workers and reporting (Spark 24 Oct: no hub or digest session; "only use tokens when absolutely needed")
+- **One task, one session.** The session Spark starts for a task owns it end to end: design, review agent, merge on PASS (CLAUDE.md step 4).
+- **Workers inside it.** Parallel subtasks go to Agent-tool workers in the same session (`isolation: "worktree"` for anything that commits). They share the box (4 cores, 16 GB) and stop if its container restarts, so they commit and push every step.
+- **A new cloud session only when needed:** a heavy run (hours, or more memory than the box can share) or a box already full. Its brief is standalone; it merges its own PR after the review agent's PASS and is archived when done.
+- **Reporting:** a session messages Spark only when a file is ready to print (pictures + slicing prompt) or a decision of his is needed (options, DEFAULT, visual). No digests, no progress pings, no timed check-ins. A child session puts its result in its own final reply and, if its parent is live, one send_message to the parent.
+- **Board:** the organiser refreshes the Nox Board (https://claude.ai/artifact/NKBNkPUSyKgwYrtZZBhMkw) on its 6 h run: `python3 tools/board_data.py <dir>`, upload each JSON as an asset, then one ArtifactData `update` per `datasets/<name>`.
 
 ## Sweep (every 6 h as part of the organiser run, `docs/organiser.md`; any session may run it by hand)
 1. `list_sessions` (mine, limit 100). Consider only sessions whose sources or outcomes name `sparkiscool/nox`, not ARCHIVED, not this session.

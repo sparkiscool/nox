@@ -17,7 +17,7 @@ L = {"__file__": SRC, "__name__": "layout_v2_defs"}
 exec(compile(src, SRC, "exec"), L)
 from assembly import load
 
-RES = os.environ.get("SCOUT_RESULT") or os.path.join(ROOT, "runs", "scout_layout", "v3", "result.json")   # a candidate run's result
+RES = os.environ.get("SCOUT_RESULT") or os.path.join(ROOT, "runs", "scout_layout", "v4", "result.json")   # a candidate run's result
 OUT = os.path.join(os.path.dirname(os.path.abspath(RES)), "assembly"); os.makedirs(OUT, exist_ok=True)
 R = json.load(open(RES))
 rel = lambda p: os.path.relpath(p, ROOT)
@@ -29,7 +29,7 @@ def mesh_part(name, m, **kw):
 
 
 SRC_REL = "nox/scout/v3/layout_v2.py"
-own = dict(owner="scout v3", version=R.get("version", "v3"), source=SRC_REL)
+own = dict(owner="scout v3", version=R.get("version", "v4"), source=SRC_REL)
 parts = []
 parts.append(mesh_part("frame plate", L["PLATE"], role="structure", mass_g=28, tag="E", note="Bee35 cut down, 3.5 carbon (C), tail XT60 cut-out", **own))
 for i, (b, (x, y)) in enumerate(zip(L["BELLS"], L["MOTORS_XY"])):
@@ -85,7 +85,7 @@ parts.append(mesh_part("keep-alive pads", trimesh.util.concatenate(L["KA_PADS"])
                        note="B+ on the +x lower ring, B- on -x; the box catch's face probes touch them (G (8))", **own))
 SWAPSET = ["cartridge v5 (latch)", "pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug", "cartridge skid closed end (latch, TPU)", "cartridge skid lead end (latch, TPU)", "receiver TPU strips (latch)"]
 a = {"name": "Scout v3", "machine": "scout",
-     "note": ("Scout v3 system pass v3: printed short members (carbon >= 33 mm, Spark), fewest pieces (layout.md). Seat frame = drone frame. Battery set = the control session's "
+     "note": ("Scout v3 system pass v4: layout change after review PR 94 (Radxa up 8, shields, access), carbon rods >= 33 mm (layout.md). Seat frame = drone frame. Battery set = the control session's "
               "latch standard (part/battery-latch 258becf, interim). No belly post: keep-alive by probes in the +-x funnel faces onto pads on the lower ring (box catch DEFAULT, G (8)). "
               "Wires, camera mount and plate hubs are E envelopes / mass points. Left out: wheel contact pads."),
      "cg_ref": [0.0, 0.0, L["PROP_Z"]], "thrust_axis": [0, 0, 1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0,

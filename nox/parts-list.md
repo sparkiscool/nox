@@ -86,7 +86,7 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | 623ZZ bearing 3 x 10 x 4 | 1 | detent v6 roller on the 3.0 carbon axle (arm v7) | to buy | box-arm.md v7, runs/detent/v6/summary.md |
 | GT2 16T pulley, 6 mm belt, 5 mm bore | 1 | arm v7 axle motor (5:1 on the fixed 80T; replaces the 20T) | to buy | box-arm.md v7 |
 | M5 precision shim 5 x 10 x 1 | 6 | arm v5: one under each V-wheel (Y 93..94), the eccentric bush sits on one | to buy | box-arm.md v5 mechanism drawn |
-| M5 x 16 socket head (ISO 4762) + M5 heat-set insert (OD 7.0 x 5.8, E) | 4 + 4 | arm v5 rail to hub post, one per post (the inserts go in hub v6's post tops) | CHECK on hand | box-arm.md v5 mechanism drawn |
+| M5 x 10 socket head (ISO 4762) + M5 heat-set insert (OD 7.0 x 5.8, E) | 4 + 4 | arm rail v5 to hub v6, one per pad (the inserts go in hub v6's pads) | CHECK on hand | rails v5 (was M5 x 16, then x 12) |
 | M3 x 4 grub screw | 2 | arm v5 16T pinions on the D-shafts (tapped in the printed boss) | CHECK on hand | box-arm.md v5 mechanism drawn |
 | DIN 988 shim 3 x 5 x 0.5 | 2 | detent arm v2: under the arm on the roller's M3 (replaces v1's printed spacer) | to buy | box-arm.md v5 detent |
 | M5 x 25 socket head + nyloc | 6 | arm v5 wheel axles | CHECK on hand | box-arm.md v5 |
@@ -111,7 +111,8 @@ Printed (state only in `nox/current-parts.md`): base, head, cam (nox/topo parts)
 | Raspberry Pi 4 B 2 GB + microSD ≥ 32 GB | 1 | box computer: Klipper host + `boxd` (DEFAULT; alt Pi 5) | to buy | M: Pi 4 85 x 56 (spec) |
 | GPIO screw-terminal HAT for the Pi 4 | 1 | halls, seat sense, relay inputs, I2C, pull-ups | to buy | |
 | PCA9685 16-ch PWM board (Adafruit 815 class) | 1 | 4 latch MG90S + 2 gripper servos | to buy | 62.5 x 25.4 (spec) |
-| INA226 module + R010 2512 shunt (swap the R100) | 3 + 3 | keep-alive and 2 live bays: current + bus voltage | to buy (CHECK: INA226 on hand?) | E 32 x 22 |
+| INA226 module + R010 2512 shunt (swap the R100) | 4 + 4 | keep-alive, 2 live bays, gripper servo stall cut (heads v7) | to buy (CHECK: INA226 on hand?) | E 32 x 22 |
+| ADS1115 4-ch 16-bit ADC module + DRV5055A4 analog hall + AP2112K-3.3 LDO + 10 k / 30 k resistors | 1 + 4 + 1 + 2 / 2 | grip halls, 2 per head summed 3:1 (heads v7; the magnets are the heads') | to buy | E 28 x 18 |
 | XL4016-class CC/CV buck, 8 A | 2 | keep-alive 13.0 V CC 3.0 A; servo rail 6.0 V | to buy | E 66 x 47 |
 | 24 → 5.1 V 5 A buck (Pololu D36V50F5 class) | 1 | Pi + logic (or the on-hand 5 V buck if ≥ 4 A) | to buy (CHECK) | E 41 x 26 |
 | DPDT relay 24 VDC coil, 8 A contacts (Omron G2RL-2 DC24 class, spec) + PCB socket | 3 | brake KB1 / KB2 (heads) / KB3 (axle): NC shorts each motor coil on itself when its brake pin is low (`box-electronics.md` Head brake) | to buy | E 29 x 13 each |

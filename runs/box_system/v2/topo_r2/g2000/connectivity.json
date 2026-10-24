@@ -1,0 +1,164 @@
+{
+ "per_body": {
+  "bay30 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay0 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-30 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-60 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-90 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-120 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-150 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-180 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-210 bosses": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay30 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay0 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-30 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-60 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-90 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-120 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-150 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-180 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "bay-210 pad": {
+   "supported": true,
+   "in_main": true
+  },
+  "post0": {
+   "supported": true,
+   "in_main": true
+  },
+  "post1": {
+   "supported": true,
+   "in_main": true
+  },
+  "post2": {
+   "supported": true,
+   "in_main": true
+  },
+  "post3": {
+   "supported": true,
+   "in_main": true
+  },
+  "post4": {
+   "supported": true,
+   "in_main": true
+  },
+  "post5": {
+   "supported": true,
+   "in_main": true
+  },
+  "post6": {
+   "supported": true,
+   "in_main": true
+  },
+  "post7": {
+   "supported": true,
+   "in_main": true
+  },
+  "stub": {
+   "supported": true,
+   "in_main": true
+  },
+  "elec boss0": {
+   "supported": false,
+   "in_main": false
+  },
+  "elec boss1": {
+   "supported": true,
+   "in_main": false
+  },
+  "elec boss2": {
+   "supported": true,
+   "in_main": true
+  },
+  "elec boss3": {
+   "supported": true,
+   "in_main": true
+  },
+  "elec boss4": {
+   "supported": false,
+   "in_main": false
+  },
+  "elec boss5": {
+   "supported": false,
+   "in_main": false
+  },
+  "elec boss6": {
+   "supported": true,
+   "in_main": true
+  },
+  "elec boss7": {
+   "supported": false,
+   "in_main": false
+  }
+ },
+ "summary": {
+  "bays_joined": 9,
+  "bays_total": 9,
+  "posts_joined": 8,
+  "posts_total": 8,
+  "stub_joined": true,
+  "elec_bosses_joined": 4,
+  "floating": [
+   "elec boss0",
+   "elec boss4",
+   "elec boss5",
+   "elec boss7"
+  ],
+  "components": 13,
+  "floor_contact_cm2_M": 5.1,
+  "side_x_contact_cm2_M": 6.4,
+  "generated_cm3_M": 2047.9,
+  "generated_mass_g_E": 2601,
+  "text": "9 of 9 bays, 8 of 8 seat posts, stub joined, 4 of 8 electronics bosses joined to the floor-supported body (M); floating: ['elec boss0', 'elec boss4', 'elec boss5', 'elec boss7']; floor contact 5.1 cm2 (M), +X face 6.4 cm2 (M); generated 2047.9 cm3 = 2601 g PETG (E)"
+ }
+}

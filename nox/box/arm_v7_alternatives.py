@@ -62,6 +62,9 @@ def main():
     t1 = "".join(f"<tr><th>{a}</th><td>{b}</td><td>{c}</td></tr>" for a, b, c in rows1)
     t2 = "".join(f"<tr><td>5:1, springs x{r['scale']:g}</td><td>{r['index_margin']}</td><td>{r['parked_margin']}</td><td>{r['head_out_margin']}</td><td>{r['head_out_creep_deg_s']}°/s, {r['impact_N']:g} N</td></tr>" for r in ix)
     t2 += "<tr><td>4:1, springs x1.8 (the hub's first DEFAULT)</td><td>1.04</td><td>1.62</td><td>0.98</td><td>3.9°/s, 13 N</td></tr>"
+    from arm_v7_layout import DETENT_SPRING_SCALE
+    ch = [r for r in ix if abs(r["scale"] - DETENT_SPRING_SCALE) < 1e-6]
+    chosen = (f"Chosen: 5:1, springs x{DETENT_SPRING_SCALE:g} (index {ch[0]['index_margin']}, parked {ch[0]['parked_margin']}, head out {ch[0]['head_out_margin']})." if ch else "")
     svg = section(0, STACKS["low"]) + section(560, STACKS["r2"])
     html = f"""<title>Arm v7 alternatives</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -77,10 +80,10 @@ svg .h {{ font-weight:600; font-size:14px; fill:var(--fg) }} svg .s {{ font-size
 .hub {{ fill:var(--hub) }} .rail {{ fill:var(--rail) }} .wheel {{ fill:var(--wheel); opacity:.8 }} .plate {{ fill:var(--plate) }} .hw {{ fill:var(--hw) }}
 .rec {{ fill:var(--rec); opacity:.7 }} .cart {{ fill:var(--cart); opacity:.9 }} .grip {{ stroke:var(--grip); stroke-dasharray:4 3 }}
 </style>
-<main><header><h1>Arm v7 alternatives</h1><p>Nox swap arm, round 3c. Section along the axle through head A at the drone insert, to scale (2.2 px per mm): what the Overseer's receiver end must clear, and what each choice costs.</p></header>
+<main><header><h1>Arm v7 alternatives</h1><p>Nox swap arm, round 3c. Section along the axle through head A at the drone insert, to scale (2.2 px per mm): what the Overseer's receiver end must clear, and what each choice costs. Option 1 is the current model (plate top 74.35 for heads v7); option 2 is frozen at the round 2 numbers (its own plate), so its clearance is as drawn then, not rerun.</p></header>
 <section class="card"><h2>Carriage stack and grip line</h2><div class="scroll"><svg viewBox="0 0 1120 460" width="1120" height="460" role="img" aria-label="two carriage stacks">{svg}</svg></div></section>
 <section class="card"><h2>Numbers</h2><div class="scroll"><table><tr><th></th><th>1. Low carriage, Y_C 165</th><th>2. Round 2 carriage, Y_C 177</th></tr>{t1}</table></div></section>
-<section class="card"><h2>Axle drive and detent springs (unpowered arm)</h2><div class="scroll"><table><tr><th>Option</th><th>Index past a notch</th><th>Parked hold</th><th>Head out at a horizontal Overseer bay</th><th>Creep with the axle on the brake relay</th></tr>{t2}</table></div><p>Chosen: 5:1, springs x1.5 (index 1.43, parked 1.31).</p></section>
+<section class="card"><h2>Axle drive and detent springs (unpowered arm)</h2><div class="scroll"><table><tr><th>Option</th><th>Index past a notch</th><th>Parked hold</th><th>Head out at a horizontal Overseer bay</th><th>Creep with the axle on the brake relay</th></tr>{t2}</table></div><p>{chosen}</p></section>
 <section class="card"><p>Source: <code>nox/box/arm_v7_alternatives.py</code>; numbers <code>runs/arm/v7/system.json</code>, <code>runs/arm/v7/alt_roundtwo_carriage_yc177.json</code>; requirements <code>nox/dimensions.md</code> "System box swap: arm".</p></section></main>"""
     open(os.path.join(RUN, "alternatives.html"), "w").write(html)
     print("->", os.path.join(RUN, "alternatives.html"))
