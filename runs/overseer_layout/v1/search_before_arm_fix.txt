@@ -1,0 +1,18 @@
+catch  0.0 aft: wheels z -30.0 (seat dz  62.9), motors  82.4 ahead, L2 base (361.6,   60), funnel   1.9, leg reach   65, 2455 g
+catch 10.0 aft: wheels z -30.0 (seat dz  62.9), motors  75.9 ahead, L2 base (355.0,   60), funnel   1.9, leg reach   69, 2449 g
+catch 20.0 aft: wheels z -32.0 (seat dz  64.9), motors  69.3 ahead, L2 base (347.8,   58), funnel   1.9, leg reach   73, 2451 g
+catch 30.0 aft: wheels z -32.0 (seat dz  64.9), motors  62.6 ahead, L2 base (341.1,   58), funnel   1.9, leg reach   76, 2446 g
+
+chosen: catch 30 aft of the plate centre, motor square 62.6 ahead; motors at (202.1, ±139.5) and (-76.9, ±139.5)
+arms: front r 246 (stock 243), rear r 159; tip gaps 25 all round (square kept)
+first vertical bending (E): front 144 Hz (22 deep at the motor), rear 394 Hz; band 1P 87..158, 2P 174..317
+L2: base centre (341.1, 0, 58), axis 15 deg below +x; body lowest z 11.7 vs funnel top 10.2 (drone frame)
+L2 field (96 deg, negative-angle mode, kept clear in both modes): closest cam bracket -24.9 behind it (C, > 0 = clear)
+length: rear prop tips x -204 to the nose x 405 (609); width 533; height 224
+front camera: horizon, portrait, lens at (355, 0, 123), 64 up the L2 back plane: the L2 leaves its view 2 deg under the lower edge
+front camera view: checked (lines above list anything in view)
+down camera and flow views: checked (lines above list anything in view)
+overlaps (M, > 0.5 mm3): none
+funnel seated (catch centre on the funnel axis, bottom plate top at seat z 64.9): closest non-wheel point 1.9 at seat (113, 94, 31) (G ≥ 1.0); below seat z -0.8 (cartridge incl.) 80.6 at ±5 deg yaw vs 84
+mass ~2448 g (E: FC 10 g alone + 4 ESCs on the arms; record 2.0 kg P was the stock frame and gear), CG (62.7, 0.9, 7.0) vs thrust centre (62.6, 0): +0.2 in x
+PX4 flow position from the CG (FRD, m): x -0.093, y +0.043, z +0.081; IMU (FC centre) from the CG: x -0.063, z -0.003

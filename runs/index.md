@@ -1,18 +1,24 @@
 # Runs
 
-_48 runs · rebuilt 2026-10-24 02:26_
+_73 runs · rebuilt 2026-10-24 02:26_
 
 ## Latest per part
 
 | Part | Version | Status | Mass | Worst index | Solid | Summary |
 |---|---|---|---|---|---|---|
-| arm | v5-layout | DONE | · | ·  | · | [runs/arm/v5-layout](runs/arm/v5-layout/summary.md) |
-| bar_half | topo-v2 | · | 76.1 (M) | ·  | PASS | [runs/bar_half/topo-v2](runs/bar_half/topo-v2/summary.md) |
-| bracket_jA | organic-v1 | · | 43.5 (M) | ·  | PASS | [runs/bracket_jA/organic-v1](runs/bracket_jA/organic-v1/summary.md) |
+| arm | v5-layout-b | DONE | · | ·  | · | [runs/arm/v5-layout-b](runs/arm/v5-layout-b/summary.md) |
+| arm_eccbush | v1 | DONE | 0.8 (M) | 0.11 in eccentric wheel load 52 N (E: preload 30 + separating) bending the shank, 2.8 MPa (E, hand calc) vs 25 across layers (E) | PASS | [runs/arm_eccbush/v1](runs/arm_eccbush/v1/summary.md) |
+| arm_pinion16 | v1 | DONE | 3.0 (M) | 0.56 in insert 60 N (E) at r 8 (C), Lewis 25.4 MPa (E) vs 45 in-layer (E); stall 74 N (E): 0.7 | PASS | [runs/arm_pinion16/v1](runs/arm_pinion16/v1/summary.md) |
+| arm_rail | v1 | DONE | 49.9 (M) | 0.23 in insert 60 N (E): couple 6.39 N.m (E), rail bending at the outer post 5.7 MPa (E, hand calc, across layers vs 25 E) | PASS | [runs/arm_rail/v1](runs/arm_rail/v1/summary.md) |
+| arm_vwheel | v1 | DONE | 2.8 (M) | 0.66 in insert 60 N (E): 228 N (E) axial on an outer fixed wheel, all on one flank, Hertz 60 MPa (E) vs 92 yield onset (E, hand calc) | PASS | [runs/arm_vwheel/v1](runs/arm_vwheel/v1/summary.md) |
+| bar_half | organic-v2 | · | 74.9 (M) | ·  | PASS | [runs/bar_half/organic-v2](runs/bar_half/organic-v2/summary.md) |
+| box_electronics | v1 | DONE | · | ·  | · | [runs/box_electronics/v1](runs/box_electronics/v1/summary.md) |
+| bracket_jA | organic-v4 | · | 36.8 (M) | ·  | PASS | [runs/bracket_jA/organic-v4](runs/bracket_jA/organic-v4/summary.md) |
 | funnel_panel | v7 | · | · | ·  | · | [runs/funnel_panel/v7](runs/funnel_panel/v7/summary.md) |
-| holder | topo-v1 | · | 10.3 (M) | ·  | FAIL | [runs/holder/topo-v1](runs/holder/topo-v1/summary.md) |
+| holder | organic-v1 | · | 10.2 (M) | ·  | FAIL | [runs/holder/organic-v1](runs/holder/organic-v1/summary.md) |
 | hook_latch | v1 | · | · | ·  | · | [runs/hook_latch/v1](runs/hook_latch/v1/summary.md) |
-| motor_mount | topo-v1 | · | 13.1 (M) | ·  | FAIL | [runs/motor_mount/topo-v1](runs/motor_mount/topo-v1/summary.md) |
+| motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
+| overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
@@ -21,6 +27,24 @@ _48 runs · rebuilt 2026-10-24 02:26_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 02:26 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | bracket_jA | [organic-v4](runs/bracket_jA/organic-v4/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | bracket_jA | [organic-v5](runs/bracket_jA/organic-v5/summary.md) | · | 36.9 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v1](runs/holder/organic-v1/summary.md) | · | 10.2 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v10](runs/holder/organic-v10/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v11](runs/holder/organic-v11/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v12](runs/holder/organic-v12/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v2](runs/holder/organic-v2/summary.md) | · | 10.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v3](runs/holder/organic-v3/summary.md) | · | 12.5 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v4](runs/holder/organic-v4/summary.md) | · | 10.8 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v5](runs/holder/organic-v5/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v6](runs/holder/organic-v6/summary.md) | · | 11.3 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v7](runs/holder/organic-v7/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v8](runs/holder/organic-v8/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:26 | holder | [organic-v9](runs/holder/organic-v9/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | motor_mount | [organic-v1](runs/motor_mount/organic-v1/summary.md) | · | 17.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:26 | motor_mount | [organic-v2](runs/motor_mount/organic-v2/summary.md) | · | 18.0 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 02:14 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 00:56 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 00:55 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
@@ -36,6 +60,13 @@ _48 runs · rebuilt 2026-10-24 02:26_
 | 2026-10-24 00:55 | motor_mount | [topo-v3](runs/motor_mount/topo-v3/summary.md) | · | 17.2 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-24 00:55 | scan_stick_base | [v13](runs/scan_stick_base/v13/summary.md) | · | 328.1 (M) | · | FAIL | · | · GB | · min | · |
 | 2026-10-24 00:55 | scan_stick_base | [v14](runs/scan_stick_base/v14/summary.md) | · | 296.6 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 | arm | [v5-layout-b](runs/arm/v5-layout-b/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 | arm_eccbush | [v1](runs/arm_eccbush/v1/summary.md) | DONE | 0.8 (M) | 0.11 | PASS | hex flange face down | · GB | · min | · |
+| 2026-10-24 | arm_pinion16 | [v1](runs/arm_pinion16/v1/summary.md) | DONE | 3.0 (M) | 0.56 | PASS | gear face (Y 72.5, C) down with a 0.3 (C) elephant-foot inset step, boss up | · GB | · min | · |
+| 2026-10-24 | arm_rail | [v1](runs/arm_rail/v1/summary.md) | DONE | 49.9 (M) | 0.23 | PASS | bottom (Y 74 (C): body + both feet, coplanar) | · GB | · min | · |
+| 2026-10-24 | arm_vwheel | [v1](runs/arm_vwheel/v1/summary.md) | DONE | 2.8 (M) | 0.66 | PASS | either face (symmetric, C) | · GB | · min | · |
+| 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
 | 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
 | 2026-10-23 23:31 | scan_stick_cam | [v5](runs/scan_stick_cam/v5/summary.md) | FAILED | 13.0 (M) | 0.31 | PASS | · | 5.7 (P) GB | 44 min | · |
 | 2026-10-23 19:52 | scan_stick | [v13](runs/scan_stick/v13/summary.md) | DONE | 42.0 (M) | 0.30 | PASS | -z (flange) | 4.3 (P) GB | 2 min | · |

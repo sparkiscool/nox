@@ -1,0 +1,1421 @@
+{
+ "date": "2026-10-24 18:00",
+ "status": "DONE",
+ "part": "box_electronics",
+ "version": "v1",
+ "note": "design + docs (no printed part); placement search on the rear sheet, nets, budget, state machine",
+ "solid_ok": null,
+ "mass_g": null,
+ "placement": {
+  "SKR": {
+   "x": -100.0,
+   "z": 12.5,
+   "turned": false,
+   "rect": [
+    -151.9,
+    -48.1,
+    -22.6,
+    47.6
+   ]
+  },
+  "PI": {
+   "x": -115.0,
+   "z": 180.0,
+   "turned": true,
+   "rect": [
+    -143.0,
+    -87.0,
+    137.5,
+    222.5
+   ]
+  },
+  "PCA": {
+   "x": -10.0,
+   "z": 180.0,
+   "turned": false,
+   "rect": [
+    -41.2,
+    21.2,
+    167.3,
+    192.7
+   ]
+  },
+  "RELAY": {
+   "x": -80.0,
+   "z": 92.5,
+   "turned": true,
+   "rect": [
+    -107.5,
+    -52.5,
+    55.0,
+    130.0
+   ]
+  },
+  "INA_KA": {
+   "x": 10.0,
+   "z": 95.0,
+   "turned": false,
+   "rect": [
+    -6.0,
+    26.0,
+    84.0,
+    106.0
+   ]
+  },
+  "INA_S": {
+   "x": -25.0,
+   "z": 87.5,
+   "turned": true,
+   "rect": [
+    -36.0,
+    -14.0,
+    71.5,
+    103.5
+   ]
+  },
+  "INA_O": {
+   "x": -135.0,
+   "z": 85.0,
+   "turned": true,
+   "rect": [
+    -146.0,
+    -124.0,
+    69.0,
+    101.0
+   ]
+  },
+  "BUCK_KA": {
+   "x": 65.0,
+   "z": 182.5,
+   "turned": false,
+   "rect": [
+    32.0,
+    98.0,
+    159.0,
+    206.0
+   ]
+  },
+  "BUCK_SV": {
+   "x": -10.0,
+   "z": 137.5,
+   "turned": false,
+   "rect": [
+    -43.0,
+    23.0,
+    114.0,
+    161.0
+   ]
+  },
+  "BUCK_5V": {
+   "x": -67.5,
+   "z": 180.0,
+   "turned": true,
+   "rect": [
+    -80.5,
+    -54.5,
+    159.5,
+    200.5
+   ]
+  },
+  "FUSE": {
+   "x": 97.5,
+   "z": 122.5,
+   "turned": false,
+   "rect": [
+    45.0,
+    150.0,
+    92.5,
+    152.5
+   ]
+  },
+  "BUS": {
+   "x": -10.0,
+   "z": 215.0,
+   "turned": false,
+   "rect": [
+    -45.0,
+    25.0,
+    200.0,
+    230.0
+   ]
+  }
+ },
+ "search": {
+  "seeds": 12,
+  "best_seed": 7,
+  "best_cost": 36631,
+  "costs": [
+   36631,
+   36842,
+   36881,
+   37582,
+   38125,
+   38140,
+   38274,
+   38349,
+   38514,
+   38517,
+   39334,
+   40426
+  ],
+  "objective": "sum over nets of conductors x (0.25 + I_cont) x route length (DEFAULT)"
+ },
+ "fixed": {
+  "PSU": {
+   "rect": [
+    42.0,
+    157.0,
+    -170.0,
+    45.0
+   ],
+   "depth": 30.0,
+   "why": "LRS-350-24 215 x 115 x 30 (spec) on its bottom face against the sheet, 4 x M4 x 6 through the sheet (thread engagement 3.0 = the spec max), terminal end up, air out the bottom end 31 over the floor"
+  },
+  "CHARGER": {
+   "rect": [
+    -162.0,
+    -44.0,
+    -200.0,
+    -29.0
+   ],
+   "depth": 59.0,
+   "why": "dual-channel DC charger 171 x 118 x 59 (listing, iCharger 456DUO class, E) standing on the floor on its 118 x 59 end, strapped to the sheet; Y -66..-7 (5 to the stub face)"
+  },
+  "IEC": {
+   "rect": [
+    78.0,
+    128.0,
+    56.0,
+    86.0
+   ],
+   "depth": 30.0,
+   "why": "IEC C14 fused switched inlet, cut-out 48 x 28 (E, CHECK) in the sheet over the PSU terminal end"
+  },
+  "ESTOP": {
+   "rect": [
+    112.0,
+    152.0,
+    188.0,
+    228.0
+   ],
+   "depth": 45.0,
+   "why": "22 mm mushroom E-stop, NC, hole 22.5 (E) in the sheet, reached from behind the box"
+  }
+ },
+ "endpoints": {
+  "ARM": {
+   "pos": [
+    -27.0,
+    3.0,
+    0.0
+   ],
+   "detour_E": 20.0,
+   "route": "arm bundle at the stub v3 lead channel exit, flange X -27 (box-arm.md Lead exit), drops beside the mast"
+  },
+  "L1": {
+   "pos": [
+    -122.0,
+    75.0,
+    182.0
+   ],
+   "detour_E": 60.0,
+   "route": "hook latch unit, -X seated face, Y_C - 100: up the corner post, over the side sheet top, down to the housing"
+  },
+  "L2": {
+   "pos": [
+    -122.0,
+    275.0,
+    182.0
+   ],
+   "detour_E": 60.0,
+   "route": "hook latch unit, -X face, Y_C + 100"
+  },
+  "R1": {
+   "pos": [
+    122.0,
+    75.0,
+    182.0
+   ],
+   "detour_E": 60.0,
+   "route": "hook latch unit, +X face, Y_C - 100"
+  },
+  "R2": {
+   "pos": [
+    122.0,
+    275.0,
+    182.0
+   ],
+   "detour_E": 60.0,
+   "route": "hook latch unit, +X face, Y_C + 100"
+  },
+  "POST": {
+   "pos": [
+    40.0,
+    175.0,
+    120.0
+   ],
+   "detour_E": 80.0,
+   "route": "pogo + KW11 post under the belly (box chat): along Y at r >= 150 over the arm sweep, under the funnel's back face"
+  },
+  "BAY_S": {
+   "pos": [
+    0.0,
+    175.0,
+    -150.0
+   ],
+   "detour_E": 120.0,
+   "route": "Scout live bay -90 (bottom), XT60E1-M on its float carrier: side corridor, under the ring's -Y edge"
+  },
+  "BAY_O": {
+   "pos": [
+    -150.0,
+    175.0,
+    0.0
+   ],
+   "detour_E": 60.0,
+   "route": "Overseer live bay 180 (reserved, wired when built): left side corridor"
+  }
+ },
+ "checks": {
+  "depth_ok": true,
+  "min_gap_mm": 6.3,
+  "min_gap_pair": [
+   "PCA",
+   "BUCK_SV"
+  ],
+  "ampacity_fail": [],
+  "drop_flags": []
+ },
+ "nets": [
+  {
+   "net": "mains L/N/PE",
+   "a": "IEC",
+   "b": "PSU",
+   "conductors": 3,
+   "awg": 18,
+   "I_cont": 6.8,
+   "I_peak": 6.8,
+   "rail_V": 115,
+   "kind": "mains",
+   "route_mm": 137,
+   "cut_mm": 205,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "24 V main",
+   "a": "PSU",
+   "b": "FUSE",
+   "conductors": 2,
+   "awg": 14,
+   "I_cont": 7.4,
+   "I_peak": 11.9,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 192,
+   "cut_mm": 275,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.024,
+    "peak_V": 0.038,
+    "cont_pct": 0.1,
+    "peak_pct": 0.16
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "F1 charger in",
+   "a": "FUSE",
+   "b": "CHARGER",
+   "conductors": 2,
+   "awg": 16,
+   "I_cont": 6.5,
+   "I_peak": 6.5,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 457,
+   "cut_mm": 590,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.078,
+    "peak_V": 0.078,
+    "cont_pct": 0.33,
+    "peak_pct": 0.33
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "F2 motion in",
+   "a": "FUSE",
+   "b": "ESTOP",
+   "conductors": 2,
+   "awg": 18,
+   "I_cont": 3.2,
+   "I_peak": 5.2,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 132,
+   "cut_mm": 200,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.018,
+    "peak_V": 0.029,
+    "cont_pct": 0.07,
+    "peak_pct": 0.12
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "SKR VIN",
+   "a": "ESTOP",
+   "b": "SKR",
+   "conductors": 2,
+   "awg": 18,
+   "I_cont": 1.0,
+   "I_peak": 3.0,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 440,
+   "cut_mm": 570,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.018,
+    "peak_V": 0.055,
+    "cont_pct": 0.08,
+    "peak_pct": 0.23
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "servo buck in",
+   "a": "ESTOP",
+   "b": "BUCK_SV",
+   "conductors": 2,
+   "awg": 18,
+   "I_cont": 0.3,
+   "I_peak": 2.2,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 225,
+   "cut_mm": 310,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.003,
+    "peak_V": 0.021,
+    "cont_pct": 0.01,
+    "peak_pct": 0.09
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "F3 keep-alive in",
+   "a": "FUSE",
+   "b": "BUCK_KA",
+   "conductors": 2,
+   "awg": 18,
+   "I_cont": 0.9,
+   "I_peak": 1.8,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 92,
+   "cut_mm": 155,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.003,
+    "peak_V": 0.007,
+    "cont_pct": 0.01,
+    "peak_pct": 0.03
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "F4 logic in",
+   "a": "FUSE",
+   "b": "BUCK_5V",
+   "conductors": 2,
+   "awg": 20,
+   "I_cont": 0.5,
+   "I_peak": 1.0,
+   "rail_V": 24,
+   "kind": "power",
+   "route_mm": 222,
+   "cut_mm": 310,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.007,
+    "peak_V": 0.015,
+    "cont_pct": 0.03,
+    "peak_pct": 0.06
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "KA + to K1",
+   "a": "BUCK_KA",
+   "b": "RELAY",
+   "conductors": 1,
+   "awg": 18,
+   "I_cont": 1.0,
+   "I_peak": 3.0,
+   "rail_V": 13,
+   "kind": "power",
+   "route_mm": 235,
+   "cut_mm": 325,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.005,
+    "peak_V": 0.015,
+    "cont_pct": 0.04,
+    "peak_pct": 0.11
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "KA + K1 to INA",
+   "a": "RELAY",
+   "b": "INA_KA",
+   "conductors": 1,
+   "awg": 18,
+   "I_cont": 1.0,
+   "I_peak": 3.0,
+   "rail_V": 13,
+   "kind": "power",
+   "route_mm": 92,
+   "cut_mm": 155,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.002,
+    "peak_V": 0.006,
+    "cont_pct": 0.01,
+    "peak_pct": 0.04
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "KA + pad",
+   "a": "INA_KA",
+   "b": "POST",
+   "conductors": 1,
+   "awg": 18,
+   "I_cont": 1.0,
+   "I_peak": 3.0,
+   "rail_V": 13,
+   "kind": "power",
+   "route_mm": 366,
+   "cut_mm": 480,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.008,
+    "peak_V": 0.023,
+    "cont_pct": 0.06,
+    "peak_pct": 0.18
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "KA - pad",
+   "a": "BUCK_KA",
+   "b": "POST",
+   "conductors": 1,
+   "awg": 18,
+   "I_cont": 1.0,
+   "I_peak": 3.0,
+   "rail_V": 13,
+   "kind": "power",
+   "route_mm": 398,
+   "cut_mm": 520,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.008,
+    "peak_V": 0.025,
+    "cont_pct": 0.06,
+    "peak_pct": 0.19
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "CH1 + to K2",
+   "a": "CHARGER",
+   "b": "RELAY",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 3.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 250,
+   "cut_mm": 340,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.01,
+    "peak_V": 0.021,
+    "cont_pct": 0.06,
+    "peak_pct": 0.13
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "CH1 + K2 to INA",
+   "a": "RELAY",
+   "b": "INA_S",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 3.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 60,
+   "cut_mm": 115,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.002,
+    "peak_V": 0.005,
+    "cont_pct": 0.01,
+    "peak_pct": 0.03
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "bay S +",
+   "a": "INA_S",
+   "b": "BAY_S",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 3.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 614,
+   "cut_mm": 780,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.024,
+    "peak_V": 0.053,
+    "cont_pct": 0.14,
+    "peak_pct": 0.31
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "bay S -",
+   "a": "CHARGER",
+   "b": "BAY_S",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 3.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 470,
+   "cut_mm": 605,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.019,
+    "peak_V": 0.04,
+    "cont_pct": 0.11,
+    "peak_pct": 0.24
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "CH2 + to K3",
+   "a": "CHARGER",
+   "b": "RELAY",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 6.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 250,
+   "cut_mm": 340,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.02,
+    "peak_V": 0.021,
+    "cont_pct": 0.12,
+    "peak_pct": 0.13
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "CH2 + K3 to INA",
+   "a": "RELAY",
+   "b": "INA_O",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 6.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 62,
+   "cut_mm": 115,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.005,
+    "peak_V": 0.005,
+    "cont_pct": 0.03,
+    "peak_pct": 0.03
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "bay O +",
+   "a": "INA_O",
+   "b": "BAY_O",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 6.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 391,
+   "cut_mm": 510,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.031,
+    "peak_V": 0.034,
+    "cont_pct": 0.18,
+    "peak_pct": 0.2
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "bay O -",
+   "a": "CHARGER",
+   "b": "BAY_O",
+   "conductors": 1,
+   "awg": 16,
+   "I_cont": 6.0,
+   "I_peak": 6.5,
+   "rail_V": 16.8,
+   "kind": "power",
+   "route_mm": 433,
+   "cut_mm": 560,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.034,
+    "peak_V": 0.037,
+    "cont_pct": 0.2,
+    "peak_pct": 0.22
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "6.0 V to bus",
+   "a": "BUCK_SV",
+   "b": "BUS",
+   "conductors": 2,
+   "awg": 18,
+   "I_cont": 1.0,
+   "I_peak": 8.0,
+   "rail_V": 6.0,
+   "kind": "power",
+   "route_mm": 78,
+   "cut_mm": 135,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.003,
+    "peak_V": 0.026,
+    "cont_pct": 0.05,
+    "peak_pct": 0.43
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "6.0 V to PCA V+",
+   "a": "BUS",
+   "b": "PCA",
+   "conductors": 2,
+   "awg": 18,
+   "I_cont": 0.3,
+   "I_peak": 3.2,
+   "rail_V": 6.0,
+   "kind": "power",
+   "route_mm": 35,
+   "cut_mm": 85,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.0,
+    "peak_V": 0.005,
+    "cont_pct": 0.01,
+    "peak_pct": 0.08
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "6.0 V gripper pair",
+   "a": "BUS",
+   "b": "ARM",
+   "conductors": 2,
+   "awg": 22,
+   "I_cont": 0.5,
+   "I_peak": 5.0,
+   "rail_V": 6.0,
+   "kind": "servo",
+   "route_mm": 424,
+   "cut_mm": 550,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.022,
+    "peak_V": 0.224,
+    "cont_pct": 0.37,
+    "peak_pct": 3.74
+   },
+   "fixed_tail_mm": 311
+  },
+  {
+   "net": "latch servo L1",
+   "a": "PCA",
+   "b": "L1",
+   "conductors": 3,
+   "awg": 22,
+   "I_cont": 0.1,
+   "I_peak": 0.8,
+   "rail_V": 6.0,
+   "kind": "servo",
+   "route_mm": 305,
+   "cut_mm": 410,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.003,
+    "peak_V": 0.026,
+    "cont_pct": 0.05,
+    "peak_pct": 0.43
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch servo L2",
+   "a": "PCA",
+   "b": "L2",
+   "conductors": 3,
+   "awg": 22,
+   "I_cont": 0.1,
+   "I_peak": 0.8,
+   "rail_V": 6.0,
+   "kind": "servo",
+   "route_mm": 505,
+   "cut_mm": 650,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.005,
+    "peak_V": 0.043,
+    "cont_pct": 0.09,
+    "peak_pct": 0.71
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch servo R1",
+   "a": "PCA",
+   "b": "R1",
+   "conductors": 3,
+   "awg": 22,
+   "I_cont": 0.1,
+   "I_peak": 0.8,
+   "rail_V": 6.0,
+   "kind": "servo",
+   "route_mm": 325,
+   "cut_mm": 430,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.003,
+    "peak_V": 0.028,
+    "cont_pct": 0.06,
+    "peak_pct": 0.46
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch servo R2",
+   "a": "PCA",
+   "b": "R2",
+   "conductors": 3,
+   "awg": 22,
+   "I_cont": 0.1,
+   "I_peak": 0.8,
+   "rail_V": 6.0,
+   "kind": "servo",
+   "route_mm": 525,
+   "cut_mm": 670,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.006,
+    "peak_V": 0.045,
+    "cont_pct": 0.09,
+    "peak_pct": 0.74
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch hall L1",
+   "a": "PI",
+   "b": "L1",
+   "conductors": 3,
+   "awg": 28,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 5.0,
+   "kind": "signal",
+   "route_mm": 200,
+   "cut_mm": 280,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch hall L2",
+   "a": "PI",
+   "b": "L2",
+   "conductors": 3,
+   "awg": 28,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 5.0,
+   "kind": "signal",
+   "route_mm": 400,
+   "cut_mm": 520,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch hall R1",
+   "a": "PI",
+   "b": "R1",
+   "conductors": 3,
+   "awg": 28,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 5.0,
+   "kind": "signal",
+   "route_mm": 430,
+   "cut_mm": 560,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "latch hall R2",
+   "a": "PI",
+   "b": "R2",
+   "conductors": 3,
+   "awg": 28,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 5.0,
+   "kind": "signal",
+   "route_mm": 630,
+   "cut_mm": 800,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "KW11",
+   "a": "PI",
+   "b": "POST",
+   "conductors": 2,
+   "awg": 28,
+   "I_cont": 0.001,
+   "I_peak": 0.001,
+   "rail_V": 3.3,
+   "kind": "signal",
+   "route_mm": 526,
+   "cut_mm": 675,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "5.1 V to Pi",
+   "a": "BUCK_5V",
+   "b": "PI",
+   "conductors": 2,
+   "awg": 20,
+   "I_cont": 1.5,
+   "I_peak": 3.5,
+   "rail_V": 5.1,
+   "kind": "power",
+   "route_mm": 48,
+   "cut_mm": 100,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.005,
+    "peak_V": 0.011,
+    "cont_pct": 0.09,
+    "peak_pct": 0.22
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "5.1 V to bus",
+   "a": "BUCK_5V",
+   "b": "BUS",
+   "conductors": 2,
+   "awg": 20,
+   "I_cont": 0.2,
+   "I_peak": 0.5,
+   "rail_V": 5.1,
+   "kind": "power",
+   "route_mm": 92,
+   "cut_mm": 155,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.001,
+    "peak_V": 0.003,
+    "cont_pct": 0.02,
+    "peak_pct": 0.06
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "relay JD-VCC",
+   "a": "BUS",
+   "b": "RELAY",
+   "conductors": 2,
+   "awg": 22,
+   "I_cont": 0.15,
+   "I_peak": 0.3,
+   "rail_V": 5.1,
+   "kind": "power",
+   "route_mm": 192,
+   "cut_mm": 275,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.003,
+    "peak_V": 0.006,
+    "cont_pct": 0.06,
+    "peak_pct": 0.12
+   },
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "relay IN + VCC",
+   "a": "PI",
+   "b": "RELAY",
+   "conductors": 5,
+   "awg": 26,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 3.3,
+   "kind": "signal",
+   "route_mm": 122,
+   "cut_mm": 190,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "I2C Pi-PCA",
+   "a": "PI",
+   "b": "PCA",
+   "conductors": 4,
+   "awg": 26,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 3.3,
+   "kind": "signal",
+   "route_mm": 105,
+   "cut_mm": 170,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "I2C PCA-INA_KA",
+   "a": "PCA",
+   "b": "INA_KA",
+   "conductors": 4,
+   "awg": 26,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 3.3,
+   "kind": "signal",
+   "route_mm": 105,
+   "cut_mm": 170,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "I2C INA_KA-INA_S",
+   "a": "INA_KA",
+   "b": "INA_S",
+   "conductors": 4,
+   "awg": 26,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 3.3,
+   "kind": "signal",
+   "route_mm": 42,
+   "cut_mm": 95,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "I2C INA_S-INA_O",
+   "a": "INA_S",
+   "b": "INA_O",
+   "conductors": 4,
+   "awg": 26,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 3.3,
+   "kind": "signal",
+   "route_mm": 112,
+   "cut_mm": 175,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "USB Pi-SKR",
+   "a": "PI",
+   "b": "SKR",
+   "conductors": 1,
+   "awg": 0,
+   "I_cont": 0.1,
+   "I_peak": 0.1,
+   "rail_V": 5.0,
+   "kind": "cable",
+   "route_mm": 182,
+   "cut_mm": 260,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  },
+  {
+   "net": "steppers A, B, axle",
+   "a": "SKR",
+   "b": "ARM",
+   "conductors": 12,
+   "awg": 26,
+   "I_cont": 1.4,
+   "I_peak": 2.0,
+   "rail_V": 24,
+   "kind": "stepper",
+   "route_mm": 453,
+   "cut_mm": 585,
+   "ampacity_ok": true,
+   "drop": {
+    "cont_V": 0.17,
+    "peak_V": 0.243,
+    "cont_pct": 0.71,
+    "peak_pct": 1.01
+   },
+   "fixed_tail_mm": 164
+  },
+  {
+   "net": "axle hall",
+   "a": "SKR",
+   "b": "ARM",
+   "conductors": 3,
+   "awg": 28,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 5.0,
+   "kind": "signal",
+   "route_mm": 410,
+   "cut_mm": 535,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": 164
+  },
+  {
+   "net": "gripper PWM",
+   "a": "PCA",
+   "b": "ARM",
+   "conductors": 2,
+   "awg": 28,
+   "I_cont": 0.01,
+   "I_peak": 0.01,
+   "rail_V": 6.0,
+   "kind": "signal",
+   "route_mm": 388,
+   "cut_mm": 510,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": 276
+  },
+  {
+   "net": "GND bus to star",
+   "a": "BUS",
+   "b": "FUSE",
+   "conductors": 1,
+   "awg": 18,
+   "I_cont": 1.2,
+   "I_peak": 8.0,
+   "rail_V": 0,
+   "kind": "power",
+   "route_mm": 200,
+   "cut_mm": 280,
+   "ampacity_ok": true,
+   "drop": null,
+   "fixed_tail_mm": null
+  }
+ ],
+ "wire_totals_mm_by_awg": {
+  "18": 5285,
+  "14": 550,
+  "16": 4545,
+  "20": 1130,
+  "22": 8130,
+  "28": 10455,
+  "26": 10410
+ },
+ "budget": {
+  "rows": [
+   {
+    "load": "Pi 4 + HAT + later USB camera",
+    "rail": "5.1 V",
+    "W_cont": 6.0,
+    "W_peak": 9.0,
+    "W_at_24V_cont": 6.7,
+    "W_at_24V_peak": 10.0
+   },
+   {
+    "load": "relay coils (2 on typical, 4 peak)",
+    "rail": "5.1 V",
+    "W_cont": 0.72,
+    "W_peak": 1.44,
+    "W_at_24V_cont": 0.8,
+    "W_at_24V_peak": 1.6
+   },
+   {
+    "load": "hall switches x5, PCA9685, INA226 x3 logic",
+    "rail": "5.1 V",
+    "W_cont": 0.15,
+    "W_peak": 0.15,
+    "W_at_24V_cont": 0.2,
+    "W_at_24V_peak": 0.2
+   },
+   {
+    "load": "SKR + 3 NEMA17 (2 A; detent holds with drivers off)",
+    "rail": "24 V",
+    "W_cont": 1.5,
+    "W_peak": 30.0,
+    "W_at_24V_cont": 1.5,
+    "W_at_24V_peak": 30.0
+   },
+   {
+    "load": "2 gripper servos (DS3218, MG995)",
+    "rail": "6.0 V",
+    "W_cont": 1.5,
+    "W_peak": 30.0,
+    "W_at_24V_cont": 1.7,
+    "W_at_24V_peak": 33.3
+   },
+   {
+    "load": "4 latch servos MG90S (not with the grippers in the sequence, budgeted together)",
+    "rail": "6.0 V",
+    "W_cont": 0.3,
+    "W_peak": 19.2,
+    "W_at_24V_cont": 0.3,
+    "W_at_24V_peak": 21.3
+   },
+   {
+    "load": "keep-alive: Scout ~8.5 W, Overseer ~24 W, CC limit 3.0 A at 13.0 V",
+    "rail": "13.0 V",
+    "W_cont": 8.5,
+    "W_peak": 39.0,
+    "W_at_24V_cont": 9.4,
+    "W_at_24V_peak": 43.3
+   },
+   {
+    "load": "charger, input limit 6.5 A (Scout 2C ~50 W + Overseer ~1C ~96 W out)",
+    "rail": "24 V",
+    "W_cont": 156.0,
+    "W_peak": 156.0,
+    "W_at_24V_cont": 156.0,
+    "W_at_24V_peak": 156.0
+   }
+  ],
+  "total_cont_W": 176.6,
+  "total_peak_W": 295.8,
+  "psu_W": 350.0,
+  "peak_pct": 84.5,
+  "peak_A": 12.32
+ },
+ "states": [
+  [
+   "IDLE",
+   "drone away; live bays charge; heads parked; K1 open; latch in",
+   "swap request from the mission script",
+   null,
+   null
+  ],
+  [
+   "PRESTAGE",
+   "head A picks the fullest charged pack (bay relay open and bay I < 50 mA first); head B waits open at 81 under the seat",
+   "both heads at pose, no stall",
+   6.0,
+   "A5 stall"
+  ],
+  [
+   "WAIT_SEAT",
+   "drone lands under its own landing mode; kill at first touch",
+   "KW11 low for 100 ms",
+   30.0,
+   "no seat: mission retries the landing"
+  ],
+  [
+   "LATCH_OUT",
+   "PCA ch 0..3 to OUT (servo pulse per unit from calibration), KW11 ignored from here",
+   "all 4 halls low within 0.5 s",
+   0.5,
+   "A1 latch not out"
+  ],
+  [
+   "KA_ON",
+   "close K1 while the old pack is higher than 13.0 V (0 A through the pads)",
+   "INA_KA bus 12.8..13.2 V and I < 0.5 A for 0.2 s",
+   0.5,
+   "A3 keep-alive fault"
+  ],
+  [
+   "PULL",
+   "head B rises to 89.6, closes, retracts with the dead pack: the drone XT60 unmates under the pull",
+   "stroke done, no stall, INA_KA I > 100 mA at the end of the stroke (pads carry the drone)",
+   2.0,
+   "A4 pull / keep-alive lost"
+  ],
+  [
+   "TURN",
+   "axle 90 deg: head A to the top",
+   "no stall; hall state matches phi",
+   0.6,
+   "A5 stall"
+  ],
+  [
+   "INSERT",
+   "head A extends, last 12 at <= 20 mm/s, cartridge to the bolt seat, 1 over-travel into the TPU strip",
+   "full stroke, no stall",
+   2.0,
+   "A5 stall"
+  ],
+  [
+   "MATE_CHECK",
+   "hold the stroke; read INA_KA",
+   "I < 50 mA within 1.0 s (the new pack carries the drone)",
+   1.0,
+   "A6 mate fail"
+  ],
+  [
+   "RELEASE",
+   "gripper opens (bolts into the drone pockets), head A retracts to park",
+   "park, no stall",
+   1.0,
+   "A5 stall"
+  ],
+  [
+   "KA_OFF",
+   "open K1 (0 A: pack higher)",
+   "INA_KA I < 50 mA before and bus < 1 V after",
+   0.3,
+   "A3 keep-alive fault"
+  ],
+  [
+   "LATCH_IN",
+   "PCA ch 0..3 to IN",
+   "all 4 halls high within 0.5 s",
+   0.5,
+   "A11 latch stuck out"
+  ],
+  [
+   "READY",
+   "SWAP_DONE to the mission; the mission arms the drone; take off",
+   "KW11 high (drone gone)",
+   60.0,
+   "drone stays: mission decides"
+  ],
+  [
+   "STORE",
+   "axle to the free bay (the live bay when free); head B extends with the dead pack, bay relay open",
+   "full stroke, no stall",
+   4.0,
+   "A5 stall"
+  ],
+  [
+   "BAY_MATE",
+   "relay open: read the bay INA226 bus voltage",
+   "13.0..17.0 V within 1.0 s",
+   1.0,
+   "A7 bay mate fail"
+  ],
+  [
+   "CHARGE",
+   "close the bay relay at 0 A, start the charger channel",
+   "charger done, or I < C/10 and rest voltage >= 4.15 V/cell",
+   null,
+   "A8 charge fault"
+  ],
+  [
+   "CHARGE_END",
+   "stop the channel; wait I < 50 mA; open the bay relay",
+   "I < 50 mA then relay open",
+   5.0,
+   "A8 charge fault"
+  ]
+ ],
+ "aborts": [
+  [
+   "A1 latch not out",
+   "a hall still high 0.5 s after OUT",
+   "all 4 IN, retry OUT once; second fail: latch IN, SWAP_FAIL, the drone keeps its pack (no motion yet)"
+  ],
+  [
+   "A2 latch lost mid-swap",
+   "any hall goes high between LATCH_OUT and LATCH_IN",
+   "stop all motion where it is, keep K1 as it is, alarm; the plungers self-lock under load, so a drone cannot be released by this"
+  ],
+  [
+   "A3 keep-alive fault",
+   "bus outside 12.8..13.2 V, or I > 2.5 A for 0.2 s with the old pack in, or K1 will not open at 0 A",
+   "open K1; before PULL: SWAP_FAIL with the old pack in; after: alarm, never open K1 with the drone on keep-alive"
+  ],
+  [
+   "A4 pull / keep-alive lost",
+   "INA_KA I < 100 mA at the end of the pull stroke",
+   "either the pack did not come out or the pads did not make: head B re-inserts what it holds, mate check, SWAP_FAIL, alarm"
+  ],
+  [
+   "A5 stall",
+   "TMC2209 DIAG (StallGuard) on X / Y during a fast move, a Klipper shutdown, the E-stop, or the axle hall out of its window",
+   "stop all motion, latch stays OUT, K1 stays as it is (the drone stays powered), alarm; Spark clears by hand; heads re-home before the next cycle"
+  ],
+  [
+   "A6 mate fail",
+   "INA_KA I >= 50 mA 1.0 s after the full stroke",
+   "back off 5, push again once at 10 mm/s; still >= 50 mA: pull the pack back into head A, drone stays on keep-alive, alarm (no time limit: the box powers it)"
+  ],
+  [
+   "A7 bay mate fail",
+   "bay bus voltage not 13.0..17.0 V with the relay open",
+   "retry the insert once; then leave the pack, no charge, alarm (not on the flight path)"
+  ],
+  [
+   "A8 charge fault",
+   "charger error, bay I > 7 A, pack over 45 C (charger probe, CHECK), or no current 5 s after start",
+   "stop the channel, wait I < 50 mA, open the relay, mark the pack"
+  ],
+  [
+   "A9 bay interlock",
+   "a head move into a live bay with its relay closed or I >= 50 mA",
+   "refused in software before the move; stop the charger first"
+  ],
+  [
+   "A10 seat lost before latch",
+   "KW11 high before LATCH_OUT",
+   "back to WAIT_SEAT"
+  ],
+  [
+   "A11 latch stuck out",
+   "a hall still low 0.5 s after IN",
+   "OUT then IN once more; then alarm: no SWAP_DONE (the drone cannot leave), it sits on its new pack disarmed"
+  ]
+ ]
+}
