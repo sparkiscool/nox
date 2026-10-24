@@ -554,7 +554,7 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cag
     g = build(dm, dc, xB, zB)
     tot, cg = cg_of(g)
     if FINAL_PASS: break                                              # the layout drawn with the settled sizes
-    new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO, init=CAGE_SIZES if it_sz else None)   # re-size the cage on this geometry (F), warm start
+    new_sizes, r_sz, ok_sz = co.size_fsd(g["P"], CAGE_TOPO)   # re-size the cage on this geometry (F), cold start (a warm start ratchets the nose up)
     if not ok_sz and os.environ.get("SYS_SEARCH", "1") == "1":         # the layout no longer passes here: search every topology again
         from multiprocessing import Pool
         with Pool(4) as pool:
@@ -573,7 +573,7 @@ for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cag
     if new_sizes == CAGE_SIZES and ok_sz: break
     CAGE_SIZES = new_sizes
     if ok_sz and nchg <= 3: FINAL_PASS = True                         # settled: one more layout pass with these sizes
-for it_fin in range(3):                                            # final sizes: re-balance at this wheel height, touch up the sizes (warm), repeat
+for it_fin in range(5):                                            # final sizes: re-balance at this wheel height, touch up the sizes (warm), repeat
     dm, xB, zB, g, tot, cg = balance(None, dm); dc = TIP_OFF - dm
     fr_ = co.evaluate(g["P"], CAGE_TOPO, CAGE_SIZES)
     say(f"final pass {it_fin + 1}: motors {dm:.1f} ahead, CG {cg[0] - dm:+.1f} in x, frame violation {fr_['violation']:.3f}")
