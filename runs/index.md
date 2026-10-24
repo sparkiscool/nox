@@ -1,6 +1,6 @@
 # Runs
 
-_87 runs · rebuilt 2026-10-24 05:47_
+_87 runs · rebuilt 2026-10-24 06:22_
 
 ## Latest per part
 
@@ -80,7 +80,7 @@ _87 runs · rebuilt 2026-10-24 05:47_
 | 2026-10-24 | box_catch_assembly | [v0](runs/box_catch_assembly/v0/summary.md) | DONE | 673 (E) | · | · | · | · GB | 1 min | · |
 | 2026-10-24 | detent | [v2](runs/detent/v2/summary.md) | DONE | 2.3 (M) | 0.22 | PASS | arm top face (Y 74.1) down | · GB | · min | · |
 | 2026-10-24 | funnel_panel | [v7](runs/funnel_panel/v7/summary.md) | DONE | 80.0 (M) | 0.91 | PASS | contact face | · GB | · min | · |
-| 2026-10-24 | funnel_panel | [v8_plain](runs/funnel_panel/v8_plain/summary.md) | DONE | 64.9 (M) | 0.95 | PASS | contact face | · GB | · min | · |
+| 2026-10-24 | funnel_panel | [v8_plain](runs/funnel_panel/v8_plain/summary.md) | DONE | 53.8 (M) | 0.91 | PASS | contact face | · GB | · min | · |
 | 2026-10-24 | overseer_assembly | [v0](runs/overseer_assembly/v0/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 8 min | · |
 | 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |

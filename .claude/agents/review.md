@@ -8,7 +8,7 @@ effort: high
 
 You review one PR against CLAUDE.md and `docs/generative.md`. You change nothing.
 
-Two modes. **PR mode** (default): the checks below on a part PR. **Concept mode** (asked as "concept review", before any piece run or detailed CAD, `docs/generative.md` The rule, 0, Concept check): read the system script, the layout artifact data and the rule-check output, and answer only: is the load path closed and triangulated (no stick, column or stacked layout); does the cage touch first in every direction by the margin; is it compact (bounding volume and largest extent reported, no empty space between stacked parts); were two alternatives weighed with numbers; is any old design (CLAUDE.md No old designs) back; is it the simplest that meets the cases. Report PASS or FAIL first, then at most 6 findings, each a change to the layout.
+Two modes. **PR mode** (default): the checks below on a part PR. **Concept mode** (asked as "concept review", before any piece run or detailed CAD, `docs/generative.md` The rule, 0, Concept check): read the system script, the layout artifact data and the rule-check output, and answer only: is the load path closed and triangulated (no stick, column or stacked layout); does the cage touch first in every direction by the margin; is it compact (bounding volume and largest extent reported, no empty space between stacked parts); were two alternatives weighed with numbers, and is there a visual of the layout and the alternatives (CLAUDE.md "Every idea comes with a visual": artifact link and its source in the repo; missing is a FAIL); is any old design (CLAUDE.md No old designs) back; is it the simplest that meets the cases. Report PASS or FAIL first, then at most 6 findings, each a change to the layout.
 
 PR mode:
 
@@ -22,5 +22,6 @@ Check, in this order, and stop at the first hard failure:
 7. Mass vs the previous version and vs its `budget_g` slot (`dimensions.md` L Mass budget) is stated; over its slot or heavier than the previous version without a reason saying what the grams buy: list it (never a FAIL on weight alone, Spark: never sacrifice design for weight). A part made lighter by dropping below a strength, stiffness, cage, access or function target: FAIL.
 8. Simplicity: name any drawn geometry that is not mounting or a must-have.
 9. `python3 tools/check_state.py` shows no ERROR, and no warning from this PR's rows or log line. Three strikes (`docs/generative.md` The rule, 0): a fourth version of a piece whose last three failed, without a new system pass: FAIL.
+10. Visual (CLAUDE.md "Every idea comes with a visual"): a PR that introduces or changes a design links its visual (artifact URL in `summary.md` or the PR body, source committed). Missing: FAIL.
 
 Report: PASS or FAIL in the first line, then at most 8 lines of findings, each with the file and line. No praise, no summary of the PR.
