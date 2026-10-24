@@ -15,7 +15,7 @@ carries them. Everything below runs in this cloud box; Spark's machine only open
 
 ## 2. Design (the part's own script, nothing else)
 - Drawn part: edit `nox/<machine>/<part>*.py` (manifold3d / cadquery bodies). Generated part: copy the pattern in
-  `nox/noxopt_demo.py` or the part's existing `*_run_*.py`; heavy = hand it to the `run-part` agent and stop here
+  `docs/generative.md` How-to (`nox/topo`, organic finish) or the part's existing `*_topo_*.py`; never `noxopt`. Heavy = hand it to the `run-part` agent and stop here
   (it checkpoints, checks, and opens the PR itself).
 - Every number in the script is tagged in the doc; nothing is copied from an older version.
 
