@@ -41,8 +41,8 @@ def tools(h):
         drv = d if drv is None else drv + d
     T["driver on the two retainer screws (along +u, from -u)"] = ([drv], None)
     T["retainer out -u"] = ([H.retainer().translate([0, 0, -d]) for d in np.arange(0.0, 30.1, 2.0)], None)
-    pw = H.WIRE["plug"]                                                         # then the JR pair and the servo lead drop out along -u (r7)
-    pair = box(pw["x"][0] + 0.5, pw["x"][1] - 0.5, pw["y"][0] + 0.5, pw["y"][1] - 0.5, pw["u"][0] + 0.2, pw["u"][1] - 0.5)
+    pw = H.WIRE["pair"]                                                         # then the JR pair and the servo lead drop out along -u (r7)
+    pair = box(pw["x"][0], pw["x"][1], pw["y"][0] + 0.25, pw["y"][1] - 0.25, pw["u"][0] + 0.2, pw["u"][1] - 0.5)
     T["JR pair out -u (retainer off)"] = ([pair.translate([0, 0, -d]) for d in np.arange(0.0, 30.1, 2.0)], None)
     if h == "B": T = {k: ([mirror_x(m) for m in v], None if o is None else mirror_x(o)) for k, (v, o) in T.items()}
     return {k: ([tm(m) for m in v], None if o is None else tm(o)) for k, (v, o) in T.items()}

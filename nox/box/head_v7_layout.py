@@ -42,9 +42,9 @@ TAIL_RIB = dict(   # (polygon X, u; Y range) per head; free space from the per-h
     B=[([(37.5, -52.0), (39.6, -52.0), (39.6, -11.5), (32.5, -11.5), (32.5, -17.2), (35.5, -17.2), (35.5, -31.5), (37.5, -33.5)], (63.0, 68.76)),
        ([(32.5, -31.0), (39.6, -31.0), (39.6, -11.5), (32.5, -11.5)], (59.25, 63.01))])    # B: the detent arm and roller sit above / beside it at park
 # the servo retainer (r4: the ear screws had no driver path on the arm): a printed bar under the servo's bottom face (u -16.3..-12.5,
-# flush with the column bottom on the head lane) from (10, 90) to (27, 148.5), Ø12 ends with M3 countersunk screws driven along +u
+# flush with the column bottom on the head lane) from (-4, 90) to (27, 148.5) (r8: the -Y end moved off the JR pair's band), Ø12 ends with M3 countersunk screws driven along +u
 # through the exit window into heat-set inserts in drawn Ø12 bosses; the ears sit captured in their slots on the pads
-RETAINER = dict(ends=((10.0, 90.0), (27.0, 148.5)), w=10.0, u=(-16.3, -12.5), end_r=6.0, boss_r=6.0, insert=dict(d=4.0, depth=6.7))
+RETAINER = dict(ends=((-4.0, 90.0), (27.0, 148.5)), w=10.0, u=(-16.3, -12.5), end_r=6.0, boss_r=6.0, insert=dict(d=4.0, depth=6.7))
 FILLET = [(28.0, 30.0), (40.5, 30.0), (40.5, 32.5), (28.0, 40.0)]   # plate / wing inside corner (bound r3: the pull peak sat in the sharp corner)
 WEB = dict(x=(40.5, 46.5), body_x=(39.5, 41.5), bar_x=(41.5, 46.5), y=(59.25, 72.75), uA=(-63.0, 30.0), uB=(-54.0, 30.0), teeth_y=(59.25, 73.25), tail_u=-39.0, tail_y0=63.0)
 WHEELS = ((22.0, 4.0), (22.0, 32.0), (-22.0, 18.0))      # (X, u); the last is the eccentric
@@ -74,7 +74,7 @@ SERVOS = {   # body L x W, base-to-case-top H, spline boss d x h, shaft from the
 HORN = dict(hub_d=10.0, hub_h=3.5, disc_d=25.0, disc_t=3.0, bolt_circle=16.0, tag="metal 25T disc horn, E (CHECK on hand)")
 ROD_D = 3.0
 B623 = dict(od=10.0, id=3.0, w=4.0, g=1.6)        # 623ZZ roller followers (C, catalogue)
-HALL = dict(pkg=(3.0, 3.0, 1.5), board=(4.2, 3.0, 1.6), tag="DRV5055A4 SOT-23 on a 4.2 x 3.0 strip at Y 155.5..158.5 (r7: past the cam, 1.0 off the carriers), E")
+HALL = dict(pkg=(2.4, 2.9, 1.3), board=(4.2, 3.2, 1.6), tag="DRV5055A4 SOT-23 (long side along Y) on a 4.2 x 3.2 strip at Y 155.6..158.8 (r8: past the cam, 1.0 off the carriers and the blade), E")
 
 # ============================================================== layout (DEFAULT, this session)
 Y_SERVO_TOP = 138.0                              # case top; spline boss to 142, horn hub 142..145.5, disc 145.5..148.5, cam 148.5..153.5
@@ -314,7 +314,7 @@ def body_drawn(servo="DS3218"):
         a, b = sorted((s * DECK["slot"][0], s * DECK["slot"][1]))
         deck -= box(a, b, DECK["slot"][2], DECK["slot"][3], DECK["u"][0] - 1, DECK["u"][1] + 1)
     for (x, y) in HALL_POS:
-        deck -= box(x - 1.6, x + 1.6, y - 1.6, y + 1.6, DECK["u"][0] - 1, U_BOT - LATCH["hall"]["gap"])    # hall face at u 14.4
+        deck -= box(x - 1.6, x + 1.6, y - 1.6, DECK["slot"][2] + 0.05, DECK["u"][0] - 1, U_BOT - LATCH["hall"]["gap"])    # hall face at u 14.4; joined to the slot (r8)
     walls = None
     for s in (-1, 1):
         a, b = sorted((s * RODS["wall_in"], s * RODS["wall_out"]))
@@ -356,32 +356,36 @@ def tail_rib(servo="DS3218"):
     return r
 
 
-WIRE = dict(plug=dict(x=(17.0, 45.0), y=(86.0, 94.6), u=(-12.3, -6.8)),   # the mated JR pair (~25..29 x 8 x 4.5, E) along X under the case, over the tab
-            hall_x=(8.8, 12.3), hall_u=(10.6, 12.91), y_merge=(92.0, 96.0), board=dict(x=(4.6, 8.7), y=(155.5, 158.5), u0=9.0))
+WIRE = dict(pair=dict(x=(9.0, 38.0), y=(86.5, 95.0), u=(-12.3, -6.3)),   # the mated JR pair (29 x 8 x 4.5, E: the longest) along X under the case
+            bend=4.0,                                                     # bend room at both ends of the pair (the wires leave its ends, r >= 3)
+            hall_x=(8.8, 12.3), hall_u=(9.9, 12.2), y_merge=(92.0, 96.0),   # the runs: 2.2 over the servo pocket, 2.7 under the column top
+            board=dict(x=(4.3, 8.7), y=(155.5, 158.9), u0=9.0),           # the board (4.2 x 3.2, package long side along Y) + fit; to the blade sweep's edge
+            wire="3 x 30 AWG per board (Ø0.6 each, E)")
 
 
 def wiring(servo="DS3218"):
-    """the reserved wire and connector spaces (r6; CLAUDE.md item 8): the two hall boards' leads, one closed run per side down the
-    column above the servo (|X| 8.8..12.3, u 10.6..12.9: >= 2.0 over the horn and the servo pocket), merged at Y 92..96 into the ribbon
-    slot; the servo lead from its grommet (far end, near the base: E, CHECK) down the end face to u -12, along -Y in a channel open to -u
-    (under the retainer's tab) to a JR socket held in a slot along u (X 21..29.6, Y 87.5..92.5, the mated pair ~25..29 E), its wires on
-    to the ribbon slot. The retainer's tab closes the slot and the channel from below; with the retainer off the plug and lead drop out
-    along -u with the servo."""
-    s = SERVOS[servo]; base = Y_SERVO_TOP - s["H"]; x1 = s["L"] - s["shaft"]; ld = s["lead"]; W_ = []
+    """the reserved wire and connector spaces (r8; CLAUDE.md item 8). Hall boards: each in its pocket past the cam's end (X 4.3..8.7, Y
+    155.5..158.9, to the blade's swept keep-out: the board 1.0 off the blade), a riser X 6.7..8.7 and a crossing at Y 152.5..153.8 to its
+    run, one closed run a side above the servo (|X| 8.8..12.3, u 9.9..12.2: >= 2.2 to the servo pocket and the horn, >= 1.9 to the cam, 2.7 roof),
+    merged at Y 92..96 into the ribbon slot; every section >= 2.0 x 2.0 for 3 x 30 AWG. Servo: the lead from its grommet (far end, near
+    the base: E, CHECK) down the end face, over the retainer's tab to the +X end of the mated JR pair (laid along X under the case,
+    X 9..38, with 4.0 of bend room at both ends), the socket's wires up from the -X end to the ribbon slot. The retainer's tab closes the
+    pair and the lead from below; with the retainer off they drop out along -u with the servo."""
+    s = SERVOS[servo]; base = Y_SERVO_TOP - s["H"]; x1 = s["L"] - s["shaft"]; ld = s["lead"]; W_ = []; pr = WIRE["pair"]; hb = WIRE["board"]
     for sg in (-1, 1):
         def bx_(a, b, *r):
             a, b = sorted((sg * a, sg * b)); return box(a, b, *r)
         W_.append(bx_(*WIRE["hall_x"], WIRE["y_merge"][0], 153.8, *WIRE["hall_u"]))                   # the run above the servo
-        W_.append(bx_(WIRE["board"]["x"][0], WIRE["hall_x"][1], 152.5, 153.8, 11.3, WIRE["hall_u"][1]))   # over to the board (>= 1.0 over the horn,
-        W_.append(bx_(*WIRE["board"]["x"], 152.5, WIRE["board"]["y"][0] + 0.1, 11.3, WIRE["hall_u"][1]))  # >= 1.0 off the lug's sweep)
-        W_.append(bx_(*WIRE["board"]["x"], *WIRE["board"]["y"], WIRE["board"]["u0"], DECK["u"][0] + 0.01))   # the board's pocket, past the cam (r7)
+        W_.append(bx_(6.7, WIRE["hall_x"][1], 152.5, 153.8, *WIRE["hall_u"]))                        # across, over the cam (>= 1.0)
+        W_.append(bx_(6.7, 8.7, 152.5, hb["y"][0] + 0.5, *WIRE["hall_u"]))                            # the riser to the board (1.0 off the lugs)
+        W_.append(bx_(*hb["x"], *hb["y"], hb["u0"], DECK["u"][0] + 0.01))                              # the board's pocket
     W_.append(box(-WIRE["hall_x"][1], WIRE["hall_x"][1], *WIRE["y_merge"], 7.0, WIRE["hall_u"][1]))
     ut = RETAINER["u"][1] + 0.2                                                # just over the retainer's tab: with the retainer off, its pocket is the way out
     W_.append(box(x1 - 0.2, x1 + 4.0, base - 0.5, base + ld["y"][1] + 1.0, RETAINER["u"][0] - 1.0, U_C + ld["t"] / 2 + 1.0))   # grommet, lead down (open to -u)
-    W_.append(box(x1 - 0.2, x1 + 4.0, WIRE["plug"]["y"][1] - 0.6, base - 0.4, ut, ut + 3.0))                          # the lead over the tab to the pair
-    W_.append(box(*WIRE["plug"]["x"], *WIRE["plug"]["y"], *WIRE["plug"]["u"]))                                       # the mated JR pair, over the tab
-    W_.append(box(WIRE["plug"]["x"][0] - 0.5, WIRE["plug"]["x"][0] + 2.0, 88.0, 92.0, WIRE["plug"]["u"][1] - 0.1, 10.3))   # its wires up (1.5 off the boss)
-    W_.append(box(3.0, WIRE["plug"]["x"][0] + 2.0, 88.0, 92.0, 7.0, 10.3))                                       # to the ribbon slot
+    W_.append(box(x1 - 0.2, pr["x"][1] + WIRE["bend"], pr["y"][0], base - 0.4, ut, pr["u"][1]))                      # the lead over the tab to the pair's +X end
+    W_.append(box(pr["x"][0] - WIRE["bend"], pr["x"][1] + WIRE["bend"], *pr["y"], ut, pr["u"][1]))                     # the pair + its two bends
+    W_.append(box(pr["x"][0] - WIRE["bend"], pr["x"][0], 88.0, 93.5, pr["u"][1] - 0.1, 10.3))                         # the socket's wires up (-X end)
+    W_.append(box(-4.1, pr["x"][0], 88.0, 93.5, 7.0, 10.3))                                                            # to the ribbon slot
     return W_
 
 
@@ -391,7 +395,7 @@ def retainer(filled=False):
     ends = cylZ(x0, y0, u0, u1, RETAINER["end_r"], 32) + cylZ(x1, y1, u0, u1, RETAINER["end_r"], 32)
     L = math.hypot(x1 - x0, y1 - y0); ang = math.degrees(math.atan2(y1 - y0, x1 - x0))
     bar = box(0, L, -RETAINER["w"] / 2, RETAINER["w"] / 2, u0, u1).rotate([0, 0, ang]).translate([x0, y0, 0])
-    m = ends + bar + box(x0, WIRE["plug"]["x"][1] + 0.5, WIRE["plug"]["y"][0] - 0.5, 97.0, u0, u1)   # the tab under the JR pair and the lead
+    m = ends + bar + box(x0, WIRE["pair"]["x"][1] + WIRE["bend"] + 0.5, WIRE["pair"]["y"][0] - 0.5, 97.0, u0, u1)   # the tab under the JR pair and the lead
     if filled: return m
     for (x, y) in RETAINER["ends"]:
         m -= cylZ(x, y, u0 - 1, u1 + 1, 1.7, 24)
@@ -786,7 +790,7 @@ ACCESS = [
     "spring rod: through the +X wall, the seat plates and the spring, into the -X wall",
     "near axle (22, 4): 3 mm L-key from +X over the plate (window Ø7 kept Y 74.35..90.35); far axle (22, 32) from above (cartridge zone); eccentric flange: pin spanner from above (r 8 kept)",
     "servo in: rest orientation, pushed in along +u; the cam's flanks spread the rollers off their stops by 1.1 each against the spring (~18 N, a hand push), then the retainer",
-    "wires: the hall boards (past the cam, Y 155.5..158.5) each in a closed run down its side above the servo (|X| 8.8..12.3) into the ribbon slot; the servo lead to its JR pair laid along X under the case over the retainer's tab (unplugged from below with the retainer off); the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
+    "wires: the hall boards (past the cam, Y 155.5..159) each by a riser and a closed run down its side above the servo (|X| 8.8..12.3, u 9.9..12.2, sections >= 2.0 x 2.0 for 3 x 30 AWG) into the ribbon slot; the servo lead over the retainer's tab to the +X end of the mated JR pair laid along X under the case (X 9..38, 4.0 bend room each end), the socket's wires up from its -X end (unplugged from below with the retainer off); the 5-wire head ribbon (servo V G S, hall sum H, 3.3 V; 6.1 x 1.3 E) down an 8.2 x 3.3 slot at X 0, u 7..10.3 through the plate into the rail's 5.0 mouth; tied to the column above the slot (strain relief)",
 ]
 
 
