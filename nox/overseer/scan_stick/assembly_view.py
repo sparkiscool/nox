@@ -51,6 +51,29 @@ else:                                                                           
     camera = sens(box(U1.CAM_F - 1.6, U1.CAM_F, -19, 19, U1.CAM_U - 19, U1.CAM_U + 19))
     lens = trimesh.creation.cylinder(6, 16, sections=32); lens.apply_transform(rot([0, 1, 0], 90, (U1.CAM_F + 8, 0, U1.CAM_U))); sens(lens)
 fov = sens(box(0.0, 120.0, -150, 150, -150, 150))                                            # the L2's 90° hemisphere near the unit
+rods = []                                                                                  # v3+: 3 mm carbon guard rods, TPU corner nodes, the pack pin
+def rod(p0, p1):
+    rods.append(trimesh.creation.cylinder(1.5, segment=[p0, p1], sections=16))
+nodes = []
+if hasattr(U1, "CAGE_Y"):
+    cy, cu, cf = U1.CAGE_Y, U1.CAGE_U, U1.CAGE_F
+    for sy in (-1, 1):
+        rod(U1.S(cf, sy * cy, U1.RAIL_U[0] + 4), U1.S(cf, sy * cy, cu + 2))
+        n = box(-6, 6, -6, 6, -6, 6); n.apply_translation([cf, sy * cy, cu]); nodes.append(sens(n))
+    rod(U1.S(cf, -cy + 4, cu), U1.S(cf, cy - 4, cu))
+    gx, gy, gz0, gz1 = U1.PI_GUARD
+    for sy in (-1, 1):
+        rod((gx, sy * gy, gz0), (gx, sy * gy, gz1))
+    ux, uy, uz0, uz1 = U1.UBEC_GUARD
+    for sx in (-1, 1):
+        rod((sx * ux, uy, uz0), (sx * ux, uy, uz1))
+    rod((U1.POCKET_PIN[0], -35, U1.POCKET_PIN[1]), (U1.POCKET_PIN[0], 35, U1.POCKET_PIN[1]))
+cage = trimesh.util.concatenate(rods + nodes) if rods else None
+view = None
+if hasattr(U1, "CAM_XF"):                                                                  # the camera's view (89 x 73°, E) out to 400
+    tv, th = math.tan(math.radians(36.5)), math.tan(math.radians(44.5)); x0 = U1.CAM_XF + U1.LENS
+    pts = [(x0, sy * 6, U1.CAM_Z + sz * 6) for sy in (-1, 1) for sz in (-1, 1)] + [(x0 + 400, sy * (6 + 400 * th), U1.CAM_Z + sz * (6 + 400 * tv)) for sy in (-1, 1) for sz in (-1, 1)]
+    view = trimesh.convex.convex_hull(np.array(pts))
 pi = box(PI_X0 + PI_SO, PI_X0 + PI_SO + 1.6, -28, 28, PI_Z0, PI_Z0 + 85)
 pack = box(BAT_X1 - 45.5, BAT_X1 - 0.5, -24, 24, BAT_Z0 + 0.5, BAT_Z0 + 148.5)            # in its keep-out, 0.5 off the back plate and the ledge
 
@@ -62,6 +85,11 @@ for an, am, bn, bm in (("base", base, "head", head), ("base", base, "Unitree L2"
                        ("base", base, "camera board", camera), ("head", head, "camera board", camera), ("head", head, "camera lens", lens),
                        ("base", base, "Pi", pi), ("base", base, "pack", pack), ("head", head, "Pi", pi)):
     print(f"fit: {an} x {bn}: {overlap(am, bm):.0f} mm3 overlap (M; 0 = clear)")
+if cage is not None:
+    print(f"fov: guard rods / nodes in the L2 hemisphere: {overlap(cage, fov):.0f} mm3 (M; 0 = clear)")
+    print(f"fit: base x guard rods: {overlap(base, trimesh.util.concatenate(rods)):.0f} mm3, head x guard rods: {overlap(head, trimesh.util.concatenate(rods)):.0f} mm3 (M; rods in Ø3.2 holes)")
+if view is not None:
+    print(f"camera view: head {overlap(head, view):.0f} mm3, base {overlap(base, view):.0f} mm3" + (f", guards {overlap(cage, view):.0f} mm3" if cage is not None else "") + " (M; 0 = clear)")
 print(f"fov: head in the L2 hemisphere: {overlap(head, fov):.0f} mm3 (M; 0 = the head is out of the lidar's view)")
 s = Scene("Scan stick", f"one bolted unit on the 3/4-5 ACME pole tip, optimised as one (unit {UNIT}{'' if SAVED else ', NOT READY: failed checks, see the run summary'}): base v19 (Pi 5 + 4S 6000 near the hand), head v14 (Unitree L2 forward 15° down + DECXIN camera below it); nox/topo")
 s.part("base v19", base, group="printed", color="#8899aa", printed=True)
@@ -69,10 +97,12 @@ s.part("head v14", head, group="printed", color="#9aa8b8", printed=True, note="L
 s.part("thread test v1", ring, group="printed", color="#b8c0c8", printed=True, note="fit ring, beside the pole for scale")
 s.part("Unitree L2", lidar, group="bought", color="#222222", printed=False, note="75 x 75 x 65, 230 g spec")
 s.part("DECXIN camera", trimesh.util.concatenate([camera, lens]), group="bought", color="#2d5a2d", printed=False)
+if cage is not None:
+    s.part("guards", cage, group="bought", color="#111111", printed=False, note="3 mm carbon rods + TPU corner nodes + the pack pin")
 s.part("Raspberry Pi 5", pi, group="bought", color="#2e7d32", printed=False)
 s.part("4S 6000 pack", pack, group="bought", color="#2f4fbf", printed=False, note="148 x 48 x 45 P")
 s.part("pole", trimesh.util.concatenate([pole, tip]), group="bought", color="#777777", printed=False, note="EXTEND-A-REACH 1.5-3 ft")
-names = ["base v19", "head v14", "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
+names = ["base v19", "head v14"] + (["guards"] if cage is not None else []) + [ "thread test v1", "Unitree L2", "DECXIN camera", "Raspberry Pi 5", "4S 6000 pack", "pole"]
 s.timeline(lambda t: {n: rot([0, 0, 1], 360 * t / 16) for n in names}, duration_s=16, fps=30)
 s.view("iso", (520, -620, 260), (0, 0, 80)); s.view("front", (0, -800, 80), (0, 0, 80)); s.view("head", (300, -300, 300), (10, 0, 230))
 os.makedirs(OUT, exist_ok=True)
