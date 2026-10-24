@@ -325,8 +325,8 @@ for dc in (0.0, 10.0, 20.0, 30.0):
     results.append(dict(dc=dc, wz=wz, dm=dm, xB=xB, zB=zB, fd=fd, low=low, tot=tot, cg=cg, reach=reach, ok=fd >= 1.0))
     say(f"catch {dc:4.1f} aft: wheels z {wz:5.1f} (seat dz {SEAT_DZ:5.1f}), motors {dm:5.1f} ahead, L2 base ({xB:5.1f}, {zB:4.0f}), "
         f"funnel {fd:5.1f}, leg reach {reach:4.0f}, {tot:4.0f} g")
-ok = [r for r in results if r["ok"] and r["reach"] <= 60.0]
-best = min(ok, key=lambda r: r["dm"])                              # shortest front arms with legs ≤ 60 long in plan (DEFAULT)
+ok = [r for r in results if r["ok"]]
+best = min(ok, key=lambda r: r["dm"])                              # shortest front arms that pass the funnel (DEFAULT; the legs grow)
 dc, dm, xB, zB = best["dc"], best["dm"], best["xB"], best["zB"]
 set_wheel(best["wz"])
 
