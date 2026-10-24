@@ -588,7 +588,7 @@ def loads_table():
     return {
         "insert at the drone 60 N (swap)": dict(at="deck pads (u 15.4, X +-16.5..20, Y 155..175)", F=[0, 0, -60.0], cls="swap"),
         "insert stall 74 N (misuse)": dict(at="deck pads", F=[0, 0, -74.0], cls="misuse"),
-        "pull 57.3 N while the XT60 unmates (swap)": dict(at="rod sockets (4 ends, X +-30.5, Y 161 / 169, u 6.75)", F=[0, 0, -pull], cls="swap",
+        "pull 57.3 N while the XT60 unmates (swap)": dict(at="rod sockets (4 ends, X +-30.5, Y 161 / 169, u 6.75)", F=[0, 0, pull], cls="swap",
                                                           note="carriers -> rods: 14.3 N per rod end"),
         "squeeze reaction (internal)": dict(at="spring between the carriers, cam on the rollers", F=[0, 0, 0], cls="swap",
                                            note="the spring is between the carriers and the cam forces cancel: nothing on the body but the servo torque 0.24 N.m at the ear pads"),
@@ -597,7 +597,12 @@ def loads_table():
                                                                              cg="cartridge CG at Y 170.2, u 48.5 (latch: swap CG y 33.1, z_T 5.18 off)"),
         "servo stall on the cam (misuse)": dict(at="ear pads", T_Nmm=round(SERVOS["DS3218"]["kgcm"] * 98.07, 0), cls="misuse",
                                                note="the servo driven against a jammed blade: 1.96 N.m into the ear pads; the cam / rollers take 2 x 93 N at r 10.5"),
-        "supports": "the three wheel bores (Y reactions both ways, X across: fixed pair + eccentric) and the rack teeth (u)",
+        "across 43.5 N at a seat, receiver gaps closed (swap)": dict(at="the inward stops (through a blade)", F=[43.5, 0, 0], cls="swap"),
+        "centring 7.6 N + 1.05 N.m at a seat, driver on (swap)": dict(at="stops (X) + pads (couple)", F=[7.6, 0, 0], T_Nmm=1050.0, cls="swap"),
+        "handling 2 g along Y, Overseer cartridge carried": dict(at="rod sockets (rib -> blades -> rods)", F=[0, round(2 * Ov, 1), 0], cls="handling"),
+        "power cut carrying (braked)": dict(at="bumper notch", F=[0, 0, 3.0], cls="misuse",
+                                            note="the head brake is required (System box swap: arm): 7.8 mm/s creep, 3 N on the bumper (runs/arm/v7/system.json)"),
+        "supports": "the three wheel bores hold X and Y (the wheels roll along u); the pinion holds u and X on the bonded rack bar's teeth at the case's stroke (drone u -56.3, bay -46.8, park 23)",
     }
 
 
@@ -615,6 +620,8 @@ BOUND_RESULTS = {   # upper-bound FE (head_v7_topo.bound, the design space fille
     "plate top 72.75, root over u 0..14.9 only": {"+y": 3.96},
     "plate top 72.75, plate / root grown to u -18": {"+y": 1.03, "+z": 0.73},
     "plate top 74.35, plate / root grown to u -18, all-direction supports (r2)": {"+y": 0.70, "+z": 0.61, "+x": 0.44},
+    "r3: partial supports (bores X Y, rack teeth u X), across + Y loads, stops, bonded rack bar, bed land, sharp plate / wing corner": {"+x": 0.59},
+    "r3: as above with the 12.5 x 10 plate / wing fillet (chosen)": {"+x": 0.41},
 }
 
 ACCESS = [
@@ -641,7 +648,7 @@ ALTERNATIVES = {
     ],
     "cut": [
         ("one body printed on its side + a bonded rack bar (chosen)", "no joint at the highest moment (5.3 / 6.8 N.m at the plate); the "
-         "column's bending and the plate's lie in the layers (+x build, upper bound 0.44 vs 0.61 / 0.70 with u or Y up); the rack bar "
+         "column's bending and the plate's lie in the layers (+x build, upper bound 0.41 with the r3 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar "
          "(5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"),
         ("carriage plate printed flat + column bolted on", "the plate and teeth print flat, but the joint sits at the root: 4 M3 inserts "
          "carry ~190..490 N per pair at the moment, the across-layer root is replaced by bolts in PETG bosses (~+8 g), one more fit and "
@@ -749,7 +756,7 @@ def page(R, P_sq, P_op):
                                   f"{sp['F_sq']} N squeezed (L {sp['L_sq']:g}), {sp['F_open']} N open (L {sp['L_open']:g}), solid {sp['solid']}, tau {sp['tau_open']:.0f} MPa ({sp['tau_ratio']} of 0.45 UTS) (E)"),
         ("Hold and release", f"hold while the XT60 unmates: {st['hold']['per_tab_N']} N per tab opens with {st['hold']['opening_N']} N vs {st['hold']['spring_N']} N: x{st['hold']['margin']}; "
                              f"release margin Scout x{st['release']['scout']}, Overseer x{st['release']['overseer']}; rib bearing {st['rib_bearing_MPa']} MPa"),
-        ("Cam and servo", f"{CAM['law']}, base 4.5 / lobe 10.5 (rise 6.0 over {CAM['rise_deg']:g} deg + dwells, turn {cm['turn_deg']:g} deg), 623ZZ rollers, gap at rest {cm['gap_at_rest']}, "
+        ("Cam and servo", f"{CAM['law']}, base {CAM['base']:g} / lobe {CAM['lobe']:g} (rise {CAM['lobe'] - CAM['base']:g} over {CAM['rise_deg']:g} deg + dwells, turn {cm['turn_deg']:g} deg), 623ZZ rollers, gap at rest {cm['gap_at_rest']}, "
                           f"pressure angle <= {cm['max_pressure_deg']} deg; peak {cm['peak_kgcm']} kg·cm: DS3218 x{cm['margin']['DS3218']}, MG995 x{cm['margin']['MG995']}; spline side load {cm['spline_side_N']}"),
         ("Pull path", f"pocket -> rib -> blade -> boss 12 long -> 2 x 3.0 carbon rods (span {st['rods']['span']:g}: {st['rods']['sigma_MPa']} MPa, index {st['rods']['index']}) -> body walls; "
                       f"anti-rack: boss 12 vs {st['anti_rack']['need_yaw']} needed"),

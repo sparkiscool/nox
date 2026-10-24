@@ -315,7 +315,7 @@
    "F": [
     0,
     0,
-    -57.3
+    57.3
    ],
    "cls": "swap",
    "note": "carriers -> rods: 14.3 N per rod end"
@@ -346,7 +346,45 @@
    "cls": "misuse",
    "note": "the servo driven against a jammed blade: 1.96 N.m into the ear pads; the cam / rollers take 2 x 93 N at r 10.5"
   },
-  "supports": "the three wheel bores (Y reactions both ways, X across: fixed pair + eccentric) and the rack teeth (u)"
+  "across 43.5 N at a seat, receiver gaps closed (swap)": {
+   "at": "the inward stops (through a blade)",
+   "F": [
+    43.5,
+    0,
+    0
+   ],
+   "cls": "swap"
+  },
+  "centring 7.6 N + 1.05 N.m at a seat, driver on (swap)": {
+   "at": "stops (X) + pads (couple)",
+   "F": [
+    7.6,
+    0,
+    0
+   ],
+   "T_Nmm": 1050.0,
+   "cls": "swap"
+  },
+  "handling 2 g along Y, Overseer cartridge carried": {
+   "at": "rod sockets (rib -> blades -> rods)",
+   "F": [
+    0,
+    14.7,
+    0
+   ],
+   "cls": "handling"
+  },
+  "power cut carrying (braked)": {
+   "at": "bumper notch",
+   "F": [
+    0,
+    0,
+    3.0
+   ],
+   "cls": "misuse",
+   "note": "the head brake is required (System box swap: arm): 7.8 mm/s creep, 3 N on the bumper (runs/arm/v7/system.json)"
+  },
+  "supports": "the three wheel bores hold X and Y (the wheels roll along u); the pinion holds u and X on the bonded rack bar's teeth at the case's stroke (drone u -56.3, bay -46.8, park 23)"
  },
  "space": {
   "carrier+": {
@@ -548,17 +586,17 @@
    ]
   },
   "body (drawn interfaces)": {
-   "arm_overlap_voxels": 105,
+   "arm_overlap_voxels": 0,
    "min_X_plus_u": -30.49,
    "park_ok": true,
    "Z_min_at_drone": 48.3,
    "X": [
-    -32.0,
+    -34.0,
     46.5
    ],
    "Y": [
     59.2,
-    185.8
+    188.0
    ],
    "u": [
     -63.0,
@@ -602,7 +640,7 @@
    ]
   }
  },
- "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: {'body (drawn interfaces)': (105, -30.49)}; lowest point at the commanded drone insert Z 96.3 (keep-out 111.5)",
+ "space_summary": "every part clear of the arm's swept parts over 4 cycles and of the park bisector: yes; lowest point at the commanded drone insert Z 96.3 (keep-out 111.5)",
  "internal": {
   "squeezed": {},
   "open": {}
@@ -619,6 +657,12 @@
    "+y": 0.7,
    "+z": 0.61,
    "+x": 0.44
+  },
+  "r3: partial supports (bores X Y, rack teeth u X), across + Y loads, stops, bonded rack bar, bed land, sharp plate / wing corner": {
+   "+x": 0.59
+  },
+  "r3: as above with the 12.5 x 10 plate / wing fillet (chosen)": {
+   "+x": 0.41
   }
  },
  "sweeps": {
@@ -643,12 +687,13 @@
    "min_clearance": 0.0
   }
  },
- "compact": "head A whole (carriage, rack tail, column as its design space, grabber, servo): 87 x 129 x 103 (X, Y, u) incl. the design space; hull 0.59 L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the servo sits in the column under the grip, the grabber on top of it",
+ "compact": "head A whole (carriage, rack tail, column as its design space, grabber, servo): 82 x 129 x 103 (X, Y, u) incl. the design space; hull 0.58 L; inside the drone keep-out's X +-47.5 and Y <= 217; nothing between stacked parts: the servo sits in the column under the grip, the grabber on top of it",
  "masses": {
   "printed_parts": {
    "carrier+": 5.8,
    "carrier-": 5.7,
-   "cam": 0.7
+   "cam": 0.7,
+   "rack bar": 5.6
   },
   "bought": {
    "servo_DS3218": 60.0,
@@ -663,7 +708,7 @@
   "body_E": 75.0,
   "note": "body from the topology run (E 75 g, v5 head 56 M + carriage)"
  },
- "mass_line": "printed grabber parts 12.2 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~164 g (system frame 120 g head + 60 g carriage, E)",
+ "mass_line": "printed grabber parts 17.8 g, body ~75 g (topology, E), bought 77 g with the DS3218: head ~170 g (system frame 120 g head + 60 g carriage, E)",
  "alternatives": {
   "spring": [
    [
@@ -687,23 +732,24 @@
   ],
   "cut": [
    [
-    "one print: carriage + body (chosen)",
-    "no joint at the highest moment (5.3 / 6.8 N.m at the plate); 1 part, fits 110 x 90 x 125"
+    "one body printed on its side + a bonded rack bar (chosen)",
+    "no joint at the highest moment (5.3 / 6.8 N.m at the plate); the column's bending and the plate's lie in the layers (+x build, upper bound 0.41 with the r3 loads and supports; 0.61 / 0.70 with u or Y up in r2); the rack bar (5.6 g) prints flat with its teeth in the layers and is epoxied over 93 x 13.5 (2 MPa x 1255 mm2 = 2.5 kN vs 74 N)"
    ],
    [
-    "carriage plate + bolted body",
-    "a printed-flat plate (better rack teeth) and 4 M3 inserts at the plate: the joint carries ~190..490 N per bolt pair at the moment, +6 g, one more fit; kept as the fallback if the one-piece print fails the teeth"
+    "carriage plate printed flat + column bolted on",
+    "the plate and teeth print flat, but the joint sits at the root: 4 M3 inserts carry ~190..490 N per pair at the moment, the across-layer root is replaced by bolts in PETG bosses (~+8 g), one more fit and a joint that creeps under 10,000 cycles"
    ]
   ]
  },
  "changes": [
-  "carriage plate top Y 72.75 -> 74.35 under the cartridge (accepted by the arm system 24 Oct, with M5 x 20 axles): the upper-bound FE of the whole design space reads 0.73..1.03 at 72.75; the plate and the column's root also grow below u 0 where the arm leaves room (to u -18, the park bisector)",
+  "carriage plate top Y 72.75 -> 74.35 under the cartridge (accepted by the arm system 24 Oct, with M5 x 20 axles): the upper-bound FE of the whole design space reads 0.73..1.03 at 72.75; the plate and the column's root also grow below u 0 where the arm leaves room (to u -17.2 on +X, 1.0 over the detent arm; the park bisector on -X)",
   "insert-lane keep-out at the drone, lower bound Z 111.5 -> 95.0 (head and grabber) and Z 100 -> 89 (carriage lane), accepted by the arm system 24 Oct (servo bottom u -12.5, horn u -15 -> Z 96.3 at the commanded insert): nothing of the catch (Z >= 154) or the structure is there",
   "open blade position inner faces +-11.0 (concept 10.5): a 0.8 rib into the grip pocket must clear the latched tab's outer face (10) on the way in (the latch's +-11 open; the tab's 1.0 chamfer cams a 1.0 head offset); stroke 5.0 per blade",
   "one crossed spring (15 N squeezed per blade, L 44 -> 34) instead of one spring per blade: the -X blade has 13 mm to the park bisector (the two parked heads), where a 15 N spring would need > 950 MPa (alternatives)",
   "two inward stops on the body take a load across the cartridge (43.5 N, receiver gaps closed); the system pass had no X path",
   "blades 10 wide (Y 160..170; the latch's 13): 1.5 clear of the hall package at Y 157 (the tab magnet's spot, z_T + 8); the rib (7.7 wide) is unchanged",
   "623ZZ roller followers on the carriers (no sliding at the cam): the servo needs about 2.5 kg.cm peak (concept 1.98 average with mu 0.3 on 19.5 N)",
-  "the m1 rack is its own bar (printed flat, teeth in the layers, epoxied to the web): the body prints on its side (+x), where the column's bending and the plate's lie in the layers"
+  "the m1 rack is its own bar (printed flat, teeth in the layers, epoxied to the web): the body prints on its side (+x), where the column's bending and the plate's lie in the layers; the bar is bonded in the FE and the pinion holds its teeth",
+  "the body's -X flank is cut flat at X -34 with a 2 mm land (the +x build's bed face, 7.4 x 113); a 12.5 x 10 fillet joins the plate and the wing (the pull's peak sat in that sharp corner)"
  ]
 }

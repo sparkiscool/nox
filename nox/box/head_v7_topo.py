@@ -11,7 +11,8 @@ system at its joints (docs/generative.md The rule, 0; requirements dimensions "S
     patch in the case (drone insert u -56, bay u -47, park u 23);
   - loads = the head's interface loads per case (head_v7_layout.loads_table, E): insert 60 N (swap) / 74 N stall (misuse) on the
     pads, the pull 57.3 N (swap) on the four rod sockets, handling 3 g + 2 g with the Overseer cartridge (pads, stops, sockets),
-    43.5 N across at a seat (swap, on the stops), the servo's stall torque on the ear pads (misuse).
+    43.5 N across at a seat (swap, on the stops), the centring 7.6 N / 1.05 N.m (swap), the servo's stall torque on the ear pads
+    (misuse); power cut carrying is braked (3 N on the bumper, the system's required head brake), under the handling cases.
 Classes as hub_v6_topo: swap -> flight (SF 4), misuse / handling -> misuse (2.5). Build +x (the part on its -X flank: the column's
 bending along Y and the plate's along u both lie in the layers). Head B is solved in the A frame with the MG995 cradle and B's
 shorter web tail, then mirrored.
@@ -134,6 +135,12 @@ def setup(h):
         # +X on the cartridge pushes the -X carrier inward onto its stop, and the reverse
         pp.load(f"across {'+' if sx > 0 else '-'}X 43.5 N at a seat, receiver gaps closed [swap]", stopm if sx > 0 else stopp, (sx * 43.5, 0, 0),
                 cls=CLS["swap"], support="bay")
+    cm = 1.05e3 / (2 * 18.25)                                                 # the lead-ins' centring 7.6 N / 1.05 N.m (arm position error, latch v2 load set)
+    for sx in (1, -1):
+        pp.load_multi(f"centring {'+' if sx > 0 else '-'}X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
+                      [(stopm if sx > 0 else stopp, (sx * 7.6, 0, 0)), (padp, (0, 0, -sx * cm)), (padm, (0, 0, sx * cm))], cls=CLS["swap"], support="bay")
+    # power cut carrying: the head brake is required (System box swap: arm, row Head brake): braked creep 7.8 mm/s puts 3 N on the bumper
+    # (runs/arm/v7/system.json brake), under the handling cases; unbraked (409 / 630 N) is outside the design, gated by the brake self-test
     sv = H.SERVOS[SERVO]; T = sv["kgcm"] * 98.07; ye = H.Y_SERVO_TOP - sv["H"] + sv["ear_y"]
     hs = H.ear_holes(SERVO); f = T / (hs[2][0] - hs[0][0]) / 2
     pp.load_multi(f"{SERVO} stall torque {T / 1000:.2f} N.m on the ear pads [misuse]",

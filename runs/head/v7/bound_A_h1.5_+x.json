@@ -1,84 +1,84 @@
 {
  "h": 1.5,
- "mass_g": 236.8,
- "worst": 0.591,
- "worst_case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
+ "mass_g": 237.1,
+ "worst": 0.409,
+ "worst_case": "insert at the drone 60 N [swap]",
  "worst_at": [
-  33.5,
-  68.9,
-  31.2
+  27.5,
+  74.9,
+  14.8
  ],
  "rows": [
   {
    "case": "insert at the drone 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.439,
-   "across": 0.475,
+   "inlayer": 0.396,
+   "across": 0.409,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
    "case": "insert at the drone, stall 74 N [misuse]",
    "cls": "misuse",
-   "inlayer": 0.338,
-   "across": 0.366,
+   "inlayer": 0.305,
+   "across": 0.315,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
    "case": "pull at the drone 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.416,
-   "across": 0.591,
+   "inlayer": 0.374,
+   "across": 0.358,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
    "case": "insert at a bay 60 N [swap]",
    "cls": "flight",
-   "inlayer": 0.437,
-   "across": 0.472,
+   "inlayer": 0.395,
+   "across": 0.409,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
    "case": "insert at a bay, stall 74 N [misuse]",
    "cls": "misuse",
-   "inlayer": 0.337,
-   "across": 0.364,
+   "inlayer": 0.305,
+   "across": 0.315,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
    "case": "pull at the bay 57.3 N while the XT60 unmates [swap]",
    "cls": "flight",
-   "inlayer": 0.414,
-   "across": 0.587,
+   "inlayer": 0.374,
+   "across": 0.356,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
    "case": "handling 3 g in + 2 g along +X, Overseer cartridge carried [handling]",
    "cls": "misuse",
-   "inlayer": 0.087,
+   "inlayer": 0.086,
    "across": 0.091,
    "at": [
     38.0,
@@ -89,8 +89,8 @@
   {
    "case": "handling 3 g in + 2 g along -X, Overseer cartridge carried [handling]",
    "cls": "misuse",
-   "inlayer": 0.106,
-   "across": 0.123,
+   "inlayer": 0.108,
+   "across": 0.126,
    "at": [
     29.0,
     73.4,
@@ -100,12 +100,12 @@
   {
    "case": "handling 3 g out, Overseer cartridge carried (on the rods) [handling]",
    "cls": "misuse",
-   "inlayer": 0.089,
-   "across": 0.122,
+   "inlayer": 0.091,
+   "across": 0.075,
    "at": [
-    33.5,
-    68.9,
-    31.2
+    27.5,
+    74.9,
+    14.8
    ]
   },
   {
@@ -133,8 +133,8 @@
   {
    "case": "across +X 43.5 N at a seat, receiver gaps closed [swap]",
    "cls": "flight",
-   "inlayer": 0.21,
-   "across": 0.127,
+   "inlayer": 0.209,
+   "across": 0.125,
    "at": [
     -26.5,
     71.9,
@@ -144,12 +144,34 @@
   {
    "case": "across -X 43.5 N at a seat, receiver gaps closed [swap]",
    "cls": "flight",
-   "inlayer": 0.21,
-   "across": 0.123,
+   "inlayer": 0.209,
+   "across": 0.121,
    "at": [
     -26.5,
     71.9,
     11.8
+   ]
+  },
+  {
+   "case": "centring +X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
+   "cls": "flight",
+   "inlayer": 0.16,
+   "across": 0.129,
+   "at": [
+    15.5,
+    175.4,
+    10.2
+   ]
+  },
+  {
+   "case": "centring -X 7.6 N + 1.05 N.m at a seat, driver on [swap]",
+   "cls": "flight",
+   "inlayer": 0.161,
+   "across": 0.147,
+   "at": [
+    15.5,
+    175.4,
+    10.2
    ]
   },
   {

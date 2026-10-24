@@ -35,12 +35,12 @@
  "box_head_v7_B_rack_bar": {
   "bed_face": "+Y down",
   "bed_mm2": 306.4,
-  "mass_g": 5.2,
+  "mass_g": 5.19,
   "bbox": [
    84.0,
    5.0,
    14.0
   ],
-  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_rack_bar.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [1389.8], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 26, 'ok': True}"
+  "solid": "/home/user/nox/runs/head/v7/parts/print/box_head_v7_B_rack_bar.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [1384.9], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 26, 'ok': True}"
  }
 }
