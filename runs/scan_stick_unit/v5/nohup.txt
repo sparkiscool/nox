@@ -81,3 +81,7 @@ layout: beta 32 done: eroded design 12 bodies, main 99.5%; drawn bodies outside 
 layout done: 927 s, peak 3.777628 GB
 build: organic surface at pitch 0.429 mm (x7), skins 319.99 cm3, field 412.20 cm3, in env - cuts 384.66 cm3 (layout 384.66, level offset -0.582 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,240,976 faces, 343 s
 build: 13 shells, volumes [383974.8, 0.4, 0.0, 0.0, 0.0, 0.0] mm3; dropped specks [0.0, 0.0, 0.0, 0.0, 0.0, 0.37, 0.0, 0.0, 0.0, 0.0]; sealed cavities kept [0.0, 0.0] mm3
+solid check: FAIL {"bodies_plain": 6, "bodies_eroded": 1, "eroded_volumes_mm3": [304732.7], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 47, "ok": false}
+function check: {'skin_mm3': 236098.2, 'skin_missing_mm3': 66.52, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 1.19 in 'unit 50 g 0' at [-36.0, 31.5, 62.5]
+RESULT {"name": "scan_stick_unit", "solid_ok": false, "mass_g": 487.65, "worst": 1.189, "function_ok": true, "bodies": 4}
