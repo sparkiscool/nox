@@ -252,7 +252,7 @@ def latch_skids():
 
 
 REC_SKIDS, CART_SKIDS = latch_skids()
-SKIDS = SKIDS + [REC_SKIDS, CART_SKIDS]
+EDGE_SKIDS = [REC_SKIDS, CART_SKIDS]                 # edge cover for the probes only: cage first and the crash cases stay on the rods
 PACK_PTS = _L["pack"].bounding_box.vertices.copy()
 # the Scout's own mount (partner part): receiver bosses (z 9.6) up to the plate (18.5) round the FC and the XT60 lead window,
 # legs down outside the receiver plates carrying the suspension joints, the Radxa plate (-y), the flow seat and pogo carrier (+y)
@@ -923,7 +923,7 @@ PROBE_PROT, PROBE_OPEN = probe_set()
 def cage_mesh(ms):
     T = member_types(N, kind, ms)
     rods_ = [member_mesh(N[a_], N[b_], T[(a_, b_)]) for a_, b_ in ms]
-    return trimesh.util.concatenate(rods_ + KA_PADS + SKIDS)
+    return trimesh.util.concatenate(rods_ + KA_PADS + SKIDS + EDGE_SKIDS)
 
 
 PROBE_CFG = dict(n_dirs=300, n_roll=24, post=True)
