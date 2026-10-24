@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (box structure system session, box electronics): heads v7 gripper items: 2 dwell positions only, stall cut (K4 + INA226 0x46, 0.5 s; DS3218 1.8 A, MG995 1.0 A, E, DEFAULT), 4 grip halls on an ADS1115 0x48 (bundle 19 → 23, ribbon 5 wide: CHECK arm; alt one weighted-sum wire per head). Script rerun, boards moved.
 - 24 Oct (box structure system session): insert keep-outs per the arm / heads v7: carriage Y to 75.35 (plate top 74.35), Z ≥ 89; grabber from r 95 (was 111.5). Variants rerun: fit 0.0, the lanes clear the catch (panel v9 plain) by 2.0 (C on M), box 80.0 L unchanged. `box_layout_v2.py`, dimensions.
 - 24 Oct (control chat, Spark: "we dont need a digest session"): no hub; one task per session with Agent workers inside it, a new cloud session only for heavy runs or a full box; sessions message Spark only for print-ready files or his decisions (`CLAUDE.md`, `docs/sessions.md`). The control session is archived.
 - 24 Oct (tooling, from scout v3): system_check crash probes: protected parts shadow each other (a probe stops at the first solid); failing probe rows Scout v3 (live layout) 21 -> 12, Overseer 28 -> 24, worst margins unchanged (-27.8, -0.0 unshielded); box manifests have no probes. `system_check.py`, `ASSEMBLY.md`.

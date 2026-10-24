@@ -51,6 +51,8 @@ BOARDS = {
     "BUCK_5V": (41.0, 26.0, 10, "E", "24 -> 5.1 V 5 A buck (Pololu D36V50F5 class): Pi + logic"),
     "FUSE":    (105.0, 60.0, 35, "E", "6-way blade fuse box with negative bus (12/24 V)"),
     "BUS":     (70.0, 30.0, 20, "E", "3 x Wago 221-415 on tape: 6.0 V servo bus, 5 V logic bus, GND"),
+    "INA_GR":  (32.0, 22.0, 10, "E", "INA226 module, shunt R010, I2C 0x46: gripper servo pair behind K4 (stall cut, heads v7)"),
+    "ADC":     (28.0, 18.0, 8, "E", "ADS1115 16-bit 4-ch ADC module, I2C 0x48: the 4 grip halls (DRV5055A4, 2 per head)"),
 }
 
 # off-sheet endpoints: name -> ((x, y, z) W, detour E, route)
@@ -96,7 +98,9 @@ NETS = [
     ("bay O -", "CHARGER", "BAY_O", 1, 16, 6.0, 6.5, 16.8, "power"),
     ("6.0 V to bus", "BUCK_SV", "BUS", 2, 18, 1.0, 8.0, 6.0, "power"),
     ("6.0 V to PCA V+", "BUS", "PCA", 2, 18, 0.3, 3.2, 6.0, "power"),
-    ("6.0 V gripper pair", "BUS", "ARM", 2, 22, 0.5, 5.0, 6.0, "servo"),
+    ("6.0 V gripper to K4", "BUS", "RELAY", 1, 22, 0.5, 5.0, 6.0, "servo"),
+    ("6.0 V gripper K4 to INA", "RELAY", "INA_GR", 1, 22, 0.5, 5.0, 6.0, "servo"),
+    ("6.0 V gripper pair", "INA_GR", "ARM", 2, 22, 0.5, 5.0, 6.0, "servo"),
     ("latch servo L1", "PCA", "L1", 3, 22, 0.1, 0.8, 6.0, "servo"),
     ("latch servo L2", "PCA", "L2", 3, 22, 0.1, 0.8, 6.0, "servo"),
     ("latch servo R1", "PCA", "R1", 3, 22, 0.1, 0.8, 6.0, "servo"),
@@ -114,16 +118,19 @@ NETS = [
     ("I2C PCA-INA_KA", "PCA", "INA_KA", 4, 26, 0.01, 0.01, 3.3, "signal"),
     ("I2C INA_KA-INA_S", "INA_KA", "INA_S", 4, 26, 0.01, 0.01, 3.3, "signal"),
     ("I2C INA_S-INA_O", "INA_S", "INA_O", 4, 26, 0.01, 0.01, 3.3, "signal"),
+    ("I2C INA_O-INA_GR", "INA_O", "INA_GR", 4, 26, 0.01, 0.01, 3.3, "signal"),
+    ("I2C INA_GR-ADC", "INA_GR", "ADC", 4, 26, 0.01, 0.01, 3.3, "signal"),
     ("USB Pi-SKR", "PI", "SKR", 1, 0, 0.1, 0.1, 5.0, "cable"),
     ("steppers A, B, axle", "SKR", "ARM", 12, 26, 1.4, 2.0, 24, "stepper"),
     ("axle hall", "SKR", "ARM", 3, 28, 0.01, 0.01, 5.0, "signal"),
     ("gripper PWM", "PCA", "ARM", 2, 28, 0.01, 0.01, 6.0, "signal"),
+    ("grip halls", "ADC", "ARM", 4, 28, 0.01, 0.01, 5.0, "signal"),   # heads v7: 2 analog halls per head; their 5 V from an LDO on the head off the 6.0 V pair
     ("GND bus to star", "BUS", "FUSE", 1, 18, 1.2, 8.0, 0, "power"),
 ]
 # arm-side lengths of the bundle conductors past the stub exit: box-wiring.md cut list / 1.2 less its 250 E fixed tail
 # (arm_wiring.cut_list); the fixed tail is now this placement's route from the board to the stub lead-channel exit
 ARM_SIDE = {"steppers A, B, axle": 646 / 1.2 - 250, "axle hall": 595 / 1.2 - 250, "6.0 V gripper pair": 435 / 1.2 - 250,
-            "gripper PWM": 435 / 1.2 - 250}
+            "gripper PWM": 435 / 1.2 - 250, "grip halls": 435 / 1.2 - 250}
 
 
 def pos(name, place):
@@ -431,7 +438,7 @@ def schematic_svg(standalone=True):
         "B5": (20, 260, 140, 50, "pwr", "Logic buck", "5.1 V 5 A"),
         "PI": (20, 420, 160, 70, "brd", "Raspberry Pi 4", "Klipper host + boxd"),
         "PCA": (390, 420, 150, 50, "sig", "PCA9685", "I2C 0x40, OE GPIO4"),
-        "RELAY": (190, 560, 150, 60, "pwr", "Relay 4-ch", "K1 KA, K2 bay S, K3 bay O, K4 spare"),
+        "RELAY": (190, 560, 150, 60, "pwr", "Relay 4-ch", "K1 KA, K2 bay S, K3 bay O, K4 grippers"),
         "INAKA": (390, 560, 110, 40, "sig", "INA226 0x41", "keep-alive"),
         "INAS": (520, 560, 110, 40, "sig", "INA226 0x44", "bay S"),
         "INAO": (650, 560, 110, 40, "sig", "INA226 0x45", "bay O"),
