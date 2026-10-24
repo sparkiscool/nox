@@ -1,6 +1,6 @@
 # Runs
 
-_78 runs · rebuilt 2026-10-24 03:23_
+_85 runs · rebuilt 2026-10-24 11:34_
 
 ## Latest per part
 
@@ -19,7 +19,10 @@ _78 runs · rebuilt 2026-10-24 03:23_
 | hook_latch | v1 | · | · | ·  | · | [runs/hook_latch/v1](runs/hook_latch/v1/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
+| overseer_cage | v1 | DONE | · | ·  | · | [runs/overseer_cage/v1](runs/overseer_cage/v1/summary.md) |
+| overseer_cams | v1 | DONE | · | 0.00 in coverage 54.7 % of the L2 field (C), ceiling 54.8 % | · | [runs/overseer_cams/v1](runs/overseer_cams/v1/summary.md) |
 | overseer_layout | v1 | DONE | 2538 (E) | ·  | · | [runs/overseer_layout/v1](runs/overseer_layout/v1/summary.md) |
+| overseer_system | v1B | DONE | 2870 (E) | ·  | · | [runs/overseer_system/v1B](runs/overseer_system/v1B/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
@@ -33,24 +36,24 @@ _78 runs · rebuilt 2026-10-24 03:23_
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2026-10-24 18:00 | box_electronics | [v1](runs/box_electronics/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
-| 2026-10-24 02:42 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | bracket_jA | [organic-v4](runs/bracket_jA/organic-v4/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | bracket_jA | [organic-v5](runs/bracket_jA/organic-v5/summary.md) | · | 36.9 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v1](runs/holder/organic-v1/summary.md) | · | 10.2 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v10](runs/holder/organic-v10/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v11](runs/holder/organic-v11/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v12](runs/holder/organic-v12/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v2](runs/holder/organic-v2/summary.md) | · | 10.9 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v3](runs/holder/organic-v3/summary.md) | · | 12.5 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v4](runs/holder/organic-v4/summary.md) | · | 10.8 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v5](runs/holder/organic-v5/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v6](runs/holder/organic-v6/summary.md) | · | 11.3 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v7](runs/holder/organic-v7/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v8](runs/holder/organic-v8/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
-| 2026-10-24 02:42 | holder | [organic-v9](runs/holder/organic-v9/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
-| 2026-10-24 02:42 | motor_mount | [organic-v1](runs/motor_mount/organic-v1/summary.md) | · | 17.9 (M) | · | FAIL | · | · GB | · min | · |
-| 2026-10-24 02:42 | motor_mount | [organic-v2](runs/motor_mount/organic-v2/summary.md) | · | 18.0 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | bracket_jA | [organic-v4](runs/bracket_jA/organic-v4/summary.md) | · | 36.8 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | bracket_jA | [organic-v5](runs/bracket_jA/organic-v5/summary.md) | · | 36.9 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v1](runs/holder/organic-v1/summary.md) | · | 10.2 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v10](runs/holder/organic-v10/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v11](runs/holder/organic-v11/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v12](runs/holder/organic-v12/summary.md) | · | 12.5 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v2](runs/holder/organic-v2/summary.md) | · | 10.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v3](runs/holder/organic-v3/summary.md) | · | 12.5 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v4](runs/holder/organic-v4/summary.md) | · | 10.8 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v5](runs/holder/organic-v5/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v6](runs/holder/organic-v6/summary.md) | · | 11.3 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v7](runs/holder/organic-v7/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v8](runs/holder/organic-v8/summary.md) | · | 11.7 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 02:21 | holder | [organic-v9](runs/holder/organic-v9/summary.md) | · | 11.7 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | motor_mount | [organic-v1](runs/motor_mount/organic-v1/summary.md) | · | 17.9 (M) | · | FAIL | · | · GB | · min | · |
+| 2026-10-24 02:21 | motor_mount | [organic-v2](runs/motor_mount/organic-v2/summary.md) | · | 18.0 (M) | · | PASS | · | · GB | · min | · |
+| 2026-10-24 00:57 | hook_latch | [v1](runs/hook_latch/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-24 | arm | [v5-layout-b](runs/arm/v5-layout-b/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 | arm_eccbush | [v1](runs/arm_eccbush/v1/summary.md) | DONE | 0.8 (M) | 0.11 | PASS | hex flange face down | · GB | · min | · |
 | 2026-10-24 | arm_pinion16 | [v1](runs/arm_pinion16/v1/summary.md) | DONE | 3.0 (M) | 0.56 | PASS | gear face (Y 72.5, C) down with a 0.3 (C) elephant-foot inset step, boss up | · GB | · min | · |
@@ -58,8 +61,15 @@ _78 runs · rebuilt 2026-10-24 03:23_
 | 2026-10-24 | arm_vwheel | [v1](runs/arm_vwheel/v1/summary.md) | DONE | 2.8 (M) | 0.66 | PASS | either face (symmetric, C) | · GB | · min | · |
 | 2026-10-24 | box_catch_assembly | [v0](runs/box_catch_assembly/v0/summary.md) | DONE | 673 (E) | · | · | · | · GB | 1 min | · |
 | 2026-10-24 | overseer_assembly | [v0](runs/overseer_assembly/v0/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 8 min | · |
+| 2026-10-24 | overseer_assembly | [v1](runs/overseer_assembly/v1/summary.md) | DONE | 3382 (E) | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_cage | [v1](runs/overseer_cage/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_cage | [v2](runs/overseer_cage/v2/summary.md) | DONE | 487 (C) | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_cage | [v3](runs/overseer_cage/v3/summary.md) | DONE | 827 (C) | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_cams | [v1](runs/overseer_cams/v1/summary.md) | DONE | · | 0.00 | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
+| 2026-10-24 | overseer_system | [v1B](runs/overseer_system/v1B/summary.md) | DONE | 2870 (E) | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_system | [v2A](runs/overseer_system/v2A/summary.md) | DONE | 3420 (E) | 0.93 | · | · | · GB | 35 min | · |
 | 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
 | 2026-10-24 | test_glue_lap | [v1](runs/test_glue_lap/v1/summary.md) | DONE | 3.9 (M) | · | PASS | flat face (as saved) | · GB | · min | · |
 | 2026-10-24 | test_layer_pull | [v1](runs/test_layer_pull/v1/summary.md) | DONE | 28.6 (M) | · | PASS | plate bottom (as saved) | · GB | · min | · |

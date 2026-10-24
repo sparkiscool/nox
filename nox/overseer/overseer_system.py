@@ -315,6 +315,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["hubs"] = hubs
     g["hub_socket_mm3"] = g.get("hub_socket_mm3", 0.0) + sum(overlap(h_, g["pan"]) for h_ in hubs)   # hub blocks seated on the belly pan
     g["hub_plate_mm3"] = sum(overlap(h_, pl_) for h_ in hubs for pl_ in (TOP, BOTTOM)) + 1.0            # and clamped on the plates
+    g["hub_arm_mm3"] = sum(overlap(h_, a_) for h_ in hubs for a_ in g["arms"]) * 1.5 + 1.0              # front hub blocks seat on the front arm roots
     g["cage_N"], g["cage_info"] = Ng, info
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
@@ -664,6 +665,7 @@ man = dict(name="overseer_system_v1", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["cage", "sled + pods + deck", round(g["pod_clamp_mm3"], 1)],    # the pods clamped on the belly bars,
                           ["cage", "apex + hubs", round(g["hub_socket_mm3"], 1)],          # rod ends in the hub and apex sockets,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
+                          ["arms", "apex + hubs", round(g["hub_arm_mm3"], 1)],             # front hub blocks seated on the front arm roots,
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
                      dict(part="pack", axis=[0, 0, -1], half_angle_deg=100.0, min_mm=0.0, skip_probes=True),                   # the cartridge path: it drops out the bottom and fills the 168 opening under the wheels, where nothing else may go; its cartridge walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)

@@ -1,0 +1,69 @@
+Overseer (overseer): 13 parts
+  name                               role      geometry  tag   mass_g  extents mm             owner / version
+  cage                               cage      mesh      E      889.1  683x589x241            overseer system v1 (layout A)
+  props                              protected mesh      E       40.0  533x533x10             overseer system v1 (layout A)
+  motors                             protected mesh      P      324.0  307x307x26             overseer system v1 (layout A)
+  L2                                 protected mesh      P      230.0  74x75x83               overseer system v1 (layout A)
+  front cameras                      protected mesh      E       34.0  35x172x37              overseer system v1 (layout A)
+  pack                               protected mesh      E      650.0  148x48x45              overseer system v1 (layout A) S
+  electronics                        protected mesh      E      190.0  98x56x42               overseer system v1 (layout A)
+  down cam + flow                    protected mesh      E       17.0  38x118x12              overseer system v1 (layout A)
+  arms                               structure mesh      E      757.1  431x315x45             overseer system v1 (layout A)
+  plates                             structure mesh      C       84.0  196x120x49             overseer system v1 (layout A)
+  sled + pods + deck                 structure mesh      E      115.6  310x144x102            overseer system v1 (layout A)
+  apex + hubs                        structure mesh      E       45.1  591x132x114            overseer system v1 (layout A)
+  cam brackets                       structure mesh      E        6.1  38x170x40              overseer system v1 (layout A)
+  flags: P protect, S swap, K moves
+system_check Overseer: PASS
+  cage first PASS: worst 9.46 mm (E) at +X on L2 (needs 0.0), 1506 dirs
+    props: min margin 28.0 mm, outside openings 28.0, slack 25.0 at +Y
+    motors: min margin 52.15 mm, outside openings 52.15, slack 49.15 at +Z
+    L2: min margin 9.46 mm, outside openings 36.67, slack 9.46 at +X
+    front cameras: min margin 48.09 mm, outside openings 48.09, slack 45.09 at (+0.34, -0.01, +0.94)
+    pack: min margin 17.0 mm, outside openings 177.37, slack 17.0 at -Z
+    electronics: min margin 36.47 mm, outside openings 36.47, slack 33.47 at (-0.43, +0.02, -0.90)
+    down cam + flow: min margin 21.0 mm, outside openings 207.58, slack 21.0 at -Z
+  compact: bbox 96.978 L (E), hull 56.539 L (E), extents [683.2, 589.0, 241.0] mm (E), largest 683.2 mm, guards {'guard rods to prop disks, plan (G)': 12.0, 'rods under / over the swept band (G)': 12.0}
+  fit PASS (tol 0.5 mm³):
+    cage / arms: 11292.87 mm³ (E) limit 21111.5 contact [manifold3d]
+    cage / sled + pods + deck: 884.67 mm³ (E) limit 2601.2 contact [manifold3d]
+    cage / apex + hubs: 16470.64 mm³ (E) limit 80148.4 contact [manifold3d]
+    L2 / apex + hubs: 0.0 mm³ (E) limit 0.5 [manifold3d]
+    arms / apex + hubs: 4.2 mm³ (E) limit 7.3 contact [manifold3d]
+    plates / apex + hubs: 53.01 mm³ (E) limit 54.0 contact [manifold3d]
+    apex + hubs / cam brackets: 175.75 mm³ (E) limit 185.5 contact [manifold3d]
+  mass 3381.97 g (E), CG [206.98, 0.6, 14.36], offset [1.27, 0.6, 14.36] = 14.43 mm from [205.71338882308478, 0.0, 0.0]
+    cage: 889.15 g (E) at [225.3, -0.0, 47.22]
+    props: 40.0 g (E) at [205.71, -0.0, 82.0]
+    motors: 324.0 g (P) at [205.71, 0.0, 58.0]
+    L2: 230.0 g (P) at [524.92, -0.0, 35.16]
+    front cameras: 34.0 g (E) at [483.38, 0.0, 46.23]
+    pack: 650.0 g (E) at [205.71, 0.0, -71.5] swap
+    electronics: 190.0 g (E) at [-2.52, 0.73, 23.59]
+    down cam + flow: 17.0 g (E) at [205.71, 11.86, -81.84]
+    arms: 757.1 g (E) at [139.89, -0.0, 24.87]
+    plates: 84.0 g (C) at [-0.06, -0.22, 11.75]
+    sled + pods + deck: 115.57 g (E) at [197.38, 14.78, -31.06]
+    apex + hubs: 45.05 g (E) at [427.29, 0.0, 37.92]
+    cam brackets: 6.1 g (E) at [480.59, -0.0, 47.21]
+  balance PASS (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
+    all: 1.4 mm horizontal, 14.36 mm axial, 3381.97 g
+    no_swap: 1.73 mm horizontal, 34.79 mm axial, 2731.97 g
+  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 548811 surface points):
+    edge / pack: 2.9 mm (E) from (-0.97, +0.03, +0.26), axis [-0.003, -0.996, 0.085], roll 75.0, lateral 121.2 mm, contact [131.7, 24.0, -90.0]
+    post r10 / pack: 3.25 mm (E) from (-0.97, +0.03, +0.26), axis [-0.003, -0.996, 0.085], roll 75.0, lateral 130.2 mm, contact [131.7, -21.0, -94.0]
+    edge / electronics: 5.0 mm (E) from -Z, axis [-0.3, 0.953, 0.035], roll 180.0, lateral 247.2 mm, contact [-36.0, 24.5, 0.5]
+    edge / down cam + flow: 5.0 mm (E) from +Y, axis [-1.0, -0.001, 0.013], roll 90.0, lateral 89.7 mm, contact [186.7, 68.0, -80.8]
+    post r10 / electronics: 5.0 mm (E) from -Z, axis [-0.3, 0.953, 0.035], roll 180.0, lateral 242.7 mm, contact [-31.0, 24.5, 0.5]
+    post r10 / down cam + flow: 5.0 mm (E) from +Y, axis [-1.0, -0.001, 0.013], roll 90.0, lateral 89.7 mm, contact [186.7, 68.0, -80.0]
+    edge / L2: 6.7 mm (E) from (-0.48, -0.13, -0.87), axis [0.261, -0.965, 0.001], roll 150.0, lateral 251.7 mm, contact [527.4, -17.5, -4.3]
+    post r10 / L2: 7.1 mm (E) from (-0.48, -0.13, -0.87), axis [0.261, -0.965, 0.001], roll 150.0, lateral 260.7 mm, contact [527.4, 6.5, -4.3]
+    edge / front cameras: 11.0 mm (E) from (+0.04, -0.22, -0.98), axis [0.157, -0.963, 0.221], roll 180.0, lateral 218.7 mm, contact [466.3, -79.5, 27.8]
+    post r10 / front cameras: 11.0 mm (E) from (+0.00, +0.23, -0.97), axis [0.013, 0.973, 0.229], roll 180.0, lateral -234.3 mm, contact [466.3, 79.5, 27.8]
+    edge / props: 15.0 mm (E) from +Z, axis [-0.95, -0.294, 0.107], roll 0.0, lateral 8.7 mm, contact [457.6, 80.5, 87.0]
+    post r10 / props: 15.11 mm (E) from +Z, axis [-0.95, -0.294, 0.107], roll 0.0, lateral 7.2 mm, contact [456.7, 78.8, 87.0]
+    edge / motors: 17.0 mm (E) from -Z, axis [-0.991, 0.049, 0.123], roll 180.0, lateral 140.7 mm, contact [53.8, -133.4, 45.0]
+    post r10 / motors: 17.0 mm (E) from -Z, axis [-0.991, 0.049, 0.123], roll 180.0, lateral 140.7 mm, contact [54.2, -132.6, 45.0]
+  access PASS (swept tool overlap <= 0.5 mm³):
+    pack swap (pack, part, 80 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+System: Overseer, cage first 9.5 mm (E) at +X (L2), fit 0.0 mm³ (E) (L2/apex + hubs), bbox 97 L (E), extents 683 x 589 x 241 mm (E), mass 3382 g (E), CG 1.4 mm off thrust axis (E) [+1.3, +0.6, +14.4], 1.7 mm without swap parts, probes 2.9 mm (E) edge at (-0.97, +0.03, +0.26) (pack), access 1/1 clear
