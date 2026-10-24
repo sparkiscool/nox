@@ -186,3 +186,13 @@ it  47 beta    4 J   0.9250 vol 0.0792 (dil 0.1475 g -0.004) grey  7.3% ch 0.100
 it  48 beta    4 J   0.9005 vol 0.0805 (dil 0.1476 g -0.003) grey  6.9% ch 0.100 worst cage bump top 100 N (spine s 5.05 2.4s
 it  49 beta    4 J   0.8859 vol 0.0814 (dil 0.1478 g -0.002) grey  6.8% ch 0.100 worst cage bump top 100 N (spine s 4.97 2.0s
 it  50 beta    4 J   0.8731 vol 0.0821 (dil 0.1478 g -0.002) grey  6.6% ch 0.100 worst cage bump top 100 N (spine s 4.91 2.3s
+it  51 beta    4 J   0.8607 vol 0.0827 (dil 0.1479 g +0.027) grey  6.5% ch 0.100 worst cage bump top 100 N (spine s 4.84 2.4s
+it  52 beta    4 J   0.9896 vol 0.0773 (dil 0.1438 g -0.001) grey  7.2% ch 0.100 worst cage bump top 100 N (spine s 5.96 2.1s
+it  53 beta    4 J   0.8857 vol 0.0786 (dil 0.1435 g -0.004) grey  6.2% ch 0.100 worst cage bump top 100 N (spine s 5.05 2.1s
+it  54 beta    4 J   0.8766 vol 0.0792 (dil 0.1438 g -0.001) grey  6.1% ch 0.100 worst cage bump top 100 N (spine s 4.99 2.3s
+it  55 beta    4 J   0.8727 vol 0.0795 (dil 0.1439 g -0.001) grey  6.1% ch 0.100 worst cage bump top 100 N (spine s 4.98 2.1s
+it  56 beta    4 J   0.8701 vol 0.0796 (dil 0.1439 g +0.017) grey  6.1% ch 0.100 worst cage bump top 100 N (spine s 4.97 2.0s
+it  57 beta    4 J   0.9146 vol 0.0762 (dil 0.1410 g -0.004) grey  6.4% ch 0.100 worst cage bump top 100 N (spine s 5.38 2.0s
+it  58 beta    4 J   0.8877 vol 0.0770 (dil 0.1411 g -0.002) grey  5.9% ch 0.100 worst cage bump top 100 N (spine s 5.13 2.4s
+it  59 beta    4 J   0.8819 vol 0.0774 (dil 0.1413 g -0.001) grey  5.9% ch 0.100 worst cage bump top 100 N (spine s 5.08 2.2s
+it  60 beta    4 J   0.8793 vol 0.0775 (dil 0.1414 g -0.001) grey  5.8% ch 0.100 worst cage bump top 100 N (spine s 5.07 2.0s
