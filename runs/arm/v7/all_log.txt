@@ -1,102 +1,102 @@
-demo v5 {'stack': 'v5', 'Y_C': 165.0, 'reach_r': 157.9, 'y': (0.0, 207.6), 'length_y': 207.6, 'swept_cyl_L': 16.25, 'bbox_L': 20.69, 'largest_mm': 315.7}
-demo v6 {'stack': 'v6', 'Y_C': 165.0, 'reach_r': 173.5, 'y': (0.0, 207.6), 'length_y': 207.6, 'swept_cyl_L': 19.62, 'bbox_L': 24.98, 'largest_mm': 346.9}
+demo v5 {'stack': 'v5', 'Y_C': 167.1, 'reach_r': 157.9, 'y': (0.0, 209.6), 'length_y': 209.6, 'swept_cyl_L': 16.42, 'bbox_L': 20.9, 'largest_mm': 315.7}
+demo v6 {'stack': 'v6', 'Y_C': 167.1, 'reach_r': 173.5, 'y': (0.0, 209.6), 'length_y': 209.6, 'swept_cyl_L': 19.82, 'bbox_L': 25.23, 'largest_mm': 346.9}
 compact_modules v5 {'stack': 'v5', 'Y_C': 156.9, 'reach_r': 157.9, 'y': (0.0, 199.4), 'length_y': 199.4, 'swept_cyl_L': 15.62, 'bbox_L': 19.88, 'largest_mm': 315.7}
 compact_modules v6 {'stack': 'v6', 'Y_C': 130.8, 'reach_r': 173.5, 'y': (0.0, 173.4), 'length_y': 173.4, 'swept_cyl_L': 16.39, 'bbox_L': 20.86, 'largest_mm': 346.9}
-{'stack': 'v5', 'variant': 'as drawn', 'Y_C': 165.0, 'pitch_free_deg': 1.05, 'lag_free_mm': 2.28, 'lag_guided_mm': 1.71, 'receiver_M_Nm': 0.2, 'length_y': 207.6, 'bbox_L': 20.69, 'largest_mm': 315.7}
+{'stack': 'v5', 'variant': 'as drawn', 'Y_C': 167.1, 'pitch_free_deg': 1.07, 'lag_free_mm': 2.34, 'lag_guided_mm': 1.73, 'receiver_M_Nm': 0.19, 'length_y': 209.6, 'bbox_L': 20.9, 'largest_mm': 315.7}
 {'stack': 'v5', 'variant': 'as drawn', 'Y_C': 156.9, 'pitch_free_deg': 0.96, 'lag_free_mm': 2.07, 'lag_guided_mm': 1.63, 'receiver_M_Nm': 0.23, 'length_y': 199.4, 'bbox_L': 19.88, 'largest_mm': 315.7}
-{'stack': 'v6', 'variant': 'as drawn', 'Y_C': 165.0, 'pitch_free_deg': 1.28, 'lag_free_mm': 1.71, 'lag_guided_mm': 0.82, 'receiver_M_Nm': 0.02, 'length_y': 207.6, 'bbox_L': 24.98, 'largest_mm': 346.9}
+{'stack': 'v6', 'variant': 'as drawn', 'Y_C': 167.1, 'pitch_free_deg': 1.32, 'lag_free_mm': 1.8, 'lag_guided_mm': 0.84, 'receiver_M_Nm': 0.09, 'length_y': 209.6, 'bbox_L': 25.23, 'largest_mm': 346.9}
 {'stack': 'v6', 'variant': 'as drawn', 'Y_C': 130.8, 'pitch_free_deg': 0.66, 'lag_free_mm': 0.69, 'lag_guided_mm': 0.52, 'receiver_M_Nm': 0.0, 'length_y': 173.4, 'bbox_L': 20.86, 'largest_mm': 346.9}
-{'stack': 'v6', 'variant': '+ carbon ties', 'Y_C': 165.0, 'pitch_free_deg': 0.81, 'lag_free_mm': 1.23, 'lag_guided_mm': 0.8, 'receiver_M_Nm': 0.0, 'length_y': 207.6, 'bbox_L': 24.98, 'largest_mm': 346.9}
+{'stack': 'v6', 'variant': '+ carbon ties', 'Y_C': 167.1, 'pitch_free_deg': 0.83, 'lag_free_mm': 1.28, 'lag_guided_mm': 0.83, 'receiver_M_Nm': 0.0, 'length_y': 209.6, 'bbox_L': 25.23, 'largest_mm': 346.9}
 {'stack': 'v6', 'variant': '+ carbon ties', 'Y_C': 130.8, 'pitch_free_deg': 0.45, 'lag_free_mm': 0.6, 'lag_guided_mm': 0.52, 'receiver_M_Nm': 0.0, 'length_y': 173.4, 'bbox_L': 20.86, 'largest_mm': 346.9}
-{'stack': 'v6', 'variant': '+ ties + XT60 on the tab line', 'Y_C': 165.0, 'pitch_free_deg': 1.23, 'lag_free_mm': 2.51, 'lag_guided_mm': 1.16, 'receiver_M_Nm': 1.32, 'length_y': 207.6, 'bbox_L': 24.98, 'largest_mm': 346.9}
+{'stack': 'v6', 'variant': '+ ties + XT60 on the tab line', 'Y_C': 167.1, 'pitch_free_deg': 1.25, 'lag_free_mm': 2.59, 'lag_guided_mm': 1.18, 'receiver_M_Nm': 1.4, 'length_y': 209.6, 'bbox_L': 25.23, 'largest_mm': 346.9}
 {'stack': 'v6', 'variant': '+ ties + XT60 on the tab line', 'Y_C': 130.8, 'pitch_free_deg': 0.82, 'lag_free_mm': 1.34, 'lag_guided_mm': 0.83, 'receiver_M_Nm': 0.03, 'length_y': 173.4, 'bbox_L': 20.86, 'largest_mm': 346.9}
-                                       lag along the insert  -0.76 (max 2.7), receiver {'F_across_N': 35.4, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at the drone 60 N               pack dX -0.277 tilt  0.394 | worst pinion 16T (Lewis, in-layer) 0.45 (pinion A)
-insert at the drone 60 N (free, no receiver) pack dX -0.238 tilt  0.666 | worst pinion 16T (Lewis, in-layer) 0.45 (pinion A)
-                                       lag along the insert   0.61 (max 2.7), receiver {'F_across_N': 16.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at the drone 50 N                 pack dX  0.326 tilt  0.343 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
-pull at the drone 50 N (free, no receiver) pack dX  0.315 tilt  0.459 | worst V-wheel (flank Hertz) 0.37 (worst wheel)
-                                       lag along the insert   0.62 (max 2.7), receiver {'F_across_N': 15.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B pull at the drone 50 N               pack dX  0.333 tilt  0.353 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion B)
-B pull at the drone 50 N (free, no receiver) pack dX  0.315 tilt  0.459 | worst V-wheel (flank Hertz) 0.37 (worst wheel)
-                                       lag along the insert  -0.90 (max 2.7), receiver {'F_across_N': 41.4, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-head stall into a jammed pack 74 N     pack dX -0.397 tilt  0.427 | worst pinion 16T (Lewis, in-layer) 0.57 (pinion A)
-head stall into a jammed pack 74 N (free, no receiver) pack dX -0.351 tilt  0.728 | worst pinion 16T (Lewis, in-layer) 0.57 (pinion A)
-axle stall, head in a bay              pack dX -1.038 tilt  0.821 | worst V-wheel (flank Hertz) 0.35 (worst wheel)
-dropped pack                           pack dX -0.533 tilt  1.261 | worst V-wheel (flank Hertz) 0.54 (worst wheel)
-box handling 3 g down + 2 g side       pack dX  0.351 tilt  0.340 | worst V-wheel (flank Hertz) 0.29 (worst wheel)
-power cut carrying: head A falls to the park stop pack dX -0.176 tilt  4.627 | worst 625ZZ (axial / C0 670 N) 1.29 (worst wheel)
+                                       lag along the insert  -0.78 (max 2.7), receiver {'F_across_N': 36.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at the drone 60 N               pack dX -0.279 tilt  0.404 | worst pinion 16T (Lewis, in-layer) 0.45 (pinion A)
+insert at the drone 60 N (free, no receiver) pack dX -0.237 tilt  0.689 | worst pinion 16T (Lewis, in-layer) 0.45 (pinion A)
+                                       lag along the insert   0.63 (max 2.7), receiver {'F_across_N': 17.8, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at the drone 50 N                 pack dX  0.331 tilt  0.350 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion A)
+pull at the drone 50 N (free, no receiver) pack dX  0.319 tilt  0.474 | worst V-wheel (flank Hertz) 0.37 (worst wheel)
+                                       lag along the insert   0.64 (max 2.7), receiver {'F_across_N': 16.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B pull at the drone 50 N               pack dX  0.339 tilt  0.361 | worst pinion 16T (Lewis, in-layer) 0.34 (pinion B)
+B pull at the drone 50 N (free, no receiver) pack dX  0.319 tilt  0.474 | worst V-wheel (flank Hertz) 0.37 (worst wheel)
+                                       lag along the insert  -0.93 (max 2.7), receiver {'F_across_N': 43.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+head stall into a jammed pack 74 N     pack dX -0.401 tilt  0.438 | worst pinion 16T (Lewis, in-layer) 0.57 (pinion A)
+head stall into a jammed pack 74 N (free, no receiver) pack dX -0.352 tilt  0.756 | worst pinion 16T (Lewis, in-layer) 0.57 (pinion A)
+axle stall, head in a bay              pack dX -1.086 tilt  0.837 | worst V-wheel (flank Hertz) 0.35 (worst wheel)
+dropped pack                           pack dX -0.541 tilt  1.286 | worst V-wheel (flank Hertz) 0.54 (worst wheel)
+box handling 3 g down + 2 g side       pack dX  0.374 tilt  0.354 | worst V-wheel (flank Hertz) 0.30 (worst wheel)
+power cut carrying: head A falls to the park stop pack dX -0.213 tilt  4.811 | worst 625ZZ (axial / C0 670 N) 1.34 (worst wheel)
 hand on rail A tip 50 N                pack dX -0.392 tilt  0.366 | worst shaft 0.21 (axle shaft)
-gravity, A horizontal carrying         pack dX  0.104 tilt  0.099 | worst V-wheel (flank Hertz) 0.21 (worst wheel)
-                                       lag along the insert  -0.73 (max 2.7), receiver {'F_across_N': 33.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay 30 60 N                  pack dX -0.198 tilt  0.387 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
-insert at bay 30 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
-                                       lag along the insert   0.63 (max 2.7), receiver {'F_across_N': 19.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay 30 50 N                    pack dX  0.379 tilt  0.373 | worst pinion 16T (Lewis, in-layer) 0.35 (pinion A)
-pull at bay 30 50 N (free, no receiver) pack dX  0.477 tilt  0.538 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
-                                       lag along the insert  -0.75 (max 2.7), receiver {'F_across_N': 33.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay 30 60 N                pack dX -0.403 tilt  0.422 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
-B insert at bay 30 60 N (free, no receiver) pack dX -0.362 tilt  0.655 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
-                                       lag along the insert  -0.69 (max 2.7), receiver {'F_across_N': 28.1, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -30 60 N                 pack dX -0.154 tilt  0.369 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion A)
-insert at bay -30 60 N (free, no receiver) pack dX -0.024 tilt  0.591 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
-                                       lag along the insert   0.68 (max 2.7), receiver {'F_across_N': 24.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -30 50 N                   pack dX  0.423 tilt  0.403 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
-pull at bay -30 50 N (free, no receiver) pack dX  0.502 tilt  0.593 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
-                                       lag along the insert  -0.71 (max 2.7), receiver {'F_across_N': 27.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -30 60 N               pack dX -0.370 tilt  0.407 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion B)
-B insert at bay -30 60 N (free, no receiver) pack dX -0.337 tilt  0.598 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
-                                       lag along the insert  -0.67 (max 2.7), receiver {'F_across_N': 25.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -90 60 N                 pack dX -0.198 tilt  0.358 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion A)
-insert at bay -90 60 N (free, no receiver) pack dX -0.168 tilt  0.552 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
-                                       lag along the insert   0.69 (max 2.7), receiver {'F_across_N': 27.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -90 50 N                   pack dX  0.386 tilt  0.391 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
-pull at bay -90 50 N (free, no receiver) pack dX  0.358 tilt  0.574 | worst V-wheel (flank Hertz) 0.40 (worst wheel)
-                                       lag along the insert  -0.69 (max 2.7), receiver {'F_across_N': 24.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -90 60 N               pack dX -0.233 tilt  0.371 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion B)
-B insert at bay -90 60 N (free, no receiver) pack dX -0.168 tilt  0.552 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
-                                       lag along the insert  -0.71 (max 2.7), receiver {'F_across_N': 27.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -150 60 N                pack dX -0.371 tilt  0.403 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion A)
-insert at bay -150 60 N (free, no receiver) pack dX -0.337 tilt  0.598 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
-                                       lag along the insert   0.66 (max 2.7), receiver {'F_across_N': 24.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -150 50 N                  pack dX  0.218 tilt  0.343 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
-pull at bay -150 50 N (free, no receiver) pack dX  0.189 tilt  0.526 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
-                                       lag along the insert  -0.70 (max 2.7), receiver {'F_across_N': 27.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -150 60 N              pack dX -0.173 tilt  0.373 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion B)
-B insert at bay -150 60 N (free, no receiver) pack dX -0.024 tilt  0.591 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
-                                       lag along the insert  -0.75 (max 2.7), receiver {'F_across_N': 32.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-insert at bay -210 60 N                pack dX -0.402 tilt  0.426 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
-insert at bay -210 60 N (free, no receiver) pack dX -0.362 tilt  0.655 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
-                                       lag along the insert   0.61 (max 2.7), receiver {'F_across_N': 19.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-pull at bay -210 50 N                  pack dX  0.187 tilt  0.324 | worst pinion 16T (Lewis, in-layer) 0.35 (pinion A)
-pull at bay -210 50 N (free, no receiver) pack dX  0.163 tilt  0.470 | worst V-wheel (flank Hertz) 0.37 (worst wheel)
-                                       lag along the insert  -0.73 (max 2.7), receiver {'F_across_N': 33.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
-B insert at bay -210 60 N              pack dX -0.179 tilt  0.379 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
-B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
+gravity, A horizontal carrying         pack dX  0.112 tilt  0.103 | worst V-wheel (flank Hertz) 0.21 (worst wheel)
+                                       lag along the insert  -0.76 (max 2.7), receiver {'F_across_N': 34.5, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay 30 60 N                  pack dX -0.197 tilt  0.396 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
+insert at bay 30 60 N (free, no receiver) pack dX -0.037 tilt  0.667 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
+                                       lag along the insert   0.65 (max 2.7), receiver {'F_across_N': 20.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay 30 50 N                    pack dX  0.387 tilt  0.381 | worst pinion 16T (Lewis, in-layer) 0.35 (pinion A)
+pull at bay 30 50 N (free, no receiver) pack dX  0.491 tilt  0.555 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
+                                       lag along the insert  -0.78 (max 2.7), receiver {'F_across_N': 34.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay 30 60 N                pack dX -0.412 tilt  0.432 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
+B insert at bay 30 60 N (free, no receiver) pack dX -0.370 tilt  0.677 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
+                                       lag along the insert  -0.71 (max 2.7), receiver {'F_across_N': 29.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -30 60 N                 pack dX -0.152 tilt  0.377 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion A)
+insert at bay -30 60 N (free, no receiver) pack dX -0.011 tilt  0.611 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert   0.70 (max 2.7), receiver {'F_across_N': 25.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -30 50 N                   pack dX  0.432 tilt  0.411 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
+pull at bay -30 50 N (free, no receiver) pack dX  0.518 tilt  0.612 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.74 (max 2.7), receiver {'F_across_N': 28.4, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -30 60 N               pack dX -0.380 tilt  0.417 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion B)
+B insert at bay -30 60 N (free, no receiver) pack dX -0.344 tilt  0.618 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.70 (max 2.7), receiver {'F_across_N': 26.3, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -90 60 N                 pack dX -0.198 tilt  0.366 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion A)
+insert at bay -90 60 N (free, no receiver) pack dX -0.165 tilt  0.570 | worst V-wheel (flank Hertz) 0.40 (worst wheel)
+                                       lag along the insert   0.72 (max 2.7), receiver {'F_across_N': 28.4, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -90 50 N                   pack dX  0.393 tilt  0.399 | worst pinion 16T (Lewis, in-layer) 0.40 (pinion A)
+pull at bay -90 50 N (free, no receiver) pack dX  0.364 tilt  0.594 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.71 (max 2.7), receiver {'F_across_N': 25.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -90 60 N               pack dX -0.235 tilt  0.380 | worst pinion 16T (Lewis, in-layer) 0.39 (pinion B)
+B insert at bay -90 60 N (free, no receiver) pack dX -0.165 tilt  0.571 | worst V-wheel (flank Hertz) 0.40 (worst wheel)
+                                       lag along the insert  -0.74 (max 2.7), receiver {'F_across_N': 29.0, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -150 60 N                pack dX -0.381 tilt  0.413 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion A)
+insert at bay -150 60 N (free, no receiver) pack dX -0.345 tilt  0.618 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert   0.68 (max 2.7), receiver {'F_across_N': 25.7, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -150 50 N                  pack dX  0.216 tilt  0.351 | worst pinion 16T (Lewis, in-layer) 0.38 (pinion A)
+pull at bay -150 50 N (free, no receiver) pack dX  0.184 tilt  0.545 | worst V-wheel (flank Hertz) 0.39 (worst wheel)
+                                       lag along the insert  -0.72 (max 2.7), receiver {'F_across_N': 28.9, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -150 60 N              pack dX -0.172 tilt  0.382 | worst pinion 16T (Lewis, in-layer) 0.41 (pinion B)
+B insert at bay -150 60 N (free, no receiver) pack dX -0.011 tilt  0.611 | worst V-wheel (flank Hertz) 0.41 (worst wheel)
+                                       lag along the insert  -0.78 (max 2.7), receiver {'F_across_N': 34.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+insert at bay -210 60 N                pack dX -0.413 tilt  0.437 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
+insert at bay -210 60 N (free, no receiver) pack dX -0.370 tilt  0.677 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion A)
+                                       lag along the insert   0.63 (max 2.7), receiver {'F_across_N': 20.6, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+pull at bay -210 50 N                  pack dX  0.183 tilt  0.331 | worst pinion 16T (Lewis, in-layer) 0.35 (pinion A)
+pull at bay -210 50 N (free, no receiver) pack dX  0.157 tilt  0.486 | worst V-wheel (flank Hertz) 0.38 (worst wheel)
+                                       lag along the insert  -0.75 (max 2.7), receiver {'F_across_N': 35.2, 'M_Nm': 0.0, 'note': "what the receiver's rails hold after their 0.3 gaps close (latch / drone / bay requirement)"}
+B insert at bay -210 60 N              pack dX -0.177 tilt  0.388 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
+B insert at bay -210 60 N (free, no receiver) pack dX -0.037 tilt  0.667 | worst pinion 16T (Lewis, in-layer) 0.43 (pinion B)
 [
  {
   "option": "v7 (ties, XT60 at the closed end)",
   "scout": {
-   "pitch_deg": 0.81,
-   "lag_mm": 1.23,
+   "pitch_deg": 0.83,
+   "lag_mm": 1.28,
    "in_float": true
   },
   "overseer": {
-   "pitch_deg": 0.49,
-   "lag_mm": 0.67,
+   "pitch_deg": 0.51,
+   "lag_mm": 0.7,
    "in_float": true
   }
  },
  {
   "option": "v7 without ties",
   "scout": {
-   "pitch_deg": 1.27,
-   "lag_mm": 1.7,
+   "pitch_deg": 1.31,
+   "lag_mm": 1.79,
    "in_float": false
   },
   "overseer": {
-   "pitch_deg": 0.74,
-   "lag_mm": 0.78,
+   "pitch_deg": 0.78,
+   "lag_mm": 0.82,
    "in_float": true
   }
  },
@@ -133,15 +133,15 @@ B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst
   "overseer_width": 55.6
  },
  "axial": {
-  "Y_C_min_common_grip": 165.0,
-  "Y_C": 165.0,
+  "Y_C_min_common_grip": 167.1,
+  "Y_C": 167.1,
   "overseer_y": [
-   79.5,
-   250.5
+   81.6,
+   252.6
   ],
   "scout_y": [
-   114.5,
-   207.6
+   116.6,
+   209.6
   ],
   "module_len_overseer": 172.0
  },
@@ -178,44 +178,44 @@ B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst
   "note": "every bay by either head inside one window: the loop's splice moves so the lap sits outside it (DEFAULT)"
  },
  "sets_on_the_grip": {
-  "Y_C": 165.0,
-  "Y_C_min": 165.0,
+  "Y_C": 167.1,
+  "Y_C_min": 167.1,
   "scout": {
    "tab_off_from_cg": 0.0,
    "receiver_y": [
-    110.4,
-    211.7
+    110.35,
+    215.95
    ],
    "cartridge_body_y": [
-    114.55,
-    207.55
+    116.65,
+    209.65
    ],
-   "xt60_y": 121.75,
+   "xt60_y": 123.85,
    "plate_top": 74.35,
-   "receiver_clear": 36.05
+   "receiver_clear": 36.0
   },
   "overseer": {
    "tab_off_from_cg": 5.18,
    "receiver_y": [
     75.35,
-    254.65
+    258.95
    ],
    "cartridge_body_y": [
-    79.5,
-    250.5
+    81.65,
+    252.65
    ],
-   "xt60_y": 86.7,
+   "xt60_y": 88.85,
    "plate_top": 74.35,
    "receiver_clear": 1.0
   },
   "note": "the grip line = each cartridge's tab line = the funnel centre"
  },
  "detent": {
-  "overseer_gravity_Nm": 0.591,
+  "overseer_gravity_Nm": 0.595,
   "hold_2_springs": 1.065,
-  "margin_now": 1.4,
-  "per_spring_needed_Nm": 0.476,
-  "spring_scale": 0.89
+  "margin_now": 1.39,
+  "per_spring_needed_Nm": 0.478,
+  "spring_scale": 0.9
  }
 }
 {
@@ -225,15 +225,15 @@ B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst
   "h": 58.6,
   "l": 171.0,
   "l_boss": 0.0,
-  "tab": 85.5,
+  "tab": 85.45,
   "xt60_z": 7.2,
   "xt60_y": 56.6,
   "cg": [
    0.0,
-   33.12,
-   90.68
+   32.85,
+   90.63
   ],
-  "mass": 748.2,
+  "mass": 755.4,
   "tag": "C geometry / M + P mass (latch v1, XT60 end at the arm side)"
  },
  "stroke": {
@@ -254,15 +254,15 @@ B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst
   "note": "carried at park its top corner crosses the seated packs' faces (R 100): the arm cannot turn with it"
  },
  "axial": {
-  "Y_C": 165.0,
+  "Y_C": 167.1,
   "cart_y": [
-   79.5,
-   250.5
+   81.64999999999999,
+   252.64999999999998
   ],
   "hw_top_v6": 79.35,
-  "clear_v6": 0.2,
+  "clear_v6": 2.3,
   "hw_top_v5": 105.5,
-  "clear_v5": -26.0,
+  "clear_v5": -23.9,
   "module_y": [
    94.0,
    255.0
@@ -276,14 +276,14 @@ B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst
   "note": "needs two sectors (60 deg) or a narrower cartridge"
  },
  "detent": {
-  "pack_torque_Nm": 0.591,
-  "scout_torque_Nm": 0.152,
+  "pack_torque_Nm": 0.595,
+  "scout_torque_Nm": 0.155,
   "disturbance_scout_Nm": 0.43,
-  "disturbance_overseer_Nm": 0.869,
+  "disturbance_overseer_Nm": 0.87,
   "holding_2_springs_Nm": 0.78,
   "margin": 0.9
  },
- "mass_ratio_vs_scout": 3.55,
+ "mass_ratio_vs_scout": 3.49,
  "radius": {
   "park_z0": 32.0,
   "top_r": 106.0,
@@ -294,24 +294,24 @@ B insert at bay -210 60 N (free, no receiver) pack dX -0.049 tilt  0.644 | worst
   "note": "every bay, the stand lane and the funnel scale with R; the Scout swap would pay for it"
  }
 }
-power cut {'hold_N': 2.75, 'weight_N': 1.77, 'holds_at_1g': True, 'holds_at_3g': False, 'fall_mm': 77.6, 'energy_J': 0.137, 'rotor_kg': 0.128, 'petg': {'k_N_mm': 5000.0, 'F_stop_N': 1171.0, 'stop_index': 1.3, 'F_tooth_N': 487.0, 'pinion_index': 2.72}, 'tpu': {'k_N_mm': 281.0, 'F_stop_N': 278.0, 'stop_index': 0.31, 'F_tooth_N': 115.0, 'pinion_index': 0.64}, 'carrying': {'falling_g': 391.0, 'weight_N': 3.83, 'holds_at_1g': False, 'F_bumper_N': 409.0, 'note': 'frame case: carriage to head 24 N.m, 625ZZ 1.23 without a brake'}, 'brake': {'creep_mm_s': 7.8, 'impact_J': 1.6e-05, 'F_bumper_N': 3.0}}
-power cut, head out at a bay {'pack': 'overseer', 'bay': 0.0, 'carrying': True, 'z0': 45.9, 'gravity_Nm': 0.806, 'margin': 1.09, 'scale_for_1_25': 1.49}
-xt60 guided {"rss_guided_deg": 0.283, "rss_full_deg": 0.409, "float_deg": 1.06, "packs": {"scout": {"guide_pitch_deg": 0.47, "per_axis_deg": 0.753, "margin": 0.29, "per_axis_full_rss_deg": 0.879, "margin_full_rss": 0.17, "worst_place": "drone A", "free_tangent_deg": 0.838, "k_tangent_Nm_deg": 4.53, "receiver_moment_Nm_stub_1.9": 2.16, "receiver_moment_Nm_stub_5": 2.96, "receiver_moment_Nm_stub_15.1": 5.59}, "overseer": {"guide_pitch_deg": 0.38, "per_axis_deg": 0.663, "margin": 0.37, "per_axis_full_rss_deg": 0.789, "margin_full_rss": 0.26, "worst_place": "drone A", "free_tangent_deg": 0.632, "k_tangent_Nm_deg": 4.511, "receiver_moment_Nm_stub_1.9": 1.63, "receiver_moment_Nm_stub_5": 2.43, "receiver_moment_Nm_stub_15.1": 5.04}}}
-xt60 axes {"rss_deg": 0.409, "float": {"x": 2.37, "z": 1.06}, "margin_target": 0.2, "packs": {"scout": {"x": {"place": "drone A", "free_deg": 0.838, "stub_0": {"deg": 1.247, "margin": 0.47}, "stub_5": {"deg": 1.534, "margin": 0.35}, "stub_15.1": {"deg": 2.112, "margin": 0.11}, "stub_allowed_mrad_at_margin": 11.3}, "z": {"place": "bay -210 A", "free_deg": 0.457, "after_gravity_offset_deg": 0.324, "cap_deg": 1.102, "held_deg": 0.324, "deg": 0.733, "margin": 0.31}}, "overseer": {"x": {"place": "drone A", "free_deg": 0.632, "stub_0": {"deg": 1.041, "margin": 0.56}, "stub_5": {"deg": 1.328, "margin": 0.44}, "stub_15.1": {"deg": 1.906, "margin": 0.2}, "stub_allowed_mrad_at_margin": 14.9}, "z": {"place": "bay -180 A", "free_deg": 0.854, "after_gravity_offset_deg": 0.435, "cap_deg": 0.778, "held_deg": 0.435, "deg": 0.844, "margin": 0.2}}}}
-xt60 budget {"scout": {"sum_no_stub": 1.292, "float 1.06": {"stub_allowed_mrad_at_margin": -7.8, "stub_allowed_mrad_no_margin": -4.1, "with_measured": 2.157, "with_target": 1.579}, "float 1.5": {"stub_allowed_mrad_at_margin": -1.6, "stub_allowed_mrad_no_margin": 3.6, "with_measured": 2.157, "with_target": 1.579}}, "overseer": {"sum_no_stub": 1.124, "float 1.06": {"stub_allowed_mrad_at_margin": -4.8, "stub_allowed_mrad_no_margin": -1.1, "with_measured": 1.989, "with_target": 1.411}, "float 1.5": {"stub_allowed_mrad_at_margin": 1.3, "stub_allowed_mrad_no_margin": 6.6, "with_measured": 1.989, "with_target": 1.411}}}
-capture {'pack': 'overseer', 'bay': 0.0, 'compensated': False, 'load_turn_deg': 0.358, 'rss_deg': 0.303, 'total_deg': 0.661, 'capture_deg': 1.2, 'ratio': 0.55} {'pack': 'overseer', 'bay': 0.0, 'compensated': True, 'load_turn_deg': 0.107, 'rss_deg': 0.303, 'total_deg': 0.41, 'capture_deg': 1.2, 'ratio': 0.34}
-park System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 32.4 L (E), extents 371 x 259 x 337 mm (E), mass 5591 g (E), CG 26.2 mm off thrust axis (E) [-1.4, +120.5, -26.1], 37.2 mm without swap parts PASS {'aabb_L': 11.3, 'extents_mm': [227.9, 210.0, 236.1], 'largest_mm': 236.1, 'hull_L': 4.5, 'turning_g': np.float64(1620.0), 'unbalance_gm': 18.95, 'cg_off_axis_mm': np.float64(11.7), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.17), 'detent_margin_2_springs': np.float64(3.13)}
+power cut {'hold_N': 2.75, 'weight_N': 1.77, 'holds_at_1g': True, 'holds_at_3g': False, 'fall_mm': 77.6, 'energy_J': 0.137, 'rotor_kg': 0.128, 'petg': {'k_N_mm': 5000.0, 'F_stop_N': 1171.0, 'stop_index': 1.3, 'F_tooth_N': 487.0, 'pinion_index': 2.72}, 'tpu': {'k_N_mm': 281.0, 'F_stop_N': 278.0, 'stop_index': 0.31, 'F_tooth_N': 115.0, 'pinion_index': 0.64}, 'carrying': {'falling_g': 396.0, 'weight_N': 3.89, 'holds_at_1g': False, 'F_bumper_N': 412.0, 'note': 'frame case: carriage to head 24 N.m, 625ZZ 1.23 without a brake'}, 'brake': {'creep_mm_s': 7.9, 'impact_J': 1.6e-05, 'F_bumper_N': 3.0}}
+power cut, head out at a bay {'pack': 'overseer', 'bay': 0.0, 'carrying': True, 'z0': 45.9, 'gravity_Nm': 0.811, 'margin': 1.09, 'scale_for_1_25': 1.5}
+xt60 guided {"rss_guided_deg": 0.283, "rss_full_deg": 0.409, "float_deg": 1.06, "packs": {"scout": {"guide_pitch_deg": 0.47, "per_axis_deg": 0.753, "margin": 0.29, "per_axis_full_rss_deg": 0.879, "margin_full_rss": 0.17, "worst_place": "drone A", "free_tangent_deg": 0.866, "k_tangent_Nm_deg": 4.512, "receiver_moment_Nm_stub_1.9": 2.28, "receiver_moment_Nm_stub_5": 3.08, "receiver_moment_Nm_stub_15.1": 5.69}, "overseer": {"guide_pitch_deg": 0.38, "per_axis_deg": 0.663, "margin": 0.37, "per_axis_full_rss_deg": 0.789, "margin_full_rss": 0.26, "worst_place": "drone A", "free_tangent_deg": 0.662, "k_tangent_Nm_deg": 4.493, "receiver_moment_Nm_stub_1.9": 1.76, "receiver_moment_Nm_stub_5": 2.55, "receiver_moment_Nm_stub_15.1": 5.15}}}
+xt60 axes {"rss_deg": 0.409, "float": {"x": 2.37, "z": 1.06}, "margin_target": 0.2, "packs": {"scout": {"x": {"place": "drone A", "free_deg": 0.866, "stub_0": {"deg": 1.275, "margin": 0.46}, "stub_5": {"deg": 1.562, "margin": 0.34}, "stub_15.1": {"deg": 2.14, "margin": 0.1}, "stub_allowed_mrad_at_margin": 10.8}, "z": {"place": "bay -210 A", "free_deg": 0.463, "after_gravity_offset_deg": 0.327, "cap_deg": 1.102, "held_deg": 0.327, "deg": 0.736, "margin": 0.31}}, "overseer": {"x": {"place": "drone A", "free_deg": 0.662, "stub_0": {"deg": 1.071, "margin": 0.55}, "stub_5": {"deg": 1.358, "margin": 0.43}, "stub_15.1": {"deg": 1.936, "margin": 0.18}, "stub_allowed_mrad_at_margin": 14.4}, "z": {"place": "bay -180 A", "free_deg": 0.861, "after_gravity_offset_deg": 0.439, "cap_deg": 0.778, "held_deg": 0.439, "deg": 0.848, "margin": 0.2}}}}
+xt60 budget {"scout": {"sum_no_stub": 1.319, "float 1.06": {"stub_allowed_mrad_at_margin": -8.2, "stub_allowed_mrad_no_margin": -4.5, "with_measured": 2.184, "with_target": 1.606}, "float 1.5": {"stub_allowed_mrad_at_margin": -2.1, "stub_allowed_mrad_no_margin": 3.2, "with_measured": 2.184, "with_target": 1.606}}, "overseer": {"sum_no_stub": 1.152, "float 1.06": {"stub_allowed_mrad_at_margin": -5.3, "stub_allowed_mrad_no_margin": -1.6, "with_measured": 2.017, "with_target": 1.439}, "float 1.5": {"stub_allowed_mrad_at_margin": 0.8, "stub_allowed_mrad_no_margin": 6.1, "with_measured": 2.017, "with_target": 1.439}}}
+capture {'pack': 'overseer', 'bay': 0.0, 'compensated': False, 'load_turn_deg': 0.359, 'rss_deg': 0.303, 'total_deg': 0.662, 'capture_deg': 1.2, 'ratio': 0.55} {'pack': 'overseer', 'bay': 0.0, 'compensated': True, 'load_turn_deg': 0.108, 'rss_deg': 0.303, 'total_deg': 0.411, 'capture_deg': 1.2, 'ratio': 0.34}
+park System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 264 x 337 mm (E), mass 6534 g (E), CG 29.3 mm off thrust axis (E) [-1.2, +127.4, -29.3], 39.0 mm without swap parts PASS {'aabb_L': 11.43, 'extents_mm': [227.9, 212.1, 236.5], 'largest_mm': 236.5, 'hull_L': 4.54, 'turning_g': np.float64(1620.0), 'unbalance_gm': 18.95, 'cg_off_axis_mm': np.float64(11.7), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.17), 'detent_margin_2_springs': np.float64(3.13)}
   bay_pick access {'M5 key, rail A r 40': (True, []), 'M5 key, rail A r 78': (True, []), 'M3 key, motor A (-1, -1)': (True, []), 'M3 key, motor A (-1, +1)': (True, []), 'M3 key, motor A (+1, -1)': (True, []), 'M3 key, motor A (+1, +1)': (True, []), 'M3 key, motor axle (-1, +1)': (True, []), 'M3 key, motor axle (+1, -1)': (True, []), 'M3 key, motor axle (+1, +1)': (True, [])}
-bay_pick System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 32.4 L (E), extents 371 x 259 x 337 mm (E), mass 5591 g (E), CG 25.5 mm off thrust axis (E) [-2.7, +120.5, -25.4], 36.2 mm without swap parts, access 9/9 clear PASS {'aabb_L': 12.04, 'extents_mm': [239.0, 210.0, 239.8], 'largest_mm': 239.8, 'hull_L': 5.74, 'turning_g': np.float64(1831.0), 'unbalance_gm': 31.05, 'cg_off_axis_mm': np.float64(16.96), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.154), 'detent_margin_2_springs': np.float64(3.28)}
-drone_insert System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 259 x 343 mm (E), mass 5591 g (E), CG 30.0 mm off thrust axis (E) [-0.1, +120.5, -30.0], 38.6 mm without swap parts PASS {'aabb_L': 12.47, 'extents_mm': [234.7, 210.0, 253.0], 'largest_mm': 253.0, 'hull_L': 6.47, 'turning_g': np.float64(2042.0), 'unbalance_gm': 30.81, 'cg_off_axis_mm': np.float64(15.09), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.002), 'detent_margin_2_springs': np.float64(6.18)}
+bay_pick System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 264 x 337 mm (E), mass 6534 g (E), CG 28.7 mm off thrust axis (E) [-2.4, +127.4, -28.6], 38.2 mm without swap parts, access 9/9 clear PASS {'aabb_L': 12.16, 'extents_mm': [239.0, 212.1, 239.8], 'largest_mm': 239.8, 'hull_L': 5.8, 'turning_g': np.float64(1837.0), 'unbalance_gm': 31.6, 'cg_off_axis_mm': np.float64(17.21), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.16), 'detent_margin_2_springs': np.float64(3.23)}
+drone_insert System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33.6 L (E), extents 371 x 264 x 343 mm (E), mass 6534 g (E), CG 32.5 mm off thrust axis (E) [-0.2, +127.4, -32.5], 40.2 mm without swap parts PASS {'aabb_L': 12.59, 'extents_mm': [234.7, 212.1, 253.0], 'largest_mm': 253.0, 'hull_L': 6.54, 'turning_g': np.float64(2053.0), 'unbalance_gm': 31.51, 'cg_off_axis_mm': np.float64(15.34), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.005), 'detent_margin_2_springs': np.float64(6.09)}
   bay_return access {'M5 key, rail B r 40': (True, []), 'M5 key, rail B r 78': (True, []), 'M3 key, motor B (-1, -1)': (True, []), 'M3 key, motor B (-1, +1)': (True, []), 'M3 key, motor B (+1, -1)': (True, []), 'M3 key, motor B (+1, +1)': (True, []), 'M3 key, motor axle (-1, +1)': (True, []), 'M3 key, motor axle (+1, -1)': (True, []), 'M3 key, motor axle (+1, +1)': (True, [])}
-bay_return System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33 L (E), extents 371 x 259 x 343 mm (E), mass 5591 g (E), CG 26.3 mm off thrust axis (E) [+2.4, +120.5, -26.1], 37.3 mm without swap parts, access 9/9 clear PASS {'aabb_L': 12.18, 'extents_mm': [241.9, 210.0, 239.8], 'largest_mm': 241.9, 'hull_L': 5.72, 'turning_g': np.float64(1831.0), 'unbalance_gm': 25.43, 'cg_off_axis_mm': np.float64(13.89), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.139), 'detent_margin_2_springs': np.float64(3.44)}
-turn_carrying System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 27.6 L (E), extents 371 x 259 x 287 mm (E), mass 5591 g (E), CG 35.3 mm off thrust axis (E) [+0.5, +120.5, -35.3], 42.4 mm without swap parts PASS {'aabb_L': 10.01, 'extents_mm': [227.7, 210.0, 209.4], 'largest_mm': 227.7, 'hull_L': 5.49, 'turning_g': np.float64(2042.0), 'unbalance_gm': 4.38, 'cg_off_axis_mm': np.float64(2.15), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.029), 'detent_margin_2_springs': np.float64(5.36)}
-overseer_park System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33.6 L (E), extents 371 x 259 x 350 mm (E), mass 5923 g (E), CG 18.8 mm off thrust axis (E) [-16.6, +123.4, -8.9], 37.5 mm without swap parts PASS {'aabb_L': 11.55, 'extents_mm': [234.4, 210.0, 234.7], 'largest_mm': 234.7, 'hull_L': 4.5, 'turning_g': np.float64(1620.0), 'unbalance_gm': 18.95, 'cg_off_axis_mm': np.float64(11.7), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.11), 'detent_margin_2_springs': np.float64(3.81)}
+bay_return System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33.6 L (E), extents 371 x 264 x 343 mm (E), mass 6534 g (E), CG 29.4 mm off thrust axis (E) [+2.1, +127.4, -29.3], 39.2 mm without swap parts, access 9/9 clear PASS {'aabb_L': 12.33, 'extents_mm': [242.3, 212.1, 239.8], 'largest_mm': 242.3, 'hull_L': 5.78, 'turning_g': np.float64(1837.0), 'unbalance_gm': 25.99, 'cg_off_axis_mm': np.float64(14.15), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.145), 'detent_margin_2_springs': np.float64(3.39)}
+turn_carrying System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 28.1 L (E), extents 371 x 264 x 288 mm (E), mass 6534 g (E), CG 37.3 mm off thrust axis (E) [+0.5, +127.4, -37.3], 43.6 mm without swap parts PASS {'aabb_L': 10.13, 'extents_mm': [227.7, 212.1, 209.8], 'largest_mm': 227.7, 'hull_L': 5.54, 'turning_g': np.float64(2053.0), 'unbalance_gm': 4.66, 'cg_off_axis_mm': np.float64(2.27), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.029), 'detent_margin_2_springs': np.float64(5.36)}
+overseer_park System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.2 L (E), extents 371 x 264 x 350 mm (E), mass 6865 g (E), CG 20.3 mm off thrust axis (E) [-14.5, +129.7, -14.3], 39.5 mm without swap parts PASS {'aabb_L': 11.67, 'extents_mm': [234.4, 212.1, 234.7], 'largest_mm': 234.7, 'hull_L': 4.54, 'turning_g': np.float64(1620.0), 'unbalance_gm': 18.95, 'cg_off_axis_mm': np.float64(11.7), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.11), 'detent_margin_2_springs': np.float64(3.81)}
   overseer_bay_pick access {'M5 key, rail A r 40': (True, []), 'M5 key, rail A r 78': (True, []), 'M3 key, motor A (-1, -1)': (True, []), 'M3 key, motor A (-1, +1)': (True, []), 'M3 key, motor A (+1, -1)': (True, []), 'M3 key, motor A (+1, +1)': (True, []), 'M3 key, motor axle (-1, +1)': (True, []), 'M3 key, motor axle (+1, -1)': (True, []), 'M3 key, motor axle (+1, +1)': (True, [])}
-overseer_bay_pick System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 33.6 L (E), extents 371 x 259 x 350 mm (E), mass 5923 g (E), CG 20.2 mm off thrust axis (E) [-18.1, +123.4, -8.9], 37.4 mm without swap parts, access 9/9 clear PASS {'aabb_L': 14.87, 'extents_mm': [255.0, 248.5, 234.7], 'largest_mm': 255.0, 'hull_L': 6.72, 'turning_g': np.float64(2368.0), 'unbalance_gm': 107.48, 'cg_off_axis_mm': np.float64(45.38), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(1.044), 'detent_margin_2_springs': np.float64(0.88)}
-overseer_drone_insert System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.2 L (E), extents 371 x 259 x 356 mm (E), mass 5923 g (E), CG 13.1 mm off thrust axis (E) [-7.6, +123.4, -10.7], 40.9 mm without swap parts PASS {'aabb_L': 15.51, 'extents_mm': [234.7, 248.5, 266.0], 'largest_mm': 266.0, 'hull_L': 8.07, 'turning_g': np.float64(3117.0), 'unbalance_gm': 124.27, 'cg_off_axis_mm': np.float64(39.87), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.435), 'detent_margin_2_springs': np.float64(1.76)}
+overseer_bay_pick System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.2 L (E), extents 371 x 264 x 350 mm (E), mass 6865 g (E), CG 21.2 mm off thrust axis (E) [-15.7, +129.7, -14.3], 39.5 mm without swap parts, access 9/9 clear PASS {'aabb_L': 15.0, 'extents_mm': [255.0, 250.6, 234.7], 'largest_mm': 255.0, 'hull_L': 6.78, 'turning_g': np.float64(2376.0), 'unbalance_gm': 108.25, 'cg_off_axis_mm': np.float64(45.57), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(1.051), 'detent_margin_2_springs': np.float64(0.87)}
+overseer_drone_insert System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.8 L (E), extents 371 x 264 x 356 mm (E), mass 6865 g (E), CG 17.0 mm off thrust axis (E) [-6.6, +129.7, -15.7], 42.2 mm without swap parts PASS {'aabb_L': 15.65, 'extents_mm': [234.7, 250.6, 266.0], 'largest_mm': 266.0, 'hull_L': 8.14, 'turning_g': np.float64(3131.0), 'unbalance_gm': 125.18, 'cg_off_axis_mm': np.float64(39.98), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.438), 'detent_margin_2_springs': np.float64(1.75)}
   overseer_bay_return access {'M5 key, rail B r 40': (True, []), 'M5 key, rail B r 78': (True, []), 'M3 key, motor B (-1, -1)': (True, []), 'M3 key, motor B (-1, +1)': (True, []), 'M3 key, motor B (+1, -1)': (True, []), 'M3 key, motor B (+1, +1)': (True, []), 'M3 key, motor axle (-1, +1)': (True, []), 'M3 key, motor axle (+1, -1)': (True, []), 'M3 key, motor axle (+1, +1)': (True, [])}
-overseer_bay_return System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.2 L (E), extents 371 x 259 x 356 mm (E), mass 5923 g (E), CG 19.5 mm off thrust axis (E) [+17.4, +123.4, -8.9], 38.4 mm without swap parts, access 9/9 clear PASS {'aabb_L': 14.87, 'extents_mm': [255.3, 248.5, 234.4], 'largest_mm': 255.3, 'hull_L': 6.71, 'turning_g': np.float64(2368.0), 'unbalance_gm': 102.81, 'cg_off_axis_mm': np.float64(43.41), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(1.003), 'detent_margin_2_springs': np.float64(0.91)}
-overseer_turn_carrying System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 27.6 L (E), extents 371 x 259 x 287 mm (E), mass 5923 g (E), CG 19.6 mm off thrust axis (E) [+0.5, +123.4, -19.6], 45.3 mm without swap parts PASS {'aabb_L': 11.85, 'extents_mm': [227.7, 248.5, 209.4], 'largest_mm': 248.5, 'hull_L': 6.66, 'turning_g': np.float64(3117.0), 'unbalance_gm': 65.71, 'cg_off_axis_mm': np.float64(21.08), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.029), 'detent_margin_2_springs': np.float64(5.36)}
+overseer_bay_return System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 34.8 L (E), extents 371 x 264 x 356 mm (E), mass 6865 g (E), CG 20.8 mm off thrust axis (E) [+15.1, +129.7, -14.2], 40.3 mm without swap parts, access 9/9 clear PASS {'aabb_L': 15.0, 'extents_mm': [255.3, 250.6, 234.4], 'largest_mm': 255.3, 'hull_L': 6.77, 'turning_g': np.float64(2376.0), 'unbalance_gm': 103.58, 'cg_off_axis_mm': np.float64(43.6), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(1.01), 'detent_margin_2_springs': np.float64(0.9)}
+overseer_turn_carrying System: box swap arm v7, cage first n/a (no protected part), fit 0.0 mm³ (E), bbox 28.1 L (E), extents 371 x 264 x 288 mm (E), mass 6865 g (E), CG 23.6 mm off thrust axis (E) [+0.4, +129.7, -23.6], 46.1 mm without swap parts PASS {'aabb_L': 11.97, 'extents_mm': [227.7, 250.6, 209.8], 'largest_mm': 250.6, 'hull_L': 6.73, 'turning_g': np.float64(3131.0), 'unbalance_gm': 66.14, 'cg_off_axis_mm': np.float64(21.12), 'detent_sized_gm': 10.1, 'gravity_Nm': np.float64(0.029), 'detent_margin_2_springs': np.float64(5.36)}
 -> /home/user/nox/runs/arm/v7/system.json

@@ -1,9 +1,12 @@
 t  0.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack charged|0.0', 'rec-180') overlaps []
+t  0.50 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack charged|0.0', 'rec-180') overlaps []
 t  1.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack charged|0.0', 'rec-180') overlaps []
+t  1.50 phi -180.0 zA  53.9 zB  32.0 clearance   0.00 ('pack charged|0.0', 'rec-180') overlaps []
 t  2.00 phi -180.0 zA  75.7 zB  32.0 clearance   0.00 ('pack charged|0.0', 'rec-180') overlaps []
 t  2.50 phi -180.0 zA  97.6 zB  32.0 clearance   0.00 ('pack charged|0.0', 'rec-180') overlaps []
 t  3.00 phi -180.0 zA  97.6 zB  32.0 clearance   0.00 ('pack charged|4.0', 'rec-180') overlaps []
-t  4.00 phi -180.0 zA  53.9 zB  32.0 clearance   0.15 ('pack charged|4.0', 'rec-180') overlaps []
+t  3.50 phi -180.0 zA  75.7 zB  32.0 clearance   0.30 ('pack charged|4.0', 'rec-180') overlaps []
+t  4.00 phi -180.0 zA  53.9 zB  32.0 clearance   0.30 ('pack charged|4.0', 'rec-180') overlaps []
 t  4.50 phi -180.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  4.51 phi -178.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  4.52 phi -176.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
@@ -100,6 +103,7 @@ t  6.50 phi    0.0 zA  32.0 zB  94.0 clearance   0.30 ('fingA_A', 'servo_A') ove
 t  7.00 phi    0.0 zA  32.0 zB 102.6 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  7.50 phi    0.0 zA  32.0 zB 102.6 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  8.00 phi    0.0 zA  32.0 zB  79.1 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
+t  8.50 phi    0.0 zA  32.0 zB  55.5 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.00 phi    0.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.02 phi    2.0 zA  32.0 zB  32.0 clearance   0.30 ('fingB_B', 'servo_B') overlaps []
 t  9.04 phi    4.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
@@ -123,6 +127,7 @@ t  9.42 phi   38.0 zA  32.0 zB  32.0 clearance   0.30 ('fingB_A', 'servo_A') ove
 t  9.44 phi   40.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.47 phi   42.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.49 phi   44.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
+t  9.50 phi   45.0 zA  32.0 zB  32.0 clearance   0.30 ('fingB_A', 'servo_A') overlaps []
 t  9.51 phi   46.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.53 phi   48.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.56 phi   50.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
@@ -146,10 +151,12 @@ t  9.93 phi   84.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') ove
 t  9.96 phi   86.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t  9.98 phi   88.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 10.00 phi   90.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
+t 10.50 phi   90.0 zA  67.9 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 10.90 phi   90.0 zA  96.6 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 11.00 phi   90.0 zA  98.6 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 11.50 phi   90.0 zA 108.6 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 12.00 phi   90.0 zA 108.6 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
+t 12.50 phi   90.0 zA  83.1 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 13.00 phi   90.0 zA  57.5 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 13.50 phi   90.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 14.00 phi   90.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
@@ -243,10 +250,12 @@ t 16.90 phi  -84.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') ove
 t 16.93 phi  -86.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 16.97 phi  -88.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
 t 17.00 phi  -90.0 zA  32.0 zB  32.0 clearance   0.30 ('fingA_A', 'servo_A') overlaps []
-t 17.90 phi  -90.0 zA  32.0 zB  85.6 clearance   0.15 ('pack dead|4.0', 'rec0') overlaps []
-t 18.00 phi  -90.0 zA  32.0 zB  87.6 clearance   0.15 ('pack dead|4.0', 'rec0') overlaps []
+t 17.50 phi  -90.0 zA  32.0 zB  61.8 clearance   0.30 ('pack dead|4.0', 'rec0') overlaps []
+t 17.90 phi  -90.0 zA  32.0 zB  85.6 clearance   0.30 ('pack dead|4.0', 'rec0') overlaps []
+t 18.00 phi  -90.0 zA  32.0 zB  87.6 clearance   0.30 ('pack dead|4.0', 'rec0') overlaps []
 t 18.50 phi  -90.0 zA  32.0 zB  97.6 clearance   0.00 ('pack dead|4.0', 'rec0') overlaps []
 t 19.00 phi  -90.0 zA  32.0 zB  97.6 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 19.50 phi  -90.0 zA  32.0 zB  75.7 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 20.00 phi  -90.0 zA  32.0 zB  53.9 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 20.50 phi  -90.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.00 phi  -90.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
@@ -272,6 +281,7 @@ t 21.42 phi -128.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') 
 t 21.44 phi -130.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.47 phi -132.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.49 phi -134.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
+t 21.50 phi -135.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.51 phi -136.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.53 phi -138.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.56 phi -140.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
@@ -295,7 +305,7 @@ t 21.93 phi -174.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') 
 t 21.96 phi -176.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 21.98 phi -178.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
 t 22.00 phi -180.0 zA  32.0 zB  32.0 clearance   0.00 ('pack dead|0.0', 'rec0') overlaps []
-sweep 297 states in 148 s
+sweep 307 states in 144 s
 states with overlaps: 0 min clearance 0.0
 closest pairs over the cycle:
     0.000  pack charged / rec-180  (t 0.0)
@@ -307,8 +317,10 @@ closest pairs over the cycle:
     0.300  fingB_B / servo_B  (t 0.0)
     0.500  fingA_A / fingB_A  (t 21.933)
     0.500  fingA_B / fingB_B  (t 21.978)
-    0.991  hub / p80  (t 4.633)
-    0.993  hub / post  (t 4.522)
+    0.967  hub / p80  (t 4.511)
+    0.969  hub / post  (t 0.0)
+    0.990  bushA / rec-180  (t 3.0)
+    0.990  bushB / rec0  (t 19.0)
     1.000  belt_axle / headA  (t 21.911)
     1.000  headA / railA  (t 21.933)
     1.000  detent_ring / railA  (t 21.956)
@@ -317,9 +329,7 @@ closest pairs over the cycle:
     1.000  headA / wheelsA  (t 0.0)
     1.000  headB / wheelsB  (t 0.0)
     1.000  detent_arm / detent_ring  (t 0.0)
-    1.000  headA / rec-180  (t 2.5)
+    1.000  headA / rec-180  (t 2.0)
     1.000  axlesA / rec-180  (t 2.5)
     1.000  headB / rec0  (t 17.9)
     1.000  axlesB / rec0  (t 17.9)
-    1.003  p80 / railA  (t 21.956)
-    1.003  p80 / railB  (t 21.956)
