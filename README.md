@@ -27,6 +27,7 @@ Every session runs in the cloud "Nox" environment with this repo selected. Paste
 | Organise, rules, workflow | `Workflow chat: <ask>` (opus, high) |
 
 ## Housekeeping
+- **Organiser:** a session tidies the project every 6 h on its own (sessions, rules, overlaps, stale work, board): `docs/organiser.md`.
 - **Progress:** one hub session sends a digest about every 30 min while work runs; the live view is the **Nox Board** (https://claude.ai/artifact/NKBNkPUSyKgwYrtZZBhMkw). Other sessions stay quiet (`docs/sessions.md`).
 - `python3 tools/check_state.py` lints the state: missing or orphan print files, cells and log lines too long. `--branches` lists branches merged into main (safe to delete) and idle ones with unmerged work.
 - Cloud boxes cannot delete branches: the session gives Spark a Claude in Chrome prompt for that.

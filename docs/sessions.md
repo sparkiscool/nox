@@ -14,7 +14,7 @@ Spark 24 Oct: no session stays alive or keeps getting updates after its work is 
 - **Digest:** the hub arms `send_later` (30 min) while any work is running, re-arms it after each digest, and stops when nothing runs. Each digest, only if something changed since the last one: done (part, version, key numbers, PR), running (who, on what), waiting on Spark (measure / buy / decide / print, with the slicing prompt for anything ready to print), problems. At most ~12 lines. Nothing changed: no message, re-arm silently.
 - **Board:** with each digest the hub refreshes the Nox Board (https://claude.ai/artifact/NKBNkPUSyKgwYrtZZBhMkw): `python3 tools/board_data.py <dir>`, upload each JSON as an asset of the board (Artifact publish, `asset: true`, `url` the board), then one ArtifactData `update` per changed `datasets/<name>` with the new `source.url` and `updated: {at, by}`.
 
-## Sweep (scheduled every 6 h; any session may run it by hand)
+## Sweep (every 6 h as part of the organiser run, `docs/organiser.md`; any session may run it by hand)
 1. `list_sessions` (mine, limit 100). Consider only sessions whose sources or outcomes name `sparkiscool/nox`, not ARCHIVED, not this session.
 2. Archive a session when all hold:
    - not RUNNING, and last update over 6 h ago;

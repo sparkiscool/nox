@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 24 Oct (workflow chat, Spark: an organisation agent that runs without me): **organiser** `docs/organiser.md`: every 6 h into the workflow session (tagged keep; fresh sessions lack the repo and session tools), light pass (sweep, check_state, board) + daily full pass (rules in one place, ownership, stale work, weight, log).
 - 24 Oct (workflow chat, Spark: no status updates from running parts, one session reports every ~30 min): **quiet workers, one reporter**: hub = control session, digest every 30 min only on change, board refresh; `tools/board_data.py` + Nox Board dashboard; CLAUDE.md, sessions.md, /part, run-part.
 - 24 Oct (workflow chat): **mass budget** in `dimensions.md` L: Overseer 2200 g (DEFAULT, alt 2330; structure ≤ 551 g), Scout v3 ≤ 500 g (DEFAULT, Spark set no target); system passes split slots `budget_g` per piece; review check 7 fails a piece over its slot.
 - 24 Oct (workflow chat, Spark: clean up sessions whose use is over, autonomously): `docs/sessions.md` lifecycle + sweep rules; CLAUDE.md rule; 10 finished idle sessions archived; scheduled sweep every 6 h (fresh session). DEFAULT idle 6 h before archive (alt 24 h).
