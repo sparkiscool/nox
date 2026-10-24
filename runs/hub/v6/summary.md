@@ -26,3 +26,6 @@ Bed face +y (sleeve end), bed contact 0 mm2: the oriented mesh does not sit on a
 
 ## What it says
 The h 2.25 grid is coarse against the 6.25 mm gate member, and the park-stop power-cut case (misuse 3.4) needs a load path the topology did not find at this resolution; a finer grid does not fit the 16 GB box with 83 cases. Next: fewer or merged cases (envelope the swap cases), or a drawn gusset at the park-stop load.
+
+## Superseded by run 2 (`runs/hub/v6r2/`, 24 Oct, swap arm worker)
+The record keeps summary, result, logs and preview; the checkpoints and meshes are not committed (rerun to recover). Run 2's changes: the unbraked power cuts out of the hub's cases (the head brake is required for both packs; alt: a drawn gusset at the park-stop load), the swap cases enveloped at 15 %, the hall pocket's side walls 0.8 → 2.0 (the drawn tower's 1.0 thin wall above was in the drawn geometry, not the topology), h 2.05 (h 2.0's coarse grid at 4.0 voxelised the tower column away beside the 80T: the tower floated, a singular full-solid compliance).
