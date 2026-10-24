@@ -98,3 +98,18 @@ it  37 beta   32 J  12.4165 vol 0.0688 (dil 0.1574 g -0.000) grey  0.9% ch 0.100
 it  38 beta   32 J  12.4165 vol 0.0689 (dil 0.1574 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 2.43e+03 37.6s
 it  39 beta   32 J  12.4164 vol 0.0691 (dil 0.1574 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 2.43e+03 38.6s
 it  40 beta   32 J  12.4163 vol 0.0692 (dil 0.1574 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 2.43e+03 37.8s
+it  41 beta   32 J  12.4163 vol 0.0694 (dil 0.1574 g +0.003) grey  0.9% ch 0.100 worst camera hit above 50 N 2.43e+03 39.1s
+it  42 beta   32 J  12.4162 vol 0.0693 (dil 0.1569 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 2.43e+03 36.0s
+it  43 beta   32 J  12.4161 vol 0.0696 (dil 0.1569 g -0.000) grey  0.9% ch 0.100 worst camera hit above 50 N 2.43e+03 36.5s
+layout: stopped (grey) at it 43, beta 32, 1657 s
+layout: beta 32 done: eroded design 8 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 1853 s, peak 9.61738 GB
+layout: min member 3.20 -> 5.00 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 5.00 mm (rods), plates 4.54 mm, filter radius 5.15 mm = 2.58 cells, erosion depth 1.37 mm; volfrac 0.068 of 100,393 design cells
+layout: WARNING nearly mirrored in y (4.5% of passive cells differ): no symmetry
+layout: 3 drawn bodies (39,705 cells), held solid in every realization; eroded filter: masked
+layout: 33 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties
+layout: reachability OK: every drawn body can be joined by members of 5.0 mm
+fem: grid (64, 48, 168) = 516,096 elements, 494,697 active dofs; backend direct (direct estimate 6.8 GB, budget 11.8 GB)
+build: surface at pitch 0.500 mm (x4), generated field 350.19 cm3, mesh 1,031,552 faces, 48 s
+build: 28 shells, volumes [377842.7, 8.1, 6.0, 0.2, 0.1, 0.0] mm3; dropped specks [0.0, 6.02, 0.0, 8.1, 0.0, 0.0, 0.02, 0.24, 0.0, 0.11, 0.01, 0.0]; sealed cavities kept [0.06, 0.05, 5.61, 0.01, 0.06, 0.0, 0.0, 1.67, 3.2, 0.02, 1.63, 0.06, 3.3, 0.08, 0.02] mm3
