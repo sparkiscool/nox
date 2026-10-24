@@ -8,7 +8,7 @@ Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11):
   6 preview  every print/ file has a preview PNG in that run folder, named in its summary.md
   9 state    tools/check_state.py shows no ERROR
   10 visual  a design PR links an artifact (claude.ai/.../artifact/...) in a changed summary.md or the PR body
-  11 carbon  a Scout / Overseer / cage / mount PR (nox/scout, nox/overseer, runs or print scout_ overseer_ cage motor_mount) lists carbon
+  11 carbon  a Scout / Overseer / cage / mount PR (nox/scout, nox/overseer, runs or print scout_ overseer_ cage motor_mount) lists carbon (rod list with any non-3.0 stock sizes)
 Prints PASS / FAIL / skip per check; exit 1 on any FAIL. Reads only.
 """
 import argparse, pathlib, re, subprocess, sys
@@ -65,7 +65,7 @@ out("10 visual", bool(art.search(body) or any(art.search(t) for t in sums.values
 drone = [f for f in design if re.match(r"nox/(scout|overseer)/|(runs|print)/(scout|overseer|cage|motor_mount)", f)]
 if drone:
     ok = any(re.search(r"carbon", t, re.I) for t in sums.values())
-    out("11 carbon", ok, "carbon list in summary" if ok else "drone / cage / mount PR without the carbon rods list in summary.md")
+    out("11 carbon", ok, "carbon list in summary" if ok else "drone / cage / mount PR without the carbon rods list (stock size and length of every non-3.0 rod) in summary.md")
 else:
     out("11 carbon", None, "not a drone, cage or mount PR")
 
