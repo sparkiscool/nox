@@ -9,6 +9,7 @@ Checks:
   WARN   a print/ file no row and no print/README.md line names (orphan)
   WARN   a current-parts.md cell over CELL_MAX chars (history belongs in log.md, numbers in dimensions.md)
   WARN   one of the newest LOG_TOP log.md lines over LINE_MAX chars (details belong in the part doc / summary.md)
+  WARN   a dimensions.md line over DIM_MAX chars that is new against origin/main (every session reads it: split it)
 """
 import re, subprocess, sys, pathlib, time
 
@@ -16,6 +17,7 @@ ROOT = pathlib.Path(__file__).resolve().parents[1]
 CELL_MAX = 600      # chars per current-parts.md cell
 LINE_MAX = 400      # chars per log.md line
 LOG_TOP = 10        # only the newest lines are held to LINE_MAX; older ones are history
+DIM_MAX = 600       # chars per new or edited dimensions.md line (docs/sessions.md Usage)
 FILE_RE = re.compile(r"`(?:print/)?([A-Za-z0-9_{},.\-]+\.(?:stl|3mf|obj|step|zip))`")
 
 
@@ -65,6 +67,13 @@ def main(branches=False):
     for l in log:
         if len(l) > LINE_MAX:
             warn.append(f"log.md line {len(l)} chars (max {LINE_MAX}): {l[:70]}...")
+    base = subprocess.run(["git", "-C", str(ROOT), "show", "origin/main:nox/dimensions.md"],
+                          capture_output=True, text=True).stdout
+    if base:
+        old = set(base.splitlines())
+        for i, l in enumerate((ROOT / "nox/dimensions.md").read_text().splitlines(), 1):
+            if len(l) > DIM_MAX and l not in old:
+                warn.append(f"dimensions.md:{i} {len(l)} chars (max {DIM_MAX}): {l[:60]}...")
     for e in err:
         print("ERROR", e)
     for w in warn:

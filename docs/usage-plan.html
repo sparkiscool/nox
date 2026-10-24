@@ -1,0 +1,136 @@
+<title>Nox Usage Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column, a cost chart, a context diagram, then the plan as a ranked table */
+:root {
+  --bg: #f6f7f5; --fg: #1d2420; --muted: #5d6862; --line: #d5dbd6;
+  --panel: #ffffff; --accent: #2f6f5a; --warn: #b4552a; --bar2: #9db8ad;
+  --sans: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #141917; --fg: #e3e8e4; --muted: #9aa69f; --line: #2c3530;
+  --panel: #1b211e; --accent: #6cc3a3; --warn: #e88a5c; --bar2: #3f5c51; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #141917; --fg: #e3e8e4; --muted: #9aa69f; --line: #2c3530;
+  --panel: #1b211e; --accent: #6cc3a3; --warn: #e88a5c; --bar2: #3f5c51; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--sans); }
+main { max-width: 860px; margin: 0 auto; padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 28px; }
+h1 { font-size: 26px; margin: 0; text-wrap: balance; }
+h2 { font-size: 17px; margin: 0 0 8px; text-wrap: balance; }
+p { margin: 0; max-width: 68ch; }
+.sub { color: var(--muted); }
+.eyebrow { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 10px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px; overflow-x: auto; }
+svg text { font-family: var(--mono); font-size: 11px; fill: var(--fg); }
+svg .m { fill: var(--muted); }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.kpi { border-top: 2px solid var(--accent); padding-top: 6px; }
+.kpi b { font: 600 22px var(--mono); display: block; font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--muted); font-size: 13px; }
+.tw { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14px; }
+th, td { text-align: left; vertical-align: top; padding: 9px 8px; border-bottom: 1px solid var(--line); }
+th { font: 600 11px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pill { font: 600 11px var(--mono); padding: 1px 6px; border-radius: 3px; border: 1px solid currentColor; white-space: nowrap; }
+.spark { color: var(--warn); } .cfg { color: var(--accent); } .doc { color: var(--muted); }
+code { font-family: var(--mono); font-size: 13px; }
+ul { margin: 0; padding-left: 20px; max-width: 68ch; }
+</style>
+
+<main>
+<header style="display:grid;gap:6px">
+  <div class="eyebrow">Nox process audit · 24 Oct 2026</div>
+  <h1>Where the tokens go, and how to cut them</h1>
+  <p class="sub">Data from every nox cloud session's transcript (38 sessions, cost at list price, M from the session records) plus the repo's process docs. Savings are estimates (E). All eight changes implemented 24 Oct (method: <code>docs/sessions.md</code> Usage).</p>
+</header>
+
+<section class="kpis">
+  <div class="kpi"><b>$1,446</b><span>33 sessions, 23 Oct 03:00 to 24 Oct 19:50 (M)</span></div>
+  <div class="kpi"><b>~85%</b><span>spent in 11 long opus sessions (M)</span></div>
+  <div class="kpi"><b>470-730k</b><span>context those sessions carry into every API call (M)</span></div>
+  <div class="kpi"><b>$2-4.6</b><span>per organiser run that changes nothing (M)</span></div>
+</section>
+
+<section>
+  <h2>Cost by session</h2>
+  <p class="sub">Cumulative cost per session, top 12. Dark bar = opus orchestrator; light = fable. Everything below $30 is grouped.</p>
+  <div class="panel">
+  <svg viewBox="0 0 780 330" width="100%" role="img" aria-label="Bar chart of cost per session">
+    <g id="bars"></g>
+  </svg>
+  </div>
+</section>
+
+<section>
+  <h2>Why long sessions are expensive</h2>
+  <p>Every tool call re-sends the whole conversation. A 700k session pays for 700k tokens of cache read on each of its calls, so a 300-call turn costs about $34 (Overseer arms, 24 Oct 13:29, M). When the session sits idle past the 1 h cache, the next wake rewrites the whole context ($1.5-2 before it does anything). Wakes for "run still going" notices pay that same price for one line.</p>
+  <div class="panel">
+  <svg viewBox="0 0 780 200" width="100%" role="img" aria-label="Context size per call now and capped">
+    <text x="0" y="16" class="m">tokens re-read per API call</text>
+    <g transform="translate(150,30)">
+      <rect x="0" y="0" width="560" height="34" fill="var(--warn)"/>
+      <text x="8" y="22" style="fill:var(--bg)">today: 470-730k (Scout v3 720k, Box structure 674k)</text>
+      <rect x="0" y="54" width="240" height="34" fill="var(--accent)"/>
+      <text x="8" y="76" style="fill:var(--bg)">cap 300k, then compact</text>
+      <rect x="0" y="108" width="64" height="34" fill="var(--bar2)"/>
+      <text x="72" y="130">worker with a fresh context: 60-100k (sonnet runs, M)</text>
+    </g>
+    <text x="0" y="52">orchestrator</text><text x="0" y="106">with the cap</text><text x="0" y="160">worker</text>
+    <text x="150" y="192" class="m">0</text><text x="690" y="192" class="m">730k</text>
+  </svg>
+  </div>
+  <p class="sub">Where the sampled turns went (146 turns, $247, M): human-started $108 (50 turns), background-job wakes $88 (79), worker and review hand-backs $50 (17).</p>
+</section>
+
+<section>
+  <h2>The plan, ranked by saving</h2>
+  <div class="tw">
+  <table>
+    <thead><tr><th>#</th><th>Change</th><th>Saves (E)</th><th>Who</th></tr></thead>
+    <tbody>
+    <tr><td class="n">1</td><td><b>Cap context at 300k.</b> <code>"autoCompactWindow": "300k"</code> in <code>.claude/settings.json</code> (accepted values 100k to 1M). Before a session passes it, it writes its state to the part doc and row, so a compact loses nothing. Try on one session first.</td><td class="n">30-40%</td><td><span class="pill cfg">config</span></td></tr>
+    <tr><td class="n">2</td><td><b>Orchestrators delegate the loop.</b> CAD iterations, FE retries and fix-review cycles go to one worker (fresh context, sonnet for runs) that returns 10 lines. The orchestrator never runs a 300-call turn itself.</td><td class="n">15-25%</td><td><span class="pill doc">docs</span></td></tr>
+    <tr><td class="n">3</td><td><b>One wake per run.</b> A heavy run starts as one background job that commits its own checkpoints and exits only when done (a wrapper script), so the parent is woken once, not every poll. No "still waiting" turns (Scout v3: 22 wakes at 720k).</td><td class="n">10-15%</td><td><span class="pill doc">tool + docs</span></td></tr>
+    <tr><td class="n">4</td><td><b>Organiser kept small.</b> Every 12 h instead of 6; a cheap exit ("nothing new" in one line) when main and the sessions have not moved; the light pass runs in one sonnet worker so the organiser spends 3 calls; its context is capped by item 1. A fresh session per run was dropped: it has no repo or session tools (tested 24 Oct). A scheduled GitHub Action was dropped: it would email on every red run.</td><td class="n">~$12/day</td><td><span class="pill cfg">config</span></td></tr>
+    <tr><td class="n">5</td><td><b>Sync by pull, not by push.</b> Children already merge <code>origin/main</code> every step. A controller messages a child only when a change hits that child's own inputs, one message per change set, priority "later" so it rides the child's next turn instead of waking a 500k context.</td><td class="n">5-10%</td><td><span class="pill spark">Spark rule</span></td></tr>
+    <tr><td class="n">6</td><td><b>Script the mechanical review.</b> <code>tools/review_precheck.py</code> runs review items 1, 2, 5, 6, 9, 10, 11 (PASS line, row and log cells, tags, preview PNG, check_state, artifact link, carbon list). The opus reviewer is called only after it is clean and judges design only; a re-review checks only the items that failed.</td><td class="n">3-5%</td><td><span class="pill doc">tool</span></td></tr>
+    <tr><td class="n">7</td><td><b>Model on every spawn.</b> <code>create_session</code> inherits the caller's model, so heavy-run sessions ran on opus (nox topo runs, 23-24 Oct). Every heavy-run spawn passes <code>model: sonnet</code>; <code>tools/check_state.py</code> or the sweep reports an opus run session.</td><td class="n">small</td><td><span class="pill doc">docs</span></td></tr>
+    <tr><td class="n">8</td><td><b>Slim what every session reads.</b> <code>dimensions.md</code> is 159 KB with lines up to 5,475 chars; add <code>tools/dim.py &lt;section&gt;</code> and a check_state warning over 600 chars per line. 63 <code>log.md</code> lines break the 400 cap. CLAUDE.md is 11.8 KB against its own 10 KB target. Each saved KB is re-read on every call.</td><td class="n">2-4%</td><td><span class="pill doc">tool</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub">Together (E): roughly half today's spend, with no change to the design rules or the gate. Items 1, 4 and 7 can land today; 5 changes a Spark rule ("Children stay in sync").</p>
+</section>
+
+<section>
+  <h2>Not proposed</h2>
+  <ul>
+    <li>Dropping the review agent, the solid gate, the visuals or opus on design work: they are Spark's rules and the cost is in context size, not in them.</li>
+    <li>Fewer parallel sessions: parallel is fine; the cost is each session's context, not their count.</li>
+  </ul>
+</section>
+</main>
+
+<script>
+const rows = [
+ ["XT60 plug-in swaps",235.8,"o"],["Box structure system",196.2,"o"],["Swap arm v6 / hub",155.8,"o"],
+ ["Camera/lidar/Pi holder",133.5,"f"],["Battery latch",129.0,"o"],["Scout v3",100.2,"o"],
+ ["Heads v7",86.0,"o"],["Scan stick cam bracket v6",82.5,"o"],["Overseer arms S500",80.7,"o"],
+ ["Parallel workers (control)",79.3,"o"],["Organiser",43.6,"o"],["21 other sessions",122.9,"f"]];
+const g = document.getElementById("bars"), max = 240, x0 = 200, w = 500, h = 20, gap = 6;
+const ns = "http://www.w3.org/2000/svg";
+rows.forEach(([name, v, k], i) => {
+  const y = 6 + i * (h + gap);
+  const t = document.createElementNS(ns, "text"); t.setAttribute("x", 0); t.setAttribute("y", y + 14); t.textContent = name; g.appendChild(t);
+  const r = document.createElementNS(ns, "rect"); r.setAttribute("x", x0); r.setAttribute("y", y);
+  r.setAttribute("width", (v / max * w).toFixed(1)); r.setAttribute("height", h);
+  r.setAttribute("fill", k === "o" ? "var(--accent)" : "var(--bar2)"); g.appendChild(r);
+  const l = document.createElementNS(ns, "text"); l.setAttribute("x", x0 + v / max * w + 6); l.setAttribute("y", y + 14);
+  l.textContent = "$" + v.toFixed(0); g.appendChild(l);
+});
+</script>
