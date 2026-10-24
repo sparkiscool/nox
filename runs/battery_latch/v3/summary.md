@@ -14,13 +14,13 @@ battery latch v3 (Scout set): HOLD
 System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, -0.75) (flow MTF-02P), fit 44.5 mm³ (E) (cage (rods + nodes)/receiver skid side px (latch)) FAIL, bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 806 g (E), CG 1.6 mm off thrust axis (E) [+1.6, +0.0, -38.2], 2.2 mm without swap parts, probes -44.4 mm (E) edge at (-0.78, -0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear
   (old refit snapshot 3595381: its cage predates the skids and the Scout's new layout; collar planes 7.04 (C))
 Assembled worst index: Scout frame model ≤ 0.98 (F); latch parts ≤ 0.512 (M mesh, E loads, receiver v2 FE), sliders grip pull 0.365, rib 0.252 (E)
-Weight: Scout set 159.6 g (M) (drone receiver with skids; bay set 155.7 g; v1 91.0)
-Size: Scout set bbox 63.6 x 54.1 x 105.6 mm, largest 105.6 (C, fits the 180 bed)
+Weight: Scout set 159.6 g (M) (drone receiver with skids; bay set 155.7 g; run v2 147.7, v1 91.0)
+Size: Scout set bbox 63.6 x 54.1 x 105.6 mm, largest 105.6 (M, fits the 180 bed)
 First mode (seated pack): 552 Hz (≥ 100, E)
 Carbon: no carbon rods, every piece printed
 Solid: solid_check PASS on all 12 Scout files
 ```
-Overseer: set 338.5 g (M); cartridge v6 rib only (no skids); bbox 66.8 x 68.8 x 183.6 mm, largest 183.6 (C); first mode 458 Hz (E); latch parts ≤ 0.548 (M mesh, E loads), grip pull 0.398, rib carry 3 g 0.129 (E); system as `dimensions.md` Overseer fit (pose B: fit, CG, L2 FAIL, Overseer session). solid_check PASS on all 6 Overseer files.
+Overseer: set 338.5 g (M); cartridge v6 rib only (no skids); bbox 66.8 x 68.8 x 183.6 mm, largest 183.6 (M); first mode 458 Hz (E); latch parts ≤ 0.548 (M mesh, E loads), grip pull 0.398, rib carry 3 g 0.129 (E); system as `dimensions.md` Overseer fit (pose B: fit, CG, L2 FAIL, Overseer session). solid_check PASS on all 6 Overseer files.
 
 | Pack | File | Material x count | g (M) | Extents in print pose, mm (M) | Bed mm² (M) | Bed face |
 |---|---|---|---|---|---|---|

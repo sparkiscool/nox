@@ -65,7 +65,7 @@ REC_Z = 11.5                      # recess half length about z_T (tab +-11 + 0.5
 TAB_IN, TAB_OUT = 5.0, 10.0       # tab faces at rest (slider v6; v5 4.0); squeezed 2.0 / 7.0 on the centre rib (v5: 0 / 6)
 TAB_HZ = 11.0                     # tab z +-11 (22 wide: the 13 wide blades + the magnet ear)
 RIB_HX, RIB_Y1, RIB_NOTCH = 2.0, 11.5, 2.5   # cartridge v6 centre rib (heads v7 ask, 24 Oct, DEFAULT): x +-2.0 (4.0; 3.0 necked),
-                                  # y 0..11.5 along the recess, notched to y 7.5 over z_T +- 2.5 for the pen spring (y 8.0..
+                                  # y 0..11.5 along the recess, notched to y 7.9 over z_T +- 2.5 for the pen spring (y 8.0..
                                   # 11.2). Each tab stops on it, so the squeezed tabs clamp the cartridge to the head and both
                                   # bolts retract 3.0 whatever the head offset (need 2.6). It carries the head's x load (the
                                   # 43.5 N across, a 3 g carry), so it is a fixed-fixed beam between two 6.0 cross walls past the

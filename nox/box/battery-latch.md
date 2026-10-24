@@ -196,18 +196,18 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
   | Overseer | 0.55 | 0.39 (35 g) | 0.07 | 0.07 |
 
   Every case and deflection is in `runs/battery_latch/v2/fe/` and the dimensions row.
-- **First mode of the seated pack: 560 Hz (Scout) / 460 Hz (Overseer)** (E: rigid swap mass, partner rigid; ≥ 100 Hz target).
-- **Sliders at the 74 N stall** (a bolt jammed on its lead-in, fault): 2.4 MPa, index 0.22. Grip pull 57 N + 1 g: tab bar 4.3 / 4.7 MPa, index 0.40 / 0.44 (E, hand calc).
+- **First mode of the seated pack: 552 Hz (Scout) / 458 Hz (Overseer)** (E: rigid swap mass, partner rigid; ≥ 100 Hz target).
+- **Sliders at the 74 N stall** (a bolt jammed on its lead-in, fault): 2.4 MPa, index 0.22. Grip pull 57 N + 1 g: tab bar 3.9 / 4.3 MPa, index 0.37 / 0.40 (E, hand calc, slider v6).
 - **Scout v3 system** (the refit snapshot `runs/battery_latch/v1/scout_v3_refit/`, current latch parts, skids as cage):
-  - `System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, −0.75) (flow MTF-02P), fit 0.0 mm³ (E), bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 794 g (E), CG 1.4 mm off thrust axis (E), 2.0 mm without swap parts, probes −47.0 mm (E) edge at (−0.78, −0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear`. The "receiver v1 (latch)" label is the snapshot's part name; the mesh is v2.
-  - **Probe FAIL: edges from the side and low, through the Scout cage's side windows and under its keel, reach the latch parts.** Receiver −47.0, cartridge v5 −25.9, receiver cap −7.3, sliders −2.2 / −1.4 (E). The Scout's own flow, camera and Radxa fail too.
+  - `System: Scout v3, cage first 4.5 mm (E) at (+0.00, +0.66, −0.75) (flow MTF-02P), fit 44.5 mm³ (E) (cage (rods + nodes)/receiver skid side px (latch)) FAIL, bbox 6.9 L (E), extents 233 x 233 x 128 mm (E), mass 806 g (E), CG 1.6 mm off thrust axis (E), 2.2 mm without swap parts, probes −44.4 mm (E) edge at (−0.78, −0.39, +0.49) (receiver v1 (latch)) FAIL, access 7/7 clear`. The "receiver v1 (latch)" label is the snapshot's part name; the mesh is v2.
+  - **Probe FAIL: edges from the side and low, through the Scout cage's side windows and under its keel, reach the latch parts.** Receiver −44.4, cartridge −21.6, receiver cap −7.3 (E); sliders PASS. The Scout's own flow, camera and Radxa fail too. The fit clash is that snapshot's cage rod against a side skid: the snapshot predates the skids the Scout specified.
   - The whole swap set round the swap opening is exempt to 40° (DEFAULT, as the Scout's own check; was 35°; alternative: no exemption, which needs the receiver recessed ≥ 3 inside the cage's bottom plane). These edges come from outside that cone.
-  - So the Scout set is HOLD until the Scout's new layout and the receiver / cartridge v6 skids (follow-up) give a rerun with probes PASS.
+  - So the Scout set is HOLD until the Scout's own pass loads the run v3 meshes (skids included) and reads fit 0 and probes PASS.
   - Collar planes 7.04 (clip inset 11.0; v2's 5.0 walls needed 0.5 more inset). Keel nodes 4.8 clear.
 - **Assembled worst index per case (Scout, one set of numbers everywhere):**
   - The Scout frame model gives every flight / crash / landing case ≤ 0.98 (F).
   - The latch parts under them, receiver v2 FE: crash ≤ 0.07 at 15.3 g (0.08 at the suspension's ~16.7 g, scaled), flight 0.03, landing (catch 6 g) 0.05, handling 0.12.
-  - The swap set ≤ 0.51. Sliders ≤ 0.40, grip pull. Cartridge floor 0.14 at ~16.7 g (E, hand calc scaled).
+  - The swap set ≤ 0.51. Sliders ≤ 0.37, grip pull; cartridge v6 rib 0.25. Cartridge floor 0.14 at ~16.7 g (E, hand calc scaled).
 - **Overseer** (`overseer.assembly.json` on main, pose B, cartridge, pack and receiver replaced): `System: Overseer, cage first −59.0 mm (E) at (+0.91, −0.01, −0.41) (Unitree L2) FAIL, fit 27792.2 mm³ (E) (belly sled + pods / receiver) FAIL, bbox 85.7 L (E), extents 634 x 570 x 237 mm (E), mass 2636 g (E), CG 10.7 mm off thrust axis (E), 26.8 mm without swap parts FAIL (tol 3), probes −0.0 mm (E) edge at (+0.71, −0.06, +0.70) (Unitree L2, unshielded) FAIL`.
   - The sled was cut for the v1 receiver. The Overseer set is 66.8 x 68.8 x 183.6 (0.84 L, M).
 
@@ -226,7 +226,8 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
   - A higher-cycle connector is the hub's / Spark's call.
 - **Scout v3:**
   - The mount takes 4 x M3 x 45 from below (heads on the receiver's flats at y 14.0, reached with the cartridge out).
-  - The edge probes reach the receiver (−47.0), cartridge (−25.9), cap (−7.3) and sliders (−2.2 / −1.4) through the side windows and under the keel. Close the windows; the receiver and cartridge v6 skids come in the follow-up. The set stays HOLD until a rerun reads PASS.
+  - On the old snapshot the edge probes reach the receiver (−44.4), cartridge (−21.6) and cap (−7.3) through the side windows and under the keel. Close the windows; the skids are drawn (run v3) and the meshes sent. The set stays HOLD until the Scout's pass with them reads fit 0 and probes PASS.
+  - Its `latch_skids()` puts the nose plate at drone x 54.8..57.0, inside the receiver's end wall; the drawn plate sits on the wall face at 56.8..59.0, and the side bars are clipped short of (60, ±31, −16) by the funnel. The Scout loads these meshes, not its own spec shapes.
   - The skids are swap parts (cage role) in its assembly.
 - **Overseer (open, v1 too):** the receiver's mount bolts at x ±26.8 (v2 ±27.8) come up from below through the cartridge's rail zone (rails x 26.5..27.5 to y 58.6), so their heads would sit in the cartridge path. Options:
   - (a) Bolts from above (through the sled) into heat-set inserts in the receiver's deck bosses: 8.7 above the deck's underside, room for a 6.7 insert and a 2.0 floor.
@@ -240,7 +241,7 @@ Assembly: sliders into the cartridge channels from inside, spring into its U-slo
 
 ## Open (E)
 - Spring rate and the XT60 forces are E; the first latch print checks release force per finger (≤ 15 N), the snap-in at the seat, and that the pack drops 0.8 onto the bolts when let go.
-- Hall part not chosen: an analog hall (DRV5055A4-class, ±169 mT, E): 157 mT latched, 1.7 half in, 3.1 squeezed at nominal; threshold ~62 mT at ±0.5 head offset.
+- Hall part not chosen: an analog hall (DRV5055A4-class, ±169 mT, E): 157 mT latched, 1.7 half in, 2.9 squeezed at nominal; threshold ~62 mT at ±0.5 head offset.
 - The swap load set is E (the arm's). The first receiver coupon checks the stall, the pocket wear over cycles (strike blocks if it wears), and the across stiffness (0.35 / 0.78 mm at 43.5 N).
 - Cartridge v6 and the Scout skids: done in run v3 (above). The skids' crash loads into the receiver come from the Scout's run (E); handling 50 N at any skid point is the receiver's handling case (0.12). The Scout confirms fit and probes with these exact meshes.
 - Receiver v2 topology (lighter at the same cases) is a follow-up. The FE peaks sit at the end walls' corners; the side walls carry little except across.
