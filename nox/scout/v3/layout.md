@@ -2,6 +2,14 @@
 
 **v2 = the system pass (Spark 24 Oct: "this design seems very flimsy ... structurally secure while light as possible ... the cage should be touching first").** `layout_v2.py`, `runs/scout_layout/v2/` (`checks.txt` has every case), numbers in `dimensions.md` "System Scout v3". The v1 stick cage below is superseded: the v2 cage comes from a ground structure of 3.0 rods trimmed by greedy mass removal on a frame model over 28 system cases, with PR 44's bottom (receiver interface, cartridge v4, pogo / KW11, Radxa, flow) as DEFAULT. Pass 1: 116 rods, 67 printed nodes, ~268 g, worst index 0.98, deflections ≤ 1.96 mm (F / E). Open: the receiver must sit ≥ 7.0 inside the funnel planes for the cage to touch first at the tail-bottom (control session); fewer joints; CG (−1.8, −1.8).
 
+## Concept check, pass 2 (24 Oct, after main's "Every drone design" list and `dimensions.md` L)
+Script defaults are now the L cases and a coarser node set (12 nodes a ring); pass 1 (my E cases, 80 N hits) is commit 1d9279a, `runs/scout_layout/v2/`.
+| Alternative | Cases | Cage | Result (F) |
+|---|---|---|---|
+| A (pass 1) | 80 N point hits at each ring node, 80 N crown, landing 6 g, swap, latch, 20 N squeeze | 116 rods, 67 nodes, ~268 g (E) | every case ≤ 0.99; contact-first blocked only by the receiver's tail-bottom (needs ≥ 7.0 inside the funnel planes) |
+| B (L standard) | crash 35 g = 172 N through the touching-first node, 14 directions; flight / landing ≤ 0.5; handling 50 N | every feasible 3.0 rod (259) | **fails: index up to 2.25** (side and lower corners); every member doubled (NROD=2): still 1.28 |
+**No 3.0-rod cage meets L's crash case at index ≤ 1.0, at any mass.** Ways out (Spark): (1) the cage is sacrificial (L "breaking order": the node goes first): crash index on cage nodes / rods up to ~2.3, frame and mounts held ≤ 1; (2) a softer crash load through compliance (TPU node mounts, E: halves the peak g); (3) a larger rod (CLAUDE.md rod rule); (4) printed cage members. Mass: **L's 500 g Scout budget is not reachable with this architecture**: bought parts ~350 g (E) + PR 44's receiver and cartridge 122 g (M) leave ~28 g for the cage. DEFAULT until Spark answers: alternative A's cases, budget "none" (Spark 23 Oct: no weight target), lightest cage that passes.
+
 ## v1 (superseded by v2 where they differ)
 
 Spark 24 Oct: "design it to the latest updates and then show me the design as a whole before the topology runs". This is v3 part 1 (bottom layout) laid out with the rest of the drone around it, so every box and funnel keep-out is checked on one model. Rough shapes: the receiver is the design space for its topology run, the cage is a stick model for part 2. Nothing here is saved or printed.

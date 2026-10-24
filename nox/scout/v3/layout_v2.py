@@ -50,9 +50,11 @@ RING_HI = 49.2
 TOP_Z = 66.0                                 # crown nodes (dome over the props; centre strips carry posts to the plate)
 BOT_Z = -47.5                                # keel nodes: 3.0 under the cartridge bottom (-44.5)
 ROD_R, ROD_A, ROD_I = 1.5, 7.069, 3.976      # 3.0 solid carbon (C)
+NROD = int(os.environ.get("NROD", "1"))       # rods per member (a pair = 2 x 3.0 side by side in shared sockets, test only)
+ROD_A, ROD_I = ROD_A * NROD, ROD_I * NROD
 E_ROD, G_ROD = 100000.0, 38000.0             # MPa (E, pultruded; D21 bend test replaces)
 SIG_ROD = 750.0                              # MPa, bending + axial allowable (1500 E / 2)
-CAP_JOINT = 150.0                            # N, epoxied socket pull-out design value (E; socket coupon pull, item 23)
+CAP_JOINT = 150.0 * int(os.environ.get("NROD", "1"))                            # N, epoxied socket pull-out design value (E; socket coupon pull, item 23)
 NODE_G, SOCKET_G, ROD_GPM = 1.5, 0.57, 0.011  # printed node body, per socket (cage v2 doc, M), rod g/mm (G)
 CG = np.array([0.0, 0.0, 4.2])
 CONTACT_MARGIN = 3.0                         # cage ahead of everything else (CLAUDE.md, DEFAULT)
@@ -203,6 +205,9 @@ def cone_gap(Q, P, rmax=40.0):
 
 
 # ================================================================ cage ground structure
+RING_T = (0.5,) if os.environ.get("FINE") is None else (0.25, 0.5, 0.75)   # flat nodes: mid only (pass 2, fewer joints)
+
+
 def ring_nodes(z):
     n = [(112, -100), (112, 100), (100, 112), (-100, 112), (-112, 100), (-112, -100), (-100, -112), (100, -112)]
     loop = []
@@ -210,7 +215,7 @@ def ring_nodes(z):
         a, b = np.array(n[i], float), np.array(n[(i + 1) % 8], float)
         loop.append(a)
         if np.linalg.norm(b - a) > 100:                                       # the flats: points at -50, 0, 50
-            for t in (0.25, 0.5, 0.75):
+            for t in RING_T:
                 loop.append(a + t * (b - a))
     return [np.array([p[0], p[1], z]) for p in loop]
 
@@ -221,14 +226,12 @@ def candidate_nodes():
     N += L; kind += ["L"] * len(L); N += U; kind += ["U"] * len(U)
     for x, y in [(0, 0), (45, 0), (-45, 0), (0, 45), (0, -45), (36, 36), (36, -36), (-36, 36), (-36, -36)]:
         N.append(np.array([x, y, TOP_Z], float)); kind.append("T")
-    for x, y in [(76, 0), (-76, 0), (0, 76), (0, -76), (74, 40), (74, -40), (-74, 40), (-74, -40), (40, 74), (-40, 74), (40, -74), (-40, -74),
-                 (66, 66), (66, -66), (-66, 66), (-66, -66)]:
+    for x, y in [(76, 0), (-76, 0), (0, 76), (0, -76), (66, 66), (66, -66), (-66, 66), (-66, -66)]:
         N.append(np.array([x, y, 0.0])); kind.append("G")                   # glove knees along the faces at z 0
-    for x, y, z in [(52, 44, -24), (52, -44, -24), (-52, 44, -24), (-52, -44, -24), (20, -46, -24), (-20, -46, -24), (20, 46, -24),
-                    (-20, 46, -24), (44, 29, -32), (44, -29, -32), (-44, 29, -32), (-44, -29, -32), (52, 29, -18), (52, -29, -18),
-                    (-52, 29, -18), (-52, -29, -18)]:
+    for x, y, z in [(20, -46, -24), (-20, -46, -24), (20, 46, -24), (-20, 46, -24), (44, 29, -32), (44, -29, -32), (-44, 29, -32),
+                    (-44, -29, -32)]:
         N.append(np.array([x, y, z], float)); kind.append("M")               # mid glove and end nodes on the funnel planes
-    for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5), (0, 28.5), (14, -28.5), (-14, -28.5)]:
+    for x, y in [(28, 28.5), (28, -28.5), (-28, 28.5), (-28, -28.5), (0, -28.5)]:
         N.append(np.array([x, y, BOT_Z])); kind.append("B")                   # keel under the pack, outside the path
     core = [(3.9, 47, 24.0), (3.9, -47, 24.0), (49, 18, 24.0), (49, -18, 24.0), (-46, 22, 24.0), (-46, -22, 24.0),
             (3.9, 47, 14.0), (3.9, -47, 14.0), (-46, 22, 14.0), (-46, -22, 14.0),
@@ -297,37 +300,45 @@ def rod_ok(p0, p1, kinds, B, is_ring, core_ends=()):
 
 
 # ================================================================ load cases (E): name, {node index: force}, class
+MASS_KG = 0.50                                # Scout (dimensions L budget; E)
+G0 = 9.81e-3                                  # N per g of mass per g of acceleration
+
+
 def load_cases(N, kind, live=None):
+    """dimensions.md L standard cases (DEFAULT): crash 35 g through the cage node that touches first in each of the 6 face
+    and 8 corner directions; landing 6 g at the keel / wheels; handling 50 N on one member node in any direction; swap
+    pull-out 50 N on two wheels; latch hold 4 x 30 N and misuse 100 N (G)."""
     cases = []
     idx = {k: [i for i, kk in enumerate(kind) if kk == k and (live is None or i in live)] for k in set(kind)}
-    def outer(ks, d):
-        cand = [i for k in ks for i in idx[k]]; return max(cand, key=lambda i: N[i] @ d)
-    for a in range(0, 360, 45):
-        d = np.array([math.cos(math.radians(a)), math.sin(math.radians(a)), 0])
-        for ring in ("L", "U"):
-            cases.append((f"hit {ring} {a}", {outer([ring], d): -80.0 * d}, "crash"))
-    if idx["T"]:
-        c0 = min(idx["T"], key=lambda i: np.hypot(*N[i][:2]))
-        cases.append(("top hit 80 N at the crown centre", {c0: np.array([0, 0, -80.0])}, "crash"))
-        cases.append(("upside-down landing 6 g on the crown", {i: np.array([0, 0, -33.0 / len(idx["T"])]) for i in idx["T"]}, "flight"))
-    for a in (45, 135):
-        d = np.array([math.cos(math.radians(a)), math.sin(math.radians(a)), 1.0]) / S2
-        cases.append((f"top corner {a}", {outer(["U", "T"], d): -80.0 * d}, "crash"))
-    B = idx["B"]
-    cases.append(("landing 6 g", {i: np.array([0, 0, 33.0 / len(B)]) for i in B}, "flight"))
-    for i in sorted(B, key=lambda i: (-N[i][0], -N[i][1]))[:1] + sorted(B, key=lambda i: (N[i][0], -N[i][1]))[:1]:
-        cases.append((f"landing on one keel node {tuple(N[i][:2].astype(int))}", {i: np.array([13.5, 13.5 * np.sign(N[i][1] or 1), 27.0])}, "flight"))
-    # wheels: corners of the lower ring
+    cage = [i for i, k in enumerate(kind) if k != "C" and (live is None or i in live)]
+    crash = 35 * MASS_KG * 1000 * G0                                      # 172 N
+    dirs = [np.array(d, float) for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))]
+    dirs += [np.array((sx, sy, sz), float) / math.sqrt(3) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]
+    for d in dirs:
+        i = max(cage, key=lambda i: N[i] @ d)
+        cases.append((f"crash 35 g {np.round(d, 2).tolist()}", {i: -crash * d}, "crash"))
+    land = 6 * MASS_KG * 1000 * G0                                        # 29.4 N
+    B = idx.get("B", [])
+    if B:
+        cases.append(("landing 6 g on the keel", {i: np.array([0, 0, land / len(B)]) for i in B}, "flight"))
+        for i in sorted(B, key=lambda i: (-N[i][0], -N[i][1]))[:1] + sorted(B, key=lambda i: (N[i][0], -N[i][1]))[:1]:
+            cases.append((f"landing 6 g on one keel node {tuple(N[i][:2].astype(int))}", {i: np.array([0.3 * land, 0.3 * land * np.sign(N[i][1] or 1), land])}, "flight"))
+    if idx.get("T"):
+        cases.append(("upside-down landing 6 g on the crown", {i: np.array([0, 0, -land / len(idx["T"])]) for i in idx["T"]}, "flight"))
     W = {tuple(np.round(N[i][:2]).astype(int)): i for i in [j for j, k in enumerate(kind) if k == "L"]}
     nrm = lambda x, y: (np.array([-np.sign(x), 0, 1.0]) if abs(x) == 112 else np.array([0, -np.sign(y), 1.0])) / S2
     for pair in (((112, 100), (-112, -100)), ((100, 112), (-100, -112))):
-        cases.append((f"swap pull 50 N on wheels {pair}", {W[p]: 25 * S2 * nrm(*p) for p in pair}, "functional"))
+        cases.append((f"swap pull 50 N on wheels {pair}", {W[p]: 25 * S2 * nrm(*p) for p in pair}, "flight"))
     yw = [(100, 112), (-100, 112), (100, -112), (-100, -112)]
     down = lambda x, y: np.array([0, -np.sign(y), -1.0]) / S2
-    cases.append(("latch hold 4 x 30 N", {W[p]: 30.0 * down(*p) for p in yw}, "functional"))
-    cases.append(("latch misuse 100 N on one wheel", {W[yw[0]]: 100.0 * down(*yw[0])}, "misuse"))
-    si = [outer(["L"], np.array([0, 1.0, 0])), outer(["L"], np.array([0, -1.0, 0]))]
-    cases.append(("hand squeeze 20 N", {si[0]: np.array([0, -20.0, 0]), si[1]: np.array([0, 20.0, 0])}, "handling"))
+    cases.append(("latch hold 4 x 30 N", {W[p]: 30.0 * down(*p) for p in yw}, "flight"))
+    cases.append(("latch misuse 100 N on one wheel", {W[yw[0]]: 100.0 * down(*yw[0])}, "crash"))
+    # handling 50 N: one node, inward / down / up at the side flat, the nose flat, the crown, a keel node
+    for ring in ("L", "U"):
+        for d in (np.array([0, 1.0, 0]), np.array([1.0, 0, 0])):
+            i = max(idx[ring], key=lambda i: N[i] @ d)
+            cases.append((f"handling 50 N on {ring} {np.round(N[i][:2]).astype(int).tolist()}", {i: -50.0 * d}, "handling"))
+            cases.append((f"handling 50 N down on {ring} {np.round(N[i][:2]).astype(int).tolist()}", {i: np.array([0, 0, -50.0])}, "handling"))
     return cases
 
 
@@ -338,7 +349,8 @@ def capacity(L):
 
 
 # ================================================================ frame FE (Euler beams, rigid printed nodes, core joints fixed)
-DEFL_LIM = {"crash": 6.0, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 1.5}   # mm at the load (E, DEFAULT)
+DEFL_LIM = {"crash": 6.0, "flight": 2.0, "functional": 1.5, "misuse": 3.0, "handling": 2.0}   # mm at the load (E, DEFAULT)
+IDX_LIM = {"crash": 1.0, "flight": 0.5, "functional": 0.5, "misuse": 1.0, "handling": 1.0}   # dimensions L index targets
 _ELC = {}
 
 
@@ -403,7 +415,7 @@ def frame_eval(N, kind, members, cases):
 
 
 def feasible(fe):
-    return fe is not None and all(r["worst"] <= 1.0 and r["defl"] <= DEFL_LIM[r["cls"]] for r in fe)
+    return fe is not None and all(r["worst"] <= IDX_LIM[r["cls"]] and r["defl"] <= DEFL_LIM[r["cls"]] for r in fe)
 
 
 def cage_mass(N, kind, members):
@@ -532,7 +544,7 @@ for a in range(nn):
         if r is None: BASE.append((a, b, rod_samples(N[a], N[b])))
         else: why0[r] = why0.get(r, 0) + 1
 say(f"rods feasible before the pads: {len(BASE)}; dropped: " + ", ".join(f"{k} {v}" for k, v in sorted(why0.items(), key=lambda kv: -kv[1])))
-PAD_OPTIONS = [(38.5, -36.5), (39.5, -36.5), (37.5, -37.0), (38.5, -38.0), (40.0, -37.0)]   # PR 44 best and its neighbours
+PAD_OPTIONS = [(38.5, -36.5)]                    # PR 44 (DEFAULT; pass 1 searched its neighbours: same cage, post r / cones bind)
 if os.environ.get('PADS'): PAD_OPTIONS = [tuple(map(float, p.split(','))) for p in os.environ['PADS'].split(';')]
 runs = []
 for yp, zp in PAD_OPTIONS:
@@ -575,7 +587,7 @@ for yp, zp in PAD_OPTIONS:
     contact_ok = lambda ms: bool(((cage_support(ms) - so_all) >= target - 1e-6).all())
     chosen, fe, note = eso(N, kind, members, set(members[j] for j in ring_members), CASES, contact_ok)
     if fe is None or not feasible(fe):
-        bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f}" for r in fe if r["worst"] > 1.0 or r["defl"] > DEFL_LIM[r["cls"]]]
+        bad = [] if fe is None else [f"{r['case']} index {r['worst']:.2f} defl {r['defl']:.1f}" for r in fe if r["worst"] > IDX_LIM[r["cls"]] or r["defl"] > DEFL_LIM[r["cls"]]]
         say(f"   ESO: {note}; failing cases: {bad[:6]}"); continue
     used = sorted(set([i for e in chosen for i in e]))
     cage_pts = np.vstack([np.vstack([N[a_] * (1 - t) + N[b_] * t for t in np.linspace(0, 1, 25)]) for a_, b_ in chosen] + [N[[i for i in used if kind[i] != "C"]]])
@@ -587,7 +599,7 @@ for yp, zp in PAD_OPTIONS:
         f"({worst['case']}); max deflection at a load {max(r['defl'] for r in fe):.2f} mm; contact-first {cf[0]:.2f} mm (worst vs {cf[1]})")
     runs.append(dict(yp=yp, zp=zp, chosen=chosen, fe=fe, cf=cf, mass=mass, members=members, pp=pp, fm=fm, rmin=rmin, why=why))
 
-ok = [r for r in runs if r["cf"][0] >= CONTACT_MARGIN and max(x["worst"] for x in r["fe"]) <= 1.0]
+ok = [r for r in runs if r["cf"][0] >= CONTACT_MARGIN and feasible(r["fe"])]
 best = min(ok, key=lambda r: r["mass"]) if ok else max(runs, key=lambda r: (min(r["cf"][0], CONTACT_MARGIN), -r["mass"]))
 say(f"\nchosen pads ({best['yp']}, {best['zp']}){'' if ok else '  (no option met every rule: best contact-first margin kept)'}")
 say(f"elapsed {time.time() - t0:.0f} s")
@@ -631,7 +643,7 @@ tot += best["mass"]; mom += best["mass"] * cage_cent
 cg = mom / tot
 say(f"drone ~{tot:.0f} g (E), CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f})")
 
-R = dict(date="2026-10-24T22:00", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
+R = dict(date="2026-10-24T23:30", status="DONE", mass_g=round(tot), mass_tag="E", worst_index=round(max(r["worst"] for r in fe), 2),
          worst_case=max(fe, key=lambda r: r["worst"])["case"], note="system pass: cage by LP + frame model, contact-first",
          pads=dict(y=best["yp"], z=best["zp"], x=[-PAD_DX, PAD_DX]), cage_mass=best["mass"], contact_first=best["cf"][0],
          contact_vs=best["cf"][1], rods=[[N[a].tolist(), N[b].tolist()] for a, b in chosen],
