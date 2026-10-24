@@ -1,6 +1,6 @@
 # Runs
 
-_97 runs · rebuilt 2026-10-24 11:35_
+_97 runs · rebuilt 2026-10-24 13:26_
 
 ## Latest per part
 
@@ -76,7 +76,7 @@ _97 runs · rebuilt 2026-10-24 11:35_
 | 2026-10-24 | funnel_panel | [v8_plain](runs/funnel_panel/v8_plain/summary.md) | DONE | 53.8 (M) | 0.91 | PASS | contact face | · GB | · min | · |
 | 2026-10-24 | funnel_panel | [v9_plain](runs/funnel_panel/v9_plain/summary.md) | DONE | 60.3 (M) | 0.80 | PASS | contact face | · GB | · min | · |
 | 2026-10-24 | overseer_assembly | [v0](runs/overseer_assembly/v0/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 8 min | · |
-| 2026-10-24 | overseer_assembly | [v1](runs/overseer_assembly/v1/summary.md) | DONE | 3382 (E) | · | · | · | · GB | · min | · |
+| 2026-10-24 | overseer_assembly | [v1](runs/overseer_assembly/v1/summary.md) | DONE | 3516 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_cage | [v1](runs/overseer_cage/v1/summary.md) | DONE | · | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_cage | [v2](runs/overseer_cage/v2/summary.md) | DONE | 487 (C) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_cage | [v3](runs/overseer_cage/v3/summary.md) | DONE | 827 (C) | · | · | · | · GB | · min | · |
@@ -84,7 +84,7 @@ _97 runs · rebuilt 2026-10-24 11:35_
 | 2026-10-24 | overseer_layout | [v1](runs/overseer_layout/v1/summary.md) | DONE | 2538 (E) | · | · | · | · GB | · min | · |
 | 2026-10-24 | overseer_layout | [v2](runs/overseer_layout/v2/summary.md) | DONE | 2332 (E) | · | · | · | · GB | 30 min | · |
 | 2026-10-24 | overseer_system | [v1B](runs/overseer_system/v1B/summary.md) | DONE | 2870 (E) | · | · | · | · GB | · min | · |
-| 2026-10-24 | overseer_system | [v2A](runs/overseer_system/v2A/summary.md) | DONE | 3420 (E) | 0.93 | · | · | · GB | 35 min | · |
+| 2026-10-24 | overseer_system | [v2A](runs/overseer_system/v2A/summary.md) | DONE | 3550 (E) | 0.99 | · | · | · GB | 40 min | · |
 | 2026-10-24 | scan_stick_cam | [v7](runs/scan_stick_cam/v7/summary.md) | DONE | 13.3 (M) | 0.32 | PASS | plate bottom | 3.1 (P) GB | 16 min | · |
 | 2026-10-24 | test_glue_lap | [v1](runs/test_glue_lap/v1/summary.md) | DONE | 3.9 (M) | · | PASS | flat face (as saved) | · GB | · min | · |
 | 2026-10-24 | test_layer_pull | [v1](runs/test_layer_pull/v1/summary.md) | DONE | 28.6 (M) | · | PASS | plate bottom (as saved) | · GB | · min | · |
