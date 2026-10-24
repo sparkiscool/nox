@@ -1,0 +1,376 @@
+{
+ "name": "Scout v3",
+ "machine": "scout",
+ "note": "Snapshot (24 Oct) of the Scout v3 system pass 1 assembly on branch claude/gracious-darwin-ogidvp (nox/scout/v3/scout.assembly.json, runs/scout_layout/v2/assembly), PR 44 receiver, cartridge, pack and XT60E1-M removed; battery_latch.scout_system() adds the latch set. Owner of the source: Scout v3 session.",
+ "cg_ref": [
+  0.0,
+  0.0,
+  41.2
+ ],
+ "thrust_axis": [
+  0,
+  0,
+  1
+ ],
+ "cg_tol_mm": 3.0,
+ "cage_margin_mm": 3.0,
+ "openings": [],
+ "contact_pairs": [
+  [
+   "motor 1",
+   "prop 1",
+   1000000000.0
+  ],
+  [
+   "motor 2",
+   "prop 2",
+   1000000000.0
+  ],
+  [
+   "motor 3",
+   "prop 3",
+   1000000000.0
+  ],
+  [
+   "motor 4",
+   "prop 4",
+   1000000000.0
+  ],
+  [
+   "motor 1",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "motor 2",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "motor 3",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "motor 4",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "cage (rods + nodes)",
+   "frame plate",
+   1000000000.0
+  ],
+  [
+   "cage (rods + nodes)",
+   "catch wheels",
+   1000000000.0
+  ],
+  [
+   "FC",
+   "frame plate",
+   1000000000.0
+  ]
+ ],
+ "parts": [
+  {
+   "name": "frame plate",
+   "role": "structure",
+   "mesh": "frame_plate.stl",
+   "mass_g": 28,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "Bee35 cut down, 3.5 carbon (C), tail XT60 cut-out"
+  },
+  {
+   "name": "motor 1",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     54.1,
+     54.1,
+     22.0
+    ],
+    "p1": [
+     54.1,
+     54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 1",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     54.1,
+     54.1,
+     37.2
+    ],
+    "p1": [
+     54.1,
+     54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "motor 2",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     54.1,
+     -54.1,
+     22.0
+    ],
+    "p1": [
+     54.1,
+     -54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 2",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     54.1,
+     -54.1,
+     37.2
+    ],
+    "p1": [
+     54.1,
+     -54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "motor 3",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     -54.1,
+     54.1,
+     22.0
+    ],
+    "p1": [
+     -54.1,
+     54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 3",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     -54.1,
+     54.1,
+     37.2
+    ],
+    "p1": [
+     -54.1,
+     54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "motor 4",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 12.4,
+    "p0": [
+     -54.1,
+     -54.1,
+     22.0
+    ],
+    "p1": [
+     -54.1,
+     -54.1,
+     37.0
+    ]
+   },
+   "mass_g": 18,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "prop 4",
+   "role": "bought",
+   "protect": true,
+   "cylinder": {
+    "r": 44.45,
+    "p0": [
+     -54.1,
+     -54.1,
+     37.2
+    ],
+    "p1": [
+     -54.1,
+     -54.1,
+     45.2
+    ]
+   },
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "swept disk +-4"
+  },
+  {
+   "name": "FC",
+   "role": "bought",
+   "protect": true,
+   "mesh": "FC.stl",
+   "mass_g": 10,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "Radxa Zero 3W",
+   "role": "bought",
+   "protect": true,
+   "mesh": "Radxa_Zero_3W.stl",
+   "mass_g": 10,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "flow MTF-02P",
+   "role": "bought",
+   "protect": true,
+   "mesh": "flow_MTF-02P.stl",
+   "mass_g": 1.5,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "UBEC",
+   "role": "bought",
+   "protect": true,
+   "mesh": "UBEC.stl",
+   "mass_g": 15,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "XR2",
+   "role": "bought",
+   "protect": true,
+   "mesh": "XR2.stl",
+   "mass_g": 1,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "camera",
+   "role": "bought",
+   "protect": true,
+   "mesh": "camera.stl",
+   "mass_g": 10,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  },
+  {
+   "name": "pogo pads + carrier",
+   "role": "structure",
+   "protect": true,
+   "mesh": "pogo_pads_+_carrier.stl",
+   "mass_g": 6,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "PR 44 position"
+  },
+  {
+   "name": "cage (rods + nodes)",
+   "role": "cage",
+   "mesh": "cage_(rods_+_nodes).stl",
+   "material": "carbon rod",
+   "mass_g": 267.7,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py",
+   "note": "system pass v2 pass 1: 116 x 3.0 rods, printed nodes; F frame model"
+  },
+  {
+   "name": "catch wheels",
+   "role": "cage",
+   "mesh": "catch_wheels.stl",
+   "mass_g": 1.6,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "v2 pass 1",
+   "source": "nox/scout/v3/layout_v2.py"
+  }
+ ]
+}

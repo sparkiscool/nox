@@ -66,8 +66,10 @@ TAB_HZ = 11.0                     # tab z +-11 (22 wide: the 13 wide blades + th
 TRAVEL = 4.0
 BOLT_Y0, BOLT_T, BOLT_HZ = 6.5, 5.0, 9.0      # bar = bolt section: y 6.5..11.5, z +-9 (18 wide, the grip pull lever)
 BOLT_Y1 = BOLT_Y0 + BOLT_T                   # 11.5
-OVERLAP = 2.5                     # bolt into the pocket past the locating face (v4 3.0; head offset +-1.0 keeps 0.2 to spare)
-UNDER = math.radians(10.0)        # bolt underside undercut over the overlap: pull-out drives it outward (v2)
+OVERLAP = 2.3                     # bolt into the pocket past the locating face (v4 3.0): a +-1.0 head offset still retracts
+                                  # the worst bolt 3.0, 0.4 past the 2.6 it needs (concept review 24 Oct; 2.5 left 0.2)
+UNDER = math.radians(15.0)        # bolt underside undercut (v2 10): pull-out drives it outward; at 15 deg the 1 g share alone
+                                  # (wedge + friction) plus the spring holds a bolt against its own 35 g inertia (side hit)
 TIP_CH = 1.0                      # 45 deg chamfer on the bolt tip's top outer edge (rides the feet lead-in)
 GP_YC, GP_H, GP_W, GP_D, GP_TAPER, GP_CH = 4.0, 4.0, 8.0, 3.0, math.radians(5.0), 0.5   # grip pocket (J, + 0.5 mouth chamfer)
 SPR_R, SPR_YC, SPR_DEPTH = 1.6, 9.6, 4.0      # pen spring U-slot (open top, under the pack): o 3.2, 4 deep per tab
@@ -235,11 +237,18 @@ def xt60_male(g):
 Y_RB = 0.2                         # block bottom 0.2 over the flat bottom (bays: 1.7 to the heads' r 98.5)
 CAP, LEAD = 3.0, math.radians(30.0)
 HCAP = CAP / math.tan(LEAD)        # 5.20
-FOOT_T, END_T, DECK_T = 4.0, 4.0, 3.0
+FOOT_T, DECK_T = 4.0, 3.0
+END_T_BY = {"scout": 4.0, "overseer": 10.0}      # end plates (FE v1: the Overseer +-z crash)
+DECK_END_BY = {"scout": 6.0, "overseer": 30.0}  # deck kept solid this far in from each pack end (FE v1: the end plate
+                                                # bends the deck strip beside the window)
+LEG_L = 16.0                                    # side frame end legs, z (FE v1: 50 N on a foot)
+MID_MOUNT = {"scout": False, "overseer": True}   # bosses at the tab line too: the Overseer's 257 N pull-out goes pocket ->
+                                                  # leg -> boss, not along a 163 span (concept review 24 Oct); the Scout's
+                                                  # tab-line boss would sit under the FC corner (1.9, +-25.5)
 PLATE_T_BY = {"scout": 2.5, "overseer": 3.0}   # side plate: root bending in the 35 g side hit (hand calc)
-PK_GAP = 0.55                      # pocket floor over the lead-in top (v4)
-REST_GAP = 0.55                    # bolt underside over the floor at the seat: >= the 10 deg floor's rise over the
-                                   # retract path (2.8 tan 10 = 0.49), so a seated bolt slides in free (hard-stop seat)
+PK_GAP = 0.3                       # pocket floor over the lead-in top (v4 0.55)
+REST_GAP = round((OVERLAP + 0.3) * math.tan(UNDER) + 0.05, 2)   # bolt underside over the floor at the seat: >= the
+                                   # floor's rise over the retract path (2.6 tan 15 = 0.70), so a seated bolt slides in free
 PK_WALL = 3.0
 BOSS_R, INS_D, INS_DEPTH = 5.0, 4.0, 6.7      # M3 x 5.7 heat-set, hole o 4.0 x 6.7, boss o 10 (wall 3.0)
 LID_T = 4.0
@@ -261,7 +270,9 @@ def rgeom(g):
     r["Y_M"] = r["Y_DK1"] + LID_T                           # mounting plane = lid top = boss tops
     r["Z_E0"], r["Z_E1"] = -0.3, g["L_C"] + 0.3
     r["BX"] = rf + 5.3                                      # boss / lid bolt x (v4 25.6 on the Scout)
-    r["MOUNT"] = [(sx * r["BX"], z) for sx in (-1, 1) for z in (r["Z_E0"] - END_T + BOSS_R, g["Z_X"])]   # closed end flush
+    r["END_T"] = END_T_BY[g["pack"]]
+    zs_m = [r["Z_E0"] - r["END_T"] + BOSS_R, g["Z_X"]] + ([g["Z_T"]] if MID_MOUNT[g["pack"]] else [])
+    r["MOUNT"] = [(sx * r["BX"], z) for sx in (-1, 1) for z in zs_m]   # closed end flush
     # with the end face; at the lead end the two lid bolts are the mount bolts (through partner + lid into the deck inserts)
     r["Y_XM"] = g["Y_XF_FACE"] + 1.5
     r["PKX_XW"], r["PKX_ZW"] = XM_FW / 2 + FLOAT, XM_FD / 2 + FLOAT
@@ -281,6 +292,7 @@ def pocket_cut(r):
 def receiver(r, clip=None):
     """receiver latch block v1, +x half drawn then mirrored (the XT60 parts are symmetric in x but for nothing)."""
     rf, xw, zt = r["RF"], r["XW"], r["Z_T"]
+    END_T = r["END_T"]
     z0, z1 = r["Z_E0"] - END_T, r["Z_E1"] + END_T
     parts = []
     for s in (-1, 1):
@@ -314,7 +326,7 @@ def receiver(r, clip=None):
         a0, a1 = sorted((s * (r["X_IN"] - 1.6), s * rf))
         cuts.append(box(a0, a1, r["Y_DK0"] - 1, r["Y_DK0"] + STRIP_REC, r["Z_P0"] - 1, r["Z_P1"] - 1))   # strip recesses
     wx = r["X_IN"] - 2.5
-    cuts.append(box(-wx, wx, r["Y_DK0"] - 1, r["Y_DK1"] + 1, r["Z_P0"] + 2, r["Z_P1"] - 2))               # deck window
+    cuts.append(box(-wx, wx, r["Y_DK0"] - 1, r["Y_DK1"] + 1, r["Z_P0"] + DECK_END_BY[r["pack"]], r["Z_P1"] - DECK_END_BY[r["pack"]]))   # deck window
     cuts.append(box(-r["PKX_XW"], r["PKX_XW"], r["Y_XM"], r["Y_DK1"] + 10, zx - r["PKX_ZW"], zx + r["PKX_ZW"]))
     cuts.append(box(-8.5, 8.5, 0.0, r["Y_XM"] + 0.01, zx - 4.8, zx + 4.8))                                   # plug / male path
     for (bx, bz) in r["MOUNT"]:
@@ -324,7 +336,7 @@ def receiver(r, clip=None):
     # side frame (DEFAULT, mass): a top band (rails' locating face) full length and three legs down to the feet per side
     # (both ends and the latch leg); the feet lead-ins at those stations capture the rigid cartridge
     wy0, wy1 = Y_RB - 1.0, r["RAIL_Y0"] - 2.0
-    for (za, zb) in ((r["Z_E0"] + 10.0, zt - r["PK_HZ"] - PK_WALL - 2), (zt + r["PK_HZ"] + PK_WALL + 2, r["Z_E1"] - 10.0)):
+    for (za, zb) in ((r["Z_E0"] + LEG_L, zt - r["PK_HZ"] - PK_WALL - 2), (zt + r["PK_HZ"] + PK_WALL + 2, r["Z_E1"] - LEG_L)):
         if zb - za > 8:
             for s in (-1, 1):
                 a0, a1 = sorted((s * (rf - 0.5), s * (xw + 1)))
@@ -439,6 +451,9 @@ def pack_body(g):
 
 # ======================================================================== tab line on the swap CG
 SPRING_G, MAG_G = 0.3, 0.06          # pen spring, o 2 x 2 magnet (E)
+SPRING_K, SPRING_FREE = 0.20, 20.0  # o 3 compression spring, music wire 0.3, mean o 2.7, ~20 active coils: solid ~6.6 under the
+                                    # 8.0 squeezed length, 671 MPa at 2.4 N (E, DEFAULT; a stiffer o 3 spring goes solid)
+MU = 0.3                            # PETG on PETG (E)
 
 def swap_cg(g):
     """mass (g) and z of the swap assembly (pack + plug + cartridge + 2 sliders + spring + magnets), cartridge coords."""
@@ -551,6 +566,48 @@ def grip_checks(B):
     return res
 
 
+def asym_squeeze(B, off=1.0):
+    """head offset `off` in x: the coupled fingers close about x = off, the tabs meet at x = off, so one slider retracts
+    TRAVEL - off and the other TRAVEL + off. Overlaps (mm3) and the worst bolt's tip vs the locating face (C)."""
+    g = B["g"]; R = B["recv"] + B["lid"] + B["strips"] + B["male"]; C = B["cart"]
+    a, b = slider(g, TRAVEL - off, 1), slider(g, TRAVEL + off, -1)
+    tip_in = (TRAVEL - abs(off)) - OVERLAP               # how far the short-stroke bolt's tip sits inside the locating face
+    A = C + xt60_female(g) + a + b
+    pull = 0.0
+    for k in range(0, 51, 2):
+        pull = max(pull, vol(A.translate([0, -k, 0]) ^ R))
+    return dict(off=off, retract=[TRAVEL - off, TRAVEL + off], vs_cart=round(max(vol(a ^ C), vol(b ^ C)), 3),
+                vs_recv=round(max(vol(a ^ R), vol(b ^ R)), 3), vs_each=round(vol(a ^ b), 3),
+                tip_inside_face_mm=round(tip_in, 2), pull_out_mm3=round(pull, 3))
+
+
+# ======================================================================== latched-state read (hall under the tab magnet)
+BR_N52 = 1.45                          # T (E)
+
+def mag_by(px, py, pz, mx, my, mz, d=MAG_D, h=MAG_DEPTH, n=48):
+    """B_y (mT) at a point from a o d x h axially (y) magnetised N52 cylinder centred (mx, my, mz): two charged discs."""
+    rr = (np.arange(n) + 0.5) / n * d / 2
+    th = (np.arange(n) + 0.5) / n * 2 * math.pi
+    R_, T_ = np.meshgrid(rr, th, indexing="ij"); dA = (d / 2 / n) * (2 * math.pi / n) * R_
+    xs, zs = mx + R_ * np.cos(T_), mz + R_ * np.sin(T_)
+    by = 0.0
+    for sgn, yy in ((1, my + h / 2), (-1, my - h / 2)):
+        rx, ry, rz = px - xs, py - yy, pz - zs
+        r3 = (rx ** 2 + ry ** 2 + rz ** 2) ** 1.5
+        by += sgn * float((ry / r3 * dA).sum())
+    return BR_N52 / (4 * math.pi) * by * 1000.0
+
+def hall_read(g, hall=(7.0, -1.5)):
+    """the head's hall (unipolar, DRV5032-class, E) at x 7.0, 1.5 under the flat bottom, z on the magnet: B_y in mT for the
+    tab magnet latched (x 7), half in (bolt on the plate face, retract OVERLAP + 0.3) and squeezed (x 3)."""
+    zm = g["Z_T"] + MAG_Z; my = MAG_DEPTH / 2
+    st = {"latched": 0.0, "half_in": OVERLAP + 0.3, "squeezed": TRAVEL}
+    out = {k: round(abs(mag_by(hall[0], hall[1], zm, MAG_X - v, my, zm)), 1) for k, v in st.items()}
+    out["threshold_mT"] = round((out["latched"] + out["half_in"]) / 2, 1)
+    out["hall_at"] = [hall[0], hall[1], round(zm, 2)]
+    return out
+
+
 # ======================================================================== hand calc (E loads, dimensions L / I)
 G0 = 9.81
 ALLOW = dict(functional=10.8, misuse=17.3)    # MPa at index 1.0 (hook latch convention: SF 4 / 2.5 on PETG, E)
@@ -624,12 +681,17 @@ def hand_calc(B):
     out["slider_inertia_35g_N"] = round(m_sl * 35 * G0, 2)
     out["bolt_friction_lock_corner_N"] = round(0.3 * cases["crash 35 g corner (-y share 35/sqrt3)"]["per_bolt_N"], 1)
     # spring / release
-    k_spr, free = 0.17, 20.0
+    k_spr, free = SPRING_K, SPRING_FREE
     gap_rest = 2 * TAB_IN + 2 * SPR_DEPTH
     out["spring"] = dict(rate_N_mm=k_spr, free_mm=free, rest_N=round(k_spr * (free - gap_rest), 2),
                          squeezed_N=round(k_spr * (free - (gap_rest - 2 * TRAVEL)), 2), length_squeezed_mm=gap_rest - 2 * TRAVEL)
-    fr = 0.3 * W1 / 2 + W1 / 2 * math.tan(UNDER)
+    fr = MU * W1 / 2 + W1 / 2 * math.tan(UNDER)
     out["release_force_per_finger_N"] = round(out["spring"]["squeezed_N"] + fr, 2)
+    # side hit along x (35 g): the inboard slider's inertia against the spring + its share of the 1 g hang (wedge + friction)
+    hold = out["spring"]["rest_N"] + fr
+    out["side_hit_slider"] = dict(inertia_N=out["slider_inertia_35g_N"], hold_N=round(hold, 2),
+                                  ratio=round(hold / out["slider_inertia_35g_N"], 2),
+                                  note="the outboard bolt is pushed further in; worst case one bolt transiently, never both")
     # side hit: rails bear on the side plate near the deck; plate root bending per mm of length, and the overturning
     # couple carried by the bolts (vertical) and the deck strips
     q = 35 * W1 / g["L_C"]; Mp = q * (r["Y_DK0"] - (g["Y_TOP"] - 5.0)); s_p = 6 * Mp / r["PLATE_T"] ** 2
@@ -831,6 +893,45 @@ def overseer_fit(x_tab=-30.0, lead_aft=True, log=print):
     return res, fit_pairs, T
 
 
+# ======================================================================== Scout v3 system (pass 1 snapshot + this set)
+SCOUT_SYS = os.path.join(OUT, "scout_v3_pass1", "scout.assembly.json")
+
+def scout_system(log=print):
+    """system_check on the Scout v3 system pass 1 assembly (snapshot of branch claude/gracious-darwin-ogidvp, its PR 44
+    receiver, cartridge, pack and XT60E1-M removed) with this latch set posed by T_dc."""
+    import system_check as sc
+    man = json.load(open(SCOUT_SYS)); base = os.path.dirname(SCOUT_SYS)
+    for p in man["parts"]:
+        if "mesh" in p: p["mesh"] = os.path.join(base, p["mesh"])
+    B = build("scout"); g = B["g"]; T = T_dc(g)
+    def P(nm, m, role, mat=None, mass=None, swap=False, tag="M"):
+        d = dict(name=nm, trimesh=tm(m, T), role=role, tag=tag, protect=True)
+        if mat: d["material"] = mat
+        if mass is not None: d["mass_g"] = mass
+        if swap: d["swap"] = True
+        return d
+    man["parts"] += [P("pack", pack_body(g), "protected", mass=g["m"] - g["m_plug"], swap=True, tag="P"),
+                     P("xt60_plug", xt60_female(g), "bought", mass=g["m_plug"], swap=True, tag="E"),
+                     P("cartridge", B["cart"], "protected", "PETG", swap=True),
+                     P("slider_px", slider(g, 0, 1), "protected", "PETG", swap=True),
+                     P("slider_nx", slider(g, 0, -1), "protected", "PETG", swap=True),
+                     P("receiver", B["recv"], "protected", "PETG"), P("receiver_lid", B["lid"], "protected", "PETG"),
+                     P("receiver_strips", B["strips"], "structure", "TPU"), P("xt60e1m", B["male"], "bought", mass=6.0, tag="E")]
+    man["contact_pairs"] += [["cartridge", "receiver_strips", 5.0], ["pack", "cartridge", 1.0], ["xt60_plug", "cartridge", 5.0],
+                             ["xt60e1m", "receiver", 5.0], ["xt60e1m", "receiver_lid", 5.0], ["receiver_strips", "receiver", 5.0],
+                             ["xt60_plug", "xt60e1m", 1.0]]
+    man["openings"] = [dict(part=n, axis=[0, 0, -1], half_angle_deg=20.0, min_mm=0.0)
+                       for n in ("cartridge", "pack", "slider_px", "slider_nx")]
+    res = sc.run(man)
+    mine = {"pack", "xt60_plug", "cartridge", "slider_px", "slider_nx", "receiver", "receiver_lid", "receiver_strips", "xt60e1m"}
+    clash = [(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in res["fit"]["pairs"]
+             if not p_["pass_"] and ({p_["a"], p_["b"]} & mine)]
+    cf = res["cage_first"]["per_part"]
+    log("scout v3 system: " + res["summary"])
+    return dict(summary=res["summary"], clashes=clash, balance=res.get("balance"),
+                cage_first={k: cf[k]["min_margin_mm"] for k in cf if k in mine | {"flow MTF-02P", "camera", "pogo pads + carrier"}})
+
+
 # ======================================================================== main
 def solid(mesh):
     from solid_check import solid_check
@@ -869,6 +970,14 @@ def main():
         R["insert_free_off0.3"] = dict(cart_vs_recv_mm3=wc1, stuck=[d for d, rr in rows1 if None in rr])
         R["bearing_drop"] = bearing_drop(B)
         R["grip"] = grip_checks(B)
+        R["asym_squeeze"] = [asym_squeeze(B, 1.0), asym_squeeze(B, -1.0)]
+        R["hall"] = hall_read(g)
+        import battery_latch_topo as BLT
+        fe = BLT.fe_v1(pack, 1.0, log=lambda s_: None)
+        R["fe_v1"] = dict(worst=fe["worst"], worst_case=fe["worst_case"], worst_at=fe["worst_at"],
+                          crash_worst=max(max(x["inlayer"], x["across"]) for x in fe["rows"] if x["case"].startswith("crash")),
+                          rows={x["case"]: max(x["inlayer"], x["across"]) for x in fe["rows"]})
+        log(f"  FE v1 (h 1.0): worst {fe['worst']} in {fe['worst_case']}; crash worst {R['fe_v1']['crash_worst']}")
         R["plug_vs_male_seat_mm3"] = ov(xt60_female(g), B["male"])
         hc = hand_calc(B); R["hand_calc"] = hc
         rx, pts, ctr = reactions(B, hc); R["reactions"] = rx; R["mount_pts"] = pts
@@ -895,16 +1004,19 @@ def main():
         log(f"  hand calc worst index {hc['worst_index']}; grip pull {hc['grip_pull']}")
         R["prints"] = save_prints(B, pack, log)
         R["system_manifest"] = write_manifest(B, pack)
-    # Overseer: pose in the seeded Overseer assembly under its system DEFAULT B (pack / tab line 30 behind the thrust axis)
-    try:
-        man = json.load(open(OV_ASM)); xt = float(man["cg_ref"][0]) - 30.0
-        ores, fp, _ = overseer_fit(x_tab=xt)
-        res["overseer"]["overseer_assembly_fit"] = dict(x_tab=xt, summary=ores["summary"],
-                                                        pairs=[(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in fp if not p_["contact"]],
-                                                        balance=ores.get("balance"))
-        log("overseer in overseer.assembly.json (B): " + ores["summary"])
-    except Exception as e:                                                   # the Overseer file is the Overseer chat's
-        res["overseer"]["overseer_assembly_fit"] = dict(error=str(e))
+    res["scout_system"] = scout_system(log)
+    # Overseer: posed in the Overseer assembly on main, pack on the thrust axis (Overseer DEFAULT A) and 30 behind (alt B)
+    man = json.load(open(OV_ASM))
+    for lab, dx in (("A", 0.0), ("B", -30.0)):
+        try:
+            xt = float(man["cg_ref"][0]) + dx
+            ores, fp, _ = overseer_fit(x_tab=xt)
+            res["overseer"][f"overseer_assembly_{lab}"] = dict(
+                x_tab=xt, summary=ores["summary"], balance=ores.get("balance"),
+                pairs=[(p_["a"], p_["b"], p_["overlap_mm3"]) for p_ in fp if not p_["contact"] and p_["overlap_mm3"] > 0.5])
+            log(f"overseer in overseer.assembly.json ({lab}): " + ores["summary"])
+        except Exception as e:                                               # the Overseer file is the Overseer chat's
+            res["overseer"][f"overseer_assembly_{lab}"] = dict(error=str(e))
     with open(os.path.join(OUT, "result.json"), "w") as f: json.dump(res, f, indent=1, default=float)
     with open(os.path.join(OUT, "log.txt"), "w") as f: f.write("\n".join(log_lines) + "\n")
     return res

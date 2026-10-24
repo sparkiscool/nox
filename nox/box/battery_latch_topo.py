@@ -104,41 +104,67 @@ def bodies(pack):
     return dict(B=B, g=g, r=r, D=D, drawn=drawn, cuts=cuts, env=env, yt=yt, zs=zs)
 
 
+def add_cases(p, Q, h, reg=lambda m: m):
+    """supports and the L load cases on Part p; reg maps each region (identity for the topology run, ^ the v1 mesh for
+    the as-drawn FE check)."""
+    g, r, D = Q["g"], Q["r"], Q["D"]
+    seats = U(*[cyl("y", bx, bz, BOSS_D / 2, (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) - 1.5 * h,
+                    (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) + 1.0) for (bx, bz) in r["MOUNT"]])
+    p.support("default", reg(seats))
+    W = g["SWAP_M"] / 1000 * G0
+    pk = U(*D["pocket"])
+    floors = U(*[box(*sorted((s * r["RF"], s * (r["RF"] + r["PK_D"]))), r["PK_Y0"] - 1.5, r["PK_Y0"],
+                     r["Z_T"] - r["PK_HZ"], r["Z_T"] + r["PK_HZ"]) for s in (-1, 1)]) ^ pk
+    locp = U(*[m for m in D["loc"] if m.bounding_box()[0] > 0]); locn = U(*[m for m in D["loc"] if m.bounding_box()[0] < 0])
+    stop = U(*D["stop"]); end0, end1 = D["endpad"]
+    lips = U(*D["xt60"])
+    fn = "flight"                                                  # SF 4 (topo.material); crashes misuse SF 2.5
+    floors, locp, locn, stop, end0, end1, lips = [reg(m) for m in (floors, locp, locn, stop, end0, end1, lips)]
+    p.load("hover 1 g", floors, (0, -W, 0), cls=fn)
+    p.load_multi("flight 4 g + 2 g x", [(floors, (0, -4 * W, 0)), (locp, (2 * W, 0, 0))], cls=fn)
+    p.load("catch 6 g", floors, (0, -6 * W, 0), cls=fn)
+    p.load("crash 35 g -y", floors, (0, -35 * W, 0))
+    p.load("crash 35 g +y", stop, (0, 35 * W, 0))
+    p.load("crash 35 g +x", locp, (35 * W, 0, 0))
+    p.load("crash 35 g -x", locn, (-35 * W, 0, 0))
+    p.load("crash 35 g +z", end1, (0, 0, 35 * W))
+    p.load("crash 35 g -z", end0, (0, 0, -35 * W))
+    c = 35 * W / math.sqrt(3)
+    p.load_multi("crash corner (+x -y +z)", [(floors, (0, -c, 0)), (locp, (c, 0, 0)), (end1, (0, 0, c))])
+    p.load_multi("crash corner (-x -y -z)", [(floors, (0, -c, 0)), (locn, (-c, 0, 0)), (end0, (0, 0, -c))])
+    p.load_multi("swap insert 60 N", [(lips, (0, 45.0, 0)), (stop, (0, 15.0, 0))], cls=fn)
+    p.load("swap pull 50 N", lips, (0, -45.0, 0), cls=fn)
+    p.load("handling 50 N on a foot", reg(U(*D["feet"][:1])), (0, 0, 50.0))
+    return p
+
+
 def setup_for(pack):
     from topo import Part
 
     def setup(h):
         Q = bodies(pack)
-        g, r, D = Q["g"], Q["r"], Q["D"]
         p = Part(f"battery_receiver_{pack}", h, Q["drawn"], Q["cuts"], Q["env"], build="+z", material="PETG")
-        seats = U(*[cyl("y", bx, bz, BOSS_D / 2, (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) - 1.5 * h,
-                        (r["Y_DK1"] if abs(bz - r["Z_X"]) < 1e-6 else r["Y_M"]) + 1.0) for (bx, bz) in r["MOUNT"]])
-        p.support("default", seats)
-        W = g["SWAP_M"] / 1000 * G0
-        pk = U(*D["pocket"])
-        floors = U(*[box(*sorted((s * r["RF"], s * (r["RF"] + r["PK_D"]))), r["PK_Y0"] - 1.5, r["PK_Y0"],
-                         r["Z_T"] - r["PK_HZ"], r["Z_T"] + r["PK_HZ"]) for s in (-1, 1)]) ^ pk
-        locp = U(*[m for m in D["loc"] if m.bounding_box()[0] > 0]); locn = U(*[m for m in D["loc"] if m.bounding_box()[0] < 0])
-        stop = U(*D["stop"]); end0, end1 = D["endpad"]
-        lips = U(*D["xt60"])
-        fn = "functional"
-        p.load("hover 1 g", floors, (0, -W, 0), cls=fn)
-        p.load_multi("flight 4 g + 2 g x", [(floors, (0, -4 * W, 0)), (locp, (2 * W, 0, 0))], cls=fn)
-        p.load("catch 6 g", floors, (0, -6 * W, 0), cls=fn)
-        p.load("crash 35 g -y", floors, (0, -35 * W, 0))
-        p.load("crash 35 g +y", stop, (0, 35 * W, 0))
-        p.load("crash 35 g +x", locp, (35 * W, 0, 0))
-        p.load("crash 35 g -x", locn, (-35 * W, 0, 0))
-        p.load("crash 35 g +z", end1, (0, 0, 35 * W))
-        p.load("crash 35 g -z", end0, (0, 0, -35 * W))
-        c = 35 * W / math.sqrt(3)
-        p.load_multi("crash corner (+x -y +z)", [(floors, (0, -c, 0)), (locp, (c, 0, 0)), (end1, (0, 0, c))])
-        p.load_multi("crash corner (-x -y -z)", [(floors, (0, -c, 0)), (locn, (-c, 0, 0)), (end0, (0, 0, -c))])
-        p.load_multi("swap insert 60 N", [(lips, (0, 45.0, 0)), (stop, (0, 15.0, 0))], cls=fn)
-        p.load("swap pull 50 N", lips, (0, -45.0, 0), cls=fn)
-        p.load("handling 50 N on a foot", U(*D["feet"][:1]), (0, 0, 50.0))
-        return p
+        return add_cases(p, Q, h)
     return setup
+
+
+def fe_v1(pack, h=1.0, log=print):
+    """as-built voxel FE of the drawn receiver v1 (`battery_latch.receiver()`) on the same cases and supports, regions cut
+    to its own material: worst index per case (topo.build.strength), the number a topology v2 must beat (rule 6)."""
+    from types import SimpleNamespace as NS
+    from topo import Part
+    from topo.part import tm as ttm
+    from topo.material import MATERIALS, AXES, stiffness
+    from topo.build import strength
+    Q = bodies(pack)
+    R = Q["B"]["recv"]
+    far = box(1e4, 1e4 + 1, 0, 1, 0, 1)
+    p = Part(f"battery_receiver_{pack}_v1", h, R, far, R, build="+z", material="PETG", log=lambda s_: None)
+    add_cases(p, Q, h, reg=lambda m: m ^ R)
+    mat = MATERIALS["PETG"]; ax = AXES["+z"][0]
+    cases = [NS(name=c.name, F=c.F, cls=c.cls, support=c.support, nodes=c.nodes, tie=False, fe=None) for c in p.cases]
+    lay = NS(part=p, cases=cases, mat=mat, build_axis=ax, C=stiffness(mat, ax), solid=p.solid)
+    return strength(lay, ttm(R), log=log)
 
 
 def main():
@@ -149,8 +175,14 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--git", action="store_true")
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--fe-v1", action="store_true", help="as-built FE of the drawn receiver v1 on the same cases")
     ap.add_argument("--time", type=float, default=5.5 * 3600)
     a = ap.parse_args()
+    if a.fe_v1:
+        import json
+        res = fe_v1(a.pack, a.h)
+        print(json.dumps(res, indent=1))
+        return
     if a.check:
         from topo.layout import Layout, Settings
         p = setup_for(a.pack)(2.0 * a.h)
