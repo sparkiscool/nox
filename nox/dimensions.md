@@ -200,7 +200,7 @@ Each case acts at the CG of the mass it moves (a mount carries its payload's mas
 | Breaking order | in the crash case the frame, every mount and the pack holder stay at ≤ 1 / 1.5 of the worst cage node or foot index (the node goes first) | DEFAULT |
 | Index target | worst as-built index ≤ 1.0 in the crash case, ≤ 0.5 in flight and landing | DEFAULT |
 
-**Mass budget (24 Oct; light is priority 1).** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section; each piece's topology mass target is its slot; `system_check` reports a system over `mass_budget_g` or a part over its `budget_g` as an "over budget" WARN, never a FAIL (soft limit, Spark 24 Oct: as low as we can, never sacrifice design for weight). A slot moves only with the same total (one `log.md` line).
+**Mass budget (24 Oct; soft, Spark: "as low as we can but never sacrifice design for weight").** The system pass splits each structure allowance into a `budget_g` per printed piece in its "System <name>" section as a target, not a limit: each piece's topology aims at its slot, but strength, stiffness, cage first, access and function come first. `system_check` reports mass against `mass_budget_g` / `budget_g` and warns when over; it never fails on mass. An over-budget piece says in its summary what the extra grams buy.
 
 | System | Whole (`mass_budget_g`) | Bought, fixed | Structure allowance (printed + rods + fasteners) | Tag |
 |---|---|---|---|---|
