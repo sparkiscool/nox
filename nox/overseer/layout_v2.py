@@ -278,8 +278,15 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     lens.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); lens.apply_translation([5, 0, 0])
     cam = trimesh.util.concatenate([board, lens]); Rc[:3, 3] = C; cam.apply_transform(Rc); g["cam"] = cam
     g["cam_lens"] = C + fwd * 9
-    cb = hull(box(-1.5, -0.5, -12, 12, -20, 20).apply_transform(Rc), back.copy())
-    g["cam_bracket"] = cb
+    # camera bracket: a 3 thick printed plate behind the board on three 3.0 rods down to the apex block (Spark 24 Oct:
+    # 3 mm rods wherever they do the job)
+    plate = box(-4.5, -1.5, -20, 20, -20, 20).apply_transform(Rc)
+    to_w = lambda v: (Rc @ np.array([*v, 1.0]))[:3]
+    cam_rods = [(to_w((-3.0, sy * 16.0, -19.0)), B - A * 8 + up_b * 20 + np.array([0, sy * 16.0, 0])) for sy in (1, -1)]
+    cam_rods.append((to_w((-3.0, 0.0, -19.0)), B - A * 11 + up_b * 20))
+    g["cam_rods"] = cam_rods
+    g["cam_plate"] = plate
+    g["cam_bracket"] = trimesh.util.concatenate([plate] + [rod(a, b) for a, b in cam_rods])
     return g
 
 
@@ -308,10 +315,10 @@ def cg_of(g):
     items += [(f"motor + prop {i}", 81 + 10, m) for i, m in enumerate(g["motors"])]
     items += [(f"ESC {i}", 25, g["arms"][i]) for i in range(4)]                  # on the arms (model open, E)
     items += [(f"wheel {i}", 0.25, w) for i, w in enumerate(g["wheels"])]
-    for k, (a, b) in g["rods"].items():                                       # 3.0 carbon, 11.0 g/m (C)
+    for k, (a, b) in list(g["rods"].items()) + [(f"cam rod {i}", r) for i, r in enumerate(g["cam_rods"])]:   # 3.0 carbon, 11.0 g/m (C)
         L = float(np.linalg.norm(np.subtract(b, a))); items.append((k, L * ROD_GPM, trimesh.points.PointCloud([np.add(a, b) / 2])))
     printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("ring nodes", g["ring_nodes"], 0.5), ("apex", [g["apex"]], 0.45),
-               ("cam bracket", [g["cam_bracket"]], 0.5),
+               ("cam plate", [g["cam_plate"]], 0.5),
                ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5),
                ("cartridge", [g["cart"]], 0.04)]
     tot, mom = 0.0, np.zeros(3)
