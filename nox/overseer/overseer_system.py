@@ -338,8 +338,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
-             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "skirt": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
+             z_rhub=-6.6, z_skirt=-4.0, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
@@ -556,7 +556,14 @@ if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 
         for sx, (y0, y1) in ((1, (-35.0, 69.0)), (-1, (-69.0, 35.0))):
             sel = (z__ > X_EDGE_Z) & (z__ < PROBE_Z) & (q__[:, 1] > y0) & (q__[:, 1] < y1) & (sx * q__[:, 0] > 0)
             if sel.any(): g8__ = min(g8__, float(((z__[sel] + FACE_C - sx * q__[sel, 0]) / math.sqrt(2)).min()))
-        print(f"  {nm__}: below the edges {worst__:+.1f}, G8 {g8__:.1f}")
+        fd__ = np.inf
+        for ax, z0 in ((0, X_EDGE_Z), (1, Y_EDGE_Z)):
+            for sg in (1, -1):
+                x__ = sg * q__[:, ax]; in_ = (z__ > z0) & (z__ < FACE_TOP) & (np.abs(q__[:, 1 - ax]) < FACE_C + z__)
+                if in_.any():
+                    v__ = (z__ + FACE_C - x__) / math.sqrt(2); v__[~in_] = np.inf; k__ = int(np.argmin(v__))
+                    if v__[k__] < fd__: fd__ = float(v__[k__]); at__ = q__[k__] - [TIP_OFF - dmd_, 0, SEAT_DZ]
+        print(f"  {nm__}: below the edges {worst__:+.1f}, G8 {g8__:.1f}, faces {fd__:.1f}" + (f" at drone {np.round(at__, 1).tolist()}" if np.isfinite(fd__) else ""))
     print("camera x arms", [round(overlap(g_["cam"], a__), 1) for a__ in g_["cam_arms"]], "camera x apex", round(overlap(g_["cam"], g_["apex"]), 1),
           "camera x lugs+seat", round(overlap(g_["cam"], union([c__ for c__ in [g_["apex"]]])), 1))
     sys.exit(0)
