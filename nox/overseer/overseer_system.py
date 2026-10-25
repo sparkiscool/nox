@@ -35,8 +35,9 @@ if SYS_PICK:
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
+SKID_Y = 73.0                                                  # skid sides (legs, rails, X braces, basket rail) outside the pods, inside the funnel opening
 CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush cap: 15 thick (10 stroke + 5 crushed), Ø24; the feet pads give 6 (DEFAULT)
-SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "60"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
+SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "85"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
                                                                # skid X braces and basket rails (Spark 25 Oct: more bottom structure by the battery; was 90)
 MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
                                                               # the mast stands there when the thrust centre is further back
@@ -266,14 +267,14 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     xb_ = g["xt60"].bounds
     g["sled"] = g["sled"].difference(box(xb_[0][0] - 1, xb_[1][0] + 1, xb_[0][1] - 1, xb_[1][1] + 1, RT - 1, RT + 5))   # XT60 lead window (its top stands 3.5 over the mount plane)
     g["sled"] = g["sled"].difference(union([cyl(4.5, RT - 1, RT + 5, *xy_) for xy_ in plate_bolts("bottom")]))   # driver holes under the bottom plate bolts (as the pan)
-    g["cam_pod"] = box(-dc - 23, -dc + 23, 33.6, 72.5, PB + 16, RT)
+    g["cam_pod"] = box(-dc - 23, -dc + 23, 29.1, 68.0, PB + 16, RT)                 # 4.5 inboard: the skid side frames pass outside it
     g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
     _bh = union([cyl(4.5, PB - 1.0, RT + 5.0, *xy_) for xy_ in plate_bolts("bottom")])   # driver holes under the bottom plate bolts through the pods
     g["cam_pod"] = g["cam_pod"].difference(_bh); g["flow_pod"] = g["flow_pod"].difference(_bh)   # (as the pan and the sled)
     for sy_ in (1, -1):                                                        # cable channels: down camera and flow leads up through their pods and the sled
         ch_ = box(-dc - 3, -dc + 3, sy_ * 41 - 3, sy_ * 41 + 3, PB + 15, RT + 5)
         g["cam_pod" if sy_ > 0 else "flow_pod"] = g["cam_pod" if sy_ > 0 else "flow_pod"].difference(ch_); g["sled"] = g["sled"].difference(ch_)
-    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 34, 72, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 53)])
+    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 29.5, 67.5, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 48.5)])
     g["down_lens"] = np.array([-dc, 53.0, PB + 6]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -58, -36, PB + 9.5, PB + 16)
     g["flow_lens"] = np.array([-dc, -47.0, PB + 9.5])
     # skid runners: printed PETG sleeves on the skid rails (cage), the lowest points with the feet: a side edge reaching
@@ -285,7 +286,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["runners"] = [union([box(-dc - 83.5, -dc + 83.5, 62 if sy > 0 else -74, 74 if sy > 0 else -62, PB - 17, PB + 12),     # sleeve on the skid rail, to ±83.5: past the set's ends (±86 cartridge) inside the opening at ±5 deg yaw
                            box(-dc - 83.5, -dc + 83.5, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 26)])     # outer lip: shields the camera board / flow window edge (to 10 over the board: a side edge 15..60 deg up meets it first)
                     for sy in (1, -1)]
-    g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 77, sy * 66) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
+    g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 77, sy * SKID_Y) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     # keep-alive pads (G (6)): one per ±x lower-ring face, 2.0 off the face at the probe height, over the probe pair
     # (+x: y +12 / +22 = B+, -x: y -12 / -22 = B-), on the wheel ring rod; 3 thick
     pads = []
@@ -352,7 +353,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=max(dm, MAST_X_MIN), x_mast=max(dm, MAST_X_MIN), z_mast=float(WHEEL_Z),
-             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "skirt": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
+             feet=(77.0, SKID_Y, float(g["PB"]) - 3.5), belly=(77.0, SKID_Y), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "skirt": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
              z_rhub=-1.0, z_skirt=-4.0, z_fhub=12.0, x_rhub=-100.0)   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
                                                                     # stay above the funnel top and out of the plate (DEFAULT 25 Oct; under the plate they reached the funnel lip)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
