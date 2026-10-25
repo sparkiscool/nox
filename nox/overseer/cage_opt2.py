@@ -34,7 +34,7 @@ Cases (dimensions L, DEFAULT unless tagged) and limits:
   The worst rod index is reported beside it.
 Objective: cage mass (rods + printed nodes + arm spars); 3.0 solid wherever it passes.
 """
-import json, math, os, sys, itertools
+import json, math, os, re, sys, itertools
 import numpy as np
 import scipy.linalg as sla
 
@@ -387,11 +387,20 @@ def _geometry(p, topo, sizes=None):
                 short_ = np.linalg.norm(N[chain[i_ + 1]] - N[chain[i_]]) < CARBON_MIN
                 mem(f"mast {i_}", chain[i_], chain[i_ + 1], "pyramid", "link" if short_ else "rod")
     join_crossings(N, M)
-    for i_, (nm_, a_, b_, grp_, kd_) in enumerate(M):                  # carbon break-even (CLAUDE.md): a piece under 33 between printed parts
-        if kd_ == "rod" and np.linalg.norm(N[b_] - N[a_]) < CARBON_MIN:   # is printed with them (a 6 x 6 or larger strut), never carbon
+    rod_len = {}                                                      # carbon break-even (CLAUDE.md) per physical rod: a rod runs on through its
+    for nm_, a_, b_, grp_, kd_ in M:                                  # cross nodes (the split pieces x1 / x2, j1 / j2, the spine a / b at the mast
+        if kd_ == "rod": rod_len[carbon_rod(nm_)] = rod_len.get(carbon_rod(nm_), 0.0) + float(np.linalg.norm(N[b_] - N[a_]))   # block); one under 33
+    for i_, (nm_, a_, b_, grp_, kd_) in enumerate(M):                 # between printed parts is printed with them (a strut), never carbon
+        if kd_ == "rod" and rod_len[carbon_rod(nm_)] < CARBON_MIN:
             M[i_] = (nm_, a_, b_, grp_, "link")
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
+
+
+def carbon_rod(name):
+    """the physical carbon rod a member belongs to: its name less the cross-node split tags (x1 / x2 / j1 / j2, repeated) and the
+    spine's a / b at the mast block"""
+    return re.sub(r"( [xj][12])+$", "", re.sub(r"^(spine (?:top|lo|dg)) [ab]", r"\1", name))
 
 
 JOIN_D = 14.0                                                   # rods (or a rod and a node) closer than this would clash: one printed cross node

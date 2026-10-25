@@ -383,10 +383,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         guard_.append(rod(c_, Ng[n_], 3.0))
     g["base_guard"] = trimesh.util.concatenate(guard_)
     ring_nodes += guard_                                                                                         # (cage up: printed with the nodes)
-    HUB_N = ("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc", "SP")      # cage pieces under the 33 carbon break-even: printed struts (8 round),
-    short_ = [(a_, b_) for nm_, a_, b_, grp_, kd_ in Mg if kd_ == "link" and grp_ not in (None, "pyramid")]   # with the hub or apex block where they end
-    hub_links = [rod(Ng[a_], Ng[b_], 4.0) for a_, b_ in short_ if any(n_.startswith(HUB_N) for n_ in (a_, b_))]  # on one, else with the cage nodes
-    ring_nodes += [rod(Ng[a_], Ng[b_], 4.0) for a_, b_ in short_ if not any(n_.startswith(HUB_N) for n_ in (a_, b_))]
+    g["short_links"] = {nm_: ((a_, b_), rod(Ng[a_], Ng[b_], 4.0)) for nm_, a_, b_, grp_, kd_ in Mg if kd_ == "link" and grp_ not in (None, "pyramid")}
+    ring_nodes += [m_ for _, m_ in g["short_links"].values()]                   # cage rods under the 33 carbon break-even: printed struts (8 round)
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)
@@ -399,7 +397,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
-    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"] + hub_links)
+    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"])
     low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring", "skid_belly")]
     nose_keys = [k for k, v in rods.items() if v[3] in NOSE_GROUPS or k in ("spider nose+", "spider nose-")]
     g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
@@ -641,12 +639,13 @@ def at_dm(dm_):
     zB_ = math.ceil(l2_low_zB()); dc_ = TIP_OFF - dm_
     xB_ = solve_xB(lambda x: build(dm_, dc_, x, zB_), zB_)
     g_ = build(dm_, dc_, xB_, zB_); s_ = None
-    for _ in range(4):                                                # the crash load follows the drone mass: size, weigh, size again until it holds
+    for _ in range(6):                                                # the crash load follows the drone mass: size, weigh, size again until it holds
         s_, r_, ok_ = co.size_fsd(g_["P"], CAGE_TOPO, init=s_)
         CAGE_SIZES = s_
         m0_ = M_DRONE; g_ = build(dm_, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
-        if abs(M_DRONE - m0_) < 5.0: break
         g_ = build(dm_, dc_, xB_, zB_)
+        if abs(M_DRONE - m0_) < 5.0: break
+    r_ = co.evaluate(g_["P"], CAGE_TOPO, s_); ok_ = r_["violation"] == 0  # reported at the mass it ends with
     say(f"final: motors {dm_:.1f} ahead, cage {r_['mass_g']:.0f} g sized here, CG {cg_[0] - dm_:+.1f} in x, frame violation {r_['violation']:.3f}")
     return dict(e=float(cg_[0] - dm_), ok=ok_, dm=dm_, sizes=s_, xB=xB_, zB=zB_)
 if os.environ.get("SYS_FINAL_SIZES"):                                 # a settled design to recheck: its topology and sizes at SYS_FINAL_DM, no re-sizing
@@ -863,6 +862,7 @@ for k_, (a_, b_) in g["rod_ends"].items():
     if any(n_.startswith(J_ARM) for n_ in (a_, b_)): JOINTS["arms"].append((k_, sum(overlap(rm_, am_) for am_ in g["arms"])))
     if any(n_.startswith(J_HUB) for n_ in (a_, b_)): JOINTS["apex"].append((k_, overlap(rm_, g["apex"])))
     if k_.startswith(("skid leg", "belly bar")): JOINTS["sled"].append((k_, overlap(rm_, union([g["sled"], g["cam_pod"], g["flow_pod"]]))))
+JOINTS["apex"] += [(k_, overlap(m_, g["apex"])) for k_, ((a_, b_), m_) in g["short_links"].items() if any(n_.startswith(J_HUB) for n_ in (a_, b_))]   # printed struts seated in a hub
 JOINTS["apex"] += [("hub on the pan", sum(overlap(h_, g["pan"]) for h_ in g["hubs"]))]
 J_ALLOW = {k_: round(sum(v_ for _, v_ in js_) * 1.05 + 1.0, 1) for k_, js_ in JOINTS.items()}
 os.makedirs(OUT, exist_ok=True); json.dump({k_: [[n_, round(float(v_), 1)] for n_, v_ in js_] for k_, js_ in JOINTS.items()}, open(os.path.join(OUT, "joints.json"), "w"), indent=0)
