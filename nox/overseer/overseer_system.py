@@ -345,7 +345,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=max(dm, MAST_X_MIN), x_mast=max(dm, MAST_X_MIN), z_mast=float(WHEEL_Z),
              feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "skirt": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-6.6, z_skirt=-4.0, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
+             z_rhub=-7.0, z_skirt=-4.0, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
     sock = hsock = 0.0                                            # rod ends epoxied in printed sockets on the arms / hubs / apex, 20 deep (E)
@@ -863,8 +863,8 @@ say(f"contact allowances (per joint, M): cage/arms {len(JOINTS['arms'])} sockets
 _l2lx = np.array([0.0, -1.0, 0.0])            # L2 local x in the drone frame: rolled 90 deg about its axis so the cable notch faces left, where the
                                                # collar is 93 wide (44.5 up and down, where the nose bars sit; DEFAULT, the scan is round)
 _tz, _bz = float(TOP.bounds[1][2]), float(BOTTOM.bounds[0][2])
-ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7}),
-          dict(name="Pi 5 SD card (front end)", part="electronics", **{"from": [42.5, 0.0, 24.0]}, dir=[1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
+ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7, "w_axis": [1, 0, 0]}),
+          dict(name="Pi 5 SD card (front end)", part="electronics", **{"from": [42.5, 0.0, 24.0]}, dir=[1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3, "w_axis": [0, 1, 0]}),
           dict(name="Pi 5 USB / Ethernet end (aft, DEFAULT: the spine hub sits ahead)", part="electronics", **{"from": [-42.5, 0.0, 32.0]}, dir=[-1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
           dict(name="L2 cable (base notch 5 up the base, local -X: left)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx + A * 5.0]},
                dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),

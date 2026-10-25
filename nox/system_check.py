@@ -156,7 +156,7 @@ def cage_first(parts, meshes, openings, margin_mm, n_dirs):
         for o in openings:
             if o.get("part") not in (None, nm): continue
             ax = np.asarray(o["axis"], float); ax /= np.linalg.norm(ax)
-            req[D @ ax >= np.cos(np.radians(o["half_angle_deg"]))] = min(float(o.get("min_mm", 0.0)), margin_mm)
+            req[D @ ax >= np.cos(np.radians(o["half_angle_deg"])) - 1e-9] = min(float(o.get("min_mm", 0.0)), margin_mm)
         sl = mg - req; k = int(np.argmin(sl)); free = req == margin_mm
         per[nm] = dict(min_margin_mm=round(float(mg.min()), 2), worst_dir=[round(float(x), 3) for x in D[k]],
                        worst_slack_mm=round(float(sl[k]), 2), min_margin_outside_openings_mm=round(float(mg[free].min()), 2) if free.any() else None,
@@ -453,7 +453,7 @@ def crash_probes(parts, meshes, cfg, req_mm, openings):
                     mg = np.where(shield, hc - hp, -np.abs(hull[:, None] + r - hp))
                 mg = np.where(has, mg, np.inf)
                 for o in skip[j]:
-                    mg[dv @ _unit(o["axis"]) >= np.cos(np.radians(o["half_angle_deg"]))] = np.inf
+                    mg[dv @ _unit(o["axis"]) >= np.cos(np.radians(o["half_angle_deg"])) - 1e-9] = np.inf   # boundary included (a 90 deg cone keeps its rim)
                 sc = np.where(np.isfinite(mg) & ~shield, -1e6 - mg, mg)             # unshielded first, least reach (most exposed) first
                 t = np.unravel_index(int(np.argmin(sc)), sc.shape)
                 if sc[t] < worst[(r, j)][0]:
