@@ -42,7 +42,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | DECXIN 2633V2 camera | 3 | front pair (yaw ±46.8, Spark 24 Oct: two forward cameras on the lidar view) + underside | 1 on hand, 2 to buy | A (P), O Camera |
 | RC receiver | 1 | RC (CRSF) | CHECK (model not recorded) | |
 | Belly frame, 8 PETG wheels, pogo pads (no steel plate since 23 Oct) | 1 set | box catch (section G) | to design | G |
-| Carbon for the cage (System v3B, 25 Oct): 3.0 solid 3.2 m (+ spars), 4.0 solid 2.8 m, 5.0 solid 0.2 m, 10.0 solid 0.4 m, tubes 6/4 3.3 m, 8/6 4.9 m, 10/8 1.4 m, 10/6 0.6 m, 12/10 0.2 m, 14/12 0.4 m, 16/14 1.3 m, 20/18 1.2 m (C, before cut waste) | per the list | cage rods and arm spars | 3.0 solid on hand (length CHECK); others to buy | O System v3, G Carbon rods |
+| Carbon for the cage (System v3B, 25 Oct, 8 types): 3.0 solid 2.1 m (+ arm spars), 6/4 6.7 m, 8/6 4.4 m, 10/8 2.0 m, 10/6 0.6 m, 10.0 solid 0.4 m, 16/14 2.3 m, 20/18 1.0 m (C, before cut waste) | per the list | cage rods and arm spars | 3.0 solid on hand (length CHECK); others to buy | O System v3, G Carbon rods |
 | LM74700 ideal-diode controller board | 1 | keep-alive pad feed on the drone side (not a Schottky: its warm leakage reads "not seated" across the 10 kΩ seat sense; box electronics PR 82) | to buy | G (6) |
 
 ## Scan stick (hand-held L2 scanner, 23 Oct; `nox/overseer/scan_stick/scan_stick.md`)
