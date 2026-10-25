@@ -62,8 +62,9 @@ PROP_R, BLADE = 127.0, 5.0
 L2_TILT = 105.0                          # L2 axis turned 105 deg from +z toward +x: 15 deg below the x axis (Spark 24 Oct)
 L2_NEG = 6.0                             # scan kept clear in the 96 deg negative-angle mode (Spark 24 Oct: "account for the 15 degrees and the scan range")
 L2_BASE_H = 25.0                         # the L2 base (Spark 24 Oct): held and caged; everything above it is exposed and nothing enters the scan
-GUARD_A, GUARD_R, GUARD_T = 15.5, 41.5, 3.0   # printed base guard ring (cage): centre 15.5 up the base, 1 off its wall, 6 section; its top at 18.5 is the
-                                              # highest a ring can sit outside the 96 deg scan (1.5 clear); the base above it is exposed with the head (DEFAULT)
+GUARD_TOP, GUARD_IN, GUARD_W = 17.0, 38.5, 2.5   # printed base shroud (cage, TPU): a square sleeve 1 off the base's 75 square faces, 2.5 wall, from the
+                                                 # base plane to 17 up: its corners (r 58) are the highest it can stand outside the 96 deg scan (1.5 clear);
+                                                 # the 8 of base above it is exposed with the head (DEFAULT; a ring left a gap a sharp edge drops into)
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])   # (0.966, 0, -0.259)
 CAM_HFOV, CAM_VFOV = 73.0, 89.0          # front camera portrait, 4:3 from 102 diag (E)
 DOWN_HFOV, DOWN_VFOV = 89.0, 73.0
@@ -369,11 +370,15 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print
         h_ = max(co.node_size(od_n.get(n_, 3.0)) for n_ in mx_) / 2; q_ = np.array([Ng[n_] for n_ in mx_])
         ring_nodes.append(box(q_[:, 0].min() - h_, q_[:, 0].max() + h_, -h_, h_, q_[:, 2].min() - h_, q_[:, 2].max() + h_))
-    Tg_ = np.eye(4); Tg_[:3, :3] = np.stack([[0.0, 1.0, 0.0], co.UP_B, A], 1); Tg_[:3, 3] = B + A * GUARD_A
-    guard_ = [trimesh.creation.torus(GUARD_R, GUARD_T, major_sections=96, minor_sections=16).apply_transform(Tg_)]   # base guard ring on posts to the
-    for n_ in ("NT+1", "NT-1", "NB+1", "NB-1"):                                                                  # four collar corner nodes
-        v_ = Ng[n_] - B; v_ = v_ - (v_ @ A) * A; v_ /= np.linalg.norm(v_)
-        guard_.append(rod(B + A * GUARD_A + v_ * GUARD_R, Ng[n_], GUARD_T))
+    Tg_ = trimesh.transformations.rotation_matrix(math.radians(L2_TILT), [0, 1, 0]); Tg_[:3, 3] = B   # the L2 frame (base at z 0)
+    go_ = GUARD_IN + GUARD_W
+    sh_ = box(-go_, go_, -go_, go_, 0.0, GUARD_TOP).difference(box(-GUARD_IN, GUARD_IN, -GUARD_IN, GUARD_IN, -1.0, GUARD_TOP + 1.0))
+    sh_ = sh_.difference(box(-5.0, 5.0, GUARD_IN - 1.0, go_ + 1.0, -1.0, 10.0))                   # L2 cable slot on the left wall (local -X turned to +y)
+    guard_ = [sh_.apply_transform(Tg_)]
+    for n_ in ("NT+1", "NT-1", "NB+1", "NB-1"):                                                   # posts from the shroud corners to the four collar corner nodes
+        q_ = Ng[n_] - B; cu_, cy_ = float(q_ @ co.UP_B), float(q_[1])
+        c_ = B + co.UP_B * math.copysign(go_ - GUARD_W / 2, cu_) + np.array([0.0, math.copysign(go_ - GUARD_W / 2, cy_), 0.0]) + A * 3.0
+        guard_.append(rod(c_, Ng[n_], 3.0))
     g["base_guard"] = trimesh.util.concatenate(guard_)
     ring_nodes += guard_                                                                                         # (cage up: printed with the nodes)
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
@@ -859,7 +864,7 @@ _l2lx = np.array([0.0, -1.0, 0.0])            # L2 local x in the drone frame: r
                                                # collar is 93 wide (44.5 up and down, where the nose bars sit; DEFAULT, the scan is round)
 _tz, _bz = float(TOP.bounds[1][2]), float(BOTTOM.bounds[0][2])
 ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7}),
-          dict(name="Pi 5 SD card (front end)", part="electronics", **{"from": [42.5, 0.0, 23.5]}, dir=[1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
+          dict(name="Pi 5 SD card (front end)", part="electronics", **{"from": [42.5, 0.0, 24.0]}, dir=[1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
           dict(name="Pi 5 USB / Ethernet end (aft, DEFAULT: the spine hub sits ahead)", part="electronics", **{"from": [-42.5, 0.0, 32.0]}, dir=[-1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
           dict(name="L2 cable (base notch 5 up the base, local -X: left)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx + A * 5.0]},
                dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
@@ -904,9 +909,9 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
-    dict(name="L2 base", trimesh=g["l2"].slice_plane(g["B"] + A * (GUARD_A + GUARD_T), -A, cap=True), role="protected", mass_g=90, tag="E"),   # the base up to the guard ring top: caged
-    dict(name="L2 base top band", trimesh=g["l2"].slice_plane(g["B"] + A * (GUARD_A + GUARD_T), A, cap=True).slice_plane(g["B"] + A * L2_BASE_H, -A, cap=True),
-         role="bought", mass_g=10, tag="E"),                                                                                                  # 6.5 under the head: a guard there would sit in the scan (exposed with the head)
+    dict(name="L2 base", trimesh=g["l2"].slice_plane(g["B"] + A * GUARD_TOP, -A, cap=True), role="protected", mass_g=70, tag="E"),   # the base inside the shroud: caged
+    dict(name="L2 base top band", trimesh=g["l2"].slice_plane(g["B"] + A * GUARD_TOP, A, cap=True).slice_plane(g["B"] + A * L2_BASE_H, -A, cap=True),
+         role="bought", mass_g=30, tag="E"),                                                                                                  # 8 under the head: a guard there would sit in the scan (exposed with the head)
     dict(name="L2 head", trimesh=g["l2"].slice_plane(g["B"] + A * L2_BASE_H, A, cap=True), role="bought", mass_g=130, tag="E"),        # exposed (Spark 24 Oct: nothing in the scan)
     dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
     dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="P", swap=True),
