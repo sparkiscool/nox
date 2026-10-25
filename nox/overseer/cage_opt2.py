@@ -74,6 +74,11 @@ SECTIONS = {
     "t14": dict(A=40.84, I=867.9, J=1735.8, gpm=63.3, od=14.0, label="14/12 tube"),
     "t16": dict(A=47.12, I=1331.5, J=2663.0, gpm=73.0, od=16.0, label="16/14 tube"),
     "t20": dict(A=59.69, I=2701.0, J=5402.0, gpm=92.5, od=20.0, label="20/18 tube"),
+    # thick wall and solid at the capped ODs (prop wash 10, nose, pods): more section where a larger OD may not go (DEFAULT 25 Oct)
+    "t6h": dict(A=21.21, I=59.65, J=119.3, gpm=33.0, od=6.0, label="6/3 tube"),
+    "t8h": dict(A=37.70, I=188.5, J=377.0, gpm=58.7, od=8.0, label="8/4 tube"),
+    "t10h": dict(A=50.27, I=427.3, J=854.6, gpm=78.2, od=10.0, label="10/6 tube"),
+    "r10": dict(A=78.54, I=490.9, J=981.7, gpm=122.2, od=10.0, label="10.0 solid"),
 }
 E_C, G_C, E_P, G_P = 120000.0, 5000.0, 2780.0, 1000.0
 SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
@@ -723,20 +728,20 @@ def obstacles_for(m, e):
 
 
 def guard_caps(m):
-    """largest section index (ORDER) per rod that keeps the prop clearance (12) and the funnel clearance (1.0);
-    -1 = no section does (the layout fails)"""
+    """largest OD per rod that keeps the prop clearance (12), the funnel clearance (1.0), the motors, the obstacles and the
+    prop wash cap (every check grows with OD only); -1 = no section does (the layout fails)"""
     caps = {}
+    ods = sorted({S["od"] for S in SECTIONS.values()})
     for e in m.el:
         if e["kind"] != "rod": continue
-        cap = -1
-        for i, sec in enumerate(ORDER):
-            od = SECTIONS[sec]["od"]
+        cap = -1.0
+        for od in ods:
             if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
             if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
             if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, obstacles_for(m, e)) < 1.0: break
             if od > WASH_OD and wash_len(m.N[e["a"]], m.N[e["b"]], m.info["motors"]) >= WASH_LEN: break
-            cap = i
+            cap = od
         caps[e["name"]] = cap
     return caps
 
@@ -913,6 +918,7 @@ def groups_of(topo):
 
 
 ORDER = sorted(SECTIONS, key=lambda s: SECTIONS[s]["gpm"])
+THICK = ("t6h", "t8h", "t10h", "r10")                              # used only on a run whose OD cap is their OD (a larger thin tube beats them elsewhere)
 
 
 def size_topology(p, topo, log=None):
@@ -954,11 +960,27 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
     caps = guard_caps(m0)
     run_names = [[m0.el[i]["name"] for i in run] for run in runs]
     run_group = [m0.el[run[0]]["group"] for run in runs]
-    gcap = {gname: ORDER.index(sec_) for gname, sec_ in p.get("cap_groups", {}).items()}   # geometric caps (funnel, pods)
-    run_cap = [min([caps.get(m0.el[i]["name"], len(ORDER) - 1) for i in run] + [gcap.get(m0.el[run[0]]["group"], len(ORDER) - 1)]) for run in runs]
+    gcap = {gname: SECTIONS[sec_]["od"] for gname, sec_ in p.get("cap_groups", {}).items()}   # geometric caps (funnel, pods), as OD
+    run_od = [min([caps.get(m0.el[i]["name"], 99.0) for i in run] + [gcap.get(m0.el[run[0]]["group"], 99.0)]) for run in runs]
+    allowed = [[s_ for s_ in ORDER if SECTIONS[s_]["od"] <= od_ and (s_ not in THICK or SECTIONS[s_]["od"] == od_)] or ["r3"]
+               for od_ in run_od]                                  # sections that fit, lightest first; thick wall only where the cap binds
+    def fit(i, s_):
+        """s_ if it fits run i, else the lightest fitting section at least as strong, else the stiffest that fits"""
+        if s_ in allowed[i]: return s_
+        S = SECTIONS[s_]
+        for a_ in allowed[i]:
+            if SECTIONS[a_]["I"] >= S["I"] and SECTIONS[a_]["A"] >= S["A"]: return a_
+        return max(allowed[i], key=lambda a_: (SECTIONS[a_]["I"], SECTIONS[a_]["A"]))
     def capped(req):
-        return [ORDER[max(0, min(ORDER.index(r_), run_cap[i]))] for i, r_ in enumerate(req)]
+        return [fit(i, r_) for i, r_ in enumerate(req)]
+    def step(i, s_, d, od_up=False, thin=False):
+        """the next fitting section up (d 1) or down (d -1) from s_ in weight; od_up: a larger OD only (a socket needs one);
+        thin: no thick wall (the blind last resort)"""
+        k = ORDER.index(s_); nxt = [a_ for a_ in allowed[i] if (ORDER.index(a_) - k) * d > 0
+                                    and (not od_up or SECTIONS[a_]["od"] > SECTIONS[s_]["od"]) and (not thin or a_ not in THICK)]
+        return (nxt[0] if d > 0 else nxt[-1]) if nxt else s_
     sec = [(init or {}).get(names[0], "r3") if (init or {}).get(names[0]) in SECTIONS else "r3" for names in run_names]   # warm start (system loop)
+    sec = capped(sec)
     # mirror pairs (y -> -y): both sides of a run take the larger section, so the cage is built symmetric
     def rkey(run, sgn):
         pts = sorted({tuple(np.round(np.asarray(m0.N[m0.el[i][e]], float) * [1, sgn, 1], 1)) for i in run for e in ("a", "b")})
@@ -971,12 +993,12 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
         return {n: s_ for names, s_ in zip(run_names, sec) for n in names}
     for it in range(iters):
         sizes = sizes_of(sec); res, m = evaluate(p, topo, sizes, detail=True)
-        req = capped(sym(run_required(m, res, runs)))                  # smallest passing section at the current forces, within the prop guard
+        req = capped(sym(run_required(m, res, runs, allowed)))         # lightest passing section at the current forces, within the caps
         changed = False
         for i in range(len(sec)):
             k, kr = ORDER.index(sec[i]), ORDER.index(req[i])
             if kr > k: sec[i] = req[i]; changed = True                  # up at once
-            elif kr < k: sec[i] = ORDER[k - 1]; changed = True          # down one step per round (no oscillation)
+            elif kr < k: sec[i] = step(i, sec[i], -1); changed = True   # down one step per round (no oscillation)
         if log: print(it, round(res["mass_g"], 1), round(res["violation"], 2), flush=True)
         if not changed: break
     # stiffness: L2 mode and crash deflections, step up the runs on those paths
@@ -994,40 +1016,51 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
             for i in order_:
                 if acc >= 0.5: break
                 acc += share[i]
-                if ORDER.index(sec[i]) < len(ORDER) - 1: sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
+                if step(i, sec[i], 1) != sec[i]: sec[i] = step(i, sec[i], 1); stepped = True
         for k in bad:
             if k.endswith(" defl") or (k not in ("L2 mode", "belly mode") and bad[k] > 0):
                 hn = k.split(" at ")[-1].split(" ")[0] if " at " in k else None
+                sk = k.endswith(" socket")                               # a socket holds by OD and depth, not by wall
                 for i, names in enumerate(run_names):
                     els = [e for e in m.el if e["name"] in names]
-                    if hn and any(hn in (e["a"], e["b"]) for e in els) and ORDER.index(sec[i]) < len(ORDER) - 1:
-                        sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
+                    if hn and any(hn in (e["a"], e["b"]) for e in els) and step(i, sec[i], 1, od_up=sk) != sec[i]:
+                        sec[i] = step(i, sec[i], 1, od_up=sk); stepped = True
         sec = capped(sym(sec))
         if not stepped:
-            for i in range(len(sec)):                                     # last resort: everything one step
-                if ORDER.index(sec[i]) < len(ORDER) - 1: sec[i] = ORDER[ORDER.index(sec[i]) + 1]; stepped = True
+            for i in range(len(sec)):                                     # last resort: everything one step (thin wall)
+                if step(i, sec[i], 1, thin=True) != sec[i]: sec[i] = step(i, sec[i], 1, thin=True); stepped = True
             sec = capped(sec)
             if not stepped: break
         if sec == prev: break                                             # capped by the prop guard: nothing left to step
     sizes = sizes_of(sec); res = evaluate(p, topo, sizes)
+    if res["violation"] == 0:                                             # take back what the stiffness steps did not need, heaviest first
+        for i in sorted(range(len(sec)), key=lambda i: -SECTIONS[sec[i]]["gpm"] * sum(m0.el[j]["L"] for j in runs[i])):
+            if sec[i] not in THICK and SECTIONS[sec[i]]["od"] < 12: continue
+            j = mirror[i]; dn = step(i, sec[i], -1)
+            if dn == sec[i]: continue
+            trial = list(sec); trial[i] = dn; trial[j] = dn if dn in allowed[j] else trial[j]
+            rt = evaluate(p, topo, sizes_of(trial))
+            if rt["violation"] == 0: sec, res = trial, rt
+    sizes = sizes_of(sec)
     return sizes, res, res["violation"] == 0
 
 
-def run_required(m, res, runs):
-    """per run, the smallest section (ORDER) whose stress, buckling and socket indices pass every case at its limit,
-    holding the run's present axial force and moments"""
+def run_required(m, res, runs, allowed=None):
+    """per run, the lightest section (ORDER, within allowed[i] when given) whose stress, buckling and socket indices pass
+    every case at its limit, holding the run's present axial force and moments; else the stiffest allowed"""
     lim = np.array([v["limit"] for v in res["cases"].values()]); U = res["_U"]
     mlim = np.array([v.get("mlimit", v["limit"]) for v in res["cases"].values()])
     out = []
-    for run in runs:
+    for ir, run in enumerate(runs):
         L = sum(m.el[i]["L"] for i in run)
         Nall, Mall = [], []
         for i in run:
             e = m.el[i]; fl = e["kl"] @ (e["T"] @ U[e["dofs"]])
             Nall.append(-fl[0]); Mall.append(np.hypot(np.maximum(abs(fl[4]), abs(fl[10])), np.maximum(abs(fl[5]), abs(fl[11]))))
         Nall, Mall = np.array(Nall), np.array(Mall)
-        choice = ORDER[-1]
-        for sname in ORDER:
+        menu = allowed[ir] if allowed else ORDER
+        choice = max(menu, key=lambda a_: (SECTIONS[a_]["I"], SECTIONS[a_]["A"]))
+        for sname in menu:
             S = SECTIONS[sname]; cap = SOCKET_CAP * S["od"]; Pcr = math.pi ** 2 * E_C * S["I"] / L ** 2
             sig = (abs(Nall) / S["A"] + Mall * (S["od"] / 2) / S["I"]) / SIG_ALLOW
             ok = (sig / mlim).max() <= 1.0 and (abs(Nall) / cap / lim).max() <= 1.0 and (BUCKLE_SF * np.maximum(-Nall, 0).max(axis=0) / Pcr / mlim).max() <= 1.0

@@ -952,7 +952,7 @@ def prop_view(i, mx, my):
 P("bottom plate", BOTTOM, "frame", "#cfcfcf", False, "S500 stock (Holybro STEP)")
 P("top plate", TOP, "frame", "#d8d8d8", False, "S500 stock")
 for i, a in enumerate(g["arms"]): P(f"arm {i + 1}", a, "printed", "#8899aa", True, "rough")
-SEC_COL = {"r3": "#3a3a3a", "r4": "#2b4f7a", "t6": "#3f7a3f", "r5": "#7a5a2b", "t8": "#8a3f8a", "t10": "#a33a3a", "t12": "#c0662b", "t14": "#b8a02b", "t16": "#2b8a8a", "t20": "#5a2b8a"}
+SEC_COL = {"r3": "#3a3a3a", "r4": "#2b4f7a", "t6": "#3f7a3f", "r5": "#7a5a2b", "t8": "#8a3f8a", "t10": "#a33a3a", "t12": "#c0662b", "t14": "#b8a02b", "t16": "#2b8a8a", "t20": "#5a2b8a", "t6h": "#5f9a5f", "t8h": "#b066b0", "t10h": "#d04a4a", "r10": "#701c1c"}
 for sec in sorted(set(v[4] for v in g["rods"].values()), key=lambda s_: co.SECTIONS[s_]["gpm"]):
     ks = [k for k, v in g["rods"].items() if v[4] == sec]
     if ks: P(f"rods {co.SECTIONS[sec]['label']}", trimesh.util.concatenate([g["rod_meshes"][k] for k in ks]), "cage", SEC_COL[sec], False,
