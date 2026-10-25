@@ -35,7 +35,8 @@ if SYS_PICK:
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
-SKID_Y = 73.0                                                  # skid sides (legs, rails, X braces, basket rail) outside the pods, inside the funnel opening
+SKID_Y = 66.0                                                  # skid sides (legs, rails, X braces, basket rail): the widest the funnel opening takes at ±5 deg yaw
+                                                               # with their socket bosses; the X braces and basket rail cross in the camera / flow pods (DEFAULT)
 CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush cap: 15 thick (10 stroke + 5 crushed), Ø24; the feet pads give 6 (DEFAULT)
 SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "85"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
                                                                # skid X braces and basket rails (Spark 25 Oct: more bottom structure by the battery; was 90)
@@ -267,14 +268,14 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     xb_ = g["xt60"].bounds
     g["sled"] = g["sled"].difference(box(xb_[0][0] - 1, xb_[1][0] + 1, xb_[0][1] - 1, xb_[1][1] + 1, RT - 1, RT + 5))   # XT60 lead window (its top stands 3.5 over the mount plane)
     g["sled"] = g["sled"].difference(union([cyl(4.5, RT - 1, RT + 5, *xy_) for xy_ in plate_bolts("bottom")]))   # driver holes under the bottom plate bolts (as the pan)
-    g["cam_pod"] = box(-dc - 23, -dc + 23, 29.1, 68.0, PB + 16, RT)                 # 4.5 inboard: the skid side frames pass outside it
+    g["cam_pod"] = box(-dc - 23, -dc + 23, 33.6, 72.5, PB + 16, RT)
     g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
     _bh = union([cyl(4.5, PB - 1.0, RT + 5.0, *xy_) for xy_ in plate_bolts("bottom")])   # driver holes under the bottom plate bolts through the pods
     g["cam_pod"] = g["cam_pod"].difference(_bh); g["flow_pod"] = g["flow_pod"].difference(_bh)   # (as the pan and the sled)
     for sy_ in (1, -1):                                                        # cable channels: down camera and flow leads up through their pods and the sled
         ch_ = box(-dc - 3, -dc + 3, sy_ * 41 - 3, sy_ * 41 + 3, PB + 15, RT + 5)
         g["cam_pod" if sy_ > 0 else "flow_pod"] = g["cam_pod" if sy_ > 0 else "flow_pod"].difference(ch_); g["sled"] = g["sled"].difference(ch_)
-    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 29.5, 67.5, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 48.5)])
+    g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 34, 72, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 53)])
     g["down_lens"] = np.array([-dc, 53.0, PB + 6]); g["flow"] = box(-dc - 10.8, -dc + 10.8, -58, -36, PB + 9.5, PB + 16)
     g["flow_lens"] = np.array([-dc, -47.0, PB + 9.5])
     # skid runners: printed PETG sleeves on the skid rails (cage), the lowest points with the feet: a side edge reaching
@@ -388,7 +389,11 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     def nbox(n_):
         return nsock(n_)
     ring_nodes = [nbox(f"{nm}{lvl}") for nm in info["pnodes"] for lvl in ("lo", "hi")]
-    ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP", "XJ", "SM", "SK")) and n_ in rods_at]   # skirt, cross, spider, basket nodes
+    _pb = {k_: g[k_].bounds for k_ in ("cam_pod", "flow_pod")}           # nodes inside a pod: the pod is the node (the side X and basket rail cross there)
+    g["pod_nodes"] = {n_: k_ for n_ in Ng if n_ in rods_at and n_.startswith(("XJ", "SK")) for k_, b_ in _pb.items()
+                      if (np.asarray(Ng[n_]) > b_[0] - 4.0).all() and (np.asarray(Ng[n_]) < b_[1] + 4.0).all()}
+    for n_, k_ in g["pod_nodes"].items(): g[k_] = union([g[k_], nsock(n_, core=False)])   # the rods' sockets in the pod body
+    ring_nodes += [nbox(n_) for n_ in Ng if (n_ == "TR" or n_.startswith(("KV", "KP", "XJ", "SM", "SK"))) and n_ in rods_at and n_ not in g["pod_nodes"]]   # skirt, cross, spider, basket
     # corner nodes: the wheel cheeks + the wheel-ring sockets (2.0 wall, the hard-rule minimum: a 3 wall would stand within 1 of the funnel face behind the
     # R 5 wheels) + the strut socket; the belly-frame corners and the feet from their sockets (DEFAULT)
     _ci = [(sx_, sy_) for sx_ in (1, -1) for sy_ in (1, -1)]
@@ -397,7 +402,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                   for k_, (sx_, sy_) in enumerate(_ci)]
     g["nodes"] += [nsock(f"BF{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"BF{sx_:+d}{sy_:+d}" in rods_at]
     g["foot_bosses"] = [nsock(f"FT{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"FT{sx_:+d}{sy_:+d}" in rods_at]   # in the TPU feet (FE node mass)
-    g["node_g"] = {n_: co.node_mass_g([o_ for _, o_ in rods_at[n_]]) for n_ in Ng if n_ in rods_at and n_ not in fixed_g and not n_.startswith("MX")
+    g["node_g"] = {n_: co.node_mass_g([o_ for _, o_ in rods_at[n_]]) for n_ in Ng if n_ in rods_at and n_ not in fixed_g and not n_.startswith("MX") and n_ not in g["pod_nodes"]
                    and (n_[:-2] in info["pnodes"] or n_.startswith(co.PRINTED_NODES))}   # the frame model's node masses (one mass model, E)
     g["corner_g"] = sum(abs(m_.volume) for m_ in g["nodes"]) * 1.27e-3 * 0.6 / 4    # per corner incl. its belly-frame corner (E)
     mx_ = [n_ for n_ in Ng if n_.startswith("MX")]; mast_block = []
@@ -986,6 +991,8 @@ for k_, (a_, b_) in g["rod_ends"].items():
     if nh_: JOINTS["apex"].append((k_, _sock(od_, nh_)))
     if k_.startswith("skid leg"): JOINTS["sled"].append((k_, overlap(g["rod_meshes"][k_], g["sled"]) * 1.05))   # through the sled boss
     if k_.startswith("belly bar"): JOINTS["sled"].append((k_, math.pi * (od_ / 2 + 0.15) ** 2 * 50.0))           # in its pod clamp (pod length + 4)
+    np_ = sum(n_ in g["pod_nodes"] for n_ in (a_, b_))
+    if np_: JOINTS["sled"].append((k_, _sock(od_, np_) + math.pi * (od_ / 2 + 0.15) ** 2 * 50.0))   # socketed in a pod (it crosses the pod body)
 JOINTS["apex"] += [(k_, math.pi * 4.15 ** 2 * co.SOCK_LEN) for k_, ((a_, b_), m_) in g["short_links"].items() if any(n_.startswith(J_HUB) for n_ in (a_, b_))]   # printed struts in a hub
 JOINTS["apex"] += [("hub on the pan", sum(overlap(h_, g["pan"]) for h_ in g["hubs"]))]
 J_ALLOW = {k_: round(sum(v_ for _, v_ in js_) + 1.0, 1) for k_, js_ in JOINTS.items()}   # designed socket volumes, + 1 mesh noise
