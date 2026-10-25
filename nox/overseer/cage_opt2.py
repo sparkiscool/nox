@@ -93,7 +93,7 @@ CRASH_TIE = 3.0                                             # nodes this close t
 CARBON_MIN = 33.0                                           # carbon break-even (CLAUDE.md): a shorter link is printed into its node
 NODE_G, CORNER_G = 2.0, 6.0                                 # (retired: nodes are sized from their rods) / corner node (E, g)
 NODE_WALL = 3.0                                             # printed node: socket bore OD + 0.3, wall 3 round it (CLAUDE.md attachments)
-PRINTED_NODES = ("NT", "NB", "NR", "TN", "TR", "KV", "KP", "FT", "MX", "XJ", "SM")
+PRINTED_NODES = ("NT", "NB", "NR", "TN", "TR", "KV", "KP", "FT", "MX", "XJ", "SM", "SK")
 
 
 def node_size(od):
@@ -113,7 +113,7 @@ def node_mass_g(ods):
     v = 4.0 / 3.0 * math.pi * rc ** 3 + sum(math.pi * ((o / 2 + 0.15 + NODE_WALL) ** 2 - (o / 2 + 0.15) ** 2) * (SOCK_LEN - rc) for o in ods if SOCK_LEN > rc)
     return 1.27e-3 * NODE_FILL * v
 
-TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "top_spider")   # no nose cross: it would sit in the L2 scan
+TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "top_spider", "skid_x", "basket")   # no nose cross: it would sit in the L2 scan
 # retired from the search (24 Oct, system v3): keels (prop guard), v_diag (the cameras), strut2 (funnel), spokes_hi (motor bells): off
 
 
@@ -387,6 +387,13 @@ def _geometry(p, topo, sizes=None):
         for sy in (1, -1):                                            # side bar + rail close each side; no rail across the ends (the pack drops out the bottom)
             mem(f"belly bar {sy:+d}", f"BF+1{sy:+d}", f"BF-1{sy:+d}", "skid_belly")
             mem(f"skid rail {sy:+d}", f"FT+1{sy:+d}", f"FT-1{sy:+d}", "skid_belly")
+            if topo.get("skid_x"):                                    # X in each skid side (Spark 25 Oct: more bottom structure by the battery):
+                mem(f"skid x {sy:+d} a", f"BF+1{sy:+d}", f"FT-1{sy:+d}", "skid_belly")   # the sides take a side hit on the set and brace the legs
+                mem(f"skid x {sy:+d} b", f"BF-1{sy:+d}", f"FT+1{sy:+d}", "skid_belly")
+            if topo.get("basket"):                                    # a mid-height side rail beside the set, on the legs
+                zm_ = (N[f"BF+1{sy:+d}"][2] + N[f"FT+1{sy:+d}"][2]) / 2
+                for sx in (1, -1): node(f"SK{sx:+d}{sy:+d}", (N[f"BF{sx:+d}{sy:+d}"][0], N[f"BF{sx:+d}{sy:+d}"][1], zm_))
+                mem(f"basket rail {sy:+d}", f"SK+1{sy:+d}", f"SK-1{sy:+d}", "skid_belly")
         if p.get("pyramid") == "mast":                                # top node on a vertical mast at the thrust centre (70 off every
             node("MB", (p.get("x_mast", dm), 0, p.get("z_mast", wz)))   # disk, out of the prop wash) down to the sled (no tail, Spark 24 Oct)
             for sx in (1, -1):
@@ -853,7 +860,7 @@ def evaluate(p, topo, sizes, detail=False):
         g["belly mode"] = F_L2_MIN / res["f_belly"] - 1
     m_drone = p.get("m_drone_g", 2200.0) * 1e-6                       # t (g -> t)
     cage_nodes = [n for n in m.names if n not in m.fixed and (n.endswith(("lo", "hi")) and not n.startswith(("S", "Vmid"))
-                                                              or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT")))]
+                                                              or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT", "SK", "BF", "XJ")))]
     cage_nodes = cage_nodes + ["L2H"]                                # nose-first the exposed head leads: the hit goes in through the L2 and its mount
     P_ = np.array([m.N[n] for n in cage_nodes])
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
@@ -1162,10 +1169,11 @@ def _one(args):
 
 
 def search(p, fl2, pool):
-    free_keys = [k for k in TOPO_KEYS if k not in FIXED_ON]
+    fix_ = {k_: 1 for k_ in os.environ.get("SEARCH_FIX", "").split(",") if k_}         # keys held on in this search (cuts the space)
+    free_keys = [k for k in TOPO_KEYS if k not in FIXED_ON and k not in fix_]
     jobs = []
     for bits in itertools.product((0, 1), repeat=len(free_keys)):
-        topo = dict(zip(free_keys, bits)); topo.update({k: 1 for k in FIXED_ON}); jobs.append((p, topo, fl2))
+        topo = dict(zip(free_keys, bits)); topo.update({k: 1 for k in FIXED_ON}); topo.update(fix_); jobs.append((p, topo, fl2))
     done = pool.map(_one, jobs)
     table, best = [], None
     for topo, sizes, r, ok in done:

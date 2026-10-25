@@ -384,7 +384,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     def nbox(n_):
         return nsock(n_)
     ring_nodes = [nbox(f"{nm}{lvl}") for nm in info["pnodes"] for lvl in ("lo", "hi")]
-    ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP", "XJ", "SM")) and n_ in rods_at]   # rear skirt, cross and spider nodes
+    ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP", "XJ", "SM", "SK")) and n_ in rods_at]   # skirt, cross, spider, basket nodes
     # corner nodes: the wheel cheeks + the wheel-ring sockets (2.0 wall, the hard-rule minimum: a 3 wall would stand within 1 of the funnel face behind the
     # R 5 wheels) + the strut socket; the belly-frame corners and the feet from their sockets (DEFAULT)
     _ci = [(sx_, sy_) for sx_ in (1, -1) for sy_ in (1, -1)]
