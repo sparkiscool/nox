@@ -35,6 +35,7 @@ if SYS_PICK:
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
+CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush cap: 15 thick (10 stroke + 5 crushed), Ø24; the feet pads give 6 (DEFAULT)
 SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "60"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
                                                                # skid X braces and basket rails (Spark 25 Oct: more bottom structure by the battery; was 90)
 MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
@@ -420,6 +421,25 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     ring_nodes += [m_ for _, m_ in g["short_links"].values()]                   # cage rods under the 33 carbon break-even: printed struts (8 round)
     g["cage_prints"] = guard_ + [m_ for _, m_ in g["short_links"].values()]    # printed cage parts that are not nodes (their mass by volume)
     P["corner_g"] = float(g["corner_g"])                                        # the frame model weighs the corners as drawn
+    # TPU crush caps (DEFAULT 25 Oct; Spark: "a bit heavy on the props"): 15 thick on the outer ring, skirt and top nodes, 10 of stroke, so a hit within
+    # 45 deg of a cap's axis is stopped over its stroke (cage_opt2 hit_force) instead of rigid 35 g; none on the nose collar (in the scan) or in the funnel
+    caps, cap_m = {}, []
+    O_ = B + A * L2_BASE_H
+    for n_ in Ng:
+        top_ = n_ == "TN" or n_.startswith("SM")
+        if not (top_ or n_[:-2] in info["pnodes"] or n_.startswith(("KP", "KV", "TR"))) or n_ not in rods_at: continue
+        q_ = np.asarray(Ng[n_], float)
+        if q_[2] < -20.0: continue
+        u_ = np.array([0.0, 0.0, 1.0]) if top_ else np.array([q_[0] - dm, q_[1], 0.0]); u_ = u_ / np.linalg.norm(u_)
+        rc_ = max(o_ for _, o_ in rods_at[n_]) / 2 + 0.15 + co.NODE_WALL
+        tip_ = q_ + u_ * (rc_ + CAP_T); d_ = tip_ - O_; ax_ = float(d_ @ A); rho_ = float(np.linalg.norm(d_ - ax_ * A))
+        if -ax_ * math.cos(math.radians(L2_NEG)) - rho_ * math.sin(math.radians(L2_NEG)) - CAP_R < 2.0: continue   # would sit in the L2 scan
+        caps[n_] = [float(u_[0]), float(u_[1]), float(u_[2]), CAP_STROKE]
+        cap_m.append(trimesh.creation.cylinder(CAP_R, segment=[q_ + u_ * (rc_ - 2.0), tip_], sections=20))
+    for sx_, sy_ in [(a__, b__) for a__ in (1, -1) for b__ in (1, -1)]:
+        if f"FT{sx_:+d}{sy_:+d}" in Ng: caps[f"FT{sx_:+d}{sy_:+d}"] = [0.0, 0.0, -1.0, FOOT_STROKE]   # the TPU feet: their pads
+    P["caps"] = caps; g["caps"] = cap_m
+    ring_nodes += cap_m
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     from topo.part import man as _man
@@ -494,6 +514,7 @@ def cg_of(g):
             L = float(np.hypot(mx - r0[0], my - r0[1])); items.append((f"spars {i_}", 4 * L * ROD_GPM, trimesh.points.PointCloud([[(mx + r0[0]) / 2, (my + r0[1]) / 2, 22]])))
     items += [(f"node {n_}", gm_, trimesh.points.PointCloud([g["cage_N"][n_]])) for n_, gm_ in g["node_g"].items()]   # as the frame model (one mass model)
     printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("cage prints", g["cage_prints"], 0.5), ("apex", [g["apex_core"]], 0.45),
+               ("TPU caps", g["caps"], 0.24),
                ("cam plate", [g["cam_plate"]], 0.5),
                ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5), ("skid runners", g["runners"], 0.4), ("belly pan", [g["pan"]], 0.5),
                ("keep-alive pads", g["pads"], 0.6)]
@@ -896,6 +917,7 @@ if CAGE_TOPO.get("arm_spars"):
         r0 = np.array([75 * math.cos(math.radians(MOTOR_DEG[i_])), 75 * math.sin(math.radians(MOTOR_DEG[i_]))]); spar_g += 4 * float(np.hypot(mx - r0[0], my - r0[1])) * ROD_GPM
 cage_g = (rod_g + spar_g + 8 * 0.25 + sum(abs(m.volume) for m in g["nodes"]) * 1.27e-3 * 0.6 + sum(g["node_g"].values())
           + sum(abs(m.volume) for m in g["cage_prints"]) * 1.27e-3 * 0.5 + sum(abs(m.volume) for m in g["feet"]) * 1.21e-3 * 0.5
+          + sum(abs(m.volume) for m in g["caps"]) * 1.21e-3 * 0.25
           + sum(abs(m.volume) for m in g["runners"]) * 1.27e-3 * 0.4 + abs(g["pan"].volume) * 1.27e-3 * 0.5)   # one mass model: nodes as the frame model
 say("cage rods (C): " + "; ".join(f"{co.SECTIONS[sec]['label']} {n_} x {Ls / 1000:.2f} m" for sec, (n_, Ls) in sorted(by_sec.items(), key=lambda x: co.SECTIONS[x[0]]['gpm']))
     + f"; {rod_g:.0f} g + arm spars {spar_g:.0f} g; nodes {sum(g['node_g'].values()):.0f} g ({len(g['node_g'])}, as the frame model); corner nodes, wheels, feet, runners, pan, "
@@ -932,7 +954,7 @@ def tm(m): return m.copy()
 _cm, _cw = np.zeros(3), 0.0
 for k_, v_ in g["rods"].items():
     w_ = float(np.linalg.norm(np.subtract(v_[1], v_[0]))) * co.SECTIONS[v_[4]]["gpm"] / 1000; _cm += w_ * (np.asarray(v_[0]) + np.asarray(v_[1])) / 2; _cw += w_
-for ms_, f_ in ((g["nodes"], 0.6), (g["cage_prints"], 0.5), (g["runners"], 0.4), ([g["pan"]], 0.5), (g["wheels"], 0.5), (g["feet"], 0.5)):
+for ms_, f_ in ((g["nodes"], 0.6), (g["cage_prints"], 0.5), (g["caps"], 0.24), (g["runners"], 0.4), ([g["pan"]], 0.5), (g["wheels"], 0.5), (g["feet"], 0.5)):
     for m_ in ms_:
         w_ = abs(m_.volume) * 1.27e-3 * f_; _cm += w_ * m_.bounding_box.centroid; _cw += w_
 for n_, gm_ in g["node_g"].items(): _cm += gm_ * np.asarray(g["cage_N"][n_], float); _cw += gm_

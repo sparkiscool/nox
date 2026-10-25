@@ -811,11 +811,22 @@ def mode_energy_runs(m, k, runs):
     return np.array([se[run].sum() / tot for run in runs])
 
 
-def crash_force(m_t):
-    """touching-node crash force (N) for a drone of m_t (t): rigid CRASH_G, or the suspension plateau that stops a V_HIT
-    hit in STROKE (½ m v² / s, never under PLATEAU_MIN, above the 175 N latch misuse)"""
-    if CRASH_MODE == "rigid": return CRASH_G * G_ACC * m_t
-    return max(0.5 * (m_t * 1e3) * V_HIT ** 2 / (STROKE * 1e-3), PLATEAU_MIN)
+def crash_force(m_t, stroke=None):
+    """touching-node crash force (N) for a drone of m_t (t): rigid CRASH_G, or, through a drawn TPU crush cap of `stroke`, the
+    plateau that stops a V_HIT hit in that stroke (½ m v² / s, never under PLATEAU_MIN, above the 175 N latch misuse)"""
+    if stroke is None and CRASH_MODE == "rigid": return CRASH_G * G_ACC * m_t
+    return max(0.5 * (m_t * 1e3) * V_HIT ** 2 / ((stroke or STROKE) * 1e-3), PLATEAU_MIN)
+
+
+CAP_COS = math.cos(math.radians(45.0))                         # a cap takes a hit within 45 deg of its axis; anything else is rigid 35 g (DEFAULT)
+
+
+def hit_force(p, n, d, m_t):
+    """crash force at touching node n in direction d: through its drawn cap (p["caps"][n] = [ux, uy, uz, stroke]) if the hit is
+    within 45 deg of the cap axis, else rigid"""
+    c = (p.get("caps") or {}).get(n)
+    if c is not None and float(np.dot(np.asarray(d, float), c[:3])) >= CAP_COS: return crash_force(m_t, c[3])   # d: toward the obstacle
+    return CRASH_G * G_ACC * m_t
 
 
 def crash_dirs():
@@ -868,7 +879,7 @@ def evaluate(p, topo, sizes, detail=False):
         sup = P_ @ d
         for k in np.flatnonzero(sup >= sup.max() - CRASH_TIE):
             n_ = cage_nodes[k]
-            cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -crash_force(m_drone) * d}, 1.0, "crash", n_, d))
+            cases.append((f"crash {np.round(d, 2).tolist()} at {n_}", {n_: -hit_force(p, n_, d, m_drone) * d}, 1.0, "crash", n_, d))
     for d in crash_dirs():
         cases.append((f"L2 crash {np.round(d, 2).tolist()}", {"apexM": crash_force(m_drone) / m_drone * 266e-6 * d}, 1.0, "l2", None, d))
     real_nodes = [n for n in cage_nodes if n[:-2] in m.info["pnodes"] or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT"))]
