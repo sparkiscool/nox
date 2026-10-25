@@ -504,6 +504,16 @@ def cg_of(g):
     for _, ms, fill in printed:
         for m in ms:
             gm = abs(m.volume) * 1.27e-3 * fill; tot += gm; mom += gm * m.centroid
+    if os.environ.get("SYS_DEBUG_CG") and g.get("_dm") is not None:   # who sets the balance: mass and moment about the thrust centre, by group
+        grp_ = {}
+        def add_(k_, gm_, c_): v_ = grp_.setdefault(k_, [0.0, 0.0]); v_[0] += gm_; v_[1] += gm_ * (c_[0] - g["_dm"])
+        for nm_, gm_, m_ in items:
+            c_ = m_.vertices.mean(axis=0) if isinstance(m_, trimesh.points.PointCloud) else m_.bounding_box.centroid
+            k_ = ("rod " + g["rods"][nm_][3]) if nm_ in g["rods"] else ("node " + ("nose" if c_[0] > g["_dm"] + 180 else "front" if c_[0] > g["_dm"] else "rear")) if nm_.startswith("node ") else nm_.split(" ")[0]
+            add_(k_, gm_, c_)
+        for nm_, ms_, fill_ in printed:
+            for m_ in ms_: add_(nm_, abs(m_.volume) * 1.27e-3 * fill_, m_.centroid)
+        print("CG moments about the thrust centre (g, g mm):", sorted(((round(v_[1]), k_, round(v_[0])) for k_, v_ in grp_.items()), key=lambda t: -abs(t[0]))[:24], flush=True)
     return tot, mom / tot
 
 
@@ -692,7 +702,7 @@ def at_dm(dm_):
     for _ in range(6):                                                # the crash load follows the drone mass: size, weigh, size again until it holds
         s_, r_, ok_ = co.size_fsd(g_["P"], CAGE_TOPO, init=s_)
         CAGE_SIZES = s_
-        m0_ = M_DRONE; g_ = build(dm_, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+        m0_ = M_DRONE; g_ = build(dm_, dc_, xB_, zB_); g_["_dm"] = dm_; tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
         g_ = build(dm_, dc_, xB_, zB_)
         if abs(M_DRONE - m0_) < 5.0: break
     r_ = co.evaluate(g_["P"], CAGE_TOPO, s_); ok_ = r_["violation"] == 0  # reported at the mass it ends with
