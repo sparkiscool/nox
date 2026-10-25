@@ -373,7 +373,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     Tg_ = trimesh.transformations.rotation_matrix(math.radians(L2_TILT), [0, 1, 0]); Tg_[:3, 3] = B   # the L2 frame (base at z 0)
     go_ = GUARD_IN + GUARD_W
     sh_ = box(-go_, go_, -go_, go_, 0.0, GUARD_TOP).difference(box(-GUARD_IN, GUARD_IN, -GUARD_IN, GUARD_IN, -1.0, GUARD_TOP + 1.0))
-    sh_ = sh_.difference(box(-5.0, 5.0, GUARD_IN - 1.0, go_ + 1.0, -1.0, 10.0))                   # L2 cable slot on the left wall (local -X turned to +y)
+    sh_ = sh_.difference(box(-5.0, 5.0, GUARD_IN - 1.0, go_ + 1.0, 1.5, 12.5))                    # L2 cable window on the left wall (local -X turned to +y), closed
+                                                                                                  # round: a sharp edge can't reach in (an open slot let one)
     guard_ = [sh_.apply_transform(Tg_)]
     for n_ in ("NT+1", "NT-1", "NB+1", "NB-1"):                                                   # posts from the shroud corners to the four collar corner nodes
         q_ = Ng[n_] - B; cu_, cy_ = float(q_ @ co.UP_B), float(q_[1])
@@ -863,10 +864,10 @@ say(f"contact allowances (per joint, M): cage/arms {len(JOINTS['arms'])} sockets
 _l2lx = np.array([0.0, -1.0, 0.0])            # L2 local x in the drone frame: rolled 90 deg about its axis so the cable notch faces left, where the
                                                # collar is 93 wide (44.5 up and down, where the nose bars sit; DEFAULT, the scan is round)
 _tz, _bz = float(TOP.bounds[1][2]), float(BOTTOM.bounds[0][2])
-ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7, "w_axis": [1, 0, 0]}),
+ACCESS = [dict(name="FC USB-C (right edge 8 behind the FC centre, DEFAULT: clear of the front arm)", part="electronics", **{"from": [14.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7, "w_axis": [1, 0, 0]}),
           dict(name="Pi 5 SD card (front end)", part="electronics", **{"from": [42.5, 0.0, 24.0]}, dir=[1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3, "w_axis": [0, 1, 0]}),
           dict(name="Pi 5 USB / Ethernet end (aft, DEFAULT: the spine hub sits ahead)", part="electronics", **{"from": [-42.5, 0.0, 32.0]}, dir=[-1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
-          dict(name="L2 cable (base notch 5 up the base, local -X: left)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx + A * 5.0]},
+          dict(name="L2 cable (base notch 7 up the base, local -X: left, through the shroud window)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx + A * 7.0]},
                dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
           dict(name="XT60 lead up through the sled", part="receiver XT60", **{"from": [float(v) for v in (g["xt60"].bounds.mean(0) * [1, 1, 0] + [0, 0, g["xt60"].bounds[1][2]])]}, dir=[0, 0, 1], length_mm=30, tool={"type": "cylinder", "d": 9})]
 ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["c"] + c_["up"] * 19]},
