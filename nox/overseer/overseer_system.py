@@ -635,10 +635,13 @@ def at_dm(dm_):
     global CAGE_SIZES, M_DRONE
     zB_ = math.ceil(l2_low_zB()); dc_ = TIP_OFF - dm_
     xB_ = solve_xB(lambda x: build(dm_, dc_, x, zB_), zB_)
-    g_ = build(dm_, dc_, xB_, zB_)
-    s_, r_, ok_ = co.size_fsd(g_["P"], CAGE_TOPO)
-    CAGE_SIZES = s_
-    g_ = build(dm_, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+    g_ = build(dm_, dc_, xB_, zB_); s_ = None
+    for _ in range(4):                                                # the crash load follows the drone mass: size, weigh, size again until it holds
+        s_, r_, ok_ = co.size_fsd(g_["P"], CAGE_TOPO, init=s_)
+        CAGE_SIZES = s_
+        m0_ = M_DRONE; g_ = build(dm_, dc_, xB_, zB_); tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+        if abs(M_DRONE - m0_) < 5.0: break
+        g_ = build(dm_, dc_, xB_, zB_)
     say(f"final: motors {dm_:.1f} ahead, cage {r_['mass_g']:.0f} g sized here, CG {cg_[0] - dm_:+.1f} in x, frame violation {r_['violation']:.3f}")
     return dict(e=float(cg_[0] - dm_), ok=ok_, dm=dm_, sizes=s_, xB=xB_, zB=zB_)
 if os.environ.get("SYS_FINAL_SIZES"):                                 # a settled design to recheck: its topology and sizes at SYS_FINAL_DM, no re-sizing
