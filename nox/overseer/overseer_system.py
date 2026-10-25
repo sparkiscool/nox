@@ -451,16 +451,17 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         rc_ = max(o_ for _, o_ in rods_at[n_]) / 2 + 0.15 + co.NODE_WALL
         tries_ = [sum(ds_) / max(np.linalg.norm(sum(ds_)), 1e-9)] + list(ds_)   # the mean lead direction first, then each one
         best_ = None
+        tries_ += [np.array([float(t_[0]), float(t_[1]), 0.0]) for t_ in list(tries_) if abs(t_[2]) < 0.99]   # and each one levelled (clear of the deck)
         for u_ in tries_:
             u_ = np.asarray(u_, float) / np.linalg.norm(u_)
             if _in_scan(q_ + u_ * (rc_ + CAP_T)): continue
+            zlo_ = min((q_ + u_ * (rc_ - 2.0))[2], (q_ + u_ * (rc_ + CAP_T))[2]); sp_ = math.sqrt(max(0.0, 1 - u_[2] ** 2))
+            cr_ = min(CAP_R, (zlo_ - (FUNNEL_TOP_D + 1.0)) / sp_) if sp_ > 1e-6 else CAP_R   # narrower where it would reach under the box deck round the funnel
+            if cr_ < 6.0: continue                                      # (under Ø12 it does not count)
             cov_ = sum(float(np.dot(d__, u_)) >= co.CAP_COS for d__ in ds_)
-            if best_ is None or cov_ > best_[0]: best_ = (cov_, u_)
+            if best_ is None or cov_ > best_[0]: best_ = (cov_, u_, cr_)
         if best_ is None or best_[0] == 0: continue
-        u_ = best_[1]
-        zlo_ = min((q_ + u_ * (rc_ - 2.0))[2], (q_ + u_ * (rc_ + CAP_T))[2]); sp_ = math.sqrt(max(0.0, 1 - u_[2] ** 2))
-        cr_ = min(CAP_R, (zlo_ - (FUNNEL_TOP_D + 1.0)) / sp_) if sp_ > 1e-6 else CAP_R   # narrower where it would reach under the box deck round the funnel
-        if cr_ < 6.0: continue                                          # (under Ø12 the node stays rigid)
+        u_, cr_ = best_[1], best_[2]
         caps[n_] = [float(u_[0]), float(u_[1]), float(u_[2]), CAP_STROKE]
         cap_m.append(trimesh.creation.cylinder(cr_, segment=[q_ + u_ * (rc_ - 2.0), q_ + u_ * (rc_ + CAP_T)], sections=20))
     for sx_, sy_ in [(a__, b__) for a__ in (1, -1) for b__ in (1, -1)]:
