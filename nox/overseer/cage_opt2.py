@@ -686,7 +686,7 @@ def obstacle_clear(a, b, od, obstacles):
     return c
 
 
-WASH_OD, WASH_LEN = 8.0, 15.0                                    # thin rods in the prop wash (CLAUDE.md design 8, DEFAULT): ≤ 8/6 tube where a rod runs ≥ 15 under / over a disk;
+WASH_OD, WASH_LEN = 10.0, 15.0                                    # thin rods in the prop wash (CLAUDE.md design 8, DEFAULT 25 Oct: ≤ 10/8 tube where a rod runs ≥ 15 under / over a disk, alt 8/6 with more bracing: 0 of 256 layouts carry 35 g at 8);
 WASH_SHARE = None                                                # each disk's shadowed share reported (a 5 % gate is not reachable with the L2 mount under the front disks)
 
 
