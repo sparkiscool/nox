@@ -65,9 +65,11 @@ MOTOR_H = 26.0                           # X2216 body (E)
 PROP_Z = PAD_Z + 37.0                    # prop hub mid plane (E)
 PROP_R, BLADE = 127.0, 5.0
 L2_TILT = 105.0                          # L2 axis turned 105 deg from +z toward +x: 15 deg below the x axis (Spark 24 Oct)
-L2_NEG = float(os.environ.get("SYS_L2_NEG", "6.0"))   # scan kept clear in the 96 deg negative-angle mode (Spark 24 Oct: "account for the 15 degrees and the scan range")
+L2_NEG = float(os.environ.get("SYS_L2_NEG", "0.0"))   # scan kept clear in the 90 deg normal mode (DEFAULT 25 Oct; the 96 deg negative-angle mode, SYS_L2_NEG=6, left the two
+                                                      # front ring corners beside the L2 without crush caps; Spark 24 Oct: "account for the 15 degrees and the scan range")
 L2_BASE_H = 25.0                         # the L2 base (Spark 24 Oct): held and caged; everything above it is exposed and nothing enters the scan
-GUARD_TOP, GUARD_IN, GUARD_W = 17.0, 38.5, 2.5   # printed base shroud (cage, TPU): a square sleeve 1 off the base's 75 square faces, 2.5 wall, from the
+GUARD_IN, GUARD_W = 38.5, 2.5
+GUARD_TOP = math.floor(L2_BASE_H - (1.5 + (GUARD_IN + GUARD_W) * math.sqrt(2) * math.sin(math.radians(L2_NEG))) / math.cos(math.radians(L2_NEG)))   # its corners 1.5 out of the scan: 17 in the 96 deg mode, 23 in the 90 deg mode   # printed base shroud (cage, TPU): a square sleeve 1 off the base's 75 square faces, 2.5 wall, from the
                                                  # base plane to 17 up: its corners (r 58) are the highest it can stand outside the 96 deg scan (1.5 clear);
                                                  # the 8 of base above it is exposed with the head (DEFAULT; a ring left a gap a sharp edge drops into)
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])   # (0.966, 0, -0.259)
