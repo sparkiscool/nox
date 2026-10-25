@@ -660,6 +660,20 @@ OPEN_HALF, FACE_TOP = 84.0, 75.1                                   # box collar 
 FACE_C, X_EDGE_Z, Y_EDGE_Z, OPEN_X = 82.7, 12.8, 1.3, 95.5           # funnel v9 plain / v7 (dimensions G): half = 82.7 + seat z
 
 
+OWN_BLOCK = ("corner", "W", "tip", "arm", "root", "mot", "BF", "FT")   # ends in a piece drawn on its own (wheel corners, arms, belly frame, feet)
+
+
+def boss_funnel(a, b, od, p, ends=(True, True)):
+    """funnel clearance of the socket bosses at a rod's ends (od + 2 x (0.15 + NODE_WALL), SOCK_LEN from the node); ends: which
+    ends sit in a socket boss (a node or hub drawn from its sockets)"""
+    a, b = np.asarray(a, float), np.asarray(b, float); L = float(np.linalg.norm(b - a))
+    if L < 1e-6: return np.inf
+    u = (b - a) / L; s_ = min(SOCK_LEN, L / 2); ob = od + 2 * (0.15 + NODE_WALL); out = [np.inf]
+    if ends[0]: out.append(funnel_clear(a, a + u * s_, ob, p))
+    if ends[1]: out.append(funnel_clear(b - u * s_, b, ob, p))
+    return min(out)
+
+
 def funnel_clear(a, b, od, p):
     """smallest clearance (mm) of a rod to the seated funnel (catch centre on the funnel axis, p["seat_dz"] = bottom
     plate top in the seat frame): face planes half = 82.7 + seat z, the ±x faces from z 12.8, the ±y faces from z 1.3,
@@ -671,6 +685,8 @@ def funnel_clear(a, b, od, p):
         for sg in (1, -1):
             x = sg * q[:, ax]; inz = (z > z0) & (z < FACE_TOP) & (np.abs(q[:, 1 - ax]) < FACE_C + z)
             if inz.any(): c = min(c, float(((z[inz] + FACE_C - x[inz]) / math.sqrt(2) - od / 2).min()))
+            up = (z >= FACE_TOP) & (z < FACE_TOP + od / 2) & (np.abs(q[:, 1 - ax]) < FACE_C + FACE_TOP)   # centre over the top, its section dips past
+            if up.any(): c = min(c, float((np.hypot(x[up] - (FACE_C + FACE_TOP), z[up] - FACE_TOP) - od / 2).min()) if (x[up] > FACE_C + FACE_TOP - od / 2).any() else c)   # the top edge
     for yaw in np.radians((-5.0, 0.0, 5.0)):
         cy, sy_ = math.cos(yaw), math.sin(yaw)
         rx = np.abs(q[:, 0] * cy - q[:, 1] * sy_); ry = np.abs(q[:, 0] * sy_ + q[:, 1] * cy)
@@ -761,6 +777,7 @@ def guard_caps(m):
         for od in ods:
             if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
+            if boss_funnel(m.N[e["a"]], m.N[e["b"]], od, m.p, [not n_.startswith(OWN_BLOCK) for n_ in (e["a"], e["b"])]) < 1.0: break   # its socket bosses
             if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
             if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, obstacles_for(m, e)) < 1.0: break
             if od > WASH_OD and wash_len(m.N[e["a"]], m.N[e["b"]], m.info["motors"]) >= WASH_LEN: break
