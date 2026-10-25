@@ -54,6 +54,8 @@ C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 489.6
 L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
+L2_BASE_H = 25.0                                              # the L2 base (Spark 24 Oct): held and caged; the head above it is exposed
+L2_NEG = 6.0                                                  # scan kept clear in the 96 deg negative-angle mode (DEFAULT, alt 90 deg normal mode)
 MOTOR_DEG = (45, 135, 225, 315)
 HELD_NODES = ("Slo", "Shi", "SP", "apexM", "BF")                  # L2 mount sockets and the belly frame corners (pack holder)
 SOCK_BACK = 13.0                                            # socket centres behind the L2 base plane: 20 tube radius 10 + 3
@@ -74,6 +76,9 @@ SECTIONS = {
 }
 E_C, G_C, E_P, G_P = 120000.0, 5000.0, 2780.0, 1000.0
 SIG_ALLOW, SOCKET_3, BUCKLE_SF = 600.0, 600.0, 1.5
+SOCKET_D, SOCKET_D_MAX = 20.0, 30.0                          # socket depth: 600 N per 3.0 rod at 20 deep (E), scaled with OD and depth; a node or hub
+                                                              # may draw a socket up to 30 deep where its rod needs it (DEFAULT): the gate, deeper ones listed
+SOCKET_CAP = SOCKET_3 * SOCKET_D_MAX / SOCKET_D / 3.0         # N per mm OD at the deepest socket
 DEFL_ALLOW, F_L2_MIN = 9.0, 100.0                              # crash deflection, L2 mode (L Sensor mounts)
 F_FIRST_MIN = 0.0                                           # cage's own lowest mode floor (set below after the trade)
 M_DRONE, V_HIT = 2.33e-3, 1000.0                            # t, mm/s
@@ -81,7 +86,7 @@ CRASH_TIE = 3.0                                             # nodes this close t
 CARBON_MIN = 33.0                                           # carbon break-even (CLAUDE.md): a shorter link is printed into its node
 NODE_G, CORNER_G = 2.0, 6.0                                 # (retired: nodes are sized from their rods) / corner node (E, g)
 NODE_WALL = 3.0                                             # printed node: socket bore OD + 0.3, wall 3 round it (CLAUDE.md attachments)
-PRINTED_NODES = ("NT", "NB", "NR", "TN", "TR", "KV", "KP", "FT", "MX")
+PRINTED_NODES = ("NT", "NB", "NR", "TN", "TR", "KV", "KP", "FT", "MX", "XJ", "SM")
 
 
 def node_size(od):
@@ -93,7 +98,7 @@ def node_mass_g(od):
     """printed PETG node at its drawn size, half filled (sockets, infill; E)"""
     return 1.27e-3 * 0.5 * node_size(od) ** 3
 
-TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "nose_x", "top_spider")
+TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "top_spider")   # no nose cross: it would sit in the L2 scan
 # retired from the search (24 Oct, system v3): keels (prop guard), v_diag (the cameras), strut2 (funnel), spokes_hi (motor bells): off
 
 
@@ -128,7 +133,20 @@ def ring_positions(dm, rear_x=None):
     return out
 
 
+_GEOM_CACHE = {}
+
+
 def geometry(p, topo, sizes=None):
+    """cached on the layout (positions do not depend on the sizes); returns copies"""
+    key = json.dumps([p, topo], sort_keys=True, default=float)
+    if key not in _GEOM_CACHE:
+        if len(_GEOM_CACHE) > 64: _GEOM_CACHE.clear()
+        _GEOM_CACHE[key] = _geometry(p, topo)
+    N, M, fixed, mass, info = _GEOM_CACHE[key]
+    return {k: v.copy() for k, v in N.items()}, list(M), set(fixed), dict(mass), info
+
+
+def _geometry(p, topo, sizes=None):
     """nodes {name: xyz}, members [(name, a, b, group, kind)], fixed node names, mass {node: t}, extra info.
     kind: 'rod' (group sized), 'arm' (PETG box), 'link' (rigid), 'pnode' (printed node post, PETG 10 x 10)."""
     dm, xc, wz, xB, zB = p["dm"], p["xc"], p["wz"], p["xB"], p["zB"]
@@ -258,31 +276,28 @@ def geometry(p, topo, sizes=None):
                 mem(f"brace m{k}", f"tipb{k}", f"Shi{sy:+d}", "l2_braces")      # arm tip underside up to the upper socket
                 mem(f"bracelo m{k}", f"tipt{k}", f"Slo{sy:+d}", "l2_braces")    # arm tip top down to the lower socket (crossed)
                 mem(f"bracedg m{k}", f"tipb{k}", f"Slo{sy:+d}", "l2_braces")    # diagonal: no four-bar
-    # nose box round the L2 and the front camera: 4 nodes 3 + rod ahead of them, longerons back to the front vertices
-    lx = np.array([math.cos(math.radians(L2_TILT)), 0, -math.sin(math.radians(L2_TILT))])
-    Bv = np.array([xB, 0, zB])
-    corners_l2 = [Bv + lx * a + np.array([0, b, 0]) + A * c for a in (-37.5, 37.5) for b in (-37.5, 37.5) for c in (0.0, 39.0)] + [Bv + A * 65]
-    l2x = max(q[0] for q in corners_l2); l2zmax = max(q[2] for q in corners_l2); l2zmin = min(q[2] for q in corners_l2)
-    xn = max(l2x, p.get("cam_front", xB)) + NOSE_GAP
-    ztn = max(l2zmax, p.get("cam_top", zB + 60)) + NOSE_GAP; zbn = min(l2zmin, p.get("cam_bot", l2zmin)) - NOSE_GAP
-    ny = p.get("nose_y", NOSE_Y)                                      # wide enough for the two front cameras beside the L2
+    # nose collar round the L2 base (Spark 24 Oct: the 25 base is held and caged; above it the L2 is exposed and nothing
+    # may enter the scan, 96 deg negative-angle mode about the axis 15 deg below +x): 4 corner nodes in the L2 frame at
+    # local up ±hu (the base and the cameras inside) and y ±ny, set back along the axis until they sit NOSE_GAP behind
+    # the scan surface (a cone of 90 + L2_NEG deg from the top of the base); a rear-bottom bar behind the lugs
+    Bv = np.array([xB, 0, zB]); O = Bv + A * L2_BASE_H
+    ny = p.get("nose_y", NOSE_Y); hu = max(37.5 + NOSE_GAP, p.get("cam_hu", 0.0))
+    r_c = math.hypot(hu, ny); h_n = L2_BASE_H - r_c * math.tan(math.radians(L2_NEG)) - NOSE_GAP / math.cos(math.radians(L2_NEG))
+    Yv = np.array([0.0, 1.0, 0.0])
     for sy in (1, -1):
-        node(f"NT{sy:+d}", (xn, ny * sy, ztn)); node(f"NB{sy:+d}", (xn, ny * sy, zbn))
+        node(f"NT{sy:+d}", Bv + A * h_n + UP_B * hu + Yv * ny * sy); node(f"NB{sy:+d}", Bv + A * h_n - UP_B * hu + Yv * ny * sy)
         mem(f"nose vert {sy:+d}", f"NT{sy:+d}", f"NB{sy:+d}", "nose")
-    # rear-bottom bar under the L2's rear-bottom: an edge from behind and below meets it before the L2
-    xnr = min(q[0] for q in corners_l2 if q[2] <= l2zmin + 15.0) - NOSE_GAP
     for sy in (1, -1):
-        node(f"NR{sy:+d}", (xnr, ny * sy, zbn)); mem(f"nose rail {sy:+d}", f"NB{sy:+d}", f"NR{sy:+d}", "nose")
+        node(f"NR{sy:+d}", Bv - A * (SOCK_BACK + 6.0) - UP_B * hu + Yv * ny * sy); mem(f"nose rail {sy:+d}", f"NB{sy:+d}", f"NR{sy:+d}", "nose")
         mem(f"nose rear lo {sy:+d}", f"Slo{sy:+d}", f"NR{sy:+d}", "nose")
     mem("nose rear bar", "NR+1", "NR-1", "nose")
     mem("nose top", "NT+1", "NT-1", "nose"); mem("nose bot", "NB+1", "NB-1", "nose")
-    if topo["nose_x"]:
-        mem("nose x1", "NT+1", "NB-1", "nose_x"); mem("nose x2", "NT-1", "NB+1", "nose_x")
+    xn, ztn, zbn = float(N["NT+1"][0]), float(N["NT+1"][2]), float(N["NB+1"][2])
     for vn, sy in (("V0", 1), ("V7", -1)):
         mem(f"longeron hi {sy:+d}", f"{vn}hi", f"NT{sy:+d}", "nose"); mem(f"longeron lo {sy:+d}", f"{vn}lo", f"NB{sy:+d}", "nose")
         mem(f"nose side dg {sy:+d}", f"{vn}hi", f"NB{sy:+d}", "nose")
         mem(f"mount hi {sy:+d}", f"Shi{sy:+d}", f"NT{sy:+d}", "nose_mount"); mem(f"mount lo {sy:+d}", f"Slo{sy:+d}", f"NB{sy:+d}", "nose_mount")
-        mem(f"mount dg {sy:+d}", f"Shi{sy:+d}", f"NB{sy:+d}", "nose_mount")
+        mem(f"mount dg {sy:+d}", f"NR{sy:+d}", f"NT{sy:+d}", "nose_mount")   # side panel diagonal (the socket-to-front diagonal would cross the camera)
     # top: node over the thrust centre on a 4-leg pyramid from the top plate, spider to the upper ring vertices
     # pyramid "plate": 4 legs from the top plate corners; "rear": the hub sits under the rear disks (layout A), so the
     # top node stands on a rear tower (top plate rear corners + rear arm roots to TR behind the disks) tied to TN
@@ -312,9 +327,12 @@ def geometry(p, topo, sizes=None):
             mem(f"skirt side {sy:+d}", f"rhubB{sy:+d}", "KP3_25" if sy > 0 else "KP3_75", "skirt_ties")
         if "TR" in N:
             mem("tower post", "KP3_50", "TR", "pyramid")
-    if topo["top_spider"]:
+    if topo["top_spider"]:                                           # spider with a mid ring: each leg braced at half length (buckling, 35 g)
         for r in vx:
-            mem(f"spider {r[0]}", "TN", f"{r[0]}hi", "top")
+            node(f"SM{r[0]}", (N["TN"] + N[f"{r[0]}hi"]) / 2)
+            mem(f"spider {r[0]}", "TN", f"SM{r[0]}", "top"); mem(f"spider out {r[0]}", f"SM{r[0]}", f"{r[0]}hi", "top")
+        for i_, r in enumerate(vx):
+            mem(f"spider ring {r[0]}", f"SM{r[0]}", f"SM{vx[(i_ + 1) % len(vx)][0]}", "top")
         for sy in (1, -1):                                            # only where it stays clear of the swept band (a low nose top dives through it)
             if prop_clear(N["TN"], N[f"NT{sy:+d}"], 3.0, mot) >= GUARD_GAP:
                 mem(f"spider nose{'+' if sy > 0 else '-'}", "TN", f"NT{sy:+d}", "top")
@@ -360,8 +378,56 @@ def geometry(p, topo, sizes=None):
             for i_ in range(len(chain) - 1):                          # a link under the carbon break-even is printed into the mast node block
                 short_ = np.linalg.norm(N[chain[i_ + 1]] - N[chain[i_]]) < CARBON_MIN
                 mem(f"mast {i_}", chain[i_], chain[i_ + 1], "pyramid", "link" if short_ else "rod")
+    join_crossings(N, M)
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
+
+
+JOIN_D = 14.0                                                   # rods (or a rod and a node) closer than this would clash: one printed cross node
+
+
+def _seg_closest(p1, q1, p2, q2):
+    d1, d2, r = q1 - p1, q2 - p2, p1 - p2
+    a, e, f, c, b = d1 @ d1, d2 @ d2, d2 @ r, d1 @ r, d1 @ d2
+    den = a * e - b * b
+    s = float(np.clip((b * f - c * e) / den, 0, 1)) if den > 1e-9 else 0.0
+    t = float(np.clip((b * s + f) / e, 0, 1)); s = float(np.clip((b * t - c) / a, 0, 1))
+    return float(np.linalg.norm(p1 + s * d1 - (p2 + t * d2))), s, t
+
+
+def join_crossings(N, M):
+    """a node lying on a rod's run splits the rod there; two rods crossing within JOIN_D share a new printed node "XJ<k>"
+    at the midpoint of their closest points (each rod kinks through it); repeated until no clash is left"""
+    def split(i, nn, tag):
+        name, a, b, group, kind = M[i]
+        M[i] = (f"{name} {tag}1", a, nn, group, kind); M.append((f"{name} {tag}2", nn, b, group, kind))
+    k_ = 0
+    for _ in range(60):
+        changed = False
+        rods = [i for i, m_ in enumerate(M) if m_[4] == "rod"]
+        used = {n_ for m_ in M if m_[4] in ("rod", "arm") for n_ in (m_[1], m_[2])}
+        for i in rods:                                                    # a node on a rod
+            name, a, b, group, kind = M[i]; pa, pb = N[a], N[b]; u = pb - pa; L2_ = u @ u
+            names_ = [n_ for n_ in used if n_ not in (a, b)]
+            Q = np.array([N[n_] for n_ in names_]); t = np.clip((Q - pa) @ u / L2_, 0, 1)
+            dl = np.linalg.norm(pa + t[:, None] * u - Q, axis=1)
+            ok_ = (dl < JOIN_D / 2) & (np.linalg.norm(Q - pa, axis=1) > JOIN_D) & (np.linalg.norm(Q - pb, axis=1) > JOIN_D)
+            if ok_.any():
+                split(i, names_[int(np.argmin(np.where(ok_, dl, np.inf)))], "j"); changed = True
+            if changed: break
+        if changed: continue
+        for x, i in enumerate(rods):                                      # two rods crossing
+            for j in rods[x + 1:]:
+                ni, ai, bi = M[i][:3]; nj, aj, bj = M[j][:3]
+                if {ai, bi} & {aj, bj}: continue
+                d, s, t = _seg_closest(N[ai], N[bi], N[aj], N[bj])
+                Li, Lj = np.linalg.norm(N[bi] - N[ai]), np.linalg.norm(N[bj] - N[aj])
+                if d < JOIN_D and JOIN_D < s * Li < Li - JOIN_D and JOIN_D < t * Lj < Lj - JOIN_D:
+                    pi_ = N[ai] + s * (N[bi] - N[ai]); pj_ = N[aj] + t * (N[bj] - N[aj])
+                    nn = f"XJ{k_}"; k_ += 1; N[nn] = (pi_ + pj_) / 2
+                    split(i, nn, "x"); split(j, nn, "x"); changed = True; break
+            if changed: break
+        if not changed: break
 
 
 # ---------------------------------------------------------------- beam FE
@@ -513,7 +579,9 @@ def structural_members(model):
         for n_ in (model.el[i]["a"], model.el[i]["b"]): by_node.setdefault(n_, []).append(i)
     def is_joint(n_):
         same = [i for i in by_node.get(n_, [])]
-        return n_ in model.fixed or deg.get(n_, 0) != 2 or len(same) != 2   # a hub (fixed) node always ends a run
+        if n_ in model.fixed or deg.get(n_, 0) != 2 or len(same) != 2: return True   # a hub (fixed) node always ends a run
+        u_ = [np.subtract(model.N[model.el[i]["b"] if model.el[i]["a"] == n_ else model.el[i]["a"]], model.N[n_]) for i in same]
+        return float(-u_[0] @ u_[1]) < math.cos(math.radians(10.0)) * np.linalg.norm(u_[0]) * np.linalg.norm(u_[1])   # a corner (> 10 deg kink) ends a run
     for i in rods:
         if i in used: continue
         chain = [i]; used.add(i)
@@ -595,6 +663,10 @@ def obstacle_clear(a, b, od, obstacles):
     if not obstacles: return np.inf
     t = np.linspace(0, 1, 100)[:, None]; q = np.asarray(a, float) + t * (np.asarray(b, float) - np.asarray(a, float)); c = np.inf
     for o in obstacles:
+        if "field" in o:                                              # the L2 scan cone: clearance behind its surface
+            O_, A_, ng_ = np.asarray(o["field"][0], float), np.asarray(o["field"][1], float), math.radians(o["field"][2])
+            d_ = q - O_; mg_ = -(d_ @ A_) * math.cos(ng_) - np.sqrt(np.maximum((d_ ** 2).sum(1) - (d_ @ A_) ** 2, 0)) * math.sin(ng_)
+            c = min(c, float(mg_.min() - od / 2)); continue
         if "pts" in o:
             P_ = np.asarray(o["pts"], float); ab = np.asarray(b, float) - np.asarray(a, float)
             s_ = np.clip((P_ - a) @ ab / max(ab @ ab, 1e-9), 0, 1)
@@ -692,7 +764,7 @@ def _indices(m, mr, runs):
     rod = sock = arm = 0.0
     for (N_, sg), e in zip(mr, m.el):
         if e["kind"] == "rod":
-            rod = max(rod, sg / SIG_ALLOW); sock = max(sock, abs(N_) / (SOCKET_3 * e["P"]["od"] / 3.0))
+            rod = max(rod, sg / SIG_ALLOW); sock = max(sock, abs(N_) / (SOCKET_CAP * e["P"]["od"]))
         elif e["kind"] == "arm":
             arm = max(arm, sg / 51.0)
     buck = 0.0
@@ -761,7 +833,7 @@ def evaluate(p, topo, sizes, detail=False):
         if e["kind"] == "arm": Sg[ie] = abs(Nax[ie]) / P["A"] + My * (P["h"] / 2) / P["Iy"] + Mz * (P["b"] / 2) / P["Iz"]
         else: Sg[ie] = abs(Nax[ie]) / P["A"] + np.hypot(My, Mz) * P["c"] / max(P["Iy"], 1e-9)
     is_rod = np.array([e["kind"] == "rod" for e in m.el]); is_arm = np.array([e["kind"] == "arm" for e in m.el])
-    cap = np.array([SOCKET_3 * e["P"].get("od", 3.0) / 3.0 for e in m.el])
+    cap = np.array([SOCKET_CAP * e["P"].get("od", 3.0) for e in m.el])
     rod_ix = (Sg[is_rod] / SIG_ALLOW).max(axis=0); sock_ix = (abs(Nax[is_rod]) / cap[is_rod, None]).max(axis=0)
     arm_ix = (Sg[is_arm] / 51.0).max(axis=0)
     buck_ix = np.zeros(nc)
@@ -794,6 +866,11 @@ def evaluate(p, topo, sizes, detail=False):
         res["cases"][cname] = r
         for key in ("rod", "socket", "buckle", "arm"):
             g[f"{cname} {key}"] = ix[key] / (lim if key == "socket" else mlim) - 1
+    deep = {}                                                        # sockets that need more than SOCKET_D: depth per rod (requirement)
+    need = (abs(Nax[is_rod]) / (cap[is_rod, None] * SOCKET_D / SOCKET_D_MAX)).max(axis=1)
+    for k_, (i_, v_) in enumerate(zip(np.flatnonzero(is_rod), need)):
+        if v_ > 1.0: deep[m.el[i_]["name"]] = round(float(SOCKET_D * v_), 1)
+    res["deep_sockets"] = deep
     res["breaking_order"] = dict(node=crash_node, arm_vs_node=crash_member / max(crash_node, 1e-9), rod=crash_rod,
                                  node_first=crash_member * 1.5 <= crash_node and crash_rod * NODE_FUSE <= 1.0 + 1e-9,
                                  joint_req_N={k: 1.5 * v / max(crash_node, 1e-9) for k, v in held_req.items()})   # held socket at <= 1 / 1.5 of the worst node index
@@ -943,7 +1020,7 @@ def run_required(m, res, runs):
         Nall, Mall = np.array(Nall), np.array(Mall)
         choice = ORDER[-1]
         for sname in ORDER:
-            S = SECTIONS[sname]; cap = SOCKET_3 * S["od"] / 3.0; Pcr = math.pi ** 2 * E_C * S["I"] / L ** 2
+            S = SECTIONS[sname]; cap = SOCKET_CAP * S["od"]; Pcr = math.pi ** 2 * E_C * S["I"] / L ** 2
             sig = (abs(Nall) / S["A"] + Mall * (S["od"] / 2) / S["I"]) / SIG_ALLOW
             ok = (sig / mlim).max() <= 1.0 and (abs(Nall) / cap / lim).max() <= 1.0 and (BUCKLE_SF * np.maximum(-Nall, 0).max(axis=0) / Pcr / mlim).max() <= 1.0
             if ok: choice = sname; break
@@ -959,7 +1036,7 @@ def run_need(m, res, runs, p, topo, sizes):
     for run in runs:
         worst = 0.0
         L = sum(m.el[i]["L"] for i in run); P = m.el[run[0]]["P"]; Pcr = math.pi ** 2 * P["E"] * P["Iy"] / L ** 2
-        cap = SOCKET_3 * P.get("od", 3.0) / 3.0
+        cap = SOCKET_CAP * P.get("od", 3.0)
         Nmin = None
         for i in run:
             e = m.el[i]; fl = e["kl"] @ (e["T"] @ U[e["dofs"]])

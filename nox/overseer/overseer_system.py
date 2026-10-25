@@ -58,8 +58,8 @@ MOTOR_H = 26.0                           # X2216 body (E)
 PROP_Z = PAD_Z + 37.0                    # prop hub mid plane (E)
 PROP_R, BLADE = 127.0, 5.0
 L2_TILT = 105.0                          # L2 axis turned 105 deg from +z toward +x: 15 deg below the x axis (Spark 24 Oct)
-L2_NEG = 0.0                             # normal mode (90 deg hemisphere) kept clear (DEFAULT): the 96 deg negative-angle mode would
-                                         # see the far ends of the cage front rods unless the L2 moves ~20 further out
+L2_NEG = 6.0                             # scan kept clear in the 96 deg negative-angle mode (Spark 24 Oct: "account for the 15 degrees and the scan range")
+L2_BASE_H = 25.0                         # the L2 base (Spark 24 Oct): held and caged; everything above it is exposed and nothing enters the scan
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])   # (0.966, 0, -0.259)
 CAM_HFOV, CAM_VFOV = 73.0, 89.0          # front camera portrait, 4:3 from 102 diag (E)
 DOWN_HFOV, DOWN_VFOV = 89.0, 73.0
@@ -330,11 +330,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     cb = g["cam"].bounds
     P = dict(dm=dm, xc=-dc, wz=WHEEL_Z, xB=xB, zB=zB, cam_top=float(max(cb[1][2], g["cam_bracket"].bounds[1][2])), cam_front=float(cb[1][0]),
              cam_bot=float(min(cb[0][2], g["cam_bracket"].bounds[0][2])), nose_y=float(max(co.NOSE_Y, np.abs(cb[:, 1]).max() + co.NOSE_GAP)),
+             cam_hu=float(np.abs((np.vstack([g["cam"].vertices, g["cam_bracket"].vertices]) - B) @ co.UP_B).max() + co.NOSE_GAP),
              obstacles=[dict(c=[float(v) for v in cm_["c"] + cm_["fwd"] * xc_], fwd=[float(v) for v in cm_["fwd"]], left=[float(v) for v in cm_["left"]],
                              half=hf_) for cm_ in g["cams"] for xc_, hf_ in ((-1.75, [2.75, 20.0, 20.0]), (5.0, [4.0, 6.0, 6.0]))]
                        + [dict(c=[2.5, 0.0, 22.25], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[98.0, 60.2, 24.4], skip_fixed=True, skip_nodes=["arm"]),   # cameras (plate + board, lens) and the plate sandwich (C)
                           dict(c=[float(v) for v in B + A * 19.5], fwd=[float(v) for v in A], left=[0.0, 1.0, 0.0], half=[19.5, 37.5, 37.5], skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # the L2 body (75 x 75 x 39, M)
-                          dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"])],   # and its dome (vertices)
+                          dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
+                          dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
              feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose_x": "t8"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
@@ -385,18 +387,19 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
 
 
 def l2_clear_margin(g, B, solid_items):
-    """smallest margin (mm) of every drone point to the L2 field: points must lie behind the base plane by
-    sin(6 deg) x distance (negative-angle mode); the seat and the block behind it are the mount and skipped."""
-    worst = (None, np.inf)
+    """smallest margin (mm) of every drone point to the L2 scan: outside the cone of 90 + L2_NEG deg about the axis from
+    the top of the base (Spark 24 Oct: the 25 base is the mount, the scan starts above it); the seat is the mount and skipped."""
+    worst = (None, np.inf); O_ = B + A * L2_BASE_H; ng_ = math.radians(L2_NEG)
     for name, m in solid_items:
         p = pts(m, 2500)
         if name == "props":
             p = np.vstack([p + [0, 0, BLADE], p - [0, 0, BLADE]])
-        d = p - B; depth = d @ A; dist = np.linalg.norm(d, axis=1)
+        d = p - O_; depth = d @ A
         if name == "apex":
             radial = np.linalg.norm(d - np.outer(depth, A), axis=1)
-            keep = ~((depth > -5.5) & (radial < 40.0)); d, depth, dist = d[keep], depth[keep], dist[keep]   # the seat itself
-        margin = -depth - math.sin(math.radians(L2_NEG)) * dist
+            keep = ~((depth > -L2_BASE_H - 5.5) & (radial < 40.0)); d, depth = d[keep], depth[keep]   # the seat itself
+        radial = np.sqrt(np.maximum((d ** 2).sum(1) - depth ** 2, 0))
+        margin = -depth * math.cos(ng_) - radial * math.sin(ng_)
         i = int(np.argmin(margin))
         if margin[i] < worst[1]: worst = (name, margin[i])
     return worst
@@ -457,7 +460,7 @@ def solve_xB(g_fn, zB):
         mid = (lo + hi) / 2; g = g_fn(mid)
         items = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.util.concatenate(g["motors"])),
                  ("arms", trimesh.util.concatenate(g["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g["apex"]),
-                 ("cage up", g["cage_up"]), ("cage low", g["cage_low"]), ("wheels", trimesh.util.concatenate(g["wheels"])), ("front cameras", g["cam"]), ("cam bracket", g["cam_bracket"])]
+                 ("cage up", g["cage_up"]), ("cage low", g["cage_low"]), ("cage nose", g["cage_nose"]), ("wheels", trimesh.util.concatenate(g["wheels"])), ("front cameras", g["cam"]), ("cam bracket", g["cam_bracket"])]
         _, mg = l2_clear_margin(g, g["B"], items)
         if mg >= 1.0 and guard_v_gap(g) >= GUARD_GAP - 0.05: hi = mid
         else: lo = mid
@@ -689,12 +692,12 @@ allitems = [("props", trimesh.util.concatenate(g["props"])), ("motors", trimesh.
             ("cartridge", g["cart"]), ("pods", trimesh.util.concatenate([g["cam_pod"], g["flow_pod"]])), ("feet", trimesh.util.concatenate(g["feet"])),
             ("Pi", PI), ("rear wing", trimesh.util.concatenate([PDB, UBEC, BUCK, RX]))]
 nm, mg = l2_clear_margin(g, g["B"], allitems)
-say(f"L2 field ({90 + 2 * L2_NEG:.0f} deg, {'negative-angle' if L2_NEG else 'normal'} mode kept clear): closest {nm} {mg:.1f} behind it (C, > 0 = clear)")
-# blocked share of the L2 field by the thin nose rods (allowed: CLAUDE.md "clear view": thin rods only, share reported)
+say(f"L2 scan ({90 + L2_NEG:.0f} deg from the axis, from the top of its {L2_BASE_H:.0f} base; Spark 24 Oct: the head exposed, nothing in the scan): closest {nm} {mg:.1f} outside it (C, > 0 = clear)")
+# blocked share of the L2 scan by any cage rod (must be 0: Spark 24 Oct)
 rng = np.random.default_rng(1); dirs = rng.normal(size=(40000, 3)); dirs /= np.linalg.norm(dirs, axis=1)[:, None]
-dirs = dirs[dirs @ A > 0]; origin = g["B"] + A * 30                               # field hemisphere about the L2 axis, from its head (E)
+dirs = dirs[dirs @ A > -math.sin(math.radians(L2_NEG))]; origin = g["B"] + A * (L2_BASE_H + 15)   # the scan from the head (E)
 blocked = np.zeros(len(dirs), bool)
-for k in g["nose_keys"]:
+for k in g["rods"]:
     a_, b_, od_, _, _ = g["rods"][k]; a_, b_ = np.asarray(a_, float), np.asarray(b_, float)
     u_ = b_ - a_; w0 = origin - a_; aa = dirs @ dirs.T[:, :1].T if False else None
     # closest distance between each ray (origin + t d, t > 0) and the segment
@@ -702,7 +705,7 @@ for k in g["nose_keys"]:
     den = uu - ud ** 2; sc_ = np.clip((ud * dw - uw) / np.maximum(den, 1e-9), 0, 1); tc = np.maximum(sc_ * ud - dw, 0)
     dist = np.linalg.norm((w0[None, :] + tc[:, None] * dirs) - sc_[:, None] * u_[None, :], axis=1)
     blocked |= dist < od_ / 2
-say(f"L2 field blocked by the thin nose rods: {blocked.mean() * 100:.1f} % of the hemisphere (C, rays from the L2 head)")
+say(f"L2 scan blocked by cage rods: {blocked.mean() * 100:.2f} % (C, rays from the L2 head; 0 required)")
 nose = max(g["l2"].bounds[1][0], g["cam"].bounds[1][0], g["cage_nose"].bounds[1][0])
 say(f"length: rear prop tips x {dm - HALF - PROP_R:.0f} to the nose x {nose:.0f} ({nose - (dm - HALF - PROP_R):.0f}); width 533; "
     f"height {max(g['cam_bracket'].bounds[1][2], g['cam'].bounds[1][2], PROP_Z) - g['feet'][0].bounds[0][2]:.0f}")
@@ -836,7 +839,7 @@ _tz, _bz = float(TOP.bounds[1][2]), float(BOTTOM.bounds[0][2])
 ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7}),
           dict(name="Pi 5 SD card", part="electronics", **{"from": [-42.5, 0.0, 23.5]}, dir=[-1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
           dict(name="Pi 5 USB / Ethernet end", part="electronics", **{"from": [42.5, 0.0, 32.0]}, dir=[1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
-          dict(name="L2 cable (base notch, local -X)", part="L2", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx]}, dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
+          dict(name="L2 cable (base notch, local -X)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx]}, dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
           dict(name="XT60 lead up through the sled", part="receiver XT60", **{"from": [float(v) for v in (g["xt60"].bounds.mean(0) * [1, 1, 0] + [0, 0, g["xt60"].bounds[1][2]])]}, dir=[0, 0, 1], length_mm=30, tool={"type": "cylinder", "d": 9})]
 ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["lens"] - c_["fwd"] * 12]},
                 dir=[float(v) for v in c_["up"]], length_mm=30, tool={"type": "box", "w": 10, "h": 6}) for c_ in g["cams"]]
@@ -851,7 +854,7 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "receiver XT60", round(abs(g["receiver"].intersection(g["xt60"]).volume) * 1.05 + 1.0, 1)],   # the XT60 panel mount in its receiver pocket
                           ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
-           openings=[dict(part="L2", axis=[float(v) for v in co.A], half_angle_deg=90.0, min_mm=0.0, skip_probes=True),   # its field
+           openings=[dict(part="L2 base", axis=[float(v) for v in co.A], half_angle_deg=80.0, min_mm=-1000.0, skip_probes=True),   # the head sits on it there (the head is exposed, Spark 24 Oct)
                      *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      *[dict(part=pt_, axis=[sx_, 0, 0], half_angle_deg=45.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60") for sx_ in (1, -1)],   # the set's ends face the funnel pit walls (0.7 to the opening): a member shielding them up to 45 deg would sit in the wall (DEFAULT, alt a shorter set, latch session)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
@@ -859,7 +862,8 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
-    dict(name="L2", trimesh=g["l2"], role="protected", mass_g=230, tag="P"),
+    dict(name="L2 base", trimesh=g["l2"].slice_plane(g["B"] + A * L2_BASE_H, -A, cap=True), role="protected", mass_g=100, tag="E"),   # the 25 base: held and caged
+    dict(name="L2 head", trimesh=g["l2"].slice_plane(g["B"] + A * L2_BASE_H, A, cap=True), role="bought", mass_g=130, tag="E"),        # exposed (Spark 24 Oct: nothing in the scan)
     dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
     dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="P", swap=True),
     dict(name="cartridge", trimesh=g["cart"], role="protected", mass_g=round(SWAP_G - 650, 1), tag="M", swap=True),
