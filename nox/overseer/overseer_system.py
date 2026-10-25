@@ -383,8 +383,10 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         guard_.append(rod(c_, Ng[n_], 3.0))
     g["base_guard"] = trimesh.util.concatenate(guard_)
     ring_nodes += guard_                                                                                         # (cage up: printed with the nodes)
-    ring_nodes += [rod(Ng[a_], Ng[b_], 4.0) for nm_, a_, b_, grp_, kd_ in Mg if kd_ == "link" and grp_ not in (None, "pyramid")]   # cage pieces under the
-                                                                                  # 33 carbon break-even: printed struts (8 round) between their nodes
+    HUB_N = ("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc", "SP")      # cage pieces under the 33 carbon break-even: printed struts (8 round),
+    short_ = [(a_, b_) for nm_, a_, b_, grp_, kd_ in Mg if kd_ == "link" and grp_ not in (None, "pyramid")]   # with the hub or apex block where they end
+    hub_links = [rod(Ng[a_], Ng[b_], 4.0) for a_, b_ in short_ if any(n_.startswith(HUB_N) for n_ in (a_, b_))]  # on one, else with the cage nodes
+    ring_nodes += [rod(Ng[a_], Ng[b_], 4.0) for a_, b_ in short_ if not any(n_.startswith(HUB_N) for n_ in (a_, b_))]
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)
@@ -397,7 +399,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
-    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"])
+    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"] + hub_links)
     low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring", "skid_belly")]
     nose_keys = [k for k, v in rods.items() if v[3] in NOSE_GROUPS or k in ("spider nose+", "spider nose-")]
     g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
