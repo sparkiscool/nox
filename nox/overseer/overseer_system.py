@@ -35,7 +35,8 @@ if SYS_PICK:
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
-MAST_X_MIN = 100.5 + 10.0 + 1.5                                # the mast clears the plate stack front (x 100.5) at 20 od: it stands there when the thrust centre is over the plates
+MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
+                                                              # the mast stands there when the thrust centre is further back
 M_DRONE = 3000.0                                            # crash mass, updated to the assembled mass every balance (g)
 NOSE_GROUPS = ("nose", "nose_x", "nose_mount")                      # thin rods allowed in the L2 field (blocked share reported)
 
@@ -61,6 +62,8 @@ PROP_R, BLADE = 127.0, 5.0
 L2_TILT = 105.0                          # L2 axis turned 105 deg from +z toward +x: 15 deg below the x axis (Spark 24 Oct)
 L2_NEG = 6.0                             # scan kept clear in the 96 deg negative-angle mode (Spark 24 Oct: "account for the 15 degrees and the scan range")
 L2_BASE_H = 25.0                         # the L2 base (Spark 24 Oct): held and caged; everything above it is exposed and nothing enters the scan
+GUARD_A, GUARD_R, GUARD_T = 15.5, 41.5, 3.0   # printed base guard ring (cage): centre 15.5 up the base, 1 off its wall, 6 section; its top at 18.5 is the
+                                              # highest a ring can sit outside the 96 deg scan (1.5 clear); the base above it is exposed with the head (DEFAULT)
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])   # (0.966, 0, -0.259)
 CAM_HFOV, CAM_VFOV = 73.0, 89.0          # front camera portrait, 4:3 from 102 diag (E)
 DOWN_HFOV, DOWN_VFOV = 89.0, 73.0
@@ -258,6 +261,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["sled"] = box(-dc - 89.65, -dc + 89.65, -76, 76, RT, RT + 4)          # over the receiver body (179.3), its bolts at x -84.7 / 0 / +78.3; 13.8 off the ±x faces (G (8) ≥ 9)
     xb_ = g["xt60"].bounds
     g["sled"] = g["sled"].difference(box(xb_[0][0] - 1, xb_[1][0] + 1, xb_[0][1] - 1, xb_[1][1] + 1, RT - 1, RT + 5))   # XT60 lead window (its top stands 3.5 over the mount plane)
+    g["sled"] = g["sled"].difference(union([cyl(4.5, RT - 1, RT + 5, *xy_) for xy_ in plate_bolts("bottom")]))   # driver holes under the bottom plate bolts (as the pan)
     g["cam_pod"] = box(-dc - 23, -dc + 23, 33.6, 72.5, PB + 16, RT)
     g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
     g["down_cam"] = trimesh.util.concatenate([box(-dc - 19, -dc + 19, 34, 72, PB + 14.4, PB + 16), cyl(6, PB + 6, PB + 14.4, -dc, 53)])
@@ -301,7 +305,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         Rc = np.eye(4); Rc[:3, :3] = cam_cover.R_cam(sy * CAM_YAW, CAM_PITCH, 0.0)
         board = box(-1, 1, -19, 19, -19, 19); lens = trimesh.creation.cylinder(6, 8, sections=32)
         lens.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); lens.apply_translation([5, 0, 0])
-        cam0 = trimesh.util.concatenate([board, lens]); plate0 = box(-4.5, -1.5, -20, 20, -20, 20)
+        cam0 = trimesh.util.concatenate([board, lens]); plate0 = box(-4.5, -1.5, -20, 20, -20, 20).difference(box(-5, -1, -6, 6, 17, 21))   # USB-C plug notch at the board top edge
         back_ = 0.0
         for _ in range(3):                                         # set back along -A until clear of the field
             C = B + up_b * CAM_H2 + np.array([0, sy * CAM_Y, 0]) - A * back_
@@ -365,6 +369,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print
         h_ = max(co.node_size(od_n.get(n_, 3.0)) for n_ in mx_) / 2; q_ = np.array([Ng[n_] for n_ in mx_])
         ring_nodes.append(box(q_[:, 0].min() - h_, q_[:, 0].max() + h_, -h_, h_, q_[:, 2].min() - h_, q_[:, 2].max() + h_))
+    Tg_ = np.eye(4); Tg_[:3, :3] = np.stack([[0.0, 1.0, 0.0], co.UP_B, A], 1); Tg_[:3, 3] = B + A * GUARD_A
+    guard_ = [trimesh.creation.torus(GUARD_R, GUARD_T, major_sections=96, minor_sections=16).apply_transform(Tg_)]   # base guard ring on posts to the
+    for n_ in ("NT+1", "NT-1", "NB+1", "NB-1"):                                                                  # four collar corner nodes
+        v_ = Ng[n_] - B; v_ = v_ - (v_ @ A) * A; v_ /= np.linalg.norm(v_)
+        guard_.append(rod(B + A * GUARD_A + v_ * GUARD_R, Ng[n_], GUARD_T))
+    g["base_guard"] = trimesh.util.concatenate(guard_)
+    ring_nodes += guard_                                                                                         # (cage up: printed with the nodes)
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)
@@ -574,6 +585,7 @@ dm = 80.0
 CAM_UP = CAM_UP_DEFAULT
 SCR = OUT; os.makedirs(SCR, exist_ok=True)
 FINAL_PASS = False
+set_wheel(float(os.environ.get("V3_WZ0", "-30")))                     # (a frozen recheck with SYS_RESIZE=0 keeps this wheel height)
 for it_sz in range(int(os.environ.get("SYS_RESIZE", "7"))):     # layout <-> cage sizing until the sizes stop changing
     for wz in np.arange(float(os.environ.get("V3_WZ0", "-30")), -60.0, -2.0):
         set_wheel(wz)
@@ -843,17 +855,38 @@ os.makedirs(OUT, exist_ok=True); json.dump({k_: [[n_, round(float(v_), 1)] for n
 say(f"contact allowances (per joint, M): cage/arms {len(JOINTS['arms'])} sockets {J_ALLOW['arms']} mm3, cage/apex + hubs {len(JOINTS['apex'])} sockets {J_ALLOW['apex']} mm3, "
     f"cage/sled {len(JOINTS['sled'])} clamps {J_ALLOW['sled']} mm3")
 # what must be reached without taking a part off (concept check): connectors, the SD card, the arm bolts (DEFAULT connector sides where unmeasured)
-_l2lx = np.array([math.cos(math.radians(L2_TILT)), 0.0, -math.sin(math.radians(L2_TILT))])            # L2 local x in the drone frame
+_l2lx = np.array([0.0, -1.0, 0.0])            # L2 local x in the drone frame: rolled 90 deg about its axis so the cable notch faces left, where the
+                                               # collar is 93 wide (44.5 up and down, where the nose bars sit; DEFAULT, the scan is round)
 _tz, _bz = float(TOP.bounds[1][2]), float(BOTTOM.bounds[0][2])
 ACCESS = [dict(name="FC USB-C (side edge, DEFAULT)", part="electronics", **{"from": [22.0, -18.0, 10.0]}, dir=[0, -1, 0], length_mm=45, tool={"type": "box", "w": 12, "h": 7}),
-          dict(name="Pi 5 SD card", part="electronics", **{"from": [-42.5, 0.0, 23.5]}, dir=[-1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
-          dict(name="Pi 5 USB / Ethernet end", part="electronics", **{"from": [42.5, 0.0, 32.0]}, dir=[1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
-          dict(name="L2 cable (base notch, local -X)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx]}, dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
+          dict(name="Pi 5 SD card (front end)", part="electronics", **{"from": [42.5, 0.0, 23.5]}, dir=[1, 0, 0], length_mm=25, tool={"type": "box", "w": 12, "h": 3}),
+          dict(name="Pi 5 USB / Ethernet end (aft, DEFAULT: the spine hub sits ahead)", part="electronics", **{"from": [-42.5, 0.0, 32.0]}, dir=[-1, 0, 0], length_mm=35, tool={"type": "box", "w": 16, "h": 14}),
+          dict(name="L2 cable (base notch 5 up the base, local -X: left)", part="L2 base", **{"from": [float(v) for v in g["B"] - 37.5 * _l2lx + A * 5.0]},
+               dir=[float(v) for v in -_l2lx], length_mm=30, tool={"type": "cylinder", "d": 8}),
           dict(name="XT60 lead up through the sled", part="receiver XT60", **{"from": [float(v) for v in (g["xt60"].bounds.mean(0) * [1, 1, 0] + [0, 0, g["xt60"].bounds[1][2]])]}, dir=[0, 0, 1], length_mm=30, tool={"type": "cylinder", "d": 9})]
-ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["lens"] - c_["fwd"] * 12]},
+ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["c"] + c_["up"] * 19]},
                 dir=[float(v) for v in c_["up"]], length_mm=30, tool={"type": "box", "w": 10, "h": 6}) for c_ in g["cams"]]
-ACCESS += [dict(name=f"arm bolt {wh_} {i_}", part="plates", **{"from": [xy_[0], xy_[1], _tz if wh_ == "top" else _bz]}, dir=[0, 0, 1 if wh_ == "top" else -1], length_mm=70,
-                tool={"type": "cylinder", "d": 8}) for wh_ in ("top", "bottom") for i_, xy_ in enumerate(plate_bolts(wh_))]
+ACCESS += [dict(name=f"arm bolt {wh_} {i_}", part="plates", **{"from": [xy_[0], xy_[1], _tz if wh_ == "top" else _bz]}, dir=[0, 0, 1 if wh_ == "top" else -1], length_mm=60,
+                tool={"type": "cylinder", "d": 8}, **({"ignore": ["props"]} if wh_ == "top" else {}))   # 60 hex driver (DEFAULT); a prop over a bolt is turned aside by hand, never taken off
+           for wh_ in ("top", "bottom") for i_, xy_ in enumerate(plate_bolts(wh_))]
+if os.environ.get("SYS_DEBUG_FIT"):                                # what overlaps the apex and hubs beyond the rod-end sockets
+    own_ = dict(JOINTS["apex"])
+    rows_ = sorted(((overlap(rm_, g["apex"]) - own_.get(k_, 0.0), k_) for k_, rm_ in g["rod_meshes"].items()), reverse=True)[:8]
+    print("rods x apex beyond own socket:", [(k_, round(v_, 1)) for v_, k_ in rows_])
+    print("nodes x apex:", round(sum(overlap(n_, g["apex"]) for n_ in g["nodes"]), 1), "ring nodes x apex:", [(i_, np.round(n_.bounding_box.centroid, 1).tolist(), round(overlap(n_, g["apex"]), 1)) for i_, n_ in enumerate(g["ring_nodes"]) if overlap(n_, g["apex"]) > 1])
+    print("cage parts x apex:", [(nm_, round(overlap(m_, g["apex"]), 1)) for nm_, m_ in (("wheels", trimesh.util.concatenate(g["wheels"])), ("feet", trimesh.util.concatenate(g["feet"])), ("runners", trimesh.util.concatenate(g["runners"])), ("pan", g["pan"]))])
+    for nm_ in ("cage_up", "cage_low", "cage_nose"): print(nm_, "x apex", round(overlap(g[nm_], g["apex"]), 1))
+    print("sum own", round(sum(own_.values()), 1))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")); import system_check as sc_
+    named_ = dict(g["rod_meshes"]); named_.update({f"node {i_}": n_ for i_, n_ in enumerate(g["nodes"])})
+    named_.update({k_: g[k_] for k_ in ("sled", "cam_pod", "flow_pod", "pan", "apex", "receiver") if k_ in g})
+    named_.update({f"prop {i_}": p_ for i_, p_ in enumerate(g["props"])}); named_.update({f"hub {i_}": h_ for i_, h_ in enumerate(g["hubs"])})
+    named_.update({f"cam bracket": g["cam_bracket"]}); named_.update({f"runner {i_}": r_ for i_, r_ in enumerate(g["runners"])})
+    for ac_ in ACCESS:
+        tm_ = sc_.sweep_tool(ac_, None, None)[0]
+        hit_ = sorted(((overlap(tm_, m_), k_) for k_, m_ in named_.items() if not (k_.startswith("prop") and "props" in ac_.get("ignore", []))), reverse=True)[:4]
+        print("access", ac_["name"], [(k_, round(v_, 1)) for v_, k_ in hit_ if v_ > 0.5])
+    sys.exit(0)
 man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cg_tol_no_swap_mm=15.0, cage_margin_mm=3.0, n_dirs=1500,
            contact_pairs=[["cage", "arms", J_ALLOW["arms"]],                         # designed joints, summed per joint (above): rod ends in the arm sockets,
                           ["cage", "sled + pods + deck", J_ALLOW["sled"]],                 # the skid legs and belly bars through the sled and pod clamps,
@@ -871,7 +904,9 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
     dict(name="cage", trimesh=trimesh.util.concatenate(cage_parts), role="cage", mass_g=cage_g, cg=[float(v) for v in cage_cg], tag="E"),
     dict(name="props", trimesh=trimesh.util.concatenate([cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *xy, 64) for xy in g["motors_xy"]]), role="protected", mass_g=40, tag="E"),
     dict(name="motors", trimesh=trimesh.util.concatenate(g["motors"]), role="protected", mass_g=324, tag="P"),
-    dict(name="L2 base", trimesh=g["l2"].slice_plane(g["B"] + A * L2_BASE_H, -A, cap=True), role="protected", mass_g=100, tag="E"),   # the 25 base: held and caged
+    dict(name="L2 base", trimesh=g["l2"].slice_plane(g["B"] + A * (GUARD_A + GUARD_T), -A, cap=True), role="protected", mass_g=90, tag="E"),   # the base up to the guard ring top: caged
+    dict(name="L2 base top band", trimesh=g["l2"].slice_plane(g["B"] + A * (GUARD_A + GUARD_T), A, cap=True).slice_plane(g["B"] + A * L2_BASE_H, -A, cap=True),
+         role="bought", mass_g=10, tag="E"),                                                                                                  # 6.5 under the head: a guard there would sit in the scan (exposed with the head)
     dict(name="L2 head", trimesh=g["l2"].slice_plane(g["B"] + A * L2_BASE_H, A, cap=True), role="bought", mass_g=130, tag="E"),        # exposed (Spark 24 Oct: nothing in the scan)
     dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
     dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="P", swap=True),
