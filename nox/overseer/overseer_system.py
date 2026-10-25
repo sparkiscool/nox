@@ -940,9 +940,9 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["cage", "apex + hubs", J_ALLOW["apex"]],                        # rod ends in the hub and apex sockets, hub blocks on the pan,
                           ["plates", "apex + hubs", round(g["hub_plate_mm3"], 1)],         # hub blocks clamped on the plates,
                           ["arms", "apex + hubs", round(g["hub_arm_mm3"], 1)],             # front hub blocks seated on the front arm roots,
-                          ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "receiver XT60", round(abs(g["receiver"].intersection(g["xt60"]).volume) * 1.05 + 1.0, 1)],   # the XT60 panel mount in its receiver pocket
-                          ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
-                          ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
+                          ["pack", "cartridge", 0.5], ["cartridge", "receiver", 0.5], ["receiver", "receiver XT60", round(overlap(g["receiver"], g["xt60"]) * 1.05 + 1.0, 1)],   # the XT60 panel mount in its receiver pocket
+                          ["receiver", "sled + pods + deck", round(overlap(g["receiver"], g["sled"]) * 1.05 + 1.0, 1)],   # bolted to the sled underside
+                          ["apex + hubs", "cam brackets", round(overlap(g["apex"], g["cam_plate"]) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[*[dict(part=pt_, axis=[1.0, 0.0, 0.0], half_angle_deg=180.0, min_mm=-1000.0, skip_probes=True) for pt_ in ("L2 head", "L2 base top band")],
                      dict(part="L2 base", axis=[float(v) for v in co.A], half_angle_deg=45.0, min_mm=0.0, skip_probes=False),   # within 45 deg of its axis the head
                      # leads the base by ≥ 19.5 (a flat wall meets the head first): the base needs margin ≥ 0 there, 3 everywhere else; probes see the head's shadow
