@@ -418,17 +418,23 @@ def join_crossings(N, M):
                 split(i, names_[int(np.argmin(np.where(ok_, dl, np.inf)))], "j"); changed = True
             if changed: break
         if changed: continue
-        for x, i in enumerate(rods):                                      # two rods crossing
-            for j in rods[x + 1:]:
-                ni, ai, bi = M[i][:3]; nj, aj, bj = M[j][:3]
-                if {ai, bi} & {aj, bj}: continue
-                d, s, t = _seg_closest(N[ai], N[bi], N[aj], N[bj])
-                Li, Lj = np.linalg.norm(N[bi] - N[ai]), np.linalg.norm(N[bj] - N[aj])
-                if d < JOIN_D and JOIN_D < s * Li < Li - JOIN_D and JOIN_D < t * Lj < Lj - JOIN_D:
-                    pi_ = N[ai] + s * (N[bi] - N[ai]); pj_ = N[aj] + t * (N[bj] - N[aj])
-                    nn = f"XJ{k_}"; k_ += 1; N[nn] = (pi_ + pj_) / 2
-                    split(i, nn, "x"); split(j, nn, "x"); changed = True; break
-            if changed: break
+        if len(rods) > 1:                                                 # two rods crossing (all pairs at once)
+            A_ = np.array([N[M[i][1]] for i in rods]); B_ = np.array([N[M[i][2]] for i in rods])
+            ii, jj = np.triu_indices(len(rods), 1)
+            ends = np.array([[M[i][1], M[i][2]] for i in rods])
+            share = (ends[ii, 0] == ends[jj, 0]) | (ends[ii, 0] == ends[jj, 1]) | (ends[ii, 1] == ends[jj, 0]) | (ends[ii, 1] == ends[jj, 1])
+            p1, d1, p2, d2 = A_[ii], B_[ii] - A_[ii], A_[jj], B_[jj] - A_[jj]; r_ = p1 - p2
+            a_, e_, f_ = (d1 * d1).sum(1), (d2 * d2).sum(1), (d2 * r_).sum(1); c_, b_ = (d1 * r_).sum(1), (d1 * d2).sum(1)
+            den = a_ * e_ - b_ * b_
+            s_ = np.where(den > 1e-9, np.clip((b_ * f_ - c_ * e_) / np.where(den > 1e-9, den, 1), 0, 1), 0.0)
+            t_ = np.clip((b_ * s_ + f_) / e_, 0, 1); s_ = np.clip((b_ * t_ - c_) / a_, 0, 1)
+            P1 = p1 + s_[:, None] * d1; P2 = p2 + t_[:, None] * d2; dd = np.linalg.norm(P1 - P2, axis=1)
+            Li, Lj = np.sqrt(a_), np.sqrt(e_)
+            hit = (~share) & (dd < JOIN_D) & (s_ * Li > JOIN_D) & (s_ * Li < Li - JOIN_D) & (t_ * Lj > JOIN_D) & (t_ * Lj < Lj - JOIN_D)
+            if hit.any():
+                q = int(np.flatnonzero(hit)[0]); i, j = rods[ii[q]], rods[jj[q]]
+                nn = f"XJ{k_}"; k_ += 1; N[nn] = (P1[q] + P2[q]) / 2
+                split(i, nn, "x"); split(j, nn, "x"); changed = True
         if not changed: break
 
 
