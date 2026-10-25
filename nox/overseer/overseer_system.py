@@ -265,6 +265,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["sled"] = g["sled"].difference(union([cyl(4.5, RT - 1, RT + 5, *xy_) for xy_ in plate_bolts("bottom")]))   # driver holes under the bottom plate bolts (as the pan)
     g["cam_pod"] = box(-dc - 23, -dc + 23, 33.6, 72.5, PB + 16, RT)
     g["flow_pod"] = box(-dc - 15, -dc + 15, -62, -35, PB + 16, RT)
+    _bh = union([cyl(4.5, PB - 1.0, RT + 5.0, *xy_) for xy_ in plate_bolts("bottom")])   # driver holes under the bottom plate bolts through the pods
+    g["cam_pod"] = g["cam_pod"].difference(_bh); g["flow_pod"] = g["flow_pod"].difference(_bh)   # (as the pan and the sled)
     for sy_ in (1, -1):                                                        # cable channels: down camera and flow leads up through their pods and the sled
         ch_ = box(-dc - 3, -dc + 3, sy_ * 41 - 3, sy_ * 41 + 3, PB + 15, RT + 5)
         g["cam_pod" if sy_ > 0 else "flow_pod"] = g["cam_pod" if sy_ > 0 else "flow_pod"].difference(ch_); g["sled"] = g["sled"].difference(ch_)
@@ -921,8 +923,9 @@ ACCESS = [dict(name="FC USB-C (right edge 8 behind the FC centre, DEFAULT: clear
           dict(name="XT60 lead up through the sled", part="receiver XT60", **{"from": [float(v) for v in (g["xt60"].bounds.mean(0) * [1, 1, 0] + [0, 0, g["xt60"].bounds[1][2]])]}, dir=[0, 0, 1], length_mm=30, tool={"type": "cylinder", "d": 9})]
 ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["c"] + c_["up"] * 19]},
                 dir=[float(v) for v in c_["up"]], length_mm=30, tool={"type": "box", "w": 10, "h": 6}) for c_ in g["cams"]]
-ACCESS += [dict(name=f"arm bolt {wh_} {i_}", part="plates", **{"from": [xy_[0], xy_[1], _tz if wh_ == "top" else _bz]}, dir=[0, 0, 1 if wh_ == "top" else -1], length_mm=60,
-                tool={"type": "cylinder", "d": 8}, **({"ignore": ["props"]} if wh_ == "top" else {}))   # 60 hex driver (DEFAULT); a prop over a bolt is turned aside by hand, never taken off
+ACCESS += [dict(name=f"arm bolt {wh_} {i_}", part="plates", **{"from": [xy_[0], xy_[1], _tz if wh_ == "top" else _bz]}, dir=[0, 0, 1 if wh_ == "top" else -1], length_mm=60 if wh_ == "top" else 45,
+                tool={"type": "cylinder", "d": 8}, **({"ignore": ["props"]} if wh_ == "top" else {}))   # 60 hex driver from above, 45 from below (the 3.0 wheel-ring
+           # rod crosses 50 under the rear bolts, 2.6 off their axis; DEFAULT); a prop over a top bolt is turned aside by hand, never taken off
            for wh_ in ("top", "bottom") for i_, xy_ in enumerate(plate_bolts(wh_))]
 if os.environ.get("SYS_DEBUG_FIT"):                                # what overlaps the apex and hubs beyond the rod-end sockets
     own_ = dict(JOINTS["apex"])
