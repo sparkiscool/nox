@@ -38,8 +38,8 @@ SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 
 SKID_Y = 66.0                                                  # skid sides (legs, rails, X braces, basket rail): the widest the funnel opening takes at ±5 deg yaw
                                                                # with their socket bosses; the X braces and basket rail cross in the camera / flow pods (DEFAULT)
 CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush cap: 15 thick (10 stroke + 5 crushed), Ø24; the feet pads give 6 (DEFAULT)
-SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "85"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
-                                                               # skid X braces and basket rails (Spark 25 Oct: more bottom structure by the battery; was 90)
+SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "90"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
+                                                               # (edge probes: an edge slides under the open bottom; flat walls from the sides meet the skid X braces and basket rails, margin ≥ 0 in the opening)
 MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
                                                               # the mast stands there when the thrust centre is further back
 M_DRONE = 3000.0                                            # crash mass, updated to the assembled mass every balance (g)
@@ -391,7 +391,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     ring_nodes = [nbox(f"{nm}{lvl}") for nm in info["pnodes"] for lvl in ("lo", "hi")]
     _pb = {k_: g[k_].bounds for k_ in ("cam_pod", "flow_pod")}           # nodes inside a pod: the pod is the node (the side X and basket rail cross there)
     g["pod_nodes"] = {n_: k_ for n_ in Ng if n_ in rods_at and n_.startswith(("XJ", "SK")) for k_, b_ in _pb.items()
-                      if (np.asarray(Ng[n_]) > b_[0] - 4.0).all() and (np.asarray(Ng[n_]) < b_[1] + 4.0).all()}
+                      if (np.asarray(Ng[n_]) > b_[0] - 6.0).all() and (np.asarray(Ng[n_]) < b_[1] + 6.0).all()}
     for n_, k_ in g["pod_nodes"].items(): g[k_] = union([g[k_], nsock(n_, core=False)])   # the rods' sockets in the pod body
     ring_nodes += [nbox(n_) for n_ in Ng if (n_ == "TR" or n_.startswith(("KV", "KP", "XJ", "SM", "SK"))) and n_ in rods_at and n_ not in g["pod_nodes"]]   # skirt, cross, spider, basket
     # corner nodes: the wheel cheeks + the wheel-ring sockets (2.0 wall, the hard-rule minimum: a 3 wall would stand within 1 of the funnel face behind the
@@ -400,7 +400,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["nodes"] = [union([g["nodes"][k_]] + [nsock(f"{w_}{sx_:+d}{sy_:+d}", wall=2.0, core=False) for w_ in ("WAi", "WBi") if f"{w_}{sx_:+d}{sy_:+d}" in rods_at]
                         + ([nsock(f"SR{sx_:+d}{sy_:+d}", core=False)] if f"SR{sx_:+d}{sy_:+d}" in rods_at else []))
                   for k_, (sx_, sy_) in enumerate(_ci)]
-    g["nodes"] += [nsock(f"BF{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"BF{sx_:+d}{sy_:+d}" in rods_at]
+    _bf = [nsock(f"BF{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"BF{sx_:+d}{sy_:+d}" in rods_at]
+    g["nodes"] += _bf
+    if _bf:                                                       # the sled bolts onto the belly-frame corners: cut clear of their socket blocks
+        from topo.part import man as _m2
+        o2_ = _m2(g["sled"])
+        for b_ in _bf: o2_ = o2_ - _m2(b_)
+        mm2_ = o2_.to_mesh(); g["sled"] = trimesh.Trimesh(mm2_.vert_properties[:, :3], mm2_.tri_verts)
     g["foot_bosses"] = [nsock(f"FT{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"FT{sx_:+d}{sy_:+d}" in rods_at]   # in the TPU feet (FE node mass)
     g["node_g"] = {n_: co.node_mass_g([o_ for _, o_ in rods_at[n_]]) for n_ in Ng if n_ in rods_at and n_ not in fixed_g and not n_.startswith("MX") and n_ not in g["pod_nodes"]
                    and (n_[:-2] in info["pnodes"] or n_.startswith(co.PRINTED_NODES))}   # the frame model's node masses (one mass model, E)
@@ -452,6 +458,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
             if best_ is None or cov_ > best_[0]: best_ = (cov_, u_)
         if best_ is None or best_[0] == 0: continue
         u_ = best_[1]
+        if min((q_ + u_ * (rc_ - 2.0))[2], (q_ + u_ * (rc_ + CAP_T))[2]) - CAP_R * math.sqrt(max(0.0, 1 - u_[2] ** 2)) < FUNNEL_TOP_D + 1.0:
+            continue                                                # it would reach under the box deck round the funnel: that node stays rigid
         caps[n_] = [float(u_[0]), float(u_[1]), float(u_[2]), CAP_STROKE]
         cap_m.append(trimesh.creation.cylinder(CAP_R, segment=[q_ + u_ * (rc_ - 2.0), q_ + u_ * (rc_ + CAP_T)], sections=20))
     for sx_, sy_ in [(a__, b__) for a__ in (1, -1) for b__ in (1, -1)]:
