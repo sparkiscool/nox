@@ -270,8 +270,9 @@ def _geometry(p, topo, sizes=None):
             node(f"SP{lv}", q); mem(f"apexlink SP{lv}", "apexM", f"SP{lv}", None, "link")
         fixed.add(node("fhubB0", (98, 0, p.get("z_fhub", -2.0)))); fixed.add(node("fhubT0", (58, 0, 46)))
         for nm_, a_, b_ in (("spine top", "fhubT0", "SPlo"), ("spine lo", "fhubB0", "SPlo"), ("spine dg", "fhubB0", "SPhi")):   # all under the swept band
-            if p.get("pyramid") == "mast" and N[a_][0] < dm < N[b_][0]:  # crosses the mast: a shared node (the spine braces the mast)
-                f_ = (dm - N[a_][0]) / (N[b_][0] - N[a_][0]); xn_ = node(f"MX {nm_}", N[a_] + f_ * (N[b_] - N[a_]))
+            xm_ = p.get("x_mast", dm)
+            if p.get("pyramid") == "mast" and N[a_][0] < xm_ < N[b_][0]:  # crosses the mast: a shared node (the spine braces the mast)
+                f_ = (xm_ - N[a_][0]) / (N[b_][0] - N[a_][0]); xn_ = node(f"MX {nm_}", N[a_] + f_ * (N[b_] - N[a_]))
                 mem(f"{nm_} a", a_, xn_, "spine"); mem(f"{nm_} b", xn_, b_, "spine"); SPINE_X.append(xn_)
             else:
                 mem(nm_, a_, b_, "spine")
@@ -377,7 +378,7 @@ def _geometry(p, topo, sizes=None):
             mem(f"belly bar {sy:+d}", f"BF+1{sy:+d}", f"BF-1{sy:+d}", "skid_belly")
             mem(f"skid rail {sy:+d}", f"FT+1{sy:+d}", f"FT-1{sy:+d}", "skid_belly")
         if p.get("pyramid") == "mast":                                # top node on a vertical mast at the thrust centre (70 off every
-            node("MB", (dm, 0, p.get("z_mast", wz)))                    # disk, out of the prop wash) down to the sled (no tail, Spark 24 Oct)
+            node("MB", (p.get("x_mast", dm), 0, p.get("z_mast", wz)))   # disk, out of the prop wash) down to the sled (no tail, Spark 24 Oct)
             for sx in (1, -1):
                 for sy in (1, -1):
                     mem(f"sled link {sx:+d}{sy:+d}", "MB", f"BF{sx:+d}{sy:+d}", None, "link")

@@ -35,6 +35,7 @@ if SYS_PICK:
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
+MAST_X_MIN = 100.5 + 10.0 + 1.5                                # the mast clears the plate stack front (x 100.5) at 20 od: it stands there when the thrust centre is over the plates
 M_DRONE = 3000.0                                            # crash mass, updated to the assembled mass every balance (g)
 NOSE_GROUPS = ("nose", "nose_x", "nose_mount")                      # thin rods allowed in the L2 field (blocked share reported)
 
@@ -337,7 +338,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(c=[float(v) for v in B + A * 19.5], fwd=[float(v) for v in A], left=[0.0, 1.0, 0.0], half=[19.5, 37.5, 37.5], skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # the L2 body (75 x 75 x 39, M)
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
-             m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
+             m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=max(dm, MAST_X_MIN), x_mast=max(dm, MAST_X_MIN), z_mast=float(WHEEL_Z),
              feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "skirt": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-4.0, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
