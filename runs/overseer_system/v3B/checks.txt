@@ -1,40 +1,45 @@
 cage (cage_opt level 160 Hz): spine ring_diag keels_x arm_spars top_spider | post V0:t10 post V1:t10 post V2:t8 post V3:t10 post V4:t10 post V5:t8 post V6:t10 post V7:t10 chord V0-P0_50 lo:t10 chord P0_50-V1 lo:t10 chord V0-P0_50 hi:t10 chord P0_50-V1 hi:t10 chord V1-P1_25 lo:t10 chord P1_25-P1_50 lo:t10 chord P1_50-P1_75 lo:t10 chord P1_75-V2 lo:t10 chord V1-P1_25 hi:t10 chord P1_25-P1_50 hi:t10 chord P1_50-P1_75 hi:t10 chord P1_75-V2 hi:t10 chord V2-P2_50 lo:r5 chord P2_50-V3 lo:r5 chord V2-P2_50 hi:t10 chord P2_50-V3 hi:t10 chord V3-P3_25 lo:t8 chord P3_25-P3_50 lo:t8 chord V3-P3_25 hi:t10 chord P3_25-P3_50 hi:t10 chord P3_50-P3_75 hi:t10 chord P3_75-V4 hi:t10 chord P3_50-P3_75 lo:t8 chord P3_75-V4 lo:t8 chord V4-P4_50 lo:r5 chord P4_50-V5 lo:r5 chord V4-P4_50 hi:t10 chord P4_50-V5 hi:t10 chord V5-P5_25 lo:t10 chord P5_25-P5_50 lo:t10 chord P5_50-P5_75 lo:t10 chord P5_75-V6 lo:t10 chord V5-P5_25 hi:t10 chord P5_25-P5_50 hi:t10 chord P5_50-P5_75 hi:t10 chord P5_75-V6 hi:t10 chord V6-P6_50 lo:t10 chord P6_50-V7 lo:t10 chord V6-P6_50 hi:t10 chord P6_50-V7 hi:t10 spoke m0-V0:t10 spoke m0-V1:t10 spoke m1-V2:t8 spoke m1-V3:t10 spoke m2-V5:t8 spoke m2-V4:t10 spoke m3-V6:t10 spoke m3-V7:t10 spokehi m0-V0:t10 spokehi m0-V1:t10 spokehi m1-V2:t8 spokehi m1-V3:t8 spokehi m2-V5:t8 spokehi m2-V4:t8 spokehi m3-V6:t10 spokehi m3-V7:t10 V V0lo a:t10 V V0lo b:t10 V V0hi a:t10 V V0hi b:t10 V V7lo a:t10 V V7lo b:t10 V V7hi a:t10 V V7hi b:t10 keello +1:t10 keeldg +1:t10 keelx +1:t10 keello -1:t10 keeldg -1:t10 keelx -1:t10 nose vert +1:t6 nose vert -1:t6 nose top:r5 nose bot:r5 longeron hi +1:r5 longeron lo +1:t10 nose side dg +1:t8 mount hi +1:r5 mount lo +1:t6 mount dg +1:t6 longeron hi -1:r5 longeron lo -1:t10 nose side dg -1:t8 mount hi -1:r5 mount lo -1:t6 mount dg -1:t6 pyramid -1+1:r5 pyramid -1-1:r5 top bar:t10 skirt post V3:t10 skirt post P3_50:t6 skirt post V4:t10 skirt rail +:t10 skirt rail -:t10 skirt dg +:t10 skirt dg -:t10 skirt tie +1:t10 skirt side +1:t10 skirt tie -1:t10 skirt side -1:t10 tower post:r5 spider V0:t10 spider V1:t10 spider V2:t10 spider V3:t10 spider V4:t10 spider V5:t10 spider V6:t10 spider V7:t10 spider nose+:t10 spider nose-:t10 strut +1+1:t10 strut +1-1:t10 strut -1+1:r5 strut -1-1:r5 wring x+1:r5 wring x-1:t6 wring y+1:t6 wring y-1:t6
-final: motors 120.7 ahead, cage 1455 g sized here, CG -1.7 in x, frame violation 0.000
-final: motors 112.3 ahead, cage 1396 g sized here, CG -0.8 in x, frame violation 0.040
-final: motors 104.3 ahead, cage 1163 g sized here, CG -0.7 in x, frame violation 0.000
-final choice: motors 104.3 ahead, CG -0.7 in x (3 points tried)
+final: motors 104.3 ahead, cage 1899 g sized here, CG +1.7 in x, frame violation 0.027
+final: motors 112.8 ahead, cage 1993 g sized here, CG -0.1 in x, frame violation 0.164
+final: motors 108.5 ahead, cage 1899 g sized here, CG +0.6 in x, frame violation 0.000
+final choice: motors 108.5 ahead, CG +0.6 in x (3 points tried)
 
-chosen: catch centre x 79.5 (24.8 behind the thrust centre, swap CG 30 behind, layout B), motor square 104.3 ahead of the plate centre; motors at (243.8, ±139.5) and (-35.2, ±139.5)
-arms: front r 281 (stock 243), rear r 144; tip gaps 25 all round (square kept)
-frame model on the final geometry (F, dimensions L cases): L2 mode 117 Hz (≥ 100), cage first mode 94 Hz (moves V5lo 6%, V2lo 6%, V5hi 4%, V2hi 4%); crash 1308 N (rigid 35 g x 3810 g, L) in 14 directions on 64 hit points (members ≤ 0.67, the node is the fuse): worst rod 0.67, buckling 0.62, sockets 0.96, arm 0.19 (≤ 1.0), touching node moves ≤ 3.7 (≤ 9); L2 at 35 g: worst 0.27; handling 50 N: 0.40; latch 0.21; violation 0.000; breaking order (L): worst cage node socket 0.96, arms at 0.19 of it (≤ 0.67) PASS; held sockets rated (≤ 1 / 1.5 of the node index): hub 5774 N, apex 2821 N, belly 2051 N; worst rod 0.67
-L2: base centre (400.9, 0, 44), axis 15 deg below +x; body lowest z -2.3 vs funnel top -13.3 (drone frame)
+chosen: catch centre x 83.7 (24.8 behind the thrust centre, swap CG 30 behind, layout B), motor square 108.5 ahead of the plate centre; motors at (248.0, ±139.5) and (-31.0, ±139.5)
+arms: front r 285 (stock 243), rear r 143; tip gaps 25 all round (square kept)
+frame model on the final geometry (F, dimensions L cases): L2 mode 113 Hz (≥ 100), belly (down camera, flow) 332 Hz (≥ 100), cage first mode 85 Hz (moves V5lo 5%, V2lo 5%, V5hi 4%, V2hi 4%); crash 1512 N (rigid 35 g x 4405 g, L) in 14 directions on 63 hit points (members ≤ 0.67, the node is the fuse): worst rod 0.67, buckling 0.33, sockets 0.84, arm 0.19 (≤ 1.0), touching node moves ≤ 3.9 (≤ 9); L2 at 35 g: worst 0.08; handling 50 N: 0.19; latch 0.07; violation 0.000; breaking order (L, every crash case): members ≤ 0.67 (worst 0.67), touching node sockets ≤ 1 (0.84): each touching node a fuse rated 1512..2269 N (holds the hit, breaks before any member) PASS; held sockets rated (≤ 1 / 1.5 of the node index): hub 8199 N, apex 2735 N, belly 2695 N; worst rod 0.67
+L2: base centre (405.2, 0, 44), axis 15 deg below +x; body lowest z -2.3 vs funnel top -13.3 (drone frame)
+nose-first (F): the exposed L2 head leads in 1 crash direction(s) ([1.0, 0.0, 0.0]): 1512 N on the head, 25 N m about the base centre on the base bolts; mount members ≤ 0.09, sockets 0.10; the head itself takes the hit (exposed, Spark 24 Oct)
 L2 scan (96 deg from the axis, from the top of its 25 base; Spark 24 Oct: the head exposed, nothing in the scan): closest cage up 1.9 outside it (C, > 0 = clear)
 L2 scan blocked by cage rods: 0.00 % (C, rays from the L2 head; 0 required)
-length: rear prop tips x -162 to the nose x 465 (627); width 533; height 230
-front camera left: two, yaw ±46.8, pitch -13.6, landscape, lens at (384, 75, 48), 23.4 behind the L2 base plane
-   cage rods block 1.1 % of its image (C): mount dg +1 j2 0.6, nose vert +1 x2 0.4, V V0lo b x2 0.4, chord V0-P0_50 lo 0.3
-front camera right: two, yaw ±46.8, pitch -13.6, landscape, lens at (384, -75, 48), 23.4 behind the L2 base plane
-   cage rods block 1.0 % of its image (C): mount dg -1 j2 0.6, V V7lo b x2 0.4, nose vert -1 x2 0.4, post V7 0.2
+length: rear prop tips x -158 to the nose x 470 (627); width 533; height 230
+front camera left: two, yaw ±46.8, pitch -13.6, landscape, lens at (389, 75, 48), 23.4 behind the L2 base plane
+   cage rods block 4.6 % of its image (C): V V0lo b x2 2.1, mount dg +1 j2 1.9, nose vert +1 x2 1.2, V V0lo b x1 1.2
+front camera right: two, yaw ±46.8, pitch -13.6, landscape, lens at (389, -75, 48), 23.4 behind the L2 base plane
+   cage rods block 4.6 % of its image (C): V V7lo b x2 2.0, mount dg -1 j2 1.9, V V7lo b x1 1.2, nose vert -1 x2 1.2
 front cameras: together 54.7 % of the L2 field in view (C, cam_cover.py; one camera at best 27.6 %)
 camera arms: 22..22 long, first bending mode 1051 Hz (≥ 100, E: rigid lug, PETG E 2780)
+FC mount: 10 g on 4 M3 standoffs on the S500 bottom plate between the arm roots; first mode ~428 Hz (E, plate patch, ≥ 100)
 down camera and flow views: checked (lines above list anything in view)
 overlaps (M, > 0.5 mm3): apex x arm 0 2; apex x arm 3 2
-guard: ring and V rods 12.0 off the disks in plan (≥ 12); rods under a disk 18.8 off the swept band (≥ 12)
-cage rods (C): 3.0 solid 45 x 3.12 m; 4.0 solid 23 x 2.71 m; 6/4 tube 34 x 3.24 m; 5.0 solid 2 x 0.16 m; 8/6 tube 33 x 4.89 m; 10/8 tube 18 x 1.33 m; 12/10 tube 3 x 0.16 m; 14/12 tube 4 x 0.32 m; 16/14 tube 12 x 1.21 m; 10/6 tube 5 x 0.51 m; 20/18 tube 15 x 1.12 m; 10.0 solid 2 x 0.33 m; 698 g + arm spars 26 g; 60 ring nodes, 4 corner nodes, 8 wheels; ~1220 g (E) without the apex
-landing: feet at z -148 (lowest points), stance x -2..162, y -71..71; CG 153 above the floor; tip-over forward 20.7 deg, back 34.7 deg, left 24.7 deg, right 25.0 deg (worst 20.7, DEFAULT ≥ 30)
-funnel seated (catch centre on the funnel axis, bottom plate top at seat z 88.4): closest non-wheel point 2.6 at seat (-92, 0, 13) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); keep-alive band G (8) 11.4 (≥ 9); below the face edges -0.0 past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0); the latch set (receiver + cartridge, the battery latch's: its check vs the real panels 3.42 a side): G (8) 2.6, past the 3 a side box +1.9 (receiver guide posts 183.6 long here vs 179.3 in its check)
-mass ~3810 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (103.6, 0.5, 5.3) vs thrust centre (104.3, 0): -0.7 in x
-balance: CG 0.9 off the thrust axis with the pack (≤ 3), 6.5 without (layout B, Spark 24 Oct: accepted, reported)
-contact allowances (per joint, M): cage/arms 12 sockets 5563.3 mm3, cage/apex + hubs 25 sockets 5778.7 mm3, cage/sled 6 clamps 454.6 mm3
-system_check: System: overseer_system_v3, cage first 14.1 mm (E) at (+0.48, -0.00, -0.88) (cartridge), fit 0.0 mm³ (E) (L2 base/apex + hubs), bbox 114 L (E), extents 663 x 603 x 285 mm (E), mass 3812 g (E), CG 0.4 mm off thrust axis (E) [+0.2, +0.3, +6.5], 8.0 mm without swap parts, probes 0.0 mm (E) edge at (+0.14, +0.83, +0.54) (L2 base), access 24/24 clear
-  probes worst: {"probe": "edge", "r_mm": 0.0, "part": "L2 base", "margin_mm": 0.0, "unshielded": false, "dir": [0.137, 0.83, 0.541], "dir_label": "(+0.14, +0.83, +0.54)", "axis": [0.285, -0.556, 0.781], "roll_deg": 330.0, "lateral_mm": -277.3, "contact": [410.7, 37.5, 14.8], "pass_": true}
+guard: ring and V rods 12.0 off the disks in plan (≥ 12); rods under a disk 17.8 off the swept band (≥ 12)
+printed nodes (socket bosses) 8.8 off the swept disks in plan (E; the rods' 12 is checked on the rods, the bosses stand 3.15 proud of them)
+cage rods (C): 6/4 tube 21 x 1.97 m; 8/6 tube 73 x 6.67 m; 10/8 tube 44 x 5.71 m; 16/14 tube 36 x 2.99 m; 10/6 tube 5 x 0.51 m; 20/18 tube 17 x 1.26 m; 901 g + arm spars 27 g; 60 ring nodes, 4 corner nodes, 8 wheels; ~1790 g (E) without the apex
+landing: feet at z -148 (lowest points), stance x 2..166, y -71..71; CG 161 above the floor; tip-over forward 19.4 deg, back 33.7 deg, left 23.7 deg, right 24.0 deg (worst 19.4, DEFAULT ≥ 30)
+funnel seated (catch centre on the funnel axis, bottom plate top at seat z 88.4): closest non-wheel point -12.1 at seat (-175, -12, 75) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); keep-alive band G (8) 10.5 (≥ 9); below the face edges -0.0 past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0); the latch set (receiver + cartridge, the battery latch's: its check vs the real panels 3.42 a side): G (8) 2.6, past the 3 a side box +1.9 (receiver guide posts 183.6 long here vs 179.3 in its check)
+mass ~4405 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (109.1, 0.4, 13.1) vs thrust centre (108.5, 0): +0.6 in x
+balance: CG 0.7 off the thrust axis with the pack (≤ 3), 6.9 without (layout B, Spark 24 Oct: accepted, reported)
+contact allowances (per joint, M): cage/arms 12 sockets 6735.7 mm3, cage/apex + hubs 25 sockets 25131.5 mm3, cage/sled 6 clamps 807.4 mm3
+system_check: System: overseer_system_v3, cage first 0.1 mm (E) at (+0.97, +0.02, -0.26) (L2 base) FAIL, fit 36994.2 mm³ (E) (cage/apex + hubs) FAIL, bbox 114 L (E), extents 663 x 603 x 285 mm (E), mass 4407 g (E), CG 1.0 mm off thrust axis (E) [+0.9, +0.3, +14.1], 7.7 mm without swap parts, probes 0.0 mm (E) edge at (+0.41, -0.91, +0.00) (L2 base), access 26/26 clear
+  probes worst: {"probe": "edge", "r_mm": 0.0, "part": "L2 base", "margin_mm": 0.0, "unshielded": false, "dir": [0.405, -0.914, 0.0], "dir_label": "(+0.41, -0.91, +0.00)", "axis": [0.246, 0.109, 0.963], "roll_deg": 90.0, "lateral_mm": 222.2, "contact": [431.3, -37.5, 75.8], "pass_": true}
   access worst: {"name": "pack swap", "part": "cartridge", "tool": "part", "dir": [0.0, 0.0, -1.0], "length_mm": 80.0, "steps": 20, "blocked_by": [], "touches": [], "overlap_mm3": 0.0, "pass_": true}
-  fit worst: {"a": "L2 base", "b": "apex + hubs", "overlap_mm3": 0.0, "limit_mm3": 0.5, "contact": false, "method": "manifold3d", "pass_": true}
+  fit worst: {"a": "cage", "b": "apex + hubs", "overlap_mm3": 36994.25, "limit_mm3": 25131.5, "contact": true, "method": "manifold3d", "pass_": false}
   access pack swap: clear (0.0 mm3)
   access FC USB-C (right edge 8 behind the FC centre, DEFAULT: clear of the front arm): clear (0.0 mm3)
   access Pi 5 SD card (front end): clear (0.0 mm3)
   access Pi 5 USB / Ethernet end (aft, DEFAULT: the spine hub sits ahead): clear (0.0 mm3)
   access L2 cable (base notch 7 up the base, local -X: left, through the shroud window): clear (0.0 mm3)
+  access down camera lead (up its pod channel and the sled): clear (0.0 mm3)
+  access flow sensor lead (up its pod channel and the sled): clear (0.0 mm3)
   access XT60 lead up through the sled: clear (0.0 mm3)
   access front camera left USB (board edge, up): clear (0.0 mm3)
   access front camera right USB (board edge, up): clear (0.0 mm3)
@@ -54,5 +59,6 @@ system_check: System: overseer_system_v3, cage first 14.1 mm (E) at (+0.48, -0.0
   access arm bolt bottom 5: clear (0.0 mm3)
   access arm bolt bottom 6: clear (0.0 mm3)
   access arm bolt bottom 7: clear (0.0 mm3)
+  cage rods in that pair: spine top a 6900, spine lo a 4034, mast 0 1894, keelx -1 x1 1129, keelx +1 x1 1129, skirt tie -1 1104, skirt tie +1 1104, skirt side -1 1104
 assembly: nox/overseer/overseer.assembly.json, 18 parts, meshes in runs/overseer_assembly/v3
-PX4 flow position from the CG (FRD, m): x -0.024, y +0.047, z +0.126; IMU (FC centre) from the CG: x -0.104, z -0.004
+PX4 flow position from the CG (FRD, m): x -0.025, y +0.047, z +0.134; IMU (FC centre) from the CG: x -0.109, z +0.003
