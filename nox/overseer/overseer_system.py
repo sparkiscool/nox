@@ -382,10 +382,11 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         return nsock(n_)
     ring_nodes = [nbox(f"{nm}{lvl}") for nm in info["pnodes"] for lvl in ("lo", "hi")]
     ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]   # rear tower and skirt nodes (cage up)
-    mx_ = [n_ for n_ in Ng if n_.startswith("MX")]
-    if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print
+    mx_ = [n_ for n_ in Ng if n_.startswith("MX")]; mast_block = []
+    if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print, 21 off the
+                                                                  # front hub at the bottom plate: printed with that hub (apex + hubs, DEFAULT)
         h_ = max(co.node_size(od_n.get(n_, 3.0)) for n_ in mx_) / 2; q_ = np.array([Ng[n_] for n_ in mx_])
-        ring_nodes.append(union([box(q_[:, 0].min() - h_, q_[:, 0].max() + h_, -h_, h_, q_[:, 2].min() - h_, q_[:, 2].max() + h_)] + [nsock(n_) for n_ in mx_]))
+        mast_block = [union([box(q_[:, 0].min() - h_, q_[:, 0].max() + h_, -h_, h_, q_[:, 2].min() - h_, q_[:, 2].max() + h_)] + [nsock(n_) for n_ in mx_])]
     Tg_ = trimesh.transformations.rotation_matrix(math.radians(L2_TILT), [0, 1, 0]); Tg_[:3, 3] = B   # the L2 frame (base at z 0)
     go_ = GUARD_IN + GUARD_W
     sh_ = box(-go_, go_, -go_, go_, -1.8, GUARD_TOP).difference(box(-GUARD_IN, GUARD_IN, -GUARD_IN, GUARD_IN, -3.0, GUARD_TOP + 1.0))   # 1.8 under the base
@@ -413,7 +414,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
-    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"])
+    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"] + mast_block)
     low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring", "skid_belly")]
     nose_keys = [k for k, v in rods.items() if v[3] in NOSE_GROUPS or k in ("spider nose+", "spider nose-")]
     g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
@@ -836,9 +837,10 @@ for k, v in g["rods"].items():
                 worst_under = min(worst_under, float(np.maximum(PROP_Z - BLADE - (zq + od / 2), zq - od / 2 - PROP_Z - BLADE).min()))
 say(f"guard: ring and V rods {worst_ring:.1f} off the disks in plan (≥ {GUARD_GAP:.0f}); rods under a disk "
     f"{worst_under:.1f} off the swept band (≥ {GUARD_GAP:.0f})")
-_nv = np.vstack([n_.vertices for n_ in g["ring_nodes"]]); _nv = _nv[np.abs(_nv[:, 2] - PROP_Z) < 40.0]   # printed nodes in the prop band
-_nd = min(float((np.hypot(_nv[:, 0] - mx_, _nv[:, 1] - my_) - PROP_R).clip(min=-1e3).min()) for mx_, my_ in g["motors_xy"]) if len(_nv) else float("inf")
-say(f"printed nodes (socket bosses) {_nd:.1f} off the swept disks in plan (E; the rods' 12 is checked on the rods, the bosses stand 3.15 proud of them)")
+_nv = np.vstack([n_.vertices for n_ in g["ring_nodes"] + g["hubs"]])          # printed nodes and hubs: their gap to each swept disk (r PROP_R, PROP_Z ± BLADE)
+_nd = min(float(np.hypot((np.hypot(_nv[:, 0] - mx_, _nv[:, 1] - my_) - PROP_R).clip(min=0), (np.abs(_nv[:, 2] - PROP_Z) - BLADE).clip(min=0)).min())
+          for mx_, my_ in g["motors_xy"])
+say(f"printed nodes and hubs (socket bosses) {_nd:.1f} off the swept disks (C, ≥ {GUARD_GAP:.0f} as the rods)")
 by_sec = {}
 for k, v in g["rods"].items():
     sec = v[4]; L = float(np.linalg.norm(np.subtract(v[1], v[0])))
@@ -884,7 +886,7 @@ cage_cg = _cm / _cw
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"] + [g["pan"]]
 # contact allowances joint by joint: each rod end's own overlap with the piece it is designed to sit in (its socket), summed
 # per part pair (x 1.05 + 1 for mesh noise); any other overlap shows in the fit check
-J_ARM = ("tipb", "tipt", "armbot", "arm", "root"); J_HUB = ("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc", "SP")
+J_ARM = ("tipb", "tipt", "armbot", "arm", "root"); J_HUB = ("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc", "SP", "MX")
 JOINTS = {"arms": [], "apex": [], "sled": []}
 for k_, (a_, b_) in g["rod_ends"].items():
     rm_ = g["rod_meshes"][k_]
@@ -942,6 +944,8 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                           ["receiver", "sled + pods + deck", round(abs(g["receiver"].intersection(g["sled"]).volume) * 1.05 + 1.0, 1)],   # bolted to the sled underside
                           ["apex + hubs", "cam brackets", round(abs(g["apex"].intersection(g["cam_plate"]).volume) * 1.05 + 1.0, 1)]],  # camera plates printed onto their arms and socket lugs
            openings=[*[dict(part=pt_, axis=[1.0, 0.0, 0.0], half_angle_deg=180.0, min_mm=-1000.0, skip_probes=True) for pt_ in ("L2 head", "L2 base top band")],
+                     dict(part="L2 base", axis=[float(v) for v in co.A], half_angle_deg=45.0, min_mm=0.0, skip_probes=False),   # within 45 deg of its axis the head
+                     # leads the base by ≥ 19.5 (a flat wall meets the head first): the base needs margin ≥ 0 there, 3 everywhere else; probes see the head's shadow
                      # exposed (Spark 24 Oct: everything outside the base, nothing in the scan): protected parts that shadow the base, never shielded
                      *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      *[dict(part=pt_, axis=[sx_, 0, 0], half_angle_deg=45.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60") for sx_ in (1, -1)],   # the set's ends face the funnel pit walls (0.7 to the opening): a member shielding them up to 45 deg would sit in the wall (DEFAULT, alt a shorter set, latch session)
