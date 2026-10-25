@@ -268,8 +268,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # blocks sit on it; its underside stays over the box top deck seated (the rear overhangs the funnel mouth)
     g["pan"] = box(-95.0, 100.0, -45.0, 45.0, -4.7, -2.2)
     g["pan"] = g["pan"].difference(union([cyl(4.5, -6.0, -1.0, *xy_) for xy_ in plate_bolts("bottom")]))   # driver holes under the bottom plate bolts
-    g["runners"] = [union([box(-dc - 85, -dc + 85, 62 if sy > 0 else -74, 74 if sy > 0 else -62, PB - 17, PB + 12),     # sleeve on the skid rail, to ±85: past the set's ends (±86 cartridge) inside the opening at ±5 deg yaw
-                           box(-dc - 85, -dc + 85, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 26)])     # outer lip: shields the camera board / flow window edge (to 10 over the board: a side edge 15..60 deg up meets it first)
+    g["runners"] = [union([box(-dc - 83.5, -dc + 83.5, 62 if sy > 0 else -74, 74 if sy > 0 else -62, PB - 17, PB + 12),     # sleeve on the skid rail, to ±83.5: past the set's ends (±86 cartridge) inside the opening at ±5 deg yaw
+                           box(-dc - 83.5, -dc + 83.5, 72.5 if sy > 0 else -74, 74 if sy > 0 else -72.5, PB + 12, PB + 26)])     # outer lip: shields the camera board / flow window edge (to 10 over the board: a side edge 15..60 deg up meets it first)
                     for sy in (1, -1)]
     g["feet"] = [cyl(5, PB - 17, PB - 6, -dc + sx * 77, sy * 66) for sx in (1, -1) for sy in (1, -1)]   # TPU pads under the skid ends, inside the opening at ±5 deg yaw
     # keep-alive pads (G (6)): one per ±x lower-ring face, 2.0 off the face at the probe height, over the probe pair
@@ -338,7 +338,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=dm, z_mast=float(WHEEL_Z),
-             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose_x": "t8"}, seat_dz=float(SEAT_DZ),
+             feet=(77.0, 66.0, float(g["PB"]) - 3.5), belly=(77.0, 66.0), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "skirt_ties": "t8", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
              z_rhub=-6.6, z_skirt=-6.6, z_fhub=12.0, x_rhub=-68.0)   # rear hub block reaches x -68: its skirt ties 39 long (carbon from 33, CLAUDE.md)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
@@ -541,8 +541,9 @@ if os.environ.get("SYS_DEBUG_XB"):                                 # why the L2 
         dmd_ = float(os.environ.get("SYS_DEBUG_DM", "197.6")); g_ = build(dmd_, TIP_OFF - dmd_, x_, zB_)
         items = [("props", trimesh.util.concatenate(g_["props"])), ("motors", trimesh.util.concatenate(g_["motors"])),
                  ("arms", trimesh.util.concatenate(g_["arms"])), ("top plate", TOP), ("bottom plate", BOTTOM), ("apex", g_["apex"]),
-                 ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("wheels", trimesh.util.concatenate(g_["wheels"]))]
-        print(x_, zB_, l2_clear_margin(g_, g_["B"], items), guard_v_gap(g_))
+                 ("cage up", g_["cage_up"]), ("cage low", g_["cage_low"]), ("cage nose", g_["cage_nose"]), ("wheels", trimesh.util.concatenate(g_["wheels"])),
+                 ("front cameras", g_["cam"]), ("cam bracket", g_["cam_bracket"])]
+        print(x_, zB_, l2_clear_margin(g_, g_["B"], items), [(nm_, round(l2_clear_margin(g_, g_["B"], [(nm_, m_)])[1], 1)) for nm_, m_ in items], guard_v_gap(g_))
     json.dump(g_["P"], open(os.path.join(SCR_DBG, "P_debug.json"), "w"), indent=1, default=float)
     for nm__, m__ in (("cage low", g_["cage_low"]), ("cage up", g_["cage_up"]), ("feet", trimesh.util.concatenate(g_["feet"])), ("runners", trimesh.util.concatenate(g_["runners"])),
                       ("receiver", g_["receiver"]), ("cart", g_["cart"]), ("sled", g_["sled"]), ("pods", trimesh.util.concatenate([g_["cam_pod"], g_["flow_pod"]])),

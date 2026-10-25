@@ -48,6 +48,7 @@ GUARD_GAP, ROD_R3 = 12.0, 1.5
 ROD_RMAX = 10.0                                             # guard offset for the largest catalog rod (20/18 tube), so any size keeps 12
 RING_LO, RING_HI = PROP_Z - BLADE - 12.0 - ROD_RMAX, PROP_Z + BLADE + 12.0 + ROD_RMAX   # 55 / 109: spokes and spiders keep 12 off the swept band with a 20 tube
 Z_TOP = 124.0                                               # top node over the thrust centre (DEFAULT)
+NOSE_OD_MAX = 10.0                                          # nose collar rods ≤ 10 od (cap groups nose / nose_mount t10): sets its node blocks
 NOSE_Y, NOSE_GAP = 58.0, 3.0 + 4.0                          # nose box half width; ahead of the L2 / camera by 3 + rod (nose plane rods ≤ 8 od: cap group nose_x t8)
 F_FLAT = HALF + PROP_R + GUARD_GAP + ROD_RMAX               # 288.5
 C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 489.6
@@ -282,7 +283,8 @@ def _geometry(p, topo, sizes=None):
     # the scan surface (a cone of 90 + L2_NEG deg from the top of the base); a rear-bottom bar behind the lugs
     Bv = np.array([xB, 0, zB]); O = Bv + A * L2_BASE_H
     ny = p.get("nose_y", NOSE_Y); hu = max(37.5 + NOSE_GAP, p.get("cam_hu", 0.0))
-    r_c = math.hypot(hu, ny); h_n = L2_BASE_H - r_c * math.tan(math.radians(L2_NEG)) - NOSE_GAP / math.cos(math.radians(L2_NEG))
+    gap_n = 3.0 + node_size(NOSE_OD_MAX) / 2 * math.sqrt(3)            # the corner node block (rods ≤ NOSE_OD_MAX) stays 3 outside the scan
+    r_c = math.hypot(hu, ny); h_n = L2_BASE_H - r_c * math.tan(math.radians(L2_NEG)) - gap_n / math.cos(math.radians(L2_NEG))
     Yv = np.array([0.0, 1.0, 0.0])
     for sy in (1, -1):
         node(f"NT{sy:+d}", Bv + A * h_n + UP_B * hu + Yv * ny * sy); node(f"NB{sy:+d}", Bv + A * h_n - UP_B * hu + Yv * ny * sy)
