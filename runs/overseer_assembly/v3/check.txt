@@ -1,69 +1,69 @@
 system_check Overseer: PASS
   cage first PASS: worst 0.07 mm (E) at (+0.97, +0.02, -0.26) on L2 base (needs 0.0), 1506 dirs
-    props: min margin 32.77 mm, outside openings 32.77, slack 29.77 at +Z
-    motors: min margin 57.43 mm, outside openings 57.43, slack 54.43 at +Z
-    L2 base: min margin 0.07 mm, outside openings 4.72, slack 0.07 at (+0.97, +0.02, -0.26)
-    L2 base top band: min margin -7.93 mm, outside openings None, slack 992.07 at (+0.97, +0.02, -0.26)
-    L2 head: min margin -47.16 mm, outside openings None, slack 952.84 at (+0.97, +0.02, -0.26)
-    front cameras: min margin 24.43 mm, outside openings 24.43, slack 21.43 at (+0.97, +0.02, -0.26)
-    pack: min margin 25.97 mm, outside openings 207.75, slack 25.97 at (-0.52, -0.02, -0.85)
-    cartridge: min margin 14.12 mm, outside openings 205.8, slack 14.12 at (+0.48, -0.00, -0.88)
-    receiver XT60: min margin 60.63 mm, outside openings 192.92, slack 60.63 at (+0.48, -0.00, -0.88)
-    electronics: min margin 91.84 mm, outside openings 91.84, slack 88.84 at +Z
-    down cam + flow: min margin 23.0 mm, outside openings 245.38, slack 23.0 at -Z
-  compact: bbox 112.359 L (E), hull 59.659 L (E), extents [658.5, 603.3, 282.8] mm (E), largest 658.5 mm, guards {'guard rods to prop disks, plan (G)': 12.0, 'rods under / over the swept band (G)': 12.0}
+    props: min margin 46.69 mm, outside openings 46.69, slack 43.69 at +Z
+    motors: min margin 67.44 mm, outside openings 67.44, slack 64.44 at +Z
+    L2 base: min margin 0.07 mm, outside openings 9.89, slack 0.07 at (+0.97, +0.02, -0.26)
+    L2 base top band: min margin -1.93 mm, outside openings None, slack 998.07 at (+0.97, +0.02, -0.26)
+    L2 head: min margin -41.17 mm, outside openings None, slack 958.83 at (+0.97, +0.02, -0.26)
+    front cameras: min margin 24.39 mm, outside openings 24.39, slack 21.39 at (+0.97, +0.02, -0.26)
+    pack: min margin 25.97 mm, outside openings 217.76, slack 25.97 at (-0.52, -0.02, -0.85)
+    cartridge: min margin 14.12 mm, outside openings 215.81, slack 14.12 at (+0.48, -0.00, -0.88)
+    receiver XT60: min margin 60.63 mm, outside openings 202.93, slack 60.63 at (+0.48, -0.00, -0.88)
+    electronics: min margin 74.46 mm, outside openings 74.46, slack 71.46 at (-0.56, +0.06, -0.83)
+    down cam + flow: min margin 23.0 mm, outside openings 257.71, slack 23.0 at -Z
+  compact: bbox 125.209 L (E), hull 70.189 L (E), extents [674.0, 634.4, 292.8] mm (E), largest 674.0 mm, guards {'guard rods to prop disks, plan (G)': 12.0, 'rods under / over the swept band (G)': 12.0}
   fit PASS (tol 0.5 mm³):
-    cage / arms: 5817.72 mm³ (E) limit 6109.6 contact [manifold3d]
-    cage / sled + pods + deck: 432.0 mm³ (E) limit 454.6 contact [manifold3d]
-    cage / apex + hubs: 44212.4 mm³ (E) limit 46424.0 contact [manifold3d]
+    cage / arms: 3944.69 mm³ (E) limit 12058.5 contact [manifold3d]
+    cage / sled + pods + deck: 2567.48 mm³ (E) limit 8348.7 contact [manifold3d]
+    cage / apex + hubs: 23446.45 mm³ (E) limit 34243.4 contact [manifold3d]
     L2 base / apex + hubs: 0.0 mm³ (E) limit 0.5 [manifold3d]
     L2 base top band / L2 head: 0.0 mm³ (E) limit 0.5 [manifold3d]
-    pack / cartridge: -0.0 mm³ (E) limit 0.5 contact [manifold3d]
+    pack / cartridge: 0.0 mm³ (E) limit 0.5 contact [manifold3d]
     cartridge / receiver: 0.0 mm³ (E) limit 0.5 contact [manifold3d]
     receiver / receiver XT60: 0.0 mm³ (E) limit 1.0 contact [manifold3d]
     receiver / sled + pods + deck: 0.0 mm³ (E) limit 1.0 contact [manifold3d]
     arms / apex + hubs: 4.2 mm³ (E) limit 7.3 contact [manifold3d]
-    plates / apex + hubs: 248.43 mm³ (E) limit 249.4 contact [manifold3d]
-    apex + hubs / cam brackets: 315.94 mm³ (E) limit 332.7 contact [manifold3d]
-  mass 4082.45 g (E), CG [86.56, 0.05, 11.23], offset [-0.74, 0.05, 11.23] = 11.25 mm from [87.3, 0.0, 0.0]
-    cage: 1468.18 g (E) at [63.94, 0.01, 60.68]
-    props: 40.0 g (E) at [87.3, 0.0, 82.0]
-    motors: 324.0 g (P) at [87.3, 0.0, 58.0]
-    L2 base: 70.0 g (E) at [388.05, 0.0, 41.8]
-    L2 base top band: 30.0 g (E) at [400.12, -0.0, 38.56]
-    L2 head: 130.0 g (E) at [418.23, -0.0, 33.71]
-    front cameras: 34.0 g (E) at [357.98, -0.0, 49.79]
-    pack: 650.0 g (P) at [53.43, 0.0, -96.17] swap
-    cartridge: 105.4 g (M) at [69.23, 0.0, -107.76] swap
-    receiver: 180.0 g (E) at [61.73, 0.0, -89.76]
-    receiver XT60: 10.0 g (E) at [140.73, 0.0, -70.44]
+    plates / apex + hubs: 0.0 mm³ (E) limit 1.0 contact [manifold3d]
+    apex + hubs / cam brackets: 175.75 mm³ (E) limit 185.5 contact [manifold3d]
+  mass 3893.03 g (E), CG [145.85, 0.05, 2.8], offset [0.38, 0.05, 2.8] = 2.83 mm from [145.4699855239236, 0.0, 0.0]
+    cage: 1199.09 g (E) at [147.45, 0.0, 43.6]
+    props: 40.0 g (E) at [145.47, 0.0, 82.0]
+    motors: 324.0 g (P) at [145.47, 0.0, 58.0]
+    L2 base: 70.0 g (E) at [449.12, -0.0, 41.02]
+    L2 base top band: 30.0 g (E) at [461.19, 0.0, 37.79]
+    L2 head: 130.0 g (E) at [476.41, -0.0, 33.71]
+    front cameras: 34.0 g (E) at [421.99, 0.0, 48.23]
+    pack: 650.0 g (P) at [111.6, 0.0, -96.17] swap
+    cartridge: 105.4 g (M) at [127.4, 0.0, -107.76] swap
+    receiver: 180.0 g (E) at [119.9, 0.0, -89.76]
+    receiver XT60: 10.0 g (E) at [198.9, 0.0, -70.44]
     electronics: 190.0 g (E) at [-2.52, 0.73, 23.59]
-    down cam + flow: 17.0 g (E) at [62.48, 4.33, -117.41]
-    arms: 551.27 g (E) at [84.81, 0.0, 24.78]
+    down cam + flow: 17.0 g (E) at [120.65, 4.33, -117.41]
+    arms: 639.71 g (E) at [114.7, -0.0, 24.76]
     plates: 84.0 g (C) at [-0.06, -0.22, 11.75]
-    sled + pods + deck: 96.06 g (E) at [53.82, 0.0, -46.34]
-    apex + hubs: 96.54 g (E) at [132.88, 0.0, 23.55]
-    cam brackets: 6.0 g (E) at [355.12, -0.0, 50.36]
+    sled + pods + deck: 103.82 g (E) at [82.9, 0.0, -46.34]
+    apex + hubs: 80.02 g (E) at [260.96, 0.0, 30.65]
+    cam brackets: 6.0 g (E) at [419.3, -0.0, 48.8]
   balance PASS (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
-    all: 0.75 mm horizontal, 11.23 mm axial, 4082.45 g
-    no_swap: 6.28 mm horizontal, 35.98 mm axial, 3327.05 g
-  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 802605 surface points):
-    edge / L2 base: 0.0 mm (E) from (+0.96, +0.14, -0.26), axis [0.246, 0.109, 0.963], roll 165.0, lateral -6.9 mm, contact [386.6, 37.5, 3.4]
-    edge / down cam + flow: 1.93 mm (E) from (-0.03, +0.97, +0.26), axis [0.988, -0.008, 0.157], roll 285.0, lateral -113.4 mm, contact [50.5, 72.0, -114.7]
-    post r10 / down cam + flow: 2.02 mm (E) from (+0.00, +0.97, +0.26), axis [-1.0, -0.001, 0.013], roll 75.0, lateral 128.1 mm, contact [45.4, 72.0, -116.2]
-    post r10 / L2 base: 2.9 mm (E) from (+0.39, +0.92, -0.08), axis [0.3, -0.045, 0.953], roll 255.0, lateral -212.4 mm, contact [406.0, 37.5, 75.8]
-    edge / electronics: 7.0 mm (E) from -Z, axis [-0.003, -0.996, 0.085], roll 180.0, lateral -170.4 mm, contact [-55.0, -24.5, 0.5]
-    edge / front cameras: 9.0 mm (E) from -Z, axis [0.094, 0.982, 0.161], roll 180.0, lateral -218.4 mm, contact [340.9, 79.5, 31.4]
-    post r10 / electronics: 9.6 mm (E) from (-0.50, -0.07, -0.86), axis [-0.003, -0.996, 0.085], roll 150.0, lateral -149.4 mm, contact [-55.0, -24.5, 0.5]
-    edge / motors: 10.0 mm (E) from -Z, axis [-0.991, 0.049, 0.123], roll 180.0, lateral -125.4 mm, contact [-65.6, 135.9, 45.0]
-    post r10 / front cameras: 11.24 mm (E) from (-0.49, -0.17, -0.86), axis [0.078, -0.985, 0.153], roll 150.0, lateral 182.1 mm, contact [340.9, -79.5, 31.4]
-    edge / props: 14.0 mm (E) from (+0.21, +0.05, +0.98), axis [-0.946, -0.241, 0.217], roll 0.0, lateral -132.9 mm, contact [339.6, -81.4, 87.0]
-    post r10 / motors: 14.07 mm (E) from -Z, axis [-0.991, 0.049, 0.123], roll 180.0, lateral 137.1 mm, contact [-62.0, -129.7, 45.0]
-    post r10 / props: 14.89 mm (E) from (+0.20, -0.06, +0.98), axis [-0.93, 0.305, 0.207], roll 0.0, lateral 144.6 mm, contact [338.8, 79.6, 87.0]
-    edge / cartridge: 22.54 mm (E) from (-0.70, -0.67, +0.26), axis [-0.67, 0.737, 0.087], roll 285.0, lateral -108.9 mm, contact [-23.1, -27.5, -79.4]
-    post r10 / cartridge: 22.8 mm (E) from (-0.70, -0.67, +0.26), axis [-0.67, 0.737, 0.087], roll 285.0, lateral -113.4 mm, contact [-23.1, -27.5, -82.1]
-    edge / receiver XT60: 82.97 mm (E) from (+0.69, -0.67, +0.26), axis [-0.707, -0.706, 0.049], roll 285.0, lateral -68.4 mm, contact [146.8, -13.6, -69.6]
-    post r10 / receiver XT60: 88.8 mm (E) from (+0.68, -0.69, +0.26), axis [-0.734, -0.661, 0.159], roll 285.0, lateral -60.9 mm, contact [146.8, -13.6, -69.6]
+    all: 0.38 mm horizontal, 2.8 mm axial, 3893.03 g
+    no_swap: 8.09 mm horizontal, 27.02 mm axial, 3137.63 g
+  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 815948 surface points):
+    edge / L2 base: 0.0 mm (E) from (+0.59, -0.81, +0.00), axis [0.119, 0.088, 0.989], roll 90.0, lateral 210.2 mm, contact [469.9, -37.5, 74.3]
+    edge / down cam + flow: 1.93 mm (E) from (-0.03, +0.97, +0.26), axis [0.988, -0.008, 0.157], roll 285.0, lateral -124.3 mm, contact [139.7, 72.0, -114.7]
+    post r10 / down cam + flow: 2.02 mm (E) from (-0.03, +0.97, +0.26), axis [0.988, -0.008, 0.157], roll 285.0, lateral -127.3 mm, contact [139.7, 72.0, -116.3]
+    post r10 / L2 base: 2.99 mm (E) from (+0.29, +0.04, -0.96), axis [0.304, 0.943, 0.135], roll 165.0, lateral -244.3 mm, contact [450.5, 37.5, 1.8]
+    edge / electronics: 5.0 mm (E) from -Z, axis [0.258, 0.966, 0.025], roll 180.0, lateral 196.7 mm, contact [-31.0, 24.5, 0.5]
+    post r10 / electronics: 5.0 mm (E) from -Z, axis [-0.086, -0.996, 0.017], roll 180.0, lateral -211.3 mm, contact [-49.0, -24.5, 0.5]
+    edge / front cameras: 7.02 mm (E) from (-0.25, -0.17, -0.95), axis [0.078, -0.985, 0.153], roll 165.0, lateral 220.7 mm, contact [405.0, -79.5, 29.8]
+    edge / motors: 11.0 mm (E) from -Z, axis [-0.993, -0.084, 0.081], roll 180.0, lateral -148.3 mm, contact [-7.1, 135.1, 45.0]
+    post r10 / motors: 12.72 mm (E) from (-0.13, -0.25, -0.96), axis [-0.991, 0.049, 0.123], roll 195.0, lateral 132.2 mm, contact [0.7, -126.7, 45.0]
+    edge / props: 13.33 mm (E) from (+0.18, -0.23, +0.96), axis [-0.975, -0.164, 0.149], roll 345.0, lateral 84.2 mm, contact [403.3, 93.6, 87.0]
+    post r10 / front cameras: 13.52 mm (E) from (+0.95, +0.12, -0.29), axis [0.3, -0.045, 0.953], roll 195.0, lateral 27.2 mm, contact [432.7, 53.4, 29.8]
+    post r10 / props: 13.59 mm (E) from (+0.18, -0.23, +0.96), axis [-0.975, -0.164, 0.149], roll 345.0, lateral 84.2 mm, contact [402.9, 92.7, 87.0]
+    edge / cartridge: 26.93 mm (E) from (+0.68, +0.69, +0.25), axis [0.648, -0.726, 0.231], roll 285.0, lateral -107.8 mm, contact [206.1, 26.5, -99.9]
+    post r10 / cartridge: 27.11 mm (E) from (-0.70, -0.67, +0.26), axis [-0.67, 0.737, 0.087], roll 285.0, lateral -116.8 mm, contact [35.1, -27.5, -82.1]
+    edge / receiver XT60: 83.93 mm (E) from (+0.69, -0.67, +0.26), axis [-0.707, -0.706, 0.049], roll 285.0, lateral -74.8 mm, contact [205.0, -13.6, -69.6]
+    post r10 / receiver XT60: 102.54 mm (E) from (+0.00, +0.97, +0.26), axis [-1.0, -0.001, 0.013], roll 75.0, lateral 61.7 mm, contact [205.0, 13.6, -69.6]
   access PASS (swept tool overlap <= 0.5 mm³):
     pack swap (cartridge, part, 80 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     FC USB-C (right edge 8 behind the FC centre, DEFAULT: clear of the front arm) (electronics, type box, w 12, h 7, w_axis [1, 0, 0], 45 mm along [0.0, -1.0, 0.0]): 0.0 mm³ (E)
@@ -73,8 +73,8 @@ system_check Overseer: PASS
     down camera lead (up its pod channel and the sled) (down cam + flow, type cylinder, d 5, 66.8 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     flow sensor lead (up its pod channel and the sled) (down cam + flow, type cylinder, d 5, 66.8 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     XT60 lead up through the sled (receiver XT60, type cylinder, d 9, 30 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
-    front camera left USB (board edge, up) (front cameras, type box, w 10, h 6, 30 mm along [0.161, 0.1714, 0.972]): 0.0 mm³ (E)
-    front camera right USB (board edge, up) (front cameras, type box, w 10, h 6, 30 mm along [0.161, -0.1714, 0.972]): 0.0 mm³ (E)
+    front camera left USB (board top edge, 10 aft / outboard, up) (front cameras, type box, w 10, h 6, 30 mm along [0.161, 0.1714, 0.972]): 0.0 mm³ (E)
+    front camera right USB (board top edge, 10 aft / outboard, up) (front cameras, type box, w 10, h 6, 30 mm along [0.161, -0.1714, 0.972]): 0.0 mm³ (E)
     arm bolt top 0 (plates, type cylinder, d 8, 60 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     arm bolt top 1 (plates, type cylinder, d 8, 60 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     arm bolt top 2 (plates, type cylinder, d 8, 60 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
@@ -91,4 +91,4 @@ system_check Overseer: PASS
     arm bolt bottom 5 (plates, type cylinder, d 8, 45 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     arm bolt bottom 6 (plates, type cylinder, d 8, 45 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     arm bolt bottom 7 (plates, type cylinder, d 8, 45 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
-System: Overseer, cage first 0.1 mm (E) at (+0.97, +0.02, -0.26) (L2 base), fit 0.0 mm³ (E) (L2 base/apex + hubs), bbox 112 L (E), extents 658 x 603 x 283 mm (E), mass 4082 g (E), CG 0.8 mm off thrust axis (E) [-0.7, +0.1, +11.2], 6.3 mm without swap parts, probes 0.0 mm (E) edge at (+0.96, +0.14, -0.26) (L2 base), access 26/26 clear
+System: Overseer, cage first 0.1 mm (E) at (+0.97, +0.02, -0.26) (L2 base), fit 0.0 mm³ (E) (L2 base/apex + hubs), bbox 125 L (E), extents 674 x 634 x 293 mm (E), mass 3893 g (E), CG 0.4 mm off thrust axis (E) [+0.4, +0.1, +2.8], 8.1 mm without swap parts, probes 0.0 mm (E) edge at (+0.59, -0.81, +0.00) (L2 base), access 26/26 clear
