@@ -318,7 +318,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         Rc = np.eye(4); Rc[:3, :3] = cam_cover.R_cam(sy * CAM_YAW, CAM_PITCH, 0.0)
         board = box(-1, 1, -19, 19, -19, 19); lens = trimesh.creation.cylinder(6, 8, sections=32)
         lens.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); lens.apply_translation([5, 0, 0])
-        cam0 = trimesh.util.concatenate([board, lens]); plate0 = box(-4.5, -1.5, -20, 20, -20, 20).difference(box(-5, -1, -6, 6, 17, 21))   # USB-C plug notch at the board top edge
+        so_ = 1.0 if Rc[0, 1] < 0 else -1.0                         # the USB-C plug 10 along the top edge, aft and outboard (clear of the V rods, DEFAULT)
+        cam0 = trimesh.util.concatenate([board, lens]); plate0 = box(-4.5, -1.5, -20, 20, -20, 20).difference(box(-5, -1, 10 * so_ - 6, 10 * so_ + 6, 17, 21))   # its notch
         back_ = 0.0
         for _ in range(3):                                         # set back along -A until clear of the field
             C = B + up_b * CAM_H2 + np.array([0, sy * CAM_Y, 0]) - A * back_
@@ -1023,7 +1024,8 @@ ACCESS = [dict(name="FC USB-C (right edge 8 behind the FC centre, DEFAULT: clear
           *[dict(name=f"{nm_} lead (up its pod channel and the sled)", part="down cam + flow", **{"from": [float(-dc), sy_ * 41.0, float(g["cart"].bounds[0][2] + 16.0)]},
                  dir=[0, 0, 1], length_mm=float(LATCH_META["Y_M"] - 16 + 14), tool={"type": "cylinder", "d": 5}) for nm_, sy_ in (("down camera", 1), ("flow sensor", -1))],
           dict(name="XT60 lead up through the sled", part="receiver XT60", **{"from": [float(v) for v in (g["xt60"].bounds.mean(0) * [1, 1, 0] + [0, 0, g["xt60"].bounds[1][2]])]}, dir=[0, 0, 1], length_mm=30, tool={"type": "cylinder", "d": 9})]
-ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board edge, up)", part="front cameras", **{"from": [float(v) for v in c_["c"] + c_["up"] * 19]},
+ACCESS += [dict(name=f"front camera {'left' if c_['sy'] > 0 else 'right'} USB (board top edge, 10 aft / outboard, up)", part="front cameras",
+                **{"from": [float(v) for v in c_["c"] + c_["up"] * 19 + c_["left"] * (10.0 if c_["left"][0] < 0 else -10.0)]},
                 dir=[float(v) for v in c_["up"]], length_mm=30, tool={"type": "box", "w": 10, "h": 6}) for c_ in g["cams"]]
 ACCESS += [dict(name=f"arm bolt {wh_} {i_}", part="plates", **{"from": [xy_[0], xy_[1], _tz if wh_ == "top" else _bz]}, dir=[0, 0, 1 if wh_ == "top" else -1], length_mm=60 if wh_ == "top" else 45,
                 tool={"type": "cylinder", "d": 8}, **({"ignore": ["props"]} if wh_ == "top" else {}))   # 60 hex driver from above, 45 from below (the 3.0 wheel-ring
