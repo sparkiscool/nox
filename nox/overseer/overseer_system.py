@@ -383,6 +383,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         guard_.append(rod(c_, Ng[n_], 3.0))
     g["base_guard"] = trimesh.util.concatenate(guard_)
     ring_nodes += guard_                                                                                         # (cage up: printed with the nodes)
+    ring_nodes += [rod(Ng[a_], Ng[b_], 4.0) for nm_, a_, b_, grp_, kd_ in Mg if kd_ == "link" and grp_ not in (None, "pyramid")]   # cage pieces under the
+                                                                                  # 33 carbon break-even: printed struts (8 round) between their nodes
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
     hubs = [box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)

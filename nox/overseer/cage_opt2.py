@@ -387,6 +387,9 @@ def _geometry(p, topo, sizes=None):
                 short_ = np.linalg.norm(N[chain[i_ + 1]] - N[chain[i_]]) < CARBON_MIN
                 mem(f"mast {i_}", chain[i_], chain[i_ + 1], "pyramid", "link" if short_ else "rod")
     join_crossings(N, M)
+    for i_, (nm_, a_, b_, grp_, kd_) in enumerate(M):                  # carbon break-even (CLAUDE.md): a piece under 33 between printed parts
+        if kd_ == "rod" and np.linalg.norm(N[b_] - N[a_]) < CARBON_MIN:   # is printed with them (a 6 x 6 or larger strut), never carbon
+            M[i_] = (nm_, a_, b_, grp_, "link")
     info = dict(ring=rp, pnodes=pnodes, motors=mot, corners=corners, sockets=S, nose=(xn, ztn, zbn))
     return N, M, fixed, mass, info
 

@@ -1,6 +1,6 @@
-chin   (2 nodes): max reaction    1299 N at chin+1 in 'crash [-0.58, -0.58, -0.58] at V5lo', moment there   1.9 N m
-fhubB  (3 nodes): max reaction    1056 N at fhubB-1 in 'crash [0.0, 1.0, 0.0] at V1hi', moment there   1.7 N m
-fhubT  (3 nodes): max reaction     488 N at fhubT+1 in 'crash [0.58, -0.58, -0.58] at NB-1', moment there   0.6 N m
+chin   (2 nodes): max reaction       0 N at None in 'None', moment there   0.0 N m
+fhubB  (3 nodes): max reaction    2954 N at fhubB0 in 'crash [0.58, -0.58, -0.58] at V7lo', moment there  31.1 N m
+fhubT  (3 nodes): max reaction    4420 N at fhubT0 in 'crash [0.58, -0.58, -0.58] at V7lo', moment there  63.1 N m
 hubc   (4 nodes): max reaction       0 N at None in 'None', moment there   0.0 N m
-rhubB  (2 nodes): max reaction    2149 N at rhubB-1 in 'crash [-1.0, 0.0, 0.0] at KP3_75', moment there   3.9 N m
-root   (4 nodes): max reaction     504 N at root2 in 'crash [-0.58, -0.58, 0.58] at V5hi', moment there  46.4 N m
+rhubB  (2 nodes): max reaction    3306 N at rhubB+1 in 'crash [-1.0, 0.0, 0.0] at KP3_25', moment there   7.3 N m
+root   (4 nodes): max reaction    1153 N at root1 in 'crash [-0.58, 0.58, 0.58] at V2hi', moment there  78.4 N m
