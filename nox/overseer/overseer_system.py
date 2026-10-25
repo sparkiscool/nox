@@ -458,10 +458,11 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
             if best_ is None or cov_ > best_[0]: best_ = (cov_, u_)
         if best_ is None or best_[0] == 0: continue
         u_ = best_[1]
-        if min((q_ + u_ * (rc_ - 2.0))[2], (q_ + u_ * (rc_ + CAP_T))[2]) - CAP_R * math.sqrt(max(0.0, 1 - u_[2] ** 2)) < FUNNEL_TOP_D + 1.0:
-            continue                                                # it would reach under the box deck round the funnel: that node stays rigid
+        zlo_ = min((q_ + u_ * (rc_ - 2.0))[2], (q_ + u_ * (rc_ + CAP_T))[2]); sp_ = math.sqrt(max(0.0, 1 - u_[2] ** 2))
+        cr_ = min(CAP_R, (zlo_ - (FUNNEL_TOP_D + 1.0)) / sp_) if sp_ > 1e-6 else CAP_R   # narrower where it would reach under the box deck round the funnel
+        if cr_ < 6.0: continue                                          # (under Ø12 the node stays rigid)
         caps[n_] = [float(u_[0]), float(u_[1]), float(u_[2]), CAP_STROKE]
-        cap_m.append(trimesh.creation.cylinder(CAP_R, segment=[q_ + u_ * (rc_ - 2.0), q_ + u_ * (rc_ + CAP_T)], sections=20))
+        cap_m.append(trimesh.creation.cylinder(cr_, segment=[q_ + u_ * (rc_ - 2.0), q_ + u_ * (rc_ + CAP_T)], sections=20))
     for sx_, sy_ in [(a__, b__) for a__ in (1, -1) for b__ in (1, -1)]:
         if f"FT{sx_:+d}{sy_:+d}" in Ng: caps[f"FT{sx_:+d}{sy_:+d}"] = [0.0, 0.0, -1.0, FOOT_STROKE]   # the TPU feet: their pads
     P["caps"] = caps; g["caps"] = cap_m
