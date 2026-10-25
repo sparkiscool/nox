@@ -372,19 +372,30 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         if kind == "rod":
             od_ = co.SECTIONS[sec_of(name, group)]["od"]; u_ = np.subtract(Ng[b], Ng[a]); u_ = u_ / max(np.linalg.norm(u_), 1e-9)
             rods_at.setdefault(a, []).append((u_, od_)); rods_at.setdefault(b, []).append((-u_, od_))
-    def nsock(n_, pad=None):
+    def nsock(n_, pad=None, wall=co.NODE_WALL, core=True):
         """a printed node drawn from its sockets (co.node_mass_g): a core round the largest bore, one boss per rod (bore OD + 0.3,
-        3 wall, co.SOCK_LEN from the centre); pad: a plate clamp block under a hub"""
+        `wall` round it, co.SOCK_LEN from the centre); pad: a plate clamp block under a hub"""
         q = np.asarray(Ng[n_], float); rs_ = rods_at.get(n_, [])
-        rc_ = max([o_ for _, o_ in rs_] + [3.0]) / 2 + 0.15 + co.NODE_WALL
-        parts_ = [trimesh.creation.icosphere(1, rc_).apply_translation(q)]
-        parts_ += [trimesh.creation.cylinder(o_ / 2 + 0.15 + co.NODE_WALL, segment=[q, q + u_ * co.SOCK_LEN], sections=16) for u_, o_ in rs_]
+        rc_ = max([o_ for _, o_ in rs_] + [3.0]) / 2 + 0.15 + wall
+        parts_ = [trimesh.creation.icosphere(1, rc_).apply_translation(q)] if core else []
+        parts_ += [trimesh.creation.cylinder(o_ / 2 + 0.15 + wall, segment=[q, q + u_ * co.SOCK_LEN], sections=16) for u_, o_ in rs_]
         if pad is not None: parts_.append(pad)
         return union(parts_)
     def nbox(n_):
         return nsock(n_)
     ring_nodes = [nbox(f"{nm}{lvl}") for nm in info["pnodes"] for lvl in ("lo", "hi")]
-    ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP"))]   # rear tower and skirt nodes (cage up)
+    ring_nodes += [nbox(n_) for n_ in Ng if n_ == "TR" or n_.startswith(("KV", "KP", "XJ", "SM")) and n_ in rods_at]   # rear skirt, cross and spider nodes
+    # corner nodes: the wheel cheeks + the wheel-ring sockets (2.0 wall, the hard-rule minimum: a 3 wall would stand within 1 of the funnel face behind the
+    # R 5 wheels) + the strut socket; the belly-frame corners and the feet from their sockets (DEFAULT)
+    _ci = [(sx_, sy_) for sx_ in (1, -1) for sy_ in (1, -1)]
+    g["nodes"] = [union([g["nodes"][k_]] + [nsock(f"{w_}{sx_:+d}{sy_:+d}", wall=2.0, core=False) for w_ in ("WAi", "WBi") if f"{w_}{sx_:+d}{sy_:+d}" in rods_at]
+                        + ([nsock(f"SR{sx_:+d}{sy_:+d}", core=False)] if f"SR{sx_:+d}{sy_:+d}" in rods_at else []))
+                  for k_, (sx_, sy_) in enumerate(_ci)]
+    g["nodes"] += [nsock(f"BF{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"BF{sx_:+d}{sy_:+d}" in rods_at]
+    g["foot_bosses"] = [nsock(f"FT{sx_:+d}{sy_:+d}") for sx_, sy_ in _ci if f"FT{sx_:+d}{sy_:+d}" in rods_at]   # in the TPU feet (FE node mass)
+    g["node_g"] = {n_: co.node_mass_g([o_ for _, o_ in rods_at[n_]]) for n_ in Ng if n_ in rods_at and n_ not in fixed_g and not n_.startswith("MX")
+                   and (n_[:-2] in info["pnodes"] or n_.startswith(co.PRINTED_NODES))}   # the frame model's node masses (one mass model, E)
+    g["corner_g"] = sum(abs(m_.volume) for m_ in g["nodes"]) * 1.27e-3 * 0.6 / 4    # per corner incl. its belly-frame corner (E)
     mx_ = [n_ for n_ in Ng if n_.startswith("MX")]; mast_block = []
     if mx_:                                                       # mast node block: the spine crossings and the short mast links in one print, 21 off the
                                                                   # front hub at the bottom plate: printed with that hub (apex + hubs, DEFAULT)
@@ -405,22 +416,38 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     ring_nodes += guard_                                                                                         # (cage up: printed with the nodes)
     g["short_links"] = {nm_: ((a_, b_), rod(Ng[a_], Ng[b_], 4.0)) for nm_, a_, b_, grp_, kd_ in Mg if kd_ == "link" and grp_ not in (None, "pyramid")}
     ring_nodes += [m_ for _, m_ in g["short_links"].values()]                   # cage rods under the 33 carbon break-even: printed struts (8 round)
+    g["cage_prints"] = guard_ + [m_ for _, m_ in g["short_links"].values()]    # printed cage parts that are not nodes (their mass by volume)
+    P["corner_g"] = float(g["corner_g"])                                        # the frame model weighs the corners as drawn
     ring_nodes += [nbox(n_) for n_ in ("NR+1", "NR-1", "NT+1", "NT-1", "NB+1", "NB-1", "TN")]   # nose nodes (the last 7)
     g["ring_v"] = [(r[1], r[2]) for r in info["ring"] if r[3]]
-    hubs = [nsock(n, pad=box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4))   # clamp pad + a boss per rod
-            for n in Ng if n.startswith(("fhubB", "fhubT", "chin", "rhubB"))]
+    from topo.part import man as _man
+    def _cut(a_, *bs_):
+        o_ = _man(a_)
+        for b_ in bs_: o_ = o_ - _man(b_)
+        mm_ = o_.to_mesh(); return trimesh.Trimesh(mm_.vert_properties[:, :3], mm_.tri_verts)
+    hubs = [_cut(nsock(n, pad=box(Ng[n][0] - 7, Ng[n][0] + 7, Ng[n][1] - 7, Ng[n][1] + 7, Ng[n][2] - 4, Ng[n][2] + 4)), TOP, BOTTOM, g["pan"])   # pad + a boss per
+            for n in Ng if n.startswith(("fhubB", "fhubT", "chin", "rhubB"))]                                                      # rod, slotted for the plates
+    sp_socks = [nsock(n_) for n_ in ("SPlo", "SPhi") if n_ in rods_at]                     # the spine sockets on the L2 apex block
     g["hubs"] = hubs
     g["hub_socket_mm3"] = g.get("hub_socket_mm3", 0.0) + sum(overlap(h_, g["pan"]) for h_ in hubs)   # hub blocks seated on the belly pan
-    g["hub_plate_mm3"] = sum(overlap(h_, pl_) for h_ in hubs for pl_ in (TOP, BOTTOM)) + 1.0            # and clamped on the plates
+    g["hub_plate_mm3"] = sum(overlap(h_, pl_) for h_ in hubs for pl_ in (TOP, BOTTOM)) * 1.05 + 1.0     # slotted round the plates: mesh noise only
     g["hub_arm_mm3"] = sum(overlap(h_, a_) for h_ in hubs for a_ in g["arms"]) * 1.5 + 1.0              # front hub blocks seat on the front arm roots
     g["cage_N"], g["cage_info"] = Ng, info
     g["rods"] = rods
     g["rod_meshes"] = {k: rod(v[0], v[1], v[2] / 2) for k, v in rods.items()}
     g["ring_nodes"] = ring_nodes
-    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"] + mast_block)
+    g["apex"] = union([seat, back] + lugs + hubs + g["cam_arms"] + mast_block + sp_socks)
+    g["apex_core"] = union([seat, back] + lugs + hubs + g["cam_arms"] + sp_socks)          # its mass without the mast block (that is in node_g)
+    for k_, (nm_, a_, b_, grp_, kd_) in enumerate([m_ for m_ in Mg if m_[0].startswith("belly bar")]):   # pod clamps on the belly bars: a sleeve over the
+        q0_, q1_ = np.asarray(Ng[a_], float), np.asarray(Ng[b_], float); od_ = co.SECTIONS[sec_of(nm_, grp_)]["od"]   # pod's length + a web to the pod
+        pk_ = "cam_pod" if q0_[1] > 0 else "flow_pod"; pb_ = g[pk_].bounds; yb_ = q0_[1]; zb_ = q0_[2]; r_ = od_ / 2 + 0.15 + 2.0
+        sl_ = trimesh.creation.cylinder(r_, segment=[[pb_[0][0], yb_, zb_], [pb_[1][0], yb_, zb_]], sections=16)
+        web_ = box(pb_[0][0], pb_[1][0], min(yb_, pb_[0][1] if yb_ < 0 else pb_[1][1]) - 1.0, max(yb_, pb_[0][1] if yb_ < 0 else pb_[1][1]) + 1.0,
+                   min(zb_, pb_[1][2]) - 1.0, max(zb_, pb_[1][2]) + 1.0) if abs(yb_) > (abs(pb_[1][1]) if yb_ > 0 else abs(pb_[0][1])) or zb_ > pb_[1][2] else None
+        g[pk_] = union([g[pk_], sl_] + ([web_] if web_ is not None else []))
     low_keys = [k for k, v in rods.items() if v[3] in ("struts", "strut2", "wheel_ring", "skid_belly")]
     nose_keys = [k for k, v in rods.items() if v[3] in NOSE_GROUPS or k in ("spider nose+", "spider nose-")]
-    g["cage_low"] = trimesh.util.concatenate(nodes + [g["rod_meshes"][k] for k in low_keys])
+    g["cage_low"] = trimesh.util.concatenate(g["nodes"] + g["foot_bosses"] + [g["rod_meshes"][k] for k in low_keys])
     g["cage_up"] = trimesh.util.concatenate([n_ for n_ in ring_nodes[:-7]] + [g["rod_meshes"][k] for k in rods if k not in low_keys and k not in nose_keys])
     g["cage_nose"] = trimesh.util.concatenate(ring_nodes[-7:] + [g["rod_meshes"][k] for k in nose_keys])
     g["nose_keys"] = nose_keys
@@ -463,7 +490,8 @@ def cg_of(g):
         for i_, (mx, my) in enumerate(g["motors_xy"]):
             r0 = np.array([75 * math.cos(math.radians(MOTOR_DEG[i_])), 75 * math.sin(math.radians(MOTOR_DEG[i_]))])
             L = float(np.hypot(mx - r0[0], my - r0[1])); items.append((f"spars {i_}", 4 * L * ROD_GPM, trimesh.points.PointCloud([[(mx + r0[0]) / 2, (my + r0[1]) / 2, 22]])))
-    printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("ring nodes", g["ring_nodes"], 0.5), ("apex", [g["apex"]], 0.45),
+    items += [(f"node {n_}", gm_, trimesh.points.PointCloud([g["cage_N"][n_]])) for n_, gm_ in g["node_g"].items()]   # as the frame model (one mass model)
+    printed = [("arms", g["arms"], 0.45), ("corner nodes", g["nodes"], 0.6), ("cage prints", g["cage_prints"], 0.5), ("apex", [g["apex_core"]], 0.45),
                ("cam plate", [g["cam_plate"]], 0.5),
                ("deck", [DECK], 0.5), ("sled + pods", [g["sled"], g["cam_pod"], g["flow_pod"]], 0.3), ("feet", g["feet"], 0.5), ("skid runners", g["runners"], 0.4), ("belly pan", [g["pan"]], 0.5),
                ("keep-alive pads", g["pads"], 0.6)]
@@ -736,8 +764,9 @@ say(f"frame model on the final geometry (F, dimensions L cases): L2 mode {FRAME[
     f"handling 50 N: {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('handling')):.2f}; "
     f"latch {max(max(v['rod'], v['socket'], v['buckle']) for k, v in cs.items() if k.startswith('latch')):.2f}; violation {FRAME['violation']:.3f}; "
     f"breaking order (L, every crash case): members ≤ {1 / co.NODE_FUSE:.2f} (worst {max(FRAME['breaking_order']['rod'], FRAME['breaking_order']['arm_vs_node'] * FRAME['breaking_order']['node']):.2f}), "
-    f"touching node sockets ≤ 1 ({FRAME['breaking_order']['node']:.2f}): each touching node a fuse rated {FRAME['breaking_order']['fuse_N'][0]:.0f}..{FRAME['breaking_order']['fuse_N'][1]:.0f} N "
-    f"(holds the hit, breaks before any member) {'PASS' if FRAME['breaking_order']['node_first'] else 'FAIL'}; held sockets rated (≤ 1 / 1.5 of the node index): "
+    f"node sockets ≤ 1 in every case ({FRAME['breaking_order']['node']:.2f}); the fuse is a TPU hit cap on each outer node, rated {FRAME['breaking_order']['fuse_N'][0]:.0f}.."
+    f"{FRAME['breaking_order']['fuse_N'][1]:.0f} N along the hit (holds the hit, gives before any member; DEFAULT, a node piece requirement) "
+    f"{'PASS' if FRAME['breaking_order']['node_first'] else 'FAIL'}; held sockets rated (≤ 1 / 1.5 of the node index): "
     + ", ".join(f"{k} {v:.0f} N" for k, v in FRAME['breaking_order']['joint_req_N'].items())
     + f"; worst rod {FRAME['breaking_order']['rod']:.2f}")
 say(f"L2: base centre ({xB:.1f}, 0, {zB:.0f}), axis 15 deg below +x; body lowest z {g['l2'].bounds[0][2]:.1f} vs funnel top {FUNNEL_TOP_D:.1f} (drone frame)")
@@ -853,10 +882,12 @@ spar_g = 0.0
 if CAGE_TOPO.get("arm_spars"):
     for i_, (mx, my) in enumerate(g["motors_xy"]):
         r0 = np.array([75 * math.cos(math.radians(MOTOR_DEG[i_])), 75 * math.sin(math.radians(MOTOR_DEG[i_]))]); spar_g += 4 * float(np.hypot(mx - r0[0], my - r0[1])) * ROD_GPM
-cage_g = (rod_g + spar_g + 8 * 0.25 + sum(abs(m.volume) for m in g["nodes"]) * 1.27e-3 * 0.6 + sum(abs(m.volume) for m in g["ring_nodes"]) * 1.27e-3 * 0.5
-          + sum(abs(m.volume) for m in g["runners"]) * 1.27e-3 * 0.4 + abs(g["pan"].volume) * 1.27e-3 * 0.5)
+cage_g = (rod_g + spar_g + 8 * 0.25 + sum(abs(m.volume) for m in g["nodes"]) * 1.27e-3 * 0.6 + sum(g["node_g"].values())
+          + sum(abs(m.volume) for m in g["cage_prints"]) * 1.27e-3 * 0.5 + sum(abs(m.volume) for m in g["feet"]) * 1.21e-3 * 0.5
+          + sum(abs(m.volume) for m in g["runners"]) * 1.27e-3 * 0.4 + abs(g["pan"].volume) * 1.27e-3 * 0.5)   # one mass model: nodes as the frame model
 say("cage rods (C): " + "; ".join(f"{co.SECTIONS[sec]['label']} {n_} x {Ls / 1000:.2f} m" for sec, (n_, Ls) in sorted(by_sec.items(), key=lambda x: co.SECTIONS[x[0]]['gpm']))
-    + f"; {rod_g:.0f} g + arm spars {spar_g:.0f} g; {len(g['ring_nodes'])} ring nodes, 4 corner nodes, 8 wheels; ~{cage_g:.0f} g (E) without the apex")
+    + f"; {rod_g:.0f} g + arm spars {spar_g:.0f} g; nodes {sum(g['node_g'].values()):.0f} g ({len(g['node_g'])}, as the frame model); corner nodes, wheels, feet, runners, pan, "
+    f"shroud and printed links; cage ~{cage_g:.0f} g (E) without the apex block")
 # landing: tip-over angle on the 4 feet (the lowest points), CG over the stance
 fz = min(f.bounds[0][2] for f in g["feet"]); fxy = np.array([f.bounds.mean(axis=0)[:2] for f in g["feet"]])
 x0, x1, y0, y1 = fxy[:, 0].min() - 5, fxy[:, 0].max() + 5, fxy[:, 1].min() - 5, fxy[:, 1].max() + 5
@@ -889,23 +920,27 @@ def tm(m): return m.copy()
 _cm, _cw = np.zeros(3), 0.0
 for k_, v_ in g["rods"].items():
     w_ = float(np.linalg.norm(np.subtract(v_[1], v_[0]))) * co.SECTIONS[v_[4]]["gpm"] / 1000; _cm += w_ * (np.asarray(v_[0]) + np.asarray(v_[1])) / 2; _cw += w_
-for ms_, f_ in ((g["nodes"], 0.6), (g["ring_nodes"], 0.5), (g["runners"], 0.4), ([g["pan"]], 0.5), (g["wheels"], 0.5), (g["feet"], 0.5)):
+for ms_, f_ in ((g["nodes"], 0.6), (g["cage_prints"], 0.5), (g["runners"], 0.4), ([g["pan"]], 0.5), (g["wheels"], 0.5), (g["feet"], 0.5)):
     for m_ in ms_:
         w_ = abs(m_.volume) * 1.27e-3 * f_; _cm += w_ * m_.bounding_box.centroid; _cw += w_
+for n_, gm_ in g["node_g"].items(): _cm += gm_ * np.asarray(g["cage_N"][n_], float); _cw += gm_
 cage_cg = _cm / _cw
 cage_parts = [g["cage_up"], g["cage_low"], g["cage_nose"], trimesh.util.concatenate(g["wheels"]), trimesh.util.concatenate(g["feet"])] + g["runners"] + [g["pan"]]
 # contact allowances joint by joint: each rod end's own overlap with the piece it is designed to sit in (its socket), summed
 # per part pair (x 1.05 + 1 for mesh noise); any other overlap shows in the fit check
 J_ARM = ("tipb", "tipt", "armbot", "arm", "root"); J_HUB = ("fhubB", "fhubT", "chin", "rhubB", "Shi", "Slo", "hubc", "SP", "MX")
 JOINTS = {"arms": [], "apex": [], "sled": []}
+_sock = lambda od_, n_: math.pi * (od_ / 2 + 0.15) ** 2 * co.SOCK_LEN * n_   # designed: bore area x boss length, per rod end seated there (C)
 for k_, (a_, b_) in g["rod_ends"].items():
-    rm_ = g["rod_meshes"][k_]
-    if any(n_.startswith(J_ARM) for n_ in (a_, b_)): JOINTS["arms"].append((k_, sum(overlap(rm_, am_) for am_ in g["arms"])))
-    if any(n_.startswith(J_HUB) for n_ in (a_, b_)): JOINTS["apex"].append((k_, overlap(rm_, g["apex"])))
-    if k_.startswith(("skid leg", "belly bar")): JOINTS["sled"].append((k_, overlap(rm_, union([g["sled"], g["cam_pod"], g["flow_pod"]]))))
-JOINTS["apex"] += [(k_, overlap(m_, g["apex"])) for k_, ((a_, b_), m_) in g["short_links"].items() if any(n_.startswith(J_HUB) for n_ in (a_, b_))]   # printed struts seated in a hub
+    od_ = g["rods"][k_][2]
+    na_ = sum(n_.startswith(J_ARM) for n_ in (a_, b_)); nh_ = sum(n_.startswith(J_HUB) for n_ in (a_, b_))
+    if na_: JOINTS["arms"].append((k_, _sock(od_, na_)))
+    if nh_: JOINTS["apex"].append((k_, _sock(od_, nh_)))
+    if k_.startswith("skid leg"): JOINTS["sled"].append((k_, overlap(g["rod_meshes"][k_], g["sled"]) * 1.05))   # through the sled boss
+    if k_.startswith("belly bar"): JOINTS["sled"].append((k_, math.pi * (od_ / 2 + 0.15) ** 2 * 50.0))           # in its pod clamp (pod length + 4)
+JOINTS["apex"] += [(k_, math.pi * 4.15 ** 2 * co.SOCK_LEN) for k_, ((a_, b_), m_) in g["short_links"].items() if any(n_.startswith(J_HUB) for n_ in (a_, b_))]   # printed struts in a hub
 JOINTS["apex"] += [("hub on the pan", sum(overlap(h_, g["pan"]) for h_ in g["hubs"]))]
-J_ALLOW = {k_: round(sum(v_ for _, v_ in js_) * 1.05 + 1.0, 1) for k_, js_ in JOINTS.items()}
+J_ALLOW = {k_: round(sum(v_ for _, v_ in js_) + 1.0, 1) for k_, js_ in JOINTS.items()}   # designed socket volumes, + 1 mesh noise
 os.makedirs(OUT, exist_ok=True); json.dump({k_: [[n_, round(float(v_), 1)] for n_, v_ in js_] for k_, js_ in JOINTS.items()}, open(os.path.join(OUT, "joints.json"), "w"), indent=0)
 say(f"contact allowances (per joint, M): cage/arms {len(JOINTS['arms'])} sockets {J_ALLOW['arms']} mm3, cage/apex + hubs {len(JOINTS['apex'])} sockets {J_ALLOW['apex']} mm3, "
     f"cage/sled {len(JOINTS['sled'])} clamps {J_ALLOW['sled']} mm3")

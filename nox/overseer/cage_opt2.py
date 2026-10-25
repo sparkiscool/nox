@@ -362,7 +362,7 @@ def _geometry(p, topo, sizes=None):
         node(f"SR{sx:+d}{sy:+d}", sr)
         for w in ("WA", "WB", "WAi", "WBi", "SR"):
             mem(f"cornerlink {w}{sx:+d}{sy:+d}", cn, f"{w}{sx:+d}{sy:+d}", None, "link")
-        mass[cn] = CORNER_G * 1e-6 + 0.5e-6
+        mass[cn] = p.get("corner_g", CORNER_G) * 1e-6 + 0.5e-6
         an = f"arm{k}_{t:.3f}"
         side = "front" if mot[k][0] > dm else "rear"
         bot = node(f"armbot{sx:+d}{sy:+d}", (N[an][0], N[an][1], t * (ROOT_H - H_TIP[side])))
@@ -596,7 +596,7 @@ class Model:
         g = 0.0
         for e in self.el:
             if e["kind"] == "rod": g += SECTIONS[e["P"]["sec"]]["gpm"] * e["L"] / 1000.0
-        g += sum(self.node_g.values()) + CORNER_G * 4                                     # printed nodes at their drawn size, corner blocks
+        g += sum(self.node_g.values()) + self.p.get("corner_g", CORNER_G) * 4             # printed nodes from their sockets, corner blocks as drawn
         if self.topo.get("arm_spars"):
             g += sum(4 * SECTIONS["r3"]["gpm"] * e["L"] / 1000.0 for e in self.el if e["kind"] == "arm")
         return g
@@ -660,17 +660,22 @@ OPEN_HALF, FACE_TOP = 84.0, 75.1                                   # box collar 
 FACE_C, X_EDGE_Z, Y_EDGE_Z, OPEN_X = 82.7, 12.8, 1.3, 95.5           # funnel v9 plain / v7 (dimensions G): half = 82.7 + seat z
 
 
-OWN_BLOCK = ("corner", "W", "tip", "arm", "root", "mot", "BF", "FT")   # ends in a piece drawn on its own (wheel corners, arms, belly frame, feet)
+OWN_BLOCK = ("tip", "arm", "root", "mot")                             # ends in the printed arms (their sockets are the arm's, drawn with it)
 
 
-def boss_funnel(a, b, od, p, ends=(True, True)):
-    """funnel clearance of the socket bosses at a rod's ends (od + 2 x (0.15 + NODE_WALL), SOCK_LEN from the node); ends: which
-    ends sit in a socket boss (a node or hub drawn from its sockets)"""
+def boss_wall(n):
+    """socket boss wall at a rod end: none in the arms, 2.0 at the wheel cheeks (the hard-rule minimum, inside the R 5 wheels), else NODE_WALL"""
+    return None if n.startswith(OWN_BLOCK) else 2.0 if n.startswith("W") else NODE_WALL
+
+
+def boss_funnel(a, b, od, p, walls=(NODE_WALL, NODE_WALL)):
+    """funnel clearance of the socket bosses at a rod's ends (od + 2 x (0.15 + wall), SOCK_LEN from the node); walls: each end's
+    boss wall, None where the end has no boss of the cage's own (an arm socket)"""
     a, b = np.asarray(a, float), np.asarray(b, float); L = float(np.linalg.norm(b - a))
     if L < 1e-6: return np.inf
-    u = (b - a) / L; s_ = min(SOCK_LEN, L / 2); ob = od + 2 * (0.15 + NODE_WALL); out = [np.inf]
-    if ends[0]: out.append(funnel_clear(a, a + u * s_, ob, p))
-    if ends[1]: out.append(funnel_clear(b - u * s_, b, ob, p))
+    u = (b - a) / L; s_ = min(SOCK_LEN, L / 2); out = [np.inf]
+    if walls[0] is not None: out.append(funnel_clear(a, a + u * s_, od + 2 * (0.15 + walls[0]), p))
+    if walls[1] is not None: out.append(funnel_clear(b - u * s_, b, od + 2 * (0.15 + walls[1]), p))
     return min(out)
 
 
@@ -777,7 +782,7 @@ def guard_caps(m):
         for od in ods:
             if e["group"] not in PLAN_GROUPS and prop_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < GUARD_GAP: break
             if funnel_clear(m.N[e["a"]], m.N[e["b"]], od, m.p) < 1.0: break
-            if boss_funnel(m.N[e["a"]], m.N[e["b"]], od, m.p, [not n_.startswith(OWN_BLOCK) for n_ in (e["a"], e["b"])]) < 1.0: break   # its socket bosses
+            if boss_funnel(m.N[e["a"]], m.N[e["b"]], od, m.p, [boss_wall(n_) for n_ in (e["a"], e["b"])]) < 1.0: break   # and its socket bosses
             if motor_clear(m.N[e["a"]], m.N[e["b"]], od, m.info["motors"]) < 1.0: break
             if obstacle_clear(m.N[e["a"]], m.N[e["b"]], od, obstacles_for(m, e)) < 1.0: break
             if od > WASH_OD and wash_len(m.N[e["a"]], m.N[e["b"]], m.info["motors"]) >= WASH_LEN: break
