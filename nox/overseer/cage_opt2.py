@@ -55,6 +55,7 @@ C_CHAMF = 2 * HALF + math.sqrt(2) * (PROP_R + GUARD_GAP + ROD_RMAX)   # 489.6
 L2_TILT = 105.0
 A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TILT))])
 UP_B = np.array([-A[2], 0.0, A[0]])
+L2_LEN = 65.0                                                 # the L2 from its base plane to the dome tip (body 39 + dome 26, M)
 L2_BASE_H = 25.0                                              # the L2 base (Spark 24 Oct): held and caged; the head above it is exposed
 L2_NEG = 6.0                                                  # scan kept clear in the 96 deg negative-angle mode (DEFAULT, alt 90 deg normal mode)
 MOTOR_DEG = (45, 135, 225, 315)
@@ -100,9 +101,17 @@ def node_size(od):
     return max(12.0, od + 0.3 + 2 * NODE_WALL)
 
 
-def node_mass_g(od):
-    """printed PETG node at its drawn size, half filled (sockets, infill; E)"""
-    return 1.27e-3 * 0.5 * node_size(od) ** 3
+SOCK_LEN = 20.0 + NODE_WALL                                   # a socket boss from the node centre: 20 deep + its 3 bottom wall (deeper ones listed)
+NODE_FILL = 0.8                                                # printed walls round the bores, mostly solid perimeters (E)
+
+
+def node_mass_g(ods):
+    """printed PETG node drawn from its sockets: a core round the largest bore and one boss per rod (bore OD + 0.3, NODE_WALL
+    round it, SOCK_LEN from the centre; E). ods: the OD of every rod in it (a float = one rod)"""
+    ods = [ods] if np.isscalar(ods) else list(ods)
+    rc = max(ods) / 2 + 0.15 + NODE_WALL
+    v = 4.0 / 3.0 * math.pi * rc ** 3 + sum(math.pi * ((o / 2 + 0.15 + NODE_WALL) ** 2 - (o / 2 + 0.15) ** 2) * (SOCK_LEN - rc) for o in ods if SOCK_LEN > rc)
+    return 1.27e-3 * NODE_FILL * v
 
 TOPO_KEYS = ("spine", "mid_spokes", "ring_diag", "l2_braces", "tip_rails", "keels_lo", "keels_x", "chin", "arm_spars", "top_spider")   # no nose cross: it would sit in the L2 scan
 # retired from the search (24 Oct, system v3): keels (prop guard), v_diag (the cameras), strut2 (funnel), spokes_hi (motor bells): off
@@ -246,7 +255,8 @@ def _geometry(p, topo, sizes=None):
         node(f"S{lvl}{sy:+d}", q); mem(f"apexlink {lvl}{sy:+d}", "apexM", f"S{lvl}{sy:+d}", None, "link")
     mem("apexlink lohi+", "Slo+1", "Shi+1", None, "link"); mem("apexlink lohi-", "Slo-1", "Shi-1", None, "link")
     mem("apexlink lo+-", "Slo+1", "Slo-1", None, "link")
-    mass["apexM"] = 266e-6                                                 # L2 230 + camera 15 + plate, rods, apex ~21 (E)
+    mass["apexM"] = 285e-6                                                 # L2 230 + both cameras 34 + plates and arms 6 + apex block ~15 (E)
+    node("L2H", np.array([xB, 0, zB]) + A * L2_LEN); mem("apexlink head", "apexM", "L2H", None, "link")   # the head's tip: it leads nose-first
     for vn, sy in (("V0", 1), ("V7", -1)):
         for lvl in ("lo", "hi"):
             mid = node(f"Vmid {vn}{lvl}", (N[f"{vn}{lvl}"] + N[f"S{lvl}{sy:+d}"]) / 2)
@@ -525,11 +535,11 @@ class Model:
             for n_ in (a, b):
                 i = 6 * self.idx[n_]; Mm[i:i + 3] += m / 2; Mm[i + 3:i + 6] += m / 2 * (L ** 2) / 24 + 1e-12
             self.el.append(dict(name=name, a=a, b=b, group=group, kind=kind, P=P, L=L, T=T, kl=kl, dofs=dofs))
-        od_max = {}
+        od_max, ods_at = {}, {}
         for e in self.el:
             if e["kind"] == "rod":
-                for n_ in (e["a"], e["b"]): od_max[n_] = max(od_max.get(n_, 0.0), e["P"]["od"])
-        self.node_g = {n_: node_mass_g(od_max.get(n_, 3.0)) for n_ in self.names
+                for n_ in (e["a"], e["b"]): od_max[n_] = max(od_max.get(n_, 0.0), e["P"]["od"]); ods_at.setdefault(n_, []).append(e["P"]["od"])
+        self.node_g = {n_: node_mass_g(ods_at.get(n_, [3.0])) for n_ in self.names
                        if n_ not in self.fixed and (n_[:-2] in self.info["pnodes"] or n_.startswith(PRINTED_NODES))}
         self.node_size = {n_: node_size(od_max.get(n_, 3.0)) for n_ in self.node_g}
         for n_, gm in self.node_g.items():                                                # printed nodes at their drawn size (E)
@@ -822,6 +832,7 @@ def evaluate(p, topo, sizes, detail=False):
     m_drone = p.get("m_drone_g", 2200.0) * 1e-6                       # t (g -> t)
     cage_nodes = [n for n in m.names if n not in m.fixed and (n.endswith(("lo", "hi")) and not n.startswith(("S", "Vmid"))
                                                               or n.startswith(("NT", "NB", "NR", "TN", "TR", "corner", "KV", "KP", "FT")))]
+    cage_nodes = cage_nodes + ["L2H"]                                # nose-first the exposed head leads: the hit goes in through the L2 and its mount
     P_ = np.array([m.N[n] for n in cage_nodes])
     cases = []                                                       # (name, loads, limit, kind, hit node, direction)
     for d in crash_dirs():                                           # every node within CRASH_TIE of the leading support may touch first
@@ -898,7 +909,8 @@ def evaluate(p, topo, sizes, detail=False):
         if v_ > 1.0: deep[m.el[i_]["name"]] = round(float(SOCKET_D * v_), 1)
     res["deep_sockets"] = deep
     res["breaking_order"] = dict(node=crash_node, arm_vs_node=crash_member / max(crash_node, 1e-9), rod=crash_rod,
-                                 node_first=crash_member * 1.5 <= crash_node and crash_rod * NODE_FUSE <= 1.0 + 1e-9,
+                                 node_first=max(crash_member, crash_rod) * NODE_FUSE <= 1.0 + 1e-9 and crash_node <= 1.0 + 1e-9,   # every case
+                                 fuse_N=(crash_force(m_drone), NODE_FUSE * crash_force(m_drone)),   # the touching node: holds the hit, breaks under 1.5 x
                                  joint_req_N={k: 1.5 * v / max(crash_node, 1e-9) for k, v in held_req.items()})   # held socket at <= 1 / 1.5 of the worst node index
     if detail: res["_U"], res["_names"] = U, [c[0] for c in cases]
     worst_pc = np.inf                                                # prop guard (C): every rod under / over the swept band by 12
@@ -932,6 +944,8 @@ def groups_of(topo):
 
 ORDER = sorted(SECTIONS, key=lambda s: SECTIONS[s]["gpm"])
 THICK = ("t6h", "t8h", "t10h", "r10")                              # used only on a run whose OD cap is their OD (a larger thin tube beats them elsewhere)
+MENU = ("r3", "t6", "t8", "t10", "t10h", "r10", "t16", "t20")     # carbon stock (DEFAULT 25 Oct): 8 types, 3.0 wherever it passes (CLAUDE.md); 7 did not
+                                                                   # carry the skirt, all 14 save 4 g; 10/6 and 10 solid only where the wash cap binds
 
 
 def size_topology(p, topo, log=None):
@@ -975,7 +989,11 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
     run_group = [m0.el[run[0]]["group"] for run in runs]
     gcap = {gname: SECTIONS[sec_]["od"] for gname, sec_ in p.get("cap_groups", {}).items()}   # geometric caps (funnel, pods), as OD
     run_od = [min([caps.get(m0.el[i]["name"], 99.0) for i in run] + [gcap.get(m0.el[run[0]]["group"], 99.0)]) for run in runs]
-    allowed = [[s_ for s_ in ORDER if SECTIONS[s_]["od"] <= od_ and (s_ not in THICK or SECTIONS[s_]["od"] == od_)] or ["r3"]
+    crod = [carbon_rod(names[0]) for names in run_names]           # a physical rod (its runs through cross nodes) takes one section: the cap of all
+    rod_od = {}
+    for i, c_ in enumerate(crod): rod_od[c_] = min(rod_od.get(c_, 99.0), run_od[i])
+    run_od = [rod_od[c_] for c_ in crod]
+    allowed = [[s_ for s_ in ORDER if s_ in MENU and SECTIONS[s_]["od"] <= od_ and (s_ not in THICK or SECTIONS[s_]["od"] == od_)] or ["r3"]
                for od_ in run_od]                                  # sections that fit, lightest first; thick wall only where the cap binds
     def fit(i, s_):
         """s_ if it fits run i, else the lightest fitting section at least as strong, else the stiffest that fits"""
@@ -1001,7 +1019,10 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
     kpos = {rkey(r, 1): i for i, r in enumerate(runs)}
     mirror = [kpos.get(rkey(r, -1), i) for i, r in enumerate(runs)]
     def sym(req):
-        return [ORDER[max(ORDER.index(req[i]), ORDER.index(req[mirror[i]]))] for i in range(len(req))]
+        out = [ORDER[max(ORDER.index(req[i]), ORDER.index(req[mirror[i]]))] for i in range(len(req))]
+        big = {}
+        for i, c_ in enumerate(crod): big[c_] = max(big.get(c_, 0), ORDER.index(out[i]))
+        return [ORDER[big[c_]] for c_ in crod]                       # and one section along each physical rod
     def sizes_of(sec):
         return {n: s_ for names, s_ in zip(run_names, sec) for n in names}
     for it in range(iters):
@@ -1051,7 +1072,9 @@ def size_fsd(p, topo, iters=30, log=False, init=None):
             if sec[i] not in THICK and SECTIONS[sec[i]]["od"] < 12: continue
             j = mirror[i]; dn = step(i, sec[i], -1)
             if dn == sec[i]: continue
-            trial = list(sec); trial[i] = dn; trial[j] = dn if dn in allowed[j] else trial[j]
+            trial = list(sec)
+            for k in range(len(sec)):                                     # the whole physical rod and its mirror
+                if crod[k] in (crod[i], crod[j]) and dn in allowed[k]: trial[k] = dn
             rt = evaluate(p, topo, sizes_of(trial))
             if rt["violation"] == 0: sec, res = trial, rt
     sizes = sizes_of(sec)
