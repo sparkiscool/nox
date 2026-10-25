@@ -425,17 +425,29 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # 45 deg of a cap's axis is stopped over its stroke (cage_opt2 hit_force) instead of rigid 35 g; none on the nose collar (in the scan) or in the funnel
     caps, cap_m = {}, []
     O_ = B + A * L2_BASE_H
-    for n_ in Ng:
-        top_ = n_ == "TN" or n_.startswith("SM")
-        if not (top_ or n_[:-2] in info["pnodes"] or n_.startswith(("KP", "KV", "TR"))) or n_ not in rods_at: continue
+    def _in_scan(tip_):
+        d_ = tip_ - O_; ax_ = float(d_ @ A); rho_ = float(np.linalg.norm(d_ - ax_ * A))
+        return -ax_ * math.cos(math.radians(L2_NEG)) - rho_ * math.sin(math.radians(L2_NEG)) - CAP_R < 2.0
+    _cand = [n_ for n_ in Ng if n_ in rods_at and (n_.endswith(("lo", "hi")) and not n_.startswith(("S", "Vmid")) or n_.startswith(("NT", "NB", "NR", "TN", "TR", "KV", "KP", "XJ")))]
+    _Pc = np.array([Ng[n_] for n_ in _cand]); _lead = {}
+    for d_ in co.crash_dirs():                                     # which node leads in which crash direction (as the frame model)
+        sp_ = _Pc @ d_
+        for k_ in np.flatnonzero(sp_ >= sp_.max() - co.CRASH_TIE): _lead.setdefault(_cand[k_], []).append(d_)
+    for n_, ds_ in _lead.items():
         q_ = np.asarray(Ng[n_], float)
-        if q_[2] < -20.0: continue
-        u_ = np.array([0.0, 0.0, 1.0]) if top_ else np.array([q_[0] - dm, q_[1], 0.0]); u_ = u_ / np.linalg.norm(u_)
+        if n_.startswith(("NT", "NB", "NR")) or q_[2] < -20.0: continue   # the nose collar (scan) and the funnel keep no cap
         rc_ = max(o_ for _, o_ in rods_at[n_]) / 2 + 0.15 + co.NODE_WALL
-        tip_ = q_ + u_ * (rc_ + CAP_T); d_ = tip_ - O_; ax_ = float(d_ @ A); rho_ = float(np.linalg.norm(d_ - ax_ * A))
-        if -ax_ * math.cos(math.radians(L2_NEG)) - rho_ * math.sin(math.radians(L2_NEG)) - CAP_R < 2.0: continue   # would sit in the L2 scan
+        tries_ = [sum(ds_) / max(np.linalg.norm(sum(ds_)), 1e-9)] + list(ds_)   # the mean lead direction first, then each one
+        best_ = None
+        for u_ in tries_:
+            u_ = np.asarray(u_, float) / np.linalg.norm(u_)
+            if _in_scan(q_ + u_ * (rc_ + CAP_T)): continue
+            cov_ = sum(float(np.dot(d__, u_)) >= co.CAP_COS for d__ in ds_)
+            if best_ is None or cov_ > best_[0]: best_ = (cov_, u_)
+        if best_ is None or best_[0] == 0: continue
+        u_ = best_[1]
         caps[n_] = [float(u_[0]), float(u_[1]), float(u_[2]), CAP_STROKE]
-        cap_m.append(trimesh.creation.cylinder(CAP_R, segment=[q_ + u_ * (rc_ - 2.0), tip_], sections=20))
+        cap_m.append(trimesh.creation.cylinder(CAP_R, segment=[q_ + u_ * (rc_ - 2.0), q_ + u_ * (rc_ + CAP_T)], sections=20))
     for sx_, sy_ in [(a__, b__) for a__ in (1, -1) for b__ in (1, -1)]:
         if f"FT{sx_:+d}{sy_:+d}" in Ng: caps[f"FT{sx_:+d}{sy_:+d}"] = [0.0, 0.0, -1.0, FOOT_STROKE]   # the TPU feet: their pads
     P["caps"] = caps; g["caps"] = cap_m
