@@ -35,6 +35,8 @@ if SYS_PICK:
 if os.environ.get("SYS_TOPO"):                                      # start from a named topology (fixed options always on); the loop re-sizes it
     CAGE_TOPO = {k: (k in co.FIXED_ON or k in os.environ["SYS_TOPO"].split(",")) for k in co.TOPO_KEYS}
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
+SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "60"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
+                                                               # skid X braces and basket rails (Spark 25 Oct: more bottom structure by the battery; was 90)
 MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
                                                               # the mast stands there when the thrust centre is further back
 M_DRONE = 3000.0                                            # crash mass, updated to the assembled mass every balance (g)
@@ -993,7 +995,7 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
                      dict(part="L2 base", axis=[float(v) for v in co.A], half_angle_deg=45.0, min_mm=0.0, skip_probes=False),   # within 45 deg of its axis the head
                      # leads the base by ≥ 19.5 (a flat wall meets the head first): the base needs margin ≥ 0 there, 3 everywhere else; probes see the head's shadow
                      # exposed (Spark 24 Oct: everything outside the base, nothing in the scan): protected parts that shadow the base, never shielded
-                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
+                     *[dict(part=pt_, axis=[0, 0, -1], half_angle_deg=SWAP_OPEN_DEG, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60")],   # the swap path: the set fills the opening under the wheels, where nothing else may go; the cartridge and receiver walls take a side hit there (DEFAULT, alt end bumpers with a wider funnel)
                      *[dict(part=pt_, axis=[sx_, 0, 0], half_angle_deg=45.0, min_mm=0.0, skip_probes=True) for pt_ in ("pack", "cartridge", "receiver XT60") for sx_ in (1, -1)],   # the set's ends face the funnel pit walls (0.7 to the opening): a member shielding them up to 45 deg would sit in the wall (DEFAULT, alt a shorter set, latch session)
                      dict(part="down cam + flow", axis=[0, 0, -1], half_angle_deg=90.0, min_mm=0.0, skip_probes=True)],         # under the belly: the swap path must stay open (as the pack); the runners, belly frame and cartridge shield the sides (DEFAULT, alt a removable guard bar)
            access=[dict(name="pack swap", part="cartridge", dir=[0, 0, -1], length_mm=80, tool="part", ignore=["pack", "receiver", "receiver XT60"])] + ACCESS, parts=[
