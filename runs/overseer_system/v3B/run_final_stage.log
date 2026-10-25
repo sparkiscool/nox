@@ -1,0 +1,62 @@
+cage (cage_opt level 160 Hz): spine ring_diag keels_x arm_spars top_spider | post V0:t10 post V1:t10 post V2:t8 post V3:t10 post V4:t10 post V5:t8 post V6:t10 post V7:t10 chord V0-P0_50 lo:t10 chord P0_50-V1 lo:t10 chord V0-P0_50 hi:t10 chord P0_50-V1 hi:t10 chord V1-P1_25 lo:t10 chord P1_25-P1_50 lo:t10 chord P1_50-P1_75 lo:t10 chord P1_75-V2 lo:t10 chord V1-P1_25 hi:t10 chord P1_25-P1_50 hi:t10 chord P1_50-P1_75 hi:t10 chord P1_75-V2 hi:t10 chord V2-P2_50 lo:r5 chord P2_50-V3 lo:r5 chord V2-P2_50 hi:t10 chord P2_50-V3 hi:t10 chord V3-P3_25 lo:t8 chord P3_25-P3_50 lo:t8 chord V3-P3_25 hi:t10 chord P3_25-P3_50 hi:t10 chord P3_50-P3_75 hi:t10 chord P3_75-V4 hi:t10 chord P3_50-P3_75 lo:t8 chord P3_75-V4 lo:t8 chord V4-P4_50 lo:r5 chord P4_50-V5 lo:r5 chord V4-P4_50 hi:t10 chord P4_50-V5 hi:t10 chord V5-P5_25 lo:t10 chord P5_25-P5_50 lo:t10 chord P5_50-P5_75 lo:t10 chord P5_75-V6 lo:t10 chord V5-P5_25 hi:t10 chord P5_25-P5_50 hi:t10 chord P5_50-P5_75 hi:t10 chord P5_75-V6 hi:t10 chord V6-P6_50 lo:t10 chord P6_50-V7 lo:t10 chord V6-P6_50 hi:t10 chord P6_50-V7 hi:t10 spoke m0-V0:t10 spoke m0-V1:t10 spoke m1-V2:t8 spoke m1-V3:t10 spoke m2-V5:t8 spoke m2-V4:t10 spoke m3-V6:t10 spoke m3-V7:t10 spokehi m0-V0:t10 spokehi m0-V1:t10 spokehi m1-V2:t8 spokehi m1-V3:t8 spokehi m2-V5:t8 spokehi m2-V4:t8 spokehi m3-V6:t10 spokehi m3-V7:t10 V V0lo a:t10 V V0lo b:t10 V V0hi a:t10 V V0hi b:t10 V V7lo a:t10 V V7lo b:t10 V V7hi a:t10 V V7hi b:t10 keello +1:t10 keeldg +1:t10 keelx +1:t10 keello -1:t10 keeldg -1:t10 keelx -1:t10 nose vert +1:t6 nose vert -1:t6 nose top:r5 nose bot:r5 longeron hi +1:r5 longeron lo +1:t10 nose side dg +1:t8 mount hi +1:r5 mount lo +1:t6 mount dg +1:t6 longeron hi -1:r5 longeron lo -1:t10 nose side dg -1:t8 mount hi -1:r5 mount lo -1:t6 mount dg -1:t6 pyramid -1+1:r5 pyramid -1-1:r5 top bar:t10 skirt post V3:t10 skirt post P3_50:t6 skirt post V4:t10 skirt rail +:t10 skirt rail -:t10 skirt dg +:t10 skirt dg -:t10 skirt tie +1:t10 skirt side +1:t10 skirt tie -1:t10 skirt side -1:t10 tower post:r5 spider V0:t10 spider V1:t10 spider V2:t10 spider V3:t10 spider V4:t10 spider V5:t10 spider V6:t10 spider V7:t10 spider nose+:t10 spider nose-:t10 strut +1+1:t10 strut +1-1:t10 strut -1+1:r5 strut -1-1:r5 wring x+1:r5 wring x-1:t6 wring y+1:t6 wring y-1:t6
+final: motors 131.6 ahead, cage 1695 g sized here, CG -2.2 in x, frame violation 0.000
+final: motors 120.7 ahead, cage 1424 g sized here, CG -0.6 in x, frame violation 0.000
+final choice: motors 120.7 ahead, CG -0.6 in x (2 points tried)
+
+chosen: catch centre x 95.8 (24.8 behind the thrust centre, swap CG 30 behind, layout B), motor square 120.7 ahead of the plate centre; motors at (260.2, ±139.5) and (-18.8, ±139.5)
+arms: front r 295 (stock 243), rear r 141; tip gaps 25 all round (square kept)
+frame model on the final geometry (F, dimensions L cases): L2 mode 127 Hz (≥ 100), cage first mode 97 Hz (moves V5lo 5%, V2lo 5%, P1_75hi 4%, P5_25hi 4%); crash 1397 N (rigid 35 g x 4068 g, L) in 14 directions on 64 hit points (members ≤ 0.67, the node is the fuse): worst rod 0.63, buckling 0.19, sockets 0.82, arm 0.17 (≤ 1.0), touching node moves ≤ 3.7 (≤ 9); L2 at 35 g: worst 0.07; handling 50 N: 0.12; latch 0.05; violation 0.000; breaking order (L): worst cage node socket 0.82, arms at 0.21 of it (≤ 0.67) PASS; held sockets rated (≤ 1 / 1.5 of the node index): hub 7519 N, apex 3503 N, belly 2569 N; worst rod 0.63
+L2: base centre (421.4, 0, 44), axis 15 deg below +x; body lowest z -2.3 vs funnel top -13.3 (drone frame)
+L2 scan (96 deg from the axis, from the top of its 25 base; Spark 24 Oct: the head exposed, nothing in the scan): closest cage up 1.9 outside it (C, > 0 = clear)
+L2 scan blocked by cage rods: 0.00 % (C, rays from the L2 head; 0 required)
+length: rear prop tips x -146 to the nose x 486 (632); width 533; height 230
+front camera left: two, yaw ±46.8, pitch -13.6, landscape, lens at (405, 75, 48), 23.4 behind the L2 base plane
+   cage rods block 6.1 % of its image (C): mount dg +1 j2 4.2, V V0lo b x2 1.7, nose vert +1 x2 1.5, V V0lo b x1 1.2
+front camera right: two, yaw ±46.8, pitch -13.6, landscape, lens at (405, -75, 48), 23.4 behind the L2 base plane
+   cage rods block 6.3 % of its image (C): mount dg -1 j2 4.4, V V7lo b x2 1.7, nose vert -1 x2 1.5, V V7lo b x1 1.2
+front cameras: together 54.7 % of the L2 field in view (C, cam_cover.py; one camera at best 27.6 %)
+camera arms: 22..22 long, first bending mode 1051 Hz (≥ 100, E: rigid lug, PETG E 2780)
+down camera and flow views: checked (lines above list anything in view)
+overlaps (M, > 0.5 mm3): apex x arm 0 2; apex x arm 3 2
+guard: ring and V rods 12.0 off the disks in plan (≥ 12); rods under a disk 17.8 off the swept band (≥ 12)
+cage rods (C): 5.0 solid 4 x 0.76 m; 8/6 tube 36 x 2.01 m; 10/8 tube 91 x 10.68 m; 8/4 tube 2 x 0.26 m; 14/12 tube 40 x 3.15 m; 16/14 tube 16 x 1.51 m; 10/6 tube 2 x 0.24 m; 20/18 tube 7 x 0.58 m; 957 g + arm spars 28 g; 58 ring nodes, 4 corner nodes, 8 wheels; ~1454 g (E) without the apex
+landing: feet at z -148 (lowest points), stance x 14..178, y -71..71; CG 155 above the floor; tip-over forward 20.4 deg, back 34.3 deg, left 24.4 deg, right 24.7 deg (worst 20.4, DEFAULT ≥ 30)
+funnel seated (catch centre on the funnel axis, bottom plate top at seat z 88.4): closest non-wheel point 2.6 at seat (-114, 94, 35) (G ≥ 1.0); hook latch plungers 2.0 (G (7) ≥ 1.0); keep-alive band G (8) 11.7 (≥ 9); below the face edges -0.0 past 191 x 168 less 3 a side at ±5 deg yaw (≤ 0); the latch set (receiver + cartridge, the battery latch's: its check vs the real panels 3.42 a side): G (8) 2.6, past the 3 a side box +1.9 (receiver guide posts 183.6 long here vs 179.3 in its check)
+mass ~4068 g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), CG (120.0, 0.5, 7.7) vs thrust centre (120.7, 0): -0.6 in x
+balance: CG 0.8 off the thrust axis with the pack (≤ 3), 6.1 without (layout B, Spark 24 Oct: accepted, reported)
+contact allowances (per joint, M): cage/arms 12 sockets 6913.2 mm3, cage/apex + hubs 25 sockets 8629.2 mm3, cage/sled 6 clamps 1261.0 mm3
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:302: RuntimeWarning: invalid value encountered in divide
+  center_mass = integrated[1:4] / volume
+system_check: System: overseer_system_v3, cage first 14.1 mm (E) at (+0.48, -0.00, -0.88) (cartridge), fit 0.0 mm³ (E) (L2 base/apex + hubs), bbox 115 L (E), extents 667 x 603 x 285 mm (E), mass 4070 g (E), CG 0.5 mm off thrust axis (E) [+0.3, +0.3, +8.8], 7.6 mm without swap parts, probes -3.2 mm (E) edge at (-0.25, -0.26, -0.93) (L2 base) FAIL, access 24/24 clear
+  probes worst: {"probe": "edge", "r_mm": 0.0, "part": "L2 base", "margin_mm": -3.16, "unshielded": false, "dir": [-0.252, -0.261, -0.932], "dir_label": "(-0.25, -0.26, -0.93)", "axis": [0.027, -0.964, 0.263], "roll_deg": 165.0, "lateral_mm": 285.7, "contact": [429.6, -37.5, 9.1], "pass_": false}
+  access worst: {"name": "pack swap", "part": "cartridge", "tool": "part", "dir": [0.0, 0.0, -1.0], "length_mm": 80.0, "steps": 20, "blocked_by": [], "touches": [], "overlap_mm3": 0.0, "pass_": true}
+  fit worst: {"a": "L2 base", "b": "apex + hubs", "overlap_mm3": 0.0, "limit_mm3": 0.5, "contact": false, "method": "manifold3d", "pass_": true}
+  access pack swap: clear (0.0 mm3)
+  access FC USB-C (right edge 8 behind the FC centre, DEFAULT: clear of the front arm): clear (0.0 mm3)
+  access Pi 5 SD card (front end): clear (0.0 mm3)
+  access Pi 5 USB / Ethernet end (aft, DEFAULT: the spine hub sits ahead): clear (0.0 mm3)
+  access L2 cable (base notch 7 up the base, local -X: left, through the shroud window): clear (0.0 mm3)
+  access XT60 lead up through the sled: clear (0.0 mm3)
+  access front camera left USB (board edge, up): clear (0.0 mm3)
+  access front camera right USB (board edge, up): clear (0.0 mm3)
+  access arm bolt top 0: clear (0.0 mm3)
+  access arm bolt top 1: clear (0.0 mm3)
+  access arm bolt top 2: clear (0.0 mm3)
+  access arm bolt top 3: clear (0.0 mm3)
+  access arm bolt top 4: clear (0.0 mm3)
+  access arm bolt top 5: clear (0.0 mm3)
+  access arm bolt top 6: clear (0.0 mm3)
+  access arm bolt top 7: clear (0.0 mm3)
+  access arm bolt bottom 0: clear (0.0 mm3)
+  access arm bolt bottom 1: clear (0.0 mm3)
+  access arm bolt bottom 2: clear (0.0 mm3)
+  access arm bolt bottom 3: clear (0.0 mm3)
+  access arm bolt bottom 4: clear (0.0 mm3)
+  access arm bolt bottom 5: clear (0.0 mm3)
+  access arm bolt bottom 6: clear (0.0 mm3)
+  access arm bolt bottom 7: clear (0.0 mm3)
+assembly: nox/overseer/overseer.assembly.json, 18 parts, meshes in runs/overseer_assembly/v3
+PX4 flow position from the CG (FRD, m): x -0.024, y +0.047, z +0.129; IMU (FC centre) from the CG: x -0.120, z -0.002
+motion: runs/overseer_system/v3B/motion.html 2.52 MB, 32 parts, 600 frames
+wrote runs/overseer_system/v3B
+exit 0

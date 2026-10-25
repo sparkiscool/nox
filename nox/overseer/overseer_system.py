@@ -372,7 +372,8 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         ring_nodes.append(box(q_[:, 0].min() - h_, q_[:, 0].max() + h_, -h_, h_, q_[:, 2].min() - h_, q_[:, 2].max() + h_))
     Tg_ = trimesh.transformations.rotation_matrix(math.radians(L2_TILT), [0, 1, 0]); Tg_[:3, 3] = B   # the L2 frame (base at z 0)
     go_ = GUARD_IN + GUARD_W
-    sh_ = box(-go_, go_, -go_, go_, 0.0, GUARD_TOP).difference(box(-GUARD_IN, GUARD_IN, -GUARD_IN, GUARD_IN, -1.0, GUARD_TOP + 1.0))
+    sh_ = box(-go_, go_, -go_, go_, -1.8, GUARD_TOP).difference(box(-GUARD_IN, GUARD_IN, -GUARD_IN, GUARD_IN, -3.0, GUARD_TOP + 1.0))   # 1.8 under the base
+                                                                                  # plane (to the lug tops): the base's square corners overhang the round seat
     sh_ = sh_.difference(box(-5.0, 5.0, GUARD_IN - 1.0, go_ + 1.0, 1.5, 12.5))                    # L2 cable window on the left wall (local -X turned to +y), closed
                                                                                                   # round: a sharp edge can't reach in (an open slot let one)
     guard_ = [sh_.apply_transform(Tg_)]
