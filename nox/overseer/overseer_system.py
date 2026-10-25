@@ -869,6 +869,13 @@ say(f"funnel seated (catch centre on the funnel axis, bottom plate top at seat z
     f"the latch set (receiver + cartridge, the battery latch's: its check vs the real panels 3.42 a side): G (8) {LATCH_G8:.1f}, past the 3 a side box {LATCH_LOW:+.1f} (receiver guide posts 183.6 long here vs 179.3 in its check)")
 say(f"mass ~{tot:.0f} g (E: FC 10 g alone + 4 ESCs on the arms, no steel plate; record 2.0 kg P was the stock frame and gear), "
     f"CG ({cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}) vs thrust centre ({dm:.1f}, 0): {cg[0] - dm:+.1f} in x")
+_pg = lambda ms_, f_: sum(abs(m_.volume) for m_ in ms_) * 1.27e-3 * f_      # printed PETG / TPU at its fill (E, as cg_of)
+_pieces = [("arm (each, front / rear)", f"{_pg([g['arms'][0]], 0.45):.0f} / {_pg([g['arms'][2]], 0.45):.0f}"), ("apex + hubs + mast block + camera arms", f"{_pg([g['apex']], 0.45):.0f}"),
+           ("cage nodes", f"{_pg(g['ring_nodes'], 0.5) - _pg([g['base_guard']], 0.5):.0f} ({len(g['ring_nodes'])} pieces)"), ("L2 base shroud", f"{_pg([g['base_guard']], 0.5):.0f}"),
+           ("corner nodes", f"{_pg(g['nodes'], 0.6):.0f}"), ("sled + pods", f"{_pg([g['sled'], g['cam_pod'], g['flow_pod']], 0.3):.0f}"), ("Pi deck", f"{_pg([DECK], 0.5):.0f}"),
+           ("belly pan", f"{_pg([g['pan']], 0.5):.0f}"), ("skid runners", f"{_pg(g['runners'], 0.4):.0f}"), ("feet (TPU)", f"{_pg(g['feet'], 0.5):.0f}"),
+           ("camera plates", f"{_pg([g['cam_plate']], 0.5):.0f}")]
+say("printed piece budgets (g, E: each piece's mass in this pass is its budget_g, L): " + "; ".join(f"{k_} {v_}" for k_, v_ in _pieces))
 # balance pack in and out (CLAUDE.md "Balanced"; layout B, Spark 24 Oct: the pack-out shift is an accepted exception)
 cg_out = (cg * tot - g["swap_cg"] * SWAP_G) / (tot - SWAP_G)
 say(f"balance: CG {np.hypot(cg[0] - dm, cg[1]):.1f} off the thrust axis with the pack (≤ 3), {np.hypot(cg_out[0] - dm, cg_out[1]):.1f} without "
