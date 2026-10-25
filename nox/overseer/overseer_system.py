@@ -736,6 +736,7 @@ def at_dm(dm_):
         s_, r_, ok_ = co.size_fsd(g_["P"], CAGE_TOPO, init=s_)
         CAGE_SIZES = s_
         m0_ = M_DRONE; g_ = build(dm_, dc_, xB_, zB_); g_["_dm"] = dm_; tot_, cg_ = cg_of(g_); M_DRONE = float(tot_)
+        if os.environ.get("SYS_DEBUG_CG"): json.dump(dict(P=g_["P"], topo=CAGE_TOPO, sizes=s_), open(os.path.join(SCR_DBG, "at_dm_P.json"), "w"), default=float)
         g_ = build(dm_, dc_, xB_, zB_)
         if abs(M_DRONE - m0_) < 5.0: break
     r_ = co.evaluate(g_["P"], CAGE_TOPO, s_); ok_ = r_["violation"] == 0  # reported at the mass it ends with
