@@ -1,5 +1,5 @@
 """Motion artifact for Overseer layout v3 (26 Oct): the chosen layout (L2 on top, runs/overseer_layout/v3) with the
-alternative beside it (L2 at the nose, runs/overseer_layout/v3/alt_nose, 900 to the left), both from their exported parts.
+alternative beside it (L2 at the nose, runs/overseer_layout/v3/alt_nose, 900 to the left by its pose), both from their exported parts.
 
 python3 nox/overseer/layout_v3_view.py      (after layout_v3.py for both; writes runs/overseer_layout/v3/motion.html + .png)
 """
@@ -13,21 +13,21 @@ from motion import Scene
 RUN = os.path.join(ROOT, "runs", "overseer_layout", "v3")
 res = json.load(open(os.path.join(RUN, "result.json"))); alt = json.load(open(os.path.join(RUN, "alt_nose", "result.json")))
 s = Scene("Overseer Geodesic Cage",
-          f"chosen (right): L2 on top, Ø{2 * res['R']:.0f} NU {res['NU']} sphere, bottom opening clear Ø{res['clear_d']:.0f}, ~{res['mass']:.0f} g (E); "
-          f"alternative (left, y +900): L2 at the nose, bay {alt['delta']:+.0f} aft, opening Ø{alt['clear_d']:.0f}")
+          f"chosen: L2 on top, Ø{2 * res['R']:.0f} NU {res['NU']} sphere, bottom opening clear Ø{res['clear_d']:.0f}, ~{res['mass']:.0f} g (E); "
+          f"alternative (y +900): L2 at the nose, bay {alt['delta']:+.0f} aft, opening Ø{alt['clear_d']:.0f}")
 names = []
 for folder, dy, tag in ((RUN, 0.0, ""), (os.path.join(RUN, "alt_nose"), 900.0, "alt: ")):
     for p in json.load(open(os.path.join(folder, "parts", "parts.json"))):
         if p["name"].startswith("prop"):
             continue
-        m = trimesh.load(os.path.join(folder, "parts", p["file"])); m.apply_translation([0, dy, 0])
+        m = trimesh.load(os.path.join(folder, "parts", p["file"]))   # at its own origin: the page stores int16 at 0.02 mm (±655)
         nm = tag + p["name"]; names.append(nm)
         s.part(nm, m, group=("alt (L2 nose)" if tag else p["group"]), color=p["color"], printed=p["printed"] and not tag,
                note=f"{p['mass_g']:.0f} g ({p['tag']})")
     r = res if not tag else alt
     rings = []
     for i, (mx, my) in enumerate(r["motors_xy"]):
-        a = trimesh.creation.annulus(124.5, 127.0, 1.0, sections=96); a.apply_translation([mx, my + dy, 82.0]); rings.append(a)
+        a = trimesh.creation.annulus(124.5, 127.0, 1.0, sections=96); a.apply_translation([mx, my, 82.0]); rings.append(a)
     nm = tag + "props (swept)"; names.append(nm)
     s.part(nm, trimesh.util.concatenate(rings), group=("alt (L2 nose)" if tag else "bought"), color="#d9a400", printed=False)
 spin = lambda t: trimesh.transformations.rotation_matrix(math.radians(360 * t / 24), [0, 0, 1])

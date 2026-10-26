@@ -60,6 +60,8 @@ CB_UP = 3.0                              # cartridge bottom above the opening ri
 FOOT_DOWN = 12.0                         # TPU foot bottom under the ring axis plane (E)
 LENS_UP = 12.0                           # down camera and flow lenses above the cartridge bottom (DEFAULT: the probe check, 26 Oct)
 BREAK_EVEN = 33.0                        # carbon vs printed strut (generative.md rule 0)
+K = float(os.environ.get("V3_K", 1.0))   # vertical / horizontal semi-axis (1.0 sphere; the rule allows height / width >= 0.85)
+BAY = os.environ.get("V3_BAY", "low")    # low: pack bay at the opening (DEFAULT, short swap reach); high: receiver under the plates
 
 
 # ---------------------------------------------------------------- geodesic (class I, icosahedral, frequency NU)
@@ -104,9 +106,9 @@ def ring_r(R, delta):
 def shell(c, R, rot_deg, delta):
     """sphere nodes (geodesic turned rot_deg about z), the opening ring, triangulated; returns nodes, rods, tris, z_o, ring ids"""
     t = math.radians(rot_deg); Rz = np.array([[math.cos(t), -math.sin(t), 0], [math.sin(t), math.cos(t), 0], [0, 0, 1]])
-    P = c + R * (U_GEO @ Rz.T)
+    P = c + R * (U_GEO @ Rz.T) * [1, 1, K]
     n_ring, R_RING, mean_edge = ring_r(R, delta)
-    dz_o = math.sqrt(R * R - R_RING ** 2); z_o = c[2] - dz_o
+    dz_o = K * math.sqrt(R * R - R_RING ** 2); z_o = c[2] - dz_o
     keep = P[:, 2] > z_o + 0.45 * mean_edge
     ang = np.linspace(0, 2 * math.pi, n_ring, endpoint=False) + math.pi / n_ring
     ring = np.stack([c[0] + R_RING * np.cos(ang), c[1] + R_RING * np.sin(ang), np.full(n_ring, z_o)], 1)
@@ -149,7 +151,7 @@ def prop_ring_pts(motors_xy):
 
 def bay(x0, z_o):
     """pack bay on the opening axis: cartridge, pack, receiver deck, down camera + flow pods (outside the swap zone)"""
-    zc = z_o + CB_UP
+    zc = z_o + CB_UP if BAY == "low" else -2.0 - CART_H - REC_H     # high: receiver deck under the bottom plate
     b = {}
     b["cart"] = box(x0 - CART[0] / 2, x0 + CART[0] / 2, -CART[1] / 2, CART[1] / 2, zc, zc + CART_H)
     b["pack"] = box(x0 - PACK[0] / 2, x0 + PACK[0] / 2, -PACK[1] / 2, PACK[1] / 2, zc + 2, zc + 2 + PACK[2])
@@ -201,24 +203,44 @@ def top_l2(g, xc):
         zb = (lo + hi) / 2; d = P - [xc, 0, zb]
         if ((-(d[:, 2]) - math.sin(math.radians(L2_NEG_TOP)) * np.linalg.norm(d, axis=1)) >= 1.0).all(): hi = zb
         else: lo = zb
-    zb = hi
-    l2 = l2_up(xc, zb); seat = cyl(37.5, zb - 5, zb, xc, 0, 48)
-    # front camera on a plate hung from the seat's front edge: the nearest spot ahead of the L2 with the L2 out of view + 2 deg
-    for dx in np.arange(40.0, 120.0, 2.0):
-        cam, plate, lens, fwd, cup = cam_mesh(np.array([xc + dx, 0, zb - 22]), CAM_UP_TOP)
-        d = pts(l2, 3000) - lens; zz = d @ fwd
-        el = np.degrees(np.arctan2(d @ cup, np.maximum(zz, 1e-6))); az = np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))
-        if not ((zz > 0) & (el < L["CAM_VFOV"] / 2 + 2.0) & (np.abs(az) < L["CAM_HFOV"] / 2 + 2.0)).any(): break
+    zb0 = hi
+    # front camera on a plate hung from the seat's front edge, 30 deg up (Spark 23 Oct), nearest spot ahead (review 26 Oct: no
+    # props in its view, CLAUDE.md 8): the L2 and its camera rise together from the lowest base until the L2 and the prop disks
+    # (± blade band) are out of the camera view + 2 deg, with the camera itself under the L2's -6 deg cone
+    disks = np.vstack([pts(cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, mx_, my_, 96), 3000) for mx_, my_ in g["motors_xy"]])
+    found = False; up = CAM_UP_TOP
+    for zb in np.arange(zb0, zb0 + 120.0, 2.0):
+        l2 = l2_up(xc, zb); B_ = np.array([xc, 0, zb])
+        for dx in np.arange(40.0, 90.0, 2.0):
+            for dzc in (-22.0, -30.0):
+                cam, plate, lens, fwd, cup = cam_mesh(np.array([xc + dx, 0, zb + dzc]), up)
+                cp = pts(cam, 400) - B_
+                if (-cp[:, 2] - math.sin(math.radians(L2_NEG_TOP)) * np.linalg.norm(cp, axis=1) < 1.0).any(): continue
+                bad = False
+                for tgt in (pts(l2, 3000), disks):
+                    d = tgt - lens; zz = d @ fwd
+                    el = np.degrees(np.arctan2(d @ cup, np.maximum(zz, 1e-6))); az = np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))
+                    if ((zz > 0) & (np.abs(el) < L["CAM_VFOV"] / 2 + 2.0) & (np.abs(az) < L["CAM_HFOV"] / 2 + 2.0)).any(): bad = True; break
+                if not bad: found = True; break
+            if found: break
+        if found: break
+    if not found: raise RuntimeError("no L2 height clears the props from the front camera view")
+    seat = cyl(37.5, zb - 5, zb, xc, 0, 48)
+    zcam = zb + dzc
     arm_bracket = box(xc + 30, xc + dx - 3, -12, 12, zb - 5, zb - 2)   # printed strap from the seat to the camera plate (E)
+    if zcam < zb - 25: arm_bracket = trimesh.util.concatenate([arm_bracket, box(xc + dx - 9, xc + dx - 3, -12, 12, zcam + 19, zb - 2)])
     mount = trimesh.util.concatenate([seat, plate, arm_bracket])
-    feet = {(sx, sy): np.array([63.0 * sx / math.sqrt(2), 63.0 * sy / math.sqrt(2), ROOT_H + 1.6]) for sx in (1, -1) for sy in (1, -1)}
-    tops = {(sx, sy): np.array([xc + 30.0 * sx / math.sqrt(2), 30.0 * sy / math.sqrt(2), zb - 5]) for sx in (1, -1) for sy in (1, -1)}
+    # mast feet on the top plate between the arms (0 / 90 / 180 / 270 deg, r 52 on the ±60 plate, pad Ø12; drilled M3, DEFAULT): on the diagonals the legs
+    # pass the prop tips under 12 (review 26 Oct)
+    ang4 = {(1, 1): 0.0, (-1, 1): 90.0, (-1, -1): 180.0, (1, -1): 270.0}
+    feet = {k: np.array([52.0 * math.cos(math.radians(a_)), 52.0 * math.sin(math.radians(a_)), ROOT_H + 1.6]) for k, a_ in ang4.items()}
+    tops = {k: np.array([xc + 30.0 * math.cos(math.radians(a_)), 30.0 * math.sin(math.radians(a_)), zb - 5]) for k, a_ in ang4.items()}
     mast = {}
     order = [(1, 1), (-1, 1), (-1, -1), (1, -1)]
     for i, k in enumerate(order):
         mast[f"mast leg {k[0]:+d}{k[1]:+d}"] = (feet[k], tops[k])
         mast[f"mast diag {k[0]:+d}{k[1]:+d}"] = (feet[k], tops[order[(i + 1) % 4]])
-    return dict(l2=l2, seat=seat, cam=cam, cam_plate=plate, cam_lens=lens, cam_fwd=fwd, cam_up_v=cup, mount=mount, mast=mast, zB=zb, cam_dx=dx)
+    return dict(zb0=zb0, l2=l2, seat=seat, cam=cam, cam_plate=plate, cam_lens=lens, cam_fwd=fwd, cam_up_v=cup, mount=mount, mast=mast, zB=zb, cam_dx=dx, cam_up=up)
 
 
 def layout(dm, zB, cam_h=None, delta=0.0):
@@ -255,7 +277,7 @@ def layout(dm, zB, cam_h=None, delta=0.0):
             if best is None or r.fun < best.fun: best = r
     c = np.array([best.x[0], 0.0, best.x[1]]); R = best.fun
     # bay at the bottom: it must sit inside too (check after the shell) and its masses enter the balance
-    z_o = c[2] - math.sqrt(R * R - ring_r(R, delta)[1] ** 2)
+    z_o = c[2] - K * math.sqrt(R * R - ring_r(R, delta)[1] ** 2)
     b = bay(c[0] + delta, z_o)
     g.update(c=c, R=R, z_o=z_o, bay=b, mxy=mxy, xB=xB, zB=zB, dm=dm, l2mount=l2mount, delta=delta, xp=c[0] + delta)
     return g
@@ -265,18 +287,19 @@ def layout_top(g, dm, delta):
     mxy = g["motors_xy"]; t = top_l2(g, dm)
     g.update(l2=t["l2"], cam=t["cam"], cam_plate=t["cam_plate"], cam_lens=t["cam_lens"], cam_fwd=t["cam_fwd"], cam_up_v=t["cam_up_v"],
              l2mount=t["mount"], keels=t["mast"], cam_h=t["cam_dx"], B=np.array([dm, 0, t["zB"]]), xB=dm, apex=t["mount"],
-             cam_bracket=t["mount"])
+             cam_bracket=t["mount"], cam_up=t["cam_up"], zb0=t["zb0"])
     fixed = [g["arms"], g["motors"], [TOP, BOTTOM, FC, DECK, PI, PDB, UBEC, BUCK, RX]]
     body = np.vstack([pts(m, 800) for grp in fixed for m in grp] + [pts(g["l2"], 2000), pts(g["cam"], 300), pts(t["mount"], 800)])
     props = prop_ring_pts(mxy)
     Q = np.vstack([props, body]); M = np.r_[np.full(len(props), PROP_GAP + SHELL_R), np.full(len(body), CAGE_GAP + SHELL_R)]
-    f = lambda c: float(((np.linalg.norm(Q - [c[0], 0, c[1]], axis=1) + M) / RHO).max())
+    S_ = np.array([1, 1, 1 / K])                                     # ellipsoid: a sphere in z-scaled space, margins / K (conservative)
+    f = lambda c: float(((np.linalg.norm((Q - [c[0], 0, c[1]]) * S_, axis=1) + M / K) / RHO).max())
     best = None
     for z_s in (60.0, 90.0, 120.0):
         r = minimize(f, [dm, z_s], method="Nelder-Mead", options=dict(xatol=0.05, fatol=0.01, maxiter=600))
         if best is None or r.fun < best.fun: best = r
     c = np.array([best.x[0], 0.0, best.x[1]]); R = best.fun
-    z_o = c[2] - math.sqrt(R * R - ring_r(R, delta)[1] ** 2)
+    z_o = c[2] - K * math.sqrt(R * R - ring_r(R, delta)[1] ** 2)
     g.update(c=c, R=R, z_o=z_o, bay=bay(c[0] + delta, z_o), mxy=mxy, zB=t["zB"], dm=dm, delta=delta, xp=c[0] + delta)
     return g
 
@@ -284,7 +307,7 @@ def layout_top(g, dm, delta):
 def rebay(g, delta):
     """move the bay (and the opening that follows it) without rebuilding the drone"""
     R, c = g["R"], g["c"]
-    z_o = c[2] - math.sqrt(R * R - ring_r(R, delta)[1] ** 2)
+    z_o = c[2] - K * math.sqrt(R * R - ring_r(R, delta)[1] ** 2)
     g.update(z_o=z_o, bay=bay(c[0] + delta, z_o), delta=delta, xp=c[0] + delta)
     return g
 
@@ -319,6 +342,15 @@ def attach(g, nodes, rods_idx, ring_ids):
                 if (nodes[k] - B) @ A < -1.0 - NODE_R][:2]
         for n_, k in enumerate(cand):
             extra[f"L2 tie {sy:+d}.{n_ + 1}"] = (sock, nodes[k])
+    # core ties (review 26 Oct): the plates straight into the shell, so a hit does not bend the motor arms: from the 4 mid-edges
+    # of the bottom plate underside to the 2 nearest shell nodes under the props that keep the disks 12 off
+    bb = BOTTOM.bounds
+    for nm_, q0 in (("front", (bb[1][0], 0)), ("rear", (bb[0][0], 0)), ("left", (0, bb[1][1])), ("right", (0, bb[0][1]))):
+        q = np.array([q0[0], q0[1], -1.0]); n_ok = 0
+        for k in sorted([k for k in range(len(nodes)) if k not in ring_ids], key=lambda k: np.linalg.norm(nodes[k] - q)):
+            if seg_band_dist(q, nodes[k], mxy) - ROD_R >= PROP_GAP:
+                extra[f"core tie {nm_}.{n_ok + 1}"] = (q, nodes[k]); n_ok += 1
+                if n_ok == 2: break
     b = g["bay"]; x0 = g["xp"]
     for sx in (1, -1):                                             # receiver top corners up and out to the 2 nearest shell nodes
         for sy in (1, -1):                                         # above it (never down through the swap zone)
@@ -425,7 +457,8 @@ if L2_MODE == "nose":
     say(f"L2: base centre ({g['xB']:.1f}, 0, {zB:.0f}), axis 15 deg below +x (Spark 24 Oct); front camera {g['cam_h']:.0f} up its back plane")
 else:
     say(f"L2: axis up, base centre ({g['xB']:.1f}, 0, {zB:.1f}): every non-cage point 1.0 under its -{L2_NEG_TOP:.0f} deg cone (96 deg mode); "
-        f"seat on an 8-rod mast from the 4 arm-top screw pads; front camera {CAM_UP_TOP:.0f} deg up, portrait, {g['cam_h']:.0f} ahead of the L2 axis, "
+        f"{zB - g['zb0']:.0f} over the lowest base so the props leave the front camera view; seat on an 8-rod mast from 4 top plate pads between the arms; "
+        f"front camera {g['cam_up']:.0f} deg up, portrait, {g['cam_h']:.0f} ahead of the L2 axis, "
         f"lens ({g['cam_lens'][0]:.0f}, 0, {g['cam_lens'][2]:.0f})")
 rl = {f"shell {i}": float(np.linalg.norm(nodes[a] - nodes[bb])) for i, (a, bb) in enumerate(rods)}
 rl.update({k: float(np.linalg.norm(np.subtract(q, p))) for k, (p, q) in extra.items()})
@@ -439,7 +472,8 @@ for t_ in tris:
     s_ = (la + lb + lc) / 2; area = math.sqrt(max(s_ * (s_ - la) * (s_ - lb) * (s_ - lc), 1e-9)); circ.append(2 * area / s_)
 say(f"largest cell: inscribed circle Ø{max(circ) - 2 * SHELL_R:.0f} between tube surfaces (C); smallest Ø{min(circ) - 2 * SHELL_R:.0f}")
 say(f"load paths: {sum(k.startswith('spoke') for k in extra)} spokes (3 per arm tip), " + (f"{sum(k.startswith('L2 tie') for k in extra)} L2 ties + 2 keels, " if L2_MODE == "nose" else "8 mast rods (L2 on the core, not on the cage), ") +
-    f"8 hanger rods (arm roots to the receiver corners), {sum(k.startswith('bay tie') for k in extra)} bay ties to the opening ring")
+    f"8 hanger rods (arm roots to the receiver corners), {sum(k.startswith('bay tie') for k in extra)} bay ties up into the shell, "
+    f"{sum(k.startswith('core tie') for k in extra)} core ties (bottom plate to the shell)")
 say(f"carbon: shell {len(sh)} tubes 6/4 (Spark 26 Oct), {sum(sh) / 1000:.2f} m, shortest {min(sh):.0f}, longest {max(sh):.0f}; links {len(carbon)} rods of 3.0 solid, {sum(carbon.values()) / 1000:.2f} m, shortest {min(carbon.values()):.0f} ({min(carbon, key=carbon.get)}), "
     f"longest {max(carbon.values()):.0f} ({max(carbon, key=carbon.get)}); printed struts (< {BREAK_EVEN:.0f}): "
     + (", ".join(f"{k} {v:.0f}" for k, v in printed.items()) or "none") + "; links stay 3.0 until the frame model sizes them")
@@ -515,8 +549,10 @@ say(f"cage: shell {shell_g:.0f} g (6/4 tubes {sum(sh) * SHELL_GPM:.0f} E + nodes
 it2 = [x for x in it if x[0] != "pack"] + [("cartridge out", -LATCH_G * 0.45, cg(it)[1] * 0 + (b["cart"].bounding_box.centroid))]; t2, c2 = cg(it2)
 say(f"mass ~{tot:.0f} g (E; latch set {LATCH_G} M now counted, v2 had the cartridge at 4 % fill), CG ({cgv[0]:.1f}, {cgv[1]:.1f}, {cgv[2]:.1f}) "
     f"vs thrust centre ({dm:.1f}, 0): {math.hypot(cgv[0] - dm, cgv[1]):.1f} off; pack + cartridge out: {math.hypot(c2[0] - dm, c2[1]):.1f} off ({t2:.0f} g)")
-say(f"T/W {6600 / tot:.2f} (C on E mass, 1650 gf per motor); CG {PROP_Z - cgv[2]:.0f} under the prop plane")
-SUMMARY = dict(motors_xy=[list(map(float, m_)) for m_ in g["mxy"]], delta=g["delta"], xp=g["xp"], NU=NU, R=g["R"], centre=g["c"].tolist(), rot=ROT, zB=zB, xB=g["xB"], dm=dm, z_o=z_o, mass=tot, cg=cgv.tolist(),
+Iyy = sum(m_ * ((c_[0] - cgv[0]) ** 2 + (c_[2] - cgv[2]) ** 2) for _, m_, c_ in it) * 1e-9      # point masses (E), kg m2
+say(f"T/W {6600 / tot:.2f} (C on E mass, 1650 gf per motor); CG {PROP_Z - cgv[2]:.0f} under the prop plane; pitch inertia {Iyy * 1000:.1f} g m² (E, point masses); "
+    f"swap reach: cartridge bottom {b['cart'].bounds[0][2] - z_o:.0f} above the opening plane; h/w {(nodes[:, 2].max() - nodes[:, 2].min()) / (np.ptp(nodes[:, 0])):.2f}")
+SUMMARY = dict(K=K, bay=BAY, Iyy_gm2=Iyy * 1000, cam_up=g.get("cam_up", 0), motors_xy=[list(map(float, m_)) for m_ in g["mxy"]], delta=g["delta"], xp=g["xp"], NU=NU, R=g["R"], centre=g["c"].tolist(), rot=ROT, zB=zB, xB=g["xB"], dm=dm, z_o=z_o, mass=tot, cg=cgv.tolist(),
                cg_pack_out=c2.tolist(), nodes=len(nodes), rods=len(rods), ring=len(ring_ids), shell_m=sum(sh) / 1000, shell_g=shell_g,
                attach_g=att_g, clear_d=2 * rc, prop_gap=pg, l2_blocked=float(hit.mean()), cam_h=g["cam_h"], spare=SPARE)
 json.dump(SUMMARY, open(os.path.join(OUT, "result.json"), "w"), indent=1)
@@ -546,7 +582,7 @@ links = trimesh.util.concatenate([rod(p, q) for p, q in extra.values()])
 hub = trimesh.util.concatenate([FC, PI, DECK, PDB, UBEC, BUCK, RX])
 grp = {}
 for n_, gm, _c in it:
-    k = ("shell rods" if n_.startswith("shell") else "nodes" if n_.startswith("node") else "links" if n_.split()[0] in ("spoke", "hanger", "bay", "mast", "L2", "keel")
+    k = ("shell rods" if n_.startswith("shell") else "nodes" if n_.startswith("node") else "links" if n_.split()[0] in ("spoke", "hanger", "bay", "mast", "L2", "keel", "core")
          and n_ not in ("L2",) and not n_.startswith("L2 seat") else n_)
     grp[k] = grp.get(k, 0.0) + gm
 ring_g = RING_G * len(ring_ids); grp["ring nodes + feet"] = ring_g; grp["nodes"] -= ring_g
