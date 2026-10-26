@@ -42,11 +42,11 @@ every part in its assembled pose; the tool reports:
   budget      mass_budget_g (whole system) and per-part budget_g (dimensions.md L "Mass budget"). A SOFT limit (Spark
               24 Oct: as low as we can, never sacrifice design for weight): never FAILs, never changes the exit code;
               the System line reads "mass <g> of <budget> g (<pct> %)", plus "over budget (...)" and a WARN line.
-  shell       geodesic cage (CLAUDE.md "Cages are geodesic", Spark 26 Oct): a drone manifest ("machine" scout / overseer)
+  shell       geodesic cage (CLAUDE.md "Cages are geodesic shells", Spark 26 Oct): a drone manifest ("machine" scout / overseer)
               with any role "cage" part must carry "cage_shell": {"nodes": [[x,y,z]], "rods": [[i,j]], "open": [{"axis",
-              "half_angle_deg"}], "ratio_min": 0.85, "rod_r_mm", "node_r_mm"}. PASS if the rod triangles close every
+              "half_angle_deg"} or {"ring": [node ids round the hole]}], "ratio_min" (optional), "rod_r_mm", "node_r_mm"}. PASS if the rod triangles close every
               direction from the node centroid except the declared open cones (the bottom opening for the pack and the
-              swap), and the node set's height / width >= ratio_min (ball-shaped, not a lens or a ring). Reports nodes,
+              swap), and, when ratio_min is given, the node set's height / width >= ratio_min. Reports h/w, nodes,
               rods, triangles, longest rod, largest cell (inscribed circle between rod surfaces). No cage_shell on a
               non-drone manifest: n/a.
 Cage first, shell, probes, access, fit and balance gate (exit 1); everything else is reported. Tags: C manifest
@@ -67,7 +67,7 @@ Manifest: {"name", "parts": [{"name", "mesh": path (STL/OBJ/PLY, relative to the
   "swap": true (optional)}],
   "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0, "skip_probes": false}],
   "contact_pairs": [[a, b, allowed_mm3]], "clearance_pairs": [[a, b, min_mm]], "guard_offsets": {name: mm},
-  "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
+  "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "balance_no_swap_gate": true, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
   "probes": true | false | {"edge": true, "post": true, "post_r_mm": 10 or [radii], "n_dirs": 500, "n_roll": 24, "res_mm": 1.0},
   "probe_margin_mm": 0.0, "access": [paths as above], "access_tol_mm3": 0.5, "mass_budget_g": g, "machine", "cage_shell": {...}}.
 From Python a part may carry "trimesh": <Trimesh>."""
@@ -269,9 +269,10 @@ def mass_cg(parts, meshes):
     return dict(mass_g=round(M, 2), cg=np.round(cg, 2).tolist(), parts=rows, tag=tag_of([r["tag"] for r in rows]))
 
 
-def balance(rows, ref, axis, tol):
+def balance(rows, ref, axis, tol, gate_no_swap=True):
     """CG offset from ref, split into the part along the thrust axis and the horizontal part normal to it; with and
-    without the swap parts. PASS if every horizontal offset <= tol."""
+    without the swap parts. PASS if every horizontal offset <= tol (the no-swap case only reported when gate_no_swap is
+    false: a manifest's "balance_no_swap_gate": false, set only with a dimensions.md L Balance exception)."""
     ax = np.asarray(axis, float); ax /= np.linalg.norm(ax); ref = np.asarray(ref, float); out = {}
     cases = [("all", rows)] + ([("no_swap", [r for r in rows if not r["swap"]])] if any(r["swap"] for r in rows) else [])
     for k, rs in cases:
@@ -279,7 +280,8 @@ def balance(rows, ref, axis, tol):
         if g <= 0: continue
         off = sum(r["_g"] * r["_c"] for r in rs) / g - ref; h = off - (off @ ax) * ax
         out[k] = dict(mass_g=round(g, 2), cg_offset=np.round(off, 2).tolist(), horizontal_mm=round(float(np.linalg.norm(h)), 2),
-                      axial_mm=round(float(off @ ax), 2), pass_=bool(np.linalg.norm(h) <= tol + 1e-9))
+                      axial_mm=round(float(off @ ax), 2), pass_=bool(np.linalg.norm(h) <= tol + 1e-9 or (k == "no_swap" and not gate_no_swap)),
+                      gated=bool(k != "no_swap" or gate_no_swap))
     w = max(out, key=lambda k: out[k]["horizontal_mm"])
     return dict(applies=True, ref=ref.tolist(), thrust_axis=ax.round(4).tolist(), tol_mm=tol, cases=out, worst_case=w,
                 worst_horizontal_mm=out[w]["horizontal_mm"], pass_=all(c["pass_"] for c in out.values()))
@@ -512,6 +514,18 @@ def cage_shell(manifest, parts, n=2000):
     c0 = N.mean(0); D = fib_dirs(n)
     skip = np.zeros(n, bool)
     for o in spec.get("open", []):
+        if "ring" in o:                                                 # a polygon of nodes: rays through it are the opening
+            P = N[list(o["ring"])]; pc = P.mean(0); nrm = np.linalg.svd(P - pc)[2][2]
+            den = D @ nrm; t = ((pc - c0) @ nrm) / np.where(np.abs(den) > 1e-12, den, np.nan)
+            X = c0 + t[:, None] * D; e1 = P[0] - pc; e1 /= np.linalg.norm(e1); e2 = np.cross(nrm, e1)
+            ang = np.arctan2((P - pc) @ e2, (P - pc) @ e1); Q = 1.02 * (P - pc)[np.argsort(ang)] @ np.stack([e1, e2], 1)   # 2 % for edge rays
+            xy = (X - pc) @ np.stack([e1, e2], 1); inside = np.zeros(n, bool)
+            for i in range(len(Q)):                                     # even-odd point in polygon
+                a_, b_ = Q[i], Q[(i + 1) % len(Q)]
+                cr = ((a_[1] > xy[:, 1]) != (b_[1] > xy[:, 1])) & (xy[:, 0] < (b_[0] - a_[0]) * (xy[:, 1] - a_[1]) / (b_[1] - a_[1] + 1e-12) + a_[0])
+                inside ^= cr
+            skip |= inside & (t > 0)
+            continue
         ax = np.asarray(o["axis"], float); ax /= np.linalg.norm(ax)
         skip |= D @ ax >= np.cos(np.radians(o["half_angle_deg"]))
     hit = np.zeros(n, bool)
@@ -522,14 +536,14 @@ def cage_shell(manifest, parts, n=2000):
         hit |= ok & (u >= -1e-9) & (v >= -1e-9) & (u + v <= 1 + 1e-9) & (t > 0)
     gaps = ~hit & ~skip
     ex = N.max(0) - N.min(0); ratio = float(ex[2] / max(ex[0], ex[1]))
-    rmin = float(spec.get("ratio_min", 0.85)); rr = float(spec.get("rod_r_mm", 1.5))
+    rmin = spec.get("ratio_min"); rr = float(spec.get("rod_r_mm", 1.5))
     L = [float(np.linalg.norm(N[a] - N[b])) for a, b in E]
     cells = []
     for a, b, c in tris:
         la, lb, lc = np.linalg.norm(N[b] - N[c]), np.linalg.norm(N[a] - N[c]), np.linalg.norm(N[a] - N[b]); sp = (la + lb + lc) / 2
         cells.append(2 * np.sqrt(max(sp * (sp - la) * (sp - lb) * (sp - lc), 0)) / sp - 2 * rr)
     closed = not gaps.any()
-    return dict(applies=True, pass_=bool(closed and ratio >= rmin), closed=bool(closed), gap_share=round(float(gaps.mean()), 4),
+    return dict(applies=True, pass_=bool(closed and (rmin is None or ratio >= float(rmin))), closed=bool(closed), gap_share=round(float(gaps.mean()), 4),
                 open_share=round(float(skip.mean()), 4), ratio=round(ratio, 3), ratio_min=rmin, nodes=len(N), rods=len(E), triangles=len(tris),
                 longest_rod_mm=round(max(L), 1), largest_cell_mm=round(max(cells), 1) if cells else None)
 
@@ -561,7 +575,8 @@ def run(manifest, n_dirs=None, probes=None):
     if ref is not None:
         off = np.asarray(mc["cg"]) - np.asarray(ref, float)
         mc["cg_ref"] = list(ref); mc["cg_offset"] = np.round(off, 2).tolist(); mc["cg_offset_mm"] = round(float(np.linalg.norm(off)), 2)
-        bal = balance(mc["parts"], ref, manifest.get("thrust_axis", [0, 0, 1]), float(manifest.get("cg_tol_mm", 3.0)))
+        bal = balance(mc["parts"], ref, manifest.get("thrust_axis", [0, 0, 1]), float(manifest.get("cg_tol_mm", 3.0)),
+                      bool(manifest.get("balance_no_swap_gate", True)))
     else:
         bal = dict(applies=False, pass_=True)
     for r in mc["parts"]: r.pop("_g"); r.pop("_c")
@@ -575,7 +590,7 @@ def run(manifest, n_dirs=None, probes=None):
     if bal["applies"]:
         a = bal["cases"]["all"]; ns = bal["cases"].get("no_swap")
         cgs = (f"CG {a['horizontal_mm']:.1f} mm off thrust axis ({mc['tag']}) [{', '.join(f'{x:+.1f}' for x in a['cg_offset'])}]"
-               + (f", {ns['horizontal_mm']:.1f} mm without swap parts" if ns else "") + ("" if bal["pass_"] else f" FAIL (tol {bal['tol_mm']:g})"))
+               + (f", {ns['horizontal_mm']:.1f} mm without swap parts" + ("" if ns.get("gated", True) else " (reported, L exception)") if ns else "") + ("" if bal["pass_"] else f" FAIL (tol {bal['tol_mm']:g})"))
     else:
         cgs = f"CG [{', '.join(f'{x:.1f}' for x in mc['cg'])}] ({mc['tag']}, no cg_ref)"
     fmt = lambda g: f"{g:.{0 if g >= 100 else 1}f}"
@@ -624,7 +639,7 @@ def report(res):
     if sh["applies"]:
         L.append(f"  shell {'PASS' if sh['pass_'] else 'FAIL'}: " + (sh["error"] if "error" in sh else
                  f"{sh['nodes']} nodes, {sh['rods']} rods, {sh['triangles']} triangles, {'closed' if sh['closed'] else 'open in ' + str(100 * sh['gap_share']) + ' % of directions'}"
-                 f" outside the declared openings ({100 * sh['open_share']:.1f} %), h/w {sh['ratio']} (min {sh['ratio_min']}), longest rod {sh['longest_rod_mm']} mm, "
+                 f" outside the declared openings ({100 * sh['open_share']:.1f} %), h/w {sh['ratio']}" + (f" (min {sh['ratio_min']})" if sh['ratio_min'] is not None else "") + f", longest rod {sh['longest_rod_mm']} mm, "
                  f"largest cell Ø{sh['largest_cell_mm']} mm"))
     L.append(f"  compact: bbox {cp['bbox_L']} L ({t}), hull {cp['hull_L']} L ({t}), extents {cp['extents_mm']} mm ({t}), largest {cp['largest_extent_mm']} mm"
              + (f", guards {cp['guard_offsets_mm']}" if cp["guard_offsets_mm"] else ""))
@@ -640,7 +655,8 @@ def report(res):
     if b["applies"]:
         L.append(f"  balance {'PASS' if b['pass_'] else 'FAIL'} (horizontal CG offset <= {b['tol_mm']} mm, thrust axis {b['thrust_axis']}):")
         for k, c in b["cases"].items():
-            L.append(f"    {k}: {c['horizontal_mm']} mm horizontal, {c['axial_mm']} mm axial, {c['mass_g']} g{'' if c['pass_'] else ' FAIL'}")
+            L.append(f"    {k}: {c['horizontal_mm']} mm horizontal, {c['axial_mm']} mm axial, {c['mass_g']} g{'' if c['pass_'] else ' FAIL'}"
+                     + ("" if c.get("gated", True) else " (reported, not gated)"))
     else:
         L.append("  balance: n/a (no cg_ref)")
     mb = res["mass_budget"]

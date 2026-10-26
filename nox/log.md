@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 26 Oct (Overseer, Spark): cage v2 = v2 layout + geodesic disk cage (freq 2, 6 mm tubes, 715 x 703 x 253), pack top z -7, L2 nose; prop shadow 7.4 / 14.6 % (secondary to structure). Pack out 22.7 mm: L Balance exception (DEFAULT, alt pack on axis r 336 arms). 3288 g E. Rule: shells formed to the drone. `runs/overseer_layout/v4/`
 - 26 Oct (Overseer, Spark): cage v1 = geodesic sphere (Elios format, v0 scrapped): NU 2, 6 mm tubes, R 363, opening clear Ø305 for pack + swap; L2 on top (DEFAULT, alt nose fails pack-out balance; L2 blind below -6°). 3361 g E, T/W 1.96. Rule + system_check shell. `runs/overseer_layout/v3/`
 - 24 Oct 16:39 scan stick nodes v2 x8 printed in PETG on Jarvis (Spark: "just use petg", TPU not loaded); rigid test set, against the TPU-nodes rule; reprint in TPU 95A for flight. Row in `nox/print-log.md`.
 - 24 Oct (rule, Spark): carbon rods are 3.0 wherever one passes, thicker solid or tube only where the frame model needs it; CLAUDE.md Hard rules, generative.md rule 0 (Carbon rod size), dimensions.md G row, review_precheck 11 message
