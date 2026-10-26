@@ -825,7 +825,7 @@ def crash_force(m_t, stroke=None):
     return max(0.5 * (m_t * 1e3) * V_HIT ** 2 / ((stroke or STROKE) * 1e-3), PLATEAU_MIN)
 
 
-CAP_COS = math.cos(math.radians(45.0))                         # a cap takes a hit within 45 deg of its axis; anything else is rigid 35 g (DEFAULT)
+CAP_COS = math.cos(math.radians(30.0))                         # a cap takes a hit within 30 deg of its axis (past that a socket boss can lead it); anything else is rigid 35 g (DEFAULT)
 
 
 def hit_force(p, n, d, m_t):

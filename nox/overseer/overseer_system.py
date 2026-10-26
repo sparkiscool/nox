@@ -37,7 +37,7 @@ if os.environ.get("SYS_TOPO"):                                      # start from
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
 SKID_Y = 66.0                                                  # skid sides (legs, rails, X braces, basket rail): the widest the funnel opening takes at ±5 deg yaw
                                                                # with their socket bosses; the X braces and basket rail cross in the camera / flow pods (DEFAULT)
-CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush dome: 15 thick over the node core (10 stroke + 5 crushed), 45 deg half cone; the feet pads give 6 (DEFAULT)
+CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 13.0, 10.0, 6.0   # TPU bumper ball Ø26, crown 15 past the node core (10 stroke + 5 crushed); the feet pads give 6 (DEFAULT)
 SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "90"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
                                                                # (edge probes: an edge slides under the open bottom; flat walls from the sides meet the skid X braces and basket rails, margin ≥ 0 in the opening)
 MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
@@ -444,13 +444,9 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # 45 deg of a cap's axis is stopped over its stroke (cage_opt2 hit_force) instead of rigid 35 g; none on the nose collar (in the scan) or in the funnel
     caps, cap_m = {}, []
     O_ = B + A * L2_BASE_H
-    def _dome(q_, u_, r0_, r1_):                                    # rounded TPU dome round the node (Spark 26 Oct: no stub standing off the cage):
-        a_ = math.acos(co.CAP_COS); t_ = np.linspace(0.0, a_, 10)   # a spherical shell r0..r1 from the node centre over the 45 deg cone the frame model credits
-        pr_ = [(r0_ * math.sin(v_), r0_ * math.cos(v_)) for v_ in t_] + [(r1_ * math.sin(v_), r1_ * math.cos(v_)) for v_ in t_[::-1]]
-        m_ = trimesh.creation.revolve(np.array(pr_), sections=32)
-        if m_.volume < 0: m_.invert()
-        z_ = np.array([0.0, 0.0, 1.0]); R_ = trimesh.geometry.align_vectors(z_, u_)
-        m_.apply_transform(R_); m_.apply_translation(q_); return m_
+    def _dome(q_, u_, rc_):                                         # TPU bumper ball on the node's outer face (Spark 26 Oct: no stub standing off the cage):
+        m_ = trimesh.creation.icosphere(subdivisions=3, radius=CAP_R)   # Ø26, its crown CAP_T past the node core, so it leads the node and its
+        m_.apply_translation(q_ + u_ * (rc_ + CAP_T - CAP_R)); return m_   # socket bosses for a hit within 30 deg of its axis (cage_opt2 CAP_COS)
     def _in_scan(pts_):                                             # any point within 2 of the scan cone
         d_ = np.atleast_2d(pts_) - O_; ax_ = d_ @ A; rho_ = np.linalg.norm(d_ - ax_[:, None] * A, axis=1)
         return bool((-ax_ * math.cos(math.radians(L2_NEG)) - rho_ * math.sin(math.radians(L2_NEG)) < 2.0).any())
@@ -468,7 +464,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         tries_ += [np.array([float(t_[0]), float(t_[1]), 0.0]) for t_ in list(tries_) if abs(t_[2]) < 0.99]   # and each one levelled (clear of the deck)
         for u_ in tries_:
             u_ = np.asarray(u_, float) / np.linalg.norm(u_)
-            dm_ = _dome(q_, u_, rc_ - 2.0, rc_ + CAP_T)
+            dm_ = _dome(q_, u_, rc_)
             if _in_scan(dm_.vertices) or (q_ + u_ * (rc_ + CAP_T))[2] < FUNNEL_TOP_D + 3.0: continue   # out of the scan, its crown over the box deck
             if dm_.bounds[0][2] < FUNNEL_TOP_D + 1.0:                   # flat underneath where it would reach under the deck (the crown keeps its stroke)
                 dm_ = trimesh.intersections.slice_mesh_plane(dm_, [0.0, 0.0, 1.0], [0.0, 0.0, FUNNEL_TOP_D + 1.0], cap=True)
