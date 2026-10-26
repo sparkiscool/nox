@@ -395,7 +395,7 @@ def _geometry(p, topo, sizes=None):
                 for sx in (1, -1): node(f"SK{sx:+d}{sy:+d}", (N[f"BF{sx:+d}{sy:+d}"][0], N[f"BF{sx:+d}{sy:+d}"][1], zm_))
                 mem(f"basket rail {sy:+d}", f"SK+1{sy:+d}", f"SK-1{sy:+d}", "skid_belly")
             if topo.get("pack_rails"):                                # battery cradle (Spark 26 Oct: "the battery still does not have enough supports"):
-                zr_, ry_ = fz + 3.5 + p.get("rail_dz", 0.0), p.get("rail_y", 36.5)   # a rail beside each bottom edge of the set, outside its drop-out
+                zr_, ry_ = fz + 3.5 + p.get("rail_dz", 2.0), p.get("rail_y", 42.5)   # a rail beside each bottom edge of the set, outside the receiver frame
                 for sx in (1, -1):                                    # footprint; each end tied out to the foot and up to the basket rail node
                     node(f"SKR{sx:+d}{sy:+d}", (xc + bx * sx, ry_ * sy, zr_))   # (nothing at mid length: the down camera and flow sensor sit over it)
                     mem(f"cradle tie {sx:+d}{sy:+d}", f"SKR{sx:+d}{sy:+d}", f"FT{sx:+d}{sy:+d}", "skid_belly")

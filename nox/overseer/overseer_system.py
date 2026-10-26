@@ -356,12 +356,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                        + [dict(c=[2.5, 0.0, 22.25], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[98.0, 60.2, 24.4], skip_fixed=True, skip_nodes=["arm"]),   # cameras (plate + board, lens) and the plate sandwich (C)
                           dict(c=[float(v) for v in B + A * 19.5], fwd=[float(v) for v in A], left=[0.0, 1.0, 0.0], half=[19.5, 37.5, 37.5], skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # the L2 body (75 x 75 x 39, M)
                           *[dict(c=[float(v) for v in bb_.mean(0)], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[float(v) for v in (bb_[1] - bb_[0]) / 2 + 1.0])
-                            for bb_ in (g["cart"].bounds, g["flow"].bounds, g["down_cam"].bounds)],   # the swap set, flow sensor and down camera (1 off): the battery cradle rails stand beside them
+                            for bb_ in (g["receiver"].bounds, g["cart"].bounds, g["flow"].bounds, np.array([[-dc - 19.0, 34.0, g["PB"] + 14.4], [-dc + 19.0, 72.0, g["PB"] + 16.0]]),
+                                        np.array([[-dc - 6.0, 47.0, g["PB"] + 6.0], [-dc + 6.0, 59.0, g["PB"] + 14.4]]))],   # the receiver frame round the set, the set, flow sensor and down camera board and lens (1 off): the battery cradle rails stand outside them
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=max(dm, MAST_X_MIN), x_mast=max(dm, MAST_X_MIN), z_mast=float(WHEEL_Z),
              feet=(77.0, SKID_Y, float(g["PB"]) - 3.5), belly=(77.0, SKID_Y), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-1.0, z_skirt=2.0, rail_y=36.5, rail_dz=-2.0, z_fhub=12.0, x_rhub=-100.0)   # skirt level with the rear hub, high enough that full crush caps clear the box deck   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
+             z_rhub=-1.0, z_skirt=2.0, rail_y=42.5, rail_dz=2.0, z_fhub=12.0, x_rhub=-100.0)   # skirt level with the rear hub, high enough that full crush caps clear the box deck   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
                                                                     # stay above the funnel top and out of the plate (DEFAULT 25 Oct; under the plate they reached the funnel lip)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
@@ -468,7 +469,9 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         for u_ in tries_:
             u_ = np.asarray(u_, float) / np.linalg.norm(u_)
             dm_ = _dome(q_, u_, rc_ - 2.0, rc_ + CAP_T)
-            if _in_scan(dm_.vertices) or dm_.bounds[0][2] < FUNNEL_TOP_D + 1.0: continue   # out of the scan, over the box deck
+            if _in_scan(dm_.vertices) or (q_ + u_ * (rc_ + CAP_T))[2] < FUNNEL_TOP_D + 3.0: continue   # out of the scan, its crown over the box deck
+            if dm_.bounds[0][2] < FUNNEL_TOP_D + 1.0:                   # flat underneath where it would reach under the deck (the crown keeps its stroke)
+                dm_ = trimesh.intersections.slice_mesh_plane(dm_, [0.0, 0.0, 1.0], [0.0, 0.0, FUNNEL_TOP_D + 1.0], cap=True)
             cov_ = sum(float(np.dot(d__, u_)) >= co.CAP_COS for d__ in ds_)
             if best_ is None or cov_ > best_[0]: best_ = (cov_, u_, dm_)
         if best_ is None or best_[0] == 0: continue
