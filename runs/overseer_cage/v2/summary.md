@@ -1,0 +1,5 @@
+# Overseer cage v2 (cage_opt2 on layout v2, 24 Oct)
+
+Spark 24 Oct: "this cage is way too flimsy ... the lidar mounted tight, the cage can take impact and the bottom can land without toppling over, run a serious design optimization". `CAGE_CRASH_G=35,20 python3 nox/overseer/cage_opt2.py runs/overseer_cage/v2/params_seed.json runs/overseer_cage/v2/cage_opt2.json 100`: 512 topologies, beam FE (rigid joints, carbon rods, PETG arms), cases of `dimensions.md` L (crash 35 g x 2200 g at the touching node in 14 directions, L2 crash 35 g, handling 50 N, catch landing 6 g, latch 100 N, swap pull 50 N, deflection ≤ 9, L2 mode ≥ 100 Hz).
+
+35 g: best 477 g (C), mid_spokes 487 g with the L2 mode and the cage first mode at 178 Hz (vs 102 Hz). Ablation: without keels_lo, keels_x or top_spider no design is feasible; without arm spars 573 g. 20 g: best 432 g. `system_A_pack_on_axis.txt`: the first system pass of layout A on this cage, which showed the geometry problems fixed in `runs/overseer_system/v2A` (pyramid through the rear disks, hub out of the cage, camera rods in the camera, cage sized on the seed geometry). Superseded by the in-loop cage of `runs/overseer_system/v2A`.

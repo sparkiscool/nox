@@ -1,0 +1,2 @@
+{"dm": 100.0, "xc": 100.0, "wz": -38.0, "xB": 384.3, "zB": 58.0, "cam_top": 125.0, "cam_front": 390.0, "m_drone_g": 2200.0,
+ "note": "seed for the system pass: pack and catch on the thrust axis (xc = dm, balance rule), L2 base 284.3 ahead of the motor-square centre (layout v2, C), zB raised 7 so the nose box bottom clears the funnel top, camera extremes E; overseer_system.py re-solves and re-checks"}

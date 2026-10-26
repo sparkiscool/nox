@@ -32,11 +32,11 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel and the box swaps its pack.
 
 ### Parts to draw (order DEFAULT)
-Cage first (Spark 24 Oct: "lets make the cage first it must fit in the funnel and then we will make the actual designs"): `layout_v2.py`, `dimensions.md` O Cage v0; 3 mm rods wherever they do the job (Spark 24 Oct). v0 / v1 layouts kept.
-0. **Cage**: frame model on the rod layout (hits, floor landing, 30 / 100 N on the latched wheels, G (5) 50 N swap pull on two wheels and the 0.02 J face hit), then the nodes: 8 ring nodes, 4 corner nodes with the wheels, the L2 apex node with its lugs and the camera plate, the front hub.
-1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors and spoke and strut sockets per the cage.
+Cage first (Spark 24 Oct: "lets make the cage first it must fit in the funnel and then we will make the actual designs"; "way too flimsy ... run a serious design optimization"; weight no cap). The system: `overseer_system.py` (layout B, Spark 24 Oct: pack 30 aft, no tail; the cage search and sizing `cage_opt2.py`, the two front cameras `cam_cover.py`, the picture `render_system.py`), `dimensions.md` O System v3 rows, assembly `overseer.assembly.json`; `python3 nox/overseer/overseer_system.py runs/overseer_system/<v>` (~25 to 60 min; `SYS_RESIZE` sizing passes, `SYS_TOPO` seed topology, `SYS_FINAL_DM` / `SYS_FINAL_SIZES` start or recheck the final stage, `SYS_WRITE_ASM=1` writes the assembly, `SYS_VIDEO=1` the video). Layout A: `runs/overseer_system/v2A`. Layout scripts v0-v3 kept as history.
+0. **Cage nodes and hubs**: the rod layout and sizes are set (`runs/overseer_system/v3B/cage_final.json`, layout B); next the printed pieces from their joint loads (`hub_loads.py`): ring nodes, 4 corner nodes with the wheels and belly-frame tabs, the L2 apex block with its lugs and both camera arms, the front hub block between the plates, the rear hub block, the belly pan, the skid runners.
+1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors; the cage nodes at each arm (spoke, strut and tip-rail sockets) printed into the arm (Spark 25 Oct: "make sure the nodes are also built into the arms"), loads from `runs/overseer_system/v3B` (roots 1425 N, 83 N m).
 2. Pi deck between the plates (4 posts over the FC stack).
-3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it, 2 pogo pads (G (6)), 4 TPU feet.
+3. Belly frame (on the 4 corner nodes): cartridge receiver centred on the catch, down camera pod and flow pod clamped on the belly bars, 2 pogo pads (G (6)), skid with 4 TPU feet.
 4. Overseer cartridge + latch block for the bays; its bottom face seat height must match the Scout's (swap wheel R 100); it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
 
 ### Open for Spark (DEFAULT in brackets, work goes on)

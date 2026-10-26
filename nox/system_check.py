@@ -60,7 +60,7 @@ Manifest: {"name", "parts": [{"name", "mesh": path (STL/OBJ/PLY, relative to the
   "swap": true (optional)}],
   "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0, "skip_probes": false}],
   "contact_pairs": [[a, b, allowed_mm3]], "clearance_pairs": [[a, b, min_mm]], "guard_offsets": {name: mm},
-  "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
+  "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "cg_tol_no_swap_mm" (optional, pack out), "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
   "probes": true | false | {"edge": true, "post": true, "post_r_mm": 10 or [radii], "n_dirs": 500, "n_roll": 24, "res_mm": 1.0},
   "probe_margin_mm": 0.0, "access": [paths as above], "access_tol_mm3": 0.5, "mass_budget_g": g}.
 From Python a part may carry "trimesh": <Trimesh>."""
@@ -156,7 +156,7 @@ def cage_first(parts, meshes, openings, margin_mm, n_dirs):
         for o in openings:
             if o.get("part") not in (None, nm): continue
             ax = np.asarray(o["axis"], float); ax /= np.linalg.norm(ax)
-            req[D @ ax >= np.cos(np.radians(o["half_angle_deg"]))] = min(float(o.get("min_mm", 0.0)), margin_mm)
+            req[D @ ax >= np.cos(np.radians(o["half_angle_deg"])) - 1e-9] = min(float(o.get("min_mm", 0.0)), margin_mm)
         sl = mg - req; k = int(np.argmin(sl)); free = req == margin_mm
         per[nm] = dict(min_margin_mm=round(float(mg.min()), 2), worst_dir=[round(float(x), 3) for x in D[k]],
                        worst_slack_mm=round(float(sl[k]), 2), min_margin_outside_openings_mm=round(float(mg[free].min()), 2) if free.any() else None,
@@ -262,9 +262,10 @@ def mass_cg(parts, meshes):
     return dict(mass_g=round(M, 2), cg=np.round(cg, 2).tolist(), parts=rows, tag=tag_of([r["tag"] for r in rows]))
 
 
-def balance(rows, ref, axis, tol):
+def balance(rows, ref, axis, tol, tol_no_swap=None):
     """CG offset from ref, split into the part along the thrust axis and the horizontal part normal to it; with and
-    without the swap parts. PASS if every horizontal offset <= tol."""
+    without the swap parts. PASS if every horizontal offset <= tol (the pack-out case <= tol_no_swap when the manifest
+    gives cg_tol_no_swap_mm: a Spark-accepted exception, e.g. the Overseer's layout B)."""
     ax = np.asarray(axis, float); ax /= np.linalg.norm(ax); ref = np.asarray(ref, float); out = {}
     cases = [("all", rows)] + ([("no_swap", [r for r in rows if not r["swap"]])] if any(r["swap"] for r in rows) else [])
     for k, rs in cases:
@@ -272,7 +273,8 @@ def balance(rows, ref, axis, tol):
         if g <= 0: continue
         off = sum(r["_g"] * r["_c"] for r in rs) / g - ref; h = off - (off @ ax) * ax
         out[k] = dict(mass_g=round(g, 2), cg_offset=np.round(off, 2).tolist(), horizontal_mm=round(float(np.linalg.norm(h)), 2),
-                      axial_mm=round(float(off @ ax), 2), pass_=bool(np.linalg.norm(h) <= tol + 1e-9))
+                      axial_mm=round(float(off @ ax), 2),
+                      pass_=bool(np.linalg.norm(h) <= (tol_no_swap if (k == "no_swap" and tol_no_swap is not None) else tol) + 1e-9))
     w = max(out, key=lambda k: out[k]["horizontal_mm"])
     return dict(applies=True, ref=ref.tolist(), thrust_axis=ax.round(4).tolist(), tol_mm=tol, cases=out, worst_case=w,
                 worst_horizontal_mm=out[w]["horizontal_mm"], pass_=all(c["pass_"] for c in out.values()))
@@ -451,7 +453,7 @@ def crash_probes(parts, meshes, cfg, req_mm, openings):
                     mg = np.where(shield, hc - hp, -np.abs(hull[:, None] + r - hp))
                 mg = np.where(has, mg, np.inf)
                 for o in skip[j]:
-                    mg[dv @ _unit(o["axis"]) >= np.cos(np.radians(o["half_angle_deg"]))] = np.inf
+                    mg[dv @ _unit(o["axis"]) >= np.cos(np.radians(o["half_angle_deg"])) - 1e-9] = np.inf   # boundary included (a 90 deg cone keeps its rim)
                 sc = np.where(np.isfinite(mg) & ~shield, -1e6 - mg, mg)             # unshielded first, least reach (most exposed) first
                 t = np.unravel_index(int(np.argmin(sc)), sc.shape)
                 if sc[t] < worst[(r, j)][0]:
@@ -515,7 +517,8 @@ def run(manifest, n_dirs=None, probes=None):
     if ref is not None:
         off = np.asarray(mc["cg"]) - np.asarray(ref, float)
         mc["cg_ref"] = list(ref); mc["cg_offset"] = np.round(off, 2).tolist(); mc["cg_offset_mm"] = round(float(np.linalg.norm(off)), 2)
-        bal = balance(mc["parts"], ref, manifest.get("thrust_axis", [0, 0, 1]), float(manifest.get("cg_tol_mm", 3.0)))
+        bal = balance(mc["parts"], ref, manifest.get("thrust_axis", [0, 0, 1]), float(manifest.get("cg_tol_mm", 3.0)),
+                      None if manifest.get("cg_tol_no_swap_mm") is None else float(manifest["cg_tol_no_swap_mm"]))
     else:
         bal = dict(applies=False, pass_=True)
     for r in mc["parts"]: r.pop("_g"); r.pop("_c")

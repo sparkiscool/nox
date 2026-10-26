@@ -1,0 +1,1 @@
+{"dm": 85.0, "xc": 55.0, "wz": -38.0, "xB": 369.3, "zB": 51.0, "note": "seed: motors 85 ahead of the plate centre, catch centre 30 behind the thrust centre (tip rule), L2 base 284.3 ahead of the motor-square centre (layout v2, C); layout_v3.py re-solves the balance and re-checks the chosen cage"}
