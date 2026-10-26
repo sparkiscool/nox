@@ -15,7 +15,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 
 ### Keep (on hand, decided)
 - S500 centre plates (2015 edition, Spark 23 Oct, CHECK), SunnySky X2216 II, 1045 props, MicoAir743-Lite, Matek FCHUB-12S, 4S 6000 packs (3), MTF-02P, Unitree L2, Pi 5 companion (`dimensions.md` O, `nox/parts-list.md`).
-- **L2 at the nose, axis 15° below forward** (Spark 24 Oct; was top-mounted), above the collar faces (`dimensions.md` O Lidar, Layout v1, G).
+- **L2 on top inside the sphere, axis up** (DEFAULT 26 Oct with the geodesic cage, as the photo; the 24 Oct nose mount, axis 15° below forward, is the alternative: it fails pack-out balance inside the sphere) (`dimensions.md` O Lidar, Layout v1, G).
 - 2 x DECXIN 2633V2: front portrait at the horizon behind the L2 (DEFAULT 24 Oct with the forward-down L2; alt 30° up, the 23 Oct choice), rigid to the L2 for the camera-lidar calibration; underside straight down (Spark 23 Oct). Pointing in `dimensions.md` O Camera.
 - PX4 1.18.0rc, airframe 4001, DShot, CRSF; flies perfectly in Position mode (Spark 23 Oct); tune backup `claude/overseer_params_2026-09-26.params`, never delete. Switches matched to the Scout (mode ch 5, kill ch 8).
 - Printed mounts generated with the `nox/topo` engine, not `noxopt` (Spark 23 Oct, lidar mount row).
@@ -32,8 +32,8 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel and the box swaps its pack.
 
 ### Parts to draw (order DEFAULT)
-Cage first (Spark 24 Oct: "lets make the cage first it must fit in the funnel and then we will make the actual designs"): `layout_v2.py`, `dimensions.md` O Cage v0; 3 mm rods wherever they do the job (Spark 24 Oct). v0 / v1 layouts kept.
-0. **Cage**: frame model on the rod layout (hits, floor landing, 30 / 100 N on the latched wheels, G (5) 50 N swap pull on two wheels and the 0.02 J face hit), then the nodes: 8 ring nodes, 4 corner nodes with the wheels, the L2 apex node with its lugs and the camera plate, the front hub.
+Cage first, now a geodesic sphere (Spark 26 Oct, Elios 3 photo: the v0 ring cage is scrapped; larger cells, 6 mm tubes; a new funnel follows the cage): `layout_v3.py`, `dimensions.md` O Cage v1, method `docs/generative.md` rule 0 Geodesic cage. v0 / v1 / v2 layouts kept.
+0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, 50 N handling, the pack bay hanger at 35 g; tube wall 6/4 vs 6/5), then the nodes: 36 shell nodes, 6 opening ring nodes with TPU feet, the spoke sockets at the arm tips, the L2 seat on its mast, the hanger nodes at the receiver.
 1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors and spoke and strut sockets per the cage.
 2. Pi deck between the plates (4 posts over the FC stack).
 3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it, 2 pogo pads (G (6)), 4 TPU feet.
