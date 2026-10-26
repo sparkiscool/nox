@@ -1,0 +1,34 @@
+seat: shell vs holder+cap (mm3): 0.0
+seat: female vs male (mm3, insert in the socket): 0.0
+seat: male vs shell (mm3): 0.0
+XT60 engaged at seat (C): 6.0
+latch: nose over tooth (C, x engagement / drop): [1.0, 0.2]
+insert/pull sweep, pinched, 0..45 every 0.5: worst overlap (mm3): 0.0
+insert/pull sweep stuck steps: []
+relaxed shell pulled down 0.3/0.5/1/2 (must collide = latched, mm3): [3.2, 9.6, 24.31, 41.8]
+pincer open approach 0..90 below grip: worst overlap (mm3): 0.0
+pincer shut at seat vs holder+cap (mm3): 0.0
+finger shut: blade face / nose tip x (C): [33.45, 30.45]
+fingers shut vs squeezed shell (mm3, nose in pocket): 0.0
+jaw/servo/pinion vs squeezed shell (mm3): 0.0
+pinion vs racks over the stroke (mm3, ~0 = meshing): [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+fingers vs jaw over the stroke (mm3): [0.0, 0.0, 0.0, 0.0, 0.0]
+rail travel before the flip (min, step 5, C): 80
+flip sweep radius about the axis (C): 91.6
+flip sweep x extent (C): [-77.0, 77.0]
+rail travel after the flip into the bay (min, step 5, C): 85
+bay insert sweep, pinched: worst overlap (mm3): 0.0
+bay seat relaxed vs bay holder (mm3): 0.0
+bay holder deck underside z / mount face z, drone frame (C): [-233.0, -243.0]
+flip vs bay holder: worst overlap (mm3): 0.0
+swap mass g (pack 470 + shell + keeper + XT60 + bolts, E): 591.7
+swap CG (C/E): [0.0, 3.94, -26.73]
+clip / pinch line y vs CG y (mm): -0.04
+mass {'shell': 102.0, 'xt60_keeper': 1.7, 'holder': 106.0, 'xt60_cap': 4.2, 'jaw': 325.3, 'finger': 13.0, 'pinion': 7.6}
+beam: force per pad to the stop N (E): 8.4
+beam: root strain % at full pinch (E, PETG fatigue ~1 %): 1.03
+beam: nose retracts / engagement / clear of the tooth (mm, C): [1.48, 1.0, 0.48]
+latch: 10 g drop per nose N / nose shear MPa (E): [29.0, 0.6]
+pinch servo torque to hold the 60 N push N m (E): 0.523
+flip torque, static N m (E: swap + ~400 g pincer 50 below the axis): 0.24
+hub shear per stub shaft at the 60 N push N (C/E, two hubs): 30.0
