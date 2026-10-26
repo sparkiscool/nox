@@ -1,68 +1,62 @@
-# X-axis flip swap v1 (Alex, 25 Oct 2026)
+# X-axis flip swap v2 (Alex, 25 Oct 2026)
 
 Battery shell, battery holder (drone and charging bay, one print) and pincer for a Zeee 4S 5200 mAh 120C hard-case pack
-(138 x 47 x 48 listing, ±2, E; 470 g listing) on XT60 only.
+(138 x 47 x 48 listing, ±2, E; 470 g listing) on XT60 only. v2 adds guided capture for an imprecise rail and a latch
+that holds through a 5 to 10 mph crash. v1 (flexure clips) is in git history and `runs/xswap/v1/`.
 
 ## How it works
 1. The drone sits on top with its pack hanging below in the **holder** (opens down). The pack lives in a **shell**; its
-   own female XT60 sits in the shell's lead-end block, face up, and mates the holder's XT60E1-M panel male (6.0 engaged, C).
-2. Two **clip beams** on the shell's long sides (at the swap CG, y 3.9) hang from the top deck. Each has a latch nose that
-   rests on a tooth at the bottom of a holder arm (1.0 engaged, 0.2 drop, C), and a pad with a **finger pocket** lower down.
-3. The **pincer** rides the vertical rail (the swap's X axis) up under the pack. Its two fingers close along x with one
-   servo (rack and pinion, m 1.5, 18 T). Each finger's **shaped nose** (a 30 deg / 20 deg frustum on a 3 mm neck) seats in its
-   pad pocket and pushes the pad in 3.1 mm. That one squeeze pulls both noses 1.48 in (0.48 clear of the teeth, C) and
-   grips the shell through the pockets.
-4. The rail moves down 80 (C): the XT60 pulls apart (~50 N, E) and the shell clears the holder.
-5. The pincer flips the shell 180 deg about the pinch line (x axis through the pads). Hubs on both sides of the jaw
-   take 8 mm D stub shafts in a fork on the rail carriage. Sweep radius 91.6 about the axis, x ±77 (C).
-6. The rail moves down 85 more into the **bay holder**: the same print mounted upside down (opens up), 243 below the drone
-   holder's mount face. The fingers open, the noses spring out under the bay teeth, and the pincer leaves.
+   own female XT60 sits in the shell's lead-end block, face up, and mates the holder's XT60E1-M panel male (6.0 engaged).
+2. **Latch:** a rigid PETG **rocker** on each long side of the shell (at the swap CG, y 3.9) turns on an M4 pin in two
+   ears. Its hook drops into a pocket in a solid **lug** on the holder and sits 2.5 over a ledge. The pin is inboard of the
+   hook contact, so any pull on the pack turns the hook further in: pulling cannot open it, only pressing the pads can.
+   A 5 x 13 spring holds each rocker closed; a rest stop and a hard stop on the shell limit it (0 / 15 deg).
+3. **Guidance:** two bullet-nosed guide posts on the holder (r 5, tip r 1.5) find two sockets on the shell (entry r 7.2)
+   18 to 25 mm before seat, then a 30 deg funnel (6 per side, 3.5 at the ends) and the skirt lead-ins, then the XT60
+   mates on the last 6. Checked: offsets to ±5 in x, y and diagonals, and tilts to 3 deg, always touch a post first.
+4. **Crash:** the floor is solid 3.0; two keys under the holder deck drop into the shell's deck windows and take side
+   and end hits; the lugs carry pull-out straight up into 4 extra M3 inserts in the drone mount face.
+5. **Pincer:** rides the vertical rail. Each finger has a round nose bar (r 3) that lands in the pad's round slot; the
+   finger pushes the pad, the rocker turns 13 deg and both hooks clear the ledges (0.44 clear). The round nose lets the
+   rocker turn round it; the slot lets the nose ride 2.6 up the pad as it turns.
+6. **Sequence:** rise, pinch, rail down 65 (XT60 apart, clear), flip 180 deg about the finger line (hubs on both sides,
+   8 mm D stubs in a carriage fork), rail down 65 into the **bay holder** (the same print upside down), open: the springs
+   swing the hooks over the bay ledges.
 
-Run back the other way for a charged pack. A bay is the drone holder turned 180 deg about the flip axis, so the lead
-end swaps sides: mount each bay with its XT60 end opposite the drone holder's.
+## Checks (v2, `runs/xswap/v2/check.txt`, `result.json`)
+All 0 mm³ (C): seat; rockers over 0..13 deg; insert / pull sweep pinched (0..55 every 0.5); pincer approach (0..90);
+finger nose tracking the rocker 0..13 deg; fingers on the pinched shell; pinion and racks over the stroke; flip vs drone
+and bay holders (shell nominal and hanging 2.6); bay insert and seat. A latched shell pulled down 0.6 collides (locked).
+Connectivity PASS on all 8 print files (`xswap_solid.py`).
 
-## Files
-- `xswap.py` all geometry (one frame: x across the pack, y along it, +y XT60 end, z up, z 0 = shell top at seat).
-- `xswap_check.py` seat, latch, pinched insert / pull sweep, relaxed-pull lock, pincer approach and grip, rack mesh over
-  the stroke, flip vs both holders, bay seat, masses, hand calcs -> `runs/xswap/v1/result.json`, `check.txt`.
-- `xswap_export.py` print files in print orientation -> `runs/xswap/v1/stl/`; `xswap_solid.py` connectivity check
-  (0.3 mm voxels, 0.9 mm erosion, one body); `xswap_render.py` + `zrender.py` figures -> `runs/xswap/v1/figs/`.
-
-## Checks (v1)
-All overlaps 0 mm³ (C): seat, insert / pull sweep pinched (0..45 every 0.5), pincer approach (0..90), fingers shut on the
-squeezed shell, pinion vs racks over the stroke, flip vs drone and bay holders, bay insert and seat. A relaxed shell
-pulled down 0.3 collides (locked). Connectivity PASS on all 7 print files.
-
-Hand calcs (E, PETG E 2000 MPa): beam 8.4 N per pad, root strain 1.03 % at full pinch (keep the servo stroke at 3.1);
-nose 29 N each at a 10 g drop (0.6 MPa); pinch servo 0.52 N·m to hold the 60 N push (MG996R / DS3218 class is 1+ N·m);
-flip 0.24 N·m static; 30 N per stub shaft at the push.
+Crash (E): 150 g on the 637 g swap mass = 937 N pull-out (10 mph = 4.47 m/s stopped in ~7 mm), 469 N per rocker:
+hook root 10.4 MPa, hook bearing 6.7, pin boss 4.2, M4 pin 18.6 (steel), ears 9.8 / 5.8, lug spine 4.6 across layers,
+ledge 8.8, 234 N per lug insert, floor 20.0 MPa (all in-layer except the lug spine; PETG ~45 in-layer, ~15-20 across).
+Closing torque from the hook load 1476 N·mm vs 86 opening from the rocker's own inertia. Side / end hit: keys 12.5 MPa.
 
 ## Print (PETG, Bambu A1 mini, tree supports)
 | File | Count | Orientation | g solid (C) |
 |---|---|---|---|
-| xswap_shell_v1 | 1 per pack | tail end down | 102 |
-| xswap_xt60_keeper_v1 | 1 per pack | flat | 2 |
-| xswap_holder_v1 | 1 drone + 1 per bay | mount face (rib tops) down | 106 |
-| xswap_xt60_cap_v1 | 1 per holder | plate down | 4 |
-| xswap_finger_v1 | 2 | rack bottom down | 13 |
-| xswap_pinion_v1 | 1 | tooth face down | 8 |
-| xswap_jaw_v1 | 1 | bottom down | 325 |
+| xswap_shell_v2 | 1 per pack | tail end down | 129 |
+| xswap_rocker_v2 | 2 per pack | on its side | 9 |
+| xswap_xt60_keeper_v2 | 1 per pack | flat | 2 |
+| xswap_holder_v2 | 1 drone + 1 per bay | mount face (rib tops) down, 178.6 long | 163 |
+| xswap_xt60_cap_v2 | 1 per holder | plate down | 4 |
+| xswap_finger_v2 | 2 | rack bottom down | 11 |
+| xswap_pinion_v2 | 1 | tooth face down | 8 |
+| xswap_jaw_v2 | 1 | bottom down, 172 wide | 331 |
 
 ## Hardware
-- Per shell: 2 x M3 x 60 + nyloc (tail cross bolts), 2 x M3 heat-set inserts + 2 x M3 x 6 (keeper), 1 mm foam tape.
-  The pack's XT60 is re-soldered: thread the leads through the keeper's slot, solder, push the housing up into the
-  pocket (face 0.5 proud), screw the keeper on; a drop of epoxy round the housing takes the 50 N pull.
-- Per holder: 1 x XT60E1-M, 2 x M3 inserts + 2 x M3 x 8 (cap), 4 x M3 inserts in the mount face (screws from the drone /
-  bay side). The cap stands 3 proud of the mount face: the drone plate needs a cut-out for it and the XT60 leads.
-- Pincer: 1 x MG996R / DS3218 class servo with its round horn, 4 x M3 inserts + M3 x 8 (servo ears), horn screws
-  (pinion), 2 x 8 mm D stub shafts + 4 x M3 inserts + 4 x M3 set screws (hubs), a flip actuator ≥ 0.5 N·m on one stub, a
-  rail carriage fork with 2 x 608 bearings outside x ±77. Rail travel ≥ 165, force ≥ 60 N each way plus weights.
+- Per shell: 2 x M4 x 45 + nyloc (rocker pins), 2 x 5 x 13 compression springs (~0.5 N/mm, E), 2 x M3 x 60 + nyloc
+  (tail), 2 x M3 inserts + 2 x M3 x 6 (keeper), 1 mm foam tape. Re-solder the pack's XT60 through the keeper (epoxy it).
+- Per holder: 1 x XT60E1-M, 2 x M3 inserts + 2 x M3 x 8 (cap), 8 x M3 inserts in the mount face (4 corners + 4 over the
+  lugs), screws from the drone / bay side. The cap stands 3 proud: cut the drone plate for it and the leads.
+- Pincer: as v1 (MG996R / DS3218 class servo, 8 mm D stubs, 608s in your carriage fork, now outside x ±85.5). Rail travel
+  ≥ 130, ≥ 60 N each way.
 
 ## Open (measure before printing, E)
-1. Caliper the pack (PACK_* in `xswap.py`), the servo (case, ears, shaft offset, horn Ø21.5 and its screw circle) and the
-   XT60E1-M flange; rerun the three scripts.
-2. XT60-only charging means **no cell balancing**: balance-charge each pack on the bench now and then, or add a balance
-   connector to the shell and bay.
-3. The 60 N insert push lifts the drone: it must be held down on the box (a hook or latch on its frame) during insert.
-4. First print: a shell + holder coupon. Check the pinch force, that the noses snap under the teeth when released, and
-   50 insert / pull cycles; Amass rates most XT60s ~100 mating cycles, so plan the holder XT60 as a wear part.
+1. Caliper the pack, servo, horn and XT60E1-M flange; set the numbers at the top of `xswap.py`; rerun check, export, solid.
+2. XT60-only charging means no cell balancing: balance-charge on the bench, or add a balance connector later.
+3. The 60 N insert push lifts the drone: hold it down on the box during the insert.
+4. First print: one shell, two rockers, one holder. Check the springs return the rockers, the hooks drop over the ledges
+   by themselves, a hard pull on the pack does nothing, and a 5 mm misaligned push still seats.

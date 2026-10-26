@@ -10,7 +10,7 @@ import xswap as X
 import zrender as ZR
 
 FIG = os.path.join(X.OUT, "figs"); os.makedirs(FIG, exist_ok=True)
-YC, ZP = X.Y_C, X.Z_P
+YC, ZP = X.Y_C, X.Z_AX
 COL = dict(holder="#5b8def", cap="#3b6fd0", shell="#f2a541", keeper="#d98a2b", pack="#4a4a4a", female="#e8d44d", male="#e8d44d",
            jaw="#7fbf7f", finger="#2f9e5a", pinion="#1f6e3d", servo="#999999")
 LIGHT = np.array([0.4, -0.6, 0.7]); LIGHT /= np.linalg.norm(LIGHT)
@@ -51,7 +51,7 @@ def fill(ax, polys, color, alpha=1.0, z=1):
             ax.add_patch(Polygon(p, closed=True, facecolor=color, edgecolor="k", lw=0.4, alpha=alpha, zorder=z))
 
 if __name__ == "__main__":
-    shell_r, shell_p = X.shell(YC), X.shell(YC, X.PINCH)
+    shell_r, shell_p = X.shell(YC, 0.0), X.shell(YC, X.TH_OPEN)
     H, cap = X.holder(YC), X.xt60_cap()
     pin_o, pin_s = X.pincer(YC, X.FACE_OPEN), X.pincer(YC, X.FACE_SHUT)
     base = [(H, COL["holder"], 1), (cap, COL["cap"], 1), (X.xt60_male(), COL["male"], 1)]
@@ -67,26 +67,26 @@ if __name__ == "__main__":
 
     # 2 clip section at y = YC: relaxed + latched (left), pinched + gripped (right)
     fig, axs = plt.subplots(1, 2, figsize=(12, 6.5))
-    for ax, (sh, p, ttl) in zip(axs, [(shell_r, pin_o, "Latched: nose rests on the holder's tooth, finger open"),
-                                       (shell_p, pin_s, "Pinched: nose in the pad pocket, clip pulled in 1.5, free to drop")]):
+    for ax, (sh, p, ttl) in zip(axs, [(shell_r, pin_o, "Latched: hook over the ledge, a pull turns it further in"),
+                                       (shell_p, pin_s, "Pinched: the finger turns the rocker 13 deg, hook clears the ledge")]):
         fill(ax, sect(X.pack(), YC), COL["pack"], 0.25, 0)
         fill(ax, sect(sh, YC), COL["shell"], 1, 2)
         fill(ax, sect(H, YC), COL["holder"], 1, 2)
         for k in ("finger_p", "finger_m"): fill(ax, sect(p[k], YC), COL["finger"], 1, 3)
         fill(ax, sect(p["jaw"], YC), COL["jaw"], 0.6, 1)
-        ax.set_xlim(18, 50); ax.set_ylim(-48, 14); ax.set_aspect("equal"); ax.grid(alpha=0.3)
+        ax.set_xlim(18, 60); ax.set_ylim(-52, 14); ax.set_aspect("equal"); ax.grid(alpha=0.3)
         ax.set_title(ttl, fontsize=10); ax.set_xlabel("x across the pack (mm)"); ax.set_ylabel("z up (mm)")
     for ax in axs:
-        ax.annotate("tooth (holder)", (X.TOOTH_TIP + 0.5, X.TOOTH_Z1 - 1.5), (40, -18), arrowprops=dict(arrowstyle="->"), fontsize=8)
-        ax.annotate("latch nose", (X.BX1 + 0.5, X.NOSE_Z0 + 1), (38, -6), arrowprops=dict(arrowstyle="->"), fontsize=8)
-        ax.annotate("pad + finger pocket", (X.BX1 + 1.5, ZP), (40, -42), arrowprops=dict(arrowstyle="->"), fontsize=8)
-        ax.annotate("clip beam (flexure)", (X.BX0 + 1, -12), (19, 6), arrowprops=dict(arrowstyle="->"), fontsize=8)
-        ax.annotate("XT60 deck", (25, 5), (36, 10), fontsize=8)
-    fig.suptitle("Section through the clip (y = %.1f, the swap CG): one squeeze unlatches and grips" % YC)
+        ax.annotate("ledge (holder)", (34.5, X.LEDGE_Z0 + 1), (46, -14), arrowprops=dict(arrowstyle="->"), fontsize=8)
+        ax.annotate("hook", (35.0, X.HOOK_Z1 - 1.5), (44, -4), arrowprops=dict(arrowstyle="->"), fontsize=8)
+        ax.annotate("M4 pin", (X.PX, X.PZ), (19, -24), arrowprops=dict(arrowstyle="->"), fontsize=8)
+        ax.annotate("pad + finger slot", (X.PAD_X1, X.Z_P), (49, -47), arrowprops=dict(arrowstyle="->"), fontsize=8)
+        ax.annotate("holder deck", (25, 5), (40, 10), fontsize=8)
+    fig.suptitle("Section through the latch (y = %.1f, the swap CG): one squeeze unlatches and grips" % YC)
     fig.tight_layout(); fig.savefig(os.path.join(FIG, "clip_section.png"), dpi=110); plt.close(fig)
 
     # 3 swap sequence (side view along x)
-    D1, D2 = 80.0, 85.0
+    D1, D2 = 65.0, 65.0
     bay = lambda m: m.translate([0, -YC, -ZP]).rotate([180, 0, 0]).translate([0, YC, ZP - D1 - D2])
     bayH = [(bay(H), COL["holder"], 1), (bay(cap), COL["cap"], 1)]
     def carry(t, ang, p, sh):
@@ -100,11 +100,11 @@ if __name__ == "__main__":
     steps = [("1 rise open under the pack", carry(60, 0, pin_o, shell_r) if False else
               [(shell_r, COL["shell"], 1), (X.pack(), COL["pack"], 1)] + [(m.translate([0, 0, -40]), c, a) for m, c, a in pincer_items(pin_o)]),
              ("2 pinch: unlatch + grip", carry(0, 0, pin_s, shell_p)),
-             ("3 down 80: XT60 out, clear", carry(D1, 0, pin_s, shell_p)),
+             ("3 down 65: XT60 out, clear", carry(D1, 0, pin_s, shell_p)),
              ("4 flip 90", carry(D1, 90, pin_s, shell_p)),
              ("5 flip 180", carry(D1, 180, pin_s, shell_p)),
-             ("6 down 85 into the bay, open", carry(D1 + D2, 180, pin_o, shell_r))]
-    B = [[-80, -100, -262], [80, 100, 22]]
+             ("6 down 65 into the bay, open", carry(D1 + D2, 180, pin_o, shell_r))]
+    B = [[-90, -100, -230], [90, 100, 22]]
     B = [[x, y, z] for x in (B[0][0], B[1][0]) for y in (B[0][1], B[1][1]) for z in (B[0][2], B[1][2])]
     fig = plt.figure(figsize=(13, 15))
     for i, (ttl, items) in enumerate(steps):

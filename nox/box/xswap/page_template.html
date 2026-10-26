@@ -7,7 +7,7 @@
 :root {
   --bg: #eef0f2; --panel: #ffffff; --ink: #17202a; --muted: #5d6874; --line: #d3d8de;
   --holder: #3f6fb5; --shell: #e0892b; --pincer: #2f8f5b; --pack: #3a3f45; --plug: #d9b92e;
-  --accent: #e0892b; --vp: #e4e8ec;
+  --accent: #e0892b; --vp: #e4e8ec; --rocker: #b85f12;
   --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
   --body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -15,11 +15,11 @@
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #12161b; --panel: #1a2027; --ink: #e6eaee; --muted: #98a3ae; --line: #2c343d;
   --holder: #6b98dc; --shell: #f0a04b; --pincer: #4dbb7f; --pack: #8a929b; --plug: #e8cc4a;
-  --accent: #f0a04b; --vp: #161b21; color-scheme: dark } }
+  --accent: #f0a04b; --vp: #161b21; --rocker: #c7782a; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #12161b; --panel: #1a2027; --ink: #e6eaee; --muted: #98a3ae; --line: #2c343d;
   --holder: #6b98dc; --shell: #f0a04b; --pincer: #4dbb7f; --pack: #8a929b; --plug: #e8cc4a;
-  --accent: #f0a04b; --vp: #161b21; color-scheme: dark }
+  --accent: #f0a04b; --vp: #161b21; --rocker: #c7782a; color-scheme: dark }
 * { box-sizing: border-box }
 body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
 .wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 48px;
@@ -78,7 +78,7 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
   <header>
     <div class="eyebrow">Zeee 4S 5200 mAh · XT60 · REPO1 branch xswap-v1</div>
     <h1>Flip swap station</h1>
-    <p class="lede">The pincer rides one vertical rail. <b>A single squeeze</b> on the shell's two clip pads unlatches the pack and grips it. The rail pulls the pack out, the pincer flips it 180°, and it drops into a bay that is the same holder print mounted upside down.</p>
+    <p class="lede">The pincer rides one vertical rail. <b>A single squeeze</b> on the shell's two latch pads swings both hooks off their ledges and grips the pack. The rail pulls it out, the pincer flips it 180°, and it drops into a bay that is the same holder print mounted upside down. Guide poles and a funnel take up a misaligned rail, and nothing but the pincer can open the latch.</p>
   </header>
 
   <div class="main">
@@ -87,6 +87,7 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
         <div class="legend" aria-hidden="true">
           <span><i style="background:var(--holder)"></i>holder ×2</span>
           <span><i style="background:var(--shell)"></i>shell</span>
+          <span><i style="background:var(--rocker)"></i>latch rockers</span>
           <span><i style="background:var(--pincer)"></i>pincer</span>
           <span><i style="background:var(--pack)"></i>pack</span>
         </div>
@@ -114,10 +115,10 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
         <ol class="steps" id="steps"></ol>
       </section>
       <section class="card sec">
-        <h3>The clip, in section</h3>
+        <h3>The latch, in section</h3>
         <div class="state" id="secState">State: <b>latched</b></div>
-        <svg id="secSvg" viewBox="18 -14 32 62" role="img" aria-label="Section through one clip beam, nose and tooth"></svg>
-        <p>Cut across the pack at the clip (y 3.9 mm, the pack's balance point). The finger's nose pushes the pad in 3.1 mm. The beam bends, its nose pulls 1.5 mm off the holder tooth (1.0 mm of hook), and the same nose now holds the shell in its pocket.</p>
+        <svg id="secSvg" viewBox="18 -14 42 66" role="img" aria-label="Section through one latch: rocker, hook, holder ledge and finger"></svg>
+        <p>Cut across the pack at the latch (y 3.9 mm, the pack's balance point). The rocker turns on an M4 pin that sits inboard of the hook, so pulling the pack down only turns the hook further over the 2.5 mm ledge. The finger's round nose pushes the pad, turns the rocker 13°, and the hook swings 0.4 mm clear.</p>
       </section>
     </div>
   </div>
@@ -125,18 +126,18 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
   <section class="card">
     <h3>Numbers from the model</h3>
     <dl class="specs">
-      <div><dt>XT60 engaged</dt><dd>6.0 mm<small>female 0.5 proud of the shell</small></dd></div>
-      <div><dt>Latch hook</dt><dd>1.0 mm<small>clears by 0.48 when pinched</small></dd></div>
-      <div><dt>Pinch</dt><dd>3.1 mm · 8.4 N<small>per pad, 1.03 % beam strain</small></dd></div>
-      <div><dt>Rail travel</dt><dd>80 + 85 mm<small>out and clear, then into the bay</small></dd></div>
-      <div><dt>Flip sweep</dt><dd>Ø 183 mm<small>about the pinch line</small></dd></div>
-      <div><dt>Servo torque</dt><dd>0.52 N·m<small>pinch, holding the 60 N push</small></dd></div>
-      <div><dt>Hold in a drop</dt><dd>29 N per nose<small>10 g on the 592 g pack</small></dd></div>
+      <div><dt>Crash design load</dt><dd>150 g · 937 N<small>10 mph with ~7 mm of crush</small></dd></div>
+      <div><dt>Hook over the ledge</dt><dd>2.5 mm<small>pull turns it further in</small></dd></div>
+      <div><dt>Worst stress at 150 g</dt><dd>20 MPa<small>pack floor; latch parts 4 to 10</small></dd></div>
+      <div><dt>Capture</dt><dd>±5 mm · 3°<small>poles touch 18 to 25 mm out</small></dd></div>
+      <div><dt>XT60 engaged</dt><dd>6.0 mm<small>after the poles have centred it</small></dd></div>
+      <div><dt>Rail travel</dt><dd>65 + 65 mm<small>out and clear, then into the bay</small></dd></div>
+      <div><dt>Servo torque</dt><dd>0.49 N·m<small>pinch, holding the 60 N push</small></dd></div>
       <div><dt>Interference</dt><dd>0 mm³<small>every pose in the sequence</small></dd></div>
     </dl>
   </section>
 
-  <p class="foot">Geometry is the real v1 model (<code>nox/box/xswap/xswap.py</code>); pack size from Zeee's listing (138 × 47 × 48 mm ±2), forces are estimates. The bay holder is the drone holder turned 180° about the flip axis, so its XT60 end faces the other way.</p>
+  <p class="foot">Geometry is the real v2 model (<code>nox/box/xswap/xswap.py</code>); pack size from Zeee's listing (138 × 47 × 48 mm ±2), forces are estimates. The bay holder is the drone holder turned 180° about the flip axis, so its XT60 end faces the other way.</p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -147,20 +148,20 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
   const D = window.XSWAP, P = D.p;
   const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const STEPS = [
-    { k: "Seated", d: 1.6, t: "Drone seated, pack in the holder",
-      p: "The pack hangs in the drone holder. Both clip noses rest on the holder's teeth and the XT60 is fully mated." },
+    { k: "Seated", d: 1.6, t: "Drone seated, pack latched",
+      p: "Both rocker hooks sit over the holder's ledges. Two locating keys in the deck windows take side and end hits, and the XT60 is fully mated." },
     { k: "Rise", d: 1.6, t: "Pincer rises on the rail",
-      p: "The open pincer climbs under the pack. Its fingers straddle the two clip pads; the jaw stays 2.5 mm under the shell." },
-    { k: "Pinch", d: 1.0, t: "One squeeze: unlatch and grip",
-      p: "Each finger's nose seats in its pad pocket and pushes the pad 3.1 mm. Both noses leave the teeth and the shell is now held by the fingers." },
-    { k: "Pull", d: 1.9, t: "Rail down 80 mm, XT60 apart",
-      p: "The rail pulls the pack straight down the plug axis (~50 N), then far enough that the flip clears the holder." },
-    { k: "Flip", d: 2.2, t: "Flip 180° about the pinch line",
-      p: "The jaw turns on its two stub shafts. The pack's centre of gravity sits near the axis, so this takes about 0.24 N·m." },
-    { k: "Insert", d: 1.9, t: "Rail down 85 mm into the bay",
-      p: "The bay holder is the same print mounted upside down. Lead-ins centre the shell and the XT60 mates on the last 6 mm (~60 N)." },
-    { k: "Release", d: 1.2, t: "Open: clips snap under the bay teeth",
-      p: "The fingers open, the beams spring out, and the noses hook under the bay holder's teeth. Charging starts through the bay's XT60." }
+      p: "The open pincer climbs under the pack. Its fingers come up beside the two latch pads; the jaw stays 4 mm under the shell." },
+    { k: "Pinch", d: 1.4, t: "One squeeze: unlatch and grip",
+      p: "Each finger's round nose lands in its pad's slot and turns the rocker 13° on its pin. Both hooks swing clear of the ledges, and the noses now hold the shell." },
+    { k: "Pull", d: 1.8, t: "Rail down 65 mm, XT60 apart",
+      p: "The rail pulls the pack straight down the plug axis (~50 N), then far enough that the flip clears the holder and its guide poles." },
+    { k: "Flip", d: 2.2, t: "Flip 180° about the finger line",
+      p: "The jaw turns on its two stub shafts. The pack's centre of gravity sits near the axis, so this takes about 0.25 N·m." },
+    { k: "Insert", d: 1.9, t: "Rail down 65 mm into the bay",
+      p: "The bay's guide poles find the shell's sockets 18 to 25 mm out and centre it, even 5 mm or 3° off. The funnel follows, then the XT60 mates on the last 6 mm." },
+    { k: "Release", d: 1.4, t: "Open: hooks drop over the bay ledges",
+      p: "The fingers open, the springs swing both rockers back, and the hooks drop over the bay holder's ledges. Pulling on the pack now only locks it tighter." }
   ];
   const END_HOLD = 1.2;
   let acc = 0; STEPS.forEach(s => { s.t0 = acc; acc += s.d; });
@@ -201,8 +202,8 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
   ["holder", "cap"].forEach(k => fixedBay.add(mesh(k, "holder")));
   fixedBay.add(mesh("male", "plug"));
   const bplate = new THREE.Mesh(new THREE.BoxGeometry(220, 220, 3), mat("frame")); bplate.position.set(0, 0, 14.5); fixedBay.add(bplate);
-  const bayPivot = new THREE.Group(); bayPivot.position.set(0, P.YC, P.ZP - P.D1 - P.D2); bayPivot.rotation.x = Math.PI;
-  fixedBay.position.set(0, -P.YC, -P.ZP); bayPivot.add(fixedBay);
+  const bayPivot = new THREE.Group(); bayPivot.position.set(0, P.YC, P.ZA - P.D1 - P.D2); bayPivot.rotation.x = Math.PI;
+  fixedBay.position.set(0, -P.YC, -P.ZA); bayPivot.add(fixedBay);
   scene.add(fixedTop, bayPivot);
 
   // rail (stand-in) and carriage fork
@@ -216,22 +217,26 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
 
   // carried: pivot about the flip axis
   const pivot = new THREE.Group(); scene.add(pivot);
-  const carried = new THREE.Group(); carried.position.set(0, -P.YC, -P.ZP); pivot.add(carried);
-  const shellR = mesh("shell_r", "shell"), shellP = mesh("shell_p", "shell");
+  const carried = new THREE.Group(); carried.position.set(0, -P.YC, -P.ZA); pivot.add(carried);
   const packM = mesh("pack", "pack");
-  carried.add(shellR, shellP, mesh("keeper", "shell"), mesh("female", "plug"), packM);
+  carried.add(mesh("shell", "shell"), mesh("keeper", "shell"), mesh("female", "plug"), packM);
+  const rocks = [1, -1].map(sx => {
+    const piv = new THREE.Group(); piv.position.set(sx * P.PX, 0, P.PZ);
+    const m = mesh(sx > 0 ? "rocker_p" : "rocker_m", "rocker"); m.position.set(-sx * P.PX, 0, -P.PZ);
+    piv.add(m); carried.add(piv); return { piv, sx };
+  });
   const pincer = new THREE.Group(); carried.add(pincer);
   ["jaw", "pinion", "servo"].forEach(k => pincer.add(mesh(k, k === "servo" ? "frame" : "pincer")));
   const fP = mesh("finger_p", "pincer"), fM = mesh("finger_m", "pincer"); pincer.add(fP, fM);
   [-1, 1].forEach(s => {
     const sh = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 22, 20), mat("frame"));
-    sh.rotation.z = Math.PI / 2; sh.position.set(s * 87, P.YC, P.ZP); pincer.add(sh);
+    sh.rotation.z = Math.PI / 2; sh.position.set(s * 87, P.YC, P.ZA); pincer.add(sh);
   });
 
   function applyColors() {
     const set = (k, v) => mat(k).color.set(v);
     set("holder", css("--holder")); set("shell", css("--shell")); set("pincer", css("--pincer"));
-    set("pack", css("--pack")); set("plug", css("--plug")); set("frame", css("--muted"));
+    set("pack", css("--pack")); set("rocker", css("--rocker")); set("plug", css("--plug")); set("frame", css("--muted"));
     mat("frame").transparent = true; mat("frame").opacity = 0.45;
     scene.background = new THREE.Color(css("--vp"));
   }
@@ -244,14 +249,23 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
     let i = 0; STEPS.forEach((s, j) => { if (t >= s.t0) i = j; });
     return { rise, pinch, down, ang, i };
   }
+  // finger face (+x) for a pinch amount s: open -> touching the pad (first 40 %), then turning the rocker to TH
+  const FACE_TOUCH = P.PX + P.SLOT_LX + P.NECK;
+  function fingerFace(s, th) {
+    if (s <= 0.4) return P.FACE_OPEN + (FACE_TOUCH - P.FACE_OPEN) * (s / 0.4);
+    const t = th * Math.PI / 180, w = P.ZN - P.PZ;
+    return P.PX + (P.SLOT_LX + w * Math.sin(t)) / Math.cos(t) + P.NECK;
+  }
   function pose(t) {
     const s = stateAt(t);
-    pivot.position.set(0, P.YC, P.ZP - s.down); pivot.rotation.x = s.ang;
-    carriage.position.z = P.ZP - s.down;
+    pivot.position.set(0, P.YC, P.ZA - s.down); pivot.rotation.x = s.ang;
+    carriage.position.z = P.ZA - s.down;
     pincer.position.z = -70 * (1 - s.rise);
-    fP.position.x = -P.STROKE * s.pinch; fM.position.x = P.STROKE * s.pinch;
-    const pinched = s.pinch > 0.5;
-    shellR.visible = !pinched; shellP.visible = pinched;
+    const th = s.pinch <= 0.4 ? 0 : P.TH * (s.pinch - 0.4) / 0.6;
+    const face = fingerFace(s.pinch, th);
+    fP.position.x = face - P.FACE_OPEN; fM.position.x = -(face - P.FACE_OPEN);
+    rocks.forEach(r => { r.piv.rotation.y = r.sx * th * Math.PI / 180; });
+    s.th = th;
     return s;
   }
 
@@ -272,7 +286,7 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
       capN.textContent = `STEP ${s.i + 1} OF ${STEPS.length}`; capT.textContent = st.t; capP.textContent = st.p;
       [...stepsEl.querySelectorAll("button")].forEach((b, j) => b.setAttribute("aria-current", j === s.i ? "true" : "false"));
     }
-    const sec = s.pinch > 0.5 ? "pinched" : "latched";
+    const sec = s.th > 6.5 ? "pinched" : "latched";
     if (sec !== lastSec) { lastSec = sec; drawSec(sec); }
     scrub.value = Math.round(1000 * time / TOTAL);
   }
@@ -286,9 +300,10 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
       `<path d="${path(S.holder)}" fill="var(--holder)" stroke="var(--ink)" stroke-width=".12"/>` +
       `<path d="${path(S.shell)}" fill="var(--shell)" stroke="var(--ink)" stroke-width=".12"/>` +
       `<path d="${path(S.finger)}" fill="var(--pincer)" stroke="var(--ink)" stroke-width=".12"/>` +
-      lab(35.2, 12, "holder") + lab(19.0, 20, "pack") + lab(41.6, 36, "finger") +
-      `<line x1="33.6" y1="${24.4}" x2="39.6" y2="${20.5}" stroke="var(--muted)" stroke-width=".12"/>` + lab(39.8, 20.6, state === "latched" ? "nose on tooth" : "nose clear") +
-      `<line x1="34.2" y1="${34}" x2="39.6" y2="${30}" stroke="var(--muted)" stroke-width=".12"/>` + lab(39.8, 30.1, "pad pocket");
+      lab(42.5, -6, "holder") + lab(19.0, 20, "pack") + lab(52.0, 34.5, "finger") +
+      `<line x1="35" y1="15" x2="45.5" y2="13" stroke="var(--muted)" stroke-width=".12"/>` + lab(45.8, 13.3, state === "latched" ? "hook over ledge" : "hook clear") +
+      `<line x1="31.5" y1="30" x2="22" y2="38" stroke="var(--muted)" stroke-width=".12"/>` + lab(19.0, 40, "M4 pin") +
+      `<line x1="43.5" y1="41" x2="48" y2="47" stroke="var(--muted)" stroke-width=".12"/>` + lab(48.2, 48.5, "pad slot");
     document.getElementById("secState").innerHTML = "State: <b>" + state + "</b>";
   }
   const lab = (x, y, t) => `<text x="${x}" y="${y}" font-family="IBM Plex Mono, monospace" font-size="1.5" fill="var(--ink)">${t}</text>`;

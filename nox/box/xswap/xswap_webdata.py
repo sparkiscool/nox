@@ -1,4 +1,4 @@
-"""Mesh + section data for the xswap explainer page -> runs/xswap/v1/web/data.js"""
+"""Mesh + section data for the xswap explainer page -> runs/xswap/v2/web/data.js"""
 import base64, json, os
 import numpy as np
 import xswap as X
@@ -21,13 +21,14 @@ def sect(m, y):
 pin_o = X.pincer(YC, X.FACE_OPEN)
 meshes = dict(
     holder=X.holder(YC), cap=X.xt60_cap(), male=X.xt60_male(),
-    shell_r=X.shell(YC), shell_p=X.shell(YC, X.PINCH), keeper=X.xt60_keeper(), female=X.xt60_female(), pack=X.pack(),
+    shell=X.shell_body(YC), rocker_p=X.rocker(YC, 0, 1), rocker_m=X.rocker(YC, 0, -1), keeper=X.xt60_keeper(), female=X.xt60_female(), pack=X.pack(),
     jaw=pin_o["jaw"], finger_p=pin_o["finger_p"], finger_m=pin_o["finger_m"], pinion=pin_o["pinion"], servo=pin_o["servo"])
 data = dict(meshes={k: pack_mesh(m) for k, m in meshes.items()},
-            p=dict(YC=YC, ZP=X.Z_P, D1=80.0, D2=85.0, STROKE=X.STROKE, PINCH=X.PINCH),
+            p=dict(YC=YC, ZA=X.Z_AX, D1=65.0, D2=65.0, PX=X.PX, PZ=X.PZ, TH=X.TH_OPEN, SLOT_LX=X.SLOT_LX, ZN=X.Z_N,
+                   NECK=X.NECK, FACE_OPEN=X.FACE_OPEN),
             sec={})
 pin_s = X.pincer(YC, X.FACE_SHUT)
-for st, sh, p in (("latched", meshes["shell_r"], pin_o), ("pinched", meshes["shell_p"], pin_s)):
+for st, sh, p in (("latched", X.shell(YC, 0.0), pin_o), ("pinched", X.shell(YC, X.TH_OPEN), pin_s)):
     data["sec"][st] = dict(shell=sect(sh, YC), holder=sect(meshes["holder"], YC), pack=sect(meshes["pack"], YC),
                            finger=sect(p["finger_p"], YC) + sect(p["finger_m"], YC))
 s = "window.XSWAP=" + json.dumps(data, separators=(",", ":")) + ";"

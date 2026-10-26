@@ -1,0 +1,40 @@
+seat: shell (latched) vs holder + cap (mm3): 0.0
+seat: XT60 female vs male / male vs shell (mm3): [0.0, 0.0]
+XT60 engaged at seat (C): 6.0
+rocker vs shell body, 0..13 deg (mm3, must be 0): [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+rocker vs hard stop at 15.5 deg (mm3, > 0 = the stop): 5.16
+rocker at rest vs holder (mm3): 0.0
+hook: x engagement over the ledge / drop to the catch / opened hook tip clear of the ledge (mm, C): [2.5, 0.3, 0.44]
+self-locking: pivot x / hook contact x range (C; pivot inboard = a pull closes the hook): [31.5, [33.4, 35.9]]
+latched shell pulled down 0.3 / 0.6 / 1 / 3 (mm3, must collide): [0.0, 42.0, 98.0, 378.0]
+insert / pull sweep, pinched, 0..55 every 0.5: worst overlap (mm3): 0.0
+insert / pull stuck steps: []
+capture (offset mm -> first touch below seat: post / a non-guide part (lug, key, XT60); guides must lead): [([3, 0], 20.5, 7.25, 'post first'), ([-3, 0], 20.5, 7.25, 'post first'), ([0, 3], 20.5, 5.75, 'post first'), ([0, -3], 18.75, 5.75, 'post first'), ([5, 0], 24.0, 7.0, 'post first'), ([-5, 0], 24.0, 7.0, 'post first'), ([0, 5], 24.0, 5.75, 'post first'), ([0, -5], 23.0, 5.75, 'post first'), ([4, 4], 24.75, 7.25, 'post first'), ([-4, -4], 24.75, 7.25, 'post first'), ([4, -4], 24.75, 7.25, 'post first'), ([-4, 4], 24.75, 7.25, 'post first')]
+capture range (C): post tip r / socket entry r / funnel per side, sides / ends: [1.5, 7.2, 6.0, 3.5]
+pincer open approach 0..90 below grip (mm3): 0.0
+finger nose tracking the rocker 0..13 deg (mm3, ~0): [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+finger shut vs pinched shell / jaw+servo+pinion vs shell (mm3): [0.0, 0.0]
+pincer shut vs holder (mm3): 0.0
+pinion vs racks + fingers vs jaw over the stroke (mm3): [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+rail travel before the flip (min, step 5, C): 65
+rail travel after the flip into the bay (min, step 5, C): 65
+bay insert sweep, pinched (mm3): 0.0
+bay seat latched (mm3): 0.0
+flip sweep radius about the axis (C): 95.2
+swap mass g (pack 470 + shell + rockers + keeper + XT60 + bolts, E): 637.0
+swap CG (C/E): [-0.0, 3.69, -27.58]
+mass {'shell': 129.4, 'rocker': 9.0, 'xt60_keeper': 1.7, 'holder': 162.7, 'xt60_cap': 4.2, 'jaw': 330.7, 'finger': 10.9, 'pinion': 7.6}
+crash: design case 150 g on the swap mass, pull-out direction, total / per rocker N (E): [937, 469]
+crash: hook root bending MPa (rocker printed on its side: in-layer, PETG ~45): 10.4
+crash: hook bearing on the lug MPa: 6.7
+crash: rocker boss on the M4 pin MPa: 4.2
+crash: M4 pin double shear MPa (steel 8.8 ~ 400): 18.6
+crash: ear bearing / ear root bending MPa (in-layer): [np.float64(9.8), np.float64(5.8)]
+crash: lug spine tension across layers MPa (PETG across layers ~15-20): 4.6
+crash: ledge bending MPa (in-layer): 8.8
+crash: per M3 insert over the lugs N (2 per lug; M3 heat-set pull-out in PETG ~500+ N, E): 234
+crash: floor bending under the pack MPa (in-layer, 3.0 solid): 20.0
+crash: closing torque from the hook load / opening torque from the rocker's own inertia N mm (E): [1476, 86]
+crash: side / end hit, deck window bearing on the keys MPa (2 keys, 2.4 deep): 12.5
+pinch servo torque to hold the 60 N push N m (E): 0.49
+tilt capture (run before the post-root change; tips unchanged) (tilt x deg, tilt y deg, x offset mm) -> post / flat-face touch below seat: [((2, 0, 0), 16.75, 1.25), ((-2, 0, 0), 16.0, None), ((0, 2, 0), 16.25, 2.75), ((0, -2, 0), 16.25, 2.75), ((2, 2, 3), 19.25, 9.0), ((-2, -2, -3), 19.25, 9.0), ((3, 0, 0), 18.5, 3.25), ((0, 3, 0), 18.0, 3.25)] all post first
