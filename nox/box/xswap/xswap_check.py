@@ -79,7 +79,7 @@ trk = []
 for th in np.arange(0.0, X.TH_OPEN + 0.01, 1.0):
     t = math.radians(th); u = (X.SLOT_LX + w * math.sin(t)) / math.cos(t)
     face = X.PX + u + X.NECK
-    f = X.finger(YC, face)
+    f = X.finger_full(YC, face, 1)
     trk.append(round(ov(f, X.rocker(YC, th, 1)) + ov(f, body), 2))
 say("finger nose tracking the rocker 0..13 deg (mm3, ~0)", trk)
 say("finger shut vs pinched shell / jaw+servo+pinion vs shell (mm3)",
@@ -119,7 +119,7 @@ say("flip sweep radius about the axis (C)", round(float(np.max(np.hypot(pts[:, 1
 
 # ---- mass / CG
 m, cg, ms, mk = X.swap_cg(YC)
-say("swap mass g (pack 470 + shell + rockers + keeper + XT60 + bolts, E)", round(m, 1))
+say("swap mass g (pack 480 + shell + rockers + keeper + XT60 + bolts, E)", round(m, 1))
 say("swap CG (C/E)", [round(float(v), 2) for v in cg])
 R["mass_g_solid_petg"] = {k: round(v.volume() * X.PETG, 1) for k, v in dict(
     shell=body, rocker=X.rocker_local(YC), xt60_keeper=keeper, holder=holder, xt60_cap=cap,
@@ -157,6 +157,22 @@ say("crash: side / end hit, deck window bearing on the keys MPa (2 keys, 2.4 dee
 Fz = 60.0 / 2
 T = 2 * (6.0 + Fz * math.tan(math.radians(22))) * X.R_P / 1000
 say("pinch servo torque to hold the 60 N push N m (E)", round(T, 2))
+# ---- cradle support (E, PETG E 2000 MPa): the lips under the floor
+fa, fb = X.finger_pair(YC, X.FACE_SHUT)
+say("cradle: lip under the floor / end tabs to the shell ends, gaps (mm, C)",
+    [round(X.SZ0 - X.LIP_Z1, 2), round(X.TAIL_Y - (X.TAIL_Y - 0.4), 2), round((X.SY1 + 0.4) - X.SY1, 2)])
+say("cradle: lip overlap under the floor each side, shut / open (mm, C)",
+    [round(X.SX - (X.FACE_SHUT - X.LIP_IN), 1), round(X.SX - (X.FACE_OPEN - X.LIP_IN), 1)])
+Ld = 3.0 * m / 1000 * 9.81 + 60.0                     # 3 g handling + the 60 N insert push on the lips, both fingers
+w_ = 2 * X.LIP_T                                       # spine depth etc.
+H_ = X.LIP_Z1 - X.SPINE_Z0; B_ = X.SPINE_IN + X.F_T
+I_ = (B_ * H_ ** 3 - (B_ - 2 * X.SPINE_W) * (H_ - X.LIP_T - 2.5) ** 3) / 12
+L_ = (X.SY1 + 4.0) - (YC + 23.0)                       # spine cantilever from the blade to the head tab
+d_ = (Ld / 2) * L_ ** 3 / (3 * 2000.0 * I_) / 4      # load spread along the spine (~1/4 of a tip load, E)
+say("cradle: load on the lips N (3 g + 60 N push) / spine I mm4 / tip sag at the head end mm (E)", [round(Ld, 1), round(I_), round(d_, 3)])
+sig_l = 6 * (Ld / 2 / ((X.SY1 - X.TAIL_Y))) * (X.SX - (X.FACE_SHUT - X.LIP_IN)) / X.LIP_T ** 2
+say("cradle: lip root bending MPa (lip as a cantilever from the spine, load per mm along y)", round(sig_l, 2))
+say("finger A / B mass g solid", [round(fa.volume() * X.PETG, 1), round(fb.volume() * X.PETG, 1)])
 os.makedirs(X.OUT, exist_ok=True)
 R["capture"] = cap_rows
 json.dump(R, open(os.path.join(X.OUT, "result.json"), "w"), indent=1)

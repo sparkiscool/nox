@@ -1,4 +1,4 @@
-"""Mesh + section data for the xswap explainer page -> runs/xswap/v2/web/data.js"""
+"""Mesh + section data for the xswap explainer page -> runs/xswap/v3/web/data.js"""
 import base64, json, os
 import numpy as np
 import xswap as X
@@ -24,7 +24,7 @@ meshes = dict(
     shell=X.shell_body(YC), rocker_p=X.rocker(YC, 0, 1), rocker_m=X.rocker(YC, 0, -1), keeper=X.xt60_keeper(), female=X.xt60_female(), pack=X.pack(),
     jaw=pin_o["jaw"], finger_p=pin_o["finger_p"], finger_m=pin_o["finger_m"], pinion=pin_o["pinion"], servo=pin_o["servo"])
 data = dict(meshes={k: pack_mesh(m) for k, m in meshes.items()},
-            p=dict(YC=YC, ZA=X.Z_AX, D1=65.0, D2=65.0, PX=X.PX, PZ=X.PZ, TH=X.TH_OPEN, SLOT_LX=X.SLOT_LX, ZN=X.Z_N,
+            p=dict(YC=YC, ZA=X.Z_AX, D1=85.0, D2=75.0, PX=X.PX, PZ=X.PZ, TH=X.TH_OPEN, SLOT_LX=X.SLOT_LX, ZN=X.Z_N,
                    NECK=X.NECK, FACE_OPEN=X.FACE_OPEN),
             sec={})
 pin_s = X.pincer(YC, X.FACE_SHUT)

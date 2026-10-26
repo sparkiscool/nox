@@ -86,7 +86,7 @@ if __name__ == "__main__":
     fig.tight_layout(); fig.savefig(os.path.join(FIG, "clip_section.png"), dpi=110); plt.close(fig)
 
     # 3 swap sequence (side view along x)
-    D1, D2 = 65.0, 65.0
+    D1, D2 = 85.0, 75.0
     bay = lambda m: m.translate([0, -YC, -ZP]).rotate([180, 0, 0]).translate([0, YC, ZP - D1 - D2])
     bayH = [(bay(H), COL["holder"], 1), (bay(cap), COL["cap"], 1)]
     def carry(t, ang, p, sh):
@@ -100,11 +100,11 @@ if __name__ == "__main__":
     steps = [("1 rise open under the pack", carry(60, 0, pin_o, shell_r) if False else
               [(shell_r, COL["shell"], 1), (X.pack(), COL["pack"], 1)] + [(m.translate([0, 0, -40]), c, a) for m, c, a in pincer_items(pin_o)]),
              ("2 pinch: unlatch + grip", carry(0, 0, pin_s, shell_p)),
-             ("3 down 65: XT60 out, clear", carry(D1, 0, pin_s, shell_p)),
+             ("3 down 85: XT60 out, clear", carry(D1, 0, pin_s, shell_p)),
              ("4 flip 90", carry(D1, 90, pin_s, shell_p)),
              ("5 flip 180", carry(D1, 180, pin_s, shell_p)),
-             ("6 down 65 into the bay, open", carry(D1 + D2, 180, pin_o, shell_r))]
-    B = [[-90, -100, -230], [90, 100, 22]]
+             ("6 down 75 into the bay, open", carry(D1 + D2, 180, pin_o, shell_r))]
+    B = [[-95, -100, -255], [95, 100, 22]]
     B = [[x, y, z] for x in (B[0][0], B[1][0]) for y in (B[0][1], B[1][1]) for z in (B[0][2], B[1][2])]
     fig = plt.figure(figsize=(13, 15))
     for i, (ttl, items) in enumerate(steps):
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     # 4 print previews (print orientation; red = overhang > 45 deg, needs support)
     import glob, trimesh
     files = sorted(glob.glob(os.path.join(X.OUT, "stl", "*.stl")))
-    fig = plt.figure(figsize=(18, 10))
+    fig = plt.figure(figsize=(15, 14))
     for i, f in enumerate(files):
         t = trimesh.load(f)
         n = t.face_normals
@@ -126,9 +126,9 @@ if __name__ == "__main__":
         for mask, c in ((~down, (0.80, 0.80, 0.77)), (down & ~bed, (0.92, 0.32, 0.26)), (bed, (0.30, 0.45, 0.92))):
             if mask.any(): parts.append((t.submesh([np.where(mask)[0]], append=True), c))
         img = ZR.render(parts, elev=24, azim=-55, size=520, bounds=t.vertices)
-        ax = fig.add_subplot(2, 4, i + 1); ax.imshow(img); ax.set_axis_off()
+        ax = fig.add_subplot(3, 3, i + 1); ax.imshow(img); ax.set_axis_off()
         nm = os.path.basename(f)[:-4]
-        cnt = {"xswap_finger_v1": " (print 2)"}.get(nm, "")
+        cnt = {"xswap_rocker_v3": " (print 2)"}.get(nm, "")
         ax.set_title("%s%s\n%.0f x %.0f x %.0f mm, %.0f g solid" % (nm, cnt, *t.extents, t.volume * X.PETG), fontsize=9)
     fig.suptitle("Print files in print orientation, bed at the bottom (blue = on the bed, red = overhang: tree supports)")
     fig.tight_layout(); fig.savefig(os.path.join(FIG, "prints.png"), dpi=95); plt.close(fig)

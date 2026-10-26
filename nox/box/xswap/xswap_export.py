@@ -1,4 +1,4 @@
-"""Export xswap v2 print files (print orientation, z min = bed) and the assembled-pose meshes. python3 xswap_export.py"""
+"""Export xswap v3 print files (print orientation, z min = bed) and the assembled-pose meshes. python3 xswap_export.py"""
 import os
 import numpy as np
 import xswap as X
@@ -13,14 +13,15 @@ def to_bed(m, rot):
     return m.translate([-(b[0] + b[3]) / 2, -(b[1] + b[4]) / 2, -b[2]])
 
 PRINTS = {   # name: (part, rotation to print pose, count, note)
-    "xswap_shell_v2": (X.shell_body(YC), [90, 0, 0], 1, "tail end down, tree supports (ears, sockets, head roof)"),
-    "xswap_rocker_v2": (X.rocker_local(YC), [90, 0, 0], 2, "on its side (y face down); print 2, same part both sides"),
-    "xswap_xt60_keeper_v2": (X.xt60_keeper(), None, 1, "flat"),
-    "xswap_holder_v2": (X.holder(YC), [180, 0, 0], 1, "mount face down (rib tops), skirt up; print 1 per drone + 1 per bay"),
-    "xswap_xt60_cap_v2": (X.xt60_cap(), [180, 0, 0], 1, "plate down; 1 per holder"),
-    "xswap_finger_v2": (X.pincer(YC, X.FACE_OPEN)["finger_p"], None, 2, "rack bottom down; print 2 (same part both sides)"),
-    "xswap_pinion_v2": (X.pinion(YC), [180, 0, 0], 1, "tooth face down, horn recess up"),
-    "xswap_jaw_v2": (X.jaw_body(YC), None, 1, "bottom down, tree supports (hubs, tunnels)"),
+    "xswap_shell_v3": (X.shell_body(YC), [90, 0, 0], 1, "tail end down, tree supports (ears, sockets, head roof)"),
+    "xswap_rocker_v3": (X.rocker_local(YC), [90, 0, 0], 2, "on its side (y face down); print 2, same part both sides"),
+    "xswap_xt60_keeper_v3": (X.xt60_keeper(), None, 1, "flat"),
+    "xswap_holder_v3": (X.holder(YC), [180, 0, 0], 1, "mount face down (rib tops), skirt up; print 1 per drone + 1 per bay"),
+    "xswap_xt60_cap_v3": (X.xt60_cap(), [180, 0, 0], 1, "plate down; 1 per holder"),
+    "xswap_finger_a_v3": (X.finger_full(YC, X.FACE_OPEN, 1), [0, 90, 0], 1, "outer face down (+x finger)"),
+    "xswap_finger_b_v3": (X.finger_full(YC, X.FACE_OPEN, -1), [0, -90, 0], 1, "outer face down (-x finger)"),
+    "xswap_pinion_v3": (X.pinion(YC), [180, 0, 0], 1, "tooth face down, horn recess up"),
+    "xswap_jaw_v3": (X.jaw_body(YC), None, 1, "bottom down, tree supports (hubs, tunnels)"),
 }
 
 if __name__ == "__main__":

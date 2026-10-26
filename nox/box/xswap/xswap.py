@@ -1,4 +1,4 @@
-"""X-axis flip swap v2 (Alex, 25 Oct 2026; v2 = guided capture + crash latch): battery shell, battery holder (drone and charging bay, one part), pincer.
+"""X-axis flip swap v3 (Alex, 26 Oct 2026; v2 = guided capture + crash latch, v3 = cradle pincer): battery shell, battery holder (drone and charging bay, one part), pincer.
 
 Concept (Alex): the drone sits on top with its pack hanging below it in the holder. A pincer rides a vertical rail (the X
 axis of the swap). It rises under the pack, pinches the shell's two clip pads (that one squeeze unlatches the shell AND
@@ -20,7 +20,7 @@ import numpy as np, trimesh, manifold3d as mf
 M = mf.Manifold
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-OUT = os.path.join(ROOT, "runs", "xswap", "v2")
+OUT = os.path.join(ROOT, "runs", "xswap", "v3")
 SEG = 48
 
 # ============================================================================== helpers
@@ -54,7 +54,7 @@ def overlap(a, b):
 
 # ============================================================================== numbers
 # pack (E: listing 138 x 47 x 48 +-2)
-PACK_L, PACK_W, PACK_H, PACK_G = 138.0, 47.0, 48.0, 470.0
+PACK_L, PACK_W, PACK_H, PACK_G = 138.0, 47.0, 48.0, 480.0     # Alex 26 Oct: 470-480 g, design at 480
 CLR = 0.75                      # per side around the pack (C); foam tape takes the listing's +-2
 WALL, DECK, FLOOR = 2.4, 3.0, 3.0                # floor solid 3.0: it carries the pack into the latch in a crash
 CAV_X = PACK_W / 2 + CLR                         # 24.25
@@ -435,10 +435,39 @@ def finger(yc, face):
     rack = rack.translate([face + F_T - RK_L, yc + R_P, RK_Z0])
     return blade + nose + rack
 
+# cradle (v3 pincer): a lip under the shell floor along its whole length, a box spine under the lip, and end tabs
+# past both shell ends. The lips carry the pack's weight and the insert push; the tabs hold it end to end in the flip.
+LIP_Z1 = SZ0 - 0.3                               # lip top, 0.3 under the shell floor
+LIP_T = 2.5
+LIP_Z0 = LIP_Z1 - LIP_T
+LIP_IN = 34.0                                    # lip inner edge at face - 34 (x 12.0 shut)
+SPINE_IN, SPINE_Z0, SPINE_W = 13.0, -74.0, 3.0   # box spine: inner web at face - 13, bottom at -74 (2 over the jaw base)
+TAB_T, TAB_Z1, TAB_X1 = 3.5, -35.0, 19.6         # end tabs: thickness, top, outer edge at face - 19.6 (x 26.4 shut)
+TAIL_Y = SY0 - 0.5                               # shell's tail end incl. the cross-bolt bosses (-76.5)
+def cradle(yc, face):
+    """+x cradle in absolute y (the -x one is its mirror in x)."""
+    y0, y1 = TAIL_Y - 0.4 - TAB_T, SY1 + 0.4 + TAB_T
+    x_in, x_out = face - LIP_IN, face + F_T
+    lip = box(x_in, x_out, y0, y1, LIP_Z0, LIP_Z1)
+    spine = U(box(face - SPINE_IN, face - SPINE_IN + SPINE_W, y0, y1, SPINE_Z0, LIP_Z0 + 0.01),
+              box(x_out - SPINE_W, x_out, y0, y1, SPINE_Z0, LIP_Z0 + 0.01),
+              box(face - SPINE_IN, x_out, y0, y1, SPINE_Z0, SPINE_Z0 + 2.5))
+    tabs = U(box(x_in, face - TAB_X1, y0, TAIL_Y - 0.4, LIP_Z0, TAB_Z1),
+             box(x_in, face - TAB_X1, SY1 + 0.4, y1, LIP_Z0, TAB_Z1))
+    gus = U(*[hull([[x_in, y, LIP_Z1] for y in (ya, yb)] + [[x_in + 10.0, y, LIP_Z1] for y in (ya, yb)] +
+                   [[x_in, y, LIP_Z1 + 8.0] for y in (ya, yb)]) for ya, yb in ((y0, TAIL_Y - 0.4), (SY1 + 0.4, y1))])
+    # the tab gussets run 10 in along the lip below the shell's end faces only (they sit beyond the shell in y)
+    return U(lip, spine, tabs, gus)
+
+def finger_full(yc, face, side=1):
+    """finger A (+x) / B (-x): the v2 nose, blade and rack (turned 180 deg about z for -x) + the cradle (mirrored)."""
+    core = finger(yc, face)
+    if side > 0:
+        return core + cradle(yc, face)
+    return core.translate([0, -yc, 0]).rotate([0, 0, 180]).translate([0, yc, 0]) + cradle(yc, face).mirror([1, 0, 0])
+
 def finger_pair(yc, face):
-    f = finger(yc, face)
-    g = f.translate([0, -yc, 0]).rotate([0, 0, 180]).translate([0, yc, 0])
-    return f, g
+    return finger_full(yc, face, 1), finger_full(yc, face, -1)
 
 # servo (MG996R / DS3218 class, E: CHECK yours): case 40.7 (y) x 19.7 (x) x 37 (z), ears 54.6 x 2.5 at 9.5 below the case
 SV_L, SV_W, SV_H = 40.7, 19.7, 37.0

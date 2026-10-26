@@ -78,7 +78,7 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
   <header>
     <div class="eyebrow">Zeee 4S 5200 mAh · XT60 · REPO1 branch xswap-v1</div>
     <h1>Flip swap station</h1>
-    <p class="lede">The pincer rides one vertical rail. <b>A single squeeze</b> on the shell's two latch pads swings both hooks off their ledges and grips the pack. The rail pulls it out, the pincer flips it 180°, and it drops into a bay that is the same holder print mounted upside down. Guide poles and a funnel take up a misaligned rail, and nothing but the pincer can open the latch.</p>
+    <p class="lede">The pincer rides one vertical rail. <b>A single squeeze</b> on the shell's two latch pads swings both hooks off their ledges, and two full-length lips slide under the shell to carry it. The rail pulls it out, the pincer flips it 180°, and it drops into a bay that is the same holder print mounted upside down. Guide poles and a funnel take up a misaligned rail, and nothing but the pincer can open the latch.</p>
   </header>
 
   <div class="main">
@@ -131,13 +131,13 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
       <div><dt>Worst stress at 150 g</dt><dd>20 MPa<small>pack floor; latch parts 4 to 10</small></dd></div>
       <div><dt>Capture</dt><dd>±5 mm · 3°<small>poles touch 18 to 25 mm out</small></dd></div>
       <div><dt>XT60 engaged</dt><dd>6.0 mm<small>after the poles have centred it</small></dd></div>
-      <div><dt>Rail travel</dt><dd>65 + 65 mm<small>out and clear, then into the bay</small></dd></div>
-      <div><dt>Servo torque</dt><dd>0.49 N·m<small>pinch, holding the 60 N push</small></dd></div>
+      <div><dt>Rail travel</dt><dd>85 + 75 mm<small>out and clear, then into the bay</small></dd></div>
+      <div><dt>Cradle</dt><dd>2 lips · 173 mm<small>14 mm under the floor, 0.07 mm sag</small></dd></div>
       <div><dt>Interference</dt><dd>0 mm³<small>every pose in the sequence</small></dd></div>
     </dl>
   </section>
 
-  <p class="foot">Geometry is the real v2 model (<code>nox/box/xswap/xswap.py</code>); pack size from Zeee's listing (138 × 47 × 48 mm ±2), forces are estimates. The bay holder is the drone holder turned 180° about the flip axis, so its XT60 end faces the other way.</p>
+  <p class="foot">Geometry is the real v3 model (<code>nox/box/xswap/xswap.py</code>); pack size from Zeee's listing (138 × 47 × 48 mm ±2), forces are estimates. The bay holder is the drone holder turned 180° about the flip axis, so its XT60 end faces the other way.</p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -151,15 +151,15 @@ ol.steps button[aria-current="true"] .k { color: var(--accent); }
     { k: "Seated", d: 1.6, t: "Drone seated, pack latched",
       p: "Both rocker hooks sit over the holder's ledges. Two locating keys in the deck windows take side and end hits, and the XT60 is fully mated." },
     { k: "Rise", d: 1.6, t: "Pincer rises on the rail",
-      p: "The open pincer climbs under the pack. Its fingers come up beside the two latch pads; the jaw stays 4 mm under the shell." },
+      p: "The open pincer climbs under the pack. The cradle's two lips rise just under the shell floor, end tabs past both ends, and the fingers come up beside the latch pads." },
     { k: "Pinch", d: 1.4, t: "One squeeze: unlatch and grip",
-      p: "Each finger's round nose lands in its pad's slot and turns the rocker 13° on its pin. Both hooks swing clear of the ledges, and the noses now hold the shell." },
-    { k: "Pull", d: 1.8, t: "Rail down 65 mm, XT60 apart",
+      p: "The lips slide 14 mm under the floor on each side while each finger's round nose turns its rocker 13°. The hooks swing clear; the lips carry the weight and the tabs stop it sliding end to end." },
+    { k: "Pull", d: 1.8, t: "Rail down 85 mm, XT60 apart",
       p: "The rail pulls the pack straight down the plug axis (~50 N), then far enough that the flip clears the holder and its guide poles." },
     { k: "Flip", d: 2.2, t: "Flip 180° about the finger line",
       p: "The jaw turns on its two stub shafts. The pack's centre of gravity sits near the axis, so this takes about 0.25 N·m." },
-    { k: "Insert", d: 1.9, t: "Rail down 65 mm into the bay",
-      p: "The bay's guide poles find the shell's sockets 18 to 25 mm out and centre it, even 5 mm or 3° off. The funnel follows, then the XT60 mates on the last 6 mm." },
+    { k: "Insert", d: 1.9, t: "Rail down 75 mm into the bay",
+      p: "The bay's guide poles find the shell's sockets 18 to 25 mm out and centre it, even 5 mm or 3° off. The funnel follows, the lips push the shell home, and the XT60 mates on the last 6 mm." },
     { k: "Release", d: 1.4, t: "Open: hooks drop over the bay ledges",
       p: "The fingers open, the springs swing both rockers back, and the hooks drop over the bay holder's ledges. Pulling on the pack now only locks it tighter." }
   ];
