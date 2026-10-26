@@ -42,7 +42,14 @@ every part in its assembled pose; the tool reports:
   budget      mass_budget_g (whole system) and per-part budget_g (dimensions.md L "Mass budget"). A SOFT limit (Spark
               24 Oct: as low as we can, never sacrifice design for weight): never FAILs, never changes the exit code;
               the System line reads "mass <g> of <budget> g (<pct> %)", plus "over budget (...)" and a WARN line.
-Cage first, probes, access, fit and balance gate (exit 1); everything else is reported. Tags: C manifest
+  shell       geodesic cage (CLAUDE.md "Cages are geodesic", Spark 26 Oct): a drone manifest ("machine" scout / overseer)
+              with any role "cage" part must carry "cage_shell": {"nodes": [[x,y,z]], "rods": [[i,j]], "open": [{"axis",
+              "half_angle_deg"}], "ratio_min": 0.85, "rod_r_mm", "node_r_mm"}. PASS if the rod triangles close every
+              direction from the node centroid except the declared open cones (the bottom opening for the pack and the
+              swap), and the node set's height / width >= ratio_min (ball-shaped, not a lens or a ring). Reports nodes,
+              rods, triangles, longest rod, largest cell (inscribed circle between rod surfaces). No cage_shell on a
+              non-drone manifest: n/a.
+Cage first, shell, probes, access, fit and balance gate (exit 1); everything else is reported. Tags: C manifest
 geometry / mass, M mesh-derived, E when any input part is tagged E, P measured.
 Limits: flat walls see each role's convex hull (a protected part in a concave pocket of the cage is seen only by the
 probes). Probes are infinite lines and cylinders: a short stub or a corner poking through a cage window is not modelled,
@@ -62,7 +69,7 @@ Manifest: {"name", "parts": [{"name", "mesh": path (STL/OBJ/PLY, relative to the
   "contact_pairs": [[a, b, allowed_mm3]], "clearance_pairs": [[a, b, min_mm]], "guard_offsets": {name: mm},
   "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
   "probes": true | false | {"edge": true, "post": true, "post_r_mm": 10 or [radii], "n_dirs": 500, "n_roll": 24, "res_mm": 1.0},
-  "probe_margin_mm": 0.0, "access": [paths as above], "access_tol_mm3": 0.5, "mass_budget_g": g}.
+  "probe_margin_mm": 0.0, "access": [paths as above], "access_tol_mm3": 0.5, "mass_budget_g": g, "machine", "cage_shell": {...}}.
 From Python a part may carry "trimesh": <Trimesh>."""
 import sys, os, json, argparse, numpy as np, trimesh
 
@@ -489,6 +496,44 @@ def mass_budget(parts, rows, total_budget):
     return out
 
 
+# ---------- geodesic shell
+def cage_shell(manifest, parts, n=2000):
+    spec = manifest.get("cage_shell")
+    drone = manifest.get("machine") in ("scout", "overseer") and any(p.get("role") == "cage" for p in parts)
+    if spec is None:
+        if drone:
+            return dict(applies=True, pass_=False, error="no cage_shell: a drone cage is a geodesic shell (CLAUDE.md, Spark 26 Oct)")
+        return dict(applies=False, pass_=True)
+    N = np.asarray(spec["nodes"], float); E = [tuple(sorted(map(int, r))) for r in spec["rods"]]
+    adj = {i: set() for i in range(len(N))}
+    for a, b in E:
+        adj[a].add(b); adj[b].add(a)
+    tris = sorted({tuple(sorted((a, b, c))) for a, b in E for c in adj[a] & adj[b]})
+    c0 = N.mean(0); D = fib_dirs(n)
+    skip = np.zeros(n, bool)
+    for o in spec.get("open", []):
+        ax = np.asarray(o["axis"], float); ax /= np.linalg.norm(ax)
+        skip |= D @ ax >= np.cos(np.radians(o["half_angle_deg"]))
+    hit = np.zeros(n, bool)
+    for a, b, c in tris:                                            # Moller-Trumbore, rays from the centroid
+        e1, e2 = N[b] - N[a], N[c] - N[a]; pv = np.cross(D, e2); det = pv @ e1
+        ok = np.abs(det) > 1e-12; inv = np.where(ok, 1 / np.where(ok, det, 1), 0)
+        tv = c0 - N[a]; u = (pv @ tv) * inv; qv = np.cross(tv, e1); v = (D @ qv) * inv; t = (qv @ e2) * inv
+        hit |= ok & (u >= -1e-9) & (v >= -1e-9) & (u + v <= 1 + 1e-9) & (t > 0)
+    gaps = ~hit & ~skip
+    ex = N.max(0) - N.min(0); ratio = float(ex[2] / max(ex[0], ex[1]))
+    rmin = float(spec.get("ratio_min", 0.85)); rr = float(spec.get("rod_r_mm", 1.5))
+    L = [float(np.linalg.norm(N[a] - N[b])) for a, b in E]
+    cells = []
+    for a, b, c in tris:
+        la, lb, lc = np.linalg.norm(N[b] - N[c]), np.linalg.norm(N[a] - N[c]), np.linalg.norm(N[a] - N[b]); sp = (la + lb + lc) / 2
+        cells.append(2 * np.sqrt(max(sp * (sp - la) * (sp - lb) * (sp - lc), 0)) / sp - 2 * rr)
+    closed = not gaps.any()
+    return dict(applies=True, pass_=bool(closed and ratio >= rmin), closed=bool(closed), gap_share=round(float(gaps.mean()), 4),
+                open_share=round(float(skip.mean()), 4), ratio=round(ratio, 3), ratio_min=rmin, nodes=len(N), rods=len(E), triangles=len(tris),
+                longest_rod_mm=round(max(L), 1), largest_cell_mm=round(max(cells), 1) if cells else None)
+
+
 # ---------- run
 def run(manifest, n_dirs=None, probes=None):
     """probes: None = the manifest's `probes` (default on with a cage), False = skip, dict = override settings."""
@@ -508,6 +553,7 @@ def run(manifest, n_dirs=None, probes=None):
     pr = (crash_probes(parts, meshes, pc, float(manifest.get("probe_margin_mm", 0.0)), manifest.get("openings", []))
           if pc else dict(applies=False, pass_=True, skipped=True))
     ac = access(parts, meshes, manifest.get("access", []), float(manifest.get("access_tol_mm3", 0.5)))
+    sh = cage_shell(manifest, parts)
     mc = mass_cg(parts, meshes)
     if anyE: mc["tag"] = "E"
     mb = mass_budget(parts, mc["parts"], manifest.get("mass_budget_g"))
@@ -551,10 +597,15 @@ def run(manifest, n_dirs=None, probes=None):
         bad = [p for p in ac["paths"] if not p["pass_"]]
         acs = f", access {ac['n_clear']}/{len(ac['paths'])} clear" + (
             " (" + "; ".join(f"{p['name']} blocked by {', '.join(b['part'] for b in p['blocked_by'])} {p['overlap_mm3']:.0f} mm³" for p in bad) + ") FAIL" if bad else "")
-    summary = (f"System: {name}, {cfs}, {fts}, bbox {cp['bbox_L']:.3g} L ({gtag}), extents {ex[0]:.0f} x {ex[1]:.0f} x {ex[2]:.0f} mm ({gtag}), "
+    if not sh["applies"]: shs = ""
+    elif "error" in sh: shs = f", shell FAIL ({sh['error']})"
+    else:
+        shs = (f", shell {sh['rods']} rods {'closed' if sh['closed'] else 'OPEN ' + format(100 * sh['gap_share'], '.1f') + ' %'}, h/w {sh['ratio']:.2f}"
+               + ("" if sh["pass_"] else " FAIL"))
+    summary = (f"System: {name}, {cfs}{shs}, {fts}, bbox {cp['bbox_L']:.3g} L ({gtag}), extents {ex[0]:.0f} x {ex[1]:.0f} x {ex[2]:.0f} mm ({gtag}), "
                f"{ms}, {cgs}{prs}{acs}")
-    ok = bool(cf["pass_"] and ft["pass_"] and bal["pass_"] and pr["pass_"] and ac["pass_"])      # mass budget is soft
-    return dict(name=name, pass_=ok, cage_first=cf, compact=cp, fit=ft, mass_cg=mc, balance=bal, probes=pr, access=ac,
+    ok = bool(cf["pass_"] and ft["pass_"] and bal["pass_"] and pr["pass_"] and ac["pass_"] and sh["pass_"])      # mass budget is soft
+    return dict(name=name, pass_=ok, cage_first=cf, shell=sh, compact=cp, fit=ft, mass_cg=mc, balance=bal, probes=pr, access=ac,
                 mass_budget=mb, geometry_tag=gtag, summary=summary, **{"pass": ok})
 
 
@@ -569,6 +620,12 @@ def report(res):
                      f"at {dir_label(np.array(r['worst_dir']))}{'' if r['pass_'] else ' FAIL'}")
     else:
         L.append("  cage first: " + cf.get("error", "n/a (no protected part)"))
+    sh = res.get("shell", {"applies": False})
+    if sh["applies"]:
+        L.append(f"  shell {'PASS' if sh['pass_'] else 'FAIL'}: " + (sh["error"] if "error" in sh else
+                 f"{sh['nodes']} nodes, {sh['rods']} rods, {sh['triangles']} triangles, {'closed' if sh['closed'] else 'open in ' + str(100 * sh['gap_share']) + ' % of directions'}"
+                 f" outside the declared openings ({100 * sh['open_share']:.1f} %), h/w {sh['ratio']} (min {sh['ratio_min']}), longest rod {sh['longest_rod_mm']} mm, "
+                 f"largest cell Ø{sh['largest_cell_mm']} mm"))
     L.append(f"  compact: bbox {cp['bbox_L']} L ({t}), hull {cp['hull_L']} L ({t}), extents {cp['extents_mm']} mm ({t}), largest {cp['largest_extent_mm']} mm"
              + (f", guards {cp['guard_offsets_mm']}" if cp["guard_offsets_mm"] else ""))
     L.append(f"  fit {'PASS' if ft['pass_'] else 'FAIL'} (tol {ft['tol_mm3']} mm³):")

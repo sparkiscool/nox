@@ -20,7 +20,7 @@ CLI (JSON spec, poses as [x, y, z, rx, ry, rz] mm / deg or a flat 4x4 row-major)
      "frames": [{"hub": [0, 0, 0, 0, 0, 30]}, ...]}
 
 Masses on the page: mesh volume (M) x 1.27 g/cm3 PETG (E, solid) for printed parts. Meshes are decimated (fast_simplification, default
-30k faces) and quantised to 0.02 mm int16, normals int8, so a 10 MB STL costs ~0.5 MB in the page; keep the page under 15 MB.
+30k faces) and quantised to 0.02 mm int16 (coarser, extent / 32000, on a part over 640 mm), normals int8, so a 10 MB STL costs ~0.5 MB in the page; keep the page under 15 MB.
 Needs: trimesh, numpy; fast_simplification (decimation); video only: playwright, the box's Chromium (/opt/pw-browsers/chromium or
 CHROMIUM_PATH), ffmpeg on PATH, three.js from npm (fetched once into ~/.cache/nox-motion).
 """
@@ -50,12 +50,13 @@ def pack(m, crease_deg=35.0):
     """crease-split smooth normals; positions int16 at 0.02 mm + offset, normals int8, indices uint16 / uint32; base64."""
     s = trimesh.graph.smooth_shade(m, angle=math.radians(crease_deg))
     v = np.asarray(s.vertices, np.float64); off = v.min(0)
-    q = np.round((v - off) / 0.02).astype(np.int16)
+    st = max(0.02, float((v - off).max()) / 32000)              # 0.02 mm up to 640 mm of extent, coarser beyond (int16)
+    q = np.round((v - off) / st).astype(np.int16)
     n = np.round(np.asarray(s.vertex_normals) * 127).astype(np.int8)
     big = len(v) > 65000
     idx = np.asarray(s.faces).astype(np.uint32 if big else np.uint16).ravel()
     b = lambda a: base64.b64encode(a.tobytes()).decode()
-    return dict(off=[round(float(x), 3) for x in off], n=len(v), big=big, nf=int(len(s.faces)), p=b(q), nrm=b(n), i=b(idx))
+    return dict(off=[round(float(x), 3) for x in off], st=st, n=len(v), big=big, nf=int(len(s.faces)), p=b(q), nrm=b(n), i=b(idx))
 
 
 # ------------------------------------------------------------------ poses

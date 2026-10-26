@@ -234,6 +234,39 @@ def test_mass_budget():
     assert run(dict(name="mb", parts=[dict(a, budget_g=None)]))["mass_budget"]["applies"] is False
 
 
+
+
+def _geo():
+    m = trimesh.creation.icosphere(1, 100.0)
+    rods = sorted({tuple(sorted(e)) for e in m.edges.tolist()})
+    return m.vertices.tolist(), [list(r) for r in rods]
+
+
+def test_shell_closed_and_open():
+    N, R = _geo()
+    base = dict(name="d", machine="overseer", parts=[{"name": "c", "sphere": {"r": 100, "center": [0, 0, 0]}, "role": "cage", "mass_g": 1}], n_dirs=200,
+                probes=False)
+    r = run(dict(base, cage_shell=dict(nodes=N, rods=R)))
+    assert r["shell"]["pass_"] and r["shell"]["closed"], r["shell"]
+    # drop the rods round the bottom vertex: open there, a FAIL unless the opening is declared
+    low = int(np.argmin(np.asarray(N)[:, 2])); R2 = [e for e in R if low not in e]
+    r2 = run(dict(base, cage_shell=dict(nodes=N, rods=R2)))
+    assert not r2["shell"]["pass_"] and not r2["pass"]
+    r3 = run(dict(base, cage_shell=dict(nodes=N, rods=R2, open=[dict(axis=[0, 0, -1], half_angle_deg=45)])))
+    assert r3["shell"]["pass_"], r3["shell"]
+    # a flat lens fails the ball ratio
+    Nf = (np.asarray(N) * [1, 1, 0.4]).tolist()
+    assert not run(dict(base, cage_shell=dict(nodes=Nf, rods=R)))["shell"]["pass_"]
+
+
+def test_shell_missing_on_drone():
+    r = run(dict(name="d", machine="scout", parts=[{"name": "c", "sphere": {"r": 100, "center": [0, 0, 0]}, "role": "cage", "mass_g": 1}],
+                 n_dirs=200, probes=False))
+    assert not r["shell"]["pass_"] and "no cage_shell" in r["summary"]
+    r2 = run(dict(name="d", parts=[{"name": "c", "sphere": {"r": 100, "center": [0, 0, 0]}, "role": "cage", "mass_g": 1}], n_dirs=200, probes=False))
+    assert not r2["shell"]["applies"]
+
+
 if __name__ == "__main__":
     for k, f in list(globals().items()):
         if k.startswith("test_"):

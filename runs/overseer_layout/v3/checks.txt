@@ -1,0 +1,22 @@
+motors  12.6 ahead: front arms r  206, rear r  189; bay   +0.0 off the sphere axis, opening clear Ø 276 at z -242.8; sphere R 363.2;  3360 g, CG ( 13.1,  0.3, -21.2)
+
+chosen: motor square 14.9 ahead of the plate centre (lightest of 1 with front arms ≤ r 237), bay +0.0 off the sphere axis (x 14.9); geodesic NU 2, turned 0 deg about z
+sphere: R 363.2 (C), centre (14.9, 0, 82.0); inner face planes at 0.9342 R (C)
+motors at (154.4, ±139.5) and (-124.6, ±139.5); front arms r 208, rear r 187
+L2: axis up, base centre (14.9, 0, 162.1): every non-cage point 1.0 under its -6 deg cone (96 deg mode); 40 over the lowest base so the props leave the front camera view; seat on an 8-rod mast from 4 top plate pads between the arms; front camera 30 deg up, portrait, 82 ahead of the L2 axis, lens (105, 0, 137)
+shell: 42 nodes (6 on the opening ring), 117 rods, 76 triangles; rods 163 .. 270 (mean 212), 24.81 m (C)
+largest cell: inscribed circle Ø124 between tube surfaces (C); smallest Ø98
+load paths: 12 spokes (3 per arm tip), 8 mast rods (L2 on the core, not on the cage), 8 hanger rods (arm roots to the receiver corners), 8 bay ties up into the shell, 8 core ties (bottom plate to the shell)
+carbon: shell 117 tubes 6/4 (Spark 26 Oct), 24.81 m, shortest 163, longest 270; links 44 rods of 3.0 solid, 8.89 m, shortest 111 (mast leg +1+1), longest 281 (core tie right.2); printed struts (< 33): none; links stay 3.0 until the frame model sizes them
+props: shell rods 20.6 off the swept disks (≥ 12, 3D), spokes / ties / hanger / keels 13.6 (spoke 3.3), nodes 34.0 (C)
+opening: ring of 6 nodes at z -242.8, clear circle Ø305 (node surfaces, C), Ø305 round the bay axis, for the swap zone 240 x 136 (receiver 179.6 x 76.2 M + 30 a side, diagonal Ø276); cartridge bottom 3 above the ring plane, TPU feet 12 below it (lowest point z -254.8)
+swap zone (receiver + spare, from the receiver down through the opening): clear (0 mm³, M)
+inside the shell (closest point to a face plane, > 0 inside, C): L2 200.2, front camera 235.1, cam bracket 226.4, pack bay 34.7, arms 117.1, motors 124.4, plates + hub 194.5
+L2 field: 10.4 % of its upper hemisphere blocked by rods and nodes (E, sampled; thin rods allowed, CLAUDE.md 8); every non-cage point 1.0 behind the base plane by construction
+down camera and flow: views checked (lines above list anything in view)
+size: 726 across (sphere), 710 tall (feet to the top node), sphere top z 445; v2 was 615 x 533 x 237
+cage: shell 802 g (6/4 tubes 604 E + nodes E), spokes / ties / hanger / keels 98 g (C); v0 cage ~96 g without the apex (E)
+mass ~3361 g (E; latch set 338.5 M now counted, v2 had the cartridge at 4 % fill), CG (15.1, 0.3, -21.1) vs thrust centre (14.9, 0): 0.4 off; pack + cartridge out: 0.5 off (2559 g)
+T/W 1.96 (C on E mass, 1650 gf per motor); CG 103 under the prop plane; pitch inertia 141.0 g m² (E, point masses); swap reach: cartridge bottom 3 above the opening plane; h/w 0.95
+assembly mass 3361 g (E) vs the layout model 3361 g
+wrote nox/overseer/overseer.assembly.json

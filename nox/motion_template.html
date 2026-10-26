@@ -101,7 +101,7 @@ $('note').textContent = 'Masses: mesh volume (M) x ' + (D.material === 'TPU' ? '
 function b64(s) { const b = atob(s); const u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
 function geom(m) {
   const q = new Int16Array(b64(m.p).buffer); const pos = new Float32Array(q.length);
-  for (let k = 0; k < q.length; k++) pos[k] = q[k] * 0.02 + m.off[k % 3];
+  for (let k = 0; k < q.length; k++) pos[k] = q[k] * (m.st || 0.02) + m.off[k % 3];
   const n8 = new Int8Array(b64(m.nrm).buffer); const nrm = new Float32Array(n8.length);
   for (let k = 0; k < n8.length; k++) nrm[k] = n8[k] / 127;
   const ib = b64(m.i).buffer; const idx = m.big ? new Uint32Array(ib) : new Uint16Array(ib);
