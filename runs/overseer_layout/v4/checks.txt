@@ -64,7 +64,7 @@ prop blockage (Spark 26 Oct, secondary to structure): 7.4 % of the disks' thrust
 L2 field: 20.3 % of its hemisphere crossed by tubes and nodes (E; thin members allowed, CLAUDE.md 8)
 down camera and flow: views checked (lines above list anything in view)
 cage: shell 744 g (tubes 532 E + nodes 212 E), links 48 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
-mass ~3288 g (E; latch set 338.5 M), CG (42.0, 0.4, 18.3) vs thrust centre (42.2, 0): 0.5 off; pack + cartridge out: 23.0 off (2485 g)
+mass ~3288 g (E; latch set 338.5 M), CG (42.0, 0.4, 18.3) vs thrust centre (42.2, 0): 0.5 off; pack + cartridge out: 23.0 off (2485 g; layout mass model, the gated number is system_check's)
 T/W 2.01 (C on E mass, 1650 gf a motor); CG 64 under the prop plane; pitch inertia 79.8 g m² (E, point masses)
 compact: shell hull 64.7 L vs the parts-with-margins hull 35.4 L (C)
 assembly mass 3288 g (E) vs the layout model 3288 g
