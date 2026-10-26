@@ -254,9 +254,13 @@ def test_shell_closed_and_open():
     assert not r2["shell"]["pass_"] and not r2["pass"]
     r3 = run(dict(base, cage_shell=dict(nodes=N, rods=R2, open=[dict(axis=[0, 0, -1], half_angle_deg=45)])))
     assert r3["shell"]["pass_"], r3["shell"]
-    # a flat lens fails the ball ratio
+    ring = sorted({i for e in R if low in e for i in e} - {low})       # the same hole declared as its ring of nodes
+    r4 = run(dict(base, cage_shell=dict(nodes=N, rods=R2, open=[dict(ring=ring)])))
+    assert r4["shell"]["pass_"], r4["shell"]
+    # a flat lens is fine (Spark 26 Oct: formed to the drone, often a disk) unless a manifest asks for a ratio
     Nf = (np.asarray(N) * [1, 1, 0.4]).tolist()
-    assert not run(dict(base, cage_shell=dict(nodes=Nf, rods=R)))["shell"]["pass_"]
+    assert run(dict(base, cage_shell=dict(nodes=Nf, rods=R)))["shell"]["pass_"]
+    assert not run(dict(base, cage_shell=dict(nodes=Nf, rods=R, ratio_min=0.85)))["shell"]["pass_"]
 
 
 def test_shell_missing_on_drone():
@@ -265,6 +269,18 @@ def test_shell_missing_on_drone():
     assert not r["shell"]["pass_"] and "no cage_shell" in r["summary"]
     r2 = run(dict(name="d", parts=[{"name": "c", "sphere": {"r": 100, "center": [0, 0, 0]}, "role": "cage", "mass_g": 1}], n_dirs=200, probes=False))
     assert not r2["shell"]["applies"]
+
+
+
+
+def test_balance_no_swap_reported():
+    parts = [{"name": "body", "box": [-10, 10, -10, 10, -10, 10], "role": "structure", "mass_g": 100},
+             {"name": "pack", "box": [-40, -20, -5, 5, -30, -20], "role": "bought", "mass_g": 100, "swap": True},
+             {"name": "nose", "box": [25, 35, -5, 5, -5, 5], "role": "bought", "mass_g": 100}]
+    m = dict(name="b", parts=parts, cg_ref=[0, 0, 0], n_dirs=200, probes=False)
+    assert not run(m)["balance"]["pass_"]                                # all 0 off, no_swap 15 off: gated by default
+    r = run(dict(m, balance_no_swap_gate=False))
+    assert r["balance"]["pass_"] and "reported" in r["summary"], r["summary"]
 
 
 if __name__ == "__main__":

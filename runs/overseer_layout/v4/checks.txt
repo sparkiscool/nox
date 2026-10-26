@@ -1,0 +1,50 @@
+balance (v2: motor square onto the CG; catch 30 aft, L2 base z 51; geodesic frequency 2); start scan [0.7, 0.85, 1.0, 0.0] (0 = cast onto the hull), smallest shell volume among valid shells:
+   motors  52.1 ahead: CG x  47.1,  3152 g, 111 tubes
+   motors  47.1 ahead: CG x  44.4,  3242 g, 112 tubes
+   motors  44.4 ahead: CG x  43.1,  3239 g, 112 tubes
+   motors  43.1 ahead: CG x  42.5,  3238 g, 112 tubes
+   motors  42.5 ahead: CG x  42.1,  3237 g, 112 tubes
+   motors  42.1 ahead: CG x  41.9,  3237 g, 112 tubes
+start 0.7: valid: shell 69.3 L, longest tube 314, props 17.6, residual 0.04, 3237 g
+   motors  52.1 ahead: CG x  48.1,  3255 g, 118 tubes
+   motors  48.1 ahead: CG x  46.1,  3251 g, 118 tubes
+   motors  46.1 ahead: CG x  45.1,  3249 g, 118 tubes
+   motors  45.1 ahead: CG x  44.6,  3248 g, 118 tubes
+   motors  44.6 ahead: CG x  44.3,  3248 g, 118 tubes
+start 0.85: valid: shell 66.8 L, longest tube 305, props 18.4, residual 0.03, 3248 g
+   motors  52.1 ahead: CG x  46.8,  3291 g, 130 tubes
+   motors  46.8 ahead: CG x  44.1,  3285 g, 130 tubes
+   motors  44.1 ahead: CG x  42.8,  3283 g, 130 tubes
+   motors  42.8 ahead: CG x  42.1,  3281 g, 130 tubes
+   motors  42.1 ahead: CG x  41.7,  3280 g, 130 tubes
+   motors  41.7 ahead: CG x  41.5,  3280 g, 130 tubes
+start 1.0: valid: shell 64.2 L, longest tube 253, props 19.2, residual 0.05, 3280 g
+   motors  52.1 ahead: CG x  47.2,  3326 g, 124 tubes
+   motors  47.2 ahead: CG x  44.7,  3321 g, 124 tubes
+   motors  44.7 ahead: CG x  43.4,  3319 g, 124 tubes
+   motors  43.4 ahead: CG x  42.7,  3318 g, 124 tubes
+   motors  42.7 ahead: CG x  42.4,  3317 g, 124 tubes
+   motors  42.4 ahead: CG x  42.2,  3317 g, 124 tubes
+start 0.0: invalid: shell 49.4 L, longest tube 564, props 22.3, residual 0.03, 3317 g
+
+chosen: start 1.0 (smallest valid shell); motor square 41.7 ahead of the plate centre; motors (181.2, ±139.5) and (-97.8, ±139.5); front arms r 229, rear r 170
+L2: base (302.4, 0, 51), axis 15 deg below +x (Spark 24 Oct); front camera horizon, portrait, 74 up its back plane, lens (302, 0, 130); L2 and props out of its view + 2 deg
+shell: 47 nodes (8 on the opening ring), 130 tubes, 84 triangles; tubes 54 .. 253 (mean 167), 21.74 m; node extents 715 x 703 x 253 (h/w 0.35); hull residual 0.05 (C)
+largest cell: inscribed circle Ø125 between tube surfaces (C)
+carbon: shell 130 tubes 6/4 (Spark 26 Oct), shortest 54; links 32 rods 3.0 solid, 3.94 m, shortest 63 (bay tie -1+1.1); printed struts (< 33): none
+props: shell tubes 19.2 off the swept disks (≥ 12, 3D), nodes 24.1, links 23.2 (L2 tie +1.2) (C)
+   inside: props (disks) 18.5 from the nearest face plane (C)
+   inside: L2 + camera + apex 7.0 from the nearest face plane (C)
+   inside: arms + motors 34.7 from the nearest face plane (C)
+   inside: hub + plates 54.9 from the nearest face plane (C)
+   inside: belly 3.0 from the nearest face plane (C)
+opening: 8 nodes on an ellipse 352 x 209 round the swap zone 240 x 136 (receiver 179.6 x 76.2 M + 30 a side), plane z -57.0 = cartridge bottom - 3; v2 TPU feet the floor contact (z -61.0)
+swap zone (receiver + spare, from the cartridge bottom down): clear (0 mm³, M)
+L2 field: 20.3 % of its hemisphere crossed by tubes and nodes (E; thin members allowed, CLAUDE.md 8)
+down camera and flow: views checked (lines above list anything in view)
+cage: shell 741 g (tubes 529 E + nodes 212 E), links 43 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
+mass ~3280 g (E; latch set 338.5 M), CG (41.5, 0.6, 18.3) vs thrust centre (41.7, 0): 0.6 off; pack + cartridge out: 23.0 off (2478 g)
+T/W 2.01 (C on E mass, 1650 gf a motor); CG 64 under the prop plane; pitch inertia 79.3 g m² (E, point masses)
+compact: shell hull 64.2 L vs the parts-with-margins hull 35.4 L (C)
+assembly mass 3280 g (E) vs the layout model 3280 g
+wrote nox/overseer/overseer.assembly.json
