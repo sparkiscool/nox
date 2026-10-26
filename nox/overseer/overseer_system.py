@@ -37,7 +37,7 @@ if os.environ.get("SYS_TOPO"):                                      # start from
 SWAP_BACK = float(os.environ.get("SYS_SWAP_BACK", "30"))   # layout B (Spark 24 Oct): the swap set's CG 30 behind the thrust axis
 SKID_Y = 66.0                                                  # skid sides (legs, rails, X braces, basket rail): the widest the funnel opening takes at ±5 deg yaw
                                                                # with their socket bosses; the X braces and basket rail cross in the camera / flow pods (DEFAULT)
-CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush cap: 15 thick (10 stroke + 5 crushed), Ø24; the feet pads give 6 (DEFAULT)
+CAP_T, CAP_R, CAP_STROKE, FOOT_STROKE = 15.0, 12.0, 10.0, 6.0   # TPU crush dome: 15 thick over the node core (10 stroke + 5 crushed), 45 deg half cone; the feet pads give 6 (DEFAULT)
 SWAP_OPEN_DEG = float(os.environ.get("SYS_SWAP_OPEN", "90"))   # the swap path under the set: open within this of straight down; flatter side hits meet the
                                                                # (edge probes: an edge slides under the open bottom; flat walls from the sides meet the skid X braces and basket rails, margin ≥ 0 in the opening)
 MAST_X_MIN = 105.0 + 13.0 + 1.0                                # the mast node block (26 for a 20 tube) clears the front hub block (x 105) and the plate stack:
@@ -76,7 +76,8 @@ A = np.array([math.sin(math.radians(L2_TILT)), 0.0, math.cos(math.radians(L2_TIL
 CAM_HFOV, CAM_VFOV = 73.0, 89.0          # front camera portrait, 4:3 from 102 diag (E)
 DOWN_HFOV, DOWN_VFOV = 89.0, 73.0
 FLOW_HALF = 23.0
-PACK = (148.0, 48.0, 45.0)               # 4S 6000 (P)
+PACK = (148.0, 48.0, 45.0)               # the latch v1 set's pack envelope (P, 4S 6000); the Overseer flies the Zeee 4S 5200 (Spark 26 Oct):
+PACK_ZEEE, PACK_G, PACK_G_LATCH = (138.0, 47.0, 48.0), 470.0, 650.0   # 138 x 47 x 48, ~470 g (E, listings); 3 taller than the cartridge (latch session)
 CART = (157.0, 54.0)                     # cartridge envelope (E, G)
 WHEEL_R, WHEEL_W = 5.0, 3.0               # R 5 (v4 set): the hook latch is laid out on it (G Hook latch v1)
 OPEN_HALF, FACE_TOP = 84.0, 75.1         # funnel (G): y opening half 84
@@ -91,7 +92,7 @@ LATCH_DIR = os.path.join(ROOT, "runs", "box_system", "v2", "latch_ctx")
 LATCH_META = json.load(open(os.path.join(LATCH_DIR, "meta.json")))["overseer"]
 LATCH_MESH = {k: trimesh.load(os.path.join(LATCH_DIR, f"overseer_{k}_c.stl")) for k in ("cartridge", "pack", "receiver", "receiver_lid", "xt60e1m")}
 LATCH_SEAT_Z0 = 113.0 - 155.3
-SWAP_G, RECEIVER_G = LATCH_META["SWAP_M"], 190.0                    # cartridge + pack 748 g (M), receiver set 190.0 g (latch PR 69, E)
+SWAP_G, RECEIVER_G = LATCH_META["SWAP_M"] - PACK_G_LATCH + PACK_G, 190.0   # cartridge 105 (M) + Zeee pack 470 (E), receiver set 190.0 g (latch PR 69, E)
 SWAP_FWD = LATCH_META["Z_T"] - LATCH_META["SWAP_CG"][2]              # swap CG 5.18 behind the set centre (the catch centre)
 TIP_OFF = SWAP_BACK - SWAP_FWD                                      # catch centre (the set centre) 24.8 behind the thrust axis (B)
 
@@ -354,11 +355,13 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                              half=hf_) for cm_ in g["cams"] for xc_, hf_ in ((-1.75, [2.75, 20.0, 20.0]), (5.0, [4.0, 6.0, 6.0]))]
                        + [dict(c=[2.5, 0.0, 22.25], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[98.0, 60.2, 24.4], skip_fixed=True, skip_nodes=["arm"]),   # cameras (plate + board, lens) and the plate sandwich (C)
                           dict(c=[float(v) for v in B + A * 19.5], fwd=[float(v) for v in A], left=[0.0, 1.0, 0.0], half=[19.5, 37.5, 37.5], skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # the L2 body (75 x 75 x 39, M)
+                          *[dict(c=[float(v) for v in bb_.mean(0)], fwd=[1.0, 0.0, 0.0], left=[0.0, 1.0, 0.0], half=[float(v) for v in (bb_[1] - bb_[0]) / 2 + 1.0])
+                            for bb_ in (g["cart"].bounds, g["flow"].bounds, g["down_cam"].bounds)],   # the swap set, flow sensor and down camera (1 off): the battery cradle rails stand beside them
                           dict(pts=np.round(g["l2"].vertices[(g["l2"].vertices - B) @ A > 39.1], 2).tolist(), skip_nodes=["Slo", "Shi", "SP", "apexM"]),   # and its dome (vertices)
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=max(dm, MAST_X_MIN), x_mast=max(dm, MAST_X_MIN), z_mast=float(WHEEL_Z),
              feet=(77.0, SKID_Y, float(g["PB"]) - 3.5), belly=(77.0, SKID_Y), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-1.0, z_skirt=2.0, z_fhub=12.0, x_rhub=-100.0)   # skirt level with the rear hub, high enough that full crush caps clear the box deck   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
+             z_rhub=-1.0, z_skirt=2.0, rail_y=36.5, rail_dz=0.0, z_fhub=12.0, x_rhub=-100.0)   # skirt level with the rear hub, high enough that full crush caps clear the box deck   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
                                                                     # stay above the funnel top and out of the plate (DEFAULT 25 Oct; under the plate they reached the funnel lip)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
@@ -440,9 +443,16 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
     # 45 deg of a cap's axis is stopped over its stroke (cage_opt2 hit_force) instead of rigid 35 g; none on the nose collar (in the scan) or in the funnel
     caps, cap_m = {}, []
     O_ = B + A * L2_BASE_H
-    def _in_scan(tip_):
-        d_ = tip_ - O_; ax_ = float(d_ @ A); rho_ = float(np.linalg.norm(d_ - ax_ * A))
-        return -ax_ * math.cos(math.radians(L2_NEG)) - rho_ * math.sin(math.radians(L2_NEG)) - CAP_R < 2.0
+    def _dome(q_, u_, r0_, r1_):                                    # rounded TPU dome round the node (Spark 26 Oct: no stub standing off the cage):
+        a_ = math.acos(co.CAP_COS); t_ = np.linspace(0.0, a_, 10)   # a spherical shell r0..r1 from the node centre over the 45 deg cone the frame model credits
+        pr_ = [(r0_ * math.sin(v_), r0_ * math.cos(v_)) for v_ in t_] + [(r1_ * math.sin(v_), r1_ * math.cos(v_)) for v_ in t_[::-1]]
+        m_ = trimesh.creation.revolve(np.array(pr_), sections=32)
+        if m_.volume < 0: m_.invert()
+        z_ = np.array([0.0, 0.0, 1.0]); R_ = trimesh.geometry.align_vectors(z_, u_)
+        m_.apply_transform(R_); m_.apply_translation(q_); return m_
+    def _in_scan(pts_):                                             # any point within 2 of the scan cone
+        d_ = np.atleast_2d(pts_) - O_; ax_ = d_ @ A; rho_ = np.linalg.norm(d_ - ax_[:, None] * A, axis=1)
+        return bool((-ax_ * math.cos(math.radians(L2_NEG)) - rho_ * math.sin(math.radians(L2_NEG)) < 2.0).any())
     _cand = [n_ for n_ in Ng if n_ in rods_at and (n_.endswith(("lo", "hi")) and not n_.startswith(("S", "Vmid")) or n_.startswith(("NT", "NB", "NR", "TN", "TR", "KV", "KP", "XJ")))]
     _Pc = np.array([Ng[n_] for n_ in _cand]); _lead = {}
     for d_ in co.crash_dirs():                                     # which node leads in which crash direction (as the frame model)
@@ -457,16 +467,14 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
         tries_ += [np.array([float(t_[0]), float(t_[1]), 0.0]) for t_ in list(tries_) if abs(t_[2]) < 0.99]   # and each one levelled (clear of the deck)
         for u_ in tries_:
             u_ = np.asarray(u_, float) / np.linalg.norm(u_)
-            if _in_scan(q_ + u_ * (rc_ + CAP_T)): continue
-            zlo_ = min((q_ + u_ * (rc_ - 2.0))[2], (q_ + u_ * (rc_ + CAP_T))[2]); sp_ = math.sqrt(max(0.0, 1 - u_[2] ** 2))
-            cr_ = min(CAP_R, (zlo_ - (FUNNEL_TOP_D + 1.0)) / sp_) if sp_ > 1e-6 else CAP_R   # narrower where it would reach under the box deck round the funnel
-            if cr_ < 6.0: continue                                      # (under Ø12 it does not count)
+            dm_ = _dome(q_, u_, rc_ - 2.0, rc_ + CAP_T)
+            if _in_scan(dm_.vertices) or dm_.bounds[0][2] < FUNNEL_TOP_D + 1.0: continue   # out of the scan, over the box deck
             cov_ = sum(float(np.dot(d__, u_)) >= co.CAP_COS for d__ in ds_)
-            if best_ is None or cov_ > best_[0]: best_ = (cov_, u_, cr_)
+            if best_ is None or cov_ > best_[0]: best_ = (cov_, u_, dm_)
         if best_ is None or best_[0] == 0: continue
-        u_, cr_ = best_[1], best_[2]
+        u_ = best_[1]
         caps[n_] = [float(u_[0]), float(u_[1]), float(u_[2]), CAP_STROKE]
-        cap_m.append(trimesh.creation.cylinder(cr_, segment=[q_ + u_ * (rc_ - 2.0), q_ + u_ * (rc_ + CAP_T)], sections=20))
+        cap_m.append(best_[2])
     for sx_, sy_ in [(a__, b__) for a__ in (1, -1) for b__ in (1, -1)]:
         if f"FT{sx_:+d}{sy_:+d}" in Ng: caps[f"FT{sx_:+d}{sy_:+d}"] = [0.0, 0.0, -1.0, FOOT_STROKE]   # the TPU feet: their pads
     P["caps"] = caps; g["caps"] = cap_m
@@ -1074,8 +1082,8 @@ man = dict(name="overseer_system_v3", cg_ref=[dm, 0.0, 0.0], thrust_axis=[0, 0, 
          role="protected", mass_g=30, tag="E"),                                                                                                  # 8 under the head: a guard there would sit in the scan (exposed with the head)
     dict(name="L2 head", trimesh=g["l2"].slice_plane(g["B"] + A * L2_BASE_H, A, cap=True), role="protected", mass_g=130, tag="E"),        # exposed (Spark 24 Oct: nothing in the scan)
     dict(name="front cameras", trimesh=g["cam"], role="protected", mass_g=34, tag="E"),
-    dict(name="pack", trimesh=g["pack"], role="protected", mass_g=650, tag="P", swap=True),
-    dict(name="cartridge", trimesh=g["cart"], role="protected", mass_g=round(SWAP_G - 650, 1), tag="M", swap=True),
+    dict(name="pack", trimesh=g["pack"], role="protected", mass_g=PACK_G, tag="E", swap=True),
+    dict(name="cartridge", trimesh=g["cart"], role="protected", mass_g=round(SWAP_G - PACK_G, 1), tag="M", swap=True),
     dict(name="receiver", trimesh=g["receiver"], role="structure", mass_g=RECEIVER_G - 10, tag="E"),   # printed latch frame: its ends sit at the pit walls (0.7 to the opening), no cage member fits past them (DEFAULT, alt protected: needs a shorter receiver, latch session)
     dict(name="receiver XT60", trimesh=g["xt60"], role="protected", mass_g=10, tag="E"),
     dict(name="electronics", trimesh=trimesh.util.concatenate([FC, PI, PDB, UBEC, BUCK, RX]), role="protected", mass_g=110 + 80, tag="E"),
