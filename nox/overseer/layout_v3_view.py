@@ -1,7 +1,7 @@
 """Motion artifact for Overseer layout v3 (26 Oct): the chosen layout (L2 on top, runs/overseer_layout/v3) with the
 alternative beside it (L2 at the nose, runs/overseer_layout/v3/alt_nose, 900 to the left by its pose), both from their exported parts.
 
-python3 nox/overseer/layout_v3_view.py      (after layout_v3.py for both; writes runs/overseer_layout/v3/motion.html + .png)
+python3 nox/overseer/layout_v3_view.py      (V3_VIDEO=1 for the mp4 / gif, not committed; after layout_v3.py for both; writes runs/overseer_layout/v3/motion.html + .png)
 """
 import json, math, os, sys
 import numpy as np, trimesh
@@ -22,8 +22,10 @@ for folder, dy, tag in ((RUN, 0.0, ""), (os.path.join(RUN, "alt_nose"), 900.0, "
             continue
         m = trimesh.load(os.path.join(folder, "parts", p["file"]))   # at its own origin: the page stores int16 at 0.02 mm (±655)
         nm = tag + p["name"]; names.append(nm)
-        s.part(nm, m, group=("alt (L2 nose)" if tag else p["group"]), color=p["color"], printed=p["printed"] and not tag,
-               note=f"{p['mass_g']:.0f} g ({p['tag']})")
+        # printed=False everywhere: these are layout envelopes, the page would weigh them as solid PETG; the layout's own
+        # masses (summary.md) are in each part's note
+        s.part(nm, m, group=("alt (L2 nose)" if tag else p["group"]), color=p["color"], printed=False,
+               note=f"{p['mass_g']:.0f} g ({p['tag']}, layout model)")
     r = res if not tag else alt
     rings = []
     for i, (mx, my) in enumerate(r["motors_xy"]):
@@ -38,8 +40,9 @@ s.view("iso", (1100, -1300, 900), (0, 300, 0)); s.view("chosen iso", (800, -800,
 s.view("side", (0, -1800, 80), (0, 450, 80)); s.view("front", (1600, 0, 80), (0, 0, 80)); s.view("under", (300, -300, -1000), (0, 0, -200))
 s.view("top", (0, 450, 2000), (0, 450, 0))
 s.write(os.path.join(RUN, "motion.html"))
-try:
+if os.environ.get("V3_VIDEO"):
+  try:
     s.video(os.path.join(RUN, "motion.mp4"))
-except Exception as e:
+  except Exception as e:
     print("video skipped:", str(e)[:200])
 print("wrote", os.path.join(RUN, "motion.html"))
