@@ -11,11 +11,13 @@ funnel is redesigned round the shell later (Spark 26 Oct), so the wheels go with
 the CG again (v2's balance) because the shell's mass sits differently.
 
 Shell: the convex hull of every part with its margin (prop disks 12 off, the rest 3 off the tube surface, the belly
-clipped at the opening plane) is covered with ~(240.0 / FREQ) nodes by farthest-point sampling, relaxed to even cells, then pushed
-out node by node until every face plane holds the hull: a triangulated convex shell as tight as its cells allow. One
+clipped at the opening plane) is the target; a class-I icosahedral geodesic (FREQ, symmetric about xz) laid on an ellipsoid of
+the hull's half extents is pushed out node by node until its convex hull holds the target. Scanned: the start scale, a prop
+snap (nodes off the disk columns) and local peak nodes at the nose camera; structure and compactness first, then the least
+prop blockage (Spark 26 Oct: "less structures over and under [the props] ... only secondary to structure"). One
 bottom opening: a ring of nodes on an ellipse round the swap zone (receiver + SPARE a side), 3 under the cartridge.
 
-python3 nox/overseer/layout_v4.py [out_dir]      (~2 min; V4_FREQ=3 for the smaller-cell alternative)
+python3 nox/overseer/layout_v4.py [out_dir]      (~10 min: balance x start / turn / prop-snap scan; V4_FREQ=3 for the smaller-cell alternative)
 Drone frame: x forward, y left, z up; z 0 = bottom plate top; plate centre x 0. Numbers: `nox/dimensions.md` O / L / G.
 """
 import math, os, sys, io, json
@@ -47,6 +49,7 @@ WZ = -12.0                               # belly as close to the body as it goes
                                          # latch block, E); v2 hung it at -33 only for the funnel's wheel height
 L["set_wheel"](WZ)
 FREQ = int(os.environ.get("V4_FREQ", 2))  # geodesic frequency (Spark 26 Oct: the larger cells; 3 the alternative)
+ROT, SNAP, PEAK = 0.0, False, False                   # geodesic turn about z (0 / 36 keep the xz mirror) and the prop snap, both scanned
 START = float(os.environ.get("V4_START", 0.85))  # start: the geodesic on an ellipsoid of the hull's half extents x START (0 = cast
                                                   # onto the hull itself: tighter, but the nose camera peak tents the top)
 SHELL_R = 3.0                            # 6 mm carbon tube (Spark 26 Oct), 6/4 DEFAULT
@@ -58,6 +61,7 @@ M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0   # hull mar
 SPARE = 30.0                             # room a side round the receiver at the opening (DEFAULT, Spark 26 Oct)
 REC = (179.6, 76.2)                      # Overseer receiver v2 footprint (M)
 ZONE = (REC[0] / 2 + SPARE, REC[1] / 2 + SPARE)
+POD_DX = 35.0                            # down camera + flow pods 35 ahead of v2's (access 26 Oct: the rear arms' bottom M3 key lines)
 LATCH_G = 338.5                          # Overseer latch set (M, battery latch v4); v2 counted the cartridge at 4 % fill
 BREAK_EVEN = 33.0
 
@@ -122,6 +126,10 @@ def drone(dm, xB=None, cam_h=None):
                 if ((zz > 0) & (np.abs(el) < L["CAM_VFOV"] / 2 + 2.0) & (np.abs(az) < L["CAM_HFOV"] / 2 + 2.0)).any(): clear = False; break
             if clear: cam_h = h; break
     g = L["build"](dm, DC, xB, ZB, 0.0, cam_h)
+    for k in ("down_cam", "flow"): g[k].apply_translation([0, 0, 1.5])    # lenses 1.5 up into the pods (review 26 Oct: edge probe)
+    g["down_lens"] = g["down_lens"] + [0, 0, 1.5]; g["flow_lens"] = g["flow_lens"] + [0, 0, 1.5]
+    for k in ("down_cam", "flow", "cam_pod", "flow_pod"): g[k].apply_translation([POD_DX, 0, 0])   # pods forward, clear of the rear
+    g["down_lens"] = g["down_lens"] + [POD_DX, 0, 0]; g["flow_lens"] = g["flow_lens"] + [POD_DX, 0, 0]  # arms' bottom screw key lines
     g.update(dm=dm, xB=xB, cam_h=cam_h, mxy=g["motors_xy"], keels={k: v for k, v in g["rods"].items() if k.startswith("keel")})
     g["z_o"] = g["cart"].bounds[0][2] - 3.0                            # opening plane: cartridge bottom 3 above it
     return g
@@ -166,6 +174,7 @@ def shell(g, seed=1):
     area = 4 * math.pi * ((((hx * hy) ** 1.6 + (hx * (ct + cb) / 2) ** 1.6 + (hy * (ct + cb) / 2) ** 1.6) / 3) ** (1 / 1.6))
     f = FREQ
     Ug = geodesic(f)
+    tr = math.radians(ROT); Ug = Ug @ np.array([[math.cos(tr), -math.sin(tr), 0], [math.sin(tr), math.cos(tr), 0], [0, 0, 1]]).T
     D = np.stack([hx * Ug[:, 0], hy * Ug[:, 1], np.where(Ug[:, 2] > 0, ct, cb) * Ug[:, 2]], 1)   # ellipsoid directions
     D /= np.linalg.norm(D, axis=1)[:, None]
     eqK = ConvexHull(K).equations                                       # cast each onto the hull: nodes start on it
@@ -175,28 +184,71 @@ def shell(g, seed=1):
     ex, ey = np.ptp(R[:, 0]) / 2, np.ptp(R[:, 1]) / 2
     in_open = (((Pg[:, 0] + DC) / (1.25 * ex)) ** 2 + (Pg[:, 1] / (1.25 * ey)) ** 2 < 1.0) & (Ug[:, 2] < 0)
     N = np.vstack([R, Pg[~in_open]])
+    if PEAK:                                                           # local nodes on the hull's top front (the nose camera peak)
+        Kp = K[(K[:, 0] > c0[0] + 0.4 * hx) & (K[:, 1] >= 0)]
+        top2 = Kp[np.argsort(-Kp[:, 2])]; sel = [top2[0]]
+        for q in top2[1:]:
+            if np.linalg.norm(q - sel[0]) > 60: sel.append(q); break
+        add = np.array([q for q0 in sel for q in ([q0] if q0[1] < 10 else [q0, q0 * [1, -1, 1]])])
+        keep = [i for i in range(nR, len(N)) if np.min(np.linalg.norm(add - N[i], axis=1)) > 60.0]
+        N = np.vstack([N[:nR], N[keep], add])
     N[nR:, 2] = np.maximum(N[nR:, 2], g["z_o"] + 1.0)
     shell.freq = f
     dirs = lambda P: (P - c0) / np.linalg.norm(P - c0, axis=1)[:, None]
     topo = lambda P: ConvexHull(dirs(P)).simplices                     # triangulation by direction: every node stays a vertex
-    U = dirs(N); viol = np.array([np.inf])
-    # convex pass: the true hull of the nodes must hold every hull point (direction triangles can fold inward at an edge)
-    for it in range(2000):
-        h = ConvexHull(N)
-        lost = np.setdiff1d(np.arange(len(N)), h.vertices)
-        if len(lost):
-            lf = lost[lost >= nR]
-            if len(lf) == 0: viol = np.array([np.inf]); break           # a ring node fell inside: invalid start
-            N[lf] += 3.0 * U[lf]; continue
-        viol_f = (K @ h.equations[:, :3].T + h.equations[:, 3]).max(0)
-        viol = viol_f
-        if viol_f.max() <= 0.05: break
-        step = np.zeros(len(N))
-        for f, v in zip(h.simplices, viol_f):
-            if v > 0.05:
-                for a in f: step[a] = max(step[a], min(v, 15.0))
-        step[:nR] = 0
-        N += (0.7 * step)[:, None] * U
+    def convex(N, U):
+        """the true hull of the nodes must hold every hull point: push the nodes of each crossed face along U (capped)"""
+        viol = np.array([np.inf])
+        for it in range(2000):
+            h = ConvexHull(N)
+            lost = np.setdiff1d(np.arange(len(N)), h.vertices)
+            if len(lost):
+                lf = lost[lost >= nR]
+                if len(lf) == 0: return N, np.array([np.inf])            # a ring node fell inside: invalid start
+                N[lf] += 3.0 * U[lf]; continue
+            viol = (K @ h.equations[:, :3].T + h.equations[:, 3]).max(0)
+            if viol.max() <= 0.05: break
+            step = np.zeros(len(N))
+            for f, v in zip(h.simplices, viol):
+                if v > 0.05:
+                    for a in f: step[a] = max(step[a], min(v, 15.0))
+            step[:nR] = 0
+            N = N + (0.7 * step)[:, None] * U
+        return N, viol
+    U = dirs(N)
+    N, viol = convex(N, U)
+    if SNAP and np.isfinite(viol.max()):
+        # prop snap, one node at a time (Spark 26 Oct: less structure over and under the props, secondary to structure): a
+        # free node in a prop disk column tries the motor axis (the hub, low thrust; one per prop and side) or out past the
+        # tip (R + 15), keeping its height, then moves only vertically in a convex pass; the move stays only if the shell
+        # still converges, keeps its ring, the props 12 off, its longest tube within 10 % of the unsnapped shell's and
+        # its prop shadow drops
+        grids = prop_grids(g)
+        def stats(Nn):
+            h_ = ConvexHull(Nn); F = [f for f in h_.simplices if not (f < nR).all()]
+            Ee = sorted({tuple(sorted((int(f[i]), int(f[(i + 1) % 3])))) for f in F for i in range(3)})
+            tl_ = max(np.linalg.norm(Nn[a_] - Nn[b_]) for a_, b_ in Ee)
+            pg_ = min(seg_band_dist(Nn[a_], Nn[b_], mxy) for a_, b_ in Ee) - SHELL_R
+            sh_ = sum(sum(seg_shadow(grids, Nn[a_], Nn[b_], SHELL_R)) for a_, b_ in Ee)
+            return tl_, pg_, sh_, len(h_.vertices) == len(Nn)
+        tl0, _, sh0, _ = stats(N); bar = max(1.1 * tl0, tl0 + 25)
+        Ud = U.copy(); used_axis = set(); n_snap = 0
+        cand = [i for i in range(nR, len(N)) if min(math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy) < PROP_R + 15.0]
+        for i in sorted(cand, key=lambda i: min(math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy)):
+            k = int(np.argmin([math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy])); mx, my = mxy[k]
+            r = math.hypot(N[i, 0] - mx, N[i, 1] - my); side = 1 if N[i, 2] > PROP_Z else -1
+            T_ = N.copy(); Ut = Ud.copy()
+            if r < 0.6 * PROP_R and (k, side) not in used_axis: T_[i, :2] = (mx, my)
+            else: T_[i, :2] = np.array([mx, my]) + (N[i, :2] - (mx, my)) / max(r, 1e-6) * (PROP_R + 15.0)
+            if np.min(np.linalg.norm(np.delete(T_, i, 0) - T_[i], axis=1)) < 40.0: continue
+            Ut[i] = (0, 0, side)
+            T_, v_ = convex(T_, Ut)
+            if not np.isfinite(v_.max()) or v_.max() > 0.05: continue
+            tl_, pg_, sh_, allv = stats(T_)
+            if allv and tl_ <= bar and pg_ >= PROP_GAP and sh_ < sh0 - 0.05:
+                N, Ud, viol, sh0 = T_, Ut, v_, sh_; n_snap += 1
+                if r < 0.6 * PROP_R: used_axis.add((k, side))
+        shell.snapped = n_snap
     h = ConvexHull(N)
     tris = np.array([f for f in h.simplices if not (f < nR).all()])
     used = sorted(set(tris.ravel())); remap = {o: i for i, o in enumerate(used)}
@@ -206,24 +258,89 @@ def shell(g, seed=1):
     return nodes, E, tris, ring_ids, float(viol.max()), K
 
 
+def prop_grids(g):
+    """per prop: annulus points 0.2 .. 1.0 R (plan), weight r x r (area x loading ~ r, E), and the mask of points the arm
+    and motor already shadow (a member there costs no extra thrust)"""
+    from matplotlib.path import Path
+    rr = np.linspace(0.2, 1.0, 24) * PROP_R; th = np.linspace(0, 2 * np.pi, 96, endpoint=False)
+    Rg, Tg = np.meshgrid(rr, th); w = (Rg ** 2).ravel()
+    arm_paths = [Path(a.vertices[ConvexHull(a.vertices[:, :2]).vertices, :2]) for a in g["arms"]]
+    out = []
+    for mx, my in g["mxy"]:
+        P = np.stack([mx + (Rg * np.cos(Tg)).ravel(), my + (Rg * np.sin(Tg)).ravel()], 1)
+        shade = np.zeros(len(P), bool)
+        for pth in arm_paths: shade |= pth.contains_points(P)
+        out.append((P, w, shade))
+    return out
+
+
+def seg_shadow(grids, p0, p1, rad):
+    """weighted share (% of the 4 disks) a member's plan shadow adds above (z > prop plane) and below, outside the arms'"""
+    top = bot = 0.0; d = p1[:2] - p0[:2]; L2 = float(d @ d)
+    for P, w, shade in grids:
+        t = np.clip(((P - p0[:2]) @ d) / L2, 0, 1) if L2 > 1e-9 else np.zeros(len(P))
+        hit = (np.linalg.norm(P - (p0[:2] + t[:, None] * d), axis=1) <= rad) & ~shade
+        z = p0[2] + t * (p1[2] - p0[2])
+        top += (w * (hit & (z > PROP_Z))).sum() / w.sum(); bot += (w * (hit & (z < PROP_Z))).sum() / w.sum()
+    return 100 * top / len(grids), 100 * bot / len(grids)
+
+
+def blockage(g, nodes, E, extra, parts=False):
+    """share of the props' thrust shadowed in plan by shell tubes, nodes and links above and below, outside the arm and motor
+    shadow: annulus 0.2 .. 1.0 R, thrust per area ~ r (E); (top %, bottom %) over the 4 props (+ shell / links split)"""
+    grids = prop_grids(g)
+    def mark(segs, pts_):
+        bt = [np.zeros(len(P), bool) for P, _, _ in grids]; bb = [np.zeros(len(P), bool) for P, _, _ in grids]
+        for j, (P, w, shade) in enumerate(grids):
+            for p0, p1, rad in segs:
+                d = p1[:2] - p0[:2]; L2 = float(d @ d)
+                t = np.clip(((P - p0[:2]) @ d) / L2, 0, 1) if L2 > 1e-9 else np.zeros(len(P))
+                hit = (np.linalg.norm(P - (p0[:2] + t[:, None] * d), axis=1) <= rad) & ~shade
+                z = p0[2] + t * (p1[2] - p0[2]); bt[j] |= hit & (z > PROP_Z); bb[j] |= hit & (z < PROP_Z)
+            for n in pts_:
+                hit = (np.linalg.norm(P - n[:2], axis=1) <= NODE_R) & ~shade
+                bt[j] |= hit & (n[2] > PROP_Z); bb[j] |= hit & (n[2] < PROP_Z)
+        return bt, bb
+    pct = lambda m: 100 * np.mean([(w * mm).sum() / w.sum() for (P, w, _), mm in zip(grids, m)])
+    sh = [(nodes[a], nodes[b], SHELL_R) for a, b in E]; ln = [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+    bt, bb = mark(sh + ln, nodes)
+    if not parts: return pct(bt), pct(bb)
+    st, sb = mark(sh, nodes); lt, lb = mark(ln, [])
+    return pct(bt), pct(bb), dict(shell_top=pct(st), shell_bottom=pct(sb), links_top=pct(lt), links_bottom=pct(lb))
+
+
 def attach(g, nodes, ring_ids):
     mxy = g["mxy"]; extra = {}
-    cb_ = g["cart"].bounds + [[-ROD_R - 1, -ROD_R - 1, -ROD_R - 1], [ROD_R + 1, ROD_R + 1, ROD_R + 1]]
-    clear_of_cart = lambda p0, p1: not (((p0 + np.linspace(0, 1, 80)[:, None] * (p1 - p0) > cb_[0]) &
-                                         (p0 + np.linspace(0, 1, 80)[:, None] * (p1 - p0) < cb_[1])).all(1)).any()
+    pad = [[-ROD_R - 1] * 3, [ROD_R + 1] * 3]
+    boxes_ = [m_.bounds + pad for m_ in (g["cart"], TOP, FC, PI, DECK, PDB, UBEC, BUCK, RX)]   # links clear of the cartridge, top plate, hub
+
+    def clear_of_cart(p0, p1):
+        q = p0[None] + np.linspace(0.02, 1, 80)[:, None] * (p1 - p0)[None]
+        return not any(((q > b_[0]) & (q < b_[1])).all(1).any() for b_ in boxes_)
+    grids = prop_grids(g)
+
+    def pick(p0, cands, n, spread_deg):
+        """n links from p0 among the 10 nearest valid candidates: least added prop shadow (Spark 26 Oct, secondary to
+        structure: the links still spread at least spread_deg apart), length as the tie-break"""
+        cands = sorted(cands, key=lambda k: np.linalg.norm(nodes[k] - p0))[:10]
+        cost = {k: sum(seg_shadow(grids, p0, nodes[k], ROD_R)) + 0.002 * np.linalg.norm(nodes[k] - p0) for k in cands}
+        out = []
+        for k in sorted(cands, key=cost.get):
+            u = (nodes[k] - p0) / np.linalg.norm(nodes[k] - p0)
+            if all(np.degrees(np.arccos(np.clip(u @ v, -1, 1))) >= spread_deg for v in [(nodes[j] - p0) / np.linalg.norm(nodes[j] - p0) for j in out]):
+                out.append(k)
+            if len(out) == n: break
+        return out
     for i, ((mx, my), (r0, m1, ht)) in enumerate(zip(mxy, g["axes"])):  # 3 spokes per arm tip, 12 off the disks
-        tip = np.array([mx, my, ROOT_H - ht]); n_ok = 0
-        for k in sorted(range(len(nodes)), key=lambda k: np.linalg.norm(nodes[k] - tip)):
-            if seg_band_dist(tip, nodes[k], mxy) - ROD_R >= PROP_GAP:
-                extra[f"spoke {i + 1}.{n_ok + 1}"] = (tip, nodes[k]); n_ok += 1
-                if n_ok == 3: break
+        tip = np.array([mx, my, ROOT_H - ht])
+        for n_, k in enumerate(pick(tip, [k for k in range(len(nodes)) if seg_band_dist(tip, nodes[k], mxy) - ROD_R >= PROP_GAP], 3, 30.0)):
+            extra[f"spoke {i + 1}.{n_ + 1}"] = (tip, nodes[k])
     bb = BOTTOM.bounds                                                  # core ties: bottom plate underside to the shell
     for nm, q0 in (("front", (bb[1][0], 0)), ("rear", (bb[0][0], 0)), ("left", (0, bb[1][1])), ("right", (0, bb[0][1]))):
-        q = np.array([q0[0], q0[1], -1.0]); n_ok = 0
-        for k in sorted([k for k in range(len(nodes)) if k not in ring_ids], key=lambda k: np.linalg.norm(nodes[k] - q)):
-            if seg_band_dist(q, nodes[k], mxy) - ROD_R >= PROP_GAP and clear_of_cart(q, nodes[k]):
-                extra[f"core tie {nm}.{n_ok + 1}"] = (q, nodes[k]); n_ok += 1
-                if n_ok == 2: break
+        q = np.array([q0[0], q0[1], -1.0])
+        for n_, k in enumerate(pick(q, [k for k in range(len(nodes)) if k not in ring_ids and seg_band_dist(q, nodes[k], mxy) - ROD_R >= PROP_GAP
+                                        and clear_of_cart(q, nodes[k])], 2, 25.0)):
+            extra[f"core tie {nm}.{n_ + 1}"] = (q, nodes[k])
     B = g["B"]; up_b = np.array([-A[2], 0, A[0]])                       # L2 apex lugs to the 2 nearest nodes behind its plane
     for sy in (1, -1):
         sock = B - A * 5 + up_b * 16 + np.array([0, 46.0 * sy, 0])
@@ -282,18 +399,35 @@ def solve(dm=52.1):
 
 os.makedirs(OUT, exist_ok=True)
 MAX_TUBE = 350.0                         # longest shell tube allowed (DEFAULT: keeps the geodesic pattern; buckling E)
-STARTS = [float(x) for x in os.environ.get("V4_STARTS", "0.7,0.85,1.0,0").split(",")] if "V4_START" not in os.environ else [START]
-say(f"balance (v2: motor square onto the CG; catch {DC:.0f} aft, L2 base z {ZB:.0f}; geodesic frequency {FREQ}); "
-    f"start scan {STARTS} (0 = cast onto the hull), smallest shell volume among valid shells:")
-best = None
+STARTS = [float(x) for x in os.environ.get("V4_STARTS", "0.7,0.85,1.0").split(",")] if "V4_START" not in os.environ else [START]
+ROTS = [float(x) for x in os.environ.get("V4_ROTS", "0").split(",")]     # 36 was worse in every case (26 Oct scan)
+PEAKS = [bool(int(x)) for x in os.environ.get("V4_PEAKS", "0").split(",")]   # 1 (nodes at the nose camera peak): every case over 400 tubes (26 Oct)
+SNAPS = [bool(int(x)) for x in os.environ.get("V4_SNAPS", "0,1").split(",")]
+say(f"balance (v2: motor square onto the CG; catch {DC:.0f} aft, L2 base z {ZB:.0f}; geodesic frequency {FREQ}); scan start {STARTS} x "
+    f"turn {ROTS} deg x prop snap {SNAPS} x peak nodes {PEAKS}: structure first (the most compact valid shell sets the bar: longest tube, volume, mass), "
+    f"then the least prop blockage among shells within 10 % / 10 % / 3 % of it:")
+cands = []
 for START in STARTS:
-    r = solve()
-    g_, nodes_, E_ = r[0], r[1], r[2]
-    tl = max(np.linalg.norm(nodes_[a] - nodes_[b]) for a, b in E_); vol = ConvexHull(nodes_).volume / 1e6
-    pg_ = min(seg_band_dist(nodes_[a], nodes_[b], g_["mxy"]) for a, b in E_) - SHELL_R
-    ok = r[9] <= 0.05 and len(r[4]) == 8 and tl <= MAX_TUBE and pg_ >= PROP_GAP
-    say(f"start {START}: {'valid' if ok else 'invalid'}: shell {vol:.1f} L, longest tube {tl:.0f}, props {pg_:.1f}, residual {r[9]:.2f}, {r[7]:.0f} g")
-    if ok and (best is None or vol < best[0]): best = (vol, START, r)
+    for ROT in ROTS:
+        for SNAP in SNAPS:
+          for PEAK in PEAKS:
+            r = solve()
+            g_, nodes_, E_ = r[0], r[1], r[2]
+            tl = max(np.linalg.norm(nodes_[a] - nodes_[b]) for a, b in E_); vol = ConvexHull(nodes_).volume / 1e6
+            pg_ = min(seg_band_dist(nodes_[a], nodes_[b], g_["mxy"]) for a, b in E_) - SHELL_R
+            ok = bool(np.max(r[9]) <= 0.05 and len(r[4]) == 8 and tl <= MAX_TUBE and pg_ >= PROP_GAP)
+            bt, bb = blockage(g_, nodes_, E_, r[5]) if ok else (np.nan, np.nan)
+            say(f"start {START} turn {ROT:.0f} snap {int(SNAP)} peak {int(PEAK)}: {'valid' if ok else 'invalid'}: shell {vol:.1f} L, {len(E_)} tubes, longest {tl:.0f}, "
+                f"props {pg_:.1f}, {r[7]:.0f} g, prop blockage top {bt:.1f} % / bottom {bb:.1f} %")
+            if ok: cands.append(dict(vol=vol, tl=tl, mass=r[7], block=bt + bb, bt=bt, bb=bb, start=START, rot=ROT, snap=SNAP, peak=PEAK, r=r))
+ref = min(cands, key=lambda c: c["vol"])
+fit = [c for c in cands if c["tl"] <= max(1.1 * ref["tl"], ref["tl"] + 25) and c["vol"] <= 1.1 * ref["vol"] and c["mass"] <= 1.03 * ref["mass"]]
+pick = min(fit, key=lambda c: c["block"])
+say(f"structure bar: start {ref['start']} turn {ref['rot']:.0f} snap {int(ref['snap'])} peak {int(ref['peak'])} ({ref['vol']:.1f} L, longest {ref['tl']:.0f}, {ref['mass']:.0f} g, "
+    f"blockage {ref['bt']:.1f} / {ref['bb']:.1f} %); picked start {pick['start']} turn {pick['rot']:.0f} snap {int(pick['snap'])} peak {int(pick['peak'])} "
+    f"(blockage {pick['bt']:.1f} / {pick['bb']:.1f} %)")
+START, ROT, SNAP, PEAK = pick["start"], pick["rot"], pick["snap"], pick["peak"]
+best = (pick["vol"], START, pick["r"])
 _, START, (g, nodes, E, tris, ring_ids, extra, it, tot, cgv, viol, K) = best
 dm = g["dm"]; mxy = g["mxy"]
 
@@ -342,6 +476,10 @@ for p0, p1, rr in [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p
     hit |= (np.linalg.norm(Bc + tq[:, None] * D - (p0 + sq[:, None] * u), axis=1) < rr) & (tq > 0)
 for n in nodes:
     v = n - Bc; t = D @ v; hit |= (np.linalg.norm(v - t[:, None] * D, axis=1) < NODE_R) & (t > 0)
+BT, BB, BS = blockage(g, nodes, E, extra, parts=True)
+say(f"prop blockage (Spark 26 Oct, secondary to structure): {BT:.1f} % of the disks' thrust shadowed from above, {BB:.1f} % from below "
+    f"(plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell {BS['shell_top']:.1f} / {BS['shell_bottom']:.1f} %, "
+    f"links {BS['links_top']:.1f} / {BS['links_bottom']:.1f} %")
 say(f"L2 field: {100 * hit.mean():.1f} % of its hemisphere crossed by tubes and nodes (E; thin members allowed, CLAUDE.md 8)")
 for lens, hh, hv, nm in ((g["down_lens"], 44.5, 36.5, "down camera"), (g["flow_lens"], 23.0, 23.0, "flow")):
     for k, m in (("shell", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E])), ("cartridge", g["cart"]), ("feet", trimesh.util.concatenate(g["feet"]))):
@@ -360,7 +498,7 @@ say(f"T/W {6600 / tot:.2f} (C on E mass, 1650 gf a motor); CG {PROP_Z - cgv[2]:.
 hullK = ConvexHull(K)
 say(f"compact: shell hull {ConvexHull(nodes).volume / 1e6:.1f} L vs the parts-with-margins hull {hullK.volume / 1e6:.1f} L (C)")
 
-SUMMARY = dict(freq=FREQ, start=START, dm=dm, xB=g["xB"], cam_h=g["cam_h"], z_o=g["z_o"], nodes=len(nodes), tubes=len(E), ring=len(ring_ids), shell_m=float(sh.sum() / 1000),
+SUMMARY = dict(freq=FREQ, start=START, rot=ROT, snap=SNAP, peak=PEAK, block_parts=BS, block_top=BT, block_bottom=BB, dm=dm, xB=g["xB"], cam_h=g["cam_h"], z_o=g["z_o"], nodes=len(nodes), tubes=len(E), ring=len(ring_ids), shell_m=float(sh.sum() / 1000),
                shell_g=float(shell_g), link_g=float(link_g), mass=tot, cg=cgv.tolist(), cg_pack_out=c2.tolist(), extents=ext.tolist(), prop_gap=pg,
                l2_blocked=float(hit.mean()), motors_xy=[list(map(float, m)) for m in mxy], Iyy_gm2=Iyy, largest_cell=max(circ) - 2 * SHELL_R)
 json.dump(SUMMARY, open(os.path.join(OUT, "result.json"), "w"), indent=1)
@@ -390,7 +528,8 @@ PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)", trimesh.util.concatenate([FC, PI, DECK, PDB, UBEC, BUCK, RX]), "bought", True, grp["hub"], "E", None, "bought", "#2e7d32", False),
     ("wires", FC, "bought", False, 80, "E", None, "bought", "#1b5e20", False),
     ("pack", g["pack"], "bought", True, 650, "E", None, "bought", "#2f4fbf", True),
-    ("cartridge + receiver (latch set)", g["cart"], "protected", True, LATCH_G, "M", "PETG", "printed", "#99a6b3", True),
+    ("cartridge", g["cart"], "protected", True, LATCH_G * 0.45, "E", "PETG", "printed", "#99a6b3", True),
+    ("receiver", g["cart"], "protected", True, LATCH_G * 0.55, "E", "PETG", "printed", "#8899aa", False),   # stays in the drone (latch set split E)
     ("belly sled + pods", trimesh.util.concatenate([g["sled"], g["cam_pod"], g["flow_pod"]]), "structure", False, grp["belly"], "E", "PETG", "printed", "#99a6b3", False),
     ("down camera", g["down_cam"], "bought", True, 15, "E", None, "bought", "#2d5a2d", False),
     ("flow MTF-02P", g["flow"], "bought", True, 2, "E", None, "bought", "#2d5a2d", False),
@@ -405,11 +544,77 @@ for p_ in PARTS:
 json.dump([dict(name=n_, file=fname(n_), role=r_, protect=pr_, mass_g=round(float(gm_), 2), tag=t_, group=gr_, color=co_, swap=sw_)
            for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS], open(os.path.join(PD, "parts.json"), "w"), indent=1)
 say(f"assembly mass {sum(p_[4] for p_ in PARTS):.0f} g (E) vs the layout model {tot:.0f} g")
+# ---------------------------------------------------------------- access (rule 2: reachable without taking another part off)
+# straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),
+# then gated by system_check's own sweep
+blockers = [(n_, m_) for n_, m_, *_ in PARTS if not n_.startswith(("cage shell", "spokes"))]
+segs_all = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+pq = {n_: trimesh.proximity.ProximityQuery(m_) for n_, m_ in blockers}
+
+
+def line_clear(p0, d, L_, rad, ignore=()):
+    q = p0 + np.linspace(6, L_, int(L_ / 4))[:, None] * d
+    for a, b, rr in segs_all:
+        u = b - a; t = np.clip(((q - a) @ u) / (u @ u), 0, 1)
+        if (np.linalg.norm(q - (a + t[:, None] * u), axis=1) < rad + rr + 1).any(): return False
+    for n in nodes:
+        if (np.linalg.norm(q - n, axis=1) < rad + NODE_R + 1).any(): return False
+    for n_, m_ in blockers:
+        if n_ in ignore: continue
+        bb_ = m_.bounds
+        near = ((q > bb_[0] - rad - 2) & (q < bb_[1] + rad + 2)).all(1)
+        if near.any():
+            sd = pq[n_].signed_distance(q[near])
+            if (sd > -(rad + 1)).any(): return False
+    return True
+
+
+def search(p0, axis, cone_deg, rad, L_=450.0, ignore=()):
+    axis = np.asarray(axis, float) / np.linalg.norm(axis); best = None
+    for d in fib(400):
+        ang = np.degrees(np.arccos(np.clip(d @ axis, -1, 1)))
+        if ang <= cone_deg and (best is None or ang < best[0]) and line_clear(p0, d, L_, rad, ignore): best = (ang, d)
+    return best
+
+
+ACCESS, acc_rep = [], []
+ACCESS.append({"name": "pack swap: cartridge + pack down through the opening", "part": "cartridge", "dir": [0, 0, -1], "length_mm": 150.0,
+               "tool": "part", "ignore": ["pack", "receiver"]})
+hubn_ = "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)"
+for nm_, faces in (("FC USB-C", [((18.0, 0, 9.75), (1, 0, 0)), ((0, 18.0, 9.75), (0, 1, 0)), ((0, -18.0, 9.75), (0, -1, 0)), ((-18.0, 0, 9.75), (-1, 0, 0))]),
+                   ("Pi 5 USB-C", [((42.5, 0, 30.0), (1, 0, 0)), ((-42.5, 0, 30.0), (-1, 0, 0)), ((0, 28.0, 30.0), (0, 1, 0)), ((0, -28.0, 30.0), (0, -1, 0))])):
+    got = None
+    for p0, ax in faces:
+        b_ = search(np.array(p0, float), ax, 50.0, 7.0, ignore=(hubn_, "wires"))
+        if b_ and (got is None or b_[0] < got[0]): got = (b_[0], b_[1], p0)
+    if got:
+        ACCESS.append({"name": f"{nm_} cable", "part": hubn_, "from": list(got[2]), "dir": np.round(got[1], 4).tolist(), "length_mm": 450.0,
+                       "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["wires"]})
+        acc_rep.append(f"{nm_}: clear line {got[0]:.0f} deg off its face normal from {tuple(np.round(got[2], 1))}")
+    else:
+        acc_rep.append(f"{nm_}: NO clear line within 50 deg of any face")
+for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-top screws (M3 into the root, driver d 8 from above)
+    c_, s_ = math.cos(math.radians(d_)), math.sin(math.radians(d_))
+    for v_ in (15.0, -15.0):
+        p0 = np.array([63.17 * c_ - v_ * s_, 63.17 * s_ + v_ * c_, ROOT_H + 1.6])
+        ok_ = line_clear(p0, np.array([0, 0, 1.0]), 400.0, 4.0, ignore=("top plate", f"arm {i_ + 1}", f"prop {i_ + 1}"))
+        ACCESS.append({"name": f"M3 key, arm {i_ + 1} top screw v {v_:+.0f}", "part": "top plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, 1],
+                       "length_mm": 400.0, "tool": {"type": "cylinder", "d": 8}, "ignore": [f"arm {i_ + 1}"] + [f"prop {j}" for j in range(1, 5)]})
+        acc_rep.append(f"arm {i_ + 1} top screw v {v_:+.0f}: {'clear' if ok_ else 'BLOCKED'} straight up (a stopped prop turned aside)")
+    for v_ in (10.0, -10.0):                                            # bottom screws (driver d 8 from below)
+        p0 = np.array([63.74 * c_ - v_ * s_, 63.74 * s_ + v_ * c_, -1.7])
+        ok_ = line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}"))
+        ign = [f"arm {i_ + 1}"] + (["belly sled + pods"] if not ok_ and line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}", "belly sled + pods")) else [])
+        ACCESS.append({"name": f"M3 key, arm {i_ + 1} bottom screw v {v_:+.0f}", "part": "bottom plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, -1],
+                       "length_mm": 400.0, "tool": {"type": "cylinder", "d": 8}, "ignore": ign})
+        acc_rep.append(f"arm {i_ + 1} bottom screw v {v_:+.0f}: " + ("clear" if ok_ else "through a Ø9 driver hole in the belly sled (requirement)" if len(ign) > 1 else "BLOCKED"))
+say("access (straight lines through the shell cells, tool radius + 1 clear, C): " + "; ".join(acc_rep))
+
 SHELL_SPEC = dict(nodes=np.round(nodes, 3).tolist(), rods=[list(map(int, e)) for e in E],
                   open=[dict(name="bottom opening (pack + swap)", ring=[int(i) for i in np.where(nodes[:, 2] < g["z_o"] + 0.5)[0]])],
                   node_r_mm=NODE_R, rod_r_mm=SHELL_R)
 json.dump(SHELL_SPEC, open(os.path.join(OUT, "cage_shell.json"), "w"))
-if not any(k in os.environ for k in ("V4_FREQ", "V4_START", "V4_STARTS", "V4_PACK")) and os.path.abspath(OUT) == os.path.join(ROOT, "runs", "overseer_layout", "v4"):
+if not any(k in os.environ for k in ("V4_FREQ", "V4_START", "V4_STARTS", "V4_PACK", "V4_ROTS", "V4_SNAPS", "V4_PEAKS")) and os.path.abspath(OUT) == os.path.join(ROOT, "runs", "overseer_layout", "v4"):
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
         p_ = dict(name=n_, role=r_, mesh=rel(os.path.join(PD, fname(n_))), mass_g=round(float(gm_), 2), tag=t_, owner="overseer",
@@ -419,10 +624,10 @@ if not any(k in os.environ for k in ("V4_FREQ", "V4_START", "V4_STARTS", "V4_PAC
         if sw_: p_["swap"] = True
         asm_parts.append(p_)
     hubn = "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)"
-    contact = [["wires", hubn], ["pack", "cartridge + receiver (latch set)"], ["cage shell tubes", "cage shell nodes"], ["spokes, ties, keels", "cage shell nodes"],
+    contact = [["wires", hubn], ["pack", "cartridge"], ["pack", "receiver"], ["cartridge", "receiver"], ["belly sled + pods", "receiver"], ["cage shell tubes", "cage shell nodes"], ["spokes, ties, keels", "cage shell nodes"],
                ["spokes, ties, keels", "cage shell tubes"], ["spokes, ties, keels", "bottom plate"], ["spokes, ties, keels", "apex + cam bracket"],
                ["spokes, ties, keels", "belly sled + pods"], ["Unitree L2", "apex + cam bracket"], ["front camera", "apex + cam bracket"],
-               ["apex + cam bracket", "bottom plate"], ["apex + cam bracket", "top plate"], ["belly sled + pods", "cartridge + receiver (latch set)"],
+               ["apex + cam bracket", "bottom plate"], ["apex + cam bracket", "top plate"], ["belly sled + pods", "cartridge"],
                ["belly sled + pods", "down camera"], ["belly sled + pods", "flow MTF-02P"], ["belly sled + pods", "TPU feet"], ["belly sled + pods", "bottom plate"],
                [hubn, "bottom plate"], [hubn, "top plate"]]
     for i in range(1, 5):
@@ -434,8 +639,8 @@ if not any(k in os.environ for k in ("V4_FREQ", "V4_START", "V4_STARTS", "V4_PAC
                              "(the new funnel's), scan stick mount, XT60 and leads; the latch set is drawn as v2's cartridge envelope."),
                        cg_ref=[round(dm, 3), 0.0, PROP_Z], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0,
                        openings=[dict(part=p_, axis=[0, 0, -1], half_angle_deg=40.0, skip_probes=True)
-                                 for p_ in ("pack", "cartridge + receiver (latch set)", "down camera", "flow MTF-02P")],
-                       contact_pairs=contact, guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=2200, cage_shell=SHELL_SPEC,
+                                 for p_ in ("pack", "cartridge", "receiver", "down camera", "flow MTF-02P")],
+                       contact_pairs=contact, guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=2200, cage_shell=SHELL_SPEC, access=ACCESS,
                        balance_no_swap_gate=False)   # dimensions.md L Balance: Overseer pack-out reported (DEFAULT 26 Oct, Spark's v2 format)
     asm.save(os.path.join(ROOT, "nox", "overseer", "overseer.assembly.json"))
     say("wrote nox/overseer/overseer.assembly.json")

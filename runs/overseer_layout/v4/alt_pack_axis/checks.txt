@@ -1,82 +1,115 @@
-balance (v2: motor square onto the CG; catch 30 aft, L2 base z 51; geodesic frequency 2); start scan [0.7, 0.85, 1.0, 0.0] (0 = cast onto the hull), smallest shell volume among valid shells:
-   motors  52.1 ahead: CG x  75.9,  3232 g, 109 tubes
-   motors  75.9 ahead: CG x  95.7,  3256 g, 109 tubes
-   motors  95.7 ahead: CG x 112.3,  3280 g, 109 tubes
-   motors 112.3 ahead: CG x 126.1,  3303 g, 109 tubes
-   motors 126.1 ahead: CG x 137.1,  3324 g, 109 tubes
-   motors 137.1 ahead: CG x 145.9,  3342 g, 109 tubes
-   motors 145.9 ahead: CG x 153.0,  3357 g, 109 tubes
-   motors 153.0 ahead: CG x 158.6,  3370 g, 109 tubes
-   motors 158.6 ahead: CG x 162.7,  3382 g, 109 tubes
-   motors 162.7 ahead: CG x 165.3,  3394 g, 109 tubes
-   motors 165.3 ahead: CG x 167.2,  3401 g, 109 tubes
-   motors 167.2 ahead: CG x 168.5,  3405 g, 109 tubes
-   motors 168.5 ahead: CG x 169.4,  3410 g, 109 tubes
-   motors 169.4 ahead: CG x 169.9,  3412 g, 109 tubes
-start 0.7: invalid: shell 70.2 L, longest tube 363, props 17.6, residual 0.04, 3412 g
-   motors  52.1 ahead: CG x  73.1,  3258 g, 118 tubes
-   motors  73.1 ahead: CG x  91.0,  3278 g, 118 tubes
-   motors  91.0 ahead: CG x 106.1,  3298 g, 118 tubes
-   motors 106.1 ahead: CG x 118.6,  3319 g, 118 tubes
-   motors 118.6 ahead: CG x 128.7,  3337 g, 118 tubes
-   motors 128.7 ahead: CG x 136.9,  3353 g, 118 tubes
-   motors 136.9 ahead: CG x 143.5,  3367 g, 118 tubes
-   motors 143.5 ahead: CG x 148.8,  3378 g, 118 tubes
-   motors 148.8 ahead: CG x 153.0,  3387 g, 118 tubes
-   motors 153.0 ahead: CG x 156.3,  3395 g, 118 tubes
-   motors 156.3 ahead: CG x 159.0,  3401 g, 118 tubes
-   motors 159.0 ahead: CG x 161.1,  3406 g, 118 tubes
-   motors 161.1 ahead: CG x 162.7,  3410 g, 118 tubes
-   motors 162.7 ahead: CG x 163.9,  3413 g, 118 tubes
-start 0.85: invalid: shell 66.7 L, longest tube 364, props 18.4, residual 0.03, 3413 g
-   motors  52.1 ahead: CG x  73.1,  3279 g, 127 tubes
-   motors  73.1 ahead: CG x  90.7,  3299 g, 127 tubes
-   motors  90.7 ahead: CG x 105.6,  3320 g, 127 tubes
-   motors 105.6 ahead: CG x 118.0,  3339 g, 127 tubes
-   motors 118.0 ahead: CG x 128.2,  3358 g, 127 tubes
-   motors 128.2 ahead: CG x 136.5,  3374 g, 127 tubes
-   motors 136.5 ahead: CG x 143.2,  3388 g, 127 tubes
-   motors 143.2 ahead: CG x 148.6,  3400 g, 127 tubes
-   motors 148.6 ahead: CG x 152.8,  3409 g, 127 tubes
-   motors 152.8 ahead: CG x 155.5,  3425 g, 127 tubes
-   motors 155.5 ahead: CG x 157.8,  3430 g, 127 tubes
-   motors 157.8 ahead: CG x 160.1,  3426 g, 127 tubes
-   motors 160.1 ahead: CG x 161.9,  3430 g, 127 tubes
-   motors 161.9 ahead: CG x 163.3,  3434 g, 127 tubes
-start 1.0: valid: shell 63.7 L, longest tube 253, props 19.2, residual 0.05, 3434 g
-   motors  52.1 ahead: CG x  75.2,  3285 g, 118 tubes
-   motors  75.2 ahead: CG x  94.7,  3308 g, 118 tubes
-   motors  94.7 ahead: CG x 111.1,  3331 g, 118 tubes
-   motors 111.1 ahead: CG x 123.7,  3363 g, 121 tubes
-   motors 123.7 ahead: CG x 134.2,  3379 g, 121 tubes
-   motors 134.2 ahead: CG x 142.5,  3400 g, 121 tubes
-   motors 142.5 ahead: CG x 149.2,  3414 g, 121 tubes
-   motors 149.2 ahead: CG x 154.4,  3426 g, 121 tubes
-   motors 154.4 ahead: CG x 158.5,  3436 g, 121 tubes
-   motors 158.5 ahead: CG x 161.7,  3443 g, 121 tubes
-   motors 161.7 ahead: CG x 164.3,  3449 g, 121 tubes
-   motors 164.3 ahead: CG x 166.3,  3455 g, 121 tubes
-   motors 166.3 ahead: CG x 167.8,  3459 g, 121 tubes
-   motors 167.8 ahead: CG x 169.0,  3462 g, 121 tubes
-start 0.0: invalid: shell 49.7 L, longest tube 565, props 22.0, residual 0.02, 3462 g
+balance (v2: motor square onto the CG; catch 30 aft, L2 base z 51; geodesic frequency 2); scan start [0.7, 0.85, 1.0] x turn [0.0] deg x prop snap [False, True] x peak nodes [False]: structure first (the most compact valid shell sets the bar: longest tube, volume, mass), then the least prop blockage among shells within 10 % / 10 % / 3 % of it:
+   motors  52.1 ahead: CG x  77.0,  3241 g, 109 tubes
+   motors  77.0 ahead: CG x  97.5,  3264 g, 109 tubes
+   motors  97.5 ahead: CG x 114.5,  3289 g, 109 tubes
+   motors 114.5 ahead: CG x 128.4,  3312 g, 109 tubes
+   motors 128.4 ahead: CG x 139.7,  3334 g, 109 tubes
+   motors 139.7 ahead: CG x 148.8,  3353 g, 109 tubes
+   motors 148.8 ahead: CG x 156.3,  3366 g, 109 tubes
+   motors 156.3 ahead: CG x 162.0,  3381 g, 109 tubes
+   motors 162.0 ahead: CG x 165.5,  3401 g, 109 tubes
+   motors 165.5 ahead: CG x 168.2,  3409 g, 109 tubes
+   motors 168.2 ahead: CG x 169.8,  3418 g, 109 tubes
+   motors 169.8 ahead: CG x 171.0,  3422 g, 109 tubes
+   motors 171.0 ahead: CG x 171.8,  3425 g, 109 tubes
+   motors 171.8 ahead: CG x 172.4,  3427 g, 109 tubes
+start 0.7 turn 0 snap 0 peak 0: invalid: shell 70.4 L, 109 tubes, longest 363, props 17.6, 3427 g, prop blockage top nan % / bottom nan %
+   motors  52.1 ahead: CG x  77.5,  3241 g, 109 tubes
+   motors  77.5 ahead: CG x  98.5,  3264 g, 109 tubes
+   motors  98.5 ahead: CG x 115.8,  3290 g, 109 tubes
+   motors 115.8 ahead: CG x 129.6,  3316 g, 109 tubes
+   motors 129.6 ahead: CG x 141.1,  3336 g, 109 tubes
+   motors 141.1 ahead: CG x 150.2,  3359 g, 109 tubes
+   motors 150.2 ahead: CG x 157.7,  3372 g, 109 tubes
+   motors 157.7 ahead: CG x 163.5,  3384 g, 109 tubes
+   motors 163.5 ahead: CG x 167.1,  3404 g, 109 tubes
+   motors 167.1 ahead: CG x 169.7,  3413 g, 109 tubes
+   motors 169.7 ahead: CG x 171.5,  3419 g, 109 tubes
+   motors 171.5 ahead: CG x 172.7,  3424 g, 109 tubes
+   motors 172.7 ahead: CG x 173.7,  3427 g, 109 tubes
+   motors 173.7 ahead: CG x 174.3,  3429 g, 109 tubes
+start 0.7 turn 0 snap 1 peak 0: invalid: shell 69.9 L, 109 tubes, longest 363, props 17.6, 3429 g, prop blockage top nan % / bottom nan %
+   motors  52.1 ahead: CG x  74.1,  3266 g, 118 tubes
+   motors  74.1 ahead: CG x  92.6,  3288 g, 118 tubes
+   motors  92.6 ahead: CG x 108.4,  3309 g, 118 tubes
+   motors 108.4 ahead: CG x 121.3,  3330 g, 118 tubes
+   motors 121.3 ahead: CG x 131.8,  3349 g, 118 tubes
+   motors 131.8 ahead: CG x 140.3,  3366 g, 118 tubes
+   motors 140.3 ahead: CG x 147.1,  3381 g, 118 tubes
+   motors 147.1 ahead: CG x 152.5,  3393 g, 118 tubes
+   motors 152.5 ahead: CG x 157.1,  3399 g, 118 tubes
+   motors 157.1 ahead: CG x 160.8,  3408 g, 118 tubes
+   motors 160.8 ahead: CG x 163.7,  3415 g, 118 tubes
+   motors 163.7 ahead: CG x 166.0,  3420 g, 118 tubes
+   motors 166.0 ahead: CG x 167.8,  3424 g, 118 tubes
+   motors 167.8 ahead: CG x 169.1,  3428 g, 118 tubes
+start 0.85 turn 0 snap 0 peak 0: invalid: shell 66.7 L, 118 tubes, longest 365, props 18.4, 3428 g, prop blockage top nan % / bottom nan %
+   motors  52.1 ahead: CG x  73.7,  3270 g, 118 tubes
+   motors  73.7 ahead: CG x  92.3,  3293 g, 118 tubes
+   motors  92.3 ahead: CG x 108.1,  3314 g, 118 tubes
+   motors 108.1 ahead: CG x 120.8,  3335 g, 118 tubes
+   motors 120.8 ahead: CG x 131.2,  3354 g, 118 tubes
+   motors 131.2 ahead: CG x 139.4,  3372 g, 118 tubes
+   motors 139.4 ahead: CG x 146.1,  3385 g, 118 tubes
+   motors 146.1 ahead: CG x 151.4,  3397 g, 118 tubes
+   motors 151.4 ahead: CG x 156.2,  3402 g, 118 tubes
+   motors 156.2 ahead: CG x 160.0,  3411 g, 118 tubes
+   motors 160.0 ahead: CG x 163.1,  3418 g, 118 tubes
+   motors 163.1 ahead: CG x 165.4,  3424 g, 118 tubes
+   motors 165.4 ahead: CG x 167.3,  3428 g, 118 tubes
+   motors 167.3 ahead: CG x 168.7,  3432 g, 118 tubes
+start 0.85 turn 0 snap 1 peak 0: invalid: shell 66.4 L, 118 tubes, longest 383, props 18.4, 3432 g, prop blockage top nan % / bottom nan %
+   motors  52.1 ahead: CG x  73.6,  3285 g, 127 tubes
+   motors  73.6 ahead: CG x  92.0,  3306 g, 127 tubes
+   motors  92.0 ahead: CG x 107.4,  3329 g, 127 tubes
+   motors 107.4 ahead: CG x 120.2,  3349 g, 127 tubes
+   motors 120.2 ahead: CG x 130.6,  3369 g, 127 tubes
+   motors 130.6 ahead: CG x 139.0,  3386 g, 127 tubes
+   motors 139.0 ahead: CG x 145.8,  3400 g, 127 tubes
+   motors 145.8 ahead: CG x 151.2,  3412 g, 127 tubes
+   motors 151.2 ahead: CG x 154.9,  3430 g, 127 tubes
+   motors 154.9 ahead: CG x 157.9,  3435 g, 127 tubes
+   motors 157.9 ahead: CG x 161.1,  3431 g, 127 tubes
+   motors 161.1 ahead: CG x 163.6,  3437 g, 127 tubes
+   motors 163.6 ahead: CG x 165.3,  3443 g, 127 tubes
+   motors 165.3 ahead: CG x 166.7,  3446 g, 127 tubes
+start 1.0 turn 0 snap 0 peak 0: valid: shell 63.7 L, 127 tubes, longest 253, props 19.2, 3446 g, prop blockage top 7.3 % / bottom 14.9 %
+   motors  52.1 ahead: CG x  73.8,  3285 g, 127 tubes
+   motors  73.8 ahead: CG x  92.4,  3307 g, 127 tubes
+   motors  92.4 ahead: CG x 107.9,  3330 g, 127 tubes
+   motors 107.9 ahead: CG x 120.7,  3350 g, 127 tubes
+   motors 120.7 ahead: CG x 131.1,  3370 g, 127 tubes
+   motors 131.1 ahead: CG x 139.6,  3387 g, 127 tubes
+   motors 139.6 ahead: CG x 146.4,  3402 g, 127 tubes
+   motors 146.4 ahead: CG x 151.8,  3414 g, 127 tubes
+   motors 151.8 ahead: CG x 155.1,  3439 g, 127 tubes
+   motors 155.1 ahead: CG x 157.8,  3442 g, 127 tubes
+   motors 157.8 ahead: CG x 161.2,  3432 g, 127 tubes
+   motors 161.2 ahead: CG x 163.8,  3438 g, 127 tubes
+   motors 163.8 ahead: CG x 165.7,  3444 g, 127 tubes
+   motors 165.7 ahead: CG x 167.1,  3447 g, 127 tubes
+start 1.0 turn 0 snap 1 peak 0: valid: shell 63.9 L, 127 tubes, longest 262, props 19.2, 3447 g, prop blockage top 7.1 % / bottom 14.7 %
+structure bar: start 1.0 turn 0 snap 0 peak 0 (63.7 L, longest 253, 3446 g, blockage 7.3 / 14.9 %); picked start 1.0 turn 0 snap 1 peak 0 (blockage 7.1 / 14.7 %)
 
-chosen: start 1.0 (smallest valid shell); motor square 161.9 ahead of the plate centre; motors (301.4, ±139.5) and (22.4, ±139.5); front arms r 332, rear r 141
-L2: base (422.6, 0, 51), axis 15 deg below +x (Spark 24 Oct); front camera horizon, portrait, 74 up its back plane, lens (422, 0, 130); L2 and props out of its view + 2 deg
-shell: 46 nodes (8 on the opening ring), 127 tubes, 82 triangles; tubes 64 .. 253 (mean 169), 21.45 m; node extents 715 x 703 x 253 (h/w 0.35); hull residual 0.05 (C)
+chosen: start 1.0 (smallest valid shell); motor square 165.7 ahead of the plate centre; motors (305.2, ±139.5) and (26.2, ±139.5); front arms r 336, rear r 142
+L2: base (426.4, 0, 51), axis 15 deg below +x (Spark 24 Oct); front camera horizon, portrait, 74 up its back plane, lens (426, 0, 130); L2 and props out of its view + 2 deg
+shell: 46 nodes (8 on the opening ring), 127 tubes, 82 triangles; tubes 64 .. 262 (mean 169), 21.48 m; node extents 715 x 703 x 253 (h/w 0.35); hull residual 0.05 (C)
 largest cell: inscribed circle Ø125 between tube surfaces (C)
-carbon: shell 127 tubes 6/4 (Spark 26 Oct), shortest 64; links 31 rods 3.0 solid, 4.05 m, shortest 18 (core tie rear.1); printed struts (< 33): core tie rear.1 18
-props: shell tubes 19.2 off the swept disks (≥ 12, 3D), nodes 24.1, links 24.7 (L2 tie +1.1) (C)
+carbon: shell 127 tubes 6/4 (Spark 26 Oct), shortest 64; links 32 rods 3.0 solid, 4.60 m, shortest 63 (bay tie -1+1.1); printed struts (< 33): none
+props: shell tubes 19.2 off the swept disks (≥ 12, 3D), nodes 24.1, links 17.1 (core tie front.2) (C)
    inside: props (disks) 18.5 from the nearest face plane (C)
    inside: L2 + camera + apex 7.0 from the nearest face plane (C)
-   inside: arms + motors 23.7 from the nearest face plane (C)
-   inside: hub + plates 8.6 from the nearest face plane (C)
+   inside: arms + motors 23.1 from the nearest face plane (C)
+   inside: hub + plates 8.4 from the nearest face plane (C)
    inside: belly 3.0 from the nearest face plane (C)
 opening: 8 nodes on an ellipse 352 x 209 round the swap zone 240 x 136 (receiver 179.6 x 76.2 M + 30 a side), plane z -57.0 = cartridge bottom - 3; v2 TPU feet the floor contact (z -61.0)
 swap zone (receiver + spare, from the cartridge bottom down): clear (0 mm³, M)
-L2 field: 19.4 % of its hemisphere crossed by tubes and nodes (E; thin members allowed, CLAUDE.md 8)
+prop blockage (Spark 26 Oct, secondary to structure): 7.1 % of the disks' thrust shadowed from above, 14.7 % from below (plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell 7.1 / 13.1 %, links 0.0 / 2.0 %
+L2 field: 19.7 % of its hemisphere crossed by tubes and nodes (E; thin members allowed, CLAUDE.md 8)
 down camera and flow: views checked (lines above list anything in view)
-cage: shell 729 g (tubes 522 E + nodes 207 E), links 45 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
-mass ~3434 g (E; latch set 338.5 M), CG (163.3, 0.5, 18.9) vs thrust centre (161.9, 0): 1.5 off; pack + cartridge out: 2.0 off (2631 g)
-T/W 1.92 (C on E mass, 1650 gf a motor); CG 63 under the prop plane; pitch inertia 83.4 g m² (E, point masses)
-compact: shell hull 63.7 L vs the parts-with-margins hull 35.8 L (C)
-assembly mass 3434 g (E) vs the layout model 3434 g
+cage: shell 730 g (tubes 523 E + nodes 207 E), links 51 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
+mass ~3447 g (E; latch set 338.5 M), CG (167.1, 0.5, 19.1) vs thrust centre (165.7, 0): 1.5 off; pack + cartridge out: 2.0 off (2645 g)
+T/W 1.91 (C on E mass, 1650 gf a motor); CG 63 under the prop plane; pitch inertia 84.2 g m² (E, point masses)
+compact: shell hull 63.9 L vs the parts-with-margins hull 35.8 L (C)
+assembly mass 3447 g (E) vs the layout model 3447 g
+access (straight lines through the shell cells, tool radius + 1 clear, C): FC USB-C: clear line 9 deg off its face normal from (np.float64(-18.0), np.float64(0.0), np.float64(9.8)); Pi 5 USB-C: clear line 3 deg off its face normal from (np.float64(-42.5), np.float64(0.0), np.float64(30.0)); arm 1 top screw v +15: BLOCKED straight up (a stopped prop turned aside); arm 1 top screw v -15: BLOCKED straight up (a stopped prop turned aside); arm 1 bottom screw v +10: BLOCKED; arm 1 bottom screw v -10: clear; arm 2 top screw v +15: clear straight up (a stopped prop turned aside); arm 2 top screw v -15: clear straight up (a stopped prop turned aside); arm 2 bottom screw v +10: clear; arm 2 bottom screw v -10: clear; arm 3 top screw v +15: clear straight up (a stopped prop turned aside); arm 3 top screw v -15: clear straight up (a stopped prop turned aside); arm 3 bottom screw v +10: clear; arm 3 bottom screw v -10: clear; arm 4 top screw v +15: BLOCKED straight up (a stopped prop turned aside); arm 4 top screw v -15: BLOCKED straight up (a stopped prop turned aside); arm 4 bottom screw v +10: clear; arm 4 bottom screw v -10: BLOCKED
