@@ -361,7 +361,7 @@ def build(dm, dc, xB, zB, cam_up=0.0, cam_h=None):
                           dict(field=[[float(v) for v in B + A * L2_BASE_H], [float(v) for v in A], L2_NEG])],   # the L2 scan: no rod in it (Spark 24 Oct)
              m_drone_g=M_DRONE, rear_x=-102.0, pyramid="mast", x_top=max(dm, MAST_X_MIN), x_mast=max(dm, MAST_X_MIN), z_mast=float(WHEEL_Z),
              feet=(77.0, SKID_Y, float(g["PB"]) - 3.5), belly=(77.0, SKID_Y), swap_g=float(SWAP_G + RECEIVER_G), cap_groups={"skid_belly": "t10", "wheel_ring": "t6", "struts": "t10", "nose": "t10", "nose_mount": "t10"}, seat_dz=float(SEAT_DZ),
-             z_rhub=-1.0, z_skirt=2.0, rail_y=36.5, rail_dz=0.0, z_fhub=12.0, x_rhub=-100.0)   # skirt level with the rear hub, high enough that full crush caps clear the box deck   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
+             z_rhub=-1.0, z_skirt=2.0, rail_y=36.5, rail_dz=-2.0, z_fhub=12.0, x_rhub=-100.0)   # skirt level with the rear hub, high enough that full crush caps clear the box deck   # rear hub clamps the bottom plate's rear edge (x -95.5) at its mid plane: its socket bosses
                                                                     # stay above the funnel top and out of the plate (DEFAULT 25 Oct; under the plate they reached the funnel lip)                      # front hub block between the plates: the keels pass over the sled and the cartridge                                   # rear hub nodes and skirt 3.5 under the bottom plate (6 tube ties clear it)   # funnel caps: skid rails clear the down camera board and the legs the opening; wheel ring and struts keep the hook latch plungers 2.0 (G (7))   # crash mass ~3 kg (E, no cap); skid rails under the down camera board (10 tube top 1.9 under it)
     g["P"] = P
     Ng, Mg, fixed_g, _, info = co.geometry(P, CAGE_TOPO, CAGE_SIZES)
@@ -767,7 +767,8 @@ def at_dm(dm_):
         g_ = build(dm_, dc_, xB_, zB_)
         if abs(M_DRONE - m0_) < 5.0: break
     r_ = co.evaluate(g_["P"], CAGE_TOPO, s_); ok_ = r_["violation"] == 0  # reported at the mass it ends with
-    say(f"final: motors {dm_:.1f} ahead, cage {r_['mass_g']:.0f} g sized here, CG {cg_[0] - dm_:+.1f} in x, frame violation {r_['violation']:.3f}")
+    say(f"final: motors {dm_:.1f} ahead, cage {r_['mass_g']:.0f} g sized here, CG {cg_[0] - dm_:+.1f} in x, frame violation {r_['violation']:.3f}"
+        + "".join(f"; {k} {v:+.3f}" for k, v in r_["g"].items() if v > 0))
     return dict(e=float(cg_[0] - dm_), ok=ok_, dm=dm_, sizes=s_, xB=xB_, zB=zB_)
 if os.environ.get("SYS_FINAL_SIZES"):                                 # a settled design to recheck: its topology and sizes at SYS_FINAL_DM, no re-sizing
     fz_ = json.load(open(os.environ["SYS_FINAL_SIZES"])); CAGE_TOPO, CAGE_SIZES = fz_["topo"], fz_["sizes"]

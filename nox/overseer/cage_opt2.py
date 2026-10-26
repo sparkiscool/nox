@@ -395,15 +395,12 @@ def _geometry(p, topo, sizes=None):
                 for sx in (1, -1): node(f"SK{sx:+d}{sy:+d}", (N[f"BF{sx:+d}{sy:+d}"][0], N[f"BF{sx:+d}{sy:+d}"][1], zm_))
                 mem(f"basket rail {sy:+d}", f"SK+1{sy:+d}", f"SK-1{sy:+d}", "skid_belly")
             if topo.get("pack_rails"):                                # battery cradle (Spark 26 Oct: "the battery still does not have enough supports"):
-                zr_, ry_ = fz + 3.5 + p.get("rail_dz", 4.0), p.get("rail_y", 33.0)   # a rail beside each bottom edge of the set, outside its drop-out
-                for sx in (1, -1):                                    # footprint, tied out to the feet and up to the skid X crossing in the pod
-                    node(f"SKR{sx:+d}{sy:+d}", (xc + bx * sx, ry_ * sy, zr_))
+                zr_, ry_ = fz + 3.5 + p.get("rail_dz", 0.0), p.get("rail_y", 36.5)   # a rail beside each bottom edge of the set, outside its drop-out
+                for sx in (1, -1):                                    # footprint; each end tied out to the foot and up to the basket rail node
+                    node(f"SKR{sx:+d}{sy:+d}", (xc + bx * sx, ry_ * sy, zr_))   # (nothing at mid length: the down camera and flow sensor sit over it)
                     mem(f"cradle tie {sx:+d}{sy:+d}", f"SKR{sx:+d}{sy:+d}", f"FT{sx:+d}{sy:+d}", "skid_belly")
-                node(f"SKRm{sy:+d}", (xc, ry_ * sy, zr_))
-                mem(f"cradle rail {sy:+d} a", f"SKR+1{sy:+d}", f"SKRm{sy:+d}", "skid_belly"); mem(f"cradle rail {sy:+d} b", f"SKRm{sy:+d}", f"SKR-1{sy:+d}", "skid_belly")
-                if topo.get("skid_x"):
-                    node(f"SKX{sy:+d}", (xc, by * sy, (wz + fz) / 2))   # the X crossing (it splits the X and basket rods there)
-                    mem(f"cradle post {sy:+d}", f"SKRm{sy:+d}", f"SKX{sy:+d}", "skid_belly")
+                    if topo.get("basket"): mem(f"cradle post {sx:+d}{sy:+d}", f"SKR{sx:+d}{sy:+d}", f"SK{sx:+d}{sy:+d}", "skid_belly")
+                mem(f"cradle rail {sy:+d}", f"SKR+1{sy:+d}", f"SKR-1{sy:+d}", "skid_belly")
         if p.get("pyramid") == "mast":                                # top node on a vertical mast at the thrust centre (70 off every
             node("MB", (p.get("x_mast", dm), 0, p.get("z_mast", wz)))   # disk, out of the prop wash) down to the sled (no tail, Spark 24 Oct)
             for sx in (1, -1):
