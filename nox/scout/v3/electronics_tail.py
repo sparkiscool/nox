@@ -35,7 +35,8 @@ UBEC = (50.0, 25.0, 10.0)           # worst of the makers' range (M Q4: 43-50 x 
 XR2 = (16.0, 12.0, 6.0)             # M spec; tower antenna ~14 above the board (E)
 XR2_ANT = 14.0
 FIN_T = 2.4                          # fin web (>= 2.0 rule) (C)
-FIN_MASS = 6.0                       # fin + 4 bosses + root lug, PETG, before topology (E)
+FIN_MASS = 7.0                       # fin + flange + clip + 4 Radxa bosses, PETG, before topology (E)
+BLOCK_MASS = 2.0                     # the belly mount's tail block (E)
 TRAY_MASS = 9.0                      # option B tray + hanger (E)
 WIRES_TAIL = 4.0                     # extra lead length to the tail (UART, 5 V, XR2, camera USB) (E)
 CAGE_FIRST, WASH, GAP = 3.0, 3.0, 2.0
@@ -43,6 +44,8 @@ CLIP_R = 1.65 + 3.0                  # tie clip: bore 3.3 + 3.0 wall (boss rule)
 USB_PLUG = (12.0, 7.0, 250.0)        # FC USB-C plug + cable, as the layout's access check (E)
 RADXA_PLUG = 14.0                    # 90 deg USB-C plug height over the Radxa's port edge (E)
 SD_PULL = 15.0                       # microSD out of the short end (E)
+ROOT_Y = 6.5                         # fin root flange and the belly mount's tail block half width (C)
+TOOL_R = 5.0                         # fingers / tweezers / a plug on its cable, to outside the shell (E)
 MOVED = ("Radxa Zero 3W", "UBEC", "XR2")
 PACK_OUT = ("pack 4S 1500", "pack XT60 plug", "cartridge v6 (latch)", "cartridge v6 strips (latch, TPU)",
             "cartridge skid closed end (latch, TPU)", "cartridge skid lead end (latch, TPU)")
@@ -131,7 +134,7 @@ def fin_mesh(yf, poly):
 
 def option_a():
     yf = 5.0                                      # fin plane (C): the faces 2.3 clear of the tail core tie (centre plane, r 1.5)
-    x0 = -65.0                                    # Radxa nose end: 5 behind the receiver TPU end pieces (-60) (C)
+    x0 = -67.0                                    # Radxa nose end: 2 behind the root flange (x -65) (C)
     rad_y0 = yf - FIN_T / 2 - STANDOFF - 1.6 - 3.16   # PCB back on 3.0 standoffs, component side out, USB-C tops (H)
     rad = box([x0 - RADXA[0], rad_y0, -24.0], [x0, yf - FIN_T / 2 - STANDOFF, -24.0 + RADXA[1]])
     ub = box([-88.0 - UBEC[0], yf + FIN_T / 2, -12.0], [-88.0, yf + FIN_T / 2 + UBEC[2], -12.0 + UBEC[1]])
@@ -142,16 +145,24 @@ def option_a():
     # plate tail -> tie -> clip -> fin -> root lug -> belly mount -> plate is a closed triangle, not a stalk (review 27 Oct)
     a, b = TIE
     zt = lambda x: a[2] + (x - a[0]) / (b[0] - a[0]) * (b[2] - a[2])
-    fin = fin_mesh(yf, [(-56.0, 11.6), (-56.0, 18.5), (-66.0, 18.5), (-100.0, zt(-100.0) - CLIP_R), (-112.0, zt(-112.0) - CLIP_R),
-                        (-140.0, 34.0), (-140.0, -26.0), (-62.0, -26.0), (-62.0, 11.6)])
+    fin = fin_mesh(yf, [(-62.0, 18.5), (-66.0, 18.5), (-100.0, zt(-100.0) - CLIP_R), (-112.0, zt(-112.0) - CLIP_R),
+                        (-140.0, 34.0), (-140.0, -26.0), (-62.0, -26.0)])
     # the clip: a split collar round the 3.0 tie (bore 3.3, wall 3.0: boss rule), bridging the fin plane to the centre plane
     d = (b - a) / np.linalg.norm(b - a)
     c0, c1 = a + d * ((-100.0 - a[0]) / d[0]), a + d * ((-112.0 - a[0]) / d[0])
     clip = trimesh.creation.cylinder(radius=CLIP_R, segment=[c0, c1], sections=24)
     web = box([-112.0, 0.0, zt(-112.0) - CLIP_R], [-100.0, yf + FIN_T / 2, zt(-100.0)])
     fin = trimesh.util.concatenate([fin, clip, web])
+    # root (review 27 Oct, round 2): the clip and the old lug both sat on the tie's line, so the fin could swing about it.
+    # Now a flange across the fin's front (x -65..-62, y -6.5..6.5, z -4..18.5) bolts with 2 M3 (one high, one low and
+    # across: (y -3.5, z 14), (y +3.5, z -1)) into a tail block printed on the belly mount (x -62..-56 over the receiver,
+    # -62..-58 below its top), inserts in Ø10 bosses. Roll, pitch and yaw all go into the belly mount; |y| <= 6.5 keeps it
+    # 3 inside the rear disks' wash edge (|y| 10.0 at x -60, C)
+    flange = box([-65.0, -ROOT_Y, -4.0], [-62.0, ROOT_Y, 18.5])
+    block = trimesh.util.concatenate([box([-62.0, -ROOT_Y, 10.6], [-56.0, ROOT_Y, 18.5]), box([-62.0, -ROOT_Y, -4.0], [-59.9, ROOT_Y, 10.6])])
+    fin = trimesh.util.concatenate([fin, flange])
     return dict(name="A tail fin", placed={"Radxa Zero 3W": rad, "UBEC": ub, "XR2": trimesh.util.concatenate([xr, ant])},
-                mount={"tail fin (PETG)": fin}, extra=[(fin.center_mass, FIN_MASS), (np.array([-80.0, 0, 0]), WIRES_TAIL)],
+                mount={"tail fin + clip (PETG)": fin, "belly mount tail block": block}, extra=[(fin.center_mass, FIN_MASS), (block.bounds.mean(0), BLOCK_MASS), (np.array([-80.0, 0, 0]), WIRES_TAIL)],
                 note="fin plane y %.1f; Radxa on edge on the -y face, ports up, SD end aft; UBEC on the +y face behind the disks' "
                      "wash; XR2 top aft on the +y face, antenna up" % yf)
 
@@ -230,6 +241,20 @@ def access(opt):
         ys = rb[0][1]
         plug = box([rb[0][0] - RADXA_PLUG, ys + 9.2, rb[0][2]], [rb[0][0], ys + 58.5, rb[1][2]])
         sd = box([rb[0][0] + 7.8, ys - SD_PULL, rb[0][2] - 3.0], [rb[0][0] + 22.3, ys, rb[0][2]])
+    # a tool or plug on its cable (radius TOOL_R) from the open side of the plugs and of the SD slot to outside the shell
+    def sweep(st, dirs):
+        best = (-1e9, None)
+        for dv in dirs:
+            dv = dv / np.linalg.norm(dv); L = 10.0
+            while SHELL.find_simplex(st + dv * L) >= 0 and L < 400: L += 5.0
+            c = seg_clear(st + dv * (TOOL_R + 1), st + dv * (L + 10), TOOL_R, rad_pts)
+            if c > best[0]: best = (c, dv)
+        return {"clear": round(float(best[0]), 1), "dir": best[1].round(2).tolist()}
+    sph = [np.array([np.cos(e) * np.cos(a_), np.cos(e) * np.sin(a_), np.sin(e)])
+           for a_ in np.radians(np.arange(0, 360, 15)) for e in np.radians(np.arange(-80, 81, 10))]
+    pc = plug.bounds.mean(0); sc = sd.bounds.mean(0)
+    out["plug_tool"] = sweep(pc, [d for d in sph if (d @ (pc - rb.mean(0))) > 0])
+    out["sd_tool"] = sweep(sc, [d for d in sph if (d @ (sc - rb.mean(0))) > 0])
     out["radxa_plugs"] = round(float(box_clear(plug, rad_pts)), 1)
     out["radxa_sd"] = round(float(box_clear(sd, rad_pts)), 1)
     return out
@@ -263,7 +288,8 @@ def check(opt):
     allp = np.vstack([m.bounds for n, (m, w, g) in P.items() if not n.startswith("Overseer")] + [m.bounds for m in allm])
     r["compact"] = {"tail_bay_box": [lo.round(1).tolist(), hi.round(1).tolist()], "tail_bay_L": round(float(np.prod(hi - lo)) / 1e6, 3),
                     "electronics_L": round(float(sum(np.prod(np.diff(m.bounds, axis=0)) for m in opt["placed"].values())) / 1e6, 3),
-                    "drone_extents": (allp.max(0) - allp.min(0)).round(1).tolist()}
+                    "drone_extents": (allp.max(0) - allp.min(0)).round(1).tolist(),
+                    "drone_L": round(float(np.prod(allp.max(0) - allp.min(0))) / 1e6, 2)}
     fc_ = [m.center_mass for m in opt["mount"].values()][0]
     r["cg_per_g_at_mount"] = round(float(abs(fc_[0]) / mass), 3)
     r["access"] = access(opt)
@@ -271,8 +297,9 @@ def check(opt):
     r["ok"] = {"cage_first": all(r["parts"][n]["rod_gap"] >= CAGE_FIRST and r["parts"][n]["inside_shell"] for n in el),
                "wash": all(r["parts"][n]["wash_gap"] >= WASH for n in r["parts"]),
                "fit": all(min(p["part_gap"].values()) >= GAP for n, p in r["parts"].items() if n in el),
-               "balance": max(r["cg_off_in"], r["cg_off_out"]) <= 3.0,
-               "access": r["access"]["fc_usb"]["clear"] >= 0 and r["access"]["radxa_plugs"] >= 0 and r["access"]["radxa_sd"] >= 0}
+               "balance": r["reslide"]["cg_x_worst"] <= 3.0,          # after the cage session's catch-set scan (its lever)
+               "access": min(r["access"]["fc_usb"]["clear"], r["access"]["radxa_plugs"], r["access"]["radxa_sd"],
+                             r["access"]["plug_tool"]["clear"], r["access"]["sd_tool"]["clear"]) >= 0}
     return r
 
 

@@ -44,17 +44,17 @@
     "Radxa Zero 3W": {
      "bounds": [
       [
-       -130.0,
+       -132.0,
        -4.0,
        -24.0
       ],
       [
-       -65.0,
+       -67.0,
        0.8,
        6.0
       ]
      ],
-     "rod_gap": 11.0,
+     "rod_gap": 9.3,
      "nearest_rod": [
       "cage ",
       [
@@ -69,15 +69,15 @@
       ]
      ],
      "inside_shell": true,
-     "wash_gap": 6.9,
+     "wash_gap": 7.3,
      "part_gap": {
-      "receiver v3 (latch)": 7.2,
-      "receiver TPU end pieces (latch, E)": 5.0,
-      "cartridge v6 (latch)": 13.5,
-      "FC": 32.6,
-      "frame plate (Bee35 carbon)": 20.2,
-      "mount + nose legs (Scout)": 9.8,
-      "flow MTF-02P": 52.3
+      "receiver v3 (latch)": 9.2,
+      "receiver TPU end pieces (latch, E)": 7.0,
+      "cartridge v6 (latch)": 15.5,
+      "FC": 34.6,
+      "frame plate (Bee35 carbon)": 21.7,
+      "mount + nose legs (Scout)": 11.7,
+      "flow MTF-02P": 54.1
      }
     },
     "UBEC": {
@@ -158,16 +158,16 @@
       "flow MTF-02P": 109.3
      }
     },
-    "tail fin (PETG)": {
+    "tail fin + clip (PETG)": {
      "bounds": [
       [
        -140.0,
-       -4.6,
+       -6.5,
        -26.0
       ],
       [
-       -56.0,
-       6.2,
+       -62.0,
+       6.5,
        54.3
       ]
      ],
@@ -186,40 +186,79 @@
       ]
      ],
      "inside_shell": true,
-     "wash_gap": 3.5,
+     "wash_gap": 3.8,
      "part_gap": {
-      "receiver v3 (latch)": 2.0,
+      "receiver v3 (latch)": 4.2,
       "receiver TPU end pieces (latch, E)": 2.0,
       "cartridge v6 (latch)": 10.5,
-      "FC": 23.7,
-      "frame plate (Bee35 carbon)": 6.6,
-      "mount + nose legs (Scout)": 0.2,
+      "FC": 29.4,
+      "frame plate (Bee35 carbon)": 12.3,
+      "mount + nose legs (Scout)": 6.2,
       "flow MTF-02P": 47.1
+     }
+    },
+    "belly mount tail block": {
+     "bounds": [
+      [
+       -62.0,
+       -6.5,
+       -4.0
+      ],
+      [
+       -56.0,
+       6.5,
+       18.5
+      ]
+     ],
+     "rod_gap": 38.4,
+     "nearest_rod": [
+      "spoke",
+      [
+       -81.9,
+       104.4,
+       -47.5
+      ],
+      [
+       -57.8,
+       32.7,
+       -34.0
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 3.2,
+     "part_gap": {
+      "receiver v3 (latch)": 1.0,
+      "receiver TPU end pieces (latch, E)": 2.0,
+      "cartridge v6 (latch)": 8.4,
+      "FC": 23.4,
+      "frame plate (Bee35 carbon)": 6.5,
+      "mount + nose legs (Scout)": 0.2,
+      "flow MTF-02P": 50.0
      }
     }
    },
    "cg_in": [
-    -2.77,
+    -3.11,
     0.29,
-    -3.16
+    -3.11
    ],
    "cg_out": [
-    0.36,
-    0.43,
-    3.89
+    -0.16,
+    0.44,
+    3.92
    ],
-   "mass": 644.0,
-   "cg_off_in": 2.79,
-   "cg_off_out": 0.56,
+   "mass": 647.0,
+   "cg_off_in": 3.12,
+   "cg_off_out": 0.47,
    "reslide": {
-    "catch_set_dx": 2.6,
-    "cg_x_worst": 1.31
+    "catch_set_dx": 3.5,
+    "cg_x_worst": 1.12
    },
    "compact": {
     "tail_bay_box": [
      [
       -140.0,
-      -4.6,
+      -6.5,
       -26.0
      ],
      [
@@ -228,15 +267,16 @@
       54.3
      ]
     ],
-    "tail_bay_L": 0.141,
+    "tail_bay_L": 0.153,
     "electronics_L": 0.024,
     "drone_extents": [
      378.9,
      278.3,
      125.1
-    ]
+    ],
+    "drone_L": 13.19
    },
-   "cg_per_g_at_mount": 0.16,
+   "cg_per_g_at_mount": 0.156,
    "access": {
     "fc_usb": {
      "clear": 6.9,
@@ -251,8 +291,24 @@
       -0.64
      ]
     },
-    "radxa_plugs": 2.6,
-    "radxa_sd": 2.5
+    "plug_tool": {
+     "clear": 6.2,
+     "dir": [
+      0.26,
+      -0.97,
+      0.0
+     ]
+    },
+    "sd_tool": {
+     "clear": 6.1,
+     "dir": [
+      -0.26,
+      -0.97,
+      0.0
+     ]
+    },
+    "radxa_plugs": 3.0,
+    "radxa_sd": 0.9
    },
    "ok": {
     "cage_first": true,
@@ -459,7 +515,8 @@
      378.9,
      278.3,
      125.1
-    ]
+    ],
+    "drone_L": 13.19
    },
    "cg_per_g_at_mount": 0.161,
    "access": {
@@ -476,6 +533,22 @@
       -0.64
      ]
     },
+    "plug_tool": {
+     "clear": -2.9,
+     "dir": [
+      -0.04,
+      -0.17,
+      -0.98
+     ]
+    },
+    "sd_tool": {
+     "clear": 6.5,
+     "dir": [
+      -0.0,
+      -1.0,
+      0.0
+     ]
+    },
     "radxa_plugs": -1.0,
     "radxa_sd": -1.0
    },
@@ -483,7 +556,7 @@
     "cage_first": true,
     "wash": false,
     "fit": true,
-    "balance": false,
+    "balance": true,
     "access": false
    }
   }

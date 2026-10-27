@@ -1,6 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
-- 27 Oct (Scout electronics mount, Spark: pointed tail): concept A, one PETG fin in the race-car tail clipped to the tail core tie: Radxa on edge, UBEC, XR2; out of the prop wash, rods ≥ 10.9 clear; CG needs catch set ~2.5 fwd (DEFAULT; alt B crosswise tray: 3.8 aft). `runs/scout_electronics/v1/`
+- 27 Oct (Scout electronics mount, Spark: pointed tail): concept A, PETG fin in the race-car tail bolted to a belly mount block, C-clip fuse on the tail tie: Radxa on edge, UBEC, XR2; out of the wash, walls ≥ 13.9; CG needs catch set 3.5 fwd (DEFAULT; alt B tray: 3.8 aft). `runs/scout_electronics/v1/`
 - 27 Oct (Scout electronics mount, Spark): list confirmed (FC AIO, XR2, MTF-02P, Radxa + microSD, UBEC, camera, wiring); no lights; battery side (pack, XT60, cap, pads, diode) left out of the mount. `scout/v3/README.md`, `scout/scout.md`
 - 27 Oct (Overseer core, Spark: "do we really need that many"): 4 plate bolts, not 6 ((24, ±36.5), (-65, ±22.5)): 193 N a bolt in the 35 g crash vs 137 (E); coupons 16.0 / 28.1 g, solid PASS. `runs/overseer_core/v1/`
 - 27 Oct (Overseer core, review): FC stack turned 45° into the top plate's slots ("the lines", r 21.57; +X hole at the cutout edge, CHECK), on bench-set M3 studs with nuts from above; front bay bars inside |y| 20 (arm envelopes); access 34/35 (Pi plugs vs v5 body ties: cage). `runs/overseer_core/v1/`
