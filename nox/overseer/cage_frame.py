@@ -51,9 +51,9 @@ def build():
         elif on:                                                        # a link from a cage node to the core
             i = on[0]; other = q if np.linalg.norm(N[i] - p) < 0.6 else p; C_ = f.node(other); f.member(nid[i], C_, sec_of(k), k); f.fix(C_)
     W0 = np.array([368.0, 112.0, 70.0])                                 # wing struts (head_mount.py: 20 deg+ from the node's tubes)
-    struts = []
+    struts = []                                                         # none with the head on the cage (alt V5_HEAD_ON=cage)
     for i, q in enumerate(N):
-        if abs(q[1]) > 150 and q[0] > 300:
+        if abs(q[1]) > 150 and q[0] > 300 and os.environ.get("V5_HEAD_ON", "core") != "cage":
             w = W0 * [1, np.sign(q[1]), 1]; d = (w - q) / np.linalg.norm(w - q)
             tub = [N[b if a == i else a] - q for a, b in CG["rods"] if i in (a, b)]
             if all(math.degrees(math.acos(np.clip(d @ (t / np.linalg.norm(t)), -1, 1))) >= 20 for t in tub):
@@ -116,7 +116,7 @@ def main():
     say = lambda s: (print(s), L_.append(s))
     say(f"# Overseer cage frame model v1 (F, on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa)\n")
     say(f"Cage `nox/overseer/cage_v5_shell.json` ({len(N)} nodes, {len(CG['rods'])} tubes 6/4) + {len(links)} links 3.0 on the core (fixed); "
-        f"sensor head rigid on 2 keels + 4 braces, holding node {HEAD_NODE} and wing struts to nodes {struts}. Drone {MASS * 1000:.0f} g: crash force "
+        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and wing struts to nodes {struts}. Drone {MASS * 1000:.0f} g: crash force "
         f"{F_crash:.0f} N through the first-touching member, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
     say(f"## Buckling (pinned ends): {len(bad_b)} members at or over 1.0 x their Euler load")
     for b_, k, L in bad_b[:20]: say(f"- {k}: {b_:.2f} x Pcr (L {L:.0f}; {worst[k]['case_b']})")

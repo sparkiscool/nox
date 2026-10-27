@@ -5,6 +5,7 @@ coming from the body"): concept check of three head supports on the frame model 
   B  cage only: no keels, no braces; the head holds the front centre node (17) and the wing struts to the side nodes (6/4 tube)
   C  B + top struts (6/4 tube) from the guard ring's top to the cage's top nodes behind it (the centre one and the two sides)
   D  B + the centre top strut only
+  Z  cage only, no struts at all: the head holds the front centre node (17) and its 4 tubes, nothing else
   G  A without the 4 L2 braces (the 2 keels only);  H  A without the 2 keels (the 4 braces only)
   F  B + struts to every node in reach: the centre top, the two top-side front nodes, the base loop's front node
 
@@ -69,7 +70,7 @@ def build(var, soft):
             f.member(end(i, other), C_, sec, k); f.fix(C_); add_m(nid[i], np.linalg.norm(p - q) * gpm / 2000)
     W0 = np.array([368.0, 112.0, 70.0]); struts = []
     for i, q in enumerate(N):                                      # wing struts (head_mount.py: 20 deg+ from the node's tubes)
-        if abs(q[1]) > 150 and q[0] > 300:
+        if abs(q[1]) > 150 and q[0] > 300 and var != "Z":
             w = W0 * [1, np.sign(q[1]), 1]; d = (w - q) / np.linalg.norm(w - q)
             tub = [N[b if a == i else a] - q for a, b in CG["rods"] if i in (a, b)]
             if all(math.degrees(math.acos(np.clip(d @ (t / np.linalg.norm(t)), -1, 1))) >= 20 for t in tub):
@@ -143,13 +144,13 @@ def run(var, soft):
                 frame_modes_hz=[round(float(h), 1) for h in hz], head_mode_hz=head_mode, over=over, **info)
 
 
-TITLE = {"A": "keels + braces (v5)", "B": "cage only", "C": "cage only + 3 top struts", "D": "cage only + centre top strut", "F": "cage only + 4 struts", "G": "2 keels only", "H": "4 braces only"}
+TITLE = {"A": "keels + braces (v5)", "B": "cage only", "C": "cage only + 3 top struts", "D": "cage only + centre top strut", "F": "cage only + 4 struts", "G": "2 keels only", "H": "4 braces only", "Z": "front node only"}
 
 
 def picture(res, path):
     import matplotlib; matplotlib.use("Agg"); import matplotlib.pyplot as plt
     fig, axs = plt.subplots(2, 4, figsize=(22, 10)); axs = axs.ravel()
-    for ax, var in zip(axs, "ABCDFGH"):
+    for ax, var in zip(axs, "ABCDFGHZ"):
         f, nid, H, Lc, mass, info = build(var, False)
         for m in f.M:
             a, b = f.X[m["a"]], f.X[m["b"]]; nm = m["name"]
@@ -170,14 +171,14 @@ def picture(res, path):
     axs[0].plot([], [], color="#d1495b", lw=2.4, label="keels, L2 braces (to the core)")
     axs[0].plot([], [], color="#2a9d8f", lw=2.4, label="head to cage struts")
     axs[0].plot([], [], color="#4a6fa5", label="cage tubes"); axs[0].plot([], [], "k^", label="core (fixed)")
-    axs[0].legend(loc="lower left", fontsize=7); axs[-1].axis("off")
+    axs[0].legend(loc="lower left", fontsize=7)
     fig.suptitle("Overseer: L2 head held from the core vs by the cage (frame model F on E, cage v5)")
     fig.tight_layout(); fig.savefig(path, dpi=110); plt.close(fig)
 
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    res = [run(v, s) for v in "ABCDFGH" for s in (False, True)]
+    res = [run(v, s) for v in "ABCDFGHZ" for s in (False, True)]
     json.dump(res, open(os.path.join(OUT, "result.json"), "w"), indent=1)
     picture(res, os.path.join(OUT, "concept.png"))
     for r in res: print(r)

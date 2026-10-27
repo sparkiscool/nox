@@ -123,6 +123,9 @@ LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()
 lr = lambda k: SHELL_R if k in LINK6 else ROD_R
 lgpm = lambda k: SHELL_GPM if k in LINK6 else ROD_GPM
 PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
+HEAD_ON_CAGE = os.environ.get("V5_HEAD_ON", "core") == "cage"          # alt (V5_HEAD_ON=cage): the head on the cage's front centre node only, no keels,
+# braces or wing struts (Spark 27 Oct tried it: ~32 Hz on TPU nodes, F on E, runs/overseer_head_cage/concept); Spark then: "keep the design we have
+# right now i need the lidar to have max performance": the keels and L2 braces stay (A, the stiffest: 200 / 119 Hz rigid / TPU)
 HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
 CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
                                                                    # ties, guard ring and its struts, camera guards and brackets) become one printed
@@ -687,7 +690,7 @@ def attach(g, nodes, ring_ids):
     # L2 braces (27 Oct review: the 4 ties land on the flat front face and the keels root 24 apart, a stalk): each apex lug,
     # low and high, also to its side's front arm beam just outboard of the plates, so the seat is a braced pyramid on the core
     g["braces"] = []
-    for sy in (1, -1):
+    for sy in (() if HEAD_ON_CAGE else (1, -1)):
         (mx, my), (r0, m1, ht) = next(((m_, a_) for m_, a_ in zip(mxy, g["axes"]) if m_[0] > g["dm"] and m_[1] * sy > 0))
         u = (np.asarray(m1) - r0) / np.linalg.norm(np.asarray(m1) - r0)
         for out_ in (30.0, 40.0, 50.0, 60.0):
@@ -700,7 +703,7 @@ def attach(g, nodes, ring_ids):
                 for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
                     extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), root)
                 g["braces"].append(round(out_, 0)); break
-    extra.update(g["keels"])
+    if not HEAD_ON_CAGE: extra.update(g["keels"])
     hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
     cr, cn_ = cam_guards(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
 
@@ -714,6 +717,8 @@ def attach(g, nodes, ring_ids):
     if PRINTED_HEAD:                                                   # the head's short rods out: the printed head carries the guards (ring, camera
         head = {k: extra.pop(k) for k in list(extra) if k.startswith(("L2 tie", "halo", "cam guard"))}   # bars) and reaches the cage nodes they reached
         g["head_attach"] = sorted({tuple(np.round(np.asarray(b_, float), 2)) for k, (a_, b_) in head.items() if "strut" in k or "tie" in k})
+        if HEAD_ON_CAGE:                                               # the front centre node only (the head's own node, printed in it)
+            g["head_attach"] = [max(g["head_attach"], key=lambda q_: q_[0] - 10 * abs(q_[1]))]
         g["head_guards"] = {k: v for k, v in head.items() if not ("strut" in k or "tie" in k)}
         g["head_budget"] = (sum(np.linalg.norm(np.subtract(b_, a_)) for a_, b_ in head.values()) * ROD_GPM + 1.5 * len(g["halo_nodes"]) + CAM_BRACKET_G)
         g["head_topo"] = max(0.0, g["head_budget"] - 1.5 * len(g["halo_nodes"])
@@ -1029,7 +1034,7 @@ if PRINTED_HEAD:
               drawn_mesh="parts/" + fname(HEADN))
     json.dump(HS, open(os.path.join(OUT, "head_system.json"), "w"), indent=1)
     say(f"sensor head mount (Spark 27 Oct: a topology printed mount instead of the little rods): drawn seat, lugs, camera pads, guard ring and camera "
-        f"guard bars; it holds {len(g['head_attach'])} cage nodes (the cage as it is) and takes the keels and braces; {HEAD_SYS_G:.0f} g in the system "
+        f"guard bars; it holds {len(g['head_attach'])} cage nodes (the cage as it is){'' if HEAD_ON_CAGE else ' and takes the keels and braces'}; {HEAD_SYS_G:.0f} g in the system "
         f"model (E: seat and lugs, camera plates, guards, joining material {g['head_topo']:.0f} g held to the rods it replaces); requirements in head_system.json")
 # ---------------------------------------------------------------- access (rule 2: reachable without taking another part off)
 # straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),

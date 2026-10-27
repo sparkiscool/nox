@@ -18,7 +18,11 @@ Target: sensor mounts first mode ≥ 100 Hz (L, DEFAULT).
 
 **Result.** With TPU nodes, every cage-only option stays near 50 Hz, however many cage nodes the head holds. The cage itself sits soft on its TPU joints, so more struts to it do not help. A cage-only head is half the target stiffness and moves 6 mm in a nose hit. The body rods make the lidar stiff: the 4 L2 braces alone reach 101 Hz, while the 2 keels alone reach 44.
 
-**Decision (DEFAULT 27 Oct):** H. The 2 keels go and the 4 L2 braces stay: 4 rods from the body instead of 6, at 101 Hz, which only just meets the target. Alt: cage-only D (1 strut, ~49 Hz, E) if Spark waives the 100 Hz for the L2. Alt: keep A (119 Hz, 6 rods).
+**Spark 27 Oct:** "just do it with the least amount of rods possible" (Z below: the front node only, 32 Hz TPU, 15 mm nose hit), then "nevermind just keep the design we have right now i need the lidar to have max performance": **A stays** (2 keels + 4 L2 braces, the stiffest). Z kept as `V5_HEAD_ON=cage`.
+
+| Z front node only, no struts | 0 | 65 / 32 | 15.3 | 0 |
+
+Earlier DEFAULT (superseded): H. The 2 keels go and the 4 L2 braces stay: 4 rods from the body instead of 6, at 101 Hz, which only just meets the target. Alt: cage-only D (1 strut, ~49 Hz, E) if Spark waives the 100 Hz for the L2. Alt: keep A (119 Hz, 6 rods).
 
 **Frame model fix found here.** `Frame.solve` regularised every free dof with 1e-9 x the mean diagonal. The stiff "rigid" head links (E 1e8) pushed that mean up, so every node sat on ~100 N/mm to ground and frame model v1 read low. It now uses 1e-10 x the median diagonal. Converged: rigid-link E 1e5..1e8 gives the same worst member (2.32) and head mode (200 Hz) on A. `cage_frame.py` rerun (`runs/overseer_frame/v1/`): 9 more links to 6/4 tube, then 6 members still buckle in the 35 g single-node crash: core ties left.1 / right.1 2.17 (L 276), left.2 / right.2 1.32 / 1.18 (L 337), shell tubes 11-18 / 12-19 1.15 (L 417). All are already 6/4 tube. Next: split the 2 tubes and shorten the 4 core ties, then rerun until none (the system pass).
 

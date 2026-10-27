@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer, Spark): head stays on the keels + 4 L2 braces ("keep the design we have right now i need the lidar to have max performance"): 200 / 119 Hz rigid / TPU, the stiffest option; head-on-cage kept as alt `V5_HEAD_ON=cage` (32 Hz). Frame: 6 members still buckle (4 core ties 1.2..2.2, tubes 11-18 / 12-19 1.15): next.
 - 27 Oct (Overseer, Spark): L2 on the cage tried (`head_cage_concept.py`, `runs/overseer_head_cage/concept/`): cage-only ~50 Hz on TPU nodes vs 100 target; DEFAULT keep 4 L2 braces, drop 2 keels (101 Hz); alt cage-only D. Frame solver regularisation bug fixed: 9 links to 6/4, 6 members still buckle (core ties, 2 side tubes), node runs stopped.
 - 27 Oct: Overseer v5 docs: one head mount mass (100 g E, system model = head_system.json), mass 3178 g, T/W 2.08, shell 63 tubes 15.9 m, L2 base 384, camera field cones per lens; `layout_v5.py`, `runs/overseer_layout/v5/summary.md`.
 - 27 Oct (Overseer, Spark): rod socket coupons v1 ready to print: 6 mm tube (bores 6.30/6.45/6.60) and 3 mm rod (3.30/3.45/3.60), glue rings, floor vent, entry chamfer; solid PASS. Spark picks the bore. `print/rod_coupon_*_v1.stl`
