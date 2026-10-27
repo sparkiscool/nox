@@ -112,3 +112,5 @@ it  36 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000
 it  36 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 66.5s
 it  37 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 67.3s
 it  37 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 67.3s
+it  38 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 64.2s
+it  38 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 64.2s
