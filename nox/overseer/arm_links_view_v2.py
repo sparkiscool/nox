@@ -25,7 +25,7 @@ for w in ("front", "rear"):
     for mir in (False, True):
         parts.append((A.arm_to_drone(tm(B["drawn"]), F, mir), "#55606b", 1.0))
         parts.append((A.arm_to_drone(tm(B["env"]), F, mir), "#7fb3c9", 0.10))
-        if w == "front":
+        if not B["rods"].is_empty():
             parts.append((A.arm_to_drone(tm(B["rods"]), F, mir), "#111417", 1.0))
     node = np.array(A.SPOKE_NODE[w]); tag = "1" if w == "front" else "2"
     for k, (p, q) in links.items():
@@ -57,11 +57,11 @@ for k, (title, el, az) in enumerate((("iso", 24, -120), ("plan (nose to the righ
     ax.set_xlim(-160, 400); ax.set_ylim(-280, 280); ax.set_zlim(-90, 110); ax.set_box_aspect((560, 560, 200))
     ax.view_init(el, az); ax.set_axis_off(); ax.set_title(title, fontsize=11)
 wn = J["worst_N"]
-fig.suptitle("Overseer arms v2: the cage attachments (red: 3 spokes from one node beside each motor, off the screw key column "
+fig.suptitle(os.environ.get("NOX_VIEW_TITLE", "Overseer arms v2") + ": the cage attachments (red: 3 spokes from one node beside each motor, off the screw key column "
              "(blue dashes); orange: 2 L2 braces into the front beam, inside the arm so the top stays flat)\n"
              f"worst summed crash force from the frame model: front tip {wn['arm 1 tip']:.0f} N, rear tip {wn['arm 2 tip']:.0f} N, "
              f"front beam braces {wn['arm 1 beam (L2 braces)']:.0f} N (F)", fontsize=10)
 fig.tight_layout()
-out = os.path.join(ROOT, "runs", "overseer_arms", "v2", "links.png")
+out = os.environ.get("NOX_VIEW_OUT", os.path.join(ROOT, "runs", "overseer_arms", "v2", "links.png"))
 os.makedirs(os.path.dirname(out), exist_ok=True)
 fig.savefig(out, facecolor="white"); print(out)

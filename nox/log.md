@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms, system pass after 3 strikes each): rear v4: solid PASS, 96 g, modes 277 Hz, flight 0.09, handling 0.35, cage crash 1.09. v5 front + rear: 6/4 carbon tube chords (bore 6.2, 20 sockets), rear shoulders, solid root, flanges; braces-to-core asked of the cage. `nox/overseer/arm_topo_v5.py`
 - 27 Oct (Overseer arms): front v3 FAIL (strike 3: v1 unchecked, v2, v3): solid (5 walls 1.1..1.5), 165 g, modes 104 / 123 Hz, cage crash 1.94, handling 0.65; rods OK; bed fits on the diagonal (168 square, C). Back to the system pass: cage loads (front tip 1.1 kN, braces 0.9 kN) vs 3.0 rod chords. Rear v4 running here (its box never started).
 - 27 Oct (Overseer arms): front v2 built here (layout done on its box): 93.1 g, 1 body, solid FAIL (1.2 wall under a bottom rod bore), root open middle: flight 1.58, handling 5.5, cage crash 9.1. Front v3 started: solid root block, flanges to x 50, bottom rods z 5.5, gen 45. `nox/overseer/arm_topo_v3f.py`
 - 27 Oct (Overseer arms): rear v3: 80.9 g, solid PASS, flight 0.09, handling 0.26, modes 268 / 274 Hz; cage crash 1.22 on the arm top face past the top plate edge (pivot). Rear v4 started: drawn root flanges 6 thick to x 40 (third rear version). `nox/overseer/arm_topo_v4.py`, `arm_strength_band.py`

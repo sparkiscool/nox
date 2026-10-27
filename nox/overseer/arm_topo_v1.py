@@ -59,12 +59,21 @@ MOTOR_DEG = {"front": 45.0, "rear": 135.0}     # arm 1 / arm 2 diagonal (left si
 # there and is epoxied), blind at the motor end inside the pocket wall. Drawn: a socket at each rod end; the topology
 # webs, root and pad join them, the rods are stiff inserts in its FE (Part.insert).
 ROD_D, ROD_BORE = 3.0, 3.2      # bore 3.2: Spark's pick from the printed coupons (27 Oct, P; OD + 0.3 was loose in PETG)
+ROD_ID = 0.0                          # solid rod
+CHORD = os.environ.get("NOX_ARM_CHORD", "rod3")
+if CHORD == "tube6":                  # system pass after 3 strikes (27 Oct): 6/4 carbon tube chords (the cage's stock), bore 6.2
+    ROD_D, ROD_BORE, ROD_ID = 6.0, 6.2, 4.0
 SHOULDER = {"front": (25.0, 35.0, 9.0)}              # arm-frame x, |y|, plan radius of the shoulder envelope disc
+if CHORD == "tube6":
+    SHOULDER["rear"] = tuple(float(v) for v in os.environ.get("NOX_ARM_REAR_SHOULDER", "20,28,9").split(","))
 ROD_TIP = (15.0, 12.0)                               # rod end: x = L - 15, |y| 12 (r 19.2 from the motor axis, in the wall)
 ROD_Z = tuple(float(v) for v in os.environ.get("NOX_ARM_ROD_Z", "41.0,4.0").split(","))   # top / bottom rod centres
                                                      # (v3: 39.5 / 5.5, front v2 read a 1.2 wall under the bottom bore)
-CHORD_SKIN = 2.65                     # socket wall round the bore (>= skin 2.5)
+CHORD_SKIN = 2.65 if CHORD == "rod3" else 2.5   # socket wall round the bore (>= skin 2.5)
 SOCKET_L = 18.0                       # drawn socket at each rod end (6 x the rod: epoxy bond ~ 2 MPa x pi x 3 x 18 = 340 N, E)
+if CHORD == "tube6":
+    SOCKET_L = 20.0                   # tube: epoxy ~2 MPa x pi x 6 x 20 = 750 N an end (E)
+ROD_AREA = math.pi / 4 * (ROD_D ** 2 - ROD_ID ** 2)   # carbon section carried by each chord
 E_CARBON = 120000.0                   # MPa, pultruded 3.0 rod along its axis (E)
 RHO_CARBON = 1.55                     # g/cm3 (E)
 E_PETG = 2780.0                       # MPa, nox/topo/material.py
@@ -345,7 +354,7 @@ def setup_for(which):
         p = Part(f"overseer_arm_{which}", h, B["drawn"], B["cuts"], B["env"], build="-z", material="PETG")
         for k_, (p0, p1) in enumerate(chords(which, F)):
             rr = max(ROD_BORE / 2, 0.9 * h)              # a fat enough cylinder to stay connected on the coarse grid
-            p.insert(f"rod {k_}", rod_m(p0, p1, rr), E_CARBON / E_PETG, area_mm2=math.pi * (ROD_D / 2) ** 2,
+            p.insert(f"rod {k_}", rod_m(p0, p1, rr), E_CARBON / E_PETG, area_mm2=ROD_AREA,
                      length_mm=float(np.linalg.norm(p1 - p0)))
         p.support("default", B["sup"])
         p.support("bosses", B["bosses"])        # review 27 Oct: the joint as 4 inserts only (no face contact)
@@ -450,7 +459,7 @@ def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     # rods: carbon along x; the voxel cross-section scaled to the real Ø3 area
     nrod = max(rod.sum(), 1)
     rod_len = sum(float(np.linalg.norm(p1 - p0)) for p0, p1 in chords(which, F))
-    area_fix = (math.pi * (ROD_D / 2) ** 2 * rod_len) / (nrod * h ** 3) if rod.any() else 1.0
+    area_fix = (ROD_AREA * rod_len) / (nrod * h ** 3) if rod.any() else 1.0
     Ee = np.where(motor.ravel(), 50.0, np.where(rod.ravel(), E_CARBON / mat.E * area_fix, 1.0))[on]   # motor + prop stiff
     rho = mat.density * 1e-3 * h ** 3 * 1e-3                    # kg per PETG cell
     me = np.where(motor.ravel(), 0.0, np.where(rod.ravel(), rho * RHO_CARBON / mat.density * area_fix, rho))[on]
