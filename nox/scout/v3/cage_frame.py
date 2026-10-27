@@ -1,15 +1,15 @@
-"""Scout cage frame model (F): the v11 race-car cage (every rod 3.0 solid carbon), the 6 saddle ties into the core and the camera
-on its 4 snap clips, under the system cases of dimensions.md L. Checks every member (buckling, stress, handling) and the camera
+"""Scout cage frame model (F): the v12 race-car cage (every rod 3.0 solid carbon, or 6/4 tube on the sized list), the 8 saddle ties into the core and
+the camera mount v1 on its 4 snap clips, under the system cases of dimensions.md L. Checks every member (buckling, stress, handling) and the camera
 mount's first mode, and writes the forces each node socket really carries, for the node topology runs (nox/scout/v3/cage_node.py).
 
 Model (E properties: carbon E 100 GPa, allowables 1000 / 600 MPa):
 - cage nodes rigid joints (PETG, epoxied 3.2 sockets); shell rods pinned both ends for buckling (k 1.0, conservative);
 - the saddle ties' saddle ends fixed (the saddle is bolted to the plate, the core held), k 0.7;
-- the camera + cradle one rigid body on its 4 clips, which split their rods (the clips grip, requirement).
+- the camera + mount one rigid body on its 4 clips, which split their rods (the clips grip, requirement).
 Cases: crash 35 g through the most extreme node, 14 directions (the drone's mass, the core held); flight 4 g on the cage and camera
 masses; handling 50 N at mid-span of each rod (closed form). Modes: the lowest 3 with lumped masses.
 
-python3 nox/scout/v3/cage_frame.py [out]  -> runs/scout_frame/v1/ (summary.md, members.json, node_loads.json)
+python3 nox/scout/v3/cage_frame.py [out]  -> runs/scout_frame/v3/ (summary.md, members.json, node_loads.json)
 """
 import os, sys, json, math
 import numpy as np
@@ -18,18 +18,19 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 from frame_model import Frame, tube
 
-RUN = os.environ.get("SCOUT_FRAME_RUN", os.path.join(ROOT, "runs", "scout_layout", "v11"))
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scout_frame", "v1")
+RUN = os.environ.get("SCOUT_FRAME_RUN", os.path.join(ROOT, "runs", "scout_layout", "v12"))
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scout_frame", "v3")
 CG = json.load(open(os.path.join(RUN, "cage_shell.json"))); RES = json.load(open(os.path.join(RUN, "result.json")))
 G = 9.81
-MASS = RES["mass"] / 1000.0                        # kg, the drone (E)
+MASS = sum(p["mass_g"] for p in json.load(open(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")))["parts"]) / 1000.0   # kg, the drone (E, the assembly)
 CRASH, FLIGHT, HANDLE = 35.0, 4.0, 50.0            # g, g, N (dimensions.md L; handling E)
 SIG_T, SIG_C = 1000.0, 600.0                       # MPa allowables, pultruded carbon (E)
 ROD3 = tube(3.0, 0.0); TUBE6 = tube(6.0, 4.0); RIGID = dict(E=100e6, G=40e6, A=1e3, I=1e5, J=2e5, c=5.0)
 ROD_GPM = 7.07 * 1.55e-3                           # g/mm, 3.0 solid carbon (E)
+TUBE_GPM = 15.71 * 1.55e-3                         # g/mm, 6/4 carbon tube (E)
 NODE_G, RING_NODE_G = 1.5, 4.5                     # g (E, layout_v3.py)
-CLIPS = [(109.3, 18.0, 61.5), (120.3, 20.5, 24.2)]  # the camera's snap clips (+y; mirrored), runs/scout_layout/v11/summary.md
-CAM_C, CAM_G = (139.0, 0.0, 42.0), 27.0             # camera + cradle + arms + clips, g at their CG (E)
+CLIPS = [(110.5, 18.0, 61.1), (122.6, 18.0, 11.5)]  # the camera mount v1's snap clips (+y; mirrored) on rods 7-8 and 14-15 (v12, camera_mount.py)
+CAM_C, CAM_G = (136.0, 0.0, 41.7), 31.8             # camera + mount v1 + 2 collars, g at their CG (M mount, E camera; runs/scout_camera_mount/v1)
 K_TIE = 0.7                                        # a saddle tie: epoxied into the PETG saddle (~ fixed), pinned at its cage node
 N = np.array(CG["nodes"], float); nR = len(CG["open"][0]["ring"])
 SHELL_SEC = TUBE6 if os.environ.get("SCOUT_FRAME_SHELL") == "6" else ROD3      # variants: 6/4 tube shell, 6/4 tube ties (Spark rule: 3.0)
@@ -38,12 +39,16 @@ _U6 = os.environ.get("SCOUT_FRAME_UP6")                                         
 UP6 = set(json.load(open(_U6))) if _U6 and os.path.exists(_U6) else set()
 
 
+def seg_d(c, p, q):
+    t = np.clip(np.dot(c - p, q - p) / np.dot(q - p, q - p), 0, 1); return np.linalg.norm(c - (p + t * (q - p)))
+
+
 def build():
     f = Frame(); nid = [f.node(p) for p in N]; rods = [tuple(r) for r in CG["rods"]]
     clips = [np.array(c) * [1, s, 1] for c in CLIPS for s in (1, -1)]
     split = {}
     for c in clips:                                                      # the rod each clip sits on
-        best = min(rods, key=lambda r: np.linalg.norm(np.cross(N[r[1]] - N[r[0]], c - N[r[0]])) / np.linalg.norm(N[r[1]] - N[r[0]]))
+        best = min(rods, key=lambda r: seg_d(c, N[r[0]], N[r[1]]))     # distance to the segment, not its line
         split.setdefault(best, []).append(c)
     for a, b in rods:
         pts = [N[a]] + sorted(split.get((a, b), []), key=lambda c: np.linalg.norm(c - N[a])) + [N[b]]
@@ -59,7 +64,7 @@ def build():
 def masses(f, nid, H):
     m = {}
     for a, b in CG["rods"]:
-        w = np.linalg.norm(N[a] - N[b]) * ROD_GPM; m[nid[a]] = m.get(nid[a], 0) + w / 2; m[nid[b]] = m.get(nid[b], 0) + w / 2
+        w = np.linalg.norm(N[a] - N[b]) * (TUBE_GPM if f"rod {a}-{b}" in UP6 or SHELL_SEC is TUBE6 else ROD_GPM); m[nid[a]] = m.get(nid[a], 0) + w / 2; m[nid[b]] = m.get(nid[b], 0) + w / 2
     for i, j in enumerate(nid): m[j] = m.get(j, 0) + (RING_NODE_G if i < nR else NODE_G)
     m[H] = m.get(H, 0) + CAM_G
     return m                                                             # g
@@ -110,9 +115,9 @@ def main():
     soft = sorted([(v["defl_handling"], k, v["L_full"]) for k, v in rods.items() if v["defl_handling"] > 10.0], reverse=True)
     L_ = []
     say = lambda s: (print(s), L_.append(s))
-    say(f"# Scout cage frame model v1 (F on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 shell rods, {K_TIE} saddle ties)\n")
-    say(f"Cage `{os.path.relpath(RUN, ROOT)}/cage_shell.json`: {len(N)} nodes, {len(CG['rods'])} shell rods + {len(RES['links'])} saddle ties, every rod 3.0 solid; "
-        f"the ties' saddle ends fixed (the core held); the camera + cradle ({CAM_G:.0f} g E) rigid on its 4 clips. Drone {MASS * 1000:.0f} g (E): crash "
+    say(f"# Scout cage frame model (F on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 shell rods, {K_TIE} saddle ties)\n")
+    say(f"Cage `{os.path.relpath(RUN, ROOT)}/cage_shell.json`: {len(N)} nodes, {len(CG['rods'])} shell rods + {len(RES['links'])} saddle ties, " + (f"{len(UP6)} members 6/4 tube (the sized list), the rest 3.0 solid; " if UP6 else "every rod 3.0 solid; ") +
+        f"the ties' saddle ends fixed (the core held); the camera + mount ({CAM_G:.1f} g, M mount + E camera) rigid on its 4 clips. Drone {MASS * 1000:.0f} g (E): crash "
         f"{F_crash:.0f} N through the most extreme node, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
     say("Lowest modes (rigid joints, lumped masses): " + ", ".join(f"{h_:.0f} Hz" + (" (the camera moves)" if hd[k] > 0.3 else "") for k, h_ in enumerate(hz)) + "\n")
     say(f"## Buckling: {len(bad_b)} members at or over 1.0 x their Euler load")
