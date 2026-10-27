@@ -114,6 +114,11 @@ def seg_band_dist(p0, p1, mxy):
 
 
 # ---------------------------------------------------------------- the v2 drone (everything but its cage)
+HEAD_G = float(os.environ.get("V5_HEAD_G", "143.7"))   # the printed head in the system model (E): v4's M mass until the redo's own (27 Oct)
+HEAD_GUARDS = os.environ.get("V5_HEAD_GUARDS", "0") == "1"   # the L2 guard ring and the camera guard bars on the printed head: off (Spark 27 Oct:
+                                                   # "that ring around the lidar does nothing"; system_check counts only role "cage", so the
+                                                   # cage tubes and links already met the L2 52.8 and the cameras 7.7 / 8.9 ahead outside their
+                                                   # field cones without them, and v4's worst case was a ring hit). V5_HEAD_GUARDS=1 keeps them
 HALO_BACK, HALO_R, HALO_NODE_R = 8.0, 62.0, 5.0   # L2 guard ring: 8 behind its base plane, r 62 round its axis (body half
                                                  # diagonal 53 + 9), printed nodes r 5 (DEFAULT, E)
 FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v5_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
@@ -192,6 +197,9 @@ HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the
 # the arm session's printed nodes (overseer arm, 27 Oct, Spark "add the arm nodes"): the 3 spokes of each arm leave from a node beside
 # the motor (offset from the motor axis point, y mirrored), the L2 braces root in the core (BRACE_ROOT below; first in the front beam, 27 Oct)
 ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
+KEELS = os.environ.get("V5_KEELS", "0") == "1"     # the 2 keels: off (DEFAULT 27 Oct): with the brace roots low in the hub deck tower each keel
+                                                   # ran beside the low brace (same head lug, roots 14 apart), a duplicate: the head mode is
+                                                   # 186 Hz without, 187 with (PETG nodes, F on E, head_cage_concept A vs H). V5_KEELS=1 keeps them
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
 BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
@@ -792,12 +800,14 @@ def attach(g, nodes, ring_ids):
                     rt = np.array([BRACE_ROOT[0][lvl], BRACE_ROOT[1][lvl] * sy, BRACE_ROOT[2][lvl]]) if BRACE_ROOT else root
                     extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), rt)
                 g["braces"].append(round(out_, 0)); break
-    if not HEAD_ON_CAGE:                                               # the keels' core ends sit 5 deeper in the hub deck's sockets (core v2, 27 Oct)
+    if KEELS and not HEAD_ON_CAGE:                                     # the keels' core ends sit 5 deeper in the hub deck's sockets (core v2, 27 Oct)
         for k_, (a_, b_) in g["keels"].items():
             a_, b_ = np.asarray(a_, float), np.asarray(b_, float); cr, lg = (a_, b_) if a_[0] < b_[0] else (b_, a_)
             extra[k_] = (cr + (lg - cr) / np.linalg.norm(lg - cr) * KEEL_INSET, lg)
-    hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
-    cr, cn_ = cam_guards(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
+    g["halo_nodes"] = []
+    if HEAD_GUARDS or not PRINTED_HEAD:
+        hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
+        cr, cn_ = cam_guards(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
 
     # perfect left-right symmetry (Spark 27 Oct) for the links too: a link without its mirror gets it
     mir = np.array([1.0, -1.0, 1.0]); have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]
@@ -863,7 +873,11 @@ def masses(g, nodes, E, extra):
     for i, n in enumerate(g.get("halo_nodes", [])): add(f"halo node {i}", 1.5, n)            # printed, r 5 (E)
     for k, (p, q) in g.get("head_guards", {}).items(): add(f"head guard {k}", np.linalg.norm(np.subtract(q, p)) * 36 * 1.27e-3 * 0.8, (np.asarray(p) + np.asarray(q)) / 2)
     if g.get("head_attach"):                                           # the topology's joining material (E) between the head and the cage nodes
-        add("head topology", g["head_topo"], 0.5 * (g["B"] - A * 20) + 0.5 * np.mean(g["head_attach"], 0))
+        ht = g["head_topo"]
+        if not HEAD_GUARDS:                                            # the whole head held to HEAD_G (E): the drawn bits above + the rest here
+            ht = max(0.0, HEAD_G - sum(m_ for n_, m_, _ in it if n_.startswith(("apex", "cam plate", "cam strut"))))
+            g["head_topo"] = ht
+        add("head topology", ht, 0.5 * (g["B"] - A * 20) + 0.5 * np.mean(g["head_attach"], 0))
     return it
 
 
@@ -1033,8 +1047,8 @@ else:
         f"the L2 base where it was ({FZ['xB']:.1f}, 0, {ZB:.0f}); the cameras' bodies {fz_clear(np.vstack([c['mesh'].vertices for c in g['cams']])):.1f} off its tubes "
         f"and nodes, nothing of it in their views (C)")
 if PRINTED_HEAD:
-    say(f"L2 mount: the printed sensor head mount{' (one piece with both cameras)' if HEAD_ONE else ''}: seat, back block, lugs, the guard ring (8 nodes, r "
-        f"{HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on "
+    say(f"L2 mount: the printed sensor head mount{' (one piece with both cameras)' if HEAD_ONE else ''}: " + (f"seat, back block, lugs, the guard ring (8 nodes, r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane) and the camera guard bars printed in it"
+        if HEAD_GUARDS else "the L2 and camera bolt bosses and the sockets drawn, the topology between them; no guard ring or camera bars (the cage guards both, Spark 27 Oct)") + f"; the cage's front centre node in it; on "
         f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the core's hub deck tower "
         f"{'(BRACE_ROOT)' if BRACE_ROOT else str(g.get('braces')) + ' out of the arm root'}, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
         f"printed fuse (requirement: they let go before the L2 base, E)")
@@ -1139,9 +1153,8 @@ if PRINTED_HEAD:
                      "(camera pad, camera guard, the side nodes), bolted M3 on drawn pads",
               drawn_mesh="parts/" + fname(HEADN))
     json.dump(HS, open(os.path.join(OUT, "head_system.json"), "w"), indent=1)
-    say(f"sensor head mount (Spark 27 Oct: a topology printed mount instead of the little rods): drawn seat, lugs, camera pads, guard ring and camera "
-        f"guard bars; it holds {len(g['head_attach'])} cage nodes (its own node + the struts' nodes){'' if HEAD_ON_CAGE else ' and takes the keels and braces'}; {HEAD_SYS_G:.0f} g in the system "
-        f"model (E: seat and lugs, camera plates, guards, joining material {g['head_topo']:.0f} g held to the rods it replaces); requirements in head_system.json")
+    say(f"sensor head mount (Spark 27 Oct: a topology printed mount instead of the little rods): " + ("drawn seat, lugs, camera pads, guard ring and camera guard bars" if HEAD_GUARDS else "drawn L2 and camera bolt bosses and sockets") + f"; it holds {len(g['head_attach'])} cage nodes (its own node + the struts' nodes){'' if HEAD_ON_CAGE else ' and takes the keels and braces'}; {HEAD_SYS_G:.0f} g in the system "
+        f"model (E: {'v4 M mass, HEAD_G' if not HEAD_GUARDS else 'seat and lugs, camera plates, guards, joining material ' + format(g['head_topo'], '.0f') + ' g held to the rods it replaces'}); requirements in head_system.json")
 # ---------------------------------------------------------------- access (rule 2: reachable without taking another part off)
 # straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),
 # then gated by system_check's own sweep

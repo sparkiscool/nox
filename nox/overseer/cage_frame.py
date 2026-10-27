@@ -34,7 +34,7 @@ K_CORE = 0.7                                      # a link's core end epoxied 15
 N = np.array(CG["nodes"]); B = np.array(HS["l2"]["base"]); A = np.array(HS["l2"]["axis"])
 _k = [i for i in range(len(N)) if abs(N[i, 1]) < 0.5 and N[i, 0] > 300]
 HEAD_NODE = max(_k, key=lambda i: N[i, 0])
-M_HEAD = (230 + 30 + 102) / 1000.0                # L2 + cameras + mount (E)
+M_HEAD = (230 + 30 + float(HS["mass_budget_g"])) / 1000.0   # L2 + cameras + the printed head (head_system.json, E)
 LS = os.path.join(HERE, "link_sizes.json")        # links sized up to 6/4 tube (the only other stock, Spark 27 Oct), written here
 LINK6 = set(json.load(open(LS))["tube6"]) if os.path.exists(LS) else set()
 sec_of = lambda k: TUBE6 if k in LINK6 else ROD3
@@ -78,6 +78,18 @@ def node_mass(f, nid):
     return m
 
 
+def head_forces(f, u, load_h=None):
+    """the force (and moment) the rest of the frame puts on the rigid head at each attachment, global frame (N, N mm): the end
+    force of each rigid head member at its far end (the keel and brace lugs, the strut sockets, the cage's front centre node)"""
+    out = []
+    for m, (T, kl, L) in zip(f.M, f._cache):
+        if not m["name"].startswith("head-"): continue
+        ue = np.concatenate([u[6 * m["a"]:6 * m["a"] + 6], u[6 * m["b"]:6 * m["b"] + 6]]); fl = kl @ (T @ ue); R = T[:3, :3]
+        out.append(dict(name=m["name"], at=np.round(np.asarray(f.X[m["b"]], float), 2).tolist(),
+                        F=np.round(R.T @ fl[6:9], 2).tolist(), M=np.round(R.T @ fl[9:12], 1).tolist()))   # the end force on the rigid link = on the head
+    return out
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     f, nid, H, struts = build()
@@ -87,14 +99,17 @@ def main():
     F_crash = MASS * G * CRASH
     cases = {}
     for k, d in enumerate(dirs):                                         # the obstacle from d meets the most extreme member first
-        sup_c = N @ d; i = int(np.argmax(sup_c)); sup_h = (guard @ d).max()
+        sup_c = N @ d; i = int(np.argmax(sup_c)); sup_h = (guard @ d).max() if len(guard) else -1e9   # no guard ring (Spark 27 Oct): cage nodes only
         if sup_h > sup_c[i] + 3.0: cases[f"crash {k} {np.round(d, 2).tolist()} via head guard"] = {H: -d * F_crash}
         else: cases[f"crash {k} {np.round(d, 2).tolist()} via node {i}"] = {nid[i]: -d * F_crash}
+    for k, d in enumerate(dirs):                                         # the head's own 35 g (the L2, cameras and mount decelerating) on its supports
+        cases[f"head inertia {k} {np.round(d, 2).tolist()}"] = {H: d * M_HEAD * G * CRASH}
     m = node_mass(f, nid); fl = {i: np.array([0, 0, -m[i] * G * FLIGHT]) for i in range(len(m)) if m[i] > 0}
     fl[H] = fl.get(H, 0) + np.array([0, 0, -M_HEAD * G * FLIGHT]); cases["flight 4 g down"] = fl
-    res = {}; worst = {}
+    res = {}; worst = {}; head = {}
     for cn, loads in cases.items():
         u = f.solve(loads); mf_ = f.member_forces(u); res[cn] = mf_
+        head[cn] = head_forces(f, u, loads.get(H))
         for r in mf_:
             w = worst.setdefault(r["name"], dict(L=r["L"], buckle=0.0, sigma=0.0, N_max=0.0, N_min=0.0, case_b="", case_s=""))
             if r["buckle"] > w["buckle"]: w["buckle"], w["case_b"] = r["buckle"], cn
@@ -117,6 +132,10 @@ def main():
     json.dump({k: {kk: {kkk: round(vvv, 3) if isinstance(vvv, float) else vvv for kkk, vvv in vv.items()} for kk, vv in v.items()}
                for k, v in [("members", worst)]}, open(os.path.join(OUT, "members.json"), "w"), indent=1)
     json.dump(nl, open(os.path.join(OUT, "node_loads.json"), "w"), indent=1)
+    json.dump(dict(note="forces (N) and moments (N mm) the frame puts on the rigid sensor head at each attachment, global drone frame, "
+                        "per case of cage_frame.py (crash 35 g x 14 through the first-touching cage member, core fixed; flight 4 g); "
+                        "head_mount.py loads its topology with these (F on E)", cases=head),
+              open(os.path.join(OUT, "head_loads.json"), "w"), indent=1)
     # the arm groups (overseer arm session): the summed link force on each arm's spoke node and on each front beam's brace roots,
     # per case (N, vector on the arm; the frame holds the core rigid)
     grp = {f"arm {a} spoke node": [k for k in RES["links"] if k.startswith(f"spoke {a}.")] for a in (1, 2, 3, 4)}
