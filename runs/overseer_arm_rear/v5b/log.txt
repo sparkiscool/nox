@@ -189,3 +189,37 @@ it  23 beta    8 J   0.6316 vol 0.2256 (dil 0.3795 g -0.001) grey 13.5% ch 0.100
 it  23 beta    8 J   0.6316 vol 0.2256 (dil 0.3795 g -0.001) grey 13.5% ch 0.100 worst tie b3 my 15.3 41.1s
 it  24 beta    8 J   0.6257 vol 0.2261 (dil 0.3796 g -0.001) grey 13.5% ch 0.100 worst tie b3 my 15.2 40.7s
 it  24 beta    8 J   0.6257 vol 0.2261 (dil 0.3796 g -0.001) grey 13.5% ch 0.100 worst tie b3 my 15.2 40.7s
+it  25 beta    8 J   0.6211 vol 0.2266 (dil 0.3797 g -0.001) grey 13.5% ch 0.100 worst tie b3 my 15 42.4s
+it  25 beta    8 J   0.6211 vol 0.2266 (dil 0.3797 g -0.001) grey 13.5% ch 0.100 worst tie b3 my 15 42.4s
+it  26 beta    8 J   0.6172 vol 0.2269 (dil 0.3798 g +0.004) grey 13.5% ch 0.100 worst tie b3 my 14.9 42.6s
+it  26 beta    8 J   0.6172 vol 0.2269 (dil 0.3798 g +0.004) grey 13.5% ch 0.100 worst tie b3 my 14.9 42.6s
+it  27 beta    8 J   0.6245 vol 0.2253 (dil 0.3779 g -0.001) grey 13.4% ch 0.100 worst tie b3 my 15 42.3s
+it  27 beta    8 J   0.6245 vol 0.2253 (dil 0.3779 g -0.001) grey 13.4% ch 0.100 worst tie b3 my 15 42.3s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  28 beta   16 J   0.7486 vol 0.2209 (dil 0.3759 g -0.010) grey  6.2% ch 0.100 worst blow 150 N +x 15.7 42.6s
+it  28 beta   16 J   0.7486 vol 0.2209 (dil 0.3759 g -0.010) grey  6.2% ch 0.100 worst blow 150 N +x 15.7 42.6s
+it  29 beta   16 J   0.6082 vol 0.2234 (dil 0.3790 g -0.002) grey  6.3% ch 0.100 worst tie b3 my 13.5 42.7s
+it  29 beta   16 J   0.6082 vol 0.2234 (dil 0.3790 g -0.002) grey  6.3% ch 0.100 worst tie b3 my 13.5 42.7s
+it  30 beta   16 J   0.5640 vol 0.2235 (dil 0.3793 g -0.002) grey  6.3% ch 0.100 worst tie b3 my 13.5 41.0s
+it  30 beta   16 J   0.5640 vol 0.2235 (dil 0.3793 g -0.002) grey  6.3% ch 0.100 worst tie b3 my 13.5 41.0s
+it  31 beta   16 J   0.5588 vol 0.2242 (dil 0.3796 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.4 41.3s
+it  31 beta   16 J   0.5588 vol 0.2242 (dil 0.3796 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.4 41.3s
+it  32 beta   16 J   0.5568 vol 0.2242 (dil 0.3794 g -0.001) grey  6.3% ch 0.100 worst tie b3 my 13.4 40.9s
+it  32 beta   16 J   0.5568 vol 0.2242 (dil 0.3794 g -0.001) grey  6.3% ch 0.100 worst tie b3 my 13.4 40.9s
+it  33 beta   16 J   0.5548 vol 0.2245 (dil 0.3795 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.3 41.9s
+it  33 beta   16 J   0.5548 vol 0.2245 (dil 0.3795 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.3 41.9s
+it  34 beta   16 J   0.5531 vol 0.2246 (dil 0.3795 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.3 42.3s
+it  34 beta   16 J   0.5531 vol 0.2246 (dil 0.3795 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.3 42.3s
+it  35 beta   16 J   0.5518 vol 0.2248 (dil 0.3795 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.2 42.7s
+it  35 beta   16 J   0.5518 vol 0.2248 (dil 0.3795 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.2 42.7s
+it  36 beta   16 J   0.5505 vol 0.2249 (dil 0.3795 g +0.002) grey  6.3% ch 0.100 worst tie b3 my 13.2 41.4s
+it  36 beta   16 J   0.5505 vol 0.2249 (dil 0.3795 g +0.002) grey  6.3% ch 0.100 worst tie b3 my 13.2 41.4s
+it  37 beta   16 J   0.5525 vol 0.2241 (dil 0.3787 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.2 42.6s
+it  37 beta   16 J   0.5525 vol 0.2241 (dil 0.3787 g -0.000) grey  6.3% ch 0.100 worst tie b3 my 13.2 42.6s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  38 beta   32 J   0.6323 vol 0.2229 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst cage crash 3 [0.0, -1.0, 0.0 12.5 42.6s
+it  38 beta   32 J   0.6323 vol 0.2229 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst cage crash 3 [0.0, -1.0, 0.0 12.5 42.6s
+it  39 beta   32 J   0.5283 vol 0.2225 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.5 42.9s
+it  39 beta   32 J   0.5283 vol 0.2225 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.5 42.9s
