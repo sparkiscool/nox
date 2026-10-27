@@ -34,6 +34,9 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 ### Cage (Spark 27 Oct)
 The latest layout (PR 94) with a geodesic shell cage (the Overseer cage v3 idea, CLAUDE.md "Cages are geodesic shells"): **bottom ring exactly the Overseer's** (same 8 nodes and tubes, same datum: catch centre, 3 under the cartridge flat bottom) so one funnel takes both drones; **one camera** at the nose outside the cage, nothing in its view; **the Bee35 carbon base stays**. Layout v3 / cage v1: `layout_v3.py`, `runs/scout_layout/v6/summary.md`, numbers `dimensions.md` System Scout v3. Supersedes PR 94's ground-structure cage.
 
+### Electronics mount (Spark 27 Oct)
+Confirmed list for the mount: MicoAir743v2-AIO-35A (FC + ESC) on 4 grommets, RadioMaster XR2, MicoAir MTF-02P, Radxa Zero 3W (+ microSD), 5 V 5 A UBEC, DECXIN 2633V2 camera, and their wiring (SH1.0 4-pin pigtail, 90° USB-C). **No lights.** **Battery side left as it is** (pack, XT60E1-M, 220 µF cap, keep-alive pads, 10 kΩ, ideal diode): not this mount's work, it stays with the battery latch / box catch.
+
 ### v3 parts to draw (order DEFAULT)
 1. Bottom layout: pack, receiver with latch pockets, contacts, belly plate, pogo pads, underside stack (FC, Radxa, flow) in one sweep (v2 drew it in `archive/scout-v2/s2-receiver.md`; history only).
 2. Cage: layout v3 / cage v1 geodesic (27 Oct); next the frame model on the shell, then shell nodes, spoke clamps, the camera boom + guard.
