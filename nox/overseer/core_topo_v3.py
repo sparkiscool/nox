@@ -7,8 +7,8 @@ carries its own).
   hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 8 feet Ø14 x 6.5 with Ø4.0 insert holes through (core v3: + (60, ±17)); 4 Pi posts
              Ø7 to z 8 on Ø12 x 6 root webs; UBEC / buck seat rails (VHB tape); 2 keel bosses Ø13 (bores 6.2 x 15 from 5 past the v5
              roots, the tube ends); 4 brace bosses Ø11.2 (bores 6.2 x 15.6 incl. the 0.6 lead-in, 2.5 end wall behind each tube end
-             lo (97, ±26, 22), hi (97, ±14, 32)). Envelope: z 0..6.5 over the plate x -76..100, the hub room x 80..118, |y| <= 34,
-             z 0..40, deep side webs x 58..92, |y| 18..34, z 0..40 to the mid feet; cuts: the UBEC / buck columns (placed straight down), the arm session's root envelopes, the keel / brace tubes past their mouths, the cage's front tie tubes, the
+             lo (97, ±26, 22), hi (97, ±14, 32)). Envelope: z 0..6.5 over the plate x -76..100, the hub room x 80..100, |y| <= 34, z 0..30, a room round each socket
+             (its boss + 4, to 3 short of its mouth), deep side webs x 58..92, |y| 18..34, z 0..40 to the mid feet; cuts: the UBEC / buck columns (placed straight down), the arm session's root envelopes, the keel / brace tubes past their mouths, the cage's front tie tubes, the
              core's wire routes (+1).
              Loads: each crash case k (35 g x 14) as one set: the payload (Pi 55 g at its CG through the posts, UBEC 15, buck 6) at
              35 g in its direction + that case's keel and brace forces on their bore walls; flight 4 g the same; 2 g x / y flight
@@ -34,7 +34,7 @@ GEN = float(args[1]) if len(args) > 1 else 18.0   # cm3 generated (v6 at 18 was 
 GIT = "--no-git" not in sys.argv
 COARSE = "--no-coarse" not in sys.argv          # sled v2: the 3.0 coarse grid went singular at h 1.5 (v1), so run the fine grid only
 LEAN = "--lean" in sys.argv                     # sled v2: flight / landing cases left out, the 35 g crash cases cover them
-VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v10")
+VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v11")
 SETS = {}                                       # --set key=value: Settings fields (sled v3: tie_moments=0 held_ties=0 gate_ties=0, the
 for i_, a_ in enumerate(sys.argv):              # engine keeps F and U for every case on the full grid: 145 cases x 1.7 M dofs ran out of memory)
     if a_ == "--set":
@@ -162,7 +162,11 @@ def hub_deck_bodies():
     # core v3 round 3: deep side webs from the tower back to the mid feet (60, ±17), (65, ±22.5) beside the bays (their columns stay
     # open for placing the UBEC and buck straight down; the arm root envelopes and grown arms trim the outer side)
     web_env = [box(58.0, 92.0, sy * 18.0, sy * 34.0, 0, 30.0) for sy in (1, -1)]
-    env = U([box(-76, 100, -42, 42, 0, T), hub_env] + web_env)
+    # v11 (concept review on v10: the room stopped at the socket bottoms, leaving the keel bores and most of the brace bores bare):
+    # each socket gets its own room, its drawn boss + 4, from 3 behind the tube end to 3 short of its mouth (nothing past the mouths)
+    wraps = [along(*root_axis(k), -3.0, (BS["l"] + BS["lead"] if k.startswith("L2") else SK["l"]) - 3.0,
+                   (BS["d"] / 2 + BS["wall"] if k.startswith("L2") else SK["od"] / 2) + 4.0) for k in ROOTS]
+    env = U([box(-76, 100, -42, 42, 0, T), hub_env] + web_env + wraps)
     return drawn, cuts, env, feet, ph
 
 
@@ -195,6 +199,15 @@ def hub_deck_setup(h):
         payload("flight 4 g down (+ the keel / brace forces, F)", FLIGHT["flight 4 g"], "flight", rc["flight 4 g down"])
         for nm in ("flight 2 g x", "flight 2 g y", "landing 6 g"):
             payload(nm, FLIGHT[nm], "flight")
+    # v11 (review): the drawn sockets also see a side knock: 20 N across each mouth (E, misuse), sideways out and up, so the joint behind
+    # each socket is sized for bending as well as the tubes' axial forces
+    mouths = {}
+    for k in ROOTS:
+        a_, d_ = root_axis(k); L_ = (BS["l"] + BS["lead"]) if k.startswith("L2") else SK["off"] + SK["l"]
+        mouths[k] = along(a_, d_, L_ - 4.0, L_, (BS["d"] / 2 + 1.0) if k.startswith("L2") else SK["d"] / 2 + 1.0)
+    side = lambda k: np.array([0.0, 1.0 if k.endswith("+1") else -1.0, 0.0])
+    p.load_multi("socket mouths 20 N sideways out (misuse, E)", [(mouths[k], 20.0 * side(k)) for k in ROOTS], cls="misuse")
+    p.load_multi("socket mouths 20 N up (misuse, E)", [(mouths[k], np.array([0, 0, 20.0])) for k in ROOTS], cls="misuse")
     usb = rigid_split(posts, np.array([20.0, 0, 0]), (C["pi_x"][0] - 2, 0, C["z_pi"] + 9))           # plug pushed in at the aft ports
     p.load_multi("USB plug 20 N into the Pi's aft ports", [(post_reg[i], usb[i]) for i in range(4)], cls="misuse")
     p.load_multi("press 50 N on the Pi (assembly)", [(post_reg[i], np.array([0, 0, -12.5])) for i in range(4)], cls="misuse")
