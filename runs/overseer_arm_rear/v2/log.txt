@@ -344,3 +344,7 @@ it   7 beta    4 J   8.0180 vol 0.1393 (dil 0.2568 g -0.005) grey 25.5% ch 0.100
 it   7 beta    4 J   8.0180 vol 0.1393 (dil 0.2568 g -0.005) grey 25.5% ch 0.100 worst held b2 fz 562 48.1s
 it   7 beta    4 J   8.0180 vol 0.1393 (dil 0.2568 g -0.005) grey 25.5% ch 0.100 worst held b2 fz 562 45.3s
 it   7 beta    4 J   8.0180 vol 0.1393 (dil 0.2568 g -0.005) grey 25.5% ch 0.100 worst held b2 fz 562 45.3s
+it   8 beta    4 J   7.0527 vol 0.1411 (dil 0.2572 g -0.003) grey 25.2% ch 0.100 worst held b2 fz 485 50.2s
+it   8 beta    4 J   7.0527 vol 0.1411 (dil 0.2572 g -0.003) grey 25.2% ch 0.100 worst held b2 fz 485 50.2s
+it   8 beta    4 J   7.0527 vol 0.1411 (dil 0.2572 g -0.003) grey 25.2% ch 0.100 worst held b2 fz 485 48.3s
+it   8 beta    4 J   7.0527 vol 0.1411 (dil 0.2572 g -0.003) grey 25.2% ch 0.100 worst held b2 fz 485 48.3s
