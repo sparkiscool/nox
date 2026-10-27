@@ -191,3 +191,51 @@ it  16 beta    4 J   4.4574 vol 0.2456 (dil 0.3684 g +0.017) grey 27.2% ch 0.100
 it  16 beta    4 J   4.4574 vol 0.2456 (dil 0.3684 g +0.017) grey 27.2% ch 0.100 worst held b1 my 28.4 27.5s
 it  17 beta    4 J   4.7241 vol 0.2397 (dil 0.3617 g -0.002) grey 27.1% ch 0.100 worst held b1 my 30.2 27.8s
 it  17 beta    4 J   4.7241 vol 0.2397 (dil 0.3617 g -0.002) grey 27.1% ch 0.100 worst held b1 my 30.2 27.8s
+it  18 beta    4 J   4.6079 vol 0.2407 (dil 0.3621 g -0.001) grey 27.0% ch 0.100 worst held b1 my 29.4 27.8s
+it  18 beta    4 J   4.6079 vol 0.2407 (dil 0.3621 g -0.001) grey 27.0% ch 0.100 worst held b1 my 29.4 27.8s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  19 beta    8 J   9.6314 vol 0.2354 (dil 0.3820 g +0.021) grey 15.1% ch 0.100 worst cage crash 2 55.2 28.2s
+it  19 beta    8 J   9.6314 vol 0.2354 (dil 0.3820 g +0.021) grey 15.1% ch 0.100 worst cage crash 2 55.2 28.2s
+it  20 beta    8 J   7.6982 vol 0.2199 (dil 0.3703 g -0.010) grey 15.4% ch 0.100 worst held b1 my 44.7 28.9s
+it  20 beta    8 J   7.6982 vol 0.2199 (dil 0.3703 g -0.010) grey 15.4% ch 0.100 worst held b1 my 44.7 28.9s
+it  21 beta    8 J   6.4718 vol 0.2248 (dil 0.3722 g -0.016) grey 15.1% ch 0.100 worst blow 150 N +x 36.6 28.6s
+it  21 beta    8 J   6.4718 vol 0.2248 (dil 0.3722 g -0.016) grey 15.1% ch 0.100 worst blow 150 N +x 36.6 28.6s
+it  22 beta    8 J   5.9141 vol 0.2303 (dil 0.3768 g -0.004) grey 15.0% ch 0.100 worst blow 150 N +x 33.7 27.7s
+it  22 beta    8 J   5.9141 vol 0.2303 (dil 0.3768 g -0.004) grey 15.0% ch 0.100 worst blow 150 N +x 33.7 27.7s
+it  23 beta    8 J   5.5400 vol 0.2315 (dil 0.3778 g -0.002) grey 15.0% ch 0.100 worst held b1 my 31 28.4s
+it  23 beta    8 J   5.5400 vol 0.2315 (dil 0.3778 g -0.002) grey 15.0% ch 0.100 worst held b1 my 31 28.4s
+it  24 beta    8 J   5.1314 vol 0.2320 (dil 0.3779 g -0.001) grey 15.0% ch 0.100 worst held b1 my 30.7 27.7s
+it  24 beta    8 J   5.1314 vol 0.2320 (dil 0.3779 g -0.001) grey 15.0% ch 0.100 worst held b1 my 30.7 27.7s
+it  25 beta    8 J   4.9661 vol 0.2325 (dil 0.3780 g -0.001) grey 15.0% ch 0.100 worst held b1 my 30.4 27.6s
+it  25 beta    8 J   4.9661 vol 0.2325 (dil 0.3780 g -0.001) grey 15.0% ch 0.100 worst held b1 my 30.4 27.6s
+it  26 beta    8 J   4.9005 vol 0.2329 (dil 0.3781 g +0.002) grey 14.9% ch 0.100 worst held b1 my 30 27.1s
+it  26 beta    8 J   4.9005 vol 0.2329 (dil 0.3781 g +0.002) grey 14.9% ch 0.100 worst held b1 my 30 27.1s
+it  27 beta    8 J   4.9001 vol 0.2323 (dil 0.3772 g -0.001) grey 14.9% ch 0.100 worst held b1 my 30 27.3s
+it  27 beta    8 J   4.9001 vol 0.2323 (dil 0.3772 g -0.001) grey 14.9% ch 0.100 worst held b1 my 30 27.3s
+it  28 beta    8 J   4.8574 vol 0.2327 (dil 0.3772 g -0.001) grey 14.9% ch 0.100 worst held b1 my 29.7 27.4s
+it  28 beta    8 J   4.8574 vol 0.2327 (dil 0.3772 g -0.001) grey 14.9% ch 0.100 worst held b1 my 29.7 27.4s
+it  29 beta    8 J   4.8204 vol 0.2330 (dil 0.3772 g -0.000) grey 14.9% ch 0.100 worst held b1 my 29.4 27.4s
+it  29 beta    8 J   4.8204 vol 0.2330 (dil 0.3772 g -0.000) grey 14.9% ch 0.100 worst held b1 my 29.4 27.4s
+it  30 beta    8 J   4.7905 vol 0.2333 (dil 0.3773 g -0.000) grey 14.8% ch 0.100 worst held b1 my 29.2 26.8s
+it  30 beta    8 J   4.7905 vol 0.2333 (dil 0.3773 g -0.000) grey 14.8% ch 0.100 worst held b1 my 29.2 26.8s
+it  31 beta    8 J   4.7661 vol 0.2335 (dil 0.3773 g +0.003) grey 14.8% ch 0.100 worst held b1 my 28.9 27.0s
+it  31 beta    8 J   4.7661 vol 0.2335 (dil 0.3773 g +0.003) grey 14.8% ch 0.100 worst held b1 my 28.9 27.0s
+it  32 beta    8 J   4.8109 vol 0.2323 (dil 0.3759 g -0.000) grey 14.8% ch 0.100 worst held b1 my 29.3 27.2s
+it  32 beta    8 J   4.8109 vol 0.2323 (dil 0.3759 g -0.000) grey 14.8% ch 0.100 worst held b1 my 29.3 27.2s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  33 beta   16 J   5.6220 vol 0.2309 (dil 0.3739 g +0.001) grey  6.5% ch 0.100 worst cage crash 2 30.3 26.8s
+it  33 beta   16 J   5.6220 vol 0.2309 (dil 0.3739 g +0.001) grey  6.5% ch 0.100 worst cage crash 2 30.3 26.8s
+it  34 beta   16 J   4.5901 vol 0.2291 (dil 0.3725 g -0.003) grey  6.5% ch 0.100 worst held b1 my 25.4 27.3s
+it  34 beta   16 J   4.5901 vol 0.2291 (dil 0.3725 g -0.003) grey  6.5% ch 0.100 worst held b1 my 25.4 27.3s
+it  35 beta   16 J   4.3327 vol 0.2296 (dil 0.3730 g -0.001) grey  6.5% ch 0.100 worst held b1 my 25.1 28.6s
+it  35 beta   16 J   4.3327 vol 0.2296 (dil 0.3730 g -0.001) grey  6.5% ch 0.100 worst held b1 my 25.1 28.6s
+it  36 beta   16 J   4.2501 vol 0.2299 (dil 0.3732 g -0.002) grey  6.5% ch 0.100 worst held b1 my 25 27.9s
+it  36 beta   16 J   4.2501 vol 0.2299 (dil 0.3732 g -0.002) grey  6.5% ch 0.100 worst held b1 my 25 27.9s
+it  37 beta   16 J   4.2119 vol 0.2305 (dil 0.3736 g -0.001) grey  6.5% ch 0.100 worst held b1 my 24.7 27.9s
+it  37 beta   16 J   4.2119 vol 0.2305 (dil 0.3736 g -0.001) grey  6.5% ch 0.100 worst held b1 my 24.7 27.9s
+it  38 beta   16 J   4.1944 vol 0.2308 (dil 0.3737 g -0.000) grey  6.5% ch 0.100 worst held b1 my 24.6 28.6s
+it  38 beta   16 J   4.1944 vol 0.2308 (dil 0.3737 g -0.000) grey  6.5% ch 0.100 worst held b1 my 24.6 28.6s
+it  39 beta   16 J   4.1817 vol 0.2309 (dil 0.3737 g -0.000) grey  6.5% ch 0.100 worst held b1 my 24.5 27.7s
+it  39 beta   16 J   4.1817 vol 0.2309 (dil 0.3737 g -0.000) grey  6.5% ch 0.100 worst held b1 my 24.5 27.7s
