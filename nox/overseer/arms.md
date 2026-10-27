@@ -14,6 +14,9 @@ Left off v1 (Spark 27 Oct): cage nodes, spoke sockets and the L2 brace sockets. 
 ## Print
 PETG, Bambu A1 mini, top face (z 45 plane: root top, motor face) on the bed, tree supports, 100 % infill (the FE and the mode check assume solid PETG, E), 0.2 layers. Front arm fits the bed on the diagonal (about a 167 square at 44°). Print 1 + 1 mirrored of each pair.
 
+## Rod install check
+`python3 nox/overseer/arm_topo_v1.py front --rodcheck <mesh>` on every built front arm: the bore is clear for a 3.0 rod from 160 behind the shoulder to the blind end (it slides in straight on the bench, before the arm is mounted; past the 30 mm bore cut the insertion line is outside the design envelope, so no member can block it), both 18 mm sockets grip (≥ 80 % PETG round the bore), and the bonded length and collars per rod. A FAIL is a design fix.
+
 ## Assembly
 1. Heat-set 4 M3 inserts in each root (2 from the top face, 2 from the bottom face), flush.
 2. Front arms: ream each rod line with a long 3.3 drill from the open shoulder end to the blind tip socket (the flat-printed bores sag a little). Dry-fit each rod.

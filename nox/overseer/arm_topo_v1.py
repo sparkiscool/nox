@@ -4,6 +4,7 @@ python3 nox/overseer/arm_topo_v1.py front|rear [--gen CM3] [--h H] [--out DIR] [
 python3 nox/overseer/arm_topo_v1.py front|rear --setup                                    setup summary only
 python3 nox/overseer/arm_topo_v1.py front|rear --modes MESH [--out DIR]                    first modes of a built arm (Hz)
 python3 nox/overseer/arm_topo_v1.py front|rear --place MESH                               the 2 arms of the pair in the drone frame
+python3 nox/overseer/arm_topo_v1.py front --rodcheck MESH [--out DIR]                     rods: bore clear, sockets grip, bonded length
 
 Requirements: `dimensions.md` "System Overseer: arms" (the system pass for the arms, numbers tagged there). The run is
 in the arm's own frame (x from the root centre to the motor, z the drone z, z 0 = bottom plate top), so the grid hugs
@@ -409,6 +410,45 @@ def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     return dict(modes=out, arm_g_grid=round(float(mass), 1), h=h, support=support)
 
 
+def rodcheck(which, mesh_path, log=print):
+    """can the rods go in and are they held, on a built arm (arm frame): (1) the bore is clear for a 3.0 rod from 160
+    behind the shoulder to the blind end (slides in straight); (2) both end sockets grip (PETG round >= 80 % of the
+    18 mm x 2.65 wall); (3) bonded length along each rod (PETG round the bore at >= 6 of 8 points, r 2.4) and the collars"""
+    from topo.part import voxelise
+    arm = trimesh.load(mesh_path, force="mesh")
+    m = from_tm(arm)
+    VP = 0.5                                                   # point test on a 0.5 mm voxel copy (contains() on the
+    vlo = arm.bounds[0] - VP                                   # 600k-face mesh ran out of memory)
+    ax = [vlo[k] + (np.arange(int((arm.bounds[1][k] - vlo[k]) / VP) + 2) + 0.5) * VP for k in range(3)]
+    V = voxelise(arm, *ax)
+    out = []
+    for k, (p0, p1) in enumerate(chords(which, F := frame(which))):
+        u = (p1 - p0) / np.linalg.norm(p1 - p0)
+        L = float(np.linalg.norm(p1 - p0))
+        block = (m ^ rod_m(p0 - 160.0 * u, p1, ROD_D / 2)).volume()
+        r_in, r_out = ROD_BORE / 2, ROD_BORE / 2 + CHORD_SKIN
+        grip = []
+        for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1)):
+            ann = rod_m(q0, q1, r_out) - rod_m(q0 - u, q1 + u, r_in)
+            grip.append(round((m ^ ann).volume() / ann.volume(), 2))
+        a = np.cross(u, [0, 0, 1.0]); a /= np.linalg.norm(a); b = np.cross(u, a)
+        ang = np.linspace(0, 2 * np.pi, 8, endpoint=False)
+        ts = np.arange(0.5, L, 1.0)
+        P = (p0[None, None] + ts[:, None, None] * u + 2.4 * (np.cos(ang)[None, :, None] * a + np.sin(ang)[None, :, None] * b))
+        idx = np.floor((P.reshape(-1, 3) - vlo) / VP).astype(int)
+        okk = np.all((idx >= 0) & (idx < np.array(V.shape)), 1)
+        hit = np.zeros(len(idx), bool)
+        hit[okk] = V[idx[okk, 0], idx[okk, 1], idx[okk, 2]]
+        inside = hit.reshape(len(ts), 8).sum(1) >= 6
+        collars = int(np.sum(np.diff(np.r_[0, inside.astype(int)]) == 1))
+        ok = block < 1.0 and min(grip) >= 0.8
+        out.append(dict(rod=k, length_mm=round(L, 1), bore_blocked_mm3=round(block, 1), socket_grip=grip,
+                        bonded_mm=int(inside.sum()), collars=collars, ok=bool(ok)))
+        log(f"rod {k}: {L:.1f} long, bore blocked {block:.1f} mm3, socket grip {grip}, bonded {int(inside.sum())} mm in "
+            f"{collars} collars -> {'OK' if ok else 'FAIL'}")
+    return out
+
+
 def from_tm_vox(m, ax, h):
     from topo.part import tm, voxelise
     return voxelise(tm(m), *ax)
@@ -424,6 +464,7 @@ if __name__ == "__main__":
     ap.add_argument("--setup", action="store_true")
     ap.add_argument("--modes", default=None)
     ap.add_argument("--place", default=None)
+    ap.add_argument("--rodcheck", default=None)
     a = ap.parse_args()
     h = a.h or (2.0 if a.which == "front" else 1.5)   # ~ min member / 3 (topo README); direct solver (27 Oct: h 1.5 / 1.0 fell to multigrid, ~10 min an iteration)
     gen = a.gen or (40.0 if a.which == "front" else 25.0)   # cm3 generated (E), generous (Spark 27 Oct); front rods carry the chords
@@ -435,6 +476,10 @@ if __name__ == "__main__":
         r = {sp_: modes(a.which, a.modes, support=sp_) for sp_ in ("faces", "inserts")}
         os.makedirs(out, exist_ok=True)
         json.dump(r, open(os.path.join(out, "modes.json"), "w"), indent=1)
+    elif a.rodcheck:
+        r = rodcheck(a.which, a.rodcheck)
+        os.makedirs(out, exist_ok=True)
+        json.dump(r, open(os.path.join(out, "rodcheck.json"), "w"), indent=1)
     elif a.place:
         F = frame(a.which)
         t = trimesh.load(a.place, force="mesh")
