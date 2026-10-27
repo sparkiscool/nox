@@ -1,0 +1,49 @@
+{
+ "h": 1.5,
+ "faces": {
+  "modes": [
+   {
+    "Hz": 483.3,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 556.0,
+    "kind": "vertical"
+   },
+   {
+    "Hz": 1027.1,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 1187.9,
+    "kind": "vertical"
+   }
+  ],
+  "arm_g_grid": 196.5,
+  "h": 1.5,
+  "support": "faces"
+ },
+ "inserts": {
+  "modes": [
+   {
+    "Hz": 437.5,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 513.1,
+    "kind": "vertical"
+   },
+   {
+    "Hz": 985.3,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 1151.7,
+    "kind": "vertical"
+   }
+  ],
+  "arm_g_grid": 196.5,
+  "h": 1.5,
+  "support": "inserts"
+ }
+}

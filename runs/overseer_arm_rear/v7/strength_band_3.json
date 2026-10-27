@@ -1,0 +1,61 @@
+{
+ "band_mm": 3.0,
+ "h": 1.5,
+ "mesh": "runs/overseer_arm_rear/v7/overseer_arm_rear.stl",
+ "worst": {
+  "arm crash": {
+   "index": 0.692,
+   "case": "cage crash 11 [-0.58, 0.58, -0.58] via node 11",
+   "at": [
+    10.8,
+    -20.2,
+    44.2
+   ]
+  },
+  "arm flight": {
+   "index": 0.037,
+   "case": "max thrust + 2 g +y side + gyro",
+   "at": [
+    9.3,
+    -21.8,
+    0.8
+   ]
+  },
+  "arm misuse": {
+   "index": 0.152,
+   "case": "handling 100 N +y",
+   "at": [
+    3.3,
+    24.8,
+    0.8
+   ]
+  },
+  "joint crash": {
+   "index": 0.667,
+   "case": "cage crash 11 [-0.58, 0.58, -0.58] via node 11",
+   "at": [
+    10.8,
+    -18.8,
+    44.2
+   ]
+  },
+  "joint flight": {
+   "index": 0.04,
+   "case": "max thrust + 2 g +y side + gyro",
+   "at": [
+    9.3,
+    -20.2,
+    0.8
+   ]
+  },
+  "joint misuse": {
+   "index": 0.145,
+   "case": "handling 100 N +y",
+   "at": [
+    3.3,
+    23.2,
+    0.8
+   ]
+  }
+ }
+}
