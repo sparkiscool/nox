@@ -1,0 +1,225 @@
+<title>Scout Belly Catch</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column drawing sheet; a live 3D view of the chosen layout, then the three sections to one scale, then the numbers */
+:root {
+  --paper: #f4f6f4; --sheet: #ffffff; --ink: #1c2421; --muted: #5c6a64; --rule: #d5ddd9;
+  --carbon: #26302c; --petg: #1f8a7a; --pack: #d08a1e; --funnel: #6f87a8; --funnel-fill: rgba(111,135,168,.16);
+  --prop: #a7b3ae; --good: #2f7d4f; --bad: #b4462f; --accent: #1f8a7a;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
+  --carbon: #cfd9d4; --petg: #4cc2ae; --pack: #e6a64a; --funnel: #8fa7c7; --funnel-fill: rgba(143,167,199,.14);
+  --prop: #4d5a55; --good: #6cc08d; --bad: #e07a62; --accent: #4cc2ae; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
+  --carbon: #cfd9d4; --petg: #4cc2ae; --pack: #e6a64a; --funnel: #8fa7c7; --funnel-fill: rgba(143,167,199,.14);
+  --prop: #4d5a55; --good: #6cc08d; --bad: #e07a62; --accent: #4cc2ae; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 1080px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: 2rem; line-height: 1.1; }
+h2 { font-size: 1.3rem; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.seg button { font: 500 .85rem var(--f-body); background: transparent; color: var(--ink); border: 0; padding: 7px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--sheet); }
+.seg button:focus-visible, .chk:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chk { font-size: .85rem; color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+canvas { width: 100%; height: auto; aspect-ratio: 16 / 10; max-width: 100%; display: block; touch-action: none; cursor: grab; border-radius: 4px; background: var(--paper); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--muted); }
+.legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+.sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .sections { grid-template-columns: 1fr; } }
+.sec { display: grid; gap: 6px; min-width: 0; }
+.sec h3 { font: 600 1.05rem var(--f-display); margin: 0; }
+.sec .tag { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
+.sec svg { width: 100%; height: auto; display: block; }
+.verdict { font-size: .85rem; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 620px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 500 .75rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+td.n { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.rec td { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+.pill { font: 500 .72rem var(--f-mono); padding: 2px 7px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
+.ok { color: var(--good); } .no { color: var(--bad); }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch; }
+.mono { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+</style>
+
+<main>
+  <header>
+    <span class="eyebrow">Scout v3 · bottom and landing · concept check · 27 Oct</span>
+    <h1>Land on the cage, tuck the pack, drop the receiver box</h1>
+    <p>The box funnel stays exactly as built. What changes is the Scout: one geodesic shell whose lower half is the funnel's negative, its 8 catch wheels on the shell's crown, the pack pulled up to the FC, and the 94 g receiver box replaced by two latch rails that are part of the shell's bottom ring. Numbers are E (concept geometry) unless tagged.</p>
+  </header>
+
+  <section class="sheet" aria-label="3D view">
+    <div class="bar">
+      <div class="seg" role="group" aria-label="Layout">
+        <button id="vB" aria-pressed="true">B · shell catch</button>
+        <button id="vA" aria-pressed="false">A · today's latch</button>
+        <button id="vC" aria-pressed="false">C · belly catch</button>
+      </div>
+      <label class="chk"><input type="checkbox" id="fun" checked> funnel</label>
+    </div>
+    <canvas id="cv" width="1280" height="800" aria-label="3D view of the selected layout seated in the funnel; drag to turn"></canvas>
+    <div class="legend">
+      <span><i style="background:var(--carbon)"></i>carbon (6 mm equator, 3 mm rest)</span>
+      <span><i style="background:var(--petg)"></i>printed latch parts</span>
+      <span><i style="background:var(--pack)"></i>pack + cartridge</span>
+      <span><i style="background:var(--funnel)"></i>box funnel faces</span>
+      <span><i style="background:var(--prop)"></i>props, motors, FC, plate</span>
+    </div>
+    <p class="mono" id="cap"></p>
+  </section>
+
+  <section class="sheet" aria-label="Sections">
+    <h2>Side sections, one scale</h2>
+    <div class="sections" id="secs"></div>
+    <p class="mono">Seat frame = drone frame of the seated Scout (x forward, z up, plate top z 22). Funnel line: the ±x face, |x| = 82.7 + z, open below z 12.8 (C, dimensions G). Grid 20 mm.</p>
+  </section>
+
+  <section class="sheet" aria-label="Numbers">
+    <h2>Numbers</h2>
+    <div class="scroll"><table id="tbl"></table></div>
+    <p class="mono" id="sc"></p>
+  </section>
+
+  <section class="sheet" aria-label="What it changes">
+    <h2>What B changes, and what it leaves</h2>
+    <ul id="notes"></ul>
+  </section>
+</main>
+
+<script>
+const D = {"A": {"receiver": {"boxes": [["receiver v3 (box)", [-53, 53, -32.75, 32.75, -44.3, 9.6]]], "mass": 114.9, "tag": "M", "parts": null}, "cart": [-46.5, 46.5, -20.0, 20.0, -44.5, 1.1000000000000014], "pack": [-35.0, 35.0, -16.0, 16.0, -32.5, 0.5], "nodes": [[0.0, 0.0, 60.0], [83.44, 83.44, 56.0], [-83.44, 83.44, 56.0], [-83.44, -83.44, 56.0], [83.44, -83.44, 56.0], [104.0, 0.0, 52.0], [106.0, 106.0, 36.37], [0.0, 104.0, 52.0], [-106.0, 106.0, 36.37], [-104.0, 0.0, 52.0], [-106.0, -106.0, 36.37], [0.0, -104.0, 52.0], [106.0, -106.0, 36.37], [72.0, 36.0, 7.0], [38.0, 68.0, -3.0], [-38.0, 68.0, -3.0], [-72.0, 36.0, 7.0], [-72.0, -36.0, 7.0], [-38.0, -68.0, -3.0], [38.0, -68.0, -3.0], [72.0, -36.0, 7.0], [86.0, 0.0, -42.5], [64.0, 60.0, -42.5], [0.0, 66.0, -42.5], [-64.0, 60.0, -42.5], [-86.0, 0.0, -42.5], [-64.0, -60.0, -42.5], [0.0, -66.0, -42.5], [64.0, -60.0, -42.5]], "rods": [[0, 1, 3.0], [0, 2, 3.0], [0, 3, 3.0], [0, 4, 3.0], [1, 2, 3.0], [1, 4, 3.0], [1, 5, 3.0], [1, 6, 3.0], [1, 7, 3.0], [2, 3, 3.0], [2, 7, 3.0], [2, 8, 3.0], [2, 9, 3.0], [3, 4, 3.0], [3, 9, 3.0], [3, 10, 3.0], [3, 11, 3.0], [4, 5, 3.0], [4, 11, 3.0], [4, 12, 3.0], [5, 6, 6.0], [5, 12, 6.0], [5, 13, 3.0], [5, 20, 3.0], [6, 7, 6.0], [6, 13, 3.0], [6, 14, 3.0], [7, 8, 6.0], [7, 14, 3.0], [7, 15, 3.0], [8, 9, 6.0], [8, 15, 3.0], [8, 16, 3.0], [9, 10, 6.0], [9, 16, 3.0], [9, 17, 3.0], [10, 11, 6.0], [10, 17, 3.0], [10, 18, 3.0], [11, 12, 6.0], [11, 18, 3.0], [11, 19, 3.0], [12, 19, 3.0], [12, 20, 3.0], [13, 14, 3.0], [13, 20, 3.0], [13, 21, 3.0], [13, 22, 3.0], [14, 15, 3.0], [14, 22, 3.0], [14, 23, 3.0], [15, 16, 3.0], [15, 23, 3.0], [15, 24, 3.0], [16, 17, 3.0], [16, 24, 3.0], [16, 25, 3.0], [17, 18, 3.0], [17, 25, 3.0], [17, 26, 3.0], [18, 19, 3.0], [18, 26, 3.0], [18, 27, 3.0], [19, 20, 3.0], [19, 27, 3.0], [19, 28, 3.0], [20, 21, 3.0], [20, 28, 3.0], [21, 22, 3.0], [21, 28, 3.0], [22, 23, 3.0], [23, 24, 3.0], [24, 25, 3.0], [25, 26, 3.0], [26, 27, 3.0], [27, 28, 3.0]], "tags": ["apex", "top", "top", "top", "top", "equator", "wheel node", "equator", "wheel node", "equator", "wheel node", "equator", "wheel node", "knee", "knee", "knee", "knee", "knee", "knee", "knee", "knee", "foot", "foot", "foot", "foot", "foot", "foot", "foot", "foot"], "ids": {"apex": [0], "T": [1, 2, 3, 4], "E": [5, 6, 7, 8, 9, 10, 11, 12], "K": [13, 14, 15, 16, 17, 18, 19, 20], "B": [21, 22, 23, 24, 25, 26, 27, 28]}, "shell": {"tube6_m": 0.86, "rod3_m": 5.11, "nodes": 29, "g": 139.2}, "catch": {"face": 1.0, "plunger": 4.6, "probe": 0.5, "where": {"face": "rod 6-14", "plunger": "rod 6-7", "probe": "rod 6-13"}}, "z_low": -47.5, "z_high": 65.0, "height": 112.5, "below_plate": 66.0, "opening": {"x": 162.0, "y": 122.0}, "swap_on_drone_g": 165.4, "drone_g": 734.6, "pack_cz": -16.0, "wheel_to_cart_bottom": 80.9, "system_check": "System: Scout v3 bottom concept A (today, shell for the count), cage first 3.0 mm (E) at -Z (cartridge), shell 76 rods closed, h/w 0.48, fit 129.6 mm\u00b3 (E) (FC MicoAir743/receiver v3 (box)) FAIL, bbox 5.54 L (E), extents 222 x 222 x 112 mm (E), mass 729 of 500 g (146 %) (E) over budget (total), CG 0.0 mm off thrust axis (E) [+0.0, +0.0, -35.4], 0.0 mm without swap parts"}, "B": {"receiver": {"boxes": [["latch rail L", [-50, 50, 20.3, 28.3, -34.35, -22.25]], ["rail post Lt", [-44, -36, 20.3, 28.3, -22.25, 18.5]], ["rail post Lf", [36, 44, 20.3, 28.3, -22.25, 18.5]], ["latch rail R", [-50, 50, -28.3, -20.3, -34.35, -22.25]], ["rail post Rt", [-44, -36, -28.3, -20.3, -22.25, 18.5]], ["rail post Rf", [36, 44, -28.3, -20.3, -22.25, 18.5]], ["XT60 carrier + cap", [31, 47, -9.25, 9.25, 8.5, 18.5]]], "mass": 42.6, "tag": "E", "parts": {"rails": 19.7, "posts": 10.6, "carrier_cap": 10.3, "strips": 2.0}}, "cart": [-46.5, 46.5, -20.0, 20.0, -37.1, 8.5], "pack": [-35.0, 35.0, -16.0, 16.0, -25.1, 7.899999999999999], "nodes": [[0.0, 0.0, 60.0], [83.44, 83.44, 56.0], [-83.44, 83.44, 56.0], [-83.44, -83.44, 56.0], [83.44, -83.44, 56.0], [104.0, 0.0, 52.0], [106.0, 106.0, 36.37], [0.0, 104.0, 52.0], [-106.0, 106.0, 36.37], [-104.0, 0.0, 52.0], [-106.0, -106.0, 36.37], [0.0, -104.0, 52.0], [106.0, -106.0, 36.37], [72.0, 36.0, 7.0], [38.0, 68.0, -3.0], [-38.0, 68.0, -3.0], [-72.0, 36.0, 7.0], [-72.0, -36.0, 7.0], [-38.0, -68.0, -3.0], [38.0, -68.0, -3.0], [72.0, -36.0, 7.0], [86.0, 0.0, -35.1], [64.0, 60.0, -35.1], [0.0, 66.0, -35.1], [-64.0, 60.0, -35.1], [-86.0, 0.0, -35.1], [-64.0, -60.0, -35.1], [0.0, -66.0, -35.1], [64.0, -60.0, -35.1]], "rods": [[0, 1, 3.0], [0, 2, 3.0], [0, 3, 3.0], [0, 4, 3.0], [1, 2, 3.0], [1, 4, 3.0], [1, 5, 3.0], [1, 6, 3.0], [1, 7, 3.0], [2, 3, 3.0], [2, 7, 3.0], [2, 8, 3.0], [2, 9, 3.0], [3, 4, 3.0], [3, 9, 3.0], [3, 10, 3.0], [3, 11, 3.0], [4, 5, 3.0], [4, 11, 3.0], [4, 12, 3.0], [5, 6, 6.0], [5, 12, 6.0], [5, 13, 3.0], [5, 20, 3.0], [6, 7, 6.0], [6, 13, 3.0], [6, 14, 3.0], [7, 8, 6.0], [7, 14, 3.0], [7, 15, 3.0], [8, 9, 6.0], [8, 15, 3.0], [8, 16, 3.0], [9, 10, 6.0], [9, 16, 3.0], [9, 17, 3.0], [10, 11, 6.0], [10, 17, 3.0], [10, 18, 3.0], [11, 12, 6.0], [11, 18, 3.0], [11, 19, 3.0], [12, 19, 3.0], [12, 20, 3.0], [13, 14, 3.0], [13, 20, 3.0], [13, 21, 3.0], [13, 22, 3.0], [14, 15, 3.0], [14, 22, 3.0], [14, 23, 3.0], [15, 16, 3.0], [15, 23, 3.0], [15, 24, 3.0], [16, 17, 3.0], [16, 24, 3.0], [16, 25, 3.0], [17, 18, 3.0], [17, 25, 3.0], [17, 26, 3.0], [18, 19, 3.0], [18, 26, 3.0], [18, 27, 3.0], [19, 20, 3.0], [19, 27, 3.0], [19, 28, 3.0], [20, 21, 3.0], [20, 28, 3.0], [21, 22, 3.0], [21, 28, 3.0], [22, 23, 3.0], [23, 24, 3.0], [24, 25, 3.0], [25, 26, 3.0], [26, 27, 3.0], [27, 28, 3.0]], "tags": ["apex", "top", "top", "top", "top", "equator", "wheel node", "equator", "wheel node", "equator", "wheel node", "equator", "wheel node", "knee", "knee", "knee", "knee", "knee", "knee", "knee", "knee", "foot", "foot", "foot", "foot", "foot", "foot", "foot", "foot"], "ids": {"apex": [0], "T": [1, 2, 3, 4], "E": [5, 6, 7, 8, 9, 10, 11, 12], "K": [13, 14, 15, 16, 17, 18, 19, 20], "B": [21, 22, 23, 24, 25, 26, 27, 28]}, "shell": {"tube6_m": 0.86, "rod3_m": 5.02, "nodes": 29, "g": 138.1}, "catch": {"face": 1.0, "plunger": 4.6, "probe": 0.5, "where": {"face": "rod 6-14", "plunger": "rod 6-7", "probe": "rod 6-13"}}, "z_low": -40.1, "z_high": 65.0, "height": 105.1, "below_plate": 58.6, "opening": {"x": 162.0, "y": 122.0}, "swap_on_drone_g": 93.1, "drone_g": 661.2, "pack_cz": -8.6, "wheel_to_cart_bottom": 73.5, "vs_A": {"mass_g": -73.4, "height": -7.4, "below_plate": -7.4, "hover_power_pct": -14.6}, "system_check": "System: Scout v3 bottom concept B (shell catch), cage first 3.0 mm (E) at -Z (cartridge), shell 76 rods closed, h/w 0.45, fit 0.0 mm\u00b3 (E) (arm 1/rail post Lf), bbox 5.18 L (E), extents 222 x 222 x 105 mm (E), mass 655 of 500 g (131 %) (E) over budget (total), CG 0.3 mm off thrust axis (E) [+0.3, +0.0, -29.9], 0.4 mm without swap parts"}, "C": {"receiver": {"boxes": [["latch rail L", [-50, 50, 20.3, 28.3, -34.35, -22.25]], ["rail post Lt", [-44, -36, 20.3, 28.3, -22.25, 18.5]], ["rail post Lf", [36, 44, 20.3, 28.3, -22.25, 18.5]], ["latch rail R", [-50, 50, -28.3, -20.3, -34.35, -22.25]], ["rail post Rt", [-44, -36, -28.3, -20.3, -22.25, 18.5]], ["rail post Rf", [36, 44, -28.3, -20.3, -22.25, 18.5]], ["XT60 carrier + cap", [31, 47, -9.25, 9.25, 8.5, 18.5]]], "mass": 42.6, "tag": "E", "parts": {"rails": 19.7, "posts": 10.6, "carrier_cap": 10.3, "strips": 2.0}}, "cart": [-46.5, 46.5, -20.0, 20.0, -37.1, 8.5], "pack": [-35.0, 35.0, -16.0, 16.0, -25.1, 7.899999999999999], "nodes": [[0.0, 0.0, 60.0], [83.44, 83.44, 56.0], [-83.44, 83.44, 56.0], [-83.44, -83.44, 56.0], [83.44, -83.44, 56.0], [112.0, 0.0, 40.0], [106.0, 106.0, 40.0], [0.0, 112.0, 40.0], [-106.0, 106.0, 40.0], [-112.0, 0.0, 40.0], [-106.0, -106.0, 40.0], [-0.0, -112.0, 40.0], [106.0, -106.0, 40.0], [107.5, 0.0, -35.1], [80.0, 93.0, -35.1], [0.0, 102.3, -35.1], [-80.0, 93.0, -35.1], [-107.5, 0.0, -35.1], [-80.0, -93.0, -35.1], [0.0, -102.3, -35.1], [80.0, -93.0, -35.1]], "rods": [[0, 1, 3.0], [0, 2, 3.0], [0, 3, 3.0], [0, 4, 3.0], [1, 2, 3.0], [1, 4, 3.0], [1, 5, 3.0], [1, 6, 3.0], [1, 7, 3.0], [2, 3, 3.0], [2, 7, 3.0], [2, 8, 3.0], [2, 9, 3.0], [3, 4, 3.0], [3, 9, 3.0], [3, 10, 3.0], [3, 11, 3.0], [4, 5, 3.0], [4, 11, 3.0], [4, 12, 3.0], [5, 6, 6.0], [5, 12, 6.0], [5, 13, 3.0], [5, 14, 3.0], [5, 20, 3.0], [6, 7, 6.0], [6, 14, 3.0], [7, 8, 6.0], [7, 14, 3.0], [7, 15, 3.0], [7, 16, 3.0], [8, 9, 6.0], [8, 16, 3.0], [9, 10, 6.0], [9, 16, 3.0], [9, 17, 3.0], [9, 18, 3.0], [10, 11, 6.0], [10, 18, 3.0], [11, 12, 6.0], [11, 18, 3.0], [11, 19, 3.0], [11, 20, 3.0], [12, 20, 3.0], [13, 14, 3.0], [13, 20, 3.0], [14, 15, 3.0], [15, 16, 3.0], [16, 17, 3.0], [17, 18, 3.0], [18, 19, 3.0], [19, 20, 3.0]], "tags": ["apex", "top", "top", "top", "top", "equator", "equator", "equator", "equator", "equator", "equator", "equator", "equator", "foot", "foot", "foot", "foot", "foot", "foot", "foot", "foot"], "ids": {"apex": [0], "T": [1, 2, 3, 4], "E": [5, 6, 7, 8, 9, 10, 11, 12], "K": [], "B": [13, 14, 15, 16, 17, 18, 19, 20]}, "shell": {"tube6_m": 0.85, "rod3_m": 4.27, "nodes": 21, "g": 109.7}, "catch": null, "z_low": -40.1, "z_high": 65.0, "height": 105.1, "below_plate": 58.6, "opening": {"x": 205.0, "y": 194.6}, "swap_on_drone_g": 93.1, "drone_g": 632.8, "pack_cz": -8.6, "wheel_to_cart_bottom": 2.0, "funnel": {"contact_half": 107.5, "mouth": 315.0, "height": 56, "note": "E: mouth = contact + 40 capture + 10 at 45 deg; the box catch redraws panels, hook latch and probes"}}, "numbers": {"Z_WHEEL": 36.37, "CORE_G": 265.0, "FC": [-16.1, 19.9, -18, 18, 9.5, 17.5], "PLATE": [-50, 50, -47, 47, 18.5, 22.0], "face_k": 82.7, "edges": [1.3, 84.0, 12.8, 95.5], "motor": 54.1, "prop_r": 44.45, "prop_z": 41.2}};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const N = D.numbers;
+const FUN = (() => { const k = 160, top = 77.3, ex = 95.5, ey = 84, zx = 12.8, zy = 1.3, F = [];
+  for (const s of [1, -1]) {
+    F.push([[s*ex,-ex,zx],[s*ex,ex,zx],[s*k,k,top],[s*k,-k,top]]);
+    F.push([[-ey,s*ey,zy],[ey,s*ey,zy],[ex,s*ex,zx],[k,s*k,top],[-k,s*k,top],[-ex,s*ex,zx]]);
+  } return F; })();
+const funC = c => { const r = c.contact_half, h = 56, t = r + h, F = [];
+  const zc = Math.min(...D.C.ids.B.map(i => D.C.nodes[i][2])) - 3;
+  for (const s of [1, -1]) { F.push([[s*r,-r,zc],[s*r,r,zc],[s*t,t,zc+h],[s*t,-t,zc+h]]); F.push([[-r,s*r,zc],[r,s*r,zc],[t,s*t,zc+h],[-t,s*t,zc+h]]); }
+  return F; };
+function boxFaces(b) { const [x0,x1,y0,y1,z0,z1] = b; const P = (x,y,z)=>[x,y,z];
+  return [[P(x0,y0,z0),P(x1,y0,z0),P(x1,y1,z0),P(x0,y1,z0)],[P(x0,y0,z1),P(x1,y0,z1),P(x1,y1,z1),P(x0,y1,z1)],
+    [P(x0,y0,z0),P(x1,y0,z0),P(x1,y0,z1),P(x0,y0,z1)],[P(x0,y1,z0),P(x1,y1,z0),P(x1,y1,z1),P(x0,y1,z1)],
+    [P(x0,y0,z0),P(x0,y1,z0),P(x0,y1,z1),P(x0,y0,z1)],[P(x1,y0,z0),P(x1,y1,z0),P(x1,y1,z1),P(x1,y0,z1)]]; }
+function ring(cx, cy, z, r, n=28) { const p = []; for (let i = 0; i <= n; i++) { const a = 2*Math.PI*i/n; p.push([cx + r*Math.cos(a), cy + r*Math.sin(a), z]); } return p; }
+const MOT = [[1,1],[-1,1],[-1,-1],[1,-1]].map(([a,b]) => [a*N.motor, b*N.motor]);
+
+function scene(key, withFunnel) {
+  const L = D[key], S = [];
+  const col = { carbon: css('--carbon'), petg: css('--petg'), pack: css('--pack'), funnel: css('--funnel'), ff: css('--funnel-fill'), prop: css('--prop') };
+  if (withFunnel) for (const f of (key === 'C' ? funC(D.C.funnel) : FUN)) S.push({ k: 'poly', p: f, fill: col.ff, stroke: col.funnel, w: 1 });
+  for (const f of boxFaces(N.PLATE)) S.push({ k: 'poly', p: f, fill: col.prop + '55', stroke: col.prop, w: .6 });
+  for (const f of boxFaces(N.FC)) S.push({ k: 'poly', p: f, fill: col.prop + '66', stroke: col.prop, w: .6 });
+  for (const [x,y] of MOT) { S.push({ k: 'line', p: ring(x, y, N.prop_z, N.prop_r, 40), stroke: col.prop, w: 1.2 }); S.push({ k: 'line', p: ring(x, y, 36, 14, 16), stroke: col.prop, w: 1 });
+    S.push({ k: 'line', p: [[x*.55, y*.55, 20], [x, y, 20]], stroke: col.prop, w: 5 }); }
+  for (const f of boxFaces(L.cart)) S.push({ k: 'poly', p: f, fill: col.pack + '30', stroke: col.pack, w: 1 });
+  for (const f of boxFaces(L.pack)) S.push({ k: 'poly', p: f, fill: col.pack + '70', stroke: col.pack, w: .6 });
+  for (const [, b] of L.receiver.boxes) for (const f of boxFaces(b)) S.push({ k: 'poly', p: f, fill: col.petg + '40', stroke: col.petg, w: .8 });
+  for (const [a, b, d] of L.rods) S.push({ k: 'line', p: [L.nodes[a], L.nodes[b]], stroke: col.carbon, w: d === 6 ? 3.2 : 1.6 });
+  L.nodes.forEach((p, i) => S.push({ k: 'dot', p: [p], fill: L.tags[i] === 'wheel node' ? col.petg : col.carbon, r: L.tags[i] === 'wheel node' ? 5 : 3 }));
+  return S;
+}
+
+const cv = document.getElementById('cv'), cx = cv.getContext('2d');
+let view = 'B', yaw = -0.62, pitch = 0.42, showF = true;
+function draw() {
+  const W = cv.width, H = cv.height; cx.clearRect(0, 0, W, H);
+  const cy_ = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), s = Math.min(W, H) / 330;
+  const pr = ([x, y, z]) => { const X = x*cy_ - y*sy, Y = x*sy + y*cy_; const Z = z - 10; return [W/2 + X*s, H*0.56 - (Z*cp - Y*sp)*s, Y*cp + Z*sp]; };
+  const S = scene(view, showF).map(o => { const q = o.p.map(pr); return { ...o, q, d: q.reduce((a, v) => a + v[2], 0) / q.length }; });
+  S.sort((a, b) => b.d - a.d);
+  for (const o of S) {
+    cx.beginPath(); o.q.forEach(([x, y], i) => i ? cx.lineTo(x, y) : cx.moveTo(x, y));
+    if (o.k === 'poly') { cx.closePath(); cx.fillStyle = o.fill; cx.fill(); cx.strokeStyle = o.stroke; cx.lineWidth = o.w; cx.stroke(); }
+    else if (o.k === 'line') { cx.strokeStyle = o.stroke; cx.lineWidth = o.w * s / 2.2; cx.lineCap = 'round'; cx.stroke(); }
+    else { cx.beginPath(); cx.arc(o.q[0][0], o.q[0][1], o.r * s / 2.2, 0, 7); cx.fillStyle = o.fill; cx.fill(); }
+  }
+  const L = D[view];
+  document.getElementById('cap').textContent = `${view}: ${L.height} mm tall, ${L.below_plate} below the plate, swap parts on the drone ${L.swap_on_drone_g} g, drone ${L.drone_g} g (E). Drag to turn.`;
+}
+for (const k of ['A', 'B', 'C']) document.getElementById('v' + k).addEventListener('click', () => { view = k;
+  for (const j of ['A', 'B', 'C']) document.getElementById('v' + j).setAttribute('aria-pressed', String(j === k)); draw(); });
+document.getElementById('fun').addEventListener('change', e => { showF = e.target.checked; draw(); });
+let drag = null;
+cv.addEventListener('pointerdown', e => { drag = [e.clientX, e.clientY, yaw, pitch]; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', e => { if (!drag) return; yaw = drag[2] + (e.clientX - drag[0]) * 0.01; pitch = Math.max(-1.4, Math.min(1.4, drag[3] + (e.clientY - drag[1]) * 0.01)); draw(); });
+cv.addEventListener('pointerup', () => drag = null);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+// sections (x-z), one scale
+const X0 = -150, X1 = 150, Z0 = -60, Z1 = 90;
+function section(key) {
+  const L = D[key], ns = 'http://www.w3.org/2000/svg', w = X1 - X0, h = Z1 - Z0;
+  const T = (x, z) => `${x - X0},${Z1 - z}`;
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="${ns}" role="img" aria-label="side section of layout ${key}">`;
+  for (let x = -140; x <= 140; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${h}" stroke="var(--rule)" stroke-width=".3"/>`;
+  for (let z = -60; z <= 90; z += 20) g += `<line x1="0" y1="${Z1-z}" x2="${w}" y2="${Z1-z}" stroke="var(--rule)" stroke-width=".3"/>`;
+  if (key === 'C') { const r = D.C.funnel.contact_half, zc = Math.min(...D.C.ids.B.map(i => D.C.nodes[i][2])) - 3;
+    for (const s of [1, -1]) g += `<polyline points="${T(s*r, zc)} ${T(s*(r+56), zc+56)}" fill="none" stroke="var(--funnel)" stroke-width="2"/>`; }
+  else for (const s of [1, -1]) g += `<polyline points="${T(s*95.5, 12.8)} ${T(s*160, 77.3)}" fill="none" stroke="var(--funnel)" stroke-width="2"/>`;
+  const rect = (b, f, st, sw) => `<rect x="${b[0]-X0}" y="${Z1-b[5]}" width="${b[1]-b[0]}" height="${b[5]-b[4]}" fill="${f}" stroke="${st}" stroke-width="${sw}"/>`;
+  for (const [x] of MOT) { g += `<rect x="${x-N.prop_r-X0}" y="${Z1-N.prop_z-4}" width="${2*N.prop_r}" height="8" fill="var(--prop)" opacity=".35"/>`;
+    g += `<rect x="${x-14-X0}" y="${Z1-36}" width="28" height="14" fill="var(--prop)" opacity=".7"/>`; }
+  g += rect(N.PLATE, 'var(--prop)', 'none', 0) + rect(N.FC, 'var(--prop)', 'none', 0);
+  g += rect(L.cart, 'none', 'var(--pack)', 1) + rect(L.pack, 'var(--pack)', 'none', 0);
+  for (const [, b] of L.receiver.boxes) g += rect(b, 'var(--petg)', 'var(--petg)', .4).replace('fill="var(--petg)"', 'fill="var(--petg)" fill-opacity=".45"');
+  for (const [a, b, d] of L.rods) { const p = L.nodes[a], q = L.nodes[b]; g += `<line x1="${p[0]-X0}" y1="${Z1-p[2]}" x2="${q[0]-X0}" y2="${Z1-q[2]}" stroke="var(--carbon)" stroke-width="${d === 6 ? 1.6 : .7}" opacity=".75"/>`; }
+  L.nodes.forEach((p, i) => { g += `<circle cx="${p[0]-X0}" cy="${Z1-p[2]}" r="${L.tags[i] === 'wheel node' ? 5 : 2.2}" fill="${L.tags[i] === 'wheel node' ? 'var(--petg)' : 'var(--carbon)'}"/>`; });
+  g += `<text x="4" y="${h-4}" font-size="7" fill="var(--muted)" font-family="IBM Plex Mono, monospace">z ${L.z_low} … ${L.z_high}</text>`;
+  return g + '</svg>';
+}
+const META = {
+  A: ['A · today\'s latch set', 'receiver v3 box hung under the FC, cartridge bottom z −44.5 (M); same shell for a fair count'],
+  B: ['B · shell catch (DEFAULT)', 'wheels on the crown, pack 1.0 under the FC, 2 latch rails in the bottom ring; box unchanged'],
+  C: ['C · belly catch (alternative)', 'wheels on the bottom ring, a new smaller funnel round it; box catch redrawn'] };
+document.getElementById('secs').innerHTML = ['A', 'B', 'C'].map(k => `<div class="sec"><h3>${META[k][0]}</h3><span class="tag">${META[k][1]}</span>${section(k)}</div>`).join('');
+
+const pill = (ok, t) => `<span class="pill ${ok ? 'ok' : 'no'}">${t}</span>`;
+const rows = [
+  ['', 'A today', 'B shell catch', 'C belly catch'],
+  ['Height (shell, z)', D.A.height, D.B.height, D.C.height],
+  ['Below the plate top', D.A.below_plate, D.B.below_plate, D.C.below_plate],
+  ['Swap parts on the drone (g)', D.A.swap_on_drone_g + ' (M)', D.B.swap_on_drone_g, D.C.swap_on_drone_g],
+  ['Shell, same method (g)', D.A.shell.g, D.B.shell.g, D.C.shell.g],
+  ['Drone all-up (g, E)', D.A.drone_g, D.B.drone_g, D.C.drone_g],
+  ['Pack centre z (prop plane 41.2)', D.A.pack_cz, D.B.pack_cz, D.C.pack_cz],
+  ['Wheel centre to cartridge bottom', D.A.wheel_to_cart_bottom, D.B.wheel_to_cart_bottom, D.C.wheel_to_cart_bottom],
+  ['Catch keep-outs (face / plunger / probe, mm spare)', `${D.A.catch.face} / ${D.A.catch.plunger} / ${D.A.catch.probe}`, `${D.B.catch.face} / ${D.B.catch.plunger} / ${D.B.catch.probe}`, 'new funnel'],
+  ['Box', pill(true, 'unchanged'), pill(true, 'unchanged') + ' head stop +7.4', pill(false, 'catch redrawn')],
+];
+document.getElementById('tbl').innerHTML = rows.map((r, i) => i === 0 ? `<tr>${r.map(c => `<th>${c}</th>`).join('')}</tr>`
+  : `<tr>${r.map((c, j) => j ? `<td class="n">${c}</td>` : `<td>${c}</td>`).join('')}</tr>`).join('');
+document.getElementById('sc').textContent = 'B ' + D.B.system_check;
+const v = D.B.vs_A;
+document.getElementById('notes').innerHTML = [
+  `B against A: ${v.mass_g} g on the drone (${D.A.swap_on_drone_g} → ${D.B.swap_on_drone_g} g of swap parts), ${v.height} mm in height, hover power ${v.hover_power_pct} % at the same props (E, P ∝ m^1.5). That is flight time, not looks.`,
+  `Structure is kept and gets simpler: one closed, mirror-exact shell carries landing, crash and swap. The latch rails bolt to the plate on 4 posts and end in the bottom ring nodes, so the 74 N insert and 43.5 N across go plate ↔ rails ↔ ring ↔ shell, no 35 mm bolt columns and no separate legs, keel, skids or TPU end pieces.`,
+  `Catch interface unchanged: the 8 R 5 wheels at (±112, ±100) / (±100, ±112), z ${N.Z_WHEEL} on the 45° faces; the lower band stays ≥ 1.0 inside the faces and ≥ 3 inside the 191 × 168 opening at ±5° yaw; the ±x crown is lifted above the probe pads (G (8)), the ±y side clears the hook latch plungers (G (7)).`,
+  `Box ask (box swap, DEFAULT): the Scout cartridge sits 7.4 higher in the seated drone, so the head stops 7.4 further up at the drone position, or the Scout seat drops 7.4. Nothing else in the box moves; panels v7 / v9 plain and hook latch v2 stay READY.`,
+  `Bottom opening ${D.B.opening.x} × ${D.B.opening.y} clear: the rule's receiver + 30 a side holds across (y) and along (x) but the corners are cut, because the box opening (191 × 168 at ±5° yaw) caps the ring. The head works in the central 37 × 40 recess.`,
+  `Not decided here: FC on a top case would lift the pack another ~8 (E; Spark 12 Oct: FC stays under, 16 Oct: top case). Kept under (DEFAULT). The shell is a concept stand-in (29 nodes, 76 rods, 6 mm equator, 3 mm rest); the Scout v3 system pass sizes it with the frame model.`,
+  `C would make the funnel smaller (mouth ${D.C.funnel.mouth}, ${D.C.funnel.height} tall vs 320 / 76) and the shell lightest (${D.C.shell.g} g), but it redraws the READY panels, hook latch and probes and breaks the one-funnel interface with the Overseer. Kept as the alternative.`,
+].map(t => `<li>${t}</li>`).join('');
+draw();
+</script>

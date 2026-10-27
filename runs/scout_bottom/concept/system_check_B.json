@@ -1,0 +1,6798 @@
+{
+ "name": "Scout v3 bottom concept B (shell catch)",
+ "pass_": true,
+ "cage_first": {
+  "applies": true,
+  "pass_": true,
+  "worst_part": "cartridge",
+  "worst_dir": [
+   -0.0,
+   -0.0,
+   -1.0
+  ],
+  "worst_dir_label": "-Z",
+  "margin_mm": 3.0,
+  "required_mm": 0.0,
+  "n_dirs": 2006,
+  "cage_margin_mm": 3.0,
+  "per_part": {
+   "FC MicoAir743": {
+    "min_margin_mm": 46.72,
+    "worst_dir": [
+     0.011,
+     0.029,
+     1.0
+    ],
+    "worst_slack_mm": 43.72,
+    "min_margin_outside_openings_mm": 46.72,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "Radxa Zero 3W (top)": {
+    "min_margin_mm": 34.17,
+    "worst_dir": [
+     0.011,
+     0.029,
+     1.0
+    ],
+    "worst_slack_mm": 31.17,
+    "min_margin_outside_openings_mm": 34.17,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "pack 4S 1500": {
+    "min_margin_mm": 15.0,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 15.0,
+    "min_margin_outside_openings_mm": 41.03,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "cartridge": {
+    "min_margin_mm": 3.0,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 3.0,
+    "min_margin_outside_openings_mm": 24.0,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "motor 1": {
+    "min_margin_mm": 26.33,
+    "worst_dir": [
+     0.011,
+     0.029,
+     1.0
+    ],
+    "worst_slack_mm": 23.33,
+    "min_margin_outside_openings_mm": 26.33,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "prop 1": {
+    "min_margin_mm": 7.73,
+    "worst_dir": [
+     0.104,
+     0.618,
+     0.779
+    ],
+    "worst_slack_mm": 4.73,
+    "min_margin_outside_openings_mm": 7.73,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "motor 2": {
+    "min_margin_mm": 26.96,
+    "worst_dir": [
+     -0.113,
+     0.012,
+     0.994
+    ],
+    "worst_slack_mm": 23.96,
+    "min_margin_outside_openings_mm": 26.96,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "prop 2": {
+    "min_margin_mm": 7.94,
+    "worst_dir": [
+     -0.57,
+     0.099,
+     0.816
+    ],
+    "worst_slack_mm": 4.94,
+    "min_margin_outside_openings_mm": 7.94,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "motor 3": {
+    "min_margin_mm": 26.35,
+    "worst_dir": [
+     -0.049,
+     -0.024,
+     0.999
+    ],
+    "worst_slack_mm": 23.35,
+    "min_margin_outside_openings_mm": 26.35,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "prop 3": {
+    "min_margin_mm": 7.61,
+    "worst_dir": [
+     -0.58,
+     -0.105,
+     0.807
+    ],
+    "worst_slack_mm": 4.61,
+    "min_margin_outside_openings_mm": 7.61,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "motor 4": {
+    "min_margin_mm": 26.53,
+    "worst_dir": [
+     0.068,
+     -0.02,
+     0.998
+    ],
+    "worst_slack_mm": 23.53,
+    "min_margin_outside_openings_mm": 26.53,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "prop 4": {
+    "min_margin_mm": 8.33,
+    "worst_dir": [
+     0.588,
+     -0.127,
+     0.798
+    ],
+    "worst_slack_mm": 5.33,
+    "min_margin_outside_openings_mm": 8.33,
+    "dirs_in_openings": 235,
+    "pass_": true
+   }
+  }
+ },
+ "shell": {
+  "applies": true,
+  "pass_": true,
+  "closed": true,
+  "mirror": {
+   "plane": "y",
+   "node_err_mm": 0.0,
+   "rods_unmatched": 0
+  },
+  "gap_share": 0.0,
+  "open_share": 0.2395,
+  "ratio": 0.449,
+  "ratio_min": null,
+  "nodes": 29,
+  "rods": 76,
+  "triangles": 48,
+  "longest_rod_mm": 166.9,
+  "largest_cell_mm": 66.2
+ },
+ "compact": {
+  "bbox_min": [
+   -111.0,
+   -111.0,
+   -40.1
+  ],
+  "bbox_max": [
+   111.0,
+   111.0,
+   65.0
+  ],
+  "extents_mm": [
+   222.0,
+   222.0,
+   105.1
+  ],
+  "largest_extent_mm": 222.0,
+  "bbox_L": 5.18,
+  "hull_L": 3.785,
+  "guard_offsets_mm": {}
+ },
+ "fit": {
+  "pass_": true,
+  "tol_mm3": 0.5,
+  "worst": {
+   "a": "arm 1",
+   "b": "rail post Lf",
+   "overlap_mm3": 0.02,
+   "limit_mm3": 0.5,
+   "contact": false,
+   "method": "manifold3d",
+   "pass_": true
+  },
+  "pairs": [
+   {
+    "a": "frame plate",
+    "b": "wiring, UBEC, XR2, camera, flow (lump)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "arm 1",
+    "overlap_mm3": 944.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "arm 2",
+    "overlap_mm3": 944.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "arm 3",
+    "overlap_mm3": 944.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "arm 4",
+    "overlap_mm3": 944.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "latch rail L",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "rail post Lt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "rail post Lf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "latch rail R",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "frame plate",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "FC MicoAir743",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "Radxa Zero 3W (top)",
+    "overlap_mm3": 12600.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "pack 4S 1500",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "cartridge",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "motor 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "prop 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "arm 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "motor 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "prop 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "arm 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "motor 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "prop 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "arm 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "motor 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "prop 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "arm 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "latch rail L",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "rail post Lt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "rail post Lf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "latch rail R",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wiring, UBEC, XR2, camera, flow (lump)",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "pack 4S 1500",
+    "b": "cartridge",
+    "overlap_mm3": 73920.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "latch rail L",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "rail post Lt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "rail post Lf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "latch rail R",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "motor 1",
+    "b": "prop 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "motor 1",
+    "b": "arm 1",
+    "overlap_mm3": 490.75,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm 1",
+    "b": "rail post Lf",
+    "overlap_mm3": 0.02,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "motor 2",
+    "b": "prop 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "motor 2",
+    "b": "arm 2",
+    "overlap_mm3": 490.75,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm 2",
+    "b": "rail post Lt",
+    "overlap_mm3": 0.02,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "motor 3",
+    "b": "prop 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "motor 3",
+    "b": "arm 3",
+    "overlap_mm3": 490.75,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm 3",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.02,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "motor 4",
+    "b": "prop 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "motor 4",
+    "b": "arm 4",
+    "overlap_mm3": 490.75,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm 4",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.02,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "latch rail L",
+    "b": "rail post Lt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail L",
+    "b": "rail post Lf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail L",
+    "b": "latch rail R",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail L",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail L",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail L",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lt",
+    "b": "rail post Lf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lt",
+    "b": "latch rail R",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lt",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lt",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lt",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lf",
+    "b": "latch rail R",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lf",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lf",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Lf",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail R",
+    "b": "rail post Rt",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail R",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "latch rail R",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Rt",
+    "b": "rail post Rf",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Rt",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "rail post Rf",
+    "b": "XT60 carrier + cap",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "node 0 apex",
+    "b": "rod 0-1",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 0 apex",
+    "b": "rod 0-2",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 0 apex",
+    "b": "rod 0-3",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 0 apex",
+    "b": "rod 0-4",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 1 top",
+    "b": "rod 0-1",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 1 top",
+    "b": "rod 1-2",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 1 top",
+    "b": "rod 1-4",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 1 top",
+    "b": "rod 1-5",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 1 top",
+    "b": "rod 1-6",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 1 top",
+    "b": "rod 1-7",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 2 top",
+    "b": "rod 0-2",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 2 top",
+    "b": "rod 1-2",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 2 top",
+    "b": "rod 2-3",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 2 top",
+    "b": "rod 2-7",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 2 top",
+    "b": "rod 2-8",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 2 top",
+    "b": "rod 2-9",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 3 top",
+    "b": "rod 0-3",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 3 top",
+    "b": "rod 2-3",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 3 top",
+    "b": "rod 3-4",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 3 top",
+    "b": "rod 3-9",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 3 top",
+    "b": "rod 3-10",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 3 top",
+    "b": "rod 3-11",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 4 top",
+    "b": "rod 0-4",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 4 top",
+    "b": "rod 1-4",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 4 top",
+    "b": "rod 3-4",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 4 top",
+    "b": "rod 4-5",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 4 top",
+    "b": "rod 4-11",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 4 top",
+    "b": "rod 4-12",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 5 equator",
+    "b": "rod 1-5",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 5 equator",
+    "b": "rod 4-5",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 5 equator",
+    "b": "rod 5-6",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 5 equator",
+    "b": "rod 5-12",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 5 equator",
+    "b": "rod 5-13",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 5 equator",
+    "b": "rod 5-20",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 6 wheel node",
+    "b": "rod 1-6",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 6 wheel node",
+    "b": "rod 5-6",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 6 wheel node",
+    "b": "rod 6-7",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 6 wheel node",
+    "b": "rod 6-13",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 6 wheel node",
+    "b": "rod 6-14",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 7 equator",
+    "b": "rod 1-7",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 7 equator",
+    "b": "rod 2-7",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 7 equator",
+    "b": "rod 6-7",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 7 equator",
+    "b": "rod 7-8",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 7 equator",
+    "b": "rod 7-14",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 7 equator",
+    "b": "rod 7-15",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 8 wheel node",
+    "b": "rod 2-8",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 8 wheel node",
+    "b": "rod 7-8",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 8 wheel node",
+    "b": "rod 8-9",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 8 wheel node",
+    "b": "rod 8-15",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 8 wheel node",
+    "b": "rod 8-16",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 9 equator",
+    "b": "rod 2-9",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 9 equator",
+    "b": "rod 3-9",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 9 equator",
+    "b": "rod 8-9",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 9 equator",
+    "b": "rod 9-10",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 9 equator",
+    "b": "rod 9-16",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 9 equator",
+    "b": "rod 9-17",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 10 wheel node",
+    "b": "rod 3-10",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 10 wheel node",
+    "b": "rod 9-10",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 10 wheel node",
+    "b": "rod 10-11",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 10 wheel node",
+    "b": "rod 10-17",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 10 wheel node",
+    "b": "rod 10-18",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 11 equator",
+    "b": "rod 3-11",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 11 equator",
+    "b": "rod 4-11",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 11 equator",
+    "b": "rod 10-11",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 11 equator",
+    "b": "rod 11-12",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 11 equator",
+    "b": "rod 11-18",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 11 equator",
+    "b": "rod 11-19",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 12 wheel node",
+    "b": "rod 4-12",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 12 wheel node",
+    "b": "rod 5-12",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 12 wheel node",
+    "b": "rod 11-12",
+    "overlap_mm3": 127.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 12 wheel node",
+    "b": "rod 12-19",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 12 wheel node",
+    "b": "rod 12-20",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 13 knee",
+    "b": "rod 5-13",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 13 knee",
+    "b": "rod 6-13",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 13 knee",
+    "b": "rod 13-14",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 13 knee",
+    "b": "rod 13-20",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 13 knee",
+    "b": "rod 13-21",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 13 knee",
+    "b": "rod 13-22",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 14 knee",
+    "b": "rod 6-14",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 14 knee",
+    "b": "rod 7-14",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 14 knee",
+    "b": "rod 13-14",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 14 knee",
+    "b": "rod 14-15",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 14 knee",
+    "b": "rod 14-22",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 14 knee",
+    "b": "rod 14-23",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 15 knee",
+    "b": "rod 7-15",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 15 knee",
+    "b": "rod 8-15",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 15 knee",
+    "b": "rod 14-15",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 15 knee",
+    "b": "rod 15-16",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 15 knee",
+    "b": "rod 15-23",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 15 knee",
+    "b": "rod 15-24",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 16 knee",
+    "b": "rod 8-16",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 16 knee",
+    "b": "rod 9-16",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 16 knee",
+    "b": "rod 15-16",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 16 knee",
+    "b": "rod 16-17",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 16 knee",
+    "b": "rod 16-24",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 16 knee",
+    "b": "rod 16-25",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 17 knee",
+    "b": "rod 9-17",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 17 knee",
+    "b": "rod 10-17",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 17 knee",
+    "b": "rod 16-17",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 17 knee",
+    "b": "rod 17-18",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 17 knee",
+    "b": "rod 17-25",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 17 knee",
+    "b": "rod 17-26",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 18 knee",
+    "b": "rod 10-18",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 18 knee",
+    "b": "rod 11-18",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 18 knee",
+    "b": "rod 17-18",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 18 knee",
+    "b": "rod 18-19",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 18 knee",
+    "b": "rod 18-26",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 18 knee",
+    "b": "rod 18-27",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 19 knee",
+    "b": "rod 11-19",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 19 knee",
+    "b": "rod 12-19",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 19 knee",
+    "b": "rod 18-19",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 19 knee",
+    "b": "rod 19-20",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 19 knee",
+    "b": "rod 19-27",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 19 knee",
+    "b": "rod 19-28",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 20 knee",
+    "b": "rod 5-20",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 20 knee",
+    "b": "rod 12-20",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 20 knee",
+    "b": "rod 13-20",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 20 knee",
+    "b": "rod 19-20",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 20 knee",
+    "b": "rod 20-21",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 20 knee",
+    "b": "rod 20-28",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 21 foot",
+    "b": "rod 13-21",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 21 foot",
+    "b": "rod 20-21",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 21 foot",
+    "b": "rod 21-22",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 21 foot",
+    "b": "rod 21-28",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 22 foot",
+    "b": "rod 13-22",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 22 foot",
+    "b": "rod 14-22",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 22 foot",
+    "b": "rod 21-22",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 22 foot",
+    "b": "rod 22-23",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 23 foot",
+    "b": "rod 14-23",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 23 foot",
+    "b": "rod 15-23",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 23 foot",
+    "b": "rod 22-23",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 23 foot",
+    "b": "rod 23-24",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 24 foot",
+    "b": "rod 15-24",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 24 foot",
+    "b": "rod 16-24",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 24 foot",
+    "b": "rod 23-24",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 24 foot",
+    "b": "rod 24-25",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 25 foot",
+    "b": "rod 16-25",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 25 foot",
+    "b": "rod 17-25",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 25 foot",
+    "b": "rod 24-25",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 25 foot",
+    "b": "rod 25-26",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 26 foot",
+    "b": "rod 17-26",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 26 foot",
+    "b": "rod 18-26",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 26 foot",
+    "b": "rod 25-26",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 26 foot",
+    "b": "rod 26-27",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 27 foot",
+    "b": "rod 18-27",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 27 foot",
+    "b": "rod 19-27",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 27 foot",
+    "b": "rod 26-27",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 27 foot",
+    "b": "rod 27-28",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 28 foot",
+    "b": "rod 19-28",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 28 foot",
+    "b": "rod 20-28",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 28 foot",
+    "b": "rod 21-28",
+    "overlap_mm3": 34.46,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "node 28 foot",
+    "b": "rod 27-28",
+    "overlap_mm3": 34.45,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 0-2",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 0-3",
+    "overlap_mm3": 0.15,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 0-4",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 1-2",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 1-4",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 1-5",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 1-6",
+    "overlap_mm3": 1.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-1",
+    "b": "rod 1-7",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 0-3",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 0-4",
+    "overlap_mm3": 0.15,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 1-2",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 2-3",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 2-7",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 2-8",
+    "overlap_mm3": 1.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-2",
+    "b": "rod 2-9",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-3",
+    "b": "rod 0-4",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-3",
+    "b": "rod 2-3",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-3",
+    "b": "rod 3-4",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-3",
+    "b": "rod 3-9",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-3",
+    "b": "rod 3-10",
+    "overlap_mm3": 1.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-3",
+    "b": "rod 3-11",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-4",
+    "b": "rod 1-4",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-4",
+    "b": "rod 3-4",
+    "overlap_mm3": 10.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-4",
+    "b": "rod 4-5",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-4",
+    "b": "rod 4-11",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 0-4",
+    "b": "rod 4-12",
+    "overlap_mm3": 1.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 1-4",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 1-5",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 1-6",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 1-7",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 2-3",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 2-7",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 2-8",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-2",
+    "b": "rod 2-9",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 1-5",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 1-6",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 1-7",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 3-4",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 4-5",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 4-11",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-4",
+    "b": "rod 4-12",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 1-6",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 1-7",
+    "overlap_mm3": 2.73,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 4-5",
+    "overlap_mm3": 1.13,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 5-6",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 5-12",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 5-13",
+    "overlap_mm3": 9.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-5",
+    "b": "rod 5-20",
+    "overlap_mm3": 2.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-6",
+    "b": "rod 1-7",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-6",
+    "b": "rod 5-6",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-6",
+    "b": "rod 6-7",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-6",
+    "b": "rod 6-13",
+    "overlap_mm3": 8.55,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-6",
+    "b": "rod 6-14",
+    "overlap_mm3": 7.72,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-7",
+    "b": "rod 2-7",
+    "overlap_mm3": 1.13,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-7",
+    "b": "rod 6-7",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-7",
+    "b": "rod 7-8",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-7",
+    "b": "rod 7-14",
+    "overlap_mm3": 8.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 1-7",
+    "b": "rod 7-15",
+    "overlap_mm3": 2.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 2-7",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 2-8",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 2-9",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 3-4",
+    "overlap_mm3": 4.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 3-9",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 3-10",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-3",
+    "b": "rod 3-11",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-7",
+    "b": "rod 2-8",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-7",
+    "b": "rod 2-9",
+    "overlap_mm3": 2.73,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-7",
+    "b": "rod 6-7",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-7",
+    "b": "rod 7-8",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-7",
+    "b": "rod 7-14",
+    "overlap_mm3": 2.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-7",
+    "b": "rod 7-15",
+    "overlap_mm3": 8.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-8",
+    "b": "rod 2-9",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-8",
+    "b": "rod 7-8",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-8",
+    "b": "rod 8-9",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-8",
+    "b": "rod 8-15",
+    "overlap_mm3": 7.72,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-8",
+    "b": "rod 8-16",
+    "overlap_mm3": 8.55,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-9",
+    "b": "rod 3-9",
+    "overlap_mm3": 1.13,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-9",
+    "b": "rod 8-9",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-9",
+    "b": "rod 9-10",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-9",
+    "b": "rod 9-16",
+    "overlap_mm3": 9.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 2-9",
+    "b": "rod 9-17",
+    "overlap_mm3": 2.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-4",
+    "b": "rod 3-9",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-4",
+    "b": "rod 3-10",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-4",
+    "b": "rod 3-11",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-4",
+    "b": "rod 4-5",
+    "overlap_mm3": 3.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-4",
+    "b": "rod 4-11",
+    "overlap_mm3": 36.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-4",
+    "b": "rod 4-12",
+    "overlap_mm3": 2.24,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-9",
+    "b": "rod 3-10",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-9",
+    "b": "rod 3-11",
+    "overlap_mm3": 2.73,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-9",
+    "b": "rod 8-9",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-9",
+    "b": "rod 9-10",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-9",
+    "b": "rod 9-16",
+    "overlap_mm3": 2.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-9",
+    "b": "rod 9-17",
+    "overlap_mm3": 9.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-10",
+    "b": "rod 3-11",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-10",
+    "b": "rod 9-10",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-10",
+    "b": "rod 10-11",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-10",
+    "b": "rod 10-17",
+    "overlap_mm3": 8.55,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-10",
+    "b": "rod 10-18",
+    "overlap_mm3": 7.72,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-11",
+    "b": "rod 4-11",
+    "overlap_mm3": 1.13,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-11",
+    "b": "rod 10-11",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-11",
+    "b": "rod 11-12",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-11",
+    "b": "rod 11-18",
+    "overlap_mm3": 8.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 3-11",
+    "b": "rod 11-19",
+    "overlap_mm3": 2.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-5",
+    "b": "rod 4-11",
+    "overlap_mm3": 2.73,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-5",
+    "b": "rod 4-12",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-5",
+    "b": "rod 5-6",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-5",
+    "b": "rod 5-12",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-5",
+    "b": "rod 5-13",
+    "overlap_mm3": 2.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-5",
+    "b": "rod 5-20",
+    "overlap_mm3": 9.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-11",
+    "b": "rod 4-12",
+    "overlap_mm3": 2.88,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-11",
+    "b": "rod 10-11",
+    "overlap_mm3": 0.56,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-11",
+    "b": "rod 11-12",
+    "overlap_mm3": 63.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-11",
+    "b": "rod 11-18",
+    "overlap_mm3": 2.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-11",
+    "b": "rod 11-19",
+    "overlap_mm3": 8.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-12",
+    "b": "rod 5-12",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-12",
+    "b": "rod 11-12",
+    "overlap_mm3": 25.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-12",
+    "b": "rod 12-19",
+    "overlap_mm3": 7.72,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 4-12",
+    "b": "rod 12-20",
+    "overlap_mm3": 8.55,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-6",
+    "b": "rod 5-12",
+    "overlap_mm3": 5.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-6",
+    "b": "rod 5-13",
+    "overlap_mm3": 23.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-6",
+    "b": "rod 5-20",
+    "overlap_mm3": 4.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-6",
+    "b": "rod 6-7",
+    "overlap_mm3": 38.07,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-6",
+    "b": "rod 6-13",
+    "overlap_mm3": 31.54,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-6",
+    "b": "rod 6-14",
+    "overlap_mm3": 16.87,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-12",
+    "b": "rod 5-13",
+    "overlap_mm3": 4.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-12",
+    "b": "rod 5-20",
+    "overlap_mm3": 23.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-12",
+    "b": "rod 11-12",
+    "overlap_mm3": 38.07,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-12",
+    "b": "rod 12-19",
+    "overlap_mm3": 16.87,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-12",
+    "b": "rod 12-20",
+    "overlap_mm3": 31.54,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-13",
+    "b": "rod 5-20",
+    "overlap_mm3": 6.89,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-13",
+    "b": "rod 6-13",
+    "overlap_mm3": 4.4,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-13",
+    "b": "rod 13-14",
+    "overlap_mm3": 1.26,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-13",
+    "b": "rod 13-20",
+    "overlap_mm3": 8.29,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-13",
+    "b": "rod 13-21",
+    "overlap_mm3": 4.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-13",
+    "b": "rod 13-22",
+    "overlap_mm3": 0.85,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-20",
+    "b": "rod 12-20",
+    "overlap_mm3": 4.4,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-20",
+    "b": "rod 13-20",
+    "overlap_mm3": 8.29,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-20",
+    "b": "rod 19-20",
+    "overlap_mm3": 1.26,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-20",
+    "b": "rod 20-21",
+    "overlap_mm3": 4.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 5-20",
+    "b": "rod 20-28",
+    "overlap_mm3": 0.85,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-7",
+    "b": "rod 6-13",
+    "overlap_mm3": 16.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-7",
+    "b": "rod 6-14",
+    "overlap_mm3": 26.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-7",
+    "b": "rod 7-8",
+    "overlap_mm3": 5.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-7",
+    "b": "rod 7-14",
+    "overlap_mm3": 22.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-7",
+    "b": "rod 7-15",
+    "overlap_mm3": 5.03,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-13",
+    "b": "rod 6-14",
+    "overlap_mm3": 15.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-13",
+    "b": "rod 13-14",
+    "overlap_mm3": 5.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-13",
+    "b": "rod 13-20",
+    "overlap_mm3": 1.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-13",
+    "b": "rod 13-21",
+    "overlap_mm3": 1.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-13",
+    "b": "rod 13-22",
+    "overlap_mm3": 4.68,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-14",
+    "b": "rod 7-14",
+    "overlap_mm3": 5.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-14",
+    "b": "rod 13-14",
+    "overlap_mm3": 6.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-14",
+    "b": "rod 14-15",
+    "overlap_mm3": 1.58,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-14",
+    "b": "rod 14-22",
+    "overlap_mm3": 4.74,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 6-14",
+    "b": "rod 14-23",
+    "overlap_mm3": 1.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-8",
+    "b": "rod 7-14",
+    "overlap_mm3": 5.03,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-8",
+    "b": "rod 7-15",
+    "overlap_mm3": 22.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-8",
+    "b": "rod 8-9",
+    "overlap_mm3": 38.07,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-8",
+    "b": "rod 8-15",
+    "overlap_mm3": 26.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-8",
+    "b": "rod 8-16",
+    "overlap_mm3": 16.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-14",
+    "b": "rod 7-15",
+    "overlap_mm3": 7.77,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-14",
+    "b": "rod 13-14",
+    "overlap_mm3": 2.51,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-14",
+    "b": "rod 14-15",
+    "overlap_mm3": 7.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-14",
+    "b": "rod 14-22",
+    "overlap_mm3": 0.7,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-14",
+    "b": "rod 14-23",
+    "overlap_mm3": 4.04,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-15",
+    "b": "rod 8-15",
+    "overlap_mm3": 5.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-15",
+    "b": "rod 14-15",
+    "overlap_mm3": 7.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-15",
+    "b": "rod 15-16",
+    "overlap_mm3": 2.51,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-15",
+    "b": "rod 15-23",
+    "overlap_mm3": 4.04,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 7-15",
+    "b": "rod 15-24",
+    "overlap_mm3": 0.7,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-9",
+    "b": "rod 8-15",
+    "overlap_mm3": 16.87,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-9",
+    "b": "rod 8-16",
+    "overlap_mm3": 31.54,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-9",
+    "b": "rod 9-10",
+    "overlap_mm3": 5.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-9",
+    "b": "rod 9-16",
+    "overlap_mm3": 23.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-9",
+    "b": "rod 9-17",
+    "overlap_mm3": 4.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-15",
+    "b": "rod 8-16",
+    "overlap_mm3": 15.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-15",
+    "b": "rod 14-15",
+    "overlap_mm3": 1.58,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-15",
+    "b": "rod 15-16",
+    "overlap_mm3": 6.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-15",
+    "b": "rod 15-23",
+    "overlap_mm3": 1.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-15",
+    "b": "rod 15-24",
+    "overlap_mm3": 4.74,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-16",
+    "b": "rod 9-16",
+    "overlap_mm3": 4.4,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-16",
+    "b": "rod 15-16",
+    "overlap_mm3": 5.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-16",
+    "b": "rod 16-17",
+    "overlap_mm3": 1.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-16",
+    "b": "rod 16-24",
+    "overlap_mm3": 4.68,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 8-16",
+    "b": "rod 16-25",
+    "overlap_mm3": 1.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-10",
+    "b": "rod 9-16",
+    "overlap_mm3": 4.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-10",
+    "b": "rod 9-17",
+    "overlap_mm3": 23.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-10",
+    "b": "rod 10-11",
+    "overlap_mm3": 38.07,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-10",
+    "b": "rod 10-17",
+    "overlap_mm3": 31.54,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-10",
+    "b": "rod 10-18",
+    "overlap_mm3": 16.87,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-16",
+    "b": "rod 9-17",
+    "overlap_mm3": 6.89,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-16",
+    "b": "rod 15-16",
+    "overlap_mm3": 1.26,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-16",
+    "b": "rod 16-17",
+    "overlap_mm3": 8.29,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-16",
+    "b": "rod 16-24",
+    "overlap_mm3": 0.85,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-16",
+    "b": "rod 16-25",
+    "overlap_mm3": 4.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-17",
+    "b": "rod 10-17",
+    "overlap_mm3": 4.4,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-17",
+    "b": "rod 16-17",
+    "overlap_mm3": 8.29,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-17",
+    "b": "rod 17-18",
+    "overlap_mm3": 1.26,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-17",
+    "b": "rod 17-25",
+    "overlap_mm3": 4.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 9-17",
+    "b": "rod 17-26",
+    "overlap_mm3": 0.85,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-11",
+    "b": "rod 10-17",
+    "overlap_mm3": 16.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-11",
+    "b": "rod 10-18",
+    "overlap_mm3": 26.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-11",
+    "b": "rod 11-12",
+    "overlap_mm3": 5.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-11",
+    "b": "rod 11-18",
+    "overlap_mm3": 22.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-11",
+    "b": "rod 11-19",
+    "overlap_mm3": 5.03,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-17",
+    "b": "rod 10-18",
+    "overlap_mm3": 15.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-17",
+    "b": "rod 16-17",
+    "overlap_mm3": 1.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-17",
+    "b": "rod 17-18",
+    "overlap_mm3": 5.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-17",
+    "b": "rod 17-25",
+    "overlap_mm3": 1.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-17",
+    "b": "rod 17-26",
+    "overlap_mm3": 4.68,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-18",
+    "b": "rod 11-18",
+    "overlap_mm3": 5.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-18",
+    "b": "rod 17-18",
+    "overlap_mm3": 6.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-18",
+    "b": "rod 18-19",
+    "overlap_mm3": 1.58,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-18",
+    "b": "rod 18-26",
+    "overlap_mm3": 4.74,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 10-18",
+    "b": "rod 18-27",
+    "overlap_mm3": 1.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-12",
+    "b": "rod 11-18",
+    "overlap_mm3": 5.03,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-12",
+    "b": "rod 11-19",
+    "overlap_mm3": 22.34,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-12",
+    "b": "rod 12-19",
+    "overlap_mm3": 26.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-12",
+    "b": "rod 12-20",
+    "overlap_mm3": 16.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-18",
+    "b": "rod 11-19",
+    "overlap_mm3": 7.77,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-18",
+    "b": "rod 17-18",
+    "overlap_mm3": 2.51,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-18",
+    "b": "rod 18-19",
+    "overlap_mm3": 7.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-18",
+    "b": "rod 18-26",
+    "overlap_mm3": 0.7,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-18",
+    "b": "rod 18-27",
+    "overlap_mm3": 4.04,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-19",
+    "b": "rod 12-19",
+    "overlap_mm3": 5.19,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-19",
+    "b": "rod 18-19",
+    "overlap_mm3": 7.78,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-19",
+    "b": "rod 19-20",
+    "overlap_mm3": 2.51,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-19",
+    "b": "rod 19-27",
+    "overlap_mm3": 4.04,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 11-19",
+    "b": "rod 19-28",
+    "overlap_mm3": 0.7,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-19",
+    "b": "rod 12-20",
+    "overlap_mm3": 15.44,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-19",
+    "b": "rod 18-19",
+    "overlap_mm3": 1.58,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-19",
+    "b": "rod 19-20",
+    "overlap_mm3": 6.52,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-19",
+    "b": "rod 19-27",
+    "overlap_mm3": 1.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-19",
+    "b": "rod 19-28",
+    "overlap_mm3": 4.74,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-20",
+    "b": "rod 13-20",
+    "overlap_mm3": 1.32,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-20",
+    "b": "rod 19-20",
+    "overlap_mm3": 5.49,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-20",
+    "b": "rod 20-21",
+    "overlap_mm3": 1.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 12-20",
+    "b": "rod 20-28",
+    "overlap_mm3": 4.68,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-14",
+    "b": "rod 13-20",
+    "overlap_mm3": 1.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-14",
+    "b": "rod 13-21",
+    "overlap_mm3": 2.79,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-14",
+    "b": "rod 13-22",
+    "overlap_mm3": 9.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-14",
+    "b": "rod 14-15",
+    "overlap_mm3": 1.84,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-14",
+    "b": "rod 14-22",
+    "overlap_mm3": 6.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-14",
+    "b": "rod 14-23",
+    "overlap_mm3": 2.06,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-20",
+    "b": "rod 13-21",
+    "overlap_mm3": 9.42,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-20",
+    "b": "rod 13-22",
+    "overlap_mm3": 2.63,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-20",
+    "b": "rod 19-20",
+    "overlap_mm3": 1.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-20",
+    "b": "rod 20-21",
+    "overlap_mm3": 9.42,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-20",
+    "b": "rod 20-28",
+    "overlap_mm3": 2.63,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-21",
+    "b": "rod 13-22",
+    "overlap_mm3": 6.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-21",
+    "b": "rod 20-21",
+    "overlap_mm3": 5.53,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-21",
+    "b": "rod 21-22",
+    "overlap_mm3": 10.21,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-21",
+    "b": "rod 21-28",
+    "overlap_mm3": 2.57,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-22",
+    "b": "rod 14-22",
+    "overlap_mm3": 7.38,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-22",
+    "b": "rod 21-22",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 13-22",
+    "b": "rod 22-23",
+    "overlap_mm3": 3.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-15",
+    "b": "rod 14-22",
+    "overlap_mm3": 2.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-15",
+    "b": "rod 14-23",
+    "overlap_mm3": 12.25,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-15",
+    "b": "rod 15-16",
+    "overlap_mm3": 1.84,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-15",
+    "b": "rod 15-23",
+    "overlap_mm3": 12.25,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-15",
+    "b": "rod 15-24",
+    "overlap_mm3": 2.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-22",
+    "b": "rod 14-23",
+    "overlap_mm3": 4.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-22",
+    "b": "rod 21-22",
+    "overlap_mm3": 2.97,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-22",
+    "b": "rod 22-23",
+    "overlap_mm3": 9.47,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-23",
+    "b": "rod 15-23",
+    "overlap_mm3": 3.8,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-23",
+    "b": "rod 22-23",
+    "overlap_mm3": 12.05,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 14-23",
+    "b": "rod 23-24",
+    "overlap_mm3": 1.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-16",
+    "b": "rod 15-23",
+    "overlap_mm3": 2.06,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-16",
+    "b": "rod 15-24",
+    "overlap_mm3": 6.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-16",
+    "b": "rod 16-17",
+    "overlap_mm3": 1.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-16",
+    "b": "rod 16-24",
+    "overlap_mm3": 9.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-16",
+    "b": "rod 16-25",
+    "overlap_mm3": 2.79,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-23",
+    "b": "rod 15-24",
+    "overlap_mm3": 4.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-23",
+    "b": "rod 22-23",
+    "overlap_mm3": 1.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-23",
+    "b": "rod 23-24",
+    "overlap_mm3": 12.05,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-24",
+    "b": "rod 16-24",
+    "overlap_mm3": 7.38,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-24",
+    "b": "rod 23-24",
+    "overlap_mm3": 9.47,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 15-24",
+    "b": "rod 24-25",
+    "overlap_mm3": 2.97,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-17",
+    "b": "rod 16-24",
+    "overlap_mm3": 2.63,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-17",
+    "b": "rod 16-25",
+    "overlap_mm3": 9.42,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-17",
+    "b": "rod 17-18",
+    "overlap_mm3": 1.99,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-17",
+    "b": "rod 17-25",
+    "overlap_mm3": 9.42,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-17",
+    "b": "rod 17-26",
+    "overlap_mm3": 2.63,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-24",
+    "b": "rod 16-25",
+    "overlap_mm3": 6.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-24",
+    "b": "rod 23-24",
+    "overlap_mm3": 3.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-24",
+    "b": "rod 24-25",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-25",
+    "b": "rod 17-25",
+    "overlap_mm3": 5.53,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-25",
+    "b": "rod 24-25",
+    "overlap_mm3": 10.21,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 16-25",
+    "b": "rod 25-26",
+    "overlap_mm3": 2.57,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-18",
+    "b": "rod 17-25",
+    "overlap_mm3": 2.79,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-18",
+    "b": "rod 17-26",
+    "overlap_mm3": 9.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-18",
+    "b": "rod 18-19",
+    "overlap_mm3": 1.84,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-18",
+    "b": "rod 18-26",
+    "overlap_mm3": 6.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-18",
+    "b": "rod 18-27",
+    "overlap_mm3": 2.06,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-25",
+    "b": "rod 17-26",
+    "overlap_mm3": 6.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-25",
+    "b": "rod 24-25",
+    "overlap_mm3": 2.57,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-25",
+    "b": "rod 25-26",
+    "overlap_mm3": 10.21,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-26",
+    "b": "rod 18-26",
+    "overlap_mm3": 7.38,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-26",
+    "b": "rod 25-26",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 17-26",
+    "b": "rod 26-27",
+    "overlap_mm3": 3.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-19",
+    "b": "rod 18-26",
+    "overlap_mm3": 2.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-19",
+    "b": "rod 18-27",
+    "overlap_mm3": 12.25,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-19",
+    "b": "rod 19-20",
+    "overlap_mm3": 1.84,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-19",
+    "b": "rod 19-27",
+    "overlap_mm3": 12.25,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-19",
+    "b": "rod 19-28",
+    "overlap_mm3": 2.18,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-26",
+    "b": "rod 18-27",
+    "overlap_mm3": 4.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-26",
+    "b": "rod 25-26",
+    "overlap_mm3": 2.97,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-26",
+    "b": "rod 26-27",
+    "overlap_mm3": 9.47,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-27",
+    "b": "rod 19-27",
+    "overlap_mm3": 3.8,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-27",
+    "b": "rod 26-27",
+    "overlap_mm3": 12.05,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 18-27",
+    "b": "rod 27-28",
+    "overlap_mm3": 1.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-20",
+    "b": "rod 19-27",
+    "overlap_mm3": 2.06,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-20",
+    "b": "rod 19-28",
+    "overlap_mm3": 6.92,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-20",
+    "b": "rod 20-21",
+    "overlap_mm3": 2.79,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-20",
+    "b": "rod 20-28",
+    "overlap_mm3": 9.31,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-27",
+    "b": "rod 19-28",
+    "overlap_mm3": 4.62,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-27",
+    "b": "rod 26-27",
+    "overlap_mm3": 1.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-27",
+    "b": "rod 27-28",
+    "overlap_mm3": 12.05,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-28",
+    "b": "rod 20-28",
+    "overlap_mm3": 7.38,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-28",
+    "b": "rod 21-28",
+    "overlap_mm3": 2.97,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 19-28",
+    "b": "rod 27-28",
+    "overlap_mm3": 9.47,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 20-21",
+    "b": "rod 20-28",
+    "overlap_mm3": 6.01,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 20-21",
+    "b": "rod 21-22",
+    "overlap_mm3": 2.57,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 20-21",
+    "b": "rod 21-28",
+    "overlap_mm3": 10.21,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 20-28",
+    "b": "rod 21-28",
+    "overlap_mm3": 7.93,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 20-28",
+    "b": "rod 27-28",
+    "overlap_mm3": 3.64,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 21-22",
+    "b": "rod 21-28",
+    "overlap_mm3": 1.65,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 21-22",
+    "b": "rod 22-23",
+    "overlap_mm3": 2.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 21-28",
+    "b": "rod 27-28",
+    "overlap_mm3": 2.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 22-23",
+    "b": "rod 23-24",
+    "overlap_mm3": 0.42,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 23-24",
+    "b": "rod 24-25",
+    "overlap_mm3": 2.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 24-25",
+    "b": "rod 25-26",
+    "overlap_mm3": 1.65,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 25-26",
+    "b": "rod 26-27",
+    "overlap_mm3": 2.83,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "rod 26-27",
+    "b": "rod 27-28",
+    "overlap_mm3": 0.42,
+    "limit_mm3": 1000000000.0,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   }
+  ],
+  "clearance": []
+ },
+ "mass_cg": {
+  "mass_g": 655.33,
+  "cg": [
+   0.26,
+   0.0,
+   11.26
+  ],
+  "parts": [
+   {
+    "name": "frame plate",
+    "mass_g": 28.0,
+    "cg": [
+     0.0,
+     0.0,
+     20.25
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "wiring, UBEC, XR2, camera, flow (lump)",
+    "mass_g": 89.0,
+    "cg": [
+     0.0,
+     0.0,
+     28.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "FC MicoAir743",
+    "mass_g": 10.0,
+    "cg": [
+     1.9,
+     0.0,
+     13.5
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "Radxa Zero 3W (top)",
+    "mass_g": 10.0,
+    "cg": [
+     0.0,
+     0.0,
+     26.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "pack 4S 1500",
+    "mass_g": 165.0,
+    "cg": [
+     0.0,
+     0.0,
+     -8.6
+    ],
+    "tag": "P",
+    "swap": true
+   },
+   {
+    "name": "cartridge",
+    "mass_g": 50.5,
+    "cg": [
+     0.0,
+     0.0,
+     -14.3
+    ],
+    "tag": "M",
+    "swap": true
+   },
+   {
+    "name": "motor 1",
+    "mass_g": 28.0,
+    "cg": [
+     54.1,
+     54.1,
+     29.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 1",
+    "mass_g": 4.0,
+    "cg": [
+     54.1,
+     54.1,
+     41.2
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "arm 1",
+    "mass_g": 0.0,
+    "cg": [
+     42.05,
+     42.05,
+     20.25
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 2",
+    "mass_g": 28.0,
+    "cg": [
+     -54.1,
+     54.1,
+     29.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 2",
+    "mass_g": 4.0,
+    "cg": [
+     -54.1,
+     54.1,
+     41.2
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "arm 2",
+    "mass_g": 0.0,
+    "cg": [
+     -42.05,
+     42.05,
+     20.25
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 3",
+    "mass_g": 28.0,
+    "cg": [
+     -54.1,
+     -54.1,
+     29.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 3",
+    "mass_g": 4.0,
+    "cg": [
+     -54.1,
+     -54.1,
+     41.2
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "arm 3",
+    "mass_g": 0.0,
+    "cg": [
+     -42.05,
+     -42.05,
+     20.25
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 4",
+    "mass_g": 28.0,
+    "cg": [
+     54.1,
+     -54.1,
+     29.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 4",
+    "mass_g": 4.0,
+    "cg": [
+     54.1,
+     -54.1,
+     41.2
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "arm 4",
+    "mass_g": 0.0,
+    "cg": [
+     42.05,
+     -42.05,
+     20.25
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "latch rail L",
+    "mass_g": 12.59,
+    "cg": [
+     0.0,
+     24.3,
+     -28.3
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rail post Lt",
+    "mass_g": 3.39,
+    "cg": [
+     -40.0,
+     24.3,
+     -1.88
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rail post Lf",
+    "mass_g": 3.39,
+    "cg": [
+     40.0,
+     24.3,
+     -1.88
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "latch rail R",
+    "mass_g": 12.59,
+    "cg": [
+     0.0,
+     -24.3,
+     -28.3
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rail post Rt",
+    "mass_g": 3.39,
+    "cg": [
+     -40.0,
+     -24.3,
+     -1.88
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rail post Rf",
+    "mass_g": 3.39,
+    "cg": [
+     40.0,
+     -24.3,
+     -1.88
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "XT60 carrier + cap",
+    "mass_g": 3.85,
+    "cg": [
+     39.0,
+     0.0,
+     13.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 0 apex",
+    "mass_g": 1.5,
+    "cg": [
+     -0.0,
+     0.0,
+     60.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 1 top",
+    "mass_g": 1.5,
+    "cg": [
+     83.44,
+     83.44,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 2 top",
+    "mass_g": 1.5,
+    "cg": [
+     -83.44,
+     83.44,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 3 top",
+    "mass_g": 1.5,
+    "cg": [
+     -83.44,
+     -83.44,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 4 top",
+    "mass_g": 1.5,
+    "cg": [
+     83.44,
+     -83.44,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 5 equator",
+    "mass_g": 1.5,
+    "cg": [
+     104.0,
+     0.0,
+     52.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 6 wheel node",
+    "mass_g": 3.5,
+    "cg": [
+     106.0,
+     106.0,
+     36.37
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 7 equator",
+    "mass_g": 1.5,
+    "cg": [
+     0.0,
+     104.0,
+     52.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 8 wheel node",
+    "mass_g": 3.5,
+    "cg": [
+     -106.0,
+     106.0,
+     36.37
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 9 equator",
+    "mass_g": 1.5,
+    "cg": [
+     -104.0,
+     0.0,
+     52.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 10 wheel node",
+    "mass_g": 3.5,
+    "cg": [
+     -106.0,
+     -106.0,
+     36.37
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 11 equator",
+    "mass_g": 1.5,
+    "cg": [
+     0.0,
+     -104.0,
+     52.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 12 wheel node",
+    "mass_g": 3.5,
+    "cg": [
+     106.0,
+     -106.0,
+     36.37
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 13 knee",
+    "mass_g": 1.5,
+    "cg": [
+     72.0,
+     36.0,
+     7.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 14 knee",
+    "mass_g": 1.5,
+    "cg": [
+     38.0,
+     68.0,
+     -3.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 15 knee",
+    "mass_g": 1.5,
+    "cg": [
+     -38.0,
+     68.0,
+     -3.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 16 knee",
+    "mass_g": 1.5,
+    "cg": [
+     -72.0,
+     36.0,
+     7.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 17 knee",
+    "mass_g": 1.5,
+    "cg": [
+     -72.0,
+     -36.0,
+     7.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 18 knee",
+    "mass_g": 1.5,
+    "cg": [
+     -38.0,
+     -68.0,
+     -3.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 19 knee",
+    "mass_g": 1.5,
+    "cg": [
+     38.0,
+     -68.0,
+     -3.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 20 knee",
+    "mass_g": 1.5,
+    "cg": [
+     72.0,
+     -36.0,
+     7.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 21 foot",
+    "mass_g": 2.0,
+    "cg": [
+     86.0,
+     0.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 22 foot",
+    "mass_g": 2.0,
+    "cg": [
+     64.0,
+     60.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 23 foot",
+    "mass_g": 2.0,
+    "cg": [
+     0.0,
+     66.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 24 foot",
+    "mass_g": 2.0,
+    "cg": [
+     -64.0,
+     60.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 25 foot",
+    "mass_g": 2.0,
+    "cg": [
+     -86.0,
+     0.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 26 foot",
+    "mass_g": 2.0,
+    "cg": [
+     -64.0,
+     -60.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 27 foot",
+    "mass_g": 2.0,
+    "cg": [
+     -0.0,
+     -66.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "node 28 foot",
+    "mass_g": 2.0,
+    "cg": [
+     64.0,
+     -60.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 0-1",
+    "mass_g": 1.3,
+    "cg": [
+     41.72,
+     41.72,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 0-2",
+    "mass_g": 1.3,
+    "cg": [
+     -41.72,
+     41.72,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 0-3",
+    "mass_g": 1.3,
+    "cg": [
+     -41.72,
+     -41.72,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 0-4",
+    "mass_g": 1.3,
+    "cg": [
+     41.72,
+     -41.72,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 1-2",
+    "mass_g": 1.84,
+    "cg": [
+     0.0,
+     83.44,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 1-4",
+    "mass_g": 1.84,
+    "cg": [
+     83.44,
+     0.0,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 1-5",
+    "mass_g": 0.95,
+    "cg": [
+     93.72,
+     41.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 1-6",
+    "mass_g": 0.41,
+    "cg": [
+     94.72,
+     94.72,
+     46.18
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 1-7",
+    "mass_g": 0.95,
+    "cg": [
+     41.72,
+     93.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 2-3",
+    "mass_g": 1.84,
+    "cg": [
+     -83.44,
+     0.0,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 2-7",
+    "mass_g": 0.95,
+    "cg": [
+     -41.72,
+     93.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 2-8",
+    "mass_g": 0.41,
+    "cg": [
+     -94.72,
+     94.72,
+     46.19
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 2-9",
+    "mass_g": 0.95,
+    "cg": [
+     -93.72,
+     41.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 3-4",
+    "mass_g": 1.84,
+    "cg": [
+     -0.0,
+     -83.44,
+     56.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 3-9",
+    "mass_g": 0.95,
+    "cg": [
+     -93.72,
+     -41.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 3-10",
+    "mass_g": 0.41,
+    "cg": [
+     -94.72,
+     -94.72,
+     46.18
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 3-11",
+    "mass_g": 0.95,
+    "cg": [
+     -41.72,
+     -93.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 4-5",
+    "mass_g": 0.95,
+    "cg": [
+     93.72,
+     -41.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 4-11",
+    "mass_g": 0.95,
+    "cg": [
+     41.72,
+     -93.72,
+     54.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 4-12",
+    "mass_g": 0.41,
+    "cg": [
+     94.72,
+     -94.72,
+     46.19
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 5-6",
+    "mass_g": 2.68,
+    "cg": [
+     105.0,
+     53.0,
+     44.19
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 5-12",
+    "mass_g": 2.68,
+    "cg": [
+     105.0,
+     -53.0,
+     44.18
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 5-13",
+    "mass_g": 0.73,
+    "cg": [
+     88.0,
+     18.0,
+     29.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 5-20",
+    "mass_g": 0.73,
+    "cg": [
+     88.0,
+     -18.0,
+     29.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 6-7",
+    "mass_g": 2.68,
+    "cg": [
+     53.0,
+     105.0,
+     44.18
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 6-13",
+    "mass_g": 0.91,
+    "cg": [
+     89.0,
+     71.0,
+     21.69
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 6-14",
+    "mass_g": 0.96,
+    "cg": [
+     72.0,
+     87.0,
+     16.69
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 7-8",
+    "mass_g": 2.68,
+    "cg": [
+     -53.0,
+     105.0,
+     44.19
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 7-14",
+    "mass_g": 0.84,
+    "cg": [
+     19.0,
+     86.0,
+     24.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 7-15",
+    "mass_g": 0.84,
+    "cg": [
+     -19.0,
+     86.0,
+     24.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 8-9",
+    "mass_g": 2.68,
+    "cg": [
+     -105.0,
+     53.0,
+     44.18
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 8-15",
+    "mass_g": 0.96,
+    "cg": [
+     -72.0,
+     87.0,
+     16.68
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 8-16",
+    "mass_g": 0.91,
+    "cg": [
+     -89.0,
+     71.0,
+     21.68
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 9-10",
+    "mass_g": 2.68,
+    "cg": [
+     -105.0,
+     -53.0,
+     44.19
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 9-16",
+    "mass_g": 0.73,
+    "cg": [
+     -88.0,
+     18.0,
+     29.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 9-17",
+    "mass_g": 0.73,
+    "cg": [
+     -88.0,
+     -18.0,
+     29.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 10-11",
+    "mass_g": 2.68,
+    "cg": [
+     -53.0,
+     -105.0,
+     44.18
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 10-17",
+    "mass_g": 0.91,
+    "cg": [
+     -89.0,
+     -71.0,
+     21.69
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 10-18",
+    "mass_g": 0.96,
+    "cg": [
+     -72.0,
+     -87.0,
+     16.69
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 11-12",
+    "mass_g": 2.68,
+    "cg": [
+     53.0,
+     -105.0,
+     44.19
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 11-18",
+    "mass_g": 0.84,
+    "cg": [
+     -19.0,
+     -86.0,
+     24.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 11-19",
+    "mass_g": 0.84,
+    "cg": [
+     19.0,
+     -86.0,
+     24.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 12-19",
+    "mass_g": 0.96,
+    "cg": [
+     72.0,
+     -87.0,
+     16.68
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 12-20",
+    "mass_g": 0.91,
+    "cg": [
+     89.0,
+     -71.0,
+     21.68
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 13-14",
+    "mass_g": 0.53,
+    "cg": [
+     55.0,
+     52.0,
+     2.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 13-20",
+    "mass_g": 0.79,
+    "cg": [
+     72.0,
+     0.0,
+     7.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 13-21",
+    "mass_g": 0.63,
+    "cg": [
+     79.0,
+     18.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 13-22",
+    "mass_g": 0.54,
+    "cg": [
+     68.0,
+     48.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 14-15",
+    "mass_g": 0.84,
+    "cg": [
+     0.0,
+     68.0,
+     -3.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 14-22",
+    "mass_g": 0.46,
+    "cg": [
+     51.0,
+     64.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 14-23",
+    "mass_g": 0.55,
+    "cg": [
+     19.0,
+     67.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 15-16",
+    "mass_g": 0.53,
+    "cg": [
+     -55.0,
+     52.0,
+     2.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 15-23",
+    "mass_g": 0.55,
+    "cg": [
+     -19.0,
+     67.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 15-24",
+    "mass_g": 0.46,
+    "cg": [
+     -51.0,
+     64.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 16-17",
+    "mass_g": 0.79,
+    "cg": [
+     -72.0,
+     0.0,
+     7.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 16-24",
+    "mass_g": 0.54,
+    "cg": [
+     -68.0,
+     48.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 16-25",
+    "mass_g": 0.63,
+    "cg": [
+     -79.0,
+     18.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 17-18",
+    "mass_g": 0.53,
+    "cg": [
+     -55.0,
+     -52.0,
+     2.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 17-25",
+    "mass_g": 0.63,
+    "cg": [
+     -79.0,
+     -18.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 17-26",
+    "mass_g": 0.54,
+    "cg": [
+     -68.0,
+     -48.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 18-19",
+    "mass_g": 0.84,
+    "cg": [
+     -0.0,
+     -68.0,
+     -3.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 18-26",
+    "mass_g": 0.46,
+    "cg": [
+     -51.0,
+     -64.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 18-27",
+    "mass_g": 0.55,
+    "cg": [
+     -19.0,
+     -67.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 19-20",
+    "mass_g": 0.53,
+    "cg": [
+     55.0,
+     -52.0,
+     2.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 19-27",
+    "mass_g": 0.55,
+    "cg": [
+     19.0,
+     -67.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 19-28",
+    "mass_g": 0.46,
+    "cg": [
+     51.0,
+     -64.0,
+     -19.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 20-21",
+    "mass_g": 0.63,
+    "cg": [
+     79.0,
+     -18.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 20-28",
+    "mass_g": 0.54,
+    "cg": [
+     68.0,
+     -48.0,
+     -14.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 21-22",
+    "mass_g": 0.7,
+    "cg": [
+     75.0,
+     30.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 21-28",
+    "mass_g": 0.7,
+    "cg": [
+     75.0,
+     -30.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 22-23",
+    "mass_g": 0.71,
+    "cg": [
+     32.0,
+     63.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 23-24",
+    "mass_g": 0.71,
+    "cg": [
+     -32.0,
+     63.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 24-25",
+    "mass_g": 0.7,
+    "cg": [
+     -75.0,
+     30.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 25-26",
+    "mass_g": 0.7,
+    "cg": [
+     -75.0,
+     -30.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 26-27",
+    "mass_g": 0.71,
+    "cg": [
+     -32.0,
+     -63.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rod 27-28",
+    "mass_g": 0.71,
+    "cg": [
+     32.0,
+     -63.0,
+     -35.1
+    ],
+    "tag": "E",
+    "swap": false
+   }
+  ],
+  "tag": "E",
+  "cg_ref": [
+   0,
+   0,
+   41.2
+  ],
+  "cg_offset": [
+   0.26,
+   0.0,
+   -29.94
+  ],
+  "cg_offset_mm": 29.94
+ },
+ "balance": {
+  "applies": true,
+  "ref": [
+   0.0,
+   0.0,
+   41.2
+  ],
+  "thrust_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tol_mm": 3.0,
+  "cases": {
+   "all": {
+    "mass_g": 655.33,
+    "cg_offset": [
+     0.26,
+     0.0,
+     -29.94
+    ],
+    "horizontal_mm": 0.26,
+    "axial_mm": -29.94,
+    "pass_": true,
+    "gated": true
+   },
+   "no_swap": {
+    "mass_g": 439.83,
+    "cg_offset": [
+     0.38,
+     0.0,
+     -19.56
+    ],
+    "horizontal_mm": 0.38,
+    "axial_mm": -19.56,
+    "pass_": true,
+    "gated": true
+   }
+  },
+  "worst_case": "no_swap",
+  "worst_horizontal_mm": 0.38,
+  "pass_": true
+ },
+ "probes": {
+  "applies": false,
+  "pass_": true,
+  "skipped": true
+ },
+ "access": {
+  "applies": false,
+  "pass_": true,
+  "paths": []
+ },
+ "mass_budget": {
+  "applies": true,
+  "mass_g": 655.33,
+  "part_budgets_g": {},
+  "over_parts": [],
+  "budget_g": 500.0,
+  "pct": 131.1,
+  "total_ok": false,
+  "over": true,
+  "pass_": true
+ },
+ "geometry_tag": "E",
+ "summary": "System: Scout v3 bottom concept B (shell catch), cage first 3.0 mm (E) at -Z (cartridge), shell 76 rods closed, h/w 0.45, fit 0.0 mm\u00b3 (E) (arm 1/rail post Lf), bbox 5.18 L (E), extents 222 x 222 x 105 mm (E), mass 655 of 500 g (131 %) (E) over budget (total), CG 0.3 mm off thrust axis (E) [+0.3, +0.0, -29.9], 0.4 mm without swap parts",
+ "pass": true
+}

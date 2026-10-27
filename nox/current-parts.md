@@ -33,7 +33,7 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 ## Scout v3
 | Part | Doc / scripts | Version | State | File (`print/`) | g | Next (owner) |
 |---|---|---|---|---|---|---|
-| Scout v3 (scope) | `scout/v3/README.md`; aircraft `scout/scout.md` | v3 | **DESIGN** | none | | Brief filled 23 Oct, Spark's answers in (XT60 back, no weight target, ~500 g, flies in Position). First part: bottom layout with the XT60. Carry-overs to settle in v3: bottom layout (pack, latch pockets, contacts, belly plate, pogo pads; v2 drew it in `archive/scout-v2/s2-receiver.md`); holder group budget (P once drawn); props on top at z ≈ +41.2, `dimensions.md` H rows that say "below the props" are stale; every rod 3.0 (socket bore from the coupon test); a snap-on cover for spare packs' live pads |
+| Scout v3 (scope) | `scout/v3/README.md`; aircraft `scout/scout.md`; bottom concept `scout/v3/bottom_concept.py`, `runs/scout_bottom/concept/` | v3 | **DESIGN** | none | | Bottom concept B (27 Oct, DEFAULT): 8 wheels on the shell crown (box catch unchanged), pack 1.0 under the FC, 2 latch rails in the shell's bottom ring replace the receiver box (swap parts 165 -> 93 g, E); box swap ask: head stop +7.4. Next: Scout v3 system pass on B (frame model sizes the shell; rails with the battery latch owner); camera mount; snap-on cover for spare packs |
 | Frame plate | dimensions C | Bee35 carbon 3.5, cut down | **ON HAND** | n/a | 24 to 32 (E) | Weigh (P) |
 
 ## Overseer
