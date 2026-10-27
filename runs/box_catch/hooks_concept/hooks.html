@@ -46,15 +46,15 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 76ch; }
 
 <main>
   <header>
-    <span class="eyebrow">Box catch · hook idea · Overseer cage v5 + Scout v11 · 27 Oct</span>
-    <h1>Land on a flat pad, then four hooks pull it home</h1>
-    <p>The deck is flat with the hooks folded flush, so nothing has to clear either cage while it lands. Once the drone is down, the box (which knows which drone it is) raises the hooks. Each one sweeps in under a bottom corner and pulls it out into a V-seat. When all four are closed, the drone is centred in x, y and yaw and locked down for the swap. Both drones put a bottom node on the same 4 points (the Overseer's hexagon side nodes), so the same 4 hooks serve both.</p>
+    <span class="eyebrow">Box catch · hook idea, one servo · Overseer cage v5 + Scout v11 · 27 Oct</span>
+    <h1>Land on a flat pad, then one servo pulls four hooks home</h1>
+    <p>The deck is flat with the hooks folded flush, so nothing has to clear either cage while it lands. Once the drone is down, one servo pulls a lift frame down under the deck. A sprung link from the frame turns each of the 4 hooks in its own diagonal plane, so each hook sweeps up under a bottom corner and pulls it out into a V-seat. With the frame at the bottom, the links sit over-centre: the drone is centred in x, y and yaw and locked for the swap, with the servo unpowered. Both drones put a bottom node on the same 4 points (the Overseer's hexagon side nodes), so one set of hooks serves both. No keep-alive contacts.</p>
   </header>
 
   <section class="sheet" aria-label="Plan">
     <h2>Plan, to scale</h2>
     <div class="scroll"><div id="plan" style="min-width:520px"></div></div>
-    <p class="mono">Looking down, x forward, about the catch centre. Overseer opening (hexagon) and the Scout's (its 4 side nodes). Hook pivots under the deck, sweep shown at the corner; the dashed circle is a ±40 landing around each corner node. Grid 20 mm.</p>
+    <p class="mono">Looking down, x forward, about the catch centre. Overseer opening (hexagon) and the Scout's (its 4 side nodes). The lift frame runs under the deck round the swap column; a sprung link (dotted) from it drives each hook's pivot lever. The dashed circle is a ±40 landing around each corner node. Grid 20 mm.</p>
   </section>
 
   <section class="sheet" aria-label="Sequence">
@@ -84,6 +84,10 @@ const CAP = 40, REACH = 70;          // landing spread around each node (mm, tar
   for (let y = -160; y <= 160; y += 20) g += `<line x1="0" y1="${Y1 - y}" x2="${w}" y2="${Y1 - y}" stroke="var(--rule)" stroke-width=".35"/>`;
   g += `<rect x="${T(-160, 50)[0]}" y="${T(-160, 50)[1]}" width="${320}" height="${100}" fill="var(--deck)" fill-opacity=".25" stroke="none"/>`;
   g += `<text x="${T(-150, 38)[0]}" y="${T(-150, 38)[1]}" font-size="8" fill="var(--muted)" font-family="IBM Plex Mono, monospace">swap column (both cartridges drop through)</text>`;
+  g += `<rect x="${T(-120, 74)[0]}" y="${T(-120, 74)[1]}" width="${240}" height="${148}" fill="none" stroke="var(--ink)" stroke-width="5" stroke-opacity=".55" rx="6"/>`;
+  g += `<text x="${T(-110, -64)[0]}" y="${T(-110, -64)[1]}" font-size="8" fill="var(--ink)" font-family="IBM Plex Mono, monospace">lift frame (under the deck, one servo moves it down)</text>`;
+  const [sv0, sv1] = T(-150, 0); g += `<rect x="${sv0 - 9}" y="${sv1 - 12}" width="18" height="24" fill="var(--ink)" opacity=".7" rx="2"/><line x1="${sv0}" y1="${sv1}" x2="${T(-120, 0)[0]}" y2="${sv1}" stroke="var(--ink)" stroke-width="3" opacity=".7"/>`;
+  g += `<text x="${T(-196, -24)[0]}" y="${T(-196, -24)[1]}" font-size="8" fill="var(--ink)" font-family="IBM Plex Mono, monospace">servo + lever</text>`;
   const hexPts = ['F', 'Ln', 'Lt', 'T', 'Rt', 'Rn'].map(k => T(...HEX[k]).join(',')).join(' ');
   g += `<polygon points="${hexPts}" fill="none" stroke="var(--ovr)" stroke-width="3"/>`;
   g += `<polygon points="${CORNERS.map(k => T(...HEX[k]).join(',')).join(' ')}" fill="none" stroke="var(--scout)" stroke-width="3" stroke-dasharray="7 4"/>`;
@@ -94,6 +98,8 @@ const CAP = 40, REACH = 70;          // landing spread around each node (mm, tar
     const [ppx, ppy] = T(px, py), [vx, vy] = T(nx + ux * 9, ny + uy * 9);
     g += `<line x1="${ppx}" y1="${ppy}" x2="${vx}" y2="${vy}" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
     g += `<circle cx="${ppx}" cy="${ppy}" r="4" fill="var(--hook)"/>`;
+    const fx = Math.sign(nx) * Math.min(Math.abs(px), 120), fy = Math.sign(ny) * 74, [ffx, ffy] = T(fx, fy);
+    g += `<line x1="${ffx}" y1="${ffy}" x2="${ppx}" y2="${ppy}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="2 2" opacity=".75"/>`;
     const a = Math.atan2(uy, ux), s = 13, [cx, cy] = T(nx + ux * 12, ny + uy * 12);
     const p1 = [cx + s * Math.cos(-a + 2.4), cy + s * Math.sin(-a + 2.4)], p2 = [cx + s * Math.cos(-a - 2.4), cy + s * Math.sin(-a - 2.4)];
     g += `<polyline points="${p1.join(',')} ${cx},${cy} ${p2.join(',')}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
@@ -106,10 +112,10 @@ const CAP = 40, REACH = 70;          // landing spread around each node (mm, tar
 // one corner, section along its diagonal: r outward, z up; node r 10.15 on a flat deck
 (() => { const R0 = 150, frames = [
   ['1 · Lands on the flat deck', 'Hooks are folded flush. The drone lands anywhere within ±40; its bottom nodes rest on the deck. Nothing sticks up to clear.', 'flat'],
-  ['2 · Hooks rise', 'The box raises the hooks for this drone. Each swings up through its slot inside the corner and over the node, wherever the node landed.', 'up'],
-  ['3 · Closes and locks', 'The hook pulls the node out into the V-seat and down onto it. With all 4 closed the drone is centred and locked (over-centre: holds with power off, takes the 60 N XT60 push).', 'closed']];
+  ['2 · Frame goes down, hooks rise', 'The servo pulls the lift frame down. Every link turns its hook up through its slot and over the node, wherever the node landed. All 4 move together.', 'up'],
+  ['3 · Closes and locks', 'At the bottom of the frame travel each hook has pulled its node into the V-seat. The springs take up the last mm at each corner, and the links sit over-centre, so it stays locked with the servo off and takes the 60 N XT60 push.', 'closed']];
   const html = frames.map(([t, p, mode]) => {
-    const X0 = 60, X1 = 200, Z0 = -40, Z1 = 70, w = X1 - X0, h = Z1 - Z0; const T = (r, z) => [r - X0, Z1 - z];
+    const X0 = 30, X1 = 200, Z0 = -48, Z1 = 70, w = X1 - X0, h = Z1 - Z0; const T = (r, z) => [r - X0, Z1 - z];
     let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${t}">`;
     g += `<rect x="0" y="${T(0, 0)[1]}" width="${w}" height="${h}" fill="var(--deck)" fill-opacity=".45"/>`;
     const seat = R0 + 6; const [sx, sy] = T(seat, 0);
@@ -118,7 +124,10 @@ const CAP = 40, REACH = 70;          // landing spread around each node (mm, tar
     const [nx, nz] = T(nodeR, nodeZ);
     g += `<line x1="${nx - 60}" y1="${nz - 26}" x2="${nx}" y2="${nz}" stroke="var(--scout)" stroke-width="3" opacity=".7"/>`;
     g += `<circle cx="${nx}" cy="${nz}" r="10.15" fill="var(--sheet)" stroke="var(--scout)" stroke-width="2.4"/>`;
-    const piv = T(R0 - 75, -12);
+    const piv = T(R0 - 75, -12), fz = mode === 'flat' ? -20 : (mode === 'up' ? -28 : -36), fr = R0 - 112;
+    const [fbx, fby] = T(fr, fz); g += `<rect x="${fbx - 8}" y="${fby - 4}" width="16" height="8" fill="var(--ink)" opacity=".7"/>`;
+    const lev = [piv[0] - 8, piv[1] + 12]; g += `<line x1="${piv[0]}" y1="${piv[1]}" x2="${lev[0]}" y2="${lev[1]}" stroke="var(--hook)" stroke-width="4" stroke-linecap="round"/>`;
+    g += `<line x1="${fbx}" y1="${fby}" x2="${lev[0]}" y2="${lev[1]}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 2"/>`;
     if (mode === 'flat') g += `<line x1="${piv[0]}" y1="${piv[1]}" x2="${piv[0] + 70}" y2="${piv[1] + 9}" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
     else { const tip = mode === 'up' ? [nx + 2, nz - 22] : [nx + 4, nz - 12];
       g += `<line x1="${piv[0]}" y1="${piv[1]}" x2="${tip[0]}" y2="${tip[1]}" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
@@ -126,7 +135,7 @@ const CAP = 40, REACH = 70;          // landing spread around each node (mm, tar
       if (mode === 'up') g += `<path d="M ${tip[0] + 18} ${tip[1] + 22} l 14 0" stroke="var(--hook)" stroke-width="1.4" marker-end="url(#a)"/>`; }
     g += `<circle cx="${piv[0]}" cy="${piv[1]}" r="4" fill="var(--hook)"/>`;
     g += `<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--hook)"/></marker></defs>`;
-    g += `<text x="4" y="${h - 6}" font-size="7" fill="var(--muted)" font-family="IBM Plex Mono, monospace">deck · seat · node Ø20</text>`;
+    g += `<text x="4" y="${h - 6}" font-size="7" fill="var(--muted)" font-family="IBM Plex Mono, monospace">deck · lift frame · sprung link · seat · node Ø20</text>`;
     return `<div class="step"><h3>${t}</h3>${g}</svg><p>${p}</p></div>`; }).join('');
   document.getElementById('steps').innerHTML = html; })();
 
@@ -137,15 +146,17 @@ const rows = [
   ['Centring', 'passive, on sliding contact (needs a low-friction face, μ ≤ 0.2)', 'active: the hook drags the drone; μ 0.4 on the deck is fine (Overseer 12 N, Scout 3 N to slide)'],
   ['Final position', 'where the ramps meet (both drones level only by matching ring heights)', '4 V-seats on the 4 shared nodes: exact, the same for both drones'],
   ['Hold-down for the swap', 'a separate latch still needed', 'the same hooks, over-centre: hold the 60 N XT60 push with power off'],
-  ['Parts', '10 printed ramps, no motors', '4 servos + 4 hooks + 4 V-seats; the 4 MG90S of the old hook latch move here, bigger servos likely'],
-  ['Failure', 'nothing to fail; tolerance is what it is', 'a stuck hook = drone not centred: the box re-cycles it or waves the drone off; hall switch per hook reads closed'],
+  ['Parts', '10 printed ramps, no motors', '1 servo + lever, 1 lift frame, 4 sprung links, 4 hooks, 4 V-seats'],
+  ['Failure', 'nothing to fail; tolerance is what it is', 'one servo: if it stalls, nothing is locked and the box re-cycles or waves the drone off; a hall at the frame bottom reads locked'],
 ];
 document.getElementById('cmp').innerHTML = rows.map((r, i) => `<tr>${r.map((c, j) => i ? `<td class="${j === 2 ? 'rec' : ''}">${c}</td>` : `<th class="${j === 2 ? 'rec' : ''}">${c}</th>`).join('')}</tr>`).join('');
 document.getElementById('notes').innerHTML = [
-  'Why it fits both drones: after the Scout refit both bottoms have a Ø20 node on the same 4 points, (85.8, ±116.1) and (−68.9, ±119.7) about the catch. Hooking those nodes (not the 3 mm Scout rods) gives one set of 4 hooks for both. The box knows which drone is landing, so per-drone hook positions or extra hooks stay possible for later drones.',
-  'Sequence: drone lands, motors off, the 4 hooks rise (staggered, so the drone is dragged, not lifted), close, and lock. Each hook has a hall switch at closed. The swap only starts when all 4 read closed and keep-alive current flows. Release is the reverse after the swap.',
-  'Forces (E): sliding the Overseer (3.1 kg) on the deck at μ 0.4 takes ~12 N, shared by the hooks pulling at once; the XT60 insert pushes the drone up 60 N, so each hook holds ≥ 15 N down plus margin. An over-centre linkage takes that load off the servo, and keeps the lock with the power off.',
-  'Keep-alive: pins in two V-seats meet copper pads on two nodes once the hooks close, so the contact is made only when the drone is centred.',
-  'What still has to be checked: each hook sweep against both cages (the shell rods leaving each corner node, the Overseer feet and pods), the reach for ±40 and yaw ±10°, and the deck under a ±40 landing (the cartridges must not land on the swap-column edge).',
+  'Why one servo works: every hook turns in its own diagonal plane, but they all take their motion from the same vertical travel of the lift frame. So one 1-DOF drive moves all 4 at once, whatever direction each hook pulls. The frame runs round the swap column, so both cartridges still drop straight through the middle.',
+  'Why the links are sprung: 4 rigid hooks on one drive would fight each other if a drone\'s nodes are a mm off the seats. A preloaded spring in each link (or a TPU block) lets each hook finish its own last few mm, so every node is pulled firmly into its V-seat.',
+  'Lock: at the bottom of the frame travel each link passes just over its dead centre. A pull up on the drone (the 60 N XT60 insert) then pushes the linkage further into the lock instead of opening it, so the servo carries no load while the drone is held and nothing opens on a power cut.',
+  'Forces (E): dragging the Overseer (3.1 kg) across the deck at μ 0.4 takes ~12 N in all. Through the lever and frame, a standard 20 kg·cm servo has a large margin. Release is the servo driving the frame back up past the dead centre.',
+  'Sensing, with no keep-alive: one hall switch at the frame\'s locked position, and the servo current at the end of travel (a stall short of locked means a node did not seat). The swap starts only when the frame reads locked.',
+  'Both drones share the hooks because they share the 4 nodes. Per-drone hook positions would need more drives, so with one servo every future drone puts nodes on the same 4 points.',
+  'Still to check: the 4 hook sweeps against both cages (the shell rods leaving each corner node, the Overseer feet and pods), the reach for ±40 and yaw ±10°, the spring rate, and the deck under a ±40 landing (the cartridges must not come down on the swap-column edge).',
 ].map(t => `<li>${t}</li>`).join('');
 </script>
