@@ -29,7 +29,7 @@ Nothing of it stands beside the FC over x −18..18, so the ESC has **641 mm² o
   - the FC as the real board (36 x 36 x 8) in place of the layout's 51 x 51 envelope;
   - the flow sensor re-placed (below);
   - the placeholder "mount + nose legs" replaced by this piece.
-- **Wires (20 g E):** the CG is declared at the FC (0, 0, 13.5). For the fit they are a 0.4 box in free air in the right vent (no contact allowance; fit 0).
+- **Wires (20 g E):** the CG is declared at the FC (0, 0, 13.5). For the fit they are a 0.4 box in free air in the left vent (y +22) (no contact allowance; fit 0).
 
 ## 1. FC: on the plate's own AIO holes (picked) and the stack
 - **Where:** the FC stays where it is built, on the Bee35's 25.5 AIO holes at the plate centre (x 0; P). Its load path is grommets, screws, then the carbon plate. The belly mount only frames it, with a 2.0 window.
@@ -203,7 +203,7 @@ All at z 9.6..18.5 (the 8.9 gap) except the bipod.
 1. **A (picked): FC under the plate on its AIO holes (x 0, as built).**
    - Wins: carbon load path; no new holes beside the AIO pattern; harness as built; ESC now vented both sides (641 mm²); first mode 543..858 Hz.
    - Loses: FC 1.0 / 0.9 to plate and receiver rib until the grommet requirement; the nuts under the FC, so **FC out = receiver off**.
-2. **B (Spark's call): FC on the plate top at x +6.0** (clear of the tail block's foot by 2.0), on 3.0 standoffs, z 25..33.
+2. **B (for Spark): FC on the plate top at x +6.0** (clear of the tail block's foot by 2.0), on 3.0 standoffs, z 25..33.
    - Wins: plate 3.0, props 4.2, foot 2.0, plan 2.5 outside the swept disks; ESC in free air; USB, plugs and its 4 screws from above, and **the FC comes out with no other part off**; the belly mount loses its FC window.
    - Costs: Spark's 12 Oct "the FC cannot move up"; 4 new M2 holes 6.0 from the AIO ones; cables over the plate; the IMU 15.5 higher.
 3. **C (rejected): FC seated on the belly mount at x +5 (the layout's).**
@@ -242,6 +242,10 @@ None in this piece (no rods). The cage rods are the layout's (`runs/scout_layout
    - the rule-8 clear-air method (column vs contracted slipstream).
 
 ## Open
+- **Grommet requirement must be redone before it goes to the receiver's owner (review 27 Oct):** it models the silicone column above the PCB as the only lateral spring, but the M2 nut clamps the PCB from below and friction ties the PCB to the screw, bypassing the column. It needs a soft element below the PCB too (or a grommet in the PCB hole). That changes the stack height and the 2.1 rib cut.
+- **Front bridge (review 27 Oct):** the y 0 section of the front bridge (12 x 4.5, Z about 40 mm³) is the only link between the front halves and is not in the frame index; the prying model treats each yoke as rigid. The reviewer's per-half estimate is prying up to ~3.7x, plate index ~0.18: the breaking order holds. Check it in the piece pass.
+- **Flow bipod twist:** the flow CG at y −40 sits 9.5 off the strut plane (y −30.5); about 16 N·mm at 35 g (E), small, not in the post index. Check it in the piece pass.
+- **Stale round-1 wording in `belly_mount.py`:** comments at the docstring ("flow strut + cradle, windows"), the fit-row label ("post, gussets, cradle") and the reason for the USB-C side ("the USB-C window breaks that rail"; there is no rail now). The −y side pick for the flow stands on the bipod's own clearances. To clean up at the next run.
 - **Measure:** the FC's stack as built (grommet type and size, spacer, nut, PCB height in the 8.0 envelope, connector entry); the plate's AIO hole size.
 - **Vibration:** the vibration log.
 - **ESC heat:** the temperature at hover current with the vents.

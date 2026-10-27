@@ -753,7 +753,7 @@ def manifest(M, P, usb, flow, bm, bm_g, bm_c):
         n = p["name"]
         if n == PLACEHOLDER or n in TAILBAY_BOX or n in ("FC", "wires", "flow MTF-02P"): continue
         q = dict(p)
-        if "mesh" in q: q["mesh"] = os.path.join(ROOT, q["mesh"])
+        if "mesh" in q: q["mesh"] = os.path.join(ROOT, q["mesh"])  # absolute for system_check; manifest.json is written repo-relative
         if "cg" not in q and "mesh" in q: q["cg"] = np.round(P[n]["c"], 3).tolist()
         parts.append(q)
     for n, src in (("electronics tail block (PETG)", "belly_mount_tail_block__petg_.stl"), ("electronics tail carrier (PETG)", "tail_carrier__petg_.stl")):
