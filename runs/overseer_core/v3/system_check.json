@@ -889,7 +889,7 @@
    {
     "a": "wires",
     "b": "hub deck",
-    "overlap_mm3": 6.79,
+    "overlap_mm3": 7.36,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -971,11 +971,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3260.97,
+  "mass_g": 3271.67,
   "cg": [
-   68.9,
+   68.93,
    -0.05,
-   15.23
+   15.21
   ],
   "parts": [
    {
@@ -1343,11 +1343,11 @@
    },
    {
     "name": "hub deck",
-    "mass_g": 71.7,
+    "mass_g": 82.4,
     "cg": [
-     75.13,
+     75.54,
      0.0,
-     15.82
+     14.77
     ],
     "tag": "E",
     "swap": false
@@ -1382,11 +1382,11 @@
    82.0
   ],
   "cg_offset": [
-   2.5,
+   2.53,
    -0.05,
-   -66.77
+   -66.79
   ],
-  "cg_offset_mm": 66.82
+  "cg_offset_mm": 66.84
  },
  "balance": {
   "applies": true,
@@ -1403,32 +1403,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3260.97,
+    "mass_g": 3271.67,
     "cg_offset": [
-     2.5,
+     2.53,
      -0.05,
-     -66.77
+     -66.79
     ],
-    "horizontal_mm": 2.5,
-    "axial_mm": -66.77,
+    "horizontal_mm": 2.53,
+    "axial_mm": -66.79,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2505.37,
+    "mass_g": 2516.07,
     "cg_offset": [
-     30.24,
+     30.16,
      -0.07,
-     -48.85
+     -48.96
     ],
-    "horizontal_mm": 30.24,
-    "axial_mm": -48.85,
+    "horizontal_mm": 30.16,
+    "axial_mm": -48.96,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 30.24,
+  "worst_horizontal_mm": 30.16,
   "pass_": true
  },
  "probes": {
@@ -2933,6 +2933,44 @@
     "pass_": true
    },
    {
+    "name": "step 1: M3 x 8 up from under the plate into the hub deck insert, foot 6 (screwdriver from below, the battery slot empty)",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 1: M3 x 8 up from under the plate into the hub deck insert, foot 7 (screwdriver from below, the battery slot empty)",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
     "name": "step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet)",
     "part": "Pi 5 + Active Cooler",
     "tool": {
@@ -3085,7 +3123,7 @@
     "pass_": true
    }
   ],
-  "n_clear": 35,
+  "n_clear": 37,
   "worst": {
    "name": "M3 key, arm 1 top screw v +15",
    "part": "top plate",
@@ -3108,7 +3146,7 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3260.97,
+  "mass_g": 3271.67,
   "part_budgets_g": {
    "hub deck": 55.0,
    "flow clip": 5.0
@@ -3116,17 +3154,17 @@
   "over_parts": [
    {
     "name": "hub deck",
-    "mass_g": 71.7,
+    "mass_g": 82.4,
     "budget_g": 55.0
    }
   ],
   "budget_g": 2200.0,
-  "pct": 148.2,
+  "pct": 148.7,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3261 of 2200 g (148 %) (E) over budget (total, hub deck 71.7 of 55 g), CG 2.5 mm off thrust axis (E) [+2.5, -0.1, -66.8], 30.2 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear",
+ "summary": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3272 of 2200 g (149 %) (E) over budget (total, hub deck 82.4 of 55 g), CG 2.5 mm off thrust axis (E) [+2.5, -0.1, -66.8], 30.2 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
  "pass": false
 }

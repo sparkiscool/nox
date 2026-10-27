@@ -109,7 +109,7 @@ Z_ESC = Z_TP + STANDOFF            # 49.6
 Z_STACK_TOP = Z_ESC + STACK_H      # 70.1
 CAP = (10.0, 20.0)                 # low-ESR cap on the ESC battery pads, 35 V 470 µF Ø10 x 20, lying on the top plate behind the ESC (E)
 RX_TP = (-30.0, -18.0, 24.0, 40.0)  # RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, taped / zip-tied through the plate
-FEET_XY = [(-24.0, 36.5), (-24.0, -36.5), (65.0, 22.5), (65.0, -22.5), (96.0, 17.0), (96.0, -17.0)]   # bottom plate Ø3.1 / Ø3.5 (front) holes, 360° in the STEP
+FEET_XY = [(-24.0, 36.5), (-24.0, -36.5), (65.0, 22.5), (65.0, -22.5), (96.0, 17.0), (96.0, -17.0), (60.0, 17.0), (60.0, -17.0)]   # v3: + (60, ±17) Ø3.5   # bottom plate Ø3.1 / Ø3.5 (front) holes, 360° in the STEP
 # v2 (concept review 27 Oct): every foot outside the battery slot (heads clear its reserved top 6: |y| 36.5 - 2.75 > 33.4, x 65 - 2.75 > 61.9);
 # each keel root closes a triangle into the plate: (96, ±17), (65, ±22.5) and the cross bar at x 96. M3 up from under the plate into inserts
 INSERT = (4.0, 5.7)                # Ruthex M3 x 5.7 heat-set insert, hole Ø4.0 (Q17), pressed into each foot from the plate side
@@ -245,16 +245,11 @@ def brace_socket(key, r, l0, l1):
     return trimesh.creation.cylinder(r, l1 - l0, sections=32, segment=np.vstack([a + d * l0, a + d * l1]))
 
 
-# second chord (concept review 27 Oct: the braces' pull tips the tower forward about its toe, ~24 N m a side at SF 1.1, and the
-# 2 front screws alone would be pried with kN): a deep side web from the tower back and up to a bearing pad under the top plate,
-# x 42..50, |y| 12..20 (between the plates the front arm roots fill the diagonals in to (26, ±26): the arm-free front wing is
-# |y| <= x - 24; over the UBEC / buck, z >= 17): the tipping becomes a couple toe -> pad, the pad pressing up on the carbon
-# (compression only: counted only in the cases where it presses)
-TOP_PADS = [(42.0, 50.0, sy * 12.0, sy * 20.0) for sy in (1, -1)]
-TOE_X = 104.0                              # the tower's toe on the bottom plate's front wing (concept)
-Z_TOP_UNDER_P = Z_TP - 1.6                 # the top plate underside 45.0 (STEP)
-
-
+# second chord (concept review 27 Oct, rounds 1-2): the braces tip the tower forward (top hit) or back (front hit), ~20 / 14 N m a side
+# at SF 1.1. Round 3: deep side webs from the tower back to the mid feet beside the bays (|y| 20..34, x 58..92, z 0..36; the UBEC /
+# buck columns stay open for placing them; the arm-free wing is |y| <= x - 24), and 2 more feet (60, ±17): the tower, web and the 4
+# mid / front feet close a triangle both ways (round 2's pads under the top plate bore only one way and bent the 1.6 plate)
+TOE_X, MID_X, FRONT_X = 104.0, 62.5, 96.0
 def bar3(p, q, w):
     p, q = np.asarray(p, float), np.asarray(q, float)
     return trimesh.creation.box([np.linalg.norm(q - p), w, w], transform=trimesh.geometry.align_vectors([1, 0, 0], q - p) @ np.eye(4)
@@ -265,9 +260,8 @@ def tower():
     """the front hub tower: the 4 brace bosses, a web down to the keel bosses and the front feet, and the side webs back to the pads"""
     bosses = [brace_socket(k, BR_BORE / 2 + BR_WALL, -BR_WALL, BR_L + BR_LEAD) for k in BRACES]
     webs = [box(86.0, 104.0, sy * 9.0, sy * 31.0, 0, 36.0) for sy in (1, -1)]
-    sides = [bar3((88.0, sy * 16.0, 30.0), (46.0, sy * 16.0, Z_TOP_UNDER_P - 4.5), 8.0) for sy in (1, -1)]   # concept struts over the bays, ending in the pads
-    pads = [box(x0, x1, y0, y1, Z_TOP_UNDER_P - 4.0, Z_TOP_UNDER_P) for x0, x1, y0, y1 in TOP_PADS]
-    return uni(bosses + webs + sides + pads)
+    sides = [box(60.0, 92.0, sy * 20.0, sy * 28.0, 0, 36.0) for sy in (1, -1)]   # concept: the deep side webs to the mid feet (the run shapes them)
+    return uni(bosses + webs + sides)
 
 
 DECK, CLIP = hub_deck(), flow_clip()
@@ -406,7 +400,8 @@ say(f"   deck x Pi {ov(DECK, pi):.1f} (posts on its holes), deck x UBEC {ov(DECK
 say(f"   battery slot (empty, x {RB[0][0]:.1f}..{RB[1][0]:.1f}, y ±{RB[1][1]:.1f}, z {Z_CART:.1f}..{Z_PLATE_BOT}): x deck {ov(slot, DECK):.1f}, x flow clip {ov(slot, CLIP):.1f}, "
     f"x flow {ov(slot, flow):.1f}, x wires {ov(slot, wires):.1f} mm³")
 heads = cat([cyl(2.75, Z_PLATE_BOT - (CLIP_FLANGE if x > 90 else 0) - 3.0, Z_PLATE_BOT - (CLIP_FLANGE if x > 90 else 0), x, y) for x, y in FEET_XY])
-say(f"deck screw heads (M3 Ø5.5 x 3) x the battery slot {ov(heads, slot):.1f} mm³ (its top 6 is the receiver mount's)")
+say(f"deck screw heads (M3 Ø5.5 x 3) x the battery slot {ov(heads, slot):.1f} mm³: the 2 heads at (60, ±17) sit in its top 6 (reserved pockets Ø7 x 3.5 "
+    f"for the receiver mount to clear, v3 DEFAULT); every other head 0")
 keel_tubes = [trimesh.creation.cylinder(3.4, np.linalg.norm(b - a), sections=24, segment=np.vstack([a, b])) for a, b in KEELS.values()]   # v5 draws them from the root
 bores = cat([keel_socket(sy, SOCK_D / 2, SOCK_OFF, SOCK_OFF + SOCK_L + 1) for sy in (1, -1)])
 say(f"keel sockets: bore Ø{SOCK_D} x {SOCK_L} from {SOCK_OFF} past each root, boss Ø{SOCK_OD}; deck x keel tubes {ov(DECK, cat(keel_tubes)):.1f} mm³ "
@@ -527,26 +522,26 @@ def brace_loads(sg):
     return [((b - a) / np.linalg.norm(b - a) * BRACE_N[lvl] * sg, a) for (lvl, sy), (a, b) in BRACES.items()]
 RF = json.load(open(os.path.join(OUT, "core_root_forces.json")))      # the cage frame model's per-case root forces (F on E, no SF)
 RP = {k: (np.array(v["core"]), np.array(v["lug"])) for k, v in RF["points"].items()}
-PAD_N = {"max_press_N": 0.0, "case": None, "max_toe_lift_N_m": 0.0, "lift_case": None}
-pad_x = np.mean([(a + b) / 2 for a, b, _, _ in TOP_PADS]); lever = TOE_X - pad_x
+PAD_N = {"fwd_N_m": 0.0, "fwd_case": None, "back_N_m": 0.0, "back_case": None}
 for case, nn_ in RF["cases"].items():
     for sy in (1, -1):                                    # one side's 3 tubes (keel + 2 braces), SF 1.1: moment about the toe line (y axis)
         My = 0.0
         for k, n in nn_.items():
             if not k.endswith("+1" if sy > 0 else "-1"): continue
             a, b = RP[k]; F = (b - a) / np.linalg.norm(b - a) * n * 1.1; r = a - np.array([TOE_X, a[1], 0.0])
-            My += (r[2] * F[0] - r[0] * F[2])                 # + = tips the tower forward (its back rises, the pad presses up)
-        if My > 0:
-            P_ = My / lever
-            if P_ > PAD_N["max_press_N"]: PAD_N.update(max_press_N=round(float(P_), 1), case=case)
-        elif -My / 1000 > PAD_N["max_toe_lift_N_m"]:
-            PAD_N.update(max_toe_lift_N_m=round(float(-My / 1000), 1), lift_case=case)
+            My += (r[2] * F[0] - r[0] * F[2])                 # + = tips the tower forward (its back rises)
+        key = ("fwd_N_m", "fwd_case") if My > 0 else ("back_N_m", "back_case")
+        if abs(My) / 1000 > PAD_N[key[0]]: PAD_N.update({key[0]: round(abs(My) / 1000, 1), key[1]: case})
+PAD_N["mid_insert_pull_N"] = round(PAD_N["fwd_N_m"] * 1000 / (TOE_X - MID_X) / 2, 0)        # forward tip: the 2 mid feet a side pull
+PAD_N["front_insert_pull_N"] = round(PAD_N["back_N_m"] * 1000 / (FRONT_X - MID_X) / 2, 0)   # back tip about the mid feet: the front... (1 a side)
+PAD_N["front_insert_pull_N"] *= 2
 for case, (ks, bs) in BRACE_CASES.items():
     for nm in ("hub deck", "hub deck, front 4 feet alone (compliant deck bound)"):
         rec(nm, case, piece_case(SUP[nm], (keel_loads(ks) if ks else []) + brace_loads(bs) + inertial(CARRY[nm], np.array([0, 0, -35.0]))))
 say("joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):")
-say(f"   tower tipping (SF 1.1, the cage's per-case root forces, F): forward up to {PAD_N['max_press_N']} N pressing each top pad up ({PAD_N['case']}; lever {lever:.0f} toe -> pad), "
-    f"~{PAD_N['max_press_N'] / 64:.1f} MPa on its 8 x 8; backward up to {PAD_N['max_toe_lift_N_m']} N m a side ({PAD_N['lift_case']}): the front feet's inserts pull, the plate under the toe bears (C on F)")
+say(f"   tower tipping (SF 1.1, the cage's per-case root forces, F, the deep webs carrying it to the feet): forward {PAD_N['fwd_N_m']} N m a side ({PAD_N['fwd_case']}) "
+    f"-> {PAD_N['mid_insert_pull_N']:.0f} N pull on each of the 2 mid inserts a side over {TOE_X - MID_X:.0f} toe -> mid feet; back {PAD_N['back_N_m']} N m ({PAD_N['back_case']}) "
+    f"-> {PAD_N['front_insert_pull_N']:.0f} N on the front insert a side over {FRONT_X - MID_X:.1f} (E: insert pull-out ~600, coupon P to come)")
 for k, v in REQ.items():
     say(f"   {k}: max {v['max_bolt_N']} N per bolt ({v['worst_case']}), shear {v['max_shear_N']}, axial {v['max_axial_N']}")
 say("   the 2 front deck screws clamp the flow clip's 3 flange and the plate (M3 x 10, inserts in the deck); the front 4 bound puts every keel load on (96, ±17) + (65, ±22.5)")
@@ -557,7 +552,7 @@ say(f"mass {M_TOT:.0f} g (E), T/W {tw:.2f} at 1650 gf a motor; CG ({cg[0]:.1f}, 
 result = {"mass_g": M_TOT, "tw": round(tw, 2), "cg": cg.tolist(), "requirements": REQ, "wash_pct": wash,
           "keels": {str(sy): [a.tolist(), b.tolist()] for sy, (a, b) in KEELS.items()}, "keel_n": KEEL_N,
           "braces": {f"{l} {sy}": [a.tolist(), b.tolist()] for (l, sy), (a, b) in BRACES.items()}, "brace_n": BRACE_N,
-          "brace_socket": {"d": BR_BORE, "l": BR_L, "lead": BR_LEAD, "wall": BR_WALL}, "top_pads": TOP_PADS, "pad_press": PAD_N,
+          "brace_socket": {"d": BR_BORE, "l": BR_L, "lead": BR_LEAD, "wall": BR_WALL}, "tipping": PAD_N,
           "socket": {"d": SOCK_D, "l": SOCK_L, "off": SOCK_OFF, "od": SOCK_OD}, "insert": INSERT, "foot_h": FOOT_H,
           "slot": {"x": [float(RB[0][0]), float(RB[1][0])], "y": float(RB[1][1]), "z": [Z_CART, Z_PLATE_BOT]},
           "z": {"mount_plane": Z_M, "pack_top": float(pack.bounds[1][2]), "cartridge_bottom": float(cartridge.bounds[0][2]), "lens": LENS_Z,

@@ -4,11 +4,11 @@
 forces (`runs/overseer_core/v3/core_root_forces.json`, from the cage branch's runs/overseer_frame/v1; F on E, no SF: the crash class
 carries its own).
 
-  hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 6 feet Ø14 x 6.5 with Ø4.0 insert holes through; 4 Pi posts
+  hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 8 feet Ø14 x 6.5 with Ø4.0 insert holes through (core v3: + (60, ±17)); 4 Pi posts
              Ø7 to z 8 on Ø12 x 6 root webs; UBEC / buck seat rails (VHB tape); 2 keel bosses Ø13 (bores 6.2 x 15 from 5 past the v5
              roots, the tube ends); 4 brace bosses Ø11.2 (bores 6.2 x 15.6 incl. the 0.6 lead-in, 2.5 end wall behind each tube end
              lo (97, ±26, 22), hi (97, ±14, 32)). Envelope: z 0..6.5 over the plate x -76..100, the hub room x 80..118, |y| <= 34,
-             z 0..40; cuts: the arm session's root envelopes, the keel / brace tubes past their mouths, the cage's front tie tubes, the
+             z 0..40, deep side webs x 58..92, |y| 18..34, z 0..40 to the mid feet; cuts: the UBEC / buck columns (placed straight down), the arm session's root envelopes, the keel / brace tubes past their mouths, the cage's front tie tubes, the
              core's wire routes (+1).
              Loads: each crash case k (35 g x 14) as one set: the payload (Pi 55 g at its CG through the posts, UBEC 15, buck 6) at
              35 g in its direction + that case's keel and brace forces on their bore walls; flight 4 g the same; 2 g x / y flight
@@ -92,9 +92,7 @@ KEEL_N = R["keel_n"]                                                       # max
 RF = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", "core_root_forces.json")))
 ROOTS = {k: (np.array(v["core"], float), np.array(v["lug"], float)) for k, v in RF["points"].items()}   # core = the tube end
 BS = R["brace_socket"]
-PADS = [tuple(t) for t in R["top_pads"]]                                   # (x0, x1, y0, y1) under the top plate (bearing up, compression only)
 Z_UNDER = 45.0                                                             # the top plate underside (S500 STEP)
-TOE_X = 104.0
 FOOT_R = 7.0                                                               # feet Ø14: 5 of wall round the Ø4.0 insert hole (the gate erodes 2.0; v3's Ø12 left 4.0)
 
 
@@ -142,8 +140,7 @@ def hub_deck_bodies():
     # v5 (PR 148 review): a root web Ø12 x 6.0 under every Pi post (a gusset into the body; v4's bare Ø7 posts were 99.8 % in the main
     # body at the gate's 2.0 erosion, under its 99.9 % bar); 6.0 stays under the board's underside parts (z 6.5..8)
     roots = [cyl(x, y, 0, 6.0, 6.0) for x, y in ph]
-    pads = [box(x0, x1, y0, y1, Z_UNDER - 4.0, Z_UNDER) for x0, x1, y0, y1 in PADS]        # the second chord's bearing faces (core v3)
-    drawn = U([cyl(x, y, 0, T, FOOT_R) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + roots + rails + bosses + seats + pads)
+    drawn = U([cyl(x, y, 0, T, FOOT_R) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + roots + rails + bosses + seats)
     bores = [along(*keel_axis(sy), SK["off"], SK["off"] + SK["l"] + 1.0, SK["d"] / 2) for sy in (1, -1)]
     tubes = [along(*keel_axis(sy), SK["off"] + SK["l"] - 0.5, 400.0, 3.5) for sy in (1, -1)]
     bores += [along(*root_axis(k), 0.0, BS["l"] + BS["lead"] + 1.0, BS["d"] / 2) for k in braces]
@@ -155,11 +152,14 @@ def hub_deck_bodies():
                for k, (a, b) in ties.items() if k.startswith("core tie front")]
     hub_env = box(80.0, 118.0, -34.0, 34.0, 0, 40.0)        # the front hub tower's room: keels and braces, gussets back to the feet and across
     plates = [man(M["top plate"])]
-    cuts = U(plates + [cyl(x, y, -1, T + 1, INS[0] / 2) for x, y in feet] + tie_cut + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots + bores + tubes + wires
+    bays = [box(m.bounds[0][0] - 1, m.bounds[1][0] + 1, m.bounds[0][1] - 1, m.bounds[1][1] + 1, T, Z_UNDER) for m in (M["UBEC 5 V"], M["buck 12 V"])]
+    cuts = U(plates + bays + [cyl(x, y, -1, T + 1, INS[0] / 2) for x, y in feet] + tie_cut + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots + bores + tubes + wires
              + [grown(f"arm {i}", 1.0) for i in (1, 2, 3, 4)]
              + [arm_env(a_) for a_ in (45, -45, 135, -135)])                                   # the arm session's root envelopes (u >= 58, |v| <= 21)
-    strut_env = [box(42.0, 92.0, sy * 10.0, sy * 24.0, 17.0, Z_UNDER) for sy in (1, -1)]   # over the bays to the pads (arm cuts trim it)
-    env = U([box(-76, 100, -42, 42, 0, T), hub_env] + strut_env)
+    # core v3 round 3: deep side webs from the tower back to the mid feet (60, ±17), (65, ±22.5) beside the bays (their columns stay
+    # open for placing the UBEC and buck straight down; the arm root envelopes and grown arms trim the outer side)
+    web_env = [box(58.0, 92.0, sy * 18.0, sy * 34.0, 0, 40.0) for sy in (1, -1)]
+    env = U([box(-76, 100, -42, 42, 0, T), hub_env] + web_env)
     return drawn, cuts, env, feet, ph
 
 
@@ -167,11 +167,7 @@ def hub_deck_setup(h):
     drawn, cuts, env, feet, ph = hub_deck_bodies()
     p = Part("overseer_hub_deck", h, drawn, cuts, env, build="+z", material="PETG")
     foot_sup = [cyl(x, y, -0.5, 3.0, FOOT_R + 0.5) for x, y in feet]
-    pad_sup = {sy: box(x0 - 0.5, x1 + 0.5, min(y0, y1) - 0.5, max(y0, y1) + 0.5, Z_UNDER - 1.5, Z_UNDER + 0.5) for (x0, x1, y0, y1), sy in zip(PADS, (1, -1))}
     p.support("default", U(foot_sup))
-    p.support("pads", U(foot_sup + list(pad_sup.values())))
-    p.support("pad +y", U(foot_sup + [pad_sup[1]]))
-    p.support("pad -y", U(foot_sup + [pad_sup[-1]]))
     pi_c = M[PI_NM].centroid
     posts = [np.array([x, y, C["z_pi"]]) for x, y in ph]
     post_reg = [cyl(x, y, C["z_pi"] - 3.0, C["z_pi"] + 0.5, 4.0) for x, y in ph]
@@ -182,20 +178,12 @@ def hub_deck_setup(h):
     walls = {k: along(*root_axis(k), 0.0 if k.startswith("L2") else SK["off"], (BS["l"] + BS["lead"]) if k.startswith("L2") else SK["off"] + SK["l"],
                       (BS["d"] if k.startswith("L2") else SK["d"]) / 2 + 1.0) for k in ROOTS}       # the bore walls (epoxy)
 
-    def tips(roots):
-        """the support group: the pad of each side whose keel + braces tip the tower forward (its back rises, the pad presses up)"""
-        fw = []
-        for sy, tag in ((1, "+1"), (-1, "-1")):
-            My = sum(((ROOTS[k][0][2]) * (root_axis(k)[1] * n_)[0] - (ROOTS[k][0][0] - TOE_X) * (root_axis(k)[1] * n_)[2]) for k, n_ in (roots or {}).items() if k.endswith(tag))
-            if My > 0: fw.append(sy)
-        return {(): "default", (1,): "pad +y", (-1,): "pad -y", (1, -1): "pads"}[tuple(fw)]
-
     def payload(name, a, cls, roots=None):
         f = rigid_split(posts, -55 * G * a, pi_c)
         reg = [(post_reg[i], f[i]) for i in range(4)] + [(bay(ub), -15 * G * a), (bay(bk), -6 * G * a)]
         for k, n_ in (roots or {}).items():
             reg.append((walls[k], root_axis(k)[1] * n_))            # + tension pulls the socket toward the head
-        p.load_multi(name, reg, cls=cls, accel=-a, support=tips(roots))
+        p.load_multi(name, reg, cls=cls, accel=-a)
     rc = RF["cases"]
     for k, d in enumerate(DIRS14):
         nm = next(c for c in rc if c.startswith(f"crash {k} "))

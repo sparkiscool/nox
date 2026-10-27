@@ -38,7 +38,7 @@ fig2, axs = plt.subplots(1, 2, figsize=(16, 6.2), facecolor="white")
 plates = [(-95.5, 100.5, -2.1, 0.0), (-60.2, 56.5, 45.0, 46.6)]
 A = {"lo": (57, 50), "hi": (53, 50)}; B = {"lo": (97, 22), "hi": (97, 32)}
 titles = ["A: block on the top plate's front edge (roots x 53..57, z 50)\nSF 1.1, the cage's per-case forces: 765..788 N on each of 4 fasteners\nin the 1.6 top plate (584 shear): not sound in PETG",
-          "B (chosen): tower on the hub deck's front hub (roots x 97, z 22 / 32)\n+ struts to 2 pads under the top plate. SF 1.1: forward tip -> 343 N a pad (5.4 MPa, bearing);\nback tip 13.8 N m a side -> ~445 N per front insert (E); 6 feet <= 247 N (rigid)"]
+          "B (chosen): tower on the hub deck's front hub (roots x 97, z 22 / 32)\n+ deep side webs to 4 mid feet. SF 1.1: forward tip 19.9 N m a side -> 240 N per mid insert;\nback tip 13.8 N m -> 412 N per front insert (E, insert ~600: coupon P to come)"]
 for k, ax in enumerate(axs):
     for x0, x1, z0, z1 in plates: ax.fill([x0, x1, x1, x0], [z0, z0, z1, z1], color="#9aa4b1")
     ax.fill([34, 82, 82, 34], [6.5, 6.5, 15.5, 15.5], color="#6b4fa0", alpha=0.7)
@@ -53,8 +53,8 @@ for k, ax in enumerate(axs):
     else:
         ax.fill([-20, 110, 110, -20], [0, 0, 6.5, 6.5], color="#e8833a", alpha=0.9)
         ax.fill([86, 112, 112, 86], [0, 0, 38, 38], color="#e8833a", alpha=0.9)
-        ax.plot([88, 46], [30, 40.5], color="#e8833a", lw=8, solid_capstyle="round"); ax.fill([42, 50, 50, 42], [41, 41, 45, 45], color="#e8833a")
-        ax.annotate("pad bears up on the top plate", (46, 45), (0, 62), arrowprops=dict(arrowstyle="->"), fontsize=9)
+        ax.fill([60, 92, 92, 60], [0, 0, 36, 36], color="#d9662a", alpha=0.75)
+        ax.annotate("deep side webs to the mid feet (60, ±17), (65, ±22.5),\nbeside the UBEC / buck (|y| 20..28)", (70, 30), (-25, 62), arrowprops=dict(arrowstyle="->"), fontsize=9)
     ax.set_xlim(-30, 200); ax.set_ylim(-10, 80); ax.set_aspect("equal"); ax.set_title(titles[k], fontsize=9.5); ax.set_xlabel("x (nose right), side view")
 fig2.suptitle("L2 brace roots: alternatives (grey = S500 plates, purple = UBEC, black = keel, red = braces, orange = printed core)", fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.92)); plt.savefig("runs/overseer_core/v3/alternatives.png", dpi=100)
