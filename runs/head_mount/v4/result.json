@@ -1,0 +1,500 @@
+{
+ "name": "head_mount",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 9,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   79017.0
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.5",
+    0.932,
+    "erode 2.0"
+   ],
+   [
+    "0.6",
+    0.805,
+    "erode 2.0"
+   ],
+   [
+    "0.7",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.8",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.9",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.10",
+    0.0,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 4,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 25632.8,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "crash 0",
+    "cls": "misuse",
+    "inlayer": 0.053,
+    "across": 0.072,
+    "at": [
+     371.6,
+     -3.4,
+     49.9
+    ]
+   },
+   {
+    "case": "crash 1",
+    "cls": "misuse",
+    "inlayer": 0.053,
+    "across": 0.057,
+    "at": [
+     380.6,
+     1.1,
+     45.4
+    ]
+   },
+   {
+    "case": "crash 2",
+    "cls": "misuse",
+    "inlayer": 0.084,
+    "across": 0.129,
+    "at": [
+     378.3,
+     -37.1,
+     47.6
+    ]
+   },
+   {
+    "case": "crash 3",
+    "cls": "misuse",
+    "inlayer": 0.084,
+    "across": 0.082,
+    "at": [
+     378.3,
+     -37.1,
+     47.6
+    ]
+   },
+   {
+    "case": "crash 4",
+    "cls": "misuse",
+    "inlayer": 0.203,
+    "across": 0.221,
+    "at": [
+     367.1,
+     1.1,
+     38.6
+    ]
+   },
+   {
+    "case": "crash 5",
+    "cls": "misuse",
+    "inlayer": 0.203,
+    "across": 0.18,
+    "at": [
+     382.8,
+     -34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "crash 6",
+    "cls": "misuse",
+    "inlayer": 0.126,
+    "across": 0.12,
+    "at": [
+     382.8,
+     34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "crash 7",
+    "cls": "misuse",
+    "inlayer": 0.175,
+    "across": 0.146,
+    "at": [
+     382.8,
+     -34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "crash 8",
+    "cls": "misuse",
+    "inlayer": 0.148,
+    "across": 0.186,
+    "at": [
+     367.1,
+     1.1,
+     38.6
+    ]
+   },
+   {
+    "case": "crash 9",
+    "cls": "misuse",
+    "inlayer": 0.174,
+    "across": 0.124,
+    "at": [
+     382.8,
+     34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "crash 10",
+    "cls": "misuse",
+    "inlayer": 0.174,
+    "across": 0.108,
+    "at": [
+     382.8,
+     34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "crash 11",
+    "cls": "misuse",
+    "inlayer": 0.148,
+    "across": 0.14,
+    "at": [
+     367.1,
+     3.4,
+     40.9
+    ]
+   },
+   {
+    "case": "crash 12",
+    "cls": "misuse",
+    "inlayer": 0.175,
+    "across": 0.136,
+    "at": [
+     382.8,
+     -34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "crash 13",
+    "cls": "misuse",
+    "inlayer": 0.126,
+    "across": 0.119,
+    "at": [
+     382.8,
+     34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "flight",
+    "cls": "flight",
+    "inlayer": 0.04,
+    "across": 0.034,
+    "at": [
+     382.8,
+     -34.9,
+     65.6
+    ]
+   },
+   {
+    "case": "guard hit 0",
+    "cls": "misuse",
+    "inlayer": 0.185,
+    "across": 0.184,
+    "at": [
+     385.1,
+     43.9,
+     85.9
+    ]
+   },
+   {
+    "case": "guard hit 1",
+    "cls": "misuse",
+    "inlayer": 0.076,
+    "across": 0.036,
+    "at": [
+     382.8,
+     66.4,
+     76.9
+    ]
+   },
+   {
+    "case": "guard hit 2",
+    "cls": "misuse",
+    "inlayer": 0.491,
+    "across": 0.653,
+    "at": [
+     380.6,
+     55.1,
+     49.9
+    ]
+   },
+   {
+    "case": "guard hit 3",
+    "cls": "misuse",
+    "inlayer": 0.597,
+    "across": 1.056,
+    "at": [
+     378.3,
+     55.1,
+     45.4
+    ]
+   },
+   {
+    "case": "guard hit 4",
+    "cls": "misuse",
+    "inlayer": 0.69,
+    "across": 0.919,
+    "at": [
+     378.3,
+     -57.4,
+     43.1
+    ]
+   },
+   {
+    "case": "guard hit 5",
+    "cls": "misuse",
+    "inlayer": 0.486,
+    "across": 0.747,
+    "at": [
+     380.6,
+     -57.4,
+     52.1
+    ]
+   },
+   {
+    "case": "guard hit 6",
+    "cls": "misuse",
+    "inlayer": 0.075,
+    "across": 0.036,
+    "at": [
+     382.8,
+     -66.4,
+     76.9
+    ]
+   },
+   {
+    "case": "guard hit 7",
+    "cls": "misuse",
+    "inlayer": 0.22,
+    "across": 0.23,
+    "at": [
+     389.6,
+     -64.1,
+     85.9
+    ]
+   },
+   {
+    "case": "camera guard hit 0.0",
+    "cls": "misuse",
+    "inlayer": 0.033,
+    "across": 0.024,
+    "at": [
+     373.8,
+     70.9,
+     101.6
+    ]
+   },
+   {
+    "case": "camera guard hit 0.1",
+    "cls": "misuse",
+    "inlayer": 0.022,
+    "across": 0.041,
+    "at": [
+     376.1,
+     73.1,
+     85.9
+    ]
+   },
+   {
+    "case": "camera guard hit 1.0",
+    "cls": "misuse",
+    "inlayer": 0.077,
+    "across": 0.06,
+    "at": [
+     391.8,
+     -77.6,
+     148.9
+    ]
+   },
+   {
+    "case": "camera guard hit 1.1",
+    "cls": "misuse",
+    "inlayer": 0.068,
+    "across": 0.016,
+    "at": [
+     391.8,
+     -77.6,
+     151.1
+    ]
+   }
+  ],
+  "worst": 1.056,
+  "worst_case": "guard hit 3",
+  "worst_at": [
+   378.3,
+   55.1,
+   45.4
+  ]
+ },
+ "mass_g": 143.66,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 113118.2,
+ "drawn_g": 109.44,
+ "stl": "head_mount.stl",
+ "view_stl": "head_mount_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 2.8633630551668268,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.03948750606199166,
+  "nd": 123750,
+  "sym_axes": [],
+  "n_real": 27,
+  "n_ties": 78,
+  "backend": "direct",
+  "iterations": 82,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "head",
+  "h": 2.25,
+  "shape": [
+   40,
+   88,
+   88
+  ],
+  "origin": [
+   332.1921,
+   -99.0,
+   -23.2416
+  ],
+  "cells": 309760,
+  "design": 121146,
+  "drawn": 7621,
+  "cases": [
+   "crash 0",
+   "crash 1",
+   "crash 2",
+   "crash 3",
+   "crash 4",
+   "crash 5",
+   "crash 6",
+   "crash 7",
+   "crash 8",
+   "crash 9",
+   "crash 10",
+   "crash 11",
+   "crash 12",
+   "crash 13",
+   "flight",
+   "guard hit 0",
+   "guard hit 1",
+   "guard hit 2",
+   "guard hit 3",
+   "guard hit 4",
+   "guard hit 5",
+   "guard hit 6",
+   "guard hit 7",
+   "camera guard hit 0.0",
+   "camera guard hit 0.1",
+   "camera guard hit 1.0",
+   "camera guard hit 1.1"
+  ],
+  "supports": [
+   "frame"
+  ]
+ },
+ "build_s": 593.9,
+ "layout_s": 3151,
+ "peak_gb": 11.996344,
+ "gen_cm3": 26.0,
+ "h": 2.25,
+ "total_s": 3745
+}
