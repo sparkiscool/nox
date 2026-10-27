@@ -31,14 +31,14 @@ H_SIDE = float(os.environ.get("RAMP_SIDE_H", 25.0))       # ramp heights above t
 H_OEND = float(os.environ.get("RAMP_OEND_H", 25.0))
 H_SEND = float(os.environ.get("RAMP_SEND_H", 8.0))
 SEND_Y = (0, 0)                                            # unused (per end below)
-SEND_NOSE = (40.0, 96.0)    # Scout nose pads |y|: beside the Overseer's receiver (|y| 27 + yaw + capture), inside its side nodes
+SEND_NOSE = (52.0, 96.0)    # Scout nose pads |y|: outside the Overseer's nose TPU feet (|y| 39 + yaw + capture), inside its side nodes
 SEND_TAIL = (92.5, 99.5)    # Scout tail pads |y|: between the Scout's tail-bay ties (|y| <= 91) and its tail nodes (|y| >= 109.5)
 TIP_LEN = 50.0              # Overseer tip ramps: 50 along each tip edge from 40 off the tip node
 SLED_Y = float(os.environ.get("OVR_SLED_Y", 0.0))         # 0 = the Overseer's belly sled and pods as they are
 ALT_SIDE, ALT_SLED_Y = 35.0, 46.0                          # what-if: taller side ramps with the Overseer's belly pods inside |y| 46
 S2 = math.sqrt(2)
 
-def wedge(A, B, c, s0, s1, h, name):
+def wedge(A, B, c, s0, s1, h, name, v_tip=None):
     """45 deg ramp under the ring tube from A to B (plan, seat frame; tube centre at z 0), rising inward (away from the
     plan centre c); along the edge from s0 to s1 mm from A; half-spaces n.p <= d"""
     A, B, c = (np.array(v, float) for v in (A, B, c))
@@ -47,14 +47,20 @@ def wedge(A, B, c, s0, s1, h, name):
     e = np.array([e2[0], e2[1], 0.0]); t = np.array([t2[0], t2[1], 0.0])
     k = e2 @ A - TUBE_R * S2                                   # slope plane: e.p + z = k (touches a seated r-3 tube)
     H = [((e + [0, 0, 1]) / S2, k / S2), (np.array([0, 0, 1.0]), h), (-e, -(k - h)), (e, k - BOTTOM),
-         (np.array([0, 0, -1.0]), -BOTTOM), (t, t2 @ A + s1), (-t, -(t2 @ A + s0))]
+         (np.array([0, 0, -1.0]), -BOTTOM),
+         ((t + [0, 0, 1]) / S2, (t2 @ A + s1) / S2), (t, t2 @ A + s1 - BOTTOM)]                      # 45 deg end chamfer (top edge to s1)
+    if v_tip is None:
+        H += [((-t + [0, 0, 1]) / S2, (-(t2 @ A + s0)) / S2), (-t, -(t2 @ A + s0) - BOTTOM)]
+    else:                                                    # one half of a V under a tip: meets its mirror on y 0, cut back from the tip
+        side, xcut, sx = v_tip                               # side +1 / -1 (its y), x of the cut, +1 front / -1 tail
+        H += [(np.array([0, -side, 0.0]), 0.0), (np.array([sx, 0, 1.0]) / S2, sx * xcut / S2), (np.array([sx, 0, 0.0]), sx * xcut - BOTTOM)]
     return dict(name=name, planes=[(n.tolist(), float(d)) for n, d in H], A=A.tolist(), B=B.tolist(), e=e2.tolist(), t=t2.tolist(),
                 k=float(k), span=[s0, s1], h=h)
 
 # the current Overseer base loop (cage v5, PR 122, confirmed 27 Oct) about the swap centre (x -30), seat z 0 = the loop plane
 HEX = dict(Ln=(85.8, 116.1), Rn=(85.8, -116.1), Lt=(-68.9, 119.7), Rt=(-68.9, -119.7), F=(191.2, 0.0), T=(-212.6, 0.0))
 INSET = 20.0                                                     # clear of the r 10.15 nodes by ~10 at both ends
-TIP_INSET = 40.0                                                 # tip ramps start 40 from the tip node: at yaw 5 deg the far tip tube crosses a ramp end nearer
+TIP_INSET = 30.0                                                 # the V under each tip is cut back 30 (in x) from the tip node
 
 def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
     h_side = H_SIDE if h_side is None else h_side; h_tip = H_OEND if h_tip is None else h_tip; h_send = H_SEND if h_send is None else h_send
@@ -63,7 +69,9 @@ def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
     for a, b, nm in (("Lt", "Ln", "side +y"), ("Rt", "Rn", "side -y")):            # shared: the long sides
         L = float(np.linalg.norm(np.subtract(X[b], X[a]))); R.append(wedge(X[a], X[b], c, INSET, L - INSET, h_side, nm))
     for a, b, nm in (("F", "Ln", "Overseer tip +x +y"), ("F", "Rn", "Overseer tip +x -y"), ("T", "Lt", "Overseer tip -x +y"), ("T", "Rt", "Overseer tip -x -y")):
-        R.append(wedge(X[a], X[b], c, TIP_INSET, TIP_INSET + TIP_LEN, h_tip, nm))   # near the tip only: the Scout's nose / tail tubes lie low nearer the sides
+        sx = 1 if a == "F" else -1; side = 1 if b.startswith("L") else -1
+        R.append(wedge(X[a], X[b], c, 0.0, TIP_INSET + TIP_LEN, h_tip, nm, v_tip=(side, X[a][0] - sx * TIP_INSET, sx)))
+        # a V under each tip, its two halves joined on the centreline, cut back TIP_INSET from the tip node, TIP_LEN + TIP_INSET along each tip edge
     for a, b, nm, (y0, y1) in (("Rn", "Ln", "Scout end +x", SEND_NOSE), ("Rt", "Lt", "Scout end -x", SEND_TAIL)):   # the Scout's short ends
         A, B = X[a], X[b]; L = float(np.linalg.norm(np.subtract(B, A)))
         for lo, hi in ((L / 2 + y0, L / 2 + y1), (L / 2 - y1, L / 2 - y0)):
@@ -96,8 +104,9 @@ def landing(P, rad, ring, R, off, yd, names=None):
         if len(bad): return False, f"{nm(bad)} meets {sorted({R[which[i]]['name'] for i in bad})} before it is centred", -1
         if u is None: Hr = H; break
         push = face[c][:, :2] @ u
-        if (push > 1e-6).any(): return False, "a ramp pushes the ring outward (landed past a ramp top)", -1
-        if (-push).max() >= 0.3: Hr = H; break
+        net = float(push.mean())                                   # all contacts together (several touch at once under yaw)
+        if net > 0.1: return False, "the ramps push the ring outward (landed past a ramp top)", -1
+        if (-push).max() >= 0.3 and net < 0: Hr = H; break
     if Hr is None: return False, "nothing pushes it back along the offset (it would sit off centre)", -1
     worst, who = 1e9, ""
     for s in np.linspace(0, 1, 33):
