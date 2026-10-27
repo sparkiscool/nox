@@ -164,9 +164,9 @@
   ],
   "keel +1": [
    [
-    96,
-    12,
-    8
+    100.9,
+    12.59,
+    8.8
    ],
    [
     379.7,
@@ -176,9 +176,9 @@
   ],
   "keel -1": [
    [
-    96,
-    -12,
-    8
+    100.9,
+    -12.59,
+    8.8
    ],
    [
     379.7,
@@ -428,7 +428,7 @@
   "prop disks 12 off",
   "the keels and braces (their sockets are on the lugs)"
  ],
- "mass_budget_g": 102.2,
+ "mass_budget_g": 99.0,
  "cases": "dimensions.md L (flight 4 g / 2 g, crash 35 g in 14 directions at each payload's CG, sensor mounts first mode >= 100 Hz, breaking order: the lugs let go before the L2 base)",
  "print_": "Bambu A1 mini 180 cube, PETG; cut DEFAULT: centre piece |y| <= 75 (seat, lugs, guard ring, the centre node) and two mirrored wings (camera pad, camera guard, the side nodes), bolted M3 on drawn pads",
  "drawn_mesh": "parts/sensor_head_mount__printed__drawn_seat__.stl"
