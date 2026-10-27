@@ -312,3 +312,11 @@ layout done: 2795 s, peak 5.577332 GB
 layout done: 2795 s, peak 5.577332 GB
 build: organic surface at pitch 0.312 mm (x4), skins 30.44 cm3, field 60.57 cm3, in env - cuts 53.59 cm3 (layout 53.59, level offset +0.094 mm), fillet 2.5 mm, rims 1.0 mm, mesh 604,344 faces, 257 s
 build: organic surface at pitch 0.312 mm (x4), skins 30.44 cm3, field 60.57 cm3, in env - cuts 53.59 cm3 (layout 53.59, level offset +0.094 mm), fillet 2.5 mm, rims 1.0 mm, mesh 604,344 faces, 257 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [35921.2], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 0, "ok": true}
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [35921.2], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 0, "ok": true}
+function check: {'skin_mm3': 18080.6, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 18080.6, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.30 in 'crash 0 [1.0, 0.0, 0.0] via head guard (35 g + the keel / brace forces, F)' at [104.1, -19.4, 4.4]
+strength: worst index 0.30 in 'crash 0 [1.0, 0.0, 0.0] via head guard (35 g + the keel / brace forces, F)' at [104.1, -19.4, 4.4]
+RESULT {"name": "overseer_hub_deck", "solid_ok": true, "mass_g": 68.04, "worst": 0.3, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_hub_deck", "solid_ok": true, "mass_g": 68.04, "worst": 0.3, "function_ok": true, "bodies": 1}
