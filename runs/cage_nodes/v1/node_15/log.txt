@@ -1,0 +1,36 @@
+=== cage_node_15: h 1.0, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_15: h 1.0, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_15: grid (80, 80, 80) h 1.0 = 512,000 cells; design 209,013 (209.0 cm3), drawn 5,453, void 297,534
+  support hold 0: 4323 cells, 7121 nodes
+  support hold 1: 4315 cells, 7120 nodes
+  support hold 2: 4508 cells, 7572 nodes
+  support hold 3: 4437 cells, 7425 nodes
+  support hold 4: 4333 cells, 7226 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_15: grid (40, 40, 40) h 2.0 = 64,000 cells; design 26,103 (208.8 cm3), drawn 720, void 37,177
+  support hold 0: 574 cells, 1272 nodes
+  support hold 1: 575 cells, 1271 nodes
+  support hold 2: 572 cells, 1362 nodes
+  support hold 3: 589 cells, 1338 nodes
+  support hold 4: 584 cells, 1305 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.71 cm3); 0.05 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.71 cm3); 0.05 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.006 of 26,109 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.006 of 26,109 design cells
+layout: WARNING nearly mirrored in x (1.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (1.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.5% of passive cells differ): no symmetry
+Traceback (most recent call last):
+  File "/home/user/nox/nox/overseer/cage_node.py", line 114, in <module>
+    optimise(setup, h=a.h, gen_cm3=gen, out_dir=out, name=f"cage_node_{i}", settings=Settings(), git=a.git)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/nox/nox/topo/run.py", line 75, in optimise
+    Lc = Layout(part_c, gen_cm3=gen_cm3, settings=sc, log=log)
+  File "/home/user/nox/nox/topo/layout.py", line 307, in __init__
+    mat = MATERIALS[part.material]
+          ~~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'TPU'
