@@ -10,10 +10,10 @@ flow clip x bottom plate -0.0, x the v5 links and nodes 28.0 / 0.0, flow x clip 
 arm bottom screw keys (Ø8 below the plate): all 8 clear of the core (C); the slot's contents come later
 flow view (42°, +2°, from the clip's window): clear (C)
 swap column (receiver + 30 a side, below the cartridge bottom): flow clip 0.0, flow 0.0, feet 0.0 mm³
-prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 0.85, flow clip 0.0, battery slot 1.83
+prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 0.89, flow clip 0.0, battery slot 1.83
 System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm³ (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3225 of 2200 g (147 %) (E) over budget (total), CG 2.1 mm off thrust axis (E) [+2.1, -0.1, -66.8], 30.1 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear
 joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):
-   hub deck: max 127.9 N per bolt (keels push (both 387 N, F)), shear 126.5, axial 27.8
+   hub deck: max 127.9 N per bolt (keels push (both 387 N, F)), shear 126.5, axial 27.9
    hub deck, front 4 feet alone (compliant deck bound): max 211.5 N per bolt (keels push (both 387 N, F)), shear 189.8, axial 93.3
    flow clip: max 1.3 N per bolt (crash 35 g 4), shear 0.9, axial 1.3
    Pi screws: max 6.7 N per bolt (crash 35 g 5), shear 6.0, axial 6.7

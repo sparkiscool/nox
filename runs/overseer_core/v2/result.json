@@ -11,7 +11,7 @@
    "worst_case": "keels push (both 387 N, F)",
    "max_bolt_N": 127.9,
    "max_shear_N": 126.5,
-   "max_axial_N": 27.8
+   "max_axial_N": 27.9
   },
   "hub deck, front 4 feet alone (compliant deck bound)": {
    "worst_case": "keels push (both 387 N, F)",
@@ -39,7 +39,7 @@
   }
  },
  "wash_pct": {
-  "hub deck + Pi + bays": 0.85,
+  "hub deck + Pi + bays": 0.89,
   "flow clip": 0.0,
   "battery slot": 1.83
  },

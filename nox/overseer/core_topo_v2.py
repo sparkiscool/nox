@@ -86,7 +86,8 @@ def rigid_split(pts, F, P):
 # ================================================================ hub deck
 KEELS = {int(k): (np.array(v[0], float), np.array(v[1], float)) for k, v in R["keels"].items()}
 SK = R["socket"]; INS = R["insert"]; T = R["foot_h"]
-KEEL_N = R["keel_n"]                                                       # max pull / push per keel (F)
+KEEL_N = R["keel_n"]
+FOOT_R = 7.0                                                               # feet Ø14: 5 of wall round the Ø4.0 insert hole (the gate erodes 2.0; v3's Ø12 left 4.0)                                                       # max pull / push per keel (F)
 
 
 def along(a, d, l0, l1, r, n=40):
@@ -94,6 +95,12 @@ def along(a, d, l0, l1, r, n=40):
     q0, q1 = a + d * l0, a + d * l1
     t = trimesh.creation.cylinder(r, l1 - l0, sections=n, segment=np.vstack([q0, q1]))
     return man(t)
+
+
+def arm_env(deg):
+    """the arm session's root envelope along the arm at deg (27 Oct: roots u >= 58 for |v| <= 21); v3 used a box |y| > 20 ahead of
+    x 56, which cut the mid feet (65, ±22.5) to a 3.5 sliver and capped every member at 4.44 (the solid gate FAILED)"""
+    return box(58.0, 400.0, -21.0, 21.0, -1.0, 20.0).rotate([0, 0, deg])
 
 
 def keel_axis(sy):
@@ -115,16 +122,16 @@ def hub_deck_bodies():
     # keel front hub: bosses on the keel axes, seated on the front feet (the keels' 387 N go into the plate at (96, ±17))
     bosses = [along(*keel_axis(sy), -2.0, SK["off"] + SK["l"], SK["od"] / 2) for sy in (1, -1)]
     seats = []                                              # v3: the topology grows the seats (the hub's room below)
-    drawn = U([cyl(x, y, 0, T, 6.0) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + rails + bosses + seats)
+    drawn = U([cyl(x, y, 0, T, FOOT_R) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + rails + bosses + seats)
     bores = [along(*keel_axis(sy), SK["off"], SK["off"] + SK["l"] + 1.0, SK["d"] / 2) for sy in (1, -1)]
-    tubes = [along(*keel_axis(sy), SK["off"] + SK["l"], 400.0, 3.5) for sy in (1, -1)]   # the keel tube past the socket mouth + 0.5
+    tubes = [along(*keel_axis(sy), SK["off"] + SK["l"] - 0.5, 400.0, 3.5) for sy in (1, -1)]   # the keel tube past the socket mouth + 0.5 (0.5 lead-in: no end slivers)
     ties = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))["links"]   # the cage's front core ties (parked body node)
     tie_cut = [man(trimesh.creation.cylinder(4.0, np.linalg.norm(np.subtract(b, a)), sections=24, segment=np.array([a, b], float)))
                for k, (a, b) in ties.items() if k.startswith("core tie front")]
     hub_env = box(80.0, 118.0, -20.0, 20.0, 0, 16.0)        # the keel front hub's room: gussets from each socket back to the feet and across
     cuts = U([cyl(x, y, -1, T + 1, INS[0] / 2) for x, y in feet] + tie_cut + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots + bores + tubes
              + [grown(f"arm {i}", 1.0) for i in (1, 2, 3, 4)]
-             + [box(56, 101, 20, 60, -1, 20), box(56, 101, -60, -20, -1, 20)])            # the arm session's front envelopes (27 Oct)
+             + [arm_env(a_) for a_ in (45, -45, 135, -135)])                                   # the arm session's root envelopes (u >= 58, |v| <= 21)
     env = U([box(-76, 100, -42, 42, 0, T), hub_env])
     return drawn, cuts, env, feet, ph
 
@@ -132,7 +139,7 @@ def hub_deck_bodies():
 def hub_deck_setup(h):
     drawn, cuts, env, feet, ph = hub_deck_bodies()
     p = Part("overseer_hub_deck", h, drawn, cuts, env, build="+z", material="PETG")
-    p.support("default", U([cyl(x, y, -0.5, 3.0, 6.5) for x, y in feet]))
+    p.support("default", U([cyl(x, y, -0.5, 3.0, FOOT_R + 0.5) for x, y in feet]))
     pi_c = M[PI_NM].centroid
     posts = [np.array([x, y, C["z_pi"]]) for x, y in ph]
     post_reg = [cyl(x, y, C["z_pi"] - 3.0, C["z_pi"] + 0.5, 4.0) for x, y in ph]

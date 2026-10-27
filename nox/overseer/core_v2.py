@@ -210,7 +210,7 @@ def keel_socket(sy, r, l0, l1):
 
 def hub_deck():
     """on the bottom plate: 6 feet (inserts, M3 up from under the plate), the Pi's 4 posts, the UBEC + buck bays, the keel front hub"""
-    feet = [cyl(6, 0, FOOT_H, x, y) for x, y in FEET_XY]
+    feet = [cyl(7, 0, FOOT_H, x, y) for x, y in FEET_XY]                                                          # Ø14 (hub deck v4: the gate's 2.0 round Ø4.0)
     px0, px1 = PI_HOLES[0][0], PI_HOLES[2][0]
     pip = [cyl(3.5, 0, Z_PI, x, y) for x, y in PI_HOLES]
     bars = [bar((-24.0, sy * 36.5), (px0, sy * 24.5), 6, 0, FLOOR_T) for sy in (1, -1)]                         # rear feet to the rear posts
