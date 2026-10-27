@@ -126,20 +126,20 @@
 |---|---|---|---|---|---|---|---|
 | V0 round 4 (tube 20, UBEC box full, block solid, foot 45, lower back 20) | 59.4 | 0.72 / 2.73 | 0.44 | 0.01 / 0.02 | no (0.44) | all but +x | 0.80 |
 | V1 tube 14 | 58.3 | 0.62 / 2.51 | 0.43 | 0.01 / 0.02 | no | all but +x | 0.80 |
-| V2 V1 + UBEC box 6 | 57.0 | 0.43 / 2.10 | 0.42 | 0.01 / 0.02 | no | all but +x | 0.80 |
-| V3 flanges only + box 6 | 56.5 | 0.44 / 1.98 | 0.72 | 0.08 / 0.12 | no | fails 14 / 14 | n/a |
+| V2 V1 + UBEC box 6 | 57.0 | 0.43 / 2.10 | 0.41 | 0.01 / 0.02 | no | all but +x | 0.80 |
+| V3 flanges only + box 6 | 56.5 | 0.44 / 1.98 | 0.71 | 0.08 / 0.12 | no | fails 14 / 14 | n/a |
 | V4 V2 + block 2.4 walls / 20 % | 51.8 | 0.46 / 1.72 | 0.27 | 0.01 / 0.02 | yes | all but ±x | 0.80 |
 | V5 V4 + foot to z 34 | 50.1 | 0.49 / 1.64 | 0.27 | 0.01 / 0.02 | yes | all but ±x | 0.83 |
 | V6 V5 + lower back 6 | 47.9 | 0.66 / 1.32 | 0.26 | 0.01 / 0.02 | yes | fails 7 / 14 | 0.94 |
-| V7 V3 + V6's lightening | 47.2 | 0.78 / 1.19 | 0.72 | 0.08 / 0.12 | no | fails all | n/a |
-| **V8 V5 + lower back 14 (picked)** | **49.2** | **0.56 / 1.49** | **0.26** | **0.01 / 0.02** | **yes** | **all but ±x** | 0.83 |
+| V7 V3 + V6's lightening | 47.2 | 0.78 / 1.19 | 0.73 | 0.08 / 0.12 | no | fails all | n/a |
+| **V8 V5 + lower back 14 (picked)** | **49.2** | **0.56 / 1.49** | **0.27** | **0.01 / 0.02** | **yes** | **all but ±x** | 0.83 |
 
 - **Pick rule:** pass L, its breaking order and balance; then the fewest cases where the yoke or block is not 1.5 times ahead of the carrier; then the lightest. That gives V8.
 - **Crash detail (V8):**
-  - Worst 0.26: the web arm at y −9, 35 g corner (−x −y −z).
+  - Worst 0.27: the web arm at y −9, 35 g corner (−x −y −z).
   - 35 g y: the fuse first (0.17) before the block (0.14) and the carrier (0.07).
   - 35 g −z: the block (0.10), carrier 0.05.
-- **L breaking order (cage first):** the mount's crash worst is 0.26 against the cage's 0.59 (the sized 6/4 cage's worst rod, frame model v2 `alt_sized`, F on E). 0.26 ≤ 0.59 / 1.5 = 0.39, so it holds.
+- **L breaking order (cage first):** the mount's crash worst is 0.27 against the cage's 0.59 (the sized 6/4 cage's worst rod, frame model v2 `alt_sized`, F on E). 0.27 ≤ 0.59 / 1.5 = 0.39, so it holds.
   - The cage nodes' index isn't computed yet, so this uses the worst member.
 - **Our own order (yoke or block before the carrier):** it holds in 12 of 14 crash cases.
   - It misses **pure ±x**: 35 g x is carrier 0.054 (spine at x −112) vs fuse 0.025 and block 0.022; 35 g −x is block 0.063 vs carrier 0.054.
@@ -154,7 +154,7 @@
   | Block, vertical | −42.5 | n/a | 5942 | n/a | n/a |
   | Block, lateral | −47.5 | n/a | 7601 | 2170 | n/a |
 
-- **First modes (E):** lateral 227 Hz, vertical 461 Hz. They come from the section EI and GJ from the plate bolts to the carried CG (62.4 g at x −108.4), PETG E 2000, rigid joints.
+- **First modes (E):** lateral 235 Hz, vertical 476 Hz. They come from the section EI and GJ from the plate bolts to the carried CG (62.4 g at x −106.8), PETG E 2000, rigid joints.
 
 ## Checks (A, v12 at catch −5.0, C)
 | Check | Result |
@@ -191,20 +191,20 @@
 5. **Scout layout, Radxa entry:** the mount's 4 posts land on the PCB back at y −1.6. The layout's Radxa box (±3.15) must take the 4 Ø8.4 back-side keep-outs this model cuts (`radxa_envelope()`, from the H STEP data, not measured), or the posts read 1.55 deep (269 mm³) in main's assembly.
 
 ## What the extra mass buys
-The mount is 49.2 g against the layout's 38.6 g placeholder (+10.6 g, E). Crash worst is 0.26 of 1.0, so strength isn't what sets it:
+The mount is 49.2 g against the layout's 38.6 g placeholder (+10.6 g, E). Crash worst is 0.27 of 1.0, so strength isn't what sets it:
 - the spine tube (14 tall) and the UBEC box keep the internal break order (fuse or block first) in 12 of 14 crash directions; the lighter flanges-only spine (V3 / V7) reaches 0.72 and loses the order;
 - the tail block is a printed root sized for the bolts' bosses (Ø10, wall 3.0) and the gusset bearing on the receiver;
 - the piece passes (topology on the same L loads) are where the grams come out, with the balance (0.56 / 1.49) and the order as constraints.
 
 ## Alternative B: A + a Ø6 strut to the tail point (−231.5, 0, 41.5), clip fuse
-- +4.3 g; modes 252 / 496 Hz against A's 227 / 461.
+- +4.3 g; modes 244 / 479 Hz against A's 235 / 476: almost no stiffness gained.
 - CG 0.79 / 2.91.
 - Its fit fails: it overlaps the cage node 71 mm³ and the carrier 18 mm³, and dips 5.0 under the funnel line.
 - **A picked.**
 
 ## Still open
 1. **Our own order in pure ±x:** the carrier's spine at x −112 is within 1.2 times of the block (indices ≤ 0.07). L orders the mount only against the cage, and the cage goes first by about 8 times, so this is a piece-pass constraint (DEFAULT): the carrier's piece pass keeps the spine section at x −112.4 (A 125, C) ≥ 1.5 times the block in ±x.
-4. **L breaking order is checked against the worst cage rod, not a node.** L asks the mount to stay ≤ 1/1.5 of the worst cage node or foot index. Node indices aren't computed yet, so the 0.59 used is the sized 6/4 cage's worst rod (F on E, a cage Spark has not decided). It needs a node or foot index ≥ 0.39 (= 0.26 x 1.5) when the frame model reports nodes.
+4. **L breaking order is checked against the worst cage rod, not a node.** L asks the mount to stay ≤ 1/1.5 of the worst cage node or foot index. Node indices aren't computed yet, so the 0.59 used is the sized 6/4 cage's worst rod (F on E, a cage Spark has not decided). It needs a node or foot index ≥ 0.41 (= 0.27 x 1.5) when the frame model reports nodes.
 5. **Plate keys have no practical margin:** 0.21 / 0.09 off the swept prop disks and 0.77 / 1.42 off the block's own fin and foot at the ball-end's 25° limit (C, reviewer's measure). Any hole tolerance uses that up. In practice turn the props off the line, or use a stubby key.
 2. **Requirements:** the belly mount's tail face and the 2 plate holes are open.
 3. **Measure first:** the UBEC, the plugs, and the microSD socket's width at the posts.

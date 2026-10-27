@@ -141,7 +141,7 @@ system_check Scout v3 with the tail electronics mount (system pass v2, round 5, 
     clearance tail carrier (PETG) / cage shell tubes: 16.64 mm (E) (min 2.0)
     clearance tail carrier (PETG) / cage shell nodes: 25.92 mm (E) (min 2.0)
     clearance tail carrier (PETG) / spokes, bay ties, core ties, camera guard: 36.81 mm (E) (min 2.0)
-    clearance tail carrier (PETG) / frame plate (Bee35 carbon): 2.18 mm (E) (min 2.0)
+    clearance tail carrier (PETG) / frame plate (Bee35 carbon): 2.08 mm (E) (min 2.0)
     clearance tail carrier (PETG) / prop 3: 12.91 mm (E) (min 2.0)
     clearance tail carrier (PETG) / prop 4: 5.08 mm (E) (min 2.0)
     clearance tail carrier (PETG) / mount + nose legs (Scout): 16.29 mm (E) (min 2.0)
