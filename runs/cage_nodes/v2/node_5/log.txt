@@ -72,3 +72,23 @@ it  17 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000
 it  17 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 61.2s
 it  18 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 66.5s
 it  18 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 66.5s
+it  19 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 57.6s
+it  19 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 57.6s
+it  20 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 59.5s
+it  20 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.495) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 59.5s
+it  21 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 55.0s
+it  21 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 55.0s
+it  22 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 62.4s
+it  22 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 62.4s
+it  23 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 61.8s
+it  23 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 61.8s
+it  24 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 68.3s
+it  24 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 68.3s
+it  25 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 62.8s
+it  25 beta    1 J  10.8198 vol 0.0168 (dil 0.0201 g +1.497) grey  6.6% ch 0.000 worst held b2 fz 9.29e+05 62.8s
+layout: beta 1 done: eroded design 6 bodies, main 36.7%; drawn bodies outside the main body: 5
+layout: beta 1 done: eroded design 6 bodies, main 36.7%; drawn bodies outside the main body: 5
+it  26 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 65.7s
+it  26 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 65.7s
+it  27 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 62.1s
+it  27 beta    2 J  10.8198 vol 0.0133 (dil 0.0237 g +0.991) grey  5.0% ch 0.000 worst held b2 fz 9.29e+05 62.1s
