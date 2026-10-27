@@ -3,7 +3,7 @@
  "version": "v1",
  "rod_od": 6.0,
  "bore": 6.2,
- "mass_mount_g": 21.26,
+ "mass_mount_g": 21.75,
  "mass_collar_g": 0.25,
  "bounds": [
   [
@@ -578,7 +578,7 @@
   "in_view_points": 0,
   "in_view_aperture": 0,
   "hood_lead_mm": 4.0,
-  "cone_margin_deg_point": 34.4,
+  "cone_margin_deg_point": 34.3,
   "cone_margin_deg_aperture": 29.9
  },
  "fit": {
@@ -590,22 +590,22 @@
    ],
    [
     "rod 15-16",
-    7.74
+    7.73
    ],
    [
     "rod 7-16",
-    8.45
+    8.46
    ],
    [
     "rod 8-16",
-    8.45
+    8.46
    ]
   ],
-  "node_clearance_min_mm": 5.45,
+  "node_clearance_min_mm": 5.46,
   "part_penetration_mm": {
    "prop_1.stl": -21.45,
-   "prop_2.stl": -21.09,
-   "spokes__bay_ties__core_ties__camera_guar.stl": -31.55
+   "prop_2.stl": -21.83,
+   "spokes__bay_ties__core_ties__camera_guar.stl": -31.59
   },
   "points_in_camera_box": 0
  },
@@ -615,10 +615,10 @@
   "allowed_mm": 0.25
  },
  "props": {
-  "prop_1": 23.1,
-  "prop_2": 21.3,
-  "prop_3": 122.6,
-  "prop_4": 121.6
+  "prop_1": 21.1,
+  "prop_2": 21.1,
+  "prop_3": 120.5,
+  "prop_4": 120.5
  },
  "frame": {
   "mode1_largest_motion_at": [
@@ -638,7 +638,7 @@
     42.0
    ],
    [
-    152.2,
+    152.1,
     0.0,
     42.9
    ],
@@ -649,17 +649,17 @@
    ],
    [
     133.9,
-    0.0,
+    -0.0,
     69.8
    ]
   ],
   "modes_hz": [
-   109.5,
-   163.8,
-   241.4,
-   333.5,
-   428.0,
-   556.7
+   109.3,
+   163.7,
+   241.3,
+   333.1,
+   425.9,
+   554.9
   ],
   "camera_share": [
    0.23,
@@ -677,16 +677,16 @@
    1.0,
    1.0
   ],
-  "first_camera_mode_hz": 428.0,
-  "body_mass_g": 31.3,
+  "first_camera_mode_hz": 425.9,
+  "body_mass_g": 31.8,
   "body_cg": [
    136.0,
-   -0.0,
+   0.0,
    41.7
   ],
   "cases": {
    "frontal hit 250 N on the hood centre (-x)": {
-    "petg_worst": "arm top chord +1",
+    "petg_worst": "arm top chord -1",
     "petg_sigma_MPa": 13.05,
     "carbon_worst": "saddle tie 4.1 m",
     "carbon_ratio": 0.297,
@@ -706,56 +706,56 @@
    "flight 4 g down (mount + camera)": {
     "petg_worst": "clip bottom -1",
     "petg_sigma_MPa": 0.08,
-    "carbon_worst": "saddle tie 4.1 m",
+    "carbon_worst": "saddle tie 4.1",
     "carbon_ratio": 0.004,
-    "clip_pull_N": 0.13,
+    "clip_pull_N": 0.14,
     "net_side_per_clip_N": 0.0,
     "lens_disp_mm": 0.021
    },
    "crash 35 g inertial +x (mount + camera)": {
-    "petg_worst": "arm top chord +1",
-    "petg_sigma_MPa": 0.55,
+    "petg_worst": "arm top chord -1",
+    "petg_sigma_MPa": 0.56,
     "carbon_worst": "saddle tie 4.1 m",
     "carbon_ratio": 0.013,
-    "clip_pull_N": 2.91,
+    "clip_pull_N": 2.95,
     "net_side_per_clip_N": 0.0,
-    "lens_disp_mm": 0.1
+    "lens_disp_mm": 0.101
    },
    "crash 35 g inertial -x (mount + camera)": {
-    "petg_worst": "arm top chord +1",
-    "petg_sigma_MPa": 0.55,
+    "petg_worst": "arm top chord -1",
+    "petg_sigma_MPa": 0.56,
     "carbon_worst": "saddle tie 4.1 m",
     "carbon_ratio": 0.013,
     "clip_pull_N": 0.0,
     "net_side_per_clip_N": 0.0,
-    "lens_disp_mm": 0.1
+    "lens_disp_mm": 0.101
    },
    "crash 35 g inertial +y (mount + camera)": {
     "petg_worst": "knee inner chord +1",
-    "petg_sigma_MPa": 1.53,
-    "carbon_worst": "saddle tie 4.1",
+    "petg_sigma_MPa": 1.56,
+    "carbon_worst": "saddle tie 4.1 m",
     "carbon_ratio": 0.009,
-    "clip_pull_N": 3.52,
-    "net_side_per_clip_N": 2.68,
-    "lens_disp_mm": 0.048
+    "clip_pull_N": 3.57,
+    "net_side_per_clip_N": 2.73,
+    "lens_disp_mm": 0.049
    },
    "crash 35 g inertial -z (mount + camera)": {
     "petg_worst": "clip bottom -1",
-    "petg_sigma_MPa": 0.67,
-    "carbon_worst": "saddle tie 4.1 m",
-    "carbon_ratio": 0.032,
-    "clip_pull_N": 1.18,
+    "petg_sigma_MPa": 0.68,
+    "carbon_worst": "saddle tie 4.1",
+    "carbon_ratio": 0.033,
+    "clip_pull_N": 1.19,
     "net_side_per_clip_N": 0.0,
-    "lens_disp_mm": 0.184
+    "lens_disp_mm": 0.187
    },
    "crash 35 g inertial +z (mount + camera)": {
     "petg_worst": "clip bottom -1",
-    "petg_sigma_MPa": 0.67,
-    "carbon_worst": "saddle tie 4.1 m",
-    "carbon_ratio": 0.032,
-    "clip_pull_N": 1.18,
+    "petg_sigma_MPa": 0.68,
+    "carbon_worst": "saddle tie 4.1",
+    "carbon_ratio": 0.033,
+    "clip_pull_N": 1.19,
     "net_side_per_clip_N": 0.0,
-    "lens_disp_mm": 0.184
+    "lens_disp_mm": 0.187
    }
   },
   "breaking_order": {
@@ -808,11 +808,11 @@
     ],
     [
      298.0,
-     "saddle tie 4.1 m (carbon)"
+     "saddle tie 4.1 (carbon)"
     ],
     [
      298.0,
-     "saddle tie 4.1 (carbon)"
+     "saddle tie 4.1 m (carbon)"
     ]
    ],
    "down -z": [
@@ -822,44 +822,44 @@
     ],
     [
      298.0,
-     "saddle tie 4.1 m (carbon)"
+     "saddle tie 4.1 (carbon)"
     ],
     [
      298.0,
-     "saddle tie 4.1 (carbon)"
+     "saddle tie 4.1 m (carbon)"
     ]
    ]
   }
  },
  "frame_soft_clips": {
   "modes_hz": [
-   109.4,
-   163.4,
-   240.6,
-   330.2,
-   408.6,
-   479.6
+   109.2,
+   163.3,
+   240.5,
+   329.7,
+   406.7,
+   477.1
   ],
   "camera_share": [
    0.23,
    0.08,
    0.06,
-   0.23,
+   0.24,
    0.65,
    0.72
   ]
  },
  "frame_chords_high": {
   "modes_hz": [
-   109.6,
-   164.0,
+   109.5,
+   163.9,
    241.9,
-   334.3,
-   440.4,
-   589.7
+   333.8,
+   438.3,
+   588.6
   ],
   "camera_share": [
-   0.22,
+   0.23,
    0.07,
    0.05,
    0.18,

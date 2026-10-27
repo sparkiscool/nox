@@ -189,9 +189,9 @@ ul {{ margin: 0; padding-left: 18px; display: grid; gap: 4px; max-width: 75ch; }
   <div class="plate">
     <h2>What it is</h2>
     <ul>
-      <li>Chamfered box frame round the camera, 0.5 clear at the sides, lips 6 above and below, all behind the lens. The board sits on 4 M2.5 heat-set bosses (28 × 28) with 1.0 TPU washers.</li>
+      <li>Chamfered box frame round the camera, 0.5 clear at the sides, lips 6 above and below, all behind the lens. The board sits on 4 M2.5 heat-set bosses (28 × 28, Ø12 pads with a 2.0 web) on bought M2.5 nylon washers, 1.0 thick (E).</li>
       <li>Lens hood: the frame runs on to x 153, {V['hood_lead_mm']:.1f} ahead of the lens. A flat hit lands on its front land and goes back through the cradle.</li>
-      <li>Faces are chevron trusses, the back is an X frame through the bosses, arms and knees are flanged webs in the cheek plane. Every visible face is planar and chamfered.</li>
+      <li>Faces are chevron trusses, the back is an X frame through the bosses, arms and knees are flanged webs in the cheek plane. Every visible face is planar and chamfered: drawn for the look Spark asked for, a topology pass on the hidden web is the v2 option.</li>
       <li>4 octagon C-clips, bore {R['bore']:.1f}, mouth {S['mouth_mm']:.1f}, fingers {S['t_f']:.1f}, {S['L']:.0f} long, mouths facing into the cage. Grip ribs hold the tube against rattle and slide. Two CA'd stop collars on rod 14-15 fix y.</li>
     </ul>
   </div>

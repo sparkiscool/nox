@@ -51,7 +51,7 @@ CAM_BOX = ((135.0, 149.0), (-19.0, 19.0), (23.0, 61.0)) # camera envelope 38 x 3
 CAM_G = 10.0                                            # camera mass, E (layout; Q3 not measured)
 BOARD_HOLES = [(sy * 14.0, 42.0 + sz * 14.0) for sy in (1, -1) for sz in (1, -1)]   # M2.5 on 28 x 28, P
 INSERT_HOLE, INSERT_L = 3.2, 5.7                        # M2.5 heat-set insert hole and length, E (dimensions.md M)
-WASHER = 1.0                                            # TPU board washer (DEFAULT, layout), E
+WASHER = 1.0                                            # bought M2.5 nylon washer under the board, E (no printed TPU: nothing printed under 2.0)
 
 # ---------------------------------------------------------------- design numbers (C unless tagged)
 X_BACK, X_FRAME, X_BOSS, X_HOOD = 128.0, 131.0, 134.0, 153.0   # back face, back frame front, boss face (+ washer = board 135), hood front
@@ -63,7 +63,8 @@ HOOD_CH, HOOD_FLARE = 1.2, 0.8                          # hood front outer chamf
 LONG = 4.0                                              # longeron strip left at each face edge
 RIB = 3.5                                               # truss rib width
 XBAR, BORDER = 5.0, 4.0                                 # back frame X bars, border
-BOSS_D = INSERT_HOLE + 2 * 3.0                          # boss wall 3 round the insert hole (attachments rule)
+BOSS_D = INSERT_HOLE + 2 * 3.0                          # boss body: wall 3 round the insert hole (attachments rule)
+PAD_D, PAD_T = 12.0, 2.0                                # board pad flange at the seat face: Ø12 across flats, 2.0 web (pad rule)
 ARM = float(os.environ.get("SCM_ARM", 7.0))             # arm octagon across flats (>= 6 x 6 post rule)
 BRACE = 6.0                                             # (v1 draft: brace octagon; now the truss chords)
 WEB, FLANGE, FT = 3.0, 8.0, 3.0                         # truss web thickness, chord flange width and thickness
@@ -247,7 +248,7 @@ def build(t_f, snap, CLIP_L):
         plate = plate - prism(w, "yz", X_BACK - 0.5, X_FRAME + 0.5)
     body = body + plate
     for (y, z) in BOARD_HOLES:
-        body = body + prism(octagon(BOSS_D / 2, y, z), "yz", X_BACK, X_BOSS)
+        body = body + prism(octagon(BOSS_D / 2, y, z), "yz", X_BACK, X_BOSS) + prism(octagon(PAD_D / 2, y, z), "yz", X_BOSS - PAD_T, X_BOSS)
     # arms and knees (+y; mirrored): flanged web trusses (a WEB thick plate in the clip's x-z plane, a window, FLANGE wide
     # chords), from the clip's back flat (the neck: the finger roots at +-22.5 deg) into the back frame / the bottom wall
     xt, yt, zt = CLIP_TOP; xb_, yb_, zb_ = CLIP_BOT
@@ -559,8 +560,7 @@ def system_recheck(mesh, cmesh, g_mount, g_col):
     for x, y, t in a["contact_pairs"]:
         if x in old - {"camera cradle (printed)"} or y in old - {"camera cradle (printed)"}: continue
         cp.append([("camera mount (printed)" if v == "camera cradle (printed)" else v) for v in (x, y)] + [t])
-    for nm in ("camera mount (printed)", "camera mount stop collar +y", "camera mount stop collar -y"):
-        cp.append([nm, "cage shell tubes", 1e9])                         # the clips and collars grip the tubes (drawn 3.0 in the layout)
+    # no contact pairs for the tubes: the layout draws them 3.0 (r 1.5), inside the 6.2 bores, so the fit check sees any real touch
     a["parts"], a["contact_pairs"] = parts, cp
     a["note"] = "v12 Scout manifest with the camera mount v1 (runs/scout_camera_mount/v1) in place of the layout's cradle, arms and clips. " + a["note"]
     man = os.path.join(OUT, "scout_with_mount.assembly.json"); json.dump(a, open(man, "w"), indent=1)

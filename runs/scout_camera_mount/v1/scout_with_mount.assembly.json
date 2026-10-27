@@ -935,21 +935,6 @@
    "tail bay mount block (Scout electronics, E)",
    "camera",
    1000000000.0
-  ],
-  [
-   "camera mount (printed)",
-   "cage shell tubes",
-   1000000000.0
-  ],
-  [
-   "camera mount stop collar +y",
-   "cage shell tubes",
-   1000000000.0
-  ],
-  [
-   "camera mount stop collar -y",
-   "cage shell tubes",
-   1000000000.0
   ]
  ],
  "guard_offsets": {
@@ -1636,7 +1621,7 @@
    "role": "cage",
    "mesh": "runs/scout_camera_mount/v1/camera_mount_assembled.stl",
    "material": "PETG",
-   "mass_g": 21.26,
+   "mass_g": 21.75,
    "tag": "M",
    "owner": "scout camera mount",
    "version": "v1",

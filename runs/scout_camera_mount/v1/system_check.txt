@@ -31,9 +31,6 @@ system_check Scout v3: PASS
     cage shell tubes / tail bay mount block (Scout electronics, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     cage shell tubes / tail bay carrier (Scout electronics, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     cage shell tubes / tail bay cables (Scout electronics, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    cage shell tubes / camera mount (printed): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    cage shell tubes / camera mount stop collar +y: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    cage shell tubes / camera mount stop collar -y: 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     cage shell nodes / spokes, bay ties, core ties, camera guard: 304.9 mm³ (E) limit 1000000000.0 contact [manifold3d]
     cage shell nodes / tail bay mount block (Scout electronics, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     cage shell nodes / tail bay carrier (Scout electronics, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -191,7 +188,7 @@ system_check Scout v3: PASS
     tail bay cables (Scout electronics, E) / wires: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     tail bay cables (Scout electronics, E) / camera mount (printed): 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     camera / camera mount (printed): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-  mass 734.79 g (E), CG [1.79, 0.25, 2.78], offset [1.79, 0.25, -38.42] = 38.46 mm from [0.0, 0.0, 41.2]
+  mass 735.28 g (E), CG [1.88, 0.25, 2.81], offset [1.88, 0.25, -38.39] = 38.44 mm from [0.0, 0.0, 41.2]
     cage shell tubes: 67.48 g (E) at [0.18, 0.0, 15.07]
     cage shell nodes: 39.0 g (E) at [13.94, 0.0, -5.55]
     spokes, bay ties, core ties, camera guard: 8.45 g (C) at [20.58, 0.0, 1.89]
@@ -229,15 +226,15 @@ system_check Scout v3: PASS
     camera: 10.0 g (E) at [142.0, 0.0, 42.0]
     tie saddle (printed): 17.01 g (E) at [-3.46, -0.0, -2.25]
     wires: 20.0 g (E) at [6.9, 0.0, 13.5]
-    camera mount (printed): 21.26 g (M) at [133.24, -0.0, 41.54]
+    camera mount (printed): 21.75 g (M) at [133.23, 0.0, 41.55]
     camera mount stop collar +y: 0.25 g (M) at [124.17, 25.3, 11.5]
     camera mount stop collar -y: 0.25 g (M) at [124.17, -25.3, 11.5]
   balance PASS (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
-    all: 1.81 mm horizontal, -38.42 mm axial, 734.79 g
-    no_swap: 0.69 mm horizontal, -29.54 mm axial, 519.29 g
-  mass budget (soft): 734.79 g of 500.0 g (147.0 %)
-WARN  over budget: total 734.79 of 500.0 g (147.0 %)
-  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 258939 surface points):
+    all: 1.9 mm horizontal, -38.39 mm axial, 735.28 g
+    no_swap: 0.8 mm horizontal, -29.51 mm axial, 519.78 g
+  mass budget (soft): 735.28 g of 500.0 g (147.1 %)
+WARN  over budget: total 735.28 of 500.0 g (147.1 %)
+  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 259816 surface points):
     edge / UBEC: 7.2 mm (E) from (-0.53, +0.03, -0.85), axis [-0.385, -0.899, 0.211], roll 150.0, lateral -112.4 mm, contact [-171.1, 23.7, 16.0]
     post r10 / UBEC: 7.81 mm (E) from (-0.32, -0.09, -0.94), axis [-0.385, -0.899, 0.211], roll 165.0, lateral -127.4 mm, contact [-171.1, 24.7, 16.0]
     edge / cartridge v6 (latch): 8.49 mm (E) from (+0.13, -0.70, -0.71), axis [0.984, 0.176, 0.005], roll 135.0, lateral 15.1 mm, contact [21.8, -18.5, -44.5]
@@ -287,4 +284,4 @@ WARN  over budget: total 734.79 of 500.0 g (147.0 %)
     M3 key, receiver bolt (+48.2, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, receiver bolt (+48.2, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     FC USB-C cable (12 x 7, searched path, E) (FC, type box, w 12, h 7, w_axis [0.7496, -0.6618, 0.0], 250 mm along [-0.6618, -0.7496, 0.0083]): 0.0 mm³ (E)
-System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.8 mm off thrust axis (E) [+1.8, +0.2, -38.4], 0.7 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear
+System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [+1.9, +0.2, -38.4], 0.8 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear

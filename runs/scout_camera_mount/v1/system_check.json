@@ -395,33 +395,6 @@
     "pass_": true
    },
    {
-    "a": "cage shell tubes",
-    "b": "camera mount (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "camera mount stop collar +y",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "camera mount stop collar -y",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
     "a": "cage shell nodes",
     "b": "spokes, bay ties, core ties, camera guard",
     "overlap_mm3": 304.9,
@@ -1838,11 +1811,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 734.79,
+  "mass_g": 735.28,
   "cg": [
-   1.79,
+   1.88,
    0.25,
-   2.78
+   2.81
   ],
   "parts": [
    {
@@ -2254,11 +2227,11 @@
    },
    {
     "name": "camera mount (printed)",
-    "mass_g": 21.26,
+    "mass_g": 21.75,
     "cg": [
-     133.24,
-     -0.0,
-     41.54
+     133.23,
+     0.0,
+     41.55
     ],
     "tag": "M",
     "swap": false
@@ -2293,11 +2266,11 @@
    41.2
   ],
   "cg_offset": [
-   1.79,
+   1.88,
    0.25,
-   -38.42
+   -38.39
   ],
-  "cg_offset_mm": 38.46
+  "cg_offset_mm": 38.44
  },
  "balance": {
   "applies": true,
@@ -2314,32 +2287,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 734.79,
+    "mass_g": 735.28,
     "cg_offset": [
-     1.79,
+     1.88,
      0.25,
-     -38.42
+     -38.39
     ],
-    "horizontal_mm": 1.81,
-    "axial_mm": -38.42,
+    "horizontal_mm": 1.9,
+    "axial_mm": -38.39,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 519.29,
+    "mass_g": 519.78,
     "cg_offset": [
-     0.59,
+     0.72,
      0.35,
-     -29.54
+     -29.51
     ],
-    "horizontal_mm": 0.69,
-    "axial_mm": -29.54,
+    "horizontal_mm": 0.8,
+    "axial_mm": -29.51,
     "pass_": true,
     "gated": true
    }
   },
   "worst_case": "all",
-  "worst_horizontal_mm": 1.81,
+  "worst_horizontal_mm": 1.9,
   "pass_": true
  },
  "probes": {
@@ -3423,7 +3396,7 @@
    0.0,
    10.0
   ],
-  "n_points": 258939
+  "n_points": 259816
  },
  "access": {
   "applies": true,
@@ -3600,16 +3573,16 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 734.79,
+  "mass_g": 735.28,
   "part_budgets_g": {},
   "over_parts": [],
   "budget_g": 500.0,
-  "pct": 147.0,
+  "pct": 147.1,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.8 mm off thrust axis (E) [+1.8, +0.2, -38.4], 0.7 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear",
+ "summary": "System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [+1.9, +0.2, -38.4], 0.8 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear",
  "pass": true
 }
