@@ -122,3 +122,31 @@ it  47 beta    4 J   0.1613 vol 0.0343 (dil 0.0623 g -0.007) grey  4.2% ch 0.100
 it  47 beta    4 J   0.1613 vol 0.0343 (dil 0.0623 g -0.007) grey  4.2% ch 0.100 worst guard hit 4 2.08e+03 9.2s
 it  48 beta    4 J   0.1603 vol 0.0341 (dil 0.0619 g -0.013) grey  4.2% ch 0.100 worst guard hit 4 2.08e+03 10.0s
 it  48 beta    4 J   0.1603 vol 0.0341 (dil 0.0619 g -0.013) grey  4.2% ch 0.100 worst guard hit 4 2.08e+03 10.0s
+it  49 beta    4 J   0.1584 vol 0.0344 (dil 0.0622 g -0.009) grey  4.1% ch 0.100 worst guard hit 4 2.07e+03 12.6s
+it  49 beta    4 J   0.1584 vol 0.0344 (dil 0.0622 g -0.009) grey  4.1% ch 0.100 worst guard hit 4 2.07e+03 12.6s
+layout: stopped (beta_stop) at it 49, beta 4, 589 s
+layout: stopped (beta_stop) at it 49, beta 4, 589 s
+layout: beta 4 done: eroded design 53 bodies, main 83.0%; drawn bodies outside the main body: 51
+layout: beta 4 done: eroded design 53 bodies, main 83.0%; drawn bodies outside the main body: 51
+coarse stage done: 49 iterations, 612 s, peak 1.87934 GB
+coarse stage done: 49 iterations, 612 s, peak 1.87934 GB
+head: grid (40, 96, 96) h 2.0 = 368,640 cells; design 166,442 (1331.5 cm3), drawn 10,825, void 191,373
+  support frame: 1000 cells, 2469 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (54.98 cm3); 31.62 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (54.98 cm3); 31.62 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.042 of 170,395 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.042 of 170,395 design cells
+layout: WARNING nearly mirrored in y (1.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (1.8% of passive cells differ): no symmetry
+layout: 12 drawn bodies (6,872 cells), held solid in every realization; eroded filter: masked
+layout: 12 drawn bodies (6,872 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (540 cells) count by their cover; 3 bodies tied to body 2
+layout: gate ties: held bodies thinner than 2.0 mm (540 cells) count by their cover; 3 bodies tied to body 2
+layout: 27 load cases + 24 tie cases (4 bodies tied, 6 held by support 'frame') + 18 gate ties + 36 held ties
+layout: 27 load cases + 24 tie cases (4 bodies tied, 6 held by support 'frame') + 18 gate ties + 36 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (40, 96, 96) = 368,640 elements, 588,348 active dofs; backend mg (direct estimate 8.6 GB, budget 11.8 GB)
+fem: grid (40, 96, 96) = 368,640 elements, 588,348 active dofs; backend mg (direct estimate 8.6 GB, budget 11.8 GB)
+fem: multigrid 3 levels [(np.int64(40), np.int64(96), np.int64(96)), (np.int64(20), np.int64(48), np.int64(48)), (np.int64(10), np.int64(24), np.int64(24))], coarsest 20,625 dofs (direct)
+fem: multigrid 3 levels [(np.int64(40), np.int64(96), np.int64(96)), (np.int64(20), np.int64(48), np.int64(48)), (np.int64(10), np.int64(24), np.int64(24))], coarsest 20,625 dofs (direct)
