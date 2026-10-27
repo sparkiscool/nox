@@ -88,6 +88,23 @@ E_PETG = 2780.0                       # MPa, nox/topo/material.py
 # >= 17 from the axis in plan, C); the 2 L2 braces end inside the front beam (z 30 / 39) so the top stays flat for the bed.
 TUBE_BORE, TUBE_DEPTH, TUBE_LEAD, TUBE_WALL = 6.2, 15.0, 0.6, 2.5
 SPOKE_NODE = {"front": (178.9, 146.7, 8.0), "rear": (-53.3, 119.7, 25.0)}   # left arm, drone frame (C, searched)
+
+
+def _spoke_nodes_from_layout():
+    """layout v5 after the cage's 27 Oct rebalance: each arm's spokes start at its node (the end the 3 spokes share);
+    older layouts started them at the motor (y 139.5) and keep SPOKE_NODE above"""
+    try:
+        links = json.load(open(os.path.join(LAYOUT, "result.json")))["links"]
+    except (OSError, KeyError, ValueError):
+        return
+    for which, tag in (("front", "1"), ("rear", "2")):
+        ends = [tuple(np.round(e, 2)) for k, v in links.items() if k.startswith(f"spoke {tag}.") for e in v]
+        common = [e for e in set(ends) if ends.count(e) >= 3]
+        if len(common) == 1 and abs(common[0][1]) != 139.5:
+            SPOKE_NODE[which] = tuple(float(c) for c in common[0])
+
+
+_spoke_nodes_from_layout()
 BRACE_END = {"front": [("L2 brace lo +1", (72.95, 62.11, 30.0)), ("L2 brace hi +1", (72.95, 62.11, 39.0))]}
 if os.environ.get("NOX_ARM_BRACES", "1") == "0":   # v5b: the L2 braces root on a top-plate block (cage session 27 Oct), not the arm
     BRACE_END = {}
@@ -364,7 +381,7 @@ def bodies(which):
         for k in sorted(res):
             if k.startswith(f"spoke {tag}."):
                 p_, q_ = map(np.array, res[k])
-                far = q_ if abs(p_[1]) == 139.5 else p_
+                far = q_ if np.linalg.norm(q_ - node) > np.linalg.norm(p_ - node) else p_   # the end away from the node
                 ends.append((k, node, far))
         for k, e in BRACE_END.get(which, []):
             p_, q_ = map(np.array, res[k])

@@ -1,0 +1,322 @@
+{
+ "rods": [
+  {
+   "rod": 0,
+   "length_mm": 146.2,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 0,
+   "collars": 0,
+   "ok": true
+  },
+  {
+   "rod": 1,
+   "length_mm": 146.2,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    0.83
+   ],
+   "bonded_mm": 0,
+   "collars": 0,
+   "ok": true
+  },
+  {
+   "rod": 2,
+   "length_mm": 146.2,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 0,
+   "collars": 0,
+   "ok": true
+  },
+  {
+   "rod": 3,
+   "length_mm": 146.2,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    0.99,
+    1.0
+   ],
+   "bonded_mm": 0,
+   "collars": 0,
+   "ok": true
+  },
+  {
+   "rod": "diag side+ 0",
+   "length_mm": 50.7,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 51,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag side+ 1",
+   "length_mm": 50.7,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 51,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag side+ 2",
+   "length_mm": 50.7,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 51,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag side- 0",
+   "length_mm": 50.7,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 51,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag side- 1",
+   "length_mm": 50.7,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 51,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag side- 2",
+   "length_mm": 50.7,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 51,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag top 0",
+   "length_mm": 71.1,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 71,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag top 1",
+   "length_mm": 59.9,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 60,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag top 2",
+   "length_mm": 50.4,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 50,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag bottom 0",
+   "length_mm": 71.1,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 71,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag bottom 1",
+   "length_mm": 59.9,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 60,
+   "collars": 1,
+   "ok": true
+  },
+  {
+   "rod": "diag bottom 2",
+   "length_mm": 50.4,
+   "bore_blocked_mm3": 0.0,
+   "socket_grip": [
+    1.0,
+    1.0
+   ],
+   "bonded_mm": 50,
+   "collars": 1,
+   "ok": true
+  }
+ ],
+ "geometry": {
+  "ok": true,
+  "diagonals": [
+   {
+    "diag": "diag side+ 0",
+    "length_mm": 50.7,
+    "exit_mm": 12.0,
+    "web_to_nearest_mm": 2.3,
+    "nearest": "chord 1",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag side+ 1",
+    "length_mm": 50.7,
+    "exit_mm": 12.0,
+    "web_to_nearest_mm": 3.08,
+    "nearest": "chord 1",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag side+ 2",
+    "length_mm": 50.7,
+    "exit_mm": 12.0,
+    "web_to_nearest_mm": 2.3,
+    "nearest": "chord 1",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag side- 0",
+    "length_mm": 50.7,
+    "exit_mm": 12.0,
+    "web_to_nearest_mm": 3.08,
+    "nearest": "chord 3",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag side- 1",
+    "length_mm": 50.7,
+    "exit_mm": 12.0,
+    "web_to_nearest_mm": 2.3,
+    "nearest": "chord 3",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag side- 2",
+    "length_mm": 50.7,
+    "exit_mm": 12.0,
+    "web_to_nearest_mm": 3.08,
+    "nearest": "chord 3",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag top 0",
+    "length_mm": 71.1,
+    "exit_mm": 11.0,
+    "web_to_nearest_mm": 4.09,
+    "nearest": "chord 2",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag top 1",
+    "length_mm": 59.9,
+    "exit_mm": 16.0,
+    "web_to_nearest_mm": 2.3,
+    "nearest": "chord 2",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag top 2",
+    "length_mm": 50.4,
+    "exit_mm": 22.5,
+    "web_to_nearest_mm": 3.45,
+    "nearest": "chord 2",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag bottom 0",
+    "length_mm": 71.1,
+    "exit_mm": 8.0,
+    "web_to_nearest_mm": 2.3,
+    "nearest": "chord 3",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag bottom 1",
+    "length_mm": 59.9,
+    "exit_mm": 16.0,
+    "web_to_nearest_mm": 3.84,
+    "nearest": "chord 3",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   },
+   {
+    "diag": "diag bottom 2",
+    "length_mm": 50.4,
+    "exit_mm": 22.5,
+    "web_to_nearest_mm": 2.3,
+    "nearest": "chord 3",
+    "hits_pad_pocket_slots_sockets_mm3": 0.0,
+    "hits_root_pads_mm3": 0.0,
+    "ok": true
+   }
+  ]
+ },
+ "ok": true
+}
