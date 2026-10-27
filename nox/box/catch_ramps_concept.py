@@ -162,7 +162,7 @@ SCOUT_REF = os.environ.get("SCOUT_REF", "dea0b51")             # Scout v3 layout
 SCOUT_DIR = "runs/scout_layout/v11"
 SCOUT_CATCH_X, SCOUT_PLANE_Z = -3.5, -49.62                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
 SCOUT_PLANE_FIX = -49.62                                         # the plane that seats its r 1.5 ring like the Overseer's r 3 (cartridge -3 -2.12; asked of the Scout session)
-OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
+OVR_REF = os.environ.get("OVR_REF", "dea0b51")                   # Overseer cage v5 (PR 122 merged to main; loop as confirmed 27 Oct)
 OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
 
 def git_bytes(ref, path):
