@@ -1,6 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
-- 27 Oct (Scout v3, Spark): bottom on the Overseer v5 loop's 4 side nodes, plane 2.12 lower so both cartridges stop alike; links out of the funnel band; no rods on the carbon arms, 8 ties from receiver bosses to a new waist pair: 52 rods, 664 g E, CG 2.5/1.0. `runs/scout_layout/v10/`
+- 27 Oct (Scout v3, Spark): bottom on Overseer v5 loop's side nodes, plane 2.12 lower; links out of funnel band; no rods on carbon arms: 6 ties from a printed tie saddle by the receiver (DEFAULT reading of "cartridge"; alt core ties on plate edges 42 rods 651 g); 50 rods, 679 g E, CG 2.4/0.9. `runs/scout_layout/v10/`
 - 27 Oct (Scout v3, Spark): the Scout = race-car cage: 54 x 3.0 rods (was 123), flat roof, raked front, tail point, no small triangles; bottom = Overseer ring's middle rectangle (+13.7/+21.6 ends, was +30); camera close in, PETG cradle snap-clipped onto cage rods after the build; DEFAULT tail bay; CG 2.3/1.0; 662 g E. Rule: CLAUDE.md, generative 0, precheck 13. `runs/scout_layout/v9/`
 - 27 Oct (Scout electronics mount, Spark): list confirmed (FC AIO, XR2, MTF-02P, Radxa + microSD, UBEC, camera, wiring); no lights; battery side (pack, XT60, cap, pads, diode) left out of the mount. `scout/v3/README.md`, `scout/scout.md`
 - 27 Oct (Overseer core, Spark: "do we really need that many"): 4 plate bolts, not 6 ((24, ±36.5), (-65, ±22.5)): 193 N a bolt in the 35 g crash vs 137 (E); coupons 16.0 / 28.1 g, solid PASS. `runs/overseer_core/v1/`

@@ -39,6 +39,9 @@ SEAT_DZ = float(os.environ.get("SCOUT_SEAT_DZ", (OV_ROD_R - 1.5) * math.sqrt(2))
                                                            # sits r·√2 above a 45 deg ramp face, 2.12 lower than the 6 mm tube, so the cartridges
                                                            # stop at the same height (DEFAULT 27 Oct, design center; alt: 6 mm ring tubes)
 USB_FIRST = RING_MODE != "v5side"                          # v5side: the links first (the rear spokes need the tail-left side), then the USB path
+SADDLE_X = (-45.0, -15.0, 15.0, 38.0)                     # tie saddle (printed PETG, DEFAULT 27 Oct): a rail a side outside the belly mount and the
+SADDLE_Y = (36.3, 42.3)                                    # receiver's TPU end pieces (y 36.3..42.3, x -50..42, z -15..6), 2 tabs a side up to the
+SADDLE_Z = (-15.0, 6.0)                                    # plate underside between the arms (x ±14..26, 4 M3 into the plate); tie roots on its face
 FUNNEL_BAND = 30.0                                         # nothing but the ring rods within this height above the plane, outside the swap column (funnel ramps)
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v10", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
@@ -69,9 +72,11 @@ NDIR = int(os.environ.get("SCOUT_NDIR", 6))
 # race pattern anchors (fractions of the target's half length about its centre, of its half width, of its height above the bottom):
 # nose point, shoulders, mid sides, haunches, roof front, roof rear, tail point (Spark 27 Oct, the race-car look)
 RACE_ANCHORS = [(1.08, 0.0, 0.38), (0.72, 1.0, 0.62), (0.0, 1.06, 0.72), (-0.72, 1.0, 0.66), (0.42, 0.62, 1.0), (-0.42, 0.62, 1.0), (-1.1, 0.0, 0.8)]
-SHELL_CAP = int(os.environ.get("SCOUT_SHELL_CAP", 52))     # shell rods allowed: 62 minus the 10 lean links (spokes, bay ties; the camera is on printed arms), about half of cage v1's 123 (Spark 27 Oct)
+SHELL_CAP = int(os.environ.get("SCOUT_SHELL_CAP", 52))     # shell rods allowed: 62 minus about 10 links (the cage ties; the camera is on printed arms), about half of cage v1's 123 (Spark 27 Oct)
 OFFSETS = [float(x) for x in os.environ.get("SCOUT_OFFSETS", "16,20,24,28,32").split(",")]   # free pattern corner offsets scanned
 NFREE = int(os.environ.get("SCOUT_NFREE", 9))              # free shell nodes kept (Spark 27 Oct: half the rods; 0 = all of the geodesic)
+TIES = os.environ.get("SCOUT_TIES", "saddle")             # saddle: the cage ties root on a printed PETG tie saddle beside the receiver, bolted to the
+                                                           # plate (review 27 Oct: the replaceable part, not the latch); core: on the plate underside edges
 ARM_SPOKES = os.environ.get("SCOUT_ARM_SPOKES", "0") == "1"   # spokes from under the motors: off (Spark 27 Oct: the arms are just carbon fibre; the
                                                            # cage ties to the receiver on the underside instead)
 LEAN = os.environ.get("SCOUT_LEAN", "1") == "1"            # links: the essential set only (Spark 27 Oct: half the rods)
@@ -419,8 +424,8 @@ def shell(START, DOME, SNAP=False):
         C = behind(np.vstack([RING, Kd[Kd[:, 2] > Z_O + 1.0]]))[nR:]
         C[np.abs(C[:, 1]) < 3.0, 1] = 0.0
         sel = [C[int(np.argmax(C[:, 2] - 0.01 * np.abs(C[:, 1])))] * [1, 0, 1]]           # the top, on the centre plane
-        if not ARM_SPOKES:                                    # a waist pair at mid-side, over the catch, just above the funnel band: the
-            w_ = np.array([TAB_X, float(np.abs(RING[:, 1]).max()), Z_O + FUNNEL_BAND + 10.0])   # receiver ties land there (the arms carry none)
+        if not ARM_SPOKES and TIES == "saddle":               # a waist pair at mid-side, over the catch, just above the funnel band: the
+            w_ = np.array([TAB_X, float(np.abs(RING[:, 1]).max()), Z_O + FUNNEL_BAND + 10.0])   # saddle ties land there (the arms carry none)
             sel += [w_, w_ * mir]
         for _ in range(60):
             h_ = ConvexHull(np.vstack([RING, sel]), qhull_options="QJ")
@@ -748,8 +753,21 @@ def _closest(q, a, b):
     u = b - a; return a + np.clip(((q - a) @ u) / (u @ u), 0, 1) * u
 
 
+def tie_saddle():
+    ms = []
+    for sy in (1, -1):
+        y0, y1 = (SADDLE_Y if sy > 0 else (-SADDLE_Y[1], -SADDLE_Y[0]))
+        ms.append(box(-50.0, 42.0, y0, y1, SADDLE_Z[0], SADDLE_Z[1]))
+        for xa, xb in ((-26.0, -14.0), (14.0, 26.0)):
+            ms.append(box(xa, xb, y0, y1, SADDLE_Z[1], 18.5))
+    m = trimesh.util.concatenate(ms)
+    D["tie saddle (printed)"] = (m, "cage", False, sum(abs(m_.volume) for m_ in ms) * 1.27e-3 * 0.5, "E", "PETG", "printed", "#7d8a99", False)
+
+
 def attach(nodes, ring_ids, E=()):
     place_cradle() if CAM_MOUNT in ("cage", "printed") else place_boom(nodes, E)
+    if not ARM_SPOKES and TIES == "saddle": tie_saddle()
+    else: D.pop("tie saddle (printed)", None)
     usb_ok = usb_line(nodes, E)
     extra = {}
     keep_out = [D[n][0].bounds + [[-ROD_R - 1] * 3, [ROD_R + 1] * 3] for n in
@@ -813,25 +831,23 @@ def attach(nodes, ring_ids, E=()):
         ns = 2 if LEAN else 3
         got = pick(tip, ok, ns, 30.0, f"spoke {i + 1}")
         if len(got) < ns: pick(tip, [k for k in ok if k not in got], ns - len(got), 20.0, f"spoke {i + 1}x")
-    if not ARM_SPOKES:                                        # receiver ties (Spark 27 Oct: "the rods to the arms need to be on the cartridge on
-        rb_ = REC_B                                           # the underside because the arms are just carbon fiber"): from bosses on the
-        for i, xr in enumerate((rb_[0][0] + 8.0, 0.5 * (rb_[0][0] + rb_[1][0]), rb_[1][0] - 8.0)):   # receiver's side face (the fixed part round
-            for zr in np.arange(Z_O + FUNNEL_BAND + ROD_R + 1.0, rb_[1][2] - 3.0, 6.0):             # the cartridge), above the funnel band,
-                r0 = np.array([xr, rb_[1][1] + ROD_R + 1.5, zr])                                                 # tail, middle and nose, to the nearest
-                ok = [k for k in range(nR, len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(r0, nodes[k]) - ROD_R >= PROP_GAP]   # clear shell node
-                if pick(r0, ok, 1, 0.0, f"receiver tie {i + 1}"): break                              # on its side (the lowest root that works)
+    if not ARM_SPOKES and TIES == "saddle":                  # saddle ties (Spark 27 Oct: "the rods to the arms need to be on the cartridge on the
+        for i, xr in enumerate(SADDLE_X):                     # underside because the arms are just carbon fiber"): from the tie saddle's outer
+            r0 = np.array([xr, SADDLE_Y[1] + ROD_R + 0.5, SADDLE_Z[0] + 8.0])          # face beside the receiver (the replaceable piece), above
+            ok = [k for k in range(nR, len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(r0, nodes[k]) - ROD_R >= PROP_GAP]   # the funnel band,
+            pick(r0, ok, 1, 0.0, f"saddle tie {i + 1}")                                             # to the nearest clear shell node on its side
     rb = REC_B                                               # bay ties: the receiver's side corners, above the funnel band, to the nearest shell
-    for sx in (1, -1):                                       # nodes on their side (design center 27 Oct: nothing but the ring rods in the band);
+    for sx in ((1, -1) if ARM_SPOKES else ()):            # (with the arm spokes only: their roots sit in the TPU end pieces, review 27 Oct)                                       # nodes on their side (design center 27 Oct: nothing but the ring rods in the band);
         for zc_ in np.arange(Z_O + FUNNEL_BAND + ROD_R + 1.0, rb[1][2] - 2.0, 6.0):   # 1 a corner when lean, nose and tail; the lowest start
             cn = np.array([rb[1][0] if sx > 0 else rb[0][0], rb[1][1], zc_])            # on the receiver's side that finds a clear node
             ok = [k for k in range(nR, len(nodes)) if side(nodes[k], sx, 1) and nodes[k][2] >= cn[2] and seg_band_dist(cn, nodes[k]) - ROD_R >= PROP_GAP]
             if pick(cn, ok, 1 if LEAN else 2, 15.0, f"bay tie {sx:+d}+1"): break
     pb = D["frame plate (Bee35 carbon)"][0].bounds           # core ties: 2 from each plate edge (underside) into the shell
-    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1))[3 if LEAN else 0:3]:   # lean: none (the spokes, bay ties and camera braces tie the core; Spark 27 Oct: half the rods)
+    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1))[3 if (LEAN and TIES != "core") else 0:3]:   # lean: none (the spokes, bay ties and camera braces tie the core; Spark 27 Oct: half the rods)
         q = np.array([q0[0], q0[1], 18.5 - ROD_R])
         ok = [k for k in range(len(nodes)) if (sx == 0 or sx * nodes[k][0] > 0) and (sy == 0 or sy * nodes[k][1] > 0)
               and seg_band_dist(q, nodes[k]) - ROD_R >= PROP_GAP]
-        pick(q, ok, 1 if LEAN else 2, 25.0, f"core tie {nm}")
+        pick(q, ok, 1 if (LEAN or TIES == "core") else 2, 25.0, f"core tie {nm}")
     # camera: a guard bar of 2 printed nodes over its top behind the lens, 2 struts each into the shell; the seat braced from its
     # back corners into the shell and from its lower corners to the front arm beams 30 out of the plate (a braced pyramid on the
     # core with the boom, not a stalk); the boom root lug at the plate nose is the printed fuse (requirement)
@@ -1091,7 +1107,7 @@ json.dump(SHELL_SPEC, open(os.path.join(OUT, "cage_shell.json"), "w"))
 grp = {}
 for n_, gm, _c in it:
     k = "shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else "guard nodes" if n_.startswith("guard node") else \
-        "links" if n_.split()[0] in ("spoke", "bay", "core", "cam") or n_.startswith("receiver tie") else n_
+        "links" if n_.split()[0] in ("spoke", "bay", "core", "cam", "saddle") else n_
     grp[k] = grp.get(k, 0.0) + gm
 PARTS = [("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
          ("cage shell nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, RING_NODE_R if i < nR else NODE_R).apply_translation(n) for i, n in enumerate(nodes)]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
@@ -1107,7 +1123,7 @@ for p_ in PARTS: p_[1].export(os.path.join(PD, fname(p_[0])))
 json.dump([dict(name=n_, file=fname(n_), role=r_, protect=pr_, mass_g=round(float(gm_), 2), tag=t_, group=gr_, color=co_, swap=sw_)
            for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS], open(os.path.join(PD, "parts.json"), "w"), indent=1)
 rel = lambda p_: os.path.relpath(p_, ROOT)
-LINKS = "spokes, bay ties, core ties, camera guard"            # (the part name kept; it holds the receiver ties too)
+LINKS = "spokes, bay ties, core ties, camera guard"            # (the part name kept; it holds the saddle ties too)
 ACCESS = [{"name": f"swap: {p} down", "part": p, "dir": [0, 0, -1], "length_mm": 150.0, "tool": "part", "ignore": SW_IGN}
           for p in ("cartridge v6 (latch)", "pack 4S 1500", "pack XT60 plug")]
 for x_, y_ in ((-42.65, -26.55), (-42.65, 26.55), (43.25, -26.55), (43.25, 26.55)):
@@ -1134,7 +1150,7 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v10", ""):
         if n_ in ("cage shell tubes", "cage shell nodes", LINKS):
             k = {"cage shell tubes": "shell", "cage shell nodes": "nodes", LINKS: "links"}[n_]
             pref = {"shell": "shell", "nodes": "node "}[k] if k != "links" else None
-            sel = [(g_, c_) for nn, g_, c_ in it if (nn.startswith(pref) if pref else (nn.split()[0] in ("spoke", "bay", "core", "cam") or nn.startswith("receiver tie")))]
+            sel = [(g_, c_) for nn, g_, c_ in it if (nn.startswith(pref) if pref else nn.split()[0] in ("spoke", "bay", "core", "cam", "saddle"))]
             p_["cg"] = np.round(sum(g_ * np.asarray(c_) for g_, c_ in sel) / sum(g_ for g_, _ in sel), 2).tolist()
         if pr_: p_["protect"] = True
         if mat_: p_["material"] = mat_
@@ -1159,6 +1175,7 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v10", ""):
                 ["wires", "FC"], ["wires", "mount + nose legs (Scout)"], ["wires", "frame plate (Bee35 carbon)"], ["wires", "UBEC"], ["wires", "receiver v3 (latch)"]]
     if guard: contact += [[LINKS, "camera guard nodes"], ["camera guard nodes", CAMP]]
     contact += [[LINKS, "camera chin guard (printed)"]]          # the cradle struts root in the chin lip
+    contact += [[LINKS, "tie saddle (printed)"], ["tie saddle (printed)", "frame plate (Bee35 carbon)"]]   # the ties root in the saddle; it bolts to the plate
     if CAM_MOUNT == "printed":
         contact += [["camera cradle arms (printed)", "cage shell nodes"], ["camera cradle arms (printed)", CAMP]]   # printed into the nodes and
         if CAM.get("clamps"):                                 # the snap clips sit round their rods (bore 3.1 on 3.0: no overlap); the arms end in them
