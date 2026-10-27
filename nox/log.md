@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer hub deck v3/v4): v3 ran 2.08 h (smoke said 1.5..3.6), 34.5 g, worst 0.35, CLI gate PASS but the drawn-body test FAILED: the arm box cut the mid feet and the zip-tie channels split the deck, capping members at 4.44. v4: real arm envelope, feet Ø14, UBEC/buck on VHB tape (DEFAULT; alt zip ties), every body reachable at 6.25.
 - 27 Oct (Overseer core v2, Spark): scope = everything but arms and nodes, the L2 keel roots included; battery side an empty slot. Sled v3 stopped (it 68), hub deck v2 stopped. `core_v2.py`: hub deck + keel front hub (2 sockets 6.2 x 15, 6 insert feet, 129 N a bolt), flow clip under the front wing; fit 26.5 mm³ with a parked cage body node. Restored the core rows in current-parts.
 - 27 Oct (rule, Spark): socket bores from the coupons: "the largest of the coupons we just printed was the one": 6.2 (6 mm tube) / 3.2 (3 mm rod), standing and sideways; CLAUDE.md, docs/generative.md, dimensions.md Carbon rods, head_mount.py, cage_node.py. Fixed a merge duplicate in generative.md. All socket sessions told.
 - 27 Oct (Scout v3, Spark): rod sockets 3.2 for the 3 mm rods (coupon pick, the largest bore) in the cage nodes, tie saddle and every epoxied Scout socket; the camera snap clips keep their own grip fit. `dimensions.md` System Scout v3

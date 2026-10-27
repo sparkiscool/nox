@@ -118,7 +118,10 @@ def hub_deck_bodies():
     rails += [box(ub[1][0] - 6, ub[1][0], ub[0][1], ub[1][1], 0, T), box(bk[0][0], bk[0][0] + 6, ub[0][1], bk[1][1], 0, T)]
     # zip-tie channels 3 x 2.5 open on the plate side (the tie runs between deck and plate), 4.0 of deck above: v2's tunnels at z 2..4.5
     # left 2.0 skins across the whole deck, and the smoke (27 Oct) found the front hub cut off from the rest at a 3.2 member
-    slots = [box(x - 1.5, x + 1.5, ub[0][1] - 1, bk[1][1] + 1, -1.0, 2.5) for x in (ub[0][0] + 12, ub[1][0] - 14)]
+    # v4: no zip-tie channels: the UBEC and the buck sit on the seat rails on 3M VHB foam tape (DEFAULT; ~576 mm² a bay against ~5 N in
+    # a 35 g crash). Any channel under the bays crosses the whole deck and leaves < 6.25 of it above, which cut the front hub off from
+    # the rest at the solid gate's member (v4 smoke 27 Oct: gate members capped at 4.96)
+    slots = []
     # keel front hub: bosses on the keel axes, seated on the front feet (the keels' 387 N go into the plate at (96, ±17))
     bosses = [along(*keel_axis(sy), -2.0, SK["off"] + SK["l"], SK["od"] / 2) for sy in (1, -1)]
     seats = []                                              # v3: the topology grows the seats (the hub's room below)
