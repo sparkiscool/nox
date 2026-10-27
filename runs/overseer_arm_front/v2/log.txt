@@ -514,3 +514,11 @@ fem: grid (112, 48, 32) = 172,032 elements, 231,117 active dofs; backend direct 
 fem: grid (112, 48, 32) = 172,032 elements, 231,117 active dofs; backend direct (direct estimate 2.5 GB, budget 11.8 GB)
 build: organic surface at pitch 0.286 mm (x7), skins 24.33 cm3, field 80.15 cm3, in env - cuts 73.16 cm3 (layout 73.16, level offset +0.272 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,273,932 faces, 405 s
 build: organic surface at pitch 0.286 mm (x7), skins 24.33 cm3, field 80.15 cm3, in env - cuts 73.16 cm3 (layout 73.16, level offset +0.272 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,273,932 faces, 405 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [44181.9], "necks": [], "drawn_not_in_main": [["0.0", 0.957, "erode 2.0"], ["0.1", 0.588, "erode 2.0"], ["0.2", 0.004, "erode 2.0"], ["0.3", 0.363, "erode 2.0"], ["0.4", 0.998, "erode 2.0"], ["0.5", 0.993, "erode 2.0"], ["0.6", 0.994, "erode 1.9"], ["0.7", 0.995, "erode 2.0"], ["0.8", 0.983, "erode 2.0"], ["0.9", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.22, "core_mm3": 6.72, "at": [46.8, 32.9, 2.5], "span": [1.7, 1.2, 0.3]}], "acute_edges": 21, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [44181.9], "necks": [], "drawn_not_in_main": [["0.0", 0.957, "erode 2.0"], ["0.1", 0.588, "erode 2.0"], ["0.2", 0.004, "erode 2.0"], ["0.3", 0.363, "erode 2.0"], ["0.4", 0.998, "erode 2.0"], ["0.5", 0.993, "erode 2.0"], ["0.6", 0.994, "erode 1.9"], ["0.7", 0.995, "erode 2.0"], ["0.8", 0.983, "erode 2.0"], ["0.9", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.22, "core_mm3": 6.72, "at": [46.8, 32.9, 2.5], "span": [1.7, 1.2, 0.3]}], "acute_edges": 21, "ok": false}
+function check: {'skin_mm3': 12516.6, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 12516.6, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 9.17 in 'cage crash 4' at [4.1, -19.0, 30.0]
+strength: worst index 9.17 in 'cage crash 4' at [4.1, -19.0, 30.0]
+RESULT {"name": "overseer_arm_front", "solid_ok": false, "mass_g": 93.11, "worst": 9.169, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_front", "solid_ok": false, "mass_g": 93.11, "worst": 9.169, "function_ok": true, "bodies": 1}
