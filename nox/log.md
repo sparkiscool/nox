@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout v3, Spark): bottom on Overseer v5 loop's side nodes, plane 2.12 lower; links out of funnel band; no rods on carbon arms: 6 ties from a printed tie saddle by the receiver (DEFAULT reading of "cartridge"; alt core ties on plate edges 42 rods 651 g); 50 rods, 679 g E, CG 2.4/0.9. `runs/scout_layout/v10/`
 - 27 Oct (Scout electronics mount): tail fin concept v1 failed review x3 (root joint, CG true centroids need catch set 7.4 fwd, hand-placed): back to the system pass v2 on scout_layout v9. `runs/scout_electronics/v1/`
 - 27 Oct (Scout electronics mount, Spark: pointed tail): concept A, PETG fin in the race-car tail bolted to a belly mount block, C-clip fuse on the tail tie: Radxa on edge, UBEC, XR2; out of the wash, walls ≥ 13.9; CG needs catch set 3.5 fwd (DEFAULT; alt B tray: 3.8 aft). `runs/scout_electronics/v1/`
 - 27 Oct (Scout v3, Spark): the Scout = race-car cage: 54 x 3.0 rods (was 123), flat roof, raked front, tail point, no small triangles; bottom = Overseer ring's middle rectangle (+13.7/+21.6 ends, was +30); camera close in, PETG cradle snap-clipped onto cage rods after the build; DEFAULT tail bay; CG 2.3/1.0; 662 g E. Rule: CLAUDE.md, generative 0, precheck 13. `runs/scout_layout/v9/`
