@@ -403,3 +403,11 @@ it  96 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000
 it  96 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 69.1s
 it  97 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 114.9s
 it  97 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 114.9s
+it  98 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 125.6s
+it  98 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 125.6s
+it  99 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 124.8s
+it  99 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 124.8s
+it 100 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 125.7s
+it 100 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 125.7s
+it 101 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 118.0s
+it 101 beta   16 J  10.0002 vol 0.0007 (dil 0.0253 g +0.470) grey  0.1% ch 0.000 worst tube to 23 side a 963 118.0s
