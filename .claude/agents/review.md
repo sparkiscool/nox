@@ -12,7 +12,7 @@ Two modes. **PR mode** (default): the checks below on a part PR. **Concept mode*
 
 PR mode:
 
-First `python3 tools/review_precheck.py --base origin/main` (add `--body <file>` if you have the PR body). Any FAIL: report FAIL with its lines and stop. Its PASS or skip lines settle items 1, 2, 6, 9 (check_state), 10, 11 and 12 (runs started together, CLAUDE.md Parallel by default); judge the rest. A re-review checks only the last review's findings and what changed since (`docs/sessions.md` Usage).
+First `python3 tools/review_precheck.py --base origin/main` (add `--body <file>` if you have the PR body). Any FAIL: report FAIL with its lines and stop. Its PASS or skip lines settle items 1, 2, 6, 9 (check_state), 10, 11, 12 (runs started together, CLAUDE.md Parallel by default) and 13 (Scout rods: 3 mm, about half); judge the rest. A re-review checks only the last review's findings and what changed since (`docs/sessions.md` Usage).
 
 Check, in this order, and stop at the first hard failure:
 1. `solid_check` PASS appears verbatim in `runs/<part>/<version>/summary.md` for the exact file named in `print/` and in the part's `current-parts.md` row. No PASS, or a different file name: FAIL.
@@ -26,6 +26,6 @@ Check, in this order, and stop at the first hard failure:
 9. `python3 tools/check_state.py` shows no ERROR, and no warning from this PR's rows or log line. Three strikes (`docs/generative.md` The rule, 0): a fourth version of a piece whose last three failed, without a new system pass: FAIL.
 10. Visual (CLAUDE.md "Every idea comes with a visual"): a PR that introduces or changes a design links its visual (artifact URL in `summary.md` or the PR body, source committed). Missing: FAIL.
 11. Carbon where its length earns it (`docs/generative.md` The rule, 0): the summary lists carbon rods (count, shortest length) and printed struts. A carbon rod shorter than the break-even length stated there without a stated reason, or no such list on a drone, cage or mount PR: FAIL.
-13. Materials (CLAUDE.md "PETG rigid"): every rigid printed part and every cage node is PETG (a node script's `Part(..., material=...)`, the summary's mass tag); TPU only for feet, skids and strips; no PLA. A TPU cage node is a FAIL (Spark 27 Oct).
+14. Materials (CLAUDE.md "PETG rigid"): every rigid printed part and every cage node is PETG (a node script's `Part(..., material=...)`, the summary's mass tag); TPU only for feet, skids and strips; no PLA. A TPU cage node is a FAIL (Spark 27 Oct).
 
 Report: PASS or FAIL in the first line, then at most 8 lines of findings, each with the file and line. No praise, no summary of the PR.
