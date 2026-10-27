@@ -70,3 +70,23 @@ it  16 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000
 it  16 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 68.1s
 it  17 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 64.0s
 it  17 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 64.0s
+it  18 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 65.9s
+it  18 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 65.9s
+it  19 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 63.0s
+it  19 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 63.0s
+it  20 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 58.3s
+it  20 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.433) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 58.3s
+it  21 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 63.3s
+it  21 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 63.3s
+it  22 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 62.8s
+it  22 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 62.8s
+it  23 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 65.8s
+it  23 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 65.8s
+it  24 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 62.0s
+it  24 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 62.0s
+it  25 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 64.0s
+it  25 beta    1 J  10.7629 vol 0.0159 (dil 0.0192 g +1.435) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 64.0s
+layout: beta 1 done: eroded design 6 bodies, main 36.4%; drawn bodies outside the main body: 5
+layout: beta 1 done: eroded design 6 bodies, main 36.4%; drawn bodies outside the main body: 5
+it  26 beta    2 J  10.7629 vol 0.0124 (dil 0.0226 g +0.902) grey  4.7% ch 0.000 worst held b1 fz 9.8e+05 61.9s
+it  26 beta    2 J  10.7629 vol 0.0124 (dil 0.0226 g +0.902) grey  4.7% ch 0.000 worst held b1 fz 9.8e+05 61.9s
