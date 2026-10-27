@@ -1,0 +1,7 @@
+node_4: grid (64, 64, 64) h 1.0 = 262,144 cells; design 81,410 (81.4 cm3), drawn 8,678, void 172,056
+  support hold 0: 6996 cells, 10927 nodes
+  support hold 1: 6824 cells, 10428 nodes
+  support hold 2: 6832 cells, 10471 nodes
+  support hold 3: 7021 cells, 10857 nodes
+  support hold 4: 7179 cells, 11117 nodes
+  support hold 5: 7644 cells, 11821 nodes

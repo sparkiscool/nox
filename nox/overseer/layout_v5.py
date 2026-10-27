@@ -147,6 +147,9 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 CORE_PARTS = os.path.join(SAVED, "core", "core_parts.json")   # the core session's parts (everything inside the cage), decimated copies
 CORE_TIE_FRONT = (114.0, 0.0, 20.0)                # the front core ties' root on the hub deck tower's front face, off the flow clip (C, DEFAULT 27 Oct)
+THIRD_BOTTOM = os.environ.get("V5_THIRD_BOTTOM", "0") == "1"   # the arms' third bottom screw (u 32.9): off (DEFAULT 27 Oct): it sits over the battery
+                                                   # receiver (|y| 22.5 < its 38), no driver from below without taking the receiver off;
+                                                   # the third hole takes the top screw only (into an insert in the arm tongue)
 REAR_TIE_Y = 12.0                                    # the rear core ties' roots at y ±12, clear of the battery lead (core: |y| <= 6, C, DEFAULT 27 Oct)
 CORE_SLED_Y = 56.0                                   # the core's sled edge |y| (dimensions.md Sled): the bay ties' roots, on its side faces (C, DEFAULT 27 Oct)
 
@@ -1214,12 +1217,12 @@ for nm_, faces in (("FC USB-C", [((18.0, 0, 9.75), (1, 0, 0)), ((0, 18.0, 9.75),
         acc_rep.append(f"{nm_}: NO clear line within 50 deg of any face")
 for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-top screws (M3 into the root, driver d 8 from above)
     c_, s_ = math.cos(math.radians(d_)), math.sin(math.radians(d_))
-    for v_ in (15.0, -15.0):
-        p0 = np.array([63.17 * c_ - v_ * s_, 63.17 * s_ + v_ * c_, ROOT_H + 1.6])
+    for r_, v_ in ((63.17, 15.0), (63.17, -15.0), (34.66, 0.0)):       # + the third screw per arm (arm session v8, 27 Oct: top Ø3.1 at u 34.66, v 0)
+        p0 = np.array([r_ * c_ - v_ * s_, r_ * s_ + v_ * c_, ROOT_H + 1.6])
         ign_p = ("top plate", f"arm {i_ + 1}") + tuple(f"prop {j}" for j in range(1, 5))
         ok_ = line_clear(p0, np.array([0, 0, 1.0]), 400.0, 4.0, ignore=ign_p)
         if ok_:
-            ACCESS.append({"name": f"M3 key, arm {i_ + 1} top screw v {v_:+.0f}", "part": "top plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, 1],
+            ACCESS.append({"name": f"M3 key, arm {i_ + 1} top screw" + (f" v {v_:+.0f}" if r_ > 50 else " 3 (u 34.66)"), "part": "top plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, 1],
                            "length_mm": 400.0, "tool": {"type": "cylinder", "d": 8}, "ignore": [f"arm {i_ + 1}"] + [f"prop {j}" for j in range(1, 5)]})
             acc_rep.append(f"arm {i_ + 1} top screw v {v_:+.0f}: clear straight up (a stopped prop turned aside)")
             continue
@@ -1234,14 +1237,15 @@ for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-to
                            "dir": np.round(lg[1], 4).tolist(), "length_mm": 400.0, "tool": {"type": "cylinder", "d": 4},
                            "ignore": [f"arm {i_ + 1}"] + [f"prop {j}" for j in range(1, 5)]})
         acc_rep.append(f"arm {i_ + 1} top screw v {v_:+.0f}: " + (f"L-key (short leg up 30, long leg {lg[0]:.0f} deg off radial out through a cell)" if lg else "BLOCKED"))
-    for v_ in (10.0, -10.0):                                            # bottom screws (driver d 8 from below)
-        p0 = np.array([63.74 * c_ - v_ * s_, 63.74 * s_ + v_ * c_, -1.7])
+    v3_ = 1.1 * (-1 if (d_ in (45, 225)) else 1)                       # the third bottom screw (arm session v8: u 32.9, v -+1.1 front / +-1.1 rear)
+    for r_, v_ in ((63.74, 10.0), (63.74, -10.0)) + (((32.9, v3_),) if THIRD_BOTTOM else ()):   # bottom screws (driver d 8 from below)
+        p0 = np.array([r_ * c_ - v_ * s_, r_ * s_ + v_ * c_, -1.7])
         ok_ = line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}"))
         ign = [f"arm {i_ + 1}"]
         if not ok_:
             for extra_ in (["belly sled + pods"], ["belly sled + pods", "flow MTF-02P"]):
                 if line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}", *extra_)): ign += extra_; break
-        ACCESS.append({"name": f"M3 key, arm {i_ + 1} bottom screw v {v_:+.0f}", "part": "bottom plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, -1],
+        ACCESS.append({"name": f"M3 key, arm {i_ + 1} bottom screw" + (f" v {v_:+.0f}" if r_ > 50 else " 3 (u 32.9)"), "part": "bottom plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, -1],
                        "length_mm": 400.0, "tool": {"type": "cylinder", "d": 8}, "ignore": ign})
         acc_rep.append(f"arm {i_ + 1} bottom screw v {v_:+.0f}: " + ("clear" if ok_ else "BLOCKED" if len(ign) == 1 else
                        "through a Ø9 driver hole in the belly sled (requirement)" if len(ign) == 2 else
