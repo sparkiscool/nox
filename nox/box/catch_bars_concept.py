@@ -309,9 +309,9 @@ def finish(d, pose, s, s_clamp, s_slide):
     return dict(ok=True, s_clamp=round(s_clamp, 1), s_slide=round(s_slide, 2), spring=round(s - s_slide, 2), s_stall=round(s, 1), pose_err=err,
                 clear=round(clear, 2), clear_who=who, ride=round(resolve.ride, 2))
 
-def sweep(d, offs, yaws):
+def sweep(d, offs, yaws, offs_x=None):
     res = []; t0 = time.time()
-    for ox in offs:
+    for ox in (offs_x or offs):
         for oy in offs:
             for yw in yaws:
                 r = landing(d, (ox, oy), yw); r.update(off=[ox, oy], yaw=yw); res.append(r)
@@ -347,9 +347,10 @@ def capture(res):
                 min_clear_mm=min((r["clear"] for r in good), default=None), s_clamp=sorted({r["s_clamp"] for r in good}),
                 n=len(res), n_ok=len(good), fails=dict(sorted(fails.items(), key=lambda kv: -kv[1])[:6]))
 
-def main(smoke=False, only=None):
+def main(smoke=False, only=None, tag=""):
     offs = [-20, 0, 20] if smoke else [-80, -60, -40, -20, 0, 20, 40, 60, 80]
     yaws = [-10, 0, 10] if smoke else [-15, -10, -5, 0, 5, 10, 15]
+    offs_x = [float(v) for v in os.environ["OFFS_X"].split(",")] if os.environ.get("OFFS_X") else offs   # a chunk of the x rows (parallel runs)
     res = dict(deck=DECK, sleeve=SLEEVE, gap=GAP, lm=LM, s2=S2, wing_deg=WING_DEG, wing_c=round(WING_C, 2), bar_x=BAR_X, bar_t=BAR_T, lip=[LIP_Z0, LIP_T, LIP_IN], notch_y=NOTCH_Y, wing_y=WING_Y, d_wing=round(D_WING, 2),
                ramp=[RAMP_Y, RAMP_DX],
                pad_t=PAD_T, h_pad=H_PAD, v_deg=V_DEG, height=H,
@@ -362,18 +363,27 @@ def main(smoke=False, only=None):
     for name, f in (("overseer", overseer), ("scout", scout)):
         if only and name != only: continue
         d = f(); print(f"{name}: {len(d['P'])} low points, cartridge bottom {d['cart']} above z 0 ({d['cart'] - DECK:.2f} above the deck)", flush=True)
-        r = sweep(d, offs, yaws)
+        r = sweep(d, offs, yaws, offs_x)
         res[name] = dict(cart_bottom_seat=d["cart"], landings=r, capture=capture(r), draw=d["draw"], sleeve_pts=d.get("sleeve_pts"))
         print(name, json.dumps(res[name]["capture"]), flush=True)
     enc = lambda o: o.tolist() if hasattr(o, "tolist") else float(o)
-    fn = ("smoke" if smoke else "result") + (f"_{only}" if only else "") + ".json"
+    fn = ("smoke" if smoke else "result") + (f"_{only}" if only else "") + tag + ".json"
     json.dump(res, open(os.path.join(OUT, fn), "w"), default=enc)
     if not smoke and not only: build_html(res)
 
 def merge():
-    """join result_overseer.json and result_scout.json into result.json and build the page"""
-    a = json.load(open(os.path.join(OUT, "result_overseer.json"))); b = json.load(open(os.path.join(OUT, "result_scout.json")))
-    a["scout"] = b["scout"]; json.dump(a, open(os.path.join(OUT, "result.json"), "w")); build_html(a)
+    """join result_overseer*.json and result_scout*.json (chunks of x rows) into result.json and build the page"""
+    import glob
+    out = None
+    for name in ("overseer", "scout"):
+        parts = sorted(glob.glob(os.path.join(OUT, f"result_{name}*.json")))
+        land = []; base = None
+        for fp in parts:
+            j = json.load(open(fp)); base = base or j; land += j[name]["landings"]
+        if out is None: out = base
+        out[name] = dict(base[name]); out[name]["landings"] = land; out[name]["capture"] = capture(land)
+        print(name, len(parts), "files,", len(land), "landings:", json.dumps(out[name]["capture"]))
+    json.dump(out, open(os.path.join(OUT, "result.json"), "w")); build_html(out)
 
 def build_html(res=None):
     res = res or json.load(open(os.path.join(OUT, "result.json")))
@@ -385,4 +395,5 @@ def build_html(res=None):
 
 if __name__ == "__main__":
     only = sys.argv[sys.argv.index("--drone") + 1] if "--drone" in sys.argv else None
-    build_html() if "--html" in sys.argv else merge() if "--merge" in sys.argv else main(smoke="--smoke" in sys.argv, only=only)
+    tag = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else ""
+    build_html() if "--html" in sys.argv else merge() if "--merge" in sys.argv else main(smoke="--smoke" in sys.argv, only=only, tag=tag)
