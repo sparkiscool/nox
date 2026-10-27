@@ -2,7 +2,7 @@
 """The mechanical half of the review agent's PR mode (.claude/agents/review.md), so the opus reviewer only judges design.
 
 python3 tools/review_precheck.py [--base origin/main] [--body <pr body file>]
-Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11, 12, 13, 14):
+Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11, 12, 13, 14, 16):
   1 solid    every print/ file the PR adds or changes is named with a solid_check PASS in a summary.md
   2 state    a design PR changes nox/current-parts.md and adds a new top line to nox/log.md
   6 preview  every print/ file has a preview PNG in that run folder, named in its summary.md
@@ -11,10 +11,13 @@ Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11, 12, 
   11 carbon  a Scout / Overseer / cage / mount PR (nox/scout, nox/overseer, runs or print scout_ overseer_ cage motor_mount) lists carbon (rod list with any non-3.0 stock sizes)
   12 parallel the runs the PR adds started within 30 min of each other (run_bg.txt start lines), or the later run's summary.md says `Waited for:`
   13 scout rods  a PR that changes the Scout assembly: every cage rod 3.0 (shell and links) and at most 62 rods in all (cage_shell total_rods; Spark 27 Oct)
-  14 estimate  every topo run the PR adds that started after 2026-10-27T08:00Z (run_bg.txt) has estimate.json from tools/run_estimate.py (Spark 27 Oct)
+  14 estimate  every topo run the PR adds that started after 2026-10-27T08:00Z (run_bg.txt) has estimate.json from tools/run_estimate.py (Spark 27 Oct);
+              after 2026-10-28T00:00Z its room audit must read PASS (loaded drawn features on the design room, Spark 27 Oct)
+  16 drawn    a topo run whose part's previous version FAILED may not grow the drawn mass (result.json drawn_g) by > 5 % and > 1 g unless
+              its summary.md has a `Drawn added:` line naming each added feature (the review checks each is an attachment; Spark 27 Oct)
 Prints PASS / FAIL / skip per check; exit 1 on any FAIL. Reads only.
 """
-import argparse, pathlib, re, subprocess, sys
+import argparse, json, pathlib, re, subprocess, sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 ap = argparse.ArgumentParser()
@@ -99,8 +102,39 @@ RULE14 = _dt.datetime(2026, 10, 27, 8, 0)                             # Measure 
 topo_runs = [d for d, t in starts.items() if t >= RULE14 and "=== " in ((ROOT / d / "log.txt").read_text() if (ROOT / d / "log.txt").exists() else "")]
 if topo_runs:
     miss = [d for d in topo_runs if not (ROOT / d / "estimate.json").exists()]
+    RULE14B = _dt.datetime(2026, 10, 28, 0, 0)                          # the room audit (Spark 27 Oct: drawn filler on hub deck v7 / v9)
+    miss += [f"{d} (room audit not PASS)" for d in topo_runs if starts[d] >= RULE14B and (ROOT / d / "estimate.json").exists()
+             and json.loads((ROOT / d / "estimate.json").read_text()).get("room_audit") != "PASS"]
     out("14 estimate", not miss, f"{len(topo_runs)} topo run(s) measured" if not miss else
         f"{', '.join(miss)}: no estimate.json (tools/run_estimate.py before the run; CLAUDE.md Measure before quoting)")
 else:
     out("14 estimate", None, "no topo run started after the rule in the PR")
+# 16 drawn growth after a failed version (Spark 27 Oct: "the issue that happened here with the extra materials cannot happen again")
+def _vnum(v):
+    m_ = re.match(r"v(\d+)([a-z]?)$", v); return (int(m_.group(1)), m_.group(2)) if m_ else None
+def _read(part, ver, name):
+    f_ = ROOT / "runs" / part / ver / name
+    if f_.exists(): return f_.read_text()
+    return subprocess.run(["git", "-C", str(ROOT), "show", f"origin/run/{part}-{ver}:runs/{part}/{ver}/{name}"], capture_output=True, text=True).stdout
+grown = []; seen16 = 0
+for f in changed:
+    m = re.match(r"runs/([^/]+)/(v\d+[a-z]?)/result\.json$", f)
+    if not m or not (ROOT / f).exists(): continue
+    part, ver = m.groups(); cur = json.loads((ROOT / f).read_text()).get("drawn_g")
+    if cur is None or _vnum(ver) is None: continue
+    vers = {d.name for d in (ROOT / "runs" / part).iterdir() if d.is_dir()}
+    vers |= {b.split(f"origin/run/{part}-")[1] for b in git("branch", "-r", "--list", f"origin/run/{part}-*").split()}
+    prev = sorted([v for v in vers if _vnum(v) and _vnum(v)[0] < _vnum(ver)[0] and _read(part, v, "result.json").strip()], key=_vnum)
+    if not prev: continue
+    pv = prev[-1]; seen16 += 1
+    p_res = json.loads(_read(part, pv, "result.json")); p_sum = _read(part, pv, "summary.md").split("\n")[0]
+    if "FAILED" not in p_sum: continue
+    pd_ = p_res.get("drawn_g") or 0.0
+    if cur > pd_ * 1.05 and cur - pd_ > 1.0 and "Drawn added:" not in ((ROOT / "runs" / part / ver / "summary.md").read_text() if (ROOT / "runs" / part / ver / "summary.md").exists() else ""):
+        grown.append(f"{part} {ver}: drawn {cur:.1f} g after {pv} FAILED at {pd_:.1f} g")
+if seen16:
+    out("16 drawn", not grown, "no drawn growth after a failure" if not grown else
+        "; ".join(grown) + " (fix a failed run in its setup: room, cuts, loads, volume; a real new attachment goes on a `Drawn added:` line)")
+else:
+    out("16 drawn", None, "no topo run with a previous version in the PR")
 sys.exit(1 if False in res else 0)
