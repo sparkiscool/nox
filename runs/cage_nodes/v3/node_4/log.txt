@@ -365,3 +365,17 @@ layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside t
 layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 it  71 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 73.3s
 it  71 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 73.3s
+it  72 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 84.9s
+it  72 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 84.9s
+it  73 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 78.3s
+it  73 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 78.3s
+it  74 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 77.3s
+it  74 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 77.3s
+it  75 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 80.7s
+it  75 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 80.7s
+it  76 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 88.3s
+it  76 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 88.3s
+it  77 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 88.4s
+it  77 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 88.4s
+it  78 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 89.9s
+it  78 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 89.9s
