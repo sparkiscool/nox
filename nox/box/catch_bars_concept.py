@@ -59,7 +59,7 @@ H = LIP_Z0 + LIP_T - DECK   # bar height from the deck (11.5)
 NOTCH_Y = 6.0               # notch half width: the Overseer's tip rods leave the node surface at |y| 7.9 (C), so the notch (contact at |y| r sin V = 5.1) only ever touches the node sphere
 PAD_T = 8.0
 RIDE = 2.0                  # a pushed rod met by a body's top edge with the normal tilted past the friction angle (centre > 0.3 r above the top) climbs onto it; the climb (r - height above the top) may be this much (reported), more is a crash
-H_PAD = -1.0 - DECK         # pad height from the deck so its top is at z -1: pushes the Overseer's node 1 under its equator and the Scout's end tube on centre; the tip rods (5.7 deg up) pass over it from 20 mm out of the node
+H_PAD = 0.5 - DECK          # pad height from the deck so its top is at z +0.5: pushes the Overseer's node just under its equator, and the Scout's 3 mm end tube on centre when the Scout stands on the same caps; the tip rods (5.7 deg up) ride up to 1.5 inside 20 mm of the node and pass over beyond 40
 V_DEG = 30.0                # notch flank angle from the y axis (120 deg notch): a node seats r / cos 30 ahead of the apex, centred in y
 TV = math.tan(math.radians(V_DEG)); CV = math.cos(math.radians(V_DEG))
 WING_Y = (28.0, 80.0)       # V wings each side, 18 deg flanks, outer end leading: they push a node inward (squaring a yawed Overseer), the Scout's straight end tube rests on their outer corners; the tip rods pass over them (>= 0.6 above the pad top)
@@ -166,6 +166,7 @@ def prep(d, kind):
     near_node = dn < NODE_R + 10
     tipc = np.array([HEX["F"], HEX["T"]]); dtip = np.min(np.linalg.norm(P[:, None, :2] - tipc[None], axis=2), axis=1)
     fitting = np.char.startswith(names.astype(str), "spokes") & ((dn < NODE_R + 10) | (dtip < 70))   # node fittings; the nose and tail structure at the tip nodes
+    fitting |= (names == "TPU feet") & (dtip < 20)                                                   # the foot caps under the tip nodes are the node's own foot
     cage = np.char.startswith(names.astype(str), "cage")
     return dict(P=P, rad=rad, names=names, allow=dict(ring=ring, ends=cage | fitting), tube=tube, node=node, kind=kind, draw=d["draw"], cart=d["cart_bottom_seat"])
 
@@ -280,8 +281,9 @@ def landing(d, off, yaw_deg):
         else:
             # phase 2: the pad slide is sprung to the carriage: each step the spring pushes it fully forward and the
             # contacts push it back as far as they must (within the stroke)
-            p_start = min(s, s_slide + 1.0)
+            p_prev = s_slide; p_start = min(s, s_slide + 1.0)
             pose, s_slide, resid, touched, fail = resolve(d, pose, bars_at(s, s_clamp, p_start), slide=[p_start, max(s - LM, 0.0), s])
+            if any(k.endswith("pad") and v > 0.1 for k, v in resid.items()): s_slide = min(s_slide, p_prev)   # pinched: the spring cannot creep in
         if fail and s == 0.0: return dict(ok=False, why=f"lands on the {fail.split(' (')[0].split(' pushes')[0].split(' meets')[0]}: {fail.split(' ')[-1] if ' pushes ' not in fail and ' meets ' not in fail else fail.split('pushes ' if 'pushes ' in fail else 'meets ')[1]}", s=s, pose=pose.round(2).tolist(), phase=0)
         if fail: return dict(ok=False, why=f"{fail} at s {s:.1f}", s=s, pose=pose.round(2).tolist(), phase=1 if s_clamp is None else 2)
         if abs(pose[0]) > 400 or abs(pose[1]) > 300: return dict(ok=False, why="runaway", s=s, pose=pose.round(2).tolist())
