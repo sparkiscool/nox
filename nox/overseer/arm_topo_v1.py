@@ -308,7 +308,8 @@ def bodies(which):
         rods += rod_m(p0, p1, ROD_D / 2)
         B["cuts"] += rod_m(p0, p1, ROD_BORE / 2, back=30.0)
         u = (p1 - p0) / np.linalg.norm(p1 - p0)
-        for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1 + 1.0 * u)):
+        cap = CHORD_SKIN if os.environ.get("NOX_ARM_CAP") == "1" else 1.0   # v5d: the blind tip end's wall (rear v5c: 1.58)
+        for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1 + cap * u)):
             sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
         if os.environ.get("NOX_ARM_SLEEVE") == "1":   # v5c: a full-length drawn sleeve (rear v5b: webs meeting the tube
             sockets += rod_m(p0, p1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)   # left 1.1 collar walls)
