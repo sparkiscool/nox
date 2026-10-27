@@ -221,3 +221,5 @@ layout: warm start from a (32, 32, 32) grid (h 2.0): mean x 0.011
 layout: warm start from a (32, 32, 32) grid (h 2.0): mean x 0.011
 it   1 beta    4 J  10.0000 vol 0.0150 (dil 0.0604 g +0.437) grey  4.8% ch 0.100 worst held b2 fz 9.35e+05 510.5s
 it   1 beta    4 J  10.0000 vol 0.0150 (dil 0.0604 g +0.437) grey  4.8% ch 0.100 worst held b2 fz 9.35e+05 510.5s
+it   2 beta    4 J  10.0014 vol 0.0146 (dil 0.0592 g +0.409) grey  4.6% ch 0.100 worst held b2 fz 9.36e+05 442.3s
+it   2 beta    4 J  10.0014 vol 0.0146 (dil 0.0592 g +0.409) grey  4.6% ch 0.100 worst held b2 fz 9.36e+05 442.3s
