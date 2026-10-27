@@ -16,3 +16,6 @@ What changed from v1:
 - Unchanged: two glue rings per socket (0.5 deep, 2 tall, 45° roof), a floor vent, a 1 x 45° entry chamfer, 2.5 walls (2.6 round the sideways holes).
 
 Test: dry-fit a rod in each of the 6 sockets per coupon, epoxy the snug ones, pull and bend. Tell me the best mark in each row (standing and sideways) for each stock.
+
+## Result (Spark 27 Oct, P)
+"the largest of the coupons we just printed was the one": the 3-dot sockets, 6.20 for the 6 mm tube and 3.20 for the 3 mm rod, standing and sideways. Every socket (cage nodes, head mount, core and arm sockets) uses 6.2 / 3.2 (CLAUDE.md Hard rules, `dimensions.md` Carbon rods). The sideways row needed no other bore, so a socket's angle to the bed does not change its bore.
