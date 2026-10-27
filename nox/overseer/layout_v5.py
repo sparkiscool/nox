@@ -1011,6 +1011,7 @@ say(f"assembly mass {sum(p_[4] for p_ in PARTS):.0f} g (E) vs the layout model {
 if PRINTED_HEAD:
     # the sensor head mount's requirements for its topology run (system first, then cut): drawn bodies, the cage nodes it holds,
     # the carbon rods it takes, keep-outs, masses and cases (dimensions.md L), print limits
+    HEAD_SYS_G = sum(m_ for n_, m_, _ in it if n_.startswith(("apex", "cam plate", "cam strut", "halo node", "head guard", "head topology")))   # one head mass: the system model's
     HS = dict(note="Overseer sensor head mount (printed PETG, topology): replaces the short rods at the L2 and the cameras (Spark 27 Oct). Drone frame, mm.",
               l2=dict(base=g["B"].tolist(), axis=A.tolist(), mass_g=230, cg=cen_(g["l2"]).tolist(), field="half-space ahead of the base plane, nothing of the mount in it (1 behind)"),
               cameras=[dict(side=c["side"], lens=c["lens"].tolist(), f=c["f"].tolist(), u=c["u"].tolist(), r=c["r"].tolist(), half_across=c["ha"], half_up=c["hv"],
@@ -1021,15 +1022,15 @@ if PRINTED_HEAD:
               guard_nodes=[np.round(np.asarray(h_), 2).tolist() for h_ in g["halo_nodes"]],
               keep_out=["the L2 and its field", "both cameras and their views (+2 deg)", "the frozen cage's tubes (3 off) except the held nodes",
                         "prop disks 12 off", "the keels and braces (their sockets are on the lugs)"],
-              mass_budget_g=round(float(g["head_budget"]), 1), cases="dimensions.md L (flight 4 g / 2 g, crash 35 g in 14 directions at each payload's CG, "
+              mass_budget_g=round(HEAD_SYS_G, 1), cases="dimensions.md L (flight 4 g / 2 g, crash 35 g in 14 directions at each payload's CG, "
               "sensor mounts first mode >= 100 Hz, breaking order: the lugs let go before the L2 base)",
               print_="Bambu A1 mini 180 cube, PETG; cut DEFAULT: centre piece |y| <= 75 (seat, lugs, guard ring, the centre node) and two mirrored wings "
                      "(camera pad, camera guard, the side nodes), bolted M3 on drawn pads",
               drawn_mesh="parts/" + fname(HEADN))
     json.dump(HS, open(os.path.join(OUT, "head_system.json"), "w"), indent=1)
     say(f"sensor head mount (Spark 27 Oct: a topology printed mount instead of the little rods): drawn seat, lugs, camera pads, guard ring and camera "
-        f"guard bars; it holds {len(g['head_attach'])} cage nodes (the cage as it is) and takes the keels and braces; mass budget {g['head_budget']:.0f} g "
-        f"(what it replaces), topology material {g['head_topo']:.0f} g of it (E); requirements in head_system.json")
+        f"guard bars; it holds {len(g['head_attach'])} cage nodes (the cage as it is) and takes the keels and braces; {HEAD_SYS_G:.0f} g in the system "
+        f"model (E: seat and lugs, camera plates, guards, joining material {g['head_topo']:.0f} g held to the rods it replaces); requirements in head_system.json")
 # ---------------------------------------------------------------- access (rule 2: reachable without taking another part off)
 # straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),
 # then gated by system_check's own sweep

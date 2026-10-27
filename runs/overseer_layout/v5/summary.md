@@ -62,28 +62,28 @@ System: Overseer, cage first 12.7 mm (E) at -Z (flow MTF-02P) (field cones open:
 
   It replaces the L2 ties, the guard ring rods and its 16 struts, the camera brackets' struts and the camera guards' struts. It holds the cage's front centre node (its tube sockets are part of the centre piece); 3.0 carbon struts run from each wing to the side node by the head where they meet its tubes at 20°+.
 - **Carbon kept:** the 2 keels (289) and the 4 L2 braces (~310); they earn their length.
-- **Mass:** ~102 g in the system model (E: seat and lugs 23, camera plates 6, guards 34, joining material 38); the joining material is held to what the rods weighed.
+- **Mass:** 100 g in the system model (E: seat and lugs, camera plates, guards, joining material held to what the rods weighed); `head_system.json` carries the same number. The saved pieces' M mass replaces it.
 - **Requirements** for its topology run (`head_system.json`): drawn bodies, held nodes, kept rods, keep-outs (the L2 and its field, both cameras and views, the cage tubes 3 off, props), loads (dimensions.md L: flight, crash 35 g in 14 directions at each payload's CG, sensor mounts ≥ 100 Hz, the lugs the fuse before the L2 base), print limits.
-- **Print cut (DEFAULT):** a centre piece |y| ≤ 75 and two mirrored wings, bolted M3 on drawn pads. The topology run is the next step (a heavy run, its own PR).
+- **Print cut (DEFAULT):** a centre piece |y| ≤ 75 and two mirrored wings, bolted M3 on drawn pads. Topology runs: `runs/head_centre/`, `runs/head_wing/` (run branches).
 
 ## Layout (C on E sizes; `checks.txt`)
 - **Drone:** the v2 drone (L2 at the nose axis 15° below +x, base (384.0, 0, 51); motors forward; catch 30 aft; pack top z -7). The motor square sits 62.0 ahead (front arms r 245, rear r 160) with the CG 0.2 off (E). The L2, the cameras and the head mount are outside the shell.
 - **L2:** its field 0.0 % crossed.
-- **Props and swap:** shell tubes 14.9 off the props; swap zone clear; access 21 / 21.
+- **Props and swap:** shell tubes 20.2 off the props; swap zone clear; access 21 / 21.
 
 ## One layout ("the one with perfect CG")
 - **Pack in:** CG 0.2 mm off the thrust centre (system_check, E).
-- **Pack + cartridge out:** 31.8 mm off. Accepted by Spark 27 Oct ("as long as with battery the drone is centered"), the L Balance exception.
+- **Pack + cartridge out:** 31.6 mm off. Accepted by Spark 27 Oct ("as long as with battery the drone is centered"), the L Balance exception.
 
 ## Carbon rods (6 mm tube, 3 mm rod)
-- Shell: 54 carbon tubes 6 mm, 14.7 m, 122 .. 655.
-- Links: carbon rods 3 mm (spokes, core ties, keels, L2 braces, bay ties). The short ones at the head are printed now (the head mount).
+- Shell: 63 carbon tubes 6/4, 15.9 m, 116 .. 446 (after the frame model's splits).
+- Links: 32, 6.30 m: 19 sized up to 6/4 tube by the frame model (`link_sizes.json`), the rest 3.0 solid (spokes, core ties, keels, L2 braces, bay ties). The short ones at the head are printed now (the head mount).
 
 ## Mass (E)
-3084 g: shell 462 (tubes 359 + nodes 104), links 73, sensor head mount ~102. T/W 2.14 at 1650 gf a motor (C on E).
+3178 g: shell 495 (tubes 387 + nodes 108), links 127, sensor head mount 100. T/W 2.08 at 1650 gf a motor (C on E).
 
 ## Next
-1. Topology run of the sensor head mount on `head_system.json`.
-2. Frame model on the halved shell: the long spans' buckling, cell guarding, the crash cases.
-3. The nodes, arms and belly sled.
+1. Save the head centre and wing topology runs (running).
+2. Node runs v2 (`run/cage_nodes-v2`); the coupon bore pick (Spark) sets the socket bores.
+3. The arms and belly sled; the deeper belly from core PR 123 lowers the loop plane.
 4. The new funnel round the shell (box catch session).
