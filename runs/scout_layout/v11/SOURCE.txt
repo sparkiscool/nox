@@ -1,0 +1,1 @@
+overseer_cage_v5_shell.json: copied from sparkiscool/nox branch claude/gracious-mccarthy-5rctc9 @ 93e39539 (PR 122, Overseer cage v5, not merged 27 Oct), for the ghost and the ring check only. Its base loop: 6 nodes at z -57.0, swap centre (catch) x -30.
