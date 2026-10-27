@@ -186,3 +186,53 @@ fem: grid (136, 96, 56) = 731,136 elements, 347,721 active dofs; backend mg (dir
 fem: grid (136, 96, 56) = 731,136 elements, 347,721 active dofs; backend mg (direct estimate 4.3 GB, budget 6.0 GB)
 fem: multigrid 3 levels [(np.int64(136), np.int64(96), np.int64(56)), (np.int64(68), np.int64(48), np.int64(28)), (np.int64(34), np.int64(24), np.int64(14))], coarsest 39,375 dofs (direct)
 fem: multigrid 3 levels [(np.int64(136), np.int64(96), np.int64(56)), (np.int64(68), np.int64(48), np.int64(28)), (np.int64(34), np.int64(24), np.int64(14))], coarsest 39,375 dofs (direct)
+=== overseer_sled: h 1.4, generated 40.0 cm3, min member 3.2 mm, cores 4
+=== overseer_sled: h 1.4, generated 40.0 cm3, min member 3.2 mm, cores 4
+overseer_sled: grid (136, 96, 56) h 1.4 = 731,136 cells; design 93,526 (256.6 cm3), drawn 3,773, void 633,837
+  support default: 1145 cells, 1926 nodes
+layout: WARNING the solid gate wants 6.25 mm members round the drawn bodies (2.0 mm erosion), the design space routes at most 6.21 mm to every body: using 6.21 mm; the gate may fail on the setup
+layout: WARNING the solid gate wants 6.25 mm members round the drawn bodies (2.0 mm erosion), the design space routes at most 6.21 mm to every body: using 6.21 mm; the gate may fail on the setup
+overseer_sled: grid (72, 48, 32) h 2.8 = 110,592 cells; design 11,206 (246.0 cm3), drawn 355, void 99,031
+  support default: 110 cells, 294 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (7.75 cm3); 0.04 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (7.75 cm3); 0.04 cm3 of drawn volume opened to the design
+layout: min member 6.21 mm (rods), plates 5.64 mm, filter radius 6.40 mm = 2.29 cells, erosion depth 1.70 mm; volfrac 0.163 of 11,208 design cells
+layout: min member 6.21 mm (rods), plates 5.64 mm, filter radius 6.40 mm = 2.29 cells, erosion depth 1.70 mm; volfrac 0.163 of 11,208 design cells
+layout: WARNING nearly mirrored in x (3.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (3.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (6.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (6.7% of passive cells differ): no symmetry
+layout: 14 drawn bodies (353 cells), held solid in every realization; eroded filter: masked
+layout: 14 drawn bodies (353 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (100 cells) count by their cover; 9 bodies tied to body 9
+layout: gate ties: held bodies thinner than 2.0 mm (100 cells) count by their cover; 9 bodies tied to body 9
+layout: 23 load cases + 60 tie cases (10 bodies tied, 4 held by support 'default') + 54 gate ties + 24 held ties
+layout: 23 load cases + 60 tie cases (10 bodies tied, 4 held by support 'default') + 54 gate ties + 24 held ties
+fem: grid (72, 48, 32) = 110,592 elements, 48,648 active dofs; backend direct (direct estimate 0.3 GB, budget 4.0 GB)
+fem: grid (72, 48, 32) = 110,592 elements, 48,648 active dofs; backend direct (direct estimate 0.3 GB, budget 4.0 GB)
+fem: Cholesky failed (The Pardiso solver failed with error code -4. See Pardiso documentation for details.); LU fallback
+fem: Cholesky failed (The Pardiso solver failed with error code -4. See Pardiso documentation for details.); LU fallback
+layout: resumed from /home/user/nox/.claude/worktrees/agent-a33458b517f6566cb/runs/overseer_sled/v1/coarse_ck.npz at it 62, beta 4 (already stopped: beta_stop)
+layout: resumed from /home/user/nox/.claude/worktrees/agent-a33458b517f6566cb/runs/overseer_sled/v1/coarse_ck.npz at it 62, beta 4 (already stopped: beta_stop)
+layout: beta 4 done: eroded design 21 bodies, main 25.0%; drawn bodies outside the main body: 12
+layout: beta 4 done: eroded design 21 bodies, main 25.0%; drawn bodies outside the main body: 12
+coarse stage done: 62 iterations, 57 s, peak 2.063688 GB
+coarse stage done: 62 iterations, 57 s, peak 2.063688 GB
+overseer_sled: grid (136, 96, 56) h 1.4 = 731,136 cells; design 93,526 (256.6 cm3), drawn 3,773, void 633,837
+  support default: 1145 cells, 1926 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (10.21 cm3); 0.14 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (10.21 cm3); 0.14 cm3 of drawn volume opened to the design
+layout: min member 6.21 mm (rods), plates 5.64 mm, filter radius 6.40 mm = 4.57 cells, erosion depth 1.70 mm; volfrac 0.156 of 93,577 design cells
+layout: min member 6.21 mm (rods), plates 5.64 mm, filter radius 6.40 mm = 4.57 cells, erosion depth 1.70 mm; volfrac 0.156 of 93,577 design cells
+layout: WARNING nearly mirrored in x (4.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (4.7% of passive cells differ): no symmetry
+layout: 13 drawn bodies (3,722 cells), held solid in every realization; eroded filter: masked
+layout: 13 drawn bodies (3,722 cells), held solid in every realization; eroded filter: masked
+layout: 23 load cases + 54 tie cases (9 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+layout: 23 load cases + 54 tie cases (9 bodies tied, 4 held by support 'default') + 0 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.21 mm
+layout: reachability OK: every drawn body can be joined by members of 6.21 mm
+fem: grid (136, 96, 56) = 731,136 elements, 347,721 active dofs; backend mg (direct estimate 4.3 GB, budget 4.0 GB)
+fem: grid (136, 96, 56) = 731,136 elements, 347,721 active dofs; backend mg (direct estimate 4.3 GB, budget 4.0 GB)
+fem: multigrid 3 levels [(np.int64(136), np.int64(96), np.int64(56)), (np.int64(68), np.int64(48), np.int64(28)), (np.int64(34), np.int64(24), np.int64(14))], coarsest 39,375 dofs (direct)
+fem: multigrid 3 levels [(np.int64(136), np.int64(96), np.int64(56)), (np.int64(68), np.int64(48), np.int64(28)), (np.int64(34), np.int64(24), np.int64(14))], coarsest 39,375 dofs (direct)
