@@ -27,34 +27,47 @@ OUT = os.path.join(REPO, "runs", "box_catch", "ramps_concept"); os.makedirs(OUT,
 RX, RY = bc.RECT_E                     # C: middle rectangle of the Overseer's opening (node centres), about its catch centre
 TIP_X = 176.0                          # C: its trapezoid tips (drone x 146 / -206, catch centre -30)
 TUBE_R, CLEAR, BOTTOM = 3.0, 1.0, -25.0
-H_SIDE = float(os.environ.get("RAMP_SIDE_H", 7.0))       # ramp heights above the seat (= capture along that axis, 45 deg)
-H_OEND = float(os.environ.get("RAMP_OEND_H", 30.0))
+H_SIDE = float(os.environ.get("RAMP_SIDE_H", 25.0))       # ramp heights above the seat (= capture along that axis, 45 deg)
+H_OEND = float(os.environ.get("RAMP_OEND_H", 25.0))
 H_SEND = float(os.environ.get("RAMP_SEND_H", 8.0))
+SEND_Y = (0, 0)                                            # unused (per end below)
+SEND_NOSE = (40.0, 96.0)    # Scout nose pads |y|: beside the Overseer's receiver (|y| 27 + yaw + capture), inside its side nodes
+SEND_TAIL = (92.5, 99.5)    # Scout tail pads |y|: between the Scout's tail-bay ties (|y| <= 91) and its tail nodes (|y| >= 109.5)
+TIP_LEN = 50.0              # Overseer tip ramps: 50 along each tip edge from 40 off the tip node
 SLED_Y = float(os.environ.get("OVR_SLED_Y", 0.0))         # 0 = the Overseer's belly sled and pods as they are
-ALT_SIDE, ALT_SLED_Y = 26.0, 46.0                          # what-if: taller side ramps with the Overseer's pods pulled in
+ALT_SIDE, ALT_SLED_Y = 35.0, 46.0                          # what-if: taller side ramps with the Overseer's belly pods inside |y| 46
 S2 = math.sqrt(2)
 
-def wedge(axis, sign, c_line, span, h, name):
-    """45 deg ramp under a ring tube along the other axis at axis-coordinate sign*c_line (tube centre), rising toward
-    the centre; span = (lo, hi) along the tube; half-spaces n.p <= d"""
-    e = np.zeros(3); e[axis] = sign                          # outward horizontal
-    t = np.zeros(3); t[1 - axis] = 1.0                       # along the tube
-    k = c_line - TUBE_R * S2                                 # slope plane: e.p + z = k (surface touching the seated tube)
-    H = [((e + [0, 0, 1]) / S2, k / S2),                     # slope (outside = above it)
-         (np.array([0, 0, 1.0]), h),                         # top
-         (-e, -(k - h)),                                     # back face (inner vertical)
-         (e, k - BOTTOM),                                    # outer bound at the bottom
-         (np.array([0, 0, -1.0]), -BOTTOM),
-         (t, span[1]), (-t, -span[0])]
-    return dict(name=name, planes=[(n.tolist(), float(d)) for n, d in H], axis=axis, sign=sign, line=c_line, span=list(span), h=h)
+def wedge(A, B, c, s0, s1, h, name):
+    """45 deg ramp under the ring tube from A to B (plan, seat frame; tube centre at z 0), rising inward (away from the
+    plan centre c); along the edge from s0 to s1 mm from A; half-spaces n.p <= d"""
+    A, B, c = (np.array(v, float) for v in (A, B, c))
+    t2 = (B - A) / np.linalg.norm(B - A); e2 = np.array([t2[1], -t2[0]])
+    if e2 @ (A - c) < 0: e2 = -e2                             # outward
+    e = np.array([e2[0], e2[1], 0.0]); t = np.array([t2[0], t2[1], 0.0])
+    k = e2 @ A - TUBE_R * S2                                   # slope plane: e.p + z = k (touches a seated r-3 tube)
+    H = [((e + [0, 0, 1]) / S2, k / S2), (np.array([0, 0, 1.0]), h), (-e, -(k - h)), (e, k - BOTTOM),
+         (np.array([0, 0, -1.0]), -BOTTOM), (t, t2 @ A + s1), (-t, -(t2 @ A + s0))]
+    return dict(name=name, planes=[(n.tolist(), float(d)) for n, d in H], A=A.tolist(), B=B.tolist(), e=e2.tolist(), t=t2.tolist(),
+                k=float(k), span=[s0, s1], h=h)
 
-def ramps(h_side=H_SIDE, h_oend=H_OEND, h_send=H_SEND):
-    R = [wedge(1, s, RY, span, h_side, f"side {'+' if s > 0 else '-'}y {'+' if span[0] > 0 else '-'}x")   # two pads a side: clear of
-         for s in (1, -1) for span in ((12, 55), (-55, -12))]                                                # the corners and the Scout's mid node
-    R += [wedge(0, s, TIP_X, (-25, 25), h_oend, f"Overseer end {'+' if s > 0 else '-'}x") for s in (1, -1)]
-    for s in (1, -1):
-        for lo, hi in ((54, 88), (-88, -54)):              # beside the Overseer's receiver and its TPU feet (|y| <= 39 + yaw + capture)
-            R.append(wedge(0, s, RX, (lo, hi), h_send, f"Scout end {'+' if s > 0 else '-'}x {'+' if lo > 0 else '-'}y"))
+# the current Overseer base loop (cage v5, PR 122, confirmed 27 Oct) about the swap centre (x -30), seat z 0 = the loop plane
+HEX = dict(Ln=(85.8, 116.1), Rn=(85.8, -116.1), Lt=(-68.9, 119.7), Rt=(-68.9, -119.7), F=(191.2, 0.0), T=(-212.6, 0.0))
+INSET = 20.0                                                     # clear of the r 10.15 nodes by ~10 at both ends
+TIP_INSET = 40.0                                                 # tip ramps start 40 from the tip node: at yaw 5 deg the far tip tube crosses a ramp end nearer
+
+def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
+    h_side = H_SIDE if h_side is None else h_side; h_tip = H_OEND if h_tip is None else h_tip; h_send = H_SEND if h_send is None else h_send
+    y0, y1 = SEND_Y if send_y is None else send_y
+    X = HEX; c = (0.0, 0.0); R = []
+    for a, b, nm in (("Lt", "Ln", "side +y"), ("Rt", "Rn", "side -y")):            # shared: the long sides
+        L = float(np.linalg.norm(np.subtract(X[b], X[a]))); R.append(wedge(X[a], X[b], c, INSET, L - INSET, h_side, nm))
+    for a, b, nm in (("F", "Ln", "Overseer tip +x +y"), ("F", "Rn", "Overseer tip +x -y"), ("T", "Lt", "Overseer tip -x +y"), ("T", "Rt", "Overseer tip -x -y")):
+        R.append(wedge(X[a], X[b], c, TIP_INSET, TIP_INSET + TIP_LEN, h_tip, nm))   # near the tip only: the Scout's nose / tail tubes lie low nearer the sides
+    for a, b, nm, (y0, y1) in (("Rn", "Ln", "Scout end +x", SEND_NOSE), ("Rt", "Lt", "Scout end -x", SEND_TAIL)):   # the Scout's short ends
+        A, B = X[a], X[b]; L = float(np.linalg.norm(np.subtract(B, A)))
+        for lo, hi in ((L / 2 + y0, L / 2 + y1), (L / 2 - y1, L / 2 - y0)):
+            R.append(wedge(A, B, c, lo, hi, h_send, f"{nm} {'+' if lo > L / 2 else '-'}y"))
     return R
 
 def sdf(Q, R):
@@ -132,69 +145,70 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
 
 SCOUT_REF = os.environ.get("SCOUT_REF", "64d6210")             # Scout v3 layout v9 / cage v2 (PR 127 head, confirmed by the Scout session 27 Oct)
 SCOUT_CATCH_X, SCOUT_PLANE_Z = -8.5, -47.5                       # C (Scout session): catch (tab line) x, bottom plane z; cartridge flat bottom -44.5
+OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
+OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
 
 def git_bytes(ref, path):
     import subprocess
     return subprocess.check_output(["git", "-C", REPO, "show", f"{ref}:{path}"])
 
-def scout():
-    """the Scout as its session has it (PR 127 head): cage graph + every part mesh, seat frame = catch centre, z 0 at the
-    bottom plane; its ring rods are r 1.5 (the ramps are set for the Overseer's r 3), so it seats (3 - 1.5) * sqrt 2 lower"""
-    man = json.loads(git_bytes(SCOUT_REF, "nox/scout/v3/scout.assembly.json"))
-    sh = json.loads(git_bytes(SCOUT_REF, "runs/scout_layout/v9/cage_shell.json"))
-    drop = (TUBE_R - sh["rod_r_mm"]) * S2
-    off = np.array([-SCOUT_CATCH_X, 0.0, -SCOUT_PLANE_Z - drop])
-    N = np.array(sh["nodes"], float) + off; ring_ids = set(sh["open"][0]["ring"])
-    P, rad, ring = tube_points(N, sh["rods"], lambda a, b: sh["rod_r_mm"], ring_ids); names = list(tube_points.names)
+def load_drone(ref, assembly, shell, off, skip=("cage shell",), move=None, ring_r=None):
+    """one drone from a git ref in the seat frame: the cage graph (ring = its bottom opening) and every part mesh"""
+    man = json.loads(git_bytes(ref, assembly)); sh = json.loads(git_bytes(ref, shell))
+    N = np.array(sh["nodes"], float); ring_ids = set(sh["open"][0]["ring"])
+    if move:
+        for i, p in move.items(): N[i] = p
+    N = N + off
+    rr = sh["rod_r_mm"]
+    P, rad, ring = tube_points(N, sh["rods"], lambda a, b: rr, ring_ids); names = list(tube_points.names)
     for i, p in enumerate(N):
         P.append(p); rad.append(10.15 if i in ring_ids else sh["node_r_mm"]); ring.append(i in ring_ids); names.append(f"cage node {i}")
-    meshes, parts = [], {}
+    meshes = []
     for p in man["parts"]:
-        if p["name"].startswith(("cage shell",)): continue
-        if "mesh" in p:
-            m = trimesh.load(trimesh.util.wrap_as_stream(git_bytes(SCOUT_REF, p["mesh"])), file_type="stl")
+        if p["name"].startswith(skip): continue
+        if "mesh" in p: m = trimesh.load(trimesh.util.wrap_as_stream(git_bytes(ref, p["mesh"])), file_type="stl")
         else:
             r = load_part(p, REPO); m = r[0] if isinstance(r, tuple) else r
         m = m.copy()
         if "pose" in p: m.apply_transform(pose_matrix(p["pose"]))
         m.apply_translation(off)
         Q = np.vstack([m.vertices, trimesh.sample.sample_surface(m, 1500, seed=4)[0]]); Q = Q[Q[:, 2] < 70]
-        P.extend(Q); rad.extend([0.0] * len(Q)); ring.extend([False] * len(Q)); names.extend([p["name"]] * len(Q))
-        dm = m.simplify_quadric_decimation(face_count=300) if len(m.faces) > 300 else m
-        meshes.append(dict(name=p["name"], v=dm.vertices.round(1).tolist(), f=dm.faces.tolist())); parts[p["name"]] = m.bounds.tolist()
-    cb = -44.5 + off[2]
-    return dict(P=np.array(P), rad=np.array(rad), ring=np.array(ring), names=names, dz=off[2], cart_bottom_seat=round(cb, 2), seat_drop=round(drop, 2),
-                draw=dict(nodes=N.round(1).tolist(), rods=sh["rods"], ring=sorted(ring_ids), meshes=meshes, node_r=sh["node_r_mm"]))
-
-def overseer():
-    man = json.load(open(bc.OVR)); sh = json.load(open(os.path.join(REPO, "runs", "overseer_layout", "v5", "cage_shell.json")))
-    ringz = -57.0; dz = -ringz; xc = bc.OVR_XC                      # C: its opening ring plane; cartridge bottom 3.0 above
-    N = np.array(sh["nodes"]) + [-xc, 0, dz]; ring_ids = set(sh["open"][0]["ring"])
-    P, rad, ring = tube_points(N, sh["rods"], lambda a, b: 3.0, ring_ids); names = list(tube_points.names)
-    for i, p in enumerate(N):
-        P.append(p); rad.append(10.15); ring.append(i in ring_ids); names.append(f"cage node {i}")
-    meshes = []
-    for p in man["parts"]:
-        if p["name"].startswith(("cage shell",)): continue
-        r = load_part(p, os.path.dirname(bc.OVR)); m = (r[0] if isinstance(r, tuple) else r).copy()
-        if "pose" in p: m.apply_transform(pose_matrix(p["pose"]))
-        m.apply_translation([-xc, 0, dz])
-        Q = np.vstack([m.vertices, trimesh.sample.sample_surface(m, 1500, seed=3)[0]]); Q = Q[Q[:, 2] < 70]
-        if SLED_Y and p["name"].startswith(("belly sled", "down camera", "flow")):   # what-if: the belly pods pulled in to |y| <= SLED_Y
+        if SLED_Y and p["name"].startswith(("belly sled", "flow")):  # what-if: the belly pods inside |y| SLED_Y
             Q = Q.copy(); Q[:, 1] = np.clip(Q[:, 1], -SLED_Y, SLED_Y)
         P.extend(Q); rad.extend([0.0] * len(Q)); ring.extend([False] * len(Q)); names.extend([p["name"]] * len(Q))
-        dm = m.simplify_quadric_decimation(face_count=360) if len(m.faces) > 360 else m
+        dm = m.simplify_quadric_decimation(face_count=300) if len(m.faces) > 300 else m
         meshes.append(dict(name=p["name"], v=dm.vertices.round(1).tolist(), f=dm.faces.tolist()))
-    return dict(P=np.array(P), rad=np.array(rad), ring=np.array(ring), names=names, dz=dz, cart_bottom_seat=round(-54.0 + dz, 1),
-                draw=dict(nodes=N.round(1).tolist(), rods=sh["rods"], ring=sorted(ring_ids), meshes=meshes))
+    return dict(P=np.array(P), rad=np.array(rad), ring=np.array(ring), names=names,
+                draw=dict(nodes=N.round(1).tolist(), rods=sh["rods"], ring=sorted(ring_ids), meshes=meshes, rod_r=rr)), rr
+
+def scout():
+    """the Scout (PR 127 head) with its 4 bottom nodes refitted onto the Overseer loop's 4 side nodes (Spark 27 Oct);
+    its ring rods are r 1.5, the ramps are set for r 3, so it seats (3 - 1.5) * sqrt 2 lower"""
+    sh = json.loads(git_bytes(SCOUT_REF, "runs/scout_layout/v9/cage_shell.json")); drop = (TUBE_R - sh["rod_r_mm"]) * S2
+    off = np.array([-SCOUT_CATCH_X, 0.0, -SCOUT_PLANE_Z - drop])
+    move = {}
+    for i in sh["open"][0]["ring"]:                                       # nearest hexagon side node, back in the Scout frame
+        x, y = sh["nodes"][i][0] - SCOUT_CATCH_X, sh["nodes"][i][1]
+        tx, ty = HEX[("L" if y > 0 else "R") + ("n" if x > 0 else "t")]
+        move[i] = [tx + SCOUT_CATCH_X, ty, SCOUT_PLANE_Z]
+    d, rr = load_drone(SCOUT_REF, "nox/scout/v3/scout.assembly.json", "runs/scout_layout/v9/cage_shell.json", off, move=move)
+    d.update(dz=off[2], cart_bottom_seat=round(-44.5 + off[2], 2), seat_drop=round(drop, 2))
+    return d
+
+def overseer():
+    off = np.array([-OVR_CATCH_X, 0.0, -OVR_PLANE_Z])
+    d, rr = load_drone(OVR_REF, "nox/overseer/overseer.assembly.json", "nox/overseer/cage_v5_shell.json", off)
+    d.update(dz=off[2], cart_bottom_seat=round(-54.0 + off[2], 2))
+    return d
 
 def wedge_mesh(r):
-    """the ramp's 6 corners for drawing (seat frame)"""
-    ax, s, k, (lo, hi), h = r["axis"], r["sign"], r["line"] - TUBE_R * S2, r["span"], r["h"]
+    """6 corners for drawing: per end [top inner, bottom outer, bottom inner]"""
+    A, e, t, k, (s0, s1), h = np.array(r["A"]), np.array(r["e"]), np.array(r["t"]), r["k"], r["span"], r["h"]
     pts = []
-    for t in (lo, hi):
+    for sv in (s0, s1):
+        base = A + t * sv - e * (e @ A)
         for (u, z) in ((k - h, h), (k - BOTTOM, BOTTOM), (k - h, BOTTOM)):
-            p = [0.0, 0.0, z]; p[ax] = s * u; p[1 - ax] = t; pts.append(p)
+            q = base + e * u; pts.append([float(q[0]), float(q[1]), z])
     return pts
 
 def run_config(h_side, h_oend, h_send, sled_y=0.0):
@@ -212,28 +226,35 @@ def run_config(h_side, h_oend, h_send, sled_y=0.0):
 def main():
     res = run_config(H_SIDE, H_OEND, H_SEND)                       # DEFAULT: every cage and part as it is
     alt = run_config(ALT_SIDE, H_OEND, H_SEND, sled_y=ALT_SLED_Y)   # what-if: the Overseer's belly pods inside |y| ALT_SLED_Y
-    S_, O_ = res["scout"], res["overseer"]; m = lambda d: min(d["capture"][k]["ok_mm"] for k in ("x", "y", "diag"))
     res["whatif"] = [dict(label=f"Scout, side ramps {ALT_SIDE:.0f}", capture=alt["scout"]["capture"]),
-                     dict(label=f"Overseer, belly pods in to |y| {ALT_SLED_Y:.0f}, side ramps {ALT_SIDE:.0f}", capture=alt["overseer"]["capture"])]
-    res["lede"] = (f"No rim and no change to either cage. The Scout's bottom opening is just the Overseer's middle rectangle "
-                   f"({2 * RX:.0f} × {2 * RY:.0f} between node centres). Ramps rise into the opening: two shared side ramps under the long sides, "
-                   f"two Overseer end ramps under its trapezoid tips, and two Scout end ramps under the Scout's short ends, split around the Overseer's "
-                   f"cartridge and kept {H_SEND:.0f} mm low so the Overseer passes over them. Both cartridges seat 3 mm above the ring, so one head stop. "
-                   f"Landing tolerance as the cages are today: Scout ±{m(S_)} mm, Overseer ±{m(O_)} mm.")
-    res["notes"] = [
-        f"Ramp heights (mm above the seat; along its axis a 45° ramp catches about its own height): side {H_SIDE:.0f}, Overseer ends {H_OEND:.0f}, Scout ends {H_SEND:.0f}. The side ramps are two pads a side (x ±12..55) so they miss the corner nodes and the Scout's mid node; the Overseer end ramps sit between its tip nodes (y ±25); the Scout end ramps are pads at |y| 54..88, beside the Overseer's receiver and its TPU feet.",
-        f"What limits the Overseer sideways: its belly sled and the down camera / flow pods reach y ±72 at 9 mm above the ring, right over the side ramps. With the pods pulled in to |y| {ALT_SLED_Y:.0f} the side ramps can be {ALT_SIDE:.0f} tall: Overseer ±{min(alt['overseer']['capture'][k]['ok_mm'] for k in ('x', 'y', 'diag'))} mm, Scout ±{min(alt['scout']['capture'][k]['ok_mm'] for k in ('x', 'y', 'diag'))} mm (table).",
-        "Scout: its cage ends in the rectangle ring (6 mm tubes, nodes at the 4 corners and the 4 mid sides), cartridge 3 mm above the ring as the Overseer's, pack 1.0 under the FC, two latch rails for the receiver box. Overseer: cage v3 unchanged.",
-        "Box: the 6 ramps stand on a deck round the swap column (both cartridges drop straight through between them). The funnel panels and hook latch v2 retire; the hold (a latch over a ring tube) and keep-alive (pins against pads on the ring) move to the ramp bases.",
-        "Still open (concept review 27 Oct): the ring tubes slide on the ramps, so the slopes need a low-friction face (PTFE, μ ≤ 0.2) and the drop sim with tilt and drift before anything is printed; the 45° slope and these heights are concept numbers.",
-    ]
+                     dict(label=f"Overseer, belly pods inside |y| {ALT_SLED_Y:.0f}, side ramps {ALT_SIDE:.0f}", capture=alt["overseer"]["capture"])]
     enc = lambda o: o.tolist() if hasattr(o, "tolist") else float(o)
     json.dump(res, open(os.path.join(OUT, "result.json"), "w"), default=enc)
+    build_html(res)
+
+def build_html(res=None):
+    """the artifact from result.json: text from the numbers"""
+    res = res or json.load(open(os.path.join(OUT, "result.json")))
+    S_, O_ = res["scout"], res["overseer"]; m = lambda d: min(d["capture"][k]["ok_mm"] for k in ("x", "y", "diag"))
+    hs = res["heights"]; wi = {w["label"].split(",")[0]: w for w in res.get("whatif", [])}
+    mw = lambda w: min(w["capture"][k]["ok_mm"] for k in ("x", "y", "diag"))
+    res["lede"] = (f"Built on the cages the two sessions confirmed: Overseer cage v5 (PR 122, hexagon bottom) and Scout cage v9 (PR 127) "
+                   f"with its 4 bottom nodes moved onto the hexagon's side nodes, so the Scout's opening is the middle of the Overseer's. "
+                   f"Ramps rise into the opening: 2 shared side ramps, 4 Overseer ramps near its tips and 4 small Scout pads at its ends. "
+                   f"Landing tolerance today: Scout ±{m(S_)} mm, Overseer ±{m(O_)} mm.")
+    res["notes"] = [
+        f"Ramp heights above the seat (a 45° ramp catches about its own height): side {hs['side']:.0f}, Overseer tips {hs['overseer_end']:.0f}, Scout pads {hs['scout_end']:.0f}. Side ramps run the long sides 20 clear of each node; the Overseer ramps sit on the tip edges, 20 to 75 from the tip; the Scout pads sit beside the Overseer's receiver and feet at the nose (|y| 40..96) and between the Scout's tail-bay ties and its corner nodes at the tail (|y| 92.5..99.5).",
+        "What limits the Scout: at the tail its own tail-bay ties sit at ring height (x ≈ −60, |y| 50..91), and the Overseer's TPU feet and receiver fill the middle, so its tail pads are 7 mm wide slivers. Its nose and tail tubes also run low over where the Overseer's ramps would continue, so those stop near the tips.",
+        f"With the Overseer's belly pods inside |y| {ALT_SLED_Y:.0f} the side ramps can be {ALT_SIDE:.0f} tall: see the last two table rows.",
+        "Seat height: the Scout's ring rods are 3 mm, the Overseer's 6 mm, so on the same ramps the Scout sits 2.1 mm lower and its cartridge is 2.1 mm below the Overseer's at the swap. A 6 mm Scout ring (or its plane 2.1 higher) removes it (asked of the Scout session).",
+        "Box: the ramps stand on a deck round the swap column. The hold (a latch over a ring tube) and keep-alive (pins on ring pads) move to the ramp bases. Still open: low-friction ramp faces (PTFE, μ ≤ 0.2) and the drop sim with tilt and drift.",
+    ]
     bcj = json.load(open(os.path.join(REPO, "runs", "scout_bottom", "concept", "concept.json")))
     tpl = open(os.path.join(REPO, "nox", "box", "catch_ramps_view.html")).read()
+    enc = lambda o: o.tolist() if hasattr(o, "tolist") else float(o)
     html = tpl.replace("/*DATA*/null", json.dumps(dict(bc=bcj, ramps=res), default=enc))
     open(os.path.join(OUT, "ramps.html"), "w").write(html)
     open(os.path.join(REPO, "runs", "scout_bottom", "concept", "concept.html"), "w").write(html)   # the published artifact
 
 if __name__ == "__main__":
-    main()
+    build_html() if "--html" in sys.argv else main()

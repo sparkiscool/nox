@@ -61,8 +61,8 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 76ch; }
 
 <main>
   <header>
-    <span class="eyebrow">Box catch · concept E · Scout v3 + Overseer cage v3 · 27 Oct</span>
-    <h1>Ramps into the bottom opening, no rim</h1>
+    <span class="eyebrow">Box catch · ramps · Scout v9 (PR 127) + Overseer cage v5 (PR 122) · 27 Oct</span>
+    <h1>Ramps into the bottom opening, on the current cages</h1>
     <p id="lede"></p>
   </header>
 
@@ -95,7 +95,7 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 76ch; }
   <section class="sheet plan" aria-label="Plan">
     <h2>Plan, to scale</h2>
     <div class="scroll"><div id="plan" style="min-width:520px"></div></div>
-    <p class="mono">Looking down, x forward. Scout opening (rectangle) and Overseer opening (rectangle + trapezoid ends), ring node centres; ramps as drawn at their top edge (solid) and seat contact (dashed). Grid 20 mm.</p>
+    <p class="mono">Looking down, x forward. Overseer opening (hexagon, cage v5) and the Scout opening (its 4 side nodes), ring node centres; ramps as drawn at their top edge (solid) and seat contact (dashed). Grid 20 mm.</p>
   </section>
 
   <section class="sheet" aria-label="Sections">
@@ -131,31 +131,19 @@ function scene(v) {
     const col = shared(r) ? c.ramp : c.ramp2;
     for (const f of rampFaces(r)) L.push({ k: 'poly', p: f, fill: hex2(col, mine ? 'cc' : '33'), stroke: col, w: .6, shade: true });
   }
-  if (v === 's') { const d = S.draw;
-    for (const f of boxFaces(d.cart)) L.push({ k: 'poly', p: f, fill: hex2(c.pack, '55'), stroke: c.pack, w: .6 });
-    for (const b of d.boxes) for (const f of boxFaces(b)) L.push({ k: 'poly', p: f, fill: hex2(c.ring, '30'), stroke: c.ring, w: .4 });
-    for (const f of boxFaces(d.plate)) L.push({ k: 'poly', p: f, fill: hex2(c.part, '66'), stroke: c.part, w: .4 });
-    for (const f of boxFaces(d.fc)) L.push({ k: 'poly', p: f, fill: hex2(c.part, '66'), stroke: c.part, w: .4 });
-    for (const [x, y] of d.motors) { L.push({ k: 'line', p: ring(x, y, d.prop_z, d.prop_r, 40), stroke: c.part, w: 1.2 });
-      L.push({ k: 'line', p: [[x*.55, y*.55, d.arm_z], [x, y, d.arm_z]], stroke: c.part, w: 5 }); L.push({ k: 'line', p: ring(x, y, d.arm_z + 10, 14, 16), stroke: c.part, w: 1 }); }
-    const ringSet = new Set(d.ring);
-    for (const [a, b, w] of d.rods) { const isR = ringSet.has(a) && ringSet.has(b); L.push({ k: 'line', p: [d.nodes[a], d.nodes[b]], stroke: isR ? c.ring : c.carbon, w: w === 6 ? 3.2 : 1.6 }); }
-    for (const [p, q] of d.links) L.push({ k: 'line', p: [p, q], stroke: c.carbon, w: 1.2 });
-    d.nodes.forEach((p, i) => L.push({ k: 'dot', p: [p], fill: ringSet.has(i) ? c.ring : c.carbon, r: 3.5 }));
-  }
-  if (v === 'o') { const d = O.draw;
-    for (const m of d.meshes) { const col = /cartridge|receiver|pack/.test(m.name) ? c.pack : (/spokes|guard/.test(m.name) ? c.carbon : c.part);
+  for (const [key, D] of [['s', S], ['o', O]]) { if (v !== key) continue; const d = D.draw;
+    for (const m of d.meshes) { const col = /cartridge|receiver|pack|slider|skid|strip|XT60/.test(m.name) ? c.pack : (/spokes|guard|ties/.test(m.name) ? c.carbon : c.part);
       const a = /prop/.test(m.name) ? '22' : '99';
       for (const f of m.f) L.push({ k: 'poly', p: f.map(i => m.v[i]), fill: hex2(col, a), stroke: 'none', w: 0, shade: true }); }
-    const ringSet = new Set(d.ring);
-    for (const [a, b] of d.rods) { const isR = ringSet.has(a) && ringSet.has(b); L.push({ k: 'line', p: [d.nodes[a], d.nodes[b]], stroke: isR ? c.ring : c.carbon, w: isR ? 6 : 4 }); }
-    d.nodes.forEach((p, i) => L.push({ k: 'dot', p: [p], fill: ringSet.has(i) ? c.ring : c.carbon, r: 9 }));
+    const ringSet = new Set(d.ring), w = key === 'o' ? 6 : 3;
+    for (const [a, b] of d.rods) { const isR = ringSet.has(a) && ringSet.has(b); L.push({ k: 'line', p: [d.nodes[a], d.nodes[b]], stroke: isR ? c.ring : c.carbon, w: isR ? w + 2 : w }); }
+    d.nodes.forEach((p, i) => L.push({ k: 'dot', p: [p], fill: ringSet.has(i) ? c.ring : c.carbon, r: ringSet.has(i) ? 10 : (key === 'o' ? 9 : 5) }));
   }
   return L;
 }
 const cv = document.getElementById('cv'), cx = cv.getContext('2d');
 let view = 's', yaw = -0.7, pitch = 0.42;
-const SC = { s: 300, o: 820, r: 440 }, ZC = { s: 30, o: 70, r: 0 };
+const SC = { s: 420, o: 820, r: 520 }, ZC = { s: 40, o: 70, r: 0 };
 function draw() {
   const W = cv.width, H = cv.height; cx.clearRect(0, 0, W, H);
   const cy_ = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), s = Math.min(W, H) / SC[view];
@@ -184,11 +172,11 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
 new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
 // plan
-(() => { const X0 = -230, X1 = 230, Y0 = -130, Y1 = 130, w = X1 - X0, h = Y1 - Y0;
+(() => { const X0 = -250, X1 = 230, Y0 = -140, Y1 = 140, w = X1 - X0, h = Y1 - Y0;
   const T = (x, y) => `${(x - X0).toFixed(1)},${(Y1 - y).toFixed(1)}`;
   let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="plan of ramps and openings">`;
-  for (let x = -220; x <= 220; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${h}" stroke="var(--rule)" stroke-width=".35"/>`;
-  for (let y = -120; y <= 120; y += 20) g += `<line x1="0" y1="${Y1-y}" x2="${w}" y2="${Y1-y}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let x = -240; x <= 220; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${h}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let y = -140; y <= 140; y += 20) g += `<line x1="0" y1="${Y1-y}" x2="${w}" y2="${Y1-y}" stroke="var(--rule)" stroke-width=".35"/>`;
   for (const r of RA.ramps) { const c = r.corners; const top = [c[0], c[3]], base = [c[1], c[4]];
     const pts = [c[0], c[3], c[4], c[1]].map(p => T(p[0], p[1])).join(' ');
     g += `<polygon points="${pts}" fill="${shared(r) ? 'var(--ramp)' : 'var(--ramp2)'}" fill-opacity=".35" stroke="${shared(r) ? 'var(--ramp)' : 'var(--ramp2)'}" stroke-width=".8"/>`;
@@ -203,10 +191,9 @@ new MutationObserver(draw).observe(document.documentElement, { attributes: true,
   g += loop(sR, S.draw.nodes, 'var(--ring)', 3);
   for (const i of O.draw.ring) g += `<circle cx="${T(O.draw.nodes[i][0], O.draw.nodes[i][1]).split(',')[0]}" cy="${T(O.draw.nodes[i][0], O.draw.nodes[i][1]).split(',')[1]}" r="10.15" fill="none" stroke="var(--ovr)" stroke-width="1"/>`;
   for (const i of S.draw.ring) g += `<circle cx="${T(S.draw.nodes[i][0], S.draw.nodes[i][1]).split(',')[0]}" cy="${T(S.draw.nodes[i][0], S.draw.nodes[i][1]).split(',')[1]}" r="4" fill="var(--ring)"/>`;
-  const cb = S.draw.cart; g += `<rect x="${cb[0]-X0}" y="${Y1-cb[3]}" width="${cb[1]-cb[0]}" height="${cb[3]-cb[2]}" fill="var(--pack)" fill-opacity=".35" stroke="var(--pack)" stroke-width=".6"/>`;
-  g += `<text x="${T(-226, 120).split(',')[0]}" y="${T(-226, 120).split(',')[1]}" font-size="8" fill="var(--ovr)" font-family="IBM Plex Mono, monospace">Overseer opening</text>`;
-  g += `<text x="${T(-226, 108).split(',')[0]}" y="${T(-226, 108).split(',')[1]}" font-size="8" fill="var(--ring)" font-family="IBM Plex Mono, monospace">Scout opening</text>`;
-  g += `<text x="${T(-226, -122).split(',')[0]}" y="${T(-226, -122).split(',')[1]}" font-size="7.5" fill="var(--muted)" font-family="IBM Plex Mono, monospace">numbers = ramp height above the seat (mm)</text>`;
+  g += `<text x="${T(-246, 130).split(',')[0]}" y="${T(-246, 130).split(',')[1]}" font-size="8" fill="var(--ovr)" font-family="IBM Plex Mono, monospace">Overseer opening</text>`;
+  g += `<text x="${T(-246, 118).split(',')[0]}" y="${T(-246, 118).split(',')[1]}" font-size="8" fill="var(--ring)" font-family="IBM Plex Mono, monospace">Scout opening</text>`;
+  g += `<text x="${T(-246, -134).split(',')[0]}" y="${T(-246, -134).split(',')[1]}" font-size="7.5" fill="var(--muted)" font-family="IBM Plex Mono, monospace">numbers = ramp height above the seat (mm)</text>`;
   document.getElementById('plan').innerHTML = g + '</svg>'; })();
 
 // sections: y-z at x 30 (side pads) and x-z at y 0 / y 60
@@ -222,14 +209,14 @@ function sec(title, axisH, cut, X0, X1, Z0, Z1, drone) {
   for (const rr of d.rods) { const [a, b] = rr; const p = d.nodes[a], q = d.nodes[b];
     g += `<line x1="${H(p)-X0}" y1="${Z1-p[2]}" x2="${H(q)-X0}" y2="${Z1-q[2]}" stroke="${rs.has(a) && rs.has(b) ? 'var(--ring)' : 'var(--carbon)'}" stroke-width="${rs.has(a) && rs.has(b) ? 2 : .6}" opacity=".7"/>`; }
   if (d.cart) { const b = d.cart; const [lo, hi] = axisH === 0 ? [b[0], b[1]] : [b[2], b[3]]; g += `<rect x="${lo-X0}" y="${Z1-b[5]}" width="${hi-lo}" height="${b[5]-b[4]}" fill="var(--pack)" fill-opacity=".5"/>`; }
-  if (d.meshes) for (const m of d.meshes) { if (/prop|spokes|guard|L2|camera|apex/.test(m.name)) continue;
+  if (d.meshes) for (const m of d.meshes) { if (/prop|spokes|guard|L2|camera|apex|wires|plate|hub|arm|motor/.test(m.name)) continue;
     const xs = m.v.map(v => v[axisH]), zs = m.v.map(v => v[2]); const lo = Math.min(...xs), hi = Math.max(...xs), zl = Math.min(...zs), zh = Math.max(...zs);
-    g += `<rect x="${lo-X0}" y="${Z1-zh}" width="${hi-lo}" height="${zh-zl}" fill="${/cartridge|receiver|pack/.test(m.name) ? 'var(--pack)' : 'var(--part)'}" fill-opacity=".35"/>`; }
+    g += `<rect x="${lo-X0}" y="${Z1-zh}" width="${hi-lo}" height="${zh-zl}" fill="${/cartridge|receiver|pack|slider|skid|strip/.test(m.name) ? 'var(--pack)' : 'var(--part)'}" fill-opacity=".35"/>`; }
   return `<div class="sec"><h3>${title}</h3>${g}</svg></div>`;
 }
 document.getElementById('secs').innerHTML = [
-  sec('Scout, side view (x)', 0, 60, -130, 130, -30, 110, S),
-  sec('Scout, end view (y)', 1, 30, -130, 130, -30, 110, S),
+  sec('Scout, side view (x)', 0, 60, -200, 200, -30, 130, S),
+  sec('Scout, end view (y)', 1, 30, -160, 160, -30, 130, S),
   sec('Overseer, side view (x)', 0, 0, -320, 470, -30, 220, O),
   sec('Overseer, end view (y)', 1, 30, -360, 360, -30, 220, O),
 ].join('');
