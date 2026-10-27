@@ -1,0 +1,30 @@
+{
+ "name": "overseer_arm_rear",
+ "h": 1.5,
+ "gen_cm3": 50.0,
+ "coarse": {
+  "s_per_it": 1.4,
+  "cells": 36864,
+  "design_cells": 6397,
+  "cases": 53,
+  "load_cases": 53,
+  "backend": "direct",
+  "peak_gb": 1.91
+ },
+ "smoke_iterations": 3,
+ "fine": {
+  "s_per_it": 27.3,
+  "cells": 172032,
+  "design_cells": 51095,
+  "cases": 53,
+  "load_cases": 53,
+  "backend": "direct",
+  "peak_gb": 7.01
+ },
+ "peak_gb": 7.01,
+ "wall_h": [
+  0.48,
+  1.19
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
