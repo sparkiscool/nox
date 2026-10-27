@@ -84,7 +84,7 @@ def setup_for(i):
     def setup(h):
         from topo import Part
         b = bodies(i)
-        p = Part(f"node_{i}", h, b["drawn"], b["cuts"], b["env"], build="+z", material="TPU")   # TPU feet and nodes (CLAUDE.md)
+        p = Part(f"node_{i}", h, b["drawn"], b["cuts"], b["env"], build="+z", material="TPU95A")   # TPU feet and nodes (CLAUDE.md)
         S = b["sockets"]
         for j, s in enumerate(S):                        # member j loaded, every other member holding
             hold = None
