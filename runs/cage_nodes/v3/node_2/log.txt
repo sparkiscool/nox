@@ -1,0 +1,46 @@
+=== cage_node_2: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_2: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_2: grid (40, 40, 40) h 1.5 = 64,000 cells; design 24,612 (83.1 cm3), drawn 2,596, void 36,792
+  support hold 0: 2100 cells, 3988 nodes
+  support hold 1: 2100 cells, 3988 nodes
+  support hold 2: 2138 cells, 4084 nodes
+  support hold 3: 2138 cells, 4084 nodes
+  support hold 4: 2135 cells, 4099 nodes
+  support hold 5: 2135 cells, 4099 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_2: grid (24, 24, 24) h 3.0 = 13,824 cells; design 3,014 (81.4 cm3), drawn 332, void 10,478
+  support hold 0: 269 cells, 716 nodes
+  support hold 1: 269 cells, 716 nodes
+  support hold 2: 275 cells, 738 nodes
+  support hold 3: 275 cells, 738 nodes
+  support hold 4: 279 cells, 748 nodes
+  support hold 5: 279 cells, 748 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.96 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.96 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.015 of 3,014 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.015 of 3,014 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (2.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (2.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: 1 drawn bodies (332 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (332 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+fem: grid (24, 24, 24) = 13,824 elements, 12,957 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+fem: grid (24, 24, 24) = 13,824 elements, 12,957 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0481 (dil 0.0578 g +2.259) grey 16.1% ch 0.015 worst tube to 1 side a 216 3.0s
+it   1 beta    1 J  10.0000 vol 0.0481 (dil 0.0578 g +2.259) grey 16.1% ch 0.015 worst tube to 1 side a 216 3.0s
+it   2 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.7s
+it   2 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.7s
+it   3 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.5s
+it   3 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.5s
+it   4 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it   4 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it   5 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.2s
+it   5 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.2s
+it   6 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.3s
+it   6 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.3s
