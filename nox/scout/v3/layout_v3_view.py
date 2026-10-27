@@ -53,9 +53,20 @@ cor = [L_ + Rf * (ex + math.tan(ha) * sy * ey + math.tan(va) * sz * ez) / np.lin
        for sy, sz in ((1, 1), (-1, 1), (-1, -1), (1, -1))]
 fr = [line(L_, c) for c in cor] + [line(cor[i], cor[(i + 1) % 4]) for i in range(4)]
 names.append("front camera view"); s.part("front camera view", trimesh.util.concatenate(fr), group="views", color="#3fa34d", printed=False)
+# the two alternatives weighed (concept rule), side by side: B = a ring round the Scout's own receiver (own funnel), C = the camera
+# on top (SCOUT_CAM_Z=90,110); each drawn whole, offset in y
+ALTS = [("B own ring", os.path.join(RUN, "alt_own_ring"), -460.0), ("C camera on top", os.path.join(RUN, "alt_top_camera"), 460.0)]
+for tag, d_, off in ALTS:
+    if not os.path.exists(os.path.join(d_, "parts", "parts.json")): continue
+    ms = [trimesh.load(os.path.join(d_, "parts", p_["file"])).apply_translation([0, off, 0])
+          for p_ in json.load(open(os.path.join(d_, "parts", "parts.json"))) if not p_["name"].startswith("prop")]
+    ra = json.load(open(os.path.join(d_, "result.json")))
+    nm = f"alternative {tag} ({ra['mass']:.0f} g E, {ra['extents'][0]:.0f} x {ra['extents'][1]:.0f} x {ra['extents'][2]:.0f})"
+    names.append(nm); s.part(nm, trimesh.util.concatenate(ms), group="alternatives", color="#8a8a8a", printed=False,
+                             note="weighed, not picked: runs/scout_layout/v6/summary.md")
 spin = lambda t: trimesh.transformations.rotation_matrix(math.radians(360 * t / 20), [0, 0, 1])
 s.timeline(lambda t: {n: spin(t) for n in names}, duration_s=20, fps=24)
-s.view("iso", (500, -560, 380), (0, 0, 10)); s.view("side", (0, -900, 30), (0, 0, 30)); s.view("front", (900, 0, 40), (0, 0, 30))
+s.view("iso", (500, -560, 380), (0, 0, 10)); s.view("all three", (0, -1700, 900), (0, 0, 0)); s.view("side", (0, -900, 30), (0, 0, 30)); s.view("front", (900, 0, 40), (0, 0, 30))
 s.view("top", (0, 0, 900), (0, 0, 0)); s.view("under", (200, -200, -700), (0, 0, -40))
 s.write(os.path.join(RUN, "motion.html"))
 
@@ -83,3 +94,27 @@ for k, (el, az, ttl) in enumerate(((22, -55, "iso"), (0, -90, "side (from -y)"),
 fig.suptitle("Scout v3 layout v3 / cage v1 geodesic: orange = the shared bottom ring (the Overseer's), light blue = the Overseer cage on the same datum, "
              "green = camera view", fontsize=11)
 fig.tight_layout(); fig.savefig(os.path.join(RUN, "preview.png")); print("wrote", os.path.join(RUN, "preview.png"))
+
+# ---------------------------------------------------------------- the three options side by side (picked A, B, C): top and side
+fig = plt.figure(figsize=(18, 9), dpi=100)
+opts = [("A picked: the Overseer's ring, nose camera", RUN)] + [(f"{t}", d_) for t, d_, _ in ALTS]
+for c_, (ttl, d_) in enumerate(opts):
+    if not os.path.exists(os.path.join(d_, "cage_shell.json")): continue
+    ra = json.load(open(os.path.join(d_, "result.json"))); sa = json.load(open(os.path.join(d_, "cage_shell.json")))
+    Na = np.array(sa["nodes"]); Ea = sa["rods"]; rg = sa["open"][0]["ring"]
+    pa = json.load(open(os.path.join(d_, "parts", "parts.json")))
+    for r_, (el, az, vt) in enumerate(((90, -90, "top"), (0, -90, "side"))):
+        ax = fig.add_subplot(2, 3, r_ * 3 + c_ + 1, projection="3d"); ax.set_proj_type("ortho")
+        for p in pa:
+            if p["name"].startswith(("cage shell", "spokes")): continue
+            m = trimesh.load(os.path.join(d_, "parts", p["file"]))
+            ax.add_collection3d(Poly3DCollection(m.triangles, facecolor=p["color"], edgecolor="none", alpha=0.35 if p["name"].startswith("prop") else 0.9))
+        ax.add_collection3d(Line3DCollection([(Na[a], Na[b]) for a, b in Ea if not (a in rg and b in rg)], colors="#222222", linewidths=1.4))
+        ax.add_collection3d(Line3DCollection([(Na[a], Na[b]) for a, b in Ea if a in rg and b in rg], colors="#e07020", linewidths=2.6))
+        ax.add_collection3d(Line3DCollection([tuple(map(tuple, v)) for v in ra["links"].values()], colors="#666666", linewidths=0.7))
+        lo, hi = np.array([-230, -170, -80]), np.array([230, 170, 160])
+        ax.set_xlim(lo[0], hi[0]); ax.set_ylim(lo[1], hi[1]); ax.set_zlim(lo[2], hi[2]); ax.set_box_aspect(hi - lo)
+        ax.view_init(el, az); ax.set_axis_off()
+        ax.set_title(f"{ttl}\n{ra['mass']:.0f} g E, {ra['extents'][0]:.0f} x {ra['extents'][1]:.0f} x {ra['extents'][2]:.0f} ({vt})" if r_ == 0 else vt, fontsize=9)
+fig.suptitle("Scout v3 cage options: orange = bottom ring", fontsize=11); fig.tight_layout()
+fig.savefig(os.path.join(RUN, "options.png")); print("wrote", os.path.join(RUN, "options.png"))

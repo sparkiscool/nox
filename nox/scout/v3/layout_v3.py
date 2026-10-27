@@ -29,7 +29,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 
 RING_MODE = os.environ.get("SCOUT_RING", "overseer")
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scout_layout", "v6", "" if RING_MODE == "overseer" else "alt_own_ring")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v6", "" if RING_MODE == "overseer" else "alt_own_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")                # the Overseer cage v3 (ring source)
 LOG = io.StringIO()
@@ -475,7 +475,7 @@ def place_boom(nodes, E):
     seat = box(CAM["Lx"] - CAM_D - 4.0, CAM["Lx"] - CAM_D, -CAM_W / 2, CAM_W / 2, min(CAM["Lz"] - CAM_H / 2, b[2] - sec / 2), CAM["Lz"] + CAM_H / 2)
     D["camera mount (boom + seat)"] = (trimesh.util.concatenate(meshes + [seat]), "structure", False,
                                        (len(bars) * bl * sec * sec * 0.5 + 4.0 * CAM_W * CAM_H * 0.6) * 1.27e-3, "E", "PETG", "printed", "#aab4c0", False)
-    CAM.update(boom=bl, boom_gap=g_, boom_w=w, boom_sec=sec)
+    CAM.update(boom=bl, boom_gap=g_, boom_w=w, boom_sec=sec, seat_z=(float(seat.bounds[0][2]), float(seat.bounds[1][2])))
     return g_
 
 
@@ -521,8 +521,19 @@ def attach(nodes, ring_ids, E=()):
     def seg_d(q, a, b):
         u = b - a; t = np.clip(((q - a) @ u) / (u @ u), 0, 1); return np.linalg.norm(q - (a + t[:, None] * u), axis=1)
 
+    acc = []                                                 # accepted links (and their mirrors): no two rods through each other
+
+    def link_gap(q, a_, b_):
+        r_ = np.asarray(a_) + np.linspace(0.08, 0.92, 40)[:, None] * (np.asarray(b_) - np.asarray(a_))
+        return float(np.linalg.norm(q[:, None, :] - r_[None], axis=2).min())
+
     def clear(p0, p1):                                       # a link and its mirror (mirror-exact links)
-        return clear1(p0, p1) and clear1(np.asarray(p0) * mir, np.asarray(p1) * mir)
+        p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
+        if not (clear1(p0, p1) and clear1(p0 * mir, p1 * mir)): return False
+        if np.linalg.norm(p0 - p0 * mir) + np.linalg.norm(p1 - p1 * mir) > 1.0:   # a link and its own mirror apart
+            q = p0 + np.linspace(0.08, 0.92, 40)[:, None] * (p1 - p0)
+            if link_gap(q, p0 * mir, p1 * mir) < 2 * ROD_R + 1.0: return False
+        return True
 
     def clear1(p0, p1):
         q = np.asarray(p0)[None] + np.linspace(0.04, 0.96, 60)[:, None] * (np.asarray(p1) - np.asarray(p0))[None]
@@ -530,50 +541,66 @@ def attach(nodes, ring_ids, E=()):
         if any((seg_d(q, a_, b_) < CAM['boom_sec'] / math.sqrt(2) + ROD_R + 1.0).any() for a_, b_ in BOOM_AX): return False
         if any(((q > b_[0]) & (q < b_[1])).all(1).any() for b_ in keep_out): return False
         if any(((np.linalg.norm(q[:, :2] - k, axis=1) < 2.0 + 1.0 + ROD_R) & (q[:, 2] < -20.0)).any() for k in keys_): return False
-        if (q[:, 0] > ZONE[0]) .any() and ((q[:, 0] > ZONE[0]) & (q[:, 0] < ZONE[1]) & (q[:, 1] > ZONE[2]) & (q[:, 1] < ZONE[3]) & (q[:, 2] < CART_BOT)).any():
-            return False
+        if ((q[:, 0] > ZONE[0]) & (q[:, 0] < ZONE[1]) & (q[:, 1] > ZONE[2]) & (q[:, 1] < ZONE[3]) & (q[:, 2] < CART_BOT)).any(): return False
+        qi = q[(np.linspace(0.04, 0.96, 60) > 0.08) & (np.linspace(0.04, 0.96, 60) < 0.92)]
+        if any(link_gap(qi, a_, b_) < 2 * ROD_R + 1.0 for a_, b_ in acc): return False
         return views_clear(p0, p1, ROD_R)
 
-    def pick(p0, cands, n, spread_deg):
-        cands = sorted(cands, key=lambda k: np.linalg.norm(nodes[k] - p0))[:10]
+    def add(name, a_, b_):
+        extra[name] = (a_, b_); acc.append((np.asarray(a_, float), np.asarray(b_, float)))
+        acc.append((np.asarray(a_, float) * mir, np.asarray(b_, float) * mir))
+
+    def pick(p0, cands, n, spread_deg, name):
+        """n links from p0 among the 10 nearest valid candidates: least added prop shadow (secondary to structure; the links
+        spread at least spread_deg apart), length as the tie-break; each taken link is checked against the ones before it"""
+        cands = sorted(cands, key=lambda k: np.linalg.norm(nodes[k] - p0))[:14]
         cost = {k: sum(seg_shadow(p0, nodes[k], ROD_R)) + 0.002 * np.linalg.norm(nodes[k] - p0) for k in cands}
         out = []
         for k in sorted(cands, key=cost.get):
             u = (nodes[k] - p0) / np.linalg.norm(nodes[k] - p0)
-            if all(np.degrees(np.arccos(np.clip(u @ v, -1, 1))) >= spread_deg for v in [(nodes[j] - p0) / np.linalg.norm(nodes[j] - p0) for j in out]):
-                out.append(k)
+            if all(np.degrees(np.arccos(np.clip(u @ v, -1, 1))) >= spread_deg for v in [(nodes[j] - p0) / np.linalg.norm(nodes[j] - p0) for j in out]) \
+                    and clear(p0, nodes[k]):
+                out.append(k); add(f"{name}.{len(out)}", p0, nodes[k])
             if len(out) == n: break
         return out
-    for i, (mx, my) in enumerate(MXY):                      # 3 spokes per arm tip (under the motor, the carbon arm), props 12 off
-        tip = np.array([mx, my, 18.5 - ROD_R])
-        ok = [k for k in range(len(nodes)) if seg_band_dist(tip, nodes[k]) - ROD_R >= PROP_GAP and clear(tip, nodes[k])]
-        for n_, k in enumerate(pick(tip, ok, 3, 30.0)):
-            extra[f"spoke {i + 1}.{n_ + 1}"] = (tip, nodes[k])
-    rb = REC_B                                               # bay ties: receiver bottom corners to the 2 nearest ring nodes
+    side = lambda P, sx, sy: (sx * P[0] > -1.0) and (sy * P[1] > -1.0)
+    for i, (mx, my) in enumerate(MXY):                      # 3 spokes per arm tip (under the motor, the carbon arm) to shell nodes
+        tip = np.array([mx, my, 18.5 - ROD_R])                # on its own side (docs/generative.md 0), props 12 off
+        if my < 0: continue                                   # the -y arms are the mirrors
+        ok = [k for k in range(len(nodes)) if side(nodes[k], np.sign(mx), np.sign(my)) and seg_band_dist(tip, nodes[k]) - ROD_R >= PROP_GAP]
+        got = pick(tip, ok, 3, 30.0, f"spoke {i + 1}")
+        if len(got) < 3: pick(tip, [k for k in ok if k not in got], 3 - len(got), 20.0, f"spoke {i + 1}x")
+    rb = REC_B                                               # bay ties: receiver bottom corners to the 2 nearest ring nodes (from inside, above the ring)
     for sx in (1, -1):
-        for sy in (1, -1):
-            cn = np.array([rb[1][0] if sx > 0 else rb[0][0], sy * rb[1][1], -34.0])
-            ok = [k for k in sorted(ring_ids, key=lambda k: np.linalg.norm(nodes[k] - cn)) if clear(cn, nodes[k])]
-            for n_, k in enumerate(ok[:2]):
-                extra[f"bay tie {sx:+d}{sy:+d}.{n_ + 1}"] = (cn, nodes[k])
-    pb = D["frame plate (Bee35 carbon)"][0].bounds           # core ties: plate nose and tail to the shell top
-    for nm, q0 in (("nose", (pb[1][0] - 8.0, 0.0)), ("tail", (pb[0][0] + 8.0, 0.0))):
-        q = np.array([q0[0], q0[1], 22.0 + ROD_R])
-        ok = [k for k in range(len(nodes)) if k not in ring_ids and seg_band_dist(q, nodes[k]) - ROD_R >= PROP_GAP and clear(q, nodes[k])]
-        for n_, k in enumerate(pick(q, ok, 2, 25.0)):
-            extra[f"core tie {nm}.{n_ + 1}"] = (q, nodes[k])
-    # camera guard bar: 2 printed nodes over the camera top, behind its lens (out of its view), 2 struts each into the shell
+        cn = np.array([rb[1][0] if sx > 0 else rb[0][0], rb[1][1], -34.0])
+        ok = [k for k in ring_ids if side(nodes[k], sx, 1)]
+        pick(cn, ok, 2, 15.0, f"bay tie {sx:+d}+1")
+    pb = D["frame plate (Bee35 carbon)"][0].bounds           # core ties: 2 from each plate edge (underside) into the shell
+    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1)):
+        q = np.array([q0[0], q0[1], 18.5 - ROD_R])
+        ok = [k for k in range(len(nodes)) if (sx == 0 or sx * nodes[k][0] > 0) and (sy == 0 or sy * nodes[k][1] > 0)
+              and seg_band_dist(q, nodes[k]) - ROD_R >= PROP_GAP]
+        pick(q, ok, 2, 25.0, f"core tie {nm}")
+    # camera: a guard bar of 2 printed nodes over its top behind the lens, 2 struts each into the shell; the seat braced from its
+    # back corners into the shell and from its lower corners to the front arm beams 30 out of the plate (a braced pyramid on the
+    # core with the boom, not a stalk); the boom root lug at the plate nose is the printed fuse (requirement)
     cb = D["camera"][0].bounds; x = cb[1][0] - GUARD_NODE_R - 3.0
     T = [np.array([x, sy * (CAM_W / 2 + 4.0), cb[1][2] + 3.0 + GUARD_NODE_R]) for sy in (1, -1)]
     guard = []
     if views_clear(T[0], T[1], ROD_R):
-        extra["cam guard bar"] = (T[0], T[1]); guard = T
-        for i, t_ in enumerate(T):
-            ok = [k for k in sorted(range(len(nodes)), key=lambda k: np.linalg.norm(nodes[k] - t_))
-                  if seg_band_dist(t_, nodes[k]) - ROD_R >= PROP_GAP and views_clear(t_, nodes[k], ROD_R)
-                  and all((seg_d(t_[None] + np.linspace(0.05, 0.95, 40)[:, None] * (nodes[k] - t_)[None], a_, b_) > CAM['boom_sec'] / math.sqrt(2) + ROD_R + 1.0).all() for a_, b_ in BOOM_AX)]
-            for n_, k in enumerate(ok[:2]):
-                extra[f"cam guard strut {i}.{n_ + 1}"] = (t_, nodes[k])
+        add("cam guard bar", T[0], T[1]); guard = T
+        ok = [k for k in range(len(nodes)) if seg_band_dist(T[0], nodes[k]) - ROD_R >= PROP_GAP]
+        pick(T[0], ok, 2, 20.0, "cam guard strut 0")
+    sz = CAM["seat_z"]; xs = CAM["Lx"] - CAM_D - 4.0
+    for lvl, zc in (("lo", sz[0] + ROD_R), ("hi", sz[1] - ROD_R)):
+        c_ = np.array([xs, CAM_W / 2 - ROD_R, zc])
+        ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
+        pick(c_, ok, 1, 0.0, f"cam brace {lvl}")
+    c_ = np.array([xs, CAM_W / 2 - ROD_R, sz[0] + ROD_R]); u_ = np.array([1.0, 1.0, 0]) / math.sqrt(2)
+    for out_ in (30.0, 40.0, 50.0, 60.0):
+        root = np.array([*(out_ * u_[:2]), 18.5 - ROD_R])
+        if seg_band_dist(c_, root) - ROD_R >= PROP_GAP and clear(c_, root):
+            add("cam brace arm.1", c_, root); break
     have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]   # mirror-exact links
     for k_, (a_, b_) in list(extra.items()):
         a_, b_ = np.asarray(a_) * mir, np.asarray(b_) * mir
@@ -671,9 +698,21 @@ for f in tris:
 say(f"largest cell: inscribed circle Ø{max(circ) - 2 * SHELL_R:.0f} between tube surfaces (C)")
 rl = {k: float(np.linalg.norm(np.subtract(q, p))) for k, (p, q) in extra.items()}
 short = [l for l in sh if l < BREAK_EVEN]
+kinds = {}
+for k_ in extra: kinds[" ".join(k_.split()[:2]).split(".")[0]] = kinds.get(" ".join(k_.split()[:2]).split(".")[0], 0) + 1
+say("links by kind: " + ", ".join(f"{k} {v}" for k, v in sorted(kinds.items())))
 say(f"carbon: shell {len(sh)} tubes 6/4, shortest {sh.min():.0f}" + (f" ({len(short)} under {BREAK_EVEN:.0f}: printed into the node)" if short else "")
     + f"; links {len(rl)} rods 3.0, {sum(rl.values()) / 1000:.2f} m, shortest {min(rl.values()):.0f} ({min(rl, key=rl.get)})"
     + (f"; printed (< {BREAK_EVEN:.0f}): " + ", ".join(f"{k} {v:.0f}" for k, v in rl.items() if v < BREAK_EVEN) if any(v < BREAK_EVEN for v in rl.values()) else ""))
+LL = list(extra.items()); lgap = (np.inf, "")
+for i_ in range(len(LL)):                                # link to link: no two rods through each other (interior 8..92 %)
+    for j_ in range(i_ + 1, len(LL)):
+        (ka, (a0, a1)), (kb, (b0, b1)) = LL[i_], LL[j_]
+        qa = np.asarray(a0) + np.linspace(0.08, 0.92, 40)[:, None] * (np.asarray(a1) - np.asarray(a0))
+        qb = np.asarray(b0) + np.linspace(0.08, 0.92, 40)[:, None] * (np.asarray(b1) - np.asarray(b0))
+        d_ = float(np.linalg.norm(qa[:, None] - qb[None], axis=2).min()) - 2 * ROD_R
+        if d_ < lgap[0]: lgap = (d_, f"{ka} / {kb}")
+say(f"links apart: closest pair {lgap[0]:.1f} between rod surfaces ({lgap[1]}) (C, need ≥ 1.0)")
 pg = min(seg_band_dist(nodes[a], nodes[b]) for a, b in E) - SHELL_R
 pn = min(seg_band_dist(n, n) for n in nodes) - NODE_R
 pe = {k: seg_band_dist(np.asarray(p, float), np.asarray(q, float)) - ROD_R for k, (p, q) in extra.items()}
@@ -720,12 +759,16 @@ if RING_MODE == "overseer":
     so = json.load(open(os.path.join(OV, "cage_shell.json"))); No = np.array(so["nodes"])
     No = No - [OV_CX, 0, R_OV[:, 2].mean()] + [TAB_X, 0, Z_O]                     # the Overseer on the same datum
     eo = ConvexHull(No).equations; band = {}
+    # the funnel bears on the outside of the Overseer's lower shell: a Scout tube inside the Overseer's tube-axis hull cannot reach
+    # it; the margin per 20 mm band above the ring (the low band holds the tubes leaving the shared ring nodes)
+    q = np.vstack([nodes[a] + np.linspace(0, 1, 80)[:, None] * (nodes[b] - nodes[a]) for a, b in E if not (a < nR and b < nR)])
+    q = q[np.linalg.norm(q[:, None, :] - nodes[None, :nR], axis=2).min(1) > NODE_R]          # off the shared ring nodes
+    dq = (-(q @ eo[:, :3].T + eo[:, 3])).min(1)
     for H in (20.0, 40.0, 60.0, 80.0):
-        q = np.vstack([nodes[a] + np.linspace(0, 1, 40)[:, None] * (nodes[b] - nodes[a]) for a, b in E if not (a < nR and b < nR)])
-        q = q[(q[:, 2] <= Z_O + H) & (np.linalg.norm(q[:, None, :] - nodes[None, :nR], axis=2).min(1) > NODE_R)]   # off the shared ring nodes
-        band[H] = float((-(q @ eo[:, :3].T + eo[:, 3])).min(1).min()) if len(q) else float("nan")
+        m_ = (q[:, 2] > Z_O + H - 20.0) & (q[:, 2] <= Z_O + H)
+        band[H] = float(dq[m_].min()) if m_.any() else float("nan")
     say("funnel: Scout shell tube axes inside the Overseer's tube-axis hull (same datum, outside the shared ring nodes) by "
-        + ", ".join(f"{v:.1f} up to {H:.0f} above the ring" for H, v in band.items())
+        + ", ".join(f"{v:.1f} at {H - 20:.0f}..{H:.0f} above the ring" for H, v in band.items())
         + " (C; positive = inside, same 6 mm tubes: a funnel that takes the Overseer's ring and lower shell takes the Scout's)")
 else:
     band = {}
@@ -795,7 +838,7 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v6", ""):
                           box=np.round(np.array(D["FC"][0].bounds).T.ravel(), 2).tolist(), note="envelope = the FC's (E)"))
     contact = [["motor %d" % i, "prop %d" % i] for i in range(1, 5)] + [["motor %d" % i, "frame plate (Bee35 carbon)"] for i in range(1, 5)]
     contact += [["cage shell tubes", "cage shell nodes"], [LINKS, "cage shell nodes"], [LINKS, "cage shell tubes"], [LINKS, "frame plate (Bee35 carbon)"],
-                [LINKS, "receiver v3 (latch)"], [LINKS, "mount + nose legs (Scout)"], [LINKS, "receiver TPU end pieces (latch, E)"],
+                [LINKS, "receiver v3 (latch)"], [LINKS, "mount + nose legs (Scout)"], [LINKS, "receiver TPU end pieces (latch, E)"], [LINKS, "camera mount (boom + seat)"],
                 ["camera mount (boom + seat)", "camera"], ["camera mount (boom + seat)", "frame plate (Bee35 carbon)"], ["camera mount (boom + seat)", "mount + nose legs (Scout)"],
                 ["receiver TPU end pieces (latch, E)", "receiver v3 (latch)"], ["receiver TPU end pieces (latch, E)", "receiver lid (latch)"],
                 ["receiver TPU end pieces (latch, E)", "receiver TPU strips (latch)"], ["receiver TPU end pieces (latch, E)", "mount + nose legs (Scout)"],
