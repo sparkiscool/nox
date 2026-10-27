@@ -184,3 +184,23 @@ fem: grid (160, 72, 40) = 460,800 elements, 339,327 active dofs; backend direct 
 fem: grid (160, 72, 40) = 460,800 elements, 339,327 active dofs; backend direct (direct estimate 4.1 GB, budget 11.8 GB)
 layout: warm start from a (80, 40, 24) grid (h 2.5): mean x 0.134
 layout: warm start from a (80, 40, 24) grid (h 2.5): mean x 0.134
+it   1 beta    4 J  10.0000 vol 0.1072 (dil 0.2174 g -0.037) grey 21.5% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  2.64e+03 58.2s
+it   1 beta    4 J  10.0000 vol 0.1072 (dil 0.2174 g -0.037) grey 21.5% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  2.64e+03 58.2s
+it   2 beta    4 J   9.1321 vol 0.1116 (dil 0.2231 g -0.012) grey 21.8% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  2.41e+03 55.2s
+it   2 beta    4 J   9.1321 vol 0.1116 (dil 0.2231 g -0.012) grey 21.8% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  2.41e+03 55.2s
+it   3 beta    4 J   7.8908 vol 0.1115 (dil 0.2232 g -0.011) grey 21.7% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  2.08e+03 59.0s
+it   3 beta    4 J   7.8908 vol 0.1115 (dil 0.2232 g -0.011) grey 21.7% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  2.08e+03 59.0s
+it   4 beta    4 J   6.2021 vol 0.1129 (dil 0.2238 g -0.009) grey 21.6% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  1.63e+03 56.1s
+it   4 beta    4 J   6.2021 vol 0.1129 (dil 0.2238 g -0.009) grey 21.6% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  1.63e+03 56.1s
+it   5 beta    4 J   4.3359 vol 0.1141 (dil 0.2244 g -0.006) grey 21.5% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  1.12e+03 58.2s
+it   5 beta    4 J   4.3359 vol 0.1141 (dil 0.2244 g -0.006) grey 21.5% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  1.12e+03 58.2s
+it   6 beta    4 J   2.8788 vol 0.1148 (dil 0.2240 g +0.002) grey 21.4% ch 0.100 worst crash 6 [0.58, 0.58, 0.58] v 712 57.3s
+it   6 beta    4 J   2.8788 vol 0.1148 (dil 0.2240 g +0.002) grey 21.4% ch 0.100 worst crash 6 [0.58, 0.58, 0.58] v 712 57.3s
+it   7 beta    4 J   2.1423 vol 0.1142 (dil 0.2221 g -0.007) grey 21.3% ch 0.100 worst held b2 mz 533 59.2s
+it   7 beta    4 J   2.1423 vol 0.1142 (dil 0.2221 g -0.007) grey 21.3% ch 0.100 worst held b2 mz 533 59.2s
+it   8 beta    4 J   1.7208 vol 0.1152 (dil 0.2218 g -0.008) grey 21.2% ch 0.100 worst held b2 mz 434 57.8s
+it   8 beta    4 J   1.7208 vol 0.1152 (dil 0.2218 g -0.008) grey 21.2% ch 0.100 worst held b2 mz 434 57.8s
+it   9 beta    4 J   1.4599 vol 0.1168 (dil 0.2222 g -0.006) grey 21.1% ch 0.100 worst held b5 mx 383 61.2s
+it   9 beta    4 J   1.4599 vol 0.1168 (dil 0.2222 g -0.006) grey 21.1% ch 0.100 worst held b5 mx 383 61.2s
+it  10 beta    4 J   1.2846 vol 0.1186 (dil 0.2224 g -0.005) grey 21.0% ch 0.100 worst held b5 mx 357 60.8s
+it  10 beta    4 J   1.2846 vol 0.1186 (dil 0.2224 g -0.005) grey 21.0% ch 0.100 worst held b5 mx 357 60.8s
