@@ -7,7 +7,7 @@ Start it with the Bash tool's run_in_background and do not poll: the task notifi
 - the command's stdout + stderr go to <dir>/log.txt
 - every --every s, if <dir> changed: git add <dir>, commit "ckpt <n>", push (files over 49 MB are left out: no LFS)
 - at --cap-h hours (hard cap, docs/generative.md The rule 4) the job is stopped and the last checkpoint kept
-- at exit: <dir>/run_bg.txt (exit code, wall time, peak memory GB of the job), a last commit + push, one line on stdout
+- at start: <dir>/run_bg.txt gets the start time (UTC); at exit: the exit code, wall time, peak memory GB of the job, a last commit + push, one line on stdout
 Exit code = the job's (124 at the cap).
 """
 import argparse, datetime, os, pathlib, resource, signal, subprocess, sys, time
@@ -44,6 +44,8 @@ def checkpoint(msg):
 
 
 t0 = time.time()
+with open(d / "run_bg.txt", "a") as f:                   # start time: review_precheck 12 (runs start together)
+    f.write(f"run_bg: start {datetime.datetime.now(datetime.timezone.utc):%Y-%m-%dT%H:%M}Z: {' '.join(cmd)}\n")
 with open(d / "log.txt", "ab") as log:
     job = subprocess.Popen(cmd, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
     code, last = None, time.time()

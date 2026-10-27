@@ -2,7 +2,7 @@
 
 Spark 27 Oct, on cage v1 (`runs/scout_layout/v6/`, PR 124: 91 x 6 mm shell tubes + 32 x 3 mm links = 123 rods): "subtract the number of rods, these are all 3mm as well and also just divide the number of rods by half", then "dont worry about same rod legnth anymore". Unchanged from cage v1: the PR 94 drone, the bottom ring = the Overseer's (funnel shared), one nose camera outside the cage, the Bee35 carbon base.
 
-Read as: every Scout rod 3.0 solid carbon (shell and links), about half of cage v1's 123 rods, and the shell no longer has to keep the geodesic pattern's near-equal rod lengths. Rule lines: CLAUDE.md (Cages are geodesic shells: the Scout clause), `docs/generative.md` 0 (Shared ring and the Scout), check `tools/review_precheck.py` 12.
+Read as: every Scout rod 3.0 solid carbon (shell and links), about half of cage v1's 123 rods, and the shell no longer has to keep the geodesic pattern's near-equal rod lengths. Rule lines: CLAUDE.md (Cages are geodesic shells: the Scout clause), `docs/generative.md` 0 (Shared ring and the Scout), check `tools/review_precheck.py` 13.
 
 Script `nox/scout/v3/layout_v3.py` (pattern "free", ~13 min), view `layout_v3_view.py`. Drone meshes `runs/scout_layout/v6/drone/` (PR 94 run v5). Numbers `nox/dimensions.md` "System Scout v3".
 
