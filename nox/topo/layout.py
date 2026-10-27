@@ -364,7 +364,10 @@ class Layout:
                 core |= sol3 & near
             self.anchor = core.ravel()
         self.skin = self.solid & ~self.anchor
-        lab, nb = ndi.label(sol3, S26)
+        # drawn bodies for the ties: inserts (Part.insert) are bonded in after printing, so they never join two drawn
+        # bodies into one (a rod would chain a motor pad to a socket the PETG reaches, and the pad's ties would pass)
+        ins3 = getattr(part, "insert_cells", np.zeros(self.nel, bool)).reshape(shape)
+        lab, nb = ndi.label(sol3 & ~ins3, S26)
         self.body_lab, self.nbody = lab.ravel(), nb
         if s.erosion == "anchored":
             self.log(f"layout: {nb} drawn bodies; anchored cores {int(self.anchor.sum()):,} cells, skins "

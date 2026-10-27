@@ -208,7 +208,7 @@ class Part:
         """drawn cells of every drawn body the main support (the one most load cases use) holds: the mounting
         features (bolt pads and bosses, a wall flange). The organic finish keeps them whole."""
         from scipy import ndimage as ndi
-        sol = self.solid.reshape(self.shape)
+        sol = (self.solid & ~self.insert_cells).reshape(self.shape)
         main = self.main_support()
         if main is None:
             return np.zeros(self.nel, bool)
