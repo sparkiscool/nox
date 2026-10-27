@@ -79,7 +79,8 @@ CAM_MOUNT = os.environ.get("SCOUT_CAM_MOUNT", "printed")    # printed: the camer
 CAMP = "camera cradle (printed)" if CAM_MOUNT in ("cage", "printed") else "camera mount (boom + seat)"
 LIP = 6.0                                                  # the cradle frame stands this far round the camera body (above, below; cage first over it)
 ARM = 9.0                                                  # printed cradle arm, round Ø9 PETG (64 mm², as an 8 x 8 post; posts >= 6 x 6, E)
-CLAMP_L, CLAMP_R = 12.0, 4.65                              # printed saddle clamp on a shell rod: 12 long, 3.3 bore + wall 3 (pad rule), E
+CLAMP_L, CLAMP_R = 12.0, 4.65                              # printed snap clip on a shell rod (Spark 27 Oct: "clip into the rods ... put it on
+CLIP_BORE, CLIP_MOUTH = 3.1, 2.6                           # after cage is done"): 12 long, OD 9.3, bore 3.1 on the 3.0 rod, mouth 2.6 (snaps over), E
 TAIL_GAP = float(os.environ.get("SCOUT_TAIL_GAP", 13.0))   # tail bay: the Radxa / UBEC front ends this far behind the receiver (balance trim, DEFAULT)
 TAIL_BAY = os.environ.get("SCOUT_TAIL_BAY", "1") == "1"   # Radxa + UBEC in a tail bay behind the receiver (balance, race-car tail, Spark 27 Oct)
 PLATE_NOSE = np.array([60.0, 0.0, 20.25])                  # camera boom root on the plate nose (E, plate edge x ~65)
@@ -658,8 +659,8 @@ def usb_line(nodes, E):
 
 def cradle_arms(nodes, E, clear, add, extra=None):
     """printed PETG arms (round, Ø ARM) from the cradle's back corners into the cage: to the nearest shell node whose rods leave
-    clear of the arm (its joint: the node sphere + 2, review 27 Oct), else to a printed saddle clamp on the nearest shell rod
-    (a declared joint, CLAMP_L long, wall 3 round the 3.3 bore); 3+ non-collinear supports (no pivot); behind the camera's view,
+    clear of the arm (its joint: the node sphere + 2, review 27 Oct), else to a printed snap clip on the nearest shell rod (a C
+    round the rod, its mouth across the arm and up, pushed on after the cage is built, Spark 27 Oct); 3+ non-collinear supports (no pivot); behind the camera's view,
     props 12 off, clear of every other rod; the arm roots at the cage are the printed fuse (they let go before the camera)"""
     xs, xf, z0, z1 = CAM["cradle"]; wo = CAM_W / 2 + 3.5
     T = [(nodes[a], nodes[b]) for a, b in E] + [(np.asarray(a_, float), np.asarray(b_, float)) for a_, b_ in (extra or {}).values()]
@@ -685,7 +686,7 @@ def cradle_arms(nodes, E, clear, add, extra=None):
             if sup and abs(nodes[k][1]) < 1.0 and abs(sup[0][1]) < 1.0: continue   # not 2 supports on the centre plane (a pivot)
             e_ = free(c_, k)
             if e_ is not None: opts.append((float(np.linalg.norm(e_ - c_)), nodes[k], e_, None))
-        for a, b in E:                                        # a saddle clamp on a shell rod (off its nodes, off the centre plane)
+        for a, b in E:                                        # a snap clip on a shell rod (off its nodes, off the centre plane)
             pa, pb = nodes[a], nodes[b]; p_ = _closest(c_, pa, pb); u = (pb - pa) / np.linalg.norm(pb - pa)
             if np.linalg.norm(p_ - c_) > 90.0 or min(np.linalg.norm(p_ - pa), np.linalg.norm(p_ - pb)) < NODE_R + CLAMP_L / 2 + 4.0 \
                     or abs(p_[1]) < CLAMP_L or p_[0] >= xs or any(np.linalg.norm(p_ - s_) < CLAMP_L for s_ in sup): continue
@@ -696,18 +697,23 @@ def cradle_arms(nodes, E, clear, add, extra=None):
         got = min(opts, key=lambda o: o[0])[1:] if opts else None
         if got is None: raise SystemExit("camera cradle: no clear printed arm from a back corner into the cage")
         sup.append(got[0]); ends.append((c_, got[1], got[0], got[2] is not None))
-        if got[2] is not None: clamps.append((got[0], got[2]))
+        if got[2] is not None: clamps.append((got[0], got[2], (c_ - got[0]) / np.linalg.norm(c_ - got[0])))
     meshes = []
     for c_, n_ in [(e[0], e[1]) for e in ends] + [(e[0] * mir, e[1] * mir) for e in ends]:
         L_ = float(np.linalg.norm(n_ - c_)); bm = trimesh.creation.cylinder(radius=ARM / 2, height=L_, sections=24)
         bm.apply_transform(trimesh.geometry.align_vectors([0, 0, 1], (n_ - c_) / L_)); bm.apply_translation((c_ + n_) / 2); meshes.append(bm)
     D["camera cradle arms (printed)"] = (trimesh.util.concatenate(meshes), "cage", False, sum(abs(m_.volume) for m_ in meshes) * 1.27e-3 * 0.6, "E", "PETG", "cage", "#7d8a99", False)
     cm = []
-    for p_, u in clamps + [(p_ * mir, u * mir) for p_, u in clamps]:
-        bm = trimesh.creation.cylinder(radius=CLAMP_R, height=CLAMP_L, sections=24)
-        bm.apply_transform(trimesh.geometry.align_vectors([0, 0, 1], u)); bm.apply_translation(p_); cm.append(bm)
+    for p_, u, d_ in clamps + [(p_ * mir, u * mir, d_ * mir) for p_, u, d_ in clamps]:
+        m_ = np.cross(u, d_); m_ /= np.linalg.norm(m_); m_ = m_ if m_[2] >= 0 else -m_    # the mouth: across the arm, up (the weight
+        w_ = np.cross(u, m_)                                                              # bears on the clip's closed side)
+        F = np.eye(4); F[:3, 0], F[:3, 1], F[:3, 2], F[:3, 3] = w_, m_, u, p_          # local frame: x across, y the mouth, z the rod
+        body = trimesh.creation.cylinder(radius=CLAMP_R, height=CLAMP_L, sections=48)
+        bore = trimesh.creation.cylinder(radius=CLIP_BORE / 2, height=CLAMP_L + 2.0, sections=48)
+        slot = trimesh.creation.box([CLIP_MOUTH, CLAMP_R + 1.0, CLAMP_L + 2.0]); slot.apply_translation([0, (CLAMP_R + 1.0) / 2, 0])
+        bm = trimesh.boolean.difference([body, bore, slot], engine="manifold"); bm.apply_transform(F); cm.append(bm)
     if cm:
-        D["camera cradle clamps (printed)"] = (trimesh.util.concatenate(cm), "cage", False, sum(abs(m_.volume) for m_ in cm) * 1.27e-3 * 0.8, "E", "PETG", "cage", "#7d8a99", False)
+        D["camera cradle clips (printed)"] = (trimesh.util.concatenate(cm), "cage", False, sum(abs(m_.volume) for m_ in cm) * 1.27e-3 * 0.8, "E", "PETG", "cage", "#7d8a99", False)
     CAM["arms"] = [(np.round(c_, 1).tolist(), np.round(p_, 1).tolist(), round(float(np.linalg.norm(e_ - c_)), 1), cl) for c_, e_, p_, cl in ends]
     CAM["clamps"] = len(cm)
 
@@ -1066,7 +1072,7 @@ say(f"FC USB-C cable: from ({USB[0][0]:.1f}, {USB[0][1]:.1f}, {USB[0][2]:.1f}) a
     f"{math.degrees(math.acos(np.clip(USB[1] @ np.array([-0.7071, -0.7071, 0.0]), -1, 1))):.0f} deg off the tail-left diagonal, out through a cell (C)")
 if CAM_MOUNT == "printed":
     say("camera mount: a printed PETG cradle round the camera (0.5 clear, lips 6 over and under, behind the lens) on 4 printed Ø9 round arms into "
-        + ", ".join(f"{'a saddle clamp on the shell rod at' if cl_ else 'node'} {tuple(n_)} ({l_:.0f} long)" for _, n_, l_, cl_ in CAM["arms"]) + " and their mirrors: no rods, no boom (Spark 27 Oct)")
+        + ", ".join(f"{'a snap clip on the shell rod at' if cl_ else 'node'} {tuple(n_)} ({l_:.0f} long)" for _, n_, l_, cl_ in CAM["arms"]) + " and their mirrors: no rods, no boom (Spark 27 Oct)")
 if CAM_MOUNT != "printed": say("camera ties: " + ", ".join(k for k in extra if k.startswith(("cam brace", "cam cradle", "cam guard strut"))) + (" (the cradle hangs from the cage only, Spark 27 Oct)" if CAM_MOUNT == "cage" else " (the seat on the boom + these: not a stalk)"))
 if CAM_MOUNT == "boom": say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
@@ -1106,11 +1112,11 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v9", ""):
     contact += [[LINKS, "camera chin guard (printed)"]]          # the cradle struts root in the chin lip
     if CAM_MOUNT == "printed":
         contact += [["camera cradle arms (printed)", "cage shell nodes"], ["camera cradle arms (printed)", CAMP]]   # printed into the nodes and
-        if CAM.get("clamps"):                                 # the saddle clamps: round their rod (the joint, bounded), the arm ends in them
-            contact += [["camera cradle clamps (printed)", "cage shell tubes", round(CAM["clamps"] * math.pi * SHELL_R ** 2 * CLAMP_L * 1.05 + 2.0, 1)],
-                        ["camera cradle clamps (printed)", "camera cradle arms (printed)"]]
+        if CAM.get("clamps"):                                 # the snap clips sit round their rods (bore 3.1 on 3.0: no overlap); the arms end in them
+            contact += [["camera cradle clips (printed)", "camera cradle arms (printed)"]]
                                                                                   # the cradle; clear of every rod (no contact, review 27 Oct)
-    contact = [c_ if len(c_) == 3 else c_ + [1e9] for c_ in contact]
+    names_ = {p_[0] for p_ in PARTS} | {a_["name"] for a_ in asm_parts}
+    contact = [c_ if len(c_) == 3 else c_ + [1e9] for c_ in contact if c_[0] in names_ and c_[1] in names_]   # pairs of drawn parts only
     openings = [dict(part=p_, axis=[0, 0, -1], half_angle_deg=40.0, min_mm=0.0, skip_probes=True)
                 for p_ in SW_IGN[:1] + ["pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug", "receiver v3 (latch)", "receiver lid (latch)", "flow MTF-02P"]]
     openings.append(dict(part="camera", axis=[1.0, 0.0, 0.0], half_angle_deg=CAM_CONE, field=True,
