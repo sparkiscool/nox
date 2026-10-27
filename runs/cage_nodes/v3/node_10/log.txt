@@ -225,3 +225,9 @@ it   2 beta    4 J  10.0001 vol 0.0109 (dil 0.0403 g +1.343) grey  3.6% ch 0.100
 it   2 beta    4 J  10.0001 vol 0.0109 (dil 0.0403 g +1.343) grey  3.6% ch 0.100 worst tube to 23 side a 963 112.3s
 it   3 beta    4 J  10.0001 vol 0.0105 (dil 0.0394 g +1.291) grey  3.5% ch 0.100 worst tube to 23 side a 963 118.8s
 it   3 beta    4 J  10.0001 vol 0.0105 (dil 0.0394 g +1.291) grey  3.5% ch 0.100 worst tube to 23 side a 963 118.8s
+it   4 beta    4 J  10.0002 vol 0.0102 (dil 0.0385 g +1.239) grey  3.4% ch 0.100 worst tube to 23 side a 963 108.4s
+it   4 beta    4 J  10.0002 vol 0.0102 (dil 0.0385 g +1.239) grey  3.4% ch 0.100 worst tube to 23 side a 963 108.4s
+it   5 beta    4 J  10.0002 vol 0.0098 (dil 0.0376 g +1.187) grey  3.2% ch 0.100 worst tube to 23 side a 963 106.6s
+it   5 beta    4 J  10.0002 vol 0.0098 (dil 0.0376 g +1.187) grey  3.2% ch 0.100 worst tube to 23 side a 963 106.6s
+it   6 beta    4 J  10.0002 vol 0.0095 (dil 0.0367 g +1.135) grey  3.1% ch 0.100 worst tube to 23 side a 963 110.8s
+it   6 beta    4 J  10.0002 vol 0.0095 (dil 0.0367 g +1.135) grey  3.1% ch 0.100 worst tube to 23 side a 963 110.8s
