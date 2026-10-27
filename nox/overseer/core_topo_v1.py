@@ -16,7 +16,9 @@ and the assembly `nox/overseer/overseer_core.assembly.json` (never retyped), the
              Loads: swap set + receiver 1000 g at their CG through the 6 receiver bolts (force + moment, least norm), the camera
              pod 27 g, 35 g crash x 14, flight 4 g / 2 g, landing 6 g, swap push 60 N / pull 50 N (L), 20 N poke on the pod tip.
 
-python3 nox/overseer/core_topo_v1.py hub_deck|sled [h] [gen_cm3] [--no-git]     (NOX_SETUP_ONLY=1: build the setup, print it, stop)
+python3 nox/overseer/core_topo_v1.py hub_deck|sled [h] [gen_cm3] [--no-git] [--no-coarse] [--lean] [--ver=v2]     (NOX_SETUP_ONLY=1: setup only)
+sled v1 FAILED (6 attempts out of memory at the fine stage, 8.4..13.3 GB: the 5.7 mm filter is 4.6 cells at h 1.25); sled v2: h 1.6,
+fine grid only (--no-coarse), flight cases left out (--lean).
 """
 import json, os, sys
 import numpy as np, trimesh, manifold3d as mf
@@ -33,6 +35,9 @@ args = [a for a in sys.argv[2:] if not a.startswith("-")]
 H = float(args[0]) if args else (1.0 if PIECE == "hub_deck" else 1.25)
 GEN = float(args[1]) if len(args) > 1 else (10.0 if PIECE == "hub_deck" else 40.0)   # cm3 generated (E: slots 24 / 75 g, minus drawn)
 GIT = "--no-git" not in sys.argv
+COARSE = "--no-coarse" not in sys.argv          # sled v2: the 3.0 coarse grid went singular at h 1.5 (v1), so run the fine grid only
+LEAN = "--lean" in sys.argv                     # sled v2: flight / landing cases left out, the 35 g crash cases cover them
+VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v1")
 
 R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v1", "result.json")))
 C = R["coupon"]
@@ -165,7 +170,7 @@ def sled_setup(h):
         p.load_multi(name, [(rec_reg[i], f[i]) for i in range(6)] + [(cam_reg[i], fc[i]) for i in range(2)], cls=cls, accel=-a)
     for k, d in enumerate(DIRS14):
         payload(f"crash 35 g {k}", 35 * d, "crash")
-    for nm, a in FLIGHT.items():
+    for nm, a in ({} if LEAN else FLIGHT).items():        # LEAN: 35 g x crash safety 1.1 = 38.5 g-equiv > 6 g x flight 4.0 = 24 (material.SAFETY)
         payload(nm, a, "flight")
     push = rigid_split(rec_pts, np.array([0, 0, 60.0]), swap_cg - np.array([0, 0, 35.0]))           # swap insert push from below (L)
     pull = rigid_split(rec_pts, np.array([0, 0, -50.0]), swap_cg - np.array([0, 0, 35.0]))
@@ -180,9 +185,9 @@ def sled_setup(h):
 
 if __name__ == "__main__":
     setup = hub_deck_setup if PIECE == "hub_deck" else sled_setup
-    out = os.path.join(ROOT, "runs", f"overseer_{PIECE}", "v1")
+    out = os.path.join(ROOT, "runs", f"overseer_{PIECE}", VER)
     if os.environ.get("NOX_SETUP_ONLY"):
         p = setup(H)
         print(p.summary() if hasattr(p, "summary") else (p.shape, p.nel, int(p.design.sum()), int(p.solid.sum()), len(p.cases)))
     else:
-        optimise(setup, h=H, gen_cm3=GEN, out_dir=out, name=f"overseer_{PIECE}", settings=Settings(), git=GIT)
+        optimise(setup, h=H, gen_cm3=GEN, out_dir=out, name=f"overseer_{PIECE}", settings=Settings(), git=GIT, coarse=COARSE)
