@@ -153,9 +153,9 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
             tube_points.names.append(f"cage tube {a}-{b}")
     return P, rad, ring
 
-SCOUT_REF = os.environ.get("SCOUT_REF", "c5b57903")            # Scout v3 layout v10 (PR 131 head: bottom on the Overseer loop's side nodes, ties out of the band, plane -49.62)
+SCOUT_REF = os.environ.get("SCOUT_REF", "91d72348")            # Scout v3 layout v10 (PR 131 head: bottom on the Overseer loop's side nodes, ties out of the band, plane -49.62)
 SCOUT_DIR = "runs/scout_layout/v10"
-SCOUT_CATCH_X, SCOUT_PLANE_Z = -7.5, -49.62                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
+SCOUT_CATCH_X, SCOUT_PLANE_Z = -8.0, -49.62                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
 SCOUT_PLANE_FIX = -49.62                                         # the plane that seats its r 1.5 ring like the Overseer's r 3 (cartridge -3 -2.12; asked of the Scout session)
 OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
 OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
@@ -266,5 +266,19 @@ def build_html(res=None):
     open(os.path.join(OUT, "ramps.html"), "w").write(html)
     open(os.path.join(REPO, "runs", "scout_bottom", "concept", "concept.html"), "w").write(html)   # the published artifact
 
+def rerun_scout():
+    """after a Scout-only change: recompute the Scout in both configs, keep the Overseer's results"""
+    global SLED_Y
+    res = json.load(open(os.path.join(OUT, "result.json")))
+    for cfg, target in ((dict(h_side=H_SIDE), res), (dict(h_side=ALT_SIDE), None)):
+        R = ramps(cfg["h_side"], H_OEND, H_SEND); d = scout()
+        out = dict(seated_clear=seated(d, R), cart_bottom_seat=d["cart_bottom_seat"], capture=capture(d, R), draw=d["draw"])
+        print("scout", cfg, out["seated_clear"], out["capture"])
+        if target is res: res["scout"] = out
+        else: res["whatif"][0]["capture"] = out["capture"]
+    enc = lambda o: o.tolist() if hasattr(o, "tolist") else float(o)
+    json.dump(res, open(os.path.join(OUT, "result.json"), "w"), default=enc)
+    build_html(res)
+
 if __name__ == "__main__":
-    build_html() if "--html" in sys.argv else main()
+    build_html() if "--html" in sys.argv else rerun_scout() if "--scout" in sys.argv else main()
