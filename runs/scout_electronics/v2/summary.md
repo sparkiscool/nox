@@ -192,7 +192,7 @@
 
 ## What the extra mass buys
 The mount is 49.2 g against the layout's 38.6 g placeholder (+10.6 g, E). Crash worst is 0.27 of 1.0, so strength isn't what sets it:
-- the spine tube (14 tall) and the UBEC box keep the internal break order (fuse or block first) in 12 of 14 crash directions; the lighter flanges-only spine (V3 / V7) reaches 0.72 and loses the order;
+- the spine tube (14 tall) and the UBEC box keep the internal break order (fuse or block first) in 12 of 14 crash directions; the lighter flanges-only spine (V3 / V7) reaches 0.71 / 0.73 and loses the order;
 - the tail block is a printed root sized for the bolts' bosses (Ø10, wall 3.0) and the gusset bearing on the receiver;
 - the piece passes (topology on the same L loads) are where the grams come out, with the balance (0.56 / 1.49) and the order as constraints.
 
