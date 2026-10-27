@@ -1,0 +1,12 @@
+overseer: 4348 low points, cartridge bottom 3.0 above z 0 (7.00 above the deck)
+  overseer off ( -20, -80) yaw  -15: FAIL side +y lip meets cage node 4 at s 185.5 pose [30.31, -10.33, -0.46]
+  overseer off ( -20, -80) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 178.5 pose [34.21, -23.22, -0.35]
+  overseer off ( -20, -80) yaw   -5: FAIL side +y lip meets cage tube 4-11 at s 179.5 pose [33.65, -21.21, -0.36]
+  overseer off ( -20, -80) yaw    0: ok clamp 84.0 slide 88.42 err (-0.71, -0.07, -0.72) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -80) yaw    5: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off ( -20, -80) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off ( -20, -80) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off ( -20, -60) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 175.5 pose [31.81, -14.85, -0.42]
+  overseer off ( -20, -60) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off ( -20, -60) yaw   -5: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off ( -20, -60) yaw    0: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
