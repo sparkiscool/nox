@@ -28,6 +28,7 @@ import numpy as np, trimesh, manifold3d as mf
 VERSION = os.environ.get("NOX_ARM_VERSION", "v1")
 LAYOUT = os.environ.get("NOX_ARM_LAYOUT", os.path.join(ROOT, "runs", "overseer_arms", "v1", "inputs"))
 CORE = os.environ.get("NOX_ARM_CORE")               # a parts folder whose meshes (+ CLEAR) are keep-outs, or None
+LINKS = os.environ.get("NOX_ARM_LINKS") == "1"      # v2 (Spark 27 Oct: "add the arm nodes"): cage spoke + L2 brace sockets
 G = 9.81
 
 # ------------------------------------------------------------------------------------------- numbers (dimensions.md)
@@ -67,6 +68,15 @@ E_PETG = 2780.0                       # MPa, nox/topo/material.py
 
 # ESC: a 4-in-1 under the FC, the stack on top of the top plate (Spark 27 Oct), nothing on the arms; the motor leads run
 # along the arm's flat top to it, zip-tied round the top carbon rods' free spans (front) or the beam (DEFAULT)
+
+# cage links on the arms (v2, Spark 27 Oct; links and forces from the cage frame model, `arm_joint_loads.py`): 6/4 tube
+# sockets, bore 6.2 x 15 + 0.6 lead-in (Spark's coupon pick, dimensions System Overseer v5), wall 2.5. The 3 spokes of each arm
+# meet in one printed node beside the motor, off its axis (the screw pocket's key column, r 14, stays clear: every spoke line
+# >= 17 from the axis in plan, C); the 2 L2 braces end inside the front beam (z 30 / 39) so the top stays flat for the bed.
+TUBE_BORE, TUBE_DEPTH, TUBE_LEAD, TUBE_WALL = 6.2, 15.0, 0.6, 2.5
+SPOKE_NODE = {"front": (178.9, 146.7, 8.0), "rear": (-53.3, 119.7, 25.0)}   # left arm, drone frame (C, searched)
+BRACE_END = {"front": [("L2 brace lo +1", (72.95, 62.11, 30.0)), ("L2 brace hi +1", (72.95, 62.11, 39.0))]}
+JOINT = os.path.join(ROOT, "runs", "overseer_arms", "v2", "joint_loads.json")
 
 # loads (dimensions.md "System Overseer: arms", E)
 THRUST_N = 21.0                       # 1650 gf at 14.8 V (C) x (16.8 / 14.8)^2 on a full pack = 2.13 kgf
@@ -110,6 +120,17 @@ def frame(which):
 
 def to_arm(m, F):
     return m.translate([-F["R0"][0], -F["R0"][1], 0.0]).rotate([0.0, 0.0, -F["th"]])
+
+
+def to_arm_pt(p, F):
+    c, s_ = math.cos(math.radians(-F["th"])), math.sin(math.radians(-F["th"]))
+    x, y = p[0] - F["R0"][0], p[1] - F["R0"][1]
+    return np.array([c * x - s_ * y, s_ * x + c * y, p[2]])
+
+
+def to_arm_vec(v, F):
+    c, s_ = math.cos(math.radians(-F["th"])), math.sin(math.radians(-F["th"]))
+    return np.array([c * v[0] - s_ * v[1], s_ * v[0] + c * v[1], v[2]])
 
 
 def diag(m, d):
@@ -222,12 +243,46 @@ def bodies(which):
     sup_bot = diag(box(u0, u1, -V_ROOT, V_ROOT, -0.5, 1.0), d) ^ bot_fp
     sup = (sup_top + sup_bot) - ko
     load = mpad - cyl(M[0], M[1], ROOT_H - PAD_T - 1, ROOT_H + 1, SHAFT_D / 2 + 0.5, 48)
-    B = {k: to_arm(v, F) for k, v in dict(env=env, pads=pad_top + pad_bot, mpad=mpad + mwall, cuts=cuts, sup=sup,
+    socks, sock_regions = mf.Manifold(), {}
+    if LINKS:
+        res = json.load(open(os.path.join(LAYOUT, "result.json")))["links"]
+        ends = []
+        node = np.array(SPOKE_NODE[which])
+        tag = "1" if which == "front" else "2"
+        for k in sorted(res):
+            if k.startswith(f"spoke {tag}."):
+                p_, q_ = map(np.array, res[k])
+                far = q_ if abs(p_[1]) == 139.5 else p_
+                ends.append((k, node, far))
+        for k, e in BRACE_END.get(which, []):
+            p_, q_ = map(np.array, res[k])
+            far = p_ if p_[0] > q_[0] else q_
+            ends.append((k, np.array(e), far))
+        r_b = TUBE_BORE / 2 + TUBE_WALL
+        for k, a, far in ends:
+            u = (far - a) / np.linalg.norm(far - a)
+            mouth = a + (TUBE_DEPTH + TUBE_LEAD) * u
+            boss = rod_m(a - TUBE_WALL * u, mouth, r_b, n=40) + mf.Manifold.sphere(r_b, 32).translate(a.tolist())
+            socks += boss
+            cuts += rod_m(a, mouth + 30.0 * u, TUBE_BORE / 2, n=32)          # the bore, open past the mouth
+            sock_regions[k] = (boss, a, u)
+        # the sockets join the envelope after the shoulder hull (below), with the node and the tip hulled together
+        link_env = socks + (mf.Manifold.sphere(r_b + 4.0, 32).translate(node.tolist()) + tip).hull()
+        if which == "rear":
+            link_env = link_env + socks.hull()
+        cuts += cyl(M[0], M[1], -80.0, -1.0, 14.0, 64)                   # the key column under the pocket stays clear
+        clamp = box(-400, 400, -400, 400, ROOT_H, ROOT_H + 100) + plate_prism("bottom_plate.stl", -100.0, 0.0)
+    B = {k: to_arm(v, F) for k, v in dict(env=env, pads=pad_top + pad_bot, mpad=mpad + mwall + socks, cuts=cuts, sup=sup,
                                          bosses=bosses, load=load, ko=ko).items()}
+    B["sock"] = {k: (to_arm(m_, F), (np.r_[to_arm_pt(a_, F)]), to_arm_vec(u_, F)) for k, (m_, a_, u_) in sock_regions.items()}
+    B["link_env"] = to_arm(link_env, F) if LINKS else None
+    B["clamp"] = to_arm(clamp, F) if LINKS else None
     if which in SHOULDER:                       # the plan envelope widens to the two shoulders (arm frame)
         xs, ys, rs = SHOULDER[which]
         sh = cyl(xs, ys, 0.0, ROOT_H, rs) + cyl(xs, -ys, 0.0, ROOT_H, rs)
         B["env"] = (B["env"] + sh).hull() - B["ko"]
+    if B["link_env"] is not None:
+        B["env"] = B["env"] + B["link_env"] - B["ko"] - B["clamp"]
 
     # chords (arm frame): the rod is an insert (Part.insert: solid at the carbon's modulus in the layout and the strength
     # FE, never printed); drawn only a socket at each end (review 2, 27 Oct); the optimiser hangs its webs on the free span,
@@ -309,6 +364,23 @@ def setup_for(which):
         # direct blow on the motor end (something gets past the cage), 6 directions
         for v, nm in ((ex, "+x"), (-ex, "-x"), (ey, "+y"), (-ey, "-y"), (ez, "+z"), (-ez, "-z")):
             rigid_case(p, f"blow {BLOW_N:.0f} N {nm}", [(B["load"], tipc, BLOW_N * v, Z)], cls="crash")
+        # cage joint reactions (v2): the frame model's force on the arm at each link group, per case (crash 35 g x 14,
+        # flight 4 g), on the socket bosses; braces split evenly between their 2 sockets (E)
+        if LINKS:
+            J = json.load(open(JOINT))["forces"]
+            tag = "arm 1" if which == "front" else "arm 2"
+            for cn in J[f"{tag} tip"]:
+                parts = []
+                tipF = to_arm_vec(np.array(J[f"{tag} tip"][cn]), F)
+                spokes = [(m_, a_) for k, (m_, a_, u_) in B["sock"].items() if k.startswith("spoke")]
+                for m_, a_ in spokes:
+                    parts.append((m_, a_, tipF / len(spokes), Z))
+                if which == "front":
+                    bF = to_arm_vec(np.array(J["arm 1 beam (L2 braces)"][cn]), F)
+                    for k, (m_, a_, u_) in B["sock"].items():
+                        if k.startswith("L2 brace"):
+                            parts.append((m_, a_, bF / 2, Z))
+                rigid_case(p, f"cage {cn}", parts, cls="flight" if cn.startswith("flight") else "crash")
         # the same joint held by the 4 inserts only (review 27 Oct): the worst-looking cases again
         rigid_case(p, "max thrust + yaw [inserts only]", masses(Z, THRUST_N * ez, YAW_NM * ez), support="bosses")
         for v, nm in ((ez, "+z"), (-ez, "-z"), (ey, "+y"), (-ey, "-y")):
