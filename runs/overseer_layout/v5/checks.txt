@@ -1,37 +1,40 @@
 balance (v2: motor square onto the CG; catch 30 aft, L2 base z 51; geodesic frequency 2); scan start [0.85] x prop snap [True] x dome [60.0]: structure first (the most compact valid shell sets the bar: volume, mass; no tube-length limit), then the least prop blockage among shells within 10 % / 3 % of it:
-   motors  52.1 ahead: CG x  56.1,  3372 g, 131 tubes
-   motors  56.1 ahead: CG x  58.2,  3377 g, 131 tubes
-   motors  58.2 ahead: CG x  59.4,  3377 g, 131 tubes
-   motors  59.4 ahead: CG x  60.1,  3378 g, 131 tubes
-   motors  60.1 ahead: CG x  60.3,  3379 g, 131 tubes
-   motors  60.3 ahead: CG x  60.6,  3380 g, 131 tubes
-   motors  60.6 ahead: CG x  60.8,  3380 g, 131 tubes
-   motors  60.8 ahead: CG x  60.9,  3380 g, 131 tubes
-start 0.85 dome 60 snap 1: valid: shell 51.7 L, 131 tubes, longest 437, props 13.3, 3380 g, prop blockage top 8.0 % / bottom 14.7 %
-structure bar: start 0.85 dome 60 snap 1 (51.7 L, longest 437, 3380 g, blockage 8.0 / 14.7 %); picked start 0.85 dome 60 snap 1 (blockage 8.0 / 14.7 %)
+   motors  52.1 ahead: CG x  61.2,  3338 g, 130 tubes
+   motors  61.2 ahead: CG x  66.5,  3357 g, 133 tubes
+   motors  66.5 ahead: CG x  69.4,  3361 g, 133 tubes
+   motors  69.4 ahead: CG x  70.9,  3365 g, 133 tubes
+   motors  70.9 ahead: CG x  71.7,  3367 g, 133 tubes
+   motors  71.7 ahead: CG x  72.1,  3367 g, 133 tubes
+   motors  72.1 ahead: CG x  72.3,  3368 g, 133 tubes
+   motors  72.3 ahead: CG x  72.4,  3368 g, 133 tubes
+   motors  72.4 ahead: CG x  72.4,  3368 g, 133 tubes
+start 0.85 dome 60 snap 1: valid: shell 52.2 L, 133 tubes, longest 437, props 13.3, 3368 g, prop blockage top 7.8 % / bottom 14.4 %
+structure bar: start 0.85 dome 60 snap 1 (52.2 L, longest 437, 3368 g, blockage 7.8 / 14.4 %); picked start 0.85 dome 60 snap 1 (blockage 7.8 / 14.4 %)
 
-chosen: start 0.85 (smallest valid shell); motor square 60.8 ahead of the plate centre; motors (200.3, ±139.5) and (-78.7, ±139.5); front arms r 244, rear r 160
-L2: base (384.0, 0, 51), axis 15 deg below +x (Spark 24 Oct); front camera horizon, portrait, 74 up its back plane, lens (383, 0, 130); L2 and props out of its view + 2 deg
-shell: 48 nodes (8 on the opening ring), 131 tubes, 84 triangles; tubes 47 .. 437 (mean 171), 22.46 m; node extents 637 x 673 x 209 (h/w 0.31); hull residual 0.05 (C)
+chosen: start 0.85 (smallest valid shell); motor square 72.4 ahead of the plate centre; motors (211.9, ±139.5) and (-67.1, ±139.5); front arms r 254, rear r 155
+L2: base (414.8, 0, 51), axis 15 deg below +x (Spark 24 Oct)
+cameras (Spark 27 Oct: no down camera; the two on either side of the L2, their field maximized): portrait (73 across x 89 up), yawed 50.0 deg out, pitched -15; lenses (405, ±105, 64), 105 off the centre plane, 13 behind the L2 base plane; combined field 3.45 sr (27.5 % of the sphere, no overlap: the most a pair gets), 55 % of the L2 field (C)
+   camera alternatives (orientation only, before the mount search): landscape best 3.44 sr, 54 % of the L2 field (yaw 47.5, pitch -10); portrait best 3.45 sr, 55 % of the L2 field (yaw 50.0, pitch -15)
+shell: 48 nodes (8 on the opening ring), 133 tubes, 86 triangles; tubes 43 .. 437 (mean 171), 22.78 m; node extents 641 x 673 x 209 (h/w 0.31); hull residual 0.05 (C)
 largest cell: inscribed circle Ø141 between tube surfaces (C)
-carbon: shell 131 tubes 6/4 (Spark 26 Oct), shortest 47; links 68 rods 3.0 solid, 8.16 m, shortest 42 (halo strut 2.1); printed struts (< 33): none
-props: shell tubes 13.3 off the swept disks (≥ 12, 3D), nodes 21.1, links 14.0 (L2 brace hi +1) (C)
-   inside: props (disks) 18.4 from the nearest face plane (C)
-   inside: arms + motors 41.7 from the nearest face plane (C)
+carbon: shell 133 tubes 6/4 (Spark 26 Oct), shortest 43; links 63 rods 3.0 solid, 8.20 m, shortest 33 (halo strut 4.1); printed struts (< 33): none
+props: shell tubes 13.3 off the swept disks (≥ 12, 3D), nodes 21.1, links 14.6 (L2 brace hi +1) (C)
+   inside: props (disks) 18.2 from the nearest face plane (C)
+   inside: arms + motors 42.3 from the nearest face plane (C)
    inside: hub + plates 54.9 from the nearest face plane (C)
    inside: belly 3.0 from the nearest face plane (C)
 opening: 8 nodes on an ellipse 352 x 209 round the swap zone 240 x 136 (receiver 179.6 x 76.2 M + 30 a side), plane z -57.0 = cartridge bottom - 3; v2 TPU feet the floor contact (z -61.0)
 swap zone (receiver + spare, from the cartridge bottom down): clear (0 mm³, M)
-prop blockage (Spark 26 Oct, secondary to structure): 8.0 % of the disks' thrust shadowed from above, 14.7 % from below (plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell 8.0 / 12.5 %, links 0.0 / 2.6 %
+prop blockage (Spark 26 Oct, secondary to structure): 7.8 % of the disks' thrust shadowed from above, 14.4 % from below (plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell 7.8 / 12.2 %, links 0.0 / 2.6 %
 L2 field (Spark 26 Oct: outside the cage, not blocked at all): 0.0 % of its hemisphere crossed; the most forward cage member surface is 3.0 behind its base plane (guard ring nodes) (C)
-front camera (horizon, portrait, 73 x 89 deg): nothing of the drone in its view (C)
-sensor head outside the shell: shell node centres 25.1 behind the L2 base plane (guard ring in front), 13.2 under the camera's lower view plane (+2 deg) and behind the head plane (the head's back, tilted 20 deg from the L2 axis toward +z: the tilt that keeps the L2 furthest back of [20.0, 35.0, 50.0, 65.0])
-L2 guard ring: 8 of 8 rods (r 62, 8 behind the base plane; the others in the camera view), 16 struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, 4 ties into the shell, 4 braces from the lugs (low and high) to the front arm beams [30.0, 30.0] out of the root (a braced pyramid on the core, not a stalk); front camera guard: a bar of 2 printed nodes over its top, behind its lens and the L2 base plane, 4 struts into the shell; break order: the apex lugs are the printed fuse (requirement: they let go before the L2 base, E)
-down camera and flow: views checked (lines above list anything in view)
-cage: shell 763 g (tubes 547 E + nodes 216 E), links 90 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
-mass ~3380 g (E; latch set 338.5 M), CG (60.9, 0.5, 19.4) vs thrust centre (60.8, 0): 0.5 off; pack + cartridge out: 28.4 off (2578 g; layout mass model, the gated number is system_check's)
-T/W 1.95 (C on E mass, 1650 gf a motor); CG 63 under the prop plane; pitch inertia 96.6 g m² (E, point masses)
-compact: shell hull 51.7 L vs the parts-with-margins hull 27.8 L (C)
-assembly mass 3380 g (E) vs the layout model 3380 g
-access (straight lines through the shell cells, tool radius + 1 clear, C): FC USB-C: clear line 6 deg off its face normal from (np.float64(0.0), np.float64(-18.0), np.float64(9.8)); Pi 5 USB-C: clear line 7 deg off its face normal from (np.float64(0.0), np.float64(-28.0), np.float64(30.0)); arm 1 top screw v +15: clear straight up (a stopped prop turned aside); arm 1 top screw v -15: L-key (short leg up 30, long leg 8 deg off radial out through a cell); arm 1 bottom screw v +10: clear; arm 1 bottom screw v -10: clear; arm 2 top screw v +15: clear straight up (a stopped prop turned aside); arm 2 top screw v -15: clear straight up (a stopped prop turned aside); arm 2 bottom screw v +10: through the sled with the down camera board unplugged from its pod (v2 camera format, Spark 27 Oct; requirement); arm 2 bottom screw v -10: through the sled with the down camera board unplugged from its pod (v2 camera format, Spark 27 Oct; requirement); arm 3 top screw v +15: clear straight up (a stopped prop turned aside); arm 3 top screw v -15: clear straight up (a stopped prop turned aside); arm 3 bottom screw v +10: through the sled with the flow MTF-02P board unplugged from its pod (v2 camera format, Spark 27 Oct; requirement); arm 3 bottom screw v -10: through a Ø9 driver hole in the belly sled (requirement); arm 4 top screw v +15: L-key (short leg up 30, long leg 8 deg off radial out through a cell); arm 4 top screw v -15: clear straight up (a stopped prop turned aside); arm 4 bottom screw v +10: clear; arm 4 bottom screw v -10: clear
+cameras: nothing of the drone in either view (C)
+sensor head outside the shell: shell node centres 25.1 behind the L2 base plane (guard ring in front), 13.2 beyond each camera's limiting view face (+2 deg) and behind the head plane (the head's back, tilted 20 deg from the L2 axis toward +z: the tilt that keeps the L2 furthest back of [20.0, 35.0, 50.0, 65.0])
+L2 guard ring: 8 of 8 rods (r 62, 8 behind the base plane; the others in a camera view), 16 struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, 4 ties into the shell, 4 braces from the lugs (low and high) to the front arm beams [30.0, 30.0] out of the root (a braced pyramid on the core, not a stalk); each camera on a printed plate with 2 rods to its side's lugs; break order: the apex lugs are the printed fuse (requirement: they let go before the L2 base, E)
+flow: view checked (lines above list anything in view)
+cage: shell 771 g (tubes 555 E + nodes 216 E), links 90 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
+mass ~3368 g (E; latch set 338.5 M), CG (72.4, -0.2, 19.0) vs thrust centre (72.4, 0): 0.2 off; pack + cartridge out: 32.1 off (2566 g; layout mass model, the gated number is system_check's)
+T/W 1.96 (C on E mass, 1650 gf a motor); CG 63 under the prop plane; pitch inertia 105.6 g m² (E, point masses)
+compact: shell hull 52.2 L vs the parts-with-margins hull 27.6 L (C)
+assembly mass 3368 g (E) vs the layout model 3368 g
+access (straight lines through the shell cells, tool radius + 1 clear, C): FC USB-C: clear line 6 deg off its face normal from (np.float64(0.0), np.float64(-18.0), np.float64(9.8)); Pi 5 USB-C: clear line 7 deg off its face normal from (np.float64(0.0), np.float64(-28.0), np.float64(30.0)); arm 1 top screw v +15: clear straight up (a stopped prop turned aside); arm 1 top screw v -15: clear straight up (a stopped prop turned aside); arm 1 bottom screw v +10: clear; arm 1 bottom screw v -10: clear; arm 2 top screw v +15: clear straight up (a stopped prop turned aside); arm 2 top screw v -15: clear straight up (a stopped prop turned aside); arm 2 bottom screw v +10: through a Ø9 driver hole in the belly sled (requirement); arm 2 bottom screw v -10: through a Ø9 driver hole in the belly sled (requirement); arm 3 top screw v +15: clear straight up (a stopped prop turned aside); arm 3 top screw v -15: clear straight up (a stopped prop turned aside); arm 3 bottom screw v +10: through the sled with the flow MTF-02P board unplugged from its pod (v2 camera format, Spark 27 Oct; requirement); arm 3 bottom screw v -10: through a Ø9 driver hole in the belly sled (requirement); arm 4 top screw v +15: clear straight up (a stopped prop turned aside); arm 4 top screw v -15: clear straight up (a stopped prop turned aside); arm 4 bottom screw v +10: clear; arm 4 bottom screw v -10: clear
 wrote nox/overseer/overseer.assembly.json

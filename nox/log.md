@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer, Spark): down camera removed; the 2 cameras beside the L2, orientation searched for the largest union field: portrait, 50° out, 15° down, 3.45 sr with no overlap, nothing of the drone in view (alt landscape 3.44). L2 31 forward, motors 72.4 ahead, 3368 g E. `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): cage v3 structure kept (same 48 nodes, 131 tubes; scan pinned); symmetry already exact (0 tubes without a mirror, links too), none to add; cameras back to v2's format (down camera + flow pods at v2's place, v4 had them 35 forward); 3 rear-arm screws need a pod board unplugged. `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): cage v3 mirror-exact (symmetric triangulation, system_check mirror gate), no tube-length limit, 6/3 mm tubes only; review fixes: camera guard bar, L2 braces to the arm beams, lug fuse, field cones replace exempt (L2 75°, camera 55°). 48 nodes, 131 tubes, CG 0.6 mm, 3382 g E. `runs/overseer_layout/v5/`
 - 26 Oct (Overseer, Spark): cage v3: L2 + front camera outside the geodesic disk, nothing in their views (shell 25 behind the L2 plane, under the camera view), guard ring behind the L2; one layout, CG 0.6 mm (pack out 29 mm: L exception). 636 x 678 x 190, 3375 g E. Rule: field sensors outside the shell. `runs/overseer_layout/v5/`
