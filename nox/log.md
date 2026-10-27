@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (rule, Spark): cage sessions keep their parts in sync: every cage change goes to every session making its parts, and the cage artifact is republished with the newest saved parts each time one is saved (CLAUDE.md, docs/sessions.md, review item 15).
 - 27 Oct (Scout v3): DEFAULT for the cage pieces: 6/4 tube on the 39 members the frame model sizes (6.2 sockets), 3.0 on the rest (3.2); the layout keeps 3.0 per the Scout clause until Spark rules (alt: 3.0 everywhere fails every crash case). `runs/scout_frame/v2/`
 - 27 Oct (Scout v3): rerun on the electronics mount (38.6 g + cables 6.4 g, UBEC 7 out, XR2 kept off the rear prop): catch 5.0 forward, CG 0.9/0.8, 55 rods, 730 g E; alt bay fixed in the frame (61-64 rods, CG 1.3/2.9) out. Frame v2: all-3.0 fails, 6/4 on 39 (+74 g) passes at 138 Hz. `runs/scout_layout/v12/`
 - 27 Oct (Overseer): arm session ends in (spokes from the arm nodes, L2 brace roots in the front beam) and core v2 (keels 5 into the hub deck, hub block off the head); frame: rear arm node 2317 N, front 1074, braces 897 (F, `arm_loads.json`), the arm root takes it (told); `cage_node.py recut` makes saved sockets 6.2 / 3.2 (C) without a rerun (Spark).
