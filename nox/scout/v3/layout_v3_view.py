@@ -15,19 +15,26 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 
-RUN = os.environ.get("SCOUT_VIEW_RUN") or os.path.join(ROOT, "runs", "scout_layout", "v9")
+RUN = os.environ.get("SCOUT_VIEW_RUN") or os.path.join(ROOT, "runs", "scout_layout", "v10")
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")
 r = json.load(open(os.path.join(RUN, "result.json")))
 sh = json.load(open(os.path.join(RUN, "cage_shell.json"))); N = np.array(sh["nodes"]); E = sh["rods"]; ring = sh["open"][0]["ring"]
-so = json.load(open(os.path.join(OV, "cage_shell.json"))); No = np.array(so["nodes"]); Eo = so["rods"]
-ov_cart = trimesh.load(os.path.join(OV, "parts", "cartridge.stl"))
-Ro = No[so["open"][0]["ring"]]
-No = No - [ov_cart.bounds[:, 0].mean(), 0, Ro[:, 2].mean()] + [r["tab_x"], 0, r["z_o"]]      # the Overseer on the Scout's datum
+V5 = os.path.join(RUN, "overseer_cage_v5_shell.json")       # the Overseer cage v5 (PR 122, copied into the run, SOURCE.txt)
+if r.get("ring_mode") == "v5side" and os.path.exists(V5):
+    so = json.load(open(V5)); No = np.array(so["nodes"]); Eo = so["rods"]; Ro = No[so["open"][0]["ring"]]
+    No = No - [-30.0, 0, Ro[:, 2].mean()] + [r["tab_x"], 0, r["z_o"] - r.get("seat_dz", 0.0)]   # its catch x -30 on the Scout's catch, its loop
+    OVN = "Overseer cage v5"                                                                    # at the shared datum (the Scout plane sits the seat offset higher)
+else:
+    so = json.load(open(os.path.join(OV, "cage_shell.json"))); No = np.array(so["nodes"]); Eo = so["rods"]
+    ov_cart = trimesh.load(os.path.join(OV, "parts", "cartridge.stl"))
+    Ro = No[so["open"][0]["ring"]]
+    No = No - [ov_cart.bounds[:, 0].mean(), 0, Ro[:, 2].mean()] + [r["tab_x"], 0, r["z_o"]]      # the Overseer on the Scout's datum
+    OVN = "Overseer cage v3"
 line = lambda a, b, rr=0.7: trimesh.creation.cylinder(rr, np.linalg.norm(np.subtract(b, a)), sections=6, segment=np.vstack([a, b]))
 
 s = Scene("Scout v3 Cage",
-          f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the Overseer ring's middle rectangle (same funnel, fewer ramps), one camera low in the nose outside the cage, carbon base kept; "
-          f"carbon base kept; {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{r['mass']:.0f} g (E), "
+          f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the 4 side nodes of the Overseer's base loop (same funnel, fewer ramps), one camera close in at the nose on snap clips, carbon base kept; "
+          f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{r['mass']:.0f} g (E), "
           f"CG {math.hypot(*r['cg'][:2]):.1f} mm pack in / {math.hypot(*r['cg_pack_out'][:2]):.1f} pack out")
 names = []
 for p in json.load(open(os.path.join(RUN, "parts", "parts.json"))):
@@ -42,11 +49,11 @@ for mx, my in [(54.1, 54.1), (54.1, -54.1), (-54.1, 54.1), (-54.1, -54.1)]:
 names.append("props (swept)"); s.part("props (swept)", trimesh.util.concatenate(rings), group="bought", color="#d9a400", printed=False)
 rr_ = [trimesh.creation.cylinder(4.0, np.linalg.norm(N[a] - N[b]), sections=12, segment=np.vstack([N[a], N[b]]))
        for a, b in E if a in ring and b in ring]
-names.append("bottom rectangle (the Overseer ring's middle)"); s.part("bottom rectangle (the Overseer ring's middle)", trimesh.util.concatenate(rr_), group="cage", color="#e07020", printed=False,
-                                                          note="4 of the Overseer ring's 8 nodes (its middle rectangle), same datum (grip line, 3 under the cartridge flat bottom); the nose and tail trapezoids dropped")
+names.append("bottom loop (the Overseer's 4 side nodes)"); s.part("bottom loop (the Overseer's 4 side nodes)", trimesh.util.concatenate(rr_), group="cage", color="#e07020", printed=False,
+                                                          note="the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped), same datum (grip line, 3 under the cartridge flat bottom, + 2.1 so the 3 mm rods seat like its 6 mm tubes)")
 names.append("Overseer cage (same datum, ghost)")
 s.part("Overseer cage (same datum, ghost)", trimesh.util.concatenate([line(No[a], No[b], 0.6) for a, b in Eo]), group="reference", color="#9ab0c8", printed=False,
-       note="Overseer cage v3 placed ring on ring: the Scout's lower shell sits inside the Overseer's, so a funnel that takes one takes both")
+       note=OVN + " placed loop on loop: one funnel takes both")
 L_ = np.array(r["cam"]["lens"]); ha, va = math.radians(r["cam"]["hfov"] / 2), math.radians(r["cam"]["vfov"] / 2); Rf = 160.0
 ey, ez, ex = np.array([0, 1.0, 0]), np.array([0, 0, 1.0]), np.array([1.0, 0, 0])
 cor = [L_ + Rf * (ex + math.tan(ha) * sy * ey + math.tan(va) * sz * ez) / np.linalg.norm(ex + math.tan(ha) * sy * ey + math.tan(va) * sz * ez)
@@ -91,7 +98,7 @@ for k, (el, az, ttl) in enumerate(((22, -55, "iso"), (0, -90, "side (from -y)"),
     lo, hi = np.array([-260, -260, -120]), np.array([300, 260, 180])
     ax.set_xlim(lo[0], hi[0]); ax.set_ylim(lo[1], hi[1]); ax.set_zlim(lo[2], hi[2]); ax.set_box_aspect(hi - lo)
     ax.view_init(el, az); ax.set_title(ttl); ax.set_axis_off()
-fig.suptitle(f"Scout v3 race-car cage: {len(E) + len(r['links'])} x 3 mm rods; orange = the bottom rectangle (the Overseer ring's middle), light blue = the Overseer cage on the same datum, "
+fig.suptitle(f"Scout v3 race-car cage: {len(E) + len(r['links'])} x 3 mm rods; orange = the bottom loop (the Overseer's 4 side nodes), light blue = the Overseer cage on the same datum, "
              "green = camera view", fontsize=11)
 fig.tight_layout(); fig.savefig(os.path.join(RUN, "preview.png")); print("wrote", os.path.join(RUN, "preview.png"))
 

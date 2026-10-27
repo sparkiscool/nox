@@ -30,8 +30,16 @@ from scipy.spatial import ConvexHull, cKDTree
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 
-RING_MODE = os.environ.get("SCOUT_RING", "rect")           # rect: the Overseer ring's middle rectangle (Spark 27 Oct); overseer: the whole octagon; own
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v9", "" if RING_MODE == "rect" else "alt_" + RING_MODE + "_ring")
+RING_MODE = os.environ.get("SCOUT_RING", "v5side")         # v5side: the 4 side nodes of the Overseer cage v5 base loop (Spark 27 Oct, via the design
+                                                           # center: "the rectangle part" of its current hexagon); rect: the v3 octagon's middle rectangle;
+                                                           # overseer: the whole v3 octagon; own
+OV5_SIDE = [(85.8, 116.1), (-68.9, 119.7), (-68.9, -119.7), (85.8, -116.1)]   # about the catch (C, Overseer cage v5, PR 122 nox/overseer/cage_v5_shell.json)
+OV_ROD_R = 3.0                                             # the Overseer's ring tube radius (6 mm tubes)
+SEAT_DZ = float(os.environ.get("SCOUT_SEAT_DZ", (OV_ROD_R - 1.5) * math.sqrt(2)))   # the Scout plane this much higher, so its 3.0 ring rods seat
+                                                           # where the Overseer's 6 mm tubes do on the shared 45 deg ramps (DEFAULT 27 Oct; alt: 6 mm ring tubes)
+USB_FIRST = RING_MODE != "v5side"                          # v5side: the links first (the rear spokes need the tail-left side), then the USB path
+FUNNEL_BAND = 30.0                                         # nothing but the ring rods within this height above the plane, outside the swap column (funnel ramps)
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v10", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")                # the Overseer cage v3 (ring source)
 LOG = io.StringIO()
@@ -201,9 +209,9 @@ def build(DC):
     TAB_X = float(np.mean([D["slider +y (latch)"][0].bounds[:, 0].mean(), D["slider -y (latch)"][0].bounds[:, 0].mean()]))
     CART_BOT = float(D["cartridge v6 (latch)"][0].bounds[0][2])
     REC_B = D["receiver v3 (latch)"][0].bounds
-    Z_O = CART_BOT + RING_DZ                                   # the Scout ring plane on the same datum
+    Z_O = CART_BOT + RING_DZ + (SEAT_DZ if RING_MODE == "v5side" else 0.0)   # the Scout ring plane on the same datum (+ the seat offset)
     RING = ring_nodes(); nR = len(RING)
-    sx_ = 30.0 if RING_MODE != "rect" else min(30.0, float(RING[:, 0].max()) - REC_B[1][0] - SHELL_R - 1.0, REC_B[0][0] - float(RING[:, 0].min()) - SHELL_R - 1.0)
+    sx_ = 30.0 if RING_MODE not in ("rect", "v5side") else min(30.0, float(RING[:, 0].max()) - REC_B[1][0] - SHELL_R - 1.0, REC_B[0][0] - float(RING[:, 0].min()) - SHELL_R - 1.0)
     SPARE_X = sx_
     SPARE_ENDS = (float(RING[:, 0].max()) - REC_B[1][0] - SHELL_R - 1.0, REC_B[0][0] - float(RING[:, 0].min()) - SHELL_R - 1.0)
     ZONE = (REC_B[0][0] - sx_, REC_B[1][0] + sx_, REC_B[0][1] - 30.0, REC_B[1][1] + 30.0)   # swap zone: receiver + 30 a side (rect: + what the
@@ -236,6 +244,8 @@ R_OV, RING_DZ, RING_TUBES, OV_CX, OV_CB = overseer_ring()
 
 
 def ring_nodes():
+    if RING_MODE == "v5side":                                  # the Overseer cage v5 base loop's 4 side nodes (its nose and tail nodes dropped)
+        return np.array([[TAB_X + x_, y_, Z_O] for x_, y_ in OV5_SIDE])
     if RING_MODE in ("overseer", "rect"):
         R = R_OV + [TAB_X, 0, 0] + [0, 0, Z_O - R_OV[:, 2].mean()]
         # rect (Spark 27 Oct: "get rid of the two trapezoids so the bottom is just a rectangle"): the octagon's 4 side nodes, the
@@ -628,7 +638,17 @@ def place_boom(nodes, E):
     return g_
 
 
-def usb_line(nodes, E):
+def in_band(q, r=0.0):
+    """the funnel band (design center 27 Oct): within FUNNEL_BAND above the plane, inside the bottom opening or up to 40 past its
+    nose and tail ends (the ramps); only the ring rods (and the shell rods leaving the 4 bottom nodes outward) may be there"""
+    q = np.atleast_2d(q)
+    x0, x1 = float(RING[:, 0].min()), float(RING[:, 0].max())
+    yw = np.interp(q[:, 0], [x0, x1], [np.abs(RING[RING[:, 0] < x0 + 1, 1]).max(), np.abs(RING[RING[:, 0] > x1 - 1, 1]).max()])
+    inside = (q[:, 0] > x0 - 40.0) & (q[:, 0] < x1 + 40.0) & (np.abs(q[:, 1]) < yw + r)   # the 40 past the ends on the rod axis
+    return inside & (q[:, 2] < Z_O + FUNNEL_BAND + r)
+
+
+def usb_line(nodes, E, segs=()):
     """FC USB-C cable path (12 x 7 plug + cable, 250 long, E): from a point on the FC's tail or left edge, the direction nearest
     the tail-left diagonal (within 60 deg) that clears every part (but the mount and the wires) by 1 and the shell tubes and
     nodes by their radius + 7 + 1 (as the Overseer's access search)"""
@@ -645,9 +665,9 @@ def usb_line(nodes, E):
             if ang > 60.0 or (best is not None and ang >= best[0]): continue
             q = p0 + np.linspace(0.0, 250.0, 250)[:, None] * dv
             ok = True
-            for a, b in E:
-                u = nodes[b] - nodes[a]; t = np.clip(((q - nodes[a]) @ u) / (u @ u), 0, 1)
-                if (np.linalg.norm(q - (nodes[a] + t[:, None] * u), axis=1) < SHELL_R + 7.0 + 2.0).any(): ok = False; break
+            for a_, b_ in [(nodes[a], nodes[b]) for a, b in E] + [(np.asarray(p_, float), np.asarray(q_, float)) for p_, q_ in segs]:
+                u = b_ - a_; t = np.clip(((q - a_) @ u) / (u @ u), 0, 1)
+                if (np.linalg.norm(q - (a_ + t[:, None] * u), axis=1) < SHELL_R + 7.0 + 2.0).any(): ok = False; break
             if not ok or (np.linalg.norm(q[:, None, :] - nodes[None], axis=2) < NODE_R + 7.0 + 1.0).any(): continue
             for m, pq_ in pq:
                 near = ((q > m.bounds[0] - 9.0) & (q < m.bounds[1] + 9.0)).all(1)
@@ -752,11 +772,12 @@ def attach(nodes, ring_ids, E=()):
 
     def clear1(p0, p1):
         q = np.asarray(p0)[None] + np.linspace(0.04, 0.96, 60)[:, None] * (np.asarray(p1) - np.asarray(p0))[None]
-        if (seg_d(q, usb0, usb0 + 250.0 * usb_d) < 7.0 + ROD_R + 1.0).any(): return False
+        if USB_FIRST and (seg_d(q, usb0, usb0 + 250.0 * usb_d) < 7.0 + ROD_R + 1.0).any(): return False
         if any((seg_d(q, a_, b_) < CAM['boom_sec'] / math.sqrt(2) + ROD_R + 1.0).any() for a_, b_ in BOOM_AX): return False
         if any(((q > b_[0]) & (q < b_[1])).all(1).any() for b_ in keep_out): return False
         if any(((np.linalg.norm(q[:, :2] - k, axis=1) < 2.0 + 1.0 + ROD_R) & (q[:, 2] < -20.0)).any() for k in keys_): return False
         if ((q[:, 0] > ZONE[0]) & (q[:, 0] < ZONE[1]) & (q[:, 1] > ZONE[2]) & (q[:, 1] < ZONE[3]) & (q[:, 2] < CART_BOT)).any(): return False
+        if (in_band(q)).any(): return False                                             # the funnel band (the ramps inside the opening), rod axis
         qi = q[(np.linspace(0.04, 0.96, 60) > 0.08) & (np.linspace(0.04, 0.96, 60) < 0.92)]
         if any(link_gap(qi, a_, b_) < 2 * ROD_R + 1.0 for a_, b_ in acc): return False
         return views_clear(p0, p1, ROD_R)
@@ -786,11 +807,12 @@ def attach(nodes, ring_ids, E=()):
         ns = 2 if LEAN else 3
         got = pick(tip, ok, ns, 30.0, f"spoke {i + 1}")
         if len(got) < ns: pick(tip, [k for k in ok if k not in got], ns - len(got), 20.0, f"spoke {i + 1}x")
-    rb = REC_B                                               # bay ties: receiver bottom corners to the 2 nearest ring nodes (from inside, above the ring)
-    for sx in (1, -1):                                       # 1 a corner when lean (review 27 Oct: nose and tail, both ends tied)
-        cn = np.array([rb[1][0] if sx > 0 else rb[0][0], rb[1][1], -34.0])
-        ok = [k for k in ring_ids if side(nodes[k], sx, 1)]
-        pick(cn, ok, 1 if LEAN else 2, 15.0, f"bay tie {sx:+d}+1")
+    rb = REC_B                                               # bay ties: the receiver's side corners, above the funnel band, to the nearest shell
+    for sx in (1, -1):                                       # nodes on their side (design center 27 Oct: nothing but the ring rods in the band);
+        for zc_ in np.arange(Z_O + FUNNEL_BAND + ROD_R + 1.0, rb[1][2] - 2.0, 6.0):   # 1 a corner when lean, nose and tail; the lowest start
+            cn = np.array([rb[1][0] if sx > 0 else rb[0][0], rb[1][1], zc_])            # on the receiver's side that finds a clear node
+            ok = [k for k in range(nR, len(nodes)) if side(nodes[k], sx, 1) and nodes[k][2] >= cn[2] and seg_band_dist(cn, nodes[k]) - ROD_R >= PROP_GAP]
+            if pick(cn, ok, 1 if LEAN else 2, 15.0, f"bay tie {sx:+d}+1"): break
     pb = D["frame plate (Bee35 carbon)"][0].bounds           # core ties: 2 from each plate edge (underside) into the shell
     for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1))[3 if LEAN else 0:3]:   # lean: none (the spokes, bay ties and camera braces tie the core; Spark 27 Oct: half the rods)
         q = np.array([q0[0], q0[1], 18.5 - ROD_R])
@@ -842,6 +864,8 @@ def attach(nodes, ring_ids, E=()):
         a_, b_ = np.asarray(a_) * mir, np.asarray(b_) * mir
         if not any(min(np.linalg.norm(a_ - p_) + np.linalg.norm(b_ - q_), np.linalg.norm(a_ - q_) + np.linalg.norm(b_ - p_)) < 1.0 for p_, q_ in have):
             extra[k_ + " m"] = (a_, b_); have.append((a_, b_))
+    if not USB_FIRST:                                        # the links first, then the FC USB-C cable path round them (and the shell)
+        usb_line(nodes, E, [v for v in extra.values()] + [(np.asarray(a_, float) * mir, np.asarray(b_, float) * mir) for a_, b_ in extra.values()])
     return extra, guard
 
 
@@ -943,6 +967,18 @@ if RING_MODE in ("overseer", "rect"):
     dR = max(np.linalg.norm(Rd - (q - [TAB_X, 0, Z_O]), axis=1).min() for q in nodes[:nR])
     say(f"ring: {nR} of the Overseer's {len(R_OV)} ring nodes " + ("(the whole octagon)" if RING_MODE == "overseer" else "(its middle rectangle, the nose and tail trapezoids dropped)")
         + f", each within {dR:.3f} mm of its node on the same datum, {len(ringE)} ring rods, extents {np.ptp(nodes[:nR, 0]):.1f} x {np.ptp(nodes[:nR, 1]):.1f} (C)")
+if RING_MODE == "v5side":
+    say(f"ring: the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped; Spark 27 Oct), about the catch "
+        + ", ".join(f"({x_:+.1f}, {y_:+.1f})" for x_, y_ in OV5_SIDE) + f", {np.ptp(nodes[:nR, 0]):.1f} long, {2 * OV5_SIDE[1][1]:.1f} wide at the tail, "
+        + f"{2 * OV5_SIDE[0][1]:.1f} at the nose; plane z {Z_O:.2f} = cartridge flat bottom {RING_DZ:+.2f} + seat {SEAT_DZ:+.2f} (3.0 rods seat where the "
+        + f"Overseer's 6 mm tubes do on 45 deg ramps); {len(ringE)} ring rods (C)")
+    smp = lambda a_, b_: np.asarray(a_) + np.linspace(0.02, 0.98, 80)[:, None] * (np.asarray(b_) - np.asarray(a_))
+    nl_ = sum(int(in_band(smp(p_, q_)).any()) for p_, q_ in extra.values()); nl1_ = sum(int(in_band(smp(p_, q_), ROD_R).any()) for p_, q_ in extra.values())
+    ns_ = [(a, b) for a, b in E if min(a, b) >= nR and in_band(smp(nodes[a], nodes[b]), SHELL_R).any()]
+    nr_ = [(a, b) for a, b in E if (a < nR) != (b < nR) and in_band(smp(nodes[a], nodes[b])[8:], SHELL_R).any()]
+    say(f"funnel band (within {FUNNEL_BAND:.0f} above the plane, inside the opening or 40 past its ends): links in it {nl_} (rod axis; {nl1_} graze its edge by up to the rod radius), shell rods between free "
+        f"nodes {len(ns_)}, shell rods leaving the 4 bottom nodes that stay in it past their first 10 % {len(nr_)} "
+        + (f"({', '.join(f'{a}-{b}' for a, b in nr_)})" if nr_ else "") + " (C)")
 circ = []
 for f in tris:
     a_, b_, c_ = nodes[f]; la, lb, lc = np.linalg.norm(b_ - c_), np.linalg.norm(a_ - c_), np.linalg.norm(a_ - b_); s_ = (la + lb + lc) / 2
@@ -1025,7 +1061,7 @@ if RING_MODE in ("overseer", "rect"):
 else:
     band = {}
 
-SUMMARY = dict(ring_mode=RING_MODE, tab_x=TAB_X, cart_bottom=CART_BOT, z_o=Z_O, ring=np.round(nodes[:nR], 3).tolist(), cam=dict(lens=CAM["lens"].tolist(),
+SUMMARY = dict(ring_mode=RING_MODE, seat_dz=SEAT_DZ if RING_MODE == "v5side" else 0.0, tab_x=TAB_X, cart_bottom=CART_BOT, z_o=Z_O, ring=np.round(nodes[:nR], 3).tolist(), cam=dict(lens=CAM["lens"].tolist(),
                phi=CAM["phi"], boom=CAM["boom"], hfov=CAM_HFOV, vfov=CAM_VFOV), start=pick["start"], dome=pick["dome"], nodes=len(nodes), tubes=len(E),
                shell_m=float(sh.sum() / 1000), shell_g=float(shell_g), link_g=float(link_g), mass=float(tot), cg=cgv.tolist(), cg_pack_out=c2.tolist(),
                extents=ext.tolist(), prop_gap=float(pg), block_top=BT, block_bottom=BB, largest_cell=max(circ) - 2 * SHELL_R, funnel_band=band,
@@ -1034,7 +1070,7 @@ json.dump(SUMMARY, open(os.path.join(OUT, "result.json"), "w"), indent=1)
 json.dump([dict(name=n_, g=round(float(m_), 3), c=np.round(c_, 2).tolist()) for n_, m_, c_ in it], open(os.path.join(OUT, "masses.json"), "w"))
 SHELL_SPEC = dict(nodes=np.round(nodes, 3).tolist(), rods=[list(map(int, e)) for e in E],
                   links=len(extra), link_r_mm=ROD_R, total_rods=len(E) + len(extra),
-                  open=[dict(name={"overseer": "bottom opening (pack + swap): the Overseer's ring", "rect": "bottom opening (pack + swap): the Overseer ring's middle rectangle"}.get(RING_MODE, "bottom opening (pack + swap)"),
+                  open=[dict(name={"v5side": "bottom opening (pack + swap): the Overseer cage v5 base loop's 4 side nodes", "overseer": "bottom opening (pack + swap): the Overseer's ring", "rect": "bottom opening (pack + swap): the Overseer ring's middle rectangle"}.get(RING_MODE, "bottom opening (pack + swap)"),
                              ring=list(range(nR)))], node_r_mm=NODE_R, rod_r_mm=SHELL_R)
 json.dump(SHELL_SPEC, open(os.path.join(OUT, "cage_shell.json"), "w"))
 
@@ -1076,7 +1112,7 @@ if CAM_MOUNT == "printed":
 if CAM_MOUNT != "printed": say("camera ties: " + ", ".join(k for k in extra if k.startswith(("cam brace", "cam cradle", "cam guard strut"))) + (" (the cradle hangs from the cage only, Spark 27 Oct)" if CAM_MOUNT == "cage" else " (the seat on the boom + these: not a stalk)"))
 if CAM_MOUNT == "boom": say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
-if OUT == os.path.join(ROOT, "runs", "scout_layout", "v9", ""):
+if OUT == os.path.join(ROOT, "runs", "scout_layout", "v10", ""):
     from assembly import new as new_assembly
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:

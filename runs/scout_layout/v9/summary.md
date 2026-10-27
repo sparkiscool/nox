@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2, race-car shape: the Scout design (27 Oct 2026, concept)
 
+**Superseded 27 Oct by `runs/scout_layout/v10/summary.md` (Spark via the design center: the bottom on the Overseer cage v5 loop's 4 side nodes; the bay ties out of the funnel band). Kept: summary, results, stills; meshes in git history.**
+
 Spark 27 Oct, in order:
 - On cage v1 (`v6/`, 123 rods): "these are all 3mm ... divide the number of rods by half"
 - "dont worry about same rod legnth anymore" (`v7/`)
