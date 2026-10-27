@@ -12,10 +12,18 @@ h = float(sys.argv[4]) if len(sys.argv) > 4 else (2.0 if which == "front" else 1
 BAND = float(sys.argv[5]) if len(sys.argv) > 5 else 3.0
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, "nox"))
-src = open(script).read()                                       # the version wrapper sets its env, then load arm_topo_v1
-for line in src.splitlines():
-    if line.strip().startswith("os.environ.setdefault("):
-        exec(line.strip(), {"os": os, "ROOT": ROOT, "HERE": HERE})
+class _Chain:                                                    # the version wrappers set their env, then run the next one;
+    @staticmethod                                               # stop at arm_topo_v1 (imported below)
+    def run_path(path, run_name=None):
+        if os.path.basename(path) != "arm_topo_v1.py":
+            exec(open(path).read(), {"__file__": path, "__name__": "wrapper", "runpy": _Chain})
+
+
+import builtins
+_imp = builtins.__import__
+builtins.__import__ = lambda n, *a, **k: _Chain if n == "runpy" else _imp(n, *a, **k)
+_Chain.run_path(os.path.abspath(script))
+builtins.__import__ = _imp
 import trimesh
 import arm_topo_v1 as A
 from scipy import ndimage as ndi
