@@ -214,3 +214,17 @@ fem: grid (112, 48, 32) = 172,032 elements, 231,117 active dofs; backend direct 
 fem: grid (112, 48, 32) = 172,032 elements, 231,117 active dofs; backend direct (direct estimate 2.5 GB, budget 11.8 GB)
 layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.138
 layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.138
+it   1 beta    4 J  10.0000 vol 0.1030 (dil 0.2033 g +0.182) grey 20.3% ch 0.100 worst tie b5 mx 3.63e+05 79.0s
+it   1 beta    4 J  10.0000 vol 0.1030 (dil 0.2033 g +0.182) grey 20.3% ch 0.100 worst tie b5 mx 3.63e+05 79.0s
+it   2 beta    4 J  10.2776 vol 0.0878 (dil 0.1887 g +0.097) grey 19.9% ch 0.100 worst tie b5 mx 3.63e+05 89.7s
+it   2 beta    4 J  10.2776 vol 0.0878 (dil 0.1887 g +0.097) grey 19.9% ch 0.100 worst tie b5 mx 3.63e+05 89.7s
+it   3 beta    4 J  10.8275 vol 0.0730 (dil 0.1729 g +0.005) grey 18.6% ch 0.100 worst tie b5 mx 3.78e+05 94.9s
+it   3 beta    4 J  10.8275 vol 0.0730 (dil 0.1729 g +0.005) grey 18.6% ch 0.100 worst tie b5 mx 3.78e+05 94.9s
+it   4 beta    4 J   6.5148 vol 0.0672 (dil 0.1678 g -0.024) grey 17.6% ch 0.100 worst tie b5 mx 2.26e+05 84.9s
+it   4 beta    4 J   6.5148 vol 0.0672 (dil 0.1678 g -0.024) grey 17.6% ch 0.100 worst tie b5 mx 2.26e+05 84.9s
+it   5 beta    4 J   3.0415 vol 0.0657 (dil 0.1677 g -0.025) grey 17.5% ch 0.100 worst tie b5 mx 1.07e+05 82.4s
+it   5 beta    4 J   3.0415 vol 0.0657 (dil 0.1677 g -0.025) grey 17.5% ch 0.100 worst tie b5 mx 1.07e+05 82.4s
+it   6 beta    4 J   2.1220 vol 0.0669 (dil 0.1683 g -0.094) grey 17.6% ch 0.100 worst tie b10 fx 7.65e+04 80.1s
+it   6 beta    4 J   2.1220 vol 0.0669 (dil 0.1683 g -0.094) grey 17.6% ch 0.100 worst tie b10 fx 7.65e+04 80.1s
+it   7 beta    4 J   1.0088 vol 0.0766 (dil 0.1806 g -0.028) grey 18.9% ch 0.100 worst tie b3 mx 3.31e+04 84.0s
+it   7 beta    4 J   1.0088 vol 0.0766 (dil 0.1806 g -0.028) grey 18.9% ch 0.100 worst tie b3 mx 3.31e+04 84.0s
