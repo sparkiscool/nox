@@ -1,0 +1,106 @@
+<title>Scout Belly Mount v1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: a drawing sheet: title block, the pick full width, the options sheet full width, then spec columns that stack on a phone */
+:root {
+  --bg: #f4f6f8; --paper: #ffffff; --ink: #18222d; --muted: #5b6876; --line: #d5dce3;
+  --petg: #2f7fd8; --fail: #b3261e; --pass: #2e7d32;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --paper: #182029; --ink: #e3e9ef; --muted: #9aa8b6; --line: #2c3743;
+  --petg: #6aa9f0; --fail: #f2867c; --pass: #7cc583; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --paper: #182029; --ink: #e3e9ef; --muted: #9aa8b6; --line: #2c3743;
+  --petg: #6aa9f0; --fail: #f2867c; --pass: #7cc583; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
+.sheet { max-width: 1180px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: grid; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 72ch; margin: 0; }
+.tags { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); letter-spacing: 0.02em; }
+figure { margin: 0; background: #ffffff; border: 1px solid var(--line); padding: 10px; overflow-x: auto; }
+figure img { display: block; width: 100%; min-width: 760px; max-width: none; height: auto; }
+figcaption { font-size: 0.82rem; color: #5b6876; padding-top: 8px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+section { min-width: 0; }
+h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; }
+dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; }
+dt { color: var(--muted); font-size: 0.88rem; }
+dd { margin: 0; font-family: var(--mono); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+.fail { color: var(--fail); font-weight: 500; }
+.pass { color: var(--pass); }
+ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+li { max-width: 65ch; }
+.alt { background: var(--paper); border: 1px solid var(--line); padding: 12px 14px; display: grid; gap: 6px; }
+.alt b { color: var(--petg); }
+</style>
+<div class="sheet">
+  <header>
+    <h1>Scout v3 belly mount, concept v1 (round 2)</h1>
+    <p class="sub">One PETG print, 25.0 g (E): two yokes clamped between the Bee35 plate (z 18.5) and the receiver's mount plane (z 9.6), joined only through the flow sensor's bipod. Nothing of it stands beside the FC over x −18..18, so the ESC has 641 mm² of side vents. It takes the receiver's 4 M3 bolts in inserts and bolts to the plate with 4 new M3. The tail block's tongue bears on its tail face at x −31.</p>
+    <div class="tags">drone frame: x nose, y left, z up, mm · C computed on layout v12 · E estimate · P measured · runs/scout_belly_mount/v1</div>
+  </header>
+  <figure>
+    <img src="preview.png" alt="Belly mount in the assembled Scout v3: side, top and rear views, a slice at z 14, a slice through the flow bipod, and the FC grommet stack">
+    <figcaption>The pick. Blue: belly mount. Green: FC and flow. Violet: the electronics tail block and carrier. Orange: tie saddle. Green fan: the flow's 23° view. Red arrow: the FC USB-C path. Red squares: the 4 new plate bolts. Scroll sideways on a phone.</figcaption>
+  </figure>
+  <figure>
+    <img src="preview_alternatives.png" alt="The options side by side: A FC under the plate with side vents (picked), B FC on the plate top, C FC seated on the belly mount, and the tail-root inserts option">
+    <figcaption>The options from the same model. A (picked): FC under the plate, both sides vented. B (Spark's call): FC on the plate top. C (rejected): FC seated on the belly mount; red is the seat it needs. Right: the tail-root bearing face against 2 inserts whose key lines hit the tail block.</figcaption>
+  </figure>
+  <div class="cols">
+    <section>
+      <h2>Checks</h2>
+      <dl>
+        <dt>solid_check</dt><dd class="pass">PASS, 1 body</dd>
+        <dt>system_check</dt><dd class="pass">PASS</dd>
+        <dt>fit</dt><dd>0.0 mm³, contacts 0.000</dd>
+        <dt>access</dt><dd>25 / 25 clear</dd>
+        <dt>CG in / out</dt><dd>0.2 / 2.2 (gate 3.0)</dd>
+        <dt>flow view</dt><dd class="pass">clear to the ground</dd>
+        <dt>ESC vents</dt><dd class="pass">641 mm², both sides</dd>
+        <dt>FC / plate</dt><dd class="fail">1.0 (rule 2.0, as built)</dd>
+        <dt>FC / receiver rib</dt><dd class="fail">0.9 (rule 2.0, as built)</dd>
+        <dt>flow clear air</dt><dd>slipstream test (E); column test: no pose passes</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>Loads and modes (E)</h2>
+      <dl>
+        <dt>crash 35 g × 14</dt><dd>worst 0.23 (frame), limit 1.0</dd>
+        <dt>receiver inserts</dt><dd>0.081 (600 N)</dd>
+        <dt>plate inserts</dt><dd>0.143, prying up to 3.3×</dd>
+        <dt>carbon bearing</dt><dd>0.014</dd>
+        <dt>flight / landing</dt><dd>≤ 0.03, limit 0.5</dd>
+        <dt>FC as-built grommets</dt><dd>543..858 Hz, in blade pass</dd>
+        <dt>soft-mount requirement</dt><dd>120 Hz, columns 5.2 tall</dd>
+        <dt>flow bipod</dt><dd>405 Hz</dd>
+        <dt>breaking order</dt><dd>0.23 ≤ 0.59 / 1.5</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>Attachments</h2>
+      <ul>
+        <li>Receiver: 4 M3 up into M3 × 5.7 inserts at (−37.65, ±26.55), (48.28, ±26.55).</li>
+        <li>Plate: 4 new Ø3.4 holes, M3 down into inserts at (−25, ±13), (30, ±13). The Bee35's own side and nose holes stay empty.</li>
+        <li>FC: on the plate's own 25.5 AIO holes, M2 × 12 + grommets (E). The yokes stay clear of it.</li>
+        <li>Tail block: tongue on the x −31 face, ears bearing on its bosses at |y| 21.</li>
+        <li>Flow: a bipod from pads at x ∓24, with a tie bar over the cradle at (0, −40), z −30..−22.</li>
+      </ul>
+    </section>
+  </div>
+  <div class="cols">
+    <div class="alt"><b>FC placement (Spark decides A or B)</b>
+      <span>A, picked: under the plate on its AIO holes, as built, vented both sides. The FC comes out only with the receiver off. The soft-mount requirement clears both FC gaps: 5.2 columns, FC at z 8.5..16.5, receiver rib cut 2.1.</span>
+      <span>B: on the plate top at x +6. Clear on every side, ESC in free air, FC out with nothing else off. Against it: Spark's 12 Oct "cannot move up", 4 new holes, the IMU 15.5 higher.</span>
+      <span>C, rejected: a seat on the belly mount at x +5. It needs 8.1 of height above the FC where 1.0 exists.</span>
+    </div>
+    <div class="alt"><b>Tail block root</b>
+      <span>Picked: a bearing face at x −31 plus ears. No fasteners; peak 26.9 N at 0.12 MPa.</span>
+      <span>Rejected: 2 M3 inserts in the tail face. Their key lines hit the tail block 31.8 and 8.4 mm aft, and they would lock the block to the belly mount.</span>
+    </div>
+  </div>
+</div>
