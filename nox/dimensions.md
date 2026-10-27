@@ -181,7 +181,7 @@ The system pass of the swap arm carrying both packs (Spark 24 Oct: 9 bays, 4 Ove
 | Props shadow | 3.8 % above, 9.0 % below (plan shadow weighted by r) | E |
 | Mass | 679 g all-up (cage ~144 incl. the tie saddle 17 and the printed camera cradle + arms + clips 17; bought + latch set + wires ~505); budget 500 soft (L) | E |
 | Access | swap down (cartridge, pack, plug); 4 receiver bolt keys from below; FC USB-C cable out the tail-left through a cell: 8 / 8 | C |
-| Electronics tail bay (27 Oct) | concept v1 FAILED review x3 (`runs/scout_electronics/v1/summary.md`): no numbers carried; the system pass v2 sets them | DEFAULT |
+| Electronics tail bay (system pass v2) | optimised, catch set **x 0.0** (8 fwd of v10): Radxa on edge right wall x −110..−78.5, z −15..52; UBEC left wall x −113..−88; XR2 shelf x −128..−112; 8-wide PETG box keel + yoke, 4 M3 into a belly-mount tail block (x −74..−53, \|y\| ≤ 6.5); bay 59.5 g at (−81.5, 0.2, 16.0); CG 0.15/0.34 mm, no slide 6.7/6.1 FAIL; wash ≥ 3.1, funnel line ≥ 1.0. `runs/scout_electronics/v2/envelope.json` | C on E |
 
 ## J. Bottom latch: battery under the drone (DEFAULT, C from the coupon, E where tagged)
 Doc: `archive/scout-v2/s2-bottom-latch.md`. CAD: `archive/scout-v2/s2_latch_coupon.py`. Research: `claude/research/2026-10-14-bottom-cartridge-latch.md` (hook era). Coupon coords: x = slide axis (0 at centre), y = up toward the drone, z = thickness = print Z (14). Positions on the drone come from a sweep once the bottom layout (pack + underside stack, Problem 31) is set; the numbers below are the slider, pocket and gripper themselves.
