@@ -300,6 +300,34 @@ def landing(d, off, yaw_deg):
         s += STEP
     return dict(ok=False, why="no x clamp before the end of travel", s=s, pose=pose.round(2).tolist())
 
+def trace(d, off, yaw_deg, out_path):
+    """one landing recorded step by step for the animation: per frame s, phase, pose, slide, nose / tail apex, side face
+    offset; plus the drone's draw geometry and the pad / bar profile parameters (the page draws the bodies)"""
+    pose = np.array([off[0], off[1], math.radians(yaw_deg)]); s = 0.0; s_clamp = None; s_slide = None; resolve.ride = 0.0
+    frames = []; status = "running"
+    while s <= (S_S + 2.0 if s_clamp is None else s_clamp + S2):
+        if s_clamp is None:
+            pose, _p, resid, touched, fail = resolve(d, pose, bars_at(s)); sp = s
+        else:
+            p_prev = s_slide; p_start = min(s, s_slide + 1.0)
+            pose, s_slide, resid, touched, fail = resolve(d, pose, bars_at(s, s_clamp, p_start), slide=[p_start, max(s - LM, 0.0), s])
+            if any(k.endswith("pad") and v > 0.1 for k, v in resid.items()): s_slide = min(s_slide, p_prev)
+            sp = s_slide
+        frames.append(dict(s=round(s, 2), phase=1 if s_clamp is None else 2, pose=[round(float(pose[0]), 3), round(float(pose[1]), 3), round(float(pose[2]), 5)],
+                           xn=round(NOSE_PARK - sp, 2), xt=round(TAIL_PARK + K_T * sp, 2), out=round(side_out(s, s_clamp), 2), touched=sorted(touched)))
+        if fail: status = fail; break
+        pads = {k: v for k, v in resid.items() if k.endswith("pad") and v > 0.1}
+        if s_clamp is None and len(pads) == 2: s_clamp = s; s_slide = s
+        if s_clamp is not None and s >= s_clamp + S2 - STEP / 2: status = "seated"; break
+        s += STEP
+    geo = dict(deck=DECK, h_pad=H_PAD, h_bar=H, lip=[LIP_Z0, LIP_T, LIP_IN], bar_x=BAR_X, bar_t=BAR_T, pad_t=PAD_T, notch_y=NOTCH_Y, v_deg=V_DEG, ramp=[RAMP_Y, RAMP_DX],
+               wing_y=WING_Y, wing_deg=WING_DEG, wing_c=WING_C, y_out=Y_OUT, hex=HEX, k_t=K_T, nose_park=NOSE_PARK, tail_park=TAIL_PARK, y_park=Y_PARK, y_line0=Y_LINE0,
+               seats=dict(nose_overseer=NOSE_SEAT, tail_overseer=TAIL_SEAT, nose_scout=SCOUT_NOSE, tail_scout=SCOUT_TAIL), s2=S2, lm=LM)
+    enc = lambda o: o.tolist() if hasattr(o, "tolist") else float(o)
+    json.dump(dict(drone=d["kind"], off=list(off), yaw=yaw_deg, status=status, frames=frames, geo=geo, draw=d["draw"], cart=d["cart"], sleeve=SLEEVE, caps=SCOUT_CAPS),
+              open(out_path, "w"), default=enc)
+    print(d["kind"], off, yaw_deg, status, len(frames), "frames ->", out_path)
+
 def finish(d, pose, s, s_clamp, s_slide):
     """seated: lips and bars' clearance to everything that is not a ring tube, the pose error"""
     Q = pose_pts(d["P"], pose); clear = 1e9; who = ""
@@ -399,4 +427,9 @@ def build_html(res=None):
 if __name__ == "__main__":
     only = sys.argv[sys.argv.index("--drone") + 1] if "--drone" in sys.argv else None
     tag = sys.argv[sys.argv.index("--tag") + 1] if "--tag" in sys.argv else ""
-    build_html() if "--html" in sys.argv else merge() if "--merge" in sys.argv else main(smoke="--smoke" in sys.argv, only=only, tag=tag)
+    if "--trace" in sys.argv:                                   # --trace overseer 40 30 10 (x, y, yaw) -> runs/.../trace_<drone>_<x>_<y>_<yaw>.json
+        i = sys.argv.index("--trace"); kind = sys.argv[i + 1]; x, y, yw = (float(v) for v in sys.argv[i + 2:i + 5])
+        d = overseer() if kind == "overseer" else scout()
+        trace(d, (x, y), yw, os.path.join(OUT, f"trace_{kind}_{x:+.0f}_{y:+.0f}_{yw:+.0f}.json"))
+    else:
+        build_html() if "--html" in sys.argv else merge() if "--merge" in sys.argv else main(smoke="--smoke" in sys.argv, only=only, tag=tag)
