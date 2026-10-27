@@ -1,0 +1,20 @@
+{
+ "overseer_core_coupon_keel_hub_v2.stl": {
+  "mass_g": 12.0,
+  "size_mm": [
+   57.9,
+   57.0,
+   17.6
+  ],
+  "watertight": true
+ },
+ "overseer_flow_clip_v1.stl": {
+  "mass_g": 5.0,
+  "size_mm": [
+   28.0,
+   46.0,
+   9.8
+  ],
+  "watertight": true
+ }
+}

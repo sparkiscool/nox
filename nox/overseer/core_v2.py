@@ -107,10 +107,12 @@ Z_ESC = Z_TP + STANDOFF            # 49.6
 Z_STACK_TOP = Z_ESC + STACK_H      # 70.1
 CAP = (10.0, 20.0)                 # low-ESR cap on the ESC battery pads, 35 V 470 µF Ø10 x 20, lying on the top plate behind the ESC (E)
 RX_TP = (-30.0, -18.0, 24.0, 40.0)  # RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, taped / zip-tied through the plate
-FEET_XY = [(24.0, 36.5), (24.0, -36.5), (-65.0, 22.5), (-65.0, -22.5), (96.0, 17.0), (96.0, -17.0)]   # bottom plate Ø3.1 / Ø3.5 (front) holes, 360° in the STEP
-# v2: the front pair on the keel roots (the keels' 387 N go straight into the plate there); M3 up from under the plate into inserts
+FEET_XY = [(-24.0, 36.5), (-24.0, -36.5), (65.0, 22.5), (65.0, -22.5), (96.0, 17.0), (96.0, -17.0)]   # bottom plate Ø3.1 / Ø3.5 (front) holes, 360° in the STEP
+# v2 (concept review 27 Oct): every foot outside the battery slot (heads clear its reserved top 6: |y| 36.5 - 2.75 > 33.4, x 65 - 2.75 > 61.9);
+# each keel root closes a triangle into the plate: (96, ±17), (65, ±22.5) and the cross bar at x 96. M3 up from under the plate into inserts
 INSERT = (4.0, 5.7)                # Ruthex M3 x 5.7 heat-set insert, hole Ø4.0 (Q17), pressed into each foot from the plate side
-FOOT_H = 6.5                       # feet Ø12 x 6.5 (the deck's floor height; the insert's 5.7 + 0.8)
+FOOT_H = 6.5                       # feet Ø12 x 6.5 (the deck's floor height), the insert hole Ø4.0 through (no thin cap over it)
+CLIP_FLANGE = 3.0                  # the flow clip's flange under the 2 front screw heads (review: only 3 of PETG in the keel joint's clamp)
 # (Spark 27 Oct: "do we really need that many": 4 carry 193 N a bolt in the 35 g crash vs 137 N with 6, E)
 # (review 27 Oct: (-72.5, ±31.75) are R3 outline fillets, not holes; (-65, ±36.5) sit under the rear arm roots)
 # Pi 5: board 85 x 56 x 1.6, M2.5 holes Ø2.7 on 58 x 49, 3.5 from the far edge and 23.5 from the USB-A / RJ45 edge (spec);
@@ -138,7 +140,7 @@ SOCK_D, SOCK_L, SOCK_OFF, SOCK_OD = 6.2, 15.0, 5.0, 13.0   # bore (Spark 27 Oct 
 FLOW_X, FLOW_Y = 94.0, 0.0
 FLOW_T = 6.5
 LENS_Z = Z_PLATE_BOT - FLOW_T      # lens on the sensor's underside, the clip's window below it
-CLIP_FLOOR = 2.0
+CLIP_FLOOR = 3.0                   # floor and walls 3.0: the solid gate fails necks under 3.0 (2.0 failed on the clip, 27 Oct)
 ARM_SCREWS = [(sx * a, sy * b) for sx in (1, -1) for sy in (1, -1) for a, b in ((52.14, 38.0), (38.0, 52.14))]   # bottom plate (derived)
 
 # ---------------------------------------------------------------- context: v5 manifest
@@ -211,9 +213,10 @@ def hub_deck():
     feet = [cyl(6, 0, FOOT_H, x, y) for x, y in FEET_XY]
     px0, px1 = PI_HOLES[0][0], PI_HOLES[2][0]
     pip = [cyl(3.5, 0, Z_PI, x, y) for x, y in PI_HOLES]
-    bars = [bar((24, sy * 36.5), (px1, sy * 24.5), 6, 0, FLOOR_T) for sy in (1, -1)]
+    bars = [bar((-24.0, sy * 36.5), (px0, sy * 24.5), 6, 0, FLOOR_T) for sy in (1, -1)]                         # rear feet to the rear posts
     bars += [bar((px0, 24.5), (px0, -24.5), 6, 0, FLOOR_T), bar((px1, 24.5), (px1, -24.5), 6, 0, FLOOR_T)]
-    bars += [bar((-65.0, sy * 22.5), (px0, sy * RAIL_Y), 6, 0, FLOOR_T) for sy in (1, -1)]
+    bars += [bar((px1, sy * RAIL_Y), (65.0, sy * 22.5), 6, 0, FLOOR_T) for sy in (1, -1)]                       # front posts to the mid feet
+    bars += [bar((65.0, sy * 22.5), (96.0, sy * 17.0), 6, 0, FLOOR_T) for sy in (1, -1)]                        # the keel triangles' sides
     bars += [bar((px1, sy * BAY_Y), (96, sy * BAY_Y), 6, 0, FLOOR_T) for sy in (1, -1)]                          # bay rails to the front feet
     bars += [bar((px0, sy * RAIL_Y), (px1, sy * RAIL_Y), 6, 0, FLOOR_T) for sy in (1, -1)]                       # under the Pi (board z 8)
     bars += [bar((96, BAY_Y), (96, -BAY_Y), 6, 0, FLOOR_T), bar((57, BAY_Y), (57, -BAY_Y), 6, 0, FLOOR_T)]
@@ -224,9 +227,9 @@ def hub_deck():
 
 def flow_clip():
     """under the front wing: the MTF-02P pocket (window below the lens) between the 2 front feet, clamped by their screws"""
-    pads = [cyl(6, LENS_Z - CLIP_FLOOR, Z_PLATE_BOT, 96.0, sy * 17.0) for sy in (1, -1)]
-    cup = box(FLOW_X - 12.8, FLOW_X + 12.8, -10.0, 10.0, LENS_Z - CLIP_FLOOR, Z_PLATE_BOT)
-    arms_ = [box(90.0, 102.0, sy * 9.0, sy * 17.0, LENS_Z - CLIP_FLOOR, Z_PLATE_BOT) for sy in (1, -1)]
+    pads = [cyl(6, Z_PLATE_BOT - CLIP_FLANGE, Z_PLATE_BOT, 96.0, sy * 17.0) for sy in (1, -1)]               # 3 flange under the heads
+    cup = box(FLOW_X - 13.8, FLOW_X + 13.8, -11.2, 11.2, LENS_Z - CLIP_FLOOR, Z_PLATE_BOT)
+    arms_ = [box(90.0, 102.0, sy * 9.0, sy * 17.0, Z_PLATE_BOT - CLIP_FLANGE, Z_PLATE_BOT) for sy in (1, -1)]
     return uni(pads + [cup] + arms_)
 
 
@@ -314,10 +317,10 @@ acc += [{"name": "pack swap: cartridge + pack down through the opening", "part":
 SLOT_LATER = ["pack", "cartridge", "receiver", "XT60 pair", "cage shell tubes", "cage shell nodes", KEELS_NM]   # the latch set and the cage go on after the core
 for k, (x, y) in enumerate(FEET_XY):
     front = x > 90
-    acc.append({"name": f"step {2 if front else 1}: M3 x {16 if front else 8} up from under the plate{' through the flow clip' if front else ''} into the hub deck insert, foot {k} "
+    acc.append({"name": f"step {2 if front else 1}: M3 x {10 if front else 8} up from under the plate{' through the flow clip flange' if front else ''} into the hub deck insert, foot {k} "
                 f"(screwdriver from below, the battery slot empty)", "part": "flow clip" if front else "bottom plate",
-                "from": [x, y, (LENS_Z - CLIP_FLOOR if front else Z_PLATE_BOT) - 0.5], "dir": [0, 0, -1], "length_mm": 150.0, "tool": DRV,
-                "ignore": SLOT_LATER + ["TPU feet (cage session, placeholders)"]})
+                "from": [x, y, (Z_PLATE_BOT - CLIP_FLANGE if front else Z_PLATE_BOT) - 0.5], "dir": [0, 0, -1], "length_mm": 150.0, "tool": DRV,
+                "ignore": ["pack", "cartridge", "receiver", "XT60 pair", "cage shell tubes", "cage shell nodes", "TPU feet (cage session, placeholders)"]})
 for k, (x, y) in enumerate(PI_HOLES):
     acc.append({"name": f"step 2: M2.5 Pi screw {k} (screwdriver, top plate not on yet)", "part": PI_NM, "from": [x, y, Z_PI + PI_BOARD_T + 0.5], "dir": [0, 0, 1],
                 "length_mm": 150.0, "tool": {"type": "cylinder", "d": 5}, "ignore": LATER})
@@ -360,6 +363,8 @@ say(f"   deck x Pi {ov(DECK, pi):.1f} (posts on its holes), deck x UBEC {ov(DECK
     f"Pi x UBEC {ov(cat([pi, pi_plugs]), ubec):.1f}, cap x stack {ov(cap, stack):.1f}, RX x stack {ov(rx, stack):.1f} mm³")
 say(f"   battery slot (empty, x {RB[0][0]:.1f}..{RB[1][0]:.1f}, y ±{RB[1][1]:.1f}, z {Z_CART:.1f}..{Z_PLATE_BOT}): x deck {ov(slot, DECK):.1f}, x flow clip {ov(slot, CLIP):.1f}, "
     f"x flow {ov(slot, flow):.1f}, x wires {ov(slot, wires):.1f} mm³")
+heads = cat([cyl(2.75, Z_PLATE_BOT - (CLIP_FLANGE if x > 90 else 0) - 3.0, Z_PLATE_BOT - (CLIP_FLANGE if x > 90 else 0), x, y) for x, y in FEET_XY])
+say(f"deck screw heads (M3 Ø5.5 x 3) x the battery slot {ov(heads, slot):.1f} mm³ (its top 6 is the receiver mount's)")
 keel_tubes = [trimesh.creation.cylinder(3.4, np.linalg.norm(b - a), sections=24, segment=np.vstack([a, b])) for a, b in KEELS.values()]   # v5 draws them from the root
 bores = cat([keel_socket(sy, SOCK_D / 2, SOCK_OFF, SOCK_OFF + SOCK_L + 1) for sy in (1, -1)])
 say(f"keel sockets: bore Ø{SOCK_D} x {SOCK_L} from {SOCK_OFF} past each root, boss Ø{SOCK_OD}; deck x keel tubes {ov(DECK, cat(keel_tubes)):.1f} mm³ "
@@ -435,10 +440,10 @@ def inertial(names, acc):
     return [(-mass_c[n][0] * G * acc, mass_c[n][1]) for n in names]
 
 
-SUP = {"hub deck": [(x, y, 0.0) for x, y in FEET_XY], "hub deck, 4 feet (no front pair)": [(x, y, 0.0) for x, y in FEET_XY[:4]],
+SUP = {"hub deck": [(x, y, 0.0) for x, y in FEET_XY], "hub deck, front 4 feet alone (compliant deck bound)": [(x, y, 0.0) for x, y in FEET_XY[2:]],
        "flow clip": [(96.0, sy * 17.0, Z_PLATE_BOT) for sy in (1, -1)] + [(FLOW_X + 12.8, 0.0, Z_PLATE_BOT)],
        "Pi screws": [(x, y, Z_PI) for x, y in PI_HOLES], "stack screws": [(x, y, Z_TP) for x, y in STACK_HOLES]}
-CARRY = {"hub deck": ["Pi", "UBEC", "buck", "deck wires", "hub deck"], "hub deck, 4 feet (no front pair)": ["Pi", "UBEC", "buck", "deck wires", "hub deck"],
+CARRY = {"hub deck": ["Pi", "UBEC", "buck", "deck wires", "hub deck"], "hub deck, front 4 feet alone (compliant deck bound)": ["UBEC", "buck"],
          "flow clip": ["flow", "flow clip"], "Pi screws": ["Pi"], "stack screws": ["stack"]}
 KEEL_CASES = {"keels push (both 387 N, F)": (-1, -1), "keels pull (both 274 N, F)": (1, 1), "keel +y push, -y pull (F)": (-1, 1)}
 
@@ -465,12 +470,12 @@ for case, a in cases.items():
     for nm in SUP:
         rec(nm, case, piece_case(SUP[nm], inertial(CARRY[nm], a)))
 for case, sg in KEEL_CASES.items():          # the head's keel forces on the hub (frame model maxima, F), with the deck's own 35 g down
-    for nm in ("hub deck", "hub deck, 4 feet (no front pair)"):
+    for nm in ("hub deck", "hub deck, front 4 feet alone (compliant deck bound)"):
         rec(nm, case, piece_case(SUP[nm], keel_loads(sg) + inertial(CARRY[nm], np.array([0, 0, -35.0]))))
 say("joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):")
 for k, v in REQ.items():
     say(f"   {k}: max {v['max_bolt_N']} N per bolt ({v['worst_case']}), shear {v['max_shear_N']}, axial {v['max_axial_N']}")
-say("   the 2 front deck screws pass through the flow clip and the plate: the clip's loads add on them (M3 x 16, inserts in the deck)")
+say("   the 2 front deck screws clamp the flow clip's 3 flange and the plate (M3 x 10, inserts in the deck); the front 4 bound puts every keel load on (96, ±17) + (65, ±22.5)")
 f1 = None
 cg = np.asarray(res["mass_cg"]["cg"], float)
 tw = 4 * 1650 / M_TOT

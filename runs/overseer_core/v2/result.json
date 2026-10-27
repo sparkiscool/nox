@@ -2,22 +2,22 @@
  "mass_g": 3224.66,
  "tw": 2.05,
  "cg": [
-  68.54,
+  68.53,
   -0.06,
-  15.15
+  15.2
  ],
  "requirements": {
   "hub deck": {
    "worst_case": "keels push (both 387 N, F)",
-   "max_bolt_N": 129.0,
+   "max_bolt_N": 127.9,
    "max_shear_N": 126.5,
-   "max_axial_N": 28.5
+   "max_axial_N": 27.8
   },
-  "hub deck, 4 feet (no front pair)": {
+  "hub deck, front 4 feet alone (compliant deck bound)": {
    "worst_case": "keels push (both 387 N, F)",
-   "max_bolt_N": 198.8,
+   "max_bolt_N": 211.5,
    "max_shear_N": 189.8,
-   "max_axial_N": 74.0
+   "max_axial_N": 93.3
   },
   "flow clip": {
    "worst_case": "crash 35 g 4",
@@ -39,7 +39,7 @@
   }
  },
  "wash_pct": {
-  "hub deck + Pi + bays": 0.92,
+  "hub deck + Pi + bays": 0.85,
   "flow clip": 0.0,
   "battery slot": 1.83
  },
@@ -135,19 +135,19 @@
  ],
  "feet_xy": [
   [
-   24.0,
+   -24.0,
    36.5
   ],
   [
-   24.0,
+   -24.0,
    -36.5
   ],
   [
-   -65.0,
+   65.0,
    22.5
   ],
   [
-   -65.0,
+   65.0,
    -22.5
   ],
   [
@@ -215,7 +215,7 @@
   "hub deck": 32,
   "flow clip": 5
  },
- "system": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 26.5 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3225 of 2200 g (147 %) (E) over budget (total), CG 2.1 mm off thrust axis (E) [+2.1, -0.1, -66.8], 30.1 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear",
+ "system": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3225 of 2200 g (147 %) (E) over budget (total), CG 2.1 mm off thrust axis (E) [+2.1, -0.1, -66.8], 30.1 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear",
  "coupon": {
   "floor_t": 4.0,
   "post_h": 5.0,
@@ -255,7 +255,7 @@
    0.0
   ],
   "lens_z": -8.6,
-  "clip_floor": 2.0,
+  "clip_floor": 3.0,
   "z_plate_bot": -2.1
  }
 }
