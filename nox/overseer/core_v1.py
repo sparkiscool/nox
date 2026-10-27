@@ -120,6 +120,7 @@ PI_CX = float(os.environ.get("CORE_PI_CX", -11.0))   # Pi centre between the pla
 PI_X0, PI_X1, PI_W = PI_CX - 42.5, PI_CX + 42.5, 56.0
 PI_HOLES = [(PI_X0 + 23.5 + dx, sy * 24.5) for dx in (0.0, 58.0) for sy in (1, -1)]
 PI_POST = 4.0                      # posts on the floor bars, M2.5 self-tapping Ø2.2 x 4 (DEFAULT)
+# the Pi boots from a USB stick in an aft port (DEFAULT): its microSD end faces the UBEC bay 2.5 away, not reachable
 Z_PI = FLOOR_T + PI_POST           # board underside 8.0
 PI_BOARD_T, PI_UP, PI_COOL = 1.6, 16.0, 13.7
 COOL_X = (PI_X1 - 63.5 + 2.0, PI_X1 + 2.0)     # cooler over the SoC end of the board (E place)
@@ -219,9 +220,10 @@ W = {
     "FC UART -> flow (out at -y, down past both plate edges to the pod)": ([(10, -18, Z_STACK_TOP - 4), (8, -58, Z_TP + 2), (6, -62, 20), (0, -61, 2), (-4, -61, Z_M - 16), (POD_X, FLOW_Y - 4, LENS_Z + 8)], 1.5),
 }
 # motor leads: from each ESC corner straight out along the top of its arm (on top of the plate now: no root to pass)
-for k, ang in enumerate((45, 135, 225, 315)):
-    d = np.array([math.cos(math.radians(ang)), math.sin(math.radians(ang))])
-    W[f"motor lead {k + 1}: ESC corner -> along the top of arm {k + 1}"] = ([(*(28 * d), Z_ESC + 3), (*(70 * d), Z_TP + 3), (*(110 * d), Z_TP + 4)], 2.0)
+for k, ang in enumerate((45, 135, 225, 315)):   # the stack is turned 45°: its corners (motor pads, E) sit on the plate axes; each lead
+    d = np.array([math.cos(math.radians(ang)), math.sin(math.radians(ang))])   # leaves the nearer corner and turns onto its arm's top
+    c0 = np.array([math.cos(math.radians(ang - 45)), math.sin(math.radians(ang - 45))]) * 30.0
+    W[f"motor lead {k + 1}: ESC corner (on the plate axis) -> along the top of arm {k + 1}"] = ([(*c0, Z_ESC + 3), (*(45 * d), Z_TP + 3), (*(110 * d), Z_TP + 4)], 2.0)
 wires = cat([tube(p, r) for p, r in W.values()])
 
 # ---------------------------------------------------------------- manifest
@@ -279,8 +281,8 @@ acc = [a for a in v5["access"] if a["name"].startswith("M3")]
 for a in acc:
     a["ignore"] = [i for i in a["ignore"] if i in ("arm 1", "arm 2", "arm 3", "arm 4", "prop 1", "prop 2", "prop 3", "prop 4", "down camera")] + (["sled"] if a["part"] == "bottom plate" else [])
 acc += [{"name": "pack swap: cartridge + pack down through the opening", "part": "cartridge", "dir": [0, 0, -1], "length_mm": 150.0, "tool": "part", "ignore": ["pack", "receiver", "XT60 pair"]},
-        {"name": "FC USB-C (an edge of the turned FC, plug in from above it)", "part": STACK_NM, "from": [12.7, -12.7, Z_STACK_TOP - 4],
-         "dir": [0.5, -0.5, 0.707], "length_mm": 60.0, "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["wires"]},
+        {"name": "FC USB-C (an edge of the turned FC: plug straight in 30 along the arm, then the cable bends up)", "part": STACK_NM,
+         "from": [12.7, -12.7, Z_STACK_TOP - 4], "dir": [0.7071, -0.7071, 0.0], "length_mm": 30.0, "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["wires"]},
         {"name": "Pi USB-A / RJ45 plugs (aft, in the open)", "part": PI_NM, "from": [PI_X0 - 20, 0, Z_PI + 9], "dir": [-1, 0, 0], "length_mm": 40.0,
          "tool": {"type": "box", "w": 40, "h": 14, "w_axis": [0, 1, 0]}, "ignore": ["wires"]}]
 for k, (x, y) in enumerate(FEET_XY):
@@ -418,7 +420,7 @@ for case, a in cases.items():
 say("joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):")
 for k, v in REQ.items():
     say(f"   {k}: max {v['max_bolt_N']} N per bolt ({v['worst_case']}), shear {v['max_shear_N']}, axial {v['max_axial_N']}")
-say("   the 6 sled bolts pass through the hub deck feet and the plate: hub deck and sled loads add on the same M3 x 16 (inserts in the sled)")
+say("   the 6 sled bolts pass through the hub deck feet and the plate: hub deck and sled loads add on the same M3 x 12 (inserts in the sled)")
 Lp = (Z_M - 14) - LENS_Z
 I_ = (30 * 23 ** 3 - 25 * 18 ** 3) / 12; mt = 1.5 + 0.24 * 2 * (30 + 23) * 2.5 * Lp * 1.27e-3
 f1 = 1 / (2 * math.pi) * math.sqrt(3 * 2000 * I_ / Lp ** 3 / (mt * 1e-3) * 1e3)
