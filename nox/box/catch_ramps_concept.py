@@ -152,8 +152,8 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
             tube_points.names.append(f"cage tube {a}-{b}")
     return P, rad, ring
 
-SCOUT_REF = os.environ.get("SCOUT_REF", "64d6210")             # Scout v3 layout v9 / cage v2 (PR 127 head, confirmed by the Scout session 27 Oct)
-SCOUT_CATCH_X, SCOUT_PLANE_Z = -8.5, -47.5                       # C (Scout session): catch (tab line) x, bottom plane z; cartridge flat bottom -44.5
+SCOUT_REF = os.environ.get("SCOUT_REF", "7c0780f")             # Scout v3 layout v9 / cage v2 (PR 127 merged to main, confirmed by the Scout session 27 Oct)
+SCOUT_CATCH_X, SCOUT_PLANE_Z = -8.0, -47.5                       # C (Scout session): catch (tab line) x, bottom plane z; cartridge flat bottom -44.5
 OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
 OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
 
