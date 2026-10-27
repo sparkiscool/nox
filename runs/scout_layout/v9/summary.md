@@ -55,8 +55,9 @@ DECXIN 2633V2 landscape (89 x 73, E), horizon, lens (149, 0, 42). Nothing of the
   - Every arm is clear of every rod and link (0 mm³). The clamps hold their rods through the bore, the declared joint (324 mm³, limit 358, system_check).
   - **Why PETG and not TPU:** the camera mount must stay ≥ 100 Hz (CLAUDE.md design list 6) and hold the view still; TPU arms would let it swing. TPU goes only as washers under the camera board screws, for vibration (DEFAULT).
   - **Fuse:** the saddle clamps are the printed fuse; they let go of their rods before the camera breaks (requirement for the piece).
-  - **First mode, not computed yet (frame model).** Hand estimate (E, arms only): the camera + cradle, ~21 g on 4 PETG arms 9..18 long, gives ~360 Hz or more.
-    - The estimate leaves out the rods' own give. The clamps sit mid-span on 3.0 rods (the top cross rod is 210 long), so the frame model must confirm ≥ 100 Hz.
+  - **First mode, not computed yet (frame model): ~70 to 140 Hz (E), across the 100 Hz gate.**
+    - The arms alone would give ~360 Hz. The rods' own give sets the mode: the top clamps sit near the middle of the 210 long top front cross rod (t 0.41 / 0.59), and the cradle pitches about the bottom clamps on that rod's bending (review hand estimate).
+    - If the frame model reads under 100 Hz, the cheapest fix is to move the top clamps toward that rod's end nodes or onto a shorter rod.
 - **Cage first:** worst 4.2, over the camera on the cradle's top lip, outside the 55° field cone. The camera stands 2.0 out along its axis.
 
 ## Bottom: the Overseer ring's middle rectangle
