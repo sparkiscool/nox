@@ -95,3 +95,8 @@ it  24 beta    4 J   0.0077 vol 0.0830 (dil 0.1206 g -0.001) grey  7.8% ch 0.100
 it  25 beta    4 J   0.0075 vol 0.0835 (dil 0.1206 g -0.001) grey  7.7% ch 0.100 worst tie b7 fy 297 28.1s
 it  26 beta    4 J   0.0072 vol 0.0838 (dil 0.1207 g +0.029) grey  7.6% ch 0.100 worst tie b7 fy 287 27.5s
 it  27 beta    4 J   0.0084 vol 0.0803 (dil 0.1167 g -0.005) grey  7.6% ch 0.100 worst tie b7 fy 331 28.1s
+it  28 beta    4 J   0.0078 vol 0.0811 (dil 0.1171 g -0.002) grey  7.5% ch 0.100 worst tie b7 fy 313 29.9s
+it  29 beta    4 J   0.0076 vol 0.0814 (dil 0.1172 g -0.001) grey  7.5% ch 0.100 worst tie b7 fy 304 33.0s
+it  30 beta    4 J   0.0075 vol 0.0816 (dil 0.1172 g -0.001) grey  7.4% ch 0.100 worst tie b7 fy 297 33.7s
+it  31 beta    4 J   0.0073 vol 0.0818 (dil 0.1172 g +0.022) grey  7.4% ch 0.100 worst tie b7 fy 291 37.5s
+it  32 beta    4 J   0.0083 vol 0.0790 (dil 0.1142 g -0.004) grey  7.4% ch 0.100 worst tie b7 fy 325 35.0s
