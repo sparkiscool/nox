@@ -68,12 +68,17 @@ def ball(c, r):
     return mf.Manifold.sphere(r, 32).translate(list(map(float, c)))
 
 
+FLOOR = 3.0                                                            # solid socket floor, as cage_node.FLOOR (C, DEFAULT 27 Oct)
+
+
 def socket(end, toward, bore, depth, wall=3.0):
     """a drawn boss round a rod / tube socket at `end`, the rod leaving toward `toward`: (boss, bore cut, rod keep-out)"""
     end, toward = np.asarray(end, float), np.asarray(toward, float); d = (toward - end) / np.linalg.norm(toward - end)
-    boss = seg(end - d * depth, end + d * 1.0, bore / 2 + wall)
+    boss = seg(end - d * (depth + FLOOR), end + d * 1.0, bore / 2 + wall)   # a solid floor FLOOR behind the bore (v4: the boss ended on the
+                                                                       # bore floor, coplanar: voxel specks at every socket floor, 27 Oct)
     cut = seg(end - d * depth, end + d * 400.0, bore / 2)
-    keep = seg(end + d * 1.0, end + d * 400.0, bore / 2 + 1.0)
+    keep = seg(end + d * 2.0, end + d * 400.0, bore / 2 + 1.0)       # 1 past the boss end: no coplanar face at the mouth (v3: voxel
+                                                                       # specks at every socket rim failed the solid gate, 27 Oct)
     return boss, cut, keep
 
 

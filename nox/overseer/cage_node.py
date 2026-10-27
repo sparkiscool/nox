@@ -34,6 +34,10 @@ HEAD_NODE = N[max(_k, key=lambda i: N[i, 0])] if _k else np.array([352.88, 0.0, 
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 
 
+FLOOR = 3.0                                      # solid boss floor behind each socket (C, DEFAULT 27 Oct: 1.0 left the arm-to-boss joint a neck under 1.8)
+ARM_R, HUB_R = 3.5, 6.0                          # drawn arm Ø7 (PETG, 3.5 over the 2.0 minimum) and hub Ø12 at the node centre (DEFAULT)
+
+
 def members(i):
     """(direction, kind) of every member ending at node i"""
     out = []
@@ -77,10 +81,14 @@ def bodies(i):
     drawn = cuts = None; sockets = []
     for d, k, nm in M:
         K = KINDS[k]; a = c + d * r0; b = a + d * K["depth"]
-        boss = seg(a - d * 1.0, b, K["bore"] / 2 + WALL)
+        boss = seg(a - d * FLOOR, b, K["bore"] / 2 + WALL)            # the boss with a solid floor FLOOR thick behind the socket floor
+        boss = boss + seg(c, a, ARM_R)                                # a drawn arm from the socket floor to the hub: one body by construction
+                                                                      # (v3 runs: the topology alone left sockets disconnected; node 2 after the
+                                                                      # loop drop: the arm met the boss through a 1.0 floor, a neck under 1.8, 27 Oct)
         cut = seg(a, b + d * 400.0, K["bore"] / 2) + seg(b + d * 0.5, b + d * 400.0, K["bore"] / 2 + 1.0)   # bore + the member beyond
         drawn = boss if drawn is None else drawn + boss; cuts = cut if cuts is None else cuts + cut
         sockets.append(dict(boss=boss, d=d, kind=k, name=nm))
+    drawn = drawn + mf.Manifold.sphere(HUB_R, 48).translate(list(map(float, c)))   # the hub the arms meet in
     R = r0 + max(KINDS[k]["depth"] for _, k, _ in M) + 1.0
     env = mf.Manifold.sphere(R, 64).translate(list(map(float, c)))
     return dict(drawn=drawn, cuts=cuts, env=env, sockets=sockets, r0=r0, R=R)

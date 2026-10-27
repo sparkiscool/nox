@@ -34,6 +34,11 @@ line = lambda a, b, rr=0.7: trimesh.creation.cylinder(rr, np.linalg.norm(np.subt
 
 ASM = json.load(open(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")))
 SAVED = [p for p in ASM["parts"] if p.get("owner") == "scout camera mount"]   # saved camera mount (PR 146): drawn in place of the layout's cradle
+AN = {p["name"]: p for p in ASM["parts"]}
+LAY = {p["name"]: p for p in json.load(open(os.path.join(RUN, "parts", "parts.json")))}
+DROP = {n for n in LAY if n not in AN or os.path.normpath(os.path.join(ROOT, AN[n].get("mesh", ""))) != os.path.normpath(os.path.join(RUN, "parts", LAY[n]["file"]))}
+OTHER = [p for n, p in AN.items() if "mesh" in p and (n not in LAY or n in DROP) and not n.startswith("prop")]   # the assembly's parts from
+                                                                              # other sessions (camera mount, belly mount, re-placed FC / flow)
 SC_ = os.path.join(RUN, "system_check_mount.json")             # system_check on the assembly with the saved mount (its numbers, not the layout's)
 if SAVED and os.path.exists(SC_):
     bc_ = json.load(open(SC_))["balance"]["cases"]; MASS_, CGI_, CGO_ = bc_["all"]["mass_g"], bc_["all"]["horizontal_mm"], bc_["no_swap"]["horizontal_mm"]
@@ -44,16 +49,21 @@ s = Scene("Scout v3 Cage",
           f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{MASS_:.0f} g (E), "
           f"CG {CGI_:.1f} mm pack in / {CGO_:.1f} pack out")
 names = []
+def look(p):                                                  # saved parts teal, other sessions' concepts amber: what changed stands out
+    o = p.get("owner", ""); lp = LAY.get(p["name"])
+    if o == "scout camera mount": return f"saved: camera mount {p.get('version', '')}", "#12a5a5"
+    if o == "scout electronics": return "concept: electronics mounts", "#e8890c"
+    return (lp["group"], lp["color"]) if lp else ("electronics", "#4a5560")
+for p in OTHER:                                                # first, so their groups head the parts list
+    names.append(p["name"]); g_, c_ = look(p)
+    s.part(p["name"], trimesh.load(os.path.join(ROOT, p["mesh"])), group=g_, color=c_, printed=p.get("material") in ("PETG", "TPU"),
+           note=f"{p['mass_g']:.2f} g ({p['tag']}, {p.get('owner', '')} {p.get('version', '')})")
 for p in json.load(open(os.path.join(RUN, "parts", "parts.json"))):
-    if p["name"].startswith("prop") or (SAVED and p["name"].startswith("camera cradle")):
+    if p["name"].startswith("prop") or p["name"] in DROP:
         continue
     names.append(p["name"])
     s.part(p["name"], trimesh.load(os.path.join(RUN, "parts", p["file"])), group=p["group"], color=p["color"], printed=False,
            note=f"{p['mass_g']:.0f} g ({p['tag']}, layout model)")
-for p in SAVED:
-    names.append(p["name"])
-    s.part(p["name"], trimesh.load(os.path.join(ROOT, p["mesh"])), group="cage", color="#4a5560", printed=True,
-           note=f"{p['mass_g']:.2f} g ({p['tag']}, saved {p['version']}, PR 146)")
 rings = []
 for mx, my in [(54.1, 54.1), (54.1, -54.1), (-54.1, 54.1), (-54.1, -54.1)]:
     a = trimesh.creation.annulus(43.0, 44.45, 1.0, sections=96); a.apply_translation([mx, my, 41.2]); rings.append(a)
@@ -84,7 +94,7 @@ for tag, d_, off in ALTS:
                              note="weighed, not picked: runs/scout_layout/v7/summary.md")
 spin = lambda t: trimesh.transformations.rotation_matrix(math.radians(360 * t / 20), [0, 0, 1])
 s.timeline(lambda t: {n: spin(t) for n in names}, duration_s=20, fps=24)
-s.view("iso", (500, -560, 380), (0, 0, 10)); s.view("all three", (0, -1700, 900), (0, 0, 0)); s.view("side", (0, -900, 30), (0, 0, 30)); s.view("front", (900, 0, 40), (0, 0, 30))
+s.view("iso", (500, -560, 380), (0, 0, 10)); s.view("camera mount", (330, -190, 110), (130, 0, 40)); s.view("belly", (120, -230, -200), (-20, 0, 0)); s.view("all three", (0, -1700, 900), (0, 0, 0)); s.view("side", (0, -900, 30), (0, 0, 30)); s.view("front", (900, 0, 40), (0, 0, 30))
 s.view("top", (0, 0, 900), (0, 0, 0)); s.view("under", (200, -200, -700), (0, 0, -40))
 s.write(os.path.join(RUN, "motion.html"))
 
@@ -93,8 +103,8 @@ parts = json.load(open(os.path.join(RUN, "parts", "parts.json")))
 fig = plt.figure(figsize=(16, 11), dpi=110)
 for k, (el, az, ttl) in enumerate(((22, -55, "iso"), (0, -90, "side (from -y)"), (0, 0, "front (from +x)"), (90, -90, "top"))):
     ax = fig.add_subplot(2, 2, k + 1, projection="3d"); ax.set_proj_type("ortho")
-    for p in parts + [dict(name=q["name"], path=os.path.join(ROOT, q["mesh"]), color="#4a5560") for q in SAVED]:
-        if p["name"].startswith(("cage shell", "spokes")) or (SAVED and p["name"].startswith("camera cradle")):
+    for p in parts + [dict(name=q["name"], path=os.path.join(ROOT, q["mesh"]), color=look(q)[1]) for q in OTHER]:
+        if p["name"].startswith(("cage shell", "spokes")) or (p["name"] in DROP and "path" not in p):
             continue
         m = trimesh.load(p.get("path") or os.path.join(RUN, "parts", p["file"]))
         if len(m.faces) > 6000: m = m.simplify_quadric_decimation(face_count=6000) if hasattr(m, "simplify_quadric_decimation") else m

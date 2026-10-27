@@ -48,7 +48,14 @@ def voxelise(mesh, xs, ys, zs):
     A = np.zeros((len(xs) * len(ys), len(zs)), bool)
     if len(mesh.faces) == 0:
         return A.reshape(len(xs), len(ys), len(zs))
-    loc, ray, _ = mesh.ray.intersects_location(org, np.tile([0, 0, 1.0], (len(org), 1)), multiple_hits=True)
+    # rays in chunks: trimesh's ray test holds every candidate (ray, triangle) pair at once, and a 1M-face organic mesh
+    # under 160k columns ran a 16 GB box out of memory (overseer arm rear v5c, solid check at pitch 0.25)
+    locs, rays = [], []
+    for c0 in range(0, len(org), 20000):
+        o = org[c0:c0 + 20000]
+        l_, r_, _ = mesh.ray.intersects_location(o, np.tile([0, 0, 1.0], (len(o), 1)), multiple_hits=True)
+        locs.append(l_.reshape(-1, 3)); rays.append(np.asarray(r_, int) + c0)
+    loc, ray = np.concatenate(locs), np.concatenate(rays)
     if len(ray):
         order = np.argsort(ray, kind="stable")
         ray = ray[order]
@@ -94,6 +101,8 @@ class Part:
         self.solid = (inside_drawn & ~inside_cut).ravel()
         self.void = ((~inside_env) | inside_cut).ravel() & ~self.solid
         self.design = ~self.solid & ~self.void
+        self.stiff = np.ones(self.nel)                          # modulus multiplier per cell (inserts, see insert())
+        self.insert_cells = np.zeros(self.nel, bool)
         self.supports = {}            # name -> bool (nn, 3) fixed dofs
         self.support_cells = {}       # name -> element ids the support region covers
         self.cases = []
@@ -137,6 +146,22 @@ class Part:
         return np.unique(np.concatenate([nid(ex + a, ey + b, ez + c) for a in (0, 1) for b in (0, 1) for c in (0, 1)]))
 
     # ------------------------------------------------------------------------------------- supports and loads
+    def insert(self, name, region, e_ratio, area_mm2=None, length_mm=None):
+        """a bought stiff insert embedded in the part (a carbon rod in its bore): its cells are solid in the layout and
+        in the strength FE with e_ratio x the part's modulus, never printed (the bore stays in the cuts, so the build
+        cuts it), and left out of the strength indices. With area_mm2 and length_mm the multiplier is scaled so the
+        voxels carry the real section (E A), whatever the grid makes of a thin cylinder."""
+        el = self.elems(region, what=f"insert {name}")
+        if len(el) == 0:
+            raise ValueError(f"insert {name}: the region holds no cells")
+        k = float(e_ratio)
+        if area_mm2 is not None and length_mm is not None:
+            k *= area_mm2 * length_mm / (len(el) * self.h ** 3)
+        self.insert_cells[el] = True
+        self.stiff[el] = k
+        self.solid[el], self.void[el], self.design[el] = True, False, False
+        self.log(f"  insert {name}: {len(el)} cells, modulus x{k:.1f}")
+
     def support(self, name, region):
         el = self.elems(region, self.solid | self.design, what=f"support {name}")
         if len(el) == 0:
@@ -190,7 +215,7 @@ class Part:
         """drawn cells of every drawn body the main support (the one most load cases use) holds: the mounting
         features (bolt pads and bosses, a wall flange). The organic finish keeps them whole."""
         from scipy import ndimage as ndi
-        sol = self.solid.reshape(self.shape)
+        sol = (self.solid & ~self.insert_cells).reshape(self.shape)
         main = self.main_support()
         if main is None:
             return np.zeros(self.nel, bool)
@@ -206,7 +231,7 @@ class Part:
         body that touches neither keeps all its cells. Same rule as build.skin_field at the fine pitch."""
         from scipy import ndimage as ndi
         sh = self.shape
-        sol = self.solid.reshape(sh)
+        sol = (self.solid & ~self.insert_cells).reshape(sh)
         out0 = ~self.in_env0.reshape(sh)
         ext = self.cut.reshape(sh) | out0
         d = (ndi.distance_transform_edt(~ext) - 0.5) * self.h               # cell centre to the face of the nearest cell
@@ -218,7 +243,7 @@ class Part:
             skin |= keep[lab] & sol
         # mounting features stay whole: opening part of a bolt pad left its envelope-side skin with a core of its own
         # at the gate's 2.0 mm erosion, cut off from the legs (motor_mount organic-v1: pad cores 0.75 in the main body)
-        return skin.ravel() | self.held_bodies()
+        return skin.ravel() | self.held_bodies() | self.insert_cells
 
     # ------------------------------------------------------------------------------------------------ misc
     def cell_centres(self):

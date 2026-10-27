@@ -1,0 +1,50 @@
+[
+ {
+  "rod": 0,
+  "length_mm": 63.1,
+  "bore_blocked_mm3": 0.0,
+  "socket_grip": [
+   1.0,
+   1.0
+  ],
+  "bonded_mm": 0,
+  "collars": 0,
+  "ok": true
+ },
+ {
+  "rod": 1,
+  "length_mm": 63.1,
+  "bore_blocked_mm3": 0.0,
+  "socket_grip": [
+   1.0,
+   1.0
+  ],
+  "bonded_mm": 0,
+  "collars": 0,
+  "ok": true
+ },
+ {
+  "rod": 2,
+  "length_mm": 63.1,
+  "bore_blocked_mm3": 0.0,
+  "socket_grip": [
+   1.0,
+   1.0
+  ],
+  "bonded_mm": 0,
+  "collars": 0,
+  "ok": true
+ },
+ {
+  "rod": 3,
+  "length_mm": 63.1,
+  "bore_blocked_mm3": 0.0,
+  "socket_grip": [
+   1.0,
+   1.0
+  ],
+  "bonded_mm": 0,
+  "collars": 0,
+  "ok": true
+ }
+]

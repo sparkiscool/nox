@@ -112,18 +112,6 @@
     "dirs_in_openings": 0,
     "pass_": true
    },
-   "FC": {
-    "min_margin_mm": 49.97,
-    "worst_dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "worst_slack_mm": 46.97,
-    "min_margin_outside_openings_mm": 49.97,
-    "dirs_in_openings": 0,
-    "pass_": true
-   },
    "UBEC": {
     "min_margin_mm": 15.04,
     "worst_dir": [
@@ -158,18 +146,6 @@
     "worst_slack_mm": 22.71,
     "min_margin_outside_openings_mm": 25.71,
     "dirs_in_openings": 0,
-    "pass_": true
-   },
-   "flow MTF-02P": {
-    "min_margin_mm": 26.27,
-    "worst_dir": [
-     -0.0,
-     -0.0,
-     -1.0
-    ],
-    "worst_slack_mm": 26.27,
-    "min_margin_outside_openings_mm": 72.38,
-    "dirs_in_openings": 235,
     "pass_": true
    },
    "receiver v3 (latch)": {
@@ -291,6 +267,30 @@
     "min_margin_outside_openings_mm": 6.18,
     "dirs_in_openings": 428,
     "pass_": true
+   },
+   "FC": {
+    "min_margin_mm": 49.97,
+    "worst_dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "worst_slack_mm": 46.97,
+    "min_margin_outside_openings_mm": 49.97,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "flow MTF-02P": {
+    "min_margin_mm": 29.77,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 29.77,
+    "min_margin_outside_openings_mm": 72.74,
+    "dirs_in_openings": 235,
+    "pass_": true
    }
   }
  },
@@ -368,33 +368,6 @@
     "pass_": true
    },
    {
-    "a": "cage shell tubes",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
     "a": "cage shell nodes",
     "b": "spokes, bay ties, core ties, camera guard",
     "overlap_mm3": 304.9,
@@ -404,44 +377,8 @@
     "pass_": true
    },
    {
-    "a": "cage shell nodes",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell nodes",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell nodes",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
     "a": "spokes, bay ties, core ties, camera guard",
     "b": "frame plate (Bee35 carbon)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "spokes, bay ties, core ties, camera guard",
-    "b": "mount + nose legs (Scout)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -460,33 +397,6 @@
    {
     "a": "spokes, bay ties, core ties, camera guard",
     "b": "receiver TPU end pieces (latch, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "spokes, bay ties, core ties, camera guard",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "spokes, bay ties, core ties, camera guard",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "spokes, bay ties, core ties, camera guard",
-    "b": "tail bay cables (Scout electronics, E)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -549,15 +459,6 @@
    },
    {
     "a": "frame plate (Bee35 carbon)",
-    "b": "FC",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
     "b": "UBEC",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
@@ -576,52 +477,7 @@
    },
    {
     "a": "frame plate (Bee35 carbon)",
-    "b": "mount + nose legs (Scout)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
     "b": "tie saddle (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
-    "b": "wires",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -638,62 +494,26 @@
     "pass_": true
    },
    {
+    "a": "frame plate (Bee35 carbon)",
+    "b": "electronics tail block (PETG)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.05,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "frame plate (Bee35 carbon)",
+    "b": "belly mount (PETG)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.05,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
     "a": "motor 1",
     "b": "prop 1",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 1",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 1",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 1",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 1",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 1",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 1",
-    "b": "tail bay cables (Scout electronics, E)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -710,116 +530,8 @@
     "pass_": true
    },
    {
-    "a": "motor 2",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 2",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 2",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 2",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 2",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 2",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "motor 3",
     "b": "prop 3",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 3",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 3",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 3",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 3",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 3",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 3",
-    "b": "tail bay cables (Scout electronics, E)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -836,327 +548,30 @@
     "pass_": true
    },
    {
-    "a": "motor 4",
-    "b": "tail bay mount block (Scout electronics, E)",
+    "a": "UBEC",
+    "b": "electronics tail carrier (PETG)",
     "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 4",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 4",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 4",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 4",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 4",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "FC",
-    "b": "mount + nose legs (Scout)",
-    "overlap_mm3": 10238.4,
-    "limit_mm3": 1000000000.0,
+    "limit_mm3": 0.05,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "FC",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "FC",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "FC",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "FC",
-    "b": "wires",
-    "overlap_mm3": 10368.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "UBEC",
-    "b": "mount + nose legs (Scout)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "UBEC",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "UBEC",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "UBEC",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "UBEC",
-    "b": "wires",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
     "a": "XR2",
-    "b": "tail bay mount block (Scout electronics, E)",
+    "b": "electronics tail carrier (PETG)",
     "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
+    "limit_mm3": 0.05,
     "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "XR2",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "XR2",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "Radxa Zero 3W",
-    "b": "mount + nose legs (Scout)",
+    "b": "electronics tail carrier (PETG)",
     "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "Radxa Zero 3W",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "Radxa Zero 3W",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "Radxa Zero 3W",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "flow MTF-02P",
-    "b": "mount + nose legs (Scout)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
+    "limit_mm3": 0.05,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "flow MTF-02P",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "flow MTF-02P",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "flow MTF-02P",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "receiver v3 (latch)",
-    "overlap_mm3": 15.26,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "receiver lid (latch)",
-    "overlap_mm3": 46.2,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "receiver TPU end pieces (latch, E)",
-    "overlap_mm3": 2.56,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "XT60E1-M",
-    "overlap_mm3": 126.48,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "wires",
-    "overlap_mm3": 20483.48,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "mount + nose legs (Scout)",
-    "b": "camera mount (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
@@ -1188,36 +603,18 @@
    },
    {
     "a": "receiver v3 (latch)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
+    "b": "electronics tail block (PETG)",
+    "overlap_mm3": -0.0,
+    "limit_mm3": 0.05,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "receiver v3 (latch)",
-    "b": "tail bay carrier (Scout electronics, E)",
+    "b": "belly mount (PETG)",
     "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver v3 (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver v3 (latch)",
-    "b": "wires",
-    "overlap_mm3": 36.92,
-    "limit_mm3": 1000000000.0,
+    "limit_mm3": 0.05,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
@@ -1242,29 +639,11 @@
    },
    {
     "a": "receiver lid (latch)",
-    "b": "tail bay mount block (Scout electronics, E)",
+    "b": "belly mount (PETG)",
     "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
+    "limit_mm3": 0.05,
     "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver lid (latch)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver lid (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -1286,33 +665,6 @@
     "pass_": true
    },
    {
-    "a": "receiver TPU strips (latch)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver TPU strips (latch)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver TPU strips (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "receiver TPU end pieces (latch, E)",
     "b": "cartridge v6 strips (latch, TPU)",
     "overlap_mm3": 0.0,
@@ -1322,66 +674,12 @@
     "pass_": true
    },
    {
-    "a": "receiver TPU end pieces (latch, E)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver TPU end pieces (latch, E)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver TPU end pieces (latch, E)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "XT60E1-M",
     "b": "pack XT60 plug",
     "overlap_mm3": 0.0,
     "limit_mm3": 1.0,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "XT60E1-M",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "XT60E1-M",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "XT60E1-M",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
@@ -1421,33 +719,6 @@
     "pass_": true
    },
    {
-    "a": "cartridge v6 (latch)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge v6 (latch)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge v6 (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "slider +y (latch)",
     "b": "cartridge v6 strips (latch, TPU)",
     "overlap_mm3": 0.0,
@@ -1457,341 +728,17 @@
     "pass_": true
    },
    {
-    "a": "slider +y (latch)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "slider +y (latch)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "slider +y (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "slider -y (latch)",
     "b": "cartridge v6 strips (latch, TPU)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "slider -y (latch)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "slider -y (latch)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "slider -y (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
     "a": "cartridge v6 strips (latch, TPU)",
     "b": "pack 4S 1500",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge v6 strips (latch, TPU)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge v6 strips (latch, TPU)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge v6 strips (latch, TPU)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid closed end (latch, TPU)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid closed end (latch, TPU)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid closed end (latch, TPU)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid lead end (latch, TPU)",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid lead end (latch, TPU)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid lead end (latch, TPU)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack 4S 1500",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack 4S 1500",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack 4S 1500",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack XT60 plug",
-    "b": "tail bay mount block (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack XT60 plug",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack XT60 plug",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay mount block (Scout electronics, E)",
-    "b": "tail bay carrier (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay mount block (Scout electronics, E)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay mount block (Scout electronics, E)",
-    "b": "camera",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay mount block (Scout electronics, E)",
-    "b": "tie saddle (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "tail bay mount block (Scout electronics, E)",
-    "b": "wires",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay mount block (Scout electronics, E)",
-    "b": "camera mount (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay carrier (Scout electronics, E)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay carrier (Scout electronics, E)",
-    "b": "camera",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay carrier (Scout electronics, E)",
-    "b": "tie saddle (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay carrier (Scout electronics, E)",
-    "b": "wires",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay carrier (Scout electronics, E)",
-    "b": "camera mount (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "camera",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "tie saddle (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "wires",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "camera mount (printed)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -1806,16 +753,100 @@
     "contact": true,
     "method": "manifold3d",
     "pass_": true
+   },
+   {
+    "a": "electronics tail block (PETG)",
+    "b": "electronics tail carrier (PETG)",
+    "overlap_mm3": -0.0,
+    "limit_mm3": 0.05,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "electronics tail block (PETG)",
+    "b": "belly mount (PETG)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.05,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "flow MTF-02P",
+    "b": "belly mount (PETG)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.05,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
    }
   ],
-  "clearance": []
+  "clearance": [
+   {
+    "a": "belly mount (PETG)",
+    "b": "XT60E1-M",
+    "clearance_mm": 8.2,
+    "min_mm": 2.0,
+    "ok": true
+   },
+   {
+    "a": "belly mount (PETG)",
+    "b": "FC",
+    "clearance_mm": 2.0,
+    "min_mm": 2.0,
+    "ok": true
+   },
+   {
+    "a": "belly mount (PETG)",
+    "b": "tie saddle (printed)",
+    "clearance_mm": 2.8,
+    "min_mm": 2.0,
+    "ok": true
+   },
+   {
+    "a": "belly mount (PETG)",
+    "b": "receiver TPU end pieces (latch, E)",
+    "clearance_mm": 15.6,
+    "min_mm": 2.0,
+    "ok": true
+   },
+   {
+    "a": "flow MTF-02P",
+    "b": "receiver v3 (latch)",
+    "clearance_mm": 6.1,
+    "min_mm": 2.0,
+    "ok": true
+   },
+   {
+    "a": "flow MTF-02P",
+    "b": "tie saddle (printed)",
+    "clearance_mm": 7.0,
+    "min_mm": 2.0,
+    "ok": true
+   },
+   {
+    "a": "FC",
+    "b": "frame plate (Bee35 carbon)",
+    "clearance_mm": 1.0,
+    "min_mm": 2.0,
+    "ok": false
+   },
+   {
+    "a": "FC",
+    "b": "receiver v3 (latch)",
+    "clearance_mm": 0.9,
+    "min_mm": 2.0,
+    "ok": false
+   }
+  ]
  },
  "mass_cg": {
-  "mass_g": 745.76,
+  "mass_g": 745.71,
   "cg": [
-   0.38,
-   0.43,
-   2.61
+   -0.18,
+   -0.08,
+   2.4
   ],
   "parts": [
    {
@@ -1951,17 +982,6 @@
     "swap": false
    },
    {
-    "name": "FC",
-    "mass_g": 10.0,
-    "cg": [
-     6.9,
-     0.0,
-     13.5
-    ],
-    "tag": "P",
-    "swap": false
-   },
-   {
     "name": "UBEC",
     "mass_g": 15.0,
     "cg": [
@@ -1990,28 +1010,6 @@
      -104.35,
      0.06,
      23.0
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "flow MTF-02P",
-    "mass_g": 1.5,
-    "cg": [
-     5.0,
-     35.5,
-     -29.5
-    ],
-    "tag": "P",
-    "swap": false
-   },
-   {
-    "name": "mount + nose legs (Scout)",
-    "mass_g": 25.0,
-    "cg": [
-     10.15,
-     0.0,
-     13.09
     ],
     "tag": "E",
     "swap": false
@@ -2160,28 +1158,6 @@
     "swap": true
    },
    {
-    "name": "tail bay mount block (Scout electronics, E)",
-    "mass_g": 15.92,
-    "cg": [
-     -45.3,
-     0.7,
-     12.9
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "tail bay carrier (Scout electronics, E)",
-    "mass_g": 33.28,
-    "cg": [
-     -102.51,
-     -0.63,
-     9.65
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
     "name": "tail bay cables (Scout electronics, E)",
     "mass_g": 6.27,
     "cg": [
@@ -2210,17 +1186,6 @@
      -3.46,
      -0.0,
      -2.25
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "wires",
-    "mass_g": 20.0,
-    "cg": [
-     6.9,
-     0.0,
-     13.5
     ],
     "tag": "E",
     "swap": false
@@ -2257,6 +1222,72 @@
     ],
     "tag": "M",
     "swap": false
+   },
+   {
+    "name": "electronics tail block (PETG)",
+    "mass_g": 15.92,
+    "cg": [
+     -45.3,
+     0.7,
+     12.9
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "electronics tail carrier (PETG)",
+    "mass_g": 33.28,
+    "cg": [
+     -102.51,
+     -0.63,
+     9.65
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "FC",
+    "mass_g": 10.0,
+    "cg": [
+     0.0,
+     0.0,
+     13.5
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "wires",
+    "mass_g": 20.0,
+    "cg": [
+     0.0,
+     0.0,
+     13.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "flow MTF-02P",
+    "mass_g": 1.5,
+    "cg": [
+     0.0,
+     -40.0,
+     -26.0
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "belly mount (PETG)",
+    "mass_g": 24.95,
+    "cg": [
+     2.14,
+     -10.68,
+     6.8
+    ],
+    "tag": "E",
+    "swap": false
    }
   ],
   "tag": "E",
@@ -2266,11 +1297,11 @@
    41.2
   ],
   "cg_offset": [
-   0.38,
-   0.43,
-   -38.59
+   -0.18,
+   -0.08,
+   -38.8
   ],
-  "cg_offset_mm": 38.59
+  "cg_offset_mm": 38.8
  },
  "balance": {
   "applies": true,
@@ -2287,32 +1318,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 745.76,
+    "mass_g": 745.71,
     "cg_offset": [
-     0.38,
-     0.43,
-     -38.59
+     -0.18,
+     -0.08,
+     -38.8
     ],
-    "horizontal_mm": 0.57,
-    "axial_mm": -38.59,
+    "horizontal_mm": 0.2,
+    "axial_mm": -38.8,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 530.26,
+    "mass_g": 530.21,
     "cg_offset": [
-     -1.38,
-     0.61,
-     -29.97
+     -2.16,
+     -0.11,
+     -30.25
     ],
-    "horizontal_mm": 1.5,
-    "axial_mm": -29.97,
+    "horizontal_mm": 2.16,
+    "axial_mm": -30.25,
     "pass_": true,
     "gated": true
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 1.5,
+  "worst_horizontal_mm": 2.16,
   "pass_": true
  },
  "probes": {
@@ -2922,25 +1953,25 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "flow MTF-02P",
-    "margin_mm": 25.46,
+    "margin_mm": 29.7,
     "unshielded": false,
     "dir": [
-     -0.01,
-     0.707,
+     0.128,
+     -0.696,
      -0.707
     ],
-    "dir_label": "(-0.01, +0.71, -0.71)",
+    "dir_label": "(+0.13, -0.70, -0.71)",
     "axis": [
-     -1.0,
-     -0.001,
-     0.013
+     0.984,
+     0.176,
+     0.005
     ],
     "roll_deg": 135.0,
-    "lateral_mm": -1.4,
+    "lateral_mm": -14.9,
     "contact": [
-     -2.1,
-     40.6,
-     -33.5
+     10.8,
+     -48.0,
+     -30.0
     ],
     "pass_": true
    },
@@ -2948,25 +1979,25 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "flow MTF-02P",
-    "margin_mm": 25.46,
+    "margin_mm": 29.7,
     "unshielded": false,
     "dir": [
-     -0.01,
-     0.707,
+     0.128,
+     -0.696,
      -0.707
     ],
-    "dir_label": "(-0.01, +0.71, -0.71)",
+    "dir_label": "(+0.13, -0.70, -0.71)",
     "axis": [
-     -1.0,
-     -0.001,
-     0.013
+     0.984,
+     0.176,
+     0.005
     ],
     "roll_deg": 135.0,
-    "lateral_mm": 3.1,
+    "lateral_mm": -7.4,
     "contact": [
-     -6.0,
-     42.5,
-     -33.5
+     10.8,
+     -46.0,
+     -30.0
     ],
     "pass_": true
    },
@@ -3017,7 +2048,7 @@
     "lateral_mm": 39.1,
     "contact": [
      0.0,
-     -18.6,
+     -18.0,
      17.5
     ],
     "pass_": true
@@ -3396,7 +2427,7 @@
    0.0,
    10.0
   ],
-  "n_points": 262457
+  "n_points": 262454
  },
  "access": {
   "applies": true,
@@ -3528,22 +2559,22 @@
     "pass_": true
    },
    {
-    "name": "FC USB-C cable (12 x 7, searched path, E)",
+    "name": "FC USB-C cable (12 x 7, from the FC's left edge, E)",
     "part": "FC",
     "tool": {
      "type": "box",
-     "w": 12,
-     "h": 7,
+     "w": 12.0,
+     "h": 7.0,
      "w_axis": [
-      0.7496,
-      -0.6618,
+      -0.9848,
+      -0.1736,
       0.0
      ]
     },
     "dir": [
-     -0.6618,
-     -0.7496,
-     0.0083
+     -0.1736,
+     0.9848,
+     0.0
     ],
     "length_mm": 250.0,
     "steps": 1,
@@ -3551,38 +2582,383 @@
     "touches": [],
     "overlap_mm3": 0.0,
     "pass_": true
+   },
+   {
+    "name": "M3 key, belly-mount plate bolt (-25, +13)",
+    "part": "belly mount (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, belly-mount plate bolt (-25, -13)",
+    "part": "belly mount (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, belly-mount plate bolt (30, +13)",
+    "part": "belly mount (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, belly-mount plate bolt (30, -13)",
+    "part": "belly mount (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M2 key, FC grommet screw (+12.75, +12.75)",
+    "part": "FC",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M2 key, FC grommet screw (+12.75, -12.75)",
+    "part": "FC",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M2 key, FC grommet screw (-12.75, +12.75)",
+    "part": "FC",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M2 key, FC grommet screw (-12.75, -12.75)",
+    "part": "FC",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "flow SH1.0 plug out of its end (6 x 4, E)",
+    "part": "flow MTF-02P",
+    "tool": {
+     "type": "box",
+     "w": 6.0,
+     "h": 4.0
+    },
+    "dir": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "length_mm": 25.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, yoke top bolt (x -54.5)",
+    "part": "electronics tail carrier (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, yoke bottom bolt (x -54.5)",
+    "part": "electronics tail carrier (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, yoke top bolt (x -63.5)",
+    "part": "electronics tail carrier (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, yoke bottom bolt (x -63.5)",
+    "part": "electronics tail carrier (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     -0.259,
+     0.0,
+     -0.9659
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, plate bolt (-42.0, +16.0)",
+    "part": "electronics tail block (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.109,
+     -0.4082,
+     0.9064
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [
+     {
+      "part": "frame plate (Bee35 carbon)",
+      "overlap_mm3": 0.28,
+      "method": "manifold3d"
+     }
+    ],
+    "overlap_mm3": 0.28,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, plate bolt (-42.0, -16.0)",
+    "part": "electronics tail block (PETG)",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.2111,
+     0.3661,
+     0.9063
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [
+     {
+      "part": "frame plate (Bee35 carbon)",
+      "overlap_mm3": 0.28,
+      "method": "manifold3d"
+     }
+    ],
+    "overlap_mm3": 0.28,
+    "pass_": true
+   },
+   {
+    "name": "Radxa SD card (\u00d810)",
+    "part": "Radxa Zero 3W",
+    "tool": {
+     "type": "cylinder",
+     "d": 10.0
+    },
+    "dir": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "Radxa USB-C 1 (\u00d810)",
+    "part": "Radxa Zero 3W",
+    "tool": {
+     "type": "cylinder",
+     "d": 10.0
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
    }
   ],
-  "n_clear": 8,
+  "n_clear": 25,
   "worst": {
-   "name": "swap: cartridge v6 (latch) down",
-   "part": "cartridge v6 (latch)",
-   "tool": "part",
+   "name": "M3 key, plate bolt (-42.0, +16.0)",
+   "part": "electronics tail block (PETG)",
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
    "dir": [
-    0.0,
-    0.0,
-    -1.0
+    0.109,
+    -0.4082,
+    0.9064
    ],
    "length_mm": 150.0,
-   "steps": 20,
+   "steps": 1,
    "blocked_by": [],
-   "touches": [],
-   "overlap_mm3": 0.0,
+   "touches": [
+    {
+     "part": "frame plate (Bee35 carbon)",
+     "overlap_mm3": 0.28,
+     "method": "manifold3d"
+    }
+   ],
+   "overlap_mm3": 0.28,
    "pass_": true
   }
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 745.76,
+  "mass_g": 745.71,
   "part_budgets_g": {},
   "over_parts": [],
   "budget_g": 500.0,
-  "pct": 149.2,
+  "pct": 149.1,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [+0.4, +0.4, -38.6], 1.5 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear",
+ "summary": "System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.2, -0.1, -38.8], 2.2 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 25/25 clear",
  "pass": true
 }
