@@ -198,13 +198,13 @@ def setup_centre(h):
 def wing_bodies():
     c = HS["cameras"][0] if HS["cameras"][0]["side"] > 0 else HS["cameras"][1]
     Tc = cam_frame(c)
-    plate = xf(box(-7.5, -1.5, -20, 20, -20, 20), Tc)                   # the board's plate (board at -1..1 in front of it)
+    plate = xf(box(-9.5, -1.5, -20, 20, -20, 20), Tc)                   # the board's plate, 8 thick (board at -1..1 in front of it)
     drawn = plate; cuts = None
     def addcut(m):
         nonlocal cuts; cuts = m if cuts is None else cuts + m
     for a_ in (-14, 14):                                               # M2.5 heat-set inserts on 28 x 28, from the board face
         for b_ in (-14, 14):
-            addcut(xf(seg([-7.6, a_, b_], [0.5, a_, b_], 1.6), Tc))
+            addcut(xf(seg([-7.5, a_, b_], [0.5, a_, b_], 1.6), Tc))     # blind, 6 deep: a 2.0 floor behind (v1's 6.1 in a 6 plate left 0.1 rims)
     gb = [np.array(v, float) for v in HS["guards"]["cam guard bar"]]
     guard = ball(gb[0], GUARD_NODE_R) + ball(gb[1], GUARD_NODE_R) + seg(gb[0], gb[1], GUARD_R); drawn += guard
     pads = []
