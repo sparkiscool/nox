@@ -217,3 +217,5 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (64, 64, 64) = 262,144 elements, 303,489 active dofs; backend direct (direct estimate 3.5 GB, budget 11.8 GB)
 fem: grid (64, 64, 64) = 262,144 elements, 303,489 active dofs; backend direct (direct estimate 3.5 GB, budget 11.8 GB)
+layout: warm start from a (32, 32, 32) grid (h 2.0): mean x 0.011
+layout: warm start from a (32, 32, 32) grid (h 2.0): mean x 0.011
