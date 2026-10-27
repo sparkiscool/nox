@@ -1,5 +1,5 @@
-"""Overseer arm rear v5c: build and check again from the finished layout (the run OOM'd in the solid check, 27 Oct; fixed
-in nox/topo voxelise). python3 nox/overseer/arm_rebuild_v5c.py <src dir with density.npz>"""
+"""Overseer arms v5c: build and check again from the finished layout (the run OOM'd in the solid check, 27 Oct; fixed
+in nox/topo voxelise). python3 nox/overseer/arm_rebuild_v5c.py front|rear <src dir with density.npz> (a copy: the run dir is rewritten)"""
 import os, sys
 ROOT = os.getcwd()
 for k, v in (("NOX_ARM_VERSION","v5c"),("NOX_ARM_SLEEVE","1"),("NOX_ARM_SHFLANGE","1"),("NOX_ARM_BRACES","0"),
@@ -11,5 +11,5 @@ sys.path.insert(0, os.path.join(ROOT, "nox/overseer")); sys.path.insert(0, os.pa
 import arm_topo_v1 as A
 from topo import Settings
 from topo.run import rebuild
-rebuild(A.setup_for("rear"), h=1.5, gen_cm3=40.0, src_dir=sys.argv[1], out_dir=os.path.join(ROOT, "runs/overseer_arm_rear/v5c"),
-        name="overseer_arm_rear", settings=Settings())
+rebuild(A.setup_for(sys.argv[1]), h=2.0 if sys.argv[1] == "front" else 1.5, gen_cm3=45.0 if sys.argv[1] == "front" else 40.0, src_dir=sys.argv[2], out_dir=os.path.join(ROOT, f"runs/overseer_arm_{sys.argv[1]}/v5c"),
+        name=f"overseer_arm_{sys.argv[1]}", settings=Settings())
