@@ -973,7 +973,7 @@
  "mass_cg": {
   "mass_g": 3419.68,
   "cg": [
-   61.55,
+   61.57,
    -0.21,
    15.71
   ],
@@ -1356,9 +1356,9 @@
     "name": "hub deck",
     "mass_g": 24.0,
     "cg": [
-     7.58,
+     10.42,
      -0.0,
-     2.18
+     2.19
     ],
     "tag": "E",
     "swap": false
@@ -1393,11 +1393,11 @@
    82.0
   ],
   "cg_offset": [
-   0.77,
+   0.79,
    -0.21,
    -66.29
   ],
-  "cg_offset_mm": 66.29
+  "cg_offset_mm": 66.3
  },
  "balance": {
   "applies": true,
@@ -1416,11 +1416,11 @@
    "all": {
     "mass_g": 3419.68,
     "cg_offset": [
-     0.77,
+     0.79,
      -0.21,
      -66.29
     ],
-    "horizontal_mm": 0.8,
+    "horizontal_mm": 0.81,
     "axial_mm": -66.29,
     "pass_": true,
     "gated": true
@@ -1428,18 +1428,18 @@
    "no_swap": {
     "mass_g": 2664.08,
     "cg_offset": [
-     24.77,
+     24.8,
      -0.27,
      -49.3
     ],
-    "horizontal_mm": 24.78,
+    "horizontal_mm": 24.8,
     "axial_mm": -49.3,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 24.78,
+  "worst_horizontal_mm": 24.8,
   "pass_": true
  },
  "probes": {
@@ -2970,44 +2970,6 @@
     "pass_": true
    },
    {
-    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 4 (screwdriver, top plate not on yet)",
-    "part": "hub deck",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 5 (screwdriver, top plate not on yet)",
-    "part": "hub deck",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
     "name": "step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet)",
     "part": "Pi 5 + Active Cooler",
     "tool": {
@@ -3160,7 +3122,7 @@
     "pass_": true
    }
   ],
-  "n_clear": 34,
+  "n_clear": 32,
   "worst": {
    "name": "Pi USB-A / RJ45 plugs (aft, in the open)",
    "part": "Pi 5 + Active Cooler",
@@ -3214,6 +3176,6 @@
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 34/35 clear (Pi USB-A / RJ45 plugs (aft, in the open) blocked by spokes, ties, keels, L2 guard ring 53 mm\u00b3) FAIL",
+ "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 32/33 clear (Pi USB-A / RJ45 plugs (aft, in the open) blocked by spokes, ties, keels, L2 guard ring 53 mm\u00b3) FAIL",
  "pass": false
 }

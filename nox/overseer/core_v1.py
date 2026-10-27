@@ -11,10 +11,10 @@ not need a mount it already goes to the carbon plate"):
   FC stack   MicoAir743-Lite on a 4-in-1 ESC (MicoAir 55A AM32 assumed, CHECK), straight on the top plate, turned 45° so its 30.5
              holes (r 21.57 on the plate axes) fall in the top plate's 3.0 slots ("the lines"); 4 M3 studs up through the slots, set
              on the bench, nylon nuts on top from above with everything assembled. RX and the battery cap beside it.
-  hub deck   PETG on the bottom plate: 6 feet on the plate's Ø3.1 holes (±24, ±36.5), (-65, ±22.5), M3 x 12 down through the plate
+  hub deck   PETG on the bottom plate: 4 feet on the plate's Ø3.1 holes (24, ±36.5), (-65, ±22.5), M3 x 12 down through the plate
              into the sled's inserts; the Pi 5 right side up between the plates on 4 posts (M2.5 self-tapping), ports aft; UBEC and
              12 V buck bays on the front wing (zip ties), bars inside |y| 20 there (arm session's front envelopes)
-  sled       PETG under the bottom plate: the receiver's mount face (6 M3 inserts), the 6 hub deck bolts' inserts, the flow pod
+  sled       PETG under the bottom plate: the receiver's mount face (6 M3 inserts), the 4 hub deck bolts' inserts, the flow pod
              (MTF-02P pocket, lens on the cartridge bottom plane), a +y rib for the down camera owner's pod, Ø9 driver holes under
              the 8 arm bottom screws
 Every screw goes straight in with a screwdriver in assembly order (dimensions.md System Overseer core). Cameras, lidar, their
@@ -111,7 +111,8 @@ Z_ESC = Z_TP + STANDOFF            # 49.6
 Z_STACK_TOP = Z_ESC + STACK_H      # 70.1
 CAP = (10.0, 20.0)                 # low-ESR cap on the ESC battery pads, 35 V 470 µF Ø10 x 20, lying on the top plate behind the ESC (E)
 RX_TP = (-30.0, -18.0, 24.0, 40.0)  # RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, taped / zip-tied through the plate
-FEET_XY = [(24.0, 36.5), (24.0, -36.5), (-24.0, 36.5), (-24.0, -36.5), (-65.0, 22.5), (-65.0, -22.5)]   # bottom plate Ø3.1 holes, 360° faces in the STEP
+FEET_XY = [(24.0, 36.5), (24.0, -36.5), (-65.0, 22.5), (-65.0, -22.5)]   # bottom plate Ø3.1 holes, 360° faces in the STEP; 4 are enough
+# (Spark 27 Oct: "do we really need that many": 4 carry 193 N a bolt in the 35 g crash vs 137 N with 6, E)
 # (review 27 Oct: (-72.5, ±31.75) are R3 outline fillets, not holes; (-65, ±36.5) sit under the rear arm roots)
 # Pi 5: board 85 x 56 x 1.6, M2.5 holes Ø2.7 on 58 x 49, 3.5 from the far edge and 23.5 from the USB-A / RJ45 edge (spec);
 # Active Cooler 63.5 x 42.5 footprint, 13.7 tall over the board, blower intake on top (Raspberry Pi product brief, Jan 2026);
@@ -190,7 +191,6 @@ def hub_deck():
     px0, px1 = PI_HOLES[0][0], PI_HOLES[2][0]
     pip = [cyl(3.5, 0, Z_PI, x, y) for x, y in PI_HOLES]
     bars = [bar((24, sy * 36.5), (px1, sy * 24.5), 6, 0, FLOOR_T) for sy in (1, -1)]
-    bars += [bar((-24, sy * 36.5), (px0, sy * 24.5), 6, 0, FLOOR_T) for sy in (1, -1)]
     bars += [bar((px0, 24.5), (px0, -24.5), 6, 0, FLOOR_T), bar((px1, 24.5), (px1, -24.5), 6, 0, FLOOR_T)]
     bars += [bar((-65.0, sy * 22.5), (px0, sy * RAIL_Y), 6, 0, FLOOR_T) for sy in (1, -1)]
     bars += [bar((px1, sy * BAY_Y), (80, sy * BAY_Y), 6, 0, FLOOR_T) for sy in (1, -1)]                          # bay rails
@@ -420,7 +420,7 @@ for case, a in cases.items():
 say("joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):")
 for k, v in REQ.items():
     say(f"   {k}: max {v['max_bolt_N']} N per bolt ({v['worst_case']}), shear {v['max_shear_N']}, axial {v['max_axial_N']}")
-say("   the 6 sled bolts pass through the hub deck feet and the plate: hub deck and sled loads add on the same M3 x 12 (inserts in the sled)")
+say("   the 4 sled bolts pass through the hub deck feet and the plate: hub deck and sled loads add on the same M3 x 12 (inserts in the sled)")
 Lp = (Z_M - 14) - LENS_Z
 I_ = (30 * 23 ** 3 - 25 * 18 ** 3) / 12; mt = 1.5 + 0.24 * 2 * (30 + 23) * 2.5 * Lp * 1.27e-3
 f1 = 1 / (2 * math.pi) * math.sqrt(3 * 2000 * I_ / Lp ** 3 / (mt * 1e-3) * 1e3)

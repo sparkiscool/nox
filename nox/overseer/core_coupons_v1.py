@@ -7,12 +7,12 @@ Drawn, least material: only the mounting features of the two core pieces (`nox/o
 from `runs/overseer_core/v1/result.json`, never retyped) joined by 6 x 4 bars (4 thick: solid_check fails necks under 3.0), each
 printed the way it sits on the drone:
 
-  hub deck coupon     on the bottom plate, plate face down. 6 feet Ø12 x 4 (Ø3.4) on the plate's Ø3.1 holes (±24, ±36.5) and
+  hub deck coupon     on the bottom plate, plate face down. 4 feet Ø12 x 4 (Ø3.4) on the plate's Ø3.1 holes (24, ±36.5) and
                       (-65, ±22.5) (M3 x 12 down into the sled's inserts, or nuts under the plate for the check); the Pi's 4 posts
                       Ø7 x 8 on its 58 x 49 (Ø2.2 x 4 for M2.5 self-tapping); the UBEC / buck bay rails ahead of it. Checks: the
                       plate holes, the Pi between the arm roots with its plugs aft, the cooler under the top plate, the bays.
   sled coupon         under the bottom plate; printed with its top (the plate face) down, so it bolts on flipped over as it prints
-                      (y mirrored here). 6 pads Ø12 x 6 under the hub deck feet and 6 under the receiver v2 bolts (Ø4.0 through:
+                      (y mirrored here). 4 pads Ø12 x 6 under the hub deck feet and 6 under the receiver v2 bolts (Ø4.0 through:
                       inserts), Ø9 driver rings under the 8 arm bottom screws, the MTF-02P pocket (0.2 a side, 0.3 deep extra,
                       lens window, cable slot). Checks: the bolts line up through the plate, the arm screw heads pass the rings,
                       the flow sensor fits (plan and fit only: the pod's 55 drop to the lens is not in the coupon).
@@ -68,7 +68,7 @@ def hub_deck_coupon():
     ph = [tuple(p) for p in R["pi_holes"]]
     px0, px1 = ph[0][0], ph[2][0]
     body = [cyl(x, y, 0, T, PAD_D / 2) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph]
-    body += [bar((24, sy * 36.5), (px1, sy * 24.5)) for sy in (1, -1)] + [bar((-24, sy * 36.5), (px0, sy * 24.5)) for sy in (1, -1)]
+    body += [bar((24, sy * 36.5), (px1, sy * 24.5)) for sy in (1, -1)]
     body += [bar((px0, 24.5), (px0, -24.5)), bar((px1, 24.5), (px1, -24.5))]
     body += [bar((-65.0, sy * 22.5), (px0, sy * ry)) for sy in (1, -1)] + [bar((px0, sy * ry), (px1, sy * ry)) for sy in (1, -1)]
     xb = C["ubec_bay"][1] - 2.0

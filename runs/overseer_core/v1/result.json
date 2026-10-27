@@ -2,22 +2,22 @@
  "mass_g": 3419.68,
  "tw": 1.93,
  "cg": [
-  61.55,
+  61.57,
   -0.21,
   15.71
  ],
  "requirements": {
   "hub deck": {
    "worst_case": "crash 35 g 4",
-   "max_bolt_N": 13.3,
-   "max_shear_N": 10.8,
-   "max_axial_N": 13.3
+   "max_bolt_N": 16.5,
+   "max_shear_N": 14.8,
+   "max_axial_N": 16.5
   },
   "sled to plate": {
    "worst_case": "crash 35 g 6",
-   "max_bolt_N": 137.4,
-   "max_shear_N": 65.2,
-   "max_axial_N": 127.4
+   "max_bolt_N": 193.4,
+   "max_shear_N": 99.0,
+   "max_axial_N": 177.3
   },
   "receiver bolts": {
    "worst_case": "crash 35 g 13",
@@ -40,7 +40,7 @@
  },
  "pod_mode_hz": 1687,
  "wash_pct": {
-  "hub deck + Pi + bays": 1.07,
+  "hub deck + Pi + bays": 0.77,
   "sled + pod": 4.8,
   "receiver": 1.73
  },
@@ -89,14 +89,6 @@
   ],
   [
    24.0,
-   -36.5
-  ],
-  [
-   -24.0,
-   36.5
-  ],
-  [
-   -24.0,
    -36.5
   ],
   [
@@ -164,7 +156,7 @@
   "hub deck": 24,
   "sled": 75
  },
- "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 34/35 clear (Pi USB-A / RJ45 plugs (aft, in the open) blocked by spokes, ties, keels, L2 guard ring 53 mm\u00b3) FAIL",
+ "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 32/33 clear (Pi USB-A / RJ45 plugs (aft, in the open) blocked by spokes, ties, keels, L2 guard ring 53 mm\u00b3) FAIL",
  "coupon": {
   "floor_t": 4.0,
   "post_h": 5.0,

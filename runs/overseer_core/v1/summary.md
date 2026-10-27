@@ -5,7 +5,7 @@ Script `nox/overseer/core_v1.py` (~1 min), visuals `nox/overseer/core_v1_view.py
 
 Visual: https://claude.ai/artifact/JX9skx2qYkJGBnjFHrWAo6 (source `motion.html`: assembly order, core in colour, v5 context grey, alternatives A and C beside it as their own groups; stills `preview.png` (side, top, section) and `alternatives.png` (A / B / C side by side with their numbers))
 
-System: Overseer core v1, cage first 7.5 mm (E), shell 131 rods closed, fit 170.2 mm³ (E) (down camera / receiver) FAIL, extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (E), CG 0.8 mm off the thrust axis (E), 24.8 pack out (L exception), probes -178 mm (E) edge at -X (receiver, unshielded) FAIL, access 34/35 (the Pi's aft plugs blocked by the v5 cage body ties, 53 mm³: cage session, Spark: body nodes later). The FAILs are other sessions' parts against the real belly: the v5 down camera (camera owner), the v5 shell (cage session).
+System: Overseer core v1, cage first 7.5 mm (E), shell 131 rods closed, fit 170.2 mm³ (E) (down camera / receiver) FAIL, extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (E), CG 0.8 mm off the thrust axis (E), 24.8 pack out (L exception), probes -178 mm (E) edge at -X (receiver, unshielded) FAIL, access 32/33 (the Pi's aft plugs blocked by the v5 cage body ties, 53 mm³: cage session, Spark: body nodes later). The FAILs are other sessions' parts against the real belly: the v5 down camera (camera owner), the v5 shell (cage session).
 
 ## Rounds 4 and 5 (Spark 27 Oct: the FC on the top plate with no mount; optimise the space; review fixes)
 - Round 5: the MicoAir743-Lite on its 4-in-1 ESC (MicoAir 55A AM32 assumed: 44 x 43.5 x 5.2, 14 g, listing; the 17.5 / 24 g stack on MicoAir's drawing, spec; CHECK) bolts straight to the carbon top plate (Spark: no mount), turned 45° so its 30.5 holes fall in the plate's slots on its axes ("the lines", r 21.57; the +X hole sits at the central cutout's edge, CHECK; review ray probe of the STEP), on 4 M3 studs set on the bench, nylon nuts from above: FC top z 67.1 (C), clear of the props' band at z 77; motor leads leave the ESC's corners (on the plate axes once turned) and run out over the arm tops; its 4 screws go in with everything assembled.
@@ -23,8 +23,8 @@ System: Overseer core v1, cage first 7.5 mm (E), shell 131 rods closed, fit 170.
 ## Pieces
 | Piece | Holds | Fixed by | Worst reaction (E) | Slot |
 |---|---|---|---|---|
-| hub deck | Pi 5, UBEC, buck | 6 M3 x 12 down through the plate into the sled | 13.4 N a bolt | 24 g |
-| sled | receiver (6 M3), flow sensor | the same 6 M3 | receiver 104.6 N, plate 137.4 N a bolt | 75 g |
+| hub deck | Pi 5, UBEC, buck | 4 M3 x 12 down through the plate into the sled | 16.5 N a bolt | 24 g |
+| sled | receiver (6 M3), flow sensor | the same 4 M3 (Spark: "do we really need that many": 4 carry 193 N a bolt, 6 carried 137, E) | receiver 104.6 N, plate 193.4 N a bolt | 75 g |
 
 Mass 3420 g, T/W 1.93 at 1650 gf a motor (E). Carbon rods: none in the core, every piece printed.
 

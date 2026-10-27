@@ -95,7 +95,7 @@ for n in ("UBEC 5 V", "buck 12 V", PI_NM):
 label(ax, "Pi 5 (outline) on the 4 posts\nports face aft, plugs go in here", (-30, 10), (-130, 75))
 label(ax, "UBEC on the front rails\n(zip ties)", (55, -10), (70, -85))
 label(ax, "buck", (45, 13), (90, 60))
-label(ax, "6 feet: M3 through the plate holes", (24, 36.5), (10, 85))
+label(ax, "4 feet: M3 through the plate holes", (24, 36.5), (10, 85))
 label(ax, "arm roots (grey)", (-70, 60), (-135, 95))
 ax.set_title("1. Hub deck coupon on the bottom plate (top view)", fontsize=12); ax.set_aspect("equal"); ax.set_xlim(-140, 140); ax.set_ylim(-100, 100); ax.grid(alpha=0.2)
 # 2. side: both plates, the 45 gap, everything in it
@@ -125,7 +125,7 @@ draw(ax, proj(M["flow MTF-02P"], 0, 1), "#26a69a", 0.9)
 label(ax, "receiver footprint (bolts to the 6 pads)", (-30, 0), (-135, 85))
 label(ax, "Ø9 rings over the 8 arm screws", (38, 52), (40, 90))
 label(ax, "flow sensor pocket", (-10, -55), (20, -90))
-label(ax, "6 pads under the hub deck feet", (-65, -22.5), (-140, -90))
+label(ax, "4 pads under the hub deck feet", (-65, -22.5), (-140, -90))
 ax.set_title("3. Sled coupon under the plate (seen from above, through the plate)", fontsize=12); ax.set_aspect("equal"); ax.set_xlim(-140, 140); ax.set_ylim(-100, 100); ax.grid(alpha=0.2)
 fig.suptitle("Overseer core coupons in place: what sits where", fontsize=14)
 fig.tight_layout(); fig.savefig(os.path.join(OUT, "fit.png"), dpi=105)
@@ -145,7 +145,7 @@ for x, y in R_["arm_screws_driver_holes"]:
     ax.add_patch(plt.Circle((x, y), 8.5, fc="none", ec="#2e7d32", lw=2.5, ls="--"))
 draw(ax, proj(M["flow MTF-02P"], 0, 1), "#26a69a", 0.9)
 from matplotlib.lines import Line2D
-ax.legend(handles=[Line2D([], [], marker="o", ms=14, mfc="none", mec="#c62828", mew=2.5, ls="", label="6 x M3 through the bottom plate (the only bolts to the plate; the hub deck sits on top of the same 6)"),
+ax.legend(handles=[Line2D([], [], marker="o", ms=14, mfc="none", mec="#c62828", mew=2.5, ls="", label="4 x M3 through the bottom plate (the only bolts to the plate; the hub deck sits on top of the same 4)"),
                    Line2D([], [], marker="s", ms=14, mfc="none", mec="#1a237e", mew=2.5, ls="", label="6 x M3 from the battery receiver, up into the sled (not into the plate)"),
                    Line2D([], [], marker="o", ms=20, mfc="none", mec="#2e7d32", mew=2.5, ls="", label="8 x Ø9 clearance rings: the arm screw heads pass, a screwdriver reaches them (no bolt)"),
                    Line2D([], [], marker="s", ms=14, mfc="#26a69a", mec="k", ls="", label="flow sensor pocket (no bolt)")],

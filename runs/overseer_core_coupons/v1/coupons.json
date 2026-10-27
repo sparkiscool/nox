@@ -1,6 +1,6 @@
 {
  "overseer_core_coupon_hub_deck_v1.stl": {
-  "mass_g": 17.3,
+  "mass_g": 16.0,
   "size_mm": [
    154.0,
    85.0,
@@ -9,7 +9,7 @@
   "watertight": true
  },
  "overseer_core_coupon_sled_v1.stl": {
-  "mass_g": 29.2,
+  "mass_g": 28.1,
   "size_mm": [
    177.1,
    124.8,
