@@ -434,3 +434,11 @@ it  84 beta   32 J   0.0390 vol 0.0873 (dil 0.1742 g -0.000) grey  1.7% ch 0.100
 it  84 beta   32 J   0.0390 vol 0.0873 (dil 0.1742 g -0.000) grey  1.7% ch 0.100 worst tie b10 mx 1.24e+03 83.9s
 it  85 beta   32 J   0.0388 vol 0.0873 (dil 0.1742 g -0.000) grey  1.7% ch 0.100 worst tie b10 mx 1.23e+03 84.1s
 it  85 beta   32 J   0.0388 vol 0.0873 (dil 0.1742 g -0.000) grey  1.7% ch 0.100 worst tie b10 mx 1.23e+03 84.1s
+it  86 beta   32 J   0.0387 vol 0.0873 (dil 0.1742 g +0.000) grey  1.7% ch 0.100 worst tie b10 mx 1.23e+03 83.1s
+it  86 beta   32 J   0.0387 vol 0.0873 (dil 0.1742 g +0.000) grey  1.7% ch 0.100 worst tie b10 mx 1.23e+03 83.1s
+layout: stopped (grey) at it 86, beta 32, 5921 s
+layout: stopped (grey) at it 86, beta 32, 5921 s
+layout: beta 32 done: eroded design 15 bodies, main 94.0%; drawn bodies outside the main body: 1
+layout: beta 32 done: eroded design 15 bodies, main 94.0%; drawn bodies outside the main body: 1
+layout done: 6069 s, peak 6.524556 GB
+layout done: 6069 s, peak 6.524556 GB
