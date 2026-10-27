@@ -78,3 +78,15 @@ fem: WARNING multigrid CG hit 300 iterations (rel residual 2.59e+00)
 fem: WARNING multigrid CG hit 300 iterations (rel residual 2.59e+00)
 it  11 beta    1 J  29.7420 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.33e+05 cg 300 229.8s
 it  11 beta    1 J  29.7420 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.33e+05 cg 300 229.8s
+fem: WARNING multigrid CG hit 300 iterations (rel residual 7.93e+00)
+fem: WARNING multigrid CG hit 300 iterations (rel residual 7.93e+00)
+it  12 beta    1 J  29.8031 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.35e+05 cg 300 220.7s
+it  12 beta    1 J  29.8031 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.35e+05 cg 300 220.7s
+fem: WARNING multigrid CG hit 300 iterations (rel residual 9.42e-01)
+fem: WARNING multigrid CG hit 300 iterations (rel residual 9.42e-01)
+it  13 beta    1 J  29.8029 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.35e+05 cg 300 217.5s
+it  13 beta    1 J  29.8029 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.35e+05 cg 300 217.5s
+fem: WARNING multigrid CG hit 300 iterations (rel residual 7.71e+00)
+fem: WARNING multigrid CG hit 300 iterations (rel residual 7.71e+00)
+it  14 beta    1 J  29.8351 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.36e+05 cg 300 229.6s
+it  14 beta    1 J  29.8351 vol 0.0277 (dil 0.0333 g +0.463) grey 11.5% ch 0.000 worst held b2 fz 9.36e+05 cg 300 229.6s
