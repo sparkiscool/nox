@@ -1,18 +1,18 @@
 {
  "name": "Overseer",
- "pass_": false,
+ "pass_": true,
  "cage_first": {
   "applies": true,
   "pass_": true,
-  "worst_part": "flow MTF-02P",
+  "worst_part": "camera left",
   "worst_dir": [
-   -0.0,
-   -0.0,
-   -1.0
+   0.901,
+   0.01,
+   0.434
   ],
-  "worst_dir_label": "-Z",
-  "margin_mm": 12.65,
-  "required_mm": 0.0,
+  "worst_dir_label": "(+0.90, +0.01, +0.43)",
+  "margin_mm": 7.38,
+  "required_mm": 3.0,
   "n_dirs": 2006,
   "cage_margin_mm": 3.0,
   "per_part": {
@@ -23,32 +23,32 @@
      -0.024,
      0.867
     ],
-    "worst_slack_mm": 17.79,
-    "min_margin_outside_openings_mm": 20.79,
+    "worst_slack_mm": 30.96,
+    "min_margin_outside_openings_mm": 33.96,
     "dirs_in_openings": 741,
     "pass_": true
    },
    "camera left": {
-    "min_margin_mm": -1.21,
+    "min_margin_mm": 0.33,
     "worst_dir": [
-     0.851,
-     0.036,
-     0.524
+     0.901,
+     0.01,
+     0.434
     ],
-    "worst_slack_mm": 17.41,
-    "min_margin_outside_openings_mm": 20.41,
+    "worst_slack_mm": 4.38,
+    "min_margin_outside_openings_mm": 7.38,
     "dirs_in_openings": 428,
     "pass_": true
    },
    "camera right": {
-    "min_margin_mm": -1.2,
+    "min_margin_mm": -0.68,
     "worst_dir": [
-     0.835,
-     -0.076,
-     0.544
+     0.871,
+     -0.035,
+     0.49
     ],
-    "worst_slack_mm": 15.5,
-    "min_margin_outside_openings_mm": 18.5,
+    "worst_slack_mm": 5.01,
+    "min_margin_outside_openings_mm": 8.01,
     "dirs_in_openings": 429,
     "pass_": true
    },
@@ -72,7 +72,7 @@
      -1.0
     ],
     "worst_slack_mm": 15.15,
-    "min_margin_outside_openings_mm": 61.92,
+    "min_margin_outside_openings_mm": 74.78,
     "dirs_in_openings": 235,
     "pass_": true
    },
@@ -84,7 +84,7 @@
      -1.0
     ],
     "worst_slack_mm": 13.15,
-    "min_margin_outside_openings_mm": 56.9,
+    "min_margin_outside_openings_mm": 69.72,
     "dirs_in_openings": 235,
     "pass_": true
    },
@@ -96,7 +96,7 @@
      -1.0
     ],
     "worst_slack_mm": 13.15,
-    "min_margin_outside_openings_mm": 56.9,
+    "min_margin_outside_openings_mm": 69.72,
     "dirs_in_openings": 235,
     "pass_": true
    },
@@ -108,103 +108,103 @@
      -1.0
     ],
     "worst_slack_mm": 12.65,
-    "min_margin_outside_openings_mm": 91.79,
+    "min_margin_outside_openings_mm": 104.92,
     "dirs_in_openings": 235,
     "pass_": true
    },
    "motor 1": {
-    "min_margin_mm": 86.88,
+    "min_margin_mm": 65.96,
     "worst_dir": [
-     0.373,
-     0.489,
-     -0.788
+     0.011,
+     0.029,
+     1.0
     ],
-    "worst_slack_mm": 83.88,
-    "min_margin_outside_openings_mm": 86.88,
+    "worst_slack_mm": 62.96,
+    "min_margin_outside_openings_mm": 65.96,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "prop 1": {
-    "min_margin_mm": 27.31,
+    "min_margin_mm": 30.53,
     "worst_dir": [
-     0.635,
-     0.583,
-     0.508
+     0.435,
+     0.9,
+     -0.022
     ],
-    "worst_slack_mm": 24.31,
-    "min_margin_outside_openings_mm": 27.31,
+    "worst_slack_mm": 27.53,
+    "min_margin_outside_openings_mm": 30.53,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "motor 2": {
-    "min_margin_mm": 99.62,
+    "min_margin_mm": 61.98,
     "worst_dir": [
-     -0.607,
-     0.438,
-     -0.663
+     -0.113,
+     0.012,
+     0.994
     ],
-    "worst_slack_mm": 96.62,
-    "min_margin_outside_openings_mm": 99.62,
+    "worst_slack_mm": 58.98,
+    "min_margin_outside_openings_mm": 61.98,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "prop 2": {
-    "min_margin_mm": 33.19,
+    "min_margin_mm": 26.87,
     "worst_dir": [
-     -0.738,
-     0.52,
-     -0.431
+     -0.59,
+     0.806,
+     0.043
     ],
-    "worst_slack_mm": 30.19,
-    "min_margin_outside_openings_mm": 33.19,
+    "worst_slack_mm": 23.87,
+    "min_margin_outside_openings_mm": 26.87,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "motor 3": {
-    "min_margin_mm": 99.95,
+    "min_margin_mm": 65.0,
     "worst_dir": [
-     -0.529,
-     -0.37,
-     -0.764
+     -0.165,
+     -0.041,
+     0.986
     ],
-    "worst_slack_mm": 96.95,
-    "min_margin_outside_openings_mm": 99.95,
+    "worst_slack_mm": 62.0,
+    "min_margin_outside_openings_mm": 65.0,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "prop 3": {
-    "min_margin_mm": 32.48,
+    "min_margin_mm": 25.74,
     "worst_dir": [
+     -0.586,
      -0.81,
-     -0.534,
-     -0.242
+     -0.018
     ],
-    "worst_slack_mm": 29.48,
-    "min_margin_outside_openings_mm": 32.48,
+    "worst_slack_mm": 22.74,
+    "min_margin_outside_openings_mm": 25.74,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "motor 4": {
-    "min_margin_mm": 86.8,
+    "min_margin_mm": 68.67,
     "worst_dir": [
-     0.38,
-     -0.493,
-     -0.782
+     0.0,
+     0.0,
+     1.0
     ],
-    "worst_slack_mm": 83.8,
-    "min_margin_outside_openings_mm": 86.8,
+    "worst_slack_mm": 65.67,
+    "min_margin_outside_openings_mm": 68.67,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "prop 4": {
-    "min_margin_mm": 27.47,
+    "min_margin_mm": 29.08,
     "worst_dir": [
-     0.637,
-     -0.582,
-     0.506
+     0.38,
+     -0.916,
+     -0.131
     ],
-    "worst_slack_mm": 24.47,
-    "min_margin_outside_openings_mm": 27.47,
+    "worst_slack_mm": 26.08,
+    "min_margin_outside_openings_mm": 29.08,
     "dirs_in_openings": 0,
     "pass_": true
    }
@@ -220,55 +220,55 @@
    "rods_unmatched": 0
   },
   "gap_share": 0.0,
-  "open_share": 0.1665,
-  "ratio": 0.389,
+  "open_share": 0.2255,
+  "ratio": 0.281,
   "ratio_min": null,
-  "nodes": 48,
-  "rods": 131,
-  "triangles": 85,
-  "longest_rod_mm": 302.1,
-  "largest_cell_mm": 167.3
+  "nodes": 25,
+  "rods": 64,
+  "triangles": 40,
+  "longest_rod_mm": 653.1,
+  "largest_cell_mm": 219.7
  },
  "compact": {
   "bbox_min": [
-   -295.26,
-   -366.31,
+   -320.27,
+   -339.11,
    -67.15
   ],
   "bbox_max": [
    448.34,
-   366.31,
-   230.3
+   339.11,
+   139.67
   ],
   "extents_mm": [
-   743.6,
-   732.6,
-   297.4
+   768.6,
+   678.2,
+   206.8
   ],
-  "largest_extent_mm": 743.6,
-  "bbox_L": 162.039,
-  "hull_L": 75.545,
+  "largest_extent_mm": 768.6,
+  "bbox_L": 107.811,
+  "hull_L": 63.13,
   "guard_offsets_mm": {
-   "shell tubes to prop disks, 3D (G)": 13.9
+   "shell tubes to prop disks, 3D (G)": 14.9
   }
  },
  "fit": {
-  "pass_": false,
+  "pass_": true,
   "tol_mm3": 0.5,
   "worst": {
-   "a": "cage shell tubes",
-   "b": "camera left",
-   "overlap_mm3": 76.11,
+   "a": "spokes, ties, keels, L2 guard ring",
+   "b": "cartridge",
+   "overlap_mm3": 0.25,
    "limit_mm3": 0.5,
    "contact": false,
    "method": "manifold3d",
-   "pass_": false
+   "pass_": true
   },
   "pairs": [
    {
     "a": "cage shell tubes",
     "b": "cage shell nodes",
-    "overlap_mm3": 67095.29,
+    "overlap_mm3": 32749.27,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -277,7 +277,7 @@
    {
     "a": "cage shell tubes",
     "b": "spokes, ties, keels, L2 guard ring",
-    "overlap_mm3": 2062.86,
+    "overlap_mm3": 2484.75,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -286,34 +286,16 @@
    {
     "a": "cage shell tubes",
     "b": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
-    "overlap_mm3": 214.3,
+    "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
-    "a": "cage shell tubes",
-    "b": "camera left",
-    "overlap_mm3": 76.11,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "camera right",
-    "overlap_mm3": 76.11,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
-   },
-   {
     "a": "cage shell nodes",
     "b": "spokes, ties, keels, L2 guard ring",
-    "overlap_mm3": 1759.05,
+    "overlap_mm3": 1822.88,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -340,7 +322,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "bottom plate",
-    "overlap_mm3": 24.41,
+    "overlap_mm3": 202.78,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -348,8 +330,17 @@
    },
    {
     "a": "spokes, ties, keels, L2 guard ring",
-    "b": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
-    "overlap_mm3": 0.0,
+    "b": "cartridge",
+    "overlap_mm3": 0.25,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "receiver",
+    "overlap_mm3": 0.25,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
@@ -358,7 +349,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "belly sled + pods",
-    "overlap_mm3": 170.26,
+    "overlap_mm3": 11.83,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -367,7 +358,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "arm 1",
-    "overlap_mm3": 139.23,
+    "overlap_mm3": 69.72,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -376,7 +367,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "arm 2",
-    "overlap_mm3": 323.34,
+    "overlap_mm3": 363.15,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -385,7 +376,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "arm 3",
-    "overlap_mm3": 323.34,
+    "overlap_mm3": 363.15,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -394,7 +385,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "arm 4",
-    "overlap_mm3": 139.23,
+    "overlap_mm3": 69.72,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -692,42 +683,42 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3379.58,
+  "mass_g": 3120.2,
   "cg": [
-   64.95,
-   -0.17,
-   21.81
+   61.94,
+   -0.18,
+   16.28
   ],
   "parts": [
    {
     "name": "cage shell tubes",
-    "mass_g": 557.8,
+    "mass_g": 382.33,
     "cg": [
-     70.47,
+     58.46,
      0.0,
-     61.17
+     45.14
     ],
     "tag": "E",
     "swap": false
    },
    {
     "name": "cage shell nodes",
-    "mass_g": 216.0,
+    "mass_g": 112.5,
     "cg": [
-     68.02,
+     38.48,
      0.0,
-     53.06
+     25.84
     ],
     "tag": "E",
     "swap": false
    },
    {
     "name": "spokes, ties, keels, L2 guard ring",
-    "mass_g": 59.98,
+    "mass_g": 69.51,
     "cg": [
-     75.93,
+     52.1,
      0.0,
-     11.42
+     13.31
     ],
     "tag": "C",
     "swap": false
@@ -745,11 +736,11 @@
    },
    {
     "name": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
-    "mass_g": 88.7,
+    "mass_g": 101.78,
     "cg": [
-     358.91,
+     352.6,
      0.0,
-     56.43
+     60.62
     ],
     "tag": "E",
     "swap": false
@@ -769,9 +760,9 @@
     "name": "camera left",
     "mass_g": 15.0,
     "cg": [
-     368.12,
-     113.73,
-     65.49
+     378.47,
+     83.73,
+     104.13
     ],
     "tag": "E",
     "swap": false
@@ -780,9 +771,9 @@
     "name": "camera right",
     "mass_g": 15.0,
     "cg": [
-     368.12,
-     -113.73,
-     65.49
+     378.47,
+     -83.73,
+     104.13
     ],
     "tag": "E",
     "swap": false
@@ -888,10 +879,10 @@
    },
    {
     "name": "arm 1",
-    "mass_g": 179.3,
+    "mass_g": 177.36,
     "cg": [
-     121.43,
-     90.95,
+     119.98,
+     90.94,
      24.35
     ],
     "tag": "E",
@@ -901,7 +892,7 @@
     "name": "motor 1",
     "mass_g": 81.0,
     "cg": [
-     204.53,
+     201.49,
      139.5,
      58.0
     ],
@@ -912,7 +903,7 @@
     "name": "prop 1",
     "mass_g": 10.0,
     "cg": [
-     204.53,
+     201.49,
      139.5,
      82.0
     ],
@@ -921,10 +912,10 @@
    },
    {
     "name": "arm 2",
-    "mass_g": 84.22,
+    "mass_g": 84.65,
     "cg": [
-     -58.28,
-     83.46,
+     -59.47,
+     83.5,
      27.94
     ],
     "tag": "E",
@@ -934,7 +925,7 @@
     "name": "motor 2",
     "mass_g": 81.0,
     "cg": [
-     -74.47,
+     -77.51,
      139.5,
      58.0
     ],
@@ -945,7 +936,7 @@
     "name": "prop 2",
     "mass_g": 10.0,
     "cg": [
-     -74.47,
+     -77.51,
      139.5,
      82.0
     ],
@@ -954,10 +945,10 @@
    },
    {
     "name": "arm 3",
-    "mass_g": 84.22,
+    "mass_g": 84.65,
     "cg": [
-     -58.28,
-     -83.46,
+     -59.47,
+     -83.5,
      27.94
     ],
     "tag": "E",
@@ -967,7 +958,7 @@
     "name": "motor 3",
     "mass_g": 81.0,
     "cg": [
-     -74.47,
+     -77.51,
      -139.5,
      58.0
     ],
@@ -978,7 +969,7 @@
     "name": "prop 3",
     "mass_g": 10.0,
     "cg": [
-     -74.47,
+     -77.51,
      -139.5,
      82.0
     ],
@@ -987,10 +978,10 @@
    },
    {
     "name": "arm 4",
-    "mass_g": 179.3,
+    "mass_g": 177.36,
     "cg": [
-     121.43,
-     -90.95,
+     119.98,
+     -90.94,
      24.35
     ],
     "tag": "E",
@@ -1000,7 +991,7 @@
     "name": "motor 4",
     "mass_g": 81.0,
     "cg": [
-     204.53,
+     201.49,
      -139.5,
      58.0
     ],
@@ -1011,7 +1002,7 @@
     "name": "prop 4",
     "mass_g": 10.0,
     "cg": [
-     204.53,
+     201.49,
      -139.5,
      82.0
     ],
@@ -1021,21 +1012,21 @@
   ],
   "tag": "E",
   "cg_ref": [
-   65.031,
+   61.99,
    0.0,
    82.0
   ],
   "cg_offset": [
-   -0.08,
-   -0.17,
-   -60.19
+   -0.05,
+   -0.18,
+   -65.72
   ],
-  "cg_offset_mm": 60.19
+  "cg_offset_mm": 65.72
  },
  "balance": {
   "applies": true,
   "ref": [
-   65.031,
+   61.99,
    0.0,
    82.0
   ],
@@ -1047,32 +1038,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3379.58,
+    "mass_g": 3120.2,
     "cg_offset": [
-     -0.08,
-     -0.17,
-     -60.19
+     -0.05,
+     -0.18,
+     -65.72
     ],
     "horizontal_mm": 0.19,
-    "axial_mm": -60.19,
+    "axial_mm": -65.72,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2577.25,
+    "mass_g": 2317.87,
     "cg_offset": [
-     29.48,
-     -0.22,
-     -44.3
+     31.77,
+     -0.24,
+     -49.97
     ],
-    "horizontal_mm": 29.48,
-    "axial_mm": -44.3,
+    "horizontal_mm": 31.77,
+    "axial_mm": -49.97,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 29.48,
+  "worst_horizontal_mm": 31.77,
   "pass_": true
  },
  "probes": {
@@ -1097,10 +1088,10 @@
     0.007
    ],
    "roll_deg": 135.0,
-   "lateral_mm": -0.2,
+   "lateral_mm": -18.9,
    "contact": [
-    -108.5,
-    -14.0,
+    -107.5,
+    -27.0,
     -54.0
    ],
    "pass_": true
@@ -1124,10 +1115,10 @@
      0.007
     ],
     "roll_deg": 135.0,
-    "lateral_mm": -0.2,
+    "lateral_mm": -18.9,
     "contact": [
-     -108.5,
-     -14.0,
+     -107.5,
+     -27.0,
      -54.0
     ],
     "pass_": true
@@ -1150,10 +1141,10 @@
      0.007
     ],
     "roll_deg": 135.0,
-    "lateral_mm": -0.2,
+    "lateral_mm": -18.9,
     "contact": [
-     -108.5,
-     -14.0,
+     -107.5,
+     -27.0,
      -54.0
     ],
     "pass_": true
@@ -1165,21 +1156,21 @@
     "margin_mm": 8.49,
     "unshielded": false,
     "dir": [
-     -0.471,
-     -0.527,
+     -0.565,
+     0.425,
      -0.707
     ],
-    "dir_label": "(-0.47, -0.53, -0.71)",
+    "dir_label": "(-0.56, +0.43, -0.71)",
     "axis": [
-     0.738,
-     -0.674,
-     0.011
+     -0.607,
+     -0.794,
+     0.007
     ],
     "roll_deg": 135.0,
-    "lateral_mm": 29.8,
+    "lateral_mm": 30.6,
     "contact": [
-     -10.1,
-     -50.0,
+     -25.8,
+     -35.0,
      -54.5
     ],
     "pass_": true
@@ -1202,10 +1193,10 @@
      0.007
     ],
     "roll_deg": 135.0,
-    "lateral_mm": 7.3,
+    "lateral_mm": -11.4,
     "contact": [
-     -108.5,
-     -18.0,
+     -104.5,
+     -27.0,
      -54.0
     ],
     "pass_": true
@@ -1228,10 +1219,10 @@
      0.007
     ],
     "roll_deg": 135.0,
-    "lateral_mm": 7.3,
+    "lateral_mm": -11.4,
     "contact": [
-     -108.5,
-     -18.0,
+     -104.5,
+     -27.0,
      -54.0
     ],
     "pass_": true
@@ -1243,21 +1234,21 @@
     "margin_mm": 8.49,
     "unshielded": false,
     "dir": [
-     -0.471,
-     -0.527,
+     -0.565,
+     0.425,
      -0.707
     ],
-    "dir_label": "(-0.47, -0.53, -0.71)",
+    "dir_label": "(-0.56, +0.43, -0.71)",
     "axis": [
-     0.738,
-     -0.674,
-     0.011
+     -0.607,
+     -0.794,
+     0.007
     ],
     "roll_deg": 135.0,
-    "lateral_mm": 44.8,
+    "lateral_mm": 39.6,
     "contact": [
-     -4.2,
-     -38.0,
+     -25.8,
+     -43.0,
      -54.5
     ],
     "pass_": true
@@ -1265,129 +1256,25 @@
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "prop 1",
-    "margin_mm": 19.0,
-    "unshielded": false,
-    "dir": [
-     0.372,
-     0.534,
-     0.759
-    ],
-    "dir_label": "(+0.37, +0.53, +0.76)",
-    "axis": [
-     -0.434,
-     -0.623,
-     0.651
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": -36.2,
-    "contact": [
-     285.4,
-     237.3,
-     87.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "prop 4",
-    "margin_mm": 19.0,
-    "unshielded": false,
-    "dir": [
-     0.427,
-     -0.507,
-     0.749
-    ],
-    "dir_label": "(+0.43, -0.51, +0.75)",
-    "axis": [
-     -0.482,
-     0.573,
-     0.663
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": 4.3,
-    "contact": [
-     284.0,
-     -238.5,
-     87.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "prop 1",
-    "margin_mm": 19.0,
-    "unshielded": false,
-    "dir": [
-     0.372,
-     0.534,
-     0.759
-    ],
-    "dir_label": "(+0.37, +0.53, +0.76)",
-    "axis": [
-     -0.434,
-     -0.623,
-     0.651
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": -36.2,
-    "contact": [
-     285.4,
-     237.3,
-     87.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "prop 4",
-    "margin_mm": 19.0,
-    "unshielded": false,
-    "dir": [
-     0.427,
-     -0.507,
-     0.749
-    ],
-    "dir_label": "(+0.43, -0.51, +0.75)",
-    "axis": [
-     -0.482,
-     0.573,
-     0.663
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": 4.3,
-    "contact": [
-     283.3,
-     -239.1,
-     87.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
     "part": "prop 2",
-    "margin_mm": 24.03,
+    "margin_mm": 17.0,
     "unshielded": false,
     "dir": [
-     -0.806,
-     0.557,
-     -0.198
+     -0.592,
+     0.806,
+     -0.0
     ],
-    "dir_label": "(-0.81, +0.56, -0.20)",
+    "dir_label": "(-0.59, +0.81, -0.00)",
     "axis": [
-     0.322,
-     0.695,
-     0.643
+     0.119,
+     0.088,
+     0.989
     ],
-    "roll_deg": 255.0,
-    "lateral_mm": 29.8,
+    "roll_deg": 270.0,
+    "lateral_mm": 35.1,
     "contact": [
-     -180.1,
-     210.1,
+     -151.8,
+     242.4,
      77.0
     ],
     "pass_": true
@@ -1396,24 +1283,24 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "prop 3",
-    "margin_mm": 24.19,
+    "margin_mm": 17.0,
     "unshielded": false,
     "dir": [
-     -0.847,
-     -0.502,
-     -0.177
+     -0.625,
+     -0.781,
+     -0.0
     ],
-    "dir_label": "(-0.85, -0.50, -0.18)",
+    "dir_label": "(-0.62, -0.78, -0.00)",
     "axis": [
-     -0.304,
-     0.183,
-     0.935
+     -0.167,
+     0.133,
+     0.977
     ],
-    "roll_deg": 240.0,
-    "lateral_mm": 61.3,
+    "roll_deg": 270.0,
+    "lateral_mm": -11.4,
     "contact": [
-     -182.0,
-     -206.9,
+     -154.8,
+     -240.3,
      77.0
     ],
     "pass_": true
@@ -1422,24 +1309,24 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "prop 2",
-    "margin_mm": 24.62,
+    "margin_mm": 17.0,
     "unshielded": false,
     "dir": [
-     -0.806,
-     0.557,
-     -0.198
+     -0.592,
+     0.806,
+     -0.0
     ],
-    "dir_label": "(-0.81, +0.56, -0.20)",
+    "dir_label": "(-0.59, +0.81, -0.00)",
     "axis": [
-     0.322,
-     0.695,
-     0.643
+     0.119,
+     0.088,
+     0.989
     ],
-    "roll_deg": 255.0,
-    "lateral_mm": 29.8,
+    "roll_deg": 270.0,
+    "lateral_mm": 35.1,
     "contact": [
-     -180.6,
-     209.3,
+     -151.1,
+     242.9,
      77.0
     ],
     "pass_": true
@@ -1448,25 +1335,129 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "prop 3",
-    "margin_mm": 24.69,
+    "margin_mm": 17.0,
     "unshielded": false,
     "dir": [
-     -0.56,
-     -0.447,
-     -0.697
+     -0.625,
+     -0.781,
+     -0.0
     ],
-    "dir_label": "(-0.56, -0.45, -0.70)",
+    "dir_label": "(-0.62, -0.78, -0.00)",
     "axis": [
-     -0.101,
-     -0.799,
-     0.593
+     -0.167,
+     0.133,
+     0.977
     ],
-    "roll_deg": 150.0,
-    "lateral_mm": -112.7,
+    "roll_deg": 270.0,
+    "lateral_mm": -8.4,
     "contact": [
-     -171.1,
-     -221.8,
-     77.0
+     -154.1,
+     -240.8,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 4",
+    "margin_mm": 18.68,
+    "unshielded": false,
+    "dir": [
+     0.259,
+     -0.006,
+     0.966
+    ],
+    "dir_label": "(+0.26, -0.01, +0.97)",
+    "axis": [
+     -0.086,
+     -0.996,
+     0.017
+    ],
+    "roll_deg": 345.0,
+    "lateral_mm": -251.4,
+    "contact": [
+     328.3,
+     -134.0,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 1",
+    "margin_mm": 19.0,
+    "unshielded": false,
+    "dir": [
+     0.21,
+     0.054,
+     0.976
+    ],
+    "dir_label": "(+0.21, +0.05, +0.98)",
+    "axis": [
+     -0.946,
+     -0.241,
+     0.217
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": 59.1,
+    "contact": [
+     328.0,
+     129.4,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 1",
+    "margin_mm": 19.0,
+    "unshielded": false,
+    "dir": [
+     0.197,
+     -0.065,
+     0.978
+    ],
+    "dir_label": "(+0.20, -0.06, +0.98)",
+    "axis": [
+     -0.93,
+     0.305,
+     0.207
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": 210.6,
+    "contact": [
+     328.3,
+     134.0,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 4",
+    "margin_mm": 19.0,
+    "unshielded": false,
+    "dir": [
+     0.191,
+     0.006,
+     0.982
+    ],
+    "dir_label": "(+0.19, +0.01, +0.98)",
+    "axis": [
+     -0.981,
+     -0.032,
+     0.191
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": -168.9,
+    "contact": [
+     326.8,
+     -159.7,
+     87.0
     ],
     "pass_": true
    },
@@ -1474,7 +1465,7 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
-    "margin_mm": 72.53,
+    "margin_mm": 71.57,
     "unshielded": false,
     "dir": [
      -0.013,
@@ -1488,7 +1479,7 @@
      0.013
     ],
     "roll_deg": 165.0,
-    "lateral_mm": -6.2,
+    "lateral_mm": -17.4,
     "contact": [
      -42.0,
      27.0,
@@ -1500,24 +1491,50 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "motor 1",
-    "margin_mm": 78.89,
+    "margin_mm": 74.46,
     "unshielded": false,
     "dir": [
-     0.317,
-     0.439,
-     -0.841
+     0.142,
+     0.25,
+     -0.958
     ],
-    "dir_label": "(+0.32, +0.44, -0.84)",
+    "dir_label": "(+0.14, +0.25, -0.96)",
     "axis": [
-     -0.51,
-     0.826,
-     0.239
+     -0.564,
+     0.816,
+     0.129
     ],
-    "roll_deg": 150.0,
-    "lateral_mm": -145.7,
+    "roll_deg": 165.0,
+    "lateral_mm": -195.9,
     "contact": [
-     213.0,
-     150.5,
+     205.9,
+     152.6,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 4",
+    "margin_mm": 74.46,
+    "unshielded": false,
+    "dir": [
+     0.164,
+     -0.243,
+     -0.956
+    ],
+    "dir_label": "(+0.16, -0.24, -0.96)",
+    "axis": [
+     -0.463,
+     -0.874,
+     0.143
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 188.1,
+    "contact": [
+     205.1,
+     -152.9,
      45.0
     ],
     "pass_": true
@@ -1526,50 +1543,24 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 1",
-    "margin_mm": 79.53,
+    "margin_mm": 74.87,
     "unshielded": false,
     "dir": [
-     0.317,
-     0.439,
-     -0.841
+     0.142,
+     0.25,
+     -0.958
     ],
-    "dir_label": "(+0.32, +0.44, -0.84)",
+    "dir_label": "(+0.14, +0.25, -0.96)",
     "axis": [
-     -0.51,
-     0.826,
-     0.239
+     -0.564,
+     0.816,
+     0.129
     ],
-    "roll_deg": 150.0,
-    "lateral_mm": -145.7,
+    "roll_deg": 165.0,
+    "lateral_mm": -197.4,
     "contact": [
-     213.0,
-     150.5,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "motor 4",
-    "margin_mm": 79.76,
-    "unshielded": false,
-    "dir": [
-     0.317,
-     -0.445,
-     -0.838
-    ],
-    "dir_label": "(+0.32, -0.44, -0.84)",
-    "axis": [
-     -0.496,
-     -0.831,
-     0.253
-    ],
-    "roll_deg": 210.0,
-    "lateral_mm": 142.3,
-    "contact": [
-     213.0,
-     -150.5,
+     206.8,
+     152.3,
      45.0
     ],
     "pass_": true
@@ -1578,76 +1569,24 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 4",
-    "margin_mm": 79.88,
+    "margin_mm": 74.87,
     "unshielded": false,
     "dir": [
-     0.313,
-     -0.421,
-     -0.851
+     0.158,
+     -0.289,
+     -0.944
     ],
-    "dir_label": "(+0.31, -0.42, -0.85)",
+    "dir_label": "(+0.16, -0.29, -0.94)",
     "axis": [
-     -0.572,
-     -0.799,
-     0.185
+     -0.385,
+     -0.899,
+     0.211
     ],
-    "roll_deg": 210.0,
-    "lateral_mm": 152.8,
+    "roll_deg": 195.0,
+    "lateral_mm": 182.1,
     "contact": [
-     214.3,
-     -149.3,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "motor 2",
-    "margin_mm": 87.68,
-    "unshielded": false,
-    "dir": [
-     -0.599,
-     0.413,
-     -0.686
-    ],
-    "dir_label": "(-0.60, +0.41, -0.69)",
-    "axis": [
-     0.345,
-     0.906,
-     0.245
-    ],
-    "roll_deg": 225.0,
-    "lateral_mm": 106.3,
-    "contact": [
-     -85.5,
-     147.9,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "motor 3",
-    "margin_mm": 87.68,
-    "unshielded": false,
-    "dir": [
-     -0.593,
-     -0.423,
-     -0.685
-    ],
-    "dir_label": "(-0.59, -0.42, -0.69)",
-    "axis": [
-     0.358,
-     -0.901,
-     0.247
-    ],
-    "roll_deg": 135.0,
-    "lateral_mm": -106.7,
-    "contact": [
-     -85.5,
-     -147.9,
+     206.8,
+     -152.3,
      45.0
     ],
     "pass_": true
@@ -1656,21 +1595,21 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
-    "margin_mm": 87.8,
+    "margin_mm": 86.93,
     "unshielded": false,
     "dir": [
-     0.182,
-     0.184,
+     0.136,
+     0.22,
      -0.966
     ],
-    "dir_label": "(+0.18, +0.18, -0.97)",
+    "dir_label": "(+0.14, +0.22, -0.97)",
     "axis": [
-     0.738,
-     -0.674,
-     0.011
+     -0.845,
+     0.536,
+     0.003
     ],
-    "roll_deg": 195.0,
-    "lateral_mm": -9.2,
+    "roll_deg": 165.0,
+    "lateral_mm": -15.9,
     "contact": [
      44.5,
      30.0,
@@ -1679,27 +1618,79 @@
     "pass_": true
    },
    {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 2",
+    "margin_mm": 89.02,
+    "unshielded": false,
+    "dir": [
+     -0.104,
+     0.338,
+     -0.936
+    ],
+    "dir_label": "(-0.10, +0.34, -0.94)",
+    "axis": [
+     -0.872,
+     0.422,
+     0.249
+    ],
+    "roll_deg": 165.0,
+    "lateral_mm": -62.4,
+    "contact": [
+     -81.1,
+     152.9,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 3",
+    "margin_mm": 89.02,
+    "unshielded": false,
+    "dir": [
+     -0.093,
+     -0.337,
+     -0.937
+    ],
+    "dir_label": "(-0.09, -0.34, -0.94)",
+    "axis": [
+     -0.867,
+     -0.436,
+     0.243
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 54.6,
+    "contact": [
+     -84.4,
+     -151.5,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 2",
-    "margin_mm": 89.1,
+    "margin_mm": 89.02,
     "unshielded": false,
     "dir": [
-     -0.584,
-     0.418,
-     -0.696
+     -0.109,
+     0.308,
+     -0.945
     ],
-    "dir_label": "(-0.58, +0.42, -0.70)",
+    "dir_label": "(-0.11, +0.31, -0.95)",
     "axis": [
-     0.425,
-     0.888,
-     0.177
+     -0.93,
+     0.305,
+     0.207
     ],
-    "roll_deg": 225.0,
-    "lateral_mm": 116.8,
+    "roll_deg": 165.0,
+    "lateral_mm": -89.4,
     "contact": [
-     -86.5,
-     146.4,
+     -81.1,
+     152.9,
      45.0
     ],
     "pass_": true
@@ -1708,24 +1699,24 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 3",
-    "margin_mm": 90.79,
+    "margin_mm": 89.02,
     "unshielded": false,
     "dir": [
-     -0.759,
-     -0.435,
-     -0.485
+     -0.139,
+     -0.303,
+     -0.943
     ],
-    "dir_label": "(-0.76, -0.43, -0.48)",
+    "dir_label": "(-0.14, -0.30, -0.94)",
     "axis": [
-     0.358,
-     -0.901,
-     0.247
+     -0.946,
+     -0.241,
+     0.217
     ],
-    "roll_deg": 120.0,
-    "lateral_mm": -48.2,
+    "roll_deg": 195.0,
+    "lateral_mm": 99.6,
     "contact": [
-     -82.9,
-     -150.5,
+     -82.8,
+     -152.3,
      45.0
     ],
     "pass_": true
@@ -1740,7 +1731,7 @@
    0.0,
    10.0
   ],
-  "n_points": 781965
+  "n_points": 627805
  },
  "access": {
   "applies": true,
@@ -1880,26 +1871,7 @@
     "pass_": true
    },
    {
-    "name": "M3 key, arm 2 top screw v +15",
-    "part": "top plate",
-    "tool": {
-     "type": "cylinder",
-     "d": 8
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key short leg, arm 2 top screw v -15",
+    "name": "M3 L-key short leg, arm 2 top screw v +15",
     "part": "top plate",
     "tool": {
      "type": "cylinder",
@@ -1918,7 +1890,7 @@
     "pass_": true
    },
    {
-    "name": "M3 L-key long leg, arm 2 top screw v -15",
+    "name": "M3 L-key long leg, arm 2 top screw v +15",
     "part": "top plate",
     "tool": {
      "type": "cylinder",
@@ -1928,6 +1900,25 @@
      -0.7389,
      0.6718,
      0.0525
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 2 top screw v -15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
     ],
     "length_mm": 400.0,
     "steps": 1,
@@ -1975,7 +1966,26 @@
     "pass_": true
    },
    {
-    "name": "M3 L-key short leg, arm 3 top screw v +15",
+    "name": "M3 key, arm 3 top screw v +15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key short leg, arm 3 top screw v -15",
     "part": "top plate",
     "tool": {
      "type": "cylinder",
@@ -1994,35 +2004,16 @@
     "pass_": true
    },
    {
-    "name": "M3 L-key long leg, arm 3 top screw v +15",
+    "name": "M3 L-key long leg, arm 3 top screw v -15",
     "part": "top plate",
     "tool": {
      "type": "cylinder",
      "d": 4
     },
     "dir": [
-     -0.7334,
-     -0.6769,
-     0.0625
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 key, arm 3 top screw v -15",
-    "part": "top plate",
-    "tool": {
-     "type": "cylinder",
-     "d": 8
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
+     -0.6373,
+     -0.7695,
+     -0.0425
     ],
     "length_mm": 400.0,
     "steps": 1,
@@ -2166,16 +2157,16 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3379.58,
+  "mass_g": 3120.2,
   "part_budgets_g": {},
   "over_parts": [],
   "budget_g": 2200.0,
-  "pct": 153.6,
+  "pct": 141.8,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer, cage first 12.7 mm (E) at -Z (flow MTF-02P) (field cones open: Unitree L2 75 deg, out 64.05 mm, camera left 55 deg, out 1.21 mm, camera right 55 deg, out 1.2 mm), shell 131 rods closed, h/w 0.39, fit 76.1 mm\u00b3 (E) (cage shell tubes/camera left) FAIL, bbox 162 L (E), extents 744 x 733 x 297 mm (E), mass 3380 of 2200 g (154 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -60.2], 29.5 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.56, +0.43, -0.71) (cartridge), access 21/21 clear",
- "pass": false
+ "summary": "System: Overseer, cage first 7.4 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 64.05 mm, camera left 55 deg, out 0 mm, camera right 55 deg, out 0.68 mm), shell 64 rods closed, h/w 0.28, fit 0.2 mm\u00b3 (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 108 L (E), extents 769 x 678 x 207 mm (E), mass 3120 of 2200 g (142 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -65.7], 31.8 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.56, +0.43, -0.71) (cartridge), access 21/21 clear",
+ "pass": true
 }

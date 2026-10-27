@@ -23,7 +23,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | 5 V 5 A UBEC | 1 | Radxa + camera power | on hand | M (typical; measure) |
 | SH1.0 4-pin pigtail | 1 | Radxa UART to FC UART4 | to buy (CHECK) | |
 | 90° USB-C plug or short cable | 1 | camera to Radxa | to buy (CHECK) | |
-| Carbon tube 6 x 4 (OD x ID; Spark 26 Oct: 6 mm tubes for the geodesic cages) | ~22.5 m for the Overseer cage v3 (131 pieces, 47 .. 437, `runs/overseer_layout/v5/checks.txt`) | geodesic cage shells | to buy (after the frame model) | O Cage v3 |
+| Carbon tube 6 x 4 (OD x ID; Spark 26 Oct: 6 mm tubes for the geodesic cages) | ~15.7 m for the Overseer cage v5 (64 pieces, 52 .. 653, `runs/overseer_layout/v5/checks.txt`) | geodesic cage shells | to buy (after the frame model) | O Cage v3 |
 | Carbon rod Ø3.0 | per cage design | cage struts, wheel pins (decision 22) | on hand (length CHECK) | G |
 | Catch hardware for the box (hold plate, charging contacts) | 1 set | box catch | to design with v3 | G |
 | M2 / M3 screws, nylocs, standoffs | as built | stack, plate bolts | on hand | H |

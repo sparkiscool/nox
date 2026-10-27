@@ -116,7 +116,7 @@ def seg_band_dist(p0, p1, mxy):
 # ---------------------------------------------------------------- the v2 drone (everything but its cage)
 HALO_BACK, HALO_R, HALO_NODE_R = 8.0, 62.0, 5.0   # L2 guard ring: 8 behind its base plane, r 62 round its axis (body half
                                                  # diagonal 53 + 9), printed nodes r 5 (DEFAULT, E)
-FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v4_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
+FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v5_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
 FZ = json.load(open(FROZEN)) if FROZEN and os.path.exists(FROZEN) else None        # changing any cage structure"); V5_FROZEN= builds a new one
 PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
 HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch

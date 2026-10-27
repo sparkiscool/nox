@@ -27,13 +27,69 @@ exec(compile(src, "layout_v5", "exec"), G); sys.argv = argv0
 FZ = G["FZ"]; A = G["A"]; LIM, LIM_L2, NODE_R, SHELL_R = G["LIM"], G["LIM_L2"], G["NODE_R"], G["SHELL_R"]
 dm = float(sys.argv[1]) if len(sys.argv) > 1 else json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))["dm"]
 g = G["drone"](dm); K = g["K"]
-N0 = np.array(FZ["nodes"]); E = [tuple(r) for r in FZ["rods"]]; ring = list(FZ["open"][0]["ring"]); nR = len(ring)
+SRC = json.load(open(os.environ["CE_START"])) if os.environ.get("CE_START") else FZ
+N0 = np.array(SRC["nodes"]); E = [tuple(r) for r in SRC["rods"]]; ring = list(SRC["open"][0]["ring"]); nR = len(ring)
 assert ring == list(range(nR))
-adj = {i: set() for i in range(len(N0))}
-for a, b in E: adj[a].add(b); adj[b].add(a)
-tris = sorted({tuple(sorted((a, b, c))) for a, b in E for c in adj[a] & adj[b]})
-hN = ConvexHull(N0); fs = {tuple(sorted(f)) for f in hN.simplices}
-tris = np.array([t for t in tris if t in fs])                     # the shell's faces (3-cliques on its hull)
+KEEP = int(os.environ.get("CE_KEEP", 0))
+REDUCE = os.environ.get("CE_MODE") == "reduce"                         # Spark 27 Oct: "get rid of the number of same length rule just do the rods number reduction"                               # free nodes kept (0 = all; Spark 27 Oct: "divide the number of rods by half")
+
+
+def sym_tris(N):
+    """the hull's faces (the opening ring's own facet left out), a mirror-symmetric triangulation: flat facets merged, a facet
+    and its mirror share one triangulation, a centre-plane facet that is not its own mirror is fanned from a node at its centre"""
+    from scipy.spatial import cKDTree
+    _, P_ = cKDTree(N).query(N * [1, -1, 1]); h = ConvexHull(N); S = h.simplices; par = list(range(len(S)))
+    def root(i):
+        while par[i] != i: par[i] = par[par[i]]; i = par[i]
+        return i
+    for fi in range(len(S)):
+        for fj in h.neighbors[fi]:
+            opp = [v for v in S[fj] if v not in S[fi]]
+            if opp and abs(N[opp[0]] @ h.equations[fi, :3] + h.equations[fi, 3]) < 0.3: par[root(fi)] = root(fj)
+    fac = {}
+    for fi in range(len(S)): fac.setdefault(root(fi), []).append(fi)
+    fac = [fs_ for fs_ in fac.values() if not (np.unique(S[fs_]) < nR).all()]
+    key = {frozenset(np.unique(S[fs_]).tolist()): k for k, fs_ in enumerate(fac)}
+    T, extra = [], []
+    for k, fs_ in enumerate(fac):
+        vs = np.unique(S[fs_]); km = key.get(frozenset(P_[vs].tolist())); T_ = [tuple(sorted(int(v) for v in S[fi])) for fi in fs_]
+        if km is None: T += T_; continue
+        if km != k:
+            if N[vs, 1].mean() > 0: T += T_ + [tuple(sorted(int(P_[v]) for v in t)) for t in T_]
+            continue
+        if {tuple(sorted(int(P_[v]) for v in t)) for t in T_} == set(T_): T += T_; continue
+        cnt = {}
+        for t in T_:
+            for i in range(3): e2 = tuple(sorted((t[i], t[(i + 1) % 3]))); cnt[e2] = cnt.get(e2, 0) + 1
+        c = N[vs].mean(0); c[1] = 0.0; ci = len(N) + len(extra); extra.append(c)
+        T += [tuple(sorted((ci, a_, b_))) for (a_, b_), n_ in cnt.items() if n_ == 1]
+    if extra: N = np.vstack([N, extra])
+    return N, np.array(sorted(set(T)))
+
+
+if KEEP:                                                               # thin the free nodes: mirror pairs and centre nodes, farthest first
+    fr = [i for i in range(nR, len(N0)) if N0[i, 1] >= -0.5]
+    ctr = N0[nR:].mean(0); scale = np.ptp(N0, 0)
+    pick = [max(fr, key=lambda i: np.linalg.norm((N0[i] - ctr) / scale))]
+    cnt_ = lambda sel: sum(1 if abs(N0[i, 1]) <= 0.5 else 2 for i in sel)
+    while cnt_(pick) < KEEP:
+        d_ = {i: min(np.linalg.norm((N0[i] - N0[j]) / scale) for j in pick) for i in fr if i not in pick}
+        pick.append(max(d_, key=d_.get))
+    keep = sorted(set(pick) | {int(np.argmin(np.linalg.norm(N0 - N0[i] * [1, -1, 1], axis=1))) for i in pick})
+    N0 = np.vstack([N0[:nR], N0[keep]])
+    N0, tris = sym_tris(N0)
+    E = sorted({tuple(sorted((int(t[i]), int(t[(i + 1) % 3])))) for t in tris for i in range(3)})
+else:
+    adj = {i: set() for i in range(len(N0))}
+    for a, b in E: adj[a].add(b); adj[b].add(a)
+    tris = sorted({tuple(sorted((a, b, c))) for a, b in E for c in adj[a] & adj[b]})
+    if "tris" in SRC: tris = np.array(SRC["tris"])
+    elif SRC is FZ:
+        hN = ConvexHull(N0); fs = {tuple(sorted(f)) for f in hN.simplices}
+        tris = np.array([t for t in tris if t in fs])                 # the shell's faces (3-cliques on its hull)
+    else: tris = np.array([t for t in tris if not all(v < nR for v in t)])   # every 3-clique but the ring's own
+print(f"start: {len(N0)} nodes, {len(E)} tubes, {len(tris)} faces", flush=True)
+N_START = N0.copy()
 Kp = K[ConvexHull(K).vertices]; kc = Kp.mean(0)
 if len(Kp) > 400:                                                       # thin the target's hull vertices (farthest-point, 400) for memory
     sel = [0]; dmin = np.linalg.norm(Kp - Kp[0], axis=1)
@@ -81,10 +137,36 @@ def pack(N, T):
 W = 30.0                                                               # constraint weight (mm of violation vs mm of length error)
 
 
-def resid(x, n, cls):
+MMAX = int(os.environ.get("CE_MMAX", 3))                               # a span may be cut as up to MMAX equal pieces joined in line
+SPLIT_PEN = 0.3                                                         # mm: a split only where it lands a piece nearer a cut length
+
+
+WL = 1.0                                                                # length-residual weights (IRLS: most pieces exact, a few left out)
+
+
+def merged(PL):
+    """the cut lengths after merging pieces within TOL of one centre (greedy along the sorted piece lengths)"""
+    Ls = np.sort(PL); out_ = []; i = 0
+    while i < len(Ls):
+        j = i
+        while j + 1 < len(Ls) and Ls[j + 1] - Ls[i] <= 2 * TOL: j += 1
+        out_.append(0.5 * (Ls[i] + Ls[j])); i = j + 1
+    return np.array(out_)
+
+
+def assign(L, T):
+    """each span: the (cut length, number of pieces) whose piece is nearest a cut length (a split costs SPLIT_PEN)"""
+    m_ = np.arange(1, MMAX + 1)
+    cost = np.abs(L[:, None, None] / m_[None, :, None] - T[None, None, :]) + SPLIT_PEN * (m_[None, :, None] - 1)
+    k = cost.reshape(len(L), -1).argmin(1)
+    return k % len(T), m_[k // len(T)]
+
+
+def resid(x, n, cls, mult=None):
     N, T = unpack(x, n)
     L = np.linalg.norm(N[[a for a, b in E]] - N[[b for a, b in E]], axis=1)
-    r = [L - T[cls]]
+    if REDUCE: r = [0.05 * (N - N_START).ravel()]                      # reduce mode: no length goal, stay near the thinned start
+    else: r = [WL * (L / (mult if mult is not None else 1) - T[cls])]
     p0 = N[tris[:, 0]]; nv = np.cross(N[tris[:, 1]] - p0, N[tris[:, 2]] - p0); nv /= np.linalg.norm(nv, axis=1)[:, None]
     nv *= np.sign(((p0 - kc) * nv).sum(1))[:, None]                    # outward
     r.append(W * np.maximum(0, ((Kp[None] - p0[:, None]) * nv[:, None]).sum(2)).ravel())    # K inside every face
@@ -105,37 +187,40 @@ def fit(n):
     T = np.quantile(L0, (np.arange(n) + 0.5) / n); x = pack(N0, T); best = None
     for it in range(12):
         N, T = unpack(x, n); L = np.linalg.norm(N[[a for a, b in E]] - N[[b for a, b in E]], axis=1)
-        cls = np.abs(L[:, None] - T[None]).argmin(1)
-        res = least_squares(resid, x, args=(n, cls), method="trf", tr_solver="lsmr", max_nfev=NFEV, x_scale=1.0)
+        cls, mult = assign(L, T)
+        res = least_squares(resid, x, args=(n, cls, mult), method="trf", tr_solver="lsmr", max_nfev=NFEV, x_scale=1.0)
         x = res.x
         N, T = unpack(x, n); L = np.linalg.norm(N[[a for a, b in E]] - N[[b for a, b in E]], axis=1)
-        cls2 = np.abs(L[:, None] - T[None]).argmin(1)
-        if (cls2 == cls).all(): break
-    rr = resid(x, n, cls2); m = len(E)
-    return dict(n=n, N=N, T=T, cls=cls2, L=L, err=float(np.abs(L - T[cls2]).max()), viol=float(rr[m:].max() / W if len(rr) > m else 0))
+        cls2, mult2 = assign(L, T)
+        if (cls2 == cls).all() and (mult2 == mult).all(): break
+    global WL
+    for it in range(8):                                                 # IRLS toward L1: pieces near a cut length go exact
+        rl = L / mult2 - T[cls2]; WL = 1.0 / np.sqrt(np.sqrt(rl ** 2 + 0.25))
+        res = least_squares(resid, x, args=(n, cls2, mult2), method="trf", tr_solver="lsmr", max_nfev=NFEV, x_scale=1.0); x = res.x
+        N, T = unpack(x, n); L = np.linalg.norm(N[[a for a, b in E]] - N[[b for a, b in E]], axis=1); cls2, mult2 = assign(L, T)
+    WL = 1.0
+    rr = resid(x, n, cls2, mult2); m = len(E)
+    return dict(n=n, N=N, T=T, cls=cls2, mult=mult2, L=L, ncut=len(merged(L / mult2)), err=float(np.abs(L / mult2 - T[cls2]).max()), viol=float(rr[m:].max() / W if len(rr) > m else 0))
 
 
+if REDUCE:
+    NS = [1]; MMAX = 1
 out = []
 for n in NS:
     f = fit(n); out.append(f)
     print(f"n {n:2d}: worst tube {f['err']:.2f} off its cut length, constraints {f['viol']:.2f} mm; lengths "
-          + ", ".join(f"{t:.0f} x{int((f['cls'] == i).sum())}" for i, t in sorted(enumerate(f['T']), key=lambda q: q[1])), flush=True)
-    if f["err"] <= TOL and f["viol"] <= 0.05: break
-ok = [f for f in out if f["err"] <= TOL and f["viol"] <= 0.05]
-best = ok[0] if ok else min(out, key=lambda f: (f["viol"] > 0.05, f["err"]))
+          + ", ".join(f"{t:.0f} x{int(f['mult'][f['cls'] == i].sum())}" for i, t in sorted(enumerate(f['T']), key=lambda q: q[1]))
+          + f"; {int(f['mult'].sum())} pieces in {len(E)} spans; {f['ncut']} lengths to cut within ±{TOL:g}", flush=True)
+best = min(out, key=lambda f: (f["viol"] > 0.05, f["ncut"], f["err"]))   # the fewest lengths to cut (Spark 27 Oct)
 # merge cut lengths whose tubes all stay within TOL of one centre (fewest lengths to cut, greedy along the sorted lengths)
-Ls = np.sort(best["L"]); groups = []; i = 0
-while i < len(Ls):
-    j = i
-    while j + 1 < len(Ls) and Ls[j + 1] - Ls[i] <= 2 * TOL: j += 1
-    groups.append(Ls[i:j + 1]); i = j + 1
-cuts = [0.5 * (q.min() + q.max()) for q in groups]
-best["T"] = np.array(cuts); best["cls"] = np.abs(best["L"][:, None] - best["T"][None]).argmin(1); best["n"] = len(cuts)
-best["err"] = float(np.abs(best["L"] - best["T"][best["cls"]]).max())
+PL = best["L"] / best["mult"]; cuts = list(merged(PL))
+best["T"] = np.array(cuts); best["cls"] = np.abs(PL[:, None] - best["T"][None]).argmin(1); best["n"] = len(cuts)
+best["err"] = float(np.abs(PL - best["T"][best["cls"]]).max())
 spec = dict(note=f"Overseer cage v4 (27 Oct, Spark: as few cut lengths as possible): cage v3's nodes and tubes moved by nox/overseer/cage_equal.py; "
-                 f"{best['n']} cut lengths, every tube within {best['err']:.2f} of its length.",
+                 f"{best['n']} cut lengths, every piece within {best['err']:.2f} of its length; a span of more than one piece is joined in line by a node.",
             dm=dm, xB=FZ["xB"], nodes=np.round(best["N"], 3).tolist(), rods=[list(map(int, e)) for e in E], open=FZ["open"],
-            node_r_mm=NODE_R, rod_r_mm=SHELL_R, cut_lengths=[round(float(t), 1) for t in best["T"]],
-            counts=[int((best["cls"] == i).sum()) for i in range(best["n"])], fits=[dict(n=f["n"], err=round(f["err"], 2), viol=round(f["viol"], 2)) for f in out])
-json.dump(spec, open(os.path.join(HERE, "cage_v4_shell.json"), "w"))
-print("wrote nox/overseer/cage_v4_shell.json:", best["n"], "lengths", spec["cut_lengths"], spec["counts"], "err", round(best["err"], 2), "viol", round(best["viol"], 2))
+            tris=[list(map(int, t)) for t in tris], node_r_mm=NODE_R, rod_r_mm=SHELL_R, cut_lengths=[round(float(t), 1) for t in best["T"]],
+            counts=[int(best["mult"][best["cls"] == i].sum()) for i in range(best["n"])], pieces=[int(m_) for m_ in best["mult"]], fits=[dict(n=f["n"], err=round(f["err"], 2), viol=round(f["viol"], 2)) for f in out])
+OUTF = os.environ.get("CE_OUT", os.path.join(HERE, "cage_v4_shell.json"))
+json.dump(spec, open(OUTF, "w"))
+print("wrote", OUTF, ":", best["n"], "lengths", spec["cut_lengths"], spec["counts"], "err", round(best["err"], 2), "viol", round(best["viol"], 2))
