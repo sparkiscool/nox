@@ -48,7 +48,7 @@ MOTOR_DEG = {"front": 45.0, "rear": 135.0}     # arm 1 / arm 2 diagonal (left si
 # carbon chords (front pair only; concept review 27 Oct: PETG alone tops out near the mode target on the 179 front arm,
 # and a modal check of a plain 30 wide box beam read its first mode lateral at ~130 Hz). A tapered space frame: 4 x 3.0
 # carbon rods (hard rule), top and bottom on each side, from two shoulders beside the root (arm frame x 25, y ±35, outside
-# both plates) to y ±12 beside the motor pocket; bore 3.3 (OD + 0.3), open at the shoulder end (the rod slides in from
+# both plates) to y ±12 beside the motor pocket; bore 3.2 (coupon pick), open at the shoulder end (the rod slides in from
 # there and is epoxied), blind at the motor end inside the pocket wall. Drawn: a socket at each rod end; the topology
 # webs, root and pad join them, the rods are stiff inserts in its FE (Part.insert).
 ROD_D, ROD_BORE = 3.0, 3.2      # bore 3.2: Spark's pick from the printed coupons (27 Oct, P; OD + 0.3 was loose in PETG)
