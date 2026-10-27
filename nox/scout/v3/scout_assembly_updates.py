@@ -15,7 +15,7 @@ ASM = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")
 RUN = os.path.join(ROOT, "runs", "scout_layout", "v12")
 CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
 ELEC_R = os.path.join(RUN, "electronics_envelope_r5.json")      # the electronics session's round 5 (SOURCE.txt), drawn at the v12 catch
-CAMP = "camera cradle (printed)"
+CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant
 # the Radxa's 4 M2.5 holes, board coords (X along 65 from the SD end, Y along 30 from the ports edge; H, STEP, from the electronics
 # session's electronics_system.py RADXA_HOLES); its posts land on the PCB back (y -1.6) with Ø8.4 keep-outs (their round 5)
 RADXA_HOLES = [(3.55, 3.60), (3.60, 26.45), (61.40, 3.60), (61.40, 26.50)]
@@ -23,7 +23,8 @@ POST_R, PCB_BACK_Y = 4.2, -1.6
 
 
 def camera_mount(a):
-    if not os.path.exists(CAM_SAVED) or not any(p["name"] == CAMP for p in a["parts"]): return []
+    CAMP = next((p["name"] for p in a["parts"] if p["name"] in CAMPS), None)
+    if not os.path.exists(CAM_SAVED) or CAMP is None: return []
     sm = json.load(open(CAM_SAVED)); old = {CAMP, "camera cradle arms (printed)", "camera cradle clips (printed)"}
     mine = [p for p in sm["parts"] if p.get("owner") == "scout camera mount"]; mn = {p["name"] for p in mine}
     a["parts"] = [p for p in a["parts"] if p["name"] not in old] + mine

@@ -56,16 +56,22 @@ System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera
 - Swap column: receiver + 26.5 at the nose end, + 17.6 at the tail, + 30 at the sides; clear.
 - Props shadow 3.6 % above, 6.7 % below (E).
 
-## Strength (frame model on v12, `runs/scout_frame/v2/`)
-- **Every rod 3.0 fails:** 28 of 55 buckle, 10 crash stresses and 19 handling stresses over 600 MPa, first mode 48 Hz (the camera).
-- **Sized** (`v2/alt_sized`): 39 members to 6/4 tube (+74 g E) pass every case, first mode 138 Hz (camera mount over 100).
+## Strength (frame model v3 on v12 with the camera mount v1, `runs/scout_frame/v3/`)
+- **Every rod 3.0 fails:** 25 of 55 buckle, 10 crash stresses and 19 handling stresses over 600 MPa, first mode 47 Hz (the camera) (F on E).
+- **Sized** (`v3/alt_sized`): 39 members to 6/4 tube (+74 g E) pass every case at 810 g E (278 N crash), first mode 111 Hz (F; camera mount over 100). v2 read 138 Hz with the tubes weighed as 3.0 rods and the old 27 g cradle.
 - **DEFAULT for the pieces:** the sized cage (below, Open). Spark can revert to 3.0 everywhere, which fails these cases.
 
+## Carbon (C lengths, node centre to node centre)
+- **As drawn, every rod 3.0 solid:** 55 (shell 47, saddle ties 8), 61..286, shortest 61 (over the 33 break-even, every one earns its carbon).
+- **Sized (DEFAULT for the pieces): 39 x 6/4 tube**, 5543 mm in all: rod 7-15 61, 8-14 61, 4-11 75, saddle ties 3.1 81 (x2), 0-14 88, 3-15 88, saddle ties 4.1 88 (x2), saddle ties 1.1 96 (x2), 7-16 100, 8-16 100, 0-8 114, 3-7 114, saddle ties 2.1 118 (x2), 0-17 121, 3-17 121, 14-15 124, 4-10 129, 4-9 129, 1-12 144, 2-13 144, 10-12 147, 9-13 147, 0-1 155, 2-3 155, 10-11 175, 9-11 175, 7-8 193, 7-9 212, 8-10 212, 1-11 225, 2-11 225, 0-3 232, 1-2 239, 4-7 286, 4-8 286.
+- **The other 16 stay 3.0 solid:** 67, 67, 68, 68, 71, 71, 77, 77, 80, 80, 93, 93, 106, 106, 116, 116 (1356 mm).
+- **Printed struts:** none in the cage (the tie saddle and the camera mount are printed parts, not struts); no member under 33.
+
 ## Mass (E)
-730 g (system_check):
+746 g (system_check, on the drawn 3.0 rods; the sized tubes add +74):
 - cage 132 (shell rods 67, nodes 39, saddle ties 8, tie saddle 17);
-- camera + cradle + arms + clips 26.5;
-- the tail bay mount 38.6 and cables 6.4;
+- camera 10 + camera mount v1 21.8 + 2 collars 0.5 (M) = 32.3;
+- the electronics session's tail bay mount 49.2 and cables 6.3 (round 5 concept);
 - bought, latch set and wires 526.
 
 ## Open
