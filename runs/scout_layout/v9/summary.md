@@ -14,9 +14,9 @@ This is the one design. Unchanged: the PR 94 drone, one camera, the Bee35 carbon
 
 Script `nox/scout/v3/layout_v3.py` (defaults: ring rect, pattern free with the race silhouette, lean links, camera low, tail bay), view `layout_v3_view.py`. Drone meshes `runs/scout_layout/v6/drone/`. Numbers `nox/dimensions.md` "System Scout v3". Rule: CLAUDE.md (Cages: the Scout clause), `docs/generative.md` 0 (Shared ring and the Scout), check `tools/review_precheck.py` 13.
 
-Visual: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 8; source `motion.html`; orange = the bottom rectangle, light blue = the Overseer cage on the same datum, green = the camera view). Still `preview.png`.
+Visual: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 9; source `motion.html`; orange = the bottom rectangle, light blue = the Overseer cage on the same datum, green = the camera view). Still `preview.png`.
 
-System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field cones open: camera 55 deg, out 2 mm), shell 44 rods closed, h/w 0.34, fit 0.0 mm³ (E), bbox 12.5 L (E), extents 352 x 285 x 125 mm (E), mass 665 of 500 g (133 %) (E) over budget (total), CG 2.7 mm off thrust axis (E), 1.1 mm without swap parts, probes 5.7 mm (E) edge (receiver v3), access 8/8 clear. PASS.
+System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field cones open: camera 55 deg, out 2 mm), shell 44 rods closed, h/w 0.34, fit 0.0 mm³ (E), bbox 12.5 L (E), extents 351 x 285 x 125 mm (E), mass 663 of 500 g (132 %) (E) over budget (total), CG 2.5 mm off thrust axis (E), 1.0 mm without swap parts, probes 7.1 mm (E) edge (receiver v3), access 8/8 clear. PASS.
 
 ## Shape: race car
 - A low flat roof just over the props: the drone's margin hull, grown, is clipped at the drone's own top. The cage stands 109 between node centres, 125 overall (v8: 160 with the camera on top).
@@ -26,9 +26,12 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 - **How the nodes are placed:**
   - corners of the margin hull grown 24 mm along 6 directions, plus the tail point;
   - added farthest-outside first in mirror pairs until the hull holds the drone;
-  - scan of offsets 16..32: with the camera this close, 16..24 cannot close a shell behind its view; 28 and 32 give 17 nodes / 44 rods at 109;
+  - scan of offsets 16..32, all 5 valid (review 27 Oct: a merge whose push runs up the camera's limit plane is reverted and that triangle kept):
+    - 16: 44 rods but a 30 mm sliver rod (under the 45 minimum);
+    - 20 and 24: 53 and 62 shell rods (over the 52 cap) and 2 small triangles each;
+    - 28 and 32: 17 nodes / 44 rods, 5.9 and 6.1 L;
   - the most compact shell with no small or sliver triangle (every rod ≥ 45), within the rod cap (62 − 10 links = 52), wins: offset 28.
-- **Small triangles to one node (Spark):** during the build, a hull triangle with every edge under 70, or a mirror pair closer than 70, collapses to one node (a mirror pair onto the centre plane). Shell rods are 68..264; no triangle has all edges under 70.
+- **Small triangles to one node (Spark):** during the build, a hull triangle with every edge under 70, or a mirror pair closer than 70, collapses to one node (a mirror pair onto the centre plane). Shell rods are 67..264; no triangle has all edges under 70.
 
 ## Rods: 54, all 3.0 solid carbon (cage v1: 123)
 - **Shell, 44 rods** (5.77 m) on 17 nodes: the 4 bottom nodes Ø20, and 13 printed Ø12 nodes for 3.3 sockets.
@@ -42,27 +45,36 @@ DECXIN 2633V2 landscape (89 x 73, E), horizon, lens (149, 0, 42). Nothing of the
 - **Placement (Spark: "as compact as possible"):** as close to the drone as its clear view allows, with its cradle no higher than the cage roof. Searched over lens z 30..50 and back-plane tilt 0..50, with the cage 14 under its lower view plane and behind its back. The lens is 23 closer than v9's first pass (172), and the drone 24 shorter (352).
 - **Mount (Spark: "not on rods but on printed petg or tpu"):** all printed PETG, no carbon, nothing to the drone body.
   - A cradle frame round the camera, 0.5 clear of its body (fit 0): back plate, two cheeks, a top lip and a chin lip 6 over and under it, all behind the lens (x 131..147, z 17..67, 11.5 g E).
-  - 4 printed 8 x 8 arms from the cradle's back corners into the cage nodes (8.1 g E). The top corners go to the centre front-top node (116.9, 0, 34.8), 36 long; the bottom corners to the side nodes (124.4, ±63.5, 8.2), 47 long. That is 3 non-collinear support points, so the cradle cannot pivot.
+  - 4 printed round Ø9 arms (64 mm², as an 8 x 8 post) from the cradle's back corners into the cage, 2.5 g E. Each corner takes the shortest clear way in:
+    - into a node, if every rod there stays clear of the arm outside the node + 2;
+    - else into a printed saddle clamp on a shell rod: 12 long, wall 3 round the 3.3 bore, 3.3 g E for all 4.
+  - **Picked: 4 saddle clamps.** No node near the cradle has its rods leaving at a clear angle. The old bottom arms ran 15° off two rods and through them (review 27 Oct).
+    - The top corners go to the top front cross rod at (109.4, ±18.0, 61.5), 18 long.
+    - The bottom corners go to the front rods at (119.4, ±21.2, 25.9), 9 long.
+    - That gives 4 non-collinear supports, so the cradle cannot pivot.
+  - Every arm is clear of every rod and link (0 mm³). The clamps hold their rods through the bore, the declared joint (324 mm³, limit 358, system_check).
   - **Why PETG and not TPU:** the camera mount must stay ≥ 100 Hz (CLAUDE.md design list 6) and hold the view still; TPU arms would let it swing. TPU goes only as washers under the camera board screws, for vibration (DEFAULT).
-  - **Fuse:** the arm roots at the cage nodes are the printed fuse; they let go before the camera (requirement for the piece).
-  - First mode: not computed yet (frame model). Hand estimate (E): the camera + cradle ~21 g on 4 PETG arms of 36..47 mm comes out well over 100 Hz.
+  - **Fuse:** the saddle clamps are the printed fuse; they let go of their rods before the camera breaks (requirement for the piece).
+  - **First mode, not computed yet (frame model).** Hand estimate (E, arms only): the camera + cradle, ~21 g on 4 PETG arms 9..18 long, gives ~360 Hz or more.
+    - The estimate leaves out the rods' own give. The clamps sit mid-span on 3.0 rods (the top cross rod is 210 long), so the frame model must confirm ≥ 100 Hz.
 - **Cage first:** worst 4.2, over the camera on the cradle's top lip, outside the 55° field cone. The camera stands 2.0 out along its axis.
 
 ## Bottom: the Overseer ring's middle rectangle
 - 4 of the Overseer ring's 8 nodes, (±72.9, ±104.3) about the catch centre, 145.8 x 208.7, on the same datum: catch centre on the grip line, 3.0 under the cartridge flat bottom.
-- Scout: tab line x −9.5, plane z −47.5, nodes Ø20, rods 3.0.
+- Scout: tab line x −8.5, plane z −47.5, nodes Ø20, rods 3.0.
 - One reverse funnel serves both drones; the Scout bears on fewer ramps (design center told, 27 Oct).
 - Above the bottom, the Scout's rods stay inside the Overseer's shell: 0.1 at 0..20, 16.6 at 20..40, 33.2 at 40..60 (C).
+- **Open input:** the Overseer cage PR 122 (not merged) turns its base loop into a 6-node hexagon. Once it lands, the Scout bottom refits to that loop's 4 side nodes.
 - **Swap column:** the rectangle leaves the receiver + 13.7 at the nose end and + 21.6 at the tail (`checks.txt` swap zone; the + 30 DEFAULT gives way to Spark's rectangle), + 30 at the sides; clear (0 mm³). Box arm and catch sessions: check the head and grabber against these.
 
 ## Balance (tail bay)
 - **Tail bay (DEFAULT 27 Oct, for the low nose camera):** the Radxa and the UBEC ride behind the receiver's tail on the belly mount, their front ends 13 behind it (Radxa x −136..−71, UBEC −116..−71). The alternative is the camera over the nose (v8), which Spark asked to lower.
-- **Catch set:** 9.5 aft of the thrust centre (plate centre), searched 0..24 then refined. It is the receiver, cartridge, pack and belly mount with the FC and flow.
-- **CG:** 2.0 / 1.8 mm pack in / out (layout model), 2.7 / 1.1 (system_check, gate 3).
-- FC IMU offset x −9.5 (PX4).
+- **Catch set:** 8.5 aft of the thrust centre (plate centre), searched 0..24 then refined. It is the receiver, cartridge, pack and belly mount with the FC and flow.
+- **CG:** 1.8 / 1.8 mm pack in / out (layout model), 2.5 / 1.0 (system_check, gate 3).
+- FC IMU offset x −8.5 (PX4).
 
 ## Mass (E)
-665 g: cage ~130 (shell rods 63, nodes 38, links 9, camera cradle + arms 20); bought, latch set and wires ~505. Cage v1: 933 g. T/W not checked (motor KV not recorded).
+663 g: cage ~127 (shell rods 63, nodes 38, links 8, camera cradle + arms + clamps 17); bought, latch set and wires ~505. Cage v1: 933 g. T/W not checked (motor KV not recorded).
 
 ## Access
 8 / 8:
@@ -72,5 +84,5 @@ DECXIN 2633V2 landscape (89 x 73, E), horizon, lens (149, 0, 42). Nothing of the
 
 ## Next
 - Frame model on this cage: crash 35 g in 14 directions, incl. a nose-camera hit; landing on the 4 bottom nodes; handling 50 N. It sizes the long rods and checks the core path without a core tie.
-- Then the pieces: nodes, spoke clamps, the camera cradle + arms (with their mode), belly mount with the tail bay (receiver 9.5 aft of the plate centre).
+- Then the pieces: nodes, spoke clamps, the camera cradle + arms + saddle clamps (with their mode), belly mount with the tail bay (receiver 8.5 aft of the plate centre).
 - The reverse funnel: design center / funnel sessions.
