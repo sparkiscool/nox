@@ -386,3 +386,55 @@ it  88 beta   16 J 156.6712 vol 0.1695 (dil 0.3133 g +0.055) grey 10.1% ch 0.100
 it  88 beta   16 J 156.6712 vol 0.1695 (dil 0.3133 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 46.5s
 it  89 beta   16 J 156.4927 vol 0.1694 (dil 0.3131 g +0.054) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 50.4s
 it  89 beta   16 J 156.4927 vol 0.1694 (dil 0.3131 g +0.054) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 50.4s
+=== overseer_hub_deck: h 1.0, generated 10.0 cm3, min member 3.2 mm, cores 4
+=== overseer_hub_deck: h 1.0, generated 10.0 cm3, min member 3.2 mm, cores 4
+overseer_hub_deck: grid (168, 88, 16) h 1.0 = 236,544 cells; design 63,504 (63.5 cm3), drawn 3,616, void 169,424
+  support default: 2856 cells, 4242 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_hub_deck: grid (168, 88, 16) h 1.0 = 236,544 cells; design 63,504 (63.5 cm3), drawn 3,616, void 169,424
+  support default: 2856 cells, 4242 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (3.62 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (3.62 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.157 of 63,504 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.157 of 63,504 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (5.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (5.5% of passive cells differ): no symmetry
+layout: 8 drawn bodies (3,616 cells), held solid in every realization; eroded filter: masked
+layout: 8 drawn bodies (3,616 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (2,400 cells) count by their cover; 3 bodies tied to body 3
+layout: gate ties: held bodies thinner than 2.0 mm (2,400 cells) count by their cover; 3 bodies tied to body 3
+layout: 20 load cases + 24 tie cases (4 bodies tied, 4 held by support 'default') + 18 gate ties + 24 held ties
+layout: 20 load cases + 24 tie cases (4 bodies tied, 4 held by support 'default') + 18 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (168, 88, 16) = 236,544 elements, 241,599 active dofs; backend direct (direct estimate 2.6 GB, budget 11.8 GB)
+fem: grid (168, 88, 16) = 236,544 elements, 241,599 active dofs; backend direct (direct estimate 2.6 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/.claude/worktrees/agent-a27c121457d00ba38/runs/overseer_hub_deck/v1/ck.npz at it 80, beta 16
+layout: resumed from /home/user/nox/.claude/worktrees/agent-a27c121457d00ba38/runs/overseer_hub_deck/v1/ck.npz at it 80, beta 16
+it  81 beta   16 J 157.1584 vol 0.1705 (dil 0.3149 g +0.051) grey 10.2% ch 0.100 worst held b5 mz 2.46e+04 38.5s
+it  81 beta   16 J 157.1584 vol 0.1705 (dil 0.3149 g +0.051) grey 10.2% ch 0.100 worst held b5 mz 2.46e+04 38.5s
+it  82 beta   16 J 157.0379 vol 0.1703 (dil 0.3146 g +0.050) grey 10.2% ch 0.100 worst held b5 mz 2.46e+04 43.2s
+it  82 beta   16 J 157.0379 vol 0.1703 (dil 0.3146 g +0.050) grey 10.2% ch 0.100 worst held b5 mz 2.46e+04 43.2s
+it  83 beta   16 J 156.9899 vol 0.1701 (dil 0.3143 g +0.049) grey 10.2% ch 0.100 worst held b5 mz 2.46e+04 41.2s
+it  83 beta   16 J 156.9899 vol 0.1701 (dil 0.3143 g +0.049) grey 10.2% ch 0.100 worst held b5 mz 2.46e+04 41.2s
+it  84 beta   16 J 156.8690 vol 0.1700 (dil 0.3141 g +0.048) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 42.7s
+it  84 beta   16 J 156.8690 vol 0.1700 (dil 0.3141 g +0.048) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 42.7s
+it  85 beta   16 J 156.8149 vol 0.1699 (dil 0.3138 g +0.048) grey 10.1% ch 0.100 worst held b5 mz 2.45e+04 41.4s
+it  85 beta   16 J 156.8149 vol 0.1699 (dil 0.3138 g +0.048) grey 10.1% ch 0.100 worst held b5 mz 2.45e+04 41.4s
+it  86 beta   16 J 156.7711 vol 0.1697 (dil 0.3136 g +0.056) grey 10.1% ch 0.100 worst held b5 mz 2.45e+04 44.1s
+it  86 beta   16 J 156.7711 vol 0.1697 (dil 0.3136 g +0.056) grey 10.1% ch 0.100 worst held b5 mz 2.45e+04 44.1s
+it  87 beta   16 J 156.7652 vol 0.1696 (dil 0.3134 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 39.5s
+it  87 beta   16 J 156.7652 vol 0.1696 (dil 0.3134 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 39.5s
+it  88 beta   16 J 156.6712 vol 0.1695 (dil 0.3133 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 39.8s
+it  88 beta   16 J 156.6712 vol 0.1695 (dil 0.3133 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 39.8s
+it  89 beta   16 J 156.4927 vol 0.1694 (dil 0.3131 g +0.054) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 41.7s
+it  89 beta   16 J 156.4927 vol 0.1694 (dil 0.3131 g +0.054) grey 10.1% ch 0.100 worst held b5 mz 2.46e+04 41.7s
+it  90 beta   16 J 154.9672 vol 0.1697 (dil 0.3134 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.42e+04 39.8s
+it  90 beta   16 J 154.9672 vol 0.1697 (dil 0.3134 g +0.055) grey 10.1% ch 0.100 worst held b5 mz 2.42e+04 39.8s
+it  91 beta   16 J 155.3393 vol 0.1695 (dil 0.3131 g +0.061) grey 10.1% ch 0.100 worst held b5 mz 2.44e+04 38.3s
+it  91 beta   16 J 155.3393 vol 0.1695 (dil 0.3131 g +0.061) grey 10.1% ch 0.100 worst held b5 mz 2.44e+04 38.3s
+it  92 beta   16 J 154.9363 vol 0.1694 (dil 0.3130 g +0.061) grey 10.1% ch 0.100 worst held b5 mz 2.43e+04 39.5s
+it  92 beta   16 J 154.9363 vol 0.1694 (dil 0.3130 g +0.061) grey 10.1% ch 0.100 worst held b5 mz 2.43e+04 39.5s
