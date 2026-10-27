@@ -228,3 +228,11 @@ it  32 beta    4 J   0.0834 vol 0.0400 (dil 0.0699 g -0.001) grey  5.6% ch 0.100
 it  32 beta    4 J   0.0834 vol 0.0400 (dil 0.0699 g -0.001) grey  5.6% ch 0.100 worst gate b6 mz 2.85e+03 135.5s
 layout: beta 4 done: eroded design 6 bodies, main 97.4%; drawn bodies outside the main body: 5
 layout: beta 4 done: eroded design 6 bodies, main 97.4%; drawn bodies outside the main body: 5
+it  33 beta    8 J   0.5108 vol 0.0365 (dil 0.0729 g -0.076) grey  2.6% ch 0.100 worst guard hit 2 1.93e+04 137.4s
+it  33 beta    8 J   0.5108 vol 0.0365 (dil 0.0729 g -0.076) grey  2.6% ch 0.100 worst guard hit 2 1.93e+04 137.4s
+it  34 beta    8 J   0.2641 vol 0.0375 (dil 0.0748 g -0.052) grey  2.7% ch 0.100 worst guard hit 2 1.01e+04 131.8s
+it  34 beta    8 J   0.2641 vol 0.0375 (dil 0.0748 g -0.052) grey  2.7% ch 0.100 worst guard hit 2 1.01e+04 131.8s
+it  35 beta    8 J   0.1047 vol 0.0388 (dil 0.0769 g -0.025) grey  2.8% ch 0.100 worst guard hit 2 3.53e+03 136.8s
+it  35 beta    8 J   0.1047 vol 0.0388 (dil 0.0769 g -0.025) grey  2.8% ch 0.100 worst guard hit 2 3.53e+03 136.8s
+it  36 beta    8 J   0.0784 vol 0.0400 (dil 0.0784 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.81e+03 132.9s
+it  36 beta    8 J   0.0784 vol 0.0400 (dil 0.0784 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.81e+03 132.9s
