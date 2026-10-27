@@ -285,3 +285,17 @@ it  32 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000
 it  32 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 110.6s
 it  33 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 113.0s
 it  33 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 113.0s
+it  34 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 110.7s
+it  34 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 110.7s
+it  35 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 109.7s
+it  35 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 109.7s
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  36 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 108.8s
+it  36 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 108.8s
+it  37 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 107.4s
+it  37 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 107.4s
+it  38 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 110.4s
+it  38 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 110.4s
+it  39 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 108.9s
+it  39 beta    8 J  10.0002 vol 0.0021 (dil 0.0304 g +0.766) grey  0.4% ch 0.000 worst tube to 23 side a 963 108.9s
