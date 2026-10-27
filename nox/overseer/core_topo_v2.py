@@ -2,9 +2,9 @@
 the battery side is an empty slot): the nox/topo setup on the requirements in `nox/dimensions.md` "System Overseer core" (v2), every
 position from `runs/overseer_core/v2/result.json` and the assembly `nox/overseer/overseer_core.assembly.json` (never retyped).
 
-  hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 6 feet Ø12 x 6.5, each with a Ø4.0 x 5.7 blind insert
-             hole from the plate side (M3 up from under the plate); 4 Pi posts Ø7 to z 8 (Ø2.2 x 4, M2.5 self-tapping); the UBEC and
-             buck seat rails 6 x 6.5 with 2 zip-tie tunnels; the keel front hub: 2 bosses Ø13 on the keel axes from 2 behind the v5
+  hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 6 feet Ø14 x 6.5, each with a Ø4.0 insert hole through
+             (M3 x 5.7 insert pressed from the plate side; M3 up from under the plate); 4 Pi posts Ø7 to z 8 on Ø12 x 6.0 root webs (Ø2.2 x 4,
+             M2.5 self-tapping); the UBEC and buck seat rails 6 x 6.5 (VHB tape, no tie channels); the keel front hub: 2 bosses Ø13 on the keel axes from 2 behind the v5
              roots (96, ±12, 8) to 20 past them, bores 6.2 x 15 from 5 past (epoxied 6/4 tube), seated on the front feet.
              Envelope: z 0..6.5 over the plate, x -76..100, plus the hub room x 80..118, |y| 20, z 0..16 round the bosses (smoke 27 Oct: without it the bosses could not be joined), inside |y| 20 ahead of
              x 56 (the arm session's front envelopes), the v5 arm meshes + 1 and the keel tubes + 0.5 cut.
@@ -86,8 +86,8 @@ def rigid_split(pts, F, P):
 # ================================================================ hub deck
 KEELS = {int(k): (np.array(v[0], float), np.array(v[1], float)) for k, v in R["keels"].items()}
 SK = R["socket"]; INS = R["insert"]; T = R["foot_h"]
-KEEL_N = R["keel_n"]
-FOOT_R = 7.0                                                               # feet Ø14: 5 of wall round the Ø4.0 insert hole (the gate erodes 2.0; v3's Ø12 left 4.0)                                                       # max pull / push per keel (F)
+KEEL_N = R["keel_n"]                                                       # max pull / push per keel (F)
+FOOT_R = 7.0                                                               # feet Ø14: 5 of wall round the Ø4.0 insert hole (the gate erodes 2.0; v3's Ø12 left 4.0)
 
 
 def along(a, d, l0, l1, r, n=40):
@@ -111,7 +111,7 @@ def hub_deck_bodies():
     feet = [tuple(f) for f in R["feet_xy"]]
     ph = [tuple(p) for p in R["pi_holes"]]
     zp = C["z_pi"]
-    # bay seats (hub deck v2): rails under the UBEC and the buck with zip-tie tunnels, inside |y| 20 (the arm envelopes)
+    # bay seats (hub deck v2): rails under the UBEC and the buck, inside the arm envelopes
     ub, bk = M["UBEC 5 V"].bounds, M["buck 12 V"].bounds
     rails = [box(ub[0][0], ub[1][0], y - 3, y + 3, 0, T) for y in (ub[0][1] + 3, ub[1][1] - 3)]
     rails += [box(bk[0][0], bk[1][0], y - 3, y + 3, 0, T) for y in (bk[0][1] + 3, min(bk[1][1] - 3, 17.0))]
@@ -125,7 +125,10 @@ def hub_deck_bodies():
     # keel front hub: bosses on the keel axes, seated on the front feet (the keels' 387 N go into the plate at (96, ±17))
     bosses = [along(*keel_axis(sy), -2.0, SK["off"] + SK["l"], SK["od"] / 2) for sy in (1, -1)]
     seats = []                                              # v3: the topology grows the seats (the hub's room below)
-    drawn = U([cyl(x, y, 0, T, FOOT_R) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + rails + bosses + seats)
+    # v5 (PR 148 review): a root web Ø12 x 6.0 under every Pi post (a gusset into the body; v4's bare Ø7 posts were 99.8 % in the main
+    # body at the gate's 2.0 erosion, under its 99.9 % bar); 6.0 stays under the board's underside parts (z 6.5..8)
+    roots = [cyl(x, y, 0, 6.0, 6.0) for x, y in ph]
+    drawn = U([cyl(x, y, 0, T, FOOT_R) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + roots + rails + bosses + seats)
     bores = [along(*keel_axis(sy), SK["off"], SK["off"] + SK["l"] + 1.0, SK["d"] / 2) for sy in (1, -1)]
     tubes = [along(*keel_axis(sy), SK["off"] + SK["l"] - 0.5, 400.0, 3.5) for sy in (1, -1)]   # the keel tube past the socket mouth + 0.5 (0.5 lead-in: no end slivers)
     ties = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))["links"]   # the cage's front core ties (parked body node)
