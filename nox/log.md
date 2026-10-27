@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): first saved cage node: node 20 (rear top centre, 5 sockets, arms to a hub, PETG, 6.2 bores) solid PASS, 8.76 g M, worst index 0.02 (run/cage_nodes-v3 b5861a51); the layout and its artifact now use each saved node mesh (`saved_node`, mirrored for its partner).
 - 27 Oct (Overseer): L2 brace roots low in the tower (core session DEFAULT: halves its worst root force): lo (97, ±26, 12), hi (97, ±14, 18) (C); fit 0, props 16.4, access 21/21; head 155 Hz PETG, worst shell tube 2.33 (F on E). Head rerun waits for the core's hub deck to pass (the roots may still move).
 - 27 Oct (Overseer): cage node v3 runs gave disconnected nodes (eroded design 4-5 bodies, sockets outside the main one); fix in the design: a drawn Ø7 arm from each socket floor to a Ø12 hub at the node centre, one body by construction (`cage_node.py` ARM_R, HUB_R); drawn 11.1 g node 2, 20.1 g node 18 (C, PETG). Node runs restart.
 - 27 Oct (Overseer): L2 brace roots on the hub deck's front tower between the plates (core v3 B: braces pull, keels push in one piece; the top-plate block put 0.8 kN on PETG keys in a 1.6 plate): lo (97, ±26, 22), hi (97, ±14, 32) (C); props 16.4, access 21/21, fit 0; head 166 Hz PETG (F on E), braces ~710 N a side. Head run v3.

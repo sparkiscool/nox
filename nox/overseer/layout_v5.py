@@ -332,6 +332,22 @@ PHIS = (20.0, 35.0, 50.0, 65.0)                  # tilt of the head plane (from 
 _DRONE = {}
 
 
+def saved_node(c):
+    """the newest saved cage node at c (CLAUDE.md "Cage sessions keep their parts in sync": the artifact shows the saved parts):
+    runs/cage_nodes/v3/node_<i>/cage_node_<i>.stl for the design at c, or its mirror's reflected (y -> -y); None if not saved yet"""
+    if FZ is None: return None
+    SN = np.array(FZ["nodes"])
+    for i, q in enumerate(SN):
+        for sy in (1, -1):
+            if np.linalg.norm(q * [1, sy, 1] - c) < 0.5:
+                f = os.path.join(ROOT, "runs", "cage_nodes", "v3", f"node_{i}", f"cage_node_{i}.stl")
+                if os.path.exists(f):
+                    m = trimesh.load(f, force="mesh")
+                    if sy < 0: m.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0])); m.invert()
+                    return m
+    return None
+
+
 def apex_head(g):
     """the apex without the front hub block (the core's since 27 Oct, core v2 keel sockets on the hub deck): the part behind the L2
     base plane by 45 or less, as head_pts"""
@@ -1028,7 +1044,7 @@ for n_, gm, _c in it:
 links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items()])
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
-    ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
+    ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
     (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
     *([(HEADN, trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
