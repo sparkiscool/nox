@@ -1,0 +1,173 @@
+{
+ "mass_g": 3531.18,
+ "cg": [
+  58.94,
+  0.36,
+  13.49
+ ],
+ "requirements": {
+  "hub frame": {
+   "worst_case": "crash 35 g 13",
+   "max_bolt_N": 4.4,
+   "max_shear_N": 4.4,
+   "max_axial_N": 4.3
+  },
+  "power tray": {
+   "worst_case": "crash 35 g 12",
+   "max_bolt_N": 13.5,
+   "max_shear_N": 8.5,
+   "max_axial_N": 11.9
+  },
+  "receiver bolts (into the sled)": {
+   "worst_case": "crash 35 g 13",
+   "max_bolt_N": 104.6,
+   "max_shear_N": 60.3,
+   "max_axial_N": 93.1
+  },
+  "sled to plate": {
+   "worst_case": "crash 35 g 4",
+   "max_bolt_N": 163.7,
+   "max_shear_N": 74.5,
+   "max_axial_N": 163.7
+  },
+  "skid joints (one skid)": {
+   "worst_case": "crash 35 g 4",
+   "max_bolt_N": 155.6,
+   "max_shear_N": 14.0,
+   "max_axial_N": 155.6
+  }
+ },
+ "tip_deg": {
+  "forward": 28.095820098049362,
+  "back": 47.0956245775875,
+  "side": 37.2726716798814
+ },
+ "pod_mode_hz": 2151,
+ "z": {
+  "mount_plane": -8.1,
+  "pack_top": -19.89999999999999,
+  "cartridge_bottom": -76.89999999999999,
+  "lens": -76.89999999999999,
+  "floor": -85.89999999999999
+ },
+ "receiver_bolts": [
+  [
+   56.849999999999994,
+   27.8
+  ],
+  [
+   56.849999999999994,
+   -27.8
+  ],
+  [
+   -30.0,
+   27.8
+  ],
+  [
+   -30.0,
+   -27.8
+  ],
+  [
+   -108.25000000000001,
+   27.8
+  ],
+  [
+   -108.25000000000001,
+   -27.8
+  ]
+ ],
+ "plate_bolts": [
+  [
+   24.0,
+   22.5
+  ],
+  [
+   24.0,
+   -22.5
+  ],
+  [
+   -24.0,
+   22.5
+  ],
+  [
+   -24.0,
+   -22.5
+  ],
+  [
+   -65.0,
+   22.5
+  ],
+  [
+   -65.0,
+   -22.5
+  ],
+  [
+   -92.5,
+   25.75
+  ],
+  [
+   -92.5,
+   -25.75
+  ]
+ ],
+ "top_bolts": [
+  [
+   24.51,
+   24.51
+  ],
+  [
+   24.51,
+   -24.51
+  ],
+  [
+   -24.51,
+   24.51
+  ],
+  [
+   -24.51,
+   -24.51
+  ]
+ ],
+ "arm_screws_driver_holes": [
+  [
+   52.14,
+   38.0
+  ],
+  [
+   38.0,
+   52.14
+  ],
+  [
+   52.14,
+   -38.0
+  ],
+  [
+   38.0,
+   -52.14
+  ],
+  [
+   -52.14,
+   38.0
+  ],
+  [
+   -38.0,
+   52.14
+  ],
+  [
+   -52.14,
+   -38.0
+  ],
+  [
+   -38.0,
+   -52.14
+  ]
+ ],
+ "budget_g": {
+  "hub frame": 30,
+  "power tray": 18,
+  "sled": 70,
+  "skid L (down camera pod)": 45,
+  "skid R (flow pod)": 45
+ },
+ "system": "System: Overseer core v1, cage first 3.3 mm (E) at -Z (receiver) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 1006.0 mm\u00b3 (E) (cage shell tubes/skid L (down camera pod)) FAIL, bbox 128 L (E), extents 743 x 694 x 248 mm (E), mass 3531 of 2200 g (160 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [-1.8, +0.4, -68.5], 20.5 mm without swap parts (reported, L exception), probes -177.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 21/21 clear"
+}

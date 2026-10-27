@@ -1,0 +1,27 @@
+receiver in pose x -121.8..61.9, y ±33.4, z -76.7..-8.1 (M); pack top z -19.9, cartridge bottom z -76.9; XT60 male top z -4.6
+hub: FC z 4.0..12.0 on 30.5 grommet pads, plugs to 19.0; deck z 20.0..23.0; Pi board z 25.5, top 43.1, 1.9 under the top plate, cooler fan 8.9 under it (C on E)
+Pi +x plugs reach x 53.5: half sizes 53.5 + 28 = 81.5 (roots allow 82, dimensions O Arms and hub)
+   hub frame x arms (v5 meshes): 0.0 mm³
+   power tray x arms (v5 meshes): 0.0 mm³
+   Pi 5 x arms (v5 meshes): 0.0 mm³
+   PDB x arms (v5 meshes): 0.0 mm³
+   UBEC x arms (v5 meshes): 0.0 mm³
+   buck x arms (v5 meshes): 0.0 mm³
+   RX x arms (v5 meshes): 0.0 mm³
+   FC x arms (v5 meshes): 0.0 mm³
+   sled x receiver: 0.0 mm³; x cartridge 0.0
+   skid L x receiver: 0.0 mm³; x cartridge 0.0
+   skid R x receiver: 0.0 mm³; x cartridge 0.0
+arm bottom screw keys (Ø8 below the sled): all 8 clear (C); the sled gets a Ø9 hole at each
+down camera view (portrait 73 x 89°, long side across, +2°): clear (C)
+flow view (42°, +2°): clear (C)
+swap column (receiver + 30 a side, below the cartridge bottom): skid L 0.0 mm³, skid R 0.0 mm³, feet 0.0 mm³, down camera 0.0 mm³, flow 0.0 mm³
+System: Overseer core v1, cage first 3.3 mm (E) at -Z (receiver) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 1006.0 mm³ (E) (cage shell tubes/skid L (down camera pod)) FAIL, bbox 128 L (E), extents 743 x 694 x 248 mm (E), mass 3531 of 2200 g (160 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [-1.8, +0.4, -68.5], 20.5 mm without swap parts (reported, L exception), probes -177.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 21/21 clear
+joint reactions (rigid body, least-norm, E masses; landing / -Z crash through 2 feet on one side):
+   hub frame: max 4.4 N per bolt (crash 35 g 13), shear 4.4, axial 4.3
+   power tray: max 13.5 N per bolt (crash 35 g 12), shear 8.5, axial 11.9
+   receiver bolts (into the sled): max 104.6 N per bolt (crash 35 g 13), shear 60.3, axial 93.1
+   sled to plate: max 163.7 N per bolt (crash 35 g 4), shear 74.5, axial 163.7
+   skid joints (one skid): max 155.6 N per bolt (crash 35 g 4), shear 14.0, axial 155.6
+down camera pod: cantilever 54.8 under the sled ribs, first mode ~2151 Hz (E; target >= 100, L)
+on the floor: CG (58.9, 0.4, 13.5) 99 over the feet; feet x -48..112, y ±76: tip-over forward 28°, back 47°, side 37° (C on E)
