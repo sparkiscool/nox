@@ -647,6 +647,8 @@ def manifest(res, dc, mparts, M=None, extra_access=True):
             if "box" in q: x0, x1, y0, y1, z0, z1 = q["box"]; q["box"] = [x0 + sh, x1 + sh, y0, y1, z0, z1]
             else: q["pose"] = {"t": [sh, 0, 0]}
             if "cg" in q: q["cg"] = list(q["cg"])
+        if "cg" not in q and "mesh" in q and p["name"] in M["P"]:
+            q["cg"] = np.round(M["P"][p["name"]]["c"], 3).tolist()   # true centroid (system_check would take a bbox centre off a non-watertight mesh)
         parts.append(q)
     for n, m in item_meshes(res).items():
         parts.append(dict(name=n, role="bought", protect=True, trimesh=m, mass_g=MASS[n][0], tag=MASS[n][1], geom_tag="C"))
@@ -672,8 +674,9 @@ def manifest(res, dc, mparts, M=None, extra_access=True):
         for x in [an["xb0"] - d for d in BOLT_DX]:
             acc.append(dict(name=f"M3 key, carrier top bolt (x {x:.1f})", part="tail carrier: yoke + box keel (PETG)", **{"from": [x, 0.0, z1 + TONGUE]},
                             dir=[0, 0, 1], length_mm=150.0, tool={"type": "cylinder", "d": 4}, ignore=["tail cables (5 runs)"]))
-            acc.append(dict(name=f"M3 key, carrier bottom bolt (x {x:.1f})", part="tail carrier: yoke + box keel (PETG)", **{"from": [x, 0.0, z0 - TONGUE]},
-                            dir=[0, 0, -1], length_mm=150.0, tool={"type": "cylinder", "d": 4},
+            rear = x < an["xb0"] - BOLT_DX[0] - 1.0       # the rear one: a ball-end key 15 deg aft, past the ring's tail rod under it (C)
+            acc.append(dict(name=f"M3 key, carrier bottom bolt (x {x:.1f})" + (", ball-end 15 deg aft" if rear else ""), part="tail carrier: yoke + box keel (PETG)",
+                            **{"from": [x, 0.0, z0 - TONGUE]}, dir=([-0.259, 0, -0.966] if rear else [0, 0, -1]), length_mm=150.0, tool={"type": "cylinder", "d": 4},
                             ignore=["tail cables (5 runs)"] + [n for n in CATCH if M["P"].get(n, {}).get("swap")]))
     A["access"] = acc
     car = list(mparts)
@@ -1038,8 +1041,28 @@ def run_rebuild():
     json.dump(dict(dc=dc, nodes=len(nd), rods=len(sj["rods"]), extents=np.round(nd.max(0) - nd.min(0), 1).tolist(), checks=ck, sweeps=sw,
                    cg=dict(h_in=cg["hin"], h_out=cg["hout"], pack_in=cg["cin"].tolist(), pack_out=cg["cout"].tolist(), mass=cg["mass"]),
                    slide_scan=sc, system_check=txt.splitlines()[0]), open(os.path.join(out_dir, "recheck.json"), "w"), indent=1)
-    for f in os.listdir(os.path.join(out_dir, "parts")):
-        pass
+    # the fitted envelope for the cage session (every tail-bay piece: box, mass, CG; drone frame at this slide)
+    env = dict(dc=dc, note="drone frame (x nose, y left, z up, thrust centre x 0), catch set at x dc aft; boxes [[x0, y0, z0], [x1, y1, z1]]; "
+                           "items ride the belly mount (move with the catch); masses E unless tagged", parts={})
+    for n, (o, t) in P_["poses"].items():
+        env["parts"][n] = dict(box=np.round(np.array([np.min([b[0] for b in o["body"]], 0), np.max([b[1] for b in o["body"]], 0)]) + t, 1).tolist(),
+                               board_box=np.round(o["body"][0] + t, 1).tolist(), mass_g=MASS[n][0], tag=MASS[n][1], cg=np.round(o["cg"] + t, 1).tolist())
+    for k, (m, g, c, note) in mp.items():
+        env["parts"][k] = dict(box=np.round(m.bounds, 1).tolist(), mass_g=g, tag="E", cg=np.round(c, 1).tolist(), note=note)
+    cb = [(n, g, c) for n, g, c, _ in P_["cab"]]
+    env["parts"]["tail cables (5 runs, at their midpoints)"] = dict(mass_g=round(sum(g for _, g, _ in cb), 2), tag="E",
+                                                                    cg=np.round(sum(g * c for _, g, c in cb) / sum(g for _, g, _ in cb), 1).tolist())
+    gs = sum(v["mass_g"] for v in env["parts"].values()); env["total_g"] = round(gs, 1)
+    env["total_cg"] = np.round(sum(v["mass_g"] * np.array(v["cg"]) for v in env["parts"].values()) / gs, 1).tolist()
+    env["x_moment_gmm"] = round(sum(v["mass_g"] * v["cg"][0] for v in env["parts"].values()), 0)
+    json.dump(env, open(os.path.join(RUN, "envelope.json"), "w"), indent=1)
+    say(f"   envelope: {gs:.1f} g at {env['total_cg']}, x moment {env['x_moment_gmm']:.0f} g mm (runs/scout_electronics/v2/envelope.json)")
+    # the picture: A on the rebuilt shell, B (no slide) on v10's
+    V10 = MODEL; O, F = grids(DC_REF); Bres = search(DC_REF, F, O, label="alt B, no slide (v10 shell)")
+    mB = mount(Bres, DC_REF); cgB = cg_final(Bres, DC_REF, mB)
+    preview([(f"A (picked): box keel, catch slide to {dc:+.1f} (v10 {DC_REF:+.1f}), cage rebuilt round it; CG {cg['hin']:.1f} / {cg['hout']:.1f} mm", P_, dc, mp, M2),
+             (f"B: same carrier, no slide (catch {DC_REF:+.1f}, v10 cage); CG {cgB['hin']:.1f} / {cgB['hout']:.1f} mm (gate 3 FAIL)", Bres, DC_REF, mB, V10)],
+            os.path.join(RUN, "preview.png"))
     open(os.path.join(out_dir, "recheck.log"), "w").write(LOG.getvalue())
 
 

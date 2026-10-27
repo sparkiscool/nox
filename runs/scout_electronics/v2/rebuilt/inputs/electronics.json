@@ -1,5 +1,5 @@
 {
- "dc_ref": -3.0,
+ "dc_ref": 0.0,
  "parts": {
   "Radxa Zero 3W": {
    "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/radxa.stl",
@@ -34,7 +34,7 @@
   },
   "tail carrier: yoke + box keel (PETG)": {
    "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/tail_carrier__yoke___box_keel__petg_.stl",
-   "mass_g": 16.16,
+   "mass_g": 16.29,
    "tag": "E",
    "role": "structure",
    "protect": false,
