@@ -29,9 +29,9 @@ B, F = A.bodies("front")
 res = {"mesh": os.path.relpath(os.path.abspath(a.mesh), ROOT), "h": a.h, "support": a.support, "pattern": A.DIAG_PAT,
        "stations": A.DIAG_T, "offset_mm": A.DIAG_OFF, "gap_mm": A.DIAG_GAP, "kind": A.DIAG_KIND,
        "shoulder_web": os.environ.get("NOX_ARM_SHWEB"), "shoulder_web_cm3": round(B["shweb"].volume() / 1000, 2),
-       "diag_drawn_cm3": round((B["diag_drawn"] - B["cuts"]).volume() / 1000, 2)}
+       "diag_drawn_cm3": round((B.get("diag_drawn", A.mf.Manifold()) - B["cuts"]).volume() / 1000, 2)}
 res["rods_only"] = None if a.nodes_only else A.modes("front", a.mesh, h=a.h, support=a.support)
-res["rods_and_nodes"] = A.modes("front", a.mesh, h=a.h, support=a.support, extra=B["diag_drawn"] + B["shweb"] - B["cuts"])
+res["rods_and_nodes"] = A.modes("front", a.mesh, h=a.h, support=a.support, extra=B.get("diag_drawn", A.mf.Manifold()) + B["shweb"] - B["cuts"])
 os.makedirs(a.out, exist_ok=True)
 json.dump(res, open(os.path.join(a.out, "whatif_modes.json"), "w"), indent=1)
 print(json.dumps({k: [m["Hz"] for m in res[k]["modes"]] for k in ("rods_only", "rods_and_nodes") if res[k]}))

@@ -1,0 +1,64 @@
+{
+ "mesh": "../../../../../../tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/runs/overseer_arm_front/v5d/overseer_arm_front.stl",
+ "h": 1.5,
+ "support": "inserts",
+ "pattern": "0:1111",
+ "stations": [
+  0.02,
+  0.34,
+  0.66,
+  0.98
+ ],
+ "offset_mm": 7.0,
+ "gap_mm": 6.0,
+ "kind": "rod3",
+ "shoulder_web": "solid",
+ "shoulder_web_cm3": 91.37,
+ "diag_drawn_cm3": 65.29,
+ "rods_only": {
+  "modes": [
+   {
+    "Hz": 159.6,
+    "kind": "vertical"
+   },
+   {
+    "Hz": 174.9,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 398.1,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 633.0,
+    "kind": "vertical"
+   }
+  ],
+  "arm_g_grid": 249.6,
+  "h": 1.5,
+  "support": "inserts"
+ },
+ "rods_and_nodes": {
+  "modes": [
+   {
+    "Hz": 197.8,
+    "kind": "vertical"
+   },
+   {
+    "Hz": 233.6,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 561.0,
+    "kind": "lateral (in-plane)"
+   },
+   {
+    "Hz": 721.4,
+    "kind": "vertical"
+   }
+  ],
+  "arm_g_grid": 326.9,
+  "h": 1.5,
+  "support": "inserts"
+ }
+}
