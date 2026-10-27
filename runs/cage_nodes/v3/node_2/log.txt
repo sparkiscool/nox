@@ -44,3 +44,224 @@ it   5 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000
 it   5 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.494) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.2s
 it   6 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.3s
 it   6 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.3s
+it   7 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.1s
+it   7 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.1s
+it   8 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.7s
+it   8 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.7s
+it   9 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it   9 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  10 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  10 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.499) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  11 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  11 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  12 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  12 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.5s
+it  13 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.6s
+it  13 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.6s
+it  14 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.7s
+it  14 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.7s
+it  15 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.6s
+it  15 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.503) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.6s
+it  16 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.7s
+it  16 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.7s
+it  17 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.0s
+it  17 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.0s
+it  18 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.1s
+it  18 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.1s
+it  19 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.8s
+it  19 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.8s
+it  20 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it  20 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.506) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it  21 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.8s
+it  21 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.8s
+it  22 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it  22 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it  23 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.1s
+it  23 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.1s
+it  24 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.0s
+it  24 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 3.0s
+it  25 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+it  25 beta    1 J  10.0035 vol 0.0370 (dil 0.0442 g +1.507) grey 14.9% ch 0.000 worst tube to 3 side a 216 2.9s
+layout: beta 1 done: eroded design 11 bodies, main 95.2%; drawn bodies outside the main body: 10
+layout: beta 1 done: eroded design 11 bodies, main 95.2%; drawn bodies outside the main body: 10
+it  26 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.0s
+it  26 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.0s
+it  27 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  27 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  28 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.8s
+it  28 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.8s
+it  29 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  29 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  30 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  30 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  31 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  31 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  32 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  32 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  33 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  33 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  34 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  34 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  35 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.8s
+it  35 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.8s
+it  36 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  36 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  37 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  37 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  38 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.0s
+it  38 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.0s
+it  39 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.0s
+it  39 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.0s
+it  40 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.2s
+it  40 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.2s
+it  41 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  41 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  42 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  42 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  43 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  43 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  44 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.2s
+it  44 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 3.2s
+it  45 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  45 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.9s
+it  46 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  46 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.7s
+it  47 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.6s
+it  47 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.6s
+it  48 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.5s
+it  48 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.5s
+it  49 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.6s
+it  49 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.6s
+it  50 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.4s
+it  50 beta    2 J  10.0035 vol 0.0300 (dil 0.0526 g +1.034) grey 11.8% ch 0.000 worst tube to 3 side a 216 2.4s
+layout: beta 2 done: eroded design 11 bodies, main 95.2%; drawn bodies outside the main body: 10
+layout: beta 2 done: eroded design 11 bodies, main 95.2%; drawn bodies outside the main body: 10
+it  51 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.4s
+it  51 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.4s
+it  52 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.4s
+it  52 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.4s
+it  53 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  53 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  54 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  54 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  55 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  55 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  56 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.6s
+it  56 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.6s
+it  57 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.5s
+it  57 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.5s
+it  58 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.6s
+it  58 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.6s
+it  59 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.6s
+it  59 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.6s
+it  60 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  60 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  61 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  61 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  62 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 3.0s
+it  62 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 3.0s
+it  63 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 3.1s
+it  63 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 3.1s
+it  64 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  64 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.7s
+it  65 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.5s
+it  65 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.5s
+it  66 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.5s
+it  66 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.5s
+it  67 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  67 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  68 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 3.2s
+it  68 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 3.2s
+it  69 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  69 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  70 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  70 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  71 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  71 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  72 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  72 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.8s
+it  73 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  73 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  74 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  74 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  75 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+it  75 beta    4 J  10.0035 vol 0.0156 (dil 0.0630 g +0.424) grey  4.6% ch 0.000 worst tube to 3 side a 216 2.9s
+layout: stopped (beta_stop) at it 75, beta 4, 211 s
+layout: stopped (beta_stop) at it 75, beta 4, 211 s
+layout: beta 4 done: eroded design 11 bodies, main 95.2%; drawn bodies outside the main body: 10
+layout: beta 4 done: eroded design 11 bodies, main 95.2%; drawn bodies outside the main body: 10
+coarse stage done: 75 iterations, 215 s, peak 0.3126 GB
+coarse stage done: 75 iterations, 215 s, peak 0.3126 GB
+node_2: grid (40, 40, 40) h 1.5 = 64,000 cells; design 24,612 (83.1 cm3), drawn 2,596, void 36,792
+  support hold 0: 2100 cells, 3988 nodes
+  support hold 1: 2100 cells, 3988 nodes
+  support hold 2: 2138 cells, 4084 nodes
+  support hold 3: 2138 cells, 4084 nodes
+  support hold 4: 2135 cells, 4099 nodes
+  support hold 5: 2135 cells, 4099 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.76 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.76 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.014 of 24,612 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.014 of 24,612 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (5.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (5.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.8% of passive cells differ): no symmetry
+layout: 1 drawn bodies (2,596 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (2,596 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (40, 40, 40) = 64,000 elements, 93,579 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+fem: grid (40, 40, 40) = 64,000 elements, 93,579 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+layout: warm start from a (24, 24, 24) grid (h 3.0): mean x 0.017
+layout: warm start from a (24, 24, 24) grid (h 3.0): mean x 0.017
+it   1 beta    4 J  10.0000 vol 0.0242 (dil 0.0824 g +0.900) grey  7.8% ch 0.100 worst tube to 1 side a 171 38.9s
+it   1 beta    4 J  10.0000 vol 0.0242 (dil 0.0824 g +0.900) grey  7.8% ch 0.100 worst tube to 1 side a 171 38.9s
+it   2 beta    4 J  10.0000 vol 0.0233 (dil 0.0805 g +0.859) grey  7.5% ch 0.100 worst tube to 1 side a 171 37.3s
+it   2 beta    4 J  10.0000 vol 0.0233 (dil 0.0805 g +0.859) grey  7.5% ch 0.100 worst tube to 1 side a 171 37.3s
+it   3 beta    4 J  10.0000 vol 0.0225 (dil 0.0787 g +0.817) grey  7.2% ch 0.100 worst tube to 1 side a 171 40.6s
+it   3 beta    4 J  10.0000 vol 0.0225 (dil 0.0787 g +0.817) grey  7.2% ch 0.100 worst tube to 1 side a 171 40.6s
+it   4 beta    4 J  10.0000 vol 0.0217 (dil 0.0769 g +0.775) grey  6.9% ch 0.100 worst tube to 1 side a 171 38.1s
+it   4 beta    4 J  10.0000 vol 0.0217 (dil 0.0769 g +0.775) grey  6.9% ch 0.100 worst tube to 1 side a 171 38.1s
+it   5 beta    4 J  10.0000 vol 0.0209 (dil 0.0751 g +0.733) grey  6.6% ch 0.100 worst tube to 1 side a 171 36.5s
+it   5 beta    4 J  10.0000 vol 0.0209 (dil 0.0751 g +0.733) grey  6.6% ch 0.100 worst tube to 1 side a 171 36.5s
+it   6 beta    4 J  10.0000 vol 0.0201 (dil 0.0733 g +0.691) grey  6.3% ch 0.100 worst tube to 1 side a 171 34.3s
+it   6 beta    4 J  10.0000 vol 0.0201 (dil 0.0733 g +0.691) grey  6.3% ch 0.100 worst tube to 1 side a 171 34.3s
+it   7 beta    4 J  10.0000 vol 0.0194 (dil 0.0714 g +0.649) grey  6.0% ch 0.100 worst tube to 1 side a 171 38.9s
+it   7 beta    4 J  10.0000 vol 0.0194 (dil 0.0714 g +0.649) grey  6.0% ch 0.100 worst tube to 1 side a 171 38.9s
+it   8 beta    4 J  10.0000 vol 0.0187 (dil 0.0696 g +0.607) grey  5.8% ch 0.100 worst tube to 1 side a 171 37.1s
+it   8 beta    4 J  10.0000 vol 0.0187 (dil 0.0696 g +0.607) grey  5.8% ch 0.100 worst tube to 1 side a 171 37.1s
+it   9 beta    4 J  10.0000 vol 0.0180 (dil 0.0678 g +0.565) grey  5.5% ch 0.100 worst tube to 1 side a 171 38.8s
+it   9 beta    4 J  10.0000 vol 0.0180 (dil 0.0678 g +0.565) grey  5.5% ch 0.100 worst tube to 1 side a 171 38.8s
+it  10 beta    4 J  10.0000 vol 0.0173 (dil 0.0660 g +0.523) grey  5.2% ch 0.100 worst tube to 3 side a 171 44.1s
+it  10 beta    4 J  10.0000 vol 0.0173 (dil 0.0660 g +0.523) grey  5.2% ch 0.100 worst tube to 3 side a 171 44.1s
+it  11 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 37.6s
+it  11 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 37.6s
+it  12 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 41.1s
+it  12 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 41.1s
+it  13 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 41.1s
+it  13 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 41.1s
+it  14 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.3s
+it  14 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.3s
+it  15 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.2s
+it  15 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.2s
+it  16 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 37.2s
+it  16 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 37.2s
+it  17 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 37.2s
+it  17 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 37.2s
+it  18 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.4s
+it  18 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.4s
+it  19 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 41.0s
+it  19 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 41.0s
+it  20 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 35.8s
+it  20 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 35.8s
+it  21 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.9s
+it  21 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 40.9s
+it  22 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 38.3s
+it  22 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 38.3s
+it  23 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 42.0s
+it  23 beta    4 J  10.0000 vol 0.0166 (dil 0.0642 g +0.481) grey  4.9% ch 0.000 worst tube to 1 side a 171 42.0s
