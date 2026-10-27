@@ -1,6 +1,6 @@
 # Runs
 
-_103 runs · rebuilt 2026-10-27 06:24_
+_103 runs · rebuilt 2026-10-27 07:09_
 
 ## Latest per part
 
@@ -24,7 +24,7 @@ _103 runs · rebuilt 2026-10-27 06:24_
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
 | overseer_core | v1 | · | 3419.7 (M) | ·  | · | [runs/overseer_core/v1](runs/overseer_core/v1/summary.md) |
-| overseer_hub_deck | v1 | · | · | ·  | · | [runs/overseer_hub_deck/v1](runs/overseer_hub_deck/v1/summary.md) |
+| overseer_hub_deck | v1 | · | 20.6 (M) | 0.16 in press 50 N on the Pi (assembly) | FAIL | [runs/overseer_hub_deck/v1](runs/overseer_hub_deck/v1/summary.md) |
 | overseer_layout | v3 | · | · | ·  | · | [runs/overseer_layout/v3](runs/overseer_layout/v3/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
@@ -39,7 +39,7 @@ _103 runs · rebuilt 2026-10-27 06:24_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-27 06:24 | overseer_hub_deck | [v1](runs/overseer_hub_deck/v1/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-27 07:09 | overseer_hub_deck | [v1](runs/overseer_hub_deck/v1/summary.md) | · | 20.6 (M) | 0.16 | FAIL | plate face (z min) | · GB | · min | · |
 | 2026-10-27 05:06 | bar_half | [organic-v2](runs/bar_half/organic-v2/summary.md) | · | 74.9 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-27 05:06 | bar_half | [topo-v2](runs/bar_half/topo-v2/summary.md) | · | 76.1 (M) | · | PASS | · | · GB | · min | · |
 | 2026-10-27 05:06 | bar_half | [topo-v3](runs/bar_half/topo-v3/summary.md) | · | 71.2 (M) | · | PASS | · | · GB | · min | · |

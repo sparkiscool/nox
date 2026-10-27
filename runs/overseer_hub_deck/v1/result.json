@@ -401,8 +401,18 @@
  },
  "build_s": 129.7,
  "layout_s": 2178,
- "peak_gb": 5.60746,
+ "peak_gb": 5.6,
  "gen_cm3": 10.0,
  "h": 1.0,
- "total_s": 2307
+ "total_s": 2307,
+ "worst_index": 0.159,
+ "worst_case": "press 50 N on the Pi (assembly)",
+ "solid_check_pass": true,
+ "bed_face": "plate face (z min)",
+ "bed_contact_mm2": 705,
+ "wall_h": 0.64,
+ "fit_overlaps_mm3": {
+  "ubec": 254.8,
+  "buck": 176.2
+ }
 }
