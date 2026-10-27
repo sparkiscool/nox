@@ -310,3 +310,17 @@ it  60 beta   16 J   0.0556 vol 0.0397 (dil 0.0761 g -0.000) grey  1.4% ch 0.100
 it  60 beta   16 J   0.0556 vol 0.0397 (dil 0.0761 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.99e+03 106.8s
 it  61 beta   16 J   0.0552 vol 0.0398 (dil 0.0761 g +0.002) grey  1.4% ch 0.100 worst gate b6 mz 1.98e+03 95.7s
 it  61 beta   16 J   0.0552 vol 0.0398 (dil 0.0761 g +0.002) grey  1.4% ch 0.100 worst gate b6 mz 1.98e+03 95.7s
+it  62 beta   16 J   0.0552 vol 0.0397 (dil 0.0759 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.97e+03 94.4s
+it  62 beta   16 J   0.0552 vol 0.0397 (dil 0.0759 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.97e+03 94.4s
+it  63 beta   16 J   0.0549 vol 0.0397 (dil 0.0760 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.96e+03 93.8s
+it  63 beta   16 J   0.0549 vol 0.0397 (dil 0.0760 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.96e+03 93.8s
+it  64 beta   16 J   0.0546 vol 0.0398 (dil 0.0760 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.95e+03 97.4s
+it  64 beta   16 J   0.0546 vol 0.0398 (dil 0.0760 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.95e+03 97.4s
+it  65 beta   16 J   0.0543 vol 0.0398 (dil 0.0760 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.94e+03 92.7s
+it  65 beta   16 J   0.0543 vol 0.0398 (dil 0.0760 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.94e+03 92.7s
+it  66 beta   16 J   0.0541 vol 0.0398 (dil 0.0760 g +0.002) grey  1.4% ch 0.100 worst gate b6 mz 1.93e+03 89.7s
+it  66 beta   16 J   0.0541 vol 0.0398 (dil 0.0760 g +0.002) grey  1.4% ch 0.100 worst gate b6 mz 1.93e+03 89.7s
+it  67 beta   16 J   0.0543 vol 0.0397 (dil 0.0758 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.93e+03 98.5s
+it  67 beta   16 J   0.0543 vol 0.0397 (dil 0.0758 g -0.000) grey  1.4% ch 0.100 worst gate b6 mz 1.93e+03 98.5s
+layout: beta 16 done: eroded design 5 bodies, main 98.7%; drawn bodies outside the main body: 4
+layout: beta 16 done: eroded design 5 bodies, main 98.7%; drawn bodies outside the main body: 4
