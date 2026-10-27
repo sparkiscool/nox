@@ -175,10 +175,10 @@ CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens 
 CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
 HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
 # the arm session's printed nodes (overseer arm, 27 Oct, Spark "add the arm nodes"): the 3 spokes of each arm leave from a node beside
-# the motor (offset from the motor axis point, y mirrored), the L2 braces end inside the front beam (lo / hi z), so the arm top prints flat
+# the motor (offset from the motor axis point, y mirrored), the L2 braces root in the core (BRACE_ROOT below; first in the front beam, 27 Oct)
 ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
-BRACE_ROOT = (72.95, 62.11, {"lo": 30.0, "hi": 39.0})
+BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
@@ -330,6 +330,41 @@ def place_cams(g, sel):
 LIM_L2 = HALO_BACK + HALO_NODE_R + 2.0 + NODE_R   # shell node centres behind the L2 base plane: the guard ring fits in front (25.2)
 PHIS = (20.0, 35.0, 50.0, 65.0)                  # tilt of the head plane (from the L2 axis toward +z), scanned
 _DRONE = {}
+
+
+def saved_node(c):
+    """the newest saved cage node at c (CLAUDE.md "Cage sessions keep their parts in sync": the artifact shows the saved parts):
+    a decimated copy of runs/cage_nodes/v3/node_<i>/cage_node_<i>.stl (run/cage_nodes-v3) in runs/overseer_layout/v5/saved/, for the
+    design at c, or its mirror's reflected (y -> -y); None if not saved yet"""
+    if FZ is None: return None
+    SN = np.array(FZ["nodes"])
+    for i, q in enumerate(SN):
+        for sy in (1, -1):
+            if np.linalg.norm(q * [1, sy, 1] - c) < 0.5:
+                f = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved", f"cage_node_{i}.stl")   # decimated copy of the saved node
+                if os.path.exists(f):
+                    m = trimesh.load(f, force="mesh")
+                    if sy < 0: m.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0])); m.invert()
+                    return m
+    return None
+
+
+SAVED_ARMS = {"rear": "runs/overseer_layout/v5/saved/overseer_arm_rear_v5d.stl"}   # decimated copies of the arm session's newest saved
+                                                   # run meshes (arm frame; rear v5d: claude/pensive-turing-jyxlcc 319ca86a)
+ARM_DEG = {"front": 45.0, "rear": 135.0}           # the arm frame: root at r 66.5 on the plate diagonal, x toward the motor (arm_topo_v1)
+
+
+def saved_arm(mx, my, dm):
+    """the newest saved arm at the motor (mx, my), in the drone frame (the arm session's arm_to_drone), or None"""
+    which = "front" if mx > dm else "rear"
+    f = SAVED_ARMS.get(which)
+    if not f or not os.path.exists(os.path.join(ROOT, f)): return None
+    d = math.radians(ARM_DEG[which]); R0 = 66.5 * np.array([math.cos(d), math.sin(d)])
+    th = math.atan2(abs(my) - R0[1], mx - R0[0])
+    m = trimesh.load(os.path.join(ROOT, f), force="mesh"); T = trimesh.transformations.rotation_matrix(th, [0, 0, 1]); T[:2, 3] = R0
+    m.apply_transform(T)
+    if my < 0: m.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0])); m.invert()
+    return m
 
 
 def apex_head(g):
@@ -732,7 +767,7 @@ def attach(g, nodes, ring_ids):
                 ok_ &= seg_band_dist(s_, root, mxy) - ROD_R >= PROP_GAP and views_clear(g, s_, root, ROD_R) and clear_of_cart(s_ + 0.05 * (root - s_), root)
             if ok_:
                 for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
-                    rt = np.array([BRACE_ROOT[0], BRACE_ROOT[1] * sy, BRACE_ROOT[2][lvl]]) if BRACE_ROOT else root
+                    rt = np.array([BRACE_ROOT[0][lvl], BRACE_ROOT[1][lvl] * sy, BRACE_ROOT[2][lvl]]) if BRACE_ROOT else root
                     extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), rt)
                 g["braces"].append(round(out_, 0)); break
     if not HEAD_ON_CAGE:                                               # the keels' core ends sit 5 deeper in the hub deck's sockets (core v2, 27 Oct)
@@ -978,8 +1013,8 @@ else:
 if PRINTED_HEAD:
     say(f"L2 mount: the printed sensor head mount{' (one piece with both cameras)' if HEAD_ONE else ''}: seat, back block, lugs, the guard ring (8 nodes, r "
         f"{HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on "
-        f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the front arm beams "
-        f"{g.get('braces')} out of the root, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
+        f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the core's hub deck tower "
+        f"{'(BRACE_ROOT)' if BRACE_ROOT else str(g.get('braces')) + ' out of the arm root'}, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
         f"printed fuse (requirement: they let go before the L2 base, E)")
 else: say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
           f"the others in a camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "
@@ -1028,7 +1063,7 @@ for n_, gm, _c in it:
 links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items()])
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
-    ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
+    ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
     (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
     *([(HEADN, trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
@@ -1050,7 +1085,7 @@ PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("flow MTF-02P", g["flow"], "bought", True, 2, "E", None, "bought", "#2d5a2d", False),
 ]
 for i in range(4):
-    PARTS += [(f"arm {i + 1}", g["arms"][i], "structure", False, grp[f"arm {i + 1}"], "E", "PETG", "printed", "#8899aa", False),
+    PARTS += [(f"arm {i + 1}", saved_arm(*g["motors_xy"][i], g["dm"]) or g["arms"][i], "structure", False, grp[f"arm {i + 1}"], "E", "PETG", "printed", "#8899aa", False),
               (f"motor {i + 1}", g["motors"][i], "bought", True, 81, "E", None, "bought", "#b0b0b0", False),
               (f"prop {i + 1}", cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *mxy[i], 96), "bought", True, 10, "E", None, "bought", "#d9a400", False)]
 fname = lambda n_: "".join(ch if ch.isalnum() else "_" for ch in n_.lower()).strip("_")[:40] + ".stl"
