@@ -1,0 +1,1 @@
+runs/overseer_hub_deck/v9/overseer_hub_deck.stl PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [35921.4], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 0, 'ok': True}

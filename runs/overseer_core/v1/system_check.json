@@ -185,26 +185,26 @@
     "pass_": true
    },
    "UBEC 5 V": {
-    "min_margin_mm": 86.9,
+    "min_margin_mm": 89.4,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 83.9,
-    "min_margin_outside_openings_mm": 86.9,
+    "worst_slack_mm": 86.4,
+    "min_margin_outside_openings_mm": 89.4,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "buck 12 V": {
-    "min_margin_mm": 86.9,
+    "min_margin_mm": 89.4,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 83.9,
-    "min_margin_outside_openings_mm": 86.9,
+    "worst_slack_mm": 86.4,
+    "min_margin_outside_openings_mm": 89.4,
     "dirs_in_openings": 0,
     "pass_": true
    },
@@ -772,7 +772,7 @@
    {
     "a": "UBEC 5 V",
     "b": "wires",
-    "overlap_mm3": 47.99,
+    "overlap_mm3": 64.32,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -790,7 +790,7 @@
    {
     "a": "buck 12 V",
     "b": "wires",
-    "overlap_mm3": 53.25,
+    "overlap_mm3": 53.93,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -975,7 +975,7 @@
   "cg": [
    61.57,
    -0.21,
-   15.71
+   15.73
   ],
   "parts": [
    {
@@ -1259,7 +1259,7 @@
     "cg": [
      58.0,
      -8.0,
-     8.5
+     11.0
     ],
     "tag": "E",
     "swap": false
@@ -1270,7 +1270,7 @@
     "cg": [
      45.0,
      13.0,
-     8.0
+     10.5
     ],
     "tag": "E",
     "swap": false
@@ -1395,9 +1395,9 @@
   "cg_offset": [
    0.79,
    -0.21,
-   -66.29
+   -66.27
   ],
-  "cg_offset_mm": 66.3
+  "cg_offset_mm": 66.28
  },
  "balance": {
   "applies": true,
@@ -1418,10 +1418,10 @@
     "cg_offset": [
      0.79,
      -0.21,
-     -66.29
+     -66.27
     ],
     "horizontal_mm": 0.81,
-    "axial_mm": -66.29,
+    "axial_mm": -66.27,
     "pass_": true,
     "gated": true
    },
@@ -1430,10 +1430,10 @@
     "cg_offset": [
      24.8,
      -0.27,
-     -49.3
+     -49.29
     ],
     "horizontal_mm": 24.8,
-    "axial_mm": -49.3,
+    "axial_mm": -49.29,
     "pass_": true,
     "gated": false
    }
@@ -1893,7 +1893,7 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "UBEC 5 V",
-    "margin_mm": 64.0,
+    "margin_mm": 66.0,
     "unshielded": false,
     "dir": [
      0.0,
@@ -1911,7 +1911,7 @@
     "contact": [
      82.0,
      -1.0,
-     4.0
+     6.5
     ],
     "pass_": true
    },
@@ -1919,7 +1919,7 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "UBEC 5 V",
-    "margin_mm": 65.0,
+    "margin_mm": 67.0,
     "unshielded": false,
     "dir": [
      -0.001,
@@ -1937,7 +1937,7 @@
     "contact": [
      81.0,
      2.0,
-     4.0
+     6.5
     ],
     "pass_": true
    },
@@ -2179,7 +2179,7 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "buck 12 V",
-    "margin_mm": 89.68,
+    "margin_mm": 90.55,
     "unshielded": false,
     "dir": [
      0.477,
@@ -2197,7 +2197,7 @@
     "contact": [
      55.0,
      21.0,
-     5.0
+     6.5
     ],
     "pass_": true
    },
@@ -2327,7 +2327,7 @@
     "contact": [
      55.0,
      21.0,
-     12.0
+     13.5
     ],
     "pass_": true
    },
