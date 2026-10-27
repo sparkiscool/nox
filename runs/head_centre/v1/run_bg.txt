@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 run_bg: start 2026-10-27T04:38Z: python3 nox/overseer/head_mount.py centre runs/head_centre/v1 --h 2.0
+=======
+run_bg: start 2026-10-27T05:01Z: python3 nox/overseer/head_mount.py centre runs/head_centre/v1 --h 2.0
+>>>>>>> b7856575 (head_centre v1: stopped, keels and braces become 6 mm tubes)
