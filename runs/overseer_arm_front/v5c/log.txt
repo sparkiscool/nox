@@ -232,3 +232,23 @@ it  41 beta   16 J   8.7215 vol 0.1051 (dil 0.2181 g +0.009) grey  2.2% ch 0.100
 it  41 beta   16 J   8.7215 vol 0.1051 (dil 0.2181 g +0.009) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.93 66.6s
 it  42 beta   16 J   8.7669 vol 0.1031 (dil 0.2157 g -0.002) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.99 65.8s
 it  42 beta   16 J   8.7669 vol 0.1031 (dil 0.2157 g -0.002) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.99 65.8s
+it  43 beta   16 J   8.7462 vol 0.1034 (dil 0.2160 g -0.000) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.96 64.4s
+it  43 beta   16 J   8.7462 vol 0.1034 (dil 0.2160 g -0.000) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.96 64.4s
+it  44 beta   16 J   8.7356 vol 0.1035 (dil 0.2161 g -0.000) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.95 63.7s
+it  44 beta   16 J   8.7356 vol 0.1035 (dil 0.2161 g -0.000) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.95 63.7s
+it  45 beta   16 J   8.7257 vol 0.1036 (dil 0.2161 g -0.000) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.93 66.5s
+it  45 beta   16 J   8.7257 vol 0.1036 (dil 0.2161 g -0.000) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.93 66.5s
+it  46 beta   16 J   8.7154 vol 0.1036 (dil 0.2161 g +0.006) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.92 65.2s
+it  46 beta   16 J   8.7154 vol 0.1036 (dil 0.2161 g +0.006) grey  2.2% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.92 65.2s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  47 beta   32 J   8.6624 vol 0.1013 (dil 0.2151 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.87 64.9s
+it  47 beta   32 J   8.6624 vol 0.1013 (dil 0.2151 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.87 64.9s
+it  48 beta   32 J   8.6500 vol 0.1013 (dil 0.2150 g -0.001) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.85 65.7s
+it  48 beta   32 J   8.6500 vol 0.1013 (dil 0.2150 g -0.001) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.85 65.7s
+it  49 beta   32 J   8.6399 vol 0.1014 (dil 0.2151 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.84 63.9s
+it  49 beta   32 J   8.6399 vol 0.1014 (dil 0.2151 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.84 63.9s
+it  50 beta   32 J   8.6283 vol 0.1015 (dil 0.2150 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.82 64.2s
+it  50 beta   32 J   8.6283 vol 0.1015 (dil 0.2150 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.82 64.2s
+it  51 beta   32 J   8.6182 vol 0.1015 (dil 0.2151 g +0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.81 64.8s
+it  51 beta   32 J   8.6182 vol 0.1015 (dil 0.2151 g +0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.81 64.8s
