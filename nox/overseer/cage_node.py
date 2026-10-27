@@ -36,8 +36,9 @@ def members(i):
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
                 o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 3, k))
-    if N[i, 1] > 150 and N[i, 0] > 300:                 # the head wing's 3.0 struts to the side nodes by the head
-        w = np.array([368.0, 112.0, 70.0]); out.append(((w - N[i]) / np.linalg.norm(w - N[i]), 3, "head wing strut"))
+    if N[i, 1] > 150 and N[i, 0] > 300:                 # the head wing's 3.0 struts to the side nodes by the head (only at 20 deg+ from its tubes)
+        w = np.array([368.0, 112.0, 70.0]); d = (w - N[i]) / np.linalg.norm(w - N[i])
+        if all(math.degrees(math.acos(np.clip(d @ t[0], -1, 1))) >= 20.0 for t in out): out.append((d, 3, "head wing strut"))
     return out
 
 

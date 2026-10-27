@@ -278,6 +278,11 @@ best = min(out, key=lambda f: (f["viol"] > 0.05, f["ncut"], f["err"]))   # the f
 PL = best["L"] / best["mult"]; cuts = list(merged(PL))
 best["T"] = np.array(cuts); best["cls"] = np.abs(PL[:, None] - best["T"][None]).argmin(1); best["n"] = len(cuts)
 best["err"] = float(np.abs(PL - best["T"][best["cls"]]).max())
+used = sorted({v for e in E for v in e})                               # nodes no tube reaches (left inside by a merge) are dropped
+if len(used) < len(best["N"]):
+    ri = {o: k for k, o in enumerate(used)}
+    best["N"] = best["N"][used]; E = [(ri[a], ri[b]) for a, b in E]; tris = np.array([[ri[v] for v in t] for t in tris if all(v in ri for v in t)])
+    SRC = dict(SRC, open=[dict(SRC["open"][0], ring=[ri[v] for v in SRC["open"][0]["ring"] if v in ri])])
 spec = dict(note=f"Overseer cage v4 (27 Oct, Spark: as few cut lengths as possible): cage v3's nodes and tubes moved by nox/overseer/cage_equal.py; "
                  f"{best['n']} cut lengths, every piece within {best['err']:.2f} of its length; a span of more than one piece is joined in line by a node.",
             dm=dm, xB=FZ["xB"], nodes=np.round(best["N"], 3).tolist(), rods=[list(map(int, e)) for e in E], open=SRC["open"],

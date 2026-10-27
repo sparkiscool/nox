@@ -208,7 +208,13 @@ def wing_bodies():
     for j in JOINT:
         pad, hole = bolt_pad(j + np.array([0, 3.0, 0]), [0, 1, 0]); drawn += pad; addcut(hole); pads.append(pad)
     struts = []                                                        # 3.0 carbon struts to the side cage nodes (y > 150)
-    side = [np.array(q, float) for q in HS["cage_nodes_held"] if q[1] > 150]
+    side = []
+    CN = np.array(CG["nodes"]); W0 = np.array([368.0, 112.0, 70.0])
+    for k_, q in enumerate(CN):                                        # side nodes by the head, only where the strut is 20 deg+ from their tubes
+        if q[1] > 150 and q[0] > 300:
+            d = (W0 - q) / np.linalg.norm(W0 - q)
+            tub = [CN[b_ if a_ == k_ else a_] - q for a_, b_ in CG["rods"] if k_ in (a_, b_)]
+            if all(math.degrees(math.acos(np.clip(d @ (t / np.linalg.norm(t)), -1, 1))) >= 20.0 for t in tub): side.append(q)
     for q in side:
         end = np.array([368.0, 112.0, 70.0]) + (q - np.array([368.0, 112.0, 70.0])) / np.linalg.norm(q - np.array([368.0, 112.0, 70.0])) * 6.0
         boss, cut, keep = socket(end, q, ROD_BORE, 12.0); drawn += boss; addcut(cut + keep); struts.append(boss)
