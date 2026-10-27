@@ -24,6 +24,9 @@ All C from the model. The Overseer's yaw limit is its tip geometry: a node in th
 
 First sweep (bars parked at |y| 206, dea0b51): `v1_park85/`: Overseer 247, Scout 462; the 200 extra fails were landings on the parked bars, removed by parking at 258 (`v2_dea0b51/`, the same numbers as the current-drone sweep above).
 
+## After the merge: the Overseer's loop moved (cage sync 27 Oct 13:07 PDT, ee944ce8)
+Loop at z −79.9 (was −57), same plan; foot caps Ø16 x 3 under all 6 loop nodes, lowest −93.1: the deck is 13.2 under the tube centres (M). The pads become 13.7 tall with their top at +0.5 (the Scout on the same caps has its 3 mm end tubes centred at z 0, which a pad topping at −1 slid under), the bars 20.7 (the lips unchanged in the tube frame); the tip-node caps (r 8) sit inside the node's equator and count as the node's own foot. The Scout needs the same caps under its 4 ring nodes (DEFAULT; alt its loop 9.2 lower). Parameters `DECK`, `OVR_PLANE_Z`, `OVR_REF`, `SCOUT_CAPS` in the script. Smoke at the datum (27 landings a drone, ±20, yaw ±10, `smoke_datum13.log`): Overseer 27 / 27, worst x 4.06, yaw 0.91 deg; Scout 27 / 27, worst x 0.97, yaw 0.69 deg (C), the same as at the old datum. The full sweep's numbers above are at the old datum until the box catch session reruns it (see `HANDOFF.md`).
+
 ## Alternatives weighed
 - Ramps (concept E, `runs/box_catch/ramps_concept/`): passive; Scout ±20 / ±25, Overseer ±25, yaw ±2.5; no hold-down; needs μ ≤ 0.2 faces. A quarter of the room.
 - Hook claws (the earlier direction, `runs/box_catch/hooks_concept/`): every claw rises outside the ring where both shells flare out at 16..20 deg, so the sweeps collide with shell rods under any offset; 12 claws on sprung links.
