@@ -117,6 +117,21 @@ def main():
     json.dump({k: {kk: {kkk: round(vvv, 3) if isinstance(vvv, float) else vvv for kkk, vvv in vv.items()} for kk, vv in v.items()}
                for k, v in [("members", worst)]}, open(os.path.join(OUT, "members.json"), "w"), indent=1)
     json.dump(nl, open(os.path.join(OUT, "node_loads.json"), "w"), indent=1)
+    # the arm groups (overseer arm session): the summed link force on each arm's spoke node and on each front beam's brace roots,
+    # per case (N, vector on the arm; the frame holds the core rigid)
+    grp = {f"arm {a} spoke node": [k for k in RES["links"] if k.startswith(f"spoke {a}.")] for a in (1, 2, 3, 4)}
+    grp.update({f"L2 braces {sy:+d}": [k for k in RES["links"] if k.startswith("L2 brace") and k.endswith(f"{sy:+d}")] for sy in (1, -1)})
+    arm = {}
+    for cn, mf_ in res.items():
+        byn = {r["name"]: r for r in mf_}
+        for gname, ks in grp.items():
+            F = np.zeros(3)
+            for k in ks:
+                p_, q_ = (np.array(v) for v in RES["links"][k]); core = q_ if gname.startswith("L2") else p_
+                far = p_ if core is q_ else q_; F += byn[k]["N"] * (far - core) / np.linalg.norm(far - core)   # tension pulls the arm toward the far end
+            arm.setdefault(gname, {})[cn] = np.round(F, 1).tolist()
+    arm_worst = {g_: max(((float(np.linalg.norm(v)), c_) for c_, v in d.items())) for g_, d in arm.items()}
+    json.dump(dict(cases=arm, worst={g_: [round(v[0]), v[1]] for g_, v in arm_worst.items()}), open(os.path.join(OUT, "arm_loads.json"), "w"), indent=1)
     m_g = {i: v * 1000 for i, v in enumerate(m) if v > 0}; m_g[H] = m_g.get(H, 0) + M_HEAD * 1000   # the frame's lowest modes, rigid joints
     hz, U = f.modes(m_g, 3); hd = [float(np.linalg.norm(U[6 * H:6 * H + 3, k]) / max(1e-12, np.abs(U[:, k]).max())) for k in range(len(hz))]
     cage_g = sum(np.linalg.norm(N[a] - N[b]) * 24.3e-3 for a, b in CG["rods"]) + 4.5 * len(N)
@@ -139,6 +154,8 @@ def main():
     for s_, k in bad_s[:15]: say(f"- {k}: {s_:.0f} MPa ({worst[k]['case_s']})")
     say(f"\n## Handling {HANDLE:.0f} N at mid-span: tubes bending over 10 mm: {len(soft)}")
     for d_, k, L in soft[:15]: say(f"- {k}: {d_:.0f} mm (L {L:.0f})")
+    say("\n## Load into the arms (summed link force per group, core rigid; `arm_loads.json`)")
+    for g_, (v, c_) in sorted(arm_worst.items()): say(f"- {g_}: {v:.0f} N ({c_})")
     say(f"\nWorst tube buckling {max(v['buckle'] for v in tubes.values()):.2f}, worst link {max([v['buckle'] for v in links.values()] or [0]):.2f}; "
         f"node socket loads (largest axial / side per member and node over all cases) in node_loads.json.")
     up = sorted({k for k, v in links.items() if v["buckle"] >= 1.0 and k not in LINK6})   # a 3.0 link that buckles becomes a 6/4 tube

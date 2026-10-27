@@ -12,7 +12,7 @@ Two modes. **PR mode** (default): the checks below on a part PR. **Concept mode*
 
 PR mode:
 
-First `python3 tools/review_precheck.py --base origin/main` (add `--body <file>` if you have the PR body). Any FAIL: report FAIL with its lines and stop. Its PASS or skip lines settle items 1, 2, 6, 9 (check_state), 10, 11, 12 (runs started together, CLAUDE.md Parallel by default) and 13 (Scout rods: 3 mm, about half); judge the rest. A re-review checks only the last review's findings and what changed since (`docs/sessions.md` Usage).
+First `python3 tools/review_precheck.py --base origin/main` (add `--body <file>` if you have the PR body). Any FAIL: report FAIL with its lines and stop. Its PASS or skip lines settle items 1, 2, 6, 9 (check_state), 10, 11, 12 (runs started together, CLAUDE.md Parallel by default) 13 (Scout rods: 3 mm, about half) and 14 (a measured `estimate.json` beside every new topo run, CLAUDE.md Measure before quoting); judge the rest. A re-review checks only the last review's findings and what changed since (`docs/sessions.md` Usage).
 
 Check, in this order, and stop at the first hard failure:
 1. `solid_check` PASS appears verbatim in `runs/<part>/<version>/summary.md` for the exact file named in `print/` and in the part's `current-parts.md` row. No PASS, or a different file name: FAIL.

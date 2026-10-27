@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2, race-car shape, bottom on the Overseer v5 loop (27 Oct 2026, concept)
 
+**Superseded 27 Oct by `runs/scout_layout/v11/summary.md` (the tail bay out of the prop wash with the Radxa on edge, the CG centred, no low tail node; design center ramp check, Spark). Kept: summary, results, stills; meshes in git history; `alt_core_ties/` stays.**
+
 What changed from `v9/` (PR 127):
 - **Bottom:** Spark 27 Oct, relayed by the design center session: the Scout's bottom matches "the rectangle part" of the current Overseer base loop. That is the 4 side nodes of the Overseer cage v5 hexagon (PR 122, not merged), refitted now.
 - **Funnel band:** design center check 27 Oct. No link may sit within 30 above the bottom plane, inside the opening or up to 40 past its nose and tail ends, where the ramps reach; shell nodes and rods only where the ramp check clears them. So the bay ties came off the ring nodes.
@@ -14,8 +16,8 @@ Everything else is as in v9 (`v9/summary.md`, Spark's asks in order): the race-c
 Script `nox/scout/v3/layout_v3.py` (defaults: ring v5side, pattern free with the race silhouette, lean links, the funnel band, camera clips, tail bay), view `layout_v3_view.py`. Drone meshes `runs/scout_layout/v6/drone/`. The Overseer cage v5 is copied in as `overseer_cage_v5_shell.json` (ghost only, `SOURCE.txt`). Numbers `nox/dimensions.md` "System Scout v3". Rule: CLAUDE.md (Cages: the Scout clause), `docs/generative.md` 0 (Shared ring and the Scout), check `tools/review_precheck.py` 13.
 
 Visuals:
-- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 14; source `motion.html`; orange = the bottom loop, light blue = the Overseer cage v5 on the shared datum, green = the camera view). Still `preview.png`.
-- Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 2; source `camera_clips.html`, still `camera_clips.png`).
+- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 14; its source is in git history, `../v11/motion.html` is the v11 design; orange = the bottom loop, light blue = the Overseer cage v5 on the shared datum, green = the camera view). Still `preview.png`.
+- Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 2; source and still moved to `../v11/camera_clips.*`).
 
 System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field cones open: camera 55 deg, out 2 mm), shell 44 rods closed, fit 0.0 mm³ (E), bbox 11.6 L (E), extents 350 x 260 x 127 mm (E), mass 679 of 500 g (136 %) (E) over budget (total), CG 2.4 mm off thrust axis (E), 0.9 mm without swap parts, probes 9.9 mm (E) edge (receiver v3), access 8/8 clear. PASS.
 
