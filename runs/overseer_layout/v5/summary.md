@@ -24,7 +24,7 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
 - **Result:** 24 nodes, 63 tubes (was 48 / 131), mirror-exact, 670 x 655 x 188 (C), tubes 116 .. 446 (C), 15.9 m (C), shell 495 g (E). Prop shadow 7.0 % above and 15.4 % below (E).
 - **Alternatives (`cages_alt.png`):** cage v3 (main): 48 nodes, 131 tubes, 57 cut lengths, 22.5 m, ~762 g (E); cage v4 (fewest cut lengths, dropped by Spark): 11 lengths (C) but 277 tall (C) and ~773 g (E); cage v5 halves the tubes and saves ~270 g of shell (E). Its cost: long spans and large cells (largest cell Ø149, C), which the frame model checks below.
 - **The base loop is shared** with the Scout cage (PR #124) and the funnel: their sessions were told and confirmed (27 Oct).
-- **Nodes:** PETG topology parts (Spark 27 Oct, was TPU), 14 designs (C; mirror pairs share one), `nox/overseer/cage_node.py`. Each node's sockets are only for the members that meet there: 6 mm tube (bore 6.1 DEFAULT, 15 deep, C) or 3 mm rod (bore 3.1 DEFAULT, 10 deep, C), 2.5 wall (C). The bores wait on Spark's pick from the coupons (`runs/rod_coupons/v2/`). Loads: the frame model's socket forces (F). Runs: `run/cage_nodes-v3` (a child session).
+- **Nodes:** PETG topology parts (Spark 27 Oct, was TPU), 14 designs (C; mirror pairs share one), `nox/overseer/cage_node.py`. Each node's sockets are only for the members that meet there: 6 mm tube (bore 6.2, 15 deep, C) or 3 mm rod (bore 3.2, 10 deep, C), 2.5 wall (C). The bores are Spark's pick from the coupons (`runs/rod_coupons/v2/`: the largest fits, P). Loads: the frame model's socket forces (F). Runs: `run/cage_nodes-v3` (a child session).
 
 ## Frame model v1 (27 Oct, F on E carbon properties; `runs/overseer_frame/v1/summary.md`)
 - `nox/frame_model.py` (3D beam solver, checked against a cantilever, static and modal) and `nox/overseer/cage_frame.py` (the cage + links on the core, the head rigid on its keels, braces and struts). Cases: crash 35 g through the first-touching member in 14 directions, a nose hit through the head guard, flight 4 g, handling 50 N at mid-span.
@@ -40,19 +40,19 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
   1. the union of the two fields (within 2 % is a tie);
   2. the blind wedge straight ahead on the horizon;
   3. the share of the L2 field.
-- **Mount:** the most compact one beside the L2 whose head (seat, guard ring, both cameras and plates) fits one print: oriented box ≤ 175, the A1 mini's 180 cube (Spark: the cameras on the same print as the L2 mount).
-- **Chosen:** landscape (89 across x 73 up), yawed 45° out, pitched 10° down. Lenses (390, ±75, 122) (C), 13 behind the L2 base plane (the only clear mount that fits). Results: combined 3.42 sr, 27 % of the sphere, no overlap (C); nose gap 2° (C); 54 % of the L2 field (C); nothing of the drone in either view (C).
+- **Mount:** the most compact one beside the L2 whose head (seat, guard ring, both cameras and plates) fits one print: oriented box ≤ 175 (C), the A1 mini's 180 cube (Spark: the cameras on the same print as the L2 mount).
+- **Chosen:** landscape (89 across x 73 up, E), yawed 45° out, pitched 10° down (C). Lenses (390, ±75, 122) (C), 13 behind (C) the L2 base plane (the only clear mount that fits). Results: combined 3.42 sr, 27 % of the sphere, no overlap (C); nose gap 2° (C); 54 % of the L2 field (C); nothing of the drone in either view (C).
 - **Alternatives** (`cameras_alt.png`): portrait 50° out, 15° down: 3.45 sr, but a 29° blind wedge at the nose; portrait 37.5° out, level: 3.45 sr, gap 3° (C).
 - **Guards:** a bar of 2 printed nodes over each camera, behind its lens. Cage first is 7.7 outside the 55° field cones (E).
 
 ## Sensor head mount (one print with both cameras)
-- **Printed PETG, one piece** (`nox/overseer/head_mount.py head`): the drawn seat, back block and lugs, both camera plates (M2.5 inserts), the guard ring (r 62, 8 behind the L2 base plane), both camera guard bars, the cage's front centre node with its tube sockets, sockets for the 2 keels, 4 L2 braces and 4 head struts. Drawn 56 x 177 x 163 (C).
+- **Printed PETG, one piece** (`nox/overseer/head_mount.py head`): the drawn seat, back block and lugs, both camera plates (M2.5 inserts), the guard ring (r 62, 8 behind the L2 base plane, DEFAULT), both camera guard bars, the cage's front centre node with its tube sockets, sockets for the 2 keels, 4 L2 braces and 4 head struts. Drawn 56 x 177 x 163 (C).
 - **Supports (Spark: "max performance"):** the keels and braces to the core stay; 4 struts 6/4 run to the side cage nodes 15 / 16 / 18 / 19 (sockets searched inside the print box, behind the L2 base plane, out of both camera views, 20°+ from the nodes' tubes). Head mode 206 Hz on PETG cage nodes (223 with rigid joints, 120 with TPU; F on E), over the 100 Hz target. Options weighed: `runs/overseer_head_cage/concept/summary.md` (the cage-only head reads 32..50 Hz on TPU nodes, F on E).
-- **Loads (topology):** the L2 at its CG (28 ahead of its base) through its 4 bolts with its moment, both cameras at their plates, crash 35 g in 14 directions, flight, guard hits (dimensions.md L).
+- **Loads (topology):** the L2 at its CG (28 ahead of its base, E) through its 4 bolts with its moment, both cameras at their plates, crash 35 g in 14 directions, flight, guard hits (dimensions.md L).
 - **Mass:** 102 g in the system model (E); the saved part's M mass replaces it. Topology run: `runs/head_mount/v1` (branch `run/head_mount-v1`).
 
 ## Layout (C on E sizes; `checks.txt`)
-- **Drone:** the v2 drone (L2 at the nose, axis 15° below +x, base (384.0, 0, 51); motors forward; catch 30 aft; pack top z -7). The motor square sits 66.4 ahead (front arms r 249, rear r 157) with the CG 0.2 off (C on E).
+- **Drone:** the v2 drone (L2 at the nose, axis 15° below +x, base (384.0, 0, 51) (C); motors forward; catch 30 aft; pack top z -7). The motor square sits 66.4 ahead (front arms r 249, rear r 157) with the CG 0.2 off (C on E).
 - **L2:** its field 0.0 % crossed (C).
 - **Props and swap:** shell tubes 20.3 off the props, links 13.7 (C); swap zone clear (M); access 21 / 21 (C).
 

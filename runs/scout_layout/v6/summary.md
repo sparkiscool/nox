@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v1 geodesic (27 Oct 2026, concept)
 
+**Superseded 27 Oct by cage v2 (`runs/scout_layout/v7/summary.md`: every rod 3 mm, 65 rods, Spark). Kept: summary, results, stills; meshes in git history; `drone/` stays (the input of v7).**
+
 Spark 27 Oct: "using the same design idea as the latest scout design make sure the bottom of the cage is the exact same as the overseer just that loop of rods directly under the battery so funnel is interchangeable, the scout still has one camera and we will keep the carbon base for the scout".
 
 Read as: the latest Scout layout (PR 94, run v5: Bee35 carbon plate, props on top, receiver v3 + cartridge v6 under it, FC / UBEC / Radxa / flow on the belly mount) with the latest cage idea (the Overseer cage v3 geodesic shell, the rule since 26 Oct), its bottom loop = the Overseer's opening ring. Supersedes the PR 94 ground-structure cage (pre-geodesic rule).

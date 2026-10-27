@@ -33,7 +33,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 
 ### Parts to draw (order DEFAULT)
 Cage first, now a geodesic shell formed to the drone (Spark 26 Oct: the v2 layout kept, its cage replaced by triangles, compact like a disk, larger cells, 6 mm tubes, battery close to the body, a new funnel follows the cage): `layout_v5.py`, `dimensions.md` O Cage v5 (the L2 and the camera pair outside the cage; half the tubes, Spark 27 Oct), method `docs/generative.md` rule 0 Geodesic cage. v0..v4 layouts kept.
-0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes: 39 shell nodes, 8 opening ring nodes, the spoke sockets at the arm tips, the L2 apex ties, the L2 guard ring (8 nodes, 16 struts), the belly ties.
+0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes (cage v5): 24 PETG nodes in 14 designs (`cage_node.py`), 6 of them on the opening ring; the L2 guard ring, the camera guards and the cage's front centre node are part of the one-piece head print (`head_mount.py head`).
 1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors and spoke and strut sockets per the cage.
 2. Pi deck between the plates (4 posts over the FC stack).
 3. Belly sled: cartridge hanger centred on the catch, flow pod beside it, 15 ahead of v2's (no down camera; Spark 27 Oct), 4 TPU feet; Ø9 driver holes at the 4 rear arm bottom screws (access, Cage v5); pogo pads with the new funnel.
