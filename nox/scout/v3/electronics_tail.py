@@ -39,9 +39,17 @@ FIN_MASS = 6.0                       # fin + 4 bosses + root lug, PETG, before t
 TRAY_MASS = 9.0                      # option B tray + hanger (E)
 WIRES_TAIL = 4.0                     # extra lead length to the tail (UART, 5 V, XR2, camera USB) (E)
 CAGE_FIRST, WASH, GAP = 3.0, 3.0, 2.0
+CLIP_R = 1.65 + 3.0                  # tie clip: bore 3.3 + 3.0 wall (boss rule) (C)
+USB_PLUG = (12.0, 7.0, 250.0)        # FC USB-C plug + cable, as the layout's access check (E)
+RADXA_PLUG = 14.0                    # 90 deg USB-C plug height over the Radxa's port edge (E)
+SD_PULL = 15.0                       # microSD out of the short end (E)
 MOVED = ("Radxa Zero 3W", "UBEC", "XR2")
 PACK_OUT = ("pack 4S 1500", "pack XT60 plug", "cartridge v6 (latch)", "cartridge v6 strips (latch, TPU)",
             "cartridge skid closed end (latch, TPU)", "cartridge skid lead end (latch, TPU)")
+
+TIE = min(((a, b) for a, b, r, st in RODS if st.startswith("spoke") and abs(a[1]) < 0.5 and abs(b[1]) < 0.5),
+          key=lambda ab: min(ab[0][0], ab[1][0]))
+TIE = tuple(sorted(TIE, key=lambda q: -q[0]))       # (plate tail end, roof tail node end)
 
 # rear prop disks: from the rear motors, swept radius from the props mesh (E: layout model)
 pb = P["props (swept)"][0].bounds
@@ -64,10 +72,12 @@ def surf_pts(m, n=3000):
     return np.vstack([p, m.vertices])
 
 
-def rod_gap(pts):
-    """least rod-surface distance from the points, and the rod"""
+def rod_gap(pts, skip_tie=False):
+    """least rod-surface distance from the points, and the rod (the mount may hold the tail core tie)"""
     best = (1e9, None)
     for a, b, r, s in RODS:
+        if skip_tie and abs(a[1]) < 0.5 and abs(b[1]) < 0.5 and s.startswith("spoke") and np.allclose(sorted([a[0], b[0]]), sorted([TIE[0][0], TIE[1][0]])):
+            continue
         d = b - a; t = np.clip(((pts - a) @ d) / (d @ d), 0, 1)
         g = np.linalg.norm(pts - (a + np.outer(t, d)), axis=1).min() - r
         if g < best[0]: best = (g, (s, a.round(1).tolist(), b.round(1).tolist()))
@@ -128,8 +138,18 @@ def option_a():
     xr = box([-132.0, yf + FIN_T / 2, 16.0], [-132.0 + XR2[1], yf + FIN_T / 2 + XR2[2], 16.0 + XR2[0]])
     ant = box([-128.0, yf + FIN_T / 2 + 1.0, 32.0], [-124.0, yf + FIN_T / 2 + 5.0, 32.0 + XR2_ANT])
     # side view: root lug over the receiver top onto the belly mount's tail face (x -56, z 11.6..18.5, under the plate),
-    # front edge 2 behind the receiver end pieces, Radxa land z -26..6, rising aft to the XR2 at the top
-    fin = fin_mesh(yf, [(-56.0, 11.6), (-56.0, 18.5), (-66.0, 18.5), (-133.0, 34.0), (-133.0, -26.0), (-62.0, -26.0), (-62.0, 11.6)])
+    # front edge 2 behind the receiver end pieces, Radxa land z -26..6, rising aft to a clip on the tail core tie at x -100..-112:
+    # plate tail -> tie -> clip -> fin -> root lug -> belly mount -> plate is a closed triangle, not a stalk (review 27 Oct)
+    a, b = TIE
+    zt = lambda x: a[2] + (x - a[0]) / (b[0] - a[0]) * (b[2] - a[2])
+    fin = fin_mesh(yf, [(-56.0, 11.6), (-56.0, 18.5), (-66.0, 18.5), (-100.0, zt(-100.0) - CLIP_R), (-112.0, zt(-112.0) - CLIP_R),
+                        (-140.0, 34.0), (-140.0, -26.0), (-62.0, -26.0), (-62.0, 11.6)])
+    # the clip: a split collar round the 3.0 tie (bore 3.3, wall 3.0: boss rule), bridging the fin plane to the centre plane
+    d = (b - a) / np.linalg.norm(b - a)
+    c0, c1 = a + d * ((-100.0 - a[0]) / d[0]), a + d * ((-112.0 - a[0]) / d[0])
+    clip = trimesh.creation.cylinder(radius=CLIP_R, segment=[c0, c1], sections=24)
+    web = box([-112.0, 0.0, zt(-112.0) - CLIP_R], [-100.0, yf + FIN_T / 2, zt(-100.0)])
+    fin = trimesh.util.concatenate([fin, clip, web])
     return dict(name="A tail fin", placed={"Radxa Zero 3W": rad, "UBEC": ub, "XR2": trimesh.util.concatenate([xr, ant])},
                 mount={"tail fin (PETG)": fin}, extra=[(fin.center_mass, FIN_MASS), (np.array([-80.0, 0, 0]), WIRES_TAIL)],
                 note="fin plane y %.1f; Radxa on edge on the -y face, ports up, SD end aft; UBEC on the +y face behind the disks' "
@@ -149,13 +169,79 @@ def option_b():
                 note="tray z 3.6..6.0 from the plate tail; Radxa flat and crosswise behind the disks, component side up; UBEC under; XR2 behind")
 
 
+OBST = None
+
+
+def obstacles(placed, mount):
+    """surface points of every drone part (moved electronics where placed) for the access sweeps"""
+    pts = [surf_pts(m, 1500) for n, (m, w, g) in P.items()
+           if n not in MOVED and g not in ("cage",) and not n.startswith(("props", "bottom rect"))]
+    pts += [surf_pts(m, 1500) for m in list(placed.values()) + list(mount.values())]
+    return np.vstack(pts)
+
+
+def seg_clear(p0, p1, r, pts, skip=()):
+    """least clearance of a capsule (p0 -> p1, radius r) to points and rods"""
+    q = np.linspace(p0, p1, int(np.linalg.norm(p1 - p0)) + 1)
+    d = p1 - p0; L2 = d @ d
+    t = np.clip(((pts - p0) @ d) / L2, 0, 1); dp = np.linalg.norm(pts - (p0 + np.outer(t, d)), axis=1).min() - r
+    dr, _ = rod_gap(q); return min(dp, dr - r)
+
+
+def box_clear(bx, pts):
+    """least clearance of a box to points (inside = negative) and rods"""
+    lo, hi = bx.bounds
+    inside = np.all((pts > lo) & (pts < hi), axis=1)
+    if inside.any(): return -1.0
+    dp = np.linalg.norm(np.maximum(np.maximum(lo - pts, pts - hi), 0), axis=1).min()
+    return min(dp, rod_gap(surf_pts(bx, 800))[0])
+
+
+def access(opt):
+    """FC USB-C cable out of the cage, the Radxa's port plugs from their open side, the microSD out of its short end"""
+    pl, mt = opt["placed"], opt["mount"]
+    fc = P["FC"][0]; skip = [P["FC"][0], P["mount + nose legs (Scout)"][0]]
+    pts = obstacles(pl, mt)
+    keep = np.ones(len(pts), bool)
+    for m in skip:                                    # the plug starts at the FC edge: ignore the FC and the mount round it
+        lo, hi = m.bounds; keep &= ~np.all((pts > lo - 1) & (pts < hi + 1), axis=1)
+    pts_u = pts[keep]
+    (x0, y0, _), (x1, y1, _) = fc.bounds; zc = fc.bounds.mean(0)[2]
+    r = np.hypot(USB_PLUG[0], USB_PLUG[1]) / 2
+    best = (-1e9, None)
+    starts = [np.array([x0 - 1, y, zc]) for y in np.linspace(y0 + 6, y1 - 6, 5)] + \
+             [np.array([x, s_ * (y1 + 1), zc]) for x in np.linspace(x0 + 6, x1 - 6, 4) for s_ in (1, -1)]
+    for st in starts:
+        for az in np.radians(np.arange(90, 271, 10)) if st[0] < x0 else np.radians(np.arange(0, 360, 15)):
+            for el in np.radians(np.arange(-40, 41, 10)):
+                dv = np.array([np.cos(el) * np.cos(az), np.cos(el) * np.sin(az), np.sin(el)])
+                if (st[1] > y1 and dv[1] <= 0) or (st[1] < y0 and dv[1] >= 0): continue
+                c = seg_clear(st + dv * (r + 1), st + dv * USB_PLUG[2], r, pts_u)
+                if c > best[0]: best = (c, st, dv)
+    out = {"fc_usb": {"clear": round(float(best[0]), 1), "from": best[1].round(1).tolist(), "dir": best[2].round(2).tolist()}}
+    # the Radxa's three ports (board X 9.2..58.5 from the SD end, H) and the microSD (SD end, card along the board)
+    rb = pl["Radxa Zero 3W"].bounds
+    rad_pts = pts[~np.all((pts > rb[0] - 0.5) & (pts < rb[1] + 0.5), axis=1)]
+    if opt["name"].startswith("A"):
+        xs = rb[0][0]
+        plug = box([xs + 9.2, rb[0][1], rb[1][2]], [xs + 58.5, rb[1][1], rb[1][2] + RADXA_PLUG])
+        sd = box([xs - SD_PULL, rb[0][1] + 0.5, 6.0 - 22.3], [xs, rb[0][1] + 5.0, 6.0 - 7.8])
+    else:
+        ys = rb[0][1]
+        plug = box([rb[0][0] - RADXA_PLUG, ys + 9.2, rb[0][2]], [rb[0][0], ys + 58.5, rb[1][2]])
+        sd = box([rb[0][0] + 7.8, ys - SD_PULL, rb[0][2] - 3.0], [rb[0][0] + 22.3, ys, rb[0][2]])
+    out["radxa_plugs"] = round(float(box_clear(plug, rad_pts)), 1)
+    out["radxa_sd"] = round(float(box_clear(sd, rad_pts)), 1)
+    return out
+
+
 def check(opt):
     r = {"option": opt["name"], "note": opt["note"], "parts": {}}
     keep = ("receiver v3 (latch)", "receiver TPU end pieces (latch, E)", "cartridge v6 (latch)", "FC", "frame plate (Bee35 carbon)",
             "mount + nose legs (Scout)", "flow MTF-02P")
     for n, m in {**opt["placed"], **opt["mount"]}.items():
         pts = surf_pts(m)
-        g, rod = rod_gap(pts)
+        g, rod = rod_gap(pts, skip_tie=n not in opt["placed"])
         inside = bool(SHELL.find_simplex(pts).min() >= 0)
         r["parts"][n] = {"bounds": m.bounds.round(1).tolist(), "rod_gap": round(float(g), 1), "nearest_rod": rod,
                          "inside_shell": inside, "wash_gap": round(float(wash_gap(pts)), 1),
@@ -172,11 +258,21 @@ def check(opt):
     ds = np.linspace(-30, 30, 1201)
     worst = [max(abs(c_in[0] + d * m_cs_in / mass), abs(c_out[0] + d * m_cs_out / m_out)) for d in ds]
     k = int(np.argmin(worst)); r["reslide"] = {"catch_set_dx": round(float(ds[k]), 1), "cg_x_worst": round(float(worst[k]), 2)}
+    allm = list(opt["placed"].values()) + list(opt["mount"].values())
+    lo = np.min([m.bounds[0] for m in allm], axis=0); hi = np.max([m.bounds[1] for m in allm], axis=0)
+    allp = np.vstack([m.bounds for n, (m, w, g) in P.items() if not n.startswith("Overseer")] + [m.bounds for m in allm])
+    r["compact"] = {"tail_bay_box": [lo.round(1).tolist(), hi.round(1).tolist()], "tail_bay_L": round(float(np.prod(hi - lo)) / 1e6, 3),
+                    "electronics_L": round(float(sum(np.prod(np.diff(m.bounds, axis=0)) for m in opt["placed"].values())) / 1e6, 3),
+                    "drone_extents": (allp.max(0) - allp.min(0)).round(1).tolist()}
+    fc_ = [m.center_mass for m in opt["mount"].values()][0]
+    r["cg_per_g_at_mount"] = round(float(abs(fc_[0]) / mass), 3)
+    r["access"] = access(opt)
     el = [n for n in opt["placed"]]
     r["ok"] = {"cage_first": all(r["parts"][n]["rod_gap"] >= CAGE_FIRST and r["parts"][n]["inside_shell"] for n in el),
                "wash": all(r["parts"][n]["wash_gap"] >= WASH for n in r["parts"]),
                "fit": all(min(p["part_gap"].values()) >= GAP for n, p in r["parts"].items() if n in el),
-               "balance": max(r["cg_off_in"], r["cg_off_out"]) <= 3.0}
+               "balance": max(r["cg_off_in"], r["cg_off_out"]) <= 3.0,
+               "access": r["access"]["fc_usb"]["clear"] >= 0 and r["access"]["radxa_plugs"] >= 0 and r["access"]["radxa_sd"] >= 0}
     return r
 
 
@@ -215,16 +311,18 @@ def picture(opts, res, path):
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     c0_in, c0_out, m0 = layout_cg({n: trimesh.creation.box(bounds=P[n][0].bounds) for n in MOVED}, [])
+    asdrawn = dict(name="as drawn", placed={n: P[n][0] for n in MOVED}, mount={})
+    base_fc = access(dict(asdrawn, name="A"))["fc_usb"]
     opts = [option_a(), option_b()]
     res = [check(o) for o in opts]
     base = {"cg_in": c0_in.round(2).tolist(), "cg_out": c0_out.round(2).tolist(), "mass": round(m0, 1),
-            "R_disk": round(float(R_DISK), 1), "rear_disk_centres": [c.round(1).tolist() for c in REAR]}
+            "R_disk": round(float(R_DISK), 1), "rear_disk_centres": [c.round(1).tolist() for c in REAR], "fc_usb": base_fc}
     json.dump({"layout_as_drawn": base, "options": res}, open(os.path.join(OUT, "result.json"), "w"), indent=1)
     picture(opts, res, os.path.join(OUT, "preview.png"))
     print("layout as drawn (tail bay of the cage session):", base)
     for r in res:
         print(f"\n{r['option']}: {r['note']}\n  CG pack in {r['cg_in']} ({r['cg_off_in']}), pack out {r['cg_out']} ({r['cg_off_out']}), {r['mass']} g; "
-              f"catch set re-slide {r['reslide']}; ok {r['ok']}")
+              f"catch set re-slide {r['reslide']}; ok {r['ok']}\n  compact {r['compact']}\n  access {r['access']}; CG moves {r['cg_per_g_at_mount']} mm a gram at the mount")
         for n, p in r["parts"].items():
             print(f"  {n:18s} rod {p['rod_gap']:6.1f} inside {p['inside_shell']}  wash {p['wash_gap']:7.1f}  min part gap "
                   f"{min(p['part_gap'].values()):6.1f} ({min(p['part_gap'], key=p['part_gap'].get)})  {p['bounds']}")
