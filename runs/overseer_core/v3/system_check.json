@@ -457,7 +457,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "hub deck",
-    "overlap_mm3": 811.99,
+    "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -817,7 +817,7 @@
    {
     "a": "buck 12 V",
     "b": "hub deck",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": -0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -889,7 +889,7 @@
    {
     "a": "wires",
     "b": "hub deck",
-    "overlap_mm3": 7.36,
+    "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -971,11 +971,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3254.77,
+  "mass_g": 3257.27,
   "cg": [
-   68.84,
-   -0.05,
-   15.11
+   68.45,
+   -0.06,
+   15.03
   ],
   "parts": [
    {
@@ -1343,13 +1343,13 @@
    },
    {
     "name": "hub deck",
-    "mass_g": 65.5,
+    "mass_g": 68.0,
     "cg": [
-     72.57,
-     -0.0,
-     9.95
+     53.92,
+     -0.31,
+     6.11
     ],
-    "tag": "E",
+    "tag": "M",
     "swap": false
    },
    {
@@ -1382,11 +1382,11 @@
    82.0
   ],
   "cg_offset": [
-   2.44,
-   -0.05,
-   -66.89
+   2.05,
+   -0.06,
+   -66.97
   ],
-  "cg_offset_mm": 66.93
+  "cg_offset_mm": 67.0
  },
  "balance": {
   "applies": true,
@@ -1403,32 +1403,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3254.77,
+    "mass_g": 3257.27,
     "cg_offset": [
-     2.43,
-     -0.05,
-     -66.89
+     2.05,
+     -0.06,
+     -66.97
     ],
-    "horizontal_mm": 2.43,
-    "axial_mm": -66.89,
+    "horizontal_mm": 2.05,
+    "axial_mm": -66.97,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2499.17,
+    "mass_g": 2501.67,
     "cg_offset": [
-     30.23,
-     -0.07,
-     -48.96
+     29.7,
+     -0.08,
+     -49.09
     ],
-    "horizontal_mm": 30.23,
-    "axial_mm": -48.96,
+    "horizontal_mm": 29.7,
+    "axial_mm": -49.09,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 30.23,
+  "worst_horizontal_mm": 29.7,
   "pass_": true
  },
  "probes": {
@@ -3146,7 +3146,7 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3254.77,
+  "mass_g": 3257.27,
   "part_budgets_g": {
    "hub deck": 55.0,
    "flow clip": 5.0
@@ -3154,17 +3154,17 @@
   "over_parts": [
    {
     "name": "hub deck",
-    "mass_g": 65.5,
+    "mass_g": 68.0,
     "budget_g": 55.0
    }
   ],
   "budget_g": 2200.0,
-  "pct": 147.9,
+  "pct": 148.1,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3255 of 2200 g (148 %) (E) over budget (total, hub deck 65.5 of 55 g), CG 2.4 mm off thrust axis (E) [+2.4, -0.1, -66.9], 30.2 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
+ "summary": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3257 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 2.0 mm off thrust axis (E) [+2.0, -0.1, -67.0], 29.7 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
  "pass": false
 }

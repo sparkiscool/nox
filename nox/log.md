@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer hub deck v9): saved, print/overseer_hub_deck_v9.stl 68.0 g (M), worst 0.30, solid_check + build test PASS, first mode 659 Hz, FE insert pull <= 70 N; low brace roots. v8 build test FAIL (+y tower via the centreline) fixed by drawn bars to the mid feet. Open: head mode with the socket springs (cage).
 - 27 Oct (Overseer hub deck v6/v8): v6 (tower, braces at z 22/32) FAILED strength 2.72 (top hit, keel/front-foot joint); DEFAULT: brace roots lowered to z 12/18 (cage what-if: max root force 190 vs 403 N, tipping 8 vs 20 N m, head 166 -> 155 Hz; alt: v7 with more material, stopped). v8 running on the low roots.
 - 27 Oct (Overseer core v3, cage + arm ask): the L2 braces root on a tower in the hub deck (B over a top-plate block A: 788 N a fastener), closed by deep webs to 4 mid feet + feet (60, ±17) after 2 review FAILs (pried toe; one-way pads); concept PASS. Hub deck v6 next (per-case root forces). v4/v5 not to print.
 - 27 Oct (Overseer hub deck v4): READY, print/overseer_hub_deck_v4.stl 38.9 g (M), worst 0.24 (keels push), solid_check PASS, run 1.60 h (smoke 0.94..2.25), 6.25 members; flow clip v1 READY (5.0 g); keel hub coupon v2 (12.0 g). Rear Pi posts 99.8 % in the build drawn test (reported).

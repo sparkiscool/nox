@@ -1,17 +1,17 @@
 {
- "mass_g": 3254.77,
+ "mass_g": 3257.27,
  "tw": 2.03,
  "cg": [
-  68.84,
-  -0.05,
-  15.11
+  68.45,
+  -0.06,
+  15.03
  ],
  "requirements": {
   "hub deck": {
    "worst_case": "braces pull alone (E)",
-   "max_bolt_N": 194.5,
+   "max_bolt_N": 194.8,
    "max_shear_N": 175.1,
-   "max_axial_N": 84.6
+   "max_axial_N": 85.3
   },
   "hub deck, front 4 feet alone (compliant deck bound)": {
    "worst_case": "braces pull alone (E)",
@@ -39,7 +39,7 @@
   }
  },
  "wash_pct": {
-  "hub deck + Pi + bays": 0.92,
+  "hub deck + Pi + bays": 0.93,
   "flow clip": 0.0,
   "battery slot": 1.83
  },
@@ -291,7 +291,7 @@
   "hub deck": 55,
   "flow clip": 5
  },
- "system": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3255 of 2200 g (148 %) (E) over budget (total, hub deck 65.5 of 55 g), CG 2.4 mm off thrust axis (E) [+2.4, -0.1, -66.9], 30.2 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
+ "system": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3257 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 2.0 mm off thrust axis (E) [+2.0, -0.1, -67.0], 29.7 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
  "coupon": {
   "floor_t": 4.0,
   "post_h": 5.0,

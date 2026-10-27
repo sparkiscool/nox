@@ -267,9 +267,9 @@ def tower():
 
 DECK, CLIP = hub_deck(), flow_clip()
 DECK = uni([DECK, tower()])
-HUB_RUN = os.path.join(ROOT, "runs", "overseer_hub_deck", "v6", "overseer_hub_deck.stl")   # v6: keels + braces (v4/v5 keels only)   # the saved piece (topology run v4), drone frame
+HUB_RUN = os.path.join(ROOT, "runs", "overseer_hub_deck", "v9", "overseer_hub_deck.stl")   # v9: keels + braces on the tower (saved)
 if os.path.exists(HUB_RUN) and not os.environ.get("CORE_CONCEPT"):
-    DECK = trimesh.load(HUB_RUN); say(f"hub deck: the v4 run's mesh ({DECK.volume * 1.27e-3:.1f} g PETG, M) in the assembly (CORE_CONCEPT=1: the concept body)")
+    DECK = trimesh.load(HUB_RUN); say(f"hub deck: the saved run mesh ({DECK.volume * 1.27e-3:.1f} g PETG, M) in the assembly (CORE_CONCEPT=1: the concept body)")
 
 # ---------------------------------------------------------------- wiring: drawn routes, each ending in a plug (clean wiring, L 8)
 W = {

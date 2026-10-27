@@ -16,7 +16,9 @@ from topo.material import MATERIALS, stiffness
 from solid_check import voxels
 
 MESH = sys.argv[1]; OUTJ = sys.argv[2] if len(sys.argv) > 2 else None; H = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
-R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v2", "result.json")))
+R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", "result.json")))   # core v3 (the tower)
+RF = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", "core_root_forces_low.json")))
+PTS = {k: (np.array(v["core"]), np.array(v["lug"])) for k, v in RF["points"].items()}   # core = the tube end
 A = json.load(open(os.path.join(HERE, "overseer_core.assembly.json"))); PM = {p["name"]: p for p in A["parts"]}
 mat = MATERIALS["PETG"]; RHO = mat.density * 1e-9                      # t/mm3 (mm, N, s)
 E_TUBE, A_TUBE = 100e3, np.pi * (3.0 ** 2 - 2.0 ** 2)                  # 6/4 carbon tube (E), MPa and mm2
@@ -64,32 +66,35 @@ for k in range(len(f)):
 
 lu = sla.splu(Kf)
 sock = {}
-SK = R["socket"]
-for sy, (a_, b_) in R["keels"].items():
-    a_, b_ = np.array(a_), np.array(b_); d = (b_ - a_) / np.linalg.norm(b_ - a_)
+for nm_, (a_, b_) in PTS.items():
+    d = (b_ - a_) / np.linalg.norm(b_ - a_); L_s = 15.6 if nm_.startswith("L2") else 15.0
     rel = X - a_; t = rel @ d; r = np.linalg.norm(rel - np.outer(t, d), axis=1)
-    wall = (t >= SK["off"]) & (t <= SK["off"] + SK["l"]) & (r >= SK["d"] / 2 - 0.2) & (r <= SK["d"] / 2 + 1.2 * H)
-    F = np.zeros(3 * nn); F.reshape(nn, 3)[wall] = -d / wall.sum()     # 1 N pushing the socket in along the keel
+    wall = (t >= 0) & (t <= L_s) & (r >= 3.1 - 0.2) & (r <= 3.1 + 1.2 * H)
+    F = np.zeros(3 * nn); F.reshape(nn, 3)[wall] = -d / wall.sum()     # 1 N pushing the socket in along its tube
     u = np.zeros(3 * nn); u[fd] = lu.solve(F[fd])
     defl = float(-(u.reshape(nn, 3)[wall] @ d).mean())
-    k_s = 1.0 / defl; L_k = float(np.linalg.norm(b_ - a_)) - SK["off"]; k_t = E_TUBE * A_TUBE / L_k
-    sock[sy] = {"nodes": int(wall.sum()), "k_socket_N_per_mm": round(k_s), "k_keel_tube_N_per_mm": round(k_t),
-                "series_freq_factor": round(float(np.sqrt(1.0 / (1.0 + k_t / k_s))), 3), "defl_at_387N_mm": round(387.3 * defl, 3)}
+    k_s = 1.0 / defl; L_k = float(np.linalg.norm(b_ - a_)); k_t = E_TUBE * A_TUBE / L_k
+    sock[nm_] = {"nodes": int(wall.sum()), "k_socket_N_per_mm": round(k_s), "k_tube_N_per_mm": round(k_t),
+                 "series_freq_factor": round(float(np.sqrt(1.0 / (1.0 + k_t / k_s))), 3)}
 # FE bolt reactions (review: "the topology run reports the FE value"): both keels push 387.3 N (F) and the deck's payload at 35 g up;
 # each foot's reaction = the sum of K u over its fixed nodes (the plate + M3 + insert, rigid here)
-F = np.zeros(3 * nn)
-for sy, (a_, b_) in R["keels"].items():
-    a_, b_ = np.array(a_), np.array(b_); d = (b_ - a_) / np.linalg.norm(b_ - a_)
-    rel = X - a_; t = rel @ d; r = np.linalg.norm(rel - np.outer(t, d), axis=1)
-    wall = (t >= SK["off"]) & (t <= SK["off"] + SK["l"]) & (r >= SK["d"] / 2 - 0.2) & (r <= SK["d"] / 2 + 1.2 * H)
-    F.reshape(nn, 3)[wall] += -d * 387.3 / wall.sum()
-F.reshape(nn, 3)[:, 2] -= mass * 35 * 9810.0                          # 35 g up (crash 4 direction): inertia down, N (t x mm/s2)
-u = np.zeros(3 * nn); u[fd] = lu.solve(F[fd]); Rf = (K @ u - F).reshape(nn, 3)
-react = {}
-for x, y in feet:
-    sel = fixed & (np.hypot(X[:, 0] - x, X[:, 1] - y) <= 7.0)
-    v = Rf[sel].sum(0); react[f"({x:g}, {y:g})"] = {"N": round(float(np.linalg.norm(v)), 1), "shear_N": round(float(np.hypot(v[0], v[1])), 1), "axial_N": round(float(v[2]), 1)}
-res_react = {"case": "both keels push 387.3 N (F) + 35 g up", "per_foot": react, "max_N": max(r_["N"] for r_ in react.values())}
+DIRS = {0: [1, 0, 0], 4: [0, 0, 1]}
+res_react = {}
+for k_, dv in DIRS.items():
+    case = next(c for c in RF["cases"] if c.startswith(f"crash {k_} "))
+    F = np.zeros(3 * nn)
+    for nm_, n_ in RF["cases"][case].items():
+        a_, b_ = PTS[nm_]; d = (b_ - a_) / np.linalg.norm(b_ - a_); L_s = 15.6 if nm_.startswith("L2") else 15.0
+        rel = X - a_; t = rel @ d; r = np.linalg.norm(rel - np.outer(t, d), axis=1)
+        wall = (t >= 0) & (t <= L_s) & (r >= 2.9) & (r <= 3.1 + 1.2 * H)
+        F.reshape(nn, 3)[wall] += d * n_ * 1.1 / wall.sum()             # SF 1.1 (crash), + tension pulls toward the head
+    F.reshape(nn, 3)[:] -= np.outer(mass, np.array(dv, float)) * 35 * 9810.0 * 1.1
+    u = np.zeros(3 * nn); u[fd] = lu.solve(F[fd]); Rf = (K @ u - F).reshape(nn, 3)
+    react = {}
+    for x, y in feet:
+        sel = fixed & (np.hypot(X[:, 0] - x, X[:, 1] - y) <= 7.0)
+        v = Rf[sel].sum(0); react[f"({x:g}, {y:g})"] = {"N": round(float(np.linalg.norm(v)), 1), "pull_N": round(float(-v[2]), 1)}
+    res_react[case] = {"per_foot": react, "max_N": max(r_["N"] for r_ in react.values()), "max_pull_N": max(r_["pull_N"] for r_ in react.values())}
 res = {"mesh": os.path.relpath(MESH, ROOT), "pitch_mm": H, "elements": int(len(el)), "dofs_free": int(len(fd)), "material": "PETG (nox/topo)",
        "masses_g": {"Pi 5 + cooler on the post tops": 55.0, "UBEC": 15.0, "buck": 6.0}, "modes": modes, "keel_sockets": sock, "bolt_reactions_fe": res_react,
        "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses); socket stiffness along the keel"}
