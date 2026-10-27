@@ -33,7 +33,7 @@ States: DESIGN · BUILT (passes the checks, no file) · READY (file committed in
 ## Scout v3
 | Part | Doc / scripts | Version | State | File (`print/`) | g | Next (owner) |
 |---|---|---|---|---|---|---|
-| Scout v3 (scope) | `scout/v3/README.md`; aircraft `scout/scout.md`; bottom concept `scout/v3/bottom_concept.py`, `runs/scout_bottom/concept/` | v3 | **DESIGN** | none | | Bottom concept B (27 Oct, DEFAULT): 8 wheels on the shell crown (box catch unchanged), pack 1.0 under the FC, 2 latch rails in the shell's bottom ring replace the receiver box (swap parts 165 -> 93 g, E); box swap ask: head stop +7.4. Next: Scout v3 system pass on B (frame model sizes the shell; rails with the battery latch owner); camera mount; snap-on cover for spare packs |
+| Scout v3 (scope) | `scout/v3/README.md`; aircraft `scout/scout.md`; bottom concept `scout/v3/bottom_concept.py`, `runs/scout_bottom/concept/` | v3 | **DESIGN** | none | | Catch concept D (27 Oct, DEFAULT; review pending): drum cage, its belly ring = the shared 220 rim with corner rollers on 4 box posts; pack 1.0 under the FC, 2 latch rails replace the receiver box (swap parts 165 -> 102 g, E). Next: Spark's go on D, then the Scout v3 system pass; box catch draws the posts. Camera mount; spare-pack cover |
 | Frame plate | dimensions C | Bee35 carbon 3.5, cut down | **ON HAND** | n/a | 24 to 32 (E) | Weigh (P) |
 
 ## Overseer

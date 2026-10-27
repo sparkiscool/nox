@@ -1,12 +1,12 @@
-<title>Scout Belly Catch</title>
+<title>Nox Catch Concepts</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one column drawing sheet; a live 3D view of the chosen layout, then the three sections to one scale, then the numbers */
+/* Layout: one column drawing sheet: the answer, a live 3D view, three sections to one scale, the comparison, the notes */
 :root {
   --paper: #f4f6f4; --sheet: #ffffff; --ink: #1c2421; --muted: #5c6a64; --rule: #d5ddd9;
-  --carbon: #26302c; --petg: #1f8a7a; --pack: #d08a1e; --funnel: #6f87a8; --funnel-fill: rgba(111,135,168,.16);
+  --carbon: #26302c; --petg: #1f8a7a; --pack: #d08a1e; --post: #8a4fb0; --funnel: #6f87a8; --funnel-fill: rgba(111,135,168,.16);
   --prop: #a7b3ae; --good: #2f7d4f; --bad: #b4462f; --accent: #1f8a7a;
   --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
   --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -14,11 +14,11 @@
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
-  --carbon: #cfd9d4; --petg: #4cc2ae; --pack: #e6a64a; --funnel: #8fa7c7; --funnel-fill: rgba(143,167,199,.14);
+  --carbon: #cfd9d4; --petg: #4cc2ae; --pack: #e6a64a; --post: #c08ee0; --funnel: #8fa7c7; --funnel-fill: rgba(143,167,199,.14);
   --prop: #4d5a55; --good: #6cc08d; --bad: #e07a62; --accent: #4cc2ae; color-scheme: dark } }
 :root[data-theme="dark"] {
   --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
-  --carbon: #cfd9d4; --petg: #4cc2ae; --pack: #e6a64a; --funnel: #8fa7c7; --funnel-fill: rgba(143,167,199,.14);
+  --carbon: #cfd9d4; --petg: #4cc2ae; --pack: #e6a64a; --post: #c08ee0; --funnel: #8fa7c7; --funnel-fill: rgba(143,167,199,.14);
   --prop: #4d5a55; --good: #6cc08d; --bad: #e07a62; --accent: #4cc2ae; color-scheme: dark }
 body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
@@ -26,62 +26,60 @@ main { max-width: 1080px; margin: 0 auto; display: grid; gap: 28px; }
 h1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: .01em; }
 h1 { font-size: 2rem; line-height: 1.1; }
 h2 { font-size: 1.3rem; }
-p { margin: 0; max-width: 68ch; }
+p { margin: 0; max-width: 70ch; }
 .eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 header { display: grid; gap: 10px; }
 .sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
 .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
-.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
 .seg button { font: 500 .85rem var(--f-body); background: transparent; color: var(--ink); border: 0; padding: 7px 12px; cursor: pointer; }
 .seg button + button { border-left: 1px solid var(--rule); }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--sheet); }
-.seg button:focus-visible, .chk:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
-.chk { font-size: .85rem; color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 canvas { width: 100%; height: auto; aspect-ratio: 16 / 10; max-width: 100%; display: block; touch-action: none; cursor: grab; border-radius: 4px; background: var(--paper); }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--muted); }
 .legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
-.sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 @media (max-width: 760px) { .sections { grid-template-columns: 1fr; } }
-.sec { display: grid; gap: 6px; min-width: 0; }
+.sec { display: grid; gap: 6px; min-width: 0; align-content: start; }
 .sec h3 { font: 600 1.05rem var(--f-display); margin: 0; }
 .sec .tag { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); }
 .sec svg { width: 100%; height: auto; display: block; }
-.verdict { font-size: .85rem; }
 .scroll { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 620px; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 700px; }
 th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
 th { font: 500 .75rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
-td.n { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-tr.rec td { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+td.n { font-variant-numeric: tabular-nums; }
+th.rec, td.rec { background: color-mix(in srgb, var(--accent) 9%, transparent); }
 .pill { font: 500 .72rem var(--f-mono); padding: 2px 7px; border-radius: 99px; border: 1px solid currentColor; white-space: nowrap; }
 .ok { color: var(--good); } .no { color: var(--bad); }
-ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch; }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 74ch; }
 .mono { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
 </style>
 
 <main>
   <header>
-    <span class="eyebrow">Scout v3 · bottom and landing · concept check · 27 Oct</span>
-    <h1>Land on the cage, tuck the pack, drop the receiver box</h1>
-    <p>The box funnel stays exactly as built. What changes is the Scout: one geodesic shell whose lower half is the funnel's negative, its 8 catch wheels on the shell's crown, the pack pulled up to the FC, and the 94 g receiver box replaced by two latch rails that are part of the shell's bottom ring. Numbers are E (concept geometry) unless tagged.</p>
+    <span class="eyebrow">Box catch · Scout v3 · Overseer · concept check · 27 Oct</span>
+    <h1>Turn the funnel inside out: four posts that only meet the bottom opening</h1>
+    <p id="lede"></p>
   </header>
 
   <section class="sheet" aria-label="3D view">
     <div class="bar">
-      <div class="seg" role="group" aria-label="Layout">
-        <button id="vB" aria-pressed="true">B · shell catch</button>
-        <button id="vA" aria-pressed="false">A · today's latch</button>
-        <button id="vC" aria-pressed="false">C · belly catch</button>
+      <div class="seg" role="group" aria-label="View">
+        <button id="v-ds" aria-pressed="true">Scout on the posts</button>
+        <button id="v-do" aria-pressed="false">Overseer on the posts</button>
+        <button id="v-b" aria-pressed="false">Scout B in today's funnel</button>
       </div>
-      <label class="chk"><input type="checkbox" id="fun" checked> funnel</label>
     </div>
-    <canvas id="cv" width="1280" height="800" aria-label="3D view of the selected layout seated in the funnel; drag to turn"></canvas>
+    <canvas id="cv" width="1280" height="800" aria-label="3D view; drag to turn"></canvas>
     <div class="legend">
-      <span><i style="background:var(--carbon)"></i>carbon (6 mm equator, 3 mm rest)</span>
-      <span><i style="background:var(--petg)"></i>printed latch parts</span>
-      <span><i style="background:var(--pack)"></i>pack + cartridge</span>
-      <span><i style="background:var(--funnel)"></i>box funnel faces</span>
-      <span><i style="background:var(--prop)"></i>props, motors, FC, plate</span>
+      <span><i style="background:var(--post)"></i>box posts</span>
+      <span><i style="background:var(--petg)"></i>rim rollers, latch rails</span>
+      <span><i style="background:var(--carbon)"></i>cage (6 mm rim and equator, 3 mm rest)</span>
+      <span><i style="background:var(--pack)"></i>cartridge</span>
+      <span><i style="background:var(--prop)"></i>props, motors, frame, Overseer parts</span>
+      <span><i style="background:var(--funnel)"></i>today's funnel</span>
     </div>
     <p class="mono" id="cap"></p>
   </section>
@@ -89,77 +87,86 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; max-width: 72ch; }
   <section class="sheet" aria-label="Sections">
     <h2>Side sections, one scale</h2>
     <div class="sections" id="secs"></div>
-    <p class="mono">Seat frame = drone frame of the seated Scout (x forward, z up, plate top z 22). Funnel line: the ±x face, |x| = 82.7 + z, open below z 12.8 (C, dimensions G). Grid 20 mm.</p>
+    <p class="mono">Seat frames: posts, z 0 = the rim; funnel, z 0 = the Scout's seat (faces |x| = 82.7 + z). x forward. Grid 20 mm.</p>
   </section>
 
-  <section class="sheet" aria-label="Numbers">
-    <h2>Numbers</h2>
+  <section class="sheet" aria-label="Comparison">
+    <h2>B, C and D side by side</h2>
     <div class="scroll"><table id="tbl"></table></div>
-    <p class="mono" id="sc"></p>
   </section>
 
-  <section class="sheet" aria-label="What it changes">
-    <h2>What B changes, and what it leaves</h2>
+  <section class="sheet" aria-label="Notes">
+    <h2>What D means for each part of the system</h2>
     <ul id="notes"></ul>
   </section>
 </main>
 
 <script>
-const D = /*DATA*/null;
+const DATA = /*DATA*/null;
+const BC = DATA.bc, PO = DATA.posts, N = BC.numbers;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-const N = D.numbers;
-const FUN = (() => { const k = 160, top = 77.3, ex = 95.5, ey = 84, zx = 12.8, zy = 1.3, F = [];
-  for (const s of [1, -1]) {
-    F.push([[s*ex,-ex,zx],[s*ex,ex,zx],[s*k,k,top],[s*k,-k,top]]);
-    F.push([[-ey,s*ey,zy],[ey,s*ey,zy],[ex,s*ex,zx],[k,s*k,top],[-k,s*k,top],[-ex,s*ex,zx]]);
-  } return F; })();
-const funC = c => { const r = c.contact_half, h = 56, t = r + h, F = [];
-  const zc = Math.min(...D.C.ids.B.map(i => D.C.nodes[i][2])) - 3;
-  for (const s of [1, -1]) { F.push([[s*r,-r,zc],[s*r,r,zc],[s*t,t,zc+h],[s*t,-t,zc+h]]); F.push([[-r,s*r,zc],[r,s*r,zc],[t,s*t,zc+h],[-t,s*t,zc+h]]); }
-  return F; };
-function boxFaces(b) { const [x0,x1,y0,y1,z0,z1] = b; const P = (x,y,z)=>[x,y,z];
-  return [[P(x0,y0,z0),P(x1,y0,z0),P(x1,y1,z0),P(x0,y1,z0)],[P(x0,y0,z1),P(x1,y0,z1),P(x1,y1,z1),P(x0,y1,z1)],
-    [P(x0,y0,z0),P(x1,y0,z0),P(x1,y0,z1),P(x0,y0,z1)],[P(x0,y1,z0),P(x1,y1,z0),P(x1,y1,z1),P(x0,y1,z1)],
-    [P(x0,y0,z0),P(x0,y1,z0),P(x0,y1,z1),P(x0,y0,z1)],[P(x1,y0,z0),P(x1,y1,z0),P(x1,y1,z1),P(x1,y0,z1)]]; }
-function ring(cx, cy, z, r, n=28) { const p = []; for (let i = 0; i <= n; i++) { const a = 2*Math.PI*i/n; p.push([cx + r*Math.cos(a), cy + r*Math.sin(a), z]); } return p; }
 const MOT = [[1,1],[-1,1],[-1,-1],[1,-1]].map(([a,b]) => [a*N.motor, b*N.motor]);
+const FUN = (() => { const k = 160, top = 77.3, ex = 95.5, ey = 84, zx = 12.8, zy = 1.3, F = [];
+  for (const s of [1, -1]) { F.push([[s*ex,-ex,zx],[s*ex,ex,zx],[s*k,k,top],[s*k,-k,top]]);
+    F.push([[-ey,s*ey,zy],[ey,s*ey,zy],[ex,s*ex,zx],[k,s*k,top],[-k,s*k,top],[-ex,s*ex,zx]]); } return F; })();
+const sh = (b, dz, dx = 0) => [b[0]+dx, b[1]+dx, b[2], b[3], b[4]+dz, b[5]+dz];
+function boxFaces(b) { const [x0,x1,y0,y1,z0,z1] = b;
+  return [[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0]],[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],
+    [[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],[[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]],
+    [[x0,y0,z0],[x0,y1,z0],[x0,y1,z1],[x0,y0,z1]],[[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]]]; }
+function ring(cx, cy, z, r, n = 28) { const p = []; for (let i = 0; i <= n; i++) { const a = 2*Math.PI*i/n; p.push([cx + r*Math.cos(a), cy + r*Math.sin(a), z]); } return p; }
+const C = () => ({ carbon: css('--carbon'), petg: css('--petg'), pack: css('--pack'), post: css('--post'), funnel: css('--funnel'), ff: css('--funnel-fill'), prop: css('--prop') });
 
-function scene(key, withFunnel) {
-  const L = D[key], S = [];
-  const col = { carbon: css('--carbon'), petg: css('--petg'), pack: css('--pack'), funnel: css('--funnel'), ff: css('--funnel-fill'), prop: css('--prop') };
-  if (withFunnel) for (const f of (key === 'C' ? funC(D.C.funnel) : FUN)) S.push({ k: 'poly', p: f, fill: col.ff, stroke: col.funnel, w: 1 });
-  for (const f of boxFaces(N.PLATE)) S.push({ k: 'poly', p: f, fill: col.prop + '55', stroke: col.prop, w: .6 });
-  for (const f of boxFaces(N.FC)) S.push({ k: 'poly', p: f, fill: col.prop + '66', stroke: col.prop, w: .6 });
-  for (const [x,y] of MOT) { S.push({ k: 'line', p: ring(x, y, N.prop_z, N.prop_r, 40), stroke: col.prop, w: 1.2 }); S.push({ k: 'line', p: ring(x, y, 36, 14, 16), stroke: col.prop, w: 1 });
-    S.push({ k: 'line', p: [[x*.55, y*.55, 20], [x, y, 20]], stroke: col.prop, w: 5 }); }
-  for (const f of boxFaces(L.cart)) S.push({ k: 'poly', p: f, fill: col.pack + '30', stroke: col.pack, w: 1 });
-  for (const f of boxFaces(L.pack)) S.push({ k: 'poly', p: f, fill: col.pack + '70', stroke: col.pack, w: .6 });
-  for (const [, b] of L.receiver.boxes) for (const f of boxFaces(b)) S.push({ k: 'poly', p: f, fill: col.petg + '40', stroke: col.petg, w: .8 });
-  for (const [a, b, d] of L.rods) S.push({ k: 'line', p: [L.nodes[a], L.nodes[b]], stroke: col.carbon, w: d === 6 ? 3.2 : 1.6 });
-  L.nodes.forEach((p, i) => S.push({ k: 'dot', p: [p], fill: L.tags[i] === 'wheel node' ? col.petg : col.carbon, r: L.tags[i] === 'wheel node' ? 5 : 3 }));
+function scoutItems(S, L, dz, c) {   // L: layout with nodes/rods (already in this frame), core parts shifted by dz
+  S.push(...boxFaces(sh(N.PLATE, dz)).map(f => ({ k: 'poly', p: f, fill: c.prop + '55', stroke: c.prop, w: .6 })));
+  S.push(...boxFaces(sh(N.FC, dz)).map(f => ({ k: 'poly', p: f, fill: c.prop + '66', stroke: c.prop, w: .6 })));
+  for (const [x, y] of MOT) { S.push({ k: 'line', p: ring(x, y, N.prop_z + dz, N.prop_r, 40), stroke: c.prop, w: 1.2 });
+    S.push({ k: 'line', p: ring(x, y, 36 + dz, 14, 16), stroke: c.prop, w: 1 }); S.push({ k: 'line', p: [[x*.55, y*.55, 20+dz], [x, y, 20+dz]], stroke: c.prop, w: 5 }); }
+  S.push(...boxFaces(sh(L.cart, dz)).map(f => ({ k: 'poly', p: f, fill: c.pack + '40', stroke: c.pack, w: 1 })));
+  for (const b of L.boxes) S.push(...boxFaces(sh(b, dz)).map(f => ({ k: 'poly', p: f, fill: c.petg + '40', stroke: c.petg, w: .8 })));
+  for (const [a, b, d] of L.rods) S.push({ k: 'line', p: [L.nodes[a], L.nodes[b]], stroke: c.carbon, w: d === 6 ? 3.2 : 1.6 });
+  for (const [p, q] of (L.links || [])) S.push({ k: 'line', p: [p, q], stroke: c.carbon, w: 1.2 });
+}
+function postItems(S, c) { for (const [a, b] of PO.posts) S.push({ k: 'line', p: [a, b], stroke: c.post, w: 12 }); }
+function scene(v) {
+  const c = C(), S = [];
+  if (v === 'ds') { const L = PO.scout; postItems(S, c);
+    scoutItems(S, { ...L, boxes: L.boxes }, BC.D.dz, c);
+    L.nodes.forEach((p, i) => S.push({ k: 'dot', p: [p], fill: BC.D.tags[i] === 'wheel node' ? c.petg : c.carbon, r: BC.D.tags[i] === 'wheel node' ? 5 : 3 })); }
+  if (v === 'do') { const O = PO.overseer; postItems(S, c);
+    for (const [nm, b] of Object.entries(O.parts)) { const bb = [b[0][0], b[1][0], b[0][1], b[1][1], b[0][2], b[1][2]];
+      const col = /cartridge|receiver|pack/.test(nm) ? c.pack : c.prop;
+      S.push(...boxFaces(bb).map(f => ({ k: 'poly', p: f, fill: col + (/prop/.test(nm) ? '18' : '38'), stroke: col, w: .6 }))); }
+    for (const [a, b] of O.shell.rods) S.push({ k: 'line', p: [O.shell.nodes[a], O.shell.nodes[b]], stroke: c.carbon + '55', w: 1.6 });
+    const R = O.rim_nodes; for (let i = 0; i < 8; i++) S.push({ k: 'line', p: [R[i], R[(i+1)%8]], stroke: c.carbon, w: 3.2 });
+    R.forEach((p, i) => S.push({ k: 'dot', p: [p], fill: i % 2 ? c.petg : c.carbon, r: i % 2 ? 5 : 3 })); }
+  if (v === 'b') { const L = BC.B; for (const f of FUN) S.push({ k: 'poly', p: f, fill: c.ff, stroke: c.funnel, w: 1 });
+    scoutItems(S, { nodes: L.nodes, rods: L.rods, links: L.links, cart: L.cart, boxes: L.receiver.boxes.map(x => x[1]) }, 0, c);
+    L.nodes.forEach((p, i) => S.push({ k: 'dot', p: [p], fill: L.tags[i] === 'wheel node' ? c.petg : c.carbon, r: L.tags[i] === 'wheel node' ? 5 : 3 })); }
   return S;
 }
-
 const cv = document.getElementById('cv'), cx = cv.getContext('2d');
-let view = 'B', yaw = -0.62, pitch = 0.42, showF = true;
+let view = 'ds', yaw = -0.62, pitch = 0.36;
+const SCALE = { ds: 300, do: 760, b: 330 }, ZC = { ds: 30, do: 60, b: 10 };
 function draw() {
   const W = cv.width, H = cv.height; cx.clearRect(0, 0, W, H);
-  const cy_ = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), s = Math.min(W, H) / 330;
-  const pr = ([x, y, z]) => { const X = x*cy_ - y*sy, Y = x*sy + y*cy_; const Z = z - 10; return [W/2 + X*s, H*0.56 - (Z*cp - Y*sp)*s, Y*cp + Z*sp]; };
-  const S = scene(view, showF).map(o => { const q = o.p.map(pr); return { ...o, q, d: q.reduce((a, v) => a + v[2], 0) / q.length }; });
+  const cy_ = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), s = Math.min(W, H) / SCALE[view];
+  const pr = ([x, y, z]) => { const X = x*cy_ - y*sy, Y = x*sy + y*cy_, Z = z - ZC[view]; return [W/2 + X*s, H*0.55 - (Z*cp - Y*sp)*s, Y*cp + Z*sp]; };
+  const S = scene(view).map(o => { const q = o.p.map(pr); return { ...o, q, d: q.reduce((a, v) => a + v[2], 0) / q.length }; });
   S.sort((a, b) => b.d - a.d);
   for (const o of S) {
     cx.beginPath(); o.q.forEach(([x, y], i) => i ? cx.lineTo(x, y) : cx.moveTo(x, y));
     if (o.k === 'poly') { cx.closePath(); cx.fillStyle = o.fill; cx.fill(); cx.strokeStyle = o.stroke; cx.lineWidth = o.w; cx.stroke(); }
-    else if (o.k === 'line') { cx.strokeStyle = o.stroke; cx.lineWidth = o.w * s / 2.2; cx.lineCap = 'round'; cx.stroke(); }
+    else if (o.k === 'line') { cx.strokeStyle = o.stroke; cx.lineWidth = Math.max(1, o.w * s / 2.2); cx.lineCap = 'round'; cx.stroke(); }
     else { cx.beginPath(); cx.arc(o.q[0][0], o.q[0][1], o.r * s / 2.2, 0, 7); cx.fillStyle = o.fill; cx.fill(); }
   }
-  const L = D[view];
-  document.getElementById('cap').textContent = `${view}: ${L.height} mm tall, ${L.below_plate} below the plate, swap parts on the drone ${L.swap_on_drone_g} g, drone ${L.drone_g} g (E). Drag to turn.`;
+  document.getElementById('cap').textContent = {
+    ds: `Scout D on the posts: rim ${2*PO.rim} square at its belly, cartridge bottom ${PO.scout.cart_bottom_seat} under the rim; lands within ±${PO.scout.capture_ok_mm}, everything else ≥ ${PO.scout.capture[30].min_clear} mm off the posts. Drag to turn.`,
+    do: `Overseer v5 parts unchanged on the same posts; its bottom opening redrawn as the same rim at its cartridge bottom (today's shell drawn faint). Lands within ±${PO.overseer.capture_ok_mm}, clearance ≥ ${PO.overseer.capture[30].min_clear} mm.`,
+    b: `Scout B seated in today's funnel. Fine for the Scout, but the Overseer cannot share it (see the third section).` }[view];
 }
-for (const k of ['A', 'B', 'C']) document.getElementById('v' + k).addEventListener('click', () => { view = k;
-  for (const j of ['A', 'B', 'C']) document.getElementById('v' + j).setAttribute('aria-pressed', String(j === k)); draw(); });
-document.getElementById('fun').addEventListener('change', e => { showF = e.target.checked; draw(); });
+for (const k of ['ds', 'do', 'b']) document.getElementById('v-' + k).addEventListener('click', () => { view = k;
+  for (const j of ['ds', 'do', 'b']) document.getElementById('v-' + j).setAttribute('aria-pressed', String(j === k)); draw(); });
 let drag = null;
 cv.addEventListener('pointerdown', e => { drag = [e.clientX, e.clientY, yaw, pitch]; cv.setPointerCapture(e.pointerId); });
 cv.addEventListener('pointermove', e => { if (!drag) return; yaw = drag[2] + (e.clientX - drag[0]) * 0.01; pitch = Math.max(-1.4, Math.min(1.4, drag[3] + (e.clientY - drag[1]) * 0.01)); draw(); });
@@ -168,58 +175,66 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
 new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
 // sections (x-z), one scale
-const X0 = -150, X1 = 150, Z0 = -60, Z1 = 90;
-function section(key) {
-  const L = D[key], ns = 'http://www.w3.org/2000/svg', w = X1 - X0, h = Z1 - Z0;
-  const T = (x, z) => `${x - X0},${Z1 - z}`;
-  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="${ns}" role="img" aria-label="side section of layout ${key}">`;
-  for (let x = -140; x <= 140; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${h}" stroke="var(--rule)" stroke-width=".3"/>`;
-  for (let z = -60; z <= 90; z += 20) g += `<line x1="0" y1="${Z1-z}" x2="${w}" y2="${Z1-z}" stroke="var(--rule)" stroke-width=".3"/>`;
-  if (key === 'C') { const r = D.C.funnel.contact_half, zc = Math.min(...D.C.ids.B.map(i => D.C.nodes[i][2])) - 3;
-    for (const s of [1, -1]) g += `<polyline points="${T(s*r, zc)} ${T(s*(r+56), zc+56)}" fill="none" stroke="var(--funnel)" stroke-width="2"/>`; }
-  else for (const s of [1, -1]) g += `<polyline points="${T(s*95.5, 12.8)} ${T(s*160, 77.3)}" fill="none" stroke="var(--funnel)" stroke-width="2"/>`;
-  const rect = (b, f, st, sw) => `<rect x="${b[0]-X0}" y="${Z1-b[5]}" width="${b[1]-b[0]}" height="${b[5]-b[4]}" fill="${f}" stroke="${st}" stroke-width="${sw}"/>`;
-  for (const [x] of MOT) { g += `<rect x="${x-N.prop_r-X0}" y="${Z1-N.prop_z-4}" width="${2*N.prop_r}" height="8" fill="var(--prop)" opacity=".35"/>`;
-    g += `<rect x="${x-14-X0}" y="${Z1-36}" width="28" height="14" fill="var(--prop)" opacity=".7"/>`; }
-  g += rect(N.PLATE, 'var(--prop)', 'none', 0) + rect(N.FC, 'var(--prop)', 'none', 0);
-  g += rect(L.cart, 'none', 'var(--pack)', 1) + rect(L.pack, 'var(--pack)', 'none', 0);
-  for (const [, b] of L.receiver.boxes) g += rect(b, 'var(--petg)', 'var(--petg)', .4).replace('fill="var(--petg)"', 'fill="var(--petg)" fill-opacity=".45"');
-  for (const [a, b, d] of L.rods) { const p = L.nodes[a], q = L.nodes[b]; g += `<line x1="${p[0]-X0}" y1="${Z1-p[2]}" x2="${q[0]-X0}" y2="${Z1-q[2]}" stroke="var(--carbon)" stroke-width="${d === 6 ? 1.6 : .7}" opacity=".75"/>`; }
-  L.nodes.forEach((p, i) => { g += `<circle cx="${p[0]-X0}" cy="${Z1-p[2]}" r="${L.tags[i] === 'wheel node' ? 5 : 2.2}" fill="${L.tags[i] === 'wheel node' ? 'var(--petg)' : 'var(--carbon)'}"/>`; });
-  g += `<text x="4" y="${h-4}" font-size="7" fill="var(--muted)" font-family="IBM Plex Mono, monospace">z ${L.z_low} … ${L.z_high}</text>`;
-  return g + '</svg>';
+function svgSec(title, tag, X0, X1, Z0, Z1, body) {
+  const w = X1 - X0, h = Z1 - Z0; let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${title}">`;
+  for (let x = Math.ceil(X0/20)*20; x <= X1; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${h}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let z = Math.ceil(Z0/20)*20; z <= Z1; z += 20) g += `<line x1="0" y1="${Z1-z}" x2="${w}" y2="${Z1-z}" stroke="var(--rule)" stroke-width=".35"/>`;
+  const T = (x, z) => [x - X0, Z1 - z];
+  const rect = (b, f, st, op = 1) => `<rect x="${b[0]-X0}" y="${Z1-b[5]}" width="${b[1]-b[0]}" height="${b[5]-b[4]}" fill="${f}" fill-opacity="${op}" stroke="${st}" stroke-width=".5"/>`;
+  const line = (p, q, st, sw, op = 1) => `<line x1="${p[0]-X0}" y1="${Z1-p[2]}" x2="${q[0]-X0}" y2="${Z1-q[2]}" stroke="${st}" stroke-width="${sw}" opacity="${op}" stroke-linecap="round"/>`;
+  g += body({ T, rect, line }) + '</svg>';
+  return `<div class="sec"><h3>${title}</h3><span class="tag">${tag}</span>${g}</div>`;
 }
-const META = {
-  A: ['A · today\'s latch set', 'receiver v3 box hung under the FC, cartridge bottom z −44.5 (M); same shell for a fair count'],
-  B: ['B · shell catch (DEFAULT)', 'wheels on the crown, pack 1.0 under the FC, 2 latch rails in the bottom ring; box unchanged'],
-  C: ['C · belly catch (alternative)', 'wheels on the bottom ring, a new smaller funnel round it; box catch redrawn'] };
-document.getElementById('secs').innerHTML = ['A', 'B', 'C'].map(k => `<div class="sec"><h3>${META[k][0]}</h3><span class="tag">${META[k][1]}</span>${section(k)}</div>`).join('');
+const posts = h => PO.posts.map(([a, b]) => h.line(a, b, 'var(--post)', 12, .55)).join('');
+const secs = [];
+secs.push(svgSec('D · Scout on the posts', `rim ${2*PO.rim} sq, posts ${PO.alpha}°, tops ±${PO.top}`, -150, 150, -40, 110, h => {
+  const dz = BC.D.dz, L = PO.scout; let g = posts(h);
+  for (const [x] of MOT) { g += h.rect([x-N.prop_r, x+N.prop_r, 0, 0, N.prop_z-4+dz, N.prop_z+4+dz], 'var(--prop)', 'none', .35); g += h.rect([x-14, x+14, 0, 0, 22+dz, 36+dz], 'var(--prop)', 'none', .7); }
+  g += h.rect(sh(N.PLATE, dz), 'var(--prop)', 'none') + h.rect(sh(N.FC, dz), 'var(--prop)', 'none') + h.rect(sh(L.cart, dz), 'var(--pack)', 'var(--pack)', .6);
+  for (const b of L.boxes) g += h.rect(sh(b, dz), 'var(--petg)', 'var(--petg)', .45);
+  for (const [a, b, d] of L.rods) g += h.line(L.nodes[a], L.nodes[b], 'var(--carbon)', d === 6 ? 1.6 : .7, .75);
+  return g; }));
+secs.push(svgSec('D · Overseer on the same posts', 'v5 parts as they are; its bottom opening becomes the rim', -300, 500, -40, 200, h => {
+  const O = PO.overseer; let g = '';
+  for (const [a, b] of O.shell.rods) g += h.line(O.shell.nodes[a], O.shell.nodes[b], 'var(--carbon)', 1.2, .25);
+  for (const [nm, b] of Object.entries(O.parts)) { const bb = [b[0][0], b[1][0], 0, 0, b[0][2], b[1][2]];
+    g += h.rect(bb, /cartridge|receiver|pack/.test(nm) ? 'var(--pack)' : 'var(--prop)', 'none', /prop/.test(nm) ? .25 : .55); }
+  g += posts(h); g += h.line([-PO.rim, 0, 0], [PO.rim, 0, 0], 'var(--carbon)', 3);
+  return g; }));
+secs.push(svgSec('B · why the Overseer cannot share it', `its cartridge would sit ${(BC.overseer.B.d_body - BC.overseer.B.d_for_shared).toFixed(0)} mm too low`, -300, 500, -100, 160, h => {
+  let g = ''; const O = PO.overseer, shift = BC.overseer.B.d_for_shared - 53;   // posts frame -> funnel seat frame at the shared head stop
+  for (const s of [1, -1]) g += `<polyline points="${h.T(s*95.5, 12.8).join(',')} ${h.T(s*160, 77.3).join(',')}" fill="none" stroke="var(--funnel)" stroke-width="3"/>`;
+  for (const [nm, b] of Object.entries(O.parts)) { const bb = [b[0][0], b[1][0], 0, 0, b[0][2] + shift, b[1][2] + shift];
+    const hit = /arm|L2|apex|plate/.test(nm);
+    g += h.rect(bb, /cartridge|receiver|pack/.test(nm) ? 'var(--pack)' : (hit ? 'var(--bad)' : 'var(--prop)'), 'none', /prop/.test(nm) ? .2 : .5); }
+  return g; }));
+document.getElementById('secs').innerHTML = secs.join('');
 
 const pill = (ok, t) => `<span class="pill ${ok ? 'ok' : 'no'}">${t}</span>`;
+const oB = BC.overseer.B, oC = BC.overseer.C;
 const rows = [
-  ['', 'A today', 'B shell catch', 'C belly catch'],
-  ['Height (shell, z)', D.A.height, D.B.height, D.C.height],
-  ['Below the plate top', D.A.below_plate, D.B.below_plate, D.C.below_plate],
-  ['Swap parts on the drone (g)', D.A.swap_on_drone_g + ' (M)', D.B.swap_on_drone_g, D.C.swap_on_drone_g],
-  ['Shell, same method (g)', D.A.shell.g, D.B.shell.g, D.C.shell.g],
-  ['Drone all-up (g, E)', D.A.drone_g, D.B.drone_g, D.C.drone_g],
-  ['Pack centre z (prop plane 41.2)', D.A.pack_cz, D.B.pack_cz, D.C.pack_cz],
-  ['Wheel centre to cartridge bottom', D.A.wheel_to_cart_bottom, D.B.wheel_to_cart_bottom, D.C.wheel_to_cart_bottom],
-  ['Catch keep-outs (face / plunger / probe, mm spare)', `${D.A.catch.face} / ${D.A.catch.plunger} / ${D.A.catch.probe}`, `${D.B.catch.face} / ${D.B.catch.plunger} / ${D.B.catch.probe}`, 'new funnel'],
-  ['Box', pill(true, 'unchanged'), pill(true, 'unchanged') + ' head stop +7.4', pill(false, 'catch redrawn')],
+  ['', 'B · Scout shell catch, today\'s funnel', 'C · belly crown, today\'s funnel lowered', 'D · four posts into the rim'],
+  ['On the box', 'funnel 320 × 76, 8 panels (~480 g E), hook latch v2', 'the same funnel, seated 79 lower against the swap wheel', `4 posts r 6 at ${PO.alpha}°, ${PO.post_height} tall above the rim, on a deck (~60 g E)`],
+  ['What the drones share', '8 wheel points; everything under them inside the 45° cone', '8 wheel points on each belly ring; everything outside the 320 mouth above it', `only the rim: ${2*PO.rim} square, rollers on its corners, at the cartridge bottom`],
+  ['Capture (checked, 8 directions × ±5° yaw)', `±40 on the faces; concept capture margin ${BC.B.catch.capture} mm (fixable)`, `±40; margin ${BC.C.catch.capture} mm at a pad (fixable)`, `±${PO.scout.capture_ok_mm} Scout, ±${PO.overseer.capture_ok_mm} Overseer; clear ${PO.scout.capture[30].min_clear} / ${PO.overseer.capture[30].min_clear} mm`],
+  ['Scout swap parts / all-up (E)', `${BC.B.swap_on_drone_g} / ${BC.B.drone_g} g`, `${BC.C.swap_on_drone_g} / ${BC.C.drone_g} g`, `${BC.D.swap_on_drone_g} / ${BC.D.drone_g} g`],
+  ['Overseer', pill(false, 'no shared head stop') + ` arms and L2 need the drone ${(oB.d_body - oB.d_for_shared).toFixed(0)} higher`, pill(true, 'fits') + ` ${oC.shell_at_shared.nodes_out} of ${oC.shell_at_shared.of} shell nodes rise ≤ ${oC.shell_at_shared.max_rise}`, pill(true, 'fits') + ' parts unchanged; bottom opening redrawn as the rim'],
+  ['One head stop for both', pill(false, 'no'), pill(true, 'yes'), pill(true, 'yes') + ' both cartridges 1.0 under the rim'],
+  ['Box change', 'two head stops, or an Overseer pack stalk', 'seat 79 lower; ±60° bays to check', 'catch redrawn: posts, latch and keep-alive on the post bases; seat at the top-bay height'],
 ];
-document.getElementById('tbl').innerHTML = rows.map((r, i) => i === 0 ? `<tr>${r.map(c => `<th>${c}</th>`).join('')}</tr>`
-  : `<tr>${r.map((c, j) => j ? `<td class="n">${c}</td>` : `<td>${c}</td>`).join('')}</tr>`).join('');
-document.getElementById('sc').textContent = 'B ' + D.B.system_check;
-const v = D.B.vs_A;
+document.getElementById('tbl').innerHTML = rows.map((r, i) => `<tr>${r.map((c, j) => i === 0 ? `<th class="${j === 3 ? 'rec' : ''}">${c}</th>`
+  : `<td class="${j ? 'n' : ''} ${j === 3 ? 'rec' : ''}">${c}</td>`).join('')}</tr>`).join('');
+
+document.getElementById('lede').textContent = `With B the Scout fits today's funnel, but the Overseer does not. Its 637 mm disk and L2 must stay above the 320 mouth, and its 171 mm cartridge cannot hang as low as the Scout's. The two packs would need swap-head stops ${(oB.d_body - oB.d_for_shared).toFixed(0)} mm apart. Flipping the funnel inside out fixes that. Four posts rise into each drone's bottom opening, so the only thing the drones share is a ${2*PO.rim} mm square rim at the cartridge bottom. Checked with both drones: ±30 landings, the rim always touches first, and both packs sit at one height.`;
+
 document.getElementById('notes').innerHTML = [
-  `B against A: ${v.mass_g} g on the drone (${D.A.swap_on_drone_g} → ${D.B.swap_on_drone_g} g of swap parts), ${v.height} mm in height, hover power ${v.hover_power_pct} % at the same props (E, P ∝ m^1.5). That is flight time, not looks.`,
-  `Structure is kept and gets simpler: one closed, mirror-exact shell carries landing, crash and swap. The latch rails bolt to the plate on 4 posts and end in the bottom ring nodes, so the 74 N insert and 43.5 N across go plate ↔ rails ↔ ring ↔ shell, no 35 mm bolt columns and no separate legs, keel, skids or TPU end pieces.`,
-  `Catch interface unchanged: the 8 R 5 wheels at (±112, ±100) / (±100, ±112), z ${N.Z_WHEEL} on the 45° faces; the lower band stays ≥ 1.0 inside the faces and ≥ 3 inside the 191 × 168 opening at ±5° yaw; the ±x crown is lifted above the probe pads (G (8)), the ±y side clears the hook latch plungers (G (7)).`,
-  `Box ask (box swap, DEFAULT): the Scout cartridge sits 7.4 higher in the seated drone, so the head stops 7.4 further up at the drone position, or the Scout seat drops 7.4. Nothing else in the box moves; panels v7 / v9 plain and hook latch v2 stay READY.`,
-  `Bottom opening ${D.B.opening.x} × ${D.B.opening.y} clear: the rule's receiver + 30 a side holds across (y) and along (x) but the corners are cut, because the box opening (191 × 168 at ±5° yaw) caps the ring. The head works in the central 37 × 40 recess.`,
-  `Not decided here: FC on a top case would lift the pack another ~8 (E; Spark 12 Oct: FC stays under, 16 Oct: top case). Kept under (DEFAULT). The shell is a concept stand-in (29 nodes, 76 rods, 6 mm equator, 3 mm rest); the Scout v3 system pass sizes it with the frame model.`,
-  `C would make the funnel smaller (mouth ${D.C.funnel.mouth}, ${D.C.funnel.height} tall vs 320 / 76) and the shell lightest (${D.C.shell.g} g), but it redraws the READY panels, hook latch and probes and breaks the one-funnel interface with the Overseer. Kept as the alternative.`,
+  `How it lands: the drone comes down anywhere within ±30. Its rim meets the posts' upper ends and slides down the ${PO.alpha}° posts to the seat, where the 4 corner rollers sit on the posts. The checks run 8 directions × ±5° yaw. The rim touches first every time, the posts always push it back toward the centre, and nothing else of either drone comes within ${Math.min(PO.scout.capture[30].min_clear, PO.overseer.capture[30].min_clear)} mm of a post.`,
+  `Why ±30 and not ±40: past ±${PO.rim - PO.top - 9} the rim lands on the inside of the posts, which pushes it outward. Moving the tops further in to reach ±40 runs them into the Scout's motors, or (shallower posts) gives only ±20. G's full flight sim already found ±30 is the gate that works: 100 % inside ±30, 86 % at ±40 even with today's funnel.`,
+  `Only the bottom opening matters. The cage outside is free: the Overseer's disk, the L2 at the nose, any later drone. A drone fits if it has the ${2*PO.rim} rim at its cartridge bottom and keeps ±30 around the post wells clear.`,
+  `Scout: a drum cage with the rim as its belly ring (also its floor feet). The pack sits 1.0 under the FC, and two latch rails replace the 94 g receiver box: ${BC.D.swap_on_drone_g} g of swap parts against 165.4 today, about −${Math.abs(BC.D.vs_A.mass_g)} g all-up and ${BC.D.vs_A.hover_power_pct} % hover power (E). system_check: ${BC.D.system_pass ? 'PASS' : 'see the run'}.`,
+  `Overseer: no part moves. Its bottom opening ring (352 × 208 today) becomes the ${2*PO.rim} rim at its cartridge bottom, and the shell's lower nodes re-form to it in its next layout pass.`,
+  `Box: the funnel panels and hook latch v2 retire. The hold becomes a latch on two post bases over the rim tube. Keep-alive becomes spring pins in two post bases against copper pads on two rim corners. The drone sits about 80 mm lower on the box than in today's funnel, rim at the top-bay height. Box structure re-checks the bays at ±60°.`,
+  `Open before any print: on axis landings the rim's carbon tubes slide on the posts, so the posts need a low-friction sleeve (PTFE, μ ~0.1 to 0.2, E). G found fixed contacts need μ ≤ 0.2, so the box catch session runs the drop sim on the posts first.`,
 ].map(t => `<li>${t}</li>`).join('');
 draw();
 </script>
