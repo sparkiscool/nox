@@ -2,14 +2,18 @@
 the front camera outside the cage, nothing in their views. Spark 26 Oct: "The lidar needs to be outside the cage and not be
 blocked at all, try to give it enough support and guard is okay as long as it's outside the view of the lidar, also keep
 the two camera layout, also needs to not have its view obstructed, also why are there three orientations, I just need the
-one with perfect cg".
+one with perfect cg". Spark 27 Oct: "get rid of the down camera we don't need it, put the two cameras on either side the
+lidar pointing so their field of view is maximized".
 
-The shell target is every part with its margin except the L2, the front camera and their mount; every shell node stays
-NODE_R + 3 behind the L2 base plane (its 90 deg field) and under the front camera's lower view plane (+2 deg), so the
-shell's front is a flat face there; the L2 base and the camera height are placed so the target fits behind those limits.
+The shell target is every part with its margin except the L2, the two cameras and their mounts; every shell node stays
+NODE_R + 3 behind the L2 base plane (its 90 deg field) and beyond one view face (+2 deg) of each camera, so the shell's
+front is a flat face there. The camera pair: every orientation of the mirrored pair (portrait / landscape, yaw, pitch) is
+ranked by the union of their fields, then the share of the L2 field they see; the first one with a mount beside the L2
+(behind its base plane, clear of the guard ring) where nothing of the drone is in view and the shell target clears a view
+face wins. The L2 base is placed so the target fits behind those limits.
 The L2 keeps v2's mount (seat, back block, side lugs, keels to the front hub, ties into the shell behind its plane) and
-gets a guard ring 8 behind its base plane (rods the front camera would see are left out). The down camera and flow look
-through the bottom opening. One layout: the CG on the thrust centre (v2's balance).
+gets a guard ring 8 behind its base plane (rods a camera would see are left out). The flow sensor looks
+through the bottom opening; no down camera (Spark 27 Oct). One layout: the CG on the thrust centre (v2's balance).
 
 Shell method as v4: a class-I geodesic (FREQ, symmetric about xz) laid on an ellipsoid of the target hull, pushed out node by
 node until its convex hull holds the target (now also projected back behind the two view limits); start scale and a prop
@@ -59,8 +63,8 @@ M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0   # hull mar
 SPARE = 30.0                             # room a side round the receiver at the opening (DEFAULT, Spark 26 Oct)
 REC = (179.6, 76.2)                      # Overseer receiver v2 footprint (M)
 ZONE = (REC[0] / 2 + SPARE, REC[1] / 2 + SPARE)
-POD_DX = float(os.environ.get("V5_POD_DX", 0.0))   # down camera + flow pods where v2 had them (Spark 27 Oct: keep the two camera format; v4 had them 35 ahead)
-POD_UP = float(os.environ.get("V5_POD_UP", 0.0))   # v2's lens heights (v4 lifted them 1.5 into the pods for an edge probe)
+POD_DX = float(os.environ.get("V5_POD_DX", 15.0))  # flow pod 15 ahead of v2's (Spark 27 Oct: clear of the rear arm's bottom screw)
+POD_UP = float(os.environ.get("V5_POD_UP", 0.0))   # v2's lens height
 LATCH_G = 338.5                          # Overseer latch set (M, battery latch v4); v2 counted the cartridge at 4 % fill
 BREAK_EVEN = 33.0
 
@@ -112,6 +116,22 @@ def seg_band_dist(p0, p1, mxy):
 # ---------------------------------------------------------------- the v2 drone (everything but its cage)
 HALO_BACK, HALO_R, HALO_NODE_R = 8.0, 62.0, 5.0   # L2 guard ring: 8 behind its base plane, r 62 round its axis (body half
                                                  # diagonal 53 + 9), printed nodes r 5 (DEFAULT, E)
+FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v5_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
+FZ = json.load(open(FROZEN)) if FROZEN and os.path.exists(FROZEN) else None        # changing any cage structure"); V5_FROZEN= builds a new one
+_LS = os.path.join(HERE, "link_sizes.json")                       # links the frame model sized up to 6 mm tube (cage_frame.py); the rest 3.0
+LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()
+lr = lambda k: SHELL_R if k in LINK6 else ROD_R
+lgpm = lambda k: SHELL_GPM if k in LINK6 else ROD_GPM
+PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
+HEAD_ON_CAGE = os.environ.get("V5_HEAD_ON", "core") == "cage"          # alt (V5_HEAD_ON=cage): the head on the cage's front centre node only, no keels,
+# braces or wing struts (Spark 27 Oct tried it: ~32 Hz on TPU nodes, F on E, runs/overseer_head_cage/concept); Spark then: "keep the design we have
+# right now i need the lidar to have max performance": the keels and L2 braces stay (A, the stiffest: 200 / 119 Hz rigid / TPU)
+LINKN = "spokes, ties, keels, braces, head struts" if os.environ.get("V5_HEAD", "printed") == "printed" else "spokes, ties, keels, L2 guard ring"
+HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
+CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
+                                                                   # ties, guard ring and its struts, camera guards and brackets) become one printed
+                                                                   # part. Its mass budget is what it replaces (rods, their nodes, the camera
+                                                                   # brackets' struts, E 10 g), so the balance stays (DEFAULT 27 Oct)
 L2_CONE, CAM_CONE = 75.0, 55.0                  # cage first is gated outside these cones (L2 field 90 from its axis: 75 keeps the
                                                 # ring's lateral cover gated; camera diagonal half-angle 51 + 4) (DEFAULT 27 Oct, review)
 LIM = NODE_R + 3.0                               # shell node centres this far behind the L2 base plane and the camera's lower view plane
@@ -120,21 +140,20 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 
 
 def adjust(g):
-    for k in ("down_cam", "flow"): g[k].apply_translation([0, 0, POD_UP])
-    g["down_lens"] = g["down_lens"] + [0, 0, POD_UP]; g["flow_lens"] = g["flow_lens"] + [0, 0, POD_UP]
-    for k in ("down_cam", "flow", "cam_pod", "flow_pod"): g[k].apply_translation([POD_DX, 0, 0])   # pods forward, clear of the rear
-    g["down_lens"] = g["down_lens"] + [POD_DX, 0, 0]; g["flow_lens"] = g["flow_lens"] + [POD_DX, 0, 0]  # arms' bottom screw key lines
+    for k in ("down_cam", "cam_pod", "down_lens"): g.pop(k, None)       # no down camera (Spark 27 Oct: "get rid of the down camera, we don't need it")
+    g["flow"].apply_translation([POD_DX, 0, POD_UP]); g["flow_pod"].apply_translation([POD_DX, 0, 0])
+    g["flow_lens"] = g["flow_lens"] + [POD_DX, 0, POD_UP]
     g["z_o"] = g["cart"].bounds[0][2] - 3.0                            # opening plane: cartridge bottom 3 above it
     return g
 
 
 def make_K(g):
-    """the shell's target: every part but the L2, the front camera and their mount, with its margin (prop disks 12 off,
+    """the shell's target: every part but the L2, the cameras and their mounts, with its margin (prop disks 12 off,
     the rest 3 off the tube surface, +1), the belly clipped at the opening plane, mirrored in y"""
     props = np.vstack([np.stack([mx + PROP_R * np.cos(a), my + PROP_R * np.sin(a), np.full_like(a, PROP_Z + s_ * BLADE)], 1)
                        for mx, my in g["motors_xy"] for s_ in (1, -1) for a in [np.linspace(0, 2 * np.pi, 72, endpoint=False)]])
     body = hullpts(g["arms"] + g["motors"] + [TOP, BOTTOM, PI, DECK, PDB, UBEC])
-    belly = hullpts([g["cart"], g["sled"], g["cam_pod"], g["flow_pod"], g["down_cam"], g["flow"]] + g["feet"])
+    belly = hullpts([g["cart"], g["sled"], g["flow_pod"], g["flow"]] + g["feet"])
     K = np.vstack([(props[:, None, :] + M_PROP * DIRS[None]).reshape(-1, 3), (body[:, None, :] + M_BODY * DIRS[None]).reshape(-1, 3),
                    (belly[:, None, :] + M_BODY * DIRS[None]).reshape(-1, 3)])
     K[:, 2] = np.maximum(K[:, 2], g["z_o"])
@@ -142,16 +161,165 @@ def make_K(g):
     return K[ConvexHull(K).vertices]
 
 
-def cam_lower(g):
-    """the front camera's lower view plane (+2 deg): normal into the view, through the lens"""
-    e = math.radians(L["CAM_VFOV"] / 2 + 2.0)
-    n = math.sin(e) * g["cam_fwd"] + math.cos(e) * g["cam_up_v"]; return n / np.linalg.norm(n), g["cam_lens"]
-
-
 def in_cam_view(g, P, extra_deg=2.0):
-    d = P - g["cam_lens"]; zz = d @ g["cam_fwd"]
-    el = np.degrees(np.arctan2(d @ g["cam_up_v"], np.maximum(zz, 1e-6))); az = np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))
-    return (zz > 0) & (np.abs(el) < L["CAM_VFOV"] / 2 + extra_deg) & (np.abs(az) < L["CAM_HFOV"] / 2 + extra_deg)
+    """in either camera's view (+ extra_deg)"""
+    P = np.atleast_2d(P); v = np.zeros(len(P), bool)
+    for c in g["cams"]: v |= in_frustum(c["lens"], c["f"], c["u"], c["r"], c["ha"], c["hv"], P, extra_deg)
+    return v
+
+
+# ---------------------------------------------------------------- the camera pair (Spark 27 Oct: "get rid of the down camera, we
+# don't need it; put the two cameras on either side of the lidar pointing so their field of view is maximized")
+CAM_FMTS = {"landscape": (L["CAM_VFOV"] / 2, L["CAM_HFOV"] / 2), "portrait": (L["CAM_HFOV"] / 2, L["CAM_VFOV"] / 2)}   # (half across, half up), 102 diag (E)
+CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens off the centre plane (scanned)
+CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
+HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
+HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
+HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
+                                                   # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
+CAM_PSI = np.arange(0.0, 72.5, 2.5)                # yaw out from +x (scanned)
+CAM_TH = np.arange(-30.0, 32.5, 5.0)               # pitch (scanned)
+CAM_BODY = np.array([[x, y, z] for x in (-13.5, -10.75, -8.0) for y in np.linspace(-20.0, 20.0, 9) for z in np.linspace(-20.0, 20.0, 9)]
+                    + [[0.0, 6 * math.cos(t), 6 * math.sin(t)] for t in np.linspace(0, 2 * math.pi, 8, endpoint=False)])   # plate + board + lens, lens frame
+SPH = fib(6000)
+DCF = fib(500)
+CAM_STRUT_R = 3.4                                  # printed bracket strut ~6 x 6 PETG (Ø6.8 round in the model)
+
+
+def cam_axes(psi, th, sy):
+    """forward, up, across of a camera yawed psi out to side sy and pitched th"""
+    p_, t_ = math.radians(psi), math.radians(th)
+    f = np.array([math.cos(t_) * math.cos(p_), sy * math.cos(t_) * math.sin(p_), math.sin(t_)])
+    u = np.array([0, 0, 1.0]) - f[2] * f; u /= np.linalg.norm(u)
+    return f, u, np.cross(u, f)
+
+
+def in_frustum(lens, f, u, r, ha, hv, P, extra=2.0):
+    d = np.atleast_2d(P) - lens; z = d @ f; zz = np.maximum(z, 1e-6)
+    return (z > 0) & (np.abs(np.degrees(np.arctan2(d @ r, zz))) < ha + extra) & (np.abs(np.degrees(np.arctan2(d @ u, zz))) < hv + extra)
+
+
+def cam_faces(f, u, r, ha, hv, extra=2.0):
+    """outward normals of the 4 view faces (+ extra) and the lens plane; a point beyond one of them is out of view"""
+    a_, b_ = math.radians(ha + extra), math.radians(hv + extra)
+    return [r * math.cos(a_) - f * math.sin(a_), -r * math.cos(a_) - f * math.sin(a_), u * math.cos(b_) - f * math.sin(b_),
+            -u * math.cos(b_) - f * math.sin(b_), -f]
+
+
+_CAMT = []
+
+
+def cam_table():
+    """every orientation of the mirrored pair, best first: the union of the two fields (steradians, the ask; within 2 % is a
+    tie, the sampling noise), then the blind wedge straight ahead on the horizon (the two fields meet at the nose), then the
+    share of the L2's field they see (they colour its cloud). V5_CAM=fmt,yaw,pitch forces one orientation (the alternatives)"""
+    if _CAMT: return _CAMT
+    l2f = SPH @ A >= 0; rows = []
+    for fmt, (ha, hv) in CAM_FMTS.items():
+        for psi in CAM_PSI:
+            for th in CAM_TH:
+                v = np.zeros(len(SPH), bool)
+                for sy in (1, -1):
+                    f, u, r = cam_axes(psi, th, sy); v |= in_frustum(np.zeros(3), f, u, r, ha, hv, SPH, 0.0)
+                hz = np.radians(np.arange(-40.0, 40.01, 0.5)); H_ = np.stack([np.cos(hz), np.sin(hz), np.zeros_like(hz)], 1)
+                hv_ = np.zeros(len(H_), bool)
+                for sy in (1, -1):
+                    f, u, r = cam_axes(psi, th, sy); hv_ |= in_frustum(np.zeros(3), f, u, r, ha, hv, H_, 0.0)
+                gap = 0.0 if hv_[np.abs(np.degrees(hz)) < 0.3].all() else float(2 * np.min(np.abs(np.degrees(hz[hv_])))) if hv_.any() else 80.0
+                rows.append(dict(fmt=fmt, psi=float(psi), th=float(th), U=4 * math.pi * v.mean(), S=float(v[l2f].mean()), gap=gap))
+    um = max(r_["U"] for r_ in rows)
+    if os.environ.get("V5_CAM"):
+        fm, ps, tt = os.environ["V5_CAM"].split(","); rows = [r_ for r_ in rows if r_["fmt"] == fm and abs(r_["psi"] - float(ps)) < 0.01 and abs(r_["th"] - float(tt)) < 0.01]
+    _CAMT.extend(sorted(rows, key=lambda r_: (-int(r_["U"] >= 0.98 * um), r_["gap"], -r_["S"])))
+    return _CAMT
+
+
+def fz_clear(Q):
+    """least gap from points Q to the frozen cage's node and tube surfaces"""
+    SN = np.array(FZ["nodes"]); a_ = SN[[r_[0] for r_ in FZ["rods"]]]; b_ = SN[[r_[1] for r_ in FZ["rods"]]]
+    d_ = b_ - a_; t_ = np.clip(np.einsum("qkj,kj->qk", Q[:, None] - a_[None], d_) / (d_ * d_).sum(1), 0, 1)
+    seg = np.linalg.norm(Q[:, None] - (a_[None] + t_[..., None] * d_[None]), axis=2).min() - SHELL_R
+    return float(min(seg, np.linalg.norm(Q[:, None] - SN[None], axis=2).min() - NODE_R))
+
+
+def head_fits(B, up_b, Q, f, r, u, lens):
+    """the one-piece head (seat Ø80, guard ring r HALO_R + its nodes, both camera bodies and their back plates) inside the
+    printer: oriented bounding box (trimesh) with every side <= HEAD_FIT"""
+    acr = np.cross(A, up_b)
+    ring = [B - A * HALO_BACK + (HALO_R + HALO_NODE_R) * (math.cos(t_) * up_b + math.sin(t_) * acr) for t_ in np.linspace(0, 2 * math.pi, 16, endpoint=False)]
+    seat = [B - A * 4 + 40 * (math.cos(t_) * up_b + math.sin(t_) * acr) for t_ in np.linspace(0, 2 * math.pi, 12, endpoint=False)]
+    plate = [lens - f * 13.5 + r * a_ + u * b_ for a_ in (-20, 20) for b_ in (-20, 20)]
+    P = np.vstack([ring, seat, Q, plate, Q * [1, -1, 1], np.array(plate) * [1, -1, 1]])
+    return bool(np.max(trimesh.bounds.oriented_bounds(P)[1]) <= HEAD_FIT)
+
+
+def cam_pick(B, K, Keq, avoid, face=True):
+    """the first orientation of the table with a mount beside the L2 (lens off the centre plane CAM_W, up its base plane
+    CAM_HS, body behind the base plane by 2, clear of the guard ring) where nothing of the drone is in view and the shell
+    target sits LIM + SLACK beyond one of the view faces (that face is then the shell's limit); of those mounts the most
+    compact (least behind the L2 plane, nearest the axis)"""
+    up_b = np.array([-A[2], 0, A[0]]); KS = (K @ DCF.T).max(0)
+    for t in cam_table():
+        ha, hv = CAM_FMTS[t["fmt"]]; f, u, r = cam_axes(t["psi"], t["th"], 1)
+        body = CAM_BODY @ np.stack([f, r, u]); faces = cam_faces(f, u, r, ha, hv)
+        ok_ = []
+        for w, h in ((w, h) for w in CAM_W for h in CAM_HS):
+            base = B + up_b * h + np.array([0, w, 0])
+            bk = max(0.0, float(((base + body - B) @ A).max()) + 2.0)
+            if bk > 80: continue
+            lens = base - A * bk; Q = lens + body
+            dq = (Q - B) - np.outer((Q - B) @ A, A)
+            if np.linalg.norm(dq, axis=1).min() < HALO_R + HALO_NODE_R + 3.0: continue
+            if (Q @ Keq[:, :3].T + Keq[:, 3]).max(1).min() < 5.0: continue        # the body clear of the shell target
+            if FZ is not None and fz_clear(Q) < 3.0: continue            # the body 3 off the frozen cage's tubes and nodes
+            if in_frustum(lens, f, u, r, ha, hv, np.vstack([avoid, Q * [1, -1, 1]])).any(): continue
+            if HEAD_ONE and not head_fits(B, up_b, Q, f, r, u, lens): continue
+            sl = [float(((K - lens) @ n).min()) for n in faces]; k = int(np.argmax(sl))
+            if face and sl[k] < LIM + SLACK: continue                    # (a frozen cage: its own points are in avoid instead)
+            ok_.append(dict(t, w=w, h=h, bk=bk, face=k, slack=sl[k], lens_rel=lens - B, cost=bk + 0.5 * (w - CAM_W[0]) + 0.5 * abs(h - 10.0)))
+        if ok_: return dict(min(ok_, key=lambda q: q["cost"]), mounts=len(ok_))   # the most compact mount (behind the plane, off the axis)
+    return None
+
+
+def place_cams(g, sel):
+    """the pair at sel (mirrored): board, lens, a printed plate behind the board on 3 printed struts to its side's lugs and block"""
+    B = g["B"]; up_b = np.array([-A[2], 0, A[0]]); ha, hv = CAM_FMTS[sel["fmt"]]
+    cams, meshes, plates, rods_ = [], [], [], []
+    for sy in (1, -1):
+        f, u, r = cam_axes(sel["psi"], sel["th"], sy); lens = B + sel["lens_rel"] * [1, sy, 1]
+        Rc = np.eye(4); Rc[:3, 0] = f; Rc[:3, 1] = r; Rc[:3, 2] = u; Rc[:3, 3] = lens - 9 * f
+        board = box(-1, 1, -19, 19, -19, 19); lc = trimesh.creation.cylinder(6, 8, sections=32)
+        lc.apply_transform(trimesh.transformations.rotation_matrix(math.pi / 2, [0, 1, 0])); lc.apply_translation([5, 0, 0])
+        m = trimesh.util.concatenate([board, lc]); m.apply_transform(Rc)
+        pl = box(-4.5, -1.5, -20, 20, -20, 20); pl.apply_transform(Rc)
+        corners = [lens - 12 * f + r * a_ + u * b_ for a_ in (-16, 16) for b_ in (-16, 16)]
+        # printed 3-point bracket (27 Oct review: 2 rods to one corner were a pin; short links between printed parts are printed):
+        # struts 6 x 6 PETG from three different plate corners to the low lug, the high lug and the back block of its side
+        ring_ = [B - A * HALO_BACK + HALO_R * (math.cos(t_) * up_b + math.sin(t_) * np.array([0, 1.0, 0]))
+                 for t_ in np.linspace(0, 2 * math.pi, 8, endpoint=False) + math.pi / 8]
+        clear_ = lambda a_, b_: all(np.linalg.norm(np.cross(b_ - a_, q_ - a_)) / np.linalg.norm(b_ - a_) > HALO_NODE_R + CAM_STRUT_R + 1.0
+                                    or not 0 < (q_ - a_) @ (b_ - a_) < (b_ - a_) @ (b_ - a_) for q_ in ring_)
+        lugs_ = [B - A * 5 + up_b * 2.0 + np.array([0, 46.0 * sy, 0]), B - A * 5 + up_b * 16.0 + np.array([0, 46.0 * sy, 0])]
+        thirds = [B - A * 11 + up_b * z_ + np.array([0, y_ * sy, 0]) for z_ in (20.0, 2.0, 30.0) for y_ in (20.0, 0.0, 35.0)]
+        best_ = None
+        for th_ in thirds:                                             # 3 struts, 3 corners, clear of the ring nodes, the shortest set
+            free = list(range(4)); set_ = []
+            for so in lugs_ + [th_]:
+                k_ = min(free, key=lambda i_: np.linalg.norm(corners[i_] - so)); free.remove(k_); set_.append((corners[k_], so))
+            if all(clear_(a_, b_) for a_, b_ in set_):
+                L_ = sum(np.linalg.norm(b_ - a_) for a_, b_ in set_)
+                if best_ is None or L_ < best_[0]: best_ = (L_, set_)
+        rods_ += best_[1] if best_ else set_
+        faces = cam_faces(f, u, r, ha, hv)
+        lim_n = -faces[sel["face"]] if sy > 0 else cams[0]["lim_n"] * [1, -1, 1]    # the mirror's face is the mirror of the left one
+        cams.append(dict(lens=lens, f=f, u=u, r=r, ha=ha, hv=hv, lim_n=lim_n, mesh=m, side=sy))
+        meshes.append(m); plates.append(pl)
+    g["cams"] = cams; g["cam_sel"] = sel
+    if PRINTED_HEAD: rods_ = []                                        # the printed head joins the plates (topology)
+    g["cam"] = trimesh.util.concatenate(meshes); g["cam_plate"] = trimesh.util.concatenate(plates); g["cam_rods"] = rods_
+    g["cam_bracket"] = trimesh.util.concatenate(plates + [rod(a_, b_, CAM_STRUT_R) for a_, b_ in rods_])
+    g["cam_lens"], g["cam_fwd"], g["cam_up_v"] = cams[0]["lens"], cams[0]["f"], cams[0]["u"]
+    return g
 
 
 LIM_L2 = HALO_BACK + HALO_NODE_R + 2.0 + NODE_R   # shell node centres behind the L2 base plane: the guard ring fits in front (25.2)
@@ -159,53 +327,48 @@ PHIS = (20.0, 35.0, 50.0, 65.0)                  # tilt of the head plane (from 
 _DRONE = {}
 
 
-def cam_frame(B, h):
-    """v2's front camera (horizon, portrait) h up the L2 back plane: lens, forward, up"""
-    up_b = np.array([-A[2], 0, A[0]]); C = B + up_b * h - A * L["CAM_BACK"]
-    return C + np.array([9.0, 0, 0]), np.array([1.0, 0, 0]), np.array([0, 0, 1.0])
-
-
-def view_of(lens, fwd, up, P, extra_deg=2.0):
-    d = P - lens; zz = d @ fwd
-    el = np.degrees(np.arctan2(d @ up, np.maximum(zz, 1e-6))); az = np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))
-    return (zz > 0) & (np.abs(el) < L["CAM_VFOV"] / 2 + extra_deg) & (np.abs(az) < L["CAM_HFOV"] / 2 + extra_deg)
-
-
 def head_pts(g):
-    """the sensor head behind the L2 base plane: seat, back block, lugs, camera bracket, camera (not the front hub)"""
-    P = np.vstack([pts(g["apex"], 3000), pts(g["cam_bracket"], 1500), pts(g["cam"], 800)])
+    """the sensor head behind the L2 base plane: seat, back block, lugs (not the front hub)"""
+    P = pts(g["apex"], 3000)                       # the cameras keep the shell out by their own view face and body check
     return P[((P - g["B"]) @ A) > -45.0]
 
 
 def drone(dm):
-    """the v2 drone at motor square dm, its sensor head (L2 + front camera) placed outside the shell: the shell target
-    (make_K) LIM_L2 + SLACK behind the L2 base plane, LIM + SLACK under the camera's lower view plane and behind the head
+    """the v2 drone at motor square dm, its sensor head (L2 + the camera pair) placed outside the shell: the shell target
+    (make_K) LIM_L2 + SLACK behind the L2 base plane, LIM + SLACK beyond each camera's limiting view face and behind the head
     plane (the head's own back, tilted PHI from the L2 axis toward +z; the tilt that keeps the L2 furthest back wins)"""
     key = round(dm, 1)
     if key in _DRONE: return _DRONE[key]
-    g0 = adjust(L["build"](dm, DC, 330.0, ZB)); K = make_K(g0)
-    disks = np.vstack([pts(p, 2000) for p in g0["props"]])
+    g0 = adjust(L["build"](dm, DC, 330.0, ZB)); K = make_K(g0); Keq = ConvexHull(K).equations
+    disks = np.vstack([pts(p, 1500) for p in g0["props"]]); armp = np.vstack([pts(a_, 500) for a_ in g0["arms"]])
     best = None
+    if FZ is not None:                                                 # the frozen cage: the L2 where it was, nothing of the cage in a camera view
+        SN = np.array(FZ["nodes"]); SP_ = np.vstack([SN + NODE_R * DIRS[i % len(DIRS)] for i in range(4) for _ in [0]] +
+                                                    [SN[a_] + t_ * (SN[b_] - SN[a_]) for a_, b_ in FZ["rods"] for t_ in np.linspace(0, 1, 12)])
+        SP_ = np.vstack([SP_] + [SN[a_] + t_ * (SN[b_] - SN[a_]) + SHELL_R * d_ for a_, b_ in FZ["rods"] for t_ in (0.25, 0.5, 0.75) for d_ in DIRS[:16]])
+        SP_ = np.vstack([SP_, (SN[:, None, :] + NODE_R * DIRS[None]).reshape(-1, 3)])
+        g = adjust(L["build"](dm, DC, FZ["xB"], ZB, 0.0, 60.0))
+        sel = cam_pick(g["B"], K, Keq, np.vstack([pts(g["l2"], 1500), disks, pts(g["apex"], 1000), armp, SP_]), face=False)
+        g = place_cams(g, sel)
+        g.update(dm=dm, xB=FZ["xB"], mxy=g["motors_xy"], keels={k: v for k, v in g["rods"].items() if k.startswith("keel")}, K=K, phi=None, lims=[])
+        _DRONE[key] = g
+        return g
     for phi in PHIS:
         n3 = A * math.cos(math.radians(phi)) + np.array([0, 0, 1.0]) * math.sin(math.radians(phi)); n3 /= np.linalg.norm(n3)
         xB = (float((K @ A).max()) + LIM_L2 + SLACK - ZB * A[2]) / A[0]
-        for _ in range(15):
-            B = np.array([xB, 0, ZB]); l2p = pts(L["l2_mesh"](B), 3000); cam_h = None
-            for h in np.arange(30, 300, 2.0):                         # v2's camera search + props, target under its lower view plane
-                lens, fwd, up = cam_frame(B, h)
-                if view_of(lens, fwd, up, np.vstack([l2p, disks])).any(): continue
-                e = math.radians(L["CAM_VFOV"] / 2 + 2.0); n2 = math.sin(e) * fwd + math.cos(e) * up
-                if ((K - lens) @ n2).max() <= -(LIM + SLACK): cam_h = h; break
-            g = adjust(L["build"](dm, DC, xB, ZB, 0.0, cam_h))
+        for _ in range(25):
+            g = adjust(L["build"](dm, DC, xB, ZB, 0.0, 60.0))
+            sel = cam_pick(g["B"], K, Keq, np.vstack([pts(g["l2"], 1500), disks, pts(g["apex"], 1000), armp]))
+            if sel is None: xB += 5.0; continue                       # no mount sees clear: the head further out
+            g = place_cams(g, sel)
             d_b = float((head_pts(g) @ n3).min())
             viol = float((K @ n3).max()) - (d_b - LIM - SLACK)
             if viol <= 0: break
             xB += viol / n3[0] + 0.5
-        if best is None or xB < best[0]: best = (xB, cam_h, phi, n3, d_b, g)
-    xB, cam_h, phi, n3, d_b, g = best
-    g.update(dm=dm, xB=xB, cam_h=cam_h, mxy=g["motors_xy"], keels={k: v for k, v in g["rods"].items() if k.startswith("keel")}, K=K, phi=phi)
-    n2, lens = cam_lower(g)
-    g["lims"] = [(A, g["B"], LIM_L2), (n2, lens, LIM), (n3, n3 * d_b, LIM)]
+        if best is None or xB < best[0]: best = (xB, phi, n3, d_b, g)
+    xB, phi, n3, d_b, g = best
+    g.update(dm=dm, xB=xB, mxy=g["motors_xy"], keels={k: v for k, v in g["rods"].items() if k.startswith("keel")}, K=K, phi=phi)
+    g["lims"] = [(A, g["B"], LIM_L2)] + [(c["lim_n"], c["lens"], LIM) for c in g["cams"]] + [(n3, n3 * d_b, LIM)]
     _DRONE[key] = g
     return g
 
@@ -228,6 +391,14 @@ def ring_nodes(g):
 
 
 def shell(g, seed=1, warm=None):
+    if FZ is not None:                                                 # the frozen cage (Spark 27 Oct): its nodes and tubes as they are
+        nodes = np.array(FZ["nodes"]); E = sorted(tuple(sorted(map(int, r_))) for r_ in FZ["rods"]); ring_ids = list(FZ["open"][0]["ring"])
+        h = ConvexHull(nodes); adj = {i: set() for i in range(len(nodes))}
+        for a_, b_ in E: adj[a_].add(b_); adj[b_].add(a_)
+        tris = np.array(sorted({tuple(sorted((a_, b_, c_))) for a_, b_ in E for c_ in adj[a_] & adj[b_]}))
+        viol = float((g["K"] @ h.equations[:, :3].T + h.equations[:, 3]).max())   # the target (parts + margins) still inside it
+        shell.lastN = nodes; shell.snapped = 0
+        return nodes, E, tris, ring_ids, viol, g["K"]
     mxy = g["mxy"]; K = g["K"]
     Kmesh = trimesh.convex.convex_hull(K)
     R = ring_nodes(g); nR = len(R)
@@ -316,13 +487,14 @@ def shell(g, seed=1, warm=None):
 
     def behind(N):
         """every free node behind each view limit by its offset (projected onto it)"""
-        N = N.copy()
-        for _ in range(3):
-            for n_, p0, lim_ in g["lims"]:
-                over = (N - p0) @ n_ + lim_
-                mv = over > 0; mv[:nR] = False
-                N[mv] -= over[mv][:, None] * n_[None]
-            N[nR:, 2] = np.maximum(N[nR:, 2], g["z_o"] + 1.0)          # free nodes stay above the opening ring (it is the bottom)
+        N = N.copy(); P0 = partners(N)
+        for _ in range(12):                                            # each pass the worst limit per node, then the pair averaged (the camera
+            O = np.stack([(N - p0) @ n_ + lim_ for n_, p0, lim_ in g["lims"]], 1); k = O.argmax(1); over = O[np.arange(len(N)), k]
+            mv = over > 0.01; mv[:nR] = False                          # limits come in mirror pairs; a centre node stays on the plane)
+            if not mv.any(): break
+            Ns = np.stack([g["lims"][j][0] for j in k])
+            N[mv] -= over[mv][:, None] * Ns[mv]; N = sym(N, P0)
+        N[nR:, 2] = np.maximum(N[nR:, 2], g["z_o"] + 1.0)              # free nodes stay above the opening ring (it is the bottom)
         return N
     if warm is not None and len(warm) > nR: N = np.vstack([R, warm[nR:]])   # balance trim: the last shell's pattern, re-held round the moved parts
     U = dirs(N)
@@ -450,7 +622,7 @@ def blockage(g, nodes, E, extra, parts=False):
                 bt[j] |= hit & (n[2] > PROP_Z); bb[j] |= hit & (n[2] < PROP_Z)
         return bt, bb
     pct = lambda m: 100 * np.mean([(w * mm).sum() / w.sum() for (P, w, _), mm in zip(grids, m)])
-    sh = [(nodes[a], nodes[b], SHELL_R) for a, b in E]; ln = [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+    sh = [(nodes[a], nodes[b], SHELL_R) for a, b in E]; ln = [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]
     bt, bb = mark(sh + ln, nodes)
     if not parts: return pct(bt), pct(bb)
     st, sb = mark(sh, nodes); lt, lb = mark(ln, [])
@@ -458,13 +630,13 @@ def blockage(g, nodes, E, extra, parts=False):
 
 
 def views_clear(g, p0, p1, rad):
-    """a member stays out of the L2 field (behind its base plane) and out of the front camera view (+2 deg)"""
+    """a member stays out of the L2 field (behind its base plane) and out of both camera views (+2 deg)"""
     q = p0[None] + np.linspace(0, 1, 60)[:, None] * (p1 - p0)[None]
     return bool(((q - g["B"]) @ A < -(rad + 1.0)).all() and not in_cam_view(g, q).any())
 
 
 def halo(g, nodes):
-    """L2 guard ring: 8 nodes round its axis, HALO_BACK behind its base plane, r HALO_R; the rods the front camera would see
+    """L2 guard ring: 8 nodes round its axis, HALO_BACK behind its base plane, r HALO_R; the rods a camera would see
     are left out; each kept node 2 struts to the nearest shell nodes (props 12 off, views clear)"""
     up_b = np.array([-A[2], 0, A[0]]); c = g["B"] - A * HALO_BACK; ey = np.array([0, 1.0, 0])
     H = [c + HALO_R * (math.cos(t) * up_b + math.sin(t) * ey) for t in np.linspace(0, 2 * math.pi, 8, endpoint=False) + math.pi / 8]
@@ -482,7 +654,7 @@ def halo(g, nodes):
 
 def attach(g, nodes, ring_ids):
     mxy = g["mxy"]; extra = {}
-    pad = [[-ROD_R - 1] * 3, [ROD_R + 1] * 3]
+    pad = [[-SHELL_R - 1] * 3, [SHELL_R + 1] * 3]                       # a link may be sized up to 6 mm tube (link_sizes.json)
     boxes_ = [m_.bounds + pad for m_ in (g["cart"], TOP, FC, PI, DECK, PDB, UBEC, BUCK, RX)]   # links clear of the cartridge, top plate, hub
 
     keys_ = [(np.array([r_ * math.cos(math.radians(d_)) - v_ * math.sin(math.radians(d_)), r_ * math.sin(math.radians(d_)) + v_ * math.cos(math.radians(d_))]), z_, sg)
@@ -535,7 +707,7 @@ def attach(g, nodes, ring_ids):
     # L2 braces (27 Oct review: the 4 ties land on the flat front face and the keels root 24 apart, a stalk): each apex lug,
     # low and high, also to its side's front arm beam just outboard of the plates, so the seat is a braced pyramid on the core
     g["braces"] = []
-    for sy in (1, -1):
+    for sy in (() if HEAD_ON_CAGE else (1, -1)):
         (mx, my), (r0, m1, ht) = next(((m_, a_) for m_, a_ in zip(mxy, g["axes"]) if m_[0] > g["dm"] and m_[1] * sy > 0))
         u = (np.asarray(m1) - r0) / np.linalg.norm(np.asarray(m1) - r0)
         for out_ in (30.0, 40.0, 50.0, 60.0):
@@ -548,38 +720,56 @@ def attach(g, nodes, ring_ids):
                 for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
                     extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), root)
                 g["braces"].append(round(out_, 0)); break
-    extra.update(g["keels"])
+    if not HEAD_ON_CAGE: extra.update(g["keels"])
     hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
-    cr, cn_ = cam_guard(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
+    cr, cn_ = cam_guards(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
+
     # perfect left-right symmetry (Spark 27 Oct) for the links too: a link without its mirror gets it
     mir = np.array([1.0, -1.0, 1.0]); have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]
     for k_, (a_, b_) in list(extra.items()):
         a_, b_ = np.asarray(a_) * mir, np.asarray(b_) * mir
         if not any(min(np.linalg.norm(a_ - p_) + np.linalg.norm(b_ - q_), np.linalg.norm(a_ - q_) + np.linalg.norm(b_ - p_)) < 1.0 for p_, q_ in have):
             extra[k_ + " m"] = (a_, b_); have.append((a_, b_))
+    g["head_attach"], g["head_guards"] = [], {}
+    if PRINTED_HEAD:                                                   # the head's short rods out: the printed head carries the guards (ring, camera
+        head = {k: extra.pop(k) for k in list(extra) if k.startswith(("L2 tie", "halo", "cam guard"))}   # bars) and reaches the cage nodes they reached
+        g["head_attach"] = sorted({tuple(np.round(np.asarray(b_, float), 2)) for k, (a_, b_) in head.items() if "strut" in k or "tie" in k})
+        if HEAD_ONE and not HEAD_ON_CAGE:                              # the one-piece head: its own node + 4 struts (head_mount.HEAD_STRUTS)
+            cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]
+            g["head_attach"] = [tuple(np.round(nodes[max(cn_, key=lambda k_: nodes[k_][0])], 2))]
+            for w_, q_ in HEAD_STRUTS:
+                for sy in (1, -1):
+                    k_ = int(np.argmin([np.linalg.norm(nodes[j_] - np.array(q_) * [1, sy, 1]) for j_ in range(len(nodes))]))
+                    extra[f"head strut {k_}"] = (np.array(w_) * [1, sy, 1], nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
+        if HEAD_ON_CAGE:                                               # the front centre node only (the head's own node, printed in it)
+            g["head_attach"] = [max(g["head_attach"], key=lambda q_: q_[0] - 10 * abs(q_[1]))]
+        g["head_guards"] = {k: v for k, v in head.items() if not ("strut" in k or "tie" in k)}
+        g["head_budget"] = (sum(np.linalg.norm(np.subtract(b_, a_)) for a_, b_ in head.values()) * ROD_GPM + 1.5 * len(g["halo_nodes"]) + CAM_BRACKET_G)
+        g["head_topo"] = max(0.0, g["head_budget"] - 1.5 * len(g["halo_nodes"])
+                             - sum(np.linalg.norm(np.subtract(q_, p_)) for p_, q_ in g["head_guards"].values()) * 36 * 1.27e-3 * 0.8)
     return extra
 
 
-def cam_guard(g, nodes):
-    """front camera guard (27 Oct review: the camera stood 33 above the cage): a bar of 2 printed nodes over the camera
-    top, behind its lens plane (out of its view) and behind the L2 base plane, each node 2 struts to the nearest shell
-    nodes (props 12 off, views clear); cage first gated over the camera outside its field cone"""
-    b = g["cam"].bounds; hw = max(abs(b[0][1]), abs(b[1][1])); zt = b[1][2]
-    x = min(b[1][0], float(g["cam_lens"][0])) - HALO_NODE_R - 3.0
-    T = [np.array([x, sy * (hw + 4.0), zt + 3.0]) for sy in (1, -1)]
-    rods = {}
-    if not views_clear(g, T[0], T[1], ROD_R): return rods, []
-    rods["halo cam bar"] = (T[0], T[1])
+def cam_guards(g, nodes):
+    """a guard over each camera (the cameras stand ahead of the shell at the nose, like the L2): a bar of 2 printed nodes over
+    its top, behind its lens (out of both views) and behind the L2 base plane, each node 2 struts to the nearest shell nodes
+    (props 12 off, views clear); the left one is built, the right one mirrored"""
+    c = g["cams"][0]; rods, T = {}, []
+    for a_ in (-16.0, 16.0):
+        q = c["lens"] - c["f"] * (HALO_NODE_R + 4.0) + c["u"] * (20.0 + 3.0 + HALO_NODE_R) + c["r"] * a_
+        T.append(q)
+    if not (views_clear(g, T[0], T[1], ROD_R) and ((np.stack(T) - g["B"]) @ A < -(HALO_NODE_R + 1.0)).all()): return rods, []
+    rods["cam guard bar"] = (T[0], T[1])
     for i, t_ in enumerate(T):
         for n_, k in enumerate([k for k in sorted(range(len(nodes)), key=lambda k: np.linalg.norm(nodes[k] - t_))
                                 if seg_band_dist(t_, nodes[k], g["mxy"]) - ROD_R >= PROP_GAP and views_clear(g, t_, nodes[k], ROD_R)][:2]):
-            rods[f"halo cam strut {i}.{n_ + 1}"] = (t_, nodes[k])
-    return rods, T
+            rods[f"cam guard strut {i}.{n_ + 1}"] = (t_, nodes[k])
+    return rods, T + [t_ * [1, -1, 1] for t_ in T]
 
 
 def masses(g, nodes, E, extra):
     it = []; add = lambda n, m, c: it.append((n, float(m), np.asarray(c, float))); cen = lambda m: m.bounding_box.centroid
-    add("L2", 230, cen(g["l2"])); add("front camera", 15, cen(g["cam"])); add("down camera", 15, cen(g["down_cam"]))
+    add("L2", 230, cen(g["l2"])); [add(f"camera {'left' if c['side'] > 0 else 'right'}", 15, cen(c["mesh"])) for c in g["cams"]]
     for n, gm, m in (("Pi 5", 55, PI), ("FC", 10, FC), ("PDB", 21, PDB), ("UBEC", 15, UBEC), ("buck", 6, BUCK), ("RX", 2, RX),
                      ("top plate", 23, TOP), ("bottom plate", 61, BOTTOM), ("wires", 80, FC)):
         add(n, gm, cen(m))
@@ -588,14 +778,17 @@ def masses(g, nodes, E, extra):
     for i, a in enumerate(g["arms"]): add(f"arm {i + 1}", abs(a.volume) * 1.27e-3 * 0.45 + 25, a.centroid)
     add("apex", abs(g["apex"].volume) * 1.27e-3 * 0.45, g["apex"].centroid)
     add("cam plate", abs(g["cam_plate"].volume) * 1.27e-3 * 0.5, g["cam_plate"].centroid)
-    for k, (a, b) in enumerate(g["cam_rods"]): add(f"cam rod {k}", np.linalg.norm(np.subtract(b, a)) * ROD_GPM, np.add(a, b) / 2)
+    for k, (a, b) in enumerate(g["cam_rods"]): add(f"cam strut {k}", np.linalg.norm(np.subtract(b, a)) * 36 * 1.27e-3 * 0.8, np.add(a, b) / 2)   # printed (E)
     add("Pi deck", abs(DECK.volume) * 1.27e-3 * 0.5, DECK.centroid)
-    for nm in ("sled", "cam_pod", "flow_pod"): add(nm, abs(g[nm].volume) * 1.27e-3 * 0.3, g[nm].centroid)
+    for nm in ("sled", "flow_pod"): add(nm, abs(g[nm].volume) * 1.27e-3 * 0.3, g[nm].centroid)
     for i, f in enumerate(g["feet"]): add(f"foot {i}", abs(f.volume) * 1.21e-3 * 0.5, f.centroid)
     for i, (a, b) in enumerate(E): add(f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2)
-    for k, (p, q) in extra.items(): add(k, np.linalg.norm(np.subtract(q, p)) * ROD_GPM, (np.asarray(p) + np.asarray(q)) / 2)
+    for k, (p, q) in extra.items(): add(k, np.linalg.norm(np.subtract(q, p)) * lgpm(k), (np.asarray(p) + np.asarray(q)) / 2)
     for i, n in enumerate(nodes): add(f"node {i}", NODE_G, n)
     for i, n in enumerate(g.get("halo_nodes", [])): add(f"halo node {i}", 1.5, n)            # printed, r 5 (E)
+    for k, (p, q) in g.get("head_guards", {}).items(): add(f"head guard {k}", np.linalg.norm(np.subtract(q, p)) * 36 * 1.27e-3 * 0.8, (np.asarray(p) + np.asarray(q)) / 2)
+    if g.get("head_attach"):                                           # the topology's joining material (E) between the head and the cage nodes
+        add("head topology", g["head_topo"], 0.5 * (g["B"] - A * 20) + 0.5 * np.mean(g["head_attach"], 0))
     return it
 
 
@@ -631,9 +824,9 @@ def solve(dm=52.1):
     # the shell pattern jumps with the motor square (a node more or less): keep the closest one's pattern and trim the
     # motor square onto the CG with it (nodes re-pushed round the moved parts, no new pattern)
     for _ in range(10):
-        if abs(r[8][0] - dm) < 0.1 or not np.isfinite(r[9]): break
+        if abs(r[8][0] - dm) < 0.1 or not np.isfinite(r[9]) or FZ is not None: break
         dm = r[8][0]; r2 = run(dm, warm=r[0]["shellN"])
-        if not np.isfinite(r2[9]) or r2[9] > 0.05: break
+        if not np.isfinite(r2[9]) or (r2[9] > 0.05 and FZ is None): break
         r = r2
     return r
 
@@ -659,7 +852,8 @@ for START in STARTS:
             g_, nodes_, E_ = r[0], r[1], r[2]
             tl = max(np.linalg.norm(nodes_[a] - nodes_[b]) for a, b in E_); vol = ConvexHull(nodes_).volume / 1e6
             pg_ = min(seg_band_dist(nodes_[a], nodes_[b], g_["mxy"]) for a, b in E_) - SHELL_R
-            ok = bool(np.max(r[9]) <= 0.05 and len(r[4]) == 8 and pg_ >= PROP_GAP)      # no tube-length limit (Spark 26 Oct)
+            ok = bool((FZ is not None or np.max(r[9]) <= 0.05) and len(r[4]) == (len(FZ["open"][0]["ring"]) if FZ is not None else 8) and pg_ >= PROP_GAP - 0.05)   # no tube-length limit (Spark 26 Oct); a frozen
+                                                                                                   # cage is held to the props and system_check instead
             bt, bb = blockage(g_, nodes_, E_, r[5]) if ok else (np.nan, np.nan)
             say(f"start {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: shell {vol:.1f} L, {len(E_)} tubes, longest {tl:.0f}, "
                 f"props {pg_:.1f}, {r[7]:.0f} g, prop blockage top {bt:.1f} % / bottom {bb:.1f} %")
@@ -678,8 +872,18 @@ dm = g["dm"]; mxy = g["mxy"]
 # ---------------------------------------------------------------- checks
 say(f"\nchosen: start {START} (smallest valid shell); motor square {dm:.1f} ahead of the plate centre; motors ({mxy[0][0]:.1f}, ±{HALF}) and ({mxy[1][0]:.1f}, ±{HALF}); "
     f"front arms r {math.hypot(*mxy[0]):.0f}, rear r {math.hypot(*mxy[1]):.0f}")
-say(f"L2: base ({g['xB']:.1f}, 0, {ZB:.0f}), axis 15 deg below +x (Spark 24 Oct); front camera horizon, portrait, {g['cam_h']:.0f} up its back plane, "
-    f"lens ({g['cam_lens'][0]:.0f}, 0, {g['cam_lens'][2]:.0f}); L2 and props out of its view + 2 deg")
+cs = g["cam_sel"]; ha_, hv_ = CAM_FMTS[cs["fmt"]]
+say(f"L2: base ({g['xB']:.1f}, 0, {ZB:.0f}), axis 15 deg below +x (Spark 24 Oct)")
+say(f"cameras (Spark 27 Oct: no down camera; the two on either side of the L2, their field maximized): {cs['fmt']} ({2 * ha_:.0f} across x {2 * hv_:.0f} up), "
+    f"yawed {cs['psi']:.1f} deg out, pitched {cs['th']:+.0f}; lenses ({g['cams'][0]['lens'][0]:.0f}, ±{g['cams'][0]['lens'][1]:.0f}, {g['cams'][0]['lens'][2]:.0f}), "
+    f"{cs['w']:.0f} off the centre plane, {cs['bk']:.0f} behind the L2 base plane (the most compact of {cs['mounts']} clear mounts); combined field "
+    f"{cs['U']:.2f} sr ({100 * cs['U'] / (4 * math.pi):.1f} % of the sphere; every pair whose fields do not overlap gets this, within the sampling), "
+    f"blind wedge ahead on the horizon {cs['gap']:.1f} deg (the tie-break: the fields meet at the nose), {100 * cs['S']:.0f} % of the L2 field (C); "
+    f"printed bracket: a plate on 3 struts 6 x 6 from 3 corners to its side's lugs and block")
+um_ = max(t["U"] for t in cam_table())
+CAMALT = [f"{t['fmt']} yaw {t['psi']:.1f} pitch {t['th']:+.0f}: {t['U']:.2f} sr, gap {t['gap']:.1f}, {100 * t['S']:.0f} % of the L2 field"
+          for t in sorted(cam_table(), key=lambda t: -t["S"])[:1] + [t for t in cam_table() if t["fmt"] != cs["fmt"]][:1]]
+say("   camera alternatives: " + "; ".join(CAMALT))
 sh = np.array([np.linalg.norm(nodes[a] - nodes[b]) for a, b in E])
 ext = nodes.max(0) - nodes.min(0)
 say(f"shell: {len(nodes)} nodes ({len(ring_ids)} on the opening ring), {len(E)} tubes, {len(tris)} triangles; tubes {sh.min():.0f} .. {sh.max():.0f} "
@@ -692,7 +896,7 @@ for f in tris:
 say(f"largest cell: inscribed circle Ø{max(circ) - 2 * SHELL_R:.0f} between tube surfaces (C)")
 short = [(i, l) for i, l in enumerate(sh) if l < BREAK_EVEN]
 rl = {k: float(np.linalg.norm(np.subtract(q, p))) for k, (p, q) in extra.items()}
-say(f"carbon: shell {len(sh) - len(short)} tubes 6/4 (Spark 26 Oct), shortest {min(l for l in sh if l >= BREAK_EVEN):.0f}; links {sum(v >= BREAK_EVEN for v in rl.values())} rods 3.0 solid, "
+say(f"carbon: shell {len(sh) - len(short)} tubes 6/4 (Spark 26 Oct), shortest {min(l for l in sh if l >= BREAK_EVEN):.0f}; links {sum(v >= BREAK_EVEN for v in rl.values())} ({sum(v >= BREAK_EVEN and k in LINK6 for k, v in rl.items())} tube 6/4, the rest rod 3.0), "
     f"{sum(rl.values()) / 1000:.2f} m, shortest {min(rl.values()):.0f} ({min(rl, key=rl.get)}); printed struts (< {BREAK_EVEN:.0f}): "
     + (", ".join(f"shell {i} {l:.0f}" for i, l in short) + ", " if short else "") + (", ".join(f"{k} {v:.0f}" for k, v in rl.items() if v < BREAK_EVEN) or "none"))
 pg = min(seg_band_dist(nodes[a], nodes[b], mxy) for a, b in E) - SHELL_R
@@ -701,11 +905,11 @@ pe_all = {k: seg_band_dist(np.asarray(p, float), np.asarray(q, float), mxy) - RO
 say(f"props: shell tubes {pg:.1f} off the swept disks (≥ 12, 3D), nodes {pn:.1f}, links {min(pe_all.values()):.1f} ({min(pe_all, key=pe_all.get)}) (C)")
 eqs = ConvexHull(nodes).equations
 for nm, ms in (("props (disks)", g["props"]), ("arms + motors", g["arms"] + g["motors"]),
-               ("hub + plates", [TOP, BOTTOM, PI, DECK, PDB]), ("belly", [g["cart"], g["sled"], g["cam_pod"], g["flow_pod"]])):
+               ("hub + plates", [TOP, BOTTOM, PI, DECK, PDB]), ("belly", [g["cart"], g["sled"], g["flow_pod"]])):
     p = np.vstack([pts(m, 2000) for m in ms]); p = p[p[:, 2] > g["z_o"]]
     say(f"   inside: {nm} {float((-(p @ eqs[:, :3].T + eqs[:, 3])).min(1).min()):.1f} from the nearest face plane (C)")
-rc = ring_nodes(g)
-say(f"opening: {len(ring_ids)} nodes on an ellipse {np.ptp(rc[:, 0]):.0f} x {np.ptp(rc[:, 1]):.0f} round the swap zone {2 * ZONE[0]:.0f} x {2 * ZONE[1]:.0f} "
+rc = nodes[ring_ids]
+say(f"opening: {len(ring_ids)} nodes, a ring {np.ptp(rc[:, 0]):.0f} x {np.ptp(rc[:, 1]):.0f} round the swap zone {2 * ZONE[0]:.0f} x {2 * ZONE[1]:.0f} "
     f"(receiver {REC[0]} x {REC[1]} M + {SPARE:.0f} a side), plane z {g['z_o']:.1f} = cartridge bottom - 3; v2 TPU feet the floor contact (z {min(f.bounds[0][2] for f in g['feet']):.1f})")
 zone = box(-DC - ZONE[0], -DC + ZONE[0], -ZONE[1], ZONE[1], g["z_o"] - 200, g["cart"].bounds[0][2])
 blk = [(i, overlap(zone, rod(nodes[a], nodes[b], SHELL_R))) for i, (a, b) in enumerate(E)]
@@ -714,7 +918,7 @@ say("swap zone (receiver + spare, from the cartridge bottom down): " + ("clear (
 Bc = g["B"] + A * 40.0
 rng = np.random.default_rng(1); D = rng.normal(size=(20000, 3)); D /= np.linalg.norm(D, axis=1)[:, None]; D = D[D @ A > 0]
 hit = np.zeros(len(D), bool)
-for p0, p1, rr in [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]:
+for p0, p1, rr in [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]:
     u = p1 - p0; w0 = Bc - p0; bq = D @ u; cq = float(u @ u); dq = D @ w0; eq_ = float(u @ w0)
     sq = np.clip((eq_ - bq * dq) / np.maximum(cq - bq * bq, 1e-9), 0, 1); tq = -dq + sq * bq
     hit |= (np.linalg.norm(Bc + tq[:, None] * D - (p0 + sq[:, None] * u), axis=1) < rr) & (tq > 0)
@@ -724,7 +928,7 @@ BT, BB, BS = blockage(g, nodes, E, extra, parts=True)
 say(f"prop blockage (Spark 26 Oct, secondary to structure): {BT:.1f} % of the disks' thrust shadowed from above, {BB:.1f} % from below "
     f"(plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell {BS['shell_top']:.1f} / {BS['shell_bottom']:.1f} %, "
     f"links {BS['links_top']:.1f} / {BS['links_bottom']:.1f} %")
-memb = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+memb = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]
 ahead = max([float(((np.stack([p0, p1]) - g["B"]) @ A).max()) + rr for p0, p1, rr in memb] + [float(((nodes - g["B"]) @ A).max()) + NODE_R]
             + [float((np.asarray(h_) - g["B"]) @ A) + HALO_NODE_R for h_ in g["halo_nodes"]])
 fw = {k: float(((np.stack([np.asarray(p, float), np.asarray(q, float)]) - g["B"]) @ A).max()) + ROD_R for k, (p, q) in extra.items()}
@@ -736,27 +940,42 @@ say(f"L2 field (Spark 26 Oct: outside the cage, not blocked at all): {100 * hit.
 cam_seen = []
 for k, P_ in (("shell tubes", np.vstack([rod(nodes[a], nodes[b], SHELL_R).vertices for a, b in E])), ("shell nodes", np.vstack([n + NODE_R * DIRS for n in nodes])),
               ("links + guard ring", np.vstack([pts(rod(p0, p1, rr), 200) for p0, p1, rr in memb[len(E):]])), ("props", np.vstack([pts(p_, 3000) for p_ in g["props"]])),
-              ("L2", pts(g["l2"], 3000)), ("arms", np.vstack([pts(a_, 2000) for a_ in g["arms"]]))):
+              ("L2", pts(g["l2"], 3000)), ("arms", np.vstack([pts(a_, 2000) for a_ in g["arms"]])),
+              ("apex + camera brackets", np.vstack([pts(g["apex"], 3000), pts(g["cam_bracket"], 3000)]))):
     n_ = int(in_cam_view(g, P_, 0.0).sum())
     if n_: cam_seen.append(f"{k} {n_} points")
-say("front camera (horizon, portrait, 73 x 89 deg): " + ("nothing of the drone in its view (C)" if not cam_seen else "in view: " + "; ".join(cam_seen)))
-say(f"sensor head outside the shell: shell node centres {LIM_L2:.1f} behind the L2 base plane (guard ring in front), {LIM:.1f} under the camera's "
-    f"lower view plane (+2 deg) and behind the head plane (the head's back, tilted {g['phi']:.0f} deg from the L2 axis toward +z: the tilt that keeps "
-    f"the L2 furthest back of {list(PHIS)})")
-say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
-    f"the others in the camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "
-    f"{sum(k.startswith('L2 tie') for k in extra)} ties into the shell, {sum(k.startswith('L2 brace') for k in extra)} braces from the lugs (low and high) to the front "
-    f"arm beams {g.get('braces')} out of the root (a braced pyramid on the core, not a stalk); front camera guard: a bar of 2 printed nodes over its top, "
-    f"behind its lens and the L2 base plane, {sum(k.startswith('halo cam strut') for k in extra)} struts into the shell; break order: the apex lugs are the "
-    f"printed fuse (requirement: they let go before the L2 base, E)")
-for lens, hh, hv, nm in ((g["down_lens"], 44.5, 36.5, "down camera"), (g["flow_lens"], 23.0, 23.0, "flow")):
+for c in g["cams"]:                                                     # each camera and the other one
+    o_ = [d_ for d_ in g["cams"] if d_ is not c][0]
+    n_ = int(in_frustum(c["lens"], c["f"], c["u"], c["r"], c["ha"], c["hv"], pts(o_["mesh"], 3000), 0.0).sum())
+    if n_: cam_seen.append(f"the other camera {n_} points")
+say("cameras: " + ("nothing of the drone in either view (C)" if not cam_seen else "in view: " + "; ".join(cam_seen)))
+if FZ is None:
+    say(f"sensor head outside the shell: shell node centres {LIM_L2:.1f} behind the L2 base plane (guard ring in front), {LIM:.1f} beyond each camera's "
+        f"limiting view face (+2 deg) and behind the head plane (the head's back, tilted {g['phi']:.0f} deg from the L2 axis toward +z: the tilt that keeps "
+        f"the L2 furthest back of {list(PHIS)})")
+else:
+    say(f"sensor head outside the frozen cage ({os.path.basename(FROZEN)}): "
+        f"the L2 base where it was ({FZ['xB']:.1f}, 0, {ZB:.0f}); the cameras' bodies {fz_clear(np.vstack([c['mesh'].vertices for c in g['cams']])):.1f} off its tubes "
+        f"and nodes, nothing of it in their views (C)")
+if PRINTED_HEAD:
+    say(f"L2 mount: the printed sensor head mount{' (one piece with both cameras)' if HEAD_ONE else ''}: seat, back block, lugs, the guard ring (8 nodes, r "
+        f"{HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on "
+        f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the front arm beams "
+        f"{g.get('braces')} out of the root, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
+        f"printed fuse (requirement: they let go before the L2 base, E)")
+else: say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
+          f"the others in a camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "
+          f"{sum(k.startswith('L2 tie') for k in extra)} ties into the shell, {sum(k.startswith('L2 brace') for k in extra)} braces from the lugs (low and high) to the front "
+          f"arm beams {g.get('braces')} out of the root (a braced pyramid on the core, not a stalk); each camera on a printed plate with 2 rods to its side's lugs; break order: the apex lugs are the "
+          f"printed fuse (requirement: they let go before the L2 base, E)")
+for lens, hh, hv, nm in ((g["flow_lens"], 23.0, 23.0, "flow"),):
     for k, m in (("shell", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E])), ("cartridge", g["cart"]), ("feet", trimesh.util.concatenate(g["feet"])),
-                 ("links", trimesh.util.concatenate([rod(p0, p1, rr) for p0, p1, rr in memb[len(E):]])), ("sled + pods", trimesh.util.concatenate([g["sled"], g["cam_pod"], g["flow_pod"]]))):
+                 ("links", trimesh.util.concatenate([rod(p0, p1, rr) for p0, p1, rr in memb[len(E):]])), ("sled + pod", trimesh.util.concatenate([g["sled"], g["flow_pod"]]))):
         d = pts(m, 4000) - lens; zz = -d[:, 2]
         n_ = ((zz > 0) & (np.abs(np.degrees(np.arctan2(d[:, 0], np.maximum(zz, 1e-6)))) < hh) & (np.abs(np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))) < hv)).mean()
         if n_: say(f"   {k} in the {nm} view ({100 * n_:.1f} % of its points)")
-say("down camera and flow: views checked (lines above list anything in view)")
-shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(rl.values()) * ROD_GPM
+say("flow: view checked (lines above list anything in view)")
+shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(v * lgpm(k) for k, v in rl.items())
 say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} E + nodes {NODE_G * len(nodes):.0f} E), links {link_g:.0f} g (C); "
     f"v0 rings ~96 g, v1 sphere 802 + 98 g (E)")
 t2, c2 = cg([x for x in it if x[0] not in ("pack",)] + [("cartridge out", -LATCH_G * 0.45, g["cart"].bounding_box.centroid)])
@@ -767,8 +986,8 @@ say(f"T/W {6600 / tot:.2f} (C on E mass, 1650 gf a motor); CG {PROP_Z - cgv[2]:.
 hullK = ConvexHull(K)
 say(f"compact: shell hull {ConvexHull(nodes).volume / 1e6:.1f} L vs the parts-with-margins hull {hullK.volume / 1e6:.1f} L (C)")
 
-SUMMARY = dict(cg_off=float(math.hypot(cgv[0] - dm, cgv[1])), l2_axis=A.tolist(), l2_base=g["B"].tolist(), cam_lens=g["cam_lens"].tolist(),
-               cam_fwd=g["cam_fwd"].tolist(), cam_up=g["cam_up_v"].tolist(), freq=FREQ, start=START, dome=DOME, snap=SNAP, block_parts=BS, block_top=BT, block_bottom=BB, dm=dm, xB=g["xB"], cam_h=g["cam_h"], z_o=g["z_o"], nodes=len(nodes), tubes=len(E), ring=len(ring_ids), shell_m=float(sh.sum() / 1000),
+SUMMARY = dict(cg_off=float(math.hypot(cgv[0] - dm, cgv[1])), l2_axis=A.tolist(), l2_base=g["B"].tolist(), cams=[dict(lens=c["lens"].tolist(), f=c["f"].tolist(),
+               u=c["u"].tolist(), r=c["r"].tolist(), ha=c["ha"], hv=c["hv"]) for c in g["cams"]], cam_sel={k: (v.tolist() if hasattr(v, "tolist") else v) for k, v in g["cam_sel"].items()}, freq=FREQ, start=START, dome=DOME, snap=SNAP, block_parts=BS, block_top=BT, block_bottom=BB, dm=dm, xB=g["xB"], z_o=g["z_o"], nodes=len(nodes), tubes=len(E), ring=len(ring_ids), shell_m=float(sh.sum() / 1000),
                shell_g=float(shell_g), link_g=float(link_g), mass=tot, cg=cgv.tolist(), cg_pack_out=c2.tolist(), extents=ext.tolist(), prop_gap=pg,
                l2_blocked=float(hit.mean()), motors_xy=[list(map(float, m)) for m in mxy], Iyy_gm2=Iyy, largest_cell=max(circ) - 2 * SHELL_R)
 SUMMARY["links"] = {k: [np.round(np.asarray(a_), 2).tolist(), np.round(np.asarray(b_), 2).tolist()] for k, (a_, b_) in extra.items()}
@@ -778,25 +997,30 @@ json.dump([dict(name=n_, g=round(float(m_), 3), c=np.round(c_, 2).tolist()) for 
 # ---------------------------------------------------------------- export: parts, assembly file
 from assembly import new as new_assembly
 PD = os.path.join(OUT, "parts"); os.makedirs(PD, exist_ok=True)
+cen_ = lambda m_: m_.bounding_box.centroid
 rel = lambda p_: os.path.relpath(p_, ROOT)
 node_m = lambda c_: trimesh.creation.icosphere(1, NODE_R).apply_translation(c_)
 grp, grp_mc = {}, {}
 for n_, gm, _c in it:
-    k = ("shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else "halo nodes" if n_.startswith("halo node")
-         else "links" if n_.split()[0] in ("spoke", "core", "L2", "bay", "keel", "halo") and n_ != "L2"
-         else "hub" if n_ in ("Pi 5", "FC", "PDB", "UBEC", "buck", "RX", "Pi deck") else "belly" if n_ in ("sled", "cam_pod", "flow_pod") else
-         "feet" if n_.startswith("foot") else "L2 mount" if n_ in ("apex", "cam plate") or n_.startswith("cam rod") else n_)
+    k = ("shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else ("head" if PRINTED_HEAD else "halo nodes") if n_.startswith("halo node") else "head" if n_.startswith("head ") and not n_.startswith("head strut")
+         else "links" if n_.startswith("head strut") or n_.split()[0] in ("spoke", "core", "L2", "bay", "keel", "halo", "cam") and n_ != "L2" and not n_.startswith(("cam plate", "cam strut"))
+         else "hub" if n_ in ("Pi 5", "FC", "PDB", "UBEC", "buck", "RX", "Pi deck") else "belly" if n_ in ("sled", "flow_pod") else
+         "feet" if n_.startswith("foot") else ("head" if PRINTED_HEAD else "L2 mount") if n_ in ("apex", "cam plate") or n_.startswith("cam strut") else n_)
     grp[k] = grp.get(k, 0.0) + gm; grp_mc[k] = grp_mc.get(k, 0.0) + gm * np.asarray(_c, float)
-links = trimesh.util.concatenate([rod(p, q) for p, q in extra.values()])
+links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items()])
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
     ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
-    ("spokes, ties, keels, L2 guard ring", links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
-    ("L2 guard ring nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]), "cage", False, grp.get("halo nodes", 0.0), "E", "PETG", "cage", "#7d8a99", False),
+    (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
-    ("apex + cam bracket", trimesh.util.concatenate([g["apex"], g["cam_bracket"]]), "structure", False, grp["L2 mount"], "E", "PETG", "printed", "#aab4c0", False),
+    *([(HEADN, trimesh.util.concatenate([g["apex"], g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
+                                        + [trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]),
+         "structure", False, grp["head"], "E", "PETG", "printed", "#aab4c0", False)] if PRINTED_HEAD else
+      [("L2 guard ring nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]), "cage", False, grp.get("halo nodes", 0.0), "E", "PETG", "cage", "#7d8a99", False),
+       ("apex + cam bracket", trimesh.util.concatenate([g["apex"], g["cam_bracket"]]), "structure", False, grp["L2 mount"], "E", "PETG", "printed", "#aab4c0", False)]),
     ("Unitree L2", g["l2"], "bought", True, 230, "P", None, "bought", "#222222", False),
-    ("front camera", g["cam"], "bought", True, 15, "E", None, "bought", "#2d5a2d", False),
+    ("camera left", g["cams"][0]["mesh"], "bought", True, 15, "E", None, "bought", "#2d5a2d", False),
+    ("camera right", g["cams"][1]["mesh"], "bought", True, 15, "E", None, "bought", "#2d5a2d", False),
     ("top plate", TOP, "bought", False, 23, "E", None, "frame", "#d8d8d8", False),
     ("bottom plate", BOTTOM, "bought", False, 61, "E", None, "frame", "#cfcfcf", False),
     ("hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)", trimesh.util.concatenate([FC, PI, DECK, PDB, UBEC, BUCK, RX]), "bought", True, grp["hub"], "E", None, "bought", "#2e7d32", False),
@@ -804,8 +1028,7 @@ PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("pack", g["pack"], "bought", True, 650, "E", None, "bought", "#2f4fbf", True),
     ("cartridge", g["cart"], "protected", True, LATCH_G * 0.45, "E", "PETG", "printed", "#99a6b3", True),
     ("receiver", g["cart"], "protected", True, LATCH_G * 0.55, "E", "PETG", "printed", "#8899aa", False),   # stays in the drone (latch set split E)
-    ("belly sled + pods", trimesh.util.concatenate([g["sled"], g["cam_pod"], g["flow_pod"]]), "structure", False, grp["belly"], "E", "PETG", "printed", "#99a6b3", False),
-    ("down camera", g["down_cam"], "bought", True, 15, "E", None, "bought", "#2d5a2d", False),
+    ("belly sled + pods", trimesh.util.concatenate([g["sled"], g["flow_pod"]]), "structure", False, grp["belly"], "E", "PETG", "printed", "#99a6b3", False),
     ("flow MTF-02P", g["flow"], "bought", True, 2, "E", None, "bought", "#2d5a2d", False),
 ]
 for i in range(4):
@@ -817,12 +1040,38 @@ for p_ in PARTS:
     p_[1].export(os.path.join(PD, fname(p_[0])))
 json.dump([dict(name=n_, file=fname(n_), role=r_, protect=pr_, mass_g=round(float(gm_), 2), tag=t_, group=gr_, color=co_, swap=sw_)
            for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS], open(os.path.join(PD, "parts.json"), "w"), indent=1)
+for f_ in os.listdir(PD):                                               # parts no longer in the drone (27 Oct review: a stale down camera)
+    if f_.endswith(".stl") and f_ not in {fname(p_[0]) for p_ in PARTS}: os.remove(os.path.join(PD, f_))
 say(f"assembly mass {sum(p_[4] for p_ in PARTS):.0f} g (E) vs the layout model {tot:.0f} g")
+if PRINTED_HEAD:
+    # the sensor head mount's requirements for its topology run (system first, then cut): drawn bodies, the cage nodes it holds,
+    # the carbon rods it takes, keep-outs, masses and cases (dimensions.md L), print limits
+    HEAD_SYS_G = sum(m_ for n_, m_, _ in it if n_.startswith(("apex", "cam plate", "cam strut", "halo node", "head guard", "head topology")))   # one head mass: the system model's
+    HS = dict(note="Overseer sensor head mount (printed PETG, topology): replaces the short rods at the L2 and the cameras (Spark 27 Oct). Drone frame, mm.",
+              l2=dict(base=g["B"].tolist(), axis=A.tolist(), mass_g=230, cg=cen_(g["l2"]).tolist(), field="half-space ahead of the base plane, nothing of the mount in it (1 behind)"),
+              cameras=[dict(side=c["side"], lens=c["lens"].tolist(), f=c["f"].tolist(), u=c["u"].tolist(), r=c["r"].tolist(), half_across=c["ha"], half_up=c["hv"],
+                            mass_g=15, cg=cen_(c["mesh"]).tolist(), view="frustum + 2 deg kept clear; board 38 x 38, M2.5 on 28 x 28 behind it") for c in g["cams"]],
+              cage_nodes_held=[list(q_) for q_ in g["head_attach"]], cage_node_r=NODE_R,
+              carbon_kept={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith(("keel", "L2 brace"))},
+              struts={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith("head strut")},
+              guards={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in g["head_guards"].items()},
+              guard_nodes=[np.round(np.asarray(h_), 2).tolist() for h_ in g["halo_nodes"]],
+              keep_out=["the L2 and its field", "both cameras and their views (+2 deg)", "the frozen cage's tubes (3 off) except the held nodes",
+                        "prop disks 12 off", "the keels and braces (their sockets are on the lugs)"],
+              mass_budget_g=round(HEAD_SYS_G, 1), cases="dimensions.md L (flight 4 g / 2 g, crash 35 g in 14 directions at each payload's CG, "
+              "sensor mounts first mode >= 100 Hz, breaking order: the lugs let go before the L2 base)",
+              print_="Bambu A1 mini 180 cube, PETG; cut DEFAULT: centre piece |y| <= 75 (seat, lugs, guard ring, the centre node) and two mirrored wings "
+                     "(camera pad, camera guard, the side nodes), bolted M3 on drawn pads",
+              drawn_mesh="parts/" + fname(HEADN))
+    json.dump(HS, open(os.path.join(OUT, "head_system.json"), "w"), indent=1)
+    say(f"sensor head mount (Spark 27 Oct: a topology printed mount instead of the little rods): drawn seat, lugs, camera pads, guard ring and camera "
+        f"guard bars; it holds {len(g['head_attach'])} cage nodes (its own node + the struts' nodes){'' if HEAD_ON_CAGE else ' and takes the keels and braces'}; {HEAD_SYS_G:.0f} g in the system "
+        f"model (E: seat and lugs, camera plates, guards, joining material {g['head_topo']:.0f} g held to the rods it replaces); requirements in head_system.json")
 # ---------------------------------------------------------------- access (rule 2: reachable without taking another part off)
 # straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),
 # then gated by system_check's own sweep
 blockers = [(n_, m_) for n_, m_, *_ in PARTS if not n_.startswith(("cage shell", "spokes"))]
-segs_all = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+segs_all = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]
 pq = {n_: trimesh.proximity.ProximityQuery(m_) for n_, m_ in blockers}
 
 
@@ -894,7 +1143,7 @@ for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-to
         ok_ = line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}"))
         ign = [f"arm {i_ + 1}"]
         if not ok_:
-            for extra_ in (["belly sled + pods"], ["belly sled + pods", "down camera"], ["belly sled + pods", "flow MTF-02P"]):
+            for extra_ in (["belly sled + pods"], ["belly sled + pods", "flow MTF-02P"]):
                 if line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}", *extra_)): ign += extra_; break
         ACCESS.append({"name": f"M3 key, arm {i_ + 1} bottom screw v {v_:+.0f}", "part": "bottom plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, -1],
                        "length_mm": 400.0, "tool": {"type": "cylinder", "d": 8}, "ignore": ign})
@@ -907,13 +1156,13 @@ SHELL_SPEC = dict(nodes=np.round(nodes, 3).tolist(), rods=[list(map(int, e)) for
                   open=[dict(name="bottom opening (pack + swap)", ring=[int(i) for i in np.where(nodes[:, 2] < g["z_o"] + 0.5)[0]])],
                   node_r_mm=NODE_R, rod_r_mm=SHELL_R)
 json.dump(SHELL_SPEC, open(os.path.join(OUT, "cage_shell.json"), "w"))
-GRP_OF = {"cage shell tubes": "shell", "cage shell nodes": "nodes", "spokes, ties, keels, L2 guard ring": "links", "L2 guard ring nodes": "halo nodes",
-          "TPU feet": "feet", "apex + cam bracket": "L2 mount", "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)": "hub", "belly sled + pods": "belly"}
+GRP_OF = {"cage shell tubes": "shell", "cage shell nodes": "nodes", LINKN: "links", "L2 guard ring nodes": "halo nodes",
+          "TPU feet": "feet", "apex + cam bracket": "L2 mount", HEADN: "head", "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)": "hub", "belly sled + pods": "belly"}
 if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_START", "V5_STARTS", "V5_PACK", "V5_ROTS", "V5_SNAPS", "V5_PEAKS", "V5_DOME", "V5_DOMES", "V5_SLACK")) and os.path.abspath(OUT) == os.path.join(ROOT, "runs", "overseer_layout", "v5")):
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
         p_ = dict(name=n_, role=r_, mesh=rel(os.path.join(PD, fname(n_))), mass_g=round(float(gm_), 2), tag=t_, owner="overseer",
-                  version="layout v5 / cage v3", source="nox/overseer/layout_v5.py")
+                  version="layout v5 / cage v5", source="nox/overseer/layout_v5.py")
         gk = GRP_OF.get(n_, n_ if n_ in grp else None)                 # CG from the layout's mass model (multi-piece meshes are not
         if gk and grp.get(gk, 0) > 0: p_["cg"] = np.round(grp_mc[gk] / grp[gk], 2).tolist()   # watertight: system_check would take the box centre)
         if pr_: p_["protect"] = True
@@ -921,27 +1170,31 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
         if sw_: p_["swap"] = True
         asm_parts.append(p_)
     hubn = "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)"
-    contact = [["wires", hubn], ["pack", "cartridge"], ["pack", "receiver"], ["cartridge", "receiver"], ["belly sled + pods", "receiver"], ["cage shell tubes", "cage shell nodes"], ["spokes, ties, keels, L2 guard ring", "cage shell nodes"], ["spokes, ties, keels, L2 guard ring", "L2 guard ring nodes"],
-               ["spokes, ties, keels, L2 guard ring", "cage shell tubes"], ["spokes, ties, keels, L2 guard ring", "bottom plate"], ["spokes, ties, keels, L2 guard ring", "apex + cam bracket"],
-               ["spokes, ties, keels, L2 guard ring", "belly sled + pods"], ["Unitree L2", "apex + cam bracket"], ["front camera", "apex + cam bracket"],
+    contact = [["wires", hubn], ["pack", "cartridge"], ["pack", "receiver"], ["cartridge", "receiver"], ["belly sled + pods", "receiver"], ["cage shell tubes", "cage shell nodes"], [LINKN, "cage shell nodes"], [LINKN, "L2 guard ring nodes"],
+               [LINKN, "cage shell tubes"], [LINKN, "bottom plate"], [LINKN, "apex + cam bracket"],
+               [LINKN, "belly sled + pods"], ["Unitree L2", "apex + cam bracket"], ["camera left", "apex + cam bracket"], ["camera right", "apex + cam bracket"],
                ["apex + cam bracket", "bottom plate"], ["apex + cam bracket", "top plate"], ["belly sled + pods", "cartridge"],
-               ["belly sled + pods", "down camera"], ["belly sled + pods", "flow MTF-02P"], ["belly sled + pods", "TPU feet"], ["belly sled + pods", "bottom plate"],
+               ["belly sled + pods", "flow MTF-02P"], ["belly sled + pods", "TPU feet"], ["belly sled + pods", "bottom plate"],
                [hubn, "bottom plate"], [hubn, "top plate"]]
     for i in range(1, 5):
-        contact += [[f"arm {i}", "top plate"], [f"arm {i}", "bottom plate"], [f"motor {i}", f"arm {i}"], ["spokes, ties, keels, L2 guard ring", f"arm {i}"], [f"arm {i}", hubn]]
+        contact += [[f"arm {i}", "top plate"], [f"arm {i}", "bottom plate"], [f"motor {i}", f"arm {i}"], [LINKN, f"arm {i}"], [f"arm {i}", hubn]]
+    if PRINTED_HEAD:                                                   # the two head parts are one printed part now
+        contact = [[HEADN if q_ in ("apex + cam bracket", "L2 guard ring nodes") else q_ for q_ in c_] for c_ in contact]
+        contact = [c_ for c_ in contact if c_[0] != c_[1]] + [[HEADN, "cage shell nodes"], [HEADN, "cage shell tubes"]]
     asm = new_assembly("Overseer", "overseer", asm_parts,
-                       note=("Layout v5 / cage v3 (26 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the front camera outside "
+                       note=("Layout v5 / cage v5 (26-27 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the two cameras (27 Oct: no down camera, the pair beside the L2) outside "
                              "it with nothing in their views, a guard ring behind the L2; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
                              "layout v4 / cage v2. Rough layout: C geometry on E sizes. "
                              "Drone frame: x fwd, y left, z up, z 0 bottom plate top. Left out: ESC bodies (25 g each in the arm masses), catch features "
                              "(the new funnel's), scan stick mount, XT60 and leads; the latch set is drawn as v2's cartridge envelope."),
                        cg_ref=[round(dm, 3), 0.0, PROP_Z], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0,
                        openings=[dict(part=p_, axis=[0, 0, -1], half_angle_deg=40.0, skip_probes=True)
-                                 for p_ in ("pack", "cartridge", "receiver", "down camera", "flow MTF-02P")]
+                                 for p_ in ("pack", "cartridge", "receiver", "flow MTF-02P")]
                                 + [dict(part="Unitree L2", axis=[round(float(v), 4) for v in A], half_angle_deg=L2_CONE, field=True,
                                         note="Spark 26 Oct: outside the cage, nothing in its view; guarded only outside its field (cage first gated outside this cone)"),
-                                   dict(part="front camera", axis=[round(float(v), 4) for v in g["cam_fwd"]], half_angle_deg=CAM_CONE, field=True,
-                                        note="Spark 26 Oct: nothing of the drone in its view (73 x 89 deg, diagonal 51); cage first gated outside this cone")],
+                                   *[dict(part=f"camera {'left' if c['side'] > 0 else 'right'}", axis=[round(float(v), 4) for v in c["f"]], half_angle_deg=CAM_CONE, field=True,
+                                          note="Spark 27 Oct: the pair beside the L2, nothing of the drone in its view (diagonal 51); cage first gated outside this cone")
+                                     for c in g["cams"]]],
                        contact_pairs=contact, guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=2200, cage_shell=SHELL_SPEC, access=ACCESS,
                        balance_no_swap_gate=False)   # dimensions.md L Balance: Overseer pack-out reported (DEFAULT 26 Oct, Spark's v2 format)
     asm.save(os.environ.get("V5_ASM", os.path.join(ROOT, "nox", "overseer", "overseer.assembly.json")))

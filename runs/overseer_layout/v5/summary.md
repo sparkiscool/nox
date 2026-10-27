@@ -1,38 +1,74 @@
-# Overseer layout v5 / cage v3: sensor head outside the disk cage, mirror-exact (26-27 Oct 2026, concept)
+# Overseer layout v5 / cage v5: halved geodesic disk, camera pair beside the L2, one-piece printed sensor head (26-27 Oct 2026)
 
-Spark 26 Oct: "The lidar needs to be outside the cage and not be blocked at all, try to give it enough support and guard is okay as long as it's outside the view of the lidar, also keep the two camera layout, also needs to not have its view obstructed, also why are there three orientations, I just need the one with perfect cg". Supersedes layout v4 / cage v2 (L2 inside the disk; the page showed the chosen layout with two alternatives beside it, which read as three orientations: this page shows one drone).
-Spark 27 Oct (sic): "There is no limit for the tube length do t worry about that delete it / There needs to be perfect left and right symmetry the nose and tail can be different / Don't worry about tube length just create the structure don't worry about materials just stay to using 6mm and 3mm tubes". The concept review (FAIL) asked for: a camera guard, the L2 exemption cut to its field cone, the L2 mount braced into the core, a fuse in the mount, the rule text, the pack-on-axis numbers. All done below.
-Spark 27 Oct, later: "There is not perfect symmetry in the cage right now, don't change the structure just make it symmetrical by adding rods, also you didn't keep the same two camera format we had before, make minimal changes but apply those". Structure kept: the same 48 nodes and 131 tubes (nodes moved ≤ 1.7 by the balance trim), the scan pinned to its pick. Symmetry: system_check finds every node and every tube with its mirror (nodes within 0.0 mm, 0 tubes without a mirror; links too), so no rod was missing to add; the page's motion yaws the drone, the top view at frame 0 (`preview_top.png`) shows the mirror. Cameras: both back exactly as v2 (front portrait on the horizon 74 up the L2 back plane, as it was; the down camera and flow pods back from v4's 35 forward to v2's place, lenses at v2's height).
-Script `nox/overseer/layout_v5.py` (~10 min: balance x start / dome / prop-snap scan), artifact `layout_v5_view.py`. Rule: CLAUDE.md "Cages are geodesic shells formed to the drone" (field sensors outside), `docs/generative.md` rule 0 Geodesic cage, check `system_check` shell (closed + mirror) and field openings.
+Spark's asks, in order (26-27 Oct):
+- the L2 outside the cage, not blocked at all; guards only outside its view; one layout with perfect CG; no tube-length limit; perfect left-right symmetry; 6 and 3 mm tubes only;
+- "get rid of the down camera ... put the two cameras on either side the lidar pointing so their field of view is maximized";
+- "move the flow pod 15 forward, as long as with battery the drone is centered we are okay";
+- "for the mounts on the lidar and the camera, replace the bunch of little rods with a topology printed mount";
+- "make sure we are not changing any cage structure for this";
+- then the cage itself: "as many of the same length rods as possible", "you can actually change the base as well"; "divide the number of rods by half" ("ignore the tests"); finally "get rid of the number of same length rule just do the rods number reduction";
+- "lets try to mount the lidar on the cage ... so we dont need the rods coming from the body", then "keep the design we have right now i need the lidar to have max performance";
+- "make the camera mounted on the same print as the lidar mount".
 
-Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (source `runs/overseer_layout/v5/motion.html`, still `preview.png`; one drone, with the L2 field (blue half-sphere outline) and the front camera view (green frustum) drawn)
+Script `nox/overseer/layout_v5.py` (builds the drone round a fixed cage, `nox/overseer/cage_v5_shell.json`); the cage from `nox/overseer/cage_equal.py`; artifact `layout_v5_view.py`; camera alternatives `layout_v5_cams.py`; cage alternatives `layout_v5_cages.py`.
 
-Access note: "access 21/21" counts 3 rear-arm bottom screws reached through an unplugged pod board (down camera 2, flow 1), not a clear line.
+Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (source `runs/overseer_layout/v5/motion.html`; stills `preview.png` iso, `preview_top.png` top at frame 0, `preview_under.png` from below, `cameras_alt.png` the camera orientations over the L2 field, `cages_alt.png` cage v3 / v4 / v5 side by side). Head support options: https://claude.ai/artifact/4Z5Uv7N96VBaNhBLQyBE9e (`runs/overseer_head_cage/concept/`).
 
-System: Overseer, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 0.2 mm³ (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 118 L (E), extents 743 x 694 x 230 mm (E), mass 3380 of 2200 g (154 %) (E) over budget (total), CG 0.5 mm off thrust axis (E) [-0.1, +0.5, -62.5], 28.2 mm without swap parts (reported, L exception), probes 2.8 mm (E) edge at (-0.38, -0.60, -0.71) (down camera), access 21/21 clear
+System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm³ (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3215 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.2], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear (`system_check.txt`)
+
+## Cage v5 (27 Oct): half the tubes, close nodes merged
+- **From cage v3 (main), its 131 tubes halved (Spark).** The free nodes were thinned to 16 (mirror pairs and centre nodes, farthest first) and the shell re-triangulated mirror-symmetric (flat facets in mirror pairs).
+- **Close nodes merged.** Spark: "anytime there's a small triangle or short rods like that ... I don't want nodes so close together when they can just become one". Every tube under 95 (DEFAULT) collapses into one node. The base loop went from 8 to 6 nodes: a hexagon 404 x 239 (C) round the same swap zone.
+- **No socket clashes.** No two tubes meet at a node under 20° (DEFAULT).
+- **Repair.** The nodes moved only as far as needed: every part with its margin inside every face, props 12 off, the L2 base plane, both camera views, the loop flat with its chords clear of the swap zone (`cage_equal.py`, CE_MODE=reduce, CE_MERGE_MM=95, CE_MIN_ANGLE=20).
+- **Result:** 24 nodes, 63 tubes (was 48 / 131), mirror-exact, 670 x 655 x 188 (C), tubes 116 .. 446 (C), 15.9 m (C), shell 495 g (E). Prop shadow 7.0 % above and 15.4 % below (E).
+- **Alternatives (`cages_alt.png`):** cage v3 (main): 48 nodes, 131 tubes, 57 cut lengths, 22.5 m, ~762 g (E); cage v4 (fewest cut lengths, dropped by Spark): 11 lengths (C) but 277 tall (C) and ~773 g (E); cage v5 halves the tubes and saves ~270 g of shell (E). Its cost: long spans and large cells (largest cell Ø149, C), which the frame model checks below.
+- **The base loop is shared** with the Scout cage (PR #124) and the funnel: their sessions were told and confirmed (27 Oct).
+- **Nodes:** PETG topology parts (Spark 27 Oct, was TPU), 14 designs (C; mirror pairs share one), `nox/overseer/cage_node.py`. Each node's sockets are only for the members that meet there: 6 mm tube (bore 6.2, 15 deep, C) or 3 mm rod (bore 3.2, 10 deep, C), 2.5 wall (C). The bores are Spark's pick from the coupons (`runs/rod_coupons/v2/`: the largest fits, P). Loads: the frame model's socket forces (F). Runs: `run/cage_nodes-v3` (a child session).
+
+## Frame model v1 (27 Oct, F on E carbon properties; `runs/overseer_frame/v1/summary.md`)
+- `nox/frame_model.py` (3D beam solver, checked against a cantilever, static and modal) and `nox/overseer/cage_frame.py` (the cage + links on the core, the head rigid on its keels, braces and struts). Cases: crash 35 g through the first-touching member in 14 directions, a nose hit through the head guard, flight 4 g, handling 50 N at mid-span.
+- **Solver fix (27 Oct).** The regularisation scaled by the mean diagonal let the stiff "rigid" head links put ~100 N/mm to ground on every node (F), so the first pass read low. It now uses the median; results are converged over rigid-link stiffness 1e5..1e8.
+- **Sized:** 30 of the 36 links are 6/4 tube now (`link_sizes.json`), the rest 3.0 rod; every link ≤ 0.63 x its buckling load (F, k 0.7 with a core end, 0.5 keels / braces, E).
+- **Reported over (not gated; the halved cage, Spark "ignore the tests"):** tubes 1-19 / 3-18 1.59 x on a top hit through the camera guards, tubes 11-18 / 12-19 1.29 x on a side-corner hit (F). Splitting moved the buckling to the next long tube each time, so the splits stop at the frame v1 set.
+- **Modes:** lowest 144 Hz with rigid joints, the head in the 214 Hz mode (F on E); with PETG nodes the cage's lowest mode is 126 Hz, with TPU it was 26 Hz (F on E, `runs/overseer_head_cage/concept/`). No member over stress.
+- **Handling:** the longest spans (438, 446) bend 17 to 18 mm under 50 N (F).
+
+## Camera pair (Spark 27 Oct)
+- **Down camera removed** with its pod; the flow sensor stays in the belly, its pod 15 ahead of v2's (Spark).
+- **Method:** every orientation of the mirrored pair (portrait / landscape, yaw 0..70 out, pitch -30..+30). Ranked by:
+  1. the union of the two fields (within 2 % is a tie);
+  2. the blind wedge straight ahead on the horizon;
+  3. the share of the L2 field.
+- **Mount:** the most compact one beside the L2 whose head (seat, guard ring, both cameras and plates) fits one print: oriented box ≤ 175 (C), the A1 mini's 180 cube (Spark: the cameras on the same print as the L2 mount).
+- **Chosen:** landscape (89 across x 73 up, E), yawed 45° out, pitched 10° down (C). Lenses (390, ±75, 122) (C), 13 behind (C) the L2 base plane (the only clear mount that fits). Results: combined 3.42 sr, 27 % of the sphere, no overlap (C); nose gap 2° (C); 54 % of the L2 field (C); nothing of the drone in either view (C).
+- **Alternatives** (`cameras_alt.png`): portrait 50° out, 15° down: 3.45 sr, but a 29° blind wedge at the nose; portrait 37.5° out, level: 3.45 sr, gap 3° (C).
+- **Guards:** a bar of 2 printed nodes over each camera, behind its lens. Cage first is 7.7 outside the 55° field cones (E).
+
+## Sensor head mount (one print with both cameras)
+- **Printed PETG, one piece** (`nox/overseer/head_mount.py head`): the drawn seat, back block and lugs, both camera plates (M2.5 inserts), the guard ring (r 62, 8 behind the L2 base plane, DEFAULT), both camera guard bars, the cage's front centre node with its tube sockets, sockets for the 2 keels, 4 L2 braces and 4 head struts. Drawn 56 x 177 x 163 (C).
+- **Supports (Spark: "max performance"):** the keels and braces to the core stay; 4 struts 6/4 run to the side cage nodes 15 / 16 / 18 / 19 (sockets searched inside the print box, behind the L2 base plane, out of both camera views, 20°+ from the nodes' tubes). Head mode 206 Hz on PETG cage nodes (223 with rigid joints, 120 with TPU; F on E), over the 100 Hz target. Options weighed: `runs/overseer_head_cage/concept/summary.md` (the cage-only head reads 32..50 Hz on TPU nodes, F on E).
+- **Loads (topology):** the L2 at its CG (28 ahead of its base, E) through its 4 bolts with its moment, both cameras at their plates, crash 35 g in 14 directions, flight, guard hits (dimensions.md L).
+- **Mass:** 102 g in the system model (E); the saved part's M mass replaces it. Topology run: `runs/head_mount/v1` (branch `run/head_mount-v1`).
 
 ## Layout (C on E sizes; `checks.txt`)
-- As v4 (the v2 drone: L2 at the nose axis 15° below +x, motors forward, catch 30 aft, pack top z -7; the down camera and flow pods at v2's place since 27 Oct), but the L2, the front camera and their mount are left out of the shell.
-- **L2 field clear:** every shell node centre 25.1 behind the L2 base plane (its 90° field); 0.0 % of the field crossed; the most forward cage member surface 3.0 behind the plane (guard ring nodes) (C).
-- **Front camera view clear:** shell nodes 13.2 under its lower view plane (+2°) and behind the head plane (the head's own back, tilted 20° from the L2 axis, the tilt of 20 / 35 / 50 / 65 that keeps the L2 furthest back); nothing of the drone in its 73 x 89° view (C). **Down camera and flow:** nothing in their views through the bottom opening (C).
-- **L2 support and guard (outside its view):** v2 seat, back block, side lugs, 2 keels to the front hub on the bottom plate, 4 ties into the shell behind its plane, and (review 27 Oct) 4 braces from the lugs (low and high) to the front arm beams 30 out of the root: the seat is a braced pyramid on the core, not a stalk on the keels. Guard ring r 62 round its axis, 8 behind its base plane, 8 rods + 16 struts into the shell (C). **Break order:** the apex lugs are the printed fuse, sized to let go before the L2 base (requirement for the frame model case "nose hit on the L2 through its mount", E).
-- **Front camera guard (review 27 Oct):** the camera stood 33 above the cage; a bar of 2 printed nodes now runs over its top, behind its lens (out of its view) and behind the L2 base plane, 4 struts into the shell. Cage first over the camera 7.5 (worst direction up and forward, outside its view).
-- **Field cones, not exemptions:** in `system_check` the L2 is a field opening 75° on its axis (its field is 90°; 75 keeps the ring's lateral cover gated: 37.5 outside the cone) and the front camera 55° on +x (its diagonal half-angle 51 + 4); cage first is gated everywhere else; probes skip the two (a face outside the cage can always be reached) and their protrusion is reported: the L2 stands 66.6 out of the cage along its axis, the camera 0.
-- The L2 base sits at x 385.6 so the shell clears its plane with room for the guard ring; the balance puts the motor square 60.8 ahead (front arms r 244, rear r 160).
-- **Shell, mirror-exact (Spark 27 Oct):** frequency 2 class-I geodesic (equator at the prop plane), every node moved with its mirror partner while it is pushed out to the target and projected behind the three view limits, a 3 x 5 node grid on the flat front face; the hull is merged into flat facets, a facet and its mirror share one triangulation, a centre-plane facet is fanned from its on-plane vertex or a centre node; links without a mirror get one. No tube-length limit (the 300 split and the 350 cap are gone). Scan start 0.7 / 0.85 / 1.0 x dome 40 / 60 / 80 x prop snap (18 shells, all valid); the most compact valid shell sets the bar (volume, mass), the least prop shadow within it wins: start 0.85, dome 60, snap (now the pinned default, Spark: don't change the structure). 48 nodes, 131 tubes 47 .. 437, 637 x 673 x 209 (h/w 0.31), 51.7 L; largest cell Ø141; tubes 13.3 off the swept disks. system_check: 0 tubes without a mirror.
-- **Balance:** the shell pattern flips with the motor square (a node more or less), so the closer pattern is kept and the motor square trimmed onto the CG with it: CG x 0.1 off, 0.5 sideways (the hub electronics), E.
-- Props: shadow 8.0 % above, 14.7 % below (E).
-- Opening, swap column: 0 mm³. Access 21 / 21 (FC and Pi USB-C, every arm M3; links kept off the screw key lines). **Cost of v2's pods:** 3 rear-arm bottom screws sit over the down camera and flow boards, reached through the sled with that board unplugged from its pod (a requirement; CLAUDE.md 2 wants no part off: Spark's call, the alternative is v4's pods 35 forward), 1 more through a Ø9 hole in the sled.
+- **Drone:** the v2 drone (L2 at the nose, axis 15° below +x, base (384.0, 0, 51) (C); motors forward; catch 30 aft; pack top z -7). The motor square sits 66.4 ahead (front arms r 249, rear r 157) with the CG 0.2 off (C on E).
+- **L2:** its field 0.0 % crossed (C).
+- **Props and swap:** shell tubes 20.3 off the props, links 13.7 (C); swap zone clear (M); access 21 / 21 (C).
 
 ## One layout ("the one with perfect CG")
-CG 0.5 mm off the thrust centre with the pack in (system_check, E). With the pack + cartridge out it is 28.2 mm off (reported, the L Balance exception, DEFAULT). The alternative, run 27 Oct (`V5_PACK=axis`, not drawn): the pack on the thrust axis balances pack out too (0.6 mm) but needs front arms r 373, 3645 g (+263) and T/W 1.81 (vs 1.95). Spark's call.
+- **Pack in:** CG 0.2 mm off the thrust centre (system_check, E).
+- **Pack + cartridge out:** 32.0 mm off (system_check, E). Accepted by Spark 27 Oct ("as long as with battery the drone is centered"), the L Balance exception.
 
-## Carbon rods (6 mm tube, 3 mm rod)
-- Shell: 131 tubes 6 mm, 22.5 m, 47 .. 437 (no length limit, Spark 27 Oct).
-- Links: 68 rods 3 mm, 8.2 m (spokes, core ties, L2 ties and braces, keels, bay ties, guard ring and camera guard), shortest 42.
+## Carbon (6 mm tube, 3 mm rod)
+- Shell: 63 tubes 6/4, 15.9 m, 116 .. 446 (C).
+- Links: 36, 6.86 m (C), shortest 71 (bay tie -1+1.1, C): 30 tube 6/4 (the frame model's sizing), 6 rod 3.0 (bay ties). The spokes, ties, keels, braces and head struts each run longer than the 33 break-even.
 
 ## Mass (E)
-3380 g: shell 763 (tubes 547 + nodes 216), links 90, guard nodes. T/W 1.95 at 1650 gf a motor (C on E). Over v5 of 26 Oct (3375): +7 g for the camera guard and the L2 braces.
+3215 g: shell 495 (tubes 387 + nodes 108), links 159, sensor head mount 102 (E). T/W 2.05 at 1650 gf a motor (C on E). Over the 2200 g slot by 1015 g (146 %): v3's cage mass slot predates the L2 (230 P), the 650 g pack, the 338.5 g latch set (M) and the full cage; against cage v3 the halved shell saves ~270 g (E). The extra grams over v3's link set (~60 g, E) buy the 6/4 links that hold the 35 g crash.
 
 ## Next
-Frame model on the shell and the sensor head (crash 35 g in 14 directions incl. a nose hit on the L2 through its mount, floor landing on the feet, handling), then nodes, arms, belly sled; new funnel round the shell (box catch session).
+1. Save the one-piece head mount (`run/head_mount-v1`, running).
+2. Node runs v3 (child session); Spark's bore pick from the v2 coupons sets the socket bores.
+3. The arms and belly sled; the deeper belly from core PR 123 lowers the loop plane.
+4. The new funnel round the shell (design center session).
