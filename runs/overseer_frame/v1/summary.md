@@ -5,9 +5,9 @@ Cage `nox/overseer/cage_v5_shell.json` (24 nodes, 63 tubes 6/4, 496 g E) + 36 li
 Lowest modes (rigid joints, lumped masses, the head 404 g (E) at its mount): 148 Hz, 194 Hz (the head moves), 235 Hz (the head moves); TPU joints and the head's own mode: runs/overseer_head_cage/concept/.
 
 ## Buckling (k L): 3 members at or over 1.0 x their Euler load
-- tube 11-18: 1.38 x Pcr (L 417; crash 11 [-0.58, 0.58, -0.58] via node 11)
-- tube 12-19: 1.38 x Pcr (L 417; crash 13 [-0.58, -0.58, -0.58] via node 12)
-- tube 15-16: 1.18 x Pcr (L 446; crash 6 [0.58, 0.58, 0.58] via node 15)
+- tube 11-18: 1.40 x Pcr (L 417; crash 11 [-0.58, 0.58, -0.58] via node 11)
+- tube 12-19: 1.40 x Pcr (L 417; crash 13 [-0.58, -0.58, -0.58] via node 12)
+- tube 15-16: 1.17 x Pcr (L 446; crash 6 [0.58, 0.58, 0.58] via node 15)
 
 ## Stress over 600 MPa: 0 members
 
@@ -23,8 +23,8 @@ Lowest modes (rigid joints, lumped masses, the head 404 g (E) at its mount): 148
 - L2 braces +1: 426 N (crash 0 [1.0, 0.0, 0.0] via node 17)
 - L2 braces -1: 426 N (crash 0 [1.0, 0.0, 0.0] via node 17)
 - arm 1 spoke node: 1086 N (crash 7 [0.58, 0.58, -0.58] via node 18)
-- arm 2 spoke node: 1931 N (crash 11 [-0.58, 0.58, -0.58] via node 11)
-- arm 3 spoke node: 1931 N (crash 13 [-0.58, -0.58, -0.58] via node 12)
+- arm 2 spoke node: 1926 N (crash 11 [-0.58, 0.58, -0.58] via node 11)
+- arm 3 spoke node: 1926 N (crash 13 [-0.58, -0.58, -0.58] via node 12)
 - arm 4 spoke node: 1086 N (crash 9 [0.58, -0.58, -0.58] via node 19)
 
-Worst tube buckling 1.38, worst link 0.71; node socket loads (largest axial / side per member and node over all cases) in node_loads.json.
+Worst tube buckling 1.40, worst link 0.70; node socket loads (largest axial / side per member and node over all cases) in node_loads.json.

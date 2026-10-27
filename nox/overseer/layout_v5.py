@@ -147,6 +147,7 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 CORE_PARTS = os.path.join(SAVED, "core", "core_parts.json")   # the core session's parts (everything inside the cage), decimated copies
 CORE_TIE_FRONT = (114.0, 0.0, 20.0)                # the front core ties' root on the hub deck tower's front face, off the flow clip (C, DEFAULT 27 Oct)
+REAR_TIE_Y = 12.0                                    # the rear core ties' roots at y ±12, clear of the battery lead (core: |y| <= 6, C, DEFAULT 27 Oct)
 CORE_SLED_Y = 56.0                                   # the core's sled edge |y| (dimensions.md Sled): the bay ties' roots, on its side faces (C, DEFAULT 27 Oct)
 
 
@@ -766,6 +767,13 @@ def attach(g, nodes, ring_ids):
     for nm, q0 in (("front", (bb[1][0], 0)), ("rear", (bb[0][0], 0)), ("left", (0, bb[1][1])), ("right", (0, bb[0][1]))):
         q = np.array([q0[0], q0[1], -1.0]) if not (nm == "front" and os.path.exists(CORE_PARTS)) else np.array(CORE_TIE_FRONT)
         fwd = (lambda k: nodes[k][0] - q[0] > 0) if nm == "front" and os.path.exists(CORE_PARTS) else (lambda k: True)   # the tower-face root ties forward, never back over the FC nuts
+        if nm == "rear" and os.path.exists(CORE_PARTS):                # two roots off the battery lead route (core: |y| <= 6 at x -105..-96), one tie a side
+            for n_, sy in enumerate((1, -1)):
+                qs = np.array([q[0], REAR_TIE_Y * sy, q[2]])
+                ks = pick(qs, [k for k in range(len(nodes)) if k not in ring_ids and nodes[k][1] * sy > 1.0 and seg_band_dist(qs, nodes[k], mxy) - ROD_R >= PROP_GAP
+                               and clear_of_cart(qs, nodes[k]) and views_clear(g, qs, nodes[k], ROD_R)], 1, 25.0)
+                if ks: extra[f"core tie {nm}.{n_ + 1}"] = (qs, nodes[ks[0]])
+            continue
         for n_, k in enumerate(pick(q, [k for k in range(len(nodes)) if k not in ring_ids and seg_band_dist(q, nodes[k], mxy) - ROD_R >= PROP_GAP
                                         and clear_of_cart(q, nodes[k]) and views_clear(g, q, nodes[k], ROD_R) and fwd(k)], 2, 25.0)):
             extra[f"core tie {nm}.{n_ + 1}"] = (q, nodes[k])
