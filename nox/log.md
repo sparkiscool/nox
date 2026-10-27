@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout v3): Landing row takes the box catch F requirements (PR 155, DEFAULT): TPU caps Ø16 x 3 under the 4 ring nodes like the Overseer's, 6 mm sleeves on the side rods over x ±32 (fall away if the ring goes 6/4); alt: loop 9.2 lower. No Scout geometry moved.
 - 27 Oct (Overseer hub deck v9): saved, print/overseer_hub_deck_v9.stl 68.0 g (M), worst 0.30, solid_check + build test PASS, first mode 659 Hz, FE insert pull <= 70 N; low brace roots. v8 build test FAIL (+y tower via the centreline) fixed by drawn bars to the mid feet. Open: head mode with the socket springs (cage).
 - 27 Oct (Overseer hub deck v6/v8): v6 (tower, braces at z 22/32) FAILED strength 2.72 (top hit, keel/front-foot joint); DEFAULT: brace roots lowered to z 12/18 (cage what-if: max root force 190 vs 403 N, tipping 8 vs 20 N m, head 166 -> 155 Hz; alt: v7 with more material, stopped). v8 running on the low roots.
 - 27 Oct (Overseer core v3, cage + arm ask): the L2 braces root on a tower in the hub deck (B over a top-plate block A: 788 N a fastener), closed by deep webs to 4 mid feet + feet (60, ±17) after 2 review FAILs (pried toe; one-way pads); concept PASS. Hub deck v6 next (per-case root forces). v4/v5 not to print.
