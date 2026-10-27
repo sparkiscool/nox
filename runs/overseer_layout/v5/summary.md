@@ -8,10 +8,10 @@ Spark 27 Oct, last: "get rid of the down camera we don't need it put the two cam
 
 Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (source `runs/overseer_layout/v5/motion.html`, stills `preview.png` (iso) and `preview_top.png` (top, frame 0: the mirror); the L2 field (blue half-sphere outline) and the two camera views (green frustums) drawn)
 
-System: Overseer, cage first 4.1 mm (E) at (+0.81, -0.26, +0.53) (camera right) (field cones open: Unitree L2 75 deg, out 66.63 mm, camera left 55 deg, out 7.21 mm, camera right 55 deg, out 7.69 mm), shell 133 rods closed, h/w 0.31, fit 0.2 mm³ (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 121 L (E), extents 761 x 694 x 230 mm (E), mass 3368 of 2200 g (153 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -62.8], 31.9 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (+0.56, -0.43, -0.71) (flow MTF-02P), access 19/19 clear
+System: Overseer, cage first 4.1 mm (E) at (+0.81, -0.26, +0.53) (camera right) (field cones open: Unitree L2 75 deg, out 66.63 mm, camera left 55 deg, out 7.21 mm, camera right 55 deg, out 7.69 mm), shell 133 rods closed, h/w 0.31, fit 0.2 mm³ (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 121 L (E), extents 761 x 694 x 230 mm (E), mass 3368 of 2200 g (153 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.0, -0.2, -62.8], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (+0.68, +0.18, -0.71) (flow MTF-02P), access 19/19 clear
 
 ## Camera pair (Spark 27 Oct)
-- **Down camera removed** with its pod; the flow sensor stays in its pod in the belly.
+- **Down camera removed** with its pod; the flow sensor stays in its pod in the belly, 15 ahead of v2's (Spark 27 Oct).
 - **Method:** every orientation of the mirrored pair (portrait / landscape, yaw 0..70 out, pitch -30..+30) ranked by the union of the two fields (the ask), then by the share of the L2 field they see (they colour its cloud); the first with a mount beside the L2 (lens 75..135 off the centre plane, -30..90 up the L2 base plane, the body 2 behind that plane so the L2 field stays clear, clear of the guard ring) where nothing of the drone is in view (L2, props, arms, apex, the other camera) and the shell target clears one of its view faces by NODE_R + 3 + 5 wins; that face then limits the shell like the L2 plane does.
 - **Chosen:** portrait (73 across x 89 up), yawed 50.0° out, pitched 15° down; lenses (405, ±105, 64), 13 behind the L2 base plane. Combined field 3.45 sr, 27.5 % of the sphere: the two fields do not overlap, so this is the most a pair of these cameras gives; 55 % of the L2 field (C). Nothing of the drone in either view (C).
 - **Alternative weighed:** landscape, yaw 47.5°, pitch -10: 3.44 sr, 54 % of the L2 field (orientation only); portrait wins by a hair on both.
@@ -27,10 +27,10 @@ System: Overseer, cage first 4.1 mm (E) at (+0.81, -0.26, +0.53) (camera right) 
 - **Shell, mirror-exact:** frequency 2 class-I geodesic, every node moved with its mirror partner, projected behind the view limits (the L2 plane, one face of each camera, the head plane; the worst limit per node each pass, the pair averaged, so the two camera limits keep the mirror); flat facets triangulated in mirror pairs; links mirrored. No tube-length limit. Start 0.85, dome 60, prop snap (the 27 Oct pick, pinned). 48 nodes, 133 tubes 43 .. 437, 641 x 673 x 209 (h/w 0.31), 52.2 L; largest cell Ø141; tubes 13.3 off the swept disks. system_check: 0 tubes without a mirror.
 - **Balance:** motor square onto the CG with the shell rebuilt each time: CG 0.2 off (E).
 - Props: shadow 7.8 % above, 14.4 % below (E).
-- Opening, swap column: 0 mm³. Access 19 / 19 (FC and Pi USB-C, every arm M3; links kept off the screw key lines): with the down camera gone, the rear-left bottom screws come through Ø9 holes in the sled; one rear-right screw still needs the flow board unplugged from its pod (requirement; CLAUDE.md 2: Spark's call, or the flow pod moves 15 forward).
+- Opening, swap column: 0 mm³. Access 19 / 19 (FC and Pi USB-C, every arm M3; links kept off the screw key lines): the flow pod 15 ahead of v2's (Spark 27 Oct), so every rear bottom screw comes through a Ø9 hole in the sled, nothing unplugged.
 
 ## One layout ("the one with perfect CG")
-CG 0.2 mm off the thrust centre with the pack in (system_check, E). With the pack + cartridge out it is 31.9 mm off (reported, the L Balance exception, DEFAULT). The alternative (`V5_PACK=axis`, 27 Oct, before the camera pair): pack on the thrust axis, 0.6 mm pack out, front arms r 373, +263 g, T/W 1.81.
+CG 0.2 mm off the thrust centre with the pack in (system_check, E). With the pack + cartridge out it is 32.0 mm off: accepted by Spark 27 Oct ("as long as with battery the drone is centered we are okay"), the L Balance exception. The alternative (`V5_PACK=axis`, 27 Oct, before the camera pair): pack on the thrust axis, 0.6 mm pack out, front arms r 373, +263 g, T/W 1.81.
 
 ## Carbon rods (6 mm tube, 3 mm rod)
 - Shell: 133 carbon tubes 6 mm, 22.8 m, 43 .. 437 (no length limit, Spark 27 Oct).
