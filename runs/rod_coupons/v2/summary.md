@@ -4,8 +4,8 @@ Script `nox/overseer/rod_coupons.py v2`. Pictures: `preview_6mm.png`, `preview_3
 
 | File | Stock | Bores (1 / 2 / 3 dots) | Rows | Depth | Vent | Mass (M, PETG) | Bed | Solid |
 |---|---|---|---|---|---|---|---|---|
-| `print/rod_coupon_6mm_v2.stl` | 6 mm carbon tube | 6.00 / 6.10 / 6.20 | standing + sideways | 15 | Ø1.6 | 16.0 g | base, 2047 mm² | PASS |
-| `print/rod_coupon_3mm_v2.stl` | 3 mm carbon rod | 3.00 / 3.10 / 3.20 | standing + sideways | 10 | Ø1.2 | 7.8 g | base, 1170 mm² | PASS |
+| `print/rod_coupon_6mm_v2.stl` | 6 mm carbon tube | 6.00 / 6.10 / 6.20 (C) | standing + sideways | 15 (C) | Ø1.6 (C) | 16.0 g (M) | base, 2047 mm² (M) | PASS |
+| `print/rod_coupon_3mm_v2.stl` | 3 mm carbon rod | 3.00 / 3.10 / 3.20 (C) | standing + sideways | 10 (C) | Ø1.2 (C) | 7.8 g (M) | base, 1170 mm² (M) | PASS |
 
 - `print/rod_coupon_6mm_v2.stl`: solid_check PASS (one body, no thin walls, no necks), picture `preview_6mm.png`.
 - `print/rod_coupon_3mm_v2.stl`: solid_check PASS (one body, no thin walls, no necks), picture `preview_3mm.png`.

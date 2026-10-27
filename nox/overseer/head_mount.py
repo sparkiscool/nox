@@ -27,7 +27,7 @@ B = np.array(HS["l2"]["base"]); A = np.array(HS["l2"]["axis"]); UPB = np.array([
 TILT = 105.0
 G = 9.81
 M_L2, M_CAM = 0.230, 0.015                     # kg (P, E)
-M_HEAD = 0.36                                  # kg: L2 230 + cameras 30 + mount 100 (system model), what a guard member stops (E)
+M_HEAD = 0.36                                  # kg: L2 230 + cameras 30 + mount 102 (system model), what a guard member stops (E)
 CRASH, FLIGHT_UP, FLIGHT_LAT = 35.0, 4.0, 2.0  # g (dimensions.md L)
 ROD_BORE, TUBE_BORE = 3.1, 6.1                 # socket bores: the v2 coupons' middle (DEFAULT 27 Oct; v1 OD + 0.3 was loose in PETG)
 NODE_R, TUBE_R = CG["node_r_mm"], CG["rod_r_mm"]

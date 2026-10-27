@@ -22,11 +22,11 @@
   "swap": false
  },
  {
-  "name": "spokes, ties, keels, L2 guard ring",
-  "file": "spokes__ties__keels__l2_guard_ring.stl",
+  "name": "spokes, ties, keels, braces, head struts",
+  "file": "spokes__ties__keels__braces__head_struts.stl",
   "role": "cage",
   "protect": false,
-  "mass_g": 143.08,
+  "mass_g": 158.94,
   "tag": "C",
   "group": "cage",
   "color": "#444444",
@@ -46,11 +46,11 @@
  {
   "name": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
   "file": "sensor_head_mount__printed__drawn_seat__.stl",
-  "role": "cage",
+  "role": "structure",
   "protect": false,
-  "mass_g": 118.05,
+  "mass_g": 102.19,
   "tag": "E",
-  "group": "cage",
+  "group": "printed",
   "color": "#aab4c0",
   "swap": false
  },

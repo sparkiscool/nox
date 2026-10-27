@@ -1,4 +1,4 @@
-"""Overseer cage nodes (printed TPU, nox/topo): one topology part per node design, shaped by the tubes that meet there
+"""Overseer cage nodes (printed PETG, nox/topo; Spark 27 Oct: PETG, not TPU): one topology part per node design, shaped by the tubes that meet there
 (Spark 27 Oct: "start the nodes runs too, make sure each node takes either 3mm or 6mm, that's the only two rods we will use,
 also do topology based on the contact of the rods for each joint so it's optimized and not overly thick and wasteful").
 
@@ -90,7 +90,7 @@ def setup_for(i):
     def setup(h):
         from topo import Part
         b = bodies(i)
-        p = Part(f"node_{i}", h, b["drawn"], b["cuts"], b["env"], build="+z", material="TPU95A")   # TPU feet and nodes (CLAUDE.md)
+        p = Part(f"node_{i}", h, b["drawn"], b["cuts"], b["env"], build="+z", material="PETG")   # PETG cage nodes (CLAUDE.md, Spark 27 Oct)
         S = b["sockets"]
         for j, s in enumerate(S):                        # member j loaded, every other member holding
             hold = None
