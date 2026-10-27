@@ -34,3 +34,15 @@ fem: grid (40, 40, 40) = 64,000 elements, 54,516 active dofs; backend direct (di
 fem: grid (40, 40, 40) = 64,000 elements, 54,516 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
 it   1 beta    1 J  10.0000 vol 0.0280 (dil 0.0341 g +1.764) grey  8.8% ch 0.010 worst held b1 fy 7.16e+05 24.3s
 it   1 beta    1 J  10.0000 vol 0.0280 (dil 0.0341 g +1.764) grey  8.8% ch 0.010 worst held b1 fy 7.16e+05 24.3s
+it   2 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 23.8s
+it   2 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 23.8s
+it   3 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 23.8s
+it   3 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 23.8s
+it   4 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 21.9s
+it   4 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 21.9s
+it   5 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 23.1s
+it   5 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.985) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 23.1s
+it   6 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.990) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 24.1s
+it   6 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.990) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 24.1s
+it   7 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.990) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 26.4s
+it   7 beta    1 J  12.8870 vol 0.0203 (dil 0.0245 g +0.990) grey  8.2% ch 0.000 worst held b1 fy 9.21e+05 26.4s
