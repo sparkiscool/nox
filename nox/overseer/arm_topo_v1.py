@@ -310,6 +310,8 @@ def bodies(which):
         u = (p1 - p0) / np.linalg.norm(p1 - p0)
         for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1 + 1.0 * u)):
             sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+        if os.environ.get("NOX_ARM_SLEEVE") == "1":   # v5c: a full-length drawn sleeve (rear v5b: webs meeting the tube
+            sockets += rod_m(p0, p1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)   # left 1.1 collar walls)
     B["rods"] = rods
     B["drawn"] = B["pads"] + B["mpad"] + sockets
     if os.environ.get("NOX_ARM_ROOT_SOLID") == "1":      # front v3: the root block solid between the plates (front v2: its open
@@ -320,6 +322,13 @@ def bodies(which):
         x0, x1 = 0.0, float(fx)
         fl = (box(x0, x1, -20.0, 20.0, 0.0, FLANGE_T) + box(x0, x1, -20.0, 20.0, ROOT_H - FLANGE_T, ROOT_H)) ^ B["env"]
         B["drawn"] = B["drawn"] + (fl - B["cuts"])
+    if os.environ.get("NOX_ARM_SHFLANGE") == "1" and which in SHOULDER:   # v5c: the top / bottom flange spans root to the
+        xs, ys, _ = SHOULDER[which]                     # shoulder sockets (rear v5b: crash 1.47 where the socket hung off
+        rb = to_arm(diag(box(U_ROOT[0], U_ROOT[1], -V_ROOT, V_ROOT, 0.0, ROOT_H), F["d"]), F)   # the flange corner)
+        for z0, z1 in ((0.0, FLANGE_T), (ROOT_H - FLANGE_T, ROOT_H)):
+            band = box(-400, 400, -400, 400, z0, z1)
+            shf = ((rb ^ band) + cyl(xs, ys, z0, z1, r) + cyl(xs, -ys, z0, z1, r)).hull() ^ B["env"]
+            B["drawn"] = B["drawn"] + (shf - B["cuts"])
     return B, F
 
 

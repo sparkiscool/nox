@@ -56,7 +56,7 @@ for k, (title, el, az) in enumerate((("iso", 24, -120), ("plan (nose to the righ
         ax.add_collection3d(Poly3DCollection(t.vertices[t.faces], facecolors=(0.6, 0.65, 0.7, 0.15), linewidths=0))
     ax.set_xlim(-160, 400); ax.set_ylim(-280, 280); ax.set_zlim(-90, 110); ax.set_box_aspect((560, 560, 200))
     ax.view_init(el, az); ax.set_axis_off(); ax.set_title(title, fontsize=11)
-wn = J["worst_N"]
+wn = J.get("worst_N") or {"arm 1 tip": J["worst"]["arm 1 spoke node"][0], "arm 2 tip": J["worst"]["arm 2 spoke node"][0], "arm 1 beam (L2 braces)": 0.0}
 fig.suptitle(os.environ.get("NOX_VIEW_TITLE", "Overseer arms v2") + ": the cage attachments (red: 3 spokes from one node beside each motor, off the screw key column "
              "(blue dashes); orange: 2 L2 braces into the front beam, inside the arm so the top stays flat)\n"
              f"worst summed crash force from the frame model: front tip {wn['arm 1 tip']:.0f} N, rear tip {wn['arm 2 tip']:.0f} N, "
