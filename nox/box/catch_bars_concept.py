@@ -44,9 +44,9 @@ DECK = -4.0                 # M: the Overseer's TPU feet bottom (its ring tube c
 TUBE_R = 3.0                # Overseer ring tube (C); the Scout's is 1.5 (C)
 GAP = 0.5                   # closed side gap over the two tube surfaces (E: ring width tolerance)
 Y_WAIT = None               # (phase 1 cam removed: the side bars stay parked until the x clamp; the lost-motion stage alone drives them)
-LM = 60.0                   # pad spring stroke (the slide may lag the carriage this much): the phase 2 travel S2 plus the x the nodes need to ride the ramps into the notches (17, C)
-S2 = 40.0                   # phase 2 carriage travel after the x clamp: drives the side bars from park to the gap (ratio 2.1)
-EXTRA_Y = float(os.environ.get("PARK_EXTRA_Y", 85.0))  # side bars parked this far outside the seated tube surface (the y landing room)
+LM = float(os.environ.get("LM", 80.0))                   # pad spring stroke (the slide may lag the carriage this much): S2 plus the x the nodes need to ride the pad ramps into the notches (17, C)
+S2 = float(os.environ.get("S2", 60.0))                   # phase 2 carriage travel after the x clamp: drives the side bars from park to the gap (ratio 2.3)
+EXTRA_Y = float(os.environ.get("PARK_EXTRA_Y", 137.0))  # side bars parked this far outside the seated tube surface (|y| 258): the Overseer's 16 deg side rods clear the bar top with a node anywhere inside the +-80 landing room (C)
 
 SLEEVE = int(os.environ.get("SLEEVE", 1))            # 1: 6 mm printed sleeves on the Scout's side tubes over the bar span (DEFAULT); 0: bare 3 mm rods
 SLEEVE_HALF = 32.0          # sleeve half length along x (bar 50 + yaw)
@@ -62,7 +62,7 @@ H_PAD = 3.0                 # pad height from the deck (top at z -1): pushes the
 V_DEG = 30.0                # notch flank angle from the y axis (120 deg notch): a node seats r / cos 30 ahead of the apex, centred in y
 TV = math.tan(math.radians(V_DEG)); CV = math.cos(math.radians(V_DEG))
 WING_Y = (28.0, 80.0)       # V wings each side, 18 deg flanks, outer end leading: they push a node inward (squaring a yawed Overseer), the Scout's straight end tube rests on their outer corners; the tip rods pass over them (>= 0.6 above the pad top)
-WING_DEG = 18.0             # wing flank angle from y: squares the Overseer (tan > 33 / 191) and the Scout (tan < 87 / 60)
+WING_DEG = float(os.environ.get("WING_DEG", 18.0))             # wing flank angle from y: squares the Overseer (tan > 33 / 191) and the Scout (tan < 87 / 60)
 TW = math.tan(math.radians(WING_DEG))
 RAMP_Y, RAMP_DX = 28.0, 14.0  # from the notch edge the face recedes to RAMP_DX behind the apex at |y| RAMP_Y: the tip rods run there at deck height (x apex + 11 at |y| 28); an off-centre node slides out to the wings
 STEP = 0.5                  # nose-pad travel per step
