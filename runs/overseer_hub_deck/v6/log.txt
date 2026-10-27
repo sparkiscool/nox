@@ -384,3 +384,31 @@ it  96 beta   32 J  12.4587 vol 0.1152 (dil 0.2209 g +0.009) grey  2.3% ch 0.100
 it  96 beta   32 J  12.4587 vol 0.1152 (dil 0.2209 g +0.009) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 55.3s
 it  97 beta   32 J  12.8193 vol 0.1115 (dil 0.2177 g -0.005) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 56.0s
 it  97 beta   32 J  12.8193 vol 0.1115 (dil 0.2177 g -0.005) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 56.0s
+it  98 beta   32 J  12.5299 vol 0.1124 (dil 0.2182 g -0.003) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 56.1s
+it  98 beta   32 J  12.5299 vol 0.1124 (dil 0.2182 g -0.003) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 56.1s
+it  99 beta   32 J  12.4921 vol 0.1129 (dil 0.2186 g -0.001) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 56.3s
+it  99 beta   32 J  12.4921 vol 0.1129 (dil 0.2186 g -0.001) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 56.3s
+it 100 beta   32 J  12.4701 vol 0.1132 (dil 0.2187 g -0.001) grey  2.2% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 53.9s
+it 100 beta   32 J  12.4701 vol 0.1132 (dil 0.2187 g -0.001) grey  2.2% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 53.9s
+it 101 beta   32 J  12.4546 vol 0.1132 (dil 0.2188 g +0.005) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 58.5s
+it 101 beta   32 J  12.4546 vol 0.1132 (dil 0.2188 g +0.005) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 58.5s
+it 102 beta   32 J  12.4883 vol 0.1118 (dil 0.2174 g -0.002) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 53.4s
+it 102 beta   32 J  12.4883 vol 0.1118 (dil 0.2174 g -0.002) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.27e+03 53.4s
+it 103 beta   32 J  12.4668 vol 0.1121 (dil 0.2176 g -0.001) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 54.5s
+it 103 beta   32 J  12.4668 vol 0.1121 (dil 0.2176 g -0.001) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 54.5s
+it 104 beta   32 J  12.4567 vol 0.1122 (dil 0.2176 g -0.000) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 54.4s
+it 104 beta   32 J  12.4567 vol 0.1122 (dil 0.2176 g -0.000) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 54.4s
+it 105 beta   32 J  12.4483 vol 0.1122 (dil 0.2176 g -0.000) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 56.7s
+it 105 beta   32 J  12.4483 vol 0.1122 (dil 0.2176 g -0.000) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 56.7s
+it 106 beta   32 J  12.4409 vol 0.1122 (dil 0.2177 g +0.002) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 53.5s
+it 106 beta   32 J  12.4409 vol 0.1122 (dil 0.2177 g +0.002) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 53.5s
+it 107 beta   32 J  12.4488 vol 0.1116 (dil 0.2170 g -0.001) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 53.1s
+it 107 beta   32 J  12.4488 vol 0.1116 (dil 0.2170 g -0.001) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 53.1s
+it 108 beta   32 J  12.4412 vol 0.1117 (dil 0.2171 g -0.000) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 54.4s
+it 108 beta   32 J  12.4412 vol 0.1117 (dil 0.2171 g -0.000) grey  2.3% ch 0.100 worst crash 8 [0.58, -0.58, 0.58]  3.26e+03 54.4s
+layout: stopped (max_stage) at it 108, beta 32, 6055 s
+layout: stopped (max_stage) at it 108, beta 32, 6055 s
+layout: beta 32 done: eroded design 9 bodies, main 80.4%; drawn bodies outside the main body: 4
+layout: beta 32 done: eroded design 9 bodies, main 80.4%; drawn bodies outside the main body: 4
+layout done: 6623 s, peak 8.426524 GB
+layout done: 6623 s, peak 8.426524 GB
