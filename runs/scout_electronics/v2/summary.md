@@ -127,11 +127,11 @@
 | V0 round 4 (tube 20, UBEC box full, block solid, foot 45, lower back 20) | 59.4 | 0.72 / 2.73 | 0.44 | 0.01 / 0.02 | no (0.44) | all but +x | 0.80 |
 | V1 tube 14 | 58.3 | 0.62 / 2.51 | 0.43 | 0.01 / 0.02 | no | all but +x | 0.80 |
 | V2 V1 + UBEC box 6 | 57.0 | 0.43 / 2.10 | 0.41 | 0.01 / 0.02 | no | all but +x | 0.80 |
-| V3 flanges only + box 6 | 56.5 | 0.44 / 1.98 | 0.71 | 0.08 / 0.12 | no | fails 14 / 14 | n/a |
+| V3 flanges only + box 6 | 56.5 | 0.44 / 1.98 | 0.71 | 0.08 / 0.12 | no | fails 14 / 14 | 5.92 |
 | V4 V2 + block 2.4 walls / 20 % | 51.8 | 0.46 / 1.72 | 0.27 | 0.01 / 0.02 | yes | all but ±x | 0.80 |
 | V5 V4 + foot to z 34 | 50.1 | 0.49 / 1.64 | 0.27 | 0.01 / 0.02 | yes | all but ±x | 0.83 |
 | V6 V5 + lower back 6 | 47.9 | 0.66 / 1.32 | 0.26 | 0.01 / 0.02 | yes | fails 7 / 14 | 0.94 |
-| V7 V3 + V6's lightening | 47.2 | 0.78 / 1.19 | 0.73 | 0.08 / 0.12 | no | fails all | n/a |
+| V7 V3 + V6's lightening | 47.2 | 0.78 / 1.19 | 0.73 | 0.08 / 0.12 | no | fails all | 5.92 |
 | **V8 V5 + lower back 14 (picked)** | **49.2** | **0.56 / 1.49** | **0.27** | **0.01 / 0.02** | **yes** | **all but ±x** | 0.83 |
 
 - **Pick rule:** pass L, its breaking order and balance; then the fewest cases where the yoke or block is not 1.5 times ahead of the carrier; then the lightest. That gives V8.
@@ -204,10 +204,10 @@ The mount is 49.2 g against the layout's 38.6 g placeholder (+10.6 g, E). Crash 
 
 ## Still open
 1. **Our own order in pure ±x:** the carrier's spine at x −112 is within 1.2 times of the block (indices ≤ 0.07). L orders the mount only against the cage, and the cage goes first by about 8 times, so this is a piece-pass constraint (DEFAULT): the carrier's piece pass keeps the spine section at x −112.4 (A 125, C) ≥ 1.5 times the block in ±x.
-4. **L breaking order is checked against the worst cage rod, not a node.** L asks the mount to stay ≤ 1/1.5 of the worst cage node or foot index. Node indices aren't computed yet, so the 0.59 used is the sized 6/4 cage's worst rod (F on E, a cage Spark has not decided). It needs a node or foot index ≥ 0.41 (= 0.27 x 1.5) when the frame model reports nodes.
-5. **Plate keys have no practical margin:** 0.21 / 0.09 off the swept prop disks and 0.77 / 1.42 off the block's own fin and foot at the ball-end's 25° limit (C, reviewer's measure). Any hole tolerance uses that up. In practice turn the props off the line, or use a stubby key.
 2. **Requirements:** the belly mount's tail face and the 2 plate holes are open.
 3. **Measure first:** the UBEC, the plugs, and the microSD socket's width at the posts.
+4. **L breaking order is checked against the worst cage rod, not a node.** L asks the mount to stay ≤ 1/1.5 of the worst cage node or foot index. Node indices aren't computed yet, so the 0.59 used is the sized 6/4 cage's worst rod (F on E, a cage Spark has not decided). It needs a node or foot index ≥ 0.41 (= 0.27 x 1.5) when the frame model reports nodes.
+5. **Plate keys have no practical margin:** the binding measure is the prop meshes `system_check` sweeps, 0.18 / 0.06 (C); the reviewer's swept-disk measure reads 0.21 / 0.09. The keys are also only 0.77 / 1.42 off the block's own fin and foot at the ball-end's 25° limit (C, reviewer's measure). Any hole tolerance uses that up. In practice turn the props off the line, or use a stubby key.
 
 ## Visual
 `preview.png`, also at https://claude.ai/artifact/EiZ5Z7WktXkSQePPHYEPiU. Top row A, bottom row B. Side, top and rear views on v12 at catch −5.0, with the wash rings, the funnel line (red dashed) and the SD and USB-C tool lines.
