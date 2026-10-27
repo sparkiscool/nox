@@ -1,3 +1,60 @@
 overseer: 3153 low points, cartridge bottom 3.0 above z 0 (16.20 above the deck)
   overseer off ( -20, -20) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
   overseer off ( -20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20, -20) yaw   10: ok clamp 95.0 slide 83.53 err (-3.55, 0.01, 0.48) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20,   0) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20,   0) yaw    0: ok clamp 91.0 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20,   0) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20,  20) yaw  -10: ok clamp 95.0 slide 82.35 err (-4.06, 0.0, -0.45) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off ( -20,  20) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0, -20) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0, -20) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0,   0) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0,   0) yaw    0: ok clamp 90.5 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0,   0) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0,  20) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (   0,  20) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20, -20) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20, -20) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20,   0) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20,   0) yaw    0: ok clamp 91.0 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20,   0) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20,  20) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer off (  20,  20) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 1.37
+  overseer 27 landings in 144 s
+overseer {"square_mm": 20, "per_axis": {"x": [-20, 20], "y": [-20, 20]}, "yaw_ok_deg": [-10, 0, 10], "worst_pose_err_mm": 4.06, "worst_yaw_err_deg": 0.91, "min_clear_mm": 1.5, "s_clamp": [90.5, 91.0, 95.0, 99.0, 100.0, 100.5], "n": 27, "n_ok": 27, "fails": {}}
+scout: 3344 low points, cartridge bottom 5.12 above z 0 (18.32 above the deck)
+  scout    off ( -20, -20) yaw  -10: ok clamp 196.5 slide 194.92 err (-0.85, -0.06, -0.65) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20, -20) yaw    0: ok clamp 197.0 slide 194.94 err (-0.8, -0.06, -0.66) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20, -20) yaw   10: ok clamp 197.0 slide 194.79 err (-0.97, -0.07, -0.69) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20,   0) yaw  -10: ok clamp 196.5 slide 195.68 err (-0.18, -0.01, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20,   0) yaw    0: ok clamp 197.0 slide 195.93 err (-0.2, -0.22, -0.08) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20,   0) yaw   10: ok clamp 196.5 slide 195.24 err (-0.63, -0.03, -0.59) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20,  20) yaw  -10: ok clamp 197.0 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20,  20) yaw    0: ok clamp 197.0 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -20,  20) yaw   10: ok clamp 196.5 slide 195.45 err (-0.2, -0.03, -0.51) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0, -20) yaw  -10: ok clamp 196.5 slide 194.94 err (-0.8, -0.06, -0.66) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0, -20) yaw    0: ok clamp 197.0 slide 194.82 err (-0.93, -0.07, -0.68) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0, -20) yaw   10: ok clamp 197.0 slide 194.94 err (-0.8, -0.06, -0.66) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0,   0) yaw  -10: ok clamp 197.0 slide 195.93 err (-0.2, -0.22, -0.08) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0,   0) yaw    0: ok clamp 196.5 slide 195.93 err (-0.2, -0.22, -0.08) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0,   0) yaw   10: ok clamp 197.0 slide 195.93 err (-0.2, -0.22, -0.08) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0,  20) yaw  -10: ok clamp 197.0 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0,  20) yaw    0: ok clamp 197.0 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (   0,  20) yaw   10: ok clamp 196.5 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20, -20) yaw  -10: ok clamp 197.0 slide 194.82 err (-0.93, -0.07, -0.68) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20, -20) yaw    0: ok clamp 197.0 slide 194.94 err (-0.8, -0.06, -0.66) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20, -20) yaw   10: ok clamp 196.5 slide 194.98 err (-0.81, -0.05, -0.64) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20,   0) yaw  -10: ok clamp 197.0 slide 195.24 err (-0.63, -0.03, -0.59) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20,   0) yaw    0: ok clamp 196.5 slide 195.93 err (-0.2, -0.22, -0.08) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20,   0) yaw   10: ok clamp 197.0 slide 195.68 err (-0.18, -0.01, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20,  20) yaw  -10: ok clamp 196.5 slide 195.49 err (-0.19, -0.01, -0.57) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20,  20) yaw    0: ok clamp 197.0 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off (  20,  20) yaw   10: ok clamp 197.0 slide 195.41 err (-0.24, -0.03, -0.52) clear 1.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout 27 landings in 214 s
+scout {"square_mm": 20, "per_axis": {"x": [-20, 20], "y": [-20, 20]}, "yaw_ok_deg": [-10, 0, 10], "worst_pose_err_mm": 0.97, "worst_yaw_err_deg": 0.69, "min_clear_mm": 1.5, "s_clamp": [196.5, 197.0], "n": 27, "n_ok": 27, "fails": {}}
