@@ -170,3 +170,58 @@ it  64 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000
 it  64 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 53.5s
 it  65 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 52.1s
 it  65 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 52.1s
+it  66 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 54.0s
+it  66 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 54.0s
+it  67 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 55.5s
+it  67 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 55.5s
+it  68 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 51.6s
+it  68 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 51.6s
+it  69 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 59.0s
+it  69 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 59.0s
+it  70 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 57.9s
+it  70 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 57.9s
+it  71 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 55.0s
+it  71 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 55.0s
+it  72 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 54.7s
+it  72 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 54.7s
+it  73 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 53.4s
+it  73 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 53.4s
+it  74 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 53.7s
+it  74 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 53.7s
+it  75 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 49.9s
+it  75 beta    4 J  11.1231 vol 0.0067 (dil 0.0300 g +0.343) grey  1.6% ch 0.000 worst held b1 fz 9.74e+05 49.9s
+layout: stopped (beta_stop) at it 75, beta 4, 4085 s
+layout: stopped (beta_stop) at it 75, beta 4, 4085 s
+layout: beta 4 done: eroded design 5 bodies, main 35.9%; drawn bodies outside the main body: 4
+layout: beta 4 done: eroded design 5 bodies, main 35.9%; drawn bodies outside the main body: 4
+coarse stage done: 75 iterations, 4146 s, peak 1.612024 GB
+coarse stage done: 75 iterations, 4146 s, peak 1.612024 GB
+node_3: grid (72, 72, 72) h 1.0 = 373,248 cells; design 163,299 (163.3 cm3), drawn 7,621, void 202,328
+  support hold 0: 6507 cells, 10890 nodes
+  support hold 1: 6465 cells, 11016 nodes
+  support hold 2: 6507 cells, 10888 nodes
+  support hold 3: 6602 cells, 11176 nodes
+  support hold 4: 6593 cells, 11132 nodes
+  support hold 5: 6510 cells, 10960 nodes
+  support hold 6: 7123 cells, 11924 nodes
+  support hold 7: 7149 cells, 12065 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (7.61 cm3); 0.01 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (7.61 cm3); 0.01 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.007 of 163,307 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.007 of 163,307 design cells
+layout: WARNING nearly mirrored in x (4.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (4.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (4.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (4.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.5% of passive cells differ): no symmetry
+layout: 5 drawn bodies (7,613 cells), held solid in every realization; eroded filter: masked
+layout: 5 drawn bodies (7,613 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 6 tie cases (1 bodies tied, 4 held by support 'hold 0') + 0 gate ties + 24 held ties
+layout: 32 load cases + 6 tie cases (1 bodies tied, 4 held by support 'hold 0') + 0 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (72, 72, 72) = 373,248 elements, 551,511 active dofs; backend mg (direct estimate 7.9 GB, budget 11.8 GB)
+fem: grid (72, 72, 72) = 373,248 elements, 551,511 active dofs; backend mg (direct estimate 7.9 GB, budget 11.8 GB)
+fem: multigrid 3 levels [(np.int64(72), np.int64(72), np.int64(72)), (np.int64(36), np.int64(36), np.int64(36)), (np.int64(18), np.int64(18), np.int64(18))], coarsest 20,577 dofs (direct)
+fem: multigrid 3 levels [(np.int64(72), np.int64(72), np.int64(72)), (np.int64(36), np.int64(36), np.int64(36)), (np.int64(18), np.int64(18), np.int64(18))], coarsest 20,577 dofs (direct)
