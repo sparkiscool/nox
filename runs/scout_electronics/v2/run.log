@@ -1,63 +1,74 @@
-Scout v3 electronics, system pass v2 (27 Oct 2026): nox/scout/v3/electronics_system.py on scout_layout v9 (PR 127, main 7c0780f)
-model: 36 parts in pose, catch set 8.0 aft (v9); shell 17 nodes / 44 rods + 10 links
+Scout v3 electronics, system pass v2 (27 Oct 2026): nox/scout/v3/electronics_system.py on scout_layout v10 (PRs 127 + 131, main 23a7814)
+model: 37 parts in pose, catch set 8.0 aft (v10); shell 17 nodes / 44 rods + 6 links
 centroids: cage shell tubes (manifest), cage shell nodes (manifest), spokes, bay ties, core ties, camera guard (manifest), camera cradle (printed) (area)
-reference, v9's own tail bay in this model (DC 8.0): CG pack in 2.35, out 0.99 mm (E); wash Radxa Zero 3W +10.3, UBEC -12.3, XR2 -15.7 (need >= 3: negative = inside a disk column)
+reference, v10's own tail bay in this model (DC 8.0): CG pack in 2.44, out 0.83 mm (E); wash Radxa Zero 3W +10.3, UBEC -12.3, XR2 -15.7 (need >= 3: negative = inside a disk column)
 1. placement x slide (box keel 8 wide, items on its side walls):
-   DC -3.00 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 5.51: CG in 0.52 / out 0.49 mm (E), bay 106 cm3, cables 6.4 g, bay x -128..-78 (4 s)
-   DC -2.00 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 5.25: CG in 0.31 / out 0.43 mm (E), bay 113 cm3, cables 6.4 g, bay x -124..-78 (4 s)
-   DC -1.50 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 5.86: CG in 0.15 / out 0.58 mm (E), bay 113 cm3, cables 6.4 g, bay x -124..-78 (4 s)
-   DC -1.00 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 6.50: CG in 0.31 / out 0.74 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (4 s)
-   DC -0.50 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 7.15: CG in 0.57 / out 0.90 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (4 s)
-   DC +0.00 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 7.81: CG in 0.83 / out 1.07 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (4 s)
-   DC +1.00 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 9.15: CG in 1.37 / out 1.40 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (4 s)
-   DC +2.00 tail: feasible poses Radxa 117, UBEC 848, XR2 40964
-      J 11.19: CG in 1.92 / out 1.74 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (4 s)
-   DC +4.00 tail: feasible poses Radxa 104, UBEC 848, XR2 40964
-      J 16.19: CG in 3.23 / out 2.74 mm (E), bay 101 cm3, cables 6.3 g, bay x -126..-82 (4 s)
-   DC +6.00 tail: feasible poses Radxa 86, UBEC 848, XR2 40964
-      J 21.48: CG in 4.52 / out 3.71 mm (E), bay 107 cm3, cables 6.3 g, bay x -130..-82 (4 s)
-   DC +8.00 tail: feasible poses Radxa 78, UBEC 752, XR2 40964
-      J 26.13: CG in 5.71 / out 4.54 mm (E), bay 101 cm3, cables 6.3 g, bay x -130..-84 (4 s)
-   pick: DC -2.0 (slide 10.0 forward of v9's 8.0), J 5.25
+   DC -4.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 6.16: CG in 0.68 / out 0.65 mm (E), bay 106 cm3, cables 6.6 g, bay x -128..-78 (3 s)
+   DC -3.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 5.69: CG in 0.51 / out 0.51 mm (E), bay 118 cm3, cables 6.4 g, bay x -124..-78 (3 s)
+   DC -2.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 5.97: CG in 0.19 / out 0.61 mm (E), bay 113 cm3, cables 6.4 g, bay x -124..-78 (3 s)
+   DC -1.50 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 6.59: CG in 0.21 / out 0.76 mm (E), bay 113 cm3, cables 6.4 g, bay x -124..-78 (3 s)
+   DC -1.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 7.23: CG in 0.44 / out 0.92 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (3 s)
+   DC -0.50 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 7.87: CG in 0.70 / out 1.08 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (3 s)
+   DC +0.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 8.52: CG in 0.96 / out 1.25 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (3 s)
+   DC +1.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 9.81: CG in 1.49 / out 1.57 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (3 s)
+   DC +2.00 tail: feasible poses Radxa 215, UBEC 272, XR2 29968
+      J 11.61: CG in 2.02 / out 1.90 mm (E), bay 113 cm3, cables 6.3 g, bay x -124..-78 (3 s)
+   DC +4.00 tail: feasible poses Radxa 211, UBEC 272, XR2 29968
+      J 21.82: CG in 4.15 / out 4.09 mm (E), bay 194 cm3, cables 6.7 g, bay x -148..-82 (2 s)
+   DC +6.00 tail: feasible poses Radxa 210, UBEC 272, XR2 29968
+      J 26.14: CG in 5.23 / out 4.77 mm (E), bay 194 cm3, cables 6.7 g, bay x -148..-82 (2 s)
+   DC +8.00 tail: feasible poses Radxa 209, UBEC 236, XR2 29968
+      J 30.48: CG in 6.32 / out 5.46 mm (E), bay 194 cm3, cables 6.6 g, bay x -148..-82 (3 s)
+   DC +10.00 tail: feasible poses Radxa 209, UBEC 204, XR2 29868
+      J 35.10: CG in 7.48 / out 6.25 mm (E), bay 194 cm3, cables 6.6 g, bay x -148..-82 (2 s)
+   pick: DC -3.0 (slide 11.0 forward of v10's 8.0), J 5.69
       Radxa on the right (-y) wall: long side z, component side -y (out), ports edge -x, SD end +z; board x -110.0..-78.5, y -11.8..-4.0, z -15.0..52.0
-      UBEC on the left (+y) wall: long side z; x -107.0..-82.0, y 4.0..14.0, z -6.0..44.0
-      XR2 on a shelf, left (+y): antenna +z; x -122.0..-110.0, y 6.0..22.0, z 12.0..20.0
+      UBEC on the left (+y) wall: long side z; x -110.0..-85.0, y 4.0..14.0, z -9.0..41.0
+      XR2 on a shelf, left (+y): antenna -z; x -122.0..-110.0, y 6.0..22.0, z 45.0..53.0
 2. alternatives:
-   B no slide (catch stays 8.0 aft): CG in 5.71 / out 4.54 mm
-   DC -4.00 keel 13: feasible poses Radxa 62, UBEC 692, XR2 29920
-      J 7.21: CG in 0.57 / out 0.81 mm (E), bay 133 cm3, cables 6.4 g, bay x -126..-82 (3 s)
-   DC -3.00 keel 13: feasible poses Radxa 62, UBEC 692, XR2 29920
-      J 8.52: CG in 0.04 / out 1.14 mm (E), bay 133 cm3, cables 6.4 g, bay x -126..-82 (3 s)
-   DC -2.00 keel 13: feasible poses Radxa 62, UBEC 692, XR2 29920
-      J 9.84: CG in 0.50 / out 1.47 mm (E), bay 133 cm3, cables 6.4 g, bay x -126..-82 (3 s)
-   DC -2.00 forward Radxa (x > -40), free: feasible poses Radxa 375, UBEC 104324, XR2 221450
-      J 15.22: CG in 0.30 / out 0.30 mm (E), bay 666 cm3, cables 3.5 g, bay x -113..108 (17 s)
-   DC +8.00 forward Radxa (x > -40), free: feasible poses Radxa 375, UBEC 100712, XR2 218470
-      J 17.65: CG in 2.12 / out 2.29 mm (E), bay 383 cm3, cables 4.2 g, bay x -64..6 (16 s)
+   B no slide (catch stays 8.0 aft): CG in 6.32 / out 5.46 mm
+   DC -4.00 keel 13: feasible poses Radxa 209, UBEC 212, XR2 22080
+      J 15.20: CG in 0.63 / out 2.48 mm (E), bay 194 cm3, cables 6.9 g, bay x -151..-85 (2 s)
+   DC -3.00 keel 13: feasible poses Radxa 209, UBEC 212, XR2 22080
+      J 16.52: CG in 1.16 / out 2.82 mm (E), bay 194 cm3, cables 6.9 g, bay x -151..-85 (2 s)
+   DC -2.00 keel 13: feasible poses Radxa 209, UBEC 212, XR2 22080
+      J 17.85: CG in 1.69 / out 3.15 mm (E), bay 194 cm3, cables 6.9 g, bay x -151..-85 (2 s)
+   DC -4.00 Radxa flat only: feasible poses Radxa 209, UBEC 272, XR2 29968
+      J 10.91: CG in 0.14 / out 1.42 mm (E), bay 194 cm3, cables 6.9 g, bay x -148..-82 (2 s)
+   DC -3.00 Radxa flat only: feasible poses Radxa 209, UBEC 272, XR2 29968
+      J 12.27: CG in 0.41 / out 1.76 mm (E), bay 194 cm3, cables 6.8 g, bay x -148..-82 (2 s)
+   DC -2.00 Radxa flat only: feasible poses Radxa 209, UBEC 272, XR2 29968
+      J 13.63: CG in 0.95 / out 2.10 mm (E), bay 194 cm3, cables 6.8 g, bay x -148..-82 (2 s)
+   DC -3.00 forward Radxa (x > -40), free: feasible poses Radxa 303, UBEC 63752, XR2 166348
+      J 16.28: CG in 0.49 / out 0.42 mm (E), bay 679 cm3, cables 3.6 g, bay x -115..110 (15 s)
+   DC +8.00 forward Radxa (x > -40), free: feasible poses Radxa 303, UBEC 61604, XR2 163494
+      J 18.77: CG in 2.61 / out 2.67 mm (E), bay 357 cm3, cables 4.8 g, bay x -59..8 (14 s)
 3. the carrier (drawn round the pick) and the checks:
-   belly-mount tail block (PETG): 9.8 g (E), CG (-58.8, -0.0, 6.4), x -72.1..-40.8, y -6.5..6.5, z -8.0..18.5; hollow 2.4 walls + 4 insert bosses; watertight True
-   tail carrier: yoke + box keel (PETG): 15.8 g (E), CG (-92.1, 0.0, 16.5), x -122.0..-50.5, y -6.5..6.5, z -15.0..52.0; keel side face 29 cm2, walls 2.4 at 60% (E); watertight True
+   belly-mount tail block (PETG): 9.8 g (E), CG (-57.8, -0.0, 6.4), x -71.1..-39.8, y -6.5..6.5, z -8.0..18.5; hollow 2.4 walls + 4 insert bosses; watertight True
+   tail carrier: yoke + box keel (PETG): 16.2 g (E), CG (-91.7, 0.0, 18.3), x -122.0..-49.5, y -6.5..6.5, z -15.0..53.0; keel side face 30 cm2, walls 2.4 at 60% (E); watertight True
    Radxa standoffs (PETG): 0.4 g (E), CG (-93.5, -5.4, 17.5), x -107.9..-79.0, y -7.0..-3.8, z -14.4..49.5; 4 x Ø6 x 3, M2.5; watertight True
-   XR2 shelf (PETG): 0.6 g (E), CG (-116.0, 12.6, 13.0), x -122.0..-110.0, y 4.0..22.0, z 10.0..16.0; pocket floor 2.0 + 6 x 6 post; watertight True
-   Radxa Zero 3W: wash +4.3 (need >= 3), shell inset 8.0 (need >= 3), rods/nodes 8.0, nearest: Radxa standoffs (PETG) -0.2, tail carrier: yoke + box keel (PETG) -0.0, belly-mount tail block (PETG) 6.4
-   UBEC: wash +4.4 (need >= 3), shell inset 8.0 (need >= 3), rods/nodes 8.0, nearest: tail carrier: yoke + box keel (PETG) -0.0, XR2 3.0, XR2 shelf (PETG) 3.0
-   XR2: wash +20.0 (need >= 3), shell inset 26.0 (need >= 3), rods/nodes 26.2, nearest: XR2 shelf (PETG) -1.0, tail carrier: yoke + box keel (PETG) 2.0, UBEC 3.0
-   belly-mount tail block (PETG): wash +3.1 (need >= 3), shell inset 38.0 (need >= 3), rods/nodes 35.5, nearest: mount + nose legs (Scout) -4.0, tail carrier: yoke + box keel (PETG) -0.0, receiver v3 (latch) -0.0
-   tail carrier: yoke + box keel (PETG): wash +3.1 (need >= 3), shell inset 8.0 (need >= 3), rods/nodes 9.4, nearest: Radxa standoffs (PETG) -0.2, belly-mount tail block (PETG) -0.0, UBEC -0.0
-   Radxa standoffs (PETG): wash +8.8 (need >= 3), shell inset 10.5 (need >= 3), rods/nodes 11.4, nearest: Radxa Zero 3W -3.0, tail carrier: yoke + box keel (PETG) -0.2, belly-mount tail block (PETG) 7.5
-   XR2 shelf (PETG): wash +20.0 (need >= 3), shell inset 31.1 (need >= 3), rods/nodes 32.8, nearest: XR2 -2.0, tail carrier: yoke + box keel (PETG) -0.0, UBEC 3.0
-   tool Ø10, SD card: from [-93.5, -5.6, 52.0] along [0.0, 0.0, 1.0], out of the shell at 9.5 mm, least clear of a rod / node 9.0 (need >= 5)
-   tool Ø10, USB-C 1: from [-110.0, -10.2, 8.5] along [-1.0, 0.0, 0.0], out of the shell at 59.5 mm, least clear of a rod / node 8.7 (need >= 5)
-   CG (true centroids, drawn carrier): pack in (+0.33, +0.16) = 0.36 mm, pack out (-0.28, +0.23) = 0.36 mm (E, gate 3); 695 g all-up, 479 g pack out; added 59.0 g
-   slide trim (our parts ride the belly mount): best DC -2.00: 0.36 / 0.36 mm
-   loads (E): {"carried_g": 46.0, "carried_cg": [-88.0, 1.5, 17.5], "joint": [-61.5, 0.0, 5.2], "F35_N": 15.8, "pitch_Nmm": 417.0, "roll_Nmm": 194.0, "yaw_Nmm": 417.0, "bolt_tension_pitch_N": 13.2, "bolt_shear_yaw_N": 20.9, "roll_capacity_Nmm": 7800.0, "h50_corner": [-123.5, 0.0, 52.0], "h50_moment_Nmm": 3881.0, "h50_bolt_tension_N": 110.8, "h50_bolt_shear_N": 154.9, "keel_root_Iz": 1471.0, "keel_root_Iy": 23923.0, "sigma_h50_lateral_MPa": 8.42, "sigma_35g_vertical_MPa": 0.32, "index_h50": 0.34, "index_35g": 0.05, "bearing_MPa_h50": 10.33, "mode_lateral_Hz": 513.0}
-   system_check Scout v3 with the tail electronics (system pass v2): FAIL
-   alt B (no slide), drawn: CG in 5.73 / out 4.56 mm; system_check Scout v3 with the tail electronics (system pass v2): FAIL
-done in 481 s
+   XR2 shelf (PETG): 0.6 g (E), CG (-116.0, 12.6, 52.0), x -122.0..-110.0, y 4.0..22.0, z 49.0..55.0; pocket floor 2.0 + 6 x 6 post; watertight True
+   Radxa Zero 3W: wash +4.3 (need >= 3), above the funnel line +1.0 (need >= 0), shell inset 8.0 (need >= 3), rods/nodes 8.0, nearest: Radxa standoffs (PETG) -0.2, tail carrier: yoke + box keel (PETG) -0.0, belly-mount tail block (PETG) 7.4
+   UBEC: wash +6.1 (need >= 3), above the funnel line +9.2 (need >= 0), shell inset 11.0 (need >= 3), rods/nodes 11.0, nearest: tail carrier: yoke + box keel (PETG) -0.0, XR2 4.0, XR2 shelf (PETG) 5.4
+   XR2: wash +20.0 (need >= 3), above the funnel line +47.2 (need >= 0), shell inset 7.0 (need >= 3), rods/nodes 7.0, nearest: XR2 shelf (PETG) -1.0, tail carrier: yoke + box keel (PETG) 2.0, UBEC 4.0
+   belly-mount tail block (PETG): wash +3.1 (need >= 3), above the funnel line +nan (need >= 0), shell inset 40.1 (need >= 3), rods/nodes 36.5, nearest: mount + nose legs (Scout) -4.0, tail carrier: yoke + box keel (PETG) -0.0, receiver v3 (latch) -0.0
+   tail carrier: yoke + box keel (PETG): wash +3.1 (need >= 3), above the funnel line +7.3 (need >= 0), shell inset 7.0 (need >= 3), rods/nodes 7.2, nearest: Radxa standoffs (PETG) -0.2, belly-mount tail block (PETG) -0.0, UBEC -0.0
+   Radxa standoffs (PETG): wash +8.8 (need >= 3), above the funnel line +11.1 (need >= 0), shell inset 10.5 (need >= 3), rods/nodes 12.1, nearest: Radxa Zero 3W -3.0, tail carrier: yoke + box keel (PETG) -0.2, UBEC 7.8
+   XR2 shelf (PETG): wash +20.0 (need >= 3), above the funnel line +64.1 (need >= 0), shell inset 5.0 (need >= 3), rods/nodes 5.1, nearest: XR2 -2.0, tail carrier: yoke + box keel (PETG) -0.0, UBEC 5.4
+   tool Ø10, SD card: from [-93.5, -5.6, 52.0] along [0.0, 0.0, 1.0], out of the shell at 9.5 mm, least clear of a rod / node 10.8 (need >= 5)
+   tool Ø10, USB-C 1: from [-110.0, -10.2, 8.5] along [-1.0, 0.0, 0.0], out of the shell at 62.5 mm, least clear of a rod / node 8.7 (need >= 5)
+   CG (true centroids, drawn carrier): pack in (+0.63, +0.15) = 0.65 mm, pack out (-0.26, +0.22) = 0.34 mm (E, gate 3); 712 g all-up, 496 g pack out; added 59.3 g
+   tail bay x moment about the thrust centre: -4701 g mm (59.3 g at x -79.2: items, carrier, cables) vs the v10 placeholder Radxa + UBEC -2409 (25 g; with its XR2 -2451); -2251 g mm more aft = -3.2 mm of CG at the same slide
+   slide trim (our parts ride the belly mount): best DC -2.75: 0.50 / 0.44 mm
+   loads (E): {"carried_g": 46.4, "carried_cg": [-88.8, 1.4, 18.4], "joint": [-60.5, 0.0, 5.2], "F35_N": 15.9, "pitch_Nmm": 450.0, "roll_Nmm": 209.0, "yaw_Nmm": 450.0, "bolt_tension_pitch_N": 14.3, "bolt_shear_yaw_N": 22.5, "roll_capacity_Nmm": 7800.0, "h50_corner": [-123.5, 0.0, 53.0], "h50_moment_Nmm": 3951.0, "h50_bolt_tension_N": 112.4, "h50_bolt_shear_N": 157.4, "keel_root_Iz": 1471.0, "keel_root_Iy": 23923.0, "sigma_h50_lateral_MPa": 8.56, "sigma_35g_vertical_MPa": 0.34, "index_h50": 0.34, "index_35g": 0.05, "bearing_MPa_h50": 10.49, "mode_lateral_Hz": 461.0}
+   system_check Scout v3 with the tail electronics (system pass v2): PASS
+   alt B (no slide), drawn: CG in 6.74 / out 6.07 mm; system_check Scout v3 with the tail electronics (system pass v2): FAIL
+done in 586 s

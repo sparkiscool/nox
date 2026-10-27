@@ -1,0 +1,28 @@
+   catch -3.0 aft: CG pack in +2.8, pack out +2.8 (x, mm), 713 g, lens (149, 42)
+Scout v3 layout v3 / cage v2 (pattern free, every rod 3 mm); ring v5side: 4 nodes; balance: catch -3.0 aft of the thrust centre; tab line x 3.00, cartridge flat bottom z -44.50, ring plane z -49.62 (Overseer: catch x -30.0, cartridge bottom -54.0, ring -3.00 under it)
+camera: lens (149, 0, 42), head plane tilt 0 deg, in a printed cradle on the cage (no boom) (lens z 30..50 x tilt 0..90: the shell target 14.0 under its lower view plane and behind its back; closest to the drone with its cradle under the cage roof)
+offset 16.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 5.8 L, 112 tall, shell 111 g, props 15.1, shell shadow 5.3 / 5.4 %
+offset 20.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 6.0 L, 112 tall, shell 110 g, props 15.5, shell shadow 4.4 / 5.4 %
+offset 24.0 dome 20 snap 0: valid: 26 nodes, 71 tubes, 6.3 L, 112 tall, shell 137 g, props 15.7, shell shadow 3.8 / 6.3 %
+offset 28.0 dome 20 snap 0: valid: 20 nodes, 53 tubes, 6.2 L, 112 tall, shell 114 g, props 13.2, shell shadow 3.0 / 4.6 %
+offset 32.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 6.4 L, 112 tall, shell 111 g, props 13.7, shell shadow 3.4 / 4.2 %
+structure bar: start 16.0 dome 20 (5.8 L, 111 g); picked start 16.0 dome 20 snap 0
+shell: 19 nodes (4 on the ring), 50 tubes, 32 triangles; tubes 38 .. 263, 6.40 m; node extents 310 x 242 x 112; hull residual 0.00 (C)
+ring: the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped; Spark 27 Oct), about the catch (+85.8, +116.1), (-68.9, +119.7), (-68.9, -119.7), (+85.8, -116.1), 154.7 long, 239.4 wide at the tail, 232.2 at the nose; plane z -49.62 = cartridge flat bottom -3.00 − seat 2.12 (the 3.0 rods sit 2.12 lower on the 45 deg ramps than the Overseer's 6 mm tubes, so both cartridges stop at the same height); 4 ring rods (C)
+funnel band (within 30 above the plane, inside the opening or 40 past its ends): links in it 0 (rod axis; 0 graze its edge by up to the rod radius), shell rods between free nodes 0, shell rods leaving the 4 bottom nodes that stay in it past their first 10 % 20 (0-5, 0-7, 0-12, 0-15, 0-17, 1-5, 1-10, 1-11, 1-12, 1-16, 2-6, 2-9, 2-11, 2-13, 2-16, 3-6, 3-8, 3-13, 3-14, 3-17) (C)
+largest cell: inscribed circle Ø120 between tube surfaces (C)
+links by kind: saddle tie 6
+carbon: shell 50 rods 3.0 solid, shortest 38; links 6 rods 3.0; total 56 rods (cage v1: 123), 0.53 m, shortest 76 (saddle tie 3.1)
+links apart: closest pair 1.8 between rod surfaces (saddle tie 1.1 / saddle tie 3.1) (C, need ≥ 1.0)
+props: shell tubes 15.1 off the swept disks (≥ 12, 3D), nodes 19.8, links 13.1 (saddle tie 4.1) (C)
+   inside: props 15.5 from the nearest face plane (C)
+   inside: body 3.1 from the nearest face plane (C)
+swap zone (receiver 105.6 x 65.5 + 17.6 at the ends (nose 26.5, tail 17.6 to the rectangle rods), 30 at the sides, cartridge bottom down): clear (0 mm³)
+front camera (horizon, landscape, 89 x 73 deg): nothing of the drone in its view (C)
+flow (23 deg cone, straight down): checked (lines above list anything in view)
+prop blockage (secondary to structure): 5.3 % of the disks' thrust shadowed from above, 8.0 % from below (plan shadow of tubes and links, annulus 0.2..1 R weighted by r, E)
+cage: shell 111 g (tubes 70 + nodes 40, E), links 6 g, guard nodes 0 g (C on E)
+mass ~713 g (E), CG (2.8, 0.2, 0.6) vs thrust centre (0, 0): 2.8 off; pack + cartridge out: 2.8 off (498 g); CG 41 under the prop plane
+compact: shell hull 5.8 L vs the parts-with-margins hull 3.5 L (C)
+FC USB-C cable: from (-14.6, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
+camera mount: a printed PETG cradle round the camera (0.5 clear, lips 6 over and under, behind the lens) on 4 printed Ø9 round arms into a snap clip on the shell rod at (109.3, 18.0, 62.1) (18 long), a snap clip on the shell rod at (126.0, 18.0, 34.2) (10 long) and their mirrors: no rods, no boom (Spark 27 Oct)

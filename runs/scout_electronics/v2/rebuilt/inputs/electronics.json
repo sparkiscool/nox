@@ -1,0 +1,66 @@
+{
+ "dc_ref": -3.0,
+ "parts": {
+  "Radxa Zero 3W": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/radxa.stl",
+   "mass_g": 10.0,
+   "tag": "E",
+   "role": "bought",
+   "protect": true
+  },
+  "UBEC": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/ubec.stl",
+   "mass_g": 15.0,
+   "tag": "E",
+   "role": "bought",
+   "protect": true
+  },
+  "XR2": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/xr2.stl",
+   "mass_g": 1.0,
+   "tag": "P",
+   "role": "bought",
+   "protect": true
+  },
+  "belly-mount tail block (PETG)": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/belly_mount_tail_block__petg_.stl",
+   "mass_g": 9.77,
+   "tag": "E",
+   "role": "structure",
+   "protect": false,
+   "material": "PETG",
+   "group": "printed",
+   "color": "#4a90d9"
+  },
+  "tail carrier: yoke + box keel (PETG)": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/tail_carrier__yoke___box_keel__petg_.stl",
+   "mass_g": 16.16,
+   "tag": "E",
+   "role": "structure",
+   "protect": false,
+   "material": "PETG",
+   "group": "printed",
+   "color": "#4a90d9"
+  },
+  "Radxa standoffs (PETG)": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/radxa_standoffs__petg_.stl",
+   "mass_g": 0.43,
+   "tag": "E",
+   "role": "structure",
+   "protect": false,
+   "material": "PETG",
+   "group": "printed",
+   "color": "#4a90d9"
+  },
+  "XR2 shelf (PETG)": {
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a9a360d3e492e7945/runs/scout_electronics/v2/rebuilt/inputs/xr2_shelf__petg_.stl",
+   "mass_g": 0.58,
+   "tag": "E",
+   "role": "structure",
+   "protect": false,
+   "material": "PETG",
+   "group": "printed",
+   "color": "#4a90d9"
+  }
+ }
+}

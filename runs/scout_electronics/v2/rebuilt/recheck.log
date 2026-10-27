@@ -1,0 +1,21 @@
+stage 3: shell rebuilt by nox/scout/v3/layout_v3.py at DC -3.00 with the electronics and the carrier in the drone
+   layout: shell: 19 nodes (4 on the ring), 50 tubes, 32 triangles; tubes 38 .. 263, 6.40 m; node extents 310 x 242 x 112; hull residual 0.00 (C)
+   layout: largest cell: inscribed circle Ø120 between tube surfaces (C)
+   layout: props: shell tubes 15.1 off the swept disks (≥ 12, 3D), nodes 19.8, links 13.1 (saddle tie 4.1) (C)
+   layout: swap zone (receiver 105.6 x 65.5 + 17.6 at the ends (nose 26.5, tail 17.6 to the rectangle rods), 30 at the sides, cartridge bottom down): clear (0 mm³)
+   layout: front camera (horizon, landscape, 89 x 73 deg): nothing of the drone in its view (C)
+   layout: mass ~713 g (E), CG (2.8, 0.2, 0.6) vs thrust centre (0, 0): 2.8 off; pack + cartridge out: 2.8 off (498 g); CG 41 under the prop plane
+   layout: compact: shell hull 5.8 L vs the parts-with-margins hull 3.5 L (C)
+   layout: FC USB-C cable: from (-14.6, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
+   Radxa Zero 3W: wash +4.3 (need >= 3), above the funnel line +1.0 (need >= 0), shell inset 6.2 (need >= 3), rods/nodes 8.9, nearest: Radxa standoffs (PETG) -0.2, tail carrier: yoke + box keel (PETG) -0.0, belly-mount tail block (PETG) 7.4
+   UBEC: wash +6.1 (need >= 3), above the funnel line +9.2 (need >= 0), shell inset 11.8 (need >= 3), rods/nodes 11.9, nearest: tail carrier: yoke + box keel (PETG) -0.0, XR2 4.0, XR2 shelf (PETG) 5.4
+   XR2: wash +20.0 (need >= 3), above the funnel line +47.2 (need >= 0), shell inset 7.6 (need >= 3), rods/nodes 7.8, nearest: XR2 shelf (PETG) -1.0, tail carrier: yoke + box keel (PETG) 2.0, UBEC 4.0
+   belly-mount tail block (PETG): wash +3.1 (need >= 3), above the funnel line +nan (need >= 0), shell inset 35.1 (need >= 3), rods/nodes 36.5, nearest: mount + nose legs (Scout) -4.0, tail carrier: yoke + box keel (PETG) -0.0, receiver v3 (latch) -0.0
+   tail carrier: yoke + box keel (PETG): wash +3.1 (need >= 3), above the funnel line +7.3 (need >= 0), shell inset 7.9 (need >= 3), rods/nodes 8.1, nearest: Radxa standoffs (PETG) -0.2, belly-mount tail block (PETG) -0.0, UBEC -0.0
+   Radxa standoffs (PETG): wash +8.8 (need >= 3), above the funnel line +11.1 (need >= 0), shell inset 11.4 (need >= 3), rods/nodes 12.2, nearest: Radxa Zero 3W -3.0, tail carrier: yoke + box keel (PETG) -0.2, UBEC 7.8
+   XR2 shelf (PETG): wash +20.0 (need >= 3), above the funnel line +64.1 (need >= 0), shell inset 5.9 (need >= 3), rods/nodes 5.9, nearest: XR2 -2.0, tail carrier: yoke + box keel (PETG) -0.0, UBEC 5.4
+   tool Ø10, SD card: out of the shell at 10.5 mm, least clear of a rod / node 8.2 (need >= 5)
+   tool Ø10, USB-C 1: out of the shell at 42.5 mm, least clear of a rod / node 8.7 (need >= 5)
+   CG on the rebuilt shell: pack in 1.96, pack out 1.66 mm (E); 720 g
+   slide trim on the rebuilt shell: best DC +0.00: 0.17 / 0.34 mm
+   system_check Scout v3 with the tail electronics (system pass v2): FAIL

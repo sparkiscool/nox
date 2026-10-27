@@ -1,5 +1,5 @@
 """Scout v3 electronics: system pass v2 (27 Oct 2026). Places the Radxa Zero 3W, the 5 V UBEC and the RadioMaster XR2 by
-optimisation on the race-car cage (scout_layout v9, PR 127), jointly with balance (the catch-set slide), draws the mount concept
+optimisation on the race-car cage (scout_layout v10, PRs 127 + 131), jointly with balance (the catch-set slide), draws the mount concept
 from the picked poses and checks the assembled result.
 
 Why v2: concept v1 (`runs/scout_electronics/v1/`, one PETG fin) failed review three times (root joint did not fit, CG from
@@ -7,14 +7,14 @@ bounding-box centres, hand-picked poses), so it comes back to the system pass (t
 Spark 27 Oct: "fit the stuff there" (the pointed tail). The FC and the flow sensor stay; the battery side is not touched.
 
 Model: the Scout v3 system model `nox/scout/v3/scout.assembly.json` (every part in pose, catch set 8.0 aft of the thrust centre)
-with its meshes in `runs/scout_layout/v9/parts/`, the shell in `runs/scout_layout/v9/cage_shell.json`. Centroids: the manifest's
+with its meshes in `runs/scout_layout/v10/parts/`, the shell in `runs/scout_layout/v10/cage_shell.json`. Centroids: the manifest's
 `cg` where given, else the volume centroid of a watertight mesh, else the area-weighted surface centroid (v1's bounding-box
 centres were ~1.5 mm off). The catch set (receiver set, cartridge set, pack, belly mount with FC and flow, wires) slides by DC.
 
 Stage 1, placement (`search`): a 1 mm grid of the assembled model. Every axis-aligned orientation of each item (the discrete set:
 the Radxa and the UBEC on edge against the carrier's side walls, the XR2 antenna vertical on a shelf) at every lattice position is
 tested against: inside the shell inset by rod r + 3 (cage first), >= 3 off the swept disk columns (wash), >= 2 to every other
-part, the swap column, the FC USB-C path, the flow view, nothing low over the bottom opening, the belly-mount tail block and the
+part, the swap column, the FC USB-C path, the flow view, the funnel band (30 over the bottom plane, the opening + 40), the belly-mount tail block and the
 carrier box kept free; the Radxa's SD card and USB-C port swept with a Ø10 tool to the outside of the shell, its component side
 8 mm free for air. The triple (and the slide DC, scanned) minimises
     J = max(worst CG, 0.3) / 0.25 mm + bay volume / 50 cm3 + added cable mass / 5 g          (DEFAULT weights)
@@ -36,7 +36,7 @@ from scipy import ndimage
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 RUN = os.path.join(ROOT, "runs", "scout_electronics", "v2")
-V9 = os.path.join(ROOT, "runs", "scout_layout", "v9")
+V9 = os.path.join(ROOT, "runs", "scout_layout", "v10")      # the race-car layout as merged (PR 131, 23a7814; v9 + tie saddle)
 ASM = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")
 LOG = io.StringIO()
 
@@ -46,17 +46,20 @@ def say(*a):
 
 
 # ---------------------------------------------------------------- numbers (dimensions.md H, M, L; E where open)
-DC_REF = 8.0                      # v9 as merged: catch set 8.0 aft of the thrust centre (C, PR 127)
+DC_REF = 8.0                      # v10: catch set 8.0 aft of the thrust centre (C, PR 131)
 MOTORS = [(54.1, 54.1), (54.1, -54.1), (-54.1, 54.1), (-54.1, -54.1)]      # C (P 153 diagonals)
-DISK_R = 44.5                     # swept prop radius (v9 props, C)
+DISK_R = 44.5                     # swept prop radius (v10 props, C)
 WASH = 3.0                        # off the swept disk columns (CLAUDE.md 8, DEFAULT)
 CAGE_FIRST = 3.0                  # L, DEFAULT
 ROD_R, NODE_R, RING_NODE_R = 1.5, 6.0, 10.0
 GAP = 2.0                         # to every other part (DEFAULT)
 AIR = 8.0                         # free air over the Radxa's component side (DEFAULT)
 TOOL = 10.0                       # Ø10 tool / fingers to outside the shell (v1 method, E)
-LOW_OPEN_Z = -20.0                # nothing under this over the bottom opening (a probe through the swap hole, DEFAULT)
-SWAP_END, SWAP_SIDE = 13.7, 30.0  # swap column: receiver + 13.7 at the ends (v9's rectangle), + 30 at the sides (C)
+FUNNEL_LINE = ([-197.0, -165.0, -150.0, -130.0, -100.0, -79.0], [44.5, 20.0, 8.0, -7.0, -30.0, -46.6])   # tail bay lowest point above
+                                  # this (x, z) line: the hull from the tail bottom rod (-79, -49.6) to the tail point (-197, 41.5) + 3,
+                                  # so the Overseer's tail-tip ramp stays clear (cage session 27 Oct, hard, E)
+FUNNEL_BAND, FUNNEL_PAST = 30.0, 40.0   # nothing within 30 above the bottom plane over the opening or 40 past its ends (funnel ramps, v10)
+SWAP_NOSE, SWAP_TAIL, SWAP_SIDE = 26.5, 17.6, 30.0   # swap column: receiver + 26.5 nose, + 17.6 tail, + 30 sides (v10, C)
 CART_BOT = -44.5                  # cartridge flat bottom (C)
 W_CG, W_V, W_C, CG_FLOOR = 0.25, 50.0, 5.0, 0.3   # objective: mm, cm3, g; a CG under 0.3 counts as 0.3 (model accuracy, DEFAULT)
 NEAR = 20.0                       # one carrier: every pair of items within 20 (DEFAULT)
@@ -176,6 +179,11 @@ def box_sum(I, lo, hi, clip=False):
     return np.where(out & (not clip), 10 ** 9, s)
 
 
+def funnel_z(x):
+    """the funnel line's z at x (nothing of the tail bay below it); -inf ahead of x -79 (the funnel band rules there)"""
+    x = np.asarray(x, float); return np.where(x < FUNNEL_LINE[0][-1], np.interp(x, *FUNNEL_LINE), -np.inf)
+
+
 def wash_dist(x, y):
     """horizontal distance outside the nearest swept disk column (negative inside)"""
     return np.min([np.hypot(np.asarray(x) - mx, np.asarray(y) - my) for mx, my in MOTORS], axis=0) - DISK_R
@@ -207,11 +215,11 @@ def grids(dc, M=None):
     for e in ConvexHull(M["nodes"]).equations:
         F |= (e[0] * X3 + e[1] * Y3 + e[2] * Z3 + e[3]) > -(ROD_R + CAGE_FIRST + 0.5)
     rb = at_dc("receiver v3 (latch)", dc, M).bounds
-    sx = (XC >= rb[0][0] - SWAP_END) & (XC <= rb[1][0] + SWAP_END); sy = (YC >= rb[0][1] - SWAP_SIDE) & (YC <= rb[1][1] + SWAP_SIDE)
+    sx = (XC >= rb[0][0] - SWAP_TAIL) & (XC <= rb[1][0] + SWAP_NOSE); sy = (YC >= rb[0][1] - SWAP_SIDE) & (YC <= rb[1][1] + SWAP_SIDE)
     F |= sx[:, None, None] & sy[None, :, None] & (ZC < CART_BOT)[None, None, :]
     ring = M["nodes"][:M["nring"]]
-    ox = (XC >= ring[:, 0].min()) & (XC <= ring[:, 0].max()); oy = (YC >= ring[:, 1].min()) & (YC <= ring[:, 1].max())
-    F |= ox[:, None, None] & oy[None, :, None] & (ZC < LOW_OPEN_Z)[None, None, :]
+    ox = (XC >= ring[:, 0].min() - FUNNEL_PAST) & (XC <= ring[:, 0].max() + FUNNEL_PAST); oy = (YC >= ring[:, 1].min()) & (YC <= ring[:, 1].max())
+    F |= ox[:, None, None] & oy[None, :, None] & (ZC < ring[:, 2].mean() + FUNNEL_BAND + 0.5)[None, None, :]
     s, u = usb_path(dc, M); w = np.cross([0, 0, 1.0], u); w /= np.linalg.norm(w); h = np.cross(u, w)
     du = (X3 - s[0]) * u[0] + (Y3 - s[1]) * u[1] + (Z3 - s[2]) * u[2]
     dw = (X3 - s[0]) * w[0] + (Y3 - s[1]) * w[1] + (Z3 - s[2]) * w[2]
@@ -220,11 +228,13 @@ def grids(dc, M=None):
     an = anchors(dc, M)          # the tail block + bridge + yoke tongues (+ GAP) and the box keel (|y| < 6.5 behind the block)
     bx = (XC >= an["xb1"] - GAP) & (XC <= an["belly_tail"] + GAP)
     F |= bx[:, None, None] & (np.abs(YC) <= BLK_HALF + GAP)[None, :, None] & ((ZC >= BLK_Z[0] - TONGUE - GAP) & (ZC <= BLK_Z[1] + TONGUE + GAP))[None, None, :]
-    if not FREE: F |= (XC <= an["xb1"])[:, None, None] & (np.abs(YC) < KEEL_OUT)[None, :, None]
+    F |= Z3 < funnel_z(XC)[:, None, None] + 0.5
     fb = at_dc("flow MTF-02P", dc, M).bounds; lens = np.array([fb[:, 0].mean(), fb[:, 1].mean(), fb[0][2]])
     zz = lens[2] - Z3; tn = math.tan(math.radians(23))
     F |= (zz > 0) & (np.abs(X3 - lens[0]) < zz * tn) & (np.abs(Y3 - lens[1]) < zz * tn)
-    return O, F
+    F2 = F.copy()                     # F2: without the keel's interior (a flat Radxa on a tray over the keel)
+    if not FREE: F |= (XC <= an["xb1"])[:, None, None] & (np.abs(YC) < KEEL_OUT)[None, :, None]
+    return O, (F, F2)
 
 
 # ---------------------------------------------------------------- the items (local frames; H, M)
@@ -251,6 +261,8 @@ ITEMS = {
                 cg=np.array([8.0, 6.0, 3.0]), pts={"pads": np.array([8.0, 6.0, 0.0])}, face=np.array([0, 0, -1.0]), keel=False),
 }
 SHELF = 12.0                      # XR2 within 12 of the carrier's side wall (a 6 x 6 post, DEFAULT)
+TRAY_T = 2.4                      # a flat Radxa sits on a 2.4 tray on the keel's top (or hangs under it)
+RADXA_TRAY = B(-2, 65, -1.5, 30, -4.6 - TRAY_T, -4.6)
 
 
 def rotations():
@@ -273,10 +285,11 @@ def orient(item, R):
         return np.array([c.min(0), c.max(0)])
     body = [rb(b) for b in it["body"]]; o = body[0][0].copy()
     sub = lambda L: [b - o for b in L]
-    return dict(R=R, o=o, body=sub(body), air=sub([rb(b) for b in it["air"]]), sweep=sub([rb(b) for b in it["sweep"]]),
+    return dict(item=item, R=R, o=o, body=sub(body), air=sub([rb(b) for b in it["air"]]), sweep=sub([rb(b) for b in it["sweep"]]),
                 cg=R @ it["cg"] - o, pts={k: R @ v - o for k, v in it["pts"].items()}, face=R @ it["face"])
 
 
+RADXA_MODE = "any"                # any | flat | edge: the Radxa's orientation family (alternatives)
 FREE = False                      # True: no carrier walls (any orientation, any y): the "forward / split" alternative only
 
 
@@ -286,7 +299,9 @@ def orient_set(item):
     seen = set(); out = []
     for R in ROTS:
         o = orient(item, R)
-        if ITEMS[item]["keel"] and not FREE and abs(o["face"][1]) < 0.9: continue
+        flat_ok = item == "Radxa Zero 3W" and abs(o["face"][2]) > 0.9            # the Radxa flat on a tray (cage session 27 Oct)
+        if item == "Radxa Zero 3W" and not FREE and RADXA_MODE != "any" and (RADXA_MODE == "flat") != flat_ok: continue
+        if ITEMS[item]["keel"] and not FREE and abs(o["face"][1]) < 0.9 and not flat_ok: continue
         if item == "XR2" and abs((R @ [0, 0, 1.0])[2]) < 0.9: continue
         key = (item, tuple(np.round(np.concatenate([b.ravel() for b in o["body"]] + [o["face"]]), 2))) if item == "UBEC" else id(R)
         if key in seen: continue
@@ -294,12 +309,18 @@ def orient_set(item):
     return out
 
 
-def candidates(item, IF, IA, x_lim=None):
+def tray_box(o):
+    R = o["R"]; c = np.array([[RADXA_TRAY[i][0], RADXA_TRAY[j][1], RADXA_TRAY[k][2]] for i in (0, 1) for j in (0, 1) for k in (0, 1)]) @ R.T
+    return np.array([c.min(0), c.max(0)]) - o["o"]
+
+
+def candidates(item, IF, IA, x_lim=None, IF2=None):
     """every feasible pose: body clear of F, air and sweeps clear of A (sweeps run to the grid edge, out of the shell)"""
     ors = orient_set(item); out = []
     xs = np.arange(-200.0, 140.0, 3.0); zs = np.arange(-45.0, 62.0, 3.0); ys = np.arange(-120.0, 120.0, 2.0)
     for k, o in enumerate(ors):
-        if ITEMS[item]["keel"] and not FREE:             # mount face on the wall: y fixed by the face
+        flat = item == "Radxa Zero 3W" and abs(o["face"][2]) > 0.9 and not FREE
+        if ITEMS[item]["keel"] and not FREE and not flat:  # mount face on the wall: y fixed by the face
             ty = [KEEL_OUT] if o["face"][1] < 0 else [-KEEL_OUT - o["body"][0][1][1]]
         else:
             ty = ys
@@ -309,7 +330,10 @@ def candidates(item, IF, IA, x_lim=None):
             ylo, yhi = T[:, 1] + o["body"][0][0][1], T[:, 1] + o["body"][0][1][1]
             ok &= ((ylo >= KEEL_OUT + GAP) & (ylo <= KEEL_OUT + SHELF)) | ((yhi <= -KEEL_OUT - GAP) & (yhi >= -KEEL_OUT - SHELF))
         if x_lim is not None: ok &= (T[:, 0] + o["cg"][0] < x_lim) if x_lim < 0 else (T[:, 0] + o["cg"][0] > -x_lim)
-        for b in o["body"]: ok[ok] &= box_sum(IF, T[ok] + b[0], T[ok] + b[1]) == 0
+        if flat:                                          # on a tray over the keel: the board spans the keel, the tray clear too
+            ok &= (T[:, 1] + o["body"][0][0][1] <= -KEEL_OUT) & (T[:, 1] + o["body"][0][1][1] >= KEEL_OUT)
+            tb = tray_box(o); ok[ok] &= box_sum(IF2, T[ok] + tb[0], T[ok] + tb[1]) == 0
+        for b in o["body"]: ok[ok] &= box_sum(IF2 if flat else IF, T[ok] + b[0], T[ok] + b[1]) == 0
         for b in o["air"]: ok[ok] &= box_sum(IA, T[ok] + b[0], T[ok] + b[1]) == 0
         for b in o["sweep"]: ok[ok] &= box_sum(IA, T[ok] + np.maximum(b[0], -INF), T[ok] + np.minimum(b[1], INF), clip=True) == 0
         out += [(k, t) for t in T[ok]]
@@ -323,6 +347,8 @@ def pose_arrays(ors, cands):
         if not n_: return np.zeros((len(k), 0, 2, 3))
         return np.stack([np.array([ors[i][name][j] for i in k]) + t[:, None, :] for j in range(n_)], 1)
     body = stack("body")
+    if "Radxa" in str(ors[0].get("item")):                    # the tray counts as the Radxa's in the clash checks
+        body = np.concatenate([body, np.stack([np.array([tray_box(ors[i]) for i in k]) + t[:, None, :]], 1)[:, 0][:, None]], 1)
     return dict(k=k, t=t, body=body, air=stack("air"), sweep=stack("sweep"), cg=np.array([ors[i]["cg"] for i in k]) + t,
                 pts={n: np.array([ors[i]["pts"][n] for i in k]) + t for n in ors[0]["pts"]}, ulo=body[:, :, 0].min(1), uhi=body[:, :, 1].max(1))
 
@@ -390,8 +416,8 @@ def evaluate(dc, R, i, U, j, X, k, mount=None):
 
 def search(dc, F, A, x_lim=None, log=True, label="tail"):
     """the best (Radxa, UBEC, XR2) for one catch slide"""
-    t0 = time.time(); IF, IA = integral(F), integral(A)
-    oR, cR = candidates("Radxa Zero 3W", IF, IA, x_lim); oU, cU = candidates("UBEC", IF, IA); oX, cX = candidates("XR2", IF, IA)
+    t0 = time.time(); F, F2 = F if isinstance(F, tuple) else (F, F); IF, IA, IF2 = integral(F), integral(A), integral(F2)
+    oR, cR = candidates("Radxa Zero 3W", IF, IA, x_lim, IF2); oU, cU = candidates("UBEC", IF, IA); oX, cX = candidates("XR2", IF, IA)
     if log: say(f"   DC {dc:+5.2f} {label}: feasible poses Radxa {len(cR)}, UBEC {len(cU)}, XR2 {len(cX)}")
     if not cR or not cU or not cX: return None
     Rf, Uf, Xf = pose_arrays(oR, cR), pose_arrays(oU, cU), pose_arrays(oX, cX)
@@ -500,13 +526,24 @@ def mount(res, dc):
     #    block whose side walls carry the Radxa (standoffs) and the UBEC (zip ties), XR2 shelf on a 6 x 6 post
     tongue_lo = xb1; tongue_hi = xb0 + 0.5
     pts = [[xb1, z0 - TONGUE], [xb1, z1 + TONGUE]]
+    o, t = P["Radxa Zero 3W"]; flat = abs(o["face"][2]) > 0.9; trb = tray_box(o) + t
     for n in ("Radxa Zero 3W", "UBEC", "XR2"):
-        o, t = P[n]; b = o["body"][0] + t
+        o, t = P[n]; b = (trb if (n == "Radxa Zero 3W" and flat) else o["body"][0] + t)
         pts += [[b[0][0], b[0][2]], [b[1][0], b[0][2]], [b[0][0], b[1][2]], [b[1][0], b[1][2]]]
     pts = np.array(pts); pts[:, 0] = np.minimum(pts[:, 0], xb1)
     hull = ConvexHull(pts); poly = pts[hull.vertices]
     import shapely.geometry as sg
     pg = sg.Polygon(poly)
+    o, t = P["Radxa Zero 3W"]; R = o["R"]                              # keep the Radxa's tool sweeps clear of the keel (C)
+    for nm, d in (("sd", R @ [-1.0, 0, 0]), ("usb1", R @ [0, -1.0, 0])):
+        p0 = o["pts"][nm] + t
+        if abs(p0[1]) - TOOL / 2 - 1.0 < KEEL_OUT and abs(d[1]) < 0.5:
+            q = p0 + 400 * d; w = TOOL / 2 + 1.0; n_ = np.array([-d[2], d[0]])
+            pg = pg.difference(sg.Polygon([p0[[0, 2]] + w * n_, q[[0, 2]] + w * n_, q[[0, 2]] - w * n_, p0[[0, 2]] - w * n_]))
+    if flat:                                                          # the keel stops at the tray (the board above / below it)
+        up = o["face"][2] < 0; zc_ = trb[0][2] if up else trb[1][2]
+        pg = pg.difference(sg.box(trb[0][0] - 0.01, zc_ if up else -1000, trb[1][0] + 0.01, 1000 if up else zc_))
+    if pg.geom_type != "Polygon": pg = max(pg.geoms, key=lambda g_: g_.area)
     keel = trimesh.creation.extrude_polygon(pg, 2 * KEEL_OUT)          # extrudes along +z: map (x, z) plane -> (x, z), y thickness
     T = np.array([[1, 0, 0, 0], [0, 0, 1, -KEEL_OUT], [0, 1, 0, 0], [0, 0, 0, 1.0]]); keel.apply_transform(T)
     if keel.volume < 0: keel.invert()
@@ -529,6 +566,8 @@ def mount(res, dc):
         a = R @ np.array([hx, hy, -4.6]) - o["o"] + t; b = R @ np.array([hx, hy, -1.6]) - o["o"] + t
         so.append(cyl(a + (a - b) / 3.0 * 0.2, b, 3.0, 16))
     parts["Radxa standoffs (PETG)"] = (union(so), round(4 * math.pi * 9 * 3.0 * PETG, 2), "4 x Ø6 x 3, M2.5")
+    if flat:
+        tr = box(trb[0], trb[1]); parts["Radxa tray (PETG)"] = (tr, round(tr.volume * FILL * PETG, 2), f"2.4 tray on the keel, {FILL:.0%} (E)")
     # 4. XR2 shelf: pocket floor 2.0 under it and a 6 x 6 post into the keel wall
     o, t = P["XR2"]; b = o["body"][0] + t; fl = o["face"]
     zf = (b[0][2], b[0][2] + 2.0) if fl[2] < 0 else (b[1][2] - 2.0, b[1][2])
@@ -574,7 +613,8 @@ def checks(res, dc, mparts, M=None, label=""):
             pq = trimesh.proximity.ProximityQuery(m2); g[n2] = float(-pq.signed_distance(Q).max())
         w = float(wash_dist(Q[:, 0], Q[:, 1]).min())
         inset = float((-(Q @ eq[:, :3].T + eq[:, 3])).min(1).min()) - ROD_R
-        out[n] = dict(gaps=g, wash=w, rods=rod_gap(Q), inset=inset)
+        fz = Q[:, 2] - funnel_z(Q[:, 0]); fl = float(fz[np.isfinite(fz)].min()) if np.isfinite(fz).any() else float("nan")
+        out[n] = dict(gaps=g, wash=w, rods=rod_gap(Q), inset=inset, funnel=fl)
     return out
 
 
@@ -734,11 +774,11 @@ def preview(rows, path, M=None):
     import matplotlib; matplotlib.use("Agg")
     import matplotlib.pyplot as plt
     from matplotlib.collections import PolyCollection
-    M = M or MODEL
     fig, axs = plt.subplots(len(rows), 3, figsize=(19, 6.2 * len(rows)), gridspec_kw=dict(width_ratios=[1.35, 1.35, 1.0]))
     axs = np.atleast_2d(axs)
     views = [("side (from +y): x, z", (0, 2)), ("top: x, y", (0, 1)), ("rear (from -x): y, z", (1, 2))]
-    for r_, (title, res, dc, mparts) in enumerate(rows):
+    for r_, row in enumerate(rows):
+        title, res, dc, mparts = row[:4]; M = row[4] if len(row) > 4 else MODEL
         for c_, (vt, (i, j)) in enumerate(views):
             ax = axs[r_, c_]; ax.set_aspect("equal"); ax.set_title(f"{title}\n{vt}", fontsize=10)
             flip = -1 if c_ == 2 else 1               # rear view: looking forward from behind, +y on the left
@@ -871,28 +911,28 @@ def fmt_checks(ck):
     lines = []
     for n, v in ck.items():
         g = sorted(v["gaps"].items(), key=lambda kv: kv[1])[:3]
-        lines.append(f"   {n}: wash {v['wash']:+.1f} (need >= {WASH:.0f}), shell inset {v['inset']:.1f} (need >= {CAGE_FIRST:.0f}), rods/nodes {v['rods']:.1f}, "
+        lines.append(f"   {n}: wash {v['wash']:+.1f} (need >= {WASH:.0f}), above the funnel line {v['funnel']:+.1f} (need >= 0), shell inset {v['inset']:.1f} (need >= {CAGE_FIRST:.0f}), rods/nodes {v['rods']:.1f}, "
                      f"nearest: " + ", ".join(f"{k} {d:.1f}" for k, d in g))
     return lines
 
 
 def run_all():
-    global KEEL_OUT, FREE
+    global KEEL_OUT, FREE, RADXA_MODE
     t0 = time.time()
-    say("Scout v3 electronics, system pass v2 (27 Oct 2026): nox/scout/v3/electronics_system.py on scout_layout v9 (PR 127, main 7c0780f)")
-    say(f"model: {len(MODEL['P'])} parts in pose, catch set {DC_REF} aft (v9); shell {len(MODEL['nodes'])} nodes / {len(MODEL['rods'])} rods + {len(MODEL['links'])} links")
+    say("Scout v3 electronics, system pass v2 (27 Oct 2026): nox/scout/v3/electronics_system.py on scout_layout v10 (PRs 127 + 131, main 23a7814)")
+    say(f"model: {len(MODEL['P'])} parts in pose, catch set {DC_REF} aft (v10); shell {len(MODEL['nodes'])} nodes / {len(MODEL['rods'])} rods + {len(MODEL['links'])} links")
     say("centroids: " + ", ".join(f"{n} ({P['how']})" for n, P in MODEL["P"].items() if P["how"] != "volume"))
     ref = v9_bay_eval()
-    say(f"reference, v9's own tail bay in this model (DC {DC_REF}): CG pack in {ref['hin']:.2f}, out {ref['hout']:.2f} mm (E); wash "
+    say(f"reference, v10's own tail bay in this model (DC {DC_REF}): CG pack in {ref['hin']:.2f}, out {ref['hout']:.2f} mm (E); wash "
         + ", ".join(f"{n} {w:+.1f}" for n, w in ref["wash"].items()) + " (need >= 3: negative = inside a disk column)")
     # 1. joint optimisation with the slide (picked family: the box keel)
     say("1. placement x slide (box keel 8 wide, items on its side walls):")
     runs = {}
-    for dc in (-3.0, -2.0, -1.5, -1.0, -0.5, 0.0, 1.0, 2.0, 4.0, 6.0, DC_REF):
+    for dc in (-4.0, -3.0, -2.0, -1.5, -1.0, -0.5, 0.0, 1.0, 2.0, 4.0, 6.0, DC_REF, 10.0):
         O, F = grids(dc); runs[dc] = search(dc, F, O)
     ok = {d: r for d, r in runs.items() if r}
     pick_dc = min(ok, key=lambda d: ok[d]["J"]); P_ = ok[pick_dc]
-    say(f"   pick: DC {pick_dc:+.1f} (slide {DC_REF - pick_dc:.1f} forward of v9's {DC_REF}), J {P_['J']:.2f}")
+    say(f"   pick: DC {pick_dc:+.1f} (slide {DC_REF - pick_dc:.1f} forward of v10's {DC_REF}), J {P_['J']:.2f}")
     for n, (o, t) in P_["poses"].items(): say("      " + describe(n, o, t))
     B_ = ok.get(DC_REF)
     # 2. alternatives
@@ -904,6 +944,12 @@ def run_all():
         O, F = grids(dc); C_[dc] = search(dc, F, O, label="keel 13")
     C_ = {d: r for d, r in C_.items() if r}; cdc = min(C_, key=lambda d: C_[d]["J"]) if C_ else None
     KEEL_OUT = 4.0
+    o_, t_ = P_["poses"]["Radxa Zero 3W"]; other = "edge" if abs(o_["face"][2]) > 0.9 else "flat"
+    RADXA_MODE = other; E_ = {}
+    for dc in (pick_dc - 1.0, pick_dc, pick_dc + 1.0):
+        O, F = grids(dc); E_[dc] = search(dc, F, O, label=f"Radxa {other} only")
+    RADXA_MODE = "any"
+    E_ = {d: r for d, r in E_.items() if r}
     FREE = True
     D_ = {}
     for dc in (pick_dc, DC_REF):
@@ -922,6 +968,11 @@ def run_all():
     cg = cg_final(P_, pick_dc, mp)
     say(f"   CG (true centroids, drawn carrier): pack in ({cg['cin'][0]:+.2f}, {cg['cin'][1]:+.2f}) = {cg['hin']:.2f} mm, pack out ({cg['cout'][0]:+.2f}, {cg['cout'][1]:+.2f}) = "
         f"{cg['hout']:.2f} mm (E, gate 3); {cg['mass']:.0f} g all-up, {cg['mass_out']:.0f} g pack out; added {cg['add_g']:.1f} g")
+    v10 = sum(MODEL["P"][n]["g"] * centroid(MODEL["P"][n]["mesh"])[0][0] for n in ("Radxa Zero 3W", "UBEC"))
+    v10x = sum(MODEL["P"][n]["g"] * centroid(MODEL["P"][n]["mesh"])[0][0] for n in MOVED)
+    mom = sum(r[1] * r[3][0] for r in cg["rows"])
+    say(f"   tail bay x moment about the thrust centre: {mom:.0f} g mm ({cg['add_g']:.1f} g at x {mom / cg['add_g']:.1f}: items, carrier, cables) vs the v10 "
+        f"placeholder Radxa + UBEC {v10:.0f} (25 g; with its XR2 {v10x:.0f}); {mom - v10x:+.0f} g mm more aft = {(mom - v10x) / cg['mass']:+.1f} mm of CG at the same slide")
     sc = slide_scan(P_, pick_dc, mp); best_sl = min(sc, key=lambda r: max(r[1], r[2]))
     say(f"   slide trim (our parts ride the belly mount): best DC {best_sl[0]:+.2f}: {best_sl[1]:.2f} / {best_sl[2]:.2f} mm")
     ld = loads(P_, pick_dc, mp)
@@ -936,7 +987,7 @@ def run_all():
     if B_:
         r_B, txtB = run_system_check(manifest(B_, DC_REF, mB), os.path.join(RUN, "system_check_alt_B.txt"))
         say(f"   alt B (no slide), drawn: CG in {cgB['hin']:.2f} / out {cgB['hout']:.2f} mm; " + txtB.splitlines()[0])
-    preview([(f"A (picked): box keel, catch slide to {pick_dc:+.1f} (v9 {DC_REF:+.1f}); CG {cg['hin']:.1f} / {cg['hout']:.1f} mm", P_, pick_dc, mp)]
+    preview([(f"A (picked): box keel, catch slide to {pick_dc:+.1f} (v10 {DC_REF:+.1f}); CG {cg['hin']:.1f} / {cg['hout']:.1f} mm", P_, pick_dc, mp)]
             + ([(f"B: same carrier, no slide (catch {DC_REF:+.1f}); CG {cgB['hin']:.1f} / {cgB['hout']:.1f} mm (gate 3)", B_, DC_REF, mB)] if B_ else []),
             os.path.join(RUN, "preview.png"))
     for k, (m, g, c, note) in mp.items(): m.export(os.path.join(RUN, "".join(ch if ch.isalnum() else "_" for ch in k.lower())[:40] + ".stl"))
@@ -955,7 +1006,8 @@ def run_all():
                scan={str(d): rj(r) for d, r in runs.items()},
                alt_B_no_slide=dict(**rj(B_), poses=pose_json(B_), cg_final=dict(h_in=round(cgB["hin"], 3), h_out=round(cgB["hout"], 3)),
                                    system_check=txtB.splitlines()[0]) if B_ else None,
-               alt_C_keel13={str(d): rj(r) for d, r in C_.items()}, alt_C_pick=cdc,
+               alt_C_keel13={str(d): rj(r) for d, r in C_.items()}, alt_C_pick=cdc, alt_E_other_radxa={str(d): rj(r) for d, r in E_.items()},
+               bay_moment=dict(ours=round(mom, 0), v10_radxa_ubec=round(v10, 0), v10_with_xr2=round(v10x, 0)),
                alt_D_forward={str(d): (rj(r) if r else None) for d, r in D_.items()},
                ref_v9_bay=ref, weights=dict(W_CG=W_CG, W_V=W_V, W_C=W_C, CG_FLOOR=CG_FLOOR, NEAR=NEAR), dc_ref=DC_REF)
     json.dump(out, open(os.path.join(RUN, "result.json"), "w"), indent=1, default=lambda x: x.tolist() if hasattr(x, "tolist") else str(x))
@@ -991,6 +1043,60 @@ def run_rebuild():
     open(os.path.join(out_dir, "recheck.log"), "w").write(LOG.getvalue())
 
 
+def run_iterate():
+    """stage 4: the placement x slide again on the shell rebuilt round stage 1's pick (the cage follows the tail bay), then the
+    carrier, the checks and the picture on that shell; `--rebuild` after it closes the loop"""
+    global MODEL
+    V10 = MODEL; d = json.load(open(os.path.join(RUN, "result.json"))); dc0 = d["pick"]["dc"]
+    rb = os.path.join(RUN, "rebuilt"); MODEL = rebuilt_model(rb, dc0)
+    say(f"stage 4: placement x slide again on the shell rebuilt at DC {dc0:+.1f} ({len(MODEL['nodes'])} nodes, {len(MODEL['rods'])} rods)")
+    runs = {}
+    for dc in [dc0 + k for k in (-1.0, 0.0, 1.0, 2.0, 3.0, 4.0)]:
+        O, F = grids(dc); runs[dc] = search(dc, F, O)
+    ok = {k: r for k, r in runs.items() if r}; pick_dc = min(ok, key=lambda k: ok[k]["J"]); P_ = ok[pick_dc]
+    say(f"   pick: DC {pick_dc:+.1f} (slide {DC_REF - pick_dc:.1f} forward of v10's {DC_REF}), J {P_['J']:.2f}")
+    for n, (o, t) in P_["poses"].items(): say("      " + describe(n, o, t))
+    mp = mount(P_, pick_dc)
+    for k, (m, g, c, note) in mp.items():
+        say(f"   {k}: {g:.1f} g (E), CG ({c[0]:.1f}, {c[1]:.1f}, {c[2]:.1f}), x {m.bounds[0][0]:.1f}..{m.bounds[1][0]:.1f}, y {m.bounds[0][1]:.1f}..{m.bounds[1][1]:.1f}, "
+            f"z {m.bounds[0][2]:.1f}..{m.bounds[1][2]:.1f}; {note}")
+    ck = checks(P_, pick_dc, mp)
+    for l in fmt_checks(ck): say(l)
+    sw = sweep_out(P_)
+    for k, v in sw.items(): say(f"   tool Ø10, {k}: out of the shell at {v['exits_shell_at_mm']} mm, least clear of a rod / node {v['least_clear_mm']} (need >= 5)")
+    cg = cg_final(P_, pick_dc, mp)
+    say(f"   CG (true centroids, drawn carrier, iteration-1 shell): pack in ({cg['cin'][0]:+.2f}, {cg['cin'][1]:+.2f}) = {cg['hin']:.2f} mm, pack out "
+        f"({cg['cout'][0]:+.2f}, {cg['cout'][1]:+.2f}) = {cg['hout']:.2f} mm (E); {cg['mass']:.0f} g, added {cg['add_g']:.1f} g")
+    mom = sum(r[1] * r[3][0] for r in cg["rows"])
+    sc = slide_scan(P_, pick_dc, mp); bs = min(sc, key=lambda r: max(r[1], r[2]))
+    say(f"   tail bay x moment {mom:.0f} g mm; slide trim best DC {bs[0]:+.2f}: {bs[1]:.2f} / {bs[2]:.2f} mm")
+    ld = loads(P_, pick_dc, mp); say("   loads (E): " + json.dumps(ld))
+    r_sc, txt = run_system_check(manifest(P_, pick_dc, mp), os.path.join(RUN, "system_check.txt")); say("   " + txt.splitlines()[0])
+    MODEL_IT = MODEL; MODEL = V10
+    O, F = grids(DC_REF); Bres = search(DC_REF, F, O, label="alt B, no slide (v10 shell)")
+    mB = mount(Bres, DC_REF); cgB = cg_final(Bres, DC_REF, mB)
+    preview([(f"A (picked): box keel, catch slide to {pick_dc:+.1f} (v10 {DC_REF:+.1f}), cage rebuilt round it; CG {cg['hin']:.1f} / {cg['hout']:.1f} mm", P_, pick_dc, mp, MODEL_IT),
+             (f"B: same carrier, no slide (catch {DC_REF:+.1f}, v10 cage); CG {cgB['hin']:.1f} / {cgB['hout']:.1f} mm (gate 3)", Bres, DC_REF, mB, V10)],
+            os.path.join(RUN, "preview.png"))
+    MODEL = MODEL_IT
+    for k, (m, g, c, note) in mp.items(): m.export(os.path.join(RUN, "".join(ch if ch.isalnum() else "_" for ch in k.lower())[:40] + ".stl"))
+    d["pick_stage1_v10"] = {k: d["pick"][k] for k in ("dc", "J", "cg_in", "cg_out", "bay", "cg_final", "system_check") if k in d["pick"]}
+    d["pick"] = dict(dc=pick_dc, J=round(P_["J"], 3), base="rebuilt iteration 1", poses=pose_json(P_),
+                     cables=[dict(name=n, g=round(g, 2), mid=np.round(m, 2).tolist(), L=round(L, 0)) for n, g, m, L in P_["cab"]],
+                     bay=dict(lo=np.round(P_["lo"], 2).tolist(), hi=np.round(P_["hi"], 2).tolist()),
+                     carrier={k: dict(g=g, cg=np.round(c, 2).tolist(), bounds=np.round(m.bounds, 2).tolist(), note=note) for k, (m, g, c, note) in mp.items()},
+                     cg_final=dict(pack_in=np.round(cg["cin"], 3).tolist(), pack_out=np.round(cg["cout"], 3).tolist(), h_in=round(cg["hin"], 3), h_out=round(cg["hout"], 3),
+                                   mass=round(cg["mass"], 1), mass_out=round(cg["mass_out"], 1), added_g=round(cg["add_g"], 2), bay_cg=np.round(cg["bay_cg"], 2).tolist(),
+                                   rows=[dict(name=n, g=round(g, 2), tag=t, cg=np.round(c, 2).tolist()) for n, g, t, c in cg["rows"]]),
+                     bay_moment=round(mom, 0), slide_scan=sc, checks=ck, sweeps=sw, loads=ld,
+                     anchors={k: (np.round(v, 2).tolist() if isinstance(v, np.ndarray) else round(v, 2)) for k, v in anchors(pick_dc).items()},
+                     system_check=txt.splitlines()[0], scan={str(k): (round(r["J"], 3), round(r["worst"], 3)) for k, r in ok.items()})
+    if d.get("alt_B_no_slide"): d["alt_B_no_slide"]["drawn_cg"] = dict(h_in=round(cgB["hin"], 3), h_out=round(cgB["hout"], 3))
+    json.dump(d, open(os.path.join(RUN, "result.json"), "w"), indent=1, default=lambda x: x.tolist() if hasattr(x, "tolist") else str(x))
+    open(os.path.join(RUN, "run.log"), "a").write("\n" + LOG.getvalue())
+
+
 if __name__ == "__main__":
     if "--rebuild" in sys.argv: run_rebuild()
+    elif "--iterate" in sys.argv: run_iterate()
     else: run_all()
