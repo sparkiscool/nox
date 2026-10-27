@@ -257,3 +257,37 @@ it  42 beta   16 J   4.0473 vol 0.2365 (dil 0.3714 g -0.000) grey  6.6% ch 0.100
 it  42 beta   16 J   4.0473 vol 0.2365 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.6 37.4s
 it  43 beta   16 J   4.0314 vol 0.2367 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.4 36.8s
 it  43 beta   16 J   4.0314 vol 0.2367 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.4 36.8s
+it  44 beta   16 J   4.0165 vol 0.2368 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.3 38.4s
+it  44 beta   16 J   4.0165 vol 0.2368 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.3 38.4s
+it  45 beta   16 J   4.0024 vol 0.2369 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.2 37.0s
+it  45 beta   16 J   4.0024 vol 0.2369 (dil 0.3714 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38.2 37.0s
+it  46 beta   16 J   3.9890 vol 0.2371 (dil 0.3715 g +0.001) grey  6.6% ch 0.100 worst blow 150 N +x 38.1 37.1s
+it  46 beta   16 J   3.9890 vol 0.2371 (dil 0.3715 g +0.001) grey  6.6% ch 0.100 worst blow 150 N +x 38.1 37.1s
+it  47 beta   16 J   3.9874 vol 0.2369 (dil 0.3711 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38 35.8s
+it  47 beta   16 J   3.9874 vol 0.2369 (dil 0.3711 g -0.000) grey  6.6% ch 0.100 worst blow 150 N +x 38 35.8s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  48 beta   32 J   4.2847 vol 0.2371 (dil 0.3690 g +0.004) grey  3.3% ch 0.100 worst cage crash 2 39.7 35.6s
+it  48 beta   32 J   4.2847 vol 0.2371 (dil 0.3690 g +0.004) grey  3.3% ch 0.100 worst cage crash 2 39.7 35.6s
+it  49 beta   32 J   3.7599 vol 0.2346 (dil 0.3667 g -0.003) grey  3.3% ch 0.100 worst blow 150 N +x 36.9 36.5s
+it  49 beta   32 J   3.7599 vol 0.2346 (dil 0.3667 g -0.003) grey  3.3% ch 0.100 worst blow 150 N +x 36.9 36.5s
+it  50 beta   32 J   3.7096 vol 0.2355 (dil 0.3673 g -0.001) grey  3.2% ch 0.100 worst blow 150 N +x 36.6 37.0s
+it  50 beta   32 J   3.7096 vol 0.2355 (dil 0.3673 g -0.001) grey  3.2% ch 0.100 worst blow 150 N +x 36.6 37.0s
+it  51 beta   32 J   3.6940 vol 0.2357 (dil 0.3674 g -0.001) grey  3.2% ch 0.100 worst blow 150 N +x 36.4 36.4s
+it  51 beta   32 J   3.6940 vol 0.2357 (dil 0.3674 g -0.001) grey  3.2% ch 0.100 worst blow 150 N +x 36.4 36.4s
+it  52 beta   32 J   3.6573 vol 0.2358 (dil 0.3676 g -0.001) grey  3.3% ch 0.100 worst blow 150 N +x 36 38.9s
+it  52 beta   32 J   3.6573 vol 0.2358 (dil 0.3676 g -0.001) grey  3.3% ch 0.100 worst blow 150 N +x 36 38.9s
+it  53 beta   32 J   3.6477 vol 0.2361 (dil 0.3677 g -0.001) grey  3.2% ch 0.100 worst blow 150 N +x 35.9 37.2s
+it  53 beta   32 J   3.6477 vol 0.2361 (dil 0.3677 g -0.001) grey  3.2% ch 0.100 worst blow 150 N +x 35.9 37.2s
+it  54 beta   32 J   3.6363 vol 0.2361 (dil 0.3676 g -0.001) grey  3.3% ch 0.100 worst blow 150 N +x 35.9 37.0s
+it  54 beta   32 J   3.6363 vol 0.2361 (dil 0.3676 g -0.001) grey  3.3% ch 0.100 worst blow 150 N +x 35.9 37.0s
+it  55 beta   32 J   3.6233 vol 0.2363 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.7 38.8s
+it  55 beta   32 J   3.6233 vol 0.2363 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.7 38.8s
+it  56 beta   32 J   3.6133 vol 0.2365 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.7 38.4s
+it  56 beta   32 J   3.6133 vol 0.2365 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.7 38.4s
+it  57 beta   32 J   3.6066 vol 0.2366 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.6 39.4s
+it  57 beta   32 J   3.6066 vol 0.2366 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.6 39.4s
+it  58 beta   32 J   3.5986 vol 0.2367 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.5 38.7s
+it  58 beta   32 J   3.5986 vol 0.2367 (dil 0.3678 g -0.000) grey  3.3% ch 0.100 worst blow 150 N +x 35.5 38.7s
+it  59 beta   32 J   3.5913 vol 0.2368 (dil 0.3678 g -0.000) grey  3.2% ch 0.100 worst blow 150 N +x 35.4 38.2s
+it  59 beta   32 J   3.5913 vol 0.2368 (dil 0.3678 g -0.000) grey  3.2% ch 0.100 worst blow 150 N +x 35.4 38.2s
