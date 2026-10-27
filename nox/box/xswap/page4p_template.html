@@ -1,0 +1,314 @@
+<title>Pincer Strength Options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: same workbench as the flip-swap page: a live viewport with version tabs, a spec card, then the strength chart and table that decide */
+:root {
+  --bg: #eef0f2; --panel: #ffffff; --ink: #17202a; --muted: #5d6874; --line: #d3d8de;
+  --holder: #3f6fb5; --shell: #e0892b; --bar: #b85f12; --pincer: #2f8f5b; --lid: #6fb58b; --steel: #8c96a3; --vp: #e4e8ec;
+  --accent: #e0892b; --good: #2f8f5b; --warn: #c98a12; --bad: #c2413a;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12161b; --panel: #1a2027; --ink: #e6eaee; --muted: #98a3ae; --line: #2c343d;
+  --holder: #6b98dc; --shell: #f0a04b; --bar: #c7782a; --pincer: #4dbb7f; --lid: #7fcf9f; --steel: #a9b3bf; --vp: #161b21;
+  --accent: #f0a04b; --good: #4dbb7f; --warn: #e0a83a; --bad: #e0675f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12161b; --panel: #1a2027; --ink: #e6eaee; --muted: #98a3ae; --line: #2c343d;
+  --holder: #6b98dc; --shell: #f0a04b; --bar: #c7782a; --pincer: #4dbb7f; --lid: #7fcf9f; --steel: #a9b3bf; --vp: #161b21;
+  --accent: #f0a04b; --good: #4dbb7f; --warn: #e0a83a; --bad: #e0675f; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 22px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-stretch: 78%; font-weight: 800; font-size: clamp(30px, 5vw, 46px); line-height: 1.02; margin: 0; text-wrap: balance; }
+.lede { margin: 0; max-width: 72ch; color: var(--muted); }
+.lede b { color: var(--ink); font-weight: 600; }
+.main { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 900px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.card h3 { margin: 0; font-family: var(--display); font-stretch: 85%; font-size: 17px; font-weight: 700; }
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 12px 0; }
+.tabs button { font: 600 14px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; cursor: pointer; display: inline-flex; gap: 8px; align-items: baseline; }
+.tabs button .k { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.tabs button[aria-pressed="true"] { background: var(--ink); color: var(--panel); border-color: var(--ink); }
+.tabs button[aria-pressed="true"] .k { color: var(--panel); opacity: .75; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.vp { position: relative; aspect-ratio: 4 / 3.1; max-width: 100%; background: var(--vp); margin-top: 12px; }
+.vp canvas { width: 100% !important; height: 100% !important; display: block; touch-action: none; }
+.legend { position: absolute; left: 12px; top: 10px; display: flex; flex-wrap: wrap; gap: 6px 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); pointer-events: none; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.hint { position: absolute; right: 12px; bottom: 10px; font-family: var(--mono); font-size: 11px; color: var(--muted); pointer-events: none; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 12px 16px 16px; }
+.controls label { display: inline-flex; gap: 8px; align-items: center; font-size: 13.5px; color: var(--muted); }
+.controls input[type=range] { width: 160px; accent-color: var(--accent); }
+.controls .val { font-family: var(--mono); font-size: 12.5px; color: var(--ink); font-variant-numeric: tabular-nums; min-width: 9ch; }
+.spec h2 { margin: 0; font-family: var(--display); font-stretch: 82%; font-weight: 750; font-size: 26px; line-height: 1.1; }
+.spec .what { margin: 0; color: var(--muted); }
+.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 14px; margin: 0; }
+.kv dt { font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); padding-top: 2px; }
+.kv dd { margin: 0; font-variant-numeric: tabular-nums; }
+.pill { display: inline-block; font-family: var(--mono); font-size: 12px; padding: 1px 8px; border-radius: 99px; border: 1px solid currentColor; }
+.ok { color: var(--good); } .mid { color: var(--warn); } .low { color: var(--bad); }
+.note { margin: 0; font-size: 13px; color: var(--muted); }
+.shared { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; display: grid; gap: 4px; }
+.chartbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 7px; overflow: hidden; }
+.seg button { font: 600 13px var(--body); color: var(--ink); background: var(--panel); border: 0; padding: 6px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--panel); }
+.chartwrap { overflow-x: auto; }
+svg.chart { width: 100%; min-width: 620px; height: auto; display: block; }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--mono); font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.sel td { background: var(--bg); }
+.foot { font-size: 13px; color: var(--muted); max-width: 95ch; margin: 0; }
+.foot code { font-family: var(--mono); font-size: 12.5px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Flip swap v4 · pincer only · PETG · no print files yet</div>
+    <h1>Pincer strength options</h1>
+    <p class="lede">v4's pincer had one weak link: each finger's arm was a thin 8 × 4.4 mm bar sticking out 23 mm, and pulling the XT60 apart bent it to <b>26 MPa</b>, under 2× PETG's strength. It also couldn't be assembled: the one-piece jaw sealed the racks and pinion inside. All four versions below fix both, then add strength in different ways. The latch, shell and holder stay v4's.</p>
+  </header>
+
+  <div class="main">
+    <section class="stage" aria-label="3D view of the selected pincer version">
+      <div class="tabs" id="tabs" role="group" aria-label="Pincer version"></div>
+      <div class="vp" id="vp">
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--pincer)"></i>base + fingers</span>
+          <span><i style="background:var(--lid)"></i>lid</span>
+          <span><i style="background:var(--steel)"></i>steel</span>
+          <span><i style="background:var(--bar)"></i>gate bars</span>
+          <span><i style="background:var(--shell)"></i>shell (bottom)</span>
+        </div>
+        <div class="hint">drag to orbit · scroll to zoom</div>
+      </div>
+      <div class="controls">
+        <label for="squeeze">Squeeze <input id="squeeze" type="range" min="0" max="1000" value="0"></label>
+        <span class="val" id="sqv">0.0 mm</span>
+        <label><input type="checkbox" id="ghost" checked> See-through lid</label>
+        <label><input type="checkbox" id="showshell" checked> Show shell</label>
+      </div>
+    </section>
+
+    <section class="card spec" aria-live="polite">
+      <div class="eyebrow" id="specK">P1</div>
+      <h2 id="specName"></h2>
+      <p class="what" id="specWhat"></p>
+      <dl class="kv" id="specKV"></dl>
+      <p class="note" id="specNote"></p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h3>Changed in all four</h3>
+    <ul class="shared">
+      <li>The jaw is a base plus a screwed lid (4 × M3 into heat-set inserts), so the racks, pinion and fingers drop in from above.</li>
+      <li>Each finger's arm runs right under the lid with a 14 × 14 mm pad round the post. A pull on the post pushes the pad up into the lid, so the arm no longer bends as a 23 mm cantilever.</li>
+      <li>Arm 10 × 6 mm (was 8 × 4.4). The 2 mm flange and the Ø7 post stay: they sit between the shell bottom and the gate bar, with 0.5 mm to spare.</li>
+      <li>Still 44 mm wide (the battery is 47). Every version passes the same checks as v4: no clash over the stroke at ±0.5 mm pincer error, both bars still release, the shell is held when the fingers are shut and free when they are open.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <div class="chartbar">
+      <h3>Safety factor by part (strength ÷ stress, higher is stronger)</h3>
+      <div class="seg" role="group" aria-label="Load case">
+        <button type="button" id="caseN" aria-pressed="true">Normal swap</button>
+        <button type="button" id="caseM" aria-pressed="false">Misuse</button>
+      </div>
+    </div>
+    <p class="note" id="caseNote"></p>
+    <div class="chartwrap"><svg class="chart" id="chart" role="img" aria-label="Safety factor of each part for v4 and the four pincer versions"></svg></div>
+    <p class="note">Hand calculations (E). PETG strength 45 MPa along the layers, 15 MPa across them; posts print upright, so their tension and bending are across layers. Dashed line: the 2.0 target. Bars stop at 10.</p>
+  </section>
+
+  <section class="card">
+    <h3>Side by side</h3>
+    <div class="tbl"><table id="tbl"></table></div>
+  </section>
+
+  <p class="foot">Geometry: <code>nox/box/xswap/xswap4p.py</code> on the <code>xswap-v1</code> branch of REPO1; checks in <code>xswap4p_check.py</code>. Steel dowels are standard Ø3 mm pins. Print files will be exported once you pick a version.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>/*DATA*/</script>
+<script>
+(function () {
+  const D = window.PX, P = D.p, R = D.results;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const KEYS = ["P1", "P2", "P3", "P4"];
+  const INFO = {
+    P1: { what: "The minimum fix: base + lid, a deeper arm with a pad that bears on the lid. No change to the shell.",
+          extra: "4 × M3 screws + inserts for the lid", shell: "none", note: "Now limited by the shell's keyhole lips, not the pincer. The pincer parts all sit at 4× or more." },
+    P2: { what: "P1 plus a second, anchor post on each finger, 18 mm further out, in its own keyhole. Two posts share the pull.",
+          extra: "as P1", shell: "2 extra keyholes in the shell bottom (one per end)", note: "Halves the load on the posts, flanges and the shell's keyhole lips, and stops the shell rocking on one post. Pincer grows to 136 mm long (the pack is 138)." },
+    P3: { what: "P1 plus a Ø3 × 20 mm steel dowel pressed up through each post into the arm. The steel carries the post's tension and most of its bending.",
+          extra: "as P1 + 2 × Ø3 × 20 steel dowels", shell: "none", note: "Removes the posts as a weak point (they print upright, across layers). The shell's keyhole lips still set the limit, as in P1." },
+    P4: { what: "Twin posts and steel cores together, with a 5 mm lid.",
+          extra: "as P1 + 4 × Ø3 dowels (20 and 7 mm)", shell: "2 extra keyholes in the shell bottom", note: "The strongest version: every pincer part at 6× or more in misuse. The shell lips at 1.6× are what's left." }
+  };
+  let sel = "P1", lcase = "normal";
+
+  // ---------- three
+  const vp = document.getElementById("vp");
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1)); vp.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(30, 1, 5, 4000); cam.up.set(0, 0, 1); cam.position.set(250, -230, -190);
+  const ctl = new THREE.OrbitControls(cam, renderer.domElement); ctl.target.set(0, 6, -82); ctl.enableDamping = true;
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x445566, 0.75));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.65); sun.position.set(300, -400, 500); scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.25); fill.position.set(-300, 300, -200); scene.add(fill);
+  const b64 = (s, T) => { const bin = atob(s); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return new T(u.buffer); };
+  function geom(m) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(b64(m.v, Float32Array), 3));
+    g.setIndex(new THREE.BufferAttribute(b64(m.f, Uint32Array), 1));
+    const n = g.toNonIndexed(); n.computeVertexNormals(); return n;
+  }
+  const mats = {};
+  const mat = k => (mats[k] = mats[k] || new THREE.MeshStandardMaterial({ roughness: 0.6, metalness: k === "steel" ? 0.5 : 0.05, side: THREE.DoubleSide }));
+  function pivotMesh(m, k, px, py) { const g = new THREE.Group(); g.position.set(px, py, 0); const me = new THREE.Mesh(geom(m), mat(k)); me.position.set(-px, -py, 0); g.add(me); return g; }
+  const barA = pivotMesh(D.common.barA, "bar", 0, P.PIV_A), barB = pivotMesh(D.common.barB, "bar", 0, P.PIV_B);
+  scene.add(barA, barB);
+  const sets = {};
+  for (const k of KEYS) {
+    const M = D.variants[k].meshes, grp = new THREE.Group();
+    const o = {};
+    o.base = new THREE.Mesh(geom(M.base), mat("pincer"));
+    o.lid = new THREE.Mesh(geom(M.lid), mat("lid"));
+    o.fa = new THREE.Mesh(geom(M.finger_a), mat("pincer"));
+    o.fb = new THREE.Mesh(geom(M.finger_b), mat("pincer"));
+    o.pin = pivotMesh(M.pinion, "pincer", 0, P.YP);
+    o.servo = new THREE.Mesh(geom(M.servo), mat("frame"));
+    o.shell = new THREE.Mesh(geom(M.shell), mat("shell"));
+    grp.add(o.base, o.lid, o.fa, o.fb, o.pin, o.servo);
+    if (M.steel) { o.steel = new THREE.Mesh(geom(M.steel), mat("steel")); grp.add(o.steel); }
+    grp.add(o.shell); grp.visible = false; scene.add(grp);
+    sets[k] = { grp, o };
+  }
+  function applyColors() {
+    const set = (k, v) => mat(k).color.set(v);
+    set("pincer", css("--pincer")); set("lid", css("--lid")); set("steel", css("--steel")); set("bar", css("--bar"));
+    set("shell", css("--shell")); set("frame", css("--muted"));
+    mat("frame").transparent = true; mat("frame").opacity = 0.4;
+    scene.background = new THREE.Color(css("--vp"));
+  }
+  const thetaFromU = u => { const d = u - P.CLR; return d <= 0 ? 0 : Math.asin(Math.min(1, d / P.FIN_A)); };
+  let u = 0;
+  function pose() {
+    const s = sets[sel].o, th = thetaFromU(u);
+    s.fa.position.x = -u; s.fb.position.x = u;
+    if (s.steel) s.steel.position.x = 0;
+    s.pin.rotation.z = u / P.R_P;
+    barA.rotation.z = th; barB.rotation.z = th;
+    document.getElementById("sqv").textContent = u.toFixed(1) + " mm" + (th >= P.TH_REL * Math.PI / 180 ? " · released" : "");
+  }
+  const ghost = document.getElementById("ghost"), showshell = document.getElementById("showshell");
+  function applyToggles() {
+    const m = mat("lid"); m.transparent = ghost.checked; m.opacity = ghost.checked ? 0.3 : 1; m.depthWrite = !ghost.checked; m.needsUpdate = true;
+    const ms = mat("shell"); ms.transparent = true; ms.opacity = 0.55; ms.depthWrite = false;
+    for (const k of KEYS) sets[k].o.shell.visible = showshell.checked;
+    barA.visible = barB.visible = showshell.checked;
+  }
+  ghost.addEventListener("change", applyToggles); showshell.addEventListener("change", applyToggles);
+  document.getElementById("squeeze").addEventListener("input", e => { u = P.STROKE * e.target.value / 1000; pose(); });
+  function resize() { const w = vp.clientWidth, h = vp.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+  new ResizeObserver(resize).observe(vp);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { applyColors(); drawChart(); });
+  new MutationObserver(() => { applyColors(); drawChart(); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  (function loop() { ctl.update(); renderer.render(scene, cam); requestAnimationFrame(loop); })();
+
+  // ---------- spec card + tabs
+  const minSF = (k, c) => { const s = R[k].safety[c]; let best = [1e9, ""]; for (const m in s) if (s[m].sf < best[0] && m !== "post tension (steel)") best = [s[m].sf, m]; return best; };
+  const cls = v => v >= 2 ? "ok" : v >= 1 ? "mid" : "low";
+  const tabs = document.getElementById("tabs");
+  KEYS.forEach(k => {
+    const b = document.createElement("button"); b.type = "button"; b.id = "tab" + k;
+    b.innerHTML = `<span class="k">${k}</span>${D.variants[k].name}`;
+    b.addEventListener("click", () => select(k)); tabs.appendChild(b);
+  });
+  function select(k) {
+    sel = k;
+    KEYS.forEach(q => { sets[q].grp.visible = q === k; document.getElementById("tab" + q).setAttribute("aria-pressed", q === k ? "true" : "false"); });
+    const r = R[k], I = INFO[k], n = minSF(k, "normal"), m = minSF(k, "misuse");
+    document.getElementById("specK").textContent = k;
+    document.getElementById("specName").textContent = D.variants[k].name;
+    document.getElementById("specWhat").textContent = I.what;
+    document.getElementById("specKV").innerHTML =
+      `<dt>Weakest, normal</dt><dd><span class="pill ${cls(n[0])}">${n[0].toFixed(1)}×</span> ${n[1]}</dd>` +
+      `<dt>Weakest, misuse</dt><dd><span class="pill ${cls(m[0])}">${m[0].toFixed(1)}×</span> ${m[1]}</dd>` +
+      `<dt>Printed</dt><dd>${r.pincer_printed_g} g PETG solid (v4 ${R.v4.pincer_printed_g} g)</dd>` +
+      `<dt>Size</dt><dd>${r.size_mm[0]} × ${r.size_mm[1]} × ${r.size_mm[2]} mm with the servo</dd>` +
+      `<dt>Bought extra</dt><dd>${I.extra}</dd>` +
+      `<dt>Shell change</dt><dd>${I.shell}</dd>`;
+    document.getElementById("specNote").textContent = I.note;
+    [...document.querySelectorAll("#tbl tbody tr")].forEach(tr => tr.classList.toggle("sel", tr.dataset.k === k));
+    pose(); applyToggles(); if (typeof drawChart === 'function') drawChart();
+  }
+
+  // ---------- chart
+  const MEMBERS = [["arm", "Finger arm"], ["post bending", "Post, bending"], ["post tension", "Post, tension"], ["flange", "Flange"], ["lid", "Lid"], ["shell lips", "Shell keyhole lips"]];
+  const SERIES = ["v4", ...KEYS];
+  function drawChart() {
+    const svg = document.getElementById("chart");
+    const W = 760, left = 150, right = 64, rowH = 16, gap = 14, top = 26;
+    const H = top + MEMBERS.length * (SERIES.length * rowH + gap) + 26;
+    const x = v => left + Math.min(v, 10) / 10 * (W - left - right);
+    const ink = css("--ink"), muted = css("--muted"), line = css("--line");
+    const col = { v4: css("--muted"), P1: css("--pincer"), P2: css("--holder") || "#3f6fb5", P3: css("--steel"), P4: css("--accent") };
+    let s = `<rect x="0" y="0" width="${W}" height="${H}" fill="none"/>`;
+    for (let t = 0; t <= 10; t += 2) s += `<line x1="${x(t)}" y1="${top - 6}" x2="${x(t)}" y2="${H - 22}" stroke="${line}" stroke-width="1"/><text x="${x(t)}" y="${H - 6}" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="${muted}">${t === 10 ? "10+" : t}</text>`;
+    s += `<line x1="${x(2)}" y1="${top - 10}" x2="${x(2)}" y2="${H - 22}" stroke="${ink}" stroke-width="1.2" stroke-dasharray="4 3"/><text x="${x(2) + 4}" y="${top - 12}" font-family="IBM Plex Mono, monospace" font-size="11" fill="${ink}">target 2.0</text>`;
+    s += `<line x1="${x(1)}" y1="${top - 6}" x2="${x(1)}" y2="${H - 22}" stroke="${css("--bad")}" stroke-width="1"/>`;
+    let y = top;
+    MEMBERS.forEach(([key, label]) => {
+      s += `<text x="${left - 10}" y="${y + SERIES.length * rowH / 2 + 4}" text-anchor="end" font-family="Archivo, sans-serif" font-size="13" fill="${ink}">${label}</text>`;
+      SERIES.forEach((k, i) => {
+        const e = R[k].safety[lcase][key];
+        const yy = y + i * rowH;
+        if (!e) { s += `<text x="${left + 4}" y="${yy + 11}" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="${muted}">${k}: no lid</text>`; return; }
+        const v = e.sf, w = Math.max(1.5, x(v) - left);
+        const sw = k === sel ? 2 : 0;
+        s += `<rect x="${left}" y="${yy + 2}" width="${w}" height="${rowH - 4}" rx="2" fill="${col[k]}" stroke="${ink}" stroke-width="${sw}"/>`;
+        s += `<text x="${left + w + 5}" y="${yy + 11}" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="${v < 2 ? css("--bad") : muted}">${k} ${v >= 10 ? "10+" : v.toFixed(1)}</text>`;
+      });
+      y += SERIES.length * rowH + gap;
+    });
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = s;
+    document.getElementById("caseNote").textContent = lcase === "normal"
+      ? "Normal swap: 57 N pulling the XT60 apart (50 N + the pack's weight), 15 N on each finger at full swing."
+      : "Misuse: the rail stalls pulling at 150 N, and the servo stalls pushing 41 N on each finger (estimates).";
+  }
+  const caseN = document.getElementById("caseN"), caseM = document.getElementById("caseM");
+  caseN.addEventListener("click", () => { lcase = "normal"; caseN.setAttribute("aria-pressed", "true"); caseM.setAttribute("aria-pressed", "false"); drawChart(); });
+  caseM.addEventListener("click", () => { lcase = "misuse"; caseM.setAttribute("aria-pressed", "true"); caseN.setAttribute("aria-pressed", "false"); drawChart(); });
+
+  // ---------- table
+  const tbl = document.getElementById("tbl");
+  let h = `<thead><tr><th>Version</th><th>Weakest, normal</th><th>Weakest, misuse</th><th>Printed</th><th>Bought extra</th><th>Shell change</th></tr></thead><tbody>`;
+  const v4n = minSF("v4", "normal"), v4m = minSF("v4", "misuse");
+  h += `<tr data-k="v4"><td>v4 (before)</td><td class="num"><span class="pill ${cls(v4n[0])}">${v4n[0].toFixed(1)}×</span> ${v4n[1]}</td><td class="num"><span class="pill ${cls(v4m[0])}">${v4m[0].toFixed(1)}×</span> ${v4m[1]}</td><td class="num">${R.v4.pincer_printed_g} g</td><td>none</td><td>none</td></tr>`;
+  KEYS.forEach(k => {
+    const n = minSF(k, "normal"), m = minSF(k, "misuse");
+    h += `<tr data-k="${k}"><td><b>${k}</b> ${D.variants[k].name}</td><td class="num"><span class="pill ${cls(n[0])}">${n[0].toFixed(1)}×</span> ${n[1]}</td><td class="num"><span class="pill ${cls(m[0])}">${m[0].toFixed(1)}×</span> ${m[1]}</td><td class="num">${R[k].pincer_printed_g} g</td><td>${INFO[k].extra}</td><td>${INFO[k].shell}</td></tr>`;
+  });
+  tbl.innerHTML = h + "</tbody>";
+
+  applyColors(); resize(); drawChart(); select("P1");
+})();
+</script>

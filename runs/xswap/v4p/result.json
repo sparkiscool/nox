@@ -1,0 +1,563 @@
+{
+ "P1": {
+  "fingers vs bars + shell over the stroke, pincer x error -0.5/0/+0.5 (mm3)": 0.0,
+  "fingers vs base / lid / pinion over the stroke (mm3)": 0.0,
+  "approach 0..100 below grip vs shell, bars, holder (mm3)": 0.0,
+  "shut fingers pulled down 1 mm (mm3, >0 = shell captured)": 21.0,
+  "open fingers pulled down 1 mm (mm3, 0 = free to leave)": 0.0,
+  "shut fingers lifted 0.5 into the lid (mm3, >0 = lid takes the pull)": 111.8,
+  "both bars past release at full stroke": true,
+  "mass_g": {
+   "base": 240.5,
+   "lid": 21.1,
+   "finger_a": 7.0,
+   "finger_b": 7.0,
+   "pinion": 7.8
+  },
+  "pincer_printed_g": 283.4,
+  "size_mm": [
+   44.0,
+   100.0,
+   76.9
+  ],
+  "one body each": true,
+  "shell still one body": true,
+  "safety": {
+   "normal": {
+    "post tension": {
+     "mpa": 0.74,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 20.26
+    },
+    "post bending": {
+     "mpa": 3.61,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 4.15
+    },
+    "flange": {
+     "mpa": 5.34,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 8.42
+    },
+    "shell lips": {
+     "mpa": 7.33,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 2.05
+    },
+    "lid": {
+     "mpa": 2.67,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 16.84
+    },
+    "arm": {
+     "mpa": 1.43,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 31.58
+    },
+    "rack teeth": {
+     "mpa": 3.38,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 13.32
+    }
+   },
+   "misuse": {
+    "post tension": {
+     "mpa": 1.95,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 7.7
+    },
+    "post bending": {
+     "mpa": 9.74,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 1.54
+    },
+    "flange": {
+     "mpa": 14.06,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 3.2
+    },
+    "shell lips": {
+     "mpa": 19.29,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 0.78
+    },
+    "lid": {
+     "mpa": 7.03,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 6.4
+    },
+    "arm": {
+     "mpa": 3.75,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 12.0
+    },
+    "rack teeth": {
+     "mpa": 9.11,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 4.94
+    }
+   }
+  }
+ },
+ "P2": {
+  "fingers vs bars + shell over the stroke, pincer x error -0.5/0/+0.5 (mm3)": 0.0,
+  "fingers vs base / lid / pinion over the stroke (mm3)": -0.0,
+  "approach 0..100 below grip vs shell, bars, holder (mm3)": 0.0,
+  "shut fingers pulled down 1 mm (mm3, >0 = shell captured)": 34.2,
+  "open fingers pulled down 1 mm (mm3, 0 = free to leave)": 0.0,
+  "shut fingers lifted 0.5 into the lid (mm3, >0 = lid takes the pull)": 173.9,
+  "both bars past release at full stroke": true,
+  "mass_g": {
+   "base": 354.7,
+   "lid": 28.3,
+   "finger_a": 9.4,
+   "finger_b": 9.4,
+   "pinion": 7.8
+  },
+  "pincer_printed_g": 409.6,
+  "size_mm": [
+   44.0,
+   136.0,
+   76.9
+  ],
+  "one body each": true,
+  "shell still one body": true,
+  "safety": {
+   "normal": {
+    "post tension": {
+     "mpa": 0.37,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 40.51
+    },
+    "post bending": {
+     "mpa": 3.61,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 4.15
+    },
+    "flange": {
+     "mpa": 2.67,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 16.84
+    },
+    "shell lips": {
+     "mpa": 3.66,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 4.09
+    },
+    "lid": {
+     "mpa": 2.67,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 16.84
+    },
+    "arm": {
+     "mpa": 0.71,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 63.16
+    },
+    "rack teeth": {
+     "mpa": 3.38,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 13.32
+    }
+   },
+   "misuse": {
+    "post tension": {
+     "mpa": 0.97,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 15.39
+    },
+    "post bending": {
+     "mpa": 9.74,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 1.54
+    },
+    "flange": {
+     "mpa": 7.03,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 6.4
+    },
+    "shell lips": {
+     "mpa": 9.64,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 1.56
+    },
+    "lid": {
+     "mpa": 7.03,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 6.4
+    },
+    "arm": {
+     "mpa": 1.88,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 24.0
+    },
+    "rack teeth": {
+     "mpa": 9.11,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 4.94
+    }
+   }
+  }
+ },
+ "P3": {
+  "fingers vs bars + shell over the stroke, pincer x error -0.5/0/+0.5 (mm3)": 0.0,
+  "fingers vs base / lid / pinion over the stroke (mm3)": 0.0,
+  "approach 0..100 below grip vs shell, bars, holder (mm3)": 0.0,
+  "shut fingers pulled down 1 mm (mm3, >0 = shell captured)": 21.0,
+  "open fingers pulled down 1 mm (mm3, 0 = free to leave)": 0.0,
+  "shut fingers lifted 0.5 into the lid (mm3, >0 = lid takes the pull)": 111.8,
+  "both bars past release at full stroke": true,
+  "mass_g": {
+   "base": 240.5,
+   "lid": 21.1,
+   "finger_a": 6.8,
+   "finger_b": 6.8,
+   "pinion": 7.8
+  },
+  "pincer_printed_g": 283.0,
+  "size_mm": [
+   44.0,
+   100.0,
+   76.9
+  ],
+  "one body each": true,
+  "shell still one body": true,
+  "safety": {
+   "normal": {
+    "post tension (steel)": {
+     "mpa": 4.03,
+     "allow": 400.0,
+     "layer": "steel",
+     "sf": 99.21
+    },
+    "post tension": {
+     "mpa": 0.04,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 388.57
+    },
+    "post bending": {
+     "mpa": 0.83,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 18.01
+    },
+    "flange": {
+     "mpa": 5.34,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 8.42
+    },
+    "shell lips": {
+     "mpa": 7.33,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 2.05
+    },
+    "lid": {
+     "mpa": 2.67,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 16.84
+    },
+    "arm": {
+     "mpa": 1.43,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 31.58
+    },
+    "rack teeth": {
+     "mpa": 3.38,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 13.32
+    }
+   },
+   "misuse": {
+    "post tension (steel)": {
+     "mpa": 10.61,
+     "allow": 400.0,
+     "layer": "steel",
+     "sf": 37.7
+    },
+    "post tension": {
+     "mpa": 0.1,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 147.65
+    },
+    "post bending": {
+     "mpa": 2.25,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 6.68
+    },
+    "flange": {
+     "mpa": 14.06,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 3.2
+    },
+    "shell lips": {
+     "mpa": 19.29,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 0.78
+    },
+    "lid": {
+     "mpa": 7.03,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 6.4
+    },
+    "arm": {
+     "mpa": 3.75,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 12.0
+    },
+    "rack teeth": {
+     "mpa": 9.11,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 4.94
+    }
+   }
+  }
+ },
+ "P4": {
+  "fingers vs bars + shell over the stroke, pincer x error -0.5/0/+0.5 (mm3)": 0.0,
+  "fingers vs base / lid / pinion over the stroke (mm3)": -0.0,
+  "approach 0..100 below grip vs shell, bars, holder (mm3)": 0.0,
+  "shut fingers pulled down 1 mm (mm3, >0 = shell captured)": 34.2,
+  "open fingers pulled down 1 mm (mm3, 0 = free to leave)": 0.0,
+  "shut fingers lifted 0.5 into the lid (mm3, >0 = lid takes the pull)": 173.9,
+  "both bars past release at full stroke": true,
+  "mass_g": {
+   "base": 354.7,
+   "lid": 35.5,
+   "finger_a": 9.1,
+   "finger_b": 9.1,
+   "pinion": 7.8
+  },
+  "pincer_printed_g": 416.2,
+  "size_mm": [
+   44.0,
+   136.0,
+   77.9
+  ],
+  "one body each": true,
+  "shell still one body": true,
+  "safety": {
+   "normal": {
+    "post tension (steel)": {
+     "mpa": 2.02,
+     "allow": 400.0,
+     "layer": "steel",
+     "sf": 198.42
+    },
+    "post tension": {
+     "mpa": 0.02,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 777.13
+    },
+    "post bending": {
+     "mpa": 0.83,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 18.01
+    },
+    "flange": {
+     "mpa": 2.67,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 16.84
+    },
+    "shell lips": {
+     "mpa": 3.66,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 4.09
+    },
+    "lid": {
+     "mpa": 1.71,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 26.32
+    },
+    "arm": {
+     "mpa": 0.71,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 63.16
+    },
+    "rack teeth": {
+     "mpa": 3.38,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 13.32
+    }
+   },
+   "misuse": {
+    "post tension (steel)": {
+     "mpa": 5.31,
+     "allow": 400.0,
+     "layer": "steel",
+     "sf": 75.4
+    },
+    "post tension": {
+     "mpa": 0.05,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 295.31
+    },
+    "post bending": {
+     "mpa": 2.25,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 6.68
+    },
+    "flange": {
+     "mpa": 7.03,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 6.4
+    },
+    "shell lips": {
+     "mpa": 9.64,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 1.56
+    },
+    "lid": {
+     "mpa": 4.5,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 10.0
+    },
+    "arm": {
+     "mpa": 1.88,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 24.0
+    },
+    "rack teeth": {
+     "mpa": 9.11,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 4.94
+    }
+   }
+  }
+ },
+ "v4": {
+  "safety": {
+   "normal": {
+    "post tension": {
+     "mpa": 0.74,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 20.26
+    },
+    "post bending": {
+     "mpa": 3.61,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 4.15
+    },
+    "flange": {
+     "mpa": 5.34,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 8.42
+    },
+    "shell lips": {
+     "mpa": 7.33,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 2.05
+    },
+    "arm": {
+     "mpa": 25.84,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 1.74
+    },
+    "rack teeth": {
+     "mpa": 3.38,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 13.32
+    }
+   },
+   "misuse": {
+    "post tension": {
+     "mpa": 1.95,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 7.7
+    },
+    "post bending": {
+     "mpa": 9.74,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 1.54
+    },
+    "flange": {
+     "mpa": 14.06,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 3.2
+    },
+    "shell lips": {
+     "mpa": 19.29,
+     "allow": 15.0,
+     "layer": "across",
+     "sf": 0.78
+    },
+    "arm": {
+     "mpa": 67.99,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 0.66
+    },
+    "rack teeth": {
+     "mpa": 9.11,
+     "allow": 45.0,
+     "layer": "in",
+     "sf": 4.94
+    }
+   }
+  },
+  "pincer_printed_g": 191.0
+ }
+}
