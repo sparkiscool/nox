@@ -170,8 +170,11 @@ def in_cam_view(g, P, extra_deg=2.0):
 # ---------------------------------------------------------------- the camera pair (Spark 27 Oct: "get rid of the down camera, we
 # don't need it; put the two cameras on either side of the lidar pointing so their field of view is maximized")
 CAM_FMTS = {"landscape": (L["CAM_VFOV"] / 2, L["CAM_HFOV"] / 2), "portrait": (L["CAM_HFOV"] / 2, L["CAM_VFOV"] / 2)}   # (half across, half up), 102 diag (E)
-CAM_W = (75.0, 90.0, 105.0, 120.0, 135.0)          # lens off the centre plane (scanned)
-CAM_HS = (-30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0)   # lens up the L2 base plane from its centre (scanned)
+CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens off the centre plane (scanned)
+CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
+HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
+HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
+                                                   # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
 CAM_PSI = np.arange(0.0, 72.5, 2.5)                # yaw out from +x (scanned)
 CAM_TH = np.arange(-30.0, 32.5, 5.0)               # pitch (scanned)
 CAM_BODY = np.array([[x, y, z] for x in (-13.5, -10.75, -8.0) for y in np.linspace(-20.0, 20.0, 9) for z in np.linspace(-20.0, 20.0, 9)]
@@ -237,6 +240,17 @@ def fz_clear(Q):
     return float(min(seg, np.linalg.norm(Q[:, None] - SN[None], axis=2).min() - NODE_R))
 
 
+def head_fits(B, up_b, Q, f, r, u, lens):
+    """the one-piece head (seat Ø80, guard ring r HALO_R + its nodes, both camera bodies and their back plates) inside the
+    printer: oriented bounding box (trimesh) with every side <= HEAD_FIT"""
+    acr = np.cross(A, up_b)
+    ring = [B - A * HALO_BACK + (HALO_R + HALO_NODE_R) * (math.cos(t_) * up_b + math.sin(t_) * acr) for t_ in np.linspace(0, 2 * math.pi, 16, endpoint=False)]
+    seat = [B - A * 4 + 40 * (math.cos(t_) * up_b + math.sin(t_) * acr) for t_ in np.linspace(0, 2 * math.pi, 12, endpoint=False)]
+    plate = [lens - f * 13.5 + r * a_ + u * b_ for a_ in (-20, 20) for b_ in (-20, 20)]
+    P = np.vstack([ring, seat, Q, plate, Q * [1, -1, 1], np.array(plate) * [1, -1, 1]])
+    return bool(np.max(trimesh.bounds.oriented_bounds(P)[1]) <= HEAD_FIT)
+
+
 def cam_pick(B, K, Keq, avoid, face=True):
     """the first orientation of the table with a mount beside the L2 (lens off the centre plane CAM_W, up its base plane
     CAM_HS, body behind the base plane by 2, clear of the guard ring) where nothing of the drone is in view and the shell
@@ -257,6 +271,7 @@ def cam_pick(B, K, Keq, avoid, face=True):
             if (Q @ Keq[:, :3].T + Keq[:, 3]).max(1).min() < 5.0: continue        # the body clear of the shell target
             if FZ is not None and fz_clear(Q) < 3.0: continue            # the body 3 off the frozen cage's tubes and nodes
             if in_frustum(lens, f, u, r, ha, hv, np.vstack([avoid, Q * [1, -1, 1]])).any(): continue
+            if HEAD_ONE and not head_fits(B, up_b, Q, f, r, u, lens): continue
             sl = [float(((K - lens) @ n).min()) for n in faces]; k = int(np.argmax(sl))
             if face and sl[k] < LIM + SLACK: continue                    # (a frozen cage: its own points are in avoid instead)
             ok_.append(dict(t, w=w, h=h, bk=bk, face=k, slack=sl[k], lens_rel=lens - B, cost=bk + 0.5 * (w - CAM_W[0]) + 0.5 * abs(h - 10.0)))
