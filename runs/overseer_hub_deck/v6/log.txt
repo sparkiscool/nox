@@ -412,3 +412,13 @@ layout: beta 32 done: eroded design 9 bodies, main 80.4%; drawn bodies outside t
 layout: beta 32 done: eroded design 9 bodies, main 80.4%; drawn bodies outside the main body: 4
 layout done: 6623 s, peak 8.426524 GB
 layout done: 6623 s, peak 8.426524 GB
+build: organic surface at pitch 0.312 mm (x4), skins 24.47 cm3, field 48.77 cm3, in env - cuts 42.59 cm3 (layout 42.59, level offset -0.055 mm), fillet 2.5 mm, rims 1.0 mm, mesh 590,416 faces, 302 s
+build: organic surface at pitch 0.312 mm (x4), skins 24.47 cm3, field 48.77 cm3, in env - cuts 42.59 cm3 (layout 42.59, level offset -0.055 mm), fillet 2.5 mm, rims 1.0 mm, mesh 590,416 faces, 302 s
+solid check: FAIL {"bodies_plain": 2, "bodies_eroded": 1, "eroded_volumes_mm3": [26164.5], "necks": [], "drawn_not_in_main": [["0.11", 0.998, "erode 2.0"]], "thin_walls": [], "acute_edges": 2, "ok": false}
+solid check: FAIL {"bodies_plain": 2, "bodies_eroded": 1, "eroded_volumes_mm3": [26164.5], "necks": [], "drawn_not_in_main": [["0.11", 0.998, "erode 2.0"]], "thin_walls": [], "acute_edges": 2, "ok": false}
+function check: {'skin_mm3': 13204.8, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 13204.8, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 2.72 in 'crash 4 [0.0, 0.0, 1.0] via head guard (35 g + the keel / brace forces, F)' at [94.1, 15.6, 8.1]
+strength: worst index 2.72 in 'crash 4 [0.0, 0.0, 1.0] via head guard (35 g + the keel / brace forces, F)' at [94.1, 15.6, 8.1]
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 53.9, "worst": 2.722, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 53.9, "worst": 2.722, "function_ok": true, "bodies": 1}
