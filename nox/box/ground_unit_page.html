@@ -82,7 +82,7 @@ a { color: var(--accent); }
 <header>
   <div class="eyebrow">Nox · box · master view · <span id="updated"></span></div>
   <h1>Nox Ground Unit</h1>
-  <p class="lede">The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved: the landing mechanism is being designed by the design center. There is no funnel any more.</p>
+  <p class="lede"><b>3D assembly from the real mesh files:</b> <a href="https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG" target="_blank" rel="noopener">Nox Ground Unit 3D</a> (orbit, pick, the swap cycle, explode, section). The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved: the landing mechanism is being designed by the design center. There is no funnel any more.</p>
   <div class="pills" id="pills"></div>
 </header>
 
@@ -120,14 +120,15 @@ a { color: var(--accent); }
 <script>
 // ---------- DATA: the only block the master session edits on an update ----------
 const D = {
-  updated: "27 Oct 2026, 02:10 PT",
+  updated: "27 Oct 2026, 07:30 PT",
   master: "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X",
   pills: [
     ["enclosure", "418 x 409 x 470 mm, 80.4 L (C / E)"],
     ["bays", "9 at 30°, R 113 (C): 4 Overseer + 5 Scout"],
     ["structure", "38 PETG pieces + 8 TPU feet, 5144 g (M, cut PR 113)"],
     ["arm", "~2900 g (E)"], ["electronics + PSU", "~2000 g (E)"],
-    ["top", "RESERVED: landing mechanism, design center"],
+    ["top", "RESERVED: concept F push-bar catch (design center, PR 125 merged), not drawn yet"],
+    ["3D", "assembled from the real mesh files: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG"],
   ],
   W: { X_IN: 206, Y_BACK: -66, Y_FRONT: 337, FLOOR: -236, Z_TOP: 234, R: 113, Y_C: 167.1, sheet: 3 },
   bays: [ [30, "scout"], [0, "overseer"], [-30, "scout"], [-60, "overseer"], [-90, "scout"], [-120, "overseer"], [-150, "scout"], [-180, "overseer"], [-210, "scout"] ],
@@ -136,8 +137,8 @@ const D = {
   elec: { PSU: { X: [42, 157], Y: [-66, -36], Z: [-170, 45] }, charger: { X: [-162, -44], Y: [-66, -7], Z: [-200, -29] }, boards: { Y: [-66, -36], Z: [-210, 90] } },
   top: { Z: [120, 234], swapHole: [209.6, 106.2], note: "RESERVED: landing mechanism (design center, PR 128)" },
   system: [
-    "<b>Top: the landing mechanism (reserved).</b> The design center is designing it (PR 128 concept: three feet hung from each drone's shared bottom ring land in three V-blocks on the box top, a kinematic coupling that centres to 0.0 mm from ±30 mm off; an AprilTag on the cartridge bottom is the landing gate; a clamp over each foot holds the drone for the swap). The funnel panels, funnel hub and hook latch are superseded. This page draws the slot and nothing in it.",
-    "<b>Keep-alive:</b> the drone stays powered through the swap (13.0 V CC 3.0 A, box electronics); the probes move from the funnel panels to the landing's front blocks onto pads on the feet (concept).",
+    "<b>Top: the catch (reserved, design center).</b> Concept F merged 27 Oct (PR 125): a flat deck round the swap column, one NEMA 17 on a T8 x 2 lead screw moves one carriage; two end pads clamp the drone's bottom ring along x through a sprung slide, then two side bars with lips close y and yaw and hold it down (74 N); the stepper stall means seated. Both drones on the same deck (the Scout gets 6 mm sleeves on its side rods). Deck from the parks 656 x 528 (C), wider than today's enclosure. The funnel panels, funnel hub and hook latch are superseded. Nothing of it is drawn yet; this page draws the slot and the deck footprint.",
+    "<b>Keep-alive:</b> Spark 27 Oct: no keep-alive contacts in the catch; the box electronics' keep-alive branch (13.0 V CC 3.0 A) is open until the catch session draws the deck.",
     "<b>Swap wheel under the top, vertical like a ferris wheel:</b> a fixed printed stub on the mast, the hub turning on two 6010 bearings, 9 bays at 30° round it at R 113 (C): Overseer at 0 / −60 / −120 / −180, Scout at 30 / −30 / −90 / −150 / −210 (DEFAULT), the drone at the top in the 120° opening.",
     "<b>Every cartridge long side along the axle,</b> gripped on the common grip line Y 167.1 (C) by one of two heads on the arm (rack and pinion carriages on rails to r 151, spring-closed grabber blades, one servo cam opens them, the grip holds unpowered). XT60 at the closed end: insert 60 N, pull 50 N (E).",
     "<b>One latch standard for every pack</b> (Scout 4S 1500, Overseer 4S 6000): cartridge + sliders, the receiver block in the drone and in every bay, the XT60 on a float carrier (±2.37° / ±1.06°).",
@@ -147,27 +148,27 @@ const D = {
   ],
   seq: [
     ["1 before", "head A pulls a charged pack from its bay and parks; head B waits open under the seat"],
-    ["2 land", "drone lands on the top mechanism, is centred and held; keep-alive makes"],
+    ["2 land", "drone lands on the flat deck; pads clamp x, bars clamp y and yaw and hold it down; stall = seated (concept F)"],
     ["3 pull", "head B rises, grabs the dead pack's tabs, pulls the XT60 apart (50 N, E) and retracts"],
     ["4 turn", "wheel turns 90°: head A at the top (axle driver on for every insert and pull)"],
     ["5 insert", "head A pushes the charged pack home: lead-ins centre it, XT60 mates (60 N, E), latch bolts drop in"],
-    ["6 go", "hold releases, spin-up, the drone leaves through the top"],
+    ["6 go", "the carriage backs off, bars and pads park, spin-up, the drone leaves"],
     ["7 park", "wheel turns, head B drops the dead pack into its bay; charging starts"],
   ],
   boards: [
-    { id: "top", name: "Top: landing mechanism", state: ["res", "RESERVED"], reserved: true,
+    { id: "top", name: "Top: the catch (concept F, push bars on a flat deck)", state: ["res", "RESERVED"], reserved: true,
       owner: ["design center session", "https://claude.ai/code/session_01EtHMZMB13ed4juqR8ktuXy"],
       parts: [
-        ["V-blocks x3, tag plate, foot clamps, upward tag camera, keep-alive probes (box side)", "concept v1", ["warn", "CONCEPT"], "PR 128 open; sim 100 % capture to ±30 mm (E)", "runs/landing/v1-concept/"],
-        ["Feet x3 + AprilTag on the cartridge bottom (drone side, shared)", "concept v1", ["warn", "CONCEPT"], "requirements to the Overseer, Scout and latch sessions", "nox/box/box-landing.md"],
-        ["Catch concept D (posts into a shared rim)", "concept", ["hold", "ALT"], "PR 125 open, the alternative weighed", "nox/box/catch_posts_concept.py"],
+        ["Deck, 2 end pads + sprung pad slide, carriage on T8 x 2 + NEMA 17, lever + compound pinion, 2 side bars with lips", "concept F", ["warn", "CONCEPT PASS"], "PR 125 merged: Scout seats from every landing in |y| ≤ 60, yaw ±15; Overseer |y| ≤ 40 at every x at yaw 0; seated x error ≤ 1.0 inside ±20 (Scout); ~400 g with the motor (E)", "runs/box_catch/bars_concept/summary.md"],
+        ["Scout side-rod sleeves (6 mm, x ±32) or its 6/4 ring", "concept F", ["warn", "SCOUT"], "one bar gap and lip height for both drones; Scout session decides", "runs/box_catch/HANDOFF.md"],
+        ["Landing v1: 3 feet in 3 V-blocks", "concept", ["hold", "ALT"], "PR 128 still open, the alternative; ramps (E) and hook claws weighed and dropped", "nox/box/box-landing.md"],
         ["Funnel panels A + B v7 / v9 plain, probe caps", "v9 plain", ["hold", "SUPERSEDED"], "READY files stay in print/, do not print", "nox/box/box-funnel.md"],
         ["Hook latch housings + plungers v2", "v2", ["hold", "SUPERSEDED"], "READY files stay in print/, do not print", "nox/box/box-hook-latch.md"],
       ],
-      next: "<b>Design center:</b> the concept check on PR 128 vs PR 125, then the system pass on the box top (V-blocks, tag plate, clamps; landing 6 g at the feet, swap pull 50 N, hand lift 100 N), then its pieces. The structure session carries its interface in the top frame as DEFAULT until it merges. <b>This page only reserves the slot.</b>",
-      visuals: [["Box landing v1", "https://claude.ai/artifact/Nh3LqpJzkExyn8Vsk2C3Uw"], ["Catch concepts", "https://claude.ai/artifact/F5b6L8uScqbaDSsXPXTSmz"]] },
+      next: "<b>Box catch session (when Spark starts design):</b> draw the deck, pads, pad slide, carriage, lever, pinion, side bars and lips; the assembly file and system pass on the new cases (head stall 74 N on the lips, spring 30 N preload, carriage 120 N at stall, E); the Overseer yaw envelope options; a friction run; StallGuard bench test. The deck (656 x 528) sets the top of the structure. <b>Nothing is drawn yet; this page reserves the slot.</b>",
+      visuals: [["Concept F push-bar catch", "https://claude.ai/artifact/XfUFHJZZrfnNdi9nnuuHQB"], ["Box landing v1 (alt)", "https://claude.ai/artifact/Nh3LqpJzkExyn8Vsk2C3Uw"], ["Ramp and post concepts", "https://claude.ai/artifact/F5b6L8uScqbaDSsXPXTSmz"]] },
     { id: "arm", name: "Swap arm", state: ["warn", "DESIGN"],
-      owner: ["arm session", "https://claude.ai/code/session_01EtHMZNRLY3ruhuLzMZPL9D"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Hub v7", "v7", ["ok", "BUILT"], "solid PASS, 213.3 g (M); swap 0.524 (F) at a corner = strike 1; corner check next", "PR 111"],
         ["Heads A / B v7 (carriage, head body, grabber)", "v7", ["warn", "DESIGN"], "paused 24 Oct at ckpt 17 on part/heads-v7; the arm session resumes it", "box/box-arm.md v7"],
@@ -180,7 +181,7 @@ const D = {
       next: "Heads v7 to solid PASS; the hub v7 corner check; the assembled recheck at Y 167.1 that moves the pieces to READY; stub v3 recheck against the v2 mast.",
       visuals: [["Hub v7 system pass", "https://claude.ai/artifact/RaBgZMUzC9PBK6gHi5waDJ"], ["Heads v7 grabber", "https://claude.ai/artifact/JWnuGJqAAvRXxATL5hyBya"], ["Arm v7 alternatives", "https://claude.ai/artifact/F7cY19HjCUZFY53HUB5k6d"]] },
     { id: "latch", name: "Battery latch (one standard for every pack)", state: ["warn", "DESIGN"],
-      owner: ["latch session", "https://claude.ai/code/session_01EtHMZMkaQBx4ntdsV5jwR6"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Scout set: cartridge v7, TPU skids v2 + strips, sliders v6 x2, receiver v3 + XT60 carrier v2 + lid, TPU end pieces", "v7 / v6 / v3", ["hold", "HOLD"], "165.3 g per drone set, 157.1 per bay set (M); 6 sets; solid PASS on all 11; HOLD until the Scout v3 pass reads fit 0", "runs/battery_latch/v4"],
         ["Overseer set: cartridge v6, sliders v6 x2, receiver v2 (66.8 wide) + carrier v1 + lid, TPU strips", "v6 / v2", ["warn", "DESIGN"], "338.5 g per set (M); 5 sets; solid PASS on all 6; open: mount bolts past the cartridge rail zone", "runs/battery_latch/v4"],
@@ -189,7 +190,7 @@ const D = {
       next: "Overseer receiver mount bolts; the tag plate and pads; the Scout set to READY once the Scout v3 bottom passes (receiver bolts (−41.7 / 43.25, ±25.6), M3 x 35 DEFAULT).",
       visuals: [["Battery latch v1", "https://claude.ai/artifact/MX2dpRcjHegntjHvqp6U8x"]] },
     { id: "structure", name: "Box structure v2 (stand, bay bodies, enclosure, feet)", state: ["warn", "DESIGN"],
-      owner: ["structure session", "https://claude.ai/code/session_01EtHMZMp1XAMtMif3KyT5Xq"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Layout v2: 9 bays at R 113, grip line 167.1, enclosure 418 x 409 x 470", "v2", ["ok", "CONCEPT PASS"], "fit 0.0 mm³, access 18 / 18 (E / M); alternatives B (bottom Overseer) and C (R 128) weighed", "runs/box_system/v2/layout"],
         ["System topology round 2: one floor-standing body, 3000 cm³", "r2", ["ok", "RUN"], "3886 g generated (E); stub tilt 0.41 mrad, bay rotation 1.8 mrad (M on h 8)", "runs/box_system/v2/topo_r2"],
@@ -200,14 +201,14 @@ const D = {
       next: "Fix the cut's review findings on the new top, rerun the system FE, write the piece requirements, then every piece run to solid PASS and READY; sheets' cut list for R 113.",
       visuals: [["Box v2 layouts", "https://claude.ai/artifact/Mn5JGDkjEGSQXyPhjqrpxb"], ["Layout assembly 3D", "https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp"], ["Box v2 topology", "https://claude.ai/artifact/1JYZSHTs8E6Y2jHTnyAZAs"], ["The cut and system FE", "https://claude.ai/artifact/FzJg3vz6Z8UnnUaerm5h3p"]] },
     { id: "elec", name: "Box electronics", state: ["warn", "DESIGN v1"],
-      owner: ["electronics session", "https://claude.ai/code/session_01EtHMZL5a6fGTAzBc42XPEF"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Supply + distribution: LRS-350-24, IEC inlet, 6-way fuse box, E-stop on the motion branch", "v1", ["ok", "DESIGNED"], "296 W peak (E); PSU selector to 115 V", "box/box-electronics.md"],
         ["Box computer + I/O: Pi 4, PCA9685, 4 x INA226, ADS1115 + halls, SKR Mini E3 (Klipper)", "v1", ["ok", "DESIGNED"], "to buy (parts-list rows)", "box/box-electronics.md"],
-        ["Keep-alive 13.0 V CC 3.0 A (K1) and seat sense", "v1", ["warn", "MOVES"], "was on the funnel panel pins; goes to the landing's probes and pads (v2)", ""],
+        ["Keep-alive 13.0 V CC 3.0 A (K1) and seat sense", "v1", ["warn", "OPEN"], "was on the funnel panel pins; Spark 27 Oct: no keep-alive contacts in the catch; seat sense = stepper stall (concept F)", ""],
         ["Head brake: 3 DPDT relays, boot self-test", "v1", ["ok", "DESIGNED"], "required by the arm; bench drop before the first Overseer swap (~930 g, creep ≤ ~25 mm/s E)", "box-electronics.md Head brake"],
         ["Live bays: 2 on a dual-channel charger (K2 / K3)", "v1", ["warn", "CHECK"], "MODBUS map and non-balance mode to check before buying", ""],
-        ["Hook latch servo channel (4 x MG90S)", "v1", ["hold", "SUPERSEDED"], "replaced by the foot clamps' actuators (v2)", ""],
+        ["Hook latch servo channel (4 x MG90S)", "v1", ["hold", "SUPERSEDED"], "concept F uses one NEMA 17 on the SKR's spare E driver (StallGuard, bench test)", ""],
       ],
       next: "Electronics v2 on the landing interface (probes, clamps, tag camera, seat sense), boards re-placed round the rear frame, the charger decision, the buy list with a cart link.",
       visuals: [["Box electronics v1", "https://claude.ai/artifact/BbTuWGQWy9RxmPjQNRDt9q"]] },
@@ -224,8 +225,8 @@ const D = {
     ["XT60 insert / pull-out / head stall", "60 / 50 / 74 N", "E", "dimensions I XT60 mate"],
     ["Arm envelopes: hub / motors / rail disc / insert lane", "r 88 Y 7..74 / r 106.5 Y 2..50 / r 151 Y 38..73 / r ≤ 159, Z ≥ 89", "C", "System box swap: arm"],
     ["Receiver spans on the grip line", "Scout Y 110.3..215.9, Overseer 75.3..259.0", "M", "latch_ctx_export.py"],
-    ["Swap hole in the top (landing concept)", "209.6 x 106.2 (receiver + 15 a side)", "C", "System box landing (PR 128)"],
-    ["Landing capture (sim)", "100 % to ±30 mm, ±5° yaw, drift 0.15 m/s; seat 0.0 mm", "E", "runs/landing/v1-concept"],
+    ["Catch deck from the parks (concept F)", "656 x 528; carriage travel 256 along x", "C", "runs/box_catch/bars_concept/summary.md"],
+    ["Catch envelope (concept F, quasi-static)", "Scout: all landings |y| ≤ 60, yaw ±15; Overseer: |y| ≤ 40 at every x at yaw 0", "C", "runs/box_catch/bars_concept/result.json"],
     ["Electronics peak", "296 W", "E", "box_electronics.py"],
     ["Drones (context)", "Scout v3 730 g, Overseer v5 3215 g", "E", "System Scout v3 / Overseer v5"],
   ],
@@ -236,7 +237,7 @@ const D = {
     hold: ["MG90S x4, M2 screws, A3144 halls (hook latch): superseded by the landing", "brass probe pins, springs, leads (funnel v9): superseded by the landing"],
   },
   decisions: [
-    "<b>Top mechanism:</b> landing v1 (three feet in three V-blocks, PR 128) is the design center's DEFAULT; concept D (posts into a shared rim, PR 125) is the alternative. The funnel is out.",
+    "<b>Top mechanism:</b> concept F, the one-motor push-bar catch on a flat deck (PR 125, merged) is the design center's DEFAULT; landing v1 (three feet in V-blocks, PR 128 open) and the ramps are the alternatives. The funnel is out.",
     "<b>Bay set:</b> Overseer at 0 / −60 / −120 / −180, Scout at the other five (DEFAULT); alt the arm's set (Overseer 30 / −30 / −90 / −150) or the 4 bottom slots at R 128.",
     "<b>Grip line Y_C 167.1</b> (latch v4's longer Overseer lead end); alts 138 (37 shorter box) or 175.",
     "<b>Sheets are clip-on cladding,</b> the structure stands on the floor alone (DEFAULT); alt 3 mm acrylic carrying load (not run). Front sheet = service door.",
@@ -244,6 +245,8 @@ const D = {
     "<b>Head brake bench drop</b> before the first Overseer swap; strength and XT60 force tests dropped (assumed numbers).",
   ],
   log: [
+    ["27 Oct 07:30 PT", "Design center merged PR 125: box catch concept F, a one-motor push-bar catch on a flat deck for both drones (deck 656 x 528 from the parks, wider than the enclosure). Top board, system text, numbers and decisions updated; the 3D page shows the deck footprint in the reserved slot. Nothing drawn, no part changed."],
+    ["27 Oct 02:30 PT", "Spark: no design work yet, an assembled artifact from the real CAD files. The four part sessions stopped and archived (nothing merged). 3D assembly published: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG (143 real meshes in W: cut pieces of PR 113, arm v7 with its cycle, receivers and cartridges, electronics, sheets, the reserved top slot)."],
     ["27 Oct 02:10 PT", "The four part sessions restarted with the repo attached (the first four had none, archived); owner links updated."],
     ["27 Oct 02:05 PT", "Page created by the box master session. Top slot reserved for the design center's landing mechanism (no funnel; panels v7 / v9 and the hook latch superseded, files kept). Four part sessions started: swap arm, battery latch, structure v2, electronics v2. Every merged box PR lands here as one line."],
   ],

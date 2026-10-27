@@ -1295,6 +1295,9 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v12", ""):
                        guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=500, cage_shell=SHELL_SPEC, access=ACCESS)
     asm.save(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json"))
     say("wrote nox/scout/v3/scout.assembly.json")
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import scout_assembly_updates                             # the saved camera mount (PR 146) and the electronics session's round
+    for s_ in scout_assembly_updates.main(): say(s_)          # (masses, Radxa post keep-outs) into the assembly; system_check_mount.json
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())
 print("wrote", OUT)

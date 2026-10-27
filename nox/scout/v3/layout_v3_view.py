@@ -32,17 +32,34 @@ else:
     OVN = "Overseer cage v3"
 line = lambda a, b, rr=0.7: trimesh.creation.cylinder(rr, np.linalg.norm(np.subtract(b, a)), sections=6, segment=np.vstack([a, b]))
 
+ASM = json.load(open(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")))
+SAVED = [p for p in ASM["parts"] if p.get("owner") == "scout camera mount"]   # saved camera mount (PR 146): drawn in place of the layout's cradle
+AN = {p["name"]: p for p in ASM["parts"]}
+LAY = {p["name"]: p for p in json.load(open(os.path.join(RUN, "parts", "parts.json")))}
+DROP = {n for n in LAY if n not in AN or os.path.normpath(os.path.join(ROOT, AN[n].get("mesh", ""))) != os.path.normpath(os.path.join(RUN, "parts", LAY[n]["file"]))}
+OTHER = [p for n, p in AN.items() if "mesh" in p and (n not in LAY or n in DROP) and not n.startswith("prop")]   # the assembly's parts from
+                                                                              # other sessions (camera mount, belly mount, re-placed FC / flow)
+SC_ = os.path.join(RUN, "system_check_mount.json")             # system_check on the assembly with the saved mount (its numbers, not the layout's)
+if SAVED and os.path.exists(SC_):
+    bc_ = json.load(open(SC_))["balance"]["cases"]; MASS_, CGI_, CGO_ = bc_["all"]["mass_g"], bc_["all"]["horizontal_mm"], bc_["no_swap"]["horizontal_mm"]
+else:
+    MASS_, CGI_, CGO_ = r["mass"], math.hypot(*r["cg"][:2]), math.hypot(*r["cg_pack_out"][:2])
 s = Scene("Scout v3 Cage",
-          f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the 4 side nodes of the Overseer's base loop (same funnel, fewer ramps), one camera close in at the nose on snap clips, carbon base kept; "
-          f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{r['mass']:.0f} g (E), "
-          f"CG {math.hypot(*r['cg'][:2]):.1f} mm pack in / {math.hypot(*r['cg_pack_out'][:2]):.1f} pack out")
+          f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the 4 side nodes of the Overseer's base loop (same funnel, fewer ramps), one camera close in at the nose " + ("on its saved clip-on mount with a lens hood" if SAVED else "on snap clips") + ", carbon base kept; "
+          f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{MASS_:.0f} g (E), "
+          f"CG {CGI_:.1f} mm pack in / {CGO_:.1f} pack out")
 names = []
 for p in json.load(open(os.path.join(RUN, "parts", "parts.json"))):
-    if p["name"].startswith("prop"):
+    if p["name"].startswith("prop") or p["name"] in DROP:
         continue
     names.append(p["name"])
     s.part(p["name"], trimesh.load(os.path.join(RUN, "parts", p["file"])), group=p["group"], color=p["color"], printed=False,
            note=f"{p['mass_g']:.0f} g ({p['tag']}, layout model)")
+for p in OTHER:
+    names.append(p["name"]); lp = LAY.get(p["name"])
+    s.part(p["name"], trimesh.load(os.path.join(ROOT, p["mesh"])), group=lp["group"] if lp else ("cage" if p.get("role") == "cage" else "electronics"),
+           color=lp["color"] if lp else "#4a5560", printed=p.get("material") in ("PETG", "TPU"),
+           note=f"{p['mass_g']:.2f} g ({p['tag']}, {p.get('owner', '')} {p.get('version', '')})")
 rings = []
 for mx, my in [(54.1, 54.1), (54.1, -54.1), (-54.1, 54.1), (-54.1, -54.1)]:
     a = trimesh.creation.annulus(43.0, 44.45, 1.0, sections=96); a.apply_translation([mx, my, 41.2]); rings.append(a)
@@ -82,10 +99,10 @@ parts = json.load(open(os.path.join(RUN, "parts", "parts.json")))
 fig = plt.figure(figsize=(16, 11), dpi=110)
 for k, (el, az, ttl) in enumerate(((22, -55, "iso"), (0, -90, "side (from -y)"), (0, 0, "front (from +x)"), (90, -90, "top"))):
     ax = fig.add_subplot(2, 2, k + 1, projection="3d"); ax.set_proj_type("ortho")
-    for p in parts:
-        if p["name"].startswith("cage shell") or p["name"].startswith("spokes"):
+    for p in parts + [dict(name=q["name"], path=os.path.join(ROOT, q["mesh"]), color=LAY[q["name"]]["color"] if q["name"] in LAY else "#4a5560") for q in OTHER]:
+        if p["name"].startswith(("cage shell", "spokes")) or (p["name"] in DROP and "path" not in p):
             continue
-        m = trimesh.load(os.path.join(RUN, "parts", p["file"]))
+        m = trimesh.load(p.get("path") or os.path.join(RUN, "parts", p["file"]))
         if len(m.faces) > 6000: m = m.simplify_quadric_decimation(face_count=6000) if hasattr(m, "simplify_quadric_decimation") else m
         pc = Poly3DCollection(m.triangles, facecolor=p["color"], edgecolor="none", alpha=0.35 if p["name"].startswith("prop") else 0.9)
         ax.add_collection3d(pc)
