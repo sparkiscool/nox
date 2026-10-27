@@ -254,3 +254,27 @@ it  48 beta   16 J   3.0527 vol 0.1722 (dil 0.2474 g -0.001) grey  4.4% ch 0.100
 it  48 beta   16 J   3.0527 vol 0.1722 (dil 0.2474 g -0.001) grey  4.4% ch 0.100 worst crash 35 g 0 278 55.0s
 it  49 beta   16 J   3.0330 vol 0.1726 (dil 0.2475 g -0.001) grey  4.4% ch 0.100 worst crash 35 g 0 276 52.6s
 it  49 beta   16 J   3.0330 vol 0.1726 (dil 0.2475 g -0.001) grey  4.4% ch 0.100 worst crash 35 g 0 276 52.6s
+it  50 beta   16 J   3.0157 vol 0.1729 (dil 0.2475 g -0.001) grey  4.4% ch 0.100 worst crash 35 g 0 275 53.9s
+it  50 beta   16 J   3.0157 vol 0.1729 (dil 0.2475 g -0.001) grey  4.4% ch 0.100 worst crash 35 g 0 275 53.9s
+it  51 beta   16 J   2.9994 vol 0.1732 (dil 0.2475 g +0.012) grey  4.3% ch 0.100 worst crash 35 g 0 273 55.1s
+it  51 beta   16 J   2.9994 vol 0.1732 (dil 0.2475 g +0.012) grey  4.3% ch 0.100 worst crash 35 g 0 273 55.1s
+it  52 beta   16 J   3.0527 vol 0.1697 (dil 0.2439 g -0.003) grey  4.4% ch 0.100 worst poke 20 N on the flow pod ti 283 52.3s
+it  52 beta   16 J   3.0527 vol 0.1697 (dil 0.2439 g -0.003) grey  4.4% ch 0.100 worst poke 20 N on the flow pod ti 283 52.3s
+layout: beta 16 done: eroded design 3 bodies, main 46.7%; drawn bodies outside the main body: 2
+layout: beta 16 done: eroded design 3 bodies, main 46.7%; drawn bodies outside the main body: 2
+it  53 beta   32 J   2.7122 vol 0.1711 (dil 0.2434 g +0.032) grey  2.4% ch 0.100 worst crash 35 g 0 255 54.1s
+it  53 beta   32 J   2.7122 vol 0.1711 (dil 0.2434 g +0.032) grey  2.4% ch 0.100 worst crash 35 g 0 255 54.1s
+it  54 beta   32 J 150.7858 vol 0.1602 (dil 0.2355 g -0.002) grey  2.4% ch 0.100 worst poke 20 N on the flow pod ti 1.86e+04 51.1s
+it  54 beta   32 J 150.7858 vol 0.1602 (dil 0.2355 g -0.002) grey  2.4% ch 0.100 worst poke 20 N on the flow pod ti 1.86e+04 51.1s
+it  55 beta   32 J   4.0353 vol 0.1558 (dil 0.2336 g -0.010) grey  2.6% ch 0.100 worst tie b7 fy 486 53.4s
+it  55 beta   32 J   4.0353 vol 0.1558 (dil 0.2336 g -0.010) grey  2.6% ch 0.100 worst tie b7 fy 486 53.4s
+it  56 beta   32 J   3.1476 vol 0.1569 (dil 0.2334 g -0.026) grey  2.5% ch 0.100 worst tie b7 fy 317 54.0s
+it  56 beta   32 J   3.1476 vol 0.1569 (dil 0.2334 g -0.026) grey  2.5% ch 0.100 worst tie b7 fy 317 54.0s
+it  57 beta   32 J   2.9181 vol 0.1620 (dil 0.2374 g -0.010) grey  2.4% ch 0.100 worst crash 35 g 0 269 53.2s
+it  57 beta   32 J   2.9181 vol 0.1620 (dil 0.2374 g -0.010) grey  2.4% ch 0.100 worst crash 35 g 0 269 53.2s
+it  58 beta   32 J   2.8045 vol 0.1637 (dil 0.2386 g -0.005) grey  2.2% ch 0.100 worst crash 35 g 0 261 53.3s
+it  58 beta   32 J   2.8045 vol 0.1637 (dil 0.2386 g -0.005) grey  2.2% ch 0.100 worst crash 35 g 0 261 53.3s
+it  59 beta   32 J   2.7352 vol 0.1649 (dil 0.2387 g -0.004) grey  2.2% ch 0.100 worst crash 35 g 0 256 50.5s
+it  59 beta   32 J   2.7352 vol 0.1649 (dil 0.2387 g -0.004) grey  2.2% ch 0.100 worst crash 35 g 0 256 50.5s
+it  60 beta   32 J   2.7112 vol 0.1665 (dil 0.2389 g -0.003) grey  2.2% ch 0.100 worst crash 35 g 0 255 51.4s
+it  60 beta   32 J   2.7112 vol 0.1665 (dil 0.2389 g -0.003) grey  2.2% ch 0.100 worst crash 35 g 0 255 51.4s
