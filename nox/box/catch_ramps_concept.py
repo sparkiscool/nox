@@ -163,7 +163,7 @@ SCOUT_DIR = os.environ.get("SCOUT_DIR", "runs/scout_layout/v11")   # v12 (PR 141
 SCOUT_CATCH_X, SCOUT_PLANE_Z = float(os.environ.get("SCOUT_CATCH_X", -3.5)), -49.62   # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
 SCOUT_PLANE_FIX = -49.62                                         # the plane that seats its r 1.5 ring like the Overseer's r 3 (cartridge -3 -2.12; asked of the Scout session)
 OVR_REF = os.environ.get("OVR_REF", "dea0b51")                   # Overseer cage v5 (PR 122 merged to main; loop as confirmed 27 Oct)
-OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
+OVR_CATCH_X, OVR_PLANE_Z = float(os.environ.get("OVR_CATCH_X", -30.0)), float(os.environ.get("OVR_PLANE_Z", -57.0))   # C (Overseer session): swap centre x, loop plane (cartridge bottom = plane + 3); 27 Oct 13:07 PDT cage sync: plane -79.9, foot caps to -93.1 (OVR_REF=ee944ce8 OVR_PLANE_Z=-79.9)
 
 def git_bytes(ref, path):
     import subprocess
@@ -213,7 +213,7 @@ def scout(plane=None):
 def overseer():
     off = np.array([-OVR_CATCH_X, 0.0, -OVR_PLANE_Z])
     d, rr = load_drone(OVR_REF, "nox/overseer/overseer.assembly.json", "nox/overseer/cage_v5_shell.json", off)
-    d.update(dz=off[2], cart_bottom_seat=round(-54.0 + off[2], 2))
+    d.update(dz=off[2], cart_bottom_seat=round(OVR_PLANE_Z + 3.0 + off[2], 2))
     return d
 
 def wedge_mesh(r):

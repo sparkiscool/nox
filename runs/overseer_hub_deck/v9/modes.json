@@ -1,0 +1,183 @@
+{
+ "mesh": "runs/overseer_hub_deck/v9/overseer_hub_deck.stl",
+ "pitch_mm": 1.25,
+ "elements": 28127,
+ "dofs_free": 111258,
+ "material": "PETG (nox/topo)",
+ "masses_g": {
+  "Pi 5 + cooler on the post tops": 55.0,
+  "UBEC": 15.0,
+  "buck": 6.0
+ },
+ "modes": [
+  {
+   "hz": 658.7,
+   "peak_at": [
+    25.2,
+    -33.5,
+    3.8
+   ],
+   "dir": [
+    0.0,
+    -0.01,
+    -1.0
+   ]
+  },
+  {
+   "hz": 722.1,
+   "peak_at": [
+    23.9,
+    32.8,
+    3.8
+   ],
+   "dir": [
+    0.0,
+    0.02,
+    -1.0
+   ]
+  },
+  {
+   "hz": 1094.2,
+   "peak_at": [
+    -32.3,
+    -18.5,
+    6.2
+   ],
+   "dir": [
+    -0.07,
+    0.31,
+    -0.95
+   ]
+  },
+  {
+   "hz": 1245.3,
+   "peak_at": [
+    -33.6,
+    -22.2,
+    7.5
+   ],
+   "dir": [
+    0.83,
+    0.51,
+    0.24
+   ]
+  }
+ ],
+ "keel_sockets": {
+  "L2 brace lo +1": {
+   "nodes": 321,
+   "k_socket_N_per_mm": 4611,
+   "k_tube_N_per_mm": 5482,
+   "series_freq_factor": 0.676
+  },
+  "L2 brace hi +1": {
+   "nodes": 322,
+   "k_socket_N_per_mm": 3236,
+   "k_tube_N_per_mm": 5373,
+   "series_freq_factor": 0.613
+  },
+  "L2 brace lo -1": {
+   "nodes": 321,
+   "k_socket_N_per_mm": 5342,
+   "k_tube_N_per_mm": 5482,
+   "series_freq_factor": 0.703
+  },
+  "L2 brace hi -1": {
+   "nodes": 333,
+   "k_socket_N_per_mm": 3116,
+   "k_tube_N_per_mm": 5373,
+   "series_freq_factor": 0.606
+  },
+  "keel +1": {
+   "nodes": 300,
+   "k_socket_N_per_mm": 9649,
+   "k_tube_N_per_mm": 5522,
+   "series_freq_factor": 0.798
+  },
+  "keel -1": {
+   "nodes": 305,
+   "k_socket_N_per_mm": 9117,
+   "k_tube_N_per_mm": 5522,
+   "series_freq_factor": 0.789
+  }
+ },
+ "bolt_reactions_fe": {
+  "crash 0 [1.0, 0.0, 0.0] via head guard": {
+   "per_foot": {
+    "(-24, 36.5)": {
+     "N": 14.0,
+     "pull_N": -0.9
+    },
+    "(-24, -36.5)": {
+     "N": 14.5,
+     "pull_N": -0.7
+    },
+    "(65, 22.5)": {
+     "N": 222.6,
+     "pull_N": -81.7
+    },
+    "(65, -22.5)": {
+     "N": 223.1,
+     "pull_N": -85.4
+    },
+    "(96, 17)": {
+     "N": 343.3,
+     "pull_N": 11.4
+    },
+    "(96, -17)": {
+     "N": 340.4,
+     "pull_N": 11.2
+    },
+    "(60, 17)": {
+     "N": 81.4,
+     "pull_N": -30.9
+    },
+    "(60, -17)": {
+     "N": 80.1,
+     "pull_N": -24.4
+    }
+   },
+   "max_N": 343.3,
+   "max_pull_N": 11.4
+  },
+  "crash 4 [0.0, 0.0, 1.0] via head guard": {
+   "per_foot": {
+    "(-24, 36.5)": {
+     "N": 10.9,
+     "pull_N": -10.8
+    },
+    "(-24, -36.5)": {
+     "N": 10.6,
+     "pull_N": -10.4
+    },
+    "(65, 22.5)": {
+     "N": 173.3,
+     "pull_N": 66.7
+    },
+    "(65, -22.5)": {
+     "N": 174.4,
+     "pull_N": 70.1
+    },
+    "(96, 17)": {
+     "N": 215.5,
+     "pull_N": -22.5
+    },
+    "(96, -17)": {
+     "N": 207.9,
+     "pull_N": -23.5
+    },
+    "(60, 17)": {
+     "N": 67.1,
+     "pull_N": 15.8
+    },
+    "(60, -17)": {
+     "N": 65.1,
+     "pull_N": 6.2
+    }
+   },
+   "max_N": 215.5,
+   "max_pull_N": 70.1
+  }
+ },
+ "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses); socket stiffness along the keel"
+}
