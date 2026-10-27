@@ -191,3 +191,35 @@ it  27 beta    8 J   7.1004 vol 0.2317 (dil 0.3891 g -0.002) grey 12.5% ch 0.100
 it  27 beta    8 J   7.1004 vol 0.2317 (dil 0.3891 g -0.002) grey 12.5% ch 0.100 worst tie b2 mx 5.92 39.6s
 layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  28 beta   16 J   6.7150 vol 0.2262 (dil 0.3877 g -0.011) grey  5.6% ch 0.100 worst tie b2 mx 5.51 39.3s
+it  28 beta   16 J   6.7150 vol 0.2262 (dil 0.3877 g -0.011) grey  5.6% ch 0.100 worst tie b2 mx 5.51 39.3s
+it  29 beta   16 J   6.6305 vol 0.2299 (dil 0.3913 g -0.002) grey  5.6% ch 0.100 worst tie b2 mx 5.39 39.4s
+it  29 beta   16 J   6.6305 vol 0.2299 (dil 0.3913 g -0.002) grey  5.6% ch 0.100 worst tie b2 mx 5.39 39.4s
+it  30 beta   16 J   6.6024 vol 0.2308 (dil 0.3920 g -0.001) grey  5.6% ch 0.100 worst tie b2 mx 5.35 39.4s
+it  30 beta   16 J   6.6024 vol 0.2308 (dil 0.3920 g -0.001) grey  5.6% ch 0.100 worst tie b2 mx 5.35 39.4s
+it  31 beta   16 J   6.5900 vol 0.2311 (dil 0.3921 g +0.003) grey  5.5% ch 0.100 worst tie b2 mx 5.33 39.8s
+it  31 beta   16 J   6.5900 vol 0.2311 (dil 0.3921 g +0.003) grey  5.5% ch 0.100 worst tie b2 mx 5.33 39.8s
+it  32 beta   16 J   6.6078 vol 0.2300 (dil 0.3909 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.36 40.2s
+it  32 beta   16 J   6.6078 vol 0.2300 (dil 0.3909 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.36 40.2s
+it  33 beta   16 J   6.5987 vol 0.2301 (dil 0.3910 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.35 38.9s
+it  33 beta   16 J   6.5987 vol 0.2301 (dil 0.3910 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.35 38.9s
+it  34 beta   16 J   6.5917 vol 0.2302 (dil 0.3910 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.34 38.4s
+it  34 beta   16 J   6.5917 vol 0.2302 (dil 0.3910 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.34 38.4s
+it  35 beta   16 J   6.5852 vol 0.2303 (dil 0.3910 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.33 39.5s
+it  35 beta   16 J   6.5852 vol 0.2303 (dil 0.3910 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.33 39.5s
+it  36 beta   16 J   6.5791 vol 0.2303 (dil 0.3910 g +0.002) grey  5.5% ch 0.100 worst tie b2 mx 5.32 39.2s
+it  36 beta   16 J   6.5791 vol 0.2303 (dil 0.3910 g +0.002) grey  5.5% ch 0.100 worst tie b2 mx 5.32 39.2s
+it  37 beta   16 J   6.5899 vol 0.2295 (dil 0.3902 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.34 39.2s
+it  37 beta   16 J   6.5899 vol 0.2295 (dil 0.3902 g -0.000) grey  5.5% ch 0.100 worst tie b2 mx 5.34 39.2s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  38 beta   32 J   6.3796 vol 0.2279 (dil 0.3883 g -0.004) grey  2.6% ch 0.100 worst tie b2 mx 5.15 39.2s
+it  38 beta   32 J   6.3796 vol 0.2279 (dil 0.3883 g -0.004) grey  2.6% ch 0.100 worst tie b2 mx 5.15 39.2s
+it  39 beta   32 J   6.3513 vol 0.2291 (dil 0.3896 g -0.001) grey  2.6% ch 0.100 worst tie b2 mx 5.11 38.8s
+it  39 beta   32 J   6.3513 vol 0.2291 (dil 0.3896 g -0.001) grey  2.6% ch 0.100 worst tie b2 mx 5.11 38.8s
+it  40 beta   32 J   6.3436 vol 0.2293 (dil 0.3898 g -0.000) grey  2.6% ch 0.100 worst tie b2 mx 5.1 38.3s
+it  40 beta   32 J   6.3436 vol 0.2293 (dil 0.3898 g -0.000) grey  2.6% ch 0.100 worst tie b2 mx 5.1 38.3s
+it  41 beta   32 J   6.3387 vol 0.2294 (dil 0.3898 g +0.001) grey  2.6% ch 0.100 worst tie b2 mx 5.09 39.2s
+it  41 beta   32 J   6.3387 vol 0.2294 (dil 0.3898 g +0.001) grey  2.6% ch 0.100 worst tie b2 mx 5.09 39.2s
+it  42 beta   32 J   6.3397 vol 0.2291 (dil 0.3895 g -0.000) grey  2.6% ch 0.100 worst tie b2 mx 5.09 39.8s
+it  42 beta   32 J   6.3397 vol 0.2291 (dil 0.3895 g -0.000) grey  2.6% ch 0.100 worst tie b2 mx 5.09 39.8s
