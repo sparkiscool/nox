@@ -31,7 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 
 RING_MODE = os.environ.get("SCOUT_RING", "rect")           # rect: the Overseer ring's middle rectangle (Spark 27 Oct); overseer: the whole octagon; own
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v8", "" if RING_MODE == "rect" else "alt_" + RING_MODE + "_ring")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v9", "" if RING_MODE == "rect" else "alt_" + RING_MODE + "_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")                # the Overseer cage v3 (ring source)
 LOG = io.StringIO()
@@ -52,10 +52,16 @@ GUARD_NODE_R, GUARD_NODE_G = 5.0, 1.5                      # camera guard bar no
 PROP_GAP, CAGE_GAP = 12.0, 3.0
 M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0
 FREQ = int(os.environ.get("SCOUT_FREQ", 2))                # geodesic frequency
-PATTERN = os.environ.get("SCOUT_PATTERN", "free")           # free: nodes on the drone's own corners, any rod length (Spark 27 Oct); geodesic
-NDIR = int(os.environ.get("SCOUT_NDIR", 6))                # free pattern: directions the target is grown along (fewer = boxier corners)
+PATTERN = os.environ.get("SCOUT_PATTERN", "free")
+RACE = os.environ.get("SCOUT_RACE", "1") == "1"            # free pattern with the race-car silhouette (Spark 27 Oct)
+RACE_NOSE = [float(x) for x in os.environ.get("SCOUT_RACE_NOSE", "0,0").split(",")]   # nose point ahead of the target, above the bottom (0: none; Spark 27 Oct: "get rid of that sharp section under the camera")
+RACE_TAIL = [float(x) for x in os.environ.get("SCOUT_RACE_TAIL", "55,18").split(",")]   # tail point: behind the target, under its top           # free: nodes on the drone's own corners, any rod length (Spark 27 Oct); geodesic
+NDIR = int(os.environ.get("SCOUT_NDIR", 6))
+# race pattern anchors (fractions of the target's half length about its centre, of its half width, of its height above the bottom):
+# nose point, shoulders, mid sides, haunches, roof front, roof rear, tail point (Spark 27 Oct, the race-car look)
+RACE_ANCHORS = [(1.08, 0.0, 0.38), (0.72, 1.0, 0.62), (0.0, 1.06, 0.72), (-0.72, 1.0, 0.66), (0.42, 0.62, 1.0), (-0.42, 0.62, 1.0), (-1.1, 0.0, 0.8)]
 SHELL_CAP = int(os.environ.get("SCOUT_SHELL_CAP", 49))     # shell rods allowed: with the ~15 lean links, about half the 123 rods of cage v1 (Spark 27 Oct)
-OFFSETS = [float(x) for x in os.environ.get("SCOUT_OFFSETS", "16,20,24,28,30,32,36").split(",")]   # free pattern corner offsets scanned
+OFFSETS = [float(x) for x in os.environ.get("SCOUT_OFFSETS", "16,20,24,28,32").split(",")]   # free pattern corner offsets scanned
 NFREE = int(os.environ.get("SCOUT_NFREE", 9))              # free shell nodes kept (Spark 27 Oct: half the rods; 0 = all of the geodesic)
 LEAN = os.environ.get("SCOUT_LEAN", "1") == "1"            # links: the essential set only (Spark 27 Oct: half the rods)
 BREAK_EVEN = 33.0
@@ -64,11 +70,14 @@ CAM_CONE = 55.0                                            # cage first gated ou
 CAM_W, CAM_H, CAM_D = 38.0, 38.0, 14.0                     # board 38 x 38 (P) + lens, 14 deep (E, PR 94)
 LIM = NODE_R + 3.0                                         # shell node centres this far behind the camera's view planes
 SLACK = float(os.environ.get("SCOUT_SLACK", 5.0))
-CAM_Z = [float(x) for x in os.environ.get("SCOUT_CAM_Z", "70,90").split(",")]   # lens height range scanned (70..90: the camera over the nose, its group moment small enough to balance pack in and out)
+CAM_Z = [float(x) for x in os.environ.get("SCOUT_CAM_Z", "30,46").split(",")]   # lens height range scanned (Spark 27 Oct: "you can definitly lower the camera": low in the nose)
 PHIS = [float(x) for x in os.environ.get("SCOUT_PHIS", "35,50").split(",")]   # camera back-plane tilts scanned
-ELEC_AFT = float(os.environ.get("SCOUT_ELEC_AFT", 30.0))   # the UBEC this much further aft on the belly mount's tail (balance trim, DEFAULT 27 Oct)
+MIN_ROD = float(os.environ.get("SCOUT_MIN_ROD", 45.0))      # shortest shell rod (a sliver triangle below, Spark 27 Oct "small triangles", E)
+SMALL_TRI = float(os.environ.get("SCOUT_SMALL_TRI", 70.0))  # a hull triangle with every edge under this collapses to one node (Spark 27 Oct, E)
+TAIL_GAP = float(os.environ.get("SCOUT_TAIL_GAP", 13.0))   # tail bay: the Radxa / UBEC front ends this far behind the receiver (balance trim, DEFAULT)
+TAIL_BAY = os.environ.get("SCOUT_TAIL_BAY", "1") == "1"   # Radxa + UBEC in a tail bay behind the receiver (balance, race-car tail, Spark 27 Oct)
 PLATE_NOSE = np.array([60.0, 0.0, 20.25])                  # camera boom root on the plate nose (E, plate edge x ~65)
-BOOM = 12.0                                                # printed boom section 12 x 12 (E)
+BOOM = 10.0                                                # printed boom section 10 x 10 (E; braced to the arms, balance)
 
 ld = lambda f: trimesh.load(os.path.join(DR, f), force="mesh")
 
@@ -167,7 +176,14 @@ def drone(DC):
     D["pack 4S 1500"] = (ld("pack_4S_1500.stl"), "protected", True, 155.0, "P", None, "bought", "#2f4fbf", True)
     D["pack XT60 plug"] = (ld("pack_XT60_plug.stl"), "bought", True, 10.0, "E", None, "bought", "#c9a400", True)
     for n in CATCH:
-        m = D[n][0].copy(); m.apply_translation([-DC - (ELEC_AFT if n == "UBEC" else 0.0), 0, 0]); D[n] = (m,) + D[n][1:]
+        m = D[n][0].copy(); m.apply_translation([-DC, 0, 0]); D[n] = (m,) + D[n][1:]
+    if TAIL_BAY:
+        # tail bay (Spark 27 Oct: "a race car look", "lower the camera"): the Radxa and the UBEC ride behind the receiver's tail on the
+        # belly mount, their front ends TAIL_GAP behind it (the low nose camera's moment balanced by them; the cage gets a long low tail)
+        rt = float(D["receiver v3 (latch)"][0].bounds[0][0]) - TAIL_GAP
+        for n, y0 in (("Radxa Zero 3W", -1.6), ("UBEC", None)):
+            m = D[n][0].copy(); b_ = m.bounds
+            m.apply_translation([rt - b_[1][0], 0.0 if y0 is None else y0 - b_[0][1], 0.0]); D[n] = (m,) + D[n][1:]
     return D
 
 
@@ -321,7 +337,7 @@ def convex(N, U):
         lost = np.setdiff1d(np.arange(len(N)), h.vertices); lost = np.union1d(lost, P[lost])
         if len(lost):
             lf = lost[lost >= nR]; stuck[lf] += 1
-            drop = lf[stuck[lf] > 15]
+            drop = lf[stuck[lf] > (0 if PATTERN == "race" else 15)]     # race: an anchor inside the hull is not a corner there: drop it
             if len(drop):
                 drop = np.union1d(drop, P[drop])
                 keep = np.setdiff1d(np.arange(len(N)), drop); N, U, stuck = N[keep], U[keep], stuck[keep]; P = partners(N); continue
@@ -351,12 +367,30 @@ def shell(START, DOME, SNAP=False):
     ex, ey = np.ptp(RING[:, 0]) / 2, np.ptp(RING[:, 1]) / 2; rcx = RING[:, 0].mean()
     in_open = (((Pg[:, 0] - rcx) / (1.25 * ex)) ** 2 + (Pg[:, 1] / (1.25 * ey)) ** 2 < 1.0) & (Ug[:, 2] < -1e-6)
     Pf, Uf = Pg[~in_open], Ug[~in_open]
-    if PATTERN == "free":
+    if PATTERN == "race":
+        # race-car silhouette (Spark 27 Oct: "i want a race car look the overseer looks cooler"): 12 nodes on fixed fractions of
+        # the target's own extents (a low nose point under the camera, shoulders at the front prop tips, mid sides, haunches at the
+        # rear prop tips, a flat roof of 4 over the props, a tail point), grown START % about the centre; the camera's view limits
+        # rake the nose, and the convex pass below pushes a node out only as far as the hull needs to hold every part
+        lo_, hi_ = K.min(0), K.max(0); cx_ = 0.5 * (lo_[0] + hi_[0]); hx_ = 0.5 * (hi_[0] - lo_[0]); hy_ = hi_[1]; zt_ = hi_[2]
+        g_ = 1.0 + START / 100.0
+        sel = []
+        for fx, fy, fz in RACE_ANCHORS:
+            q = np.array([cx_ + g_ * fx * hx_, g_ * fy * hy_, Z_O + min(1.0, g_ * fz) * (zt_ - Z_O) + (g_ - 1.0) * max(0.0, fz - 0.9) * (zt_ - Z_O)])
+            sel += [q] if fy == 0 else [q, q * mir]
+        Pf = behind(np.vstack([RING, np.array(sel)]))[nR:]
+    elif PATTERN == "free":
         # free pattern (Spark 27 Oct: "dont worry about same rod length anymore"): no geodesic spacing, any rod length; the nodes
         # are corners of the target grown by START mm (scanned), taken one at a time (a mirror pair, or one on the centre plane),
         # the one farthest outside the hull so far first, until the hull of the ring and the nodes holds the whole target: a
         # larger offset needs fewer nodes (fewer rods) for a slightly larger cage
-        Kd = np.vstack([K + START * d_ for d_ in fib(NDIR)]); Kd = Kd[ConvexHull(Kd).vertices]
+        Kd = np.vstack([K + START * d_ for d_ in fib(NDIR)])
+        if RACE:                                              # the race-car look (Spark 27 Oct): a flat roof (the grown target clipped at
+            Kd[:, 2] = np.minimum(Kd[:, 2], K[:, 2].max() + 2.0)   # the target's own top), a low nose point under the camera and a raised
+            lo_, hi_ = K.min(0), K.max(0)                     # tail point, both on the centre plane
+            Kd = np.vstack([Kd, [[lo_[0] - RACE_TAIL[0], 0.0, hi_[2] - RACE_TAIL[1]]]]
+                           + ([[[hi_[0] + RACE_NOSE[0], 0.0, Z_O + RACE_NOSE[1]]]] if RACE_NOSE[0] > 0 else []))
+        Kd = Kd[ConvexHull(Kd).vertices]
         C = behind(np.vstack([RING, Kd[Kd[:, 2] > Z_O + 1.0]]))[nR:]
         C[np.abs(C[:, 1]) < 3.0, 1] = 0.0
         sel = [C[int(np.argmax(C[:, 2] - 0.01 * np.abs(C[:, 1])))] * [1, 0, 1]]           # the top, on the centre plane
@@ -385,6 +419,35 @@ def shell(START, DOME, SNAP=False):
     N = sym(N, partners(N)); U = dirs(N)
     N, viol, U = convex(behind(N), U)
     if not np.isfinite(viol.max()): return None
+    # small triangles to one node (Spark 27 Oct: "reduce small triangles to one node"): a hull triangle whose every edge is under
+    # SMALL_TRI collapses to one node (its free nodes merged at their centroid; a triangle and its mirror together, a self-mirror
+    # one onto the centre plane; a free node in one with a ring node is dropped into the ring node); the shell is pushed again
+    for _ in range(12):
+        h_ = ConvexHull(N); P = partners(N); hit = None
+        for f in h_.simplices:
+            e_ = max(np.linalg.norm(N[f[i]] - N[f[(i + 1) % 3]]) for i in range(3))
+            fr_ = [int(v) for v in f if v >= nR]
+            if e_ < SMALL_TRI and len(fr_) >= 2 - (len(fr_) < len(f)): hit = (f, fr_); break
+        if hit is None:                                      # a mirror pair closer than SMALL_TRI: one node on the centre plane
+            near_ = [i for i in range(nR, len(N)) if P[i] > i and np.linalg.norm(N[i] - N[P[i]]) < SMALL_TRI]
+            if near_:
+                i = near_[0]; hit = ([i, int(P[i])], [i, int(P[i])])
+        if hit is None: break
+        f, fr_ = hit
+        if len(fr_) == 2 and len(f) == 2:                    # the mirror pair
+            c_ = N[fr_].mean(0); c_[1] = 0.0; drop = set(fr_); newN = [c_]
+        elif len(fr_) < 3:                                   # a ring node in it: the free ones go into the ring node
+            drop = set(fr_) | {int(P[v]) for v in fr_}; newN = []
+        else:
+            mirr = {int(P[v]) for v in fr_}
+            if mirr == set(fr_):                              # self-mirror triangle: one node on the centre plane
+                c_ = N[fr_].mean(0); c_[1] = 0.0; drop = set(fr_); newN = [c_]
+            else:                                             # the triangle and its mirror: one node each
+                c_ = N[fr_].mean(0); drop = set(fr_) | mirr; newN = [c_, c_ * mir]
+        keep = [i for i in range(len(N)) if i not in drop]
+        N = np.vstack([N[keep]] + ([np.array(newN)] if newN else []))
+        U = dirs(N); N, viol, U = convex(behind(sym(N, partners(N))), U)
+        if not np.isfinite(viol.max()): return None
     if SNAP:
         # prop snap (the Overseer's, a mirror pair at a time): a free node over or under a prop disk tries the motor axis (the
         # hub, low thrust; one per prop and side) or out past the tip (R + 15) at its height, its partner the mirror move, both
@@ -576,7 +639,8 @@ def attach(nodes, ring_ids, E=()):
     def clear(p0, p1):                                       # a link and its mirror (mirror-exact links)
         p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
         if not (clear1(p0, p1) and clear1(p0 * mir, p1 * mir)): return False
-        if np.linalg.norm(p0 - p0 * mir) + np.linalg.norm(p1 - p1 * mir) > 1.0:   # a link and its own mirror apart
+        self_m = np.linalg.norm(p0 * mir - p1) + np.linalg.norm(p1 * mir - p0) < 1.0   # a rod across the centre plane is its own mirror
+        if not self_m and np.linalg.norm(p0 - p0 * mir) + np.linalg.norm(p1 - p1 * mir) > 1.0:   # a link and its own mirror apart
             q = p0 + np.linspace(0.08, 0.92, 40)[:, None] * (p1 - p0)
             if link_gap(q, p0 * mir, p1 * mir) < 2 * ROD_R + 1.0: return False
         return True
@@ -623,7 +687,7 @@ def attach(nodes, ring_ids, E=()):
         ok = [k for k in ring_ids if side(nodes[k], sx, 1)]
         pick(cn, ok, 1 if LEAN else 2, 15.0, f"bay tie {sx:+d}+1")
     pb = D["frame plate (Bee35 carbon)"][0].bounds           # core ties: 2 from each plate edge (underside) into the shell
-    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1))[1:2 if LEAN else 3]:   # lean: the tail tie only
+    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1))[3 if LEAN else 0:3]:   # lean: none (the spokes, bay ties and camera braces tie the core; Spark 27 Oct: half the rods)
         q = np.array([q0[0], q0[1], 18.5 - ROD_R])
         ok = [k for k in range(len(nodes)) if (sx == 0 or sx * nodes[k][0] > 0) and (sy == 0 or sy * nodes[k][1] > 0)
               and seg_band_dist(q, nodes[k]) - ROD_R >= PROP_GAP]
@@ -638,13 +702,11 @@ def attach(nodes, ring_ids, E=()):
         add("cam guard bar", T[0], T[1]); guard = T
         ok = [k for k in range(len(nodes)) if seg_band_dist(T[0], nodes[k]) - ROD_R >= PROP_GAP]
         pick(T[0], ok, 1 if LEAN else 2, 20.0, "cam guard strut 0")
-    # lower guard bar (rectangle bottom, 27 Oct: the ring no longer reaches ahead of the camera): 2 printed nodes under the camera,
-    # behind its lens, 1 strut a side into the shell
-    Tb = [np.array([x, sy * (CAM_W / 2 + 4.0), cb[0][2] - 3.0 - GUARD_NODE_R]) for sy in (1, -1)]
-    if views_clear(Tb[0], Tb[1], ROD_R) and clear(Tb[0], Tb[1]):
-        add("cam guard low bar", Tb[0], Tb[1]); guard = guard + Tb
-        ok = [k for k in range(len(nodes)) if seg_band_dist(Tb[0], nodes[k]) - ROD_R >= PROP_GAP]
-        pick(Tb[0], ok, 1, 20.0, "cam guard low strut 0")
+    # chin guard (27 Oct: the low camera with no nose point under it, Spark "get rid of that sharp section under the camera"): a
+    # printed lip on the camera seat under the camera, behind its lens (out of its view), 3 under the camera body; it links printed
+    # parts close together, so it is printed, not carbon (CLAUDE.md carbon rule); the cage-first member for a hit from below-forward
+    cl = box(CAM["Lx"] - CAM_D - 4.0, cb[1][0] - 2.0, -CAM_W / 2 - 6.0, CAM_W / 2 + 6.0, cb[0][2] - 3.0 - 4.0, cb[0][2] - 3.0)
+    CAM["chin"] = cl
     sz = CAM["seat_z"]; xs = CAM["Lx"] - CAM_D - 4.0
     for lvl, zc in ((("lo", sz[0] + ROD_R), ("hi", sz[1] - ROD_R)) if not LEAN else ()):   # lean: the boom + the arm braces carry the seat
         c_ = np.array([xs, CAM_W / 2 - ROD_R, zc])
@@ -655,6 +717,12 @@ def attach(nodes, ring_ids, E=()):
         root = np.array([*(out_ * u_[:2]), 18.5 - ROD_R])
         if seg_band_dist(c_, root) - ROD_R >= PROP_GAP and clear(c_, root):
             add("cam brace arm.1", c_, root); break
+    else:                                                     # no clear root on the arm beam: brace the seat into the shell instead
+        ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
+        pick(c_, ok, 1, 0.0, "cam brace shell")
+    if not any(k.startswith("cam brace") for k in extra):
+        raise SystemExit("camera seat unbraced (a stalk): no clear brace to the arms or the shell")
+    D["camera chin guard (printed)"] = (CAM["chin"], "cage", False, abs(CAM["chin"].volume) * 1.27e-3 * 0.5, "E", "PETG", "cage", "#7d8a99", False)
     have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]   # mirror-exact links
     for k_, (a_, b_) in list(extra.items()):
         a_, b_ = np.asarray(a_) * mir, np.asarray(b_) * mir
@@ -682,7 +750,7 @@ def run(DC):
     """the drone with the catch DC aft of the thrust centre, its shell scan (start x dome: the most compact valid shell sets
     the bar, the least prop shadow within 10 % volume / 3 % mass of it wins), links and masses"""
     build(DC); lines = []; cands = []
-    combos = [(s_, d_, n_) for s_ in (0.0, 0.7, 0.85, 1.0) for d_ in (20.0, 40.0, 60.0) for n_ in SNAPS] if PATTERN != "free" else \
+    combos = [(s_, d_, n_) for s_ in (0.0, 0.7, 0.85, 1.0) for d_ in (20.0, 40.0, 60.0) for n_ in SNAPS] if PATTERN not in ("free", "race") else \
         [(o_, 20.0, False) for o_ in OFFSETS]                 # free: START is the corner offset (mm), no dome, no prop snap
     for START, DOME, SNAP in combos:
         if START == 0.0 and DOME > 20.0: continue                 # cast onto the target: the dome does not apply
@@ -694,15 +762,20 @@ def run(DC):
         mass = sh * SHELL_GPM + NODE_G * (len(nodes) - nR) + RING_NODE_G * nR
         ok = viol <= 0.05 and pg >= PROP_GAP
         bt, bb = blockage(nodes, E, {}) if ok else (np.nan, np.nan)
-        lines.append(f"{'offset' if PATTERN == 'free' else 'start'} {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: {len(nodes)} nodes, {len(E)} tubes, {vol:.1f} L, "
+        lines.append(f"{'offset' if PATTERN in ('free', 'race') else 'start'} {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: {len(nodes)} nodes, {len(E)} tubes, {vol:.1f} L, "
                      f"{np.ptp(nodes[:, 2]):.0f} tall, shell {mass:.0f} g, props {pg:.1f}, shell shadow {bt:.1f} / {bb:.1f} %")
         if ok: cands.append(dict(start=START, dome=DOME, snap=SNAP, vol=vol, mass=mass, block=bt + bb, r=r))
-    if PATTERN == "free":                                     # half the rods (Spark 27 Oct): shells within the shell rod cap, the
+    if PATTERN in ("free", "race"):                           # half the rods (Spark 27 Oct): shells within the shell rod cap, the
         cap_ = [c for c in cands if len(c["r"][1]) <= SHELL_CAP] or [min(cands, key=lambda c: len(c["r"][1]))]   # most compact,
         for c in cap_:                                        # among the shells balanced on their own (x moment about the thrust
             nd_, E_ = c["r"][0], c["r"][1]                    # centre under 400 g mm, ~0.6 mm of CG: a lopsided shell leaves the
             c["mom"] = sum(np.linalg.norm(nd_[a] - nd_[b]) * SHELL_GPM * (nd_[a][0] + nd_[b][0]) / 2 for a, b in E_) + NODE_G * nd_[nR:, 0].sum()
-        bal_ = [c for c in cap_ if abs(c["mom"]) <= 400.0] or cap_   # catch shift unable to balance pack in and pack out together)
+        def small_(c):                                        # triangles with every edge under SMALL_TRI left in the final shell
+            nd_, _, tr_, _ = c["r"]
+            return sum(max(np.linalg.norm(nd_[t[i]] - nd_[t[(i + 1) % 3]]) for i in range(3)) < SMALL_TRI for t in tr_)
+        short_ = lambda c: min(np.linalg.norm(c["r"][0][a] - c["r"][0][b]) for a, b in c["r"][1])
+        cap_ = [c for c in cap_ if small_(c) == 0 and short_(c) >= MIN_ROD] or cap_   # no small or sliver triangles (Spark 27 Oct) first
+        bal_ = [c for c in cap_ if abs(c["mom"]) <= 1500.0] or cap_   # the catch scan balances the rest; a lopsided shell beyond this is out
         ref = pick = min(bal_, key=lambda c: c["vol"])
     else:
         ref = min(cands, key=lambda c: c["vol"])
@@ -883,9 +956,10 @@ ACCESS.append({"name": "FC USB-C cable (12 x 7, searched path, E)", "part": "FC"
                "ignore": ["mount + nose legs (Scout)", "wires"]})
 say(f"FC USB-C cable: from ({USB[0][0]:.1f}, {USB[0][1]:.1f}, {USB[0][2]:.1f}) along ({USB[1][0]:.2f}, {USB[1][1]:.2f}, {USB[1][2]:.2f}), "
     f"{math.degrees(math.acos(np.clip(USB[1] @ np.array([-0.7071, -0.7071, 0.0]), -1, 1))):.0f} deg off the tail-left diagonal, out through a cell (C)")
+say("camera braces: " + ", ".join(k for k in extra if k.startswith("cam brace")) + " (the seat on the boom + these: not a stalk)")
 say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
-if OUT == os.path.join(ROOT, "runs", "scout_layout", "v8", ""):
+if OUT == os.path.join(ROOT, "runs", "scout_layout", "v9", ""):
     from assembly import new as new_assembly
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
@@ -905,7 +979,7 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v8", ""):
     contact = [["motor %d" % i, "prop %d" % i] for i in range(1, 5)] + [["motor %d" % i, "frame plate (Bee35 carbon)"] for i in range(1, 5)]
     contact += [["cage shell tubes", "cage shell nodes"], [LINKS, "cage shell nodes"], [LINKS, "cage shell tubes"], [LINKS, "frame plate (Bee35 carbon)"],
                 [LINKS, "receiver v3 (latch)"], [LINKS, "mount + nose legs (Scout)"], [LINKS, "receiver TPU end pieces (latch, E)"], [LINKS, "camera mount (boom + seat)"],
-                ["camera mount (boom + seat)", "camera"], ["camera mount (boom + seat)", "frame plate (Bee35 carbon)"], ["camera mount (boom + seat)", "mount + nose legs (Scout)"],
+                ["camera mount (boom + seat)", "camera"], ["camera mount (boom + seat)", "frame plate (Bee35 carbon)"], ["camera chin guard (printed)", "camera mount (boom + seat)"], ["camera mount (boom + seat)", "mount + nose legs (Scout)"],
                 ["receiver TPU end pieces (latch, E)", "receiver v3 (latch)"], ["receiver TPU end pieces (latch, E)", "receiver lid (latch)"],
                 ["receiver TPU end pieces (latch, E)", "receiver TPU strips (latch)"], ["receiver TPU end pieces (latch, E)", "mount + nose legs (Scout)"],
                 ["receiver TPU end pieces (latch, E)", "cartridge v6 strips (latch, TPU)"], ["cartridge v6 strips (latch, TPU)", "cartridge v6 (latch)"],

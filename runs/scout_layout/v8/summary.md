@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2 (rectangle bottom): the Scout design (27 Oct 2026, concept)
 
+**Superseded 27 Oct by the race-car design (`runs/scout_layout/v9/summary.md`, Spark: "looks too dumb, i want a race car look", "lower the camera", "reduce small triangles to one node"). Kept: summary, results, still.**
+
 Spark 27 Oct, in order:
 - On cage v1 (`runs/scout_layout/v6/`, 123 rods): "subtract the number of rods, these are all 3mm as well and also just divide the number of rods by half"
 - "dont worry about same rod legnth anymore" (`v7/`: octagon ring, 65 rods)
