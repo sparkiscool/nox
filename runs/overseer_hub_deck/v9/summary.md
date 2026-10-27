@@ -2,6 +2,8 @@
 
 Part: the Overseer hub deck, one PETG print on the bottom plate (`nox/overseer/core_topo_v3.py hub_deck 1.25 24 --ver=v9`, nox/topo, organic finish, members 6.25): Pi 5 posts on root webs, UBEC / buck seat rails (VHB), 2 keel sockets and 4 L2 brace sockets (6.2 bores) on a front tower with drawn cores and bars back to the mid feet, 8 feet Ø14 with M3 x 5.7 inserts (M3 up from under the plate). Requirements: `nox/dimensions.md` System Overseer core (core v3, low brace roots), per-case root forces `runs/overseer_core/v3/core_root_forces_low.json` (cage frame model, F on E).
 
+Waited for: hub deck v8's result (its build drawn-body failure is what v9 fixes; v4 -> v6 -> v8 -> v9 each needed the one before).
+
 Smoke (`estimate.json`): fine 34.0 s/it, 50 cases, 5.48 GB, wall 0.59..1.44 h (E). Run 11:31-12:30 PDT, 0.90 h, peak 5.3 GB (M).
 
 ```
