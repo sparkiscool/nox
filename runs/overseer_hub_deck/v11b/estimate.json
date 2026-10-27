@@ -1,0 +1,30 @@
+{
+ "name": "overseer_hub_deck",
+ "h": 1.25,
+ "gen_cm3": 24.0,
+ "coarse": {
+  "s_per_it": 2.7,
+  "cells": 51200,
+  "design_cells": 8464,
+  "cases": 76,
+  "load_cases": 22,
+  "backend": "direct",
+  "peak_gb": 1.11
+ },
+ "smoke_iterations": 3,
+ "fine": {
+  "s_per_it": 31.6,
+  "cells": 368640,
+  "design_cells": 61095,
+  "cases": 64,
+  "load_cases": 22,
+  "backend": "direct",
+  "peak_gb": 5.49
+ },
+ "peak_gb": 5.49,
+ "wall_h": [
+  0.55,
+  1.36
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
