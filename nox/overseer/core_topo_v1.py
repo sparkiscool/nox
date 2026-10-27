@@ -18,7 +18,9 @@ and the assembly `nox/overseer/overseer_core.assembly.json` (never retyped), the
 
 python3 nox/overseer/core_topo_v1.py hub_deck|sled [h] [gen_cm3] [--no-git] [--no-coarse] [--lean] [--ver=v2]     (NOX_SETUP_ONLY=1: setup only)
 sled v1 FAILED (6 attempts out of memory at the fine stage, 8.4..13.3 GB: the 5.7 mm filter is 4.6 cells at h 1.25); sled v2: h 1.6,
-fine grid only (--no-coarse), flight cases left out (--lean).
+fine grid only (--no-coarse), flight cases left out (--lean): OOM-killed in 3 min (8.9 GB) and its 6.0 sled layer only routed 3.55 mm
+members at h 1.6. Cause: the engine keeps F and U for every case on the full grid (19 loads + 126 tie cases). sled v3: h 1.25, coarse
+stage on, --lean, --set tie_moments=0 --set held_ties=0 --set gate_ties=0 (46 cases).
 """
 import json, os, sys
 import numpy as np, trimesh, manifold3d as mf
@@ -31,13 +33,17 @@ from topo.part import man
 PIECE = sys.argv[1] if len(sys.argv) > 1 else "hub_deck"
 if PIECE not in ("hub_deck", "sled"):
     sys.exit(__doc__)
-args = [a for a in sys.argv[2:] if not a.startswith("-")]
+args = [a for i, a in enumerate(sys.argv[2:], 2) if not a.startswith("-") and sys.argv[i - 1] != "--set"]
 H = float(args[0]) if args else (1.0 if PIECE == "hub_deck" else 1.25)
 GEN = float(args[1]) if len(args) > 1 else (10.0 if PIECE == "hub_deck" else 40.0)   # cm3 generated (E: slots 24 / 75 g, minus drawn)
 GIT = "--no-git" not in sys.argv
 COARSE = "--no-coarse" not in sys.argv          # sled v2: the 3.0 coarse grid went singular at h 1.5 (v1), so run the fine grid only
 LEAN = "--lean" in sys.argv                     # sled v2: flight / landing cases left out, the 35 g crash cases cover them
 VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v1")
+SETS = {}                                       # --set key=value: Settings fields (sled v3: tie_moments=0 held_ties=0 gate_ties=0, the
+for i_, a_ in enumerate(sys.argv):              # engine keeps F and U for every case on the full grid: 145 cases x 1.7 M dofs ran out of memory)
+    if a_ == "--set":
+        k_, v_ = sys.argv[i_ + 1].split("=", 1); SETS[k_] = (v_ not in ("0", "false", "False")) if v_ in ("0", "1", "true", "false", "True", "False") else float(v_)
 
 R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v1", "result.json")))
 C = R["coupon"]
@@ -190,4 +196,4 @@ if __name__ == "__main__":
         p = setup(H)
         print(p.summary() if hasattr(p, "summary") else (p.shape, p.nel, int(p.design.sum()), int(p.solid.sum()), len(p.cases)))
     else:
-        optimise(setup, h=H, gen_cm3=GEN, out_dir=out, name=f"overseer_{PIECE}", settings=Settings(), git=GIT, coarse=COARSE)
+        optimise(setup, h=H, gen_cm3=GEN, out_dir=out, name=f"overseer_{PIECE}", settings=Settings(**SETS), git=GIT, coarse=COARSE)
