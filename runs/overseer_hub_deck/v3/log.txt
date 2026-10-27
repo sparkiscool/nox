@@ -184,3 +184,21 @@ it  23 beta    8 J   7.3568 vol 0.1442 (dil 0.2551 g -0.003) grey 10.9% ch 0.100
 it  23 beta    8 J   7.3568 vol 0.1442 (dil 0.2551 g -0.003) grey 10.9% ch 0.100 worst USB plug 20 N into the Pi's  95.6 76.3s
 it  24 beta    8 J   6.7671 vol 0.1448 (dil 0.2553 g -0.002) grey 10.9% ch 0.100 worst held b4 mz 91 77.5s
 it  24 beta    8 J   6.7671 vol 0.1448 (dil 0.2553 g -0.002) grey 10.9% ch 0.100 worst held b4 mz 91 77.5s
+it  25 beta    8 J   6.4255 vol 0.1452 (dil 0.2554 g -0.002) grey 10.9% ch 0.100 worst held b4 mz 89.9 77.3s
+it  25 beta    8 J   6.4255 vol 0.1452 (dil 0.2554 g -0.002) grey 10.9% ch 0.100 worst held b4 mz 89.9 77.3s
+it  26 beta    8 J   6.2272 vol 0.1456 (dil 0.2555 g +0.000) grey 10.9% ch 0.100 worst held b4 mz 87.7 76.2s
+it  26 beta    8 J   6.2272 vol 0.1456 (dil 0.2555 g +0.000) grey 10.9% ch 0.100 worst held b4 mz 87.7 76.2s
+it  27 beta    8 J   6.1333 vol 0.1456 (dil 0.2551 g -0.001) grey 10.9% ch 0.100 worst held b4 mz 86 77.6s
+it  27 beta    8 J   6.1333 vol 0.1456 (dil 0.2551 g -0.001) grey 10.9% ch 0.100 worst held b4 mz 86 77.6s
+it  28 beta    8 J   6.0239 vol 0.1458 (dil 0.2552 g -0.001) grey 10.9% ch 0.100 worst held b4 mz 84 81.9s
+it  28 beta    8 J   6.0239 vol 0.1458 (dil 0.2552 g -0.001) grey 10.9% ch 0.100 worst held b4 mz 84 81.9s
+it  29 beta    8 J   5.9381 vol 0.1460 (dil 0.2552 g -0.001) grey 10.9% ch 0.100 worst held b4 mz 82.5 75.9s
+it  29 beta    8 J   5.9381 vol 0.1460 (dil 0.2552 g -0.001) grey 10.9% ch 0.100 worst held b4 mz 82.5 75.9s
+it  30 beta    8 J   5.8772 vol 0.1461 (dil 0.2553 g -0.000) grey 10.9% ch 0.100 worst held b4 mz 81.2 78.9s
+it  30 beta    8 J   5.8772 vol 0.1461 (dil 0.2553 g -0.000) grey 10.9% ch 0.100 worst held b4 mz 81.2 78.9s
+it  31 beta    8 J   5.8325 vol 0.1462 (dil 0.2553 g +0.003) grey 10.9% ch 0.100 worst held b4 mz 80.3 77.4s
+it  31 beta    8 J   5.8325 vol 0.1462 (dil 0.2553 g +0.003) grey 10.9% ch 0.100 worst held b4 mz 80.3 77.4s
+it  32 beta    8 J   5.8963 vol 0.1455 (dil 0.2545 g -0.000) grey 10.9% ch 0.100 worst held b4 mz 81.1 75.5s
+it  32 beta    8 J   5.8963 vol 0.1455 (dil 0.2545 g -0.000) grey 10.9% ch 0.100 worst held b4 mz 81.1 75.5s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
