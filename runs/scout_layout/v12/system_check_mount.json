@@ -368,27 +368,9 @@
     "pass_": true
    },
    {
-    "a": "cage shell tubes",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
     "a": "cage shell nodes",
     "b": "spokes, bay ties, core ties, camera guard",
     "overlap_mm3": 304.9,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "cage shell nodes",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
@@ -415,15 +397,6 @@
    {
     "a": "spokes, bay ties, core ties, camera guard",
     "b": "receiver TPU end pieces (latch, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "spokes, bay ties, core ties, camera guard",
-    "b": "tail bay cables (Scout electronics, E)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -504,15 +477,6 @@
    },
    {
     "a": "frame plate (Bee35 carbon)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "frame plate (Bee35 carbon)",
     "b": "tie saddle (printed)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
@@ -557,44 +521,8 @@
     "pass_": true
    },
    {
-    "a": "motor 1",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 1",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "motor 2",
     "b": "prop 2",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "motor 2",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 2",
-    "b": "tail bay cables (Scout electronics, E)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -611,24 +539,6 @@
     "pass_": true
    },
    {
-    "a": "motor 3",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 3",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "motor 4",
     "b": "prop 4",
     "overlap_mm3": 0.0,
@@ -638,33 +548,6 @@
     "pass_": true
    },
    {
-    "a": "motor 4",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "prop 4",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "UBEC",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "UBEC",
     "b": "electronics tail carrier (PETG)",
     "overlap_mm3": 0.0,
@@ -675,29 +558,11 @@
    },
    {
     "a": "XR2",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "XR2",
     "b": "electronics tail carrier (PETG)",
     "overlap_mm3": 0.0,
     "limit_mm3": 0.05,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "Radxa Zero 3W",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
@@ -738,15 +603,6 @@
    },
    {
     "a": "receiver v3 (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver v3 (latch)",
     "b": "electronics tail block (PETG)",
     "overlap_mm3": -0.0,
     "limit_mm3": 0.05,
@@ -783,15 +639,6 @@
    },
    {
     "a": "receiver lid (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "receiver lid (latch)",
     "b": "belly mount (PETG)",
     "overlap_mm3": 0.0,
     "limit_mm3": 0.05,
@@ -818,15 +665,6 @@
     "pass_": true
    },
    {
-    "a": "receiver TPU strips (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "receiver TPU end pieces (latch, E)",
     "b": "cartridge v6 strips (latch, TPU)",
     "overlap_mm3": 0.0,
@@ -836,30 +674,12 @@
     "pass_": true
    },
    {
-    "a": "receiver TPU end pieces (latch, E)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "XT60E1-M",
     "b": "pack XT60 plug",
     "overlap_mm3": 0.0,
     "limit_mm3": 1.0,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "XT60E1-M",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
@@ -899,15 +719,6 @@
     "pass_": true
    },
    {
-    "a": "cartridge v6 (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "slider +y (latch)",
     "b": "cartridge v6 strips (latch, TPU)",
     "overlap_mm3": 0.0,
@@ -917,107 +728,17 @@
     "pass_": true
    },
    {
-    "a": "slider +y (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "slider -y (latch)",
     "b": "cartridge v6 strips (latch, TPU)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "slider -y (latch)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
     "a": "cartridge v6 strips (latch, TPU)",
     "b": "pack 4S 1500",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge v6 strips (latch, TPU)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid closed end (latch, TPU)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "cartridge skid lead end (latch, TPU)",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack 4S 1500",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "pack XT60 plug",
-    "b": "tail bay cables (Scout electronics, E)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "camera",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "tie saddle (printed)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": 1000000000.0,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "tail bay cables (Scout electronics, E)",
-    "b": "camera mount (printed)",
     "overlap_mm3": 0.0,
     "limit_mm3": 1000000000.0,
     "contact": true,
@@ -1297,9 +1018,9 @@
     "name": "receiver v3 (latch)",
     "mass_g": 94.4,
     "cg": [
-     4.11,
-     0.0,
-     -10.94
+     4.1,
+     -0.0,
+     -10.93
     ],
     "tag": "M",
     "swap": false
@@ -1331,7 +1052,7 @@
     "mass_g": 8.2,
     "cg": [
      -3.06,
-     0.0,
+     -0.0,
      -19.37
     ],
     "tag": "M",
@@ -1342,7 +1063,7 @@
     "mass_g": 6.0,
     "cg": [
      48.25,
-     0.0,
+     -0.0,
      2.73
     ],
     "tag": "E",
@@ -1463,7 +1184,7 @@
     "mass_g": 17.01,
     "cg": [
      -3.46,
-     0.0,
+     -0.0,
      -2.25
     ],
     "tag": "E",
@@ -1473,7 +1194,7 @@
     "name": "camera mount (printed)",
     "mass_g": 21.75,
     "cg": [
-     133.24,
+     133.23,
      0.0,
      41.55
     ],
@@ -1495,7 +1216,7 @@
     "name": "camera mount stop collar -y",
     "mass_g": 0.25,
     "cg": [
-     123.9,
+     124.17,
      -25.3,
      11.5
     ],

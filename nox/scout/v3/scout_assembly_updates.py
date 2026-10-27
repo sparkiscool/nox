@@ -73,14 +73,24 @@ def belly(a):
     m = json.load(open(man)); r = json.load(open(os.path.join(BELLY, "result.json"))); d = os.path.join(RUN, "belly_v1"); os.makedirs(d, exist_ok=True)
     meshes = {"FC": bm.fc_mesh(r["fc"]["z"][0]), "flow MTF-02P": bm.flow_mesh(r["flow"]),
               "belly mount (PETG)": trimesh.load(os.path.join(BELLY, "belly_mount__petg_.stl"))}
+    SWAP = {"belly mount (PETG)", "electronics tail block (PETG)", "electronics tail carrier (PETG)", "FC", "flow MTF-02P", "wires"}
+    GONE = {"mount + nose legs (Scout)", "tail bay mount block (Scout electronics, E)", "tail bay carrier (Scout electronics, E)"}
+    new = []
     for p in m["parts"]:
+        if p["name"] not in SWAP: continue                               # only their pieces; every other part stays the layout's
         if p.get("trimesh"):
             f = os.path.join(d, p["name"].split(" (")[0].replace(" ", "_").lower() + ".stl")
             if p["name"] != "belly mount (PETG)": meshes[p["name"]].export(f)
             else: f = os.path.join(BELLY, "belly_mount__petg_.stl")
             del p["trimesh"]; p["mesh"] = os.path.relpath(f, ROOT)
         elif "mesh" in p and os.path.isabs(p["mesh"]): p["mesh"] = os.path.relpath(p["mesh"], ROOT)
-    for k in ("parts", "contact_pairs", "clearance_pairs", "access"):
+        new.append(p)
+    a["parts"] = [p for p in a["parts"] if p["name"] not in SWAP | GONE] + new
+    touched = SWAP | GONE
+    a["contact_pairs"] = [c for c in a["contact_pairs"] if not ({c[0], c[1]} & touched)] + [c for c in m["contact_pairs"] if {c[0], c[1]} & SWAP]
+    a["contact_pairs"] = [c for c in a["contact_pairs"] if not ("tail bay cables (Scout electronics, E)" in c[:2] and c[2] >= 1e9)]   # the cables:
+                                                                     # a mass point, no blanket pairs (a future cable clash shows)
+    for k in ("clearance_pairs", "access"):
         if k in m: a[k] = m[k]
     a["note"] = "belly mount v1 (concept, runs/scout_belly_mount/v1) system model: " + m["note"] + " " + a["note"]
     bp = next(p for p in m["parts"] if p["name"] == "belly mount (PETG)")
