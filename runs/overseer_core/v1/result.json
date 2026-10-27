@@ -2,16 +2,16 @@
  "mass_g": 3419.68,
  "tw": 1.93,
  "cg": [
-  61.53,
+  61.52,
   -0.22,
   15.7
  ],
  "requirements": {
   "hub deck": {
    "worst_case": "crash 35 g 4",
-   "max_bolt_N": 13.4,
+   "max_bolt_N": 13.3,
    "max_shear_N": 10.8,
-   "max_axial_N": 13.4
+   "max_axial_N": 13.3
   },
   "sled to plate": {
    "worst_case": "crash 35 g 6",
@@ -32,10 +32,10 @@
    "max_axial_N": 6.7
   },
   "stack screws": {
-   "worst_case": "crash 35 g 6",
-   "max_bolt_N": 4.0,
+   "worst_case": "crash 35 g 0",
+   "max_bolt_N": 3.5,
    "max_shear_N": 2.5,
-   "max_axial_N": 3.4
+   "max_axial_N": 2.8
   }
  },
  "pod_mode_hz": 1687,
@@ -164,7 +164,7 @@
   "hub deck": 24,
   "sled": 75
  },
- "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 31/35 clear (FC USB-C (-y edge, on the top plate) blocked by prop 3, cage shell tubes 4201 mm\u00b3; Pi USB-A / RJ45 plugs (aft, in the open) blocked by bottom plate, sled, spokes, ties, keels, L2 guard ring 624 mm\u00b3; step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet) blocked by RX XR2 169 mm\u00b3; step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet) blocked by RX XR2 37 mm\u00b3) FAIL",
+ "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.7, -0.2, -66.3], 24.7 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 34/35 clear (Pi USB-A / RJ45 plugs (aft, in the open) blocked by spokes, ties, keels, L2 guard ring 53 mm\u00b3) FAIL",
  "coupon": {
   "floor_t": 4.0,
   "post_h": 5.0,
@@ -176,6 +176,7 @@
    31.5
   ],
   "rail_y": 22.0,
+  "bay_y": 17.0,
   "ubec_bay": [
    34.0,
    82.0,

@@ -72,7 +72,8 @@ def hub_deck_coupon():
     body += [bar((px0, 24.5), (px0, -24.5)), bar((px1, 24.5), (px1, -24.5))]
     body += [bar((-65.0, sy * 22.5), (px0, sy * ry)) for sy in (1, -1)] + [bar((px0, sy * ry), (px1, sy * ry)) for sy in (1, -1)]
     xb = C["ubec_bay"][1] - 2.0
-    body += [bar((px1, sy * ry), (xb, sy * ry)) for sy in (1, -1)] + [bar((xb, ry), (xb, -ry)), bar((57, ry), (57, -ry))]
+    by = C["bay_y"]
+    body += [bar((px1, sy * by), (xb, sy * by)) for sy in (1, -1)] + [bar((xb, by), (xb, -by)), bar((57, by), (57, -by))]
     cuts = [cyl(x, y, -1, T + 1, M3_CLR / 2) for x, y in feet] + [cyl(x, y, zp - 4.0, zp + 1, M25_TAP / 2) for x, y in ph]
     return union(body) - union(cuts)
 

@@ -1,6 +1,6 @@
 # Runs
 
-_101 runs · rebuilt 2026-10-27 04:43_
+_101 runs · rebuilt 2026-10-27 04:49_
 
 ## Latest per part
 
@@ -37,7 +37,7 @@ _101 runs · rebuilt 2026-10-27 04:43_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-27 04:41 | overseer_core | [v1](runs/overseer_core/v1/summary.md) | · | 3419.7 (M) | · | · | · | · GB | · min | · |
+| 2026-10-27 04:48 | overseer_core | [v1](runs/overseer_core/v1/summary.md) | · | 3419.7 (M) | · | · | · | · GB | · min | · |
 | 2026-10-27 02:37 | arm_pinion16 | [v2](runs/arm_pinion16/v2/summary.md) | · | 3.1 (M) | [0.76, 'power cut, bumped head'] | · | · | · GB | · min | · |
 | 2026-10-27 02:37 | arm_rail | [v2](runs/arm_rail/v2/summary.md) | · | 49.4 (M) | [0.28, 'head stall free'] | · | · | · GB | · min | · |
 | 2026-10-27 02:37 | arm_rail | [v3](runs/arm_rail/v3/summary.md) | · | 56.6 (M) | [0.11, 'dropped Overseer'] | · | · | · GB | · min | · |

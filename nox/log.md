@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer core, review): FC stack turned 45° into the top plate's slots ("the lines", r 21.57; +X hole at the cutout edge, CHECK), on bench-set M3 studs with nuts from above; front bay bars inside |y| 20 (arm envelopes); access 34/35 (Pi plugs vs v5 body ties: cage). `runs/overseer_core/v1/`
 - 27 Oct (Overseer core, Spark): round 5: no stack mount, the FC + 4-in-1 bolts straight through the carbon top plate (Spark); 2 pieces, 2 coupons (hub deck 17.9 g, sled 29.2 g); every mounting hole checked against the STEP (360° faces) and the makers, table in dimensions System Overseer core
 - 27 Oct (Overseer core, Spark): round 4: FC + 4-in-1 stack on the top plate (stack mount), Pi 5 between the plates, UBEC + buck on the front wing; rear feet on real holes (-65, ±22.5) (review: (-72.5, ±31.75) were outline fillets); 3 coupons 8.6 / 17.9 / 29.2 g, solid PASS. `runs/overseer_core/v1/`
 - 27 Oct (Overseer core, Spark): round 3: no PDB (4-in-1 under the FC), cameras/lidar off our list, 2 pieces (hub deck: stack, Pi 5 aft right side up, UBEC/buck/RX; sled: receiver face + flow pod), every screw straight down; mounting coupons hub deck 33.8 g + sled 27.9 g READY. `runs/overseer_core/v1/`, `print/overseer_core_coupon_*`

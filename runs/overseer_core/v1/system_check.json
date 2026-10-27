@@ -736,7 +736,7 @@
    {
     "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "b": "wires",
-    "overlap_mm3": 365.04,
+    "overlap_mm3": 664.74,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -973,7 +973,7 @@
  "mass_cg": {
   "mass_g": 3419.68,
   "cg": [
-   61.53,
+   61.52,
    -0.22,
    15.7
   ],
@@ -1356,9 +1356,9 @@
     "name": "hub deck",
     "mass_g": 24.0,
     "cg": [
-     9.6,
+     7.58,
      -0.0,
-     2.17
+     2.18
     ],
     "tag": "E",
     "swap": false
@@ -1393,7 +1393,7 @@
    82.0
   ],
   "cg_offset": [
-   0.75,
+   0.74,
    -0.22,
    -66.3
   ],
@@ -1416,11 +1416,11 @@
    "all": {
     "mass_g": 3419.68,
     "cg_offset": [
-     0.75,
+     0.74,
      -0.22,
      -66.3
     ],
-    "horizontal_mm": 0.78,
+    "horizontal_mm": 0.77,
     "axial_mm": -66.3,
     "pass_": true,
     "gated": true
@@ -1428,18 +1428,18 @@
    "no_swap": {
     "mass_g": 2664.08,
     "cg_offset": [
-     24.75,
+     24.73,
      -0.28,
      -49.33
     ],
-    "horizontal_mm": 24.75,
+    "horizontal_mm": 24.74,
     "axial_mm": -49.33,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 24.75,
+  "worst_horizontal_mm": 24.74,
   "pass_": true
  },
  "probes": {
@@ -2205,7 +2205,7 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "margin_mm": 94.0,
+    "margin_mm": 93.0,
     "unshielded": false,
     "dir": [
      -0.114,
@@ -2219,10 +2219,10 @@
      0.115
     ],
     "roll_deg": 0.0,
-    "lateral_mm": -15.0,
+    "lateral_mm": -12.0,
     "contact": [
-     -18.0,
-     2.0,
+     -25.5,
+     0.0,
      67.1
     ],
     "pass_": true
@@ -2257,7 +2257,7 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "margin_mm": 106.0,
+    "margin_mm": 105.46,
     "unshielded": false,
     "dir": [
      -0.224,
@@ -2273,8 +2273,8 @@
     "roll_deg": 0.0,
     "lateral_mm": -12.0,
     "contact": [
-     -18.0,
-     5.0,
+     -23.4,
+     2.1,
      67.1
     ],
     "pass_": true
@@ -2361,25 +2361,25 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "RX XR2",
-    "margin_mm": 120.07,
+    "margin_mm": 124.03,
     "unshielded": false,
     "dir": [
-     -0.198,
-     -0.274,
-     0.941
+     -0.067,
+     0.5,
+     -0.864
     ],
-    "dir_label": "(-0.20, -0.27, +0.94)",
+    "dir_label": "(-0.07, +0.50, -0.86)",
     "axis": [
-     0.972,
-     0.072,
-     0.225
+     0.964,
+     0.256,
+     0.073
     ],
-    "roll_deg": 15.0,
-    "lateral_mm": -39.0,
+    "roll_deg": 210.0,
+    "lateral_mm": 60.0,
     "contact": [
-     -30.0,
-     24.0,
-     52.6
+     -20.0,
+     40.0,
+     46.6
     ],
     "pass_": true
    },
@@ -2471,7 +2471,7 @@
    0.0,
    10.0
   ],
-  "n_points": 863777
+  "n_points": 863827
  },
  "access": {
   "applies": true,
@@ -2837,7 +2837,7 @@
     "pass_": true
    },
    {
-    "name": "FC USB-C (-y edge, on the top plate)",
+    "name": "FC USB-C (an edge of the turned FC, plug in from above it)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "box",
@@ -2845,38 +2845,16 @@
      "h": 7
     },
     "dir": [
-     0.0,
-     -0.9798,
-     0.2
+     0.5,
+     -0.5,
+     0.7071
     ],
-    "length_mm": 300.0,
+    "length_mm": 60.0,
     "steps": 1,
-    "blocked_by": [
-     {
-      "part": "prop 3",
-      "overlap_mm3": 4200.84,
-      "method": "manifold3d"
-     },
-     {
-      "part": "cage shell tubes",
-      "overlap_mm3": 189.16,
-      "method": "manifold3d"
-     }
-    ],
-    "touches": [
-     {
-      "part": "prop 3",
-      "overlap_mm3": 4200.84,
-      "method": "manifold3d"
-     },
-     {
-      "part": "cage shell tubes",
-      "overlap_mm3": 189.16,
-      "method": "manifold3d"
-     }
-    ],
-    "overlap_mm3": 4200.84,
-    "pass_": false
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
    },
    {
     "name": "Pi USB-A / RJ45 plugs (aft, in the open)",
@@ -2884,7 +2862,12 @@
     "tool": {
      "type": "box",
      "w": 40,
-     "h": 14
+     "h": 14,
+     "w_axis": [
+      0,
+      1,
+      0
+     ]
     },
     "dir": [
      -1.0,
@@ -2895,43 +2878,23 @@
     "steps": 1,
     "blocked_by": [
      {
-      "part": "bottom plate",
-      "overlap_mm3": 623.91,
-      "method": "manifold3d"
-     },
-     {
-      "part": "sled",
-      "overlap_mm3": 504.0,
-      "method": "manifold3d"
-     },
-     {
       "part": "spokes, ties, keels, L2 guard ring",
-      "overlap_mm3": 361.73,
+      "overlap_mm3": 53.26,
       "method": "manifold3d"
      }
     ],
     "touches": [
      {
-      "part": "bottom plate",
-      "overlap_mm3": 623.91,
-      "method": "manifold3d"
-     },
-     {
-      "part": "sled",
-      "overlap_mm3": 504.0,
-      "method": "manifold3d"
-     },
-     {
       "part": "spokes, ties, keels, L2 guard ring",
-      "overlap_mm3": 361.73,
+      "overlap_mm3": 53.26,
       "method": "manifold3d"
      }
     ],
-    "overlap_mm3": 623.91,
+    "overlap_mm3": 53.26,
     "pass_": false
    },
    {
-    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 0 (screwdriver, top plate not on yet)",
+    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 0 (screwdriver, top plate not on yet)",
     "part": "hub deck",
     "tool": {
      "type": "cylinder",
@@ -2950,7 +2913,7 @@
     "pass_": true
    },
    {
-    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 1 (screwdriver, top plate not on yet)",
+    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 1 (screwdriver, top plate not on yet)",
     "part": "hub deck",
     "tool": {
      "type": "cylinder",
@@ -2969,38 +2932,7 @@
     "pass_": true
    },
    {
-    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet)",
-    "part": "hub deck",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [
-     {
-      "part": "RX XR2",
-      "overlap_mm3": 169.16,
-      "method": "manifold3d"
-     }
-    ],
-    "touches": [
-     {
-      "part": "RX XR2",
-      "overlap_mm3": 169.16,
-      "method": "manifold3d"
-     }
-    ],
-    "overlap_mm3": 169.16,
-    "pass_": false
-   },
-   {
-    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 3 (screwdriver, top plate not on yet)",
+    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet)",
     "part": "hub deck",
     "tool": {
      "type": "cylinder",
@@ -3019,7 +2951,7 @@
     "pass_": true
    },
    {
-    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 4 (screwdriver, top plate not on yet)",
+    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 3 (screwdriver, top plate not on yet)",
     "part": "hub deck",
     "tool": {
      "type": "cylinder",
@@ -3038,7 +2970,26 @@
     "pass_": true
    },
    {
-    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 5 (screwdriver, top plate not on yet)",
+    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 4 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 1: M3 x 12 hub deck + plate into the sled insert, foot 5 (screwdriver, top plate not on yet)",
     "part": "hub deck",
     "tool": {
      "type": "cylinder",
@@ -3070,22 +3021,10 @@
     ],
     "length_mm": 150.0,
     "steps": 1,
-    "blocked_by": [
-     {
-      "part": "RX XR2",
-      "overlap_mm3": 36.81,
-      "method": "manifold3d"
-     }
-    ],
-    "touches": [
-     {
-      "part": "RX XR2",
-      "overlap_mm3": 36.81,
-      "method": "manifold3d"
-     }
-    ],
-    "overlap_mm3": 36.81,
-    "pass_": false
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
    },
    {
     "name": "step 2: M2.5 Pi screw 1 (screwdriver, top plate not on yet)",
@@ -3145,7 +3084,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 0 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
+    "name": "step 6: M3 nylon nut 0 on its stud over the FC (nut driver from above, everything assembled)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3164,7 +3103,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 1 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
+    "name": "step 6: M3 nylon nut 1 on its stud over the FC (nut driver from above, everything assembled)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3183,7 +3122,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 2 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
+    "name": "step 6: M3 nylon nut 2 on its stud over the FC (nut driver from above, everything assembled)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3202,7 +3141,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 3 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
+    "name": "step 6: M3 nylon nut 3 on its stud over the FC (nut driver from above, everything assembled)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3221,47 +3160,42 @@
     "pass_": true
    }
   ],
-  "n_clear": 31,
+  "n_clear": 34,
   "worst": {
-   "name": "FC USB-C (-y edge, on the top plate)",
-   "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+   "name": "Pi USB-A / RJ45 plugs (aft, in the open)",
+   "part": "Pi 5 + Active Cooler",
    "tool": {
     "type": "box",
-    "w": 12,
-    "h": 7
+    "w": 40,
+    "h": 14,
+    "w_axis": [
+     0,
+     1,
+     0
+    ]
    },
    "dir": [
+    -1.0,
     0.0,
-    -0.9798,
-    0.2
+    0.0
    ],
-   "length_mm": 300.0,
+   "length_mm": 40.0,
    "steps": 1,
    "blocked_by": [
     {
-     "part": "prop 3",
-     "overlap_mm3": 4200.84,
-     "method": "manifold3d"
-    },
-    {
-     "part": "cage shell tubes",
-     "overlap_mm3": 189.16,
+     "part": "spokes, ties, keels, L2 guard ring",
+     "overlap_mm3": 53.26,
      "method": "manifold3d"
     }
    ],
    "touches": [
     {
-     "part": "prop 3",
-     "overlap_mm3": 4200.84,
-     "method": "manifold3d"
-    },
-    {
-     "part": "cage shell tubes",
-     "overlap_mm3": 189.16,
+     "part": "spokes, ties, keels, L2 guard ring",
+     "overlap_mm3": 53.26,
      "method": "manifold3d"
     }
    ],
-   "overlap_mm3": 4200.84,
+   "overlap_mm3": 53.26,
    "pass_": false
   }
  },
@@ -3280,6 +3214,6 @@
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 31/35 clear (FC USB-C (-y edge, on the top plate) blocked by prop 3, cage shell tubes 4201 mm\u00b3; Pi USB-A / RJ45 plugs (aft, in the open) blocked by bottom plate, sled, spokes, ties, keels, L2 guard ring 624 mm\u00b3; step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet) blocked by RX XR2 169 mm\u00b3; step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet) blocked by RX XR2 37 mm\u00b3) FAIL",
+ "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.7, -0.2, -66.3], 24.7 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 34/35 clear (Pi USB-A / RJ45 plugs (aft, in the open) blocked by spokes, ties, keels, L2 guard ring 53 mm\u00b3) FAIL",
  "pass": false
 }

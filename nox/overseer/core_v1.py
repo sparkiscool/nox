@@ -4,20 +4,22 @@ mechanism of the battery cartridge and pocket for now"; "also ignore all nodes o
 for the fc has a esc under it, the camera and the lidar isnt your job ... make sure you get the right dimensions and give the
 appropriate space for the parts, and then design coupons for the least amount of materials for me to confirm mounting").
 
-Round 3 (27 Oct, after the concept review FAIL and Spark's corrections; Spark: "make sure bolts are accessible through a
-screwdriver, the whole thing need to be in as little pieces as possible and easy to work with"): no PDB; the FC stack
-(MicoAir743-Lite on a MicoAir 55A AM32 4-in-1 ESC, 17.5 tall, 24 g) at the plate centre; the Pi 5 right side up on the rear wing
-beside it (its Active Cooler is 13.7 tall with the blower intake on top: hung over the stack it would breathe through a 2 mm gap),
-cooler under the top plate's rear edge and in the open past it, ports aft; UBEC and 12 V buck under the Pi deck; RX ahead of the
-stack. Two printed pieces:
-  hub deck   PETG on the bottom plate: 6 feet on the plate's Ø3.1 / Ø6 holes (±24, ±36.5), (-72.5, ±31.75), M3 from above
-             through the plate into the sled's inserts; 4 stack posts on 30.5 (M3 short inserts); the Pi deck (4 posts on its
-             58 x 49, M2.5 self-tapping); UBEC, buck, RX bays (zip ties); battery lead + cap channel
-  sled       PETG under the bottom plate: the receiver's mount face, the 6 bolts' inserts, the flow pod (MTF-02P pocket, lens on
-             the cartridge bottom plane) and a +y rib for the down camera owner's pod; Ø9 driver holes under the 8 arm screws
-Every screw is driven straight down with a screwdriver in assembly order: hub deck + sled (6), stack (4), Pi (4), then arms and
-the top plate. Cameras, lidar and their mounts are not this session's. Floor contact: TPU feet on the cage's opening ring nodes
-(cage session, review alternative B; placeholders here).
+Round 5 (27 Oct, after two concept reviews and Spark's corrections: "no powerboard the stack for the fc has a esc under it", "the
+camera and the lidar isnt your job", "make sure bolts are accessible through a screwdriver, the whole thing need to be in as little
+pieces as possible", "the fc mounts to the top plates lines", "make the apropreiate adjustments to optimize the space", "the fc does
+not need a mount it already goes to the carbon plate"):
+  FC stack   MicoAir743-Lite on a 4-in-1 ESC (MicoAir 55A AM32 assumed, CHECK), straight on the top plate, turned 45° so its 30.5
+             holes (r 21.57 on the plate axes) fall in the top plate's 3.0 slots ("the lines"); 4 M3 studs up through the slots, set
+             on the bench, nylon nuts on top from above with everything assembled. RX and the battery cap beside it.
+  hub deck   PETG on the bottom plate: 6 feet on the plate's Ø3.1 holes (±24, ±36.5), (-65, ±22.5), M3 x 12 down through the plate
+             into the sled's inserts; the Pi 5 right side up between the plates on 4 posts (M2.5 self-tapping), ports aft; UBEC and
+             12 V buck bays on the front wing (zip ties), bars inside |y| 20 there (arm session's front envelopes)
+  sled       PETG under the bottom plate: the receiver's mount face (6 M3 inserts), the 6 hub deck bolts' inserts, the flow pod
+             (MTF-02P pocket, lens on the cartridge bottom plane), a +y rib for the down camera owner's pod, Ø9 driver holes under
+             the 8 arm bottom screws
+Every screw goes straight in with a screwdriver in assembly order (dimensions.md System Overseer core). Cameras, lidar, their
+mounts and the cage nodes are not this session's. Floor contact: TPU feet on the cage's opening ring nodes (cage session,
+review alternative B; placeholders here).
 
 Context (not edited here): layout v5 / cage v3 (`nox/overseer/overseer.assembly.json`): plates, arms, motors, props, cage,
 sensor head. The latch set is battery latch v4's Overseer meshes in pose (mechanism not designed here).
@@ -96,6 +98,8 @@ MOUNT_ZC = (-1.3, 85.55, 163.8)    # receiver v2 bolts along the cartridge (M)
 # On the top plate (Spark 27 Oct: "the fc mounts to the top plates lines so just move that there"; "the fc does not need a mount it
 # already goes to the carbon plate"): bolted straight through the plate's own 30.5 holes (Spark's plate, P; not in the Holybro STEP), centred.
 STACK_P = 30.5 / 2
+STACK_R = STACK_P * 2 ** 0.5                      # 21.57: the stack turned 45°, holes on the plate axes in its slots (C)
+STACK_HOLES = [(STACK_R, 0.0), (-STACK_R, 0.0), (0.0, STACK_R), (0.0, -STACK_R)]
 ESC_L, ESC_W, ESC_T = 44.0, 43.5, 5.2
 FC_HALF, FC_T, STACK_H = 18.0, 8.0, 17.5
 Z_TP = 46.6                        # top plate top (S500 STEP, derived; 1.6 plate on the 45 gap)
@@ -120,6 +124,7 @@ Z_PI = FLOOR_T + PI_POST           # board underside 8.0
 PI_BOARD_T, PI_UP, PI_COOL = 1.6, 16.0, 13.7
 COOL_X = (PI_X1 - 63.5 + 2.0, PI_X1 + 2.0)     # cooler over the SoC end of the board (E place)
 RAIL_Y = 22.0                      # floor rails at |y| 22: clear of the arm roots' inner corners (C)
+BAY_Y = 17.0                       # front wing bay rails at |y| 17: bars inside |y| 20, 1 off the front arm envelopes (arm session 27 Oct)
 # front wing bays (zip ties, no screws): UBEC and buck between the front arm roots, ahead of the Pi, under the top plate's front
 UBEC_BAY = (34.0, 82.0, -19.0, 2.0, FLOOR_T, FLOOR_T + 10.0)     # any 5 V 5 A UBEC of 43-50 x 17-25 x 7-10 (Q4 range)
 BUCK_BAY = (34.0, 58.0, 4.0, 22.0, FLOOR_T, FLOOR_T + 10.0)      # 12 V buck (model open: 24 x 18 x 10 bay, E)
@@ -164,6 +169,7 @@ rec_bolts = [(-DC + Z_T - zc, sy * BX) for zc in MOUNT_ZC for sy in (1, -1)]
 esc = box(-ESC_L / 2, ESC_L / 2, -ESC_W / 2, ESC_W / 2, Z_ESC, Z_ESC + ESC_T)
 fc = box(-FC_HALF, FC_HALF, -FC_HALF, FC_HALF, Z_STACK_TOP - FC_T, Z_STACK_TOP)
 stack = cat([esc, fc] + [cyl(2.5, Z_ESC + ESC_T, Z_STACK_TOP - FC_T, sx * STACK_P, sy * STACK_P, 12) for sx in (1, -1) for sy in (1, -1)])
+stack.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 4, [0, 0, 1]))       # turned 45°: holes on the plate's slots (PX4 SENS_BOARD_ROT yaw 45)
 cap = box(-62.0, -62.0 + CAP[1], -CAP[0] / 2, CAP[0] / 2, Z_TP, Z_TP + CAP[0])   # on the battery leads where they come over the plate's rear edge
 rx = box(RX_TP[0], RX_TP[1], RX_TP[2], RX_TP[3], Z_TP, Z_TP + 6)
 pi = cat([box(PI_X0, PI_X1, -PI_W / 2, PI_W / 2, Z_PI, Z_PI + PI_BOARD_T),
@@ -186,9 +192,9 @@ def hub_deck():
     bars += [bar((-24, sy * 36.5), (px0, sy * 24.5), 6, 0, FLOOR_T) for sy in (1, -1)]
     bars += [bar((px0, 24.5), (px0, -24.5), 6, 0, FLOOR_T), bar((px1, 24.5), (px1, -24.5), 6, 0, FLOOR_T)]
     bars += [bar((-65.0, sy * 22.5), (px0, sy * RAIL_Y), 6, 0, FLOOR_T) for sy in (1, -1)]
-    bars += [bar((px1, sy * RAIL_Y), (80, sy * RAIL_Y), 6, 0, FLOOR_T) for sy in (1, -1)]                        # bay rails
+    bars += [bar((px1, sy * BAY_Y), (80, sy * BAY_Y), 6, 0, FLOOR_T) for sy in (1, -1)]                          # bay rails
     bars += [bar((px0, sy * RAIL_Y), (px1, sy * RAIL_Y), 6, 0, FLOOR_T) for sy in (1, -1)]                       # under the Pi (board z 8)
-    bars += [bar((80, RAIL_Y), (80, -RAIL_Y), 6, 0, FLOOR_T), bar((57, RAIL_Y), (57, -RAIL_Y), 6, 0, FLOOR_T)]
+    bars += [bar((80, BAY_Y), (80, -BAY_Y), 6, 0, FLOOR_T), bar((57, BAY_Y), (57, -BAY_Y), 6, 0, FLOOR_T)]
     return uni(feet + pip + bars)
 
 
@@ -267,24 +273,25 @@ openings += [{"part": p_, "axis": [0, 0, -1], "half_angle_deg": 40.0, "skip_prob
 # access (CLAUDE.md 2; Spark 27 Oct: "make sure bolts are accessible through a screwdriver"): every core screw is driven straight
 # down with a screwdriver (shaft Ø6, 150 long) at its assembly step, so each path ignores what goes on later (top plate, Pi, stack)
 DRV = {"type": "cylinder", "d": 6}
-LATER = ["top plate", "prop 1", "prop 2", "prop 3", "prop 4", "cage shell tubes", "cage shell nodes", "spokes, ties, keels, L2 guard ring", "wires"]
+LATER = ["top plate", "prop 1", "prop 2", "prop 3", "prop 4", "cage shell tubes", "cage shell nodes", "spokes, ties, keels, L2 guard ring", "wires",
+         "RX XR2", "ESC cap", "FC stack (MicoAir743-Lite on 55A 4-in-1)"]   # all of these go on after the hub deck and the Pi
 acc = [a for a in v5["access"] if a["name"].startswith("M3")]
 for a in acc:
     a["ignore"] = [i for i in a["ignore"] if i in ("arm 1", "arm 2", "arm 3", "arm 4", "prop 1", "prop 2", "prop 3", "prop 4", "down camera")] + (["sled"] if a["part"] == "bottom plate" else [])
 acc += [{"name": "pack swap: cartridge + pack down through the opening", "part": "cartridge", "dir": [0, 0, -1], "length_mm": 150.0, "tool": "part", "ignore": ["pack", "receiver", "XT60 pair"]},
-        {"name": "FC USB-C (-y edge, on the top plate)", "part": STACK_NM, "from": [0, -FC_HALF, Z_STACK_TOP - 4],
-         "dir": [0.0, -0.98, 0.2], "length_mm": 300.0, "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["wires"]},
+        {"name": "FC USB-C (an edge of the turned FC, plug in from above it)", "part": STACK_NM, "from": [12.7, -12.7, Z_STACK_TOP - 4],
+         "dir": [0.5, -0.5, 0.707], "length_mm": 60.0, "tool": {"type": "box", "w": 12, "h": 7}, "ignore": ["wires"]},
         {"name": "Pi USB-A / RJ45 plugs (aft, in the open)", "part": PI_NM, "from": [PI_X0 - 20, 0, Z_PI + 9], "dir": [-1, 0, 0], "length_mm": 40.0,
-         "tool": {"type": "box", "w": 40, "h": 14}, "ignore": ["wires"]}]
+         "tool": {"type": "box", "w": 40, "h": 14, "w_axis": [0, 1, 0]}, "ignore": ["wires"]}]
 for k, (x, y) in enumerate(FEET_XY):
-    acc.append({"name": f"step 1: M3 x 16 hub deck + plate into the sled insert, foot {k} (screwdriver, top plate not on yet)", "part": "hub deck",
+    acc.append({"name": f"step 1: M3 x 12 hub deck + plate into the sled insert, foot {k} (screwdriver, top plate not on yet)", "part": "hub deck",
                 "from": [x, y, FLOOR_T + 0.5], "dir": [0, 0, 1], "length_mm": 150.0, "tool": DRV, "ignore": LATER + [PI_NM]})
 for k, (x, y) in enumerate(PI_HOLES):
     acc.append({"name": f"step 2: M2.5 Pi screw {k} (screwdriver, top plate not on yet)", "part": PI_NM, "from": [x, y, Z_PI + PI_BOARD_T + 0.5], "dir": [0, 0, 1],
                 "length_mm": 150.0, "tool": {"type": "cylinder", "d": 5}, "ignore": LATER})
 for k, (sx, sy) in enumerate([(1, 1), (1, -1), (-1, 1), (-1, -1)]):
-    acc.append({"name": f"step 5: M3 stack screw {k} through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)", "part": STACK_NM,
-                "from": [sx * STACK_P, sy * STACK_P, Z_STACK_TOP + 0.5], "dir": [0, 0, 1], "length_mm": 150.0, "tool": DRV,
+    acc.append({"name": f"step 6: M3 nylon nut {k} on its stud over the FC (nut driver from above, everything assembled)", "part": STACK_NM,
+                "from": [STACK_HOLES[k][0], STACK_HOLES[k][1], Z_STACK_TOP + 0.5], "dir": [0, 0, 1], "length_mm": 150.0, "tool": DRV,
                 "ignore": ["prop 1", "prop 2", "prop 3", "prop 4", "wires"]})
 
 man = {k: v for k, v in v5.items() if k not in ("parts", "contact_pairs", "openings", "access", "note", "name")}
@@ -389,7 +396,7 @@ def inertial(names, acc):
 
 SUP = {"hub deck": [(x, y, 0.0) for x, y in FEET_XY], "sled to plate": [(x, y, Z_PLATE_BOT) for x, y in FEET_XY],
        "receiver bolts": [(x, y, Z_M) for x, y in rec_bolts], "Pi screws": [(x, y, Z_PI) for x, y in PI_HOLES],
-       "stack screws": [(sx * STACK_P, sy * STACK_P, Z_TP) for sx in (1, -1) for sy in (1, -1)]}
+       "stack screws": [(x, y, Z_TP) for x, y in STACK_HOLES]}
 CARRY = {"hub deck": ["Pi", "UBEC", "buck", "deck wires", "hub deck"], "receiver bolts": ["swap set", "receiver set"],
          "Pi screws": ["Pi"], "stack screws": ["stack"],
          "sled to plate": ["swap set", "receiver set", "sled", "flow", "down camera + its pod (E)"]}
@@ -424,7 +431,7 @@ result = {"mass_g": M_TOT, "tw": round(tw, 2), "cg": cg.tolist(), "requirements"
                 "esc": Z_ESC, "stack_top": Z_STACK_TOP, "pi_board": Z_PI, "cooler_top": cool_top, "foot": Z_FOOT, "top_plate_top": Z_TP},
           "receiver_bolts": rec_bolts, "feet_xy": FEET_XY, "pi_holes": PI_HOLES, "arm_screws_driver_holes": ARM_SCREWS,
           "budget_g": BUDGET, "system": res["summary"],
-          "coupon": {"floor_t": FLOOR_T, "post_h": POST_H, "post_d": POST_D, "stack_p": STACK_P, "z_pi": Z_PI, "pi_x": [PI_X0, PI_X1], "rail_y": RAIL_Y,
+          "coupon": {"floor_t": FLOOR_T, "post_h": POST_H, "post_d": POST_D, "stack_p": STACK_P, "z_pi": Z_PI, "pi_x": [PI_X0, PI_X1], "rail_y": RAIL_Y, "bay_y": BAY_Y,
                      "ubec_bay": UBEC_BAY, "buck_bay": BUCK_BAY, "rx_tp": RX_TP, "aft_legs": [], "sled_t": SLED_T, "sled_x": [-115.0, 58.0], "sled_y": 56.0,
                      "flow": [POD_X, FLOW_Y], "z_plate_bot": Z_PLATE_BOT}}
 json.dump(result, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=float)
