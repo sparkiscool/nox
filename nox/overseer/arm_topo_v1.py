@@ -51,7 +51,7 @@ MOTOR_DEG = {"front": 45.0, "rear": 135.0}     # arm 1 / arm 2 diagonal (left si
 # both plates) to y ±12 beside the motor pocket; bore 3.3 (OD + 0.3), open at the shoulder end (the rod slides in from
 # there and is epoxied), blind at the motor end inside the pocket wall. Drawn: a socket at each rod end; the topology
 # webs, root and pad join them, the rods are stiff inserts in its FE (Part.insert).
-ROD_D, ROD_BORE = 3.0, 3.3
+ROD_D, ROD_BORE = 3.0, 3.2      # bore 3.2: Spark's pick from the printed coupons (27 Oct, P; OD + 0.3 was loose in PETG)
 SHOULDER = {"front": (25.0, 35.0, 9.0)}              # arm-frame x, |y|, plan radius of the shoulder envelope disc
 ROD_TIP = (15.0, 12.0)                               # rod end: x = L - 15, |y| 12 (r 19.2 from the motor axis, in the wall)
 ROD_Z = (41.0, 4.0)                                  # top and bottom rod centres (sleeve flat to the top / bottom face)

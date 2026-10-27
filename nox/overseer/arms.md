@@ -19,7 +19,7 @@ PETG, Bambu A1 mini, top face (z 45 plane: root top, motor face) on the bed, tre
 
 ## Assembly
 1. Heat-set 4 M3 inserts in each root (2 from the top face, 2 from the bottom face), flush.
-2. Front arms: ream each rod line with a long 3.3 drill from the open shoulder end to the blind tip socket (the flat-printed bores sag a little). Dry-fit each rod.
+2. Front arms: ream each rod line with a long 3.2 drill from the open shoulder end to the blind tip socket (the flat-printed bores sag a little). Dry-fit each rod.
 3. Inject epoxy into the tip socket, push the rod in from the shoulder, then wick epoxy into each grip collar and the shoulder socket. 24 h cure.
 4. Motor on the pad with 4 x M3 x 8 from below through the pocket (2 mm into the X2216 base thread, 2.8 deep), leads toward the root.
 5. Arm between the plates: 2 x M3 down through the top plate, 2 x M3 up through the bottom plate into the inserts (access per layout v5: 3 rear-arm bottom screws need a pod board unplugged).
