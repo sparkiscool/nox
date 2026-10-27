@@ -174,6 +174,11 @@ CAM_FMTS = {"landscape": (L["CAM_VFOV"] / 2, L["CAM_HFOV"] / 2), "portrait": (L[
 CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens off the centre plane (scanned)
 CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
 HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
+# the arm session's printed nodes (overseer arm, 27 Oct, Spark "add the arm nodes"): the 3 spokes of each arm leave from a node beside
+# the motor (offset from the motor axis point, y mirrored), the L2 braces end inside the front beam (lo / hi z), so the arm top prints flat
+ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
+KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
+BRACE_ROOT = (72.95, 62.11, {"lo": 30.0, "hi": 39.0})
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
@@ -325,6 +330,14 @@ def place_cams(g, sel):
 LIM_L2 = HALO_BACK + HALO_NODE_R + 2.0 + NODE_R   # shell node centres behind the L2 base plane: the guard ring fits in front (25.2)
 PHIS = (20.0, 35.0, 50.0, 65.0)                  # tilt of the head plane (from the L2 axis toward +z), scanned
 _DRONE = {}
+
+
+def apex_head(g):
+    """the apex without the front hub block (the core's since 27 Oct, core v2 keel sockets on the hub deck): the part behind the L2
+    base plane by 45 or less, as head_pts"""
+    if "apex_head" not in g:
+        g["apex_head"] = g["apex"].slice_plane(g["B"] - A * 45.0, A, cap=True)
+    return g["apex_head"]
 
 
 def head_pts(g):
@@ -681,9 +694,10 @@ def attach(g, nodes, ring_ids):
         return out
     for i, ((mx, my), (r0, m1, ht)) in enumerate(zip(mxy, g["axes"])):  # 3 spokes per arm tip, 12 off the disks
         tip = np.array([mx, my, ROOT_H - ht])
-        for n_, k in enumerate(pick(tip, [k for k in range(len(nodes)) if seg_band_dist(tip, nodes[k], mxy) - ROD_R >= PROP_GAP
-                                          and views_clear(g, tip, nodes[k], ROD_R)], 3, 30.0)):
-            extra[f"spoke {i + 1}.{n_ + 1}"] = (tip, nodes[k])
+        an = tip + np.array(ARM_NODE["front" if mx > g["dm"] else "rear"]) * [1, np.sign(my), 1]   # the arm's printed spoke node
+        for n_, k in enumerate(pick(an, [k for k in range(len(nodes)) if seg_band_dist(an, nodes[k], mxy) - ROD_R >= PROP_GAP
+                                          and views_clear(g, an, nodes[k], ROD_R)], 3, 30.0)):
+            extra[f"spoke {i + 1}.{n_ + 1}"] = (an, nodes[k])
     bb = BOTTOM.bounds                                                  # core ties: bottom plate underside to the shell
     for nm, q0 in (("front", (bb[1][0], 0)), ("rear", (bb[0][0], 0)), ("left", (0, bb[1][1])), ("right", (0, bb[0][1]))):
         q = np.array([q0[0], q0[1], -1.0])
@@ -718,9 +732,13 @@ def attach(g, nodes, ring_ids):
                 ok_ &= seg_band_dist(s_, root, mxy) - ROD_R >= PROP_GAP and views_clear(g, s_, root, ROD_R) and clear_of_cart(s_ + 0.05 * (root - s_), root)
             if ok_:
                 for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
-                    extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), root)
+                    rt = np.array([BRACE_ROOT[0], BRACE_ROOT[1] * sy, BRACE_ROOT[2][lvl]]) if BRACE_ROOT else root
+                    extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), rt)
                 g["braces"].append(round(out_, 0)); break
-    if not HEAD_ON_CAGE: extra.update(g["keels"])
+    if not HEAD_ON_CAGE:                                               # the keels' core ends sit 5 deeper in the hub deck's sockets (core v2, 27 Oct)
+        for k_, (a_, b_) in g["keels"].items():
+            a_, b_ = np.asarray(a_, float), np.asarray(b_, float); cr, lg = (a_, b_) if a_[0] < b_[0] else (b_, a_)
+            extra[k_] = (cr + (lg - cr) / np.linalg.norm(lg - cr) * KEEL_INSET, lg)
     hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
     cr, cn_ = cam_guards(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
 
@@ -776,7 +794,7 @@ def masses(g, nodes, E, extra):
     add("pack", 650, cen(g["pack"])); add("flow", 2, cen(g["flow"])); add("latch set", LATCH_G, cen(g["cart"]))
     for i, m in enumerate(g["motors"]): add(f"motor + prop {i + 1}", 91, cen(m))
     for i, a in enumerate(g["arms"]): add(f"arm {i + 1}", abs(a.volume) * 1.27e-3 * 0.45 + 25, a.centroid)
-    add("apex", abs(g["apex"].volume) * 1.27e-3 * 0.45, g["apex"].centroid)
+    ah = apex_head(g); add("apex", abs(ah.volume) * 1.27e-3 * 0.45, ah.centroid)   # the front hub block is the core's
     add("cam plate", abs(g["cam_plate"].volume) * 1.27e-3 * 0.5, g["cam_plate"].centroid)
     for k, (a, b) in enumerate(g["cam_rods"]): add(f"cam strut {k}", np.linalg.norm(np.subtract(b, a)) * 36 * 1.27e-3 * 0.8, np.add(a, b) / 2)   # printed (E)
     add("Pi deck", abs(DECK.volume) * 1.27e-3 * 0.5, DECK.centroid)
@@ -1013,7 +1031,7 @@ PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
     (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
-    *([(HEADN, trimesh.util.concatenate([g["apex"], g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
+    *([(HEADN, trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
                                         + [trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]),
          "structure", False, grp["head"], "E", "PETG", "printed", "#aab4c0", False)] if PRINTED_HEAD else
       [("L2 guard ring nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]), "cage", False, grp.get("halo nodes", 0.0), "E", "PETG", "cage", "#7d8a99", False),

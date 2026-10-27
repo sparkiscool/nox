@@ -43,7 +43,7 @@ SADDLE_X = (-45.0, -15.0, 15.0, 38.0)                     # tie saddle (printed 
 SADDLE_Y = (36.3, 42.3)                                    # receiver's TPU end pieces (y 36.3..42.3, x -50..42, z -15..6), 2 tabs a side up to the
 SADDLE_Z = (-15.0, 6.0)                                    # plate underside between the arms (x ±14..26, 4 M3 into the plate); tie roots on its face
 FUNNEL_BAND = 30.0                                         # nothing but the ring rods within this height above the plane, outside the swap column (funnel ramps)
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v11", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v12", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")                # the Overseer cage v3 (ring source)
 LOG = io.StringIO()
@@ -103,10 +103,14 @@ RADXA_POSE = os.environ.get("SCOUT_RADXA", "stand")       # tail bay (Spark 27 O
                                                            # dimensions H), in the clear strip between the rear disks (|y| < their inner edge - 3),
                                                            # ports edge up (plugs 14 above), SD end aft; the UBEC flat behind the rear disks; flat = v11
 RADXA_Z = float(os.environ.get("SCOUT_RADXA_Z", 8.0))      # stand: the board's lower edge (the funnel: no low tail node)
+BAY_FIXED = os.environ.get("SCOUT_BAY_FIXED", "0") == "1"   # alternative: the tail bay fixed in the frame at its v11 place (only the catch moves)
+UBEC_DY = float(os.environ.get("SCOUT_UBEC_DY", 7.0))     # the electronics session: the UBEC 7 further out (8 of air over the Radxa's SoC)
 UBEC_Z = float(os.environ.get("SCOUT_UBEC_Z", 16.0))      # stand: the UBEC flat behind the rear disks, its bottom here (the funnel hull line)
 RADXA_T = 6.31                                             # board thickness over the parts (dimensions H, C from the STEP; 7.62 over the SD slot)
 WASH_X = -(MOTOR + PROP_R + 3.0)                           # behind this x nothing is under a rear disk (disk + 3)
 TB = 0.0                                                   # tail bay shift aft (scanned with the catch for the balance)
+ELEC = os.environ.get("SCOUT_ELEC", os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope.json"))   # the electronics
+ELEC = json.load(open(ELEC)) if ELEC and os.path.exists(ELEC) else None    # session's mount, XR2, cables and keep-clears (drawn at catch ELEC["catch"])
 LEN_W = float(os.environ.get("SCOUT_LEN_W", 0.01))         # balance-scan length term: 0.01 mm of CG per mm of cage length (DEFAULT: 30 mm buys 0.3)
 TAIL_BAY = os.environ.get("SCOUT_TAIL_BAY", "1") == "1"   # Radxa + UBEC in a tail bay behind the receiver (balance, race-car tail, Spark 27 Oct)
 PLATE_NOSE = np.array([60.0, 0.0, 20.25])                  # camera boom root on the plate nose (E, plate edge x ~65)
@@ -216,8 +220,13 @@ def drone(DC):
         rt = float(D["receiver v3 (latch)"][0].bounds[0][0]) - TAIL_GAP
         for n, y0 in (("Radxa Zero 3W", -1.6), ("UBEC", None)):
             m = D[n][0].copy()
-            if n == "Radxa Zero 3W" and RADXA_POSE == "stand":   # on edge on the centre plane, its front end TAIL_GAP + TB behind the receiver
+            if n == "Radxa Zero 3W" and RADXA_POSE == "stand" and ELEC and BAY_FIXED:   # alternative: the v11 pose fixed in the frame
+                m = box(-145.4, -80.3, -RADXA_T / 2, RADXA_T / 2, RADXA_Z, RADXA_Z + 30.0)
+            elif n == "Radxa Zero 3W" and RADXA_POSE == "stand":   # on edge on the centre plane, its front end TAIL_GAP + TB behind the receiver
                 m = box(rt - TB - 65.0, rt - TB, -RADXA_T / 2, RADXA_T / 2, RADXA_Z, RADXA_Z + 30.0)
+            elif n == "UBEC" and RADXA_POSE == "stand" and ELEC:   # the electronics session's worst-size envelope, 7 further out in y (8 of air
+                (x0, y0, z0), (x1, y1, z1) = ELEC["items"]["UBEC"]["box"]; dx_ = 0.0 if BAY_FIXED else -(DC - ELEC["catch"])   # over the Radxa's SoC), riding with the catch
+                m = box(x0 + dx_, x1 + dx_, y0 + UBEC_DY, y1 + UBEC_DY, z0, z1)
             elif n == "UBEC" and RADXA_POSE == "stand":       # flat behind the rear disks (out of the wash), beside the Radxa's aft half
                 b_ = m.bounds; m.apply_translation([WASH_X - TB - b_[1][0], RADXA_T / 2 + 1.0 - b_[0][1], UBEC_Z - b_[0][2]])
             elif n == "Radxa Zero 3W":                        # v11: laid flat under the UBEC (in the rear wash: superseded)
@@ -226,6 +235,18 @@ def drone(DC):
             else:
                 b_ = m.bounds; m.apply_translation([rt - b_[1][0], 0.0 if y0 is None else y0 - b_[0][1], 0.0])
             D[n] = (m,) + D[n][1:]
+    if TAIL_BAY and RADXA_POSE == "stand" and ELEC:            # the electronics session's XR2 shelf pose and the mount + cables as masses at
+        dx_ = -(DC - ELEC["catch"])                            # their CGs; the bay rides with the catch (the belly mount), the XR2 held at its
+        (x0, y0, z0), (x1, y1, z1) = ELEC["items"]["XR2"]["box"]   # v11 place in the frame (riding forward put its antenna in the rear prop
+        D["XR2"] = (box(x0, x1, y0, y1, z0, z1),) + D["XR2"][1:]   # disk: its shelf grows aft by the catch shift, requirement for the mount)
+        blk = ELEC["mount"]["belly-mount tail block (PETG)"]
+        rest_g = ELEC["mount_total"]["mass_g"] - blk["mass_g"]
+        rest_c = (np.array(ELEC["mount_total"]["cg"]) * ELEC["mount_total"]["mass_g"] - np.array(blk["cg"]) * blk["mass_g"]) / rest_g
+        for nm_, g_, c_ in (("tail bay mount block (Scout electronics, E)", blk["mass_g"], np.array(blk["cg"]) + [dx_, 0, 0]),
+                            ("tail bay carrier (Scout electronics, E)", rest_g, rest_c + [0.0 if BAY_FIXED else dx_, 0, 0]),
+                            ("tail bay cables (Scout electronics, E)", ELEC["cables"]["mass_g"], np.array(ELEC["cables"]["cg"]) + [0.0 if BAY_FIXED else dx_, 0, 0])):
+            wires_ = "cables" in nm_
+            D[nm_] = (box(*(np.array([c_ - 0.2, c_ + 0.2]).T.ravel())), "structure", False, g_, "E", None if wires_ else "PETG", "wires" if wires_ else "printed", "#99a6b3", False)
     return D
 
 
@@ -247,6 +268,12 @@ def build(DC):
     props = np.vstack([np.stack([mx + PROP_R * np.cos(a), my + PROP_R * np.sin(a), np.full_like(a, PROP_Z + s_ * BLADE)], 1)
                        for mx, my in MXY for s_ in (1, -1) for a in [np.linspace(0, 2 * np.pi, 72, endpoint=False)]])
     body = hullpts([D[n][0] for n in BODY])
+    if RADXA_POSE == "stand" and TAIL_BAY and ELEC:          # the electronics session's mount boxes, item boxes and plug keep-clear (envelopes)
+        dx_ = 0.0 if BAY_FIXED else -(DC - ELEC["catch"]); bx_ = [v["box"] for k_, v in ELEC["items"].items() if k_ not in ("UBEC", "XR2")] + [ELEC["keep_clear"]["plugs"]]
+        x2_ = ELEC["items"]["XR2"]["box"]; body = np.vstack([body, box(x2_[0][0], x2_[1][0], x2_[0][1], x2_[1][1], x2_[0][2], x2_[1][2]).vertices])
+        # (the mount's own boxes are bounding boxes: their lower aft corners reach where the real spine does not; the electronics
+        # session keeps the mount ≥ 3 inside the shell and over the funnel line on its real geometry, envelope.json funnel_margin / inset)
+        body = np.vstack([body] + [box(b_[0][0] + dx_, b_[1][0] + dx_, b_[0][1], b_[1][1], b_[0][2], b_[1][2]).vertices for b_ in bx_])
     if RADXA_POSE == "stand" and TAIL_BAY:                    # the Radxa's USB-C plugs: 14 above its ports edge (board X 37..58.5 from the SD end), kept clear
         rb_ = D["Radxa Zero 3W"][0].bounds; xa = rb_[0][0]
         body = np.vstack([body, box(xa + 36.0, xa + 60.0, -5.0, 5.0, rb_[1][2], rb_[1][2] + 14.0).vertices])
@@ -1001,9 +1028,9 @@ os.makedirs(OUT, exist_ok=True)
 # Radxa, flow) and the ring slide aft of the thrust centre by DC; the shell and the camera are rebuilt round it each time; the DC
 # with the least worse of the two CG offsets wins
 SNAPS = [bool(int(x)) for x in os.environ.get("SCOUT_SNAPS", "0,1").split(",")]
-DCS = [float(x) for x in os.environ.get("SCOUT_DCS", "0,2,4,6,8").split(",")]
+DCS = [float(x) for x in os.environ.get("SCOUT_DCS", "-16,-12,-8,-4,0,4").split(",")]
 runs = {}
-TBS = [float(x) for x in os.environ.get("SCOUT_TBS", "0,5,10,15,20,25,30,35,40" if RADXA_POSE == "stand" else "0").split(",")]
+TBS = [float(x) for x in os.environ.get("SCOUT_TBS", ("25" if ELEC else "0,5,10,15,20,25,30,35,40") if RADXA_POSE == "stand" else "0").split(",")]
 best_tb = None                                                         # Spark 27 Oct: the CG in the middle of the props, pack in and out:
 for TB in TBS:                                                         # the tail bay shift and the catch together (two knobs, two CGs)
     runs = {}
@@ -1014,7 +1041,7 @@ for TB in TBS:                                                         # the tai
         b0 = min(runs, key=lambda d: runs[d]["bal"]); step = min([abs(d - b0) for d in runs if d != b0] + [4.0]) / 2
         if step < 0.25: break
         for DC in (b0 - step, b0 + step):
-            if DC >= 0 and DC not in runs:
+            if DC >= -30 and DC not in runs:
                 runs[DC] = run(DC); r_ = runs[DC]
                 say(f"   tail bay +{TB:4.1f}, catch {DC:4.1f} aft: CG pack in {r_['cgv'][0]:+.1f}, pack out {r_['c2'][0]:+.1f} (x, mm), {r_['tot']:.0f} g, {len(r_['E']) + len(r_['extra'])} rods, score {r_['bal']:.1f}")
     b0 = min(runs, key=lambda d: runs[d]["bal"])
@@ -1056,11 +1083,27 @@ if TAIL_BAY:                                                           # the rea
     wash_ = []                                                         # tail bay parts' plan points against every disk + 3 (under the props)
     rb_ = D["Radxa Zero 3W"][0].bounds
     plug_ = box(rb_[0][0] + 36.0, rb_[0][0] + 60.0, -5.0, 5.0, rb_[1][2], rb_[1][2] + 14.0)
-    for n_, m_ in (("Radxa Zero 3W", D["Radxa Zero 3W"][0]), ("UBEC", D["UBEC"][0]), ("Radxa plugs (keep clear)", plug_)):
+    extra_w = []
+    if ELEC:                                                           # the mount's spine section (y -13.05..-4.6, its summary) and tail block,
+        dxw = 0.0 if BAY_FIXED else -(DC - ELEC["catch"])              # bounding boxes shifted with the bay (their real geometry is the
+        sp_ = ELEC["mount"]["tail carrier: yoke + spine (PETG)"]["box"]; bk_ = ELEC["mount"]["belly-mount tail block (PETG)"]["box"]   # electronics session's)
+        extra_w = [("mount spine (envelope)", box(sp_[0][0] + dxw, sp_[1][0] + dxw, -13.05, -4.6, sp_[0][2], sp_[1][2])),
+                   ("mount tail block (envelope)", box(bk_[0][0] - (DC - ELEC["catch"]), bk_[1][0] - (DC - ELEC["catch"]), bk_[0][1], bk_[1][1], bk_[0][2], bk_[1][2])),
+                   ("XR2", D["XR2"][0])]
+    for n_, m_ in [("Radxa Zero 3W", D["Radxa Zero 3W"][0]), ("UBEC", D["UBEC"][0]), ("Radxa plugs (keep clear)", plug_)] + extra_w:
         v_ = m_.vertices; v_ = np.vstack([v_, m_.sample(400)])
         d_ = min(float((np.hypot(v_[:, 0] - mx, v_[:, 1] - my) - PROP_R).min()) for mx, my in MXY)
         wash_.append(f"{n_} {d_:+.1f}")
     say("tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): " + ", ".join(wash_) + " (C)")
+    if ELEC:                                                           # the electronics session's tool lines: clear of every rod (Ø10 tool)
+        dx_ = 0.0 if BAY_FIXED else -(DC - ELEC["catch"]); segs_ = [(nodes[a], nodes[b]) for a, b in E] + [(np.asarray(p_, float), np.asarray(q_, float)) for p_, q_ in extra.values()]
+        out_ = []
+        for nm_, t_ in ELEC["keep_clear"]["tool_lines"].items():
+            q0 = np.array(t_["start"]) + [dx_, 0, 0]; dv = np.array(t_["dir"]) / np.linalg.norm(t_["dir"])
+            qq = q0 + np.linspace(0, 80.0, 161)[:, None] * dv
+            dmin = min(float(np.min(np.linalg.norm(qq - (a_ + np.clip(((qq - a_) @ (b_ - a_)) / ((b_ - a_) @ (b_ - a_)), 0, 1)[:, None] * (b_ - a_)), axis=1))) for a_, b_ in segs_)
+            out_.append(f"{nm_} {dmin - t_['d'] / 2 - SHELL_R:+.1f}")
+        say("electronics tool lines (Ø10, 80 out) clear of every rod by: " + ", ".join(out_) + " (C; need ≥ 0)")
     tl_ = [n for n in nodes[nR:] if n[0] - TAB_X < -130.0]
     say(f"tail nodes past x -130 about the catch: lowest {min([n[2] - Z_O for n in tl_] + [999]):.1f} above the plane (the Overseer tail-tip ramp, need ≥ 45) (C)")
 circ = []
@@ -1196,7 +1239,7 @@ if CAM_MOUNT == "printed":
 if CAM_MOUNT != "printed": say("camera ties: " + ", ".join(k for k in extra if k.startswith(("cam brace", "cam cradle", "cam guard strut"))) + (" (the cradle hangs from the cage only, Spark 27 Oct)" if CAM_MOUNT == "cage" else " (the seat on the boom + these: not a stalk)"))
 if CAM_MOUNT == "boom": say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
-if OUT == os.path.join(ROOT, "runs", "scout_layout", "v11", ""):
+if OUT == os.path.join(ROOT, "runs", "scout_layout", "v12", ""):
     from assembly import new as new_assembly
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
@@ -1237,6 +1280,7 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v11", ""):
             contact += [["camera cradle clips (printed)", "camera cradle arms (printed)"]]
                                                                                   # the cradle; clear of every rod (no contact, review 27 Oct)
     names_ = {p_[0] for p_ in PARTS} | {a_["name"] for a_ in asm_parts}
+    contact += [[m_, o_] for m_ in names_ if "(Scout electronics, E)" in m_ for o_ in names_ if o_ != m_]   # mass markers, not geometry
     contact = [c_ if len(c_) == 3 else c_ + [1e9] for c_ in contact if c_[0] in names_ and c_[1] in names_]   # pairs of drawn parts only
     openings = [dict(part=p_, axis=[0, 0, -1], half_angle_deg=40.0, min_mm=0.0, skip_probes=True)
                 for p_ in SW_IGN[:1] + ["pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug", "receiver v3 (latch)", "receiver lid (latch)", "flow MTF-02P"]]
@@ -1251,6 +1295,22 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v11", ""):
                        guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=500, cage_shell=SHELL_SPEC, access=ACCESS)
     asm.save(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json"))
     say("wrote nox/scout/v3/scout.assembly.json")
+    CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
+    if os.path.exists(CAM_SAVED):                             # the saved camera mount (PR 146) in place of the layout's cradle, arms and clips
+        ap_ = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json"); a_ = json.load(open(ap_)); sm_ = json.load(open(CAM_SAVED))
+        old_ = {CAMP, "camera cradle arms (printed)", "camera cradle clips (printed)"}
+        mine_ = [p_ for p_ in sm_["parts"] if p_.get("owner") == "scout camera mount"]; mn_ = {p_["name"] for p_ in mine_}
+        a_["parts"] = [p_ for p_ in a_["parts"] if p_["name"] not in old_] + mine_
+        a_["contact_pairs"] = [[("camera mount (printed)" if v_ == CAMP else v_) for v_ in c_[:2]] + c_[2:] for c_ in a_["contact_pairs"]
+                               if not ({c_[0], c_[1]} & (old_ - {CAMP}))] + [c_ for c_ in sm_["contact_pairs"] if c_[0] in mn_ - {"camera mount (printed)"}
+                                                                             or (c_[0] == "camera mount (printed)" and c_[1] == "cage shell tubes")]
+        a_["note"] = sm_["note"]
+        from assembly import Assembly
+        Assembly(a_, ap_).save(ap_)
+        import subprocess
+        subprocess.run([sys.executable, os.path.join(ROOT, "nox", "system_check.py"), ap_, "--report", "--out", os.path.join(OUT, "system_check_mount.json")],
+                       capture_output=True, cwd=ROOT)                # the view's numbers with the mount in
+        say("camera mount: the saved part (runs/scout_camera_mount/v1, " + ", ".join(f"{p_['name']} {p_['mass_g']} g" for p_ in mine_) + ") in the assembly")
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())
 print("wrote", OUT)

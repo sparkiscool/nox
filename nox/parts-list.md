@@ -18,6 +18,9 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | microSD ≥ 32 GB A1 | 1 | Radxa boot | CHECK | |
 | DECXIN 2633V2 USB global-shutter camera, 102° | 1 | camera | on hand | A (P); measure lens |
 | M2.5 heat-set inserts for the camera (OD 3.5 x 5.7 E, Ø3.2 hole) | 4 | camera mount (Spark 23 Oct: the board takes M2.5) | CHECK | A, M |
+| Camera mount v1, printed PETG (`print/scout_camera_mount_v1.stl`) | 1 | cradle, lens hood, 4 snap clips on cage tubes 7-8 / 14-15 | to print | System Scout v3 Camera |
+| Camera mount stop collar, printed PETG (`print/scout_camera_mount_collar_v1.stl`) | 2 | y stop on tube 14-15, CA'd | to print | System Scout v3 Camera |
+| M2.5 x 8 screws + bought M2.5 nylon or silicone washers, 1.0 thick (E), about Ø6 / Ø2.7 (E) | 4 + 4 | camera board onto the mount pads | CHECK | System Scout v3 Camera |
 | 4S 1500 LiPo, XT60 | 1 + CHECK spares | flight pack | on hand | A (P) |
 | 220 µF 35 V capacitor | 1 | on the battery pads | on hand | |
 | 5 V 5 A UBEC | 1 | Radxa + camera power | on hand | M (typical; measure) |
