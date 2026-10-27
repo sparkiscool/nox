@@ -267,3 +267,33 @@ it  60 beta   32 J   0.5156 vol 0.2235 (dil 0.3764 g -0.000) grey  3.0% ch 0.100
 it  60 beta   32 J   0.5156 vol 0.2235 (dil 0.3764 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.8s
 it  61 beta   32 J   0.5154 vol 0.2235 (dil 0.3764 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.8s
 it  61 beta   32 J   0.5154 vol 0.2235 (dil 0.3764 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.8s
+it  62 beta   32 J   0.5157 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.5s
+it  62 beta   32 J   0.5157 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.5s
+it  63 beta   32 J   0.5155 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.4s
+it  63 beta   32 J   0.5155 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.4s
+it  64 beta   32 J   0.5154 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.3s
+it  64 beta   32 J   0.5154 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.3s
+it  65 beta   32 J   0.5152 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.9s
+it  65 beta   32 J   0.5152 vol 0.2234 (dil 0.3763 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 38.9s
+it  66 beta   32 J   0.5150 vol 0.2234 (dil 0.3763 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.7s
+it  66 beta   32 J   0.5150 vol 0.2234 (dil 0.3763 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.7s
+it  67 beta   32 J   0.5151 vol 0.2233 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.6s
+it  67 beta   32 J   0.5151 vol 0.2233 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.6s
+it  68 beta   32 J   0.5150 vol 0.2234 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.6s
+it  68 beta   32 J   0.5150 vol 0.2234 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.6s
+it  69 beta   32 J   0.5148 vol 0.2234 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.1s
+it  69 beta   32 J   0.5148 vol 0.2234 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.1s
+it  70 beta   32 J   0.5146 vol 0.2234 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.1s
+it  70 beta   32 J   0.5146 vol 0.2234 (dil 0.3762 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.1s
+it  71 beta   32 J   0.5145 vol 0.2235 (dil 0.3762 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.1s
+it  71 beta   32 J   0.5145 vol 0.2235 (dil 0.3762 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.1s
+it  72 beta   32 J   0.5146 vol 0.2234 (dil 0.3761 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.6s
+it  72 beta   32 J   0.5146 vol 0.2234 (dil 0.3761 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.1 39.6s
+layout: stopped (max_stage) at it 72, beta 32, 3244 s
+layout: stopped (max_stage) at it 72, beta 32, 3244 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 3404 s, peak 7.331368 GB
+layout done: 3404 s, peak 7.331368 GB
+build: organic surface at pitch 0.300 mm (x5), skins 78.00 cm3, field 138.44 cm3, in env - cuts 127.09 cm3 (layout 127.09, level offset +0.405 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,011,932 faces, 133 s
+build: organic surface at pitch 0.300 mm (x5), skins 78.00 cm3, field 138.44 cm3, in env - cuts 127.09 cm3 (layout 127.09, level offset +0.405 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,011,932 faces, 133 s
