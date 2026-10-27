@@ -9,7 +9,7 @@ topology joins only those bosses. Cases per member, the other members holding: i
 one is the mirror); the front centre node is part of the sensor head mount. Members: nox/overseer/cage_v5_shell.json (tubes),
 runs/overseer_layout/v5/result.json links and head_system.json wing struts (rods). Drone frame, mm, N.
 
-python3 nox/overseer/cage_node.py list | <node> [out_dir] [--h 0.8] [--smoke]
+python3 nox/overseer/cage_node.py list | <node> [out_dir] [--h 0.8] [--smoke] | recut <node> <mesh> [out] --ref <run commit> [--built 6.1,3.1]
 """
 import os, sys, json, math, argparse
 import numpy as np
@@ -95,7 +95,8 @@ def recut(i, mesh_in, mesh_out=None, built=(6.1, 3.1), ref=None):
     """make a saved node's sockets the current bores without a rerun (Spark 27 Oct: "dont restart runs just make the hole match"):
     the sockets placed as the run built them (its bores `built` set the set-back; with `ref`, the link ends, sizes and cage of the
     commit the run was built on, so every axis is the run's own), then each bore cut again at KINDS' bore along the same axis from
-    the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after."""
+    the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after. Limit: the head
+    struts (HEAD_STRUTS) are this file's, not the ref's; a node with one (15 / 16 / 18 / 19) needs the strut ends of its run."""
     import trimesh
     global RES, LINK6, CG, N
     keep = {k: dict(v) for k, v in KINDS.items()}; was = (RES, LINK6, CG, N)
