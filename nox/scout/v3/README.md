@@ -37,6 +37,16 @@ The latest layout (PR 94) with a geodesic shell cage (the Overseer cage v3 idea,
 ### Electronics mount (Spark 27 Oct)
 Confirmed list for the mount: MicoAir743v2-AIO-35A (FC + ESC) on 4 grommets, RadioMaster XR2, MicoAir MTF-02P, Radxa Zero 3W (+ microSD), 5 V 5 A UBEC, DECXIN 2633V2 camera, and their wiring (SH1.0 4-pin pigtail, 90° USB-C). **No lights.** **Battery side left as it is** (pack, XT60E1-M, 220 µF cap, keep-alive pads, 10 kΩ, ideal diode): not this mount's work, it stays with the battery latch / box catch. **Placement from the cage system pass (27 Oct, layout v3 / cage v2, `dimensions.md` System Scout v3; DEFAULT):** the receiver and the belly mount sit 5.0 forward of the plate centre (FC + flow over the receiver, FC IMU offset x +5.0); the tail bay is out of the prop wash on the electronics session's mount (PR 130), riding with the catch: the Radxa on edge on the centre plane (x −137..−72, z 8..38, plugs up), the UBEC behind the rear disks (x −171..−110, y 11.2..26.6, z 16..24), and the XR2 fixed in the frame at x −110..−94, off the rear prop (`runs/scout_layout/v12/summary.md`); the cage ties root on a printed tie saddle beside the receiver (y ±36.3..42.3, bolted to the plate), clear of the belly mount envelope (y ±35); the tail bay balances the nose camera; the camera sits in a printed PETG cradle snap-clipped onto the cage rods (Spark 27 Oct), not on the drone body. Moving any of these re-runs the cage balance (`layout_v3.py`).
 
+### Sessions making the Scout's cage parts (Spark 27 Oct: every cage change goes to each of them; each says when it saves a part, which then goes into the assembly and the Scout artifact)
+| Part | Session | Status |
+|---|---|---|
+| Cage layout, tie saddle, frame model, nodes (not started) | Scout v3 design (session_01EtHMZNhc68Ghbc2KCNMUzU) | layout v12 on main; nodes wait on the rod sizing |
+| Camera mount (cradle, arms, snap clips, lens guard) | worker inside the Scout v3 design session (`part/scout-camera-mount`) | v1 saved: `print/scout_camera_mount_v1.stl` 21.3 g + collar x2 0.25 g (M), `runs/scout_camera_mount/v1/` |
+| Tail bay and belly mount (Radxa, UBEC, XR2) | Scout electronics mount (session_01EtHMZQ6DeunMTynr11ADr1, PR 130) | in progress |
+| Reverse funnel (shared with the Overseer) | design center (session_01EtHMZMB13ed4juqR8ktuXy) | in progress |
+
+Scout artifact: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (republished with every saved part).
+
 ### v3 parts to draw (order DEFAULT)
 1. Bottom layout: pack, receiver with latch pockets, contacts, belly plate, pogo pads, underside stack (FC, Radxa, flow) in one sweep (v2 drew it in `archive/scout-v2/s2-receiver.md`; history only).
 2. Cage: layout v3 / cage v2 (27 Oct, race-car, 55 x 3 mm rods, bottom on the Overseer v5 loop's side nodes); next the frame model on the cage, then shell nodes and the tie saddle.
