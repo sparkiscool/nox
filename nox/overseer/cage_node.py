@@ -2,7 +2,7 @@
 (Spark 27 Oct: "start the nodes runs too, make sure each node takes either 3mm or 6mm, that's the only two rods we will use,
 also do topology based on the contact of the rods for each joint so it's optimized and not overly thick and wasteful").
 
-Each node: a drawn socket per member that ends there (6 mm carbon tube: bore 6.3, 15 deep; 3 mm carbon rod: bore 3.3, 10 deep;
+Each node: a drawn socket per member that ends there (6 mm carbon tube: bore 6.1, 15 deep; 3 mm carbon rod: bore 3.1, 10 deep;
 a 2.5 boss wall round each), the sockets set back from the node centre just far enough that neighbouring bosses clear; the
 topology joins only those bosses. Cases per member, the other members holding: its axial push and pull and two side loads
 (E until the frame model: 6 mm tube 250 N axial / 60 N side, 3 mm rod 80 N / 15 N). Mirror pairs share one design (the right
@@ -21,7 +21,7 @@ CG = json.load(open(os.path.join(HERE, "cage_v5_shell.json")))
 RES = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))
 HS = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "head_system.json")))
 N = np.array(CG["nodes"])
-KINDS = {6: dict(bore=6.3, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.3, depth=10.0, axial=80.0, side=15.0)}   # E
+KINDS = {6: dict(bore=6.1, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.1, depth=10.0, axial=80.0, side=15.0)}   # E; bores the v2 coupons' middle (DEFAULT 27 Oct, v1 OD + 0.3 loose)
 WALL = 2.5
 _LS = os.path.join(HERE, "link_sizes.json")
 LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()      # links the frame model made 6/4 tube
@@ -29,6 +29,9 @@ _NL = os.path.join(ROOT, "runs", "overseer_frame", "v1", "node_loads.json")
 NL = json.load(open(_NL)) if os.path.exists(_NL) else {}                          # frame-model socket forces (F), else KINDS (E)
 _k = [i for i in range(len(N)) if abs(N[i, 1]) < 0.5 and N[i, 0] > 300]
 HEAD_NODE = N[max(_k, key=lambda i: N[i, 0])] if _k else np.array([352.88, 0.0, 47.0])   # the front centre node: part of the sensor head mount
+
+
+HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 
 
 def members(i):
@@ -40,9 +43,11 @@ def members(i):
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
                 o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6 if k in LINK6 else 3, k))
-    if N[i, 1] > 150 and N[i, 0] > 300:                 # the head wing's 3.0 struts to the side nodes by the head (only at 20 deg+ from its tubes)
-        w = np.array([368.0, 112.0, 70.0]); d = (w - N[i]) / np.linalg.norm(w - N[i])
-        if all(math.degrees(math.acos(np.clip(d @ t[0], -1, 1))) >= 20.0 for t in out): out.append((d, 3, "head wing strut"))
+    for w, q in HEAD_STRUTS:                            # the one-piece head's struts to the side nodes (head_mount.HEAD_STRUTS)
+        for sy in (1, -1):
+            w_, q_ = np.array(w) * [1, sy, 1], np.array(q) * [1, sy, 1]
+            if np.linalg.norm(q_ - N[i]) < 1.0:
+                out.append(((w_ - N[i]) / np.linalg.norm(w_ - N[i]), 6 if f"head strut {i}" in LINK6 else 3, f"head strut {i}"))
     return out
 
 
