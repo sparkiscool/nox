@@ -33,7 +33,8 @@ G = 9.81
 
 # ------------------------------------------------------------------------------------------- numbers (dimensions.md)
 ROOT_H = 45.0                         # root between the plates, arm top = top plate underside (O Arms and hub, DEFAULT)
-U_ROOT = (58.0, 75.0)                 # root block along the diagonal (O: inner face u >= 58 for |v| <= 20; stock block to 75)
+U_ROOT = (58.0, float(os.environ.get("NOX_ARM_ROOT_U1", 75.0)))   # root block along the diagonal (O: inner face u >= 58 for
+                                      # |v| <= 20; stock block to 75; v3: to the plate corner, clipped by each plate outline)
 V_ROOT = 21.0
 TOP_INS = [(63.17, 15.0), (63.17, -15.0)]      # M3 into the top plate (O, derived)
 BOT_INS = [(63.74, 10.0), (63.74, -10.0)]      # M3 into the bottom plate (O, derived)
