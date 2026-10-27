@@ -50,3 +50,13 @@ it   8 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.726) grey  9.5% ch 0.000
 it   8 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.726) grey  9.5% ch 0.000 worst tube to 14 side a 574 4.7s
 it   9 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.726) grey  9.5% ch 0.000 worst tube to 14 side a 574 4.8s
 it   9 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.726) grey  9.5% ch 0.000 worst tube to 14 side a 574 4.8s
+it  10 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.726) grey  9.5% ch 0.000 worst tube to 14 side a 574 5.0s
+it  10 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.726) grey  9.5% ch 0.000 worst tube to 14 side a 574 5.0s
+it  11 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 3.7s
+it  11 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 3.7s
+it  12 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 4.4s
+it  12 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 4.4s
+it  13 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 3.4s
+it  13 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 3.4s
+it  14 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 3.4s
+it  14 beta    1 J  10.0016 vol 0.0239 (dil 0.0285 g +1.731) grey  9.5% ch 0.000 worst tube to 14 side a 574 3.4s

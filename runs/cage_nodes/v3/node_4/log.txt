@@ -545,3 +545,11 @@ it 138 beta   32 J  10.0001 vol 0.0023 (dil 0.0452 g +0.024) grey  0.2% ch 0.000
 it 138 beta   32 J  10.0001 vol 0.0023 (dil 0.0452 g +0.024) grey  0.2% ch 0.000 worst tube to 11 side a 242 26.1s
 it 139 beta   32 J  10.0001 vol 0.0023 (dil 0.0452 g +0.024) grey  0.2% ch 0.000 worst tube to 11 side a 242 33.5s
 it 139 beta   32 J  10.0001 vol 0.0023 (dil 0.0452 g +0.024) grey  0.2% ch 0.000 worst tube to 11 side a 242 33.5s
+it 140 beta   32 J  10.0001 vol 0.0023 (dil 0.0452 g +0.024) grey  0.2% ch 0.000 worst tube to 11 side a 242 33.9s
+it 140 beta   32 J  10.0001 vol 0.0023 (dil 0.0452 g +0.024) grey  0.2% ch 0.000 worst tube to 11 side a 242 33.9s
+layout: stopped (grey) at it 140, beta 32, 1949 s
+layout: stopped (grey) at it 140, beta 32, 1949 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 1995 s, peak 1.476592 GB
+layout done: 1995 s, peak 1.476592 GB
