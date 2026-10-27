@@ -9,7 +9,7 @@ topology joins only those bosses. Cases per member, the other members holding: i
 one is the mirror); the front centre node is part of the sensor head mount. Members: nox/overseer/cage_v5_shell.json (tubes),
 runs/overseer_layout/v5/result.json links and head_system.json wing struts (rods). Drone frame, mm, N.
 
-python3 nox/overseer/cage_node.py list | <node> [out_dir] [--h 0.8] [--smoke]
+python3 nox/overseer/cage_node.py list | <node> [out_dir] [--h 0.8] [--smoke] | recut <node> <mesh> [out] --ref <run commit> [--built 6.1,3.1]
 """
 import os, sys, json, math, argparse
 import numpy as np
@@ -32,6 +32,9 @@ HEAD_NODE = N[max(_k, key=lambda i: N[i, 0])] if _k else np.array([352.88, 0.0, 
 
 
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
+
+
+ARM_R, HUB_R = 3.5, 6.0                          # drawn arm Ø7 (PETG, 3.5 over the 2.0 minimum) and hub Ø12 at the node centre (DEFAULT)
 
 
 def members(i):
@@ -78,9 +81,12 @@ def bodies(i):
     for d, k, nm in M:
         K = KINDS[k]; a = c + d * r0; b = a + d * K["depth"]
         boss = seg(a - d * 1.0, b, K["bore"] / 2 + WALL)
+        boss = boss + seg(c, a, ARM_R)                                # a drawn arm from the socket floor to the hub: one body by construction
+                                                                      # (v3 runs: the topology alone left sockets disconnected, 27 Oct)
         cut = seg(a, b + d * 400.0, K["bore"] / 2) + seg(b + d * 0.5, b + d * 400.0, K["bore"] / 2 + 1.0)   # bore + the member beyond
         drawn = boss if drawn is None else drawn + boss; cuts = cut if cuts is None else cuts + cut
         sockets.append(dict(boss=boss, d=d, kind=k, name=nm))
+    drawn = drawn + mf.Manifold.sphere(HUB_R, 48).translate(list(map(float, c)))   # the hub the arms meet in
     R = r0 + max(KINDS[k]["depth"] for _, k, _ in M) + 1.0
     env = mf.Manifold.sphere(R, 64).translate(list(map(float, c)))
     return dict(drawn=drawn, cuts=cuts, env=env, sockets=sockets, r0=r0, R=R)
@@ -95,7 +101,8 @@ def recut(i, mesh_in, mesh_out=None, built=(6.1, 3.1), ref=None):
     """make a saved node's sockets the current bores without a rerun (Spark 27 Oct: "dont restart runs just make the hole match"):
     the sockets placed as the run built them (its bores `built` set the set-back; with `ref`, the link ends, sizes and cage of the
     commit the run was built on, so every axis is the run's own), then each bore cut again at KINDS' bore along the same axis from
-    the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after."""
+    the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after. Limit: the head
+    struts (HEAD_STRUTS) are this file's, not the ref's; a node with one (15 / 16 / 18 / 19) needs the strut ends of its run."""
     import trimesh
     global RES, LINK6, CG, N
     keep = {k: dict(v) for k, v in KINDS.items()}; was = (RES, LINK6, CG, N)

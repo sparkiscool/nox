@@ -13,6 +13,7 @@ Spark's drone project: the **box** (ground station that catches a drone, swaps i
 | What happened, newest first | `nox/log.md` (design), `nox/print-log.md` (prints) |
 | How parts are designed, saved and printed | `docs/generative.md` |
 | Research notes | `claude/` (cited when needed); Scout v2 and old designs: `archive/` |
+| The box as a whole (sections to scale, every system, owners, change log) | the Nox Ground Unit artifact https://claude.ai/artifact/RX2CexkfhB5UoQHnGTVgCC, kept by the box master session (`nox/box/box.md` Master view); the box assembled in 3D from its real mesh files: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG |
 
 ## Start a session
 Every session runs in the cloud "Nox" environment with this repo selected. Paste one of these:
