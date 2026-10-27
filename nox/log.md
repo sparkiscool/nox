@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer cage nodes v3, DEFAULT): h 1.0 direct runs OOM-killed (6 GB each, 380 s/iter) so all 14 rerun at h 1.5 on NOX_TOPO_BACKEND=mg (direct fallback if no fine iteration in 10 min), split over 3 boxes; alt: h 1.0 one at a time, 6 h cap. Logs of the void runs in runs/cage_nodes/v3_h1_failed.
 - 27 Oct (Overseer): arm session ends in (spokes from the arm nodes, L2 brace roots in the front beam) and core v2 (keels 5 into the hub deck, hub block off the head); frame: rear arm node 2317 N, front 1074, braces 897 (`arm_loads.json`), the arm root takes it (told); `cage_node.py recut` makes saved sockets 6.2 / 3.2 without a rerun (Spark).
 - 27 Oct (Scout v3, Spark question): one-way props cannot right the Scout (upside down they press it down, on its side they roll it onto its back); the v11 cage rests in 6 poses. Ways: turtle mode (reverse ESC + ArduPilot or a PX4 add-on), a flip arm (~15-20 g), or a self-righting cage (sides ±170). `runs/scout_selfright/v1/`
 - 27 Oct (Scout v3): frame model v1 (`nox/scout/v3/cage_frame.py`, `runs/scout_frame/v1/`): the all-3.0 cage fails the 35 g crash (31 of 50 buckle, saddle ties 2800 MPa) and the camera mode is 25 Hz; 6/4 tube on 38 members (+73 g) passes all, 79 Hz. Spark decides vs the 3 mm Scout clause; nodes wait on it.
