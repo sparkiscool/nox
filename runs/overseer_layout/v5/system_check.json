@@ -149,14 +149,14 @@
     "pass_": true
    },
    "prop 2": {
-    "min_margin_mm": 31.35,
+    "min_margin_mm": 31.36,
     "worst_dir": [
      -0.186,
      0.063,
      0.981
     ],
-    "worst_slack_mm": 28.35,
-    "min_margin_outside_openings_mm": 31.35,
+    "worst_slack_mm": 28.36,
+    "min_margin_outside_openings_mm": 31.36,
     "dirs_in_openings": 0,
     "pass_": true
    },
@@ -247,7 +247,7 @@
   ],
   "largest_extent_mm": 771.0,
   "bbox_L": 116.156,
-  "hull_L": 69.291,
+  "hull_L": 69.164,
   "guard_offsets_mm": {
    "shell tubes to prop disks, 3D (G)": 20.3
   }
@@ -260,7 +260,7 @@
    {
     "a": "cage shell tubes",
     "b": "cage shell nodes",
-    "overlap_mm3": 32247.84,
+    "overlap_mm3": 32364.19,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -269,7 +269,7 @@
    {
     "a": "cage shell tubes",
     "b": "spokes, ties, keels, braces, head struts",
-    "overlap_mm3": 8904.86,
+    "overlap_mm3": 8913.03,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -287,7 +287,7 @@
    {
     "a": "cage shell nodes",
     "b": "spokes, ties, keels, braces, head struts",
-    "overlap_mm3": 6530.65,
+    "overlap_mm3": 6689.93,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -305,7 +305,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
-    "overlap_mm3": 523.98,
+    "overlap_mm3": 535.62,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -332,7 +332,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 1",
-    "overlap_mm3": 1626.91,
+    "overlap_mm3": 25.53,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -341,7 +341,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 2",
-    "overlap_mm3": 887.83,
+    "overlap_mm3": 2394.11,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -350,7 +350,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 3",
-    "overlap_mm3": 887.83,
+    "overlap_mm3": -2229.01,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -359,7 +359,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 4",
-    "overlap_mm3": 1626.91,
+    "overlap_mm3": 25.53,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -443,16 +443,16 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "top plate",
     "b": "arm 3",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": -0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -497,7 +497,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -506,7 +506,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -632,16 +632,16 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "arm 3",
     "b": "motor 3",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": -0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -657,11 +657,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3211.53,
+  "mass_g": 3209.51,
   "cg": [
-   66.3,
+   66.31,
    -0.17,
-   18.77
+   18.67
   ],
   "parts": [
    {
@@ -688,11 +688,11 @@
    },
    {
     "name": "spokes, ties, keels, braces, head struts",
-    "mass_g": 158.8,
+    "mass_g": 156.78,
     "cg": [
-     114.14,
+     114.85,
      0.0,
-     20.8
+     18.7
     ],
     "tag": "C",
     "swap": false
@@ -866,7 +866,7 @@
     "name": "motor 1",
     "mass_g": 81.0,
     "cg": [
-     205.9,
+     205.91,
      139.5,
      58.0
     ],
@@ -877,7 +877,7 @@
     "name": "prop 1",
     "mass_g": 10.0,
     "cg": [
-     205.9,
+     205.91,
      139.5,
      82.0
     ],
@@ -899,7 +899,7 @@
     "name": "motor 2",
     "mass_g": 81.0,
     "cg": [
-     -73.1,
+     -73.09,
      139.5,
      58.0
     ],
@@ -910,7 +910,7 @@
     "name": "prop 2",
     "mass_g": 10.0,
     "cg": [
-     -73.1,
+     -73.09,
      139.5,
      82.0
     ],
@@ -932,7 +932,7 @@
     "name": "motor 3",
     "mass_g": 81.0,
     "cg": [
-     -73.1,
+     -73.09,
      -139.5,
      58.0
     ],
@@ -943,7 +943,7 @@
     "name": "prop 3",
     "mass_g": 10.0,
     "cg": [
-     -73.1,
+     -73.09,
      -139.5,
      82.0
     ],
@@ -965,7 +965,7 @@
     "name": "motor 4",
     "mass_g": 81.0,
     "cg": [
-     205.9,
+     205.91,
      -139.5,
      58.0
     ],
@@ -976,7 +976,7 @@
     "name": "prop 4",
     "mass_g": 10.0,
     "cg": [
-     205.9,
+     205.91,
      -139.5,
      82.0
     ],
@@ -986,21 +986,21 @@
   ],
   "tag": "E",
   "cg_ref": [
-   66.402,
+   66.408,
    0.0,
    82.0
   ],
   "cg_offset": [
    -0.1,
    -0.17,
-   -63.23
+   -63.33
   ],
-  "cg_offset_mm": 63.23
+  "cg_offset_mm": 63.33
  },
  "balance": {
   "applies": true,
   "ref": [
-   66.402,
+   66.408,
    0.0,
    82.0
   ],
@@ -1012,32 +1012,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3211.53,
+    "mass_g": 3209.51,
     "cg_offset": [
      -0.1,
      -0.17,
-     -63.23
+     -63.33
     ],
     "horizontal_mm": 0.2,
-    "axial_mm": -63.23,
+    "axial_mm": -63.33,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2409.2,
+    "mass_g": 2407.18,
     "cg_offset": [
-     31.97,
+     32.0,
      -0.23,
-     -47.25
+     -47.37
     ],
-    "horizontal_mm": 31.97,
-    "axial_mm": -47.25,
+    "horizontal_mm": 32.0,
+    "axial_mm": -47.37,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 31.97,
+  "worst_horizontal_mm": 32.0,
   "pass_": true
  },
  "probes": {
@@ -1349,10 +1349,10 @@
      0.067
     ],
     "roll_deg": 345.0,
-    "lateral_mm": -170.4,
+    "lateral_mm": -162.9,
     "contact": [
-     -199.4,
-     -126.6,
+     -199.9,
+     -146.9,
      87.0
     ],
     "pass_": true
@@ -1490,58 +1490,6 @@
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "motor 4",
-    "margin_mm": 90.0,
-    "unshielded": false,
-    "dir": [
-     0.051,
-     -0.08,
-     -0.995
-    ],
-    "dir_label": "-Z",
-    "axis": [
-     0.531,
-     -0.842,
-     0.095
-    ],
-    "roll_deg": 180.0,
-    "lateral_mm": 57.6,
-    "contact": [
-     219.5,
-     -142.2,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "motor 4",
-    "margin_mm": 90.46,
-    "unshielded": false,
-    "dir": [
-     0.051,
-     -0.08,
-     -0.995
-    ],
-    "dir_label": "-Z",
-    "axis": [
-     0.531,
-     -0.842,
-     0.095
-    ],
-    "roll_deg": 180.0,
-    "lateral_mm": 60.6,
-    "contact": [
-     219.6,
-     -137.7,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
     "part": "motor 3",
     "margin_mm": 90.95,
     "unshielded": false,
@@ -1592,6 +1540,32 @@
     "pass_": true
    },
    {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 4",
+    "margin_mm": 91.0,
+    "unshielded": false,
+    "dir": [
+     0.007,
+     -0.263,
+     -0.965
+    ],
+    "dir_label": "(+0.01, -0.26, -0.96)",
+    "axis": [
+     0.027,
+     -0.964,
+     0.263
+    ],
+    "roll_deg": 180.0,
+    "lateral_mm": 135.6,
+    "contact": [
+     204.1,
+     -153.2,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 1",
@@ -1613,6 +1587,32 @@
     "contact": [
      217.4,
      147.2,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "motor 4",
+    "margin_mm": 91.0,
+    "unshielded": false,
+    "dir": [
+     0.007,
+     -0.263,
+     -0.965
+    ],
+    "dir_label": "(+0.01, -0.26, -0.96)",
+    "axis": [
+     0.027,
+     -0.964,
+     0.263
+    ],
+    "roll_deg": 180.0,
+    "lateral_mm": 135.6,
+    "contact": [
+     203.2,
+     -153.1,
      45.0
     ],
     "pass_": true
@@ -1705,7 +1705,7 @@
    0.0,
    10.0
   ],
-  "n_points": 643647
+  "n_points": 671298
  },
  "access": {
   "applies": true,
@@ -2131,16 +2131,16 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3211.53,
+  "mass_g": 3209.51,
   "part_budgets_g": {},
   "over_parts": [],
   "budget_g": 2200.0,
-  "pct": 146.0,
+  "pct": 145.9,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm\u00b3 (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3212 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.2], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear",
+ "summary": "System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm\u00b3 (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3210 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.3], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear",
  "pass": true
 }
