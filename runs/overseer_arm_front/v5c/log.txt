@@ -270,3 +270,12 @@ layout done: 3878 s, peak 5.55686 GB
 layout done: 3878 s, peak 5.55686 GB
 build: organic surface at pitch 0.286 mm (x7), skins 117.93 cm3, field 199.52 cm3, in env - cuts 179.65 cm3 (layout 179.65, level offset +0.513 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,764,992 faces, 584 s
 build: organic surface at pitch 0.286 mm (x7), skins 117.93 cm3, field 199.52 cm3, in env - cuts 179.65 cm3 (layout 179.65, level offset +0.513 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,764,992 faces, 584 s
+=== overseer_arm_front: rebuild from /tmp/claude-0/-home-user-nox/e1c84f6e-e0be-588a-a441-170356a8569d/scratchpad/front_v5c/density.npz (layout not rerun)
+=== overseer_arm_front: rebuild from /tmp/claude-0/-home-user-nox/e1c84f6e-e0be-588a-a441-170356a8569d/scratchpad/front_v5c/density.npz (layout not rerun)
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 55,522 (444.2 cm3), drawn 14,554, void 101,956
+  insert rod 0: 566 cells, modulus x21.8
+  insert rod 1: 566 cells, modulus x21.8
+  insert rod 2: 566 cells, modulus x21.8
+  insert rod 3: 566 cells, modulus x21.8
+  support default: 269 cells, 696 nodes
+  support bosses: 112 cells, 355 nodes
