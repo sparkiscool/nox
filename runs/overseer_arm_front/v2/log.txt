@@ -442,3 +442,5 @@ layout: beta 32 done: eroded design 15 bodies, main 94.0%; drawn bodies outside 
 layout: beta 32 done: eroded design 15 bodies, main 94.0%; drawn bodies outside the main body: 1
 layout done: 6069 s, peak 6.524556 GB
 layout done: 6069 s, peak 6.524556 GB
+build: organic surface at pitch 0.286 mm (x7), skins 24.33 cm3, field 80.15 cm3, in env - cuts 73.16 cm3 (layout 73.16, level offset +0.272 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,273,932 faces, 1078 s
+build: organic surface at pitch 0.286 mm (x7), skins 24.33 cm3, field 80.15 cm3, in env - cuts 73.16 cm3 (layout 73.16, level offset +0.272 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,273,932 faces, 1078 s
