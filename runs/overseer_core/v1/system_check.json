@@ -149,14 +149,14 @@
     "pass_": true
    },
    "FC stack (MicoAir743-Lite on 55A 4-in-1)": {
-    "min_margin_mm": 92.48,
+    "min_margin_mm": 95.48,
     "worst_dir": [
      0.0,
      0.0,
      1.0
     ],
-    "worst_slack_mm": 89.48,
-    "min_margin_outside_openings_mm": 92.48,
+    "worst_slack_mm": 92.48,
+    "min_margin_outside_openings_mm": 95.48,
     "dirs_in_openings": 0,
     "pass_": true
    },
@@ -546,6 +546,15 @@
    },
    {
     "a": "top plate",
+    "b": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top plate",
     "b": "ESC cap",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
@@ -565,19 +574,10 @@
    {
     "a": "top plate",
     "b": "wires",
-    "overlap_mm3": 16.36,
+    "overlap_mm3": 16.42,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "top plate",
-    "b": "stack mount",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
     "pass_": true
    },
    {
@@ -736,25 +736,16 @@
    {
     "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "b": "wires",
-    "overlap_mm3": 269.0,
+    "overlap_mm3": 365.04,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
-    "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "b": "stack mount",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
     "a": "ESC cap",
     "b": "wires",
-    "overlap_mm3": 993.88,
+    "overlap_mm3": 976.47,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -817,16 +808,7 @@
    {
     "a": "RX XR2",
     "b": "wires",
-    "overlap_mm3": 9.11,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "RX XR2",
-    "b": "stack mount",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 75.34,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -881,15 +863,6 @@
     "a": "wires",
     "b": "XT60 pair",
     "overlap_mm3": 4.09,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "wires",
-    "b": "stack mount",
-    "overlap_mm3": 183.84,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -998,11 +971,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3427.68,
+  "mass_g": 3419.68,
   "cg": [
-   61.39,
-   -0.21,
-   15.81
+   61.53,
+   -0.22,
+   15.7
   ],
   "parts": [
    {
@@ -1253,7 +1226,7 @@
     "cg": [
      0.0,
      -0.0,
-     60.75
+     57.75
     ],
     "tag": "E",
     "swap": false
@@ -1328,9 +1301,9 @@
     "name": "wires",
     "mass_g": 80.0,
     "cg": [
-     -27.86,
+     -27.92,
      -6.76,
-     35.71
+     35.06
     ],
     "tag": "E",
     "swap": false
@@ -1380,17 +1353,6 @@
     "swap": false
    },
    {
-    "name": "stack mount",
-    "mass_g": 8.0,
-    "cg": [
-     -1.71,
-     0.68,
-     48.88
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
     "name": "hub deck",
     "mass_g": 24.0,
     "cg": [
@@ -1431,11 +1393,11 @@
    82.0
   ],
   "cg_offset": [
-   0.61,
-   -0.21,
-   -66.19
+   0.75,
+   -0.22,
+   -66.3
   ],
-  "cg_offset_mm": 66.19
+  "cg_offset_mm": 66.3
  },
  "balance": {
   "applies": true,
@@ -1452,32 +1414,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3427.68,
+    "mass_g": 3419.68,
     "cg_offset": [
-     0.6,
-     -0.21,
-     -66.19
+     0.75,
+     -0.22,
+     -66.3
     ],
-    "horizontal_mm": 0.64,
-    "axial_mm": -66.19,
+    "horizontal_mm": 0.78,
+    "axial_mm": -66.3,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2672.08,
+    "mass_g": 2664.08,
     "cg_offset": [
-     24.49,
-     -0.27,
-     -49.23
+     24.75,
+     -0.28,
+     -49.33
     ],
-    "horizontal_mm": 24.49,
-    "axial_mm": -49.23,
+    "horizontal_mm": 24.75,
+    "axial_mm": -49.33,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 24.49,
+  "worst_horizontal_mm": 24.75,
   "pass_": true
  },
  "probes": {
@@ -2243,7 +2205,7 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "margin_mm": 91.0,
+    "margin_mm": 94.0,
     "unshielded": false,
     "dir": [
      -0.114,
@@ -2257,11 +2219,11 @@
      0.115
     ],
     "roll_deg": 0.0,
-    "lateral_mm": -21.0,
+    "lateral_mm": -15.0,
     "contact": [
      -18.0,
-     8.0,
-     70.1
+     2.0,
+     67.1
     ],
     "pass_": true
    },
@@ -2295,7 +2257,7 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "margin_mm": 103.46,
+    "margin_mm": 106.0,
     "unshielded": false,
     "dir": [
      -0.224,
@@ -2313,7 +2275,7 @@
     "contact": [
      -18.0,
      5.0,
-     70.1
+     67.1
     ],
     "pass_": true
    },
@@ -2370,6 +2332,32 @@
     "pass_": true
    },
    {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "ESC cap",
+    "margin_mm": 113.54,
+    "unshielded": false,
+    "dir": [
+     -0.267,
+     0.016,
+     0.964
+    ],
+    "dir_label": "(-0.27, +0.02, +0.96)",
+    "axis": [
+     0.962,
+     -0.057,
+     0.267
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": 9.0,
+    "contact": [
+     -62.0,
+     -1.0,
+     56.6
+    ],
+    "pass_": true
+   },
+   {
     "probe": "edge",
     "r_mm": 0.0,
     "part": "RX XR2",
@@ -2392,32 +2380,6 @@
      -30.0,
      24.0,
      52.6
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "ESC cap",
-    "margin_mm": 125.0,
-    "unshielded": false,
-    "dir": [
-     -0.375,
-     0.042,
-     0.926
-    ],
-    "dir_label": "(-0.37, +0.04, +0.93)",
-    "axis": [
-     0.921,
-     -0.102,
-     0.377
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": 18.0,
-    "contact": [
-     -62.0,
-     -2.0,
-     56.6
     ],
     "pass_": true
    },
@@ -2892,7 +2854,7 @@
     "blocked_by": [
      {
       "part": "prop 3",
-      "overlap_mm3": 4200.73,
+      "overlap_mm3": 4200.84,
       "method": "manifold3d"
      },
      {
@@ -2904,7 +2866,7 @@
     "touches": [
      {
       "part": "prop 3",
-      "overlap_mm3": 4200.73,
+      "overlap_mm3": 4200.84,
       "method": "manifold3d"
      },
      {
@@ -2913,7 +2875,7 @@
       "method": "manifold3d"
      }
     ],
-    "overlap_mm3": 4200.73,
+    "overlap_mm3": 4200.84,
     "pass_": false
    },
    {
@@ -3183,83 +3145,7 @@
     "pass_": true
    },
    {
-    "name": "step 3 (bench): M3 stack mount screw 0 up through the top plate",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     -1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "step 3 (bench): M3 stack mount screw 1 up through the top plate",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     -1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "step 3 (bench): M3 stack mount screw 2 up through the top plate",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     -1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "step 3 (bench): M3 stack mount screw 3 up through the top plate",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 6
-    },
-    "dir": [
-     0.0,
-     0.0,
-     -1.0
-    ],
-    "length_mm": 150.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "step 5: M3 stack screw 0 into the mount's post insert (screwdriver, everything assembled)",
+    "name": "step 5: M3 stack screw 0 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3278,7 +3164,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 1 into the mount's post insert (screwdriver, everything assembled)",
+    "name": "step 5: M3 stack screw 1 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3297,7 +3183,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 2 into the mount's post insert (screwdriver, everything assembled)",
+    "name": "step 5: M3 stack screw 2 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3316,7 +3202,7 @@
     "pass_": true
    },
    {
-    "name": "step 5: M3 stack screw 3 into the mount's post insert (screwdriver, everything assembled)",
+    "name": "step 5: M3 stack screw 3 through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)",
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
@@ -3335,7 +3221,7 @@
     "pass_": true
    }
   ],
-  "n_clear": 35,
+  "n_clear": 31,
   "worst": {
    "name": "FC USB-C (-y edge, on the top plate)",
    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
@@ -3354,7 +3240,7 @@
    "blocked_by": [
     {
      "part": "prop 3",
-     "overlap_mm3": 4200.73,
+     "overlap_mm3": 4200.84,
      "method": "manifold3d"
     },
     {
@@ -3366,7 +3252,7 @@
    "touches": [
     {
      "part": "prop 3",
-     "overlap_mm3": 4200.73,
+     "overlap_mm3": 4200.84,
      "method": "manifold3d"
     },
     {
@@ -3375,26 +3261,25 @@
      "method": "manifold3d"
     }
    ],
-   "overlap_mm3": 4200.73,
+   "overlap_mm3": 4200.84,
    "pass_": false
   }
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3427.68,
+  "mass_g": 3419.68,
   "part_budgets_g": {
-   "stack mount": 8.0,
    "hub deck": 24.0,
    "sled": 75.0
   },
   "over_parts": [],
   "budget_g": 2200.0,
-  "pct": 155.8,
+  "pct": 155.4,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3428 of 2200 g (156 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [+0.6, -0.2, -66.2], 24.5 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/39 clear (FC USB-C (-y edge, on the top plate) blocked by prop 3, cage shell tubes 4201 mm\u00b3; Pi USB-A / RJ45 plugs (aft, in the open) blocked by bottom plate, sled, spokes, ties, keels, L2 guard ring 624 mm\u00b3; step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet) blocked by RX XR2 169 mm\u00b3; step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet) blocked by RX XR2 37 mm\u00b3) FAIL",
+ "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3420 of 2200 g (155 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [+0.8, -0.2, -66.3], 24.8 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 31/35 clear (FC USB-C (-y edge, on the top plate) blocked by prop 3, cage shell tubes 4201 mm\u00b3; Pi USB-A / RJ45 plugs (aft, in the open) blocked by bottom plate, sled, spokes, ties, keels, L2 guard ring 624 mm\u00b3; step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet) blocked by RX XR2 169 mm\u00b3; step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet) blocked by RX XR2 37 mm\u00b3) FAIL",
  "pass": false
 }

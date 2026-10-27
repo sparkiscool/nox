@@ -1,15 +1,12 @@
 """Overseer core mounting check coupons v1 (27 Oct, Spark: "make a fast to print mounting check coupons first, in the orientation
 we are going to put them in. make it fast to print"; "make sure bolts are accessible through a screwdriver"; "the fc mounts to the
-top plates lines so just move that there").
+top plates lines so just move that there"; "the fc does not need a mount it already goes to the carbon plate": no stack
+mount and no coupon for it, the stack bolts through the plate's own holes).
 
-Drawn, least material: only the mounting features of the three core pieces (`nox/overseer/core_v1.py` round 4; every position read
+Drawn, least material: only the mounting features of the two core pieces (`nox/overseer/core_v1.py` round 5; every position read
 from `runs/overseer_core/v1/result.json`, never retyped) joined by 6 x 4 bars (4 thick: solid_check fails necks under 3.0), each
 printed the way it sits on the drone:
 
-  stack mount coupon  on the top plate, plate face down. 4 pads Ø12 x 5 on the top plate's Ø3.0 holes (±35.5, 0), (0, ±35.5)
-                      with Ø4.0 x 5 through (M3 x 4 short inserts; the M3 comes up from under the plate), 4 posts Ø11 x 5 on 30.5
-                      for the FC stack's grommets (Ø4.0 x 5, inserts), the RX tab. Checks: the top plate holes, the stack on its
-                      grommets, the ESC and FC footprints, the USB-C, the RX beside the stack.
   hub deck coupon     on the bottom plate, plate face down. 6 feet Ø12 x 4 (Ø3.4) on the plate's Ø3.1 holes (±24, ±36.5) and
                       (-65, ±22.5) (M3 x 12 down into the sled's inserts, or nuts under the plate for the check); the Pi's 4 posts
                       Ø7 x 8 on its 58 x 49 (Ø2.2 x 4 for M2.5 self-tapping); the UBEC / buck bay rails ahead of it. Checks: the
@@ -64,21 +61,6 @@ def save(m, name):
     return path, t
 
 
-def stack_mount_coupon():
-    """drone frame, z 0 = top plate top = bed"""
-    sp, H = C["stack_p"], C["post_h"]
-    pads = [tuple(p) for p in R["tp_holes"]]
-    posts = [(sx * sp, sy * sp) for sx in (1, -1) for sy in (1, -1)]
-    body = [cyl(x, y, 0, H, PAD_D / 2) for x, y in pads] + [cyl(x, y, 0, H, C["post_d"] / 2) for x, y in posts]
-    for x, y in pads:                                                    # each pad to its two nearest posts
-        for px, py in sorted(posts, key=lambda q: (q[0] - x) ** 2 + (q[1] - y) ** 2)[:2]:
-            body.append(bar((x, y), (px, py)))
-    rx = C["rx_tp"]
-    body.append(bar((-35.5, 0), (-33, rx[2] - 3)))                                                # RX tab (zip tie round the RX and the tab end)
-    cuts = [cyl(x, y, -1, H + 1, M3_INS / 2) for x, y in pads + posts]
-    return union(body) - union(cuts)
-
-
 def hub_deck_coupon():
     """drone frame, z 0 = bottom plate top = bed"""
     T, ry, zp = C["floor_t"], C["rail_y"], C["z_pi"]
@@ -120,7 +102,7 @@ def sled_coupon():
 
 if __name__ == "__main__":
     out = {}
-    for name, fn in (("overseer_core_coupon_stack_mount_v1.stl", stack_mount_coupon), ("overseer_core_coupon_hub_deck_v1.stl", hub_deck_coupon),
+    for name, fn in (("overseer_core_coupon_hub_deck_v1.stl", hub_deck_coupon),
                      ("overseer_core_coupon_sled_v1.stl", sled_coupon)):
         path, t = save(fn(), name)
         out[name] = {"mass_g": round(float(t.volume / 1000 * 1.27), 1), "size_mm": [round(float(v), 1) for v in t.extents], "watertight": bool(t.is_watertight)}

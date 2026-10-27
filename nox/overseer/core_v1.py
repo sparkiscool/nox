@@ -93,19 +93,20 @@ BX = 27.8                          # receiver v2 bolt line x (M)
 MOUNT_ZC = (-1.3, 85.55, 163.8)    # receiver v2 bolts along the cartridge (M)
 # FC stack: MicoAir743-Lite 36 x 36 x 8, 10 g (spec) on a MicoAir 55A AM32 4-in-1 44 x 43.5 x 5.2, 14 g (listing; the stack's
 # 17.5 / 24 g on the MicoAir drawing = FC 10 + this ESC 14, E: model CHECK), 30.5 x 30.5 Ø4 holes, M3 in grommets (usual, E).
-# On the top plate (Spark 27 Oct: "the fc mounts to the top plates lines so just move that there"), centred on the plate.
+# On the top plate (Spark 27 Oct: "the fc mounts to the top plates lines so just move that there"; "the fc does not need a mount it
+# already goes to the carbon plate"): bolted straight through the plate's own 30.5 holes (Spark's plate, P; not in the Holybro STEP), centred.
 STACK_P = 30.5 / 2
 ESC_L, ESC_W, ESC_T = 44.0, 43.5, 5.2
 FC_HALF, FC_T, STACK_H = 18.0, 8.0, 17.5
 Z_TP = 46.6                        # top plate top (S500 STEP, derived; 1.6 plate on the 45 gap)
-TP_HOLES = [(35.5, 0.0), (-35.5, 0.0), (0.0, 35.5), (0.0, -35.5)]       # top plate Ø3.0 (derived, STEP): the stack mount's 4 M3
 FLOOR_T = 4.0                      # 6 x 4 bars and Ø12 pads (the solid gate's 3.0 neck test)
 POST_H, POST_D = 5.0, 11.0         # stack posts (wall 3.5 round the insert): M3 short heat-set insert (Ruthex M3 x 4.0, hole Ø4.0 x 5, Q17)
 GROM = 1.0                         # grommet under the ESC (E)
-Z_ESC = Z_TP + POST_H + GROM       # 52.6
+STANDOFF = 3.0                     # the stack's own bottom grommet / nylon standoff on the plate (E)
+Z_ESC = Z_TP + STANDOFF            # 49.6
 Z_STACK_TOP = Z_ESC + STACK_H      # 70.1
 CAP = (10.0, 20.0)                 # low-ESR cap on the ESC battery pads, 35 V 470 µF Ø10 x 20, lying on the top plate behind the ESC (E)
-RX_TP = (-30.0, -18.0, 24.0, 40.0)  # RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, zip-tied to the mount's tab
+RX_TP = (-30.0, -18.0, 24.0, 40.0)  # RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, taped / zip-tied through the plate
 FEET_XY = [(24.0, 36.5), (24.0, -36.5), (-24.0, 36.5), (-24.0, -36.5), (-65.0, 22.5), (-65.0, -22.5)]   # bottom plate Ø3.1 holes, 360° faces in the STEP
 # (review 27 Oct: (-72.5, ±31.75) are R3 outline fillets, not holes; (-65, ±36.5) sit under the rear arm roots)
 # Pi 5: board 85 x 56 x 1.6, M2.5 holes Ø2.7 on 58 x 49, 3.5 from the far edge and 23.5 from the USB-A / RJ45 edge (spec);
@@ -176,16 +177,6 @@ flow = box(POD_X - 10.8, POD_X + 10.8, FLOW_Y - 8, FLOW_Y + 8, LENS_Z, LENS_Z + 
 
 
 # ---------------------------------------------------------------- the three core pieces (concept bodies for the piece runs; the coupons are their mounting features)
-def stack_mount():
-    """on the top plate: 4 pads on its Ø3.0 holes (M3 up from under the plate into short inserts, on the bench), 4 posts for the stack"""
-    pads = [cyl(6, Z_TP, Z_TP + POST_H, x, y) for x, y in TP_HOLES]
-    posts = [cyl(POST_D / 2, Z_TP, Z_TP + POST_H, sx * STACK_P, sy * STACK_P) for sx in (1, -1) for sy in (1, -1)]
-    bars = [bar(p_, (np.sign(p_[0] or 1) * STACK_P if p_[0] else s2 * STACK_P, np.sign(p_[1] or 1) * STACK_P if p_[1] else s2 * STACK_P), 6, Z_TP, Z_TP + FLOOR_T)
-            for p_ in TP_HOLES for s2 in (1, -1)]
-    tab = [bar((-35.5, 0), (-33, 21), 6, Z_TP, Z_TP + FLOOR_T)]                                   # RX tab (zip tie)
-    return uni(pads + posts + bars + tab)
-
-
 def hub_deck():
     """on the bottom plate: 6 feet (M3 down through the plate into the sled), the Pi's 4 posts, the UBEC + buck bays ahead of it"""
     feet = [cyl(6, 0, FLOOR_T, x, y) for x, y in FEET_XY]
@@ -208,7 +199,7 @@ def sled():
     return uni([plate, pod] + ribs)
 
 
-SMOUNT, DECK, SLED = stack_mount(), hub_deck(), sled()
+DECK, SLED = hub_deck(), sled()
 
 # ---------------------------------------------------------------- wiring: drawn routes, each ending in a plug (clean wiring, L 8)
 W = {
@@ -240,7 +231,7 @@ def P(name, m, role, mass=None, material="PETG", protect=False, tag="E", swap=Fa
     return d
 
 
-BUDGET = {"stack mount": 8, "hub deck": 24, "sled": 75}   # g, soft slots (DEFAULT)
+BUDGET = {"hub deck": 24, "sled": 75}   # g, soft slots (DEFAULT)
 # floor contact: TPU feet on 4 opening ring nodes (cage session; placeholders at v5's ring nodes, contact 6 under the lenses)
 RING = [(146.0, 43.2), (146.0, -43.2), (-102.9, 104.3), (-102.9, -104.3)]
 Z_FOOT = LENS_Z - 6.0
@@ -259,14 +250,13 @@ core = [
     P("cartridge", cartridge, "protected", 105.6, protect=True, swap=True, tag="M", owner="box swap (battery latch)", version="cartridge v6 + sliders v6"),
     P("receiver", receiver, "protected", 229.3, protect=True, tag="M", owner="box swap (battery latch)", version="receiver v2 + carrier v1 + cap + strips"),
     P("XT60 pair", xt60, "bought", 15, protect=True),
-    P("stack mount", SMOUNT, "structure", BUDGET["stack mount"], budget=BUDGET["stack mount"]),
     P("hub deck", DECK, "structure", BUDGET["hub deck"], budget=BUDGET["hub deck"]),
     P("sled", SLED, "structure", BUDGET["sled"], budget=BUDGET["sled"]),
     P("TPU feet (cage session, placeholders)", feet, "cage", 6.4, material="TPU", owner="overseer cage", version="placeholder"),
 ]
 CORE_NAMES = {p["name"] for p in core}
 contact = [list(c) for c in v5["contact_pairs"] if not (set(c) & REPLACED)]
-contact += [["stack mount", "top plate"], ["stack mount", STACK_NM], ["stack mount", "RX XR2"], ["ESC cap", "top plate"], ["RX XR2", "top plate"],
+contact += [[STACK_NM, "top plate"], ["ESC cap", "top plate"], ["RX XR2", "top plate"],
             ["hub deck", "bottom plate"], ["hub deck", PI_NM], ["hub deck", "UBEC 5 V"], ["hub deck", "buck 12 V"],
             ["ESC cap", STACK_NM], ["sled", "bottom plate"], ["sled", "receiver"], ["sled", "XT60 pair"], ["sled", "flow MTF-02P"],
             ["pack", "cartridge"], ["pack", "receiver"], ["cartridge", "receiver"], ["receiver", "XT60 pair"], ["cartridge", "XT60 pair"], ["pack", "XT60 pair"]]
@@ -292,20 +282,15 @@ for k, (x, y) in enumerate(FEET_XY):
 for k, (x, y) in enumerate(PI_HOLES):
     acc.append({"name": f"step 2: M2.5 Pi screw {k} (screwdriver, top plate not on yet)", "part": PI_NM, "from": [x, y, Z_PI + PI_BOARD_T + 0.5], "dir": [0, 0, 1],
                 "length_mm": 150.0, "tool": {"type": "cylinder", "d": 5}, "ignore": LATER})
-for k, (x, y) in enumerate(TP_HOLES):             # on the bench: the top plate upside down, M3 up into the mount's inserts
-    acc.append({"name": f"step 3 (bench): M3 stack mount screw {k} up through the top plate", "part": "stack mount", "from": [x, y, Z_TP - 1.7 - 0.5], "dir": [0, 0, -1],
-                "length_mm": 150.0, "tool": DRV, "ignore": ["top plate", "stack mount", "wires", PI_NM, "hub deck", "bottom plate", "sled", "receiver", "cartridge", "pack", "XT60 pair",
-                                                          "flow MTF-02P", "UBEC 5 V", "buck 12 V", "down camera", "arm 1", "arm 2", "arm 3", "arm 4", "TPU feet (cage session, placeholders)",
-                                                          "cage shell tubes", "cage shell nodes", "spokes, ties, keels, L2 guard ring"]})
 for k, (sx, sy) in enumerate([(1, 1), (1, -1), (-1, 1), (-1, -1)]):
-    acc.append({"name": f"step 5: M3 stack screw {k} into the mount's post insert (screwdriver, everything assembled)", "part": STACK_NM,
+    acc.append({"name": f"step 5: M3 stack screw {k} through the top plate (screwdriver, everything assembled; nut under the plate, before the plate goes on)", "part": STACK_NM,
                 "from": [sx * STACK_P, sy * STACK_P, Z_STACK_TOP + 0.5], "dir": [0, 0, 1], "length_mm": 150.0, "tool": DRV,
                 "ignore": ["prop 1", "prop 2", "prop 3", "prop 4", "wires"]})
 
 man = {k: v for k, v in v5.items() if k not in ("parts", "contact_pairs", "openings", "access", "note", "name")}
 man.update({"name": "Overseer core v1", "machine": "overseer",
-            "note": ("Overseer core v1 round 4 (27 Oct, Spark: everything inside the cage except the arms; latch mechanism, body nodes, cameras and "
-                     "lidar not this session's; screwdriver access, fewest pieces; the FC stack on the top plate): v5 / cage v3 context parts unchanged (nox/overseer/overseer.assembly.json); "
+            "note": ("Overseer core v1 round 5 (27 Oct, Spark: everything inside the cage except the arms; latch mechanism, body nodes, cameras and "
+                     "lidar not this session's; screwdriver access, fewest pieces; the FC stack straight on the carbon top plate): v5 / cage v3 context parts unchanged (nox/overseer/overseer.assembly.json); "
                      "the core, the real latch set (battery latch v4 Overseer meshes) and the feet placeholders on the cage's opening ring from nox/overseer/core_v1.py."),
             "parts": context + core, "contact_pairs": contact, "openings": openings, "access": acc})
 MAN = os.path.join(HERE, "overseer_core.assembly.json")
@@ -323,16 +308,16 @@ def ov(a, b):
 
 top_plate = ctx_mesh["top plate"]
 props = cat([ctx_mesh[f"prop {i}"] for i in (1, 2, 3, 4)])
-say(f"stack on the top plate: ESC z {Z_ESC:.1f}..{Z_ESC + ESC_T:.1f} on {POST_H:.0f} posts + grommets, FC top z {Z_STACK_TOP:.1f}; leads to ~{Z_STACK_TOP + 3:.1f}; "
+say(f"stack straight on the top plate: ESC z {Z_ESC:.1f}..{Z_ESC + ESC_T:.1f} on its own {STANDOFF:.0f} standoffs / grommets, FC top z {Z_STACK_TOP:.1f}; leads to ~{Z_STACK_TOP + 3:.1f}; "
     f"x props {ov(cat([stack, cap, rx]), props):.1f} mm³; nearest blade band z {82 - 5:.0f} (C on E)")
 cool_top = Z_PI + PI_BOARD_T + PI_COOL
 say(f"Pi right side up between the plates: board x {PI_X0:.1f}..{PI_X1:.1f}, z {Z_PI}..{Z_PI + PI_BOARD_T}; Active Cooler top z {cool_top:.1f} "
     f"({Z_TOP_UNDER - cool_top:.1f} under the top plate for the blower intake); ports aft, top z {Z_PI + PI_BOARD_T + PI_UP:.1f} (C on E)")
 fits = [f"{nm} {sum(ov(m, arm) for arm in ARMS):.1f}" for nm, m in (("hub deck", DECK), ("Pi + plugs", cat([pi, pi_plugs])), ("UBEC", ubec), ("buck", buck),
-                                                                    ("stack mount", SMOUNT), ("stack", stack), ("cap", cap), ("RX", rx))]
+                                                                    ("stack", stack), ("cap", cap), ("RX", rx))]
 say("   x arms (v5 meshes), mm³: " + ", ".join(fits))
 say(f"   deck x Pi {ov(DECK, pi):.1f} (posts on its holes), deck x UBEC {ov(DECK, ubec):.1f}, deck x buck {ov(DECK, buck):.1f}, Pi + intake x top plate {ov(cat([pi, fan_air]), top_plate):.1f}, "
-    f"Pi x UBEC {ov(cat([pi, pi_plugs]), ubec):.1f}, mount x stack {ov(SMOUNT, stack):.1f}, mount x cap {ov(SMOUNT, cap):.1f}, mount x RX {ov(SMOUNT, rx):.1f}, cap x stack {ov(cap, stack):.1f} mm³")
+    f"Pi x UBEC {ov(cat([pi, pi_plugs]), ubec):.1f}, cap x stack {ov(cap, stack):.1f}, RX x stack {ov(rx, stack):.1f} mm³")
 say(f"   sled x receiver {ov(SLED, receiver):.1f}, deck x sled {ov(DECK, SLED):.1f} mm³")
 blk = []
 for x, y in ARM_SCREWS:
@@ -377,7 +362,7 @@ DIRS14 = [np.array(v, float) / np.linalg.norm(v) for v in
           [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)] + [(a, b, c) for a in (1, -1) for b in (1, -1) for c in (1, -1)]]
 M_TOT = float(res["mass_cg"]["mass_g"])
 mass_c = {"stack": (24 + 5, stack.centroid), "Pi": (55, pi.centroid), "UBEC": (15, ubec.centroid), "buck": (6, buck.centroid), "RX": (2, rx.centroid),
-          "deck wires": (20, np.array([0, 0, 8.0])), "stack mount": (BUDGET["stack mount"], SMOUNT.centroid), "swap set": (650 + 105.6 + 7.5, pack.centroid), "receiver set": (229.3 + 7.5, receiver.centroid),
+          "deck wires": (20, np.array([0, 0, 8.0])), "swap set": (650 + 105.6 + 7.5, pack.centroid), "receiver set": (229.3 + 7.5, receiver.centroid),
           "flow": (1.5, flow.centroid), "down camera + its pod (E)": (15 + 12, np.array([POD_X, 55.0, -50.0])),
           "hub deck": (BUDGET["hub deck"], DECK.centroid), "sled": (BUDGET["sled"], SLED.centroid)}
 
@@ -402,10 +387,10 @@ def inertial(names, acc):
     return [(-mass_c[n][0] * G * acc, mass_c[n][1]) for n in names]
 
 
-SUP = {"stack mount": [(x, y, Z_TP) for x, y in TP_HOLES], "hub deck": [(x, y, 0.0) for x, y in FEET_XY], "sled to plate": [(x, y, Z_PLATE_BOT) for x, y in FEET_XY],
+SUP = {"hub deck": [(x, y, 0.0) for x, y in FEET_XY], "sled to plate": [(x, y, Z_PLATE_BOT) for x, y in FEET_XY],
        "receiver bolts": [(x, y, Z_M) for x, y in rec_bolts], "Pi screws": [(x, y, Z_PI) for x, y in PI_HOLES],
-       "stack screws": [(sx * STACK_P, sy * STACK_P, Z_TP + POST_H) for sx in (1, -1) for sy in (1, -1)]}
-CARRY = {"stack mount": ["stack", "RX", "stack mount"], "hub deck": ["Pi", "UBEC", "buck", "deck wires", "hub deck"], "receiver bolts": ["swap set", "receiver set"],
+       "stack screws": [(sx * STACK_P, sy * STACK_P, Z_TP) for sx in (1, -1) for sy in (1, -1)]}
+CARRY = {"hub deck": ["Pi", "UBEC", "buck", "deck wires", "hub deck"], "receiver bolts": ["swap set", "receiver set"],
          "Pi screws": ["Pi"], "stack screws": ["stack"],
          "sled to plate": ["swap set", "receiver set", "sled", "flow", "down camera + its pod (E)"]}
 cases = {f"crash 35 g {k}": 35 * d for k, d in enumerate(DIRS14)}
@@ -437,7 +422,7 @@ say(f"mass {M_TOT:.0f} g (E), T/W {tw:.2f} at 1650 gf a motor; CG ({cg[0]:.1f}, 
 result = {"mass_g": M_TOT, "tw": round(tw, 2), "cg": cg.tolist(), "requirements": REQ, "pod_mode_hz": round(f1), "wash_pct": wash,
           "z": {"mount_plane": Z_M, "pack_top": float(pack.bounds[1][2]), "cartridge_bottom": float(cartridge.bounds[0][2]), "lens": LENS_Z,
                 "esc": Z_ESC, "stack_top": Z_STACK_TOP, "pi_board": Z_PI, "cooler_top": cool_top, "foot": Z_FOOT, "top_plate_top": Z_TP},
-          "receiver_bolts": rec_bolts, "feet_xy": FEET_XY, "pi_holes": PI_HOLES, "tp_holes": TP_HOLES, "arm_screws_driver_holes": ARM_SCREWS,
+          "receiver_bolts": rec_bolts, "feet_xy": FEET_XY, "pi_holes": PI_HOLES, "arm_screws_driver_holes": ARM_SCREWS,
           "budget_g": BUDGET, "system": res["summary"],
           "coupon": {"floor_t": FLOOR_T, "post_h": POST_H, "post_d": POST_D, "stack_p": STACK_P, "z_pi": Z_PI, "pi_x": [PI_X0, PI_X1], "rail_y": RAIL_Y,
                      "ubec_bay": UBEC_BAY, "buck_bay": BUCK_BAY, "rx_tp": RX_TP, "aft_legs": [], "sled_t": SLED_T, "sled_x": [-115.0, 58.0], "sled_y": 56.0,

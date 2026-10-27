@@ -1,13 +1,4 @@
 {
- "overseer_core_coupon_stack_mount_v1.stl": {
-  "mass_g": 8.6,
-  "size_mm": [
-   83.0,
-   83.0,
-   5.0
-  ],
-  "watertight": true
- },
  "overseer_core_coupon_hub_deck_v1.stl": {
   "mass_g": 17.9,
   "size_mm": [

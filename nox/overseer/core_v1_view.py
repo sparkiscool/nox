@@ -21,14 +21,14 @@ STACK_NM, PI_NM = "FC stack (MicoAir743-Lite on 55A 4-in-1)", "Pi 5 + Active Coo
 FEET_NM = "TPU feet (cage session, placeholders)"
 CORE = {  # name: (colour, assembly step, fly-in direction)
     "sled": ("#4c9be8", 0, (0, 0, -1)), "hub deck": ("#e8834c", 1, (0, 0, 1)), PI_NM: ("#43a047", 2, (0, 0, 1)),
-    "UBEC 5 V": ("#9ccc65", 3, (1, 0, 0)), "buck 12 V": ("#9ccc65", 3, (1, 0, 0)), "stack mount": ("#f4a261", 4, (0, 0, 1)),
+    "UBEC 5 V": ("#9ccc65", 3, (1, 0, 0)), "buck 12 V": ("#9ccc65", 3, (1, 0, 0)),
     STACK_NM: ("#2e7d32", 5, (0, 0, 1)), "ESC cap": ("#9ccc65", 5, (0, 0, 1)), "RX XR2": ("#c5e1a5", 5, (0, 0, 1)),
     "flow MTF-02P": ("#26a69a", 6, (0, -1, -1)), "wires": ("#d84315", 7, (0, 0, 1)),
     "receiver": ("#8899aa", 8, (0, 0, -1)), "XT60 pair": ("#fbc02d", 8, (0, 0, -1)), "cartridge": ("#b0bec5", 9, (0, 0, -1)), "pack": ("#37474f", 9, (0, 0, -1)),
     FEET_NM: ("#424242", 10, (0, 0, -1)),
 }
 s = Scene("Overseer Core",
-          f"Everything inside the cage but the arms (core v1 round 4): three printed pieces, the stack mount on the top plate (FC + 4-in-1, RX), "
+          f"Everything inside the cage but the arms (core v1 round 5): two printed pieces (the FC + 4-in-1 stack and the RX bolt straight to the carbon top plate), "
           f"the hub deck (Pi 5, UBEC, buck) and the sled (receiver face, flow pod); every screw straight down with a screwdriver in this order. "
           f"Real latch set in pose (mechanism not designed). Drone {r['mass_g']:.0f} g (E). Grey: v5 cage, arms, plates, sensor head. "
           f"Beside it: alternative A (skids, +y) and C (receiver on the plate, -y), not taken.")
@@ -103,22 +103,20 @@ def draw(ax, geom, color, alpha=0.85, lw=0.4, ec="k"):
 
 fig, axs = plt.subplots(1, 3, figsize=(21, 7.2), gridspec_kw={"width_ratios": [1.45, 1.45, 0.95]})
 ctx_side = ["top plate", "bottom plate", "arm 1", "arm 2", "apex + cam bracket", "Unitree L2", "motor 1", "motor 2"]
-order = ["pack", "cartridge", "receiver", "XT60 pair", "sled", "hub deck", PI_NM, "UBEC 5 V", "buck 12 V", "stack mount", STACK_NM, "ESC cap", "RX XR2", "flow MTF-02P", "wires"]
+order = ["pack", "cartridge", "receiver", "XT60 pair", "sled", "hub deck", PI_NM, "UBEC 5 V", "buck 12 V", STACK_NM, "ESC cap", "RX XR2", "flow MTF-02P", "wires"]
 for ax, (i, j, title) in zip(axs[:2], ((0, 2, "Side (x forward, z up), from -y"), (0, 1, "Top (x forward, y left): top plate parts drawn over the hub"))):
     for n in (ctx_side if j == 2 else ["arm 1", "arm 2", "arm 3", "arm 4", "bottom plate"]):
         draw(ax, proj(M[n], i, j), "#d0d0d0", 0.6, 0.3, "#999")
-    for n in (order if j == 2 else ["hub deck", PI_NM, "UBEC 5 V", "buck 12 V", "stack mount", STACK_NM, "ESC cap", "RX XR2"]):
+    for n in (order if j == 2 else ["hub deck", PI_NM, "UBEC 5 V", "buck 12 V", STACK_NM, "ESC cap", "RX XR2"]):
         draw(ax, proj(M[n], i, j), CORE[n][0], 0.9 if part[n]["role"] == "structure" else 0.7)
     ax.set_title(title, fontsize=11); ax.set_aspect("equal"); ax.grid(alpha=0.25)
 for x, y in r["feet_xy"]:
     axs[1].add_patch(plt.Circle((x, y), 2.5, fc="white", ec="#c62828", lw=1.2))
-for x, y in r["tp_holes"]:
-    axs[1].add_patch(plt.Circle((x, y), 2.5, fc="white", ec="#6a1b9a", lw=1.2))
-axs[1].text(-135, -95, "red: 6 M3 hub deck + sled bolts; purple: 4 M3 stack mount bolts in the top plate", fontsize=7.5)
+axs[1].text(-135, -95, "red: 6 M3 hub deck + sled bolts; the FC stack bolts through the top plate's own 30.5 holes", fontsize=7.5)
 cg = r["cg"]
 axs[0].plot(cg[0], cg[2], "x", color="#c62828", ms=12, mew=2); axs[0].annotate("CG", (cg[0], cg[2]), (cg[0] + 8, cg[2] + 8), color="#c62828")
 axs[0].set_xlim(-140, 460); axs[0].set_ylim(-100, 160); axs[1].set_xlim(-140, 140); axs[1].set_ylim(-100, 100)
-for n, (x, z, dx, dz) in {"hub deck": (60, 2, 40, -35), PI_NM: (-30, 18, -60, 60), STACK_NM: (0, 64, 40, 50), "stack mount": (30, 49, 90, 25),
+for n, (x, z, dx, dz) in {"hub deck": (60, 2, 40, -35), PI_NM: (-30, 18, -60, 60), STACK_NM: (0, 60, 40, 50),
                           "sled": (-60, -5, 80, -40), "receiver": (-30, -45, 120, -30), "UBEC 5 V": (60, 9, 70, 20)}.items():
     axs[0].annotate(n.split(" (")[0].replace(" + Active Cooler", ""), (x, z), (x + dx, z + dz), fontsize=8, arrowprops=dict(arrowstyle="-", lw=0.6))
 ax = axs[2]; x0 = 0.0
@@ -127,7 +125,7 @@ for n in ["bottom plate", "top plate"] + order:
         draw(ax, pg, CORE[n][0] if n in CORE else "#d0d0d0", 0.9)
 ax.set_title(f"Section at x {x0:.0f}, looking forward", fontsize=11); ax.set_aspect("equal"); ax.grid(alpha=0.25)
 ax.set_xlim(-70, 70); ax.set_ylim(-85, 80); ax.set_xlabel("y (left)"); ax.invert_xaxis()
-fig.suptitle(f"Overseer core v1 round 4: 3 printed pieces; CG {cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}; {r['mass_g']:.0f} g, T/W {r['tw']} (E); "
+fig.suptitle(f"Overseer core v1 round 5: 2 printed pieces; CG {cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}; {r['mass_g']:.0f} g, T/W {r['tw']} (E); "
              f"FC top z {r['z']['stack_top']:.1f} on the top plate, Pi cooler top z {r['z']['cooler_top']:.1f} under the 45 gap", fontsize=12)
 fig.tight_layout(); fig.savefig(os.path.join(RUN, "preview.png"), dpi=110)
 
@@ -139,7 +137,7 @@ cases = [("A: skids carry the pods and the feet (round 1, not taken)", [("receiv
           "front feet 100 ahead of the last joint: ~1.6 kN a joint bolt in a one-side -Z crash (review recompute, E)\n2 rails 19 x 55 in the rear prop wash; +2 x 45 g; tip 28° forward"),
          ("B: feet on the cage's opening ring nodes (chosen)", [("receiver", M["receiver"], "#8899aa"), ("sled", M["sled"], "#4c9be8"),
                                                                ("feet", M[FEET_NM], "#424242"), ("flow", M["flow MTF-02P"], "#26a69a")],
-          "floor load into the cage (sized for 35 g through the node that touches first, L)\ncore keeps 3 pieces (slots 107 g); shell reaches z -82.9 (+6 on what it needs)"),
+          "floor load into the cage (sized for 35 g through the node that touches first, L)\ncore keeps 2 pieces (slots 99 g); shell reaches z -82.9 (+6 on what it needs)"),
          ("C: receiver straight on the bottom plate, no sled (not taken)", [("receiver", M["receiver"].copy().apply_translation([0, 0, 6.0]), "#8899aa")],
           "6 shallower, sled 75 g -> ~20 g bracket; but the front receiver bolts (56.85, ±27.8) land in\nthe front arm roots (u 59.9) and the 2 XT60-end bolts sit 13 past the plate edge")]
 for ax, (title, parts_, note) in zip(axs, cases):
