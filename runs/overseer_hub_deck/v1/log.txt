@@ -500,3 +500,37 @@ it 121 beta   32 J 197.8598 vol 0.1939 (dil 0.3330 g +0.215) grey  4.7% ch 0.100
 it 121 beta   32 J 197.8598 vol 0.1939 (dil 0.3330 g +0.215) grey  4.7% ch 0.100 worst held b5 mz 3.37e+04 38.1s
 it 122 beta   32 J 197.4477 vol 0.1938 (dil 0.3328 g +0.215) grey  4.7% ch 0.100 worst held b5 mz 3.38e+04 37.6s
 it 122 beta   32 J 197.4477 vol 0.1938 (dil 0.3328 g +0.215) grey  4.7% ch 0.100 worst held b5 mz 3.38e+04 37.6s
+it 123 beta   32 J 197.2034 vol 0.1937 (dil 0.3325 g +0.214) grey  4.7% ch 0.100 worst held b5 mz 3.4e+04 38.4s
+it 123 beta   32 J 197.2034 vol 0.1937 (dil 0.3325 g +0.214) grey  4.7% ch 0.100 worst held b5 mz 3.4e+04 38.4s
+it 124 beta   32 J 196.6888 vol 0.1937 (dil 0.3324 g +0.214) grey  4.7% ch 0.100 worst held b5 mz 3.4e+04 38.7s
+it 124 beta   32 J 196.6888 vol 0.1937 (dil 0.3324 g +0.214) grey  4.7% ch 0.100 worst held b5 mz 3.4e+04 38.7s
+it 125 beta   32 J 196.4961 vol 0.1936 (dil 0.3323 g +0.213) grey  4.7% ch 0.100 worst held b5 mz 3.4e+04 38.4s
+it 125 beta   32 J 196.4961 vol 0.1936 (dil 0.3323 g +0.213) grey  4.7% ch 0.100 worst held b5 mz 3.4e+04 38.4s
+it 126 beta   32 J 195.9435 vol 0.1937 (dil 0.3323 g +0.218) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 39.7s
+it 126 beta   32 J 195.9435 vol 0.1937 (dil 0.3323 g +0.218) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 39.7s
+it 127 beta   32 J 195.6417 vol 0.1937 (dil 0.3322 g +0.218) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 38.5s
+it 127 beta   32 J 195.6417 vol 0.1937 (dil 0.3322 g +0.218) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 38.5s
+it 128 beta   32 J 195.3160 vol 0.1937 (dil 0.3322 g +0.218) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 40.6s
+it 128 beta   32 J 195.3160 vol 0.1937 (dil 0.3322 g +0.218) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 40.6s
+it 129 beta   32 J 195.1680 vol 0.1937 (dil 0.3321 g +0.217) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 51.0s
+it 129 beta   32 J 195.1680 vol 0.1937 (dil 0.3321 g +0.217) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 51.0s
+it 130 beta   32 J 195.0362 vol 0.1937 (dil 0.3321 g +0.217) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 63.5s
+it 130 beta   32 J 195.0362 vol 0.1937 (dil 0.3321 g +0.217) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 63.5s
+it 131 beta   32 J 195.0268 vol 0.1937 (dil 0.3320 g +0.221) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 53.3s
+it 131 beta   32 J 195.0268 vol 0.1937 (dil 0.3320 g +0.221) grey  4.7% ch 0.100 worst held b5 mz 3.39e+04 53.3s
+layout: stopped (max_stage) at it 131, beta 32, 2074 s
+layout: stopped (max_stage) at it 131, beta 32, 2074 s
+layout: beta 32 done: eroded design 20 bodies, main 14.4%; drawn bodies outside the main body: 7
+layout: beta 32 done: eroded design 20 bodies, main 14.4%; drawn bodies outside the main body: 7
+layout done: 2178 s, peak 5.60746 GB
+layout done: 2178 s, peak 5.60746 GB
+build: organic surface at pitch 0.333 mm (x3), skins 3.77 cm3, field 17.60 cm3, in env - cuts 15.91 cm3 (layout 15.91, level offset +0.267 mm), fillet 2.5 mm, rims 1.0 mm, mesh 218,960 faces, 65 s
+build: organic surface at pitch 0.333 mm (x3), skins 3.77 cm3, field 17.60 cm3, in env - cuts 15.91 cm3 (layout 15.91, level offset +0.267 mm), fillet 2.5 mm, rims 1.0 mm, mesh 218,960 faces, 65 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [9635.6], "necks": [], "drawn_not_in_main": [["0.0", 0.998, "erode 2.0"], ["0.1", 0.998, "erode 2.0"], ["0.2", 0.971, "erode 2.0"], ["0.3", 0.971, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [9635.6], "necks": [], "drawn_not_in_main": [["0.0", 0.998, "erode 2.0"], ["0.1", 0.998, "erode 2.0"], ["0.2", 0.971, "erode 2.0"], ["0.3", 0.971, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 2099.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 2099.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.16 in 'press 50 N on the Pi (assembly)' at [-56.5, 19.5, 1.5]
+strength: worst index 0.16 in 'press 50 N on the Pi (assembly)' at [-56.5, 19.5, 1.5]
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 20.56, "worst": 0.159, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 20.56, "worst": 0.159, "function_ok": true, "bodies": 1}
