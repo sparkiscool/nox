@@ -314,3 +314,25 @@ it  78 beta   32 J  13.7729 vol 0.1829 (dil 0.2940 g -0.000) grey  2.6% ch 0.100
 it  78 beta   32 J  13.7729 vol 0.1829 (dil 0.2940 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 34.0s
 it  79 beta   32 J  13.7726 vol 0.1828 (dil 0.2940 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 35.1s
 it  79 beta   32 J  13.7726 vol 0.1828 (dil 0.2940 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 35.1s
+it  80 beta   32 J  13.7724 vol 0.1826 (dil 0.2940 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 37.8s
+it  80 beta   32 J  13.7724 vol 0.1826 (dil 0.2940 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 37.8s
+it  81 beta   32 J  13.7722 vol 0.1823 (dil 0.2940 g -0.001) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 36.9s
+it  81 beta   32 J  13.7722 vol 0.1823 (dil 0.2940 g -0.001) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 36.9s
+it  82 beta   32 J  13.7719 vol 0.1826 (dil 0.2943 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 36.3s
+it  82 beta   32 J  13.7719 vol 0.1826 (dil 0.2943 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 36.3s
+layout: stopped (max_stage) at it 82, beta 32, 2831 s
+layout: stopped (max_stage) at it 82, beta 32, 2831 s
+layout: beta 32 done: eroded design 9 bodies, main 78.1%; drawn bodies outside the main body: 4
+layout: beta 32 done: eroded design 9 bodies, main 78.1%; drawn bodies outside the main body: 4
+layout done: 3119 s, peak 6.004908 GB
+layout done: 3119 s, peak 6.004908 GB
+build: organic surface at pitch 0.312 mm (x4), skins 27.32 cm3, field 57.34 cm3, in env - cuts 50.75 cm3 (layout 50.75, level offset +0.170 mm), fillet 2.5 mm, rims 1.0 mm, mesh 571,548 faces, 262 s
+build: organic surface at pitch 0.312 mm (x4), skins 27.32 cm3, field 57.34 cm3, in env - cuts 50.75 cm3 (layout 50.75, level offset +0.170 mm), fillet 2.5 mm, rims 1.0 mm, mesh 571,548 faces, 262 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [34205.2], "necks": [], "drawn_not_in_main": [["0.1", 0.0, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [34205.2], "necks": [], "drawn_not_in_main": [["0.1", 0.0, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 16021.2, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 16021.2, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.34 in 'crash 0 [1.0, 0.0, 0.0] via head guard (35 g + the keel / brace forces, F)' at [104.1, 19.4, 4.4]
+strength: worst index 0.34 in 'crash 0 [1.0, 0.0, 0.0] via head guard (35 g + the keel / brace forces, F)' at [104.1, 19.4, 4.4]
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 64.53, "worst": 0.339, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 64.53, "worst": 0.339, "function_ok": true, "bodies": 1}
