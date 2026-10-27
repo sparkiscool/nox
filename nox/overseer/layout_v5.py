@@ -139,11 +139,26 @@ SLACK = float(os.environ.get("V5_SLACK", 5.0))
 DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the start ellipsoid (scanned 26 Oct)  # room between the shell target and those limits so frequency-2 cells fit (scanned)
 
 
+SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
+CORE_PARTS = os.path.join(SAVED, "core", "core_parts.json")   # the core session's parts (everything inside the cage), decimated copies
+CORE_TIE_FRONT = (114.0, 0.0, 20.0)                # the front core ties' root on the hub deck tower's front face, off the flow clip (C, DEFAULT 27 Oct)
+CORE_SLED_Y = 56.0                                   # the core's sled edge |y| (dimensions.md Sled): the bay ties' roots, on its side faces (C, DEFAULT 27 Oct)
+
+
 def adjust(g):
     for k in ("down_cam", "cam_pod", "down_lens"): g.pop(k, None)       # no down camera (Spark 27 Oct: "get rid of the down camera, we don't need it")
     g["flow"].apply_translation([POD_DX, 0, POD_UP]); g["flow_pod"].apply_translation([POD_DX, 0, 0])
     g["flow_lens"] = g["flow_lens"] + [POD_DX, 0, POD_UP]
+    if os.path.exists(CORE_PARTS):                                     # the core's cartridge, receiver and pack (core v3, the deeper belly of core
+        CP = {p_["name"]: p_ for p_ in json.load(open(CORE_PARTS))["parts"]}   # PR 123): the swap set and the opening plane follow them
+        ld = lambda n: trimesh.load(os.path.join(ROOT, CP[n]["mesh"]), force="mesh")
+        g["cart"] = trimesh.util.concatenate([ld("cartridge"), ld("receiver")]); g["pack"] = ld("pack")
     g["z_o"] = g["cart"].bounds[0][2] - 3.0                            # opening plane: cartridge bottom 3 above it
+    if os.path.exists(CORE_PARTS) and FZ is not None:                  # feet: TPU caps under the base loop nodes, the drone's lowest points now
+        SN = np.array(FZ["nodes"]); caps = []                           # (the deeper belly; as the Scout's ring, DEFAULT 27 Oct)
+        for i_ in FZ["open"][0]["ring"]:
+            cap = trimesh.creation.cylinder(8.0, 3.0, sections=24); cap.apply_translation(SN[i_] - [0, 0, NODE_R + 1.5]); caps.append(cap)
+        g["feet"] = caps
     return g
 
 
@@ -349,6 +364,7 @@ def saved_node(c):
     return None
 
 
+SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 SAVED_ARMS = {"rear": "runs/overseer_layout/v5/saved/overseer_arm_rear_v5d.stl"}   # decimated copies of the arm session's newest saved
                                                    # run meshes (arm frame; rear v5d: claude/pensive-turing-jyxlcc 319ca86a)
 ARM_DEG = {"front": 45.0, "rear": 135.0}           # the arm frame: root at r 66.5 on the plate diagonal, x toward the motor (arm_topo_v1)
@@ -735,9 +751,10 @@ def attach(g, nodes, ring_ids):
             extra[f"spoke {i + 1}.{n_ + 1}"] = (an, nodes[k])
     bb = BOTTOM.bounds                                                  # core ties: bottom plate underside to the shell
     for nm, q0 in (("front", (bb[1][0], 0)), ("rear", (bb[0][0], 0)), ("left", (0, bb[1][1])), ("right", (0, bb[0][1]))):
-        q = np.array([q0[0], q0[1], -1.0])
+        q = np.array([q0[0], q0[1], -1.0]) if not (nm == "front" and os.path.exists(CORE_PARTS)) else np.array(CORE_TIE_FRONT)
+        fwd = (lambda k: nodes[k][0] - q[0] > 0) if nm == "front" and os.path.exists(CORE_PARTS) else (lambda k: True)   # the tower-face root ties forward, never back over the FC nuts
         for n_, k in enumerate(pick(q, [k for k in range(len(nodes)) if k not in ring_ids and seg_band_dist(q, nodes[k], mxy) - ROD_R >= PROP_GAP
-                                        and clear_of_cart(q, nodes[k]) and views_clear(g, q, nodes[k], ROD_R)], 2, 25.0)):
+                                        and clear_of_cart(q, nodes[k]) and views_clear(g, q, nodes[k], ROD_R) and fwd(k)], 2, 25.0)):
             extra[f"core tie {nm}.{n_ + 1}"] = (q, nodes[k])
     B = g["B"]; up_b = np.array([-A[2], 0, A[0]])                       # L2 apex lugs to the 2 nearest nodes behind its plane
     for sy in (1, -1):
@@ -749,7 +766,7 @@ def attach(g, nodes, ring_ids):
     sb = g["sled"].bounds                                               # belly sled corners to the 2 nearest ring nodes clear of the cartridge
     for sx in (1, -1):
         for sy in (1, -1):
-            cn = np.array([-DC + sx * (sb[1][0] - sb[0][0]) / 2, sy * sb[1][1], sb[0][2]])
+            cn = np.array([-DC + sx * (sb[1][0] - sb[0][0]) / 2, sy * (CORE_SLED_Y if os.path.exists(CORE_PARTS) else sb[1][1]), sb[0][2]])
             clear = lambda k: clear_of_cart(cn, nodes[k])
             for n_, k in enumerate([k for k in sorted(ring_ids, key=lambda k: np.linalg.norm(nodes[k] - cn)) if clear(k)][:2]):
                 extra[f"bay tie {sx:+d}{sy:+d}.{n_ + 1}"] = (cn, nodes[k])
@@ -1234,6 +1251,16 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
     if PRINTED_HEAD:                                                   # the two head parts are one printed part now
         contact = [[HEADN if q_ in ("apex + cam bracket", "L2 guard ring nodes") else q_ for q_ in c_] for c_ in contact]
         contact = [c_ for c_ in contact if c_[0] != c_[1]] + [[HEADN, "cage shell nodes"], [HEADN, "cage shell tubes"]]
+    if os.path.exists(CORE_PARTS):                                     # the core's parts replace this layout's placeholders inside the cage
+        CP = json.load(open(CORE_PARTS))
+        drop = {hubn, "wires", "pack", "cartridge", "receiver", "belly sled + pods", "flow MTF-02P"}
+        asm_parts = [p_ for p_ in asm_parts if p_["name"] not in drop] + [dict(p_, owner="overseer core session") for p_ in CP["parts"]]
+        names_ = {p_["name"] for p_ in asm_parts}
+        contact = [c_ for c_ in contact if c_[0] in names_ and c_[1] in names_]
+        contact += [c_ for c_ in CP["contact_pairs"] if c_[0] in names_ and c_[1] in names_ and c_ not in contact and c_[::-1] not in contact]
+        mine_ = {a_["name"] for a_ in ACCESS}
+        ACCESS[:] = [a_ for a_ in ACCESS if a_.get("part") in names_] + [a_ for a_ in CP["access"] if a_["name"] not in mine_ and a_.get("part") in names_]
+        say(f"core: {len(CP['parts'])} parts of the core session in place of the layout's placeholders ({', '.join(sorted(drop))})")
     asm = new_assembly("Overseer", "overseer", asm_parts,
                        note=("Layout v5 / cage v5 (26-27 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the two cameras (27 Oct: no down camera, the pair beside the L2) outside "
                              "it with nothing in their views, a guard ring behind the L2; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
