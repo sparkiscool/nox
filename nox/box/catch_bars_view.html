@@ -315,7 +315,7 @@ document.getElementById('kpis').innerHTML = kp.map(([b, s]) => `<div class="kpi"
 // ---- comparison and notes
 const rows = [
   ['', 'Ramps (concept E, checked)', 'Hook claws (handoff direction, checked by hand)', 'Push bars (this, checked)'],
-  ['Landing room', 'Scout ±20 / ±25, Overseer ±25 / ±25, yaw ±2.5°', 'a few tens of mm; every claw rises outside the ring where both shells flare, 12 claws', `Scout: every landing in |y| ≤ 60, any x, yaw ${D.yaws[0]}..${D.yaws.at(-1)}°; Overseer: x ±80 at y 0 for every yaw, |y| ≤ 40 at yaw 0 and ±5, y ±20 at ±10 for |x| ≤ 20 (maps above)`],
+  ['Landing room', 'Scout ±20 / ±25, Overseer ±25 / ±25, yaw ±2.5°', 'a few tens of mm; every claw rises outside the ring where both shells flare, 12 claws', `Scout: every landing in |y| ≤ 60, any x, yaw ${D.yaws[0]}..${D.yaws.at(-1)}°; Overseer: yaw 0: |y| ≤ 40 at every x, y ±80 at x −40..60, y ±60 only at x 0; ±5: |y| ≤ 40 at every x; ±10: y 0 at every x, y ±20 for |x| ≤ 20; ±15: y 0 at every x (maps above)`],
   ['What stands up on the deck', '10 ramps, 20..25 high', 'flat deck until the claws rise', `flat; parked pads ${D.h_pad} and bars ${D.height} high, outside the landing room`],
   ['Centring', 'passive, sliding on 45° faces (needs μ ≤ 0.2)', 'active, 12 claws through sprung links', 'active: 2 pads then 2 bars, rigid stops, one motor'],
   ['Final position', 'where the faces meet, both drones level only by matching ring heights', 'V-seats on 4 shared nodes', 'notch on the tip nodes (Overseer), wing corners on the end tubes (Scout), bar stop for y: both receivers on the swap centre, x median 0.8, max 6 at the edge (C)'],
