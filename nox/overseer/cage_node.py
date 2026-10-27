@@ -34,6 +34,7 @@ HEAD_NODE = N[max(_k, key=lambda i: N[i, 0])] if _k else np.array([352.88, 0.0, 
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 
 
+FLOOR = 3.0                                      # solid boss floor behind each socket (C, DEFAULT 27 Oct: 1.0 left the arm-to-boss joint a neck under 1.8)
 ARM_R, HUB_R = 3.5, 6.0                          # drawn arm Ø7 (PETG, 3.5 over the 2.0 minimum) and hub Ø12 at the node centre (DEFAULT)
 
 
@@ -60,11 +61,11 @@ def designs():
     return [i for i in range(len(N)) if N[i, 1] > -0.5 and not np.allclose(N[i], HEAD_NODE, atol=0.5)]
 
 
-def seg(a, b, r, n=32):
+def seg(a, b, r, n=32, r2=None):
     a, b = np.asarray(a, float), np.asarray(b, float); d = b - a; L = float(np.linalg.norm(d))
     z = d / L; x = np.cross(z, [0, 0, 1.0]) if abs(z[2]) < 0.9 else np.cross(z, [1.0, 0, 0]); x /= np.linalg.norm(x); y = np.cross(z, x)
     T = np.eye(4); T[:3, 0], T[:3, 1], T[:3, 2], T[:3, 3] = x, y, z, a
-    return mf.Manifold.cylinder(L, r, r, n).transform(T[:3, :4])
+    return mf.Manifold.cylinder(L, r, r if r2 is None else r2, n).transform(T[:3, :4])
 
 
 def bodies(i):
@@ -80,9 +81,10 @@ def bodies(i):
     drawn = cuts = None; sockets = []
     for d, k, nm in M:
         K = KINDS[k]; a = c + d * r0; b = a + d * K["depth"]
-        boss = seg(a - d * 1.0, b, K["bore"] / 2 + WALL)
+        boss = seg(a - d * FLOOR, b, K["bore"] / 2 + WALL)            # the boss with a solid floor FLOOR thick behind the socket floor
         boss = boss + seg(c, a, ARM_R)                                # a drawn arm from the socket floor to the hub: one body by construction
-                                                                      # (v3 runs: the topology alone left sockets disconnected, 27 Oct)
+                                                                      # (v3 runs: the topology alone left sockets disconnected; node 2 after the
+                                                                      # loop drop: the arm met the boss through a 1.0 floor, a neck under 1.8, 27 Oct)
         cut = seg(a, b + d * 400.0, K["bore"] / 2) + seg(b + d * 0.5, b + d * 400.0, K["bore"] / 2 + 1.0)   # bore + the member beyond
         drawn = boss if drawn is None else drawn + boss; cuts = cut if cuts is None else cuts + cut
         sockets.append(dict(boss=boss, d=d, kind=k, name=nm))
