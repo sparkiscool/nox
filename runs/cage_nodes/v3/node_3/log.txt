@@ -315,3 +315,11 @@ it  43 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000
 it  43 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 189.9s
 it  44 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 181.0s
 it  44 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 181.0s
+it  45 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 176.9s
+it  45 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 176.9s
+it  46 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 178.8s
+it  46 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 178.8s
+it  47 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 180.5s
+it  47 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 180.5s
+it  48 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 176.1s
+it  48 beta    8 J  10.0000 vol 0.0040 (dil 0.0440 g +0.951) grey  0.8% ch 0.000 worst tube to 11 side a 709 176.1s
