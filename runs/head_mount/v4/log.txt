@@ -244,3 +244,19 @@ it  41 beta    8 J   0.0655 vol 0.0410 (dil 0.0789 g +0.009) grey  2.8% ch 0.100
 it  41 beta    8 J   0.0655 vol 0.0410 (dil 0.0789 g +0.009) grey  2.8% ch 0.100 worst gate b6 mz 2.32e+03 85.9s
 it  42 beta    8 J   0.0674 vol 0.0404 (dil 0.0780 g -0.002) grey  2.8% ch 0.100 worst gate b6 mz 2.35e+03 84.7s
 it  42 beta    8 J   0.0674 vol 0.0404 (dil 0.0780 g -0.002) grey  2.8% ch 0.100 worst gate b6 mz 2.35e+03 84.7s
+it  43 beta    8 J   0.0661 vol 0.0405 (dil 0.0780 g -0.001) grey  2.8% ch 0.100 worst gate b6 mz 2.32e+03 83.1s
+it  43 beta    8 J   0.0661 vol 0.0405 (dil 0.0780 g -0.001) grey  2.8% ch 0.100 worst gate b6 mz 2.32e+03 83.1s
+it  44 beta    8 J   0.0651 vol 0.0407 (dil 0.0781 g -0.001) grey  2.8% ch 0.100 worst gate b6 mz 2.27e+03 83.4s
+it  44 beta    8 J   0.0651 vol 0.0407 (dil 0.0781 g -0.001) grey  2.8% ch 0.100 worst gate b6 mz 2.27e+03 83.4s
+layout: beta 8 done: eroded design 5 bodies, main 98.7%; drawn bodies outside the main body: 4
+layout: beta 8 done: eroded design 5 bodies, main 98.7%; drawn bodies outside the main body: 4
+it  45 beta   16 J   0.2363 vol 0.0398 (dil 0.0765 g +0.009) grey  1.3% ch 0.100 worst guard hit 2 9.04e+03 83.3s
+it  45 beta   16 J   0.2363 vol 0.0398 (dil 0.0765 g +0.009) grey  1.3% ch 0.100 worst guard hit 2 9.04e+03 83.3s
+it  46 beta   16 J   0.4596 vol 0.0383 (dil 0.0753 g -0.008) grey  1.4% ch 0.100 worst gate b5 mz 1.99e+04 83.4s
+it  46 beta   16 J   0.4596 vol 0.0383 (dil 0.0753 g -0.008) grey  1.4% ch 0.100 worst gate b5 mz 1.99e+04 83.4s
+it  47 beta   16 J   0.1024 vol 0.0386 (dil 0.0757 g -0.002) grey  1.4% ch 0.100 worst guard hit 0 3.79e+03 82.9s
+it  47 beta   16 J   0.1024 vol 0.0386 (dil 0.0757 g -0.002) grey  1.4% ch 0.100 worst guard hit 0 3.79e+03 82.9s
+it  48 beta   16 J   0.1867 vol 0.0385 (dil 0.0753 g -0.007) grey  1.4% ch 0.100 worst guard hit 2 7.26e+03 79.5s
+it  48 beta   16 J   0.1867 vol 0.0385 (dil 0.0753 g -0.007) grey  1.4% ch 0.100 worst guard hit 2 7.26e+03 79.5s
+it  49 beta   16 J   0.0664 vol 0.0387 (dil 0.0756 g -0.003) grey  1.4% ch 0.100 worst gate b6 mz 2.31e+03 77.6s
+it  49 beta   16 J   0.0664 vol 0.0387 (dil 0.0756 g -0.003) grey  1.4% ch 0.100 worst gate b6 mz 2.31e+03 77.6s
