@@ -86,16 +86,26 @@ def bodies(i):
     return dict(drawn=drawn, cuts=cuts, env=env, sockets=sockets, r0=r0, R=R)
 
 
-def recut(i, mesh_in, mesh_out=None, built=(6.1, 3.1)):
+def _at_ref(ref, path):
+    import subprocess
+    return json.loads(subprocess.run(["git", "-C", ROOT, "show", f"{ref}:{path}"], capture_output=True, text=True, check=True).stdout)
+
+
+def recut(i, mesh_in, mesh_out=None, built=(6.1, 3.1), ref=None):
     """make a saved node's sockets the current bores without a rerun (Spark 27 Oct: "dont restart runs just make the hole match"):
-    the sockets placed as the run built them (its bores `built` set the set-back), then each bore cut again at KINDS' bore along the
-    same axis from the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after."""
+    the sockets placed as the run built them (its bores `built` set the set-back; with `ref`, the link ends, sizes and cage of the
+    commit the run was built on, so every axis is the run's own), then each bore cut again at KINDS' bore along the same axis from
+    the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after."""
     import trimesh
-    keep = {k: dict(v) for k, v in KINDS.items()}
+    global RES, LINK6, CG, N
+    keep = {k: dict(v) for k, v in KINDS.items()}; was = (RES, LINK6, CG, N)
+    if ref:
+        RES = _at_ref(ref, "runs/overseer_layout/v5/result.json"); LINK6 = set(_at_ref(ref, "nox/overseer/link_sizes.json")["tube6"])
+        CG = _at_ref(ref, "nox/overseer/cage_v5_shell.json"); N = np.array(CG["nodes"])
     KINDS[6]["bore"], KINDS[3]["bore"] = built
-    try: b = bodies(i)
-    finally: KINDS.update(keep)
-    c = N[i]; cut = None
+    try: b = bodies(i); c = N[i]
+    finally: KINDS.update(keep); RES, LINK6, CG, N = was
+    cut = None
     for sk in b["sockets"]:
         d, k = sk["d"], sk["kind"]; a = c + d * b["r0"]; bb = a + d * KINDS[k]["depth"]
         m = seg(a, bb + d * 400.0, KINDS[k]["bore"] / 2); cut = m if cut is None else cut + m
@@ -133,14 +143,15 @@ def setup_for(i):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1 and sys.argv[1] == "recut":                   # cage_node.py recut <node> <mesh> [out] --ref <git ref of the run> [--built 6.1,3.1]
+        rp = argparse.ArgumentParser(); rp.add_argument("cmd"); rp.add_argument("node", type=int); rp.add_argument("mesh"); rp.add_argument("out", nargs="?")
+        rp.add_argument("--ref", required=True, help="the git commit the run was built on (its link ends, sizes and cage)")
+        rp.add_argument("--built", default="6.1,3.1"); r = rp.parse_args()
+        recut(r.node, r.mesh, r.out, tuple(map(float, r.built.split(","))), ref=r.ref); sys.exit(0)
     ap = argparse.ArgumentParser(); ap.add_argument("node"); ap.add_argument("out", nargs="?")
     ap.add_argument("--h", type=float, default=0.8); ap.add_argument("--gen", type=float, default=None)
     ap.add_argument("--git", action="store_true"); ap.add_argument("--smoke", action="store_true")
     a = ap.parse_args()
-    if a.node == "recut":                                              # cage_node.py recut <node> <mesh> [out] [--built 6.1,3.1]
-        rest = [x for x in sys.argv[2:] if not x.startswith("--")]; bi = sys.argv.index("--built") if "--built" in sys.argv else None
-        built = tuple(map(float, sys.argv[bi + 1].split(","))) if bi else (6.1, 3.1)
-        recut(int(rest[0]), rest[1], rest[2] if len(rest) > 2 and rest[2] != (sys.argv[bi + 1] if bi else None) else None, built); sys.exit(0)
     if a.node == "list":
         for i in designs():
             M = members(i); b = bodies(i)

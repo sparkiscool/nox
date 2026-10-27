@@ -695,7 +695,7 @@ def attach(g, nodes, ring_ids):
     for i, ((mx, my), (r0, m1, ht)) in enumerate(zip(mxy, g["axes"])):  # 3 spokes per arm tip, 12 off the disks
         tip = np.array([mx, my, ROOT_H - ht])
         an = tip + np.array(ARM_NODE["front" if mx > g["dm"] else "rear"]) * [1, np.sign(my), 1]   # the arm's printed spoke node
-        for n_, k in enumerate(pick(tip, [k for k in range(len(nodes)) if seg_band_dist(an, nodes[k], mxy) - ROD_R >= PROP_GAP
+        for n_, k in enumerate(pick(an, [k for k in range(len(nodes)) if seg_band_dist(an, nodes[k], mxy) - ROD_R >= PROP_GAP
                                           and views_clear(g, an, nodes[k], ROD_R)], 3, 30.0)):
             extra[f"spoke {i + 1}.{n_ + 1}"] = (an, nodes[k])
     bb = BOTTOM.bounds                                                  # core ties: bottom plate underside to the shell

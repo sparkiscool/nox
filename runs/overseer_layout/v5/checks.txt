@@ -1,17 +1,17 @@
 balance (v2: motor square onto the CG; catch 30 aft, L2 base z 51; geodesic frequency 2); scan start [0.85] x prop snap [True] x dome [60.0]: structure first (the most compact valid shell sets the bar: volume, mass; no tube-length limit), then the least prop blockage among shells within 10 % / 3 % of it:
    motors  52.1 ahead: CG x  63.2,  3198 g, 63 tubes
-   motors  63.2 ahead: CG x  65.3,  3210 g, 63 tubes
-   motors  65.3 ahead: CG x  66.2,  3210 g, 63 tubes
-   motors  66.2 ahead: CG x  66.4,  3211 g, 63 tubes
+   motors  63.2 ahead: CG x  65.7,  3208 g, 63 tubes
+   motors  65.7 ahead: CG x  66.3,  3211 g, 63 tubes
+   motors  66.3 ahead: CG x  66.4,  3211 g, 63 tubes
    motors  66.4 ahead: CG x  66.4,  3212 g, 63 tubes
 start 0.85 dome 60 snap 1: valid: shell 55.0 L, 63 tubes, longest 446, props 20.3, 3212 g, prop blockage top 7.0 % / bottom 14.8 %
 structure bar: start 0.85 dome 60 snap 1 (55.0 L, longest 446, 3212 g, blockage 7.0 / 14.8 %); picked start 0.85 dome 60 snap 1 (blockage 7.0 / 14.8 %)
 
-chosen: start 0.85 (smallest valid shell); motor square 66.4 ahead of the plate centre; motors (205.9, ±139.5) and (-73.1, ±139.5); front arms r 249, rear r 158
+chosen: start 0.85 (smallest valid shell); motor square 66.4 ahead of the plate centre; motors (205.9, ±139.5) and (-73.1, ±139.5); front arms r 249, rear r 157
 L2: base (384.0, 0, 51), axis 15 deg below +x (Spark 24 Oct)
 cameras (Spark 27 Oct: no down camera; the two on either side of the L2, their field maximized): landscape (89 across x 73 up), yawed 45.0 deg out, pitched -10; lenses (390, ±75, 122), 75 off the centre plane, 13 behind the L2 base plane (the most compact of 1 clear mounts); combined field 3.42 sr (27.2 % of the sphere; every pair whose fields do not overlap gets this, within the sampling), blind wedge ahead on the horizon 2.0 deg (the tie-break: the fields meet at the nose), 54 % of the L2 field (C); printed bracket: a plate on 3 struts 6 x 6 from 3 corners to its side's lugs and block
    camera alternatives: portrait yaw 50.0 pitch -15: 3.45 sr, gap 29.0, 55 % of the L2 field; portrait yaw 37.5 pitch +0: 3.45 sr, gap 3.0, 55 % of the L2 field
-shell: 24 nodes (6 on the opening ring), 63 tubes, 40 triangles; tubes 116 .. 446 (mean 252), 15.91 m; node extents 670 x 655 x 188 (h/w 0.28); hull residual 2.12 (C)
+shell: 24 nodes (6 on the opening ring), 63 tubes, 40 triangles; tubes 116 .. 446 (mean 252), 15.91 m; node extents 670 x 655 x 188 (h/w 0.28); hull residual 2.13 (C)
 largest cell: inscribed circle Ø149 between tube surfaces (C)
 carbon: shell 63 tubes 6/4 (Spark 26 Oct), shortest 116; links 36 (30 tube 6/4, the rest rod 3.0), 6.86 m, shortest 71 (bay tie -1+1.1); printed struts (< 33): none
 props: shell tubes 20.3 off the swept disks (≥ 12, 3D), nodes 34.0, links 15.7 (L2 brace hi +1) (C)
@@ -28,7 +28,7 @@ sensor head outside the frozen cage (cage_v5_shell.json): the L2 base where it w
 L2 mount: the printed sensor head mount (one piece with both cameras): seat, back block, lugs, the guard ring (8 nodes, r 62, 8 behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on 2 keels to the front hub and 4 braces to the front arm beams [30.0, 30.0] out of the root, 4 struts to the side cage nodes; break order: the apex lugs are the printed fuse (requirement: they let go before the L2 base, E)
 flow: view checked (lines above list anything in view)
 cage: shell 495 g (tubes 387 E + nodes 108 E), links 159 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
-mass ~3212 g (E; latch set 338.5 M), CG (66.4, -0.2, 18.6) vs thrust centre (66.4, 0): 0.2 off; pack + cartridge out: 32.2 off (2409 g; layout mass model, the gated number is system_check's)
+mass ~3212 g (E; latch set 338.5 M), CG (66.4, -0.2, 18.6) vs thrust centre (66.4, 0): 0.2 off; pack + cartridge out: 32.1 off (2409 g; layout mass model, the gated number is system_check's)
 T/W 2.06 (C on E mass, 1650 gf a motor); CG 63 under the prop plane; pitch inertia 92.7 g m² (E, point masses)
 compact: shell hull 55.0 L vs the parts-with-margins hull 27.6 L (C)
 assembly mass 3212 g (E) vs the layout model 3212 g
