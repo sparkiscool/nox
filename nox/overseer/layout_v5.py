@@ -174,6 +174,10 @@ CAM_FMTS = {"landscape": (L["CAM_VFOV"] / 2, L["CAM_HFOV"] / 2), "portrait": (L[
 CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens off the centre plane (scanned)
 CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
 HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
+# the arm session's printed nodes (overseer arm, 27 Oct, Spark "add the arm nodes"): the 3 spokes of each arm leave from a node beside
+# the motor (offset from the motor axis point, y mirrored), the L2 braces end inside the front beam (lo / hi z), so the arm top prints flat
+ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
+BRACE_ROOT = (72.95, 62.11, {"lo": 30.0, "hi": 39.0})
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
@@ -681,9 +685,10 @@ def attach(g, nodes, ring_ids):
         return out
     for i, ((mx, my), (r0, m1, ht)) in enumerate(zip(mxy, g["axes"])):  # 3 spokes per arm tip, 12 off the disks
         tip = np.array([mx, my, ROOT_H - ht])
-        for n_, k in enumerate(pick(tip, [k for k in range(len(nodes)) if seg_band_dist(tip, nodes[k], mxy) - ROD_R >= PROP_GAP
-                                          and views_clear(g, tip, nodes[k], ROD_R)], 3, 30.0)):
-            extra[f"spoke {i + 1}.{n_ + 1}"] = (tip, nodes[k])
+        an = tip + np.array(ARM_NODE["front" if mx > g["dm"] else "rear"]) * [1, np.sign(my), 1]   # the arm's printed spoke node
+        for n_, k in enumerate(pick(tip, [k for k in range(len(nodes)) if seg_band_dist(an, nodes[k], mxy) - ROD_R >= PROP_GAP
+                                          and views_clear(g, an, nodes[k], ROD_R)], 3, 30.0)):
+            extra[f"spoke {i + 1}.{n_ + 1}"] = (an, nodes[k])
     bb = BOTTOM.bounds                                                  # core ties: bottom plate underside to the shell
     for nm, q0 in (("front", (bb[1][0], 0)), ("rear", (bb[0][0], 0)), ("left", (0, bb[1][1])), ("right", (0, bb[0][1]))):
         q = np.array([q0[0], q0[1], -1.0])
@@ -718,7 +723,8 @@ def attach(g, nodes, ring_ids):
                 ok_ &= seg_band_dist(s_, root, mxy) - ROD_R >= PROP_GAP and views_clear(g, s_, root, ROD_R) and clear_of_cart(s_ + 0.05 * (root - s_), root)
             if ok_:
                 for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
-                    extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), root)
+                    rt = np.array([BRACE_ROOT[0], BRACE_ROOT[1] * sy, BRACE_ROOT[2][lvl]]) if BRACE_ROOT else root
+                    extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), rt)
                 g["braces"].append(round(out_, 0)); break
     if not HEAD_ON_CAGE: extra.update(g["keels"])
     hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn

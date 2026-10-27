@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): the arm session's moved link ends taken in (spokes from the printed arm nodes, L2 brace roots inside the front beam, lo z 30 / hi 39; `layout_v5.py` ARM_NODE, BRACE_ROOT); frame: rear arm node 2320 N, front 1075, braces 896 (`arm_loads.json`); softer spokes do not cut it (5 % stiffness: 1041 N, core ties buckle): the arm root joint takes it.
 - 27 Oct (Spark): socket bores: "dont restart runs just make the hole match": saved parts keep their topology and get their sockets re-cut to 6.2 / 3.2 (`cage_node.py recut <node> <mesh> --built 6.1,3.1`, same axis and floor, then solid_check); no run is restarted for the bore.
 - 27 Oct (rule, Spark): socket bores from the coupons: "the largest of the coupons we just printed was the one": 6.2 (6 mm tube) / 3.2 (3 mm rod), standing and sideways; CLAUDE.md, docs/generative.md, dimensions.md Carbon rods, head_mount.py, cage_node.py. Fixed a merge duplicate in generative.md. All socket sessions told.
 - 27 Oct (Scout v3, Spark): rod sockets 3.2 for the 3 mm rods (coupon pick, the largest bore) in the cage nodes, tie saddle and every epoxied Scout socket; the camera snap clips keep their own grip fit. `dimensions.md` System Scout v3
