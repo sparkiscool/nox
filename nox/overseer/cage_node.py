@@ -23,6 +23,10 @@ HS = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "head_sy
 N = np.array(CG["nodes"])
 KINDS = {6: dict(bore=6.3, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.3, depth=10.0, axial=80.0, side=15.0)}   # E
 WALL = 2.5
+_LS = os.path.join(HERE, "link_sizes.json")
+LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()      # links the frame model made 6/4 tube
+_NL = os.path.join(ROOT, "runs", "overseer_frame", "v1", "node_loads.json")
+NL = json.load(open(_NL)) if os.path.exists(_NL) else {}                          # frame-model socket forces (F), else KINDS (E)
 _k = [i for i in range(len(N)) if abs(N[i, 1]) < 0.5 and N[i, 0] > 300]
 HEAD_NODE = N[max(_k, key=lambda i: N[i, 0])] if _k else np.array([352.88, 0.0, 47.0])   # the front centre node: part of the sensor head mount
 
@@ -35,7 +39,7 @@ def members(i):
     for k, (p, q) in RES["links"].items():
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
-                o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 3, k))
+                o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6 if k in LINK6 else 3, k))
     if N[i, 1] > 150 and N[i, 0] > 300:                 # the head wing's 3.0 struts to the side nodes by the head (only at 20 deg+ from its tubes)
         w = np.array([368.0, 112.0, 70.0]); d = (w - N[i]) / np.linalg.norm(w - N[i])
         if all(math.degrees(math.acos(np.clip(d @ t[0], -1, 1))) >= 20.0 for t in out): out.append((d, 3, "head wing strut"))
@@ -87,7 +91,12 @@ def setup_for(i):
             for t, o in enumerate(S):
                 if t != j: hold = o["boss"] if hold is None else hold + o["boss"]
             p.support(f"hold {j}", hold)
-            K = KINDS[s["kind"]]; d = s["d"]; x = np.cross(d, [0, 0, 1.0]) if abs(d[2]) < 0.9 else np.cross(d, [1.0, 0, 0]); x /= np.linalg.norm(x); y = np.cross(d, x)
+            K = dict(KINDS[s["kind"]]); d = s["d"]
+            fl = NL.get(str(i), {}).get(s["name"] if not s["name"].startswith("tube to") else None)
+            if fl is None and s["name"].startswith("tube to"):
+                o = int(s["name"].split()[-1]); fl = NL.get(str(i), {}).get(f"tube {min(i, o)}-{max(i, o)}")
+            if fl: K["axial"], K["side"] = max(fl["axial"], 20.0), max(fl["side"], 5.0)   # the frame model's crash forces (F)
+            x = np.cross(d, [0, 0, 1.0]) if abs(d[2]) < 0.9 else np.cross(d, [1.0, 0, 0]); x /= np.linalg.norm(x); y = np.cross(d, x)
             for nm, f in (("pull", K["axial"] * d), ("push", -K["axial"] * d), ("side a", K["side"] * x), ("side b", K["side"] * y)):
                 p.load(f"{s['name']} {nm}", s["boss"], f, cls="misuse", support=f"hold {j}")
         return p

@@ -1,0 +1,24 @@
+{
+ "note": "links the frame model sized up to 6/4 carbon tube (nox/overseer/cage_frame.py); every other link 3.0 solid",
+ "tube6": [
+  "L2 brace hi +1",
+  "L2 brace hi -1",
+  "L2 brace lo +1",
+  "L2 brace lo -1",
+  "core tie front.1",
+  "core tie front.2",
+  "core tie left.1",
+  "core tie left.2",
+  "core tie rear.1",
+  "core tie rear.2",
+  "core tie right.1",
+  "core tie right.2",
+  "keel +1",
+  "keel -1",
+  "spoke 1.3",
+  "spoke 2.3",
+  "spoke 3.1",
+  "spoke 3.3",
+  "spoke 4.3"
+ ]
+}

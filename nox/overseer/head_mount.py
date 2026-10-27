@@ -28,6 +28,8 @@ ROD_BORE, TUBE_BORE = 3.3, 6.3                 # socket bores (rod OD + 0.3)
 NODE_R, TUBE_R = CG["node_r_mm"], CG["rod_r_mm"]
 GUARD_R = 3.4                                  # guard ring / bar: printed ~6 x 6 (Ø6.8 round)
 GUARD_NODE_R = 5.0
+_LS = os.path.join(HERE, "link_sizes.json")
+LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()   # keels / braces the frame model made 6/4 tube
 WING_Y = 72.0                                  # the cut between the centre piece and the wings (DEFAULT, bed 180)
 _CN = np.array(CG["nodes"]); _k = [i for i in range(len(_CN)) if abs(_CN[i, 1]) < 0.5 and _CN[i, 0] > 300]
 CENTRE_NODE = _CN[max(_k, key=lambda i: _CN[i, 0])] if _k else np.array([352.88, 0.0, 47.0])   # the cage's front centre node: part of the centre piece
@@ -143,7 +145,8 @@ def centre_bodies():
     sockets = []
     for k, (p, q) in HS["carbon_kept"].items():
         end = np.array(q if k.startswith("keel") else p, float); far = np.array(p if k.startswith("keel") else q, float)
-        boss, cut, keep = socket(end, far, ROD_BORE, 12.0); drawn += boss; addcut(cut + keep); sockets.append(boss)
+        six = k in LINK6; boss, cut, keep = socket(end, far, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
+        drawn += boss; addcut(cut + keep); sockets.append(boss)
     # guard ring (a cage member, drawn): its nodes and bars
     gr = [np.array(v, float) for v in HS["guard_nodes"][:8]]
     for i in range(8):

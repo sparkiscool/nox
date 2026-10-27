@@ -118,6 +118,10 @@ HALO_BACK, HALO_R, HALO_NODE_R = 8.0, 62.0, 5.0   # L2 guard ring: 8 behind its 
                                                  # diagonal 53 + 9), printed nodes r 5 (DEFAULT, E)
 FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v5_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
 FZ = json.load(open(FROZEN)) if FROZEN and os.path.exists(FROZEN) else None        # changing any cage structure"); V5_FROZEN= builds a new one
+_LS = os.path.join(HERE, "link_sizes.json")                       # links the frame model sized up to 6 mm tube (cage_frame.py); the rest 3.0
+LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()
+lr = lambda k: SHELL_R if k in LINK6 else ROD_R
+lgpm = lambda k: SHELL_GPM if k in LINK6 else ROD_GPM
 PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
 HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
 CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
@@ -598,7 +602,7 @@ def blockage(g, nodes, E, extra, parts=False):
                 bt[j] |= hit & (n[2] > PROP_Z); bb[j] |= hit & (n[2] < PROP_Z)
         return bt, bb
     pct = lambda m: 100 * np.mean([(w * mm).sum() / w.sum() for (P, w, _), mm in zip(grids, m)])
-    sh = [(nodes[a], nodes[b], SHELL_R) for a, b in E]; ln = [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+    sh = [(nodes[a], nodes[b], SHELL_R) for a, b in E]; ln = [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]
     bt, bb = mark(sh + ln, nodes)
     if not parts: return pct(bt), pct(bb)
     st, sb = mark(sh, nodes); lt, lb = mark(ln, [])
@@ -630,7 +634,7 @@ def halo(g, nodes):
 
 def attach(g, nodes, ring_ids):
     mxy = g["mxy"]; extra = {}
-    pad = [[-ROD_R - 1] * 3, [ROD_R + 1] * 3]
+    pad = [[-SHELL_R - 1] * 3, [SHELL_R + 1] * 3]                       # a link may be sized up to 6 mm tube (link_sizes.json)
     boxes_ = [m_.bounds + pad for m_ in (g["cart"], TOP, FC, PI, DECK, PDB, UBEC, BUCK, RX)]   # links clear of the cartridge, top plate, hub
 
     keys_ = [(np.array([r_ * math.cos(math.radians(d_)) - v_ * math.sin(math.radians(d_)), r_ * math.sin(math.radians(d_)) + v_ * math.cos(math.radians(d_))]), z_, sg)
@@ -750,7 +754,7 @@ def masses(g, nodes, E, extra):
     for nm in ("sled", "flow_pod"): add(nm, abs(g[nm].volume) * 1.27e-3 * 0.3, g[nm].centroid)
     for i, f in enumerate(g["feet"]): add(f"foot {i}", abs(f.volume) * 1.21e-3 * 0.5, f.centroid)
     for i, (a, b) in enumerate(E): add(f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2)
-    for k, (p, q) in extra.items(): add(k, np.linalg.norm(np.subtract(q, p)) * ROD_GPM, (np.asarray(p) + np.asarray(q)) / 2)
+    for k, (p, q) in extra.items(): add(k, np.linalg.norm(np.subtract(q, p)) * lgpm(k), (np.asarray(p) + np.asarray(q)) / 2)
     for i, n in enumerate(nodes): add(f"node {i}", NODE_G, n)
     for i, n in enumerate(g.get("halo_nodes", [])): add(f"halo node {i}", 1.5, n)            # printed, r 5 (E)
     for k, (p, q) in g.get("head_guards", {}).items(): add(f"head guard {k}", np.linalg.norm(np.subtract(q, p)) * 36 * 1.27e-3 * 0.8, (np.asarray(p) + np.asarray(q)) / 2)
@@ -885,7 +889,7 @@ say("swap zone (receiver + spare, from the cartridge bottom down): " + ("clear (
 Bc = g["B"] + A * 40.0
 rng = np.random.default_rng(1); D = rng.normal(size=(20000, 3)); D /= np.linalg.norm(D, axis=1)[:, None]; D = D[D @ A > 0]
 hit = np.zeros(len(D), bool)
-for p0, p1, rr in [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]:
+for p0, p1, rr in [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]:
     u = p1 - p0; w0 = Bc - p0; bq = D @ u; cq = float(u @ u); dq = D @ w0; eq_ = float(u @ w0)
     sq = np.clip((eq_ - bq * dq) / np.maximum(cq - bq * bq, 1e-9), 0, 1); tq = -dq + sq * bq
     hit |= (np.linalg.norm(Bc + tq[:, None] * D - (p0 + sq[:, None] * u), axis=1) < rr) & (tq > 0)
@@ -895,7 +899,7 @@ BT, BB, BS = blockage(g, nodes, E, extra, parts=True)
 say(f"prop blockage (Spark 26 Oct, secondary to structure): {BT:.1f} % of the disks' thrust shadowed from above, {BB:.1f} % from below "
     f"(plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell {BS['shell_top']:.1f} / {BS['shell_bottom']:.1f} %, "
     f"links {BS['links_top']:.1f} / {BS['links_bottom']:.1f} %")
-memb = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+memb = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]
 ahead = max([float(((np.stack([p0, p1]) - g["B"]) @ A).max()) + rr for p0, p1, rr in memb] + [float(((nodes - g["B"]) @ A).max()) + NODE_R]
             + [float((np.asarray(h_) - g["B"]) @ A) + HALO_NODE_R for h_ in g["halo_nodes"]])
 fw = {k: float(((np.stack([np.asarray(p, float), np.asarray(q, float)]) - g["B"]) @ A).max()) + ROD_R for k, (p, q) in extra.items()}
@@ -936,7 +940,7 @@ for lens, hh, hv, nm in ((g["flow_lens"], 23.0, 23.0, "flow"),):
         n_ = ((zz > 0) & (np.abs(np.degrees(np.arctan2(d[:, 0], np.maximum(zz, 1e-6)))) < hh) & (np.abs(np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))) < hv)).mean()
         if n_: say(f"   {k} in the {nm} view ({100 * n_:.1f} % of its points)")
 say("flow: view checked (lines above list anything in view)")
-shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(rl.values()) * ROD_GPM
+shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(v * lgpm(k) for k, v in rl.items())
 say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} E + nodes {NODE_G * len(nodes):.0f} E), links {link_g:.0f} g (C); "
     f"v0 rings ~96 g, v1 sphere 802 + 98 g (E)")
 t2, c2 = cg([x for x in it if x[0] not in ("pack",)] + [("cartridge out", -LATCH_G * 0.45, g["cart"].bounding_box.centroid)])
@@ -968,7 +972,7 @@ for n_, gm, _c in it:
          else "hub" if n_ in ("Pi 5", "FC", "PDB", "UBEC", "buck", "RX", "Pi deck") else "belly" if n_ in ("sled", "flow_pod") else
          "feet" if n_.startswith("foot") else ("head" if PRINTED_HEAD else "L2 mount") if n_ in ("apex", "cam plate") or n_.startswith("cam strut") else n_)
     grp[k] = grp.get(k, 0.0) + gm; grp_mc[k] = grp_mc.get(k, 0.0) + gm * np.asarray(_c, float)
-links = trimesh.util.concatenate([rod(p, q) for p, q in extra.values()])
+links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items()])
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
     ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
@@ -1030,7 +1034,7 @@ if PRINTED_HEAD:
 # straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),
 # then gated by system_check's own sweep
 blockers = [(n_, m_) for n_, m_, *_ in PARTS if not n_.startswith(("cage shell", "spokes"))]
-segs_all = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
+segs_all = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), lr(k)) for k, (p, q) in extra.items()]
 pq = {n_: trimesh.proximity.ProximityQuery(m_) for n_, m_ in blockers}
 
 
