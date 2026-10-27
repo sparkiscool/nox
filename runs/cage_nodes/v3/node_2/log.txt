@@ -172,3 +172,48 @@ it  67 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000
 it  67 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 11.8s
 it  68 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 12.0s
 it  68 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 12.0s
+it  69 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 14.6s
+it  69 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 14.6s
+it  70 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.2s
+it  70 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.2s
+it  71 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.2s
+it  71 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.2s
+it  72 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.2s
+it  72 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.2s
+it  73 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.3s
+it  73 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 13.3s
+it  74 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 14.3s
+it  74 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 14.3s
+it  75 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 14.9s
+it  75 beta    4 J  17.6217 vol 0.0111 (dil 0.0487 g +0.148) grey  2.9% ch 0.000 worst held b2 fz 9.3e+05 14.9s
+layout: stopped (beta_stop) at it 75, beta 4, 970 s
+layout: stopped (beta_stop) at it 75, beta 4, 970 s
+layout: beta 4 done: eroded design 4 bodies, main 32.5%; drawn bodies outside the main body: 3
+layout: beta 4 done: eroded design 4 bodies, main 32.5%; drawn bodies outside the main body: 3
+coarse stage done: 75 iterations, 987 s, peak 0.732612 GB
+coarse stage done: 75 iterations, 987 s, peak 0.732612 GB
+node_2: grid (64, 64, 64) h 1.0 = 262,144 cells; design 85,694 (85.7 cm3), drawn 6,564, void 169,886
+  support hold 0: 5458 cells, 9266 nodes
+  support hold 1: 5458 cells, 9266 nodes
+  support hold 2: 5505 cells, 9408 nodes
+  support hold 3: 5505 cells, 9408 nodes
+  support hold 4: 5498 cells, 9437 nodes
+  support hold 5: 5498 cells, 9437 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (6.56 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (6.56 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.014 of 85,694 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.014 of 85,694 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: WARNING nearly mirrored in x (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.1% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.1% of passive cells differ): no symmetry
+layout: 2 drawn bodies (6,564 cells), held solid in every realization; eroded filter: masked
+layout: 2 drawn bodies (6,564 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 2 held by support 'hold 0') + 0 gate ties + 6 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 2 held by support 'hold 0') + 0 gate ties + 6 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (64, 64, 64) = 262,144 elements, 303,489 active dofs; backend direct (direct estimate 3.5 GB, budget 11.8 GB)
+fem: grid (64, 64, 64) = 262,144 elements, 303,489 active dofs; backend direct (direct estimate 3.5 GB, budget 11.8 GB)
