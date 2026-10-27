@@ -57,6 +57,8 @@ for q, c in enumerate(p.cases):
     Axy, Az, As = allowables(mat, c.cls)
     for zone, mask in (("arm", keep & ~band), ("joint", keep & band)):
         idx = np.where(mask)[0]
+        if len(idx) == 0:
+            continue
         sg = U[:, q][edof[idx]] @ CB.T
         vm = np.sqrt(np.maximum(np.einsum("ei,ij,ej->e", sg, M, sg), 0.0))
         f = np.maximum(vm / Axy, np.sqrt((np.maximum(sg[:, ax], 0) / Az) ** 2 + sum(sg[:, k] ** 2 for k in lay) / As ** 2))
