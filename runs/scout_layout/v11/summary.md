@@ -4,10 +4,10 @@
 - The limit was the cage's tail low node (−156.4, 0, −35.2): landing 10 toward the tail, it rode into the Overseer's tail-tip V ramp.
 - That node was there only because the Radxa stood on edge in the tail bay, hanging to z −27.
 - **Fix (DEFAULT):** the Radxa lies flat (65 x 30 x 3.2) under the UBEC, x −136.9..−71.8, z 4.8..8.0. The cage needs no low tail node now.
-  - Every node past x −130 about the catch sits ≥ 91 above the bottom plane, against the ≥ 45 the ramp check asked for.
+  - Every node past x −130 about the catch sits ≥ 91 above the bottom plane, against the ≥ 45 the ramp check asked for. The rods from the 2 tail bottom nodes cross x −130 at 45.6 above it (rod surface), 0.6 over.
   - The tail bay contents and their mount belong to the electronics session; this is the layout's placement for them.
 - **Alternative weighed:** the Radxa standing, raised ≥ 32 so its bottom clears z −4.6. Its top would then reach z 35, 2 under the rear prop sweep (the disks reach y ±9.6 of the centre plane), against the 12 the props need: out.
-- **Cost:** 3 fewer shell rods (41), 6 g lighter, and the balance is tighter: CG 2.7 / 1.3 (system_check, gate 3), catch 10.0 aft.
+- **Cost:** 3 fewer shell rods (41), 6 g lighter, but the balance is worse: CG 2.7 / 1.3 against v10's 2.4 / 0.9 (system_check, gate 3), catch 10.0 aft. It still passes the 3.0 gate, and the funnel tolerance is worth the 0.3.
 
 What changed from `v9/` (PR 127), carried over from v10:
 - **Bottom:** Spark 27 Oct, relayed by the design center session: the Scout's bottom matches "the rectangle part" of the current Overseer base loop. That is the 4 side nodes of the Overseer cage v5 hexagon (PR 122, not merged), refitted now.
@@ -97,9 +97,11 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 - Cage first 4.2 over the cradle's top lip, outside the 55° field cone.
 
 ## Balance (tail bay)
-- **Tail bay (DEFAULT):** the Radxa (flat, z 4.8..8.0) and the UBEC (z 10..18) sit behind the receiver's tail, x −137..−72.
+- **Tail bay (DEFAULT, placeholder):** the Radxa (flat, z 4.8..8.0) and the UBEC (z 10..18) sit behind the receiver's tail, x −137..−72.
+  - The electronics session reports both are in the rear prop wash (rule 8) and that the Radxa is 6.31 thick, not 3.2. Its system pass sets the fitted envelope, and this layout reruns on it.
+  - What carries the bay aft of the plate is the electronics session's mount, and the frame model needs it.
 - **Catch set:** 10.0 aft of the thrust centre. The FC IMU offset is x −10.0 (PX4).
-- **CG:** 2.0 / 2.2 mm pack in / out (layout model), 2.7 / 1.3 (system_check, gate 3). This is tighter than v10 (2.4 / 0.9): the Radxa moved up, and the catch moved 2 further aft to balance it.
+- **CG:** 2.0 / 2.2 mm pack in / out (layout model), 2.7 / 1.3 (system_check, gate 3). This is worse than v10 (2.4 / 0.9) on both, but still inside the gate: the Radxa moved up, and the catch moved 2 further aft to balance it. Accepted for the funnel tolerance; the electronics session's fitted tail bay sets the final number.
 
 ## Mass (E)
 673 g: cage ~138 (shell rods 61, nodes 36, links 7, tie saddle 17, camera cradle + arms + clips 17); bought, latch set and wires ~505.
