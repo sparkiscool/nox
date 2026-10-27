@@ -1,0 +1,1 @@
+drone: PR 94 run v5 assembly meshes (claude/gracious-darwin-ogidvp @ 676fcda, runs/scout_layout/v5/assembly/), copied as drawn; the old cage, catch wheels, keep-alive pads, plate hubs, receiver v2 and the old camera + mount are left out
