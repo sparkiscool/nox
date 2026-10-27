@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms, Spark): one printed part per arm (no fuse node); root joint (4 M3 inserts, S500 plates) assumed good for the cage crash loads (reported, not a gate). Replaces the fuse-node DEFAULT. `dimensions.md` System Overseer: arms
 - 27 Oct (Overseer arms, decide): cage crash 2320 N at the rear node (frame v1 arm_loads, F) beats the S500 root joint (~1 kN an insert vs ~600). DEFAULT B: replaceable fuse spoke node (~600 N), arm sized for 1.5x; alt A through-bolts (plate holes not coaxial, PCB bearing ~1.2 kN), C printed hub plates. Runs keep full loads meanwhile. `runs/overseer_arms/v2/joint_options.png`
 - 27 Oct (Overseer arms v2, Spark): cage nodes on the arms: one spoke node beside each motor (off the key column), 2 brace sockets in the front beam (inside, flat top); frame-model loads front 1108 / rear 1811 / braces 904 N (F). Root inserts at ~1 kN: asked the cage to cap the spokes. `runs/overseer_arms/v2/`
 - 27 Oct (Overseer arms v2): cage v5 on main moved the motors 5.6 forward (205.9 / -73.1); v2 runs start beside v1 (v1 pinned to its inputs, finishes as the method check): core parts as keep-outs, bore 3.2, front rods 145.7. Fit 0 mm³. `nox/overseer/arm_topo_v2.py`
