@@ -393,3 +393,9 @@ it  81 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000
 it  81 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 27.2s
 it  82 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 27.5s
 it  82 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 27.5s
+it  83 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 26.8s
+it  83 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 26.8s
+it  84 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 27.5s
+it  84 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 27.5s
+it  85 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 29.4s
+it  85 beta   16 J  10.0000 vol 0.0034 (dil 0.0636 g +0.636) grey  0.6% ch 0.000 worst core tie front.1 side a 441 29.4s
