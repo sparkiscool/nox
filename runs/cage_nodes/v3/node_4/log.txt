@@ -267,3 +267,17 @@ it  23 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000
 it  23 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.4s
 it  24 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 87.7s
 it  24 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 87.7s
+it  25 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.7s
+it  25 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.7s
+it  26 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.4s
+it  26 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.4s
+it  27 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 81.4s
+it  27 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 81.4s
+it  28 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 77.2s
+it  28 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 77.2s
+it  29 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 85.8s
+it  29 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 85.8s
+it  30 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 83.8s
+it  30 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 83.8s
+it  31 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 79.4s
+it  31 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 79.4s
