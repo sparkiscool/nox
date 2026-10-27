@@ -70,3 +70,7 @@ it  16 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000
 it  16 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 31.3s
 it  17 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 32.7s
 it  17 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 32.7s
+it  18 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 32.6s
+it  18 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 32.6s
+it  19 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 30.7s
+it  19 beta    1 J  12.2720 vol 0.0203 (dil 0.0245 g +1.160) grey  8.0% ch 0.000 worst held b1 fz 9.62e+05 30.7s
