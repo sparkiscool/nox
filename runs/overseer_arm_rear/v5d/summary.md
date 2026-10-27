@@ -2,6 +2,10 @@
 
 Script `nox/overseer/arm_topo_v5d.py rear --gen 50` (wrapper chain v5d > v5c > v5b > v5 > `arm_topo_v1.py`; nox/topo, organic, h 1.5). System: cage v3 / layout v5, loads from the cage frame `runs/overseer_arms/v5/arm_loads.json` (rear spoke node 2354 N worst, F on E). L2 braces root on the top-plate block (cage session), not on the arms.
 
+Page (27 Oct): https://claude.ai/artifact/JS9dzFCg1PsPeGfaZYprRc (source `nox/overseer/arm_page_v5d.py` -> `runs/overseer_arms/v5d/arms.html`).
+
+System: Overseer cage v3 / layout v5 (cage session's frame, arm_loads.json); assembled in the drone frame by `arm_topo_v5d.py rear --place`; worst index in the system loads 0.94 in cage crash 11 (was 1.47, v5b); spoke node socket at the cage's SPOKE_NODE rear (-53.3, ±119.7, 25), unchanged; mass 187.4 g (M) + tubes 18 g (E).
+
 ## What it is
 - One printed PETG part, between the S500 plates (z 0..45), 2 + 2 M3 heat-set inserts (top u 63.17 v ±15, bottom u 63.74 v ±10).
 - 4 x 6/4 carbon tube chords, 63.1 each (C): top z 38.5, bottom z 6.5, from the shoulders (arm x 20, y ±28) to y ±12 at the motor; bore 6.2, 20 mm sockets, full-length 2.5 sleeve, 2.5 blind tip caps. Length: each tube spans root shoulder to motor pad, 63 mm, past the 33 mm break-even (C); the tubes carry the cage crash moment (2354 N at the spoke node, ~300 N·m at the root, E).
