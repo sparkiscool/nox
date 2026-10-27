@@ -234,6 +234,9 @@ def flow_clip():
 
 
 DECK, CLIP = hub_deck(), flow_clip()
+HUB_RUN = os.path.join(ROOT, "runs", "overseer_hub_deck", "v4", "overseer_hub_deck.stl")   # the saved piece (topology run v4), drone frame
+if os.path.exists(HUB_RUN) and not os.environ.get("CORE_CONCEPT"):
+    DECK = trimesh.load(HUB_RUN); say(f"hub deck: the v4 run's mesh ({DECK.volume * 1.27e-3:.1f} g PETG, M) in the assembly (CORE_CONCEPT=1: the concept body)")
 
 # ---------------------------------------------------------------- wiring: drawn routes, each ending in a plug (clean wiring, L 8)
 W = {
@@ -268,6 +271,7 @@ def P(name, m, role, mass=None, material="PETG", protect=False, tag="E", swap=Fa
 
 
 BUDGET = {"hub deck": 32, "flow clip": 5}   # g, soft slots (DEFAULT; v1 deck 24 + the keel hub 8)
+MASS = {"hub deck": round(float(DECK.volume) * 1.27e-3, 1), "flow clip": 5.0}   # M once saved
 # floor contact: TPU feet on 4 opening ring nodes (cage session; placeholders at v5's ring nodes, contact 6 under the lenses)
 RING = [(146.0, 43.2), (146.0, -43.2), (-102.9, 104.3), (-102.9, -104.3)]
 Z_FOOT = Z_CART - 6.0                # contact 6 under the cartridge bottom (v1)
@@ -286,7 +290,7 @@ core = [
     P("cartridge", cartridge, "protected", 105.6, protect=True, swap=True, tag="M", owner="box swap (battery latch, later: the slot's contents)", version="cartridge v6 + sliders v6"),
     P("receiver", receiver, "protected", 229.3, protect=True, tag="M", owner="box swap (battery latch, later: the slot's contents)", version="receiver v2 + carrier v1 + cap + strips"),
     P("XT60 pair", xt60, "bought", 15, protect=True),
-    P("hub deck", DECK, "structure", BUDGET["hub deck"], budget=BUDGET["hub deck"]),
+    P("hub deck", DECK, "structure", MASS["hub deck"], budget=BUDGET["hub deck"], tag="M" if os.path.exists(HUB_RUN) else "E"),
     P("flow clip", CLIP, "structure", BUDGET["flow clip"], budget=BUDGET["flow clip"]),
     P("TPU feet (cage session, placeholders)", feet, "cage", 6.4, material="TPU", owner="overseer cage", version="placeholder"),
 ]
@@ -417,7 +421,7 @@ DIRS14 = [np.array(v, float) / np.linalg.norm(v) for v in
 M_TOT = float(res["mass_cg"]["mass_g"])
 mass_c = {"stack": (24 + 5, stack.centroid), "Pi": (55, pi.centroid), "UBEC": (15, ubec.centroid), "buck": (6, buck.centroid), "RX": (2, rx.centroid),
           "deck wires": (20, np.array([0, 0, 8.0])), "swap set": (650 + 105.6 + 7.5, pack.centroid), "receiver set": (229.3 + 7.5, receiver.centroid),
-          "flow": (1.5, flow.centroid), "hub deck": (BUDGET["hub deck"], DECK.centroid), "flow clip": (BUDGET["flow clip"], CLIP.centroid)}
+          "flow": (1.5, flow.centroid), "hub deck": (MASS["hub deck"], DECK.centroid), "flow clip": (MASS["flow clip"], CLIP.centroid)}
 
 
 def bolt_forces(pts_, F, Mc, c):

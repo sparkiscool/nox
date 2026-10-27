@@ -1,0 +1,2 @@
+print/overseer_hub_deck_v4.stl extents [150.7  87.   17.6] g PETG 38.92 watertight True
+   saved: bed   2118 mm2  overhang   2922 mm2  height  17.6  first layer 10 islands [56.4, 56.4, 64.4, 64.8, 158.1, 158.1, 160.0, 163.3] (total 2264.5)  thin-island run 0 mm

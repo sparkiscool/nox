@@ -428,5 +428,16 @@
  "peak_gb": 8.33534,
  "gen_cm3": 12.0,
  "h": 1.0,
- "total_s": 5757
+ "total_s": 5757,
+ "solid_check_pass": true,
+ "solid_check_cli": "PASS (python3 nox/solid_check.py print/overseer_hub_deck_v4.stl)",
+ "build_drawn_test": "FAIL by 0.1-0.2 %: the 2 rear Pi posts (-30, \u00b124.5) 99.9 / 99.8 % in the main body at 2.0 erosion (reported; the CLI gate passes)",
+ "worst_index": 0.245,
+ "worst_case": "keels push 387 N each (F) + 35 g up at (102.5, 19.5, 4.3)",
+ "bed_face": "plate face (z 0) down, as built (+z)",
+ "bed_contact_mm2": 2188,
+ "wall_h": 1.6,
+ "peak_gb_run_bg": 7.9,
+ "print_file": "print/overseer_hub_deck_v4.stl",
+ "keel_bores": "a 6 mm tube on each keel line from 5 past the root: 0.00 mm\u00b3 with the deck; wall 3.1..6.1 99 % filled (C)"
 }
