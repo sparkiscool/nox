@@ -3,7 +3,7 @@ requirements in `nox/dimensions.md` "System Overseer core" (round 5, PR 123), ev
 and the assembly `nox/overseer/overseer_core.assembly.json` (never retyped), the mounting features exactly as the coupons v1 check them.
 
   hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 4 foot pads Ø12 x 6.5 (Ø3.4, M3 x 12 down into the
-             sled), 4 Pi posts Ø7 to z 8 (Ø2.2 x 4, M2.5 self-tapping). Envelope: z 0..6.5 over the plate (Pi underside parts at
+             sled), 4 Pi posts Ø7 to z 8 (Ø2.2 x 4, M2.5 self-tapping), and (v2) the UBEC and buck seat rails 6 x 6.5 with 2 zip-tie tunnels. Envelope: z 0..6.5 over the plate (Pi underside parts at
              z 6.5..8), inside |y| 20 ahead of x 56 (the arm session's front envelopes), the v5 arm meshes + 1 cut.
              Loads: Pi 55 g at its CG through the 4 posts (force + moment, least norm), UBEC 15 g and buck 6 g on their bays,
              35 g crash x 14, flight 4 g / 2 g, landing 6 g, USB plug 20 N at the Pi's aft ports, 50 N press on the posts.
@@ -96,8 +96,15 @@ def hub_deck_bodies():
     feet = [tuple(f) for f in R["feet_xy"]]
     ph = [tuple(p) for p in R["pi_holes"]]
     zp = C["z_pi"]
-    drawn = U([cyl(x, y, 0, T, 6.0) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph])
-    cuts = U([cyl(x, y, -1, T + 1, 1.7) for x, y in feet] + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph]
+    # bay seats (hub deck v2: v1 stopped at x 48 and left the UBEC 34 mm unsupported): rails under the UBEC and the buck, the
+    # contact faces they rest on (z 6.5) with zip-tie slots, drawn as must-haves; bars inside |y| 20 (the arm envelopes)
+    ub, bk = M["UBEC 5 V"].bounds, M["buck 12 V"].bounds
+    rails = [box(ub[0][0], ub[1][0], y - 3, y + 3, 0, T) for y in (ub[0][1] + 3, ub[1][1] - 3)]
+    rails += [box(bk[0][0], bk[1][0], y - 3, y + 3, 0, T) for y in (bk[0][1] + 3, min(bk[1][1] - 3, 17.0))]
+    rails += [box(ub[1][0] - 6, ub[1][0], ub[0][1], ub[1][1], 0, T), box(bk[0][0], bk[0][0] + 6, ub[0][1], bk[1][1], 0, T)]
+    slots = [box(x - 1.5, x + 1.5, ub[0][1] - 1, bk[1][1] + 1, 2.0, 4.5) for x in (ub[0][0] + 12, ub[1][0] - 14)]   # zip-tie tunnels 3 x 2.5 under the seats
+    drawn = U([cyl(x, y, 0, T, 6.0) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + rails)
+    cuts = U([cyl(x, y, -1, T + 1, 1.7) for x, y in feet] + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots
              + [grown(f"arm {i}", 1.0) for i in (1, 2, 3, 4)]
              + [box(56, 100, 20, 60, -1, 20), box(56, 100, -60, -20, -1, 20)])            # the arm session's front envelopes (27 Oct)
     env = box(-76, 84, -42, 42, 0, T)
