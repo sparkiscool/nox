@@ -59,7 +59,8 @@ M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0   # hull mar
 SPARE = 30.0                             # room a side round the receiver at the opening (DEFAULT, Spark 26 Oct)
 REC = (179.6, 76.2)                      # Overseer receiver v2 footprint (M)
 ZONE = (REC[0] / 2 + SPARE, REC[1] / 2 + SPARE)
-POD_DX = 35.0                            # down camera + flow pods 35 ahead of v2's (access 26 Oct: the rear arms' bottom M3 key lines)
+POD_DX = float(os.environ.get("V5_POD_DX", 0.0))   # down camera + flow pods where v2 had them (Spark 27 Oct: keep the two camera format; v4 had them 35 ahead)
+POD_UP = float(os.environ.get("V5_POD_UP", 0.0))   # v2's lens heights (v4 lifted them 1.5 into the pods for an edge probe)
 LATCH_G = 338.5                          # Overseer latch set (M, battery latch v4); v2 counted the cartridge at 4 % fill
 BREAK_EVEN = 33.0
 
@@ -119,8 +120,8 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 
 
 def adjust(g):
-    for k in ("down_cam", "flow"): g[k].apply_translation([0, 0, 1.5])    # lenses 1.5 up into the pods (v4 review: edge probe)
-    g["down_lens"] = g["down_lens"] + [0, 0, 1.5]; g["flow_lens"] = g["flow_lens"] + [0, 0, 1.5]
+    for k in ("down_cam", "flow"): g[k].apply_translation([0, 0, POD_UP])
+    g["down_lens"] = g["down_lens"] + [0, 0, POD_UP]; g["flow_lens"] = g["flow_lens"] + [0, 0, POD_UP]
     for k in ("down_cam", "flow", "cam_pod", "flow_pod"): g[k].apply_translation([POD_DX, 0, 0])   # pods forward, clear of the rear
     g["down_lens"] = g["down_lens"] + [POD_DX, 0, 0]; g["flow_lens"] = g["flow_lens"] + [POD_DX, 0, 0]  # arms' bottom screw key lines
     g["z_o"] = g["cart"].bounds[0][2] - 3.0                            # opening plane: cartridge bottom 3 above it
@@ -638,11 +639,13 @@ def solve(dm=52.1):
 
 
 os.makedirs(OUT, exist_ok=True)
-STARTS = [float(x) for x in os.environ.get("V5_STARTS", "0.7,0.85,1.0").split(",")] if "V5_START" not in os.environ else [START]
+# the cage structure is kept (Spark 27 Oct: "don't change the structure"): the 27 Oct pick of the full scan (start 0.85 x dome 60 x
+# prop snap) is the default; V5_STARTS=0.7,0.85,1.0 V5_DOMES=40,60,80 V5_SNAPS=0,1 runs the scan again
+STARTS = [float(x) for x in os.environ.get("V5_STARTS", "0.85").split(",")] if "V5_START" not in os.environ else [START]
 ROTS = [float(x) for x in os.environ.get("V5_ROTS", "0").split(",")]     # 36 was worse in every case (26 Oct scan)
 PEAKS = [bool(int(x)) for x in os.environ.get("V5_PEAKS", "0").split(",")]   # 1 (nodes at the nose camera peak): every case over 400 tubes (26 Oct)
-SNAPS = [bool(int(x)) for x in os.environ.get("V5_SNAPS", "0,1").split(",")]
-DOMES = [float(x) for x in os.environ.get("V5_DOMES", "40,60,80").split(",")] if "V5_DOME" not in os.environ else [DOME]
+SNAPS = [bool(int(x)) for x in os.environ.get("V5_SNAPS", "1").split(",")]
+DOMES = [float(x) for x in os.environ.get("V5_DOMES", "60").split(",")] if "V5_DOME" not in os.environ else [DOME]
 say(f"balance (v2: motor square onto the CG; catch {DC:.0f} aft, L2 base z {ZB:.0f}; geodesic frequency {FREQ}); scan start {STARTS} x "
     f"prop snap {SNAPS} x dome {DOMES}: structure first (the most compact valid shell sets the bar: volume, mass; no tube-length limit), "
     f"then the least prop blockage among shells within 10 % / 3 % of it:")
@@ -889,10 +892,15 @@ for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-to
     for v_ in (10.0, -10.0):                                            # bottom screws (driver d 8 from below)
         p0 = np.array([63.74 * c_ - v_ * s_, 63.74 * s_ + v_ * c_, -1.7])
         ok_ = line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}"))
-        ign = [f"arm {i_ + 1}"] + (["belly sled + pods"] if not ok_ and line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}", "belly sled + pods")) else [])
+        ign = [f"arm {i_ + 1}"]
+        if not ok_:
+            for extra_ in (["belly sled + pods"], ["belly sled + pods", "down camera"], ["belly sled + pods", "flow MTF-02P"]):
+                if line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}", *extra_)): ign += extra_; break
         ACCESS.append({"name": f"M3 key, arm {i_ + 1} bottom screw v {v_:+.0f}", "part": "bottom plate", "from": np.round(p0, 2).tolist(), "dir": [0, 0, -1],
                        "length_mm": 400.0, "tool": {"type": "cylinder", "d": 8}, "ignore": ign})
-        acc_rep.append(f"arm {i_ + 1} bottom screw v {v_:+.0f}: " + ("clear" if ok_ else "through a Ø9 driver hole in the belly sled (requirement)" if len(ign) > 1 else "BLOCKED"))
+        acc_rep.append(f"arm {i_ + 1} bottom screw v {v_:+.0f}: " + ("clear" if ok_ else "BLOCKED" if len(ign) == 1 else
+                       "through a Ø9 driver hole in the belly sled (requirement)" if len(ign) == 2 else
+                       f"through the sled with the {ign[-1]} board unplugged from its pod (v2 camera format, Spark 27 Oct; requirement)"))
 say("access (straight lines through the shell cells, tool radius + 1 clear, C): " + "; ".join(acc_rep))
 
 SHELL_SPEC = dict(nodes=np.round(nodes, 3).tolist(), rods=[list(map(int, e)) for e in E],
