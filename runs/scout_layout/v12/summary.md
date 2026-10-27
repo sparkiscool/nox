@@ -74,6 +74,11 @@ System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera
 - the electronics session's tail bay mount 49.2 and cables 6.3 (round 5 concept);
 - bought, latch set and wires 526.
 
+## Spark 27 Oct (decisions)
+- **Every rod 3.0**, every socket 3.2; the 6/4 sized cage is dropped. The frame model's crash and handling fails stand, accepted: the rods are the fuse.
+- **FC on top of the plate** (the electronics session moves it).
+- **Camera mount v2 by topology**, on 3.0 rods, ≥ 100 Hz (worker, `runs/scout_camera_mount/v2/`).
+
 ## Open
 - **Rods (DEFAULT for the pieces, 27 Oct):** the node and saddle sockets are sized for the frame model's 6/4 tube on its 39 members (6.2 bores), and 3.0 on the rest (3.2).
   - The general rod rule allows thicker where the frame model needs it; the 3.0-everywhere layout fails every crash case.
