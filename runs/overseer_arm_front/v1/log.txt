@@ -148,3 +148,127 @@ it  56 beta    4 J   1.3582 vol 0.0937 (dil 0.1779 g +0.016) grey 17.4% ch 0.100
 it  56 beta    4 J   1.3582 vol 0.0937 (dil 0.1779 g +0.016) grey 17.4% ch 0.100 worst tie b21 mx 978 9.7s
 it  57 beta    4 J   1.4396 vol 0.0916 (dil 0.1745 g -0.003) grey 17.0% ch 0.100 worst tie b21 mx 1.05e+03 8.6s
 it  57 beta    4 J   1.4396 vol 0.0916 (dil 0.1745 g -0.003) grey 17.0% ch 0.100 worst tie b21 mx 1.05e+03 8.6s
+it  58 beta    4 J   1.3401 vol 0.0925 (dil 0.1747 g -0.002) grey 17.0% ch 0.100 worst tie b21 mx 956 10.8s
+it  58 beta    4 J   1.3401 vol 0.0925 (dil 0.1747 g -0.002) grey 17.0% ch 0.100 worst tie b21 mx 956 10.8s
+it  59 beta    4 J   1.2702 vol 0.0931 (dil 0.1748 g -0.001) grey 16.9% ch 0.100 worst tie b21 mx 898 9.3s
+it  59 beta    4 J   1.2702 vol 0.0931 (dil 0.1748 g -0.001) grey 16.9% ch 0.100 worst tie b21 mx 898 9.3s
+it  60 beta    4 J   1.2145 vol 0.0937 (dil 0.1748 g -0.001) grey 17.0% ch 0.100 worst tie b21 mx 854 9.2s
+it  60 beta    4 J   1.2145 vol 0.0937 (dil 0.1748 g -0.001) grey 17.0% ch 0.100 worst tie b21 mx 854 9.2s
+it  61 beta    4 J   1.1694 vol 0.0942 (dil 0.1749 g +0.022) grey 16.9% ch 0.100 worst tie b21 mx 819 10.5s
+it  61 beta    4 J   1.1694 vol 0.0942 (dil 0.1749 g +0.022) grey 16.9% ch 0.100 worst tie b21 mx 819 10.5s
+it  62 beta    4 J   1.3602 vol 0.0909 (dil 0.1707 g -0.002) grey 16.6% ch 0.100 worst tie b21 mx 997 10.5s
+it  62 beta    4 J   1.3602 vol 0.0909 (dil 0.1707 g -0.002) grey 16.6% ch 0.100 worst tie b21 mx 997 10.5s
+it  63 beta    4 J   1.3018 vol 0.0914 (dil 0.1709 g -0.001) grey 16.6% ch 0.100 worst tie b21 mx 910 10.9s
+it  63 beta    4 J   1.3018 vol 0.0914 (dil 0.1709 g -0.001) grey 16.6% ch 0.100 worst tie b21 mx 910 10.9s
+it  64 beta    4 J   1.2705 vol 0.0917 (dil 0.1710 g -0.001) grey 16.6% ch 0.100 worst tie b21 mx 893 10.1s
+it  64 beta    4 J   1.2705 vol 0.0917 (dil 0.1710 g -0.001) grey 16.6% ch 0.100 worst tie b21 mx 893 10.1s
+it  65 beta    4 J   1.2499 vol 0.0919 (dil 0.1710 g -0.000) grey 16.6% ch 0.100 worst tie b21 mx 876 9.9s
+it  65 beta    4 J   1.2499 vol 0.0919 (dil 0.1710 g -0.000) grey 16.6% ch 0.100 worst tie b21 mx 876 9.9s
+it  66 beta    4 J   1.2340 vol 0.0920 (dil 0.1710 g +0.016) grey 16.5% ch 0.100 worst tie b21 mx 862 11.0s
+it  66 beta    4 J   1.2340 vol 0.0920 (dil 0.1710 g +0.016) grey 16.5% ch 0.100 worst tie b21 mx 862 11.0s
+it  67 beta    4 J   1.3819 vol 0.0895 (dil 0.1680 g -0.002) grey 16.2% ch 0.100 worst tie b21 mx 996 10.2s
+it  67 beta    4 J   1.3819 vol 0.0895 (dil 0.1680 g -0.002) grey 16.2% ch 0.100 worst tie b21 mx 996 10.2s
+it  68 beta    4 J   1.3448 vol 0.0898 (dil 0.1681 g -0.001) grey 16.3% ch 0.100 worst tie b21 mx 942 9.3s
+it  68 beta    4 J   1.3448 vol 0.0898 (dil 0.1681 g -0.001) grey 16.3% ch 0.100 worst tie b21 mx 942 9.3s
+it  69 beta    4 J   1.3235 vol 0.0900 (dil 0.1681 g -0.001) grey 16.2% ch 0.100 worst tie b21 mx 926 9.5s
+it  69 beta    4 J   1.3235 vol 0.0900 (dil 0.1681 g -0.001) grey 16.2% ch 0.100 worst tie b21 mx 926 9.5s
+it  70 beta    4 J   1.3005 vol 0.0901 (dil 0.1681 g -0.001) grey 16.2% ch 0.100 worst tie b21 mx 907 9.2s
+it  70 beta    4 J   1.3005 vol 0.0901 (dil 0.1681 g -0.001) grey 16.2% ch 0.100 worst tie b21 mx 907 9.2s
+it  71 beta    4 J   1.2724 vol 0.0902 (dil 0.1681 g +0.010) grey 16.2% ch 0.100 worst tie b21 mx 885 9.8s
+it  71 beta    4 J   1.2724 vol 0.0902 (dil 0.1681 g +0.010) grey 16.2% ch 0.100 worst tie b21 mx 885 9.8s
+it  72 beta    4 J   1.3327 vol 0.0889 (dil 0.1662 g -0.001) grey 15.9% ch 0.100 worst tie b21 mx 943 9.5s
+it  72 beta    4 J   1.3327 vol 0.0889 (dil 0.1662 g -0.001) grey 15.9% ch 0.100 worst tie b21 mx 943 9.5s
+layout: stopped (beta_stop) at it 72, beta 4, 716 s
+layout: stopped (beta_stop) at it 72, beta 4, 716 s
+layout: beta 4 done: eroded design 13 bodies, main 88.8%; drawn bodies outside the main body: 7
+layout: beta 4 done: eroded design 13 bodies, main 88.8%; drawn bodies outside the main body: 7
+coarse stage done: 72 iterations, 744 s, peak 1.836892 GB
+coarse stage done: 72 iterations, 744 s, peak 1.836892 GB
+overseer_arm_front: grid (144, 64, 32) h 1.5 = 294,912 cells; design 154,478 (521.4 cm3), drawn 7,191, void 133,243
+  insert rod 0: 336 cells, modulus x37.9
+  insert rod 1: 335 cells, modulus x38.0
+  insert rod 2: 336 cells, modulus x37.9
+  insert rod 3: 335 cells, modulus x38.0
+  support default: 458 cells, 1128 nodes
+  support bosses: 225 cells, 618 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (27.15 cm3); 1.65 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (27.15 cm3); 1.65 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.080 of 154,966 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.080 of 154,966 design cells
+layout: WARNING nearly mirrored in y (2.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: 9 drawn bodies (8,045 cells), held solid in every realization; eroded filter: masked
+layout: 9 drawn bodies (8,045 cells), held solid in every realization; eroded filter: masked
+layout: 38 load cases + 42 tie cases (7 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 38 load cases + 42 tie cases (7 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (144, 64, 32) = 294,912 elements, 528,282 active dofs; backend mg (direct estimate 7.4 GB, budget 11.8 GB)
+fem: grid (144, 64, 32) = 294,912 elements, 528,282 active dofs; backend mg (direct estimate 7.4 GB, budget 11.8 GB)
+fem: multigrid 3 levels [(np.int64(144), np.int64(64), np.int64(32)), (np.int64(72), np.int64(32), np.int64(16)), (np.int64(36), np.int64(16), np.int64(8))], coarsest 16,983 dofs (direct)
+fem: multigrid 3 levels [(np.int64(144), np.int64(64), np.int64(32)), (np.int64(72), np.int64(32), np.int64(16)), (np.int64(36), np.int64(16), np.int64(8))], coarsest 16,983 dofs (direct)
+=== overseer_arm_front: h 1.5, generated 40.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_front: h 1.5, generated 40.0 cm3, min member 3.2 mm, cores 4
+overseer_arm_front: grid (144, 64, 32) h 1.5 = 294,912 cells; design 154,478 (521.4 cm3), drawn 7,191, void 133,243
+  insert rod 0: 336 cells, modulus x37.9
+  insert rod 1: 335 cells, modulus x38.0
+  insert rod 2: 336 cells, modulus x37.9
+  insert rod 3: 335 cells, modulus x38.0
+  support default: 458 cells, 1128 nodes
+  support bosses: 225 cells, 618 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_front: grid (80, 32, 24) h 3.0 = 61,440 cells; design 19,365 (522.9 cm3), drawn 862, void 41,213
+  insert rod 0: 137 cells, modulus x11.6
+  insert rod 1: 137 cells, modulus x11.6
+  insert rod 2: 137 cells, modulus x11.6
+  insert rod 3: 137 cells, modulus x11.6
+  support default: 61 cells, 174 nodes
+  support bosses: 27 cells, 118 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (30.27 cm3); 5.21 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (30.27 cm3); 5.21 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.087 of 19,262 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.087 of 19,262 design cells
+layout: WARNING nearly mirrored in y (1.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (1.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.4% of passive cells differ): no symmetry
+layout: 21 drawn bodies (1,121 cells), held solid in every realization; eroded filter: masked
+layout: 21 drawn bodies (1,121 cells), held solid in every realization; eroded filter: masked
+layout: 38 load cases + 48 tie cases (8 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: 38 load cases + 48 tie cases (8 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (80, 32, 24) = 61,440 elements, 71,007 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+fem: grid (80, 32, 24) = 61,440 elements, 71,007 active dofs; backend direct (direct estimate 0.5 GB, budget 11.8 GB)
+layout: resumed from runs/overseer_arm_front/v1/coarse_ck.npz at it 72, beta 4 (already stopped: beta_stop)
+layout: resumed from runs/overseer_arm_front/v1/coarse_ck.npz at it 72, beta 4 (already stopped: beta_stop)
+layout: beta 4 done: eroded design 13 bodies, main 88.8%; drawn bodies outside the main body: 7
+layout: beta 4 done: eroded design 13 bodies, main 88.8%; drawn bodies outside the main body: 7
+coarse stage done: 72 iterations, 30 s, peak 1.808064 GB
+coarse stage done: 72 iterations, 30 s, peak 1.808064 GB
+overseer_arm_front: grid (144, 64, 32) h 1.5 = 294,912 cells; design 154,478 (521.4 cm3), drawn 7,191, void 133,243
+  insert rod 0: 336 cells, modulus x37.9
+  insert rod 1: 335 cells, modulus x38.0
+  insert rod 2: 336 cells, modulus x37.9
+  insert rod 3: 335 cells, modulus x38.0
+  support default: 458 cells, 1128 nodes
+  support bosses: 225 cells, 618 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (27.15 cm3); 1.65 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (27.15 cm3); 1.65 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.080 of 154,966 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.080 of 154,966 design cells
+layout: WARNING nearly mirrored in y (2.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: 9 drawn bodies (8,045 cells), held solid in every realization; eroded filter: masked
+layout: 9 drawn bodies (8,045 cells), held solid in every realization; eroded filter: masked
+layout: 38 load cases + 42 tie cases (7 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 38 load cases + 42 tie cases (7 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (144, 64, 32) = 294,912 elements, 528,282 active dofs; backend mg (direct estimate 7.4 GB, budget 11.8 GB)
+fem: grid (144, 64, 32) = 294,912 elements, 528,282 active dofs; backend mg (direct estimate 7.4 GB, budget 11.8 GB)
+fem: multigrid 3 levels [(np.int64(144), np.int64(64), np.int64(32)), (np.int64(72), np.int64(32), np.int64(16)), (np.int64(36), np.int64(16), np.int64(8))], coarsest 16,983 dofs (direct)
+fem: multigrid 3 levels [(np.int64(144), np.int64(64), np.int64(32)), (np.int64(72), np.int64(32), np.int64(16)), (np.int64(36), np.int64(16), np.int64(8))], coarsest 16,983 dofs (direct)
