@@ -61,7 +61,7 @@ def wedge(A, B, c, s0, s1, h, name, v_tip=None):
 # the current Overseer base loop (cage v5, PR 122, confirmed 27 Oct) about the swap centre (x -30), seat z 0 = the loop plane
 HEX = dict(Ln=(85.8, 116.1), Rn=(85.8, -116.1), Lt=(-68.9, 119.7), Rt=(-68.9, -119.7), F=(191.2, 0.0), T=(-212.6, 0.0))
 INSET = 20.0                                                     # clear of the r 10.15 nodes by ~10 at both ends
-TIP_INSET = 30.0                                                 # the V under each tip is cut back 30 (in x) from the tip node
+TIP_INSET = 15.0                                                 # the V under each tip is cut back 15 (in x) from the tip node (30 lost the Overseer's diagonals under yaw)
 
 def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
     h_side = H_SIDE if h_side is None else h_side; h_tip = H_OEND if h_tip is None else h_tip; h_send = H_SEND if h_send is None else h_send
