@@ -170,3 +170,7 @@ it  66 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000
 it  66 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 28.8s
 it  67 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 27.3s
 it  67 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 27.3s
+it  68 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 30.9s
+it  68 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 30.9s
+it  69 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 24.5s
+it  69 beta    4 J  12.7330 vol 0.0072 (dil 0.0328 g +0.099) grey  1.7% ch 0.000 worst tube to 5 side b 9.03e+05 24.5s
