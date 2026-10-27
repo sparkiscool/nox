@@ -111,6 +111,7 @@ CAP = (10.0, 20.0)                 # low-ESR cap on the ESC battery pads, 35 V 4
 RX_TP = (-30.0, -18.0, 24.0, 40.0)  # RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, taped / zip-tied through the plate
 FEET_XY = [(-24.0, 36.5), (-24.0, -36.5), (65.0, 22.5), (65.0, -22.5), (96.0, 17.0), (96.0, -17.0), (60.0, 17.0), (60.0, -17.0)]   # v3: + (60, ±17) Ø3.5   # bottom plate Ø3.1 / Ø3.5 (front) holes, 360° in the STEP
 # v2 (concept review 27 Oct): every foot outside the battery slot (heads clear its reserved top 6: |y| 36.5 - 2.75 > 33.4, x 65 - 2.75 > 61.9);
+# v3: except (60, ±17), whose heads sit in reserved pockets Ø7 x 3.5 in the slot top (asked of the latch session);
 # each keel root closes a triangle into the plate: (96, ±17), (65, ±22.5) and the cross bar at x 96. M3 up from under the plate into inserts
 INSERT = (4.0, 5.7)                # Ruthex M3 x 5.7 heat-set insert, hole Ø4.0 (Q17), pressed into each foot from the plate side
 FOOT_H = 6.5                       # feet Ø12 x 6.5 (the deck's floor height), the insert hole Ø4.0 through (no thin cap over it)
@@ -257,7 +258,7 @@ def bar3(p, q, w):
 
 
 def tower():
-    """the front hub tower: the 4 brace bosses, a web down to the keel bosses and the front feet, and the side webs back to the pads"""
+    """the front hub tower: the 4 brace bosses, a web down to the keel bosses and the front feet, and the deep side webs back to the mid feet"""
     bosses = [brace_socket(k, BR_BORE / 2 + BR_WALL, -BR_WALL, BR_L + BR_LEAD) for k in BRACES]
     webs = [box(86.0, 104.0, sy * 9.0, sy * 31.0, 0, 36.0) for sy in (1, -1)]
     sides = [box(60.0, 92.0, sy * 20.0, sy * 28.0, 0, 36.0) for sy in (1, -1)]   # concept: the deep side webs to the mid feet (the run shapes them)
