@@ -86,6 +86,29 @@ def bodies(i):
     return dict(drawn=drawn, cuts=cuts, env=env, sockets=sockets, r0=r0, R=R)
 
 
+def recut(i, mesh_in, mesh_out=None, built=(6.1, 3.1)):
+    """make a saved node's sockets the current bores without a rerun (Spark 27 Oct: "dont restart runs just make the hole match"):
+    the sockets placed as the run built them (its bores `built` set the set-back), then each bore cut again at KINDS' bore along the
+    same axis from the same floor. A larger bore only removes material. Returns the output path; run solid_check on it after."""
+    import trimesh
+    keep = {k: dict(v) for k, v in KINDS.items()}
+    KINDS[6]["bore"], KINDS[3]["bore"] = built
+    try: b = bodies(i)
+    finally: KINDS.update(keep)
+    c = N[i]; cut = None
+    for sk in b["sockets"]:
+        d, k = sk["d"], sk["kind"]; a = c + d * b["r0"]; bb = a + d * KINDS[k]["depth"]
+        m = seg(a, bb + d * 400.0, KINDS[k]["bore"] / 2); cut = m if cut is None else cut + m
+    tm = trimesh.load(mesh_in, force="mesh")
+    part = mf.Manifold(mf.Mesh(vert_properties=np.asarray(tm.vertices, np.float32), tri_verts=np.asarray(tm.faces, np.uint32)))
+    out = (part - cut).to_mesh()
+    res = trimesh.Trimesh(np.asarray(out.vert_properties)[:, :3], np.asarray(out.tri_verts), process=True)
+    res.export(mesh_out or mesh_in)
+    print(f"node {i}: {len(b['sockets'])} sockets re-cut from {built} to {KINDS[6]['bore']} / {KINDS[3]['bore']}; "
+          f"volume {tm.volume / 1000:.2f} -> {res.volume / 1000:.2f} cm3; {mesh_out or mesh_in}")
+    return mesh_out or mesh_in
+
+
 def setup_for(i):
     def setup(h):
         from topo import Part
@@ -114,6 +137,10 @@ if __name__ == "__main__":
     ap.add_argument("--h", type=float, default=0.8); ap.add_argument("--gen", type=float, default=None)
     ap.add_argument("--git", action="store_true"); ap.add_argument("--smoke", action="store_true")
     a = ap.parse_args()
+    if a.node == "recut":                                              # cage_node.py recut <node> <mesh> [out] [--built 6.1,3.1]
+        rest = [x for x in sys.argv[2:] if not x.startswith("--")]; bi = sys.argv.index("--built") if "--built" in sys.argv else None
+        built = tuple(map(float, sys.argv[bi + 1].split(","))) if bi else (6.1, 3.1)
+        recut(int(rest[0]), rest[1], rest[2] if len(rest) > 2 and rest[2] != (sys.argv[bi + 1] if bi else None) else None, built); sys.exit(0)
     if a.node == "list":
         for i in designs():
             M = members(i); b = bodies(i)
