@@ -1,0 +1,151 @@
+<title>Nox Hook Catch</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column sheet: the idea, the plan to scale, the three-step section, the comparison with the ramps */
+:root {
+  --paper: #f4f6f4; --sheet: #ffffff; --ink: #1c2421; --muted: #5c6a64; --rule: #d5ddd9;
+  --ovr: #5d7fa8; --scout: #1f8a7a; --hook: #c2512f; --hook-soft: rgba(194,81,47,.14); --deck: #b9c3bf; --pack: #d08a1e;
+  --good: #2f7d4f; --bad: #b4462f; --accent: #c2512f;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
+  --ovr: #8fb0d6; --scout: #4cc2ae; --hook: #ee8a66; --hook-soft: rgba(238,138,102,.16); --deck: #46524d; --pack: #e6a64a;
+  --good: #6cc08d; --bad: #e07a62; --accent: #ee8a66; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
+  --ovr: #8fb0d6; --scout: #4cc2ae; --hook: #ee8a66; --hook-soft: rgba(238,138,102,.16); --deck: #46524d; --pack: #e6a64a;
+  --good: #6cc08d; --bad: #e07a62; --accent: #ee8a66; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 1040px; margin: 0 auto; display: grid; gap: 26px; }
+h1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; line-height: 1.1; } h2 { font-size: 1.3rem; }
+p { margin: 0; max-width: 72ch; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.scroll { overflow-x: auto; }
+svg { width: 100%; height: auto; display: block; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+.step { display: grid; gap: 6px; min-width: 0; }
+.step h3 { font: 600 1.02rem var(--f-display); margin: 0; }
+.step p { font-size: .88rem; color: var(--muted); }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 620px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 500 .75rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+td.rec, th.rec { background: var(--hook-soft); }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 76ch; }
+.mono { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
+</style>
+
+<main>
+  <header>
+    <span class="eyebrow">Box catch · hook idea · Overseer cage v5 + Scout v11 · 27 Oct</span>
+    <h1>Land on a flat pad, then four hooks pull it home</h1>
+    <p>The deck is flat with the hooks folded flush, so nothing has to clear either cage while it lands. Once the drone is down, the box (which knows which drone it is) raises the hooks. Each one sweeps in under a bottom corner and pulls it out into a V-seat. When all four are closed, the drone is centred in x, y and yaw and locked down for the swap. Both drones put a bottom node on the same 4 points (the Overseer's hexagon side nodes), so the same 4 hooks serve both.</p>
+  </header>
+
+  <section class="sheet" aria-label="Plan">
+    <h2>Plan, to scale</h2>
+    <div class="scroll"><div id="plan" style="min-width:520px"></div></div>
+    <p class="mono">Looking down, x forward, about the catch centre. Overseer opening (hexagon) and the Scout's (its 4 side nodes). Hook pivots under the deck, sweep shown at the corner; the dashed circle is a ±40 landing around each corner node. Grid 20 mm.</p>
+  </section>
+
+  <section class="sheet" aria-label="Sequence">
+    <h2>One corner, three steps (section along the diagonal)</h2>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <section class="sheet" aria-label="Comparison">
+    <h2>Against the ramps</h2>
+    <div class="scroll"><table id="cmp"></table></div>
+  </section>
+
+  <section class="sheet" aria-label="Notes">
+    <h2>What it takes</h2>
+    <ul id="notes"></ul>
+  </section>
+</main>
+
+<script>
+const HEX = { Ln: [85.8, 116.1], Rn: [85.8, -116.1], Lt: [-68.9, 119.7], Rt: [-68.9, -119.7], F: [191.2, 0], T: [-212.6, 0] };
+const CORNERS = ['Ln', 'Lt', 'Rt', 'Rn'];
+const CAP = 40, REACH = 70;          // landing spread around each node (mm, target), hook arm length (E)
+(() => { const X0 = -250, X1 = 240, Y1 = 175, Y0 = -175, w = X1 - X0, h = Y1 - Y0;
+  const T = (x, y) => [x - X0, Y1 - y];
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="plan of the openings and hooks">`;
+  for (let x = -240; x <= 240; x += 20) g += `<line x1="${x - X0}" y1="0" x2="${x - X0}" y2="${h}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let y = -160; y <= 160; y += 20) g += `<line x1="0" y1="${Y1 - y}" x2="${w}" y2="${Y1 - y}" stroke="var(--rule)" stroke-width=".35"/>`;
+  g += `<rect x="${T(-160, 50)[0]}" y="${T(-160, 50)[1]}" width="${320}" height="${100}" fill="var(--deck)" fill-opacity=".25" stroke="none"/>`;
+  g += `<text x="${T(-150, 38)[0]}" y="${T(-150, 38)[1]}" font-size="8" fill="var(--muted)" font-family="IBM Plex Mono, monospace">swap column (both cartridges drop through)</text>`;
+  const hexPts = ['F', 'Ln', 'Lt', 'T', 'Rt', 'Rn'].map(k => T(...HEX[k]).join(',')).join(' ');
+  g += `<polygon points="${hexPts}" fill="none" stroke="var(--ovr)" stroke-width="3"/>`;
+  g += `<polygon points="${CORNERS.map(k => T(...HEX[k]).join(',')).join(' ')}" fill="none" stroke="var(--scout)" stroke-width="3" stroke-dasharray="7 4"/>`;
+  for (const k of ['F', 'T']) { const [x, y] = T(...HEX[k]); g += `<circle cx="${x}" cy="${y}" r="10.15" fill="none" stroke="var(--ovr)" stroke-width="1.2"/>`; }
+  for (const k of CORNERS) { const [nx, ny] = HEX[k]; const [x, y] = T(nx, ny); const d = Math.hypot(nx, ny), ux = nx / d, uy = ny / d;
+    g += `<circle cx="${x}" cy="${y}" r="${CAP}" fill="var(--hook-soft)" stroke="var(--hook)" stroke-width=".8" stroke-dasharray="3 3"/>`;
+    const px = nx - ux * (CAP + 25), py = ny - uy * (CAP + 25);     // pivot inside, along the diagonal
+    const [ppx, ppy] = T(px, py), [vx, vy] = T(nx + ux * 9, ny + uy * 9);
+    g += `<line x1="${ppx}" y1="${ppy}" x2="${vx}" y2="${vy}" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
+    g += `<circle cx="${ppx}" cy="${ppy}" r="4" fill="var(--hook)"/>`;
+    const a = Math.atan2(uy, ux), s = 13, [cx, cy] = T(nx + ux * 12, ny + uy * 12);
+    const p1 = [cx + s * Math.cos(-a + 2.4), cy + s * Math.sin(-a + 2.4)], p2 = [cx + s * Math.cos(-a - 2.4), cy + s * Math.sin(-a - 2.4)];
+    g += `<polyline points="${p1.join(',')} ${cx},${cy} ${p2.join(',')}" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+    g += `<circle cx="${x}" cy="${y}" r="10.15" fill="var(--sheet)" stroke="var(--scout)" stroke-width="2"/>`; }
+  const lab = (x, y, t, c) => `<text x="${T(x, y)[0]}" y="${T(x, y)[1]}" font-size="9" fill="${c}" font-family="IBM Plex Mono, monospace">${t}</text>`;
+  g += lab(-245, 165, 'Overseer opening (hexagon)', 'var(--ovr)') + lab(-245, 152, 'Scout opening (its 4 side nodes)', 'var(--scout)');
+  g += lab(-245, -150, 'hook (pivot under the deck) and its V-seat', 'var(--hook)') + lab(-245, -163, 'dashed circle: ±40 landing around a node', 'var(--muted)');
+  document.getElementById('plan').innerHTML = g + '</svg>'; })();
+
+// one corner, section along its diagonal: r outward, z up; node r 10.15 on a flat deck
+(() => { const R0 = 150, frames = [
+  ['1 · Lands on the flat deck', 'Hooks are folded flush. The drone lands anywhere within ±40; its bottom nodes rest on the deck. Nothing sticks up to clear.', 'flat'],
+  ['2 · Hooks rise', 'The box raises the hooks for this drone. Each swings up through its slot inside the corner and over the node, wherever the node landed.', 'up'],
+  ['3 · Closes and locks', 'The hook pulls the node out into the V-seat and down onto it. With all 4 closed the drone is centred and locked (over-centre: holds with power off, takes the 60 N XT60 push).', 'closed']];
+  const html = frames.map(([t, p, mode]) => {
+    const X0 = 60, X1 = 200, Z0 = -40, Z1 = 70, w = X1 - X0, h = Z1 - Z0; const T = (r, z) => [r - X0, Z1 - z];
+    let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${t}">`;
+    g += `<rect x="0" y="${T(0, 0)[1]}" width="${w}" height="${h}" fill="var(--deck)" fill-opacity=".45"/>`;
+    const seat = R0 + 6; const [sx, sy] = T(seat, 0);
+    g += `<polygon points="${sx - 10},${sy} ${sx},${sy - 0} ${sx + 4},${sy - 12} ${sx + 4},${sy}" fill="var(--ink)" opacity=".75"/>`;
+    const nodeR = mode === 'closed' ? seat - 11 : R0 - 25, nodeZ = 10.15;
+    const [nx, nz] = T(nodeR, nodeZ);
+    g += `<line x1="${nx - 60}" y1="${nz - 26}" x2="${nx}" y2="${nz}" stroke="var(--scout)" stroke-width="3" opacity=".7"/>`;
+    g += `<circle cx="${nx}" cy="${nz}" r="10.15" fill="var(--sheet)" stroke="var(--scout)" stroke-width="2.4"/>`;
+    const piv = T(R0 - 75, -12);
+    if (mode === 'flat') g += `<line x1="${piv[0]}" y1="${piv[1]}" x2="${piv[0] + 70}" y2="${piv[1] + 9}" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
+    else { const tip = mode === 'up' ? [nx + 2, nz - 22] : [nx + 4, nz - 12];
+      g += `<line x1="${piv[0]}" y1="${piv[1]}" x2="${tip[0]}" y2="${tip[1]}" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
+      g += `<path d="M ${tip[0]} ${tip[1]} q 14 -2 14 14" fill="none" stroke="var(--hook)" stroke-width="5" stroke-linecap="round"/>`;
+      if (mode === 'up') g += `<path d="M ${tip[0] + 18} ${tip[1] + 22} l 14 0" stroke="var(--hook)" stroke-width="1.4" marker-end="url(#a)"/>`; }
+    g += `<circle cx="${piv[0]}" cy="${piv[1]}" r="4" fill="var(--hook)"/>`;
+    g += `<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--hook)"/></marker></defs>`;
+    g += `<text x="4" y="${h - 6}" font-size="7" fill="var(--muted)" font-family="IBM Plex Mono, monospace">deck · seat · node Ø20</text>`;
+    return `<div class="step"><h3>${t}</h3>${g}</svg><p>${p}</p></div>`; }).join('');
+  document.getElementById('steps').innerHTML = html; })();
+
+const rows = [
+  ['', 'Ramps (checked today)', 'Hooks (this idea)'],
+  ['Landing tolerance', 'Scout ±20 fore-aft / ±25 side / 25 diag; Overseer ±25 / ±25 / 40; yaw ±2.5°', '±40 target in any direction and yaw ±10° (set by hook reach, E); not yet checked'],
+  ['Clearance to the cages', 'every ramp fights something: Overseer feet and pods, Scout ties and tail node; needed changes on both drones', 'flat deck: nothing to clear while landing; only the 4 hook sweeps, inside each corner, ~25 mm high'],
+  ['Centring', 'passive, on sliding contact (needs a low-friction face, μ ≤ 0.2)', 'active: the hook drags the drone; μ 0.4 on the deck is fine (Overseer 12 N, Scout 3 N to slide)'],
+  ['Final position', 'where the ramps meet (both drones level only by matching ring heights)', '4 V-seats on the 4 shared nodes: exact, the same for both drones'],
+  ['Hold-down for the swap', 'a separate latch still needed', 'the same hooks, over-centre: hold the 60 N XT60 push with power off'],
+  ['Parts', '10 printed ramps, no motors', '4 servos + 4 hooks + 4 V-seats; the 4 MG90S of the old hook latch move here, bigger servos likely'],
+  ['Failure', 'nothing to fail; tolerance is what it is', 'a stuck hook = drone not centred: the box re-cycles it or waves the drone off; hall switch per hook reads closed'],
+];
+document.getElementById('cmp').innerHTML = rows.map((r, i) => `<tr>${r.map((c, j) => i ? `<td class="${j === 2 ? 'rec' : ''}">${c}</td>` : `<th class="${j === 2 ? 'rec' : ''}">${c}</th>`).join('')}</tr>`).join('');
+document.getElementById('notes').innerHTML = [
+  'Why it fits both drones: after the Scout refit both bottoms have a Ø20 node on the same 4 points, (85.8, ±116.1) and (−68.9, ±119.7) about the catch. Hooking those nodes (not the 3 mm Scout rods) gives one set of 4 hooks for both. The box knows which drone is landing, so per-drone hook positions or extra hooks stay possible for later drones.',
+  'Sequence: drone lands, motors off, the 4 hooks rise (staggered, so the drone is dragged, not lifted), close, and lock. Each hook has a hall switch at closed. The swap only starts when all 4 read closed and keep-alive current flows. Release is the reverse after the swap.',
+  'Forces (E): sliding the Overseer (3.1 kg) on the deck at μ 0.4 takes ~12 N, shared by the hooks pulling at once; the XT60 insert pushes the drone up 60 N, so each hook holds ≥ 15 N down plus margin. An over-centre linkage takes that load off the servo, and keeps the lock with the power off.',
+  'Keep-alive: pins in two V-seats meet copper pads on two nodes once the hooks close, so the contact is made only when the drone is centred.',
+  'What still has to be checked: each hook sweep against both cages (the shell rods leaving each corner node, the Overseer feet and pods), the reach for ±40 and yaw ±10°, and the deck under a ±40 landing (the cartridges must not land on the swap-column edge).',
+].map(t => `<li>${t}</li>`).join('');
+</script>
