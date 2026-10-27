@@ -31,9 +31,12 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel, the box swaps its pack and it flies out, with the drone powered through the swap.
 - Live video from the Radxa reaches the box (B7).
 
+### Cage (Spark 27 Oct)
+The latest layout (PR 94) with a geodesic shell cage (the Overseer cage v3 idea, CLAUDE.md "Cages are geodesic shells"): **bottom ring exactly the Overseer's** (same 8 nodes and tubes, same datum: catch centre, 3 under the cartridge flat bottom) so one funnel takes both drones; **one camera** at the nose outside the cage, nothing in its view; **the Bee35 carbon base stays**. Layout v3 / cage v1: `layout_v3.py`, `runs/scout_layout/v6/summary.md`, numbers `dimensions.md` System Scout v3. Supersedes PR 94's ground-structure cage.
+
 ### v3 parts to draw (order DEFAULT)
 1. Bottom layout: pack, receiver with latch pockets, contacts, belly plate, pogo pads, underside stack (FC, Radxa, flow) in one sweep (v2 drew it in `archive/scout-v2/s2-receiver.md`; history only).
-2. Cage around the raised prop plane that rolls into the funnel (catch interface `dimensions.md` G).
+2. Cage: layout v3 / cage v1 geodesic (27 Oct); next the frame model on the shell, then shell nodes, spoke clamps, the camera boom + guard.
 3. Camera mount on the nose, outside the cage keep-outs.
 4. Cartridge (Scout size) matching the bay modules (`nox/box/box-case.md`).
 
