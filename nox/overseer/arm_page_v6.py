@@ -45,6 +45,11 @@ html = f"""<title>Overseer Front Arm v6</title>
 </table></div>
 <p class="note">Rods only, no new PETG: {m5['modes'][0]['Hz']:.0f} / {m5['modes'][1]['Hz']:.0f} Hz. The shoulder band (x 5..25) is the soft spot: stiffening it alone gave 260 Hz. Grid g is PETG + carbon on the FE grid, before the topology rerun moves material. The solid wedge costs about 9 g over tri10 for 5.5 Hz more margin (DEFAULT). Every rod is 50 to 71 mm (C), slides in from its root-side end (rodcheck on the setup: 16/16 clear).</p>
 </section>
+<section class="front">
+<h2>v6 run result (27 Oct)</h2>
+<p>330.4 g PETG (M) + tubes and rods ~22 g (E); solid_check PASS on the run mesh; strength worst 0.37 (cage crash 7), inside the 0.5 target; first modes 182 Hz vertical / 214 Hz lateral on the 4 inserts, 188 / 229 on the plate faces (M, h 1.5): 4 % under 190. With 6/4 tube diagonals the same mesh reads 191 Hz (E). Fourth front miss on the mode target: Spark decides (accept 182 Hz = 1.15 x full-throttle 1P, or a layout change: shorter front arms).</p>
+<figure>{img(os.path.join(F, "v6", "preview_run.png"), "front arm v6 as built")}<figcaption>Front arm v6 as built (arm frame)</figcaption></figure>
+</section>
 <section>
 <h2>Pictures</h2>
 <div class="pair">{figs}</div>
