@@ -1,0 +1,261 @@
+<title>Nox Ground Unit 3D</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Source: nox/box/ground_unit_3d.html (Nox repo); data: runs/ground_unit/v1/scene.json + scene.b64.txt from nox/box/ground_unit_export.py.
+   Layout: one-screen viewer. A 3D stage with a transport bar under it, a side panel (systems, parts, the picked part). One column on a phone. */
+:root {
+  --bg: #eef0ee; --panel: #f9faf8; --ink: #1c2126; --muted: #5d6771; --line: #cfd5d9; --line2: #e3e7e9;
+  --accent: #b5471b; --accent-soft: #f5e1d6; --stage: #e4e7e6; --grid: #c9cfd2;
+  --c-structure: #8d98a3; --c-arm: #c7612f; --c-latch: #3b7fb6; --c-electronics: #3f9d5f; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb;
+  --display: "Barlow Semi Condensed", "Arial Narrow", sans-serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #14181c; --panel: #1b2026; --ink: #e5e9eb; --muted: #97a3ad; --line: #343c44; --line2: #262d34;
+  --accent: #e0772f; --accent-soft: #3a2415; --stage: #1d2328; --grid: #313a42;
+  --c-structure: #a7b1bb; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #14181c; --panel: #1b2026; --ink: #e5e9eb; --muted: #97a3ad; --line: #343c44; --line2: #262d34;
+  --accent: #e0772f; --accent-soft: #3a2415; --stage: #1d2328; --grid: #313a42;
+  --c-structure: #a7b1bb; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark }
+html, body { height: 100%; }
+[hidden] { display: none !important; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.45 var(--body); }
+.app { height: 100%; display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 340px; grid-template-areas: "head head" "stage side" "bar side"; gap: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 10px 12px; }
+header { grid-area: head; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+h1 { font: 700 22px/1 var(--display); margin: 0; }
+h1 small { font: 500 12px/1 var(--mono); color: var(--muted); margin-left: 8px; letter-spacing: 0.04em; }
+.views { display: inline-flex; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-left: auto; }
+.views button, .bar button { font: 500 12px/1 var(--mono); padding: 7px 10px; border: 0; background: var(--panel); color: var(--ink); cursor: pointer; }
+.views button + button { border-left: 1px solid var(--line); }
+.views button:hover, .bar button:hover { background: var(--accent-soft); }
+.stage { grid-area: stage; position: relative; min-height: 320px; border: 1px solid var(--line); border-radius: 6px; background: var(--stage); overflow: hidden; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.hint { position: absolute; left: 10px; bottom: 8px; font: 11px/1.3 var(--mono); color: var(--muted); pointer-events: none; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; font: 500 13px var(--mono); color: var(--muted); }
+.bar { grid-area: bar; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 8px 12px; }
+.bar .row { display: contents; }
+.bar label { font: 600 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.bar input[type=range] { width: 100%; accent-color: var(--accent); }
+.bar .val { font: 500 12px/1 var(--mono); min-width: 84px; text-align: right; font-variant-numeric: tabular-nums; }
+.bar button { border: 1px solid var(--line); border-radius: 4px; }
+.side { grid-area: side; min-width: 0; display: grid; grid-template-rows: auto auto 1fr; gap: 10px; overflow: hidden; }
+.card { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 10px 12px; min-width: 0; }
+.card h2 { font: 600 13px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.sys { display: grid; gap: 4px; }
+.sys label { display: grid; grid-template-columns: auto 12px 1fr auto; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer; }
+.sys .sw { width: 12px; height: 12px; border-radius: 2px; background: var(--sw); }
+.sys .n { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.parts { overflow: auto; min-height: 0; }
+.parts input { width: 100%; font: 13px var(--body); padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--ink); margin-bottom: 6px; }
+.parts ul { list-style: none; margin: 0; padding: 0; }
+.parts li { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; padding: 3px 4px; border-radius: 3px; font-size: 13px; cursor: pointer; }
+.parts li:hover, .parts li.on { background: var(--accent-soft); }
+.parts li .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sw); }
+.parts li .g { font: 11px var(--mono); color: var(--muted); }
+.pick dl { margin: 0; display: grid; grid-template-columns: 70px 1fr; gap: 3px 10px; font-size: 13px; }
+.pick dt { font: 600 11px/1.5 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.pick dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.pick dd.mono { font: 12px/1.5 var(--mono); }
+.st { font: 600 10.5px/1 var(--mono); padding: 3px 6px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 900px) { .app { grid-template-columns: 1fr; grid-template-rows: auto minmax(320px, 55vh) auto auto; grid-template-areas: "head" "stage" "bar" "side"; height: auto; } .side { grid-template-rows: auto auto auto; } .parts { max-height: 260px; } .views { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="app">
+  <header>
+    <h1>Nox Ground Unit 3D <small id="sub">loading scene</small></h1>
+    <div class="views" role="group" aria-label="Views">
+      <button id="v-iso">iso</button><button id="v-front">front</button><button id="v-side">side</button><button id="v-top">top</button><button id="v-fit">fit</button>
+    </div>
+  </header>
+  <div class="stage" id="stage"><canvas id="c"></canvas><div class="hint">drag: orbit · right / two fingers: pan · wheel / pinch: zoom · click: pick</div><div class="loading" id="loading">loading the real meshes</div></div>
+  <div class="bar">
+    <div class="row"><label for="t">swap cycle</label><input type="range" id="t" min="0" max="22" step="0.05" value="0"><span class="val" id="tv">0.00 s</span></div>
+    <div class="row"><label for="ex">explode</label><input type="range" id="ex" min="0" max="1" step="0.01" value="0"><span class="val" id="exv">0 %</span></div>
+    <div class="row"><label for="cut">section</label><input type="range" id="cut" min="0" max="1" step="0.005" value="1"><span class="val"><select id="cutax" style="font: 12px var(--mono); background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 3px"><option value="none">off</option><option value="x">X</option><option value="y">Y</option><option value="z">Z</option></select></span></div>
+    <div class="row"><label>play</label><div><button id="play">play cycle</button> <button id="reset">park</button></div><span class="val" id="fps"></span></div>
+  </div>
+  <aside class="side">
+    <section class="card"><h2>Systems</h2><div class="sys" id="sys"></div></section>
+    <section class="card pick" id="pick"><h2>Picked part</h2><p style="margin: 0; color: var(--muted); font-size: 13px">Click a part in the scene or in the list.</p></section>
+    <section class="card parts"><h2>Parts <span id="np" style="font-weight: 400"></span></h2><input id="q" type="search" placeholder="filter by name" aria-label="filter parts"><ul id="list"></ul></section>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const SYS = {
+  structure: { label: "Structure v2 cut (PR 113, unmerged)", on: true, opacity: 1 },
+  arm: { label: "Swap arm v7", on: true, opacity: 1 },
+  latch: { label: "Battery latch: receivers + cartridges", on: true, opacity: 1 },
+  electronics: { label: "Electronics (boxes, placement v1)", on: true, opacity: 1 },
+  enclosure: { label: "Clear sheets", on: true, opacity: 0.1 },
+  reserved: { label: "Reserved top slot (landing, design center)", on: true, opacity: 0.16 },
+  envelopes: { label: "Arm envelopes and keep-outs", on: false, opacity: 0.25 },
+};
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $ = (id) => document.getElementById(id);
+
+// ---------- renderer, scene, camera
+const canvas = $("c"), stage = $("stage");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.localClippingEnabled = true;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(32, 1, 5, 20000);
+const root = new THREE.Group(); scene.add(root);
+// W frame: X across, Y along the axle, Z up. three.js is Y up: rotate the root so W Z points up on screen.
+root.rotation.x = -Math.PI / 2;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x667788, 0.9));
+const key = new THREE.DirectionalLight(0xffffff, 0.8); key.position.set(600, 900, 700); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.35); fill.position.set(-700, 300, -500); scene.add(fill);
+const grid = new THREE.GridHelper(1600, 32, 0x888888, 0x888888); grid.material.transparent = true; grid.material.opacity = 0.25; scene.add(grid);
+
+// ---------- orbit controls (own, small)
+const ctl = { target: new THREE.Vector3(0, 0, 0), theta: Math.PI - 0.85, phi: 1.05, dist: 1500 };
+function applyCam() {
+  const s = Math.sin(ctl.phi); camera.position.set(ctl.target.x + ctl.dist * s * Math.sin(ctl.theta), ctl.target.y + ctl.dist * Math.cos(ctl.phi), ctl.target.z + ctl.dist * s * Math.cos(ctl.theta));
+  camera.lookAt(ctl.target);
+}
+let drag = null, pinch = null;
+canvas.addEventListener("pointerdown", (e) => { canvas.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, b: e.button, moved: 0, id: e.pointerId, pts: {} }; drag.pts[e.pointerId] = [e.clientX, e.clientY]; });
+canvas.addEventListener("pointermove", (e) => {
+  if (!drag) return; drag.pts[e.pointerId] = [e.clientX, e.clientY]; const ids = Object.keys(drag.pts);
+  if (ids.length >= 2) { const a = drag.pts[ids[0]], b = drag.pts[ids[1]]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); const cx = (a[0] + b[0]) / 2, cy = (a[1] + b[1]) / 2;
+    if (pinch) { ctl.dist *= pinch.d / d; pan(cx - pinch.x, cy - pinch.y); } pinch = { d, x: cx, y: cy }; applyCam(); return; }
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY; drag.moved += Math.abs(dx) + Math.abs(dy);
+  if (drag.b === 2 || drag.b === 1 || e.shiftKey) pan(dx, dy); else { ctl.theta -= dx * 0.006; ctl.phi = Math.min(Math.PI - 0.05, Math.max(0.05, ctl.phi - dy * 0.006)); }
+  applyCam();
+});
+function pan(dx, dy) { const v = new THREE.Vector3(), u = new THREE.Vector3(); camera.matrix.extractBasis(u, v, new THREE.Vector3()); const k = ctl.dist * 0.0012; ctl.target.addScaledVector(u, -dx * k).addScaledVector(v, dy * k); }
+canvas.addEventListener("pointerup", (e) => { if (drag && drag.moved < 4 && Object.keys(drag.pts).length === 1) pickAt(e); if (drag) delete drag.pts[e.pointerId]; if (!drag || !Object.keys(drag.pts).length) { drag = null; pinch = null; } });
+canvas.addEventListener("pointercancel", () => { drag = null; pinch = null; });
+canvas.addEventListener("wheel", (e) => { e.preventDefault(); ctl.dist *= Math.exp(e.deltaY * 0.0012); ctl.dist = Math.min(12000, Math.max(80, ctl.dist)); applyCam(); }, { passive: false });
+canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+function view(which) { const b = { iso: [Math.PI - 0.85, 1.05], front: [Math.PI, 1.45], side: [Math.PI / 2, 1.45], top: [Math.PI, 0.06] }[which]; ctl.theta = b[0]; ctl.phi = b[1]; applyCam(); }
+function fit() { const box = new THREE.Box3().setFromObject(root); if (box.isEmpty()) return; const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3()).length(); ctl.target.copy(c); ctl.dist = s * 1.1; applyCam(); }
+for (const v of ["iso", "front", "side", "top"]) $("v-" + v).onclick = () => view(v);
+$("v-fit").onclick = fit;
+
+// ---------- resize + render loop
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(stage); resize();
+let playing = false, last = performance.now(), frames = 0, fpsT = last;
+function loop(now) {
+  requestAnimationFrame(loop);
+  if (playing) { const t = (+$("t").value + (now - last) / 1000) % (META ? META.t_end : 22); $("t").value = t.toFixed(2); setTime(t); }
+  last = now; renderer.render(scene, camera);
+  frames++; if (now - fpsT > 1000) { $("fps").textContent = frames + " fps"; frames = 0; fpsT = now; }
+}
+requestAnimationFrame(loop);
+
+// ---------- load the scene
+let META = null, BIN = null; const PARTS = []; const byName = {};
+const colorOf = (sys) => new THREE.Color(css("--c-" + sys) || "#888888");
+async function load() {
+  const [mj, b64] = await Promise.all([fetch("scene.json").then(r => r.json()), fetch("scene.b64.txt").then(r => r.text())]);
+  const bin = atob(b64.trim()); const mb = new ArrayBuffer(bin.length); const u8 = new Uint8Array(mb); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  META = mj; BIN = mb; $("t").max = META.t_end;
+  const counts = {};
+  for (const p of META.parts) {
+    const m = p.mesh; const q = new Uint16Array(BIN, m.off_v, m.nV * 3); const pos = new Float32Array(m.nV * 3);
+    for (let i = 0; i < m.nV; i++) for (let k = 0; k < 3; k++) pos[i * 3 + k] = m.origin[k] + q[i * 3 + k] * m.scale;
+    const idx = m.idx_bytes === 2 ? new Uint16Array(BIN, m.off_i, m.nF * 3) : new Uint32Array(BIN, m.off_i, m.nF * 3);
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g.setIndex(new THREE.BufferAttribute(idx, 1)); g.computeVertexNormals(); g.computeBoundingBox();
+    const S = SYS[p.system] || SYS.structure;
+    const mat = new THREE.MeshStandardMaterial({ color: colorOf(p.system), flatShading: p.system !== "arm", metalness: 0.05, roughness: 0.75, transparent: S.opacity < 1, opacity: S.opacity, side: THREE.DoubleSide, depthWrite: S.opacity >= 1 });
+    if (p.system === "reserved") { mat.wireframe = false; }
+    const mesh = new THREE.Mesh(g, mat); mesh.userData = p; mesh.visible = S.on;
+    mesh.matrixAutoUpdate = false; setMatrix(mesh, p.pose); root.add(mesh);
+    const lc = g.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(mesh.matrix);
+    PARTS.push({ p, mesh, base: mesh.matrix.clone(), center: lc }); byName[p.name] = PARTS[PARTS.length - 1];
+    counts[p.system] = (counts[p.system] || 0) + 1;
+  }
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(418, 409, 470)), new THREE.LineBasicMaterial({ color: css("--muted"), transparent: true, opacity: 0.5 }));
+  edges.position.set(0, (337 - 66) / 2, (234 - 236) / 2); root.add(edges);
+  grid.position.y = -236;
+  $("loading").hidden = true; $("sub").textContent = `${META.parts.length} parts · W frame, mm · ${META.n_frames} frames of the ${META.t_end} s cycle`;
+  buildPanel(counts); fit(); view("iso"); setTime(0);
+}
+function setMatrix(mesh, a) { mesh.matrix.set(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], 0, 0, 0, 1); mesh.matrixWorldNeedsUpdate = true; }
+
+// ---------- cycle time: slerp between stored frames
+const _m1 = new THREE.Matrix4(), _m2 = new THREE.Matrix4(), _p1 = new THREE.Vector3(), _p2 = new THREE.Vector3(), _q1 = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _s = new THREE.Vector3(1, 1, 1);
+function frameMatrix(fr, i, out) { const a = new Float32Array(BIN, fr.off + i * 48, 12); out.set(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], 0, 0, 0, 1); return out; }
+function setTime(t) {
+  if (!META) return; $("tv").textContent = t.toFixed(2) + " s";
+  const f = t * META.fps, i0 = Math.min(META.n_frames - 1, Math.floor(f)), i1 = Math.min(META.n_frames - 1, i0 + 1), u = f - i0;
+  for (const P of PARTS) {
+    const fr = P.p.frames; if (!fr) continue;
+    frameMatrix(fr, i0, _m1); frameMatrix(fr, i1, _m2);
+    _m1.decompose(_p1, _q1, _s); _m2.decompose(_p2, _q2, _s); _p1.lerp(_p2, u); _q1.slerp(_q2, u);
+    P.base.compose(_p1, _q1, _s.set(1, 1, 1)); P.mesh.matrix.copy(P.base); applyExplode(P);
+  }
+}
+$("t").addEventListener("input", (e) => { playing = false; $("play").textContent = "play cycle"; setTime(+e.target.value); });
+$("play").onclick = () => { playing = !playing; $("play").textContent = playing ? "pause" : "play cycle"; last = performance.now(); };
+$("reset").onclick = () => { playing = false; $("play").textContent = "play cycle"; $("t").value = 0; setTime(0); };
+
+// ---------- explode: each part slides away from the box centre by its offset x factor
+const CENTRE = new THREE.Vector3(0, 135, 0); let EX = 0; const _d = new THREE.Vector3(), _t = new THREE.Matrix4();
+function applyExplode(P) {
+  if (EX <= 0) { P.mesh.matrix.copy(P.base); P.mesh.matrixWorldNeedsUpdate = true; return; }
+  const c = P.p.frames ? new THREE.Vector3().setFromMatrixPosition(P.base) : P.center;
+  _d.copy(c).sub(CENTRE); _t.makeTranslation(_d.x * EX * 0.9, _d.y * EX * 0.9, _d.z * EX * 0.9); P.mesh.matrix.multiplyMatrices(_t, P.base); P.mesh.matrixWorldNeedsUpdate = true;
+}
+$("ex").addEventListener("input", (e) => { EX = +e.target.value; $("exv").textContent = Math.round(EX * 100) + " %"; for (const P of PARTS) applyExplode(P); });
+
+// ---------- section plane
+const planes = { x: new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0), y: new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), z: new THREE.Plane(new THREE.Vector3(0, -1, 0), 0) };
+// in three.js space after the root rotation: W X -> x, W Y -> -z, W Z -> y
+const RANGE = { x: [-215, 215], y: [-75, 345], z: [-240, 240] };
+function setCut() {
+  const ax = $("cutax").value, u = +$("cut").value;
+  for (const P of PARTS) P.mesh.material.clippingPlanes = ax === "none" ? [] : [planes[ax]];
+  if (ax === "none") return;
+  const [a, b] = RANGE[ax], v = a + (b - a) * u;
+  if (ax === "x") planes.x.constant = v; else if (ax === "y") planes.y.constant = v; else planes.z.constant = v;
+  $("cut").previousElementSibling.textContent = "section " + ax.toUpperCase();
+}
+$("cut").addEventListener("input", setCut); $("cutax").addEventListener("change", setCut);
+
+// ---------- panel: systems, parts, pick
+function buildPanel(counts) {
+  const sys = $("sys"); sys.innerHTML = "";
+  for (const [k, S] of Object.entries(SYS)) {
+    const mass = PARTS.filter(P => P.p.system === k && P.p.mass_g).reduce((s, P) => s + P.p.mass_g, 0);
+    const l = document.createElement("label"); l.innerHTML = `<input type="checkbox" id="sys-${k}" ${S.on ? "checked" : ""}><span class="sw" style="--sw: var(--c-${k})"></span><span>${S.label}</span><span class="n">${counts[k] || 0}${mass ? " · " + (mass / 1000).toFixed(2) + " kg" : ""}</span>`;
+    l.querySelector("input").addEventListener("change", (e) => { S.on = e.target.checked; for (const P of PARTS) if (P.p.system === k) P.mesh.visible = S.on; renderList(); });
+    sys.appendChild(l);
+  }
+  renderList(); $("q").addEventListener("input", renderList);
+}
+function renderList() {
+  const q = $("q").value.toLowerCase(); const ul = $("list"); ul.innerHTML = ""; let n = 0;
+  for (const P of PARTS) {
+    if (!SYS[P.p.system].on || (q && !P.p.name.toLowerCase().includes(q))) continue; n++;
+    const li = document.createElement("li"); li.innerHTML = `<span class="dot" style="--sw: var(--c-${P.p.system})"></span><span>${P.p.name}</span><span class="g">${P.p.mass_g ? P.p.mass_g + " g" : ""}</span>`;
+    li.onclick = () => pick(P); li.dataset.name = P.p.name; ul.appendChild(li);
+  }
+  $("np").textContent = "(" + n + ")";
+}
+const ray = new THREE.Raycaster(); let picked = null;
+function pickAt(e) {
+  const r = canvas.getBoundingClientRect(); const v = new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(v, camera); const hits = ray.intersectObjects(PARTS.filter(P => P.mesh.visible && P.p.system !== "reserved" && P.p.system !== "enclosure").map(P => P.mesh), false);
+  if (hits.length) pick(byName[hits[0].object.userData.name]);
+}
+function pick(P) {
+  if (picked) picked.mesh.material.emissive.setHex(0);
+  picked = P; P.mesh.material.emissive.set(css("--accent")); P.mesh.material.emissiveIntensity = 0.35;
+  for (const li of $("list").children) li.classList.toggle("on", li.dataset.name === P.p.name);
+  const p = P.p; const rows = [["system", SYS[p.system].label], ["version", p.version || ""], ["owner", p.owner || ""], ["material", p.material || ""], ["mass", p.mass_g ? p.mass_g + " g (" + (p.tag || "") + ")" : "n/a"], ["file", p.file || ""], ["moves", p.frames ? "yes, in the cycle" : "fixed"], ["note", p.note || ""]];
+  $("pick").innerHTML = `<h2>Picked part</h2><p style="margin: 0 0 8px; font: 600 15px var(--display)">${p.name}</p><dl>` + rows.filter(r => r[1]).map(r => `<dt>${r[0]}</dt><dd class="${r[0] === "file" ? "mono" : ""}">${r[1]}</dd>`).join("") + "</dl>";
+}
+load().catch(e => { $("loading").textContent = "could not load the scene: " + e.message; });
+if (window.matchMedia) { const mq = window.matchMedia("(prefers-color-scheme: dark)"); const recolor = () => { for (const P of PARTS) P.mesh.material.color.copy(colorOf(P.p.system)); }; if (mq.addEventListener) mq.addEventListener("change", recolor); new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); }
+</script>
