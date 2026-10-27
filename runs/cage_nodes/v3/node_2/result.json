@@ -1,0 +1,446 @@
+{
+ "name": "cage_node_2",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   3844.1
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.993,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 3620.4,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": -0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "tube to 1 pull",
+    "cls": "misuse",
+    "inlayer": 0.04,
+    "across": 0.037,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 1 push",
+    "cls": "misuse",
+    "inlayer": 0.04,
+    "across": 0.033,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 1 side a",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.001,
+    "at": [
+     160.4,
+     -2.2,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 1 side b",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.001,
+    "at": [
+     160.4,
+     -2.2,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 3 pull",
+    "cls": "misuse",
+    "inlayer": 0.04,
+    "across": 0.037,
+    "at": [
+     158.9,
+     0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 3 push",
+    "cls": "misuse",
+    "inlayer": 0.04,
+    "across": 0.032,
+    "at": [
+     158.9,
+     0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 3 side a",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.001,
+    "at": [
+     160.4,
+     2.2,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 3 side b",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.001,
+    "at": [
+     160.4,
+     2.2,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 18 pull",
+    "cls": "misuse",
+    "inlayer": 0.017,
+    "across": 0.016,
+    "at": [
+     163.4,
+     0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 18 push",
+    "cls": "misuse",
+    "inlayer": 0.017,
+    "across": 0.014,
+    "at": [
+     163.4,
+     0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 18 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     163.4,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 18 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     163.4,
+     0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 19 pull",
+    "cls": "misuse",
+    "inlayer": 0.017,
+    "across": 0.016,
+    "at": [
+     163.4,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 19 push",
+    "cls": "misuse",
+    "inlayer": 0.017,
+    "across": 0.014,
+    "at": [
+     163.4,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 19 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     163.4,
+     0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "tube to 19 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     163.4,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 1.1 pull",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 1.1 push",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 1.1 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 1.1 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 4.1 pull",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 4.1 push",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 4.1 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   },
+   {
+    "case": "spoke 4.1 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     158.9,
+     -0.8,
+     -62.2
+    ]
+   }
+  ],
+  "worst": 0.04,
+  "worst_case": "tube to 1 pull",
+  "worst_at": [
+   158.9,
+   -0.8,
+   -62.2
+  ]
+ },
+ "mass_g": 11.33,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 8924.3,
+ "drawn_g": 11.13,
+ "stl": "cage_node_2.stl",
+ "view_stl": "cage_node_2_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 4.29504458275024,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.014310374126843578,
+  "nd": 24846,
+  "sym_axes": [
+   1
+  ],
+  "n_real": 24,
+  "n_ties": 0,
+  "backend": "direct",
+  "iterations": 140,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "node_2",
+  "h": 1.5,
+  "shape": [
+   40,
+   40,
+   40
+  ],
+  "origin": [
+   131.159,
+   -30.0,
+   -87.0
+  ],
+  "cells": 64000,
+  "design": 24846,
+  "drawn": 2610,
+  "cases": [
+   "tube to 1 pull",
+   "tube to 1 push",
+   "tube to 1 side a",
+   "tube to 1 side b",
+   "tube to 3 pull",
+   "tube to 3 push",
+   "tube to 3 side a",
+   "tube to 3 side b",
+   "tube to 18 pull",
+   "tube to 18 push",
+   "tube to 18 side a",
+   "tube to 18 side b",
+   "tube to 19 pull",
+   "tube to 19 push",
+   "tube to 19 side a",
+   "tube to 19 side b",
+   "spoke 1.1 pull",
+   "spoke 1.1 push",
+   "spoke 1.1 side a",
+   "spoke 1.1 side b",
+   "spoke 4.1 pull",
+   "spoke 4.1 push",
+   "spoke 4.1 side a",
+   "spoke 4.1 side b"
+  ],
+  "supports": [
+   "hold 0",
+   "hold 1",
+   "hold 2",
+   "hold 3",
+   "hold 4",
+   "hold 5"
+  ]
+ },
+ "build_s": 80.7,
+ "layout_s": 5594,
+ "peak_gb": 1.458112,
+ "gen_cm3": 1.2,
+ "h": 1.5,
+ "total_s": 5675
+}

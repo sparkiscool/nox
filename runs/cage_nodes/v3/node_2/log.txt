@@ -477,3 +477,47 @@ it 125 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000
 it 125 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 33.5s
 it 126 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 37.5s
 it 126 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 37.5s
+it 127 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.3s
+it 127 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.3s
+it 128 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.1s
+it 128 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.1s
+it 129 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 39.0s
+it 129 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 39.0s
+it 130 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.0s
+it 130 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.0s
+it 131 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 34.5s
+it 131 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 34.5s
+it 132 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 37.0s
+it 132 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 37.0s
+it 133 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 36.9s
+it 133 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 36.9s
+it 134 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 40.0s
+it 134 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 40.0s
+it 135 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 41.2s
+it 135 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 41.2s
+it 136 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.9s
+it 136 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 38.9s
+it 137 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 40.8s
+it 137 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 40.8s
+it 138 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 35.6s
+it 138 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 35.6s
+it 139 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 34.4s
+it 139 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 34.4s
+it 140 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 40.3s
+it 140 beta   32 J  10.0000 vol 0.0017 (dil 0.0477 g +0.111) grey  0.2% ch 0.000 worst tube to 1 side a 116 40.3s
+layout: stopped (grey) at it 140, beta 32, 5333 s
+layout: stopped (grey) at it 140, beta 32, 5333 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 5594 s, peak 1.458112 GB
+layout done: 5594 s, peak 1.458112 GB
+build: organic surface at pitch 0.300 mm (x5), skins 8.77 cm3, field 10.48 cm3, in env - cuts 8.95 cm3 (layout 8.95, level offset -0.721 mm), fillet 2.5 mm, rims 1.0 mm, mesh 194,396 faces, 46 s
+build: organic surface at pitch 0.300 mm (x5), skins 8.77 cm3, field 10.48 cm3, in env - cuts 8.95 cm3 (layout 8.95, level offset -0.721 mm), fillet 2.5 mm, rims 1.0 mm, mesh 194,396 faces, 46 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [3844.1], "necks": [], "drawn_not_in_main": [["0.0", 0.993, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [3844.1], "necks": [], "drawn_not_in_main": [["0.0", 0.993, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 3620.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 3620.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.04 in 'tube to 1 pull' at [158.9, -0.8, -62.2]
+strength: worst index 0.04 in 'tube to 1 pull' at [158.9, -0.8, -62.2]
+RESULT {"name": "cage_node_2", "solid_ok": false, "mass_g": 11.33, "worst": 0.04, "function_ok": true, "bodies": 1}
+RESULT {"name": "cage_node_2", "solid_ok": false, "mass_g": 11.33, "worst": 0.04, "function_ok": true, "bodies": 1}
