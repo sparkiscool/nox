@@ -265,6 +265,10 @@ class Layout:
             design &= ~add
             log(f"layout: collar {s.collar_mm} mm round the drawn bodies: +{add.sum() * h ** 3 / 1000:.2f} cm3 passive")
         self.solid, self.void, self.design = solid, void, design
+        self.stiff = getattr(part, "stiff", np.ones(self.nel))   # inserts (Part.insert): solid at their own modulus
+        ins = getattr(part, "insert_cells", np.zeros(self.nel, bool))
+        self.has_inserts = bool(ins.any())
+        self.stiff_tie = np.where(ins, s.emin, self.stiff)        # tie cases: inserts absent (bonded in after printing)
         self.nd = int(design.sum())
         if self.nd == 0:
             raise ValueError("layout: no design cells")
@@ -360,7 +364,10 @@ class Layout:
                 core |= sol3 & near
             self.anchor = core.ravel()
         self.skin = self.solid & ~self.anchor
-        lab, nb = ndi.label(sol3, S26)
+        # drawn bodies for the ties: inserts (Part.insert) are bonded in after printing, so they never join two drawn
+        # bodies into one (a rod would chain a motor pad to a socket the PETG reaches, and the pad's ties would pass)
+        ins3 = getattr(part, "insert_cells", np.zeros(self.nel, bool)).reshape(shape)
+        lab, nb = ndi.label(sol3 & ~ins3, S26)
         self.body_lab, self.nbody = lab.ravel(), nb
         if s.erosion == "anchored":
             self.log(f"layout: {nb} drawn bodies; anchored cores {int(self.anchor.sum()):,} cells, skins "
@@ -626,7 +633,7 @@ class Layout:
         """compliance of every case. Gate ties run on rho_g (the gate realization) when it is given, the rest on
         rho_e (a held thin body stays whole there, so the real cases and the ordinary ties keep it attached)."""
         s = self.s
-        E = s.emin + (1.0 - s.emin) * rho_e ** s.penal
+        E = (s.emin + (1.0 - s.emin) * rho_e ** s.penal) * self.stiff
         g = self.fe_solver.grid
         cases = self.cases
         F = np.zeros((self.part.ndof, len(cases)))
@@ -636,13 +643,20 @@ class Layout:
                 r = (rho_e[:, None] * c.fe[None, :])[None]
                 F[:, q] += g.to_flat(g.scatter(r))[:, 0]
         gate = np.array([c.support == "_gate" for c in cases])
-        if rho_g is None or not gate.any():
+        tie = np.array([c.tie for c in cases]) & self.has_inserts
+        if (rho_g is None or not gate.any()) and not tie.any():
             U = self.fe_solver.solve(E, F, [c.support for c in cases], keys=[c.name for c in cases])
         else:
+            # gate ties on the gate realization; with inserts, every tie case without them: the printed part must hold
+            # its drawn bodies together by itself (an insert is bonded in after printing)
             U = np.zeros_like(F)
-            Eg = s.emin + (1.0 - s.emin) * rho_g ** s.penal
-            for m, EE in ((~gate, E), (gate, Eg)):
+            rg = rho_e if (rho_g is None or not gate.any()) else rho_g
+            Eg = (s.emin + (1.0 - s.emin) * rg ** s.penal) * self.stiff_tie
+            Et = (s.emin + (1.0 - s.emin) * rho_e ** s.penal) * self.stiff_tie
+            for m, EE in ((~gate & ~tie, E), (~gate & tie, Et), (gate, Eg)):
                 idx = np.where(m)[0]
+                if len(idx) == 0:
+                    continue
                 U[:, idx] = self.fe_solver.solve(EE, F[:, idx], [cases[q].support for q in idx],
                                                  keys=[cases[q].name for q in idx])
         comp = (F * U).sum(0)
@@ -666,8 +680,9 @@ class Layout:
         s = self.s
         g = np.zeros(self.nel)
         gg = np.zeros(self.nel) if rho_g is not None else None
-        dE = s.penal * np.maximum(rho_e, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin)
-        dEg = None if rho_g is None else s.penal * np.maximum(rho_g, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin)
+        dE = s.penal * np.maximum(rho_e, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin) * self.stiff
+        dEt = dE if not self.has_inserts else dE / self.stiff * self.stiff_tie
+        dEg = None if rho_g is None else s.penal * np.maximum(rho_g, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin) * self.stiff_tie
         CH = 4
         for a in range(0, len(self.cases), CH):
             sl = list(range(a, min(a + CH, len(self.cases))))
@@ -677,7 +692,7 @@ class Layout:
                 if dJdc[q] == 0.0:
                     continue
                 on_g = gg is not None and self.cases[q].support == "_gate"
-                d = -(dEg if on_g else dE) * en[j]
+                d = -(dEg if on_g else (dEt if self.cases[q].tie else dE)) * en[j]
                 if fe[j] is not None:
                     d = d + 2.0 * fo[j]
                 if on_g:
