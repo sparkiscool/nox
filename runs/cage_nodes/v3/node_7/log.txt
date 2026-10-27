@@ -223,3 +223,49 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (48, 48, 48) = 110,592 elements, 105,909 active dofs; backend direct (direct estimate 0.9 GB, budget 11.8 GB)
 fem: grid (48, 48, 48) = 110,592 elements, 105,909 active dofs; backend direct (direct estimate 0.9 GB, budget 11.8 GB)
+=== cage_node_7: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_7: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_7: grid (48, 48, 48) h 1.5 = 110,592 cells; design 27,426 (92.6 cm3), drawn 3,479, void 79,687
+  support hold 0: 3045 cells, 5654 nodes
+  support hold 1: 3045 cells, 5654 nodes
+  support hold 2: 2985 cells, 5457 nodes
+  support hold 3: 2984 cells, 5455 nodes
+  support hold 4: 2965 cells, 5477 nodes
+  support hold 5: 3022 cells, 5551 nodes
+  support hold 6: 3022 cells, 5551 nodes
+  support hold 7: 2969 cells, 5404 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_7: grid (48, 48, 48) h 1.5 = 110,592 cells; design 27,426 (92.6 cm3), drawn 3,479, void 79,687
+  support hold 0: 3045 cells, 5654 nodes
+  support hold 1: 3045 cells, 5654 nodes
+  support hold 2: 2985 cells, 5457 nodes
+  support hold 3: 2984 cells, 5455 nodes
+  support hold 4: 2965 cells, 5477 nodes
+  support hold 5: 3022 cells, 5551 nodes
+  support hold 6: 3022 cells, 5551 nodes
+  support hold 7: 2969 cells, 5404 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (11.74 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (11.74 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.013 of 27,426 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.013 of 27,426 design cells
+layout: WARNING nearly mirrored in x (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.5% of passive cells differ): no symmetry
+layout: 1 drawn bodies (3,479 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (3,479 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 32 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (48, 48, 48) = 110,592 elements, 105,909 active dofs; backend direct (direct estimate 0.9 GB, budget 11.8 GB)
+fem: grid (48, 48, 48) = 110,592 elements, 105,909 active dofs; backend direct (direct estimate 0.9 GB, budget 11.8 GB)
+layout: resumed from runs/cage_nodes/v3/node_7/ck.npz at it 30, beta 4
+layout: resumed from runs/cage_nodes/v3/node_7/ck.npz at it 30, beta 4
+it  31 beta    4 J  10.0000 vol 0.0205 (dil 0.0759 g +0.952) grey  6.1% ch 0.000 worst core tie front.1 side a 453 33.2s
+it  31 beta    4 J  10.0000 vol 0.0205 (dil 0.0759 g +0.952) grey  6.1% ch 0.000 worst core tie front.1 side a 453 33.2s
+it  32 beta    4 J  10.0000 vol 0.0205 (dil 0.0759 g +0.952) grey  6.1% ch 0.000 worst core tie front.1 side a 453 30.5s
+it  32 beta    4 J  10.0000 vol 0.0205 (dil 0.0759 g +0.952) grey  6.1% ch 0.000 worst core tie front.1 side a 453 30.5s
