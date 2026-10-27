@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): arm session ends in (spokes from the arm nodes, L2 brace roots in the front beam) and core v2 (keels 5 into the hub deck, hub block off the head); frame: rear arm node 2317 N, front 1074, braces 897 (F, `arm_loads.json`), the arm root takes it (told); `cage_node.py recut` makes saved sockets 6.2 / 3.2 (C) without a rerun (Spark).
 - 27 Oct (Scout v3, Spark): firmware check: the AM32 ESC can reverse; PX4 has no ESC passthrough (why the app failed) and no turtle mode; `dshot reverse/save` sets direction without soldering; ArduPilot Copter has Turtle mode on this board. Choice: ArduPilot, or PX4 + flip arm. `runs/scout_selfright/v1/summary.md`
 - 27 Oct (Scout v3, Spark question): one-way props cannot right the Scout (upside down they press it down, on its side they roll it onto its back); the v11 cage rests in 6 poses. Ways: turtle mode (reverse ESC + ArduPilot or a PX4 add-on), a flip arm (~15-20 g), or a self-righting cage (sides ±170). `runs/scout_selfright/v1/`
 - 27 Oct (Scout v3): frame model v1 (`nox/scout/v3/cage_frame.py`, `runs/scout_frame/v1/`): the all-3.0 cage fails the 35 g crash (31 of 50 buckle, saddle ties 2800 MPa) and the camera mode is 25 Hz; 6/4 tube on 38 members (+73 g) passes all, 79 Hz. Spark decides vs the 3 mm Scout clause; nodes wait on it.
