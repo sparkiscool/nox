@@ -2,7 +2,7 @@
 """The mechanical half of the review agent's PR mode (.claude/agents/review.md), so the opus reviewer only judges design.
 
 python3 tools/review_precheck.py [--base origin/main] [--body <pr body file>]
-Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11):
+Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11, 12, 13, 14):
   1 solid    every print/ file the PR adds or changes is named with a solid_check PASS in a summary.md
   2 state    a design PR changes nox/current-parts.md and adds a new top line to nox/log.md
   6 preview  every print/ file has a preview PNG in that run folder, named in its summary.md
@@ -10,6 +10,8 @@ Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11):
   10 visual  a design PR links an artifact (claude.ai/.../artifact/...) in a changed summary.md or the PR body
   11 carbon  a Scout / Overseer / cage / mount PR (nox/scout, nox/overseer, runs or print scout_ overseer_ cage motor_mount) lists carbon (rod list with any non-3.0 stock sizes)
   12 parallel the runs the PR adds started within 30 min of each other (run_bg.txt start lines), or the later run's summary.md says `Waited for:`
+  13 scout rods  a PR that changes the Scout assembly: every cage rod 3.0 (shell and links) and at most 62 rods in all (cage_shell total_rods; Spark 27 Oct)
+  14 estimate  every topo run the PR adds that started after 2026-10-27T08:00Z (run_bg.txt) has estimate.json from tools/run_estimate.py (Spark 27 Oct)
 Prints PASS / FAIL / skip per check; exit 1 on any FAIL. Reads only.
 """
 import argparse, pathlib, re, subprocess, sys
@@ -86,4 +88,19 @@ if len(starts) >= 2:
 else:
     out("12 parallel", None, "fewer than 2 runs with a start time in the PR")
 
+if "nox/scout/v3/scout.assembly.json" in changed:                     # Scout cage (Spark 27 Oct): every rod 3 mm, about half the rods
+    import json as _j
+    cs_ = _j.load(open(ROOT / "nox/scout/v3/scout.assembly.json")).get("cage_shell") or {}
+    tot = int(cs_.get("total_rods", 0))
+    ok = abs(float(cs_.get("rod_r_mm", 0)) - 1.5) < 1e-6 and abs(float(cs_.get("link_r_mm", 0)) - 1.5) < 1e-6 and 0 < tot <= 62
+    out("13 scout rods", ok, f"shell {len(cs_.get('rods', []))} + links {cs_.get('links')} = {tot} rods, r {cs_.get('rod_r_mm')} / {cs_.get('link_r_mm')}"
+        + ("" if ok else ": every Scout rod 3.0 (r 1.5) and at most 62 in all (half of cage v1's 123, Spark 27 Oct)"))
+RULE14 = _dt.datetime(2026, 10, 27, 8, 0)                             # Measure before quoting (Spark 27 Oct)
+topo_runs = [d for d, t in starts.items() if t >= RULE14 and "=== " in ((ROOT / d / "log.txt").read_text() if (ROOT / d / "log.txt").exists() else "")]
+if topo_runs:
+    miss = [d for d in topo_runs if not (ROOT / d / "estimate.json").exists()]
+    out("14 estimate", not miss, f"{len(topo_runs)} topo run(s) measured" if not miss else
+        f"{', '.join(miss)}: no estimate.json (tools/run_estimate.py before the run; CLAUDE.md Measure before quoting)")
+else:
+    out("14 estimate", None, "no topo run started after the rule in the PR")
 sys.exit(1 if False in res else 0)

@@ -75,8 +75,8 @@ Fly over textured floor, 0.5-1.5 m, good light: Stabilized, then Altitude, then 
 - **Must not change:** PX4 version matched to the Overseer; switches matched (mode 5, kill 8); nothing that needs resoldering without asking.
 - **Done when:** holds position within ~10 cm over a textured floor; kill and failsafe proven props off; parameter file saved.
 
-## Lights (proposed, not built)
-WS2812B status LEDs on the Overseer's colour code, plus a 1-3 W white headlight. LED control must be worked out for PX4 (the proposal assumed Betaflight).
+## Lights
+None (Spark 27 Oct: no lights on the Scout; the WS2812B + headlight proposal is dropped).
 
 ## Where things are
 Pocket, cartridge, underside, pack bar: PC `scout\cad\current` (README), work in `wip`. Cage: `scout\cage` (README), v8 in `wip\cage_v8`. Firmware: `firmware`; DFU files in `Scout-DFU`. Old cage STLs v3-v5: `v3`, `v4`, `v5` / `archive`.
