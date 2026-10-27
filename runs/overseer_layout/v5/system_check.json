@@ -269,7 +269,7 @@
    {
     "a": "cage shell tubes",
     "b": "spokes, ties, keels, braces, head struts",
-    "overlap_mm3": 8779.14,
+    "overlap_mm3": 8880.81,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -305,7 +305,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
-    "overlap_mm3": 518.77,
+    "overlap_mm3": 529.41,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -341,7 +341,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 2",
-    "overlap_mm3": 887.88,
+    "overlap_mm3": 887.91,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -350,7 +350,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 3",
-    "overlap_mm3": 887.88,
+    "overlap_mm3": 887.91,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -657,11 +657,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3213.25,
+  "mass_g": 3209.35,
   "cg": [
    66.3,
    -0.17,
-   18.86
+   18.72
   ],
   "parts": [
    {
@@ -688,11 +688,11 @@
    },
    {
     "name": "spokes, ties, keels, braces, head struts",
-    "mass_g": 160.52,
+    "mass_g": 156.62,
     "cg": [
-     113.56,
+     114.72,
      0.0,
-     22.63
+     19.75
     ],
     "tag": "C",
     "swap": false
@@ -986,21 +986,21 @@
   ],
   "tag": "E",
   "cg_ref": [
-   66.398,
+   66.397,
    0.0,
    82.0
   ],
   "cg_offset": [
    -0.1,
    -0.17,
-   -63.14
+   -63.28
   ],
-  "cg_offset_mm": 63.14
+  "cg_offset_mm": 63.28
  },
  "balance": {
   "applies": true,
   "ref": [
-   66.398,
+   66.397,
    0.0,
    82.0
   ],
@@ -1012,32 +1012,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3213.25,
+    "mass_g": 3209.35,
     "cg_offset": [
      -0.1,
      -0.17,
-     -63.14
+     -63.28
     ],
     "horizontal_mm": 0.2,
-    "axial_mm": -63.14,
+    "axial_mm": -63.28,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2410.92,
+    "mass_g": 2407.02,
     "cg_offset": [
-     31.95,
+     32.0,
      -0.23,
-     -47.13
+     -47.3
     ],
-    "horizontal_mm": 31.95,
-    "axial_mm": -47.13,
+    "horizontal_mm": 32.0,
+    "axial_mm": -47.3,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 31.95,
+  "worst_horizontal_mm": 32.0,
   "pass_": true
  },
  "probes": {
@@ -1705,7 +1705,7 @@
    0.0,
    10.0
   ],
-  "n_points": 644918
+  "n_points": 641507
  },
  "access": {
   "applies": true,
@@ -2131,16 +2131,16 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3213.25,
+  "mass_g": 3209.35,
   "part_budgets_g": {},
   "over_parts": [],
   "budget_g": 2200.0,
-  "pct": 146.1,
+  "pct": 145.9,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm\u00b3 (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3213 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.1], 31.9 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear",
+ "summary": "System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm\u00b3 (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3209 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.3], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear",
  "pass": true
 }

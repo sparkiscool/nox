@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): L2 brace roots on the hub deck's front tower between the plates (core v3 B: braces pull, keels push in one piece; the top-plate block put 0.8 kN on PETG keys in a 1.6 plate): lo (97, ±26, 22), hi (97, ±14, 32) (C); props 16.4, access 21/21, fit 0; head 166 Hz PETG (F on E), braces ~710 N a side. Head run v3.
 - 27 Oct (Overseer): brace tube ends forward of the top plate edge so the core block's bore wall clears the plate (core session): lo (57, ±26, 50), hi (53, ±14, 50) (C); props 13.3, access 21/21, block 1066 N a side (F); axis change < 0.1°, head v2 run kept.
 - 27 Oct (Overseer): L2 braces off the front arm beams onto a printed socket block on the top plate's front edge (arm session ask; BRACE_ROOT (52, ±26 lo / ±14 hi, z 50), C): props 13.2, access 21/21; head 198 Hz PETG (was 177), worst shell tube 1.68 (was 2.00), front arm loses ~0.9 kN, block 1063 N a side (F). Head run restarted.
 - 27 Oct (Scout electronics mount): v2 round 5 on v12: fit table 33/33, no allowances (C); sized on L (14 crash dirs): variant V8, mount 49.2 g E, crash worst 0.27 E; CG 0.56/1.49 at −5.0 C (main assembly, camera mount): PASS; system_check PASS; belly mount tail to x −31.0 (DEFAULT, alt: inserts in it). `runs/scout_electronics/v2/`
