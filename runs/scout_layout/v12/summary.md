@@ -70,7 +70,7 @@ System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera
 ## Mass (E)
 746 g (system_check, on the drawn 3.0 rods; the sized tubes add +74):
 - cage 132 (shell rods 67, nodes 39, saddle ties 8, tie saddle 17);
-- camera 10 + camera mount v1 21.8 + 2 collars 0.5 (M) = 32.3;
+- camera 10 (E) + camera mount v1 21.8 + 2 collars 0.5 (M) = 32.3 (M + E);
 - the electronics session's tail bay mount 49.2 and cables 6.3 (round 5 concept);
 - bought, latch set and wires 526.
 
