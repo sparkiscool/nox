@@ -252,3 +252,19 @@ it  50 beta   32 J   8.6283 vol 0.1015 (dil 0.2150 g -0.000) grey  1.0% ch 0.100
 it  50 beta   32 J   8.6283 vol 0.1015 (dil 0.2150 g -0.000) grey  1.0% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.82 64.2s
 it  51 beta   32 J   8.6182 vol 0.1015 (dil 0.2151 g +0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.81 64.8s
 it  51 beta   32 J   8.6182 vol 0.1015 (dil 0.2151 g +0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.81 64.8s
+it  52 beta   32 J   8.6139 vol 0.1015 (dil 0.2149 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.8 61.2s
+it  52 beta   32 J   8.6139 vol 0.1015 (dil 0.2149 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.8 61.2s
+it  53 beta   32 J   8.6076 vol 0.1016 (dil 0.2149 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.8 64.1s
+it  53 beta   32 J   8.6076 vol 0.1016 (dil 0.2149 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.8 64.1s
+it  54 beta   32 J   8.6023 vol 0.1016 (dil 0.2150 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.79 64.1s
+it  54 beta   32 J   8.6023 vol 0.1016 (dil 0.2150 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.79 64.1s
+it  55 beta   32 J   8.5977 vol 0.1017 (dil 0.2150 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.78 62.1s
+it  55 beta   32 J   8.5977 vol 0.1017 (dil 0.2150 g -0.000) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.78 62.1s
+it  56 beta   32 J   8.5937 vol 0.1017 (dil 0.2150 g +0.001) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.78 61.2s
+it  56 beta   32 J   8.5937 vol 0.1017 (dil 0.2150 g +0.001) grey  1.1% ch 0.100 worst cage crash 12 [-0.58, -0.58, 8.78 61.2s
+layout: stopped (grey) at it 56, beta 32, 3670 s
+layout: stopped (grey) at it 56, beta 32, 3670 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 3878 s, peak 5.55686 GB
+layout done: 3878 s, peak 5.55686 GB
