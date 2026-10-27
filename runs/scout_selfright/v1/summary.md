@@ -19,3 +19,14 @@ Ways out:
    - A roof peak alone only moves the stable pose to the side.
 
 Picture: https://claude.ai/artifact/VfUix53fmkUNJBcrhR1SD5 (`selfright.html`).
+
+## Firmware check (27 Oct, Spark: "when i tried in the app they couldent spin backwards so i had to resolder wires")
+- **The ESC can reverse.** The Scout's MicoAir743 AIO 35A runs AM32 (vendor build AM32_MICOAIR_743_AIO_F421 2.17; one listing says 2.12, so check what is flashed). It takes DShot300/600, bidirectional DShot (telemetry only) and the DShot direction commands.
+- **Why the app could not reverse it:** MicoAir's AM32 guide sets the ESC through the am32.ca configurator over the FC's USB. It notes that PX4 has no ESC passthrough, so with PX4 on the FC the configurator cannot reach the ESC.
+- **Without resoldering on PX4:** the MAVLink console's `dshot reverse -m <motor>` then `dshot save -m <motor>` sets a motor's direction for good. This is PX4's dshot driver (from memory, E; check on the bench).
+- **Turtle mode (reversing in flight to flip):**
+  - PX4 has none. A 2025 feature request on the PX4 forum went unanswered. PX4's own reversible output (DSHOT_3D_ENABLE with the ESC in 3D mode) changes the throttle range and is not a flip routine.
+  - ArduPilot Copter has Turtle mode, which needs DShot ESCs that take the reverse command; AM32 does.
+  - ArduPilot also runs on the MicoAir743 AIO and has optical-flow position hold.
+- **Choice for Spark:** move the Scout to ArduPilot for turtle mode (a firmware change and retune; PX4 flies it well now), or stay on PX4 and add the flip arm (~15 to 20 g). A custom PX4 turtle module is possible, but it is code nobody maintains.
+- Sources: micoair.com/docs/how-to-configure-and-update-am32-esc-on-micoair743-aio/, micoair.com/flightcontroller_micoair743_aio_35a/, ardupilot.org/copter/docs/turtle-mode.html, ardupilot.org/copter/docs/common-MicoAir743-AIO.html, discuss.px4.io/t/flip-after-crash-turtle-mode-feature-request/48112, docs.px4.io/main/en/config/motor_failure_recovery.

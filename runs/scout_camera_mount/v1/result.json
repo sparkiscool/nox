@@ -1,0 +1,916 @@
+{
+ "part": "scout_camera_mount",
+ "version": "v1",
+ "rod_od": 6.0,
+ "bore": 6.2,
+ "mass_mount_g": 21.75,
+ "mass_collar_g": 0.25,
+ "bounds": [
+  [
+   107.22,
+   -22.5,
+   6.4
+  ],
+  [
+   153.0,
+   22.5,
+   67.0
+  ]
+ ],
+ "snap": {
+  "t_f": 2.0,
+  "snap": 0.2,
+  "L": 9.0,
+  "k_finger_N_mm": 168.6,
+  "finger_root_deg": 22.5,
+  "finger_tip_deg": 115.4,
+  "install_N": 23.4,
+  "pop_N": 23.4,
+  "open_mm": 0.2,
+  "finger_sigma_MPa": 22.4,
+  "grip_rib_N": 20.5,
+  "slide_N": 11.1,
+  "mouth_mm": 5.6
+ },
+ "snap_scan": [
+  {
+   "t_f": 2.0,
+   "snap": 0.2,
+   "L": 8.0,
+   "k_finger_N_mm": 149.9,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 20.8,
+   "pop_N": 20.8,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 22.4,
+   "grip_rib_N": 18.2,
+   "slide_N": 9.9,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.2,
+   "L": 9.0,
+   "k_finger_N_mm": 168.6,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 23.4,
+   "pop_N": 23.4,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 22.4,
+   "grip_rib_N": 20.5,
+   "slide_N": 11.1,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.2,
+   "L": 10.0,
+   "k_finger_N_mm": 187.4,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 26.0,
+   "pop_N": 26.0,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 22.4,
+   "grip_rib_N": 22.7,
+   "slide_N": 12.4,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.2,
+   "L": 12.0,
+   "k_finger_N_mm": 224.9,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 31.2,
+   "pop_N": 31.2,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 22.4,
+   "grip_rib_N": 27.3,
+   "slide_N": 14.8,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.25,
+   "L": 8.0,
+   "k_finger_N_mm": 140.3,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 25.6,
+   "pop_N": 25.6,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 26.8,
+   "grip_rib_N": 18.2,
+   "slide_N": 9.9,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.25,
+   "L": 9.0,
+   "k_finger_N_mm": 157.9,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 28.8,
+   "pop_N": 28.8,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 26.8,
+   "grip_rib_N": 20.5,
+   "slide_N": 11.1,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.25,
+   "L": 10.0,
+   "k_finger_N_mm": 175.4,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 32.0,
+   "pop_N": 32.0,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 26.8,
+   "grip_rib_N": 22.7,
+   "slide_N": 12.4,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.25,
+   "L": 12.0,
+   "k_finger_N_mm": 210.5,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 38.4,
+   "pop_N": 38.4,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 26.8,
+   "grip_rib_N": 27.3,
+   "slide_N": 14.8,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.3,
+   "L": 8.0,
+   "k_finger_N_mm": 132.3,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 30.3,
+   "pop_N": 30.3,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 31.0,
+   "grip_rib_N": 18.2,
+   "slide_N": 9.9,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.3,
+   "L": 9.0,
+   "k_finger_N_mm": 148.8,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 34.1,
+   "pop_N": 34.1,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 31.0,
+   "grip_rib_N": 20.5,
+   "slide_N": 11.1,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.3,
+   "L": 10.0,
+   "k_finger_N_mm": 165.3,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 37.9,
+   "pop_N": 37.9,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 31.0,
+   "grip_rib_N": 22.7,
+   "slide_N": 12.4,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.0,
+   "snap": 0.3,
+   "L": 12.0,
+   "k_finger_N_mm": 198.4,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 45.5,
+   "pop_N": 45.5,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 31.0,
+   "grip_rib_N": 27.3,
+   "slide_N": 14.8,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.2,
+   "L": 8.0,
+   "k_finger_N_mm": 183.8,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 25.5,
+   "pop_N": 25.5,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 23.7,
+   "grip_rib_N": 22.3,
+   "slide_N": 12.1,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.2,
+   "L": 9.0,
+   "k_finger_N_mm": 206.8,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 28.7,
+   "pop_N": 28.7,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 23.7,
+   "grip_rib_N": 25.1,
+   "slide_N": 13.6,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.2,
+   "L": 10.0,
+   "k_finger_N_mm": 229.7,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 31.9,
+   "pop_N": 31.9,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 23.7,
+   "grip_rib_N": 27.9,
+   "slide_N": 15.2,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.2,
+   "L": 12.0,
+   "k_finger_N_mm": 275.7,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 38.2,
+   "pop_N": 38.2,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 23.7,
+   "grip_rib_N": 33.5,
+   "slide_N": 18.2,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.25,
+   "L": 8.0,
+   "k_finger_N_mm": 172.1,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 31.4,
+   "pop_N": 31.4,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 28.4,
+   "grip_rib_N": 22.3,
+   "slide_N": 12.1,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.25,
+   "L": 9.0,
+   "k_finger_N_mm": 193.6,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 35.3,
+   "pop_N": 35.3,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 28.4,
+   "grip_rib_N": 25.1,
+   "slide_N": 13.6,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.25,
+   "L": 10.0,
+   "k_finger_N_mm": 215.1,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 39.2,
+   "pop_N": 39.2,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 28.4,
+   "grip_rib_N": 27.9,
+   "slide_N": 15.2,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.25,
+   "L": 12.0,
+   "k_finger_N_mm": 258.1,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 47.1,
+   "pop_N": 47.1,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 28.4,
+   "grip_rib_N": 33.5,
+   "slide_N": 18.2,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.3,
+   "L": 8.0,
+   "k_finger_N_mm": 162.2,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 37.2,
+   "pop_N": 37.2,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 32.8,
+   "grip_rib_N": 22.3,
+   "slide_N": 12.1,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.3,
+   "L": 9.0,
+   "k_finger_N_mm": 182.4,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 41.8,
+   "pop_N": 41.8,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 32.8,
+   "grip_rib_N": 25.1,
+   "slide_N": 13.6,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.3,
+   "L": 10.0,
+   "k_finger_N_mm": 202.7,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 46.4,
+   "pop_N": 46.4,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 32.8,
+   "grip_rib_N": 27.9,
+   "slide_N": 15.2,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.2,
+   "snap": 0.3,
+   "L": 12.0,
+   "k_finger_N_mm": 243.2,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 55.7,
+   "pop_N": 55.7,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 32.8,
+   "grip_rib_N": 33.5,
+   "slide_N": 18.2,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.2,
+   "L": 8.0,
+   "k_finger_N_mm": 220.5,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 30.6,
+   "pop_N": 30.6,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 24.9,
+   "grip_rib_N": 26.8,
+   "slide_N": 14.5,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.2,
+   "L": 9.0,
+   "k_finger_N_mm": 248.0,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 34.4,
+   "pop_N": 34.4,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 24.9,
+   "grip_rib_N": 30.1,
+   "slide_N": 16.4,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.2,
+   "L": 10.0,
+   "k_finger_N_mm": 275.6,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 38.2,
+   "pop_N": 38.2,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 24.9,
+   "grip_rib_N": 33.4,
+   "slide_N": 18.2,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.2,
+   "L": 12.0,
+   "k_finger_N_mm": 330.7,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 115.4,
+   "install_N": 45.9,
+   "pop_N": 45.9,
+   "open_mm": 0.2,
+   "finger_sigma_MPa": 24.9,
+   "grip_rib_N": 40.1,
+   "slide_N": 21.8,
+   "mouth_mm": 5.6
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.25,
+   "L": 8.0,
+   "k_finger_N_mm": 206.4,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 37.6,
+   "pop_N": 37.6,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 29.8,
+   "grip_rib_N": 26.8,
+   "slide_N": 14.5,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.25,
+   "L": 9.0,
+   "k_finger_N_mm": 232.2,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 42.4,
+   "pop_N": 42.4,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 29.8,
+   "grip_rib_N": 30.1,
+   "slide_N": 16.4,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.25,
+   "L": 10.0,
+   "k_finger_N_mm": 258.0,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 47.1,
+   "pop_N": 47.1,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 29.8,
+   "grip_rib_N": 33.4,
+   "slide_N": 18.2,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.25,
+   "L": 12.0,
+   "k_finger_N_mm": 309.6,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 117.5,
+   "install_N": 56.5,
+   "pop_N": 56.5,
+   "open_mm": 0.25,
+   "finger_sigma_MPa": 29.8,
+   "grip_rib_N": 40.1,
+   "slide_N": 21.8,
+   "mouth_mm": 5.5
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.3,
+   "L": 8.0,
+   "k_finger_N_mm": 194.5,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 44.6,
+   "pop_N": 44.6,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 34.4,
+   "grip_rib_N": 26.8,
+   "slide_N": 14.5,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.3,
+   "L": 9.0,
+   "k_finger_N_mm": 218.9,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 50.1,
+   "pop_N": 50.1,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 34.4,
+   "grip_rib_N": 30.1,
+   "slide_N": 16.4,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.3,
+   "L": 10.0,
+   "k_finger_N_mm": 243.2,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 55.7,
+   "pop_N": 55.7,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 34.4,
+   "grip_rib_N": 33.4,
+   "slide_N": 18.2,
+   "mouth_mm": 5.4
+  },
+  {
+   "t_f": 2.4,
+   "snap": 0.3,
+   "L": 12.0,
+   "k_finger_N_mm": 291.8,
+   "finger_root_deg": 22.5,
+   "finger_tip_deg": 119.4,
+   "install_N": 66.9,
+   "pop_N": 66.9,
+   "open_mm": 0.3,
+   "finger_sigma_MPa": 34.4,
+   "grip_rib_N": 40.1,
+   "slide_N": 21.8,
+   "mouth_mm": 5.4
+  }
+ ],
+ "view": {
+  "in_view_points": 0,
+  "in_view_aperture": 0,
+  "hood_lead_mm": 4.0,
+  "cone_margin_deg_point": 34.3,
+  "cone_margin_deg_aperture": 29.9
+ },
+ "fit": {
+  "rod_clearance_min_mm": 6.58,
+  "rod_clearance_worst": [
+   [
+    "rod 14-16",
+    6.58
+   ],
+   [
+    "rod 15-16",
+    7.73
+   ],
+   [
+    "rod 7-16",
+    8.46
+   ],
+   [
+    "rod 8-16",
+    8.46
+   ]
+  ],
+  "node_clearance_min_mm": 5.46,
+  "part_penetration_mm": {
+   "prop_1.stl": -21.45,
+   "prop_2.stl": -21.83,
+   "spokes__bay_ties__core_ties__camera_guar.stl": -31.59
+  },
+  "points_in_camera_box": 0
+ },
+ "stroke": {
+  "other_rods_min_clear_mm": 7.72,
+  "clip_rod_max_interference_mm": 0.23,
+  "allowed_mm": 0.25
+ },
+ "props": {
+  "prop_1": 21.1,
+  "prop_2": 21.1,
+  "prop_3": 120.5,
+  "prop_4": 120.5
+ },
+ "frame": {
+  "mode1_largest_motion_at": [
+   [
+    -231.5,
+    0.0,
+    41.5
+   ],
+   [
+    153.0,
+    20.5,
+    65.0
+   ],
+   [
+    153.0,
+    0.0,
+    42.0
+   ],
+   [
+    152.1,
+    0.0,
+    42.9
+   ],
+   [
+    -159.0,
+    0.0,
+    61.5
+   ],
+   [
+    133.9,
+    -0.0,
+    69.8
+   ]
+  ],
+  "modes_hz": [
+   109.3,
+   163.7,
+   241.3,
+   333.1,
+   425.9,
+   554.9
+  ],
+  "camera_share": [
+   0.23,
+   0.08,
+   0.05,
+   0.19,
+   0.69,
+   0.43
+  ],
+  "camera_disp_ratio": [
+   0.75,
+   0.7,
+   0.39,
+   0.82,
+   1.0,
+   1.0
+  ],
+  "first_camera_mode_hz": 425.9,
+  "body_mass_g": 31.8,
+  "body_cg": [
+   136.0,
+   0.0,
+   41.7
+  ],
+  "cases": {
+   "frontal hit 250 N on the hood centre (-x)": {
+    "petg_worst": "arm top chord -1",
+    "petg_sigma_MPa": 13.05,
+    "carbon_worst": "saddle tie 4.1 m",
+    "carbon_ratio": 0.297,
+    "clip_pull_N": 0.0,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 2.34
+   },
+   "frontal hit 250 N on the hood top corner (-x)": {
+    "petg_worst": "arm top chord +1",
+    "petg_sigma_MPa": 28.45,
+    "carbon_worst": "rod 7-8",
+    "carbon_ratio": 0.524,
+    "clip_pull_N": 67.45,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 3.595
+   },
+   "flight 4 g down (mount + camera)": {
+    "petg_worst": "clip bottom -1",
+    "petg_sigma_MPa": 0.08,
+    "carbon_worst": "saddle tie 4.1",
+    "carbon_ratio": 0.004,
+    "clip_pull_N": 0.14,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 0.021
+   },
+   "crash 35 g inertial +x (mount + camera)": {
+    "petg_worst": "arm top chord -1",
+    "petg_sigma_MPa": 0.56,
+    "carbon_worst": "saddle tie 4.1 m",
+    "carbon_ratio": 0.013,
+    "clip_pull_N": 2.95,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 0.101
+   },
+   "crash 35 g inertial -x (mount + camera)": {
+    "petg_worst": "arm top chord -1",
+    "petg_sigma_MPa": 0.56,
+    "carbon_worst": "saddle tie 4.1 m",
+    "carbon_ratio": 0.013,
+    "clip_pull_N": 0.0,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 0.101
+   },
+   "crash 35 g inertial +y (mount + camera)": {
+    "petg_worst": "knee inner chord +1",
+    "petg_sigma_MPa": 1.56,
+    "carbon_worst": "saddle tie 4.1 m",
+    "carbon_ratio": 0.009,
+    "clip_pull_N": 3.57,
+    "net_side_per_clip_N": 2.73,
+    "lens_disp_mm": 0.049
+   },
+   "crash 35 g inertial -z (mount + camera)": {
+    "petg_worst": "clip bottom -1",
+    "petg_sigma_MPa": 0.68,
+    "carbon_worst": "saddle tie 4.1",
+    "carbon_ratio": 0.033,
+    "clip_pull_N": 1.19,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 0.187
+   },
+   "crash 35 g inertial +z (mount + camera)": {
+    "petg_worst": "clip bottom -1",
+    "petg_sigma_MPa": 0.68,
+    "carbon_worst": "saddle tie 4.1",
+    "carbon_ratio": 0.033,
+    "clip_pull_N": 1.19,
+    "net_side_per_clip_N": 0.0,
+    "lens_disp_mm": 0.187
+   }
+  },
+  "breaking_order": {
+   "pull forward +x": [
+    [
+     86.0,
+     "a clip pops"
+    ],
+    [
+     843.0,
+     "saddle tie 4.1 m (carbon)"
+    ],
+    [
+     843.0,
+     "saddle tie 4.1 (carbon)"
+    ]
+   ],
+   "push back -x (frontal)": [
+    [
+     843.0,
+     "saddle tie 4.1 m (carbon)"
+    ],
+    [
+     843.0,
+     "saddle tie 4.1 (carbon)"
+    ],
+    [
+     907.0,
+     "rod 7-8 (carbon)"
+    ]
+   ],
+   "side +y": [
+    [
+     40.0,
+     "a clip pops"
+    ],
+    [
+     44.0,
+     "clips slide (grip), then the stop collars"
+    ],
+    [
+     293.0,
+     "knee inner chord +1 (PETG yield)"
+    ]
+   ],
+   "up +z": [
+    [
+     92.0,
+     "a clip pops"
+    ],
+    [
+     298.0,
+     "saddle tie 4.1 (carbon)"
+    ],
+    [
+     298.0,
+     "saddle tie 4.1 m (carbon)"
+    ]
+   ],
+   "down -z": [
+    [
+     92.0,
+     "a clip pops"
+    ],
+    [
+     298.0,
+     "saddle tie 4.1 (carbon)"
+    ],
+    [
+     298.0,
+     "saddle tie 4.1 m (carbon)"
+    ]
+   ]
+  }
+ },
+ "frame_soft_clips": {
+  "modes_hz": [
+   109.2,
+   163.3,
+   240.5,
+   329.7,
+   406.7,
+   477.1
+  ],
+  "camera_share": [
+   0.23,
+   0.08,
+   0.06,
+   0.24,
+   0.65,
+   0.72
+  ]
+ },
+ "frame_chords_high": {
+  "modes_hz": [
+   109.5,
+   163.9,
+   241.9,
+   333.8,
+   438.3,
+   588.6
+  ],
+  "camera_share": [
+   0.23,
+   0.07,
+   0.05,
+   0.18,
+   0.7,
+   0.24
+  ]
+ },
+ "collar_centre": [
+  122.6,
+  25.3,
+  11.5
+ ],
+ "params": {
+  "ARM": 7.0,
+  "BRACE": 6.0,
+  "WALL": 3.0,
+  "CHAMF": 3.0,
+  "RIB": 3.5,
+  "XBAR": 5.0,
+  "BORDER": 4.0,
+  "CLIP_L": 9.0,
+  "T_F": 2.0,
+  "SNAP": 0.2,
+  "FLARE": 30.0,
+  "GRIP": 0.05,
+  "X_BACK": 128.0,
+  "X_HOOD": 153.0,
+  "APERTURE_R": 6.0,
+  "MU": 0.25
+ },
+ "print": {
+  "mount": {
+   "file": "print/scout_camera_mount_v1.stl",
+   "extents": [
+    45.8,
+    60.6,
+    45.0
+   ]
+  },
+  "collar": {
+   "file": "print/scout_camera_mount_collar_v1.stl",
+   "extents": [
+    8.4,
+    10.2,
+    5.0
+   ],
+   "qty": 2
+  }
+ },
+ "system": {
+  "manifest": "runs/scout_camera_mount/v1/scout_with_mount.assembly.json",
+  "report": "runs/scout_camera_mount/v1/system_check.txt"
+ }
+}
