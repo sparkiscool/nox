@@ -74,6 +74,8 @@ CAM_Z = [float(x) for x in os.environ.get("SCOUT_CAM_Z", "30,46").split(",")]   
 PHIS = [float(x) for x in os.environ.get("SCOUT_PHIS", "35,50").split(",")]   # camera back-plane tilts scanned
 MIN_ROD = float(os.environ.get("SCOUT_MIN_ROD", 45.0))      # shortest shell rod (a sliver triangle below, Spark 27 Oct "small triangles", E)
 SMALL_TRI = float(os.environ.get("SCOUT_SMALL_TRI", 70.0))  # a hull triangle with every edge under this collapses to one node (Spark 27 Oct, E)
+CAM_MOUNT = os.environ.get("SCOUT_CAM_MOUNT", "cage")       # cage: the camera in a printed cradle tied to the cage only (Spark 27 Oct: "just let the camera mount to the cage"); boom: off the plate nose
+CAMP = "camera cradle (printed)" if CAM_MOUNT == "cage" else "camera mount (boom + seat)"
 TAIL_GAP = float(os.environ.get("SCOUT_TAIL_GAP", 13.0))   # tail bay: the Radxa / UBEC front ends this far behind the receiver (balance trim, DEFAULT)
 TAIL_BAY = os.environ.get("SCOUT_TAIL_BAY", "1") == "1"   # Radxa + UBEC in a tail bay behind the receiver (balance, race-car tail, Spark 27 Oct)
 PLATE_NOSE = np.array([60.0, 0.0, 20.25])                  # camera boom root on the plate nose (E, plate edge x ~65)
@@ -189,7 +191,7 @@ def drone(DC):
 
 def build(DC):
     """every drone-side global for a catch offset DC: parts, datum, ring, shell target, camera"""
-    global D, TAB_X, CART_BOT, REC_B, Z_O, RING, nR, ZONE, BODY, props, body, K, CAM, GRIDS, CDC, SPARE_X
+    global D, TAB_X, CART_BOT, REC_B, Z_O, RING, nR, ZONE, BODY, props, body, K, CAM, GRIDS, CDC, SPARE_X, SPARE_ENDS
     D = drone(DC); CDC = DC
     TAB_X = float(np.mean([D["slider +y (latch)"][0].bounds[:, 0].mean(), D["slider -y (latch)"][0].bounds[:, 0].mean()]))
     CART_BOT = float(D["cartridge v6 (latch)"][0].bounds[0][2])
@@ -198,6 +200,7 @@ def build(DC):
     RING = ring_nodes(); nR = len(RING)
     sx_ = 30.0 if RING_MODE != "rect" else min(30.0, float(RING[:, 0].max()) - REC_B[1][0] - SHELL_R - 1.0, REC_B[0][0] - float(RING[:, 0].min()) - SHELL_R - 1.0)
     SPARE_X = sx_
+    SPARE_ENDS = (float(RING[:, 0].max()) - REC_B[1][0] - SHELL_R - 1.0, REC_B[0][0] - float(RING[:, 0].min()) - SHELL_R - 1.0)
     ZONE = (REC_B[0][0] - sx_, REC_B[1][0] + sx_, REC_B[0][1] - 30.0, REC_B[1][1] + 30.0)   # swap zone: receiver + 30 a side (rect: + what the
                                                                                           # rectangle leaves along x, Spark 27 Oct)
     BODY = [n for n in D if not n.startswith("prop")]
@@ -555,6 +558,21 @@ def blockage(nodes, E, extra):
 
 
 # ---------------------------------------------------------------- links: spokes, bay ties, camera guard
+def place_cradle():
+    """the camera cradle (Spark 27 Oct: "just let the camera mount to the cage, its light and dosent need the support from the
+    drone body"): a printed back plate and two side cheeks round the camera, all behind the lens (out of its view), from the chin
+    lip up to the guard bar nodes; tied to the shell by the guard bar struts and the cradle struts (attach), no boom to the plate"""
+    global BOOM_AX
+    BOOM_AX = []
+    cb = D["camera"][0].bounds; xs = CAM["Lx"] - CAM_D - 4.0; xf = cb[1][0] - 2.0
+    z0, z1 = cb[0][2] - 3.0 - 4.0, cb[1][2] + 3.0 + GUARD_NODE_R
+    w = CAM_W / 2
+    parts_ = [box(xs, xs + 4.0, -w - 4.0, w + 4.0, z0, z1)] + [box(xs, xf, sy * (w + 1.0) - (3.0 if sy > 0 else 0.0), sy * (w + 1.0) + (0.0 if sy > 0 else 3.0), z0, z1) for sy in (1, -1)]
+    cr = trimesh.util.concatenate(parts_)
+    D[CAMP] = (cr, "structure", False, sum(abs(p_.volume) for p_ in parts_) * 1.27e-3 * 0.5, "E", "PETG", "printed", "#aab4c0", False)
+    CAM.update(boom=0.0, boom_gap=float("nan"), boom_w=0.0, boom_sec=0.0, seat_z=(z0, z1), cradle=(xs, xf, z0, z1))
+
+
 def place_boom(nodes, E):
     """the camera boom (PETG) from the plate nose to the camera seat: one 12 x 12 bar on the centre plane, or a fork of two
     10 x 10 bars at y ±w (mirror pair); root height, end height and w picked so the bars keep the most room to the shell
@@ -582,7 +600,7 @@ def place_boom(nodes, E):
         bm = trimesh.creation.box([bl, sec, sec]); bm.apply_transform(trimesh.geometry.align_vectors([1, 0, 0], (b_ - a_) / bl))
         bm.apply_translation((a_ + b_) / 2); meshes.append(bm)
     seat = box(CAM["Lx"] - CAM_D - 4.0, CAM["Lx"] - CAM_D, -CAM_W / 2, CAM_W / 2, min(CAM["Lz"] - CAM_H / 2, b[2] - sec / 2), CAM["Lz"] + CAM_H / 2)
-    D["camera mount (boom + seat)"] = (trimesh.util.concatenate(meshes + [seat]), "structure", False,
+    D[CAMP] = (trimesh.util.concatenate(meshes + [seat]), "structure", False,
                                        (len(bars) * bl * sec * sec * 0.5 + 4.0 * CAM_W * CAM_H * 0.6) * 1.27e-3, "E", "PETG", "printed", "#aab4c0", False)
     CAM.update(boom=bl, boom_gap=g_, boom_w=w, boom_sec=sec, seat_z=(float(seat.bounds[0][2]), float(seat.bounds[1][2])))
     return g_
@@ -595,7 +613,7 @@ def usb_line(nodes, E):
     global USB
     fb = D["FC"][0].bounds; zc = 13.5
     starts = [np.array([fb[0][0] + 14.0, -12.7, zc]), np.array([fb[0][0] + 6.0, 0.0, zc]), np.array([fb[0][0] + 14.0, 12.7, zc])]
-    others = [D[n][0] for n in D if n not in ("FC", "mount + nose legs (Scout)", "camera mount (boom + seat)") and not n.startswith("prop")]
+    others = [D[n][0] for n in D if n not in ("FC", "mount + nose legs (Scout)", CAMP) and not n.startswith("prop")]
     pq = [(m, trimesh.proximity.ProximityQuery(m)) for m in others]
     best = None
     for p0 in starts:
@@ -618,7 +636,7 @@ def usb_line(nodes, E):
 
 
 def attach(nodes, ring_ids, E=()):
-    place_boom(nodes, E)
+    place_cradle() if CAM_MOUNT == "cage" else place_boom(nodes, E)
     usb_ok = usb_line(nodes, E)
     extra = {}
     keep_out = [D[n][0].bounds + [[-ROD_R - 1] * 3, [ROD_R + 1] * 3] for n in
@@ -708,19 +726,25 @@ def attach(nodes, ring_ids, E=()):
     cl = box(CAM["Lx"] - CAM_D - 4.0, cb[1][0] - 2.0, -CAM_W / 2 - 6.0, CAM_W / 2 + 6.0, cb[0][2] - 3.0 - 4.0, cb[0][2] - 3.0)
     CAM["chin"] = cl
     sz = CAM["seat_z"]; xs = CAM["Lx"] - CAM_D - 4.0
+    if CAM_MOUNT == "cage":                                   # the cradle's low back corners into the shell (the top is tied by the guard
+        c_ = np.array([xs, CAM_W / 2 + 4.0, sz[0] + ROD_R])     # bar struts): the camera hangs from the cage only, triangulated, not a stalk
+        ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
+        if not pick(c_, ok, 1, 0.0, "cam cradle strut lo"):
+            raise SystemExit("camera cradle: no clear strut from its low corners into the shell")
     for lvl, zc in ((("lo", sz[0] + ROD_R), ("hi", sz[1] - ROD_R)) if not LEAN else ()):   # lean: the boom + the arm braces carry the seat
         c_ = np.array([xs, CAM_W / 2 - ROD_R, zc])
         ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
         pick(c_, ok, 1, 0.0, f"cam brace {lvl}")
     c_ = np.array([xs, CAM_W / 2 - ROD_R, sz[0] + ROD_R]); u_ = np.array([1.0, 1.0, 0]) / math.sqrt(2)
-    for out_ in (30.0, 40.0, 50.0, 60.0):
+    for out_ in ((30.0, 40.0, 50.0, 60.0) if CAM_MOUNT != "cage" else ()):
         root = np.array([*(out_ * u_[:2]), 18.5 - ROD_R])
         if seg_band_dist(c_, root) - ROD_R >= PROP_GAP and clear(c_, root):
             add("cam brace arm.1", c_, root); break
     else:                                                     # no clear root on the arm beam: brace the seat into the shell instead
-        ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
-        pick(c_, ok, 1, 0.0, "cam brace shell")
-    if not any(k.startswith("cam brace") for k in extra):
+        if CAM_MOUNT != "cage":
+            ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
+            pick(c_, ok, 1, 0.0, "cam brace shell")
+    if CAM_MOUNT != "cage" and not any(k.startswith("cam brace") for k in extra):
         raise SystemExit("camera seat unbraced (a stalk): no clear brace to the arms or the shell")
     D["camera chin guard (printed)"] = (CAM["chin"], "cage", False, abs(CAM["chin"].volume) * 1.27e-3 * 0.5, "E", "PETG", "cage", "#7d8a99", False)
     have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]   # mirror-exact links
@@ -814,8 +838,8 @@ DC = BEST; nodes, E, tris, viol, extra, guard, it, tot, cgv = (R_[k] for k in ("
 pick = R_["pick"]; ring_ids = list(range(nR))
 say(f"Scout v3 layout v3 / cage v2 (pattern {PATTERN}, every rod 3 mm); ring {RING_MODE}: {nR} nodes; balance: catch {DC:.1f} aft of the thrust centre; tab line x {TAB_X:.2f}, "
     f"cartridge flat bottom z {CART_BOT:.2f}, ring plane z {Z_O:.2f} (Overseer: catch x {OV_CX:.1f}, cartridge bottom {OV_CB:.1f}, ring {RING_DZ:+.2f} under it)")
-say(f"camera: lens ({CAM['Lx']:.0f}, 0, {CAM['Lz']:.0f}), head plane tilt {CAM['phi']:.0f} deg, boom {CAM['boom']:.0f} from the plate nose "
-    f"(lens z {CAM_Z[0]:.0f}..{CAM_Z[1]:.0f} x tilt 0..90: the shell target {LIM + SLACK:.1f} under its lower view plane and behind its back; "
+say(f"camera: lens ({CAM['Lx']:.0f}, 0, {CAM['Lz']:.0f}), head plane tilt {CAM['phi']:.0f} deg, " + ("in a printed cradle on the cage (no boom) " if CAM_MOUNT == "cage" else f"boom {CAM['boom']:.0f} from the plate nose ")
+    + f"(lens z {CAM_Z[0]:.0f}..{CAM_Z[1]:.0f} x tilt 0..90: the shell target {LIM + SLACK:.1f} under its lower view plane and behind its back; "
     f"least growth of the drone's box, then the shortest boom)")
 for l_ in R_["lines"]: say(l_)
 
@@ -864,14 +888,14 @@ zone = box(ZONE[0], ZONE[1], ZONE[2], ZONE[3], Z_O - 200, CART_BOT)
 from topo.part import man
 blk = [i for i, (a, b) in enumerate(E) if (man(zone) ^ man(rod(nodes[a], nodes[b], SHELL_R))).volume() > 0.5]
 blk += [k for k, (p, q) in extra.items() if (man(zone) ^ man(rod(p, q))).volume() > 0.5]
-say(f"swap zone (receiver {REC_B[1][0] - REC_B[0][0]:.1f} x {REC_B[1][1] - REC_B[0][1]:.1f} + {SPARE_X:.1f} at the ends, 30 at the sides, cartridge bottom down): "
+say(f"swap zone (receiver {REC_B[1][0] - REC_B[0][0]:.1f} x {REC_B[1][1] - REC_B[0][1]:.1f} + {SPARE_X:.1f} at the ends (nose {SPARE_ENDS[0]:.1f}, tail {SPARE_ENDS[1]:.1f} to the rectangle rods), 30 at the sides, cartridge bottom down): "
     + ("clear (0 mm³)" if not blk else "BLOCKED by " + ", ".join(map(str, blk))))
 seen = []
 memb = [(nodes[a], nodes[b], SHELL_R) for a, b in E] + [(np.asarray(p, float), np.asarray(q, float), ROD_R) for p, q in extra.values()]
 for k, P_ in (("shell tubes", np.vstack([rod(nodes[a], nodes[b], SHELL_R).vertices for a, b in E])), ("shell nodes", np.vstack([n + NODE_R * DIRS for n in nodes])),
               ("links + guard", np.vstack([pts(rod(p0, p1, rr), 200) for p0, p1, rr in memb[len(E):]])), ("props", props),
-              ("drone", np.vstack([pts(D[n][0], 1500) for n in D if n not in ("camera", "camera mount (boom + seat)")])),
-              ("camera mount", pts(D["camera mount (boom + seat)"][0], 1500))):
+              ("drone", np.vstack([pts(D[n][0], 1500) for n in D if n not in ("camera", CAMP)])),
+              ("camera mount", pts(D[CAMP][0], 1500))):
     n_ = int(in_cam_view(P_, 0.0).sum())
     if n_: seen.append(f"{k} {n_} points")
 say(f"front camera (horizon, landscape, {CAM_HFOV:.0f} x {CAM_VFOV:.0f} deg): " + ("nothing of the drone in its view (C)" if not seen else "in view: " + "; ".join(seen)))
@@ -956,8 +980,8 @@ ACCESS.append({"name": "FC USB-C cable (12 x 7, searched path, E)", "part": "FC"
                "ignore": ["mount + nose legs (Scout)", "wires"]})
 say(f"FC USB-C cable: from ({USB[0][0]:.1f}, {USB[0][1]:.1f}, {USB[0][2]:.1f}) along ({USB[1][0]:.2f}, {USB[1][1]:.2f}, {USB[1][2]:.2f}), "
     f"{math.degrees(math.acos(np.clip(USB[1] @ np.array([-0.7071, -0.7071, 0.0]), -1, 1))):.0f} deg off the tail-left diagonal, out through a cell (C)")
-say("camera braces: " + ", ".join(k for k in extra if k.startswith("cam brace")) + " (the seat on the boom + these: not a stalk)")
-say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
+say("camera ties: " + ", ".join(k for k in extra if k.startswith(("cam brace", "cam cradle", "cam guard strut"))) + (" (the cradle hangs from the cage only, Spark 27 Oct)" if CAM_MOUNT == "cage" else " (the seat on the boom + these: not a stalk)"))
+if CAM_MOUNT != "cage": say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
 if OUT == os.path.join(ROOT, "runs", "scout_layout", "v9", ""):
     from assembly import new as new_assembly
@@ -978,8 +1002,8 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v9", ""):
                           box=np.round(np.array(D["FC"][0].bounds).T.ravel(), 2).tolist(), note="envelope = the FC's (E)"))
     contact = [["motor %d" % i, "prop %d" % i] for i in range(1, 5)] + [["motor %d" % i, "frame plate (Bee35 carbon)"] for i in range(1, 5)]
     contact += [["cage shell tubes", "cage shell nodes"], [LINKS, "cage shell nodes"], [LINKS, "cage shell tubes"], [LINKS, "frame plate (Bee35 carbon)"],
-                [LINKS, "receiver v3 (latch)"], [LINKS, "mount + nose legs (Scout)"], [LINKS, "receiver TPU end pieces (latch, E)"], [LINKS, "camera mount (boom + seat)"],
-                ["camera mount (boom + seat)", "camera"], ["camera mount (boom + seat)", "frame plate (Bee35 carbon)"], ["camera chin guard (printed)", "camera mount (boom + seat)"], ["camera mount (boom + seat)", "mount + nose legs (Scout)"],
+                [LINKS, "receiver v3 (latch)"], [LINKS, "mount + nose legs (Scout)"], [LINKS, "receiver TPU end pieces (latch, E)"], [LINKS, CAMP],
+                [CAMP, "camera"], [CAMP, "frame plate (Bee35 carbon)"], ["camera chin guard (printed)", CAMP], [CAMP, "mount + nose legs (Scout)"],
                 ["receiver TPU end pieces (latch, E)", "receiver v3 (latch)"], ["receiver TPU end pieces (latch, E)", "receiver lid (latch)"],
                 ["receiver TPU end pieces (latch, E)", "receiver TPU strips (latch)"], ["receiver TPU end pieces (latch, E)", "mount + nose legs (Scout)"],
                 ["receiver TPU end pieces (latch, E)", "cartridge v6 strips (latch, TPU)"], ["cartridge v6 strips (latch, TPU)", "cartridge v6 (latch)"],
@@ -991,7 +1015,8 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v9", ""):
                 ["mount + nose legs (Scout)", "UBEC"], ["FC", "frame plate (Bee35 carbon)"], ["Radxa Zero 3W", "mount + nose legs (Scout)"],
                 ["flow MTF-02P", "mount + nose legs (Scout)"], ["UBEC", "frame plate (Bee35 carbon)"], ["XR2", "frame plate (Bee35 carbon)"],
                 ["wires", "FC"], ["wires", "mount + nose legs (Scout)"], ["wires", "frame plate (Bee35 carbon)"], ["wires", "UBEC"], ["wires", "receiver v3 (latch)"]]
-    if guard: contact += [[LINKS, "camera guard nodes"]]
+    if guard: contact += [[LINKS, "camera guard nodes"], ["camera guard nodes", CAMP]]
+    contact += [[LINKS, "camera chin guard (printed)"]]          # the cradle struts root in the chin lip
     contact = [c_ if len(c_) == 3 else c_ + [1e9] for c_ in contact]
     openings = [dict(part=p_, axis=[0, 0, -1], half_angle_deg=40.0, min_mm=0.0, skip_probes=True)
                 for p_ in SW_IGN[:1] + ["pack 4S 1500", "slider +y (latch)", "slider -y (latch)", "pack XT60 plug", "receiver v3 (latch)", "receiver lid (latch)", "flow MTF-02P"]]

@@ -1,42 +1,41 @@
-   catch  0.0 aft: CG pack in +5.2, pack out +7.8 (x, mm), 668 g, lens (172, 30)
-   catch  4.0 aft: CG pack in +2.1, pack out +5.1 (x, mm), 669 g, lens (172, 30)
-   catch  8.0 aft: CG pack in -0.7, pack out +3.0 (x, mm), 669 g, lens (172, 30)
-   catch 12.0 aft: CG pack in -3.4, pack out +0.8 (x, mm), 670 g, lens (172, 30)
-   catch 16.0 aft: CG pack in -6.2, pack out -1.4 (x, mm), 670 g, lens (172, 30)
-   catch 20.0 aft: CG pack in -9.0, pack out -3.6 (x, mm), 671 g, lens (172, 30)
-   catch 24.0 aft: CG pack in -12.2, pack out -6.6 (x, mm), 673 g, lens (172, 30)
-   catch  6.0 aft: CG pack in +0.7, pack out +4.0 (x, mm), 670 g, lens (172, 30)
-   catch 10.0 aft: CG pack in -2.1, pack out +1.9 (x, mm), 669 g, lens (172, 30)
-   catch  9.0 aft: CG pack in -1.4, pack out +2.4 (x, mm), 669 g, lens (172, 30)
-   catch 11.0 aft: CG pack in -2.7, pack out +1.4 (x, mm), 669 g, lens (172, 30)
-   catch  9.5 aft: CG pack in -1.7, pack out +2.1 (x, mm), 669 g, lens (172, 30)
-   catch 10.5 aft: CG pack in -2.4, pack out +1.6 (x, mm), 669 g, lens (172, 30)
-Scout v3 layout v3 / cage v2 (pattern free, every rod 3 mm); ring rect: 4 nodes; balance: catch 10.0 aft of the thrust centre; tab line x -10.00, cartridge flat bottom z -44.50, ring plane z -47.50 (Overseer: catch x -30.0, cartridge bottom -54.0, ring -3.00 under it)
-camera: lens (172, 0, 30), head plane tilt 35 deg, boom 97 from the plate nose (lens z 30..46 x tilt 0..90: the shell target 14.0 under its lower view plane and behind its back; least growth of the drone's box, then the shortest boom)
+   catch  0.0 aft: CG pack in +5.7, pack out +8.6 (x, mm), 665 g, lens (172, 30)
+   catch  4.0 aft: CG pack in +2.5, pack out +5.8 (x, mm), 667 g, lens (172, 30)
+   catch  8.0 aft: CG pack in -0.2, pack out +3.6 (x, mm), 666 g, lens (172, 30)
+   catch 12.0 aft: CG pack in -3.0, pack out +1.4 (x, mm), 667 g, lens (172, 30)
+   catch 16.0 aft: CG pack in -5.8, pack out -0.8 (x, mm), 667 g, lens (172, 30)
+   catch 20.0 aft: CG pack in -8.6, pack out -3.0 (x, mm), 668 g, lens (172, 30)
+   catch 24.0 aft: CG pack in -11.9, pack out -6.0 (x, mm), 670 g, lens (172, 30)
+   catch 10.0 aft: CG pack in -1.6, pack out +2.5 (x, mm), 666 g, lens (172, 30)
+   catch 14.0 aft: CG pack in -4.4, pack out +0.3 (x, mm), 667 g, lens (172, 30)
+   catch  9.0 aft: CG pack in -0.9, pack out +3.1 (x, mm), 666 g, lens (172, 30)
+   catch 11.0 aft: CG pack in -2.3, pack out +2.0 (x, mm), 666 g, lens (172, 30)
+   catch 10.5 aft: CG pack in -2.0, pack out +2.2 (x, mm), 666 g, lens (172, 30)
+   catch 11.5 aft: CG pack in -2.7, pack out +1.7 (x, mm), 667 g, lens (172, 30)
+Scout v3 layout v3 / cage v2 (pattern free, every rod 3 mm); ring rect: 4 nodes; balance: catch 10.5 aft of the thrust centre; tab line x -10.50, cartridge flat bottom z -44.50, ring plane z -47.50 (Overseer: catch x -30.0, cartridge bottom -54.0, ring -3.00 under it)
+camera: lens (172, 0, 30), head plane tilt 35 deg, in a printed cradle on the cage (no boom) (lens z 30..46 x tilt 0..90: the shell target 14.0 under its lower view plane and behind its back; least growth of the drone's box, then the shortest boom)
 offset 16.0 dome 20 snap 0: valid: 17 nodes, 44 tubes, 6.6 L, 117 tall, shell 109 g, props 13.0, shell shadow 2.7 / 5.3 %
-offset 20.0 dome 20 snap 0: valid: 20 nodes, 53 tubes, 5.7 L, 109 tall, shell 112 g, props 14.5, shell shadow 5.0 / 5.7 %
-offset 24.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 5.8 L, 109 tall, shell 104 g, props 14.5, shell shadow 3.0 / 5.3 %
+offset 20.0 dome 20 snap 0: valid: 20 nodes, 53 tubes, 5.7 L, 109 tall, shell 112 g, props 14.5, shell shadow 5.0 / 5.8 %
+offset 24.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 5.8 L, 109 tall, shell 104 g, props 14.5, shell shadow 3.0 / 5.4 %
 offset 28.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 6.0 L, 109 tall, shell 105 g, props 14.4, shell shadow 3.1 / 5.3 %
-offset 32.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 6.1 L, 109 tall, shell 105 g, props 14.3, shell shadow 3.1 / 5.1 %
+offset 32.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 6.1 L, 109 tall, shell 105 g, props 14.3, shell shadow 3.1 / 5.2 %
 structure bar: start 24.0 dome 20 (5.8 L, 104 g); picked start 24.0 dome 20 snap 0
 shell: 18 nodes (4 on the ring), 47 tubes, 30 triangles; tubes 63 .. 209, 5.92 m; node extents 320 x 266 x 109; hull residual 0.00 (C)
 ring: 4 of the Overseer's 8 ring nodes (its middle rectangle, the nose and tail trapezoids dropped), each within 0.000 mm of its node on the same datum, 4 ring rods, extents 145.8 x 208.7 (C)
 largest cell: inscribed circle Ø95 between tube surfaces (C)
-links by kind: bay tie 4, cam brace 2, cam guard 3, spoke 1 4, spoke 3 2
-carbon: shell 47 rods 3.0 solid, shortest 63; links 15 rods 3.0; total 62 rods (cage v1: 123), 1.24 m, shortest 46 (cam guard bar)
-links apart: closest pair 1.4 between rod surfaces (spoke 3.1 / bay tie -1+1.1) (C, need ≥ 1.0)
+links by kind: bay tie 4, cam cradle 2, cam guard 3, spoke 1 4, spoke 3 2
+carbon: shell 47 rods 3.0 solid, shortest 63; links 15 rods 3.0; total 62 rods (cage v1: 123), 1.06 m, shortest 46 (cam guard bar)
+links apart: closest pair 1.2 between rod surfaces (cam guard strut 0.1 / cam cradle strut lo.1) (C, need ≥ 1.0)
 props: shell tubes 14.5 off the swept disks (≥ 12, 3D), nodes 20.0, links 18.7 (spoke 1.1) (C)
    inside: props 15.6 from the nearest face plane (C)
    inside: body 1.0 from the nearest face plane (C)
-swap zone (receiver 105.6 x 65.5 + 13.7 at the ends, 30 at the sides, cartridge bottom down): clear (0 mm³)
+swap zone (receiver 105.6 x 65.5 + 13.7 at the ends (nose 13.7, tail 21.6 to the rectangle rods), 30 at the sides, cartridge bottom down): clear (0 mm³)
 front camera (horizon, landscape, 89 x 73 deg): nothing of the drone in its view (C)
 flow (23 deg cone, straight down): checked (lines above list anything in view)
-prop blockage (secondary to structure): 3.0 % of the disks' thrust shadowed from above, 11.3 % from below (plan shadow of tubes and links, annulus 0.2..1 R weighted by r, E)
-cage: shell 104 g (tubes 65 + nodes 39, E), links 14 g, guard nodes 3 g (C on E)
-mass ~669 g (E), CG (-2.1, 0.5, -1.2) vs thrust centre (0, 0): 2.1 off; pack + cartridge out: 2.0 off (454 g); CG 42 under the prop plane
+prop blockage (secondary to structure): 3.0 % of the disks' thrust shadowed from above, 9.5 % from below (plan shadow of tubes and links, annulus 0.2..1 R weighted by r, E)
+cage: shell 104 g (tubes 65 + nodes 39, E), links 12 g, guard nodes 3 g (C on E)
+mass ~666 g (E), CG (-2.0, 0.5, -1.2) vs thrust centre (0, 0): 2.0 off; pack + cartridge out: 2.4 off (451 g); CG 42 under the prop plane
 compact: shell hull 5.8 L vs the parts-with-margins hull 3.5 L (C)
 funnel: Scout shell tube axes inside the Overseer's tube-axis hull (same datum, outside the shared ring nodes) by 0.3 at 0..20 above the ring, 17.8 at 20..40 above the ring, 34.6 at 40..60 above the ring, 34.4 at 60..80 above the ring (C; positive = inside; the Overseer's rods are 6 mm, the Scout's 3.0: a funnel that takes the Overseer's ring and lower shell takes the Scout's)
-FC USB-C cable: from (-27.6, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
-camera braces: cam brace arm.1, cam brace arm.1 m (the seat on the boom + these: not a stalk)
-camera boom: one bar, 97 long, 10 x 10 PETG from the plate nose to the camera seat, 3.5 clear of the shell tubes (C)
+FC USB-C cable: from (-28.1, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
+camera ties: cam guard strut 0.1, cam cradle strut lo.1, cam guard strut 0.1 m, cam cradle strut lo.1 m (the cradle hangs from the cage only, Spark 27 Oct)
 wrote nox/scout/v3/scout.assembly.json

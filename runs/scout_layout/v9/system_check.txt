@@ -17,24 +17,26 @@ system_check Scout v3: PASS
     receiver lid (latch): min margin 56.25 mm, outside openings 57.87, slack 54.87 at +Z
     receiver TPU strips (latch): min margin 58.75 mm, outside openings 58.75, slack 55.75 at -Z
     XT60E1-M: min margin 50.75 mm, outside openings 50.75, slack 47.75 at -Z
-    cartridge v6 (latch): min margin 13.15 mm, outside openings 61.97, slack 13.15 at -Z
+    cartridge v6 (latch): min margin 13.15 mm, outside openings 62.29, slack 13.15 at -Z
     slider +y (latch): min margin 13.15 mm, outside openings 70.9, slack 13.15 at -Z
-    slider -y (latch): min margin 13.15 mm, outside openings 72.27, slack 13.15 at -Z
+    slider -y (latch): min margin 13.15 mm, outside openings 72.59, slack 13.15 at -Z
     pack 4S 1500: min margin 25.15 mm, outside openings 66.38, slack 25.15 at -Z
-    pack XT60 plug: min margin 32.75 mm, outside openings 65.95, slack 32.75 at -Z
+    pack XT60 plug: min margin 32.75 mm, outside openings 66.27, slack 32.75 at -Z
     camera: min margin -2.55 mm, outside openings 4.87, slack 1.87 at (+0.57, -0.05, -0.82)
-  shell PASS: 18 nodes, 47 rods, 31 triangles, closed outside the declared openings (22.6 %), h/w 0.341, longest rod 208.7 mm, largest cell Ø103.9 mm, mirror y: nodes within 0.0 mm, 0 rods without a mirror
-  compact: bbox 13.067 L (E), hull 7.833 L (E), extents [375.3, 278.3, 125.1] mm (E), largest 375.3 mm, guards {'shell tubes to prop disks, 3D (G)': 14.5}
+  shell PASS: 18 nodes, 47 rods, 31 triangles, closed outside the declared openings (22.6 %), h/w 0.34, longest rod 208.7 mm, largest cell Ø103.9 mm, mirror y: nodes within 0.0 mm, 0 rods without a mirror
+  compact: bbox 13.084 L (E), hull 7.84 L (E), extents [375.8, 278.3, 125.1] mm (E), largest 375.8 mm, guards {'shell tubes to prop disks, 3D (G)': 14.5}
   fit PASS (tol 0.5 mm³):
-    cage shell tubes / cage shell nodes: 4235.56 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    cage shell tubes / spokes, bay ties, core ties, camera guard: 547.95 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    cage shell nodes / spokes, bay ties, core ties, camera guard: 670.94 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    cage shell tubes / cage shell nodes: 4235.71 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    cage shell tubes / spokes, bay ties, core ties, camera guard: 543.66 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    cage shell nodes / spokes, bay ties, core ties, camera guard: 692.1 mm³ (E) limit 1000000000.0 contact [manifold3d]
     spokes, bay ties, core ties, camera guard / camera guard nodes: 125.62 mm³ (E) limit 1000000000.0 contact [manifold3d]
     spokes, bay ties, core ties, camera guard / frame plate (Bee35 carbon): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    spokes, bay ties, core ties, camera guard / mount + nose legs (Scout): 318.05 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    spokes, bay ties, core ties, camera guard / mount + nose legs (Scout): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     spokes, bay ties, core ties, camera guard / receiver v3 (latch): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     spokes, bay ties, core ties, camera guard / receiver TPU end pieces (latch, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    spokes, bay ties, core ties, camera guard / camera mount (boom + seat): 0.18 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    spokes, bay ties, core ties, camera guard / camera cradle (printed): 20.28 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    spokes, bay ties, core ties, camera guard / camera chin guard (printed): 5.22 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    camera guard nodes / camera cradle (printed): 41.68 mm³ (E) limit 1000000000.0 contact [manifold3d]
     frame plate (Bee35 carbon) / motor 1: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     frame plate (Bee35 carbon) / motor 2: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     frame plate (Bee35 carbon) / motor 3: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
@@ -43,7 +45,7 @@ system_check Scout v3: PASS
     frame plate (Bee35 carbon) / UBEC: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     frame plate (Bee35 carbon) / XR2: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     frame plate (Bee35 carbon) / mount + nose legs (Scout): 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
-    frame plate (Bee35 carbon) / camera mount (boom + seat): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    frame plate (Bee35 carbon) / camera cradle (printed): 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     frame plate (Bee35 carbon) / wires: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     motor 1 / prop 1: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     motor 2 / prop 2: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
@@ -59,7 +61,7 @@ system_check Scout v3: PASS
     mount + nose legs (Scout) / receiver lid (latch): 46.2 mm³ (E) limit 1000000000.0 contact [manifold3d]
     mount + nose legs (Scout) / receiver TPU end pieces (latch, E): 2.56 mm³ (E) limit 1000000000.0 contact [manifold3d]
     mount + nose legs (Scout) / XT60E1-M: 126.48 mm³ (E) limit 1000000000.0 contact [manifold3d]
-    mount + nose legs (Scout) / camera mount (boom + seat): 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
+    mount + nose legs (Scout) / camera cradle (printed): 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
     mount + nose legs (Scout) / wires: 20483.49 mm³ (E) limit 1000000000.0 contact [manifold3d]
     receiver v3 (latch) / receiver TPU strips (latch): 0.0 mm³ (E) limit 5.0 contact [manifold3d]
     receiver v3 (latch) / receiver TPU end pieces (latch, E): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
@@ -78,12 +80,12 @@ system_check Scout v3: PASS
     slider +y (latch) / cartridge v6 strips (latch, TPU): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     slider -y (latch) / cartridge v6 strips (latch, TPU): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
     cartridge v6 strips (latch, TPU) / pack 4S 1500: 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
-    camera / camera mount (boom + seat): 0.0 mm³ (E) limit 1000000000.0 contact [aabb]
-    camera mount (boom + seat) / camera chin guard (printed): 0.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
-  mass 669.4 g (E), CG [-2.51, 0.51, 0.46], offset [-2.51, 0.51, -40.74] = 40.82 mm from [0.0, 0.0, 41.2]
-    cage shell tubes: 65.11 g (E) at [-5.91, 0.0, 16.82]
-    cage shell nodes: 39.0 g (E) at [-0.4, 0.0, -3.63]
-    spokes, bay ties, core ties, camera guard: 13.6 g (C) at [47.72, 0.0, -3.21]
+    camera / camera cradle (printed): 1520.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+    camera cradle (printed) / camera chin guard (printed): 1056.0 mm³ (E) limit 1000000000.0 contact [manifold3d]
+  mass 666.33 g (E), CG [-2.76, 0.52, 0.51], offset [-2.76, 0.52, -40.69] = 40.79 mm from [0.0, 0.0, 41.2]
+    cage shell tubes: 65.15 g (E) at [-6.12, 0.0, 16.82]
+    cage shell nodes: 39.0 g (E) at [-0.68, 0.0, -3.63]
+    spokes, bay ties, core ties, camera guard: 11.63 g (C) at [48.08, 0.0, -4.35]
     camera guard nodes: 3.0 g (E) at [164.0, -0.0, 57.0]
     frame plate (Bee35 carbon): 28.0 g (E) at [1.58, 0.0, 20.25]
     motor 1: 18.0 g (E) at [54.1, 54.1, 29.5]
@@ -94,80 +96,81 @@ system_check Scout v3: PASS
     prop 3: 1.8 g (P) at [-54.1, 54.1, 41.2]
     motor 4: 18.0 g (E) at [-54.1, -54.1, 29.5]
     prop 4: 1.8 g (P) at [-54.1, -54.1, 41.2]
-    FC: 10.0 g (P) at [-8.1, -0.0, 13.5]
-    UBEC: 15.0 g (E) at [-94.35, 18.3, 14.0]
+    FC: 10.0 g (P) at [-8.6, -0.0, 13.5]
+    UBEC: 15.0 g (E) at [-94.85, 18.3, 14.0]
     XR2: 1.0 g (P) at [-42.0, 18.0, 25.5]
-    Radxa Zero 3W: 10.0 g (E) at [-104.35, 0.0, -12.0]
-    flow MTF-02P: 1.5 g (P) at [-10.0, 35.5, -29.5]
-    mount + nose legs (Scout): 25.0 g (E) at [-4.85, 0.0, 13.09]
-    receiver v3 (latch): 94.4 g (M) at [-10.9, -0.0, -10.93]
-    receiver lid (latch): 10.3 g (M) at [33.25, 0.0, 5.31]
-    receiver TPU strips (latch): 2.0 g (M) at [-16.05, 0.0, 2.3]
-    receiver TPU end pieces (latch, E): 8.2 g (M) at [-18.06, -0.0, -19.37]
-    XT60E1-M: 6.0 g (E) at [33.25, -0.0, 2.73]
-    cartridge v6 (latch): 37.9 g (M) at [-4.64, 0.01, -22.76] swap
-    slider +y (latch): 2.9 g (M) at [-10.02, 11.89, -37.09] swap
-    slider -y (latch): 2.9 g (M) at [-9.98, -11.89, -37.09] swap
-    cartridge v6 strips (latch, TPU): 2.2 g (M) at [-10.0, 0.0, -44.46] swap
-    cartridge skid closed end (latch, TPU): 1.4 g (M) at [-42.3, 0.0, -39.5] swap
-    cartridge skid lead end (latch, TPU): 3.2 g (M) at [28.86, 0.0, -32.91] swap
-    pack 4S 1500: 155.0 g (P) at [-15.05, 0.0, -16.5] swap
-    pack XT60 plug: 10.0 g (E) at [33.25, -0.17, -11.78] swap
+    Radxa Zero 3W: 10.0 g (E) at [-104.85, 0.0, -12.0]
+    flow MTF-02P: 1.5 g (P) at [-10.5, 35.5, -29.5]
+    mount + nose legs (Scout): 25.0 g (E) at [-5.35, 0.0, 13.09]
+    receiver v3 (latch): 94.4 g (M) at [-11.4, -0.0, -10.93]
+    receiver lid (latch): 10.3 g (M) at [32.75, 0.0, 5.31]
+    receiver TPU strips (latch): 2.0 g (M) at [-16.55, 0.0, 2.3]
+    receiver TPU end pieces (latch, E): 8.2 g (M) at [-18.56, -0.0, -19.37]
+    XT60E1-M: 6.0 g (E) at [32.75, -0.0, 2.73]
+    cartridge v6 (latch): 37.9 g (M) at [-5.14, 0.01, -22.76] swap
+    slider +y (latch): 2.9 g (M) at [-10.52, 11.89, -37.09] swap
+    slider -y (latch): 2.9 g (M) at [-10.48, -11.89, -37.09] swap
+    cartridge v6 strips (latch, TPU): 2.2 g (M) at [-10.5, 0.0, -44.46] swap
+    cartridge skid closed end (latch, TPU): 1.4 g (M) at [-42.8, 0.0, -39.5] swap
+    cartridge skid lead end (latch, TPU): 3.2 g (M) at [28.36, 0.0, -32.91] swap
+    pack 4S 1500: 155.0 g (P) at [-15.55, 0.0, -16.5] swap
+    pack XT60 plug: 10.0 g (E) at [32.75, -0.17, -11.78] swap
     camera: 10.0 g (E) at [165.0, 0.0, 30.0]
-    camera mount (boom + seat): 10.56 g (E) at [125.29, -0.0, 23.73]
+    camera cradle (printed): 9.42 g (E) at [158.06, 0.0, 30.5]
     camera chin guard (printed): 2.03 g (E) at [162.0, 0.0, 6.0]
-    wires: 20.0 g (E) at [-8.1, 0.0, 13.5]
+    wires: 20.0 g (E) at [-8.6, 0.0, 13.5]
   balance PASS (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
-    all: 2.57 mm horizontal, -40.74 mm axial, 669.4 g
-    no_swap: 1.41 mm horizontal, -31.68 mm axial, 453.9 g
-  mass budget (soft): 669.4 g of 500.0 g (133.9 %)
-WARN  over budget: total 669.4 of 500.0 g (133.9 %)
-  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 245019 surface points):
-    edge / receiver v3 (latch): 7.07 mm (E) from (-0.47, +0.53, -0.71), axis [0.736, 0.676, 0.015], roll 225.0, lateral -32.9 mm, contact [2.3, 23.4, -44.3]
-    edge / cartridge v6 (latch): 7.07 mm (E) from (-0.26, -0.66, -0.71), axis [-0.939, 0.342, 0.029], roll 225.0, lateral -17.9 mm, contact [-35.8, -19.0, -44.5]
-    edge / slider +y (latch): 7.07 mm (E) from (+0.14, +0.69, -0.71), axis [0.985, -0.173, 0.021], roll 225.0, lateral -28.4 mm, contact [-0.0, 9.0, -44.5]
-    edge / slider -y (latch): 7.07 mm (E) from (+0.38, +0.60, -0.71), axis [-0.845, 0.536, 0.003], roll 135.0, lateral 40.6 mm, contact [-16.2, -6.6, -44.5]
-    post r10 / receiver v3 (latch): 7.07 mm (E) from (+0.14, +0.69, -0.71), axis [0.985, -0.173, 0.021], roll 225.0, lateral -55.4 mm, contact [19.0, -24.3, -44.3]
-    post r10 / cartridge v6 (latch): 7.07 mm (E) from (+0.14, +0.69, -0.71), axis [0.985, -0.173, 0.021], roll 225.0, lateral -35.9 mm, contact [7.5, 5.0, -44.5]
-    post r10 / slider +y (latch): 7.07 mm (E) from (+0.14, +0.69, -0.71), axis [0.985, -0.173, 0.021], roll 225.0, lateral -35.9 mm, contact [1.0, 5.8, -44.5]
-    post r10 / slider -y (latch): 7.07 mm (E) from (-0.11, -0.70, -0.71), axis [0.985, -0.173, 0.021], roll 135.0, lateral 39.1 mm, contact [1.0, -7.4, -44.5]
-    edge / Radxa Zero 3W: 13.59 mm (E) from (-0.88, +0.40, -0.25), axis [0.345, 0.906, 0.245], roll 255.0, lateral 9.1 mm, contact [-136.9, 1.6, -27.0]
-    post r10 / Radxa Zero 3W: 13.89 mm (E) from (-0.77, +0.42, -0.48), axis [0.345, 0.906, 0.245], roll 240.0, lateral 39.1 mm, contact [-136.9, 1.6, -27.0]
-    edge / prop 2: 16.49 mm (E) from (-0.02, -0.70, +0.71), axis [-0.251, 0.69, 0.679], roll 345.0, lateral 58.6 mm, contact [54.1, -98.6, 45.2]
-    edge / prop 1: 16.62 mm (E) from (+0.09, +0.67, +0.74), axis [0.556, -0.649, 0.519], roll 330.0, lateral -77.9 mm, contact [57.0, 98.5, 45.2]
-    post r10 / prop 1: 16.97 mm (E) from (+0.10, +0.73, +0.68), axis [0.88, -0.382, 0.283], roll 315.0, lateral -62.9 mm, contact [59.9, 98.2, 45.2]
-    post r10 / prop 2: 16.97 mm (E) from (+0.05, -0.71, +0.70), axis [-0.991, 0.049, 0.123], roll 315.0, lateral -31.4 mm, contact [57.0, -98.5, 45.2]
-    edge / prop 3: 17.0 mm (E) from +Z, axis [0.738, -0.674, 0.011], roll 0.0, lateral 15.1 mm, contact [-98.5, 57.0, 45.2]
-    edge / prop 4: 17.0 mm (E) from +Z, axis [-0.845, 0.536, 0.003], roll 0.0, lateral -109.4 mm, contact [-63.7, -97.5, 45.2]
-    post r10 / prop 3: 17.0 mm (E) from +Z, axis [0.738, -0.674, 0.011], roll 0.0, lateral 18.1 mm, contact [-98.5, 51.2, 45.2]
-    post r10 / prop 4: 17.0 mm (E) from +Z, axis [-0.845, 0.536, 0.003], roll 0.0, lateral -109.4 mm, contact [-67.5, -96.5, 45.2]
-    edge / flow MTF-02P: 22.63 mm (E) from (+0.13, -0.70, -0.71), axis [0.984, 0.176, 0.005], roll 135.0, lateral 58.6 mm, contact [-13.0, 43.5, -33.5]
-    post r10 / flow MTF-02P: 22.63 mm (E) from (-0.12, +0.70, -0.71), axis [0.984, 0.176, 0.005], roll 225.0, lateral -4.4 mm, contact [-10.0, 43.5, -33.5]
-    edge / UBEC: 36.35 mm (E) from (-0.77, +0.42, -0.48), axis [-0.595, -0.748, 0.295], roll 120.0, lateral -40.4 mm, contact [-116.8, 26.0, 10.0]
-    post r10 / UBEC: 36.71 mm (E) from (-0.76, +0.44, -0.48), axis [-0.549, -0.042, 0.835], roll 150.0, lateral 10.6 mm, contact [-116.8, 26.0, 10.0]
-    edge / pack XT60 plug: 37.0 mm (E) from (+0.63, +0.14, -0.76), axis [0.742, 0.166, 0.649], roll 180.0, lateral -8.9 mm, contact [35.0, 3.6, -24.9]
-    edge / FC: 46.0 mm (E) from +Z, axis [-0.089, 0.996, 0.009], roll 0.0, lateral 12.1 mm, contact [-2.6, -20.0, 17.5]
-    edge / motor 2: 47.54 mm (E) from (+0.75, -0.62, -0.24), axis [-0.518, -0.775, 0.363], roll 255.0, lateral 37.6 mm, contact [63.9, -61.6, 22.0]
-    edge / motor 1: 47.8 mm (E) from (+0.73, +0.64, -0.25), axis [-0.565, 0.766, 0.307], roll 105.0, lateral -40.4 mm, contact [63.9, 61.6, 22.0]
-    post r10 / motor 1: 48.43 mm (E) from (+0.71, +0.65, -0.25), axis [-0.622, 0.758, 0.197], roll 105.0, lateral -40.4 mm, contact [62.9, 62.9, 22.0]
-    post r10 / motor 2: 48.9 mm (E) from (+0.71, +0.00, -0.71), axis [0.045, 0.998, 0.051], roll 135.0, lateral -74.9 mm, contact [66.5, -54.1, 22.0]
-    edge / pack 4S 1500: 50.91 mm (E) from (-0.73, +0.18, -0.66), axis [-0.518, -0.775, 0.363], roll 135.0, lateral 19.6 mm, contact [-50.0, -14.5, -32.5]
-    edge / receiver lid (latch): 51.11 mm (E) from (+0.69, +0.02, -0.72), axis [0.559, 0.621, 0.549], roll 150.0, lateral -50.9 mm, contact [43.3, -31.5, 2.6]
-    edge / motor 3: 51.66 mm (E) from (-0.18, +0.95, -0.25), axis [-0.959, -0.111, 0.259], roll 105.0, lateral -28.4 mm, contact [-55.6, 66.4, 22.9]
-    edge / motor 4: 51.66 mm (E) from (-0.16, -0.95, -0.25), axis [-0.968, 0.098, 0.233], roll 255.0, lateral 27.1 mm, contact [-55.7, -66.4, 22.0]
-    post r10 / motor 4: 51.75 mm (E) from (-0.14, -0.96, -0.26), axis [-0.99, 0.132, 0.055], roll 255.0, lateral 36.1 mm, contact [-55.7, -66.4, 22.0]
-    post r10 / motor 3: 52.78 mm (E) from (-0.18, +0.95, -0.25), axis [-0.959, -0.111, 0.259], roll 105.0, lateral -22.4 mm, contact [-57.3, 66.1, 22.0]
-    edge / XR2: 52.89 mm (E) from (-0.15, -0.26, +0.95), axis [0.988, -0.008, 0.157], roll 15.0, lateral -16.4 mm, contact [-48.0, 10.0, 28.5]
-    post r10 / receiver lid (latch): 67.79 mm (E) from (+0.70, +0.26, -0.66), axis [0.589, -0.733, 0.341], roll 225.0, lateral 45.1 mm, contact [43.3, 31.5, 2.6]
-    post r10 / pack 4S 1500: 68.52 mm (E) from (-0.20, -0.69, -0.69), axis [-0.691, -0.404, 0.599], roll 210.0, lateral -43.4 mm, contact [-50.0, -5.5, -32.5]
-    edge / XT60E1-M: 79.0 mm (E) from (+0.26, +0.03, +0.97), axis [-0.959, -0.111, 0.259], roll 0.0, lateral 0.1 mm, contact [34.7, 4.7, 14.8]
+    all: 2.81 mm horizontal, -40.69 mm axial, 666.33 g
+    no_swap: 1.33 mm horizontal, -31.55 mm axial, 450.83 g
+  mass budget (soft): 666.33 g of 500.0 g (133.3 %)
+WARN  over budget: total 666.33 of 500.0 g (133.3 %)
+  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 242414 surface points):
+    edge / receiver v3 (latch): 7.07 mm (E) from (+0.48, +0.52, -0.71), axis [0.738, -0.674, 0.011], roll 225.0, lateral -6.2 mm, contact [18.5, 25.3, -44.3]
+    edge / cartridge v6 (latch): 7.07 mm (E) from (+0.14, +0.69, -0.71), axis [0.985, -0.173, 0.021], roll 225.0, lateral -19.7 mm, contact [15.3, 19.0, -44.5]
+    edge / slider +y (latch): 7.07 mm (E) from (-0.70, -0.06, -0.71), axis [-0.089, 0.996, 0.009], roll 225.0, lateral -34.7 mm, contact [-18.5, 5.0, -44.5]
+    edge / slider -y (latch): 7.07 mm (E) from (-0.01, -0.71, -0.71), axis [-1.0, -0.001, 0.013], roll 225.0, lateral -30.2 mm, contact [-20.7, -8.7, -44.5]
+    post r10 / receiver v3 (latch): 7.07 mm (E) from (+0.70, +0.07, -0.71), axis [-0.089, 0.996, 0.009], roll 135.0, lateral 20.8 mm, contact [11.6, 25.1, -44.3]
+    post r10 / cartridge v6 (latch): 7.07 mm (E) from (-0.01, -0.71, -0.71), axis [-1.0, -0.001, 0.013], roll 225.0, lateral -37.7 mm, contact [-27.9, -6.3, -44.5]
+    post r10 / slider +y (latch): 7.07 mm (E) from (-0.12, +0.70, -0.71), axis [0.984, 0.176, 0.005], roll 225.0, lateral -37.7 mm, contact [0.5, 9.0, -44.5]
+    post r10 / slider -y (latch): 7.07 mm (E) from (-0.01, -0.71, -0.71), axis [-1.0, -0.001, 0.013], roll 225.0, lateral -37.7 mm, contact [-21.5, -5.8, -44.5]
+    edge / Radxa Zero 3W: 13.89 mm (E) from (-0.82, -0.37, -0.43), axis [0.122, -0.852, 0.509], roll 120.0, lateral -43.7 mm, contact [-137.4, -1.6, -27.0]
+    post r10 / Radxa Zero 3W: 13.89 mm (E) from (-0.76, -0.42, -0.50), axis [0.412, -0.901, 0.137], roll 120.0, lateral -34.7 mm, contact [-137.4, -1.6, -27.0]
+    edge / prop 1: 16.49 mm (E) from (+0.01, +0.70, +0.71), axis [-0.282, -0.68, 0.677], roll 15.0, lateral -57.2 mm, contact [56.0, 98.5, 45.2]
+    edge / prop 2: 16.49 mm (E) from (-0.02, -0.70, +0.71), axis [-0.251, 0.69, 0.679], roll 345.0, lateral 61.3 mm, contact [55.1, -98.5, 45.2]
+    post r10 / prop 1: 16.97 mm (E) from (+0.10, +0.73, +0.68), axis [0.88, -0.382, 0.283], roll 315.0, lateral -64.7 mm, contact [60.9, 98.0, 45.2]
+    post r10 / prop 2: 16.97 mm (E) from (+0.05, -0.71, +0.70), axis [-0.991, 0.049, 0.123], roll 315.0, lateral -31.7 mm, contact [57.0, -98.5, 45.2]
+    edge / prop 3: 17.0 mm (E) from +Z, axis [-0.845, 0.536, 0.003], roll 0.0, lateral 40.3 mm, contact [-10.9, 43.5, 45.2]
+    edge / prop 4: 17.0 mm (E) from +Z, axis [-0.089, 0.996, 0.009], roll 0.0, lateral -60.2 mm, contact [-66.5, -96.8, 45.2]
+    post r10 / prop 3: 17.0 mm (E) from +Z, axis [-0.845, 0.536, 0.003], roll 0.0, lateral 43.3 mm, contact [-10.2, 47.3, 45.2]
+    post r10 / prop 4: 17.0 mm (E) from +Z, axis [-0.089, 0.996, 0.009], roll 0.0, lateral -57.2 mm, contact [-64.7, -97.3, 45.2]
+    edge / flow MTF-02P: 22.63 mm (E) from (-0.01, +0.71, -0.71), axis [-1.0, -0.001, 0.013], roll 135.0, lateral -3.2 mm, contact [-21.5, 43.5, -33.5]
+    post r10 / flow MTF-02P: 22.63 mm (E) from (-0.01, +0.71, -0.71), axis [-1.0, -0.001, 0.013], roll 135.0, lateral 4.3 mm, contact [-21.5, 42.5, -33.5]
+    edge / UBEC: 36.71 mm (E) from (-0.76, +0.44, -0.48), axis [-0.549, -0.042, 0.835], roll 150.0, lateral 11.8 mm, contact [-117.3, 26.0, 10.0]
+    post r10 / UBEC: 36.71 mm (E) from (-0.76, +0.44, -0.48), axis [-0.549, -0.042, 0.835], roll 150.0, lateral 11.8 mm, contact [-117.3, 26.0, 10.0]
+    edge / pack 4S 1500: 40.31 mm (E) from (-0.71, +0.01, -0.70), axis [-0.136, -0.983, 0.127], roll 135.0, lateral 1.3 mm, contact [-50.5, 13.5, -32.5]
+    edge / pack XT60 plug: 45.35 mm (E) from (+0.49, -0.45, -0.74), axis [0.724, -0.261, 0.639], roll 165.0, lateral 28.3 mm, contact [34.5, -3.9, -24.9]
+    edge / FC: 46.0 mm (E) from +Z, axis [-0.089, 0.996, 0.009], roll 0.0, lateral 13.3 mm, contact [-1.7, -18.6, 17.5]
+    edge / motor 1: 48.08 mm (E) from (+0.71, +0.00, -0.71), axis [0.045, 0.998, 0.051], roll 135.0, lateral -66.2 mm, contact [66.5, 54.1, 22.0]
+    edge / motor 2: 48.5 mm (E) from (+0.75, -0.62, -0.24), axis [-0.518, -0.775, 0.363], roll 255.0, lateral 37.3 mm, contact [63.4, -62.3, 22.0]
+    post r10 / motor 1: 48.76 mm (E) from (+0.71, +0.65, -0.25), axis [-0.622, 0.758, 0.197], roll 105.0, lateral -40.7 mm, contact [62.9, 62.9, 22.0]
+    post r10 / motor 2: 49.03 mm (E) from (+0.72, -0.65, -0.26), axis [-0.643, -0.757, 0.117], roll 255.0, lateral 38.8 mm, contact [62.9, -62.9, 22.0]
+    edge / motor 4: 51.0 mm (E) from -Y, axis [-0.968, 0.098, 0.233], roll 270.0, lateral 8.8 mm, contact [-55.7, -66.4, 22.0]
+    edge / motor 3: 51.66 mm (E) from (-0.18, +0.95, -0.25), axis [-0.959, -0.111, 0.259], roll 105.0, lateral -27.2 mm, contact [-55.7, 66.4, 22.0]
+    edge / XR2: 51.66 mm (E) from (-0.15, -0.26, +0.95), axis [0.988, -0.008, 0.157], roll 15.0, lateral -16.7 mm, contact [-48.0, 10.0, 28.5]
+    post r10 / motor 4: 51.83 mm (E) from (-0.14, -0.96, -0.26), axis [-0.99, 0.132, 0.055], roll 255.0, lateral 37.3 mm, contact [-55.7, -66.4, 24.0]
+    post r10 / motor 3: 52.46 mm (E) from +Y, axis [-0.975, -0.164, 0.149], roll 90.0, lateral -9.2 mm, contact [-57.3, 66.1, 22.0]
+    post r10 / pack XT60 plug: 54.0 mm (E) from (+0.61, +0.29, -0.74), axis [0.669, 0.312, 0.675], roll 180.0, lateral -27.2 mm, contact [34.5, -3.3, -24.9]
+    edge / receiver lid (latch): 58.69 mm (E) from (+0.70, +0.26, -0.66), axis [0.589, -0.733, 0.341], roll 225.0, lateral 41.8 mm, contact [42.8, 31.5, 2.6]
+    post r10 / receiver lid (latch): 68.39 mm (E) from (+0.70, +0.26, -0.66), axis [0.589, -0.733, 0.341], roll 225.0, lateral 46.3 mm, contact [42.8, 31.5, 2.6]
+    post r10 / pack 4S 1500: 71.14 mm (E) from (-0.24, +0.71, -0.66), axis [-0.661, 0.38, 0.647], roll 150.0, lateral 41.8 mm, contact [-50.5, 8.5, -32.5]
+    edge / XT60E1-M: 76.65 mm (E) from (+0.97, -0.03, -0.26), axis [0.045, 0.998, 0.051], roll 105.0, lateral -22.7 mm, contact [34.5, -3.9, 13.8]
   access PASS (swept tool overlap <= 0.5 mm³):
     swap: cartridge v6 (latch) down (cartridge v6 (latch), part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     swap: pack 4S 1500 down (pack 4S 1500, part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     swap: pack XT60 plug down (pack XT60 plug, part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
-    M3 key, receiver bolt (-52.6, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
-    M3 key, receiver bolt (-52.6, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
-    M3 key, receiver bolt (+33.2, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
-    M3 key, receiver bolt (+33.2, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (-53.1, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (-53.1, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (+32.8, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (+32.8, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     FC USB-C cable (12 x 7, searched path, E) (FC, type box, w 12, h 7, w_axis [0.7496, -0.6618, 0.0], 250 mm along [-0.6618, -0.7496, 0.0083]): 0.0 mm³ (E)
-System: Scout v3, cage first 4.9 mm (E) at (+0.57, -0.05, -0.82) (camera) (field cones open: camera 55 deg, out 2.55 mm), shell 47 rods closed, h/w 0.34, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.1 L (E), extents 375 x 278 x 125 mm (E), mass 669 of 500 g (134 %) (E) over budget (total), CG 2.6 mm off thrust axis (E) [-2.5, +0.5, -40.7], 1.4 mm without swap parts, probes 7.1 mm (E) edge at (-0.47, +0.53, -0.71) (receiver v3 (latch)), access 8/8 clear
+System: Scout v3, cage first 4.9 mm (E) at (+0.57, -0.05, -0.82) (camera) (field cones open: camera 55 deg, out 2.55 mm), shell 47 rods closed, h/w 0.34, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.1 L (E), extents 376 x 278 x 125 mm (E), mass 666 of 500 g (133 %) (E) over budget (total), CG 2.8 mm off thrust axis (E) [-2.8, +0.5, -40.7], 1.3 mm without swap parts, probes 7.1 mm (E) edge at (+0.48, +0.52, -0.71) (receiver v3 (latch)), access 8/8 clear
