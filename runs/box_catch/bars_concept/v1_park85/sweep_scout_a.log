@@ -1,0 +1,192 @@
+scout: 4002 low points, cartridge bottom 4.12 above z 0 (8.12 above the deck)
+  scout    off ( -80, -80) yaw  -15: FAIL lands on the side -y: cage tube 3-13 pose [-80.0, -80.0, -0.26]
+  scout    off ( -80, -80) yaw  -10: FAIL lands on the side -y: cage tube 3-6 pose [-80.0, -80.0, -0.17]
+  scout    off ( -80, -80) yaw   -5: FAIL lands on the side -y lip: cage tube 3-6 pose [-80.0, -80.0, -0.09]
+  scout    off ( -80, -80) yaw    0: FAIL lands on the side -y lip: cage node 3 pose [-80.0, -80.0, 0.0]
+  scout    off ( -80, -80) yaw    5: FAIL side -y lip meets cage node 3 at s 139.5 pose [-76.74, -81.06, 0.05]
+  scout    off ( -80, -80) yaw   10: FAIL side -y lip meets cage node 3 at s 143.0 pose [-70.39, -83.12, 0.08]
+  scout    off ( -80, -80) yaw   15: FAIL side -y lip meets cage tube 3-6 at s 152.5 pose [-56.64, -88.83, 0.09]
+  scout    off ( -80, -60) yaw  -15: FAIL lands on the side -y lip: cage node 3 pose [-80.0, -60.0, -0.26]
+  scout    off ( -80, -60) yaw  -10: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -60) yaw   -5: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -60) yaw    0: ok clamp 191.0 slide 191.53 err (-5.48, 0.01, -0.84) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -60) yaw    5: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -60) yaw   10: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -60) yaw   15: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw  -15: ok clamp 197.0 slide 195.01 err (-0.77, -0.05, -0.63) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw  -10: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw   -5: ok clamp 197.0 slide 194.93 err (-0.84, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw    0: ok clamp 197.0 slide 194.93 err (-0.84, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw    5: ok clamp 197.0 slide 194.93 err (-0.83, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw   10: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -40) yaw   15: ok clamp 190.5 slide 191.46 err (-5.57, 0.01, -0.84) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw  -15: ok clamp 197.0 slide 195.58 err (-0.36, -0.03, -0.46) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw  -10: ok clamp 197.0 slide 195.23 err (-0.66, -0.03, -0.59) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw   -5: ok clamp 197.0 slide 195.11 err (-0.74, -0.03, -0.6) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw    0: ok clamp 197.0 slide 195.02 err (-0.8, -0.04, -0.62) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw    5: ok clamp 197.0 slide 195.01 err (-0.77, -0.05, -0.63) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw   10: ok clamp 197.0 slide 195.01 err (-0.77, -0.05, -0.63) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -20) yaw   15: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw  -15: ok clamp 197.0 slide 195.56 err (-0.22, -0.03, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw  -10: ok clamp 197.0 slide 195.68 err (-0.18, -0.0, -0.5) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw   -5: ok clamp 197.0 slide 195.81 err (-0.24, 0.1, -0.31) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw    0: ok clamp 197.0 slide 195.93 err (-0.2, -0.22, -0.08) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw    5: ok clamp 197.0 slide 195.58 err (-0.36, -0.03, -0.46) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw   10: ok clamp 197.0 slide 195.23 err (-0.66, -0.03, -0.59) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,   0) yaw   15: ok clamp 197.0 slide 195.11 err (-0.74, -0.03, -0.6) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw  -15: ok clamp 197.0 slide 195.47 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw  -10: ok clamp 197.0 slide 195.48 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw   -5: ok clamp 197.0 slide 195.48 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw    0: ok clamp 197.0 slide 195.51 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw    5: ok clamp 197.0 slide 195.56 err (-0.22, -0.03, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw   10: ok clamp 197.0 slide 195.68 err (-0.18, -0.0, -0.5) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  20) yaw   15: ok clamp 197.0 slide 195.81 err (-0.24, 0.1, -0.31) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw  -15: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw  -10: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw   -5: ok clamp 197.0 slide 195.48 err (-0.18, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw    0: ok clamp 197.0 slide 195.47 err (-0.19, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw    5: ok clamp 197.0 slide 195.47 err (-0.19, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw   10: ok clamp 196.5 slide 195.46 err (-0.2, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  40) yaw   15: ok clamp 197.0 slide 195.48 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw  -15: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw  -10: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw   -5: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw    0: ok clamp 190.5 slide 191.07 err (-4.97, 0.03, -0.82) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw    5: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw   10: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80,  60) yaw   15: FAIL lands on the side +y lip: cage node 0 pose [-80.0, 60.0, 0.26]
+  scout    off ( -80,  80) yaw  -15: FAIL side +y lip meets cage tube 0-5 at s 152.5 pose [-56.64, 88.83, -0.09]
+  scout    off ( -80,  80) yaw  -10: FAIL side +y lip meets cage node 0 at s 143.0 pose [-70.39, 83.12, -0.08]
+  scout    off ( -80,  80) yaw   -5: FAIL side +y lip meets cage node 0 at s 139.5 pose [-76.73, 81.05, -0.05]
+  scout    off ( -80,  80) yaw    0: FAIL lands on the side +y lip: cage node 0 pose [-80.0, 80.0, 0.0]
+  scout    off ( -80,  80) yaw    5: FAIL lands on the side +y lip: cage tube 0-5 pose [-80.0, 80.0, 0.09]
+  scout    off ( -80,  80) yaw   10: FAIL lands on the side +y: cage tube 0-5 pose [-80.0, 80.0, 0.17]
+  scout    off ( -80,  80) yaw   15: FAIL lands on the side +y: cage tube 0-12 pose [-80.0, 80.0, 0.26]
+  scout    off ( -60, -80) yaw  -15: FAIL lands on the side -y: cage tube 3-6 pose [-60.0, -80.0, -0.26]
+  scout    off ( -60, -80) yaw  -10: FAIL lands on the side -y: cage tube 3-6 pose [-60.0, -80.0, -0.17]
+  scout    off ( -60, -80) yaw   -5: FAIL lands on the side -y lip: cage tube 3-6 pose [-60.0, -80.0, -0.09]
+  scout    off ( -60, -80) yaw    0: FAIL lands on the side -y lip: cage node 3 pose [-60.0, -80.0, 0.0]
+  scout    off ( -60, -80) yaw    5: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -80) yaw   10: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -80) yaw   15: FAIL side bars jam before their stop at s 211.0 (phase 2): {'side -y': 0.9724082149157028} pose [-4.96, -54.42, -0.13]
+  scout    off ( -60, -60) yaw  -15: FAIL lands on the side -y lip: cage node 3 pose [-60.0, -60.0, -0.26]
+  scout    off ( -60, -60) yaw  -10: ok clamp 191.0 slide 191.45 err (-5.57, 0.01, -0.84) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -60) yaw   -5: ok clamp 191.0 slide 191.47 err (-5.56, 0.01, -0.84) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -60) yaw    0: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -60) yaw    5: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -60) yaw   10: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -60) yaw   15: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw  -15: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw  -10: ok clamp 197.0 slide 194.92 err (-0.85, -0.05, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw   -5: ok clamp 197.0 slide 194.93 err (-0.83, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw    0: ok clamp 197.0 slide 194.93 err (-0.83, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw    5: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw   10: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -40) yaw   15: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw  -15: ok clamp 197.0 slide 195.58 err (-0.36, -0.03, -0.46) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw  -10: ok clamp 197.0 slide 195.12 err (-0.73, -0.03, -0.6) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw   -5: ok clamp 197.0 slide 195.02 err (-0.8, -0.04, -0.62) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw    0: ok clamp 197.0 slide 195.01 err (-0.77, -0.05, -0.63) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw    5: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw   10: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60, -20) yaw   15: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw  -15: ok clamp 196.5 slide 195.56 err (-0.22, -0.03, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw  -10: ok clamp 197.0 slide 195.68 err (-0.18, -0.0, -0.5) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw   -5: ok clamp 197.0 slide 195.81 err (-0.24, 0.1, -0.31) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw    0: ok clamp 197.0 slide 195.93 err (-0.2, -0.22, -0.08) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw    5: ok clamp 197.0 slide 195.58 err (-0.36, -0.03, -0.46) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw   10: ok clamp 197.0 slide 195.23 err (-0.66, -0.03, -0.59) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,   0) yaw   15: ok clamp 197.0 slide 195.11 err (-0.74, -0.03, -0.6) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw  -15: ok clamp 197.0 slide 195.46 err (-0.2, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw  -10: ok clamp 197.0 slide 195.46 err (-0.2, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw   -5: ok clamp 197.0 slide 195.46 err (-0.2, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw    0: ok clamp 197.0 slide 195.48 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw    5: ok clamp 197.0 slide 195.51 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw   10: ok clamp 197.0 slide 195.68 err (-0.19, -0.01, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  20) yaw   15: ok clamp 197.0 slide 195.81 err (-0.24, 0.1, -0.31) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw  -15: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw  -10: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw   -5: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw    0: ok clamp 196.5 slide 195.48 err (-0.18, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw    5: ok clamp 197.0 slide 195.48 err (-0.18, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw   10: ok clamp 197.0 slide 195.47 err (-0.19, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  40) yaw   15: ok clamp 197.0 slide 195.46 err (-0.2, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw  -15: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw  -10: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw   -5: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw    0: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw    5: ok clamp 191.0 slide 191.2 err (-4.79, 0.03, -0.81) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw   10: ok clamp 191.0 slide 191.17 err (-4.83, 0.03, -0.81) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  60) yaw   15: FAIL lands on the side +y lip: cage node 0 pose [-60.0, 60.0, 0.26]
+  scout    off ( -60,  80) yaw  -15: ok clamp 197.0 slide 194.62 err (1.09, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  80) yaw  -10: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  80) yaw   -5: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -60,  80) yaw    0: FAIL lands on the side +y lip: cage node 0 pose [-60.0, 80.0, 0.0]
+  scout    off ( -60,  80) yaw    5: FAIL lands on the side +y lip: cage tube 0-5 pose [-60.0, 80.0, 0.09]
+  scout    off ( -60,  80) yaw   10: FAIL lands on the side +y: cage tube 0-5 pose [-60.0, 80.0, 0.17]
+  scout    off ( -60,  80) yaw   15: FAIL lands on the side +y: cage tube 0-5 pose [-60.0, 80.0, 0.26]
+  scout    off ( -40, -80) yaw  -15: FAIL lands on the side -y: cage tube 3-6 pose [-40.0, -80.0, -0.26]
+  scout    off ( -40, -80) yaw  -10: FAIL lands on the side -y: cage tube 3-6 pose [-40.0, -80.0, -0.17]
+  scout    off ( -40, -80) yaw   -5: FAIL lands on the side -y lip: cage tube 3-6 pose [-40.0, -80.0, -0.09]
+  scout    off ( -40, -80) yaw    0: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -80) yaw    5: FAIL side bars jam before their stop at s 212.5 (phase 2): {'side -y': 1.0366716536509557} pose [-4.57, -49.96, -0.14]
+  scout    off ( -40, -80) yaw   10: ok clamp 197.0 slide 194.14 err (0.16, -0.05, -0.59) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -80) yaw   15: FAIL side bars jam before their stop at s 210.0 (phase 2): {'side -y': 0.14998620469532398} pose [4.33, -55.39, 0.12]
+  scout    off ( -40, -60) yaw  -15: FAIL lands on the side -y lip: cage node 3 pose [-40.0, -60.0, -0.26]
+  scout    off ( -40, -60) yaw  -10: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -60) yaw   -5: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -60) yaw    0: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -60) yaw    5: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -60) yaw   10: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -60) yaw   15: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw  -15: ok clamp 197.0 slide 194.93 err (-0.83, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw  -10: ok clamp 197.0 slide 194.93 err (-0.83, -0.06, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw   -5: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw    0: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw    5: ok clamp 196.5 slide 194.94 err (-0.82, -0.06, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw   10: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -40) yaw   15: ok clamp 197.0 slide 193.72 err (-2.54, -0.02, -0.66) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw  -15: ok clamp 196.5 slide 195.23 err (-0.65, -0.03, -0.59) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw  -10: ok clamp 197.0 slide 195.11 err (-0.74, -0.03, -0.6) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw   -5: ok clamp 197.0 slide 195.02 err (-0.8, -0.04, -0.62) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw    0: ok clamp 197.0 slide 195.01 err (-0.77, -0.05, -0.63) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw    5: ok clamp 197.0 slide 194.96 err (-0.82, -0.05, -0.64) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw   10: ok clamp 197.0 slide 194.92 err (-0.85, -0.05, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40, -20) yaw   15: ok clamp 197.0 slide 194.92 err (-0.85, -0.05, -0.65) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw  -15: ok clamp 197.0 slide 195.51 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw  -10: ok clamp 197.0 slide 195.68 err (-0.18, -0.0, -0.5) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw   -5: ok clamp 197.0 slide 195.81 err (-0.24, 0.1, -0.31) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw    0: ok clamp 197.0 slide 195.93 err (-0.2, -0.22, -0.08) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw    5: ok clamp 197.0 slide 195.58 err (-0.36, -0.03, -0.46) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw   10: ok clamp 197.0 slide 195.17 err (-0.67, -0.03, -0.6) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,   0) yaw   15: ok clamp 196.5 slide 195.02 err (-0.8, -0.04, -0.62) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw  -15: ok clamp 197.0 slide 195.47 err (-0.19, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw  -10: ok clamp 197.0 slide 195.47 err (-0.19, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw   -5: ok clamp 197.0 slide 195.46 err (-0.2, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw    0: ok clamp 197.0 slide 195.48 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw    5: ok clamp 197.0 slide 195.51 err (-0.21, -0.01, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw   10: ok clamp 197.0 slide 195.56 err (-0.22, -0.03, -0.57) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  20) yaw   15: ok clamp 196.5 slide 195.68 err (-0.19, -0.0, -0.5) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw  -15: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw  -10: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw   -5: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw    0: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw    5: ok clamp 196.5 slide 195.46 err (-0.2, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw   10: ok clamp 197.0 slide 195.48 err (-0.18, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  40) yaw   15: ok clamp 197.0 slide 195.48 err (-0.18, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw  -15: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw  -10: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw   -5: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw    0: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw    5: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw   10: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  60) yaw   15: FAIL lands on the side +y lip: cage node 0 pose [-40.0, 60.0, 0.26]
+  scout    off ( -40,  80) yaw  -15: ok clamp 197.5 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  80) yaw  -10: ok clamp 197.0 slide 194.62 err (1.09, -0.03, -0.51) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  80) yaw   -5: FAIL side bars jam before their stop at s 212.0 (phase 2): {'side +y': 0.8080369615582299} pose [3.52, 50.43, -0.13]
+  scout    off ( -40,  80) yaw    0: ok clamp 197.0 slide 195.43 err (-0.22, -0.0, -0.58) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -40,  80) yaw    5: FAIL lands on the side +y lip: cage tube 0-5 pose [-40.0, 80.0, 0.09]
+  scout    off ( -40,  80) yaw   10: FAIL lands on the side +y: cage tube 0-5 pose [-40.0, 80.0, 0.17]
+  scout    off ( -40,  80) yaw   15: FAIL lands on the side +y: cage tube 0-5 pose [-40.0, 80.0, 0.26]
+  scout 189 landings in 755 s
+scout {"square_mm": 40.0, "per_axis": {"x": [-80.0, 0], "y": [0, 0]}, "yaw_ok_deg": [-15, -10, -5, 0, 5, 10, 15], "worst_pose_err_mm": 5.57, "worst_yaw_err_deg": 0.84, "min_clear_mm": 2.5, "s_clamp": [190.5, 191.0, 196.5, 197.0, 197.5], "n": 189, "n_ok": 151, "fails": {"lands on the side -y: cage tube 3-6": 5, "lands on the side -y lip: cage node 3": 5, "lands on the side +y lip: cage node 0": 5, "lands on the side +y: cage tube 0-5": 5, "side bars jam before their stop": 4, "lands on the side -y lip: cage tube 3-6": 3}}

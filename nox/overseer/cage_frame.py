@@ -130,6 +130,14 @@ def main():
                 p_, q_ = (np.array(v) for v in RES["links"][k]); core = q_ if gname.startswith("L2") else p_
                 far = p_ if core is q_ else q_; F += byn[k]["N"] * (far - core) / np.linalg.norm(far - core)   # tension pulls the arm toward the far end
             arm.setdefault(gname, {})[cn] = np.round(F, 1).tolist()
+    core_root = {}                                                      # the core session's hub deck tower: keels + L2 braces per case
+    for cn, mf_ in res.items():
+        core_root[cn] = {r["name"]: round(float(r["N"]), 1) for r in mf_ if r["name"].startswith(("keel", "L2 brace"))}
+    json.dump(dict(note="axial force N (+ tension), no SF, per case of cage_frame.py (crash 35 g x 14 through the first-touching member, flight 4 g); "
+                        "core = the tube end in the hub deck tower, lug = the head end (F on E)",
+                   points={k: dict(core=(v[1] if k.startswith("L2") else v[0]), lug=(v[0] if k.startswith("L2") else v[1]))
+                           for k, v in RES["links"].items() if k.startswith(("keel", "L2 brace"))},
+                   cases=core_root), open(os.path.join(OUT, "core_root_forces.json"), "w"), indent=1)
     arm_worst = {g_: max(((float(np.linalg.norm(v)), c_) for c_, v in d.items())) for g_, d in arm.items()}
     json.dump(dict(cases=arm, worst={g_: [round(v[0]), v[1]] for g_, v in arm_worst.items()}), open(os.path.join(OUT, "arm_loads.json"), "w"), indent=1)
     m_g = {i: v * 1000 for i, v in enumerate(m) if v > 0}; m_g[H] = m_g.get(H, 0) + M_HEAD * 1000   # the frame's lowest modes, rigid joints
