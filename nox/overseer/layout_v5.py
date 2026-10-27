@@ -347,6 +347,9 @@ PHIS = (20.0, 35.0, 50.0, 65.0)                  # tilt of the head plane (from 
 _DRONE = {}
 
 
+STALE = set()                                                           # saved nodes drawn for an older cage, left out
+
+
 def saved_node(c):
     """the newest saved cage node at c (CLAUDE.md "Cage sessions keep their parts in sync": the artifact shows the saved parts):
     a decimated copy of runs/cage_nodes/v3/node_<i>/cage_node_<i>.stl (run/cage_nodes-v3) in runs/overseer_layout/v5/saved/, for the
@@ -360,6 +363,8 @@ def saved_node(c):
                 if os.path.exists(f):
                     m = trimesh.load(f, force="mesh")
                     if sy < 0: m.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0])); m.invert()
+                    if trimesh.proximity.closest_point(m, [c])[1][0] > 8.0:   # saved for an older cage (its hub is not at c): stale,
+                        STALE.add(i); return None                             # the placeholder until the node's rerun saves
                     return m
     return None
 
@@ -1278,6 +1283,7 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
                        contact_pairs=contact, guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=2200, cage_shell=SHELL_SPEC, access=ACCESS,
                        balance_no_swap_gate=False)   # dimensions.md L Balance: Overseer pack-out reported (DEFAULT 26 Oct, Spark's v2 format)
     asm.save(os.environ.get("V5_ASM", os.path.join(ROOT, "nox", "overseer", "overseer.assembly.json")))
+    if STALE: say(f"saved nodes left out (saved for an older cage, placeholder until their rerun saves): {sorted(STALE)}")
     say("wrote nox/overseer/overseer.assembly.json")
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())
