@@ -367,7 +367,7 @@ for k, (sx, sy) in enumerate([(1, 1), (1, -1), (-1, 1), (-1, -1)]):
                 "ignore": ["prop 1", "prop 2", "prop 3", "prop 4", "wires", "cage shell tubes", "cage shell nodes"]})
 
 man = {k: v for k, v in v5.items() if k not in ("parts", "contact_pairs", "openings", "access", "note", "name")}
-man.update({"name": "Overseer core v2", "machine": "overseer",
+man.update({"name": "Overseer core v3", "machine": "overseer",
             "note": ("Overseer core v2 (27 Oct, Spark: everything inside the cage except the arms and the nodes, the keel roots of the L2 head included; "
                      "the battery side an empty rectangular slot; latch mechanism, cameras and the head not this session's; screwdriver access, fewest pieces): "
                      "v5 / cage v5 context parts unchanged (nox/overseer/overseer.assembly.json); the core, the latch set in pose (masses only: the slot's "
