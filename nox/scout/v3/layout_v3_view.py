@@ -22,8 +22,8 @@ sh = json.load(open(os.path.join(RUN, "cage_shell.json"))); N = np.array(sh["nod
 V5 = os.path.join(RUN, "overseer_cage_v5_shell.json")       # the Overseer cage v5 (PR 122, copied into the run, SOURCE.txt)
 if r.get("ring_mode") == "v5side" and os.path.exists(V5):
     so = json.load(open(V5)); No = np.array(so["nodes"]); Eo = so["rods"]; Ro = No[so["open"][0]["ring"]]
-    No = No - [-30.0, 0, Ro[:, 2].mean()] + [r["tab_x"], 0, r["z_o"] - r.get("seat_dz", 0.0)]   # its catch x -30 on the Scout's catch, its loop
-    OVN = "Overseer cage v5"                                                                    # at the shared datum (the Scout plane sits the seat offset higher)
+    No = No - [-30.0, 0, Ro[:, 2].mean()] + [r["tab_x"], 0, r["z_o"] + r.get("seat_dz", 0.0)]   # its catch x -30 on the Scout's catch, its loop
+    OVN = "Overseer cage v5"                                                                    # at the shared datum (the Scout plane sits the seat offset lower)
 else:
     so = json.load(open(os.path.join(OV, "cage_shell.json"))); No = np.array(so["nodes"]); Eo = so["rods"]
     ov_cart = trimesh.load(os.path.join(OV, "parts", "cartridge.stl"))
@@ -50,7 +50,7 @@ names.append("props (swept)"); s.part("props (swept)", trimesh.util.concatenate(
 rr_ = [trimesh.creation.cylinder(4.0, np.linalg.norm(N[a] - N[b]), sections=12, segment=np.vstack([N[a], N[b]]))
        for a, b in E if a in ring and b in ring]
 names.append("bottom loop (the Overseer's 4 side nodes)"); s.part("bottom loop (the Overseer's 4 side nodes)", trimesh.util.concatenate(rr_), group="cage", color="#e07020", printed=False,
-                                                          note="the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped), same datum (grip line, 3 under the cartridge flat bottom, + 2.1 so the 3 mm rods seat like its 6 mm tubes)")
+                                                          note="the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped), same datum (grip line, 3 under the cartridge flat bottom, 2.1 lower so the cartridges stop at the same height on the ramps)")
 names.append("Overseer cage (same datum, ghost)")
 s.part("Overseer cage (same datum, ghost)", trimesh.util.concatenate([line(No[a], No[b], 0.6) for a, b in Eo]), group="reference", color="#9ab0c8", printed=False,
        note=OVN + " placed loop on loop: one funnel takes both")

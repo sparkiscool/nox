@@ -35,8 +35,9 @@ RING_MODE = os.environ.get("SCOUT_RING", "v5side")         # v5side: the 4 side 
                                                            # overseer: the whole v3 octagon; own
 OV5_SIDE = [(85.8, 116.1), (-68.9, 119.7), (-68.9, -119.7), (85.8, -116.1)]   # about the catch (C, Overseer cage v5, PR 122 nox/overseer/cage_v5_shell.json)
 OV_ROD_R = 3.0                                             # the Overseer's ring tube radius (6 mm tubes)
-SEAT_DZ = float(os.environ.get("SCOUT_SEAT_DZ", (OV_ROD_R - 1.5) * math.sqrt(2)))   # the Scout plane this much higher, so its 3.0 ring rods seat
-                                                           # where the Overseer's 6 mm tubes do on the shared 45 deg ramps (DEFAULT 27 Oct; alt: 6 mm ring tubes)
+SEAT_DZ = float(os.environ.get("SCOUT_SEAT_DZ", (OV_ROD_R - 1.5) * math.sqrt(2)))   # the Scout plane this much lower under its cartridge: a 3.0 rod
+                                                           # sits r·√2 above a 45 deg ramp face, 2.12 lower than the 6 mm tube, so the cartridges
+                                                           # stop at the same height (DEFAULT 27 Oct, design center; alt: 6 mm ring tubes)
 USB_FIRST = RING_MODE != "v5side"                          # v5side: the links first (the rear spokes need the tail-left side), then the USB path
 FUNNEL_BAND = 30.0                                         # nothing but the ring rods within this height above the plane, outside the swap column (funnel ramps)
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v10", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
@@ -209,7 +210,7 @@ def build(DC):
     TAB_X = float(np.mean([D["slider +y (latch)"][0].bounds[:, 0].mean(), D["slider -y (latch)"][0].bounds[:, 0].mean()]))
     CART_BOT = float(D["cartridge v6 (latch)"][0].bounds[0][2])
     REC_B = D["receiver v3 (latch)"][0].bounds
-    Z_O = CART_BOT + RING_DZ + (SEAT_DZ if RING_MODE == "v5side" else 0.0)   # the Scout ring plane on the same datum (+ the seat offset)
+    Z_O = CART_BOT + RING_DZ - (SEAT_DZ if RING_MODE == "v5side" else 0.0)   # the Scout ring plane on the same datum (− the seat offset)
     RING = ring_nodes(); nR = len(RING)
     sx_ = 30.0 if RING_MODE not in ("rect", "v5side") else min(30.0, float(RING[:, 0].max()) - REC_B[1][0] - SHELL_R - 1.0, REC_B[0][0] - float(RING[:, 0].min()) - SHELL_R - 1.0)
     SPARE_X = sx_
@@ -970,8 +971,8 @@ if RING_MODE in ("overseer", "rect"):
 if RING_MODE == "v5side":
     say(f"ring: the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped; Spark 27 Oct), about the catch "
         + ", ".join(f"({x_:+.1f}, {y_:+.1f})" for x_, y_ in OV5_SIDE) + f", {np.ptp(nodes[:nR, 0]):.1f} long, {2 * OV5_SIDE[1][1]:.1f} wide at the tail, "
-        + f"{2 * OV5_SIDE[0][1]:.1f} at the nose; plane z {Z_O:.2f} = cartridge flat bottom {RING_DZ:+.2f} + seat {SEAT_DZ:+.2f} (3.0 rods seat where the "
-        + f"Overseer's 6 mm tubes do on 45 deg ramps); {len(ringE)} ring rods (C)")
+        + f"{2 * OV5_SIDE[0][1]:.1f} at the nose; plane z {Z_O:.2f} = cartridge flat bottom {RING_DZ:+.2f} − seat {SEAT_DZ:.2f} (the 3.0 rods sit 2.12 lower on "
+        + f"the 45 deg ramps than the Overseer's 6 mm tubes, so both cartridges stop at the same height); {len(ringE)} ring rods (C)")
     smp = lambda a_, b_: np.asarray(a_) + np.linspace(0.02, 0.98, 80)[:, None] * (np.asarray(b_) - np.asarray(a_))
     nl_ = sum(int(in_band(smp(p_, q_)).any()) for p_, q_ in extra.values()); nl1_ = sum(int(in_band(smp(p_, q_), ROD_R).any()) for p_, q_ in extra.values())
     ns_ = [(a, b) for a, b in E if min(a, b) >= nR and in_band(smp(nodes[a], nodes[b]), SHELL_R).any()]
