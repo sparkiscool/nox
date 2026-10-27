@@ -7,17 +7,17 @@
 :root {
   --bg: #eef0ee; --panel: #f9faf8; --ink: #1c2126; --muted: #5d6771; --line: #cfd5d9; --line2: #e3e7e9;
   --accent: #b5471b; --accent-soft: #f5e1d6; --stage: #e4e7e6; --grid: #c9cfd2;
-  --c-structure: #8d98a3; --c-arm: #c7612f; --c-latch: #3b7fb6; --c-electronics: #3f9d5f; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb;
+  --c-structure: #8d98a3; --c-structure_v1: #c9b27a; --c-catch_old: #d98cae; --c-arm: #c7612f; --c-latch: #3b7fb6; --c-electronics: #3f9d5f; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb;
   --display: "Barlow Semi Condensed", "Arial Narrow", sans-serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #14181c; --panel: #1b2026; --ink: #e5e9eb; --muted: #97a3ad; --line: #343c44; --line2: #262d34;
   --accent: #e0772f; --accent-soft: #3a2415; --stage: #1d2328; --grid: #313a42;
-  --c-structure: #a7b1bb; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark } }
+  --c-structure: #a7b1bb; --c-structure_v1: #d6c08a; --c-catch_old: #e39cbf; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #14181c; --panel: #1b2026; --ink: #e5e9eb; --muted: #97a3ad; --line: #343c44; --line2: #262d34;
   --accent: #e0772f; --accent-soft: #3a2415; --stage: #1d2328; --grid: #313a42;
-  --c-structure: #a7b1bb; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark }
+  --c-structure: #a7b1bb; --c-structure_v1: #d6c08a; --c-catch_old: #e39cbf; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark }
 html, body { height: 100%; }
 [hidden] { display: none !important; }
 * { box-sizing: border-box; }
@@ -92,11 +92,13 @@ a { color: var(--accent); }
 const SYS = {
   structure: { label: "Structure v2 cut (PR 113, unmerged)", on: true, opacity: 1 },
   arm: { label: "Swap arm v7", on: true, opacity: 1 },
-  latch: { label: "Battery latch: receivers + cartridges", on: true, opacity: 1 },
+  latch: { label: "Battery latch sets in every bay (cartridge, sliders, receiver, lid, carrier, XT60, TPU)", on: true, opacity: 1 },
   electronics: { label: "Electronics (boxes, placement v1)", on: true, opacity: 1 },
   enclosure: { label: "Clear sheets", on: true, opacity: 0.1 },
   reserved: { label: "Reserved top slot (landing, design center)", on: true, opacity: 0.16 },
   envelopes: { label: "Arm envelopes and keep-outs", on: false, opacity: 0.25 },
+  structure_v1: { label: "Structure v1 demo (printed 19 Oct, superseded by v2)", on: false, opacity: 1 },
+  catch_old: { label: "Funnel panels + hook latch (superseded, no funnel)", on: false, opacity: 0.6 },
 };
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const $ = (id) => document.getElementById(id);
