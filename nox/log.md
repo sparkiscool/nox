@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer hub deck v6/v8): v6 (tower, braces at z 22/32) FAILED strength 2.72 (top hit, keel/front-foot joint); DEFAULT: brace roots lowered to z 12/18 (cage what-if: max root force 190 vs 403 N, tipping 8 vs 20 N m, head 166 -> 155 Hz; alt: v7 with more material, stopped). v8 running on the low roots.
 - 27 Oct (Overseer core v3, cage + arm ask): the L2 braces root on a tower in the hub deck (B over a top-plate block A: 788 N a fastener), closed by deep webs to 4 mid feet + feet (60, ±17) after 2 review FAILs (pried toe; one-way pads); concept PASS. Hub deck v6 next (per-case root forces). v4/v5 not to print.
 - 27 Oct (Overseer hub deck v4): READY, print/overseer_hub_deck_v4.stl 38.9 g (M), worst 0.24 (keels push), solid_check PASS, run 1.60 h (smoke 0.94..2.25), 6.25 members; flow clip v1 READY (5.0 g); keel hub coupon v2 (12.0 g). Rear Pi posts 99.8 % in the build drawn test (reported).
 - 27 Oct (Overseer hub deck v3/v4): v3 ran 2.08 h (smoke said 1.5..3.6), 34.5 g, worst 0.35, CLI gate PASS but the drawn-body test FAILED: the arm box cut the mid feet and the zip-tie channels split the deck, capping members at 4.44. v4: real arm envelope, feet Ø14, UBEC/buck on VHB tape (DEFAULT; alt zip ties), every body reachable at 6.25.
