@@ -66,7 +66,8 @@ Manifest: {"name", "parts": [{"name", "mesh": path (STL/OBJ/PLY, relative to the
   "protect": true (any role), "material", "mass_g", "budget_g", "tag": M|C|E|P, "cg": [x,y,z] in part frame (optional),
   "swap": true (optional)}],
   "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0, "skip_probes": false} or
-  {"part", "exempt": true} (outside the cage on purpose: no cage-first or probe requirement, reported)],
+  {"part", "axis", "half_angle_deg", "field": true} (a sensor's field outside the cage, Spark 26 Oct: no cage-first
+  requirement inside the cone, skip_probes there; every other direction gated as usual)],
   "contact_pairs": [[a, b, allowed_mm3]], "clearance_pairs": [[a, b, min_mm]], "guard_offsets": {name: mm},
   "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "balance_no_swap_gate": true, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
   "probes": true | false | {"edge": true, "post": true, "post_r_mm": 10 or [radii], "n_dirs": 500, "n_roll": 24, "res_mm": 1.0},
@@ -164,7 +165,8 @@ def cage_first(parts, meshes, openings, margin_mm, n_dirs):
         for o in openings:
             if o.get("part") not in (None, nm): continue
             ax = np.asarray(o["axis"], float); ax /= np.linalg.norm(ax)
-            req[D @ ax >= np.cos(np.radians(o["half_angle_deg"]))] = min(float(o.get("min_mm", 0.0)), margin_mm)
+            inc = D @ ax >= np.cos(np.radians(o["half_angle_deg"]))     # overlapping openings: the loosest requirement holds
+            req[inc] = np.minimum(req[inc], -np.inf if o.get("field") else min(float(o.get("min_mm", 0.0)), margin_mm))
         sl = mg - req; k = int(np.argmin(sl)); free = req == margin_mm
         per[nm] = dict(min_margin_mm=round(float(mg.min()), 2), worst_dir=[round(float(x), 3) for x in D[k]],
                        worst_slack_mm=round(float(sl[k]), 2), min_margin_outside_openings_mm=round(float(mg[free].min()), 2) if free.any() else None,
@@ -544,7 +546,15 @@ def cage_shell(manifest, parts, n=2000):
         la, lb, lc = np.linalg.norm(N[b] - N[c]), np.linalg.norm(N[a] - N[c]), np.linalg.norm(N[a] - N[b]); sp = (la + lb + lc) / 2
         cells.append(2 * np.sqrt(max(sp * (sp - la) * (sp - lb) * (sp - lc), 0)) / sp - 2 * rr)
     closed = not gaps.any()
-    return dict(applies=True, pass_=bool(closed and (rmin is None or ratio >= float(rmin))), closed=bool(closed), gap_share=round(float(gaps.mean()), 4),
+    mirror = None; mok = True
+    pl = spec.get("mirror", "y" if drone else None)                 # every node and rod has its mirror (Spark 26 Oct: perfect left-right symmetry)
+    if pl:
+        k = "xyz".index(pl); M = N.copy(); M[:, k] *= -1
+        dd = np.linalg.norm(M[:, None] - N[None], axis=2); j = dd.argmin(1)
+        Es = set(E); bad = sum(tuple(sorted((int(j[a]), int(j[b])))) not in Es for a, b in E)
+        mirror = dict(plane=pl, node_err_mm=round(float(dd.min(1).max()), 3), rods_unmatched=int(bad))
+        mok = mirror["node_err_mm"] <= 0.5 and bad == 0
+    return dict(applies=True, pass_=bool(closed and mok and (rmin is None or ratio >= float(rmin))), closed=bool(closed), mirror=mirror, gap_share=round(float(gaps.mean()), 4),
                 open_share=round(float(skip.mean()), 4), ratio=round(ratio, 3), ratio_min=rmin, nodes=len(N), rods=len(E), triangles=len(tris),
                 longest_rod_mm=round(max(L), 1), largest_cell_mm=round(max(cells), 1) if cells else None)
 
@@ -561,13 +571,14 @@ def run(manifest, n_dirs=None, probes=None):
     anyE = any(p.get("tag") == "E" for p in parts)
     gtag = "E" if anyE else tag_of(gtags)
     n = n_dirs or manifest.get("n_dirs", 2000); cm = float(manifest.get("cage_margin_mm", 3.0))
-    # an opening with "exempt": true lifts cage first and the probes for its part in every direction (a sensor that must
-    # sit outside the cage with nothing in its field, Spark 26 Oct: set only with its CLAUDE.md / dimensions.md L line)
-    openings = []
-    for o in manifest.get("openings", []):
-        openings.append(dict(o, axis=[1, 0, 0], half_angle_deg=180.0, min_mm=-1e9, skip_probes=True) if o.get("exempt") else o)
-    exempt = sorted(o["part"] for o in manifest.get("openings", []) if o.get("exempt"))
-    manifest = dict(manifest, openings=openings)
+    # an opening with "field": true is a sensor's field cone outside the cage (Spark 26 Oct: the L2 and the front camera with
+    # nothing in their views, guarded only outside them): no cage-first requirement and no probes inside it, gated elsewhere
+    assert not any(o.get("exempt") for o in manifest.get("openings", [])), "exempt openings are retired: declare the sensor's field cone (field: true)"
+    # a probe can always reach a sensor's face that stands outside the cage, so the probes skip a field part (every direction);
+    # its protrusion past the cage envelope is reported instead
+    fo = [o for o in manifest.get("openings", []) if o.get("field")]
+    manifest = dict(manifest, openings=[o for o in manifest.get("openings", [])]
+                    + [dict(part=o["part"], axis=[1, 0, 0], half_angle_deg=180.0, min_mm=cm, skip_probes=True) for o in fo])
     cf = cage_first(parts, meshes, manifest.get("openings", []), cm, n)
     cp = compact(meshes, manifest.get("guard_offsets"))
     ft = fit(parts, meshes, manifest.get("contact_pairs", []), float(manifest.get("fit_tol_mm3", 0.5)), manifest.get("clearance_pairs", []))
@@ -592,7 +603,8 @@ def run(manifest, n_dirs=None, probes=None):
     if not cf["applies"]: cfs = "cage first n/a (no protected part)"
     elif "error" in cf: cfs = f"cage first FAIL ({cf['error']})"
     else: cfs = (f"cage first {cf['margin_mm']:.1f} mm ({gtag}) at {cf['worst_dir_label']} ({cf['worst_part']}){'' if cf['pass_'] else ' FAIL'}"
-                 + (f" ({', '.join(exempt)} outside the cage, exempt)" if exempt else ""))
+                 + (" (field cones open: " + ", ".join(f"{o['part']} {o['half_angle_deg']:g} deg, out {max(0.0, -cf['per_part'][o['part']]['min_margin_mm']):g} mm"
+                                                      for o in fo if o["part"] in cf.get("per_part", {})) + ")" if fo else ""))
     w = ft["worst"]
     fts = f"fit {w['overlap_mm3']:.1f} mm³ ({gtag}) ({w['a']}/{w['b']}){'' if ft['pass_'] else ' FAIL'}" if w else f"fit 0.0 mm³ ({gtag})"
     ex = cp["extents_mm"]
@@ -649,7 +661,9 @@ def report(res):
         L.append(f"  shell {'PASS' if sh['pass_'] else 'FAIL'}: " + (sh["error"] if "error" in sh else
                  f"{sh['nodes']} nodes, {sh['rods']} rods, {sh['triangles']} triangles, {'closed' if sh['closed'] else 'open in ' + str(100 * sh['gap_share']) + ' % of directions'}"
                  f" outside the declared openings ({100 * sh['open_share']:.1f} %), h/w {sh['ratio']}" + (f" (min {sh['ratio_min']})" if sh['ratio_min'] is not None else "") + f", longest rod {sh['longest_rod_mm']} mm, "
-                 f"largest cell Ø{sh['largest_cell_mm']} mm"))
+                 f"largest cell Ø{sh['largest_cell_mm']} mm"
+                 + (f", mirror {sh['mirror']['plane']}: nodes within {sh['mirror']['node_err_mm']} mm, {sh['mirror']['rods_unmatched']} rods without a mirror"
+                    if sh.get("mirror") else "")))
     L.append(f"  compact: bbox {cp['bbox_L']} L ({t}), hull {cp['hull_L']} L ({t}), extents {cp['extents_mm']} mm ({t}), largest {cp['largest_extent_mm']} mm"
              + (f", guards {cp['guard_offsets_mm']}" if cp["guard_offsets_mm"] else ""))
     L.append(f"  fit {'PASS' if ft['pass_'] else 'FAIL'} (tol {ft['tol_mm3']} mm³):")

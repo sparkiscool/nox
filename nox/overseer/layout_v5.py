@@ -111,6 +111,8 @@ def seg_band_dist(p0, p1, mxy):
 # ---------------------------------------------------------------- the v2 drone (everything but its cage)
 HALO_BACK, HALO_R, HALO_NODE_R = 8.0, 62.0, 5.0   # L2 guard ring: 8 behind its base plane, r 62 round its axis (body half
                                                  # diagonal 53 + 9), printed nodes r 5 (DEFAULT, E)
+L2_CONE, CAM_CONE = 75.0, 55.0                  # cage first is gated outside these cones (L2 field 90 from its axis: 75 keeps the
+                                                # ring's lateral cover gated; camera diagonal half-angle 51 + 4) (DEFAULT 27 Oct, review)
 LIM = NODE_R + 3.0                               # shell node centres this far behind the L2 base plane and the camera's lower view plane
 SLACK = float(os.environ.get("V5_SLACK", 5.0))
 DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the start ellipsoid (scanned 26 Oct)  # room between the shell target and those limits so frequency-2 cells fit (scanned)
@@ -224,7 +226,7 @@ def ring_nodes(g):
         k *= 1.03
 
 
-def shell(g, seed=1):
+def shell(g, seed=1, warm=None):
     mxy = g["mxy"]; K = g["K"]
     Kmesh = trimesh.convex.convex_hull(K)
     R = ring_nodes(g); nR = len(R)
@@ -271,31 +273,44 @@ def shell(g, seed=1):
     shell.freq = f
     dirs = lambda P: (P - c0) / np.linalg.norm(P - c0, axis=1)[:, None]
     topo = lambda P: ConvexHull(dirs(P)).simplices                     # triangulation by direction: every node stays a vertex
+    from scipy.spatial import cKDTree
+    mir = np.array([1.0, -1.0, 1.0])
+
+    def partners(N):
+        """each node's mirror partner (itself on the centre plane): perfect left-right symmetry (Spark 26 Oct)"""
+        d, j = cKDTree(N).query(N * mir)
+        assert d.max() < 1.0, f"shell nodes are not mirror pairs ({d.max():.2f})"
+        return j
+
+    def sym(N, P):
+        M = 0.5 * (N + N[P] * mir); M[P == np.arange(len(N)), 1] = 0.0; return M
+
     def convex(N, U):
-        """the true hull of the nodes must hold every hull point: push the nodes of each crossed face along U (capped)"""
-        viol = np.array([np.inf]); stuck = np.zeros(len(N), int)
+        """the true hull of the nodes must hold every hull point: push the nodes of each crossed face along U (capped);
+        every step is taken by a node and its mirror partner alike, so the shell stays symmetric"""
+        viol = np.array([np.inf]); stuck = np.zeros(len(N), int); P = partners(N)
         for it in range(2000):
             h = ConvexHull(N)
             lost = np.setdiff1d(np.arange(len(N)), h.vertices)
+            lost = np.union1d(lost, P[lost])
             if len(lost):
                 lf = lost[lost >= nR]
                 stuck[lf] += 1
                 drop = lf[stuck[lf] > 15]                                # held inside by the view limits: not a cell corner there
                 if len(drop):
-                    keep = np.setdiff1d(np.arange(len(N)), drop); N, U, stuck = N[keep], U[keep], stuck[keep]; continue
+                    drop = np.union1d(drop, P[drop])
+                    keep = np.setdiff1d(np.arange(len(N)), drop); N, U, stuck = N[keep], U[keep], stuck[keep]; P = partners(N); continue
                 if len(lf) == 0:
-                    if os.environ.get("V5_DEBUG"): print("ring lost", lost, "it", it, "free z min", N[nR:, 2].min(), "z_o", g["z_o"], "ring z", N[:nR, 2].round(1))
                     return N, np.array([np.inf]), U                     # a ring node fell inside: invalid start
-                N[lf] += 3.0 * U[lf]; N = behind(N); continue
+                N[lf] += 3.0 * U[lf]; N = sym(behind(N), P); continue
             viol = (K @ h.equations[:, :3].T + h.equations[:, 3]).max(0)
             if viol.max() <= 0.05: break
             step = np.zeros(len(N))
             for f, v in zip(h.simplices, viol):
                 if v > 0.05:
                     for a in f: step[a] = max(step[a], min(v, 15.0))
-            step[:nR] = 0
-            N = N + (0.7 * step)[:, None] * U
-            N = behind(N)
+            step = np.maximum(step, step[P]); step[:nR] = 0
+            N = sym(behind(N + (0.7 * step)[:, None] * U), P)
         return N, viol, U
 
     def behind(N):
@@ -308,59 +323,81 @@ def shell(g, seed=1):
                 N[mv] -= over[mv][:, None] * n_[None]
             N[nR:, 2] = np.maximum(N[nR:, 2], g["z_o"] + 1.0)          # free nodes stay above the opening ring (it is the bottom)
         return N
+    if warm is not None and len(warm) > nR: N = np.vstack([R, warm[nR:]])   # balance trim: the last shell's pattern, re-held round the moved parts
     U = dirs(N)
+    N = sym(N, partners(N)); U = dirs(N)
     N, viol, U = convex(behind(N), U)
-    if SNAP and np.isfinite(viol.max()):
-        # prop snap, one node at a time (Spark 26 Oct: less structure over and under the props, secondary to structure): a
-        # free node in a prop disk column tries the motor axis (the hub, low thrust; one per prop and side) or out past the
-        # tip (R + 15), keeping its height, then moves only vertically in a convex pass; the move stays only if the shell
-        # still converges, keeps its ring, the props 12 off, its longest tube within 10 % of the unsnapped shell's and
-        # its prop shadow drops
+    if SNAP and warm is None and np.isfinite(viol.max()):
+        # prop snap, a mirror pair at a time (Spark 26 Oct: less structure over and under the props, secondary to structure):
+        # a free node in a prop disk column tries the motor axis (the hub, low thrust; one per prop and side) or out past
+        # the tip (R + 15), keeping its height, its partner the mirror move; both then move only vertically in a convex pass;
+        # the move stays only if the shell still converges, keeps its ring, the props 12 off and its prop shadow drops
         grids = prop_grids(g)
         def stats(Nn):
             h_ = ConvexHull(Nn); F = [f for f in h_.simplices if not (f < nR).all()]
             Ee = sorted({tuple(sorted((int(f[i]), int(f[(i + 1) % 3])))) for f in F for i in range(3)})
-            tl_ = max(np.linalg.norm(Nn[a_] - Nn[b_]) for a_, b_ in Ee)
             pg_ = min(seg_band_dist(Nn[a_], Nn[b_], mxy) for a_, b_ in Ee) - SHELL_R
             sh_ = sum(sum(seg_shadow(grids, Nn[a_], Nn[b_], SHELL_R)) for a_, b_ in Ee)
-            return tl_, pg_, sh_, len(h_.vertices) == len(Nn)
-        tl0, _, sh0, _ = stats(N); bar = max(1.1 * tl0, tl0 + 25)
+            return pg_, sh_, len(h_.vertices) == len(Nn)
+        _, sh0, _ = stats(N)
         Ud = U.copy(); used_axis = set(); n_snap = 0
-        cand = [i for i in range(nR, len(N)) if min(math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy) < PROP_R + 15.0]
+        cand = [i for i in range(nR, len(N)) if N[i, 1] >= 0 and min(math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy) < PROP_R + 15.0]
         for i in sorted(cand, key=lambda i: min(math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy)):
+            P = partners(N); j = P[i]
             k = int(np.argmin([math.hypot(N[i, 0] - mx, N[i, 1] - my) for mx, my in mxy])); mx, my = mxy[k]
             r = math.hypot(N[i, 0] - mx, N[i, 1] - my); side = 1 if N[i, 2] > PROP_Z else -1
             T_ = N.copy(); Ut = Ud.copy()
             if r < 0.6 * PROP_R and (k, side) not in used_axis: T_[i, :2] = (mx, my)
             else: T_[i, :2] = np.array([mx, my]) + (N[i, :2] - (mx, my)) / max(r, 1e-6) * (PROP_R + 15.0)
-            if np.min(np.linalg.norm(np.delete(T_, i, 0) - T_[i], axis=1)) < 40.0: continue
-            Ut[i] = (0, 0, side)
+            if j != i: T_[j] = T_[i] * mir
+            elif abs(T_[i, 1]) > 0.5: continue                          # a centre-plane node cannot leave the plane
+            if np.min(np.linalg.norm(np.delete(T_, [i, j], 0) - T_[i], axis=1)) < 40.0: continue
+            Ut[i] = Ut[j] = (0, 0, side)
             T_, v_, Ut = convex(T_, Ut)
             if len(T_) != len(N): continue                             # a snap that drops a node changes the pattern: not taken
             if not np.isfinite(v_.max()) or v_.max() > 0.05: continue
-            tl_, pg_, sh_, allv = stats(T_)
-            if allv and tl_ <= bar and pg_ >= PROP_GAP and sh_ < sh0 - 0.05:
+            pg_, sh_, allv = stats(T_)
+            if allv and pg_ >= PROP_GAP and sh_ < sh0 - 0.05:
                 N, Ud, viol, sh0 = T_, Ut, v_, sh_; n_snap += 1
-                if r < 0.6 * PROP_R: used_axis.add((k, side))
+                if r < 0.6 * PROP_R: used_axis.add((k, side)); used_axis.add((int(np.argmin([math.hypot(T_[j, 0] - a_, T_[j, 1] - b_) for a_, b_ in mxy])), side))
         shell.snapped = n_snap
-    # split long tubes: a tube over REFINE_MAX gets a node at its midpoint, 3 out along its faces' normal (so it is a cell
-    # corner, not a point on a flat face), behind the view limits; then the convex pass again; until none is over
-    for _ in range(60):
-        if not np.isfinite(np.max(viol)): break
-        h = ConvexHull(N); F = [f for f in h.simplices if not (f < nR).all()]
-        Ee = {}
-        for fi, f in enumerate(h.simplices):
-            if (f < nR).all(): continue
-            for i in range(3):
-                e_ = tuple(sorted((int(f[i]), int(f[(i + 1) % 3])))); Ee.setdefault(e_, []).append(h.equations[fi, :3])
-        e_, nrm = max(Ee.items(), key=lambda kv: np.linalg.norm(N[kv[0][0]] - N[kv[0][1]]))
-        if np.linalg.norm(N[e_[0]] - N[e_[1]]) <= REFINE_MAX: break
-        nv = np.mean(nrm, 0); nv /= np.linalg.norm(nv)
-        m = 0.5 * (N[e_[0]] + N[e_[1]]) + 3.0 * nv
-        N = behind(np.vstack([N, m])); U = np.vstack([U, dirs(N[-1:])])
-        N, viol, U = convex(N, U)
-    h = ConvexHull(N)
-    tris = np.array([f for f in h.simplices if not (f < nR).all()])
+    # symmetric triangulation (Spark 26 Oct: perfect left-right symmetry): the hull's faces are merged into flat facets
+    # (every vertex within 0.3 of the face plane); a facet and its mirror facet take one triangulation, mirrored; a facet
+    # on the centre plane keeps its triangles if they are their own mirror, else is fanned from a node at its centre
+    # (on the plane and in the facet, so the hull is unchanged)
+    h = ConvexHull(N); P = partners(N); S = h.simplices; nS = len(S)
+    par = list(range(nS))
+    def root(i):
+        while par[i] != i: par[i] = par[par[i]]; i = par[i]
+        return i
+    for fi in range(nS):
+        for fj in h.neighbors[fi]:
+            opp = [v for v in S[fj] if v not in S[fi]]
+            if opp and abs(N[opp[0]] @ h.equations[fi, :3] + h.equations[fi, 3]) < 0.3: par[root(fi)] = root(fj)
+    facets = {}
+    for fi in range(nS): facets.setdefault(root(fi), []).append(fi)
+    facets = [fs for fs in facets.values() if not (np.unique(S[fs]) < nR).all()]          # the opening ring's own facet is the hole
+    key = {frozenset(np.unique(S[fs]).tolist()): k for k, fs in enumerate(facets)}
+    tris = []; extraN = []
+    for k, fs in enumerate(facets):
+        vs = np.unique(S[fs]); km = key.get(frozenset(P[vs].tolist()))
+        assert km is not None, "a facet has no mirror facet"
+        T_ = [tuple(sorted(int(v) for v in S[fi])) for fi in fs]
+        if km != k:
+            if N[vs, 1].mean() > 0: tris += T_ + [tuple(sorted(int(P[v]) for v in t)) for t in T_]
+            continue
+        if {tuple(sorted(int(P[v]) for v in t)) for t in T_} == set(T_): tris += T_; continue
+        cnt = {}
+        for t in T_:
+            for i in range(3): e2 = tuple(sorted((t[i], t[(i + 1) % 3]))); cnt[e2] = cnt.get(e2, 0) + 1
+        c = N[vs].mean(0); c[1] = 0.0
+        onp = [int(v) for v in vs if abs(N[v, 1]) < 0.5 and np.linalg.norm(N[v] - c) < 60.0]
+        if onp: ci = min(onp, key=lambda v: np.linalg.norm(N[v] - c))  # a vertex on the plane near the centre: the fan's apex (no short tube)
+        else: ci = len(N) + len(extraN); extraN.append(c)
+        tris += [tuple(sorted((ci, a_, b_))) for (a_, b_), n_ in cnt.items() if n_ == 1 and ci not in (a_, b_)]
+    shell.lastN = N.copy()
+    if extraN: N = np.vstack([N, extraN])
+    tris = np.array(sorted(set(tris)))
     used = sorted(set(tris.ravel())); remap = {o: i for i, o in enumerate(used)}
     nodes = N[used]; tris = np.array([[remap[a] for a in f] for f in tris])
     E = sorted({tuple(sorted((int(f[i]), int(f[(i + 1) % 3])))) for f in tris for i in range(3)})
@@ -447,9 +484,14 @@ def attach(g, nodes, ring_ids):
     pad = [[-ROD_R - 1] * 3, [ROD_R + 1] * 3]
     boxes_ = [m_.bounds + pad for m_ in (g["cart"], TOP, FC, PI, DECK, PDB, UBEC, BUCK, RX)]   # links clear of the cartridge, top plate, hub
 
+    keys_ = [(np.array([r_ * math.cos(math.radians(d_)) - v_ * math.sin(math.radians(d_)), r_ * math.sin(math.radians(d_)) + v_ * math.cos(math.radians(d_))]), z_, sg)
+             for d_ in (45, 135, 225, 315) for r_, vs_, z_, sg in ((63.74, (10.0, -10.0), -1.7, -1), (63.17, (15.0, -15.0), ROOT_H + 1.6, 1)) for v_ in vs_]
+
     def clear_of_cart(p0, p1):
+        """links clear of the cartridge, top plate and hub boxes and of the arm screws' key lines (d 8 + 1, below and above)"""
         q = p0[None] + np.linspace(0.02, 1, 80)[:, None] * (p1 - p0)[None]
-        return not any(((q > b_[0]) & (q < b_[1])).all(1).any() for b_ in boxes_)
+        if any(((q > b_[0]) & (q < b_[1])).all(1).any() for b_ in boxes_): return False
+        return not any(((sg * (q[:, 2] - z_) > 0) & (np.linalg.norm(q[:, :2] - c_, axis=1) < 4.0 + 1.0 + ROD_R)).any() for c_, z_, sg in keys_)
     grids = prop_grids(g)
 
     def pick(p0, cands, n, spread_deg):
@@ -489,9 +531,49 @@ def attach(g, nodes, ring_ids):
             clear = lambda k: clear_of_cart(cn, nodes[k])
             for n_, k in enumerate([k for k in sorted(ring_ids, key=lambda k: np.linalg.norm(nodes[k] - cn)) if clear(k)][:2]):
                 extra[f"bay tie {sx:+d}{sy:+d}.{n_ + 1}"] = (cn, nodes[k])
+    # L2 braces (27 Oct review: the 4 ties land on the flat front face and the keels root 24 apart, a stalk): each apex lug,
+    # low and high, also to its side's front arm beam just outboard of the plates, so the seat is a braced pyramid on the core
+    g["braces"] = []
+    for sy in (1, -1):
+        (mx, my), (r0, m1, ht) = next(((m_, a_) for m_, a_ in zip(mxy, g["axes"]) if m_[0] > g["dm"] and m_[1] * sy > 0))
+        u = (np.asarray(m1) - r0) / np.linalg.norm(np.asarray(m1) - r0)
+        for out_ in (30.0, 40.0, 50.0, 60.0):
+            root = np.array([*(r0 + out_ * u), ROOT_H + ROD_R])
+            ok_ = True
+            for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
+                s_ = B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0])
+                ok_ &= seg_band_dist(s_, root, mxy) - ROD_R >= PROP_GAP and views_clear(g, s_, root, ROD_R) and clear_of_cart(s_ + 0.05 * (root - s_), root)
+            if ok_:
+                for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
+                    extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), root)
+                g["braces"].append(round(out_, 0)); break
     extra.update(g["keels"])
     hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
+    cr, cn_ = cam_guard(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
+    # perfect left-right symmetry (Spark 26 Oct) for the links too: a link without its mirror gets it
+    mir = np.array([1.0, -1.0, 1.0]); have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]
+    for k_, (a_, b_) in list(extra.items()):
+        a_, b_ = np.asarray(a_) * mir, np.asarray(b_) * mir
+        if not any(min(np.linalg.norm(a_ - p_) + np.linalg.norm(b_ - q_), np.linalg.norm(a_ - q_) + np.linalg.norm(b_ - p_)) < 1.0 for p_, q_ in have):
+            extra[k_ + " m"] = (a_, b_); have.append((a_, b_))
     return extra
+
+
+def cam_guard(g, nodes):
+    """front camera guard (27 Oct review: the camera stood 33 above the cage): a bar of 2 printed nodes over the camera
+    top, behind its lens plane (out of its view) and behind the L2 base plane, each node 2 struts to the nearest shell
+    nodes (props 12 off, views clear); cage first gated over the camera outside its field cone"""
+    b = g["cam"].bounds; hw = max(abs(b[0][1]), abs(b[1][1])); zt = b[1][2]
+    x = min(b[1][0], float(g["cam_lens"][0])) - HALO_NODE_R - 3.0
+    T = [np.array([x, sy * (hw + 4.0), zt + 3.0]) for sy in (1, -1)]
+    rods = {}
+    if not views_clear(g, T[0], T[1], ROD_R): return rods, []
+    rods["halo cam bar"] = (T[0], T[1])
+    for i, t_ in enumerate(T):
+        for n_, k in enumerate([k for k in sorted(range(len(nodes)), key=lambda k: np.linalg.norm(nodes[k] - t_))
+                                if seg_band_dist(t_, nodes[k], g["mxy"]) - ROD_R >= PROP_GAP and views_clear(g, t_, nodes[k], ROD_R)][:2]):
+            rods[f"halo cam strut {i}.{n_ + 1}"] = (t_, nodes[k])
+    return rods, T
 
 
 def masses(g, nodes, E, extra):
@@ -523,28 +605,47 @@ def cg(it):
 def solve(dm=52.1):
     """v2's balance: the motor square (thrust centre) onto the CG, the shell rebuilt round the drone each time"""
     global DC
-    for _ in range(14):
+    def run(dm, warm=None):
+        global DC
         if PACK_AXIS: DC = -dm
         g = drone(dm)
-        nodes, E, tris, ring_ids, viol, K = shell(g)
+        nodes, E, tris, ring_ids, viol, K = shell(g, warm=warm); g["shellN"] = shell.lastN
         extra = attach(g, nodes, ring_ids); it = masses(g, nodes, E, extra); tot, c = cg(it)
         say(f"   motors {dm:5.1f} ahead: CG x {c[0]:5.1f}, {tot:5.0f} g, {len(E)} tubes")
-        if abs(c[0] - dm) < 0.3: break
+        return g, nodes, E, tris, ring_ids, extra, it, tot, c, viol, K
+    seen = []                                                   # (dm, result): the shell is discrete, so the CG can jump
+    for _ in range(14):
+        r = run(dm); seen.append((dm, r)); c = r[8]
+        if abs(c[0] - dm) < 0.1: return r
+        lo = [d_ for d_, q in seen if q[8][0] > d_]; hi = [d_ for d_, q in seen if q[8][0] < d_]
+        if lo and hi and any(abs(d_ - dm) < 1e-6 for d_, _ in seen[:-1]) or len(seen) > 6 and lo and hi:
+            break                                               # a 2-cycle: bisect between the shells
         dm = c[0]
-    return g, nodes, E, tris, ring_ids, extra, it, tot, c, viol, K
+    for _ in range(8):
+        lo = max(d_ for d_, q in seen if q[8][0] > d_); hi = min(d_ for d_, q in seen if q[8][0] < d_ and d_ > lo) if any(q[8][0] < d_ and d_ > lo for d_, q in seen) else None
+        if hi is None or hi - lo < 0.05: break
+        dm = 0.5 * (lo + hi); r = run(dm); seen.append((dm, r))
+        if abs(r[8][0] - dm) < 0.1: return r
+    dm, r = min(seen, key=lambda q: abs(q[1][8][0] - q[0]))
+    # the shell pattern jumps with the motor square (a node more or less): keep the closest one's pattern and trim the
+    # motor square onto the CG with it (nodes re-pushed round the moved parts, no new pattern)
+    for _ in range(10):
+        if abs(r[8][0] - dm) < 0.1 or not np.isfinite(r[9]): break
+        dm = r[8][0]; r2 = run(dm, warm=r[0]["shellN"])
+        if not np.isfinite(r2[9]) or r2[9] > 0.05: break
+        r = r2
+    return r
 
 
 os.makedirs(OUT, exist_ok=True)
-REFINE_MAX = float(os.environ.get("V5_REFINE", 300.0))                    # tubes over this are split (DEFAULT 26 Oct)
-MAX_TUBE = float(os.environ.get("V5_MAX_TUBE", 350.0))                         # longest shell tube allowed (DEFAULT: keeps the geodesic pattern; buckling E)
 STARTS = [float(x) for x in os.environ.get("V5_STARTS", "0.7,0.85,1.0").split(",")] if "V5_START" not in os.environ else [START]
 ROTS = [float(x) for x in os.environ.get("V5_ROTS", "0").split(",")]     # 36 was worse in every case (26 Oct scan)
 PEAKS = [bool(int(x)) for x in os.environ.get("V5_PEAKS", "0").split(",")]   # 1 (nodes at the nose camera peak): every case over 400 tubes (26 Oct)
 SNAPS = [bool(int(x)) for x in os.environ.get("V5_SNAPS", "0,1").split(",")]
 DOMES = [float(x) for x in os.environ.get("V5_DOMES", "40,60,80").split(",")] if "V5_DOME" not in os.environ else [DOME]
 say(f"balance (v2: motor square onto the CG; catch {DC:.0f} aft, L2 base z {ZB:.0f}; geodesic frequency {FREQ}); scan start {STARTS} x "
-    f"prop snap {SNAPS} x dome {DOMES}: structure first (the most compact valid shell sets the bar: longest tube, volume, mass), "
-    f"then the least prop blockage among shells within 10 % / 10 % / 3 % of it:")
+    f"prop snap {SNAPS} x dome {DOMES}: structure first (the most compact valid shell sets the bar: volume, mass; no tube-length limit), "
+    f"then the least prop blockage among shells within 10 % / 3 % of it:")
 cands = []
 for START in STARTS:
     for ROT in ROTS:
@@ -555,13 +656,13 @@ for START in STARTS:
             g_, nodes_, E_ = r[0], r[1], r[2]
             tl = max(np.linalg.norm(nodes_[a] - nodes_[b]) for a, b in E_); vol = ConvexHull(nodes_).volume / 1e6
             pg_ = min(seg_band_dist(nodes_[a], nodes_[b], g_["mxy"]) for a, b in E_) - SHELL_R
-            ok = bool(np.max(r[9]) <= 0.05 and len(r[4]) == 8 and tl <= MAX_TUBE and pg_ >= PROP_GAP)
+            ok = bool(np.max(r[9]) <= 0.05 and len(r[4]) == 8 and pg_ >= PROP_GAP)      # no tube-length limit (Spark 26 Oct)
             bt, bb = blockage(g_, nodes_, E_, r[5]) if ok else (np.nan, np.nan)
             say(f"start {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: shell {vol:.1f} L, {len(E_)} tubes, longest {tl:.0f}, "
                 f"props {pg_:.1f}, {r[7]:.0f} g, prop blockage top {bt:.1f} % / bottom {bb:.1f} %")
             if ok: cands.append(dict(vol=vol, tl=tl, mass=r[7], block=bt + bb, bt=bt, bb=bb, start=START, rot=ROT, snap=SNAP, peak=PEAK, dome=DOME, r=r))
 ref = min(cands, key=lambda c: c["vol"])
-fit = [c for c in cands if c["tl"] <= max(1.1 * ref["tl"], ref["tl"] + 25) and c["vol"] <= 1.1 * ref["vol"] and c["mass"] <= 1.03 * ref["mass"]]
+fit = [c for c in cands if c["vol"] <= 1.1 * ref["vol"] and c["mass"] <= 1.03 * ref["mass"]]
 pick = min(fit, key=lambda c: c["block"])
 say(f"structure bar: start {ref['start']} dome {ref['dome']:.0f} snap {int(ref['snap'])} ({ref['vol']:.1f} L, longest {ref['tl']:.0f}, {ref['mass']:.0f} g, "
     f"blockage {ref['bt']:.1f} / {ref['bb']:.1f} %); picked start {pick['start']} dome {pick['dome']:.0f} snap {int(pick['snap'])} "
@@ -639,9 +740,12 @@ say("front camera (horizon, portrait, 73 x 89 deg): " + ("nothing of the drone i
 say(f"sensor head outside the shell: shell node centres {LIM_L2:.1f} behind the L2 base plane (guard ring in front), {LIM:.1f} under the camera's "
     f"lower view plane (+2 deg) and behind the head plane (the head's back, tilted {g['phi']:.0f} deg from the L2 axis toward +z: the tilt that keeps "
     f"the L2 furthest back of {list(PHIS)})")
-say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
+say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
     f"the others in the camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "
-    f"{sum(k.startswith('L2 tie') for k in extra)} ties into the shell")
+    f"{sum(k.startswith('L2 tie') for k in extra)} ties into the shell, {sum(k.startswith('L2 brace') for k in extra)} braces from the lugs (low and high) to the front "
+    f"arm beams {g.get('braces')} out of the root (a braced pyramid on the core, not a stalk); front camera guard: a bar of 2 printed nodes over its top, "
+    f"behind its lens and the L2 base plane, {sum(k.startswith('halo cam strut') for k in extra)} struts into the shell; break order: the apex lugs are the "
+    f"printed fuse (requirement: they let go before the L2 base, E)")
 for lens, hh, hv, nm in ((g["down_lens"], 44.5, 36.5, "down camera"), (g["flow_lens"], 23.0, 23.0, "flow")):
     for k, m in (("shell", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E])), ("cartridge", g["cart"]), ("feet", trimesh.util.concatenate(g["feet"])),
                  ("links", trimesh.util.concatenate([rod(p0, p1, rr) for p0, p1, rr in memb[len(E):]])), ("sled + pods", trimesh.util.concatenate([g["sled"], g["cam_pod"], g["flow_pod"]]))):
@@ -664,6 +768,7 @@ SUMMARY = dict(cg_off=float(math.hypot(cgv[0] - dm, cgv[1])), l2_axis=A.tolist()
                cam_fwd=g["cam_fwd"].tolist(), cam_up=g["cam_up_v"].tolist(), freq=FREQ, start=START, dome=DOME, snap=SNAP, block_parts=BS, block_top=BT, block_bottom=BB, dm=dm, xB=g["xB"], cam_h=g["cam_h"], z_o=g["z_o"], nodes=len(nodes), tubes=len(E), ring=len(ring_ids), shell_m=float(sh.sum() / 1000),
                shell_g=float(shell_g), link_g=float(link_g), mass=tot, cg=cgv.tolist(), cg_pack_out=c2.tolist(), extents=ext.tolist(), prop_gap=pg,
                l2_blocked=float(hit.mean()), motors_xy=[list(map(float, m)) for m in mxy], Iyy_gm2=Iyy, largest_cell=max(circ) - 2 * SHELL_R)
+SUMMARY["links"] = {k: [np.round(np.asarray(a_), 2).tolist(), np.round(np.asarray(b_), 2).tolist()] for k, (a_, b_) in extra.items()}
 json.dump(SUMMARY, open(os.path.join(OUT, "result.json"), "w"), indent=1)
 json.dump([dict(name=n_, g=round(float(m_), 3), c=np.round(c_, 2).tolist()) for n_, m_, c_ in it], open(os.path.join(OUT, "masses.json"), "w"))
 
@@ -796,7 +901,7 @@ SHELL_SPEC = dict(nodes=np.round(nodes, 3).tolist(), rods=[list(map(int, e)) for
 json.dump(SHELL_SPEC, open(os.path.join(OUT, "cage_shell.json"), "w"))
 GRP_OF = {"cage shell tubes": "shell", "cage shell nodes": "nodes", "spokes, ties, keels, L2 guard ring": "links", "L2 guard ring nodes": "halo nodes",
           "TPU feet": "feet", "apex + cam bracket": "L2 mount", "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)": "hub", "belly sled + pods": "belly"}
-if not any(k in os.environ for k in ("V5_FREQ", "V5_START", "V5_STARTS", "V5_PACK", "V5_ROTS", "V5_SNAPS", "V5_PEAKS", "V5_DOME", "V5_DOMES", "V5_MAX_TUBE", "V5_SLACK")) and os.path.abspath(OUT) == os.path.join(ROOT, "runs", "overseer_layout", "v5"):
+if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_START", "V5_STARTS", "V5_PACK", "V5_ROTS", "V5_SNAPS", "V5_PEAKS", "V5_DOME", "V5_DOMES", "V5_SLACK")) and os.path.abspath(OUT) == os.path.join(ROOT, "runs", "overseer_layout", "v5")):
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
         p_ = dict(name=n_, role=r_, mesh=rel(os.path.join(PD, fname(n_))), mass_g=round(float(gm_), 2), tag=t_, owner="overseer",
@@ -825,11 +930,13 @@ if not any(k in os.environ for k in ("V5_FREQ", "V5_START", "V5_STARTS", "V5_PAC
                        cg_ref=[round(dm, 3), 0.0, PROP_Z], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0,
                        openings=[dict(part=p_, axis=[0, 0, -1], half_angle_deg=40.0, skip_probes=True)
                                  for p_ in ("pack", "cartridge", "receiver", "down camera", "flow MTF-02P")]
-                                + [dict(part=p_, exempt=True, note="Spark 26 Oct: outside the cage, nothing in its view; guard only outside the view")
-                                   for p_ in ("Unitree L2", "front camera")],
+                                + [dict(part="Unitree L2", axis=[round(float(v), 4) for v in A], half_angle_deg=L2_CONE, field=True,
+                                        note="Spark 26 Oct: outside the cage, nothing in its view; guarded only outside its field (cage first gated outside this cone)"),
+                                   dict(part="front camera", axis=[round(float(v), 4) for v in g["cam_fwd"]], half_angle_deg=CAM_CONE, field=True,
+                                        note="Spark 26 Oct: nothing of the drone in its view (73 x 89 deg, diagonal 51); cage first gated outside this cone")],
                        contact_pairs=contact, guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=2200, cage_shell=SHELL_SPEC, access=ACCESS,
                        balance_no_swap_gate=False)   # dimensions.md L Balance: Overseer pack-out reported (DEFAULT 26 Oct, Spark's v2 format)
-    asm.save(os.path.join(ROOT, "nox", "overseer", "overseer.assembly.json"))
+    asm.save(os.environ.get("V5_ASM", os.path.join(ROOT, "nox", "overseer", "overseer.assembly.json")))
     say("wrote nox/overseer/overseer.assembly.json")
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())

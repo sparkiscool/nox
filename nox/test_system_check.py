@@ -283,11 +283,29 @@ def test_balance_no_swap_reported():
     assert r["balance"]["pass_"] and "reported" in r["summary"], r["summary"]
 
 
-def test_exempt_opening():
+def test_field_opening():
+    """a sensor's field cone outside the cage: no requirement inside it, gated everywhere else"""
     sp = {"name": "lidar", "sphere": {"r": 10, "center": [55, 0, 0]}, "role": "protected", "mass_g": 5}
     assert not run(sysm(sp, probes=False))["cage_first"]["pass_"]                  # pokes out of the cage
-    r = run(sysm(sp, probes=False, openings=[{"part": "lidar", "exempt": True}]))
-    assert r["cage_first"]["pass_"] and "exempt" in r["summary"], r["summary"]
+    r = run(sysm(sp, probes=False, openings=[{"part": "lidar", "axis": [1, 0, 0], "half_angle_deg": 89, "field": True}]))
+    assert r["cage_first"]["pass_"] and "field cones open" in r["summary"], r["summary"]
+    r2 = run(sysm(sp, probes=False, openings=[{"part": "lidar", "axis": [0, 0, 1], "half_angle_deg": 60, "field": True}]))
+    assert not r2["cage_first"]["pass_"]                                          # pokes out outside its field cone: gated
+    try:
+        run(sysm(sp, probes=False, openings=[{"part": "lidar", "exempt": True}])); assert False, "exempt must be refused"
+    except AssertionError as e:
+        assert "retired" in str(e), e
+
+
+def test_shell_mirror():
+    N, R = _geo()
+    base = dict(name="d", machine="overseer", parts=[{"name": "c", "sphere": {"r": 100, "center": [0, 0, 0]}, "role": "cage", "mass_g": 1}], n_dirs=200,
+                probes=False)
+    r = run(dict(base, cage_shell=dict(nodes=N, rods=R)))
+    assert r["shell"]["mirror"]["rods_unmatched"] == 0 and r["shell"]["pass_"], r["shell"]
+    N2 = [list(p) for p in N]; i = max(range(len(N2)), key=lambda i: N2[i][1]); N2[i][1] += 5.0   # one node off its mirror
+    r2 = run(dict(base, cage_shell=dict(nodes=N2, rods=R)))
+    assert not r2["shell"]["pass_"] and r2["shell"]["mirror"]["node_err_mm"] > 0.5, r2["shell"]
 
 
 if __name__ == "__main__":
