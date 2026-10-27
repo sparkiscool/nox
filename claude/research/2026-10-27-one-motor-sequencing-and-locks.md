@@ -1,0 +1,105 @@
+# One motor, two sequenced pusher axes, unpowered lock (research, 2026-10-27)
+
+Scope: the box centres and locks a landed drone with one NEMA 17 on a spare TMC2209 (the E driver of an SKR Mini E3 V3). Y bars close to a fixed width, then x bars close further to one of two stops. Hold-down must resist 74 N upward with the motor off.
+Tags: S = number read in the cited source. C = my calculation from cited inputs (inputs shown). E = my estimate, no source found. Web search was thin on items 1, 2 and 6: the standards-level claims there are flagged.
+
+## 1. One input, two outputs in sequence
+
+| Mechanism | What it does | Fit here | Source |
+|---|---|---|---|
+| Grooved or barrel cam with dwell | Follower in a closed groove; a dwell segment gives zero output while the input keeps turning, so one cam can hold two sequences. Geometry fixes every stop. | Good if both stop positions are fixed by the cam. Bad for "stop wherever the part is": a second landed drone width needs a different groove. | S: https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5243869 and https://www.firgelliauto.com/blogs/mechanisms/grooved-cam-reciprocating-form-1 |
+| Lost-motion link plus spring | First stage moves the arm until it stops; the actuator then keeps moving (spring compresses or slot is taken up) and drives the second stage. Described as a mechanical sequence with no sequence valve. | Best fit: sequence is set by force and hard stops, not by a fixed profile, so two end positions come for free. | S: https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6279886 (power clamp, first drive is the lost-motion stage), search summary of a wedge clamp with a lost-motion spring |
+| Geneva or cam indexer | Rotary indexing with dwell. Geneva has limited torque capacity, and speed and shock rise as the pin enters the slot. | Wrong tool: it indexes a rotary part, it does not hold a clamp force or reach a variable stop. | S: https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5720091 , https://www.firgelliauto.com/blogs/mechanisms/intermittent-transmission |
+| Spur-gear differential or whiffletree rocker | Splits one force or travel between two outputs so both bars carry equal load. | Not found in search (no source). A pivoting equaliser bar is the printable version (E). Only needed if left and right bars must close onto a part of unknown centre. | no source |
+| Sequence valve or separate actuators | Industrial default for "close A then B" (pneumatic and hydraulic). | Not a single-motor option; an electrical analogue is two motors or two screws with firmware sequencing. | S: sequence valves named as the comparison in the patent search for https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/6279886 ; no standards text found |
+
+What is standard: in fixed-cycle automation the cam (barrel or face) is the usual way to get timed motions with dwells from one shaft. For a clamp that closes A to a stop then continues with B, the usual mechanical form in the clamp patents is the lost-motion stage followed by a force stage. I found no standards text that ranks them; this is my reading of the patents (E).
+
+Printed behaviour (PETG):
+- No wear-life numbers for a PETG pin-in-groove cam exist in the sources found. Plain printed PETG sliding showed uneven groove wear tied to infill structure. S: https://www.mdpi.com/2076-3417/14/16/7161 (IGUS-coated PETG pin-on-disc; load strongly sets wear groove depth and width).
+- A printed groove-cam model uses a rounded groove section, dry PETG, 0.08 to 0.1 mm layers and a random seam. S: https://makerworld.com/en/models/2079758-cylindrical-cam-educational-model
+- Practice (E): put a bearing (623 or 608) as the follower roller, keep pressure angle at or under 30 deg (S for the 30 deg design limit: https://github.com/gingerskull/mechanism-database/issues/216), and keep groove loads low. A lost-motion slot with a printed pin sees the same wear but carries only the spring force, not the 74 N.
+
+Fit to this box (E): one T8x2 screw drives a nut carriage. The carriage pulls the y bars through preloaded springs or slotted links until the y hard stops, then keeps travelling and drives the x bars to whichever stop the part meets. Spring preload must exceed the y-bar friction and stay below the stall current force. Cam is the fallback only if the two drone widths are fixed and known.
+
+## 2. Self-centring one-drive jaws
+
+| Type | Pros | Cons | Source |
+|---|---|---|---|
+| Central pinion, two opposed racks | Positive 1:1 centring, most common self-centring vise. Compact. | Teeth wear after many cycles and centring degrades; holding force is only as high as clamp force, no shock margin; gears must stay engaged under side load; not self-locking, so a separate lock (screw) is still required. | S: https://patents.google.com/patent/US3899162A/en , https://patents.google.com/patent/US9095958 (via search extracts) |
+| Left and right hand thread on one screw | Simple, self-locking if lead is small, centring set by thread symmetry. | Jaw clearance in guides can cause lift; needs a dual-hand screw or two nuts of opposite hand; thread pitch error shifts centre. Dual-hand ACME screws exist off the shelf. | S: https://patents.google.com/patent/US20140131933A1 (patent extract), https://www.helixlinear.com/products/Lead-Screw-and-Nuts/Twin-Lead-Screws/389 |
+| Scissor linkage | Compact when open, one input, equal travel by symmetry. | Force falls as links open; non-linear travel; many pins to print; not self-locking. | no source found (E) |
+
+Printed versions: MakerWorld self-centring vise uses two sliders with opposite-hand screws, printed in ABS and glued: https://makerworld.com/en/models/598304-self-centering-vise-vice . A printed desk vise screw snapped easily; advice is at least 4 perimeters: https://www.matterhackers.com/store/l/alec-steeles-3d-printed-vise/sk/MV0RUJYX . Mirrored nut gives left hand thread: https://www.myminifactory.com/object/3d-print-bidirectional-bolt-left-and-right-hand-thread-146162 .
+Fit (E): a single-hand T8x2 plus the bars on a symmetric pinion pair (racks run on the bars) gives centring and the screw gives the lock. Do not rely on the racks to hold.
+
+## 3. Lead screw hold
+
+Lead angle: tan(lambda) = L / (pi d_m), self-locks when tan(lambda) < mu / cos(14.5 deg) for the 29 deg trapezoid flank. S: https://unseel.com/engineering/lead-screw-acme . Same condition, plain form: https://www.cndeltaprecision.com/blog/under-what-conditions-does-a-lead-screw-have-self-locking-1771847.html
+Friction input: steel screw on bronze or polymer nut mu = 0.15 to 0.20 (S: https://unseel.com/engineering/lead-screw-acme). Same page: 4-start screw at 10 deg is marginal and back-drives; single-start 4 to 5 deg locks; vibration can reduce locking, so safety loads need a second lock.
+Product facts: T8 is sold as 2 mm pitch, single start (lead 2) or 4-start lead 8 (S: https://www.voltaat.com/products/t8-lead-screw-with-brass-nut , https://kb-3d.com/store/hardware/247-tr8x8-4-start-anti-backlash-lead-screw-nut-pom-1634424201379.html). Mean diameter taken as 7 mm (E).
+
+Calculation, F = 74 N, d_m = 7 mm (C, inputs above):
+
+| Screw | tan(lambda) | lambda | mu needed to self-lock | Torque to close to 74 N (mu 0.15) | Torque the unpowered motor must supply to hold (mu 0.10 / 0.15 / 0.20) |
+|---|---|---|---|---|---|
+| T8x2 (lead 2) | 0.091 | 5.2 deg | 0.088 | 65 mN.m (about 6.5 N.cm) | 3 / 0 / 0 mN.m: locks with mu 0.15 and up; at 0.10 the 22 mN.m detent covers it 7 times over |
+| T8x8 (4-start) | 0.364 | 20.0 deg | 0.352 | 142 mN.m | 65 / 51 / 38 mN.m: back-drives, detent is only 15 to 26 mN.m |
+
+Result: T8x2 is self-locking with brass or POM at any usual mu (S range 0.15 to 0.20, margin 1.7 to 2.3 times the 0.088 limit, C). T8x8 is not, so it would need a worm, brake or powered hold. ACME T8 is the same thread form as T8; only lead and starts set the angle. Efficiency T8x2 about 0.36 (C), T8x8 about 0.66 (C), consistent with the 50 percent locking boundary on the unseel page. Self-locking is a static property: vibration from a landing or a drone motor spooling up can walk a nut back, so add a micro-switch detent, spring washer or a small bias in the nut (E).
+
+NEMA 17 unpowered: detent torque 2.2 N.cm = 22 mN.m for a 17HS4401 (40 N.cm holding), S: https://www.bitsandparts.nl/Stappenmotor-NEMA-17-17HS4401-p1910324 ; range 16 to 26 mN.m, S: https://mechtex.com/products/hybrid-stepper-motors/nema17 ; Joy-it lists 15 and 20 mN.m, S: https://joy-it.net/en/products/NEMA17-04 . One outlier 38 mN.m, S: https://robocraze.com/products/nema-17-stepper-motor-3-8kg-cm-high-torque-hybrid-for-cnc-3d-printers (ignore). Powered hold: rated holding torque 40 N.cm at rated 1.5 A, S: same bitsandparts page; hold torque scales about with current; Marlin sets run current with M906 (S: https://forum.v1engineering.com/t/z-axis-isnt-strong-enough/21772 mentions raising current via M906; not needed for T8x2).
+Force a stalled T8x2 can make (C, eta 0.365): 5 N.cm gives 57 N, 10 N.cm gives 115 N, 20 N.cm gives 229 N. So set run current for about 8 to 10 N.cm (roughly 25 percent of rated, E) so a stall at the end stop cannot exceed about 100 N on printed parts.
+
+Thrust: printers normally hang the T8 from the motor coupler, so axial load goes into the motor shaft; listed NEMA 17 max axial force is 10 N, radial 28 N (S: https://thepihut.com/collections/adafruit-robotics-cnc/products/nema-17-stepper-motor-42mm-x-40mm , retailer figure, not a 17HS datasheet). 74 N is 7 times that, so the screw thrust must go through its own bearing. Standard part: F8-16M 8x16x5 thrust ball bearing, dynamic rating 2500 N (S: https://makerstore.cc/?p=17988) or 3.8 kN (S: https://simplybearings.co.uk/shop/p504975/SF8-16M-Budget-Stainless-Steel-Single-Thrust-Ball-Bearing-with-Grooved-Washers-8x16x5mm/product_info.html), takes load in one direction only. Hold-down pulls the nut one way, so one thrust bearing on the correct side of the screw plus a flexible coupler to the motor works; the push (closing) direction needs a second one or a collar pair. Top mounts with a radial bearing exist for the Ender 3 (S: https://www.bitsandparts.nl/en/leadscrew-t8-top-mount-bracket-for-ender-3-cr10-p1911972) but they locate, they do not carry thrust.
+
+## 4. StallGuard4 on the SKR Mini E3 V3
+
+Wiring:
+- All four drivers share one UART (UART4 TX PC10, RX PC11); addresses X 0, Z 1, Y 2, E0 3. S: https://raw.githubusercontent.com/MarlinFirmware/Marlin/bugfix-2.1.x/Marlin/src/pins/stm32g0/pins_BTT_SKR_MINI_E3_V3_0.h and https://raw.githubusercontent.com/Klipper3d/klipper/master/config/generic-bigtreetech-skr-mini-e3-v3.0.cfg
+- E0 pins: step PB3, dir PB4, enable PD1. Same sources.
+- Marlin pin file sets USES_DIAG_JUMPERS and defines no X/Y/Z/E0_DIAG_PIN; stops are X PC0, Y PC1, Z PC2 and E0-STOP PC15 (used as FIL_RUNOUT). Same Marlin source. DIAG reaches the MCU through jumper caps onto the stop pins.
+- An E0-DIAG jumper exists: "the sensorless jumper is also available for extruders (E0-DIAG)". S: https://notenoughtech.com/3dupgrades/bigtreetech-skr-mini-e3-v3-0/ . That it routes to E0-STOP / PC15 is my inference from the two sources above (E); confirm on the board silk or schematic before wiring. I could not open the BTT schematic (GitHub access blocked here).
+- BTT wiki: with the sensorless caps fitted you cannot also use the external endstop on that axis. S: https://global.bttwiki.com/SKR%20MINI%20E3.html
+
+Firmware:
+- Klipper: needs StallGuard driver, UART and the DIAG pin on an MCU pin. S: https://www.klipper3d.org/TMC_Drivers.html . The Klipper sample config sets no diag_pin and defines the E driver as an extruder; for this use, declare the E pins as a manual_stepper plus a tmc2209 section (address 3) with diag_pin and endstop_pin: tmc2209_manual_stepper_<name>:virtual_endstop. A forum user got the config to load this way but saw "No trigger on manual_stepper after full movement" and MANUAL_STEPPER STOP_ON_ENDSTOP not backing off, no confirmed fix: https://klipper.discourse.group/t/specifying-tmc2209-parameters-including-sensorless-homing-on-a-manual-stepper/24712 . Verdict: feasible, needs a smoke test (E).
+- Marlin: sensorless sensitivity exists for X, Y, Z, I, J, K, U, V, W, not E. TMC2209 range 0 to 255 (255 most sensitive), homes in stealthChop, default 8, set HOMING_BUMP_MM to 0. S: https://marlinfw.org/docs/settings/tmc_stallguard.html . So Marlin needs the E driver remapped as an extra axis with custom pins (E, unverified). Klipper is the easier path.
+
+Speed floor:
+- Klipper: below 10 RPM there is not enough back EMF; start at about one rotation per 2 s (30 RPM). S: https://www.klipper3d.org/TMC_Drivers.html . At 2 mm lead: 10 RPM is 0.33 mm/s, 30 RPM is 1.0 mm/s (C).
+- Favero: not accurate below 400 Hz; works 400 to 2000 Hz at 1/8 microstep (1600 pulses/rev), so 400 Hz is 15 RPM, 0.5 mm/s at 2 mm lead (C). S: https://github.com/AndreaFavero71/stepper_sensorless_homing
+- Valar: signal unreliable "below roughly a couple of revolutions per second" (120 RPM, 4 mm/s at 2 mm lead, C), rule of thumb of a wiki. S: https://github.com/Valar-Systems/valar-motion/wiki/StallGuard-Tuning . The three disagree; design for 30 RPM (1 mm/s) and test.
+- Tuning rule: find the highest sensitivity that homes and the lowest that homes on a single touch, use min + (max - min)/3; a range under 5 is unstable. S: https://www.klipper3d.org/TMC_Drivers.html . Stall flag when SG_RESULT < 2 x SGTHRS; changing run current shifts the baseline. S: Valar wiki above.
+
+Repeatability: Favero measured 3 sigma = 0.01 mm on a stepper arm with a dial gauge, "better than a microstep" (arm length unknown). S: same repo. One microstep at 1/8 on a 2 mm lead is 0.00125 mm (C). No lead-screw figure in mm found. My estimate for a printed carriage with compliance and a fixed run current: stall point repeats within about 0.05 to 0.1 mm (E); measure by 20 homings.
+
+Which stop was reached: yes in principle, by step count. Klipper `MANUAL_STEPPER ... STOP_ON_ENDSTOP=probe` stops on the trigger and `home` sets the stepper position to the move target (S: https://www.klipper3d.org/G-Codes.html), so use `probe` (position not reset) or compare against the planned move; the exact position read-back after a probe stop is not documented there (E, test it). If stops A and B are at least 2 mm apart (one revolution = 1600 microsteps at 1/8, C), the gap is 1600 microsteps against a stall scatter of 0.1 mm = 80 microsteps, a 20:1 separation (C). Fallback if the read-back fails: a micro-switch on each stop or one at the carriage, or have the controller already know which drone is in the box.
+
+## 5. Friction
+
+- PETG on ground steel (Ra 0.123 um), dry: static 0.24 to 0.29, kinetic 0.18 to 0.26 at 30 to 70 N; carbon-fibre PETG static force 35 percent below plain PETG at the top load; static to kinetic jump 5.6 to 17.6 percent dry. S: https://filamentspecs.com/filament-friction-coefficient/ citing https://tribology.rs/journals/2024/2024-1/9-1546.pdf (the paper's samples were ground, the filamentspecs numbers are a secondhand summary; I checked the 30 N static force of 8 to 9 N in the paper text, about 0.28 at 30 N).
+- Prusa forum figures PETG 0.30 to 0.40 static, 0.25 to 0.35 dynamic are unsourced. S: https://forum.prusa3d.com/forum/english-forum-general-discussion-announcements-and-releases/friction-coefficient-and-hydroscopic-tendencies/ (not read in full).
+- Higher friction in humid air for PET and PETG: S: https://www.politesi.polimi.it/handle/10589/210850 (thesis, no value read).
+- PETG on PETG and PETG on carbon tube: no measured value found. Printed layer lines make these pairs rougher than ground steel; use 0.3 to 0.6 for design (E) and treat the carbon tube as about 0.25 to 0.4 (E). Measure with a tilt or pull test on the real tube.
+- PTFE: static 0.04 to 0.10, dynamic about 0.10 to 0.25 for PTFE sheet; tape on a plastic pair not found. S: https://www.emachineshop.com/coefficient-of-friction/ and the PTFE datasheets https://www.apsoparts.com/media/downloads/asset//std.lang.all/0_/en/PTFE_HP110_013-00_EN.pdf (0.06 to 0.18 static, 0.12 to 0.25 dynamic, ASTM D3702).
+- PTFE-filled PETG exists and is claimed to lower friction (vendor claim): https://us.spectrumfilaments.com/products/filament-spectrum-pet-g-ptfe-1-75mm-iron-grey-1kg
+- Worth it? Friction here helps the lock (tube grip) and hurts the pusher bars (carriage force, stall margin). A PTFE tape face on the pusher bars (where the tube slides) roughly halves friction (E, from 0.3 to 0.4 down to 0.1 to 0.2). Tape gets cut by carbon edges and loses its film after a few hundred strokes (E); try it on the bar faces first, never on the hold-down lip where grip is useful.
+
+## 6. Hold-down lip geometry
+
+Search found no standards text for lip overhang or clearance (no industrial hook clamp, aircraft latch or pallet clamp spec). What exists: Carr Lane hook clamps swing in and clamp straight down by screw, mounting blocks give 90 deg stops for repeatable arm position (S: https://www.carrlane.com/hook-clamps-i-carr-lane). A snap-fit guide says L-shaped retention resists pull-out better than J hooks (S: autodiscover.bps.go.id snap-fit design guide, low quality, via search). Cantilever loading lowers clamp capacity through bending, torsion and shear (S: https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5975605). Over-centre latches need a margin past dead centre so vibration cannot unlock (S: https://image-ppubs.uspto.gov/dirsearch-public/print/downloadPdf/5688014). The rules below are therefore my own and tagged E.
+
+Design rules (E, from geometry and mechanics):
+1. Overlap: the lip tip must reach past the tube equator toward the tube axis, so a vertical rise is blocked. If the tip reaches a horizontal distance d from the tube axis, the contact normal is at angle theta with sin(theta) = d / r from the vertical. Choose d at most 0.6 r (theta about 37 deg): vertical share of the load cos(theta) = 0.8, and sideways push on the tube is 74 N x tan(theta) = 56 N, which the x bar must take. For a 6 mm tube (r = 3): d about 1.8 mm, lip tip overlaps the tube by r - d = 1.2 mm beyond the equator, but design for 2 mm overlap to cover bar gap and tolerance.
+2. Clearance: vertical gap from lip underside to tube top at the closed bar position of 0.5 to 1.0 mm so the lip does not drag the tube when sliding in and the tube cannot roll under the lip.
+3. Contact: a rolled or chamfered lip lead-in about 1 mm radius on the tip, flat contact length at least 3 mm on the underside, so the load does not point-load PETG.
+4. Lip bending: sigma = 6 F L / (b t^2) with F = 74 N (C). Examples: t 3, b 20, L 6 mm gives 14.8 MPa; t 4, b 20, L 8 gives 11 MPa; t 3, b 20, L 10 gives 24.7 MPa. Bambu PETG HF tensile 34 +/- 4 MPa, flexural 64 MPa XY but only 48 MPa across layers (S: https://shop3duniverse.com/collections/1-75mm-filaments/products/bambu-lab-petg-hf-1-75mm-1kg). Print the lip so layers run along the bending stress (lip printed lying flat, not standing) and keep sigma under 10 MPa (safety factor above 3 on 34) so use t 4, L 8 or shorter; carbon rod or a gusset into the bar web for more.
+5. Failure modes: lip bends or delaminates along layers; tube rides up and over the lip when the overlap is too small or the tube is pushed sideways by a moving bar; lip creeps under constant load (PETG, E); thread on the screw backs off with vibration; bar flexes in the plane normal to the deck so the lip rotates away (stiffen with a gusset); drone prop wash or a landing impact adds a transient above 74 N.
+6. Unknowns to measure: lip stiffness under 74 N, the true tube friction, and whether the stall read-back works.
+
+## Recommendation
+
+- Item 1: lost-motion sequence driven by one T8x2 nut carriage (y bars through preloaded springs or slotted links to hard stops, carriage continues to the x bars), because the two x stops are decided by the part, not a profile. Use a barrel or groove cam only if both drone widths are fixed. Skip Geneva. Use an equaliser rocker only if the bars must self-centre onto an unknown part.
+- Item 3: T8x2 single start with a brass or POM nut. It is self-locking for mu above 0.088 (source range 0.15 to 0.20) and needs about 65 mN.m to close to 74 N (C). T8x8 back-drives and cannot hold 74 N unpowered (needs 38 to 65 mN.m against 15 to 26 mN.m detent). Take thrust in an 8x16x5 F8-16M thrust bearing, never the motor shaft (10 N max axial). Set run current for about 10 N.cm so a stall cannot make more than about 115 N.
+- Item 4: use Klipper with the E driver declared as a manual_stepper plus tmc2209 (address 3), DIAG via the E0-DIAG jumper (confirm the pin on the board), homing speed about 30 RPM (1 mm/s at 2 mm lead). Marlin cannot do E-driver sensorless without remapping the axis. Stall repeatability is about 0.05 to 0.1 mm (E); distinguishing two stops 2 mm or more apart by step count is reliable in principle but the Klipper read-back after a probe stop needs a bench test. Keep a micro-switch as fallback.
