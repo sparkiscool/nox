@@ -97,20 +97,20 @@
     [
      -14.0,
      21.0,
-     45.0
+     34.0
     ]
    ],
-   "mass_g": 23.35,
+   "mass_g": 15.92,
    "tag": "E",
    "cg": [
-    -43.7,
-    0.6,
-    16.1
+    -45.3,
+    0.7,
+    12.9
    ],
-   "note": "block 21.4 x 11.05 between the tongues, gusset on the receiver's tail face, web under the plate tab to 2 plate-bolt bosses at [(-43.2, 16.0), (-43.2, -16.0)], fin through the notch, foot on the plate top to x -14.0; 6 inserts",
+   "note": "block 21.4 x 11.05 between the tongues, gusset on the receiver's tail face, web under the plate tab to 2 plate-bolt bosses at [(-42.0, 16.0), (-42.0, -16.0)], fin through the notch, foot on the plate top to x -14.0; 6 inserts",
    "funnel_margin": 36.7,
    "rods": 27.0,
-   "inset": 14.8
+   "inset": 25.8
   },
   "tail carrier (PETG)": {
    "box": [
@@ -122,15 +122,15 @@
     [
      -48.0,
      26.6,
-     39.0
+     37.5
     ]
    ],
-   "mass_g": 49.34,
+   "mass_g": 33.23,
    "tag": "E",
    "cg": [
-    -105.1,
-    0.1,
-    9.5
+    -102.6,
+    -0.7,
+    9.6
    ],
    "note": "yoke (2 tongues, 4 M3, 2.0 side wall, lower back under the Radxa) + spine (2.0 inner wall, box y -13.05..-6.55 aft of x -78.5) + 4 \u00d88 posts + cross plate + UBEC tray + XR2 shelf; one print",
    "funnel_margin": 3.7,
@@ -143,7 +143,7 @@
    [
     -99.8,
     -4.0,
-    38.0
+    39.5
    ],
    [
     -68.4,
@@ -232,9 +232,9 @@
     ],
     "d": 4
    },
-   "M3 key, plate bolt (-43.2, +16.0)": {
+   "M3 key, plate bolt (-42.0, +16.0)": {
     "start": [
-     -43.2,
+     -42.0,
      16.0,
      22.5
     ],
@@ -245,15 +245,15 @@
     ],
     "d": 4
    },
-   "M3 key, plate bolt (-43.2, -16.0)": {
+   "M3 key, plate bolt (-42.0, -16.0)": {
     "start": [
-     -43.2,
+     -42.0,
      -16.0,
      22.5
     ],
     "dir": [
-     0.109,
-     0.408,
+     0.211,
+     0.366,
      0.906
     ],
     "d": 4
@@ -317,39 +317,39 @@
   }
  },
  "mount_total": {
-  "mass_g": 72.7,
+  "mass_g": 49.2,
   "cg": [
-   -85.4,
-   0.3,
-   11.6
+   -84.0,
+   -0.2,
+   10.7
   ]
  },
  "cg": {
   "pack_in": [
-   -3.39,
-   0.44,
-   2.67
+   0.38,
+   0.41,
+   2.6
   ],
   "pack_out": [
-   -6.56,
-   0.62,
-   11.04
+   -1.37,
+   0.58,
+   11.22
   ],
-  "h_in": 3.42,
-  "h_out": 6.59,
-  "mass": 763.5,
+  "h_in": 0.56,
+  "h_out": 1.49,
+  "mass": 745.7,
   "best_catch_bay_riding": {
-   "catch": -13.5,
-   "h_in": 2.17,
-   "h_out": 2.31
+   "catch": -6.0,
+   "h_in": 1.09,
+   "h_out": 1.06
   }
  },
  "ubec_region": {
   "at_layout_catch": {
    "catch": -5.0,
    "cg_now": [
-    3.42,
-    6.59
+    0.56,
+    1.49
    ],
    "box_now": [
     [
@@ -363,30 +363,39 @@
      24.0
     ]
    ],
-   "n": 0
+   "n": 10598,
+   "shift_x": [
+    -40.0,
+    17.0
+   ],
+   "shift_y": [
+    0.0,
+    20.0
+   ],
+   "shift_z_min_at_dx0": -5.0
   },
   "at_best_catch": {
-   "catch": -13.5,
+   "catch": -6.0,
    "cg_now": [
-    2.17,
-    2.31
+    1.09,
+    1.06
    ],
    "box_now": [
     [
-     -162.6,
+     -170.1,
      11.2,
      16.0
     ],
     [
-     -101.6,
+     -109.1,
      26.6,
      24.0
     ]
    ],
-   "n": 6117,
+   "n": 10246,
    "shift_x": [
-    -25.0,
-    8.0
+    -40.0,
+    16.0
    ],
    "shift_y": [
     0.0,
@@ -397,6 +406,6 @@
  },
  "requirements": {
   "belly_mount": "its tail face at x -31.0 over |y| <= 22, z 9.6..18.5 (10.85 ahead of the layout's box): the tail block's web and the 2 plate-bolt bosses sit there under the plate; the block's gusset bears on the receiver's tail face (z -4..9.6, |y| <= 7.2)",
-  "plate": "2 x \u00d83.4 holes at (-43.2, +-16.0) in the tail tab (6.8 from its tail edge, 7.0 from the notch edge)"
+  "plate": "2 x \u00d83.4 holes at (-42.0, +-16.0) in the tail tab (8.0 from its tail edge, 7.0 from the notch edge)"
  }
 }

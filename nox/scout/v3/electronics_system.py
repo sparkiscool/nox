@@ -1420,7 +1420,7 @@ def mount_v12(P, dc, xr2=None, strut=False):
         zf = (b[0][2] - 2.0, b[0][2])                                                    # the floor under the XR2 (z 21..23)
         floor = box([b[0][0], b[0][1], zf[0]], [b[1][0], b[1][1], zf[1]])
         xm = (b[0][0] + b[1][0]) / 2
-        pieces += [floor, box([xm - 3, b[1][1] - 1.0, zf[0] - 6.0], [xm + 3, SIDE_AFT[0] + 0.5, zf[1]])]    # 6 x 8 post down into the spine tube
+        pieces += [floor, box([xm - 3, b[1][1] - 1.0, zf[0] - 12.0], [xm + 3, SIDE_AFT[0] + 0.5, zf[1]])]   # 6 x 14 post down into the spine tube
     pieces.append(box([xb1, SIDE_Y[1] - 0.5, z1 + T], [xb0, -1.0, z1 + T + 6.5]))        # fillet: the upper tongue onto the side wall over 3.5 x 6.5
     xc_ = np.linspace(xb0, xw, 40); yo_ = [max(SPINE_Y[0], -(corridor(x_) - 0.05)) for x_ in xc_]
     chk = trimesh.creation.extrude_polygon(sg.Polygon(list(zip(xc_, yo_)) + [(xw, SIDE_AFT[1]), (x_step, SIDE_AFT[1]), (x_step, SIDE_Y[1]),
@@ -2014,9 +2014,9 @@ def run_v12():
             f"{CAGE_CRASH_WORST} / 1.5) {r_['cage_first_order']}; yoke / block before the carrier {r_['order_ok']} {r_['order_fails']}; "
             f"50 N bay corner (E) {r_['E']:.2f}; one body {r_['one_body']}")
     ok_ = [r for r in vrows if r["l_pass"] and r["cage_first_order"] and r["one_body"] and max(r["cg"]) <= 3.0]
-    pick = min(ok_, key=lambda r: r["mass"]) if ok_ else vrows[0]
+    pick = min(ok_, key=lambda r: (len(r["order_fails"]), r["mass"])) if ok_ else vrows[0]   # fewest yoke / block order misses, then the lightest
     globals().update(pick["cfg"])
-    say(f"   picked (the lightest that passes L, its breaking order and the balance at {dc:+.1f}): {pick['name']}")
+    say(f"   picked (passes L, its breaking order and the balance at {dc:+.1f}; then the fewest cases where the yoke or block is not 1.5 x before the carrier; then the lightest): {pick['name']}")
     out = {}
     for label, strut in (("A", False), ("B", True)):
         mp = mount_v12(P, dc, xr, strut=strut)
