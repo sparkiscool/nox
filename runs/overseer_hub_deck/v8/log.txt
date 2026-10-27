@@ -168,3 +168,39 @@ it   8 beta    4 J   0.8309 vol 0.1796 (dil 0.2998 g -0.047) grey 29.5% ch 0.100
 it   8 beta    4 J   0.8309 vol 0.1796 (dil 0.2998 g -0.047) grey 29.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 234 35.2s
 it   9 beta    4 J   0.4647 vol 0.1846 (dil 0.3042 g -0.033) grey 29.8% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 130 33.6s
 it   9 beta    4 J   0.4647 vol 0.1846 (dil 0.3042 g -0.033) grey 29.8% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 130 33.6s
+it  10 beta    4 J   0.2771 vol 0.1908 (dil 0.3098 g -0.015) grey 30.0% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 73.9 33.7s
+it  10 beta    4 J   0.2771 vol 0.1908 (dil 0.3098 g -0.015) grey 30.0% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 73.9 33.7s
+it  11 beta    4 J   0.2190 vol 0.1959 (dil 0.3139 g +0.015) grey 29.9% ch 0.100 worst held b1 fz 54.9 35.1s
+it  11 beta    4 J   0.2190 vol 0.1959 (dil 0.3139 g +0.015) grey 29.9% ch 0.100 worst held b1 fz 54.9 35.1s
+it  12 beta    4 J   0.2139 vol 0.1916 (dil 0.3083 g -0.003) grey 29.5% ch 0.100 worst held b1 fz 53.5 33.8s
+it  12 beta    4 J   0.2139 vol 0.1916 (dil 0.3083 g -0.003) grey 29.5% ch 0.100 worst held b1 fz 53.5 33.8s
+it  13 beta    4 J   0.2065 vol 0.1924 (dil 0.3087 g -0.002) grey 29.5% ch 0.100 worst held b1 fz 51.8 35.6s
+it  13 beta    4 J   0.2065 vol 0.1924 (dil 0.3087 g -0.002) grey 29.5% ch 0.100 worst held b1 fz 51.8 35.6s
+it  14 beta    4 J   0.1997 vol 0.1930 (dil 0.3088 g -0.002) grey 29.4% ch 0.100 worst held b1 fz 50 36.5s
+it  14 beta    4 J   0.1997 vol 0.1930 (dil 0.3088 g -0.002) grey 29.4% ch 0.100 worst held b1 fz 50 36.5s
+it  15 beta    4 J   0.1934 vol 0.1938 (dil 0.3088 g -0.002) grey 29.3% ch 0.100 worst held b1 fz 48.2 36.2s
+it  15 beta    4 J   0.1934 vol 0.1938 (dil 0.3088 g -0.002) grey 29.3% ch 0.100 worst held b1 fz 48.2 36.2s
+it  16 beta    4 J   0.1877 vol 0.1947 (dil 0.3089 g +0.016) grey 29.3% ch 0.100 worst held b1 fz 46.3 35.3s
+it  16 beta    4 J   0.1877 vol 0.1947 (dil 0.3089 g +0.016) grey 29.3% ch 0.100 worst held b1 fz 46.3 35.3s
+it  17 beta    4 J   0.1874 vol 0.1906 (dil 0.3035 g -0.002) grey 28.9% ch 0.100 worst held b1 fz 45.3 34.3s
+it  17 beta    4 J   0.1874 vol 0.1906 (dil 0.3035 g -0.002) grey 28.9% ch 0.100 worst held b1 fz 45.3 34.3s
+it  18 beta    4 J   0.1828 vol 0.1921 (dil 0.3037 g -0.001) grey 28.7% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 35.5s
+it  18 beta    4 J   0.1828 vol 0.1921 (dil 0.3037 g -0.001) grey 28.7% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 35.5s
+it  19 beta    4 J   0.1795 vol 0.1932 (dil 0.3037 g -0.001) grey 28.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 35.0s
+it  19 beta    4 J   0.1795 vol 0.1932 (dil 0.3037 g -0.001) grey 28.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 35.0s
+it  20 beta    4 J   0.1774 vol 0.1942 (dil 0.3038 g -0.001) grey 28.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 34.5s
+it  20 beta    4 J   0.1774 vol 0.1942 (dil 0.3038 g -0.001) grey 28.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 34.5s
+it  21 beta    4 J   0.1759 vol 0.1949 (dil 0.3038 g +0.017) grey 28.4% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 34.0s
+it  21 beta    4 J   0.1759 vol 0.1949 (dil 0.3038 g +0.017) grey 28.4% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.4 34.0s
+it  22 beta    4 J   0.1810 vol 0.1891 (dil 0.2982 g -0.002) grey 28.1% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.8 33.0s
+it  22 beta    4 J   0.1810 vol 0.1891 (dil 0.2982 g -0.002) grey 28.1% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 44.8 33.0s
+layout: beta 4 done: eroded design 2 bodies, main 99.4%; drawn bodies outside the main body: 0
+layout: beta 4 done: eroded design 2 bodies, main 99.4%; drawn bodies outside the main body: 0
+it  23 beta    8 J   8.1489 vol 0.1913 (dil 0.3154 g +0.044) grey 15.0% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 2.29e+03 33.0s
+it  23 beta    8 J   8.1489 vol 0.1913 (dil 0.3154 g +0.044) grey 15.0% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 2.29e+03 33.0s
+it  24 beta    8 J   8.7554 vol 0.1765 (dil 0.3072 g +0.017) grey 15.0% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 2.47e+03 34.8s
+it  24 beta    8 J   8.7554 vol 0.1765 (dil 0.3072 g +0.017) grey 15.0% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 2.47e+03 34.8s
+it  25 beta    8 J   9.4358 vol 0.1618 (dil 0.2991 g -0.010) grey 15.1% ch 0.100 worst held b7 mz 3.02e+03 33.9s
+it  25 beta    8 J   9.4358 vol 0.1618 (dil 0.2991 g -0.010) grey 15.1% ch 0.100 worst held b7 mz 3.02e+03 33.9s
+it  26 beta    8 J   8.1583 vol 0.1612 (dil 0.2986 g -0.046) grey 14.9% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 2.3e+03 34.2s
+it  26 beta    8 J   8.1583 vol 0.1612 (dil 0.2986 g -0.046) grey 14.9% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 2.3e+03 34.2s
