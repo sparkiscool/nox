@@ -152,8 +152,10 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
             tube_points.names.append(f"cage tube {a}-{b}")
     return P, rad, ring
 
-SCOUT_REF = os.environ.get("SCOUT_REF", "7c0780f")             # Scout v3 layout v9 / cage v2 (PR 127 merged to main, confirmed by the Scout session 27 Oct)
-SCOUT_CATCH_X, SCOUT_PLANE_Z = -8.0, -47.5                       # C (Scout session): catch (tab line) x, bottom plane z; cartridge flat bottom -44.5
+SCOUT_REF = os.environ.get("SCOUT_REF", "0c05443e")            # Scout v3 layout v10 (PR 131: bottom refitted onto the Overseer loop's side nodes, ties out of the band)
+SCOUT_DIR = "runs/scout_layout/v10"
+SCOUT_CATCH_X, SCOUT_PLANE_Z = -7.5, -45.38                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
+SCOUT_PLANE_FIX = -49.62                                         # the plane that seats its r 1.5 ring like the Overseer's r 3 (cartridge -3 -2.12; asked of the Scout session)
 OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
 OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
 
@@ -190,18 +192,16 @@ def load_drone(ref, assembly, shell, off, skip=("cage shell",), move=None, ring_
     return dict(P=np.array(P), rad=np.array(rad), ring=np.array(ring), names=names,
                 draw=dict(nodes=N.round(1).tolist(), rods=sh["rods"], ring=sorted(ring_ids), meshes=meshes, rod_r=rr)), rr
 
-def scout():
-    """the Scout (PR 127 head) with its 4 bottom nodes refitted onto the Overseer loop's 4 side nodes (Spark 27 Oct);
-    its ring rods are r 1.5, the ramps are set for r 3, so it seats (3 - 1.5) * sqrt 2 lower"""
-    sh = json.loads(git_bytes(SCOUT_REF, "runs/scout_layout/v9/cage_shell.json")); drop = (TUBE_R - sh["rod_r_mm"]) * S2
-    off = np.array([-SCOUT_CATCH_X, 0.0, -SCOUT_PLANE_Z - drop])
-    move = {}
-    for i in sh["open"][0]["ring"]:                                       # nearest hexagon side node, back in the Scout frame
-        x, y = sh["nodes"][i][0] - SCOUT_CATCH_X, sh["nodes"][i][1]
-        tx, ty = HEX[("L" if y > 0 else "R") + ("n" if x > 0 else "t")]
-        move[i] = [tx + SCOUT_CATCH_X, ty, SCOUT_PLANE_Z]
-    d, rr = load_drone(SCOUT_REF, "nox/scout/v3/scout.assembly.json", "runs/scout_layout/v9/cage_shell.json", off, move=move)
-    d.update(dz=off[2], cart_bottom_seat=round(-44.5 + off[2], 2), seat_drop=round(drop, 2))
+def scout(plane=None):
+    """the Scout (PR 131) seated on the ramps: its r 1.5 ring sits (3 - 1.5) * sqrt 2 below where an r 3 tube would; its
+    plane is modelled at SCOUT_PLANE_FIX (the cartridge then lands where the Overseer's does) unless plane= is given"""
+    sh = json.loads(git_bytes(SCOUT_REF, f"{SCOUT_DIR}/cage_shell.json")); drop = (TUBE_R - sh["rod_r_mm"]) * S2
+    plane = SCOUT_PLANE_FIX if plane is None else plane
+    # only the 4 ring nodes move to `plane`; everything else keeps its drone-frame place
+    move = {i: [sh["nodes"][i][0], sh["nodes"][i][1], plane] for i in sh["open"][0]["ring"]}
+    off = np.array([-SCOUT_CATCH_X, 0.0, -plane - drop])
+    d, rr = load_drone(SCOUT_REF, "nox/scout/v3/scout.assembly.json", f"{SCOUT_DIR}/cage_shell.json", off, move=move)
+    d.update(dz=off[2], cart_bottom_seat=round(-44.5 + off[2], 2), seat_drop=round(drop, 2), plane=plane)
     return d
 
 def overseer():
