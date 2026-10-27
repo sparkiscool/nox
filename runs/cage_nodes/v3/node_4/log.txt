@@ -471,3 +471,5 @@ it 122 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000
 it 122 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 84.7s
 it 123 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 86.7s
 it 123 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 86.7s
+it 124 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 96.7s
+it 124 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 96.7s
