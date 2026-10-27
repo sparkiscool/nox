@@ -270,8 +270,9 @@ def strength(layout, part_mesh, log=print):
     failure indices in-layer (von Mises / A_xy) and across layers (sqrt((sigma_n+ / A_z)^2 + (tau_n / A_s)^2)) at
     element centres; elements touching a loaded or fixed node are left out (point-load singularities)."""
     part = layout.part
-    A = voxelise(part_mesh, *part.axes).ravel()
-    E = np.where(A, 1.0, 1e-9)
+    ins = getattr(part, "insert_cells", np.zeros(part.nel, bool))
+    A = voxelise(part_mesh, *part.axes).ravel() | ins                     # inserts (rods) sit in their bores
+    E = np.where(ins, getattr(part, "stiff", np.ones(part.nel)), np.where(A, 1.0, 1e-9))
     real = [c for c in layout.cases if not c.tie]
     sol = Solver(part.shape, part.h, layout.C, part.supports, active=A | layout.solid, backend="auto",
                  log=lambda s_: None)
@@ -291,7 +292,7 @@ def strength(layout, part_mesh, log=print):
             hot[c.nodes] = True
     for fx in part.supports.values():
         hot[fx.any(1)] = True
-    keep = A & ~hot[enodes].any(1)
+    keep = A & ~ins & ~hot[enodes].any(1)                                  # inserts carry load, are not PETG
     CB = layout.C @ sol.B0
     ax = layout.build_axis
     lay = [k for k, (i, j) in {3: (0, 1), 4: (1, 2), 5: (2, 0)}.items() if ax in (i, j)]

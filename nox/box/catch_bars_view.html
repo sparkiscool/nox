@@ -1,0 +1,336 @@
+<title>Nox Deck Catch</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one engineering sheet, top to bottom: the idea, the plan to scale, the pad face, the sequence, the drive, the capture maps, the comparison, what it takes */
+:root {
+  --paper: #f3f5f2; --sheet: #ffffff; --ink: #1b2320; --muted: #5b6963; --rule: #d3dbd6;
+  --ovr: #4f77a6; --scout: #1d8676; --bar: #b8512b; --bar-soft: rgba(184,81,43,.14); --deck: #b5bfba; --node: #2b3a33;
+  --good: #2e7a4e; --bad: #b0432d; --warn: #b7791f;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #111614; --sheet: #181f1c; --ink: #e2eae6; --muted: #93a29b; --rule: #2b3631;
+  --ovr: #8cb0da; --scout: #4fc3ae; --bar: #ec8a62; --bar-soft: rgba(236,138,98,.16); --deck: #434f4a; --node: #c9d4ce;
+  --good: #6cc08c; --bad: #e37a62; --warn: #e0a84a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #111614; --sheet: #181f1c; --ink: #e2eae6; --muted: #93a29b; --rule: #2b3631;
+  --ovr: #8cb0da; --scout: #4fc3ae; --bar: #ec8a62; --bar-soft: rgba(236,138,98,.16); --deck: #434f4a; --node: #c9d4ce;
+  --good: #6cc08c; --bad: #e37a62; --warn: #e0a84a; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 1060px; margin: 0 auto; display: grid; gap: 26px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; }
+h1 { font-size: 2rem; line-height: 1.1; } h2 { font-size: 1.3rem; } h3 { font-size: 1.02rem; }
+p { margin: 0; max-width: 74ch; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.scroll { overflow-x: auto; }
+svg { width: 100%; height: auto; display: block; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.step { display: grid; gap: 6px; min-width: 0; }
+.step p, .mono { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); }
+.step p { font-family: var(--f-body); font-size: .88rem; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 620px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 500 .75rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+td.rec, th.rec { background: var(--bar-soft); }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 78ch; }
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.kpi { border-left: 3px solid var(--bar); padding: 2px 10px; display: grid; gap: 2px; }
+.kpi b { font: 600 1.25rem var(--f-display); } .kpi span { font: .75rem var(--f-mono); color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; font: .78rem var(--f-mono); color: var(--muted); }
+.sw { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -2px; margin-right: 4px; }
+</style>
+
+<main>
+  <header>
+    <span class="eyebrow">Box catch concept F · one stepper · Overseer v5 assembly + Scout v12 (main 2bded7a0) · 27 Oct</span>
+    <h1>Land anywhere on a flat deck; two pads and two bars put both drones on the same spot</h1>
+    <p id="lede"></p>
+    <div class="kpis" id="kpis"></div>
+  </header>
+
+  <section class="sheet" aria-label="Plan">
+    <h2>Plan, to scale</h2>
+    <div class="scroll"><div id="plan" style="min-width:560px"></div></div>
+    <p class="mono" id="plan-cap"></p>
+  </section>
+
+  <section class="sheet" aria-label="Pad face">
+    <h2>The end pad face, and why it has that shape</h2>
+    <div class="row">
+      <div class="step"><div id="pad"></div><p id="pad-cap"></p></div>
+      <div class="step"><div id="side"></div><p id="side-cap"></p></div>
+    </div>
+  </section>
+
+  <section class="sheet" aria-label="Sequence">
+    <h2>One landing, four states (Overseer landed 40 off and yawed 10°)</h2>
+    <div class="row" id="steps"></div>
+  </section>
+
+  <section class="sheet" aria-label="Drive">
+    <h2>The drive: one carriage, two phases set by force</h2>
+    <div class="row">
+      <div class="step"><div id="drive"></div><p id="drive-cap"></p></div>
+      <div class="step"><h3>How the sequence sets itself</h3><ul id="drive-notes"></ul></div>
+    </div>
+  </section>
+
+  <section class="sheet" aria-label="Capture">
+    <h2>Where it works: every landing of the sweep</h2>
+    <div class="legend" id="legend"></div>
+    <div class="row" id="maps"></div>
+    <div class="scroll"><table id="cap"></table></div>
+  </section>
+
+  <section class="sheet" aria-label="Comparison">
+    <h2>Against the ramps and the hook claws</h2>
+    <div class="scroll"><table id="cmp"></table></div>
+  </section>
+
+  <section class="sheet" aria-label="Notes">
+    <h2>What it takes, what is open</h2>
+    <ul id="notes"></ul>
+  </section>
+</main>
+
+<script>
+const D = /*DATA*/null;
+const S = D.schedule, H = D.hex, O = D.overseer, C = D.scout;
+const f1 = x => (Math.round(x * 10) / 10).toString();
+const cap = d => d.capture;
+const bothOk = (a, b) => Math.min(a, b);
+const squareBoth = bothOk(cap(O).square_mm, cap(C).square_mm);
+document.getElementById('lede').textContent =
+  `The deck is flat: nothing stands up where a drone lands, so the landing needs no aim beyond the deck itself. One NEMA 17 on a T8 x 2 lead screw moves one carriage under the deck. First two low end pads close along x (nose : tail travel 1 : ${S.k_t}) and stop where the drone stops them: the Overseer on its two tip nodes after ${S.s_overseer} mm, the Scout on its two end tubes after ${S.s_scout} mm, both with the receiver on the swap centre. Then, driven only by the carriage running ${D.s2} mm on against the pad spring, two short side bars close ${S.y_travel} mm a side onto the shared side tubes, square the drone, and their lips reach over the tubes for the hold-down. The motor stalls on the bars' stop: that stall, and how far the carriage went, is the seat sense and says which drone landed. The screw self-locks.`;
+const kp = [
+  [`±${cap(C).square_mm} / ±${cap(O).per_axis.x[1]} mm`, 'Scout: every landing in this square, every yaw −15..15° · Overseer: x reach at y 0, every yaw'],
+  [`${cap(O).yaw_ok_deg.length ? cap(O).yaw_ok_deg[0] + '..' + cap(O).yaw_ok_deg.at(-1) : '–'}°`, 'Overseer yaw at the centre'],
+  [`${f1(Math.max(cap(O).worst_pose_err_mm || 0, cap(C).worst_pose_err_mm || 0))} mm · ${f1(Math.max(cap(O).worst_yaw_err_deg || 0, cap(C).worst_yaw_err_deg || 0))}°`, 'worst seated error, both drones (C)'],
+  [`${S.carriage_overseer} / ${S.carriage_scout} mm`, 'carriage travel Overseer / Scout (C)'],
+  ['1', 'motor; no servo, no over-centre, no keep-alive contacts'],
+];
+document.getElementById('kpis').innerHTML = kp.map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join('');
+
+// ---- plan to scale (seat frame, x forward, y left; both drones seated)
+(() => {
+  const X0 = -380, X1 = 330, Y1 = 240, Y0 = -240, w = X1 - X0, h = Y1 - Y0; const T = (x, y) => [x - X0, Y1 - y];
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="plan of the deck, bars, pads and both drones">`;
+  for (let x = -380; x <= 330; x += 20) g += `<line x1="${x - X0}" y1="0" x2="${x - X0}" y2="${h}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let y = -240; y <= 240; y += 20) g += `<line x1="0" y1="${Y1 - y}" x2="${w}" y2="${Y1 - y}" stroke="var(--rule)" stroke-width=".35"/>`;
+  // swap column
+  g += `<rect x="${T(-95, 50)[0]}" y="${T(-95, 50)[1]}" width="190" height="100" fill="var(--deck)" fill-opacity=".3"/>`;
+  g += `<text x="${T(-90, 40)[0]}" y="${T(-90, 40)[1]}" font-size="7.5" fill="var(--muted)" font-family="IBM Plex Mono, monospace">swap column: both cartridges drop through</text>`;
+  // landing room
+  const E = D.park_extra, EY = D.park_extra_y;
+  g += `<rect x="${T(-E, EY)[0]}" y="${T(-E, EY)[1]}" width="${2 * E}" height="${2 * EY}" fill="none" stroke="var(--muted)" stroke-dasharray="4 3" stroke-width=".8"/>`;
+  g += `<text x="${T(-E + 3, EY - 4)[0]}" y="${T(-E + 3, EY - 4)[1]}" font-size="7.5" fill="var(--muted)" font-family="IBM Plex Mono, monospace">landing room ±${E} x ±${EY} (catch centre anywhere in here)</text>`;
+  // low cage rods of both drones (under z 30), faint
+  const rods = (d, col, zmax) => { const N = d.draw.nodes; let s = '';
+    for (const [a, b] of d.draw.rods) { if (N[a][2] > zmax && N[b][2] > zmax) continue; const [x1, y1] = T(N[a][0], N[a][1]), [x2, y2] = T(N[b][0], N[b][1]);
+      s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="1" stroke-opacity=".35"/>`; } return s; };
+  g += rods(O, 'var(--ovr)', 40) + rods(C, 'var(--scout)', 40);
+  // rings
+  const ring = (d, col, dash) => { const N = d.draw.nodes, R = d.draw.ring; let s = '';
+    for (const [a, b] of d.draw.rods) if (R.includes(a) && R.includes(b)) { const [x1, y1] = T(N[a][0], N[a][1]), [x2, y2] = T(N[b][0], N[b][1]);
+      s += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${col}" stroke-width="${2 * d.draw.rod_r}" ${dash ? 'stroke-dasharray="6 3"' : ''}/>`; }
+    for (const i of R) { const [x, y] = T(N[i][0], N[i][1]); s += `<circle cx="${x}" cy="${y}" r="${d === O ? 10.15 : 6}" fill="var(--sheet)" stroke="${col}" stroke-width="1.6"/>`; } return s; };
+  g += ring(O, 'var(--ovr)', false) + ring(C, 'var(--scout)', true);
+  // side bars: parked (outline) and closed (solid), lips hatched
+  const line0 = D.seats.y_out; const yl = x => H.Lt[1] + (x - H.Lt[0]) * (H.Ln[1] - H.Lt[1]) / (H.Ln[0] - H.Lt[0]);
+  for (const sg of [1, -1]) for (const [out, op, lab] of [[D.park_extra_y + line0, .35, 'parked'], [line0, 1, 'closed']]) {
+    const [xa, xb] = D.bar_x; const pts = [[xa, sg * (yl(xa) + out)], [xb, sg * (yl(xb) + out)], [xb, sg * (yl(xb) + out + D.bar_t)], [xa, sg * (yl(xa) + out + D.bar_t)]].map(p => T(...p).join(',')).join(' ');
+    g += `<polygon points="${pts}" fill="var(--bar)" fill-opacity="${op * .8}" stroke="var(--bar)" stroke-width=".8"/>`;
+    if (op === 1) { const lp = [[xa, sg * (yl(xa) + out)], [xb, sg * (yl(xb) + out)], [xb, sg * (yl(xb) - D.lip[2])], [xa, sg * (yl(xa) - D.lip[2])]].map(p => T(...p).join(',')).join(' ');
+      g += `<polygon points="${lp}" fill="none" stroke="var(--bar)" stroke-width=".8" stroke-dasharray="2 1.5"/>`; }
+  }
+  // end pads: parked, Overseer seat, Scout seat
+  const padPath = (xa, sgn) => { // face profile in local X (into the pad), mirrored by sgn
+    const tv = Math.tan(D.v_deg * Math.PI / 180), tw = Math.tan(D.wing_deg * Math.PI / 180), [ny, ry, rdx] = [D.notch_y, D.ramp[0], D.ramp[1]], [w0, w1] = D.wing_y, wc = D.wing_c, t = D.pad_t;
+    const prof = [[0, 0], [-ny * tv, ny], [rdx, ry], [wc, w0], [wc - (w1 - w0) * tw, w1], [wc - (w1 - w0) * tw + t + 14, w1]];
+    const up = prof, down = prof.slice().reverse().map(([X, y]) => [X, -y]);
+    const loop = [...up, ...down.map(([X, y]) => [X + 0, y])];
+    const back = loop.map(([X, y]) => [xa + sgn * X, y]);
+    return back.map(p => T(...p).join(',')).join(' ');
+  };
+  for (const [xn, xt, op] of [[S.nose_park, S.tail_park, .3], [D.seats.nose_overseer, D.seats.tail_overseer, .9], [D.seats.nose_scout, D.seats.tail_scout, .6]]) {
+    g += `<polygon points="${padPath(xn, 1)}" fill="var(--bar)" fill-opacity="${op * .8}" stroke="var(--bar)" stroke-width=".8"/>`;
+    g += `<polygon points="${padPath(xt, -1)}" fill="var(--bar)" fill-opacity="${op * .8}" stroke="var(--bar)" stroke-width=".8"/>`;
+  }
+  const lab = (x, y, t, c) => `<text x="${T(x, y)[0]}" y="${T(x, y)[1]}" font-size="8.5" fill="${c}" font-family="IBM Plex Mono, monospace">${t}</text>`;
+  g += lab(-375, 230, 'Overseer base loop (hexagon), its low rods', 'var(--ovr)') + lab(-375, 218, 'Scout rectangle (the hexagon side nodes), its low rods', 'var(--scout)');
+  g += lab(-375, -222, 'pads and bars: parked (faint), seated on the Overseer (solid), on the Scout (mid)', 'var(--bar)') + lab(-375, -234, 'dotted: the lips, reaching 2 inside the tube line', 'var(--bar)');
+  document.getElementById('plan').innerHTML = g + '</svg>';
+  document.getElementById('plan-cap').textContent = `Looking down, x forward, about the catch centre, seat frame; grid 20 mm. Both drones drawn seated: their receivers are then on the swap centre. The side bars are ${D.bar_x[1] - D.bar_x[0]} long, centred between the side nodes, where both drones' side tubes are clear above; parked ${D.park_extra_y} outside the tube surface. The pads park ${D.park_extra} beyond the Overseer's seat; the nose pad is on the carriage, the tail pad runs ${S.k_t} x as far through a reversing compound pinion, so one travel seats either drone.`;
+})();
+
+// ---- pad face profile (plan, nose pad), with the node, its rods, the Scout tube
+(() => {
+  const tv = Math.tan(D.v_deg * Math.PI / 180), tw = Math.tan(D.wing_deg * Math.PI / 180), [ny, ry, rdx] = [D.notch_y, D.ramp[0], D.ramp[1]], [w0, w1] = D.wing_y, wc = D.wing_c, t = D.pad_t;
+  const X0 = -50, X1 = 40, Y1 = 92, Y0 = -92, w = X1 - X0, h = Y1 - Y0; const T = (X, y) => [X - X0, Y1 - y];
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="pad face profile">`;
+  const prof = [[0, 0], [-ny * tv, ny], [rdx, ry], [wc, w0], [wc - (w1 - w0) * tw, w1], [wc - (w1 - w0) * tw + t + 12, w1]];
+  const loop = [...prof, ...prof.slice().reverse().map(([X, y]) => [X, -y])];
+  g += `<polygon points="${loop.map(p => T(...p).join(',')).join(' ')}" fill="var(--bar)" fill-opacity=".75" stroke="var(--bar)" stroke-width=".6"/>`;
+  // node seated in the notch
+  const r = 10.15, xc = -(r + D.gap / 2) / Math.cos(D.v_deg * Math.PI / 180);
+  const [cx, cy] = T(xc, 0); g += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="var(--sheet)" stroke="var(--ovr)" stroke-width="1.6"/>`;
+  for (const sg of [1, -1]) { const [x2, y2] = T(xc + 0.63 * 60, sg * 0.78 * 60); g += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="var(--ovr)" stroke-width="6" stroke-opacity=".5" stroke-linecap="round"/>`; }
+  // a node arriving off centre on the wing
+  const yw = 50, xw = wc - (yw - w0) * tw - (r + D.gap / 2) / Math.cos(D.wing_deg * Math.PI / 180);
+  const [wx, wy] = T(xw, -yw); g += `<circle cx="${wx}" cy="${wy}" r="${r}" fill="none" stroke="var(--ovr)" stroke-width="1" stroke-dasharray="3 2"/>`;
+  g += `<path d="M ${wx} ${wy - 12} q 6 -20 ${T(xc, -18)[0] - wx} ${T(xc, -18)[1] - wy + 12}" fill="none" stroke="var(--ovr)" stroke-width=".9" marker-end="url(#ar)"/>`;
+  // Scout end tube on the wing corners
+  const xs = wc - (w1 - w0) * tw - 1.5 - D.gap / 2; const [sx0, sy0] = T(xs, 86), [sx1, sy1] = T(xs, -86);
+  g += `<line x1="${sx0}" y1="${sy0}" x2="${sx1}" y2="${sy1}" stroke="var(--scout)" stroke-width="3" stroke-dasharray="6 3"/>`;
+  g += `<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="var(--ovr)"/></marker></defs>`;
+  const lab = (X, y, s, c) => `<text x="${T(X, y)[0]}" y="${T(X, y)[1]}" font-size="2.7" fill="${c}" font-family="IBM Plex Mono, monospace">${s}</text>`;
+  g += lab(8, 1, `notch ${2 * ny} wide, ${2 * (90 - D.v_deg)}°`, 'var(--ink)') + lab(16, 18, `ramp, recedes ${rdx}`, 'var(--ink)') + lab(-6, 72, `wing ${D.wing_deg}°`, 'var(--ink)');
+  g += lab(-48, -86, 'Scout end tube on the wing corners', 'var(--scout)') + lab(-48, 90, 'Overseer node: in the notch, or arriving on a wing', 'var(--ovr)');
+  g += lab(-48, 85, 'rods leave the node at 51° in plan, 5.7° up', 'var(--ovr)') + lab(-48, -90, 'x into the pad →', 'var(--muted)');
+  document.getElementById('pad').innerHTML = g + '</svg>';
+  document.getElementById('pad-cap').textContent = `The pad is ${D.h_pad} tall (top 1 under the tube centres). Its face is a profile along y. The notch (±${ny}) cradles a tip node: the Overseer's tip rods leave the node surface at |y| 7.9, so nothing wider can touch the node alone. Beside it the face recedes ${rdx} mm: the rods run there at deck height. The wings (|y| ${w0}..${w1}) are V flanks at ${D.wing_deg}° whose outer corners lead: they push an off-centre node inward (a flat face pushes it out, a yawed drone then spins), the Scout's straight end tube rests on their corners, and the rods pass over them. A node mid-wing sits at the same x as in the notch, so x is right before y is.`;
+})();
+
+// ---- side bar section (y-z)
+(() => {
+  const W0 = -16, W1 = 22, Z1 = 16, Z0 = -6, w = W1 - W0, h = Z1 - Z0; const T = (y, z) => [y - W0, Z1 - z];
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="side bar section">`;
+  g += `<rect x="0" y="${T(0, -4)[1]}" width="${w}" height="${2}" fill="var(--deck)"/>`;
+  const out = D.seats.y_out, [lz0, lt, lin] = D.lip, top = lz0 + lt;
+  const L = [[out, -4], [out + D.bar_t, -4], [out + D.bar_t, top], [-lin, top], [-lin, lz0], [out, lz0]];
+  g += `<polygon points="${L.map(p => T(...p).join(',')).join(' ')}" fill="var(--bar)" fill-opacity=".8" stroke="var(--bar)" stroke-width=".3"/>`;
+  g += `<circle cx="${T(0, 0)[0]}" cy="${T(0, 0)[1]}" r="3" fill="var(--sheet)" stroke="var(--ovr)" stroke-width=".7"/>`;
+  g += `<circle cx="${T(0, -1)[0]}" cy="${T(0, -1)[1]}" r="3" fill="none" stroke="var(--scout)" stroke-width=".6" stroke-dasharray="1.5 1"/>`;
+  g += `<circle cx="${T(0, -1)[0]}" cy="${T(0, -1)[1]}" r="1.5" fill="none" stroke="var(--scout)" stroke-width=".6"/>`;
+  g += `<rect x="${T(-13, 5)[0]}" y="${T(-13, 10)[1]}" width="8" height="5" fill="var(--ovr)" fill-opacity=".25" stroke="var(--ovr)" stroke-width=".3"/>`;
+  const lab = (y, z, s, c) => `<text x="${T(y, z)[0]}" y="${T(y, z)[1]}" font-size="1.25" fill="${c}" font-family="IBM Plex Mono, monospace">${s}</text>`;
+  g += lab(out + 7, 2, 'bar 6 x 11.5', 'var(--ink)') + lab(-15, 9.3, `lip ${lt} thick, edge ${lin} inside the tube line`, 'var(--ink)') + lab(5, -5.3, `deck · ${f1(out - 3)} gap on the tube`, 'var(--muted)');
+  g += lab(-15, 11.5, 'Overseer link +5..8', 'var(--ovr)') + lab(4, 2.2, 'Overseer tube r 3 / Scout rod in a 6 sleeve', 'var(--muted)') + lab(-15, 15, 'side rods rise 16° from the nodes: the bar waits outside until x is clamped', 'var(--muted)');
+  document.getElementById('side').innerHTML = g + '</svg>';
+  document.getElementById('side-cap').textContent = `Side bar section at x 0 (y outward, z up, mm). The face closes to ${D.gap} over the two tube surfaces; the lip underside sits 1.5 over the Overseer's tube top, its edge ${D.lip[2]} inside the tube line and 3 clear of the Overseer's inner link. Hold-down for the ${74} N head stall is this lip, a 3 mm PETG cantilever of 5 mm, not the screw. ${D.sleeve ? 'The Scout wears a 6 mm printed sleeve on each side rod over the bar span, so one gap and one lip height serve both (DEFAULT; alt: bare 3 mm rods, 3.5 mm of y slack and a 5 mm lift).' : 'Bare Scout rods: 3.5 mm of y slack.'}`;
+})();
+
+// ---- sequence: four plan sketches of the Overseer (landed 40 off, 10° yaw)
+(() => {
+  const frames = [
+    ['1 · Lands', 'Anywhere inside the landing room, any yaw within the budget. Everything on the deck is parked outside the drone and under 12 mm; the deck under it is flat.', 40, 40, 10, 'park'],
+    ['2 · Pads close along x', 'The carriage runs; the pads meet whatever is there first (a tip node, its rods, a wing) and slide the drone to the centre. A node on a wing is pushed inward, so the yaw is pulled down while x closes.', 10, 30, 6, 'push'],
+    ['3 · x clamp, spring stage', `Both pads touch: the drone can go no further in x. The pad slide stops; the carriage goes on ${D.s2} mm against the pad spring. That motion alone now drives the side bars in.`, 0, 25, 4, 'clamp'],
+    ['4 · Bars close, lips over, stall', 'The bars square the drone and centre y; the nodes ride the pad ramps into the notches (the spring gives). The lips reach over the side tubes. The motor stalls on the bars\' stop: seated, and the travel says which drone. The screw holds.', 0, 0, 0, 'seat'],
+  ];
+  const html = frames.map(([t, p, dx, dy, yaw, mode]) => {
+    const X0 = -300, X1 = 300, Y1 = 170, Y0 = -170, w = X1 - X0, h = Y1 - Y0; const T = (x, y) => [x - X0, Y1 - y];
+    const th = yaw * Math.PI / 180, R = ([x, y]) => [Math.cos(th) * x - Math.sin(th) * y + dx, Math.sin(th) * x + Math.cos(th) * y + dy];
+    let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${t}">`;
+    g += `<rect x="${T(-D.park_extra, D.park_extra_y)[0]}" y="${T(-D.park_extra, D.park_extra_y)[1]}" width="${2 * D.park_extra}" height="${2 * D.park_extra_y}" fill="none" stroke="var(--rule)" stroke-dasharray="4 3"/>`;
+    const hex = ['F', 'Ln', 'Lt', 'T', 'Rt', 'Rn'].map(k => T(...R(H[k])).join(',')).join(' ');
+    g += `<polygon points="${hex}" fill="none" stroke="var(--ovr)" stroke-width="4"/>`;
+    for (const k of ['F', 'T', 'Ln', 'Lt', 'Rt', 'Rn']) { const [x, y] = T(...R(H[k])); g += `<circle cx="${x}" cy="${y}" r="10" fill="var(--sheet)" stroke="var(--ovr)" stroke-width="2"/>`; }
+    const yb = mode === 'seat' ? D.seats.y_out : D.seats.y_out + D.park_extra_y;
+    for (const sg of [1, -1]) g += `<rect x="${T(D.bar_x[0], 0)[0]}" y="${T(0, sg * (118.1 + yb) + (sg > 0 ? D.bar_t : 0))[1]}" width="${D.bar_x[1] - D.bar_x[0]}" height="${D.bar_t}" fill="var(--bar)"/>`;
+    const xn = mode === 'park' ? S.nose_park : mode === 'push' ? S.nose_park - 50 : D.seats.nose_overseer, xt = S.tail_park + S.k_t * (S.nose_park - xn);
+    g += `<rect x="${T(xn, 80)[0]}" y="${T(xn, 80)[1]}" width="${D.pad_t + 14}" height="160" fill="var(--bar)"/><rect x="${T(xt - D.pad_t - 14, 80)[0]}" y="${T(xt, 80)[1]}" width="${D.pad_t + 14}" height="160" fill="var(--bar)"/>`;
+    g += `<circle cx="${T(0, 0)[0]}" cy="${T(0, 0)[1]}" r="3" fill="var(--ink)"/>`;
+    g += `<text x="4" y="${h - 6}" font-size="9" fill="var(--muted)" font-family="IBM Plex Mono, monospace">pose x ${dx} y ${dy} yaw ${yaw}°</text>`;
+    return `<div class="step"><h3>${t}</h3>${g}</svg><p>${p}</p></div>`; }).join('');
+  document.getElementById('steps').innerHTML = html;
+})();
+
+// ---- drive schematic (x-z section under the deck)
+(() => {
+  const X0 = -220, X1 = 220, Z1 = 20, Z0 = -70, w = X1 - X0, h = Z1 - Z0; const T = (x, z) => [x - X0, Z1 - z];
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="drive schematic">`;
+  g += `<rect x="0" y="${T(0, -4)[1]}" width="${w}" height="3" fill="var(--deck)"/>`;
+  g += `<text x="${T(-215, 4)[0]}" y="${T(-215, 4)[1]}" font-size="7" fill="var(--muted)" font-family="IBM Plex Mono, monospace">deck (flat, z −4)</text>`;
+  // lead screw and motor
+  g += `<line x1="${T(-200, -30)[0]}" y1="${T(-200, -30)[1]}" x2="${T(120, -30)[0]}" y2="${T(120, -30)[1]}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="3 2"/>`;
+  g += `<rect x="${T(-215, -22)[0]}" y="${T(-215, -22)[1]}" width="16" height="16" fill="var(--ink)" opacity=".8"/>`;
+  g += `<text x="${T(-215, -45)[0]}" y="${T(-215, -45)[1]}" font-size="7" fill="var(--ink)" font-family="IBM Plex Mono, monospace">NEMA 17, T8 x 2, thrust bearing</text>`;
+  // carriage (nut)
+  g += `<rect x="${T(-40, -24)[0]}" y="${T(-40, -24)[1]}" width="50" height="12" fill="var(--ink)" opacity=".7"/>`;
+  g += `<text x="${T(-40, -50)[0]}" y="${T(-40, -50)[1]}" font-size="7" fill="var(--ink)" font-family="IBM Plex Mono, monospace">carriage (nut)</text>`;
+  // spring and pad slide
+  let zz = ''; for (let i = 0; i < 8; i++) zz += `${T(12 + i * 4, i % 2 ? -14 : -20)[0]},${T(0, i % 2 ? -14 : -20)[1]} `;
+  g += `<polyline points="${zz}" fill="none" stroke="var(--bar)" stroke-width="1.5"/>`;
+  g += `<rect x="${T(44, -12)[0]}" y="${T(44, -12)[1]}" width="130" height="6" fill="var(--bar)" opacity=".8"/>`;
+  g += `<rect x="${T(170, 0)[0]}" y="${T(170, -1)[1]}" width="8" height="12" fill="var(--bar)"/>`;
+  g += `<text x="${T(60, -2)[0]}" y="${T(60, -2)[1]}" font-size="7" fill="var(--bar)" font-family="IBM Plex Mono, monospace">pad slide, sprung (stroke ${D.lm}) → nose pad</text>`;
+  // reversing pinion to the tail pad
+  g += `<circle cx="${T(-70, -18)[0]}" cy="${T(-70, -18)[1]}" r="7" fill="none" stroke="var(--ink)" stroke-width="1.5"/><circle cx="${T(-70, -18)[0]}" cy="${T(-70, -18)[1]}" r="9.4" fill="none" stroke="var(--ink)" stroke-width=".8"/>`;
+  g += `<rect x="${T(-200, -8)[0]}" y="${T(-200, -8)[1]}" width="125" height="5" fill="var(--bar)" opacity=".8"/><rect x="${T(-206, 0)[0]}" y="${T(-206, -1)[1]}" width="8" height="12" fill="var(--bar)"/>`;
+  g += `<text x="${T(-200, 3)[0]}" y="${T(-200, 3)[1]}" font-size="7" fill="var(--bar)" font-family="IBM Plex Mono, monospace">tail pad rack, 1 : ${S.k_t} through the compound pinion</text>`;
+  // lever to the side bars
+  g += `<line x1="${T(-15, -24)[0]}" y1="${T(-15, -24)[1]}" x2="${T(30, -60)[0]}" y2="${T(30, -60)[1]}" stroke="var(--ink)" stroke-width="2"/><circle cx="${T(44, -12)[0] + 4}" cy="${T(44, -12)[1] + 3}" r="2.5" fill="var(--ink)"/>`;
+  g += `<text x="${T(-10, -64)[0]}" y="${T(-10, -64)[1]}" font-size="7" fill="var(--ink)" font-family="IBM Plex Mono, monospace">lever between carriage and slide: moves only after the x clamp, ${S.y_ratio} : 1 to the side bars (out of plane)</text>`;
+  document.getElementById('drive').innerHTML = g + '</svg>';
+  document.getElementById('drive-cap').textContent = `Section under the deck, schematic. The motor turns the screw; the carriage carries the nose pad through a preloaded spring (the pad slide) and the tail pad through a reversing compound pinion on the slide. A lever pinned between carriage and slide moves only when they move relative to each other, which happens only once the pads are clamped: it drives the two side bars. Stall on the bars' stop ends the stroke.`;
+  document.getElementById('drive-notes').innerHTML = [
+    `Phase 1 is position: carriage and slide move together (the spring preload exceeds the drag of a 3.1 kg Overseer on its TPU feet, ~25 N, E), the pads close 1 : ${S.k_t}. They stop where the drone stops them: nose apex at ${D.seats.nose_overseer} for the Overseer (its node ${f1(10.15 / Math.cos(D.v_deg * Math.PI / 180))} ahead of the apex), ${D.seats.nose_scout} for the Scout (its tube on the wing corners). Both put the receiver on the swap centre: that is what the ratio is for (C).`,
+    `Phase 2 is force: the carriage goes on ${D.s2} mm, the spring compresses, the lever closes the side bars ${S.y_travel} mm (ratio ${S.y_ratio}). The bars stop on a rigid stop at gap ${D.gap}; the motor stalls there. Carriage travel at the stall: ${S.carriage_overseer} mm for the Overseer, ${S.carriage_scout} for the Scout, read back as the step count (StallGuard4 on the TMC2209, Klipper manual_stepper, bench test; a switch at park as fallback; research 27 Oct).`,
+    `Why the bars wait: the side tubes taper 3.6 over 155, so a fixed gap fits at one x only; and the Overseer's side rods leave each side node at 16°, so a bar near a node before x is centred gets a rod across its top. Both are answered by closing y after x, with no cam to time it.`,
+    `Spring stroke ${D.lm}: the ${D.s2} of phase 2 plus the x the nodes need to ride the pad ramps into the notches (17, C). Preload about 30 N, 0.5 N/mm (E). Carriage force at the stall: bar push through the lever plus the spring, about 120 N (E), inside a NEMA 17 on T8 x 2 at 10..15 N·cm; the screw self-locks (lead angle 5.2°, μ needed 0.09, bronze or POM nut 0.15..0.20, research 27 Oct).`,
+    `Release: back out. The bars open first (the spring extends), then the pads. Nothing is over-centre and nothing is held by the motor: the lips hold the drone, the screw holds the bars.`,
+  ].map(t => `<li>${t}</li>`).join('');
+})();
+
+// ---- capture maps
+(() => {
+  const yaws = D.yaws, offs = D.offs;
+  const col = n => n === yaws.length ? 'var(--good)' : n === 0 ? 'var(--bad)' : 'var(--warn)';
+  document.getElementById('legend').innerHTML = [[`<span class="sw" style="background:var(--good)"></span>all ${yaws.length} yaws (${yaws[0]}..${yaws.at(-1)}°) seat`], ['<span class="sw" style="background:var(--warn)"></span>some yaws seat (count shown)'], ['<span class="sw" style="background:var(--bad)"></span>none']].map(x => `<span>${x}</span>`).join('');
+  const maps = [[O, 'Overseer', 'var(--ovr)'], [C, 'Scout', 'var(--scout)']].map(([d, name, c]) => {
+    const n = offs.length, cell = 26, pad = 30, w = pad + n * cell + 6, h = pad + n * cell + 6;
+    let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${name} capture map">`;
+    const idx = {}; for (const r of d.landings) { const k = r.off.join(','); idx[k] = idx[k] || { ok: 0, why: {} }; if (r.ok) idx[k].ok++; else { const y = r.why.split(' at s')[0].split(' pose')[0]; idx[k].why[y] = (idx[k].why[y] || 0) + 1; } }
+    offs.forEach((ox, i) => offs.forEach((oy, j) => { const e = idx[`${ox},${oy}`] || { ok: 0, why: {} }; const x = pad + (n - 1 - j) * cell, y = pad + (n - 1 - i) * cell;
+      const why = Object.entries(e.why).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k} (${v})`).join('; ');
+      g += `<rect x="${x}" y="${y}" width="${cell - 2}" height="${cell - 2}" rx="2" fill="${col(e.ok)}" fill-opacity="${e.ok === yaws.length ? .85 : e.ok ? .45 + .4 * e.ok / yaws.length : .5}"><title>x ${ox} y ${oy}: ${e.ok}/${yaws.length} yaws seat${why ? '. Fails: ' + why : ''}</title></rect>`;
+      if (e.ok && e.ok < yaws.length) g += `<text x="${x + cell / 2 - 1}" y="${y + cell / 2 + 3}" font-size="9" text-anchor="middle" fill="var(--ink)" font-family="IBM Plex Mono, monospace">${e.ok}</text>`; }));
+    offs.forEach((o, i) => { g += `<text x="${pad + (n - 1 - i) * cell + cell / 2 - 1}" y="${pad - 8}" font-size="8" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${o}</text>`;
+      g += `<text x="${pad - 6}" y="${pad + (n - 1 - i) * cell + cell / 2 + 2}" font-size="8" text-anchor="end" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${o}</text>`; });
+    g += `<text x="${pad + n * cell / 2}" y="${h - 4}" font-size="7" text-anchor="middle" fill="var(--muted)" font-family="IBM Plex Mono, monospace">y offset across (mm), x offset down, nose up</text>`;
+    return `<div class="step"><h3 style="color:${c}">${name}: ${cap(d).n_ok} of ${cap(d).n} landings seat</h3>${g}</svg></div>`; }).join('');
+  document.getElementById('maps').innerHTML = maps;
+  const rows = [['', 'Overseer', 'Scout'],
+    ['Full square (every yaw)', `±${cap(O).square_mm} mm`, `±${cap(C).square_mm} mm`],
+    ['Reach along x at yaw 0 (tail / nose)', cap(O).per_axis.x.join(' / '), cap(C).per_axis.x.join(' / ')],
+    ['Reach along y at yaw 0', cap(O).per_axis.y.join(' / '), cap(C).per_axis.y.join(' / ')],
+    ['Yaws that seat at the centre', cap(O).yaw_ok_deg.join(', ') + '°', cap(C).yaw_ok_deg.join(', ') + '°'],
+    ['Worst seated position error', `${cap(O).worst_pose_err_mm} mm`, `${cap(C).worst_pose_err_mm} mm`],
+    ['Worst seated yaw error', `${cap(O).worst_yaw_err_deg}°`, `${cap(C).worst_yaw_err_deg}°`],
+    ['Nose travel at the x clamp (seat sense)', cap(O).s_clamp.join(', '), cap(C).s_clamp.join(', ')],
+    ['Cartridge bottom above the deck', `${f1(O.cart_bottom_seat - D.deck)} mm`, `${f1(C.cart_bottom_seat - D.deck)} mm${D.sleeve ? ' (sleeves; the Scout plane goes 1.1 lower to match, C)' : ''}`],
+    ['Most common failure', Object.entries(cap(O).fails).map(([k, v]) => `${k} (${v})`).slice(0, 2).join('; ') || 'none', Object.entries(cap(C).fails).map(([k, v]) => `${k} (${v})`).slice(0, 2).join('; ') || 'none'],
+  ];
+  document.getElementById('cap').innerHTML = rows.map((r, i) => `<tr>${r.map(c => i ? `<td>${c}</td>` : `<th>${c}</th>`).join('')}</tr>`).join('');
+})();
+
+// ---- comparison and notes
+const rows = [
+  ['', 'Ramps (concept E, checked)', 'Hook claws (handoff direction, checked by hand)', 'Push bars (this, checked)'],
+  ['Landing room', 'Scout ±20 / ±25, Overseer ±25 / ±25, yaw ±2.5°', 'a few tens of mm; every claw rises outside the ring where both shells flare, 12 claws', `Scout: every landing in |y| ≤ 60, any x, yaw ${D.yaws[0]}..${D.yaws.at(-1)}°; Overseer: yaw 0: |y| ≤ 40 at every x, y ±80 at x −40..60, y ±60 only at x 0; ±5: |y| ≤ 40 at every x; ±10: y 0 at every x, y ±20 for |x| ≤ 20; ±15: y 0 at every x (maps above)`],
+  ['What stands up on the deck', '10 ramps, 20..25 high', 'flat deck until the claws rise', `flat; parked pads ${D.h_pad} and bars ${D.height} high, outside the landing room`],
+  ['Centring', 'passive, sliding on 45° faces (needs μ ≤ 0.2)', 'active, 12 claws through sprung links', 'active: 2 pads then 2 bars, rigid stops, one motor'],
+  ['Final position', 'where the faces meet, both drones level only by matching ring heights', 'V-seats on 4 shared nodes', 'notch on the tip nodes (Overseer), wing corners on the end tubes (Scout), bar stop for y: both receivers on the swap centre, x median 0.8, max 6 at the edge (C)'],
+  ['Hold-down for the 74 N stall', 'a separate latch', 'the claws, over-centre', 'the two lips, 3 clear of the Overseer\'s inner link; the screw holds the bars'],
+  ['Both drones', 'different ramps for each, Overseer pads cross the Scout\'s path', 'shared nodes only; the Overseer\'s x needs its own claws', 'one travel, two stall positions; the pad ratio does the rest'],
+  ['Parts to buy', 'none', '1 servo or stepper, 12 claws, springs', '1 NEMA 17, 1 T8 x 2 screw + nut + thrust bearing, 1 spring; everything else printed'],
+  ['Failure', 'nothing to fail; tolerance is what it is', 'a claw blocked = nothing locked', 'a stall short of the expected travel = blocked; back out and retry, or wave the drone off'],
+];
+document.getElementById('cmp').innerHTML = rows.map((r, i) => `<tr>${r.map((c, j) => i ? `<td class="${j === 3 ? 'rec' : ''}">${c}</td>` : `<th class="${j === 3 ? 'rec' : ''}">${c}</th>`).join('')}</tr>`).join('');
+document.getElementById('notes').innerHTML = [
+  `Checked on both drones as they are on main (2bded7a0: the Overseer's v5 assembly, Scout layout v12; every low part of both assemblies) with a quasi-static push model: the drone is rigid on the deck, each 0.5 mm of carriage travel it is moved the least that resolves every contact (translation and yaw), the pad slide gives way within its stroke. A pad or bar may only touch ring tubes, nodes and the tip structure; a lip touching anything, a body running under anything, or a rod climbing more than ${D.rid ?? 2} mm fails the landing. Script nox/box/catch_bars_concept.py, results runs/box_catch/bars_concept/result.json.`,
+  `What the drones need: nothing on the Overseer. The Scout: a 6 mm printed sleeve on each side rod over x ±32 (DEFAULT, 2 parts, ~1 g each), and its bottom plane 1.1 lower against its cartridge so both cartridges sit 7.0 above the deck (plane −50.7 instead of −49.6, C; or the swap head takes the 1.1). Both go to the Scout session.`,
+  `What the box needs: a flat deck round the swap column; the pad slide and carriage under it; 2 pads, 2 bars with lips, 1 lever, 1 compound pinion and 2 racks, all PETG; 1 NEMA 17 (the fourth; the three on hand are the arm's), 1 T8 x 2 screw 300 with a POM or brass nut and an F8-16M thrust bearing, 1 compression spring. The spare E driver on the SKR Mini E3 V3 drives it (UART address 3, E0-DIAG jumper for StallGuard; Klipper manual_stepper). Retires: funnel panels v7 and v9 plain, hook latch v2, the 8 catch wheels, the keep-alive probes.`,
+  `Open before CAD: a bench test of StallGuard on the E driver at 30 rpm (research says it needs one); the spring rate against the Overseer's drag on TPU feet (μ 0.5..0.8, E); rounding the notch corner so a node rides in smoothly; chamfers on the pad tops where rods ride up to 0.8 mm; the deck's own flatness under a ±80 landing.`,
+  `Alternatives weighed: ramps (passive, a quarter of the landing room, no hold-down, needs low-friction faces); hook claws (the handoff direction: every claw rises outside the ring where both shells flare out at 16..20°, so claws collide with shell rods under any offset; 12 drives). Both kept in the comparison; neither centres both drones from ±80.`,
+  `Spark's words this concept answers: "the most error-tolerant most well-designed one-motor latch system that works for both current drone cages." The budget comes from the research: real touchdown error 7..14 cm, tag yaw 1..4°; plan ±80 mm and ±10°, survive ±15° (claude/research/2026-10-27-precision-landing-accuracy.md).`,
+].map(t => `<li>${t}</li>`).join('');
+</script>
