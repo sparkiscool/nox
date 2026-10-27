@@ -21,3 +21,18 @@ overseer: 3153 low points, cartridge bottom 3.0 above z 0 (16.20 above the deck)
   overseer off (  20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
   overseer off (  20, -20) yaw   10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, 2.92, 0.11]
   overseer off (  20,   0) yaw  -10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, -2.91, -0.11]
+  overseer off (  20,   0) yaw    0: ok clamp 91.0 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off (  20,   0) yaw   10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, 2.91, 0.11]
+  overseer off (  20,  20) yaw  -10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, -2.92, -0.11]
+  overseer off (  20,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off (  20,  20) yaw   10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.29, -0.54, 0.11]
+  overseer 27 landings in 91 s
+overseer {"square_mm": -1, "per_axis": {"x": [-20, 20], "y": [-20, 20]}, "yaw_ok_deg": [0], "worst_pose_err_mm": 0.58, "worst_yaw_err_deg": 0.91, "min_clear_mm": 1.5, "s_clamp": [90.5, 91.0, 99.0], "n": 27, "n_ok": 9, "fails": {"tail pad pushes TPU feet": 10, "nose pad pushes TPU feet": 8}}
+scout: 3344 low points, cartridge bottom 5.12 above z 0 (18.32 above the deck)
+  scout    off ( -20, -20) yaw  -10: FAIL no x clamp before the end of travel pose [-23.17, -19.44, -0.13]
+  scout    off ( -20, -20) yaw    0: FAIL no x clamp before the end of travel pose [-20.0, -20.0, 0.0]
+  scout    off ( -20, -20) yaw   10: FAIL no x clamp before the end of travel pose [-18.59, -17.34, 0.13]
+  scout    off ( -20,   0) yaw  -10: FAIL no x clamp before the end of travel pose [-20.0, 0.0, -0.17]
+  scout    off ( -20,   0) yaw    0: FAIL no x clamp before the end of travel pose [-20.0, 0.0, 0.0]
+  scout    off ( -20,   0) yaw   10: FAIL no x clamp before the end of travel pose [-20.0, 0.0, 0.17]
+  scout    off ( -20,  20) yaw  -10: FAIL no x clamp before the end of travel pose [-18.59, 17.34, -0.13]
