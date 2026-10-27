@@ -1,0 +1,452 @@
+{
+ "name": "overseer_hub_deck",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   16554.8
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.427,
+    "erode 2.0"
+   ],
+   [
+    "0.1",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.2",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.9",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.14",
+    0.993,
+    "erode 2.0"
+   ],
+   [
+    "0.15",
+    0.993,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 3,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 7836.3,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "crash 35 g 0",
+    "cls": "crash",
+    "inlayer": 0.017,
+    "across": 0.009,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 1",
+    "cls": "crash",
+    "inlayer": 0.017,
+    "across": 0.007,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 2",
+    "cls": "crash",
+    "inlayer": 0.028,
+    "across": 0.019,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 3",
+    "cls": "crash",
+    "inlayer": 0.028,
+    "across": 0.017,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 4",
+    "cls": "crash",
+    "inlayer": 0.047,
+    "across": 0.025,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 5",
+    "cls": "crash",
+    "inlayer": 0.047,
+    "across": 0.033,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 6",
+    "cls": "crash",
+    "inlayer": 0.018,
+    "across": 0.011,
+    "at": [
+     57.5,
+     18.5,
+     5.3
+    ]
+   },
+   {
+    "case": "crash 35 g 7",
+    "cls": "crash",
+    "inlayer": 0.052,
+    "across": 0.033,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 8",
+    "cls": "crash",
+    "inlayer": 0.033,
+    "across": 0.017,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 9",
+    "cls": "crash",
+    "inlayer": 0.023,
+    "across": 0.015,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 10",
+    "cls": "crash",
+    "inlayer": 0.023,
+    "across": 0.012,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 11",
+    "cls": "crash",
+    "inlayer": 0.033,
+    "across": 0.023,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 12",
+    "cls": "crash",
+    "inlayer": 0.052,
+    "across": 0.025,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "crash 35 g 13",
+    "cls": "crash",
+    "inlayer": 0.018,
+    "across": 0.014,
+    "at": [
+     57.5,
+     18.5,
+     5.3
+    ]
+   },
+   {
+    "case": "flight 4 g",
+    "cls": "flight",
+    "inlayer": 0.019,
+    "across": 0.011,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "flight 2 g x",
+    "cls": "flight",
+    "inlayer": 0.004,
+    "across": 0.002,
+    "at": [
+     -30.5,
+     31.5,
+     1.3
+    ]
+   },
+   {
+    "case": "flight 2 g y",
+    "cls": "flight",
+    "inlayer": 0.005,
+    "across": 0.002,
+    "at": [
+     42.5,
+     3.5,
+     4.3
+    ]
+   },
+   {
+    "case": "landing 6 g",
+    "cls": "flight",
+    "inlayer": 0.029,
+    "across": 0.016,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "keels push 387 N each (F) + 35 g up",
+    "cls": "crash",
+    "inlayer": 0.296,
+    "across": 0.318,
+    "at": [
+     101.5,
+     17.5,
+     4.3
+    ]
+   },
+   {
+    "case": "keels pull 274 N each (F) + 35 g up",
+    "cls": "crash",
+    "inlayer": 0.211,
+    "across": 0.354,
+    "at": [
+     94.5,
+     18.5,
+     7.3
+    ]
+   },
+   {
+    "case": "keel +y push, -y pull (F) + 35 g up",
+    "cls": "crash",
+    "inlayer": 0.243,
+    "across": 0.322,
+    "at": [
+     101.5,
+     19.5,
+     4.3
+    ]
+   },
+   {
+    "case": "USB plug 20 N into the Pi's aft ports",
+    "cls": "misuse",
+    "inlayer": 0.039,
+    "across": 0.019,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   },
+   {
+    "case": "press 50 N on the Pi (assembly)",
+    "cls": "misuse",
+    "inlayer": 0.261,
+    "across": 0.139,
+    "at": [
+     57.5,
+     18.5,
+     1.3
+    ]
+   }
+  ],
+  "worst": 0.354,
+  "worst_case": "keels pull 274 N each (F) + 35 g up",
+  "worst_at": [
+   94.5,
+   18.5,
+   7.3
+  ]
+ },
+ "mass_g": 34.54,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 27195.6,
+ "drawn_g": 18.07,
+ "stl": "overseer_hub_deck.stl",
+ "view_stl": "overseer_hub_deck_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 4.44,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 4.576799507378656,
+  "R_cells": 4.576799507378656,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.1446930262192996,
+  "nd": 83183,
+  "sym_axes": [],
+  "n_real": 23,
+  "n_ties": 78,
+  "backend": "direct",
+  "iterations": 86,
+  "stopped": "max_stage"
+ },
+ "grid": {
+  "name": "overseer_hub_deck",
+  "h": 1.0,
+  "shape": [
+   200,
+   88,
+   24
+  ],
+  "origin": [
+   -79.0,
+   -44.0,
+   -3.1947
+  ],
+  "cells": 422400,
+  "design": 83147,
+  "drawn": 14773,
+  "cases": [
+   "crash 35 g 0",
+   "crash 35 g 1",
+   "crash 35 g 2",
+   "crash 35 g 3",
+   "crash 35 g 4",
+   "crash 35 g 5",
+   "crash 35 g 6",
+   "crash 35 g 7",
+   "crash 35 g 8",
+   "crash 35 g 9",
+   "crash 35 g 10",
+   "crash 35 g 11",
+   "crash 35 g 12",
+   "crash 35 g 13",
+   "flight 4 g",
+   "flight 2 g x",
+   "flight 2 g y",
+   "landing 6 g",
+   "keels push 387 N each (F) + 35 g up",
+   "keels pull 274 N each (F) + 35 g up",
+   "keel +y push, -y pull (F) + 35 g up",
+   "USB plug 20 N into the Pi's aft ports",
+   "press 50 N on the Pi (assembly)"
+  ],
+  "supports": [
+   "default"
+  ]
+ },
+ "build_s": 270.8,
+ "layout_s": 7199,
+ "peak_gb": 9.811056,
+ "gen_cm3": 12.0,
+ "h": 1.0,
+ "total_s": 7470
+}

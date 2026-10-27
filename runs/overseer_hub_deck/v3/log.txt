@@ -318,3 +318,13 @@ layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside 
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 7199 s, peak 9.811056 GB
 layout done: 7199 s, peak 9.811056 GB
+build: organic surface at pitch 0.333 mm (x3), skins 14.02 cm3, field 31.59 cm3, in env - cuts 26.77 cm3 (layout 26.77, level offset +0.270 mm), fillet 2.5 mm, rims 1.0 mm, mesh 346,260 faces, 115 s
+build: organic surface at pitch 0.333 mm (x3), skins 14.02 cm3, field 31.59 cm3, in env - cuts 26.77 cm3 (layout 26.77, level offset +0.270 mm), fillet 2.5 mm, rims 1.0 mm, mesh 346,260 faces, 115 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [16554.8], "necks": [], "drawn_not_in_main": [["0.0", 0.427, "erode 2.0"], ["0.1", 0.0, "erode 2.0"], ["0.2", 0.0, "erode 2.0"], ["0.9", 0.0, "erode 2.0"], ["0.14", 0.993, "erode 2.0"], ["0.15", 0.993, "erode 2.0"]], "thin_walls": [], "acute_edges": 3, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [16554.8], "necks": [], "drawn_not_in_main": [["0.0", 0.427, "erode 2.0"], ["0.1", 0.0, "erode 2.0"], ["0.2", 0.0, "erode 2.0"], ["0.9", 0.0, "erode 2.0"], ["0.14", 0.993, "erode 2.0"], ["0.15", 0.993, "erode 2.0"]], "thin_walls": [], "acute_edges": 3, "ok": false}
+function check: {'skin_mm3': 7836.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 7836.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.35 in 'keels pull 274 N each (F) + 35 g up' at [94.5, 18.5, 7.3]
+strength: worst index 0.35 in 'keels pull 274 N each (F) + 35 g up' at [94.5, 18.5, 7.3]
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 34.54, "worst": 0.354, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_hub_deck", "solid_ok": false, "mass_g": 34.54, "worst": 0.354, "function_ok": true, "bodies": 1}
