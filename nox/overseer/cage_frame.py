@@ -16,6 +16,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 from frame_model import Frame, tube
+HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "overseer_frame", "v1")
 CG = json.load(open(os.path.join(HERE, "cage_v5_shell.json")))
@@ -52,10 +53,15 @@ def build():
             L_ = f.node(lug); C_ = f.node(core); f.member(H, L_, RIGID, f"head-{k}"); f.member(L_, C_, sec_of(k), k, k=0.5); f.fix(C_)   # PETG both ends
         elif on:                                                        # a link from a cage node to the core
             i = on[0]; other = q if np.linalg.norm(N[i] - p) < 0.6 else p; C_ = f.node(other); f.member(nid[i], C_, sec_of(k), k, k=K_CORE); f.fix(C_)
-    W0 = np.array([368.0, 112.0, 70.0])                                 # wing struts (head_mount.py: 20 deg+ from the node's tubes)
-    struts = []                                                         # none with the head on the cage (alt V5_HEAD_ON=cage)
+    struts = []                                                         # the one-piece head's struts to the side nodes (head_mount.py)
+    if os.environ.get("V5_HEAD_ON", "core") != "cage":
+        for w, q in HEAD_STRUTS:
+            for sy in (1, -1):
+                w_, i = np.array(w) * [1, sy, 1], int(np.argmin(np.linalg.norm(N - np.array(q) * [1, sy, 1], axis=1)))
+                Wn = f.node(w_); f.member(H, Wn, RIGID, "head-strut"); f.member(Wn, nid[i], sec_of(f"head strut {i}"), f"head strut {i}"); struts.append(i)
+    W0 = np.array([368.0, 112.0, 70.0])                                 # the old wing struts (two-piece head), off
     for i, q in enumerate(N):
-        if abs(q[1]) > 150 and q[0] > 300 and os.environ.get("V5_HEAD_ON", "core") != "cage":
+        if abs(q[1]) > 150 and q[0] > 300 and os.environ.get("V5_HEAD_ON", "core") == "wings":
             w = W0 * [1, np.sign(q[1]), 1]; d = (w - q) / np.linalg.norm(w - q)
             tub = [N[b if a == i else a] - q for a, b in CG["rods"] if i in (a, b)]
             if all(math.degrees(math.acos(np.clip(d @ (t / np.linalg.norm(t)), -1, 1))) >= 20 for t in tub):
@@ -102,7 +108,7 @@ def main():
     nl = {}
     for cn, mf_ in res.items():
         for r in mf_:
-            if not (r["name"].startswith("tube") or r["name"] in RES["links"] or r["name"].startswith("wing strut")): continue
+            if not (r["name"].startswith("tube") or r["name"] in RES["links"] or r["name"].startswith(("wing strut", "head strut"))): continue
             for end, fe in ((r["a"], r["f_end_a"]), (r["b"], r["f_end_b"])):
                 if end not in nid: continue
                 i = nid.index(end); e = nl.setdefault(str(i), {}).setdefault(r["name"], dict(axial=0.0, side=0.0))

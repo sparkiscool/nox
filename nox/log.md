@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer, Spark): one-piece head (L2 + both cameras, `head_mount.py head`): drawn 56 x 177 x 163 (fits 180), L2 loaded at its CG with its moment through the 4 bolts, 4 struts 6/4 to side nodes 15/16/18/19 (searched clear of views): head mode 222 / 119 Hz rigid / TPU (F on E). Top hit now on the camera guards: tubes 1-19 / 3-18 1.62 (reported).
 - 27 Oct (Overseer, Spark): cameras on the same print as the L2 mount: the camera search gets a one-print fit (the head oriented box ≤ 175, `HEAD_ONE` in `layout_v5.py`): lenses (390, ±75, 122), same field 3.42 sr; system_check cage first 7.4, fit 0, CG 0.2. One-piece head setup next.
 - 27 Oct (Overseer, Spark): rod coupons v2 ready to print: v1 loose in PETG, bores 6.00/6.10/6.20 and 3.00/3.10/3.20, each standing and sideways (a sideways hole prints tighter; sockets take the bore by their angle to the bed); solid PASS; `runs/rod_coupons/v2/`.
 - 27 Oct (Overseer): frame v1 rerun on the fixed solver: 9 links 3.0 -> 6/4, buckling k 0.7 for links with a core end (E); 4 members reported over in the 35 g crash (tubes 11-18 / 12-19 1.15, core ties left.1 / right.1 1.06), not split: each split moved it to the next long tube (halved cage, Spark "ignore the tests"; buckling is reported, not gated).

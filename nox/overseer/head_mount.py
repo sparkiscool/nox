@@ -8,7 +8,12 @@ brace sockets, the guard ring, the cage's front centre node with its tube socket
 one; the right is its mirror: the camera pad, the camera guard bar, joint pads, sockets for 3.0 carbon struts to the side cage
 nodes). Drone frame, mm, N.
 
-python3 nox/overseer/head_mount.py centre|wing [out_dir] [--h 2.0] [--git]
+One piece (Spark 27 Oct: "make the camera mounted on the same print as the lidar mount"): `head` = the centre piece's bodies
+(no wing joint pads) + both camera plates and guard bars + strut sockets to the side cage nodes, in one print (the layout placed
+the cameras so the head's box fits the A1 mini, layout_v5.py HEAD_ONE). The L2 loads at its CG (head_system.json l2.cg, 28
+ahead of its base) through its 4 bolts, force and moment (27 Oct review); each crash case carries the L2 and both cameras.
+
+python3 nox/overseer/head_mount.py head|centre|wing [out_dir] [--h 2.0] [--git]
 """
 import os, sys, json, math, argparse
 import numpy as np
@@ -22,7 +27,7 @@ B = np.array(HS["l2"]["base"]); A = np.array(HS["l2"]["axis"]); UPB = np.array([
 TILT = 105.0
 G = 9.81
 M_L2, M_CAM = 0.230, 0.015                     # kg (P, E)
-M_HEAD = 0.33                                  # kg: L2 + cameras + mount, what a guard member stops in a crash (E)
+M_HEAD = 0.36                                  # kg: L2 230 + cameras 30 + mount 100 (system model), what a guard member stops (E)
 CRASH, FLIGHT_UP, FLIGHT_LAT = 35.0, 4.0, 2.0  # g (dimensions.md L)
 ROD_BORE, TUBE_BORE = 3.3, 6.3                 # socket bores (rod OD + 0.3)
 NODE_R, TUBE_R = CG["node_r_mm"], CG["rod_r_mm"]
@@ -126,7 +131,7 @@ JOINT = [np.array([372.0, WING_Y, 62.0]), np.array([380.0, WING_Y, 112.0])]   # 
 
 
 # ---------------------------------------------------------------- the centre piece
-def centre_bodies():
+def centre_bodies(skip_pads=False):
     T = T_l2()
     seat = xf(mf.Manifold.cylinder(5.0, 37.5, 37.5, 64).translate([0, 0, -5.0]), T)
     back = xf(box(-22, 22, -16, 16, -11, -5), T)
@@ -159,13 +164,13 @@ def centre_bodies():
         drawn += boss; addcut(cut + keep); frame.append(boss)
     # wing joint pads (both sides), bolts along y
     pads = []
-    for sy in (1, -1):
+    for sy in (() if skip_pads else (1, -1)):
         for j in JOINT:
             c = j * [1, sy, 1] - np.array([0, sy * 3.0, 0]); pad, hole = bolt_pad(c, [0, 1, 0]); drawn += pad; addcut(hole); pads.append(pad)
     # keep-outs: the L2 and its field (1 behind its base plane, the seat excepted), both cameras and their views, the cage
     addcut(l2_body() + half_space(A, B, 0.0))
-    for c in HS["cameras"]:
-        addcut(frustum(c) + xf(box(-14, 10, -21, 21, -21, 21), cam_frame(c)))
+    for c in HS["cameras"]:                                            # (one piece: the plates are drawn, the camera body only)
+        addcut(frustum(c) + xf(box(-1.4 if skip_pads else -14, 10, -21, 21, -21, 21), cam_frame(c)))
     addcut(cage_tubes(skip_node=CENTRE_NODE))
     # envelope: behind the L2 base plane, |y| <= WING_Y, round the head
     env = box(334.0, 405.0, -WING_Y, WING_Y, -14.0, 122.0) - half_space(A, B, -1.0)
@@ -247,15 +252,99 @@ def setup_wing(h):
     return p
 
 
+# ---------------------------------------------------------------- one piece: the head with both cameras
+# struts from the one-piece head to the side cage nodes (left; the right mirrored): the shortest socket point inside the print box,
+# behind the L2 base plane by 4, the strut out of both camera views (+4 deg) and 20 deg+ from the node's tubes (searched 27 Oct, C)
+HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]
+
+
+def head_struts():
+    """[(socket point, cage node)] both sides"""
+    return [(np.array(w) * [1, sy, 1], np.array(q) * [1, sy, 1]) for w, q in HEAD_STRUTS for sy in (1, -1)]
+
+
+def l2_bolts():
+    """the 4 L2 bolt points on the seat face (drone frame) and the seat centre"""
+    T = T_l2(); out = []
+    for k in range(4):
+        a = math.radians(22.5 + 90 * k); out.append((T @ np.array([25.5 * math.cos(a), 25.5 * math.sin(a), 0.0, 1.0]))[:3])
+    return out, (T @ np.array([0, 0, 0, 1.0]))[:3]
+
+
+def couple(F, at, pts):
+    """least-norm forces at pts that carry force F acting at `at` (its moment about the bolts included)"""
+    c = np.mean(pts, 0); Mm = np.cross(at - c, F); rows = []
+    for p in pts:
+        S = np.array([[0, -(p - c)[2], (p - c)[1]], [(p - c)[2], 0, -(p - c)[0]], [-(p - c)[1], (p - c)[0], 0]])
+        rows.append(np.vstack([np.eye(3), S]))
+    Aeq = np.hstack(rows); x = np.linalg.pinv(Aeq) @ np.concatenate([F, Mm])
+    return [x[3 * k:3 * k + 3] for k in range(len(pts))]
+
+
+def head_bodies():
+    b = centre_bodies(skip_pads=True)
+    drawn, cuts = b["drawn"], b["cuts"]; plates, cguards, struts = [], [], []
+    CN = np.array(CG["nodes"])
+    for c in HS["cameras"]:
+        Tc = cam_frame(c); pl = xf(box(-9.5, -1.5, -20, 20, -20, 20), Tc); drawn += pl; plates.append(pl)
+        for a_ in (-14, 14):
+            for b_ in (-14, 14): cuts += xf(seg([-7.5, a_, b_], [0.5, a_, b_], 1.6), Tc)
+    for k_ in ("cam guard bar", "cam guard bar m"):
+        gb = [np.array(v, float) for v in HS["guards"][k_]]
+        g_ = ball(gb[0], GUARD_NODE_R) + ball(gb[1], GUARD_NODE_R) + seg(gb[0], gb[1], GUARD_R); drawn += g_; cguards.append(g_)
+    for W, q in head_struts():                                          # struts to the side cage nodes
+        k_ = int(np.argmin(np.linalg.norm(CN - q, axis=1))); six = f"head strut {k_}" in LINK6
+        boss, cut, keep = socket(W, q, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
+        drawn += boss; cuts += cut + keep; struts.append(boss)
+    for c in HS["cameras"]:                                             # the camera bodies and views stay clear (plates excepted)
+        cuts += frustum(c) + xf(box(-1.4, 10, -21, 21, -21, 21), cam_frame(c))
+    pts = np.vstack([np.asarray(mf_mesh_pts(drawn))])
+    lo, hi = pts.min(0) - 6.0, pts.max(0) + 6.0
+    for ax in range(3):                                                 # the print box: no axis over 178 (A1 mini 180, C)
+        if hi[ax] - lo[ax] > 178.0: c_ = (hi[ax] + lo[ax]) / 2; lo[ax], hi[ax] = c_ - 89.0, c_ + 89.0
+    env = box(lo[0], hi[0], lo[1], hi[1], lo[2], hi[2]) - half_space(A, B, -1.0)
+    return dict(drawn=drawn, cuts=cuts, env=env, seat=b["seat"], frame=b["frame"], sockets=b["sockets"] + struts, guard=b["guard"],
+                cguards=cguards, plates=plates)
+
+
+def mf_mesh_pts(m):
+    return np.asarray(m.to_mesh().vert_properties)[:, :3]
+
+
+def setup_head(h):
+    from topo import Part
+    b = head_bodies()
+    p = Part("head", h, b["drawn"], b["cuts"], b["env"], build="+z", material="PETG")
+    sup = b["frame"][0]
+    for s_ in b["frame"][1:] + b["sockets"]: sup = sup + s_
+    p.support("frame", sup)                                            # keels, braces, struts and the cage tubes at the centre node
+    bolts, sc = l2_bolts(); L2CG = np.array(HS["l2"]["cg"]); breg = [ball(q, 6.0) for q in bolts]
+    dirs = [np.array(v, float) for v in [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]]
+    dirs += [np.array((sx, sy, sz), float) / math.sqrt(3) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]
+    def case(acc):                                                      # the L2 at its CG through its bolts + both cameras at their plates
+        F = M_L2 * G * acc; parts = list(zip(breg, couple(F, L2CG, bolts)))
+        return parts + [(pl, M_CAM * G * acc) for pl in b["plates"]]
+    for k, d in enumerate(dirs):
+        p.load_multi(f"crash {k}", case(CRASH * d), cls="misuse", support="frame", accel=CRASH * d)
+    fl = np.array([FLIGHT_LAT, 0, -FLIGHT_UP]); p.load_multi("flight", case(fl), cls="flight", support="frame", accel=fl)
+    for i, q in enumerate(b["guard"]):                                 # a guard ring node takes the head's crash, inward and back
+        inward = (B - A * 8 - q); inward[0] = 0; inward = inward / max(np.linalg.norm(inward), 1e-6) - A * 0.5
+        p.load(f"guard hit {i}", ball(q, GUARD_NODE_R), M_HEAD * G * CRASH * inward / np.linalg.norm(inward), cls="misuse", support="frame")
+    for i, g_ in enumerate(b["cguards"]):
+        for k, d in enumerate([np.array([0, 0, -1.0]), np.array([-1.0, 0, 0])]):
+            p.load(f"camera guard hit {i}.{k}", g_, M_HEAD * G * CRASH * 0.5 * d, cls="misuse", support="frame")   # half the head on a bar (E)
+    return p
+
+
 if __name__ == "__main__":
-    ap = argparse.ArgumentParser(); ap.add_argument("piece", choices=["centre", "wing"]); ap.add_argument("out", nargs="?")
+    ap = argparse.ArgumentParser(); ap.add_argument("piece", choices=["head", "centre", "wing"]); ap.add_argument("out", nargs="?")
     ap.add_argument("--h", type=float, default=2.0); ap.add_argument("--gen", type=float, default=None); ap.add_argument("--git", action="store_true")
     ap.add_argument("--smoke", action="store_true", help="build the Part once and report, no optimisation")
     a = ap.parse_args()
-    setup = setup_centre if a.piece == "centre" else setup_wing
+    setup = {"head": setup_head, "centre": setup_centre, "wing": setup_wing}[a.piece]
     if a.smoke:
         p = setup(a.h); print(a.piece, "grid", p.shape, "ok"); sys.exit(0)
     from topo import Settings, optimise
-    out = a.out or os.path.join(ROOT, "runs", f"head_{a.piece}", "v1")
-    gen = a.gen if a.gen is not None else (16.0 if a.piece == "centre" else 5.0)   # cm3 generated (budget 73 g for the head, E)
-    optimise(setup, h=a.h, gen_cm3=gen, out_dir=out, name=f"head_{a.piece}", settings=Settings(), git=a.git)
+    out = a.out or os.path.join(ROOT, "runs", f"head_{a.piece}" if a.piece != "head" else "head_mount", "v1")
+    gen = a.gen if a.gen is not None else {"head": 26.0, "centre": 16.0, "wing": 5.0}[a.piece]   # cm3 generated (the head ~100 g, E)
+    optimise(setup, h=a.h, gen_cm3=gen, out_dir=out, name="head_mount" if a.piece == "head" else f"head_{a.piece}", settings=Settings(), git=a.git)

@@ -68,7 +68,7 @@ def build(var, soft):
         if on:
             i = on[0]; other = q if np.linalg.norm(N[i] - p) < 0.6 else p; C_ = f.node(other)
             f.member(end(i, other), C_, sec, k); f.fix(C_); add_m(nid[i], np.linalg.norm(p - q) * gpm / 2000)
-    W0 = np.array([368.0, 112.0, 70.0]); struts = []
+    W0 = np.array([float(v) for v in os.environ.get("V5_W0", "368,112,70").split(",")]); struts = []
     for i, q in enumerate(N):                                      # wing struts (head_mount.py: 20 deg+ from the node's tubes)
         if abs(q[1]) > 150 and q[0] > 300 and var != "Z":
             w = W0 * [1, np.sign(q[1]), 1]; d = (w - q) / np.linalg.norm(w - q)
@@ -78,6 +78,12 @@ def build(var, soft):
                 Wn = f.node(w); f.member(H, Wn, RIGID, "head-wing"); f.member(Wn, end(i, w), sec, f"wing strut {i}")
                 L = np.linalg.norm(w - q); carbon += L * (24.3 if sec is TUBE6 else 10.5) / 1000; add_m(nid[i], L * 24.3e-3 / 2); struts.append(i)
     tops = []
+    if var == "A" and os.environ.get("V5_WS"):                         # the one-piece head's struts (cage_frame.HEAD_STRUTS)
+        for w, q in cf.HEAD_STRUTS:
+            for sy in (1, -1):
+                w_, i = np.array(w) * [1, sy, 1], int(np.argmin(np.linalg.norm(N - np.array(q) * [1, sy, 1], axis=1)))
+                Wn = f.node(w_); f.member(H, Wn, RIGID, "head-strut"); f.member(Wn, end(i, w_), TUBE6, f"head strut {i}")
+                L = np.linalg.norm(w_ - N[i]); carbon += L * 24.3 / 1000; add_m(nid[i], L * 24.3e-3 / 2); struts.append(i)
     if var in ("C", "D"):                                          # guard ring top (8 behind the plane, r 62) to the cage top nodes
         for i in (TOP if var == "C" else [i for i in TOP if abs(N[i, 1]) < 1]):
             r0 = B - A * 8.0 + UPB * 62.0 + np.array([0, 25.0 * np.sign(N[i, 1]) if abs(N[i, 1]) > 1 else 0, 0])
