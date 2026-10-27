@@ -1,0 +1,26 @@
+=== overseer_sled: h 1.6, generated 40.0 cm3, min member 3.2 mm, cores 4
+=== overseer_sled: h 1.6, generated 40.0 cm3, min member 3.2 mm, cores 4
+overseer_sled: grid (120, 80, 56) h 1.6 = 537,600 cells; design 58,230 (238.5 cm3), drawn 1,894, void 477,476
+  support default: 519 cells, 1036 nodes
+layout: WARNING the solid gate wants 6.25 mm members round the drawn bodies (2.0 mm erosion), the design space routes at most 3.55 mm to every body: using 3.55 mm; the gate may fail on the setup
+layout: WARNING the solid gate wants 6.25 mm members round the drawn bodies (2.0 mm erosion), the design space routes at most 3.55 mm to every body: using 3.55 mm; the gate may fail on the setup
+overseer_sled: grid (120, 80, 56) h 1.6 = 537,600 cells; design 58,230 (238.5 cm3), drawn 1,894, void 477,476
+  support default: 519 cells, 1036 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (7.76 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (7.76 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 3.55 mm (rods), plates 3.22 mm, filter radius 3.66 mm = 2.29 cells, erosion depth 0.97 mm; volfrac 0.168 of 58,230 design cells
+layout: min member 3.55 mm (rods), plates 3.22 mm, filter radius 3.66 mm = 2.29 cells, erosion depth 0.97 mm; volfrac 0.168 of 58,230 design cells
+layout: WARNING nearly mirrored in x (4.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (4.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (7.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (7.7% of passive cells differ): no symmetry
+layout: 13 drawn bodies (1,894 cells), held solid in every realization; eroded filter: masked
+layout: 13 drawn bodies (1,894 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (339 cells) count by their cover; 8 bodies tied to body 8
+layout: gate ties: held bodies thinner than 2.0 mm (339 cells) count by their cover; 8 bodies tied to body 8
+layout: 19 load cases + 54 tie cases (9 bodies tied, 4 held by support 'default') + 48 gate ties + 24 held ties
+layout: 19 load cases + 54 tie cases (9 bodies tied, 4 held by support 'default') + 48 gate ties + 24 held ties
+layout: reachability OK: every drawn body can be joined by members of 3.55 mm
+layout: reachability OK: every drawn body can be joined by members of 3.55 mm
+fem: grid (120, 80, 56) = 537,600 elements, 222,813 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
+fem: grid (120, 80, 56) = 537,600 elements, 222,813 active dofs; backend direct (direct estimate 2.4 GB, budget 11.8 GB)
