@@ -260,3 +260,35 @@ it  15 beta    4 J   0.2722 vol 0.0395 (dil 0.0763 g -0.004) grey  7.1% ch 0.100
 it  15 beta    4 J   0.2722 vol 0.0395 (dil 0.0763 g -0.004) grey  7.1% ch 0.100 worst guard hit 4 8.37e+03 106.9s
 it  16 beta    4 J   0.2516 vol 0.0398 (dil 0.0764 g +0.024) grey  7.1% ch 0.100 worst guard hit 4 7.81e+03 108.3s
 it  16 beta    4 J   0.2516 vol 0.0398 (dil 0.0764 g +0.024) grey  7.1% ch 0.100 worst guard hit 4 7.81e+03 108.3s
+=== head_centre: h 2.0, generated 16.0 cm3, min member 3.2 mm, cores 4
+=== head_centre: h 2.0, generated 16.0 cm3, min member 3.2 mm, cores 4
+head_centre: grid (40, 80, 72) h 2.0 = 230,400 cells; design 108,649 (869.2 cm3), drawn 6,931, void 114,820
+  support frame: 470 cells, 1218 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+head_centre: grid (40, 80, 72) h 2.0 = 230,400 cells; design 108,649 (869.2 cm3), drawn 6,931, void 114,820
+  support frame: 470 cells, 1218 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (39.30 cm3); 16.14 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (39.30 cm3); 16.14 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.036 of 110,667 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.036 of 110,667 design cells
+layout: WARNING nearly mirrored in y (1.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (1.2% of passive cells differ): no symmetry
+layout: 10 drawn bodies (4,913 cells), held solid in every realization; eroded filter: masked
+layout: 10 drawn bodies (4,913 cells), held solid in every realization; eroded filter: masked
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'frame') + 0 gate ties + 12 held ties
+layout: 29 load cases + 24 tie cases (4 bodies tied, 2 held by support 'frame') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (40, 80, 72) = 230,400 elements, 384,900 active dofs; backend direct (direct estimate 4.9 GB, budget 11.8 GB)
+fem: grid (40, 80, 72) = 230,400 elements, 384,900 active dofs; backend direct (direct estimate 4.9 GB, budget 11.8 GB)
+layout: resumed from runs/head_centre/v2/ck.npz at it 10, beta 4
+layout: resumed from runs/head_centre/v2/ck.npz at it 10, beta 4
+it  11 beta    4 J   0.4091 vol 0.0399 (dil 0.0777 g +0.015) grey  7.3% ch 0.100 worst held b1 mx 1.5e+04 129.0s
+it  11 beta    4 J   0.4091 vol 0.0399 (dil 0.0777 g +0.015) grey  7.3% ch 0.100 worst held b1 mx 1.5e+04 129.0s
+it  12 beta    4 J   0.3899 vol 0.0385 (dil 0.0759 g -0.009) grey  7.2% ch 0.100 worst guard hit 4 1.29e+04 114.7s
+it  12 beta    4 J   0.3899 vol 0.0385 (dil 0.0759 g -0.009) grey  7.2% ch 0.100 worst guard hit 4 1.29e+04 114.7s
+it  13 beta    4 J   0.4141 vol 0.0390 (dil 0.0761 g -0.007) grey  7.1% ch 0.100 worst held b1 mx 1.57e+04 98.2s
+it  13 beta    4 J   0.4141 vol 0.0390 (dil 0.0761 g -0.007) grey  7.1% ch 0.100 worst held b1 mx 1.57e+04 98.2s
+it  14 beta    4 J   0.3039 vol 0.0391 (dil 0.0761 g -0.006) grey  7.1% ch 0.100 worst guard hit 4 9.49e+03 96.7s
+it  14 beta    4 J   0.3039 vol 0.0391 (dil 0.0761 g -0.006) grey  7.1% ch 0.100 worst guard hit 4 9.49e+03 96.7s
