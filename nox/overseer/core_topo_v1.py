@@ -27,6 +27,8 @@ from topo import Part, Settings, optimise
 from topo.part import man
 
 PIECE = sys.argv[1] if len(sys.argv) > 1 else "hub_deck"
+if PIECE not in ("hub_deck", "sled"):
+    sys.exit(__doc__)
 args = [a for a in sys.argv[2:] if not a.startswith("-")]
 H = float(args[0]) if args else (1.0 if PIECE == "hub_deck" else 1.25)
 GEN = float(args[1]) if len(args) > 1 else (10.0 if PIECE == "hub_deck" else 40.0)   # cm3 generated (E: slots 24 / 75 g, minus drawn)
