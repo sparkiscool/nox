@@ -286,3 +286,13 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (40, 88, 88) = 309,760 elements, 431,760 active dofs; backend direct (direct estimate 5.7 GB, budget 11.8 GB)
 fem: grid (40, 88, 88) = 309,760 elements, 431,760 active dofs; backend direct (direct estimate 5.7 GB, budget 11.8 GB)
+layout: resumed from runs/head_mount/v4/ck.npz at it 50, beta 16
+layout: resumed from runs/head_mount/v4/ck.npz at it 50, beta 16
+it  51 beta   16 J   0.0628 vol 0.0388 (dil 0.0756 g -0.008) grey  1.4% ch 0.100 worst gate b6 mz 2.24e+03 91.5s
+it  51 beta   16 J   0.0628 vol 0.0388 (dil 0.0756 g -0.008) grey  1.4% ch 0.100 worst gate b6 mz 2.24e+03 91.5s
+it  52 beta   16 J   0.0600 vol 0.0393 (dil 0.0760 g -0.002) grey  1.4% ch 0.100 worst gate b6 mz 2.16e+03 93.7s
+it  52 beta   16 J   0.0600 vol 0.0393 (dil 0.0760 g -0.002) grey  1.4% ch 0.100 worst gate b6 mz 2.16e+03 93.7s
+it  53 beta   16 J   0.0591 vol 0.0394 (dil 0.0761 g -0.001) grey  1.4% ch 0.100 worst gate b6 mz 2.13e+03 94.7s
+it  53 beta   16 J   0.0591 vol 0.0394 (dil 0.0761 g -0.001) grey  1.4% ch 0.100 worst gate b6 mz 2.13e+03 94.7s
+it  54 beta   16 J   0.0584 vol 0.0395 (dil 0.0761 g -0.001) grey  1.4% ch 0.100 worst gate b6 mz 2.11e+03 92.8s
+it  54 beta   16 J   0.0584 vol 0.0395 (dil 0.0761 g -0.001) grey  1.4% ch 0.100 worst gate b6 mz 2.11e+03 92.8s
