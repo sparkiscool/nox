@@ -36,8 +36,8 @@ Previews: `preview_scout_camera_mount_v1.png` (print/scout_camera_mount_v1.stl),
   - 3 grip ribs, 0.05 radial interference on the tube, at 0° and ±95° (E; set on a coupon). They stop rattle and slide.
   - The two rods together stop it turning.
   - The bore is a parameter: `SCM_ROD=3` gives 3.2 for a 3.0 rod if Spark reverts.
-- **Stop collars (2):** the clip profile, 5 long, snapped onto rod 14-15 outboard of the bottom clips (0.3 gap), then a drop of CA (DEFAULT). They are the y end stop. They do not block the pop (a pop is radial).
-- **Hardware:** 4 heat-set inserts M2.5 (OD 3.5 x 5.7, E), 4 M2.5 x 8 screws through the board, 4 TPU washers 1.0 (DEFAULT).
+- **Stop collars (2):** the clip profile, 5 long, snapped onto rod 14-15 outboard of the bottom clips (0.3 gap, C), then a drop of CA (DEFAULT). They are the y end stop. They do not block the pop (a pop is radial).
+- **Hardware:** 4 heat-set inserts M2.5 (OD 3.5 x 5.7, E), 4 M2.5 x 8 screws through the board (C), 4 TPU washers 1.0 (DEFAULT, E).
 - **Assembly:**
   1. Inserts into the bosses.
   2. Camera onto the bosses (screws from the front, through the open hood).
@@ -131,6 +131,7 @@ Both are in the frame model's sized 39 (`runs/scout_frame/v2/alt_sized/up6.json`
   - With the v12 points and real tube mass, the cage's lowest mode is 109.5 Hz (F), not 138. That is still over 100 but with 9.5 % margin.
 - **Node 16:** keep its sockets for 14-16 / 15-16 / 7-16 / 8-16 inside 5 of the node centre toward +x; the mount's back frame is 5.45 from a Ø12 node there (C).
 - **Layout:** the camera row's 26.5 g slot becomes 31.8 (M + E). The CG moves to 1.8 pack in (gate 3); no trim needed.
+- **Cage sync (CLAUDE.md, review 15):** saved part reported to the Scout v3 cage session (session_01EtHMZNhc68Ghbc2KCNMUzU) in this worker's hand-off, with file, commit and mass (21.3 g M). Putting it into the Scout artifact (https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR) is that session's step. Until it is done, the mount on the cage is shown at https://claude.ai/artifact/82LPH8p6h9bXxAq6h3kYPE (27 Oct).
 
 ## Open
 - **Snap fit (E):** print one mount and try it on a 6/4 offcut before the drone: snap 0.20 and grip 0.05 are estimates. Too tight: `SCM_SNAP=0.15`. Loose: raise GRIP.
