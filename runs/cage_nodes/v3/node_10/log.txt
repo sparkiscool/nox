@@ -251,3 +251,17 @@ it  22 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000
 it  22 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 115.6s
 it  23 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 122.8s
 it  23 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 122.8s
+it  24 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 121.8s
+it  24 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 121.8s
+it  25 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 118.0s
+it  25 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 118.0s
+it  26 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 121.4s
+it  26 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 121.4s
+it  27 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 92.0s
+it  27 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 92.0s
+it  28 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 70.1s
+it  28 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 70.1s
+it  29 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 55.1s
+it  29 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 55.1s
+it  30 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 53.7s
+it  30 beta    4 J  10.0002 vol 0.0080 (dil 0.0323 g +0.879) grey  2.5% ch 0.000 worst tube to 23 side a 963 53.7s
