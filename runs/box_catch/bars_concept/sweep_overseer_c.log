@@ -7,3 +7,4 @@ overseer: 4343 low points, cartridge bottom 3.0 above z 0 (7.00 above the deck)
   overseer off (  40, -80) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 112.5 pose [-2.25, -85.81, 0.33]
   overseer off (  40, -80) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 96.5 pose [13.63, -85.47, 0.33]
   overseer off (  40, -60) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 183.0 pose [39.56, -14.42, -0.38]
+  overseer off (  40, -60) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 184.5 pose [45.2, -26.22, -0.25]

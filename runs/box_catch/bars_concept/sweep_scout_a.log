@@ -4,3 +4,5 @@ scout: 3996 low points, cartridge bottom 4.12 above z 0 (8.12 above the deck)
   scout    off ( -80, -80) yaw   -5: ok clamp 197.0 slide 193.55 err (-2.72, -0.03, -0.68) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
   scout    off ( -80, -80) yaw    0: ok clamp 197.0 slide 193.55 err (-2.72, -0.03, -0.68) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
   scout    off ( -80, -80) yaw    5: ok clamp 197.0 slide 193.55 err (-2.72, -0.03, -0.68) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -80) yaw   10: ok clamp 197.0 slide 193.55 err (-2.72, -0.03, -0.68) clear 2.5 (side +y lip to cage tube 0-1) ride 0.0
+  scout    off ( -80, -80) yaw   15: FAIL side bars jam before their stop at s 233.0 (phase 2): {'side -y': 1.138197102096143} pose [-6.94, -54.7, -0.12]
