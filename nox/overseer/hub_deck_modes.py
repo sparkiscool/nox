@@ -75,8 +75,23 @@ for sy, (a_, b_) in R["keels"].items():
     k_s = 1.0 / defl; L_k = float(np.linalg.norm(b_ - a_)) - SK["off"]; k_t = E_TUBE * A_TUBE / L_k
     sock[sy] = {"nodes": int(wall.sum()), "k_socket_N_per_mm": round(k_s), "k_keel_tube_N_per_mm": round(k_t),
                 "series_freq_factor": round(float(np.sqrt(1.0 / (1.0 + k_t / k_s))), 3), "defl_at_387N_mm": round(387.3 * defl, 3)}
+# FE bolt reactions (review: "the topology run reports the FE value"): both keels push 387.3 N (F) and the deck's payload at 35 g up;
+# each foot's reaction = the sum of K u over its fixed nodes (the plate + M3 + insert, rigid here)
+F = np.zeros(3 * nn)
+for sy, (a_, b_) in R["keels"].items():
+    a_, b_ = np.array(a_), np.array(b_); d = (b_ - a_) / np.linalg.norm(b_ - a_)
+    rel = X - a_; t = rel @ d; r = np.linalg.norm(rel - np.outer(t, d), axis=1)
+    wall = (t >= SK["off"]) & (t <= SK["off"] + SK["l"]) & (r >= SK["d"] / 2 - 0.2) & (r <= SK["d"] / 2 + 1.2 * H)
+    F.reshape(nn, 3)[wall] += -d * 387.3 / wall.sum()
+F.reshape(nn, 3)[:, 2] -= mass * 35 * 9810.0                          # 35 g up (crash 4 direction): inertia down, N (t x mm/s2)
+u = np.zeros(3 * nn); u[fd] = lu.solve(F[fd]); Rf = (K @ u - F).reshape(nn, 3)
+react = {}
+for x, y in feet:
+    sel = fixed & (np.hypot(X[:, 0] - x, X[:, 1] - y) <= 7.0)
+    v = Rf[sel].sum(0); react[f"({x:g}, {y:g})"] = {"N": round(float(np.linalg.norm(v)), 1), "shear_N": round(float(np.hypot(v[0], v[1])), 1), "axial_N": round(float(v[2]), 1)}
+res_react = {"case": "both keels push 387.3 N (F) + 35 g up", "per_foot": react, "max_N": max(r_["N"] for r_ in react.values())}
 res = {"mesh": os.path.relpath(MESH, ROOT), "pitch_mm": H, "elements": int(len(el)), "dofs_free": int(len(fd)), "material": "PETG (nox/topo)",
-       "masses_g": {"Pi 5 + cooler on the post tops": 55.0, "UBEC": 15.0, "buck": 6.0}, "modes": modes, "keel_sockets": sock,
+       "masses_g": {"Pi 5 + cooler on the post tops": 55.0, "UBEC": 15.0, "buck": 6.0}, "modes": modes, "keel_sockets": sock, "bolt_reactions_fe": res_react,
        "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses); socket stiffness along the keel"}
 print(json.dumps(res, indent=1))
 if OUTJ: json.dump(res, open(OUTJ, "w"), indent=1)

@@ -1,7 +1,7 @@
 """Overseer core v2 prints (27 Oct): the keel front hub mounting coupon and the flow clip v1 (the clip is drawn and small: it is its
 own check). Positions from `runs/overseer_core/v2/result.json` (never retyped); each printed the way it sits on the drone.
 
-  keel hub coupon   the hub deck's front: the 4 front feet Ø12 x 6.5 on the plate's holes (96, ±17) Ø3.5 and (65, ±22.5) Ø3.1
+  keel hub coupon   the hub deck's front: the 4 front feet Ø14 x 6.5 on the plate's holes (96, ±17) Ø3.5 and (65, ±22.5) Ø3.1
                     with Ø4.0 insert holes through, the keel triangles' sides and cross bar, the seats and the 2 keel bosses Ø13 with the 6.2 x 15 bores on the keel axes
                     (aimed at the head lugs (379.7, ±46, 54.2)); plate face down. Checks: the holes, the inserts, a 6 mm tube in
                     each bore and its line to the head, the flow clip under it.
@@ -20,7 +20,7 @@ R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v2", "result.jso
 C = R["coupon"]; SK = R["socket"]; INS = R["insert"]; FH = R["foot_h"]
 OUT = os.path.join(ROOT, "runs", "overseer_core_coupons", "v2"); os.makedirs(OUT, exist_ok=True)
 PRINT = os.path.join(ROOT, "print")
-BAR_W, BAR_T, PAD_D, M3_CLR = 6.0, 4.0, 12.0, 3.4
+BAR_W, BAR_T, PAD_D, M3_CLR = 6.0, 4.0, 14.0, 3.4     # feet Ø14 as hub deck v4
 FLOW = (21.6, 16.0, 6.5)            # MTF-02P (spec), long side along x
 FLOW_CLR, FLOW_ZCLR, WALL = 0.2, 0.3, 3.0     # walls and floor 3.0: the solid gate fails necks under 3.0 (2.0 failed, 27 Oct)
 WIN = (12.0, 10.0)                  # lens window (E: lens + ToF centred on the board)
@@ -80,7 +80,7 @@ def flow_clip():
     cx, cy, cz = FLOW[0] + 2 * FLOW_CLR, FLOW[1] + 2 * FLOW_CLR, FLOW[2] + FLOW_ZCLR
     zb = zt - cz - WALL
     body = [box(fx - cx / 2 - WALL, fx + cx / 2 + WALL, fy - cy / 2 - WALL, fy + cy / 2 + WALL, zb, zt)]
-    body += [cyl(x, y, zt - FLANGE, zt, PAD_D / 2) for x, y in FRONT]
+    body += [cyl(x, y, zt - FLANGE, zt, 6.0) for x, y in FRONT]
     body += [box(90.0, 102.0, sy * 7.0, sy * 17.0, zt - FLANGE, zt) for sy in (1, -1)]
     cut = [box(fx - cx / 2, fx + cx / 2, fy - cy / 2, fy + cy / 2, zt - cz, zt + 1)]                  # pocket, open to the plate
     cut += [box(fx - WIN[0] / 2, fx + WIN[0] / 2, fy - WIN[1] / 2, fy + WIN[1] / 2, zb - 1, zt)]     # lens window

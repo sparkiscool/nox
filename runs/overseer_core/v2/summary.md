@@ -32,4 +32,4 @@ Re-review 27 Oct: PASS. Nits fixed: bearing case above, previews `runs/overseer_
 
 ## Print files (solid_check PASS on each, print_orient)
 - `print/overseer_flow_clip_v1.stl`: 5.0 g, floor down, bed 507 mm², overhang 234 mm², 9.8 tall; preview `runs/overseer_core_coupons/v2/overseer_flow_clip_v1_preview.png`
-- `print/overseer_core_coupon_keel_hub_v2.stl`: 12.0 g, plate face down, bed 869 mm², overhang 653 mm² (the bosses past the seats: tree supports), 17.6 tall; preview `runs/overseer_core_coupons/v2/overseer_core_coupon_keel_hub_v2_preview.png`
+- `print/overseer_core_coupon_keel_hub_v2.stl`: 13.0 g (M), feet Ø14 as the deck, plate face down, bed 982 mm² (M), overhang 484 mm² (M) (the bosses past the seats: tree supports), 17.6 tall; preview `runs/overseer_core_coupons/v2/overseer_core_coupon_keel_hub_v2_preview.png`
