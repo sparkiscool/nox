@@ -16,7 +16,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 ### Keep (on hand, decided)
 - S500 centre plates (2015 edition, Spark 23 Oct, CHECK), SunnySky X2216 II, 1045 props, MicoAir743-Lite, Matek FCHUB-12S, 4S 6000 packs (3), MTF-02P, Unitree L2, Pi 5 companion (`dimensions.md` O, `nox/parts-list.md`).
 - **L2 at the nose, axis 15° below forward** (Spark 24 Oct), outside the cage with nothing in its field, guarded only from behind (Spark 26 Oct; `dimensions.md` O Lidar, Cage v5).
-- 2 x DECXIN 2633V2 on either side of the L2, pointed so their field is maximized (Spark 27 Oct): portrait, 50° out, 15° down, 3.45 sr with no overlap (`dimensions.md` O Camera); rigid to the L2 for the camera-lidar calibration. Pointing in `dimensions.md` O Camera.
+- 2 x DECXIN 2633V2 on either side of the L2, pointed so their field is maximized (Spark 27 Oct): landscape, 45° out, 10° down, 3.42 sr with no overlap, lenses (390, ±75, 122) so the head and both cameras are one print (`dimensions.md` O Camera); rigid to the L2 for the camera-lidar calibration. Pointing in `dimensions.md` O Camera.
 - PX4 1.18.0rc, airframe 4001, DShot, CRSF; flies perfectly in Position mode (Spark 23 Oct); tune backup `claude/overseer_params_2026-09-26.params`, never delete. Switches matched to the Scout (mode ch 5, kill ch 8).
 - Printed mounts generated with the `nox/topo` engine, not `noxopt` (Spark 23 Oct, lidar mount row).
 
@@ -33,7 +33,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 
 ### Parts to draw (order DEFAULT)
 Cage first, now a geodesic shell formed to the drone (Spark 26 Oct: the v2 layout kept, its cage replaced by triangles, compact like a disk, larger cells, 6 mm tubes, battery close to the body, a new funnel follows the cage): `layout_v5.py`, `dimensions.md` O Cage v5 (the L2 and the camera pair outside the cage; half the tubes, Spark 27 Oct), method `docs/generative.md` rule 0 Geodesic cage. v0..v4 layouts kept.
-0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes: 39 shell nodes, 8 opening ring nodes, the spoke sockets at the arm tips, the L2 apex ties, the L2 guard ring (8 nodes, 16 struts), the belly ties.
+0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes (cage v5): 24 PETG nodes in 14 designs (`cage_node.py`), 6 of them on the opening ring; the L2 guard ring, the camera guards and the cage's front centre node are part of the one-piece head print (`head_mount.py head`).
 1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors and spoke and strut sockets per the cage.
 2. Pi deck between the plates (4 posts over the FC stack).
 3. Belly sled: cartridge hanger centred on the catch, flow pod beside it, 15 ahead of v2's (no down camera; Spark 27 Oct), 4 TPU feet; Ø9 driver holes at the 4 rear arm bottom screws (access, Cage v5); pogo pads with the new funnel.

@@ -1,8 +1,8 @@
-"""Overseer cage nodes (printed TPU, nox/topo): one topology part per node design, shaped by the tubes that meet there
+"""Overseer cage nodes (printed PETG, nox/topo; Spark 27 Oct: PETG, not TPU): one topology part per node design, shaped by the tubes that meet there
 (Spark 27 Oct: "start the nodes runs too, make sure each node takes either 3mm or 6mm, that's the only two rods we will use,
 also do topology based on the contact of the rods for each joint so it's optimized and not overly thick and wasteful").
 
-Each node: a drawn socket per member that ends there (6 mm carbon tube: bore 6.1, 15 deep; 3 mm carbon rod: bore 3.1, 10 deep;
+Each node: a drawn socket per member that ends there (6 mm carbon tube: bore 6.2, 15 deep; 3 mm carbon rod: bore 3.2, 10 deep;
 a 2.5 boss wall round each), the sockets set back from the node centre just far enough that neighbouring bosses clear; the
 topology joins only those bosses. Cases per member, the other members holding: its axial push and pull and two side loads
 (E until the frame model: 6 mm tube 250 N axial / 60 N side, 3 mm rod 80 N / 15 N). Mirror pairs share one design (the right
@@ -21,7 +21,7 @@ CG = json.load(open(os.path.join(HERE, "cage_v5_shell.json")))
 RES = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))
 HS = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "head_system.json")))
 N = np.array(CG["nodes"])
-KINDS = {6: dict(bore=6.1, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.1, depth=10.0, axial=80.0, side=15.0)}   # E; bores the v2 coupons' middle (DEFAULT 27 Oct, v1 OD + 0.3 loose)
+KINDS = {6: dict(bore=6.2, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.2, depth=10.0, axial=80.0, side=15.0)}   # E; bores Spark 27 Oct (coupons v2: the largest fits)
 WALL = 2.5
 _LS = os.path.join(HERE, "link_sizes.json")
 LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()      # links the frame model made 6/4 tube
@@ -40,6 +40,7 @@ def members(i):
     for a, b in CG["rods"]:
         if i in (a, b): o = N[b if a == i else a]; out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6, f"tube to {b if a == i else a}"))
     for k, (p, q) in RES["links"].items():
+        if k.startswith("head strut"): continue                        # below, from HEAD_STRUTS
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
                 o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6 if k in LINK6 else 3, k))
@@ -89,7 +90,7 @@ def setup_for(i):
     def setup(h):
         from topo import Part
         b = bodies(i)
-        p = Part(f"node_{i}", h, b["drawn"], b["cuts"], b["env"], build="+z", material="TPU")   # TPU feet and nodes (CLAUDE.md)
+        p = Part(f"node_{i}", h, b["drawn"], b["cuts"], b["env"], build="+z", material="PETG")   # PETG cage nodes (CLAUDE.md, Spark 27 Oct)
         S = b["sockets"]
         for j, s in enumerate(S):                        # member j loaded, every other member holding
             hold = None

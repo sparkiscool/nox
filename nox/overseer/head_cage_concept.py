@@ -57,6 +57,7 @@ def build(var, soft):
     f.member(H, nid[cf.HEAD_NODE], RIGID, "head-centre node")
     carbon = 0.0
     for k, (p, q) in RES["links"].items():
+        if k.startswith("head strut"): continue
         p, q = np.array(p), np.array(q); sec = cf.sec_of(k); gpm = 24.3 if sec is TUBE6 else 10.5
         if k.startswith(("keel", "L2 brace")):
             if var not in ("A", "G", "H") or (var == "G" and k.startswith("L2 brace")) or (var == "H" and k.startswith("keel")): continue

@@ -2,7 +2,7 @@
 dimensions.md L. Checks every member (pinned-end buckling, stress) and writes the forces each node socket really carries, for the
 node and head-mount topology runs (in place of their E loads).
 
-Model: cage nodes as rigid joints (TPU nodes hold less: the buckling check uses pinned ends); the 6/4 carbon tubes and the 3.0
+Model: cage nodes as rigid joints (PETG nodes, Spark 27 Oct; a 15-deep epoxied socket is not fully fixed, so the buckling check keeps pinned ends for cage tubes, conservative); the 6/4 carbon tubes and the 3.0
 carbon links as beams; the core (plates, arms, belly) fixed: every link's core end is a support; the sensor head mount one rigid
 body (H) on its keels and braces, holding the cage's front centre node and the wing struts.
 Cases: crash 35 g through the cage member that touches first, 14 directions (the drone's mass, the core held); a nose hit on the
@@ -29,8 +29,8 @@ HANDLE = 50.0                                     # N at mid-span (E)
 SIG_T, SIG_C = 1000.0, 600.0                      # MPa allowables, pultruded carbon (E)
 TUBE6 = tube(6.0, 4.0); ROD3 = tube(3.0, 0.0)
 RIGID = dict(E=100e6, G=40e6, A=1e3, I=1e5, J=2e5, c=5.0)
-K_CORE = 0.7                                      # a link's core end epoxied 15 deep in a printed PETG socket ~ fixed, its cage end in a
-                                                  # TPU node ~ pinned: effective length 0.7 L (E); cage tubes TPU both ends, 1.0
+K_CORE = 0.7                                      # a link's core end epoxied 15 deep in a printed PETG socket ~ fixed, its cage end taken
+                                                  # as pinned: effective length 0.7 L (E); cage tubes pinned both ends, 1.0 (conservative on PETG nodes)
 N = np.array(CG["nodes"]); B = np.array(HS["l2"]["base"]); A = np.array(HS["l2"]["axis"])
 _k = [i for i in range(len(N)) if abs(N[i, 1]) < 0.5 and N[i, 0] > 300]
 HEAD_NODE = max(_k, key=lambda i: N[i, 0])
@@ -46,6 +46,7 @@ def build():
     H = f.node(B - A * 20.0)                                            # the head mount, rigid
     f.member(H, nid[HEAD_NODE], RIGID, "head-centre node")
     for k, (p, q) in RES["links"].items():
+        if k.startswith("head strut"): continue                        # built with the head below
         p, q = np.array(p), np.array(q)
         on = [i for i in range(len(N)) if np.linalg.norm(N[i] - p) < 0.6 or np.linalg.norm(N[i] - q) < 0.6]
         if k.startswith(("keel", "L2 brace")):                          # head lug to the core
@@ -116,6 +117,9 @@ def main():
     json.dump({k: {kk: {kkk: round(vvv, 3) if isinstance(vvv, float) else vvv for kkk, vvv in vv.items()} for kk, vv in v.items()}
                for k, v in [("members", worst)]}, open(os.path.join(OUT, "members.json"), "w"), indent=1)
     json.dump(nl, open(os.path.join(OUT, "node_loads.json"), "w"), indent=1)
+    m_g = {i: v * 1000 for i, v in enumerate(m) if v > 0}; m_g[H] = m_g.get(H, 0) + M_HEAD * 1000   # the frame's lowest modes, rigid joints
+    hz, U = f.modes(m_g, 3); hd = [float(np.linalg.norm(U[6 * H:6 * H + 3, k]) / max(1e-12, np.abs(U[:, k]).max())) for k in range(len(hz))]
+    cage_g = sum(np.linalg.norm(N[a] - N[b]) * 24.3e-3 for a, b in CG["rods"]) + 4.5 * len(N)
     tubes = {k: v for k, v in worst.items() if k.startswith("tube")}; links = {k: v for k, v in worst.items() if not k.startswith(("tube", "head-"))}
     bad_b = sorted([(v["buckle"], k, v["L"]) for k, v in {**tubes, **links}.items() if v["buckle"] >= 1.0], reverse=True)
     bad_s = sorted([(v["sigma"], k) for k, v in {**tubes, **links}.items() if v["sigma"] > SIG_C], reverse=True)
@@ -123,9 +127,12 @@ def main():
     L_ = []
     say = lambda s: (print(s), L_.append(s))
     say(f"# Overseer cage frame model v1 (F, on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 cage tubes, {K_CORE} links with a core end, 0.5 keels / braces (PETG both ends), E)\n")
-    say(f"Cage `nox/overseer/cage_v5_shell.json` ({len(N)} nodes, {len(CG['rods'])} tubes 6/4) + {len(links)} links 3.0 on the core (fixed); "
-        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and wing struts to nodes {struts}. Drone {MASS * 1000:.0f} g: crash force "
+    say(f"Cage `nox/overseer/cage_v5_shell.json` ({len(N)} nodes, {len(CG['rods'])} tubes 6/4, {cage_g:.0f} g E) + {len(links)} links on the core (fixed; "
+        f"{sum(k in LINK6 for k in links)} tube 6/4, the rest rod 3.0); "
+        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and struts to nodes {struts}. Drone {MASS * 1000:.0f} g (E): crash force "
         f"{F_crash:.0f} N through the first-touching member, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
+    say(f"Lowest modes (rigid joints, lumped masses, the head {M_HEAD * 1000:.0f} g (E) at its mount): " + ", ".join(f"{h_:.0f} Hz" + (" (the head moves)" if hd[k] > 0.3 else "")
+        for k, h_ in enumerate(hz)) + "; TPU joints and the head's own mode: runs/overseer_head_cage/concept/.\n")
     say(f"## Buckling (k L): {len(bad_b)} members at or over 1.0 x their Euler load")
     for b_, k, L in bad_b[:20]: say(f"- {k}: {b_:.2f} x Pcr (L {L:.0f}; {worst[k]['case_b']})")
     say(f"\n## Stress over {SIG_C:.0f} MPa: {len(bad_s)} members")

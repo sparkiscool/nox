@@ -2,7 +2,7 @@
 
 Script `nox/overseer/head_cage_concept.py` (frame model F on E properties; `nox/frame_model.py`). Picture `concept.png` (side view of each option, struts to the core red, head-to-cage struts green). Data `result.json`.
 
-Cases, core fixed: nose hit (the drone's 3178 g at 35 g into the head where its guard leads), the head's own 360 g at 35 g in 14 directions at its CG, crash 35 g through the first-touching cage node, flight 4 g. Head first mode: the head as a rigid body (L2 230 g at its CG with its own inertia, cameras 2 x 15, mount 100, E) on the frame's 6 x 6 stiffness at the head. Two joint bounds: rigid nodes, and TPU nodes (each tube end 6 short of the node centre on a TPU 95A stub Ø11.3, E 26 MPa, E).
+Inputs at the time (27 Oct, before the head struts): drone 3178 g (E), mount 100 g (E; the system model now says 102, a 2 % change in the head mass). Cases, core fixed: nose hit (the drone's 3178 g at 35 g into the head where its guard leads), the head's own 360 g at 35 g in 14 directions at its CG, crash 35 g through the first-touching cage node, flight 4 g. Head first mode: the head as a rigid body (L2 230 g at its CG with its own inertia, cameras 2 x 15, mount 100, E) on the frame's 6 x 6 stiffness at the head. Two joint bounds: rigid nodes, and TPU nodes (each tube end 6 short of the node centre on a TPU 95A stub Ø11.3, E 26 MPa, E).
 
 | Option | Rods from the body | Head mode rigid / TPU (Hz, F on E) | L2 move, nose hit, TPU (mm) | Head carbon (g, E) |
 |---|---|---|---|---|
@@ -27,3 +27,16 @@ Earlier DEFAULT (superseded): H. The 2 keels go and the 4 L2 braces stay: 4 rods
 **Frame model fix found here.** `Frame.solve` regularised every free dof with 1e-9 x the mean diagonal. The stiff "rigid" head links (E 1e8) pushed that mean up, so every node sat on ~100 N/mm to ground and frame model v1 read low. It now uses 1e-10 x the median diagonal. Converged: rigid-link E 1e5..1e8 gives the same worst member (2.32) and head mode (200 Hz) on A. `cage_frame.py` rerun (`runs/overseer_frame/v1/`): 9 more links to 6/4 tube, then 6 members still buckle in the 35 g single-node crash: core ties left.1 / right.1 2.17 (L 276), left.2 / right.2 1.32 / 1.18 (L 337), shell tubes 11-18 / 12-19 1.15 (L 417). All are already 6/4 tube. Next: split the 2 tubes and shorten the 4 core ties, then rerun until none (the system pass).
 
 Also found: the flat top of the cage (node 20 and its ring) has a ~26 Hz mode on TPU joints (F on E). It holds no sensor, so it is reported, not gated.
+
+## The one-piece head's 4 struts, and PETG nodes (27 Oct)
+With the cameras on the head print, the old wing struts could not reach. 4 struts 6/4 now run from sockets inside the print box ((401, ±83, 151), (383, ±83, 73), C) to nodes 15 / 16 / 18 / 19 (`head_mount.HEAD_STRUTS`). Data: `result_A1.json` (TPU bound), `result_petg.json`.
+
+| Option (head on keels + braces) | Head mode rigid / TPU / PETG joints (Hz, F on E) | L2 move, nose hit, PETG (mm) |
+|---|---|---|
+| A, no struts | 167 / 114 / 164 | 1.7 |
+| **A + 4 struts (built)** | **223 / 120 / 206** | **1.6** |
+
+- With TPU joints the struts add little: the vertical stiffness at the L2 CG is 197 N/mm with them and 192 without (F on E). They end in soft TPU nodes, so the keels and braces to the core set the 120 Hz.
+- **Spark 27 Oct: "would it be better using petg if so we will just use that".** PETG nodes (E 2000 MPa against TPU's 26, E): the head 120 → 206 Hz; the cage's lowest mode 26 → 126 Hz (the flat top no longer rattles); the cage-only option D 45 → 96 Hz (F on E). Cost: a PETG node cracks in a hard crash rather than giving; it is the cheap part, replaced (L Breaking order). Epoxy also holds PETG far better than TPU. Decision: PETG cage nodes (hard rule changed).
+- `runs/overseer_frame/v1/summary.md` gives 214 Hz for the mode where the head moves. That model is the whole frame with point masses (the head 362 g at one point, no rotary inertia, the cage's own masses moving, rigid joints). The 223 here is the head as a rigid body with the L2's own inertia on the frame's condensed stiffness. Both are F on E.
+- Buckling here uses k 1.0 on every member (pinned, the concept's comparison basis); `runs/overseer_frame/v1` uses k 0.7 for links with a core end and 0.5 for keels / braces (E). So a link at 1.28 here reads 0.63 there (1.28 x 0.7² ≈ 0.63): the frame model is the sizing number.
