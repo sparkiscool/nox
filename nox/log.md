@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (rule, Spark): Measure before quoting. `tools/run_estimate.py` smokes a topo run (3 iterations a stage: s/it, cases, peak GB) into `estimate.json` before it starts; times quoted as a range in Pacific; parallel only if peaks fit 75 % RAM. CLAUDE.md, generative.md Heavy runs, run-part step 2, precheck 14.
 - 27 Oct (rule, Spark): socket bore = the coupon pick (DEFAULT 6.1 / 3.1; OD + 0.3 was loose in PETG) in CLAUDE.md and docs/generative.md; TPU only for feet, skids and strips. PR 122 review round 4 PASS, its notes fixed.
 - 27 Oct (rule, Spark): cage nodes PETG, not TPU ("would it be better using petg if so we will just use that"): F on E, PETG joints lift the L2 head 120 -> 206 Hz and the cage's lowest mode 26 -> 126 Hz; CLAUDE.md Hard rules, docs/generative.md Geodesic cage, review check 14, cage_node.py material. Plus PR 122 review round 3 fixes.
 - 27 Oct (Overseer): PR 122 review fixes: System Overseer v5 in dimensions.md (head and node requirements), shared ring row to the v5 loop, cage alternatives picture `cages_alt.png`, frame report with modes and cage mass, summary rewritten on current numbers, artifact labels (head printed, cage v5) republished.
