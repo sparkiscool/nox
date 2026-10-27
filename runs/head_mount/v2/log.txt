@@ -1,0 +1,24 @@
+=== head_mount: h 2.25, generated 26.0 cm3, min member 3.2 mm, cores 4
+=== head_mount: h 2.25, generated 26.0 cm3, min member 3.2 mm, cores 4
+head: grid (40, 88, 88) h 2.25 = 309,760 cells; design 121,012 (1378.4 cm3), drawn 7,619, void 181,129
+  support frame: 726 cells, 1936 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+head: grid (24, 48, 48) h 4.5 = 55,296 cells; design 15,112 (1377.1 cm3), drawn 935, void 39,249
+  support frame: 100 cells, 418 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (70.26 cm3); 14.94 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (70.26 cm3); 14.94 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.43 cells, erosion depth 1.71 mm; volfrac 0.029 of 15,276 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.43 cells, erosion depth 1.71 mm; volfrac 0.029 of 15,276 design cells
+layout: WARNING filter radius 1.43 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING filter radius 1.43 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (0.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.3% of passive cells differ): no symmetry
+layout: 7 drawn bodies (771 cells), held solid in every realization; eroded filter: masked
+layout: 7 drawn bodies (771 cells), held solid in every realization; eroded filter: masked
+layout: 27 load cases + 12 tie cases (2 bodies tied, 5 held by support 'frame') + 0 gate ties + 30 held ties
+layout: 27 load cases + 12 tie cases (2 bodies tied, 5 held by support 'frame') + 0 gate ties + 30 held ties
+fem: grid (24, 48, 48) = 55,296 elements, 59,268 active dofs; backend mg (direct estimate 0.4 GB, budget 11.8 GB)
+fem: grid (24, 48, 48) = 55,296 elements, 59,268 active dofs; backend mg (direct estimate 0.4 GB, budget 11.8 GB)
+fem: multigrid 2 levels [(np.int64(24), np.int64(48), np.int64(48)), (np.int64(12), np.int64(24), np.int64(24))], coarsest 24,375 dofs (direct)
+fem: multigrid 2 levels [(np.int64(24), np.int64(48), np.int64(48)), (np.int64(12), np.int64(24), np.int64(24))], coarsest 24,375 dofs (direct)
