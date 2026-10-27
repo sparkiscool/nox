@@ -181,6 +181,7 @@ The system pass of the swap arm carrying both packs (Spark 24 Oct: 9 bays, 4 Ove
 | Props shadow | 3.6 % above, 6.7 % below (plan shadow weighted by r) | E |
 | Mass | 746 g all-up (system_check, E): cage 132 (shell rods 67, nodes 39, saddle ties 8, tie saddle 17); camera 10 (E) + mount v1 21.8 + 2 collars 0.5 (M) = 32.3 (M + E); the electronics session's tail bay mount 49.2 and cables 6.3 (round 5 concept); bought, latch set and wires 526; budget 500 soft (L) | E |
 | Access | swap down (cartridge, pack, plug); 4 receiver bolt keys from below; FC USB-C cable out the tail-left through a cell: 8 / 8 | C |
+| Electronics tail bay (mount v2 on v12) | v12 poses, catch −5.0 (C); tail block 15.9 g E (web under the plate to x −31.0, 2 M3 through the tab at (−42.0, ±16.0) C, fin + foot to z 34) + carrier 33.2 g E (4-M3 yoke = lateral fuse, tube spine 14, UBEC box 6, XR2 floor z 21); mount 49.2 g E at (−84.0, −0.2, 10.7) C, cables 6.3 g E; L crash worst 0.27 E; 235 / 476 Hz E; CG 0.56 / 1.49 at −5.0 C (main, camera mount); belly mount tail face x −31.0 (req). `runs/scout_electronics/v2/envelope.json` | C on E |
 
 ## System Overseer v5 (27 Oct 2026, layout v5 / cage v5; `nox/overseer/layout_v5.py`, assembly `nox/overseer/overseer.assembly.json`, frame `nox/overseer/cage_frame.py`, runs `runs/overseer_layout/v5/summary.md`, `runs/overseer_frame/v1/`; drone frame: x nose, y left, z up, z 0 bottom plate top; C geometry on E sizes, F frame model unless tagged)
 | Item | Value | Tag |

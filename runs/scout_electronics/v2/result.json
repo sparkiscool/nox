@@ -1,0 +1,5730 @@
+{
+ "round": 5,
+ "catch": -4.999999046325684,
+ "poses": {
+  "Radxa Zero 3W": {
+   "R": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ],
+    [
+     0,
+     -1,
+     0
+    ]
+   ],
+   "t": [
+    -138.85,
+    -4.61,
+    8.0
+   ],
+   "body": [
+    [
+     -138.85,
+     -4.61,
+     8.0
+    ],
+    [
+     -71.85,
+     3.19,
+     39.5
+    ]
+   ],
+   "boxes": [
+    [
+     [
+      -138.85,
+      -4.61,
+      8.0
+     ],
+     [
+      -71.85,
+      3.19,
+      39.5
+     ]
+    ],
+    [
+     [
+      -99.75,
+      -4.01,
+      39.5
+     ],
+     [
+      -68.35,
+      5.99,
+      45.0
+     ]
+    ]
+   ],
+   "cg": [
+    -104.35,
+    -0.81,
+    23.0
+   ],
+   "mass_g": 10.0,
+   "tag": "E",
+   "text": "Radxa on the right (-y) wall: long side x, component side +y (out), ports edge +z, SD end -x; board x -138.9..-71.9, y -4.6..3.2, z 8.0..39.5"
+  },
+  "UBEC": {
+   "R": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "t": [
+    -163.1,
+    11.2,
+    16.0
+   ],
+   "body": [
+    [
+     -163.1,
+     11.2,
+     16.0
+    ],
+    [
+     -118.1,
+     26.6,
+     24.0
+    ]
+   ],
+   "boxes": [
+    [
+     [
+      -163.1,
+      11.2,
+      16.0
+     ],
+     [
+      -118.1,
+      26.6,
+      24.0
+     ]
+    ],
+    [
+     [
+      -171.1,
+      13.2,
+      16.0
+     ],
+     [
+      -163.1,
+      24.6,
+      24.0
+     ]
+    ],
+    [
+     [
+      -118.1,
+      13.2,
+      16.0
+     ],
+     [
+      -110.1,
+      24.6,
+      24.0
+     ]
+    ]
+   ],
+   "cg": [
+    -140.6,
+    18.9,
+    20.0
+   ],
+   "mass_g": 15.0,
+   "tag": "E",
+   "text": "UBEC on the left (+y) wall: long side x; x -163.1..-118.1, y 11.2..26.6, z 16.0..24.0"
+  },
+  "XR2": {
+   "R": [
+    [
+     1,
+     0,
+     0
+    ],
+    [
+     0,
+     1,
+     0
+    ],
+    [
+     0,
+     0,
+     1
+    ]
+   ],
+   "t": [
+    -110.0,
+    -27.05,
+    23.0
+   ],
+   "body": [
+    [
+     -110.0,
+     -27.05,
+     23.0
+    ],
+    [
+     -94.0,
+     -15.05,
+     31.0
+    ]
+   ],
+   "boxes": [
+    [
+     [
+      -110.0,
+      -27.05,
+      23.0
+     ],
+     [
+      -94.0,
+      -15.05,
+      31.0
+     ]
+    ],
+    [
+     [
+      -104.0,
+      -23.05,
+      31.0
+     ],
+     [
+      -100.0,
+      -19.05,
+      45.0
+     ]
+    ]
+   ],
+   "cg": [
+    -102.0,
+    -21.05,
+    28.0
+   ],
+   "mass_g": 1.0,
+   "tag": "P",
+   "text": "XR2 on a shelf, right (-y): antenna +z; x -110.0..-94.0, y -27.1..-15.1, z 23.0..31.0"
+  }
+ },
+ "cables": {
+  "mass_g": 6.27,
+  "tag": "E",
+  "cg": [
+   -8.3,
+   2.3,
+   31.6
+  ],
+  "runs": {
+   "camera USB-C": {
+    "g": 4.09,
+    "mid": [
+     26.1,
+     0.8,
+     40.0
+    ],
+    "L": 272.0
+   },
+   "Radxa UART": {
+    "g": 0.35,
+    "mid": [
+     -49.0,
+     -0.8,
+     12.2
+    ],
+    "L": 140.0
+   },
+   "UBEC 5 V out": {
+    "g": 0.55,
+    "mid": [
+     -136.0,
+     8.6,
+     15.5
+    ],
+    "L": 83.0
+   },
+   "UBEC in (FC pads)": {
+    "g": 1.01,
+    "mid": [
+     -53.6,
+     9.5,
+     16.8
+    ],
+    "L": 153.0
+   },
+   "XR2 UART": {
+    "g": 0.28,
+    "mid": [
+     -47.6,
+     -10.5,
+     19.2
+    ],
+    "L": 139.0
+   }
+  }
+ },
+ "concepts": {
+  "A": {
+   "mount": {
+    "belly-mount tail block (PETG)": {
+     "g": 15.92,
+     "cg": [
+      -45.29,
+      0.68,
+      12.92
+     ],
+     "bounds": [
+      [
+       -69.45,
+       -21.0,
+       -8.0
+      ],
+      [
+       -14.0,
+       21.0,
+       34.0
+      ]
+     ],
+     "note": "block 21.4 x 11.05 between the tongues, gusset on the receiver's tail face, web under the plate tab to 2 plate-bolt bosses at [(-42.0, 16.0), (-42.0, -16.0)], fin through the notch, foot on the plate top to x -14.0; 6 inserts",
+     "bodies": 1
+    },
+    "tail carrier (PETG)": {
+     "g": 33.23,
+     "cg": [
+      -102.57,
+      -0.7,
+      9.58
+     ],
+     "bounds": [
+      [
+       -163.1,
+       -27.05,
+       -13.0
+      ],
+      [
+       -48.05,
+       26.6,
+       37.5
+      ]
+     ],
+     "note": "yoke (2 tongues, 4 M3, 2.0 side wall, lower back under the Radxa) + spine (2.0 inner wall, box y -13.05..-6.55 aft of x -78.5) + 4 \u00d88 posts + cross plate + UBEC tray + XR2 shelf; one print",
+     "bodies": 1
+    }
+   },
+   "mount_g": 49.2,
+   "checks": {
+    "Radxa Zero 3W": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": 22.328952023720156,
+      "mount + nose legs (Scout)": 34.70995567253501,
+      "receiver v3 (latch)": 28.00000762939453,
+      "receiver TPU end pieces (latch, E)": 29.353711082401986,
+      "tie saddle (printed)": 38.54861530784044,
+      "UBEC": 8.004999876022339,
+      "XR2": 10.445000171661377,
+      "belly-mount tail block (PETG)": 2.4000091552734375,
+      "tail carrier (PETG)": -1.4531713720859054
+     },
+     "wash": 5.671243855027086,
+     "rods": 20.26430130460109,
+     "inset": 13.34484987292322,
+     "funnel": 14.941259883800605
+    },
+    "UBEC": {
+     "gaps": {
+      "Radxa Zero 3W": 8.004999876022339,
+      "XR2": 27.471302759075044,
+      "belly-mount tail block (PETG)": 41.19845411539261,
+      "tail carrier (PETG)": -4.0194366942304644e-14
+     },
+     "wash": 18.794942978051978,
+     "rods": 13.789391225807586,
+     "inset": 4.976539431520891,
+     "funnel": 5.3754189567718385
+    },
+    "XR2": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": 37.225882632055985,
+      "motor 4": 35.830362835682585,
+      "Radxa Zero 3W": 10.445000171661377,
+      "UBEC": 27.471302759075044,
+      "belly-mount tail block (PETG)": 27.077715004064096,
+      "tail carrier (PETG)": -1.5888218580782548e-14
+     },
+     "wash": 3.704901631214071,
+     "rods": 14.896289135889827,
+     "inset": 14.871273448472806,
+     "funnel": 45.65520152591424
+    },
+    "belly-mount tail block (PETG)": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": -4.15091419741844e-12,
+      "motor 3": 22.87610010846363,
+      "motor 4": 22.87610010846363,
+      "FC": 4.5,
+      "flow MTF-02P": 44.601119861314054,
+      "mount + nose legs (Scout)": -8.343678738167853e-15,
+      "receiver v3 (latch)": -7.021666937153402e-13,
+      "receiver TPU strips (latch)": 6.099998474121094,
+      "receiver TPU end pieces (latch, E)": 2.0,
+      "cartridge v6 (latch)": 6.299999237060547,
+      "slider +y (latch)": 47.68251579245612,
+      "slider -y (latch)": 47.68251579245612,
+      "cartridge skid closed end (latch, TPU)": 30.088411390434025,
+      "pack 4S 1500": 8.799999237060547,
+      "tie saddle (printed)": 15.717823184771087,
+      "wires": 4.5,
+      "Radxa Zero 3W": 2.4000091552734375,
+      "UBEC": 41.19845411539261,
+      "XR2": 27.077715004064096,
+      "tail carrier (PETG)": -7.326161809327023e-10
+     },
+     "wash": 3.0492776775187167,
+     "rods": 26.97793002305167,
+     "inset": 25.819731149584094,
+     "funnel": 36.74186519095947
+    },
+    "tail carrier (PETG)": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": 2.0655571946471127,
+      "motor 3": 35.214693652154686,
+      "motor 4": 35.142955395258696,
+      "FC": 29.520292193346485,
+      "mount + nose legs (Scout)": 16.33657504286061,
+      "receiver v3 (latch)": 4.200000762939453,
+      "receiver TPU strips (latch)": 14.716565494652803,
+      "receiver TPU end pieces (latch, E)": 2.0,
+      "cartridge v6 (latch)": 10.5,
+      "cartridge v6 strips (latch, TPU)": 37.42822060233858,
+      "cartridge skid closed end (latch, TPU)": 25.793652319902275,
+      "pack 4S 1500": 13.0,
+      "tie saddle (printed)": 29.363134384155273,
+      "wires": 29.489999237060548,
+      "Radxa Zero 3W": -3.0,
+      "UBEC": -1.070923684697708e-12,
+      "XR2": -1.4210854715202004e-14,
+      "belly-mount tail block (PETG)": -5.613331529383019e-13
+     },
+     "wash": 3.0415101264045816,
+     "rods": 16.624103168876644,
+     "inset": 3.5241303140406615,
+     "funnel": 3.732836861151064
+    }
+   },
+   "fit": [
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "frame plate (Bee35 carbon)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "mount + nose legs (Scout)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "receiver v3 (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "tail carrier (PETG)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": 0.0,
+     "gap_mm": 0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "UBEC",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "XR2",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "receiver TPU end pieces (latch, E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "receiver TPU end pieces (latch, E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "Radxa plug keep-clear (E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG) less its 4 posts",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": null,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "frame plate (Bee35 carbon)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.06,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.4,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "receiver v3 (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.2,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "prop 3",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.48,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "prop 4",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.48,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "FC",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.5,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "wires",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.5,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "prop 4",
+     "overlap_mm3": 0.0,
+     "gap_mm": 5.08,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "receiver TPU strips (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 6.1,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "cartridge v6 (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 6.3,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "pack 4S 1500",
+     "overlap_mm3": 0.0,
+     "gap_mm": 8.8,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "prop 3",
+     "overlap_mm3": 0.0,
+     "gap_mm": 12.91,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "tie saddle (printed)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 15.72,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "mount + nose legs (Scout)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 16.29,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "cage shell tubes",
+     "overlap_mm3": null,
+     "gap_mm": 16.64,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "Radxa plug keep-clear (E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 21.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "cage shell nodes",
+     "overlap_mm3": 0.0,
+     "gap_mm": 25.92,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "spokes, bay ties, core ties, camera guard",
+     "overlap_mm3": 0.0,
+     "gap_mm": 27.66,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "tie saddle (printed)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 29.36,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "spokes, bay ties, core ties, camera guard",
+     "overlap_mm3": 0.0,
+     "gap_mm": 36.81,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "cage shell tubes",
+     "overlap_mm3": null,
+     "gap_mm": 40.12,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "cage shell nodes",
+     "overlap_mm3": 0.0,
+     "gap_mm": 93.39,
+     "kind": ">= 2.0",
+     "ok": true
+    }
+   ],
+   "sweeps": {
+    "SD card": {
+     "start": [
+      -138.9,
+      -3.0,
+      23.0
+     ],
+     "dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "exits_shell_at_mm": 59.0,
+     "least_clear_mm": 11.4
+    },
+    "USB-C 1": {
+     "start": [
+      -95.4,
+      1.6,
+      39.5
+     ],
+     "dir": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "exits_shell_at_mm": 22.0,
+     "least_clear_mm": 18.4
+    }
+   },
+   "loads": {
+    "far_corner": [
+     -163.1,
+     26.6,
+     24.0
+    ],
+    "yoke_centre": [
+     -59.0,
+     0.5,
+     5.2
+    ],
+    "cases": {
+     "crash 35 g x": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.054,
+       "x": -112.4,
+       "sigma": 1.4,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.011,
+       "x": -50.4,
+       "sigma": 0.3,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.022,
+       "x": -47.5,
+       "sigma": 0.6,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 9.6,
+       "index": 0.025,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.01
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 5.4,
+       "index": 0.01,
+       "receiver_bearing_index": 0.001,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.021,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.025,
+       "root": 0.022,
+       "carrier": 0.054,
+       "first": "carrier",
+       "fuse_first": false
+      }
+     },
+     "crash 35 g -x": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.054,
+       "x": -112.4,
+       "sigma": 1.4,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.011,
+       "x": -50.4,
+       "sigma": 0.3,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.022,
+       "x": -47.5,
+       "sigma": 0.6,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 9.6,
+       "index": 0.025,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.01
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 16.2,
+       "index": 0.028,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 3.1
+      },
+      "foot": {
+       "index": 0.013,
+       "x": -26.3,
+       "F": 3.1
+      },
+      "web arms": {
+       "index": 0.063,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.025,
+       "root": 0.063,
+       "carrier": 0.054,
+       "first": "tail block (root)",
+       "fuse_first": false
+      }
+     },
+     "crash 35 g y": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.074,
+       "x": -94.4,
+       "sigma": 1.8,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.062,
+       "x": -50.4,
+       "sigma": 1.5,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 62.1,
+       "index": 0.166,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.02
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.9,
+       "S": 57.2,
+       "index": 0.1,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.166,
+       "root": 0.138,
+       "carrier": 0.074,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g -y": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.074,
+       "x": -94.4,
+       "sigma": 1.8,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.062,
+       "x": -50.4,
+       "sigma": 1.5,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 62.1,
+       "index": 0.166,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.02
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.9,
+       "S": 57.2,
+       "index": 0.1,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.166,
+       "root": 0.138,
+       "carrier": 0.074,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g z": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.052,
+       "x": -94.4,
+       "sigma": 0.6,
+       "tau": 0.7,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.028,
+       "x": -50.4,
+       "sigma": 0.6,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.105,
+       "x": -42.5,
+       "sigma": 2.6,
+       "tau": 0.3,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.07
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.8,
+       "S": 0.0,
+       "index": 0.003,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 46.7
+      },
+      "foot": {
+       "index": 0.193,
+       "x": -26.3,
+       "F": 46.7
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.193,
+       "carrier": 0.052,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g -z": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.052,
+       "x": -94.4,
+       "sigma": 0.6,
+       "tau": 0.7,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.028,
+       "x": -50.4,
+       "sigma": 0.6,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.105,
+       "x": -42.5,
+       "sigma": 2.6,
+       "tau": 0.3,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.07
+      },
+      "plate bolts (2 M3)": {
+       "T": 16.2,
+       "S": 40.1,
+       "index": 0.07,
+       "receiver_bearing_index": 0.021,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.07,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.105,
+       "carrier": 0.052,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x +y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 2.0,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.057,
+       "x": -50.4,
+       "sigma": 1.4,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.05
+      },
+      "plate bolts (2 M3)": {
+       "T": 3.3,
+       "S": 34.6,
+       "index": 0.061,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 25.2
+      },
+      "foot": {
+       "index": 0.104,
+       "x": -26.3,
+       "F": 25.2
+      },
+      "web arms": {
+       "index": 0.136,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.138,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x +y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 1.9,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.054,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.128,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.046
+      },
+      "plate bolts (2 M3)": {
+       "T": 7.8,
+       "S": 59.3,
+       "index": 0.104,
+       "receiver_bearing_index": 0.013,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.235,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.235,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x -y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.051,
+       "x": -94.4,
+       "sigma": 1.0,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.052,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.131,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.058
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 31.4,
+       "index": 0.055,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 25.2
+      },
+      "foot": {
+       "index": 0.104,
+       "x": -26.3,
+       "F": 25.2
+      },
+      "web arms": {
+       "index": 0.122,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.131,
+       "carrier": 0.051,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x -y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.041,
+       "x": -94.4,
+       "sigma": 0.9,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.048,
+       "x": -50.4,
+       "sigma": 1.2,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.121,
+       "x": -47.5,
+       "sigma": 3.0,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.038
+      },
+      "plate bolts (2 M3)": {
+       "T": 11.0,
+       "S": 56.1,
+       "index": 0.098,
+       "receiver_bearing_index": 0.013,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.225,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.225,
+       "carrier": 0.041,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x +y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.041,
+       "x": -94.4,
+       "sigma": 0.9,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.048,
+       "x": -50.4,
+       "sigma": 1.2,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.121,
+       "x": -47.5,
+       "sigma": 3.0,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.038
+      },
+      "plate bolts (2 M3)": {
+       "T": 3.3,
+       "S": 34.6,
+       "index": 0.061,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 28.7
+      },
+      "foot": {
+       "index": 0.119,
+       "x": -26.3,
+       "F": 28.7
+      },
+      "web arms": {
+       "index": 0.144,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.144,
+       "carrier": 0.041,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x +y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.051,
+       "x": -94.4,
+       "sigma": 1.0,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.052,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.131,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.058
+      },
+      "plate bolts (2 M3)": {
+       "T": 7.8,
+       "S": 56.3,
+       "index": 0.099,
+       "receiver_bearing_index": 0.012,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.242,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.242,
+       "carrier": 0.051,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x -y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 1.9,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.054,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.128,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.046
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 37.8,
+       "index": 0.066,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 28.7
+      },
+      "foot": {
+       "index": 0.119,
+       "x": -26.3,
+       "F": 28.7
+      },
+      "web arms": {
+       "index": 0.147,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.147,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x -y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 2.0,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.057,
+       "x": -50.4,
+       "sigma": 1.4,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.05
+      },
+      "plate bolts (2 M3)": {
+       "T": 11.0,
+       "S": 59.5,
+       "index": 0.104,
+       "receiver_bearing_index": 0.012,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.265,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.265,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "flight 4 g (thrust axis)": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.006,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.1,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.003,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.012,
+       "x": -42.5,
+       "sigma": 0.3,
+       "tau": 0.0,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.008
+      },
+      "plate bolts (2 M3)": {
+       "T": 1.9,
+       "S": 4.6,
+       "index": 0.008,
+       "receiver_bearing_index": 0.002,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.008,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.012,
+       "carrier": 0.006,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "flight 2 g x": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.003,
+       "x": -112.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.001,
+       "x": -50.4,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.001,
+       "x": -47.5,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.5,
+       "index": 0.001,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 0.3,
+       "index": 0.001,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.001,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.001,
+       "root": 0.001,
+       "carrier": 0.003,
+       "first": "carrier",
+       "fuse_first": false
+      }
+     },
+     "flight 2 g -x": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.003,
+       "x": -112.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.001,
+       "x": -50.4,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.001,
+       "x": -47.5,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.5,
+       "index": 0.001,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 0.9,
+       "index": 0.002,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 0.2
+      },
+      "foot": {
+       "index": 0.001,
+       "x": -26.3,
+       "F": 0.2
+      },
+      "web arms": {
+       "index": 0.004,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.001,
+       "root": 0.004,
+       "carrier": 0.003,
+       "first": "tail block (root)",
+       "fuse_first": false
+      }
+     },
+     "flight 2 g y": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.004,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.004,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.008,
+       "x": -47.5,
+       "sigma": 0.2,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 3.6,
+       "index": 0.009,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.2,
+       "S": 3.3,
+       "index": 0.006,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.001,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.009,
+       "root": 0.008,
+       "carrier": 0.004,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "flight 2 g -y": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.004,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.004,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.008,
+       "x": -47.5,
+       "sigma": 0.2,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 3.6,
+       "index": 0.009,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.2,
+       "S": 3.3,
+       "index": 0.006,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.001,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.009,
+       "root": 0.008,
+       "carrier": 0.004,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "landing 6 g": {
+      "kind": "landing",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.009,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.1,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.005,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.018,
+       "x": -42.5,
+       "sigma": 0.4,
+       "tau": 0.0,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.012
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.8,
+       "S": 6.9,
+       "index": 0.012,
+       "receiver_bearing_index": 0.004,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.018,
+       "carrier": 0.009,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "E: 50 N y at the far item corner": {
+      "kind": "E",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.628,
+       "x": -112.4,
+       "sigma": 15.5,
+       "tau": 1.5,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.271,
+       "x": -50.4,
+       "sigma": 6.7,
+       "tau": 0.4,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.592,
+       "x": -47.5,
+       "sigma": 14.7,
+       "tau": 0.9,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 301.5,
+       "index": 0.804,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.086
+      },
+      "plate bolts (2 M3)": {
+       "T": 8.6,
+       "S": 214.2,
+       "index": 0.376,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.037,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.804,
+       "root": 0.592,
+       "carrier": 0.628,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": false
+      }
+     },
+     "E: 50 N z at the far item corner": {
+      "kind": "E",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.349,
+       "x": -112.4,
+       "sigma": 4.6,
+       "tau": 4.3,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.145,
+       "x": -54.4,
+       "sigma": 2.8,
+       "tau": 1.3,
+       "A": 322.0
+      },
+      "block / web / fin": {
+       "index": 0.46,
+       "x": -42.5,
+       "sigma": 10.7,
+       "tau": 2.5,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.4
+      },
+      "plate bolts (2 M3)": {
+       "T": 41.6,
+       "S": 0.0,
+       "index": 0.039,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 201.8
+      },
+      "foot": {
+       "index": 0.835,
+       "x": -26.3,
+       "F": 201.8
+      },
+      "web arms": {
+       "index": 0.178,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.835,
+       "carrier": 0.349,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "E: 50 N -z at the far item corner": {
+      "kind": "E",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.349,
+       "x": -112.4,
+       "sigma": 4.6,
+       "tau": 4.3,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.145,
+       "x": -54.4,
+       "sigma": 2.8,
+       "tau": 1.3,
+       "A": 322.0
+      },
+      "block / web / fin": {
+       "index": 0.46,
+       "x": -42.5,
+       "sigma": 10.7,
+       "tau": 2.5,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.4
+      },
+      "plate bolts (2 M3)": {
+       "T": 66.6,
+       "S": 173.5,
+       "index": 0.304,
+       "receiver_bearing_index": 0.092,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.286,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.46,
+       "carrier": 0.349,
+       "first": "tail block (root)",
+       "fuse_first": false
+      }
+     }
+    },
+    "weakest_sections": {
+     "carrier, vertical (least Iy)": {
+      "x": -160.4,
+      "A": 157.0,
+      "Iy": 832.0,
+      "Iz": 23285.0,
+      "J": 1006.0
+     },
+     "carrier, lateral (least Iz)": {
+      "x": -115.4,
+      "A": 124.0,
+      "Iy": 11577.0,
+      "Iz": 807.0,
+      "J": 1133.0
+     },
+     "yoke + block (clamped), vertical (least Iy)": {
+      "x": -50.4,
+      "A": 245.0,
+      "Iy": 44143.0,
+      "Iz": 5897.0,
+      "J": 14254.0
+     },
+     "yoke + block (clamped), lateral (least Iz)": {
+      "x": -50.4,
+      "A": 245.0,
+      "Iy": 44143.0,
+      "Iz": 5897.0,
+      "J": 14254.0
+     },
+     "block / web / fin, vertical (least Iy)": {
+      "x": -42.5,
+      "A": 274.0,
+      "Iy": 5942.0,
+      "Iz": 39034.0,
+      "J": 5427.0
+     },
+     "block / web / fin, lateral (least Iz)": {
+      "x": -47.5,
+      "A": 138.0,
+      "Iy": 7601.0,
+      "Iz": 2170.0,
+      "J": 5047.0
+     }
+    },
+    "by_kind": {
+     "crash": {
+      "fuse": 0.166,
+      "root": 0.265,
+      "carrier": 0.084,
+      "limit": 1.0,
+      "worst": 0.265,
+      "order_ok": false,
+      "order_fails": [
+       "crash 35 g x",
+       "crash 35 g -x"
+      ],
+      "pass": true
+     },
+     "flight": {
+      "fuse": 0.009,
+      "root": 0.012,
+      "carrier": 0.006,
+      "limit": 0.5,
+      "worst": 0.012,
+      "order_ok": false,
+      "order_fails": [
+       "flight 2 g x",
+       "flight 2 g -x"
+      ],
+      "pass": true
+     },
+     "landing": {
+      "fuse": 0.0,
+      "root": 0.018,
+      "carrier": 0.009,
+      "limit": 0.5,
+      "worst": 0.018,
+      "order_ok": true,
+      "order_fails": [],
+      "pass": true
+     },
+     "E": {
+      "fuse": 0.804,
+      "root": 0.835,
+      "carrier": 0.628,
+      "limit": 1.0,
+      "worst": 0.835,
+      "order_ok": false,
+      "order_fails": [
+       "E: 50 N y at the far item corner",
+       "E: 50 N -z at the far item corner"
+      ],
+      "pass": true
+     }
+    },
+    "worst_root": 0.265,
+    "worst_fuse": 0.166,
+    "worst_carrier": 0.084,
+    "fuse_first": false,
+    "l_pass": true
+   },
+   "modes": {
+    "lateral": 235.0,
+    "vertical": 476.0,
+    "carried_g": 62.4,
+    "carried_cg": [
+     -106.8,
+     4.0,
+     15.6
+    ],
+    "root_x": -42.0
+   },
+   "cg": {
+    "pack_in": [
+     0.38,
+     0.413,
+     2.598
+    ],
+    "pack_out": [
+     -1.37,
+     0.584,
+     11.219
+    ],
+    "h_in": 0.562,
+    "h_out": 1.489,
+    "mass": 745.7
+   },
+   "slide_riding": [
+    [
+     -19.0,
+     9.235533124392985,
+     5.413282654404339,
+     9.226283751445086,
+     5.381696136037624
+    ],
+    [
+     -18.75,
+     9.07772890138668,
+     5.293443714008653,
+     9.068318574989002,
+     5.26113776264651
+    ],
+    [
+     -18.5,
+     8.919930376204046,
+     5.173638202761195,
+     8.910353398532923,
+     5.140579389255406
+    ],
+    [
+     -18.25,
+     8.762137856683715,
+     5.053868498046994,
+     8.752388222076842,
+     5.020021015864295
+    ],
+    [
+     -18.0,
+     8.604351673233587,
+     4.934137207336544,
+     8.594423045620758,
+     4.899462642473179
+    ],
+    [
+     -17.75,
+     8.446572180936544,
+     4.814447196603516,
+     8.43645786916468,
+     4.778904269082072
+    ],
+    [
+     -17.5,
+     8.288799761896176,
+     4.694801623043665,
+     8.278492692708598,
+     4.658345895690962
+    ],
+    [
+     -17.25,
+     8.131034827855231,
+     4.575203972870812,
+     8.120527516252519,
+     4.537787522299856
+    ],
+    [
+     -17.0,
+     7.973277823124254,
+     4.455658105128997,
+     7.962562339796442,
+     4.41722914890875
+    ],
+    [
+     -16.75,
+     7.815529227864279,
+     4.3361683026630695,
+     7.804597163340358,
+     4.2966707755176365
+    ],
+    [
+     -16.5,
+     7.657789561774484,
+     4.216739331643296,
+     7.646631986884278,
+     4.176112402126523
+    ],
+    [
+     -16.25,
+     7.500059388244157,
+     4.097376511357565,
+     7.4886668104281995,
+     4.055554028735419
+    ],
+    [
+     -16.0,
+     7.342339319038716,
+     3.9780857963863947,
+     7.330701633972117,
+     3.9349956553443075
+    ],
+    [
+     -15.75,
+     7.18463001960158,
+     3.858873873785866,
+     7.17273645751604,
+     3.8144372819532024
+    ],
+    [
+     -15.5,
+     7.026932215068252,
+     3.7397482785546488,
+     7.014771281059957,
+     3.6938789085620902
+    ],
+    [
+     -15.25,
+     6.869246697106857,
+     3.6207175314994138,
+     6.856806104603878,
+     3.5733205351709785
+    ],
+    [
+     -15.0,
+     6.71157433172043,
+     3.5017913046969897,
+     6.698840928147801,
+     3.4527621617798765
+    ],
+    [
+     -14.75,
+     6.553916068172459,
+     3.3829806211660483,
+     6.5408757516917175,
+     3.332203788388763
+    ],
+    [
+     -14.5,
+     6.396272949228746,
+     3.264298097219074,
+     6.3829105752356385,
+     3.211645414997656
+    ],
+    [
+     -14.25,
+     6.238646122947452,
+     3.145758238425281,
+     6.22494539877956,
+     3.0910870416065492
+    ],
+    [
+     -14.0,
+     6.081036856297179,
+     3.027377803400555,
+     6.066980222323477,
+     2.9705286682154357
+    ],
+    [
+     -13.75,
+     5.923446550942091,
+     2.909176254064659,
+     5.9090150458674,
+     2.8499702948243306
+    ],
+    [
+     -13.5,
+     5.765876761606722,
+     2.7911763170201915,
+     5.751049869411321,
+     2.7294119214332238
+    ],
+    [
+     -13.25,
+     5.608329217525542,
+     2.6734046889620946,
+     5.593084692955239,
+     2.6088535480421116
+    ],
+    [
+     -13.0,
+     5.450805847598178,
+     2.5558929304695175,
+     5.435119516499158,
+     2.4882951746510016
+    ],
+    [
+     -12.75,
+     5.293308810018167,
+     2.4386786085651018,
+     5.277154340043078,
+     2.367736801259891
+    ],
+    [
+     -12.5,
+     5.135840527330167,
+     2.3218067711399715,
+     5.119189163586999,
+     2.2471784278687843
+    ],
+    [
+     -12.25,
+     4.978403728110414,
+     2.2053318688894037,
+     4.961223987130919,
+     2.1266200544776757
+    ],
+    [
+     -12.0,
+     4.821001496774911,
+     2.089320287595098,
+     4.80325881067484,
+     2.006061681086567
+    ],
+    [
+     -11.75,
+     4.663637333422676,
+     1.973853722838423,
+     4.645293634218757,
+     1.8855033076954553
+    ],
+    [
+     -11.5,
+     4.506315226149543,
+     1.8590337320659804,
+     4.487328457762676,
+     1.764944934304345
+    ],
+    [
+     -11.25,
+     4.349039738966095,
+     1.7449879534096118,
+     4.329363281306597,
+     1.6443865609132382
+    ],
+    [
+     -11.0,
+     4.191816119384403,
+     1.6318787151377279,
+     4.171398104850514,
+     1.5238281875221245
+    ],
+    [
+     -10.75,
+     4.034650430991661,
+     1.519915118381255,
+     4.013432928394437,
+     1.4032698141310194
+    ],
+    [
+     -10.5,
+     3.8775497180329053,
+     1.4093702267458528,
+     3.8554677519383573,
+     1.2827114407399107
+    ],
+    [
+     -10.25,
+     3.720522211367446,
+     1.3006058387462438,
+     3.6975025754822752,
+     1.1621530673487988
+    ],
+    [
+     -10.0,
+     3.5635775884194785,
+     1.1941085806213003,
+     3.5395373990261967,
+     1.0415946939576919
+    ],
+    [
+     -9.75,
+     3.4067273043257007,
+     1.0905428463088596,
+     3.3815722225701172,
+     0.9210363205665835
+    ],
+    [
+     -9.5,
+     3.249985018017239,
+     0.9908283099240042,
+     3.223607046114036,
+     0.8004779471754732
+    ],
+    [
+     -9.25,
+     3.0933671464248143,
+     0.8962513166783721,
+     3.065641869657959,
+     0.6799195737843681
+    ],
+    [
+     -9.0,
+     2.936893593879397,
+     0.808616564471678,
+     2.9076766932018745,
+     0.5593612003932527
+    ],
+    [
+     -8.75,
+     2.7805887245158925,
+     0.730427078371054,
+     2.749711516745796,
+     0.43880282700214585
+    ],
+    [
+     -8.5,
+     2.6244826770214336,
+     0.6650228026818227,
+     2.591746340289716,
+     0.31824445361103726
+    ],
+    [
+     -8.25,
+     2.468613169982664,
+     0.6164864817214715,
+     2.4337811638336353,
+     0.19768608021992704
+    ],
+    [
+     -8.0,
+     2.313028023605364,
+     0.58900295329758,
+     2.2758159873775567,
+     0.0771277068288202
+    ],
+    [
+     -7.75,
+     2.1577887493684815,
+     0.5855442072385688,
+     2.1178508109214733,
+     -0.04343066656229522
+    ],
+    [
+     -7.5,
+     2.0029757686413188,
+     0.6065213937343321,
+     1.959885634465396,
+     -0.16398903995340033
+    ],
+    [
+     -7.25,
+     1.8486961801694073,
+     0.6495714173773732,
+     1.8019204580093164,
+     -0.2845474133445089
+    ],
+    [
+     -7.0,
+     1.6950956307321514,
+     0.7106943747345154,
+     1.6439552815532354,
+     -0.40510578673561914
+    ],
+    [
+     -6.75,
+     1.5423770038570703,
+     0.7856835273023961,
+     1.4859901050971571,
+     -0.525664160126726
+    ],
+    [
+     -6.5,
+     1.3908308454562635,
+     0.8709646138958873,
+     1.3280249286410748,
+     -0.646222533517838
+    ],
+    [
+     -6.25,
+     1.2408868011481384,
+     0.9638095014227193,
+     1.1700597521849927,
+     -0.76678090690895
+    ],
+    [
+     -6.0,
+     1.0932043083524434,
+     1.0622366940545884,
+     1.0120945757289144,
+     -0.8873392803000567
+    ],
+    [
+     -5.75,
+     0.948839955041221,
+     1.164831951892098,
+     0.8541293992728346,
+     -1.0078976536911652
+    ],
+    [
+     -5.5,
+     0.8095707842495969,
+     1.2705860068845842,
+     0.6961642228167536,
+     -1.1284560270822757
+    ],
+    [
+     -5.25,
+     0.6785414085256619,
+     1.3787721959854335,
+     0.5381990463606715,
+     -1.2490144004733876
+    ],
+    [
+     -5.0,
+     0.5615496642355651,
+     1.4888604295713832,
+     0.380233869904593,
+     -1.3695727738644943
+    ],
+    [
+     -4.75,
+     0.4692159435353435,
+     1.6004582568295533,
+     0.22226869344851455,
+     -1.4901311472556011
+    ],
+    [
+     -4.5,
+     0.4182047009277265,
+     1.7132707105865472,
+     0.06430351699243361,
+     -1.6106895206467116
+    ],
+    [
+     -4.25,
+     0.4237130350059306,
+     1.8270728136675303,
+     -0.09366165946364609,
+     -1.73124789403782
+    ],
+    [
+     -4.0,
+     0.48381431782805556,
+     1.9416905644107332,
+     -0.25162683591972823,
+     -1.851806267428932
+    ],
+    [
+     -3.75,
+     0.581829739857389,
+     2.056987620815878,
+     -0.40959201237580795,
+     -1.9723646408200406
+    ],
+    [
+     -3.5,
+     0.7020551204679084,
+     2.1728558487040246,
+     -0.5675571888318889,
+     -2.092923014211151
+    ],
+    [
+     -3.25,
+     0.834950856106815,
+     2.2892085202301318,
+     -0.7255223652879698,
+     -2.213481387602261
+    ],
+    [
+     -3.0,
+     0.9753514576794328,
+     2.4059753535168595,
+     -0.8834875417440482,
+     -2.334039760993368
+    ],
+    [
+     -2.75,
+     1.120439196845099,
+     2.5230988480747953,
+     -1.0414527182001292,
+     -2.454598134384478
+    ],
+    [
+     -2.5,
+     1.26860691926301,
+     2.6405315440970507,
+     -1.1994178946562088,
+     -2.5751565077755867
+    ],
+    [
+     -2.25,
+     1.4188900702037084,
+     2.7582339488114815,
+     -1.3573830711122898,
+     -2.695714881166697
+    ],
+    [
+     -2.0,
+     1.5706815530173448,
+     2.876172950323086,
+     -1.5153482475683684,
+     -2.816273254557804
+    ],
+    [
+     -1.75,
+     1.723582909117191,
+     2.994320591846115,
+     -1.6733134240244492,
+     -2.936831627948914
+    ],
+    [
+     -1.5,
+     1.8773229722555418,
+     3.112653115290323,
+     -1.8312786004805301,
+     -3.0573900013400244
+    ],
+    [
+     -1.25,
+     2.0317113558922406,
+     3.2311502082522967,
+     -1.9892437769366111,
+     -3.177948374731135
+    ],
+    [
+     -1.0,
+     2.186610737902424,
+     3.3497944061151816,
+     -2.1472089533926897,
+     -3.298506748122241
+    ],
+    [
+     -0.75,
+     2.341919725034248,
+     3.4685706135210377,
+     -2.3051741298487705,
+     -3.4190651215133516
+    ],
+    [
+     -0.5,
+     2.4975619055079266,
+     3.587465718513872,
+     -2.463139306304849,
+     -3.5396234949044585
+    ],
+    [
+     -0.25,
+     2.653478648704356,
+     3.7064682792157067,
+     -2.6211044827609298,
+     -3.660181868295569
+    ],
+    [
+     0.0,
+     2.809624245403824,
+     3.8255682677141767,
+     -2.779069659217011,
+     -3.780740241686679
+    ],
+    [
+     0.25,
+     2.9659625512702803,
+     3.9447568594072386,
+     -2.9370348356730904,
+     -3.9012986150777875
+    ],
+    [
+     0.5,
+     3.12246462024152,
+     4.064026258715449,
+     -3.0950000121291703,
+     -4.021856988468896
+    ],
+    [
+     0.75,
+     3.2791070046169466,
+     4.1833695540803415,
+     -3.2529651885852497,
+     -4.142415361860005
+    ],
+    [
+     1.0,
+     3.435870513383972,
+     4.302780596692497,
+     -3.410930365041331,
+     -4.262973735251115
+    ]
+   ],
+   "best_riding": [
+    -6.0,
+    1.0932043083524434,
+    1.0622366940545884,
+    1.0120945757289144,
+    -0.8873392803000567
+   ],
+   "keys": [
+    [
+     "M3 key, yoke top bolt (x -54.5)",
+     [
+      -54.5,
+      0.5,
+      23.5
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ],
+     7.2
+    ],
+    [
+     "M3 key, yoke bottom bolt (x -54.5)",
+     [
+      -54.5,
+      0.5,
+      -13.0
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     5.9
+    ],
+    [
+     "M3 key, yoke top bolt (x -63.5)",
+     [
+      -63.5,
+      0.5,
+      23.5
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ],
+     8.0
+    ],
+    [
+     "M3 key, yoke bottom bolt (x -63.5)",
+     [
+      -63.5,
+      0.5,
+      -13.0
+     ],
+     [
+      -0.259,
+      0.0,
+      -0.966
+     ],
+     5.6
+    ],
+    [
+     "M3 key, plate bolt (-42.0, +16.0)",
+     [
+      -42.0,
+      16.0,
+      22.5
+     ],
+     [
+      0.109,
+      -0.408,
+      0.906
+     ],
+     0.2
+    ],
+    [
+     "M3 key, plate bolt (-42.0, -16.0)",
+     [
+      -42.0,
+      -16.0,
+      22.5
+     ],
+     [
+      0.211,
+      0.366,
+      0.906
+     ],
+     0.1
+    ]
+   ],
+   "system_check": "System: Scout v3 with the tail electronics mount (system pass v2, round 5, layout v12), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [+0.4, +0.4, -38.6], 1.4 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 16/16 clear",
+   "by_kind": {
+    "crash": {
+     "fuse": 0.166,
+     "root": 0.265,
+     "carrier": 0.084,
+     "limit": 1.0,
+     "worst": 0.265,
+     "order_ok": false,
+     "order_fails": [
+      "crash 35 g x",
+      "crash 35 g -x"
+     ],
+     "pass": true
+    },
+    "flight": {
+     "fuse": 0.009,
+     "root": 0.012,
+     "carrier": 0.006,
+     "limit": 0.5,
+     "worst": 0.012,
+     "order_ok": false,
+     "order_fails": [
+      "flight 2 g x",
+      "flight 2 g -x"
+     ],
+     "pass": true
+    },
+    "landing": {
+     "fuse": 0.0,
+     "root": 0.018,
+     "carrier": 0.009,
+     "limit": 0.5,
+     "worst": 0.018,
+     "order_ok": true,
+     "order_fails": [],
+     "pass": true
+    },
+    "E": {
+     "fuse": 0.804,
+     "root": 0.835,
+     "carrier": 0.628,
+     "limit": 1.0,
+     "worst": 0.835,
+     "order_ok": false,
+     "order_fails": [
+      "E: 50 N y at the far item corner",
+      "E: 50 N -z at the far item corner"
+     ],
+     "pass": true
+    }
+   }
+  },
+  "B": {
+   "mount": {
+    "belly-mount tail block (PETG)": {
+     "g": 15.92,
+     "cg": [
+      -45.29,
+      0.68,
+      12.92
+     ],
+     "bounds": [
+      [
+       -69.45,
+       -21.0,
+       -8.0
+      ],
+      [
+       -14.0,
+       21.0,
+       34.0
+      ]
+     ],
+     "note": "block 21.4 x 11.05 between the tongues, gusset on the receiver's tail face, web under the plate tab to 2 plate-bolt bosses at [(-42.0, 16.0), (-42.0, -16.0)], fin through the notch, foot on the plate top to x -14.0; 6 inserts",
+     "bodies": 1
+    },
+    "tail carrier (PETG)": {
+     "g": 33.23,
+     "cg": [
+      -102.57,
+      -0.7,
+      9.58
+     ],
+     "bounds": [
+      [
+       -163.1,
+       -27.05,
+       -13.0
+      ],
+      [
+       -48.05,
+       26.6,
+       37.5
+      ]
+     ],
+     "note": "yoke (2 tongues, 4 M3, 2.0 side wall, lower back under the Radxa) + spine (2.0 inner wall, box y -13.05..-6.55 aft of x -78.5) + 4 \u00d88 posts + cross plate + UBEC tray + XR2 shelf; one print",
+     "bodies": 1
+    },
+    "strut to the tail point (PETG, B)": {
+     "g": 4.36,
+     "cg": [
+      -183.49,
+      -4.77,
+      38.08
+     ],
+     "bounds": [
+      [
+       -228.6,
+       -12.79,
+       31.51
+      ],
+      [
+       -132.49,
+       3.31,
+       44.98
+      ]
+     ],
+     "note": "\u00d86 printed strut to the tail point [-231.5, 0.0, 41.5], snap clip on its rod beside the node (3.2 bore) = the fuse (+1 g clip, E)",
+     "bodies": 1
+    }
+   },
+   "mount_g": 53.5,
+   "checks": {
+    "Radxa Zero 3W": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": 22.328952023720156,
+      "mount + nose legs (Scout)": 34.70995567253501,
+      "receiver v3 (latch)": 28.00000762939453,
+      "receiver TPU end pieces (latch, E)": 29.353711082401986,
+      "tie saddle (printed)": 38.54861530784044,
+      "UBEC": 8.004999876022339,
+      "XR2": 10.445000171661377,
+      "belly-mount tail block (PETG)": 2.4000091552734375,
+      "tail carrier (PETG)": -1.4531713720859054,
+      "strut to the tail point (PETG, B)": 1.69036085173788
+     },
+     "wash": 5.671243855027086,
+     "rods": 20.26430130460109,
+     "inset": 13.34484987292322,
+     "funnel": 14.941259883800605
+    },
+    "UBEC": {
+     "gaps": {
+      "Radxa Zero 3W": 8.004999876022339,
+      "XR2": 27.471302759075044,
+      "belly-mount tail block (PETG)": 41.19845411539261,
+      "tail carrier (PETG)": -4.0194366942304644e-14,
+      "strut to the tail point (PETG, B)": 19.022724800493652
+     },
+     "wash": 18.794942978051978,
+     "rods": 13.789391225807586,
+     "inset": 4.976539431520891,
+     "funnel": 5.3754189567718385
+    },
+    "XR2": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": 37.225882632055985,
+      "motor 4": 35.830362835682585,
+      "Radxa Zero 3W": 10.445000171661377,
+      "UBEC": 27.471302759075044,
+      "belly-mount tail block (PETG)": 27.077715004064096,
+      "tail carrier (PETG)": -1.5888218580782548e-14,
+      "strut to the tail point (PETG, B)": 23.45178045993513
+     },
+     "wash": 3.704901631214071,
+     "rods": 14.896289135889827,
+     "inset": 14.871273448472806,
+     "funnel": 45.65520152591424
+    },
+    "belly-mount tail block (PETG)": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": -4.15091419741844e-12,
+      "motor 3": 22.87610010846363,
+      "motor 4": 22.87610010846363,
+      "FC": 4.5,
+      "flow MTF-02P": 44.601119861314054,
+      "mount + nose legs (Scout)": -8.343678738167853e-15,
+      "receiver v3 (latch)": -7.021666937153402e-13,
+      "receiver TPU strips (latch)": 6.099998474121094,
+      "receiver TPU end pieces (latch, E)": 2.0,
+      "cartridge v6 (latch)": 6.299999237060547,
+      "slider +y (latch)": 47.68251579245612,
+      "slider -y (latch)": 47.68251579245612,
+      "cartridge skid closed end (latch, TPU)": 30.088411390434025,
+      "pack 4S 1500": 8.799999237060547,
+      "tie saddle (printed)": 15.717823184771087,
+      "wires": 4.5,
+      "Radxa Zero 3W": 2.4000091552734375,
+      "UBEC": 41.19845411539261,
+      "XR2": 27.077715004064096,
+      "tail carrier (PETG)": -7.326161809327023e-10,
+      "strut to the tail point (PETG, B)": 64.91750616062505
+     },
+     "wash": 3.0492776775187167,
+     "rods": 26.97793002305167,
+     "inset": 25.819731149584094,
+     "funnel": 36.74186519095947
+    },
+    "tail carrier (PETG)": {
+     "gaps": {
+      "frame plate (Bee35 carbon)": 2.0655571946471127,
+      "motor 3": 35.214693652154686,
+      "motor 4": 35.142955395258696,
+      "FC": 29.520292193346485,
+      "mount + nose legs (Scout)": 16.33657504286061,
+      "receiver v3 (latch)": 4.200000762939453,
+      "receiver TPU strips (latch)": 14.716565494652803,
+      "receiver TPU end pieces (latch, E)": 2.0,
+      "cartridge v6 (latch)": 10.5,
+      "cartridge v6 strips (latch, TPU)": 37.42822060233858,
+      "cartridge skid closed end (latch, TPU)": 25.793652319902275,
+      "pack 4S 1500": 13.0,
+      "tie saddle (printed)": 29.363134384155273,
+      "wires": 29.489999237060548,
+      "Radxa Zero 3W": -3.0,
+      "UBEC": -1.070923684697708e-12,
+      "XR2": -1.4210854715202004e-14,
+      "belly-mount tail block (PETG)": -5.613331529383019e-13,
+      "strut to the tail point (PETG, B)": -1.1461951698349921
+     },
+     "wash": 3.0415101264045816,
+     "rods": 16.624103168876644,
+     "inset": 3.5241303140406615,
+     "funnel": 3.732836861151064
+    },
+    "strut to the tail point (PETG, B)": {
+     "gaps": {
+      "Radxa Zero 3W": 1.6194838514759593,
+      "UBEC": 19.028167956300443,
+      "XR2": 23.457031284566124,
+      "belly-mount tail block (PETG)": 64.91750616062505,
+      "tail carrier (PETG)": -0.9825756913264958
+     },
+     "wash": 44.691491136234916,
+     "rods": -2.956609892375008,
+     "inset": -4.307706073476993,
+     "funnel": -4.958957291857011
+    }
+   },
+   "fit": [
+    {
+     "a": "strut to the tail point (PETG, B)",
+     "b": "cage shell tubes",
+     "overlap_mm3": null,
+     "gap_mm": -2.91,
+     "kind": ">= 2.0",
+     "ok": false
+    },
+    {
+     "a": "strut to the tail point (PETG, B)",
+     "b": "cage shell nodes",
+     "overlap_mm3": 71.11,
+     "gap_mm": -2.75,
+     "kind": ">= 2.0",
+     "ok": false
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "strut to the tail point (PETG, B)",
+     "overlap_mm3": 18.085,
+     "gap_mm": -1.0,
+     "kind": "declared bearing contact",
+     "ok": false
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "frame plate (Bee35 carbon)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "mount + nose legs (Scout)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "receiver v3 (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "tail carrier (PETG)",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": 0.0,
+     "gap_mm": 0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "UBEC",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "XR2",
+     "overlap_mm3": 0.0,
+     "gap_mm": -0.0,
+     "kind": "declared bearing contact",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "receiver TPU end pieces (latch, E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "receiver TPU end pieces (latch, E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "Radxa plug keep-clear (E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG) less its 4 posts",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": null,
+     "gap_mm": 2.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "frame plate (Bee35 carbon)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.06,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": 0.0,
+     "gap_mm": 2.4,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "strut to the tail point (PETG, B)",
+     "b": "Radxa Zero 3W",
+     "overlap_mm3": 0.0,
+     "gap_mm": 3.5,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "receiver v3 (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.2,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "prop 3",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.48,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "prop 4",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.48,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "FC",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.5,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "wires",
+     "overlap_mm3": 0.0,
+     "gap_mm": 4.5,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "prop 4",
+     "overlap_mm3": 0.0,
+     "gap_mm": 5.08,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "receiver TPU strips (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 6.1,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "cartridge v6 (latch)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 6.3,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "pack 4S 1500",
+     "overlap_mm3": 0.0,
+     "gap_mm": 8.8,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "prop 3",
+     "overlap_mm3": 0.0,
+     "gap_mm": 12.91,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "tie saddle (printed)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 15.72,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "mount + nose legs (Scout)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 16.29,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "cage shell tubes",
+     "overlap_mm3": null,
+     "gap_mm": 16.64,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "strut to the tail point (PETG, B)",
+     "b": "UBEC",
+     "overlap_mm3": 0.0,
+     "gap_mm": 19.02,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "Radxa plug keep-clear (E)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 21.0,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "cage shell nodes",
+     "overlap_mm3": 0.0,
+     "gap_mm": 25.92,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "spokes, bay ties, core ties, camera guard",
+     "overlap_mm3": 0.0,
+     "gap_mm": 27.66,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "tie saddle (printed)",
+     "overlap_mm3": 0.0,
+     "gap_mm": 29.36,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "tail carrier (PETG)",
+     "b": "spokes, bay ties, core ties, camera guard",
+     "overlap_mm3": 0.0,
+     "gap_mm": 36.81,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "cage shell tubes",
+     "overlap_mm3": null,
+     "gap_mm": 40.12,
+     "kind": ">= 2.0",
+     "ok": true
+    },
+    {
+     "a": "belly-mount tail block (PETG)",
+     "b": "cage shell nodes",
+     "overlap_mm3": 0.0,
+     "gap_mm": 93.39,
+     "kind": ">= 2.0",
+     "ok": true
+    }
+   ],
+   "sweeps": {
+    "SD card": {
+     "start": [
+      -138.9,
+      -3.0,
+      23.0
+     ],
+     "dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "exits_shell_at_mm": 59.0,
+     "least_clear_mm": 11.4
+    },
+    "USB-C 1": {
+     "start": [
+      -95.4,
+      1.6,
+      39.5
+     ],
+     "dir": [
+      0.0,
+      0.0,
+      1.0
+     ],
+     "exits_shell_at_mm": 22.0,
+     "least_clear_mm": 18.4
+    }
+   },
+   "loads": {
+    "far_corner": [
+     -163.1,
+     26.6,
+     24.0
+    ],
+    "yoke_centre": [
+     -59.0,
+     0.5,
+     5.2
+    ],
+    "cases": {
+     "crash 35 g x": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.054,
+       "x": -112.4,
+       "sigma": 1.4,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.011,
+       "x": -50.4,
+       "sigma": 0.3,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.022,
+       "x": -47.5,
+       "sigma": 0.6,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 9.6,
+       "index": 0.025,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.01
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 5.4,
+       "index": 0.01,
+       "receiver_bearing_index": 0.001,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.021,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.025,
+       "root": 0.022,
+       "carrier": 0.054,
+       "first": "carrier",
+       "fuse_first": false
+      }
+     },
+     "crash 35 g -x": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.054,
+       "x": -112.4,
+       "sigma": 1.4,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.011,
+       "x": -50.4,
+       "sigma": 0.3,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.022,
+       "x": -47.5,
+       "sigma": 0.6,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 9.6,
+       "index": 0.025,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.01
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 16.2,
+       "index": 0.028,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 3.1
+      },
+      "foot": {
+       "index": 0.013,
+       "x": -26.3,
+       "F": 3.1
+      },
+      "web arms": {
+       "index": 0.063,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.025,
+       "root": 0.063,
+       "carrier": 0.054,
+       "first": "tail block (root)",
+       "fuse_first": false
+      }
+     },
+     "crash 35 g y": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.074,
+       "x": -94.4,
+       "sigma": 1.8,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.062,
+       "x": -50.4,
+       "sigma": 1.5,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 62.1,
+       "index": 0.166,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.02
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.9,
+       "S": 57.2,
+       "index": 0.1,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.166,
+       "root": 0.138,
+       "carrier": 0.074,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g -y": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.074,
+       "x": -94.4,
+       "sigma": 1.8,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.062,
+       "x": -50.4,
+       "sigma": 1.5,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 62.1,
+       "index": 0.166,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.02
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.9,
+       "S": 57.2,
+       "index": 0.1,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.166,
+       "root": 0.138,
+       "carrier": 0.074,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g z": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.052,
+       "x": -94.4,
+       "sigma": 0.6,
+       "tau": 0.7,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.028,
+       "x": -50.4,
+       "sigma": 0.6,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.105,
+       "x": -42.5,
+       "sigma": 2.6,
+       "tau": 0.3,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.07
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.8,
+       "S": 0.0,
+       "index": 0.003,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 46.7
+      },
+      "foot": {
+       "index": 0.193,
+       "x": -26.3,
+       "F": 46.7
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.193,
+       "carrier": 0.052,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g -z": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.052,
+       "x": -94.4,
+       "sigma": 0.6,
+       "tau": 0.7,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.028,
+       "x": -50.4,
+       "sigma": 0.6,
+       "tau": 0.2,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.105,
+       "x": -42.5,
+       "sigma": 2.6,
+       "tau": 0.3,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.07
+      },
+      "plate bolts (2 M3)": {
+       "T": 16.2,
+       "S": 40.1,
+       "index": 0.07,
+       "receiver_bearing_index": 0.021,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.07,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.105,
+       "carrier": 0.052,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x +y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 2.0,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.057,
+       "x": -50.4,
+       "sigma": 1.4,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.05
+      },
+      "plate bolts (2 M3)": {
+       "T": 3.3,
+       "S": 34.6,
+       "index": 0.061,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 25.2
+      },
+      "foot": {
+       "index": 0.104,
+       "x": -26.3,
+       "F": 25.2
+      },
+      "web arms": {
+       "index": 0.136,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.138,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x +y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 1.9,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.054,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.128,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.046
+      },
+      "plate bolts (2 M3)": {
+       "T": 7.8,
+       "S": 59.3,
+       "index": 0.104,
+       "receiver_bearing_index": 0.013,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.235,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.235,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x -y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.051,
+       "x": -94.4,
+       "sigma": 1.0,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.052,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.131,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.058
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 31.4,
+       "index": 0.055,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 25.2
+      },
+      "foot": {
+       "index": 0.104,
+       "x": -26.3,
+       "F": 25.2
+      },
+      "web arms": {
+       "index": 0.122,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.131,
+       "carrier": 0.051,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (+x -y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.041,
+       "x": -94.4,
+       "sigma": 0.9,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.048,
+       "x": -50.4,
+       "sigma": 1.2,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.121,
+       "x": -47.5,
+       "sigma": 3.0,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.038
+      },
+      "plate bolts (2 M3)": {
+       "T": 11.0,
+       "S": 56.1,
+       "index": 0.098,
+       "receiver_bearing_index": 0.013,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.225,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.225,
+       "carrier": 0.041,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x +y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.041,
+       "x": -94.4,
+       "sigma": 0.9,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.048,
+       "x": -50.4,
+       "sigma": 1.2,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.121,
+       "x": -47.5,
+       "sigma": 3.0,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.038
+      },
+      "plate bolts (2 M3)": {
+       "T": 3.3,
+       "S": 34.6,
+       "index": 0.061,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 28.7
+      },
+      "foot": {
+       "index": 0.119,
+       "x": -26.3,
+       "F": 28.7
+      },
+      "web arms": {
+       "index": 0.144,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.144,
+       "carrier": 0.041,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x +y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.051,
+       "x": -94.4,
+       "sigma": 1.0,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.052,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.131,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 34.7,
+       "index": 0.093,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.058
+      },
+      "plate bolts (2 M3)": {
+       "T": 7.8,
+       "S": 56.3,
+       "index": 0.099,
+       "receiver_bearing_index": 0.012,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.242,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.093,
+       "root": 0.242,
+       "carrier": 0.051,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x -y +z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 1.9,
+       "tau": 0.5,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.054,
+       "x": -50.4,
+       "sigma": 1.3,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.128,
+       "x": -47.5,
+       "sigma": 3.2,
+       "tau": 0.3,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.046
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 37.8,
+       "index": 0.066,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 28.7
+      },
+      "foot": {
+       "index": 0.119,
+       "x": -26.3,
+       "F": 28.7
+      },
+      "web arms": {
+       "index": 0.147,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.147,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "crash 35 g corner (-x -y -z)": {
+      "kind": "crash",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.084,
+       "x": -94.4,
+       "sigma": 2.0,
+       "tau": 0.3,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.057,
+       "x": -50.4,
+       "sigma": 1.4,
+       "tau": 0.1,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.138,
+       "x": -47.5,
+       "sigma": 3.4,
+       "tau": 0.2,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 39.6,
+       "index": 0.106,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.05
+      },
+      "plate bolts (2 M3)": {
+       "T": 11.0,
+       "S": 59.5,
+       "index": 0.104,
+       "receiver_bearing_index": 0.012,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.265,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.106,
+       "root": 0.265,
+       "carrier": 0.084,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "flight 4 g (thrust axis)": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.006,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.1,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.003,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.012,
+       "x": -42.5,
+       "sigma": 0.3,
+       "tau": 0.0,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.008
+      },
+      "plate bolts (2 M3)": {
+       "T": 1.9,
+       "S": 4.6,
+       "index": 0.008,
+       "receiver_bearing_index": 0.002,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.008,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.012,
+       "carrier": 0.006,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "flight 2 g x": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.003,
+       "x": -112.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.001,
+       "x": -50.4,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.001,
+       "x": -47.5,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.5,
+       "index": 0.001,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 0.3,
+       "index": 0.001,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.001,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.001,
+       "root": 0.001,
+       "carrier": 0.003,
+       "first": "carrier",
+       "fuse_first": false
+      }
+     },
+     "flight 2 g -x": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.003,
+       "x": -112.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.001,
+       "x": -50.4,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.001,
+       "x": -47.5,
+       "sigma": 0.0,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.5,
+       "index": 0.001,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.0,
+       "S": 0.9,
+       "index": 0.002,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 0.2
+      },
+      "foot": {
+       "index": 0.001,
+       "x": -26.3,
+       "F": 0.2
+      },
+      "web arms": {
+       "index": 0.004,
+       "y": -9.0
+      },
+      "order": {
+       "fuse": 0.001,
+       "root": 0.004,
+       "carrier": 0.003,
+       "first": "tail block (root)",
+       "fuse_first": false
+      }
+     },
+     "flight 2 g y": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.004,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.004,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.008,
+       "x": -47.5,
+       "sigma": 0.2,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 3.6,
+       "index": 0.009,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.2,
+       "S": 3.3,
+       "index": 0.006,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.001,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.009,
+       "root": 0.008,
+       "carrier": 0.004,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "flight 2 g -y": {
+      "kind": "flight",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.004,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.004,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.008,
+       "x": -47.5,
+       "sigma": 0.2,
+       "tau": 0.0,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 3.6,
+       "index": 0.009,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.001
+      },
+      "plate bolts (2 M3)": {
+       "T": 0.2,
+       "S": 3.3,
+       "index": 0.006,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.001,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.009,
+       "root": 0.008,
+       "carrier": 0.004,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": true
+      }
+     },
+     "landing 6 g": {
+      "kind": "landing",
+      "limit": 0.5,
+      "carrier": {
+       "index": 0.009,
+       "x": -94.4,
+       "sigma": 0.1,
+       "tau": 0.1,
+       "A": 158.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.005,
+       "x": -50.4,
+       "sigma": 0.1,
+       "tau": 0.0,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.018,
+       "x": -42.5,
+       "sigma": 0.4,
+       "tau": 0.0,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.012
+      },
+      "plate bolts (2 M3)": {
+       "T": 2.8,
+       "S": 6.9,
+       "index": 0.012,
+       "receiver_bearing_index": 0.004,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.012,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.018,
+       "carrier": 0.009,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "E: 50 N y at the far item corner": {
+      "kind": "E",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.628,
+       "x": -112.4,
+       "sigma": 15.5,
+       "tau": 1.5,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.271,
+       "x": -50.4,
+       "sigma": 6.7,
+       "tau": 0.4,
+       "A": 245.0
+      },
+      "block / web / fin": {
+       "index": 0.592,
+       "x": -47.5,
+       "sigma": 14.7,
+       "tau": 0.9,
+       "A": 138.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 301.5,
+       "index": 0.804,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.086
+      },
+      "plate bolts (2 M3)": {
+       "T": 8.6,
+       "S": 214.2,
+       "index": 0.376,
+       "receiver_bearing_index": -0.0,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.037,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.804,
+       "root": 0.592,
+       "carrier": 0.628,
+       "first": "fuse (yoke bolts)",
+       "fuse_first": false
+      }
+     },
+     "E: 50 N z at the far item corner": {
+      "kind": "E",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.349,
+       "x": -112.4,
+       "sigma": 4.6,
+       "tau": 4.3,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.145,
+       "x": -54.4,
+       "sigma": 2.8,
+       "tau": 1.3,
+       "A": 322.0
+      },
+      "block / web / fin": {
+       "index": 0.46,
+       "x": -42.5,
+       "sigma": 10.7,
+       "tau": 2.5,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.4
+      },
+      "plate bolts (2 M3)": {
+       "T": 41.6,
+       "S": 0.0,
+       "index": 0.039,
+       "receiver_bearing_index": 0.0,
+       "tail_up_couple_N": 201.8
+      },
+      "foot": {
+       "index": 0.835,
+       "x": -26.3,
+       "F": 201.8
+      },
+      "web arms": {
+       "index": 0.178,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.835,
+       "carrier": 0.349,
+       "first": "tail block (root)",
+       "fuse_first": true
+      }
+     },
+     "E: 50 N -z at the far item corner": {
+      "kind": "E",
+      "limit": 1.0,
+      "carrier": {
+       "index": 0.349,
+       "x": -112.4,
+       "sigma": 4.6,
+       "tau": 4.3,
+       "A": 125.0
+      },
+      "yoke + block (clamped)": {
+       "index": 0.145,
+       "x": -54.4,
+       "sigma": 2.8,
+       "tau": 1.3,
+       "A": 322.0
+      },
+      "block / web / fin": {
+       "index": 0.46,
+       "x": -42.5,
+       "sigma": 10.7,
+       "tau": 2.5,
+       "A": 274.0
+      },
+      "fuse (yoke 4 M3)": {
+       "S": 0.0,
+       "index": 0.0,
+       "mode": "tongue bearing at the bolts",
+       "face_bearing_index": 0.4
+      },
+      "plate bolts (2 M3)": {
+       "T": 66.6,
+       "S": 173.5,
+       "index": 0.304,
+       "receiver_bearing_index": 0.092,
+       "tail_up_couple_N": 0.0
+      },
+      "web arms": {
+       "index": 0.286,
+       "y": 9.0
+      },
+      "order": {
+       "fuse": 0.0,
+       "root": 0.46,
+       "carrier": 0.349,
+       "first": "tail block (root)",
+       "fuse_first": false
+      }
+     }
+    },
+    "weakest_sections": {
+     "carrier, vertical (least Iy)": {
+      "x": -160.4,
+      "A": 157.0,
+      "Iy": 832.0,
+      "Iz": 23285.0,
+      "J": 1006.0
+     },
+     "carrier, lateral (least Iz)": {
+      "x": -115.4,
+      "A": 124.0,
+      "Iy": 11577.0,
+      "Iz": 807.0,
+      "J": 1133.0
+     },
+     "yoke + block (clamped), vertical (least Iy)": {
+      "x": -50.4,
+      "A": 245.0,
+      "Iy": 44143.0,
+      "Iz": 5897.0,
+      "J": 14254.0
+     },
+     "yoke + block (clamped), lateral (least Iz)": {
+      "x": -50.4,
+      "A": 245.0,
+      "Iy": 44143.0,
+      "Iz": 5897.0,
+      "J": 14254.0
+     },
+     "block / web / fin, vertical (least Iy)": {
+      "x": -42.5,
+      "A": 274.0,
+      "Iy": 5942.0,
+      "Iz": 39034.0,
+      "J": 5427.0
+     },
+     "block / web / fin, lateral (least Iz)": {
+      "x": -47.5,
+      "A": 138.0,
+      "Iy": 7601.0,
+      "Iz": 2170.0,
+      "J": 5047.0
+     }
+    },
+    "by_kind": {
+     "crash": {
+      "fuse": 0.166,
+      "root": 0.265,
+      "carrier": 0.084,
+      "limit": 1.0,
+      "worst": 0.265,
+      "order_ok": false,
+      "order_fails": [
+       "crash 35 g x",
+       "crash 35 g -x"
+      ],
+      "pass": true
+     },
+     "flight": {
+      "fuse": 0.009,
+      "root": 0.012,
+      "carrier": 0.006,
+      "limit": 0.5,
+      "worst": 0.012,
+      "order_ok": false,
+      "order_fails": [
+       "flight 2 g x",
+       "flight 2 g -x"
+      ],
+      "pass": true
+     },
+     "landing": {
+      "fuse": 0.0,
+      "root": 0.018,
+      "carrier": 0.009,
+      "limit": 0.5,
+      "worst": 0.018,
+      "order_ok": true,
+      "order_fails": [],
+      "pass": true
+     },
+     "E": {
+      "fuse": 0.804,
+      "root": 0.835,
+      "carrier": 0.628,
+      "limit": 1.0,
+      "worst": 0.835,
+      "order_ok": false,
+      "order_fails": [
+       "E: 50 N y at the far item corner",
+       "E: 50 N -z at the far item corner"
+      ],
+      "pass": true
+     }
+    },
+    "worst_root": 0.265,
+    "worst_fuse": 0.166,
+    "worst_carrier": 0.084,
+    "fuse_first": false,
+    "l_pass": true
+   },
+   "modes": {
+    "lateral": 244.0,
+    "vertical": 479.0,
+    "carried_g": 62.4,
+    "carried_cg": [
+     -106.8,
+     4.0,
+     15.6
+    ],
+    "root_x": -42.0
+   },
+   "cg": {
+    "pack_in": [
+     -0.689,
+     0.383,
+     2.804
+    ],
+    "pack_out": [
+     -2.855,
+     0.54,
+     11.438
+    ],
+    "h_in": 0.788,
+    "h_out": 2.906,
+    "mass": 750.1
+   },
+   "slide_riding": [
+    [
+     -19.0,
+     8.19637970458878,
+     3.9921232330496768,
+     8.187421942589227,
+     3.955397942645909
+    ],
+    [
+     -18.75,
+     8.038056187298672,
+     3.871662887035994,
+     8.028921787784903,
+     3.833783834240576
+    ],
+    [
+     -18.5,
+     7.87973977214299,
+     3.7512769954477236,
+     7.870421632980582,
+     3.712169725835254
+    ],
+    [
+     -18.25,
+     7.721430895977741,
+     3.630972963962289,
+     7.711921478176258,
+     3.590555617429923
+    ],
+    [
+     -18.0,
+     7.563130032213721,
+     3.5107592079493726,
+     7.553421323371932,
+     3.4689415090245888
+    ],
+    [
+     -17.75,
+     7.404837694719091,
+     3.3906453294474823,
+     7.394921168567614,
+     3.3473274006192626
+    ],
+    [
+     -17.5,
+     7.246554442232409,
+     3.270642332437648,
+     7.23642101376329,
+     3.225713292213935
+    ],
+    [
+     -17.25,
+     7.088280883365854,
+     3.150762886363998,
+     7.07792085895897,
+     3.1040991838086094
+    ],
+    [
+     -17.0,
+     6.930017682292548,
+     3.031021650891141,
+     6.919420704154652,
+     2.9824850754032854
+    ],
+    [
+     -16.75,
+     6.7717655652297095,
+     2.911435679004315,
+     6.760920549350327,
+     2.8608709669979526
+    ],
+    [
+     -16.5,
+     6.61352532785052,
+     2.7920249211843053,
+     6.602420394546003,
+     2.7392568585926202
+    ],
+    [
+     -16.25,
+     6.455297843783496,
+     2.672812861158754,
+     6.443920239741685,
+     2.6176427501872994
+    ],
+    [
+     -16.0,
+     6.29708407439009,
+     2.553827324578436,
+     6.2854200849373605,
+     2.4960286417819684
+    ],
+    [
+     -15.75,
+     6.138885080050351,
+     2.4351015172837753,
+     6.126919930133042,
+     2.3744145333766444
+    ],
+    [
+     -15.5,
+     5.9807020332347465,
+     2.316675371716643,
+     5.968419775328718,
+     2.2528004249713134
+    ],
+    [
+     -15.25,
+     5.822536233700712,
+     2.1985973117161763,
+     5.809919620524396,
+     2.131186316565983
+    ],
+    [
+     -15.0,
+     5.664389126227394,
+     2.0809265924052283,
+     5.651419465720077,
+     2.009572208160662
+    ],
+    [
+     -14.75,
+     5.506262321396841,
+     1.9637364409714653,
+     5.492919310915754,
+     1.8879580997553311
+    ],
+    [
+     -14.5,
+     5.348157620049352,
+     1.8471183283552202,
+     5.334419156111434,
+     1.7663439913500052
+    ],
+    [
+     -14.25,
+     5.190077042192664,
+     1.7311878612729281,
+     5.175919001307113,
+     1.6447298829446795
+    ],
+    [
+     -14.0,
+     5.032022861339634,
+     1.6160930313005237,
+     5.01741884650279,
+     1.5231157745393487
+    ],
+    [
+     -13.75,
+     4.873997645500056,
+     1.5020259462951888,
+     4.858918691698469,
+     1.4015016661340227
+    ],
+    [
+     -13.5,
+     4.716004306378596,
+     1.389239786212677,
+     4.70041853689415,
+     1.279887557728697
+    ],
+    [
+     -13.25,
+     4.558046158758025,
+     1.278073709366938,
+     4.5419183820898255,
+     1.1582734493233662
+    ],
+    [
+     -13.0,
+     4.400126992610795,
+     1.1689899966552915,
+     4.383418227285504,
+     1.0366593409180387
+    ],
+    [
+     -12.75,
+     4.242251161232846,
+     1.0626301335421249,
+     4.224918072481182,
+     0.9150452325127094
+    ],
+    [
+     -12.5,
+     4.084423689702961,
+     0.9598999801384633,
+     4.066417917676861,
+     0.7934311241073836
+    ],
+    [
+     -12.25,
+     3.9266504093410255,
+     0.8620980952039812,
+     3.9079177628725397,
+     0.6718170157020561
+    ],
+    [
+     -12.0,
+     3.7689381257186128,
+     0.7711019792253736,
+     3.749417608068218,
+     0.5502029072967286
+    ],
+    [
+     -11.75,
+     3.6112948303840526,
+     0.6896110365290617,
+     3.5909174532638946,
+     0.4285887988913977
+    ],
+    [
+     -11.5,
+     3.453729970129083,
+     0.6213762819472058,
+     3.4324172984595718,
+     0.3069746904860685
+    ],
+    [
+     -11.25,
+     3.2962547928403683,
+     0.571168599064084,
+     3.273917143655253,
+     0.18536058208074443
+    ],
+    [
+     -11.0,
+     3.1388827965096615,
+     0.5440024228563379,
+     3.115416988850928,
+     0.06374647367541184
+    ],
+    [
+     -10.75,
+     2.9816303190153453,
+     0.5433449054852272,
+     2.9569168340466088,
+     -0.05786763472991226
+    ],
+    [
+     -10.5,
+     2.824517322741137,
+     0.5692879054453731,
+     2.7984166792422873,
+     -0.17948174313523976
+    ],
+    [
+     -10.25,
+     2.6675684530680646,
+     0.6184931163581834,
+     2.6399165244379637,
+     -0.30109585154057067
+    ],
+    [
+     -10.0,
+     2.5108144884258468,
+     0.6859728372209616,
+     2.481416369633645,
+     -0.4227099599458948
+    ],
+    [
+     -9.75,
+     2.3542943607204943,
+     0.7669183232613118,
+     2.3229162148293234,
+     -0.5443240683512223
+    ],
+    [
+     -9.5,
+     2.198058023960577,
+     0.8575247392520847,
+     2.1644160600250006,
+     -0.6659381767565514
+    ],
+    [
+     -9.25,
+     2.042170613494533,
+     0.9550463994127238,
+     2.005915905220682,
+     -0.7875522851618756
+    ],
+    [
+     -9.0,
+     1.8867186199032848,
+     1.0575720090658236,
+     1.8474157504163555,
+     -0.9091663935672099
+    ],
+    [
+     -8.75,
+     1.731819299148986,
+     1.163779818700371,
+     1.6889155956120352,
+     -1.0307805019725356
+    ],
+    [
+     -8.5,
+     1.5776354513213762,
+     1.2727483495159047,
+     1.530415440807715,
+     -1.1523946103778615
+    ],
+    [
+     -8.25,
+     1.424399434067951,
+     1.3838255810264177,
+     1.3719152860033925,
+     -1.2740087187831906
+    ],
+    [
+     -8.0,
+     1.2724537227051484,
+     1.4965420471664617,
+     1.2134151311990722,
+     -1.3956228271885165
+    ],
+    [
+     -7.75,
+     1.1223225041071125,
+     1.6105536134813192,
+     1.0549149763947472,
+     -1.5172369355938506
+    ],
+    [
+     -7.5,
+     0.9748444635788462,
+     1.7256035951471302,
+     0.8964148215904282,
+     -1.6388510439991748
+    ],
+    [
+     -7.25,
+     0.8314326498649066,
+     1.8414973733345708,
+     0.7379146667861068,
+     -1.7604651524045023
+    ],
+    [
+     -7.0,
+     0.6946102306318404,
+     1.9580851276535445,
+     0.5794145119817842,
+     -1.8820792608098316
+    ],
+    [
+     -6.75,
+     0.5691494459994213,
+     2.0752498984470034,
+     0.4209143571774652,
+     -2.0036933692151555
+    ],
+    [
+     -6.5,
+     0.4643526778327669,
+     2.192899199141874,
+     0.2624142023731414,
+     -2.1253074776204866
+    ],
+    [
+     -6.25,
+     0.3969386918473228,
+     2.3109590296922815,
+     0.10391404756881757,
+     -2.2469215860258176
+    ],
+    [
+     -6.0,
+     0.38696490655672533,
+     2.429369539399458,
+     -0.05458610723550262,
+     -2.3685356944311433
+    ],
+    [
+     -5.75,
+     0.438369650949326,
+     2.5480818400777534,
+     -0.21308626203982403,
+     -2.490149802836471
+    ],
+    [
+     -5.5,
+     0.5337027833789152,
+     2.6670556333216187,
+     -0.3715864168441466,
+     -2.6117639112418
+    ],
+    [
+     -5.25,
+     0.6540290278308426,
+     2.7862574219654537,
+     -0.5300865716484693,
+     -2.733378019647129
+    ],
+    [
+     -5.0,
+     0.7879808853330759,
+     2.905659146288326,
+     -0.6885867264527894,
+     -2.854992128052455
+    ],
+    [
+     -4.75,
+     0.9296872485955855,
+     3.025237132868577,
+     -0.8470868812571121,
+     -2.976606236457784
+    ],
+    [
+     -4.5,
+     1.0760889753631693,
+     3.144971276258536,
+     -1.0055870360614372,
+     -3.0982203448631167
+    ],
+    [
+     -4.25,
+     1.2255044609225423,
+     3.2648443959279243,
+     -1.1640871908657537,
+     -3.2198344532684375
+    ],
+    [
+     -4.0,
+     1.3769529704132795,
+     3.384841726503504,
+     -1.3225873456700787,
+     -3.34144856167377
+    ],
+    [
+     -3.75,
+     1.5298308337410487,
+     3.5049505103585803,
+     -1.4810875004743989,
+     -3.4630626700790956
+    ],
+    [
+     -3.5,
+     1.6837487565387221,
+     3.6251596695004973,
+     -1.6395876552787179,
+     -3.58467677848442
+    ],
+    [
+     -3.25,
+     1.8384455304883436,
+     3.7454595394169665,
+     -1.7980878100830442,
+     -3.706290886889754
+    ],
+    [
+     -3.0,
+     1.993739867722316,
+     3.8658416517199092,
+     -1.9565879648873619,
+     -3.8279049952950768
+    ],
+    [
+     -2.75,
+     2.1495022563059223,
+     3.986298555510113,
+     -2.115088119691688,
+     -3.949519103700411
+    ],
+    [
+     -2.5,
+     2.30563783750377,
+     4.106823669684137,
+     -2.273588274496007,
+     -4.071133212105735
+    ],
+    [
+     -2.25,
+     2.46207561292091,
+     4.227411160133378,
+     -2.4320884293003298,
+     -4.192747320511065
+    ],
+    [
+     -2.0,
+     2.6187614263037906,
+     4.348055837094206,
+     -2.59058858410465,
+     -4.31436142891639
+    ],
+    [
+     -1.75,
+     2.775653272690854,
+     4.468753068909068,
+     -2.7490887389089713,
+     -4.435975537321718
+    ],
+    [
+     -1.5,
+     2.932718085777805,
+     4.589498709228048,
+     -2.907588893713295,
+     -4.557589645727048
+    ],
+    [
+     -1.25,
+     3.0899294893642764,
+     4.710289035277348,
+     -3.066089048517614,
+     -4.679203754132373
+    ],
+    [
+     -1.0,
+     3.24726619265864,
+     4.831120695286819,
+     -3.224589203321938,
+     -4.800817862537703
+    ],
+    [
+     -0.75,
+     3.404710824852892,
+     4.951990663534168,
+     -3.383089358126257,
+     -4.922431970943028
+    ],
+    [
+     -0.5,
+     3.5622490752196425,
+     5.072896201752709,
+     -3.5415895129305808,
+     -5.044046079348358
+    ],
+    [
+     -0.25,
+     3.719869049453476,
+     5.193834825878751,
+     -3.700089667734902,
+     -5.165660187753685
+    ],
+    [
+     0.0,
+     3.877560781523174,
+     5.314804277298582,
+     -3.8585898225392237,
+     -5.287274296159013
+    ],
+    [
+     0.25,
+     4.035315858997572,
+     5.4358024979020465,
+     -4.017089977343548,
+     -5.408888404564344
+    ],
+    [
+     0.5,
+     4.1931271322837285,
+     5.556827608368946,
+     -4.175590132147867,
+     -5.530502512969669
+    ],
+    [
+     0.75,
+     4.350988486683991,
+     5.67787788921099,
+     -4.33409028695219,
+     -5.652116621374999
+    ],
+    [
+     1.0,
+     4.5088946620169885,
+     5.798951764170588,
+     -4.492590441756511,
+     -5.773730729780326
+    ]
+   ],
+   "best_riding": [
+    -8.25,
+    1.424399434067951,
+    1.3838255810264177,
+    1.3719152860033925,
+    -1.2740087187831906
+   ],
+   "keys": [
+    [
+     "M3 key, yoke top bolt (x -54.5)",
+     [
+      -54.5,
+      0.5,
+      23.5
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ],
+     7.2
+    ],
+    [
+     "M3 key, yoke bottom bolt (x -54.5)",
+     [
+      -54.5,
+      0.5,
+      -13.0
+     ],
+     [
+      0.0,
+      0.0,
+      -1.0
+     ],
+     5.9
+    ],
+    [
+     "M3 key, yoke top bolt (x -63.5)",
+     [
+      -63.5,
+      0.5,
+      23.5
+     ],
+     [
+      0.0,
+      0.0,
+      1.0
+     ],
+     8.0
+    ],
+    [
+     "M3 key, yoke bottom bolt (x -63.5)",
+     [
+      -63.5,
+      0.5,
+      -13.0
+     ],
+     [
+      -0.259,
+      0.0,
+      -0.966
+     ],
+     5.6
+    ],
+    [
+     "M3 key, plate bolt (-42.0, +16.0)",
+     [
+      -42.0,
+      16.0,
+      22.5
+     ],
+     [
+      0.109,
+      -0.408,
+      0.906
+     ],
+     0.2
+    ],
+    [
+     "M3 key, plate bolt (-42.0, -16.0)",
+     [
+      -42.0,
+      -16.0,
+      22.5
+     ],
+     [
+      0.211,
+      0.366,
+      0.906
+     ],
+     0.1
+    ]
+   ],
+   "system_check": "System: Scout v3 with the tail electronics mount (system pass v2, round 5, layout v12), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 91.2 mm\u00b3 (E) (cage shell tubes/strut to the tail point (PETG, B)) FAIL, bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 750 of 500 g (150 %) (E) over budget (total), CG 0.8 mm off thrust axis (E) [-0.7, +0.4, -38.4], 2.9 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 16/16 clear",
+   "by_kind": {
+    "crash": {
+     "fuse": 0.166,
+     "root": 0.265,
+     "carrier": 0.084,
+     "limit": 1.0,
+     "worst": 0.265,
+     "order_ok": false,
+     "order_fails": [
+      "crash 35 g x",
+      "crash 35 g -x"
+     ],
+     "pass": true
+    },
+    "flight": {
+     "fuse": 0.009,
+     "root": 0.012,
+     "carrier": 0.006,
+     "limit": 0.5,
+     "worst": 0.012,
+     "order_ok": false,
+     "order_fails": [
+      "flight 2 g x",
+      "flight 2 g -x"
+     ],
+     "pass": true
+    },
+    "landing": {
+     "fuse": 0.0,
+     "root": 0.018,
+     "carrier": 0.009,
+     "limit": 0.5,
+     "worst": 0.018,
+     "order_ok": true,
+     "order_fails": [],
+     "pass": true
+    },
+    "E": {
+     "fuse": 0.804,
+     "root": 0.835,
+     "carrier": 0.628,
+     "limit": 1.0,
+     "worst": 0.835,
+     "order_ok": false,
+     "order_fails": [
+      "E: 50 N y at the far item corner",
+      "E: 50 N -z at the far item corner"
+     ],
+     "pass": true
+    }
+   }
+  }
+ },
+ "funnel": {
+  "line": [
+   -66.0,
+   -46.62,
+   -233.24,
+   44.47
+  ],
+  "margins": {
+   "Radxa Zero 3W": 14.9,
+   "UBEC": 5.4,
+   "XR2": 45.7,
+   "belly-mount tail block (PETG)": 36.7,
+   "tail carrier (PETG)": 3.7
+  },
+  "wash_at_best_catch": {
+   "Radxa Zero 3W": 5.4,
+   "UBEC": 17.9,
+   "XR2": 2.9,
+   "belly-mount tail block (PETG)": 3.1,
+   "tail carrier (PETG)": 2.6
+  }
+ },
+ "ubec_region": {
+  "at_layout_catch": {
+   "catch": -5.0,
+   "cg_now": [
+    0.56,
+    1.49
+   ],
+   "box_now": [
+    [
+     -171.1,
+     11.2,
+     16.0
+    ],
+    [
+     -110.1,
+     26.6,
+     24.0
+    ]
+   ],
+   "n": 10598,
+   "shift_x": [
+    -40.0,
+    17.0
+   ],
+   "shift_y": [
+    0.0,
+    20.0
+   ],
+   "shift_z_min_at_dx0": -5.0
+  },
+  "at_best_catch": {
+   "catch": -6.0,
+   "cg_now": [
+    1.09,
+    1.06
+   ],
+   "box_now": [
+    [
+     -170.1,
+     11.2,
+     16.0
+    ],
+    [
+     -109.1,
+     26.6,
+     24.0
+    ]
+   ],
+   "n": 10246,
+   "shift_x": [
+    -40.0,
+    16.0
+   ],
+   "shift_y": [
+    0.0,
+    20.0
+   ],
+   "shift_z_min_at_dx0": -5.0
+  }
+ },
+ "variants": [
+  {
+   "name": "V0 round 4",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 20.0,
+    "UBOX": 99.0,
+    "BLOCK_SOLID": true,
+    "FOOT_TOP": 45.0,
+    "LOW_AFT": 20.0
+   },
+   "mass": 59.4,
+   "pieces": {
+    "belly-mount tail block (PETG)": 22.83,
+    "tail carrier (PETG)": 36.59
+   },
+   "cage_first_order": false,
+   "cg": [
+    0.72,
+    2.73
+   ],
+   "crash": 0.437,
+   "flight": 0.013,
+   "landing": 0.02,
+   "E": 0.804,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V1 tube 14",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 14.0,
+    "UBOX": 99.0,
+    "BLOCK_SOLID": true,
+    "FOOT_TOP": 45.0,
+    "LOW_AFT": 20.0
+   },
+   "mass": 58.3,
+   "pieces": {
+    "belly-mount tail block (PETG)": 22.83,
+    "tail carrier (PETG)": 35.44
+   },
+   "cage_first_order": false,
+   "cg": [
+    0.62,
+    2.51
+   ],
+   "crash": 0.431,
+   "flight": 0.013,
+   "landing": 0.02,
+   "E": 0.804,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V2 tube 14 + UBEC box 6",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 14.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": true,
+    "FOOT_TOP": 45.0,
+    "LOW_AFT": 20.0
+   },
+   "mass": 57.0,
+   "pieces": {
+    "belly-mount tail block (PETG)": 22.83,
+    "tail carrier (PETG)": 34.19
+   },
+   "cage_first_order": false,
+   "cg": [
+    0.43,
+    2.1
+   ],
+   "crash": 0.412,
+   "flight": 0.013,
+   "landing": 0.019,
+   "E": 0.804,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V3 flanges only + UBEC box 6",
+   "cfg": {
+    "SPINE_SKIN": false,
+    "SPINE_TUBE": 20.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": true,
+    "FOOT_TOP": 45.0,
+    "LOW_AFT": 20.0
+   },
+   "mass": 56.5,
+   "pieces": {
+    "belly-mount tail block (PETG)": 22.83,
+    "tail carrier (PETG)": 33.68
+   },
+   "cage_first_order": false,
+   "cg": [
+    0.44,
+    1.98
+   ],
+   "crash": 0.709,
+   "flight": 0.081,
+   "landing": 0.122,
+   "E": 5.923,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x",
+    "crash 35 g -x",
+    "crash 35 g y",
+    "crash 35 g -y",
+    "crash 35 g z",
+    "crash 35 g -z",
+    "crash 35 g corner (+x +y +z)",
+    "crash 35 g corner (+x +y -z)",
+    "crash 35 g corner (+x -y +z)",
+    "crash 35 g corner (+x -y -z)",
+    "crash 35 g corner (-x +y +z)",
+    "crash 35 g corner (-x +y -z)",
+    "crash 35 g corner (-x -y +z)",
+    "crash 35 g corner (-x -y -z)"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V4 V2 + block walls 2.4 / 20 %",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 14.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": false,
+    "FOOT_TOP": 45.0,
+    "LOW_AFT": 20.0
+   },
+   "mass": 51.8,
+   "pieces": {
+    "belly-mount tail block (PETG)": 17.63,
+    "tail carrier (PETG)": 34.19
+   },
+   "cage_first_order": true,
+   "cg": [
+    0.46,
+    1.72
+   ],
+   "crash": 0.268,
+   "flight": 0.012,
+   "landing": 0.018,
+   "E": 0.804,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x",
+    "crash 35 g -x"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V5 V4 + foot to z 34",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 14.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": false,
+    "FOOT_TOP": 34.0,
+    "LOW_AFT": 20.0
+   },
+   "mass": 50.1,
+   "pieces": {
+    "belly-mount tail block (PETG)": 15.92,
+    "tail carrier (PETG)": 34.19
+   },
+   "cage_first_order": true,
+   "cg": [
+    0.49,
+    1.64
+   ],
+   "crash": 0.267,
+   "flight": 0.012,
+   "landing": 0.018,
+   "E": 0.835,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x",
+    "crash 35 g -x"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V6 V5 + lower back 6 aft",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 14.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": false,
+    "FOOT_TOP": 34.0,
+    "LOW_AFT": 6.0
+   },
+   "mass": 47.9,
+   "pieces": {
+    "belly-mount tail block (PETG)": 15.92,
+    "tail carrier (PETG)": 32.01
+   },
+   "cage_first_order": true,
+   "cg": [
+    0.66,
+    1.32
+   ],
+   "crash": 0.262,
+   "flight": 0.012,
+   "landing": 0.018,
+   "E": 0.938,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x",
+    "crash 35 g -x",
+    "crash 35 g y",
+    "crash 35 g -y",
+    "crash 35 g corner (+x +y +z)",
+    "crash 35 g corner (+x -y +z)",
+    "crash 35 g corner (-x -y +z)"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V7 V3 + block 2.4 / 20 % + foot 34 + lower back 6",
+   "cfg": {
+    "SPINE_SKIN": false,
+    "SPINE_TUBE": 20.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": false,
+    "FOOT_TOP": 34.0,
+    "LOW_AFT": 6.0
+   },
+   "mass": 47.2,
+   "pieces": {
+    "belly-mount tail block (PETG)": 15.92,
+    "tail carrier (PETG)": 31.3
+   },
+   "cage_first_order": false,
+   "cg": [
+    0.78,
+    1.19
+   ],
+   "crash": 0.73,
+   "flight": 0.083,
+   "landing": 0.125,
+   "E": 5.923,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x",
+    "crash 35 g -x",
+    "crash 35 g y",
+    "crash 35 g -y",
+    "crash 35 g z",
+    "crash 35 g -z",
+    "crash 35 g corner (+x +y +z)",
+    "crash 35 g corner (+x +y -z)",
+    "crash 35 g corner (+x -y +z)",
+    "crash 35 g corner (+x -y -z)",
+    "crash 35 g corner (-x +y +z)",
+    "crash 35 g corner (-x +y -z)",
+    "crash 35 g corner (-x -y +z)",
+    "crash 35 g corner (-x -y -z)"
+   ],
+   "l_pass": true,
+   "one_body": true
+  },
+  {
+   "name": "V8 V5 + lower back 14 aft",
+   "cfg": {
+    "SPINE_SKIN": true,
+    "SPINE_TUBE": 14.0,
+    "UBOX": 6.0,
+    "BLOCK_SOLID": false,
+    "FOOT_TOP": 34.0,
+    "LOW_AFT": 14.0
+   },
+   "mass": 49.2,
+   "pieces": {
+    "belly-mount tail block (PETG)": 15.92,
+    "tail carrier (PETG)": 33.23
+   },
+   "cage_first_order": true,
+   "cg": [
+    0.56,
+    1.49
+   ],
+   "crash": 0.265,
+   "flight": 0.012,
+   "landing": 0.018,
+   "E": 0.835,
+   "order_ok": false,
+   "order_fails": [
+    "crash 35 g x",
+    "crash 35 g -x"
+   ],
+   "l_pass": true,
+   "one_body": true
+  }
+ ],
+ "picked": "V8 V5 + lower back 14 aft",
+ "pose_findings": {
+  "ubec_radxa_gap": 8.0,
+  "plug_keepclear": [
+   [
+    -99.8,
+    -4.0,
+    39.5
+   ],
+   [
+    -68.4,
+    6.0,
+    45.0
+   ]
+  ]
+ },
+ "usb1_tilts": [
+  [
+   0,
+   1,
+   18.4
+  ]
+ ],
+ "usb1_dir": [
+  0.0,
+  0.0,
+  1.0
+ ],
+ "bbox": {
+  "extents": [
+   391.0,
+   278.0,
+   127.0
+  ],
+  "L": 13.8
+ }
+}

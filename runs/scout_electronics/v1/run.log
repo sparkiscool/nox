@@ -1,0 +1,23 @@
+only got 1466/1500 samples!
+only got 1466/1500 samples!
+only got 1466/1500 samples!
+layout as drawn (tail bay of the cage session): {'cg_in': [-0.43, 0.46, -3.03], 'cg_out': [3.92, 0.69, 4.26], 'mass': 634.0, 'R_disk': 44.5, 'rear_disk_centres': [[-54.1, 54.1], [-54.1, -54.1]], 'fc_usb': {'clear': 6.9, 'from': [-33.6, 0.0, 13.5], 'dir': [-0.0, -0.77, -0.64]}}
+
+A tail fin: fin plane y 5.0; Radxa on edge on the -y face, ports up, SD end aft; UBEC on the +y face behind the disks' wash; XR2 top aft on the +y face, antenna up
+  CG pack in [-3.11, 0.29, -3.11] (3.12), pack out [-0.16, 0.44, 3.92] (0.47), 647.0 g; catch set re-slide {'catch_set_dx': 3.5, 'cg_x_worst': 1.12}; ok {'cage_first': True, 'wash': True, 'fit': True, 'balance': True, 'access': True}
+  compact {'tail_bay_box': [[-140.0, -6.5, -26.0], [-56.0, 16.2, 54.3]], 'tail_bay_L': 0.153, 'electronics_L': 0.024, 'drone_extents': [378.9, 278.3, 125.1], 'drone_L': 13.19}
+  access {'fc_usb': {'clear': 6.9, 'from': [-33.6, 0.0, 13.5], 'dir': [-0.0, -0.77, -0.64]}, 'plug_tool': {'clear': 6.2, 'dir': [0.26, -0.97, 0.0]}, 'sd_tool': {'clear': 6.1, 'dir': [-0.26, -0.97, 0.0]}, 'radxa_plugs': 3.0, 'radxa_sd': 0.9}; CG moves 0.156 mm a gram at the mount
+  Radxa Zero 3W      rod    9.3 inside True  wash     7.3  min part gap    7.0 (receiver TPU end pieces (latch, E))  [[-132.0, -4.0, -24.0], [-67.0, 0.8, 6.0]]
+  UBEC               rod   12.1 inside True  wash     6.4  min part gap   28.0 (receiver TPU end pieces (latch, E))  [[-138.0, 6.2, -12.0], [-88.0, 16.2, 13.0]]
+  XR2                rod   10.9 inside True  wash    33.6  min part gap   62.5 (receiver v3 (latch))  [[-132.0, 6.2, 16.0], [-120.0, 12.2, 46.0]]
+  tail fin + clip (PETG) rod    3.3 inside True  wash     3.8  min part gap    2.0 (receiver TPU end pieces (latch, E))  [[-140.0, -6.5, -26.0], [-62.0, 6.5, 54.3]]
+  belly mount tail block rod   38.4 inside True  wash     3.2  min part gap    0.2 (mount + nose legs (Scout))  [[-62.0, -6.5, -4.0], [-56.0, 6.5, 18.5]]
+
+B tail tray: tray z 3.6..6.0 from the plate tail; Radxa flat and crosswise behind the disks, component side up; UBEC under; XR2 behind
+  CG pack in [-3.81, -0.0, -2.93] (3.81), pack out [-1.2, 0.0, 4.18] (1.2), 647.0 g; catch set re-slide {'catch_set_dx': 5.3, 'cg_x_worst': 0.77}; ok {'cage_first': True, 'wash': False, 'fit': True, 'balance': True, 'access': False}
+  compact {'tail_bay_box': [[-150.0, -34.5, -6.4], [-58.0, 34.5, 26.0]], 'tail_bay_L': 0.206, 'electronics_L': 0.031, 'drone_extents': [378.9, 278.3, 125.1], 'drone_L': 13.19}
+  access {'fc_usb': {'clear': 6.9, 'from': [-33.6, 0.0, 13.5], 'dir': [-0.0, -0.77, -0.64]}, 'plug_tool': {'clear': -2.9, 'dir': [-0.04, -0.17, -0.98]}, 'sd_tool': {'clear': 6.5, 'dir': [-0.0, -1.0, 0.0]}, 'radxa_plugs': -1.0, 'radxa_sd': -1.0}; CG moves 0.161 mm a gram at the mount
+  Radxa Zero 3W      rod   12.5 inside True  wash     9.9  min part gap   43.7 (frame plate (Bee35 carbon))  [[-134.0, -32.5, 6.0], [-104.0, 32.5, 13.6]]
+  UBEC               rod   21.4 inside True  wash    13.3  min part gap   44.0 (receiver TPU end pieces (latch, E))  [[-129.0, -25.0, -6.4], [-104.0, 25.0, 3.6]]
+  XR2                rod   11.9 inside True  wash    49.5  min part gap   76.9 (receiver TPU end pieces (latch, E))  [[-148.0, -8.0, 6.0], [-136.0, 8.0, 26.0]]
+  tail tray (PETG)   rod    3.2 inside False  wash   -24.5  min part gap    0.2 (receiver v3 (latch))  [[-150.0, -34.5, 3.6], [-58.0, 34.5, 6.0]]
