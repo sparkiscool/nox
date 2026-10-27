@@ -1,33 +1,38 @@
 """Push-bar catch (concept F, 27 Oct, Spark: "the most error-tolerant most well-designed one-motor latch system that
 works for both current drone cages. Take your time and research first"). Concept check only; the box catch session
 owns the catch. Research: claude/research/2026-10-27-{dock-centering-mechanisms,one-motor-sequencing-and-locks,
-precision-landing-accuracy}.md.
+precision-landing-accuracy}.md (budget: +-80 mm, +-10 deg, survive +-15 deg).
 
-The drone lands anywhere on a flat deck (nothing stands up). One stepper (NEMA 17, T8 x 2 lead screw, self-locking)
-moves one carriage under the deck. From it, in two phases set by force, not by position (lost motion):
-  phase 1  two end pads (centre line, |y| <= PAD_Y, low) close along x at a 1 : K_T ratio (nose : tail) through a
-           preloaded spring; two side bars (L-section, BAR_X long, under the shared long side tubes) come to the side
-           gap + Y_PRE by a cam slot and wait. The pads stop where the drone stops them: the Overseer on its two tip
-           nodes after S_O of nose travel, the Scout on its two end tubes after S_S; both end with the receiver on
-           the swap centre because K_T is set by the two drones' seats.
-  phase 2  the carriage goes on LM against the pad spring; that relative motion drives the side bars the last
-           Y_PRE / 2 a side onto a rigid stop (gap GAP over the tube surfaces), squaring yaw and centring y at the
-           drone's seated x (the side tubes taper 3.6 over 155, so a fixed gap only fits at one x); the lips reach
-           over the tubes (hold-down); the motor stalls on the stop: StallGuard + the step count = seated and which
-           drone. Release: back out.
-Seat frame: catch centre, z 0 = the Overseer's ring tube centres seated; its TPU feet reach z -4.0 (M), so the deck
-is at -4.0 and its ring floats 1.0 above it. The Scout rests on 6 mm printed sleeves on its side tubes (SLEEVE = 1,
-DEFAULT: one gap, one lip height for both) or on its bare r 1.5 rods (SLEEVE = 0: 3.5 of y slack); its cartridge
-height is reported.
+The drone lands anywhere on a flat deck (nothing stands up inside the landing room). One stepper (NEMA 17, T8 x 2 lead
+screw, self-locking) moves one carriage under the deck. Two phases, set by force (lost motion), not by a cam:
+  phase 1  two low end pads (H_PAD tall) close along x at a 1 : K_T ratio (nose : tail) through a preloaded spring
+           (the pad slide). Each pad face is a profile along y: a notch (|y| <= NOTCH_Y) that cradles a tip node, a
+           ramp beside it receding RAMP_DX (the Overseer's tip rods run there at deck height), and V wings
+           (WING_Y, WING_DEG, outer corners leading) that push an off-centre node inward and carry the Scout's straight
+           end tube on their corners. The pads stop where the drone stops them: the Overseer on its two tip nodes after
+           S_O of nose travel, the Scout on its two end tubes after S_S; K_T puts both receivers on the swap centre.
+  phase 2  the carriage runs S2 further against the pad spring; that relative motion alone drives two short side bars
+           (BAR_X long, L-section with lips) from park onto the shared side tubes to a rigid stop (gap GAP), squaring
+           yaw and centring y at the drone's seated x (the side tubes taper 3.6 over 155, so a fixed gap fits at one x;
+           and the Overseer's side rods leave the side nodes at 16 deg, so a bar near a node before x is centred gets a
+           rod across its top). The nodes ride the pad ramps into the notches, the spring gives (stroke LM). The lips
+           reach over the tubes (hold-down for the 74 N head stall). The motor stalls on the bars' stop: StallGuard and
+           the step count read seated, and which drone. Release: back out.
+Seat frame: catch centre, z 0 = the Overseer's ring tube centres seated; its TPU feet reach z -4.0 (M), so the deck is
+at -4.0 and its ring floats 1.0 above it. The Scout rests on 6 mm printed sleeves on its side rods (SLEEVE = 1, DEFAULT:
+one gap, one lip height for both) or on its bare r 1.5 rods (SLEEVE = 0: 3.5 of y slack); its cartridge height is reported.
 
-Check: the drone lands at an offset (x, y) and yaw; the bars move in STEP mm of nose-pad travel; every step the drone
-is pushed (translation + yaw, least-norm) until no bar penetrates it. A pushing face may only touch ring tubes or
-nodes (the pads also the Overseer's tip-node fittings); a lip, a bar top or end touching anything, or a face pushing
-anything else, fails that landing. Two opposed pads that can no longer resolve = the x clamp (phase 2 starts); the
-two side bars on their stop = seated. Capture = the landings that end seated, with the pose error and clearances.
-python3 nox/box/catch_bars_concept.py            full sweep (both drones) -> runs/box_catch/bars_concept/result.json + page
-python3 nox/box/catch_bars_concept.py --smoke    9 landings a drone
-python3 nox/box/catch_bars_concept.py --html     rebuild the page from result.json
+Check: the drone lands at an offset (x, y) and yaw; the bodies move in STEP mm of nose-pad travel; every step the drone
+is pushed the least that resolves every contact (translation + yaw, least-norm; in phase 2 the pad slide is a 4th
+unknown, sprung within its stroke). Sphere-vs-body contacts are exact (every body an orthogonal box in its own frame).
+A pushing face may only touch ring tubes, nodes and the tip-node structure; a lip touching anything, a body running
+under anything, a rod climbing a top edge by more than RIDE, or a landing on a parked body fails that landing. Both pads
+pinching = the x clamp (phase 2 starts); the carriage at s_clamp + S2 = seated. Capture = the landings that end seated,
+with the pose error, the clearances and the stall travel.
+python3 nox/box/catch_bars_concept.py                   full sweep (both drones) -> runs/box_catch/bars_concept/result.json + page
+python3 nox/box/catch_bars_concept.py --drone scout      one drone -> result_scout.json (run the two in parallel), then --merge
+python3 nox/box/catch_bars_concept.py --smoke            27 landings a drone
+python3 nox/box/catch_bars_concept.py --html             rebuild the page from result.json
 """
 import os, sys, json, math, time, numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); REPO = os.path.dirname(os.path.dirname(HERE))
