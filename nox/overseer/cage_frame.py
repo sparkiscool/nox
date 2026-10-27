@@ -46,6 +46,7 @@ def build():
     H = f.node(B - A * 20.0)                                            # the head mount, rigid
     f.member(H, nid[HEAD_NODE], RIGID, "head-centre node")
     for k, (p, q) in RES["links"].items():
+        if k.startswith("head strut"): continue                        # built with the head below
         p, q = np.array(p), np.array(q)
         on = [i for i in range(len(N)) if np.linalg.norm(N[i] - p) < 0.6 or np.linalg.norm(N[i] - q) < 0.6]
         if k.startswith(("keel", "L2 brace")):                          # head lug to the core

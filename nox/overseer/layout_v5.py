@@ -173,6 +173,7 @@ CAM_FMTS = {"landscape": (L["CAM_VFOV"] / 2, L["CAM_HFOV"] / 2), "portrait": (L[
 CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens off the centre plane (scanned)
 CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
 HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
+HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
 CAM_PSI = np.arange(0.0, 72.5, 2.5)                # yaw out from +x (scanned)
@@ -732,6 +733,13 @@ def attach(g, nodes, ring_ids):
     if PRINTED_HEAD:                                                   # the head's short rods out: the printed head carries the guards (ring, camera
         head = {k: extra.pop(k) for k in list(extra) if k.startswith(("L2 tie", "halo", "cam guard"))}   # bars) and reaches the cage nodes they reached
         g["head_attach"] = sorted({tuple(np.round(np.asarray(b_, float), 2)) for k, (a_, b_) in head.items() if "strut" in k or "tie" in k})
+        if HEAD_ONE and not HEAD_ON_CAGE:                              # the one-piece head: its own node + 4 struts (head_mount.HEAD_STRUTS)
+            cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]
+            g["head_attach"] = [tuple(np.round(nodes[max(cn_, key=lambda k_: nodes[k_][0])], 2))]
+            for w_, q_ in HEAD_STRUTS:
+                for sy in (1, -1):
+                    k_ = int(np.argmin([np.linalg.norm(nodes[j_] - np.array(q_) * [1, sy, 1]) for j_ in range(len(nodes))]))
+                    extra[f"head strut {k_}"] = (np.array(w_) * [1, sy, 1], nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
         if HEAD_ON_CAGE:                                               # the front centre node only (the head's own node, printed in it)
             g["head_attach"] = [max(g["head_attach"], key=lambda q_: q_[0] - 10 * abs(q_[1]))]
         g["head_guards"] = {k: v for k, v in head.items() if not ("strut" in k or "tie" in k)}
@@ -887,7 +895,7 @@ for f in tris:
 say(f"largest cell: inscribed circle Ø{max(circ) - 2 * SHELL_R:.0f} between tube surfaces (C)")
 short = [(i, l) for i, l in enumerate(sh) if l < BREAK_EVEN]
 rl = {k: float(np.linalg.norm(np.subtract(q, p))) for k, (p, q) in extra.items()}
-say(f"carbon: shell {len(sh) - len(short)} tubes 6/4 (Spark 26 Oct), shortest {min(l for l in sh if l >= BREAK_EVEN):.0f}; links {sum(v >= BREAK_EVEN for v in rl.values())} rods 3.0 solid, "
+say(f"carbon: shell {len(sh) - len(short)} tubes 6/4 (Spark 26 Oct), shortest {min(l for l in sh if l >= BREAK_EVEN):.0f}; links {sum(v >= BREAK_EVEN for v in rl.values())} ({sum(v >= BREAK_EVEN and k in LINK6 for k, v in rl.items())} tube 6/4, the rest rod 3.0), "
     f"{sum(rl.values()) / 1000:.2f} m, shortest {min(rl.values()):.0f} ({min(rl, key=rl.get)}); printed struts (< {BREAK_EVEN:.0f}): "
     + (", ".join(f"shell {i} {l:.0f}" for i, l in short) + ", " if short else "") + (", ".join(f"{k} {v:.0f}" for k, v in rl.items() if v < BREAK_EVEN) or "none"))
 pg = min(seg_band_dist(nodes[a], nodes[b], mxy) for a, b in E) - SHELL_R
@@ -948,11 +956,17 @@ else:
     say(f"sensor head outside the frozen cage ({os.path.basename(FROZEN)}): "
         f"the L2 base where it was ({FZ['xB']:.1f}, 0, {ZB:.0f}); the cameras' bodies {fz_clear(np.vstack([c['mesh'].vertices for c in g['cams']])):.1f} off its tubes "
         f"and nodes, nothing of it in their views (C)")
-say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
-    f"the others in a camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "
-    f"{sum(k.startswith('L2 tie') for k in extra)} ties into the shell, {sum(k.startswith('L2 brace') for k in extra)} braces from the lugs (low and high) to the front "
-    f"arm beams {g.get('braces')} out of the root (a braced pyramid on the core, not a stalk); each camera on a printed plate with 2 rods to its side's lugs; break order: the apex lugs are the "
-    f"printed fuse (requirement: they let go before the L2 base, E)")
+if PRINTED_HEAD:
+    say(f"L2 mount: the printed sensor head mount{' (one piece with both cameras)' if HEAD_ONE else ''}: seat, back block, lugs, the guard ring (8 nodes, r "
+        f"{HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on "
+        f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the front arm beams "
+        f"{g.get('braces')} out of the root, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
+        f"printed fuse (requirement: they let go before the L2 base, E)")
+else: say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
+          f"the others in a camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "
+          f"{sum(k.startswith('L2 tie') for k in extra)} ties into the shell, {sum(k.startswith('L2 brace') for k in extra)} braces from the lugs (low and high) to the front "
+          f"arm beams {g.get('braces')} out of the root (a braced pyramid on the core, not a stalk); each camera on a printed plate with 2 rods to its side's lugs; break order: the apex lugs are the "
+          f"printed fuse (requirement: they let go before the L2 base, E)")
 for lens, hh, hv, nm in ((g["flow_lens"], 23.0, 23.0, "flow"),):
     for k, m in (("shell", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E])), ("cartridge", g["cart"]), ("feet", trimesh.util.concatenate(g["feet"])),
                  ("links", trimesh.util.concatenate([rod(p0, p1, rr) for p0, p1, rr in memb[len(E):]])), ("sled + pod", trimesh.util.concatenate([g["sled"], g["flow_pod"]]))):
@@ -1038,6 +1052,7 @@ if PRINTED_HEAD:
                             mass_g=15, cg=cen_(c["mesh"]).tolist(), view="frustum + 2 deg kept clear; board 38 x 38, M2.5 on 28 x 28 behind it") for c in g["cams"]],
               cage_nodes_held=[list(q_) for q_ in g["head_attach"]], cage_node_r=NODE_R,
               carbon_kept={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith(("keel", "L2 brace"))},
+              struts={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith("head strut")},
               guards={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in g["head_guards"].items()},
               guard_nodes=[np.round(np.asarray(h_), 2).tolist() for h_ in g["halo_nodes"]],
               keep_out=["the L2 and its field", "both cameras and their views (+2 deg)", "the frozen cage's tubes (3 off) except the held nodes",
@@ -1049,7 +1064,7 @@ if PRINTED_HEAD:
               drawn_mesh="parts/" + fname(HEADN))
     json.dump(HS, open(os.path.join(OUT, "head_system.json"), "w"), indent=1)
     say(f"sensor head mount (Spark 27 Oct: a topology printed mount instead of the little rods): drawn seat, lugs, camera pads, guard ring and camera "
-        f"guard bars; it holds {len(g['head_attach'])} cage nodes (the cage as it is){'' if HEAD_ON_CAGE else ' and takes the keels and braces'}; {HEAD_SYS_G:.0f} g in the system "
+        f"guard bars; it holds {len(g['head_attach'])} cage nodes (its own node + the struts' nodes){'' if HEAD_ON_CAGE else ' and takes the keels and braces'}; {HEAD_SYS_G:.0f} g in the system "
         f"model (E: seat and lugs, camera plates, guards, joining material {g['head_topo']:.0f} g held to the rods it replaces); requirements in head_system.json")
 # ---------------------------------------------------------------- access (rule 2: reachable without taking another part off)
 # straight tool lines from each target out through a shell cell, searched (clear of every part by the tool radius + 1),

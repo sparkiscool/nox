@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): the head's 4 struts are layout links now (mass, props 13.7, views clear): 3215 g, T/W 2.05, links 36 (30 tube 6/4); frame: every link ≤ 0.63, 4 shell tubes reported over in the crash (1-19 / 3-18 1.59 on the top hit, 11-18 / 12-19 1.29); system_check cage first 7.7, fit 0, CG 0.2.
 - 27 Oct (Overseer): socket bores DEFAULT 6.10 / 3.10 (v2 coupons' middle; v1 OD + 0.3 loose) in head_mount.py and cage_node.py until Spark picks; cage_node takes the one-piece head's 4 struts (6/4) at nodes 15/16/18/19.
 - 27 Oct (Overseer, Spark): one-piece head (L2 + both cameras, `head_mount.py head`): drawn 56 x 177 x 163 (fits 180), L2 loaded at its CG with its moment through the 4 bolts, 4 struts 6/4 to side nodes 15/16/18/19 (searched clear of views): head mode 222 / 119 Hz rigid / TPU (F on E). Top hit now on the camera guards: tubes 1-19 / 3-18 1.62 (reported).
 - 27 Oct (Overseer, Spark): cameras on the same print as the L2 mount: the camera search gets a one-print fit (the head oriented box ≤ 175, `HEAD_ONE` in `layout_v5.py`): lenses (390, ±75, 122), same field 3.42 sr; system_check cage first 7.4, fit 0, CG 0.2. One-piece head setup next.
