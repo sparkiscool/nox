@@ -263,7 +263,7 @@ One latch + cartridge standard for every pack: the v2 squeeze latch (J) as one m
 
 | Piece (qty) | Envelope | Interfaces | Cases (front / rear root moment) | budget_g | Stiffness | Worst index |
 |---|---|---|---|---|---|---|
-| Front arm (arm 1, mirror 4) + 4 rods 3.0 x 140.9 | hull of root block (u 58..75, v ±21), 2 Ø18 shoulders, Ø40 at the motor; z 0..45; less hub electronics, keel hub (+ 1) | root: 2 + 2 M3 heat-set (top u 63.17 v ±15, bottom u 63.74 v ±10), Ø4.0 x 7, boss Ø12, pads 9; pegs dropped (DEFAULT); motor pad Ø36 x 6, slots, Ø8.6 bore, Ø27 pocket, wall 3.5 x 6; rod sockets | thrust 21 N + yaw (3.8 / 2.1 N·m); + 2 g + gyro x4; landing 6 g; crash 35 g x14 (5.9 / 3.2 N·m); handling 50 N x6 (9.0 / 4.9 N·m); thrust + handling on inserts | 60 soft; ~69 expected (E) | modes ≥ 190 Hz on inserts | ≤ 0.5 / ≤ 1.0 |
+| Front arm (arm 1, mirror 4) + 4 rods 3.0 x 140.9 | hull of root block (u 58..75, v ±21), 2 Ø18 shoulders, Ø40 at the motor; z 0..45; less hub electronics, keel hub (+ 1) | root: 2 + 2 M3 heat-set (top u 63.17 v ±15, bottom u 63.74 v ±10), Ø4.0 x 7, boss Ø12, pads 9; pegs dropped (DEFAULT); motor pad Ø36 x 6, slots, Ø8.6 bore, Ø27 pocket; rod sockets | thrust 21 N + yaw (3.8 / 2.1 N·m); 2 g + gyro x4; landing 6 g; crash 35 g x14 (5.9 / 3.2 N·m); handling 50 N x6 (9.0 / 4.9 N·m); thrust + handling on inserts | 60 soft; ~69 expected (E) | modes ≥ 190 Hz on inserts | ≤ 0.5 / ≤ 1.0 |
 | Rear arm (arm 2, mirror arm 3), PETG only | root block + Ø40 at the motor | as front, no rods | as front | 45 (E) | as front | as front |
 
 ## S. Scan stick (23 Oct 2026; `nox/overseer/scan_stick/scan_stick.md`; C from the run scripts unless tagged; one bolted unit on the pole tip, Spark 23 Oct)
