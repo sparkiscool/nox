@@ -219,3 +219,11 @@ fem: grid (48, 48, 48) = 110,592 elements, 159,159 active dofs; backend direct (
 fem: grid (48, 48, 48) = 110,592 elements, 159,159 active dofs; backend direct (direct estimate 1.5 GB, budget 11.8 GB)
 layout: warm start from a (32, 32, 32) grid (h 3.0): mean x 0.010
 layout: warm start from a (32, 32, 32) grid (h 3.0): mean x 0.010
+it   1 beta    4 J  10.0000 vol 0.0145 (dil 0.0509 g +1.133) grey  4.7% ch 0.100 worst tube to 14 side a 614 139.4s
+it   1 beta    4 J  10.0000 vol 0.0145 (dil 0.0509 g +1.133) grey  4.7% ch 0.100 worst tube to 14 side a 614 139.4s
+it   2 beta    4 J  10.0000 vol 0.0140 (dil 0.0498 g +1.087) grey  4.5% ch 0.100 worst tube to 13 side a 614 133.0s
+it   2 beta    4 J  10.0000 vol 0.0140 (dil 0.0498 g +1.087) grey  4.5% ch 0.100 worst tube to 13 side a 614 133.0s
+it   3 beta    4 J  10.0000 vol 0.0135 (dil 0.0487 g +1.040) grey  4.4% ch 0.100 worst tube to 14 side a 614 138.1s
+it   3 beta    4 J  10.0000 vol 0.0135 (dil 0.0487 g +1.040) grey  4.4% ch 0.100 worst tube to 14 side a 614 138.1s
+it   4 beta    4 J  10.0000 vol 0.0131 (dil 0.0476 g +0.994) grey  4.2% ch 0.100 worst tube to 13 side a 614 141.7s
+it   4 beta    4 J  10.0000 vol 0.0131 (dil 0.0476 g +0.994) grey  4.2% ch 0.100 worst tube to 13 side a 614 141.7s
