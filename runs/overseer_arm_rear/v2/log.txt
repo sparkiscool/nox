@@ -269,3 +269,31 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (96, 40, 32) = 122,880 elements, 204,429 active dofs; backend direct (direct estimate 2.1 GB, budget 11.8 GB)
 fem: grid (96, 40, 32) = 122,880 elements, 204,429 active dofs; backend direct (direct estimate 2.1 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/overseer_arm_rear/v2/ck.npz at it 40, beta 8
+layout: resumed from /home/user/nox/runs/overseer_arm_rear/v2/ck.npz at it 40, beta 8
+it  41 beta    8 J   7.5108 vol 0.1469 (dil 0.2691 g +0.008) grey 11.6% ch 0.100 worst held b1 mz 223 40.3s
+it  41 beta    8 J   7.5108 vol 0.1469 (dil 0.2691 g +0.008) grey 11.6% ch 0.100 worst held b1 mz 223 40.3s
+it  42 beta    8 J   7.8403 vol 0.1451 (dil 0.2668 g -0.001) grey 11.5% ch 0.100 worst held b1 mz 234 38.7s
+it  42 beta    8 J   7.8403 vol 0.1451 (dil 0.2668 g -0.001) grey 11.5% ch 0.100 worst held b1 mz 234 38.7s
+it  43 beta    8 J   7.7273 vol 0.1454 (dil 0.2669 g -0.000) grey 11.5% ch 0.100 worst held b1 mz 231 37.9s
+it  43 beta    8 J   7.7273 vol 0.1454 (dil 0.2669 g -0.000) grey 11.5% ch 0.100 worst held b1 mz 231 37.9s
+it  44 beta    8 J   7.6550 vol 0.1456 (dil 0.2669 g -0.000) grey 11.5% ch 0.100 worst held b1 mz 228 39.1s
+it  44 beta    8 J   7.6550 vol 0.1456 (dil 0.2669 g -0.000) grey 11.5% ch 0.100 worst held b1 mz 228 39.1s
+it  45 beta    8 J   7.5938 vol 0.1458 (dil 0.2669 g -0.000) grey 11.5% ch 0.100 worst held b1 mz 227 39.3s
+it  45 beta    8 J   7.5938 vol 0.1458 (dil 0.2669 g -0.000) grey 11.5% ch 0.100 worst held b1 mz 227 39.3s
+it  46 beta    8 J   7.5413 vol 0.1460 (dil 0.2670 g +0.007) grey 11.4% ch 0.100 worst held b1 mz 225 39.4s
+it  46 beta    8 J   7.5413 vol 0.1460 (dil 0.2670 g +0.007) grey 11.4% ch 0.100 worst held b1 mz 225 39.4s
+it  47 beta    8 J   7.8819 vol 0.1444 (dil 0.2651 g -0.001) grey 11.4% ch 0.100 worst held b1 mz 236 39.2s
+it  47 beta    8 J   7.8819 vol 0.1444 (dil 0.2651 g -0.001) grey 11.4% ch 0.100 worst held b1 mz 236 39.2s
+it  48 beta    8 J   7.8136 vol 0.1446 (dil 0.2651 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 235 37.3s
+it  48 beta    8 J   7.8136 vol 0.1446 (dil 0.2651 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 235 37.3s
+it  49 beta    8 J   7.7776 vol 0.1447 (dil 0.2652 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 234 39.4s
+it  49 beta    8 J   7.7776 vol 0.1447 (dil 0.2652 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 234 39.4s
+it  50 beta    8 J   7.7480 vol 0.1447 (dil 0.2652 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 233 37.2s
+it  50 beta    8 J   7.7480 vol 0.1447 (dil 0.2652 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 233 37.2s
+it  51 beta    8 J   7.7199 vol 0.1448 (dil 0.2652 g +0.004) grey 11.4% ch 0.100 worst held b1 mz 232 37.8s
+it  51 beta    8 J   7.7199 vol 0.1448 (dil 0.2652 g +0.004) grey 11.4% ch 0.100 worst held b1 mz 232 37.8s
+it  52 beta    8 J   7.9378 vol 0.1438 (dil 0.2639 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 239 38.1s
+it  52 beta    8 J   7.9378 vol 0.1438 (dil 0.2639 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 239 38.1s
+it  53 beta    8 J   7.8998 vol 0.1439 (dil 0.2640 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 238 36.7s
+it  53 beta    8 J   7.8998 vol 0.1439 (dil 0.2640 g -0.000) grey 11.4% ch 0.100 worst held b1 mz 238 36.7s
