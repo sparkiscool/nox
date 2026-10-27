@@ -223,3 +223,23 @@ it  38 beta   32 J   0.6323 vol 0.2229 (dil 0.3766 g -0.001) grey  3.0% ch 0.100
 it  38 beta   32 J   0.6323 vol 0.2229 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst cage crash 3 [0.0, -1.0, 0.0 12.5 42.6s
 it  39 beta   32 J   0.5283 vol 0.2225 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.5 42.9s
 it  39 beta   32 J   0.5283 vol 0.2225 (dil 0.3766 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.5 42.9s
+it  40 beta   32 J   0.5245 vol 0.2227 (dil 0.3768 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.5 44.3s
+it  40 beta   32 J   0.5245 vol 0.2227 (dil 0.3768 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.5 44.3s
+it  41 beta   32 J   0.5332 vol 0.2232 (dil 0.3769 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.4 59.4s
+it  41 beta   32 J   0.5332 vol 0.2232 (dil 0.3769 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.4 59.4s
+it  42 beta   32 J   0.5228 vol 0.2229 (dil 0.3770 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.4 55.0s
+it  42 beta   32 J   0.5228 vol 0.2229 (dil 0.3770 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.4 55.0s
+it  43 beta   32 J   0.5219 vol 0.2234 (dil 0.3770 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.3 53.3s
+it  43 beta   32 J   0.5219 vol 0.2234 (dil 0.3770 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.3 53.3s
+it  44 beta   32 J   0.5206 vol 0.2232 (dil 0.3769 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.3 71.6s
+it  44 beta   32 J   0.5206 vol 0.2232 (dil 0.3769 g -0.001) grey  3.0% ch 0.100 worst tie b3 my 12.3 71.6s
+it  45 beta   32 J   0.5188 vol 0.2236 (dil 0.3771 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.3 51.4s
+it  45 beta   32 J   0.5188 vol 0.2236 (dil 0.3771 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.3 51.4s
+it  46 beta   32 J   0.5177 vol 0.2238 (dil 0.3772 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.3 66.7s
+it  46 beta   32 J   0.5177 vol 0.2238 (dil 0.3772 g +0.000) grey  3.0% ch 0.100 worst tie b3 my 12.3 66.7s
+it  47 beta   32 J   0.5176 vol 0.2237 (dil 0.3770 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.3 53.6s
+it  47 beta   32 J   0.5176 vol 0.2237 (dil 0.3770 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.3 53.6s
+it  48 beta   32 J   0.5170 vol 0.2238 (dil 0.3770 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.2 60.2s
+it  48 beta   32 J   0.5170 vol 0.2238 (dil 0.3770 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.2 60.2s
+it  49 beta   32 J   0.5165 vol 0.2238 (dil 0.3770 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.2 59.7s
+it  49 beta   32 J   0.5165 vol 0.2238 (dil 0.3770 g -0.000) grey  3.0% ch 0.100 worst tie b3 my 12.2 59.7s
