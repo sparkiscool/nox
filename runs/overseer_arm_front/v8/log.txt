@@ -234,3 +234,85 @@ it   5 beta    4 J   3.6557 vol 0.0646 (dil 0.1599 g -0.012) grey 16.6% ch 0.100
 it   5 beta    4 J   3.6557 vol 0.0646 (dil 0.1599 g -0.012) grey 16.6% ch 0.100 worst tie b9 mx 2.19e+05 81.6s
 it   6 beta    4 J   1.9668 vol 0.0626 (dil 0.1587 g -0.042) grey 16.6% ch 0.100 worst tie b9 mx 1.12e+05 81.4s
 it   6 beta    4 J   1.9668 vol 0.0626 (dil 0.1587 g -0.042) grey 16.6% ch 0.100 worst tie b9 mx 1.12e+05 81.4s
+it   7 beta    4 J   1.1294 vol 0.0665 (dil 0.1627 g -0.018) grey 17.1% ch 0.100 worst tie b18 mx 6.16e+04 81.0s
+it   7 beta    4 J   1.1294 vol 0.0665 (dil 0.1627 g -0.018) grey 17.1% ch 0.100 worst tie b18 mx 6.16e+04 81.0s
+it   8 beta    4 J   0.7735 vol 0.0677 (dil 0.1634 g -0.014) grey 17.2% ch 0.100 worst tie b18 mx 4.25e+04 79.5s
+it   8 beta    4 J   0.7735 vol 0.0677 (dil 0.1634 g -0.014) grey 17.2% ch 0.100 worst tie b18 mx 4.25e+04 79.5s
+=== overseer_arm_front: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_front: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
+  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
+  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
+overseer_arm_front: grid (128, 48, 32) h 2.0 = 196,608 cells; design 66,255 (530.0 cm3), drawn 5,366, void 124,987
+  dropped 17 envelope speck cell(s) off the main body
+  insert rod 0: 564 cells, modulus x22.0
+  insert rod 1: 564 cells, modulus x22.0
+  insert rod 2: 564 cells, modulus x22.0
+  insert rod 3: 564 cells, modulus x22.0
+  support default: 401 cells, 1014 nodes
+  support bosses: 148 cells, 465 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_front: grid (64, 24, 16) h 4.0 = 24,576 cells; design 7,772 (497.4 cm3), drawn 649, void 16,155
+  insert rod 0: 91 cells, modulus x17.0
+  insert rod 1: 91 cells, modulus x17.0
+  insert rod 2: 91 cells, modulus x17.0
+  insert rod 3: 91 cells, modulus x17.0
+  support default: no cell centre in the region at h 4.0; using the 60 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 60 cells, 170 nodes
+  support bosses: 8 cells, 49 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (56.19 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (56.19 cm3); 4.35 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.078 of 7,840 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.078 of 7,840 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (2.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.9% of passive cells differ): no symmetry
+layout: 28 drawn bodies (878 cells), held solid in every realization; eroded filter: masked
+layout: 28 drawn bodies (878 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (103 cells) count by their cover; 15 bodies tied to body 27
+layout: gate ties: held bodies thinner than 2.0 mm (103 cells) count by their cover; 15 bodies tied to body 27
+layout: 53 load cases + 96 tie cases (16 bodies tied, 1 held by support 'default') + 90 gate ties + 0 held ties
+layout: 53 load cases + 96 tie cases (16 bodies tied, 1 held by support 'default') + 90 gate ties + 0 held ties
+fem: grid (64, 24, 16) = 24,576 elements, 33,627 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+fem: grid (64, 24, 16) = 24,576 elements, 33,627 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/overseer_arm_front/v8/coarse_ck.npz at it 75, beta 4 (already stopped: beta_stop)
+layout: resumed from /home/user/nox/runs/overseer_arm_front/v8/coarse_ck.npz at it 75, beta 4 (already stopped: beta_stop)
+layout: beta 4 done: eroded design 12 bodies, main 45.5%; drawn bodies outside the main body: 7
+layout: beta 4 done: eroded design 12 bodies, main 45.5%; drawn bodies outside the main body: 7
+coarse stage done: 75 iterations, 66 s, peak 2.267792 GB
+coarse stage done: 75 iterations, 66 s, peak 2.267792 GB
+overseer_arm_front: grid (128, 48, 32) h 2.0 = 196,608 cells; design 66,255 (530.0 cm3), drawn 5,366, void 124,987
+  dropped 17 envelope speck cell(s) off the main body
+  insert rod 0: 564 cells, modulus x22.0
+  insert rod 1: 564 cells, modulus x22.0
+  insert rod 2: 564 cells, modulus x22.0
+  insert rod 3: 564 cells, modulus x22.0
+  support default: 401 cells, 1014 nodes
+  support bosses: 148 cells, 465 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (56.76 cm3); 2.69 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (56.76 cm3); 2.69 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.071 of 66,591 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.071 of 66,591 design cells
+layout: WARNING nearly mirrored in y (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (3.2% of passive cells differ): no symmetry
+layout: 25 drawn bodies (7,095 cells), held solid in every realization; eroded filter: masked
+layout: 25 drawn bodies (7,095 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 132 tie cases (22 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 53 load cases + 132 tie cases (22 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (128, 48, 32) = 196,608 elements, 256,353 active dofs; backend direct (direct estimate 2.8 GB, budget 11.8 GB)
+fem: grid (128, 48, 32) = 196,608 elements, 256,353 active dofs; backend direct (direct estimate 2.8 GB, budget 11.8 GB)
+layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.106
+layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.106
+it   1 beta    4 J  10.0000 vol 0.0742 (dil 0.1697 g +0.048) grey 17.9% ch 0.100 worst tie b15 my 5.85e+05 89.4s
+it   1 beta    4 J  10.0000 vol 0.0742 (dil 0.1697 g +0.048) grey 17.9% ch 0.100 worst tie b15 my 5.85e+05 89.4s
+it   2 beta    4 J   9.7902 vol 0.0648 (dil 0.1591 g -0.017) grey 17.3% ch 0.100 worst tie b15 my 5.74e+05 88.7s
+it   2 beta    4 J   9.7902 vol 0.0648 (dil 0.1591 g -0.017) grey 17.3% ch 0.100 worst tie b15 my 5.74e+05 88.7s
+it   3 beta    4 J   9.0826 vol 0.0646 (dil 0.1589 g -0.018) grey 17.1% ch 0.100 worst tie b15 my 5.33e+05 89.7s
+it   3 beta    4 J   9.0826 vol 0.0646 (dil 0.1589 g -0.018) grey 17.1% ch 0.100 worst tie b15 my 5.33e+05 89.7s
+it   4 beta    4 J   6.7023 vol 0.0648 (dil 0.1596 g -0.014) grey 16.7% ch 0.100 worst tie b15 my 3.99e+05 89.0s
+it   4 beta    4 J   6.7023 vol 0.0648 (dil 0.1596 g -0.014) grey 16.7% ch 0.100 worst tie b15 my 3.99e+05 89.0s
