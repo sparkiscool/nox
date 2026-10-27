@@ -247,7 +247,7 @@ One latch + cartridge standard for every pack: the v2 squeeze latch (J) as one m
 
 ## System Overseer: arms (27 Oct 2026, arms system pass on layout v5 / cage v3; script `nox/overseer/arm_topo_v1.py`, page `nox/overseer/arm_view_v1.py`, doc `nox/overseer/arms.md`, runs `runs/overseer_arm_front/`, `runs/overseer_arm_rear/`, pair `runs/overseer_arms/v1/`; C geometry, E loads unless tagged)
 - Plate gap 45 kept (27 Oct, with the core session: its stack + leads reach z ~26.5, Pi 5 on the rear wing to 39.6, its minimum ~32; the arms want ≥ 45; O Arms and hub).
-- Pose (layout v5 `result.json`, C): motors (200.3, ±139.5) front, (-78.7, ±139.5) rear; z 45 motor face = arm top = top plate underside, z 0 bottom plate top; root centre r 66.5 on each 45° diagonal; root centre to motor 179.0 front, 97.8 rear (C).
+- Pose (layout v5 `result.json` on main, C): motors (200.3, ±139.5) front, (-78.7, ±139.5) rear (cage v5, PR 122: 1.6 forward, taken in arms v2); z 45 motor face = arm top = top plate underside, z 0 bottom plate top; root centre r 66.5 on each 45° diagonal; root centre to motor 179.0 front, 97.8 rear (C).
 - Pairs: front and rear differ; each right arm is the mirror of its left (every case is mirror-symmetric). Motor holes are radial slots r 8..9.5 on all four 45° lines, so a mirrored pad takes the X2216 with its leads to the root.
 - Left off v1 (Spark 27 Oct: "ignore the cage nodes on the arms for now"): cage nodes, spokes, L2 brace sockets. The cage pass adds them and the arms rerun; the spoke socket sits off the motor axis (the Ø27 screw pocket under the pad is the key path, open below).
 - Supports: the two plate contact faces of the root (main), and the 4 M3 insert bores alone for the thrust and handling cases (concept review 27 Oct).
