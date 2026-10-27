@@ -153,8 +153,12 @@ def main():
 
     # ---------------- the reserved top slot (no funnel): the landing mechanism's volume, design center
     m = trimesh.creation.box(extents=[412, 403, 114]); m.apply_translation([0, (337 - 66) / 2, (120 + 234) / 2])
-    add("RESERVED: landing mechanism (design center)", "reserved", m, faces=100, role="reserved", material="", mass_g=None, tag="C", owner="design center", version="PR 128 concept",
-        file="nox/box/box-landing.md", note="X ±206, Y −66..337, Z 120..234: V-blocks, tag plate, clamps, tag camera; nothing drawn here yet")
+    add("RESERVED: top mechanism slot (design center)", "reserved", m, faces=100, role="reserved", material="", mass_g=None, tag="C", owner="design center", version="concept F (PR 125)",
+        file="runs/box_catch/bars_concept/summary.md", note="X ±206, Y −66..337, Z 120..234 inside the enclosure; the catch concept F (flat deck, push bars) is not drawn yet")
+    # concept F deck footprint from the parks (summary.md Deck size, C): drone x −355..301 about the catch centre = W Y about Y_C; y ±264 = W X. Height E (cartridges 7.0 above the deck).
+    YC = 167.1; m = trimesh.creation.box(extents=[528, 656, 6]); m.apply_translation([0, YC + (301 - 355) / 2, 111])
+    add("concept F deck footprint 656 x 528 (design center, PR 125)", "reserved", m, faces=100, role="reserved", material="", mass_g=None, tag="C", owner="design center", version="concept F (PR 125, merged)",
+        file="runs/box_catch/bars_concept/summary.md", note="flat deck set by the pad and bar parks: W Y −188..468, X ±264 (C), wider than the enclosure (X ±206, Y −66..337): the parks come in or the top grows; deck height Z 111 is E")
 
     import base64
     with open(os.path.join(a.out, "scene.b64.txt"), "w") as f: f.write(base64.b64encode(blob.bytes()).decode())      # text/plain: the artifact host serves no .bin
