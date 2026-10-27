@@ -371,3 +371,17 @@ it  84 beta   32 J   0.0297 vol 0.0826 (dil 0.1632 g -0.000) grey  1.8% ch 0.100
 it  84 beta   32 J   0.0297 vol 0.0826 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.11e+03 43.0s
 it  85 beta   32 J   0.0296 vol 0.0826 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.11e+03 41.7s
 it  85 beta   32 J   0.0296 vol 0.0826 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.11e+03 41.7s
+it  86 beta   32 J   0.0295 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 42.2s
+it  86 beta   32 J   0.0295 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 42.2s
+it  87 beta   32 J   0.0294 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 40.1s
+it  87 beta   32 J   0.0294 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 40.1s
+it  88 beta   32 J   0.0293 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 40.5s
+it  88 beta   32 J   0.0293 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 40.5s
+it  89 beta   32 J   0.0292 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 42.2s
+it  89 beta   32 J   0.0292 vol 0.0827 (dil 0.1632 g -0.000) grey  1.8% ch 0.100 worst held b1 fy 1.1e+03 42.2s
+layout: stopped (grey) at it 89, beta 32, 3563 s
+layout: stopped (grey) at it 89, beta 32, 3563 s
+layout: beta 32 done: eroded design 7 bodies, main 99.7%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 7 bodies, main 99.7%; drawn bodies outside the main body: 0
+layout done: 3765 s, peak 5.694712 GB
+layout done: 3765 s, peak 5.694712 GB
