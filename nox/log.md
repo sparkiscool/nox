@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (box master, Spark): Nox Ground Unit artifact https://claude.ai/artifact/RX2CexkfhB5UoQHnGTVgCC (`nox/box/ground_unit_page.html`): the whole box to scale, the top slot reserved for the design center's landing mechanism (no funnel), one session per system started (arm, latch, structure v2, electronics v2); owners in current-parts System recheck.
 - 27 Oct (Scout v3, Spark rule via PR 143): the sessions making the Scout's cage parts are listed in `nox/scout/v3/README.md` (electronics mount, design center funnel, the camera mount worker); every cage change goes to each, and each saved part goes into the assembly and the Scout artifact.
 - 27 Oct (rule, Spark): cage sessions keep their parts in sync: every cage change goes to every session making its parts, and the cage artifact is republished with the newest saved parts each time one is saved (CLAUDE.md, docs/sessions.md, review item 15).
 - 27 Oct (Scout v3): DEFAULT for the cage pieces: 6/4 tube on the 39 members the frame model sizes (6.2 sockets), 3.0 on the rest (3.2); the layout keeps 3.0 per the Scout clause until Spark rules (alt: 3.0 everywhere fails every crash case). `runs/scout_frame/v2/`

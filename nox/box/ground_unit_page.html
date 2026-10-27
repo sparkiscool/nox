@@ -1,0 +1,406 @@
+<title>Nox Ground Unit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Source: nox/box/ground_unit_page.html (Nox repo). The master box session republishes it on every change; the data block D below is the only thing that changes.
+   Layout: an engineering sheet. Two scale sections of the box up top, then the system, the five boards (one per system and its session), numbers, parts, decisions, the change log. */
+:root {
+  --bg: #f3f4f2; --paper: #fbfbf9; --ink: #1c2126; --muted: #5d6771; --line: #cfd5d9; --line2: #e4e8ea;
+  --accent: #b5471b; --accent-soft: #f5e1d6;
+  --ok: #2d7a4f; --ok-soft: #dcefe2; --warn: #8a6a14; --warn-soft: #f4ebcf; --bad: #a3322b; --bad-soft: #f6dbd8; --hold: #4f5b66; --hold-soft: #e2e6e9;
+  --scout: #2f6f9f; --scout-soft: #d9e7f2; --over: #6e4fa0; --over-soft: #e6ddf1; --reserve: #b5471b;
+  --display: "Barlow Semi Condensed", "Arial Narrow", sans-serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #15191d; --paper: #1c2126; --ink: #e6e9eb; --muted: #97a3ad; --line: #343c44; --line2: #272e35;
+  --accent: #e0772f; --accent-soft: #3a2415;
+  --ok: #5fc78b; --ok-soft: #173223; --warn: #d8b352; --warn-soft: #33291a; --bad: #e4756c; --bad-soft: #3a1f1d; --hold: #aab4bd; --hold-soft: #2a3239;
+  --scout: #6fb0e0; --scout-soft: #1b2f3f; --over: #b094dc; --over-soft: #2a2140; --reserve: #e0772f; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #15191d; --paper: #1c2126; --ink: #e6e9eb; --muted: #97a3ad; --line: #343c44; --line2: #272e35;
+  --accent: #e0772f; --accent-soft: #3a2415;
+  --ok: #5fc78b; --ok-soft: #173223; --warn: #d8b352; --warn-soft: #33291a; --bad: #e4756c; --bad-soft: #3a1f1d; --hold: #aab4bd; --hold-soft: #2a3239;
+  --scout: #6fb0e0; --scout-soft: #1b2f3f; --over: #b094dc; --over-soft: #2a2140; --reserve: #e0772f; color-scheme: dark }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 22px 48px; display: grid; gap: 26px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font: 600 12px/1.2 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 700 40px/1 var(--display); margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+h2 { font: 600 22px/1.15 var(--display); margin: 0 0 10px; letter-spacing: 0; }
+h3 { font: 600 17px/1.2 var(--display); margin: 0; }
+.lede { max-width: 72ch; margin: 0; color: var(--muted); }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font: 500 12px/1 var(--mono); padding: 6px 9px; border-radius: 4px; border: 1px solid var(--line); background: var(--paper); white-space: nowrap; }
+.pill b { font-weight: 500; color: var(--muted); margin-right: 4px; }
+.st { font: 600 11px/1 var(--mono); letter-spacing: 0.06em; padding: 4px 7px; border-radius: 3px; display: inline-block; vertical-align: middle; }
+.st.ok { background: var(--ok-soft); color: var(--ok); } .st.warn { background: var(--warn-soft); color: var(--warn); } .st.bad { background: var(--bad-soft); color: var(--bad); }
+.st.hold { background: var(--hold-soft); color: var(--hold); } .st.res { background: var(--accent-soft); color: var(--accent); }
+.st.scout { background: var(--scout-soft); color: var(--scout); } .st.over { background: var(--over-soft); color: var(--over); }
+section.sheet { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 18px 20px; }
+.draws { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.draw { min-width: 0; }
+.draw figure { margin: 0; border: 1px solid var(--line2); border-radius: 4px; background: var(--bg); overflow-x: auto; }
+.draw svg { display: block; width: 100%; height: auto; max-width: 100%; }
+.draw figcaption { font: 13px/1.45 var(--body); color: var(--muted); padding: 8px 10px; border-top: 1px solid var(--line2); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font: 12px/1.3 var(--mono); color: var(--muted); margin-top: 8px; }
+.legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 2px; margin-right: 6px; vertical-align: -2px; background: var(--sw); border: 1px solid var(--line); }
+.system ol { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; max-width: 80ch; }
+.seq { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 14px; }
+.seq div { border: 1px solid var(--line2); border-radius: 4px; padding: 8px 10px; background: var(--bg); font-size: 13.5px; min-width: 0; }
+.seq div b { display: block; font: 600 13px/1.2 var(--display); color: var(--accent); margin-bottom: 3px; }
+.boards { display: grid; gap: 14px; }
+.board { border: 1px solid var(--line); border-radius: 6px; background: var(--paper); padding: 14px 16px; display: grid; gap: 10px; }
+.board.reserved { border-color: var(--reserve); border-style: dashed; }
+.board header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.board header .own { font: 12px/1.3 var(--mono); color: var(--muted); margin-left: auto; }
+.board header .own a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--accent-soft); }
+.parts { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.parts th, .parts td { text-align: left; vertical-align: top; padding: 5px 8px 5px 0; border-top: 1px solid var(--line2); }
+.parts th { font: 600 11px/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+.parts td.n { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tbl-wrap { overflow-x: auto; }
+.next { font-size: 14px; } .next b { font-weight: 600; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.two > * { min-width: 0; }
+table.num { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+table.num td, table.num th { padding: 5px 8px 5px 0; border-top: 1px solid var(--line2); vertical-align: top; text-align: left; }
+table.num th { font: 600 11px/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border-top: 0; }
+table.num td.v { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tag { font: 500 10.5px/1 var(--mono); padding: 2px 5px; border-radius: 3px; background: var(--hold-soft); color: var(--hold); margin-left: 5px; }
+ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 5px; font-size: 14px; }
+.log { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.log li { display: grid; grid-template-columns: 150px 1fr; gap: 12px; font-size: 14px; border-top: 1px solid var(--line2); padding-top: 8px; }
+.log li time { font: 500 12px/1.5 var(--mono); color: var(--muted); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 860px) { .draws, .two { grid-template-columns: 1fr; } h1 { font-size: 32px; } .log li { grid-template-columns: 1fr; gap: 2px; } .board header .own { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Nox · box · master view · <span id="updated"></span></div>
+  <h1>Nox Ground Unit</h1>
+  <p class="lede">The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved: the landing mechanism is being designed by the design center. There is no funnel any more.</p>
+  <div class="pills" id="pills"></div>
+</header>
+
+<section class="sheet">
+  <h2>The box to scale (W frame: X across, Y along the axle, Z up)</h2>
+  <div class="draws">
+    <div class="draw"><figure><svg id="xsec" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Section across the axle"></svg><figcaption>Section across the axle, looking along Y. The nine bays sit round the axle at R 113 (C), the drone at the top. Enclosure 418 wide x 470 tall (C). The hatched band is the reserved top slot.</figcaption></figure></div>
+    <div class="draw"><figure><svg id="ysec" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Section along the axle"></svg><figcaption>Section along the axle, looking along X. Mast and electronics at the rear, hub and rails on the stub, every pack gripped on the common grip line Y 167.1 (C). The front sheet is the service door (DEFAULT).</figcaption></figure></div>
+  </div>
+  <div class="legend">
+    <span style="--sw: var(--over-soft)">Overseer bay / pack</span><span style="--sw: var(--scout-soft)">Scout bay / pack</span><span style="--sw: var(--accent-soft)">reserved: landing mechanism (design center)</span><span style="--sw: var(--hold-soft)">arm envelope (hub, motors, rail disc)</span><span style="--sw: var(--line2)">electronics, mast, enclosure</span>
+  </div>
+</section>
+
+<section class="sheet system">
+  <h2>What it is</h2>
+  <ol id="system"></ol>
+  <h3 style="margin-top: 16px">One swap (E, drone seated to leaving)</h3>
+  <div class="seq" id="seq"></div>
+</section>
+
+<div class="boards" id="boards"></div>
+
+<div class="two">
+  <section class="sheet"><h2>Numbers that shape the box</h2><div class="tbl-wrap"><table class="num"><thead><tr><th>What</th><th>Value</th><th>Where</th></tr></thead><tbody id="numbers"></tbody></table></div></section>
+  <section class="sheet"><h2>Bought parts</h2><div id="buy"></div></section>
+</div>
+
+<div class="two">
+  <section class="sheet"><h2>Decisions Spark can revert</h2><ul class="plain" id="decisions"></ul></section>
+  <section class="sheet"><h2>Change log (newest first)</h2><ul class="log" id="log"></ul></section>
+</div>
+</div>
+
+<script>
+// ---------- DATA: the only block the master session edits on an update ----------
+const D = {
+  updated: "27 Oct 2026, 02:10 PT",
+  master: "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X",
+  pills: [
+    ["enclosure", "418 x 409 x 470 mm, 80.4 L (C / E)"],
+    ["bays", "9 at 30°, R 113 (C): 4 Overseer + 5 Scout"],
+    ["structure", "38 PETG pieces + 8 TPU feet, 5144 g (M, cut PR 113)"],
+    ["arm", "~2900 g (E)"], ["electronics + PSU", "~2000 g (E)"],
+    ["top", "RESERVED: landing mechanism, design center"],
+  ],
+  W: { X_IN: 206, Y_BACK: -66, Y_FRONT: 337, FLOOR: -236, Z_TOP: 234, R: 113, Y_C: 167.1, sheet: 3 },
+  bays: [ [30, "scout"], [0, "overseer"], [-30, "scout"], [-60, "overseer"], [-90, "scout"], [-120, "overseer"], [-150, "scout"], [-180, "overseer"], [-210, "scout"] ],
+  rec: { scout: { r: [115.6, 170.1], Y: [110.3, 215.9], w: 42, mount: 167.1 }, overseer: { r: [113.2, 184.7], Y: [75.3, 259.0], w: 66.8, mount: 181.8 } },
+  arm: { hub: { r: 88, Y: [7, 74] }, motors: { r: 106.5, Y: [2, 50] }, rail: { r: 151, Y: [38, 73] }, lane: { r: 159, Zmin: 89 }, mast: { X: [-72, 72], Y: [-70, 10], Z: [-233, 127] } },
+  elec: { PSU: { X: [42, 157], Y: [-66, -36], Z: [-170, 45] }, charger: { X: [-162, -44], Y: [-66, -7], Z: [-200, -29] }, boards: { Y: [-66, -36], Z: [-210, 90] } },
+  top: { Z: [120, 234], swapHole: [209.6, 106.2], note: "RESERVED: landing mechanism (design center, PR 128)" },
+  system: [
+    "<b>Top: the landing mechanism (reserved).</b> The design center is designing it (PR 128 concept: three feet hung from each drone's shared bottom ring land in three V-blocks on the box top, a kinematic coupling that centres to 0.0 mm from ±30 mm off; an AprilTag on the cartridge bottom is the landing gate; a clamp over each foot holds the drone for the swap). The funnel panels, funnel hub and hook latch are superseded. This page draws the slot and nothing in it.",
+    "<b>Keep-alive:</b> the drone stays powered through the swap (13.0 V CC 3.0 A, box electronics); the probes move from the funnel panels to the landing's front blocks onto pads on the feet (concept).",
+    "<b>Swap wheel under the top, vertical like a ferris wheel:</b> a fixed printed stub on the mast, the hub turning on two 6010 bearings, 9 bays at 30° round it at R 113 (C): Overseer at 0 / −60 / −120 / −180, Scout at 30 / −30 / −90 / −150 / −210 (DEFAULT), the drone at the top in the 120° opening.",
+    "<b>Every cartridge long side along the axle,</b> gripped on the common grip line Y 167.1 (C) by one of two heads on the arm (rack and pinion carriages on rails to r 151, spring-closed grabber blades, one servo cam opens them, the grip holds unpowered). XT60 at the closed end: insert 60 N, pull 50 N (E).",
+    "<b>One latch standard for every pack</b> (Scout 4S 1500, Overseer 4S 6000): cartridge + sliders, the receiver block in the drone and in every bay, the XT60 on a float carrier (±2.37° / ±1.06°).",
+    "<b>Charging in the bays</b> through each bay's XT60; 2 live bays on a dual-channel charger (DEFAULT iCharger 456DUO class, MODBUS to the Pi), the rest bench-charged until Spark decides on channels.",
+    "<b>Structure:</b> one floor-standing PETG body from a 3000 cm³ system topology, cut into 38 pieces + 8 TPU feet (PR 113): mast + stub face, rear frame round the boards, top frame, bay bodies with the receiver inserts, hub links. Clear sheets are clip-on cladding; the front sheet is the service door.",
+    "<b>Electronics on the rear sheet:</b> LRS-350-24, fuse box, E-stop on the motion branch, Pi 4 + PCA9685 + INA226s, SKR (Klipper) for the 3 NEMA17, 3 DPDT brake relays that short each motor when unpowered, 296 W peak (E).",
+  ],
+  seq: [
+    ["1 before", "head A pulls a charged pack from its bay and parks; head B waits open under the seat"],
+    ["2 land", "drone lands on the top mechanism, is centred and held; keep-alive makes"],
+    ["3 pull", "head B rises, grabs the dead pack's tabs, pulls the XT60 apart (50 N, E) and retracts"],
+    ["4 turn", "wheel turns 90°: head A at the top (axle driver on for every insert and pull)"],
+    ["5 insert", "head A pushes the charged pack home: lead-ins centre it, XT60 mates (60 N, E), latch bolts drop in"],
+    ["6 go", "hold releases, spin-up, the drone leaves through the top"],
+    ["7 park", "wheel turns, head B drops the dead pack into its bay; charging starts"],
+  ],
+  boards: [
+    { id: "top", name: "Top: landing mechanism", state: ["res", "RESERVED"], reserved: true,
+      owner: ["design center session", "https://claude.ai/code/session_01EtHMZMB13ed4juqR8ktuXy"],
+      parts: [
+        ["V-blocks x3, tag plate, foot clamps, upward tag camera, keep-alive probes (box side)", "concept v1", ["warn", "CONCEPT"], "PR 128 open; sim 100 % capture to ±30 mm (E)", "runs/landing/v1-concept/"],
+        ["Feet x3 + AprilTag on the cartridge bottom (drone side, shared)", "concept v1", ["warn", "CONCEPT"], "requirements to the Overseer, Scout and latch sessions", "nox/box/box-landing.md"],
+        ["Catch concept D (posts into a shared rim)", "concept", ["hold", "ALT"], "PR 125 open, the alternative weighed", "nox/box/catch_posts_concept.py"],
+        ["Funnel panels A + B v7 / v9 plain, probe caps", "v9 plain", ["hold", "SUPERSEDED"], "READY files stay in print/, do not print", "nox/box/box-funnel.md"],
+        ["Hook latch housings + plungers v2", "v2", ["hold", "SUPERSEDED"], "READY files stay in print/, do not print", "nox/box/box-hook-latch.md"],
+      ],
+      next: "<b>Design center:</b> the concept check on PR 128 vs PR 125, then the system pass on the box top (V-blocks, tag plate, clamps; landing 6 g at the feet, swap pull 50 N, hand lift 100 N), then its pieces. The structure session carries its interface in the top frame as DEFAULT until it merges. <b>This page only reserves the slot.</b>",
+      visuals: [["Box landing v1", "https://claude.ai/artifact/Nh3LqpJzkExyn8Vsk2C3Uw"], ["Catch concepts", "https://claude.ai/artifact/F5b6L8uScqbaDSsXPXTSmz"]] },
+    { id: "arm", name: "Swap arm", state: ["warn", "DESIGN"],
+      owner: ["arm session", "https://claude.ai/code/session_01EtHMZNRLY3ruhuLzMZPL9D"],
+      parts: [
+        ["Hub v7", "v7", ["ok", "BUILT"], "solid PASS, 213.3 g (M); swap 0.524 (F) at a corner = strike 1; corner check next", "PR 111"],
+        ["Heads A / B v7 (carriage, head body, grabber)", "v7", ["warn", "DESIGN"], "paused 24 Oct at ckpt 17 on part/heads-v7; the arm session resumes it", "box/box-arm.md v7"],
+        ["Pinion16 v3 x2, detent ring v4, detent arm v3", "v3 / v4 / v3", ["warn", "DESIGN"], "solid PASS, 3.7 / 8.7 / 3.3 g (M); READY after the assembled recheck with hub v7", "runs/arm_pinion16/v3, runs/detent/v6"],
+        ["Rails A / B v5", "v5", ["warn", "DESIGN"], "solid PASS, 56.5 g each (M); READY after the same recheck", "runs/arm_rail/v5"],
+        ["V-wheels v1 x6, eccentric bushes v1 x2", "v1", ["warn", "DESIGN"], "2.8 / 0.8 g (M); brake required for both packs (625ZZ 1.34 / 2.80 unbraked, E)", "runs/arm_vwheel/v1"],
+        ["Stub v3, sun post v1", "v3 / v1", ["warn", "DESIGN"], "47.7 / 30.4 g (C); READY when the mast tilt passes (cut reads 0.32 mrad F vs ≤ 10)", "arm_cad.stub()"],
+        ["Idler ends v3, fingers v4, heads v5, hub v5 set", "old", ["hold", "SUPERSEDED"], "kept for history, do not print", ""],
+      ],
+      next: "Heads v7 to solid PASS; the hub v7 corner check; the assembled recheck at Y 167.1 that moves the pieces to READY; stub v3 recheck against the v2 mast.",
+      visuals: [["Hub v7 system pass", "https://claude.ai/artifact/RaBgZMUzC9PBK6gHi5waDJ"], ["Heads v7 grabber", "https://claude.ai/artifact/JWnuGJqAAvRXxATL5hyBya"], ["Arm v7 alternatives", "https://claude.ai/artifact/F7cY19HjCUZFY53HUB5k6d"]] },
+    { id: "latch", name: "Battery latch (one standard for every pack)", state: ["warn", "DESIGN"],
+      owner: ["latch session", "https://claude.ai/code/session_01EtHMZMkaQBx4ntdsV5jwR6"],
+      parts: [
+        ["Scout set: cartridge v7, TPU skids v2 + strips, sliders v6 x2, receiver v3 + XT60 carrier v2 + lid, TPU end pieces", "v7 / v6 / v3", ["hold", "HOLD"], "165.3 g per drone set, 157.1 per bay set (M); 6 sets; solid PASS on all 11; HOLD until the Scout v3 pass reads fit 0", "runs/battery_latch/v4"],
+        ["Overseer set: cartridge v6, sliders v6 x2, receiver v2 (66.8 wide) + carrier v1 + lid, TPU strips", "v6 / v2", ["warn", "DESIGN"], "338.5 g per set (M); 5 sets; solid PASS on all 6; open: mount bolts past the cartridge rail zone", "runs/battery_latch/v4"],
+        ["Cartridge bottom tag plate (landing gate), keep-alive pads on the feet", "new", ["warn", "TO DRAW"], "from the landing concept (requirements to the latch)", "nox/box/box-landing.md"],
+      ],
+      next: "Overseer receiver mount bolts; the tag plate and pads; the Scout set to READY once the Scout v3 bottom passes (receiver bolts (−41.7 / 43.25, ±25.6), M3 x 35 DEFAULT).",
+      visuals: [["Battery latch v1", "https://claude.ai/artifact/MX2dpRcjHegntjHvqp6U8x"]] },
+    { id: "structure", name: "Box structure v2 (stand, bay bodies, enclosure, feet)", state: ["warn", "DESIGN"],
+      owner: ["structure session", "https://claude.ai/code/session_01EtHMZMp1XAMtMif3KyT5Xq"],
+      parts: [
+        ["Layout v2: 9 bays at R 113, grip line 167.1, enclosure 418 x 409 x 470", "v2", ["ok", "CONCEPT PASS"], "fit 0.0 mm³, access 18 / 18 (E / M); alternatives B (bottom Overseer) and C (R 128) weighed", "runs/box_system/v2/layout"],
+        ["System topology round 2: one floor-standing body, 3000 cm³", "r2", ["ok", "RUN"], "3886 g generated (E); stub tilt 0.41 mrad, bay rotation 1.8 mrad (M on h 8)", "runs/box_system/v2/topo_r2"],
+        ["The cut: mast x3, rear frame x4, top frame x4 + bridge, bay bodies 5 + 8 halves, hub links x6, feet (38 PETG + 8 TPU)", "v2 cut", ["bad", "REVIEW FAIL"], "PR 113: 5144 g (M), stub 0.32 mrad, worst piece 0.34, solid PASS 38 / 38; 9 joints over the aim, receiver bosses off by Z_T, rear strip not clear", "runs/box_system/v2/cut"],
+        ["Top frame interface to the landing mechanism", "v2", ["res", "RESERVED"], "the 8 funnel seat landings are out; V-blocks, tag plate and clamps per the design center", ""],
+        ["v1 demo: mast v6, cradle_keel v6, kb v7b, toe v7b, bar_half v8, frames, posts, brackets, bay modules v4i", "v1", ["hold", "SUPERSEDED"], "system FAIL 24 Oct (stub 15.1 mrad F); files in print/, do not print", "runs/box_system/v1"],
+      ],
+      next: "Fix the cut's review findings on the new top, rerun the system FE, write the piece requirements, then every piece run to solid PASS and READY; sheets' cut list for R 113.",
+      visuals: [["Box v2 layouts", "https://claude.ai/artifact/Mn5JGDkjEGSQXyPhjqrpxb"], ["Layout assembly 3D", "https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp"], ["Box v2 topology", "https://claude.ai/artifact/1JYZSHTs8E6Y2jHTnyAZAs"], ["The cut and system FE", "https://claude.ai/artifact/FzJg3vz6Z8UnnUaerm5h3p"]] },
+    { id: "elec", name: "Box electronics", state: ["warn", "DESIGN v1"],
+      owner: ["electronics session", "https://claude.ai/code/session_01EtHMZL5a6fGTAzBc42XPEF"],
+      parts: [
+        ["Supply + distribution: LRS-350-24, IEC inlet, 6-way fuse box, E-stop on the motion branch", "v1", ["ok", "DESIGNED"], "296 W peak (E); PSU selector to 115 V", "box/box-electronics.md"],
+        ["Box computer + I/O: Pi 4, PCA9685, 4 x INA226, ADS1115 + halls, SKR Mini E3 (Klipper)", "v1", ["ok", "DESIGNED"], "to buy (parts-list rows)", "box/box-electronics.md"],
+        ["Keep-alive 13.0 V CC 3.0 A (K1) and seat sense", "v1", ["warn", "MOVES"], "was on the funnel panel pins; goes to the landing's probes and pads (v2)", ""],
+        ["Head brake: 3 DPDT relays, boot self-test", "v1", ["ok", "DESIGNED"], "required by the arm; bench drop before the first Overseer swap (~930 g, creep ≤ ~25 mm/s E)", "box-electronics.md Head brake"],
+        ["Live bays: 2 on a dual-channel charger (K2 / K3)", "v1", ["warn", "CHECK"], "MODBUS map and non-balance mode to check before buying", ""],
+        ["Hook latch servo channel (4 x MG90S)", "v1", ["hold", "SUPERSEDED"], "replaced by the foot clamps' actuators (v2)", ""],
+      ],
+      next: "Electronics v2 on the landing interface (probes, clamps, tag camera, seat sense), boards re-placed round the rear frame, the charger decision, the buy list with a cart link.",
+      visuals: [["Box electronics v1", "https://claude.ai/artifact/BbTuWGQWy9RxmPjQNRDt9q"]] },
+  ],
+  numbers: [
+    ["Bay radius R (every receiver's flat bottom)", "113 mm", "C", "dimensions I, System box swap: arm"],
+    ["Common grip line Y_C (= every drone's catch centre)", "167.1 mm", "C", "System box structure (v2 layout)"],
+    ["Bays", "9 at 30°: Overseer 0 / −60 / −120 / −180, Scout 30 / −30 / −90 / −150 / −210", "DEFAULT", "runs/box_system/v2/layout"],
+    ["Enclosure outer / volume", "418 x 409 x 470 mm / 80.4 L", "C / E", "System box structure"],
+    ["Sheets inner faces", "X ±206, Y −66..337, Z −236..234", "C", "layout.json"],
+    ["Structure mass (cut, 38 PETG + 8 TPU)", "5144 g", "M", "PR 113"],
+    ["Stub face tilt at a 60 N insert", "0.32 mrad (limit ≤ 10)", "F / C", "PR 113; arm round 3d"],
+    ["Bay rotation about the axle vs the stub", "2.58 mrad (limit 2.6 = ±0.15°)", "F / C", "PR 113"],
+    ["XT60 insert / pull-out / head stall", "60 / 50 / 74 N", "E", "dimensions I XT60 mate"],
+    ["Arm envelopes: hub / motors / rail disc / insert lane", "r 88 Y 7..74 / r 106.5 Y 2..50 / r 151 Y 38..73 / r ≤ 159, Z ≥ 89", "C", "System box swap: arm"],
+    ["Receiver spans on the grip line", "Scout Y 110.3..215.9, Overseer 75.3..259.0", "M", "latch_ctx_export.py"],
+    ["Swap hole in the top (landing concept)", "209.6 x 106.2 (receiver + 15 a side)", "C", "System box landing (PR 128)"],
+    ["Landing capture (sim)", "100 % to ±30 mm, ±5° yaw, drift 0.15 m/s; seat 0.0 mm", "E", "runs/landing/v1-concept"],
+    ["Electronics peak", "296 W", "E", "box_electronics.py"],
+    ["Drones (context)", "Scout v3 730 g, Overseer v5 3215 g", "E", "System Scout v3 / Overseer v5"],
+  ],
+  buy: {
+    onhand: ["NEMA17 x3", "BTT SKR Mini E3 V3", "Mean Well LRS-350-24", "DS3218 servo", "6010-2RS x2", "2040 extrusion, brackets, T-nuts", "GT2 20T pulleys, belt connectors, idlers", "heat-set inserts, M3 / M5 hardware", "arm harness wire"],
+    ordered: ["MG995 x2 (15 Oct, arrival not recorded)", "GT2 80T pulley", "GT2 belt 2 m", "12-wire slip ring (not used)"],
+    tobuy: ["625ZZ x12, 623ZZ x1, GT2 16T, M5 shims x6, DIN 988 shims x2 (arm)", "XT60E1-M x3 (drone + 2 live bays)", "Pi 4 + microSD, GPIO HAT, PCA9685, INA226 x4 + R010 shunts, ADS1115 + DRV5055 halls", "XL4016 bucks x2, 5.1 V 5 A buck, 3 x DPDT relays + ULN2003A, 4-ch relay board", "fuse box + fuses, IEC C14 inlet, E-stop, charger (after the MODBUS check)"],
+    hold: ["MG90S x4, M2 screws, A3144 halls (hook latch): superseded by the landing", "brass probe pins, springs, leads (funnel v9): superseded by the landing"],
+  },
+  decisions: [
+    "<b>Top mechanism:</b> landing v1 (three feet in three V-blocks, PR 128) is the design center's DEFAULT; concept D (posts into a shared rim, PR 125) is the alternative. The funnel is out.",
+    "<b>Bay set:</b> Overseer at 0 / −60 / −120 / −180, Scout at the other five (DEFAULT); alt the arm's set (Overseer 30 / −30 / −90 / −150) or the 4 bottom slots at R 128.",
+    "<b>Grip line Y_C 167.1</b> (latch v4's longer Overseer lead end); alts 138 (37 shorter box) or 175.",
+    "<b>Sheets are clip-on cladding,</b> the structure stands on the floor alone (DEFAULT); alt 3 mm acrylic carrying load (not run). Front sheet = service door.",
+    "<b>Charger:</b> 2 live bays on one dual-channel charger; more channels or a relay mux after DubHacks (Spark).",
+    "<b>Head brake bench drop</b> before the first Overseer swap; strength and XT60 force tests dropped (assumed numbers).",
+  ],
+  log: [
+    ["27 Oct 02:10 PT", "The four part sessions restarted with the repo attached (the first four had none, archived); owner links updated."],
+    ["27 Oct 02:05 PT", "Page created by the box master session. Top slot reserved for the design center's landing mechanism (no funnel; panels v7 / v9 and the hook latch superseded, files kept). Four part sessions started: swap arm, battery latch, structure v2, electronics v2. Every merged box PR lands here as one line."],
+  ],
+};
+
+// ---------- rendering ----------
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+document.getElementById("updated").textContent = "updated " + D.updated;
+$("pills").innerHTML = D.pills.map(([k, v]) => `<span class="pill"><b>${esc(k)}</b>${esc(v)}</span>`).join("");
+$("system").innerHTML = D.system.map(s => `<li>${s}</li>`).join("");
+$("seq").innerHTML = D.seq.map(([h, t]) => `<div><b>${esc(h)}</b>${esc(t)}</div>`).join("");
+$("boards").innerHTML = D.boards.map(b => `
+  <section class="board${b.reserved ? " reserved" : ""}" id="b-${b.id}">
+    <header><h3>${esc(b.name)}</h3><span class="st ${b.state[0]}">${esc(b.state[1])}</span>
+      <span class="own">owner: <a href="${b.owner[1]}" target="_blank" rel="noopener">${esc(b.owner[0])}</a></span></header>
+    <div class="tbl-wrap"><table class="parts"><thead><tr><th>Part</th><th>Version</th><th>State</th><th>Numbers and notes</th><th>Where</th></tr></thead>
+    <tbody>${b.parts.map(p => `<tr><td>${esc(p[0])}</td><td class="n">${esc(p[1])}</td><td><span class="st ${p[2][0]}">${esc(p[2][1])}</span></td><td>${esc(p[3])}</td><td class="n">${esc(p[4])}</td></tr>`).join("")}</tbody></table></div>
+    <p class="next"><b>Next:</b> ${b.next}</p>
+    ${b.visuals && b.visuals.length ? `<p class="next" style="color: var(--muted)">Pictures: ${b.visuals.map(v => `<a href="${v[1]}" target="_blank" rel="noopener">${esc(v[0])}</a>`).join(" · ")}</p>` : ""}
+  </section>`).join("");
+$("numbers").innerHTML = D.numbers.map(n => `<tr><td>${esc(n[0])}</td><td class="v">${esc(n[1])}<span class="tag">${esc(n[2])}</span></td><td style="color: var(--muted); font-size: 12.5px">${esc(n[3])}</td></tr>`).join("");
+$("buy").innerHTML = [["On hand", D.buy.onhand, "ok"], ["Ordered", D.buy.ordered, "warn"], ["To buy", D.buy.tobuy, "bad"], ["Hold, superseded", D.buy.hold, "hold"]].map(([h, l, c]) =>
+  `<p style="margin: 10px 0 4px"><span class="st ${c}">${h}</span></p><ul class="plain">${l.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`).join("");
+$("decisions").innerHTML = D.decisions.map(d => `<li>${d}</li>`).join("");
+$("log").innerHTML = D.log.map(([t, s]) => `<li><time>${esc(t)}</time><span>${esc(s)}</span></li>`).join("");
+
+// ---------- drawings ----------
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs, text) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
+function hatch(svg, id, color) {
+  const defs = el("defs", {}); const p = el("pattern", { id, width: 8, height: 8, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" });
+  p.appendChild(el("line", { x1: 0, y1: 0, x2: 0, y2: 8, stroke: color, "stroke-width": 1.2 })); defs.appendChild(p); svg.appendChild(defs);
+}
+const W = D.W, S = 0.78; // px per mm
+const deg = Math.PI / 180;
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+function drawX() {
+  const svg = $("xsec"); const x0 = W.X_IN + W.sheet, zTop = 330, zBot = W.FLOOR - 30;
+  const PW = (2 * x0 + 130) * S, PH = (zTop - zBot + 40) * S; svg.setAttribute("viewBox", `0 0 ${PW} ${PH}`);
+  const cx = 65 * S + x0 * S, cz = (zTop + 20) * S; const X = (x) => cx + x * S, Z = (z) => cz - z * S;
+  hatch(svg, "hx", css("--reserve")); hatch(svg, "hg", css("--muted"));
+  const ink = css("--ink"), muted = css("--muted"), line = css("--line"), line2 = css("--line2"), hold = css("--hold-soft");
+  const g = (a) => { const e = el("g", a); svg.appendChild(e); return e; };
+  // floor
+  svg.appendChild(el("line", { x1: X(-x0 - 40), y1: Z(W.FLOOR), x2: X(x0 + 40), y2: Z(W.FLOOR), stroke: muted, "stroke-width": 1.5 }));
+  svg.appendChild(el("rect", { x: X(-x0 - 40), y: Z(W.FLOOR), width: (2 * x0 + 80) * S, height: 6, fill: "url(#hg)" }));
+  // enclosure (sheets)
+  svg.appendChild(el("rect", { x: X(-x0), y: Z(W.Z_TOP), width: 2 * x0 * S, height: (W.Z_TOP - W.FLOOR) * S, fill: "none", stroke: ink, "stroke-width": 2 }));
+  svg.appendChild(el("rect", { x: X(-W.X_IN), y: Z(W.Z_TOP), width: 2 * W.X_IN * S, height: (W.Z_TOP - W.FLOOR) * S, fill: "none", stroke: line, "stroke-width": 1 }));
+  // mast (behind, at Y -70..10) and electronics (rear)
+  const m = D.arm.mast; svg.appendChild(el("rect", { x: X(m.X[0]), y: Z(m.Z[1]), width: (m.X[1] - m.X[0]) * S, height: (m.Z[1] - m.Z[0]) * S, fill: line2, stroke: line, "stroke-dasharray": "4 3" }));
+  svg.appendChild(el("text", { x: X(0), y: Z(-215), "text-anchor": "middle", fill: muted, "font-size": 10, "font-family": "monospace" }, "mast + stub face (Y −70..10, behind the wheel)"));
+  for (const [k, b] of Object.entries(D.elec)) { if (!b.X) continue; svg.appendChild(el("rect", { x: X(b.X[0]), y: Z(b.Z[1]), width: (b.X[1] - b.X[0]) * S, height: (b.Z[1] - b.Z[0]) * S, fill: "url(#hg)", stroke: line, opacity: 0.6 })); svg.appendChild(el("text", { x: X((b.X[0] + b.X[1]) / 2), y: Z(b.Z[1]) - 3, "text-anchor": "middle", fill: muted, "font-size": 10, "font-family": "monospace" }, k + " (rear sheet)")); }
+  // arm envelopes
+  svg.appendChild(el("circle", { cx: X(0), cy: Z(0), r: D.arm.rail.r * S, fill: "none", stroke: muted, "stroke-dasharray": "5 4" }));
+  svg.appendChild(el("circle", { cx: X(0), cy: Z(0), r: D.arm.motors.r * S, fill: hold, stroke: "none", opacity: 0.8 }));
+  svg.appendChild(el("circle", { cx: X(0), cy: Z(0), r: D.arm.hub.r * S, fill: hold, stroke: muted }));
+  svg.appendChild(el("circle", { cx: X(0), cy: Z(0), r: 25 * S, fill: "none", stroke: ink, "stroke-width": 1.5 }));
+  svg.appendChild(el("text", { x: X(0), y: Z(-8), "text-anchor": "middle", fill: ink, "font-size": 11, "font-family": "monospace" }, "stub Ø50"));
+  svg.appendChild(el("text", { x: X(0), y: Z(-60), "text-anchor": "middle", fill: muted, "font-size": 10, "font-family": "monospace" }, "hub r 88 · motors r 106.5"));
+  svg.appendChild(el("text", { x: X(0), y: Z(-D.arm.rail.r - 10), "text-anchor": "middle", fill: muted, "font-size": 10, "font-family": "monospace" }, "rail disc r 151"));
+  // R 113 circle
+  svg.appendChild(el("circle", { cx: X(0), cy: Z(0), r: W.R * S, fill: "none", stroke: css("--accent"), "stroke-dasharray": "2 4", "stroke-width": 1 }));
+  // bays
+  for (const [a, pack] of D.bays) {
+    const r = D.rec[pack], col = css(pack === "scout" ? "--scout" : "--over"), soft = css(pack === "scout" ? "--scout-soft" : "--over-soft");
+    const r0 = W.R - 1, r1 = r.mount + 12, h = 13 * deg, th = a * deg;
+    const p = (rr, t) => `${X(rr * Math.cos(t))},${Z(rr * Math.sin(t))}`;
+    svg.appendChild(el("path", { d: `M${p(r0, th - h)} A${r0 * S} ${r0 * S} 0 0 1 ${p(r0, th + h)} L${p(r1, th + h)} A${r1 * S} ${r1 * S} 0 0 0 ${p(r1, th - h)} Z`, fill: soft, stroke: col, "stroke-width": 1, opacity: 0.9 }));
+    // cartridge end-on
+    const gg = el("g", { transform: `translate(${X(0)} ${Z(0)}) rotate(${-a})` });
+    gg.appendChild(el("rect", { x: r.r[0] * S, y: -r.w / 2 * S, width: (r.r[1] - r.r[0]) * S, height: r.w * S, fill: col, opacity: 0.75, rx: 2 }));
+    svg.appendChild(gg);
+    const lr = r1 + 16; svg.appendChild(el("text", { x: X(lr * Math.cos(th)), y: Z(lr * Math.sin(th)) + 4, "text-anchor": "middle", fill: col, "font-size": 10.5, "font-family": "monospace", "font-weight": 600 }, `${pack === "scout" ? "S" : "O"} ${a}°`));
+  }
+  // drone seat at the top (90°): receiver of the drone + the reserved slot
+  const t = D.top; svg.appendChild(el("rect", { x: X(-W.X_IN), y: Z(t.Z[1]), width: 2 * W.X_IN * S, height: (t.Z[1] - t.Z[0]) * S, fill: "url(#hx)", stroke: css("--reserve"), "stroke-dasharray": "6 4", "stroke-width": 1.5 }));
+  const ro = D.rec.overseer, rs = D.rec.scout;
+  svg.appendChild(el("rect", { x: X(-ro.w / 2), y: Z(ro.r[1]), width: ro.w * S, height: (ro.r[1] - ro.r[0]) * S, fill: css("--over"), opacity: 0.75, rx: 2 }));
+  svg.appendChild(el("rect", { x: X(-rs.w / 2), y: Z(rs.r[1]), width: rs.w * S, height: (rs.r[1] - rs.r[0]) * S, fill: "none", stroke: css("--scout"), "stroke-dasharray": "3 2" }));
+  svg.appendChild(el("text", { x: X(ro.w / 2 + 8), y: Z(150), fill: ink, "font-size": 10.5, "font-family": "monospace" }, "drone receiver (seat)"));
+  // swap hole mark
+  svg.appendChild(el("line", { x1: X(-t.swapHole[1] / 2), y1: Z(t.Z[1] + 4), x2: X(t.swapHole[1] / 2), y2: Z(t.Z[1] + 4), stroke: ink, "stroke-width": 2 }));
+  svg.appendChild(el("text", { x: X(0), y: Z(t.Z[1] + 9), "text-anchor": "middle", fill: ink, "font-size": 10, "font-family": "monospace" }, `swap hole ${t.swapHole[1]} x ${t.swapHole[0]} (concept)`));
+  // reserved label
+  const lab = el("text", { x: X(-W.X_IN + 10), y: Z(t.Z[1]) + 16, fill: css("--reserve"), "font-size": 12, "font-family": "monospace", "font-weight": 700 }, "RESERVED · landing mechanism (design center)");
+  svg.appendChild(lab);
+  // drone silhouette above (no numbers: the drones' own pages carry them)
+  const dz = t.Z[1] + 20; const path = `M${X(-205)},${Z(dz + 30)} Q${X(-190)},${Z(dz + 85)} ${X(0)},${Z(dz + 92)} Q${X(190)},${Z(dz + 85)} ${X(205)},${Z(dz + 30)} Q${X(120)},${Z(dz + 4)} ${X(0)},${Z(dz + 2)} Q${X(-120)},${Z(dz + 4)} ${X(-205)},${Z(dz + 30)} Z`;
+  svg.appendChild(el("path", { d: path, fill: "none", stroke: muted, "stroke-dasharray": "5 4", "stroke-width": 1.2 }));
+  svg.appendChild(el("text", { x: X(0), y: Z(dz + 55), "text-anchor": "middle", fill: muted, "font-size": 11, "font-family": "monospace" }, "drone on its shared bottom ring (not to scale)"));
+  for (const fx of [-150, 150]) svg.appendChild(el("circle", { cx: X(fx), cy: Z(dz - 4), r: 4, fill: css("--reserve") }));
+  svg.appendChild(el("text", { x: X(-150), y: Z(dz + 14), "text-anchor": "middle", fill: css("--reserve"), "font-size": 10, "font-family": "monospace" }, "feet (concept)"));
+  // dimensions
+  const dimY = Z(W.FLOOR) + 26; svg.appendChild(el("line", { x1: X(-x0), y1: dimY, x2: X(x0), y2: dimY, stroke: ink, "marker-end": "none" }));
+  svg.appendChild(el("text", { x: X(0), y: dimY - 4, "text-anchor": "middle", fill: ink, "font-size": 11, "font-family": "monospace" }, `${(2 * x0).toFixed(0)} outer (C) · floor Z −236`));
+  const dimX = X(x0) + 22 * S; svg.appendChild(el("line", { x1: dimX, y1: Z(W.Z_TOP), x2: dimX, y2: Z(W.FLOOR), stroke: ink }));
+  svg.appendChild(el("text", { x: dimX + 4, y: Z(0), fill: ink, "font-size": 11, "font-family": "monospace", transform: `rotate(90 ${dimX + 4} ${Z(0)})`, "text-anchor": "middle" }, "470 outer (C)"));
+  svg.appendChild(el("line", { x1: X(0), y1: Z(0), x2: X(W.R * Math.cos(-45 * deg)), y2: Z(W.R * Math.sin(-45 * deg)), stroke: css("--accent"), "stroke-width": 1 }));
+  svg.appendChild(el("text", { x: X(W.R * 0.5 * Math.cos(-45 * deg)) + 6, y: Z(W.R * 0.5 * Math.sin(-45 * deg)), fill: css("--accent"), "font-size": 11, "font-family": "monospace", "font-weight": 600 }, "R 113 (C)"));
+}
+
+function drawY() {
+  const svg = $("ysec"); const yb = W.Y_BACK - W.sheet, yf = W.Y_FRONT + W.sheet, zTop = 330, zBot = W.FLOOR - 30;
+  const PW = (yf - yb + 110) * S, PH = (zTop - zBot + 40) * S; svg.setAttribute("viewBox", `0 0 ${PW} ${PH}`);
+  const oy = 50 * S - yb * S, cz = (zTop + 20) * S; const Y = (y) => oy + y * S, Z = (z) => cz - z * S;
+  hatch(svg, "hy", css("--reserve")); hatch(svg, "hg2", css("--muted"));
+  const ink = css("--ink"), muted = css("--muted"), line = css("--line"), line2 = css("--line2"), hold = css("--hold-soft");
+  svg.appendChild(el("line", { x1: Y(yb - 40), y1: Z(W.FLOOR), x2: Y(yf + 40), y2: Z(W.FLOOR), stroke: muted, "stroke-width": 1.5 }));
+  svg.appendChild(el("rect", { x: Y(yb - 40), y: Z(W.FLOOR), width: (yf - yb + 80) * S, height: 6, fill: "url(#hg2)" }));
+  svg.appendChild(el("rect", { x: Y(yb), y: Z(W.Z_TOP), width: (yf - yb) * S, height: (W.Z_TOP - W.FLOOR) * S, fill: "none", stroke: ink, "stroke-width": 2 }));
+  svg.appendChild(el("rect", { x: Y(W.Y_BACK), y: Z(W.Z_TOP), width: (W.Y_FRONT - W.Y_BACK) * S, height: (W.Z_TOP - W.FLOOR) * S, fill: "none", stroke: line }));
+  // boards band, PSU, charger
+  const e = D.elec; svg.appendChild(el("rect", { x: Y(e.boards.Y[0]), y: Z(e.boards.Z[1]), width: (e.boards.Y[1] - e.boards.Y[0]) * S, height: (e.boards.Z[1] - e.boards.Z[0]) * S, fill: "url(#hg2)", stroke: line, opacity: 0.6 }));
+  svg.appendChild(el("rect", { x: Y(e.PSU.Y[0]), y: Z(e.PSU.Z[1]), width: (e.PSU.Y[1] - e.PSU.Y[0]) * S, height: (e.PSU.Z[1] - e.PSU.Z[0]) * S, fill: line2, stroke: line }));
+  svg.appendChild(el("rect", { x: Y(e.charger.Y[0]), y: Z(e.charger.Z[1]), width: (e.charger.Y[1] - e.charger.Y[0]) * S, height: (e.charger.Z[1] - e.charger.Z[0]) * S, fill: line2, stroke: line }));
+  svg.appendChild(el("text", { x: Y(-50), y: Z(100), fill: muted, "font-size": 10, "font-family": "monospace", transform: `rotate(-90 ${Y(-50)} ${Z(100)})`, "text-anchor": "end" }, "rear sheet: boards, PSU, charger"));
+  // mast
+  const m = D.arm.mast; svg.appendChild(el("rect", { x: Y(m.Y[0]), y: Z(m.Z[1]), width: (m.Y[1] - m.Y[0]) * S, height: (m.Z[1] - m.Z[0]) * S, fill: line2, stroke: ink }));
+  svg.appendChild(el("text", { x: Y(-30), y: Z(-150), fill: ink, "font-size": 10.5, "font-family": "monospace", transform: `rotate(-90 ${Y(-30)} ${Z(-150)})`, "text-anchor": "middle" }, "mast + stub face"));
+  // hub, motors, rail disc
+  const a = D.arm;
+  svg.appendChild(el("rect", { x: Y(a.rail.Y[0]), y: Z(a.rail.r), width: (a.rail.Y[1] - a.rail.Y[0]) * S, height: 2 * a.rail.r * S, fill: "none", stroke: muted, "stroke-dasharray": "5 4" }));
+  svg.appendChild(el("rect", { x: Y(a.motors.Y[0]), y: Z(a.motors.r), width: (a.motors.Y[1] - a.motors.Y[0]) * S, height: 2 * a.motors.r * S, fill: hold, opacity: 0.8 }));
+  svg.appendChild(el("rect", { x: Y(a.hub.Y[0]), y: Z(a.hub.r), width: (a.hub.Y[1] - a.hub.Y[0]) * S, height: 2 * a.hub.r * S, fill: hold, stroke: muted }));
+  svg.appendChild(el("line", { x1: Y(-70), y1: Z(0), x2: Y(a.hub.Y[1] + 10), y2: Z(0), stroke: ink, "stroke-width": 1.5 }));
+  svg.appendChild(el("text", { x: Y(a.hub.Y[0] + 2), y: Z(-a.hub.r - 10), fill: muted, "font-size": 10, "font-family": "monospace" }, "hub Y 7..74 · rail disc Y 38..73"));
+  svg.appendChild(el("text", { x: Y(a.hub.Y[1] + 14), y: Z(-3), fill: ink, "font-size": 10.5, "font-family": "monospace" }, "axle"));
+  // top bay (drone) and bottom bay (-90, Scout)
+  const ro = D.rec.overseer, rs = D.rec.scout;
+  const t = D.top; svg.appendChild(el("rect", { x: Y(W.Y_BACK), y: Z(t.Z[1]), width: (W.Y_FRONT - W.Y_BACK) * S, height: (t.Z[1] - t.Z[0]) * S, fill: "url(#hy)", stroke: css("--reserve"), "stroke-dasharray": "6 4", "stroke-width": 1.5 }));
+  svg.appendChild(el("rect", { x: Y(ro.Y[0]), y: Z(ro.r[1]), width: (ro.Y[1] - ro.Y[0]) * S, height: (ro.r[1] - ro.r[0]) * S, fill: css("--over"), opacity: 0.75, rx: 2 }));
+  svg.appendChild(el("rect", { x: Y(rs.Y[0]), y: Z(rs.r[1]), width: (rs.Y[1] - rs.Y[0]) * S, height: (rs.r[1] - rs.r[0]) * S, fill: "none", stroke: css("--scout"), "stroke-width": 1.5, "stroke-dasharray": "3 2" }));
+  svg.appendChild(el("text", { x: Y(ro.Y[0]), y: Z(ro.r[1]) - 5, fill: css("--over"), "font-size": 10.5, "font-family": "monospace", "font-weight": 600 }, "Overseer receiver Y 75.3..259.0"));
+  svg.appendChild(el("text", { x: Y(rs.Y[0]), y: Z(rs.r[0]) + 12, fill: css("--scout"), "font-size": 10.5, "font-family": "monospace", "font-weight": 600 }, "Scout receiver Y 110.3..215.9"));
+  svg.appendChild(el("rect", { x: Y(rs.Y[0]), y: Z(-rs.r[0]), width: (rs.Y[1] - rs.Y[0]) * S, height: (rs.r[1] - rs.r[0]) * S, fill: css("--scout"), opacity: 0.75, rx: 2 }));
+  svg.appendChild(el("text", { x: Y(rs.Y[0]), y: Z(-rs.r[1]) + 14, fill: css("--scout"), "font-size": 10.5, "font-family": "monospace" }, "bay −90 (Scout); the other bays at their angles (left)"));
+  // grip line
+  svg.appendChild(el("line", { x1: Y(W.Y_C), y1: Z(-200), x2: Y(W.Y_C), y2: Z(t.Z[1] + 40), stroke: css("--accent"), "stroke-dasharray": "2 4" }));
+  svg.appendChild(el("text", { x: Y(W.Y_C) - 4, y: Z(t.Z[1] + 32), "text-anchor": "end", fill: css("--accent"), "font-size": 11, "font-family": "monospace", "font-weight": 600 }, "grip line Y_C 167.1 (C) = catch centre"));
+  svg.appendChild(el("text", { x: Y(W.Y_BACK) + 6, y: Z(t.Z[1]) + 16, fill: css("--reserve"), "font-size": 12, "font-family": "monospace", "font-weight": 700 }, "RESERVED · landing mechanism · design center"));
+  // drone silhouette
+  const dz = t.Z[1] + 20; const path = `M${Y(-40)},${Z(dz + 30)} Q${Y(0)},${Z(dz + 85)} ${Y(W.Y_C)},${Z(dz + 92)} Q${Y(340)},${Z(dz + 85)} ${Y(380)},${Z(dz + 30)} Q${Y(280)},${Z(dz + 4)} ${Y(W.Y_C)},${Z(dz + 2)} Q${Y(50)},${Z(dz + 4)} ${Y(-40)},${Z(dz + 30)} Z`;
+  svg.appendChild(el("path", { d: path, fill: "none", stroke: muted, "stroke-dasharray": "5 4", "stroke-width": 1.2 }));
+  svg.appendChild(el("text", { x: Y(W.Y_C), y: Z(dz + 55), "text-anchor": "middle", fill: muted, "font-size": 11, "font-family": "monospace" }, "drone (not to scale)"));
+  // front sheet = door
+  svg.appendChild(el("text", { x: Y(W.Y_FRONT) - 6, y: Z(-150), fill: ink, "font-size": 10.5, "font-family": "monospace", transform: `rotate(-90 ${Y(W.Y_FRONT) - 6} ${Z(-150)})`, "text-anchor": "middle" }, "front sheet = service door"));
+  // dims
+  const dimY = Z(W.FLOOR) + 26; svg.appendChild(el("line", { x1: Y(yb), y1: dimY, x2: Y(yf), y2: dimY, stroke: ink }));
+  svg.appendChild(el("text", { x: Y((yb + yf) / 2), y: dimY - 4, "text-anchor": "middle", fill: ink, "font-size": 11, "font-family": "monospace" }, `${(yf - yb).toFixed(0)} outer along the axle (C) · Y −66..337 inside`));
+  svg.appendChild(el("text", { x: Y(yb), y: Z(W.Z_TOP) - 6, fill: ink, "font-size": 11, "font-family": "monospace" }, "rear (Y −)"));
+  svg.appendChild(el("text", { x: Y(yf), y: Z(W.Z_TOP) - 6, "text-anchor": "end", fill: ink, "font-size": 11, "font-family": "monospace" }, "front (Y +)"));
+}
+function drawAll() { $("xsec").innerHTML = ""; $("ysec").innerHTML = ""; drawX(); drawY(); }
+drawAll();
+if (window.matchMedia) { const mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", drawAll); }
+new MutationObserver(drawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>
