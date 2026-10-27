@@ -137,3 +137,50 @@ it  54 beta    4 J   2.5281 vol 0.0996 (dil 0.2059 g -0.001) grey 21.5% ch 0.100
 it  54 beta    4 J   2.5281 vol 0.0996 (dil 0.2059 g -0.001) grey 21.5% ch 0.100 worst held b1 mx 1.82e+03 8.9s
 it  55 beta    4 J   2.4052 vol 0.1002 (dil 0.2059 g -0.001) grey 21.4% ch 0.100 worst held b1 mx 1.72e+03 8.5s
 it  55 beta    4 J   2.4052 vol 0.1002 (dil 0.2059 g -0.001) grey 21.4% ch 0.100 worst held b1 mx 1.72e+03 8.5s
+it  56 beta    4 J   2.3095 vol 0.1006 (dil 0.2059 g +0.030) grey 21.4% ch 0.100 worst held b1 mx 1.65e+03 8.5s
+it  56 beta    4 J   2.3095 vol 0.1006 (dil 0.2059 g +0.030) grey 21.4% ch 0.100 worst held b1 mx 1.65e+03 8.5s
+it  57 beta    4 J   3.0115 vol 0.0954 (dil 0.1994 g -0.003) grey 20.8% ch 0.100 worst held b1 mx 2.18e+03 9.3s
+it  57 beta    4 J   3.0115 vol 0.0954 (dil 0.1994 g -0.003) grey 20.8% ch 0.100 worst held b1 mx 2.18e+03 9.3s
+it  58 beta    4 J   2.8491 vol 0.0961 (dil 0.1998 g -0.001) grey 20.8% ch 0.100 worst held b1 mx 2.04e+03 8.4s
+it  58 beta    4 J   2.8491 vol 0.0961 (dil 0.1998 g -0.001) grey 20.8% ch 0.100 worst held b1 mx 2.04e+03 8.4s
+it  59 beta    4 J   2.7794 vol 0.0963 (dil 0.1999 g -0.000) grey 20.8% ch 0.100 worst held b1 mx 1.99e+03 9.1s
+it  59 beta    4 J   2.7794 vol 0.0963 (dil 0.1999 g -0.000) grey 20.8% ch 0.100 worst held b1 mx 1.99e+03 9.1s
+it  60 beta    4 J   2.7255 vol 0.0965 (dil 0.1999 g -0.000) grey 20.8% ch 0.100 worst held b1 mx 1.95e+03 8.5s
+it  60 beta    4 J   2.7255 vol 0.0965 (dil 0.1999 g -0.000) grey 20.8% ch 0.100 worst held b1 mx 1.95e+03 8.5s
+it  61 beta    4 J   2.6793 vol 0.0967 (dil 0.1999 g +0.019) grey 20.8% ch 0.100 worst held b1 mx 1.91e+03 9.0s
+it  61 beta    4 J   2.6793 vol 0.0967 (dil 0.1999 g +0.019) grey 20.8% ch 0.100 worst held b1 mx 1.91e+03 9.0s
+it  62 beta    4 J   3.1586 vol 0.0936 (dil 0.1959 g -0.002) grey 20.5% ch 0.100 worst held b1 mx 2.28e+03 9.0s
+it  62 beta    4 J   3.1586 vol 0.0936 (dil 0.1959 g -0.002) grey 20.5% ch 0.100 worst held b1 mx 2.28e+03 9.0s
+it  63 beta    4 J   3.0771 vol 0.0939 (dil 0.1962 g -0.000) grey 20.5% ch 0.100 worst held b1 mx 2.21e+03 8.8s
+it  63 beta    4 J   3.0771 vol 0.0939 (dil 0.1962 g -0.000) grey 20.5% ch 0.100 worst held b1 mx 2.21e+03 8.8s
+it  64 beta    4 J   3.0428 vol 0.0940 (dil 0.1962 g -0.000) grey 20.5% ch 0.100 worst held b1 mx 2.18e+03 8.8s
+it  64 beta    4 J   3.0428 vol 0.0940 (dil 0.1962 g -0.000) grey 20.5% ch 0.100 worst held b1 mx 2.18e+03 8.8s
+it  65 beta    4 J   3.0145 vol 0.0940 (dil 0.1962 g -0.000) grey 20.5% ch 0.100 worst held b1 mx 2.16e+03 8.6s
+it  65 beta    4 J   3.0145 vol 0.0940 (dil 0.1962 g -0.000) grey 20.5% ch 0.100 worst held b1 mx 2.16e+03 8.6s
+it  66 beta    4 J   2.9869 vol 0.0941 (dil 0.1962 g +0.011) grey 20.5% ch 0.100 worst held b1 mx 2.14e+03 8.4s
+it  66 beta    4 J   2.9869 vol 0.0941 (dil 0.1962 g +0.011) grey 20.5% ch 0.100 worst held b1 mx 2.14e+03 8.4s
+it  67 beta    4 J   3.2708 vol 0.0924 (dil 0.1940 g -0.001) grey 20.3% ch 0.100 worst held b1 mx 2.34e+03 8.6s
+it  67 beta    4 J   3.2708 vol 0.0924 (dil 0.1940 g -0.001) grey 20.3% ch 0.100 worst held b1 mx 2.34e+03 8.6s
+layout: stopped (beta_stop) at it 67, beta 4, 676 s
+layout: stopped (beta_stop) at it 67, beta 4, 676 s
+layout: beta 4 done: eroded design 9 bodies, main 38.9%; drawn bodies outside the main body: 2
+layout: beta 4 done: eroded design 9 bodies, main 38.9%; drawn bodies outside the main body: 2
+coarse stage done: 67 iterations, 701 s, peak 1.729996 GB
+coarse stage done: 67 iterations, 701 s, peak 1.729996 GB
+overseer_arm_rear: grid (144, 48, 48) h 1.0 = 331,776 cells; design 191,457 (191.5 cm3), drawn 16,969, void 123,350
+  support default: 1020 cells, 2366 nodes
+  support bosses: 693 cells, 1472 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (15.77 cm3); 1.20 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (15.77 cm3); 1.20 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.084 of 192,657 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.084 of 192,657 design cells
+layout: 3 drawn bodies (15,769 cells), held solid in every realization; eroded filter: masked
+layout: 3 drawn bodies (15,769 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 6 tie cases (1 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 32 load cases + 6 tie cases (1 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (144, 48, 48) = 331,776 elements, 673,017 active dofs; backend mg (direct estimate 10.3 GB, budget 11.8 GB)
+fem: grid (144, 48, 48) = 331,776 elements, 673,017 active dofs; backend mg (direct estimate 10.3 GB, budget 11.8 GB)
+fem: multigrid 3 levels [(np.int64(144), np.int64(48), np.int64(48)), (np.int64(72), np.int64(24), np.int64(24)), (np.int64(36), np.int64(12), np.int64(12))], coarsest 18,759 dofs (direct)
+fem: multigrid 3 levels [(np.int64(144), np.int64(48), np.int64(48)), (np.int64(72), np.int64(24), np.int64(24)), (np.int64(36), np.int64(12), np.int64(12))], coarsest 18,759 dofs (direct)
