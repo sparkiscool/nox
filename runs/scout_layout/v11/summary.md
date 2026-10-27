@@ -19,7 +19,8 @@ What changed from `v10/` (PR 131):
 
     | shift | catch | CG in / out (x) | rods |
     |---|---|---|---|
-    | 0 | 6.2 | −1.2 / +1.3 | 50 |
+    | 0 | 7.0 | −1.3 / +1.5 | 47 |
+    | +5 | 6.2 | −1.2 / +1.3 | 50 |
     | +10 | 5.2 | −1.0 / +1.1 | 50 |
     | +15 | 4.8 | −1.0 / +0.9 | 50 |
     | +20 | 4.0 | −0.8 / +0.8 | 50 |
@@ -27,7 +28,7 @@ What changed from `v10/` (PR 131):
     | +30 | 3.2 | −0.7 / +0.7 | 50 |
     | +35 | 3.2 | −0.6 / +0.7 | 58 |
 
-    Shifts +5 and +40 score no better.
+    Shift +40 scores no better.
   - Pack in and pack out land on opposite sides of the thrust centre; the gap between them closes slowly as the bay goes aft, at a cost in length.
   - **Cost:** the whole drone is 387 long (352 with the flat Radxa), 50 rods (+3), 680 g (+7).
 - **Alternative weighed:** the Radxa flat under the UBEC (v11's first push): in the rear wash, CG 2.7. Out.
