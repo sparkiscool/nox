@@ -1,5 +1,7 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms): correction: the front v5b OOM was a sibling box missing /usr/local/lib/libmkl_rt.so.3 (pypardiso failed, fem fell back to splu, 14 GB); fixed there with `pip install --force-reinstall --no-deps mkl`. Threaded Pardiso climbing past 6 GB here was seen only beside another run (M). Front v5c runs single-threaded, done ~09:31..11:03 PDT (E).
+- 27 Oct (Overseer arms): rear v5b: solid FAIL (1.1 collar walls where webs met bare tubes), cage crash 11 1.47 at the shoulder socket off the flange corner, 161 g. v5c (both): full-length 2.5 tube sleeves + flanges spanning root to shoulders. `arm_topo_v5c.py`, picture `runs/overseer_arms/v5c/layout.png`
 - 27 Oct (Overseer arms): front v5b smoke OOM'd (14 GB) on a sibling: threaded MKL Pardiso climbs past 6 GB in the run's early iterations at 240k dofs; MKL_NUM_THREADS=1 holds 3.2 GB (M, probe). Front reruns single-threaded (DEFAULT; alt h 2.5). Engine fix left to a topo session.
 - 27 Oct (Overseer arms): v5 stopped; v5b runs: L2 braces off the front arm (top-plate block, cage session), cage arm_loads.json (rear spoke node 2354 N, front 1013 N, F). Rear on this box, front in a sibling. `nox/overseer/arm_topo_v5b.py`
 - 27 Oct (Overseer arms, system pass after 3 strikes each): rear v4: solid PASS, 96 g, modes 277 Hz, flight 0.09, handling 0.35, cage crash 1.09. v5 front + rear: 6/4 carbon tube chords (bore 6.2, 20 sockets), rear shoulders, solid root, flanges; braces-to-core asked of the cage. `nox/overseer/arm_topo_v5.py`

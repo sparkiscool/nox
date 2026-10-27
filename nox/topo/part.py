@@ -48,7 +48,14 @@ def voxelise(mesh, xs, ys, zs):
     A = np.zeros((len(xs) * len(ys), len(zs)), bool)
     if len(mesh.faces) == 0:
         return A.reshape(len(xs), len(ys), len(zs))
-    loc, ray, _ = mesh.ray.intersects_location(org, np.tile([0, 0, 1.0], (len(org), 1)), multiple_hits=True)
+    # rays in chunks: trimesh's ray test holds every candidate (ray, triangle) pair at once, and a 1M-face organic mesh
+    # under 160k columns ran a 16 GB box out of memory (overseer arm rear v5c, solid check at pitch 0.25)
+    locs, rays = [], []
+    for c0 in range(0, len(org), 20000):
+        o = org[c0:c0 + 20000]
+        l_, r_, _ = mesh.ray.intersects_location(o, np.tile([0, 0, 1.0], (len(o), 1)), multiple_hits=True)
+        locs.append(l_.reshape(-1, 3)); rays.append(np.asarray(r_, int) + c0)
+    loc, ray = np.concatenate(locs), np.concatenate(rays)
     if len(ray):
         order = np.argsort(ray, kind="stable")
         ray = ray[order]
