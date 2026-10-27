@@ -303,3 +303,17 @@ it  40 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000
 it  40 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 81.4s
 it  41 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 82.4s
 it  41 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 82.4s
+it  42 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 82.2s
+it  42 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 82.2s
+it  43 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 79.3s
+it  43 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 79.3s
+it  44 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 84.9s
+it  44 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 84.9s
+it  45 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 91.2s
+it  45 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 91.2s
+it  46 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 83.6s
+it  46 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 83.6s
+it  47 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 85.9s
+it  47 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 85.9s
+it  48 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 82.4s
+it  48 beta    8 J  10.0000 vol 0.0030 (dil 0.0378 g +0.584) grey  0.7% ch 0.000 worst tube to 14 side a 614 82.4s
