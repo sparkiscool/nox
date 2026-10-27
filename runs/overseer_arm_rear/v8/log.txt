@@ -206,3 +206,49 @@ it  19 beta    4 J   0.9165 vol 0.1278 (dil 0.2357 g -0.000) grey 20.9% ch 0.100
 it  19 beta    4 J   0.9165 vol 0.1278 (dil 0.2357 g -0.000) grey 20.9% ch 0.100 worst held b1 my 246 62.3s
 it  20 beta    4 J   0.9073 vol 0.1279 (dil 0.2357 g -0.000) grey 20.9% ch 0.100 worst held b1 my 243 63.6s
 it  20 beta    4 J   0.9073 vol 0.1279 (dil 0.2357 g -0.000) grey 20.9% ch 0.100 worst held b1 my 243 63.6s
+=== overseer_arm_rear: h 1.5, generated 30.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_rear: h 1.5, generated 30.0 cm3, min member 3.2 mm, cores 4
+overseer_arm_rear: grid (104, 56, 32) h 1.5 = 186,368 cells; design 76,091 (256.8 cm3), drawn 11,325, void 98,952
+  dropped 72 envelope speck cell(s) off the main body
+  insert rod 0: 552 cells, modulus x22.9
+  insert rod 1: 552 cells, modulus x22.9
+  insert rod 2: 552 cells, modulus x22.9
+  insert rod 3: 552 cells, modulus x22.9
+  support default: 704 cells, 1704 nodes
+  support bosses: 275 cells, 780 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_rear: grid (104, 56, 32) h 1.5 = 186,368 cells; design 76,091 (256.8 cm3), drawn 11,325, void 98,952
+  dropped 72 envelope speck cell(s) off the main body
+  insert rod 0: 552 cells, modulus x22.9
+  insert rod 1: 552 cells, modulus x22.9
+  insert rod 2: 552 cells, modulus x22.9
+  insert rod 3: 552 cells, modulus x22.9
+  support default: 704 cells, 1704 nodes
+  support bosses: 275 cells, 780 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (43.38 cm3); 2.01 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (43.38 cm3); 2.01 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.124 of 76,684 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.124 of 76,684 design cells
+layout: WARNING nearly mirrored in y (7.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (7.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (5.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (5.9% of passive cells differ): no symmetry
+layout: 16 drawn bodies (12,852 cells), held solid in every realization; eroded filter: masked
+layout: 16 drawn bodies (12,852 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 72 tie cases (12 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 53 load cases + 72 tie cases (12 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (104, 56, 32) = 186,368 elements, 302,487 active dofs; backend direct (direct estimate 3.5 GB, budget 11.8 GB)
+fem: grid (104, 56, 32) = 186,368 elements, 302,487 active dofs; backend direct (direct estimate 3.5 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox-rear5/runs/overseer_arm_rear/v8/ck.npz at it 20, beta 4
+layout: resumed from /home/user/nox-rear5/runs/overseer_arm_rear/v8/ck.npz at it 20, beta 4
+it  21 beta    4 J   0.8998 vol 0.1280 (dil 0.2357 g +0.010) grey 20.9% ch 0.100 worst held b1 my 240 89.0s
+it  21 beta    4 J   0.8998 vol 0.1280 (dil 0.2357 g +0.010) grey 20.9% ch 0.100 worst held b1 my 240 89.0s
+it  22 beta    4 J   0.9527 vol 0.1258 (dil 0.2332 g -0.001) grey 20.8% ch 0.100 worst held b1 my 255 90.9s
+it  22 beta    4 J   0.9527 vol 0.1258 (dil 0.2332 g -0.001) grey 20.8% ch 0.100 worst held b1 my 255 90.9s
+it  23 beta    4 J   0.9410 vol 0.1261 (dil 0.2333 g -0.000) grey 20.8% ch 0.100 worst held b1 my 251 90.7s
+it  23 beta    4 J   0.9410 vol 0.1261 (dil 0.2333 g -0.000) grey 20.8% ch 0.100 worst held b1 my 251 90.7s
+it  24 beta    4 J   0.9357 vol 0.1262 (dil 0.2333 g -0.000) grey 20.7% ch 0.100 worst held b1 my 249 90.9s
+it  24 beta    4 J   0.9357 vol 0.1262 (dil 0.2333 g -0.000) grey 20.7% ch 0.100 worst held b1 my 249 90.9s
