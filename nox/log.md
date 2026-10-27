@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms): front v5d 228 g: solid PASS, strength 0.62 (cage crash 6), rods OK, modes 131 Hz vertical / 162 lateral (target 190): third front strike, back to the system pass. DEFAULT front v6: carbon space frame (4 x 6/4 chords + 12 x 3.0 Warren diagonals, sides, top, bottom; modal what-if 193..200 Hz on v5d's mass); alt: accept 131 Hz (in the 1P band).
 - 27 Oct (Overseer arms): rear v5d READY: solid PASS, 187 g (M), modes 435 Hz, flight 0.04, handling 0.16, blow 0.11, cage crash 11 0.94 at the top plate corner (joint), 0.77 in the arm (generous target 0.5 missed in that case, reported). `print/overseer_arm_rear_v5d.stl` + `_mirror.stl`.
 - 27 Oct (Overseer arms): front v5c 228 g: strength PASS (worst 0.62, cage crash 6), solid FAIL only at the blind tip socket walls (1.58), same as rear; front v5d (tip caps) runs in the sibling. Build OOM fixed by the voxelise chunking.
 - 27 Oct (Overseer arms): rear v5c 174 g: solid FAIL (1.58 walls at the blind tip sockets); crash 11 1.10 at the top plate corner (joint), 1.01 in the arm; modes 418 Hz; rods OK. v5d: 2.5 tip caps, rear gen 50. `arm_topo_v5d.py`
