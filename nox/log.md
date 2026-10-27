@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (rule, Spark): "Saved parts go into their system as CAD" replaces the cage-sync line: the turn a part is saved its mesh replaces its placeholder in the system assembly and the system artifact is republished (CLAUDE.md, `docs/generative.md` Save and print, `docs/sessions.md`, review item 15).
 - 27 Oct (Overseer): head mount v4 (run/head_mount-v4) solid FAIL: 8 voxel specks where each drawn socket boss ended on its bore floor. `head_mount.py` socket gets a 3.0 solid floor (FLOOR, as the cage nodes, DEFAULT); the v4 mesh plus the new drawn passes solid_check (C). v5 run next (strike 3) (alt: ream the floors on the mesh, not allowed)
 - 27 Oct (Scout v3, Spark): every rod 3.0, sockets 3.2 (6/4 sizing dropped; crash fails accepted, rods are the fuse); FC on top of the plate; camera mount v2 by topology (worker). Rows: dimensions Rods, Strength; current-parts; v12 summary.
 - 27 Oct (Scout v3): Scout artifact v24 (Spark: no visible part updates): the other sessions' parts now stand out, saved teal (camera mount v1), concepts amber (belly v1, tail block, carrier), listed first, plus "camera mount" and "belly" views (`layout_v3_view.py`).
