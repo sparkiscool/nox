@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): L2 brace roots low in the tower (core session DEFAULT: halves its worst root force): lo (97, ±26, 12), hi (97, ±14, 18) (C); fit 0, props 16.4, access 21/21; head 155 Hz PETG, worst shell tube 2.33 (F on E). Head rerun waits for the core's hub deck to pass (the roots may still move).
 - 27 Oct (Overseer): cage node v3 runs gave disconnected nodes (eroded design 4-5 bodies, sockets outside the main one); fix in the design: a drawn Ø7 arm from each socket floor to a Ø12 hub at the node centre, one body by construction (`cage_node.py` ARM_R, HUB_R); drawn 11.1 g node 2, 20.1 g node 18 (C, PETG). Node runs restart.
 - 27 Oct (Overseer): L2 brace roots on the hub deck's front tower between the plates (core v3 B: braces pull, keels push in one piece; the top-plate block put 0.8 kN on PETG keys in a 1.6 plate): lo (97, ±26, 22), hi (97, ±14, 32) (C); props 16.4, access 21/21, fit 0; head 166 Hz PETG (F on E), braces ~710 N a side. Head run v3.
 - 27 Oct (Overseer): brace tube ends forward of the top plate edge so the core block's bore wall clears the plate (core session): lo (57, ±26, 50), hi (53, ±14, 50) (C); props 13.3, access 21/21, block 1066 N a side (F); axis change < 0.1°, head v2 run kept.

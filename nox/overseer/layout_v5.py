@@ -178,7 +178,7 @@ HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the
 # the motor (offset from the motor axis point, y mirrored), the L2 braces end inside the front beam (lo / hi z), so the arm top prints flat
 ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
-BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 22.0, "hi": 32.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels (core v3, B: the braces pull and the keels push in one piece; 27 Oct, the core session; was a top-plate block (57 / 53, ±26 / ±14, z 50), alt: head 198 Hz)
+BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120

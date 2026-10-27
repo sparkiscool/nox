@@ -11,7 +11,7 @@ system_check Overseer: PASS
     motor 1: min margin 82.95 mm, outside openings 82.95, slack 79.95 at +Z
     prop 1: min margin 25.77 mm, outside openings 25.77, slack 22.77 at (+0.46, +0.88, -0.11)
     motor 2: min margin 63.2 mm, outside openings 63.2, slack 60.2 at +Z
-    prop 2: min margin 31.35 mm, outside openings 31.35, slack 28.35 at (-0.19, +0.06, +0.98)
+    prop 2: min margin 31.36 mm, outside openings 31.36, slack 28.36 at (-0.19, +0.06, +0.98)
     motor 3: min margin 66.25 mm, outside openings 66.25, slack 63.25 at +Z
     prop 3: min margin 30.86 mm, outside openings 30.86, slack 27.86 at (-0.56, -0.83, +0.07)
     motor 4: min margin 81.51 mm, outside openings 81.51, slack 78.51 at +Z
@@ -20,16 +20,16 @@ system_check Overseer: PASS
   compact: bbox 116.156 L (E), hull 69.291 L (E), extents [771.0, 675.1, 223.2] mm (E), largest 771.0 mm, guards {'shell tubes to prop disks, 3D (G)': 20.3}
   fit PASS (tol 0.5 mm³):
     cage shell tubes / cage shell nodes: 32247.84 mm³ (E) limit inf contact [manifold3d]
-    cage shell tubes / spokes, ties, keels, braces, head struts: 8880.81 mm³ (E) limit inf contact [manifold3d]
+    cage shell tubes / spokes, ties, keels, braces, head struts: 8913.03 mm³ (E) limit inf contact [manifold3d]
     cage shell tubes / sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them): 0.0 mm³ (E) limit inf contact [manifold3d]
-    cage shell nodes / spokes, ties, keels, braces, head struts: 6530.65 mm³ (E) limit inf contact [manifold3d]
+    cage shell nodes / spokes, ties, keels, braces, head struts: 6530.66 mm³ (E) limit inf contact [manifold3d]
     cage shell nodes / sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them): 0.0 mm³ (E) limit inf contact [manifold3d]
-    spokes, ties, keels, braces, head struts / sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them): 529.41 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, braces, head struts / sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them): 535.62 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, keels, braces, head struts / bottom plate: 52.29 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, keels, braces, head struts / belly sled + pods: 240.11 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, keels, braces, head struts / arm 1: 25.53 mm³ (E) limit inf contact [manifold3d]
-    spokes, ties, keels, braces, head struts / arm 2: 887.91 mm³ (E) limit inf contact [manifold3d]
-    spokes, ties, keels, braces, head struts / arm 3: 887.91 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, braces, head struts / arm 2: 887.74 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, braces, head struts / arm 3: 887.74 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, keels, braces, head struts / arm 4: 25.53 mm³ (E) limit inf contact [manifold3d]
     TPU feet / belly sled + pods: 0.0 mm³ (E) limit inf contact [aabb]
     sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them) / Unitree L2: 0.02 mm³ (E) limit inf contact [manifold3d]
@@ -63,10 +63,10 @@ system_check Overseer: PASS
     arm 2 / motor 2: 0.0 mm³ (E) limit inf contact [aabb]
     arm 3 / motor 3: 0.0 mm³ (E) limit inf contact [aabb]
     arm 4 / motor 4: 0.0 mm³ (E) limit inf contact [aabb]
-  mass 3209.35 g (E), CG [66.3, -0.17, 18.72], offset [-0.1, -0.17, -63.28] = 63.28 mm from [66.397, 0.0, 82.0]
+  mass 3209.51 g (E), CG [66.31, -0.17, 18.67], offset [-0.1, -0.17, -63.33] = 63.33 mm from [66.408, 0.0, 82.0]
     cage shell tubes: 387.29 g (E) at [57.53, 0.0, 53.87]
     cage shell nodes: 108.0 g (E) at [48.39, 0.0, 49.94]
-    spokes, ties, keels, braces, head struts: 156.62 g (C) at [114.72, 0.0, 19.75]
+    spokes, ties, keels, braces, head struts: 156.78 g (C) at [114.85, 0.0, 18.7]
     TPU feet: 2.46 g (E) at [-30.0, 0.0, -54.5]
     sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them): 98.98 g (E) at [370.49, 0.0, 65.66]
     Unitree L2: 230.0 g (P) at [409.53, 0.0, 44.16]
@@ -81,24 +81,24 @@ system_check Overseer: PASS
     receiver: 186.18 g (E) at [-30.0, 0.0, -28.05]
     belly sled + pods: 32.5 g (E) at [-24.12, -16.48, -12.6]
     flow MTF-02P: 2.0 g (E) at [-15.0, -42.0, -51.25]
-    arm 1: 180.17 g (E) at [122.08, 90.96, 24.35]
-    motor 1: 81.0 g (E) at [205.9, 139.5, 58.0]
-    prop 1: 10.0 g (E) at [205.9, 139.5, 82.0]
+    arm 1: 180.17 g (E) at [122.09, 90.96, 24.35]
+    motor 1: 81.0 g (E) at [205.91, 139.5, 58.0]
+    prop 1: 10.0 g (E) at [205.91, 139.5, 82.0]
     arm 2: 84.03 g (E) at [-57.75, 83.45, 27.94]
-    motor 2: 81.0 g (E) at [-73.1, 139.5, 58.0]
-    prop 2: 10.0 g (E) at [-73.1, 139.5, 82.0]
+    motor 2: 81.0 g (E) at [-73.09, 139.5, 58.0]
+    prop 2: 10.0 g (E) at [-73.09, 139.5, 82.0]
     arm 3: 84.03 g (E) at [-57.75, -83.45, 27.94]
-    motor 3: 81.0 g (E) at [-73.1, -139.5, 58.0]
-    prop 3: 10.0 g (E) at [-73.1, -139.5, 82.0]
-    arm 4: 180.17 g (E) at [122.08, -90.96, 24.35]
-    motor 4: 81.0 g (E) at [205.9, -139.5, 58.0]
-    prop 4: 10.0 g (E) at [205.9, -139.5, 82.0]
+    motor 3: 81.0 g (E) at [-73.09, -139.5, 58.0]
+    prop 3: 10.0 g (E) at [-73.09, -139.5, 82.0]
+    arm 4: 180.17 g (E) at [122.09, -90.96, 24.35]
+    motor 4: 81.0 g (E) at [205.91, -139.5, 58.0]
+    prop 4: 10.0 g (E) at [205.91, -139.5, 82.0]
   balance PASS (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
-    all: 0.2 mm horizontal, -63.28 mm axial, 3209.35 g
-    no_swap: 32.0 mm horizontal, -47.3 mm axial, 2407.02 g (reported, not gated)
-  mass budget (soft): 3209.35 g of 2200.0 g (145.9 %)
-WARN  over budget: total 3209.35 of 2200.0 g (145.9 %)
-  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 641507 surface points):
+    all: 0.2 mm horizontal, -63.33 mm axial, 3209.51 g
+    no_swap: 32.0 mm horizontal, -47.37 mm axial, 2407.18 g (reported, not gated)
+  mass budget (soft): 3209.51 g of 2200.0 g (145.9 %)
+WARN  over budget: total 3209.51 of 2200.0 g (145.9 %)
+  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 641657 surface points):
     edge / flow MTF-02P: 7.07 mm (E) from (-0.68, -0.19, -0.71), axis [0.261, -0.965, 0.001], roll 135.0, lateral 11.1 mm, contact [-15.0, -34.0, -54.5]
     post r10 / flow MTF-02P: 7.07 mm (E) from (-0.68, -0.19, -0.71), axis [0.261, -0.965, 0.001], roll 135.0, lateral 18.6 mm, contact [-8.1, -50.0, -54.5]
     edge / cartridge: 8.49 mm (E) from (-0.70, -0.06, -0.71), axis [-0.089, 0.996, 0.009], roll 225.0, lateral -3.9 mm, contact [-31.4, 0.5, -54.0]
@@ -107,7 +107,7 @@ WARN  over budget: total 3209.35 of 2200.0 g (145.9 %)
     post r10 / receiver: 8.49 mm (E) from (-0.70, -0.06, -0.71), axis [-0.089, 0.996, 0.009], roll 225.0, lateral -24.9 mm, contact [-12.5, 27.0, -54.0]
     edge / prop 4: 16.0 mm (E) from (+0.42, -0.91, +0.00), axis [0.669, 0.312, 0.675], roll 90.0, lateral 30.6 mm, contact [268.6, -249.9, 77.0]
     post r10 / prop 4: 16.46 mm (E) from (+0.42, -0.91, +0.00), axis [0.669, 0.312, 0.675], roll 90.0, lateral 33.6 mm, contact [271.0, -248.5, 77.0]
-    edge / prop 1: 16.75 mm (E) from (+0.38, +0.92, -0.13), axis [-0.404, 0.291, 0.867], roll 105.0, lateral -113.4 mm, contact [262.6, 253.1, 77.7]
+    edge / prop 1: 16.75 mm (E) from (+0.38, +0.92, -0.13), axis [-0.404, 0.291, 0.867], roll 105.0, lateral -120.9 mm, contact [271.0, 248.5, 77.0]
     post r10 / prop 1: 17.0 mm (E) from (+0.53, +0.85, +0.00), axis [-0.752, 0.464, 0.469], roll 90.0, lateral -48.9 mm, contact [268.6, 249.9, 77.0]
     edge / prop 3: 19.65 mm (E) from (-0.26, +0.04, +0.96), axis [0.384, 0.921, 0.067], roll 345.0, lateral -170.4 mm, contact [-199.4, -126.6, 87.0]
     post r10 / prop 3: 19.98 mm (E) from (-0.26, +0.04, +0.96), axis [0.384, 0.921, 0.067], roll 345.0, lateral -162.9 mm, contact [-199.8, -147.8, 87.0]
@@ -145,4 +145,4 @@ WARN  over budget: total 3209.35 of 2200.0 g (145.9 %)
     M3 key, arm 4 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 key, arm 4 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 4 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
-System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm³ (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3209 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.3], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear
+System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm³ (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3210 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.3], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear
