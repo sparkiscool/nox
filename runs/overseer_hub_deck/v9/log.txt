@@ -278,3 +278,37 @@ it  64 beta   32 J  13.7587 vol 0.1878 (dil 0.3046 g -0.000) grey  2.6% ch 0.100
 it  64 beta   32 J  13.7587 vol 0.1878 (dil 0.3046 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.5s
 it  65 beta   32 J  13.7586 vol 0.1878 (dil 0.3046 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.4s
 it  65 beta   32 J  13.7586 vol 0.1878 (dil 0.3046 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.4s
+it  66 beta   32 J  13.7585 vol 0.1878 (dil 0.3046 g +0.001) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.7s
+it  66 beta   32 J  13.7585 vol 0.1878 (dil 0.3046 g +0.001) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.7s
+it  67 beta   32 J  13.7585 vol 0.1875 (dil 0.3043 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.9s
+it  67 beta   32 J  13.7585 vol 0.1875 (dil 0.3043 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.9s
+it  68 beta   32 J  13.7584 vol 0.1875 (dil 0.3044 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.1s
+it  68 beta   32 J  13.7584 vol 0.1875 (dil 0.3044 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.1s
+it  69 beta   32 J  13.7583 vol 0.1875 (dil 0.3044 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.0s
+it  69 beta   32 J  13.7583 vol 0.1875 (dil 0.3044 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 32.0s
+it  70 beta   32 J  13.7582 vol 0.1875 (dil 0.3044 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.7s
+it  70 beta   32 J  13.7582 vol 0.1875 (dil 0.3044 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.7s
+it  71 beta   32 J  13.7581 vol 0.1875 (dil 0.3044 g +0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 30.3s
+it  71 beta   32 J  13.7581 vol 0.1875 (dil 0.3044 g +0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 30.3s
+it  72 beta   32 J  13.7580 vol 0.1874 (dil 0.3042 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.9s
+it  72 beta   32 J  13.7580 vol 0.1874 (dil 0.3042 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.9s
+it  73 beta   32 J  13.7580 vol 0.1874 (dil 0.3042 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.3s
+it  73 beta   32 J  13.7580 vol 0.1874 (dil 0.3042 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.3s
+it  74 beta   32 J  13.7579 vol 0.1874 (dil 0.3042 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.8s
+it  74 beta   32 J  13.7579 vol 0.1874 (dil 0.3042 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.8s
+it  75 beta   32 J  13.7578 vol 0.1874 (dil 0.3042 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.2s
+it  75 beta   32 J  13.7578 vol 0.1874 (dil 0.3042 g -0.000) grey  2.5% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.2s
+it  76 beta   32 J  13.7577 vol 0.1874 (dil 0.3042 g +0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 30.5s
+it  76 beta   32 J  13.7577 vol 0.1874 (dil 0.3042 g +0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 30.5s
+it  77 beta   32 J  13.7577 vol 0.1874 (dil 0.3041 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 33.6s
+it  77 beta   32 J  13.7577 vol 0.1874 (dil 0.3041 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 33.6s
+it  78 beta   32 J  13.7576 vol 0.1874 (dil 0.3041 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.8s
+it  78 beta   32 J  13.7576 vol 0.1874 (dil 0.3041 g -0.000) grey  2.6% ch 0.100 worst crash 3 [0.0, -1.0, 0.0] via 3.88e+03 31.8s
+layout: stopped (max_stage) at it 78, beta 32, 2521 s
+layout: stopped (max_stage) at it 78, beta 32, 2521 s
+layout: beta 32 done: eroded design 9 bodies, main 78.7%; drawn bodies outside the main body: 4
+layout: beta 32 done: eroded design 9 bodies, main 78.7%; drawn bodies outside the main body: 4
+layout done: 2795 s, peak 5.577332 GB
+layout done: 2795 s, peak 5.577332 GB
+build: organic surface at pitch 0.312 mm (x4), skins 30.44 cm3, field 60.57 cm3, in env - cuts 53.59 cm3 (layout 53.59, level offset +0.094 mm), fillet 2.5 mm, rims 1.0 mm, mesh 604,344 faces, 257 s
+build: organic surface at pitch 0.312 mm (x4), skins 30.44 cm3, field 60.57 cm3, in env - cuts 53.59 cm3 (layout 53.59, level offset +0.094 mm), fillet 2.5 mm, rims 1.0 mm, mesh 604,344 faces, 257 s
