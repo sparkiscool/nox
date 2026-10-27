@@ -40,7 +40,7 @@ sys.path.insert(0, HERE)
 import catch_ramps_concept as cr                      # the two drones from git refs (SCOUT_REF / OVR_REF at its top)
 OUT = os.path.join(REPO, "runs", "box_catch", "bars_concept"); os.makedirs(OUT, exist_ok=True)
 
-DECK = float(os.environ.get("DECK", -4.0))                 # M: the Overseer's TPU feet bottom (its ring tube centre at 0, r 3)
+DECK = float(os.environ.get("DECK", -4.0))               # M: the Overseer's lowest point under its ring tube centres (v5 assembly on main: TPU feet -4.0; the 27 Oct cage sync puts foot caps under the loop nodes 13.2 under: DECK=-13.2)
 TUBE_R = 3.0                # Overseer ring tube (C); the Scout's is 1.5 (C)
 GAP = 0.5                   # closed side gap over the two tube surfaces (E: ring width tolerance)
 Y_WAIT = None               # (phase 1 cam removed: the side bars stay parked until the x clamp; the lost-motion stage alone drives them)
@@ -50,6 +50,7 @@ EXTRA_Y = float(os.environ.get("PARK_EXTRA_Y", 137.0))  # side bars parked this 
 
 SLEEVE = int(os.environ.get("SLEEVE", 1))            # 1: 6 mm printed sleeves on the Scout's side tubes over the bar span (DEFAULT); 0: bare 3 mm rods
 SLEEVE_HALF = 32.0          # sleeve half length along x (bar 50 + yaw)
+SCOUT_CAPS = int(os.environ.get("SCOUT_CAPS", 0))    # 1: the Scout stands on the same foot caps under its 4 ring nodes as the Overseer (ring centre on the Overseer's), else its ring tube rests on the deck
 BAR_X = (-25.0, 25.0)       # side bar span along x (C: inside both drones' clear tube spans at +-40 landing)
 BAR_T = 6.0                 # bar thickness (outward), >= 6 x 6 (attachments rule)
 LIP_Z0, LIP_T = 4.5, 3.0    # lip underside above the seated Overseer tube top (3.0) by 1.5; lip 3 thick
@@ -58,7 +59,7 @@ H = LIP_Z0 + LIP_T - DECK   # bar height from the deck (11.5)
 NOTCH_Y = 6.0               # notch half width: the Overseer's tip rods leave the node surface at |y| 7.9 (C), so the notch (contact at |y| r sin V = 5.1) only ever touches the node sphere
 PAD_T = 8.0
 RIDE = 2.0                  # a pushed rod met by a body's top edge with the normal tilted past the friction angle (centre > 0.3 r above the top) climbs onto it; the climb (r - height above the top) may be this much (reported), more is a crash
-H_PAD = 3.0                 # pad height from the deck (top at z -1): pushes the Overseer's node 1 under its equator and the Scout's end tube on centre; the tip rods (5.7 deg up) pass over it from 20 mm out of the node
+H_PAD = -1.0 - DECK         # pad height from the deck so its top is at z -1: pushes the Overseer's node 1 under its equator and the Scout's end tube on centre; the tip rods (5.7 deg up) pass over it from 20 mm out of the node
 V_DEG = 30.0                # notch flank angle from the y axis (120 deg notch): a node seats r / cos 30 ahead of the apex, centred in y
 TV = math.tan(math.radians(V_DEG)); CV = math.cos(math.radians(V_DEG))
 WING_Y = (28.0, 80.0)       # V wings each side, 18 deg flanks, outer end leading: they push a node inward (squaring a yawed Overseer), the Scout's straight end tube rests on their outer corners; the tip rods pass over them (>= 0.6 above the pad top)
@@ -177,7 +178,7 @@ def scout():
     sh = json.loads(cr.git_bytes(cr.SCOUT_REF, f"{cr.SCOUT_DIR}/cage_shell.json"))
     plane = cr.SCOUT_PLANE_Z
     move = {i: [sh["nodes"][i][0], sh["nodes"][i][1], plane] for i in sh["open"][0]["ring"]}
-    off = np.array([-cr.SCOUT_CATCH_X, 0.0, -plane + DECK + r])
+    off = np.array([-cr.SCOUT_CATCH_X, 0.0, -plane + (0.0 if SCOUT_CAPS else DECK + r)])   # ring centre: on the Overseer's (caps) or r above the deck
     d, _ = cr.load_drone(cr.SCOUT_REF, "nox/scout/v3/scout.assembly.json", f"{cr.SCOUT_DIR}/cage_shell.json", off, move=move)
     d["cart_bottom_seat"] = round(-44.5 + off[2], 2)
     p = prep(d, "scout")
@@ -351,7 +352,7 @@ def main(smoke=False, only=None, tag=""):
     offs = [-20, 0, 20] if smoke else [-80, -60, -40, -20, 0, 20, 40, 60, 80]
     yaws = [-10, 0, 10] if smoke else [-15, -10, -5, 0, 5, 10, 15]
     offs_x = [float(v) for v in os.environ["OFFS_X"].split(",")] if os.environ.get("OFFS_X") else offs   # a chunk of the x rows (parallel runs)
-    res = dict(deck=DECK, sleeve=SLEEVE, gap=GAP, lm=LM, s2=S2, wing_deg=WING_DEG, wing_c=round(WING_C, 2), bar_x=BAR_X, bar_t=BAR_T, lip=[LIP_Z0, LIP_T, LIP_IN], notch_y=NOTCH_Y, wing_y=WING_Y, d_wing=round(D_WING, 2),
+    res = dict(deck=DECK, sleeve=SLEEVE, scout_caps=SCOUT_CAPS, ovr_plane=cr.OVR_PLANE_Z, ovr_ref=cr.OVR_REF, scout_ref=cr.SCOUT_REF, scout_dir=cr.SCOUT_DIR, gap=GAP, lm=LM, s2=S2, wing_deg=WING_DEG, wing_c=round(WING_C, 2), bar_x=BAR_X, bar_t=BAR_T, lip=[LIP_Z0, LIP_T, LIP_IN], notch_y=NOTCH_Y, wing_y=WING_Y, d_wing=round(D_WING, 2),
                ramp=[RAMP_Y, RAMP_DX],
                pad_t=PAD_T, h_pad=H_PAD, v_deg=V_DEG, height=H,
                park_extra=EXTRA, park_extra_y=EXTRA_Y,
