@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2, race-car shape, bottom on the Overseer v5 loop (27 Oct 2026, concept)
 
+**Superseded 27 Oct by `runs/scout_layout/v11/summary.md` (the Radxa laid flat in the tail bay, no low tail node; design center ramp check). Kept: summary, results, stills; meshes in git history; `alt_core_ties/` stays.**
+
 What changed from `v9/` (PR 127):
 - **Bottom:** Spark 27 Oct, relayed by the design center session: the Scout's bottom matches "the rectangle part" of the current Overseer base loop. That is the 4 side nodes of the Overseer cage v5 hexagon (PR 122, not merged), refitted now.
 - **Funnel band:** design center check 27 Oct. No link may sit within 30 above the bottom plane, inside the opening or up to 40 past its nose and tail ends, where the ramps reach; shell nodes and rods only where the ramp check clears them. So the bay ties came off the ring nodes.
