@@ -2,7 +2,7 @@
 
 What changed from `v9/` (PR 127):
 - **Bottom:** Spark 27 Oct, relayed by the design center session: the Scout's bottom matches "the rectangle part" of the current Overseer base loop. That is the 4 side nodes of the Overseer cage v5 hexagon (PR 122, not merged), refitted now.
-- **Funnel band:** design center check 27 Oct. Nothing but the ring rods may sit within 30 above the bottom plane, inside the opening or up to 40 past its nose and tail ends, where the ramps reach. So the bay ties came off the ring nodes.
+- **Funnel band:** design center check 27 Oct. No link may sit within 30 above the bottom plane, inside the opening or up to 40 past its nose and tail ends, where the ramps reach; shell nodes and rods only where the ramp check clears them. So the bay ties came off the ring nodes.
 - **Seat height:** the Scout's plane sits 2.12 further under its cartridge, so both cartridges stop at the same height on the shared ramps (DEFAULT; sign from the design center).
 - **No rods on the arms (Spark 27 Oct):** "the rods to the arms need to be on the cartridge on the underside because the arms are just carbon fiber". The spokes from under the motors are gone, and the cage ties to the receiver instead.
   - Read as the underside round the receiver (DEFAULT). The cartridge itself drops out at every swap, so a rod on it would block the swap.
@@ -24,8 +24,7 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 - **Datum:** the same rule as the Overseer: catch centre on the grip line, plane 3.0 under the cartridge flat bottom.
 - **Seat (DEFAULT):** the Scout plane sits (3.0 − 1.5)·√2 = 2.12 further under its cartridge.
   - On a 45° ramp a rod's centre sits r·√2 above the face, so the 3.0 ring rides 2.12 lower than the Overseer's 6 mm tube; this lands both cartridges at the same height. (A first push had the sign reversed; the design center caught it.)
-  - This follows the design center's ramp model: the ring rods bear on the side ramps and the bottom nodes clear them.
-  - If the Ø20 bottom nodes bear instead (a continuous ramp under the node), both drones' nodes are about Ø20 and the offset is (10.15 − 10)·√2 ≈ 0.2. The design center is asked which; the funnel decides.
+  - Confirmed by the design center: the ring rods bear, and every ramp stops 20 short of the Ø20 nodes. (Had the nodes borne, the offset would be about 0.2.)
   - The alternative is 6 mm ring tubes, which the Scout rule (every rod 3 mm) does not allow.
   - Scout: tab line x −8.0, cartridge flat bottom z −44.5, plane z −49.6; nodes Ø20, rods 3.0.
 - **Funnel band:** within 30 above the plane, inside the opening or up to 40 past its ends.
