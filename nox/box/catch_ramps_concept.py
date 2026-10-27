@@ -29,11 +29,12 @@ TIP_X = 176.0                          # C: its trapezoid tips (drone x 146 / -2
 TUBE_R, CLEAR, BOTTOM = 3.0, 1.0, -25.0
 H_SIDE = float(os.environ.get("RAMP_SIDE_H", 25.0))       # ramp heights above the seat (= capture along that axis, 45 deg)
 H_OEND = float(os.environ.get("RAMP_OEND_H", 25.0))
-H_SEND = float(os.environ.get("RAMP_SEND_H", 8.0))
+H_SEND = float(os.environ.get("RAMP_SEND_H", 20.0))
 SEND_Y = (0, 0)                                            # unused (per end below)
 SEND_NOSE = (52.0, 96.0)    # Scout nose pads |y|: outside the Overseer's nose TPU feet (|y| 39 + yaw + capture), inside its side nodes
-SEND_TAIL = (92.5, 99.5)    # Scout tail pads |y|: between the Scout's tail-bay ties (|y| <= 91) and its tail nodes (|y| >= 109.5)
-TIP_LEN = 50.0              # Overseer tip ramps: 50 along each tip edge from 40 off the tip node
+SEND_TAIL = (52.0, 96.0)    # Scout tail pads |y|: outside the Overseer's tail TPU feet, inside the corner nodes (the Scout's ties left the band in v10)
+TIP_LEN = 50.0              # Overseer nose V: 30 + 50 along each tip edge
+TIP_LEN_TAIL = float(os.environ.get("TIP_LEN_TAIL", 25.0))   # Overseer tail V: 30 + 25 only, so it stays behind the Scout's tail low node and its rods
 SLED_Y = float(os.environ.get("OVR_SLED_Y", 0.0))         # 0 = the Overseer's belly sled and pods as they are
 ALT_SIDE, ALT_SLED_Y = 35.0, 46.0                          # what-if: taller side ramps with the Overseer's belly pods inside |y| 46
 S2 = math.sqrt(2)
@@ -70,7 +71,7 @@ def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
         L = float(np.linalg.norm(np.subtract(X[b], X[a]))); R.append(wedge(X[a], X[b], c, INSET, L - INSET, h_side, nm))
     for a, b, nm in (("F", "Ln", "Overseer tip +x +y"), ("F", "Rn", "Overseer tip +x -y"), ("T", "Lt", "Overseer tip -x +y"), ("T", "Rt", "Overseer tip -x -y")):
         sx = 1 if a == "F" else -1; side = 1 if b.startswith("L") else -1
-        R.append(wedge(X[a], X[b], c, 0.0, TIP_INSET + TIP_LEN, h_tip, nm, v_tip=(side, X[a][0] - sx * TIP_INSET, sx)))
+        R.append(wedge(X[a], X[b], c, 0.0, TIP_INSET + (TIP_LEN if sx > 0 else TIP_LEN_TAIL), h_tip, nm, v_tip=(side, X[a][0] - sx * TIP_INSET, sx)))
         # a V under each tip, its two halves joined on the centreline, cut back TIP_INSET from the tip node, TIP_LEN + TIP_INSET along each tip edge
     for a, b, nm, (y0, y1) in (("Rn", "Ln", "Scout end +x", SEND_NOSE), ("Rt", "Lt", "Scout end -x", SEND_TAIL)):   # the Scout's short ends
         A, B = X[a], X[b]; L = float(np.linalg.norm(np.subtract(B, A)))
@@ -152,9 +153,9 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
             tube_points.names.append(f"cage tube {a}-{b}")
     return P, rad, ring
 
-SCOUT_REF = os.environ.get("SCOUT_REF", "0c05443e")            # Scout v3 layout v10 (PR 131: bottom refitted onto the Overseer loop's side nodes, ties out of the band)
+SCOUT_REF = os.environ.get("SCOUT_REF", "c5b57903")            # Scout v3 layout v10 (PR 131 head: bottom on the Overseer loop's side nodes, ties out of the band, plane -49.62)
 SCOUT_DIR = "runs/scout_layout/v10"
-SCOUT_CATCH_X, SCOUT_PLANE_Z = -7.5, -45.38                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
+SCOUT_CATCH_X, SCOUT_PLANE_Z = -7.5, -49.62                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
 SCOUT_PLANE_FIX = -49.62                                         # the plane that seats its r 1.5 ring like the Overseer's r 3 (cartridge -3 -2.12; asked of the Scout session)
 OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
 OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
