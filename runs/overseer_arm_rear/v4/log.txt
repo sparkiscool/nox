@@ -283,3 +283,51 @@ it  59 beta   32 J   3.7735 vol 0.2315 (dil 0.3701 g -0.000) grey  3.0% ch 0.100
 it  59 beta   32 J   3.7735 vol 0.2315 (dil 0.3701 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 28.4s
 it  60 beta   32 J   3.7706 vol 0.2316 (dil 0.3701 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
 it  60 beta   32 J   3.7706 vol 0.2316 (dil 0.3701 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  61 beta   32 J   3.7681 vol 0.2317 (dil 0.3701 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.4 28.4s
+it  61 beta   32 J   3.7681 vol 0.2317 (dil 0.3701 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.4 28.4s
+it  62 beta   32 J   3.7774 vol 0.2313 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.5 27.7s
+it  62 beta   32 J   3.7774 vol 0.2313 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.5 27.7s
+it  63 beta   32 J   3.7747 vol 0.2313 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  63 beta   32 J   3.7747 vol 0.2313 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  64 beta   32 J   3.7720 vol 0.2314 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  64 beta   32 J   3.7720 vol 0.2314 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  65 beta   32 J   3.7691 vol 0.2314 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  65 beta   32 J   3.7691 vol 0.2314 (dil 0.3696 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.9s
+it  66 beta   32 J   3.7665 vol 0.2315 (dil 0.3696 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.3 27.9s
+it  66 beta   32 J   3.7665 vol 0.2315 (dil 0.3696 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.3 27.9s
+it  67 beta   32 J   3.7739 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 26.8s
+it  67 beta   32 J   3.7739 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 26.8s
+it  68 beta   32 J   3.7717 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.1s
+it  68 beta   32 J   3.7717 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.1s
+it  69 beta   32 J   3.7698 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.0s
+it  69 beta   32 J   3.7698 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.0s
+it  70 beta   32 J   3.7681 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 26.9s
+it  70 beta   32 J   3.7681 vol 0.2312 (dil 0.3692 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 26.9s
+it  71 beta   32 J   3.7666 vol 0.2313 (dil 0.3692 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.3 27.1s
+it  71 beta   32 J   3.7666 vol 0.2313 (dil 0.3692 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.3 27.1s
+it  72 beta   32 J   3.7728 vol 0.2310 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.5s
+it  72 beta   32 J   3.7728 vol 0.2310 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.5s
+it  73 beta   32 J   3.7715 vol 0.2311 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.2s
+it  73 beta   32 J   3.7715 vol 0.2311 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.2s
+it  74 beta   32 J   3.7702 vol 0.2311 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.7s
+it  74 beta   32 J   3.7702 vol 0.2311 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.7s
+it  75 beta   32 J   3.7688 vol 0.2311 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.0s
+it  75 beta   32 J   3.7688 vol 0.2311 (dil 0.3689 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.0s
+it  76 beta   32 J   3.7674 vol 0.2311 (dil 0.3689 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.4 26.3s
+it  76 beta   32 J   3.7674 vol 0.2311 (dil 0.3689 g +0.001) grey  3.0% ch 0.100 worst held b1 my 21.4 26.3s
+it  77 beta   32 J   3.7720 vol 0.2310 (dil 0.3687 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.3s
+it  77 beta   32 J   3.7720 vol 0.2310 (dil 0.3687 g -0.000) grey  3.0% ch 0.100 worst held b1 my 21.4 27.3s
+layout: stopped (max_stage) at it 77, beta 32, 2129 s
+layout: stopped (max_stage) at it 77, beta 32, 2129 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 2258 s, peak 5.216684 GB
+layout done: 2258 s, peak 5.216684 GB
+build: organic surface at pitch 0.300 mm (x5), skins 33.17 cm3, field 82.59 cm3, in env - cuts 75.48 cm3 (layout 75.48, level offset -0.016 mm), fillet 2.5 mm, rims 1.0 mm, mesh 731,008 faces, 78 s
+build: organic surface at pitch 0.300 mm (x5), skins 33.17 cm3, field 82.59 cm3, in env - cuts 75.48 cm3 (layout 75.48, level offset -0.016 mm), fillet 2.5 mm, rims 1.0 mm, mesh 731,008 faces, 78 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [56179.5], "necks": [], "drawn_not_in_main": [["0.0", 0.997, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [56179.5], "necks": [], "drawn_not_in_main": [["0.0", 0.997, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 22999.0, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+function check: {'skin_mm3': 22999.0, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+strength: worst index 1.09 in 'cage crash 11' at [12.5, -13.9, 44.2]
+strength: worst index 1.09 in 'cage crash 11' at [12.5, -13.9, 44.2]
