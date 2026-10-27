@@ -158,9 +158,9 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
             tube_points.names.append(f"cage tube {a}-{b}")
     return P, rad, ring
 
-SCOUT_REF = os.environ.get("SCOUT_REF", "cb3a3bfc")            # Scout v3 layout v11 (PR 133: bottom on the Overseer loop's side nodes, no tail low node, plane -49.62)
+SCOUT_REF = os.environ.get("SCOUT_REF", "dea0b51")             # Scout v3 layout v11 (PR 133 merged to main: bottom on the Overseer loop's side nodes, no tail low node, plane -49.62)
 SCOUT_DIR = "runs/scout_layout/v11"
-SCOUT_CATCH_X, SCOUT_PLANE_Z = -10.0, -49.62                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
+SCOUT_CATCH_X, SCOUT_PLANE_Z = -3.5, -49.62                      # C (Scout session): catch (tab line) x, bottom plane z as pushed; cartridge flat bottom -44.5
 SCOUT_PLANE_FIX = -49.62                                         # the plane that seats its r 1.5 ring like the Overseer's r 3 (cartridge -3 -2.12; asked of the Scout session)
 OVR_REF = os.environ.get("OVR_REF", "c65d96a")                   # Overseer cage v5 (PR 122 head; loop unchanged since 20fbb52e, confirmed 27 Oct)
 OVR_CATCH_X, OVR_PLANE_Z = -30.0, -57.0                          # C (Overseer session): swap centre x, loop plane (cartridge bottom -54)
