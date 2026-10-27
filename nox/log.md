@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer, Spark): cage v5 close nodes merged (tubes < 95 become one node; base loop 8 -> 6, told funnel + Scout), node angles >= 20: 21 nodes, 54 tubes, 3084 g, T/W 2.14. Head mount (centre + wing) and 12 TPU node topology runs started. `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): cage v5 = cage v3 with half the tubes (25 nodes, 64 tubes, mirror-exact, 3120 g, T/W 2.12); same-length cage v4 (11 lengths) dropped by Spark. Camera pair beside the L2 (landscape 45° out), flow pod 15 fwd, printed sensor head mount replaces the short rods (budget 73 g). `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): flow pod 15 forward (every rear arm screw through a sled hole, nothing unplugged); pack-out CG 32 mm accepted by Spark ("as long as with battery the drone is centered"), the L Balance exception. CG 0.2 mm pack in. `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): down camera removed; the 2 cameras beside the L2, orientation searched for the largest union field: portrait, 50° out, 15° down, 3.45 sr with no overlap, nothing of the drone in view (alt landscape 3.44). L2 31 forward, motors 72.4 ahead, 3368 g E. `runs/overseer_layout/v5/`
