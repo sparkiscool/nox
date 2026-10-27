@@ -170,3 +170,11 @@ layout: warm start from a (24, 48, 48) grid (h 4.5): mean x 0.043
 layout: warm start from a (24, 48, 48) grid (h 4.5): mean x 0.043
 it   1 beta    4 J  10.0000 vol 0.0396 (dil 0.0735 g +0.001) grey  6.4% ch 0.100 worst held b1 mx 3.54e+05 138.1s
 it   1 beta    4 J  10.0000 vol 0.0396 (dil 0.0735 g +0.001) grey  6.4% ch 0.100 worst held b1 mx 3.54e+05 138.1s
+it   2 beta    4 J   5.9700 vol 0.0367 (dil 0.0721 g -0.018) grey  6.7% ch 0.100 worst guard hit 4 2.11e+05 146.3s
+it   2 beta    4 J   5.9700 vol 0.0367 (dil 0.0721 g -0.018) grey  6.7% ch 0.100 worst guard hit 4 2.11e+05 146.3s
+it   3 beta    4 J   3.5223 vol 0.0347 (dil 0.0719 g -0.021) grey  7.0% ch 0.100 worst gate b6 fy 1.3e+05 149.1s
+it   3 beta    4 J   3.5223 vol 0.0347 (dil 0.0719 g -0.021) grey  7.0% ch 0.100 worst gate b6 fy 1.3e+05 149.1s
+it   4 beta    4 J   4.2331 vol 0.0350 (dil 0.0717 g -0.023) grey  6.8% ch 0.100 worst held b13 mx 1.68e+05 146.1s
+it   4 beta    4 J   4.2331 vol 0.0350 (dil 0.0717 g -0.023) grey  6.8% ch 0.100 worst held b13 mx 1.68e+05 146.1s
+it   5 beta    4 J   1.0145 vol 0.0353 (dil 0.0723 g -0.015) grey  6.9% ch 0.100 worst held b13 fz 3.29e+04 138.6s
+it   5 beta    4 J   1.0145 vol 0.0353 (dil 0.0723 g -0.015) grey  6.9% ch 0.100 worst held b13 fz 3.29e+04 138.6s
