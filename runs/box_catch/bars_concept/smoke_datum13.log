@@ -1,0 +1,23 @@
+overseer: 3153 low points, cartridge bottom 3.0 above z 0 (16.20 above the deck)
+  overseer off ( -20, -20) yaw  -10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.29, 0.54, -0.11]
+  overseer off ( -20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off ( -20, -20) yaw   10: FAIL tail pad pushes TPU feet at s 95.0 pose [-4.42, -10.06, 0.05]
+  overseer off ( -20,   0) yaw  -10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.33, 0.65, -0.11]
+  overseer off ( -20,   0) yaw    0: ok clamp 91.0 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off ( -20,   0) yaw   10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.33, -0.65, 0.11]
+  overseer off ( -20,  20) yaw  -10: FAIL tail pad pushes TPU feet at s 95.0 pose [-4.42, 10.06, -0.05]
+  overseer off ( -20,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off ( -20,  20) yaw   10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.29, -0.54, 0.11]
+  overseer off (   0, -20) yaw  -10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.29, 0.54, -0.11]
+  overseer off (   0, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off (   0, -20) yaw   10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, 2.92, 0.11]
+  overseer off (   0,   0) yaw  -10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, -2.91, -0.11]
+  overseer off (   0,   0) yaw    0: ok clamp 90.5 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off (   0,   0) yaw   10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, 2.91, 0.11]
+  overseer off (   0,  20) yaw  -10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, -2.92, -0.11]
+  overseer off (   0,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off (   0,  20) yaw   10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.29, -0.54, 0.11]
+  overseer off (  20, -20) yaw  -10: FAIL nose pad pushes TPU feet at s 100.0 pose [2.29, 0.54, -0.11]
+  overseer off (  20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.0
+  overseer off (  20, -20) yaw   10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, 2.92, 0.11]
+  overseer off (  20,   0) yaw  -10: FAIL tail pad pushes TPU feet at s 100.0 pose [1.2, -2.91, -0.11]
