@@ -189,3 +189,37 @@ it  10 beta    4 J   5.2795 vol 0.2433 (dil 0.3689 g -0.002) grey 29.0% ch 0.100
 it  10 beta    4 J   5.2795 vol 0.2433 (dil 0.3689 g -0.002) grey 29.0% ch 0.100 worst held b1 mx 52.1 39.3s
 it  11 beta    4 J   4.9285 vol 0.2451 (dil 0.3690 g +0.008) grey 28.6% ch 0.100 worst held b1 mx 48.7 37.5s
 it  11 beta    4 J   4.9285 vol 0.2451 (dil 0.3690 g +0.008) grey 28.6% ch 0.100 worst held b1 mx 48.7 37.5s
+it  12 beta    4 J   4.9189 vol 0.2430 (dil 0.3657 g -0.001) grey 28.3% ch 0.100 worst held b1 mx 48.4 38.1s
+it  12 beta    4 J   4.9189 vol 0.2430 (dil 0.3657 g -0.001) grey 28.3% ch 0.100 worst held b1 mx 48.4 38.1s
+it  13 beta    4 J   4.7380 vol 0.2440 (dil 0.3658 g -0.001) grey 28.1% ch 0.100 worst held b1 mx 46.3 36.3s
+it  13 beta    4 J   4.7380 vol 0.2440 (dil 0.3658 g -0.001) grey 28.1% ch 0.100 worst held b1 mx 46.3 36.3s
+it  14 beta    4 J   4.6138 vol 0.2446 (dil 0.3659 g -0.001) grey 27.9% ch 0.100 worst held b1 mx 44.6 39.0s
+it  14 beta    4 J   4.6138 vol 0.2446 (dil 0.3659 g -0.001) grey 27.9% ch 0.100 worst held b1 mx 44.6 39.0s
+it  15 beta    4 J   4.5183 vol 0.2451 (dil 0.3659 g -0.001) grey 27.8% ch 0.100 worst held b1 mx 43.4 38.9s
+it  15 beta    4 J   4.5183 vol 0.2451 (dil 0.3659 g -0.001) grey 27.8% ch 0.100 worst held b1 mx 43.4 38.9s
+it  16 beta    4 J   4.4362 vol 0.2456 (dil 0.3659 g +0.011) grey 27.7% ch 0.100 worst held b1 mx 42.3 37.8s
+it  16 beta    4 J   4.4362 vol 0.2456 (dil 0.3659 g +0.011) grey 27.7% ch 0.100 worst held b1 mx 42.3 37.8s
+it  17 beta    4 J   4.6071 vol 0.2418 (dil 0.3617 g -0.001) grey 27.5% ch 0.100 worst held b1 mx 43.9 39.8s
+it  17 beta    4 J   4.6071 vol 0.2418 (dil 0.3617 g -0.001) grey 27.5% ch 0.100 worst held b1 mx 43.9 39.8s
+layout: beta 4 done: eroded design 2 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 4 done: eroded design 2 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  18 beta    8 J  12.3388 vol 0.2389 (dil 0.3816 g +0.011) grey 15.0% ch 0.100 worst cage crash 2 127 38.1s
+it  18 beta    8 J  12.3388 vol 0.2389 (dil 0.3816 g +0.011) grey 15.0% ch 0.100 worst cage crash 2 127 38.1s
+it  19 beta    8 J   7.0578 vol 0.2310 (dil 0.3748 g -0.007) grey 15.1% ch 0.100 worst held b1 my 62.6 39.5s
+it  19 beta    8 J   7.0578 vol 0.2310 (dil 0.3748 g -0.007) grey 15.1% ch 0.100 worst held b1 my 62.6 39.5s
+it  20 beta    8 J   5.9377 vol 0.2336 (dil 0.3760 g -0.004) grey 14.9% ch 0.100 worst blow 150 N +x 54.5 39.6s
+it  20 beta    8 J   5.9377 vol 0.2336 (dil 0.3760 g -0.004) grey 14.9% ch 0.100 worst blow 150 N +x 54.5 39.6s
+it  21 beta    8 J   5.6911 vol 0.2348 (dil 0.3766 g -0.005) grey 14.9% ch 0.100 worst blow 150 N +x 52.6 37.8s
+it  21 beta    8 J   5.6911 vol 0.2348 (dil 0.3766 g -0.005) grey 14.9% ch 0.100 worst blow 150 N +x 52.6 37.8s
+it  22 beta    8 J   5.3995 vol 0.2363 (dil 0.3775 g -0.002) grey 14.9% ch 0.100 worst blow 150 N +x 49.5 37.8s
+it  22 beta    8 J   5.3995 vol 0.2363 (dil 0.3775 g -0.002) grey 14.9% ch 0.100 worst blow 150 N +x 49.5 37.8s
+it  23 beta    8 J   5.2391 vol 0.2369 (dil 0.3777 g -0.002) grey 14.8% ch 0.100 worst blow 150 N +x 47.7 38.2s
+it  23 beta    8 J   5.2391 vol 0.2369 (dil 0.3777 g -0.002) grey 14.8% ch 0.100 worst blow 150 N +x 47.7 38.2s
+it  24 beta    8 J   5.1014 vol 0.2375 (dil 0.3778 g -0.001) grey 14.8% ch 0.100 worst held b1 mx 46.1 38.1s
+it  24 beta    8 J   5.1014 vol 0.2375 (dil 0.3778 g -0.001) grey 14.8% ch 0.100 worst held b1 mx 46.1 38.1s
+it  25 beta    8 J   4.9935 vol 0.2380 (dil 0.3779 g -0.001) grey 14.7% ch 0.100 worst held b1 mx 45.3 37.5s
+it  25 beta    8 J   4.9935 vol 0.2380 (dil 0.3779 g -0.001) grey 14.7% ch 0.100 worst held b1 mx 45.3 37.5s
+it  26 beta    8 J   4.9128 vol 0.2385 (dil 0.3779 g +0.002) grey 14.7% ch 0.100 worst held b1 mx 44.4 36.6s
+it  26 beta    8 J   4.9128 vol 0.2385 (dil 0.3779 g +0.002) grey 14.7% ch 0.100 worst held b1 mx 44.4 36.6s
+it  27 beta    8 J   4.8882 vol 0.2381 (dil 0.3771 g -0.001) grey 14.6% ch 0.100 worst held b1 mx 44.2 38.6s
+it  27 beta    8 J   4.8882 vol 0.2381 (dil 0.3771 g -0.001) grey 14.6% ch 0.100 worst held b1 mx 44.2 38.6s
