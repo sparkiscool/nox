@@ -198,3 +198,13 @@ it  17 beta    4 J   0.0938 vol 0.0414 (dil 0.0723 g -0.004) grey  5.8% ch 0.100
 it  17 beta    4 J   0.0938 vol 0.0414 (dil 0.0723 g -0.004) grey  5.8% ch 0.100 worst gate b6 mz 3.16e+03 128.4s
 it  18 beta    4 J   0.0887 vol 0.0416 (dil 0.0724 g -0.002) grey  5.8% ch 0.100 worst gate b6 mz 3.14e+03 132.3s
 it  18 beta    4 J   0.0887 vol 0.0416 (dil 0.0724 g -0.002) grey  5.8% ch 0.100 worst gate b6 mz 3.14e+03 132.3s
+it  19 beta    4 J   0.0860 vol 0.0418 (dil 0.0724 g -0.001) grey  5.8% ch 0.100 worst gate b6 mz 3.05e+03 139.1s
+it  19 beta    4 J   0.0860 vol 0.0418 (dil 0.0724 g -0.001) grey  5.8% ch 0.100 worst gate b6 mz 3.05e+03 139.1s
+it  20 beta    4 J   0.0838 vol 0.0418 (dil 0.0724 g -0.001) grey  5.8% ch 0.100 worst gate b6 mz 2.98e+03 136.2s
+it  20 beta    4 J   0.0838 vol 0.0418 (dil 0.0724 g -0.001) grey  5.8% ch 0.100 worst gate b6 mz 2.98e+03 136.2s
+it  21 beta    4 J   0.0819 vol 0.0419 (dil 0.0725 g +0.017) grey  5.7% ch 0.100 worst gate b6 mz 2.92e+03 137.0s
+it  21 beta    4 J   0.0819 vol 0.0419 (dil 0.0725 g +0.017) grey  5.7% ch 0.100 worst gate b6 mz 2.92e+03 137.0s
+it  22 beta    4 J   0.0880 vol 0.0407 (dil 0.0711 g -0.002) grey  5.7% ch 0.100 worst gate b6 mz 3.04e+03 139.6s
+it  22 beta    4 J   0.0880 vol 0.0407 (dil 0.0711 g -0.002) grey  5.7% ch 0.100 worst gate b6 mz 3.04e+03 139.6s
+it  23 beta    4 J   0.0853 vol 0.0409 (dil 0.0712 g -0.001) grey  5.7% ch 0.100 worst gate b6 mz 3.01e+03 134.9s
+it  23 beta    4 J   0.0853 vol 0.0409 (dil 0.0712 g -0.001) grey  5.7% ch 0.100 worst gate b6 mz 3.01e+03 134.9s
