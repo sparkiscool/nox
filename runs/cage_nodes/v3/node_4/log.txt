@@ -381,3 +381,39 @@ it  78 beta   16 J  10.0600 vol 0.0002 (dil 0.0189 g -0.367) grey  0.0% ch 0.000
 it  78 beta   16 J  10.0600 vol 0.0002 (dil 0.0189 g -0.367) grey  0.0% ch 0.000 worst held b1 fy 9.1e+05 135.2s
 it  79 beta   16 J  10.0600 vol 0.0002 (dil 0.0189 g -0.367) grey  0.0% ch 0.000 worst held b1 fy 9.1e+05 126.7s
 it  79 beta   16 J  10.0600 vol 0.0002 (dil 0.0189 g -0.367) grey  0.0% ch 0.000 worst held b1 fy 9.1e+05 126.7s
+=== cage_node_4: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_4: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_4: grid (48, 48, 48) h 1.5 = 110,592 cells; design 35,807 (120.8 cm3), drawn 1,748, void 73,037
+  support hold 0: 1468 cells, 3053 nodes
+  support hold 1: 1404 cells, 2842 nodes
+  support hold 2: 1419 cells, 2887 nodes
+  support hold 3: 1419 cells, 2883 nodes
+  support hold 4: 1449 cells, 2971 nodes
+  support hold 5: 1602 cells, 3244 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_4: grid (48, 48, 48) h 1.5 = 110,592 cells; design 35,807 (120.8 cm3), drawn 1,748, void 73,037
+  support hold 0: 1468 cells, 3053 nodes
+  support hold 1: 1404 cells, 2842 nodes
+  support hold 2: 1419 cells, 2887 nodes
+  support hold 3: 1419 cells, 2883 nodes
+  support hold 4: 1449 cells, 2971 nodes
+  support hold 5: 1602 cells, 3244 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.90 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (5.90 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.010 of 35,807 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.010 of 35,807 design cells
+layout: WARNING nearly mirrored in x (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.1% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.1% of passive cells differ): no symmetry
+layout: 4 drawn bodies (1,748 cells), held solid in every realization; eroded filter: masked
+layout: 4 drawn bodies (1,748 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 4 held by support 'hold 0') + 0 gate ties + 18 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 4 held by support 'hold 0') + 0 gate ties + 18 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (48, 48, 48) = 110,592 elements, 126,783 active dofs; backend direct (direct estimate 1.1 GB, budget 11.8 GB)
+fem: grid (48, 48, 48) = 110,592 elements, 126,783 active dofs; backend direct (direct estimate 1.1 GB, budget 11.8 GB)
