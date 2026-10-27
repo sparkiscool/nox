@@ -116,7 +116,7 @@ def seg_band_dist(p0, p1, mxy):
 # ---------------------------------------------------------------- the v2 drone (everything but its cage)
 HALO_BACK, HALO_R, HALO_NODE_R = 8.0, 62.0, 5.0   # L2 guard ring: 8 behind its base plane, r 62 round its axis (body half
                                                  # diagonal 53 + 9), printed nodes r 5 (DEFAULT, E)
-FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v3_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
+FROZEN = os.environ.get("V5_FROZEN", os.path.join(HERE, "cage_v4_shell.json"))   # the cage is fixed (Spark 27 Oct: "make sure we are not
 FZ = json.load(open(FROZEN)) if FROZEN and os.path.exists(FROZEN) else None        # changing any cage structure"); V5_FROZEN= builds a new one
 PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
 HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
@@ -167,7 +167,7 @@ CAM_W = (75.0, 90.0, 105.0, 120.0, 135.0)          # lens off the centre plane (
 CAM_HS = (-30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0)   # lens up the L2 base plane from its centre (scanned)
 CAM_PSI = np.arange(0.0, 72.5, 2.5)                # yaw out from +x (scanned)
 CAM_TH = np.arange(-30.0, 32.5, 5.0)               # pitch (scanned)
-CAM_BODY = np.array([[x, y, z] for x in (-13.5, -8.0) for y in (-20.0, 20.0) for z in (-20.0, 20.0)]
+CAM_BODY = np.array([[x, y, z] for x in (-13.5, -10.75, -8.0) for y in np.linspace(-20.0, 20.0, 9) for z in np.linspace(-20.0, 20.0, 9)]
                     + [[0.0, 6 * math.cos(t), 6 * math.sin(t)] for t in np.linspace(0, 2 * math.pi, 8, endpoint=False)])   # plate + board + lens, lens frame
 SPH = fib(6000)
 DCF = fib(500)
@@ -875,8 +875,8 @@ for nm, ms in (("props (disks)", g["props"]), ("arms + motors", g["arms"] + g["m
                ("hub + plates", [TOP, BOTTOM, PI, DECK, PDB]), ("belly", [g["cart"], g["sled"], g["flow_pod"]])):
     p = np.vstack([pts(m, 2000) for m in ms]); p = p[p[:, 2] > g["z_o"]]
     say(f"   inside: {nm} {float((-(p @ eqs[:, :3].T + eqs[:, 3])).min(1).min()):.1f} from the nearest face plane (C)")
-rc = ring_nodes(g)
-say(f"opening: {len(ring_ids)} nodes on an ellipse {np.ptp(rc[:, 0]):.0f} x {np.ptp(rc[:, 1]):.0f} round the swap zone {2 * ZONE[0]:.0f} x {2 * ZONE[1]:.0f} "
+rc = nodes[ring_ids]
+say(f"opening: {len(ring_ids)} nodes, a ring {np.ptp(rc[:, 0]):.0f} x {np.ptp(rc[:, 1]):.0f} round the swap zone {2 * ZONE[0]:.0f} x {2 * ZONE[1]:.0f} "
     f"(receiver {REC[0]} x {REC[1]} M + {SPARE:.0f} a side), plane z {g['z_o']:.1f} = cartridge bottom - 3; v2 TPU feet the floor contact (z {min(f.bounds[0][2] for f in g['feet']):.1f})")
 zone = box(-DC - ZONE[0], -DC + ZONE[0], -ZONE[1], ZONE[1], g["z_o"] - 200, g["cart"].bounds[0][2])
 blk = [(i, overlap(zone, rod(nodes[a], nodes[b], SHELL_R))) for i, (a, b) in enumerate(E)]
@@ -921,7 +921,7 @@ if FZ is None:
         f"limiting view face (+2 deg) and behind the head plane (the head's back, tilted {g['phi']:.0f} deg from the L2 axis toward +z: the tilt that keeps "
         f"the L2 furthest back of {list(PHIS)})")
 else:
-    say(f"sensor head outside the frozen cage (Spark 27 Oct: the cage as on main, only the L2 and camera mounts and the rods by them change): "
+    say(f"sensor head outside the frozen cage ({os.path.basename(FROZEN)}): "
         f"the L2 base where it was ({FZ['xB']:.1f}, 0, {ZB:.0f}); the cameras' bodies {fz_clear(np.vstack([c['mesh'].vertices for c in g['cams']])):.1f} off its tubes "
         f"and nodes, nothing of it in their views (C)")
 say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
