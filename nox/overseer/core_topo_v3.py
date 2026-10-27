@@ -30,11 +30,11 @@ if PIECE != "hub_deck":
     sys.exit(__doc__)
 args = [a for i, a in enumerate(sys.argv[2:], 2) if not a.startswith("-") and sys.argv[i - 1] != "--set"]
 H = float(args[0]) if args else 1.0
-GEN = float(args[1]) if len(args) > 1 else 18.0   # cm3 generated (E: slot 55 g, minus drawn)
+GEN = float(args[1]) if len(args) > 1 else 30.0   # cm3 generated (v6 at 18 was 2.7x over in the top hit)
 GIT = "--no-git" not in sys.argv
 COARSE = "--no-coarse" not in sys.argv          # sled v2: the 3.0 coarse grid went singular at h 1.5 (v1), so run the fine grid only
 LEAN = "--lean" in sys.argv                     # sled v2: flight / landing cases left out, the 35 g crash cases cover them
-VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v6")
+VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v7")
 SETS = {}                                       # --set key=value: Settings fields (sled v3: tie_moments=0 held_ties=0 gate_ties=0, the
 for i_, a_ in enumerate(sys.argv):              # engine keeps F and U for every case on the full grid: 145 cases x 1.7 M dofs ran out of memory)
     if a_ == "--set":
@@ -134,7 +134,9 @@ def hub_deck_bodies():
     slots = []
     # keel front hub: bosses on the keel axes, seated on the front feet (the keels' 387 N go into the plate at (96, ±17))
     bosses = [along(*keel_axis(sy), -2.0, SK["off"] + SK["l"], SK["od"] / 2) for sy in (1, -1)]
-    seats = []                                              # v3: the topology grows the seats (the hub's room below)
+    # v7 (hub deck v6 FAILED strength: worst 2.72 in the top hit at the +y keel boss / front foot joint (94, 16, 8), 18 cm3 generated):
+    # a drawn solid core round the keel bosses and the front feet (both sides), so that joint can't thin out
+    seats = [box(88.0, 104.0, sy * 8.0, sy * 24.0, 0, 14.0) for sy in (1, -1)]
     braces = [k for k in ROOTS if k.startswith("L2 brace")]
     bosses += [along(*root_axis(k), -BS["wall"], BS["l"] + BS["lead"], BS["d"] / 2 + BS["wall"]) for k in braces]
     # v5 (PR 148 review): a root web Ø12 x 6.0 under every Pi post (a gusset into the body; v4's bare Ø7 posts were 99.8 % in the main
