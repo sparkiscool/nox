@@ -304,3 +304,7 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (112, 48, 32) = 172,032 elements, 240,462 active dofs; backend direct (direct estimate 2.6 GB, budget 11.8 GB)
 fem: grid (112, 48, 32) = 172,032 elements, 240,462 active dofs; backend direct (direct estimate 2.6 GB, budget 11.8 GB)
+build: organic surface at pitch 0.286 mm (x7), skins 117.93 cm3, field 199.52 cm3, in env - cuts 179.65 cm3 (layout 179.65, level offset +0.513 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,764,992 faces, 517 s
+build: organic surface at pitch 0.286 mm (x7), skins 117.93 cm3, field 199.52 cm3, in env - cuts 179.65 cm3 (layout 179.65, level offset +0.513 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,764,992 faces, 517 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [133078.8], "necks": [], "drawn_not_in_main": [["0.0", 0.922, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.58, "core_mm3": 9.36, "at": [169.6, -12.2, 5.3], "span": [1.0, 0.9, 0.3]}], "acute_edges": 1, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [133078.8], "necks": [], "drawn_not_in_main": [["0.0", 0.922, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.58, "core_mm3": 9.36, "at": [169.6, -12.2, 5.3], "span": [1.0, 0.9, 0.3]}], "acute_edges": 1, "ok": false}
