@@ -350,3 +350,13 @@ it  90 beta   32 J   0.0468 vol 0.0398 (dil 0.0740 g -0.000) grey  0.7% ch 0.100
 it  90 beta   32 J   0.0468 vol 0.0398 (dil 0.0740 g -0.000) grey  0.7% ch 0.100 worst gate b6 mz 1.68e+03 125.6s
 it  91 beta   32 J   0.0465 vol 0.0399 (dil 0.0741 g +0.002) grey  0.7% ch 0.100 worst gate b6 mz 1.67e+03 123.8s
 it  91 beta   32 J   0.0465 vol 0.0399 (dil 0.0741 g +0.002) grey  0.7% ch 0.100 worst gate b6 mz 1.67e+03 123.8s
+it  92 beta   32 J   0.0467 vol 0.0397 (dil 0.0739 g -0.000) grey  0.7% ch 0.100 worst gate b6 mz 1.67e+03 126.0s
+it  92 beta   32 J   0.0467 vol 0.0397 (dil 0.0739 g -0.000) grey  0.7% ch 0.100 worst gate b6 mz 1.67e+03 126.0s
+layout: stopped (grey) at it 92, beta 32, 12388 s
+layout: stopped (grey) at it 92, beta 32, 12388 s
+layout: beta 32 done: eroded design 4 bodies, main 98.8%; drawn bodies outside the main body: 3
+layout: beta 32 done: eroded design 4 bodies, main 98.8%; drawn bodies outside the main body: 3
+layout done: 12820 s, peak 12.010288 GB
+layout done: 12820 s, peak 12.010288 GB
+build: organic surface at pitch 0.450 mm (x5), skins 51.50 cm3, field 122.95 cm3, in env - cuts 113.26 cm3 (layout 113.26, level offset +0.065 mm), fillet 2.5 mm, rims 1.0 mm, mesh 622,996 faces, 331 s
+build: organic surface at pitch 0.450 mm (x5), skins 51.50 cm3, field 122.95 cm3, in env - cuts 113.26 cm3 (layout 113.26, level offset +0.065 mm), fillet 2.5 mm, rims 1.0 mm, mesh 622,996 faces, 331 s
