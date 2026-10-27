@@ -292,3 +292,11 @@ layout done: 1187 s, peak 6.833748 GB
 layout done: 1187 s, peak 6.833748 GB
 build: organic surface at pitch 0.286 mm (x7), skins 191.62 cm3, field 286.98 cm3, in env - cuts 259.97 cm3 (layout 259.97, level offset +0.614 mm), fillet 2.5 mm, rims 1.0 mm, mesh 2,348,752 faces, 594 s
 build: organic surface at pitch 0.286 mm (x7), skins 191.62 cm3, field 286.98 cm3, in env - cuts 259.97 cm3 (layout 259.97, level offset +0.614 mm), fillet 2.5 mm, rims 1.0 mm, mesh 2,348,752 faces, 594 s
+solid check: FAIL {"bodies_plain": 2, "bodies_eroded": 1, "eroded_volumes_mm3": [196461.4], "necks": [], "drawn_not_in_main": [["0.0", 0.844, "erode 2.0"]], "thin_walls": [], "acute_edges": 15, "ok": false}
+solid check: FAIL {"bodies_plain": 2, "bodies_eroded": 1, "eroded_volumes_mm3": [196461.4], "necks": [], "drawn_not_in_main": [["0.0", 0.844, "erode 2.0"]], "thin_walls": [], "acute_edges": 15, "ok": false}
+function check: {'skin_mm3': 139074.4, 'skin_missing_mm3': 55.95, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 139074.4, 'skin_missing_mm3': 55.95, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.52 in 'cage crash 4 [0.0, 0.0, 1.0] via head guard' at [32.4, -21.0, 2.8]
+strength: worst index 0.52 in 'cage crash 4 [0.0, 0.0, 1.0] via head guard' at [32.4, -21.0, 2.8]
+RESULT {"name": "overseer_arm_front", "solid_ok": false, "mass_g": 330.87, "worst": 0.521, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_front", "solid_ok": false, "mass_g": 330.87, "worst": 0.521, "function_ok": true, "bodies": 1}
