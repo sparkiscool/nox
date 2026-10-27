@@ -32,3 +32,5 @@ layout: 24 load cases + 0 tie cases (0 bodies tied, 3 held by support 'hold 0') 
 layout: 24 load cases + 0 tie cases (0 bodies tied, 3 held by support 'hold 0') + 0 gate ties + 12 held ties
 fem: grid (40, 40, 40) = 64,000 elements, 55,038 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
 fem: grid (40, 40, 40) = 64,000 elements, 55,038 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0295 (dil 0.0357 g +1.917) grey  9.2% ch 0.010 worst held b3 fz 6.77e+05 21.4s
+it   1 beta    1 J  10.0000 vol 0.0295 (dil 0.0357 g +1.917) grey  9.2% ch 0.010 worst held b3 fz 6.77e+05 21.4s
