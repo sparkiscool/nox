@@ -1,0 +1,411 @@
+{
+ "round": 5,
+ "layout": "scout_layout v12 (PR 141, on main)",
+ "catch": -4.999999046325684,
+ "funnel_line": [
+  -66.0,
+  -46.6,
+  -233.2,
+  44.5
+ ],
+ "note": "drone frame (x nose, y left, z up, thrust centre x 0), catch 5.0 forward (v12); boxes [[x0, y0, z0], [x1, y1, z1]]; masses E unless tagged",
+ "items": {
+  "Radxa Zero 3W": {
+   "box": [
+    [
+     -138.9,
+     -4.6,
+     8.0
+    ],
+    [
+     -68.4,
+     6.0,
+     45.0
+    ]
+   ],
+   "mass_g": 10.0,
+   "tag": "E",
+   "cg": [
+    -104.4,
+    -0.8,
+    23.0
+   ],
+   "funnel_margin": 14.9,
+   "rods": 20.3,
+   "inset": 13.3,
+   "wash": 5.7
+  },
+  "UBEC": {
+   "box": [
+    [
+     -171.1,
+     11.2,
+     16.0
+    ],
+    [
+     -110.1,
+     26.6,
+     24.0
+    ]
+   ],
+   "mass_g": 15.0,
+   "tag": "E",
+   "cg": [
+    -140.6,
+    18.9,
+    20.0
+   ],
+   "funnel_margin": 5.4,
+   "rods": 13.8,
+   "inset": 5.0,
+   "wash": 18.8
+  },
+  "XR2": {
+   "box": [
+    [
+     -110.0,
+     -27.0,
+     23.0
+    ],
+    [
+     -94.0,
+     -15.0,
+     45.0
+    ]
+   ],
+   "mass_g": 1.0,
+   "tag": "P",
+   "cg": [
+    -102.0,
+    -21.0,
+    28.0
+   ],
+   "funnel_margin": 45.7,
+   "rods": 14.9,
+   "inset": 14.9,
+   "wash": 3.7
+  }
+ },
+ "mount": {
+  "belly-mount tail block (PETG)": {
+   "box": [
+    [
+     -69.4,
+     -21.0,
+     -8.0
+    ],
+    [
+     -14.0,
+     21.0,
+     34.0
+    ]
+   ],
+   "mass_g": 15.92,
+   "tag": "E",
+   "cg": [
+    -45.3,
+    0.7,
+    12.9
+   ],
+   "note": "block 21.4 x 11.05 between the tongues, gusset on the receiver's tail face, web under the plate tab to 2 plate-bolt bosses at [(-42.0, 16.0), (-42.0, -16.0)], fin through the notch, foot on the plate top to x -14.0; 6 inserts",
+   "funnel_margin": 36.7,
+   "rods": 27.0,
+   "inset": 25.8
+  },
+  "tail carrier (PETG)": {
+   "box": [
+    [
+     -163.1,
+     -27.0,
+     -13.0
+    ],
+    [
+     -48.0,
+     26.6,
+     37.5
+    ]
+   ],
+   "mass_g": 33.23,
+   "tag": "E",
+   "cg": [
+    -102.6,
+    -0.7,
+    9.6
+   ],
+   "note": "yoke (2 tongues, 4 M3, 2.0 side wall, lower back under the Radxa) + spine (2.0 inner wall, box y -13.05..-6.55 aft of x -78.5) + 4 \u00d88 posts + cross plate + UBEC tray + XR2 shelf; one print",
+   "funnel_margin": 3.7,
+   "rods": 16.6,
+   "inset": 3.5
+  }
+ },
+ "keep_clear": {
+  "plugs": [
+   [
+    -99.8,
+    -4.0,
+    39.5
+   ],
+   [
+    -68.4,
+    6.0,
+    45.0
+   ]
+  ],
+  "tool_lines": {
+   "SD card": {
+    "start": [
+     -138.9,
+     -3.0,
+     23.0
+    ],
+    "dir": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "d": 10.0
+   },
+   "USB-C 1": {
+    "start": [
+     -95.4,
+     1.6,
+     39.5
+    ],
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "d": 10.0
+   }
+  },
+  "keys": {
+   "M3 key, yoke top bolt (x -54.5)": {
+    "start": [
+     -54.5,
+     0.5,
+     23.5
+    ],
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "d": 4
+   },
+   "M3 key, yoke bottom bolt (x -54.5)": {
+    "start": [
+     -54.5,
+     0.5,
+     -13.0
+    ],
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "d": 4
+   },
+   "M3 key, yoke top bolt (x -63.5)": {
+    "start": [
+     -63.5,
+     0.5,
+     23.5
+    ],
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "d": 4
+   },
+   "M3 key, yoke bottom bolt (x -63.5)": {
+    "start": [
+     -63.5,
+     0.5,
+     -13.0
+    ],
+    "dir": [
+     -0.259,
+     0.0,
+     -0.966
+    ],
+    "d": 4
+   },
+   "M3 key, plate bolt (-42.0, +16.0)": {
+    "start": [
+     -42.0,
+     16.0,
+     22.5
+    ],
+    "dir": [
+     0.109,
+     -0.408,
+     0.906
+    ],
+    "d": 4
+   },
+   "M3 key, plate bolt (-42.0, -16.0)": {
+    "start": [
+     -42.0,
+     -16.0,
+     22.5
+    ],
+    "dir": [
+     0.211,
+     0.366,
+     0.906
+    ],
+    "d": 4
+   }
+  }
+ },
+ "cables": {
+  "mass_g": 6.27,
+  "tag": "E",
+  "cg": [
+   -8.3,
+   2.3,
+   31.6
+  ],
+  "runs": {
+   "camera USB-C": {
+    "g": 4.09,
+    "mid": [
+     26.1,
+     0.8,
+     40.0
+    ],
+    "L": 272.0
+   },
+   "Radxa UART": {
+    "g": 0.35,
+    "mid": [
+     -49.0,
+     -0.8,
+     12.2
+    ],
+    "L": 140.0
+   },
+   "UBEC 5 V out": {
+    "g": 0.55,
+    "mid": [
+     -136.0,
+     8.6,
+     15.5
+    ],
+    "L": 83.0
+   },
+   "UBEC in (FC pads)": {
+    "g": 1.01,
+    "mid": [
+     -53.6,
+     9.5,
+     16.8
+    ],
+    "L": 153.0
+   },
+   "XR2 UART": {
+    "g": 0.28,
+    "mid": [
+     -47.6,
+     -10.5,
+     19.2
+    ],
+    "L": 139.0
+   }
+  }
+ },
+ "mount_total": {
+  "mass_g": 49.2,
+  "cg": [
+   -84.0,
+   -0.2,
+   10.7
+  ]
+ },
+ "cg": {
+  "pack_in": [
+   0.38,
+   0.41,
+   2.6
+  ],
+  "pack_out": [
+   -1.37,
+   0.58,
+   11.22
+  ],
+  "h_in": 0.56,
+  "h_out": 1.49,
+  "mass": 745.7,
+  "best_catch_bay_riding": {
+   "catch": -6.0,
+   "h_in": 1.09,
+   "h_out": 1.06
+  }
+ },
+ "ubec_region": {
+  "at_layout_catch": {
+   "catch": -5.0,
+   "cg_now": [
+    0.56,
+    1.49
+   ],
+   "box_now": [
+    [
+     -171.1,
+     11.2,
+     16.0
+    ],
+    [
+     -110.1,
+     26.6,
+     24.0
+    ]
+   ],
+   "n": 10598,
+   "shift_x": [
+    -40.0,
+    17.0
+   ],
+   "shift_y": [
+    0.0,
+    20.0
+   ],
+   "shift_z_min_at_dx0": -5.0
+  },
+  "at_best_catch": {
+   "catch": -6.0,
+   "cg_now": [
+    1.09,
+    1.06
+   ],
+   "box_now": [
+    [
+     -170.1,
+     11.2,
+     16.0
+    ],
+    [
+     -109.1,
+     26.6,
+     24.0
+    ]
+   ],
+   "n": 10246,
+   "shift_x": [
+    -40.0,
+    16.0
+   ],
+   "shift_y": [
+    0.0,
+    20.0
+   ],
+   "shift_z_min_at_dx0": -5.0
+  }
+ },
+ "requirements": {
+  "belly_mount": "its tail face at x -31.0 over |y| <= 22, z 9.6..18.5 (10.85 ahead of the layout's box): the tail block's web and the 2 plate-bolt bosses sit there under the plate; the block's gusset bears on the receiver's tail face (z -4..9.6, |y| <= 7.2)",
+  "plate": "2 x \u00d83.4 holes at (-42.0, +-16.0) in the tail tab (8.0 from its tail edge, 7.0 from the notch edge)"
+ }
+}
