@@ -219,3 +219,5 @@ fem: grid (64, 64, 64) = 262,144 elements, 307,275 active dofs; backend direct (
 fem: grid (64, 64, 64) = 262,144 elements, 307,275 active dofs; backend direct (direct estimate 3.6 GB, budget 11.8 GB)
 layout: warm start from a (32, 32, 32) grid (h 2.0): mean x 0.009
 layout: warm start from a (32, 32, 32) grid (h 2.0): mean x 0.009
+it   1 beta    4 J  10.0000 vol 0.0105 (dil 0.0463 g +0.143) grey  3.0% ch 0.100 worst held b1 fy 9.18e+05 511.6s
+it   1 beta    4 J  10.0000 vol 0.0105 (dil 0.0463 g +0.143) grey  3.0% ch 0.100 worst held b1 fy 9.18e+05 511.6s
