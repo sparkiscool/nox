@@ -283,6 +283,13 @@ def test_balance_no_swap_reported():
     assert r["balance"]["pass_"] and "reported" in r["summary"], r["summary"]
 
 
+def test_exempt_opening():
+    sp = {"name": "lidar", "sphere": {"r": 10, "center": [55, 0, 0]}, "role": "protected", "mass_g": 5}
+    assert not run(sysm(sp, probes=False))["cage_first"]["pass_"]                  # pokes out of the cage
+    r = run(sysm(sp, probes=False, openings=[{"part": "lidar", "exempt": True}]))
+    assert r["cage_first"]["pass_"] and "exempt" in r["summary"], r["summary"]
+
+
 if __name__ == "__main__":
     for k, f in list(globals().items()):
         if k.startswith("test_"):

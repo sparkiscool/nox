@@ -1,0 +1,2192 @@
+{
+ "name": "Overseer",
+ "pass_": true,
+ "cage_first": {
+  "applies": true,
+  "pass_": true,
+  "worst_part": "down camera",
+  "worst_dir": [
+   -0.0,
+   -0.0,
+   -1.0
+  ],
+  "worst_dir_label": "-Z",
+  "margin_mm": 10.65,
+  "required_mm": 0.0,
+  "n_dirs": 2006,
+  "cage_margin_mm": 3.0,
+  "per_part": {
+   "Unitree L2": {
+    "min_margin_mm": -66.63,
+    "worst_dir": [
+     0.964,
+     -0.024,
+     -0.264
+    ],
+    "worst_slack_mm": 999999933.37,
+    "min_margin_outside_openings_mm": null,
+    "dirs_in_openings": 2006,
+    "pass_": true
+   },
+   "front camera": {
+    "min_margin_mm": -31.46,
+    "worst_dir": [
+     0.213,
+     -0.032,
+     0.977
+    ],
+    "worst_slack_mm": 999999968.54,
+    "min_margin_outside_openings_mm": null,
+    "dirs_in_openings": 2006,
+    "pass_": true
+   },
+   "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)": {
+    "min_margin_mm": 67.15,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 64.15,
+    "min_margin_outside_openings_mm": 67.15,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "pack": {
+    "min_margin_mm": 15.15,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 15.15,
+    "min_margin_outside_openings_mm": 74.78,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "cartridge": {
+    "min_margin_mm": 13.15,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 13.15,
+    "min_margin_outside_openings_mm": 69.72,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "receiver": {
+    "min_margin_mm": 13.15,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 13.15,
+    "min_margin_outside_openings_mm": 69.72,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "down camera": {
+    "min_margin_mm": 10.65,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 10.65,
+    "min_margin_outside_openings_mm": 97.75,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "flow MTF-02P": {
+    "min_margin_mm": 14.15,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 14.15,
+    "min_margin_outside_openings_mm": 106.34,
+    "dirs_in_openings": 235,
+    "pass_": true
+   },
+   "motor 1": {
+    "min_margin_mm": 61.87,
+    "worst_dir": [
+     0.084,
+     0.062,
+     0.995
+    ],
+    "worst_slack_mm": 58.87,
+    "min_margin_outside_openings_mm": 61.87,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "prop 1": {
+    "min_margin_mm": 27.56,
+    "worst_dir": [
+     0.114,
+     0.234,
+     0.966
+    ],
+    "worst_slack_mm": 24.56,
+    "min_margin_outside_openings_mm": 27.56,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "motor 2": {
+    "min_margin_mm": 69.33,
+    "worst_dir": [
+     -0.118,
+     0.094,
+     0.989
+    ],
+    "worst_slack_mm": 66.33,
+    "min_margin_outside_openings_mm": 69.33,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "prop 2": {
+    "min_margin_mm": 27.12,
+    "worst_dir": [
+     -0.279,
+     0.369,
+     0.886
+    ],
+    "worst_slack_mm": 24.12,
+    "min_margin_outside_openings_mm": 27.12,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "motor 3": {
+    "min_margin_mm": 68.86,
+    "worst_dir": [
+     -0.165,
+     -0.041,
+     0.986
+    ],
+    "worst_slack_mm": 65.86,
+    "min_margin_outside_openings_mm": 68.86,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "prop 3": {
+    "min_margin_mm": 27.44,
+    "worst_dir": [
+     -0.291,
+     -0.374,
+     0.881
+    ],
+    "worst_slack_mm": 24.44,
+    "min_margin_outside_openings_mm": 27.44,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "motor 4": {
+    "min_margin_mm": 64.42,
+    "worst_dir": [
+     0.081,
+     -0.092,
+     0.993
+    ],
+    "worst_slack_mm": 61.42,
+    "min_margin_outside_openings_mm": 64.42,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "prop 4": {
+    "min_margin_mm": 28.39,
+    "worst_dir": [
+     0.133,
+     -0.297,
+     0.946
+    ],
+    "worst_slack_mm": 25.39,
+    "min_margin_outside_openings_mm": 28.39,
+    "dirs_in_openings": 0,
+    "pass_": true
+   }
+  }
+ },
+ "shell": {
+  "applies": true,
+  "pass_": true,
+  "closed": true,
+  "gap_share": 0.0,
+  "open_share": 0.161,
+  "ratio": 0.281,
+  "ratio_min": null,
+  "nodes": 50,
+  "rods": 139,
+  "triangles": 91,
+  "longest_rod_mm": 296.1,
+  "largest_cell_mm": 148.6
+ },
+ "compact": {
+  "bbox_min": [
+   -290.83,
+   -348.98,
+   -67.15
+  ],
+  "bbox_max": [
+   450.9,
+   348.98,
+   150.24
+  ],
+  "extents_mm": [
+   741.7,
+   698.0,
+   217.4
+  ],
+  "largest_extent_mm": 741.7,
+  "bbox_L": 112.544,
+  "hull_L": 62.332,
+  "guard_offsets_mm": {
+   "shell tubes to prop disks, 3D (G)": 14.9
+  }
+ },
+ "fit": {
+  "pass_": true,
+  "tol_mm3": 0.5,
+  "worst": {
+   "a": "spokes, ties, keels, L2 guard ring",
+   "b": "cartridge",
+   "overlap_mm3": 0.1,
+   "limit_mm3": 0.5,
+   "contact": false,
+   "method": "manifold3d",
+   "pass_": true
+  },
+  "pairs": [
+   {
+    "a": "cage shell tubes",
+    "b": "cage shell nodes",
+    "overlap_mm3": 73604.31,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "cage shell tubes",
+    "b": "spokes, ties, keels, L2 guard ring",
+    "overlap_mm3": 3571.5,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "cage shell nodes",
+    "b": "spokes, ties, keels, L2 guard ring",
+    "overlap_mm3": 3127.42,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "L2 guard ring nodes",
+    "overlap_mm3": 1007.25,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "apex + cam bracket",
+    "overlap_mm3": 352.96,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "bottom plate",
+    "overlap_mm3": 21.5,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "cartridge",
+    "overlap_mm3": 0.1,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "receiver",
+    "overlap_mm3": 0.1,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "belly sled + pods",
+    "overlap_mm3": 440.99,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "arm 1",
+    "overlap_mm3": 147.02,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "arm 2",
+    "overlap_mm3": 95.68,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "arm 3",
+    "overlap_mm3": 95.68,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "arm 4",
+    "overlap_mm3": 147.02,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "TPU feet",
+    "b": "belly sled + pods",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "apex + cam bracket",
+    "b": "Unitree L2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "apex + cam bracket",
+    "b": "front camera",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "apex + cam bracket",
+    "b": "top plate",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "apex + cam bracket",
+    "b": "bottom plate",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top plate",
+    "b": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top plate",
+    "b": "arm 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top plate",
+    "b": "arm 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top plate",
+    "b": "arm 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "top plate",
+    "b": "arm 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "bottom plate",
+    "b": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "bottom plate",
+    "b": "belly sled + pods",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "bottom plate",
+    "b": "arm 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "bottom plate",
+    "b": "arm 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "bottom plate",
+    "b": "arm 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "bottom plate",
+    "b": "arm 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "b": "wires",
+    "overlap_mm3": 22680.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "b": "arm 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "b": "arm 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "b": "arm 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "b": "arm 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "pack",
+    "b": "cartridge",
+    "overlap_mm3": 319680.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "pack",
+    "b": "receiver",
+    "overlap_mm3": 319680.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "receiver",
+    "overlap_mm3": 439923.42,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "cartridge",
+    "b": "belly sled + pods",
+    "overlap_mm3": 19375.2,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "receiver",
+    "b": "belly sled + pods",
+    "overlap_mm3": 19375.2,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "belly sled + pods",
+    "b": "down camera",
+    "overlap_mm3": 2166.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "belly sled + pods",
+    "b": "flow MTF-02P",
+    "overlap_mm3": 518.4,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "arm 1",
+    "b": "motor 1",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm 2",
+    "b": "motor 2",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm 3",
+    "b": "motor 3",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "arm 4",
+    "b": "motor 4",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   }
+  ],
+  "clearance": []
+ },
+ "mass_cg": {
+  "mass_g": 3375.36,
+  "cg": [
+   63.34,
+   0.55,
+   18.1
+  ],
+  "parts": [
+   {
+    "name": "cage shell tubes",
+    "mass_g": 559.96,
+    "cg": [
+     84.16,
+     0.09,
+     49.31
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "cage shell nodes",
+    "mass_g": 225.0,
+    "cg": [
+     89.18,
+     0.0,
+     42.45
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "spokes, ties, keels, L2 guard ring",
+    "mass_g": 63.24,
+    "cg": [
+     141.28,
+     0.09,
+     14.58
+    ],
+    "tag": "C",
+    "swap": false
+   },
+   {
+    "name": "L2 guard ring nodes",
+    "mass_g": 12.0,
+    "cg": [
+     378.85,
+     0.0,
+     53.07
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "TPU feet",
+    "mass_g": 2.46,
+    "cg": [
+     -30.0,
+     0.0,
+     -54.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "apex + cam bracket",
+    "mass_g": 27.43,
+    "cg": [
+     347.88,
+     0.0,
+     58.37
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "Unitree L2",
+    "mass_g": 230.0,
+    "cg": [
+     412.09,
+     -0.0,
+     44.16
+    ],
+    "tag": "P",
+    "swap": false
+   },
+   {
+    "name": "front camera",
+    "mass_g": 15.0,
+    "cg": [
+     380.75,
+     0.0,
+     130.24
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "top plate",
+    "mass_g": 23.0,
+    "cg": [
+     0.0,
+     0.0,
+     45.8
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "bottom plate",
+    "mass_g": 61.0,
+    "cg": [
+     2.5,
+     0.0,
+     -1.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "mass_g": 116.59,
+    "cg": [
+     -26.92,
+     0.5,
+     20.3
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "wires",
+    "mass_g": 80.0,
+    "cg": [
+     0.0,
+     0.0,
+     9.75
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "pack",
+    "mass_g": 650.0,
+    "cg": [
+     -30.0,
+     0.0,
+     -29.5
+    ],
+    "tag": "E",
+    "swap": true
+   },
+   {
+    "name": "cartridge",
+    "mass_g": 152.33,
+    "cg": [
+     -30.0,
+     0.0,
+     -28.05
+    ],
+    "tag": "E",
+    "swap": true
+   },
+   {
+    "name": "receiver",
+    "mass_g": 186.18,
+    "cg": [
+     -30.0,
+     0.0,
+     -28.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "belly sled + pods",
+    "mass_g": 64.83,
+    "cg": [
+     -5.66,
+     16.92,
+     -19.56
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "down camera",
+    "mass_g": 15.0,
+    "cg": [
+     5.0,
+     49.0,
+     -51.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "flow MTF-02P",
+    "mass_g": 2.0,
+    "cg": [
+     5.0,
+     -42.0,
+     -49.75
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "arm 1",
+    "mass_g": 178.22,
+    "cg": [
+     120.62,
+     90.95,
+     24.35
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 1",
+    "mass_g": 81.0,
+    "cg": [
+     202.84,
+     139.5,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 1",
+    "mass_g": 10.0,
+    "cg": [
+     202.84,
+     139.5,
+     82.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "arm 2",
+    "mass_g": 84.45,
+    "cg": [
+     -58.94,
+     83.48,
+     27.94
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 2",
+    "mass_g": 81.0,
+    "cg": [
+     -76.16,
+     139.5,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 2",
+    "mass_g": 10.0,
+    "cg": [
+     -76.16,
+     139.5,
+     82.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "arm 3",
+    "mass_g": 84.45,
+    "cg": [
+     -58.94,
+     -83.48,
+     27.94
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 3",
+    "mass_g": 81.0,
+    "cg": [
+     -76.16,
+     -139.5,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 3",
+    "mass_g": 10.0,
+    "cg": [
+     -76.16,
+     -139.5,
+     82.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "arm 4",
+    "mass_g": 178.22,
+    "cg": [
+     120.62,
+     -90.95,
+     24.35
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "motor 4",
+    "mass_g": 81.0,
+    "cg": [
+     202.84,
+     -139.5,
+     58.0
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "prop 4",
+    "mass_g": 10.0,
+    "cg": [
+     202.84,
+     -139.5,
+     82.0
+    ],
+    "tag": "E",
+    "swap": false
+   }
+  ],
+  "tag": "E",
+  "cg_ref": [
+   63.343,
+   0.0,
+   82.0
+  ],
+  "cg_offset": [
+   -0.0,
+   0.55,
+   -63.9
+  ],
+  "cg_offset_mm": 63.9
+ },
+ "balance": {
+  "applies": true,
+  "ref": [
+   63.343,
+   0.0,
+   82.0
+  ],
+  "thrust_axis": [
+   0.0,
+   0.0,
+   1.0
+  ],
+  "tol_mm": 3.0,
+  "cases": {
+   "all": {
+    "mass_g": 3375.36,
+    "cg_offset": [
+     -0.0,
+     0.55,
+     -63.9
+    ],
+    "horizontal_mm": 0.55,
+    "axial_mm": -63.9,
+    "pass_": true,
+    "gated": true
+   },
+   "no_swap": {
+    "mass_g": 2573.03,
+    "cg_offset": [
+     29.11,
+     0.72,
+     -49.14
+    ],
+    "horizontal_mm": 29.12,
+    "axial_mm": -49.14,
+    "pass_": true,
+    "gated": false
+   }
+  },
+  "worst_case": "no_swap",
+  "worst_horizontal_mm": 29.12,
+  "pass_": true
+ },
+ "probes": {
+  "applies": true,
+  "pass_": true,
+  "probe_margin_mm": 0.0,
+  "worst": {
+   "probe": "edge",
+   "r_mm": 0.0,
+   "part": "down camera",
+   "margin_mm": 5.66,
+   "unshielded": false,
+   "dir": [
+    -0.705,
+    -0.056,
+    -0.707
+   ],
+   "dir_label": "(-0.70, -0.06, -0.71)",
+   "axis": [
+    -0.089,
+    0.996,
+    0.009
+   ],
+   "roll_deg": 225.0,
+   "lateral_mm": -24.8,
+   "contact": [
+    10.5,
+    46.7,
+    -56.5
+   ],
+   "pass_": true
+  },
+  "per_probe_part": [
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "down camera",
+    "margin_mm": 5.66,
+    "unshielded": false,
+    "dir": [
+     -0.705,
+     -0.056,
+     -0.707
+    ],
+    "dir_label": "(-0.70, -0.06, -0.71)",
+    "axis": [
+     -0.089,
+     0.996,
+     0.009
+    ],
+    "roll_deg": 225.0,
+    "lateral_mm": -24.8,
+    "contact": [
+     10.5,
+     46.7,
+     -56.5
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "down camera",
+    "margin_mm": 5.66,
+    "unshielded": false,
+    "dir": [
+     0.704,
+     0.069,
+     -0.707
+    ],
+    "dir_label": "(+0.70, +0.07, -0.71)",
+    "axis": [
+     -0.089,
+     0.996,
+     0.009
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": 125.2,
+    "contact": [
+     5.8,
+     54.9,
+     -56.5
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "cartridge",
+    "margin_mm": 8.49,
+    "unshielded": false,
+    "dir": [
+     -0.565,
+     0.425,
+     -0.707
+    ],
+    "dir_label": "(-0.56, +0.43, -0.71)",
+    "axis": [
+     -0.607,
+     -0.794,
+     0.007
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": -36.8,
+    "contact": [
+     -108.5,
+     0.0,
+     -54.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "receiver",
+    "margin_mm": 8.49,
+    "unshielded": false,
+    "dir": [
+     -0.565,
+     0.425,
+     -0.707
+    ],
+    "dir_label": "(-0.56, +0.43, -0.71)",
+    "axis": [
+     -0.607,
+     -0.794,
+     0.007
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": -36.8,
+    "contact": [
+     -108.5,
+     0.0,
+     -54.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "cartridge",
+    "margin_mm": 8.49,
+    "unshielded": false,
+    "dir": [
+     -0.565,
+     0.425,
+     -0.707
+    ],
+    "dir_label": "(-0.56, +0.43, -0.71)",
+    "axis": [
+     -0.607,
+     -0.794,
+     0.007
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": -26.3,
+    "contact": [
+     -108.5,
+     -11.0,
+     -54.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "receiver",
+    "margin_mm": 8.49,
+    "unshielded": false,
+    "dir": [
+     -0.565,
+     0.425,
+     -0.707
+    ],
+    "dir_label": "(-0.56, +0.43, -0.71)",
+    "axis": [
+     -0.607,
+     -0.794,
+     0.007
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": -26.3,
+    "contact": [
+     -108.5,
+     -11.0,
+     -54.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "flow MTF-02P",
+    "margin_mm": 9.9,
+    "unshielded": false,
+    "dir": [
+     -0.565,
+     0.425,
+     -0.707
+    ],
+    "dir_label": "(-0.56, +0.43, -0.71)",
+    "axis": [
+     -0.607,
+     -0.794,
+     0.007
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": 39.7,
+    "contact": [
+     -5.8,
+     -46.0,
+     -53.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "flow MTF-02P",
+    "margin_mm": 9.9,
+    "unshielded": false,
+    "dir": [
+     -0.565,
+     0.425,
+     -0.707
+    ],
+    "dir_label": "(-0.56, +0.43, -0.71)",
+    "axis": [
+     -0.607,
+     -0.794,
+     0.007
+    ],
+    "roll_deg": 135.0,
+    "lateral_mm": 48.7,
+    "contact": [
+     -2.9,
+     -50.0,
+     -53.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 3",
+    "margin_mm": 18.36,
+    "unshielded": false,
+    "dir": [
+     -0.261,
+     -0.485,
+     0.835
+    ],
+    "dir_label": "(-0.26, -0.49, +0.83)",
+    "axis": [
+     0.962,
+     -0.057,
+     0.267
+    ],
+    "roll_deg": 30.0,
+    "lateral_mm": 165.7,
+    "contact": [
+     -154.9,
+     -239.1,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 2",
+    "margin_mm": 18.42,
+    "unshielded": false,
+    "dir": [
+     -0.203,
+     0.45,
+     0.87
+    ],
+    "dir_label": "(-0.20, +0.45, +0.87)",
+    "axis": [
+     0.746,
+     -0.504,
+     0.435
+    ],
+    "roll_deg": 345.0,
+    "lateral_mm": -20.3,
+    "contact": [
+     -151.2,
+     241.9,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 1",
+    "margin_mm": 18.68,
+    "unshielded": false,
+    "dir": [
+     0.329,
+     0.07,
+     0.942
+    ],
+    "dir_label": "(+0.33, +0.07, +0.94)",
+    "axis": [
+     -0.766,
+     0.603,
+     0.223
+    ],
+    "roll_deg": 15.0,
+    "lateral_mm": 240.7,
+    "contact": [
+     329.7,
+     145.0,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 4",
+    "margin_mm": 18.68,
+    "unshielded": false,
+    "dir": [
+     0.321,
+     0.017,
+     0.947
+    ],
+    "dir_label": "(+0.32, +0.02, +0.95)",
+    "axis": [
+     -0.622,
+     0.758,
+     0.197
+    ],
+    "roll_deg": 15.0,
+    "lateral_mm": 80.2,
+    "contact": [
+     329.6,
+     -131.2,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 2",
+    "margin_mm": 18.68,
+    "unshielded": false,
+    "dir": [
+     -0.203,
+     0.45,
+     0.87
+    ],
+    "dir_label": "(-0.20, +0.45, +0.87)",
+    "axis": [
+     0.746,
+     -0.504,
+     0.435
+    ],
+    "roll_deg": 345.0,
+    "lateral_mm": -20.3,
+    "contact": [
+     -151.2,
+     241.9,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 3",
+    "margin_mm": 18.74,
+    "unshielded": false,
+    "dir": [
+     -0.261,
+     -0.485,
+     0.835
+    ],
+    "dir_label": "(-0.26, -0.49, +0.83)",
+    "axis": [
+     0.962,
+     -0.057,
+     0.267
+    ],
+    "roll_deg": 30.0,
+    "lateral_mm": 165.7,
+    "contact": [
+     -154.9,
+     -239.1,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 1",
+    "margin_mm": 18.87,
+    "unshielded": false,
+    "dir": [
+     0.329,
+     0.128,
+     0.936
+    ],
+    "dir_label": "(+0.33, +0.13, +0.94)",
+    "axis": [
+     -0.872,
+     0.422,
+     0.249
+    ],
+    "roll_deg": 15.0,
+    "lateral_mm": 209.2,
+    "contact": [
+     329.6,
+     146.9,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 4",
+    "margin_mm": 19.0,
+    "unshielded": false,
+    "dir": [
+     0.301,
+     -0.005,
+     0.954
+    ],
+    "dir_label": "(+0.30, -0.01, +0.95)",
+    "axis": [
+     -0.953,
+     0.017,
+     0.301
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": -152.3,
+    "contact": [
+     328.8,
+     -156.1,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "margin_mm": 70.83,
+    "unshielded": false,
+    "dir": [
+     -0.011,
+     -0.5,
+     -0.866
+    ],
+    "dir_label": "(-0.01, -0.50, -0.87)",
+    "axis": [
+     -1.0,
+     -0.001,
+     0.013
+    ],
+    "roll_deg": 210.0,
+    "lateral_mm": 2.2,
+    "contact": [
+     -42.0,
+     -27.0,
+     0.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 1",
+    "margin_mm": 80.52,
+    "unshielded": false,
+    "dir": [
+     0.119,
+     0.29,
+     -0.95
+    ],
+    "dir_label": "(+0.12, +0.29, -0.95)",
+    "axis": [
+     0.962,
+     0.203,
+     0.183
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 111.7,
+    "contact": [
+     208.1,
+     152.3,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 4",
+    "margin_mm": 80.78,
+    "unshielded": false,
+    "dir": [
+     0.158,
+     -0.289,
+     -0.944
+    ],
+    "dir_label": "(+0.16, -0.29, -0.94)",
+    "axis": [
+     -0.385,
+     -0.899,
+     0.211
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 168.7,
+    "contact": [
+     209.8,
+     -151.5,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "motor 1",
+    "margin_mm": 80.78,
+    "unshielded": false,
+    "dir": [
+     0.067,
+     0.291,
+     -0.954
+    ],
+    "dir_label": "(+0.07, +0.29, -0.95)",
+    "axis": [
+     -0.723,
+     0.673,
+     0.155
+    ],
+    "roll_deg": 165.0,
+    "lateral_mm": -194.3,
+    "contact": [
+     208.1,
+     152.3,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "motor 4",
+    "margin_mm": 81.11,
+    "unshielded": false,
+    "dir": [
+     0.059,
+     -0.295,
+     -0.954
+    ],
+    "dir_label": "(+0.06, -0.30, -0.95)",
+    "axis": [
+     -0.734,
+     -0.661,
+     0.159
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 191.2,
+    "contact": [
+     204.7,
+     -153.2,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 2",
+    "margin_mm": 85.87,
+    "unshielded": false,
+    "dir": [
+     -0.104,
+     0.338,
+     -0.936
+    ],
+    "dir_label": "(-0.10, +0.34, -0.94)",
+    "axis": [
+     -0.872,
+     0.422,
+     0.249
+    ],
+    "roll_deg": 165.0,
+    "lateral_mm": -51.8,
+    "contact": [
+     -79.7,
+     152.9,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 3",
+    "margin_mm": 85.87,
+    "unshielded": false,
+    "dir": [
+     -0.139,
+     -0.303,
+     -0.943
+    ],
+    "dir_label": "(-0.14, -0.30, -0.94)",
+    "axis": [
+     -0.946,
+     -0.241,
+     0.217
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 95.2,
+    "contact": [
+     -81.5,
+     -152.3,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "motor 2",
+    "margin_mm": 86.12,
+    "unshielded": false,
+    "dir": [
+     -0.104,
+     0.338,
+     -0.936
+    ],
+    "dir_label": "(-0.10, +0.34, -0.94)",
+    "axis": [
+     -0.872,
+     0.422,
+     0.249
+    ],
+    "roll_deg": 165.0,
+    "lateral_mm": -51.8,
+    "contact": [
+     -81.5,
+     152.3,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "motor 3",
+    "margin_mm": 86.27,
+    "unshielded": false,
+    "dir": [
+     -0.093,
+     -0.337,
+     -0.937
+    ],
+    "dir_label": "(-0.09, -0.34, -0.94)",
+    "axis": [
+     -0.867,
+     -0.436,
+     0.243
+    ],
+    "roll_deg": 195.0,
+    "lateral_mm": 50.2,
+    "contact": [
+     -79.7,
+     -152.9,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "margin_mm": 89.03,
+    "unshielded": false,
+    "dir": [
+     0.186,
+     -0.181,
+     -0.966
+    ],
+    "dir_label": "(+0.19, -0.18, -0.97)",
+    "axis": [
+     0.736,
+     0.676,
+     0.015
+    ],
+    "roll_deg": 165.0,
+    "lateral_mm": 0.7,
+    "contact": [
+     44.5,
+     -30.0,
+     20.0
+    ],
+    "pass_": true
+   }
+  ],
+  "n_axes": 500,
+  "n_roll": 24,
+  "orientations": 12000,
+  "res_mm": 1.0,
+  "bin_mm": 1.5,
+  "radii_mm": [
+   0.0,
+   10.0
+  ],
+  "n_points": 769776
+ },
+ "access": {
+  "applies": true,
+  "pass_": true,
+  "tol_mm3": 0.5,
+  "paths": [
+   {
+    "name": "pack swap: cartridge + pack down through the opening",
+    "part": "cartridge",
+    "tool": "part",
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 20,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "FC USB-C cable",
+    "part": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "tool": {
+     "type": "box",
+     "w": 12,
+     "h": 7
+    },
+    "dir": [
+     0.091,
+     -0.9947,
+     0.0475
+    ],
+    "length_mm": 450.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "Pi 5 USB-C cable",
+    "part": "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)",
+    "tool": {
+     "type": "box",
+     "w": 12,
+     "h": 7
+    },
+    "dir": [
+     -0.1248,
+     -0.992,
+     -0.0175
+    ],
+    "length_mm": 450.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 1 top screw v +15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 1 top screw v -15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 1 bottom screw v +10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 1 bottom screw v -10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 2 top screw v +15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 2 top screw v -15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 2 bottom screw v +10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 2 bottom screw v -10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 3 top screw v +15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 3 top screw v -15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 3 bottom screw v +10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 3 bottom screw v -10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 4 top screw v +15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 4 top screw v -15",
+    "part": "top plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 4 bottom screw v +10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, arm 4 bottom screw v -10",
+    "part": "bottom plate",
+    "tool": {
+     "type": "cylinder",
+     "d": 8
+    },
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   }
+  ],
+  "n_clear": 19,
+  "worst": {
+   "name": "pack swap: cartridge + pack down through the opening",
+   "part": "cartridge",
+   "tool": "part",
+   "dir": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "length_mm": 150.0,
+   "steps": 20,
+   "blocked_by": [],
+   "touches": [],
+   "overlap_mm3": 0.0,
+   "pass_": true
+  }
+ },
+ "mass_budget": {
+  "applies": true,
+  "mass_g": 3375.36,
+  "part_budgets_g": {},
+  "over_parts": [],
+  "budget_g": 2200.0,
+  "pct": 153.4,
+  "total_ok": false,
+  "over": true,
+  "pass_": true
+ },
+ "geometry_tag": "E",
+ "summary": "System: Overseer, cage first 10.7 mm (E) at -Z (down camera) (Unitree L2, front camera outside the cage, exempt), shell 139 rods closed, h/w 0.28, fit 0.1 mm\u00b3 (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 113 L (E), extents 742 x 698 x 217 mm (E), mass 3375 of 2200 g (153 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [-0.0, +0.6, -63.9], 29.1 mm without swap parts (reported, L exception), probes 5.7 mm (E) edge at (-0.70, -0.06, -0.71) (down camera), access 19/19 clear",
+ "pass": true
+}

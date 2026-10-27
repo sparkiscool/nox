@@ -65,7 +65,8 @@ Manifest: {"name", "parts": [{"name", "mesh": path (STL/OBJ/PLY, relative to the
   "pose": 4x4 | {"t": [x,y,z], "rpy_deg": [r,p,y]} (R = Rz(y) Ry(p) Rx(r)), "role": cage|protected|structure|bought,
   "protect": true (any role), "material", "mass_g", "budget_g", "tag": M|C|E|P, "cg": [x,y,z] in part frame (optional),
   "swap": true (optional)}],
-  "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0, "skip_probes": false}],
+  "openings": [{"part" (omit = every protected part), "axis", "half_angle_deg", "min_mm": 0.0, "skip_probes": false} or
+  {"part", "exempt": true} (outside the cage on purpose: no cage-first or probe requirement, reported)],
   "contact_pairs": [[a, b, allowed_mm3]], "clearance_pairs": [[a, b, min_mm]], "guard_offsets": {name: mm},
   "cg_ref": [x,y,z], "thrust_axis": [0,0,1], "cg_tol_mm": 3.0, "balance_no_swap_gate": true, "cage_margin_mm": 3.0, "fit_tol_mm3": 0.5, "n_dirs": 2000,
   "probes": true | false | {"edge": true, "post": true, "post_r_mm": 10 or [radii], "n_dirs": 500, "n_roll": 24, "res_mm": 1.0},
@@ -560,6 +561,13 @@ def run(manifest, n_dirs=None, probes=None):
     anyE = any(p.get("tag") == "E" for p in parts)
     gtag = "E" if anyE else tag_of(gtags)
     n = n_dirs or manifest.get("n_dirs", 2000); cm = float(manifest.get("cage_margin_mm", 3.0))
+    # an opening with "exempt": true lifts cage first and the probes for its part in every direction (a sensor that must
+    # sit outside the cage with nothing in its field, Spark 26 Oct: set only with its CLAUDE.md / dimensions.md L line)
+    openings = []
+    for o in manifest.get("openings", []):
+        openings.append(dict(o, axis=[1, 0, 0], half_angle_deg=180.0, min_mm=-1e9, skip_probes=True) if o.get("exempt") else o)
+    exempt = sorted(o["part"] for o in manifest.get("openings", []) if o.get("exempt"))
+    manifest = dict(manifest, openings=openings)
     cf = cage_first(parts, meshes, manifest.get("openings", []), cm, n)
     cp = compact(meshes, manifest.get("guard_offsets"))
     ft = fit(parts, meshes, manifest.get("contact_pairs", []), float(manifest.get("fit_tol_mm3", 0.5)), manifest.get("clearance_pairs", []))
@@ -583,7 +591,8 @@ def run(manifest, n_dirs=None, probes=None):
     name = manifest.get("name", "system")
     if not cf["applies"]: cfs = "cage first n/a (no protected part)"
     elif "error" in cf: cfs = f"cage first FAIL ({cf['error']})"
-    else: cfs = f"cage first {cf['margin_mm']:.1f} mm ({gtag}) at {cf['worst_dir_label']} ({cf['worst_part']}){'' if cf['pass_'] else ' FAIL'}"
+    else: cfs = (f"cage first {cf['margin_mm']:.1f} mm ({gtag}) at {cf['worst_dir_label']} ({cf['worst_part']}){'' if cf['pass_'] else ' FAIL'}"
+                 + (f" ({', '.join(exempt)} outside the cage, exempt)" if exempt else ""))
     w = ft["worst"]
     fts = f"fit {w['overlap_mm3']:.1f} mm³ ({gtag}) ({w['a']}/{w['b']}){'' if ft['pass_'] else ' FAIL'}" if w else f"fit 0.0 mm³ ({gtag})"
     ex = cp["extents_mm"]

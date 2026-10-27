@@ -15,7 +15,7 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 
 ### Keep (on hand, decided)
 - S500 centre plates (2015 edition, Spark 23 Oct, CHECK), SunnySky X2216 II, 1045 props, MicoAir743-Lite, Matek FCHUB-12S, 4S 6000 packs (3), MTF-02P, Unitree L2, Pi 5 companion (`dimensions.md` O, `nox/parts-list.md`).
-- **L2 at the nose, axis 15° below forward** (Spark 24 Oct, kept 26 Oct with the geodesic cage v2), inside the cage (`dimensions.md` O Lidar, Cage v2).
+- **L2 at the nose, axis 15° below forward** (Spark 24 Oct), outside the cage with nothing in its field, guarded only from behind (Spark 26 Oct; `dimensions.md` O Lidar, Cage v3).
 - 2 x DECXIN 2633V2: front portrait at the horizon behind the L2 (DEFAULT 24 Oct with the forward-down L2; alt 30° up, the 23 Oct choice), rigid to the L2 for the camera-lidar calibration; underside straight down (Spark 23 Oct). Pointing in `dimensions.md` O Camera.
 - PX4 1.18.0rc, airframe 4001, DShot, CRSF; flies perfectly in Position mode (Spark 23 Oct); tune backup `claude/overseer_params_2026-09-26.params`, never delete. Switches matched to the Scout (mode ch 5, kill ch 8).
 - Printed mounts generated with the `nox/topo` engine, not `noxopt` (Spark 23 Oct, lidar mount row).
@@ -32,8 +32,8 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel and the box swaps its pack.
 
 ### Parts to draw (order DEFAULT)
-Cage first, now a geodesic shell formed to the drone (Spark 26 Oct: the v2 layout kept, its cage replaced by triangles, compact like a disk, larger cells, 6 mm tubes, battery close to the body, a new funnel follows the cage): `layout_v4.py`, `dimensions.md` O Cage v2, method `docs/generative.md` rule 0 Geodesic cage. v0..v3 layouts kept.
-0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes: 39 shell nodes, 8 opening ring nodes, the spoke sockets at the arm tips, the L2 apex ties, the belly ties.
+Cage first, now a geodesic shell formed to the drone (Spark 26 Oct: the v2 layout kept, its cage replaced by triangles, compact like a disk, larger cells, 6 mm tubes, battery close to the body, a new funnel follows the cage): `layout_v5.py`, `dimensions.md` O Cage v3 (the L2 and front camera outside the cage, Spark 26 Oct), method `docs/generative.md` rule 0 Geodesic cage. v0..v4 layouts kept.
+0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes: 39 shell nodes, 8 opening ring nodes, the spoke sockets at the arm tips, the L2 apex ties, the L2 guard ring (8 nodes, 16 struts), the belly ties.
 1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors and spoke and strut sockets per the cage.
 2. Pi deck between the plates (4 posts over the FC stack).
 3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it (35 ahead of v2, Cage v2), 4 TPU feet; Ø9 driver holes at the rear arms' bottom screws (access, Cage v2); pogo pads with the new funnel.

@@ -1,0 +1,151 @@
+system_check Overseer: PASS
+  cage first PASS: worst 10.65 mm (E) at -Z on down camera (needs 0.0), 2006 dirs
+    Unitree L2: min margin -66.63 mm, outside openings None, slack 999999933.37 at (+0.96, -0.02, -0.26)
+    front camera: min margin -31.46 mm, outside openings None, slack 999999968.54 at (+0.21, -0.03, +0.98)
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): min margin 67.15 mm, outside openings 67.15, slack 64.15 at -Z
+    pack: min margin 15.15 mm, outside openings 74.78, slack 15.15 at -Z
+    cartridge: min margin 13.15 mm, outside openings 69.72, slack 13.15 at -Z
+    receiver: min margin 13.15 mm, outside openings 69.72, slack 13.15 at -Z
+    down camera: min margin 10.65 mm, outside openings 97.75, slack 10.65 at -Z
+    flow MTF-02P: min margin 14.15 mm, outside openings 106.34, slack 14.15 at -Z
+    motor 1: min margin 61.87 mm, outside openings 61.87, slack 58.87 at +Z
+    prop 1: min margin 27.56 mm, outside openings 27.56, slack 24.56 at (+0.11, +0.23, +0.97)
+    motor 2: min margin 69.33 mm, outside openings 69.33, slack 66.33 at +Z
+    prop 2: min margin 27.12 mm, outside openings 27.12, slack 24.12 at (-0.28, +0.37, +0.89)
+    motor 3: min margin 68.86 mm, outside openings 68.86, slack 65.86 at +Z
+    prop 3: min margin 27.44 mm, outside openings 27.44, slack 24.44 at (-0.29, -0.37, +0.88)
+    motor 4: min margin 64.42 mm, outside openings 64.42, slack 61.42 at +Z
+    prop 4: min margin 28.39 mm, outside openings 28.39, slack 25.39 at (+0.13, -0.30, +0.95)
+  shell PASS: 50 nodes, 139 rods, 91 triangles, closed outside the declared openings (16.1 %), h/w 0.281, longest rod 296.1 mm, largest cell Ø148.6 mm
+  compact: bbox 112.544 L (E), hull 62.332 L (E), extents [741.7, 698.0, 217.4] mm (E), largest 741.7 mm, guards {'shell tubes to prop disks, 3D (G)': 14.9}
+  fit PASS (tol 0.5 mm³):
+    cage shell tubes / cage shell nodes: 73604.31 mm³ (E) limit inf contact [manifold3d]
+    cage shell tubes / spokes, ties, keels, L2 guard ring: 3571.5 mm³ (E) limit inf contact [manifold3d]
+    cage shell nodes / spokes, ties, keels, L2 guard ring: 3127.42 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / L2 guard ring nodes: 1007.25 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / apex + cam bracket: 352.96 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / bottom plate: 21.5 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): 0.0 mm³ (E) limit 0.5 [manifold3d]
+    spokes, ties, keels, L2 guard ring / cartridge: 0.1 mm³ (E) limit 0.5 [manifold3d]
+    spokes, ties, keels, L2 guard ring / receiver: 0.1 mm³ (E) limit 0.5 [manifold3d]
+    spokes, ties, keels, L2 guard ring / belly sled + pods: 440.99 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / arm 1: 147.02 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / arm 2: 95.68 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / arm 3: 95.68 mm³ (E) limit inf contact [manifold3d]
+    spokes, ties, keels, L2 guard ring / arm 4: 147.02 mm³ (E) limit inf contact [manifold3d]
+    TPU feet / belly sled + pods: 0.0 mm³ (E) limit inf contact [aabb]
+    apex + cam bracket / Unitree L2: 0.0 mm³ (E) limit inf contact [manifold3d]
+    apex + cam bracket / front camera: 0.0 mm³ (E) limit inf contact [manifold3d]
+    apex + cam bracket / top plate: 0.0 mm³ (E) limit inf contact [aabb]
+    apex + cam bracket / bottom plate: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 1: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 2: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 3: 0.0 mm³ (E) limit inf contact [aabb]
+    top plate / arm 4: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / belly sled + pods: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 1: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 2: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 3: 0.0 mm³ (E) limit inf contact [aabb]
+    bottom plate / arm 4: 0.0 mm³ (E) limit inf contact [aabb]
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX) / wires: 22680.0 mm³ (E) limit inf contact [manifold3d]
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX) / arm 1: 0.0 mm³ (E) limit inf contact [manifold3d]
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX) / arm 2: 0.0 mm³ (E) limit inf contact [manifold3d]
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX) / arm 3: 0.0 mm³ (E) limit inf contact [manifold3d]
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX) / arm 4: 0.0 mm³ (E) limit inf contact [manifold3d]
+    pack / cartridge: 319680.0 mm³ (E) limit inf contact [manifold3d]
+    pack / receiver: 319680.0 mm³ (E) limit inf contact [manifold3d]
+    cartridge / receiver: 439923.42 mm³ (E) limit inf contact [manifold3d]
+    cartridge / belly sled + pods: 19375.2 mm³ (E) limit inf contact [manifold3d]
+    receiver / belly sled + pods: 19375.2 mm³ (E) limit inf contact [manifold3d]
+    belly sled + pods / down camera: 2166.0 mm³ (E) limit inf contact [manifold3d]
+    belly sled + pods / flow MTF-02P: 518.4 mm³ (E) limit inf contact [manifold3d]
+    arm 1 / motor 1: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 2 / motor 2: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 3 / motor 3: 0.0 mm³ (E) limit inf contact [aabb]
+    arm 4 / motor 4: 0.0 mm³ (E) limit inf contact [aabb]
+  mass 3375.36 g (E), CG [63.34, 0.55, 18.1], offset [-0.0, 0.55, -63.9] = 63.9 mm from [63.343, 0.0, 82.0]
+    cage shell tubes: 559.96 g (E) at [84.16, 0.09, 49.31]
+    cage shell nodes: 225.0 g (E) at [89.18, 0.0, 42.45]
+    spokes, ties, keels, L2 guard ring: 63.24 g (C) at [141.28, 0.09, 14.58]
+    L2 guard ring nodes: 12.0 g (E) at [378.85, 0.0, 53.07]
+    TPU feet: 2.46 g (E) at [-30.0, 0.0, -54.5]
+    apex + cam bracket: 27.43 g (E) at [347.88, 0.0, 58.37]
+    Unitree L2: 230.0 g (P) at [412.09, -0.0, 44.16]
+    front camera: 15.0 g (E) at [380.75, 0.0, 130.24]
+    top plate: 23.0 g (E) at [0.0, 0.0, 45.8]
+    bottom plate: 61.0 g (E) at [2.5, 0.0, -1.05]
+    hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): 116.59 g (E) at [-26.92, 0.5, 20.3]
+    wires: 80.0 g (E) at [0.0, 0.0, 9.75]
+    pack: 650.0 g (E) at [-30.0, 0.0, -29.5] swap
+    cartridge: 152.33 g (E) at [-30.0, 0.0, -28.05] swap
+    receiver: 186.18 g (E) at [-30.0, 0.0, -28.05]
+    belly sled + pods: 64.83 g (E) at [-5.66, 16.92, -19.56]
+    down camera: 15.0 g (E) at [5.0, 49.0, -51.5]
+    flow MTF-02P: 2.0 g (E) at [5.0, -42.0, -49.75]
+    arm 1: 178.22 g (E) at [120.62, 90.95, 24.35]
+    motor 1: 81.0 g (E) at [202.84, 139.5, 58.0]
+    prop 1: 10.0 g (E) at [202.84, 139.5, 82.0]
+    arm 2: 84.45 g (E) at [-58.94, 83.48, 27.94]
+    motor 2: 81.0 g (E) at [-76.16, 139.5, 58.0]
+    prop 2: 10.0 g (E) at [-76.16, 139.5, 82.0]
+    arm 3: 84.45 g (E) at [-58.94, -83.48, 27.94]
+    motor 3: 81.0 g (E) at [-76.16, -139.5, 58.0]
+    prop 3: 10.0 g (E) at [-76.16, -139.5, 82.0]
+    arm 4: 178.22 g (E) at [120.62, -90.95, 24.35]
+    motor 4: 81.0 g (E) at [202.84, -139.5, 58.0]
+    prop 4: 10.0 g (E) at [202.84, -139.5, 82.0]
+  balance PASS (horizontal CG offset <= 3.0 mm, thrust axis [0.0, 0.0, 1.0]):
+    all: 0.55 mm horizontal, -63.9 mm axial, 3375.36 g
+    no_swap: 29.12 mm horizontal, -49.14 mm axial, 2573.03 g (reported, not gated)
+  mass budget (soft): 3375.36 g of 2200.0 g (153.4 %)
+WARN  over budget: total 3375.36 of 2200.0 g (153.4 %)
+  crash probes PASS (cage ahead >= 0.0 mm; 500 axes x 24 approach angles, res 1.0 mm, bins 1.5 mm, 769776 surface points):
+    edge / down camera: 5.66 mm (E) from (-0.70, -0.06, -0.71), axis [-0.089, 0.996, 0.009], roll 225.0, lateral -24.8 mm, contact [10.5, 46.7, -56.5]
+    post r10 / down camera: 5.66 mm (E) from (+0.70, +0.07, -0.71), axis [-0.089, 0.996, 0.009], roll 135.0, lateral 125.2 mm, contact [5.8, 54.9, -56.5]
+    edge / cartridge: 8.49 mm (E) from (-0.56, +0.43, -0.71), axis [-0.607, -0.794, 0.007], roll 135.0, lateral -36.8 mm, contact [-108.5, 0.0, -54.0]
+    edge / receiver: 8.49 mm (E) from (-0.56, +0.43, -0.71), axis [-0.607, -0.794, 0.007], roll 135.0, lateral -36.8 mm, contact [-108.5, 0.0, -54.0]
+    post r10 / cartridge: 8.49 mm (E) from (-0.56, +0.43, -0.71), axis [-0.607, -0.794, 0.007], roll 135.0, lateral -26.3 mm, contact [-108.5, -11.0, -54.0]
+    post r10 / receiver: 8.49 mm (E) from (-0.56, +0.43, -0.71), axis [-0.607, -0.794, 0.007], roll 135.0, lateral -26.3 mm, contact [-108.5, -11.0, -54.0]
+    edge / flow MTF-02P: 9.9 mm (E) from (-0.56, +0.43, -0.71), axis [-0.607, -0.794, 0.007], roll 135.0, lateral 39.7 mm, contact [-5.8, -46.0, -53.0]
+    post r10 / flow MTF-02P: 9.9 mm (E) from (-0.56, +0.43, -0.71), axis [-0.607, -0.794, 0.007], roll 135.0, lateral 48.7 mm, contact [-2.9, -50.0, -53.0]
+    edge / prop 3: 18.36 mm (E) from (-0.26, -0.49, +0.83), axis [0.962, -0.057, 0.267], roll 30.0, lateral 165.7 mm, contact [-154.9, -239.1, 87.0]
+    edge / prop 2: 18.42 mm (E) from (-0.20, +0.45, +0.87), axis [0.746, -0.504, 0.435], roll 345.0, lateral -20.3 mm, contact [-151.2, 241.9, 87.0]
+    edge / prop 1: 18.68 mm (E) from (+0.33, +0.07, +0.94), axis [-0.766, 0.603, 0.223], roll 15.0, lateral 240.7 mm, contact [329.7, 145.0, 87.0]
+    edge / prop 4: 18.68 mm (E) from (+0.32, +0.02, +0.95), axis [-0.622, 0.758, 0.197], roll 15.0, lateral 80.2 mm, contact [329.6, -131.2, 87.0]
+    post r10 / prop 2: 18.68 mm (E) from (-0.20, +0.45, +0.87), axis [0.746, -0.504, 0.435], roll 345.0, lateral -20.3 mm, contact [-151.2, 241.9, 87.0]
+    post r10 / prop 3: 18.74 mm (E) from (-0.26, -0.49, +0.83), axis [0.962, -0.057, 0.267], roll 30.0, lateral 165.7 mm, contact [-154.9, -239.1, 87.0]
+    post r10 / prop 1: 18.87 mm (E) from (+0.33, +0.13, +0.94), axis [-0.872, 0.422, 0.249], roll 15.0, lateral 209.2 mm, contact [329.6, 146.9, 87.0]
+    post r10 / prop 4: 19.0 mm (E) from (+0.30, -0.01, +0.95), axis [-0.953, 0.017, 0.301], roll 0.0, lateral -152.3 mm, contact [328.8, -156.1, 87.0]
+    edge / hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): 70.83 mm (E) from (-0.01, -0.50, -0.87), axis [-1.0, -0.001, 0.013], roll 210.0, lateral 2.2 mm, contact [-42.0, -27.0, 0.0]
+    edge / motor 1: 80.52 mm (E) from (+0.12, +0.29, -0.95), axis [0.962, 0.203, 0.183], roll 195.0, lateral 111.7 mm, contact [208.1, 152.3, 45.0]
+    edge / motor 4: 80.78 mm (E) from (+0.16, -0.29, -0.94), axis [-0.385, -0.899, 0.211], roll 195.0, lateral 168.7 mm, contact [209.8, -151.5, 45.0]
+    post r10 / motor 1: 80.78 mm (E) from (+0.07, +0.29, -0.95), axis [-0.723, 0.673, 0.155], roll 165.0, lateral -194.3 mm, contact [208.1, 152.3, 45.0]
+    post r10 / motor 4: 81.11 mm (E) from (+0.06, -0.30, -0.95), axis [-0.734, -0.661, 0.159], roll 195.0, lateral 191.2 mm, contact [204.7, -153.2, 45.0]
+    edge / motor 2: 85.87 mm (E) from (-0.10, +0.34, -0.94), axis [-0.872, 0.422, 0.249], roll 165.0, lateral -51.8 mm, contact [-79.7, 152.9, 45.0]
+    edge / motor 3: 85.87 mm (E) from (-0.14, -0.30, -0.94), axis [-0.946, -0.241, 0.217], roll 195.0, lateral 95.2 mm, contact [-81.5, -152.3, 45.0]
+    post r10 / motor 2: 86.12 mm (E) from (-0.10, +0.34, -0.94), axis [-0.872, 0.422, 0.249], roll 165.0, lateral -51.8 mm, contact [-81.5, 152.3, 45.0]
+    post r10 / motor 3: 86.27 mm (E) from (-0.09, -0.34, -0.94), axis [-0.867, -0.436, 0.243], roll 195.0, lateral 50.2 mm, contact [-79.7, -152.9, 45.0]
+    post r10 / hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX): 89.03 mm (E) from (+0.19, -0.18, -0.97), axis [0.736, 0.676, 0.015], roll 165.0, lateral 0.7 mm, contact [44.5, -30.0, 20.0]
+  access PASS (swept tool overlap <= 0.5 mm³):
+    pack swap: cartridge + pack down through the opening (cartridge, part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    FC USB-C cable (hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX), type box, w 12, h 7, 450 mm along [0.091, -0.9947, 0.0475]): 0.0 mm³ (E)
+    Pi 5 USB-C cable (hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX), type box, w 12, h 7, 450 mm along [-0.1248, -0.992, -0.0175]): 0.0 mm³ (E)
+    M3 key, arm 1 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 1 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 1 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 1 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 2 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 2 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 2 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 2 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 3 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 3 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 3 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 3 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 4 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 4 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
+    M3 key, arm 4 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, arm 4 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+System: Overseer, cage first 10.7 mm (E) at -Z (down camera) (Unitree L2, front camera outside the cage, exempt), shell 139 rods closed, h/w 0.28, fit 0.1 mm³ (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 113 L (E), extents 742 x 698 x 217 mm (E), mass 3375 of 2200 g (153 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [-0.0, +0.6, -63.9], 29.1 mm without swap parts (reported, L exception), probes 5.7 mm (E) edge at (-0.70, -0.06, -0.71) (down camera), access 19/19 clear
