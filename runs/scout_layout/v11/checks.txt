@@ -1,41 +1,74 @@
-   catch  0.0 aft: CG pack in +5.0, pack out +7.6 (x, mm), 673 g, lens (149, 42)
-   catch  4.0 aft: CG pack in +2.3, pack out +5.4 (x, mm), 673 g, lens (149, 42)
-   catch  8.0 aft: CG pack in -0.5, pack out +3.2 (x, mm), 673 g, lens (149, 42)
-   catch 12.0 aft: CG pack in -3.3, pack out +0.9 (x, mm), 673 g, lens (149, 42)
-   catch 16.0 aft: CG pack in -6.1, pack out -1.3 (x, mm), 673 g, lens (149, 42)
-   catch 20.0 aft: CG pack in -8.9, pack out -3.6 (x, mm), 677 g, lens (149, 42)
-   catch 24.0 aft: CG pack in -11.2, pack out -5.2 (x, mm), 687 g, lens (149, 42)
-   catch  6.0 aft: CG pack in +0.9, pack out +4.3 (x, mm), 673 g, lens (149, 42)
-   catch 10.0 aft: CG pack in -1.9, pack out +2.0 (x, mm), 673 g, lens (149, 42)
-   catch  9.0 aft: CG pack in -1.2, pack out +2.6 (x, mm), 673 g, lens (149, 42)
-   catch 11.0 aft: CG pack in -2.6, pack out +1.5 (x, mm), 673 g, lens (149, 42)
-   catch  9.5 aft: CG pack in -1.6, pack out +2.3 (x, mm), 673 g, lens (149, 42)
-   catch 10.5 aft: CG pack in -2.3, pack out +1.8 (x, mm), 673 g, lens (149, 42)
-Scout v3 layout v3 / cage v2 (pattern free, every rod 3 mm); ring v5side: 4 nodes; balance: catch 10.0 aft of the thrust centre; tab line x -10.00, cartridge flat bottom z -44.50, ring plane z -49.62 (Overseer: catch x -30.0, cartridge bottom -54.0, ring -3.00 under it)
+   tail bay +20.0, catch  0.0 aft: CG pack in +2.9, pack out +4.4 (x, mm), 678 g, 50 rods, score 4.4
+   tail bay +20.0, catch  2.0 aft: CG pack in +1.5, pack out +3.3 (x, mm), 678 g, 50 rods, score 3.3
+   tail bay +20.0, catch  4.0 aft: CG pack in -0.1, pack out +1.9 (x, mm), 680 g, 50 rods, score 1.9
+   tail bay +20.0, catch  6.0 aft: CG pack in -1.4, pack out +0.9 (x, mm), 680 g, 50 rods, score 1.4
+   tail bay +20.0, catch  8.0 aft: CG pack in -2.7, pack out -0.1 (x, mm), 679 g, 50 rods, score 2.7
+   tail bay +20.0, catch  5.0 aft: CG pack in -0.7, pack out +1.4 (x, mm), 680 g, 50 rods, score 1.4
+   tail bay +20.0, catch  7.0 aft: CG pack in -2.0, pack out +0.4 (x, mm), 680 g, 50 rods, score 2.0
+   tail bay +20.0, catch  5.5 aft: CG pack in -1.0, pack out +1.2 (x, mm), 680 g, 50 rods, score 1.2
+   tail bay +20.0, catch  6.5 aft: CG pack in -1.7, pack out +0.7 (x, mm), 680 g, 50 rods, score 1.7
+   tail bay +20.0, catch  5.2 aft: CG pack in -0.9, pack out +1.3 (x, mm), 680 g, 50 rods, score 1.3
+   tail bay +20.0, catch  5.8 aft: CG pack in -1.2, pack out +1.0 (x, mm), 680 g, 50 rods, score 1.2
+   tail bay +25.0, catch  0.0 aft: CG pack in +2.9, pack out +4.3 (x, mm), 688 g, 58 rods, score 4.3
+   tail bay +25.0, catch  2.0 aft: CG pack in +1.2, pack out +2.9 (x, mm), 678 g, 50 rods, score 2.9
+   tail bay +25.0, catch  4.0 aft: CG pack in -0.4, pack out +1.5 (x, mm), 680 g, 50 rods, score 1.5
+   tail bay +25.0, catch  6.0 aft: CG pack in -1.7, pack out +0.5 (x, mm), 680 g, 50 rods, score 1.7
+   tail bay +25.0, catch  8.0 aft: CG pack in -3.0, pack out -0.6 (x, mm), 680 g, 50 rods, score 3.0
+   tail bay +25.0, catch  3.0 aft: CG pack in +0.6, pack out +2.4 (x, mm), 678 g, 50 rods, score 2.4
+   tail bay +25.0, catch  5.0 aft: CG pack in -1.0, pack out +1.0 (x, mm), 680 g, 50 rods, score 1.0
+   tail bay +25.0, catch  4.5 aft: CG pack in -0.7, pack out +1.2 (x, mm), 680 g, 50 rods, score 1.2
+   tail bay +25.0, catch  5.5 aft: CG pack in -1.4, pack out +0.7 (x, mm), 680 g, 50 rods, score 1.4
+   tail bay +25.0, catch  4.8 aft: CG pack in -0.9, pack out +1.1 (x, mm), 680 g, 50 rods, score 1.1
+   tail bay +25.0, catch  5.2 aft: CG pack in -1.2, pack out +0.8 (x, mm), 680 g, 50 rods, score 1.2
+   tail bay +30.0, catch  0.0 aft: CG pack in +2.6, pack out +3.9 (x, mm), 688 g, 58 rods, score 3.9
+   tail bay +30.0, catch  2.0 aft: CG pack in +1.2, pack out +2.8 (x, mm), 688 g, 58 rods, score 2.8
+   tail bay +30.0, catch  4.0 aft: CG pack in -0.7, pack out +1.0 (x, mm), 680 g, 50 rods, score 1.0
+   tail bay +30.0, catch  6.0 aft: CG pack in -2.0, pack out -0.0 (x, mm), 680 g, 50 rods, score 2.0
+   tail bay +30.0, catch  8.0 aft: CG pack in -3.3, pack out -1.0 (x, mm), 680 g, 50 rods, score 3.3
+   tail bay +30.0, catch  3.0 aft: CG pack in +0.2, pack out +1.9 (x, mm), 678 g, 50 rods, score 1.9
+   tail bay +30.0, catch  5.0 aft: CG pack in -1.3, pack out +0.5 (x, mm), 680 g, 50 rods, score 1.3
+   tail bay +30.0, catch  3.5 aft: CG pack in -0.4, pack out +1.2 (x, mm), 680 g, 50 rods, score 1.2
+   tail bay +30.0, catch  4.5 aft: CG pack in -1.0, pack out +0.7 (x, mm), 680 g, 50 rods, score 1.0
+   tail bay +30.0, catch  3.8 aft: CG pack in -0.5, pack out +1.1 (x, mm), 680 g, 50 rods, score 1.1
+   tail bay +30.0, catch  4.2 aft: CG pack in -0.9, pack out +0.9 (x, mm), 680 g, 50 rods, score 0.9
+   tail bay +35.0, catch  0.0 aft: CG pack in +2.2, pack out +3.4 (x, mm), 688 g, 58 rods, score 3.4
+   tail bay +35.0, catch  2.0 aft: CG pack in +0.9, pack out +2.4 (x, mm), 688 g, 58 rods, score 2.4
+   tail bay +35.0, catch  4.0 aft: CG pack in -0.4, pack out +1.4 (x, mm), 688 g, 58 rods, score 1.4
+   tail bay +35.0, catch  6.0 aft: CG pack in -2.3, pack out -0.5 (x, mm), 680 g, 50 rods, score 2.3
+   tail bay +35.0, catch  8.0 aft: CG pack in -3.7, pack out -1.5 (x, mm), 680 g, 50 rods, score 3.7
+   tail bay +35.0, catch  3.0 aft: CG pack in +0.3, pack out +1.9 (x, mm), 688 g, 58 rods, score 1.9
+   tail bay +35.0, catch  5.0 aft: CG pack in -1.7, pack out +0.0 (x, mm), 680 g, 50 rods, score 1.7
+   tail bay +35.0, catch  3.5 aft: CG pack in -0.1, pack out +1.6 (x, mm), 688 g, 58 rods, score 1.6
+   tail bay +35.0, catch  4.5 aft: CG pack in -0.7, pack out +1.1 (x, mm), 688 g, 58 rods, score 1.1
+   tail bay +35.0, catch  4.2 aft: CG pack in -0.6, pack out +1.3 (x, mm), 688 g, 58 rods, score 1.3
+   tail bay +35.0, catch  4.8 aft: CG pack in -0.9, pack out +1.0 (x, mm), 688 g, 58 rods, score 1.0
+Scout v3 layout v3 / cage v2 (pattern free, every rod 3 mm); ring v5side: 4 nodes; balance: tail bay +30.0, catch 4.2 aft of the thrust centre; tab line x -4.25, cartridge flat bottom z -44.50, ring plane z -49.62 (Overseer: catch x -30.0, cartridge bottom -54.0, ring -3.00 under it)
 camera: lens (149, 0, 42), head plane tilt 0 deg, in a printed cradle on the cage (no boom) (lens z 30..50 x tilt 0..90: the shell target 14.0 under its lower view plane and behind its back; closest to the drone with its cradle under the cage roof)
-offset 16.0 dome 20 snap 0: valid: 16 nodes, 41 tubes, 6.4 L, 117 tall, shell 102 g, props 13.8, shell shadow 3.6 / 5.5 %
-offset 20.0 dome 20 snap 0: valid: 20 nodes, 53 tubes, 6.0 L, 111 tall, shell 114 g, props 14.8, shell shadow 5.3 / 5.5 %
-offset 24.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 6.1 L, 111 tall, shell 105 g, props 13.9, shell shadow 3.8 / 5.4 %
-offset 28.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 6.2 L, 111 tall, shell 106 g, props 13.3, shell shadow 3.7 / 5.5 %
-offset 32.0 dome 20 snap 0: valid: 16 nodes, 41 tubes, 6.0 L, 111 tall, shell 97 g, props 13.6, shell shadow 3.8 / 5.5 %
-structure bar: start 32.0 dome 20 (6.0 L, 97 g); picked start 32.0 dome 20 snap 0
-shell: 16 nodes (4 on the ring), 41 tubes, 26 triangles; tubes 65 .. 268, 5.51 m; node extents 323 x 239 x 111; hull residual 0.00 (C)
+offset 16.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 6.5 L, 114 tall, shell 115 g, props 13.0, shell shadow 5.2 / 5.5 %
+offset 20.0 dome 20 snap 0: valid: 20 nodes, 53 tubes, 6.3 L, 111 tall, shell 116 g, props 14.8, shell shadow 5.1 / 5.5 %
+offset 24.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 6.4 L, 111 tall, shell 110 g, props 13.9, shell shadow 2.6 / 5.5 %
+offset 28.0 dome 20 snap 0: valid: 18 nodes, 47 tubes, 6.6 L, 111 tall, shell 107 g, props 13.3, shell shadow 3.8 / 5.5 %
+offset 32.0 dome 20 snap 0: valid: 17 nodes, 44 tubes, 6.4 L, 111 tall, shell 104 g, props 13.6, shell shadow 3.1 / 5.5 %
+structure bar: start 32.0 dome 20 (6.4 L, 104 g); picked start 32.0 dome 20 snap 0
+shell: 17 nodes (4 on the ring), 44 tubes, 28 triangles; tubes 71 .. 239, 6.01 m; node extents 363 x 245 x 111; hull residual 0.00 (C)
 ring: the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped; Spark 27 Oct), about the catch (+85.8, +116.1), (-68.9, +119.7), (-68.9, -119.7), (+85.8, -116.1), 154.7 long, 239.4 wide at the tail, 232.2 at the nose; plane z -49.62 = cartridge flat bottom -3.00 − seat 2.12 (the 3.0 rods sit 2.12 lower on the 45 deg ramps than the Overseer's 6 mm tubes, so both cartridges stop at the same height); 4 ring rods (C)
-funnel band (within 30 above the plane, inside the opening or 40 past its ends): links in it 0 (rod axis; 0 graze its edge by up to the rod radius), shell rods between free nodes 2, shell rods leaving the 4 bottom nodes that stay in it past their first 10 % 14 (0-5, 0-8, 0-12, 0-15, 1-5, 1-10, 1-11, 2-6, 2-9, 2-11, 3-6, 3-7, 3-13, 3-15) (C)
-largest cell: inscribed circle Ø139 between tube surfaces (C)
+funnel band (within 30 above the plane, inside the opening or 40 past its ends): links in it 0 (rod axis; 0 graze its edge by up to the rod radius), shell rods between free nodes 2, shell rods leaving the 4 bottom nodes that stay in it past their first 10 % 16 (0-5, 0-8, 0-11, 0-12, 0-16, 1-5, 1-9, 1-11, 2-6, 2-9, 2-10, 3-6, 3-7, 3-10, 3-13, 3-16) (C)
+tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): Radxa Zero 3W +15.7, UBEC +40.4 (C)
+tail nodes past x -130 about the catch: lowest 91.1 above the plane (the Overseer tail-tip ramp, need ≥ 45) (C)
+largest cell: inscribed circle Ø128 between tube surfaces (C)
 links by kind: saddle tie 6
-carbon: shell 41 rods 3.0 solid, shortest 65; links 6 rods 3.0; total 47 rods (cage v1: 123), 0.63 m, shortest 83 (saddle tie 1.1)
-links apart: closest pair 1.4 between rod surfaces (saddle tie 2.1 / saddle tie 4.1) (C, need ≥ 1.0)
-props: shell tubes 13.6 off the swept disks (≥ 12, 3D), nodes 32.0, links 33.1 (saddle tie 2.1) (C)
-   inside: props 14.8 from the nearest face plane (C)
+carbon: shell 44 rods 3.0 solid, shortest 71; links 6 rods 3.0; total 50 rods (cage v1: 123), 0.63 m, shortest 86 (saddle tie 1.1)
+links apart: closest pair 1.5 between rod surfaces (saddle tie 2.1 / saddle tie 4.1) (C, need ≥ 1.0)
+props: shell tubes 13.6 off the swept disks (≥ 12, 3D), nodes 17.8, links 33.1 (saddle tie 2.1) (C)
+   inside: props 14.9 from the nearest face plane (C)
    inside: body 3.1 from the nearest face plane (C)
 swap zone (receiver 105.6 x 65.5 + 17.6 at the ends (nose 26.5, tail 17.6 to the rectangle rods), 30 at the sides, cartridge bottom down): clear (0 mm³)
 front camera (horizon, landscape, 89 x 73 deg): nothing of the drone in its view (C)
 flow (23 deg cone, straight down): checked (lines above list anything in view)
-prop blockage (secondary to structure): 3.8 % of the disks' thrust shadowed from above, 8.8 % from below (plan shadow of tubes and links, annulus 0.2..1 R weighted by r, E)
-cage: shell 97 g (tubes 61 + nodes 36, E), links 7 g, guard nodes 0 g (C on E)
-mass ~673 g (E), CG (-1.9, 0.5, -1.1) vs thrust centre (0, 0): 2.0 off; pack + cartridge out: 2.2 off (458 g); CG 42 under the prop plane
-compact: shell hull 6.0 L vs the parts-with-margins hull 3.4 L (C)
-FC USB-C cable: from (-27.6, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
+prop blockage (secondary to structure): 3.1 % of the disks' thrust shadowed from above, 8.8 % from below (plan shadow of tubes and links, annulus 0.2..1 R weighted by r, E)
+cage: shell 104 g (tubes 66 + nodes 38, E), links 7 g, guard nodes 0 g (C on E)
+mass ~680 g (E), CG (-0.9, 0.4, -0.3) vs thrust centre (0, 0): 0.9 off; pack + cartridge out: 1.0 off (465 g); CG 42 under the prop plane
+compact: shell hull 6.4 L vs the parts-with-margins hull 3.7 L (C)
+FC USB-C cable: from (-21.8, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
 camera mount: a printed PETG cradle round the camera (0.5 clear, lips 6 over and under, behind the lens) on 4 printed Ø9 round arms into a snap clip on the shell rod at (109.3, 18.0, 61.5) (18 long), a snap clip on the shell rod at (120.3, 20.5, 24.2) (7 long) and their mirrors: no rods, no boom (Spark 27 Oct)
 wrote nox/scout/v3/scout.assembly.json
