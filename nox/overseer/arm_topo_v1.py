@@ -540,6 +540,13 @@ def setup_for(which):
     def setup(h):
         B, F = bodies(which)
         p = Part(f"overseer_arm_{which}", h, B["drawn"], B["cuts"], B["env"], build="-z", material="PETG")
+        from scipy import ndimage as _ndi                 # v8: envelope specks the keep-outs leave (single cells joined
+        _lab, _n = _ndi.label((p.design | p.solid).reshape(p.shape), _ndi.generate_binary_structure(3, 1))   # only by an
+        if _n > 1:                                        # edge or corner make the stiffness singular): voided
+            _keep = (_lab == np.argmax(np.bincount(_lab.ravel())[1:]) + 1).ravel()
+            _drop = (p.design | p.solid) & ~_keep
+            p.design[_drop], p.solid[_drop], p.void[_drop] = False, False, True
+            p.log(f"  dropped {int(_drop.sum())} envelope speck cell(s) off the main body")
         for k_, (p0, p1) in enumerate(chords(which, F)):
             rr = max(ROD_BORE / 2, 0.9 * h)              # a fat enough cylinder to stay connected on the coarse grid
             p.insert(f"rod {k_}", rod_m(p0, p1, rr), E_CARBON / E_PETG, area_mm2=ROD_AREA,
