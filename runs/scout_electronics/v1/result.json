@@ -1,0 +1,398 @@
+{
+ "layout_as_drawn": {
+  "cg_in": [
+   -0.43,
+   0.46,
+   -3.03
+  ],
+  "cg_out": [
+   3.92,
+   0.69,
+   4.26
+  ],
+  "mass": 634.0,
+  "R_disk": 44.5,
+  "rear_disk_centres": [
+   [
+    -54.1,
+    54.1
+   ],
+   [
+    -54.1,
+    -54.1
+   ]
+  ]
+ },
+ "options": [
+  {
+   "option": "A tail fin",
+   "note": "fin plane y 5.0; Radxa on edge on the -y face, ports up, SD end aft; UBEC on the +y face behind the disks' wash; XR2 top aft on the +y face, antenna up",
+   "parts": {
+    "Radxa Zero 3W": {
+     "bounds": [
+      [
+       -130.0,
+       -4.0,
+       -24.0
+      ],
+      [
+       -65.0,
+       0.8,
+       6.0
+      ]
+     ],
+     "rod_gap": 11.0,
+     "nearest_rod": [
+      "cage ",
+      [
+       -186.3,
+       0.0,
+       41.5
+      ],
+      [
+       -132.0,
+       0.0,
+       -44.1
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 6.9,
+     "part_gap": {
+      "receiver v3 (latch)": 7.2,
+      "receiver TPU end pieces (latch, E)": 5.0,
+      "cartridge v6 (latch)": 13.5,
+      "FC": 32.6,
+      "frame plate (Bee35 carbon)": 20.2,
+      "mount + nose legs (Scout)": 9.8,
+      "flow MTF-02P": 52.3
+     }
+    },
+    "UBEC": {
+     "bounds": [
+      [
+       -138.0,
+       6.2,
+       -12.0
+      ],
+      [
+       -88.0,
+       16.2,
+       13.0
+      ]
+     ],
+     "rod_gap": 12.1,
+     "nearest_rod": [
+      "cage ",
+      [
+       -186.3,
+       0.0,
+       41.5
+      ],
+      [
+       -132.0,
+       0.0,
+       -44.1
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 6.4,
+     "part_gap": {
+      "receiver v3 (latch)": 30.2,
+      "receiver TPU end pieces (latch, E)": 28.0,
+      "cartridge v6 (latch)": 36.5,
+      "FC": 55.8,
+      "frame plate (Bee35 carbon)": 38.4,
+      "mount + nose legs (Scout)": 32.2,
+      "flow MTF-02P": 70.2
+     }
+    },
+    "XR2": {
+     "bounds": [
+      [
+       -132.0,
+       6.2,
+       16.0
+      ],
+      [
+       -120.0,
+       12.2,
+       46.0
+      ]
+     ],
+     "rod_gap": 10.9,
+     "nearest_rod": [
+      "spoke",
+      [
+       -59.1,
+       -0.0,
+       17.0
+      ],
+      [
+       -129.7,
+       -0.0,
+       61.5
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 33.6,
+     "part_gap": {
+      "receiver v3 (latch)": 62.5,
+      "receiver TPU end pieces (latch, E)": 63.9,
+      "cartridge v6 (latch)": 70.1,
+      "FC": 87.7,
+      "frame plate (Bee35 carbon)": 67.1,
+      "mount + nose legs (Scout)": 64.2,
+      "flow MTF-02P": 109.3
+     }
+    },
+    "tail fin (PETG)": {
+     "bounds": [
+      [
+       -133.0,
+       3.8,
+       -26.0
+      ],
+      [
+       -56.0,
+       6.2,
+       34.0
+      ]
+     ],
+     "rod_gap": 2.3,
+     "nearest_rod": [
+      "spoke",
+      [
+       -59.1,
+       -0.0,
+       17.0
+      ],
+      [
+       -129.7,
+       -0.0,
+       61.5
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 3.5,
+     "part_gap": {
+      "receiver v3 (latch)": 2.0,
+      "receiver TPU end pieces (latch, E)": 2.0,
+      "cartridge v6 (latch)": 10.5,
+      "FC": 23.7,
+      "frame plate (Bee35 carbon)": 6.6,
+      "mount + nose legs (Scout)": 0.2,
+      "flow MTF-02P": 47.1
+     }
+    }
+   },
+   "cg_in": [
+    -2.73,
+    0.3,
+    -3.24
+   ],
+   "cg_out": [
+    0.42,
+    0.44,
+    3.78
+   ],
+   "mass": 644.0,
+   "cg_off_in": 2.75,
+   "cg_off_out": 0.61,
+   "reslide": {
+    "catch_set_dx": 2.5,
+    "cg_x_worst": 1.34
+   },
+   "ok": {
+    "cage_first": true,
+    "wash": true,
+    "fit": true,
+    "balance": true
+   }
+  },
+  {
+   "option": "B tail tray",
+   "note": "tray z 3.6..6.0 from the plate tail; Radxa flat and crosswise behind the disks, component side up; UBEC under; XR2 behind",
+   "parts": {
+    "Radxa Zero 3W": {
+     "bounds": [
+      [
+       -134.0,
+       -32.5,
+       6.0
+      ],
+      [
+       -104.0,
+       32.5,
+       13.6
+      ]
+     ],
+     "rod_gap": 12.5,
+     "nearest_rod": [
+      "cage ",
+      [
+       -81.9,
+       -104.4,
+       -47.5
+      ],
+      [
+       -186.3,
+       0.0,
+       41.5
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 9.9,
+     "part_gap": {
+      "receiver v3 (latch)": 46.2,
+      "receiver TPU end pieces (latch, E)": 45.6,
+      "cartridge v6 (latch)": 52.7,
+      "FC": 71.4,
+      "frame plate (Bee35 carbon)": 43.7,
+      "mount + nose legs (Scout)": 48.2,
+      "flow MTF-02P": 89.7
+     }
+    },
+    "UBEC": {
+     "bounds": [
+      [
+       -129.0,
+       -25.0,
+       -6.4
+      ],
+      [
+       -104.0,
+       25.0,
+       3.6
+      ]
+     ],
+     "rod_gap": 21.4,
+     "nearest_rod": [
+      "cage ",
+      [
+       -186.3,
+       0.0,
+       41.5
+      ],
+      [
+       -132.0,
+       0.0,
+       -44.1
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 13.3,
+     "part_gap": {
+      "receiver v3 (latch)": 46.2,
+      "receiver TPU end pieces (latch, E)": 44.0,
+      "cartridge v6 (latch)": 52.5,
+      "FC": 71.7,
+      "frame plate (Bee35 carbon)": 49.1,
+      "mount + nose legs (Scout)": 48.5,
+      "flow MTF-02P": 86.2
+     }
+    },
+    "XR2": {
+     "bounds": [
+      [
+       -148.0,
+       -8.0,
+       6.0
+      ],
+      [
+       -136.0,
+       8.0,
+       26.0
+      ]
+     ],
+     "rod_gap": 11.9,
+     "nearest_rod": [
+      "cage ",
+      [
+       -186.3,
+       0.0,
+       41.5
+      ],
+      [
+       -132.0,
+       0.0,
+       -44.1
+      ]
+     ],
+     "inside_shell": true,
+     "wash_gap": 49.5,
+     "part_gap": {
+      "receiver v3 (latch)": 78.2,
+      "receiver TPU end pieces (latch, E)": 76.9,
+      "cartridge v6 (latch)": 84.6,
+      "FC": 103.4,
+      "frame plate (Bee35 carbon)": 83.0,
+      "mount + nose legs (Scout)": 80.2,
+      "flow MTF-02P": 121.8
+     }
+    },
+    "tail tray (PETG)": {
+     "bounds": [
+      [
+       -150.0,
+       -34.5,
+       3.6
+      ],
+      [
+       -58.0,
+       34.5,
+       6.0
+      ]
+     ],
+     "rod_gap": 3.2,
+     "nearest_rod": [
+      "cage ",
+      [
+       -81.9,
+       -104.4,
+       -47.5
+      ],
+      [
+       -186.3,
+       0.0,
+       41.5
+      ]
+     ],
+     "inside_shell": false,
+     "wash_gap": -24.5,
+     "part_gap": {
+      "receiver v3 (latch)": 0.2,
+      "receiver TPU end pieces (latch, E)": 9.6,
+      "cartridge v6 (latch)": 6.9,
+      "FC": 25.8,
+      "frame plate (Bee35 carbon)": 14.9,
+      "mount + nose legs (Scout)": 4.2,
+      "flow MTF-02P": 47.9
+     }
+    }
+   },
+   "cg_in": [
+    -3.81,
+    -0.0,
+    -2.93
+   ],
+   "cg_out": [
+    -1.2,
+    0.0,
+    4.18
+   ],
+   "mass": 647.0,
+   "cg_off_in": 3.81,
+   "cg_off_out": 1.2,
+   "reslide": {
+    "catch_set_dx": 5.3,
+    "cg_x_worst": 0.77
+   },
+   "ok": {
+    "cage_first": true,
+    "wash": false,
+    "fit": true,
+    "balance": false
+   }
+  }
+ ]
+}
