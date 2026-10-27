@@ -41,6 +41,7 @@ BOT_INS = [(63.74, 10.0), (63.74, -10.0)]      # M3 into the bottom plate (O, de
 INS_D, INS_DEPTH, BOSS_D = 4.0, 7.0, 12.0      # M3 heat-set insert hole (O), boss Ø12 (attachment rule)
 ROOT_PAD_T = 9.0                      # root contact pads 9 thick: the insert depth + 2, and room for the chord bores
 PAD_T = 6.0                           # motor pad (README: plates >= 6 for the gate's 2 mm core)
+FLANGE_T = 6.0                        # v4 root flanges: the arm's top / bottom face just past the plate edges (rear v3: crash 1.22 there)
 MOTOR_R_PAD = 18.0                    # motor pad Ø36 (O v0 pad)
 MOTOR_SLOTS = (8.0, 9.5)              # X2216 M3 pairs on 16 and 19 (M): a radial slot r 8 .. 9.5 on each 45° line, so the
 MOTOR_SLOT_DEG = (45.0, 135.0, 225.0, 315.0)   # pad takes the motor either hand (the right arms are mirrors) with its leads
@@ -299,6 +300,11 @@ def bodies(which):
             sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
     B["rods"] = rods
     B["drawn"] = B["pads"] + B["mpad"] + sockets
+    fx = os.environ.get("NOX_ARM_FLANGE_X")              # v4: drawn root flanges, top and bottom, out along the arm (arm frame)
+    if fx:
+        x0, x1 = 0.0, float(fx)
+        fl = (box(x0, x1, -20.0, 20.0, 0.0, FLANGE_T) + box(x0, x1, -20.0, 20.0, ROOT_H - FLANGE_T, ROOT_H)) ^ B["env"]
+        B["drawn"] = B["drawn"] + (fl - B["cuts"])
     return B, F
 
 
