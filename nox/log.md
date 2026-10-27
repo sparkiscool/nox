@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): cage nodes: solid boss floor 3.0 behind each socket (was 1.0; `cage_node.py` FLOOR, DEFAULT). Node 2 at the lowered loop failed solid_check: the Ø7 arm met the boss through the 1.0 floor, a neck under 1.8. All 14 designs pass drawn-alone; node 2 to rerun (alt: flared arms, cut into by neighbour bores) (C)
 - 27 Oct (box catch): the Overseer cage sync moved its loop to z -79.9 on foot caps 13.2 under the tube centres (ee944ce8): concept F takes it as parameters (DECK, OVR_PLANE_Z, OVR_REF, SCOUT_CAPS; pads 12.2 tall, bars 20.7, same plan); the Scout gets the same caps under its 4 ring nodes (DEFAULT, alt its loop 9.2 lower). Smoke in `runs/box_catch/bars_concept/`; full sweep: box catch session.
 - 27 Oct (Scout v3): Landing row takes the box catch F requirements (PR 155, DEFAULT): TPU caps Ø16 x 3 under the 4 ring nodes like the Overseer's, 6 mm sleeves on the side rods over x ±32 (fall away if the ring goes 6/4); alt: loop 9.2 lower. No Scout geometry moved.
 - 27 Oct (Overseer hub deck v9): saved, print/overseer_hub_deck_v9.stl 68.0 g (M), worst 0.30, solid_check + build test PASS, first mode 659 Hz, FE insert pull <= 70 N; low brace roots. v8 build test FAIL (+y tower via the centreline) fixed by drawn bars to the mid feet. Open: head mode with the socket springs (cage).
