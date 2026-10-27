@@ -184,3 +184,14 @@ fem: grid (144, 48, 48) = 331,776 elements, 673,017 active dofs; backend mg (dir
 fem: grid (144, 48, 48) = 331,776 elements, 673,017 active dofs; backend mg (direct estimate 10.3 GB, budget 11.8 GB)
 fem: multigrid 3 levels [(np.int64(144), np.int64(48), np.int64(48)), (np.int64(72), np.int64(24), np.int64(24)), (np.int64(36), np.int64(12), np.int64(12))], coarsest 18,759 dofs (direct)
 fem: multigrid 3 levels [(np.int64(144), np.int64(48), np.int64(48)), (np.int64(72), np.int64(24), np.int64(24)), (np.int64(36), np.int64(12), np.int64(12))], coarsest 18,759 dofs (direct)
+=== overseer_arm_rear: h 1.0, generated 25.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_rear: h 1.0, generated 25.0 cm3, min member 3.2 mm, cores 4
+overseer_arm_rear: grid (144, 48, 48) h 1.0 = 331,776 cells; design 191,457 (191.5 cm3), drawn 16,969, void 123,350
+  support default: 1020 cells, 2366 nodes
+  support bosses: 693 cells, 1472 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_rear: grid (72, 32, 32) h 2.0 = 73,728 cells; design 23,528 (188.2 cm3), drawn 1,998, void 48,202
+  support default: no cell centre in the region at h 2.0; using the 278 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 278 cells, 722 nodes
+  support bosses: 75 cells, 268 nodes
