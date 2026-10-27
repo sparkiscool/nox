@@ -334,3 +334,27 @@ it  70 beta   16 J  10.4869 vol 0.1389 (dil 0.2935 g -0.003) grey  7.3% ch 0.100
 it  70 beta   16 J  10.4869 vol 0.1389 (dil 0.2935 g -0.003) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  483 70.0s
 it  71 beta   16 J  10.4072 vol 0.1410 (dil 0.2936 g +0.004) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  482 74.9s
 it  71 beta   16 J  10.4072 vol 0.1410 (dil 0.2936 g +0.004) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  482 74.9s
+it  72 beta   16 J  10.3757 vol 0.1416 (dil 0.2925 g -0.000) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  482 65.9s
+it  72 beta   16 J  10.3757 vol 0.1416 (dil 0.2925 g -0.000) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  482 65.9s
+it  73 beta   16 J  10.3419 vol 0.1425 (dil 0.2925 g -0.000) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  481 51.0s
+it  73 beta   16 J  10.3419 vol 0.1425 (dil 0.2925 g -0.000) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  481 51.0s
+it  74 beta   16 J  10.3208 vol 0.1429 (dil 0.2924 g -0.000) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  480 51.6s
+it  74 beta   16 J  10.3208 vol 0.1429 (dil 0.2924 g -0.000) grey  7.3% ch 0.100 worst USB plug 20 N into the Pi's  480 51.6s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  75 beta   32 J  10.2170 vol 0.1436 (dil 0.2905 g +0.053) grey  3.5% ch 0.100 worst USB plug 20 N into the Pi's  478 54.1s
+it  75 beta   32 J  10.2170 vol 0.1436 (dil 0.2905 g +0.053) grey  3.5% ch 0.100 worst USB plug 20 N into the Pi's  478 54.1s
+it  76 beta   32 J 395.5867 vol 0.1245 (dil 0.2796 g +0.014) grey  3.9% ch 0.100 worst held b8 mz 2.13e+04 55.4s
+it  76 beta   32 J 395.5867 vol 0.1245 (dil 0.2796 g +0.014) grey  3.9% ch 0.100 worst held b8 mz 2.13e+04 55.4s
+it  77 beta   32 J 5415.1719 vol 0.1132 (dil 0.2758 g -0.000) grey  4.0% ch 0.100 worst held b2 my 2.57e+05 55.7s
+it  77 beta   32 J 5415.1719 vol 0.1132 (dil 0.2758 g -0.000) grey  4.0% ch 0.100 worst held b2 my 2.57e+05 55.7s
+it  78 beta   32 J 1130.7618 vol 0.1241 (dil 0.2788 g +0.011) grey  3.8% ch 0.100 worst held b6 mz 5.64e+04 48.1s
+it  78 beta   32 J 1130.7618 vol 0.1241 (dil 0.2788 g +0.011) grey  3.8% ch 0.100 worst held b6 mz 5.64e+04 48.1s
+it  79 beta   32 J 2912.1733 vol 0.1126 (dil 0.2732 g -0.009) grey  4.0% ch 0.100 worst held b2 mz 1.43e+05 53.0s
+it  79 beta   32 J 2912.1733 vol 0.1126 (dil 0.2732 g -0.009) grey  4.0% ch 0.100 worst held b2 mz 1.43e+05 53.0s
+it  80 beta   32 J 341.2133 vol 0.1239 (dil 0.2775 g +0.006) grey  3.7% ch 0.100 worst held b6 mx 1.84e+04 70.1s
+it  80 beta   32 J 341.2133 vol 0.1239 (dil 0.2775 g +0.006) grey  3.7% ch 0.100 worst held b6 mx 1.84e+04 70.1s
+it  81 beta   32 J 487.7292 vol 0.1159 (dil 0.2719 g -0.044) grey  3.9% ch 0.100 worst held b2 mz 2.54e+04 70.9s
+it  81 beta   32 J 487.7292 vol 0.1159 (dil 0.2719 g -0.044) grey  3.9% ch 0.100 worst held b2 mz 2.54e+04 70.9s
+it  82 beta   32 J  58.3259 vol 0.1223 (dil 0.2741 g -0.036) grey  3.6% ch 0.100 worst held b6 mx 2.95e+03 46.0s
+it  82 beta   32 J  58.3259 vol 0.1223 (dil 0.2741 g -0.036) grey  3.6% ch 0.100 worst held b6 mx 2.95e+03 46.0s
