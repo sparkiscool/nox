@@ -40,6 +40,7 @@ def members(i):
     for a, b in CG["rods"]:
         if i in (a, b): o = N[b if a == i else a]; out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6, f"tube to {b if a == i else a}"))
     for k, (p, q) in RES["links"].items():
+        if k.startswith("head strut"): continue                        # below, from HEAD_STRUTS
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
                 o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6 if k in LINK6 else 3, k))
