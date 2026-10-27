@@ -555,3 +555,25 @@ it 136 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000
 it 136 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 31.5s
 it 137 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 32.0s
 it 137 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 32.0s
+it 138 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 26.3s
+it 138 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 26.3s
+it 139 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 30.4s
+it 139 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 30.4s
+it 140 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 25.8s
+it 140 beta   32 J  10.0000 vol 0.0017 (dil 0.0478 g +0.103) grey  0.2% ch 0.000 worst tube to 1 side a 171 25.8s
+layout: stopped (grey) at it 140, beta 32, 1812 s
+layout: stopped (grey) at it 140, beta 32, 1812 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 1858 s, peak 1.441632 GB
+layout done: 1858 s, peak 1.441632 GB
+build: organic surface at pitch 0.300 mm (x5), skins 8.75 cm3, field 10.43 cm3, in env - cuts 8.90 cm3 (layout 8.90, level offset -0.774 mm), fillet 2.5 mm, rims 1.0 mm, mesh 196,184 faces, 37 s
+build: organic surface at pitch 0.300 mm (x5), skins 8.75 cm3, field 10.43 cm3, in env - cuts 8.90 cm3 (layout 8.90, level offset -0.774 mm), fillet 2.5 mm, rims 1.0 mm, mesh 196,184 faces, 37 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 3, "eroded_volumes_mm3": [3138.2, 327.2, 327.1], "necks": [], "drawn_not_in_main": [[0, 0.827], ["0.0", 0.994, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 3, "eroded_volumes_mm3": [3138.2, 327.2, 327.1], "necks": [], "drawn_not_in_main": [[0, 0.827], ["0.0", 0.994, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 3623.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 3623.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.05 in 'tube to 1 pull' at [158.9, -0.8, -85.2]
+strength: worst index 0.05 in 'tube to 1 pull' at [158.9, -0.8, -85.2]
+RESULT {"name": "cage_node_2", "solid_ok": false, "mass_g": 11.27, "worst": 0.048, "function_ok": true, "bodies": 1}
+RESULT {"name": "cage_node_2", "solid_ok": false, "mass_g": 11.27, "worst": 0.048, "function_ok": true, "bodies": 1}
