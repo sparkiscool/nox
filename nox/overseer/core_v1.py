@@ -128,8 +128,9 @@ COOL_X = (PI_X1 - 63.5 + 2.0, PI_X1 + 2.0)     # cooler over the SoC end of the 
 RAIL_Y = 22.0                      # floor rails at |y| 22: clear of the arm roots' inner corners (C)
 BAY_Y = 17.0                       # front wing bay rails at |y| 17: bars inside |y| 20, 1 off the front arm envelopes (arm session 27 Oct)
 # front wing bays (zip ties, no screws): UBEC and buck between the front arm roots, ahead of the Pi, under the top plate's front
-UBEC_BAY = (34.0, 82.0, -19.0, 2.0, FLOOR_T, FLOOR_T + 10.0)     # any 5 V 5 A UBEC of 43-50 x 17-25 x 7-10 (Q4 range)
-BUCK_BAY = (34.0, 58.0, 4.0, 22.0, FLOOR_T, FLOOR_T + 10.0)      # 12 V buck (model open: 24 x 18 x 10 bay, E)
+DECK_TOP = 6.5                     # the hub deck's floor top (its topology envelope, the gate's 6.25 member; hub deck v1 run)
+UBEC_BAY = (34.0, 82.0, -19.0, 2.0, DECK_TOP, DECK_TOP + 10.0)   # any 5 V 5 A UBEC of 43-50 x 17-25 x 7-10 (Q4 range), on the deck
+BUCK_BAY = (34.0, 58.0, 4.0, 22.0, DECK_TOP, DECK_TOP + 10.0)    # 12 V buck (model open: 24 x 18 x 10 bay, E), on the deck
 # flow pod in the sled (MTF-02P 21.6 x 16 x 6.5, 1.5 g, spec; no holes: pocket)
 POD_X, FLOW_Y = -10.0, -55.0
 LENS_Z = Z_CART                    # lens on the cartridge bottom plane (C)
