@@ -426,6 +426,15 @@ def bodies(which):
         cap = CHORD_SKIN if os.environ.get("NOX_ARM_CAP") == "1" else 1.0   # v5d: the blind tip end's wall (rear v5c: 1.58)
         for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1 + cap * u)):
             sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+        ncol = int(os.environ.get("NOX_ARM_COLLARS", "-1"))   # v8 (Spark 27 Oct: lighter, natural): drawn collar rings on
+        if ncol >= 0:                                         # the free span, the rest of a 2.5 ring round the bore kept clear
+            col = mf.Manifold()                               # (so a web meets the tube only at a full collar, no thin walls)
+            L_ = float(np.linalg.norm(p1 - p0)); a0, a1 = SOCKET_L, L_ - SOCKET_L
+            for k_ in range(ncol):
+                c_ = a0 + (a1 - a0) * (k_ + 1) / (ncol + 1)
+                col += rod_m(p0 + (c_ - 4.0) * u, p0 + (c_ + 4.0) * u, r, n=48)
+            sockets += col ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+            B["cuts"] += rod_m(p0 + a0 * u, p0 + a1 * u, r, n=48) - col
         if os.environ.get("NOX_ARM_SLEEVE") == "1":   # v5c: a full-length drawn sleeve (rear v5b: webs meeting the tube
             sockets += rod_m(p0, p1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)   # left 1.1 collar walls)
     B["cuts_base"] = B["cuts"]
