@@ -7,6 +7,9 @@ Script `nox/overseer/rod_coupons.py`. Pictures: `preview_6mm.png`, `preview_3mm.
 | `print/rod_coupon_6mm_v1.stl` | 6 mm carbon tube | 6.30 / 6.45 / 6.60 | 15 | Ø1.6 | 7.7 g | base, 1084 mm² | PASS |
 | `print/rod_coupon_3mm_v1.stl` | 3 mm carbon rod | 3.30 / 3.45 / 3.60 | 10 | Ø1.2 | 4.1 g | base, 671 mm² | PASS |
 
+- `print/rod_coupon_6mm_v1.stl`: solid_check PASS (one body, no thin walls, no necks), picture `preview_6mm.png`.
+- `print/rod_coupon_3mm_v1.stl`: solid_check PASS (one body, no thin walls, no necks), picture `preview_3mm.png`.
+
 For the epoxy hold (DEFAULT 27 Oct, E):
 - **Glue rings:** two in each socket, 0.5 deep and 2 tall, with a 45° roof so they print without support. The cured epoxy keys into them, so the joint holds on shape, not only on adhesion. Epoxy grips TPU poorly.
 - **Floor vent:** air and extra epoxy leave through it, so the socket fills to the bottom. The vent is narrower than the rod, so the rod stops on the floor.
