@@ -348,6 +348,23 @@ def saved_node(c):
     return None
 
 
+SAVED_ARMS = {"rear": "runs/overseer_arm_rear/v5d/overseer_arm_rear.stl"}   # the arm session's newest saved run meshes (arm frame)
+ARM_DEG = {"front": 45.0, "rear": 135.0}           # the arm frame: root at r 66.5 on the plate diagonal, x toward the motor (arm_topo_v1)
+
+
+def saved_arm(mx, my, dm):
+    """the newest saved arm at the motor (mx, my), in the drone frame (the arm session's arm_to_drone), or None"""
+    which = "front" if mx > dm else "rear"
+    f = SAVED_ARMS.get(which)
+    if not f or not os.path.exists(os.path.join(ROOT, f)): return None
+    d = math.radians(ARM_DEG[which]); R0 = 66.5 * np.array([math.cos(d), math.sin(d)])
+    th = math.atan2(abs(my) - R0[1], mx - R0[0])
+    m = trimesh.load(os.path.join(ROOT, f), force="mesh"); T = trimesh.transformations.rotation_matrix(th, [0, 0, 1]); T[:2, 3] = R0
+    m.apply_transform(T)
+    if my < 0: m.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0])); m.invert()
+    return m
+
+
 def apex_head(g):
     """the apex without the front hub block (the core's since 27 Oct, core v2 keel sockets on the hub deck): the part behind the L2
     base plane by 45 or less, as head_pts"""
@@ -1066,7 +1083,7 @@ PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("flow MTF-02P", g["flow"], "bought", True, 2, "E", None, "bought", "#2d5a2d", False),
 ]
 for i in range(4):
-    PARTS += [(f"arm {i + 1}", g["arms"][i], "structure", False, grp[f"arm {i + 1}"], "E", "PETG", "printed", "#8899aa", False),
+    PARTS += [(f"arm {i + 1}", saved_arm(*g["motors_xy"][i], g["dm"]) or g["arms"][i], "structure", False, grp[f"arm {i + 1}"], "E", "PETG", "printed", "#8899aa", False),
               (f"motor {i + 1}", g["motors"][i], "bought", True, 81, "E", None, "bought", "#b0b0b0", False),
               (f"prop {i + 1}", cyl(PROP_R, PROP_Z - BLADE, PROP_Z + BLADE, *mxy[i], 96), "bought", True, 10, "E", None, "bought", "#d9a400", False)]
 fname = lambda n_: "".join(ch if ch.isalnum() else "_" for ch in n_.lower()).strip("_")[:40] + ".stl"

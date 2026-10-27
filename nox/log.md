@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): the arm session's saved rear arm v5d (arm 2, arm 3 its mirror; 187.4 g M, solid PASS, branch claude/pensive-turing-jyxlcc 319ca86a) placed in the layout (`saved_arm`, the arm session's arm frame); fit 0, CG 0.2, access 21/21; artifact republished.
 - 27 Oct (Overseer): cage node 2 saved (front of the base loop, 6 tubes, PETG) solid PASS, 11.33 g M (run/cage_nodes-v3 fc8d0917); in the layout and artifact. Bed contact 6 mm²: the nodes print on supports (to settle at print).
 - 27 Oct (Overseer): first saved cage node: node 20 (rear top centre, 5 sockets, arms to a hub, PETG, 6.2 bores) solid PASS, 8.76 g M, worst index 0.02 (run/cage_nodes-v3 b5861a51); the layout and its artifact now use each saved node mesh (`saved_node`, mirrored for its partner).
 - 27 Oct (Overseer): L2 brace roots low in the tower (core session DEFAULT: halves its worst root force): lo (97, ±26, 12), hi (97, ±14, 18) (C); fit 0, props 16.4, access 21/21; head 155 Hz PETG, worst shell tube 2.33 (F on E). Head rerun waits for the core's hub deck to pass (the roots may still move).
