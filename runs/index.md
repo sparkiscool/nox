@@ -1,6 +1,6 @@
 # Runs
 
-_104 runs · rebuilt 2026-10-27 05:15_
+_105 runs · rebuilt 2026-10-27 05:15_
 
 ## Latest per part
 
@@ -23,6 +23,7 @@ _104 runs · rebuilt 2026-10-27 05:15_
 | hub | v6 | · | 188.6 (M) | 3.40 in power cut carrying: head A falls to the park stop [Overseer] [misuse] | FAIL | [runs/hub/v6](runs/hub/v6/summary.md) |
 | motor_mount | organic-v1 | · | 17.9 (M) | ·  | FAIL | [runs/motor_mount/organic-v1](runs/motor_mount/organic-v1/summary.md) |
 | overseer_assembly | v0 | DONE | 2332 (E) | ·  | · | [runs/overseer_assembly/v0](runs/overseer_assembly/v0/summary.md) |
+| overseer_core | v1 | · | 3419.7 (M) | ·  | · | [runs/overseer_core/v1](runs/overseer_core/v1/summary.md) |
 | overseer_layout | v3 | · | · | ·  | · | [runs/overseer_layout/v3](runs/overseer_layout/v3/summary.md) |
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
@@ -37,6 +38,7 @@ _104 runs · rebuilt 2026-10-27 05:15_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
+| 2026-10-27 05:15 | overseer_core | [v1](runs/overseer_core/v1/summary.md) | · | 3419.7 (M) | · | · | · | · GB | · min | · |
 | 2026-10-27 05:14 | scout_layout | [v9](runs/scout_layout/v9/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-27 04:55 | scout_layout | [v8](runs/scout_layout/v8/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-27 04:38 | scout_layout | [v7](runs/scout_layout/v7/summary.md) | · | · | · | · | · | · GB | · min | · |
