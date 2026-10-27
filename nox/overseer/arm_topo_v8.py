@@ -2,13 +2,15 @@
 cage crash index <= 1.0, front first mode >= 175 Hz): drawn = attachments only (root contact pads + insert bosses, motor
 pad + pocket wall, the cage spoke node sockets, the 4 tube end sockets with tip caps, drawn collar rings on the tube free
 spans with the rest of the ring round each bore kept clear); no solid root block, flanges, sleeves, diagonals, node
-blocks or shoulder wedge. Topology grows everything else. On the v7 inputs (rebalanced layout, 1886 / 1063 N).
+blocks or shoulder wedge. The plates' third hole per arm is used (Spark 27 Oct): a tongue from the root to
+each (top u 34.66, bottom u 32.9). Topology grows everything else. On the v7 inputs (rebalanced layout, 1886 / 1063 N).
 Same arguments as arm_topo_v1.py.
 """
 import os, runpy
 HERE = os.path.dirname(os.path.abspath(__file__))
 for k, v in (("NOX_ARM_VERSION", "v8"), ("NOX_ARM_SLEEVE", "0"), ("NOX_ARM_SHFLANGE", "0"), ("NOX_ARM_FLANGE_X", ""),
-             ("NOX_ARM_ROOT_SOLID", "0"), ("NOX_ARM_DIAG", "0"), ("NOX_ARM_SHWEB", ""), ("NOX_ARM_COLLARS", "3")):
+             ("NOX_ARM_ROOT_SOLID", "0"), ("NOX_ARM_DIAG", "0"), ("NOX_ARM_SHWEB", ""), ("NOX_ARM_COLLARS", "3"),
+             ("NOX_ARM_THIRD", "1")):
     os.environ.setdefault(k, v)
 import sys
 if "rear" in sys.argv[1:2]:

@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms, Spark): the plates have a third hole per arm on the arm line (top Ø3.1 u 34.66, bottom Ø3.1 u 32.9 v ∓1.1, M): v8 adds a 9-thick tongue to each, 6 M3 inserts per arm (was 4; the third top screw had been dropped for the Pi deck). v8 runs restarted.
 - 27 Oct (Overseer arms, Spark): too bulky, natural structures; cage crash index <= 1.0 (was 0.5), front first mode >= 175 Hz (was 190), only long 6 mm carbon tubes (no 3.0 diagonals). v8: drawn = attachments only, collar rings on the tubes, topology grows the rest; rear gen 30, front 35. `arm_topo_v8.py`
 - 27 Oct (Overseer arms): v7 on the rebalanced layout. Rear 189 g: solid PASS, modes 438 Hz, cage crash 0.69 at the plate corner / 0.57 in the arm (HOLD for balance). Front 331 g: modes 177 / 210 Hz, strength 0.52, solid FAIL (a 0.02 mm³ build sliver). Front not converging: decision to Spark (accept a 1P..2P gap target, or shorter front arms).
 - 27 Oct (Overseer arms): front v6 built 330 g, strength 0.37, modes 182 / 214 Hz (4 % under 190; 6/4 diagonals 191 Hz E but fail the install geometry). DEFAULT: accept ≥ 182 Hz (1.15 x 1P full; alt keep 190: fable geometry or shorter front arms); v7 both arms on the rebalanced layout (1886 / 1063 N), front in this box, rear in a sibling.
