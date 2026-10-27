@@ -39,6 +39,10 @@ U_ROOT = (58.0, float(os.environ.get("NOX_ARM_ROOT_U1", 75.0)))   # root block a
 V_ROOT = 21.0
 TOP_INS = [(63.17, 15.0), (63.17, -15.0)]      # M3 into the top plate (O, derived)
 BOT_INS = [(63.74, 10.0), (63.74, -10.0)]      # M3 into the bottom plate (O, derived)
+THIRD = os.environ.get("NOX_ARM_THIRD") == "1"   # v8 (Spark 27 Oct): the plates' third hole per arm, on the arm line further in:
+TOP3 = (34.66, 0.0)                              # top Ø3.1 at u 34.66 (O, derived) and bottom Ø3.1 at u 32.9, v -1.1 front /
+BOT3 = {"front": (32.9, -1.1), "rear": (32.9, 1.1)}   # +1.1 rear (M, the plate mesh); a tongue from the root to each (C)
+TONGUE_V = 7.0                                   # tongue half width: the Ø12 boss + 1 (C)
 INS_D, INS_DEPTH, BOSS_D = 4.0, 7.0, 12.0      # M3 heat-set insert hole (O), boss Ø12 (attachment rule)
 ROOT_PAD_T = 9.0                      # root contact pads 9 thick: the insert depth + 2, and room for the chord bores
 PAD_T = 6.0                           # motor pad (README: plates >= 6 for the gate's 2 mm core)
@@ -344,6 +348,17 @@ def bodies(which):
         pad_top += diag(cyl(u, v, ROOT_H - ROOT_PAD_T, ROOT_H, BOSS_D / 2), d)
     for u, v in BOT_INS:
         pad_bot += diag(cyl(u, v, 0.0, ROOT_PAD_T, BOSS_D / 2), d)
+    tongues = mf.Manifold()
+    if THIRD:                                    # v8: tongues to the third holes, top and bottom, each a pad 9 thick
+        b3 = BOT3[which]
+        t_top = (diag(box(TOP3[0], u0 + 2.0, -TONGUE_V, TONGUE_V, ROOT_H - ROOT_PAD_T, ROOT_H), d)
+                 + diag(cyl(TOP3[0], TOP3[1], ROOT_H - ROOT_PAD_T, ROOT_H, BOSS_D / 2), d)) ^ top_fp
+        t_bot = (diag(box(b3[0], u0 + 2.0, b3[1] - TONGUE_V, b3[1] + TONGUE_V, 0.0, ROOT_PAD_T), d)
+                 + diag(cyl(b3[0], b3[1], 0.0, ROOT_PAD_T, BOSS_D / 2), d)) ^ bot_fp
+        pad_top += t_top
+        pad_bot += t_bot
+        tongues = t_top + t_bot
+        env = env + (tongues - ko)
     pad_top -= ko
     pad_bot -= ko
     mpad = cyl(M[0], M[1], ROOT_H - PAD_T, ROOT_H, MOTOR_R_PAD, 96)
@@ -352,10 +367,10 @@ def bodies(which):
     # cuts
     cuts = ko
     bosses = mf.Manifold()
-    for u, v in TOP_INS:
+    for u, v in TOP_INS + ([TOP3] if THIRD else []):
         cuts += diag(cyl(u, v, ROOT_H - INS_DEPTH, ROOT_H + 1, INS_D / 2, 32), d)
         bosses += diag(cyl(u, v, ROOT_H - INS_DEPTH, ROOT_H, INS_D / 2 + 1.5, 32), d)
-    for u, v in BOT_INS:
+    for u, v in BOT_INS + ([BOT3[which]] if THIRD else []):
         cuts += diag(cyl(u, v, -1.0, INS_DEPTH, INS_D / 2, 32), d)
         bosses += diag(cyl(u, v, 0.0, INS_DEPTH, INS_D / 2 + 1.5, 32), d)
     lead = math.degrees(math.atan2(*(F["R0"] - M)[::-1]))          # motor leads point back to the root
@@ -370,6 +385,9 @@ def bodies(which):
     # support faces: the plate contact faces of the root pads (inside each plate's outline)
     sup_top = diag(box(u0, u1, -V_ROOT, V_ROOT, ROOT_H - 1.0, ROOT_H + 0.5), d) ^ top_fp
     sup_bot = diag(box(u0, u1, -V_ROOT, V_ROOT, -0.5, 1.0), d) ^ bot_fp
+    if THIRD:                                    # the tongues' plate contact faces join the main support
+        sup_top += tongues ^ box(-400, 400, -400, 400, ROOT_H - 1.0, ROOT_H + 0.5)
+        sup_bot += tongues ^ box(-400, 400, -400, 400, -0.5, 1.0)
     sup = (sup_top + sup_bot) - ko
     load = mpad - cyl(M[0], M[1], ROOT_H - PAD_T - 1, ROOT_H + 1, SHAFT_D / 2 + 0.5, 48)
     socks, sock_regions = mf.Manifold(), {}
