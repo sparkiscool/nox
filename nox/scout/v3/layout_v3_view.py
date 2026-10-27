@@ -34,10 +34,15 @@ line = lambda a, b, rr=0.7: trimesh.creation.cylinder(rr, np.linalg.norm(np.subt
 
 ASM = json.load(open(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")))
 SAVED = [p for p in ASM["parts"] if p.get("owner") == "scout camera mount"]   # saved camera mount (PR 146): drawn in place of the layout's cradle
+SC_ = os.path.join(RUN, "system_check_mount.json")             # system_check on the assembly with the saved mount (its numbers, not the layout's)
+if SAVED and os.path.exists(SC_):
+    bc_ = json.load(open(SC_))["balance"]["cases"]; MASS_, CGI_, CGO_ = bc_["all"]["mass_g"], bc_["all"]["horizontal_mm"], bc_["no_swap"]["horizontal_mm"]
+else:
+    MASS_, CGI_, CGO_ = r["mass"], math.hypot(*r["cg"][:2]), math.hypot(*r["cg_pack_out"][:2])
 s = Scene("Scout v3 Cage",
           f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the 4 side nodes of the Overseer's base loop (same funnel, fewer ramps), one camera close in at the nose " + ("on its saved clip-on mount with a lens hood" if SAVED else "on snap clips") + ", carbon base kept; "
-          f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{r['mass']:.0f} g (E), "
-          f"CG {math.hypot(*r['cg'][:2]):.1f} mm pack in / {math.hypot(*r['cg_pack_out'][:2]):.1f} pack out")
+          f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{MASS_:.0f} g (E), "
+          f"CG {CGI_:.1f} mm pack in / {CGO_:.1f} pack out")
 names = []
 for p in json.load(open(os.path.join(RUN, "parts", "parts.json"))):
     if p["name"].startswith("prop") or (SAVED and p["name"].startswith("camera cradle")):

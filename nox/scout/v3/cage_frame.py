@@ -37,6 +37,9 @@ SHELL_SEC = TUBE6 if os.environ.get("SCOUT_FRAME_SHELL") == "6" else ROD3      #
 TIE_SEC = TUBE6 if os.environ.get("SCOUT_FRAME_TIES") == "6" else ROD3
 _U6 = os.environ.get("SCOUT_FRAME_UP6")                                          # a json list: members sized up to 6/4 tube (the sizing loop)
 UP6 = set(json.load(open(_U6))) if _U6 and os.path.exists(_U6) else set()
+_L = {f"rod {a}-{b}": np.linalg.norm(np.subtract(CG["nodes"][a], CG["nodes"][b])) for a, b in CG["rods"]}
+_L.update({k: np.linalg.norm(np.subtract(p, q)) for k, (p, q) in RES["links"].items()})
+MASS += sum(_L.get(k, 0.0) for k in (UP6 if SHELL_SEC is not TUBE6 else _L)) * (15.71 - 7.07) * 1.55e-3 / 1000.0   # the sized tubes' extra mass (the assembly counts 3.0 rods)
 
 
 def seg_d(c, p, q):

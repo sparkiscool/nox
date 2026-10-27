@@ -1307,6 +1307,9 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v12", ""):
         a_["note"] = sm_["note"]
         from assembly import Assembly
         Assembly(a_, ap_).save(ap_)
+        import subprocess
+        subprocess.run([sys.executable, os.path.join(ROOT, "nox", "system_check.py"), ap_, "--report", "--out", os.path.join(OUT, "system_check_mount.json")],
+                       capture_output=True, cwd=ROOT)                # the view's numbers with the mount in
         say("camera mount: the saved part (runs/scout_camera_mount/v1, " + ", ".join(f"{p_['name']} {p_['mass_g']} g" for p_ in mine_) + ") in the assembly")
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())

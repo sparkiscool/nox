@@ -86,7 +86,7 @@ Previews: `preview_scout_camera_mount_v1.png` (print/scout_camera_mount_v1.stl),
   - **Lowest mode 109.3 Hz (F)**, gate 100: a cage pitch mode (tail point and nose); the camera has 23 % of its energy (F).
     - Stiffness changes barely move it: clips at E/10 give 109.2 Hz (F), chords at their out-of-plane I give 109.5 Hz (F).
     - The first mode the camera dominates is 426 Hz (F).
-  - Frontal hit 250 N on the hood (35 g on 730 g, E):
+  - Frontal hit 250 N on the hood (35 g on 735 g, E):
     - Centred: PETG 13.1 MPa, clip pull 0, tubes at 0.30 of allowable (F).
     - On a hood corner: the far clips are pulled 67 N (F on E), so they pop (below).
   - 35 g inertial on the mount: clip pull at most 3.6 N against pop 23.4 (F on E).
@@ -135,7 +135,7 @@ Both are in the frame model's sized 39 (`runs/scout_frame/v2/alt_sized/up6.json`
 - **Cage / frame model:** `cage_frame.py` now holds these clip points, the 32.3 g mount + camera and the real 6/4 tube mass: the sized cage's lowest mode is 111 Hz (F; `runs/scout_frame/v3/alt_sized/`), every rod 3.0 still fails (`runs/scout_frame/v3/`).
 - **Node 16:** keep its sockets for 14-16 / 15-16 / 7-16 / 8-16 inside 5 of the node centre toward +x; the mount's back frame is 5.45 from a Ø12 node there (C).
 - **Layout:** the camera slot is 32.3 g (M + E) in `dimensions.md` Mass; `nox/scout/v3/scout.assembly.json` carries this mount in place of the layout's cradle (CG 1.9 pack in, gate 3, E; no trim needed).
-- **Cage sync (CLAUDE.md, review 15):** saved part reported to the Scout v3 cage session (session_01EtHMZNhc68Ghbc2KCNMUzU), file, commit and mass (21.8 g M). That session put it in `nox/scout/v3/scout.assembly.json` and republished the Scout artifact https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR with it (version 20, 27 Oct).
+- **Cage sync (CLAUDE.md, review 15):** saved part reported to the Scout v3 cage session (session_01EtHMZNhc68Ghbc2KCNMUzU), file, commit and mass (21.8 g M). That session put it in `nox/scout/v3/scout.assembly.json` and republished the Scout artifact https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR with it (version 21, 27 Oct).
 
 ## Open
 - **Snap fit (E):** print one mount and try it on a 6/4 offcut before the drone: snap 0.20 and grip 0.05 are estimates. Too tight: `SCM_SNAP=0.15`. Loose: raise GRIP.
