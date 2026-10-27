@@ -49,7 +49,7 @@ ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 78ch; }
 
 <main>
   <header>
-    <span class="eyebrow">Box catch concept F · one stepper · Overseer cage v5 + Scout v11 · 27 Oct</span>
+    <span class="eyebrow">Box catch concept F · one stepper · Overseer v5 assembly + Scout v12 (main 2bded7a0) · 27 Oct</span>
     <h1>Land anywhere on a flat deck; two pads and two bars put both drones on the same spot</h1>
     <p id="lede"></p>
     <div class="kpis" id="kpis"></div>
@@ -110,7 +110,7 @@ const squareBoth = bothOk(cap(O).square_mm, cap(C).square_mm);
 document.getElementById('lede').textContent =
   `The deck is flat: nothing stands up where a drone lands, so the landing needs no aim beyond the deck itself. One NEMA 17 on a T8 x 2 lead screw moves one carriage under the deck. First two low end pads close along x (nose : tail travel 1 : ${S.k_t}) and stop where the drone stops them: the Overseer on its two tip nodes after ${S.s_overseer} mm, the Scout on its two end tubes after ${S.s_scout} mm, both with the receiver on the swap centre. Then, driven only by the carriage running ${D.s2} mm on against the pad spring, two short side bars close ${S.y_travel} mm a side onto the shared side tubes, square the drone, and their lips reach over the tubes for the hold-down. The motor stalls on the bars' stop: that stall, and how far the carriage went, is the seat sense and says which drone landed. The screw self-locks.`;
 const kp = [
-  [`±${squareBoth} mm`, 'every landing in this square, every yaw −15..15°, both drones'],
+  [`±${cap(C).square_mm} / ±${cap(O).per_axis.x[1]} mm`, 'Scout: every landing in this square, every yaw −15..15° · Overseer: x reach at y 0, every yaw'],
   [`${cap(O).yaw_ok_deg.length ? cap(O).yaw_ok_deg[0] + '..' + cap(O).yaw_ok_deg.at(-1) : '–'}°`, 'Overseer yaw at the centre'],
   [`${f1(Math.max(cap(O).worst_pose_err_mm || 0, cap(C).worst_pose_err_mm || 0))} mm · ${f1(Math.max(cap(O).worst_yaw_err_deg || 0, cap(C).worst_yaw_err_deg || 0))}°`, 'worst seated error, both drones (C)'],
   [`${S.carriage_overseer} / ${S.carriage_scout} mm`, 'carriage travel Overseer / Scout (C)'],
@@ -315,10 +315,10 @@ document.getElementById('kpis').innerHTML = kp.map(([b, s]) => `<div class="kpi"
 // ---- comparison and notes
 const rows = [
   ['', 'Ramps (concept E, checked)', 'Hook claws (handoff direction, checked by hand)', 'Push bars (this, checked)'],
-  ['Landing room', 'Scout ±20 / ±25, Overseer ±25 / ±25, yaw ±2.5°', 'a few tens of mm; every claw rises outside the ring where both shells flare, 12 claws', `±${squareBoth} mm square for every yaw ${D.yaws[0]}..${D.yaws.at(-1)}°, more along single axes (table above)`],
+  ['Landing room', 'Scout ±20 / ±25, Overseer ±25 / ±25, yaw ±2.5°', 'a few tens of mm; every claw rises outside the ring where both shells flare, 12 claws', `Scout: every landing in |y| ≤ 60, any x, yaw ${D.yaws[0]}..${D.yaws.at(-1)}°; Overseer: x ±80 at y 0 for every yaw, |y| ≤ 40 at yaw 0 and ±5, y ±20 at ±10 for |x| ≤ 20 (maps above)`],
   ['What stands up on the deck', '10 ramps, 20..25 high', 'flat deck until the claws rise', `flat; parked pads ${D.h_pad} and bars ${D.height} high, outside the landing room`],
   ['Centring', 'passive, sliding on 45° faces (needs μ ≤ 0.2)', 'active, 12 claws through sprung links', 'active: 2 pads then 2 bars, rigid stops, one motor'],
-  ['Final position', 'where the faces meet, both drones level only by matching ring heights', 'V-seats on 4 shared nodes', 'notch on the tip nodes (Overseer), wing corners on the end tubes (Scout), bar stop for y: both receivers on the swap centre, 1 mm (C)'],
+  ['Final position', 'where the faces meet, both drones level only by matching ring heights', 'V-seats on 4 shared nodes', 'notch on the tip nodes (Overseer), wing corners on the end tubes (Scout), bar stop for y: both receivers on the swap centre, x median 0.8, max 6 at the edge (C)'],
   ['Hold-down for the 74 N stall', 'a separate latch', 'the claws, over-centre', 'the two lips, 3 clear of the Overseer\'s inner link; the screw holds the bars'],
   ['Both drones', 'different ramps for each, Overseer pads cross the Scout\'s path', 'shared nodes only; the Overseer\'s x needs its own claws', 'one travel, two stall positions; the pad ratio does the rest'],
   ['Parts to buy', 'none', '1 servo or stepper, 12 claws, springs', '1 NEMA 17, 1 T8 x 2 screw + nut + thrust bearing, 1 spring; everything else printed'],
@@ -326,10 +326,10 @@ const rows = [
 ];
 document.getElementById('cmp').innerHTML = rows.map((r, i) => `<tr>${r.map((c, j) => i ? `<td class="${j === 3 ? 'rec' : ''}">${c}</td>` : `<th class="${j === 3 ? 'rec' : ''}">${c}</th>`).join('')}</tr>`).join('');
 document.getElementById('notes').innerHTML = [
-  `Checked on the real cages (Overseer cage v5 at dea0b51, Scout layout v11 at dea0b51, every low part of both assemblies) with a quasi-static push model: the drone is rigid on the deck, each 0.5 mm of carriage travel it is moved the least that resolves every contact (translation and yaw), the pad slide gives way within its stroke. A pad or bar may only touch ring tubes, nodes and the tip structure; a lip touching anything, a body running under anything, or a rod climbing more than ${D.rid ?? 2} mm fails the landing. Script nox/box/catch_bars_concept.py, results runs/box_catch/bars_concept/result.json.`,
+  `Checked on both drones as they are on main (2bded7a0: the Overseer's v5 assembly, Scout layout v12; every low part of both assemblies) with a quasi-static push model: the drone is rigid on the deck, each 0.5 mm of carriage travel it is moved the least that resolves every contact (translation and yaw), the pad slide gives way within its stroke. A pad or bar may only touch ring tubes, nodes and the tip structure; a lip touching anything, a body running under anything, or a rod climbing more than ${D.rid ?? 2} mm fails the landing. Script nox/box/catch_bars_concept.py, results runs/box_catch/bars_concept/result.json.`,
   `What the drones need: nothing on the Overseer. The Scout: a 6 mm printed sleeve on each side rod over x ±32 (DEFAULT, 2 parts, ~1 g each), and its bottom plane 1.1 lower against its cartridge so both cartridges sit 7.0 above the deck (plane −50.7 instead of −49.6, C; or the swap head takes the 1.1). Both go to the Scout session.`,
   `What the box needs: a flat deck round the swap column; the pad slide and carriage under it; 2 pads, 2 bars with lips, 1 lever, 1 compound pinion and 2 racks, all PETG; 1 NEMA 17 (the fourth; the three on hand are the arm's), 1 T8 x 2 screw 300 with a POM or brass nut and an F8-16M thrust bearing, 1 compression spring. The spare E driver on the SKR Mini E3 V3 drives it (UART address 3, E0-DIAG jumper for StallGuard; Klipper manual_stepper). Retires: funnel panels v7 and v9 plain, hook latch v2, the 8 catch wheels, the keep-alive probes.`,
-  `Open before CAD: a bench test of StallGuard on the E driver at 30 rpm (research says it needs one); the spring rate against the Overseer's drag on TPU feet (μ 0.5..0.8, E); rounding the notch corner so a node rides in smoothly; chamfers on the pad tops where rods ride up to 2 mm; the deck's own flatness under a ±80 landing.`,
+  `Open before CAD: a bench test of StallGuard on the E driver at 30 rpm (research says it needs one); the spring rate against the Overseer's drag on TPU feet (μ 0.5..0.8, E); rounding the notch corner so a node rides in smoothly; chamfers on the pad tops where rods ride up to 0.8 mm; the deck's own flatness under a ±80 landing.`,
   `Alternatives weighed: ramps (passive, a quarter of the landing room, no hold-down, needs low-friction faces); hook claws (the handoff direction: every claw rises outside the ring where both shells flare out at 16..20°, so claws collide with shell rods under any offset; 12 drives). Both kept in the comparison; neither centres both drones from ±80.`,
   `Spark's words this concept answers: "the most error-tolerant most well-designed one-motor latch system that works for both current drone cages." The budget comes from the research: real touchdown error 7..14 cm, tag yaw 1..4°; plan ±80 mm and ±10°, survive ±15° (claude/research/2026-10-27-precision-landing-accuracy.md).`,
 ].map(t => `<li>${t}</li>`).join('');

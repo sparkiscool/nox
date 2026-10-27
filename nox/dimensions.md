@@ -366,7 +366,7 @@ Seated drone on 8 catch wheels (Scout 4.9 N with its pack, 3.3 N without; Overse
 | Side bars (2) | x −25..25, 6 thick, 11.5 tall; face on the tube line + 3.25 (gap 0.5 over the surfaces, the line tapers 3.6 over 155); lip 3 thick, underside z 4.5, edge 2 inside the tube line; park |y| 258; travel 137 over 60 of carriage (2.3 : 1 lever), after the x clamp only |
 | Carriage | T8 x 2, NEMA 17 (the fourth), thrust bearing F8-16M; travel to the stall 150 (Overseer) / 256 (Scout); at the stall ~120 N (E) |
 | Hold-down | 74 N head stall on the two lips (5 MPa cantilever, E); the screw holds the bars |
-| Envelope (C) | Scout: every landing in ±60, yaw ±15; Overseer: x ±80, y ±20 at yaw ±10, ±40 at ±5, ±60 at 0. Seated: y ≤ 0.23, yaw ≤ 0.9°, x median 0.8 / 0.5, 90 % 2.7, max 6 |
+| Envelope (C) | Scout: every landing in |y| ≤ 60, any x, yaw ±15; Overseer: x ±80 at y 0 for every yaw −15..15; |y| ≤ 40 at every x for yaw 0 and ±5; y ±20 at ±10 only for |x| ≤ 20; y ±60 at x 0, yaw 0. Seated: y ≤ 0.23, yaw ≤ 0.9°, x median 0.8 / 0.5, 90 % 2.7, max 6 (Overseer inside ±20: 86 % within 2.3) |
 | Scout plane | −50.7 with the sleeves (cartridge 7.0 above the deck like the Overseer's), −47.5 with a 6/4 ring (Scout session) |
 
 ## System box structure (24 Oct 2026; system pass v1 `nox/box/box_system.py`, assembly `nox/box/box_structure.assembly.json`, results `runs/box_system/v1/` (`summary.md`, `requirements.md`, per-piece `req/<instance>.json`); W frame; C geometry, M mesh, F model, loads E)

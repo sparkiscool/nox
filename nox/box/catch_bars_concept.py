@@ -87,7 +87,7 @@ NOSE_SEAT = HEX["F"][0] + (NODE_R + GAP / 2) / CV          # nose apex when the 
 TAIL_SEAT = HEX["T"][0] - (NODE_R + GAP / 2) / CV          # (-227.3)
 SCOUT_NOSE = HEX["Ln"][0] + 1.5 + GAP / 2 + D_WING         # nose apex when the Scout's end tube is on the wings (96.05)
 SCOUT_TAIL = HEX["Lt"][0] - 1.5 - GAP / 2 - D_WING         # (-79.15)
-K_T = (SCOUT_TAIL - TAIL_SEAT) / (NOSE_SEAT - SCOUT_NOSE)  # tail : nose travel so both drones clamp centred (1.349)
+K_T = (SCOUT_TAIL - TAIL_SEAT) / (NOSE_SEAT - SCOUT_NOSE)  # tail : nose travel so both drones clamp centred (1.361)
 NOSE_PARK = NOSE_SEAT + EXTRA
 S_O = NOSE_PARK - NOSE_SEAT                                 # nose travel to the Overseer clamp (= EXTRA)
 S_S = NOSE_PARK - SCOUT_NOSE                                # to the Scout clamp
