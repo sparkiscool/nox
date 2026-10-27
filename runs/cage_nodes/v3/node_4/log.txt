@@ -237,3 +237,17 @@ it   8 beta    4 J  10.0001 vol 0.0135 (dil 0.0512 g +0.676) grey  4.2% ch 0.100
 it   8 beta    4 J  10.0001 vol 0.0135 (dil 0.0512 g +0.676) grey  4.2% ch 0.100 worst tube to 11 side a 339 97.3s
 it   9 beta    4 J  10.0001 vol 0.0129 (dil 0.0497 g +0.630) grey  4.0% ch 0.100 worst tube to 11 side a 339 102.6s
 it   9 beta    4 J  10.0001 vol 0.0129 (dil 0.0497 g +0.630) grey  4.0% ch 0.100 worst tube to 11 side a 339 102.6s
+it  10 beta    4 J  10.0001 vol 0.0124 (dil 0.0484 g +0.585) grey  3.7% ch 0.100 worst tube to 11 side a 339 96.5s
+it  10 beta    4 J  10.0001 vol 0.0124 (dil 0.0484 g +0.585) grey  3.7% ch 0.100 worst tube to 11 side a 339 96.5s
+it  11 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 95.3s
+it  11 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 95.3s
+it  12 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 82.4s
+it  12 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 82.4s
+it  13 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 79.3s
+it  13 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 79.3s
+it  14 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.3s
+it  14 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 88.3s
+it  15 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 79.6s
+it  15 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 79.6s
+it  16 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 80.0s
+it  16 beta    4 J  10.0001 vol 0.0120 (dil 0.0470 g +0.539) grey  3.5% ch 0.000 worst tube to 11 side a 339 80.0s
