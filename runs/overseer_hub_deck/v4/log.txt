@@ -1,0 +1,162 @@
+=== overseer_hub_deck: h 1.0, generated 12.0 cm3, min member 3.2 mm, cores 4
+=== overseer_hub_deck: h 1.0, generated 12.0 cm3, min member 3.2 mm, cores 4
+overseer_hub_deck: grid (200, 96, 24) h 1.0 = 460,800 cells; design 90,652 (90.7 cm3), drawn 18,118, void 352,030
+  support default: 2832 cells, 4648 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_hub_deck: grid (104, 48, 16) h 2.0 = 79,872 cells; design 10,033 (80.3 cm3), drawn 2,035, void 67,804
+  support default: 241 cells, 700 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (16.26 cm3); 0.02 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (16.26 cm3); 0.02 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.150 of 10,035 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.150 of 10,035 design cells
+layout: WARNING nearly mirrored in x (7.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (7.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.5% of passive cells differ): no symmetry
+layout: 10 drawn bodies (2,033 cells), held solid in every realization; eroded filter: masked
+layout: 10 drawn bodies (2,033 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (96 cells) count by their cover; 3 bodies tied to body 2
+layout: gate ties: held bodies thinner than 2.0 mm (96 cells) count by their cover; 3 bodies tied to body 2
+layout: 23 load cases + 24 tie cases (4 bodies tied, 6 held by support 'default') + 18 gate ties + 36 held ties
+layout: 23 load cases + 24 tie cases (4 bodies tied, 6 held by support 'default') + 18 gate ties + 36 held ties
+fem: grid (104, 48, 16) = 79,872 elements, 50,112 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+fem: grid (104, 48, 16) = 79,872 elements, 50,112 active dofs; backend direct (direct estimate 0.3 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1274 (dil 0.1531 g -0.149) grey 48.5% ch 0.100 worst gate b1 fz 2.67e+03 7.2s
+it   1 beta    1 J  10.0000 vol 0.1274 (dil 0.1531 g -0.149) grey 48.5% ch 0.100 worst gate b1 fz 2.67e+03 7.2s
+it   2 beta    1 J   9.4881 vol 0.1381 (dil 0.1654 g -0.080) grey 67.3% ch 0.100 worst held b10 mz 3.66e+03 7.9s
+it   2 beta    1 J   9.4881 vol 0.1381 (dil 0.1654 g -0.080) grey 67.3% ch 0.100 worst held b10 mz 3.66e+03 7.9s
+it   3 beta    1 J   3.6996 vol 0.1418 (dil 0.1693 g -0.059) grey 64.9% ch 0.100 worst tie b1 my 1.33e+03 7.5s
+it   3 beta    1 J   3.6996 vol 0.1418 (dil 0.1693 g -0.059) grey 64.9% ch 0.100 worst tie b1 my 1.33e+03 7.5s
+it   4 beta    1 J   8.9749 vol 0.1391 (dil 0.1656 g -0.079) grey 60.9% ch 0.100 worst held b10 mz 3.46e+03 8.2s
+it   4 beta    1 J   8.9749 vol 0.1391 (dil 0.1656 g -0.079) grey 60.9% ch 0.100 worst held b10 mz 3.46e+03 8.2s
+it   5 beta    1 J   2.9398 vol 0.1335 (dil 0.1592 g -0.115) grey 59.6% ch 0.100 worst tie b1 my 1.07e+03 7.9s
+it   5 beta    1 J   2.9398 vol 0.1335 (dil 0.1592 g -0.115) grey 59.6% ch 0.100 worst tie b1 my 1.07e+03 7.9s
+it   6 beta    1 J   8.1170 vol 0.1306 (dil 0.1550 g -0.136) grey 54.3% ch 0.100 worst held b10 mz 3.24e+03 8.2s
+it   6 beta    1 J   8.1170 vol 0.1306 (dil 0.1550 g -0.136) grey 54.3% ch 0.100 worst held b10 mz 3.24e+03 8.2s
+it   7 beta    1 J   2.4501 vol 0.1181 (dil 0.1409 g -0.215) grey 53.2% ch 0.100 worst gate b6 my 754 8.1s
+it   7 beta    1 J   2.4501 vol 0.1181 (dil 0.1409 g -0.215) grey 53.2% ch 0.100 worst gate b6 my 754 8.1s
+it   8 beta    1 J   1.0617 vol 0.1335 (dil 0.1586 g -0.116) grey 57.3% ch 0.100 worst gate b1 mx 338 7.9s
+it   8 beta    1 J   1.0617 vol 0.1335 (dil 0.1586 g -0.116) grey 57.3% ch 0.100 worst gate b1 mx 338 7.9s
+it   9 beta    1 J   0.6956 vol 0.1449 (dil 0.1712 g -0.046) grey 60.4% ch 0.100 worst gate b1 mx 240 7.5s
+it   9 beta    1 J   0.6956 vol 0.1449 (dil 0.1712 g -0.046) grey 60.4% ch 0.100 worst gate b1 mx 240 7.5s
+it  10 beta    1 J   0.5335 vol 0.1490 (dil 0.1755 g -0.022) grey 59.6% ch 0.100 worst gate b1 mx 176 7.7s
+it  10 beta    1 J   0.5335 vol 0.1490 (dil 0.1755 g -0.022) grey 59.6% ch 0.100 worst gate b1 mx 176 7.7s
+it  11 beta    1 J   0.4526 vol 0.1509 (dil 0.1774 g -0.006) grey 59.0% ch 0.100 worst gate b1 mx 146 7.9s
+it  11 beta    1 J   0.4526 vol 0.1509 (dil 0.1774 g -0.006) grey 59.0% ch 0.100 worst gate b1 mx 146 7.9s
+it  12 beta    1 J   0.4124 vol 0.1509 (dil 0.1771 g -0.008) grey 57.7% ch 0.100 worst gate b1 mx 129 7.5s
+it  12 beta    1 J   0.4124 vol 0.1509 (dil 0.1771 g -0.008) grey 57.7% ch 0.100 worst gate b1 mx 129 7.5s
+it  13 beta    1 J   0.3770 vol 0.1511 (dil 0.1771 g -0.008) grey 56.5% ch 0.100 worst gate b1 mx 114 7.9s
+it  13 beta    1 J   0.3770 vol 0.1511 (dil 0.1771 g -0.008) grey 56.5% ch 0.100 worst gate b1 mx 114 7.9s
+it  14 beta    1 J   0.3499 vol 0.1514 (dil 0.1770 g -0.009) grey 55.3% ch 0.100 worst crash 35 g 0 108 8.0s
+it  14 beta    1 J   0.3499 vol 0.1514 (dil 0.1770 g -0.009) grey 55.3% ch 0.100 worst crash 35 g 0 108 8.0s
+it  15 beta    1 J   0.3301 vol 0.1517 (dil 0.1769 g -0.009) grey 54.0% ch 0.100 worst crash 35 g 0 107 7.9s
+it  15 beta    1 J   0.3301 vol 0.1517 (dil 0.1769 g -0.009) grey 54.0% ch 0.100 worst crash 35 g 0 107 7.9s
+it  16 beta    1 J   0.3155 vol 0.1522 (dil 0.1768 g -0.003) grey 52.6% ch 0.100 worst crash 35 g 0 105 7.8s
+it  16 beta    1 J   0.3155 vol 0.1522 (dil 0.1768 g -0.003) grey 52.6% ch 0.100 worst crash 35 g 0 105 7.8s
+it  17 beta    1 J   0.3078 vol 0.1517 (dil 0.1758 g -0.008) grey 50.9% ch 0.100 worst crash 35 g 0 104 7.6s
+it  17 beta    1 J   0.3078 vol 0.1517 (dil 0.1758 g -0.008) grey 50.9% ch 0.100 worst crash 35 g 0 104 7.6s
+it  18 beta    1 J   0.3017 vol 0.1524 (dil 0.1760 g -0.007) grey 49.6% ch 0.100 worst crash 35 g 0 103 7.6s
+it  18 beta    1 J   0.3017 vol 0.1524 (dil 0.1760 g -0.007) grey 49.6% ch 0.100 worst crash 35 g 0 103 7.6s
+it  19 beta    1 J   0.2979 vol 0.1530 (dil 0.1763 g -0.006) grey 48.6% ch 0.100 worst crash 35 g 0 102 7.5s
+it  19 beta    1 J   0.2979 vol 0.1530 (dil 0.1763 g -0.006) grey 48.6% ch 0.100 worst crash 35 g 0 102 7.5s
+it  20 beta    1 J   0.2952 vol 0.1535 (dil 0.1764 g -0.005) grey 47.5% ch 0.100 worst crash 35 g 0 102 7.5s
+it  20 beta    1 J   0.2952 vol 0.1535 (dil 0.1764 g -0.005) grey 47.5% ch 0.100 worst crash 35 g 0 102 7.5s
+it  21 beta    1 J   0.2932 vol 0.1539 (dil 0.1765 g +0.005) grey 46.6% ch 0.100 worst crash 35 g 0 101 7.7s
+it  21 beta    1 J   0.2932 vol 0.1539 (dil 0.1765 g +0.005) grey 46.6% ch 0.100 worst crash 35 g 0 101 7.7s
+it  22 beta    1 J   0.2921 vol 0.1528 (dil 0.1750 g -0.004) grey 45.6% ch 0.100 worst crash 35 g 0 101 6.9s
+it  22 beta    1 J   0.2921 vol 0.1528 (dil 0.1750 g -0.004) grey 45.6% ch 0.100 worst crash 35 g 0 101 6.9s
+it  23 beta    1 J   0.2908 vol 0.1532 (dil 0.1751 g -0.003) grey 44.8% ch 0.100 worst crash 35 g 0 100 7.5s
+it  23 beta    1 J   0.2908 vol 0.1532 (dil 0.1751 g -0.003) grey 44.8% ch 0.100 worst crash 35 g 0 100 7.5s
+it  24 beta    1 J   0.2897 vol 0.1535 (dil 0.1752 g -0.003) grey 43.9% ch 0.100 worst crash 35 g 0 100 7.2s
+it  24 beta    1 J   0.2897 vol 0.1535 (dil 0.1752 g -0.003) grey 43.9% ch 0.100 worst crash 35 g 0 100 7.2s
+it  25 beta    1 J   0.2889 vol 0.1538 (dil 0.1753 g -0.002) grey 43.2% ch 0.100 worst crash 35 g 0 99.9 7.8s
+it  25 beta    1 J   0.2889 vol 0.1538 (dil 0.1753 g -0.002) grey 43.2% ch 0.100 worst crash 35 g 0 99.9 7.8s
+layout: beta 1 done: eroded design 4 bodies, main 69.7%; drawn bodies outside the main body: 2
+layout: beta 1 done: eroded design 4 bodies, main 69.7%; drawn bodies outside the main body: 2
+it  26 beta    2 J   0.4912 vol 0.1430 (dil 0.2094 g -0.044) grey 39.2% ch 0.100 worst held b9 mz 176 8.4s
+it  26 beta    2 J   0.4912 vol 0.1430 (dil 0.2094 g -0.044) grey 39.2% ch 0.100 worst held b9 mz 176 8.4s
+it  27 beta    2 J   0.3568 vol 0.1484 (dil 0.2160 g -0.014) grey 40.1% ch 0.100 worst held b3 mz 118 7.7s
+it  27 beta    2 J   0.3568 vol 0.1484 (dil 0.2160 g -0.014) grey 40.1% ch 0.100 worst held b3 mz 118 7.7s
+it  28 beta    2 J   0.3277 vol 0.1510 (dil 0.2169 g -0.010) grey 38.9% ch 0.100 worst crash 35 g 0 104 7.3s
+it  28 beta    2 J   0.3277 vol 0.1510 (dil 0.2169 g -0.010) grey 38.9% ch 0.100 worst crash 35 g 0 104 7.3s
+it  29 beta    2 J   0.3154 vol 0.1527 (dil 0.2178 g -0.006) grey 38.5% ch 0.100 worst crash 35 g 0 103 7.9s
+it  29 beta    2 J   0.3154 vol 0.1527 (dil 0.2178 g -0.006) grey 38.5% ch 0.100 worst crash 35 g 0 103 7.9s
+it  30 beta    2 J   0.3093 vol 0.1540 (dil 0.2181 g -0.005) grey 37.9% ch 0.100 worst crash 35 g 0 103 7.8s
+it  30 beta    2 J   0.3093 vol 0.1540 (dil 0.2181 g -0.005) grey 37.9% ch 0.100 worst crash 35 g 0 103 7.8s
+it  31 beta    2 J   0.3054 vol 0.1550 (dil 0.2185 g +0.007) grey 37.7% ch 0.100 worst crash 35 g 0 103 8.0s
+it  31 beta    2 J   0.3054 vol 0.1550 (dil 0.2185 g +0.007) grey 37.7% ch 0.100 worst crash 35 g 0 103 8.0s
+it  32 beta    2 J   0.3053 vol 0.1538 (dil 0.2165 g -0.002) grey 37.2% ch 0.100 worst crash 35 g 0 103 7.4s
+it  32 beta    2 J   0.3053 vol 0.1538 (dil 0.2165 g -0.002) grey 37.2% ch 0.100 worst crash 35 g 0 103 7.4s
+it  33 beta    2 J   0.3032 vol 0.1544 (dil 0.2166 g -0.002) grey 37.1% ch 0.100 worst crash 35 g 0 103 7.3s
+it  33 beta    2 J   0.3032 vol 0.1544 (dil 0.2166 g -0.002) grey 37.1% ch 0.100 worst crash 35 g 0 103 7.3s
+it  34 beta    2 J   0.3016 vol 0.1550 (dil 0.2166 g -0.002) grey 37.0% ch 0.100 worst crash 35 g 0 102 7.8s
+it  34 beta    2 J   0.3016 vol 0.1550 (dil 0.2166 g -0.002) grey 37.0% ch 0.100 worst crash 35 g 0 102 7.8s
+it  35 beta    2 J   0.3005 vol 0.1555 (dil 0.2167 g -0.001) grey 36.9% ch 0.100 worst crash 35 g 0 102 7.5s
+it  35 beta    2 J   0.3005 vol 0.1555 (dil 0.2167 g -0.001) grey 36.9% ch 0.100 worst crash 35 g 0 102 7.5s
+it  36 beta    2 J   0.2997 vol 0.1558 (dil 0.2168 g +0.011) grey 36.8% ch 0.100 worst crash 35 g 0 102 7.9s
+it  36 beta    2 J   0.2997 vol 0.1558 (dil 0.2168 g +0.011) grey 36.8% ch 0.100 worst crash 35 g 0 102 7.9s
+it  37 beta    2 J   0.3011 vol 0.1536 (dil 0.2142 g -0.001) grey 36.5% ch 0.100 worst crash 35 g 0 102 8.4s
+it  37 beta    2 J   0.3011 vol 0.1536 (dil 0.2142 g -0.001) grey 36.5% ch 0.100 worst crash 35 g 0 102 8.4s
+layout: beta 2 done: eroded design 6 bodies, main 68.0%; drawn bodies outside the main body: 2
+layout: beta 2 done: eroded design 6 bodies, main 68.0%; drawn bodies outside the main body: 2
+it  38 beta    4 J   1.8246 vol 0.1403 (dil 0.2620 g -0.063) grey 26.8% ch 0.100 worst held b10 mz 653 8.1s
+it  38 beta    4 J   1.8246 vol 0.1403 (dil 0.2620 g -0.063) grey 26.8% ch 0.100 worst held b10 mz 653 8.1s
+it  39 beta    4 J   0.9395 vol 0.1499 (dil 0.2759 g -0.013) grey 28.2% ch 0.100 worst held b10 my 337 8.0s
+it  39 beta    4 J   0.9395 vol 0.1499 (dil 0.2759 g -0.013) grey 28.2% ch 0.100 worst held b10 my 337 8.0s
+it  40 beta    4 J   0.7300 vol 0.1524 (dil 0.2770 g -0.009) grey 28.1% ch 0.100 worst held b10 my 227 8.2s
+it  40 beta    4 J   0.7300 vol 0.1524 (dil 0.2770 g -0.009) grey 28.1% ch 0.100 worst held b10 my 227 8.2s
+it  41 beta    4 J   0.6505 vol 0.1549 (dil 0.2783 g +0.004) grey 28.2% ch 0.100 worst gate b5 my 199 8.0s
+it  41 beta    4 J   0.6505 vol 0.1549 (dil 0.2783 g +0.004) grey 28.2% ch 0.100 worst gate b5 my 199 8.0s
+it  42 beta    4 J   0.6265 vol 0.1545 (dil 0.2764 g -0.003) grey 27.8% ch 0.100 worst held b3 mz 190 8.4s
+it  42 beta    4 J   0.6265 vol 0.1545 (dil 0.2764 g -0.003) grey 27.8% ch 0.100 worst held b3 mz 190 8.4s
+it  43 beta    4 J   0.5978 vol 0.1554 (dil 0.2768 g -0.002) grey 27.6% ch 0.100 worst held b3 mz 187 7.8s
+it  43 beta    4 J   0.5978 vol 0.1554 (dil 0.2768 g -0.002) grey 27.6% ch 0.100 worst held b3 mz 187 7.8s
+it  44 beta    4 J   0.5799 vol 0.1560 (dil 0.2769 g -0.001) grey 27.5% ch 0.100 worst held b3 mz 184 7.8s
+it  44 beta    4 J   0.5799 vol 0.1560 (dil 0.2769 g -0.001) grey 27.5% ch 0.100 worst held b3 mz 184 7.8s
+it  45 beta    4 J   0.5685 vol 0.1564 (dil 0.2771 g -0.001) grey 27.4% ch 0.100 worst held b3 mz 183 7.7s
+it  45 beta    4 J   0.5685 vol 0.1564 (dil 0.2771 g -0.001) grey 27.4% ch 0.100 worst held b3 mz 183 7.7s
+it  46 beta    4 J   0.5608 vol 0.1566 (dil 0.2771 g +0.013) grey 27.4% ch 0.100 worst held b3 mz 182 8.1s
+it  46 beta    4 J   0.5608 vol 0.1566 (dil 0.2771 g +0.013) grey 27.4% ch 0.100 worst held b3 mz 182 8.1s
+it  47 beta    4 J   0.6058 vol 0.1532 (dil 0.2732 g -0.001) grey 27.1% ch 0.100 worst held b3 mz 190 7.8s
+it  47 beta    4 J   0.6058 vol 0.1532 (dil 0.2732 g -0.001) grey 27.1% ch 0.100 worst held b3 mz 190 7.8s
+it  48 beta    4 J   0.5934 vol 0.1535 (dil 0.2734 g -0.001) grey 27.1% ch 0.100 worst held b3 mz 195 8.0s
+it  48 beta    4 J   0.5934 vol 0.1535 (dil 0.2734 g -0.001) grey 27.1% ch 0.100 worst held b3 mz 195 8.0s
+it  49 beta    4 J   0.5883 vol 0.1538 (dil 0.2735 g -0.000) grey 27.0% ch 0.100 worst held b3 mz 193 7.9s
+it  49 beta    4 J   0.5883 vol 0.1538 (dil 0.2735 g -0.000) grey 27.0% ch 0.100 worst held b3 mz 193 7.9s
+it  50 beta    4 J   0.5858 vol 0.1539 (dil 0.2736 g -0.000) grey 27.0% ch 0.100 worst held b3 mz 193 8.2s
+it  50 beta    4 J   0.5858 vol 0.1539 (dil 0.2736 g -0.000) grey 27.0% ch 0.100 worst held b3 mz 193 8.2s
+it  51 beta    4 J   0.5840 vol 0.1539 (dil 0.2736 g +0.008) grey 27.0% ch 0.100 worst held b3 mz 192 7.8s
+it  51 beta    4 J   0.5840 vol 0.1539 (dil 0.2736 g +0.008) grey 27.0% ch 0.100 worst held b3 mz 192 7.8s
+it  52 beta    4 J   0.6143 vol 0.1518 (dil 0.2711 g -0.001) grey 26.9% ch 0.100 worst held b3 mz 198 8.3s
+it  52 beta    4 J   0.6143 vol 0.1518 (dil 0.2711 g -0.001) grey 26.9% ch 0.100 worst held b3 mz 198 8.3s
+it  53 beta    4 J   0.6083 vol 0.1520 (dil 0.2713 g -0.000) grey 26.9% ch 0.100 worst held b3 mz 200 8.2s
+it  53 beta    4 J   0.6083 vol 0.1520 (dil 0.2713 g -0.000) grey 26.9% ch 0.100 worst held b3 mz 200 8.2s
+it  54 beta    4 J   0.6062 vol 0.1521 (dil 0.2713 g -0.000) grey 26.9% ch 0.100 worst held b3 mz 199 8.1s
+it  54 beta    4 J   0.6062 vol 0.1521 (dil 0.2713 g -0.000) grey 26.9% ch 0.100 worst held b3 mz 199 8.1s
+it  55 beta    4 J   0.6049 vol 0.1521 (dil 0.2713 g -0.000) grey 26.9% ch 0.100 worst held b3 mz 199 8.1s
+it  55 beta    4 J   0.6049 vol 0.1521 (dil 0.2713 g -0.000) grey 26.9% ch 0.100 worst held b3 mz 199 8.1s
+it  56 beta    4 J   0.6037 vol 0.1522 (dil 0.2713 g +0.005) grey 26.9% ch 0.100 worst held b3 mz 199 8.0s
+it  56 beta    4 J   0.6037 vol 0.1522 (dil 0.2713 g +0.005) grey 26.9% ch 0.100 worst held b3 mz 199 8.0s
+layout: stopped (beta_stop) at it 56, beta 4, 439 s
+layout: stopped (beta_stop) at it 56, beta 4, 439 s
+layout: beta 4 done: eroded design 7 bodies, main 61.1%; drawn bodies outside the main body: 3
+layout: beta 4 done: eroded design 7 bodies, main 61.1%; drawn bodies outside the main body: 3
+coarse stage done: 56 iterations, 500 s, peak 1.7426 GB
+coarse stage done: 56 iterations, 500 s, peak 1.7426 GB
+overseer_hub_deck: grid (200, 96, 24) h 1.0 = 460,800 cells; design 90,652 (90.7 cm3), drawn 18,118, void 352,030
+  support default: 2832 cells, 4648 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (18.08 cm3); 0.04 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (18.08 cm3); 0.04 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.133 of 90,688 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 6.44 cells, erosion depth 1.71 mm; volfrac 0.133 of 90,688 design cells
+layout: WARNING nearly mirrored in y (0.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.8% of passive cells differ): no symmetry
+layout: 10 drawn bodies (18,082 cells), held solid in every realization; eroded filter: masked
+layout: 10 drawn bodies (18,082 cells), held solid in every realization; eroded filter: masked
+layout: 23 load cases + 24 tie cases (4 bodies tied, 6 held by support 'default') + 0 gate ties + 36 held ties
+layout: 23 load cases + 24 tie cases (4 bodies tied, 6 held by support 'default') + 0 gate ties + 36 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (200, 96, 24) = 460,800 elements, 382,245 active dofs; backend direct (direct estimate 4.8 GB, budget 11.8 GB)
+fem: grid (200, 96, 24) = 460,800 elements, 382,245 active dofs; backend direct (direct estimate 4.8 GB, budget 11.8 GB)
