@@ -160,3 +160,25 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (200, 96, 24) = 460,800 elements, 382,245 active dofs; backend direct (direct estimate 4.8 GB, budget 11.8 GB)
 fem: grid (200, 96, 24) = 460,800 elements, 382,245 active dofs; backend direct (direct estimate 4.8 GB, budget 11.8 GB)
+layout: warm start from a (104, 48, 16) grid (h 2.0): mean x 0.179
+layout: warm start from a (104, 48, 16) grid (h 2.0): mean x 0.179
+it   1 beta    4 J  10.0000 vol 0.1428 (dil 0.2682 g +0.076) grey 27.9% ch 0.100 worst held b10 my 387 50.4s
+it   1 beta    4 J  10.0000 vol 0.1428 (dil 0.2682 g +0.076) grey 27.9% ch 0.100 worst held b10 my 387 50.4s
+it   2 beta    4 J  22.6256 vol 0.1277 (dil 0.2557 g +0.026) grey 27.9% ch 0.100 worst held b10 my 973 53.7s
+it   2 beta    4 J  22.6256 vol 0.1277 (dil 0.2557 g +0.026) grey 27.9% ch 0.100 worst held b10 my 973 53.7s
+it   3 beta    4 J  30.6836 vol 0.1191 (dil 0.2469 g -0.010) grey 27.2% ch 0.100 worst held b10 my 1.25e+03 54.6s
+it   3 beta    4 J  30.6836 vol 0.1191 (dil 0.2469 g -0.010) grey 27.2% ch 0.100 worst held b10 my 1.25e+03 54.6s
+it   4 beta    4 J  20.0354 vol 0.1224 (dil 0.2472 g -0.008) grey 26.8% ch 0.100 worst held b4 mz 756 57.5s
+it   4 beta    4 J  20.0354 vol 0.1224 (dil 0.2472 g -0.008) grey 26.8% ch 0.100 worst held b4 mz 756 57.5s
+it   5 beta    4 J  15.6349 vol 0.1252 (dil 0.2479 g -0.006) grey 26.4% ch 0.100 worst held b10 my 597 52.5s
+it   5 beta    4 J  15.6349 vol 0.1252 (dil 0.2479 g -0.006) grey 26.4% ch 0.100 worst held b10 my 597 52.5s
+it   6 beta    4 J  13.1490 vol 0.1270 (dil 0.2482 g -0.020) grey 26.1% ch 0.100 worst held b4 mz 504 52.5s
+it   6 beta    4 J  13.1490 vol 0.1270 (dil 0.2482 g -0.020) grey 26.1% ch 0.100 worst held b4 mz 504 52.5s
+it   7 beta    4 J  10.3871 vol 0.1316 (dil 0.2519 g -0.005) grey 26.1% ch 0.100 worst held b4 mz 387 54.5s
+it   7 beta    4 J  10.3871 vol 0.1316 (dil 0.2519 g -0.005) grey 26.1% ch 0.100 worst held b4 mz 387 54.5s
+it   8 beta    4 J   9.1917 vol 0.1333 (dil 0.2526 g -0.003) grey 25.9% ch 0.100 worst held b4 mz 346 52.0s
+it   8 beta    4 J   9.1917 vol 0.1333 (dil 0.2526 g -0.003) grey 25.9% ch 0.100 worst held b4 mz 346 52.0s
+it   9 beta    4 J   8.3409 vol 0.1345 (dil 0.2528 g -0.002) grey 25.6% ch 0.100 worst held b4 mz 317 50.9s
+it   9 beta    4 J   8.3409 vol 0.1345 (dil 0.2528 g -0.002) grey 25.6% ch 0.100 worst held b4 mz 317 50.9s
+it  10 beta    4 J   7.6287 vol 0.1356 (dil 0.2529 g -0.002) grey 25.4% ch 0.100 worst held b4 mz 294 51.4s
+it  10 beta    4 J   7.6287 vol 0.1356 (dil 0.2529 g -0.002) grey 25.4% ch 0.100 worst held b4 mz 294 51.4s
