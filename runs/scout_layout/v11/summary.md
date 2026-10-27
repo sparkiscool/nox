@@ -7,16 +7,30 @@ What changed from `v10/` (PR 131):
   - The cage's tail low node (−156.4, 0, −35.2), there because the Radxa hung to z −27, rode into the Overseer's tail-tip V ramp.
   - Now every node past x −130 about the catch sits ≥ 91 above the bottom plane, against the ≥ 45 asked for.
 - **Prop wash (rule 8, the electronics session):** the rear disks (R 44.5 at (−54.1, ±54.1)) leave a clear strip |y| < 6.6 (disk + 3) between them, and nothing is under a disk behind x −101.6.
-  - **Radxa:** on edge on the centre plane, in that strip. It is 65 x 6.31 x 30 (dimensions H; the old mesh had it 3.2), at x −151.1..−86.1, z 8..38. Ports edge up, with the USB-C plugs kept clear 14 above it (between the rear props, |y| ≤ 5). SD end aft. 15.7 outside every disk.
-  - **UBEC:** flat behind the rear disks, x −176.6..−131.6, y 4.2..19.6, z 16..24, 40.4 outside every disk.
+  - **Radxa:** on edge on the centre plane, in that strip. It is 65 x 6.31 x 30 (dimensions H; the old mesh had it 3.2), at x −145.4..−80.3, z 8..38. Ports edge up, USB-C plugs kept clear 14 above it (|y| ≤ 5), SD end aft. 12.9 outside every disk; the plug envelope 13.8.
+  - **UBEC:** flat behind the rear disks, x −171.6..−126.6, y 4.2..19.6, z 16..24, 35.8 outside every disk.
   - Both sit above the funnel hull line, so no low tail node comes back.
-- **Balance, CG in the middle of the props (Spark):** the tail bay shift and the catch are scanned together (`TBS` x `DCS` in layout_v3.py), within the gates the scan cannot see itself (≤ 62 rods, no tail node in the ramp).
-  - Picked: tail bay +30 (behind its first slot), catch 4.2 aft.
-  - CG 0.9 aft pack in, 1.0 forward pack out (layout model); 1.6 / 0.6 (system_check, gate 3). v11's first push was 2.7 / 1.3.
-  - **The floor:** the pack sits ~8 aft of everything else, so pack in and pack out cannot both be 0 without moving the pack in the receiver (the latch piece). The scan splits the difference.
-    - +20 gives 1.4 / 1.3; +40 gives 0.9 / 0.9 but needs 58 rods.
-  - **Cost:** 30 more of tail bay length, so the whole drone is 392 long (352 before). Also 50 rods (+3) and 680 g (+7).
-- **Alternative weighed:** the Radxa flat under the UBEC (v11's first push): in the rear wash, and it gave the 2.7 CG. Out.
+- **Balance, the CG in the middle of the props (Spark):** the tail bay shift and the catch are scanned together (`TBS` x `DCS` in layout_v3.py).
+  - Score: the CG's horizontal offset (x and y) pack in and pack out, with true centroids (review 27 Oct: the box centres it used before read 0.7 off system_check's), plus 0.01 per mm of cage length (DEFAULT: 30 mm buys 0.3).
+  - Gates the scan cannot see itself: ≤ 62 rods, and no tail node in the ramp.
+  - Picked: tail bay +25 behind its first slot, catch 3.5 aft. CG 0.8 off the thrust axis pack in, 0.9 pack out (system_check, x and y; layout model 0.9 / 0.8). v11's first push was 2.7 / 1.3.
+  - Of that, 0.4 is in y, from the UBEC on the +y side.
+  - Scan, best per shift (run.log):
+
+    | shift | catch | CG in / out (x) | rods |
+    |---|---|---|---|
+    | 0 | 6.2 | −1.2 / +1.3 | 50 |
+    | +10 | 5.2 | −1.0 / +1.1 | 50 |
+    | +15 | 4.8 | −1.0 / +0.9 | 50 |
+    | +20 | 4.0 | −0.8 / +0.8 | 50 |
+    | +25 | 3.5 | −0.8 / +0.6 | 50 |
+    | +30 | 3.2 | −0.7 / +0.7 | 50 |
+    | +35 | 3.2 | −0.6 / +0.7 | 58 |
+
+    Shifts +5 and +40 score no better.
+  - Pack in and pack out land on opposite sides of the thrust centre; the gap between them closes slowly as the bay goes aft, at a cost in length.
+  - **Cost:** the whole drone is 387 long (352 with the flat Radxa), 50 rods (+3), 680 g (+7).
+- **Alternative weighed:** the Radxa flat under the UBEC (v11's first push): in the rear wash, CG 2.7. Out.
 
 What changed from `v9/` (PR 127), carried over from v10:
 - **Bottom:** Spark 27 Oct, relayed by the design center session: the Scout's bottom matches "the rectangle part" of the current Overseer base loop. That is the 4 side nodes of the Overseer cage v5 hexagon (PR 122, not merged), refitted now.
@@ -32,10 +46,10 @@ Everything else is as in v9 (`v9/summary.md`, Spark's asks in order): the race-c
 Script `nox/scout/v3/layout_v3.py` (defaults: ring v5side, pattern free with the race silhouette, saddle ties, the funnel band, camera clips, tail bay out of the wash: the Radxa on edge in the strip, the UBEC behind the disks, scanned with the catch for the balance), view `layout_v3_view.py`. Drone meshes `runs/scout_layout/v6/drone/`. The Overseer cage v5 is copied in as `overseer_cage_v5_shell.json` (ghost only, `SOURCE.txt`). Numbers `nox/dimensions.md` "System Scout v3". Rule: CLAUDE.md (Cages: the Scout clause), `docs/generative.md` 0 (Shared ring and the Scout), check `tools/review_precheck.py` 13.
 
 Visuals:
-- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 16; source `motion.html`; orange = the bottom loop, light blue = the Overseer cage v5 on the shared datum, green = the camera view). Still `preview.png`.
+- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 17; source `motion.html`; orange = the bottom loop, light blue = the Overseer cage v5 on the shared datum, green = the camera view). Still `preview.png`.
 - Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 2; source `camera_clips.html`, still `camera_clips.png`; the clips are unchanged from v10).
 
-System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field cones open: camera 55 deg, out 2 mm), shell 44 rods closed, fit 0.0 mm³ (E), bbox 13 L (E), extents 392 x 260 x 127 mm (E), mass 680 of 500 g (136 %) (E) over budget (total), CG 1.6 mm off thrust axis (E), 0.6 mm without swap parts, probes 8.1 mm (E) edge (UBEC), access 8/8 clear. PASS.
+System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field cones open: camera 55 deg, out 2 mm), shell 44 rods closed (30 triangles counting the 2 that close the bottom loop; 28 in run.log), fit 0.0 mm³ (E), bbox 12.8 L (E), extents 387 x 260 x 127 mm (E), mass 680 of 500 g (136 %) (E) over budget (total), CG 0.8 mm off thrust axis (E), 0.9 mm without swap parts, probes 8.9 mm (E) edge (UBEC), access 8/8 clear. PASS.
 
 ## Bottom: the Overseer cage v5 loop's 4 side nodes
 - **The 4 nodes:** (+85.8, ±116.1) and (−68.9, ±119.7) about the catch (C, from the Overseer cage v5 `nox/overseer/cage_v5_shell.json`, PR 122 @ 93e39539). The loop is 154.7 long, 232.2 wide at the nose and 239.4 at the tail; the Overseer's nose and tail nodes are dropped.
@@ -44,33 +58,33 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
   - On a 45° ramp a rod's centre sits r·√2 above the face, so the 3.0 ring rides 2.12 lower than the Overseer's 6 mm tube; this lands both cartridges at the same height. (A first push had the sign reversed; the design center caught it.)
   - Confirmed by the design center: the ring rods bear, and every ramp stops 20 short of the Ø20 nodes. (Had the nodes borne, the offset would be about 0.2.)
   - The alternative is 6 mm ring tubes, which the Scout rule (every rod 3 mm) does not allow.
-  - Scout: tab line x −4.2, cartridge flat bottom z −44.5, plane z −49.6; nodes Ø20, rods 3.0.
+  - Scout: tab line x −3.5, cartridge flat bottom z −44.5, plane z −49.6; nodes Ø20, rods 3.0.
 - **Funnel band:** within 30 above the plane, inside the opening or up to 40 past its ends.
   - No link is in it (the rule enforced in the code, `in_band`).
   - Shell nodes and rods may enter it only where the funnel's ramp check clears them (`docs/generative.md`); this run's are listed below for that check.
-  - The 16 shell rods leaving the 4 bottom nodes rise through it from the plane. 2 shell rods between free nodes reach into it, at the nose low node (103.8, 0, −22.4): 27 above the plane, 24 past the nose end, clear of the nose V (design center). There is no tail low node now.
+  - The 16 shell rods leaving the 4 bottom nodes rise through it from the plane. 2 shell rods between free nodes reach into it, at the nose low node (104.2, 0, −22.4): 27 above the plane, 24 past the nose end, clear of the nose V (design center). There is no tail low node now.
   - The design center's ramp check decides whether any of these must move.
 - **Swap column:** receiver + 26.5 at the nose end, + 17.6 at the tail, + 30 at the sides; clear (0 mm³).
 
 ## Shape: race car
 - Flat roof just over the props, a raked front behind the camera, a raised tail point (DEFAULT, the look), tapering to the tail.
-- Node extents 363 x 245 x 111; whole drone 392 x 260 x 127 (camera included). The tail point (x −237) follows the tail bay aft.
+- Node extents 358 x 245 x 111; whole drone 387 x 260 x 127 (camera included). The tail point (x −232) follows the tail bay aft.
 - **Offset scan,** all 5 valid:
 
   | offset | nodes | shell rods | L |
   |---|---|---|---|
-  | 16 | 19 | 50 | 6.5 |
+  | 16 | 19 | 50 | 6.4 |
   | 20 | 20 | 53 | 6.3 |
   | 24 | 19 | 50 | 6.4 |
-  | 28 | 18 | 47 | 6.6 |
-  | 32 | 17 | 44 | 6.4 |
+  | 28 | 18 | 47 | 6.5 |
+  | 32 | 17 | 44 | 6.3 |
 
   The most compact shell with no small or sliver triangle (every rod ≥ 45), within the rod cap and balanced on its own, wins: offset 32.
-- **Waist pair:** (−4.2, ±119.7, −9.6), over the catch on the cage's sides, 40 above the bottom plane, so 10 above the funnel band. The saddle ties land there.
+- **Waist pair:** (−3.5, ±119.7, −9.6), over the catch on the cage's sides, 40 above the bottom plane, so 10 above the funnel band. The saddle ties land there.
 - **Small triangles merged to one node (Spark):** shell rods 71..239.
 
 ## Rods: 50, all 3.0 solid carbon (v10: 50, v9: 54, cage v1: 123)
-- **Shell, 44 rods** (6.01 m) on 17 nodes: the 4 bottom nodes Ø20 and 13 printed Ø12 nodes, all PETG (Spark 27 Oct: nodes PETG, TPU only for feet), sockets 3.1 for the 3.0 rods (DEFAULT until the v2 rod coupons decide). Largest cell Ø128. Rods 13.6 off the swept disks.
+- **Shell, 44 rods** (5.99 m) on 17 nodes: the 4 bottom nodes Ø20 and 13 printed Ø12 nodes, all PETG (Spark 27 Oct: nodes PETG, TPU only for feet), sockets 3.1 for the 3.0 rods (DEFAULT until the v2 rod coupons decide). Largest cell Ø127. Rods 13.6 off the swept disks.
 - **Links, 6 rods, all from the tie saddle** (no rod on the carbon arms, Spark). All stay out of the funnel band and over the 33 break-even.
   - Each runs from the saddle's outer face (y ±44.3, z −7, 23 above the band) to a shell node on its side:
     - tail station (x −45) to the waist node, 86 long;
@@ -91,7 +105,7 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 - **Strength is not checked yet; the frame model decides.**
   - The longest rod is 239: 50 N mid-span ~1.2 GPa (E, pinned) against 0.75 allowable.
   - Load path: the cage reaches the plate through the 6 saddle ties, the saddle and its 4 plate bolts. The frame model sizes the saddle and the bolts (crash 35 g x ~680 g ≈ 230 N, E).
-- Props shadow 3.1 % above, 8.8 % below (E).
+- Props shadow 3.3 % above, 8.7 % below (E).
 
 ## Camera (one), close in at the nose, snap-clipped onto the cage
 - DECXIN 2633V2 landscape, horizon, lens (149, 0, 42). Nothing of the drone is in its view (C).
@@ -106,11 +120,10 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 - Cage first 4.2 over the cradle's top lip, outside the 55° field cone.
 
 ## Balance (tail bay)
-- **Tail bay (DEFAULT, out of the wash):** the Radxa on edge in the centre strip (x −151.1..−86.1, z 8..38, plugs to 52) and the UBEC flat behind the rear disks (x −176.6..−131.6, z 16..24).
-  - The electronics session's mount carries them aft of the plate, and the frame model needs that mount.
-  - The poses here are the system's requirement for it.
-- **Catch set:** 4.2 aft of the thrust centre. The FC IMU offset is x −4.2 (PX4).
-- **CG:** 0.9 / 1.0 mm pack in / out (layout model), 1.6 / 0.6 (system_check, gate 3). The floor is set by the pack sitting ~8 aft of the rest (above).
+- **Tail bay (DEFAULT, out of the wash):** the Radxa on edge in the centre strip (x −145.4..−80.3, z 8..38, plugs to 52) and the UBEC flat behind the rear disks (x −171.6..−126.6, z 16..24).
+  - The electronics session takes these poses as the requirement for its mount, which carries them aft of the plate. Its mass and cables come next, and the balance reruns on them: the real bay is heavier than the 25 g used here, so the catch will move forward.
+- **Catch set:** 3.5 aft of the thrust centre. The FC IMU offset is x −3.5 (PX4).
+- **CG:** 0.8 / 0.9 mm pack in / out off the thrust axis (system_check, x and y; layout 0.9 / 0.8).
 
 ## Mass (E)
 680 g: cage ~145 (shell rods 66, nodes 38, links 7, tie saddle 17, camera cradle + arms + clips 17); bought, latch set and wires ~505.
@@ -123,6 +136,6 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 
 ## Open
 - **Funnel:** the design center reruns its ramp check on this cage (the tail is 40 longer; every tail node is still ≥ 91 above the plane).
-- **Balance below ±1:** that needs the pack moved forward in the receiver (latch piece), or the tail bay another ~10 aft at 58 rods.
+- **Tail bay masses:** the electronics session's mount and cables; rerun the balance with them.
 - **Overseer side:** PR 122 must merge. Until then the 4 nodes are copied from its branch; if the Overseer loop moves, this refits.
 - **Frame model:** crash 35 g in 14 directions incl. a nose-camera hit, landing on the 4 bottom nodes, handling 50 N. It sizes the long rods, the saddle and its plate bolts, and the camera mount's mode.
