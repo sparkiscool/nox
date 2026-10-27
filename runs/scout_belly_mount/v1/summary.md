@@ -203,7 +203,7 @@ None in this piece (no rods). The cage rods are the layout's (`runs/scout_layout
    - the flow 1.5 g at (0, −40, −26).
    - Keep the saddle rail and ties ≥ 2 off the flow cradle (body + cradle y −50..−30, x −12.8..12.8, z −32..−20 under the right saddle rail; now 2.8 / 11.2).
    - The cradle reaches y −50, outside the brief's ±35 envelope, but only under the saddle rail, 5.0 below it.
-5. **Design center:** the flow sits in the funnel band inside the swap column (like the layout's). The ramps must leave the swap column (+30 a side) free.
+5. **Design center:** the flow sits in the funnel band inside the swap column (like the layout's). The ramps must leave the swap column (+30 a side) free. Box catch concept F (main, 27 Oct: a flat deck, end pads 3 tall, side bars at the ring tubes) would replace the ramps; its pads and bars stay ≥ 20 under and ≥ 60 outboard of the flow (C on its rows), so the band question goes away if F is drawn.
 6. **Spark (method):** rule 8's clear-air test for a body 60+ below the props (column vs contracted slipstream).
 
 ## Open
