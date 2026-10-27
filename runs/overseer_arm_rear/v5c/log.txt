@@ -327,3 +327,47 @@ fem: grid (96, 56, 32) = 172,032 elements, 268,902 active dofs; backend direct (
 fem: grid (96, 56, 32) = 172,032 elements, 268,902 active dofs; backend direct (direct estimate 3.0 GB, budget 11.8 GB)
 build: organic surface at pitch 0.300 mm (x5), skins 89.77 cm3, field 151.05 cm3, in env - cuts 137.12 cm3 (layout 137.12, level offset +0.244 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,023,628 faces, 145 s
 build: organic surface at pitch 0.300 mm (x5), skins 89.77 cm3, field 151.05 cm3, in env - cuts 137.12 cm3 (layout 137.12, level offset +0.244 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,023,628 faces, 145 s
+=== overseer_arm_rear: rebuild from /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/rear_v5c_src/density.npz (layout not rerun)
+=== overseer_arm_rear: rebuild from /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/rear_v5c_src/density.npz (layout not rerun)
+overseer_arm_rear: grid (96, 56, 32) h 1.5 = 172,032 cells; design 52,032 (175.6 cm3), drawn 26,562, void 93,438
+  insert rod 0: 554 cells, modulus x22.9
+  insert rod 1: 554 cells, modulus x22.9
+  insert rod 2: 554 cells, modulus x22.9
+  insert rod 3: 554 cells, modulus x22.9
+  support default: 465 cells, 1150 nodes
+  support bosses: 235 cells, 618 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_rear: grid (96, 56, 32) h 1.5 = 172,032 cells; design 52,032 (175.6 cm3), drawn 26,562, void 93,438
+  insert rod 0: 554 cells, modulus x22.9
+  insert rod 1: 554 cells, modulus x22.9
+  insert rod 2: 554 cells, modulus x22.9
+  insert rod 3: 554 cells, modulus x22.9
+  support default: 465 cells, 1150 nodes
+  support bosses: 235 cells, 618 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (96.90 cm3); 0.23 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (96.90 cm3); 0.23 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.229 of 52,100 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.229 of 52,100 design cells
+layout: WARNING nearly mirrored in y (6.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (6.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.3% of passive cells differ): no symmetry
+layout: 2 drawn bodies (28,710 cells), held solid in every realization; eroded filter: masked
+layout: 2 drawn bodies (28,710 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: 53 load cases + 6 tie cases (1 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (96, 56, 32) = 172,032 elements, 268,902 active dofs; backend direct (direct estimate 3.0 GB, budget 11.8 GB)
+fem: grid (96, 56, 32) = 172,032 elements, 268,902 active dofs; backend direct (direct estimate 3.0 GB, budget 11.8 GB)
+build: organic surface at pitch 0.300 mm (x5), skins 89.77 cm3, field 151.05 cm3, in env - cuts 137.12 cm3 (layout 137.12, level offset +0.244 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,023,628 faces, 126 s
+build: organic surface at pitch 0.300 mm (x5), skins 89.77 cm3, field 151.05 cm3, in env - cuts 137.12 cm3 (layout 137.12, level offset +0.244 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,023,628 faces, 126 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [108368.9], "necks": [], "drawn_not_in_main": [["0.0", 0.927, "erode 2.0"], ["0.1", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.58, "core_mm3": 10.41, "at": [81.8, -11.9, 5.3], "span": [1.6, 0.9, 0.3]}, {"kind": "wall", "thick_mm": 1.58, "core_mm3": 9.06, "at": [81.8, 11.6, 5.4], "span": [1.8, 0.9, 0.3]}], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [108368.9], "necks": [], "drawn_not_in_main": [["0.0", 0.927, "erode 2.0"], ["0.1", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.58, "core_mm3": 10.41, "at": [81.8, -11.9, 5.3], "span": [1.6, 0.9, 0.3]}, {"kind": "wall", "thick_mm": 1.58, "core_mm3": 9.06, "at": [81.8, 11.6, 5.4], "span": [1.8, 0.9, 0.3]}], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 69042.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+function check: {'skin_mm3': 69042.4, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+strength: worst index 1.10 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [11.0, -20.2, 44.2]
+strength: worst index 1.10 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [11.0, -20.2, 44.2]
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 174.16, "worst": 1.101, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 174.16, "worst": 1.101, "function_ok": true, "bodies": 1}
