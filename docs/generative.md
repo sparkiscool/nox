@@ -67,6 +67,7 @@ Strength: worst index <x> in <case> (was <y>); weakest spot <where>   [box parts
 Solid: solid_check PASS
 Print: <bed face>, bed contact <mm²> (M), tree supports <g>; file print/<name>
 ```
+**Into the system as CAD (Spark 27 Oct: "if the nodes are done why wasnt it merged into the artifact as its actual cad files ... thats the default").** Saving a part includes putting it in its system: the saved mesh (the print file placed in the drone or box frame, or its assembled copy in the run) replaces the part's placeholder (box, sphere, mass point, envelope) in `<system>.assembly.json`, system_check reruns on it, and the system artifact is republished at the same URL showing it, saved parts marked apart from concepts. The session that owns the system does it the turn it hears of the save (`docs/sessions.md`); a part session that cannot reach it does it in its own PR. Concept pieces may go in too, marked concept.
 Every "ready to print" reply (and every reply that names a file to print) ends with one ready-to-paste prompt for a print and slicing session on the laptop (Spark 23 Oct), in a code block, filled in for that file:
 ```
 Print and slicing session (opus, medium, computer control on the laptop). In the nox clone: git pull on main.
