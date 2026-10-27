@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer core, Spark): round 4: FC + 4-in-1 stack on the top plate (stack mount), Pi 5 between the plates, UBEC + buck on the front wing; rear feet on real holes (-65, ±22.5) (review: (-72.5, ±31.75) were outline fillets); 3 coupons 8.6 / 17.9 / 29.2 g, solid PASS. `runs/overseer_core/v1/`
 - 27 Oct (Overseer core, Spark): round 3: no PDB (4-in-1 under the FC), cameras/lidar off our list, 2 pieces (hub deck: stack, Pi 5 aft right side up, UBEC/buck/RX; sled: receiver face + flow pod), every screw straight down; mounting coupons hub deck 33.8 g + sled 27.9 g READY. `runs/overseer_core/v1/`, `print/overseer_core_coupon_*`
 - 27 Oct (Overseer core, Spark): system pass for everything inside the cage but the arms: hub frame, power tray, sled, mirror skids with the pods, TPU feet; real latch set in pose puts the cartridge bottom at z -76.9 (22.9 under v5); feet now span the CG. Shell FAILs go to the cage session. `runs/overseer_core/v1/`
 - 27 Oct (Overseer, Spark): cage v3 structure kept (same 48 nodes, 131 tubes; scan pinned); symmetry already exact (0 tubes without a mirror, links too), none to add; cameras back to v2's format (down camera + flow pods at v2's place, v4 had them 35 forward); 3 rear-arm screws need a pod board unplugged. `runs/overseer_layout/v5/`

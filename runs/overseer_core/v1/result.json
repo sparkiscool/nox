@@ -1,23 +1,29 @@
 {
- "mass_g": 3428.68,
- "tw": 1.92,
+ "mass_g": 3427.68,
+ "tw": 1.93,
  "cg": [
-  58.75,
-  -0.27,
-  14.21
+  61.39,
+  -0.21,
+  15.81
  ],
  "requirements": {
+  "stack mount": {
+   "worst_case": "crash 35 g 7",
+   "max_bolt_N": 4.4,
+   "max_shear_N": 3.5,
+   "max_axial_N": 3.7
+  },
   "hub deck": {
-   "worst_case": "crash 35 g 6",
-   "max_bolt_N": 11.7,
-   "max_shear_N": 9.9,
-   "max_axial_N": 11.3
+   "worst_case": "crash 35 g 4",
+   "max_bolt_N": 13.4,
+   "max_shear_N": 10.8,
+   "max_axial_N": 13.4
   },
   "sled to plate": {
-   "worst_case": "crash 35 g 13",
-   "max_bolt_N": 130.2,
-   "max_shear_N": 64.1,
-   "max_axial_N": 119.5
+   "worst_case": "crash 35 g 6",
+   "max_bolt_N": 137.4,
+   "max_shear_N": 65.2,
+   "max_axial_N": 127.4
   },
   "receiver bolts": {
    "worst_case": "crash 35 g 13",
@@ -40,7 +46,7 @@
  },
  "pod_mode_hz": 1687,
  "wash_pct": {
-  "hub deck + Pi + bays": 2.44,
+  "hub deck + Pi + bays": 1.07,
   "sled + pod": 4.8,
   "receiver": 1.73
  },
@@ -49,11 +55,12 @@
   "pack_top": -19.89999999999999,
   "cartridge_bottom": -76.89999999999999,
   "lens": -76.89999999999999,
-  "esc": 6.0,
-  "stack_top": 23.5,
-  "pi_board": 22.0,
-  "cooler_top": 37.3,
-  "foot": -82.89999999999999
+  "esc": 52.6,
+  "stack_top": 70.1,
+  "pi_board": 8.0,
+  "cooler_top": 23.299999999999997,
+  "foot": -82.89999999999999,
+  "top_plate_top": 46.6
  },
  "receiver_bolts": [
   [
@@ -99,30 +106,48 @@
    -36.5
   ],
   [
-   -72.5,
-   31.75
+   -65.0,
+   22.5
   ],
   [
-   -72.5,
-   -31.75
+   -65.0,
+   -22.5
   ]
  ],
  "pi_holes": [
   [
-   -122.5,
+   -30.0,
    24.5
   ],
   [
-   -122.5,
+   -30.0,
    -24.5
   ],
   [
-   -64.5,
+   28.0,
    24.5
   ],
   [
-   -64.5,
+   28.0,
    -24.5
+  ]
+ ],
+ "tp_holes": [
+  [
+   35.5,
+   0.0
+  ],
+  [
+   -35.5,
+   0.0
+  ],
+  [
+   0.0,
+   35.5
+  ],
+  [
+   0.0,
+   -35.5
   ]
  ],
  "arm_screws_driver_holes": [
@@ -160,34 +185,45 @@
   ]
  ],
  "budget_g": {
-  "hub deck": 30,
-  "sled": 78
+  "stack mount": 8,
+  "hub deck": 24,
+  "sled": 75
  },
- "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3429 of 2200 g (156 %) (E) over budget (total), CG 2.0 mm off thrust axis (E) [-2.0, -0.3, -67.8], 21.1 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
+ "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3428 of 2200 g (156 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [+0.6, -0.2, -66.2], 24.5 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/39 clear (FC USB-C (-y edge, on the top plate) blocked by prop 3, cage shell tubes 4201 mm\u00b3; Pi USB-A / RJ45 plugs (aft, in the open) blocked by bottom plate, sled, spokes, ties, keels, L2 guard ring 624 mm\u00b3; step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet) blocked by RX XR2 169 mm\u00b3; step 2: M2.5 Pi screw 0 (screwdriver, top plate not on yet) blocked by RX XR2 37 mm\u00b3) FAIL",
  "coupon": {
   "floor_t": 4.0,
   "post_h": 5.0,
   "post_d": 11.0,
   "stack_p": 15.25,
-  "deck_z0": 12.0,
-  "deck_t": 6.0,
-  "z_pi": 22.0,
+  "z_pi": 8.0,
   "pi_x": [
-   -146.0,
-   -61.0
+   -53.5,
+   31.5
   ],
   "rail_y": 22.0,
-  "aft_legs": [
-   [
-    -109.0,
-    24.5
-   ],
-   [
-    -109.0,
-    -24.5
-   ]
+  "ubec_bay": [
+   34.0,
+   82.0,
+   -19.0,
+   2.0,
+   4.0,
+   14.0
   ],
-  "front_legs_x": -64.0,
+  "buck_bay": [
+   34.0,
+   58.0,
+   4.0,
+   22.0,
+   4.0,
+   14.0
+  ],
+  "rx_tp": [
+   -30.0,
+   -18.0,
+   24.0,
+   40.0
+  ],
+  "aft_legs": [],
   "sled_t": 6.0,
   "sled_x": [
    -115.0,
