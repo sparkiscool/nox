@@ -30,7 +30,7 @@ ROD_GPM = 7.07 * 1.55e-3                           # g/mm, 3.0 solid carbon (E)
 TUBE_GPM = 15.71 * 1.55e-3                         # g/mm, 6/4 carbon tube (E)
 NODE_G, RING_NODE_G = 1.5, 4.5                     # g (E, layout_v3.py)
 CLIPS = [(110.5, 18.0, 61.1), (122.6, 18.0, 11.5)]  # the camera mount v1's snap clips (+y; mirrored) on rods 7-8 and 14-15 (v12, camera_mount.py)
-CAM_C, CAM_G = (136.0, 0.0, 41.7), 31.8             # camera + mount v1 + 2 collars, g at their CG (M mount, E camera; runs/scout_camera_mount/v1)
+CAM_C, CAM_G = (136.0, 0.0, 41.7), 32.3             # camera + mount v1 + 2 collars, g at their CG (M mount, E camera; runs/scout_camera_mount/v1)
 K_TIE = 0.7                                        # a saddle tie: epoxied into the PETG saddle (~ fixed), pinned at its cage node
 N = np.array(CG["nodes"], float); nR = len(CG["open"][0]["ring"])
 SHELL_SEC = TUBE6 if os.environ.get("SCOUT_FRAME_SHELL") == "6" else ROD3      # variants: 6/4 tube shell, 6/4 tube ties (Spark rule: 3.0)

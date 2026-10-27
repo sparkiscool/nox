@@ -1,6 +1,6 @@
 # Scout cage frame model (F on E properties: carbon E 100 GPa, allowables 1000 / 600 MPa; buckling k 1.0 shell rods, 0.7 saddle ties)
 
-Cage `runs/scout_layout/v12/cage_shell.json`: 18 nodes, 47 shell rods + 8 saddle ties, 39 members 6/4 tube (the sized list), the rest 3.0 solid; the ties' saddle ends fixed (the core held); the camera + mount (31.8 g, M mount + E camera) rigid on its 4 clips. Drone 735 g (E): crash 252 N through the most extreme node, 14 directions; flight 4 g; handling 50 N at mid-span (closed form).
+Cage `runs/scout_layout/v12/cage_shell.json`: 18 nodes, 47 shell rods + 8 saddle ties, 39 members 6/4 tube (the sized list), the rest 3.0 solid; the ties' saddle ends fixed (the core held); the camera + mount (32.3 g, M mount + E camera) rigid on its 4 clips. Drone 735 g (E): crash 252 N through the most extreme node, 14 directions; flight 4 g; handling 50 N at mid-span (closed form).
 
 Lowest modes (rigid joints, lumped masses): 111 Hz (the camera moves), 168 Hz (the camera moves), 243 Hz (the camera moves)
 
