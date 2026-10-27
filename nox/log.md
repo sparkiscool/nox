@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms): front v5c 228 g: strength PASS (worst 0.62, cage crash 6), solid FAIL only at the blind tip socket walls (1.58), same as rear; front v5d (tip caps) runs in the sibling. Build OOM fixed by the voxelise chunking.
 - 27 Oct (Overseer arms): rear v5c 174 g: solid FAIL (1.58 walls at the blind tip sockets); crash 11 1.10 at the top plate corner (joint), 1.01 in the arm; modes 418 Hz; rods OK. v5d: 2.5 tip caps, rear gen 50. `arm_topo_v5d.py`
 - 27 Oct (Overseer arms): correction: the front v5b OOM was a sibling box missing /usr/local/lib/libmkl_rt.so.3 (pypardiso failed, fem fell back to splu, 14 GB); fixed there with `pip install --force-reinstall --no-deps mkl`. Threaded Pardiso climbing past 6 GB here was seen only beside another run (M). Front v5c runs single-threaded, done ~09:31..11:03 PDT (E).
 - 27 Oct (Overseer arms): rear v5b: solid FAIL (1.1 collar walls where webs met bare tubes), cage crash 11 1.47 at the shoulder socket off the flange corner, 161 g. v5c (both): full-length 2.5 tube sleeves + flanges spanning root to shoulders. `arm_topo_v5c.py`, picture `runs/overseer_arms/v5c/layout.png`
