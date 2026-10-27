@@ -317,3 +317,5 @@ it  47 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000
 it  47 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 135.8s
 it  48 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 129.0s
 it  48 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 129.0s
+it  49 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 143.6s
+it  49 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 143.6s
