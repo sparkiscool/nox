@@ -1,0 +1,23 @@
+receiver in pose x -121.8..61.9, y ±33.4, z -76.7..-8.1 (M); pack top z -19.9, cartridge bottom z -76.9; XT60 male top z -4.6
+stack straight on the top plate: ESC z 49.6..54.8 on its own 3 standoffs / grommets, FC top z 67.1; leads to ~70.1; x props 0.0 mm³; nearest blade band z 77 (C on E)
+Pi right side up between the plates: board x -53.5..31.5, z 8.0..9.6; Active Cooler top z 23.3 (21.7 under the top plate for the blower intake); ports aft, top z 25.6 (C on E)
+   x arms (v5 meshes), mm³: hub deck 0.0, Pi + plugs 0.0, UBEC 0.0, buck 0.0, stack 0.0, cap 0.0, RX 0.0
+   deck x Pi 0.0 (posts on its holes), deck x UBEC 0.0, deck x buck 0.0, Pi + intake x top plate 0.0, Pi x UBEC 0.0, cap x stack 0.0, RX x stack 0.0 mm³
+   battery slot (empty, x -121.8..61.9, y ±33.4, z -76.9..-2.1): x deck 0.0, x flow clip 0.0, x flow 0.0, x wires 163.4 mm³
+deck screw heads (M3 Ø5.5 x 3) x the battery slot 0.0 mm³ (its top 6 is the receiver mount's)
+keel sockets: bore Ø6.2 x 15.0 from 5.0 past each root, boss Ø13.0; deck x keel tubes 1436.1 mm³ (inside the bores and the boss root, cut in the run); deck x arms 0.0; deck x the other v5 links and nodes 2.0, x cage nodes 0.0 mm³
+flow clip x bottom plate -0.0, x the v5 links and nodes 28.0 / 0.0, flow x clip 2246.4 (pocket cut in the piece), deck x clip 0.0 mm³
+arm bottom screw keys (Ø8 below the plate): all 8 clear of the core (C); the slot's contents come later
+flow view (42°, +2°, from the clip's window): clear (C)
+swap column (receiver + 30 a side, below the cartridge bottom): flow clip 0.0, flow 0.0, feet 0.0 mm³
+prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 0.92, flow clip 0.0, battery slot 1.83
+tower: 4 brace sockets Ø6.2 x 15.0 (+0.6), walls 2.5, ends lo (97, ±26, 22), hi (97, ±14, 32); x arms 0.0, x top plate 0.0, x bottom plate 0.0, x UBEC 0.0, x buck 0.0, x wires 0.0, x props 0.0, x cage nodes 0.0, x cage tubes 0.0, x the v5 links (keels and braces inside the bores, ties) 170.7, x the brace tubes 2240.4 mm³ (C)
+System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm³ (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3254 of 2200 g (148 %) (E) over budget (total, hub deck 64.6 of 55 g), CG 2.5 mm off thrust axis (E) [+2.5, -0.1, -66.8], 30.3 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear
+joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):
+   hub deck: max 288.2 N per bolt (braces pull alone (E)), shear 234.8, axial 167.1
+   hub deck, front 4 feet alone (compliant deck bound): max 687.7 N per bolt (braces pull alone (E)), shear 352.2, axial 590.7
+   flow clip: max 1.3 N per bolt (crash 35 g 4), shear 0.9, axial 1.3
+   Pi screws: max 6.7 N per bolt (crash 35 g 5), shear 6.0, axial 6.7
+   stack screws: max 3.5 N per bolt (crash 35 g 0), shear 2.5, axial 2.8
+   the 2 front deck screws clamp the flow clip's 3 flange and the plate (M3 x 10, inserts in the deck); the front 4 bound puts every keel load on (96, ±17) + (65, ±22.5)
+mass 3254 g (E), T/W 2.03 at 1650 gf a motor; CG (68.9, -0.1, 15.2)
