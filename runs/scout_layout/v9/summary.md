@@ -55,7 +55,7 @@ DECXIN 2633V2 landscape (89 x 73, E), horizon, lens (149, 0, 42). Nothing of the
     - That gives 4 non-collinear supports, so the cradle cannot pivot.
   - **Fitting:** build the whole cage first, then push the 4 clips onto their rods. No rod goes through the mount.
   - **Mouth:** it faces up and across the arm, so the camera's weight and the arm's push and pull bear on the clip's closed side.
-  - **Clearance:** every arm is clear of every rod and link (0 mm³), and every clip is clear of its rod (bore 3.1 on 3.0, 0 mm³). The snap fingers' section and the snap force are set in the piece (PETG, E).
+  - **Clearance:** every arm is clear of every rod and link (0 mm³), and every clip is clear of its rod (bore 3.1 on 3.0, 0 mm³). The snap fingers' section and the snap force are set in the piece (PETG, E). Requirement for the piece (review 27 Oct): the clip grips the rod so it cannot rattle, turn or slide (fingers about 2.9 to 3.0, or a TPU liner, plus an end stop); the frame model's mode run includes that fit.
   - **Why PETG and not TPU:** the camera mount must stay ≥ 100 Hz (CLAUDE.md design list 6) and hold the view still; TPU arms would let it swing. TPU goes only as washers under the camera board screws, for vibration (DEFAULT).
   - **Fuse:** the clips are the fuse. In a hard hit they pop off their rods before the camera breaks, and they snap back on (requirement for the piece).
   - **First mode, not computed yet (frame model): ~70 to 140 Hz (E), across the 100 Hz gate.**
