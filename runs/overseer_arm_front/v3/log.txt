@@ -1,0 +1,209 @@
+=== overseer_arm_front: h 2.0, generated 45.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_front: h 2.0, generated 45.0 cm3, min member 3.2 mm, cores 4
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 58,573 (468.6 cm3), drawn 10,081, void 103,378
+  insert rod 0: 170 cells, modulus x32.7
+  insert rod 1: 170 cells, modulus x32.7
+  insert rod 2: 170 cells, modulus x32.7
+  insert rod 3: 170 cells, modulus x32.7
+  support default: no cell centre in the region at h 2.0; using the 173 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 173 cells, 434 nodes
+  support bosses: 84 cells, 284 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_front: grid (64, 24, 16) h 4.0 = 24,576 cells; design 7,928 (507.4 cm3), drawn 1,441, void 15,207
+  insert rod 0: 91 cells, modulus x7.6
+  insert rod 1: 104 cells, modulus x6.7
+  insert rod 2: 91 cells, modulus x7.6
+  insert rod 3: 104 cells, modulus x6.7
+  support default: 69 cells, 220 nodes
+  support bosses: 8 cells, 45 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (109.82 cm3); 3.14 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (109.82 cm3); 3.14 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.097 of 7,743 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 1.61 cells, erosion depth 1.71 mm; volfrac 0.097 of 7,743 design cells
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING filter radius 1.61 cells < 2: the grid is too coarse for 6.25 mm members; use h <= 2.58
+layout: WARNING nearly mirrored in y (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.0% of passive cells differ): no symmetry
+layout: 20 drawn bodies (1,716 cells), held solid in every realization; eroded filter: masked
+layout: 20 drawn bodies (1,716 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: 53 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (64, 24, 16) = 24,576 elements, 34,467 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+fem: grid (64, 24, 16) = 24,576 elements, 34,467 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1149 (dil 0.1388 g +0.183) grey 28.5% ch 0.100 worst tie b20 mx 2.97e+03 2.7s
+it   1 beta    1 J  10.0000 vol 0.1149 (dil 0.1388 g +0.183) grey 28.5% ch 0.100 worst tie b20 mx 2.97e+03 2.7s
+it   2 beta    1 J  13.2011 vol 0.0888 (dil 0.1065 g -0.092) grey 38.6% ch 0.100 worst tie b20 fy 4.16e+03 2.2s
+it   2 beta    1 J  13.2011 vol 0.0888 (dil 0.1065 g -0.092) grey 38.6% ch 0.100 worst tie b20 fy 4.16e+03 2.2s
+it   3 beta    1 J  13.2723 vol 0.0903 (dil 0.1082 g -0.078) grey 38.3% ch 0.100 worst tie b20 mx 4.51e+03 2.4s
+it   3 beta    1 J  13.2723 vol 0.0903 (dil 0.1082 g -0.078) grey 38.3% ch 0.100 worst tie b20 mx 4.51e+03 2.4s
+it   4 beta    1 J  10.3461 vol 0.0877 (dil 0.1051 g -0.104) grey 37.9% ch 0.100 worst tie b20 fy 3.24e+03 2.5s
+it   4 beta    1 J  10.3461 vol 0.0877 (dil 0.1051 g -0.104) grey 37.9% ch 0.100 worst tie b20 fy 3.24e+03 2.5s
+it   5 beta    1 J   9.3553 vol 0.0865 (dil 0.1037 g -0.116) grey 36.3% ch 0.100 worst tie b20 mx 3.2e+03 2.5s
+it   5 beta    1 J   9.3553 vol 0.0865 (dil 0.1037 g -0.116) grey 36.3% ch 0.100 worst tie b20 mx 3.2e+03 2.5s
+it   6 beta    1 J   5.0606 vol 0.0852 (dil 0.1021 g -0.127) grey 38.0% ch 0.100 worst tie b20 fy 1.44e+03 2.8s
+it   6 beta    1 J   5.0606 vol 0.0852 (dil 0.1021 g -0.127) grey 38.0% ch 0.100 worst tie b20 fy 1.44e+03 2.8s
+it   7 beta    1 J   2.5105 vol 0.0909 (dil 0.1086 g -0.072) grey 41.3% ch 0.100 worst tie b20 mx 820 2.4s
+it   7 beta    1 J   2.5105 vol 0.0909 (dil 0.1086 g -0.072) grey 41.3% ch 0.100 worst tie b20 mx 820 2.4s
+it   8 beta    1 J   1.6597 vol 0.0958 (dil 0.1142 g -0.024) grey 43.5% ch 0.100 worst tie b20 mx 522 2.2s
+it   8 beta    1 J   1.6597 vol 0.0958 (dil 0.1142 g -0.024) grey 43.5% ch 0.100 worst tie b20 mx 522 2.2s
+it   9 beta    1 J   1.3772 vol 0.0976 (dil 0.1161 g -0.008) grey 43.5% ch 0.100 worst tie b20 mx 438 2.7s
+it   9 beta    1 J   1.3772 vol 0.0976 (dil 0.1161 g -0.008) grey 43.5% ch 0.100 worst tie b20 mx 438 2.7s
+it  10 beta    1 J   1.2347 vol 0.0979 (dil 0.1163 g -0.006) grey 43.1% ch 0.100 worst tie b20 mx 394 2.5s
+it  10 beta    1 J   1.2347 vol 0.0979 (dil 0.1163 g -0.006) grey 43.1% ch 0.100 worst tie b20 mx 394 2.5s
+it  11 beta    1 J   1.1215 vol 0.0981 (dil 0.1164 g -0.001) grey 42.6% ch 0.100 worst tie b20 mx 359 2.5s
+it  11 beta    1 J   1.1215 vol 0.0981 (dil 0.1164 g -0.001) grey 42.6% ch 0.100 worst tie b20 mx 359 2.5s
+it  12 beta    1 J   1.0381 vol 0.0978 (dil 0.1159 g -0.006) grey 42.0% ch 0.089 worst tie b20 mx 334 2.5s
+it  12 beta    1 J   1.0381 vol 0.0978 (dil 0.1159 g -0.006) grey 42.0% ch 0.089 worst tie b20 mx 334 2.5s
+it  13 beta    1 J   0.9358 vol 0.0979 (dil 0.1158 g -0.006) grey 40.8% ch 0.096 worst tie b20 mx 302 2.4s
+it  13 beta    1 J   0.9358 vol 0.0979 (dil 0.1158 g -0.006) grey 40.8% ch 0.096 worst tie b20 mx 302 2.4s
+it  14 beta    1 J   0.8359 vol 0.0980 (dil 0.1158 g -0.007) grey 39.6% ch 0.100 worst tie b20 mx 271 2.5s
+it  14 beta    1 J   0.8359 vol 0.0980 (dil 0.1158 g -0.007) grey 39.6% ch 0.100 worst tie b20 mx 271 2.5s
+it  15 beta    1 J   0.7466 vol 0.0982 (dil 0.1158 g -0.006) grey 38.9% ch 0.100 worst tie b20 mx 243 2.3s
+it  15 beta    1 J   0.7466 vol 0.0982 (dil 0.1158 g -0.006) grey 38.9% ch 0.100 worst tie b20 mx 243 2.3s
+it  16 beta    1 J   0.6720 vol 0.0984 (dil 0.1159 g -0.001) grey 38.1% ch 0.100 worst tie b20 mx 219 2.4s
+it  16 beta    1 J   0.6720 vol 0.0984 (dil 0.1159 g -0.001) grey 38.1% ch 0.100 worst tie b20 mx 219 2.4s
+it  17 beta    1 J   0.6233 vol 0.0981 (dil 0.1153 g -0.005) grey 37.4% ch 0.100 worst tie b20 mx 203 2.8s
+it  17 beta    1 J   0.6233 vol 0.0981 (dil 0.1153 g -0.005) grey 37.4% ch 0.100 worst tie b20 mx 203 2.8s
+it  18 beta    1 J   0.5681 vol 0.0983 (dil 0.1154 g -0.005) grey 36.8% ch 0.100 worst tie b20 mx 185 2.6s
+it  18 beta    1 J   0.5681 vol 0.0983 (dil 0.1154 g -0.005) grey 36.8% ch 0.100 worst tie b20 mx 185 2.6s
+it  19 beta    1 J   0.5217 vol 0.0985 (dil 0.1154 g -0.004) grey 36.3% ch 0.100 worst tie b20 mx 170 2.5s
+it  19 beta    1 J   0.5217 vol 0.0985 (dil 0.1154 g -0.004) grey 36.3% ch 0.100 worst tie b20 mx 170 2.5s
+it  20 beta    1 J   0.4821 vol 0.0987 (dil 0.1155 g -0.004) grey 35.9% ch 0.100 worst tie b20 mx 157 2.4s
+it  20 beta    1 J   0.4821 vol 0.0987 (dil 0.1155 g -0.004) grey 35.9% ch 0.100 worst tie b20 mx 157 2.4s
+it  21 beta    1 J   0.4500 vol 0.0989 (dil 0.1155 g +0.003) grey 35.4% ch 0.100 worst tie b20 mx 145 2.6s
+it  21 beta    1 J   0.4500 vol 0.0989 (dil 0.1155 g +0.003) grey 35.4% ch 0.100 worst tie b20 mx 145 2.6s
+it  22 beta    1 J   0.4345 vol 0.0985 (dil 0.1149 g -0.003) grey 35.1% ch 0.100 worst tie b20 mx 140 2.3s
+it  22 beta    1 J   0.4345 vol 0.0985 (dil 0.1149 g -0.003) grey 35.1% ch 0.100 worst tie b20 mx 140 2.3s
+it  23 beta    1 J   0.4100 vol 0.0987 (dil 0.1149 g -0.003) grey 34.8% ch 0.100 worst tie b20 mx 131 2.4s
+it  23 beta    1 J   0.4100 vol 0.0987 (dil 0.1149 g -0.003) grey 34.8% ch 0.100 worst tie b20 mx 131 2.4s
+it  24 beta    1 J   0.3901 vol 0.0988 (dil 0.1149 g -0.003) grey 34.6% ch 0.100 worst tie b20 mx 125 2.3s
+it  24 beta    1 J   0.3901 vol 0.0988 (dil 0.1149 g -0.003) grey 34.6% ch 0.100 worst tie b20 mx 125 2.3s
+it  25 beta    1 J   0.3756 vol 0.0989 (dil 0.1148 g -0.003) grey 34.6% ch 0.100 worst tie b20 mx 119 2.4s
+it  25 beta    1 J   0.3756 vol 0.0989 (dil 0.1148 g -0.003) grey 34.6% ch 0.100 worst tie b20 mx 119 2.4s
+layout: beta 1 done: eroded design 9 bodies, main 72.9%; drawn bodies outside the main body: 8
+layout: beta 1 done: eroded design 9 bodies, main 72.9%; drawn bodies outside the main body: 8
+it  26 beta    2 J   1.1848 vol 0.0876 (dil 0.1369 g -0.099) grey 29.2% ch 0.100 worst tie b20 mx 384 2.3s
+it  26 beta    2 J   1.1848 vol 0.0876 (dil 0.1369 g -0.099) grey 29.2% ch 0.100 worst tie b20 mx 384 2.3s
+it  27 beta    2 J   0.6680 vol 0.0971 (dil 0.1490 g -0.019) grey 31.3% ch 0.100 worst tie b20 mx 212 2.3s
+it  27 beta    2 J   0.6680 vol 0.0971 (dil 0.1490 g -0.019) grey 31.3% ch 0.100 worst tie b20 mx 212 2.3s
+it  28 beta    2 J   0.5521 vol 0.0996 (dil 0.1508 g -0.008) grey 31.0% ch 0.100 worst tie b20 mx 176 2.3s
+it  28 beta    2 J   0.5521 vol 0.0996 (dil 0.1508 g -0.008) grey 31.0% ch 0.100 worst tie b20 mx 176 2.3s
+it  29 beta    2 J   0.5010 vol 0.1007 (dil 0.1513 g -0.004) grey 30.9% ch 0.100 worst tie b20 mx 159 2.0s
+it  29 beta    2 J   0.5010 vol 0.1007 (dil 0.1513 g -0.004) grey 30.9% ch 0.100 worst tie b20 mx 159 2.0s
+it  30 beta    2 J   0.4666 vol 0.1013 (dil 0.1514 g -0.003) grey 30.8% ch 0.100 worst tie b20 mx 148 2.3s
+it  30 beta    2 J   0.4666 vol 0.1013 (dil 0.1514 g -0.003) grey 30.8% ch 0.100 worst tie b20 mx 148 2.3s
+it  31 beta    2 J   0.4377 vol 0.1020 (dil 0.1515 g +0.011) grey 30.6% ch 0.100 worst tie b20 mx 138 2.0s
+it  31 beta    2 J   0.4377 vol 0.1020 (dil 0.1515 g +0.011) grey 30.6% ch 0.100 worst tie b20 mx 138 2.0s
+it  32 beta    2 J   0.4445 vol 0.1007 (dil 0.1495 g -0.002) grey 30.3% ch 0.100 worst tie b20 mx 141 2.0s
+it  32 beta    2 J   0.4445 vol 0.1007 (dil 0.1495 g -0.002) grey 30.3% ch 0.100 worst tie b20 mx 141 2.0s
+it  33 beta    2 J   0.4250 vol 0.1012 (dil 0.1496 g -0.002) grey 30.4% ch 0.100 worst tie b20 mx 134 2.2s
+it  33 beta    2 J   0.4250 vol 0.1012 (dil 0.1496 g -0.002) grey 30.4% ch 0.100 worst tie b20 mx 134 2.2s
+it  34 beta    2 J   0.4099 vol 0.1016 (dil 0.1496 g -0.001) grey 30.3% ch 0.100 worst tie b20 mx 129 2.4s
+it  34 beta    2 J   0.4099 vol 0.1016 (dil 0.1496 g -0.001) grey 30.3% ch 0.100 worst tie b20 mx 129 2.4s
+it  35 beta    2 J   0.3987 vol 0.1019 (dil 0.1497 g -0.001) grey 30.3% ch 0.100 worst tie b20 mx 126 2.6s
+it  35 beta    2 J   0.3987 vol 0.1019 (dil 0.1497 g -0.001) grey 30.3% ch 0.100 worst tie b20 mx 126 2.6s
+it  36 beta    2 J   0.3898 vol 0.1022 (dil 0.1497 g +0.014) grey 30.3% ch 0.100 worst tie b20 mx 123 2.0s
+it  36 beta    2 J   0.3898 vol 0.1022 (dil 0.1497 g +0.014) grey 30.3% ch 0.100 worst tie b20 mx 123 2.0s
+it  37 beta    2 J   0.4114 vol 0.1004 (dil 0.1475 g -0.001) grey 29.8% ch 0.100 worst tie b20 mx 130 2.4s
+it  37 beta    2 J   0.4114 vol 0.1004 (dil 0.1475 g -0.001) grey 29.8% ch 0.100 worst tie b20 mx 130 2.4s
+layout: beta 2 done: eroded design 13 bodies, main 92.8%; drawn bodies outside the main body: 7
+layout: beta 2 done: eroded design 13 bodies, main 92.8%; drawn bodies outside the main body: 7
+it  38 beta    4 J   2.5576 vol 0.0832 (dil 0.1770 g -0.144) grey 14.8% ch 0.100 worst tie b20 mx 835 2.5s
+it  38 beta    4 J   2.5576 vol 0.0832 (dil 0.1770 g -0.144) grey 14.8% ch 0.100 worst tie b20 mx 835 2.5s
+it  39 beta    4 J   1.3697 vol 0.0961 (dil 0.2014 g -0.026) grey 17.2% ch 0.100 worst tie b20 mx 433 2.4s
+it  39 beta    4 J   1.3697 vol 0.0961 (dil 0.2014 g -0.026) grey 17.2% ch 0.100 worst tie b20 mx 433 2.4s
+it  40 beta    4 J   0.9934 vol 0.0998 (dil 0.2037 g -0.015) grey 18.3% ch 0.100 worst tie b20 mx 311 2.3s
+it  40 beta    4 J   0.9934 vol 0.0998 (dil 0.2037 g -0.015) grey 18.3% ch 0.100 worst tie b20 mx 311 2.3s
+it  41 beta    4 J   0.8219 vol 0.1025 (dil 0.2054 g +0.006) grey 18.3% ch 0.100 worst tie b20 mx 259 2.3s
+it  41 beta    4 J   0.8219 vol 0.1025 (dil 0.2054 g +0.006) grey 18.3% ch 0.100 worst tie b20 mx 259 2.3s
+it  42 beta    4 J   0.7766 vol 0.1027 (dil 0.2033 g -0.004) grey 17.4% ch 0.100 worst tie b20 mx 249 2.4s
+it  42 beta    4 J   0.7766 vol 0.1027 (dil 0.2033 g -0.004) grey 17.4% ch 0.100 worst tie b20 mx 249 2.4s
+it  43 beta    4 J   0.7099 vol 0.1041 (dil 0.2036 g -0.003) grey 17.2% ch 0.100 worst tie b20 mx 228 2.2s
+it  43 beta    4 J   0.7099 vol 0.1041 (dil 0.2036 g -0.003) grey 17.2% ch 0.100 worst tie b20 mx 228 2.2s
+it  44 beta    4 J   0.6616 vol 0.1052 (dil 0.2037 g -0.002) grey 16.8% ch 0.100 worst tie b20 mx 213 2.1s
+it  44 beta    4 J   0.6616 vol 0.1052 (dil 0.2037 g -0.002) grey 16.8% ch 0.100 worst tie b20 mx 213 2.1s
+it  45 beta    4 J   0.6226 vol 0.1063 (dil 0.2038 g -0.002) grey 16.5% ch 0.100 worst tie b20 mx 201 2.1s
+it  45 beta    4 J   0.6226 vol 0.1063 (dil 0.2038 g -0.002) grey 16.5% ch 0.100 worst tie b20 mx 201 2.1s
+it  46 beta    4 J   0.5905 vol 0.1073 (dil 0.2039 g +0.027) grey 16.2% ch 0.100 worst tie b20 mx 190 2.2s
+it  46 beta    4 J   0.5905 vol 0.1073 (dil 0.2039 g +0.027) grey 16.2% ch 0.100 worst tie b20 mx 190 2.2s
+it  47 beta    4 J   0.7212 vol 0.1025 (dil 0.1980 g -0.003) grey 15.6% ch 0.100 worst tie b20 mx 237 2.2s
+it  47 beta    4 J   0.7212 vol 0.1025 (dil 0.1980 g -0.003) grey 15.6% ch 0.100 worst tie b20 mx 237 2.2s
+it  48 beta    4 J   0.6765 vol 0.1034 (dil 0.1984 g -0.001) grey 15.4% ch 0.100 worst tie b20 mx 221 2.3s
+it  48 beta    4 J   0.6765 vol 0.1034 (dil 0.1984 g -0.001) grey 15.4% ch 0.100 worst tie b20 mx 221 2.3s
+it  49 beta    4 J   0.6556 vol 0.1038 (dil 0.1984 g -0.001) grey 15.3% ch 0.100 worst tie b20 mx 214 2.0s
+it  49 beta    4 J   0.6556 vol 0.1038 (dil 0.1984 g -0.001) grey 15.3% ch 0.100 worst tie b20 mx 214 2.0s
+it  50 beta    4 J   0.6402 vol 0.1041 (dil 0.1985 g -0.001) grey 15.3% ch 0.100 worst tie b20 mx 208 2.3s
+it  50 beta    4 J   0.6402 vol 0.1041 (dil 0.1985 g -0.001) grey 15.3% ch 0.100 worst tie b20 mx 208 2.3s
+it  51 beta    4 J   0.6288 vol 0.1043 (dil 0.1985 g +0.021) grey 15.3% ch 0.100 worst tie b20 mx 204 2.2s
+it  51 beta    4 J   0.6288 vol 0.1043 (dil 0.1985 g +0.021) grey 15.3% ch 0.100 worst tie b20 mx 204 2.2s
+it  52 beta    4 J   0.7597 vol 0.1001 (dil 0.1940 g -0.003) grey 15.1% ch 0.100 worst tie b20 mx 250 2.4s
+it  52 beta    4 J   0.7597 vol 0.1001 (dil 0.1940 g -0.003) grey 15.1% ch 0.100 worst tie b20 mx 250 2.4s
+it  53 beta    4 J   0.7197 vol 0.1008 (dil 0.1943 g -0.001) grey 14.9% ch 0.100 worst tie b20 mx 235 2.4s
+it  53 beta    4 J   0.7197 vol 0.1008 (dil 0.1943 g -0.001) grey 14.9% ch 0.100 worst tie b20 mx 235 2.4s
+it  54 beta    4 J   0.7043 vol 0.1010 (dil 0.1944 g -0.001) grey 14.9% ch 0.100 worst tie b20 mx 229 2.2s
+it  54 beta    4 J   0.7043 vol 0.1010 (dil 0.1944 g -0.001) grey 14.9% ch 0.100 worst tie b20 mx 229 2.2s
+it  55 beta    4 J   0.6921 vol 0.1011 (dil 0.1944 g -0.001) grey 14.9% ch 0.100 worst tie b20 mx 225 2.2s
+it  55 beta    4 J   0.6921 vol 0.1011 (dil 0.1944 g -0.001) grey 14.9% ch 0.100 worst tie b20 mx 225 2.2s
+it  56 beta    4 J   0.6783 vol 0.1012 (dil 0.1944 g +0.011) grey 14.9% ch 0.100 worst tie b20 mx 220 2.4s
+it  56 beta    4 J   0.6783 vol 0.1012 (dil 0.1944 g +0.011) grey 14.9% ch 0.100 worst tie b20 mx 220 2.4s
+it  57 beta    4 J   0.7290 vol 0.0994 (dil 0.1919 g -0.001) grey 14.7% ch 0.100 worst tie b20 mx 238 2.0s
+it  57 beta    4 J   0.7290 vol 0.0994 (dil 0.1919 g -0.001) grey 14.7% ch 0.100 worst tie b20 mx 238 2.0s
+it  58 beta    4 J   0.7103 vol 0.0996 (dil 0.1920 g -0.001) grey 14.6% ch 0.100 worst tie b20 mx 230 2.2s
+it  58 beta    4 J   0.7103 vol 0.0996 (dil 0.1920 g -0.001) grey 14.6% ch 0.100 worst tie b20 mx 230 2.2s
+it  59 beta    4 J   0.6975 vol 0.0999 (dil 0.1921 g -0.000) grey 14.6% ch 0.100 worst tie b20 mx 226 2.3s
+it  59 beta    4 J   0.6975 vol 0.0999 (dil 0.1921 g -0.000) grey 14.6% ch 0.100 worst tie b20 mx 226 2.3s
+it  60 beta    4 J   0.6862 vol 0.1001 (dil 0.1921 g -0.000) grey 14.6% ch 0.100 worst tie b20 mx 222 2.2s
+it  60 beta    4 J   0.6862 vol 0.1001 (dil 0.1921 g -0.000) grey 14.6% ch 0.100 worst tie b20 mx 222 2.2s
+it  61 beta    4 J   0.6760 vol 0.1003 (dil 0.1921 g +0.009) grey 14.5% ch 0.100 worst tie b20 mx 219 2.2s
+it  61 beta    4 J   0.6760 vol 0.1003 (dil 0.1921 g +0.009) grey 14.5% ch 0.100 worst tie b20 mx 219 2.2s
+it  62 beta    4 J   0.7149 vol 0.0990 (dil 0.1903 g -0.001) grey 14.4% ch 0.100 worst tie b20 mx 233 2.4s
+it  62 beta    4 J   0.7149 vol 0.0990 (dil 0.1903 g -0.001) grey 14.4% ch 0.100 worst tie b20 mx 233 2.4s
+layout: stopped (beta_stop) at it 62, beta 4, 145 s
+layout: stopped (beta_stop) at it 62, beta 4, 145 s
+layout: beta 4 done: eroded design 12 bodies, main 92.8%; drawn bodies outside the main body: 7
+layout: beta 4 done: eroded design 12 bodies, main 92.8%; drawn bodies outside the main body: 7
+coarse stage done: 62 iterations, 177 s, peak 1.154812 GB
+coarse stage done: 62 iterations, 177 s, peak 1.154812 GB
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 58,573 (468.6 cm3), drawn 10,081, void 103,378
+  insert rod 0: 170 cells, modulus x32.7
+  insert rod 1: 170 cells, modulus x32.7
+  insert rod 2: 170 cells, modulus x32.7
+  insert rod 3: 170 cells, modulus x32.7
+  support default: no cell centre in the region at h 2.0; using the 173 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 173 cells, 434 nodes
+  support bosses: 84 cells, 284 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (82.34 cm3); 3.30 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (82.34 cm3); 3.30 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.103 of 58,821 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.103 of 58,821 design cells
+layout: WARNING nearly mirrored in y (2.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.2% of passive cells differ): no symmetry
+layout: 8 drawn bodies (10,293 cells), held solid in every realization; eroded filter: masked
+layout: 8 drawn bodies (10,293 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 42 tie cases (7 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: 53 load cases + 42 tie cases (7 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (112, 48, 32) = 172,032 elements, 230,745 active dofs; backend direct (direct estimate 2.5 GB, budget 11.8 GB)
+fem: grid (112, 48, 32) = 172,032 elements, 230,745 active dofs; backend direct (direct estimate 2.5 GB, budget 11.8 GB)
+layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.127
+layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.127
+it   1 beta    4 J  10.0000 vol 0.1015 (dil 0.2093 g -0.011) grey 20.7% ch 0.100 worst tie b5 mx 4.6e+05 42.7s
+it   1 beta    4 J  10.0000 vol 0.1015 (dil 0.2093 g -0.011) grey 20.7% ch 0.100 worst tie b5 mx 4.6e+05 42.7s
+it   2 beta    4 J   5.2013 vol 0.0936 (dil 0.2069 g -0.023) grey 21.3% ch 0.100 worst tie b5 mx 2.4e+05 43.1s
+it   2 beta    4 J   5.2013 vol 0.0936 (dil 0.2069 g -0.023) grey 21.3% ch 0.100 worst tie b5 mx 2.4e+05 43.1s
+it   3 beta    4 J   1.8704 vol 0.0882 (dil 0.2063 g -0.025) grey 21.3% ch 0.100 worst tie b5 mx 8.34e+04 48.4s
+it   3 beta    4 J   1.8704 vol 0.0882 (dil 0.2063 g -0.025) grey 21.3% ch 0.100 worst tie b5 mx 8.34e+04 48.4s
+it   4 beta    4 J   0.7283 vol 0.0857 (dil 0.2066 g -0.024) grey 21.4% ch 0.100 worst tie b7 mx 2.97e+04 45.4s
+it   4 beta    4 J   0.7283 vol 0.0857 (dil 0.2066 g -0.024) grey 21.4% ch 0.100 worst tie b7 mx 2.97e+04 45.4s
+it   5 beta    4 J   0.3066 vol 0.0899 (dil 0.2068 g -0.023) grey 21.4% ch 0.100 worst tie b7 mx 1.22e+04 43.6s
+it   5 beta    4 J   0.3066 vol 0.0899 (dil 0.2068 g -0.023) grey 21.4% ch 0.100 worst tie b7 mx 1.22e+04 43.6s
+it   6 beta    4 J   0.1418 vol 0.0955 (dil 0.2072 g -0.053) grey 21.2% ch 0.100 worst tie b7 mz 5.78e+03 45.9s
+it   6 beta    4 J   0.1418 vol 0.0955 (dil 0.2072 g -0.053) grey 21.2% ch 0.100 worst tie b7 mz 5.78e+03 45.9s
+it   7 beta    4 J   0.0666 vol 0.1059 (dil 0.2141 g -0.021) grey 21.2% ch 0.100 worst tie b7 mz 2.81e+03 45.3s
+it   7 beta    4 J   0.0666 vol 0.1059 (dil 0.2141 g -0.021) grey 21.2% ch 0.100 worst tie b7 mz 2.81e+03 45.3s
