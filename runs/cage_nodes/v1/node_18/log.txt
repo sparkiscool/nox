@@ -1,0 +1,44 @@
+=== cage_node_18: h 1.0, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_18: h 1.0, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_18: grid (80, 80, 80) h 1.0 = 512,000 cells; design 204,345 (204.3 cm3), drawn 8,702, void 298,953
+  support hold 0: 7577 cells, 12655 nodes
+  support hold 1: 7588 cells, 12761 nodes
+  support hold 2: 7580 cells, 12617 nodes
+  support hold 3: 7572 cells, 12693 nodes
+  support hold 4: 7582 cells, 12757 nodes
+  support hold 5: 7681 cells, 12982 nodes
+  support hold 6: 7753 cells, 13107 nodes
+  support hold 7: 8215 cells, 13777 nodes
+  support hold 8: 8193 cells, 13715 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_18: grid (40, 40, 40) h 2.0 = 64,000 cells; design 25,536 (204.3 cm3), drawn 1,111, void 37,353
+  support hold 0: 969 cells, 2216 nodes
+  support hold 1: 978 cells, 2254 nodes
+  support hold 2: 971 cells, 2204 nodes
+  support hold 3: 968 cells, 2219 nodes
+  support hold 4: 975 cells, 2238 nodes
+  support hold 5: 982 cells, 2292 nodes
+  support hold 6: 963 cells, 2296 nodes
+  support hold 7: 1052 cells, 2429 nodes
+  support hold 8: 1047 cells, 2403 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.89 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.89 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.006 of 25,536 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.006 of 25,536 design cells
+layout: WARNING nearly mirrored in x (3.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (3.4% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (3.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (3.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (3.2% of passive cells differ): no symmetry
+Traceback (most recent call last):
+  File "/home/user/nox/nox/overseer/cage_node.py", line 114, in <module>
+    optimise(setup, h=a.h, gen_cm3=gen, out_dir=out, name=f"cage_node_{i}", settings=Settings(), git=a.git)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/nox/nox/topo/run.py", line 75, in optimise
+    Lc = Layout(part_c, gen_cm3=gen_cm3, settings=sc, log=log)
+  File "/home/user/nox/nox/topo/layout.py", line 307, in __init__
+    mat = MATERIALS[part.material]
+          ~~~~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'TPU'
