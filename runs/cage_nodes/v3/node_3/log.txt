@@ -293,3 +293,7 @@ it  33 beta    4 J  10.0108 vol 0.0066 (dil 0.0295 g +0.259) grey  1.6% ch 0.000
 it  33 beta    4 J  10.0108 vol 0.0066 (dil 0.0295 g +0.259) grey  1.6% ch 0.000 worst held b1 fz 9.77e+05 276.1s
 it  34 beta    4 J  10.0108 vol 0.0066 (dil 0.0295 g +0.259) grey  1.6% ch 0.000 worst held b1 fz 9.77e+05 280.6s
 it  34 beta    4 J  10.0108 vol 0.0066 (dil 0.0295 g +0.259) grey  1.6% ch 0.000 worst held b1 fz 9.77e+05 280.6s
+it  35 beta    4 J  10.0108 vol 0.0066 (dil 0.0295 g +0.259) grey  1.6% ch 0.000 worst held b1 fz 9.77e+05 280.8s
+it  35 beta    4 J  10.0108 vol 0.0066 (dil 0.0295 g +0.259) grey  1.6% ch 0.000 worst held b1 fz 9.77e+05 280.8s
+layout: beta 4 done: eroded design 5 bodies, main 35.6%; drawn bodies outside the main body: 4
+layout: beta 4 done: eroded design 5 bodies, main 35.6%; drawn bodies outside the main body: 4
