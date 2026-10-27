@@ -248,16 +248,16 @@ def build_html(res=None):
     S_, O_ = res["scout"], res["overseer"]; m = lambda d: min(d["capture"][k]["ok_mm"] for k in ("x", "y", "diag"))
     hs = res["heights"]; wi = {w["label"].split(",")[0]: w for w in res.get("whatif", [])}
     mw = lambda w: min(w["capture"][k]["ok_mm"] for k in ("x", "y", "diag"))
-    res["lede"] = (f"Built on the cages the two sessions confirmed: Overseer cage v5 (PR 122, hexagon bottom) and Scout cage v9 (PR 127) "
-                   f"with its 4 bottom nodes moved onto the hexagon's side nodes, so the Scout's opening is the middle of the Overseer's. "
-                   f"Ramps rise into the opening: 2 shared side ramps, 4 Overseer ramps near its tips and 4 small Scout pads at its ends. "
-                   f"Landing tolerance today: Scout ±{m(S_)} mm, Overseer ±{m(O_)} mm.")
+    res["lede"] = (f"Built on the cages both sessions confirmed: Overseer cage v5 (PR 122, hexagon bottom, z −57) and Scout layout v10 "
+                   f"(PR 131 @ c5b5790), whose bottom nodes now sit on the hexagon's 4 side nodes, so the Scout's opening is the middle of the Overseer's. "
+                   f"Ramps rise into the opening: 2 shared side ramps, a V under each Overseer tip, and Scout pads at its two ends that the Overseer passes over. "
+                   f"Both cartridges seat level, so the swap head has one stop. Landing tolerance: Scout ±{m(S_)} mm, Overseer ±{m(O_)} mm (per axis in the table).")
     res["notes"] = [
-        f"Ramp heights above the seat (a 45° ramp catches about its own height): side {hs['side']:.0f}, Overseer tips {hs['overseer_end']:.0f}, Scout pads {hs['scout_end']:.0f}. Side ramps run the long sides 20 clear of each node; the Overseer ramps sit on the tip edges, 20 to 75 from the tip; the Scout pads sit beside the Overseer's receiver and feet at the nose (|y| 40..96) and between the Scout's tail-bay ties and its corner nodes at the tail (|y| 92.5..99.5).",
-        "What limits the Scout: at the tail its own tail-bay ties sit at ring height (x ≈ −60, |y| 50..91), and the Overseer's TPU feet and receiver fill the middle, so its tail pads are 7 mm wide slivers. Its nose and tail tubes also run low over where the Overseer's ramps would continue, so those stop near the tips.",
-        f"With the Overseer's belly pods inside |y| {ALT_SLED_Y:.0f} the side ramps can be {ALT_SIDE:.0f} tall: see the last two table rows.",
-        "Seat height: the Scout's ring rods are 3 mm, the Overseer's 6 mm, so on the same ramps the Scout sits 2.1 mm lower and its cartridge is 2.1 mm below the Overseer's at the swap. A 6 mm Scout ring (or its plane 2.1 higher) removes it (asked of the Scout session).",
-        "Box: the ramps stand on a deck round the swap column. The hold (a latch over a ring tube) and keep-alive (pins on ring pads) move to the ramp bases. Still open: low-friction ramp faces (PTFE, μ ≤ 0.2) and the drop sim with tilt and drift.",
+        f"Ramp heights above the seat (a 45° ramp catches about its own height): side {hs['side']:.0f}, Overseer tip Vs {hs['overseer_end']:.0f}, Scout end pads {hs['scout_end']:.0f}. Side ramps run each long side 20 clear of its nodes. Each tip has one V (its two halves meet on the centreline, cut back 30 from the tip node): the nose V runs 80 along the tip edges, the tail V 55, so it stays behind the Scout's tail low node. The Scout pads sit at |y| 52 to 96 on both ends, outside the Overseer's TPU feet and receiver.",
+        "Side ramps are capped at 25 by the Overseer's belly sled (|y| 55, 9 above its ring). If its pods move inside |y| 46 they can be 35 (last two table rows).",
+        "Seat: the Scout's 3 mm ring sits 2.12 mm lower on a 45° ramp than the Overseer's 6 mm one, so the Scout's plane is 2.12 further under its cartridge (z −49.62); both cartridges then seat 3.0 above the ramp datum.",
+        "Box: the ramps stand on a deck round the swap column (both cartridges drop straight through). The hold (a latch over a ring tube) and keep-alive (pins on ring pads) go on the ramp bases. Still open before printing: low-friction ramp faces (PTFE, μ ≤ 0.2) and a drop sim with tilt and drift; this check is kinematic.",
+        "Coming: the Overseer's PR 123 lowers its belly about 20 mm; the loop follows the cartridge, so the ramps keep their place relative to it.",
     ]
     bcj = json.load(open(os.path.join(REPO, "runs", "scout_bottom", "concept", "concept.json")))
     tpl = open(os.path.join(REPO, "nox", "box", "catch_ramps_view.html")).read()
