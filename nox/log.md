@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms v2): cage v5 on main moved the motors 5.6 forward (205.9 / -73.1); v2 runs start beside v1 (v1 pinned to its inputs, finishes as the method check): core parts as keep-outs, bore 3.2, front rods 145.7. Fit 0 mm³. `nox/overseer/arm_topo_v2.py`
 - 27 Oct (Overseer arms): rod bore 3.2 (Spark's coupon pick, P; was 3.3): the v1 meshes are rebuilt from their layouts with it (no rerun: the cut is exact at the build); spoke / brace sockets 6.2 x 15 for arms v2. `nox/overseer/arm_topo_v1.py`
 - 27 Oct (Overseer arms, Spark): rod install check `arm_topo_v1.py --rodcheck` (bore clear 160 behind the shoulder to the blind end, sockets ≥ 80 % gripped, bonded length); insertion line outside the envelope (0 mm³). `nox/overseer/arms.md`
 - 27 Oct (Overseer arms): runs restarted at h 2.0 front / 1.5 rear (topo README: h ~ min member / 3): at h 1.5 / 1.0 the solver fell to multigrid with 86 cases, no fine iteration in 80 min; now direct, ~2.4 GB. `nox/overseer/arm_topo_v1.py`

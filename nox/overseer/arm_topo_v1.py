@@ -23,7 +23,11 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 import numpy as np, trimesh, manifold3d as mf
 
-LAYOUT = os.path.join(ROOT, "runs", "overseer_layout", "v5")
+# inputs: v1 is pinned to the layout its runs used (runs/overseer_arms/v1/inputs, from layout v5 at af98ac52); arms v2
+# (arm_topo_v2.py) sets the current layout and the core session's parts through these
+VERSION = os.environ.get("NOX_ARM_VERSION", "v1")
+LAYOUT = os.environ.get("NOX_ARM_LAYOUT", os.path.join(ROOT, "runs", "overseer_arms", "v1", "inputs"))
+CORE = os.environ.get("NOX_ARM_CORE")               # a parts folder whose meshes (+ CLEAR) are keep-outs, or None
 G = 9.81
 
 # ------------------------------------------------------------------------------------------- numbers (dimensions.md)
@@ -122,8 +126,19 @@ def plate_prism(name, z0, z1):
 
 
 def keepouts():
-    """hub electronics (FC stack, Pi 5 + deck, PDB, UBEC, buck, RX) and the L2 keel hub, + CLEAR, as boxes"""
+    """hub electronics (FC stack, Pi 5 + deck, PDB, UBEC, buck, RX) and the L2 keel hub, + CLEAR, as boxes (v1); with
+    CORE, the core session's real part meshes grown by CLEAR (6 shifted copies)"""
     out = mf.Manifold()
+    if CORE:
+        import glob
+        for f in sorted(glob.glob(os.path.join(CORE, "*.stl"))):
+            t = trimesh.load(f, force="mesh")
+            if t.bounds[1][2] <= 0.0 or t.bounds[0][0] > 300:    # under the bottom plate (sled, pack...) or the nose
+                continue
+            m = from_tm(t)
+            for d in np.vstack([np.eye(3), -np.eye(3)]) * CLEAR:
+                out += m.translate(d.tolist())
+        return out
     for nm in ("hub_electronics__fc__pi_5___deck__pdb__u.stl", "apex___cam_bracket.stl"):
         t = trimesh.load(os.path.join(LAYOUT, "parts", nm), force="mesh")
         for b in t.split(only_watertight=False):
@@ -468,7 +483,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     h = a.h or (2.0 if a.which == "front" else 1.5)   # ~ min member / 3 (topo README); direct solver (27 Oct: h 1.5 / 1.0 fell to multigrid, ~10 min an iteration)
     gen = a.gen or (40.0 if a.which == "front" else 25.0)   # cm3 generated (E), generous (Spark 27 Oct); front rods carry the chords
-    out = a.out or os.path.join(ROOT, "runs", f"overseer_arm_{a.which}", "v1")
+    out = a.out or os.path.join(ROOT, "runs", f"overseer_arm_{a.which}", VERSION)
     if a.setup:
         p = setup_for(a.which)(h)
         s = p.summary(); s["cases"] = len(s["cases"]); print(json.dumps(s), frame(a.which))
