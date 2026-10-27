@@ -16,16 +16,21 @@ for w in ("front", "rear"):
     p = A.setup_for(w)(H[w])
     skin = p.functional_skin(2.5)
     design = p.design | (p.solid & ~skin)
-    d = np.load(f"{S}/prog_{w}/ck.npz", allow_pickle=True)
-    x = d["x"]; it = int(d["it"])
-    assert design.sum() == len(x), (design.sum(), len(x))
-    f = np.zeros(p.nel); f[design] = x; f[skin & ~p.insert_cells] = 1.0
+    if os.path.exists(f"{S}/prog_{w}/density.npz"):                    # a finished layout: the nominal field
+        d = np.load(f"{S}/prog_{w}/density.npz", allow_pickle=True)
+        f = np.asarray(d["rho_n"], float).ravel(); it = "final"
+        f[p.insert_cells] = 0.0
+    else:
+        d = np.load(f"{S}/prog_{w}/ck.npz", allow_pickle=True)
+        x = d["x"]; it = int(d["it"])
+        assert design.sum() == len(x), (design.sum(), len(x))
+        f = np.zeros(p.nel); f[design] = x; f[skin & ~p.insert_cells] = 1.0
     f3 = ndi.gaussian_filter(f.reshape(p.shape), 0.7)
     v, fc, _, _ = measure.marching_cubes(np.pad(f3, 1), 0.5)
     v = (v - 1) * p.h + np.array(p.origin) + p.h / 2
     m = trimesh.Trimesh(v, fc); B, F = A.bodies(w)
     vol = (f > 0.5).sum() * p.h ** 3 / 1000
-    info.append(f"{w}: iteration {it}, ~{vol:.0f} cm³ solid so far")
+    info.append(f"{w}: iteration {it}, ~{vol:.0f} cm³ solid")
     for mir in (False, True):
         parts.append((A.arm_to_drone(m, F, mir), "#b9c3cc"))
         if w == "front":
