@@ -1,0 +1,28 @@
+=== overseer_arm_rear: h 1.5, generated 25.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_rear: h 1.5, generated 25.0 cm3, min member 3.2 mm, cores 4
+overseer_arm_rear: grid (96, 40, 32) h 1.5 = 122,880 cells; design 56,876 (192.0 cm3), drawn 5,073, void 60,931
+  support default: 460 cells, 1136 nodes
+  support bosses: 240 cells, 618 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_rear: grid (48, 24, 24) h 3.0 = 27,648 cells; design 7,024 (189.6 cm3), drawn 645, void 19,979
+  support default: 63 cells, 178 nodes
+  support bosses: 33 cells, 129 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (13.66 cm3); 3.75 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (13.66 cm3); 3.75 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.149 of 7,163 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.149 of 7,163 design cells
+layout: WARNING nearly mirrored in x (7.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (7.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.8% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.8% of passive cells differ): no symmetry
+layout: 3 drawn bodies (506 cells), held solid in every realization; eroded filter: masked
+layout: 3 drawn bodies (506 cells), held solid in every realization; eroded filter: masked
+layout: 38 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: 38 load cases + 12 tie cases (2 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+fem: grid (48, 24, 24) = 27,648 elements, 28,344 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+fem: grid (48, 24, 24) = 27,648 elements, 28,344 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.1320 (dil 0.1596 g -0.112) grey 73.4% ch 0.100 worst tie b3 mx 843 1.7s
+it   1 beta    1 J  10.0000 vol 0.1320 (dil 0.1596 g -0.112) grey 73.4% ch 0.100 worst tie b3 mx 843 1.7s
