@@ -184,3 +184,28 @@ fem: grid (144, 48, 48) = 331,776 elements, 673,017 active dofs; backend mg (dir
 fem: grid (144, 48, 48) = 331,776 elements, 673,017 active dofs; backend mg (direct estimate 10.3 GB, budget 11.8 GB)
 fem: multigrid 3 levels [(np.int64(144), np.int64(48), np.int64(48)), (np.int64(72), np.int64(24), np.int64(24)), (np.int64(36), np.int64(12), np.int64(12))], coarsest 18,759 dofs (direct)
 fem: multigrid 3 levels [(np.int64(144), np.int64(48), np.int64(48)), (np.int64(72), np.int64(24), np.int64(24)), (np.int64(36), np.int64(12), np.int64(12))], coarsest 18,759 dofs (direct)
+=== overseer_arm_rear: h 1.0, generated 15.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_rear: h 1.0, generated 15.0 cm3, min member 3.2 mm, cores 4
+overseer_arm_rear: grid (144, 48, 48) h 1.0 = 331,776 cells; design 191,457 (191.5 cm3), drawn 16,969, void 123,350
+  support default: 1020 cells, 2366 nodes
+  support bosses: 693 cells, 1472 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_rear: grid (72, 32, 32) h 2.0 = 73,728 cells; design 23,528 (188.2 cm3), drawn 1,998, void 48,202
+  support default: no cell centre in the region at h 2.0; using the 278 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 278 cells, 722 nodes
+  support bosses: 75 cells, 268 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (13.71 cm3); 2.27 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (13.71 cm3); 2.27 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.091 of 23,812 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.091 of 23,812 design cells
+layout: WARNING nearly mirrored in y (3.1% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (3.1% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.5% of passive cells differ): no symmetry
+layout: 3 drawn bodies (1,714 cells), held solid in every realization; eroded filter: masked
+layout: 3 drawn bodies (1,714 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 6 tie cases (1 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 32 load cases + 6 tie cases (1 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+fem: grid (72, 32, 32) = 73,728 elements, 88,467 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+fem: grid (72, 32, 32) = 73,728 elements, 88,467 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
