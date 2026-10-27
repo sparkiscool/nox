@@ -98,3 +98,7 @@ it  31 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000
 it  31 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 5.0s
 it  32 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 5.1s
 it  32 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 5.1s
+it  33 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 4.5s
+it  33 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 4.5s
+it  34 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 3.8s
+it  34 beta    2 J  10.0016 vol 0.0192 (dil 0.0339 g +1.204) grey  8.0% ch 0.000 worst tube to 14 side a 574 3.8s
