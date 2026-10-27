@@ -314,3 +314,9 @@ build: 2 shells, volumes [260159.0, -0.0] mm3; dropped specks []; sealed cavitie
 build: 2 shells, volumes [260159.0, -0.0] mm3; dropped specks []; sealed cavities kept [0.0] mm3
 solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [195180.7], "necks": [], "drawn_not_in_main": [["0.0", 0.848, "erode 2.0"]], "thin_walls": [], "acute_edges": 17, "ok": false}
 solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [195180.7], "necks": [], "drawn_not_in_main": [["0.0", 0.848, "erode 2.0"]], "thin_walls": [], "acute_edges": 17, "ok": false}
+function check: {'skin_mm3': 139141.9, 'skin_missing_mm3': 37.06, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 139141.9, 'skin_missing_mm3': 37.06, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.37 in 'cage crash 7 [0.58, 0.58, -0.58] via node 18' at [32.1, 23.0, 6.7]
+strength: worst index 0.37 in 'cage crash 7 [0.58, 0.58, -0.58] via node 18' at [32.1, 23.0, 6.7]
+RESULT {"name": "overseer_arm_front", "solid_ok": false, "mass_g": 330.4, "worst": 0.366, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_front", "solid_ok": false, "mass_g": 330.4, "worst": 0.366, "function_ok": true, "bodies": 1}
