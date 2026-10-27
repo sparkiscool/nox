@@ -3,28 +3,28 @@
  "h": 2.0,
  "gen_cm3": 35.0,
  "coarse": {
-  "s_per_it": 5.8,
+  "s_per_it": 6.3,
   "cells": 24576,
   "design_cells": 7840,
   "cases": 239,
   "load_cases": 53,
   "backend": "direct",
-  "peak_gb": 2.34
+  "peak_gb": 2.35
  },
  "smoke_iterations": 3,
  "fine": {
-  "s_per_it": 88.7,
+  "s_per_it": 90.4,
   "cells": 196608,
   "design_cells": 66591,
   "cases": 197,
   "load_cases": 53,
   "backend": "direct",
-  "peak_gb": 10.9
+  "peak_gb": 11.13
  },
- "peak_gb": 10.9,
+ "peak_gb": 11.13,
  "wall_h": [
-  1.38,
-  3.32
+  1.41,
+  3.39
  ],
  "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
 }
