@@ -1,25 +1,27 @@
-"""Scout v3 layout v3 / cage v1 geodesic (27 Oct 2026): the Scout v3 drone (PR 94's latest layout: Bee35 carbon plate,
-props on top, receiver v3 + cartridge v6 under it, FC under the plate, Radxa and flow on the belly mount) with a geodesic
-shell cage formed to it, the Overseer cage v3 method (`nox/overseer/layout_v5.py`).
+"""Scout v3 layout v3 / cage v2 (27 Oct 2026): the Scout v3 drone (PR 94's latest layout: Bee35 carbon plate, props on top,
+receiver v3 + cartridge v6 under it, FC / UBEC / Radxa / flow on the belly mount) in a triangulated shell cage, the Overseer cage v3
+method (`nox/overseer/layout_v5.py`) with the Scout's own rod rules.
 
-Spark 27 Oct: "using the same design idea as the latest scout design make sure the bottom of the cage is the exact same as
-the overseer just that loop of rods directly under the battery so funnel is interchangeable, the scout still has one camera
-and we will keep the carbon base for the scout".
+Spark 27 Oct: "using the same design idea as the latest scout design make sure the bottom of the cage is the exact same as the
+overseer just that loop of rods directly under the battery so funnel is interchangeable, the scout still has one camera and we
+will keep the carbon base for the scout" (cage v1, `runs/scout_layout/v6/`); then "subtract the number of rods, these are all 3mm
+as well and also just divide the number of rods by half" and "dont worry about same rod legnth anymore" (cage v2).
 
-- Bottom ring: the Overseer's 8 opening ring nodes and 8 tubes, copied from `runs/overseer_layout/v5/cage_shell.json` at run
-  time, placed on the same datum: ring centre on the catch (the grip / tab line), ring plane 3 under the cartridge flat bottom
-  (the flat bottom sits at R 113 in every bay and at the drone for both packs, `dimensions.md` System box swap: latch). Same
-  nodes, same tubes, same height under the swap datum, so the funnel built round the Overseer's ring takes the Scout too.
-- The rest of the shell: a frequency 2 class-I geodesic formed to the Scout (props 12 off, the rest 3 off), mirror-exact.
-- One camera (front, horizon, landscape) outside the shell with nothing of the drone in its view, held from behind its view
-  on a printed boom off the plate nose, a guard bar over its top behind the lens (Overseer cage v3 rule, Spark 26 Oct).
-- The carbon base stays: the Bee35 plate carries the motors; 3 spokes per arm tip into the shell, bay ties from the receiver
-  to the ring.
+- Bottom ring: the Overseer's 8 opening ring nodes and 8 ring rods, read from `runs/overseer_layout/v5/cage_shell.json` at run
+  time, on the same datum (ring centre on the catch / grip line, plane 3 under the cartridge flat bottom); the ring nodes stay
+  Ø20 (the funnel contact), the rods are 3.0 like every Scout rod.
+- The shell (cage v2, pattern "free"): no geodesic spacing and any rod length; its nodes are corners of the drone's margin hull
+  grown by an offset (scanned), taken farthest-outside first in mirror pairs until the hull holds the whole drone; within the
+  rod cap (about half of cage v1's 123 rods) the most compact shell that balances on its own wins. Pattern "geodesic" (cage v1's
+  frequency 2, optionally thinned to SCOUT_NFREE nodes) is kept for the alternatives.
+- One camera (front, horizon, landscape) outside the shell with nothing of the drone in its view, on a braced boom off the
+  plate nose, a guard bar over its top behind the lens.
+- The carbon base stays; links (lean set, SCOUT_LEAN=1): 2 spokes per arm tip, tail bay ties, a tail core tie, camera braces.
+- Balance: the catch set slides aft of the thrust centre (scanned), the shell and camera rebuilt each time.
 
-python3 nox/scout/v3/layout_v3.py [out_dir]          (~3 min)       SCOUT_RING=own: the alternative ring round the Scout's own
-receiver (+30 a side, the Overseer's formula), not interchangeable; written to runs/scout_layout/v6/alt_own_ring/.
-Drone frame (PR 94): x nose, y left, z up, plate underside z 18.5, thrust centre x 0, tab line x 0. Numbers: `nox/dimensions.md`
-"System Scout v3".
+python3 nox/scout/v3/layout_v3.py [out_dir]          (~13 min)       env: SCOUT_PATTERN free|geodesic, SCOUT_NFREE, SCOUT_LEAN,
+SCOUT_OFFSETS, SCOUT_SHELL_CAP, SCOUT_RING=own (a ring round the Scout's own receiver), SCOUT_CAM_Z, SCOUT_DCS, SCOUT_OUT.
+Drone frame (PR 94): x nose, y left, z up, plate underside z 18.5, thrust centre x 0. Numbers: `nox/dimensions.md` "System Scout v3".
 """
 import math, os, sys, io, json
 import numpy as np, trimesh
@@ -29,7 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.pat
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 
 RING_MODE = os.environ.get("SCOUT_RING", "overseer")
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v6", "" if RING_MODE == "overseer" else "alt_own_ring")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v7", "" if RING_MODE == "overseer" else "alt_own_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")                # the Overseer cage v3 (ring source)
 LOG = io.StringIO()
@@ -41,14 +43,21 @@ def say(*a):
 
 # ---------------------------------------------------------------- numbers (C unless tagged; dimensions.md A / C / L / System Scout v3)
 MOTOR, PROP_R, PROP_Z, BLADE = 54.1, 44.45, 41.2, 4.0      # Bee35 hubs (P), Gemfan 3520 (P), prop plane (E), sweep ±4
-SHELL_R = 3.0                                              # 6 mm carbon tube (rule, Spark 26 / 27 Oct), 6/4
-SHELL_GPM = 1.55e-3 * math.pi / 4 * (6.0 ** 2 - 4.0 ** 2)  # 24.3 g/m (E)
+SHELL_R = 1.5                                              # 3.0 solid carbon, every Scout rod (Spark 27 Oct: "these are all 3mm")
+SHELL_GPM = 11.0e-3                                        # 11.0 g/m (C, G Carbon rods)
 ROD_R, ROD_GPM = 1.5, 11.0e-3                              # links 3.0 solid, 11.0 g/m (C)
-NODE_R, NODE_G = 10.15, 4.5                                # printed shell node round 6.3 sockets, Ø20 (E), 4.5 g (E), as the Overseer
+NODE_R, NODE_G = 6.0, 1.5                                  # printed shell node round 3.3 sockets, Ø12 (pad rule), 1.5 g (E)
+RING_NODE_R, RING_NODE_G = 10.15, 4.5                      # the shared ring nodes stay the Overseer's Ø20 (the funnel contact), 4.5 g (E)
 GUARD_NODE_R, GUARD_NODE_G = 5.0, 1.5                      # camera guard bar nodes (E)
 PROP_GAP, CAGE_GAP = 12.0, 3.0
 M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0
-FREQ = 2
+FREQ = int(os.environ.get("SCOUT_FREQ", 2))                # geodesic frequency
+PATTERN = os.environ.get("SCOUT_PATTERN", "free")           # free: nodes on the drone's own corners, any rod length (Spark 27 Oct); geodesic
+NDIR = int(os.environ.get("SCOUT_NDIR", 6))                # free pattern: directions the target is grown along (fewer = boxier corners)
+SHELL_CAP = int(os.environ.get("SCOUT_SHELL_CAP", 49))     # shell rods allowed: with the ~15 lean links, about half the 123 rods of cage v1 (Spark 27 Oct)
+OFFSETS = [float(x) for x in os.environ.get("SCOUT_OFFSETS", "16,20,24,28,30,32,36").split(",")]   # free pattern corner offsets scanned
+NFREE = int(os.environ.get("SCOUT_NFREE", 9))              # free shell nodes kept (Spark 27 Oct: half the rods; 0 = all of the geodesic)
+LEAN = os.environ.get("SCOUT_LEAN", "1") == "1"            # links: the essential set only (Spark 27 Oct: half the rods)
 BREAK_EVEN = 33.0
 CAM_HFOV, CAM_VFOV = 89.0, 73.0                            # DECXIN 2633V2 landscape (the Overseer's 73 x 89 turned, E)
 CAM_CONE = 55.0                                            # cage first gated outside this cone (diagonal half-angle 51 + 4)
@@ -203,7 +212,7 @@ def ring_nodes():
     # alternative: the Overseer's formula round the Scout's own receiver (+30 a side), 8 nodes, grown until chords clear
     zx, zy = (REC_B[1][0] - REC_B[0][0]) / 2 + 30.0, (REC_B[1][1] - REC_B[0][1]) / 2 + 30.0; cxr = REC_B[:, 0].mean(); k = 1.0
     while True:
-        a, b = (math.sqrt(2) * zx + NODE_R) * k, (math.sqrt(2) * zy + NODE_R) * k
+        a, b = (math.sqrt(2) * zx + RING_NODE_R) * k, (math.sqrt(2) * zy + RING_NODE_R) * k
         t = np.linspace(0, 2 * math.pi, 8, endpoint=False) + math.pi / 8
         R = np.stack([cxr + a * np.cos(t), b * np.sin(t), np.full(8, Z_O)], 1); ok = True
         for i in range(8):
@@ -237,14 +246,14 @@ def place_camera():
     box: shell estimate + camera + its guard bar), then the shortest boom from the plate nose"""
     best = None
     eqKR = ConvexHull(np.vstack([K, RING])).equations                # the camera body also outside the ring-to-target hull
-    env = np.vstack([K, RING - NODE_R, RING + NODE_R])
+    env = np.vstack([K, RING - RING_NODE_R, RING + RING_NODE_R])
     vol = lambda P: float(np.prod(P.max(0) - P.min(0))) / 1e6
     for Lz in np.arange(CAM_Z[0], CAM_Z[1] + 0.1, 2.0):
         for phi in (0.0, 20.0, 35.0, 50.0, 65.0, 80.0, 90.0):
             n3 = np.array([math.cos(math.radians(phi)), 0, math.sin(math.radians(phi))])
             for Lx in np.arange(70.0, 260.0, 1.0):
                 n2, lens = lower_plane(Lx, Lz)
-                if ((K - lens) @ n2).max() > -(LIM + SLACK) or ((RING - lens) @ n2).max() > -(NODE_R + 3.0): continue
+                if ((K - lens) @ n2).max() > -(LIM + SLACK) or ((RING - lens) @ n2).max() > -(RING_NODE_R + 3.0): continue
                 cb = cam_box(Lx, Lz); d_b = float((cb.vertices @ n3).min())
                 if (K @ n3).max() > d_b - LIM - SLACK: continue
                 if ((cb.vertices @ eqKR[:, :3].T + eqKR[:, 3]).max(1) < LIM + SLACK).any(): continue
@@ -333,7 +342,37 @@ def shell(START, DOME, SNAP=False):
         Pg = c0 + np.where(den > 1e-9, num / np.where(den > 1e-9, den, 1), np.inf).min(1)[:, None] * Dd
     ex, ey = np.ptp(RING[:, 0]) / 2, np.ptp(RING[:, 1]) / 2; rcx = RING[:, 0].mean()
     in_open = (((Pg[:, 0] - rcx) / (1.25 * ex)) ** 2 + (Pg[:, 1] / (1.25 * ey)) ** 2 < 1.0) & (Ug[:, 2] < -1e-6)
-    N = np.vstack([RING, Pg[~in_open]]); N[nR:, 2] = np.maximum(N[nR:, 2], Z_O + 1.0)
+    Pf, Uf = Pg[~in_open], Ug[~in_open]
+    if PATTERN == "free":
+        # free pattern (Spark 27 Oct: "dont worry about same rod length anymore"): no geodesic spacing, any rod length; the nodes
+        # are corners of the target grown by START mm (scanned), taken one at a time (a mirror pair, or one on the centre plane),
+        # the one farthest outside the hull so far first, until the hull of the ring and the nodes holds the whole target: a
+        # larger offset needs fewer nodes (fewer rods) for a slightly larger cage
+        Kd = np.vstack([K + START * d_ for d_ in fib(NDIR)]); Kd = Kd[ConvexHull(Kd).vertices]
+        C = behind(np.vstack([RING, Kd[Kd[:, 2] > Z_O + 1.0]]))[nR:]
+        C[np.abs(C[:, 1]) < 3.0, 1] = 0.0
+        sel = [C[int(np.argmax(C[:, 2] - 0.01 * np.abs(C[:, 1])))] * [1, 0, 1]]           # the top, on the centre plane
+        for _ in range(60):
+            h_ = ConvexHull(np.vstack([RING, sel]), qhull_options="QJ")
+            if (K @ h_.equations[:, :3].T + h_.equations[:, 3]).max() <= 0.05: break
+            v_ = (C @ h_.equations[:, :3].T + h_.equations[:, 3]).max(1)
+            c_ = C[int(np.argmax(v_))]
+            sel += [c_] if abs(c_[1]) < 3.0 else [c_, c_ * mir]
+        Pf = np.array(sel)
+    elif NFREE and len(Pf) > NFREE:
+        # half the rods (Spark 27 Oct): keep NFREE of the free geodesic nodes, mirror pairs together, spread by farthest-point
+        # sampling on the direction sphere from the top node (the pattern stays geodesic-spread, the cells grow)
+        units, seen_ = [], set()
+        for i in range(len(Uf)):
+            if i in seen_: continue
+            j = int(np.argmin(np.linalg.norm(Uf - Uf[i] * mir, axis=1)))
+            units.append([i] if j == i else [i, j]); seen_.update([i, j])
+        pick_ = [max(range(len(units)), key=lambda u: Uf[units[u][0], 2])]
+        while sum(len(units[u]) for u in pick_) < NFREE:
+            dmin = [min(np.linalg.norm(Uf[units[u][0]] - Uf[units[v][0]]) for v in pick_) if u not in pick_ else -1 for u in range(len(units))]
+            pick_.append(int(np.argmax(dmin)))
+        keep_ = [i for u in pick_ for i in units[u]]; Pf = Pf[keep_]
+    N = np.vstack([RING, Pf]); N[nR:, 2] = np.maximum(N[nR:, 2], Z_O + 1.0)
     dirs = lambda P: (P - c0) / np.linalg.norm(P - c0, axis=1)[:, None]
     N = sym(N, partners(N)); U = dirs(N)
     N, viol, U = convex(behind(N), U)
@@ -568,19 +607,20 @@ def attach(nodes, ring_ids, E=()):
         tip = np.array([mx, my, 18.5 - ROD_R])                # on its own side (docs/generative.md 0), props 12 off
         if my < 0: continue                                   # the -y arms are the mirrors
         ok = [k for k in range(len(nodes)) if side(nodes[k], np.sign(mx), np.sign(my)) and seg_band_dist(tip, nodes[k]) - ROD_R >= PROP_GAP]
-        got = pick(tip, ok, 3, 30.0, f"spoke {i + 1}")
-        if len(got) < 3: pick(tip, [k for k in ok if k not in got], 3 - len(got), 20.0, f"spoke {i + 1}x")
+        ns = 2 if LEAN else 3
+        got = pick(tip, ok, ns, 30.0, f"spoke {i + 1}")
+        if len(got) < ns: pick(tip, [k for k in ok if k not in got], ns - len(got), 20.0, f"spoke {i + 1}x")
     rb = REC_B                                               # bay ties: receiver bottom corners to the 2 nearest ring nodes (from inside, above the ring)
-    for sx in (1, -1):
+    for sx in ((-1,) if LEAN else (1, -1)):                # lean: the tail corners only (the nose end carries the camera boom)
         cn = np.array([rb[1][0] if sx > 0 else rb[0][0], rb[1][1], -34.0])
         ok = [k for k in ring_ids if side(nodes[k], sx, 1)]
-        pick(cn, ok, 2, 15.0, f"bay tie {sx:+d}+1")
+        pick(cn, ok, 1 if LEAN else 2, 15.0, f"bay tie {sx:+d}+1")
     pb = D["frame plate (Bee35 carbon)"][0].bounds           # core ties: 2 from each plate edge (underside) into the shell
-    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1)):
+    for nm, q0, sx, sy in (("nose", (pb[1][0] - 6.0, 0.0), 1, 0), ("tail", (pb[0][0] + 6.0, 0.0), -1, 0), ("left", (0.0, 44.0), 0, 1))[1:2 if LEAN else 3]:   # lean: the tail tie only
         q = np.array([q0[0], q0[1], 18.5 - ROD_R])
         ok = [k for k in range(len(nodes)) if (sx == 0 or sx * nodes[k][0] > 0) and (sy == 0 or sy * nodes[k][1] > 0)
               and seg_band_dist(q, nodes[k]) - ROD_R >= PROP_GAP]
-        pick(q, ok, 2, 25.0, f"core tie {nm}")
+        pick(q, ok, 1 if LEAN else 2, 25.0, f"core tie {nm}")
     # camera: a guard bar of 2 printed nodes over its top behind the lens, 2 struts each into the shell; the seat braced from its
     # back corners into the shell and from its lower corners to the front arm beams 30 out of the plate (a braced pyramid on the
     # core with the boom, not a stalk); the boom root lug at the plate nose is the printed fuse (requirement)
@@ -590,9 +630,9 @@ def attach(nodes, ring_ids, E=()):
     if views_clear(T[0], T[1], ROD_R):
         add("cam guard bar", T[0], T[1]); guard = T
         ok = [k for k in range(len(nodes)) if seg_band_dist(T[0], nodes[k]) - ROD_R >= PROP_GAP]
-        pick(T[0], ok, 2, 20.0, "cam guard strut 0")
+        pick(T[0], ok, 1 if LEAN else 2, 20.0, "cam guard strut 0")
     sz = CAM["seat_z"]; xs = CAM["Lx"] - CAM_D - 4.0
-    for lvl, zc in (("lo", sz[0] + ROD_R), ("hi", sz[1] - ROD_R)):
+    for lvl, zc in ((("lo", sz[0] + ROD_R), ("hi", sz[1] - ROD_R)) if not LEAN else ()):   # lean: the boom + the arm braces carry the seat
         c_ = np.array([xs, CAM_W / 2 - ROD_R, zc])
         ok = [k for k in range(len(nodes)) if nodes[k][1] > -1.0 and seg_band_dist(c_, nodes[k]) - ROD_R >= PROP_GAP]
         pick(c_, ok, 1, 0.0, f"cam brace {lvl}")
@@ -614,7 +654,7 @@ def masses(nodes, E, extra, guard):
     it.append(("wires", 20.0, D["FC"][0].bounding_box.centroid))
     for i, (a, b) in enumerate(E): it.append((f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2))
     for k, (p, q) in extra.items(): it.append((k, np.linalg.norm(np.subtract(q, p)) * ROD_GPM, (np.asarray(p) + np.asarray(q)) / 2))
-    for i, n in enumerate(nodes): it.append((f"node {i}", NODE_G, n))
+    for i, n in enumerate(nodes): it.append((f"node {i}", RING_NODE_G if i < nR else NODE_G, n))
     for i, n in enumerate(guard): it.append((f"guard node {i}", GUARD_NODE_G, n))
     return it
 
@@ -628,22 +668,32 @@ def run(DC):
     """the drone with the catch DC aft of the thrust centre, its shell scan (start x dome: the most compact valid shell sets
     the bar, the least prop shadow within 10 % volume / 3 % mass of it wins), links and masses"""
     build(DC); lines = []; cands = []
-    for START, DOME, SNAP in [(s_, d_, n_) for s_ in (0.0, 0.7, 0.85, 1.0) for d_ in (20.0, 40.0, 60.0) for n_ in SNAPS]:
+    combos = [(s_, d_, n_) for s_ in (0.0, 0.7, 0.85, 1.0) for d_ in (20.0, 40.0, 60.0) for n_ in SNAPS] if PATTERN != "free" else \
+        [(o_, 20.0, False) for o_ in OFFSETS]                 # free: START is the corner offset (mm), no dome, no prop snap
+    for START, DOME, SNAP in combos:
         if START == 0.0 and DOME > 20.0: continue                 # cast onto the target: the dome does not apply
         r = shell(START, DOME, SNAP)
         if r is None: lines.append(f"start {START} dome {DOME:.0f} snap {int(SNAP)}: invalid (no closed mirror shell)"); continue
         nodes, E, tris, viol = r
         pg = min(seg_band_dist(nodes[a], nodes[b]) for a, b in E) - SHELL_R
         vol = ConvexHull(nodes).volume / 1e6; sh = sum(np.linalg.norm(nodes[a] - nodes[b]) for a, b in E)
-        mass = sh * SHELL_GPM + NODE_G * len(nodes)
+        mass = sh * SHELL_GPM + NODE_G * (len(nodes) - nR) + RING_NODE_G * nR
         ok = viol <= 0.05 and pg >= PROP_GAP
         bt, bb = blockage(nodes, E, {}) if ok else (np.nan, np.nan)
-        lines.append(f"start {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: {len(nodes)} nodes, {len(E)} tubes, {vol:.1f} L, "
+        lines.append(f"{'offset' if PATTERN == 'free' else 'start'} {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: {len(nodes)} nodes, {len(E)} tubes, {vol:.1f} L, "
                      f"{np.ptp(nodes[:, 2]):.0f} tall, shell {mass:.0f} g, props {pg:.1f}, shell shadow {bt:.1f} / {bb:.1f} %")
         if ok: cands.append(dict(start=START, dome=DOME, snap=SNAP, vol=vol, mass=mass, block=bt + bb, r=r))
-    ref = min(cands, key=lambda c: c["vol"])
-    fit = [c for c in cands if c["vol"] <= 1.1 * ref["vol"] and c["mass"] <= 1.03 * ref["mass"]]
-    pick = min(fit, key=lambda c: c["block"])
+    if PATTERN == "free":                                     # half the rods (Spark 27 Oct): shells within the shell rod cap, the
+        cap_ = [c for c in cands if len(c["r"][1]) <= SHELL_CAP] or [min(cands, key=lambda c: len(c["r"][1]))]   # most compact,
+        for c in cap_:                                        # among the shells balanced on their own (x moment about the thrust
+            nd_, E_ = c["r"][0], c["r"][1]                    # centre under 400 g mm, ~0.6 mm of CG: a lopsided shell leaves the
+            c["mom"] = sum(np.linalg.norm(nd_[a] - nd_[b]) * SHELL_GPM * (nd_[a][0] + nd_[b][0]) / 2 for a, b in E_) + NODE_G * nd_[nR:, 0].sum()
+        bal_ = [c for c in cap_ if abs(c["mom"]) <= 400.0] or cap_   # catch shift unable to balance pack in and pack out together)
+        ref = pick = min(bal_, key=lambda c: c["vol"])
+    else:
+        ref = min(cands, key=lambda c: c["vol"])
+        fit = [c for c in cands if c["vol"] <= 1.1 * ref["vol"] and c["mass"] <= 1.03 * ref["mass"]]
+        pick = min(fit, key=lambda c: c["block"])
     nodes, E, tris, viol = pick["r"]
     lines.append(f"structure bar: start {ref['start']} dome {ref['dome']:.0f} ({ref['vol']:.1f} L, {ref['mass']:.0f} g); picked start "
                  f"{pick['start']} dome {pick['dome']:.0f} snap {int(pick['snap'])}")
@@ -675,7 +725,7 @@ BEST = min(runs, key=lambda d: runs[d]["bal"])
 R_ = run(BEST)                                                         # rebuild the globals for the pick
 DC = BEST; nodes, E, tris, viol, extra, guard, it, tot, cgv = (R_[k] for k in ("nodes", "E", "tris", "viol", "extra", "guard", "it", "tot", "cgv"))
 pick = R_["pick"]; ring_ids = list(range(nR))
-say(f"Scout v3 layout v3 / cage v1 geodesic; ring {RING_MODE}: {nR} nodes; balance: catch {DC:.1f} aft of the thrust centre; tab line x {TAB_X:.2f}, "
+say(f"Scout v3 layout v3 / cage v2 (pattern {PATTERN}, every rod 3 mm); ring {RING_MODE}: {nR} nodes; balance: catch {DC:.1f} aft of the thrust centre; tab line x {TAB_X:.2f}, "
     f"cartridge flat bottom z {CART_BOT:.2f}, ring plane z {Z_O:.2f} (Overseer: catch x {OV_CX:.1f}, cartridge bottom {OV_CB:.1f}, ring {RING_DZ:+.2f} under it)")
 say(f"camera: lens ({CAM['Lx']:.0f}, 0, {CAM['Lz']:.0f}), head plane tilt {CAM['phi']:.0f} deg, boom {CAM['boom']:.0f} from the plate nose "
     f"(lens z {CAM_Z[0]:.0f}..{CAM_Z[1]:.0f} x tilt 0..90: the shell target {LIM + SLACK:.1f} under its lower view plane and behind its back; "
@@ -701,8 +751,8 @@ short = [l for l in sh if l < BREAK_EVEN]
 kinds = {}
 for k_ in extra: kinds[" ".join(k_.split()[:2]).split(".")[0]] = kinds.get(" ".join(k_.split()[:2]).split(".")[0], 0) + 1
 say("links by kind: " + ", ".join(f"{k} {v}" for k, v in sorted(kinds.items())))
-say(f"carbon: shell {len(sh)} tubes 6/4, shortest {sh.min():.0f}" + (f" ({len(short)} under {BREAK_EVEN:.0f}: printed into the node)" if short else "")
-    + f"; links {len(rl)} rods 3.0, {sum(rl.values()) / 1000:.2f} m, shortest {min(rl.values()):.0f} ({min(rl, key=rl.get)})"
+say(f"carbon: shell {len(sh)} rods 3.0 solid, shortest {sh.min():.0f}" + (f" ({len(short)} under {BREAK_EVEN:.0f}: printed into the node)" if short else "")
+    + f"; links {len(rl)} rods 3.0; total {len(sh) + len(rl)} rods (cage v1: 123), {sum(rl.values()) / 1000:.2f} m, shortest {min(rl.values()):.0f} ({min(rl, key=rl.get)})"
     + (f"; printed (< {BREAK_EVEN:.0f}): " + ", ".join(f"{k} {v:.0f}" for k, v in rl.items() if v < BREAK_EVEN) if any(v < BREAK_EVEN for v in rl.values()) else ""))
 LL = list(extra.items()); lgap = (np.inf, "")
 for i_ in range(len(LL)):                                # link to link: no two rods through each other (interior 8..92 %)
@@ -747,9 +797,9 @@ say("flow (23 deg cone, straight down): checked (lines above list anything in vi
 BT, BB = blockage(nodes, E, extra)
 say(f"prop blockage (secondary to structure): {BT:.1f} % of the disks' thrust shadowed from above, {BB:.1f} % from below (plan shadow of tubes and links, "
     f"annulus 0.2..1 R weighted by r, E)")
-shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(rl.values()) * ROD_GPM
+shell_g = sh.sum() * SHELL_GPM + NODE_G * (len(nodes) - nR) + RING_NODE_G * nR; link_g = sum(rl.values()) * ROD_GPM
 t2, c2 = cg([x for x in it if not D.get(x[0], (0,) * 9)[8]])
-say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} + nodes {NODE_G * len(nodes):.0f}, E), links {link_g:.0f} g, guard nodes "
+say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} + nodes {NODE_G * (len(nodes) - nR) + RING_NODE_G * nR:.0f}, E), links {link_g:.0f} g, guard nodes "
     f"{GUARD_NODE_G * len(guard):.0f} g (C on E)")
 say(f"mass ~{tot:.0f} g (E), CG ({cgv[0]:.1f}, {cgv[1]:.1f}, {cgv[2]:.1f}) vs thrust centre (0, 0): {math.hypot(*cgv[:2]):.1f} off; pack + cartridge out: "
     f"{math.hypot(*c2[:2]):.1f} off ({t2:.0f} g); CG {PROP_Z - cgv[2]:.0f} under the prop plane")
@@ -762,7 +812,7 @@ if RING_MODE == "overseer":
     # the funnel bears on the outside of the Overseer's lower shell: a Scout tube inside the Overseer's tube-axis hull cannot reach
     # it; the margin per 20 mm band above the ring (the low band holds the tubes leaving the shared ring nodes)
     q = np.vstack([nodes[a] + np.linspace(0, 1, 80)[:, None] * (nodes[b] - nodes[a]) for a, b in E if not (a < nR and b < nR)])
-    q = q[np.linalg.norm(q[:, None, :] - nodes[None, :nR], axis=2).min(1) > NODE_R]          # off the shared ring nodes
+    q = q[np.linalg.norm(q[:, None, :] - nodes[None, :nR], axis=2).min(1) > RING_NODE_R]          # off the shared ring nodes
     dq = (-(q @ eo[:, :3].T + eo[:, 3])).min(1)
     for H in (20.0, 40.0, 60.0, 80.0):
         m_ = (q[:, 2] > Z_O + H - 20.0) & (q[:, 2] <= Z_O + H)
@@ -792,7 +842,7 @@ for n_, gm, _c in it:
         "links" if n_.split()[0] in ("spoke", "bay", "core", "cam") else n_
     grp[k] = grp.get(k, 0.0) + gm
 PARTS = [("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
-         ("cage shell nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, NODE_R).apply_translation(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
+         ("cage shell nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, RING_NODE_R if i < nR else NODE_R).apply_translation(n) for i, n in enumerate(nodes)]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
          ("spokes, bay ties, core ties, camera guard", trimesh.util.concatenate([rod(p, q) for p, q in extra.values()]), "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False)]
 if guard:
     PARTS.append(("camera guard nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, GUARD_NODE_R).apply_translation(g_) for g_ in guard]), "cage", False,
@@ -819,12 +869,12 @@ say(f"FC USB-C cable: from ({USB[0][0]:.1f}, {USB[0][1]:.1f}, {USB[0][2]:.1f}) a
     f"{math.degrees(math.acos(np.clip(USB[1] @ np.array([-0.7071, -0.7071, 0.0]), -1, 1))):.0f} deg off the tail-left diagonal, out through a cell (C)")
 say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
-if OUT == os.path.join(ROOT, "runs", "scout_layout", "v6", ""):
+if OUT == os.path.join(ROOT, "runs", "scout_layout", "v7", ""):
     from assembly import new as new_assembly
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
         p_ = dict(name=n_, role=r_, mesh=rel(os.path.join(PD, fname(n_))), mass_g=round(float(gm_), 2), tag=t_, owner="scout v3",
-                  version="layout v3 / cage v1 geodesic", source="nox/scout/v3/layout_v3.py")
+                  version="layout v3 / cage v2", source="nox/scout/v3/layout_v3.py")
         if n_ in ("cage shell tubes", "cage shell nodes", LINKS):
             k = {"cage shell tubes": "shell", "cage shell nodes": "nodes", LINKS: "links"}[n_]
             pref = {"shell": "shell", "nodes": "node "}[k] if k != "links" else None
@@ -858,8 +908,8 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v6", ""):
     openings.append(dict(part="camera", axis=[1.0, 0.0, 0.0], half_angle_deg=CAM_CONE, field=True,
                          note="Spark 26 Oct rule: the front camera outside the cage, nothing of the drone in its view; cage first gated outside this cone"))
     asm = new_assembly("Scout v3", "scout", asm_parts,
-                       note=("Layout v3 / cage v1 geodesic (27 Oct, Spark: the latest Scout layout (PR 94) with the Overseer's geodesic shell idea, the bottom "
-                             "ring exactly the Overseer's so the funnel is interchangeable, one camera, the carbon base kept) from nox/scout/v3/layout_v3.py. "
+                       note=("Layout v3 / cage v2 (27 Oct, Spark: the latest Scout layout (PR 94), a triangulated shell cage, the bottom ring exactly the "
+                             "Overseer's so the funnel is interchangeable, one camera, the carbon base kept; then every rod 3 mm, half the rods, any rod length) from nox/scout/v3/layout_v3.py. "
                              "Rough layout: C geometry on E sizes. Drone frame: x nose, y left, z up, plate underside 18.5, thrust centre and tab line x 0. "
                              "Left out: keep-alive contacts (the new funnel's), catch features, ESC (AIO)."),
                        cg_ref=[0.0, 0.0, PROP_Z], thrust_axis=[0, 0, 1], cg_tol_mm=3.0, cage_margin_mm=3.0, openings=openings, contact_pairs=contact,
