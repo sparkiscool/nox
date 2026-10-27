@@ -58,7 +58,7 @@ MOTOR, PROP_R, PROP_Z, BLADE = 54.1, 44.45, 41.2, 4.0      # Bee35 hubs (P), Gem
 SHELL_R = 1.5                                              # 3.0 solid carbon, every Scout rod (Spark 27 Oct: "these are all 3mm")
 SHELL_GPM = 11.0e-3                                        # 11.0 g/m (C, G Carbon rods)
 ROD_R, ROD_GPM = 1.5, 11.0e-3                              # links 3.0 solid, 11.0 g/m (C)
-NODE_R, NODE_G = 6.0, 1.5                                  # printed shell node round 3.3 sockets, Ø12 (pad rule), 1.5 g (E)
+NODE_R, NODE_G = 6.0, 1.5                                  # printed shell node round 3.1 sockets, Ø12 (pad rule), 1.5 g (E)
 RING_NODE_R, RING_NODE_G = 10.15, 4.5                      # the shared ring nodes stay the Overseer's Ø20 (the funnel contact), 4.5 g (E)
 GUARD_NODE_R, GUARD_NODE_G = 5.0, 1.5                      # camera guard bar nodes (E)
 PROP_GAP, CAGE_GAP = 12.0, 3.0
@@ -107,6 +107,7 @@ UBEC_Z = float(os.environ.get("SCOUT_UBEC_Z", 16.0))      # stand: the UBEC flat
 RADXA_T = 6.31                                             # board thickness over the parts (dimensions H, C from the STEP; 7.62 over the SD slot)
 WASH_X = -(MOTOR + PROP_R + 3.0)                           # behind this x nothing is under a rear disk (disk + 3)
 TB = 0.0                                                   # tail bay shift aft (scanned with the catch for the balance)
+LEN_W = float(os.environ.get("SCOUT_LEN_W", 0.01))         # balance-scan length term: 0.01 mm of CG per mm of cage length (DEFAULT: 30 mm buys 0.3)
 TAIL_BAY = os.environ.get("SCOUT_TAIL_BAY", "1") == "1"   # Radxa + UBEC in a tail bay behind the receiver (balance, race-car tail, Spark 27 Oct)
 PLATE_NOSE = np.array([60.0, 0.0, 20.25])                  # camera boom root on the plate nose (E, plate edge x ~65)
 BOOM = 10.0                                                # printed boom section 10 x 10 (E; braced to the arms, balance)
@@ -920,13 +921,20 @@ def attach(nodes, ring_ids, E=()):
 
 
 def masses(nodes, E, extra, guard):
-    it = [(n, D[n][3], D[n][0].bounding_box.centroid) for n in D]
+    it = [(n, D[n][3], ctr_(D[n][0])) for n in D]                    # true centroids (review 27 Oct: box centres put the receiver 4.85 off)
     it.append(("wires", 20.0, D["FC"][0].bounding_box.centroid))
     for i, (a, b) in enumerate(E): it.append((f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2))
     for k, (p, q) in extra.items(): it.append((k, np.linalg.norm(np.subtract(q, p)) * ROD_GPM, (np.asarray(p) + np.asarray(q)) / 2))
     for i, n in enumerate(nodes): it.append((f"node {i}", RING_NODE_G if i < nR else NODE_G, n))
     for i, n in enumerate(guard): it.append((f"guard node {i}", GUARD_NODE_G, n))
     return it
+
+
+def ctr_(m):
+    try:
+        if m.is_watertight and m.volume > 1e-6: return np.asarray(m.center_mass)
+    except Exception: pass
+    return np.asarray(m.bounding_box.centroid)
 
 
 def cg(it):
@@ -976,7 +984,8 @@ def run(DC):
     it = masses(nodes, E, extra, guard); tot, cgv = cg(it)
     t2, c2 = cg([x for x in it if not D.get(x[0], (0,) * 9)[8]])
     return dict(DC=DC, lines=lines, pick=pick, nodes=nodes, E=E, tris=tris, viol=viol, extra=extra, guard=guard, it=it, tot=tot, cgv=cgv,
-                t2=t2, c2=c2, bal=max(abs(cgv[0]), abs(c2[0])) + feas_(nodes, E, extra))
+                t2=t2, c2=c2, bal=max(math.hypot(cgv[0], cgv[1]), math.hypot(c2[0], c2[1])) + feas_(nodes, E, extra)
+                + LEN_W * max(0.0, float(np.ptp(nodes[:, 0])) - 320.0))      # the CG off the thrust axis (x and y), plus length (compact)
 
 
 def feas_(nodes, E, extra):
@@ -994,7 +1003,7 @@ os.makedirs(OUT, exist_ok=True)
 SNAPS = [bool(int(x)) for x in os.environ.get("SCOUT_SNAPS", "0,1").split(",")]
 DCS = [float(x) for x in os.environ.get("SCOUT_DCS", "0,2,4,6,8").split(",")]
 runs = {}
-TBS = [float(x) for x in os.environ.get("SCOUT_TBS", "20,25,30,35" if RADXA_POSE == "stand" else "0").split(",")]
+TBS = [float(x) for x in os.environ.get("SCOUT_TBS", "0,5,10,15,20,25,30,35,40" if RADXA_POSE == "stand" else "0").split(",")]
 best_tb = None                                                         # Spark 27 Oct: the CG in the middle of the props, pack in and out:
 for TB in TBS:                                                         # the tail bay shift and the catch together (two knobs, two CGs)
     runs = {}
@@ -1045,8 +1054,10 @@ if RING_MODE == "v5side":
         + (f"({', '.join(f'{a}-{b}' for a, b in nr_)})" if nr_ else "") + " (C)")
 if TAIL_BAY:                                                           # the rear prop wash (rule 8; Spark 27 Oct: the tail bay out of it): the
     wash_ = []                                                         # tail bay parts' plan points against every disk + 3 (under the props)
-    for n_ in ("Radxa Zero 3W", "UBEC"):
-        v_ = D[n_][0].vertices; v_ = np.vstack([v_, D[n_][0].sample(400)])
+    rb_ = D["Radxa Zero 3W"][0].bounds
+    plug_ = box(rb_[0][0] + 36.0, rb_[0][0] + 60.0, -5.0, 5.0, rb_[1][2], rb_[1][2] + 14.0)
+    for n_, m_ in (("Radxa Zero 3W", D["Radxa Zero 3W"][0]), ("UBEC", D["UBEC"][0]), ("Radxa plugs (keep clear)", plug_)):
+        v_ = m_.vertices; v_ = np.vstack([v_, m_.sample(400)])
         d_ = min(float((np.hypot(v_[:, 0] - mx, v_[:, 1] - my) - PROP_R).min()) for mx, my in MXY)
         wash_.append(f"{n_} {d_:+.1f}")
     say("tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): " + ", ".join(wash_) + " (C)")
