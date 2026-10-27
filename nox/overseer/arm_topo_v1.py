@@ -425,7 +425,7 @@ if __name__ == "__main__":
     ap.add_argument("--modes", default=None)
     ap.add_argument("--place", default=None)
     a = ap.parse_args()
-    h = a.h or (1.5 if a.which == "front" else 1.0)
+    h = a.h or (2.0 if a.which == "front" else 1.5)   # ~ min member / 3 (topo README); direct solver (27 Oct: h 1.5 / 1.0 fell to multigrid, ~10 min an iteration)
     gen = a.gen or (40.0 if a.which == "front" else 25.0)   # cm3 generated (E), generous (Spark 27 Oct); front rods carry the chords
     out = a.out or os.path.join(ROOT, "runs", f"overseer_arm_{a.which}", "v1")
     if a.setup:
