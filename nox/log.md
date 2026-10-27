@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms): front v5b smoke OOM'd (14 GB) on a sibling: threaded MKL Pardiso climbs past 6 GB in the run's early iterations at 240k dofs; MKL_NUM_THREADS=1 holds 3.2 GB (M, probe). Front reruns single-threaded (DEFAULT; alt h 2.5). Engine fix left to a topo session.
 - 27 Oct (Overseer arms): v5 stopped; v5b runs: L2 braces off the front arm (top-plate block, cage session), cage arm_loads.json (rear spoke node 2354 N, front 1013 N, F). Rear on this box, front in a sibling. `nox/overseer/arm_topo_v5b.py`
 - 27 Oct (Overseer arms, system pass after 3 strikes each): rear v4: solid PASS, 96 g, modes 277 Hz, flight 0.09, handling 0.35, cage crash 1.09. v5 front + rear: 6/4 carbon tube chords (bore 6.2, 20 sockets), rear shoulders, solid root, flanges; braces-to-core asked of the cage. `nox/overseer/arm_topo_v5.py`
 - 27 Oct (Overseer arms): front v3 FAIL (strike 3: v1 unchecked, v2, v3): solid (5 walls 1.1..1.5), 165 g, modes 104 / 123 Hz, cage crash 1.94, handling 0.65; rods OK; bed fits on the diagonal (168 square, C). Back to the system pass: cage loads (front tip 1.1 kN, braces 0.9 kN) vs 3.0 rod chords. Rear v4 running here (its box never started).
