@@ -62,7 +62,7 @@ feet = [tuple(f) for f in r["feet_xy"]]
 fig2, axs = plt.subplots(1, 3, figsize=(16, 6), facecolor="white")
 T_ = ["A (chosen): keel hub in the hub deck, flow clip on the 2 front screws\n2 pieces, 6 M3; front 4 feet alone carry <= 212 N a bolt (both keels push)",
       "B: separate front block for the keels on (96, ±17) + (60, ±17), deck as v1\n3 pieces, 8 M3; (60, ±17) heads land in the slot's reserved top",
-      "C: flow on the deck, looking down through the plate\nno plate opening clears its 42° cone; under the plate the slot blocks it aft of x 91"]
+      "C: flow on the deck, looking down through the plate\nno plate opening clears its 42° cone;\nunder the plate the slot blocks it aft of x 91"]
 for k, ax in enumerate(axs):
     patch(ax, plate2, "#d7dbe1"); patch(ax, slot2, "none", "#777", 1, 1.2, "--")
     if k in (0, 2): patch(ax, deck2, "#e8833a")

@@ -13,7 +13,7 @@ Script `nox/overseer/core_v2.py`, pictures `nox/overseer/core_v2_view.py` -> `pr
 ## Alternatives weighed
 - B: a separate front block for the keels on (96, ±17) + (60, ±17), deck as v1: 3 pieces, 8 M3, 4 bolts within 36 of each keel root; but (60, ±17) heads land in the slot's reserved top. A now takes B's strength in one piece: 4 front feet (96, ±17) + (65, ±22.5) triangulated, all outside the slot.
 - C: flow on the deck, looking down through the plate: the plate has no opening near the front that clears a 42° cone, and under the plate the slot blocks any view aft of x 92. Rejected.
-- Keel bolts (both keels push 387 N, F): rigid deck 128 N a bolt over the 6; compliant-deck bound (the front 4 feet alone) 212 N a bolt (E). An M3 insert in PETG holds ~600 N pull-out (E); the Ø3.5 front holes slip 0.25 radial, so the joint is friction-held by M3 preload (~1.5 kN x 0.2 = 300 N a bolt, E) above 212. The topology run reports the FE bolt forces.
+- Keel bolts (both keels push 387 N, F): rigid deck 128 N a bolt over the 6; compliant-deck bound (the front 4 feet alone) 212 N a bolt (E). Preload is capped by the insert's ~600 N pull-out (E), so friction holds ~120 N a bolt (x 0.2): flight loads (keels <= ~40 N, E) stay in friction; a crash slips the Ø3.5 front holes' 0.25 radial play and runs in bearing, ~34 MPa on the carbon plate and ~9 MPa on the insert (E), within both. DEFAULT: accept the 0.25 play (alternative: ream the two front holes to Ø3.1 is not possible, a sleeve Ø3.5/3.0 is). The topology run reports the FE bolt forces.
 
 ## Checks (C on E)
 x arms, Pi, bays, stack, slot: 0 mm³; flow view clear; access 35/35; keel tubes inside the bores (cut in the run). Fit FAIL 26.5 mm³: the flow clip's nose and the cage's parked front core-tie root (100.5, 0, -1) (body nodes parked by Spark; asked the cage to keep off). Probes FAIL at -X (slot unshielded) and mass 147 % are the cage's / whole drone's, as in v1.
@@ -27,3 +27,9 @@ x arms, Pi, bays, stack, slot: 0 mm³; flow view clear; access 35/35; keel tubes
 6. Clip mass 5.0 g (M) on its 5 g slot.
 7. Cage ask carries the numbers (nose tie root 98.1..102.9, z -3.9..1.9 vs MTF-02P to x 104.8, clip to x 106.8); fallback on our side (sensor turned 90° at x 92) kept in reserve.
 Smoke (CLAUDE.md Measure before quoting) found two setup faults before any run: the keel bosses had no room to be joined (hub room x 80..118, |y| 20, z 0..16 opened) and the zip-tie tunnels cut the deck in two at x 68 (now channels on the plate face, 4.0 above).
+
+Re-review 27 Oct: PASS. Nits fixed: bearing case above, previews `runs/overseer_core_coupons/v2/*_preview.png`, cage ask numbers (clip to x 107.8, 28.0 mm³), C title wrapped, docstring feet.
+
+## Print files (solid_check PASS on each, print_orient)
+- `print/overseer_flow_clip_v1.stl`: 5.0 g, floor down, bed 507 mm², overhang 234 mm², 9.8 tall; preview `runs/overseer_core_coupons/v2/overseer_flow_clip_v1_preview.png`
+- `print/overseer_core_coupon_keel_hub_v2.stl`: 12.0 g, plate face down, bed 869 mm², overhang 653 mm² (the bosses past the seats: tree supports), 17.6 tall; preview `runs/overseer_core_coupons/v2/overseer_core_coupon_keel_hub_v2_preview.png`

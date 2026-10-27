@@ -8,11 +8,11 @@ generate the part thats on the battery, the drone side just have an empty rectan
 v2 (from v1 round 5, PR 123):
   FC stack   unchanged: MicoAir743-Lite on a 4-in-1 ESC straight on the top plate, turned 45° into the plate's slots, M3 studs.
   hub deck   PETG on the bottom plate, now one piece with the keel front hub: 6 feet, M3 x 8 up from under the plate into Ø4.0
-             heat-set inserts in the feet ((24, ±36.5), (-65, ±22.5) Ø3.1 and (96, ±17) Ø3.5, every one a 360° hole in the STEP);
+             heat-set inserts in the feet ((-24, ±36.5), (65, ±22.5) Ø3.1 and (96, ±17) Ø3.5, every one a 360° hole in the STEP, every head outside the slot);
              the Pi 5 on 4 posts, the UBEC + buck bays on the front wing, and 2 keel sockets (6.2 x 15, Spark 27 Oct coupons) on the
              head's keel roots (96, ±12, 8) aimed at its lugs, so the L2 head's keels land on the core (layout v5 links)
   flow clip  PETG under the front wing: the MTF-02P pocket (lens down, ahead of the battery slot so its 42° view clears it),
-             clamped by the 2 front feet's screws (no screws of its own)
+             clamped under its 3.0 flange by the 2 front feet's screws (no screws of its own)
   battery    the drone side is an empty rectangular slot (the receiver v2 envelope in pose, the latch set's masses kept for
              balance and loads); no sled, nothing generated there until the latch is designed
 Every screw goes straight in with a screwdriver in assembly order. Not this session's: arms, cage nodes and tubes (the keels'
