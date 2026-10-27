@@ -31,21 +31,41 @@ U_ROOT = (58.0, 75.0)                 # root block along the diagonal (O: inner 
 V_ROOT = 21.0
 TOP_INS = [(63.17, 15.0), (63.17, -15.0)]      # M3 into the top plate (O, derived)
 BOT_INS = [(63.74, 10.0), (63.74, -10.0)]      # M3 into the bottom plate (O, derived)
-INS_D, INS_DEPTH, BOSS_D, BOSS_H = 4.0, 7.0, 12.0, 9.0   # M3 heat-set insert hole (O), boss Ø12 (attachment rule), 9 tall
-PAD_T = 6.0                           # contact pads and motor pad (README: plates >= 6 for the gate's 2 mm core)
+INS_D, INS_DEPTH, BOSS_D = 4.0, 7.0, 12.0      # M3 heat-set insert hole (O), boss Ø12 (attachment rule)
+ROOT_PAD_T = 9.0                      # root contact pads 9 thick: the insert depth + 2, and room for the chord bores
+PAD_T = 6.0                           # motor pad (README: plates >= 6 for the gate's 2 mm core)
 MOTOR_R_PAD = 18.0                    # motor pad Ø36 (O v0 pad)
-MOTOR_HOLES = [(8.0, 45.0), (8.0, 225.0), (9.5, 135.0), (9.5, 315.0)]   # X2216: pairs on 16 and 19, 45° to the leads (M)
-SHAFT_D, POCKET_R, POCKET_WALL, POCKET_H = 10.5, 13.5, 3.5, 9.0          # stock bore Ø10.5 (M); heads at r 9.5 + 2.85
+MOTOR_SLOTS = (8.0, 9.5)              # X2216 M3 pairs on 16 and 19 (M): a radial slot r 8 .. 9.5 on each 45° line, so the
+MOTOR_SLOT_DEG = (45.0, 135.0, 225.0, 315.0)   # pad takes the motor either hand (the right arms are mirrors) with its leads
+SHAFT_D, POCKET_R, POCKET_WALL, POCKET_H = 10.5, 13.5, 3.5, 9.0          # to the root; bore Ø10.5 (M); heads at r 9.5 + 2.85
 MOTOR_HOLE_D = 3.2
 ENV_R_TIP = 20.0                      # plan envelope round the motor (pad 18 + 2)
 CLEAR = 1.0                           # off the hub electronics and the keel hub
 MOTOR_DEG = {"front": 45.0, "rear": 135.0}     # arm 1 / arm 2 diagonal (left side)
 
+# carbon chords (front pair only; concept review 27 Oct: PETG alone tops out near the mode target on the 179 front arm,
+# and a modal check of a plain 30 wide box beam read its first mode lateral at ~130 Hz). A tapered space frame: 4 x 3.0
+# carbon rods (hard rule), top and bottom on each side, from two shoulders beside the root (arm frame x 25, y ±35, outside
+# both plates) to y ±12 beside the motor pocket; bore 3.3 (OD + 0.3), open at the shoulder end (the rod slides in from
+# there and is epoxied), blind at the motor end inside the pocket wall. PETG sleeves (skin round each bore) and the
+# topology webs, root and pad join them.
+ROD_D, ROD_BORE = 3.0, 3.3
+SHOULDER = {"front": (25.0, 35.0, 9.0)}              # arm-frame x, |y|, plan radius of the shoulder envelope disc
+ROD_TIP = (15.0, 12.0)                               # rod end: x = L - 15, |y| 12 (r 19.2 from the motor axis, in the wall)
+ROD_Z = (41.0, 4.0)                                  # top and bottom rod centres (sleeve flat to the top / bottom face)
+CHORD_SKIN = 2.65                     # sleeve wall round the bore (>= skin 2.5)
+E_CARBON = 120000.0                   # MPa, pultruded 3.0 rod along its axis (E)
+RHO_CARBON = 1.55                     # g/cm3 (E)
+
+# ESC (model open, Spark): on the arm's flat top in the prop wash, 2 zip ties round the beam (DEFAULT, E 25 g, 45 x 25 x 8)
+ESC_KG, ESC_X, ESC_ZC = 0.025, {"front": (50.0, 100.0), "rear": (28.0, 68.0)}, 49.0
+ESC_HALF_W = 12.0
+
 # loads (dimensions.md "System Overseer: arms", E)
 THRUST_N = 21.0                       # 1650 gf at 14.8 V (C) x (16.8 / 14.8)^2 on a full pack = 2.13 kgf
 YAW_NM = 0.5                          # motor reaction at full thrust on a full pack, both signs (DShot braking)
 GYRO_NM = 0.2                         # prop gyroscopic moment, 5.4e-5 kg m2 x 995 rad/s x 3 rad/s + margin
-TIP_KG = 0.121                        # motor 81 + prop 10 + screws 5 + ESC 25 lumped at the motor (conservative)
+TIP_KG = 0.096                        # motor 81 (M) + prop 10 + screws 5 at the motor CG
 TIP_Z = 60.0                          # tip mass CG height (motor body mid 58, prop 82)
 LAT_G, LAND_G, CRASH_G, HANDLE_N = 2.0, 6.0, 35.0, 50.0   # dimensions L
 
@@ -108,8 +128,32 @@ def keepouts():
     return out
 
 
+def cylx(x0, x1, y, z, r, n=32):
+    return mf.Manifold.cylinder(x1 - x0, r, r, n).rotate([0.0, 90.0, 0.0]).translate([x0, y, z])
+
+
+def chords(which, F):
+    """arm-frame rods: (p0, p1) 3D end points, p0 at the shoulder (open end), p1 blind in the motor pocket wall"""
+    if which not in SHOULDER:
+        return []
+    xs, ys, _ = SHOULDER[which]
+    xt, yt = F["L"] - ROD_TIP[0], ROD_TIP[1]
+    return [(np.array([xs, sy * ys, z]), np.array([xt, sy * yt, z])) for sy in (1, -1) for z in ROD_Z]
+
+
+def rod_m(p0, p1, r, back=0.0, n=32):
+    """cylinder of radius r from p0 - back along the axis to p1"""
+    d = p1 - p0
+    L = float(np.linalg.norm(d))
+    u = d / L
+    yaw = math.degrees(math.atan2(u[1], u[0]))
+    pitch = math.degrees(math.atan2(-u[2], math.hypot(u[0], u[1])))
+    c = mf.Manifold.cylinder(L + back, r, r, n).rotate([0.0, 90.0, 0.0]).translate([-back, 0.0, 0.0])
+    return c.rotate([0.0, pitch, 0.0]).rotate([0.0, 0.0, yaw]).translate(p0.tolist())
+
+
 def bodies(which):
-    """everything in the drone frame (left arm), then mapped to the arm frame"""
+    """everything in the drone frame (left arm), mapped to the arm frame; then the chords, in the arm frame"""
     F = frame(which)
     d, M = F["d"], F["M"]
     u0, u1 = U_ROOT
@@ -122,29 +166,33 @@ def bodies(which):
     tip = cyl(M[0], M[1], 0.0, ROOT_H, ENV_R_TIP, 96)
     env = (root + tip).hull() - ko
 
-    # drawn: plate contact pads with insert bosses, motor pad with the pocket wall
-    pad_top = (diag(box(u0, u1, -V_ROOT, V_ROOT, ROOT_H - PAD_T, ROOT_H), d) ^ top_fp)
-    pad_bot = (diag(box(u0, u1, -V_ROOT, V_ROOT, 0.0, PAD_T), d) ^ bot_fp)
+    # drawn: plate contact pads with insert bosses (held by the plates), motor pad with the pocket wall
+    pad_top = (diag(box(u0, u1, -V_ROOT, V_ROOT, ROOT_H - ROOT_PAD_T, ROOT_H), d) ^ top_fp)
+    pad_bot = (diag(box(u0, u1, -V_ROOT, V_ROOT, 0.0, ROOT_PAD_T), d) ^ bot_fp)
     for u, v in TOP_INS:
-        pad_top += diag(cyl(u, v, ROOT_H - BOSS_H, ROOT_H, BOSS_D / 2), d)
+        pad_top += diag(cyl(u, v, ROOT_H - ROOT_PAD_T, ROOT_H, BOSS_D / 2), d)
     for u, v in BOT_INS:
-        pad_bot += diag(cyl(u, v, 0.0, BOSS_H, BOSS_D / 2), d)
+        pad_bot += diag(cyl(u, v, 0.0, ROOT_PAD_T, BOSS_D / 2), d)
     pad_top -= ko
     pad_bot -= ko
     mpad = cyl(M[0], M[1], ROOT_H - PAD_T, ROOT_H, MOTOR_R_PAD, 96)
     mwall = cyl(M[0], M[1], ROOT_H - PAD_T - POCKET_H, ROOT_H - PAD_T, POCKET_R + POCKET_WALL, 96)
-    drawn = pad_top + pad_bot + mpad + mwall
 
     # cuts
     cuts = ko
+    bosses = mf.Manifold()
     for u, v in TOP_INS:
         cuts += diag(cyl(u, v, ROOT_H - INS_DEPTH, ROOT_H + 1, INS_D / 2, 32), d)
+        bosses += diag(cyl(u, v, ROOT_H - INS_DEPTH, ROOT_H, INS_D / 2 + 1.5, 32), d)
     for u, v in BOT_INS:
         cuts += diag(cyl(u, v, -1.0, INS_DEPTH, INS_D / 2, 32), d)
+        bosses += diag(cyl(u, v, 0.0, INS_DEPTH, INS_D / 2 + 1.5, 32), d)
     lead = math.degrees(math.atan2(*(F["R0"] - M)[::-1]))          # motor leads point back to the root
-    for r, a in MOTOR_HOLES:
-        aa = math.radians(lead + a)
-        cuts += cyl(M[0] + r * math.cos(aa), M[1] + r * math.sin(aa), ROOT_H - PAD_T - 1, ROOT_H + 1, MOTOR_HOLE_D / 2, 24)
+    for ang in MOTOR_SLOT_DEG:
+        aa = math.radians(lead + ang)
+        ends = [cyl(M[0] + r * math.cos(aa), M[1] + r * math.sin(aa), ROOT_H - PAD_T - 1, ROOT_H + 1, MOTOR_HOLE_D / 2, 24)
+                for r in MOTOR_SLOTS]
+        cuts += (ends[0] + ends[1]).hull()
     cuts += cyl(M[0], M[1], ROOT_H - PAD_T - 1, ROOT_H + 1, SHAFT_D / 2, 48)
     cuts += cyl(M[0], M[1], -1.0, ROOT_H - PAD_T, POCKET_R, 96)       # screw heads + key from below, open at the bottom
 
@@ -153,31 +201,55 @@ def bodies(which):
     sup_bot = diag(box(u0, u1, -V_ROOT, V_ROOT, -0.5, 1.0), d) ^ bot_fp
     sup = (sup_top + sup_bot) - ko
     load = mpad - cyl(M[0], M[1], ROOT_H - PAD_T - 1, ROOT_H + 1, SHAFT_D / 2 + 0.5, 48)
-    B = dict(env=env, drawn=drawn, cuts=cuts, sup=sup, load=load)
-    return {k: to_arm(v, F) for k, v in B.items()}, F
+    B = {k: to_arm(v, F) for k, v in dict(env=env, pads=pad_top + pad_bot, mpad=mpad + mwall, cuts=cuts, sup=sup,
+                                         bosses=bosses, load=load, ko=ko).items()}
+    if which in SHOULDER:                       # the plan envelope widens to the two shoulders (arm frame)
+        xs, ys, rs = SHOULDER[which]
+        sh = cyl(xs, ys, 0.0, ROOT_H, rs) + cyl(xs, -ys, 0.0, ROOT_H, rs)
+        B["env"] = (B["env"] + sh).hull() - B["ko"]
+
+    # chords (arm frame): a sleeve per rod (skin round the bore, flat to the top / bottom face), bore open past the shoulder
+    rods = mf.Manifold()
+    sleeves = mf.Manifold()
+    r = ROD_BORE / 2 + CHORD_SKIN
+    for p0, p1 in chords(which, F):
+        rods += rod_m(p0, p1, ROD_D / 2)
+        B["cuts"] += rod_m(p0, p1, ROD_BORE / 2, back=30.0)
+        sl = rod_m(p0, p1, r, n=48)
+        flat = p0[2] > ROOT_H / 2
+        sl += (sl + sl.translate([0.0, 0.0, 10.0 if flat else -10.0])).hull()
+        sleeves += sl ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+    B["rods"] = rods
+    x0e, x1e = ESC_X[which]
+    deck = box(x0e, x1e, -ESC_HALF_W, ESC_HALF_W, ROOT_H - PAD_T, ROOT_H)  # ESC seat: flat top (the bed face)
+    B["esc"] = deck
+    B["drawn"] = B["pads"] + B["mpad"] + sleeves + deck
+    return B, F
 
 
-def rigid_case(p, name, region, point, force, moment=(0.0, 0.0, 0.0), cls="flight", accel=None):
-    """force at `point` (arm frame) and a moment, carried by the region's nodes as a rigid link: every node gets
+def rigid_case(p, name, parts, cls="flight", accel=None, support="default"):
+    """parts: [(region, point, force, moment)], each carried by its region's nodes as a rigid link: every node gets
     F / n + (J^-1 M_c) x r, so the resultant and the moment about the node centroid are exact"""
     from topo.part import LoadCase
-    el = p.elems(region, p.solid | p.design, what=f"load {name}")
-    nd = p.nodes_of(el)
-    nx, ny, nz = p.nshape
-    i, j, k = np.unravel_index(nd, p.nshape)
-    X = np.stack([p.origin[0] + i * p.h, p.origin[1] + j * p.h, p.origin[2] + k * p.h], 1)
-    c = X.mean(0)
-    r = X - c
-    f = np.asarray(force, float)
-    Mc = np.asarray(moment, float) + np.cross(np.asarray(point, float) - c, f)
-    J = np.eye(3) * (r * r).sum() - r.T @ r
-    w = np.linalg.solve(J, Mc)
-    fn = f / len(nd) + np.cross(w, r)
     Fv = np.zeros(p.ndof)
-    for a in range(3):
-        Fv[3 * nd + a] = fn[:, a]
-    p.cases.append(LoadCase(name, Fv, cls=cls, support="default",
-                            accel=None if accel is None else np.asarray(accel, float), nodes=nd))
+    alln = []
+    for region, point, force, moment in parts:
+        el = p.elems(region, p.solid | p.design, what=f"load {name}")
+        nd = p.nodes_of(el)
+        i, j, k = np.unravel_index(nd, p.nshape)
+        X = np.stack([p.origin[0] + i * p.h, p.origin[1] + j * p.h, p.origin[2] + k * p.h], 1)
+        c = X.mean(0)
+        r = X - c
+        f = np.asarray(force, float)
+        Mc = np.asarray(moment, float) + np.cross(np.asarray(point, float) - c, f)
+        J = np.eye(3) * (r * r).sum() - r.T @ r
+        w = np.linalg.solve(J, Mc)
+        fn = f / len(nd) + np.cross(w, r)
+        for a in range(3):
+            Fv[3 * nd + a] += fn[:, a]
+        alln.append(nd)
+    p.cases.append(LoadCase(name, Fv, cls=cls, support=support,
+                            accel=None if accel is None else np.asarray(accel, float), nodes=np.unique(np.concatenate(alln))))
 
 
 def setup_for(which):
@@ -187,27 +259,36 @@ def setup_for(which):
         B, F = bodies(which)
         p = Part(f"overseer_arm_{which}", h, B["drawn"], B["cuts"], B["env"], build="-z", material="PETG")
         p.support("default", B["sup"])
+        p.support("bosses", B["bosses"])        # review 27 Oct: the joint as 4 inserts only (no face contact)
         tipc = np.array([F["L"], 0.0, TIP_Z])
-        W = TIP_KG * G
+        escc = np.array([0.5 * sum(ESC_X[which]), 0.0, ESC_ZC])
+        W, We = TIP_KG * G, ESC_KG * G
         ex, ey, ez = np.eye(3)
+        Z = np.zeros(3)
+
+        def masses(gvec, extra_f=Z, extra_m=Z):
+            return [(B["load"], tipc, W * gvec + extra_f, extra_m), (B["esc"], escc, We * gvec, Z)]
         # flight: max thrust with the yaw reaction both ways; with 2 g lateral and the gyro moment in 4 directions
         for sgn, nm in ((1, "+"), (-1, "-")):
-            rigid_case(p, f"max thrust {THRUST_N:.0f} N + yaw {nm}{YAW_NM} Nm", B["load"], tipc, THRUST_N * ez,
-                       sgn * YAW_NM * ez, cls="flight")
+            rigid_case(p, f"max thrust {THRUST_N:.0f} N + yaw {nm}{YAW_NM} Nm", masses(Z, THRUST_N * ez, sgn * YAW_NM * ez))
         for v, nm, gax in ((ex, "+x radial", ey), (-ex, "-x radial", -ey), (ey, "+y side", ex), (-ey, "-y side", -ex)):
-            rigid_case(p, f"max thrust + {LAT_G:.0f} g {nm} + gyro", B["load"], tipc, THRUST_N * ez + LAT_G * W * v,
-                       GYRO_NM * gax + YAW_NM * ez, cls="flight", accel=LAT_G * v)
-        rigid_case(p, f"landing {LAND_G:.0f} g", B["load"], tipc, -LAND_G * W * ez, cls="flight", accel=-LAND_G * ez)
-        # crash: the tip masses' own inertia at 35 g in 14 directions (the cage stops the drone)
+            rigid_case(p, f"max thrust + {LAT_G:.0f} g {nm} + gyro", masses(LAT_G * v, THRUST_N * ez, GYRO_NM * gax + YAW_NM * ez),
+                       accel=LAT_G * v)
+        rigid_case(p, f"landing {LAND_G:.0f} g", masses(-LAND_G * ez), accel=-LAND_G * ez)
+        # crash: the motor's and the ESC's own inertia at 35 g in 14 directions (the cage stops the drone)
         dirs = [ex, -ex, ey, -ey, ez, -ez] + [np.array((a, b, c_)) / math.sqrt(3) for a in (1, -1) for b in (1, -1)
                                                for c_ in (1, -1)]
         for k_, v in enumerate(dirs):
-            rigid_case(p, f"crash {CRASH_G:.0f} g dir {k_}", B["load"], tipc, CRASH_G * W * v, cls="crash",
-                       accel=CRASH_G * v)
+            rigid_case(p, f"crash {CRASH_G:.0f} g dir {k_}", masses(CRASH_G * v), cls="crash", accel=CRASH_G * v)
         # handling: 50 N on the motor pad, 6 directions
+        padc = np.array([F["L"], 0.0, ROOT_H])
         for v, nm in ((ex, "+x"), (-ex, "-x"), (ey, "+y"), (-ey, "-y"), (ez, "+z"), (-ez, "-z")):
-            rigid_case(p, f"handling {HANDLE_N:.0f} N {nm}", B["load"], np.array([F["L"], 0.0, ROOT_H]), HANDLE_N * v,
-                       cls="misuse")
+            rigid_case(p, f"handling {HANDLE_N:.0f} N {nm}", [(B["load"], padc, HANDLE_N * v, Z)], cls="misuse")
+        # the same joint held by the 4 inserts only (review 27 Oct): the worst-looking cases again
+        rigid_case(p, "max thrust + yaw [inserts only]", masses(Z, THRUST_N * ez, YAW_NM * ez), support="bosses")
+        for v, nm in ((ez, "+z"), (-ez, "-z"), (ey, "+y"), (-ey, "-y")):
+            rigid_case(p, f"handling {HANDLE_N:.0f} N {nm} [inserts only]", [(B["load"], padc, HANDLE_N * v, Z)], cls="misuse",
+                       support="bosses")
         return p
     return setup
 
@@ -220,12 +301,11 @@ def arm_to_drone(t, F, mirror=False):
     t.apply_transform(T)
     if mirror:
         t.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0]))
-        t.invert()
     return t
 
 
 # ------------------------------------------------------------------------------------------------- first modes
-def modes(which, mesh_path, h=1.25, n=4, log=print):
+def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     """first modes (Hz, E) of the built arm, fixed at the two plate faces, with the motor + prop (96 g) as a stiff body
     on the pad and the ESC (25 g) on the beam at 40 % of its length. Hex8 voxel FE at pitch h, PETG transversely
     isotropic (build z), lumped masses, shift-invert Lanczos."""
@@ -244,13 +324,28 @@ def modes(which, mesh_path, h=1.25, n=4, log=print):
     solid = voxelise(arm, *ax)
     X, Y, Z = np.meshgrid(*ax, indexing="ij")
     motor = ((X - F["L"]) ** 2 + Y ** 2 <= 13.85 ** 2) & (Z > ROOT_H) & (Z < 75.0)
+    rod = np.zeros(shape, bool)
+    P = np.stack([X, Y, Z], -1)
+    for p0, p1 in chords(which, F):
+        d = p1 - p0; Ln = np.linalg.norm(d); u = d / Ln
+        t = (P - p0) @ u
+        rod |= (np.linalg.norm(P - p0 - t[..., None] * u, axis=-1) <= ROD_D / 2) & (t >= 0) & (t <= Ln)
+    solid &= ~rod
     mat = MATERIALS["PETG"]
     C = stiffness(mat, 2)
     KE, _ = hex_ke(h, C)
-    on = (solid | motor).ravel()
-    Ee = np.where(motor.ravel(), 50.0, 1.0)[on]                  # motor + prop stiff (x50 PETG)
+    from scipy import ndimage as ndi
+    on3 = solid | motor | rod
+    lab, nlab = ndi.label(on3, np.ones((3, 3, 3), bool))
+    big = np.argmax(np.bincount(lab.ravel())[1:]) + 1
+    on = (lab == big).ravel()                                    # the connected arm (voxel specks dropped)
+    # rods: carbon along x; the voxel cross-section scaled to the real Ø3 area
+    nrod = max(rod.sum(), 1)
+    rod_len = sum(float(np.linalg.norm(p1 - p0)) for p0, p1 in chords(which, F))
+    area_fix = (math.pi * (ROD_D / 2) ** 2 * rod_len) / (nrod * h ** 3) if rod.any() else 1.0
+    Ee = np.where(motor.ravel(), 50.0, np.where(rod.ravel(), E_CARBON / mat.E * area_fix, 1.0))[on]   # motor + prop stiff
     rho = mat.density * 1e-3 * h ** 3 * 1e-3                    # kg per PETG cell
-    me = np.where(motor.ravel(), 0.0, rho)[on]
+    me = np.where(motor.ravel(), 0.0, np.where(rod.ravel(), rho * RHO_CARBON / mat.density * area_fix, rho))[on]
     el = np.where(on)[0]
     ex, ey, ez = np.unravel_index(el, shape)
     nyz = (shape[1] + 1) * (shape[2] + 1)
@@ -268,20 +363,33 @@ def modes(which, mesh_path, h=1.25, n=4, log=print):
     mm = 0.096 / max(mot_cells.sum(), 1)                         # motor + prop + screws on the motor cells (M spec, E)
     np.add.at(mn, en[mot_cells].ravel(), mm / 8.0)
     xm = ax[0][ex]
-    beam = (~mot_cells) & (np.abs(xm - 0.4 * F["L"]) <= 12.0) & (ax[2][ez] < 20.0)
+    beam = (~mot_cells) & (xm >= ESC_X[which][0]) & (xm <= ESC_X[which][1]) & (ax[2][ez] > ROOT_H - 3 * h)
     if beam.any():
-        np.add.at(mn, en[beam].ravel(), 0.025 / beam.sum() / 8.0)  # ESC 25 g on the beam underside at 40 %
-    # supports: the plate faces
-    sup = from_tm_vox(B["sup"], ax, h)
+        np.add.at(mn, en[beam].ravel(), ESC_KG / beam.sum() / 8.0)  # ESC 25 g on its seat
+    # supports: the plate faces (support="faces") or the 4 insert bores only ("inserts"), as cells within 1.5 h
+    if support == "faces":
+        reg = B["sup"]
+        reg = reg + reg.translate([0, 0, h]) + reg.translate([0, 0, -h])
+    else:
+        reg = B["bosses"]
+    sup = from_tm_vox(reg, ax, h)
     fix_el = np.where(sup.ravel()[on])[0]
     fixed = np.zeros(3 * nn, bool)
     for e in fix_el:
         for a in range(8):
             fixed[3 * en[e, a]:3 * en[e, a] + 3] = True
     free = np.where(~fixed)[0]
-    M = sp.diags(np.repeat(mn, 3))
+    M = sp.diags(np.repeat(mn, 3)).tocsr()
     Kf = K[free][:, free]; Mf = M[free][:, free]
-    w2, V = sla.eigsh(Kf, k=n, M=Mf, sigma=0.0, which="LM")
+    import topo.fem  # noqa: F401  (sets the MKL path for pypardiso)
+    import pypardiso
+    Kf = sp.csr_matrix(Kf)
+    ps = pypardiso.PyPardisoSolver()
+    ps.set_matrix_type(11)
+    ps.factorize(Kf)
+    OPinv = sla.LinearOperator(Kf.shape, matvec=lambda b: ps.solve(Kf, np.asarray(b, float).ravel()), dtype=float)
+    w2, V = sla.eigsh(Kf, k=n, M=Mf, sigma=0.0, which="LM", OPinv=OPinv)
+    ps.free_memory(everything=True)
     f = np.sqrt(np.abs(w2)) / (2 * math.pi)
     out = []
     for q in np.argsort(f):
@@ -291,8 +399,8 @@ def modes(which, mesh_path, h=1.25, n=4, log=print):
         kind = ["fore-aft / axial", "lateral (in-plane)", "vertical"][int(np.argmax(dom))]
         out.append(dict(Hz=round(float(f[q]), 1), kind=kind))
     mass = me.sum() * 1000
-    log(f"modes {which}: {[(o['Hz'], o['kind']) for o in out]}; arm {mass:.1f} g on the FE grid (h {h})")
-    return dict(modes=out, arm_g_grid=round(float(mass), 1), h=h)
+    log(f"modes {which} ({support}): {[(o['Hz'], o['kind']) for o in out]}; arm + rods {mass:.1f} g on the FE grid (h {h})")
+    return dict(modes=out, arm_g_grid=round(float(mass), 1), h=h, support=support)
 
 
 def from_tm_vox(m, ax, h):
@@ -318,7 +426,7 @@ if __name__ == "__main__":
         p = setup_for(a.which)(h)
         s = p.summary(); s["cases"] = len(s["cases"]); print(json.dumps(s), frame(a.which))
     elif a.modes:
-        r = modes(a.which, a.modes)
+        r = {sp_: modes(a.which, a.modes, support=sp_) for sp_ in ("faces", "inserts")}
         os.makedirs(out, exist_ok=True)
         json.dump(r, open(os.path.join(out, "modes.json"), "w"), indent=1)
     elif a.place:

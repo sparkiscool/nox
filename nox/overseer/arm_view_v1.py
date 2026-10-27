@@ -76,6 +76,8 @@ def side_svg(which, B, F, built=None):
     out.append(f'<path d="{path(polys_side(B["drawn"]), tf)}" class="drawn"/>')
     out.append(f'<path d="{path(polys_side(B["cuts"] ^ B["env"].hull()), tf)}" class="cut"/>')
     out.append(f'<path d="{path(polys_side(B["sup"]), tf)}" class="sup"/>')
+    if not B["rods"].is_empty():
+        out.append(f'<path d="{path(polys_side(B["rods"]), tf)}" class="rod"/>')
     # motor and prop
     a, b = tf(F["L"] - 13.85, 71); c, d = tf(F["L"] + 13.85, 45)
     out.append(f'<rect x="{a:.1f}" y="{b:.1f}" width="{c - a:.1f}" height="{d - b:.1f}" class="motorside"/>')
@@ -96,14 +98,14 @@ def side_svg(which, B, F, built=None):
 CSS = """
 :root{--bg:#f6f7f8;--fg:#1b2026;--mut:#5c6670;--line:#c9d0d6;--panel:#ffffff;--acc:#1f6f8b;--warn:#a5531b;
 --env:rgba(31,111,139,.10);--envs:#1f6f8b;--drawn:#3b4652;--built:#9aa9b6;--cut:#f6f7f8;--sup:#2f8f4e;--prop:rgba(120,130,140,.10);
---elec:rgba(165,83,27,.22);--plate:rgba(60,70,80,.10);
+--elec:rgba(165,83,27,.22);--rod:#111417;--plate:rgba(60,70,80,.10);
 --f-body:"IBM Plex Sans",system-ui,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,monospace}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121518;--fg:#e3e7ea;--mut:#98a3ad;--line:#2d343a;--panel:#191d21;
 --acc:#5fb3cf;--warn:#e08a4f;--env:rgba(95,179,207,.13);--envs:#5fb3cf;--drawn:#c4ccd3;--built:#6d7c88;--cut:#121518;--sup:#5cc47f;
---prop:rgba(160,170,180,.08);--elec:rgba(224,138,79,.25);--plate:rgba(200,210,220,.08);color-scheme:dark}}
+--prop:rgba(160,170,180,.08);--elec:rgba(224,138,79,.25);--plate:rgba(200,210,220,.08);--rod:#f2f4f5;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#121518;--fg:#e3e7ea;--mut:#98a3ad;--line:#2d343a;--panel:#191d21;--acc:#5fb3cf;--warn:#e08a4f;
 --env:rgba(95,179,207,.13);--envs:#5fb3cf;--drawn:#c4ccd3;--built:#6d7c88;--cut:#121518;--sup:#5cc47f;--prop:rgba(160,170,180,.08);
---elec:rgba(224,138,79,.25);--plate:rgba(200,210,220,.08);color-scheme:dark}
+--elec:rgba(224,138,79,.25);--plate:rgba(200,210,220,.08);--rod:#f2f4f5;color-scheme:dark}
 body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--f-body);padding-left:max(16px,env(safe-area-inset-left,0px));
 padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 48px}
 main{max-width:1060px;margin:0 auto;display:grid;gap:28px}
@@ -116,7 +118,7 @@ figcaption{font-size:13px;color:var(--mut);margin-top:6px}
 .prop{fill:var(--prop);stroke:var(--line);stroke-dasharray:4 4}.plate{fill:var(--plate);stroke:var(--mut);stroke-width:.6}
 .elec{fill:var(--elec);stroke:var(--warn);stroke-width:.6}.env{fill:var(--env);stroke:var(--envs);stroke-width:1}
 .drawn{fill:var(--drawn)}.built{fill:var(--built);stroke:var(--drawn);stroke-width:.5}.cut{fill:var(--cut)}
-.sup{fill:var(--sup)}.motor{fill:var(--panel);stroke:var(--fg);stroke-width:1}.motorside{fill:none;stroke:var(--fg);stroke-dasharray:3 3}
+.sup{fill:var(--sup)}.rod{fill:var(--rod)}.motor{fill:var(--panel);stroke:var(--fg);stroke-width:1}.motorside{fill:none;stroke:var(--fg);stroke-dasharray:3 3}
 .axis{stroke:var(--mut);stroke-dasharray:2 4}.scale,.dim{stroke:var(--fg);stroke-width:1.2}.arrow{stroke:var(--acc);stroke-width:2}
 .ahead{fill:var(--acc)}.lbl{font:11px var(--f-mono);fill:var(--mut)}.c{text-anchor:middle}
 .key{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--mut)}.key i{display:inline-block;width:12px;height:12px;
@@ -141,6 +143,8 @@ def page(results=None, built=None):
             else:
                 meshes.append((man(A.arm_to_drone(tm(B["env"]), F, mir)), "env"))
             meshes.append((man(A.arm_to_drone(tm(B["drawn"]), F, mir)), "drawn"))
+            if "rods" in B and not B["rods"].is_empty():
+                meshes.append((man(A.arm_to_drone(tm(B["rods"]), F, mir)), "rod"))
     res = ""
     if results:
         rows = "".join(
@@ -152,17 +156,19 @@ def page(results=None, built=None):
                "<th>Worst flight / landing</th><th>First mode (E)</th><th>solid_check</th></tr>" + rows + "</table></div></section>")
     cases = [("Max thrust", "21 N up at the motor + yaw ±0.5 N·m", "flight", "≤ 0.5"),
              ("Manoeuvre", "max thrust + 2 g lateral (4 directions) + gyro 0.2 N·m", "flight", "≤ 0.5"),
-             ("Landing", "6 g down on the 121 g at the motor", "flight", "≤ 0.5"),
-             ("Crash", "35 g on the 121 g at the motor, 14 directions (41.5 N)", "crash", "≤ 1.0"),
-             ("Handling", "50 N on the motor pad, 6 directions", "misuse", "≤ 1.0"),
-             ("Vibration", "first mode with motor, prop and ESC on", "", "≥ 190 Hz")]
+             ("Landing", "6 g down on the motor (96 g) and the ESC (25 g)", "flight", "≤ 0.5"),
+             ("Crash", "35 g on the motor and the ESC, 14 directions (motor 33 N)", "crash", "≤ 1.0"),
+             ("Handling", "50 N on the motor pad, 6 directions (and on the 4 inserts alone)", "misuse", "≤ 1.0"),
+             ("Vibration", "every first mode, motor, prop, ESC and rods on, root on the 4 inserts", "", "≥ 190 Hz")]
     crow = "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td><td>{d}</td></tr>" for a, b, c, d in cases)
-    alts = [("Chosen: printed PETG arm, topology in a 45 deep envelope", "~200 Hz at ~60 g (front, E)",
-             "the 45 tall root that the plates bolt to runs out to the motor, so the depth carries the stiffness"),
-            ("Alt 1: carbon tube 16/14 with a printed root and motor clamp", "~115 Hz (E), ~45 g",
-             "inside the 1P band (113..158 Hz); needs a ~25 mm tube to reach 190 Hz"),
-            ("Alt 2: shallow 20 deep PETG arm, stock-like", "~80 Hz (E), ~40 g",
-             "inside the 1P band; the depth cube costs 10x stiffness")]
+    alts = [("Chosen: front pair a PETG topology arm round 4 x 3.0 carbon chords (a tapered space frame from shoulders at "
+             "±35 to ±12 at the motor); rear pair PETG topology only", "front ≥ 190 Hz every mode, ~60 g with rods (E, checked on the "
+             "built arm)", "the rods carry the bending both ways, the topology joins them to the plates and the motor; rear is 98 long "
+             "and stiff without rods"),
+            ("Alt 1: PETG topology only, front too", "~130..190 Hz at ~60 g (concept review hand bound 190 Hz; a plain 30 wide box "
+             "read lateral 130 Hz, C)", "the 1P band reaches 158 Hz; the mass to clear it grows the tip inertia with it"),
+            ("Alt 2: carbon tube arm (16/14) with a printed root and motor clamp", "~115 Hz (E), ~45 g",
+             "inside the 1P band; a ~25 mm tube to reach 190 Hz, and only 6 / 3 mm stock is kept")]
     arow = "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>" for a, b, c in alts)
     sides = "".join(f"<figure>{side_svg(w, *Bs[w], built[w] if built else None)}<figcaption>{w.capitalize()} arm, side view in its "
                     f"own frame (root left, motor right). Arm {'1, mirror 4' if w == 'front' else '2, mirror 3'}.</figcaption></figure>"
@@ -172,10 +178,10 @@ def page(results=None, built=None):
 <style>{CSS}</style><main>
 <header><div class="eyebrow">Overseer · printed arms · topology v1</div><h1>Overseer arms v1</h1>
 <p class="mut">Layout v5 / cage v3 (27 Oct). Front pair r 244, rear pair r 160. Each right arm is the mirror of the left one.
-Cage nodes, spokes and L2 brace sockets are left off for now (Spark 27 Oct).</p></header>
+Cage nodes, spokes and L2 brace sockets are left off for now (Spark 27 Oct). Concept review 1 FAIL (front stiffness, supports, mirror holes, ESC, spoke path): fixed below.</p></header>
 {res}
 <figure>{plan_svg(meshes)}<div class="key"><span><i style="background:var(--env);border:1px solid var(--envs)"></i>design envelope</span>
-<span><i style="background:var(--built)"></i>built arm</span><span><i style="background:var(--drawn)"></i>drawn: plate pads, insert bosses, motor pad</span>
+<span><i style="background:var(--built)"></i>built arm</span><span><i style="background:var(--drawn)"></i>drawn: plate pads, insert bosses, motor pad, rod sleeves, ESC seat</span><span><i style="background:var(--rod)"></i>3.0 carbon rods</span>
 <span><i style="background:var(--elec)"></i>hub electronics and L2 keel hub (kept 1 mm clear)</span><span><i style="background:var(--plate)"></i>plates</span>
 <span><i style="background:var(--prop)"></i>prop disks</span></div>
 <figcaption>Plan, drone frame, nose up. 1 px = 1 mm.</figcaption></figure>
