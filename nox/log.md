@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms, Spark): strength generous: index targets half of L (≤ 0.25 flight, ≤ 0.5 crash / handling), handling 100 N, a 150 N blow on the motor end x6, generated front 40 / rear 25 cm³. Both runs restarted. `dimensions.md` System Overseer: arms
 - 27 Oct (Overseer arms + core): plate gap stays 45 (core stack + leads z 26.5, Pi on the rear wing to 39.6, its minimum ~32; arms want ≥ 45). Core's arm-1 motor lead stand-in to go beside the root, not through it. `dimensions.md` O Arms and hub
 - 27 Oct (topo engine): `Part.insert`: a bought stiff insert (carbon rod) solid in the layout and strength FE at its own modulus, never printed, out of the PETG indices; ties see it absent and never let it join two drawn bodies. Default off; test_topo 15/15. First use: Overseer front arms. `nox/topo/part.py`, `layout.py`, `build.py`
 - 27 Oct (Overseer arms v1): system pass for the 4 printed arms (`dimensions.md` System Overseer: arms), topo setup front + rear (`nox/overseer/arm_topo_v1.py`); reviews 1-2 fixed: front on 4 x 3.0 carbon chords (engine inserts), insert-only cases, motor slots; ESC under the FC (Spark). Cage nodes off (Spark). `runs/overseer_arms/v1/`

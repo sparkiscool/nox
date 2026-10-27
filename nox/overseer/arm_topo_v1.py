@@ -69,7 +69,10 @@ YAW_NM = 0.5                          # motor reaction at full thrust on a full 
 GYRO_NM = 0.2                         # prop gyroscopic moment, 5.4e-5 kg m2 x 995 rad/s x 3 rad/s + margin
 TIP_KG = 0.096                        # motor 81 (M) + prop 10 + screws 5 at the motor CG
 TIP_Z = 60.0                          # tip mass CG height (motor body mid 58, prop 82)
-LAT_G, LAND_G, CRASH_G, HANDLE_N = 2.0, 6.0, 35.0, 50.0   # dimensions L
+LAT_G, LAND_G, CRASH_G = 2.0, 6.0, 35.0              # dimensions L
+# Spark 27 Oct: "the strength needs to be really generous because if this arm is flimsy the drone is fucked": handling
+# twice L's 50 N, a direct 150 N blow on the motor end (past the cage) in 6 directions, index targets half of L's
+HANDLE_N, BLOW_N = 100.0, 150.0
 
 
 def box(x0, x1, y0, y1, z0, z1):
@@ -287,6 +290,9 @@ def setup_for(which):
         padc = np.array([F["L"], 0.0, ROOT_H])
         for v, nm in ((ex, "+x"), (-ex, "-x"), (ey, "+y"), (-ey, "-y"), (ez, "+z"), (-ez, "-z")):
             rigid_case(p, f"handling {HANDLE_N:.0f} N {nm}", [(B["load"], padc, HANDLE_N * v, Z)], cls="misuse")
+        # direct blow on the motor end (something gets past the cage), 6 directions
+        for v, nm in ((ex, "+x"), (-ex, "-x"), (ey, "+y"), (-ey, "-y"), (ez, "+z"), (-ez, "-z")):
+            rigid_case(p, f"blow {BLOW_N:.0f} N {nm}", [(B["load"], tipc, BLOW_N * v, Z)], cls="crash")
         # the same joint held by the 4 inserts only (review 27 Oct): the worst-looking cases again
         rigid_case(p, "max thrust + yaw [inserts only]", masses(Z, THRUST_N * ez, YAW_NM * ez), support="bosses")
         for v, nm in ((ez, "+z"), (-ez, "-z"), (ey, "+y"), (-ey, "-y")):
@@ -420,7 +426,7 @@ if __name__ == "__main__":
     ap.add_argument("--place", default=None)
     a = ap.parse_args()
     h = a.h or (1.5 if a.which == "front" else 1.0)
-    gen = a.gen or (25.0 if a.which == "front" else 15.0)   # cm3 generated (E): the front rods carry the chords
+    gen = a.gen or (40.0 if a.which == "front" else 25.0)   # cm3 generated (E), generous (Spark 27 Oct); front rods carry the chords
     out = a.out or os.path.join(ROOT, "runs", f"overseer_arm_{a.which}", "v1")
     if a.setup:
         p = setup_for(a.which)(h)
