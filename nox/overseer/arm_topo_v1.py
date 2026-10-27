@@ -88,7 +88,9 @@ E_PETG = 2780.0                       # MPa, nox/topo/material.py
 TUBE_BORE, TUBE_DEPTH, TUBE_LEAD, TUBE_WALL = 6.2, 15.0, 0.6, 2.5
 SPOKE_NODE = {"front": (178.9, 146.7, 8.0), "rear": (-53.3, 119.7, 25.0)}   # left arm, drone frame (C, searched)
 BRACE_END = {"front": [("L2 brace lo +1", (72.95, 62.11, 30.0)), ("L2 brace hi +1", (72.95, 62.11, 39.0))]}
-JOINT = os.path.join(ROOT, "runs", "overseer_arms", "v2", "joint_loads.json")
+if os.environ.get("NOX_ARM_BRACES", "1") == "0":   # v5b: the L2 braces root on a top-plate block (cage session 27 Oct), not the arm
+    BRACE_END = {}
+JOINT = os.environ.get("NOX_ARM_JOINT", os.path.join(ROOT, "runs", "overseer_arms", "v2", "joint_loads.json"))
 
 # loads (dimensions.md "System Overseer: arms", E)
 THRUST_N = 21.0                       # 1650 gf at 14.8 V (C) x (16.8 / 14.8)^2 on a full pack = 2.13 kgf
@@ -387,15 +389,17 @@ def setup_for(which):
         # cage joint reactions (v2): the frame model's force on the arm at each link group, per case (crash 35 g x 14,
         # flight 4 g), on the socket bosses; braces split evenly between their 2 sockets (E)
         if LINKS:
-            J = json.load(open(JOINT))["forces"]
+            J = json.load(open(JOINT))
+            J = J["forces"] if "forces" in J else J["cases"]            # v2 joint_loads.json or the cage's arm_loads.json
             tag = "arm 1" if which == "front" else "arm 2"
-            for cn in J[f"{tag} tip"]:
+            tkey = f"{tag} tip" if f"{tag} tip" in J else f"{tag} spoke node"
+            for cn in J[tkey]:
                 parts = []
-                tipF = to_arm_vec(np.array(J[f"{tag} tip"][cn]), F)
+                tipF = to_arm_vec(np.array(J[tkey][cn]), F)
                 spokes = [(m_, a_) for k, (m_, a_, u_) in B["sock"].items() if k.startswith("spoke")]
                 for m_, a_ in spokes:
                     parts.append((m_, a_, tipF / len(spokes), Z))
-                if which == "front":
+                if which == "front" and BRACE_END:
                     bF = to_arm_vec(np.array(J["arm 1 beam (L2 braces)"][cn]), F)
                     for k, (m_, a_, u_) in B["sock"].items():
                         if k.startswith("L2 brace"):
