@@ -227,3 +227,17 @@ layout: warm start from a (24, 24, 24) grid (h 3.0): mean x 0.015
 layout: warm start from a (24, 24, 24) grid (h 3.0): mean x 0.015
 it   1 beta    4 J  10.0000 vol 0.0221 (dil 0.0721 g +1.593) grey  6.8% ch 0.100 worst tube to 11 side a 507 89.8s
 it   1 beta    4 J  10.0000 vol 0.0221 (dil 0.0721 g +1.593) grey  6.8% ch 0.100 worst tube to 11 side a 507 89.8s
+it   2 beta    4 J  10.0001 vol 0.0213 (dil 0.0705 g +1.537) grey  6.6% ch 0.100 worst tube to 11 side a 507 85.5s
+it   2 beta    4 J  10.0001 vol 0.0213 (dil 0.0705 g +1.537) grey  6.6% ch 0.100 worst tube to 11 side a 507 85.5s
+it   3 beta    4 J  10.0001 vol 0.0205 (dil 0.0690 g +1.481) grey  6.3% ch 0.100 worst tube to 11 side a 507 94.6s
+it   3 beta    4 J  10.0001 vol 0.0205 (dil 0.0690 g +1.481) grey  6.3% ch 0.100 worst tube to 11 side a 507 94.6s
+it   4 beta    4 J  10.0001 vol 0.0198 (dil 0.0674 g +1.424) grey  6.1% ch 0.100 worst tube to 11 side a 507 86.7s
+it   4 beta    4 J  10.0001 vol 0.0198 (dil 0.0674 g +1.424) grey  6.1% ch 0.100 worst tube to 11 side a 507 86.7s
+it   5 beta    4 J  10.0001 vol 0.0191 (dil 0.0658 g +1.367) grey  5.8% ch 0.100 worst tube to 11 side a 507 95.5s
+it   5 beta    4 J  10.0001 vol 0.0191 (dil 0.0658 g +1.367) grey  5.8% ch 0.100 worst tube to 11 side a 507 95.5s
+it   6 beta    4 J  10.0001 vol 0.0184 (dil 0.0642 g +1.310) grey  5.7% ch 0.100 worst tube to 11 side a 507 93.5s
+it   6 beta    4 J  10.0001 vol 0.0184 (dil 0.0642 g +1.310) grey  5.7% ch 0.100 worst tube to 11 side a 507 93.5s
+it   7 beta    4 J  10.0001 vol 0.0177 (dil 0.0626 g +1.253) grey  5.4% ch 0.100 worst tube to 11 side a 507 89.2s
+it   7 beta    4 J  10.0001 vol 0.0177 (dil 0.0626 g +1.253) grey  5.4% ch 0.100 worst tube to 11 side a 507 89.2s
+it   8 beta    4 J  10.0001 vol 0.0170 (dil 0.0611 g +1.196) grey  5.2% ch 0.100 worst tube to 11 side a 507 86.0s
+it   8 beta    4 J  10.0001 vol 0.0170 (dil 0.0611 g +1.196) grey  5.2% ch 0.100 worst tube to 11 side a 507 86.0s
