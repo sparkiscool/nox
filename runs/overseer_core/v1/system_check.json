@@ -149,18 +149,42 @@
     "pass_": true
    },
    "FC stack (MicoAir743-Lite on 55A 4-in-1)": {
-    "min_margin_mm": 86.9,
+    "min_margin_mm": 88.9,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 83.9,
-    "min_margin_outside_openings_mm": 86.9,
+    "worst_slack_mm": 85.9,
+    "min_margin_outside_openings_mm": 88.9,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "ESC cap": {
+    "min_margin_mm": 83.9,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 80.9,
+    "min_margin_outside_openings_mm": 83.9,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "Pi 5 + Active Cooler": {
+    "min_margin_mm": 86.17,
+    "worst_dir": [
+     -0.877,
+     -0.004,
+     -0.48
+    ],
+    "worst_slack_mm": 83.17,
+    "min_margin_outside_openings_mm": 86.17,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "UBEC 5 V": {
     "min_margin_mm": 86.9,
     "worst_dir": [
      -0.0,
@@ -172,51 +196,27 @@
     "dirs_in_openings": 0,
     "pass_": true
    },
-   "Pi 5 + active cooler": {
-    "min_margin_mm": 107.3,
-    "worst_dir": [
-     -0.0,
-     -0.0,
-     -1.0
-    ],
-    "worst_slack_mm": 104.3,
-    "min_margin_outside_openings_mm": 107.3,
-    "dirs_in_openings": 0,
-    "pass_": true
-   },
-   "UBEC 5 V": {
-    "min_margin_mm": 92.9,
-    "worst_dir": [
-     -0.0,
-     -0.0,
-     -1.0
-    ],
-    "worst_slack_mm": 89.9,
-    "min_margin_outside_openings_mm": 92.9,
-    "dirs_in_openings": 0,
-    "pass_": true
-   },
    "buck 12 V": {
-    "min_margin_mm": 105.9,
+    "min_margin_mm": 82.84,
     "worst_dir": [
-     -0.0,
-     -0.0,
-     -1.0
+     -0.195,
+     0.02,
+     -0.98
     ],
-    "worst_slack_mm": 102.9,
-    "min_margin_outside_openings_mm": 105.9,
+    "worst_slack_mm": 79.84,
+    "min_margin_outside_openings_mm": 82.84,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "RX XR2": {
-    "min_margin_mm": 105.9,
+    "min_margin_mm": 83.4,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 102.9,
-    "min_margin_outside_openings_mm": 105.9,
+    "worst_slack_mm": 80.4,
+    "min_margin_outside_openings_mm": 83.4,
     "dirs_in_openings": 0,
     "pass_": true
    },
@@ -438,8 +438,8 @@
    },
    {
     "a": "spokes, ties, keels, L2 guard ring",
-    "b": "wires",
-    "overlap_mm3": 111.52,
+    "b": "Pi 5 + Active Cooler",
+    "overlap_mm3": 159.3,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
@@ -447,8 +447,26 @@
    },
    {
     "a": "spokes, ties, keels, L2 guard ring",
-    "b": "rear tray",
-    "overlap_mm3": 64.52,
+    "b": "UBEC 5 V",
+    "overlap_mm3": 121.08,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "wires",
+    "overlap_mm3": 28.62,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
+    "a": "spokes, ties, keels, L2 guard ring",
+    "b": "hub deck",
+    "overlap_mm3": 144.88,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
@@ -511,7 +529,7 @@
    {
     "a": "apex + cam bracket",
     "b": "wires",
-    "overlap_mm3": 74.78,
+    "overlap_mm3": 75.21,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -556,15 +574,6 @@
    {
     "a": "top plate",
     "b": "wires",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "top plate",
-    "b": "Pi hanger",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -618,20 +627,11 @@
    },
    {
     "a": "bottom plate",
-    "b": "stack mount",
+    "b": "hub deck",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "bottom plate",
-    "b": "rear tray",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -664,7 +664,7 @@
    {
     "a": "arm 1",
     "b": "wires",
-    "overlap_mm3": 95.81,
+    "overlap_mm3": 95.59,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -700,7 +700,7 @@
    {
     "a": "arm 3",
     "b": "wires",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 51.06,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -736,7 +736,7 @@
    {
     "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "b": "wires",
-    "overlap_mm3": 53.09,
+    "overlap_mm3": 60.14,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -744,34 +744,34 @@
    },
    {
     "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "b": "stack mount",
+    "b": "hub deck",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "ESC cap",
     "b": "wires",
-    "overlap_mm3": 83.79,
+    "overlap_mm3": 1205.14,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
-    "a": "Pi 5 + active cooler",
+    "a": "Pi 5 + Active Cooler",
     "b": "wires",
-    "overlap_mm3": 831.34,
+    "overlap_mm3": 133.43,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
     "pass_": true
    },
    {
-    "a": "Pi 5 + active cooler",
-    "b": "Pi hanger",
+    "a": "Pi 5 + Active Cooler",
+    "b": "hub deck",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -781,7 +781,7 @@
    {
     "a": "UBEC 5 V",
     "b": "wires",
-    "overlap_mm3": 133.23,
+    "overlap_mm3": 120.27,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -789,16 +789,7 @@
    },
    {
     "a": "UBEC 5 V",
-    "b": "rear tray",
-    "overlap_mm3": 378.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "buck 12 V",
-    "b": "wires",
+    "b": "hub deck",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -807,16 +798,16 @@
    },
    {
     "a": "buck 12 V",
-    "b": "rear tray",
-    "overlap_mm3": 0.0,
+    "b": "wires",
+    "overlap_mm3": 42.27,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
-    "a": "RX XR2",
-    "b": "wires",
+    "a": "buck 12 V",
+    "b": "hub deck",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -825,11 +816,20 @@
    },
    {
     "a": "RX XR2",
-    "b": "rear tray",
+    "b": "wires",
+    "overlap_mm3": 36.08,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "RX XR2",
+    "b": "hub deck",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -843,7 +843,7 @@
    },
    {
     "a": "flow MTF-02P",
-    "b": "flow pod",
+    "b": "sled",
     "overlap_mm3": 2246.4,
     "limit_mm3": Infinity,
     "contact": true,
@@ -880,7 +880,7 @@
    {
     "a": "wires",
     "b": "XT60 pair",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 23.4,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -888,26 +888,8 @@
    },
    {
     "a": "wires",
-    "b": "stack mount",
-    "overlap_mm3": 16.55,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "wires",
-    "b": "Pi hanger",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "wires",
-    "b": "rear tray",
-    "overlap_mm3": 467.93,
+    "b": "hub deck",
+    "overlap_mm3": 328.59,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -916,16 +898,7 @@
    {
     "a": "wires",
     "b": "sled",
-    "overlap_mm3": 117.56,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "wires",
-    "b": "flow pod",
-    "overlap_mm3": 337.26,
+    "overlap_mm3": 583.93,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -1013,8 +986,8 @@
     "pass_": true
    },
    {
-    "a": "sled",
-    "b": "flow pod",
+    "a": "hub deck",
+    "b": "sled",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -1025,11 +998,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3436.68,
+  "mass_g": 3428.68,
   "cg": [
-   60.24,
-   -0.13,
-   14.56
+   58.75,
+   -0.27,
+   14.21
   ],
   "parts": [
    {
@@ -1280,7 +1253,7 @@
     "cg": [
      0.0,
      0.0,
-     12.15
+     14.15
     ],
     "tag": "E",
     "swap": false
@@ -1289,20 +1262,20 @@
     "name": "ESC cap",
     "mass_g": 5.0,
     "cg": [
-     -32.0,
-     -9.0,
-     9.0
+     -38.0,
+     12.5,
+     6.0
     ],
     "tag": "E",
     "swap": false
    },
    {
-    "name": "Pi 5 + active cooler",
+    "name": "Pi 5 + Active Cooler",
     "mass_g": 55.0,
     "cg": [
-     -19.0,
+     -112.5,
      0.0,
-     33.2
+     32.15
     ],
     "tag": "E",
     "swap": false
@@ -1311,9 +1284,9 @@
     "name": "UBEC 5 V",
     "mass_g": 15.0,
     "cg": [
-     -80.0,
-     0.0,
-     14.5
+     -87.0,
+     -7.5,
+     8.5
     ],
     "tag": "E",
     "swap": false
@@ -1322,9 +1295,9 @@
     "name": "buck 12 V",
     "mass_g": 6.0,
     "cg": [
-     -94.0,
+     -130.0,
      0.0,
-     27.0
+     7.5
     ],
     "tag": "E",
     "swap": false
@@ -1333,9 +1306,9 @@
     "name": "RX XR2",
     "mass_g": 2.0,
     "cg": [
-     -77.5,
+     33.0,
      0.0,
-     31.0
+     3.5
     ],
     "tag": "E",
     "swap": false
@@ -1355,9 +1328,9 @@
     "name": "wires",
     "mass_g": 80.0,
     "cg": [
-     -7.9,
+     -12.5,
      -7.75,
-     -16.25
+     -19.45
     ],
     "tag": "E",
     "swap": false
@@ -1407,56 +1380,23 @@
     "swap": false
    },
    {
-    "name": "stack mount",
-    "mass_g": 8.0,
+    "name": "hub deck",
+    "mass_g": 30.0,
     "cg": [
+     -60.04,
      0.0,
-     0.0,
-     1.5
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "Pi hanger",
-    "mass_g": 10.0,
-    "cg": [
-     -5.49,
-     0.0,
-     43.5
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "rear tray",
-    "mass_g": 20.0,
-    "cg": [
-     -83.85,
-     0.0,
-     7.69
+     6.48
     ],
     "tag": "E",
     "swap": false
    },
    {
     "name": "sled",
-    "mass_g": 70.0,
+    "mass_g": 78.0,
     "cg": [
-     -25.26,
-     0.0,
-     -6.85
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "flow pod",
-    "mass_g": 8.0,
-    "cg": [
-     -10.0,
-     -54.91,
-     -49.06
+     -22.03,
+     -11.64,
+     -15.87
     ],
     "tag": "E",
     "swap": false
@@ -1480,11 +1420,11 @@
    82.0
   ],
   "cg_offset": [
-   -0.54,
-   -0.13,
-   -67.44
+   -2.03,
+   -0.27,
+   -67.79
   ],
-  "cg_offset_mm": 67.44
+  "cg_offset_mm": 67.82
  },
  "balance": {
   "applies": true,
@@ -1501,32 +1441,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3436.68,
+    "mass_g": 3428.68,
     "cg_offset": [
-     -0.55,
-     -0.13,
-     -67.44
+     -2.03,
+     -0.27,
+     -67.79
     ],
-    "horizontal_mm": 0.56,
-    "axial_mm": -67.44,
+    "horizontal_mm": 2.05,
+    "axial_mm": -67.79,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2681.08,
+    "mass_g": 2673.08,
     "cg_offset": [
-     22.94,
-     -0.17,
-     -50.89
+     21.1,
+     -0.35,
+     -51.29
     ],
-    "horizontal_mm": 22.94,
-    "axial_mm": -50.89,
+    "horizontal_mm": 21.1,
+    "axial_mm": -51.29,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 22.94,
+  "worst_horizontal_mm": 21.1,
   "pass_": true
  },
  "probes": {
@@ -1979,6 +1919,110 @@
    {
     "probe": "edge",
     "r_mm": 0.0,
+    "part": "buck 12 V",
+    "margin_mm": 63.0,
+    "unshielded": false,
+    "dir": [
+     0.0,
+     -0.001,
+     -1.0
+    ],
+    "dir_label": "-Z",
+    "axis": [
+     0.261,
+     -0.965,
+     0.001
+    ],
+    "roll_deg": 180.0,
+    "lateral_mm": -211.5,
+    "contact": [
+     -138.0,
+     -10.0,
+     3.5
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "buck 12 V",
+    "margin_mm": 64.0,
+    "unshielded": false,
+    "dir": [
+     -0.001,
+     0.009,
+     -1.0
+    ],
+    "dir_label": "-Z",
+    "axis": [
+     -0.089,
+     0.996,
+     0.009
+    ],
+    "roll_deg": 180.0,
+    "lateral_mm": 213.0,
+    "contact": [
+     -138.0,
+     10.0,
+     3.5
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "Pi 5 + Active Cooler",
+    "margin_mm": 76.65,
+    "unshielded": false,
+    "dir": [
+     -0.871,
+     0.008,
+     -0.491
+    ],
+    "dir_label": "(-0.87, +0.01, -0.49)",
+    "axis": [
+     -0.487,
+     -0.147,
+     0.861
+    ],
+    "roll_deg": 165.0,
+    "lateral_mm": -34.5,
+    "contact": [
+     -166.0,
+     22.0,
+     23.6
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "Pi 5 + Active Cooler",
+    "margin_mm": 77.66,
+    "unshielded": false,
+    "dir": [
+     -0.871,
+     -0.011,
+     -0.491
+    ],
+    "dir_label": "(-0.87, -0.01, -0.49)",
+    "axis": [
+     -0.118,
+     0.975,
+     0.187
+    ],
+    "roll_deg": 240.0,
+    "lateral_mm": 106.5,
+    "contact": [
+     -166.0,
+     -22.0,
+     23.6
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
     "part": "motor 1",
     "margin_mm": 80.78,
     "unshielded": false,
@@ -2187,34 +2231,8 @@
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "Pi 5 + active cooler",
-    "margin_mm": 102.58,
-    "unshielded": false,
-    "dir": [
-     -0.113,
-     -0.489,
-     -0.865
-    ],
-    "dir_label": "(-0.11, -0.49, -0.86)",
-    "axis": [
-     -0.99,
-     0.132,
-     0.055
-    ],
-    "roll_deg": 210.0,
-    "lateral_mm": 24.0,
-    "contact": [
-     -71.5,
-     -23.0,
-     24.4
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "buck 12 V",
-    "margin_mm": 103.08,
+    "part": "UBEC 5 V",
+    "margin_mm": 89.18,
     "unshielded": false,
     "dir": [
      -0.498,
@@ -2230,35 +2248,9 @@
     "roll_deg": 210.0,
     "lateral_mm": 150.0,
     "contact": [
-     -104.0,
-     10.0,
-     24.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "UBEC 5 V",
-    "margin_mm": 105.36,
-    "unshielded": false,
-    "dir": [
-     -0.705,
-     -0.056,
-     -0.707
-    ],
-    "dir_label": "(-0.70, -0.06, -0.71)",
-    "axis": [
-     -0.089,
-     0.996,
-     0.009
-    ],
-    "roll_deg": 225.0,
-    "lateral_mm": 109.5,
-    "contact": [
-     -104.0,
-     -11.0,
-     12.0
+     -111.0,
+     -0.7,
+     11.4
     ],
     "pass_": true
    },
@@ -2266,7 +2258,7 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "margin_mm": 106.77,
+    "margin_mm": 99.7,
     "unshielded": false,
     "dir": [
      0.128,
@@ -2284,111 +2276,33 @@
     "contact": [
      22.0,
      -21.8,
-     9.2
+     9.5
     ],
     "pass_": true
    },
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "RX XR2",
-    "margin_mm": 116.0,
+    "part": "ESC cap",
+    "margin_mm": 121.8,
     "unshielded": false,
     "dir": [
-     -0.224,
-     -0.017,
-     0.974
+     -0.008,
+     0.866,
+     -0.5
     ],
-    "dir_label": "(-0.22, -0.02, +0.97)",
+    "dir_label": "(-0.01, +0.87, -0.50)",
     "axis": [
-     0.972,
-     0.072,
-     0.225
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": -12.0,
-    "contact": [
-     -80.5,
      -1.0,
-     39.0
+     -0.001,
+     0.013
     ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "buck 12 V",
-    "margin_mm": 118.85,
-    "unshielded": false,
-    "dir": [
-     -0.498,
-     0.067,
-     -0.865
-    ],
-    "dir_label": "(-0.50, +0.07, -0.86)",
-    "axis": [
-     0.045,
-     0.998,
-     0.051
-    ],
-    "roll_deg": 210.0,
-    "lateral_mm": 160.5,
+    "roll_deg": 120.0,
+    "lateral_mm": 22.5,
     "contact": [
-     -104.0,
-     10.0,
-     30.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "Pi 5 + active cooler",
-    "margin_mm": 120.0,
-    "unshielded": false,
-    "dir": [
-     -0.224,
-     -0.017,
-     0.974
-    ],
-    "dir_label": "(-0.22, -0.02, +0.97)",
-    "axis": [
-     0.972,
-     0.072,
-     0.225
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": -12.0,
-    "contact": [
-     -71.5,
-     1.0,
-     40.4
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "RX XR2",
-    "margin_mm": 120.0,
-    "unshielded": false,
-    "dir": [
-     -0.224,
-     -0.017,
-     0.974
-    ],
-    "dir_label": "(-0.22, -0.02, +0.97)",
-    "axis": [
-     0.972,
-     0.072,
-     0.225
-    ],
-    "roll_deg": 0.0,
-    "lateral_mm": -12.0,
-    "contact": [
-     -80.5,
-     0.0,
-     39.0
+     -42.8,
+     17.5,
+     3.6
     ],
     "pass_": true
    },
@@ -2396,25 +2310,25 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "UBEC 5 V",
-    "margin_mm": 129.11,
+    "margin_mm": 131.49,
     "unshielded": false,
     "dir": [
-     -0.647,
-     -0.576,
+     -0.142,
+     -0.855,
      -0.499
     ],
-    "dir_label": "(-0.65, -0.58, -0.50)",
+    "dir_label": "(-0.14, -0.85, -0.50)",
     "axis": [
-     0.641,
-     -0.766,
-     0.053
+     -0.99,
+     0.132,
+     0.055
     ],
-    "roll_deg": 120.0,
-    "lateral_mm": -61.5,
+    "roll_deg": 240.0,
+    "lateral_mm": -9.0,
     "contact": [
-     -104.0,
-     -11.0,
-     15.0
+     -111.0,
+     -18.0,
+     9.0
     ],
     "pass_": true
    },
@@ -2448,77 +2362,77 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
-    "margin_mm": 138.85,
+    "margin_mm": 136.09,
     "unshielded": false,
     "dir": [
-     0.168,
-     -0.85,
-     -0.5
+     0.12,
+     0.7,
+     -0.704
     ],
-    "dir_label": "(+0.17, -0.85, -0.50)",
+    "dir_label": "(+0.12, +0.70, -0.70)",
     "axis": [
-     -0.976,
-     -0.216,
-     0.039
+     -0.96,
+     0.262,
+     0.097
     ],
-    "roll_deg": 240.0,
-    "lateral_mm": -16.5,
+    "roll_deg": 135.0,
+    "lateral_mm": 4.5,
     "contact": [
-     22.0,
-     -21.8,
-     9.2
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "XT60 pair",
-    "margin_mm": 148.18,
-    "unshielded": false,
-    "dir": [
-     -0.996,
-     -0.089,
-     -0.0
-    ],
-    "dir_label": "-X",
-    "axis": [
-     -0.089,
-     0.996,
-     0.009
-    ],
-    "roll_deg": 270.0,
-    "lateral_mm": -36.0,
-    "contact": [
-     -110.1,
-     -3.6,
-     -4.6
+     18.0,
+     18.0,
+     21.5
     ],
     "pass_": true
    },
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "ESC cap",
-    "margin_mm": 167.61,
+    "part": "RX XR2",
+    "margin_mm": 159.36,
     "unshielded": false,
     "dir": [
-     -0.464,
-     -0.847,
-     -0.258
+     0.259,
+     0.081,
+     0.962
     ],
-    "dir_label": "(-0.46, -0.85, -0.26)",
+    "dir_label": "(+0.26, +0.08, +0.96)",
     "axis": [
-     -0.884,
-     0.463,
-     0.071
+     -0.003,
+     -0.996,
+     0.085
+    ],
+    "roll_deg": 345.0,
+    "lateral_mm": 28.5,
+    "contact": [
+     39.0,
+     8.0,
+     6.5
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "RX XR2",
+    "margin_mm": 205.34,
+    "unshielded": false,
+    "dir": [
+     0.959,
+     0.114,
+     -0.259
+    ],
+    "dir_label": "(+0.96, +0.11, -0.26)",
+    "axis": [
+     0.13,
+     -0.991,
+     0.043
     ],
     "roll_deg": 255.0,
-    "lateral_mm": -24.0,
+    "lateral_mm": -36.0,
     "contact": [
-     -42.0,
-     -14.0,
-     4.0
+     39.0,
+     8.0,
+     6.5
     ],
     "pass_": true
    }
@@ -2532,7 +2446,7 @@
    0.0,
    10.0
   ],
-  "n_points": 863673
+  "n_points": 863792
  },
  "access": {
   "applies": true,
@@ -2918,75 +2832,19 @@
     "pass_": true
    },
    {
-    "name": "M3 L-key short leg, stack mount foot 0",
-    "part": "stack mount",
+    "name": "Pi USB-A / RJ45 plugs (aft, in the open)",
+    "part": "Pi 5 + Active Cooler",
     "tool": {
-     "type": "cylinder",
-     "d": 4
+     "type": "box",
+     "w": 40,
+     "h": 14
     },
     "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 18.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key long leg, stack mount foot 0",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
-     1.0,
-     0.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key short leg, stack mount foot 1",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 18.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key long leg, stack mount foot 1",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
      -1.0,
+     0.0,
      0.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 40.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -2994,84 +2852,8 @@
     "pass_": true
    },
    {
-    "name": "M3 L-key short leg, stack mount foot 2",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 18.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key long leg, stack mount foot 2",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
-     1.0,
-     0.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key short leg, stack mount foot 3",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 18.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 L-key long leg, stack mount foot 3",
-    "part": "stack mount",
-    "tool": {
-     "type": "cylinder",
-     "d": 4
-    },
-    "dir": [
-     0.0,
-     -1.0,
-     0.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 key, Pi hanger screw 0 (from above)",
-    "part": "Pi hanger",
+    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 0 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3081,7 +2863,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3089,8 +2871,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, Pi hanger screw 1 (from above)",
-    "part": "Pi hanger",
+    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 1 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3100,7 +2882,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3108,8 +2890,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, Pi hanger screw 2 (from above)",
-    "part": "Pi hanger",
+    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 2 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3119,7 +2901,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3127,8 +2909,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, Pi hanger screw 3 (from above)",
-    "part": "Pi hanger",
+    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 3 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3138,7 +2920,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3146,8 +2928,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, rear tray bolt 0 (from above)",
-    "part": "rear tray",
+    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 4 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3157,7 +2939,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3165,8 +2947,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, rear tray bolt 1 (from above)",
-    "part": "rear tray",
+    "name": "step 1: M3 x 16 hub deck + plate into the sled insert, foot 5 (screwdriver, top plate not on yet)",
+    "part": "hub deck",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3176,7 +2958,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3184,8 +2966,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, rear tray bolt 2 (from above)",
-    "part": "rear tray",
+    "name": "step 2: M3 stack screw 0 into the post insert (screwdriver)",
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3195,7 +2977,7 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3203,8 +2985,8 @@
     "pass_": true
    },
    {
-    "name": "M3 key, rear tray bolt 3 (from above)",
-    "part": "rear tray",
+    "name": "step 2: M3 stack screw 1 into the post insert (screwdriver)",
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "cylinder",
      "d": 6
@@ -3214,7 +2996,159 @@
      0.0,
      1.0
     ],
-    "length_mm": 400.0,
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 2: M3 stack screw 2 into the post insert (screwdriver)",
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 2: M3 stack screw 3 into the post insert (screwdriver)",
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 1: M3 x 20 hub deck aft leg 0 into the sled tail insert (screwdriver, before the Pi)",
+    "part": "hub deck",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 1: M3 x 20 hub deck aft leg 1 into the sled tail insert (screwdriver, before the Pi)",
+    "part": "hub deck",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 3: M2.5 Pi screw 0 (screwdriver, top plate on)",
+    "part": "Pi 5 + Active Cooler",
+    "tool": {
+     "type": "cylinder",
+     "d": 5
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 3: M2.5 Pi screw 1 (screwdriver, top plate on)",
+    "part": "Pi 5 + Active Cooler",
+    "tool": {
+     "type": "cylinder",
+     "d": 5
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 3: M2.5 Pi screw 2 (screwdriver, top plate on)",
+    "part": "Pi 5 + Active Cooler",
+    "tool": {
+     "type": "cylinder",
+     "d": 5
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "step 3: M2.5 Pi screw 3 (screwdriver, top plate on)",
+    "part": "Pi 5 + Active Cooler",
+    "tool": {
+     "type": "cylinder",
+     "d": 5
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 150.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3222,7 +3156,7 @@
     "pass_": true
    }
   ],
-  "n_clear": 36,
+  "n_clear": 37,
   "worst": {
    "name": "M3 key, arm 1 top screw v +15",
    "part": "top plate",
@@ -3245,22 +3179,19 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3436.68,
+  "mass_g": 3428.68,
   "part_budgets_g": {
-   "stack mount": 8.0,
-   "Pi hanger": 10.0,
-   "rear tray": 20.0,
-   "sled": 70.0,
-   "flow pod": 8.0
+   "hub deck": 30.0,
+   "sled": 78.0
   },
   "over_parts": [],
   "budget_g": 2200.0,
-  "pct": 156.2,
+  "pct": 155.8,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3437 of 2200 g (156 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [-0.6, -0.1, -67.4], 22.9 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 36/36 clear",
+ "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3429 of 2200 g (156 %) (E) over budget (total), CG 2.0 mm off thrust axis (E) [-2.0, -0.3, -67.8], 21.1 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
  "pass": false
 }

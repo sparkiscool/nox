@@ -1,22 +1,20 @@
 receiver in pose x -121.8..61.9, y ±33.4, z -76.7..-8.1 (M); pack top z -19.9, cartridge bottom z -76.9; XT60 male top z -4.6
-stack: ESC z 4.0..9.2, FC top z 21.5, plugs to 27.5 (17.5 stack, E model)
-Pi hung component side down: board z 40.4..42.0; cooler down to 30.4 (2.9 over the FC plugs); USB-A / RJ45 down to 24.4 at x -53.5..-30.5 (the stack ends at x -22.0; the cap at z <= 14.0: 10.4 clear) (C on E)
-Pi -x plugs (keep-out 18 past the ports) reach x -71.5: x arms 0.0, x rear tray + bays 0.0 mm³ (C on E)
-   x arms (v5 meshes), mm³: stack mount 0.0, Pi hanger 0.0, rear tray 0.0, Pi 5 0.0, stack 0.0, cap 0.0, UBEC 0.0, buck 0.0, RX 0.0
-   Pi x stack 0.0, Pi x cap 0.0, hanger x Pi -0.0 (posts on the board's holes, C), stack x mount 0.0 mm³
-   sled x receiver 0.0, flow pod x receiver 0.0 mm³
+stack: ESC z 6.0..11.2 on 5 posts + grommets, FC top z 23.5 (17.5 stack, E model); 21.5 free under the top plate
+Pi right side up on the rear wing: board x -146.0..-61.0, z 22.0..23.6; Active Cooler top z 37.3 (7.7 under the top plate for the blower intake, open sky aft of x -60.2); ports top z 39.6, aft (C on E)
+   Pi x stack 0.0, deck x XT60 0.0, deck x receiver 0.0, deck x sled 0.0, Pi + plugs + intake x top plate 0.0, deck x stack 0.0, deck x UBEC 0.0, deck x buck 0.0, deck x cap 0.0, Pi x UBEC 0.0 mm³
+   x arms (v5 meshes), mm³: hub deck 0.0, Pi + plugs 0.0, stack 0.0, cap 0.0, UBEC 0.0, buck 0.0, RX 0.0
+   sled x receiver 0.0 mm³
 arm bottom screw keys (Ø8 below the sled): (-52,38) down camera (v5) 4, (-38,52) down camera (v5) 115
 flow view (42°, +2°): clear (C)
-swap column (receiver + 30 a side, below the cartridge bottom): flow pod 0.0, flow 0.0, feet 0.0 mm³
-prop wash (plan area under the disks, % of the disk area): rear tray + bays 0.81, sled 4.34, flow pod 0.45, receiver 1.73
-System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm³ (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3437 of 2200 g (156 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [-0.6, -0.1, -67.4], 22.9 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 36/36 clear
-joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, alternative B):
-   stack mount: max 4.0 N per bolt (crash 35 g 6), shear 3.2, axial 3.2
-   Pi hanger: max 8.6 N per bolt (crash 35 g 5), shear 7.1, axial 8.6
-   rear tray: max 10.0 N per bolt (crash 35 g 7), shear 5.4, axial 9.0
-   sled to plate: max 117.6 N per bolt (crash 35 g 13), shear 65.9, axial 109.4
+swap column (receiver + 30 a side, below the cartridge bottom): sled 0.0, flow 0.0, feet 0.0 mm³
+prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 2.44, sled + pod 4.8, receiver 1.73
+System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm³ (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3429 of 2200 g (156 %) (E) over budget (total), CG 2.0 mm off thrust axis (E) [-2.0, -0.3, -67.8], 21.1 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear
+joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):
+   hub deck: max 11.7 N per bolt (crash 35 g 6), shear 9.9, axial 11.3
+   sled to plate: max 130.2 N per bolt (crash 35 g 13), shear 64.1, axial 119.5
    receiver bolts: max 104.6 N per bolt (crash 35 g 13), shear 60.3, axial 93.1
-   flow pod: max 8.2 N per bolt (crash 35 g 3), shear 1.5, axial 8.1
-   the sled's 8 bolts clamp the stack mount and rear tray feet: each foot carries 500 N preload (E) + up to 109.4 N
+   Pi screws: max 6.7 N per bolt (crash 35 g 5), shear 6.0, axial 6.7
+   stack screws: max 3.6 N per bolt (crash 35 g 13), shear 2.5, axial 3.0
+   the 6 sled bolts pass through the hub deck feet and the plate: hub deck and sled loads add on the same M3 x 16 (inserts in the sled)
 flow pod: cantilever 54.8 under the sled rib, first mode ~1687 Hz (E; target >= 100, L)
-mass 3437 g (E), T/W 1.92 at 1650 gf a motor; CG (60.2, -0.1, 14.6)
+mass 3429 g (E), T/W 1.92 at 1650 gf a motor; CG (58.8, -0.3, 14.2)

@@ -1,35 +1,23 @@
 {
- "mass_g": 3436.68,
+ "mass_g": 3428.68,
  "tw": 1.92,
  "cg": [
-  60.24,
-  -0.13,
-  14.56
+  58.75,
+  -0.27,
+  14.21
  ],
  "requirements": {
-  "stack mount": {
+  "hub deck": {
    "worst_case": "crash 35 g 6",
-   "max_bolt_N": 4.0,
-   "max_shear_N": 3.2,
-   "max_axial_N": 3.2
-  },
-  "Pi hanger": {
-   "worst_case": "crash 35 g 5",
-   "max_bolt_N": 8.6,
-   "max_shear_N": 7.1,
-   "max_axial_N": 8.6
-  },
-  "rear tray": {
-   "worst_case": "crash 35 g 7",
-   "max_bolt_N": 10.0,
-   "max_shear_N": 5.4,
-   "max_axial_N": 9.0
+   "max_bolt_N": 11.7,
+   "max_shear_N": 9.9,
+   "max_axial_N": 11.3
   },
   "sled to plate": {
    "worst_case": "crash 35 g 13",
-   "max_bolt_N": 117.6,
-   "max_shear_N": 65.9,
-   "max_axial_N": 109.4
+   "max_bolt_N": 130.2,
+   "max_shear_N": 64.1,
+   "max_axial_N": 119.5
   },
   "receiver bolts": {
    "worst_case": "crash 35 g 13",
@@ -37,18 +25,23 @@
    "max_shear_N": 60.3,
    "max_axial_N": 93.1
   },
-  "flow pod": {
-   "worst_case": "crash 35 g 3",
-   "max_bolt_N": 8.2,
-   "max_shear_N": 1.5,
-   "max_axial_N": 8.1
+  "Pi screws": {
+   "worst_case": "crash 35 g 5",
+   "max_bolt_N": 6.7,
+   "max_shear_N": 6.0,
+   "max_axial_N": 6.7
+  },
+  "stack screws": {
+   "worst_case": "crash 35 g 13",
+   "max_bolt_N": 3.6,
+   "max_shear_N": 2.5,
+   "max_axial_N": 3.0
   }
  },
  "pod_mode_hz": 1687,
  "wash_pct": {
-  "rear tray + bays": 0.81,
-  "sled": 4.34,
-  "flow pod": 0.45,
+  "hub deck + Pi + bays": 2.44,
+  "sled + pod": 4.8,
   "receiver": 1.73
  },
  "z": {
@@ -56,10 +49,10 @@
   "pack_top": -19.89999999999999,
   "cartridge_bottom": -76.89999999999999,
   "lens": -76.89999999999999,
-  "esc": 4.0,
-  "stack_top": 21.5,
-  "pi_component_face": 40.4,
-  "pi_lowest": 24.4,
+  "esc": 6.0,
+  "stack_top": 23.5,
+  "pi_board": 22.0,
+  "cooler_top": 37.3,
   "foot": -82.89999999999999
  },
  "receiver_bolts": [
@@ -88,7 +81,7 @@
    -27.8
   ]
  ],
- "mount_holes": [
+ "feet_xy": [
   [
    24.0,
    36.5
@@ -104,9 +97,7 @@
   [
    -24.0,
    -36.5
-  ]
- ],
- "tray_holes": [
+  ],
   [
    -72.5,
    31.75
@@ -114,32 +105,24 @@
   [
    -72.5,
    -31.75
-  ],
-  [
-   -92.5,
-   25.75
-  ],
-  [
-   -92.5,
-   -25.75
   ]
  ],
- "top_holes": [
+ "pi_holes": [
   [
-   24.51,
-   24.51
+   -122.5,
+   24.5
   ],
   [
-   24.51,
-   -24.51
+   -122.5,
+   -24.5
   ],
   [
-   -24.51,
-   24.51
+   -64.5,
+   24.5
   ],
   [
-   -24.51,
-   -24.51
+   -64.5,
+   -24.5
   ]
  ],
  "arm_screws_driver_holes": [
@@ -177,11 +160,44 @@
   ]
  ],
  "budget_g": {
-  "stack mount": 8,
-  "Pi hanger": 10,
-  "rear tray": 20,
-  "sled": 70,
-  "flow pod": 8
+  "hub deck": 30,
+  "sled": 78
  },
- "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3437 of 2200 g (156 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [-0.6, -0.1, -67.4], 22.9 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 36/36 clear"
+ "system": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3429 of 2200 g (156 %) (E) over budget (total), CG 2.0 mm off thrust axis (E) [-2.0, -0.3, -67.8], 21.1 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear",
+ "coupon": {
+  "floor_t": 4.0,
+  "post_h": 5.0,
+  "post_d": 11.0,
+  "stack_p": 15.25,
+  "deck_z0": 12.0,
+  "deck_t": 6.0,
+  "z_pi": 22.0,
+  "pi_x": [
+   -146.0,
+   -61.0
+  ],
+  "rail_y": 22.0,
+  "aft_legs": [
+   [
+    -109.0,
+    24.5
+   ],
+   [
+    -109.0,
+    -24.5
+   ]
+  ],
+  "front_legs_x": -64.0,
+  "sled_t": 6.0,
+  "sled_x": [
+   -115.0,
+   58.0
+  ],
+  "sled_y": 56.0,
+  "flow": [
+   -10.0,
+   -55.0
+  ],
+  "z_plate_bot": -2.1
+ }
 }

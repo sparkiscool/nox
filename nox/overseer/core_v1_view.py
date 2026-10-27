@@ -17,19 +17,18 @@ r = json.load(open(os.path.join(RUN, "result.json")))
 M = {p["name"]: trimesh.load(os.path.join(ROOT, p["mesh"])) for p in man["parts"]}
 part = {p["name"]: p for p in man["parts"]}
 
-CORE = {  # name: (colour, step, fly-in direction)
-    "sled": ("#4c9be8", 0, (0, 0, -1)), "hub frame": ("#e8834c", 1, (0, 0, 1)), "FC MicoAir743-Lite": ("#2e7d32", 2, (0, 0, 1)),
-    "Pi 5 + active cooler": ("#43a047", 3, (0, 0, 1)), "power tray": ("#e8b04c", 4, (-1, 0, 0)), "PDB FCHUB-12S": ("#7cb342", 5, (-1, 0, 0)),
-    "UBEC 5 V": ("#9ccc65", 5, (-1, 0, 0)), "buck 12 V": ("#9ccc65", 5, (-1, 0, 0)), "RX XR2": ("#c5e1a5", 5, (-1, 0, 0)),
-    "skid L (down camera pod)": ("#7e57c2", 6, (0, 1, 0)), "skid R (flow pod)": ("#7e57c2", 6, (0, -1, 0)),
-    "down camera": ("#26a69a", 7, (0, 1, -1)), "flow MTF-02P": ("#26a69a", 7, (0, -1, -1)), "TPU feet": ("#424242", 8, (0, 0, -1)),
-    "wires": ("#d84315", 9, (0, 0, 1)), "receiver": ("#8899aa", 10, (0, 0, -1)), "XT60 pair": ("#fbc02d", 10, (0, 0, -1)),
-    "cartridge": ("#b0bec5", 11, (0, 0, -1)), "pack": ("#37474f", 11, (0, 0, -1)),
+STACK_NM, PI_NM = "FC stack (MicoAir743-Lite on 55A 4-in-1)", "Pi 5 + Active Cooler"
+CORE = {  # name: (colour, assembly step, fly-in direction)
+    "sled": ("#4c9be8", 0, (0, 0, -1)), "hub deck": ("#e8834c", 1, (0, 0, 1)), STACK_NM: ("#2e7d32", 2, (0, 0, 1)), "ESC cap": ("#9ccc65", 2, (0, 0, 1)),
+    "UBEC 5 V": ("#9ccc65", 3, (-1, 0, 0)), "buck 12 V": ("#9ccc65", 3, (-1, 0, 0)), "RX XR2": ("#c5e1a5", 3, (1, 0, 0)),
+    PI_NM: ("#43a047", 4, (0, 0, 1)), "flow MTF-02P": ("#26a69a", 5, (0, -1, -1)), "wires": ("#d84315", 6, (0, 0, 1)),
+    "receiver": ("#8899aa", 7, (0, 0, -1)), "XT60 pair": ("#fbc02d", 7, (0, 0, -1)), "cartridge": ("#b0bec5", 8, (0, 0, -1)), "pack": ("#37474f", 8, (0, 0, -1)),
+    "TPU feet (cage session, placeholders)": ("#424242", 9, (0, 0, -1)),
 }
 s = Scene("Overseer Core",
-          f"Everything inside the cage but the arms (core v1, system pass): hub frame, power tray, sled, two skids with the camera and "
-          f"flow pods, TPU feet; the real latch set in pose (mechanism not designed). Drone {r['mass_g']:.0f} g (E), belly to z "
-          f"{r['z']['floor']:.1f}. Grey: v5 cage, arms, plates, sensor head (context).")
+          f"Everything inside the cage but the arms (core v1 round 3): two printed pieces, the hub deck (FC stack, Pi 5, UBEC, buck, RX) and "
+          f"the sled (receiver face, flow pod); every screw straight down with a screwdriver in this order. Real latch set in pose (mechanism "
+          f"not designed). Drone {r['mass_g']:.0f} g (E). Grey: v5 cage, arms, plates, sensor head (context).")
 for n, m in M.items():
     if n.startswith("prop"):
         continue
@@ -39,7 +38,7 @@ for n, m in M.items():
     else:
         s.part(n, m, group="context (v5)", color="#c8c8c8" if "cage" not in n else "#dddddd", printed=False)
 
-STEP_S, N_STEP, FLY = 0.8, 12, 160.0
+STEP_S, N_STEP, FLY = 0.9, 10, 160.0
 
 
 def poses(t):
@@ -89,45 +88,33 @@ def draw(ax, geom, color, alpha=0.85, lw=0.4, ec="k"):
 
 fig, axs = plt.subplots(1, 3, figsize=(21, 7.2), gridspec_kw={"width_ratios": [1.45, 1.45, 0.95]})
 ctx_side = ["top plate", "bottom plate", "arm 1", "arm 2", "apex + cam bracket", "Unitree L2", "motor 1", "motor 2"]
-order = ["pack", "cartridge", "receiver", "XT60 pair", "sled", "skid L (down camera pod)", "hub frame", "FC MicoAir743-Lite", "Pi 5 + active cooler",
-         "power tray", "PDB FCHUB-12S", "UBEC 5 V", "buck 12 V", "RX XR2", "down camera", "TPU feet", "wires"]
-for ax, (i, j, title) in zip(axs[:2], ((0, 2, "Side (x forward, z up), from -y"), (0, 1, "Top (x forward, y left), cage and plates hidden"))):
-    for n in (ctx_side if i == 0 and j == 2 else ["arm 1", "arm 2", "arm 3", "arm 4", "bottom plate"]):
+order = ["pack", "cartridge", "receiver", "XT60 pair", "sled", "hub deck", STACK_NM, "ESC cap", PI_NM, "UBEC 5 V", "buck 12 V", "RX XR2", "flow MTF-02P", "wires"]
+for ax, (i, j, title) in zip(axs[:2], ((0, 2, "Side (x forward, z up), from -y"), (0, 1, "Top (x forward, y left), cage and top plate hidden"))):
+    for n in (ctx_side if j == 2 else ["arm 1", "arm 2", "arm 3", "arm 4", "bottom plate"]):
         draw(ax, proj(M[n], i, j), "#d0d0d0", 0.6, 0.3, "#999")
-    for n in (order if j == 2 else [o for o in order if o not in ("pack", "cartridge", "wires")][::-1]):
-        if n in ("skid R (flow pod)",) and j == 2: continue
+    for n in (order if j == 2 else [o for o in order if o not in ("pack", "cartridge", "wires", "receiver", "XT60 pair", "sled")] + []):
         draw(ax, proj(M[n], i, j), CORE[n][0], 0.9 if part[n]["role"] == "structure" else 0.75)
-    if j == 1:
-        draw(ax, proj(M["skid R (flow pod)"], i, j), CORE["skid R (flow pod)"][0], 0.9)
-        draw(ax, proj(M["flow MTF-02P"], i, j), CORE["flow MTF-02P"][0], 0.9)
-        for x, y in r["arm_screws_driver_holes"]:
-            ax.add_patch(plt.Circle((x, y), 4.5, fc="white", ec="#c62828", lw=1.0))
-        for x, y in r["receiver_bolts"]:
-            ax.plot(x, y, "s", ms=4, color="#0d47a1")
-        for x, y in r["plate_bolts"]:
-            ax.plot(x, y, "o", ms=4, color="#e65100")
     ax.set_title(title, fontsize=11); ax.set_aspect("equal"); ax.grid(alpha=0.25)
+for x, y in r["feet_xy"]:
+    axs[1].add_patch(plt.Circle((x, y), 2.5, fc="white", ec="#c62828", lw=1.2))
+for x, y in r["pi_holes"]:
+    axs[1].add_patch(plt.Circle((x, y), 1.8, fc="white", ec="#1565c0", lw=1.2))
+axs[1].axvline(-60.2, color="#555", lw=0.8, ls="--"); axs[1].text(-58, 90, "top plate edge", fontsize=8)
+axs[1].text(-155, -95, "red rings: 6 M3 hub deck + sled bolts (straight down); blue: 4 Pi screws (reachable with the top plate on)", fontsize=7.5)
 cg = r["cg"]
 axs[0].plot(cg[0], cg[2], "x", color="#c62828", ms=12, mew=2); axs[0].annotate("CG", (cg[0], cg[2]), (cg[0] + 8, cg[2] + 8), color="#c62828")
-axs[0].axhline(r["z"]["floor"], color="#555", lw=0.8, ls="--"); axs[0].text(-140, r["z"]["floor"] - 9, f"floor z {r['z']['floor']:.1f}", fontsize=8)
-axs[0].set_xlim(-160, 460); axs[0].set_ylim(-100, 160)
-axs[1].set_xlim(-160, 160); axs[1].set_ylim(-100, 100)
-lab = [("hub frame", (40, 30, 34)), ("Pi 5 + active cooler", (-9, 0, 34)), ("power tray", (-80, 0, 4)), ("sled", (-60, 0, -5)),
-       ("receiver", (-30, 0, -45)), ("skid L (down camera pod)", (100, 0, -65))]
-for n, (x, y, z) in lab:
-    axs[0].annotate(n.split(" (")[0], (x, z), (x + 30, z + 25 if z > 0 else z - 22), fontsize=8, arrowprops=dict(arrowstyle="-", lw=0.6))
-axs[1].text(-155, -95, "white rings: Ø9 driver holes under the 8 arm bottom screws; squares: receiver bolts; dots: plate bolts", fontsize=7.5)
-# section at the pods
-ax = axs[2]; x0 = -10.0
-for n in ["bottom plate", "top plate", "arm 2", "arm 3"] + order + ["skid R (flow pod)", "flow MTF-02P"]:
+axs[0].set_xlim(-170, 460); axs[0].set_ylim(-100, 160)
+axs[1].set_xlim(-170, 160); axs[1].set_ylim(-100, 100)
+for n, (x, z, dx, dz) in {"hub deck": (-30, 2, 10, -40), PI_NM: (-100, 30, -40, 55), STACK_NM: (0, 18, 40, 50), "sled": (-60, -5, 80, -40), "receiver": (-30, -45, 120, -30), "flow MTF-02P": (-10, -74, 150, -10)}.items():
+    axs[0].annotate(n.split(" (")[0].replace(" + Active Cooler", ""), (x, z), (x + dx, z + dz), fontsize=8, arrowprops=dict(arrowstyle="-", lw=0.6))
+ax = axs[2]; x0 = -100.0
+for n in ["bottom plate", "arm 2", "arm 3"] + order:
     if n not in M: continue
     for pg in (section_x(M[n], x0) or []):
         draw(ax, pg, CORE[n][0] if n in CORE else "#d0d0d0", 0.9)
-ax.axhline(r["z"]["floor"], color="#555", lw=0.8, ls="--")
-ax.set_title(f"Section at x {x0:.0f} (the pods), looking forward", fontsize=11); ax.set_aspect("equal"); ax.grid(alpha=0.25)
-ax.set_xlim(-95, 95); ax.set_ylim(-100, 60); ax.set_xlabel("y (left)"); ax.invert_xaxis()
-fig.suptitle(f"Overseer core v1 (system pass): CG {r['cg'][0]:.1f}, {r['cg'][1]:.1f}, {r['cg'][2]:.1f}; tip-over fwd {r['tip_deg']['forward']:.0f}°, "
-             f"back {r['tip_deg']['back']:.0f}°, side {r['tip_deg']['side']:.0f}°; pack top z {r['z']['pack_top']:.1f}, cartridge bottom z "
-             f"{r['z']['cartridge_bottom']:.1f} (E)", fontsize=12)
+ax.set_title(f"Section at x {x0:.0f} (Pi deck, UBEC, lead channel), looking forward", fontsize=11); ax.set_aspect("equal"); ax.grid(alpha=0.25)
+ax.set_xlim(-60, 60); ax.set_ylim(-85, 50); ax.set_xlabel("y (left)"); ax.invert_xaxis()
+fig.suptitle(f"Overseer core v1 round 3: 2 printed pieces; CG {cg[0]:.1f}, {cg[1]:.1f}, {cg[2]:.1f}; {r['mass_g']:.0f} g, T/W {r['tw']} (E); "
+             f"stack top z {r['z']['stack_top']}, Pi cooler top z {r['z']['cooler_top']:.1f} under the 45 gap", fontsize=12)
 fig.tight_layout(); fig.savefig(os.path.join(RUN, "preview.png"), dpi=110)
 print("wrote", os.path.join(RUN, "motion.html"), os.path.join(RUN, "preview.png"))
