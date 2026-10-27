@@ -82,7 +82,7 @@ a { color: var(--accent); }
 <header>
   <div class="eyebrow">Nox · box · master view · <span id="updated"></span></div>
   <h1>Nox Ground Unit</h1>
-  <p class="lede">The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved: the landing mechanism is being designed by the design center. There is no funnel any more.</p>
+  <p class="lede"><b>3D assembly from the real mesh files:</b> <a href="https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG" target="_blank" rel="noopener">Nox Ground Unit 3D</a> (orbit, pick, the swap cycle, explode, section). The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved: the landing mechanism is being designed by the design center. There is no funnel any more.</p>
   <div class="pills" id="pills"></div>
 </header>
 
@@ -120,7 +120,7 @@ a { color: var(--accent); }
 <script>
 // ---------- DATA: the only block the master session edits on an update ----------
 const D = {
-  updated: "27 Oct 2026, 02:10 PT",
+  updated: "27 Oct 2026, 02:30 PT",
   master: "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X",
   pills: [
     ["enclosure", "418 x 409 x 470 mm, 80.4 L (C / E)"],
@@ -128,6 +128,7 @@ const D = {
     ["structure", "38 PETG pieces + 8 TPU feet, 5144 g (M, cut PR 113)"],
     ["arm", "~2900 g (E)"], ["electronics + PSU", "~2000 g (E)"],
     ["top", "RESERVED: landing mechanism, design center"],
+    ["3D", "assembled from the real mesh files: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG"],
   ],
   W: { X_IN: 206, Y_BACK: -66, Y_FRONT: 337, FLOOR: -236, Z_TOP: 234, R: 113, Y_C: 167.1, sheet: 3 },
   bays: [ [30, "scout"], [0, "overseer"], [-30, "scout"], [-60, "overseer"], [-90, "scout"], [-120, "overseer"], [-150, "scout"], [-180, "overseer"], [-210, "scout"] ],
@@ -167,7 +168,7 @@ const D = {
       next: "<b>Design center:</b> the concept check on PR 128 vs PR 125, then the system pass on the box top (V-blocks, tag plate, clamps; landing 6 g at the feet, swap pull 50 N, hand lift 100 N), then its pieces. The structure session carries its interface in the top frame as DEFAULT until it merges. <b>This page only reserves the slot.</b>",
       visuals: [["Box landing v1", "https://claude.ai/artifact/Nh3LqpJzkExyn8Vsk2C3Uw"], ["Catch concepts", "https://claude.ai/artifact/F5b6L8uScqbaDSsXPXTSmz"]] },
     { id: "arm", name: "Swap arm", state: ["warn", "DESIGN"],
-      owner: ["arm session", "https://claude.ai/code/session_01EtHMZNRLY3ruhuLzMZPL9D"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Hub v7", "v7", ["ok", "BUILT"], "solid PASS, 213.3 g (M); swap 0.524 (F) at a corner = strike 1; corner check next", "PR 111"],
         ["Heads A / B v7 (carriage, head body, grabber)", "v7", ["warn", "DESIGN"], "paused 24 Oct at ckpt 17 on part/heads-v7; the arm session resumes it", "box/box-arm.md v7"],
@@ -180,7 +181,7 @@ const D = {
       next: "Heads v7 to solid PASS; the hub v7 corner check; the assembled recheck at Y 167.1 that moves the pieces to READY; stub v3 recheck against the v2 mast.",
       visuals: [["Hub v7 system pass", "https://claude.ai/artifact/RaBgZMUzC9PBK6gHi5waDJ"], ["Heads v7 grabber", "https://claude.ai/artifact/JWnuGJqAAvRXxATL5hyBya"], ["Arm v7 alternatives", "https://claude.ai/artifact/F7cY19HjCUZFY53HUB5k6d"]] },
     { id: "latch", name: "Battery latch (one standard for every pack)", state: ["warn", "DESIGN"],
-      owner: ["latch session", "https://claude.ai/code/session_01EtHMZMkaQBx4ntdsV5jwR6"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Scout set: cartridge v7, TPU skids v2 + strips, sliders v6 x2, receiver v3 + XT60 carrier v2 + lid, TPU end pieces", "v7 / v6 / v3", ["hold", "HOLD"], "165.3 g per drone set, 157.1 per bay set (M); 6 sets; solid PASS on all 11; HOLD until the Scout v3 pass reads fit 0", "runs/battery_latch/v4"],
         ["Overseer set: cartridge v6, sliders v6 x2, receiver v2 (66.8 wide) + carrier v1 + lid, TPU strips", "v6 / v2", ["warn", "DESIGN"], "338.5 g per set (M); 5 sets; solid PASS on all 6; open: mount bolts past the cartridge rail zone", "runs/battery_latch/v4"],
@@ -189,7 +190,7 @@ const D = {
       next: "Overseer receiver mount bolts; the tag plate and pads; the Scout set to READY once the Scout v3 bottom passes (receiver bolts (−41.7 / 43.25, ±25.6), M3 x 35 DEFAULT).",
       visuals: [["Battery latch v1", "https://claude.ai/artifact/MX2dpRcjHegntjHvqp6U8x"]] },
     { id: "structure", name: "Box structure v2 (stand, bay bodies, enclosure, feet)", state: ["warn", "DESIGN"],
-      owner: ["structure session", "https://claude.ai/code/session_01EtHMZMp1XAMtMif3KyT5Xq"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Layout v2: 9 bays at R 113, grip line 167.1, enclosure 418 x 409 x 470", "v2", ["ok", "CONCEPT PASS"], "fit 0.0 mm³, access 18 / 18 (E / M); alternatives B (bottom Overseer) and C (R 128) weighed", "runs/box_system/v2/layout"],
         ["System topology round 2: one floor-standing body, 3000 cm³", "r2", ["ok", "RUN"], "3886 g generated (E); stub tilt 0.41 mrad, bay rotation 1.8 mrad (M on h 8)", "runs/box_system/v2/topo_r2"],
@@ -200,7 +201,7 @@ const D = {
       next: "Fix the cut's review findings on the new top, rerun the system FE, write the piece requirements, then every piece run to solid PASS and READY; sheets' cut list for R 113.",
       visuals: [["Box v2 layouts", "https://claude.ai/artifact/Mn5JGDkjEGSQXyPhjqrpxb"], ["Layout assembly 3D", "https://claude.ai/artifact/AioyNWKzpTH96znsmfrAXp"], ["Box v2 topology", "https://claude.ai/artifact/1JYZSHTs8E6Y2jHTnyAZAs"], ["The cut and system FE", "https://claude.ai/artifact/FzJg3vz6Z8UnnUaerm5h3p"]] },
     { id: "elec", name: "Box electronics", state: ["warn", "DESIGN v1"],
-      owner: ["electronics session", "https://claude.ai/code/session_01EtHMZL5a6fGTAzBc42XPEF"],
+      owner: ["box master (on hold: no design yet, Spark 27 Oct)", "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X"],
       parts: [
         ["Supply + distribution: LRS-350-24, IEC inlet, 6-way fuse box, E-stop on the motion branch", "v1", ["ok", "DESIGNED"], "296 W peak (E); PSU selector to 115 V", "box/box-electronics.md"],
         ["Box computer + I/O: Pi 4, PCA9685, 4 x INA226, ADS1115 + halls, SKR Mini E3 (Klipper)", "v1", ["ok", "DESIGNED"], "to buy (parts-list rows)", "box/box-electronics.md"],
@@ -244,6 +245,7 @@ const D = {
     "<b>Head brake bench drop</b> before the first Overseer swap; strength and XT60 force tests dropped (assumed numbers).",
   ],
   log: [
+    ["27 Oct 02:30 PT", "Spark: no design work yet, an assembled artifact from the real CAD files. The four part sessions stopped and archived (nothing merged). 3D assembly published: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG (143 real meshes in W: cut pieces of PR 113, arm v7 with its cycle, receivers and cartridges, electronics, sheets, the reserved top slot)."],
     ["27 Oct 02:10 PT", "The four part sessions restarted with the repo attached (the first four had none, archived); owner links updated."],
     ["27 Oct 02:05 PT", "Page created by the box master session. Top slot reserved for the design center's landing mechanism (no funnel; panels v7 / v9 and the hook latch superseded, files kept). Four part sessions started: swap arm, battery latch, structure v2, electronics v2. Every merged box PR lands here as one line."],
   ],
