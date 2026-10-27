@@ -27,4 +27,5 @@ Check, in this order, and stop at the first hard failure:
 10. Visual (CLAUDE.md "Every idea comes with a visual"): a PR that introduces or changes a design links its visual (artifact URL in `summary.md` or the PR body, source committed). Missing: FAIL.
 11. Carbon where its length earns it (`docs/generative.md` The rule, 0): the summary lists carbon rods (count, shortest length) and printed struts. A carbon rod shorter than the break-even length stated there without a stated reason, or no such list on a drone, cage or mount PR: FAIL.
 
+13. Materials (CLAUDE.md "PETG rigid"): every rigid printed part and every cage node is PETG (a node script's `Part(..., material=...)`, the summary's mass tag); TPU only for feet, skids and strips; no PLA. A TPU cage node is a FAIL (Spark 27 Oct).
 Report: PASS or FAIL in the first line, then at most 8 lines of findings, each with the file and line. No praise, no summary of the PR.

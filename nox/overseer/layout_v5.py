@@ -126,6 +126,7 @@ PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
 HEAD_ON_CAGE = os.environ.get("V5_HEAD_ON", "core") == "cage"          # alt (V5_HEAD_ON=cage): the head on the cage's front centre node only, no keels,
 # braces or wing struts (Spark 27 Oct tried it: ~32 Hz on TPU nodes, F on E, runs/overseer_head_cage/concept); Spark then: "keep the design we have
 # right now i need the lidar to have max performance": the keels and L2 braces stay (A, the stiffest: 200 / 119 Hz rigid / TPU)
+LINKN = "spokes, ties, keels, braces, head struts" if os.environ.get("V5_HEAD", "printed") == "printed" else "spokes, ties, keels, L2 guard ring"
 HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
 CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
                                                                    # ties, guard ring and its struts, camera guards and brackets) become one printed
@@ -1001,8 +1002,8 @@ rel = lambda p_: os.path.relpath(p_, ROOT)
 node_m = lambda c_: trimesh.creation.icosphere(1, NODE_R).apply_translation(c_)
 grp, grp_mc = {}, {}
 for n_, gm, _c in it:
-    k = ("shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else ("head" if PRINTED_HEAD else "halo nodes") if n_.startswith("halo node") else "head" if n_.startswith("head ")
-         else "links" if n_.split()[0] in ("spoke", "core", "L2", "bay", "keel", "halo", "cam") and n_ != "L2" and not n_.startswith(("cam plate", "cam strut"))
+    k = ("shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else ("head" if PRINTED_HEAD else "halo nodes") if n_.startswith("halo node") else "head" if n_.startswith("head ") and not n_.startswith("head strut")
+         else "links" if n_.startswith("head strut") or n_.split()[0] in ("spoke", "core", "L2", "bay", "keel", "halo", "cam") and n_ != "L2" and not n_.startswith(("cam plate", "cam strut"))
          else "hub" if n_ in ("Pi 5", "FC", "PDB", "UBEC", "buck", "RX", "Pi deck") else "belly" if n_ in ("sled", "flow_pod") else
          "feet" if n_.startswith("foot") else ("head" if PRINTED_HEAD else "L2 mount") if n_ in ("apex", "cam plate") or n_.startswith("cam strut") else n_)
     grp[k] = grp.get(k, 0.0) + gm; grp_mc[k] = grp_mc.get(k, 0.0) + gm * np.asarray(_c, float)
@@ -1010,7 +1011,7 @@ links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items(
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
     ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
-    ("spokes, ties, keels, braces, head struts" if PRINTED_HEAD else "spokes, ties, keels, L2 guard ring", links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
+    (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
     *([(HEADN, trimesh.util.concatenate([g["apex"], g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
                                         + [trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]),
@@ -1155,7 +1156,7 @@ SHELL_SPEC = dict(nodes=np.round(nodes, 3).tolist(), rods=[list(map(int, e)) for
                   open=[dict(name="bottom opening (pack + swap)", ring=[int(i) for i in np.where(nodes[:, 2] < g["z_o"] + 0.5)[0]])],
                   node_r_mm=NODE_R, rod_r_mm=SHELL_R)
 json.dump(SHELL_SPEC, open(os.path.join(OUT, "cage_shell.json"), "w"))
-GRP_OF = {"cage shell tubes": "shell", "cage shell nodes": "nodes", "spokes, ties, keels, L2 guard ring": "links", "L2 guard ring nodes": "halo nodes",
+GRP_OF = {"cage shell tubes": "shell", "cage shell nodes": "nodes", LINKN: "links", "L2 guard ring nodes": "halo nodes",
           "TPU feet": "feet", "apex + cam bracket": "L2 mount", HEADN: "head", "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)": "hub", "belly sled + pods": "belly"}
 if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_START", "V5_STARTS", "V5_PACK", "V5_ROTS", "V5_SNAPS", "V5_PEAKS", "V5_DOME", "V5_DOMES", "V5_SLACK")) and os.path.abspath(OUT) == os.path.join(ROOT, "runs", "overseer_layout", "v5")):
     asm_parts = []
@@ -1169,19 +1170,19 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
         if sw_: p_["swap"] = True
         asm_parts.append(p_)
     hubn = "hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)"
-    contact = [["wires", hubn], ["pack", "cartridge"], ["pack", "receiver"], ["cartridge", "receiver"], ["belly sled + pods", "receiver"], ["cage shell tubes", "cage shell nodes"], ["spokes, ties, keels, L2 guard ring", "cage shell nodes"], ["spokes, ties, keels, L2 guard ring", "L2 guard ring nodes"],
-               ["spokes, ties, keels, L2 guard ring", "cage shell tubes"], ["spokes, ties, keels, L2 guard ring", "bottom plate"], ["spokes, ties, keels, L2 guard ring", "apex + cam bracket"],
-               ["spokes, ties, keels, L2 guard ring", "belly sled + pods"], ["Unitree L2", "apex + cam bracket"], ["camera left", "apex + cam bracket"], ["camera right", "apex + cam bracket"],
+    contact = [["wires", hubn], ["pack", "cartridge"], ["pack", "receiver"], ["cartridge", "receiver"], ["belly sled + pods", "receiver"], ["cage shell tubes", "cage shell nodes"], [LINKN, "cage shell nodes"], [LINKN, "L2 guard ring nodes"],
+               [LINKN, "cage shell tubes"], [LINKN, "bottom plate"], [LINKN, "apex + cam bracket"],
+               [LINKN, "belly sled + pods"], ["Unitree L2", "apex + cam bracket"], ["camera left", "apex + cam bracket"], ["camera right", "apex + cam bracket"],
                ["apex + cam bracket", "bottom plate"], ["apex + cam bracket", "top plate"], ["belly sled + pods", "cartridge"],
                ["belly sled + pods", "flow MTF-02P"], ["belly sled + pods", "TPU feet"], ["belly sled + pods", "bottom plate"],
                [hubn, "bottom plate"], [hubn, "top plate"]]
     for i in range(1, 5):
-        contact += [[f"arm {i}", "top plate"], [f"arm {i}", "bottom plate"], [f"motor {i}", f"arm {i}"], ["spokes, ties, keels, L2 guard ring", f"arm {i}"], [f"arm {i}", hubn]]
+        contact += [[f"arm {i}", "top plate"], [f"arm {i}", "bottom plate"], [f"motor {i}", f"arm {i}"], [LINKN, f"arm {i}"], [f"arm {i}", hubn]]
     if PRINTED_HEAD:                                                   # the two head parts are one printed part now
         contact = [[HEADN if q_ in ("apex + cam bracket", "L2 guard ring nodes") else q_ for q_ in c_] for c_ in contact]
         contact = [c_ for c_ in contact if c_[0] != c_[1]] + [[HEADN, "cage shell nodes"], [HEADN, "cage shell tubes"]]
     asm = new_assembly("Overseer", "overseer", asm_parts,
-                       note=("Layout v5 / cage v3 (26 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the two cameras (27 Oct: no down camera, the pair beside the L2) outside "
+                       note=("Layout v5 / cage v5 (26-27 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the two cameras (27 Oct: no down camera, the pair beside the L2) outside "
                              "it with nothing in their views, a guard ring behind the L2; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
                              "layout v4 / cage v2. Rough layout: C geometry on E sizes. "
                              "Drone frame: x fwd, y left, z up, z 0 bottom plate top. Left out: ESC bodies (25 g each in the arm masses), catch features "

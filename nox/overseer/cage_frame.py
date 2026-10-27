@@ -129,9 +129,9 @@ def main():
     say(f"# Overseer cage frame model v1 (F, on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 cage tubes, {K_CORE} links with a core end, 0.5 keels / braces (PETG both ends), E)\n")
     say(f"Cage `nox/overseer/cage_v5_shell.json` ({len(N)} nodes, {len(CG['rods'])} tubes 6/4, {cage_g:.0f} g E) + {len(links)} links on the core (fixed; "
         f"{sum(k in LINK6 for k in links)} tube 6/4, the rest rod 3.0); "
-        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and struts to nodes {struts}. Drone {MASS * 1000:.0f} g: crash force "
+        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and struts to nodes {struts}. Drone {MASS * 1000:.0f} g (E): crash force "
         f"{F_crash:.0f} N through the first-touching member, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
-    say(f"Lowest modes (rigid joints, lumped masses, the head {M_HEAD * 1000:.0f} g at its mount): " + ", ".join(f"{h_:.0f} Hz" + (" (the head moves)" if hd[k] > 0.3 else "")
+    say(f"Lowest modes (rigid joints, lumped masses, the head {M_HEAD * 1000:.0f} g (E) at its mount): " + ", ".join(f"{h_:.0f} Hz" + (" (the head moves)" if hd[k] > 0.3 else "")
         for k, h_ in enumerate(hz)) + "; TPU joints and the head's own mode: runs/overseer_head_cage/concept/.\n")
     say(f"## Buckling (k L): {len(bad_b)} members at or over 1.0 x their Euler load")
     for b_, k, L in bad_b[:20]: say(f"- {k}: {b_:.2f} x Pcr (L {L:.0f}; {worst[k]['case_b']})")

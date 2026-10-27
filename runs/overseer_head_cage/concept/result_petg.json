@@ -1,0 +1,163 @@
+[
+ {
+  "var": "A+4 struts",
+  "soft": true,
+  "buckle": [
+   1.39,
+   "tube 3-18",
+   "nose hit 4"
+  ],
+  "sigma": [
+   201,
+   "bay tie -1-1.1",
+   "crash 13 via node 12"
+  ],
+  "nose_defl": 1.61,
+  "inertia_defl": 0.23,
+  "frame_modes_hz": [
+   125.7,
+   178.4,
+   215.9
+  ],
+  "head_mode_hz": 206.0,
+  "over": {
+   "core tie left.2": 1.31,
+   "tube 1-19": 1.39,
+   "tube 3-18": 1.39,
+   "core tie front.2": 1.05,
+   "bay tie -1+1.2": 1.14,
+   "bay tie -1-1.2": 1.14,
+   "tube 11-18": 1.26,
+   "core tie right.2": 1.31,
+   "tube 12-19": 1.26
+  },
+  "carbon_g": 59.97093502884369,
+  "struts": [
+   15,
+   16,
+   18,
+   19
+  ],
+  "tops": [],
+  "joints": "PETG E 2000 (E)"
+ },
+ {
+  "var": "A",
+  "soft": true,
+  "buckle": [
+   1.74,
+   "tube 15-16",
+   "nose hit 4"
+  ],
+  "sigma": [
+   207,
+   "bay tie -1+1.1",
+   "crash 11 via node 11"
+  ],
+  "nose_defl": 1.71,
+  "inertia_defl": 0.31,
+  "frame_modes_hz": [
+   125.3,
+   169.4,
+   188.3
+  ],
+  "head_mode_hz": 163.5,
+  "over": {
+   "core tie left.2": 1.29,
+   "tube 1-19": 1.33,
+   "tube 3-18": 1.33,
+   "tube 15-16": 1.74,
+   "core tie front.2": 1.11,
+   "bay tie -1+1.2": 1.07,
+   "bay tie -1-1.2": 1.07,
+   "tube 11-18": 1.35,
+   "core tie right.2": 1.29,
+   "tube 12-19": 1.35
+  },
+  "carbon_g": 44.13994394311316,
+  "struts": [],
+  "tops": [],
+  "joints": "PETG E 2000 (E)"
+ },
+ {
+  "var": "D",
+  "soft": true,
+  "buckle": [
+   2.05,
+   "tube 15-16",
+   "nose hit 4"
+  ],
+  "sigma": [
+   209,
+   "bay tie -1+1.1",
+   "crash 11 via node 11"
+  ],
+  "nose_defl": 2.3,
+  "inertia_defl": 0.96,
+  "frame_modes_hz": [
+   105.5,
+   125.1,
+   150.1
+  ],
+  "head_mode_hz": 95.9,
+  "over": {
+   "core tie front.2": 1.33,
+   "core tie left.2": 1.29,
+   "tube 1-19": 1.75,
+   "tube 3-18": 1.75,
+   "tube 15-16": 2.05,
+   "bay tie -1+1.2": 1.39,
+   "bay tie -1-1.2": 1.39,
+   "tube 11-18": 1.29,
+   "core tie right.2": 1.29,
+   "tube 12-19": 1.29
+  },
+  "carbon_g": 4.740295525054871,
+  "struts": [],
+  "tops": [
+   [
+    7,
+    195
+   ]
+  ],
+  "joints": "PETG E 2000 (E)"
+ },
+ {
+  "var": "B",
+  "soft": true,
+  "buckle": [
+   2.52,
+   "tube 15-16",
+   "nose hit 4"
+  ],
+  "sigma": [
+   325,
+   "core tie front.2",
+   "nose hit 0"
+  ],
+  "nose_defl": 5.87,
+  "inertia_defl": 2.58,
+  "frame_modes_hz": [
+   64.0,
+   99.8,
+   125.3
+  ],
+  "head_mode_hz": 58.8,
+  "over": {
+   "core tie front.2": 1.55,
+   "core tie left.2": 1.28,
+   "tube 1-19": 1.88,
+   "tube 3-18": 1.88,
+   "tube 15-16": 2.52,
+   "bay tie -1+1.2": 1.51,
+   "bay tie -1-1.2": 1.51,
+   "tube 11-18": 1.3,
+   "core tie right.2": 1.28,
+   "tube 12-19": 1.3
+  },
+  "carbon_g": 0.0,
+  "struts": [],
+  "tops": [],
+  "joints": "PETG E 2000 (E)"
+ }
+]
