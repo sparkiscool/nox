@@ -1,0 +1,79 @@
+Scout v3 belly mount, concept v1: system pass on main's assembly (layout v12, catch 5.0 forward, camera mount v1, tail bay PR 130)
+FC: on the plate's 25.5 AIO holes at x 0 (as built, P; CHECK the hole positions on the plate), z 9.5..17.5 (H: lowest point 9 below the plate). Gaps: plate 1.0, receiver 0.90 (its rib at x 3..6.5, top 8.6) against the 2.0 rule: both short (C on E)
+FC stack (E): M2 x 12 from the plate top, spacer 15.3..18.5, grommet flanges (14.299999999999999, 15.299999999999999) / (11.7, 12.7), PCB 12.7..14.3, M2 nut 10.1..11.7 in the receiver's tray (floor 5.6)
+flow clear-air test: contracted (E)
+flow search: rejected by fit 2045236, under the swap set 12977, funnel band 317672, cage hull 40858, cone 135425, wash 61939; of the feasible, 0 also pass the column measure
+flow search: 2622456 poses, 8349 feasible before the strut (62 s)
+   x-: 2411 poses, x -6..6, y 38..54, z_b -40..-22
+   x+: 2406 poses, x -6..6, y 38..54, z_b -40..-24
+   y-: 1774 poses, x -8..78, y 0..52, z_b -40..-28
+   y+: 1758 poses, x -8..78, y 0..46, z_b -40..-28
+flow search: 518 with a clear strut (375 s)
+USB-C search: 890 clear (side, x, azimuth, elevation) of 11662; best: side +y, port x 5.0, azimuth -10.0, elevation +0.0 deg
+flow picked: centre (0, -40), z -30..-22, long side along x, plug end -x, strut 31.1 (search), post at (0.0, -30.5), inside the swap column below the funnel band
+flow search, best 5 (score, x, y, z_b, strut, anchor, start, bend, in column, orientation): (np.float64(45.2962), np.float64(0.0), np.float64(40.0), np.float64(-30.0), 31.1, np.True_, 'x-'); (np.float64(45.2963), np.float64(0.0), np.float64(40.0), np.float64(-30.0), 31.1, np.True_, 'x+'); (np.float64(45.2982), np.float64(-2.0), np.float64(40.0), np.float64(-30.0), 31.1, np.True_, 'x-'); (np.float64(45.2982), np.float64(2.0), np.float64(40.0), np.float64(-30.0), 31.1, np.True_, 'x-'); (np.float64(45.2983), np.float64(-2.0), np.float64(40.0), np.float64(-30.0), 31.1, np.True_, 'x+')
+belly mount: 25.2 g as printed (2.4 walls + 20 %, E; solid 28.7 g), CG (1.8, -7.5, 8.7), bounds [-44.0, -50.0, -32.0] .. [53.3, 31.6, 18.5], solid_check PASS {'bodies_plain': 1, 'bodies_eroded': 1, 'eroded_volumes_mm3': [13325.9], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [], 'acute_edges': 2, 'ok': True}
+fit table (every pair within 10 of the belly mount, the flow and the FC; >= 2.0 or a declared face contact <= 0.05 mm3):
+   belly mount (PETG) / frame plate (Bee35 carbon): overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   belly mount (PETG) / FC: overlap 0.000 mm3, gap 2.00, >= 2: PASS
+   belly mount (PETG) / flow MTF-02P: overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   belly mount (PETG) / receiver v3 (latch): overlap 0.000 mm3, gap 0.00, declared contact: PASS
+   belly mount (PETG) / receiver lid (latch): overlap 0.000 mm3, gap 0.00, declared contact: PASS
+   belly mount (PETG) / receiver TPU strips (latch): overlap 0.000 mm3, gap 6.10, >= 2: PASS
+   belly mount (PETG) / XT60E1-M: overlap 0.000 mm3, gap 8.20, >= 2: PASS
+   belly mount (PETG) / cartridge v6 (latch): overlap 0.000 mm3, gap 7.50, >= 2: PASS
+   belly mount (PETG) / slider -y (latch): overlap 0.000 mm3, gap 7.66, >= 2: PASS
+   belly mount (PETG) / electronics tail block (PETG): overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   belly mount (PETG) / tie saddle (printed): overlap 0.000 mm3, gap 2.80, >= 2: PASS
+   flow MTF-02P / receiver v3 (latch): overlap 0.000 mm3, gap 6.10, >= 2: PASS
+   flow MTF-02P / tie saddle (printed): overlap 0.000 mm3, gap 7.00, >= 2: PASS
+   FC / frame plate (Bee35 carbon): overlap 0.000 mm3, gap 1.00, >= 2: FAIL
+   FC / receiver v3 (latch): overlap 0.000 mm3, gap 0.90, >= 2: FAIL
+   FC / receiver TPU strips (latch): overlap 0.000 mm3, gap 6.00, >= 2: PASS
+   FC / cartridge v6 (latch): overlap 0.000 mm3, gap 8.40, >= 2: PASS
+   FC / pack 4S 1500: overlap 0.000 mm3, gap 10.00, >= 2: PASS
+   FC / electronics tail block (PETG): overlap 0.000 mm3, gap 4.50, >= 2: PASS
+   belly mount below z 9.0 (post, gussets, cradle) / receiver v3 (latch): overlap 0.000 mm3, gap 2.20, >= 2: PASS
+   belly mount below z 9.0 (post, gussets, cradle) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap 17.41, >= 2: PASS
+   belly mount below z 9.0 (post, gussets, cradle) / tie saddle (printed): overlap 0.000 mm3, gap 2.80, >= 2: PASS
+   belly mount (PETG) / cage rods / links (nearest): overlap 0.000 mm3, gap 11.22, >= 2: PASS
+   flow MTF-02P / cage rods / links (nearest): overlap 0.000 mm3, gap 13.71, >= 2: PASS
+   FC / cage rods / links (nearest): overlap 0.000 mm3, gap 29.58, >= 2: PASS
+flow view (both windows, 23 deg + the window radius, to the ground): clear of every part and rod (C)
+flow wash: 3 % of its plan under a swept disk (column measure: FAIL, rule 8 wants >= 3 outside); nearest corner 43.7 from a motor axis, the slipstream there 33.0 (E, momentum theory, 63 below the props): +10.7 outside it
+System: Scout v3 with the belly mount v1 (concept), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.2, +0.0, -38.7], 2.2 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 25/25 clear
+   access swap: cartridge v6 (latch) down: clear
+   access swap: pack 4S 1500 down: clear
+   access swap: pack XT60 plug down: clear
+   access M3 key, receiver bolt (-37.6, -26.6): clear
+   access M3 key, receiver bolt (-37.6, +26.6): clear
+   access M3 key, receiver bolt (+48.2, -26.6): clear
+   access M3 key, receiver bolt (+48.2, +26.6): clear
+   access FC USB-C cable (12 x 7, from the FC's left edge, E): clear
+   access M3 key, belly-mount plate bolt (-25, +13): clear
+   access M3 key, belly-mount plate bolt (-25, -13): clear
+   access M3 key, belly-mount plate bolt (30, +13): clear
+   access M3 key, belly-mount plate bolt (30, -13): clear
+   access M2 key, FC grommet screw (+12.75, +12.75): clear
+   access M2 key, FC grommet screw (+12.75, -12.75): clear
+   access M2 key, FC grommet screw (-12.75, +12.75): clear
+   access M2 key, FC grommet screw (-12.75, -12.75): clear
+   access flow SH1.0 plug out of its end (6 x 4, E): clear
+   access M3 key, yoke top bolt (x -54.5): clear
+   access M3 key, yoke bottom bolt (x -54.5): clear
+   access M3 key, yoke top bolt (x -63.5): clear
+   access M3 key, yoke bottom bolt (x -63.5): clear
+   access M3 key, plate bolt (-42.0, +16.0): clear
+   access M3 key, plate bolt (-42.0, -16.0): clear
+   access Radxa SD card (Ø10): clear
+   access Radxa USB-C 1 (Ø10): clear
+loads (L, E): hung set 336.4 g at [6.41, -0.0, -15.24], flow + cradle 4.83 g, tail bay 78.3 g on the tongue (+x crash)
+   flight (limit 0.5): receiver inserts 0.003 (flight 4 g thrust), plate inserts 0.005 (flight 2 g y), frame 0.019 (flight 4 g thrust), flow post 0.004, tongue face 0.0000, carbon bearing 0.0006
+   landing (limit 0.5): receiver inserts 0.005 (landing 6 g), plate inserts 0.006 (landing 6 g), frame 0.029 (landing 6 g), flow post 0.000, tongue face 0.0000, carbon bearing 0.0000
+   crash (limit 1.0): receiver inserts 0.049 (crash 35 g -x+y-z), plate inserts 0.092 (crash 35 g -x+y-z), frame 0.242 (crash 35 g -x+y-z), flow post 0.066, tongue face 0.0046, carbon bearing 0.0122
+   sections (hollow 2.4 walls): rear cross-member + ears at x -31 (behind: the rear receiver inserts): A 141.1, I 1178.8, Z 264.9; side rail at x 0 (the FC window; the USB side is cut): A 90.1, I 719.9, Z 159.3; front blocks + bridge at x 30 (the front plate inserts): A 298.9, I 2411.9, Z 522.0; front rails at x 42: A 101.8, I 744.2, Z 167.2; post root (solid) A 36.0, Z 36.0
+FC modes on 4 M2 grommets (E, silicone E 1.0 / 1.5 / 2.5 MPa): first 543 / 665 / 858 Hz (lateral), vertical 1097, rocking 1313 at 1.5 MPa; hard-mounted on the screws 8028 Hz: the grommet sets it
+flow post: 35.6 long 6 x 6 PETG with 4.83 g at the tip: 274 Hz (E)
+PX4 (FRD from the CG [-0.19, 0.02, 2.47], m): EKF2_IMU_POS [0.0002, 0.0, -0.011], EKF2_OF_POS [0.0056, 0.04, 0.0325], EKF2_RNG_POS [-0.0052, 0.04, 0.0325]
+vs the layout's placeholder (25.0 g E at [10.2, 0.0, 13.1]): +0.2 g; ours at [1.8, -7.5, 8.7]
+done in 483 s

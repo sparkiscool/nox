@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout electronics mount): belly mount v1 concept: PETG 25.2 g E, receiver partner + 4 new plate M3, tail face x −31; FC on the plate AIO holes (M2 grommets DEFAULT, alt M3), flow by search at (0, −40) on a post; system_check PASS, CG 0.2/2.2 C; FC 1.0/0.9 gaps fail 2.0 (as built). `runs/scout_belly_mount/v1/`
 - 27 Oct (Scout electronics mount): v2 round 5 on v12: fit table 33/33, no allowances (C); sized on L (14 crash dirs): variant V8, mount 49.2 g E, crash worst 0.27 E; CG 0.56/1.49 at −5.0 C (main assembly, camera mount): PASS; system_check PASS; belly mount tail to x −31.0 (DEFAULT, alt: inserts in it). `runs/scout_electronics/v2/`
 - 27 Oct (Scout v3): electronics round 5 (concept) in `scout/v3/scout.assembly.json` via new `scout_assembly_updates.py`: mount 49.2 g E, cables 6.3 g E at their CGs, 4 Radxa post keep-outs (Ø8.4, H); 746 g E, CG 0.6 / 1.5 E, catch held. Artifact republished.
 - 27 Oct (Scout v3): the saved camera mount v1 (PR 146) replaces the layout's cradle in `scout/v3/scout.assembly.json` (layout_v3.py, view) and the Scout artifact (v21): 735 g E, cage first 6.2 E, CG 1.9 E. Frame model v3 (`runs/scout_frame/v3/`): real clip points, 32.3 g M+E mount, tube mass: sized 111 Hz F (810 g E), all 3.0 fails. Node 16 socket rule in dimensions.

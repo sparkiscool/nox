@@ -1,0 +1,2306 @@
+{
+ "name": "Scout v3 with the belly mount v1 (concept)",
+ "machine": "scout",
+ "note": "main's Scout v3 assembly (v12, camera mount v1) with the belly mount v1, the FC as drawn, the flow re-placed, the tail block and carrier as drawn (PR 130)",
+ "cg_ref": [
+  0.0,
+  0.0,
+  41.2
+ ],
+ "thrust_axis": [
+  0,
+  0,
+  1
+ ],
+ "cg_tol_mm": 3.0,
+ "cage_margin_mm": 3.0,
+ "openings": [
+  {
+   "part": "cartridge v6 (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "pack 4S 1500",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "slider +y (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "slider -y (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "pack XT60 plug",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "receiver v3 (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "receiver lid (latch)",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "flow MTF-02P",
+   "axis": [
+    0,
+    0,
+    -1
+   ],
+   "half_angle_deg": 40.0,
+   "min_mm": 0.0,
+   "skip_probes": true
+  },
+  {
+   "part": "camera",
+   "axis": [
+    1.0,
+    0.0,
+    0.0
+   ],
+   "half_angle_deg": 55.0,
+   "field": true,
+   "note": "Spark 26 Oct rule: the front camera outside the cage, nothing of the drone in its view; cage first gated outside this cone"
+  }
+ ],
+ "contact_pairs": [
+  [
+   "motor 1",
+   "prop 1",
+   1000000000.0
+  ],
+  [
+   "motor 2",
+   "prop 2",
+   1000000000.0
+  ],
+  [
+   "motor 3",
+   "prop 3",
+   1000000000.0
+  ],
+  [
+   "motor 4",
+   "prop 4",
+   1000000000.0
+  ],
+  [
+   "motor 1",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "motor 2",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "motor 3",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "motor 4",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "cage shell tubes",
+   "cage shell nodes",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "cage shell nodes",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "cage shell tubes",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "receiver v3 (latch)",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "receiver TPU end pieces (latch, E)",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "camera mount (printed)",
+   1000000000.0
+  ],
+  [
+   "camera mount (printed)",
+   "camera",
+   1000000000.0
+  ],
+  [
+   "camera mount (printed)",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "receiver TPU end pieces (latch, E)",
+   "receiver v3 (latch)",
+   1000000000.0
+  ],
+  [
+   "receiver TPU end pieces (latch, E)",
+   "receiver lid (latch)",
+   1000000000.0
+  ],
+  [
+   "receiver TPU end pieces (latch, E)",
+   "receiver TPU strips (latch)",
+   1000000000.0
+  ],
+  [
+   "receiver TPU end pieces (latch, E)",
+   "cartridge v6 strips (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "cartridge v6 strips (latch, TPU)",
+   "cartridge v6 (latch)",
+   1000000000.0
+  ],
+  [
+   "cartridge v6 strips (latch, TPU)",
+   "slider +y (latch)",
+   1000000000.0
+  ],
+  [
+   "cartridge v6 strips (latch, TPU)",
+   "slider -y (latch)",
+   1000000000.0
+  ],
+  [
+   "cartridge v6 strips (latch, TPU)",
+   "pack 4S 1500",
+   1000000000.0
+  ],
+  [
+   "cartridge v6 (latch)",
+   "receiver TPU strips (latch)",
+   5.0
+  ],
+  [
+   "pack 4S 1500",
+   "cartridge v6 (latch)",
+   1.0
+  ],
+  [
+   "pack XT60 plug",
+   "cartridge v6 (latch)",
+   5.0
+  ],
+  [
+   "XT60E1-M",
+   "receiver v3 (latch)",
+   5.0
+  ],
+  [
+   "XT60E1-M",
+   "receiver lid (latch)",
+   5.0
+  ],
+  [
+   "receiver TPU strips (latch)",
+   "receiver v3 (latch)",
+   5.0
+  ],
+  [
+   "pack XT60 plug",
+   "XT60E1-M",
+   1.0
+  ],
+  [
+   "UBEC",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "XR2",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "spokes, bay ties, core ties, camera guard",
+   "tie saddle (printed)",
+   1000000000.0
+  ],
+  [
+   "tie saddle (printed)",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "motor 3",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "receiver v3 (latch)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "prop 3",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "receiver TPU end pieces (latch, E)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "camera mount (printed)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "cartridge v6 strips (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "motor 2",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "receiver TPU strips (latch)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "UBEC",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "cage shell tubes",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "motor 1",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "spokes, bay ties, core ties, camera guard",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "cartridge skid closed end (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "motor 4",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "slider -y (latch)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "prop 4",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "cartridge skid lead end (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "slider +y (latch)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "pack XT60 plug",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "pack 4S 1500",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "XR2",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "cartridge v6 (latch)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "prop 1",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "XT60E1-M",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "cage shell nodes",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "prop 2",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "Radxa Zero 3W",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "receiver lid (latch)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "tie saddle (printed)",
+   1000000000.0
+  ],
+  [
+   "tail bay cables (Scout electronics, E)",
+   "camera",
+   1000000000.0
+  ],
+  [
+   "belly mount (PETG)",
+   "receiver lid (latch)",
+   0.05
+  ],
+  [
+   "belly mount (PETG)",
+   "receiver v3 (latch)",
+   0.05
+  ],
+  [
+   "belly mount (PETG)",
+   "electronics tail block (PETG)",
+   0.05
+  ],
+  [
+   "belly mount (PETG)",
+   "flow MTF-02P",
+   0.05
+  ],
+  [
+   "frame plate (Bee35 carbon)",
+   "belly mount (PETG)",
+   0.05
+  ],
+  [
+   "electronics tail block (PETG)",
+   "frame plate (Bee35 carbon)",
+   0.05
+  ],
+  [
+   "electronics tail block (PETG)",
+   "receiver v3 (latch)",
+   0.05
+  ],
+  [
+   "electronics tail carrier (PETG)",
+   "electronics tail block (PETG)",
+   0.05
+  ],
+  [
+   "electronics tail carrier (PETG)",
+   "Radxa Zero 3W",
+   0.05
+  ],
+  [
+   "electronics tail carrier (PETG)",
+   "UBEC",
+   0.05
+  ],
+  [
+   "electronics tail carrier (PETG)",
+   "XR2",
+   0.05
+  ],
+  [
+   "wires",
+   "FC",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "prop 4",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "spokes, bay ties, core ties, camera guard",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "flow MTF-02P",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "motor 2",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "camera mount stop collar -y",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "XT60E1-M",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "motor 3",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "camera mount (printed)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "camera",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "cartridge skid lead end (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "XR2",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "pack 4S 1500",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "electronics tail carrier (PETG)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "motor 1",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "tie saddle (printed)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "motor 4",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "frame plate (Bee35 carbon)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "receiver lid (latch)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "cage shell nodes",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "cartridge v6 strips (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "camera mount stop collar +y",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "Radxa Zero 3W",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "cage shell tubes",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "receiver TPU strips (latch)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "tail bay cables (Scout electronics, E)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "belly mount (PETG)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "slider +y (latch)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "receiver TPU end pieces (latch, E)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "cartridge v6 (latch)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "prop 1",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "receiver v3 (latch)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "prop 3",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "prop 2",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "slider -y (latch)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "pack XT60 plug",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "cartridge skid closed end (latch, TPU)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "electronics tail block (PETG)",
+   1000000000.0
+  ],
+  [
+   "wires",
+   "UBEC",
+   1000000000.0
+  ]
+ ],
+ "guard_offsets": {
+  "shell tubes to prop disks, 3D (G)": 13.9
+ },
+ "access": [
+  {
+   "name": "swap: cartridge v6 (latch) down",
+   "part": "cartridge v6 (latch)",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": "part",
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "wires"
+   ]
+  },
+  {
+   "name": "swap: pack 4S 1500 down",
+   "part": "pack 4S 1500",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": "part",
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "wires"
+   ]
+  },
+  {
+   "name": "swap: pack XT60 plug down",
+   "part": "pack XT60 plug",
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": "part",
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, receiver bolt (-37.6, -26.6)",
+   "part": "receiver v3 (latch)",
+   "from": [
+    -37.65,
+    -26.55,
+    9.6
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "receiver lid (latch)",
+    "belly mount (PETG)",
+    "XT60E1-M",
+    "receiver TPU end pieces (latch, E)",
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, receiver bolt (-37.6, +26.6)",
+   "part": "receiver v3 (latch)",
+   "from": [
+    -37.65,
+    26.55,
+    9.6
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "receiver lid (latch)",
+    "belly mount (PETG)",
+    "XT60E1-M",
+    "receiver TPU end pieces (latch, E)",
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, receiver bolt (+48.2, -26.6)",
+   "part": "receiver v3 (latch)",
+   "from": [
+    48.25,
+    -26.55,
+    9.6
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "receiver lid (latch)",
+    "belly mount (PETG)",
+    "XT60E1-M",
+    "receiver TPU end pieces (latch, E)",
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, receiver bolt (+48.2, +26.6)",
+   "part": "receiver v3 (latch)",
+   "from": [
+    48.25,
+    26.55,
+    9.6
+   ],
+   "dir": [
+    0,
+    0,
+    -1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "cartridge v6 (latch)",
+    "cartridge v6 strips (latch, TPU)",
+    "pack 4S 1500",
+    "slider +y (latch)",
+    "slider -y (latch)",
+    "pack XT60 plug",
+    "cartridge skid closed end (latch, TPU)",
+    "cartridge skid lead end (latch, TPU)",
+    "receiver TPU strips (latch)",
+    "receiver lid (latch)",
+    "belly mount (PETG)",
+    "XT60E1-M",
+    "receiver TPU end pieces (latch, E)",
+    "wires"
+   ]
+  },
+  {
+   "name": "FC USB-C cable (12 x 7, from the FC's left edge, E)",
+   "part": "FC",
+   "from": [
+    5.0,
+    18.0,
+    13.5
+   ],
+   "dir": [
+    -0.1736,
+    0.9848,
+    0.0
+   ],
+   "length_mm": 250.0,
+   "tool": {
+    "type": "box",
+    "w": 12.0,
+    "h": 7.0,
+    "w_axis": [
+     -0.9848,
+     -0.1736,
+     0.0
+    ]
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, belly-mount plate bolt (-25, +13)",
+   "part": "belly mount (PETG)",
+   "from": [
+    -25.0,
+    13.0,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, belly-mount plate bolt (-25, -13)",
+   "part": "belly mount (PETG)",
+   "from": [
+    -25.0,
+    -13.0,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, belly-mount plate bolt (30, +13)",
+   "part": "belly mount (PETG)",
+   "from": [
+    30.0,
+    13.0,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, belly-mount plate bolt (30, -13)",
+   "part": "belly mount (PETG)",
+   "from": [
+    30.0,
+    -13.0,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M2 key, FC grommet screw (+12.75, +12.75)",
+   "part": "FC",
+   "from": [
+    12.75,
+    12.75,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M2 key, FC grommet screw (+12.75, -12.75)",
+   "part": "FC",
+   "from": [
+    12.75,
+    -12.75,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M2 key, FC grommet screw (-12.75, +12.75)",
+   "part": "FC",
+   "from": [
+    -12.75,
+    12.75,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M2 key, FC grommet screw (-12.75, -12.75)",
+   "part": "FC",
+   "from": [
+    -12.75,
+    -12.75,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "flow SH1.0 plug out of its end (6 x 4, E)",
+   "part": "flow MTF-02P",
+   "from": [
+    -10.8,
+    -40.0,
+    -26.75
+   ],
+   "dir": [
+    -1.0,
+    0,
+    0
+   ],
+   "length_mm": 25.0,
+   "tool": {
+    "type": "box",
+    "w": 6.0,
+    "h": 4.0
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, yoke top bolt (x -54.5)",
+   "part": "electronics tail carrier (PETG)",
+   "from": [
+    -54.5,
+    0.5,
+    23.5
+   ],
+   "dir": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, yoke bottom bolt (x -54.5)",
+   "part": "electronics tail carrier (PETG)",
+   "from": [
+    -54.5,
+    0.5,
+    -13.0
+   ],
+   "dir": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, yoke top bolt (x -63.5)",
+   "part": "electronics tail carrier (PETG)",
+   "from": [
+    -63.5,
+    0.5,
+    23.5
+   ],
+   "dir": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, yoke bottom bolt (x -63.5)",
+   "part": "electronics tail carrier (PETG)",
+   "from": [
+    -63.5,
+    0.5,
+    -13.0
+   ],
+   "dir": [
+    -0.259,
+    0.0,
+    -0.966
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, plate bolt (-42.0, +16.0)",
+   "part": "electronics tail block (PETG)",
+   "from": [
+    -42.0,
+    16.0,
+    22.5
+   ],
+   "dir": [
+    0.109,
+    -0.408,
+    0.906
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, plate bolt (-42.0, -16.0)",
+   "part": "electronics tail block (PETG)",
+   "from": [
+    -42.0,
+    -16.0,
+    22.5
+   ],
+   "dir": [
+    0.211,
+    0.366,
+    0.906
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "Radxa SD card (\u00d810)",
+   "part": "Radxa Zero 3W",
+   "from": [
+    -138.9,
+    -3.0,
+    23.0
+   ],
+   "dir": [
+    -1.0,
+    0.0,
+    0.0
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 10.0
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "Radxa USB-C 1 (\u00d810)",
+   "part": "Radxa Zero 3W",
+   "from": [
+    -95.4,
+    1.6,
+    39.5
+   ],
+   "dir": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 10.0
+   },
+   "ignore": [
+    "wires"
+   ]
+  }
+ ],
+ "parts": [
+  {
+   "name": "cage shell tubes",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/cage_shell_tubes.stl",
+   "material": "carbon",
+   "mass_g": 67.48,
+   "cg": [
+    0.18,
+    0.0,
+    15.07
+   ],
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py"
+  },
+  {
+   "name": "cage shell nodes",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/cage_shell_nodes.stl",
+   "material": "PETG",
+   "mass_g": 39.0,
+   "cg": [
+    13.94,
+    0.0,
+    -5.55
+   ],
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py"
+  },
+  {
+   "name": "spokes, bay ties, core ties, camera guard",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/spokes__bay_ties__core_ties__camera_guar.stl",
+   "material": "carbon",
+   "mass_g": 8.45,
+   "cg": [
+    20.58,
+    -0.0,
+    1.89
+   ],
+   "tag": "C",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py"
+  },
+  {
+   "name": "frame plate (Bee35 carbon)",
+   "role": "structure",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/frame_plate__bee35_carbon.stl",
+   "material": "carbon",
+   "mass_g": 28.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    1.576,
+    0.0,
+    20.25
+   ]
+  },
+  {
+   "name": "motor 1",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/motor_1.stl",
+   "mass_g": 18.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    54.1,
+    54.1,
+    29.5
+   ]
+  },
+  {
+   "name": "prop 1",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/prop_1.stl",
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    54.1,
+    54.1,
+    41.2
+   ]
+  },
+  {
+   "name": "motor 2",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/motor_2.stl",
+   "mass_g": 18.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    54.1,
+    -54.1,
+    29.5
+   ]
+  },
+  {
+   "name": "prop 2",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/prop_2.stl",
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    54.1,
+    -54.1,
+    41.2
+   ]
+  },
+  {
+   "name": "motor 3",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/motor_3.stl",
+   "mass_g": 18.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -54.1,
+    54.1,
+    29.5
+   ]
+  },
+  {
+   "name": "prop 3",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/prop_3.stl",
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -54.1,
+    54.1,
+    41.2
+   ]
+  },
+  {
+   "name": "motor 4",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/motor_4.stl",
+   "mass_g": 18.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -54.1,
+    -54.1,
+    29.5
+   ]
+  },
+  {
+   "name": "prop 4",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/prop_4.stl",
+   "mass_g": 1.8,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -54.1,
+    -54.1,
+    41.2
+   ]
+  },
+  {
+   "name": "UBEC",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/ubec.stl",
+   "mass_g": 15.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -140.6,
+    18.9,
+    20.0
+   ]
+  },
+  {
+   "name": "XR2",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/xr2.stl",
+   "mass_g": 1.0,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -102.0,
+    -21.0,
+    34.0
+   ]
+  },
+  {
+   "name": "Radxa Zero 3W",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/radxa_zero_3w_keepouts.stl",
+   "mass_g": 10.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "note": "the 4 post keep-outs (\u00d88.4, PCB back side to y -1.6) cut, positions H (STEP), electronics round 5",
+   "cg": [
+    -104.35,
+    0.063,
+    23.0
+   ]
+  },
+  {
+   "name": "receiver v3 (latch)",
+   "role": "protected",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/receiver_v3__latch.stl",
+   "material": "PETG",
+   "mass_g": 94.4,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    4.105,
+    -0.0,
+    -10.935
+   ]
+  },
+  {
+   "name": "receiver lid (latch)",
+   "role": "protected",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/receiver_lid__latch.stl",
+   "material": "PETG",
+   "mass_g": 10.3,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    48.25,
+    0.0,
+    5.312
+   ]
+  },
+  {
+   "name": "receiver TPU strips (latch)",
+   "role": "structure",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/receiver_tpu_strips__latch.stl",
+   "material": "TPU",
+   "mass_g": 2.0,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -1.05,
+    0.0,
+    2.3
+   ]
+  },
+  {
+   "name": "receiver TPU end pieces (latch, E)",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/receiver_tpu_end_pieces__latch__e.stl",
+   "material": "TPU",
+   "mass_g": 8.2,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -3.063,
+    -0.0,
+    -19.368
+   ]
+  },
+  {
+   "name": "XT60E1-M",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/xt60e1_m.stl",
+   "mass_g": 6.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    48.25,
+    -0.0,
+    2.734
+   ]
+  },
+  {
+   "name": "cartridge v6 (latch)",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/cartridge_v6__latch.stl",
+   "material": "PETG",
+   "mass_g": 37.9,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    10.365,
+    0.006,
+    -22.764
+   ]
+  },
+  {
+   "name": "slider +y (latch)",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/slider_py__latch.stl",
+   "material": "PETG",
+   "mass_g": 2.9,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    4.976,
+    11.89,
+    -37.087
+   ]
+  },
+  {
+   "name": "slider -y (latch)",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/slider_my__latch.stl",
+   "material": "PETG",
+   "mass_g": 2.9,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    5.024,
+    -11.89,
+    -37.087
+   ]
+  },
+  {
+   "name": "cartridge v6 strips (latch, TPU)",
+   "role": "cage",
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/cartridge_v6_strips__latch__tpu.stl",
+   "material": "TPU",
+   "mass_g": 2.2,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    5.0,
+    0.0,
+    -44.458
+   ]
+  },
+  {
+   "name": "cartridge skid closed end (latch, TPU)",
+   "role": "cage",
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/cartridge_skid_closed_end__latch__tpu.stl",
+   "material": "TPU",
+   "mass_g": 1.4,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -27.3,
+    0.0,
+    -39.5
+   ]
+  },
+  {
+   "name": "cartridge skid lead end (latch, TPU)",
+   "role": "cage",
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/cartridge_skid_lead_end__latch__tpu.stl",
+   "material": "TPU",
+   "mass_g": 3.2,
+   "tag": "M",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    43.859,
+    0.0,
+    -32.909
+   ]
+  },
+  {
+   "name": "pack 4S 1500",
+   "role": "protected",
+   "protect": true,
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/pack_4s_1500.stl",
+   "mass_g": 155.0,
+   "tag": "P",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -0.05,
+    0.0,
+    -16.5
+   ]
+  },
+  {
+   "name": "pack XT60 plug",
+   "role": "bought",
+   "protect": true,
+   "swap": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/pack_xt60_plug.stl",
+   "mass_g": 10.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    48.25,
+    -0.167,
+    -11.775
+   ]
+  },
+  {
+   "name": "tail bay cables (Scout electronics, E)",
+   "role": "structure",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/tail_bay_cables__scout_electronics__e.stl",
+   "mass_g": 6.27,
+   "cg": [
+    -8.3,
+    2.3,
+    31.6
+   ],
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "electronics round 5 (concept)",
+   "source": "nox/scout/v3/layout_v3.py"
+  },
+  {
+   "name": "camera",
+   "role": "bought",
+   "protect": true,
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/camera.stl",
+   "mass_g": 10.0,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    142.0,
+    0.0,
+    42.0
+   ]
+  },
+  {
+   "name": "tie saddle (printed)",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_layout/v12/parts/tie_saddle__printed.stl",
+   "material": "PETG",
+   "mass_g": 17.01,
+   "tag": "E",
+   "owner": "scout v3",
+   "version": "layout v3 / cage v2",
+   "source": "nox/scout/v3/layout_v3.py",
+   "cg": [
+    -3.462,
+    -0.0,
+    -2.249
+   ]
+  },
+  {
+   "name": "camera mount (printed)",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_camera_mount/v1/camera_mount_assembled.stl",
+   "material": "PETG",
+   "mass_g": 21.75,
+   "tag": "M",
+   "owner": "scout camera mount",
+   "version": "v1",
+   "source": "nox/scout/v3/camera_mount.py",
+   "cg": [
+    133.235,
+    0.0,
+    41.552
+   ]
+  },
+  {
+   "name": "camera mount stop collar +y",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_camera_mount/v1/stop_collar_assembled.stl",
+   "material": "PETG",
+   "mass_g": 0.25,
+   "tag": "M",
+   "owner": "scout camera mount",
+   "version": "v1",
+   "source": "nox/scout/v3/camera_mount.py",
+   "cg": [
+    124.166,
+    25.3,
+    11.5
+   ]
+  },
+  {
+   "name": "camera mount stop collar -y",
+   "role": "cage",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_camera_mount/v1/stop_collar_assembled_my.stl",
+   "material": "PETG",
+   "mass_g": 0.25,
+   "tag": "M",
+   "owner": "scout camera mount",
+   "version": "v1",
+   "source": "nox/scout/v3/camera_mount.py",
+   "cg": [
+    123.899,
+    -25.3,
+    11.5
+   ]
+  },
+  {
+   "name": "electronics tail block (PETG)",
+   "role": "structure",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_electronics/v2/belly_mount_tail_block__petg_.stl",
+   "material": "PETG",
+   "mass_g": 15.92,
+   "cg": [
+    -45.3,
+    0.7,
+    12.9
+   ],
+   "tag": "E",
+   "owner": "scout electronics",
+   "version": "v2 (PR 130)"
+  },
+  {
+   "name": "electronics tail carrier (PETG)",
+   "role": "structure",
+   "mesh": "/home/user/nox/.claude/worktrees/agent-a7cf3045167fb14b3/runs/scout_electronics/v2/tail_carrier__petg_.stl",
+   "material": "PETG",
+   "mass_g": 33.28,
+   "cg": [
+    -102.51,
+    -0.63,
+    9.65
+   ],
+   "tag": "E",
+   "owner": "scout electronics",
+   "version": "v2 (PR 130)"
+  },
+  {
+   "name": "FC",
+   "role": "bought",
+   "protect": true,
+   "trimesh": "<trimesh: see the STL>",
+   "mass_g": 10.0,
+   "tag": "P",
+   "geom_tag": "C",
+   "note": "MicoAir743v2-AIO 36 x 36 x 8 on the plate's AIO holes (as built), z 9.5..17.5"
+  },
+  {
+   "name": "wires",
+   "role": "structure",
+   "box": [
+    -0.5,
+    0.5,
+    -0.5,
+    0.5,
+    13.0,
+    14.0
+   ],
+   "mass_g": 20.0,
+   "tag": "E",
+   "note": "the layout's 20 g, at the FC"
+  },
+  {
+   "name": "flow MTF-02P",
+   "role": "bought",
+   "protect": true,
+   "trimesh": "<trimesh: see the STL>",
+   "mass_g": 1.5,
+   "tag": "P",
+   "geom_tag": "C"
+  },
+  {
+   "name": "belly mount (PETG)",
+   "role": "structure",
+   "trimesh": "<trimesh: see the STL>",
+   "material": "PETG",
+   "mass_g": 25.24,
+   "cg": [
+    1.8,
+    -7.5,
+    8.68
+   ],
+   "tag": "E",
+   "geom_tag": "C",
+   "owner": "scout electronics",
+   "version": "belly mount v1 (concept)",
+   "source": "nox/scout/v3/belly_mount.py"
+  }
+ ],
+ "mass_budget_g": 500,
+ "cage_shell": {
+  "nodes": [
+   [
+    90.8,
+    116.1,
+    -49.621
+   ],
+   [
+    -63.9,
+    119.7,
+    -49.621
+   ],
+   [
+    -63.9,
+    -119.7,
+    -49.621
+   ],
+   [
+    90.8,
+    -116.1,
+    -49.621
+   ],
+   [
+    -159.032,
+    0.0,
+    61.473
+   ],
+   [
+    6.638,
+    125.013,
+    -11.877
+   ],
+   [
+    6.638,
+    -125.013,
+    -11.877
+   ],
+   [
+    110.506,
+    -96.335,
+    61.119
+   ],
+   [
+    110.506,
+    96.335,
+    61.119
+   ],
+   [
+    -100.384,
+    -114.546,
+    60.598
+   ],
+   [
+    -100.384,
+    114.546,
+    60.598
+   ],
+   [
+    -231.544,
+    0.0,
+    41.473
+   ],
+   [
+    44.808,
+    132.776,
+    44.145
+   ],
+   [
+    44.808,
+    -132.776,
+    44.145
+   ],
+   [
+    122.589,
+    62.163,
+    11.536
+   ],
+   [
+    122.589,
+    -62.163,
+    11.536
+   ],
+   [
+    116.548,
+    0.0,
+    36.328
+   ],
+   [
+    106.695,
+    0.0,
+    -19.043
+   ]
+  ],
+  "rods": [
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    3
+   ],
+   [
+    0,
+    5
+   ],
+   [
+    0,
+    8
+   ],
+   [
+    0,
+    12
+   ],
+   [
+    0,
+    14
+   ],
+   [
+    0,
+    17
+   ],
+   [
+    1,
+    2
+   ],
+   [
+    1,
+    5
+   ],
+   [
+    1,
+    10
+   ],
+   [
+    1,
+    11
+   ],
+   [
+    1,
+    12
+   ],
+   [
+    2,
+    3
+   ],
+   [
+    2,
+    6
+   ],
+   [
+    2,
+    9
+   ],
+   [
+    2,
+    11
+   ],
+   [
+    2,
+    13
+   ],
+   [
+    3,
+    6
+   ],
+   [
+    3,
+    7
+   ],
+   [
+    3,
+    13
+   ],
+   [
+    3,
+    15
+   ],
+   [
+    3,
+    17
+   ],
+   [
+    4,
+    7
+   ],
+   [
+    4,
+    8
+   ],
+   [
+    4,
+    9
+   ],
+   [
+    4,
+    10
+   ],
+   [
+    4,
+    11
+   ],
+   [
+    5,
+    12
+   ],
+   [
+    6,
+    13
+   ],
+   [
+    7,
+    8
+   ],
+   [
+    7,
+    9
+   ],
+   [
+    7,
+    13
+   ],
+   [
+    7,
+    15
+   ],
+   [
+    7,
+    16
+   ],
+   [
+    8,
+    10
+   ],
+   [
+    8,
+    12
+   ],
+   [
+    8,
+    14
+   ],
+   [
+    8,
+    16
+   ],
+   [
+    9,
+    11
+   ],
+   [
+    9,
+    13
+   ],
+   [
+    10,
+    11
+   ],
+   [
+    10,
+    12
+   ],
+   [
+    14,
+    15
+   ],
+   [
+    14,
+    16
+   ],
+   [
+    14,
+    17
+   ],
+   [
+    15,
+    16
+   ],
+   [
+    15,
+    17
+   ]
+  ],
+  "links": 8,
+  "link_r_mm": 1.5,
+  "total_rods": 55,
+  "open": [
+   {
+    "name": "bottom opening (pack + swap): the Overseer cage v5 base loop's 4 side nodes",
+    "ring": [
+     0,
+     1,
+     2,
+     3
+    ]
+   }
+  ],
+  "node_r_mm": 6.0,
+  "rod_r_mm": 1.5
+ },
+ "clearance_pairs": [
+  [
+   "belly mount (PETG)",
+   "XT60E1-M",
+   2.0
+  ],
+  [
+   "belly mount (PETG)",
+   "FC",
+   2.0
+  ],
+  [
+   "belly mount (PETG)",
+   "tie saddle (printed)",
+   2.0
+  ],
+  [
+   "belly mount (PETG)",
+   "receiver TPU end pieces (latch, E)",
+   2.0
+  ],
+  [
+   "flow MTF-02P",
+   "receiver v3 (latch)",
+   2.0
+  ],
+  [
+   "flow MTF-02P",
+   "tie saddle (printed)",
+   2.0
+  ],
+  [
+   "FC",
+   "frame plate (Bee35 carbon)",
+   2.0
+  ],
+  [
+   "FC",
+   "receiver v3 (latch)",
+   2.0
+  ]
+ ]
+}
