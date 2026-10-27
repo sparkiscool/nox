@@ -1,0 +1,34 @@
+## solid_check
+runs/overseer_arm_front/v3/overseer_arm_front.stl FAIL {'bodies_plain': 2, 'bodies_eroded': 1, 'eroded_volumes_mm3': [95853.8], 'necks': [], 'drawn_not_in_main': [], 'thin_walls': [{'kind': 'wall', 'thick_mm': 1.5, 'core_mm3': 28.52, 'at': [139.2, 16.4, 37.5], 'span': [6.3, 1.3, 0.6]}, {'kind': 'wall', 'thick_mm': 1.12, 'core_mm3': 11.42, 'at': [87.8, 26.7, 5.6], 'span': [5.1, 1.5, 0.9]}, {'kind': 'wall', 'thick_mm': 1.41, 'core_mm3': 5.77, 'at': [127.4, -16.5, 6.1], 'span': [2.0, 0.8, 0.2]}, {'kind': 'wall', 'thick_mm': 1.12, 'core_mm3': 5.28, 'at': [46.6, 33.6, 39.7], 'span': [1.6, 0.9, 0.2]}, {'kind': 'wall', 'thick_mm': 1.12, 'core_mm3': 4.84, 'at': [91.8, 25.8, 38.8], 'span': [3.4, 0.8, 0.4]}], 'acute_edges': 11, 'ok': False}
+## orient
+runs/overseer_arm_front/v3/overseer_arm_front.stl extents [215.3  77.9  46. ] g PETG 165.4 watertight True
+   saved: bed   2394 mm2  overhang  10569 mm2  height  46.0  first layer 1 islands [2424.9] (total 2424.9)  thin-island run 0 mm
+ +x down: bed      5 mm2  overhang   5224 mm2  height 215.3  first layer 1 islands [13.7] (total 13.7)  thin-island run 0 mm
+ -x down: bed      0 mm2  overhang   5476 mm2  height 215.3  first layer 1 islands [60.9] (total 60.9)  thin-island run 0 mm
+ +y down: bed      4 mm2  overhang  10437 mm2  height  77.9  first layer 3 islands [0.1, 6.2, 8.7] (total 15.0)  thin-island run 1 mm
+ -y down: bed      4 mm2  overhang  10223 mm2  height  77.9  first layer 3 islands [0.1, 6.2, 8.7] (total 15.0)  thin-island run 1 mm
+ +z down: bed      0 mm2  overhang  12969 mm2  height  46.0  first layer 1 islands [7.5] (total 7.5)  thin-island run 0 mm
+## modes
+modes front (faces): [(103.9, 'lateral (in-plane)'), (122.9, 'vertical'), (267.4, 'vertical'), (322.1, 'lateral (in-plane)')]; arm + rods 171.5 g on the FE grid (h 1.0)
+modes front (inserts): [(102.3, 'lateral (in-plane)'), (119.9, 'vertical'), (264.4, 'vertical'), (319.2, 'lateral (in-plane)')]; arm + rods 171.5 g on the FE grid (h 1.0)
+## rod
+rod 0: 145.7 long, bore blocked 0.0 mm3, socket grip [0.99, 1.0], bonded 75 mm in 3 collars -> OK
+rod 1: 145.7 long, bore blocked 0.0 mm3, socket grip [0.99, 1.0], bonded 59 mm in 4 collars -> OK
+rod 2: 145.7 long, bore blocked 0.0 mm3, socket grip [0.99, 1.0], bonded 43 mm in 2 collars -> OK
+rod 3: 145.7 long, bore blocked 0.0 mm3, socket grip [0.99, 1.0], bonded 73 mm in 2 collars -> OK
+## band
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 58,573 (468.6 cm3), drawn 10,081, void 103,378
+  insert rod 0: 170 cells, modulus x32.7
+  insert rod 1: 170 cells, modulus x32.7
+  insert rod 2: 170 cells, modulus x32.7
+  insert rod 3: 170 cells, modulus x32.7
+  support default: no cell centre in the region at h 2.0; using the 173 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 173 cells, 434 nodes
+  support bosses: 84 cells, 284 nodes
+arm crash        2.089  cage crash 4  at [98.1, 25.0, 35.2]
+arm flight       0.248  max thrust + 2 g +y side + gyro  at [156.1, -19.0, 31.2]
+arm misuse       0.701  handling 100 N +y [inserts only]  at [32.1, -19.0, 39.2]
+runs/overseer_arm_front/v3/preview.png
+overseer_arm_front   PETG   165.4 g solid (M)
+130.23 cm3   bbox 215.3 x 77.9 x 46.0 mm   bodies 1   watertight yes
+bed contact 2408 mm2 (blue)   overhang >45 deg 8284 mm2 (red)   fits A1 mini 180: NO

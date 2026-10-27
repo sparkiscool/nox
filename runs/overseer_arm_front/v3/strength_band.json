@@ -1,0 +1,34 @@
+{
+ "band_mm": 3.0,
+ "h": 2.0,
+ "mesh": "runs/overseer_arm_front/v3/overseer_arm_front.stl",
+ "worst": {
+  "arm crash": {
+   "index": 2.089,
+   "case": "cage crash 4",
+   "at": [
+    98.1,
+    25.0,
+    35.2
+   ]
+  },
+  "arm flight": {
+   "index": 0.248,
+   "case": "max thrust + 2 g +y side + gyro",
+   "at": [
+    156.1,
+    -19.0,
+    31.2
+   ]
+  },
+  "arm misuse": {
+   "index": 0.701,
+   "case": "handling 100 N +y [inserts only]",
+   "at": [
+    32.1,
+    -19.0,
+    39.2
+   ]
+  }
+ }
+}
