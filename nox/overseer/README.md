@@ -36,7 +36,7 @@ Cage first, now a geodesic shell formed to the drone (Spark 26 Oct: the v2 layou
 0. **Cage**: frame model on the shell (crash 35 g in 14 directions through the node that touches first, floor landing on the TPU feet, handling), then the nodes: 39 shell nodes, 8 opening ring nodes, the spoke sockets at the arm tips, the L2 apex ties, the L2 guard ring (8 nodes, 16 struts), the belly ties.
 1. **Printed arms**, front and rear pairs differ: tall root between the plates (O Arms and hub), plate interface from the S500 STEP (`s500/`, M S500 row), motors and spoke and strut sockets per the cage.
 2. Pi deck between the plates (4 posts over the FC stack).
-3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it (35 ahead of v2, Cage v2), 4 TPU feet; Ø9 driver holes at the rear arms' bottom screws (access, Cage v2); pogo pads with the new funnel.
+3. Belly sled: cartridge hanger centred on the catch, down camera pod and flow pod beside it (v2's place, Spark 27 Oct: keep the two camera format), 4 TPU feet; Ø9 driver hole at a rear arm bottom screw, 3 more reached with a pod board unplugged (access, Cage v3); pogo pads with the new funnel.
 4. Overseer cartridge + latch block for the bays; its bottom face seat height must match the Scout's (swap wheel R 100); it grows the box along the axle unless its latch block sits off-centre (`nox/box/box-arm.md` Problem 15).
 
 ### Open for Spark (DEFAULT in brackets, work goes on)

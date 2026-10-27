@@ -278,7 +278,7 @@ def shell(g, seed=1, warm=None):
     mir = np.array([1.0, -1.0, 1.0])
 
     def partners(N):
-        """each node's mirror partner (itself on the centre plane): perfect left-right symmetry (Spark 26 Oct)"""
+        """each node's mirror partner (itself on the centre plane): perfect left-right symmetry (Spark 27 Oct)"""
         d, j = cKDTree(N).query(N * mir)
         assert d.max() < 1.0, f"shell nodes are not mirror pairs ({d.max():.2f})"
         return j
@@ -362,7 +362,7 @@ def shell(g, seed=1, warm=None):
                 N, Ud, viol, sh0 = T_, Ut, v_, sh_; n_snap += 1
                 if r < 0.6 * PROP_R: used_axis.add((k, side)); used_axis.add((int(np.argmin([math.hypot(T_[j, 0] - a_, T_[j, 1] - b_) for a_, b_ in mxy])), side))
         shell.snapped = n_snap
-    # symmetric triangulation (Spark 26 Oct: perfect left-right symmetry): the hull's faces are merged into flat facets
+    # symmetric triangulation (Spark 27 Oct: perfect left-right symmetry): the hull's faces are merged into flat facets
     # (every vertex within 0.3 of the face plane); a facet and its mirror facet take one triangulation, mirrored; a facet
     # on the centre plane keeps its triangles if they are their own mirror, else is fanned from a node at its centre
     # (on the plane and in the facet, so the hull is unchanged)
@@ -551,7 +551,7 @@ def attach(g, nodes, ring_ids):
     extra.update(g["keels"])
     hr, hn = halo(g, nodes); extra.update(hr); g["halo_nodes"] = hn
     cr, cn_ = cam_guard(g, nodes); extra.update(cr); g["halo_nodes"] = hn + cn_
-    # perfect left-right symmetry (Spark 26 Oct) for the links too: a link without its mirror gets it
+    # perfect left-right symmetry (Spark 27 Oct) for the links too: a link without its mirror gets it
     mir = np.array([1.0, -1.0, 1.0]); have = [(np.asarray(a_), np.asarray(b_)) for a_, b_ in extra.values()]
     for k_, (a_, b_) in list(extra.items()):
         a_, b_ = np.asarray(a_) * mir, np.asarray(b_) * mir

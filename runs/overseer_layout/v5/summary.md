@@ -7,10 +7,12 @@ Script `nox/overseer/layout_v5.py` (~10 min: balance x start / dome / prop-snap 
 
 Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (source `runs/overseer_layout/v5/motion.html`, still `preview.png`; one drone, with the L2 field (blue half-sphere outline) and the front camera view (green frustum) drawn)
 
+Access note: "access 21/21" counts 3 rear-arm bottom screws reached through an unplugged pod board (down camera 2, flow 1), not a clear line.
+
 System: Overseer, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 0.2 mm³ (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 118 L (E), extents 743 x 694 x 230 mm (E), mass 3380 of 2200 g (154 %) (E) over budget (total), CG 0.5 mm off thrust axis (E) [-0.1, +0.5, -62.5], 28.2 mm without swap parts (reported, L exception), probes 2.8 mm (E) edge at (-0.38, -0.60, -0.71) (down camera), access 21/21 clear
 
 ## Layout (C on E sizes; `checks.txt`)
-- As v4 (the v2 drone: L2 at the nose axis 15° below +x, motors forward, catch 30 aft, pack top z -7, pods 35 ahead), but the L2, the front camera and their mount are left out of the shell.
+- As v4 (the v2 drone: L2 at the nose axis 15° below +x, motors forward, catch 30 aft, pack top z -7; the down camera and flow pods at v2's place since 27 Oct), but the L2, the front camera and their mount are left out of the shell.
 - **L2 field clear:** every shell node centre 25.1 behind the L2 base plane (its 90° field); 0.0 % of the field crossed; the most forward cage member surface 3.0 behind the plane (guard ring nodes) (C).
 - **Front camera view clear:** shell nodes 13.2 under its lower view plane (+2°) and behind the head plane (the head's own back, tilted 20° from the L2 axis, the tilt of 20 / 35 / 50 / 65 that keeps the L2 furthest back); nothing of the drone in its 73 x 89° view (C). **Down camera and flow:** nothing in their views through the bottom opening (C).
 - **L2 support and guard (outside its view):** v2 seat, back block, side lugs, 2 keels to the front hub on the bottom plate, 4 ties into the shell behind its plane, and (review 27 Oct) 4 braces from the lugs (low and high) to the front arm beams 30 out of the root: the seat is a braced pyramid on the core, not a stalk on the keels. Guard ring r 62 round its axis, 8 behind its base plane, 8 rods + 16 struts into the shell (C). **Break order:** the apex lugs are the printed fuse, sized to let go before the L2 base (requirement for the frame model case "nose hit on the L2 through its mount", E).

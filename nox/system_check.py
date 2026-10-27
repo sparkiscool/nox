@@ -547,7 +547,7 @@ def cage_shell(manifest, parts, n=2000):
         cells.append(2 * np.sqrt(max(sp * (sp - la) * (sp - lb) * (sp - lc), 0)) / sp - 2 * rr)
     closed = not gaps.any()
     mirror = None; mok = True
-    pl = spec.get("mirror", "y" if drone else None)                 # every node and rod has its mirror (Spark 26 Oct: perfect left-right symmetry)
+    pl = spec.get("mirror", "y" if drone else None)                 # every node and rod has its mirror (Spark 27 Oct: perfect left-right symmetry)
     if pl:
         k = "xyz".index(pl); M = N.copy(); M[:, k] *= -1
         dd = np.linalg.norm(M[:, None] - N[None], axis=2); j = dd.argmin(1)
