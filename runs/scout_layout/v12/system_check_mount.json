@@ -1811,11 +1811,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 735.28,
+  "mass_g": 745.76,
   "cg": [
-   1.88,
-   0.25,
-   2.81
+   0.38,
+   0.43,
+   2.61
   ],
   "parts": [
    {
@@ -1988,7 +1988,7 @@
     "mass_g": 10.0,
     "cg": [
      -104.35,
-     0.0,
+     0.06,
      23.0
     ],
     "tag": "E",
@@ -2161,33 +2161,33 @@
    },
    {
     "name": "tail bay mount block (Scout electronics, E)",
-    "mass_g": 17.25,
+    "mass_g": 15.92,
     "cg": [
-     -47.2,
-     0.3,
-     16.1
+     -45.3,
+     0.7,
+     12.9
     ],
     "tag": "E",
     "swap": false
    },
    {
     "name": "tail bay carrier (Scout electronics, E)",
-    "mass_g": 21.35,
+    "mass_g": 33.28,
     "cg": [
-     -105.05,
-     -6.93,
-     17.0
+     -102.51,
+     -0.63,
+     9.65
     ],
     "tag": "E",
     "swap": false
    },
    {
     "name": "tail bay cables (Scout electronics, E)",
-    "mass_g": 6.39,
+    "mass_g": 6.27,
     "cg": [
-     -4.0,
-     1.4,
-     32.0
+     -8.3,
+     2.3,
+     31.6
     ],
     "tag": "E",
     "swap": false
@@ -2266,11 +2266,11 @@
    41.2
   ],
   "cg_offset": [
-   1.88,
-   0.25,
-   -38.39
+   0.38,
+   0.43,
+   -38.59
   ],
-  "cg_offset_mm": 38.44
+  "cg_offset_mm": 38.59
  },
  "balance": {
   "applies": true,
@@ -2287,32 +2287,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 735.28,
+    "mass_g": 745.76,
     "cg_offset": [
-     1.88,
-     0.25,
-     -38.39
+     0.38,
+     0.43,
+     -38.59
     ],
-    "horizontal_mm": 1.9,
-    "axial_mm": -38.39,
+    "horizontal_mm": 0.57,
+    "axial_mm": -38.59,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 519.78,
+    "mass_g": 530.26,
     "cg_offset": [
-     0.72,
-     0.35,
-     -29.51
+     -1.38,
+     0.61,
+     -29.97
     ],
-    "horizontal_mm": 0.8,
-    "axial_mm": -29.51,
+    "horizontal_mm": 1.5,
+    "axial_mm": -29.97,
     "pass_": true,
     "gated": true
    }
   },
-  "worst_case": "all",
-  "worst_horizontal_mm": 1.9,
+  "worst_case": "no_swap",
+  "worst_horizontal_mm": 1.5,
   "pass_": true
  },
  "probes": {
@@ -3396,7 +3396,7 @@
    0.0,
    10.0
   ],
-  "n_points": 259816
+  "n_points": 262457
  },
  "access": {
   "applies": true,
@@ -3573,16 +3573,16 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 735.28,
+  "mass_g": 745.76,
   "part_budgets_g": {},
   "over_parts": [],
   "budget_g": 500.0,
-  "pct": 147.1,
+  "pct": 149.2,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [+1.9, +0.2, -38.4], 0.8 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear",
+ "summary": "System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [+0.4, +0.4, -38.6], 1.5 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear",
  "pass": true
 }
