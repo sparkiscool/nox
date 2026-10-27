@@ -819,7 +819,7 @@ for START in STARTS:
             g_, nodes_, E_ = r[0], r[1], r[2]
             tl = max(np.linalg.norm(nodes_[a] - nodes_[b]) for a, b in E_); vol = ConvexHull(nodes_).volume / 1e6
             pg_ = min(seg_band_dist(nodes_[a], nodes_[b], g_["mxy"]) for a, b in E_) - SHELL_R
-            ok = bool((FZ is not None or np.max(r[9]) <= 0.05) and len(r[4]) == 8 and pg_ >= PROP_GAP - 0.05)   # no tube-length limit (Spark 26 Oct); a frozen
+            ok = bool((FZ is not None or np.max(r[9]) <= 0.05) and len(r[4]) == (len(FZ["open"][0]["ring"]) if FZ is not None else 8) and pg_ >= PROP_GAP - 0.05)   # no tube-length limit (Spark 26 Oct); a frozen
                                                                                                    # cage is held to the props and system_check instead
             bt, bb = blockage(g_, nodes_, E_, r[5]) if ok else (np.nan, np.nan)
             say(f"start {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: shell {vol:.1f} L, {len(E_)} tubes, longest {tl:.0f}, "

@@ -29,7 +29,8 @@ NODE_R, TUBE_R = CG["node_r_mm"], CG["rod_r_mm"]
 GUARD_R = 3.4                                  # guard ring / bar: printed ~6 x 6 (Ø6.8 round)
 GUARD_NODE_R = 5.0
 WING_Y = 72.0                                  # the cut between the centre piece and the wings (DEFAULT, bed 180)
-CENTRE_NODE = np.array([352.88, 0.0, 47.0])    # the cage's front centre node: part of the centre piece (its tube sockets drawn)
+_CN = np.array(CG["nodes"]); _k = [i for i in range(len(_CN)) if abs(_CN[i, 1]) < 0.5 and _CN[i, 0] > 300]
+CENTRE_NODE = _CN[max(_k, key=lambda i: _CN[i, 0])] if _k else np.array([352.88, 0.0, 47.0])   # the cage's front centre node: part of the centre piece
 
 
 # ---------------------------------------------------------------- geometry helpers

@@ -67,7 +67,39 @@ def sym_tris(N):
     return N, np.array(sorted(set(T)))
 
 
-if KEEP:                                                               # thin the free nodes: mirror pairs and centre nodes, farthest first
+MERGE = float(os.environ.get("CE_MERGE_MM", 0))                         # Spark 27 Oct: nodes so close they can just become one (tubes under this)
+if MERGE:
+    N0, tris = sym_tris(N0); E = sorted({tuple(sorted((int(t[i]), int(t[(i + 1) % 3])))) for t in tris for i in range(3)})
+    for _ in range(10):
+        Ls = [(np.linalg.norm(N0[a] - N0[b]), a, b) for a, b in E]
+        short = [(a, b) for L_, a, b in Ls if L_ < MERGE]
+        if not short: break
+        par_ = list(range(len(N0)))
+        def rt(i):
+            while par_[i] != i: par_[i] = par_[par_[i]]; i = par_[i]
+            return i
+        for a, b in short: par_[rt(a)] = rt(b)
+        cl = {}
+        for i in range(len(N0)): cl.setdefault(rt(i), []).append(i)
+        newN, isring = [], []
+        for mem in cl.values():
+            rg = [i for i in mem if i < nR]
+            c = N0[mem].mean(0)
+            if rg: c = N0[rg].mean(0); c[2] = N0[rg[0], 2]               # a cluster with base-loop nodes stays on the loop plane
+            if abs(N0[mem, 1].mean()) < 1.0 and len(mem) > 1 and np.allclose(sorted(N0[mem, 1]), sorted(-N0[mem, 1]), atol=1.0): c[1] = 0.0
+            newN.append(c); isring.append(bool(rg))
+        newN = np.array(newN); isring = np.array(isring)
+        ctr = newN[isring].mean(0)
+        order = sorted(np.where(isring)[0], key=lambda i: math.atan2(newN[i, 1] - ctr[1], newN[i, 0] - ctr[0]))
+        N0 = np.vstack([newN[order], newN[~isring]]); nR = len(order)
+        print(f"merged tubes under {MERGE:g}: {len(short)} -> {len(N0)} nodes, base loop {nR} nodes", flush=True)
+        N0, tris = sym_tris(N0)
+        E = sorted({tuple(sorted((int(t[i]), int(t[(i + 1) % 3])))) for t in tris for i in range(3)})
+    SRC = dict(SRC, open=[dict(SRC["open"][0], ring=list(range(nR)))])
+    KEEP = 0
+if MERGE:
+    pass
+elif KEEP:                                                               # thin the free nodes: mirror pairs and centre nodes, farthest first
     fr = [i for i in range(nR, len(N0)) if N0[i, 1] >= -0.5]
     ctr = N0[nR:].mean(0); scale = np.ptp(N0, 0)
     pick = [max(fr, key=lambda i: np.linalg.norm((N0[i] - ctr) / scale))]
@@ -78,6 +110,26 @@ if KEEP:                                                               # thin th
     keep = sorted(set(pick) | {int(np.argmin(np.linalg.norm(N0 - N0[i] * [1, -1, 1], axis=1))) for i in pick})
     N0 = np.vstack([N0[:nR], N0[keep]])
     N0, tris = sym_tris(N0)
+    MIN_ANG = float(os.environ.get("CE_MIN_ANGLE", 20.0))             # no two tubes at a node closer than this (their sockets clash)
+    for _ in range(10 if os.environ.get("CE_DROP") else 0):           # dropping nodes for slivers (off: it cascades; the angle hinge below instead)
+        E_ = sorted({tuple(sorted((int(t[i]), int(t[(i + 1) % 3])))) for t in tris for i in range(3)})
+        worst = None
+        for v in range(len(N0)):
+            nb = [b_ if a_ == v else a_ for a_, b_ in E_ if v in (a_, b_)]
+            for p_ in range(len(nb)):
+                for q_ in range(p_ + 1, len(nb)):
+                    u1, u2 = N0[nb[p_]] - N0[v], N0[nb[q_]] - N0[v]
+                    th = math.degrees(math.acos(np.clip(u1 @ u2 / np.linalg.norm(u1) / np.linalg.norm(u2), -1, 1)))
+                    if th < MIN_ANG and (worst is None or th < worst[0]): worst = (th, v, nb[p_], nb[q_])
+        if worst is None: break
+        th, v, p_, q_ = worst                                          # drop the free node of the sliver's short side (and its mirror)
+        cand = [w for w in (p_, q_, v) if w >= nR]
+        w = min(cand, key=lambda w: min(np.linalg.norm(N0[w] - N0[o]) for o in (v, p_, q_) if o != w)) if cand else None
+        if w is None: break
+        mw = int(np.argmin(np.linalg.norm(N0 - N0[w] * [1, -1, 1], axis=1)))
+        keep_ = [k_ for k_ in range(len(N0)) if k_ not in (w, mw)]
+        print(f"sliver {th:.1f} deg at node {v}: node {w} dropped" + (f" with its mirror {mw}" if mw != w else ""), flush=True)
+        N0 = N0[keep_]; N0, tris = sym_tris(N0)
     E = sorted({tuple(sorted((int(t[i]), int(t[(i + 1) % 3])))) for t in tris for i in range(3)})
 else:
     adj = {i: set() for i in range(len(N0))}
@@ -89,6 +141,12 @@ else:
         tris = np.array([t for t in tris if t in fs])                 # the shell's faces (3-cliques on its hull)
     else: tris = np.array([t for t in tris if not all(v < nR for v in t)])   # every 3-clique but the ring's own
 print(f"start: {len(N0)} nodes, {len(E)} tubes, {len(tris)} faces", flush=True)
+MIN_ANG = float(os.environ.get("CE_MIN_ANGLE", 20.0))
+PAIRS = []
+for v in range(len(N0)):
+    nb = sorted({b_ if a_ == v else a_ for a_, b_ in E if v in (a_, b_)})
+    PAIRS += [(v, p_, q_) for k_, p_ in enumerate(nb) for q_ in nb[k_ + 1:]]
+PAIRS_A = np.array(PAIRS) if PAIRS else None
 N_START = N0.copy()
 Kp = K[ConvexHull(K).vertices]; kc = Kp.mean(0)
 if len(Kp) > 400:                                                       # thin the target's hull vertices (farthest-point, 400) for memory
@@ -173,6 +231,10 @@ def resid(x, n, cls, mult=None):
     r.append(W * np.maximum(0, (N[nR:] - g["B"]) @ A + l2_req))          # L2 plane
     for n_, l_, lim in cams: r.append(W * np.maximum(0, lim - (N - l_) @ n_))   # camera views
     r.append(W * np.maximum(0, z_o + 1 - N[nR:, 2]))
+    if PAIRS:                                                           # every two tubes at a node at least MIN_ANG apart
+        u1 = N[PAIRS_A[:, 1]] - N[PAIRS_A[:, 0]]; u2 = N[PAIRS_A[:, 2]] - N[PAIRS_A[:, 0]]
+        cosv = (u1 * u2).sum(1) / np.linalg.norm(u1, axis=1) / np.linalg.norm(u2, axis=1)
+        r.append(W * 50.0 * np.maximum(0, cosv - math.cos(math.radians(MIN_ANG))))
     R = N[:nR, :2]                                                      # ring chords clear of the swap zone (corners inside)
     ctr = R.mean(0)
     for i in range(nR):
@@ -218,7 +280,7 @@ best["T"] = np.array(cuts); best["cls"] = np.abs(PL[:, None] - best["T"][None]).
 best["err"] = float(np.abs(PL - best["T"][best["cls"]]).max())
 spec = dict(note=f"Overseer cage v4 (27 Oct, Spark: as few cut lengths as possible): cage v3's nodes and tubes moved by nox/overseer/cage_equal.py; "
                  f"{best['n']} cut lengths, every piece within {best['err']:.2f} of its length; a span of more than one piece is joined in line by a node.",
-            dm=dm, xB=FZ["xB"], nodes=np.round(best["N"], 3).tolist(), rods=[list(map(int, e)) for e in E], open=FZ["open"],
+            dm=dm, xB=FZ["xB"], nodes=np.round(best["N"], 3).tolist(), rods=[list(map(int, e)) for e in E], open=SRC["open"],
             tris=[list(map(int, t)) for t in tris], node_r_mm=NODE_R, rod_r_mm=SHELL_R, cut_lengths=[round(float(t), 1) for t in best["T"]],
             counts=[int(best["mult"][best["cls"] == i].sum()) for i in range(best["n"])], pieces=[int(m_) for m_ in best["mult"]], fits=[dict(n=f["n"], err=round(f["err"], 2), viol=round(f["viol"], 2)) for f in out])
 OUTF = os.environ.get("CE_OUT", os.path.join(HERE, "cage_v4_shell.json"))
