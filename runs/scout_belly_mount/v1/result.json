@@ -3,12 +3,12 @@
  "layout": "scout_layout v12 + main's assembly (camera mount v1, PR 146) + the tail bay as drawn (PR 130)",
  "wake_test": "contracted",
  "belly_mount": {
-  "mass_g": 25.24,
-  "mass_solid_g": 28.66,
+  "mass_g": 24.95,
+  "mass_solid_g": 28.49,
   "cg": [
-   1.8,
-   -7.5,
-   8.68
+   2.14,
+   -10.68,
+   6.8
   ],
   "bounds": [
    [
@@ -27,12 +27,12 @@
    "bodies_plain": 1,
    "bodies_eroded": 1,
    "eroded_volumes_mm3": [
-    13325.9
+    13264.6
    ],
    "necks": [],
    "drawn_not_in_main": [],
    "thin_walls": [],
-   "acute_edges": 2
+   "acute_edges": 0
   },
   "cradle_g": 3.33,
   "receiver_inserts": [
@@ -138,6 +138,40 @@
   },
   "hard_mounted_Hz": 8028
  },
+ "vents": {
+  "x": [
+   -18.0,
+   18.0
+  ],
+  "open_mm2": 641,
+  "ours_in_mm3": 0.24,
+  "nose_channel_mm2": 53
+ },
+ "plate_holes": {
+  "gaps": {
+   "(3.9, +31)": 13.1,
+   "(3.9, -31)": 12.4,
+   "(45, +0)": 7.3
+  },
+  "usb_axis_to_side_hole": 1.17
+ },
+ "soft_mount": {
+  "column_h": 5.2,
+  "h_window": [
+   2.4,
+   7.4
+  ],
+  "lateral_Hz": 120,
+  "vertical_Hz": 211,
+  "fc_z": [
+   8.5,
+   16.5
+  ],
+  "rib_top_max": 6.5,
+  "rib_cut": 2.1,
+  "tray_gap": 2.9,
+  "crash_travel": 0.61
+ },
  "flow": {
   "c": [
    0.0,
@@ -151,7 +185,11 @@
   "strut_L": 31.1,
   "in_swap_column": true,
   "side": -1,
-  "post_mode_Hz": 274,
+  "bipod_modes": {
+   "y_Hz": 405,
+   "axial_Hz": 3304,
+   "first_Hz": 405
+  },
   "view_clear": true,
   "seen": [],
   "plan_under_disk_pct": 2.6,
@@ -664,6 +702,14 @@
  "fit": [
   {
    "a": "belly mount (PETG)",
+   "b": "spokes, bay ties, core ties, camera guard",
+   "overlap_mm3": 0.0,
+   "gap_mm": 9.82,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
    "b": "frame plate (Bee35 carbon)",
    "overlap_mm3": 0.0,
    "gap_mm": -0.0,
@@ -840,9 +886,9 @@
   },
   {
    "a": "belly mount (PETG)",
-   "b": "cage rods / links (nearest)",
+   "b": "cage rods / links",
    "overlap_mm3": 0.0,
-   "gap_mm": 11.22,
+   "gap_mm": 9.32,
    "kind": ">= 2",
    "pass_": true
   },
@@ -868,20 +914,20 @@
    "flight": {
     "limit": 0.5,
     "rec_idx": [
-     0.0034,
+     0.0056,
      "flight 4 g thrust"
     ],
     "plate_idx": [
-     0.0049,
-     "flight 2 g y"
+     0.0155,
+     "flight 4 g thrust"
     ],
     "frame_idx": [
-     0.0193,
+     0.0184,
      "flight 4 g thrust"
     ],
     "post_idx": [
-     0.0037,
-     "flight 2 g x"
+     0.0018,
+     "flight 2 g y"
     ],
     "tongue_idx": [
      0.0,
@@ -890,20 +936,24 @@
     "carbon_idx": [
      0.0006,
      "flight 2 g x"
+    ],
+    "pry": [
+     2.81,
+     "flight 2 g x"
     ]
    },
    "landing": {
     "limit": 0.5,
     "rec_idx": [
-     0.0051,
+     0.0085,
      "landing 6 g"
     ],
     "plate_idx": [
-     0.0065,
+     0.0233,
      "landing 6 g"
     ],
     "frame_idx": [
-     0.029,
+     0.0276,
      "landing 6 g"
     ],
     "post_idx": [
@@ -917,32 +967,40 @@
     "carbon_idx": [
      0.0,
      "landing 6 g"
+    ],
+    "pry": [
+     2.75,
+     "landing 6 g"
     ]
    },
    "crash": {
     "limit": 1.0,
     "rec_idx": [
-     0.0485,
+     0.0808,
      "crash 35 g -x+y-z"
     ],
     "plate_idx": [
-     0.0921,
-     "crash 35 g -x+y-z"
+     0.1429,
+     "crash 35 g +x+y-z"
     ],
     "frame_idx": [
-     0.2419,
+     0.2305,
      "crash 35 g -x+y-z"
     ],
     "post_idx": [
-     0.0656,
-     "crash 35 g x"
+     0.0319,
+     "crash 35 g y"
     ],
     "tongue_idx": [
      0.0046,
      "crash 35 g x"
     ],
     "carbon_idx": [
-     0.0122,
+     0.0142,
+     "crash 35 g x"
+    ],
+    "pry": [
+     3.32,
      "crash 35 g x"
     ]
    }
@@ -956,42 +1014,240 @@
   "flow_g": 4.83,
   "bay_g": 78.3,
   "sections": {
-   "rear cross-member + ears at x -31 (behind: the rear receiver inserts)": {
+   "rear yoke: ears + cross-member at x -31 (behind: the rear receiver inserts)": {
     "A": 141.1,
     "I": 1178.8,
     "c": 4.45,
     "Z": 264.9
    },
-   "side rail at x 0 (the FC window; the USB side is cut)": {
-    "A": 90.1,
-    "I": 719.9,
-    "c": 4.52,
-    "Z": 159.3
+   "rear yoke: cross-member + rail stubs + pad at x -22 (the rear plate inserts)": {
+    "A": 364.4,
+    "I": 2488.1,
+    "c": 4.89,
+    "Z": 508.3
    },
-   "front blocks + bridge at x 30 (the front plate inserts)": {
-    "A": 298.9,
-    "I": 2411.9,
+   "front yoke: rails + blocks + bridge at x 30 (the front plate inserts)": {
+    "A": 309.8,
+    "I": 2411.3,
     "c": 4.62,
-    "Z": 522.0
+    "Z": 521.4
    },
-   "front rails at x 42": {
+   "front yoke: rails at x 42 (ahead: the front receiver inserts)": {
     "A": 101.8,
     "I": 744.2,
     "c": 4.45,
     "Z": 167.2
    }
   },
-  "post_root": {
-   "A": 36.0,
-   "Z": 36.0
-  },
-  "post_L": 35.6,
+  "strut_L": 34.6,
   "levers": [
    18.5,
    18.5,
    22.8,
    22.8
   ],
+  "hulls": {
+   "rear": [
+    [
+     -30.0,
+     -33.5
+    ],
+    [
+     -44.0,
+     -31.6
+    ],
+    [
+     -44.0,
+     31.6
+    ],
+    [
+     -31.0,
+     31.6
+    ],
+    [
+     -18.0,
+     26.5
+    ],
+    [
+     -18.0,
+     -33.5
+    ],
+    [
+     -30.0,
+     -33.5
+    ]
+   ],
+   "front": [
+    [
+     18.0,
+     -33.5
+    ],
+    [
+     18.0,
+     26.5
+    ],
+    [
+     47.6,
+     31.5
+    ],
+    [
+     48.3,
+     31.5
+    ],
+    [
+     48.3,
+     31.5
+    ],
+    [
+     48.9,
+     31.5
+    ],
+    [
+     49.6,
+     31.4
+    ],
+    [
+     49.6,
+     31.4
+    ],
+    [
+     50.2,
+     31.2
+    ],
+    [
+     50.8,
+     30.9
+    ],
+    [
+     50.8,
+     30.9
+    ],
+    [
+     51.3,
+     30.5
+    ],
+    [
+     51.8,
+     30.1
+    ],
+    [
+     52.2,
+     29.6
+    ],
+    [
+     52.2,
+     29.6
+    ],
+    [
+     52.6,
+     29.1
+    ],
+    [
+     52.6,
+     29.0
+    ],
+    [
+     52.9,
+     28.5
+    ],
+    [
+     53.1,
+     27.8
+    ],
+    [
+     53.2,
+     27.2
+    ],
+    [
+     53.2,
+     27.2
+    ],
+    [
+     53.3,
+     26.6
+    ],
+    [
+     53.3,
+     26.5
+    ],
+    [
+     53.3,
+     -26.5
+    ],
+    [
+     53.2,
+     -27.2
+    ],
+    [
+     53.1,
+     -27.8
+    ],
+    [
+     52.9,
+     -28.4
+    ],
+    [
+     52.9,
+     -28.5
+    ],
+    [
+     52.6,
+     -29.0
+    ],
+    [
+     52.6,
+     -29.0
+    ],
+    [
+     52.2,
+     -29.6
+    ],
+    [
+     51.8,
+     -30.1
+    ],
+    [
+     51.3,
+     -30.5
+    ],
+    [
+     51.3,
+     -30.5
+    ],
+    [
+     50.8,
+     -30.9
+    ],
+    [
+     50.8,
+     -30.9
+    ],
+    [
+     50.2,
+     -31.2
+    ],
+    [
+     49.6,
+     -31.4
+    ],
+    [
+     49.6,
+     -31.4
+    ],
+    [
+     48.9,
+     -31.5
+    ],
+    [
+     30.0,
+     -33.5
+    ],
+    [
+     18.0,
+     -33.5
+    ]
+   ]
+  },
   "cases": [
    {
     "case": "hover 1 g",
@@ -999,12 +1255,13 @@
     "limit": 0.5,
     "rec_T": 0.8,
     "rec_S": 0.0,
-    "rec_idx": 0.0008,
-    "plate_T": 1.1,
+    "rec_idx": 0.0014,
+    "plate_T": 2.3,
     "plate_S": 0.0,
-    "plate_idx": 0.0011,
+    "plate_idx": 0.0039,
+    "pry": 2.75,
     "frame_M": 19.0,
-    "frame_idx": 0.0048,
+    "frame_idx": 0.0046,
     "post_idx": 0.0001,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
@@ -1016,12 +1273,13 @@
     "limit": 0.5,
     "rec_T": 3.4,
     "rec_S": 0.0,
-    "rec_idx": 0.0034,
-    "plate_T": 4.3,
+    "rec_idx": 0.0056,
+    "plate_T": 9.3,
     "plate_S": 0.0,
-    "plate_idx": 0.0043,
+    "plate_idx": 0.0155,
+    "pry": 2.75,
     "frame_M": 77.0,
-    "frame_idx": 0.0193,
+    "frame_idx": 0.0184,
     "post_idx": 0.0002,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
@@ -1033,13 +1291,14 @@
     "limit": 0.5,
     "rec_T": 1.0,
     "rec_S": 1.7,
-    "rec_idx": 0.0019,
-    "plate_T": 2.1,
+    "rec_idx": 0.0032,
+    "plate_T": 2.7,
     "plate_S": 1.8,
-    "plate_idx": 0.0028,
+    "plate_idx": 0.0054,
+    "pry": 2.81,
     "frame_M": 18.0,
-    "frame_idx": 0.0044,
-    "post_idx": 0.0037,
+    "frame_idx": 0.0042,
+    "post_idx": 0.0001,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
     "carbon_idx": 0.0006
@@ -1050,13 +1309,14 @@
     "limit": 0.5,
     "rec_T": 1.0,
     "rec_S": 1.7,
-    "rec_idx": 0.0019,
-    "plate_T": 2.1,
+    "rec_idx": 0.0032,
+    "plate_T": 2.4,
     "plate_S": 1.8,
-    "plate_idx": 0.0028,
+    "plate_idx": 0.005,
+    "pry": 2.52,
     "frame_M": 22.0,
-    "frame_idx": 0.0055,
-    "post_idx": 0.0037,
+    "frame_idx": 0.0052,
+    "post_idx": 0.0001,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
     "carbon_idx": 0.0006
@@ -1067,13 +1327,14 @@
     "limit": 0.5,
     "rec_T": 1.5,
     "rec_S": 1.7,
-    "rec_idx": 0.0023,
-    "plate_T": 4.5,
-    "plate_S": 2.0,
-    "plate_idx": 0.0049,
+    "rec_idx": 0.0038,
+    "plate_T": 2.2,
+    "plate_S": 1.8,
+    "plate_idx": 0.0047,
+    "pry": 1.4,
     "frame_M": 35.0,
-    "frame_idx": 0.0088,
-    "post_idx": 0.0037,
+    "frame_idx": 0.0084,
+    "post_idx": 0.0018,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
     "carbon_idx": 0.0006
@@ -1084,13 +1345,14 @@
     "limit": 0.5,
     "rec_T": 1.5,
     "rec_S": 1.7,
-    "rec_idx": 0.0023,
-    "plate_T": 4.5,
-    "plate_S": 2.0,
-    "plate_idx": 0.0049,
+    "rec_idx": 0.0038,
+    "plate_T": 2.2,
+    "plate_S": 1.8,
+    "plate_idx": 0.0047,
+    "pry": 1.4,
     "frame_M": 35.0,
-    "frame_idx": 0.0088,
-    "post_idx": 0.0037,
+    "frame_idx": 0.0084,
+    "post_idx": 0.0018,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
     "carbon_idx": 0.0006
@@ -1101,12 +1363,13 @@
     "limit": 0.5,
     "rec_T": 5.1,
     "rec_S": 0.0,
-    "rec_idx": 0.0051,
-    "plate_T": 6.5,
+    "rec_idx": 0.0085,
+    "plate_T": 14.0,
     "plate_S": 0.0,
-    "plate_idx": 0.0065,
+    "plate_idx": 0.0233,
+    "pry": 2.75,
     "frame_M": 116.0,
-    "frame_idx": 0.029,
+    "frame_idx": 0.0276,
     "post_idx": 0.0003,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
@@ -1118,16 +1381,17 @@
     "limit": 1.0,
     "rec_T": 16.7,
     "rec_S": 28.9,
-    "rec_idx": 0.0334,
-    "plate_T": 38.0,
-    "plate_S": 38.4,
-    "plate_idx": 0.054,
+    "rec_idx": 0.0556,
+    "plate_T": 55.4,
+    "plate_S": 44.9,
+    "plate_idx": 0.1188,
+    "pry": 3.32,
     "frame_M": 309.0,
-    "frame_idx": 0.0777,
-    "post_idx": 0.0656,
+    "frame_idx": 0.074,
+    "post_idx": 0.0018,
     "tongue_N": 26.9,
     "tongue_idx": 0.0046,
-    "carbon_idx": 0.0122
+    "carbon_idx": 0.0142
    },
    {
     "case": "crash 35 g -x",
@@ -1135,16 +1399,17 @@
     "limit": 1.0,
     "rec_T": 16.7,
     "rec_S": 28.9,
-    "rec_idx": 0.0334,
-    "plate_T": 36.9,
-    "plate_S": 31.9,
-    "plate_idx": 0.0488,
+    "rec_idx": 0.0556,
+    "plate_T": 42.1,
+    "plate_S": 31.4,
+    "plate_idx": 0.0876,
+    "pry": 2.52,
     "frame_M": 380.0,
-    "frame_idx": 0.0954,
-    "post_idx": 0.0656,
+    "frame_idx": 0.0909,
+    "post_idx": 0.0018,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.0101
+    "carbon_idx": 0.01
    },
    {
     "case": "crash 35 g y",
@@ -1152,16 +1417,17 @@
     "limit": 1.0,
     "rec_T": 27.0,
     "rec_S": 29.4,
-    "rec_idx": 0.0399,
-    "plate_T": 78.0,
-    "plate_S": 34.8,
-    "plate_idx": 0.0854,
+    "rec_idx": 0.0666,
+    "plate_T": 37.9,
+    "plate_S": 32.0,
+    "plate_idx": 0.0815,
+    "pry": 1.4,
     "frame_M": 615.0,
-    "frame_idx": 0.1544,
-    "post_idx": 0.0656,
+    "frame_idx": 0.1471,
+    "post_idx": 0.0319,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.011
+    "carbon_idx": 0.0101
    },
    {
     "case": "crash 35 g -y",
@@ -1169,16 +1435,17 @@
     "limit": 1.0,
     "rec_T": 27.0,
     "rec_S": 29.4,
-    "rec_idx": 0.0399,
-    "plate_T": 78.0,
-    "plate_S": 34.8,
-    "plate_idx": 0.0854,
+    "rec_idx": 0.0666,
+    "plate_T": 37.9,
+    "plate_S": 32.0,
+    "plate_idx": 0.0815,
+    "pry": 1.4,
     "frame_M": 615.0,
-    "frame_idx": 0.1544,
-    "post_idx": 0.0656,
+    "frame_idx": 0.1471,
+    "post_idx": 0.0319,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.011
+    "carbon_idx": 0.0101
    },
    {
     "case": "crash 35 g z",
@@ -1190,6 +1457,7 @@
     "plate_T": 0.0,
     "plate_S": 0.0,
     "plate_idx": 0.0,
+    "pry": 0.0,
     "frame_M": 0.0,
     "frame_idx": 0.0,
     "post_idx": 0.0018,
@@ -1203,12 +1471,13 @@
     "limit": 1.0,
     "rec_T": 29.6,
     "rec_S": 0.0,
-    "rec_idx": 0.0296,
-    "plate_T": 38.0,
+    "rec_idx": 0.0494,
+    "plate_T": 81.5,
     "plate_S": 0.0,
-    "plate_idx": 0.038,
+    "plate_idx": 0.1359,
+    "pry": 2.75,
     "frame_M": 674.0,
-    "frame_idx": 0.1692,
+    "frame_idx": 0.1612,
     "post_idx": 0.0018,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
@@ -1220,16 +1489,17 @@
     "limit": 1.0,
     "rec_T": 9.0,
     "rec_S": 23.9,
-    "rec_idx": 0.0252,
-    "plate_T": 49.6,
-    "plate_S": 32.0,
-    "plate_idx": 0.0573,
+    "rec_idx": 0.0419,
+    "plate_T": 17.6,
+    "plate_S": 33.2,
+    "plate_idx": 0.0626,
+    "pry": 1.95,
     "frame_M": 167.0,
-    "frame_idx": 0.0418,
-    "post_idx": 0.0546,
+    "frame_idx": 0.0399,
+    "post_idx": 0.0199,
     "tongue_N": 15.5,
     "tongue_idx": 0.0027,
-    "carbon_idx": 0.0102
+    "carbon_idx": 0.0105
    },
    {
     "case": "crash 35 g +x+y-z",
@@ -1237,16 +1507,17 @@
     "limit": 1.0,
     "rec_T": 41.5,
     "rec_S": 23.9,
-    "rec_idx": 0.0477,
-    "plate_T": 84.3,
-    "plate_S": 32.0,
-    "plate_idx": 0.089,
+    "rec_idx": 0.0795,
+    "plate_T": 79.1,
+    "plate_S": 33.2,
+    "plate_idx": 0.1429,
+    "pry": 1.91,
     "frame_M": 769.0,
-    "frame_idx": 0.1931,
-    "post_idx": 0.0546,
+    "frame_idx": 0.184,
+    "post_idx": 0.0199,
     "tongue_N": 15.5,
     "tongue_idx": 0.0027,
-    "carbon_idx": 0.0102
+    "carbon_idx": 0.0105
    },
    {
     "case": "crash 35 g +x-y+z",
@@ -1254,16 +1525,17 @@
     "limit": 1.0,
     "rec_T": 9.0,
     "rec_S": 23.9,
-    "rec_idx": 0.0252,
-    "plate_T": 52.6,
-    "plate_S": 31.1,
-    "plate_idx": 0.0602,
+    "rec_idx": 0.0419,
+    "plate_T": 17.6,
+    "plate_S": 33.2,
+    "plate_idx": 0.0626,
+    "pry": 1.95,
     "frame_M": 167.0,
-    "frame_idx": 0.0419,
-    "post_idx": 0.0546,
+    "frame_idx": 0.0399,
+    "post_idx": 0.0199,
     "tongue_N": 15.5,
     "tongue_idx": 0.0027,
-    "carbon_idx": 0.0099
+    "carbon_idx": 0.0105
    },
    {
     "case": "crash 35 g +x-y-z",
@@ -1271,16 +1543,17 @@
     "limit": 1.0,
     "rec_T": 41.5,
     "rec_S": 23.9,
-    "rec_idx": 0.0477,
-    "plate_T": 81.3,
-    "plate_S": 31.1,
-    "plate_idx": 0.0864,
+    "rec_idx": 0.0795,
+    "plate_T": 79.1,
+    "plate_S": 33.2,
+    "plate_idx": 0.1429,
+    "pry": 1.91,
     "frame_M": 769.0,
-    "frame_idx": 0.1931,
-    "post_idx": 0.0546,
+    "frame_idx": 0.184,
+    "post_idx": 0.0199,
     "tongue_N": 15.5,
     "tongue_idx": 0.0027,
-    "carbon_idx": 0.0099
+    "carbon_idx": 0.0105
    },
    {
     "case": "crash 35 g -x+y+z",
@@ -1288,16 +1561,17 @@
     "limit": 1.0,
     "rec_T": 8.1,
     "rec_S": 23.9,
-    "rec_idx": 0.025,
-    "plate_T": 44.4,
-    "plate_S": 27.1,
-    "plate_idx": 0.0515,
+    "rec_idx": 0.0417,
+    "plate_T": 10.3,
+    "plate_S": 25.9,
+    "plate_idx": 0.0464,
+    "pry": 1.26,
     "frame_M": 185.0,
-    "frame_idx": 0.0465,
-    "post_idx": 0.0546,
+    "frame_idx": 0.0443,
+    "post_idx": 0.0199,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.0086
+    "carbon_idx": 0.0082
    },
    {
     "case": "crash 35 g -x+y-z",
@@ -1305,16 +1579,17 @@
     "limit": 1.0,
     "rec_T": 42.3,
     "rec_S": 23.9,
-    "rec_idx": 0.0485,
-    "plate_T": 88.3,
-    "plate_S": 27.1,
-    "plate_idx": 0.0921,
+    "rec_idx": 0.0808,
+    "plate_T": 68.9,
+    "plate_S": 25.9,
+    "plate_idx": 0.1227,
+    "pry": 1.63,
     "frame_M": 963.0,
-    "frame_idx": 0.2419,
-    "post_idx": 0.0546,
+    "frame_idx": 0.2305,
+    "post_idx": 0.0199,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.0086
+    "carbon_idx": 0.0082
    },
    {
     "case": "crash 35 g -x-y+z",
@@ -1322,16 +1597,17 @@
     "limit": 1.0,
     "rec_T": 8.1,
     "rec_S": 23.9,
-    "rec_idx": 0.025,
-    "plate_T": 47.3,
-    "plate_S": 28.3,
-    "plate_idx": 0.0543,
+    "rec_idx": 0.0417,
+    "plate_T": 10.3,
+    "plate_S": 25.9,
+    "plate_idx": 0.0464,
+    "pry": 1.26,
     "frame_M": 185.0,
-    "frame_idx": 0.0465,
-    "post_idx": 0.0546,
+    "frame_idx": 0.0443,
+    "post_idx": 0.0199,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.009
+    "carbon_idx": 0.0082
    },
    {
     "case": "crash 35 g -x-y-z",
@@ -1339,29 +1615,30 @@
     "limit": 1.0,
     "rec_T": 42.3,
     "rec_S": 23.9,
-    "rec_idx": 0.0485,
-    "plate_T": 85.3,
-    "plate_S": 28.3,
-    "plate_idx": 0.0894,
+    "rec_idx": 0.0808,
+    "plate_T": 68.9,
+    "plate_S": 25.9,
+    "plate_idx": 0.1227,
+    "pry": 1.63,
     "frame_M": 963.0,
-    "frame_idx": 0.2419,
-    "post_idx": 0.0546,
+    "frame_idx": 0.2304,
+    "post_idx": 0.0199,
     "tongue_N": 0.0,
     "tongue_idx": 0.0,
-    "carbon_idx": 0.009
+    "carbon_idx": 0.0082
    }
   ]
  },
  "system_check": {
-  "summary": "System: Scout v3 with the belly mount v1 (concept), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.2, +0.0, -38.7], 2.2 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 25/25 clear",
+  "summary": "System: Scout v3 with the belly mount v1 (concept), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 746 of 500 g (149 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.2, -0.1, -38.8], 2.2 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 25/25 clear",
   "pass_": true,
-  "cg_offset_in": 0.19,
-  "cg_offset_out": 2.17,
-  "mass_g": 746.0,
+  "cg_offset_in": 0.2,
+  "cg_offset_out": 2.16,
+  "mass_g": 745.71,
   "cg": [
-   -0.19,
-   0.02,
-   2.47
+   -0.18,
+   -0.08,
+   2.4
   ],
   "access": [
    [
@@ -1516,31 +1793,101 @@
    ]
   ]
  },
+ "alternatives": {
+  "B_top": {
+   "fc_x": 6.0,
+   "z": [
+    25.0,
+    33.0
+   ],
+   "gap_plate": 3.0,
+   "gap_props": 4.2,
+   "gap_foot": 2.0,
+   "plan_outside_disks": 2.5,
+   "new_holes": [
+    [
+     -6.75,
+     -12.75
+    ],
+    [
+     -6.75,
+     12.75
+    ],
+    [
+     18.75,
+     -12.75
+    ],
+    [
+     18.75,
+     12.75
+    ]
+   ],
+   "nearest_aio": 6.0,
+   "imu_dz": 15.5
+  },
+  "C_seat": {
+   "fc_x": 5.0,
+   "seat_need": 8.1,
+   "seat_have": 1.0,
+   "drop": 7.1,
+   "fc_z_dropped": [
+    2.4,
+    10.4
+   ],
+   "tray_floor": 5.6,
+   "tray_cut": 5.2
+  },
+  "D_inserts": {
+   "inserts": [
+    [
+     -27.75,
+     -4.0,
+     14.05
+    ],
+    [
+     -27.75,
+     10.0,
+     14.05
+    ]
+   ],
+   "keys": [
+    {
+     "y": -4.0,
+     "blocked_after_mm": 31.8
+    },
+    {
+     "y": 10.0,
+     "blocked_after_mm": 8.4
+    }
+   ],
+   "added_g": 1.0
+  }
+ },
  "px4": {
   "cg": [
-   -0.19,
-   0.02,
-   2.47
+   -0.18,
+   -0.08,
+   2.4
   ],
   "EKF2_IMU_POS": [
    0.0002,
-   0.0,
-   -0.011
+   -0.0001,
+   -0.0111
   ],
   "EKF2_OF_POS": [
    0.0056,
-   0.04,
-   0.0325
+   0.0399,
+   0.0324
   ],
   "EKF2_RNG_POS": [
    -0.0052,
-   0.04,
-   0.0325
+   0.0399,
+   0.0324
   ],
   "note": "IMU at the board centre (E: the chip's place on the board is not published); lens at the nose window, ToF at the tail window (E)"
  },
  "vs_placeholder": {
-  "dm_g": 0.24,
+  "dm_g": -0.05,
   "placeholder_cg": [
    10.15,
    0.0,

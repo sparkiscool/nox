@@ -1,4 +1,4 @@
-"""Scout v3 belly mount, concept v1 (27 Oct 2026). `python3 nox/scout/v3/belly_mount.py` -> runs/scout_belly_mount/v1/ (~3 min).
+"""Scout v3 belly mount, concept v1 (27 Oct 2026). `python3 nox/scout/v3/belly_mount.py` -> runs/scout_belly_mount/v1/ (~8 min).
 
 The printed piece under the Bee35 carbon plate, between the plate underside (z 18.5) and the receiver's mount plane (z 9.6):
 the receiver's partner (its 4 M3 bolts into heat-set inserts here), the frame round the FC, the flow sensor's cradle, and the
@@ -57,7 +57,9 @@ XT60_KO = (40.2, 56.3, 15.6)             # XT60E1-M + its rear leads + 2.0: x0, 
 LEADS_Y = 6.0                            # battery-lead channel |y| <= 6 from the XT60 to the FC's nose edge (2 x 14 AWG, E)
 RAIL_Y = 31.6                            # frame outer half width at the bosses and ears (<= 35 beside the tie saddle; brief)
 RAIL_IN = 26.5                           # the side rail between the bosses: |y| 20..26.5 (on the receiver's wall top |y| 20.5..25.5, C)
-BRIDGE_T = 3.5                           # the front bridge over the battery-lead channel, under the plate (z 15.0..18.5; the channel 5.4 tall)
+VENT_X = 18.0                            # round 2 (review 27 Oct): nothing of ours beside the FC over x -18..18: the ESC's side vents
+STRUT_X = 24.0                           # the flow bipod's strut roots on the rail stubs, x -+24 (outside the vents)
+BRIDGE_T = 4.5                           # the front bridge over the battery-lead channel, under the plate (z 14.0..18.5; the channel 4.4 tall): the link between the front halves
 FRONT_X = 53.3                           # front receiver bosses' nose edge (48.28 + 5)
 USB_W, USB_H, USB_L = 12.0, 7.0, 250.0   # FC USB-C 90 deg plug + cable (E, layout v12)
 USB_Z = 13.5                             # its centre height (layout v12, E)
@@ -84,7 +86,7 @@ SWAP_COL = (-43.8 - 17.6, 61.8 + 26.5, 32.8 + 30.0)   # swap column: receiver + 
 G = 9.81
 PETG_E, PETG_RHO, SIG_ALLOW = 2000.0, 1.27e-3, 25.0   # MPa, g/mm3, MPa (L / T, E)
 INFILL, WALL = 0.20, 2.4                 # as printed: 2.4 walls + 20 % infill (the electronics session's basis, E)
-INSERT_PULL, INSERT_SHEAR = 1000.0, 1000.0   # M3 x 5.7 heat-set in PETG: pull-out and bearing (N, E, published coupon range 0.9..1.5 kN)
+INSERT_PULL, INSERT_SHEAR = 600.0, 600.0     # M3 x 5.7 heat-set in PETG: ~600 N (dimensions.md Sled row, E); bearing taken the same (E)
 PLATE_BEAR = 300.0                       # carbon plate bolt bearing (MPa, E)
 
 # the drone's own parts that are not ours: the layout placeholder for this piece and its FC / wires boxes are replaced
@@ -411,9 +413,24 @@ def usb_window(side, xu, az, y_out=RAIL_Y + 8.0, clr=1.0):
     return m
 
 
-def belly_mount(side, xu, az, flow):
-    """side: the USB / flow / cable side (+1 = +y); xu, az: the USB port x and azimuth; flow: dict(c=(x, y), zb, ori, post_x, post_y)"""
-    S = side
+def strut_box(p0, p1, w=2 * STRUT_R):
+    """a w x w square strut from p0 to p1 (its section's sides along y and the in-plane normal)"""
+    p0 = np.asarray(p0, float); p1 = np.asarray(p1, float); d = p1 - p0; L = float(np.linalg.norm(d)); u = d / L
+    v = np.array([0.0, 1.0, 0.0]); v = v - u * (u @ v); v /= np.linalg.norm(v); w_ = np.cross(u, v)
+    T = np.eye(4); T[:3, 0] = u; T[:3, 1] = v; T[:3, 2] = w_; T[:3, 3] = (p0 + p1) / 2
+    b = trimesh.creation.box([L, w, w]); b.apply_transform(T); return b
+
+
+def flow_struts(flow):
+    """the bipod: a strut from each yoke's pad (x -+STRUT_X, under the rail stub) down to the cradle's top, at the flow side's y"""
+    fx, fy = flow["c"]; zb = flow["zb"]; hx = (FLOW_L / 2 if flow["ori"][0] == "x" else FLOW_W / 2)
+    py = flow["post_y"]; ztop_c = zb + FLOW_T + CRADLE
+    return [(np.array([sx * STRUT_X, py, REC_Z + 0.5]), np.array([fx + sx * (hx - 2.0), py, ztop_c - 1.0])) for sx in (-1, 1)]
+
+
+def belly_mount(side, xu, az, flow, vent=True):
+    """two yokes (rear: cross-member, ears, rail stubs; front: rails, blocks, bridge) joined only through the flow's bipod and cradle;
+    nothing beside the FC over x -VENT_X..VENT_X (the ESC's side vents). vent=False rebuilds round 1's closed rails (for the record)"""
     zz = (REC_Z, PLATE_Z)
     B = []
     B.append(box([TAIL_X, -EAR_Y, zz[0]], [-FC_WIN, EAR_Y, zz[1]]))                      # rear cross-member: the tongue's bearing face
@@ -421,23 +438,31 @@ def belly_mount(side, xu, az, flow):
         y0, y1 = sorted((sy * EAR_Y, sy * RAIL_Y))
         B.append(box([EAR_X0, y0, zz[0]], [TAIL_X, y1, zz[1]]))                          # ear: inner face on the tail block (|y| 21)
         y0, y1 = sorted((sy * FC_WIN, sy * RAIL_IN))
-        B.append(box([TAIL_X - 0.01, y0, zz[0]], [REC_BOLTS[2][0], y1, zz[1]]))           # side rail (on the receiver's wall top)
+        if vent:
+            B.append(box([TAIL_X - 0.01, y0, zz[0]], [-VENT_X, y1, zz[1]]))              # rear rail stub (on the receiver's wall top)
+            B.append(box([VENT_X, y0, zz[0]], [REC_BOLTS[2][0], y1, zz[1]]))              # front rail
+        else:
+            B.append(box([TAIL_X - 0.01, y0, zz[0]], [REC_BOLTS[2][0], y1, zz[1]]))
     for x_, y_ in REC_BOLTS + PLATE_BOLTS: B.append(cyl([x_, y_, zz[0]], [x_, y_, zz[1]], BOSS_R))
     for sy in (1, -1):                                                                    # front blocks to the front plate bolts
         y0, y1 = sorted((sy * LEADS_Y, sy * FC_WIN))
         B.append(box([24.0, y0, zz[0]], [36.0, y1, zz[1]]))
     B.append(box([24.0, -LEADS_Y - 0.01, zz[1] - BRIDGE_T], [36.0, LEADS_Y + 0.01, zz[1]]))   # the bridge over the lead channel
-    # the flow post (6 x 6) from the rail's underside down to the cradle, a pad on the rail, 2 gussets
     fx, fy = flow["c"]; zb = flow["zb"]; hx, hy = (FLOW_L / 2, FLOW_W / 2) if flow["ori"][0] == "x" else (FLOW_W / 2, FLOW_L / 2)
-    px = flow["post_x"]; py = flow["post_y"]; ztop_c = zb + FLOW_T + CRADLE
-    B.append(box([px - STRUT_R, py - STRUT_R, ztop_c - 0.01], [px + STRUT_R, py + STRUT_R, zz[0] + 0.01]))
-    FS = 1 if py > 0 else -1
-    yp0, yp1 = sorted((FS * (FC_WIN + 1.0), py + FS * STRUT_R))
-    B.append(box([px - STRUT_R, yp0, zz[0]], [px + STRUT_R, yp1, zz[1]]))               # the post's pad: the rail widened over it
-    for gx in (-1, 1):                                                                     # gussets fore and aft of the post into the rail pad
-        x0 = px + gx * STRUT_R; x1 = px + gx * (STRUT_R + 6.0)
-        tri = np.array([[x0, zz[0] - 8.0], [x0, zz[0] + 0.01], [x1, zz[0] + 0.01]])
+    py = flow["post_y"]; ztop_c = zb + FLOW_T + CRADLE; FS = 1 if py > 0 else -1
+    for sx in (-1, 1):                                                                    # the pads: each rail stub widened out over the strut
+        yp0, yp1 = sorted((FS * (FC_WIN + 1.0), py + FS * STRUT_R))
+        x0, x1 = sorted((sx * (STRUT_X - STRUT_R - 3.0), sx * (STRUT_X + STRUT_R + 3.0)))
+        B.append(box([x0, yp0, zz[0]], [x1, yp1, zz[1]]))
+    for p0, p1 in flow_struts(flow):                                                      # the bipod struts and their gussets
+        B.append(strut_box(p0, p1))
+        sx = 1 if p0[0] < 0 else -1                                                       # toward the drone's middle (the acute side)
+        u = (p1 - p0) / np.linalg.norm(p1 - p0)
+        a = p0 + u * 9.0
+        tri = np.array([[p0[0] + sx * STRUT_R, zz[0] + 0.01], [p0[0] + sx * (STRUT_R + 7.0), zz[0] + 0.01], [a[0] + sx * STRUT_R * 0.5, a[2]]])
         B.append(extrude_xz(tri, py - 1.5, py + 1.5))
+    sf = flow_struts(flow)                                                                # the tie bar joining the 2 strut feet on the cradle top
+    B.append(box([sf[0][1][0] - STRUT_R, py - STRUT_R, ztop_c - 1.0], [sf[1][1][0] + STRUT_R, py + STRUT_R, ztop_c + 2 * STRUT_R - 1.0]))   # (a closed triangle)
     # the cradle: 2.0 walls round the flow, a 2.0 top, 2 bottom lips 2.0 x 2.0 along the long sides, the plug end open
     c0 = np.array([fx - hx - CRADLE, fy - hy - CRADLE, zb - CRADLE]); c1 = np.array([fx + hx + CRADLE, fy + hy + CRADLE, ztop_c])
     cr = box(c0, c1)
@@ -457,12 +482,9 @@ def belly_mount(side, xu, az, flow):
     cuts = []
     cuts.append(box([-FC_WIN, -FC_WIN, zz[0] - 1], [FC_WIN, FC_WIN, zz[1] + 1]))        # FC window (board + 2.0)
     cuts.append(box([FC_WIN - 0.01, -LEADS_Y, zz[0] - 1], [XT60_KO[0] + 0.5, LEADS_Y, zz[1] - BRIDGE_T]))   # battery-lead channel to the XT60 (under the bridge)
-    gx = flow["post_x"] - STRUT_R - 2.0; fsy = 1 if flow["post_y"] > 0 else -1     # the flow lead's groove under the rail (2.5 x 4, laid before the receiver)
-    y0, y1 = sorted((fsy * (FC_WIN - 1.0), fsy * (RAIL_IN + 1.0)))
-    cuts.append(box([gx - 4.0, y0, zz[0] - 1], [gx, y1, zz[0] + 2.5]))
     cuts.append(box([FC_WIN - 0.01, -FC_WIN, zz[0] - 1], [24.0, FC_WIN, zz[1] + 1]))      # the FC's nose-edge pads
     cuts.append(box([XT60_KO[0], -XT60_KO[2], zz[0] - 1], [XT60_KO[1], XT60_KO[2], zz[1] + 1]))   # XT60E1-M + its rear leads
-    cuts.append(usb_window(S, xu, az))                                                   # the USB-C + cable window (full height)
+    if not vent: cuts.append(usb_window(side, xu, az))                                   # round 1: the USB-C window through the closed rail
     for x_, y_ in REC_BOLTS:                                                              # receiver inserts from below
         cuts.append(cyl([x_, y_, zz[0] - 1], [x_, y_, zz[0] + INSERT[1]], INSERT[0] / 2, 32))
     for x_, y_ in PLATE_BOLTS:                                                            # plate-bolt inserts from above
@@ -592,54 +614,89 @@ def section_props(mesh, origin, normal, hollow=True):
     return dict(A=round(float(A), 1), I=round(float(I), 1), c=round(float(cm), 2), Z=round(float(I / cm), 1) if cm > 0 else 0.0)
 
 
+YOKES = {"rear": dict(rec=[0, 1], plate=[0, 1]), "front": dict(rec=[2, 3], plate=[2, 3])}
+
+
+def yoke_hull(bm, which):
+    """the yoke's bearing footprint on the plate (its top face, z 18.5), as a convex hull in plan"""
+    import shapely.geometry as sg
+    s = bm.section(plane_origin=[0, 0, PLATE_Z - 0.3], plane_normal=[0, 0, 1])
+    polys = [sg.Polygon(e[:, :2]) for e in s.discrete]
+    pts = [p for p in polys if (p.centroid.x < 0) == (which == "rear")]
+    from shapely.ops import unary_union
+    return unary_union(pts).convex_hull
+
+
+def prying(hull, loads_xy, bolts_xy):
+    """plate-bolt tensions of a yoke bearing on the plate: for each edge of its footprint hull as the pivot, the bolts share the
+    receiver pulls' moment about it in proportion to their distance from it (T_b = k d_b, k = sum T_r d_r / sum d_b^2); the worst edge"""
+    c = np.array(hull.exterior.coords)[:-1]; best = (np.zeros(len(bolts_xy)), None)
+    for i in range(len(c)):
+        a, b = c[i], c[(i + 1) % len(c)]; t = b - a; n = np.array([-t[1], t[0]]) / max(np.linalg.norm(t), 1e-9)
+        cen = np.array(hull.centroid.coords[0])
+        if (cen - a) @ n < 0: n = -n                                   # inward normal
+        dr = np.array([(np.asarray(p) - a) @ n for p, _ in loads_xy]); Tr = np.array([T for _, T in loads_xy])
+        db = np.array([(np.asarray(p) - a) @ n for p in bolts_xy])
+        if (db <= 0.5).any(): continue
+        Mo = (Tr * dr).sum()
+        if Mo <= 0: continue
+        Tb = Mo / (db ** 2).sum() * db
+        if Tb.max() > best[0].max(): best = (Tb, (np.round(a, 1).tolist(), np.round(b, 1).tolist()))
+    return best
+
+
 def loads(P, bm, bm_g, bm_c, flow, cradle_g):
-    """L cases on the hung set (receiver set, cartridge set, pack), the belly mount's own mass, the flow + cradle, the tail tongue"""
+    """L cases on the hung set (receiver set, cartridge set, pack), the belly mount's own mass, the flow + cradle, the tail tongue.
+    Receiver bolts: an elastic bolt group (compression into bearing on the receiver's wall tops). Each yoke then carries its 2
+    receiver pulls to its 2 plate inserts by prying about the worst edge of its bearing footprint, plus its share of the shear,
+    the flow (half each) and its own weight; the tongue's push (+x crash) goes to the rear yoke"""
     hung = [(P[n]["g"], P[n]["c"]) for n in HUNG]
     mh = sum(g for g, _ in hung); ch = sum(g * c for g, c in hung) / mh
     fl_c = np.array([flow["c"][0], flow["c"][1], flow["zb"] + FLOW_T / 2]); fl_g = 1.5 + cradle_g
     bay_g = sum(P[n]["g"] for n in ("electronics tail block (PETG)", "electronics tail carrier (PETG)", "Radxa Zero 3W", "UBEC", "XR2")) + 0.5 * 6.27
-    tongue_c = np.array([TAIL_X, 3.0, 14.05])                          # the tongue's face centre (y -10..16, z 9.6..18.5, C)
     tongue_A = 26.0 * (PLATE_Z - REC_Z)
     secs = {}
-    frame_only = trimesh.boolean.intersection([bm, box([-100, -100, REC_Z - 0.01], [100, 100, 30])], engine="manifold")   # the frame (no post)
-    for nm, (o_, n_) in {"rear cross-member + ears at x -31 (behind: the rear receiver inserts)": ([-31.3, 0, 14.0], [1, 0, 0]),
-                         "side rail at x 0 (the FC window; the USB side is cut)": ([0.0, 0, 14.0], [1, 0, 0]),
-                         "front blocks + bridge at x 30 (the front plate inserts)": ([30.0, 0, 14.0], [1, 0, 0]),
-                         "front rails at x 42": ([42.0, 0, 14.0], [1, 0, 0])}.items():
+    frame_only = trimesh.boolean.intersection([bm, box([-100, -100, REC_Z - 0.01], [100, 100, 30])], engine="manifold")   # the yokes (no bipod)
+    for nm, (o_, n_) in {"rear yoke: ears + cross-member at x -31 (behind: the rear receiver inserts)": ([-31.3, 0, 14.0], [1, 0, 0]),
+                         "rear yoke: cross-member + rail stubs + pad at x -22 (the rear plate inserts)": ([-22.0, 0, 14.0], [1, 0, 0]),
+                         "front yoke: rails + blocks + bridge at x 30 (the front plate inserts)": ([30.0, 0, 14.0], [1, 0, 0]),
+                         "front yoke: rails at x 42 (ahead: the front receiver inserts)": ([42.0, 0, 14.0], [1, 0, 0])}.items():
         secs[nm] = section_props(frame_only, o_, n_)
-    s_ = bm.section(plane_origin=[flow["post_x"], flow["post_y"], REC_Z - 12.0], plane_normal=[0, 0, 1])   # the post below the gussets
-    import shapely.geometry as sg
-    pa = max((sg.Polygon(e[:, :2]).area for e in s_.discrete if abs(e[:, 0].mean() - flow["post_x"]) < 5 and abs(e[:, 1].mean() - flow["post_y"]) < 5), default=0.0) if s_ is not None else 0.0
-    post_root = dict(A=round(pa, 1), Z=round(pa ** 1.5 / 6.0, 1))       # a square post: Z = b^3 / 6 (solid; 6 wide is all wall)
+    hulls = {k: yoke_hull(bm, k) for k in YOKES}
     lever = [min(np.hypot(bx - px_, by - py_) for px_, py_ in PLATE_BOLTS) for bx, by in REC_BOLTS]
+    st = flow_struts(flow); Ls = float(np.linalg.norm(st[0][1] - st[0][0]))
     rows = []
     for name, a, kind, lim in cases():
         acc = a * G / 1000.0                                            # N per g of mass
         Fh = mh * acc
         T1, S1 = bolt_group(Fh, ch, REC_BOLTS, REC_Z)
         rec_idx = float(np.max(np.sqrt((T1 / INSERT_PULL) ** 2 + (S1 / INSERT_SHEAR) ** 2)))
-        Ff = fl_g * acc
-        Ft = np.array([max(a[0], 0.0) * bay_g * G / 1000.0, 0, 0]) if kind == "crash" else np.zeros(3)   # the tongue bears on our face (+x only)
-        Fb = bm_g * acc
-        Fall = Fh + Ff + Fb
-        call = (mh * ch + fl_g * fl_c + bm_g * np.asarray(bm_c)) / (mh + fl_g + bm_g)
-        T2, S2 = bolt_group(Fall, call, PLATE_BOLTS, PLATE_Z)
-        if Ft[0] > 0:
-            T2t, S2t = bolt_group(Ft, tongue_c, PLATE_BOLTS, PLATE_Z); T2 = T2 + T2t; S2 = S2 + S2t
-        pl_idx = float(np.max(np.sqrt((T2 / INSERT_PULL) ** 2 + (S2 / INSERT_SHEAR) ** 2)))
-        carbon_idx = float(np.max(S2) / (3.0 * 3.5 * PLATE_BEAR))      # M3 bearing in the 3.5 carbon plate
-        Mb = float(max(T1[i] * lever[i] for i in range(4)))            # a receiver insert's pull carried to the nearest plate insert (cantilever)
+        Ff = fl_g * acc; Ft = max(a[0], 0.0) * bay_g * G / 1000.0 if kind == "crash" else 0.0
+        Tp = np.zeros(4); Sp = np.zeros(4); pivots = {}
+        for k, y_ in YOKES.items():
+            Fy = (bm_g / 2) * acc + Ff / 2                                # its own half and half the flow
+            pulls = [(REC_BOLTS[i], T1[i]) for i in y_["rec"]] + [((0.0, 0.0), 0.0)]
+            Tb, piv = prying(hulls[k], [(p, T) for p, T in pulls if T > 0] or [((0, 0), 0.0)], [PLATE_BOLTS[i] for i in y_["plate"]])
+            Tb = Tb + max(-Fy[2], 0.0) / 2
+            S = (S1[y_["rec"]].sum() + np.hypot(Fy[0], Fy[1])) / 2
+            if k == "rear" and Ft > 0:                                     # the tongue at z 14.05: shear + its pitch about the plate face
+                S += Ft / 2; Tb = Tb + Ft * (PLATE_Z - 14.05) / (2 * 7.0)
+            Tp[y_["plate"]] = Tb; Sp[y_["plate"]] = S; pivots[k] = piv
+        pl_idx = float(np.max(np.sqrt((Tp / INSERT_PULL) ** 2 + (Sp / INSERT_SHEAR) ** 2)))
+        carbon_idx = float(np.max(Sp) / (3.0 * 3.5 * PLATE_BEAR))      # M3 bearing in the 3.5 carbon plate
+        Mb = float(max(T1[i] * lever[i] for i in range(4)))            # a receiver insert's pull over its lever to the nearest plate insert
         zmin = min(v["Z"] for v in secs.values() if v and v["Z"] > 0)
         frame_idx = Mb / zmin / SIG_ALLOW
-        Lp = REC_Z - (flow["zb"] + FLOW_T / 2)
-        Mp = float(np.hypot(Ff[0], Ff[1]) * Lp); post_idx = (Mp / post_root["Z"] + abs(Ff[2]) / post_root["A"]) / SIG_ALLOW if post_root and post_root["Z"] > 0 else float("nan")
-        tongue_idx = Ft[0] / tongue_A / SIG_ALLOW
+        Fyl = abs(Ff[1]); Fxz = np.hypot(Ff[0], Ff[2])                  # the bipod: y bends both struts (cantilevers, conservative);
+        post_idx = (Fyl / 2 * Ls / 36.0 + Fxz / 36.0) / SIG_ALLOW       # x and z go axially (6 x 6, Z 36, A 36)
+        tongue_idx = Ft / tongue_A / SIG_ALLOW
         rows.append(dict(case=name, kind=kind, limit=lim, rec_T=round(float(T1.max()), 1), rec_S=round(float(S1.max()), 1), rec_idx=round(rec_idx, 4),
-                         plate_T=round(float(T2.max()), 1), plate_S=round(float(S2.max()), 1), plate_idx=round(pl_idx, 4),
-                         frame_M=round(Mb, 0), frame_idx=round(frame_idx, 4), post_idx=round(post_idx, 4), tongue_N=round(float(Ft[0]), 1),
-                         tongue_idx=round(tongue_idx, 4), carbon_idx=round(carbon_idx, 4)))
+                         plate_T=round(float(Tp.max()), 1), plate_S=round(float(Sp.max()), 1), plate_idx=round(pl_idx, 4),
+                         pry=round(float(Tp.max() / max(T1.max(), 1e-9)), 2), frame_M=round(Mb, 0), frame_idx=round(frame_idx, 4),
+                         post_idx=round(post_idx, 4), tongue_N=round(float(Ft), 1), tongue_idx=round(tongue_idx, 4), carbon_idx=round(carbon_idx, 4)))
     return dict(rows=rows, hung_g=round(mh, 1), hung_cg=np.round(ch, 2).tolist(), flow_g=round(fl_g, 2), bay_g=round(bay_g, 1),
-                sections=secs, post_root=post_root, post_L=round(REC_Z - (flow["zb"] + FLOW_T / 2), 1), levers=np.round(lever, 1).tolist())
+                sections=secs, strut_L=round(Ls, 1), levers=np.round(lever, 1).tolist(),
+                hulls={k: np.round(np.array(h.exterior.coords), 1).tolist() for k, h in hulls.items()})
 
 
 # ---------------------------------------------------------------- 6. FC on grommets and the flow post: first modes (E)
@@ -665,10 +722,26 @@ def fc_rigid_mode():
     return round(math.sqrt(4 * k * 1e3 / 0.010) / (2 * math.pi))
 
 
-def post_mode(L, m_g):
-    """the flow + cradle on the 6 x 6 PETG post (cantilever with a tip mass, E)"""
-    I = 6.0 ** 4 / 12.0; k = 3 * PETG_E * I / L ** 3
-    return round(math.sqrt(k * 1e3 / (m_g / 1000.0)) / (2 * math.pi))
+def bipod_mode(L, m_g):
+    """the flow + cradle on the 2 struts (6 x 6 PETG, L each): sideways (y) both bend, as cantilevers (conservative); x and z axial (E)"""
+    I = 6.0 ** 4 / 12.0; ky = 2 * 3 * PETG_E * I / L ** 3; kax = PETG_E * 36.0 / L
+    f = lambda k: round(math.sqrt(k * 1e3 / (m_g / 1000.0)) / (2 * math.pi))
+    return dict(y_Hz=f(ky), axial_Hz=f(kax), first_Hz=f(ky))
+
+
+def soft_mount(f_lo=100.0, f_hi=175.0, G_mpa=0.3, gap=GAP):
+    """the grommet requirement for real isolation (E): Ø6 / Ø2.2 silicone columns (30A, G 0.3 MPa, E 0.9) between the plate and the
+    PCB, in shear sideways; the column height = the FC's top gap + its 3.2 of upper components; the FC moves down to keep the gap"""
+    A = math.pi / 4 * (6.0 ** 2 - 2.2 ** 2); m = 0.010
+    h = gap + 3.2                                                       # plate to PCB top with the FC 2.0 under the plate
+    k = G_mpa * A / h; f_lat = math.sqrt(4 * k * 1e3 / m) / (2 * math.pi)
+    S_ = A / (math.pi * (6.0 + 2.2) * h); kv = 3 * G_mpa * (1 + 2 * 0.6 * S_ ** 2) * A / h; f_v = math.sqrt(4 * kv * 1e3 / m) / (2 * math.pi)
+    hmin = G_mpa * A / (m * (2 * math.pi * f_hi) ** 2 / 4 / 1e3); hmax = G_mpa * A / (m * (2 * math.pi * f_lo) ** 2 / 4 / 1e3)
+    z0 = PLATE_Z - gap - FC_H
+    crash = 35 * 9.81 * m / (4 * k)
+    return dict(column_h=round(h, 1), h_window=[round(hmin, 1), round(hmax, 1)], lateral_Hz=round(f_lat), vertical_Hz=round(f_v),
+                fc_z=[round(z0, 1), round(z0 + FC_H, 1)], rib_top_max=round(z0 - GAP, 1), rib_cut=round(8.6 - (z0 - GAP), 1),
+                tray_gap=round(z0 - 5.6, 1), crash_travel=round(crash, 2))
 
 
 # ---------------------------------------------------------------- 7. the system model with our pieces: system_check
@@ -688,18 +761,18 @@ def manifest(M, P, usb, flow, bm, bm_g, bm_c):
                           tag="E", owner="scout electronics", version="v2 (PR 130)"))
     parts.append(dict(name="FC", role="bought", protect=True, trimesh=P["FC"]["mesh"], mass_g=10.0, tag="P", geom_tag="C",
                       note="MicoAir743v2-AIO 36 x 36 x 8 on the plate's AIO holes (as built), z 9.5..17.5"))
-    parts.append(dict(name="wires", role="structure", box=[-0.5, 0.5, -0.5, 0.5, 13.0, 14.0], mass_g=20.0, tag="E", note="the layout's 20 g, at the FC"))
+    parts.append(dict(name="wires", role="structure", box=[-0.2, 0.2, 21.8, 22.2, 13.3, 13.7], cg=[0.0, 0.0, 13.5], mass_g=20.0, tag="E",
+                      note="the layout's 20 g, CG at the FC; for the fit a 0.4 box in free air beside the FC (the side vent), no allowance"))
     parts.append(dict(name="flow MTF-02P", role="bought", protect=True, trimesh=P["flow MTF-02P"]["mesh"], mass_g=1.5, tag="P", geom_tag="C"))
     parts.append(dict(name="belly mount (PETG)", role="structure", trimesh=bm, material="PETG", mass_g=round(bm_g, 2), cg=np.round(bm_c, 2).tolist(),
                       tag="E", geom_tag="C", owner="scout electronics", version="belly mount v1 (concept)", source="nox/scout/v3/belly_mount.py"))
     A["parts"] = parts
     names = {p["name"] for p in parts}
     cp = [c for c in A["contact_pairs"] if set(c[:2]) <= names and not ({"FC", "wires", "flow MTF-02P"} & set(c[:2]))]
-    cp += [[a, b, 0.05] for a, b in (tuple(x) for x in CONTACT)]
+    cp += [[a, b, 0.05] for a, b in sorted(tuple(sorted(x)) for x in CONTACT)]
     cp += [[a, b, 0.05] for a, b in (("electronics tail block (PETG)", "frame plate (Bee35 carbon)"), ("electronics tail block (PETG)", "receiver v3 (latch)"),
                                       ("electronics tail carrier (PETG)", "electronics tail block (PETG)"), ("electronics tail carrier (PETG)", "Radxa Zero 3W"),
                                       ("electronics tail carrier (PETG)", "UBEC"), ("electronics tail carrier (PETG)", "XR2"))]
-    cp += [["wires", n, 1e9] for n in names if n != "wires"]
     A["contact_pairs"] = cp
     A["clearance_pairs"] = [["belly mount (PETG)", n, GAP] for n in ("XT60E1-M", "FC", "tie saddle (printed)", "receiver TPU end pieces (latch, E)")] + \
                            [["flow MTF-02P", n, GAP] for n in ("receiver v3 (latch)", "tie saddle (printed)")] + [["FC", n, GAP] for n in ("frame plate (Bee35 carbon)", "receiver v3 (latch)")]
@@ -860,6 +933,142 @@ def preview(P, M, bm, flow, usb, path, info):
     fig.tight_layout(rect=(0, 0.015, 1, 1)); fig.savefig(path, dpi=105); plt.close(fig)
 
 
+# ---------------------------------------------------------------- 8b. the alternatives, side by side (review 27 Oct: every option drawn)
+def alternatives(P, bm, info):
+    """numbers for the 3 FC options and the tail-root inserts option, from the same model"""
+    out = {}
+    sm = info["soft"]
+    # B: the FC on the plate top, on standoffs: clear the tail block's foot (its outline on the plate top, C) by 2.0
+    tb = P["electronics tail block (PETG)"]["mesh"]
+    foot = tb.section(plane_origin=[0, 0, PLATE_TOP + 1.0], plane_normal=[0, 0, 1])
+    foot_x1 = max(float(e[:, 0].max()) for e in foot.discrete) if foot is not None else -14.0
+    fcx = foot_x1 + GAP + FC_W / 2
+    stand = 3.0                                                         # M2 nylon standoff + grommet under the board (E)
+    zb_top = PLATE_TOP + stand; zt_top = zb_top + FC_H
+    corner = min(math.hypot(fcx + sx * FC_W / 2 - mx, sy * FC_W / 2 - my) for sx in (-1, 1) for sy in (-1, 1) for mx, my in DISKS) - DISK_R
+    out["B_top"] = dict(fc_x=round(fcx, 1), z=[round(zb_top, 1), round(zt_top, 1)], gap_plate=stand, gap_props=round(PROP_Z - 4.0 - zt_top, 1),
+                        gap_foot=GAP, plan_outside_disks=round(corner, 1), new_holes=[(round(fcx + sx * FC_HOLES, 2), sy * FC_HOLES) for sx in (-1, 1) for sy in (-1, 1)],
+                        nearest_aio=round(min(math.hypot(fcx + sx * FC_HOLES - ax * FC_HOLES, 0) for sx in (-1, 1) for ax in (-1, 1)), 1),
+                        imu_dz=round((zb_top + zt_top) / 2 - (FC_Z0 + FC_H / 2), 1))
+    # C: the FC seated on the belly mount at x +5 (the layout's): an insert seat above each FC hole needs 5.7 + 2.4 cap
+    need = 5.7 + 2.4
+    have = PLATE_Z - (FC_Z0 + FC_H)
+    drop = need - have
+    out["C_seat"] = dict(fc_x=5.0, seat_need=need, seat_have=round(have, 1), drop=round(drop, 1), fc_z_dropped=[round(FC_Z0 - drop, 1), round(FC_Z0 + FC_H - drop, 1)],
+                         tray_floor=5.6, tray_cut=round(5.6 - (FC_Z0 - drop - GAP), 1))
+    # D: 2 M3 inserts in our tail face, bolts along +x through the tongue: the key line aft (along -x) from the tongue's back
+    hits = []
+    others = [P[n]["mesh"] for n in ("electronics tail block (PETG)", "electronics tail carrier (PETG)", "Radxa Zero 3W")]
+    for y_ in (-4.0, 10.0):
+        o = np.array([[-37.6, y_, 14.05]]); d = np.array([[-1.0, 0, 0]])
+        best = None
+        for m in others:
+            loc, _, _ = m.ray.intersects_location(o, d, multiple_hits=False)
+            if len(loc): best = min(best or 1e9, float(-loc[0][0] - 37.6))
+        hits.append(dict(y=y_, blocked_after_mm=None if best is None else round(best, 1)))
+    out["D_inserts"] = dict(inserts=[(TAIL_X + 3.25, -4.0, 14.05), (TAIL_X + 3.25, 10.0, 14.05)], keys=hits, added_g=1.0)
+    return out
+
+
+def preview_alternatives(P, M, bm, info, alts, path):
+    import matplotlib; matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle, FancyArrowPatch
+    fig, axs = plt.subplots(2, 4, figsize=(22, 13.0), gridspec_kw=dict(height_ratios=[1.0, 0.8]))
+    def sect(ax, n, origin, normal, ij, fc, a=0.45, ec="k", z=3):
+        s = P[n]["mesh"].section(plane_origin=origin, plane_normal=normal)
+        if s is None: return
+        for e in s.discrete: ax.fill(e[:, ij[0]], e[:, ij[1]], facecolor=fc, edgecolor=ec, lw=0.4, alpha=a, zorder=z)
+    def top(ax, zcut=14.0, fc_at=None, ours=True):
+        sect(ax, "frame plate (Bee35 carbon)", [0, 0, 20.0], [0, 0, 1], (0, 1), "#3a3a3a", 0.15, "#3a3a3a", 1)
+        sect(ax, "receiver v3 (latch)", [0, 0, 9.0], [0, 0, 1], (0, 1), "#8899aa", 0.25, "#667", 2)
+        sect(ax, "electronics tail block (PETG)", [0, 0, zcut], [0, 0, 1], (0, 1), "#8e6bbf", 0.5, "k", 3)
+        sect(ax, "XT60E1-M", [0, 0, zcut], [0, 0, 1], (0, 1), "#c9a400", 0.6, "k", 3)
+        if ours: sect(ax, "belly mount (PETG)", [0, 0, zcut], [0, 0, 1], (0, 1), "#2f7fd8", 0.8, "k", 4)
+        for mx, my in DISKS: ax.add_patch(plt.Circle((mx, my), DISK_R, color="#e8c547", alpha=0.12, zorder=0))
+        if fc_at is not None: ax.add_patch(Rectangle((fc_at - FC_W / 2, -FC_W / 2), FC_W, FC_W, color="#2e7d32", alpha=0.85, zorder=5))
+        ax.set_xlim(-60, 65); ax.set_ylim(-50, 50); ax.set_aspect("equal"); ax.grid(alpha=0.15); ax.tick_params(labelsize=7)
+    def note(ax, lines, y0=-0.13):
+        ax.text(0.0, y0, "\n".join(lines), transform=ax.transAxes, fontsize=7.6, va="top", ha="left",
+                bbox=dict(facecolor="white", alpha=0.85, edgecolor="#999", lw=0.5), zorder=20)
+    sm = info["soft"]; B_ = alts["B_top"]; C_ = alts["C_seat"]; D_ = alts["D_inserts"]
+    # ---- A: picked, under the plate on the AIO holes, side vents
+    ax = axs[0, 0]; ax.set_title("A (picked): FC under the plate on its AIO holes\nboth sides open over x -18..18 (ESC vents)", fontsize=10)
+    top(ax, fc_at=0.0)
+    for sy in (1, -1):
+        ax.add_patch(FancyArrowPatch((0, sy * 46), (0, sy * 24), arrowstyle="-|>", mutation_scale=12, color="#1565c0", lw=1.6, zorder=8))
+        ax.add_patch(Rectangle((-VENT_X, sy * FC_WIN if sy > 0 else -RAIL_Y), 2 * VENT_X, RAIL_Y - FC_WIN, fill=False, ec="#1565c0", ls="--", lw=1.0, zorder=7))
+    ax.text(0, 40, "vent 36 x 8.9", ha="center", fontsize=7, color="#1565c0"); ax.text(0, -44, "vent 36 x 8.9", ha="center", fontsize=7, color="#1565c0")
+    ax = axs[1, 0]; ax.set_title("A: section at x 0 (y, z)", fontsize=10)
+    for n, c in (("frame plate (Bee35 carbon)", "#3a3a3a"), ("receiver v3 (latch)", "#8899aa"), ("belly mount (PETG)", "#2f7fd8"), ("flow MTF-02P", "#1b5e20"),
+                 ("tie saddle (printed)", "#c77d2e"), ("cartridge v6 (latch)", "#4f6fcf")):
+        sect(ax, n, [0, 0, 0], [1, 0, 0], (1, 2), c, 0.5)
+    ax.add_patch(Rectangle((-FC_W / 2, FC_Z0), FC_W, FC_H, color="#2e7d32", alpha=0.9, zorder=6))
+    for sy in (1, -1): ax.add_patch(FancyArrowPatch((sy * 44, 15.5), (sy * 20, 15.5), arrowstyle="-|>", mutation_scale=10, color="#1565c0", lw=1.4, zorder=8))
+    ax.set_xlim(-55, 55); ax.set_ylim(-50, 28); ax.set_aspect("equal"); ax.grid(alpha=0.15); ax.tick_params(labelsize=7)
+    note(ax, [f"FC z {FC_Z0}..{FC_Z0 + FC_H}: plate {info['fc_gap_plate']:.1f}, receiver rib {info['fc_gap_rec']:.1f} (rule 2.0, as built)",
+              f"ESC: open both sides, {alts.get('vent_A', 641):.0f} mm2; plate above, receiver below",
+              "FC out = receiver off (its nuts sit in the receiver's tray)",
+              f"soft-mount requirement: columns {sm['column_h']} tall, {sm['lateral_Hz']} Hz,",
+              f"FC to z {sm['fc_z'][0]}..{sm['fc_z'][1]}, receiver rib to <= {sm['rib_top_max']}"])
+    # ---- B: on the plate top
+    ax = axs[0, 1]; ax.set_title(f"B (Spark's call): FC on the plate top at x {B_['fc_x']:+.1f}\nclear of the tail block's foot by 2.0", fontsize=10)
+    top(ax, zcut=PLATE_TOP + 1.0, fc_at=B_["fc_x"])
+    for hx_, hy_ in B_["new_holes"]: ax.plot(hx_, hy_, "o", ms=4, mfc="w", mec="k", zorder=9)
+    for sx in (-1, 1):
+        for sy in (-1, 1): ax.plot(sx * FC_HOLES, sy * FC_HOLES, "x", color="#c62828", ms=5, zorder=9)
+    ax.text(-58, 44, "x: the AIO holes (left empty), o: 4 new M2 holes", fontsize=7)
+    ax = axs[1, 1]; ax.set_title(f"B: section at x {B_['fc_x']:+.1f} (y, z)", fontsize=10)
+    for n, c in (("frame plate (Bee35 carbon)", "#3a3a3a"), ("receiver v3 (latch)", "#8899aa"), ("tie saddle (printed)", "#c77d2e"), ("cartridge v6 (latch)", "#4f6fcf")):
+        sect(ax, n, [B_["fc_x"], 0, 0], [1, 0, 0], (1, 2), c, 0.5)
+    ax.add_patch(Rectangle((-FC_W / 2, B_["z"][0]), FC_W, FC_H, color="#2e7d32", alpha=0.9, zorder=6))
+    ax.axhline(PROP_Z - 4.0, color="#e8a317", ls="--", lw=1.0); ax.text(-54, PROP_Z - 3.5, "prop sweep bottom", fontsize=7, color="#a06800")
+    for sy in (1, -1): ax.add_patch(FancyArrowPatch((sy * 44, 29), (sy * 20, 29), arrowstyle="-|>", mutation_scale=10, color="#1565c0", lw=1.4, zorder=8))
+    ax.set_xlim(-55, 55); ax.set_ylim(-50, 45); ax.set_aspect("equal"); ax.grid(alpha=0.15); ax.tick_params(labelsize=7)
+    note(ax, [f"FC z {B_['z'][0]}..{B_['z'][1]}: plate {B_['gap_plate']:.1f} (standoffs), props {B_['gap_props']:.1f}, foot {B_['gap_foot']:.1f}",
+              f"plan {B_['plan_outside_disks']:.1f} outside the swept disks; ESC in free air",
+              "USB, plugs, 4 screws from above; FC out with no other part off",
+              f"costs: Spark 12 Oct 'cannot move up'; 4 new holes, {B_['nearest_aio']:.1f} from the AIO ones;",
+              f"cables over the plate; IMU {B_['imu_dz']:+.1f} higher; the belly mount loses its FC window"])
+    # ---- C: seated on the belly mount at x +5
+    ax = axs[0, 2]; ax.set_title("C (rejected): FC seated on the belly mount at x +5\n(the layout's; insert seats over its 4 holes)", fontsize=10)
+    top(ax, fc_at=5.0)
+    for sx in (-1, 1):
+        for sy in (-1, 1): ax.add_patch(plt.Circle((5 + sx * FC_HOLES, sy * FC_HOLES), BOSS_R, color="#c62828", alpha=0.6, zorder=9))
+    ax = axs[1, 2]; ax.set_title("C: section at y +12.75 (x, z): the seat it needs", fontsize=10)
+    for n, c in (("frame plate (Bee35 carbon)", "#3a3a3a"), ("receiver v3 (latch)", "#8899aa")):
+        sect(ax, n, [0, 12.75, 0], [0, 1, 0], (0, 2), c, 0.5)
+    ax.add_patch(Rectangle((5 - FC_W / 2, FC_Z0), FC_W, FC_H, color="#2e7d32", alpha=0.9, zorder=6))
+    for sx in (-1, 1):
+        ax.add_patch(Rectangle((5 + sx * FC_HOLES - BOSS_R, FC_Z0 + FC_H), 2 * BOSS_R, C_["seat_need"], facecolor="#c62828", alpha=0.45, ec="#c62828", zorder=7))
+    ax.add_patch(Rectangle((5 - FC_W / 2, C_["fc_z_dropped"][0]), FC_W, FC_H, fill=False, ec="#2e7d32", ls="--", lw=1.2, zorder=7))
+    ax.set_xlim(-45, 55); ax.set_ylim(-2, 30); ax.set_aspect("equal"); ax.grid(alpha=0.15); ax.tick_params(labelsize=7)
+    note(ax, [f"seat over each hole: insert 5.7 + cap 2.4 = {C_['seat_need']:.1f} above the FC; {C_['seat_have']:.1f} exists (red: into the plate)",
+              f"or the FC {C_['drop']:.1f} lower (dashed, z {C_['fc_z_dropped'][0]}..{C_['fc_z_dropped'][1]}): the receiver's tray",
+              f"cut {C_['tray_cut']:.1f} below its floor (a receiver change); PETG seat in series with the grommets"])
+    # ---- D: the tail root, bearing face (picked) vs 2 inserts
+    ax = axs[0, 3]; ax.set_title("Tail block root: bearing face + ears (picked)\nvs 2 M3 inserts in our tail face (rejected)", fontsize=10)
+    sect(ax, "electronics tail block (PETG)", [0, 0, 14.05], [0, 0, 1], (0, 1), "#8e6bbf", 0.5)
+    sect(ax, "electronics tail carrier (PETG)", [0, 0, 14.05], [0, 0, 1], (0, 1), "#b49ad6", 0.4)
+    sect(ax, "belly mount (PETG)", [0, 0, 14.05], [0, 0, 1], (0, 1), "#2f7fd8", 0.8)
+    for (x_, y_, z_), h in zip(D_["inserts"], D_["keys"]):
+        ax.add_patch(Rectangle((TAIL_X, y_ - 2.0), 6.5, 4.0, color="#c62828", alpha=0.7, zorder=8))
+        L_ = h["blocked_after_mm"] or 60.0
+        ax.plot([-37.6, -37.6 - L_], [y_, y_], color="#c62828", lw=1.4, zorder=9); ax.plot(-37.6 - L_, y_, "x", color="#c62828", ms=7, zorder=9)
+    ax.text(-75, 28, "bearing face x -31, ears at |y| 21 (blue)", fontsize=7.5, color="#174a85")
+    ax.set_xlim(-110, -10); ax.set_ylim(-35, 35); ax.set_aspect("equal"); ax.grid(alpha=0.15); ax.tick_params(labelsize=7)
+    ax = axs[1, 3]; ax.axis("off")
+    kb = " / ".join(f"{h['blocked_after_mm']}" for h in D_["keys"])
+    note(ax, ["Picked: bearing face + ears. No fasteners; 26.9 N peak (35 g +x on the 78.3 g bay),",
+              "0.12 MPa, index 0.005; the block slides off aft after its own 2 plate bolts.",
+              "Rejected: 2 M3 inserts in our tail face (red), +1.0 g; they would also take",
+              "the -x pull (26.9 N), which the block's own plate bolts carry at 0.028.",
+              f"Their key lines (red, along the bolt axis) hit the tail block {kb} mm aft;",
+              "no straight key, and the block could not come off without the belly mount."], 0.6)
+    fig.suptitle("Scout v3 belly mount v1: the options weighed, from the same system model (C on E)", fontsize=12)
+    fig.subplots_adjust(left=0.03, right=0.99, top=0.93, bottom=0.14, wspace=0.18, hspace=0.32); fig.savefig(path, dpi=100); plt.close(fig)
+
+
 # ---------------------------------------------------------------- 9. the pass
 def pick_flow(scored, side):
     """the best-scoring pose beside the receiver (|y| >= 30, its post in the receiver's straight wall run x -24..34, away from the bolt
@@ -971,19 +1180,43 @@ def run():
     by = {}
     for row in L["rows"]:
         k = row["kind"]; b = by.setdefault(k, dict(limit=row["limit"]))
-        for f_ in ("rec_idx", "plate_idx", "frame_idx", "post_idx", "tongue_idx", "carbon_idx"):
+        for f_ in ("rec_idx", "plate_idx", "frame_idx", "post_idx", "tongue_idx", "carbon_idx", "pry"):
             if row[f_] > b.get(f_, (-1, ""))[0]: b[f_] = (row[f_], row["case"])
     say(f"loads (L, E): hung set {L['hung_g']} g at {L['hung_cg']}, flow + cradle {L['flow_g']} g, tail bay {L['bay_g']} g on the tongue (+x crash)")
     for k, b in by.items():
         say(f"   {k} (limit {b['limit']}): receiver inserts {b['rec_idx'][0]:.3f} ({b['rec_idx'][1]}), plate inserts {b['plate_idx'][0]:.3f} ({b['plate_idx'][1]}), "
-            f"frame {b['frame_idx'][0]:.3f} ({b['frame_idx'][1]}), flow post {b['post_idx'][0]:.3f}, tongue face {b['tongue_idx'][0]:.4f}, carbon bearing {b['carbon_idx'][0]:.4f}")
+            f"frame {b['frame_idx'][0]:.3f} ({b['frame_idx'][1]}), flow bipod {b['post_idx'][0]:.3f}, tongue face {b['tongue_idx'][0]:.4f}, carbon bearing {b['carbon_idx'][0]:.4f}; "
+            f"prying: plate-insert pull up to {b['pry'][0]:.2f} x the receiver pull ({b['pry'][1]})")
     say("   sections (hollow 2.4 walls): " + "; ".join(f"{k}: A {v['A']}, I {v['I']}, Z {v['Z']}" for k, v in L["sections"].items() if v)
-        + f"; post root (solid) A {L['post_root']['A']}, Z {L['post_root']['Z']}")
+        + f"; bipod struts 6 x 6 (solid), {L['strut_L']} long")
     modes = {E_: fc_modes(E_) for E_ in (1.0, 1.5, 2.5)}
-    rigid = fc_rigid_mode(); pm = post_mode(L["post_L"], L["flow_g"])
+    rigid = fc_rigid_mode(); pm = bipod_mode(L["strut_L"], L["flow_g"]); sm = soft_mount()
     say(f"FC modes on 4 M2 grommets (E, silicone E 1.0 / 1.5 / 2.5 MPa): first " + " / ".join(f"{m['first_Hz']}" for m in modes.values())
         + f" Hz (lateral), vertical {modes[1.5]['vertical_Hz']}, rocking {modes[1.5]['rocking_Hz']} at 1.5 MPa; hard-mounted on the screws {rigid} Hz: the grommet sets it")
-    say(f"flow post: {L['post_L']} long 6 x 6 PETG with {L['flow_g']} g at the tip: {pm} Hz (E)")
+    say(f"flow bipod: 2 struts 6 x 6 PETG, {L['strut_L']} long, {L['flow_g']} g on them: {pm['y_Hz']} Hz sideways, {pm['axial_Hz']} Hz along x / z (E)")
+    say(f"grommet requirement for isolation (E): lateral mode 100..175 Hz needs Ø6 / Ø2.2 silicone 30A columns {sm['h_window'][0]}..{sm['h_window'][1]} tall in shear; "
+        f"with the FC 2.0 under the plate the column is {sm['column_h']} (plate to PCB top): {sm['lateral_Hz']} Hz sideways, {sm['vertical_Hz']} Hz vertical, "
+        f"35 g crash travel {sm['crash_travel']}; the FC then sits at z {sm['fc_z'][0]}..{sm['fc_z'][1]}: 2.0 to the plate, {sm['tray_gap']} to the receiver tray, "
+        f"and the receiver's rib must come down to <= {sm['rib_top_max']} (cut {sm['rib_cut']})")
+    # --- the ESC's side vents: nothing of ours beside the FC over x -VENT_X..VENT_X, z 9.6..18.5
+    probe = box([-VENT_X, -RAIL_Y - 2, REC_Z], [VENT_X, RAIL_Y + 2, PLATE_Z]); side_ = diff(probe, [box([-FC_WIN, -FC_WIN, REC_Z - 1], [FC_WIN, FC_WIN, PLATE_Z + 1])])
+    ours_in = trimesh.boolean.intersection([bm, side_], engine="manifold"); ours_v = float(ours_in.volume) if len(ours_in.faces) else 0.0
+    vent_A = 2 * (2 * VENT_X) * (PLATE_Z - REC_Z)
+    front_A = 2 * LEADS_Y * (PLATE_Z - BRIDGE_T - REC_Z)
+    say(f"ESC vents: both sides of the FC open over x -{VENT_X:.0f}..{VENT_X:.0f}, z {REC_Z}..{PLATE_Z}: {vent_A:.0f} mm2 (2 x {2 * VENT_X:.0f} x {PLATE_Z - REC_Z:.1f}; "
+          f"our material in it {ours_v:.1f} mm3); nose path: the battery-lead channel {front_A:.0f} mm2 under the bridge into the FC's nose slot. "
+          f"Through-flow: sideways in hover and any side wind (one vent in, the other out, 36 wide, straight across the board), forward flight enters by the nose "
+          f"channel and the windward vent edge; what still encloses the ESC is the plate (1.0 above) and the receiver (below), not this piece")
+    # --- the Bee35's existing plate holes (dimensions.md C row Plate bolts): stay empty; our clearance to them
+    import shapely.geometry as sg
+    top = bm.section(plane_origin=[0, 0, PLATE_Z - 0.3], plane_normal=[0, 0, 1]); topP = sg.MultiPolygon([sg.Polygon(e[:, :2]) for e in top.discrete]).buffer(0)
+    holes_old = [(3.9, 31.0), (3.9, -31.0), (45.0, 0.0)]
+    hole_gap = {f"({hx_:g}, {hy_:+g})": round(float(topP.distance(sg.Point(hx_, hy_).buffer(1.7))), 2) for hx_, hy_ in holes_old}
+    usb_axis = sg.LineString([tuple(usb["p0"][:2]), tuple((usb["p0"] + 60 * usb["d"])[:2])])
+    usb_hole = round(float(usb_axis.distance(sg.Point(3.9, 31.0 * side))), 2)
+    say(f"existing plate holes (dimensions C, P): our top face to each hole edge {hole_gap}; the USB path axis passes {usb_hole} from (3.9, {31.0 * side:+.0f}) "
+        f"under the plate: the side holes stay empty (a bolt tail + nyloc there would hang to z ~13, into the USB path and the vent); the nose hole (45, 0) "
+        f"stays empty (a nut there lands on the XT60, 3.7 under the plate)")
     # --- 7. PX4 offsets (FRD from the CG, m)
     cg = np.array(mc["cg"], float)
     imu = np.array([FC_C[0], FC_C[1], (pcb[0] + pcb[1]) / 2]); lens = np.array([flow["c"][0] + (FLOW_WIN if flow["ori"][0] == "x" else 0), flow["c"][1], flow["zb"]])
@@ -996,8 +1229,11 @@ def run():
     ph = trimesh.load(os.path.join(V12, "parts", "mount_p_nose_legs__scout.stl")); ph_c = centroid(ph); ph_g = 25.0
     dm = bm_g + 1.5 - ph_g - 1.5
     say(f"vs the layout's placeholder ({ph_g} g E at {np.round(ph_c, 1).tolist()}): {dm:+.1f} g; ours at {np.round(bm_c, 1).tolist()}")
-    info = dict(stack=stack, fc_gap_plate=gap_plate, fc_gap_rec=gap_rec)
+    info = dict(stack=stack, fc_gap_plate=gap_plate, fc_gap_rec=gap_rec, soft=sm)
     preview(P, M, bm, flow, usb, os.path.join(RUN, "preview.png"), info)
+    alts = alternatives(P, bm, info); alts["vent_A"] = vent_A
+    say(f"alternatives (C on E): B FC on the plate top {alts['B_top']}; C seat at x +5 {alts['C_seat']}; D tail-face inserts {alts['D_inserts']}")
+    preview_alternatives(P, M, bm, info, alts, os.path.join(RUN, "preview_alternatives.png"))
     res = dict(version="v1 (concept)", layout="scout_layout v12 + main's assembly (camera mount v1, PR 146) + the tail bay as drawn (PR 130)",
                wake_test=WAKE,
                belly_mount=dict(mass_g=round(bm_g, 2), mass_solid_g=round(bm_solid, 2), cg=np.round(bm_c, 2).tolist(), bounds=np.round(bm.bounds, 2).tolist(),
@@ -1005,7 +1241,9 @@ def run():
                                 receiver_inserts=REC_BOLTS, plate_bolts=PLATE_BOLTS, tail_face_x=TAIL_X, ear_y=EAR_Y),
                fc=dict(centre=list(FC_C), z=[FC_Z0, FC_Z0 + FC_H], gap_plate=round(gap_plate, 2), gap_receiver=round(gap_rec, 2), stack=stack,
                        modes=modes, hard_mounted_Hz=rigid),
-               flow=dict(flow, c=list(flow["c"]), post_mode_Hz=pm, view_clear=not seen, seen=sorted(set(seen)), plan_under_disk_pct=round(100 * inside.mean(), 1),
+               vents=dict(x=[-VENT_X, VENT_X], open_mm2=round(vent_A), ours_in_mm3=round(ours_v, 2), nose_channel_mm2=round(front_A)),
+               plate_holes=dict(gaps=hole_gap, usb_axis_to_side_hole=usb_hole), soft_mount=sm,
+               flow=dict(flow, c=list(flow["c"]), bipod_modes=pm, view_clear=not seen, seen=sorted(set(seen)), plan_under_disk_pct=round(100 * inside.mean(), 1),
                          corner_from_axis=round(dmin, 1), slipstream_r=round(rw, 1)),
                flow_search=dict(top=[[float(v) if isinstance(v, (int, float, np.floating)) else (str(v) if not isinstance(v, tuple) else [float(x) for x in v]) for v in r_] for r_ in scored[:20]],
                                 n_scored=len(scored), n_feasible=len(FEAS)),
@@ -1015,7 +1253,7 @@ def run():
                system_check=dict(summary=r["summary"], pass_=bool(r["pass"]), cg_offset_in=bal["cases"]["all"]["horizontal_mm"] if bal.get("applies") else None,
                                  cg_offset_out=bal["cases"].get("no_swap", {}).get("horizontal_mm") if bal.get("applies") else None,
                                  mass_g=mc["mass_g"], cg=mc["cg"], access=acc_rows),
-               px4=px4, vs_placeholder=dict(dm_g=round(dm, 2), placeholder_cg=np.round(ph_c, 2).tolist()))
+               alternatives={k: v for k, v in alts.items() if k != "vent_A"}, px4=px4, vs_placeholder=dict(dm_g=round(dm, 2), placeholder_cg=np.round(ph_c, 2).tolist()))
     json.dump(res, open(os.path.join(RUN, "result.json"), "w"), indent=1, default=lambda x: x.tolist() if hasattr(x, "tolist") else (bool(x) if isinstance(x, np.bool_) else str(x)))
     json.dump(man, open(os.path.join(RUN, "manifest.json"), "w"), indent=1, default=lambda x: "<trimesh: see the STL>" if isinstance(x, trimesh.Trimesh) else (x.tolist() if hasattr(x, "tolist") else str(x)))
     say(f"done in {time.time() - t0:.0f} s")

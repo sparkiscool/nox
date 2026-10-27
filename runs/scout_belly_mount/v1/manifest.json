@@ -453,16 +453,6 @@
   ],
   [
    "belly mount (PETG)",
-   "receiver lid (latch)",
-   0.05
-  ],
-  [
-   "belly mount (PETG)",
-   "receiver v3 (latch)",
-   0.05
-  ],
-  [
-   "belly mount (PETG)",
    "electronics tail block (PETG)",
    0.05
   ],
@@ -472,8 +462,18 @@
    0.05
   ],
   [
-   "frame plate (Bee35 carbon)",
    "belly mount (PETG)",
+   "frame plate (Bee35 carbon)",
+   0.05
+  ],
+  [
+   "belly mount (PETG)",
+   "receiver lid (latch)",
+   0.05
+  ],
+  [
+   "belly mount (PETG)",
+   "receiver v3 (latch)",
    0.05
   ],
   [
@@ -505,201 +505,6 @@
    "electronics tail carrier (PETG)",
    "XR2",
    0.05
-  ],
-  [
-   "wires",
-   "FC",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "prop 4",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "spokes, bay ties, core ties, camera guard",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "flow MTF-02P",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "motor 2",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "camera mount stop collar -y",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "XT60E1-M",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "motor 3",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "camera mount (printed)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "camera",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "cartridge skid lead end (latch, TPU)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "XR2",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "pack 4S 1500",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "electronics tail carrier (PETG)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "motor 1",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "tie saddle (printed)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "motor 4",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "frame plate (Bee35 carbon)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "receiver lid (latch)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "cage shell nodes",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "cartridge v6 strips (latch, TPU)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "camera mount stop collar +y",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "Radxa Zero 3W",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "cage shell tubes",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "receiver TPU strips (latch)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "tail bay cables (Scout electronics, E)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "belly mount (PETG)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "slider +y (latch)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "receiver TPU end pieces (latch, E)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "cartridge v6 (latch)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "prop 1",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "receiver v3 (latch)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "prop 3",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "prop 2",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "slider -y (latch)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "pack XT60 plug",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "cartridge skid closed end (latch, TPU)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "electronics tail block (PETG)",
-   1000000000.0
-  ],
-  [
-   "wires",
-   "UBEC",
-   1000000000.0
   ]
  ],
  "guard_offsets": {
@@ -1922,16 +1727,21 @@
    "name": "wires",
    "role": "structure",
    "box": [
-    -0.5,
-    0.5,
-    -0.5,
-    0.5,
-    13.0,
-    14.0
+    -0.2,
+    0.2,
+    21.8,
+    22.2,
+    13.3,
+    13.7
+   ],
+   "cg": [
+    0.0,
+    0.0,
+    13.5
    ],
    "mass_g": 20.0,
    "tag": "E",
-   "note": "the layout's 20 g, at the FC"
+   "note": "the layout's 20 g, CG at the FC; for the fit a 0.4 box in free air beside the FC (the side vent), no allowance"
   },
   {
    "name": "flow MTF-02P",
@@ -1947,11 +1757,11 @@
    "role": "structure",
    "trimesh": "<trimesh: see the STL>",
    "material": "PETG",
-   "mass_g": 25.24,
+   "mass_g": 24.95,
    "cg": [
-    1.8,
-    -7.5,
-    8.68
+    2.14,
+    -10.68,
+    6.8
    ],
    "tag": "E",
    "geom_tag": "C",
