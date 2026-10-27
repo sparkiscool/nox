@@ -61,11 +61,11 @@ def designs():
     return [i for i in range(len(N)) if N[i, 1] > -0.5 and not np.allclose(N[i], HEAD_NODE, atol=0.5)]
 
 
-def seg(a, b, r, n=32, r2=None):
+def seg(a, b, r, n=32):
     a, b = np.asarray(a, float), np.asarray(b, float); d = b - a; L = float(np.linalg.norm(d))
     z = d / L; x = np.cross(z, [0, 0, 1.0]) if abs(z[2]) < 0.9 else np.cross(z, [1.0, 0, 0]); x /= np.linalg.norm(x); y = np.cross(z, x)
     T = np.eye(4); T[:3, 0], T[:3, 1], T[:3, 2], T[:3, 3] = x, y, z, a
-    return mf.Manifold.cylinder(L, r, r if r2 is None else r2, n).transform(T[:3, :4])
+    return mf.Manifold.cylinder(L, r, r, n).transform(T[:3, :4])
 
 
 def bodies(i):
