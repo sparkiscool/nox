@@ -9,6 +9,7 @@ Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11):
   9 state    tools/check_state.py shows no ERROR
   10 visual  a design PR links an artifact (claude.ai/.../artifact/...) in a changed summary.md or the PR body
   11 carbon  a Scout / Overseer / cage / mount PR (nox/scout, nox/overseer, runs or print scout_ overseer_ cage motor_mount) lists carbon (rod list with any non-3.0 stock sizes)
+  12 parallel the runs the PR adds started within 30 min of each other (run_bg.txt start lines), or the later run's summary.md says `Waited for:`
 Prints PASS / FAIL / skip per check; exit 1 on any FAIL. Reads only.
 """
 import argparse, pathlib, re, subprocess, sys
@@ -68,5 +69,21 @@ if drone:
     out("11 carbon", ok, "carbon list in summary" if ok else "drone / cage / mount PR without the carbon rods list (stock size and length of every non-3.0 rod) in summary.md")
 else:
     out("11 carbon", None, "not a drone, cage or mount PR")
+
+import datetime as _dt
+starts = {}
+for f in changed:
+    if f.endswith("run_bg.txt") and (ROOT / f).exists():
+        m = re.search(r"run_bg: start (\S+?)Z", (ROOT / f).read_text())
+        if m:
+            starts[str(pathlib.Path(f).parent)] = _dt.datetime.fromisoformat(m.group(1))
+if len(starts) >= 2:
+    first = min(starts.values())
+    late = [d for d, t in starts.items() if (t - first).total_seconds() > 1800
+            and "Waited for:" not in ((ROOT / d / "summary.md").read_text() if (ROOT / d / "summary.md").exists() else "")]
+    out("12 parallel", not late, "runs started together" if not late else
+        f"{', '.join(late)} started over 30 min after the first run with no `Waited for:` line (CLAUDE.md Parallel by default)")
+else:
+    out("12 parallel", None, "fewer than 2 runs with a start time in the PR")
 
 sys.exit(1 if False in res else 0)

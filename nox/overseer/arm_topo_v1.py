@@ -60,8 +60,8 @@ E_CARBON = 120000.0                   # MPa, pultruded 3.0 rod along its axis (E
 RHO_CARBON = 1.55                     # g/cm3 (E)
 E_PETG = 2780.0                       # MPa, nox/topo/material.py
 
-# ESC: a 4-in-1 under the FC in the hub stack (Spark 27 Oct), nothing on the arms; the motor leads run along the arm's flat
-# top and down beside the root into the hub, zip-tied round the top carbon rods' free spans (front) or the beam (DEFAULT)
+# ESC: a 4-in-1 under the FC, the stack on top of the top plate (Spark 27 Oct), nothing on the arms; the motor leads run
+# along the arm's flat top to it, zip-tied round the top carbon rods' free spans (front) or the beam (DEFAULT)
 
 # loads (dimensions.md "System Overseer: arms", E)
 THRUST_N = 21.0                       # 1650 gf at 14.8 V (C) x (16.8 / 14.8)^2 on a full pack = 2.13 kgf
