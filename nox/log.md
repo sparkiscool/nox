@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms): front v2 built here (layout done on its box): 93.1 g, 1 body, solid FAIL (1.2 wall under a bottom rod bore), root open middle: flight 1.58, handling 5.5, cage crash 9.1. Front v3 started: solid root block, flanges to x 50, bottom rods z 5.5, gen 45. `nox/overseer/arm_topo_v3f.py`
 - 27 Oct (Overseer arms): rear v3: 80.9 g, solid PASS, flight 0.09, handling 0.26, modes 268 / 274 Hz; cage crash 1.22 on the arm top face past the top plate edge (pivot). Rear v4 started: drawn root flanges 6 thick to x 40 (third rear version). `nox/overseer/arm_topo_v4.py`, `arm_strength_band.py`
 - 27 Oct (Overseer arms): rear v2 done: solid PASS, 56.8 g, flight 0.22, handling 0.58, cage crash 2.44 at the top-plate edge (joint, Spark: assume good), modes 158 / 184 Hz. Rear v3 started: gen 45, root pads to the plate corners. `nox/overseer/arm_topo_v3.py`
 - 27 Oct (Overseer arms, Spark): one printed part per arm (no fuse node); root joint (4 M3 inserts, S500 plates) assumed good for the cage crash loads (reported, not a gate). Replaces the fuse-node DEFAULT. `dimensions.md` System Overseer: arms

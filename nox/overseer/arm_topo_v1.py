@@ -61,7 +61,8 @@ MOTOR_DEG = {"front": 45.0, "rear": 135.0}     # arm 1 / arm 2 diagonal (left si
 ROD_D, ROD_BORE = 3.0, 3.2      # bore 3.2: Spark's pick from the printed coupons (27 Oct, P; OD + 0.3 was loose in PETG)
 SHOULDER = {"front": (25.0, 35.0, 9.0)}              # arm-frame x, |y|, plan radius of the shoulder envelope disc
 ROD_TIP = (15.0, 12.0)                               # rod end: x = L - 15, |y| 12 (r 19.2 from the motor axis, in the wall)
-ROD_Z = (41.0, 4.0)                                  # top and bottom rod centres (sleeve flat to the top / bottom face)
+ROD_Z = tuple(float(v) for v in os.environ.get("NOX_ARM_ROD_Z", "41.0,4.0").split(","))   # top / bottom rod centres
+                                                     # (v3: 39.5 / 5.5, front v2 read a 1.2 wall under the bottom bore)
 CHORD_SKIN = 2.65                     # socket wall round the bore (>= skin 2.5)
 SOCKET_L = 18.0                       # drawn socket at each rod end (6 x the rod: epoxy bond ~ 2 MPa x pi x 3 x 18 = 340 N, E)
 E_CARBON = 120000.0                   # MPa, pultruded 3.0 rod along its axis (E)
@@ -300,6 +301,9 @@ def bodies(which):
             sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
     B["rods"] = rods
     B["drawn"] = B["pads"] + B["mpad"] + sockets
+    if os.environ.get("NOX_ARM_ROOT_SOLID") == "1":      # front v3: the root block solid between the plates (front v2: its open
+        rb = to_arm(diag(box(U_ROOT[0], U_ROOT[1], -V_ROOT, V_ROOT, 0.0, ROOT_H), F["d"]), F) ^ B["env"]   # middle read 1.6 in flight)
+        B["drawn"] = B["drawn"] + (rb - B["cuts"])
     fx = os.environ.get("NOX_ARM_FLANGE_X")              # v4: drawn root flanges, top and bottom, out along the arm (arm frame)
     if fx:
         x0, x1 = 0.0, float(fx)
