@@ -36,3 +36,15 @@ layout: 32 load cases + 6 tie cases (1 bodies tied, 4 held by support 'hold 0') 
 layout: 32 load cases + 6 tie cases (1 bodies tied, 4 held by support 'hold 0') + 0 gate ties + 24 held ties
 fem: grid (40, 40, 40) = 64,000 elements, 84,720 active dofs; backend direct (direct estimate 0.6 GB, budget 11.8 GB)
 fem: grid (40, 40, 40) = 64,000 elements, 84,720 active dofs; backend direct (direct estimate 0.6 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0210 (dil 0.0255 g +2.237) grey  6.6% ch 0.006 worst held b1 fz 9.13e+05 77.2s
+it   1 beta    1 J  10.0000 vol 0.0210 (dil 0.0255 g +2.237) grey  6.6% ch 0.006 worst held b1 fz 9.13e+05 77.2s
+it   2 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 70.3s
+it   2 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 70.3s
+it   3 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 76.7s
+it   3 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 76.7s
+it   4 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 74.7s
+it   4 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 74.7s
+it   5 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 69.5s
+it   5 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.442) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 69.5s
+it   6 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.447) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 75.7s
+it   6 beta    1 J  10.7408 vol 0.0159 (dil 0.0192 g +1.447) grey  6.4% ch 0.000 worst held b1 fz 9.8e+05 75.7s

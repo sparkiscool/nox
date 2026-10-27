@@ -32,3 +32,35 @@ layout: 24 load cases + 6 tie cases (1 bodies tied, 3 held by support 'hold 0') 
 layout: 24 load cases + 6 tie cases (1 bodies tied, 3 held by support 'hold 0') + 0 gate ties + 18 held ties
 fem: grid (40, 40, 40) = 64,000 elements, 57,957 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
 fem: grid (40, 40, 40) = 64,000 elements, 57,957 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0272 (dil 0.0330 g +1.816) grey  8.4% ch 0.010 worst held b2 fz 7.79e+05 28.1s
+it   1 beta    1 J  10.0000 vol 0.0272 (dil 0.0330 g +1.816) grey  8.4% ch 0.010 worst held b2 fz 7.79e+05 28.1s
+it   2 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.4s
+it   2 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.4s
+it   3 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.3s
+it   3 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.3s
+it   4 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 28.5s
+it   4 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 28.5s
+it   5 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 31.8s
+it   5 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.033) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 31.8s
+it   6 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 26.0s
+it   6 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 26.0s
+it   7 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 27.8s
+it   7 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 27.8s
+it   8 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.0s
+it   8 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.0s
+it   9 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.7s
+it   9 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.7s
+it  10 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.6s
+it  10 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.039) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 30.6s
+it  11 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 32.3s
+it  11 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 32.3s
+it  12 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.4s
+it  12 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.4s
+it  13 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 33.0s
+it  13 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 33.0s
+it  14 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.4s
+it  14 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.4s
+it  15 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.0s
+it  15 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.042) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 29.0s
+it  16 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.045) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 27.9s
+it  16 beta    1 J  12.4428 vol 0.0198 (dil 0.0239 g +1.045) grey  7.9% ch 0.000 worst held b2 fz 9.72e+05 27.9s

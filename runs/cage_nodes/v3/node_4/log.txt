@@ -32,3 +32,37 @@ layout: 24 load cases + 0 tie cases (0 bodies tied, 5 held by support 'hold 0') 
 layout: 24 load cases + 0 tie cases (0 bodies tied, 5 held by support 'hold 0') + 0 gate ties + 24 held ties
 fem: grid (40, 40, 40) = 64,000 elements, 55,449 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
 fem: grid (40, 40, 40) = 64,000 elements, 55,449 active dofs; backend direct (direct estimate 0.4 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0276 (dil 0.0336 g +1.774) grey  8.6% ch 0.010 worst held b1 fy 7.31e+05 31.0s
+it   1 beta    1 J  10.0000 vol 0.0276 (dil 0.0336 g +1.774) grey  8.6% ch 0.010 worst held b1 fy 7.31e+05 31.0s
+it   2 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 31.6s
+it   2 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 31.6s
+it   3 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.5s
+it   3 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.5s
+it   4 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 27.1s
+it   4 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 27.1s
+it   5 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.1s
+it   5 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.994) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.1s
+it   6 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 24.4s
+it   6 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 24.4s
+it   7 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.7s
+it   7 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.7s
+it   8 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 27.9s
+it   8 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 27.9s
+it   9 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.6s
+it   9 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.6s
+it  10 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.4s
+it  10 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +0.999) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.4s
+it  11 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 31.0s
+it  11 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 31.0s
+it  12 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.3s
+it  12 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.3s
+it  13 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 30.0s
+it  13 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 30.0s
+it  14 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.8s
+it  14 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 29.8s
+it  15 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 27.8s
+it  15 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.002) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 27.8s
+it  16 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.005) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 25.5s
+it  16 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.005) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 25.5s
+it  17 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.005) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.8s
+it  17 beta    1 J  12.7128 vol 0.0200 (dil 0.0241 g +1.005) grey  8.1% ch 0.000 worst held b1 fy 9.27e+05 28.8s
