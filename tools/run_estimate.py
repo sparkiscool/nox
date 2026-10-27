@@ -2,7 +2,11 @@
 """Measured run estimate (Spark 27 Oct: "why are we always so off on timing ... make that the default for all now"): before a
 heavy nox/topo run is quoted or started beside another, smoke it here and quote from the measurement, never from an older part.
 
-python3 tools/run_estimate.py runs/<part>/<version> -- python3 <part script> [args]
+python3 tools/run_estimate.py runs/<part>/<version> [--force] -- python3 <part script> [args]
+
+Drawn first: before the smoke, the drawn bodies minus the cuts go through the solid gate and the as-built strength check on the
+part's own load cases. If they pass (worst index <= 1.0), estimate.json says "run": "not needed" and no smoke runs: save the drawn
+part. --force smokes anyway (the summary must say why the run is worth it).
 
 Runs the part script with nox/topo's optimise() swapped for a smoke version (no engine edit): the setup as the script builds it,
 3 iterations of the coarse stage and 3 of the fine stage (fresh, no checkpoint, no build), then writes <dir>/estimate.json and
@@ -19,7 +23,7 @@ argv = sys.argv[1:]
 if "--" not in argv or len(argv) < 3:
     sys.exit(__doc__)
 cut = argv.index("--")
-OUT = pathlib.Path(argv[0]); cmd = argv[cut + 1:]
+OUT = pathlib.Path(argv[0]); cmd = argv[cut + 1:]; FLAGS = argv[1:cut]
 if cmd[0].startswith("python"):
     cmd = cmd[1:]
 OUT.mkdir(parents=True, exist_ok=True)
@@ -37,11 +41,24 @@ def peak_gb():
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
 
 
+def drawn_first(setup, h, gen_cm3, s):
+    d = TR.drawn_check(setup, h, gen_cm3, s)
+    print(f"drawn first {d['name']}: {d['mass_g']} g (M), solid {'PASS' if d['solid_ok'] else 'FAIL'}, worst index {d['worst']} ({d['worst_case']}): "
+          + ("PASS: save the drawn part, no topology run (it can only add mass)" if d["pass"] else "FAIL: the run goes ahead"))
+    return d
+
+
 def smoke(setup, h, gen_cm3, out_dir, name, settings=None, coarse=True, git=False, log=None, maxit=400, extra=None):
     s = settings or topo.Settings()
     if s.gate_member:
         s = replace(s, min_member_mm=round(gate_member_mm(setup(h), s.min_member_mm, log=print), 2))
     est = {"name": name, "h": h, "gen_cm3": gen_cm3, "coarse": coarse, "smoke_iterations": SMOKE_IT}
+    est["drawn"] = drawn_first(setup, h, gen_cm3, s)
+    if est["drawn"]["pass"] and "--force" not in FLAGS:
+        est["run"] = "not needed: the drawn part passes (drawn first)"
+        (OUT / "estimate.json").write_text(json.dumps(est, indent=1))
+        print(f"no run: written {OUT / 'estimate.json'} (rerun with --force only for a reason written in the summary)")
+        sys.exit(0)
     stages = ([("coarse", 2.0 * h, replace(s, reach_check="off", geometric=False, max_stage=25))] if coarse else []) + [("fine", h, s)]
     for tag, hh, ss in stages:
         part = setup(hh)
