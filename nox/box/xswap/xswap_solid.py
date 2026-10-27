@@ -41,7 +41,7 @@ def check(path, pitch=0.3, erode=0.9):
                     kept_frac=round(float(e.sum()) / max(1, a.sum()), 3))
 
 if __name__ == "__main__":
-    files = sys.argv[1:] or sorted(glob.glob(os.path.join(os.path.dirname(__file__), "..", "..", "..", "runs", "xswap", "v3", "stl", "*.stl")))
+    files = sys.argv[1:] or sorted(glob.glob(os.path.join(os.path.dirname(__file__), "..", "..", "..", "runs", "xswap", "v4", "stl", "*.stl")))
     bad = 0
     for f in files:
         ok, info = check(f)

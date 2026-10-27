@@ -1,0 +1,335 @@
+<title>Flip Swap Station</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: workbench — one large live viewport beside a numbered process sheet, data in mono like a drawing's title block */
+:root {
+  --bg: #eef0f2; --panel: #ffffff; --ink: #17202a; --muted: #5d6874; --line: #d3d8de;
+  --holder: #3f6fb5; --shell: #e0892b; --pincer: #2f8f5b; --pack: #3a3f45; --plug: #d9b92e;
+  --accent: #e0892b; --vp: #e4e8ec; --rocker: #b85f12;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #12161b; --panel: #1a2027; --ink: #e6eaee; --muted: #98a3ae; --line: #2c343d;
+  --holder: #6b98dc; --shell: #f0a04b; --pincer: #4dbb7f; --pack: #8a929b; --plug: #e8cc4a;
+  --accent: #f0a04b; --vp: #161b21; --rocker: #c7782a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #12161b; --panel: #1a2027; --ink: #e6eaee; --muted: #98a3ae; --line: #2c343d;
+  --holder: #6b98dc; --shell: #f0a04b; --pincer: #4dbb7f; --pack: #8a929b; --plug: #e8cc4a;
+  --accent: #f0a04b; --vp: #161b21; --rocker: #c7782a; color-scheme: dark }
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 22px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--display); font-stretch: 78%; font-weight: 800; font-size: clamp(30px, 5vw, 48px); line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+.lede { margin: 0; max-width: 68ch; color: var(--muted); }
+.lede b { color: var(--ink); font-weight: 600; }
+.main { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 900px) { .main { grid-template-columns: minmax(0, 1fr); } }
+.stage { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.vp { position: relative; aspect-ratio: 4 / 3.4; max-width: 100%; background: var(--vp); }
+.vp canvas { width: 100% !important; height: 100% !important; display: block; touch-action: none; }
+.legend { position: absolute; left: 12px; top: 10px; display: flex; flex-wrap: wrap; gap: 6px 12px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); pointer-events: none; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.hint { position: absolute; right: 12px; bottom: 10px; font-family: var(--mono); font-size: 11px; color: var(--muted); pointer-events: none; }
+.caption { padding: 14px 16px 4px; display: grid; gap: 4px; min-height: 92px; }
+.caption .n { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .06em; }
+.caption h2 { margin: 0; font-family: var(--display); font-stretch: 85%; font-weight: 700; font-size: 21px; line-height: 1.15; }
+.caption p { margin: 0; color: var(--muted); max-width: 70ch; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 10px 16px 16px; }
+button { font: 600 14px var(--body); color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 8px 14px; cursor: pointer; }
+button:hover { border-color: var(--muted); }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary { background: var(--ink); color: var(--panel); border-color: var(--ink); min-width: 92px; }
+input[type=range] { flex: 1 1 200px; accent-color: var(--accent); min-width: 0; }
+.toggles { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13.5px; color: var(--muted); }
+.toggles label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; }
+.side { display: grid; gap: 22px; min-width: 0; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.card h3 { margin: 0; font-family: var(--display); font-stretch: 85%; font-size: 17px; font-weight: 700; }
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+ol.steps button { width: 100%; text-align: left; display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: baseline; border: 0; background: transparent; padding: 8px 8px; border-radius: 6px; font-weight: 500; }
+ol.steps button .k { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+ol.steps button .t { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+ol.steps button[aria-current="true"] { background: var(--bg); box-shadow: inset 3px 0 0 var(--accent); }
+ol.steps button[aria-current="true"] .k { color: var(--accent); }
+.sec svg { width: 100%; height: auto; max-height: 400px; display: block; }
+.sec .state { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.sec .state b { color: var(--accent); font-weight: 500; }
+.sec p { margin: 0; font-size: 13.5px; color: var(--muted); }
+.specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.specs div { padding: 12px 14px 12px 0; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.specs dt { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.specs dd { margin: 0; font-family: var(--display); font-stretch: 85%; font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; }
+.specs dd small { font-family: var(--body); font-stretch: 100%; font-weight: 400; font-size: 12.5px; color: var(--muted); display: block; }
+.foot { font-size: 13px; color: var(--muted); max-width: 90ch; margin: 0; }
+.foot code { font-family: var(--mono); font-size: 12.5px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Zeee 4S 5200 mAh · XT60 · REPO1 branch xswap-v1</div>
+    <h1>Flip swap station</h1>
+    <p class="lede">v4 moves the latch <b>under the pack</b>. A rigid bar at each end swings on a steel dowel; its tip sits on a 12 mm ledge in an end leg of the holder. The pincer, now narrower than the battery, pushes two round posts 7.7 mm deep into slots in the bars: <b>1 mm at the finger swings the tip 4.8 mm</b>. Pulling on the pack only presses the tips harder onto the ledges.</p>
+  </header>
+
+  <div class="main">
+    <section class="stage" aria-label="3D swap animation">
+      <div class="vp" id="vp">
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--holder)"></i>holder ×2</span>
+          <span><i style="background:var(--shell)"></i>shell</span>
+          <span><i style="background:var(--rocker)"></i>gate bars</span>
+          <span><i style="background:var(--pincer)"></i>pincer</span>
+          <span><i style="background:var(--pack)"></i>pack</span>
+        </div>
+        <div class="hint">drag to orbit · scroll to zoom</div>
+      </div>
+      <div class="caption" aria-live="polite">
+        <div class="n" id="capN">STEP 1 OF 7</div>
+        <h2 id="capT"></h2>
+        <p id="capP"></p>
+      </div>
+      <div class="controls">
+        <button class="primary" id="play" type="button">Pause</button>
+        <button id="restart" type="button">Restart</button>
+        <input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Timeline">
+        <div class="toggles">
+          <label><input type="checkbox" id="ghost"> See through holders</label>
+          <label><input type="checkbox" id="showpack" checked> Show pack</label>
+        </div>
+      </div>
+    </section>
+
+    <div class="side">
+      <section class="card">
+        <h3>Sequence</h3>
+        <ol class="steps" id="steps"></ol>
+      </section>
+      <section class="card sec">
+        <h3>The gate bar, from below</h3>
+        <div class="state" id="secState">State: <b>latched</b></div>
+        <svg id="secSvg" viewBox="-31 -101 64 76" role="img" aria-label="Plan section through the gate bar at the XT60 end: latched and released"></svg>
+        <p>Plan section 4.5 mm above the tip's load face, XT60 end. The finger post sits in the bar's slot next to the pivot. It moves 3.8 mm, the bar swings 14°, and the tip leaves the ledge and lines up with the release channel. The tail end is the same bar turned 180°.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="card">
+    <h3>Numbers from the model</h3>
+    <dl class="specs">
+      <div><dt>Lever ratio</dt><dd>1 : 4.8<small>finger 3.8 mm, tip 10.7 mm needed, 14 given</small></dd></div>
+      <div><dt>Tip in the slot</dt><dd>4.2 deep · 10 wide<small>on a 12 mm ledge (v3 hook: 2.5)</small></dd></div>
+      <div><dt>Crash design load</dt><dd>150 g · 1022 N<small>worst printed stress 18 MPa</small></dd></div>
+      <div><dt>Pincer width</dt><dd>44 mm<small>the battery is 47</small></dd></div>
+      <div><dt>Capture</dt><dd>±5 mm · 2°<small>a slope touches first, 13 of 13</small></dd></div>
+      <div><dt>Pincer error allowed</dt><dd>±0.5 mm<small>both bars still release</small></dd></div>
+      <div><dt>Servo torque</dt><dd>0.41 N·m<small>spring at full swing</small></dd></div>
+      <div><dt>Interference</dt><dd>0 mm³<small>every pose in the sequence</small></dd></div>
+    </dl>
+  </section>
+
+  <p class="foot">Geometry is the real v4 model (<code>nox/box/xswap/xswap4.py</code>); pack size from Zeee's listing (138 × 47 × 48 mm ±2), forces are estimates. The bay holder is the drone holder turned 180° about the flip axis, so its XT60 end faces the other way.</p>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>/*DATA*/</script>
+<script>
+(function () {
+  const D = window.XSWAP, P = D.p;
+  const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const STEPS = [
+    { k: "Seated", d: 1.6, t: "Drone seated, pack latched",
+      p: "Each gate bar's tip sits 4.2 mm deep in a pocket in a holder end leg, on a 12 mm ledge. The XT60 is mated." },
+    { k: "Rise", d: 1.6, t: "Pincer rises under the pack",
+      p: "The pincer is narrower than the pack. Its two round posts pass the keyholes in the shell bottom and go 7.7 mm into the bars' slots; the jaw pushes the pack up 0.3 mm so the ledges carry nothing." },
+    { k: "Squeeze", d: 1.4, t: "Fingers move 3.8 mm: tips swing off the ledges",
+      p: "Each post pushes its bar 12 mm from the pivot, so the tip 58 mm out swings 4.8 times as far. The flanges slide under the keyhole lips, so the pack now hangs on the pincer." },
+    { k: "Pull", d: 1.8, t: "Rail down 80 mm, XT60 apart",
+      p: "The tips drop down the release channels in the legs while the XT60 pulls apart (~50 N, on the flanges)." },
+    { k: "Flip", d: 2.2, t: "Flip 180°",
+      p: "The jaw turns on short shafts in its sides. The pack is held by the flanges under the lips, not by friction." },
+    { k: "Insert", d: 1.9, t: "Rail down 80 mm into the bay",
+      p: "Bullet guide posts, the side funnel and the 30° lead-ins on the legs centre the shell; the tips ride down the channels; the XT60 mates on the last 6 mm." },
+    { k: "Release", d: 1.4, t: "Fingers back: springs swing the tips onto the bay ledges",
+      p: "Steel springs swing both bars back. The bars release in opposite directions, so a side hit that pulls one open pushes the other shut." }
+  ];
+  const END_HOLD = 1.2;
+  let acc = 0; STEPS.forEach(s => { s.t0 = acc; acc += s.d; });
+  const TOTAL = acc + END_HOLD;
+
+  // ---------- three
+  const vp = document.getElementById("vp");
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  vp.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(32, 1, 5, 5000);
+  cam.up.set(0, 0, 1);
+  cam.position.set(700, -660, -60);
+  const ctl = new THREE.OrbitControls(cam, renderer.domElement);
+  ctl.target.set(0, 0, -150); ctl.enableDamping = true; ctl.minDistance = 120; ctl.maxDistance = 1800;
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x445566, 0.75));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.65); sun.position.set(300, -400, 500); scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.25); fill.position.set(-300, 300, -200); scene.add(fill);
+
+  const b64 = (s, T) => { const bin = atob(s); const u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return new T(u.buffer); };
+  const geoms = {};
+  for (const [k, m] of Object.entries(D.meshes)) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(b64(m.v, Float32Array), 3));
+    g.setIndex(new THREE.BufferAttribute(b64(m.f, Uint32Array), 1));
+    const ng = g.toNonIndexed(); ng.computeVertexNormals(); geoms[k] = ng;
+  }
+  const mats = {};
+  const mat = (key) => (mats[key] = mats[key] || new THREE.MeshStandardMaterial({ roughness: 0.62, metalness: 0.05, side: THREE.DoubleSide }));
+  const mesh = (g, key) => new THREE.Mesh(geoms[g], mat(key));
+
+  // fixed: drone holder (+ drone plate stand-in), bay holder
+  const fixedTop = new THREE.Group(), fixedBay = new THREE.Group();
+  ["holder", "cap"].forEach(k => fixedTop.add(mesh(k, "holder")));
+  fixedTop.add(mesh("male", "plug"));
+  const plate = new THREE.Mesh(new THREE.BoxGeometry(220, 220, 3), mat("frame")); plate.position.set(0, 0, 14.5); fixedTop.add(plate);
+  ["holder", "cap"].forEach(k => fixedBay.add(mesh(k, "holder")));
+  fixedBay.add(mesh("male", "plug"));
+  const bplate = new THREE.Mesh(new THREE.BoxGeometry(220, 220, 3), mat("frame")); bplate.position.set(0, 0, 14.5); fixedBay.add(bplate);
+  const bayPivot = new THREE.Group(); bayPivot.position.set(0, P.YP, P.ZAX - P.D1 - P.D2); bayPivot.rotation.x = Math.PI;
+  fixedBay.position.set(0, -P.YP, -P.ZAX); bayPivot.add(fixedBay);
+  scene.add(fixedTop, bayPivot);
+
+  // rail (stand-in) and carriage fork
+  const rail = new THREE.Mesh(new THREE.BoxGeometry(14, 14, 320), mat("frame")); rail.position.set(-118, P.YP, -150); scene.add(rail);
+  const carriage = new THREE.Group(); scene.add(carriage);
+  const cblk = new THREE.Mesh(new THREE.BoxGeometry(26, 34, 40), mat("frame")); cblk.position.set(-118, P.YP, 0); carriage.add(cblk);
+  [-1, 1].forEach(s => {
+    const arm = new THREE.Mesh(new THREE.BoxGeometry(8, 30, 30), mat("frame")); arm.position.set(s * 44, P.YP, 0); carriage.add(arm);
+  });
+  const beam = new THREE.Mesh(new THREE.BoxGeometry(96, 10, 8), mat("frame")); beam.position.set(-70, P.YP + 20, 0); carriage.add(beam);
+
+  // carried: pivot about the flip axis
+  const pivot = new THREE.Group(); scene.add(pivot);
+  const carried = new THREE.Group(); carried.position.set(0, -P.YP, -P.ZAX); pivot.add(carried);
+  const packM = mesh("pack", "pack");
+  carried.add(mesh("shell", "shell"), mesh("keeper", "shell"), mesh("female", "plug"), packM);
+  // gate bars: A at the XT60 end; B = A turned 180 deg about (0, YP)
+  function barGroup() { const piv = new THREE.Group(); piv.position.set(0, P.PIV_Y, 0); const m = mesh("bar", "rocker"); m.position.set(0, -P.PIV_Y, 0); piv.add(m); return piv; }
+  const barA = barGroup(); carried.add(barA);
+  const symB = new THREE.Group(); symB.position.set(0, P.YP, 0); symB.rotation.z = Math.PI; carried.add(symB);
+  const barB = barGroup(); barB.position.set(0, P.PIV_Y - P.YP, 0); barB.children[0].position.set(0, -P.PIV_Y, 0); symB.add(barB);
+  const pincer = new THREE.Group(); carried.add(pincer);
+  pincer.add(mesh("jaw", "pincer")); pincer.add(mesh("servo", "frame"));
+  const pinG = new THREE.Group(); pinG.position.set(0, P.YP, 0); const pinM = mesh("pinion", "pincer"); pinM.position.set(0, -P.YP, 0); pinG.add(pinM); pincer.add(pinG);
+  const fA = mesh("finger", "pincer"); pincer.add(fA);
+  const symF = new THREE.Group(); symF.position.set(0, P.YP, 0); symF.rotation.z = Math.PI; pincer.add(symF);
+  const fB = mesh("finger", "pincer"); const fBw = new THREE.Group(); fBw.position.set(0, -P.YP, 0); fBw.add(fB); symF.add(fBw);
+  [-1, 1].forEach(s => {
+    const sh = new THREE.Mesh(new THREE.CylinderGeometry(4, 4, 20, 20), mat("frame"));
+    sh.rotation.z = Math.PI / 2; sh.position.set(s * 30, P.YP, P.ZAX); pincer.add(sh);
+  });
+
+  function applyColors() {
+    const set = (k, v) => mat(k).color.set(v);
+    set("holder", css("--holder")); set("shell", css("--shell")); set("pincer", css("--pincer"));
+    set("pack", css("--pack")); set("rocker", css("--rocker")); set("plug", css("--plug")); set("frame", css("--muted"));
+    mat("frame").transparent = true; mat("frame").opacity = 0.45;
+    scene.background = new THREE.Color(css("--vp"));
+  }
+
+  // ---------- state for time t
+  const ease = x => x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x);
+  function stateAt(t) {
+    const ph = i => ease((t - STEPS[i].t0) / STEPS[i].d);
+    const rise = ph(1), pinch = ph(2) * (1 - ph(6)), down = P.D1 * ph(3) + P.D2 * ph(5), ang = Math.PI * ph(4);
+    let i = 0; STEPS.forEach((s, j) => { if (t >= s.t0) i = j; });
+    return { rise, pinch, down, ang, i };
+  }
+  // bar swing from the finger offset: free travel CLR, then the post pushes the slot wall FIN_A from the pivot
+  function thetaFromU(u) { const d = u - P.CLR; return d <= 0 ? 0 : Math.asin(Math.min(1, d / P.FIN_A)); }
+  function pose(t) {
+    const s = stateAt(t);
+    pivot.position.set(0, P.YP, P.ZAX - s.down); pivot.rotation.x = s.ang;
+    carriage.position.z = P.ZAX - s.down;
+    pincer.position.z = -70 * (1 - s.rise);
+    const u = P.STROKE * s.pinch, th = thetaFromU(u);
+    fA.position.x = -u; fB.position.x = -u;
+    pinG.rotation.z = u / P.R_P;
+    barA.rotation.z = th; barB.rotation.z = th;
+    s.th = th * 180 / Math.PI;
+    return s;
+  }
+
+  // ---------- UI
+  const stepsEl = document.getElementById("steps");
+  STEPS.forEach((s, j) => {
+    const li = document.createElement("li"); const b = document.createElement("button"); b.type = "button";
+    b.innerHTML = `<span class="k">${String(j + 1).padStart(2, "0")}</span><span>${s.t}</span><span class="t">${s.t0.toFixed(1)} s</span>`;
+    b.addEventListener("click", () => { time = s.t0 + 0.001; playing = false; syncPlay(); });
+    li.appendChild(b); stepsEl.appendChild(li);
+  });
+  const capN = document.getElementById("capN"), capT = document.getElementById("capT"), capP = document.getElementById("capP");
+  const scrub = document.getElementById("scrub"), playB = document.getElementById("play");
+  let lastI = -1, lastSec = null;
+  function ui(s) {
+    if (s.i !== lastI) {
+      lastI = s.i; const st = STEPS[s.i];
+      capN.textContent = `STEP ${s.i + 1} OF ${STEPS.length}`; capT.textContent = st.t; capP.textContent = st.p;
+      [...stepsEl.querySelectorAll("button")].forEach((b, j) => b.setAttribute("aria-current", j === s.i ? "true" : "false"));
+    }
+    const sec = s.th > P.TH_REL * 0.5 ? "released" : "latched";
+    if (sec !== lastSec) { lastSec = sec; drawSec(sec); }
+    scrub.value = Math.round(1000 * time / TOTAL);
+  }
+  // section svg
+  const svg = document.getElementById("secSvg");
+  function drawSec(state) {
+    const S = D.sec[state];
+    const path = polys => polys.map(p => "M" + p.map(q => q[0] + "," + (-q[1])).join("L") + "Z").join("");
+    svg.innerHTML =
+      `<path d="${path(S.shell)}" fill="var(--shell)" fill-opacity=".45" stroke="var(--ink)" stroke-width=".15"/>` +
+      `<path d="${path(S.holder)}" fill="var(--holder)" stroke="var(--ink)" stroke-width=".15"/>` +
+      `<path d="${path(S.bar)}" fill="var(--rocker)" stroke="var(--ink)" stroke-width=".15"/>` +
+      `<path d="${path(S.finger)}" fill="var(--pincer)" stroke="var(--ink)" stroke-width=".15"/>` +
+      `<circle cx="0" cy="${-P.PIV_Y}" r=".9" fill="var(--ink)"/>` +
+      lab(10, -97.2, "holder end leg") + lab(-29.5, -97.2, "release channel") + lab(7.5, -86.2, "shell end wall") +
+      (() => { const [a, b] = S.spring, n = 10; let d = "M" + a[0] + "," + (-a[1]);
+               for (let k = 1; k < 2 * n; k++) { const f = k / (2 * n), x = a[0] + (b[0] - a[0]) * f, y = a[1] + (b[1] - a[1]) * f + (k % 2 ? 2.2 : -2.2); d += "L" + x + "," + (-y); }
+               return `<path d="${d}L${b[0]},${-b[1]}" fill="none" stroke="var(--muted)" stroke-width=".5"/>` + lab(-29.5, -64, "spring"); })() +
+      lab(7.5, -29.5, "steel dowel") + lab(8.5, -43, "finger post") +
+      "";
+    document.getElementById("secState").innerHTML = "State: <b>" + state + "</b>" + (state === "latched" ? " · tip on the ledge" : " · tip swung " + S.swing + " mm, off the ledge");
+  }
+  const lab = (x, y, t) => `<text x="${x}" y="${y}" font-family="IBM Plex Mono, monospace" font-size="2.1" fill="var(--ink)">${t}</text>`;
+
+  // ---------- loop
+  let time = 0, playing = !matchMedia("(prefers-reduced-motion: reduce)").matches, prev = performance.now();
+  function syncPlay() { playB.textContent = playing ? "Pause" : "Play"; }
+  playB.addEventListener("click", () => { if (!playing && time >= TOTAL) time = 0; playing = !playing; syncPlay(); });
+  document.getElementById("restart").addEventListener("click", () => { time = 0; playing = true; syncPlay(); });
+  scrub.addEventListener("input", () => { time = TOTAL * scrub.value / 1000; playing = false; syncPlay(); });
+  document.getElementById("ghost").addEventListener("change", e => {
+    const m = mat("holder"); m.transparent = e.target.checked; m.opacity = e.target.checked ? 0.28 : 1; m.depthWrite = !e.target.checked; m.needsUpdate = true;
+  });
+  document.getElementById("showpack").addEventListener("change", e => { packM.visible = e.target.checked; });
+  function resize() { const w = vp.clientWidth, h = vp.clientHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+  new ResizeObserver(resize).observe(vp);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyColors);
+  new MutationObserver(applyColors).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  applyColors(); syncPlay(); resize();
+  function frame(now) {
+    const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+    if (playing) { time += dt; if (time > TOTAL) time = 0; }
+    ui(pose(time)); ctl.update(); renderer.render(scene, cam);
+    requestAnimationFrame(frame);
+  }
+  pose(0); ui(stateAt(0)); requestAnimationFrame(frame);
+})();
+</script>

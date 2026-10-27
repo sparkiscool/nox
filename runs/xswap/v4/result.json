@@ -1,0 +1,449 @@
+{
+ "lever ratio (tip / finger) / release swing at the tip mm / release angle deg": [
+  4.81,
+  10.7,
+  10.68
+ ],
+ "finger stroke mm (clearance 0.8 + pincer error 0.5 + drive + 0.25)": 3.77,
+ "bar swing at full stroke deg: pincer off -0.5 / centred / +0.5 (must all be >= release)": [
+  11.89,
+  14.35,
+  16.82
+ ],
+ "tip into the leg / ledge under the tip / tip bearing area mm2": [
+  4.2,
+  12.0,
+  42.0
+ ],
+ "seat: latched shell vs holder + cap (mm3)": 0.0,
+ "seat: XT60 female vs male / male vs shell (mm3)": [
+  0.0,
+  0.0
+ ],
+ "bars vs shell body over 0..max swing (mm3, must be 0)": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "bar A vs bar B at max swing (mm3)": 0.0,
+ "latched shell pulled down 0.3 / 0.6 / 1 / 3 (mm3, must collide: ledges)": [
+  0.0,
+  20.1,
+  49.6,
+  213.0
+ ],
+ "insert / pull sweep 0..95, bars released at the least swing (mm3)": 0.0,
+ "insert / pull stuck steps": [],
+ "same at the largest swing (mm3)": 0.0,
+ "pincer open approach 0..100 below grip (mm3)": 0.0,
+ "fingers in the bar slots over the stroke, pincer off -0.5 / 0 / +0.5 in x (mm3, ~0)": [
+  [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ]
+ ],
+ "both bars past release at full stroke for pincer x error -0.5..+0.5": true,
+ "shut fingers pulled 1.0 down into the lips (mm3, > 0 = the shell comes with the pincer), x error -0.5/0/+0.5": [
+  21.0,
+  21.0,
+  21.0
+ ],
+ "open fingers pulled 1.0 down (mm3, 0 = free to leave)": 0.0,
+ "pincer shut vs holder / vs shell body (mm3)": [
+  0.0,
+  0.0
+ ],
+ "pinion vs racks + fingers vs jaw over the stroke (mm3)": [
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "pincer width x / battery width (mm)": [
+  44.0,
+  47.0
+ ],
+ "rail travel before the flip (min, step 5, C)": 80,
+ "rail travel after the flip into the bay (min, step 5, C)": 80,
+ "bay insert sweep, released (mm3)": 0.0,
+ "bay seat latched (mm3)": 0.0,
+ "flip sweep radius about the axis (C)": 137.6,
+ "capture (x, y offset mm, tilt deg) -> first touch below seat / first flat-face touch; slope must lead": [
+  [
+   [
+    3,
+    0,
+    0,
+    0
+   ],
+   33.5,
+   5.5,
+   "slope first"
+  ],
+  [
+   [
+    -3,
+    0,
+    0,
+    0
+   ],
+   33.5,
+   5.5,
+   "slope first"
+  ],
+  [
+   [
+    0,
+    3,
+    0,
+    0
+   ],
+   84.0,
+   68.0,
+   "slope first"
+  ],
+  [
+   [
+    0,
+    -3,
+    0,
+    0
+   ],
+   84.0,
+   68.0,
+   "slope first"
+  ],
+  [
+   [
+    5,
+    0,
+    0,
+    0
+   ],
+   37.0,
+   7.0,
+   "slope first"
+  ],
+  [
+   [
+    -5,
+    0,
+    0,
+    0
+   ],
+   37.0,
+   7.0,
+   "slope first"
+  ],
+  [
+   [
+    0,
+    5,
+    0,
+    0
+   ],
+   87.5,
+   68.0,
+   "slope first"
+  ],
+  [
+   [
+    0,
+    -5,
+    0,
+    0
+   ],
+   87.5,
+   68.0,
+   "slope first"
+  ],
+  [
+   [
+    4,
+    4,
+    0,
+    0
+   ],
+   86.0,
+   68.0,
+   "slope first"
+  ],
+  [
+   [
+    -4,
+    -4,
+    0,
+    0
+   ],
+   86.0,
+   68.0,
+   "slope first"
+  ],
+  [
+   [
+    0,
+    0,
+    2,
+    0
+   ],
+   84.0,
+   70.5,
+   "slope first"
+  ],
+  [
+   [
+    0,
+    0,
+    0,
+    2
+   ],
+   32.5,
+   5.5,
+   "slope first"
+  ],
+  [
+   [
+    2,
+    2,
+    2,
+    2
+   ],
+   88.5,
+   71.0,
+   "slope first"
+  ]
+ ],
+ "swap mass g (pack 480 + shell + 2 bars + keeper + XT60 + bolts + dowels, E)": 694.4,
+ "swap CG (C/E)": [
+  -0.0,
+  4.26,
+  -31.22
+ ],
+ "mass_g_solid_petg": {
+  "shell": 178.6,
+  "bar": 6.5,
+  "holder": 212.4,
+  "jaw": 172.7,
+  "finger": 5.4,
+  "pinion": 7.6
+ },
+ "crash: 150 g on the swap mass, total / per tip N (E)": [
+  1022,
+  511
+ ],
+ "tip: shear at the end face / bending MPa (bar printed flat: in-layer, PETG ~45)": [
+  7.6,
+  16.4
+ ],
+ "tip on the ledge: bearing MPa": 12.2,
+ "shell end band over the tip: fixed-fixed bending MPa (in-layer, the shell prints tail down)": 18.1,
+ "holder ledge (real section with the lead-in): area mm2 / I mm4 / bending MPa (in-layer)": [
+  114,
+  3459,
+  10.6
+ ],
+ "holder leg tension across layers MPa (PETG across layers ~15-20)": 2.0,
+ "per M3 insert over each leg N (2 per leg)": 255,
+ "friction holding a loaded tip shut N (mu 0.3) vs spring preload N": [
+  153,
+  3.2
+ ],
+ "spring force latched / at release / at max swing N (6 OD x 21 free, 0.8 N/mm, E)": [
+  3.2,
+  6.5,
+  8.3
+ ],
+ "spring length at max swing mm (solid ~6.6, E)": 10.6,
+ "finger push at max swing N / servo torque N m (2 fingers, R 13.5)": [
+  15.2,
+  0.41
+ ],
+ "side hit 150 g: bar inertia torque N mm vs spring preload torque (opposite-handed bars: one opens, one closes)": [
+  287,
+  70
+ ],
+ "pull to unplug XT60 + 1 g, per finger: flange bearing on the lips MPa": 2.1,
+ "finger post bending at full push MPa (post printed upright: across layers)": 3.6,
+ "capture": [
+  {
+   "offset_xy_tilt": [
+    3,
+    0,
+    0,
+    0
+   ],
+   "first_touch_mm": 33.5,
+   "first_flat_touch_mm": 5.5,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    -3,
+    0,
+    0,
+    0
+   ],
+   "first_touch_mm": 33.5,
+   "first_flat_touch_mm": 5.5,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    0,
+    3,
+    0,
+    0
+   ],
+   "first_touch_mm": 84.0,
+   "first_flat_touch_mm": 68.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    0,
+    -3,
+    0,
+    0
+   ],
+   "first_touch_mm": 84.0,
+   "first_flat_touch_mm": 68.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    5,
+    0,
+    0,
+    0
+   ],
+   "first_touch_mm": 37.0,
+   "first_flat_touch_mm": 7.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    -5,
+    0,
+    0,
+    0
+   ],
+   "first_touch_mm": 37.0,
+   "first_flat_touch_mm": 7.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    0,
+    5,
+    0,
+    0
+   ],
+   "first_touch_mm": 87.5,
+   "first_flat_touch_mm": 68.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    0,
+    -5,
+    0,
+    0
+   ],
+   "first_touch_mm": 87.5,
+   "first_flat_touch_mm": 68.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    4,
+    4,
+    0,
+    0
+   ],
+   "first_touch_mm": 86.0,
+   "first_flat_touch_mm": 68.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    -4,
+    -4,
+    0,
+    0
+   ],
+   "first_touch_mm": 86.0,
+   "first_flat_touch_mm": 68.0,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    0,
+    0,
+    2,
+    0
+   ],
+   "first_touch_mm": 84.0,
+   "first_flat_touch_mm": 70.5,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    0,
+    0,
+    0,
+    2
+   ],
+   "first_touch_mm": 32.5,
+   "first_flat_touch_mm": 5.5,
+   "slope_first": true
+  },
+  {
+   "offset_xy_tilt": [
+    2,
+    2,
+    2,
+    2
+   ],
+   "first_touch_mm": 88.5,
+   "first_flat_touch_mm": 71.0,
+   "slope_first": true
+  }
+ ]
+}
