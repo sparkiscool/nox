@@ -31,10 +31,16 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Lands in the funnel, the box swaps its pack and it flies out, with the drone powered through the swap.
 - Live video from the Radxa reaches the box (B7).
 
+### Cage (Spark 27 Oct)
+The latest layout (PR 94) with a geodesic shell cage (the Overseer cage v3 idea, CLAUDE.md "Cages are geodesic shells"): **bottom from the Overseer's ring** (now the 4 side nodes of its cage v5 base loop; same datum: catch centre, 3 under the cartridge flat bottom) so one funnel takes both drones; **one camera** at the nose outside the cage, nothing in its view; **the Bee35 carbon base stays**. Then (Spark 27 Oct) **every rod 3 mm, about half the rods, any rod length; the bottom on the Overseer base loop's 4 side nodes (one reverse funnel, fewer ramps); a race-car look; the camera low, nothing sharp under it; no small triangles; one design**: cage v2, 50 rods, tied to a printed tie saddle beside the receiver (none on the carbon arms), a free-pattern shell with a flat roof, a raked front and a tail point, the camera close in at the nose on a printed PETG cradle snap-clipped onto the cage rods, Radxa + UBEC in a tail bay. Layout v3 / cage v2: `layout_v3.py`, `runs/scout_layout/v11/summary.md` (earlier `v6/`..`v10/`), numbers `dimensions.md` System Scout v3. Supersedes PR 94's ground-structure cage.
+
+### Electronics mount (Spark 27 Oct)
+Confirmed list for the mount: MicoAir743v2-AIO-35A (FC + ESC) on 4 grommets, RadioMaster XR2, MicoAir MTF-02P, Radxa Zero 3W (+ microSD), 5 V 5 A UBEC, DECXIN 2633V2 camera, and their wiring (SH1.0 4-pin pigtail, 90° USB-C). **No lights.** **Battery side left as it is** (pack, XT60E1-M, 220 µF cap, keep-alive pads, 10 kΩ, ideal diode): not this mount's work, it stays with the battery latch / box catch. **Placement from the cage system pass (27 Oct, layout v3 / cage v2, `dimensions.md` System Scout v3; DEFAULT):** the receiver and the belly mount sit 3.5 aft of the plate centre (FC + flow over the receiver, FC IMU offset x −3.5); the tail bay is out of the prop wash: the Radxa on edge on the centre plane (x −145..−80, z 8..38, plugs up), the UBEC flat behind the rear disks (x −172..−127, z 16..24); the cage ties root on a printed tie saddle beside the receiver (y ±36.3..42.3, bolted to the plate), clear of the belly mount envelope (y ±35); the tail bay balances the nose camera; the camera sits in a printed PETG cradle snap-clipped onto the cage rods (Spark 27 Oct), not on the drone body. Moving any of these re-runs the cage balance (`layout_v3.py`).
+
 ### v3 parts to draw (order DEFAULT)
 1. Bottom layout: pack, receiver with latch pockets, contacts, belly plate, pogo pads, underside stack (FC, Radxa, flow) in one sweep (v2 drew it in `archive/scout-v2/s2-receiver.md`; history only).
-2. Cage around the raised prop plane that rolls into the funnel (catch interface `dimensions.md` G).
-3. Camera mount on the nose, outside the cage keep-outs.
+2. Cage: layout v3 / cage v2 (27 Oct, race-car, 50 x 3 mm rods, bottom on the Overseer v5 loop's side nodes); next the frame model on the cage, then shell nodes and the tie saddle.
+3. Camera mount: the printed PETG cradle, 4 short arms into snap clips pushed onto the cage rods after the cage is built (layout v3 / cage v2); next its mode and topology.
 4. Cartridge (Scout size) matching the bay modules (`nox/box/box-case.md`).
 
 ### Open (DEFAULT in brackets, work goes on)
