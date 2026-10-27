@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout electronics mount, Spark): list confirmed (FC AIO, XR2, MTF-02P, Radxa + microSD, UBEC, camera, wiring); no lights; battery side (pack, XT60, cap, pads, diode) left out of the mount. `scout/v3/README.md`, `scout/scout.md`
 - 27 Oct (Overseer core, Spark: "do we really need that many"): 4 plate bolts, not 6 ((24, ±36.5), (-65, ±22.5)): 193 N a bolt in the 35 g crash vs 137 (E); coupons 16.0 / 28.1 g, solid PASS. `runs/overseer_core/v1/`
 - 27 Oct (Overseer core, review): FC stack turned 45° into the top plate's slots ("the lines", r 21.57; +X hole at the cutout edge, CHECK), on bench-set M3 studs with nuts from above; front bay bars inside |y| 20 (arm envelopes); access 34/35 (Pi plugs vs v5 body ties: cage). `runs/overseer_core/v1/`
 - 27 Oct (Overseer core, Spark): round 5: no stack mount, the FC + 4-in-1 bolts straight through the carbon top plate (Spark); 2 pieces, 2 coupons (hub deck 17.9 g, sled 29.2 g); every mounting hole checked against the STEP (360° faces) and the makers, table in dimensions System Overseer core
