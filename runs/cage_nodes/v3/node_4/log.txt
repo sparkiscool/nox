@@ -353,3 +353,15 @@ it  65 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000
 it  65 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 145.8s
 it  66 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 131.1s
 it  66 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 131.1s
+it  67 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 122.4s
+it  67 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 122.4s
+it  68 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 124.2s
+it  68 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 124.2s
+it  69 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 126.7s
+it  69 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 126.7s
+it  70 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 128.4s
+it  70 beta    8 J  10.0600 vol 0.0012 (dil 0.0269 g -0.096) grey  0.1% ch 0.000 worst held b1 fy 9.1e+05 128.4s
+layout: beta 8 done: eroded design 5 bodies, main 34.3%; drawn bodies outside the main body: 4
+layout: beta 8 done: eroded design 5 bodies, main 34.3%; drawn bodies outside the main body: 4
+it  71 beta   16 J  10.0600 vol 0.0002 (dil 0.0189 g -0.367) grey  0.0% ch 0.000 worst held b1 fy 9.1e+05 138.2s
+it  71 beta   16 J  10.0600 vol 0.0002 (dil 0.0189 g -0.367) grey  0.0% ch 0.000 worst held b1 fy 9.1e+05 138.2s
