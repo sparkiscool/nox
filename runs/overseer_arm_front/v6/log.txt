@@ -312,3 +312,5 @@ build: organic surface at pitch 0.286 mm (x7), skins 191.77 cm3, field 286.62 cm
 build: organic surface at pitch 0.286 mm (x7), skins 191.77 cm3, field 286.62 cm3, in env - cuts 260.31 cm3 (layout 260.31, level offset +0.587 mm), fillet 2.5 mm, rims 1.0 mm, mesh 2,367,808 faces, 538 s
 build: 2 shells, volumes [260159.0, -0.0] mm3; dropped specks []; sealed cavities kept [0.0] mm3
 build: 2 shells, volumes [260159.0, -0.0] mm3; dropped specks []; sealed cavities kept [0.0] mm3
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [195180.7], "necks": [], "drawn_not_in_main": [["0.0", 0.848, "erode 2.0"]], "thin_walls": [], "acute_edges": 17, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [195180.7], "necks": [], "drawn_not_in_main": [["0.0", 0.848, "erode 2.0"]], "thin_walls": [], "acute_edges": 17, "ok": false}
