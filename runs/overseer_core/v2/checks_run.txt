@@ -12,7 +12,7 @@ arm bottom screw keys (Ø8 below the plate): all 8 clear of the core (C); the sl
 flow view (42°, +2°, from the clip's window): clear (C)
 swap column (receiver + 30 a side, below the cartridge bottom): flow clip 0.0, flow 0.0, feet 0.0 mm³
 prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 0.9, flow clip 0.0, battery slot 1.83
-System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm³ (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3232 of 2200 g (147 %) (E) over budget (total, hub deck 38.9 of 32 g), CG 2.1 mm off thrust axis (E) [+2.1, -0.1, -66.9], 30.0 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear
+System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm³ (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3228 of 2200 g (147 %) (E) over budget (total, hub deck 38.9 of 32 g), CG 2.1 mm off thrust axis (E) [+2.1, -0.1, -66.9], 30.0 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear
 joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):
    hub deck: max 127.8 N per bolt (keels push (both 387 N, F)), shear 126.5, axial 28.2
    hub deck, front 4 feet alone (compliant deck bound): max 211.5 N per bolt (keels push (both 387 N, F)), shear 189.8, axial 93.3
@@ -20,4 +20,4 @@ joint reactions (rigid body, least-norm, E masses; floor loads go to the cage fe
    Pi screws: max 6.7 N per bolt (crash 35 g 5), shear 6.0, axial 6.7
    stack screws: max 3.5 N per bolt (crash 35 g 0), shear 2.5, axial 2.8
    the 2 front deck screws clamp the flow clip's 3 flange and the plate (M3 x 10, inserts in the deck); the front 4 bound puts every keel load on (96, ±17) + (65, ±22.5)
-mass 3232 g (E), T/W 2.04 at 1650 gf a motor; CG (68.5, -0.1, 15.1)
+mass 3228 g (E), T/W 2.04 at 1650 gf a motor; CG (68.5, -0.1, 15.1)
