@@ -28,4 +28,5 @@ Print: plate face down, bed contact 3005 mm² (M, print_orient), tree supports (
 
 Previews: `preview_overseer_hub_deck_v9.png` (the print file), `preview.png` (the run).
 
-Cage sync (CLAUDE.md, review item 15): the cage session told 27 Oct 12:45 PDT (file, commit 26bf1475, 68.0 g M); its artifact https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg republish: pending their reply.
+Cage sync (CLAUDE.md, review item 15): the cage session told 27 Oct 12:45 PDT (file, commit 26bf1475, 68.0 g M); its artifact https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg republished with hub deck v9 13:07 PDT 27 Oct (version 14; cage branch claude/gracious-mccarthy-5rctc9 @ ee944ce8, its system_check PASS).
+Open (Spark's scope): the cage now roots its front core ties on this tower's front face (114, 0, 20), its rear / side ties on the bottom plate edges and its bay ties on a sled; Spark parked the body nodes ("ignore all nodes on the body for now") and the drone side is an empty slot, so v9 carries the keels and braces only; asked of Spark (a v10 adds the 2 front tie sockets if he says yes).
