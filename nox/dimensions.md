@@ -361,10 +361,10 @@ Seated drone on 8 catch wheels (Scout 4.9 N with its pack, 3.3 N without; Overse
 **Concept F, push-bar catch (27 Oct, concept, `runs/box_catch/bars_concept/summary.md`, artifact https://claude.ai/artifact/XfUFHJZZrfnNdi9nnuuHQB; replaces the funnel + hook latch + wheels + probes when drawn; C unless tagged).** Seat frame: catch centre, z 0 = the Overseer's ring tube centres; deck at z −4.0 (its TPU feet, M). Shared interface: the Overseer base loop side nodes (85.8, ±116.1), (−68.9, ±119.7) = the Scout's rectangle (v11 and v12), tubes r 3 (Overseer) / r 1.5 in a 6 mm printed sleeve over x ±32 (Scout, DEFAULT).
 | Piece | Numbers |
 |---|---|
-| End pads (2) | 3 tall from the deck (top z −1); face profile along y: notch ±6, flanks 30° from y (120°), apex at x_n / x_t; relief |y| 6..28 receding 14 behind the apex; V wings |y| 28..80, 18° from y, inner end 2.9 behind the apex, outer corners 15 ahead; nose : tail travel 1 : 1.349; nose apex 205.9 (Overseer clamped), 102.4 (Scout); tail apex −227.3 / −121.2; park 295.9 / −349.1; nose travel at the clamp 90.5 / 197 |
+| End pads (2) | 3 tall from the deck (top z −1); face profile along y: notch ±6, flanks 30° from y (120°), apex at x_n / x_t; relief |y| 6..28 receding 14 behind the apex; V wings |y| 28..80, 18° from y, inner end 7.4 behind the apex, outer corners 9.5 ahead; nose : tail travel 1 : 1.361; nose apex 203.2 (Overseer clamped), 97.1 (Scout); tail apex −224.6 / −80.2; park 293.2 / −347.1; nose travel at the clamp 90 / 196 |
 | Pad slide and spring | preload 30 N, 0.5 N/mm (E), stroke 80 (used ≤ 74) |
 | Side bars (2) | x −25..25, 6 thick, 11.5 tall; face on the tube line + 3.25 (gap 0.5 over the surfaces, the line tapers 3.6 over 155); lip 3 thick, underside z 4.5, edge 2 inside the tube line; park |y| 258; travel 137 over 60 of carriage (2.3 : 1 lever), after the x clamp only |
-| Carriage | T8 x 2, NEMA 17 (the fourth), thrust bearing F8-16M; travel to the stall 150 (Overseer) / 257 (Scout); at the stall ~120 N (E) |
+| Carriage | T8 x 2, NEMA 17 (the fourth), thrust bearing F8-16M; travel to the stall 150 (Overseer) / 256 (Scout); at the stall ~120 N (E) |
 | Hold-down | 74 N head stall on the two lips (5 MPa cantilever, E); the screw holds the bars |
 | Envelope (C) | Scout: every landing in ±60, yaw ±15; Overseer: x ±80, y ±20 at yaw ±10, ±40 at ±5, ±60 at 0. Seated: y ≤ 0.23, yaw ≤ 0.9°, x median 0.8 / 0.5, 90 % 2.7, max 6 |
 | Scout plane | −50.7 with the sleeves (cartridge 7.0 above the deck like the Overseer's), −47.5 with a 6/4 ring (Scout session) |

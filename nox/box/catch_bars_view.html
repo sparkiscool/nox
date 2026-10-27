@@ -316,7 +316,7 @@ document.getElementById('kpis').innerHTML = kp.map(([b, s]) => `<div class="kpi"
 const rows = [
   ['', 'Ramps (concept E, checked)', 'Hook claws (handoff direction, checked by hand)', 'Push bars (this, checked)'],
   ['Landing room', 'Scout ±20 / ±25, Overseer ±25 / ±25, yaw ±2.5°', 'a few tens of mm; every claw rises outside the ring where both shells flare, 12 claws', `±${squareBoth} mm square for every yaw ${D.yaws[0]}..${D.yaws.at(-1)}°, more along single axes (table above)`],
-  ['What stands up on the deck', '10 ramps, 20..25 high', 'flat deck until the claws rise', `flat; parked pads 7 and bars 11.5 high, outside the landing room`],
+  ['What stands up on the deck', '10 ramps, 20..25 high', 'flat deck until the claws rise', `flat; parked pads ${D.h_pad} and bars ${D.height} high, outside the landing room`],
   ['Centring', 'passive, sliding on 45° faces (needs μ ≤ 0.2)', 'active, 12 claws through sprung links', 'active: 2 pads then 2 bars, rigid stops, one motor'],
   ['Final position', 'where the faces meet, both drones level only by matching ring heights', 'V-seats on 4 shared nodes', 'notch on the tip nodes (Overseer), wing corners on the end tubes (Scout), bar stop for y: both receivers on the swap centre, 1 mm (C)'],
   ['Hold-down for the 74 N stall', 'a separate latch', 'the claws, over-centre', 'the two lips, 3 clear of the Overseer\'s inner link; the screw holds the bars'],

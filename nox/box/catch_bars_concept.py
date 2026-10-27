@@ -40,7 +40,7 @@ sys.path.insert(0, HERE)
 import catch_ramps_concept as cr                      # the two drones from git refs (SCOUT_REF / OVR_REF at its top)
 OUT = os.path.join(REPO, "runs", "box_catch", "bars_concept"); os.makedirs(OUT, exist_ok=True)
 
-DECK = -4.0                 # M: the Overseer's TPU feet bottom (its ring tube centre at 0, r 3)
+DECK = float(os.environ.get("DECK", -4.0))                 # M: the Overseer's TPU feet bottom (its ring tube centre at 0, r 3)
 TUBE_R = 3.0                # Overseer ring tube (C); the Scout's is 1.5 (C)
 GAP = 0.5                   # closed side gap over the two tube surfaces (E: ring width tolerance)
 Y_WAIT = None               # (phase 1 cam removed: the side bars stay parked until the x clamp; the lost-motion stage alone drives them)
