@@ -8,7 +8,7 @@ Smoke (`estimate.json`): fine 34.0 s/it, 50 cases, 5.48 GB, wall 0.59..1.44 h (E
 
 ```
 overseer_hub_deck v9: ready to print (after the insert pull test on the keel hub coupon)
-System: Overseer core v3 assembled (v9 mesh, `runs/overseer_core/v3/checks_run.txt`): fit 0 mm³ for the deck (the 28.0 FAIL is the flow clip vs the cage's parked tie node), cage first 7.7 (E), probes -210 at -X FAIL (slot unshielded, cage's), bbox 124 L, extents 771 x 675 x 239 (E), access 37/37, mass 3255 g (E), CG 2.0 off the thrust axis pack in / 29.7 pack out (L exception) (E); FE bolt reactions <= 343 N a foot (front hit, SF 1.1), insert pull <= 70 N (C on M); head mode 153.3 Hz with these socket springs (cage, F on E)
+System: Overseer core v3 assembled (v9 mesh, `runs/overseer_core/v3/checks_run.txt`): fit 0 mm³ (C on M) for the deck (the 28.0 FAIL is the flow clip vs the cage's parked tie node), cage first 7.7 (E), probes -210 at -X FAIL (slot unshielded, cage's), bbox 124 L, extents 771 x 675 x 239 (E), access 37/37, mass 3255 g (E), CG 2.0 off the thrust axis pack in / 29.7 pack out (L exception) (E); FE bolt reactions <= 343 N a foot (front hit, SF 1.1), insert pull <= 70 N (C on M); head mode 153.3 Hz with these socket springs (cage, F on E)
 Weight: 68.0 g (M), was 38.9 (v4, keels only)
 Strength: worst index 0.30 (M) in crash 0 (front hit) at the toe (104, -19, 4) (v8 0.34, v6 2.72 on the high roots, M); every crash case with its own keel + brace forces
 Solid: solid_check PASS (print/overseer_hub_deck_v9.stl); the build's drawn-body test PASS
