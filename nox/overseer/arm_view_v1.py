@@ -156,10 +156,10 @@ def page(results=None, built=None):
                "<th>Worst flight / landing</th><th>First mode (E)</th><th>solid_check</th></tr>" + rows + "</table></div></section>")
     cases = [("Max thrust", "21 N up at the motor + yaw ±0.5 N·m", "flight", "≤ 0.5"),
              ("Manoeuvre", "max thrust + 2 g lateral (4 directions) + gyro 0.2 N·m", "flight", "≤ 0.5"),
-             ("Landing", "6 g down on the motor (96 g) and the ESC (25 g)", "flight", "≤ 0.5"),
-             ("Crash", "35 g on the motor and the ESC, 14 directions (motor 33 N)", "crash", "≤ 1.0"),
+             ("Landing", "6 g down on the motor, prop and screws (96 g)", "flight", "≤ 0.5"),
+             ("Crash", "35 g on the motor, 14 directions (33 N)", "crash", "≤ 1.0"),
              ("Handling", "50 N on the motor pad, 6 directions (and on the 4 inserts alone)", "misuse", "≤ 1.0"),
-             ("Vibration", "every first mode, motor, prop, ESC and rods on, root on the 4 inserts", "", "≥ 190 Hz")]
+             ("Vibration", "every first mode, motor, prop and rods on, root on the 4 inserts", "", "≥ 190 Hz")]
     crow = "".join(f"<tr><td>{a}</td><td>{b}</td><td>{c}</td><td>{d}</td></tr>" for a, b, c, d in cases)
     alts = [("Chosen: front pair a PETG topology arm round 4 x 3.0 carbon chords (a tapered space frame from shoulders at "
              "±35 to ±12 at the motor); rear pair PETG topology only", "front ≥ 190 Hz every mode, ~60 g with rods (E, checked on the "
@@ -178,10 +178,10 @@ def page(results=None, built=None):
 <style>{CSS}</style><main>
 <header><div class="eyebrow">Overseer · printed arms · topology v1</div><h1>Overseer arms v1</h1>
 <p class="mut">Layout v5 / cage v3 (27 Oct). Front pair r 244, rear pair r 160. Each right arm is the mirror of the left one.
-Cage nodes, spokes and L2 brace sockets are left off for now (Spark 27 Oct). Concept review 1 FAIL (front stiffness, supports, mirror holes, ESC, spoke path): fixed below.</p></header>
+Cage nodes, spokes and L2 brace sockets are left off for now (Spark 27 Oct). Concept review 1 FAIL (front stiffness, supports, mirror holes, spoke path): fixed below. The ESC is a 4-in-1 under the FC; only motor leads run on the arms.</p></header>
 {res}
 <figure>{plan_svg(meshes)}<div class="key"><span><i style="background:var(--env);border:1px solid var(--envs)"></i>design envelope</span>
-<span><i style="background:var(--built)"></i>built arm</span><span><i style="background:var(--drawn)"></i>drawn: plate pads, insert bosses, motor pad, rod sleeves, ESC seat</span><span><i style="background:var(--rod)"></i>3.0 carbon rods</span>
+<span><i style="background:var(--built)"></i>built arm</span><span><i style="background:var(--drawn)"></i>drawn: root blocks that bolt between the top and bottom plates (M3 inserts), motor pad, rod sleeves</span><span><i style="background:var(--rod)"></i>3.0 carbon rods</span>
 <span><i style="background:var(--elec)"></i>hub electronics and L2 keel hub (kept 1 mm clear)</span><span><i style="background:var(--plate)"></i>plates</span>
 <span><i style="background:var(--prop)"></i>prop disks</span></div>
 <figcaption>Plan, drone frame, nose up. 1 px = 1 mm.</figcaption></figure>

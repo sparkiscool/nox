@@ -57,9 +57,8 @@ CHORD_SKIN = 2.65                     # sleeve wall round the bore (>= skin 2.5)
 E_CARBON = 120000.0                   # MPa, pultruded 3.0 rod along its axis (E)
 RHO_CARBON = 1.55                     # g/cm3 (E)
 
-# ESC (model open, Spark): on the arm's flat top in the prop wash, 2 zip ties round the beam (DEFAULT, E 25 g, 45 x 25 x 8)
-ESC_KG, ESC_X, ESC_ZC = 0.025, {"front": (50.0, 100.0), "rear": (28.0, 68.0)}, 49.0
-ESC_HALF_W = 12.0
+# ESC: a 4-in-1 under the FC in the hub stack (Spark 27 Oct), nothing on the arms; the motor leads run along the arm's flat
+# top and down beside the root into the hub, zip-tied round the beam (DEFAULT)
 
 # loads (dimensions.md "System Overseer: arms", E)
 THRUST_N = 21.0                       # 1650 gf at 14.8 V (C) x (16.8 / 14.8)^2 on a full pack = 2.13 kgf
@@ -220,10 +219,7 @@ def bodies(which):
         sl += (sl + sl.translate([0.0, 0.0, 10.0 if flat else -10.0])).hull()
         sleeves += sl ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
     B["rods"] = rods
-    x0e, x1e = ESC_X[which]
-    deck = box(x0e, x1e, -ESC_HALF_W, ESC_HALF_W, ROOT_H - PAD_T, ROOT_H)  # ESC seat: flat top (the bed face)
-    B["esc"] = deck
-    B["drawn"] = B["pads"] + B["mpad"] + sleeves + deck
+    B["drawn"] = B["pads"] + B["mpad"] + sleeves
     return B, F
 
 
@@ -261,13 +257,12 @@ def setup_for(which):
         p.support("default", B["sup"])
         p.support("bosses", B["bosses"])        # review 27 Oct: the joint as 4 inserts only (no face contact)
         tipc = np.array([F["L"], 0.0, TIP_Z])
-        escc = np.array([0.5 * sum(ESC_X[which]), 0.0, ESC_ZC])
-        W, We = TIP_KG * G, ESC_KG * G
+        W = TIP_KG * G
         ex, ey, ez = np.eye(3)
         Z = np.zeros(3)
 
         def masses(gvec, extra_f=Z, extra_m=Z):
-            return [(B["load"], tipc, W * gvec + extra_f, extra_m), (B["esc"], escc, We * gvec, Z)]
+            return [(B["load"], tipc, W * gvec + extra_f, extra_m)]
         # flight: max thrust with the yaw reaction both ways; with 2 g lateral and the gyro moment in 4 directions
         for sgn, nm in ((1, "+"), (-1, "-")):
             rigid_case(p, f"max thrust {THRUST_N:.0f} N + yaw {nm}{YAW_NM} Nm", masses(Z, THRUST_N * ez, sgn * YAW_NM * ez))
@@ -275,7 +270,7 @@ def setup_for(which):
             rigid_case(p, f"max thrust + {LAT_G:.0f} g {nm} + gyro", masses(LAT_G * v, THRUST_N * ez, GYRO_NM * gax + YAW_NM * ez),
                        accel=LAT_G * v)
         rigid_case(p, f"landing {LAND_G:.0f} g", masses(-LAND_G * ez), accel=-LAND_G * ez)
-        # crash: the motor's and the ESC's own inertia at 35 g in 14 directions (the cage stops the drone)
+        # crash: the motor's own inertia at 35 g in 14 directions (the cage stops the drone)
         dirs = [ex, -ex, ey, -ey, ez, -ez] + [np.array((a, b, c_)) / math.sqrt(3) for a in (1, -1) for b in (1, -1)
                                                for c_ in (1, -1)]
         for k_, v in enumerate(dirs):
@@ -307,7 +302,7 @@ def arm_to_drone(t, F, mirror=False):
 # ------------------------------------------------------------------------------------------------- first modes
 def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     """first modes (Hz, E) of the built arm, fixed at the two plate faces, with the motor + prop (96 g) as a stiff body
-    on the pad and the ESC (25 g) on the beam at 40 % of its length. Hex8 voxel FE at pitch h, PETG transversely
+    on the pad (the ESC is in the hub, Spark 27 Oct). Hex8 voxel FE at pitch h, PETG transversely
     isotropic (build z), lumped masses, shift-invert Lanczos."""
     import scipy.sparse as sp
     import scipy.sparse.linalg as sla
@@ -363,9 +358,6 @@ def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     mm = 0.096 / max(mot_cells.sum(), 1)                         # motor + prop + screws on the motor cells (M spec, E)
     np.add.at(mn, en[mot_cells].ravel(), mm / 8.0)
     xm = ax[0][ex]
-    beam = (~mot_cells) & (xm >= ESC_X[which][0]) & (xm <= ESC_X[which][1]) & (ax[2][ez] > ROOT_H - 3 * h)
-    if beam.any():
-        np.add.at(mn, en[beam].ravel(), ESC_KG / beam.sum() / 8.0)  # ESC 25 g on its seat
     # supports: the plate faces (support="faces") or the 4 insert bores only ("inserts"), as cells within 1.5 h
     if support == "faces":
         reg = B["sup"]
