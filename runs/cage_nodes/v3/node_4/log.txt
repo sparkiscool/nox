@@ -357,3 +357,69 @@ it  67 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000
 it  67 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 39.8s
 it  68 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 40.0s
 it  68 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 40.0s
+it  69 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 39.6s
+it  69 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 39.6s
+it  70 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 39.3s
+it  70 beta    8 J  10.0001 vol 0.0056 (dil 0.0580 g +0.314) grey  1.1% ch 0.000 worst tube to 11 side a 242 39.3s
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 8 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it  71 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 43.8s
+it  71 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 43.8s
+it  72 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 37.6s
+it  72 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 37.6s
+it  73 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 39.6s
+it  73 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 39.6s
+it  74 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 36.6s
+it  74 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 36.6s
+it  75 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 41.3s
+it  75 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 41.3s
+it  76 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 42.4s
+it  76 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 42.4s
+it  77 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 40.7s
+it  77 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 40.7s
+it  78 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 38.8s
+it  78 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 38.8s
+it  79 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 38.3s
+it  79 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 38.3s
+it  80 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 36.7s
+it  80 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 36.7s
+it  81 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 43.2s
+it  81 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 43.2s
+it  82 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 36.3s
+it  82 beta   16 J  10.0001 vol 0.0028 (dil 0.0490 g +0.111) grey  0.4% ch 0.000 worst tube to 11 side a 242 36.3s
+=== cage_node_4: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_4: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_4: grid (40, 40, 40) h 1.5 = 64,000 cells; design 24,174 (81.6 cm3), drawn 2,429, void 37,397
+  support hold 0: 1948 cells, 3678 nodes
+  support hold 1: 1903 cells, 3491 nodes
+  support hold 2: 1915 cells, 3516 nodes
+  support hold 3: 1946 cells, 3628 nodes
+  support hold 4: 1984 cells, 3705 nodes
+  support hold 5: 2120 cells, 3946 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_4: grid (40, 40, 40) h 1.5 = 64,000 cells; design 24,174 (81.6 cm3), drawn 2,429, void 37,397
+  support hold 0: 1948 cells, 3678 nodes
+  support hold 1: 1903 cells, 3491 nodes
+  support hold 2: 1915 cells, 3516 nodes
+  support hold 3: 1946 cells, 3628 nodes
+  support hold 4: 1984 cells, 3705 nodes
+  support hold 5: 2120 cells, 3946 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.20 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.20 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.015 of 24,174 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.015 of 24,174 design cells
+layout: WARNING nearly mirrored in x (6.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (6.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (4.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (4.7% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (4.6% of passive cells differ): no symmetry
+layout: 1 drawn bodies (2,429 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (2,429 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (40, 40, 40) = 64,000 elements, 91,398 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
+fem: grid (40, 40, 40) = 64,000 elements, 91,398 active dofs; backend direct (direct estimate 0.7 GB, budget 11.8 GB)
