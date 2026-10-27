@@ -61,7 +61,7 @@ System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field
 - **Small triangles merged to one node (Spark):** shell rods 65..268.
 
 ## Rods: 47, all 3.0 solid carbon (v10: 50, v9: 54, cage v1: 123)
-- **Shell, 41 rods** (5.51 m) on 16 nodes: the 4 bottom nodes Ø20 and 12 printed Ø12 nodes for 3.3 sockets. Largest cell Ø139. Rods 13.6 off the swept disks.
+- **Shell, 41 rods** (5.51 m) on 16 nodes: the 4 bottom nodes Ø20 and 12 printed Ø12 nodes, all PETG (Spark 27 Oct: nodes PETG, TPU only for feet), sockets 3.1 for the 3.0 rods (DEFAULT until the v2 rod coupons decide). Largest cell Ø139. Rods 13.6 off the swept disks.
 - **Links, 6 rods, all from the tie saddle** (no rod on the carbon arms, Spark). All stay out of the funnel band and over the 33 break-even.
   - Each runs from the saddle's outer face (y ±44.3, z −7, 23 above the band) to a shell node on its side:
     - tail station (x −45) to the waist node, 83 long;
