@@ -1,5 +1,12 @@
 # Scout v3 electronics in the pointed tail: concept (27 Oct 2026)
 
+> **Status 27 Oct: concept v1 FAILED review 3 times in a row. It goes back to the system pass (v2, three strikes rule); do not build from this run.**
+> Round 3 found:
+> - The root joint does not fit: the Ø10 bosses reach |y| 8.5 and the plate, and the low bolt has no body behind it.
+> - The CG here is ~1.5 off: `mass_cent` used bounding-box centres for 4 non-watertight meshes. With area centroids, A reads 4.65 / 2.35 pack in / out and needs the catch set 7.4 forward; B 5.35 / 3.34, 9.2; the cage's own tail bay −2.00 / +1.71.
+> - Every placement here was hand-placed, not optimised.
+> What stands: the tail volume, wash and cage-first findings, and the access method.
+
 Spark, 27 Oct: "check the new scout cage design it should have a pointy tail and you need to fit the stuff there". Before that, the same day: the electronics list is confirmed, no lights, and the battery side is left as it is (`nox/scout/v3/README.md` Electronics mount).
 
 **Scripts**

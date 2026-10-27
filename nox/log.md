@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout electronics mount): tail fin concept v1 failed review x3 (root joint, CG true centroids need catch set 7.4 fwd, hand-placed): back to the system pass v2 on scout_layout v9. `runs/scout_electronics/v1/`
 - 27 Oct (Scout electronics mount, Spark: pointed tail): concept A, PETG fin in the race-car tail bolted to a belly mount block, C-clip fuse on the tail tie: Radxa on edge, UBEC, XR2; out of the wash, walls ≥ 13.9; CG needs catch set 3.5 fwd (DEFAULT; alt B tray: 3.8 aft). `runs/scout_electronics/v1/`
 - 27 Oct (Scout electronics mount, Spark): list confirmed (FC AIO, XR2, MTF-02P, Radxa + microSD, UBEC, camera, wiring); no lights; battery side (pack, XT60, cap, pads, diode) left out of the mount. `scout/v3/README.md`, `scout/scout.md`
 - 27 Oct (Overseer core, Spark: "do we really need that many"): 4 plate bolts, not 6 ((24, ±36.5), (-65, ±22.5)): 193 N a bolt in the 35 g crash vs 137 (E); coupons 16.0 / 28.1 g, solid PASS. `runs/overseer_core/v1/`
