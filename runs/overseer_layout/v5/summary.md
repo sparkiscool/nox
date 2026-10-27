@@ -12,18 +12,29 @@ Script `nox/overseer/layout_v5.py` (builds the drone round a fixed cage, `nox/ov
 
 Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (source `runs/overseer_layout/v5/motion.html`; stills `preview.png` iso, `preview_top.png` top at frame 0 (the mirror), `cameras_alt.png` the camera orientations over the L2 field)
 
-System: Overseer, cage first 12.7 mm (E) at -Z (flow MTF-02P) (field cones open: Unitree L2 75 deg, out 64.05 mm, camera left 55 deg, out 0.42 mm, camera right 55 deg, out 0.91 mm), shell 54 rods closed, h/w 0.28, fit 0.3 mm³ (E) (spokes, ties, keels, L2 guard ring/cartridge), bbox 109 L (E), extents 771 x 675 x 209 mm (E), mass 3084 of 2200 g (140 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -65.8], 32.4 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear
+System: Overseer, cage first 12.7 mm (E) at -Z (flow MTF-02P) (field cones open: Unitree L2 75 deg, out 64.05 mm, camera left 55 deg, out 0.42 mm, camera right 55 deg, out 0.91 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm³ (E), bbox 109 L (E), extents 771 x 675 x 209 mm (E), mass 3178 of 2200 g (144 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -64.1], 31.4 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear
 
 ## Cage v5 (27 Oct): half the tubes, close nodes merged
 - **From cage v3 (main), its 131 tubes halved (Spark).** The free nodes were thinned to 16 (mirror pairs and centre nodes, farthest first) and the shell re-triangulated mirror-symmetric (flat facets in mirror pairs).
 - **Close nodes merged.** Spark: "anytime there's a small triangle or short rods like that ... I don't want nodes so close together when they can just become one". Every tube under 95 (DEFAULT) collapses into one node. This merged the front and rear corner triangles of the base loop, which went from 8 to 6 nodes: nose and tail vertices on the centre plane, a hexagon 404 x 239 round the same swap zone. Two nodes left inside the shell were dropped.
 - **No socket clashes.** No two tubes meet at a node under 20° (DEFAULT).
 - **Repair.** The nodes then moved only as far as needed: every part with its margin inside every face, props 12 off, the L2 base plane, both camera views, the loop flat with its chords clear of the swap zone (`nox/overseer/cage_equal.py`, CE_MODE=reduce, CE_MERGE_MM=95, CE_MIN_ANGLE=20).
-- **Result:** 21 nodes, 54 tubes (was 48 / 131), mirror-exact, 670 x 655 x 188. Tubes 122 .. 655, 14.7 m. Shell 462 g (was 763), mass 3084 g, T/W 2.14, prop shadow 5.7 % above and 12.4 % below.
+- **Result after merging:** 21 nodes, 54 tubes. **After the frame model's splits:** 24 nodes, 63 tubes (was 48 / 131), mirror-exact, 670 x 655 x 188, tubes 116 .. 446, 15.9 m. Mass 3178 g, T/W 2.08, prop shadow 7.4 % above and 13.9 % below.
 - **Cost:** long spans (to 655) and large cells, left for the frame model (Next).
 - **The base loop is shared** with the Scout cage (PR #124) and the funnel: their sessions were told (27 Oct).
 - **Weighed and dropped (Spark):** cage v4, 11 cut lengths but taller (277) and bulkier (63.8 L): `nox/overseer/cage_v4_shell.json`.
 - **Nodes:** TPU topology parts, one per design (12 designs; mirror pairs share one), `nox/overseer/cage_node.py`. Each node's sockets are only for the members that meet there: 6 mm tube (bore 6.3, 15 deep) or 3 mm rod (bore 3.3, 10 deep), 2.5 wall. The topology joins only those sockets, each member loaded in turn with the others holding (E loads until the frame model). Runs on run/cage_nodes-v1.
+
+## Frame model v1 (27 Oct, F on E carbon properties; `runs/overseer_frame/v1/summary.md`)
+- `nox/frame_model.py`, a 3D beam solver (checked against a cantilever), and `nox/overseer/cage_frame.py`, the cage + links on the core with the sensor head rigid on its keels and braces. Cases: crash 35 g through the first-touching member in 14 directions, a nose hit through the head guard, flight 4 g, handling 50 N at mid-span.
+- **Found and fixed:**
+  - 19 links (core ties, keels, L2 braces, five spokes) buckled as 3.0 rods (up to 7.9 x Euler). They are 6/4 tube now, the only other stock (`nox/overseer/link_sizes.json`).
+  - The 655 top cross tube (2.6 x) and the two 413 front-top tubes (1.25 x) buckled; each is split at mid-span by a node (`nox/overseer/cage_split.py`).
+  - The cage is 24 nodes, 63 tubes, worst tube 0.87 x.
+- **Marginal:** three core ties, already 6/4 tube, sit at 1.01 to 1.15 x on pinned ends. Their core ends are bolted, so k ~0.7 gives ~0.6 x (E).
+- **No member over stress.**
+- **Handling:** the longest spans (438, 446) bend 17 to 18 mm under 50 N.
+- **Node loads:** the per-socket forces feed the node and head runs (`node_loads.json`).
 
 ## Camera pair (Spark 27 Oct)
 - **Down camera removed** with its pod; the flow sensor stays in the belly, its pod 15 ahead of v2's (Spark), so every rear arm screw comes through a sled hole.

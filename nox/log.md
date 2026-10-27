@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): frame model v1 (`nox/frame_model.py`, `nox/overseer/cage_frame.py`): 19 links buckled as 3.0 -> 6/4 tube, 3 long tubes split; cage 24 nodes / 63 tubes, worst 0.87 (3 core ties 1.01-1.15 pinned, marginal). Head centre v2 + 14 TPU node runs restarted on it. 3178 g E. `runs/overseer_frame/v1/`
 - 27 Oct (Overseer, Spark): cage v5 close nodes merged (tubes < 95 become one node; base loop 8 -> 6, told funnel + Scout), node angles >= 20: 21 nodes, 54 tubes, 3084 g, T/W 2.14. Head mount (centre + wing) and 12 TPU node topology runs started. `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): cage v5 = cage v3 with half the tubes (25 nodes, 64 tubes, mirror-exact, 3120 g, T/W 2.12); same-length cage v4 (11 lengths) dropped by Spark. Camera pair beside the L2 (landscape 45° out), flow pod 15 fwd, printed sensor head mount replaces the short rods (budget 73 g). `runs/overseer_layout/v5/`
 - 27 Oct (Overseer, Spark): flow pod 15 forward (every rear arm screw through a sled hole, nothing unplugged); pack-out CG 32 mm accepted by Spark ("as long as with battery the drone is centered"), the L Balance exception. CG 0.2 mm pack in. `runs/overseer_layout/v5/`
