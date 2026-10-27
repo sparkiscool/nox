@@ -1,17 +1,17 @@
 {
- "mass_g": 3253.87,
- "tw": 2.03,
+ "mass_g": 3260.97,
+ "tw": 2.02,
  "cg": [
-  68.91,
+  68.9,
   -0.05,
-  15.19
+  15.23
  ],
  "requirements": {
   "hub deck": {
    "worst_case": "braces pull alone (E)",
-   "max_bolt_N": 288.2,
+   "max_bolt_N": 288.3,
    "max_shear_N": 234.8,
-   "max_axial_N": 167.1
+   "max_axial_N": 167.3
   },
   "hub deck, front 4 feet alone (compliant deck bound)": {
    "worst_case": "braces pull alone (E)",
@@ -132,6 +132,26 @@
   "l": 15.0,
   "lead": 0.6,
   "wall": 2.5
+ },
+ "top_pads": [
+  [
+   42.0,
+   50.0,
+   12.0,
+   20.0
+  ],
+  [
+   42.0,
+   50.0,
+   -12.0,
+   -20.0
+  ]
+ ],
+ "pad_press": {
+  "max_press_N": 343.2,
+  "case": "crash 4 [0.0, 0.0, 1.0] via head guard",
+  "max_toe_lift_N_m": 13.8,
+  "lift_case": "crash 0 [1.0, 0.0, 0.0] via head guard"
  },
  "socket": {
   "d": 6.2,
@@ -275,7 +295,7 @@
   "hub deck": 55,
   "flow clip": 5
  },
- "system": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3254 of 2200 g (148 %) (E) over budget (total, hub deck 64.6 of 55 g), CG 2.5 mm off thrust axis (E) [+2.5, -0.1, -66.8], 30.3 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear",
+ "system": "System: Overseer core v2, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm\u00b3 (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3261 of 2200 g (148 %) (E) over budget (total, hub deck 71.7 of 55 g), CG 2.5 mm off thrust axis (E) [+2.5, -0.1, -66.8], 30.2 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 35/35 clear",
  "coupon": {
   "floor_t": 4.0,
   "post_h": 5.0,

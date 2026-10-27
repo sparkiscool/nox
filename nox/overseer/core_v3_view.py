@@ -34,11 +34,11 @@ fig.suptitle("Overseer core v3 concept: the hub deck's front hub becomes a tower
 plt.tight_layout(rect=(0, 0, 1, 0.9)); plt.savefig("runs/overseer_core/v3/preview.png", dpi=105)
 
 # alternatives, side view x-z and the numbers
-fig2, axs = plt.subplots(1, 2, figsize=(15, 5.6), facecolor="white")
+fig2, axs = plt.subplots(1, 2, figsize=(16, 6.2), facecolor="white")
 plates = [(-95.5, 100.5, -2.1, 0.0), (-60.2, 56.5, 45.0, 46.6)]
 A = {"lo": (57, 50), "hi": (53, 50)}; B = {"lo": (97, 22), "hi": (97, 32)}
-titles = ["A: block on the top plate's front edge (roots x 53..57, z 50)\n4 fasteners in the 1.6 top plate: 765..788 N each (584 shear), SF 1.1, rigid: not sound in PETG",
-          "B (chosen): tower on the hub deck's front hub (roots x 97, z 22 / 32)\nbraces pull + keels push cancel in the tower: 120..190 N a foot (rigid), <= 688 N front-4 bound; head 166 Hz"]
+titles = ["A: block on the top plate's front edge (roots x 53..57, z 50)\nSF 1.1, the cage's per-case forces: 765..788 N on each of 4 fasteners\nin the 1.6 top plate (584 shear): not sound in PETG",
+          "B (chosen): tower on the hub deck's front hub (roots x 97, z 22 / 32)\n+ struts to 2 pads under the top plate. SF 1.1: forward tip -> 343 N a pad (5.4 MPa, bearing);\nback tip 13.8 N m a side -> ~445 N per front insert (E); 6 feet <= 247 N (rigid)"]
 for k, ax in enumerate(axs):
     for x0, x1, z0, z1 in plates: ax.fill([x0, x1, x1, x0], [z0, z0, z1, z1], color="#9aa4b1")
     ax.fill([34, 82, 82, 34], [6.5, 6.5, 15.5, 15.5], color="#6b4fa0", alpha=0.7)
@@ -53,6 +53,8 @@ for k, ax in enumerate(axs):
     else:
         ax.fill([-20, 110, 110, -20], [0, 0, 6.5, 6.5], color="#e8833a", alpha=0.9)
         ax.fill([86, 112, 112, 86], [0, 0, 38, 38], color="#e8833a", alpha=0.9)
-    ax.set_xlim(-30, 200); ax.set_ylim(-10, 80); ax.set_aspect("equal"); ax.set_title(titles[k], fontsize=10.5); ax.set_xlabel("x (nose right), side view")
+        ax.plot([88, 46], [30, 40.5], color="#e8833a", lw=8, solid_capstyle="round"); ax.fill([42, 50, 50, 42], [41, 41, 45, 45], color="#e8833a")
+        ax.annotate("pad bears up on the top plate", (46, 45), (0, 62), arrowprops=dict(arrowstyle="->"), fontsize=9)
+    ax.set_xlim(-30, 200); ax.set_ylim(-10, 80); ax.set_aspect("equal"); ax.set_title(titles[k], fontsize=9.5); ax.set_xlabel("x (nose right), side view")
 fig2.suptitle("L2 brace roots: alternatives (grey = S500 plates, purple = UBEC, black = keel, red = braces, orange = printed core)", fontsize=12)
 plt.tight_layout(rect=(0, 0, 1, 0.92)); plt.savefig("runs/overseer_core/v3/alternatives.png", dpi=100)

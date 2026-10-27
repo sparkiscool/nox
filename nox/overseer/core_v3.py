@@ -245,11 +245,29 @@ def brace_socket(key, r, l0, l1):
     return trimesh.creation.cylinder(r, l1 - l0, sections=32, segment=np.vstack([a + d * l0, a + d * l1]))
 
 
+# second chord (concept review 27 Oct: the braces' pull tips the tower forward about its toe, ~24 N m a side at SF 1.1, and the
+# 2 front screws alone would be pried with kN): a deep side web from the tower back and up to a bearing pad under the top plate,
+# x 42..50, |y| 12..20 (between the plates the front arm roots fill the diagonals in to (26, ±26): the arm-free front wing is
+# |y| <= x - 24; over the UBEC / buck, z >= 17): the tipping becomes a couple toe -> pad, the pad pressing up on the carbon
+# (compression only: counted only in the cases where it presses)
+TOP_PADS = [(42.0, 50.0, sy * 12.0, sy * 20.0) for sy in (1, -1)]
+TOE_X = 104.0                              # the tower's toe on the bottom plate's front wing (concept)
+Z_TOP_UNDER_P = Z_TP - 1.6                 # the top plate underside 45.0 (STEP)
+
+
+def bar3(p, q, w):
+    p, q = np.asarray(p, float), np.asarray(q, float)
+    return trimesh.creation.box([np.linalg.norm(q - p), w, w], transform=trimesh.geometry.align_vectors([1, 0, 0], q - p) @ np.eye(4)
+                                ).apply_translation((p + q) / 2)
+
+
 def tower():
-    """the front hub tower: the 4 brace bosses and a web from each down to the keel boss and the front feet (concept body)"""
+    """the front hub tower: the 4 brace bosses, a web down to the keel bosses and the front feet, and the side webs back to the pads"""
     bosses = [brace_socket(k, BR_BORE / 2 + BR_WALL, -BR_WALL, BR_L + BR_LEAD) for k in BRACES]
     webs = [box(86.0, 104.0, sy * 9.0, sy * 31.0, 0, 36.0) for sy in (1, -1)]
-    return uni(bosses + webs)
+    sides = [bar3((88.0, sy * 16.0, 30.0), (46.0, sy * 16.0, Z_TOP_UNDER_P - 4.5), 8.0) for sy in (1, -1)]   # concept struts over the bays, ending in the pads
+    pads = [box(x0, x1, y0, y1, Z_TOP_UNDER_P - 4.0, Z_TOP_UNDER_P) for x0, x1, y0, y1 in TOP_PADS]
+    return uni(bosses + webs + sides + pads)
 
 
 DECK, CLIP = hub_deck(), flow_clip()
@@ -432,7 +450,9 @@ TW = tower()
 say(f"tower: 4 brace sockets Ø{BR_BORE} x {BR_L} (+{BR_LEAD}), walls {BR_WALL}, ends lo (97, ±26, 22), hi (97, ±14, 32); x arms {sum(ov(TW, a_) for a_ in ARMS):.1f}, "
     f"x top plate {ov(TW, top_plate):.1f}, x bottom plate {ov(TW, ctx_mesh['bottom plate']):.1f}, x UBEC {ov(TW, ubec):.1f}, x buck {ov(TW, buck):.1f}, x wires {ov(TW, wires):.1f}, "
     f"x props {ov(TW, props):.1f}, x cage nodes {ov(TW, ctx_mesh['cage shell nodes']):.1f}, x cage tubes {ov(TW, ctx_mesh['cage shell tubes']):.1f}, "
-    f"x the v5 links (keels and braces inside the bores, ties) {ov(TW, ctx_mesh[KEELS_NM]):.1f}, x the brace tubes {ov(TW, br_tubes):.1f} mm³ (C)")
+    f"x the v5 links {ov(TW, ctx_mesh[KEELS_NM]):.1f} (all of it the keels and braces at their roots: links minus those tubes "
+    f"{(MAN_OF(TW) ^ (MAN_OF(ctx_mesh[KEELS_NM]) - MAN_OF(cat([br_tubes] + [trimesh.creation.cylinder(3.4, np.linalg.norm(b - a), sections=24, segment=np.vstack([a, b])) for a, b in KEELS.values()])))).volume():.1f}), "
+    f"x the brace tubes {ov(TW, br_tubes):.1f} mm³ (inside the bores; C); x the buck {ov(TW, buck):.1f}, x the Pi {ov(TW, cat([pi, pi_plugs])):.1f}")
 
 # ---------------------------------------------------------------- system check, mass, CG
 from system_check import run as SC_RUN
@@ -505,10 +525,28 @@ for case, sg in KEEL_CASES.items():          # the head's keel forces on the hub
         rec(nm, case, piece_case(SUP[nm], keel_loads(sg) + inertial(CARRY[nm], np.array([0, 0, -35.0]))))
 def brace_loads(sg):
     return [((b - a) / np.linalg.norm(b - a) * BRACE_N[lvl] * sg, a) for (lvl, sy), (a, b) in BRACES.items()]
+RF = json.load(open(os.path.join(OUT, "core_root_forces.json")))      # the cage frame model's per-case root forces (F on E, no SF)
+RP = {k: (np.array(v["core"]), np.array(v["lug"])) for k, v in RF["points"].items()}
+PAD_N = {"max_press_N": 0.0, "case": None, "max_toe_lift_N_m": 0.0, "lift_case": None}
+pad_x = np.mean([(a + b) / 2 for a, b, _, _ in TOP_PADS]); lever = TOE_X - pad_x
+for case, nn_ in RF["cases"].items():
+    for sy in (1, -1):                                    # one side's 3 tubes (keel + 2 braces), SF 1.1: moment about the toe line (y axis)
+        My = 0.0
+        for k, n in nn_.items():
+            if not k.endswith("+1" if sy > 0 else "-1"): continue
+            a, b = RP[k]; F = (b - a) / np.linalg.norm(b - a) * n * 1.1; r = a - np.array([TOE_X, a[1], 0.0])
+            My += (r[2] * F[0] - r[0] * F[2])                 # + = tips the tower forward (its back rises, the pad presses up)
+        if My > 0:
+            P_ = My / lever
+            if P_ > PAD_N["max_press_N"]: PAD_N.update(max_press_N=round(float(P_), 1), case=case)
+        elif -My / 1000 > PAD_N["max_toe_lift_N_m"]:
+            PAD_N.update(max_toe_lift_N_m=round(float(-My / 1000), 1), lift_case=case)
 for case, (ks, bs) in BRACE_CASES.items():
     for nm in ("hub deck", "hub deck, front 4 feet alone (compliant deck bound)"):
         rec(nm, case, piece_case(SUP[nm], (keel_loads(ks) if ks else []) + brace_loads(bs) + inertial(CARRY[nm], np.array([0, 0, -35.0]))))
 say("joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):")
+say(f"   tower tipping (SF 1.1, the cage's per-case root forces, F): forward up to {PAD_N['max_press_N']} N pressing each top pad up ({PAD_N['case']}; lever {lever:.0f} toe -> pad), "
+    f"~{PAD_N['max_press_N'] / 64:.1f} MPa on its 8 x 8; backward up to {PAD_N['max_toe_lift_N_m']} N m a side ({PAD_N['lift_case']}): the front feet's inserts pull, the plate under the toe bears (C on F)")
 for k, v in REQ.items():
     say(f"   {k}: max {v['max_bolt_N']} N per bolt ({v['worst_case']}), shear {v['max_shear_N']}, axial {v['max_axial_N']}")
 say("   the 2 front deck screws clamp the flow clip's 3 flange and the plate (M3 x 10, inserts in the deck); the front 4 bound puts every keel load on (96, ±17) + (65, ±22.5)")
@@ -519,7 +557,7 @@ say(f"mass {M_TOT:.0f} g (E), T/W {tw:.2f} at 1650 gf a motor; CG ({cg[0]:.1f}, 
 result = {"mass_g": M_TOT, "tw": round(tw, 2), "cg": cg.tolist(), "requirements": REQ, "wash_pct": wash,
           "keels": {str(sy): [a.tolist(), b.tolist()] for sy, (a, b) in KEELS.items()}, "keel_n": KEEL_N,
           "braces": {f"{l} {sy}": [a.tolist(), b.tolist()] for (l, sy), (a, b) in BRACES.items()}, "brace_n": BRACE_N,
-          "brace_socket": {"d": BR_BORE, "l": BR_L, "lead": BR_LEAD, "wall": BR_WALL},
+          "brace_socket": {"d": BR_BORE, "l": BR_L, "lead": BR_LEAD, "wall": BR_WALL}, "top_pads": TOP_PADS, "pad_press": PAD_N,
           "socket": {"d": SOCK_D, "l": SOCK_L, "off": SOCK_OFF, "od": SOCK_OD}, "insert": INSERT, "foot_h": FOOT_H,
           "slot": {"x": [float(RB[0][0]), float(RB[1][0])], "y": float(RB[1][1]), "z": [Z_CART, Z_PLATE_BOT]},
           "z": {"mount_plane": Z_M, "pack_top": float(pack.bounds[1][2]), "cartridge_bottom": float(cartridge.bounds[0][2]), "lens": LENS_Z,
