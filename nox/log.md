@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout v3, Spark): tail bay out of the prop wash (Radxa on edge on the centre plane, UBEC behind the rear disks; DEFAULT, alt flat Radxa in the wash) and CG centred: tail bay + catch scanned on true centroids, CG 0.8/0.9 off (was 2.7/1.3); no low tail node; 50 rods, 680 g E, 387 long. `runs/scout_layout/v11/`
 - 27 Oct (rule, Spark): Measure before quoting. `tools/run_estimate.py` smokes a topo run (3 iterations a stage: s/it, cases, peak GB) into `estimate.json` before it starts; times quoted as a range in Pacific; parallel only if peaks fit 75 % RAM. CLAUDE.md, generative.md Heavy runs, run-part step 2, precheck 14.
 - 27 Oct (rule, Spark): socket bore = the coupon pick (DEFAULT 6.1 / 3.1; OD + 0.3 was loose in PETG) in CLAUDE.md and docs/generative.md; TPU only for feet, skids and strips. PR 122 review round 4 PASS, its notes fixed.
 - 27 Oct (rule, Spark): cage nodes PETG, not TPU ("would it be better using petg if so we will just use that"): F on E, PETG joints lift the L2 head 120 -> 206 Hz and the cage's lowest mode 26 -> 126 Hz; CLAUDE.md Hard rules, docs/generative.md Geodesic cage, review check 14, cage_node.py material. Plus PR 122 review round 3 fixes.
