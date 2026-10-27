@@ -317,21 +317,26 @@ def head_bodies():
         end, far = np.array(p, float), np.array(q, float)
         six = k in LINK6; boss, cut, keep = socket(end, far, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
         add(boss); addcut(cut + keep); braces.append((k, boss, end))
-    struts = []
-    CN = np.array(CG["nodes"])
-    for W, q in head_struts():                                          # struts to the side cage nodes
-        k_ = int(np.argmin(np.linalg.norm(CN - q, axis=1))); six = f"head strut {k_}" in LINK6
-        boss, cut, keep = socket(W, q, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
-        add(boss); addcut(cut + keep); struts.append((W, boss))
-    node = ball(CENTRE_NODE, NODE_R); add(node)                         # the cage's front centre node, printed in the head, its tube sockets
-    for far in tubes_at(CENTRE_NODE):
-        boss, cut, keep = socket(CENTRE_NODE + (np.array(far) - CENTRE_NODE) / np.linalg.norm(np.array(far) - CENTRE_NODE) * NODE_R,
-                                 far, TUBE_BORE, 14.0, wall=2.5)
-        add(boss); addcut(cut + keep); node = node + boss
+    struts = []; node = None
+    if HS.get("rods"):                                                  # the 3-rod head (Spark 27 Oct: "max of 3"): a 6/4 tube socket per rod, no cage node
+        for k, (W, q) in HS["rods"].items():
+            W, q = np.array(W, float), np.array(q, float)
+            boss, cut, keep = socket(W, q, TUBE_BORE, 15.0, wall=2.5); add(boss); addcut(cut + keep); struts.append((W, boss, k))
+    else:
+        CN = np.array(CG["nodes"])
+        for W, q in head_struts():                                      # struts to the side cage nodes
+            k_ = int(np.argmin(np.linalg.norm(CN - q, axis=1))); six = f"head strut {k_}" in LINK6
+            boss, cut, keep = socket(W, q, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
+            add(boss); addcut(cut + keep); struts.append((W, boss, f"head strut {k_}"))
+        node = ball(CENTRE_NODE, NODE_R); add(node)                     # the cage's front centre node, printed in the head, its tube sockets
+        for far in tubes_at(CENTRE_NODE):
+            boss, cut, keep = socket(CENTRE_NODE + (np.array(far) - CENTRE_NODE) / np.linalg.norm(np.array(far) - CENTRE_NODE) * NODE_R,
+                                     far, TUBE_BORE, 14.0, wall=2.5)
+            add(boss); addcut(cut + keep); node = node + boss
     addcut(l2_body() + half_space(A, B, 0.0))                          # keep-outs: the L2 and its field, the cameras and their views, the cage
     for c in HS["cameras"]:
         addcut(frustum(c) + xf(box(-1.4, 10, -21, 21, -21, 21), cam_frame(c)))
-    addcut(cage_tubes(skip_node=CENTRE_NODE))
+    addcut(cage_tubes(skip_node=None if HS.get("rods") else CENTRE_NODE))
     pts = np.asarray(mf_mesh_pts(drawn)); lo, hi = pts.min(0) - 8.0, pts.max(0) + 8.0
     for ax in range(3):                                                 # the print box: no axis over 178 (A1 mini 180, C)
         if hi[ax] - lo[ax] > 178.0: c_ = (hi[ax] + lo[ax]) / 2; lo[ax], hi[ax] = c_ - 89.0, c_ + 89.0
@@ -349,26 +354,32 @@ def mf_mesh_pts(m):
 
 
 def setup_head(h):
-    """loads from the system (cage_frame.py head_loads.json, F on E): every case the frame runs, the 4 L2 braces held (the core);
-    the forces the frame puts on the head at the cage's front centre node and at the 4 strut sockets applied there; in the head's
-    own inertia and flight cases also the L2 at its CG through its 4 bolts (force and moment) and each camera on its 4 bosses,
-    and the mount's own mass (accel). Moments at the attachments (<= 0.4 N m, F) are left out."""
+    """loads from the system (cage_frame.py head_loads.json, F on E): every case the frame runs. The 3-rod head: the centre rod's
+    socket held (the cage's front node), the forces the frame puts on the head through the 2 side rods applied at their sockets;
+    in the head's own inertia and flight cases also the L2 at its CG through its 4 bolts (force and moment), each camera on its 4
+    bosses, and the mount's own mass (accel). (Older heads: the L2 braces held, struts and node 17 loaded.) Moments at the
+    attachments (<= 0.4 N m, F) are left out."""
     from topo import Part
     b = head_bodies()
     p = Part("head", h, b["drawn"], b["cuts"], b["env"], build="+z", material="PETG")
-    sup = b["braces"][0][1]
-    for _, bo, _ in b["braces"][1:]: sup = sup + bo
+    if HS.get("rods"):
+        held = [bo for W, bo, k in b["struts"] if k == "head rod c"]; sup = held[0]
+        loaded = {k: (W, bo) for W, bo, k in b["struts"] if k != "head rod c"}
+    else:
+        sup = b["braces"][0][1]
+        for _, bo, _ in b["braces"][1:]: sup = sup + bo
+        loaded = {k: (W, bo) for W, bo, k in b["struts"]}
     p.support("core", sup)
     bolts, _ = l2_bolts(); L2CG = np.array(HS["l2"]["cg"])
     HL = json.load(open(HEAD_LOADS))["cases"]
-    def at(pt, tol=1.0):
-        pt = np.asarray(pt, float)
-        if np.linalg.norm(pt - CENTRE_NODE) < tol: return b["node"]
-        for W, bo in b["struts"]:
-            if np.linalg.norm(pt - W) < tol: return bo
+    def at(a):
+        pt = np.asarray(a["at"], float)
+        if b["node"] is not None and np.linalg.norm(pt - CENTRE_NODE) < 1.0: return b["node"]
+        for W, bo in loaded.values():
+            if np.linalg.norm(pt - W) < 1.0: return bo
         return None
     for cn, att in HL.items():
-        parts = [(at(a["at"]), np.array(a["F"], float)) for a in att if not a["name"].startswith("head-L2 brace")]
+        parts = [(at(a), np.array(a["F"], float)) for a in att]
         parts = [(r, F) for r, F in parts if r is not None and np.linalg.norm(F) > 0.05]
         acc = None
         if cn.startswith(("head inertia", "flight")):
@@ -378,6 +389,7 @@ def setup_head(h):
             parts += [(bo, f_) for bo, f_ in zip(b["l2b"], couple(F, L2CG, bolts))]
             for bs in b["camb"]:
                 parts += [(bo, M_CAM * G * acc / 4) for bo in bs]
+        if not parts: continue
         cls = "flight" if cn.startswith("flight") else "misuse"
         p.load_multi(cn, parts, cls=cls, support="core", accel=acc)
     return p

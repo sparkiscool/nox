@@ -44,9 +44,12 @@ def build():
     f = Frame(); nid = [f.node(p) for p in N]
     for a, b in CG["rods"]: f.member(nid[a], nid[b], TUBE6, f"tube {a}-{b}")
     H = f.node(B - A * 20.0)                                            # the head mount, rigid
-    f.member(H, nid[HEAD_NODE], RIGID, "head-centre node")
+    if not HS.get("rods"): f.member(H, nid[HEAD_NODE], RIGID, "head-centre node")   # (the 3-rod head holds no cage node)
     for k, (p, q) in RES["links"].items():
         if k.startswith("head strut"): continue                        # built with the head below
+        if k.startswith("head rod"):                                   # the 3-rod head (Spark 27 Oct): head socket rigid on H, the rod to its cage node
+            p, q = np.array(p), np.array(q); i = int(np.argmin(np.linalg.norm(N - q, axis=1)))
+            Wn = f.node(p); f.member(H, Wn, RIGID, f"head-{k}"); f.member(Wn, nid[i], sec_of(k), k); continue
         p, q = np.array(p), np.array(q)
         on = [i for i in range(len(N)) if np.linalg.norm(N[i] - p) < 0.6 or np.linalg.norm(N[i] - q) < 0.6]
         if k.startswith(("keel", "L2 brace")):                          # head lug to the core
@@ -55,7 +58,7 @@ def build():
         elif on:                                                        # a link from a cage node to the core
             i = on[0]; other = q if np.linalg.norm(N[i] - p) < 0.6 else p; C_ = f.node(other); f.member(nid[i], C_, sec_of(k), k, k=K_CORE); f.fix(C_)
     struts = []                                                         # the one-piece head's struts to the side nodes (head_mount.py)
-    if os.environ.get("V5_HEAD_ON", "core") != "cage":
+    if os.environ.get("V5_HEAD_ON", "core") != "cage" and not HS.get("rods"):
         for w, q in HEAD_STRUTS:
             for sy in (1, -1):
                 w_, i = np.array(w) * [1, sy, 1], int(np.argmin(np.linalg.norm(N - np.array(q) * [1, sy, 1], axis=1)))

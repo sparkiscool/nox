@@ -131,7 +131,7 @@ PRINTED_HEAD = os.environ.get("V5_HEAD", "printed") == "printed"
 HEAD_ON_CAGE = os.environ.get("V5_HEAD_ON", "core") == "cage"          # alt (V5_HEAD_ON=cage): the head on the cage's front centre node only, no keels,
 # braces or wing struts (Spark 27 Oct tried it: ~32 Hz on TPU nodes, F on E, runs/overseer_head_cage/concept); Spark then: "keep the design we have
 # right now i need the lidar to have max performance": the keels and L2 braces stay (A, the stiffest: 200 / 119 Hz rigid / TPU)
-LINKN = "spokes, ties, keels, braces, head struts" if os.environ.get("V5_HEAD", "printed") == "printed" else "spokes, ties, keels, L2 guard ring"
+LINKN = "spokes, ties, head rods" if os.environ.get("V5_HEAD", "printed") == "printed" else "spokes, ties, keels, L2 guard ring"
 HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
 CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
                                                                    # ties, guard ring and its struts, camera guards and brackets) become one printed
@@ -207,6 +207,12 @@ KEELS = os.environ.get("V5_KEELS", "0") == "1"     # the 2 keels: off (DEFAULT 2
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
 BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
+HEAD_RODS = None if os.environ.get("V5_HEAD_RODS", "3") != "3" else ((-40.0, 0.0), (100.0, 70.0), (354.0, 223.0, 128.7))
+# the head on 3 rods (Spark 27 Oct: "reduce the number of rods going to the lidar to a max of 3"; runs/overseer_head_rods/v1, F on E):
+# a centre rod from the head's bottom (u -40 along the L2 up axis, 6 behind its base plane) to the cage's front centre node and a mirrored
+# pair from above the cameras (u +100, y ±70) to the top-side front nodes, which also guards both cameras (10.4 / 9.8 ahead, C); 151.8 Hz rigid /
+# 128.4 Hz PETG joints (F on E); the stiffer y ±85 (169 Hz) is 182 wide, over the A1 mini's 180. The head holds no cage node;
+# no braces, keels or struts. V5_HEAD_RODS=8 keeps the 4 braces + 4 struts
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
 CAM_PSI = np.arange(0.0, 72.5, 2.5)                # yaw out from +x (scanned)
@@ -797,7 +803,7 @@ def attach(g, nodes, ring_ids):
     # L2 braces (27 Oct review: the 4 ties land on the flat front face and the keels root 24 apart, a stalk): each apex lug,
     # low and high, also to its side's front arm beam just outboard of the plates, so the seat is a braced pyramid on the core
     g["braces"] = []
-    for sy in (() if HEAD_ON_CAGE else (1, -1)):
+    for sy in (() if HEAD_ON_CAGE or HEAD_RODS else (1, -1)):
         (mx, my), (r0, m1, ht) = next(((m_, a_) for m_, a_ in zip(mxy, g["axes"]) if m_[0] > g["dm"] and m_[1] * sy > 0))
         u = (np.asarray(m1) - r0) / np.linalg.norm(np.asarray(m1) - r0)
         for out_ in (30.0, 40.0, 50.0, 60.0):
@@ -830,7 +836,14 @@ def attach(g, nodes, ring_ids):
     if PRINTED_HEAD:                                                   # the head's short rods out: the printed head carries the guards (ring, camera
         head = {k: extra.pop(k) for k in list(extra) if k.startswith(("L2 tie", "halo", "cam guard"))}   # bars) and reaches the cage nodes they reached
         g["head_attach"] = sorted({tuple(np.round(np.asarray(b_, float), 2)) for k, (a_, b_) in head.items() if "strut" in k or "tie" in k})
-        if HEAD_ONE and not HEAD_ON_CAGE:                              # the one-piece head: its own node + 4 struts (head_mount.HEAD_STRUTS)
+        if HEAD_RODS:                                                  # the head on 3 rods to the cage (Spark 27 Oct: "max of 3"; head_rods.py)
+            cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]; c17 = max(cn_, key=lambda k_: nodes[k_][0])
+            hp_ = lambda u_, y_: g["B"] - A * 6.0 + np.array([-A[2], 0, A[0]]) * u_ + np.array([0, y_, 0])
+            extra["head rod c"] = (hp_(*HEAD_RODS[0]), nodes[c17]); g["head_attach"] = [tuple(np.round(nodes[c17], 2))]
+            for sy, nm in ((1, "+1"), (-1, "-1")):
+                k_ = int(np.argmin([np.linalg.norm(nodes[j_] - np.array(HEAD_RODS[2]) * [1, sy, 1]) for j_ in range(len(nodes))]))
+                extra[f"head rod {nm}"] = (hp_(HEAD_RODS[1][0], HEAD_RODS[1][1] * sy), nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
+        elif HEAD_ONE and not HEAD_ON_CAGE:                            # the one-piece head: its own node + 4 struts (head_mount.HEAD_STRUTS)
             cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]
             g["head_attach"] = [tuple(np.round(nodes[max(cn_, key=lambda k_: nodes[k_][0])], 2))]
             for w_, q_ in HEAD_STRUTS:
@@ -1102,8 +1115,8 @@ rel = lambda p_: os.path.relpath(p_, ROOT)
 node_m = lambda c_: trimesh.creation.icosphere(1, NODE_R).apply_translation(c_)
 grp, grp_mc = {}, {}
 for n_, gm, _c in it:
-    k = ("shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else ("head" if PRINTED_HEAD else "halo nodes") if n_.startswith("halo node") else "head" if n_.startswith("head ") and not n_.startswith("head strut")
-         else "links" if n_.startswith("head strut") or n_.split()[0] in ("spoke", "core", "L2", "bay", "keel", "halo", "cam") and n_ != "L2" and not n_.startswith(("cam plate", "cam strut"))
+    k = ("shell" if n_.startswith("shell") else "nodes" if n_.startswith("node") else ("head" if PRINTED_HEAD else "halo nodes") if n_.startswith("halo node") else "head" if n_.startswith("head ") and not n_.startswith(("head strut", "head rod"))
+         else "links" if n_.startswith(("head strut", "head rod")) or n_.split()[0] in ("spoke", "core", "L2", "bay", "keel", "halo", "cam") and n_ != "L2" and not n_.startswith(("cam plate", "cam strut"))
          else "hub" if n_ in ("Pi 5", "FC", "PDB", "UBEC", "buck", "RX", "Pi deck") else "belly" if n_ in ("sled", "flow_pod") else
          "feet" if n_.startswith("foot") else ("head" if PRINTED_HEAD else "L2 mount") if n_ in ("apex", "cam plate") or n_.startswith("cam strut") else n_)
     grp[k] = grp.get(k, 0.0) + gm; grp_mc[k] = grp_mc.get(k, 0.0) + gm * np.asarray(_c, float)
@@ -1154,6 +1167,7 @@ if PRINTED_HEAD:
               cage_nodes_held=[list(q_) for q_ in g["head_attach"]], cage_node_r=NODE_R,
               carbon_kept={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith(("keel", "L2 brace"))},
               struts={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith("head strut")},
+              rods={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in extra.items() if k.startswith("head rod")},
               guards={k: [np.round(np.asarray(v[0]), 2).tolist(), np.round(np.asarray(v[1]), 2).tolist()] for k, v in g["head_guards"].items()},
               guard_nodes=[np.round(np.asarray(h_), 2).tolist() for h_ in g["halo_nodes"]],
               keep_out=["the L2 and its field", "both cameras and their views (+2 deg)", "the frozen cage's tubes (3 off) except the held nodes",

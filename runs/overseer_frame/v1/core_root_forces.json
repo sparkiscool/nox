@@ -1,229 +1,35 @@
 {
  "note": "axial force N (+ tension), no SF, per case of cage_frame.py (crash 35 g x 14 through the first-touching member, flight 4 g); core = the tube end in the hub deck tower, lug = the head end (F on E)",
- "points": {
-  "L2 brace lo +1": {
-   "core": [
-    97.0,
-    26.0,
-    12.0
-   ],
-   "lug": [
-    379.7,
-    46.0,
-    54.23
-   ]
-  },
-  "L2 brace hi +1": {
-   "core": [
-    97.0,
-    14.0,
-    18.0
-   ],
-   "lug": [
-    383.32,
-    46.0,
-    67.75
-   ]
-  },
-  "L2 brace lo -1": {
-   "core": [
-    97.0,
-    -26.0,
-    12.0
-   ],
-   "lug": [
-    379.7,
-    -46.0,
-    54.23
-   ]
-  },
-  "L2 brace hi -1": {
-   "core": [
-    97.0,
-    -14.0,
-    18.0
-   ],
-   "lug": [
-    383.32,
-    -46.0,
-    67.75
-   ]
-  }
- },
+ "points": {},
  "cases": {
-  "crash 0 [1.0, 0.0, 0.0] via node 17": {
-   "L2 brace lo +1": -255.5,
-   "L2 brace hi +1": -170.9,
-   "L2 brace lo -1": -255.5,
-   "L2 brace hi -1": -170.9
-  },
-  "crash 1 [-1.0, 0.0, 0.0] via node 13": {
-   "L2 brace lo +1": -3.5,
-   "L2 brace hi +1": 67.8,
-   "L2 brace lo -1": -45.6,
-   "L2 brace hi -1": 102.1
-  },
-  "crash 2 [0.0, 1.0, 0.0] via node 10": {
-   "L2 brace lo +1": 19.5,
-   "L2 brace hi +1": -25.1,
-   "L2 brace lo -1": -22.6,
-   "L2 brace hi -1": 24.4
-  },
-  "crash 3 [0.0, -1.0, 0.0] via node 9": {
-   "L2 brace lo +1": -22.6,
-   "L2 brace hi +1": 24.4,
-   "L2 brace lo -1": 19.5,
-   "L2 brace hi -1": -25.1
-  },
-  "crash 4 [0.0, 0.0, 1.0] via node 7": {
-   "L2 brace lo +1": -30.3,
-   "L2 brace hi +1": 64.9,
-   "L2 brace lo -1": -30.3,
-   "L2 brace hi -1": 64.9
-  },
-  "crash 5 [0.0, 0.0, -1.0] via node 0": {
-   "L2 brace lo +1": -8.7,
-   "L2 brace hi +1": 17.7,
-   "L2 brace lo -1": -2.3,
-   "L2 brace hi -1": 12.9
-  },
-  "crash 6 [0.58, 0.58, 0.58] via node 15": {
-   "L2 brace lo +1": 5.6,
-   "L2 brace hi +1": -84.0,
-   "L2 brace lo -1": -13.1,
-   "L2 brace hi -1": -49.2
-  },
-  "crash 7 [0.58, 0.58, -0.58] via node 18": {
-   "L2 brace lo +1": 67.2,
-   "L2 brace hi +1": -31.2,
-   "L2 brace lo -1": 0.0,
-   "L2 brace hi -1": 36.9
-  },
-  "crash 8 [0.58, -0.58, 0.58] via node 16": {
-   "L2 brace lo +1": -13.1,
-   "L2 brace hi +1": -49.2,
-   "L2 brace lo -1": 5.6,
-   "L2 brace hi -1": -84.0
-  },
-  "crash 9 [0.58, -0.58, -0.58] via node 19": {
-   "L2 brace lo +1": 0.0,
-   "L2 brace hi +1": 36.9,
-   "L2 brace lo -1": 67.2,
-   "L2 brace hi -1": -31.2
-  },
-  "crash 10 [-0.58, 0.58, 0.58] via node 13": {
-   "L2 brace lo +1": 13.4,
-   "L2 brace hi +1": -75.2,
-   "L2 brace lo -1": 39.8,
-   "L2 brace hi -1": -95.2
-  },
-  "crash 11 [-0.58, 0.58, -0.58] via node 11": {
-   "L2 brace lo +1": 25.9,
-   "L2 brace hi +1": 78.5,
-   "L2 brace lo -1": -69.2,
-   "L2 brace hi -1": 156.6
-  },
-  "crash 12 [-0.58, -0.58, 0.58] via node 14": {
-   "L2 brace lo +1": 39.8,
-   "L2 brace hi +1": -95.2,
-   "L2 brace lo -1": 13.4,
-   "L2 brace hi -1": -75.2
-  },
-  "crash 13 [-0.58, -0.58, -0.58] via node 12": {
-   "L2 brace lo +1": -69.2,
-   "L2 brace hi +1": 156.6,
-   "L2 brace lo -1": 25.9,
-   "L2 brace hi -1": 78.5
-  },
-  "head inertia 0 [1.0, 0.0, 0.0]": {
-   "L2 brace lo +1": 27.5,
-   "L2 brace hi +1": 26.0,
-   "L2 brace lo -1": 27.5,
-   "L2 brace hi -1": 26.0
-  },
-  "head inertia 1 [-1.0, 0.0, 0.0]": {
-   "L2 brace lo +1": -27.5,
-   "L2 brace hi +1": -26.0,
-   "L2 brace lo -1": -27.5,
-   "L2 brace hi -1": -26.0
-  },
-  "head inertia 2 [0.0, 1.0, 0.0]": {
-   "L2 brace lo +1": -11.6,
-   "L2 brace hi +1": 8.3,
-   "L2 brace lo -1": 11.6,
-   "L2 brace hi -1": -8.3
-  },
-  "head inertia 3 [0.0, -1.0, 0.0]": {
-   "L2 brace lo +1": 11.6,
-   "L2 brace hi +1": -8.3,
-   "L2 brace lo -1": -11.6,
-   "L2 brace hi -1": 8.3
-  },
-  "head inertia 4 [0.0, 0.0, 1.0]": {
-   "L2 brace lo +1": -1.3,
-   "L2 brace hi +1": -6.4,
-   "L2 brace lo -1": -1.3,
-   "L2 brace hi -1": -6.4
-  },
-  "head inertia 5 [0.0, 0.0, -1.0]": {
-   "L2 brace lo +1": 1.3,
-   "L2 brace hi +1": 6.4,
-   "L2 brace lo -1": 1.3,
-   "L2 brace hi -1": 6.4
-  },
-  "head inertia 6 [0.58, 0.58, 0.58]": {
-   "L2 brace lo +1": 8.4,
-   "L2 brace hi +1": 16.1,
-   "L2 brace lo -1": 21.8,
-   "L2 brace hi -1": 6.4
-  },
-  "head inertia 7 [0.58, 0.58, -0.58]": {
-   "L2 brace lo +1": 10.0,
-   "L2 brace hi +1": 23.5,
-   "L2 brace lo -1": 23.3,
-   "L2 brace hi -1": 13.9
-  },
-  "head inertia 8 [0.58, -0.58, 0.58]": {
-   "L2 brace lo +1": 21.8,
-   "L2 brace hi +1": 6.4,
-   "L2 brace lo -1": 8.4,
-   "L2 brace hi -1": 16.1
-  },
-  "head inertia 9 [0.58, -0.58, -0.58]": {
-   "L2 brace lo +1": 23.3,
-   "L2 brace hi +1": 13.9,
-   "L2 brace lo -1": 10.0,
-   "L2 brace hi -1": 23.5
-  },
-  "head inertia 10 [-0.58, 0.58, 0.58]": {
-   "L2 brace lo +1": -23.3,
-   "L2 brace hi +1": -13.9,
-   "L2 brace lo -1": -10.0,
-   "L2 brace hi -1": -23.5
-  },
-  "head inertia 11 [-0.58, 0.58, -0.58]": {
-   "L2 brace lo +1": -21.8,
-   "L2 brace hi +1": -6.4,
-   "L2 brace lo -1": -8.4,
-   "L2 brace hi -1": -16.1
-  },
-  "head inertia 12 [-0.58, -0.58, 0.58]": {
-   "L2 brace lo +1": -10.0,
-   "L2 brace hi +1": -23.5,
-   "L2 brace lo -1": -23.3,
-   "L2 brace hi -1": -13.9
-  },
-  "head inertia 13 [-0.58, -0.58, -0.58]": {
-   "L2 brace lo +1": -8.4,
-   "L2 brace hi +1": -16.1,
-   "L2 brace lo -1": -21.8,
-   "L2 brace hi -1": -6.4
-  },
-  "flight 4 g down": {
-   "L2 brace lo +1": 0.2,
-   "L2 brace hi +1": -0.9,
-   "L2 brace lo -1": 0.2,
-   "L2 brace hi -1": -0.9
-  }
+  "crash 0 [1.0, 0.0, 0.0] via node 17": {},
+  "crash 1 [-1.0, 0.0, 0.0] via node 13": {},
+  "crash 2 [0.0, 1.0, 0.0] via node 10": {},
+  "crash 3 [0.0, -1.0, 0.0] via node 9": {},
+  "crash 4 [0.0, 0.0, 1.0] via node 7": {},
+  "crash 5 [0.0, 0.0, -1.0] via node 0": {},
+  "crash 6 [0.58, 0.58, 0.58] via node 15": {},
+  "crash 7 [0.58, 0.58, -0.58] via node 18": {},
+  "crash 8 [0.58, -0.58, 0.58] via node 16": {},
+  "crash 9 [0.58, -0.58, -0.58] via node 19": {},
+  "crash 10 [-0.58, 0.58, 0.58] via node 13": {},
+  "crash 11 [-0.58, 0.58, -0.58] via node 11": {},
+  "crash 12 [-0.58, -0.58, 0.58] via node 14": {},
+  "crash 13 [-0.58, -0.58, -0.58] via node 12": {},
+  "head inertia 0 [1.0, 0.0, 0.0]": {},
+  "head inertia 1 [-1.0, 0.0, 0.0]": {},
+  "head inertia 2 [0.0, 1.0, 0.0]": {},
+  "head inertia 3 [0.0, -1.0, 0.0]": {},
+  "head inertia 4 [0.0, 0.0, 1.0]": {},
+  "head inertia 5 [0.0, 0.0, -1.0]": {},
+  "head inertia 6 [0.58, 0.58, 0.58]": {},
+  "head inertia 7 [0.58, 0.58, -0.58]": {},
+  "head inertia 8 [0.58, -0.58, 0.58]": {},
+  "head inertia 9 [0.58, -0.58, -0.58]": {},
+  "head inertia 10 [-0.58, 0.58, 0.58]": {},
+  "head inertia 11 [-0.58, 0.58, -0.58]": {},
+  "head inertia 12 [-0.58, -0.58, 0.58]": {},
+  "head inertia 13 [-0.58, -0.58, -0.58]": {},
+  "flight 4 g down": {}
  }
 }

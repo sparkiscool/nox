@@ -48,7 +48,7 @@ def members(i):
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
                 o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6 if k in LINK6 else 3, k))
-    for w, q in HEAD_STRUTS:                            # the one-piece head's struts to the side nodes (head_mount.HEAD_STRUTS)
+    for w, q in ([] if HS.get("rods") else HEAD_STRUTS):   # the one-piece head's struts to the side nodes (the 3-rod head's rods are links)
         for sy in (1, -1):
             w_, q_ = np.array(w) * [1, sy, 1], np.array(q) * [1, sy, 1]
             if np.linalg.norm(q_ - N[i]) < 1.0:
@@ -81,7 +81,7 @@ def socket_load(i, name):
 
 def designs():
     """one design per mirror pair (the y >= 0 node) and per centre-plane node; the head's node left out"""
-    return [i for i in range(len(N)) if N[i, 1] > -0.5 and not np.allclose(N[i], HEAD_NODE, atol=0.5)]
+    return [i for i in range(len(N)) if N[i, 1] > -0.5 and (HS.get("rods") or not np.allclose(N[i], HEAD_NODE, atol=0.5))]   # the 3-rod head holds no node
 
 
 def seg(a, b, r, n=32):
