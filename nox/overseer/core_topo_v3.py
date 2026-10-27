@@ -30,11 +30,11 @@ if PIECE != "hub_deck":
     sys.exit(__doc__)
 args = [a for i, a in enumerate(sys.argv[2:], 2) if not a.startswith("-") and sys.argv[i - 1] != "--set"]
 H = float(args[0]) if args else 1.0
-GEN = float(args[1]) if len(args) > 1 else 30.0   # cm3 generated (v6 at 18 was 2.7x over in the top hit)
+GEN = float(args[1]) if len(args) > 1 else 24.0   # cm3 generated (v6 at 18 was 2.7x over with the high roots; v8 low roots halve the forces)
 GIT = "--no-git" not in sys.argv
 COARSE = "--no-coarse" not in sys.argv          # sled v2: the 3.0 coarse grid went singular at h 1.5 (v1), so run the fine grid only
 LEAN = "--lean" in sys.argv                     # sled v2: flight / landing cases left out, the 35 g crash cases cover them
-VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v7")
+VER = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--ver=")), "v8")
 SETS = {}                                       # --set key=value: Settings fields (sled v3: tie_moments=0 held_ties=0 gate_ties=0, the
 for i_, a_ in enumerate(sys.argv):              # engine keeps F and U for every case on the full grid: 145 cases x 1.7 M dofs ran out of memory)
     if a_ == "--set":
@@ -89,7 +89,8 @@ def rigid_split(pts, F, P):
 KEELS = {int(k): (np.array(v[0], float), np.array(v[1], float)) for k, v in R["keels"].items()}
 SK = R["socket"]; INS = R["insert"]; T = R["foot_h"]
 KEEL_N = R["keel_n"]                                                       # max pull / push per keel (F)
-RF = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", "core_root_forces.json")))
+RF_NAME = "core_root_forces_low.json" if "--roots=high" not in sys.argv else "core_root_forces.json"   # v8: the low roots (DEFAULT)
+RF = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", RF_NAME)))
 ROOTS = {k: (np.array(v["core"], float), np.array(v["lug"], float)) for k, v in RF["points"].items()}   # core = the tube end
 BS = R["brace_socket"]
 Z_UNDER = 45.0                                                             # the top plate underside (S500 STEP)
@@ -152,7 +153,7 @@ def hub_deck_bodies():
     ties = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))["links"]   # the cage's front core ties (parked body node)
     tie_cut = [man(trimesh.creation.cylinder(4.0, np.linalg.norm(np.subtract(b, a)), sections=24, segment=np.array([a, b], float)))
                for k, (a, b) in ties.items() if k.startswith("core tie front")]
-    hub_env = box(80.0, 118.0, -34.0, 34.0, 0, 40.0)        # the front hub tower's room: keels and braces, gussets back to the feet and across
+    hub_env = box(80.0, 118.0, -34.0, 34.0, 0, 30.0)        # v8: the low roots (z 12 / 18) need z <= 30        # the front hub tower's room: keels and braces, gussets back to the feet and across
     plates = [man(M["top plate"])]
     bays = [box(m.bounds[0][0] - 1, m.bounds[1][0] + 1, m.bounds[0][1] - 1, m.bounds[1][1] + 1, T, Z_UNDER) for m in (M["UBEC 5 V"], M["buck 12 V"])]
     cuts = U(plates + bays + [cyl(x, y, -1, T + 1, INS[0] / 2) for x, y in feet] + tie_cut + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots + bores + tubes + wires
@@ -160,7 +161,7 @@ def hub_deck_bodies():
              + [arm_env(a_) for a_ in (45, -45, 135, -135)])                                   # the arm session's root envelopes (u >= 58, |v| <= 21)
     # core v3 round 3: deep side webs from the tower back to the mid feet (60, ±17), (65, ±22.5) beside the bays (their columns stay
     # open for placing the UBEC and buck straight down; the arm root envelopes and grown arms trim the outer side)
-    web_env = [box(58.0, 92.0, sy * 18.0, sy * 34.0, 0, 40.0) for sy in (1, -1)]
+    web_env = [box(58.0, 92.0, sy * 18.0, sy * 34.0, 0, 30.0) for sy in (1, -1)]
     env = U([box(-76, 100, -42, 42, 0, T), hub_env] + web_env)
     return drawn, cuts, env, feet, ph
 

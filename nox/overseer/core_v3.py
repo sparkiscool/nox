@@ -141,7 +141,7 @@ KEEL_N = (274.2, 387.3)            # max tension / compression per keel (frame m
 SOCK_D, SOCK_L, SOCK_OFF, SOCK_OD = 6.2, 15.0, 5.0, 13.0   # bore (Spark 27 Oct coupons), depth, the tube end 5 past the root, boss (wall 3.4)
 # L2 braces (v3): tube ends on the front hub tower, each aimed at its head lug (cage session's tower roots, 27 Oct; their frame model:
 # 712 N a side summed along the braces in the top hit, F on E, no SF; head 166 Hz), split lo / hi by the v1 frame maxima 551 : 353 (E)
-BRACES = {(lvl, sy): (np.array([97.0, yy * sy, zz]), np.array([lx, 46.0 * sy, lz])) for lvl, yy, zz, lx, lz in (("lo", 26.0, 22.0, 379.7, 54.23), ("hi", 14.0, 32.0, 383.32, 67.75)) for sy in (1, -1)}
+BRACES = {(lvl, sy): (np.array([97.0, yy * sy, zz]), np.array([lx, 46.0 * sy, lz])) for lvl, yy, zz, lx, lz in (("lo", 26.0, 12.0, 379.7, 54.23), ("hi", 14.0, 18.0, 383.32, 67.75)) for sy in (1, -1)}
 BRACE_N = {"lo": 712.0 * 551 / 904, "hi": 712.0 * 353 / 904}
 BR_BORE, BR_L, BR_LEAD, BR_WALL = 6.2, 15.0, 0.6, 2.5      # cage ask: 6.2 x 15 (+0.6 lead-in), 2.5 walls; the tube end at the root
 # flow clip under the front wing (MTF-02P 21.6 x 16 x 6.5, 1.5 g, spec; no holes: pocket), long side along x between the front feet
@@ -260,8 +260,8 @@ def bar3(p, q, w):
 def tower():
     """the front hub tower: the 4 brace bosses, a web down to the keel bosses and the front feet, and the deep side webs back to the mid feet"""
     bosses = [brace_socket(k, BR_BORE / 2 + BR_WALL, -BR_WALL, BR_L + BR_LEAD) for k in BRACES]
-    webs = [box(86.0, 104.0, sy * 9.0, sy * 31.0, 0, 36.0) for sy in (1, -1)]
-    sides = [box(60.0, 92.0, sy * 20.0, sy * 28.0, 0, 36.0) for sy in (1, -1)]   # concept: the deep side webs to the mid feet (the run shapes them)
+    webs = [box(86.0, 104.0, sy * 9.0, sy * 31.0, 0, 26.0) for sy in (1, -1)]
+    sides = [box(60.0, 92.0, sy * 20.0, sy * 28.0, 0, 24.0) for sy in (1, -1)]   # concept: the deep side webs to the mid feet (the run shapes them)
     return uni(bosses + webs + sides)
 
 
@@ -443,7 +443,7 @@ wash = {nm: round(float(g.intersection(disks).area / disks.area * 100), 2) for n
 say("prop wash (plan area under the disks, % of the disk area): " + ", ".join(f"{k} {v}" for k, v in wash.items()))
 br_tubes = cat([trimesh.creation.cylinder(3.4, np.linalg.norm(b - a), sections=24, segment=np.vstack([a, b])) for a, b in BRACES.values()])
 TW = tower()
-say(f"tower: 4 brace sockets Ø{BR_BORE} x {BR_L} (+{BR_LEAD}), walls {BR_WALL}, ends lo (97, ±26, 22), hi (97, ±14, 32); x arms {sum(ov(TW, a_) for a_ in ARMS):.1f}, "
+say(f"tower: 4 brace sockets Ø{BR_BORE} x {BR_L} (+{BR_LEAD}), walls {BR_WALL}, ends lo (97, ±26, 12), hi (97, ±14, 18); x arms {sum(ov(TW, a_) for a_ in ARMS):.1f}, "
     f"x top plate {ov(TW, top_plate):.1f}, x bottom plate {ov(TW, ctx_mesh['bottom plate']):.1f}, x UBEC {ov(TW, ubec):.1f}, x buck {ov(TW, buck):.1f}, x wires {ov(TW, wires):.1f}, "
     f"x props {ov(TW, props):.1f}, x cage nodes {ov(TW, ctx_mesh['cage shell nodes']):.1f}, x cage tubes {ov(TW, ctx_mesh['cage shell tubes']):.1f}, "
     f"x the v5 links {ov(TW, ctx_mesh[KEELS_NM]):.1f} (all of it the keels and braces at their roots: links minus those tubes "
@@ -521,7 +521,7 @@ for case, sg in KEEL_CASES.items():          # the head's keel forces on the hub
         rec(nm, case, piece_case(SUP[nm], keel_loads(sg) + inertial(CARRY[nm], np.array([0, 0, -35.0]))))
 def brace_loads(sg):
     return [((b - a) / np.linalg.norm(b - a) * BRACE_N[lvl] * sg, a) for (lvl, sy), (a, b) in BRACES.items()]
-RF = json.load(open(os.path.join(OUT, "core_root_forces.json")))      # the cage frame model's per-case root forces (F on E, no SF)
+RF = json.load(open(os.path.join(OUT, "core_root_forces_low.json")))  # the cage frame model's per-case root forces, low roots (F on E, no SF)
 RP = {k: (np.array(v["core"]), np.array(v["lug"])) for k, v in RF["points"].items()}
 PAD_N = {"fwd_N_m": 0.0, "fwd_case": None, "back_N_m": 0.0, "back_case": None}
 for case, nn_ in RF["cases"].items():
