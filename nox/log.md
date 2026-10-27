@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout v3): DEFAULT for the cage pieces: 6/4 tube on the 39 members the frame model sizes (6.2 sockets), 3.0 on the rest (3.2); the layout keeps 3.0 per the Scout clause until Spark rules (alt: 3.0 everywhere fails every crash case). `runs/scout_frame/v2/`
 - 27 Oct (Scout v3): rerun on the electronics mount (38.6 g + cables 6.4 g, UBEC 7 out, XR2 kept off the rear prop): catch 5.0 forward, CG 0.9/0.8, 55 rods, 730 g E; alt bay fixed in the frame (61-64 rods, CG 1.3/2.9) out. Frame v2: all-3.0 fails, 6/4 on 39 (+74 g) passes at 138 Hz. `runs/scout_layout/v12/`
 - 27 Oct (Scout v3, Spark): firmware check: the AM32 ESC can reverse; PX4 has no ESC passthrough (why the app failed) and no turtle mode; `dshot reverse/save` sets direction without soldering; ArduPilot Copter has Turtle mode on this board. Choice: ArduPilot, or PX4 + flip arm. `runs/scout_selfright/v1/summary.md`
 - 27 Oct (Scout v3, Spark question): one-way props cannot right the Scout (upside down they press it down, on its side they roll it onto its back); the v11 cage rests in 6 poses. Ways: turtle mode (reverse ESC + ArduPilot or a PX4 add-on), a flip arm (~15-20 g), or a self-righting cage (sides ±170). `runs/scout_selfright/v1/`

@@ -369,7 +369,7 @@
   "protect": false,
   "mass_g": 6.39,
   "tag": "E",
-  "group": "printed",
+  "group": "wires",
   "color": "#99a6b3",
   "swap": false
  },

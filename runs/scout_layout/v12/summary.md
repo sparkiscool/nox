@@ -11,12 +11,17 @@ The rerun:
 - **Bay (Spark: out of the prop wash):** the Radxa and UBEC keep their v11 poses relative to the receiver (they ride with the catch on the belly mount).
   - **UBEC:** at the electronics session's worst-size envelope (61 x 15.4 x 8, not measured), 7 further out in y (y 11.2..26.6) for 8 of air over the Radxa's SoC.
   - **XR2:** stays at its v11 place in the frame (x −110..−94, y −27..−15, z 23..45). Riding forward with the bay, its antenna entered the rear prop disk (67 mm³, system_check).
-    - **Requirement for the mount:** the XR2 shelf grows 8.5 aft relative to the mount.
-  - Wash, plan distance outside every disk (need ≥ 3): Radxa +9.5, UBEC +17.9, plug keep-clear +9.7.
+    - **Requirement for the mount:** the XR2 shelf moves 8.5 aft along the spine (the spine still spans x −110..−94 after the shift); the XR2 is 3.8 out of the wash there.
+  - Wash, plan distance outside every disk (need ≥ 3): Radxa +9.5, UBEC +17.9, plug keep-clear +9.7, XR2 +3.8.
+  - **The mount's own envelopes reach into the rear disks:** spine section (y −13.05..−4.6) −3.4, tail block −4.3. They were −3.3 at v11 already; these are bounding boxes.
+    - **Requirement for the electronics mount:** its real spine and block stay ≥ 3 outside the rear disks (|y| < 6.6 between x −98.6 and −9.6 under the disks), or the part of them in the wash is a thin member only (rule 8).
 - **Balance (Spark: the CG in the middle of the props):** the catch is free (scanned −16..+4). Picked: **catch 5.0 forward of the thrust centre** (was 3.5 aft).
   - CG 0.9 / 0.8 off the thrust axis, x and y (system_check); layout model 0.8 / 0.9.
   - This is the electronics session's "bay riding" case (their estimate catch −7.25, 1.25 / 1.17).
-  - The "bay fixed in the frame" case was weighed: with the catch scanned, the shell grows to 61 to 64 rods and a low tail node comes back; the best was 1.3 / 2.9. Out.
+  - The "bay fixed in the frame" case was weighed (`alt_bay_fixed/`: `run.log`, `checks.txt`, `preview.png`; `SCOUT_BAY_FIXED=1`).
+    - Picked: catch 3.0 forward, CG 1.3 / 2.9 (layout, x), 58 rods.
+    - Further forward, the shell grows to 61 to 64 rods and the tail-node gate fails.
+    - Out: pack-out at 2.9 sits on the 3.0 gate.
 - **Keep-clears:**
   - The electronics session's item boxes and plug box are in the shell target.
   - Their tool lines (Ø10, 80 out) clear every rod: SD card +6.4, USB-C +7.4.
@@ -28,8 +33,9 @@ Everything else as v11 (`v11/summary.md`): the bottom on the Overseer v5 loop's 
 Script `nox/scout/v3/layout_v3.py` (now reading `SCOUT_ELEC`; v12 is the default output), view `layout_v3_view.py`.
 
 Visuals:
-- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 18; source `motion.html`). Still `preview.png`.
-- Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 3; source `camera_clips.html`).
+- The bay-fixed alternative: `alt_bay_fixed/preview.png`.
+- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 19; source `motion.html`). Still `preview.png`.
+- Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 4; source `camera_clips.html`, still `camera_clips.png`).
 
 System: Scout v3, cage first 4.2 mm (E) (camera), shell 47 rods closed, fit 0.0 mm³ (E), bbox 13.7 L (E), extents 386 x 278 x 127 mm (E), mass 730 of 500 g (146 %) (E) over budget (total), CG 0.9 mm off thrust axis (E), 0.8 mm without swap parts, probes 7.2 mm (E) edge (UBEC), access 8/8 clear. PASS.
 
@@ -37,7 +43,7 @@ System: Scout v3, cage first 4.2 mm (E) (camera), shell 47 rods closed, fit 0.0 
 - **Shell, 47 rods** (61..286, 6.13 m) on 18 nodes, offset 24.
   - Node extents 354 x 266 x 111; largest cell Ø133; rods 13.9 off the swept disks.
   - Offset scan: 16 → 56 rods, 20 → 53, 24 → 47, 28 → 47, 32 → 53. 24 is the most compact within the cap.
-- **Saddle ties, 8 rods** (4 a side), from the saddle face (y ±44.3, z −7):
+- **Saddle ties, 8 rods** (4 a side; v11 had 6: the 4th station at x 15 now finds a clear node), from the saddle face (y ±44.3, z −7):
   - x −45 to the waist node (6.6, ±125.0, −11.9), 96;
   - x −15 to (44.8, ±132.8, 44.2), 118;
   - x 15 to the waist node, 81;
@@ -53,16 +59,19 @@ System: Scout v3, cage first 4.2 mm (E) (camera), shell 47 rods closed, fit 0.0 
 ## Strength (frame model on v12, `runs/scout_frame/v2/`)
 - **Every rod 3.0 fails:** 28 of 55 buckle, 10 crash stresses and 19 handling stresses over 600 MPa, first mode 48 Hz (the camera).
 - **Sized** (`v2/alt_sized`): 39 members to 6/4 tube (+74 g E) pass every case, first mode 138 Hz (camera mount over 100).
-- **Spark's call, still open:** the Scout clause says every rod 3 mm.
+- **DEFAULT for the pieces:** the sized cage (below, Open). Spark can revert to 3.0 everywhere, which fails these cases.
 
 ## Mass (E)
-730 g:
-- cage ~131 (shell rods 67, nodes 39, links 8, tie saddle 17);
-- the camera cradle + arms + clips 17;
+730 g (system_check):
+- cage 132 (shell rods 67, nodes 39, saddle ties 8, tie saddle 17);
+- camera + cradle + arms + clips 26.5;
 - the tail bay mount 38.6 and cables 6.4;
-- bought, latch set and wires.
+- bought, latch set and wires 526.
 
 ## Open
-- **Rods:** Spark: 3.0 everywhere, or 6/4 where the frame model needs it.
+- **Rods (DEFAULT for the pieces, 27 Oct):** the node and saddle sockets are sized for the frame model's 6/4 tube on its 39 members (6.2 bores), and 3.0 on the rest (3.2).
+  - The general rod rule allows thicker where the frame model needs it; the 3.0-everywhere layout fails every crash case.
+  - The layout drawing keeps 3.0 per the Scout clause and its check 13, until Spark rules.
+  - The alternative, 3.0 everywhere, needs a different load path; none is drawn.
 - **Electronics session:** the XR2 shelf 8.5 aft; recheck the yoke and plate keys against this shell; real UBEC size.
 - **Design center:** rerun the funnel check (the catch moved 8.5 forward; the bottom loop moves with it).

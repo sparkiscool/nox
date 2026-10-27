@@ -23,7 +23,7 @@ structure bar: start 24.0 dome 20 (6.3 L, 106 g); picked start 24.0 dome 20 snap
 shell: 18 nodes (4 on the ring), 47 tubes, 30 triangles; tubes 61 .. 286, 6.13 m; node extents 354 x 266 x 111; hull residual 0.00 (C)
 ring: the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped; Spark 27 Oct), about the catch (+85.8, +116.1), (-68.9, +119.7), (-68.9, -119.7), (+85.8, -116.1), 154.7 long, 239.4 wide at the tail, 232.2 at the nose; plane z -49.62 = cartridge flat bottom -3.00 − seat 2.12 (the 3.0 rods sit 2.12 lower on the 45 deg ramps than the Overseer's 6 mm tubes, so both cartridges stop at the same height); 4 ring rods (C)
 funnel band (within 30 above the plane, inside the opening or 40 past its ends): links in it 0 (rod axis; 0 graze its edge by up to the rod radius), shell rods between free nodes 2, shell rods leaving the 4 bottom nodes that stay in it past their first 10 % 14 (0-5, 0-8, 0-14, 0-17, 1-5, 1-10, 1-11, 2-6, 2-9, 2-11, 3-6, 3-7, 3-15, 3-17) (C)
-tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): Radxa Zero 3W +9.5, UBEC +17.9, Radxa plugs (keep clear) +9.7 (C)
+tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): Radxa Zero 3W +9.5, UBEC +17.9, Radxa plugs (keep clear) +9.7, mount spine (envelope) -3.4, mount tail block (envelope) -4.3, XR2 +3.8 (C)
 electronics tool lines (Ø10, 80 out) clear of every rod by: SD card +6.4, USB-C 1 +7.4 (C; need ≥ 0)
 tail nodes past x -130 about the catch: lowest 91.1 above the plane (the Overseer tail-tip ramp, need ≥ 45) (C)
 largest cell: inscribed circle Ø133 between tube surfaces (C)

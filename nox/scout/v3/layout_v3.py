@@ -103,6 +103,7 @@ RADXA_POSE = os.environ.get("SCOUT_RADXA", "stand")       # tail bay (Spark 27 O
                                                            # dimensions H), in the clear strip between the rear disks (|y| < their inner edge - 3),
                                                            # ports edge up (plugs 14 above), SD end aft; the UBEC flat behind the rear disks; flat = v11
 RADXA_Z = float(os.environ.get("SCOUT_RADXA_Z", 8.0))      # stand: the board's lower edge (the funnel: no low tail node)
+BAY_FIXED = os.environ.get("SCOUT_BAY_FIXED", "0") == "1"   # alternative: the tail bay fixed in the frame at its v11 place (only the catch moves)
 UBEC_DY = float(os.environ.get("SCOUT_UBEC_DY", 7.0))     # the electronics session: the UBEC 7 further out (8 of air over the Radxa's SoC)
 UBEC_Z = float(os.environ.get("SCOUT_UBEC_Z", 16.0))      # stand: the UBEC flat behind the rear disks, its bottom here (the funnel hull line)
 RADXA_T = 6.31                                             # board thickness over the parts (dimensions H, C from the STEP; 7.62 over the SD slot)
@@ -219,10 +220,12 @@ def drone(DC):
         rt = float(D["receiver v3 (latch)"][0].bounds[0][0]) - TAIL_GAP
         for n, y0 in (("Radxa Zero 3W", -1.6), ("UBEC", None)):
             m = D[n][0].copy()
-            if n == "Radxa Zero 3W" and RADXA_POSE == "stand":   # on edge on the centre plane, its front end TAIL_GAP + TB behind the receiver
+            if n == "Radxa Zero 3W" and RADXA_POSE == "stand" and ELEC and BAY_FIXED:   # alternative: the v11 pose fixed in the frame
+                m = box(-145.4, -80.3, -RADXA_T / 2, RADXA_T / 2, RADXA_Z, RADXA_Z + 30.0)
+            elif n == "Radxa Zero 3W" and RADXA_POSE == "stand":   # on edge on the centre plane, its front end TAIL_GAP + TB behind the receiver
                 m = box(rt - TB - 65.0, rt - TB, -RADXA_T / 2, RADXA_T / 2, RADXA_Z, RADXA_Z + 30.0)
             elif n == "UBEC" and RADXA_POSE == "stand" and ELEC:   # the electronics session's worst-size envelope, 7 further out in y (8 of air
-                (x0, y0, z0), (x1, y1, z1) = ELEC["items"]["UBEC"]["box"]; dx_ = -(DC - ELEC["catch"])   # over the Radxa's SoC), riding with the catch
+                (x0, y0, z0), (x1, y1, z1) = ELEC["items"]["UBEC"]["box"]; dx_ = 0.0 if BAY_FIXED else -(DC - ELEC["catch"])   # over the Radxa's SoC), riding with the catch
                 m = box(x0 + dx_, x1 + dx_, y0 + UBEC_DY, y1 + UBEC_DY, z0, z1)
             elif n == "UBEC" and RADXA_POSE == "stand":       # flat behind the rear disks (out of the wash), beside the Radxa's aft half
                 b_ = m.bounds; m.apply_translation([WASH_X - TB - b_[1][0], RADXA_T / 2 + 1.0 - b_[0][1], UBEC_Z - b_[0][2]])
@@ -240,9 +243,10 @@ def drone(DC):
         rest_g = ELEC["mount_total"]["mass_g"] - blk["mass_g"]
         rest_c = (np.array(ELEC["mount_total"]["cg"]) * ELEC["mount_total"]["mass_g"] - np.array(blk["cg"]) * blk["mass_g"]) / rest_g
         for nm_, g_, c_ in (("tail bay mount block (Scout electronics, E)", blk["mass_g"], np.array(blk["cg"]) + [dx_, 0, 0]),
-                            ("tail bay carrier (Scout electronics, E)", rest_g, rest_c + [dx_, 0, 0]),
-                            ("tail bay cables (Scout electronics, E)", ELEC["cables"]["mass_g"], np.array(ELEC["cables"]["cg"]) + [dx_, 0, 0])):
-            D[nm_] = (box(*(np.array([c_ - 0.2, c_ + 0.2]).T.ravel())), "structure", False, g_, "E", "PETG", "printed", "#99a6b3", False)
+                            ("tail bay carrier (Scout electronics, E)", rest_g, rest_c + [0.0 if BAY_FIXED else dx_, 0, 0]),
+                            ("tail bay cables (Scout electronics, E)", ELEC["cables"]["mass_g"], np.array(ELEC["cables"]["cg"]) + [0.0 if BAY_FIXED else dx_, 0, 0])):
+            wires_ = "cables" in nm_
+            D[nm_] = (box(*(np.array([c_ - 0.2, c_ + 0.2]).T.ravel())), "structure", False, g_, "E", None if wires_ else "PETG", "wires" if wires_ else "printed", "#99a6b3", False)
     return D
 
 
@@ -265,7 +269,7 @@ def build(DC):
                        for mx, my in MXY for s_ in (1, -1) for a in [np.linspace(0, 2 * np.pi, 72, endpoint=False)]])
     body = hullpts([D[n][0] for n in BODY])
     if RADXA_POSE == "stand" and TAIL_BAY and ELEC:          # the electronics session's mount boxes, item boxes and plug keep-clear (envelopes)
-        dx_ = -(DC - ELEC["catch"]); bx_ = [v["box"] for k_, v in ELEC["items"].items() if k_ not in ("UBEC", "XR2")] + [ELEC["keep_clear"]["plugs"]]
+        dx_ = 0.0 if BAY_FIXED else -(DC - ELEC["catch"]); bx_ = [v["box"] for k_, v in ELEC["items"].items() if k_ not in ("UBEC", "XR2")] + [ELEC["keep_clear"]["plugs"]]
         x2_ = ELEC["items"]["XR2"]["box"]; body = np.vstack([body, box(x2_[0][0], x2_[1][0], x2_[0][1], x2_[1][1], x2_[0][2], x2_[1][2]).vertices])
         # (the mount's own boxes are bounding boxes: their lower aft corners reach where the real spine does not; the electronics
         # session keeps the mount ≥ 3 inside the shell and over the funnel line on its real geometry, envelope.json funnel_margin / inset)
@@ -1079,13 +1083,20 @@ if TAIL_BAY:                                                           # the rea
     wash_ = []                                                         # tail bay parts' plan points against every disk + 3 (under the props)
     rb_ = D["Radxa Zero 3W"][0].bounds
     plug_ = box(rb_[0][0] + 36.0, rb_[0][0] + 60.0, -5.0, 5.0, rb_[1][2], rb_[1][2] + 14.0)
-    for n_, m_ in (("Radxa Zero 3W", D["Radxa Zero 3W"][0]), ("UBEC", D["UBEC"][0]), ("Radxa plugs (keep clear)", plug_)):
+    extra_w = []
+    if ELEC:                                                           # the mount's spine section (y -13.05..-4.6, its summary) and tail block,
+        dxw = 0.0 if BAY_FIXED else -(DC - ELEC["catch"])              # bounding boxes shifted with the bay (their real geometry is the
+        sp_ = ELEC["mount"]["tail carrier: yoke + spine (PETG)"]["box"]; bk_ = ELEC["mount"]["belly-mount tail block (PETG)"]["box"]   # electronics session's)
+        extra_w = [("mount spine (envelope)", box(sp_[0][0] + dxw, sp_[1][0] + dxw, -13.05, -4.6, sp_[0][2], sp_[1][2])),
+                   ("mount tail block (envelope)", box(bk_[0][0] - (DC - ELEC["catch"]), bk_[1][0] - (DC - ELEC["catch"]), bk_[0][1], bk_[1][1], bk_[0][2], bk_[1][2])),
+                   ("XR2", D["XR2"][0])]
+    for n_, m_ in [("Radxa Zero 3W", D["Radxa Zero 3W"][0]), ("UBEC", D["UBEC"][0]), ("Radxa plugs (keep clear)", plug_)] + extra_w:
         v_ = m_.vertices; v_ = np.vstack([v_, m_.sample(400)])
         d_ = min(float((np.hypot(v_[:, 0] - mx, v_[:, 1] - my) - PROP_R).min()) for mx, my in MXY)
         wash_.append(f"{n_} {d_:+.1f}")
     say("tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): " + ", ".join(wash_) + " (C)")
     if ELEC:                                                           # the electronics session's tool lines: clear of every rod (Ø10 tool)
-        dx_ = -(DC - ELEC["catch"]); segs_ = [(nodes[a], nodes[b]) for a, b in E] + [(np.asarray(p_, float), np.asarray(q_, float)) for p_, q_ in extra.values()]
+        dx_ = 0.0 if BAY_FIXED else -(DC - ELEC["catch"]); segs_ = [(nodes[a], nodes[b]) for a, b in E] + [(np.asarray(p_, float), np.asarray(q_, float)) for p_, q_ in extra.values()]
         out_ = []
         for nm_, t_ in ELEC["keep_clear"]["tool_lines"].items():
             q0 = np.array(t_["start"]) + [dx_, 0, 0]; dv = np.array(t_["dir"]) / np.linalg.norm(t_["dir"])
