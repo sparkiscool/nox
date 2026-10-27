@@ -41,7 +41,7 @@ Confirmed list for the mount: MicoAir743v2-AIO-35A (FC + ESC) on 4 grommets, Rad
 | Part | Session | Status |
 |---|---|---|
 | Cage layout, tie saddle, frame model, nodes (not started) | Scout v3 design (session_01EtHMZNhc68Ghbc2KCNMUzU) | layout v12 on main; nodes wait on the rod sizing |
-| Camera mount (cradle, arms, snap clips, lens guard) | worker inside the Scout v3 design session (`part/scout-camera-mount`) | in progress |
+| Camera mount (cradle, arms, snap clips, lens guard) | worker inside the Scout v3 design session (`part/scout-camera-mount`) | v1 saved: `print/scout_camera_mount_v1.stl` 21.8 g + collar x2 0.25 g (M), `runs/scout_camera_mount/v1/` |
 | Tail bay and belly mount (Radxa, UBEC, XR2) | Scout electronics mount (session_01EtHMZQ6DeunMTynr11ADr1, PR 130) | in progress |
 | Reverse funnel (shared with the Overseer) | design center (session_01EtHMZMB13ed4juqR8ktuXy) | in progress |
 
