@@ -23,7 +23,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | 5 V 5 A UBEC | 1 | Radxa + camera power | on hand | M (typical; measure) |
 | SH1.0 4-pin pigtail | 1 | Radxa UART to FC UART4 | to buy (CHECK) | |
 | 90° USB-C plug or short cable | 1 | camera to Radxa | to buy (CHECK) | |
-| Carbon tube 6 x 4 (OD x ID; Spark 26 Oct: 6 mm tubes for the geodesic cages) | ~22.5 m for the Overseer cage v3 (131 pieces, 47 .. 437, `runs/overseer_layout/v5/checks.txt`) | geodesic cage shells | to buy (after the frame model) | O Cage v3 |
+| Carbon tube 6 x 4 (OD x ID; Spark 26 Oct: 6 mm tubes for the geodesic cages) | ~15.9 m shell (63 pieces, 116 .. 446) + ~6.3 m links (30 pieces) for the Overseer cage v5 (`runs/overseer_layout/v5/checks.txt`) | geodesic cage shells, 6/4 links | to buy | O Cage v5 |
 | Carbon rod Ø3.0 | per cage design | cage struts, wheel pins (decision 22) | on hand (length CHECK) | G |
 | Catch hardware for the box (hold plate, charging contacts) | 1 set | box catch | to design with v3 | G |
 | M2 / M3 screws, nylocs, standoffs | as built | stack, plate bolts | on hand | H |
@@ -40,7 +40,7 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | 4S 6000 LiPo, XT60 | 3 | flight pack | on hand | O, M |
 | MicoAir MTF-02P | 1 | optical flow + ToF | on hand | M, O |
 | Unitree L2 4D lidar | 1 | mapping, at the nose | on hand | M: L2, O |
-| DECXIN 2633V2 camera | 2 | front (lidar colouring by yaw) + underside | 1 on hand, 1 to buy | A (P), O |
+| DECXIN 2633V2 camera | 2 | both beside the L2, field maximized (lidar colouring by yaw; no down camera, Spark 27 Oct) | 1 on hand, 1 to buy | A (P), O |
 | RC receiver | 1 | RC (CRSF) | CHECK (model not recorded) | |
 | Belly frame, 8 PETG wheels, pogo pads (no steel plate since 23 Oct) | 1 set | box catch (section G) | to design | G |
 
