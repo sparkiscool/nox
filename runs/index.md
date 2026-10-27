@@ -1,6 +1,6 @@
 # Runs
 
-_106 runs · rebuilt 2026-10-27 06:32_
+_107 runs · rebuilt 2026-10-27 07:48_
 
 ## Latest per part
 
@@ -28,7 +28,7 @@ _106 runs · rebuilt 2026-10-27 06:32_
 | scan_stick | v13 | DONE | 42.0 (M) | 0.30  | PASS | [runs/scan_stick/v13](runs/scan_stick/v13/summary.md) |
 | scan_stick_base | v13 | · | 328.1 (M) | ·  | FAIL | [runs/scan_stick_base/v13](runs/scan_stick_base/v13/summary.md) |
 | scan_stick_cam | v7 | DONE | 13.3 (M) | 0.32 in impact 50 g 4 | PASS | [runs/scan_stick_cam/v7](runs/scan_stick_cam/v7/summary.md) |
-| scout_layout | v10 | · | · | ·  | · | [runs/scout_layout/v10](runs/scout_layout/v10/summary.md) |
+| scout_layout | v11 | · | · | ·  | · | [runs/scout_layout/v11](runs/scout_layout/v11/summary.md) |
 | test_glue_lap | v1 | DONE | 3.9 (M) | ·  | PASS | [runs/test_glue_lap/v1](runs/test_glue_lap/v1/summary.md) |
 | test_layer_pull | v1 | DONE | 28.6 (M) | ·  | PASS | [runs/test_layer_pull/v1](runs/test_layer_pull/v1/summary.md) |
 | test_post_pull | v1 | DONE | 34.6 (M) | ·  | PASS | [runs/test_post_pull/v1](runs/test_post_pull/v1/summary.md) |
@@ -38,7 +38,8 @@ _106 runs · rebuilt 2026-10-27 06:32_
 
 | Date | Part | Version | Status | Mass | Worst index | Solid | Bed face | Peak mem | Wall | PR |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2026-10-27 06:30 | scout_layout | [v10](runs/scout_layout/v10/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-27 07:47 | scout_layout | [v11](runs/scout_layout/v11/summary.md) | · | · | · | · | · | · GB | · min | · |
+| 2026-10-27 06:53 | scout_layout | [v10](runs/scout_layout/v10/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-27 06:02 | overseer_core | [v1](runs/overseer_core/v1/summary.md) | · | 3419.7 (M) | · | · | · | · GB | · min | · |
 | 2026-10-27 06:02 | scout_layout | [v7](runs/scout_layout/v7/summary.md) | · | · | · | · | · | · GB | · min | · |
 | 2026-10-27 06:02 | scout_layout | [v8](runs/scout_layout/v8/summary.md) | · | · | · | · | · | · GB | · min | · |
