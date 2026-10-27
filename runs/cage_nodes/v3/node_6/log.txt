@@ -293,3 +293,15 @@ layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside t
 layout: beta 4 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 it  36 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 46.5s
 it  36 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 46.5s
+it  37 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 45.1s
+it  37 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 45.1s
+it  38 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 47.4s
+it  38 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 47.4s
+it  39 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 46.4s
+it  39 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 46.4s
+it  40 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 46.0s
+it  40 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 46.0s
+it  41 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 42.7s
+it  41 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 42.7s
+it  42 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 58.2s
+it  42 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 58.2s
