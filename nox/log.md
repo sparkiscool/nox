@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): core's saved parts (hub deck v9 etc.) in the assembly (`runs/overseer_layout/v5/saved/core/`); cage base loop down 22.9 to z -79.9 (cartridge bottom -3); front core ties root on the deck tower (114, 0, 20), aimed forward (clear of the FC nut lines); TPU feet = caps under the loop nodes; bay ties root on the sled sides (y ±56). system_check PASS, CG 0.2 (C/E)
 - 27 Oct (Overseer): L2 brace roots moved off the front arms into the core's hub deck tower, low: lo (97, ±26, 12), hi (97, ±14, 18) (C; head 155 Hz F on E); nodes get drawn arms to a hub (one body); saved node 20 / node 2 and the rear arm v5d shown in the layout artifact; head v3 solid FAIL (socket-rim specks), socket fixed; core_root_forces.json.
 - 27 Oct (Overseer arms): rear v5d READY -> HOLD (review): assembled CG 5.8 mm with the pack in fails the 3 mm gate; the cage session rebalances (motor square) when the front is final, which moves the rear arm's ends, so the rear reruns then. Do not print v5d.
 - 27 Oct (Overseer arms): v5 system pass written to dimensions System Overseer: arms; assembled system_check with the v5d arms: cage first 7.7, fit 0, access 21/21, 3555 g, CG 5.8 aft (FAIL tol 3, was 0.2; the layout's pack, cage session told). `runs/overseer_arms/v5d/`
