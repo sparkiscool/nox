@@ -1,0 +1,88 @@
+=== cage_node_10: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_10: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_10: grid (56, 56, 56) h 1.5 = 175,616 cells; design 61,992 (209.2 cm3), drawn 3,119, void 110,505
+  support hold 0: 2515 cells, 4552 nodes
+  support hold 1: 2489 cells, 4503 nodes
+  support hold 2: 2506 cells, 4494 nodes
+  support hold 3: 2589 cells, 4728 nodes
+  support hold 4: 2630 cells, 4837 nodes
+  support hold 5: 2512 cells, 4502 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_10: grid (32, 32, 32) h 3.0 = 32,768 cells; design 7,651 (206.6 cm3), drawn 388, void 24,729
+  support hold 0: 318 cells, 832 nodes
+  support hold 1: 313 cells, 809 nodes
+  support hold 2: 314 cells, 803 nodes
+  support hold 3: 329 cells, 880 nodes
+  support hold 4: 328 cells, 879 nodes
+  support hold 5: 312 cells, 806 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (10.48 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (10.48 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.006 of 7,651 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.006 of 7,651 design cells
+layout: WARNING nearly mirrored in x (1.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (1.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (1.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (1.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.0% of passive cells differ): no symmetry
+layout: 1 drawn bodies (388 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (388 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+fem: grid (32, 32, 32) = 32,768 elements, 28,965 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+fem: grid (32, 32, 32) = 32,768 elements, 28,965 active dofs; backend direct (direct estimate 0.2 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0227 (dil 0.0274 g +2.904) grey  7.9% ch 0.006 worst tube to 23 side a 1.04e+03 4.3s
+it   1 beta    1 J  10.0000 vol 0.0227 (dil 0.0274 g +2.904) grey  7.9% ch 0.006 worst tube to 23 side a 1.04e+03 4.3s
+it   2 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.9s
+it   2 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.9s
+it   3 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it   3 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it   4 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.0s
+it   4 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.0s
+it   5 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.0s
+it   5 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.099) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.0s
+it   6 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it   6 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it   7 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.8s
+it   7 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.8s
+it   8 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.9s
+it   8 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.9s
+it   9 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it   9 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it  10 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.1s
+it  10 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.106) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.1s
+it  11 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.6s
+it  11 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.6s
+it  12 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it  12 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it  13 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it  13 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it  14 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 3.9s
+it  14 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 3.9s
+it  15 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.0s
+it  15 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.111) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.0s
+it  16 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.2s
+it  16 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.2s
+it  17 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it  17 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.4s
+it  18 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.0s
+it  18 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 5.0s
+it  19 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.2s
+it  19 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.2s
+it  20 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it  20 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.115) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it  21 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.7s
+it  21 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.7s
+it  22 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it  22 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.5s
+it  23 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.2s
+it  23 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.2s
+it  24 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.3s
+it  24 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.3s
+it  25 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.6s
+it  25 beta    1 J  10.0008 vol 0.0181 (dil 0.0217 g +2.117) grey  7.6% ch 0.000 worst tube to 23 side a 1.04e+03 4.6s
+layout: beta 1 done: eroded design 11 bodies, main 82.7%; drawn bodies outside the main body: 10
+layout: beta 1 done: eroded design 11 bodies, main 82.7%; drawn bodies outside the main body: 10
+it  26 beta    2 J  10.0008 vol 0.0145 (dil 0.0258 g +1.502) grey  6.1% ch 0.000 worst tube to 23 side a 1.04e+03 5.1s
+it  26 beta    2 J  10.0008 vol 0.0145 (dil 0.0258 g +1.502) grey  6.1% ch 0.000 worst tube to 23 side a 1.04e+03 5.1s
