@@ -91,20 +91,20 @@ code { font: 13px var(--mono); }
 <header>
   <div class="kicker">Nox · box catch · concept · 27 Oct</div>
   <h1>Three feet, three grooves</h1>
-  <p class="lede">The new Overseer cage has no funnel-shaped bottom, and the Scout will get its own cage. The one thing both drones share is the bottom opening ring. So the box catches that ring: three short feet under it, each tipped with a bought ball-transfer unit, drop into three V-grooves on the box top. Every drop inside the capture rolls into the same seat to the millimetre; nothing on the box moves.</p>
+  <p class="lede">The new Overseer cage has no funnel-shaped bottom, and the Scout's new cage carries the same bottom opening ring (Spark 27 Oct). That ring is the one thing both drones share. So the box catches that ring: three short feet under it, each tipped with a bought ball-transfer unit, drop into three V-grooves on the box top. Every drop inside the capture rolls into the same seat to the millimetre; nothing on the box moves.</p>
 </header>
 
 <div class="figures">
   <div class="fig"><b>±{{OV_CAP}} mm</b><span>Overseer: every drop in 8 directions, yaw ±5°, drift 0.15 m/s, ends within 2 mm and 1° of the seat</span></div>
   <div class="fig"><b>±{{SC_CAP}} mm</b><span>Scout, same box, same feet</span></div>
   <div class="fig"><b>{{H}} mm</b><span>foot below the ring; grooves {{TH}}° flanks, 60 half-width; ball tips μ {{MU}} (E)</span></div>
-  <div class="fig"><b>{{OV_CLEAR}}</b><span>least gap from the drawn Overseer cage, belly and pods to the blocks in any caught drop (12.7 seated)</span></div>
+  <div class="fig"><b>{{OV_CLEAR}}</b><span>least gap from the drawn Overseer cage, belly and pods to the blocks in any caught drop</span></div>
 </div>
 
 <section>
   <h2>The shared interface, to scale</h2>
   <div class="sheet"><!--TOP--></div>
-  <p class="cap">Plan, ring frame: x forward along the receiver, origin at the receiver centre, grid 50 mm. The ring is today's Overseer cage v3 opening (8 nodes round the swap zone, receiver + 30 a side). Feet F1 and F2 sit on the front-diagonal ring tubes, F3 on the rear end tube; the Overseer's CG is 91 mm ahead of the receiver, inside the triangle pack in and pack out (+119). Each groove points at the triangle's centroid (a Maxwell coupling), so the seat is fixed in x, y and yaw. The swap hole stays open between the blocks; the down camera and flow look through it, and the feet are 70° or more off their axes, out of view.</p>
+  <p class="cap">Plan, ring frame: x forward along the receiver, origin at the receiver centre, grid 50 mm. The ring is the Overseer cage v3 opening, which the Scout's cage copies (8 nodes round the swap zone, receiver + 30 a side). Feet F1 and F2 sit on the front-diagonal ring tubes, F3 on the rear end tube; the Overseer's CG is 91 mm ahead of the receiver, inside the triangle pack in and pack out (+119). Each groove points at the triangle's centroid (a Maxwell coupling), so the seat is fixed in x, y and yaw. The swap hole stays open between the blocks; the down camera and flow look through it, and the feet are 70° or more off their axes, out of view.</p>
 </section>
 
 <section>
@@ -117,7 +117,7 @@ code { font: 13px var(--mono); }
   <h2>Recorded drops</h2>
   <div class="controls"><button id="play" type="button">Pause</button><input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Time"><span class="t" id="tt">0.00 s</span></div>
   <div class="drops" id="drops"></div>
-  <p class="cap">MuJoCo, real masses and inertia (Overseer 3380 g from the v5 parts, Scout 520 g E), descent 0.30 m/s, drift 0.15 m/s, 2° tilt, props spinning down after the first touch. Top view, ring and feet in ink and amber, the box in blue. The fourth panel is the Scout on sliding PTFE tips (it jams); the last two are the rejected surfaces: the drone rolls into the swap hole or stops off-centre.</p>
+  <p class="cap">MuJoCo, real masses and inertia (Overseer 3380 g from its v5 parts, Scout 913 g from its layout v3 parts), descent 0.30 m/s, drift 0.15 m/s, 2° tilt, props spinning down after the first touch. Top view, ring and feet in ink and amber, the box in blue. The fourth panel is the Scout on sliding PTFE tips (it jams); the last two are the rejected surfaces: the drone rolls into the swap hole or stops off-centre.</p>
 </section>
 
 <section>
@@ -130,7 +130,7 @@ code { font: 13px var(--mono); }
 
 <section class="choice">
   <h2>What was weighed</h2>
-  <div class="opt on"><b>3 feet + 3 V-grooves, ball tips (DEFAULT)</b><p>Kinematic seat, exact every time inside the capture, static PETG blocks. Costs three ~{{H}} mm feet under each cage with a ball-transfer unit in each tip (~+30 g a drone, E; they replace the four TPU floor feet) and a landing gate of ±25 mm, ±5°, which the down camera's tag landing has to meet.</p></div>
+  <div class="opt on"><b>3 feet + 3 V-grooves, ball tips (DEFAULT)</b><p>Kinematic seat, exact every time inside the capture, static PETG blocks. Costs three ~{{H}} mm feet under each cage with a ball-transfer unit in each tip (~+30 g a drone, E; they replace the four TPU floor feet) and a landing gate of ±25 mm, ±5°, which the tag landing has to meet.</p></div>
   <div class="opt"><b>Same, PTFE glide tips</b><p>No rolling part in the foot, and the Overseer catches out to ±40 mm. The Scout jams: two feet seat first and the third, carrying only 27% of its weight, cannot drag them along their grooves. Even at 40° flanks with 55 mm feet the Scout holds only ±10 mm.</p></div>
   <div class="opt"><b>Tray, rolling nodes</b><p>Flat floor inside the ring, 10° walls outside, a ball transfer in each of the 8 ring nodes (+~60 g a drone, E). Centres only with rolling friction, and then has no damping: the drone rolls across and drops a node into the swap hole.</p></div>
   <div class="opt"><b>One shallow cone</b><p>Fits under today's cage (its underside rises only 7° from the ring) but a wide ring on a cone just tilts when off-centre: the centring force falls to about W·e/1000, so it stops 30 mm off even rolling.</p></div>
@@ -140,10 +140,11 @@ code { font: 13px var(--mono); }
 <section>
   <h2>What each drone carries</h2>
   <ul>
-    <li><b>Both:</b> the same bottom ring, fixed to the receiver: today's Overseer cage v3 opening. The Scout's cage takes it as its own opening, so the Scout's bottom grows to about 372 x 229.</li>
+    <li><b>Both:</b> the same bottom ring, fixed to the receiver: today's Overseer cage v3 opening. Merged 27 Oct: the Scout's layout v3 cage already uses it.</li>
     <li><b>Both:</b> three feet at F1 (150, 58.4), F2 (150, −58.4), F3 (−176, 0), {{H}} mm below the ring node bottoms, each a printed leg (TPU where it meets the floor) with a bought ball-transfer tip; nothing else of the drone below the ring node bottoms.</li>
-    <li><b>Both:</b> a down camera looking through the opening (Spark: two cameras); it reads an AprilTag on the box for precision landing and commits only inside ±25 mm, ±5°, else climbs and retries.</li>
-    <li><b>Overseer:</b> CG inside the feet triangle pack in (+91) and pack out (+119); its cage needs no other change.</li>
+    <li><b>Both:</b> an AprilTag on the cartridge bottom (the shared part). An upward camera in the box under the swap hole reads it and sends the landing target to the drone; the drone commits only inside ±25 mm, ±5°, else climbs and retries. The Overseer's own down camera (its two-camera layout) reads a tag on the box top as a second fix; the Scout keeps its one camera.</li>
+    <li><b>Overseer:</b> CG inside the feet triangle pack in (+91) and pack out (+119); its next cage pass keeps 3 mm over the blocks through the capture.</li>
+    <li><b>Scout:</b> already carries this ring (Spark 27 Oct, Scout layout v3); CG +12 ahead of the ring centre, inside the triangle.</li>
   </ul>
 </section>
 
@@ -257,7 +258,7 @@ function chart(id, series, title) {
 }
 if (!D.chart.overseer.length) document.getElementById("legend").textContent = "The full sweep (30 surfaces and frictions x 168 drops) is still running; this chart fills in when it finishes.";
 chart("ch-overseer", D.chart.overseer, "Overseer (3380 g, CG 91 ahead of the ring)");
-chart("ch-scout", D.chart.scout, "Scout (520 g E)");
+chart("ch-scout", D.chart.scout, "Scout (913 g, CG 12 ahead of the ring)");
 const tb = document.getElementById("tbl");
 tb.innerHTML = "<tr><th>drone</th><th>surface</th><th>angle °</th><th>μ</th><th>foot mm</th><th>capture mm</th><th>seated at 40</th><th>worst end mm</th><th>least gap mm</th></tr>" +
   D.table.map(r => `<tr><td>${r.drone}</td><td>${r.concept === "kin" ? "3 feet + grooves" : r.concept}</td><td>${r.theta}</td><td>${r.mu}</td><td>${r.concept === "kin" ? r.H : "-"}</td><td>±${r.cap}</td><td>${Math.round(r.rate40 * 100)}%</td><td>${r.worst}</td><td>${r.clear === null ? "-" : r.clear}</td></tr>`).join("");

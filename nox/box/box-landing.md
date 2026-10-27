@@ -4,7 +4,7 @@ Replaces the collar funnel (`box-funnel.md`, panels v7 / v9 plain and the hook l
 
 ## Brief (Spark 27 Oct)
 - "this session is in charge of designing the new funnel / landing system, using the new layout of the overseer cage, the bottom is no longer a funnel, i would like to find what the best way we can still land the drones reliably with error tolerance and also the scout needs to be able to land as well"
-- "the newest design should have two cameras" (front + down, both drones: the down camera looks through the bottom opening)
+- "the newest design should have two cameras" (read as the Overseer layout v5: front + down, the down camera looking through the bottom opening; the Scout keeps one camera per its own brief)
 - "just really care about the bottom opening, since that will likely be the only thing thats the same with the scout and the overseer"
 
 ## Why this concept
@@ -17,8 +17,8 @@ The shared interface is the cage's bottom opening ring (Overseer cage v3: 8 node
 - **On every drone (shared, fixed to the receiver):** the bottom opening ring of Overseer cage v3, and three feet hung from it: F1 / F2 on the front-diagonal ring tubes at (150, ±58.4), F3 on the rear end tube at (−176, 0) (ring frame: x forward along the receiver, origin at the receiver centre, node centres at z 0). Each foot: printed leg, ball-transfer tip (bought), tip bottom 39.6 below the ring node bottoms. They replace the four TPU floor feet. Nothing else of the drone below the ring node bottoms.
 - **On the box:** three static PETG V-blocks, one per foot, grooves pointing at the feet triangle's centroid (41.3, 0): flanks 30°, half-width 60, length 60 each way from the seated foot, block tops 5 under the ring node bottoms. The swap hole (receiver + 15 a side, 209.6 x 106.2) stays open between them; the front blocks are cut by it.
 - **Capture (sim, 24 drops per offset, yaw ±5°, drift 0.15 m/s):** both drones 100 % to ±30 mm, 96 % (Overseer) / 92 % (Scout) at ±40; every caught drop ends on the seat (0.0 mm, 0.0°).
-- **Landing gate:** the down camera reads an AprilTag on the box top (precision landing); the drone commits inside ±25 mm, ±5° yaw, else climbs and retries.
-- **Down camera and flow:** the feet are ≥ 70° off their axes, out of view; the opening stays clear.
+- **Landing gate:** an AprilTag on the cartridge bottom (shared part), read by an upward camera in the box under the swap hole, which sends the landing target to the drone; the Overseer's down camera reads a tag on the box top as a second fix (the Scout keeps its one camera, Spark). The drone commits inside ±25 mm, ±5° yaw, else climbs and retries.
+- **Overseer down camera and flow (Spark: two cameras):** the feet are ≥ 70° off their axes, out of view; the opening stays clear.
 
 ## Alternatives weighed
 - PTFE glide tips instead of ball tips: no rolling part and the Overseer catches ±40, but the Scout jams (±0 at 30°, ±10 at 40° flanks with 55 mm feet).

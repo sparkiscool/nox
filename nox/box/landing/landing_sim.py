@@ -11,15 +11,18 @@ swap zone = receiver + 30 a side). Three ways to catch it, each dropped with MuJ
 
   dish  one shallow cone through the ring nodes (rising outward at THETA, falling inward to the swap hole)
   tray  flat floor inside the node contour, walls rising outward at THETA (nodes roll or slide)
-  kin   kinematic (Maxwell) coupling: 3 short feet under the ring (ball-transfer tips) in 3 radial V-grooves
-        (flanks THETA, capture KIN_W across), raised V-blocks on the box top; nothing else touches
+  kin   kinematic (Maxwell) coupling: 3 short feet under the ring in 3 V-grooves pointing at the feet centroid
+        (flanks THETA, half-width KIN_W, round ends), cut into a flat plate PLATE_GAP under the ring node bottoms,
+        so a foot that misses its groove leaves the drone level on the plate; each foot a printed V hung from the
+        two ring nodes of its tube; nothing else touches
 
-Drop cases (E): offsets 0..60 in 8 directions, yaw -5 / 0 / +5 deg, drift 0.15 m/s turning with the case, tilt 2 deg,
+Drop cases (E): offsets 0..80 in 8 directions, yaw -5 / 0 / +5 deg, drift 0.15 m/s turning with the case, tilt 2 deg,
 descent 0.30 m/s; thrust holds the weight to the first touch, then spins down (tau 0.08 s). Pass at
-4.0 s: ring centre within 2 mm and yaw within 1 deg of the centred seat (a drone still rattling in the seat counts).
-Overseer: masses at the v5 part centroids (E masses, M geometry); its v5 cage, belly, pods, cartridge are
-point-sampled and checked against the box surface along each drop (keep-out, `clear_mm`, ring excluded).
-Scout: E masses (520 g), ring + feet only (its cage is not drawn; the keep-out is its requirement).
+4.0 s: ring centre within 2 mm, yaw within 1 deg, height within 2 mm and tilt within 2 deg of the centred seat (speed is
+stored, not gated: a drone still rattling in the seat counts).
+Drones from their run assemblies, masses at the part centroids (E masses, M geometry): Overseer layout v5 / cage v3
+(3380 g), Scout layout v3 / cage v1 (`runs/scout_layout/v6`, 933 g, the same ring, Spark 27 Oct). Each drone's cage,
+belly, pods and cartridge are point-sampled and checked against the box along every drop (`clear_mm`, ring excluded).
 
 Run: python3 nox/box/landing/landing_sim.py [--quick]   -> runs/landing/v1-concept/sweep.json + traj.json
 """
@@ -31,6 +34,7 @@ import mujoco
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 OUT = os.path.join(ROOT, "runs", "landing", "v1-concept")
 V5 = os.path.join(ROOT, "runs", "overseer_layout", "v5")
+S6 = os.path.join(ROOT, "runs", "scout_layout", "v6")      # Scout v3 layout v3 / cage v1: the same ring (G Shared bottom ring)
 G = 9.81
 TUBE_R = 3.0                       # 6 mm shell tube (C, Cage v3)
 NODE_R = 10.15                     # shell node (C, cage_shell.json)
@@ -38,13 +42,15 @@ RECEIVER = (179.6, 76.2)           # Overseer receiver (M): the larger one sets 
 HOLE_M = 15.0                      # box swap hole = receiver + 15 a side (DEFAULT: grabber zone |y| 47.5 + 2)
 HOLE = (RECEIVER[0] + 2 * HOLE_M, RECEIVER[1] + 2 * HOLE_M)
 RING_OFF = np.array([30.0, 0.0, 57.0])   # v5 layout frame -> ring frame (catch centre x -30, ring plane z -57)
+SRC = {"overseer": (V5, RING_OFF), "scout": (S6, np.array([13.5, 0.0, 47.5]))}   # Scout catch x -13.5, ring plane z -47.5
 GRID, PIT = 2.0, -90.0
 DRIFT, DESCENT, TILT, TAU, T_END = 0.15, 0.30, 2.0, 0.08, 4.0
 
 # kinematic coupling (DEFAULT): feet on the ring tubes, ball-transfer tips (bought, E rolling mu 0.03; PTFE glide 0.12 jams the Scout at 30 deg)
 FEET = [(150.0, 58.4), (150.0, -58.4), (-176.0, 0.0)]    # ring frame; front pair on the front-diagonal tubes
 FOOT_R = 8.0                       # glide tip radius (E)
-KIN_W = 60.0                       # groove half-width (DEFAULT): +-40 and +-5 deg yaw caught with drift and tilt (old collar spec)
+KIN_W = 60.0                       # groove half-width (DEFAULT): catches +-30 with +-5 deg yaw, drift and tilt (sim)
+PLATE_GAP = 8.0                    # V-plate top under the ring node bottoms (DEFAULT, >= 3 through the capture)
 KIN_LEN = (60.0, 60.0)             # groove length inward / outward of the seated foot (the swap hole cuts the front ones)
 
 
@@ -64,47 +70,36 @@ def fit_ellipse(nodes):
     return 1 / math.sqrt(u), 1 / math.sqrt(v)
 
 
-def overseer_parts():
+def drone_parts(drone):
+    """Every part of the drone's run assembly: (name, g, centroid, bbox size, mesh), ring frame."""
     import trimesh
-    parts = json.load(open(os.path.join(V5, "parts", "parts.json")))
+    run, off = SRC[drone]
+    parts = json.load(open(os.path.join(run, "parts", "parts.json")))
     out = []
     for q in parts:
-        m = trimesh.load(os.path.join(V5, "parts", q["file"]))
-        out.append((q["name"], q["mass_g"], m.centroid + RING_OFF, m.bounds[1] - m.bounds[0], m))
+        m = trimesh.load(os.path.join(run, "parts", q["file"]))
+        m.apply_translation(off)
+        out.append((q["name"], q["mass_g"], m.centroid, m.bounds[1] - m.bounds[0], m))
     return out
 
 
-def overseer_masses():
-    return [(n, mg, c, box) for n, mg, c, box, _ in overseer_parts()]
+def drone_masses(drone):
+    return [(n, mg, c, box) for n, mg, c, box, _ in drone_parts(drone)]
 
 
-def overseer_underside(z_max=60.0):
-    """Surface samples of every v5 part below ring-frame z_max (keep-out check), ring frame."""
+def drone_underside(drone, z_max=60.0):
+    """Surface samples of every part below ring-frame z_max (keep-out check), ring frame."""
     import trimesh
     pts = []
-    for name, _, _, _, m in overseer_parts():
+    for name, _, _, _, m in drone_parts(drone):
         if name.startswith(("prop", "motor", "top plate", "Unitree", "front camera", "L2 guard", "TPU feet")):
             continue
         p, _ = trimesh.sample.sample_surface(m, 6000, seed=1)
-        p = p + RING_OFF
         pts.append(p[p[:, 2] < z_max])
     return np.vstack(pts)
 
 
-def scout_masses():
-    """Scout v3 (E, 520 g): pack low, props on top, a disk cage round its ~290 prop footprint."""
-    out = [("pack + cartridge", 191.0, np.array([0, 0, 28.0]), np.array([79, 48, 45.0])),
-           ("receiver", 20.0, np.array([0, 0, 52.0]), np.array([82, 44, 6.0])),
-           ("plate, FC, Radxa, flow, cameras", 125.0, np.array([0, 0, 66.0]), np.array([100, 94, 20.0]))]
-    for sx, sy in itertools.product((1, -1), (1, -1)):
-        out.append(("motor + prop", 22.0, np.array([54.1 * sx, 54.1 * sy, 80.0]), np.array([28, 28, 20.0])))
-    for k in range(8):
-        a = 2 * math.pi * k / 8
-        out.append(("cage", 12.0, np.array([145 * math.cos(a), 145 * math.sin(a), 60.0]), np.array([60, 60, 60.0])))
-    return out
-
-
-DRONES = {"overseer": overseer_masses, "scout": scout_masses}
+DRONES = {"overseer": lambda: drone_masses("overseer"), "scout": lambda: drone_masses("scout")}
 
 
 def mass_props(pts):
@@ -139,6 +134,20 @@ def kin_grooves():
     return out
 
 
+def foot_nodes(i):
+    """The two ring nodes whose tube carries foot i (the foot hangs from both as a printed V)."""
+    f = np.array(FEET[i])
+    P = np.array(RING)
+    best = None
+    for k in range(len(P)):
+        a, b = P[k], P[(k + 1) % len(P)]
+        t = np.clip(np.dot(f - a, b - a) / np.dot(b - a, b - a), 0, 1)
+        d = np.linalg.norm(f - (a + t * (b - a)))
+        if best is None or d < best[0]:
+            best = (d, a, b)
+    return [best[1], best[2]]
+
+
 def foot_bottom(H):
     return -NODE_R - H
 
@@ -164,14 +173,15 @@ def box_z(X, Y, concept, theta, H=0.0, W=KIN_W):
             dh = np.hypot(np.maximum(np.abs(X) - hx, 0), np.maximum(np.abs(Y) - hy, 0))
             z = z - math.tan(math.radians(30)) * np.maximum(20 - dh, 0)
         return np.where(hole, PIT, z)
-    # kin: raised V-blocks under the feet on a base plate 5 under the groove bottoms
+    # kin: V-grooves cut into a flat plate at the groove-top level; round (conical) groove ends
     zb = foot_bottom(H)
-    z = np.full(np.shape(X), zb - 5.0)
+    top = zb + W * tn
+    z = np.full(np.shape(X), top)
     for f, a, c in kin_grooves():
         u = (X - f[0]) * a[0] + (Y - f[1]) * a[1]
         v = (X - f[0]) * c[0] + (Y - f[1]) * c[1]
-        inside = (u >= -KIN_LEN[1]) & (u <= KIN_LEN[0]) & (np.abs(v) <= W)
-        z = np.where(inside, np.maximum(z, zb + np.abs(v) * tn), z)
+        du = np.maximum(0.0, np.maximum(u - KIN_LEN[0], -KIN_LEN[1] - u))
+        z = np.minimum(z, zb + np.hypot(v, du) * tn)
     return np.where(hole, PIT, z)
 
 
@@ -208,7 +218,9 @@ def build_xml(drone, concept, theta, mu, H, W=KIN_W):
         for i, (x, y) in enumerate(FEET):
             tip = np.array([x, y, zb + FOOT_R]) * mm
             geoms.append(f'<geom name="foot{i}" type="sphere" pos="{tip[0]:.5f} {tip[1]:.5f} {tip[2]:.5f}" size="{FOOT_R*mm}" friction={f0} mass="0"/>')
-            geoms.append(f'<geom name="leg{i}" type="capsule" fromto="{tip[0]:.5f} {tip[1]:.5f} {tip[2]+0.004:.5f} {tip[0]:.5f} {tip[1]:.5f} 0" size="{5*mm}" friction={f0} mass="0"/>')
+            for j, nd in enumerate(foot_nodes(i)):
+                n3 = np.array([nd[0], nd[1], 0.0]) * mm
+                geoms.append(f'<geom name="leg{i}{j}" type="capsule" fromto="{tip[0]:.5f} {tip[1]:.5f} {tip[2]+0.006:.5f} {n3[0]:.5f} {n3[1]:.5f} 0" size="{4*mm}" friction={f0} mass="0"/>')
     xml = f"""<mujoco><option timestep="0.0005" gravity="0 0 -{G}" integrator="implicitfast"/>
 <default><geom solref="0.004 0.5" solimp="0.95 0.99 0.001" condim="3" contype="2" conaffinity="1"/></default>
 <asset><hfield name="box" nrow="{hf['nrow']}" ncol="{hf['ncol']}" size="{hf['rx']*mm:.5f} {hf['ry']*mm:.5f} {hf['span']*mm:.5f} 0.01"
@@ -268,16 +280,15 @@ def drop(key, dx, dy, yaw, k, record=False):
 
 
 # ---------------------------------------------------------------- keep-out along a drop (Overseer v5 as drawn)
-_UNDER = {}
+_UNDER, _GRID = {}, {}
 
 
 def clearance(key, traj):
-    """Least gap (mm) between the v5 underside (cage, belly, pods, cartridge; not the ring nodes and tubes)
-    and the box surface over the recorded poses; negative = that part would hit the box."""
-    if key[0] != "overseer":
-        return None
-    if "p" not in _UNDER:
-        P = overseer_underside()
+    """Least gap (mm) between the drone's underside (cage, belly, pods, cartridge; not the ring nodes and tubes,
+    not the feet) and the box surface over the recorded poses; negative = that part would hit the box."""
+    dr = key[0]
+    if dr not in _UNDER:
+        P = drone_underside(dr)
         rn = np.array(RING)
         seg = []
         for i in range(len(rn)):
@@ -285,20 +296,28 @@ def clearance(key, traj):
             t = np.clip(((P[:, :2] - a) @ (b - a)) / np.dot(b - a, b - a), 0, 1)
             seg.append(np.hypot(*(P[:, :2] - (a + t[:, None] * (b - a))).T))
         on_ring = (np.min(np.array(seg), axis=0) < NODE_R + 1) & (np.abs(P[:, 2]) < NODE_R + 1)
-        _UNDER["p"] = P[~on_ring] * 1e-3
-    P = _UNDER["p"]
+        _UNDER[dr] = P[~on_ring] * 1e-3
+    gk = (key[1], key[2], key[4], key[5])
+    if gk not in _GRID:
+        rx, ry = 700.0, 600.0
+        xs, ys = np.arange(-rx, rx + 1e-6, 1.0), np.arange(-ry, ry + 1e-6, 1.0)
+        X, Y = np.meshgrid(xs, ys)
+        _GRID[gk] = (box_z(X, Y, key[1], key[2], key[4], key[5]), rx, ry)
+    Z, rx, ry = _GRID[gk]
+    P = _UNDER[dr]
     worst = 1e9
     for row in traj[::2]:
         R = np.zeros(9)
         mujoco.mju_quat2Mat(R, np.array(row[4:8]))
-        W = P @ R.reshape(3, 3).T + np.array(row[1:4])
-        zb = box_z(W[:, 0] * 1e3, W[:, 1] * 1e3, key[1], key[2], key[4], key[5])
-        worst = min(worst, float(np.min(W[:, 2] * 1e3 - zb)))
+        W = (P @ R.reshape(3, 3).T + np.array(row[1:4])) * 1e3
+        ix = np.clip(np.rint(W[:, 0] + rx).astype(int), 0, Z.shape[1] - 1)
+        iy = np.clip(np.rint(W[:, 1] + ry).astype(int), 0, Z.shape[0] - 1)
+        worst = min(worst, float(np.min(W[:, 2] - Z[iy, ix])))
     return round(worst, 1)
 
 
 # ---------------------------------------------------------------- sweep
-OFFSETS = [0, 10, 20, 30, 40, 50, 60]
+OFFSETS = [0, 10, 20, 30, 40, 50, 60, 70, 80]
 YAWS = [-5.0, 0.0, 5.0]
 
 
@@ -313,9 +332,11 @@ def run_config(key):
                 k += 1
                 o = drop(key, r * math.cos(a), r * math.sin(a), yaw, k)
                 err = math.hypot(o["x"] - seat["x"], o["y"] - seat["y"])
-                ok = (not o["bad"]) and err < 2.0 and abs(o["yaw"] - seat["yaw"]) < 1.0
+                ok = ((not o["bad"]) and err < 2.0 and abs(o["yaw"] - seat["yaw"]) < 1.0 and abs(o["z"] - seat["z"]) < 2.0
+                      and abs(o["tilt"] - seat["tilt"]) < 2.0)
                 rows.append(dict(r=r, dir=j, yaw=yaw, ok=bool(ok), err=round(err, 1), dyaw=round(o["yaw"] - seat["yaw"], 2),
-                                 tilt=round(o["tilt"], 1), fell=o["bad"], clear_mm=clearance(key, o["traj"])))
+                                 dz=round(o["z"] - seat["z"], 1), v=round(o["v"], 1), tilt=round(o["tilt"], 1), fell=o["bad"],
+                                 clear_mm=clearance(key, o["traj"])))
     cap = 0
     for r in OFFSETS:
         if all(x["ok"] for x in rows if x["r"] == r):
@@ -324,13 +345,13 @@ def run_config(key):
             break
     rate = {str(r): round(sum(x["ok"] for x in rows if x["r"] == r) / sum(1 for x in rows if x["r"] == r), 3) for r in OFFSETS}
     cl = [x["clear_mm"] for x in rows if x["clear_mm"] is not None and x["ok"]]
-    return dict(key=list(key), seat=dict(x=round(seat["x"], 2), y=round(seat["y"], 2), z=round(seat["z"], 2), yaw=round(seat["yaw"], 2)),
+    return dict(key=list(key), seat=dict(x=round(seat["x"], 2), y=round(seat["y"], 2), z=round(seat["z"], 2), yaw=round(seat["yaw"], 2), tilt=round(seat["tilt"], 2)),
                 capture_mm=cap, rate=rate, worst_err=max(x["err"] for x in rows), clear_min=min(cl) if cl else None,
                 rows=rows, secs=round(time.time() - t0, 1))
 
 
 def kin_H(th, W=KIN_W):
-    return round(W * math.tan(math.radians(th)) + 5.0, 1)
+    return round(W * math.tan(math.radians(th)) + PLATE_GAP, 1)
 
 
 # drone, concept, theta (deg: dish/tray wall or groove flank), mu, H (foot length below the node bottoms, kin), W
