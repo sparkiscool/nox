@@ -239,3 +239,13 @@ it   9 beta    4 J  10.0599 vol 0.0075 (dil 0.0341 g +0.144) grey  1.9% ch 0.100
 it   9 beta    4 J  10.0599 vol 0.0075 (dil 0.0341 g +0.144) grey  1.9% ch 0.100 worst held b1 fy 9.1e+05 118.7s
 it  10 beta    4 J  10.0600 vol 0.0072 (dil 0.0329 g +0.106) grey  1.7% ch 0.100 worst held b1 fy 9.1e+05 122.0s
 it  10 beta    4 J  10.0600 vol 0.0072 (dil 0.0329 g +0.106) grey  1.7% ch 0.100 worst held b1 fy 9.1e+05 122.0s
+it  11 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 121.2s
+it  11 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 121.2s
+it  12 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 130.9s
+it  12 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 130.9s
+it  13 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 136.9s
+it  13 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 136.9s
+it  14 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 135.4s
+it  14 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 135.4s
+it  15 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 127.9s
+it  15 beta    4 J  10.0600 vol 0.0069 (dil 0.0318 g +0.067) grey  1.6% ch 0.000 worst held b1 fy 9.1e+05 127.9s
