@@ -1,5 +1,7 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer arms): runs restarted at h 2.0 front / 1.5 rear (topo README: h ~ min member / 3): at h 1.5 / 1.0 the solver fell to multigrid with 86 cases, no fine iteration in 80 min; now direct, ~2.4 GB. `nox/overseer/arm_topo_v1.py`
+- 27 Oct (Overseer arms): cage v5 (PR 122, unmerged) moves the motor square 1.6 forward (62.4); arms v1 keep main's 60.8 (DEFAULT: CG 1.6 off < 3, runs not restarted); arms v2 takes the merged motors with the spoke sockets. Alt: restart both runs now
 - 27 Oct (Overseer arms, Spark): strength generous: index targets half of L (≤ 0.25 flight, ≤ 0.5 crash / handling), handling 100 N, a 150 N blow on the motor end x6, generated front 40 / rear 25 cm³. Both runs restarted. `dimensions.md` System Overseer: arms
 - 27 Oct (Overseer arms + core): plate gap stays 45 (core stack + leads z 26.5, Pi on the rear wing to 39.6, its minimum ~32; arms want ≥ 45). Core's arm-1 motor lead stand-in to go beside the root, not through it. `dimensions.md` O Arms and hub
 - 27 Oct (topo engine): `Part.insert`: a bought stiff insert (carbon rod) solid in the layout and strength FE at its own modulus, never printed, out of the PETG indices; ties see it absent and never let it join two drawn bodies. Default off; test_topo 15/15. First use: Overseer front arms. `nox/topo/part.py`, `layout.py`, `build.py`
