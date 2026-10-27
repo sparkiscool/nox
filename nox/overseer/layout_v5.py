@@ -1010,11 +1010,11 @@ links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items(
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
     ("cage shell nodes", trimesh.util.concatenate([node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
-    ("spokes, ties, keels, L2 guard ring", links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
+    ("spokes, ties, keels, braces, head struts" if PRINTED_HEAD else "spokes, ties, keels, L2 guard ring", links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
     *([(HEADN, trimesh.util.concatenate([g["apex"], g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
                                         + [trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]),
-         "cage", False, grp["head"], "E", "PETG", "cage", "#aab4c0", False)] if PRINTED_HEAD else
+         "structure", False, grp["head"], "E", "PETG", "printed", "#aab4c0", False)] if PRINTED_HEAD else
       [("L2 guard ring nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]), "cage", False, grp.get("halo nodes", 0.0), "E", "PETG", "cage", "#7d8a99", False),
        ("apex + cam bracket", trimesh.util.concatenate([g["apex"], g["cam_bracket"]]), "structure", False, grp["L2 mount"], "E", "PETG", "printed", "#aab4c0", False)]),
     ("Unitree L2", g["l2"], "bought", True, 230, "P", None, "bought", "#222222", False),
@@ -1161,7 +1161,7 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
         p_ = dict(name=n_, role=r_, mesh=rel(os.path.join(PD, fname(n_))), mass_g=round(float(gm_), 2), tag=t_, owner="overseer",
-                  version="layout v5 / cage v3", source="nox/overseer/layout_v5.py")
+                  version="layout v5 / cage v5", source="nox/overseer/layout_v5.py")
         gk = GRP_OF.get(n_, n_ if n_ in grp else None)                 # CG from the layout's mass model (multi-piece meshes are not
         if gk and grp.get(gk, 0) > 0: p_["cg"] = np.round(grp_mc[gk] / grp[gk], 2).tolist()   # watertight: system_check would take the box centre)
         if pr_: p_["protect"] = True

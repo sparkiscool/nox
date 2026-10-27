@@ -117,6 +117,9 @@ def main():
     json.dump({k: {kk: {kkk: round(vvv, 3) if isinstance(vvv, float) else vvv for kkk, vvv in vv.items()} for kk, vv in v.items()}
                for k, v in [("members", worst)]}, open(os.path.join(OUT, "members.json"), "w"), indent=1)
     json.dump(nl, open(os.path.join(OUT, "node_loads.json"), "w"), indent=1)
+    m_g = {i: v * 1000 for i, v in enumerate(m) if v > 0}; m_g[H] = m_g.get(H, 0) + M_HEAD * 1000   # the frame's lowest modes, rigid joints
+    hz, U = f.modes(m_g, 3); hd = [float(np.linalg.norm(U[6 * H:6 * H + 3, k]) / max(1e-12, np.abs(U[:, k]).max())) for k in range(len(hz))]
+    cage_g = sum(np.linalg.norm(N[a] - N[b]) * 24.3e-3 for a, b in CG["rods"]) + 4.5 * len(N)
     tubes = {k: v for k, v in worst.items() if k.startswith("tube")}; links = {k: v for k, v in worst.items() if not k.startswith(("tube", "head-"))}
     bad_b = sorted([(v["buckle"], k, v["L"]) for k, v in {**tubes, **links}.items() if v["buckle"] >= 1.0], reverse=True)
     bad_s = sorted([(v["sigma"], k) for k, v in {**tubes, **links}.items() if v["sigma"] > SIG_C], reverse=True)
@@ -124,9 +127,12 @@ def main():
     L_ = []
     say = lambda s: (print(s), L_.append(s))
     say(f"# Overseer cage frame model v1 (F, on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 cage tubes, {K_CORE} links with a core end, 0.5 keels / braces (PETG both ends), E)\n")
-    say(f"Cage `nox/overseer/cage_v5_shell.json` ({len(N)} nodes, {len(CG['rods'])} tubes 6/4) + {len(links)} links 3.0 on the core (fixed); "
-        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and wing struts to nodes {struts}. Drone {MASS * 1000:.0f} g: crash force "
+    say(f"Cage `nox/overseer/cage_v5_shell.json` ({len(N)} nodes, {len(CG['rods'])} tubes 6/4, {cage_g:.0f} g E) + {len(links)} links on the core (fixed; "
+        f"{sum(k in LINK6 for k in links)} tube 6/4, the rest rod 3.0); "
+        f"sensor head rigid on {sum(k.startswith('keel') for k in RES['links'])} keels + {sum(k.startswith('L2 brace') for k in RES['links'])} braces, holding node {HEAD_NODE} and struts to nodes {struts}. Drone {MASS * 1000:.0f} g: crash force "
         f"{F_crash:.0f} N through the first-touching member, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
+    say(f"Lowest modes (rigid joints, lumped masses, the head {M_HEAD * 1000:.0f} g at its mount): " + ", ".join(f"{h_:.0f} Hz" + (" (the head moves)" if hd[k] > 0.3 else "")
+        for k, h_ in enumerate(hz)) + "; TPU joints and the head's own mode: runs/overseer_head_cage/concept/.\n")
     say(f"## Buckling (k L): {len(bad_b)} members at or over 1.0 x their Euler load")
     for b_, k, L in bad_b[:20]: say(f"- {k}: {b_:.2f} x Pcr (L {L:.0f}; {worst[k]['case_b']})")
     say(f"\n## Stress over {SIG_C:.0f} MPa: {len(bad_s)} members")
