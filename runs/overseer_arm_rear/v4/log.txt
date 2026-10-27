@@ -331,3 +331,5 @@ function check: {'skin_mm3': 22999.0, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.
 function check: {'skin_mm3': 22999.0, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
 strength: worst index 1.09 in 'cage crash 11' at [12.5, -13.9, 44.2]
 strength: worst index 1.09 in 'cage crash 11' at [12.5, -13.9, 44.2]
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 95.96, "worst": 1.088, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 95.96, "worst": 1.088, "function_ok": true, "bodies": 1}
