@@ -223,3 +223,17 @@ it   1 beta    4 J  10.0000 vol 0.0150 (dil 0.0534 g +1.041) grey  5.0% ch 0.100
 it   1 beta    4 J  10.0000 vol 0.0150 (dil 0.0534 g +1.041) grey  5.0% ch 0.100 worst tube to 13 side a 508 87.6s
 it   2 beta    4 J  10.0000 vol 0.0145 (dil 0.0524 g +1.002) grey  4.8% ch 0.100 worst tube to 13 side a 508 79.1s
 it   2 beta    4 J  10.0000 vol 0.0145 (dil 0.0524 g +1.002) grey  4.8% ch 0.100 worst tube to 13 side a 508 79.1s
+it   3 beta    4 J  10.0000 vol 0.0141 (dil 0.0514 g +0.964) grey  4.6% ch 0.100 worst tube to 14 side a 508 78.3s
+it   3 beta    4 J  10.0000 vol 0.0141 (dil 0.0514 g +0.964) grey  4.6% ch 0.100 worst tube to 14 side a 508 78.3s
+it   4 beta    4 J  10.0000 vol 0.0137 (dil 0.0504 g +0.925) grey  4.5% ch 0.100 worst tube to 13 side a 508 87.4s
+it   4 beta    4 J  10.0000 vol 0.0137 (dil 0.0504 g +0.925) grey  4.5% ch 0.100 worst tube to 13 side a 508 87.4s
+it   5 beta    4 J  10.0000 vol 0.0133 (dil 0.0494 g +0.887) grey  4.3% ch 0.100 worst tube to 14 side a 508 91.0s
+it   5 beta    4 J  10.0000 vol 0.0133 (dil 0.0494 g +0.887) grey  4.3% ch 0.100 worst tube to 14 side a 508 91.0s
+it   6 beta    4 J  10.0000 vol 0.0130 (dil 0.0484 g +0.848) grey  4.2% ch 0.100 worst tube to 14 side a 508 83.0s
+it   6 beta    4 J  10.0000 vol 0.0130 (dil 0.0484 g +0.848) grey  4.2% ch 0.100 worst tube to 14 side a 508 83.0s
+it   7 beta    4 J  10.0000 vol 0.0126 (dil 0.0474 g +0.810) grey  4.0% ch 0.100 worst tube to 13 side a 508 88.2s
+it   7 beta    4 J  10.0000 vol 0.0126 (dil 0.0474 g +0.810) grey  4.0% ch 0.100 worst tube to 13 side a 508 88.2s
+it   8 beta    4 J  10.0000 vol 0.0122 (dil 0.0464 g +0.772) grey  3.8% ch 0.100 worst tube to 14 side a 508 80.8s
+it   8 beta    4 J  10.0000 vol 0.0122 (dil 0.0464 g +0.772) grey  3.8% ch 0.100 worst tube to 14 side a 508 80.8s
+it   9 beta    4 J  10.0000 vol 0.0119 (dil 0.0454 g +0.734) grey  3.7% ch 0.100 worst tube to 13 side a 508 84.7s
+it   9 beta    4 J  10.0000 vol 0.0119 (dil 0.0454 g +0.734) grey  3.7% ch 0.100 worst tube to 13 side a 508 84.7s
