@@ -61,6 +61,9 @@ def wedge(A, B, c, s0, s1, h, name, v_tip=None):
 # the current Overseer base loop (cage v5, PR 122, confirmed 27 Oct) about the swap centre (x -30), seat z 0 = the loop plane
 HEX = dict(Ln=(85.8, 116.1), Rn=(85.8, -116.1), Lt=(-68.9, 119.7), Rt=(-68.9, -119.7), F=(191.2, 0.0), T=(-212.6, 0.0))
 INSET = 20.0                                                     # clear of the r 10.15 nodes by ~10 at both ends
+YAW_TEST = float(os.environ.get("YAW_TEST", 2.5))                 # landing yaw checked (deg, +-): 2.5 (at 3.5 the Overseer's tail tip tubes cross onto the wrong ramp face)
+TIP_MODE = os.environ.get("TIP_MODE", "pads")                     # "pads": one chamfered pad per tip edge; "v": the two joined on the centreline
+TIP_PAD0 = float(os.environ.get("TIP_PAD0", 35.0))                # pads start this far along the edge from the tip node (yaw swings the tip tubes ~16)
 TIP_INSET = 15.0                                                 # the V under each tip is cut back 15 (in x) from the tip node (30 lost the Overseer's diagonals under yaw)
 
 def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
@@ -71,7 +74,9 @@ def ramps(h_side=None, h_tip=None, h_send=None, send_y=None):
         L = float(np.linalg.norm(np.subtract(X[b], X[a]))); R.append(wedge(X[a], X[b], c, INSET, L - INSET, h_side, nm))
     for a, b, nm in (("F", "Ln", "Overseer tip +x +y"), ("F", "Rn", "Overseer tip +x -y"), ("T", "Lt", "Overseer tip -x +y"), ("T", "Rt", "Overseer tip -x -y")):
         sx = 1 if a == "F" else -1; side = 1 if b.startswith("L") else -1
-        R.append(wedge(X[a], X[b], c, 0.0, TIP_INSET + (TIP_LEN if sx > 0 else TIP_LEN_TAIL), h_tip, nm, v_tip=(side, X[a][0] - sx * TIP_INSET, sx)))
+        L_ = TIP_INSET + (TIP_LEN if sx > 0 else TIP_LEN_TAIL)
+        if TIP_MODE == "v": R.append(wedge(X[a], X[b], c, 0.0, L_, h_tip, nm, v_tip=(side, X[a][0] - sx * TIP_INSET, sx)))
+        else: R.append(wedge(X[a], X[b], c, TIP_PAD0, max(L_, TIP_PAD0 + 30), h_tip, nm))   # a chamfered pad per tip edge, clear of the converging tubes
         # a V under each tip, its two halves joined on the centreline, cut back TIP_INSET from the tip node, TIP_LEN + TIP_INSET along each tip edge
     for a, b, nm, (y0, y1) in (("Rn", "Ln", "Scout end +x", SEND_NOSE), ("Rt", "Lt", "Scout end -x", SEND_TAIL)):   # the Scout's short ends
         A, B = X[a], X[b]; L = float(np.linalg.norm(np.subtract(B, A)))
@@ -128,7 +133,7 @@ def capture(d, R, cs=(5, 10, 15, 20, 25, 30, 35, 40)):
             ok_all = True
             for dx, dy in dirs:
                 u = np.array([dx, dy], float); u /= np.linalg.norm(u)
-                for yd in (-5.0, 0.0, 5.0):
+                for yd in (-YAW_TEST, 0.0, YAW_TEST):
                     ok, w, _ = landing(d["P"], d["rad"], d["ring"], R, u * c, yd, d.get("names"))
                     if not ok: ok_all = False; why = f"{c} along {name}: {w}"; break
                 if not ok_all: break
@@ -251,9 +256,10 @@ def build_html(res=None):
     res["lede"] = (f"Built on the cages both sessions confirmed: Overseer cage v5 (PR 122, hexagon bottom, z −57) and Scout layout v10 "
                    f"(PR 131 @ c5b5790), whose bottom nodes now sit on the hexagon's 4 side nodes, so the Scout's opening is the middle of the Overseer's. "
                    f"Ramps rise into the opening: 2 shared side ramps, a V under each Overseer tip, and Scout pads at its two ends that the Overseer passes over. "
-                   f"Both cartridges seat level, so the swap head has one stop. Landing tolerance: Scout ±{m(S_)} mm, Overseer ±{m(O_)} mm (per axis in the table).")
+                   f"Both cartridges seat level, so the swap head has one stop. Landing tolerance with the yaw held to ±{YAW_TEST:g}°: Scout ±{m(S_)} mm, Overseer ±{m(O_)} mm (per axis in the table).")
     res["notes"] = [
-        f"Ramp heights above the seat (a 45° ramp catches about its own height): side {hs['side']:.0f}, Overseer tip Vs {hs['overseer_end']:.0f}, Scout end pads {hs['scout_end']:.0f}. Side ramps run each long side 20 clear of its nodes. Each tip has one V (its two halves meet on the centreline, cut back 30 from the tip node): the nose V runs 80 along the tip edges, the tail V 55, so it stays behind the Scout's tail low node. The Scout pads sit at |y| 52 to 96 on both ends, outside the Overseer's TPU feet and receiver.",
+        f"Ramp heights above the seat (a 45° ramp catches about its own height): side {hs['side']:.0f}, Overseer tip pads {hs['overseer_end']:.0f}, Scout end pads {hs['scout_end']:.0f}. Side ramps run each long side 20 clear of its nodes. The Overseer has one pad on each of its 4 tip edges, starting {TIP_PAD0:.0f} from the tip node (nearer the tip the two tip tubes converge and a yawed landing crosses them onto the wrong face). The Scout pads sit at |y| 52 to 96 on both ends, outside the Overseer's TPU feet and receiver.",
+        f"Yaw: the check holds the landing yaw to ±{YAW_TEST:g}°. At ±3.5° the Overseer's diagonal landings fail at its tail tip; PX4 Position mode holds heading well inside ±2.5° (E), so the landing controller has to square the yaw before the drop.",
         "Side ramps are capped at 25 by the Overseer's belly sled (|y| 55, 9 above its ring). If its pods move inside |y| 46 they can be 35 (last two table rows).",
         "Seat: the Scout's 3 mm ring sits 2.12 mm lower on a 45° ramp than the Overseer's 6 mm one, so the Scout's plane is 2.12 further under its cartridge (z −49.62); both cartridges then seat 3.0 above the ramp datum.",
         "Box: the ramps stand on a deck round the swap column (both cartridges drop straight through). The hold (a latch over a ring tube) and keep-alive (pins on ring pads) go on the ramp bases. Still open before printing: low-friction ramp faces (PTFE, μ ≤ 0.2) and a drop sim with tilt and drift; this check is kinematic.",
