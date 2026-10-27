@@ -150,3 +150,19 @@ it   7 beta    4 J   8.0390 vol 0.1438 (dil 0.2417 g -0.007) grey 20.7% ch 0.100
 it   7 beta    4 J   8.0390 vol 0.1438 (dil 0.2417 g -0.007) grey 20.7% ch 0.100 worst gate b5 my 99 79.1s
 it   8 beta    4 J   7.2578 vol 0.1460 (dil 0.2423 g -0.005) grey 20.5% ch 0.100 worst crash 35 g 0 90.2 75.8s
 it   8 beta    4 J   7.2578 vol 0.1460 (dil 0.2423 g -0.005) grey 20.5% ch 0.100 worst crash 35 g 0 90.2 75.8s
+it   9 beta    4 J   6.6756 vol 0.1479 (dil 0.2426 g -0.004) grey 20.3% ch 0.100 worst crash 35 g 0 85 76.8s
+it   9 beta    4 J   6.6756 vol 0.1479 (dil 0.2426 g -0.004) grey 20.3% ch 0.100 worst crash 35 g 0 85 76.8s
+it  10 beta    4 J   6.2157 vol 0.1499 (dil 0.2428 g -0.003) grey 20.2% ch 0.100 worst crash 35 g 0 81.2 78.8s
+it  10 beta    4 J   6.2157 vol 0.1499 (dil 0.2428 g -0.003) grey 20.2% ch 0.100 worst crash 35 g 0 81.2 78.8s
+it  11 beta    4 J   5.8483 vol 0.1516 (dil 0.2429 g +0.009) grey 20.0% ch 0.100 worst crash 35 g 0 78 78.5s
+it  11 beta    4 J   5.8483 vol 0.1516 (dil 0.2429 g +0.009) grey 20.0% ch 0.100 worst crash 35 g 0 78 78.5s
+it  12 beta    4 J   5.7849 vol 0.1501 (dil 0.2401 g -0.003) grey 19.6% ch 0.100 worst crash 35 g 0 76.1 78.2s
+it  12 beta    4 J   5.7849 vol 0.1501 (dil 0.2401 g -0.003) grey 19.6% ch 0.100 worst crash 35 g 0 76.1 78.2s
+it  13 beta    4 J   5.5418 vol 0.1513 (dil 0.2404 g -0.002) grey 19.4% ch 0.100 worst crash 35 g 0 73.5 74.3s
+it  13 beta    4 J   5.5418 vol 0.1513 (dil 0.2404 g -0.002) grey 19.4% ch 0.100 worst crash 35 g 0 73.5 74.3s
+it  14 beta    4 J   5.3848 vol 0.1519 (dil 0.2405 g -0.001) grey 19.3% ch 0.100 worst crash 35 g 0 71.1 79.4s
+it  14 beta    4 J   5.3848 vol 0.1519 (dil 0.2405 g -0.001) grey 19.3% ch 0.100 worst crash 35 g 0 71.1 79.4s
+it  15 beta    4 J   5.2689 vol 0.1521 (dil 0.2405 g -0.001) grey 19.3% ch 0.100 worst crash 35 g 0 68.7 78.8s
+it  15 beta    4 J   5.2689 vol 0.1521 (dil 0.2405 g -0.001) grey 19.3% ch 0.100 worst crash 35 g 0 68.7 78.8s
+it  16 beta    4 J   5.1616 vol 0.1521 (dil 0.2405 g +0.014) grey 19.3% ch 0.100 worst crash 35 g 0 66.1 81.5s
+it  16 beta    4 J   5.1616 vol 0.1521 (dil 0.2405 g +0.014) grey 19.3% ch 0.100 worst crash 35 g 0 66.1 81.5s
