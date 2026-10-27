@@ -425,3 +425,19 @@ it 100 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000
 it 100 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 82.4s
 it 101 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 78.6s
 it 101 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 78.6s
+it 102 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 88.1s
+it 102 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 88.1s
+it 103 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 85.6s
+it 103 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 85.6s
+it 104 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 81.1s
+it 104 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 81.1s
+it 105 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 78.7s
+it 105 beta   16 J  10.0001 vol 0.0016 (dil 0.0369 g +0.211) grey  0.3% ch 0.000 worst tube to 11 side a 339 78.7s
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+it 106 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 84.2s
+it 106 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 84.2s
+it 107 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 83.3s
+it 107 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 83.3s
+it 108 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 77.9s
+it 108 beta   32 J  10.0001 vol 0.0013 (dil 0.0340 g +0.115) grey  0.1% ch 0.000 worst tube to 11 side a 339 77.9s
