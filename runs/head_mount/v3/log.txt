@@ -236,3 +236,13 @@ it  35 beta    8 J   0.1047 vol 0.0388 (dil 0.0769 g -0.025) grey  2.8% ch 0.100
 it  35 beta    8 J   0.1047 vol 0.0388 (dil 0.0769 g -0.025) grey  2.8% ch 0.100 worst guard hit 2 3.53e+03 136.8s
 it  36 beta    8 J   0.0784 vol 0.0400 (dil 0.0784 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.81e+03 132.9s
 it  36 beta    8 J   0.0784 vol 0.0400 (dil 0.0784 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.81e+03 132.9s
+it  37 beta    8 J   0.0836 vol 0.0402 (dil 0.0783 g -0.005) grey  2.8% ch 0.100 worst guard hit 2 2.93e+03 137.6s
+it  37 beta    8 J   0.0836 vol 0.0402 (dil 0.0783 g -0.005) grey  2.8% ch 0.100 worst guard hit 2 2.93e+03 137.6s
+it  38 beta    8 J   0.0713 vol 0.0405 (dil 0.0784 g -0.003) grey  2.7% ch 0.100 worst gate b6 mz 2.56e+03 140.8s
+it  38 beta    8 J   0.0713 vol 0.0405 (dil 0.0784 g -0.003) grey  2.7% ch 0.100 worst gate b6 mz 2.56e+03 140.8s
+it  39 beta    8 J   0.0706 vol 0.0408 (dil 0.0785 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.45e+03 145.2s
+it  39 beta    8 J   0.0706 vol 0.0408 (dil 0.0785 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.45e+03 145.2s
+it  40 beta    8 J   0.0673 vol 0.0409 (dil 0.0784 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.39e+03 141.4s
+it  40 beta    8 J   0.0673 vol 0.0409 (dil 0.0784 g -0.003) grey  2.8% ch 0.100 worst gate b6 mz 2.39e+03 141.4s
+it  41 beta    8 J   0.0651 vol 0.0411 (dil 0.0786 g +0.010) grey  2.8% ch 0.100 worst gate b6 mz 2.32e+03 132.0s
+it  41 beta    8 J   0.0651 vol 0.0411 (dil 0.0786 g +0.010) grey  2.8% ch 0.100 worst gate b6 mz 2.32e+03 132.0s
