@@ -56,3 +56,11 @@ it   9 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.859) grey 15.8% ch 0.000
 it   9 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.859) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.3s
 it  10 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.859) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.3s
 it  10 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.859) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.3s
+it  11 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.2s
+it  11 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.2s
+it  12 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.5s
+it  12 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.5s
+it  13 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.4s
+it  13 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.4s
+it  14 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.3s
+it  14 beta    1 J  15.4311 vol 0.0361 (dil 0.0433 g +1.863) grey 15.8% ch 0.000 worst held b4 fz 8.72e+05 1.3s
