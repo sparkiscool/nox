@@ -352,3 +352,21 @@ it  45 beta    8 J   0.0652 vol 0.0890 (dil 0.1820 g -0.000) grey  7.9% ch 0.100
 it  45 beta    8 J   0.0652 vol 0.0890 (dil 0.1820 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.15e+03 74.7s
 it  46 beta    8 J   0.0645 vol 0.0890 (dil 0.1820 g +0.006) grey  7.9% ch 0.100 worst tie b10 mx 2.12e+03 73.7s
 it  46 beta    8 J   0.0645 vol 0.0890 (dil 0.1820 g +0.006) grey  7.9% ch 0.100 worst tie b10 mx 2.12e+03 73.7s
+it  47 beta    8 J   0.0673 vol 0.0881 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.21e+03 75.4s
+it  47 beta    8 J   0.0673 vol 0.0881 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.21e+03 75.4s
+it  48 beta    8 J   0.0666 vol 0.0882 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.18e+03 72.7s
+it  48 beta    8 J   0.0666 vol 0.0882 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.18e+03 72.7s
+it  49 beta    8 J   0.0660 vol 0.0882 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.16e+03 74.9s
+it  49 beta    8 J   0.0660 vol 0.0882 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.16e+03 74.9s
+it  50 beta    8 J   0.0655 vol 0.0883 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.14e+03 78.5s
+it  50 beta    8 J   0.0655 vol 0.0883 (dil 0.1808 g -0.000) grey  7.9% ch 0.100 worst tie b10 mx 2.14e+03 78.5s
+it  51 beta    8 J   0.0651 vol 0.0883 (dil 0.1808 g +0.004) grey  7.9% ch 0.100 worst tie b10 mx 2.13e+03 81.5s
+it  51 beta    8 J   0.0651 vol 0.0883 (dil 0.1808 g +0.004) grey  7.9% ch 0.100 worst tie b10 mx 2.13e+03 81.5s
+it  52 beta    8 J   0.0666 vol 0.0878 (dil 0.1801 g -0.000) grey  7.8% ch 0.100 worst tie b10 mx 2.18e+03 76.3s
+it  52 beta    8 J   0.0666 vol 0.0878 (dil 0.1801 g -0.000) grey  7.8% ch 0.100 worst tie b10 mx 2.18e+03 76.3s
+layout: beta 8 done: eroded design 5 bodies, main 99.5%; drawn bodies outside the main body: 0
+layout: beta 8 done: eroded design 5 bodies, main 99.5%; drawn bodies outside the main body: 0
+it  53 beta   16 J   0.1626 vol 0.0868 (dil 0.1770 g -0.004) grey  3.7% ch 0.100 worst tie b2 fz 6.14e+03 79.0s
+it  53 beta   16 J   0.1626 vol 0.0868 (dil 0.1770 g -0.004) grey  3.7% ch 0.100 worst tie b2 fz 6.14e+03 79.0s
+it  54 beta   16 J   0.1018 vol 0.0853 (dil 0.1765 g -0.007) grey  3.9% ch 0.100 worst tie b10 mx 3.58e+03 78.1s
+it  54 beta   16 J   0.1018 vol 0.0853 (dil 0.1765 g -0.007) grey  3.9% ch 0.100 worst tie b10 mx 3.58e+03 78.1s
