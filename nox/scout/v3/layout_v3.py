@@ -1295,6 +1295,22 @@ if OUT == os.path.join(ROOT, "runs", "scout_layout", "v12", ""):
                        guard_offsets={"shell tubes to prop disks, 3D (G)": round(pg, 1)}, mass_budget_g=500, cage_shell=SHELL_SPEC, access=ACCESS)
     asm.save(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json"))
     say("wrote nox/scout/v3/scout.assembly.json")
+    CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
+    if os.path.exists(CAM_SAVED):                             # the saved camera mount (PR 146) in place of the layout's cradle, arms and clips
+        ap_ = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json"); a_ = json.load(open(ap_)); sm_ = json.load(open(CAM_SAVED))
+        old_ = {CAMP, "camera cradle arms (printed)", "camera cradle clips (printed)"}
+        mine_ = [p_ for p_ in sm_["parts"] if p_.get("owner") == "scout camera mount"]; mn_ = {p_["name"] for p_ in mine_}
+        a_["parts"] = [p_ for p_ in a_["parts"] if p_["name"] not in old_] + mine_
+        a_["contact_pairs"] = [[("camera mount (printed)" if v_ == CAMP else v_) for v_ in c_[:2]] + c_[2:] for c_ in a_["contact_pairs"]
+                               if not ({c_[0], c_[1]} & (old_ - {CAMP}))] + [c_ for c_ in sm_["contact_pairs"] if c_[0] in mn_ - {"camera mount (printed)"}
+                                                                             or (c_[0] == "camera mount (printed)" and c_[1] == "cage shell tubes")]
+        a_["note"] = sm_["note"]
+        from assembly import Assembly
+        Assembly(a_, ap_).save(ap_)
+        import subprocess
+        subprocess.run([sys.executable, os.path.join(ROOT, "nox", "system_check.py"), ap_, "--report", "--out", os.path.join(OUT, "system_check_mount.json")],
+                       capture_output=True, cwd=ROOT)                # the view's numbers with the mount in
+        say("camera mount: the saved part (runs/scout_camera_mount/v1, " + ", ".join(f"{p_['name']} {p_['mass_g']} g" for p_ in mine_) + ") in the assembly")
 with open(os.path.join(OUT, "checks.txt"), "w") as f:
     f.write(LOG.getvalue())
 print("wrote", OUT)

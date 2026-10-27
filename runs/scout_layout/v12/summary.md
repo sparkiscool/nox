@@ -34,10 +34,10 @@ Script `nox/scout/v3/layout_v3.py` (now reading `SCOUT_ELEC`; v12 is the default
 
 Visuals:
 - The bay-fixed alternative: `alt_bay_fixed/preview.png`.
-- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 19; source `motion.html`). Still `preview.png`.
+- Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (source `motion.html`). Still `preview.png`. Since 27 Oct both show the saved camera mount v1 (`runs/scout_camera_mount/v1/`, PR 146) in place of the layout's cradle, arms and clips; the assembly too (version 21; system_check: cage first 6.2, CG 1.9 / 0.8, 735 g E).
 - Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 4; source `camera_clips.html`, still `camera_clips.png`).
 
-System: Scout v3, cage first 4.2 mm (E) (camera), shell 47 rods closed, fit 0.0 mm³ (E), bbox 13.7 L (E), extents 386 x 278 x 127 mm (E), mass 730 of 500 g (146 %) (E) over budget (total), CG 0.9 mm off thrust axis (E), 0.8 mm without swap parts, probes 7.2 mm (E) edge (UBEC), access 8/8 clear. PASS.
+System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [+1.9, +0.2, -38.4], 0.8 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear PASS. (With the saved camera mount v1, `system_check_mount.json`; the drawn 3.0 rods, the sized 6/4 tubes add +74 g E, not in this line.)
 
 ## Cage
 - **Shell, 47 rods** (61..286, 6.13 m) on 18 nodes, offset 24.
