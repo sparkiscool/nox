@@ -220,3 +220,17 @@ layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 layout: reachability OK: every drawn body can be joined by members of 6.25 mm
 fem: grid (128, 48, 32) = 196,608 elements, 256,353 active dofs; backend direct (direct estimate 2.8 GB, budget 11.8 GB)
 fem: grid (128, 48, 32) = 196,608 elements, 256,353 active dofs; backend direct (direct estimate 2.8 GB, budget 11.8 GB)
+layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.106
+layout: warm start from a (64, 24, 16) grid (h 4.0): mean x 0.106
+it   1 beta    4 J  10.0000 vol 0.0742 (dil 0.1697 g +0.048) grey 17.9% ch 0.100 worst tie b15 my 5.85e+05 79.5s
+it   1 beta    4 J  10.0000 vol 0.0742 (dil 0.1697 g +0.048) grey 17.9% ch 0.100 worst tie b15 my 5.85e+05 79.5s
+it   2 beta    4 J   9.7902 vol 0.0648 (dil 0.1591 g -0.017) grey 17.3% ch 0.100 worst tie b15 my 5.74e+05 83.0s
+it   2 beta    4 J   9.7902 vol 0.0648 (dil 0.1591 g -0.017) grey 17.3% ch 0.100 worst tie b15 my 5.74e+05 83.0s
+it   3 beta    4 J   9.0826 vol 0.0646 (dil 0.1589 g -0.018) grey 17.1% ch 0.100 worst tie b15 my 5.33e+05 82.5s
+it   3 beta    4 J   9.0826 vol 0.0646 (dil 0.1589 g -0.018) grey 17.1% ch 0.100 worst tie b15 my 5.33e+05 82.5s
+it   4 beta    4 J   6.7023 vol 0.0648 (dil 0.1596 g -0.014) grey 16.7% ch 0.100 worst tie b15 my 3.99e+05 82.2s
+it   4 beta    4 J   6.7023 vol 0.0648 (dil 0.1596 g -0.014) grey 16.7% ch 0.100 worst tie b15 my 3.99e+05 82.2s
+it   5 beta    4 J   3.6557 vol 0.0646 (dil 0.1599 g -0.012) grey 16.6% ch 0.100 worst tie b9 mx 2.19e+05 81.6s
+it   5 beta    4 J   3.6557 vol 0.0646 (dil 0.1599 g -0.012) grey 16.6% ch 0.100 worst tie b9 mx 2.19e+05 81.6s
+it   6 beta    4 J   1.9668 vol 0.0626 (dil 0.1587 g -0.042) grey 16.6% ch 0.100 worst tie b9 mx 1.12e+05 81.4s
+it   6 beta    4 J   1.9668 vol 0.0626 (dil 0.1587 g -0.042) grey 16.6% ch 0.100 worst tie b9 mx 1.12e+05 81.4s
