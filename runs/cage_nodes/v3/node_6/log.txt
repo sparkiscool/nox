@@ -305,3 +305,5 @@ it  41 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000
 it  41 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 42.7s
 it  42 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 58.2s
 it  42 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 58.2s
+it  43 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 56.1s
+it  43 beta    8 J  10.0000 vol 0.0044 (dil 0.0473 g +0.520) grey  1.0% ch 0.000 worst tube to 15 side a 104 56.1s
