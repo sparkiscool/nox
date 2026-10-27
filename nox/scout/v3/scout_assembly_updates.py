@@ -1,6 +1,6 @@
 """Updates to nox/scout/v3/scout.assembly.json from other sessions' parts, applied after layout_v3.py writes it (and runnable alone,
 idempotent): the saved camera mount (PR 146) in place of the layout's cradle, and the electronics session's tail bay round
-(its mount and cable masses at their CGs, the Radxa's post keep-outs). Then system_check writes the run's system_check_mount.json.
+(its mount and cable masses at their CGs, the Radxa's post keep-outs, then the belly mount v1's system model). Then system_check writes the run's system_check_mount.json.
 
 python3 nox/scout/v3/scout_assembly_updates.py
 """
@@ -15,6 +15,7 @@ ASM = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")
 RUN = os.path.join(ROOT, "runs", "scout_layout", "v12")
 CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
 ELEC_R = os.path.join(RUN, "electronics_envelope_r5.json")      # the electronics session's round 5 (SOURCE.txt), drawn at the v12 catch
+BELLY = os.path.join(ROOT, "runs", "scout_belly_mount", "v1")    # the electronics session's belly mount v1 (PR 150, concept): its system model
 CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant
 # the Radxa's 4 M2.5 holes, board coords (X along 65 from the SD end, Y along 30 from the ports edge; H, STEP, from the electronics
 # session's electronics_system.py RADXA_HOLES); its posts land on the PCB back (y -1.6) with Ø8.4 keep-outs (their round 5)
@@ -43,6 +44,7 @@ def electronics(a):
     for n, g, c in (("tail bay mount block (Scout electronics, E)", blk["mass_g"], blk["cg"]),
                     ("tail bay carrier (Scout electronics, E)", rest_g, rest_c),
                     ("tail bay cables (Scout electronics, E)", e["cables"]["mass_g"], e["cables"]["cg"])):
+        if n not in P: continue                                         # drawn by the belly mount's system model (below)
         P[n]["mass_g"] = round(float(g), 2); P[n]["cg"] = np.round(np.asarray(c, float), 2).tolist()
         P[n]["version"] = f"electronics round {e['round']} (concept)"; out.append(f"{n} {g:.1f} g")
     rx = P["Radxa Zero 3W"]; src = os.path.join(ROOT, rx["mesh"])
@@ -61,8 +63,42 @@ def electronics(a):
     return out
 
 
+def belly(a):
+    """the belly mount v1 system model (runs/scout_belly_mount/v1/manifest.json: main's assembly with the belly mount in place of the
+    25 g placeholder, the tail block and carrier as drawn, the real FC board, the flow re-placed): its parts, contacts, clearances, access"""
+    man = os.path.join(BELLY, "manifest.json")
+    if not os.path.exists(man) or not any(p["name"] == "mount + nose legs (Scout)" for p in a["parts"]): return []
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import belly_mount as bm
+    m = json.load(open(man)); r = json.load(open(os.path.join(BELLY, "result.json"))); d = os.path.join(RUN, "belly_v1"); os.makedirs(d, exist_ok=True)
+    meshes = {"FC": bm.fc_mesh(r["fc"]["z"][0]), "flow MTF-02P": bm.flow_mesh(r["flow"]),
+              "belly mount (PETG)": trimesh.load(os.path.join(BELLY, "belly_mount__petg_.stl"))}
+    SWAP = {"belly mount (PETG)", "electronics tail block (PETG)", "electronics tail carrier (PETG)", "FC", "flow MTF-02P", "wires"}
+    GONE = {"mount + nose legs (Scout)", "tail bay mount block (Scout electronics, E)", "tail bay carrier (Scout electronics, E)"}
+    new = []
+    for p in m["parts"]:
+        if p["name"] not in SWAP: continue                               # only their pieces; every other part stays the layout's
+        if p.get("trimesh"):
+            f = os.path.join(d, p["name"].split(" (")[0].replace(" ", "_").lower() + ".stl")
+            if p["name"] != "belly mount (PETG)": meshes[p["name"]].export(f)
+            else: f = os.path.join(BELLY, "belly_mount__petg_.stl")
+            del p["trimesh"]; p["mesh"] = os.path.relpath(f, ROOT)
+        elif "mesh" in p and os.path.isabs(p["mesh"]): p["mesh"] = os.path.relpath(p["mesh"], ROOT)
+        new.append(p)
+    a["parts"] = [p for p in a["parts"] if p["name"] not in SWAP | GONE] + new
+    touched = SWAP | GONE
+    a["contact_pairs"] = [c for c in a["contact_pairs"] if not ({c[0], c[1]} & touched)] + [c for c in m["contact_pairs"] if {c[0], c[1]} & SWAP]
+    a["contact_pairs"] = [c for c in a["contact_pairs"] if not ("tail bay cables (Scout electronics, E)" in c[:2] and c[2] >= 1e9)]   # the cables:
+                                                                     # a mass point, no blanket pairs (a future cable clash shows)
+    for k in ("clearance_pairs", "access"):
+        if k in m: a[k] = m[k]
+    a["note"] = "belly mount v1 (concept, runs/scout_belly_mount/v1) system model: " + m["note"] + " " + a["note"]
+    bp = next(p for p in m["parts"] if p["name"] == "belly mount (PETG)")
+    return [f"belly mount v1 (concept) {bp['mass_g']} g E, FC 36 x 36 on the AIO holes, flow at ({r['flow']['c'][0]}, {r['flow']['c'][1]}, {r['flow']['zb']})"]
+
+
 def main():
-    a = json.load(open(ASM)); done = camera_mount(a) + electronics(a)
+    a = json.load(open(ASM)); done = camera_mount(a) + electronics(a) + belly(a)
     Assembly(a, ASM).save(ASM)
     subprocess.run([sys.executable, os.path.join(ROOT, "nox", "system_check.py"), ASM, "--report", "--out", os.path.join(RUN, "system_check_mount.json")],
                    capture_output=True, cwd=ROOT)                 # the view's and summary's numbers with these in

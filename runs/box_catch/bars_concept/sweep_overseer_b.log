@@ -1,0 +1,192 @@
+overseer: 4343 low points, cartridge bottom 3.0 above z 0 (7.00 above the deck)
+  overseer off ( -20, -80) yaw  -15: FAIL side +y lip meets cage node 4 at s 185.5 pose [30.31, -10.33, -0.46]
+  overseer off ( -20, -80) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 178.5 pose [34.21, -23.22, -0.35]
+  overseer off ( -20, -80) yaw   -5: FAIL side +y lip meets cage tube 4-11 at s 179.5 pose [33.65, -21.21, -0.36]
+  overseer off ( -20, -80) yaw    0: ok clamp 84.0 slide 88.42 err (-0.71, -0.07, -0.72) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -80) yaw    5: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off ( -20, -80) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off ( -20, -80) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off ( -20, -60) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 175.5 pose [31.81, -14.85, -0.42]
+  overseer off ( -20, -60) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off ( -20, -60) yaw   -5: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off ( -20, -60) yaw    0: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off ( -20, -60) yaw    5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -60) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 199.5 pose [-47.05, -24.53, 0.26]
+  overseer off ( -20, -60) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 200.0 pose [-46.23, -24.12, 0.28]
+  overseer off ( -20, -40) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 184.5 pose [32.28, -17.08, -0.41]
+  overseer off ( -20, -40) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 183.0 pose [39.56, -14.42, -0.38]
+  overseer off ( -20, -40) yaw   -5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -40) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -40) yaw    5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -40) yaw   10: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -40) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 162.5 pose [-31.04, -55.49, 0.43]
+  overseer off ( -20, -20) yaw  -15: FAIL side -y lip meets cage tube 1-12 at s 126.0 pose [-6.36, -24.07, -0.23]
+  overseer off ( -20, -20) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -20) yaw   -5: ok clamp 95.0 slide 82.46 err (2.02, -0.03, -0.29) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -20) yaw    5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -20) yaw   10: ok clamp 95.0 slide 83.53 err (-3.55, 0.01, 0.48) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20, -20) yaw   15: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw  -15: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw   -5: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw    0: ok clamp 91.0 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw    5: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,   0) yaw   15: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw  -15: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw  -10: ok clamp 95.0 slide 82.35 err (-4.06, 0.0, -0.45) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw   -5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw    5: ok clamp 95.0 slide 84.3 err (2.73, 0.03, 0.23) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  20) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 126.0 pose [-6.36, 24.07, 0.23]
+  overseer off ( -20,  40) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 162.5 pose [-31.04, 55.49, -0.43]
+  overseer off ( -20,  40) yaw  -10: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  40) yaw   -5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  40) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  40) yaw    5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  40) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 183.0 pose [39.62, 15.54, 0.38]
+  overseer off ( -20,  40) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 184.5 pose [32.29, 17.08, 0.41]
+  overseer off ( -20,  60) yaw  -15: FAIL side -y lip meets cage tube 1-12 at s 200.0 pose [-46.14, 24.21, -0.29]
+  overseer off ( -20,  60) yaw  -10: FAIL side -y lip meets cage tube 1-12 at s 199.5 pose [-46.93, 24.62, -0.26]
+  overseer off ( -20,  60) yaw   -5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  60) yaw    0: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off ( -20,  60) yaw    5: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off ( -20,  60) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off ( -20,  60) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 175.5 pose [31.76, 14.86, 0.42]
+  overseer off ( -20,  80) yaw  -15: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off ( -20,  80) yaw  -10: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off ( -20,  80) yaw   -5: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off ( -20,  80) yaw    0: ok clamp 84.0 slide 88.03 err (-1.35, 0.01, -0.75) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off ( -20,  80) yaw    5: FAIL side -y lip meets cage tube 0-12 at s 179.5 pose [33.87, 22.3, 0.36]
+  overseer off ( -20,  80) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 178.5 pose [34.34, 23.17, 0.34]
+  overseer off ( -20,  80) yaw   15: FAIL side -y lip meets cage node 0 at s 185.5 pose [30.34, 10.32, 0.46]
+  overseer off (   0, -80) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 179.5 pose [33.65, -21.21, -0.36]
+  overseer off (   0, -80) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 179.5 pose [33.65, -21.21, -0.36]
+  overseer off (   0, -80) yaw   -5: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off (   0, -80) yaw    0: ok clamp 84.0 slide 88.42 err (-0.71, -0.07, -0.72) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -80) yaw    5: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off (   0, -80) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off (   0, -80) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 194.0 pose [-36.43, -21.51, 0.37]
+  overseer off (   0, -60) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 183.5 pose [39.56, -14.42, -0.38]
+  overseer off (   0, -60) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off (   0, -60) yaw   -5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -60) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -60) yaw    5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -60) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 200.0 pose [-46.23, -24.12, 0.28]
+  overseer off (   0, -60) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 200.0 pose [-45.48, -23.6, 0.31]
+  overseer off (   0, -40) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 184.5 pose [32.28, -17.08, -0.41]
+  overseer off (   0, -40) yaw  -10: ok clamp 95.0 slide 82.46 err (2.02, -0.03, -0.29) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -40) yaw   -5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -40) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -40) yaw    5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -40) yaw   10: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -40) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 162.5 pose [-31.04, -55.49, 0.43]
+  overseer off (   0, -20) yaw  -15: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -20) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -20) yaw   -5: ok clamp 95.0 slide 82.46 err (2.02, -0.03, -0.29) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -20) yaw    5: ok clamp 95.0 slide 83.53 err (-3.55, 0.01, 0.48) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -20) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0, -20) yaw   15: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw  -15: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw   -5: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw    0: ok clamp 90.5 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw    5: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,   0) yaw   15: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw  -15: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw   -5: ok clamp 95.0 slide 82.35 err (-4.06, 0.0, -0.45) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw    5: ok clamp 95.0 slide 84.3 err (2.73, 0.03, 0.23) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  20) yaw   15: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  40) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 162.5 pose [-31.04, 55.49, -0.43]
+  overseer off (   0,  40) yaw  -10: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  40) yaw   -5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  40) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  40) yaw    5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  40) yaw   10: ok clamp 95.0 slide 84.3 err (2.73, 0.03, 0.23) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  40) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 184.5 pose [32.29, 17.08, 0.41]
+  overseer off (   0,  60) yaw  -15: FAIL side -y lip meets cage tube 1-12 at s 200.5 pose [-45.39, 23.69, -0.31]
+  overseer off (   0,  60) yaw  -10: FAIL side -y lip meets cage tube 1-12 at s 200.0 pose [-46.14, 24.21, -0.29]
+  overseer off (   0,  60) yaw   -5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  60) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  60) yaw    5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  60) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off (   0,  60) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 183.5 pose [39.62, 15.54, 0.38]
+  overseer off (   0,  80) yaw  -15: FAIL side -y lip meets cage tube 1-12 at s 194.0 pose [-36.43, 21.52, -0.37]
+  overseer off (   0,  80) yaw  -10: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off (   0,  80) yaw   -5: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off (   0,  80) yaw    0: ok clamp 84.0 slide 88.03 err (-1.35, 0.01, -0.75) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (   0,  80) yaw    5: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off (   0,  80) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 179.5 pose [33.87, 22.3, 0.36]
+  overseer off (   0,  80) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 179.5 pose [33.87, 22.3, 0.36]
+  overseer off (  20, -80) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 178.0 pose [34.17, -23.24, -0.35]
+  overseer off (  20, -80) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off (  20, -80) yaw   -5: FAIL side +y lip meets cage tube 4-11 at s 186.0 pose [43.19, -21.96, -0.32]
+  overseer off (  20, -80) yaw    0: ok clamp 84.0 slide 88.42 err (-0.71, -0.07, -0.72) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -80) yaw    5: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off (  20, -80) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 194.0 pose [-36.43, -21.51, 0.37]
+  overseer off (  20, -80) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 118.0 pose [-7.74, -85.84, 0.33]
+  overseer off (  20, -60) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 183.5 pose [39.56, -14.42, -0.38]
+  overseer off (  20, -60) yaw  -10: FAIL side +y lip meets cage tube 4-11 at s 184.5 pose [44.51, -25.97, -0.27]
+  overseer off (  20, -60) yaw   -5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -60) yaw    0: FAIL side +y lip meets cage tube 3-11 at s 199.5 pose [-46.91, -24.58, 0.26]
+  overseer off (  20, -60) yaw    5: FAIL side +y lip meets cage tube 3-11 at s 200.0 pose [-46.38, -24.85, 0.28]
+  overseer off (  20, -60) yaw   10: FAIL side +y lip meets cage tube 3-11 at s 200.0 pose [-45.47, -23.6, 0.31]
+  overseer off (  20, -60) yaw   15: FAIL side +y lip meets cage tube 3-11 at s 200.5 pose [-45.01, -22.92, 0.32]
+  overseer off (  20, -40) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 184.5 pose [32.28, -17.08, -0.41]
+  overseer off (  20, -40) yaw  -10: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -40) yaw   -5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -40) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -40) yaw    5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -40) yaw   10: FAIL side +y lip meets cage tube 3-18 at s 192.0 pose [-42.0, -27.55, 0.39]
+  overseer off (  20, -40) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 162.5 pose [-31.04, -55.49, 0.43]
+  overseer off (  20, -20) yaw  -15: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -20) yaw  -10: ok clamp 100.5 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -20) yaw   -5: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -20) yaw    0: ok clamp 99.0 slide 88.22 err (0.06, -0.23, -0.91) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -20) yaw    5: ok clamp 95.0 slide 83.53 err (-3.55, 0.01, 0.48) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -20) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20, -20) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 125.0 pose [8.93, -23.08, 0.25]
+  overseer off (  20,   0) yaw  -15: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,   0) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,   0) yaw   -5: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,   0) yaw    0: ok clamp 91.0 slide 89.93 err (-0.23, -0.23, 0.02) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,   0) yaw    5: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,   0) yaw   10: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,   0) yaw   15: ok clamp 100.0 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  20) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 125.0 pose [8.93, 23.08, -0.25]
+  overseer off (  20,  20) yaw  -10: ok clamp 100.0 slide 86.3 err (-1.15, -0.03, -0.41) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  20) yaw   -5: ok clamp 95.0 slide 82.35 err (-4.06, 0.0, -0.45) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  20) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  20) yaw    5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  20) yaw   10: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  20) yaw   15: ok clamp 100.5 slide 87.13 err (-0.81, 0.03, 0.39) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  40) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 162.5 pose [-31.04, 55.49, -0.43]
+  overseer off (  20,  40) yaw  -10: FAIL side -y lip meets cage tube 1-19 at s 192.0 pose [-41.98, 27.56, -0.39]
+  overseer off (  20,  40) yaw   -5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  40) yaw    0: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  40) yaw    5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  40) yaw   10: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  40) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 184.5 pose [32.29, 17.08, 0.41]
+  overseer off (  20,  60) yaw  -15: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off (  20,  60) yaw  -10: FAIL side -y lip meets cage tube 1-12 at s 200.5 pose [-45.4, 23.69, -0.31]
+  overseer off (  20,  60) yaw   -5: FAIL side -y lip meets cage tube 1-12 at s 200.0 pose [-46.29, 24.13, -0.28]
+  overseer off (  20,  60) yaw    0: FAIL side -y lip meets cage tube 1-12 at s 199.5 pose [-46.82, 24.68, -0.27]
+  overseer off (  20,  60) yaw    5: ok clamp 99.0 slide 88.74 err (-0.58, -0.01, -0.66) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  60) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 184.5 pose [44.63, 25.85, 0.27]
+  overseer off (  20,  60) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 183.5 pose [39.62, 15.54, 0.38]
+  overseer off (  20,  80) yaw  -15: FAIL side +y lip meets cage tube 4-11 at s 118.0 pose [-7.74, 85.84, -0.33]
+  overseer off (  20,  80) yaw  -10: FAIL side -y lip meets cage tube 1-12 at s 194.0 pose [-36.43, 21.52, -0.37]
+  overseer off (  20,  80) yaw   -5: FAIL side -y lip meets cage tube 1-19 at s 200.5 pose [-44.94, 23.0, -0.33]
+  overseer off (  20,  80) yaw    0: ok clamp 84.0 slide 88.03 err (-1.35, 0.01, -0.75) clear 1.5 (side +y lip to cage tube 3-4) ride 0.81
+  overseer off (  20,  80) yaw    5: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off (  20,  80) yaw   10: FAIL side -y lip meets cage tube 0-12 at s 186.0 pose [43.39, 23.84, 0.31]
+  overseer off (  20,  80) yaw   15: FAIL side -y lip meets cage tube 0-12 at s 178.0 pose [34.27, 23.19, 0.35]
+  overseer 189 landings in 1162 s
+overseer {"square_mm": 0.0, "per_axis": {"x": [-20.0, 20.0], "y": [-80, 80]}, "yaw_ok_deg": [-15, -10, -5, 0, 5, 10, 15], "worst_pose_err_mm": 4.06, "worst_yaw_err_deg": 0.91, "min_clear_mm": 1.5, "s_clamp": [84.0, 90.5, 91.0, 95.0, 99.0, 100.0, 100.5], "n": 189, "n_ok": 101, "fails": {"side +y lip meets cage tube 4-11": 25, "side -y lip meets cage tube 0-12": 25, "side +y lip meets cage tube 3-11": 17, "side -y lip meets cage tube 1-12": 10, "side -y lip meets cage tube 1-19": 8, "side +y lip meets cage node 4": 1}}
