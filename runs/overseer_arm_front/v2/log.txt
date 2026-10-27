@@ -444,3 +444,37 @@ layout done: 6069 s, peak 6.524556 GB
 layout done: 6069 s, peak 6.524556 GB
 build: organic surface at pitch 0.286 mm (x7), skins 24.33 cm3, field 80.15 cm3, in env - cuts 73.16 cm3 (layout 73.16, level offset +0.272 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,273,932 faces, 1078 s
 build: organic surface at pitch 0.286 mm (x7), skins 24.33 cm3, field 80.15 cm3, in env - cuts 73.16 cm3 (layout 73.16, level offset +0.272 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,273,932 faces, 1078 s
+=== overseer_arm_front: rebuild from /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/front_v2_src/density.npz (layout not rerun)
+=== overseer_arm_front: rebuild from /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/front_v2_src/density.npz (layout not rerun)
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 64,990 (519.9 cm3), drawn 3,464, void 103,578
+  insert rod 0: 219 cells, modulus x25.4
+  insert rod 1: 131 cells, modulus x42.4
+  insert rod 2: 219 cells, modulus x25.4
+  insert rod 3: 131 cells, modulus x42.4
+  support default: no cell centre in the region at h 2.0; using the 130 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 130 cells, 338 nodes
+  support bosses: 84 cells, 284 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 64,990 (519.9 cm3), drawn 3,464, void 103,578
+  insert rod 0: 219 cells, modulus x25.4
+  insert rod 1: 131 cells, modulus x42.4
+  insert rod 2: 219 cells, modulus x25.4
+  insert rod 3: 131 cells, modulus x42.4
+  support default: no cell centre in the region at h 2.0; using the 130 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 130 cells, 338 nodes
+  support bosses: 84 cells, 284 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (27.34 cm3); 5.77 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (27.34 cm3); 5.77 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.087 of 65,636 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.087 of 65,636 design cells
+layout: WARNING nearly mirrored in y (2.6% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.6% of passive cells differ): no symmetry
+layout: 10 drawn bodies (3,417 cells), held solid in every realization; eroded filter: masked
+layout: 10 drawn bodies (3,417 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 54 tie cases (9 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: 53 load cases + 54 tie cases (9 bodies tied, 1 held by support 'default') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (112, 48, 32) = 172,032 elements, 231,117 active dofs; backend direct (direct estimate 2.5 GB, budget 11.8 GB)
+fem: grid (112, 48, 32) = 172,032 elements, 231,117 active dofs; backend direct (direct estimate 2.5 GB, budget 11.8 GB)
