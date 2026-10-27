@@ -1,0 +1,446 @@
+{
+ "name": "cage_node_21",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   4237.8
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.989,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 3608.4,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "tube to 7 pull",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.001,
+    "at": [
+     -55.6,
+     0.8,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 7 push",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.001,
+    "at": [
+     -55.6,
+     0.8,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 7 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -55.6,
+     -2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 7 side b",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.0,
+    "at": [
+     -55.6,
+     0.8,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 9 pull",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.008,
+    "at": [
+     -57.1,
+     -2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 9 push",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.008,
+    "at": [
+     -57.1,
+     -2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 9 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -60.1,
+     -2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 9 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -57.1,
+     -2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 10 pull",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.008,
+    "at": [
+     -57.1,
+     2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 10 push",
+    "cls": "misuse",
+    "inlayer": 0.01,
+    "across": 0.008,
+    "at": [
+     -57.1,
+     2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 10 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -60.1,
+     2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 10 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -57.1,
+     2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 20 pull",
+    "cls": "misuse",
+    "inlayer": 0.008,
+    "across": 0.007,
+    "at": [
+     -60.1,
+     0.8,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 20 push",
+    "cls": "misuse",
+    "inlayer": 0.008,
+    "across": 0.006,
+    "at": [
+     -60.1,
+     0.8,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 20 side a",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.002,
+    "at": [
+     -57.1,
+     -0.8,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 20 side b",
+    "cls": "misuse",
+    "inlayer": 0.005,
+    "across": 0.004,
+    "at": [
+     -57.1,
+     -2.2,
+     123.8
+    ]
+   },
+   {
+    "case": "tube to 22 pull",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.001,
+    "at": [
+     -55.6,
+     -2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 22 push",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.001,
+    "at": [
+     -55.6,
+     -2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 22 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -55.6,
+     -2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 22 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -55.6,
+     -2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 23 pull",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.001,
+    "at": [
+     -55.6,
+     2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 23 push",
+    "cls": "misuse",
+    "inlayer": 0.001,
+    "across": 0.001,
+    "at": [
+     -55.6,
+     2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 23 side a",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -55.6,
+     2.2,
+     134.3
+    ]
+   },
+   {
+    "case": "tube to 23 side b",
+    "cls": "misuse",
+    "inlayer": 0.0,
+    "across": 0.0,
+    "at": [
+     -55.6,
+     2.2,
+     134.3
+    ]
+   }
+  ],
+  "worst": 0.01,
+  "worst_case": "tube to 9 pull",
+  "worst_at": [
+   -57.1,
+   -2.2,
+   123.8
+  ]
+ },
+ "mass_g": 11.61,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 9145.3,
+ "drawn_g": 11.01,
+ "stl": "cage_node_21.stl",
+ "view_stl": "cage_node_21_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 4.29504458275024,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.015208980903223354,
+  "nd": 23378,
+  "sym_axes": [
+   1
+  ],
+  "n_real": 24,
+  "n_ties": 0,
+  "backend": "direct",
+  "iterations": 140,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "node_21",
+  "h": 1.5,
+  "shape": [
+   40,
+   40,
+   40
+  ],
+  "origin": [
+   -87.8409,
+   -30.0,
+   99.0966
+  ],
+  "cells": 64000,
+  "design": 23378,
+  "drawn": 2674,
+  "cases": [
+   "tube to 7 pull",
+   "tube to 7 push",
+   "tube to 7 side a",
+   "tube to 7 side b",
+   "tube to 9 pull",
+   "tube to 9 push",
+   "tube to 9 side a",
+   "tube to 9 side b",
+   "tube to 10 pull",
+   "tube to 10 push",
+   "tube to 10 side a",
+   "tube to 10 side b",
+   "tube to 20 pull",
+   "tube to 20 push",
+   "tube to 20 side a",
+   "tube to 20 side b",
+   "tube to 22 pull",
+   "tube to 22 push",
+   "tube to 22 side a",
+   "tube to 22 side b",
+   "tube to 23 pull",
+   "tube to 23 push",
+   "tube to 23 side a",
+   "tube to 23 side b"
+  ],
+  "supports": [
+   "hold 0",
+   "hold 1",
+   "hold 2",
+   "hold 3",
+   "hold 4",
+   "hold 5"
+  ]
+ },
+ "build_s": 73.7,
+ "layout_s": 3717,
+ "peak_gb": 1.32504,
+ "gen_cm3": 1.2,
+ "h": 1.5,
+ "total_s": 3790
+}
