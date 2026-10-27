@@ -68,7 +68,7 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
   - The rear core ties (2, new) root at (-95.5, 0, -1) (C) and run to nodes 13 / 14: with the real cartridge they clear it. That is the 36 -> 38 links.
   - TPU feet are Ø16 x 3 caps (C) under the loop nodes, contact z -93.1 (C).
   - The 8 bay ties root at x 30 / -90 (C), y ±56 (C), z -5.1 (C), the sled's side faces in dimensions.md (were the old sled corners at y ±72, C); the sled is not drawn yet (Next).
-  - Frame model: worst tube buckling 1.92 (F), link 0.72 (F), lowest mode 148 Hz (F on E).
+  - Frame model: worst tube buckling 1.92 (F), link 0.72 (F), lowest mode 148 Hz (F on E); every tie root is taken as rigid core, the 8 bay tie roots on the undrawn sled included, so the arm and node loads assume a belly root that does not exist yet (E).
   - **Compactness cost:** the cage grows 26 taller (223 -> 249, E) and the bbox 116 -> 130 L (+12 %, E). Alternative weighed: keep the loop at z -57 and dip only the swap opening round the cartridge (a recessed pocket, not modelled): it adds nodes and tubes under the 95 merge length round a 23 deep pocket, and the loop is the funnel interface the Scout shares, so a pocket changes both. Dropping the loop keeps the shell as it is (DEFAULT); the other way is a shallower belly, which the latch set's depth fixes (core session).
 
 ## One layout ("the one with perfect CG")
