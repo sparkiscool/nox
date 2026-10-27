@@ -1,0 +1,42 @@
+=== cage_node_11: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_11: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_11: grid (64, 64, 64) h 1.5 = 262,144 cells; design 115,883 (391.1 cm3), drawn 2,914, void 143,347
+  support hold 0: 2589 cells, 5165 nodes
+  support hold 1: 2587 cells, 5181 nodes
+  support hold 2: 2581 cells, 5164 nodes
+  support hold 3: 2583 cells, 5158 nodes
+  support hold 4: 2566 cells, 5164 nodes
+  support hold 5: 2588 cells, 5142 nodes
+  support hold 6: 2580 cells, 5166 nodes
+  support hold 7: 2645 cells, 5356 nodes
+  support hold 8: 2660 cells, 5385 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_11: grid (40, 40, 40) h 3.0 = 64,000 cells; design 14,467 (390.6 cm3), drawn 371, void 49,162
+  support hold 0: 328 cells, 986 nodes
+  support hold 1: 329 cells, 985 nodes
+  support hold 2: 328 cells, 985 nodes
+  support hold 3: 329 cells, 974 nodes
+  support hold 4: 330 cells, 983 nodes
+  support hold 5: 331 cells, 973 nodes
+  support hold 6: 329 cells, 977 nodes
+  support hold 7: 336 cells, 1026 nodes
+  support hold 8: 334 cells, 1029 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (10.02 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (10.02 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.003 of 14,467 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.003 of 14,467 design cells
+layout: WARNING nearly mirrored in x (1.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (1.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (0.9% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (0.9% of passive cells differ): no symmetry
+layout: 6 drawn bodies (371 cells), held solid in every realization; eroded filter: masked
+layout: 6 drawn bodies (371 cells), held solid in every realization; eroded filter: masked
+layout: 36 load cases + 0 tie cases (0 bodies tied, 6 held by support 'hold 0') + 0 gate ties + 30 held ties
+layout: 36 load cases + 0 tie cases (0 bodies tied, 6 held by support 'hold 0') + 0 gate ties + 30 held ties
+fem: grid (40, 40, 40) = 64,000 elements, 51,795 active dofs; backend mg (direct estimate 0.3 GB, budget 11.8 GB)
+fem: grid (40, 40, 40) = 64,000 elements, 51,795 active dofs; backend mg (direct estimate 0.3 GB, budget 11.8 GB)
+fem: multigrid 2 levels [(np.int64(40), np.int64(40), np.int64(40)), (np.int64(20), np.int64(20), np.int64(20))], coarsest 27,783 dofs (direct)
+fem: multigrid 2 levels [(np.int64(40), np.int64(40), np.int64(40)), (np.int64(20), np.int64(20), np.int64(20))], coarsest 27,783 dofs (direct)
