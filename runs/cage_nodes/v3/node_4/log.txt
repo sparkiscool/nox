@@ -1,0 +1,48 @@
+=== cage_node_4: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+=== cage_node_4: h 1.5, generated 1.2 cm3, min member 3.2 mm, cores 4
+node_4: grid (40, 40, 40) h 1.5 = 64,000 cells; design 24,013 (81.0 cm3), drawn 2,590, void 37,397
+  support hold 0: 2094 cells, 3846 nodes
+  support hold 1: 2024 cells, 3616 nodes
+  support hold 2: 2035 cells, 3645 nodes
+  support hold 3: 2082 cells, 3793 nodes
+  support hold 4: 2136 cells, 3894 nodes
+  support hold 5: 2280 cells, 4138 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+node_4: grid (24, 24, 24) h 3.0 = 13,824 cells; design 3,009 (81.2 cm3), drawn 331, void 10,484
+  support hold 0: 270 cells, 705 nodes
+  support hold 1: 262 cells, 663 nodes
+  support hold 2: 262 cells, 666 nodes
+  support hold 3: 269 cells, 703 nodes
+  support hold 4: 273 cells, 717 nodes
+  support hold 5: 296 cells, 758 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.94 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (8.94 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.015 of 3,009 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 2.15 cells, erosion depth 1.71 mm; volfrac 0.015 of 3,009 design cells
+layout: WARNING nearly mirrored in x (3.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (3.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (2.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (2.3% of passive cells differ): no symmetry
+layout: 1 drawn bodies (331 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (331 cells), held solid in every realization; eroded filter: masked
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 24 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+fem: grid (24, 24, 24) = 13,824 elements, 12,930 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+fem: grid (24, 24, 24) = 13,824 elements, 12,930 active dofs; backend direct (direct estimate 0.1 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0473 (dil 0.0567 g +2.204) grey 15.5% ch 0.015 worst tube to 5 side a 122 2.2s
+it   1 beta    1 J  10.0000 vol 0.0473 (dil 0.0567 g +2.204) grey 15.5% ch 0.015 worst tube to 5 side a 122 2.2s
+it   2 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 2.4s
+it   2 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 2.4s
+it   3 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 3.0s
+it   3 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 3.0s
+it   4 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 3.2s
+it   4 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 3.2s
+it   5 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 2.7s
+it   5 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.436) grey 14.5% ch 0.000 worst tube to 5 side a 122 2.7s
+it   6 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.442) grey 14.5% ch 0.000 worst tube to 5 side a 122 2.9s
+it   6 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.442) grey 14.5% ch 0.000 worst tube to 5 side a 122 2.9s
+it   7 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.442) grey 14.5% ch 0.000 worst tube to 5 side a 122 3.0s
+it   7 beta    1 J  10.0019 vol 0.0363 (dil 0.0432 g +1.442) grey 14.5% ch 0.000 worst tube to 5 side a 122 3.0s
