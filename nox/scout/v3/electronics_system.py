@@ -1556,7 +1556,7 @@ def mass_points(res, mparts, which, half_cables=True):
     for k, (m, g, c, _) in mparts.items():
         if k not in which: continue
         np.random.seed(7)                                                            # seeded: one run gives one set of numbers
-        p = trimesh.sample.volume_mesh(m, 4000)[:400] if m.is_watertight else np.zeros((0, 3))
+        p = trimesh.sample.volume_mesh(m, 4000, seed=7)[:400] if m.is_watertight else np.zeros((0, 3))
         if len(p) < 50: p = trimesh.sample.sample_surface(m, 400, seed=3)[0]
         rows += [(g / len(p), q) for q in p]
     return rows
@@ -2089,7 +2089,7 @@ def run_v12():
     for f in os.listdir(RUN):
         if f.endswith(".stl"): os.remove(os.path.join(RUN, f))
     for k, (m, g, c, note) in mp.items(): m.export(os.path.join(RUN, "".join(ch_ if ch_.isalnum() else "_" for ch_ in k.lower())[:40] + ".stl"))
-    env = dict(round=4, layout="scout_layout v12 (PR 141, on main)", catch=dc, funnel_line=np.round(fl, 1).tolist(),
+    env = dict(round=5, layout="scout_layout v12 (PR 141, on main)", catch=dc, funnel_line=np.round(fl, 1).tolist(),
                note="drone frame (x nose, y left, z up, thrust centre x 0), catch 5.0 forward (v12); boxes [[x0, y0, z0], [x1, y1, z1]]; masses E unless tagged",
                items={}, mount={}, keep_clear=dict(plugs=np.round(kp, 1).tolist(), tool_lines={k: dict(start=v["start"], dir=v["dir"], d=TOOL) for k, v in A["sw"].items()},
                                                    keys={nm: dict(start=p, dir=d, d=4) for nm, p, d, cl in A["keys"]}))
@@ -2114,7 +2114,7 @@ def run_v12():
                                             "plate-bolt bosses sit there under the plate; the block's gusset bears on the receiver's tail face (z -4..9.6, |y| <= 7.2)",
                                plate="2 x Ø3.4 holes at (-42.0, +-16.0) in the tail tab (8.0 from its tail edge, 7.0 from the notch edge)")
     json.dump(env, open(os.path.join(RUN, "envelope.json"), "w"), indent=1)
-    res_out = dict(round=4, catch=dc, poses=pose_json(res), cables=env["cables"], concepts={
+    res_out = dict(round=5, catch=dc, poses=pose_json(res), cables=env["cables"], concepts={
         k: dict(mount={kk: dict(g=g, cg=np.round(c, 2).tolist(), bounds=np.round(m.bounds, 2).tolist(), note=note, bodies=v["bodies"][kk]) for kk, (m, g, c, note) in v["mp"].items()},
                 mount_g=round(v["g"], 1), checks=v["ck"], fit=v["fp"], sweeps=v["sw"], loads={kk: vv for kk, vv in v["ld"].items() if kk != "secs"}, modes=v["md"],
                 cg=dict(pack_in=np.round(v["cg"]["cin"], 3).tolist(), pack_out=np.round(v["cg"]["cout"], 3).tolist(),

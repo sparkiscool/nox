@@ -188,6 +188,13 @@
 2. **Belly mount** (a placeholder box today; this model cuts it so): its tail face at **x −31.0 over |y| ≤ 22**, z 9.6..18.5 (DEFAULT; the alternative is inserts in the belly mount itself).
 3. **Plate:** 2 x Ø3.4 holes at (−42.0, ±16.0) in the tail tab.
 4. **Receiver:** its tail face takes the gusset's bearing (z −4..9.6, |y| ≤ 7.2).
+5. **Scout layout, Radxa entry:** the mount's 4 posts land on the PCB back at y −1.6. The layout's Radxa box (±3.15) must take the 4 Ø8.4 back-side keep-outs this model cuts (`radxa_envelope()`, from the H STEP data, not measured), or the posts read 1.55 deep (269 mm³) in main's assembly.
+
+## What the extra mass buys
+The mount is 49.2 g against the layout's 38.6 g placeholder (+10.6 g, E). Crash worst is 0.26 of 1.0, so strength isn't what sets it:
+- the spine tube (14 tall) and the UBEC box keep the internal break order (fuse or block first) in 12 of 14 crash directions; the lighter flanges-only spine (V3 / V7) reaches 0.72 and loses the order;
+- the tail block is a printed root sized for the bolts' bosses (Ø10, wall 3.0) and the gusset bearing on the receiver;
+- the piece passes (topology on the same L loads) are where the grams come out, with the balance (0.56 / 1.49) and the order as constraints.
 
 ## Alternative B: A + a Ø6 strut to the tail point (−231.5, 0, 41.5), clip fuse
 - +4.3 g; modes 252 / 496 Hz against A's 227 / 461.
@@ -196,7 +203,9 @@
 - **A picked.**
 
 ## Still open
-1. **Our own order in pure ±x:** the carrier's spine at x −112 is within 1.2 times of the block (indices ≤ 0.07).
+1. **Our own order in pure ±x:** the carrier's spine at x −112 is within 1.2 times of the block (indices ≤ 0.07). L orders the mount only against the cage, and the cage goes first by about 8 times, so this is a piece-pass constraint (DEFAULT): the carrier's piece pass keeps the spine section at x −112.4 (A 125, C) ≥ 1.5 times the block in ±x.
+4. **L breaking order is checked against the worst cage rod, not a node.** L asks the mount to stay ≤ 1/1.5 of the worst cage node or foot index. Node indices aren't computed yet, so the 0.59 used is the sized 6/4 cage's worst rod (F on E, a cage Spark has not decided). It needs a node or foot index ≥ 0.39 (= 0.26 x 1.5) when the frame model reports nodes.
+5. **Plate keys have no practical margin:** 0.21 / 0.09 off the swept prop disks and 0.77 / 1.42 off the block's own fin and foot at the ball-end's 25° limit (C, reviewer's measure). Any hole tolerance uses that up. In practice turn the props off the line, or use a stubby key.
 2. **Requirements:** the belly mount's tail face and the 2 plate holes are open.
 3. **Measure first:** the UBEC, the plugs, and the microSD socket's width at the posts.
 
