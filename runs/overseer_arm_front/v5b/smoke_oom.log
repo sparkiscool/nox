@@ -1,0 +1,28 @@
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
+  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
+  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 60,108 (480.9 cm3), drawn 9,968, void 101,956
+  insert rod 0: 566 cells, modulus x21.8
+  insert rod 1: 566 cells, modulus x21.8
+  insert rod 2: 566 cells, modulus x21.8
+  insert rod 3: 566 cells, modulus x21.8
+  support default: 269 cells, 696 nodes
+  support bosses: 112 cells, 355 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_front: grid (64, 24, 16) h 4.0 = 24,576 cells; design 7,170 (458.9 cm3), drawn 1,254, void 16,152
+  insert rod 0: 102 cells, modulus x15.1
+  insert rod 1: 102 cells, modulus x15.1
+  insert rod 2: 102 cells, modulus x15.1
+  insert rod 3: 102 cells, modulus x15.1
+  support default: no cell centre in the region at h 4.0; using the 34 cells it intersects (3 x 3 x 3 samples per cell)
+  support default: 34 cells, 106 nodes
+  support bosses: 5 cells, 34 nodes
+overseer_arm_front: grid (112, 48, 32) h 2.0 = 172,032 cells; design 60,108 (480.9 cm3), drawn 9,968, void 101,956
+  insert rod 0: 566 cells, modulus x21.8
+  insert rod 1: 566 cells, modulus x21.8
+  insert rod 2: 566 cells, modulus x21.8
+  insert rod 3: 566 cells, modulus x21.8
+  support default: 269 cells, 696 nodes
+  support bosses: 112 cells, 355 nodes
+exit 137
