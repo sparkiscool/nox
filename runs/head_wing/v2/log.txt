@@ -400,3 +400,13 @@ layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside 
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 1673 s, peak 2.066792 GB
 layout done: 1673 s, peak 2.066792 GB
+build: organic surface at pitch 0.286 mm (x7), skins 14.23 cm3, field 22.76 cm3, in env - cuts 20.45 cm3 (layout 20.45, level offset -0.405 mm), fillet 2.5 mm, rims 1.0 mm, mesh 287,880 faces, 208 s
+build: organic surface at pitch 0.286 mm (x7), skins 14.23 cm3, field 22.76 cm3, in env - cuts 20.45 cm3 (layout 20.45, level offset -0.405 mm), fillet 2.5 mm, rims 1.0 mm, mesh 287,880 faces, 208 s
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [14404.2], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 2, "ok": true}
+solid check: PASS {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [14404.2], "necks": [], "drawn_not_in_main": [], "thin_walls": [], "acute_edges": 2, "ok": true}
+function check: {'skin_mm3': 8780.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+function check: {'skin_mm3': 8780.7, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+strength: worst index 0.09 in 'guard hit 0' at [361.5, 115.7, 89.0]
+strength: worst index 0.09 in 'guard hit 0' at [361.5, 115.7, 89.0]
+RESULT {"name": "head_wing", "solid_ok": true, "mass_g": 25.98, "worst": 0.093, "function_ok": true, "bodies": 1}
+RESULT {"name": "head_wing", "solid_ok": true, "mass_g": 25.98, "worst": 0.093, "function_ok": true, "bodies": 1}

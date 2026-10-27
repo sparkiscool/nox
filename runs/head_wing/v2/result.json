@@ -1,0 +1,373 @@
+{
+ "name": "head_wing",
+ "engine": "nox/topo",
+ "solid_ok": true,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   14404.2
+  ],
+  "necks": [],
+  "drawn_not_in_main": [],
+  "thin_walls": [],
+  "acute_edges": 2,
+  "ok": true
+ },
+ "function_check": {
+  "skin_mm3": 8780.7,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": -0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "crash camera 0",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.003,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "crash camera 1",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.002,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "crash camera 2",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.003,
+    "at": [
+     371.5,
+     87.7,
+     55.0
+    ]
+   },
+   {
+    "case": "crash camera 3",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.002,
+    "at": [
+     371.5,
+     87.7,
+     55.0
+    ]
+   },
+   {
+    "case": "crash camera 4",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.002,
+    "at": [
+     381.5,
+     81.7,
+     107.0
+    ]
+   },
+   {
+    "case": "crash camera 5",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.002,
+    "at": [
+     381.5,
+     81.7,
+     107.0
+    ]
+   },
+   {
+    "case": "crash camera 6",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.002,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "crash camera 7",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.003,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "crash camera 8",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.002,
+    "at": [
+     377.5,
+     81.7,
+     61.0
+    ]
+   },
+   {
+    "case": "crash camera 9",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.002,
+    "at": [
+     381.5,
+     81.7,
+     107.0
+    ]
+   },
+   {
+    "case": "crash camera 10",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.001,
+    "at": [
+     369.5,
+     81.7,
+     59.0
+    ]
+   },
+   {
+    "case": "crash camera 11",
+    "cls": "misuse",
+    "inlayer": 0.002,
+    "across": 0.002,
+    "at": [
+     377.5,
+     81.7,
+     61.0
+    ]
+   },
+   {
+    "case": "crash camera 12",
+    "cls": "misuse",
+    "inlayer": 0.004,
+    "across": 0.003,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "crash camera 13",
+    "cls": "misuse",
+    "inlayer": 0.003,
+    "across": 0.002,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "flight",
+    "cls": "flight",
+    "inlayer": 0.0,
+    "across": 0.001,
+    "at": [
+     371.5,
+     81.7,
+     57.0
+    ]
+   },
+   {
+    "case": "guard hit 0",
+    "cls": "misuse",
+    "inlayer": 0.056,
+    "across": 0.093,
+    "at": [
+     361.5,
+     115.7,
+     89.0
+    ]
+   },
+   {
+    "case": "guard hit 1",
+    "cls": "misuse",
+    "inlayer": 0.079,
+    "across": 0.063,
+    "at": [
+     379.5,
+     97.7,
+     97.0
+    ]
+   },
+   {
+    "case": "guard hit 2",
+    "cls": "misuse",
+    "inlayer": 0.055,
+    "across": 0.062,
+    "at": [
+     365.5,
+     113.7,
+     89.0
+    ]
+   },
+   {
+    "case": "guard hit 3",
+    "cls": "misuse",
+    "inlayer": 0.022,
+    "across": 0.034,
+    "at": [
+     361.5,
+     115.7,
+     89.0
+    ]
+   }
+  ],
+  "worst": 0.093,
+  "worst_case": "guard hit 0",
+  "worst_at": [
+   361.5,
+   115.7,
+   89.0
+  ]
+ },
+ "mass_g": 25.98,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 20454.2,
+ "drawn_g": 19.59,
+ "stl": "head_wing.stl",
+ "view_stl": "head_wing_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 3.22128343706268,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.026099176872114032,
+  "nd": 29886,
+  "sym_axes": [],
+  "n_real": 19,
+  "n_ties": 24,
+  "backend": "direct",
+  "iterations": 98,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "head_wing",
+  "h": 2.0,
+  "shape": [
+   40,
+   40,
+   56
+  ],
+  "origin": [
+   332.5,
+   62.74,
+   34.0
+  ],
+  "cells": 89600,
+  "design": 29731,
+  "drawn": 1914,
+  "cases": [
+   "crash camera 0",
+   "crash camera 1",
+   "crash camera 2",
+   "crash camera 3",
+   "crash camera 4",
+   "crash camera 5",
+   "crash camera 6",
+   "crash camera 7",
+   "crash camera 8",
+   "crash camera 9",
+   "crash camera 10",
+   "crash camera 11",
+   "crash camera 12",
+   "crash camera 13",
+   "flight",
+   "guard hit 0",
+   "guard hit 1",
+   "guard hit 2",
+   "guard hit 3"
+  ],
+  "supports": [
+   "frame"
+  ]
+ },
+ "build_s": 256.7,
+ "layout_s": 1673,
+ "peak_gb": 2.066792,
+ "gen_cm3": 5.0,
+ "h": 2.0,
+ "total_s": 1929
+}
