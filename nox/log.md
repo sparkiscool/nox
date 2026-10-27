@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): head mount v3 (preview on the z 22 / 32 brace roots): 143.7 g M, worst 1.00, solid FAIL: 10 single-voxel specks at the socket rims (a coplanar face where each boss met its keep-out); fix in the design: the keep-out starts 1 past the boss (`head_mount.py` socket). The final head run waits for the core's hub deck.
 - 27 Oct (Overseer): the arm session's saved rear arm v5d (arm 2, arm 3 its mirror; 187.4 g M, solid PASS, branch claude/pensive-turing-jyxlcc 319ca86a) placed in the layout (`saved_arm`, the arm session's arm frame); fit 0, CG 0.2, access 21/21; artifact republished.
 - 27 Oct (Overseer): cage node 2 saved (front of the base loop, 6 tubes, PETG) solid PASS, 11.33 g M (run/cage_nodes-v3 fc8d0917); in the layout and artifact. Bed contact 6 mm²: the nodes print on supports (to settle at print).
 - 27 Oct (Overseer): first saved cage node: node 20 (rear top centre, 5 sockets, arms to a hub, PETG, 6.2 bores) solid PASS, 8.76 g M, worst index 0.02 (run/cage_nodes-v3 b5861a51); the layout and its artifact now use each saved node mesh (`saved_node`, mirrored for its partner).

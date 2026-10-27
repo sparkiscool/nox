@@ -73,7 +73,8 @@ def socket(end, toward, bore, depth, wall=3.0):
     end, toward = np.asarray(end, float), np.asarray(toward, float); d = (toward - end) / np.linalg.norm(toward - end)
     boss = seg(end - d * depth, end + d * 1.0, bore / 2 + wall)
     cut = seg(end - d * depth, end + d * 400.0, bore / 2)
-    keep = seg(end + d * 1.0, end + d * 400.0, bore / 2 + 1.0)
+    keep = seg(end + d * 2.0, end + d * 400.0, bore / 2 + 1.0)       # 1 past the boss end: no coplanar face at the mouth (v3: voxel
+                                                                       # specks at every socket rim failed the solid gate, 27 Oct)
     return boss, cut, keep
 
 
