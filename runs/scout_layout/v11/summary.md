@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2, race-car shape, bottom on the Overseer v5 loop, tail bay out of the prop wash (27 Oct 2026, concept)
 
+**Superseded 27 Oct by `runs/scout_layout/v12/summary.md` (the electronics session's real tail bay mount, cables and XR2 in the balance: catch 5.0 forward; UBEC 7 out). Kept: summary, results, stills; meshes in git history.**
+
 **Spark 27 Oct:** "move the tail bay out of the prop wash but also make the cg correct in the middle of the props".
 
 What changed from `v10/` (PR 131):
@@ -48,7 +50,7 @@ Script `nox/scout/v3/layout_v3.py` (defaults: ring v5side, pattern free with the
 
 Visuals:
 - Whole drone: https://claude.ai/artifact/WHdjYkzKPifXuHT1dWeqoR (version 17; source `motion.html`; orange = the bottom loop, light blue = the Overseer cage v5 on the shared datum, green = the camera view). Still `preview.png`.
-- Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 2; source `camera_clips.html`, still `camera_clips.png`; the clips are unchanged from v10).
+- Camera clips: https://claude.ai/artifact/3nsfgsnE6tmctThfu9HZqs (version 2; its source moved to `../v12/camera_clips.*`).
 
 System: Scout v3, cage first 4.2 mm (E) at (+0.55, -0.07, +0.83) (camera) (field cones open: camera 55 deg, out 2 mm), shell 44 rods closed (30 triangles counting the 2 that close the bottom loop; 28 in run.log), fit 0.0 mm³ (E), bbox 12.8 L (E), extents 387 x 260 x 127 mm (E), mass 680 of 500 g (136 %) (E) over budget (total), CG 0.8 mm off thrust axis (E), 0.9 mm without swap parts, probes 8.9 mm (E) edge (UBEC), access 8/8 clear. PASS.
 
