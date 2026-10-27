@@ -15,7 +15,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 
-RUN = os.environ.get("SCOUT_VIEW_RUN") or os.path.join(ROOT, "runs", "scout_layout", "v11")
+RUN = os.environ.get("SCOUT_VIEW_RUN") or os.path.join(ROOT, "runs", "scout_layout", "v12")
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")
 r = json.load(open(os.path.join(RUN, "result.json")))
 sh = json.load(open(os.path.join(RUN, "cage_shell.json"))); N = np.array(sh["nodes"]); E = sh["rods"]; ring = sh["open"][0]["ring"]
