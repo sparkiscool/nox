@@ -104,3 +104,5 @@ it  33 beta    4 J   0.0079 vol 0.0795 (dil 0.1146 g -0.001) grey  7.3% ch 0.100
 it  34 beta    4 J   0.0078 vol 0.0797 (dil 0.1146 g -0.000) grey  7.3% ch 0.100 worst tie b7 fy 309 40.2s
 it  35 beta    4 J   0.0077 vol 0.0797 (dil 0.1146 g -0.000) grey  7.3% ch 0.100 worst tie b7 fy 306 37.6s
 layout: beta 4 done: eroded design 38 bodies, main 92.9%; drawn bodies outside the main body: 29
+it  36 beta    8 J   0.0363 vol 0.0802 (dil 0.1172 g +0.059) grey  3.1% ch 0.100 worst crash 0 [1.0, 0.0, 0.0] via  1.67e+03 39.5s
+it  37 beta    8 J   0.3615 vol 0.0724 (dil 0.1113 g +0.006) grey  4.1% ch 0.100 worst tie b4 mz 1.74e+04 31.5s
