@@ -1,0 +1,249 @@
+<title>Nox Catch Concepts</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column drawing sheet: answer + tolerance, live 3D, the plan to scale, sections, the notes */
+:root {
+  --paper: #f4f6f4; --sheet: #ffffff; --ink: #1c2421; --muted: #5c6a64; --rule: #d5ddd9;
+  --carbon: #26302c; --ring: #1f8a7a; --pack: #d08a1e; --ramp: #8a4fb0; --ramp2: #b77fd6; --part: #a7b3ae; --ovr: #5d7fa8;
+  --good: #2f7d4f; --bad: #b4462f; --accent: #1f8a7a;
+  --f-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
+  --carbon: #cfd9d4; --ring: #4cc2ae; --pack: #e6a64a; --ramp: #c08ee0; --ramp2: #9a6bb8; --part: #56645f; --ovr: #8fb0d6;
+  --good: #6cc08d; --bad: #e07a62; --accent: #4cc2ae; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #121715; --sheet: #19201d; --ink: #e3ebe7; --muted: #94a39c; --rule: #2d3833;
+  --carbon: #cfd9d4; --ring: #4cc2ae; --pack: #e6a64a; --ramp: #c08ee0; --ramp2: #9a6bb8; --part: #56645f; --ovr: #8fb0d6;
+  --good: #6cc08d; --bad: #e07a62; --accent: #4cc2ae; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 48px; }
+main { max-width: 1080px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: 2rem; line-height: 1.1; }
+h2 { font-size: 1.3rem; }
+p { margin: 0; max-width: 72ch; }
+.eyebrow { font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+header { display: grid; gap: 10px; }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 640px) { .tiles { grid-template-columns: 1fr; } }
+.tile { border: 1px solid var(--rule); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; }
+.tile .k { font: 500 .75rem var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.tile .v { font: 600 1.6rem var(--f-display); font-variant-numeric: tabular-nums; }
+.tile .s { font-size: .85rem; color: var(--muted); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden; }
+.seg button { font: 500 .85rem var(--f-body); background: transparent; color: var(--ink); border: 0; padding: 7px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--rule); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--sheet); }
+.seg button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+canvas { width: 100%; height: auto; aspect-ratio: 16 / 10; max-width: 100%; display: block; touch-action: none; cursor: grab; border-radius: 4px; background: var(--paper); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--muted); }
+.legend i { display: inline-block; width: 18px; height: 4px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+.plan svg, .sec svg { width: 100%; height: auto; display: block; }
+.secs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .secs { grid-template-columns: 1fr; } }
+.sec { display: grid; gap: 6px; min-width: 0; }
+.sec h3 { font: 600 1.05rem var(--f-display); margin: 0; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; min-width: 600px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font: 500 .75rem var(--f-mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+td.n { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+ul { margin: 0; padding-left: 1.2em; display: grid; gap: 7px; max-width: 76ch; }
+.mono { font-family: var(--f-mono); font-size: .8rem; color: var(--muted); overflow-wrap: anywhere; }
+</style>
+
+<main>
+  <header>
+    <span class="eyebrow">Box catch · concept E · Scout v3 + Overseer cage v3 · 27 Oct</span>
+    <h1>Ramps into the bottom opening, no rim</h1>
+    <p id="lede"></p>
+  </header>
+
+  <section class="sheet" aria-label="Landing tolerance">
+    <h2>Landing tolerance</h2>
+    <div class="tiles" id="tiles"></div>
+    <div class="scroll"><table id="tbl"></table></div>
+    <p class="mono">Checked by dropping each drone at the offset, at yaw −5°, 0° and +5°. Its opening ring must touch a ramp slope first (pushing it back), then it slides to the seat with everything else 1.0 mm off every ramp. Kinematic only: no friction, tilt or drift yet.</p>
+  </section>
+
+  <section class="sheet" aria-label="3D view">
+    <div class="bar">
+      <div class="seg" role="group" aria-label="View">
+        <button id="v-s" aria-pressed="true">Scout on the ramps</button>
+        <button id="v-o" aria-pressed="false">Overseer on the ramps</button>
+        <button id="v-r" aria-pressed="false">Ramps alone</button>
+      </div>
+    </div>
+    <canvas id="cv" width="1280" height="800" aria-label="3D view of the ramps and the drone; drag to turn"></canvas>
+    <div class="legend">
+      <span><i style="background:var(--ramp)"></i>shared ramps</span>
+      <span><i style="background:var(--ramp2)"></i>one-drone ramps</span>
+      <span><i style="background:var(--ring)"></i>opening ring</span>
+      <span><i style="background:var(--carbon)"></i>cage</span>
+      <span><i style="background:var(--pack)"></i>cartridge</span>
+      <span><i style="background:var(--part)"></i>drone parts</span>
+    </div>
+  </section>
+
+  <section class="sheet plan" aria-label="Plan">
+    <h2>Plan, to scale</h2>
+    <div class="scroll"><div id="plan" style="min-width:520px"></div></div>
+    <p class="mono">Looking down, x forward. Scout opening (rectangle) and Overseer opening (rectangle + trapezoid ends), ring node centres; ramps as drawn at their top edge (solid) and seat contact (dashed). Grid 20 mm.</p>
+  </section>
+
+  <section class="sheet" aria-label="Sections">
+    <h2>Sections through the seat</h2>
+    <div class="secs" id="secs"></div>
+  </section>
+
+  <section class="sheet" aria-label="Notes">
+    <h2>What this means</h2>
+    <ul id="notes"></ul>
+  </section>
+</main>
+
+<script>
+const DATA = /*DATA*/null;
+const RA = DATA.ramps, S = RA.scout, O = RA.overseer;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const shared = r => r.name.startsWith('side');
+function rampFaces(r) { const c = r.corners; // per end: [top-inner, bottom-outer, bottom-inner]
+  const [a0, b0, c0, a1, b1, c1] = c;
+  return [[a0, a1, b1, b0], [a0, c0, c1, a1], [b0, b1, c1, c0], [a0, b0, c0], [a1, c1, b1]]; }
+function boxFaces(b) { const [x0,x1,y0,y1,z0,z1] = b;
+  return [[[x0,y0,z0],[x1,y0,z0],[x1,y1,z0],[x0,y1,z0]],[[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]],
+    [[x0,y0,z0],[x1,y0,z0],[x1,y0,z1],[x0,y0,z1]],[[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]],
+    [[x0,y0,z0],[x0,y1,z0],[x0,y1,z1],[x0,y0,z1]],[[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]]]; }
+function ring(cx, cy, z, r, n = 28) { const p = []; for (let i = 0; i <= n; i++) { const a = 2*Math.PI*i/n; p.push([cx + r*Math.cos(a), cy + r*Math.sin(a), z]); } return p; }
+const hex2 = (c, a) => c.startsWith('#') && c.length === 7 ? c + a : c;
+
+function scene(v) {
+  const c = { carbon: css('--carbon'), ring: css('--ring'), pack: css('--pack'), ramp: css('--ramp'), ramp2: css('--ramp2'), part: css('--part'), ovr: css('--ovr') }, L = [];
+  for (const r of RA.ramps) {
+    const mine = v === 'r' || shared(r) || (v === 's' ? r.name.startsWith('Scout') : r.name.startsWith('Overseer'));
+    const col = shared(r) ? c.ramp : c.ramp2;
+    for (const f of rampFaces(r)) L.push({ k: 'poly', p: f, fill: hex2(col, mine ? 'cc' : '33'), stroke: col, w: .6, shade: true });
+  }
+  if (v === 's') { const d = S.draw;
+    for (const f of boxFaces(d.cart)) L.push({ k: 'poly', p: f, fill: hex2(c.pack, '55'), stroke: c.pack, w: .6 });
+    for (const b of d.boxes) for (const f of boxFaces(b)) L.push({ k: 'poly', p: f, fill: hex2(c.ring, '30'), stroke: c.ring, w: .4 });
+    for (const f of boxFaces(d.plate)) L.push({ k: 'poly', p: f, fill: hex2(c.part, '66'), stroke: c.part, w: .4 });
+    for (const f of boxFaces(d.fc)) L.push({ k: 'poly', p: f, fill: hex2(c.part, '66'), stroke: c.part, w: .4 });
+    for (const [x, y] of d.motors) { L.push({ k: 'line', p: ring(x, y, d.prop_z, d.prop_r, 40), stroke: c.part, w: 1.2 });
+      L.push({ k: 'line', p: [[x*.55, y*.55, d.arm_z], [x, y, d.arm_z]], stroke: c.part, w: 5 }); L.push({ k: 'line', p: ring(x, y, d.arm_z + 10, 14, 16), stroke: c.part, w: 1 }); }
+    const ringSet = new Set(d.ring);
+    for (const [a, b, w] of d.rods) { const isR = ringSet.has(a) && ringSet.has(b); L.push({ k: 'line', p: [d.nodes[a], d.nodes[b]], stroke: isR ? c.ring : c.carbon, w: w === 6 ? 3.2 : 1.6 }); }
+    for (const [p, q] of d.links) L.push({ k: 'line', p: [p, q], stroke: c.carbon, w: 1.2 });
+    d.nodes.forEach((p, i) => L.push({ k: 'dot', p: [p], fill: ringSet.has(i) ? c.ring : c.carbon, r: 3.5 }));
+  }
+  if (v === 'o') { const d = O.draw;
+    for (const m of d.meshes) { const col = /cartridge|receiver|pack/.test(m.name) ? c.pack : (/spokes|guard/.test(m.name) ? c.carbon : c.part);
+      const a = /prop/.test(m.name) ? '22' : '99';
+      for (const f of m.f) L.push({ k: 'poly', p: f.map(i => m.v[i]), fill: hex2(col, a), stroke: 'none', w: 0, shade: true }); }
+    const ringSet = new Set(d.ring);
+    for (const [a, b] of d.rods) { const isR = ringSet.has(a) && ringSet.has(b); L.push({ k: 'line', p: [d.nodes[a], d.nodes[b]], stroke: isR ? c.ring : c.carbon, w: isR ? 6 : 4 }); }
+    d.nodes.forEach((p, i) => L.push({ k: 'dot', p: [p], fill: ringSet.has(i) ? c.ring : c.carbon, r: 9 }));
+  }
+  return L;
+}
+const cv = document.getElementById('cv'), cx = cv.getContext('2d');
+let view = 's', yaw = -0.7, pitch = 0.42;
+const SC = { s: 300, o: 820, r: 440 }, ZC = { s: 30, o: 70, r: 0 };
+function draw() {
+  const W = cv.width, H = cv.height; cx.clearRect(0, 0, W, H);
+  const cy_ = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), s = Math.min(W, H) / SC[view];
+  const pr = ([x, y, z]) => { const X = x*cy_ - y*sy, Y = x*sy + y*cy_, Z = z - ZC[view]; return [W/2 + X*s, H*0.56 - (Z*cp - Y*sp)*s, Y*cp + Z*sp]; };
+  const L = scene(view).map(o => { const q = o.p.map(pr); return { ...o, q, d: q.reduce((a, v) => a + v[2], 0) / q.length }; });
+  L.sort((a, b) => b.d - a.d);
+  for (const o of L) {
+    cx.beginPath(); o.q.forEach(([x, y], i) => i ? cx.lineTo(x, y) : cx.moveTo(x, y));
+    if (o.k === 'poly') { cx.closePath(); cx.fillStyle = o.fill; cx.fill();
+      if (o.shade && o.q.length >= 3) { const [a, b, c2] = o.q; const nz = (b[0]-a[0])*(c2[1]-a[1]) - (b[1]-a[1])*(c2[0]-a[0]);
+        const n = o.p.length >= 3 ? (() => { const [p0, p1, p2] = o.p; const u = [p1[0]-p0[0], p1[1]-p0[1], p1[2]-p0[2]], w = [p2[0]-p0[0], p2[1]-p0[1], p2[2]-p0[2]];
+          const nn = [u[1]*w[2]-u[2]*w[1], u[2]*w[0]-u[0]*w[2], u[0]*w[1]-u[1]*w[0]]; const l = Math.hypot(...nn) || 1; return Math.abs(nn[2] / l); })() : 1;
+        cx.fillStyle = `rgba(0,0,0,${(0.28 * (1 - n)).toFixed(3)})`; cx.fill(); }
+      if (o.stroke !== 'none') { cx.strokeStyle = o.stroke; cx.lineWidth = o.w; cx.stroke(); } }
+    else if (o.k === 'line') { cx.strokeStyle = o.stroke; cx.lineWidth = Math.max(1, o.w * s / 2.2); cx.lineCap = 'round'; cx.stroke(); }
+    else { cx.beginPath(); cx.arc(o.q[0][0], o.q[0][1], Math.max(1.5, o.r * s / 2.2), 0, 7); cx.fillStyle = o.fill; cx.fill(); }
+  }
+}
+for (const k of ['s', 'o', 'r']) document.getElementById('v-' + k).addEventListener('click', () => { view = k;
+  for (const j of ['s', 'o', 'r']) document.getElementById('v-' + j).setAttribute('aria-pressed', String(j === k)); draw(); });
+let drag = null;
+cv.addEventListener('pointerdown', e => { drag = [e.clientX, e.clientY, yaw, pitch]; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', e => { if (!drag) return; yaw = drag[2] + (e.clientX - drag[0]) * 0.01; pitch = Math.max(-1.4, Math.min(1.4, drag[3] + (e.clientY - drag[1]) * 0.01)); draw(); });
+cv.addEventListener('pointerup', () => drag = null);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+new MutationObserver(draw).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+// plan
+(() => { const X0 = -230, X1 = 230, Y0 = -130, Y1 = 130, w = X1 - X0, h = Y1 - Y0;
+  const T = (x, y) => `${(x - X0).toFixed(1)},${(Y1 - y).toFixed(1)}`;
+  let g = `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="plan of ramps and openings">`;
+  for (let x = -220; x <= 220; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${h}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let y = -120; y <= 120; y += 20) g += `<line x1="0" y1="${Y1-y}" x2="${w}" y2="${Y1-y}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (const r of RA.ramps) { const c = r.corners; const top = [c[0], c[3]], base = [c[1], c[4]];
+    const pts = [c[0], c[3], c[4], c[1]].map(p => T(p[0], p[1])).join(' ');
+    g += `<polygon points="${pts}" fill="${shared(r) ? 'var(--ramp)' : 'var(--ramp2)'}" fill-opacity=".35" stroke="${shared(r) ? 'var(--ramp)' : 'var(--ramp2)'}" stroke-width=".8"/>`;
+    g += `<line x1="${T(...top[0]).split(',')[0]}" y1="${T(...top[0]).split(',')[1]}" x2="${T(...top[1]).split(',')[0]}" y2="${T(...top[1]).split(',')[1]}" stroke="${shared(r) ? 'var(--ramp)' : 'var(--ramp2)'}" stroke-width="2"/>`;
+    const mid = [(c[0][0] + c[3][0]) / 2, (c[0][1] + c[3][1]) / 2];
+    g += `<text x="${T(...mid).split(',')[0]}" y="${+T(...mid).split(',')[1] + (r.axis === 1 ? (r.sign > 0 ? -5 : 11) : 3)}" font-size="7.5" text-anchor="middle" fill="var(--ink)" font-family="IBM Plex Mono, monospace">${r.h}</text>`; }
+  const loop = (ids, nodes, col, sw) => `<polygon points="${ids.map(i => T(nodes[i][0], nodes[i][1])).join(' ')}" fill="none" stroke="${col}" stroke-width="${sw}"/>`;
+  const oR = O.draw.ring.map(i => O.draw.nodes[i]); const order = idx => { const P = idx.map(i => O.draw.nodes[i]); const cxm = P.reduce((a, p) => a + p[0], 0) / P.length;
+    return idx.slice().sort((a, b) => Math.atan2(O.draw.nodes[a][1], O.draw.nodes[a][0] - cxm) - Math.atan2(O.draw.nodes[b][1], O.draw.nodes[b][0] - cxm)); };
+  g += loop(order(O.draw.ring), O.draw.nodes, 'var(--ovr)', 3);
+  const sR = S.draw.ring.slice().sort((a, b) => Math.atan2(S.draw.nodes[a][1], S.draw.nodes[a][0]) - Math.atan2(S.draw.nodes[b][1], S.draw.nodes[b][0]));
+  g += loop(sR, S.draw.nodes, 'var(--ring)', 3);
+  for (const i of O.draw.ring) g += `<circle cx="${T(O.draw.nodes[i][0], O.draw.nodes[i][1]).split(',')[0]}" cy="${T(O.draw.nodes[i][0], O.draw.nodes[i][1]).split(',')[1]}" r="10.15" fill="none" stroke="var(--ovr)" stroke-width="1"/>`;
+  for (const i of S.draw.ring) g += `<circle cx="${T(S.draw.nodes[i][0], S.draw.nodes[i][1]).split(',')[0]}" cy="${T(S.draw.nodes[i][0], S.draw.nodes[i][1]).split(',')[1]}" r="4" fill="var(--ring)"/>`;
+  const cb = S.draw.cart; g += `<rect x="${cb[0]-X0}" y="${Y1-cb[3]}" width="${cb[1]-cb[0]}" height="${cb[3]-cb[2]}" fill="var(--pack)" fill-opacity=".35" stroke="var(--pack)" stroke-width=".6"/>`;
+  g += `<text x="${T(-226, 120).split(',')[0]}" y="${T(-226, 120).split(',')[1]}" font-size="8" fill="var(--ovr)" font-family="IBM Plex Mono, monospace">Overseer opening</text>`;
+  g += `<text x="${T(-226, 108).split(',')[0]}" y="${T(-226, 108).split(',')[1]}" font-size="8" fill="var(--ring)" font-family="IBM Plex Mono, monospace">Scout opening</text>`;
+  g += `<text x="${T(-226, -122).split(',')[0]}" y="${T(-226, -122).split(',')[1]}" font-size="7.5" fill="var(--muted)" font-family="IBM Plex Mono, monospace">numbers = ramp height above the seat (mm)</text>`;
+  document.getElementById('plan').innerHTML = g + '</svg>'; })();
+
+// sections: y-z at x 30 (side pads) and x-z at y 0 / y 60
+function sec(title, axisH, cut, X0, X1, Z0, Z1, drone) {
+  const w = X1 - X0, hgt = Z1 - Z0; let g = `<svg viewBox="0 0 ${w} ${hgt}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${title}">`;
+  for (let x = Math.ceil(X0/20)*20; x <= X1; x += 20) g += `<line x1="${x-X0}" y1="0" x2="${x-X0}" y2="${hgt}" stroke="var(--rule)" stroke-width=".35"/>`;
+  for (let z = Math.ceil(Z0/20)*20; z <= Z1; z += 20) g += `<line x1="0" y1="${Z1-z}" x2="${w}" y2="${Z1-z}" stroke="var(--rule)" stroke-width=".35"/>`;
+  const H = p => p[axisH], other = 1 - axisH;
+  for (const r of RA.ramps) { const c = r.corners; const inSpan = r.axis === axisH ? (cut >= r.span[0] && cut <= r.span[1]) : false;
+    if (!inSpan) continue; const pts = [c[0], c[1], c[2]].map(p => `${H(p) - X0},${Z1 - p[2]}`).join(' ');
+    g += `<polygon points="${pts}" fill="${shared(r) ? 'var(--ramp)' : 'var(--ramp2)'}" fill-opacity=".6" stroke="none"/>`; }
+  const d = drone.draw, rs = new Set(d.ring);
+  for (const rr of d.rods) { const [a, b] = rr; const p = d.nodes[a], q = d.nodes[b];
+    g += `<line x1="${H(p)-X0}" y1="${Z1-p[2]}" x2="${H(q)-X0}" y2="${Z1-q[2]}" stroke="${rs.has(a) && rs.has(b) ? 'var(--ring)' : 'var(--carbon)'}" stroke-width="${rs.has(a) && rs.has(b) ? 2 : .6}" opacity=".7"/>`; }
+  if (d.cart) { const b = d.cart; const [lo, hi] = axisH === 0 ? [b[0], b[1]] : [b[2], b[3]]; g += `<rect x="${lo-X0}" y="${Z1-b[5]}" width="${hi-lo}" height="${b[5]-b[4]}" fill="var(--pack)" fill-opacity=".5"/>`; }
+  if (d.meshes) for (const m of d.meshes) { if (/prop|spokes|guard|L2|camera|apex/.test(m.name)) continue;
+    const xs = m.v.map(v => v[axisH]), zs = m.v.map(v => v[2]); const lo = Math.min(...xs), hi = Math.max(...xs), zl = Math.min(...zs), zh = Math.max(...zs);
+    g += `<rect x="${lo-X0}" y="${Z1-zh}" width="${hi-lo}" height="${zh-zl}" fill="${/cartridge|receiver|pack/.test(m.name) ? 'var(--pack)' : 'var(--part)'}" fill-opacity=".35"/>`; }
+  return `<div class="sec"><h3>${title}</h3>${g}</svg></div>`;
+}
+document.getElementById('secs').innerHTML = [
+  sec('Scout, side view (x)', 0, 60, -130, 130, -30, 110, S),
+  sec('Scout, end view (y)', 1, 30, -130, 130, -30, 110, S),
+  sec('Overseer, side view (x)', 0, 0, -320, 470, -30, 220, O),
+  sec('Overseer, end view (y)', 1, 30, -360, 360, -30, 220, O),
+].join('');
+
+const cap = (d, k) => d.capture[k].ok_mm;
+const fmt = d => `±${cap(d, 'x')} fore-aft · ±${cap(d, 'y')} sideways · ${cap(d, 'diag')} diagonal`;
+const tile = (k, v, s) => `<div class="tile"><span class="k">${k}</span><span class="v">${v}</span><span class="s">${s}</span></div>`;
+document.getElementById('tiles').innerHTML = tile('Scout', `±${Math.min(cap(S, 'x'), cap(S, 'y'), cap(S, 'diag'))} mm`, fmt(S) + ', yaw ±5°') +
+  tile('Overseer', `±${Math.min(cap(O, 'x'), cap(O, 'y'), cap(O, 'diag'))} mm`, fmt(O) + ', yaw ±5°');
+const rows = [['', 'Fore-aft (x)', 'Sideways (y)', 'Diagonal', 'What stops it going further']];
+for (const [nm, d] of [['Scout', S], ['Overseer', O], ...(RA.whatif ? RA.whatif.map(w => [w.label, w]) : [])])
+  rows.push([nm, `±${cap(d, 'x')}`, `±${cap(d, 'y')}`, `${cap(d, 'diag')}`, [d.capture.x.first_fail, d.capture.y.first_fail].filter(Boolean).join('; ') || '-']);
+document.getElementById('tbl').innerHTML = rows.map((r, i) => `<tr>${r.map((c, j) => i ? `<td class="${j && j < 4 ? 'n' : ''}">${c}</td>` : `<th>${c}</th>`).join('')}</tr>`).join('');
+document.getElementById('lede').textContent = RA.lede;
+document.getElementById('notes').innerHTML = RA.notes.map(t => `<li>${t}</li>`).join('');
+draw();
+</script>

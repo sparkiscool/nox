@@ -38,6 +38,7 @@ Z_WHEEL = WHEEL_AT - FACE_K + WHEEL_R * math.sqrt(2)  # seat z of the wheel cent
 YAW, SIDE, CAPTURE, LIFT = 5.0, 3.0, 40.0, 5.7      # G (2), (3), (7)
 TUBE6_GPM, ROD3_GPM = 25.0, 11.0                   # E: 6 x 4 carbon tube; 3.0 solid rod 11.0 g/m (G)
 CORE_G = 400.0 - 165.0 + 10 + 20                   # P: 400 g with pack, no cage (scout.md); + Radxa 10, UBEC 20 (E), no pack
+RECT_E = (72.9, 104.3)                              # E: the Overseer cage v3 bottom opening's middle rectangle (C), about its catch centre
 RIM_D = 110.0                                       # D: shared bottom rim, corner rollers at (+-110, +-110) (catch_posts_concept.py)
 OVR = os.path.join(REPO, "nox", "overseer", "overseer.assembly.json"); OVR_XC = -30.0   # Overseer catch centre (catch 30 aft, C)
 S2 = math.sqrt(2)
@@ -143,13 +144,14 @@ def layout(which):
                      lambda ids, T, sx=p[0], sy=p[1]: T[{(1, 1): 0, (-1, 1): 1, (-1, -1): 2, (1, -1): 3}[(int(np.sign(sx)), int(np.sign(sy)))]]))
                 for p, _ in pad_x(zp)]
     else:                                                # C / D: crown on the belly, a drum flank up to the equator at the props
-        zw = cb + 1.0                                    # wheel / crown centres: R 5 wheels reach 4.0 under the flat bottom
-        dz = Z_WHEEL - zw if which == "C" else -zw       # seat = drone + dz (D: seat z 0 = the rim, catch_posts_concept.py)
-        crown = {"x": (90, zw), "d": (105.0, 105.0, zw), "y": (104, zw)} if which == "C" else \
-                {"x": (RIM_D, zw), "d": (RIM_D, RIM_D, zw), "y": (RIM_D, zw)}     # D: the shared rim, rollers on the corners
+        zw = {"C": cb + 1.0, "D": cb - 1.0, "E": cb - 3.0}[which]   # C: R 5 wheels 4.0 under the flat bottom; D: rim 1.0 under it; E: ring 3.0 under (as the Overseer's)
+        dz = Z_WHEEL - zw if which == "C" else -zw       # seat = drone + dz (D / E: seat z 0 = the bottom ring)
+        crown = {"C": {"x": (90, zw), "d": (105.0, 105.0, zw), "y": (104, zw)},
+                 "D": {"x": (RIM_D, zw), "d": (RIM_D, RIM_D, zw), "y": (RIM_D, zw)},     # D: the shared rim, rollers on the corners
+                 "E": {"x": (RECT_E[0], zw), "d": (RECT_E[0], RECT_E[1], zw), "y": (RECT_E[1], zw)}}[which]   # E: the Overseer's middle rectangle
         rings = [("equator", {"x": (112, 40.0), "d": (106.0, 106.0, 40.0), "y": (112, 40.0)}),
                  ("knee", {"a": (110, 45, 0.0), "b": (45, 110, 0.0)} if which == "C" else
-                          {"a": (110, 45, 12.0), "b": (45, 110, 12.0)}),           # D: above the post tops (seat 35.4 + 6)
+                          {"a": (110, 45, 12.0), "b": (45, 110, 12.0)}),           # D / E: above the post tops / ramps
                  ("crown", crown)]
         wheel, opening, zp = 2, 2, zw + 0.3
         pads = [(p, (lambda ids, T, sx=p[0], sy=p[1]: ids[2][0 if sx > 0 else 4],
@@ -161,13 +163,18 @@ def layout(which):
     for k in ids["rings"][1]:
         t = min(tips, key=lambda q: np.linalg.norm(np.subtract(q[:2], N[k][:2])))
         links.append((f"spoke {k}", N[k].tolist(), list(t)))
+    if which in ("D", "E"):                              # steep ties (~40 deg): rim mid nodes to the two nearest arm tips, off the post planes
+        for k in ids["rings"][2]:
+            if tag[k] == "wheel node": continue
+            for t in sorted(tips, key=lambda q: np.linalg.norm(np.subtract(q[:2], N[k][:2])))[:2]:
+                links.append((f"rim tie {k} {t[0]:+.0f}{t[1]:+.0f}", N[k].tolist(), list(t)))
     if which != "A":
         low = ids["rings"][2]
         for s in (1, -1):
             for sx in (1, -1):
                 end = [sx * 50.0, s * 24.3, cb + 9.0]
                 for k in low:
-                    if np.sign(N[k][0]) == sx and (abs(N[k][1]) < 1 or (np.sign(N[k][1]) == s and which != "D")) and (abs(N[k][0]) > 1):
+                    if np.sign(N[k][0]) == sx and (abs(N[k][1]) < 1 or (np.sign(N[k][1]) == s and which not in ("D", "E"))) and (abs(N[k][0]) > 1):
                         if np.linalg.norm(N[k] - end) > 8: links.append((f"rail tie {k} {sx:+.0f}{s:+.0f}", end, N[k].tolist()))
     return rec, N, R, tag, ids, kinds, links, dz
 
@@ -295,7 +302,7 @@ def manifest(name, N, R, tag, kinds, rec, links, ids):
     for nm in latch:
         contact += [[nm, "frame plate", 1e9], [nm, "cartridge", 1e9]] + [[nm, n2, 1e9] for n2 in latch if n2 != nm]
     for nm, p0, p1 in links:                                          # links end in a node and an arm tip or a rail end
-        contact += [[nm, n2, 1e9] for n2 in names if n2.startswith(("node ", "rod ", "arm ", "latch rail", "spoke", "rail tie", "rail post", "rail strut", "motor"))]
+        contact += [[nm, n2, 1e9] for n2 in names if n2.startswith(("node ", "rod ", "arm ", "latch rail", "spoke", "rail tie", "rim tie", "rail post", "rail strut", "motor"))]
     return dict(name=name, machine="scout", parts=parts, contact_pairs=contact, cg_ref=[0, 0, PROP_Z], thrust_axis=[0, 0, 1],
                 cg_tol_mm=3.0, cage_margin_mm=3.0, mass_budget_g=500, probes=False,
                 openings=[dict(axis=[0, 0, -1], half_angle_deg=40.0, min_mm=0.0)],
@@ -335,13 +342,16 @@ def overseer_fit(cart_bottom_seat):
 
 def main():
     res = {}
-    for which in ("A", "B", "C", "D"):
+    for which in ("A", "B", "C", "D", "E"):
         rec, N, R, tag, ids, kinds, links, dz = layout(which)
         sm = shell_mass(N, R, tag, links)
         S = sample_parts(N, R, tag, kinds, links, rec, dz, which)
-        cc = catch_checks(S, which) if which != "D" else None          # D: catch_posts_concept.py
+        cc = catch_checks(S, which) if which not in ("D", "E") else None   # D: catch_posts_concept.py, E: catch_ramps_concept.py
         man = manifest(f"Scout v3 bottom concept {which}", N, R, tag, kinds, rec, links, ids)
-        sc = run(man, probes=False)
+        if which in ("D", "E"):                          # review 27 Oct: the gates (probes, the swap path) on the chosen layout
+            man["probes"] = True
+            man["access"] = [dict(name="pack swap: cartridge + pack down through the rim", part="cartridge", dir=[0, 0, -1], length_mm=150.0, tool="part", ignore=["pack 4S 1500"])]
+        sc = run(man) if which in ("D", "E") else run(man, probes=False)
         json.dump(man, open(os.path.join(OUT, f"manifest_{which}.json"), "w"))
         json.dump(sc, open(os.path.join(OUT, f"system_check_{which}.json"), "w"), default=str, indent=1)
         zlo = float(min(N[:, 2].min() - 5.0, rec["z_cart_bottom"])); zhi = float(N[:, 2].max() + 4.0)
@@ -357,7 +367,7 @@ def main():
                           pack_cz=round((pack_box(rec["z_cart_bottom"])[4] + pack_box(rec["z_cart_bottom"])[5]) / 2, 1),
                           cart_bottom_seat=round(rec["z_cart_bottom"] + dz, 1))
     a = res["A"]
-    for w in ("B", "C", "D"):
+    for w in ("B", "C", "D", "E"):
         r = res[w]
         r["vs_A"] = dict(mass_g=round(r["drone_g"] - a["drone_g"], 1), height=round(r["height"] - a["height"], 1),
                          hover_power_pct=round(((r["drone_g"] / a["drone_g"]) ** 1.5 - 1) * 100, 1),
@@ -367,7 +377,7 @@ def main():
                           edges=[EDGE_Y, HALF_Y, EDGE_X, HALF_X], motor=MOTOR, prop_r=PROP_R, prop_z=PROP_Z, ovr_xc=OVR_XC)
     enc = lambda o: o.tolist() if hasattr(o, "tolist") else float(o) if isinstance(o, np.floating) else str(o)
     json.dump(res, open(os.path.join(OUT, "concept.json"), "w"), default=enc)
-    for w in ("A", "B", "C", "D"):
+    for w in ("A", "B", "C", "D", "E"):
         r = res[w]
         print(f"{w}: h {r['height']} (z {r['z_low']}..{r['z_high']}), swap parts {r['swap_on_drone_g']} g, shell {r['shell']}, drone {r['drone_g']} g E, "
               f"cart bottom seat {r['cart_bottom_seat']}, opening {r['opening']}\n   catch {r['catch']}\n   {r['system_check']}")
