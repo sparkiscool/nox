@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer core v2, Spark): scope = everything but arms and nodes, the L2 keel roots included; battery side an empty slot. Sled v3 stopped (it 68), hub deck v2 stopped. `core_v2.py`: hub deck + keel front hub (2 sockets 6.2 x 15, 6 insert feet, 129 N a bolt), flow clip under the front wing; fit 26.5 mm³ with a parked cage body node. Restored the core rows in current-parts.
 - 27 Oct (rule, Spark): socket bores from the coupons: "the largest of the coupons we just printed was the one": 6.2 (6 mm tube) / 3.2 (3 mm rod), standing and sideways; CLAUDE.md, docs/generative.md, dimensions.md Carbon rods, head_mount.py, cage_node.py. Fixed a merge duplicate in generative.md. All socket sessions told.
 - 27 Oct (Scout v3, Spark): rod sockets 3.2 for the 3 mm rods (coupon pick, the largest bore) in the cage nodes, tie saddle and every epoxied Scout socket; the camera snap clips keep their own grip fit. `dimensions.md` System Scout v3
 - 27 Oct (Scout v3, Spark): tail bay out of the prop wash (Radxa on edge on the centre plane, UBEC behind the rear disks; DEFAULT, alt flat Radxa in the wash) and CG centred: tail bay + catch scanned on true centroids, CG 0.8/0.9 off (was 2.7/1.3); no low tail node; 50 rods, 680 g E, 387 long. `runs/scout_layout/v11/`
