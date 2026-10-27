@@ -37,7 +37,8 @@ PAD_T = 6.0                           # motor pad (README: plates >= 6 for the g
 MOTOR_R_PAD = 18.0                    # motor pad Ø36 (O v0 pad)
 MOTOR_SLOTS = (8.0, 9.5)              # X2216 M3 pairs on 16 and 19 (M): a radial slot r 8 .. 9.5 on each 45° line, so the
 MOTOR_SLOT_DEG = (45.0, 135.0, 225.0, 315.0)   # pad takes the motor either hand (the right arms are mirrors) with its leads
-SHAFT_D, POCKET_R, POCKET_WALL, POCKET_H = 10.5, 13.5, 3.5, 9.0          # to the root; bore Ø10.5 (M); heads at r 9.5 + 2.85
+SHAFT_D, POCKET_R, POCKET_WALL, POCKET_H = 8.6, 13.5, 3.5, 6.0           # to the root; bore Ø8.6 (shaft 3.175 + clip, 2.0 web to
+                                                                         # the slots, DEFAULT, CHECK P; stock Ø10.5); heads at r 9.5 + 2.85
 MOTOR_HOLE_D = 3.2
 ENV_R_TIP = 20.0                      # plan envelope round the motor (pad 18 + 2)
 CLEAR = 1.0                           # off the hub electronics and the keel hub
@@ -47,18 +48,20 @@ MOTOR_DEG = {"front": 45.0, "rear": 135.0}     # arm 1 / arm 2 diagonal (left si
 # and a modal check of a plain 30 wide box beam read its first mode lateral at ~130 Hz). A tapered space frame: 4 x 3.0
 # carbon rods (hard rule), top and bottom on each side, from two shoulders beside the root (arm frame x 25, y ±35, outside
 # both plates) to y ±12 beside the motor pocket; bore 3.3 (OD + 0.3), open at the shoulder end (the rod slides in from
-# there and is epoxied), blind at the motor end inside the pocket wall. PETG sleeves (skin round each bore) and the
-# topology webs, root and pad join them.
+# there and is epoxied), blind at the motor end inside the pocket wall. Drawn: a socket at each rod end; the topology
+# webs, root and pad join them, the rods are stiff inserts in its FE (Part.insert).
 ROD_D, ROD_BORE = 3.0, 3.3
 SHOULDER = {"front": (25.0, 35.0, 9.0)}              # arm-frame x, |y|, plan radius of the shoulder envelope disc
 ROD_TIP = (15.0, 12.0)                               # rod end: x = L - 15, |y| 12 (r 19.2 from the motor axis, in the wall)
 ROD_Z = (41.0, 4.0)                                  # top and bottom rod centres (sleeve flat to the top / bottom face)
-CHORD_SKIN = 2.65                     # sleeve wall round the bore (>= skin 2.5)
+CHORD_SKIN = 2.65                     # socket wall round the bore (>= skin 2.5)
+SOCKET_L = 18.0                       # drawn socket at each rod end (6 x the rod: epoxy bond ~ 2 MPa x pi x 3 x 18 = 340 N, E)
 E_CARBON = 120000.0                   # MPa, pultruded 3.0 rod along its axis (E)
 RHO_CARBON = 1.55                     # g/cm3 (E)
+E_PETG = 2780.0                       # MPa, nox/topo/material.py
 
 # ESC: a 4-in-1 under the FC in the hub stack (Spark 27 Oct), nothing on the arms; the motor leads run along the arm's flat
-# top and down beside the root into the hub, zip-tied round the beam (DEFAULT)
+# top and down beside the root into the hub, zip-tied round the top carbon rods' free spans (front) or the beam (DEFAULT)
 
 # loads (dimensions.md "System Overseer: arms", E)
 THRUST_N = 21.0                       # 1650 gf at 14.8 V (C) x (16.8 / 14.8)^2 on a full pack = 2.13 kgf
@@ -207,19 +210,20 @@ def bodies(which):
         sh = cyl(xs, ys, 0.0, ROOT_H, rs) + cyl(xs, -ys, 0.0, ROOT_H, rs)
         B["env"] = (B["env"] + sh).hull() - B["ko"]
 
-    # chords (arm frame): a sleeve per rod (skin round the bore, flat to the top / bottom face), bore open past the shoulder
+    # chords (arm frame): the rod is an insert (Part.insert: solid at the carbon's modulus in the layout and the strength
+    # FE, never printed); drawn only a socket at each end (review 2, 27 Oct); the optimiser hangs its webs on the free span,
+    # and the bore (open past the shoulder) cuts a collar through every web it meets: epoxy at the sockets and collars
     rods = mf.Manifold()
-    sleeves = mf.Manifold()
+    sockets = mf.Manifold()
     r = ROD_BORE / 2 + CHORD_SKIN
     for p0, p1 in chords(which, F):
         rods += rod_m(p0, p1, ROD_D / 2)
         B["cuts"] += rod_m(p0, p1, ROD_BORE / 2, back=30.0)
-        sl = rod_m(p0, p1, r, n=48)
-        flat = p0[2] > ROOT_H / 2
-        sl += (sl + sl.translate([0.0, 0.0, 10.0 if flat else -10.0])).hull()
-        sleeves += sl ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+        u = (p1 - p0) / np.linalg.norm(p1 - p0)
+        for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1 + 1.0 * u)):
+            sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
     B["rods"] = rods
-    B["drawn"] = B["pads"] + B["mpad"] + sleeves
+    B["drawn"] = B["pads"] + B["mpad"] + sockets
     return B, F
 
 
@@ -254,6 +258,10 @@ def setup_for(which):
     def setup(h):
         B, F = bodies(which)
         p = Part(f"overseer_arm_{which}", h, B["drawn"], B["cuts"], B["env"], build="-z", material="PETG")
+        for k_, (p0, p1) in enumerate(chords(which, F)):
+            rr = max(ROD_BORE / 2, 0.9 * h)              # a fat enough cylinder to stay connected on the coarse grid
+            p.insert(f"rod {k_}", rod_m(p0, p1, rr), E_CARBON / E_PETG, area_mm2=math.pi * (ROD_D / 2) ** 2,
+                     length_mm=float(np.linalg.norm(p1 - p0)))
         p.support("default", B["sup"])
         p.support("bosses", B["bosses"])        # review 27 Oct: the joint as 4 inserts only (no face contact)
         tipc = np.array([F["L"], 0.0, TIP_Z])

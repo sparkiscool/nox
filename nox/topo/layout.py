@@ -265,6 +265,7 @@ class Layout:
             design &= ~add
             log(f"layout: collar {s.collar_mm} mm round the drawn bodies: +{add.sum() * h ** 3 / 1000:.2f} cm3 passive")
         self.solid, self.void, self.design = solid, void, design
+        self.stiff = getattr(part, "stiff", np.ones(self.nel))   # inserts (Part.insert): solid at their own modulus
         self.nd = int(design.sum())
         if self.nd == 0:
             raise ValueError("layout: no design cells")
@@ -626,7 +627,7 @@ class Layout:
         """compliance of every case. Gate ties run on rho_g (the gate realization) when it is given, the rest on
         rho_e (a held thin body stays whole there, so the real cases and the ordinary ties keep it attached)."""
         s = self.s
-        E = s.emin + (1.0 - s.emin) * rho_e ** s.penal
+        E = (s.emin + (1.0 - s.emin) * rho_e ** s.penal) * self.stiff
         g = self.fe_solver.grid
         cases = self.cases
         F = np.zeros((self.part.ndof, len(cases)))
@@ -640,7 +641,7 @@ class Layout:
             U = self.fe_solver.solve(E, F, [c.support for c in cases], keys=[c.name for c in cases])
         else:
             U = np.zeros_like(F)
-            Eg = s.emin + (1.0 - s.emin) * rho_g ** s.penal
+            Eg = (s.emin + (1.0 - s.emin) * rho_g ** s.penal) * self.stiff
             for m, EE in ((~gate, E), (gate, Eg)):
                 idx = np.where(m)[0]
                 U[:, idx] = self.fe_solver.solve(EE, F[:, idx], [cases[q].support for q in idx],
@@ -666,8 +667,8 @@ class Layout:
         s = self.s
         g = np.zeros(self.nel)
         gg = np.zeros(self.nel) if rho_g is not None else None
-        dE = s.penal * np.maximum(rho_e, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin)
-        dEg = None if rho_g is None else s.penal * np.maximum(rho_g, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin)
+        dE = s.penal * np.maximum(rho_e, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin) * self.stiff
+        dEg = None if rho_g is None else s.penal * np.maximum(rho_g, 1e-12) ** (s.penal - 1.0) * (1.0 - s.emin) * self.stiff
         CH = 4
         for a in range(0, len(self.cases), CH):
             sl = list(range(a, min(a + CH, len(self.cases))))
