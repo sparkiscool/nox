@@ -178,7 +178,7 @@ HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the
 # the motor (offset from the motor axis point, y mirrored), the L2 braces end inside the front beam (lo / hi z), so the arm top prints flat
 ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
-BRACE_ROOT = (72.95, 62.11, {"lo": 30.0, "hi": 39.0})
+BRACE_ROOT = (52.0, {"lo": 26.0, "hi": 14.0}, 50.0)   # (x, y per level, z): a printed socket block on the top plate's front edge, the two sockets side by side (core; 27 Oct, the arm session: braces off the arm beams; was (72.95, 62.11) lo z 30 / hi z 39 in the front beam)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
@@ -732,7 +732,7 @@ def attach(g, nodes, ring_ids):
                 ok_ &= seg_band_dist(s_, root, mxy) - ROD_R >= PROP_GAP and views_clear(g, s_, root, ROD_R) and clear_of_cart(s_ + 0.05 * (root - s_), root)
             if ok_:
                 for lvl, upz in (("lo", 2.0), ("hi", 16.0)):
-                    rt = np.array([BRACE_ROOT[0], BRACE_ROOT[1] * sy, BRACE_ROOT[2][lvl]]) if BRACE_ROOT else root
+                    rt = np.array([BRACE_ROOT[0], BRACE_ROOT[1][lvl] * sy, BRACE_ROOT[2]]) if BRACE_ROOT else root
                     extra[f"L2 brace {lvl} {sy:+d}"] = (B - A * 5 + up_b * upz + np.array([0, 46.0 * sy, 0]), rt)
                 g["braces"].append(round(out_, 0)); break
     if not HEAD_ON_CAGE:                                               # the keels' core ends sit 5 deeper in the hub deck's sockets (core v2, 27 Oct)
