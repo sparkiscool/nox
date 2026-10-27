@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Overseer): frame v1 rerun on the fixed solver: 9 links 3.0 -> 6/4, buckling k 0.7 for links with a core end (E); 4 members reported over in the 35 g crash (tubes 11-18 / 12-19 1.15, core ties left.1 / right.1 1.06), not split: each split moved it to the next long tube (halved cage, Spark "ignore the tests"; buckling is reported, not gated).
 - 27 Oct (Overseer, Spark): head stays on the keels + 4 L2 braces ("keep the design we have right now i need the lidar to have max performance"): 200 / 119 Hz rigid / TPU, the stiffest option; head-on-cage kept as alt `V5_HEAD_ON=cage` (32 Hz). Frame: 6 members still buckle (4 core ties 1.2..2.2, tubes 11-18 / 12-19 1.15): next.
 - 27 Oct (Overseer, Spark): L2 on the cage tried (`head_cage_concept.py`, `runs/overseer_head_cage/concept/`): cage-only ~50 Hz on TPU nodes vs 100 target; DEFAULT keep 4 L2 braces, drop 2 keels (101 Hz); alt cage-only D. Frame solver regularisation bug fixed: 9 links to 6/4, 6 members still buckle (core ties, 2 side tubes), node runs stopped.
 - 27 Oct: Overseer v5 docs: one head mount mass (100 g E, system model = head_system.json), mass 3178 g, T/W 2.08, shell 63 tubes 15.9 m, L2 base 384, camera field cones per lens; `layout_v5.py`, `runs/overseer_layout/v5/summary.md`.

@@ -29,8 +29,9 @@ class Frame:
             if np.linalg.norm(q - p) < tol: return i
         self.X.append(p); return len(self.X) - 1
 
-    def member(self, a, b, sec, name=""):
-        self.M.append(dict(a=a, b=b, sec=sec, name=name))
+    def member(self, a, b, sec, name="", k=1.0):
+        """k: buckling effective-length factor (1 pinned-pinned, 0.7 fixed-pinned)"""
+        self.M.append(dict(a=a, b=b, sec=sec, name=name, k=k))
 
     def fix(self, i):
         self.fixed.add(i)
@@ -98,7 +99,7 @@ class Frame:
             N = -f[0]                                                      # + tension
             Mb = max(np.hypot(f[4], f[5]), np.hypot(f[10], f[11]))
             sig = abs(N) / s["A"] + Mb * s["c"] / s["I"]
-            Pcr = np.pi ** 2 * s["E"] * s["I"] / L ** 2                    # pinned ends (k = 1)
+            Pcr = np.pi ** 2 * s["E"] * s["I"] / (m.get("k", 1.0) * L) ** 2   # pinned ends unless the member says (k)
             out.append(dict(name=m["name"], a=m["a"], b=m["b"], L=L, N=N, M=Mb, sigma=sig, Pcr=Pcr,
                             buckle=(-N / Pcr) if N < 0 else 0.0, f_end_a=f[:3], f_end_b=f[6:9]))
         return out
