@@ -62,7 +62,7 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
 - **Drone:** the v2 drone (L2 at the nose, axis 15° below +x, base (384.0, 0, 51) (C); motors forward; catch 30 aft; pack top z -7). The motor square sits 66.4 ahead (front arms r 249, rear r 157) with the CG 0.2 off (C on E).
 - **L2:** its field 0.0 % crossed (C).
 - **Props and swap:** shell tubes 20.3 off the props, links 16.8 (C); swap zone clear (M); access PASS with the core's 37 tool paths (system_check, C).
-- **Core parts in (27 Oct, cage sync rule):** the core session's saved parts (hub deck v9, flow clip, FC stack, Pi 5, UBEC, buck, RX, wires, pack, cartridge, receiver, XT60; decimated in `saved/core/`, from `part/overseer-core-pieces` @ 26bf1475) replace the layout's placeholders. Their cartridge bottom is z -76.9, so the base loop drops 22.9 to z -79.9 (opening plane = cartridge bottom - 3). The front core ties root on the hub deck tower front face (114, 0, 20) and aim forward: aimed back, one crossed the FC nut driver lines (access FAIL). TPU feet are now Ø16 x 3 caps under the loop nodes, contact z -93.1 (C). Frame model: worst tube buckling 1.92, link 0.72, lowest mode 148 Hz (F on E).
+- **Core parts in (27 Oct, cage sync rule):** the core session's saved parts (hub deck v9, flow clip, FC stack, Pi 5, UBEC, buck, RX, wires, pack, cartridge, receiver, XT60; decimated in `saved/core/`, from `part/overseer-core-pieces` @ 26bf1475) replace the layout's placeholders. Their cartridge bottom is z -76.9, so the base loop drops 22.9 to z -79.9 (opening plane = cartridge bottom - 3). The front core ties root on the hub deck tower front face (114, 0, 20) and aim forward: aimed back, one crossed the FC nut driver lines (access FAIL). TPU feet are now Ø16 x 3 caps under the loop nodes, contact z -93.1 (C). The 8 bay ties root on the core sled's side faces (x 30 / -90, y ±56, z -5.1; were the old sled corners at y ±72, C). Frame model: worst tube buckling 1.92, link 0.72, lowest mode 148 Hz (F on E).
 
 ## One layout ("the one with perfect CG")
 - **Pack in:** CG 0.2 mm off the thrust centre (system_check, E), with the layout's E arm masses. With the saved v5d arm meshes and masses the arm session reads 5.8 mm (balance FAIL); DEFAULT: rebalance once, when the front arm is final (the motor square moves the arm and spoke ends).
@@ -70,7 +70,7 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
 
 ## Carbon (6 mm tube, 3 mm rod)
 - Shell: 63 tubes 6/4, 15.9 m, 116 .. 446 (C).
-- Links: 38, 7.51 m (C), shortest 89 (bay tie -1+1.1, C): 32 tube 6/4 (the frame model's sizing), 6 rod 3.0 (bay ties). The spokes, ties, keels, braces and head struts each run longer than the 33 break-even.
+- Links: 38, 7.57 m (C), shortest 99 (bay tie -1+1.1, C): 32 tube 6/4 (the frame model's sizing), 6 rod 3.0 (bay ties). The spokes, ties, keels, braces and head struts each run longer than the 33 break-even.
 
 ## Mass (E)
 3229 g (layout; system check 3270): shell 497 (tubes 389 + nodes 108), links 174, sensor head mount 99 (E). T/W 2.04 at 1650 gf a motor (C on E). Over the 2200 g slot by 1012 g (146 %): v3's cage mass slot predates the L2 (230 P), the 650 g pack, the 338.5 g latch set (M) and the full cage; against cage v3 the halved shell saves ~270 g (E). The extra grams over v3's link set (~60 g, E) buy the 6/4 links that hold the 35 g crash.
@@ -78,5 +78,5 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
 ## Next
 1. Save the one-piece head mount (`run/head_mount-v1`, running).
 2. Node runs v3 (child session); Spark's bore pick from the v2 coupons sets the socket bores.
-3. The arms; the bay ties' roots on the core's sled (they still use the old sled corners).
+3. The arms; the core puts 2 front tie sockets on its tower face and 8 bay tie sockets on the sled sides.
 4. The new funnel round the shell (design center session).

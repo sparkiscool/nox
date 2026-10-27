@@ -142,6 +142,7 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 CORE_PARTS = os.path.join(SAVED, "core", "core_parts.json")   # the core session's parts (everything inside the cage), decimated copies
 CORE_TIE_FRONT = (114.0, 0.0, 20.0)                # the front core ties' root on the hub deck tower's front face, off the flow clip (C, DEFAULT 27 Oct)
+CORE_SLED_Y = 56.0                                   # the core's sled edge |y| (dimensions.md Sled): the bay ties' roots, on its side faces (C, DEFAULT 27 Oct)
 
 
 def adjust(g):
@@ -765,7 +766,7 @@ def attach(g, nodes, ring_ids):
     sb = g["sled"].bounds                                               # belly sled corners to the 2 nearest ring nodes clear of the cartridge
     for sx in (1, -1):
         for sy in (1, -1):
-            cn = np.array([-DC + sx * (sb[1][0] - sb[0][0]) / 2, sy * sb[1][1], sb[0][2]])
+            cn = np.array([-DC + sx * (sb[1][0] - sb[0][0]) / 2, sy * (CORE_SLED_Y if os.path.exists(CORE_PARTS) else sb[1][1]), sb[0][2]])
             clear = lambda k: clear_of_cart(cn, nodes[k])
             for n_, k in enumerate([k for k in sorted(ring_ids, key=lambda k: np.linalg.norm(nodes[k] - cn)) if clear(k)][:2]):
                 extra[f"bay tie {sx:+d}{sy:+d}.{n_ + 1}"] = (cn, nodes[k])
