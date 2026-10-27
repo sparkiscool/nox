@@ -221,3 +221,11 @@ layout: warm start from a (24, 24, 24) grid (h 3.0): mean x 0.009
 layout: warm start from a (24, 24, 24) grid (h 3.0): mean x 0.009
 it   1 beta    4 J  10.0000 vol 0.0110 (dil 0.0445 g +0.464) grey  3.5% ch 0.100 worst held b1 fy 8.96e+05 183.1s
 it   1 beta    4 J  10.0000 vol 0.0110 (dil 0.0445 g +0.464) grey  3.5% ch 0.100 worst held b1 fy 8.96e+05 183.1s
+it   2 beta    4 J  10.0069 vol 0.0107 (dil 0.0435 g +0.432) grey  3.3% ch 0.100 worst held b1 fy 8.97e+05 184.3s
+it   2 beta    4 J  10.0069 vol 0.0107 (dil 0.0435 g +0.432) grey  3.3% ch 0.100 worst held b1 fy 8.97e+05 184.3s
+it   3 beta    4 J  10.0118 vol 0.0103 (dil 0.0426 g +0.401) grey  3.2% ch 0.100 worst held b1 fy 8.97e+05 177.4s
+it   3 beta    4 J  10.0118 vol 0.0103 (dil 0.0426 g +0.401) grey  3.2% ch 0.100 worst held b1 fy 8.97e+05 177.4s
+it   4 beta    4 J  10.0151 vol 0.0100 (dil 0.0416 g +0.369) grey  3.0% ch 0.100 worst held b1 fy 8.97e+05 187.2s
+it   4 beta    4 J  10.0151 vol 0.0100 (dil 0.0416 g +0.369) grey  3.0% ch 0.100 worst held b1 fy 8.97e+05 187.2s
+it   5 beta    4 J  10.0172 vol 0.0096 (dil 0.0406 g +0.338) grey  2.9% ch 0.100 worst held b1 fy 8.97e+05 158.9s
+it   5 beta    4 J  10.0172 vol 0.0096 (dil 0.0406 g +0.338) grey  2.9% ch 0.100 worst held b1 fy 8.97e+05 158.9s
