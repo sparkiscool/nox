@@ -355,6 +355,8 @@ def bodies(which):
                  + diag(cyl(TOP3[0], TOP3[1], ROOT_H - ROOT_PAD_T, ROOT_H, BOSS_D / 2), d)) ^ top_fp
         t_bot = (diag(box(b3[0], u0 + 2.0, b3[1] - TONGUE_V, b3[1] + TONGUE_V, 0.0, ROOT_PAD_T), d)
                  + diag(cyl(b3[0], b3[1], 0.0, ROOT_PAD_T, BOSS_D / 2), d)) ^ bot_fp
+        if os.environ.get("NOX_ARM_THIRD_BOTTOM", "1") == "0":   # cage session 27 Oct: the bottom third screw has no
+            t_bot = mf.Manifold()                                 # driver path (over the receiver): top tongue only
         pad_top += t_top
         pad_bot += t_bot
         tongues = t_top + t_bot
@@ -370,7 +372,7 @@ def bodies(which):
     for u, v in TOP_INS + ([TOP3] if THIRD else []):
         cuts += diag(cyl(u, v, ROOT_H - INS_DEPTH, ROOT_H + 1, INS_D / 2, 32), d)
         bosses += diag(cyl(u, v, ROOT_H - INS_DEPTH, ROOT_H, INS_D / 2 + 1.5, 32), d)
-    for u, v in BOT_INS + ([BOT3[which]] if THIRD else []):
+    for u, v in BOT_INS + ([BOT3[which]] if THIRD and os.environ.get("NOX_ARM_THIRD_BOTTOM", "1") != "0" else []):
         cuts += diag(cyl(u, v, -1.0, INS_DEPTH, INS_D / 2, 32), d)
         bosses += diag(cyl(u, v, 0.0, INS_DEPTH, INS_D / 2 + 1.5, 32), d)
     lead = math.degrees(math.atan2(*(F["R0"] - M)[::-1]))          # motor leads point back to the root
