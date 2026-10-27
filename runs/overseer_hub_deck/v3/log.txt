@@ -296,3 +296,25 @@ it  77 beta   32 J  20.9147 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100
 it  77 beta   32 J  20.9147 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.8s
 it  78 beta   32 J  20.9142 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.8s
 it  78 beta   32 J  20.9142 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.8s
+it  79 beta   32 J  20.9138 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.0s
+it  79 beta   32 J  20.9138 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.0s
+it  80 beta   32 J  20.9134 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 80.5s
+it  80 beta   32 J  20.9134 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 80.5s
+it  81 beta   32 J  20.9129 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 79.0s
+it  81 beta   32 J  20.9129 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 79.0s
+it  82 beta   32 J  20.9125 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 77.9s
+it  82 beta   32 J  20.9125 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 77.9s
+it  83 beta   32 J  20.9120 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 76.0s
+it  83 beta   32 J  20.9120 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 76.0s
+it  84 beta   32 J  20.9115 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.5s
+it  84 beta   32 J  20.9115 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 75.5s
+it  85 beta   32 J  20.9108 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 73.2s
+it  85 beta   32 J  20.9108 vol 0.1447 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 73.2s
+it  86 beta   32 J  20.9099 vol 0.1446 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 71.3s
+it  86 beta   32 J  20.9099 vol 0.1446 (dil 0.2522 g -0.000) grey  2.4% ch 0.100 worst USB plug 20 N into the Pi's  343 71.3s
+layout: stopped (max_stage) at it 86, beta 32, 6707 s
+layout: stopped (max_stage) at it 86, beta 32, 6707 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 7199 s, peak 9.811056 GB
+layout done: 7199 s, peak 9.811056 GB
