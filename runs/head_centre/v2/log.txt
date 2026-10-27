@@ -196,3 +196,19 @@ layout: warm start from a (24, 40, 40) grid (h 4.0): mean x 0.036
 layout: warm start from a (24, 40, 40) grid (h 4.0): mean x 0.036
 it   1 beta    4 J  10.0000 vol 0.0301 (dil 0.0654 g -0.172) grey  6.2% ch 0.100 worst guard hit 4 3.3e+05 102.1s
 it   1 beta    4 J  10.0000 vol 0.0301 (dil 0.0654 g -0.172) grey  6.2% ch 0.100 worst guard hit 4 3.3e+05 102.1s
+it   2 beta    4 J   7.0832 vol 0.0345 (dil 0.0764 g -0.032) grey  7.3% ch 0.100 worst guard hit 4 2.43e+05 105.6s
+it   2 beta    4 J   7.0832 vol 0.0345 (dil 0.0764 g -0.032) grey  7.3% ch 0.100 worst guard hit 4 2.43e+05 105.6s
+it   3 beta    4 J   4.9853 vol 0.0336 (dil 0.0762 g -0.035) grey  7.4% ch 0.100 worst guard hit 7 1.61e+05 103.2s
+it   3 beta    4 J   4.9853 vol 0.0336 (dil 0.0762 g -0.035) grey  7.4% ch 0.100 worst guard hit 7 1.61e+05 103.2s
+it   4 beta    4 J   3.0740 vol 0.0345 (dil 0.0765 g -0.032) grey  7.6% ch 0.100 worst tie b5 mz 1.01e+05 102.8s
+it   4 beta    4 J   3.0740 vol 0.0345 (dil 0.0765 g -0.032) grey  7.6% ch 0.100 worst tie b5 mz 1.01e+05 102.8s
+it   5 beta    4 J   2.0954 vol 0.0360 (dil 0.0771 g -0.023) grey  7.8% ch 0.100 worst guard hit 0 7.43e+04 76.8s
+it   5 beta    4 J   2.0954 vol 0.0360 (dil 0.0771 g -0.023) grey  7.8% ch 0.100 worst guard hit 0 7.43e+04 76.8s
+it   6 beta    4 J   2.3341 vol 0.0350 (dil 0.0753 g -0.042) grey  7.5% ch 0.100 worst tie b5 fy 8.25e+04 84.6s
+it   6 beta    4 J   2.3341 vol 0.0350 (dil 0.0753 g -0.042) grey  7.5% ch 0.100 worst tie b5 fy 8.25e+04 84.6s
+it   7 beta    4 J   1.3000 vol 0.0366 (dil 0.0765 g -0.026) grey  7.6% ch 0.100 worst guard hit 0 4.78e+04 77.0s
+it   7 beta    4 J   1.3000 vol 0.0366 (dil 0.0765 g -0.026) grey  7.6% ch 0.100 worst guard hit 0 4.78e+04 77.0s
+it   8 beta    4 J   0.9293 vol 0.0362 (dil 0.0754 g -0.040) grey  7.4% ch 0.100 worst guard hit 4 3.04e+04 65.7s
+it   8 beta    4 J   0.9293 vol 0.0362 (dil 0.0754 g -0.040) grey  7.4% ch 0.100 worst guard hit 4 3.04e+04 65.7s
+it   9 beta    4 J   0.6677 vol 0.0379 (dil 0.0766 g -0.025) grey  7.4% ch 0.100 worst guard hit 0 2.25e+04 70.6s
+it   9 beta    4 J   0.6677 vol 0.0379 (dil 0.0766 g -0.025) grey  7.4% ch 0.100 worst guard hit 0 2.25e+04 70.6s
