@@ -578,7 +578,7 @@
   "in_view_points": 0,
   "in_view_aperture": 0,
   "hood_lead_mm": 4.0,
-  "cone_margin_deg_point": 34.3,
+  "cone_margin_deg_point": 34.4,
   "cone_margin_deg_aperture": 29.9
  },
  "fit": {
@@ -594,23 +594,23 @@
    ],
    [
     "rod 7-16",
-    8.46
+    8.45
    ],
    [
     "rod 8-16",
-    8.46
+    8.45
    ]
   ],
-  "node_clearance_min_mm": 5.46,
+  "node_clearance_min_mm": 5.45,
   "part_penetration_mm": {
-   "prop_1.stl": -21.85,
+   "prop_1.stl": -21.45,
    "prop_2.stl": -21.09,
-   "spokes__bay_ties__core_ties__camera_guar.stl": -31.6
+   "spokes__bay_ties__core_ties__camera_guar.stl": -31.55
   },
   "points_in_camera_box": 0
  },
  "stroke": {
-  "other_rods_min_clear_mm": 7.74,
+  "other_rods_min_clear_mm": 7.72,
   "clip_rod_max_interference_mm": 0.23,
   "allowed_mm": 0.25
  },
@@ -908,5 +908,9 @@
    ],
    "qty": 2
   }
+ },
+ "system": {
+  "manifest": "runs/scout_camera_mount/v1/scout_with_mount.assembly.json",
+  "report": "runs/scout_camera_mount/v1/system_check.txt"
  }
 }

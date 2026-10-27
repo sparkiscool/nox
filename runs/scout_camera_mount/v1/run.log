@@ -1,8 +1,8 @@
 snap: {"t_f": 2.0, "snap": 0.2, "L": 9.0, "k_finger_N_mm": 168.6, "finger_root_deg": 22.5, "finger_tip_deg": 115.4, "install_N": 23.4, "pop_N": 23.4, "open_mm": 0.2, "finger_sigma_MPa": 22.4, "grip_rib_N": 20.5, "slide_N": 11.1, "mouth_mm": 5.6}
 mount 21.26 g, collar 0.25 g x2, watertight True, bodies 1, bounds [[107.2, -22.5, 6.4], [153.0, 22.5, 67.0]]
-view: {'in_view_points': 0, 'in_view_aperture': 0, 'hood_lead_mm': 4.0, 'cone_margin_deg_point': 34.3, 'cone_margin_deg_aperture': 29.9}
-fit: {"rod_clearance_min_mm": 6.58, "rod_clearance_worst": [["rod 14-16", 6.58], ["rod 15-16", 7.74], ["rod 7-16", 8.46], ["rod 8-16", 8.46]], "node_clearance_min_mm": 5.46, "part_penetration_mm": {"prop_1.stl": -21.85, "prop_2.stl": -21.09, "spokes__bay_ties__core_ties__camera_guar.stl": -31.6}, "points_in_camera_box": 0}
-stroke: {'other_rods_min_clear_mm': 7.74, 'clip_rod_max_interference_mm': 0.23, 'allowed_mm': 0.25}
+view: {'in_view_points': 0, 'in_view_aperture': 0, 'hood_lead_mm': 4.0, 'cone_margin_deg_point': 34.4, 'cone_margin_deg_aperture': 29.9}
+fit: {"rod_clearance_min_mm": 6.58, "rod_clearance_worst": [["rod 14-16", 6.58], ["rod 15-16", 7.74], ["rod 7-16", 8.45], ["rod 8-16", 8.45]], "node_clearance_min_mm": 5.45, "part_penetration_mm": {"prop_1.stl": -21.45, "prop_2.stl": -21.09, "spokes__bay_ties__core_ties__camera_guar.stl": -31.55}, "points_in_camera_box": 0}
+stroke: {'other_rods_min_clear_mm': 7.72, 'clip_rod_max_interference_mm': 0.23, 'allowed_mm': 0.25}
 props: {'prop_1': 23.1, 'prop_2': 21.3, 'prop_3': 122.6, 'prop_4': 121.6}
 frame: {"mode1_largest_motion_at": [[-231.5, 0.0, 41.5], [153.0, 20.5, 65.0], [153.0, 0.0, 42.0], [152.2, 0.0, 42.9], [-159.0, 0.0, 61.5], [133.9, 0.0, 69.8]], "modes_hz": [109.5, 163.8, 241.4, 333.5, 428.0, 556.7], "camera_share": [0.23, 0.08, 0.05, 0.19, 0.69, 0.43], "camera_disp_ratio": [0.75, 0.7, 0.39, 0.82, 1.0, 1.0], "first_camera_mode_hz": 428.0, "body_mass_g": 31.3}
    frontal hit 250 N on the hood centre (-x) {'petg_worst': 'arm top chord +1', 'petg_sigma_MPa': np.float64(13.05), 'carbon_worst': 'saddle tie 4.1 m', 'carbon_ratio': np.float64(0.297), 'clip_pull_N': 0.0, 'net_side_per_clip_N': np.float64(0.0), 'lens_disp_mm': 2.34}
@@ -19,3 +19,25 @@ frame: {"mode1_largest_motion_at": [[-231.5, 0.0, 41.5], [153.0, 20.5, 65.0], [1
   break up +z [(np.float64(92.0), 'a clip pops'), (np.float64(298.0), 'saddle tie 4.1 m (carbon)'), (np.float64(298.0), 'saddle tie 4.1 (carbon)')]
   break down -z [(np.float64(92.0), 'a clip pops'), (np.float64(298.0), 'saddle tie 4.1 m (carbon)'), (np.float64(298.0), 'saddle tie 4.1 (carbon)')]
 soft clips (E/10): [109.4, 163.4, 240.6]  chords out-of-plane I: [109.6, 164.0, 241.9]
+5.0, lateral -46.4 mm, contact [64.8, 60.3, 22.0]
+    edge / motor 2: 55.78 mm (E) from (+0.83, -0.50, -0.25), axis [-0.417, -0.85, 0.321], roll 255.0, lateral 46.6 mm, contact [64.8, -60.3, 22.0]
+    edge / motor 4: 56.0 mm (E) from -Y, axis [-0.929, 0.142, 0.343], roll 270.0, lateral 13.6 mm, contact [-58.8, -65.6, 22.0]
+    post r10 / motor 1: 56.0 mm (E) from (+0.46, +0.89, +0.00), axis [-0.884, 0.463, 0.071], roll 90.0, lateral -22.4 mm, contact [60.3, 64.8, 22.0]
+    post r10 / motor 2: 56.0 mm (E) from (+0.46, -0.89, +0.00), axis [0.885, 0.456, 0.099], roll 90.0, lateral -11.9 mm, contact [60.3, -64.8, 22.0]
+    post r10 / motor 3: 56.0 mm (E) from (-0.18, +0.98, -0.00), axis [0.984, 0.176, 0.005], roll 270.0, lateral 18.1 mm, contact [-55.7, 66.4, 22.0]
+    post r10 / motor 4: 56.0 mm (E) from -Y, axis [-0.99, 0.132, 0.055], roll 270.0, lateral 18.1 mm, contact [-55.7, -66.4, 22.0]
+    edge / receiver lid (latch): 57.98 mm (E) from (+0.82, +0.00, -0.58), axis [0.404, 0.711, 0.575], roll 135.0, lateral -62.9 mm, contact [58.3, -31.5, 2.6]
+    post r10 / pack 4S 1500: 60.84 mm (E) from (-0.84, +0.33, -0.44), axis [-0.527, -0.706, 0.473], roll 120.0, lateral 39.1 mm, contact [-35.0, -8.5, -32.5]
+    post r10 / receiver lid (latch): 63.38 mm (E) from (+0.68, +0.19, -0.71), axis [0.404, 0.711, 0.575], roll 150.0, lateral -91.4 mm, contact [58.3, -31.5, 3.6]
+    edge / XT60E1-M: 69.38 mm (E) from (+0.29, -0.31, +0.91), axis [-0.929, 0.142, 0.343], roll 345.0, lateral 27.1 mm, contact [49.5, 2.3, 14.8]
+  access PASS (swept tool overlap <= 0.5 mm³):
+    swap: cartridge v6 (latch) down (cartridge v6 (latch), part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    swap: pack 4S 1500 down (pack 4S 1500, part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    swap: pack XT60 plug down (pack XT60 plug, part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (-37.6, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (-37.6, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (+48.2, -26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    M3 key, receiver bolt (+48.2, +26.6) (receiver v3 (latch), type cylinder, d 4, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
+    FC USB-C cable (12 x 7, searched path, E) (FC, type box, w 12, h 7, w_axis [0.7496, -0.6618, 0.0], 250 mm along [-0.6618, -0.7496, 0.0083]): 0.0 mm³ (E)
+System: Scout v3, cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 735 of 500 g (147 %) (E) over budget (total), CG 1.8 mm off thrust axis (E) [+1.8, +0.2, -38.4], 0.7 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 8/8 clear
+

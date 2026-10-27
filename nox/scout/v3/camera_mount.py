@@ -536,8 +536,39 @@ def main():
     pm.export(os.path.join(ROOT, "print", "scout_camera_mount_v1.stl")); pc.export(os.path.join(ROOT, "print", "scout_camera_mount_collar_v1.stl"))
     result["print"] = dict(mount=dict(file="print/scout_camera_mount_v1.stl", extents=np.round(pm.extents, 1).tolist()),
                            collar=dict(file="print/scout_camera_mount_collar_v1.stl", extents=np.round(pc.extents, 1).tolist(), qty=2))
+    result["system"] = system_recheck(mesh, cmesh, g_mount, g_col)
     json.dump(result, open(os.path.join(OUT, "result.json"), "w"), indent=1, default=float)
     return result
+
+
+def system_recheck(mesh, cmesh, g_mount, g_col):
+    """the assembled recheck: the v12 Scout manifest with this mount in place of the layout's cradle, arms and clips"""
+    import subprocess, copy
+    a = json.load(open(os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")))
+    old = {"camera cradle (printed)", "camera cradle arms (printed)", "camera cradle clips (printed)"}
+    rel = os.path.relpath(OUT, ROOT)
+    cm = cmesh.copy(); cm.apply_transform(np.diag([1, -1, 1, 1])); cm.invert()
+    cm.export(os.path.join(OUT, "stop_collar_assembled_my.stl"))
+    parts = [p for p in a["parts"] if p["name"] not in old]
+    parts.append(dict(name="camera mount (printed)", role="cage", mesh=f"{rel}/camera_mount_assembled.stl", material="PETG", mass_g=round(g_mount, 2), tag="M",
+                      owner="scout camera mount", version="v1", source="nox/scout/v3/camera_mount.py"))
+    for k, f in (("+y", "stop_collar_assembled.stl"), ("-y", "stop_collar_assembled_my.stl")):
+        parts.append(dict(name=f"camera mount stop collar {k}", role="cage", mesh=f"{rel}/{f}", material="PETG", mass_g=round(g_col, 2), tag="M",
+                          owner="scout camera mount", version="v1", source="nox/scout/v3/camera_mount.py"))
+    cp = []
+    for x, y, t in a["contact_pairs"]:
+        if x in old - {"camera cradle (printed)"} or y in old - {"camera cradle (printed)"}: continue
+        cp.append([("camera mount (printed)" if v == "camera cradle (printed)" else v) for v in (x, y)] + [t])
+    for nm in ("camera mount (printed)", "camera mount stop collar +y", "camera mount stop collar -y"):
+        cp.append([nm, "cage shell tubes", 1e9])                         # the clips and collars grip the tubes (drawn 3.0 in the layout)
+    a["parts"], a["contact_pairs"] = parts, cp
+    a["note"] = "v12 Scout manifest with the camera mount v1 (runs/scout_camera_mount/v1) in place of the layout's cradle, arms and clips. " + a["note"]
+    man = os.path.join(OUT, "scout_with_mount.assembly.json"); json.dump(a, open(man, "w"), indent=1)
+    r = subprocess.run([sys.executable, os.path.join(ROOT, "nox", "system_check.py"), man, "--report", "--out", os.path.join(OUT, "system_check.json")],
+                       capture_output=True, text=True, cwd=ROOT)
+    open(os.path.join(OUT, "system_check.txt"), "w").write(r.stdout + r.stderr)
+    print(r.stdout[-3000:])
+    return dict(manifest=os.path.relpath(man, ROOT), report=f"{rel}/system_check.txt")
 
 
 if __name__ == "__main__":
