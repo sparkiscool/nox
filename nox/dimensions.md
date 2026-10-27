@@ -181,7 +181,7 @@ The system pass of the swap arm carrying both packs (Spark 24 Oct: 9 bays, 4 Ove
 | Props shadow | 3.3 % above, 8.7 % below (plan shadow weighted by r) | E |
 | Mass | 680 g all-up (cage ~145 incl. the tie saddle 17 and the printed camera cradle + arms + clips 17; bought + latch set + wires ~505); budget 500 soft (L) | E |
 | Access | swap down (cartridge, pack, plug); 4 receiver bolt keys from below; FC USB-C cable out the tail-left through a cell: 8 / 8 | C |
-| Electronics tail bay (system pass v2) | optimised, catch set **x 0.0** (8 fwd of v10): Radxa on edge right wall x −110..−78.5, z −15..52; UBEC left wall x −113..−88; XR2 shelf x −128..−112; 8-wide PETG box keel + yoke, 4 M3 into a belly-mount tail block (x −74..−53, \|y\| ≤ 6.5); bay 59.5 g at (−81.5, 0.2, 16.0); CG 0.15/0.34 mm, no slide 6.7/6.1 FAIL; wash ≥ 3.1, funnel line ≥ 1.0. `runs/scout_electronics/v2/envelope.json` | C on E |
+| Electronics tail bay (mount v2 on v11) | poses v11's; mount: belly-mount tail block + root fin (13 x 35.4) + 2 M3 into the plate (−34, +9 / −1), 4-M3 yoke (fuse), box spine y −13.05..−4.6, UBEC tray; XR2 x −110..−94, y −27..−15; mount 38.6 g at (−87.7, −3.7, 16.6), cables 6.4 g; CG at catch 3.5: 5.6/6.3 FAIL, catch −9.0: 1.8/1.2; UBEC 1.0 off the Radxa (ask +7 y). `runs/scout_electronics/v2/envelope.json` | C on E |
 
 ## System Overseer v5 (27 Oct 2026, layout v5 / cage v5; `nox/overseer/layout_v5.py`, assembly `nox/overseer/overseer.assembly.json`, frame `nox/overseer/cage_frame.py`, runs `runs/overseer_layout/v5/summary.md`, `runs/overseer_frame/v1/`; drone frame: x nose, y left, z up, z 0 bottom plate top; C geometry on E sizes, F frame model unless tagged)
 | Item | Value | Tag |

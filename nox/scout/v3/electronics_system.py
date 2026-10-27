@@ -1,4 +1,12 @@
-"""Scout v3 electronics: system pass v2 (27 Oct 2026). Places the Radxa Zero 3W, the 5 V UBEC and the RadioMaster XR2 by
+"""Scout v3 electronics mount v2 (27 Oct 2026).
+
+ROUND 3 (current, `python3 nox/scout/v3/electronics_system.py`): the mount on scout_layout v11's tail-bay poses (Spark had the cage
+session move the bay out of the wash and centre the CG; v11 sets the Radxa / UBEC poses as the requirement). `run_v11()`: the belly
+mount's tail block + root fin + 2 plate bolts, a 4-M3 yoke (the fuse), a box spine beside the Radxa, the UBEC tray, the XR2 placed;
+wash, funnel line (v11's ring and tail point), cage first, fit, access (system_check), CG with the mount and the balancing slide,
+loads (root vs fuse) and modes; concept B (a strut to the roof node) weighed. Outputs runs/scout_electronics/v2/.
+
+Rounds 1-2 (superseded, `--keel`): the poses optimised on v10 with a box keel, the text below. Places the Radxa Zero 3W, the 5 V UBEC and the RadioMaster XR2 by
 optimisation on the race-car cage (scout_layout v10, PRs 127 + 131), jointly with balance (the catch-set slide), draws the mount concept
 from the picked poses and checks the assembled result.
 
@@ -74,7 +82,7 @@ BOLT_DX = (6.5, 16.5)             # M3 positions from the block's front face (C)
 ROOT_WALL = 3.0                   # the root fin's walls (stiffer than the tongues: the fuse goes first, C)
 FIN_TOP = 45.0                    # the block's root fin rises through the plate's tail notch (|y| <= 6.5) to here (C, DEFAULT)
 NOTCH_X = -39.1                   # the plate's tail notch front (|y| < 9, C from the plate mesh); the fin stops 0.6 short
-PLATE_BOLTS = [(-35.0, 5.0), (-35.0, -5.0)]   # 2 new M3 down through the carbon plate into inserts in the belly mount's tail (DEFAULT:
+PLATE_BOLTS = [(-34.0, 9.0), (-34.0, -1.0)]   # 2 new M3 down through the carbon plate into inserts in the belly mount's tail (DEFAULT:
                                   # drill 2 x Ø3.4 in the plate; heads on the plate top, between the rear props, ahead of the notch)
 ZCAP = None                       # the bay's top (items + keel) in the tail, set by the rebuild loop (compact cage, review 27 Oct)
 SO_D, SO_PILOT = 8.0, 2.1         # Radxa posts Ø8, screw-only: M2.5 x 8 thread-forming into a Ø2.1 pilot through post + wall (DEFAULT)
@@ -617,6 +625,22 @@ def surf(m, n=4000):
     return np.vstack([m.vertices, trimesh.sample.sample_surface(m, n, seed=2)[0]])
 
 
+def under_plate(Q, M=None):
+    """points under the carbon plate (z <= its underside) and inside its outline in plan: in the plate's own shadow (no added wash)"""
+    M = M or MODEL
+    if "_plate_poly" not in M:
+        import shapely.geometry as sg, shapely.ops as so
+        sec = M["P"]["frame plate (Bee35 carbon)"]["mesh"].section(plane_origin=[0, 0, 20.0], plane_normal=[0, 0, 1])
+        pl, T_ = sec.to_planar(); polys = [pg.buffer(0) for pg in pl.polygons_full]
+        poly = so.unary_union(polys); off = T_[:2, 3]
+        M["_plate_poly"] = (poly, T_)
+    poly, T_ = M["_plate_poly"]
+    import shapely
+    Qh = np.c_[Q[:, :2], np.zeros(len(Q)), np.ones(len(Q))] @ np.linalg.inv(T_).T
+    inside = shapely.contains_xy(poly, Qh[:, 0], Qh[:, 1])
+    return inside & (Q[:, 2] <= 18.6)
+
+
 def checks(res, dc, mparts, M=None, label=""):
     """fit (min gaps), wash, shell inset, sweeps; returns a dict of numbers"""
     M = M or MODEL; it = item_meshes(res); out = {}
@@ -641,7 +665,8 @@ def checks(res, dc, mparts, M=None, label=""):
         for n2, m2 in allp.items():
             if n2 == n: continue
             pq = trimesh.proximity.ProximityQuery(m2); g[n2] = float(-pq.signed_distance(Q).max())
-        w = float(wash_dist(Q[:, 0], Q[:, 1]).min())
+        wd = wash_dist(Q[:, 0], Q[:, 1]); wd[under_plate(Q, M)] = np.inf          # under the carbon plate the wash is the plate's
+        w = float(wd.min())
         inset = float((-(Q @ eq[:, :3].T + eq[:, 3])).min(1).min()) - ROD_R
         fz = Q[:, 2] - funnel_z(Q[:, 0], dc, M); fl = float(fz[np.isfinite(fz)].min()) if np.isfinite(fz).any() else float("nan")
         out[n] = dict(gaps=g, wash=w, rods=rod_gap(Q), inset=inset, funnel=fl)
@@ -653,7 +678,8 @@ def sweep_out(res, M=None):
     distance from its axis to a rod or node surface past the shell face (>= 5 = the tool passes through a cell)"""
     M = M or MODEL; o, t = res["poses"]["Radxa Zero 3W"]; R = o["R"]; out = {}
     eq = ConvexHull(M["nodes"]).equations
-    for nm, p, d in (("SD card", o["pts"]["sd"] + t, R @ np.array([-1.0, 0, 0])), ("USB-C 1", o["pts"]["usb1"] + t, R @ np.array([0, -1.0, 0]))):
+    for nm, p, d in (("SD card", o["pts"]["sd"] + t, R @ np.array([-1.0, 0, 0])),
+                     ("USB-C 1", o["pts"]["usb1"] + t, R @ np.array([0, -1.0, 0]) if USB1_DIR is None else np.asarray(USB1_DIR, float))):
         s = np.linspace(0, 300, 601); Q = p + s[:, None] * d
         inside = (Q @ eq[:, :3].T + eq[:, 3]).max(1) <= 0
         exit_s = float(s[np.argmin(inside)]) if not inside.all() else np.inf
@@ -692,25 +718,28 @@ def manifest(res, dc, mparts, M=None, extra_access=True):
     for a in A["access"]:
         a = dict(a)
         if "from" in a and a["part"] in CATCH: a["from"] = (np.array(a["from"]) + [sh, 0, 0]).tolist()
+        if a["name"].startswith("FC USB-C") and FC_USB_FROM is not None:
+            a["from"] = list(FC_USB_FROM); a["name"] = "FC USB-C cable (12 x 7, from the FC's tail-right port, E)"
         a["ignore"] = list(a.get("ignore", [])) + ["tail cables (5 runs)"]
         acc.append(a)
     if extra_access:
         o, t = res["poses"]["Radxa Zero 3W"]; R = o["R"]
         acc.append(dict(name="Radxa microSD out + Ø10 fingers", part="Radxa Zero 3W", **{"from": (o["pts"]["sd"] + t).tolist()}, dir=(R @ [-1.0, 0, 0]).tolist(),
                         length_mm=150.0, tool={"type": "cylinder", "d": TOOL}, ignore=["tail cables (5 runs)"]))
-        acc.append(dict(name="Radxa USB-C 1 plug + Ø10", part="Radxa Zero 3W", **{"from": (o["pts"]["usb1"] + t).tolist()}, dir=(R @ [0, -1.0, 0]).tolist(),
+        acc.append(dict(name="Radxa USB-C 1 plug + Ø10", part="Radxa Zero 3W", **{"from": (o["pts"]["usb1"] + t).tolist()},
+                        dir=(R @ [0, -1.0, 0]).tolist() if USB1_DIR is None else list(USB1_DIR),
                         length_mm=150.0, tool={"type": "cylinder", "d": TOOL}, ignore=["tail cables (5 runs)"]))
         an = anchors(dc, M); z0, z1 = BLK_Z; CARRIER = [k for k in mparts if k.startswith("tail carrier")][0]
         for x in [an["xb0"] - d for d in BOLT_DX]:
-            acc.append(dict(name=f"M3 key, carrier top bolt (x {x:.1f})", part=CARRIER, **{"from": [x, 0.0, z1 + TONGUE]},
-                            dir=[0, 0, 1], length_mm=150.0, tool={"type": "cylinder", "d": 4}, ignore=["tail cables (5 runs)"]))
+            acc.append(dict(name=f"M3 key, carrier top bolt (x {x:.1f}), ball-end 15 deg to +y", part=CARRIER, **{"from": [x, 0.0, z1 + TONGUE]},
+                            dir=list(TOP_TILT), length_mm=150.0, tool={"type": "cylinder", "d": 4}, ignore=["tail cables (5 runs)"]))
             rear = x < an["xb0"] - BOLT_DX[0] - 1.0       # the rear one: a ball-end key 15 deg aft, past the ring's tail rod under it (C)
             acc.append(dict(name=f"M3 key, carrier bottom bolt (x {x:.1f})" + (", ball-end 15 deg aft" if rear else ""), part=CARRIER,
                             **{"from": [x, 0.0, z0 - TONGUE]}, dir=([-0.259, 0, -0.966] if rear else [0, 0, -1]), length_mm=150.0, tool={"type": "cylinder", "d": 4},
                             ignore=["tail cables (5 runs)"] + [n for n in CATCH if M["P"].get(n, {}).get("swap")]))
         for px, py in PLATE_BOLTS:
-            acc.append(dict(name=f"M3 key, plate bolt ({px:.0f}, {py:+.1f})", part="belly-mount tail block (PETG)", **{"from": [px, py, 22.0]},
-                            dir=[0, 0, 1], length_mm=150.0, tool={"type": "cylinder", "d": 4}, ignore=["tail cables (5 runs)"]))
+            acc.append(dict(name=f"M3 key, plate bolt ({px:.0f}, {py:+.1f})" + ("" if py > 3 else ", ball-end 15 deg to -y"), part="belly-mount tail block (PETG)", **{"from": [px, py, 22.5]},
+                            dir=([0, 0, 1] if py > 3 else [0, -0.259, 0.966]), length_mm=150.0, tool={"type": "cylinder", "d": 4}, ignore=["tail cables (5 runs)"]))
     A["access"] = acc
     car = list(mparts)
     cp = [c for c in A["contact_pairs"] if not (set(c[:2]) & set(MOVED))]
@@ -873,7 +902,7 @@ def preview(rows, path, M=None):
             ax.set_xlim(*(lim[i] if c_ != 2 else (-150, 150))); ax.set_ylim(*lim[j])
             ax.axvline(0 if c_ != 2 else 0, color="#999", lw=0.5, ls=":")
             ax.grid(alpha=0.15); ax.tick_params(labelsize=7)
-    fig.text(0.01, 0.003, "green Radxa Zero 3W, orange UBEC (50 x 25 x 10 worst), purple XR2, blue the carrier (belly-mount tail block, yoke, box keel, "
+    fig.text(0.01, 0.003, "green Radxa Zero 3W (with its low 90 deg plugs), orange UBEC, purple XR2, blue the mount (belly-mount tail block, yoke, spine / keel, trays, "
              "standoffs, XR2 shelf); grey drone parts, dark blue the swap set, black the cage rods; red arrows the SD and USB-C tool sweeps; "
              "yellow rings = prop columns + 3 (wash)", fontsize=8)
     fig.tight_layout(rect=(0, 0.015, 1, 1)); fig.savefig(path, dpi=110); plt.close(fig)
@@ -1145,34 +1174,56 @@ def run_all():
 # Spark asked the Scout v3 design session to move the tail bay out of the prop wash and centre the CG; its layout v11 (PR 133) now
 # sets the Radxa and UBEC poses as the system's requirement. This pass draws the mount for them on v11's cage (no pose optimisation:
 # the round-1/2 search above stays for the record), places the XR2, and checks everything on v11's own model.
-V11 = os.path.join(RUN, "ctx_v11")              # v11 inputs (PR 133 @ f2d8fd15, copied; SOURCE.txt)
-DC_V11 = 4.25                                   # v11: catch set 4.25 aft (tab line x -4.25, C)
-RADXA_V11 = dict(x0=-151.1, ztop=38.0, ypcb=-0.01)   # board X0 (SD end) at x -151.1, ports edge (Y0) up at z 38, PCB top plane y -0.01 (C)
-UBEC_V11 = (-131.55, 4.16, 16.0)                # their box's front / inner / bottom corner (C); drawn here at the 50 x 25 x 10 worst size aft / out / up
+V11 = os.path.join(ROOT, "runs", "scout_layout", "v11")   # scout_layout v11 on main (PR 133, dea0b51); the system model nox/scout/v3/scout.assembly.json
+DC_V11 = -json.load(open(os.path.join(V11, "result.json")))["tab_x"]   # v11: catch set 3.5 aft (tab line x -3.5, C)
+TOP_TILT = (0.0, 0.259, 0.966)                  # the yoke's top keys: ball-end hex 15 deg toward +y, past the roof's centre rod over them (C)
 PLUG_TOP = 45.0                                 # the bay's height cap at the centre strip (cage session): a low 90 deg USB-C plug lying along the
                                                 # board's top edge, its body 39.5..45 (E), cable forward along the edge (DEFAULT, round 3)
 SPINE_Y = (-13.05, -4.6)                        # the spine box beside the Radxa's back: inner wall carries the posts at y -4.6 (C)
 TRAY_Z = (13.6, 16.0)                           # UBEC tray and the cross plate behind the Radxa (C)
 
 
-UBEC_V11_SIZE = (45.0, 15.4, 8.0)               # v11's UBEC (their mesh, E); the M Q4 worst 50 x 25 x 10 is checked on its own
+RADXA_V11_ZTOP = 38.0                           # v11's Radxa top edge (C; checked against the mesh in v11_poses)
+RADXA_V11 = {}                                  # set from v11's Radxa mesh: board X0 (SD end), ports edge (Y0) up, PCB top plane
+USB1_DIR = None                                 # the USB-C 1 tool line (straight up, or tilted past the roof's centre rod), set by run_v11
+FC_USB_FROM = None                              # the FC USB-C path's start when the layout's own start meets the belly-mount tail's plate bolts:
+                                                # the layout's other start (FC tail edge + 14, y -12.7), same direction (set by run_v11)
+
+
+def fc_usb_start(mp, M=None):
+    """the FC USB-C path (12 x 7 box, 250 long) from the layout's starts in its order: the first that clears our carrier by 1"""
+    M = M or MODEL
+    a = [p for p in M["A"]["access"] if p["name"].startswith("FC USB-C")][0]; u = np.array(a["dir"], float); u /= np.linalg.norm(u)
+    w = np.cross([0, 0, 1.0], u); w /= np.linalg.norm(w); h = np.cross(u, w)
+    fb = M["P"]["FC"]["mesh"].bounds; zc = a["from"][2]
+    Q = np.vstack([surf(m, 6000) for k, (m, g, c, _) in mp.items()])
+    for st in (np.array(a["from"], float), np.array([fb[0][0] + 14.0, -12.7, zc]), np.array([fb[0][0] + 14.0, 12.7, zc])):
+        d = Q - st; su = d @ u
+        hit = (su > -1) & (su < 251) & (np.abs(d @ w) < 7.0) & (np.abs(d @ h) < 4.5)
+        if not hit.any(): return st, int(hit.sum())
+    return None, None
 
 
 def v11_poses():
     """the Radxa and the UBEC in v11's poses as item orientations of this script (true sizes: Radxa 65 x 30 x 6.31 body, UBEC worst)"""
+    br = MODEL["P"]["Radxa Zero 3W"]["mesh"].bounds; bu_ = MODEL["P"]["UBEC"]["mesh"].bounds
+    RADXA_V11.update(x0=float(br[0][0]), ztop=float(br[1][2]), ypcb=float(br[1][1]) - 3.16)   # 65 x 6.31 x 30 body: top components 3.16 (H)
+    assert abs(RADXA_V11["ztop"] - RADXA_V11_ZTOP) < 0.5
     Rr = np.array([[1, 0, 0], [0, 0, 1], [0, -1, 0]], float)     # board X -> +x (SD end aft), Y -> -z (ports edge up), Z -> +y
+    rb = ITEMS["Radxa Zero 3W"]["body"]                           # round 3: low 90 deg plugs on both USB-C along the top edge, cable bent forward,
+    ITEMS["Radxa Zero 3W"] = dict(ITEMS["Radxa Zero 3W"], body=[rb[0], B(37.1, 68.5, -(PLUG_TOP - RADXA_V11_ZTOP), -1.5, -4.0, 6.0)])   # under z 45 (E)
     o = orient("Radxa Zero 3W", Rr); t = np.array([RADXA_V11["x0"], RADXA_V11["ypcb"], RADXA_V11["ztop"]]) + o["o"]
-    L_, W_, H_ = UBEC_V11_SIZE
+    L_, W_, H_ = (bu_[1] - bu_[0]).tolist()      # v11's UBEC as drawn (45 x 15.4 x 8, E); the M Q4 worst 50 x 25 x 10 is reported apart
     ITEMS["UBEC"] = dict(ITEMS["UBEC"], body=[B(0, L_, 0, W_, 0, H_), B(-8, 0, 2, W_ - 2, 0, H_), B(L_, L_ + 8, 2, W_ - 2, 0, H_)],
                          cg=np.array([L_ / 2, W_ / 2, H_ / 2]), pts={"end0": np.array([-4.0, W_ / 2, H_ / 2]), "end1": np.array([L_ + 4.0, W_ / 2, H_ / 2])})
     ou = orient("UBEC", np.eye(3)); bu = ou["body"][0]
-    tu = np.array([UBEC_V11[0] - bu[1][0], UBEC_V11[1], UBEC_V11[2]])
+    tu = np.array([bu_[1][0] - bu[1][0], bu_[0][1], bu_[0][2]])
     return {"Radxa Zero 3W": (o, t), "UBEC": (ou, tu)}
 
 
 def keepclear_plug(o, t):
     """the permanent camera plug on USB-C 2 and the service plug on USB-C 1: low 90 deg plugs along the top edge (E)"""
-    lo = o["R"] @ np.array([37.1, 0, 0]) - o["o"] + t; hi = o["R"] @ np.array([58.5 + 18, 0, 0]) - o["o"] + t
+    lo = o["R"] @ np.array([37.1, 0, 0]) - o["o"] + t; hi = o["R"] @ np.array([58.5 + 10, 0, 0]) - o["o"] + t
     return np.array([[min(lo[0], hi[0]), -4.0, RADXA_V11["ztop"]], [max(lo[0], hi[0]), 6.0, PLUG_TOP]])
 
 
@@ -1209,6 +1260,8 @@ def mount_v11(P, dc, xr2=None, strut=False):
         if abs(d[1]) < 0.5 and p0[1] - TOOL / 2 - 1.0 < SPINE_Y[1]:
             q = p0 + 400 * d; w = TOOL / 2 + 1.0; n_ = np.array([-d[2], d[0]])
             pg = pg.difference(sg.Polygon([p0[[0, 2]] + w * n_, q[[0, 2]] + w * n_, q[[0, 2]] - w * n_, p0[[0, 2]] - w * n_]))
+    x_w = -54.1 - math.sqrt((DISK_R + WASH) ** 2 - (54.1 - abs(SPINE_Y[0])) ** 2) - 0.5   # ahead of this the spine's outer wall is in the wash
+    pg = pg.intersection(sg.box(-1000, -1000, min(x_w, xb1), 1000))
     if pg.geom_type != "Polygon": pg = max(pg.geoms, key=lambda g_: g_.area)
     wdt = SPINE_Y[1] - SPINE_Y[0]
     spine = trimesh.creation.extrude_polygon(pg, wdt)
@@ -1216,7 +1269,8 @@ def mount_v11(P, dc, xr2=None, strut=False):
     if spine.volume < 0: spine.invert()
     tongues = [box([xb1, -H, z1], [xb0, H, z1 + TONGUE]), box([xb1, -H, z0 - TONGUE], [xb0, H, z0])]
     pads = [cyl([x, 0, z1], [x, 0, z1 + TONGUE], PAD_D / 2) for x in bolts] + [cyl([x, 0, z0 - TONGUE], [x, 0, z0], PAD_D / 2) for x in bolts]
-    neck = box([xb1 - 6.0, -H, z0 - TONGUE], [xb1, SPINE_Y[1], z1 + TONGUE])          # the yoke's back joins the spine (|y| <= 6.5 -> spine)
+    neck = box([min(x_w, xb1) - 6.0, -H, z0 - TONGUE], [xb1, SPINE_Y[1], z1 + TONGUE])   # the yoke's back to the spine: |y| <= 6.5 until the wash
+                                                                                       # opens wide enough for the spine (a longer neck at a forward catch)
     car = union([spine, neck] + tongues + pads)
     cb = []
     for x in bolts:
@@ -1250,7 +1304,7 @@ def mount_v11(P, dc, xr2=None, strut=False):
         top = np.array([xa + 8.0, (SPINE_Y[0] + SPINE_Y[1]) / 2, bR[1][2]])
         st = union([cyl(top, node - (node - top) / np.linalg.norm(node - top) * (NODE_R + 1.0), 3.0, 16)])
         parts["strut to the roof node (PETG, B)"] = (st, round(st.volume * PETG + 1.0, 2), f"Ø6 printed strut to node {np.round(node, 1).tolist()}, "
-                                                     "snap clip on the node = the fuse (+1 g clip, E)")
+                                                     "snap clip round the roof rod beside the node (3.2 bore, Spark 27 Oct coupons) = the fuse (+1 g clip, E)")
     for k, (m, g, note) in parts.items():
         parts[k] = (m, g, centroid(m)[0], note)
     return parts
@@ -1286,17 +1340,42 @@ def place_xr2(P, dc, mparts):
     return None if best is None else (best[2], best[3])
 
 
+def slide_wide(res, dc, mparts, ride=True, M=None):
+    """CG pack in / out against the catch slide over -14..+6 of v11's: ride=True, everything of ours rides the belly mount with the
+    catch; ride=False, the tail bay (items, carrier, tray, XR2) stays at v11's poses in the frame and only the catch and the belly
+    mount's tail block move (the cage session's tail-bay shift undone)"""
+    M = M or MODEL; out = []
+    for d in np.arange(dc - 14.0, dc + 6.01, 0.25):
+        sh = np.array([-(d - dc), 0, 0]); m_in, Min, m_sw, Msw = base_moments(d, M)
+        rows = [(MASS[n][0], o["cg"] + t + (sh if ride else 0)) for n, (o, t) in res["poses"].items()]
+        rows += [(g, c + (sh if (ride or k.startswith("belly")) else 0)) for k, (m, g, c, _) in mparts.items()]
+        rows += [(g, c + sh / 2 * ride) for _, g, c, _ in res["cab"]]
+        g = sum(r[0] for r in rows); Mm = sum(r[0] * r[1] for r in rows)
+        cin = (Min + Mm) / (m_in + g); cout = (Min - Msw + Mm) / (m_in - m_sw + g)
+        out.append((round(float(d), 2), float(np.hypot(*cin[:2])), float(np.hypot(*cout[:2])), float(cin[0]), float(cout[0])))
+    return out
+
+
 def run_v11():
-    global MODEL
+    global MODEL, USB1_DIR, FC_USB_FROM
     t0 = time.time()
-    MODEL = load_model(os.path.join(V11, "scout.assembly.json"), V11); MODEL["dc_ref"] = DC_V11
+    MODEL = load_model(ASM, V11); MODEL["dc_ref"] = DC_V11
     dc = DC_V11
-    say("Scout v3 electronics mount, round 3 (27 Oct 2026): nox/scout/v3/electronics_system.py --v11, on scout_layout v11 (PR 133 @ f2d8fd15; "
-        "runs/scout_electronics/v2/ctx_v11/), the Radxa and UBEC in v11's poses (the system's requirement)")
+    say("Scout v3 electronics mount, round 3 (27 Oct 2026): nox/scout/v3/electronics_system.py on scout_layout v11 (main, PR 133 dea0b51), "
+        "the Radxa and UBEC in v11's poses (the system's requirement)")
     say(f"model: {len(MODEL['P'])} parts in pose, catch {dc} aft; shell {len(MODEL['nodes'])} nodes / {len(MODEL['rods'])} rods + {len(MODEL['links'])} links; "
         "funnel line from v11's ring and tail point at this slide: (%.1f, %.1f) -> (%.1f, %.1f)" % funnel_line(dc))
     P = v11_poses()
     for n, (o, t) in P.items(): say("   " + describe(n, o, t))
+    o, t = P["Radxa Zero 3W"]; up = o["R"] @ np.array([0, -1.0, 0]); tilts = []
+    for ang in range(0, 41, 5):                       # USB-C 1 from above: straight, else the least tilt about x that clears the roof rods
+        for sd in (1, -1):
+            d = np.array([0.0, sd * math.sin(math.radians(ang)), math.cos(math.radians(ang))]) if ang else up
+            USB1_DIR = d; v = sweep_out(dict(poses=P))["USB-C 1"]; tilts.append((ang, sd, v["least_clear_mm"]))
+            if v["least_clear_mm"] >= TOOL / 2: break
+        else: continue
+        break
+    say("   USB-C 1 tool line (Ø10): " + ", ".join(f"{a} deg {'+y' if s_ > 0 else '-y'}: {c:.1f}" for a, s_, c in tilts) + f" -> dir {np.round(USB1_DIR, 3).tolist()}")
     # concept A
     mp0 = mount_v11(P, dc)
     xr = place_xr2(P, dc, mp0)
@@ -1307,6 +1386,10 @@ def run_v11():
     lo = np.min([np.min([b[0] for b in o["body"]], 0) + t for o, t in P.values()], 0); hi = np.max([np.max([b[1] for b in o["body"]], 0) + t for o, t in P.values()], 0)
     res = dict(poses=P, cab=[(n, float(g), np.asarray(m), float(L)) for n, g, m, L in cab], lo=lo, hi=hi, dc=dc)
     out = {}
+    st, _ = fc_usb_start(mount_v11(P, dc, xr))
+    FC_USB_FROM = None if st is None or np.allclose(st, [p for p in MODEL["A"]["access"] if p["name"].startswith("FC USB-C")][0]["from"]) else st
+    say(f"   FC USB-C path: " + ("the layout's own start clears the carrier" if FC_USB_FROM is None else f"from the FC's tail-right edge {np.round(FC_USB_FROM, 1).tolist()} "
+        "(the layout's centre start meets the plate-bolt bosses), same direction"))
     for label, strut in (("A", False), ("B", True)):
         mp = mount_v11(P, dc, xr, strut=strut)
         say(f"concept {label} ({'spine + strut to the roof node, clip fuse' if strut else 'spine, cantilevered from the belly mount'}):")
@@ -1317,7 +1400,8 @@ def run_v11():
         for l in fmt_checks(ck): say(l)
         sw = sweep_out(res)
         cg = cg_final(res, dc, mp)
-        sc = slide_scan(res, dc, mp); bs = min(sc, key=lambda r: max(r[1], r[2]))
+        sc = slide_wide(res, dc, mp, True); bs = min(sc, key=lambda r: max(r[1], r[2]))
+        sc2 = slide_wide(res, dc, mp, False); bs2 = min(sc2, key=lambda r: max(r[1], r[2]))
         ld = loads(res, dc, mp)
         g_mount = sum(v[1] for v in mp.values())
         # first lateral mode of the bay on the spine (E): carried mass at its CG on the spine's root box (8.45 x root depth), PETG E 2000;
@@ -1328,18 +1412,25 @@ def run_v11():
         b_ = SPINE_Y[1] - SPINE_Y[0]; Iz = (dpt * b_ ** 3 - (dpt - 4.8) * (b_ - 4.8) ** 3) / 12; Iy = (b_ * dpt ** 3 - (b_ - 4.8) * (dpt - 4.8) ** 3) / 12
         k_lat = 3 * 2000 * Iz / L ** 3; k_ver = 3 * 2000 * Iy / L ** 3
         if strut:
-            a_ = abs(P["Radxa Zero 3W"][1][0] - 8.0 + 0 - root_x)            # prop position from the root (E: rigid prop through the clip)
-            k_lat = k_lat * (L / a_) ** 3 * 4.0; k_ver = k_ver * (L / a_) ** 3 * 4.0
+            k_lat = k_lat * 8.0; k_ver = k_ver * 8.0                          # the prop sits past the carried CG: ~8 x stiffer (E)
         f_lat = math.sqrt(k_lat * 1000 / (mc / 1000)) / (2 * math.pi); f_ver = math.sqrt(k_ver * 1000 / (mc / 1000)) / (2 * math.pi)
         r_sc, txt = run_system_check(manifest(res, dc, mp), os.path.join(RUN, f"system_check{'' if label == 'A' else '_alt_B'}.txt"))
         say(f"   mass: mount {g_mount:.1f} g, cables {sum(g for _, g, _, _ in res['cab']):.1f} g (E); CG pack in {cg['hin']:.2f}, out {cg['hout']:.2f} mm at catch {dc} "
-            f"({cg['mass']:.0f} g); slide trim best catch {bs[0]:+.2f}: {bs[1]:.2f} / {bs[2]:.2f}")
+            f"({cg['mass']:.0f} g); best catch with the bay riding it {bs[0]:+.2f}: {bs[1]:.2f} / {bs[2]:.2f}; best catch with the bay fixed in the frame "
+            f"{bs2[0]:+.2f}: {bs2[1]:.2f} / {bs2[2]:.2f}")
         say(f"   modes (E): lateral {f_lat:.0f} Hz, vertical {f_ver:.0f} Hz ({mc:.1f} g carried at x {cc[0]:.1f}, root x {root_x:.1f})")
         say(f"   loads: root index {ld['worst_root']:.2f}, fuse (yoke tongues) {ld['worst_fuse']:.2f}, fuse first {ld['fuse_first']}")
         for k, v in ld["cases"].items(): say(f"      {k}: " + json.dumps(v))
         for k, v in sw.items(): say(f"   tool Ø10, {k}: from {v['start']} along {v['dir']}, out of the shell at {v['exits_shell_at_mm']} mm, least clear of a rod / node {v['least_clear_mm']} (need >= 5)")
         say("   " + txt.splitlines()[0]); say("   " + txt.splitlines()[-1][:700])
-        out[label] = dict(mp=mp, ck=ck, sw=sw, cg=cg, sc=sc, bs=bs, ld=ld, g=g_mount, f=(f_lat, f_ver), mc=mc, cc=cc, sc_line=txt.splitlines()[-1], r=r_sc)
+        txt_s = None
+        if label == "A":                                # the bay stays at v11's poses, the catch moves to the balancing slide, the carrier redrawn there
+            d_ = bs2[0]; mp_s = mount_v11(P, d_, xr); cg_s = cg_final(res, d_, mp_s); ck_s = checks(res, d_, mp_s)
+            _, txt_s = run_system_check(manifest(res, d_, mp_s), os.path.join(RUN, "system_check_at_balance.txt"))
+            say(f"   at catch {d_:+.2f} (bay fixed, carrier redrawn: mount {sum(v[1] for v in mp_s.values()):.1f} g): CG {cg_s['hin']:.2f} / {cg_s['hout']:.2f}; "
+                f"carrier wash {min(v['wash'] for k, v in ck_s.items() if k in mp_s):+.1f}; " + txt_s.splitlines()[-1][:700])
+        out[label] = dict(mp=mp, ck=ck, sw=sw, cg=cg, sc=sc, bs=bs, sc2=sc2, bs2=bs2, ld=ld, g=g_mount, f=(f_lat, f_ver), mc=mc, cc=cc, sc_line=txt.splitlines()[-1], r=r_sc,
+                          sc_bal=txt_s.splitlines()[-1] if txt_s else None)
     A = out["A"]; mp = A["mp"]
     # pose findings
     o, t = P["Radxa Zero 3W"]; ou, tu = P["UBEC"]
@@ -1350,15 +1441,15 @@ def run_v11():
     kp = keepclear_plug(o, t)
     say(f"keep-clear: plugs x {kp[0][0]:.1f}..{kp[1][0]:.1f}, y {kp[0][1]}..{kp[1][1]}, z {kp[0][2]}..{kp[1][2]} (low 90 deg plugs, E); tool lines: "
         + "; ".join(f"{k} from {v['start']} along {v['dir']}" for k, v in A["sw"].items()))
-    preview([(f"A (picked): spine on the belly mount's tail, v11 poses, catch {dc}; CG {A['cg']['hin']:.1f} / {A['cg']['hout']:.1f} mm", res, dc, mp, MODEL),
+    preview([(f"A (picked): spine on the belly mount's tail, v11 poses, catch {dc:.1f}; CG {A['cg']['hin']:.1f} / {A['cg']['hout']:.1f} mm", res, dc, mp, MODEL),
              (f"B: spine + strut to the roof node (clip fuse); CG {out['B']['cg']['hin']:.1f} / {out['B']['cg']['hout']:.1f} mm", res, dc, out["B"]["mp"], MODEL)],
             os.path.join(RUN, "preview.png"))
     for f in os.listdir(RUN):
         if f.endswith(".stl"): os.remove(os.path.join(RUN, f))
     for k, (m, g, c, note) in mp.items(): m.export(os.path.join(RUN, "".join(ch_ if ch_.isalnum() else "_" for ch_ in k.lower())[:40] + ".stl"))
     # output for the cage session
-    env = dict(round=3, layout="scout_layout v11 (PR 133 @ f2d8fd15)", catch=dc, funnel_line=np.round(funnel_line(dc), 1).tolist(),
-               note="drone frame (x nose, y left, z up, thrust centre x 0), catch 4.25 aft; boxes [[x0, y0, z0], [x1, y1, z1]]; masses E unless tagged",
+    env = dict(round=3, layout="scout_layout v11 (main, PR 133 dea0b51)", catch=dc, funnel_line=np.round(funnel_line(dc), 1).tolist(),
+               note="drone frame (x nose, y left, z up, thrust centre x 0), catch 3.5 aft (v11); boxes [[x0, y0, z0], [x1, y1, z1]]; masses E unless tagged",
                items={}, mount={}, keep_clear=dict(plugs=np.round(kp, 1).tolist(), tool_lines={k: dict(start=v["start"], dir=v["dir"], d=TOOL) for k, v in A["sw"].items()}))
     for n, (o_, t_) in P.items():
         env["items"][n] = dict(box=np.round(np.array([np.min([b[0] for b in o_["body"]], 0), np.max([b[1] for b in o_["body"]], 0)]) + t_, 1).tolist(),
@@ -1374,15 +1465,19 @@ def run_v11():
     gm = sum(v["mass_g"] for v in env["mount"].values())
     env["mount_total"] = dict(mass_g=round(gm, 1), cg=np.round(sum(v["mass_g"] * np.array(v["cg"]) for v in env["mount"].values()) / gm, 1).tolist())
     env["cg"] = dict(pack_in=np.round(A["cg"]["cin"], 2).tolist(), pack_out=np.round(A["cg"]["cout"], 2).tolist(), h_in=round(A["cg"]["hin"], 2),
-                     h_out=round(A["cg"]["hout"], 2), mass=round(A["cg"]["mass"], 1), trim_best=dict(catch=A["bs"][0], h_in=round(A["bs"][1], 2), h_out=round(A["bs"][2], 2)))
+                     h_out=round(A["cg"]["hout"], 2), mass=round(A["cg"]["mass"], 1),
+                best_catch_bay_riding=dict(catch=A["bs"][0], h_in=round(A["bs"][1], 2), h_out=round(A["bs"][2], 2)),
+                best_catch_bay_fixed=dict(catch=A["bs2"][0], h_in=round(A["bs2"][1], 2), h_out=round(A["bs2"][2], 2)))
     json.dump(env, open(os.path.join(RUN, "envelope.json"), "w"), indent=1)
     res_out = dict(round=3, catch=dc, poses=pose_json(res), cables=env["cables"], concepts={
         k: dict(mount={kk: dict(g=g, cg=np.round(c, 2).tolist(), bounds=np.round(m.bounds, 2).tolist(), note=note) for kk, (m, g, c, note) in v["mp"].items()},
                 mount_g=round(v["g"], 1), checks=v["ck"], sweeps=v["sw"], loads=v["ld"], modes_Hz=np.round(v["f"], 0).tolist(), carried_g=round(v["mc"], 1),
                 carried_cg=np.round(v["cc"], 1).tolist(), cg=dict(pack_in=np.round(v["cg"]["cin"], 3).tolist(), pack_out=np.round(v["cg"]["cout"], 3).tolist(),
-                h_in=round(v["cg"]["hin"], 3), h_out=round(v["cg"]["hout"], 3), mass=round(v["cg"]["mass"], 1)), slide_scan=v["sc"], trim=v["bs"],
-                system_check=v["sc_line"][:900]) for k, v in out.items()},
-        pose_findings=dict(ubec_radxa_gap=round(float(gapRU), 2), plug_keepclear=np.round(kp, 1).tolist()))
+                h_in=round(v["cg"]["hin"], 3), h_out=round(v["cg"]["hout"], 3), mass=round(v["cg"]["mass"], 1)), slide_riding=v["sc"], best_riding=v["bs"],
+                slide_bay_fixed=v["sc2"], best_bay_fixed=v["bs2"],
+                system_check=v["sc_line"][:900], system_check_at_balance=(v["sc_bal"] or "")[:900]) for k, v in out.items()},
+        pose_findings=dict(ubec_radxa_gap=round(float(gapRU), 2), plug_keepclear=np.round(kp, 1).tolist()), usb1_tilts=tilts,
+        usb1_dir=np.round(USB1_DIR, 3).tolist())
     json.dump(res_out, open(os.path.join(RUN, "result.json"), "w"), indent=1, default=lambda x: x.tolist() if hasattr(x, "tolist") else str(x))
     say(f"done in {time.time() - t0:.0f} s")
     open(os.path.join(RUN, "run.log"), "w").write(LOG.getvalue())

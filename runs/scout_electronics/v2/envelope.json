@@ -1,209 +1,347 @@
 {
- "dc": 0.0,
- "note": "drone frame (x nose, y left, z up, thrust centre x 0), catch set at x dc aft; boxes [[x0, y0, z0], [x1, y1, z1]]; items ride the belly mount (move with the catch); masses E unless tagged",
- "parts": {
+ "round": 3,
+ "layout": "scout_layout v11 (main, PR 133 dea0b51)",
+ "catch": 3.5000009536743164,
+ "funnel_line": [
+  -74.5,
+  -46.6,
+  -233.7,
+  44.5
+ ],
+ "note": "drone frame (x nose, y left, z up, thrust centre x 0), catch 3.5 aft (v11); boxes [[x0, y0, z0], [x1, y1, z1]]; masses E unless tagged",
+ "items": {
   "Radxa Zero 3W": {
    "box": [
     [
-     -123.5,
-     -15.6,
-     -15.0
+     -147.4,
+     -4.6,
+     8.0
     ],
     [
-     -78.5,
-     -4.0,
-     52.0
-    ]
-   ],
-   "board_box": [
-    [
-     -110.0,
-     -11.8,
-     -15.0
-    ],
-    [
-     -78.5,
-     -4.0,
-     52.0
+     -76.9,
+     6.0,
+     45.0
     ]
    ],
    "mass_g": 10.0,
    "tag": "E",
    "cg": [
-    -93.5,
-    -7.8,
-    17.5
-   ]
+    -112.9,
+    -0.8,
+    23.0
+   ],
+   "funnel_margin": 12.9,
+   "rods": 15.0,
+   "inset": 11.4,
+   "wash": 8.7
   },
   "UBEC": {
    "box": [
     [
-     -113.0,
-     4.0,
-     -14.0
+     -179.6,
+     4.2,
+     16.0
     ],
     [
-     -88.0,
-     14.0,
-     52.0
-    ]
-   ],
-   "board_box": [
-    [
-     -113.0,
-     4.0,
-     -6.0
-    ],
-    [
-     -88.0,
-     14.0,
-     44.0
+     -118.6,
+     19.6,
+     24.0
     ]
    ],
    "mass_g": 15.0,
    "tag": "E",
    "cg": [
-    -100.5,
-    9.0,
-    19.0
-   ]
+    -149.1,
+    11.9,
+    20.0
+   ],
+   "funnel_margin": 2.5,
+   "rods": 16.0,
+   "inset": 2.4,
+   "wash": 29.6
   },
   "XR2": {
    "box": [
     [
-     -128.0,
-     -18.0,
-     18.0
+     -110.0,
+     -27.0,
+     23.0
     ],
     [
-     -112.0,
-     -6.0,
-     40.0
-    ]
-   ],
-   "board_box": [
-    [
-     -128.0,
-     -18.0,
-     18.0
-    ],
-    [
-     -112.0,
-     -6.0,
-     26.0
+     -94.0,
+     -15.0,
+     45.0
     ]
    ],
    "mass_g": 1.0,
    "tag": "P",
    "cg": [
-    -120.0,
-    -12.0,
-    23.0
-   ]
-  },
+    -102.0,
+    -21.0,
+    28.0
+   ],
+   "funnel_margin": 49.3,
+   "rods": 23.7,
+   "inset": 15.0,
+   "wash": 3.7
+  }
+ },
+ "mount": {
   "belly-mount tail block (PETG)": {
    "box": [
     [
-     -74.1,
+     -78.6,
      -6.5,
      -8.0
     ],
     [
-     -42.8,
-     6.5,
-     18.5
+     -29.0,
+     14.0,
+     45.0
     ]
    ],
-   "mass_g": 9.77,
+   "mass_g": 17.25,
    "tag": "E",
    "cg": [
-    -60.8,
-    -0.0,
-    6.4
+    -55.7,
+    0.3,
+    16.1
    ],
-   "note": "hollow 2.4 walls + 4 insert bosses"
+   "note": "the belly mount's tail: block + root fin (13 x 35.4, 3.0 walls) through the plate notch + gusset; 6 insert bosses (4 yoke, 2 plate bolts)",
+   "funnel_margin": 36.3,
+   "rods": 15.0,
+   "inset": 15.0
   },
-  "tail carrier: yoke + box keel (PETG)": {
+  "tail carrier: yoke + spine (PETG)": {
    "box": [
     [
-     -128.0,
-     -6.5,
-     -15.0
+     -171.6,
+     -13.1,
+     -13.0
     ],
     [
-     -52.5,
+     -56.5,
      6.5,
-     52.0
+     39.5
     ]
    ],
-   "mass_g": 16.29,
+   "mass_g": 18.0,
    "tag": "E",
    "cg": [
-    -94.8,
-    -0.0,
-    17.2
+    -109.7,
+    -8.1,
+    16.7
    ],
-   "note": "keel side face 30 cm2, walls 2.4 at 60% (E)"
+   "note": "box spine y -13.05..-4.6, side face 31 cm2, walls 2.4 at 60% (E)",
+   "funnel_margin": 4.7,
+   "rods": 16.8,
+   "inset": 4.3
+  },
+  "UBEC tray + cross plate (PETG)": {
+   "box": [
+    [
+     -171.6,
+     -13.1,
+     13.6
+    ],
+    [
+     -126.6,
+     19.6,
+     16.0
+    ]
+   ],
+   "mass_g": 1.97,
+   "tag": "E",
+   "cg": [
+    -153.1,
+    6.1,
+    14.8
+   ],
+   "note": "2.4 plate at 60% (E), zip ties round the UBEC",
+   "funnel_margin": 4.7,
+   "rods": 19.1,
+   "inset": 4.3
   },
   "Radxa standoffs (PETG)": {
    "box": [
     [
-     -107.9,
-     -7.0,
-     -14.4
+     -145.8,
+     -4.8,
+     7.5
     ],
     [
-     -79.0,
-     -3.8,
-     49.5
+     -80.0,
+     -1.6,
+     38.4
     ]
    ],
-   "mass_g": 0.43,
+   "mass_g": 0.71,
    "tag": "E",
    "cg": [
-    -93.5,
-    -5.4,
-    17.5
+    -112.9,
+    -3.2,
+    23.0
    ],
-   "note": "4 x \u00d86 x 3, M2.5"
+   "note": "4 x \u00d88 x 3 posts, M2.5 thread-forming into \u00d82.1 pilots through post + wall (no insert)",
+   "funnel_margin": 15.1,
+   "rods": 17.1,
+   "inset": 13.2
   },
   "XR2 shelf (PETG)": {
    "box": [
     [
-     -128.0,
-     -18.0,
-     16.0
+     -110.0,
+     -27.0,
+     23.0
     ],
     [
-     -112.0,
-     -4.0,
-     22.0
+     -94.0,
+     -12.6,
+     29.0
     ]
    ],
-   "mass_g": 0.58,
+   "mass_g": 0.63,
    "tag": "E",
    "cg": [
-    -120.0,
-    -10.9,
-    19.0
+    -102.0,
+    -19.5,
+    24.5
    ],
-   "note": "pocket floor 2.0 + 6 x 6 post"
-  },
-  "tail cables (5 runs, at their midpoints)": {
-   "mass_g": 6.41,
-   "tag": "E",
-   "cg": [
-    -6.1,
-    -3.5,
-    17.1
-   ]
+   "note": "pocket floor 2.0 + 6 x 6 post into the spine",
+   "funnel_margin": 49.3,
+   "rods": 33.3,
+   "inset": 31.0
   }
  },
- "total_g": 59.5,
- "total_cg": [
-  -81.5,
-  0.2,
-  16.0
- ],
- "x_moment_gmm": -4850.0
+ "keep_clear": {
+  "plugs": [
+   [
+    -108.3,
+    -4.0,
+    38.0
+   ],
+   [
+    -76.9,
+    6.0,
+    45.0
+   ]
+  ],
+  "tool_lines": {
+   "SD card": {
+    "start": [
+     -147.4,
+     -3.0,
+     23.0
+    ],
+    "dir": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "d": 10.0
+   },
+   "USB-C 1": {
+    "start": [
+     -103.9,
+     1.6,
+     39.5
+    ],
+    "dir": [
+     0.0,
+     0.26,
+     0.97
+    ],
+    "d": 10.0
+   }
+  }
+ },
+ "cables": {
+  "mass_g": 6.39,
+  "tag": "E",
+  "cg": [
+   -12.5,
+   1.4,
+   32.0
+  ],
+  "runs": {
+   "camera USB-C": {
+    "g": 4.24,
+    "mid": [
+     21.8,
+     0.8,
+     40.0
+    ],
+    "L": 283.0
+   },
+   "Radxa UART": {
+    "g": 0.35,
+    "mid": [
+     -57.5,
+     -0.8,
+     12.2
+    ],
+    "L": 140.0
+   },
+   "UBEC 5 V out": {
+    "g": 0.53,
+    "mid": [
+     -144.5,
+     5.1,
+     15.5
+    ],
+    "L": 80.0
+   },
+   "UBEC in (FC pads)": {
+    "g": 1.0,
+    "mid": [
+     -62.1,
+     5.9,
+     16.8
+    ],
+    "L": 152.0
+   },
+   "XR2 UART": {
+    "g": 0.26,
+    "mid": [
+     -51.8,
+     -10.5,
+     19.2
+    ],
+    "L": 129.0
+   }
+  }
+ },
+ "mount_total": {
+  "mass_g": 38.6,
+  "cg": [
+   -87.7,
+   -3.7,
+   16.6
+  ]
+ },
+ "cg": {
+  "pack_in": [
+   -5.59,
+   0.09,
+   2.38
+  ],
+  "pack_out": [
+   -6.33,
+   0.13,
+   11.26
+  ],
+  "h_in": 5.59,
+  "h_out": 6.34,
+  "mass": 724.8,
+  "best_catch_bay_riding": {
+   "catch": -7.25,
+   "h_in": 1.25,
+   "h_out": 1.17
+  },
+  "best_catch_bay_fixed": {
+   "catch": -9.0,
+   "h_in": 1.49,
+   "h_out": 1.56
+  }
+ }
 }
