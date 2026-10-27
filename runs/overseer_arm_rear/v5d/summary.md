@@ -1,14 +1,16 @@
-# Overseer arm rear v5d (arm 2, mirror arm 3), 27 Oct
+# Overseer arm rear v5d (arm 2, mirror arm 3), 27 Oct: HOLD
+
+**HOLD, not READY:** the part passes its own checks (solid PASS), but the assembled drone is out of balance with the pack in (CG 5.8 mm, gate 3 mm). The cage session rebalances by moving the motor square once the front arm is final, and that moves this arm's motor end and spoke node, so the arm reruns on the balanced layout before it is printed. The print files stay as the reference.
 
 Script `nox/overseer/arm_topo_v5d.py rear --gen 50` (chain v5d > v5c > v5b > v5 > `arm_topo_v1.py`; nox/topo, organic, h 1.5 (C)). Requirements: `dimensions.md` System Overseer: arms (v5 system pass). Loads: the cage frame `runs/overseer_arms/v5/arm_loads.json` (rear spoke node 2354 N worst, F on E). The L2 braces root on the cage's top-plate block, not on the arms.
 
 Page (27 Oct): https://claude.ai/artifact/JS9dzFCg1PsPeGfaZYprRc (source `nox/overseer/arm_page_v5d.py` -> `runs/overseer_arms/v5d/arms.html`).
 Cage artifact (27 Oct, version 11, shows this arm as arms 2 and 3): https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg
 
-System: Overseer cage v3 / layout v5, assembled in `runs/overseer_arms/v5d/overseer_arms_v5d.assembly.json` (the layout manifest with the v5d arms placed, front v5d as the current front), `system_check` (`runs/overseer_arms/v5d/system_check.json`): worst index 0.94 in cage crash 11 (M; was 1.47, v5b), cage first 7.7 mm (E), fit 0.0 mm³ (E), bbox 116 L, extents 771 x 675 x 223 mm (E), access 21/21 clear (E), mass 3555 g (E; was 3212 with the layout's arm meshes), CG 5.8 mm aft of the thrust axis, [-5.8, -0.2, -62.5] (E): **balance FAIL (tol 3; was 0.2)**, pack in; 20.6 mm without the swap parts (reported, L exception). The pack position is the layout's: the cage session rebalances once, when the front arm is final (its DEFAULT, 27 Oct), since moving the motor square moves the arm ends and spoke nodes.
+System: Overseer cage v3 / layout v5, assembled in `runs/overseer_arms/v5d/overseer_arms_v5d.assembly.json` (the layout manifest with the v5d arms placed, front v5d as the current front), `system_check` (`runs/overseer_arms/v5d/system_check.json`): worst index 0.94 in cage crash 11 (M; was 1.47, v5b), cage first 7.7 mm (E), fit 0.0 mm³ (E), bounding volume 116 L (E), extents 771 x 675 x 223 mm (E), access 21/21 clear (E), mass 3555 g (E; was 3212 with the layout's arm meshes), CG 5.8 mm aft of the thrust axis, [-5.8, -0.2, -62.5] (E): **balance FAIL (tol 3; was 0.2)**, pack in; 20.6 mm without the swap parts (reported, L exception). The pack position is the layout's: the cage session rebalances once, when the front arm is final (its DEFAULT, 27 Oct), since moving the motor square moves the arm ends and spoke nodes.
 
 ## What it is
-- One printed PETG part between the S500 plates, z 0..45 (C), 2 + 2 M3 heat-set inserts (top u 63.17 v ±15, bottom u 63.74 v ±10, O).
+- One printed PETG part between the S500 plates, z 0..45 (C), 2 + 2 M3 heat-set inserts (top u 63.17 v ±15, bottom u 63.74 v ±10, C from the S500 STEP).
 - 4 x 6/4 carbon tube chords, 63.1 each (C): top z 38.5, bottom z 6.5 (C), from the shoulders (arm x 20, y ±28, C) to y ±12 at the motor (C); bore 6.2 (P, Spark's coupons), 20 mm sockets (C), full-length 2.5 sleeve (C), 2.5 blind tip caps (C). Carbon list: each tube spans root shoulder to motor pad, 63.1 (C), past the 33 mm break-even (DEFAULT); the tubes carry the cage crash moment (2354 N at the spoke node, F; ~300 N·m at the root, E).
 - Solid root block, top / bottom flanges 6 thick (C) from the root to both shoulder sockets, the cage spoke node socket (3 x 6.2 x 15, C) at SPOKE_NODE rear (-53.3, ±119.7, 25) (C, the cage's), motor pad Ø36 x 6 (C) with M3 slots either hand, Ø8.6 shaft bore (C, CHECK P), Ø27 screw pocket (C).
 
