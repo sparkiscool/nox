@@ -5,6 +5,7 @@ python3 nox/overseer/arm_topo_v1.py front|rear --setup                          
 python3 nox/overseer/arm_topo_v1.py front|rear --modes MESH [--out DIR]                    first modes of a built arm (Hz)
 python3 nox/overseer/arm_topo_v1.py front|rear --place MESH                               the 2 arms of the pair in the drone frame
 python3 nox/overseer/arm_topo_v1.py front --rodcheck MESH [--out DIR]                     rods: bore clear, sockets grip, bonded length
+python3 nox/overseer/arm_topo_v1.py front --rodcheck-setup [--out DIR]                    v6: the same + diagonal geometry on drawn - cuts
 
 Requirements: `dimensions.md` "System Overseer: arms" (the system pass for the arms, numbers tagged there). The run is
 in the arm's own frame (x from the root centre to the motor, z the drone z, z 0 = bottom plate top), so the grid hugs
@@ -197,6 +198,103 @@ def chords(which, F):
     return [(np.array([xs, sy * ys, z]), np.array([xt, sy * yt, z])) for sy in (1, -1) for z in ROD_Z]
 
 
+# v6 (front, 27 Oct): the chords as a space frame. v5d read 131 / 162 Hz against 190: the 4 tubes worked almost alone, the
+# PETG webs did not carry the shear. 12 carbon diagonals, a Warren girder of 3 panels in each of the 4 faces (the 2 side
+# faces: top + bottom chord of one side; the top and bottom faces: zigzag between the +y and -y chords). Each diagonal
+# lies in a plane DIAG_OFF off its face, inboard (sides) or inside (top / bottom), so it passes beside every chord tube
+# and its straight insertion line leaves the arm without crossing one; it ends DIAG_GAP short of its Warren node point
+# so the other leg's insertion line passes clear. One end blind, the other a through bore (rod slides in from outside,
+# epoxied). Drawn: a full-length sleeve on each diagonal (as the chords) and a printed node block at each end, the hull of
+# the socket's last 10 mm and the chord sleeve beside it. Stations along the chords, node parity and the open-end
+# direction of each face's chain are set here (searched by diag_geomcheck, C).
+DIAG = os.environ.get("NOX_ARM_DIAG") == "1"
+DIAG_T = tuple(float(v) for v in os.environ.get("NOX_ARM_DIAG_T", "0.02,0.34,0.66,0.98").split(","))
+DIAG_OFF = float(os.environ.get("NOX_ARM_DIAG_OFF", 7.0))   # axis to chord axis: tube bore 3.1 + 2.0 web + rod bore 1.6 = 6.7
+DIAG_GAP = float(os.environ.get("NOX_ARM_DIAG_GAP", 6.0))   # blind rod end short of its node point (the other leg's
+DIAG_GAP_OPEN = float(os.environ.get("NOX_ARM_DIAG_GAP_OPEN", 0.0))   # insertion line passes it); the through end
+DIAG_PAT = os.environ.get("NOX_ARM_DIAG_PAT", "0:1111")     # parity : open-end chain per face (side+, side-, top, bottom)
+DIAG_KIND = os.environ.get("NOX_ARM_DIAG_KIND", "rod3")     # rod3 (3.0 rod, bore 3.2) or tube6 (6/4, bore 6.2)
+DIAG_NODE_L = float(os.environ.get("NOX_ARM_DIAG_NODE_L", 10.0))      # node block: the socket's last DIAG_NODE_L hulled to
+DIAG_NODE_SEG = float(os.environ.get("NOX_ARM_DIAG_NODE_SEG", 9.0))   # the chord sleeve ± DIAG_NODE_SEG beside the node point
+DIAG_SOCKET_L = 18.0
+
+
+def diag_spec():
+    if DIAG_KIND == "tube6":
+        return dict(d=6.0, bore=6.2, area=math.pi / 4 * (36.0 - 16.0), skin=2.5)
+    return dict(d=3.0, bore=3.2, area=math.pi / 4 * 9.0, skin=2.65)
+
+
+def diagonals(which, F):
+    """v6: the 12 diagonals (arm frame): dicts name, face, chords (ia, ib), node points A / B, p_blind, p_open, u (blind
+    to open), d, bore, area, skin"""
+    if not DIAG or which not in SHOULDER:
+        return []
+    C = chords(which, F)                       # 0 T+, 1 B+, 2 T-, 3 B-
+    par = int(DIAG_PAT.split(":")[0]); chain = [int(c) for c in DIAG_PAT.split(":")[1]]
+    ez = np.array([0.0, 0.0, 1.0])
+
+    def P(i, t):
+        return C[i][0] + t * (C[i][1] - C[i][0])
+
+    def n_in(i):                               # plan normal to chord i pointing inboard (towards y 0)
+        u = C[i][1] - C[i][0]; n = np.array([-u[1], u[0], 0.0]); n /= np.linalg.norm(n)
+        return n if n[1] * C[i][0][1] < 0 else -n
+    # node parity: side+ has T+ at odd stations, B+ at even (par 0) or the reverse (par 1); the rest follows so each chord
+    # station carries one face's node only
+    odd, even = (1, 3), (0, 2)
+    sp = (odd, even) if par == 0 else (even, odd)          # side+: (T+ stations, B+ stations)
+    faces = {
+        "side+": ((0, sp[0]), (1, sp[1]), lambda i: n_in(i)),
+        "side-": ((2, sp[1]), (3, sp[0]), lambda i: n_in(i)),
+        "top": ((0, sp[1]), (2, sp[0]), lambda i: -ez),
+        "bottom": ((1, sp[0]), (3, sp[1]), lambda i: ez),
+    }
+    sp_ = diag_spec()
+    out = []
+    for fi, (fname, ((ia, sa), (ib, sb), off)) in enumerate(faces.items()):
+        nodes = sorted([(s, ia) for s in sa] + [(s, ib) for s in sb])     # station order 0..3, alternating chords
+        pts = [P(i, DIAG_T[s]) + DIAG_OFF * off(i) for s, i in nodes]
+        for k in range(3):
+            A_, B_ = pts[k], pts[k + 1]
+            u = (B_ - A_) / np.linalg.norm(B_ - A_)
+            open_hi = chain[fi] == 0                       # chain 0: each diagonal open at its higher station
+            ga, gb = (DIAG_GAP, DIAG_GAP_OPEN) if open_hi else (DIAG_GAP_OPEN, DIAG_GAP)
+            pa, pb = A_ + ga * u, B_ - gb * u
+            p_open, p_blind = (pb, pa) if open_hi else (pa, pb)
+            uo = (p_open - p_blind) / np.linalg.norm(p_open - p_blind)
+            out.append(dict(name=f"diag {fname} {k}", face=fname, chords=(nodes[k][1], nodes[k + 1][1]), A=A_, B=B_,
+                            stations=(nodes[k][0], nodes[k + 1][0]), p_blind=p_blind, p_open=p_open, u=uo, **sp_))
+    return out
+
+
+def diag_bodies(which, F, env):
+    """v6 drawn: per diagonal a full-length sleeve, the blind end's cap, and a node block at each end (hull of the socket's
+    last DIAG_NODE_L and the chord sleeve segment beside it); cuts: the bore, open past the through end to the outside"""
+    drawn, cuts, ins = mf.Manifold(), mf.Manifold(), mf.Manifold()
+    C = chords(which, F)
+    r_ch = ROD_BORE / 2 + CHORD_SKIN
+    clip = box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+    for D in diagonals(which, F):
+        r = D["bore"] / 2 + D["skin"]
+        u, pb, po = D["u"], D["p_blind"], D["p_open"]
+        Ld = float(np.linalg.norm(po - pb))
+        drawn += rod_m(pb - D["skin"] * u, po, r, n=40) ^ clip
+        for end, s_in in ((pb, u), (po, -u)):
+            near_a = np.linalg.norm(end - D["A"]) < np.linalg.norm(end - D["B"])
+            node, i = (D["A"], D["chords"][0]) if near_a else (D["B"], D["chords"][1])
+            c0, c1 = C[i]; uc = (c1 - c0) / np.linalg.norm(c1 - c0)
+            q = c0 + float((node - c0) @ uc) * uc          # chord point beside the node
+            seg = rod_m(q - DIAG_NODE_SEG * uc, q + DIAG_NODE_SEG * uc, r_ch, n=40)
+            sock = rod_m(end, end + DIAG_NODE_L * s_in, r, n=40)
+            if end is pb:
+                sock = sock + rod_m(end - D["skin"] * u, end, r, n=40)
+            drawn += (seg + sock).hull() ^ clip
+        cuts += rod_m(pb, po, D["bore"] / 2, n=32) + rod_m(po, po + 80.0 * u, D["bore"] / 2, n=32)
+        ins += rod_m(pb, po, D["d"] / 2)
+    return drawn ^ env, cuts, ins
+
+
 def rod_m(p0, p1, r, back=0.0, n=32):
     """cylinder of radius r from p0 - back along the axis to p1"""
     d = p1 - p0
@@ -313,6 +411,13 @@ def bodies(which):
             sockets += rod_m(q0, q1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
         if os.environ.get("NOX_ARM_SLEEVE") == "1":   # v5c: a full-length drawn sleeve (rear v5b: webs meeting the tube
             sockets += rod_m(p0, p1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)   # left 1.1 collar walls)
+    B["cuts_base"] = B["cuts"]
+    if DIAG:                                    # v6: the diagonals, their sleeves and node blocks
+        d_drawn, d_cuts, d_ins = diag_bodies(which, F, B["env"])
+        sockets += d_drawn
+        B["cuts"] += d_cuts
+        rods += d_ins
+        B["diag_drawn"] = d_drawn
     B["rods"] = rods
     B["drawn"] = B["pads"] + B["mpad"] + sockets
     if os.environ.get("NOX_ARM_ROOT_SOLID") == "1":      # front v3: the root block solid between the plates (front v2: its open
@@ -330,7 +435,34 @@ def bodies(which):
             band = box(-400, 400, -400, 400, z0, z1)
             shf = ((rb ^ band) + cyl(xs, ys, z0, z1, r) + cyl(xs, -ys, z0, z1, r)).hull() ^ B["env"]
             B["drawn"] = B["drawn"] + (shf - B["cuts"])
+    shw = os.environ.get("NOX_ARM_SHWEB")                # v6: the shoulder closed full depth (the modal what-if: the x 5..25
+    B["shweb"] = mf.Manifold()                           # band, root block to the chord ends, was the soft spot)
+    if shw and which in SHOULDER:
+        xs, ys, _ = SHOULDER[which]
+        rb = to_arm(diag(box(U_ROOT[0], U_ROOT[1], -V_ROOT, V_ROOT, 0.0, ROOT_H), F["d"]), F)
+        for sy in (1, -1):
+            post = cyl(xs, sy * ys, 0.0, ROOT_H, r)      # a post joining the top and bottom chord sockets
+            if shw == "solid":                           # the wedge from the root block's half to the post
+                w = (post + (rb ^ box(-400, 400, min(0, 400 * sy), max(0, 400 * sy), 0, ROOT_H))).hull()
+            else:                                        # walls t thick from the post into the root block: to its nearest
+                tri = shw.startswith("tri")              # corner ("<t>"), or to both corners of its near side ("tri<t>")
+                t_ = float(shw[3:] if tri else shw)
+                v = trimesh_vertices(rb ^ box(-400, 400, min(0, 400 * sy), max(0, 400 * sy), 0, ROOT_H))[:, :2]
+                v = np.unique(v.round(3), axis=0)
+                dd = np.linalg.norm(v - [xs, sy * ys], axis=1)
+                outer = v[np.argsort(-sy * v[:, 1])[:4]]          # the near side's corners (largest |y| on this side)
+                cs_ = [v[np.argmin(dd)]] + ([outer[np.argmax(np.linalg.norm(outer - v[np.argmin(dd)], axis=1))]] if tri else [])
+                w = post
+                for c_ in cs_:
+                    e_ = c_ + 8.0 * (c_ - [xs, sy * ys]) / np.linalg.norm(c_ - [xs, sy * ys])   # 8 into the block
+                    w = w + (cyl(xs, sy * ys, 0.0, ROOT_H, t_ / 2) + cyl(e_[0], e_[1], 0.0, ROOT_H, t_ / 2)).hull()
+            B["shweb"] += (w ^ B["env"]) - B["cuts"]
+        B["drawn"] = B["drawn"] + B["shweb"]
     return B, F
+
+
+def trimesh_vertices(m):
+    return m.to_mesh().vert_properties[:, :3]
 
 
 def rigid_case(p, name, parts, cls="flight", accel=None, support="default"):
@@ -368,6 +500,10 @@ def setup_for(which):
             rr = max(ROD_BORE / 2, 0.9 * h)              # a fat enough cylinder to stay connected on the coarse grid
             p.insert(f"rod {k_}", rod_m(p0, p1, rr), E_CARBON / E_PETG, area_mm2=ROD_AREA,
                      length_mm=float(np.linalg.norm(p1 - p0)))
+        for D in diagonals(which, F):                   # v6: the diagonals, each at its own section
+            rr = max(D["bore"] / 2, 0.9 * h)
+            p.insert(D["name"], rod_m(D["p_blind"], D["p_open"], rr), E_CARBON / E_PETG, area_mm2=D["area"],
+                     length_mm=float(np.linalg.norm(D["p_open"] - D["p_blind"])))
         p.support("default", B["sup"])
         p.support("bosses", B["bosses"])        # review 27 Oct: the joint as 4 inserts only (no face contact)
         tipc = np.array([F["L"], 0.0, TIP_Z])
@@ -436,7 +572,14 @@ def arm_to_drone(t, F, mirror=False):
 
 
 # ------------------------------------------------------------------------------------------------- first modes
-def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
+def all_rods(which, F):
+    """every carbon insert (arm frame): (p0, p1, d, area); v6 adds the diagonals (their own d and area)"""
+    out = [(p0, p1, ROD_D, ROD_AREA) for p0, p1 in chords(which, F)]
+    out += [(D["p_blind"], D["p_open"], D["d"], D["area"]) for D in diagonals(which, F)]
+    return out
+
+
+def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print, extra=None):
     """first modes (Hz, E) of the built arm, fixed at the two plate faces, with the motor + prop (96 g) as a stiff body
     on the pad (the ESC is in the hub, Spark 27 Oct). Hex8 voxel FE at pitch h, PETG transversely
     isotropic (build z), lumped masses, shift-invert Lanczos."""
@@ -455,12 +598,19 @@ def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     solid = voxelise(arm, *ax)
     X, Y, Z = np.meshgrid(*ax, indexing="ij")
     motor = ((X - F["L"]) ** 2 + Y ** 2 <= 13.85 ** 2) & (Z > ROOT_H) & (Z < 75.0)
+    if extra is not None:                                        # v6 what-if: drawn PETG added to a built arm
+        solid |= from_tm_vox(extra, ax, h)
     rod = np.zeros(shape, bool)
+    rod_k = np.zeros(shape)                                      # per-cell carbon multiplier (each rod's own E A)
     P = np.stack([X, Y, Z], -1)
-    for p0, p1 in chords(which, F):
+    for p0, p1, dd, area in all_rods(which, F):
         d = p1 - p0; Ln = np.linalg.norm(d); u = d / Ln
         t = (P - p0) @ u
-        rod |= (np.linalg.norm(P - p0 - t[..., None] * u, axis=-1) <= ROD_D / 2) & (t >= 0) & (t <= Ln)
+        rv = max(dd / 2, 1.0 * h) if abs(u[0]) < 0.999 else dd / 2   # a slanted thin rod: fat enough to stay face-connected
+        m_ = (np.linalg.norm(P - p0 - t[..., None] * u, axis=-1) <= rv) & (t >= 0) & (t <= Ln)
+        if m_.any():
+            rod_k[m_] += area * Ln / (m_.sum() * h ** 3)
+        rod |= m_
     solid &= ~rod
     mat = MATERIALS["PETG"]
     C = stiffness(mat, 2)
@@ -471,9 +621,7 @@ def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     big = np.argmax(np.bincount(lab.ravel())[1:]) + 1
     on = (lab == big).ravel()                                    # the connected arm (voxel specks dropped)
     # rods: carbon along x; the voxel cross-section scaled to the real Ø3 area
-    nrod = max(rod.sum(), 1)
-    rod_len = sum(float(np.linalg.norm(p1 - p0)) for p0, p1 in chords(which, F))
-    area_fix = (ROD_AREA * rod_len) / (nrod * h ** 3) if rod.any() else 1.0
+    area_fix = rod_k.ravel()
     Ee = np.where(motor.ravel(), 50.0, np.where(rod.ravel(), E_CARBON / mat.E * area_fix, 1.0))[on]   # motor + prop stiff
     rho = mat.density * 1e-3 * h ** 3 * 1e-3                    # kg per PETG cell
     me = np.where(motor.ravel(), 0.0, np.where(rod.ravel(), rho * RHO_CARBON / mat.density * area_fix, rho))[on]
@@ -531,10 +679,69 @@ def modes(which, mesh_path, h=1.0, n=4, support="faces", log=print):
     return dict(modes=out, arm_g_grid=round(float(mass), 1), h=h, support=support)
 
 
+def seg_dist(a0, a1, b0, b1, step=0.25):
+    """min distance between segments a0a1 and b0b1 (sampled along a, exact to b)"""
+    n = max(int(np.linalg.norm(a1 - a0) / step), 2)
+    P = a0[None] + np.linspace(0, 1, n)[:, None] * (a1 - a0)[None]
+    d = b1 - b0; L2 = float(d @ d)
+    t = np.clip((P - b0) @ d / L2, 0, 1)
+    return float(np.min(np.linalg.norm(P - b0 - t[:, None] * d, axis=1)))
+
+
+def diag_geomcheck(which, B=None, F=None, log=print, wall=2.0):
+    """v6: the diagonals on the setup geometry (C): (1) every rod clear of every other rod and chord tube by a 2.0 web
+    (bore to bore); (2) each insertion line, from the through end out to where it leaves the envelope, clear of every
+    other rod and tube (2.0 web inside the envelope), of the motor pad, its pocket wall, pocket, slots, shaft bore, the
+    spoke node sockets and their bores, the root pads and insert holes (its own bore + 2.0 must not touch them)"""
+    if B is None:
+        B, F = bodies(which)
+    D = diagonals(which, F)
+    C = chords(which, F)
+    rods = [(d_["name"], d_["p_blind"], d_["p_open"], d_["bore"] / 2) for d_ in D]
+    rods += [(f"chord {k}", p0 - 30.0 * (p1 - p0) / np.linalg.norm(p1 - p0), p1, ROD_BORE / 2) for k, (p0, p1) in enumerate(C)]
+    from topo.part import tm
+    env_t = tm(B["env"])
+    hard = B["cuts_base"] - B["ko"]
+    hard = hard + B["mpad"] + B["bosses"]
+    root_pads = B["pads"]
+    out, ok_all = [], True
+    for d_ in D:
+        r = d_["bore"] / 2
+        u, po = d_["u"], d_["p_open"]
+        # where the insertion line leaves the envelope (0.5 mm steps)
+        ss = np.arange(0.0, 120.0, 0.5)
+        inside = env_t.contains(po[None] + ss[:, None] * u[None])
+        s_exit = float(ss[inside].max() + 0.5) if inside.any() else 0.0
+        p_ex = po + (s_exit + 2.0) * u
+        worst_rod = (1e9, None)
+        for nm, a0, a1, rr in rods:
+            if nm == d_["name"]:
+                continue
+            c1 = seg_dist(d_["p_blind"], p_ex, a0, a1) - r - rr
+            c2 = seg_dist(p_ex, po + 120.0 * u, a0, a1) - r - rr
+            c = min(c1 - wall, c2 - 0.2)
+            if c < worst_rod[0]:
+                worst_rod = (c + wall, nm)
+        corr = rod_m(d_["p_blind"] - d_["skin"] * u, p_ex, r + wall, n=24)    # the rod's own bore and its way in
+        v_hard = (corr ^ hard).volume()
+        v_pads = (corr ^ root_pads).volume()
+        ok = worst_rod[0] >= wall and v_hard < 0.5 and v_pads < 0.5
+        ok_all &= ok
+        out.append(dict(diag=d_["name"], length_mm=round(float(np.linalg.norm(d_["p_open"] - d_["p_blind"])), 1),
+                        exit_mm=round(s_exit, 1), web_to_nearest_mm=round(worst_rod[0], 2), nearest=worst_rod[1],
+                        hits_pad_pocket_slots_sockets_mm3=round(v_hard, 1), hits_root_pads_mm3=round(v_pads, 1), ok=bool(ok)))
+        log(f"{d_['name']}: {out[-1]['length_mm']} long, leaves the envelope {s_exit:.1f} past its open end, web "
+            f"{worst_rod[0]:.2f} to {worst_rod[1]}, hits pad/pocket/slots/sockets {v_hard:.1f} mm3, root pads {v_pads:.1f} mm3"
+            f" -> {'OK' if ok else 'FAIL'}")
+    return dict(ok=bool(ok_all), diagonals=out)
+
+
 def rodcheck(which, mesh_path, log=print):
     """can the rods go in and are they held, on a built arm (arm frame): (1) the bore is clear for a 3.0 rod from 160
     behind the shoulder to the blind end (slides in straight); (2) both end sockets grip (PETG round >= 80 % of the
-    18 mm x 2.65 wall); (3) bonded length along each rod (PETG round the bore at >= 6 of 8 points, r 2.4) and the collars"""
+    18 mm x 2.65 wall); (3) bonded length along each rod (PETG round the bore at >= 6 of 8 points, r 2.4) and the collars.
+    v6: the diagonals too, each from 100 outside its through end along its axis to its blind end (their geometry: also
+    diag_geomcheck; on the setup before a run: --rodcheck-setup, the drawn bodies minus the cuts as the mesh)"""
     from topo.part import voxelise
     arm = trimesh.load(mesh_path, force="mesh")
     m = from_tm(arm)
@@ -543,19 +750,26 @@ def rodcheck(which, mesh_path, log=print):
     ax = [vlo[k] + (np.arange(int((arm.bounds[1][k] - vlo[k]) / VP) + 2) + 0.5) * VP for k in range(3)]
     V = voxelise(arm, *ax)
     out = []
-    for k, (p0, p1) in enumerate(chords(which, F := frame(which))):
+    F = frame(which)
+    # (name, open end, blind end, rod d, bore, skin, socket length, run-in behind the open end); v6 adds the diagonals,
+    # each slid in along its own axis from outside the arm through its through end
+    rl = [(k, p0, p1, ROD_D, ROD_BORE, CHORD_SKIN, SOCKET_L, 160.0) for k, (p0, p1) in enumerate(chords(which, F))]
+    rl += [(D["name"], D["p_open"], D["p_blind"], D["d"], D["bore"], D["skin"], DIAG_SOCKET_L, 100.0)
+           for D in diagonals(which, F)]
+    for k, p0, p1, rd, rbore, rskin, sl, run_in in rl:
         u = (p1 - p0) / np.linalg.norm(p1 - p0)
         L = float(np.linalg.norm(p1 - p0))
-        block = (m ^ rod_m(p0 - 160.0 * u, p1, ROD_D / 2)).volume()
-        r_in, r_out = ROD_BORE / 2, ROD_BORE / 2 + CHORD_SKIN
+        block = (m ^ rod_m(p0 - run_in * u, p1, rd / 2)).volume()
+        r_in, r_out = rbore / 2, rbore / 2 + rskin
         grip = []
-        for q0, q1 in ((p0, p0 + SOCKET_L * u), (p1 - SOCKET_L * u, p1)):
+        for q0, q1 in ((p0, p0 + min(sl, L / 2) * u), (p1 - min(sl, L / 2) * u, p1)):
             ann = rod_m(q0, q1, r_out) - rod_m(q0 - u, q1 + u, r_in)
             grip.append(round((m ^ ann).volume() / ann.volume(), 2))
         a = np.cross(u, [0, 0, 1.0]); a /= np.linalg.norm(a); b = np.cross(u, a)
         ang = np.linspace(0, 2 * np.pi, 8, endpoint=False)
         ts = np.arange(0.5, L, 1.0)
-        P = (p0[None, None] + ts[:, None, None] * u + 2.4 * (np.cos(ang)[None, :, None] * a + np.sin(ang)[None, :, None] * b))
+        rs = 2.4 if rbore < 4.8 or isinstance(k, int) else rbore / 2 + 0.8      # chords keep the v5 probe radius
+        P = (p0[None, None] + ts[:, None, None] * u + rs * (np.cos(ang)[None, :, None] * a + np.sin(ang)[None, :, None] * b))
         idx = np.floor((P.reshape(-1, 3) - vlo) / VP).astype(int)
         okk = np.all((idx >= 0) & (idx < np.array(V.shape)), 1)
         hit = np.zeros(len(idx), bool)
@@ -565,7 +779,7 @@ def rodcheck(which, mesh_path, log=print):
         ok = block < 1.0 and min(grip) >= 0.8
         out.append(dict(rod=k, length_mm=round(L, 1), bore_blocked_mm3=round(block, 1), socket_grip=grip,
                         bonded_mm=int(inside.sum()), collars=collars, ok=bool(ok)))
-        log(f"rod {k}: {L:.1f} long, bore blocked {block:.1f} mm3, socket grip {grip}, bonded {int(inside.sum())} mm in "
+        log(f"{'rod ' if isinstance(k, int) else ''}{k}: {L:.1f} long, bore blocked {block:.1f} mm3, socket grip {grip}, bonded {int(inside.sum())} mm in "
             f"{collars} collars -> {'OK' if ok else 'FAIL'}")
     return out
 
@@ -586,6 +800,7 @@ if __name__ == "__main__":
     ap.add_argument("--modes", default=None)
     ap.add_argument("--place", default=None)
     ap.add_argument("--rodcheck", default=None)
+    ap.add_argument("--rodcheck-setup", action="store_true", help="v6: rodcheck + diagonal geometry on drawn - cuts")
     a = ap.parse_args()
     h = a.h or (2.0 if a.which == "front" else 1.5)   # ~ min member / 3 (topo README); direct solver (27 Oct: h 1.5 / 1.0 fell to multigrid, ~10 min an iteration)
     gen = a.gen or (40.0 if a.which == "front" else 25.0)   # cm3 generated (E), generous (Spark 27 Oct); front rods carry the chords
@@ -597,6 +812,17 @@ if __name__ == "__main__":
         r = {sp_: modes(a.which, a.modes, support=sp_) for sp_ in ("faces", "inserts")}
         os.makedirs(out, exist_ok=True)
         json.dump(r, open(os.path.join(out, "modes.json"), "w"), indent=1)
+    elif a.rodcheck_setup:
+        from topo.part import tm
+        B, F = bodies(a.which)
+        os.makedirs(out, exist_ok=True)
+        proxy = os.path.join(out, "setup_proxy.stl")
+        tm(B["drawn"] - B["cuts"]).export(proxy)
+        r = dict(rods=rodcheck(a.which, proxy), geometry=diag_geomcheck(a.which, B, F))
+        r["ok"] = bool(all(x["ok"] for x in r["rods"]) and r["geometry"]["ok"])
+        print("rodcheck on the setup (drawn - cuts):", "PASS" if r["ok"] else "FAIL")
+        json.dump(r, open(os.path.join(out, "rodcheck_setup.json"), "w"), indent=1)
+        os.remove(proxy)
     elif a.rodcheck:
         r = rodcheck(a.which, a.rodcheck)
         os.makedirs(out, exist_ok=True)
