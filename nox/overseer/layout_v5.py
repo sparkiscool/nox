@@ -175,7 +175,7 @@ CAM_W = (0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0, 105.0, 120.0, 135.0)   # lens 
 CAM_HS = (-110.0, -90.0, -70.0, -50.0, -30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 110.0)   # lens up the L2 base plane (scanned)
 HEAD_ONE = os.environ.get("V5_HEAD_ONE", "1") == "1"   # Spark 27 Oct: "make the camera mounted on the same print as the lidar mount": the
 # the arm session's printed nodes (overseer arm, 27 Oct, Spark "add the arm nodes"): the 3 spokes of each arm leave from a node beside
-# the motor (offset from the motor axis point, y mirrored), the L2 braces end inside the front beam (lo / hi z), so the arm top prints flat
+# the motor (offset from the motor axis point, y mirrored), the L2 braces root in the core (BRACE_ROOT below; first in the front beam, 27 Oct)
 ARM_NODE = {"front": (-27.03, 7.2, 1.0), "rear": (19.77, -19.8, -4.0)}
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
 BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
@@ -334,13 +334,14 @@ _DRONE = {}
 
 def saved_node(c):
     """the newest saved cage node at c (CLAUDE.md "Cage sessions keep their parts in sync": the artifact shows the saved parts):
-    runs/cage_nodes/v3/node_<i>/cage_node_<i>.stl for the design at c, or its mirror's reflected (y -> -y); None if not saved yet"""
+    a decimated copy of runs/cage_nodes/v3/node_<i>/cage_node_<i>.stl (run/cage_nodes-v3) in runs/overseer_layout/v5/saved/, for the
+    design at c, or its mirror's reflected (y -> -y); None if not saved yet"""
     if FZ is None: return None
     SN = np.array(FZ["nodes"])
     for i, q in enumerate(SN):
         for sy in (1, -1):
             if np.linalg.norm(q * [1, sy, 1] - c) < 0.5:
-                f = os.path.join(ROOT, "runs", "cage_nodes", "v3", f"node_{i}", f"cage_node_{i}.stl")
+                f = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved", f"cage_node_{i}.stl")   # decimated copy of the saved node
                 if os.path.exists(f):
                     m = trimesh.load(f, force="mesh")
                     if sy < 0: m.apply_transform(np.diag([1.0, -1.0, 1.0, 1.0])); m.invert()
@@ -348,7 +349,8 @@ def saved_node(c):
     return None
 
 
-SAVED_ARMS = {"rear": "runs/overseer_arm_rear/v5d/overseer_arm_rear.stl"}   # the arm session's newest saved run meshes (arm frame)
+SAVED_ARMS = {"rear": "runs/overseer_layout/v5/saved/overseer_arm_rear_v5d.stl"}   # decimated copies of the arm session's newest saved
+                                                   # run meshes (arm frame; rear v5d: claude/pensive-turing-jyxlcc 319ca86a)
 ARM_DEG = {"front": 45.0, "rear": 135.0}           # the arm frame: root at r 66.5 on the plate diagonal, x toward the motor (arm_topo_v1)
 
 
@@ -1011,8 +1013,8 @@ else:
 if PRINTED_HEAD:
     say(f"L2 mount: the printed sensor head mount{' (one piece with both cameras)' if HEAD_ONE else ''}: seat, back block, lugs, the guard ring (8 nodes, r "
         f"{HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on "
-        f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the front arm beams "
-        f"{g.get('braces')} out of the root, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
+        f"{sum(k.startswith('keel') for k in extra)} keels to the front hub and {sum(k.startswith('L2 brace') for k in extra)} braces to the core's hub deck tower "
+        f"{'(BRACE_ROOT)' if BRACE_ROOT else str(g.get('braces')) + ' out of the arm root'}, {sum(k.startswith('head strut') for k in extra)} struts to the side cage nodes; break order: the apex lugs are the "
         f"printed fuse (requirement: they let go before the L2 base, E)")
 else: say(f"L2 guard ring: {sum(k.startswith('halo ') and 'strut' not in k and 'cam' not in k for k in extra)} of 8 rods (r {HALO_R:.0f}, {HALO_BACK:.0f} behind the base plane; "
           f"the others in a camera view), {sum('halo strut' in k for k in extra)} struts into the shell; L2 mount: v2 seat, back block, lugs, 2 keels to the front hub, "

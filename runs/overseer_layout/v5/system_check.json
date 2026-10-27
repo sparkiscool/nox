@@ -247,7 +247,7 @@
   ],
   "largest_extent_mm": 771.0,
   "bbox_L": 116.156,
-  "hull_L": 69.291,
+  "hull_L": 69.164,
   "guard_offsets_mm": {
    "shell tubes to prop disks, 3D (G)": 20.3
   }
@@ -260,7 +260,7 @@
    {
     "a": "cage shell tubes",
     "b": "cage shell nodes",
-    "overlap_mm3": 32247.84,
+    "overlap_mm3": 32364.19,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -287,7 +287,7 @@
    {
     "a": "cage shell nodes",
     "b": "spokes, ties, keels, braces, head struts",
-    "overlap_mm3": 6530.66,
+    "overlap_mm3": 6689.93,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -341,7 +341,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 2",
-    "overlap_mm3": 887.74,
+    "overlap_mm3": 2394.11,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -350,7 +350,7 @@
    {
     "a": "spokes, ties, keels, braces, head struts",
     "b": "arm 3",
-    "overlap_mm3": 887.74,
+    "overlap_mm3": -2229.01,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -443,16 +443,16 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "top plate",
     "b": "arm 3",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": -0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -497,7 +497,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -506,7 +506,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -632,16 +632,16 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
     "a": "arm 3",
     "b": "motor 3",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": -0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -1349,10 +1349,10 @@
      0.067
     ],
     "roll_deg": 345.0,
-    "lateral_mm": -170.4,
+    "lateral_mm": -162.9,
     "contact": [
-     -199.4,
-     -126.6,
+     -199.9,
+     -146.9,
      87.0
     ],
     "pass_": true
@@ -1490,58 +1490,6 @@
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "motor 4",
-    "margin_mm": 90.0,
-    "unshielded": false,
-    "dir": [
-     0.051,
-     -0.08,
-     -0.995
-    ],
-    "dir_label": "-Z",
-    "axis": [
-     0.531,
-     -0.842,
-     0.095
-    ],
-    "roll_deg": 180.0,
-    "lateral_mm": 57.6,
-    "contact": [
-     219.5,
-     -142.2,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "motor 4",
-    "margin_mm": 90.46,
-    "unshielded": false,
-    "dir": [
-     0.051,
-     -0.08,
-     -0.995
-    ],
-    "dir_label": "-Z",
-    "axis": [
-     0.531,
-     -0.842,
-     0.095
-    ],
-    "roll_deg": 180.0,
-    "lateral_mm": 60.6,
-    "contact": [
-     219.6,
-     -137.7,
-     45.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
     "part": "motor 3",
     "margin_mm": 90.95,
     "unshielded": false,
@@ -1592,6 +1540,32 @@
     "pass_": true
    },
    {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "motor 4",
+    "margin_mm": 91.0,
+    "unshielded": false,
+    "dir": [
+     0.007,
+     -0.263,
+     -0.965
+    ],
+    "dir_label": "(+0.01, -0.26, -0.96)",
+    "axis": [
+     0.027,
+     -0.964,
+     0.263
+    ],
+    "roll_deg": 180.0,
+    "lateral_mm": 135.6,
+    "contact": [
+     204.1,
+     -153.2,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 1",
@@ -1613,6 +1587,32 @@
     "contact": [
      217.4,
      147.2,
+     45.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "motor 4",
+    "margin_mm": 91.0,
+    "unshielded": false,
+    "dir": [
+     0.007,
+     -0.263,
+     -0.965
+    ],
+    "dir_label": "(+0.01, -0.26, -0.96)",
+    "axis": [
+     0.027,
+     -0.964,
+     0.263
+    ],
+    "roll_deg": 180.0,
+    "lateral_mm": 135.6,
+    "contact": [
+     203.2,
+     -153.1,
      45.0
     ],
     "pass_": true
@@ -1705,7 +1705,7 @@
    0.0,
    10.0
   ],
-  "n_points": 641657
+  "n_points": 671298
  },
  "access": {
   "applies": true,

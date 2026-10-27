@@ -12,7 +12,7 @@ Spark's asks, in order (26-27 Oct):
 
 Script `nox/overseer/layout_v5.py` (builds the drone round a fixed cage, `nox/overseer/cage_v5_shell.json`); the cage from `nox/overseer/cage_equal.py`; artifact `layout_v5_view.py`; camera alternatives `layout_v5_cams.py`; cage alternatives `layout_v5_cages.py`.
 
-Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (source `runs/overseer_layout/v5/motion.html`; stills `preview.png` iso, `preview_top.png` top at frame 0, `preview_under.png` from below, `cameras_alt.png` the camera orientations over the L2 field, `cages_alt.png` cage v3 / v4 / v5 side by side). Head support options: https://claude.ai/artifact/4Z5Uv7N96VBaNhBLQyBE9e (`runs/overseer_head_cage/concept/`).
+Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (republished 27 Oct with the saved node 20, node 2 and rear arm v5d; source `runs/overseer_layout/v5/motion.html`; stills `preview.png` iso, `preview_top.png` top at frame 0, `preview_under.png` from below, `cameras_alt.png` the camera orientations over the L2 field, `cages_alt.png` cage v3 / v4 / v5 side by side). Head support options: https://claude.ai/artifact/4Z5Uv7N96VBaNhBLQyBE9e (`runs/overseer_head_cage/concept/`).
 
 System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 0.0 mm³ (E), bbox 116 L (E), extents 771 x 675 x 223 mm (E), mass 3212 of 2200 g (146 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.2, -63.2], 32.0 mm without swap parts (reported, L exception), probes 7.1 mm (E) edge at (-0.68, -0.19, -0.71) (flow MTF-02P), access 21/21 clear (`system_check.txt`)
 
@@ -29,16 +29,16 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
 ## Frame model v1 (27 Oct, F on E carbon properties; `runs/overseer_frame/v1/summary.md`)
 - `nox/frame_model.py` (3D beam solver, checked against a cantilever, static and modal) and `nox/overseer/cage_frame.py` (the cage + links on the core, the head rigid on its keels, braces and struts). Cases: crash 35 g through the first-touching member in 14 directions, a nose hit through the head guard, flight 4 g, handling 50 N at mid-span.
 - **Solver fix (27 Oct).** The regularisation scaled by the mean diagonal let the stiff "rigid" head links put ~100 N/mm to ground on every node (F), so the first pass read low. It now uses the median; results are converged over rigid-link stiffness 1e5..1e8.
-- **Sized:** 30 of the 36 links are 6/4 tube now (`link_sizes.json`), the rest 3.0 rod; every link ≤ 0.65 x its buckling load (F, k 0.7 with a core end, 0.5 keels / braces, E).
-- **Reported over (not gated; the halved cage, Spark "ignore the tests"):** tubes 1-19 / 3-18 2.33 x on a top hit through the camera guards, tubes 11-18 / 12-19 1.35 x on a side-corner hit, 15-16 1.16 x (F). Splitting moved the buckling to the next long tube each time, so the splits stop at the frame v1 set.
-- **Modes:** lowest 143 Hz with rigid joints, the head in the 182 Hz mode (F on E); with PETG nodes the cage's lowest mode is 126 Hz, with TPU it was 26 Hz (F on E, `runs/overseer_head_cage/concept/`). No member over stress.
+- **Sized:** 30 of the 36 links are 6/4 tube now (`link_sizes.json`), the rest 3.0 rod; every link ≤ 0.75 x its buckling load (bay tie -1-1.2, F) (F, k 0.7 with a core end, 0.5 keels / braces, E).
+- **Reported over (not gated; the halved cage, Spark "ignore the tests"):** tubes 1-19 / 3-18 2.33 x on a top hit through the camera guards, tubes 11-18 / 12-19 1.36 x on a side-corner hit, 15-16 1.28 x (F). Splitting moved the buckling to the next long tube each time, so the splits stop at the frame v1 set.
+- **Modes:** lowest 142 Hz with rigid joints, the head in the 166 Hz mode (F on E); with PETG nodes the cage's lowest mode is 126 Hz, with TPU it was 26 Hz (F on E, `runs/overseer_head_cage/concept/`). No member over stress.
 - **Handling:** the longest spans (438, 446) bend 17 to 18 mm under 50 N (F).
 
 ## Arm nodes and core v2 (27 Oct)
 - **Arm session (Spark "add the arm nodes"):** the 3 spokes of each arm leave from a printed node beside the motor (`layout_v5.py` ARM_NODE: front (178.9, ±146.7, 8), rear (-53.3, ±119.7, 25), C), ranked from that node (the same 3 cage nodes as before, C).
 - **Core v2:** the keels end 5 deeper in the hub deck (KEEL_INSET, C); the front hub block is the core's, off the head part and its mass (`apex_head`).
 - **Load into the arms** (`runs/overseer_frame/v1/arm_loads.json`, F on E, 35 g crash, core rigid): rear spoke node 2347 N, front 1154 N. Softer spokes did not move it off the arm (3.0 rod 2046 N, 5 % axial stiffness 1041 N with the core ties to 1.15, F on E); a 600 N fuse node moves it into the shell tubes (`arm_fuse.md`). Spark 27 Oct: the arm root joint is taken as good ("just assume those are good").
-- **L2 brace roots (arm and core sessions):** off the front arm beams (they took ~0.9 kN of a top hit) into the core: a top-plate block was weighed (head 198 Hz, but 0.8 kN on PETG keys in a 1.6 plate, core) and dropped for the hub deck's front tower, low (`layout_v5.py` BRACE_ROOT lo (97, ±26, 12), hi (97, ±14, 18), C): braces ≤ 368 N a side, the keels near idle in the top hit (`core_root_forces.json`), head 155 Hz on PETG nodes (F on E).
+- **L2 brace roots (arm and core sessions):** off the front arm beams (they took ~0.9 kN of a top hit, F on E) into the core: a top-plate block was weighed (head 198 Hz F on E, but 0.8 kN on PETG keys in a 1.6 plate, E, core session) and dropped for the hub deck's front tower, low (`layout_v5.py` BRACE_ROOT lo (97, ±26, 12), hi (97, ±14, 18), C): braces ≤ 368 N a side (F), the keels near idle in the top hit (`core_root_forces.json`), head 155 Hz on PETG nodes (F on E, `runs/overseer_head_cage/concept/result_A1_low_roots.json`).
 - **Socket loads:** largest axial 1694 N at node 0 (spoke 3.1, F).
 
 ## Camera pair (Spark 27 Oct)
@@ -64,7 +64,7 @@ System: Overseer, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (
 - **Props and swap:** shell tubes 20.3 off the props, links 13.7 (C); swap zone clear (M); access 21 / 21 (C).
 
 ## One layout ("the one with perfect CG")
-- **Pack in:** CG 0.2 mm off the thrust centre (system_check, E).
+- **Pack in:** CG 0.2 mm off the thrust centre (system_check, E), with the layout's E arm masses. With the saved v5d arm meshes and masses the arm session reads 5.8 mm (balance FAIL); DEFAULT: rebalance once, when the front arm is final (the motor square moves the arm and spoke ends).
 - **Pack + cartridge out:** 32.0 mm off (system_check, E). Accepted by Spark 27 Oct ("as long as with battery the drone is centered"), the L Balance exception.
 
 ## Carbon (6 mm tube, 3 mm rod)

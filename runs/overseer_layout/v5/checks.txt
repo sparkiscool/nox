@@ -25,7 +25,7 @@ prop blockage (Spark 26 Oct, secondary to structure): 7.0 % of the disks' thrust
 L2 field (Spark 26 Oct: outside the cage, not blocked at all): 0.0 % of its hemisphere crossed; the most forward cage member surface is 2.0 behind its base plane (guard ring nodes) (C)
 cameras: nothing of the drone in either view (C)
 sensor head outside the frozen cage (cage_v5_shell.json): the L2 base where it was (384.0, 0, 51); the cameras' bodies 19.5 off its tubes and nodes, nothing of it in their views (C)
-L2 mount: the printed sensor head mount (one piece with both cameras): seat, back block, lugs, the guard ring (8 nodes, r 62, 8 behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on 2 keels to the front hub and 4 braces to the front arm beams [30.0, 30.0] out of the root, 4 struts to the side cage nodes; break order: the apex lugs are the printed fuse (requirement: they let go before the L2 base, E)
+L2 mount: the printed sensor head mount (one piece with both cameras): seat, back block, lugs, the guard ring (8 nodes, r 62, 8 behind the base plane) and the camera guard bars printed in it; the cage's front centre node in it; on 2 keels to the front hub and 4 braces to the core's hub deck tower (BRACE_ROOT), 4 struts to the side cage nodes; break order: the apex lugs are the printed fuse (requirement: they let go before the L2 base, E)
 flow: view checked (lines above list anything in view)
 cage: shell 495 g (tubes 387 E + nodes 108 E), links 157 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
 mass ~3210 g (E; latch set 338.5 M), CG (66.4, -0.2, 18.5) vs thrust centre (66.4, 0): 0.2 off; pack + cartridge out: 32.2 off (2407 g; layout mass model, the gated number is system_check's)
