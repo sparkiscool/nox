@@ -1,0 +1,264 @@
+<title>Box Landing v1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one drafting column; drawings to scale on plotted paper, numbers in mono, the chosen coupling in amber. */
+:root {
+  --paper: #eef1ee; --sheet: #f8faf8; --ink: #1c2b2e; --ink-2: #4a5c5f; --ink-3: #7d8d8f; --rule: #cfd8d5;
+  --grid: #dfe6e3; --accent: #c7781a; --box: #3f6f8f; --box-fill: #c9dbe6; --hole: #e7ece9; --cage: #d4ddd9;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #131a1b; --sheet: #1a2223; --ink: #e5ece9; --ink-2: #aebcb9; --ink-3: #7f8f8c; --rule: #2e3a3b;
+  --grid: #222c2d; --accent: #e59a3f; --box: #8fb8d4; --box-fill: #24394a; --hole: #10171a; --cage: #2a3536;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #131a1b; --sheet: #1a2223; --ink: #e5ece9; --ink-2: #aebcb9; --ink-3: #7f8f8c; --rule: #2e3a3b;
+  --grid: #222c2d; --accent: #e59a3f; --box: #8fb8d4; --box-fill: #24394a; --hole: #10171a; --cage: #2a3536;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500; color-scheme: dark }
+body { background: var(--paper); color: var(--ink); font: 15px/1.55 var(--body); }
+.wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 40px; }
+header { display: grid; gap: 10px; }
+.kicker { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+h1 { font: 800 clamp(30px, 5vw, 46px)/1.05 var(--display); letter-spacing: -.01em; margin: 0; text-wrap: balance; }
+h2 { font: 700 21px/1.2 var(--display); margin: 0; text-wrap: balance; }
+p { margin: 0; max-width: 66ch; }
+.lede { font-size: 17px; color: var(--ink-2); }
+section { display: grid; gap: 14px; }
+.figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.fig { border-top: 2px solid var(--ink); padding-top: 8px; display: grid; gap: 2px; }
+.fig b { font: 700 28px/1.1 var(--display); font-variant-numeric: tabular-nums; }
+.fig span { font-size: 13px; color: var(--ink-2); }
+.sheet { background: var(--sheet); border: 1px solid var(--rule); padding: 12px; overflow-x: auto; }
+svg { display: block; width: 100%; height: auto; }
+svg .grid { stroke: var(--grid); stroke-width: .6; }
+svg .cage { fill: var(--cage); stroke: var(--ink-3); stroke-width: 1; stroke-dasharray: 4 3; opacity: .7; }
+svg .scout { fill: none; stroke: var(--ink-3); stroke-width: 1.2; stroke-dasharray: 2 4; }
+svg .vblock { fill: var(--box-fill); stroke: var(--box); stroke-width: 1.4; }
+svg .groove { stroke: var(--box); stroke-width: 1; stroke-dasharray: 6 3; }
+svg .hole { fill: var(--hole); stroke: var(--ink-3); stroke-width: 1; }
+svg .rcv { fill: none; stroke: var(--ink-3); stroke-width: .8; stroke-dasharray: 3 2; }
+svg .ring { fill: none; stroke: var(--ink); stroke-width: 6; stroke-linejoin: round; opacity: .85; }
+svg .node { fill: var(--ink-2); stroke: var(--sheet); stroke-width: 1.5; }
+svg .foot { fill: var(--accent); stroke: var(--sheet); stroke-width: 1.5; }
+svg .leg { fill: var(--accent); opacity: .55; }
+svg .cam { fill: var(--sheet); stroke: var(--ink-2); stroke-width: 1.2; }
+svg .cg circle { fill: none; stroke: var(--ink); stroke-width: 1.4; } svg .cg line { stroke: var(--ink); stroke-width: 1.4; }
+svg .dim { stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 5 3; }
+svg .scale { stroke: var(--ink); stroke-width: 2; }
+svg .lbl { font: 11px var(--mono); fill: var(--ink); } svg.sect .lbl { font-size: 6.5px; } svg .mute { fill: var(--ink-3); } svg .acc { fill: var(--accent); font-weight: 500; }
+.cap { font-size: 13px; color: var(--ink-2); max-width: 80ch; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.two > * { min-width: 0; }
+.drops { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+.drop { background: var(--sheet); border: 1px solid var(--rule); padding: 10px; display: grid; gap: 6px; min-width: 0; }
+.drop h3 { font: 600 13px/1.3 var(--body); margin: 0; }
+.drop .res { font: 12px var(--mono); color: var(--ink-2); }
+.drop canvas { width: 100%; aspect-ratio: 4 / 3; max-width: 100%; display: block; }
+.controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+button { font: 500 13px var(--body); color: var(--ink); background: var(--sheet); border: 1px solid var(--ink-3); padding: 6px 14px; cursor: pointer; }
+button:hover { border-color: var(--ink); } button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+input[type=range] { flex: 1; min-width: 140px; accent-color: var(--accent); }
+.t { font: 12px var(--mono); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--ink-2); }
+.legend i { display: inline-block; width: 18px; height: 3px; vertical-align: middle; margin-right: 6px; border-radius: 2px; }
+.chart text { font: 11px var(--mono); fill: var(--ink-2); }
+.chart .ax { stroke: var(--ink-3); stroke-width: 1; } .chart .gl { stroke: var(--grid); stroke-width: 1; }
+.chart .ln { fill: none; stroke-width: 2; stroke-linejoin: round; } .chart .dot { stroke: var(--sheet); stroke-width: 2; }
+.tip { position: fixed; pointer-events: none; background: var(--ink); color: var(--paper); font: 12px var(--mono); padding: 6px 8px; z-index: 5; }
+.choice { display: grid; gap: 10px; }
+.opt { display: grid; grid-template-columns: 9.5em 1fr; gap: 4px 14px; padding: 10px 0; border-top: 1px solid var(--rule); }
+.opt > * { min-width: 0; }
+.opt b { font: 700 15px/1.3 var(--display); }
+.opt.on b { color: var(--accent); }
+@media (max-width: 560px) { .opt { grid-template-columns: 1fr; } }
+ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; max-width: 80ch; }
+details { background: var(--sheet); border: 1px solid var(--rule); padding: 10px 12px; }
+summary { cursor: pointer; font-weight: 600; }
+.tbl { overflow-x: auto; margin-top: 10px; }
+table { border-collapse: collapse; font: 12px var(--mono); font-variant-numeric: tabular-nums; min-width: 640px; }
+th, td { text-align: right; padding: 4px 10px; border-bottom: 1px solid var(--rule); }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { color: var(--ink-3); font-weight: 500; }
+code { font: 13px var(--mono); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">Nox · box catch · concept · 27 Oct</div>
+  <h1>Three feet, three grooves</h1>
+  <p class="lede">The new Overseer cage has no funnel-shaped bottom, and the Scout will get its own cage. The one thing both drones share is the bottom opening ring. So the box catches that ring: three short feet under it, each tipped with a bought ball-transfer unit, drop into three V-grooves on the box top. Every drop inside the capture rolls into the same seat to the millimetre; nothing on the box moves.</p>
+</header>
+
+<div class="figures">
+  <div class="fig"><b>±{{OV_CAP}} mm</b><span>Overseer: every drop in 8 directions, yaw ±5°, drift 0.15 m/s, ends within 2 mm and 1° of the seat</span></div>
+  <div class="fig"><b>±{{SC_CAP}} mm</b><span>Scout, same box, same feet</span></div>
+  <div class="fig"><b>{{H}} mm</b><span>foot below the ring; grooves {{TH}}° flanks, 60 half-width; ball tips μ {{MU}} (E)</span></div>
+  <div class="fig"><b>{{OV_CLEAR}}</b><span>least gap from the drawn Overseer cage, belly and pods to the blocks in any caught drop (12.7 seated)</span></div>
+</div>
+
+<section>
+  <h2>The shared interface, to scale</h2>
+  <div class="sheet"><!--TOP--></div>
+  <p class="cap">Plan, ring frame: x forward along the receiver, origin at the receiver centre, grid 50 mm. The ring is today's Overseer cage v3 opening (8 nodes round the swap zone, receiver + 30 a side). Feet F1 and F2 sit on the front-diagonal ring tubes, F3 on the rear end tube; the Overseer's CG is 91 mm ahead of the receiver, inside the triangle pack in and pack out (+119). Each groove points at the triangle's centroid (a Maxwell coupling), so the seat is fixed in x, y and yaw. The swap hole stays open between the blocks; the down camera and flow look through it, and the feet are 70° or more off their axes, out of view.</p>
+</section>
+
+<section>
+  <h2>Across a groove</h2>
+  <div class="sheet"><!--SECT--></div>
+  <p class="cap">A ball tip in a V touches both flanks, and both contact forces pass through the ball's own centre. That is why it centres to zero: an off-centre foot sits on one flank, which pushes it back with a force that does not shrink near the bottom, and the drone cannot rock its way out of it. The block tops stay 5 mm under the ring node bottoms, so nothing but the feet ever touches.</p>
+</section>
+
+<section>
+  <h2>Recorded drops</h2>
+  <div class="controls"><button id="play" type="button">Pause</button><input id="scrub" type="range" min="0" max="1000" value="0" aria-label="Time"><span class="t" id="tt">0.00 s</span></div>
+  <div class="drops" id="drops"></div>
+  <p class="cap">MuJoCo, real masses and inertia (Overseer 3380 g from the v5 parts, Scout 520 g E), descent 0.30 m/s, drift 0.15 m/s, 2° tilt, props spinning down after the first touch. Top view, ring and feet in ink and amber, the box in blue. The fourth panel is the Scout on sliding PTFE tips (it jams); the last two are the rejected surfaces: the drone rolls into the swap hole or stops off-centre.</p>
+</section>
+
+<section>
+  <h2>Capture, by offset</h2>
+  <div class="legend" id="legend"></div>
+  <div class="two"><div class="sheet"><svg class="chart" id="ch-overseer" viewBox="0 0 420 240"></svg></div><div class="sheet"><svg class="chart" id="ch-scout" viewBox="0 0 420 240"></svg></div></div>
+  <p class="cap">Share of 24 drops (8 directions x yaw −5 / 0 / +5°) that end within 2 mm and 1° of the centred seat. Hover a point for the value.</p>
+  <details><summary>Every configuration run</summary><div class="tbl"><table id="tbl"></table></div></details>
+</section>
+
+<section class="choice">
+  <h2>What was weighed</h2>
+  <div class="opt on"><b>3 feet + 3 V-grooves, ball tips (DEFAULT)</b><p>Kinematic seat, exact every time inside the capture, static PETG blocks. Costs three ~{{H}} mm feet under each cage with a ball-transfer unit in each tip (~+30 g a drone, E; they replace the four TPU floor feet) and a landing gate of ±25 mm, ±5°, which the down camera's tag landing has to meet.</p></div>
+  <div class="opt"><b>Same, PTFE glide tips</b><p>No rolling part in the foot, and the Overseer catches out to ±40 mm. The Scout jams: two feet seat first and the third, carrying only 27% of its weight, cannot drag them along their grooves. Even at 40° flanks with 55 mm feet the Scout holds only ±10 mm.</p></div>
+  <div class="opt"><b>Tray, rolling nodes</b><p>Flat floor inside the ring, 10° walls outside, a ball transfer in each of the 8 ring nodes (+~60 g a drone, E). Centres only with rolling friction, and then has no damping: the drone rolls across and drops a node into the swap hole.</p></div>
+  <div class="opt"><b>One shallow cone</b><p>Fits under today's cage (its underside rises only 7° from the ring) but a wide ring on a cone just tilts when off-centre: the centring force falls to about W·e/1000, so it stops 30 mm off even rolling.</p></div>
+  <div class="opt"><b>Not run</b><p>A collar round the whole cage (it would bear on shell facets that differ between the drones, and be ~900 wide); pushers that sweep the drone to centre (an old design, out unless Spark asks).</p></div>
+</section>
+
+<section>
+  <h2>What each drone carries</h2>
+  <ul>
+    <li><b>Both:</b> the same bottom ring, fixed to the receiver: today's Overseer cage v3 opening. The Scout's cage takes it as its own opening, so the Scout's bottom grows to about 372 x 229.</li>
+    <li><b>Both:</b> three feet at F1 (150, 58.4), F2 (150, −58.4), F3 (−176, 0), {{H}} mm below the ring node bottoms, each a printed leg (TPU where it meets the floor) with a bought ball-transfer tip; nothing else of the drone below the ring node bottoms.</li>
+    <li><b>Both:</b> a down camera looking through the opening (Spark: two cameras); it reads an AprilTag on the box for precision landing and commits only inside ±25 mm, ±5°, else climbs and retries.</li>
+    <li><b>Overseer:</b> CG inside the feet triangle pack in (+91) and pack out (+119); its cage needs no other change.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Next</h2>
+  <ul>
+    <li>Hold for the swap: a clamp over each foot, driven from the V-block (replaces the collar's hook latch).</li>
+    <li>Keep-alive: spring probes in the front blocks onto pads on F1 and F2; the seat is exact, so the probes are short.</li>
+    <li>System pass on the box top: V-blocks, tag plate and clamps on box structure v2, loads from the landing (6 g at the feet), the swap pull and the hand lift.</li>
+  </ul>
+</section>
+</div>
+
+<div class="tip" id="tip" hidden></div>
+<script>
+const D = /*DATA*/null;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* ---------- drops ---------- */
+const panels = [
+  ["overseer|kin|30,15,5", "Overseer, 3 feet + grooves", "kin"],
+  ["overseer|kin|-20,-25,-5", "Overseer, from the other side", "kin"],
+  ["scout|kin|-25,20,5", "Scout, same box", "kin"],
+  ["scout|kin|40,0,5", "Scout on PTFE tips (jams)", "kin"],
+  ["overseer|tray|60,0,0", "Overseer, tray with rolling nodes (rejected)", "tray"],
+  ["overseer|dish|40,30,0", "Overseer, one 10° cone (rejected)", "dish"]
+];
+const host = document.getElementById("drops");
+const cvs = [];
+for (const [k, title, kind] of panels) {
+  const ex = D.traj[k]; if (!ex) continue;
+  const el = document.createElement("div"); el.className = "drop";
+  const s = ex.start, e = ex.end;
+  el.innerHTML = `<h3>${title}</h3><canvas></canvas><div class="res">start (${s[0]}, ${s[1]}) mm, yaw ${s[2]}° → end (${e.x}, ${e.y}), yaw ${e.yaw}°</div>`;
+  host.appendChild(el); cvs.push({ c: el.querySelector("canvas"), ex, kind });
+}
+const F = D.feat;
+function quatMat(w, x, y, z) {
+  return [[1-2*(y*y+z*z), 2*(x*y-z*w), 2*(x*z+y*w)], [2*(x*y+z*w), 1-2*(x*x+z*z), 2*(y*z-x*w)], [2*(x*z-y*w), 2*(y*z+x*w), 1-2*(x*x+y*y)]];
+}
+function drawPanel(p, t) {
+  const c = p.c, r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  if (c.width !== Math.round(r.width * dpr)) { c.width = Math.round(r.width * dpr); c.height = Math.round(r.width * 0.75 * dpr); }
+  const g = c.getContext("2d"), W = c.width, H = c.height, s = W / 560;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = css("--sheet"); g.fillRect(0, 0, W, H);
+  g.setTransform(s, 0, 0, -s, W / 2 - 20 * s, H / 2);
+  g.lineWidth = 1 / s * dpr;
+  // box features
+  g.fillStyle = css("--hole"); g.strokeStyle = css("--ink-3");
+  g.fillRect(-F.hole[0] / 2, -F.hole[1] / 2, F.hole[0], F.hole[1]); g.strokeRect(-F.hole[0] / 2, -F.hole[1] / 2, F.hole[0], F.hole[1]);
+  g.strokeStyle = css("--box"); g.fillStyle = css("--box-fill"); g.lineWidth = 1.4 / s * dpr;
+  if (p.kind === "kin") {
+    for (const gr of F.grooves) {
+      const [fx, fy] = gr.f, a = gr.a, cc = gr.c, u0 = -F.LEN[1], u1 = F.LEN[0];
+      const pts = [[u0, -F.W], [u1, -F.W], [u1, F.W], [u0, F.W]].map(([u, v]) => [fx + a[0]*u + cc[0]*v, fy + a[1]*u + cc[1]*v]);
+      g.beginPath(); pts.forEach((q, i) => i ? g.lineTo(...q) : g.moveTo(...q)); g.closePath(); g.fill(); g.stroke();
+      g.setLineDash([6, 3]); g.beginPath(); g.moveTo(fx + a[0]*u0, fy + a[1]*u0); g.lineTo(fx + a[0]*u1, fy + a[1]*u1); g.stroke(); g.setLineDash([]);
+    }
+  } else {
+    g.beginPath(); g.ellipse(0, 0, F.ellipse[0], F.ellipse[1], 0, 0, Math.PI * 2); g.stroke();
+    g.setLineDash([4, 4]); g.beginPath(); g.ellipse(0, 0, F.ellipse[0] + 60, F.ellipse[1] + 60, 0, 0, Math.PI * 2); g.stroke(); g.setLineDash([]);
+  }
+  // seat ghost
+  g.strokeStyle = css("--ink-3"); g.lineWidth = 1 / s * dpr; g.setLineDash([3, 3]);
+  g.beginPath(); F.ring.forEach((q, i) => i ? g.lineTo(...q) : g.moveTo(...q)); g.closePath(); g.stroke(); g.setLineDash([]);
+  // pose
+  const tr = p.ex.traj; let i = 0; while (i < tr.length - 1 && tr[i + 1][0] <= t) i++;
+  const row = tr[i], M = quatMat(row[4], row[5], row[6], row[7]), P = [row[1] * 1000, row[2] * 1000, row[3] * 1000];
+  const X = q => [M[0][0]*q[0] + M[0][1]*q[1] + M[0][2]*(q[2]||0) + P[0], M[1][0]*q[0] + M[1][1]*q[1] + M[1][2]*(q[2]||0) + P[1]];
+  g.strokeStyle = css("--ink"); g.lineWidth = 5 / s * dpr * 0.6; g.lineJoin = "round";
+  g.beginPath(); F.ring.map(X).forEach((q, k) => k ? g.lineTo(...q) : g.moveTo(...q)); g.closePath(); g.stroke();
+  g.fillStyle = css("--ink-2"); for (const q of F.ring.map(X)) { g.beginPath(); g.arc(q[0], q[1], F.node_r, 0, 7); g.fill(); }
+  if (p.kind === "kin") { g.fillStyle = css("--accent"); for (const q of F.feet.map(X)) { g.beginPath(); g.arc(q[0], q[1], F.foot_r, 0, 7); g.fill(); } }
+}
+let t = 0, playing = !matchMedia("(prefers-reduced-motion: reduce)").matches, last = null;
+const T = 3.0, scrub = document.getElementById("scrub"), tt = document.getElementById("tt"), btn = document.getElementById("play");
+btn.textContent = playing ? "Pause" : "Play";
+function frame(ts) {
+  if (playing) { if (last !== null) t = (t + (ts - last) / 1000 * 0.6) % (T + 0.6); last = ts; } else last = null;
+  const tc = Math.min(t, T); scrub.value = Math.round(tc / T * 1000); tt.textContent = tc.toFixed(2) + " s";
+  for (const p of cvs) drawPanel(p, tc);
+  requestAnimationFrame(frame);
+}
+btn.onclick = () => { playing = !playing; btn.textContent = playing ? "Pause" : "Play"; };
+scrub.oninput = () => { playing = false; btn.textContent = "Play"; t = scrub.value / 1000 * T; };
+requestAnimationFrame(frame);
+for (const p of cvs) drawPanel(p, 0);
+
+/* ---------- chart ---------- */
+const cols = ["--s1", "--s2", "--s3", "--s4"];
+const names = D.chart.overseer.map(s => s.name);
+document.getElementById("legend").innerHTML = names.map((n, i) => `<span><i style="background:var(${cols[i]})"></i>${n}</span>`).join("");
+const tip = document.getElementById("tip");
+function chart(id, series, title) {
+  const svg = document.getElementById(id), L = 44, R = 404, Tp = 28, B = 206;
+  const x = v => L + (v / 60) * (R - L), y = v => B - v * (B - Tp);
+  let h = `<text x="${L}" y="16" style="font-weight:600;fill:var(--ink)">${title}</text>`;
+  for (const v of [0, .25, .5, .75, 1]) h += `<line class="gl" x1="${L}" x2="${R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${Math.round(v * 100)}%</text>`;
+  for (const v of [0, 10, 20, 30, 40, 50, 60]) h += `<text x="${x(v)}" y="${B + 16}" text-anchor="middle">${v}</text>`;
+  h += `<line class="ax" x1="${L}" x2="${R}" y1="${B}" y2="${B}"/><text x="${R}" y="${B + 32}" text-anchor="end">offset at touchdown, mm</text>`;
+  series.forEach((s, i) => {
+    h += `<polyline class="ln" style="stroke:var(${cols[i]})" points="${s.pts.map(p => x(p[0]) + "," + y(p[1])).join(" ")}"/>`;
+    for (const p of s.pts) h += `<circle class="dot" cx="${x(p[0])}" cy="${y(p[1])}" r="4" style="fill:var(${cols[i]})" data-t="${s.name}: ${p[0]} mm, ${Math.round(p[1] * 100)}% seated"/>`;
+  });
+  svg.innerHTML = h;
+  svg.querySelectorAll("circle").forEach(c => {
+    c.addEventListener("pointerenter", ev => { tip.textContent = c.dataset.t; tip.hidden = false; });
+    c.addEventListener("pointermove", ev => { tip.style.left = (ev.clientX + 12) + "px"; tip.style.top = (ev.clientY + 12) + "px"; });
+    c.addEventListener("pointerleave", () => { tip.hidden = true; });
+  });
+}
+if (!D.chart.overseer.length) document.getElementById("legend").textContent = "The full sweep (30 surfaces and frictions x 168 drops) is still running; this chart fills in when it finishes.";
+chart("ch-overseer", D.chart.overseer, "Overseer (3380 g, CG 91 ahead of the ring)");
+chart("ch-scout", D.chart.scout, "Scout (520 g E)");
+const tb = document.getElementById("tbl");
+tb.innerHTML = "<tr><th>drone</th><th>surface</th><th>angle °</th><th>μ</th><th>foot mm</th><th>capture mm</th><th>seated at 40</th><th>worst end mm</th><th>least gap mm</th></tr>" +
+  D.table.map(r => `<tr><td>${r.drone}</td><td>${r.concept === "kin" ? "3 feet + grooves" : r.concept}</td><td>${r.theta}</td><td>${r.mu}</td><td>${r.concept === "kin" ? r.H : "-"}</td><td>±${r.cap}</td><td>${Math.round(r.rate40 * 100)}%</td><td>${r.worst}</td><td>${r.clear === null ? "-" : r.clear}</td></tr>`).join("");
+</script>
