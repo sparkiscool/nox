@@ -553,3 +553,13 @@ layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside 
 layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
 layout done: 1995 s, peak 1.476592 GB
 layout done: 1995 s, peak 1.476592 GB
+build: organic surface at pitch 0.300 mm (x5), skins 8.13 cm3, field 9.73 cm3, in env - cuts 8.38 cm3 (layout 8.38, level offset -0.611 mm), fillet 2.5 mm, rims 1.0 mm, mesh 171,184 faces, 33 s
+build: organic surface at pitch 0.300 mm (x5), skins 8.13 cm3, field 9.73 cm3, in env - cuts 8.38 cm3 (layout 8.38, level offset -0.611 mm), fillet 2.5 mm, rims 1.0 mm, mesh 171,184 faces, 33 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 3, "eroded_volumes_mm3": [3124.3, 335.4, 326.4], "necks": [], "drawn_not_in_main": [[0, 0.822], ["0.0", 0.996, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 3, "eroded_volumes_mm3": [3124.3, 335.4, 326.4], "necks": [], "drawn_not_in_main": [[0, 0.822], ["0.0", 0.996, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 3357.8, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 3357.8, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.10 in 'tube to 11 pull' at [-98.1, 121.9, -85.2]
+strength: worst index 0.10 in 'tube to 11 pull' at [-98.1, 121.9, -85.2]
+RESULT {"name": "cage_node_4", "solid_ok": false, "mass_g": 10.61, "worst": 0.103, "function_ok": true, "bodies": 1}
+RESULT {"name": "cage_node_4", "solid_ok": false, "mass_g": 10.61, "worst": 0.103, "function_ok": true, "bodies": 1}
