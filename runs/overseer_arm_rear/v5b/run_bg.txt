@@ -1,1 +1,2 @@
 run_bg: start 2026-10-27T14:15Z: python3 nox/overseer/arm_topo_v5b.py rear --gen 40
+run_bg: exit 0, wall 1.02 h, peak 7.0 GB (M), 27 Oct 15:16: python3 nox/overseer/arm_topo_v5b.py rear --gen 40

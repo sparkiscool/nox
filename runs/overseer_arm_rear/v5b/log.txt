@@ -297,3 +297,11 @@ layout done: 3404 s, peak 7.331368 GB
 layout done: 3404 s, peak 7.331368 GB
 build: organic surface at pitch 0.300 mm (x5), skins 78.00 cm3, field 138.44 cm3, in env - cuts 127.09 cm3 (layout 127.09, level offset +0.405 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,011,932 faces, 133 s
 build: organic surface at pitch 0.300 mm (x5), skins 78.00 cm3, field 138.44 cm3, in env - cuts 127.09 cm3 (layout 127.09, level offset +0.405 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,011,932 faces, 133 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [99796.7], "necks": [], "drawn_not_in_main": [["0.4", 0.999, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.22, "core_mm3": 10.95, "at": [53.4, -21.0, 3.1], "span": [6.2, 1.1, 0.3]}, {"kind": "wall", "thick_mm": 1.12, "core_mm3": 5.89, "at": [48.5, 23.2, 4.1], "span": [4.3, 0.9, 0.3]}], "acute_edges": 6, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [99796.7], "necks": [], "drawn_not_in_main": [["0.4", 0.999, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.22, "core_mm3": 10.95, "at": [53.4, -21.0, 3.1], "span": [6.2, 1.1, 0.3]}, {"kind": "wall", "thick_mm": 1.12, "core_mm3": 5.89, "at": [48.5, 23.2, 4.1], "span": [4.3, 0.9, 0.3]}], "acute_edges": 6, "ok": false}
+function check: {'skin_mm3': 59690.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 59690.3, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': -0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 1.47 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [20.0, -20.2, 41.2]
+strength: worst index 1.47 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [20.0, -20.2, 41.2]
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 161.47, "worst": 1.469, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 161.47, "worst": 1.469, "function_ok": true, "bodies": 1}
