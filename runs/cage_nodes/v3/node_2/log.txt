@@ -34,3 +34,7 @@ fem: grid (24, 24, 24) = 13,824 elements, 13,245 active dofs; backend mg (direct
 fem: grid (24, 24, 24) = 13,824 elements, 13,245 active dofs; backend mg (direct estimate 0.1 GB, budget 11.8 GB)
 fem: multigrid 2 levels [(np.int64(24), np.int64(24), np.int64(24)), (np.int64(12), np.int64(12), np.int64(12))], coarsest 6,591 dofs (direct)
 fem: multigrid 2 levels [(np.int64(24), np.int64(24), np.int64(24)), (np.int64(12), np.int64(12), np.int64(12))], coarsest 6,591 dofs (direct)
+fem: WARNING multigrid CG hit 300 iterations (rel residual 2.10e+02)
+fem: WARNING multigrid CG hit 300 iterations (rel residual 2.10e+02)
+it   1 beta    1 J  10.0000 vol 0.0420 (dil 0.0509 g +1.225) grey 13.0% ch 0.019 worst tie b1 mz 3.07e+05 cg 300 380.7s
+it   1 beta    1 J  10.0000 vol 0.0420 (dil 0.0509 g +1.225) grey 13.0% ch 0.019 worst tie b1 mz 3.07e+05 cg 300 380.7s
