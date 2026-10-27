@@ -130,31 +130,41 @@ def tube_points(N, rods, r, ring_ids, every=3.0):
             tube_points.names.append(f"cage tube {a}-{b}")
     return P, rad, ring
 
+SCOUT_REF = os.environ.get("SCOUT_REF", "64d6210")             # Scout v3 layout v9 / cage v2 (PR 127 head, confirmed by the Scout session 27 Oct)
+SCOUT_CATCH_X, SCOUT_PLANE_Z = -8.5, -47.5                       # C (Scout session): catch (tab line) x, bottom plane z; cartridge flat bottom -44.5
+
+def git_bytes(ref, path):
+    import subprocess
+    return subprocess.check_output(["git", "-C", REPO, "show", f"{ref}:{path}"])
+
 def scout():
-    rec, N, Rr, tag, ids, kinds, links, dz = bc.layout("E")
-    Ns = N + [0, 0, dz]; ring_ids = set(ids["rings"][2])
-    P, rad, ring = tube_points(Ns, Rr, lambda a, b: kinds[(a, b)] / 2, ring_ids); names = list(tube_points.names)
-    for i, p in enumerate(Ns):
-        P.append(p); rad.append(4.0); ring.append(i in ring_ids); names.append(f"cage node {i}")
-    def add(Q, r, nm="part"):
-        P.extend(Q); rad.extend([r] * len(Q)); ring.extend([False] * len(Q)); names.extend([nm] * len(Q))
-    for nm, p0, p1 in links:
-        add([np.add(p0, t * np.subtract(p1, p0)) + [0, 0, dz] for t in np.linspace(0, 1, 25)], 1.5)
-    for b in [b for _, b in rec["boxes"]] + [bc.cart_box(rec["cart_top"]), bc.PLATE, bc.FC]:
-        add([[x, y, z + dz] for x in np.linspace(b[0], b[1], 11) for y in np.linspace(b[2], b[3], 7) for z in np.linspace(b[4], b[5], 7)], 0.0)
-    for nm, p0, p1, r in rec["struts"]:
-        add([np.add(p0, t * np.subtract(p1, p0)) + [0, 0, dz] for t in np.linspace(0, 1, 11)], r)
-    for sx, sy in ((1, 1), (-1, 1), (-1, -1), (1, -1)):
-        add([[sx * bc.MOTOR * t, sy * bc.MOTOR * t, 20.25 + dz] for t in np.linspace(0.5, 1, 9)], 6.0)
-        add([[sx * bc.MOTOR, sy * bc.MOTOR, z + dz] for z in (22, 29, 36)], 14.0)
-    return dict(P=np.array(P), rad=np.array(rad), ring=np.array(ring), names=names, dz=dz, cart_bottom_seat=round(rec["z_cart_bottom"] + dz, 1),
-                draw=dict(nodes=Ns.round(1).tolist(), rods=[[int(a), int(b), kinds[(a, b)]] for a, b in Rr], ring=sorted(ring_ids),
-                          links=[[list(np.add(p, [0, 0, dz])), list(np.add(q, [0, 0, dz]))] for _, p, q in links],
-                          boxes=[list(np.add(b, [0, 0, 0, 0, dz, dz])) for _, b in rec["boxes"]],
-                          cart=list(np.add(bc.cart_box(rec["cart_top"]), [0, 0, 0, 0, dz, dz])),
-                          plate=list(np.add(bc.PLATE, [0, 0, 0, 0, dz, dz])), fc=list(np.add(bc.FC, [0, 0, 0, 0, dz, dz])),
-                          motors=[[sx * bc.MOTOR, sy * bc.MOTOR] for sx, sy in ((1, 1), (-1, 1), (-1, -1), (1, -1))],
-                          prop_z=bc.PROP_Z + dz, prop_r=bc.PROP_R, arm_z=20.25 + dz))
+    """the Scout as its session has it (PR 127 head): cage graph + every part mesh, seat frame = catch centre, z 0 at the
+    bottom plane; its ring rods are r 1.5 (the ramps are set for the Overseer's r 3), so it seats (3 - 1.5) * sqrt 2 lower"""
+    man = json.loads(git_bytes(SCOUT_REF, "nox/scout/v3/scout.assembly.json"))
+    sh = json.loads(git_bytes(SCOUT_REF, "runs/scout_layout/v9/cage_shell.json"))
+    drop = (TUBE_R - sh["rod_r_mm"]) * S2
+    off = np.array([-SCOUT_CATCH_X, 0.0, -SCOUT_PLANE_Z - drop])
+    N = np.array(sh["nodes"], float) + off; ring_ids = set(sh["open"][0]["ring"])
+    P, rad, ring = tube_points(N, sh["rods"], lambda a, b: sh["rod_r_mm"], ring_ids); names = list(tube_points.names)
+    for i, p in enumerate(N):
+        P.append(p); rad.append(10.15 if i in ring_ids else sh["node_r_mm"]); ring.append(i in ring_ids); names.append(f"cage node {i}")
+    meshes, parts = [], {}
+    for p in man["parts"]:
+        if p["name"].startswith(("cage shell",)): continue
+        if "mesh" in p:
+            m = trimesh.load(trimesh.util.wrap_as_stream(git_bytes(SCOUT_REF, p["mesh"])), file_type="stl")
+        else:
+            r = load_part(p, REPO); m = r[0] if isinstance(r, tuple) else r
+        m = m.copy()
+        if "pose" in p: m.apply_transform(pose_matrix(p["pose"]))
+        m.apply_translation(off)
+        Q = np.vstack([m.vertices, trimesh.sample.sample_surface(m, 1500, seed=4)[0]]); Q = Q[Q[:, 2] < 70]
+        P.extend(Q); rad.extend([0.0] * len(Q)); ring.extend([False] * len(Q)); names.extend([p["name"]] * len(Q))
+        dm = m.simplify_quadric_decimation(face_count=300) if len(m.faces) > 300 else m
+        meshes.append(dict(name=p["name"], v=dm.vertices.round(1).tolist(), f=dm.faces.tolist())); parts[p["name"]] = m.bounds.tolist()
+    cb = -44.5 + off[2]
+    return dict(P=np.array(P), rad=np.array(rad), ring=np.array(ring), names=names, dz=off[2], cart_bottom_seat=round(cb, 2), seat_drop=round(drop, 2),
+                draw=dict(nodes=N.round(1).tolist(), rods=sh["rods"], ring=sorted(ring_ids), meshes=meshes, node_r=sh["node_r_mm"]))
 
 def overseer():
     man = json.load(open(bc.OVR)); sh = json.load(open(os.path.join(REPO, "runs", "overseer_layout", "v5", "cage_shell.json")))
