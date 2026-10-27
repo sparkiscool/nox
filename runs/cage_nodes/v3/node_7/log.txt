@@ -120,3 +120,106 @@ it  40 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000
 it  40 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
 it  41 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.8s
 it  41 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.8s
+it  42 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  42 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  43 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.3s
+it  43 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.3s
+it  44 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.4s
+it  44 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.4s
+it  45 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  45 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  46 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.9s
+it  46 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.9s
+it  47 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  47 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  48 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  48 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  49 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  49 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  50 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 4.0s
+it  50 beta    2 J  10.0089 vol 0.0355 (dil 0.0619 g +1.749) grey 14.8% ch 0.000 worst core tie front.1 side b 888 4.0s
+layout: beta 2 done: eroded design 16 bodies, main 93.8%; drawn bodies outside the main body: 15
+layout: beta 2 done: eroded design 16 bodies, main 93.8%; drawn bodies outside the main body: 15
+it  51 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  51 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  52 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  52 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  53 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  53 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  54 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  54 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  55 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  55 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  56 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  56 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  57 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  57 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  58 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  58 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  59 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  59 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  60 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  60 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  61 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 4.1s
+it  61 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 4.1s
+it  62 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  62 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  63 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.1s
+it  63 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.1s
+it  64 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  64 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  65 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  65 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  66 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.9s
+it  66 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.9s
+it  67 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  67 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  68 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  68 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.5s
+it  69 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  69 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  70 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  70 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  71 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  71 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  72 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  72 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  73 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  73 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.7s
+it  74 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  74 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.6s
+it  75 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.8s
+it  75 beta    4 J  10.0089 vol 0.0189 (dil 0.0748 g +0.930) grey  6.5% ch 0.000 worst core tie front.1 side b 888 3.8s
+layout: stopped (beta_stop) at it 75, beta 4, 273 s
+layout: stopped (beta_stop) at it 75, beta 4, 273 s
+layout: beta 4 done: eroded design 16 bodies, main 93.8%; drawn bodies outside the main body: 15
+layout: beta 4 done: eroded design 16 bodies, main 93.8%; drawn bodies outside the main body: 15
+coarse stage done: 75 iterations, 279 s, peak 0.359328 GB
+coarse stage done: 75 iterations, 279 s, peak 0.359328 GB
+node_7: grid (48, 48, 48) h 1.5 = 110,592 cells; design 27,426 (92.6 cm3), drawn 3,479, void 79,687
+  support hold 0: 3045 cells, 5654 nodes
+  support hold 1: 3045 cells, 5654 nodes
+  support hold 2: 2985 cells, 5457 nodes
+  support hold 3: 2984 cells, 5455 nodes
+  support hold 4: 2965 cells, 5477 nodes
+  support hold 5: 3022 cells, 5551 nodes
+  support hold 6: 3022 cells, 5551 nodes
+  support hold 7: 2969 cells, 5404 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (11.74 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (11.74 cm3); 0.00 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.013 of 27,426 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.013 of 27,426 design cells
+layout: WARNING nearly mirrored in x (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in x (2.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (0.0% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (1.5% of passive cells differ): no symmetry
+layout: 1 drawn bodies (3,479 cells), held solid in every realization; eroded filter: masked
+layout: 1 drawn bodies (3,479 cells), held solid in every realization; eroded filter: masked
+layout: 32 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: 32 load cases + 0 tie cases (0 bodies tied, 1 held by support 'hold 0') + 0 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (48, 48, 48) = 110,592 elements, 105,909 active dofs; backend direct (direct estimate 0.9 GB, budget 11.8 GB)
+fem: grid (48, 48, 48) = 110,592 elements, 105,909 active dofs; backend direct (direct estimate 0.9 GB, budget 11.8 GB)
