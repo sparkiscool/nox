@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (rule, Spark): socket bore = the coupon pick (DEFAULT 6.1 / 3.1; OD + 0.3 was loose in PETG) in CLAUDE.md and docs/generative.md; TPU only for feet, skids and strips. PR 122 review round 4 PASS, its notes fixed.
 - 27 Oct (rule, Spark): cage nodes PETG, not TPU ("would it be better using petg if so we will just use that"): F on E, PETG joints lift the L2 head 120 -> 206 Hz and the cage's lowest mode 26 -> 126 Hz; CLAUDE.md Hard rules, docs/generative.md Geodesic cage, review check 13, cage_node.py material. Plus PR 122 review round 3 fixes.
 - 27 Oct (Overseer): PR 122 review fixes: System Overseer v5 in dimensions.md (head and node requirements), shared ring row to the v5 loop, cage alternatives picture `cages_alt.png`, frame report with modes and cage mass, summary rewritten on current numbers, artifact labels (head printed, cage v5) republished.
 - 27 Oct (Overseer): the head's 4 struts are layout links now (mass, props 13.7, views clear): 3215 g, T/W 2.05, links 36 (30 tube 6/4); frame: every link ≤ 0.63, 4 shell tubes reported over in the crash (1-19 / 3-18 1.59 on the top hit, 11-18 / 12-19 1.29); system_check cage first 7.7, fit 0, CG 0.2.

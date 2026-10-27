@@ -2,7 +2,7 @@
 dimensions.md L. Checks every member (pinned-end buckling, stress) and writes the forces each node socket really carries, for the
 node and head-mount topology runs (in place of their E loads).
 
-Model: cage nodes as rigid joints (TPU nodes hold less: the buckling check uses pinned ends); the 6/4 carbon tubes and the 3.0
+Model: cage nodes as rigid joints (PETG nodes, Spark 27 Oct; a 15-deep epoxied socket is not fully fixed, so the buckling check keeps pinned ends for cage tubes, conservative); the 6/4 carbon tubes and the 3.0
 carbon links as beams; the core (plates, arms, belly) fixed: every link's core end is a support; the sensor head mount one rigid
 body (H) on its keels and braces, holding the cage's front centre node and the wing struts.
 Cases: crash 35 g through the cage member that touches first, 14 directions (the drone's mass, the core held); a nose hit on the
@@ -29,8 +29,8 @@ HANDLE = 50.0                                     # N at mid-span (E)
 SIG_T, SIG_C = 1000.0, 600.0                      # MPa allowables, pultruded carbon (E)
 TUBE6 = tube(6.0, 4.0); ROD3 = tube(3.0, 0.0)
 RIGID = dict(E=100e6, G=40e6, A=1e3, I=1e5, J=2e5, c=5.0)
-K_CORE = 0.7                                      # a link's core end epoxied 15 deep in a printed PETG socket ~ fixed, its cage end in a
-                                                  # TPU node ~ pinned: effective length 0.7 L (E); cage tubes TPU both ends, 1.0
+K_CORE = 0.7                                      # a link's core end epoxied 15 deep in a printed PETG socket ~ fixed, its cage end taken
+                                                  # as pinned: effective length 0.7 L (E); cage tubes pinned both ends, 1.0 (conservative on PETG nodes)
 N = np.array(CG["nodes"]); B = np.array(HS["l2"]["base"]); A = np.array(HS["l2"]["axis"])
 _k = [i for i in range(len(N)) if abs(N[i, 1]) < 0.5 and N[i, 0] > 300]
 HEAD_NODE = max(_k, key=lambda i: N[i, 0])
