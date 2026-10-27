@@ -1,2 +1,0 @@
-run_bg: start 2026-10-27T05:04Z: python3 nox/overseer/cage_node.py 13 runs/cage_nodes/v1/node_13 --h 1.0
-run_bg: exit 1, wall 0.00 h, peak 0.3 GB (M), 27 Oct 05:04: python3 nox/overseer/cage_node.py 13 runs/cage_nodes/v1/node_13 --h 1.0
