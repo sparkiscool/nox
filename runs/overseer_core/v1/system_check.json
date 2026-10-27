@@ -4,15 +4,15 @@
  "cage_first": {
   "applies": true,
   "pass_": true,
-  "worst_part": "receiver",
+  "worst_part": "front camera",
   "worst_dir": [
-   -0.147,
-   -0.037,
-   -0.988
+   0.499,
+   -0.024,
+   0.867
   ],
-  "worst_dir_label": "-Z",
-  "margin_mm": 3.3,
-  "required_mm": 0.0,
+  "worst_dir_label": "(+0.50, -0.02, +0.87)",
+  "margin_mm": 7.48,
+  "required_mm": 3.0,
   "n_dirs": 2006,
   "cage_margin_mm": 3.0,
   "per_part": {
@@ -38,6 +38,18 @@
     "worst_slack_mm": 4.48,
     "min_margin_outside_openings_mm": 7.48,
     "dirs_in_openings": 428,
+    "pass_": true
+   },
+   "down camera": {
+    "min_margin_mm": 24.9,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 24.9,
+    "min_margin_outside_openings_mm": 82.76,
+    "dirs_in_openings": 235,
     "pass_": true
    },
    "motor 1": {
@@ -136,146 +148,134 @@
     "dirs_in_openings": 0,
     "pass_": true
    },
-   "FC MicoAir743-Lite": {
-    "min_margin_mm": 89.9,
+   "FC stack (MicoAir743-Lite on 55A 4-in-1)": {
+    "min_margin_mm": 86.9,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 86.9,
-    "min_margin_outside_openings_mm": 89.9,
+    "worst_slack_mm": 83.9,
+    "min_margin_outside_openings_mm": 86.9,
+    "dirs_in_openings": 0,
+    "pass_": true
+   },
+   "ESC cap": {
+    "min_margin_mm": 86.9,
+    "worst_dir": [
+     -0.0,
+     -0.0,
+     -1.0
+    ],
+    "worst_slack_mm": 83.9,
+    "min_margin_outside_openings_mm": 86.9,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "Pi 5 + active cooler": {
-    "min_margin_mm": 111.4,
+    "min_margin_mm": 107.3,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 108.4,
-    "min_margin_outside_openings_mm": 111.4,
-    "dirs_in_openings": 0,
-    "pass_": true
-   },
-   "PDB FCHUB-12S": {
-    "min_margin_mm": 89.13,
-    "worst_dir": [
-     -0.108,
-     0.036,
-     -0.994
-    ],
-    "worst_slack_mm": 86.13,
-    "min_margin_outside_openings_mm": 89.13,
+    "worst_slack_mm": 104.3,
+    "min_margin_outside_openings_mm": 107.3,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "UBEC 5 V": {
-    "min_margin_mm": 97.56,
+    "min_margin_mm": 92.9,
     "worst_dir": [
-     -0.108,
-     0.036,
-     -0.994
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 94.56,
-    "min_margin_outside_openings_mm": 97.56,
+    "worst_slack_mm": 89.9,
+    "min_margin_outside_openings_mm": 92.9,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "buck 12 V": {
-    "min_margin_mm": 100.17,
+    "min_margin_mm": 105.9,
     "worst_dir": [
-     -0.147,
-     -0.037,
-     -0.988
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 97.17,
-    "min_margin_outside_openings_mm": 100.17,
+    "worst_slack_mm": 102.9,
+    "min_margin_outside_openings_mm": 105.9,
     "dirs_in_openings": 0,
     "pass_": true
    },
    "RX XR2": {
-    "min_margin_mm": 97.9,
+    "min_margin_mm": 105.9,
     "worst_dir": [
-     -0.147,
-     -0.037,
-     -0.988
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 94.9,
-    "min_margin_outside_openings_mm": 97.9,
+    "worst_slack_mm": 102.9,
+    "min_margin_outside_openings_mm": 105.9,
     "dirs_in_openings": 0,
     "pass_": true
    },
-   "down camera": {
-    "min_margin_mm": 9.0,
-    "worst_dir": [
-     -0.0,
-     -0.0,
-     -1.0
-    ],
-    "worst_slack_mm": 9.0,
-    "min_margin_outside_openings_mm": 74.95,
-    "dirs_in_openings": 235,
-    "pass_": true
-   },
    "flow MTF-02P": {
-    "min_margin_mm": 9.0,
+    "min_margin_mm": 6.0,
     "worst_dir": [
      -0.0,
      -0.0,
      -1.0
     ],
-    "worst_slack_mm": 9.0,
+    "worst_slack_mm": 6.0,
     "min_margin_outside_openings_mm": 76.97,
     "dirs_in_openings": 235,
     "pass_": true
    },
    "pack": {
-    "min_margin_mm": 18.44,
+    "min_margin_mm": 18.0,
     "worst_dir": [
-     -0.108,
-     0.036,
-     -0.994
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 18.44,
+    "worst_slack_mm": 18.0,
     "min_margin_outside_openings_mm": 69.79,
     "dirs_in_openings": 235,
     "pass_": true
    },
    "cartridge": {
-    "min_margin_mm": 4.21,
+    "min_margin_mm": 6.0,
     "worst_dir": [
-     -0.108,
-     0.036,
-     -0.994
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 4.21,
+    "worst_slack_mm": 6.0,
     "min_margin_outside_openings_mm": 49.05,
     "dirs_in_openings": 235,
     "pass_": true
    },
    "receiver": {
-    "min_margin_mm": 3.3,
+    "min_margin_mm": 6.2,
     "worst_dir": [
-     -0.147,
-     -0.037,
-     -0.988
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 3.3,
+    "worst_slack_mm": 6.2,
     "min_margin_outside_openings_mm": 43.39,
     "dirs_in_openings": 235,
     "pass_": true
    },
    "XT60 pair": {
-    "min_margin_mm": 37.99,
+    "min_margin_mm": 38.6,
     "worst_dir": [
-     -0.108,
-     0.036,
-     -0.994
+     -0.0,
+     -0.0,
+     -1.0
     ],
-    "worst_slack_mm": 37.99,
+    "worst_slack_mm": 38.6,
     "min_margin_outside_openings_mm": 85.05,
     "dirs_in_openings": 235,
     "pass_": true
@@ -305,7 +305,7 @@
   "bbox_min": [
    -294.48,
    -346.84,
-   -85.9
+   -82.9
   ],
   "bbox_max": [
    448.34,
@@ -315,11 +315,11 @@
   "extents_mm": [
    742.8,
    693.7,
-   248.5
+   245.5
   ],
   "largest_extent_mm": 742.8,
-  "bbox_L": 128.034,
-  "hull_L": 67.44,
+  "bbox_L": 126.488,
+  "hull_L": 67.663,
   "guard_offsets_mm": {
    "shell tubes to prop disks, 3D (G)": 13.3
   }
@@ -328,9 +328,9 @@
   "pass_": false,
   "tol_mm3": 0.5,
   "worst": {
-   "a": "cage shell tubes",
-   "b": "skid L (down camera pod)",
-   "overlap_mm3": 1005.96,
+   "a": "down camera",
+   "b": "receiver",
+   "overlap_mm3": 170.24,
    "limit_mm3": 0.5,
    "contact": false,
    "method": "manifold3d",
@@ -354,24 +354,6 @@
     "contact": true,
     "method": "manifold3d",
     "pass_": true
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "skid L (down camera pod)",
-    "overlap_mm3": 1005.96,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
-   },
-   {
-    "a": "cage shell tubes",
-    "b": "skid R (flow pod)",
-    "overlap_mm3": 1005.96,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
    },
    {
     "a": "cage shell nodes",
@@ -457,7 +439,7 @@
    {
     "a": "spokes, ties, keels, L2 guard ring",
     "b": "wires",
-    "overlap_mm3": 59.32,
+    "overlap_mm3": 111.52,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
@@ -465,8 +447,8 @@
    },
    {
     "a": "spokes, ties, keels, L2 guard ring",
-    "b": "power tray",
-    "overlap_mm3": 13.11,
+    "b": "rear tray",
+    "overlap_mm3": 64.52,
     "limit_mm3": 0.5,
     "contact": false,
     "method": "manifold3d",
@@ -480,24 +462,6 @@
     "contact": false,
     "method": "manifold3d",
     "pass_": true
-   },
-   {
-    "a": "spokes, ties, keels, L2 guard ring",
-    "b": "skid L (down camera pod)",
-    "overlap_mm3": 7.92,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
-   },
-   {
-    "a": "spokes, ties, keels, L2 guard ring",
-    "b": "skid R (flow pod)",
-    "overlap_mm3": 7.92,
-    "limit_mm3": 0.5,
-    "contact": false,
-    "method": "manifold3d",
-    "pass_": false
    },
    {
     "a": "L2 guard ring nodes",
@@ -547,7 +511,7 @@
    {
     "a": "apex + cam bracket",
     "b": "wires",
-    "overlap_mm3": 300.88,
+    "overlap_mm3": 74.78,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -600,7 +564,7 @@
    },
    {
     "a": "top plate",
-    "b": "hub frame",
+    "b": "Pi hanger",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -654,7 +618,7 @@
    },
    {
     "a": "bottom plate",
-    "b": "hub frame",
+    "b": "stack mount",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -663,7 +627,7 @@
    },
    {
     "a": "bottom plate",
-    "b": "power tray",
+    "b": "rear tray",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -680,6 +644,15 @@
     "pass_": true
    },
    {
+    "a": "down camera",
+    "b": "receiver",
+    "overlap_mm3": 170.24,
+    "limit_mm3": 0.5,
+    "contact": false,
+    "method": "manifold3d",
+    "pass_": false
+   },
+   {
     "a": "arm 1",
     "b": "motor 1",
     "overlap_mm3": 0.0,
@@ -691,7 +664,7 @@
    {
     "a": "arm 1",
     "b": "wires",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 95.81,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -752,71 +725,8 @@
     "pass_": true
    },
    {
-    "a": "FC MicoAir743-Lite",
-    "b": "wires",
-    "overlap_mm3": 0.41,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "FC MicoAir743-Lite",
-    "b": "hub frame",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "Pi 5 + active cooler",
-    "b": "wires",
-    "overlap_mm3": 142.43,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "Pi 5 + active cooler",
-    "b": "hub frame",
-    "overlap_mm3": 1862.34,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "PDB FCHUB-12S",
-    "b": "wires",
-    "overlap_mm3": 875.89,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "PDB FCHUB-12S",
-    "b": "power tray",
-    "overlap_mm3": 1192.64,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "UBEC 5 V",
-    "b": "wires",
-    "overlap_mm3": 62.49,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "UBEC 5 V",
-    "b": "power tray",
+    "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "b": "ESC cap",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -824,9 +734,63 @@
     "pass_": true
    },
    {
-    "a": "buck 12 V",
+    "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "b": "wires",
-    "overlap_mm3": 236.22,
+    "overlap_mm3": 53.09,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "b": "stack mount",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "ESC cap",
+    "b": "wires",
+    "overlap_mm3": 83.79,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "Pi 5 + active cooler",
+    "b": "wires",
+    "overlap_mm3": 831.34,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "Pi 5 + active cooler",
+    "b": "Pi hanger",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "UBEC 5 V",
+    "b": "wires",
+    "overlap_mm3": 133.23,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "UBEC 5 V",
+    "b": "rear tray",
+    "overlap_mm3": 378.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -834,7 +798,16 @@
    },
    {
     "a": "buck 12 V",
-    "b": "power tray",
+    "b": "wires",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "buck 12 V",
+    "b": "rear tray",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -844,7 +817,7 @@
    {
     "a": "RX XR2",
     "b": "wires",
-    "overlap_mm3": 6.32,
+    "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -852,29 +825,11 @@
    },
    {
     "a": "RX XR2",
-    "b": "power tray",
+    "b": "rear tray",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "down camera",
-    "b": "wires",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
-    "pass_": true
-   },
-   {
-    "a": "down camera",
-    "b": "skid L (down camera pod)",
-    "overlap_mm3": 4257.67,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -888,8 +843,26 @@
    },
    {
     "a": "flow MTF-02P",
-    "b": "skid R (flow pod)",
+    "b": "flow pod",
     "overlap_mm3": 2246.4,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "wires",
+    "b": "pack",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "manifold3d",
+    "pass_": true
+   },
+   {
+    "a": "wires",
+    "b": "cartridge",
+    "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -915,8 +888,8 @@
    },
    {
     "a": "wires",
-    "b": "hub frame",
-    "overlap_mm3": 5.41,
+    "b": "stack mount",
+    "overlap_mm3": 16.55,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -924,8 +897,17 @@
    },
    {
     "a": "wires",
-    "b": "power tray",
-    "overlap_mm3": 17.16,
+    "b": "Pi hanger",
+    "overlap_mm3": 0.0,
+    "limit_mm3": Infinity,
+    "contact": true,
+    "method": "aabb",
+    "pass_": true
+   },
+   {
+    "a": "wires",
+    "b": "rear tray",
+    "overlap_mm3": 467.93,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -942,8 +924,8 @@
    },
    {
     "a": "wires",
-    "b": "skid L (down camera pod)",
-    "overlap_mm3": 552.43,
+    "b": "flow pod",
+    "overlap_mm3": 337.26,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -951,11 +933,11 @@
    },
    {
     "a": "wires",
-    "b": "skid R (flow pod)",
-    "overlap_mm3": 342.1,
+    "b": "TPU feet (cage session, placeholders)",
+    "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "manifold3d",
+    "method": "aabb",
     "pass_": true
    },
    {
@@ -1032,34 +1014,7 @@
    },
    {
     "a": "sled",
-    "b": "skid L (down camera pod)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "sled",
-    "b": "skid R (flow pod)",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "skid L (down camera pod)",
-    "b": "TPU feet",
-    "overlap_mm3": 0.0,
-    "limit_mm3": Infinity,
-    "contact": true,
-    "method": "aabb",
-    "pass_": true
-   },
-   {
-    "a": "skid R (flow pod)",
-    "b": "TPU feet",
+    "b": "flow pod",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -1070,11 +1025,11 @@
   "clearance": []
  },
  "mass_cg": {
-  "mass_g": 3531.18,
+  "mass_g": 3436.68,
   "cg": [
-   58.94,
-   0.36,
-   13.49
+   60.24,
+   -0.13,
+   14.56
   ],
   "parts": [
    {
@@ -1172,6 +1127,17 @@
      2.5,
      0.0,
      -1.05
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "down camera",
+    "mass_g": 15.0,
+    "cg": [
+     -30.0,
+     49.0,
+     -53.0
     ],
     "tag": "E",
     "swap": false
@@ -1309,45 +1275,45 @@
     "swap": false
    },
    {
-    "name": "FC MicoAir743-Lite",
-    "mass_g": 10.0,
+    "name": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "mass_g": 24.0,
     "cg": [
      0.0,
      0.0,
-     8.0
+     12.15
     ],
-    "tag": "P",
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "ESC cap",
+    "mass_g": 5.0,
+    "cg": [
+     -32.0,
+     -9.0,
+     9.0
+    ],
+    "tag": "E",
     "swap": false
    },
    {
     "name": "Pi 5 + active cooler",
     "mass_g": 55.0,
     "cg": [
-     5.65,
+     -19.0,
      0.0,
-     32.25
+     33.2
     ],
     "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "PDB FCHUB-12S",
-    "mass_g": 21.0,
-    "cg": [
-     -74.0,
-     0.0,
-     10.0
-    ],
-    "tag": "P",
     "swap": false
    },
    {
     "name": "UBEC 5 V",
     "mass_g": 15.0,
     "cg": [
-     -75.0,
-     12.0,
-     19.5
+     -80.0,
+     0.0,
+     14.5
     ],
     "tag": "E",
     "swap": false
@@ -1356,9 +1322,9 @@
     "name": "buck 12 V",
     "mass_g": 6.0,
     "cg": [
-     -73.0,
-     -13.0,
-     18.0
+     -94.0,
+     0.0,
+     27.0
     ],
     "tag": "E",
     "swap": false
@@ -1367,42 +1333,31 @@
     "name": "RX XR2",
     "mass_g": 2.0,
     "cg": [
-     -92.0,
-     -14.0,
-     18.0
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "down camera",
-    "mass_g": 15.0,
-    "cg": [
-     -10.0,
-     55.0,
-     -68.67
+     -77.5,
+     0.0,
+     31.0
     ],
     "tag": "E",
     "swap": false
    },
    {
     "name": "flow MTF-02P",
-    "mass_g": 2.0,
+    "mass_g": 1.5,
     "cg": [
      -10.0,
      -55.0,
      -73.65
     ],
-    "tag": "P",
+    "tag": "E",
     "swap": false
    },
    {
     "name": "wires",
     "mass_g": 80.0,
     "cg": [
-     -14.54,
-     5.82,
-     8.09
+     -7.9,
+     -7.75,
+     -16.25
     ],
     "tag": "E",
     "swap": false
@@ -1452,23 +1407,34 @@
     "swap": false
    },
    {
-    "name": "hub frame",
-    "mass_g": 30.0,
+    "name": "stack mount",
+    "mass_g": 8.0,
     "cg": [
-     -3.78,
-     0.02,
-     20.39
+     0.0,
+     0.0,
+     1.5
     ],
     "tag": "E",
     "swap": false
    },
    {
-    "name": "power tray",
-    "mass_g": 18.0,
+    "name": "Pi hanger",
+    "mass_g": 10.0,
     "cg": [
-     -74.93,
+     -5.49,
      0.0,
-     6.28
+     43.5
+    ],
+    "tag": "E",
+    "swap": false
+   },
+   {
+    "name": "rear tray",
+    "mass_g": 20.0,
+    "cg": [
+     -83.85,
+     0.0,
+     7.69
     ],
     "tag": "E",
     "swap": false
@@ -1477,42 +1443,31 @@
     "name": "sled",
     "mass_g": 70.0,
     "cg": [
-     -35.0,
+     -25.26,
      0.0,
-     -8.17
+     -6.85
     ],
     "tag": "E",
     "swap": false
    },
    {
-    "name": "skid L (down camera pod)",
-    "mass_g": 45.0,
+    "name": "flow pod",
+    "mass_g": 8.0,
     "cg": [
-     16.57,
-     65.96,
-     -48.72
+     -10.0,
+     -54.91,
+     -49.06
     ],
     "tag": "E",
     "swap": false
    },
    {
-    "name": "skid R (flow pod)",
-    "mass_g": 45.0,
-    "cg": [
-     16.57,
-     -65.96,
-     -48.72
-    ],
-    "tag": "E",
-    "swap": false
-   },
-   {
-    "name": "TPU feet",
+    "name": "TPU feet (cage session, placeholders)",
     "mass_g": 6.4,
     "cg": [
-     32.0,
-     0.0,
-     -81.9
+     21.55,
+     -0.0,
+     -78.9
     ],
     "tag": "E",
     "swap": false
@@ -1525,11 +1480,11 @@
    82.0
   ],
   "cg_offset": [
-   -1.84,
-   0.36,
-   -68.51
+   -0.54,
+   -0.13,
+   -67.44
   ],
-  "cg_offset_mm": 68.54
+  "cg_offset_mm": 67.44
  },
  "balance": {
   "applies": true,
@@ -1546,32 +1501,32 @@
   "tol_mm": 3.0,
   "cases": {
    "all": {
-    "mass_g": 3531.18,
+    "mass_g": 3436.68,
     "cg_offset": [
-     -1.84,
-     0.36,
-     -68.51
+     -0.55,
+     -0.13,
+     -67.44
     ],
-    "horizontal_mm": 1.87,
-    "axial_mm": -68.51,
+    "horizontal_mm": 0.56,
+    "axial_mm": -67.44,
     "pass_": true,
     "gated": true
    },
    "no_swap": {
-    "mass_g": 2775.58,
+    "mass_g": 2681.08,
     "cg_offset": [
-     20.49,
-     0.45,
-     -52.81
+     22.94,
+     -0.17,
+     -50.89
     ],
-    "horizontal_mm": 20.5,
-    "axial_mm": -52.81,
+    "horizontal_mm": 22.94,
+    "axial_mm": -50.89,
     "pass_": true,
     "gated": false
    }
   },
   "worst_case": "no_swap",
-  "worst_horizontal_mm": 20.5,
+  "worst_horizontal_mm": 22.94,
   "pass_": true
  },
  "probes": {
@@ -1582,25 +1537,25 @@
    "probe": "edge",
    "r_mm": 0.0,
    "part": "receiver",
-   "margin_mm": -177.0,
+   "margin_mm": -178.0,
    "unshielded": true,
    "dir": [
-    -0.999,
-    -0.038,
-    -0.0
+    -0.996,
+    0.086,
+    0.0
    ],
    "dir_label": "-X",
    "axis": [
-    -0.038,
-    0.992,
-    0.119
+    -0.086,
+    -0.996,
+    0.017
    ],
-   "roll_deg": 270.0,
-   "lateral_mm": -118.7,
+   "roll_deg": 90.0,
+   "lateral_mm": 111.0,
    "contact": [
     -121.8,
-    18.1,
-    -76.7
+    32.7,
+    -72.7
    ],
    "pass_": false
   },
@@ -1609,25 +1564,51 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "receiver",
-    "margin_mm": -177.0,
+    "margin_mm": -178.0,
     "unshielded": true,
     "dir": [
-     -0.999,
-     -0.038,
-     -0.0
+     -0.996,
+     0.086,
+     0.0
     ],
     "dir_label": "-X",
     "axis": [
-     -0.038,
-     0.992,
-     0.119
+     -0.086,
+     -0.996,
+     0.017
     ],
-    "roll_deg": 270.0,
-    "lateral_mm": -118.7,
+    "roll_deg": 90.0,
+    "lateral_mm": 111.0,
     "contact": [
      -121.8,
-     18.1,
-     -76.7
+     32.7,
+     -72.7
+    ],
+    "pass_": false
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "cartridge",
+    "margin_mm": -231.0,
+    "unshielded": true,
+    "dir": [
+     -0.74,
+     -0.673,
+     -0.0
+    ],
+    "dir_label": "(-0.74, -0.67, -0.00)",
+    "axis": [
+     -0.67,
+     0.737,
+     0.087
+    ],
+    "roll_deg": 270.0,
+    "lateral_mm": -127.5,
+    "contact": [
+     -115.4,
+     -23.5,
+     -76.9
     ],
     "pass_": false
    },
@@ -1635,129 +1616,25 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "flow MTF-02P",
-    "margin_mm": -265.0,
+    "margin_mm": -284.0,
     "unshielded": true,
     "dir": [
-     -0.173,
-     -0.985,
-     0.0
+     0.001,
+     -1.0,
+     -0.0
     ],
     "dir_label": "-Y",
     "axis": [
-     0.985,
-     -0.173,
-     0.021
+     -1.0,
+     -0.001,
+     0.013
     ],
-    "roll_deg": 90.0,
-    "lateral_mm": 107.8,
+    "roll_deg": 270.0,
+    "lateral_mm": -112.5,
     "contact": [
-     -20.8,
+     0.8,
      -63.0,
-     -72.3
-    ],
-    "pass_": false
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "down camera",
-    "margin_mm": -268.0,
-    "unshielded": true,
-    "dir": [
-     -0.176,
-     0.984,
-     -0.0
-    ],
-    "dir_label": "(-0.18, +0.98, -0.00)",
-    "axis": [
-     0.984,
-     0.176,
-     0.005
-    ],
-    "roll_deg": 270.0,
-    "lateral_mm": -114.2,
-    "contact": [
-     -11.8,
-     61.8,
-     -76.9
-    ],
-    "pass_": false
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "cartridge",
-    "margin_mm": -110.0,
-    "unshielded": false,
-    "dir": [
-     -0.677,
-     0.736,
-     -0.0
-    ],
-    "dir_label": "(-0.68, +0.74, -0.00)",
-    "axis": [
-     0.736,
-     0.676,
-     0.015
-    ],
-    "roll_deg": 270.0,
-    "lateral_mm": -114.2,
-    "contact": [
-     -115.4,
-     26.5,
-     -76.9
-    ],
-    "pass_": false
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "receiver",
-    "margin_mm": -80.07,
-    "unshielded": false,
-    "dir": [
-     -0.606,
-     0.796,
-     0.0
-    ],
-    "dir_label": "(-0.61, +0.80, +0.00)",
-    "axis": [
-     -0.792,
-     -0.603,
-     0.091
-    ],
-    "roll_deg": 90.0,
-    "lateral_mm": 140.8,
-    "contact": [
-     -121.8,
-     -12.2,
-     -76.7
-    ],
-    "pass_": false
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "cartridge",
-    "margin_mm": -66.22,
-    "unshielded": false,
-    "dir": [
-     0.962,
-     0.088,
-     -0.259
-    ],
-    "dir_label": "(+0.96, +0.09, -0.26)",
-    "axis": [
-     -0.089,
-     0.996,
-     0.009
-    ],
-    "roll_deg": 105.0,
-    "lateral_mm": 128.8,
-    "contact": [
-     51.5,
-     26.5,
-     -76.9
+     -73.2
     ],
     "pass_": false
    },
@@ -1765,21 +1642,21 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "flow MTF-02P",
-    "margin_mm": -46.28,
+    "margin_mm": -81.47,
     "unshielded": false,
     "dir": [
-     -0.649,
-     -0.715,
-     -0.259
+     0.982,
+     -0.187,
+     -0.0
     ],
-    "dir_label": "(-0.65, -0.72, -0.26)",
+    "dir_label": "(+0.98, -0.19, -0.00)",
     "axis": [
-     0.738,
-     -0.674,
-     0.011
+     -0.182,
+     -0.954,
+     0.237
     ],
-    "roll_deg": 105.0,
-    "lateral_mm": 97.3,
+    "roll_deg": 270.0,
+    "lateral_mm": -141.0,
     "contact": [
      0.8,
      -63.0,
@@ -1790,78 +1667,104 @@
    {
     "probe": "post r10",
     "r_mm": 10.0,
-    "part": "down camera",
-    "margin_mm": -44.64,
+    "part": "cartridge",
+    "margin_mm": -66.22,
     "unshielded": false,
     "dir": [
-     -0.651,
-     0.714,
+     0.933,
+     0.252,
      -0.259
     ],
-    "dir_label": "(-0.65, +0.71, -0.26)",
+    "dir_label": "(+0.93, +0.25, -0.26)",
     "axis": [
-     0.736,
-     0.676,
-     0.015
+     0.261,
+     -0.965,
+     0.001
     ],
     "roll_deg": 255.0,
-    "lateral_mm": -97.7,
+    "lateral_mm": -139.5,
     "contact": [
-     -5.8,
-     53.9,
+     22.0,
+     -22.5,
      -76.9
+    ],
+    "pass_": false
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "receiver",
+    "margin_mm": -66.22,
+    "unshielded": false,
+    "dir": [
+     0.933,
+     0.252,
+     -0.259
+    ],
+    "dir_label": "(+0.93, +0.25, -0.26)",
+    "axis": [
+     0.261,
+     -0.965,
+     0.001
+    ],
+    "roll_deg": 255.0,
+    "lateral_mm": -139.5,
+    "contact": [
+     6.5,
+     30.9,
+     -76.7
     ],
     "pass_": false
    },
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "prop 4",
-    "margin_mm": 17.71,
+    "part": "down camera",
+    "margin_mm": 2.83,
     "unshielded": false,
     "dir": [
-     0.313,
-     -0.531,
-     0.788
+     -0.121,
+     0.697,
+     -0.707
     ],
-    "dir_label": "(+0.31, -0.53, +0.79)",
+    "dir_label": "(-0.12, +0.70, -0.71)",
     "axis": [
-     -0.671,
-     0.463,
-     0.579
+     0.984,
+     0.176,
+     0.005
     ],
-    "roll_deg": 345.0,
-    "lateral_mm": -49.7,
+    "roll_deg": 225.0,
+    "lateral_mm": -21.0,
     "contact": [
-     256.5,
-     -253.4,
-     87.0
+     -25.2,
+     52.7,
+     -58.0
     ],
     "pass_": true
    },
    {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "prop 3",
-    "margin_mm": 17.99,
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "down camera",
+    "margin_mm": 6.17,
     "unshielded": false,
     "dir": [
-     -0.599,
-     -0.512,
-     -0.616
+     -0.01,
+     0.707,
+     -0.707
     ],
-    "dir_label": "(-0.60, -0.51, -0.62)",
+    "dir_label": "(-0.01, +0.71, -0.71)",
     "axis": [
-     -0.125,
-     -0.7,
-     0.703
+     -1.0,
+     -0.001,
+     0.013
     ],
-    "roll_deg": 150.0,
-    "lateral_mm": -115.7,
+    "roll_deg": 135.0,
+    "lateral_mm": 36.0,
     "contact": [
-     -183.2,
-     -211.6,
-     77.0
+     -30.0,
+     55.0,
+     -58.0
     ],
     "pass_": true
    },
@@ -1883,7 +1786,7 @@
      0.799
     ],
     "roll_deg": 180.0,
-    "lateral_mm": 8.8,
+    "lateral_mm": 9.0,
     "contact": [
      -183.2,
      211.6,
@@ -1909,7 +1812,7 @@
      0.799
     ],
     "roll_deg": 180.0,
-    "lateral_mm": 11.8,
+    "lateral_mm": 12.0,
     "contact": [
      -184.8,
      209.3,
@@ -1924,58 +1827,6 @@
     "margin_mm": 18.36,
     "unshielded": false,
     "dir": [
-     0.199,
-     0.65,
-     0.734
-    ],
-    "dir_label": "(+0.20, +0.65, +0.73)",
-    "axis": [
-     -0.764,
-     -0.366,
-     0.531
-    ],
-    "roll_deg": 30.0,
-    "lateral_mm": 31.3,
-    "contact": [
-     262.2,
-     250.4,
-     87.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "prop 4",
-    "margin_mm": 18.54,
-    "unshielded": false,
-    "dir": [
-     0.313,
-     -0.531,
-     0.788
-    ],
-    "dir_label": "(+0.31, -0.53, +0.79)",
-    "axis": [
-     -0.671,
-     0.463,
-     0.579
-    ],
-    "roll_deg": 345.0,
-    "lateral_mm": -48.2,
-    "contact": [
-     257.3,
-     -253.0,
-     87.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "prop 1",
-    "margin_mm": 18.6,
-    "unshielded": false,
-    "dir": [
      0.256,
      0.542,
      0.8
@@ -1987,10 +1838,88 @@
      0.383
     ],
     "roll_deg": 330.0,
-    "lateral_mm": -199.7,
+    "lateral_mm": -210.0,
     "contact": [
-     255.6,
-     253.8,
+     267.7,
+     247.0,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 3",
+    "margin_mm": 18.36,
+    "unshielded": false,
+    "dir": [
+     -0.673,
+     -0.462,
+     -0.578
+    ],
+    "dir_label": "(-0.67, -0.46, -0.58)",
+    "axis": [
+     -0.203,
+     -0.635,
+     0.745
+    ],
+    "roll_deg": 150.0,
+    "lateral_mm": -70.5,
+    "contact": [
+     -185.3,
+     -208.5,
+     77.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "prop 4",
+    "margin_mm": 18.36,
+    "unshielded": false,
+    "dir": [
+     0.188,
+     -0.656,
+     0.731
+    ],
+    "dir_label": "(+0.19, -0.66, +0.73)",
+    "axis": [
+     -0.752,
+     0.382,
+     0.537
+    ],
+    "roll_deg": 330.0,
+    "lateral_mm": -27.0,
+    "contact": [
+     259.7,
+     -251.7,
+     87.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 4",
+    "margin_mm": 18.36,
+    "unshielded": false,
+    "dir": [
+     0.283,
+     -0.569,
+     0.772
+    ],
+    "dir_label": "(+0.28, -0.57, +0.77)",
+    "axis": [
+     -0.873,
+     0.18,
+     0.453
+    ],
+    "roll_deg": 330.0,
+    "lateral_mm": -114.0,
+    "contact": [
+     253.1,
+     -254.9,
      87.0
     ],
     "pass_": true
@@ -1999,25 +1928,51 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "prop 3",
-    "margin_mm": 18.61,
+    "margin_mm": 18.68,
     "unshielded": false,
     "dir": [
-     -0.599,
-     -0.512,
-     -0.616
+     -0.735,
+     -0.359,
+     -0.576
     ],
-    "dir_label": "(-0.60, -0.51, -0.62)",
+    "dir_label": "(-0.73, -0.36, -0.58)",
     "axis": [
-     -0.125,
-     -0.7,
-     0.703
+     -0.425,
+     -0.418,
+     0.803
     ],
-    "roll_deg": 150.0,
-    "lateral_mm": -115.7,
+    "roll_deg": 165.0,
+    "lateral_mm": 39.0,
     "contact": [
-     -183.8,
-     -210.8,
+     -180.5,
+     -215.3,
      77.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "prop 1",
+    "margin_mm": 18.74,
+    "unshielded": false,
+    "dir": [
+     0.359,
+     0.624,
+     0.694
+    ],
+    "dir_label": "(+0.36, +0.62, +0.69)",
+    "axis": [
+     0.746,
+     -0.639,
+     0.189
+    ],
+    "roll_deg": 315.0,
+    "lateral_mm": -183.0,
+    "contact": [
+     262.2,
+     250.4,
+     87.0
     ],
     "pass_": true
    },
@@ -2025,24 +1980,24 @@
     "probe": "edge",
     "r_mm": 0.0,
     "part": "motor 1",
-    "margin_mm": 80.52,
+    "margin_mm": 80.78,
     "unshielded": false,
     "dir": [
-     0.067,
-     0.291,
-     -0.954
+     0.079,
+     0.311,
+     -0.947
     ],
-    "dir_label": "(+0.07, +0.29, -0.95)",
+    "dir_label": "(+0.08, +0.31, -0.95)",
     "axis": [
-     -0.723,
-     0.673,
-     0.155
+     -0.622,
+     0.758,
+     0.197
     ],
     "roll_deg": 165.0,
-    "lateral_mm": -190.7,
+    "lateral_mm": -186.0,
     "contact": [
-     202.1,
-     153.2,
+     203.0,
+     153.1,
      45.0
     ],
     "pass_": true
@@ -2054,21 +2009,21 @@
     "margin_mm": 80.78,
     "unshielded": false,
     "dir": [
-     0.16,
-     -0.338,
-     -0.928
+     0.059,
+     -0.295,
+     -0.954
     ],
-    "dir_label": "(+0.16, -0.34, -0.93)",
+    "dir_label": "(+0.06, -0.30, -0.95)",
     "axis": [
-     -0.304,
-     -0.911,
-     0.279
+     -0.734,
+     -0.661,
+     0.159
     ],
     "roll_deg": 195.0,
-    "lateral_mm": 149.8,
+    "lateral_mm": 192.0,
     "contact": [
-     197.6,
-     -153.1,
+     203.9,
+     -152.9,
      45.0
     ],
     "pass_": true
@@ -2077,7 +2032,7 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 1",
-    "margin_mm": 80.78,
+    "margin_mm": 80.88,
     "unshielded": false,
     "dir": [
      0.109,
@@ -2091,10 +2046,10 @@
      0.089
     ],
     "roll_deg": 195.0,
-    "lateral_mm": 155.8,
+    "lateral_mm": 156.0,
     "contact": [
-     207.2,
-     151.5,
+     205.6,
+     152.3,
      45.0
     ],
     "pass_": true
@@ -2103,24 +2058,24 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 4",
-    "margin_mm": 80.97,
+    "margin_mm": 81.37,
     "unshielded": false,
     "dir": [
-     0.16,
-     -0.338,
-     -0.928
+     0.059,
+     -0.295,
+     -0.954
     ],
-    "dir_label": "(+0.16, -0.34, -0.93)",
+    "dir_label": "(+0.06, -0.30, -0.95)",
     "axis": [
-     -0.304,
-     -0.911,
-     0.279
+     -0.734,
+     -0.661,
+     0.159
     ],
     "roll_deg": 195.0,
-    "lateral_mm": 148.3,
+    "lateral_mm": 192.0,
     "contact": [
-     196.7,
-     -152.9,
+     202.1,
+     -153.2,
      45.0
     ],
     "pass_": true
@@ -2143,7 +2098,7 @@
      0.201
     ],
     "roll_deg": 135.0,
-    "lateral_mm": -150.2,
+    "lateral_mm": -148.5,
     "contact": [
      -88.5,
      149.3,
@@ -2169,7 +2124,7 @@
      0.053
     ],
     "roll_deg": 135.0,
-    "lateral_mm": -160.7,
+    "lateral_mm": -160.5,
     "contact": [
      -88.5,
      -149.3,
@@ -2184,18 +2139,18 @@
     "margin_mm": 84.15,
     "unshielded": false,
     "dir": [
-     -0.516,
-     0.504,
-     -0.693
+     -0.524,
+     0.476,
+     -0.706
     ],
-    "dir_label": "(-0.52, +0.50, -0.69)",
+    "dir_label": "(-0.52, +0.48, -0.71)",
     "axis": [
-     -0.809,
-     -0.553,
-     0.201
+     -0.707,
+     -0.706,
+     0.049
     ],
     "roll_deg": 135.0,
-    "lateral_mm": -150.2,
+    "lateral_mm": -163.5,
     "contact": [
      -88.5,
      149.3,
@@ -2207,7 +2162,7 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "motor 3",
-    "margin_mm": 85.16,
+    "margin_mm": 84.9,
     "unshielded": false,
     "dir": [
      -0.129,
@@ -2221,10 +2176,10 @@
      0.205
     ],
     "roll_deg": 165.0,
-    "lateral_mm": -207.2,
+    "lateral_mm": -208.5,
     "contact": [
-     -84.8,
-     -151.9,
+     -85.6,
+     -151.5,
      45.0
     ],
     "pass_": true
@@ -2232,138 +2187,8 @@
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "PDB FCHUB-12S",
-    "margin_mm": 88.32,
-    "unshielded": false,
-    "dir": [
-     -0.084,
-     0.493,
-     -0.866
-    ],
-    "dir_label": "(-0.08, +0.49, -0.87)",
-    "axis": [
-     0.984,
-     0.176,
-     0.005
-    ],
-    "roll_deg": 210.0,
-    "lateral_mm": 35.8,
-    "contact": [
-     -101.5,
-     25.0,
-     10.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
     "part": "Pi 5 + active cooler",
-    "margin_mm": 101.71,
-    "unshielded": false,
-    "dir": [
-     0.147,
-     0.478,
-     -0.866
-    ],
-    "dir_label": "(+0.15, +0.48, -0.87)",
-    "axis": [
-     -0.939,
-     0.342,
-     0.029
-    ],
-    "roll_deg": 150.0,
-    "lateral_mm": -0.2,
-    "contact": [
-     29.5,
-     28.0,
-     25.5
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "UBEC 5 V",
-    "margin_mm": 102.21,
-    "unshielded": false,
-    "dir": [
-     -0.084,
-     0.493,
-     -0.866
-    ],
-    "dir_label": "(-0.08, +0.49, -0.87)",
-    "axis": [
-     0.984,
-     0.176,
-     0.005
-    ],
-    "roll_deg": 210.0,
-    "lateral_mm": 37.3,
-    "contact": [
-     -98.0,
-     22.0,
-     19.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "PDB FCHUB-12S",
-    "margin_mm": 103.99,
-    "unshielded": false,
-    "dir": [
-     -0.141,
-     0.481,
-     -0.865
-    ],
-    "dir_label": "(-0.14, +0.48, -0.87)",
-    "axis": [
-     -0.976,
-     -0.216,
-     0.039
-    ],
-    "roll_deg": 150.0,
-    "lateral_mm": -49.7,
-    "contact": [
-     -101.5,
-     25.0,
-     13.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "edge",
-    "r_mm": 0.0,
-    "part": "buck 12 V",
-    "margin_mm": 110.27,
-    "unshielded": false,
-    "dir": [
-     -0.232,
-     -0.466,
-     -0.854
-    ],
-    "dir_label": "(-0.23, -0.47, -0.85)",
-    "axis": [
-     -0.97,
-     0.18,
-     0.165
-    ],
-    "roll_deg": 210.0,
-    "lateral_mm": 23.8,
-    "contact": [
-     -81.1,
-     -22.0,
-     20.7
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "Pi 5 + active cooler",
-    "margin_mm": 112.35,
+    "margin_mm": 102.58,
     "unshielded": false,
     "dir": [
      -0.113,
@@ -2377,19 +2202,45 @@
      0.055
     ],
     "roll_deg": 210.0,
-    "lateral_mm": 35.8,
+    "lateral_mm": 24.0,
     "contact": [
-     -51.5,
-     -28.0,
-     25.5
+     -71.5,
+     -23.0,
+     24.4
     ],
     "pass_": true
    },
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "RX XR2",
-    "margin_mm": 112.43,
+    "part": "buck 12 V",
+    "margin_mm": 103.08,
+    "unshielded": false,
+    "dir": [
+     -0.498,
+     0.067,
+     -0.865
+    ],
+    "dir_label": "(-0.50, +0.07, -0.86)",
+    "axis": [
+     0.045,
+     0.998,
+     0.051
+    ],
+    "roll_deg": 210.0,
+    "lateral_mm": 150.0,
+    "contact": [
+     -104.0,
+     10.0,
+     24.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "UBEC 5 V",
+    "margin_mm": 105.36,
     "unshielded": false,
     "dir": [
      -0.705,
@@ -2403,89 +2254,63 @@
      0.009
     ],
     "roll_deg": 225.0,
-    "lateral_mm": 110.8,
+    "lateral_mm": 109.5,
     "contact": [
-     -98.0,
-     -20.0,
-     17.0
-    ],
-    "pass_": true
-   },
-   {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "UBEC 5 V",
-    "margin_mm": 113.24,
-    "unshielded": false,
-    "dir": [
-     -0.21,
-     0.472,
-     -0.856
-    ],
-    "dir_label": "(-0.21, +0.47, -0.86)",
-    "axis": [
-     -0.975,
-     -0.164,
-     0.149
-    ],
-    "roll_deg": 150.0,
-    "lateral_mm": -33.2,
-    "contact": [
-     -98.0,
-     22.0,
-     24.0
+     -104.0,
+     -11.0,
+     12.0
     ],
     "pass_": true
    },
    {
     "probe": "edge",
     "r_mm": 0.0,
-    "part": "FC MicoAir743-Lite",
-    "margin_mm": 119.2,
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "margin_mm": 106.77,
     "unshielded": false,
     "dir": [
-     -0.005,
-     -0.866,
-     -0.5
+     0.128,
+     -0.696,
+     -0.707
     ],
-    "dir_label": "(-0.01, -0.87, -0.50)",
+    "dir_label": "(+0.13, -0.70, -0.71)",
     "axis": [
-     -1.0,
-     -0.001,
-     0.013
+     0.984,
+     0.176,
+     0.005
     ],
-    "roll_deg": 240.0,
-    "lateral_mm": -22.7,
+    "roll_deg": 135.0,
+    "lateral_mm": 12.0,
     "contact": [
-     -18.0,
-     -18.0,
-     4.0
+     22.0,
+     -21.8,
+     9.2
     ],
     "pass_": true
    },
    {
-    "probe": "post r10",
-    "r_mm": 10.0,
+    "probe": "edge",
+    "r_mm": 0.0,
     "part": "RX XR2",
-    "margin_mm": 128.33,
+    "margin_mm": 116.0,
     "unshielded": false,
     "dir": [
-     -0.38,
-     -0.596,
-     -0.707
+     -0.224,
+     -0.017,
+     0.974
     ],
-    "dir_label": "(-0.38, -0.60, -0.71)",
+    "dir_label": "(-0.22, -0.02, +0.97)",
     "axis": [
-     -0.845,
-     0.536,
-     0.003
+     0.972,
+     0.072,
+     0.225
     ],
-    "roll_deg": 225.0,
-    "lateral_mm": 76.3,
+    "roll_deg": 0.0,
+    "lateral_mm": -12.0,
     "contact": [
-     -98.0,
-     -20.0,
-     20.0
+     -80.5,
+     -1.0,
+     39.0
     ],
     "pass_": true
    },
@@ -2493,25 +2318,103 @@
     "probe": "post r10",
     "r_mm": 10.0,
     "part": "buck 12 V",
-    "margin_mm": 129.98,
+    "margin_mm": 118.85,
     "unshielded": false,
     "dir": [
-     -0.244,
-     -0.674,
-     -0.697
+     -0.498,
+     0.067,
+     -0.865
     ],
-    "dir_label": "(-0.24, -0.67, -0.70)",
+    "dir_label": "(-0.50, +0.07, -0.86)",
     "axis": [
-     -0.97,
-     0.18,
-     0.165
+     0.045,
+     0.998,
+     0.051
     ],
-    "roll_deg": 225.0,
-    "lateral_mm": 14.8,
+    "roll_deg": 210.0,
+    "lateral_mm": 160.5,
     "contact": [
-     -82.0,
-     -22.0,
-     21.0
+     -104.0,
+     10.0,
+     30.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "Pi 5 + active cooler",
+    "margin_mm": 120.0,
+    "unshielded": false,
+    "dir": [
+     -0.224,
+     -0.017,
+     0.974
+    ],
+    "dir_label": "(-0.22, -0.02, +0.97)",
+    "axis": [
+     0.972,
+     0.072,
+     0.225
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": -12.0,
+    "contact": [
+     -71.5,
+     1.0,
+     40.4
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "RX XR2",
+    "margin_mm": 120.0,
+    "unshielded": false,
+    "dir": [
+     -0.224,
+     -0.017,
+     0.974
+    ],
+    "dir_label": "(-0.22, -0.02, +0.97)",
+    "axis": [
+     0.972,
+     0.072,
+     0.225
+    ],
+    "roll_deg": 0.0,
+    "lateral_mm": -12.0,
+    "contact": [
+     -80.5,
+     0.0,
+     39.0
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "UBEC 5 V",
+    "margin_mm": 129.11,
+    "unshielded": false,
+    "dir": [
+     -0.647,
+     -0.576,
+     -0.499
+    ],
+    "dir_label": "(-0.65, -0.58, -0.50)",
+    "axis": [
+     0.641,
+     -0.766,
+     0.053
+    ],
+    "roll_deg": 120.0,
+    "lateral_mm": -61.5,
+    "contact": [
+     -104.0,
+     -11.0,
+     15.0
     ],
     "pass_": true
    },
@@ -2523,21 +2426,47 @@
     "unshielded": false,
     "dir": [
      -0.996,
-     0.086,
-     0.0
+     -0.089,
+     -0.0
     ],
     "dir_label": "-X",
     "axis": [
-     -0.086,
-     -0.996,
-     0.017
+     -0.089,
+     0.996,
+     0.009
     ],
-    "roll_deg": 90.0,
-    "lateral_mm": 44.8,
+    "roll_deg": 270.0,
+    "lateral_mm": -46.5,
     "contact": [
      -110.0,
-     3.9,
-     -6.6
+     -3.7,
+     -7.1
+    ],
+    "pass_": true
+   },
+   {
+    "probe": "post r10",
+    "r_mm": 10.0,
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
+    "margin_mm": 138.85,
+    "unshielded": false,
+    "dir": [
+     0.168,
+     -0.85,
+     -0.5
+    ],
+    "dir_label": "(+0.17, -0.85, -0.50)",
+    "axis": [
+     -0.976,
+     -0.216,
+     0.039
+    ],
+    "roll_deg": 240.0,
+    "lateral_mm": -16.5,
+    "contact": [
+     22.0,
+     -21.8,
+     9.2
     ],
     "pass_": true
    },
@@ -2549,47 +2478,47 @@
     "unshielded": false,
     "dir": [
      -0.996,
-     0.086,
-     0.0
+     -0.089,
+     -0.0
     ],
     "dir_label": "-X",
     "axis": [
-     -0.086,
-     -0.996,
-     0.017
+     -0.089,
+     0.996,
+     0.009
     ],
-    "roll_deg": 90.0,
-    "lateral_mm": 34.3,
+    "roll_deg": 270.0,
+    "lateral_mm": -36.0,
     "contact": [
-     -110.0,
-     3.9,
+     -110.1,
+     -3.6,
      -4.6
     ],
     "pass_": true
    },
    {
-    "probe": "post r10",
-    "r_mm": 10.0,
-    "part": "FC MicoAir743-Lite",
-    "margin_mm": 192.21,
+    "probe": "edge",
+    "r_mm": 0.0,
+    "part": "ESC cap",
+    "margin_mm": 167.61,
     "unshielded": false,
     "dir": [
-     0.199,
-     -0.945,
-     -0.259
+     -0.464,
+     -0.847,
+     -0.258
     ],
-    "dir_label": "(+0.20, -0.95, -0.26)",
+    "dir_label": "(-0.46, -0.85, -0.26)",
     "axis": [
-     -0.976,
-     -0.216,
-     0.039
+     -0.884,
+     0.463,
+     0.071
     ],
     "roll_deg": 255.0,
-    "lateral_mm": -25.7,
+    "lateral_mm": -24.0,
     "contact": [
-     18.0,
-     -18.0,
-     10.0
+     -42.0,
+     -14.0,
+     4.0
     ],
     "pass_": true
    }
@@ -2603,7 +2532,7 @@
    0.0,
    10.0
   ],
-  "n_points": 861538
+  "n_points": 863673
  },
  "access": {
   "applies": true,
@@ -2969,8 +2898,8 @@
     "pass_": true
    },
    {
-    "name": "FC USB-C (-y, between arm 3 and arm 4 roots)",
-    "part": "FC MicoAir743-Lite",
+    "name": "FC USB-C (-y edge, between arm 3 and arm 4 roots)",
+    "part": "FC stack (MicoAir743-Lite on 55A 4-in-1)",
     "tool": {
      "type": "box",
      "w": 12,
@@ -2989,19 +2918,303 @@
     "pass_": true
    },
    {
-    "name": "Pi 5 microSD (-x)",
-    "part": "Pi 5 + active cooler",
+    "name": "M3 L-key short leg, stack mount foot 0",
+    "part": "stack mount",
     "tool": {
-     "type": "box",
-     "w": 14,
-     "h": 3
+     "type": "cylinder",
+     "d": 4
     },
     "dir": [
-     -0.96,
      0.0,
-     0.28
+     0.0,
+     1.0
     ],
-    "length_mm": 60.0,
+    "length_mm": 18.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key long leg, stack mount foot 0",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key short leg, stack mount foot 1",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 18.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key long leg, stack mount foot 1",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key short leg, stack mount foot 2",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 18.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key long leg, stack mount foot 2",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     1.0,
+     0.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key short leg, stack mount foot 3",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 18.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 L-key long leg, stack mount foot 3",
+    "part": "stack mount",
+    "tool": {
+     "type": "cylinder",
+     "d": 4
+    },
+    "dir": [
+     0.0,
+     -1.0,
+     0.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, Pi hanger screw 0 (from above)",
+    "part": "Pi hanger",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, Pi hanger screw 1 (from above)",
+    "part": "Pi hanger",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, Pi hanger screw 2 (from above)",
+    "part": "Pi hanger",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, Pi hanger screw 3 (from above)",
+    "part": "Pi hanger",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, rear tray bolt 0 (from above)",
+    "part": "rear tray",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, rear tray bolt 1 (from above)",
+    "part": "rear tray",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, rear tray bolt 2 (from above)",
+    "part": "rear tray",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
+    "steps": 1,
+    "blocked_by": [],
+    "touches": [],
+    "overlap_mm3": 0.0,
+    "pass_": true
+   },
+   {
+    "name": "M3 key, rear tray bolt 3 (from above)",
+    "part": "rear tray",
+    "tool": {
+     "type": "cylinder",
+     "d": 6
+    },
+    "dir": [
+     0.0,
+     0.0,
+     1.0
+    ],
+    "length_mm": 400.0,
     "steps": 1,
     "blocked_by": [],
     "touches": [],
@@ -3009,7 +3222,7 @@
     "pass_": true
    }
   ],
-  "n_clear": 21,
+  "n_clear": 36,
   "worst": {
    "name": "M3 key, arm 1 top screw v +15",
    "part": "top plate",
@@ -3032,22 +3245,22 @@
  },
  "mass_budget": {
   "applies": true,
-  "mass_g": 3531.18,
+  "mass_g": 3436.68,
   "part_budgets_g": {
-   "hub frame": 30.0,
-   "power tray": 18.0,
+   "stack mount": 8.0,
+   "Pi hanger": 10.0,
+   "rear tray": 20.0,
    "sled": 70.0,
-   "skid L (down camera pod)": 45.0,
-   "skid R (flow pod)": 45.0
+   "flow pod": 8.0
   },
   "over_parts": [],
   "budget_g": 2200.0,
-  "pct": 160.5,
+  "pct": 156.2,
   "total_ok": false,
   "over": true,
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer core v1, cage first 3.3 mm (E) at -Z (receiver) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 1006.0 mm\u00b3 (E) (cage shell tubes/skid L (down camera pod)) FAIL, bbox 128 L (E), extents 743 x 694 x 248 mm (E), mass 3531 of 2200 g (160 %) (E) over budget (total), CG 1.9 mm off thrust axis (E) [-1.8, +0.4, -68.5], 20.5 mm without swap parts (reported, L exception), probes -177.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 21/21 clear",
+ "summary": "System: Overseer core v1, cage first 7.5 mm (E) at (+0.50, -0.02, +0.87) (front camera) (field cones open: Unitree L2 75 deg, out 66.63 mm, front camera 55 deg, out 0 mm), shell 131 rods closed, h/w 0.31, fit 170.2 mm\u00b3 (E) (down camera/receiver) FAIL, bbox 126 L (E), extents 743 x 694 x 246 mm (E), mass 3437 of 2200 g (156 %) (E) over budget (total), CG 0.6 mm off thrust axis (E) [-0.6, -0.1, -67.4], 22.9 mm without swap parts (reported, L exception), probes -178.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 36/36 clear",
  "pass": false
 }
