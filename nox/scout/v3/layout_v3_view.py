@@ -15,7 +15,7 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 sys.path.insert(0, os.path.join(ROOT, "nox"))
 from motion import Scene
 
-RUN = os.path.join(ROOT, "runs", "scout_layout", "v7")
+RUN = os.path.join(ROOT, "runs", "scout_layout", "v8")
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")
 r = json.load(open(os.path.join(RUN, "result.json")))
 sh = json.load(open(os.path.join(RUN, "cage_shell.json"))); N = np.array(sh["nodes"]); E = sh["rods"]; ring = sh["open"][0]["ring"]
@@ -26,7 +26,7 @@ No = No - [ov_cart.bounds[:, 0].mean(), 0, Ro[:, 2].mean()] + [r["tab_x"], 0, r[
 line = lambda a, b, rr=0.7: trimesh.creation.cylinder(rr, np.linalg.norm(np.subtract(b, a)), sections=6, segment=np.vstack([a, b]))
 
 s = Scene("Scout v3 Cage",
-          f"Scout v3 layout (PR 94) + triangulated cage of 3 mm rods (half the rods, any length), bottom ring = the Overseer's (funnel interchangeable), one camera outside the cage, "
+          f"Scout v3: cage of 61 x 3 mm rods (any length), bottom = the Overseer ring's middle rectangle (same funnel, fewer ramps), one camera over the nose outside the cage, carbon base kept; "
           f"carbon base kept; {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{r['mass']:.0f} g (E), "
           f"CG {math.hypot(*r['cg'][:2]):.1f} mm pack in / {math.hypot(*r['cg_pack_out'][:2]):.1f} pack out")
 names = []
@@ -42,8 +42,8 @@ for mx, my in [(54.1, 54.1), (54.1, -54.1), (-54.1, 54.1), (-54.1, -54.1)]:
 names.append("props (swept)"); s.part("props (swept)", trimesh.util.concatenate(rings), group="bought", color="#d9a400", printed=False)
 rr_ = [trimesh.creation.cylinder(4.0, np.linalg.norm(N[a] - N[b]), sections=12, segment=np.vstack([N[a], N[b]]))
        for a, b in E if a in ring and b in ring]
-names.append("shared bottom ring (= Overseer's)"); s.part("shared bottom ring (= Overseer's)", trimesh.util.concatenate(rr_), group="cage", color="#e07020", printed=False,
-                                                          note="the Overseer cage v3 opening ring: same 8 nodes and tubes, same datum (grip line, 3 under the cartridge flat bottom)")
+names.append("bottom rectangle (the Overseer ring's middle)"); s.part("bottom rectangle (the Overseer ring's middle)", trimesh.util.concatenate(rr_), group="cage", color="#e07020", printed=False,
+                                                          note="4 of the Overseer ring's 8 nodes (its middle rectangle), same datum (grip line, 3 under the cartridge flat bottom); the nose and tail trapezoids dropped")
 names.append("Overseer cage (same datum, ghost)")
 s.part("Overseer cage (same datum, ghost)", trimesh.util.concatenate([line(No[a], No[b], 0.6) for a, b in Eo]), group="reference", color="#9ab0c8", printed=False,
        note="Overseer cage v3 placed ring on ring: the Scout's lower shell sits inside the Overseer's, so a funnel that takes one takes both")
@@ -55,8 +55,7 @@ fr = [line(L_, c) for c in cor] + [line(cor[i], cor[(i + 1) % 4]) for i in range
 names.append("front camera view"); s.part("front camera view", trimesh.util.concatenate(fr), group="views", color="#3fa34d", printed=False)
 # the two alternatives weighed (concept rule), side by side: B = the frequency 2 geodesic of cage v1 with every rod 3 mm (123 rods),
 # C = that geodesic thinned to ~half the rods (SCOUT_NFREE); each drawn whole, offset in y
-ALTS = [("B geodesic, every rod 3 mm", os.path.join(RUN, "alt_geodesic_full"), -460.0),
-        ("C geodesic thinned to ~half", os.path.join(RUN, "alt_geodesic_half"), 460.0)]
+ALTS = []                                                  # Spark 27 Oct: "just choose one design": the page shows the pick only
 for tag, d_, off in ALTS:
     if not os.path.exists(os.path.join(d_, "parts", "parts.json")): continue
     ms = [trimesh.load(os.path.join(d_, "parts", p_["file"])).apply_translation([0, off, 0])
@@ -92,30 +91,31 @@ for k, (el, az, ttl) in enumerate(((22, -55, "iso"), (0, -90, "side (from -y)"),
     lo, hi = np.array([-260, -260, -120]), np.array([300, 260, 180])
     ax.set_xlim(lo[0], hi[0]); ax.set_ylim(lo[1], hi[1]); ax.set_zlim(lo[2], hi[2]); ax.set_box_aspect(hi - lo)
     ax.view_init(el, az); ax.set_title(ttl); ax.set_axis_off()
-fig.suptitle("Scout v3 layout v3 / cage v2 (3 mm rods, half the rods): orange = the shared bottom ring (the Overseer's), light blue = the Overseer cage on the same datum, "
+fig.suptitle("Scout v3 cage v2: 61 x 3 mm rods; orange = the bottom rectangle (the Overseer ring's middle), light blue = the Overseer cage on the same datum, "
              "green = camera view", fontsize=11)
 fig.tight_layout(); fig.savefig(os.path.join(RUN, "preview.png")); print("wrote", os.path.join(RUN, "preview.png"))
 
-# ---------------------------------------------------------------- the three options side by side (picked A, B, C): top and side
-fig = plt.figure(figsize=(18, 9), dpi=100)
-opts = [("A picked: free pattern, every rod 3 mm, half the rods", RUN)] + [(f"{t}", d_) for t, d_, _ in ALTS]
-for c_, (ttl, d_) in enumerate(opts):
-    if not os.path.exists(os.path.join(d_, "cage_shell.json")): continue
-    ra = json.load(open(os.path.join(d_, "result.json"))); sa = json.load(open(os.path.join(d_, "cage_shell.json")))
-    Na = np.array(sa["nodes"]); Ea = sa["rods"]; rg = sa["open"][0]["ring"]
-    pa = json.load(open(os.path.join(d_, "parts", "parts.json")))
-    for r_, (el, az, vt) in enumerate(((90, -90, "top"), (0, -90, "side"))):
-        ax = fig.add_subplot(2, 3, r_ * 3 + c_ + 1, projection="3d"); ax.set_proj_type("ortho")
-        for p in pa:
-            if p["name"].startswith(("cage shell", "spokes")): continue
-            m = trimesh.load(os.path.join(d_, "parts", p["file"]))
-            ax.add_collection3d(Poly3DCollection(m.triangles, facecolor=p["color"], edgecolor="none", alpha=0.35 if p["name"].startswith("prop") else 0.9))
-        ax.add_collection3d(Line3DCollection([(Na[a], Na[b]) for a, b in Ea if not (a in rg and b in rg)], colors="#222222", linewidths=1.4))
-        ax.add_collection3d(Line3DCollection([(Na[a], Na[b]) for a, b in Ea if a in rg and b in rg], colors="#e07020", linewidths=2.6))
-        ax.add_collection3d(Line3DCollection([tuple(map(tuple, v)) for v in ra["links"].values()], colors="#666666", linewidths=0.7))
-        lo, hi = np.array([-230, -170, -80]), np.array([230, 170, 160])
-        ax.set_xlim(lo[0], hi[0]); ax.set_ylim(lo[1], hi[1]); ax.set_zlim(lo[2], hi[2]); ax.set_box_aspect(hi - lo)
-        ax.view_init(el, az); ax.set_axis_off()
-        ax.set_title(f"{ttl}\n{ra['mass']:.0f} g E, {ra['extents'][0]:.0f} x {ra['extents'][1]:.0f} x {ra['extents'][2]:.0f} ({vt})" if r_ == 0 else vt, fontsize=9)
-fig.suptitle("Scout v3 cage options: orange = bottom ring", fontsize=11); fig.tight_layout()
-fig.savefig(os.path.join(RUN, "options.png")); print("wrote", os.path.join(RUN, "options.png"))
+# ---------------------------------------------------------------- options side by side (only when ALTS has any)
+if ALTS:
+  fig = plt.figure(figsize=(18, 9), dpi=100)
+  opts = [("A picked: free pattern, every rod 3 mm, half the rods", RUN)] + [(f"{t}", d_) for t, d_, _ in ALTS]
+  for c_, (ttl, d_) in enumerate(opts):
+      if not os.path.exists(os.path.join(d_, "cage_shell.json")): continue
+      ra = json.load(open(os.path.join(d_, "result.json"))); sa = json.load(open(os.path.join(d_, "cage_shell.json")))
+      Na = np.array(sa["nodes"]); Ea = sa["rods"]; rg = sa["open"][0]["ring"]
+      pa = json.load(open(os.path.join(d_, "parts", "parts.json")))
+      for r_, (el, az, vt) in enumerate(((90, -90, "top"), (0, -90, "side"))):
+          ax = fig.add_subplot(2, 3, r_ * 3 + c_ + 1, projection="3d"); ax.set_proj_type("ortho")
+          for p in pa:
+              if p["name"].startswith(("cage shell", "spokes")): continue
+              m = trimesh.load(os.path.join(d_, "parts", p["file"]))
+              ax.add_collection3d(Poly3DCollection(m.triangles, facecolor=p["color"], edgecolor="none", alpha=0.35 if p["name"].startswith("prop") else 0.9))
+          ax.add_collection3d(Line3DCollection([(Na[a], Na[b]) for a, b in Ea if not (a in rg and b in rg)], colors="#222222", linewidths=1.4))
+          ax.add_collection3d(Line3DCollection([(Na[a], Na[b]) for a, b in Ea if a in rg and b in rg], colors="#e07020", linewidths=2.6))
+          ax.add_collection3d(Line3DCollection([tuple(map(tuple, v)) for v in ra["links"].values()], colors="#666666", linewidths=0.7))
+          lo, hi = np.array([-230, -170, -80]), np.array([230, 170, 160])
+          ax.set_xlim(lo[0], hi[0]); ax.set_ylim(lo[1], hi[1]); ax.set_zlim(lo[2], hi[2]); ax.set_box_aspect(hi - lo)
+          ax.view_init(el, az); ax.set_axis_off()
+          ax.set_title(f"{ttl}\n{ra['mass']:.0f} g E, {ra['extents'][0]:.0f} x {ra['extents'][1]:.0f} x {ra['extents'][2]:.0f} ({vt})" if r_ == 0 else vt, fontsize=9)
+  fig.suptitle("Scout v3 cage options: orange = bottom ring", fontsize=11); fig.tight_layout()
+  fig.savefig(os.path.join(RUN, "options.png")); print("wrote", os.path.join(RUN, "options.png"))

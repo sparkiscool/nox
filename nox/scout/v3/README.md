@@ -32,11 +32,11 @@ Lines tagged with a Spark date are his decisions; **DEFAULT** lines are carried 
 - Live video from the Radxa reaches the box (B7).
 
 ### Cage (Spark 27 Oct)
-The latest layout (PR 94) with a geodesic shell cage (the Overseer cage v3 idea, CLAUDE.md "Cages are geodesic shells"): **bottom ring exactly the Overseer's** (same 8 nodes and tubes, same datum: catch centre, 3 under the cartridge flat bottom) so one funnel takes both drones; **one camera** at the nose outside the cage, nothing in its view; **the Bee35 carbon base stays**. Then (Spark 27 Oct) **every rod 3 mm, about half the rods, any rod length**: cage v2, 65 rods, a free-pattern shell. Layout v3 / cage v2: `layout_v3.py`, `runs/scout_layout/v7/summary.md` (cage v1 `v6/`), numbers `dimensions.md` System Scout v3. Supersedes PR 94's ground-structure cage.
+The latest layout (PR 94) with a geodesic shell cage (the Overseer cage v3 idea, CLAUDE.md "Cages are geodesic shells"): **bottom from the Overseer's ring** (now its middle rectangle; same datum: catch centre, 3 under the cartridge flat bottom) so one funnel takes both drones; **one camera** at the nose outside the cage, nothing in its view; **the Bee35 carbon base stays**. Then (Spark 27 Oct) **every rod 3 mm, about half the rods, any rod length; the bottom the Overseer ring's middle rectangle (one reverse funnel, fewer ramps); one design**: cage v2, 61 rods, a free-pattern shell, the camera over the nose. Layout v3 / cage v2: `layout_v3.py`, `runs/scout_layout/v8/summary.md` (earlier `v6/`, `v7/`), numbers `dimensions.md` System Scout v3. Supersedes PR 94's ground-structure cage.
 
 ### v3 parts to draw (order DEFAULT)
 1. Bottom layout: pack, receiver with latch pockets, contacts, belly plate, pogo pads, underside stack (FC, Radxa, flow) in one sweep (v2 drew it in `archive/scout-v2/s2-receiver.md`; history only).
-2. Cage: layout v3 / cage v2 (27 Oct, 3 mm rods, 65 rods); next the frame model on the cage, then shell nodes, spoke clamps, the camera boom + guard.
+2. Cage: layout v3 / cage v2 (27 Oct, 61 x 3 mm rods, rectangle bottom); next the frame model on the cage, then shell nodes, spoke clamps, the camera boom + guard.
 3. Camera mount on the nose, outside the cage keep-outs.
 4. Cartridge (Scout size) matching the bay modules (`nox/box/box-case.md`).
 

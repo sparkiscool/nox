@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2: every rod 3 mm, about half the rods, any rod length (27 Oct 2026, concept)
 
+**Superseded 27 Oct by the rectangle-bottom design (`runs/scout_layout/v8/summary.md`, Spark: "get rid of the two trapezoids", "just choose one design"). Kept: summary, results, stills.**
+
 Spark 27 Oct, on cage v1 (`runs/scout_layout/v6/`, PR 124: 91 x 6 mm shell tubes + 32 x 3 mm links = 123 rods): "subtract the number of rods, these are all 3mm as well and also just divide the number of rods by half", then "dont worry about same rod legnth anymore". Unchanged from cage v1: the PR 94 drone, the bottom ring = the Overseer's (funnel shared), one nose camera outside the cage, the Bee35 carbon base.
 
 Read as: every Scout rod 3.0 solid carbon (shell and links), about half of cage v1's 123 rods, and the shell no longer has to keep the geodesic pattern's near-equal rod lengths. Rule lines: CLAUDE.md (Cages are geodesic shells: the Scout clause), `docs/generative.md` 0 (Shared ring and the Scout), check `tools/review_precheck.py` 13.
