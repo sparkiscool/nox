@@ -27,15 +27,17 @@ def section_png(i, rec, out):
             c = float(np.dot(S[p]["dir"], S[q]["dir"]))
             if best is None or c > best[0]: best = (c, p, q)
     _, p, q = best; a, b = np.array(S[p]["dir"]), np.array(S[q]["dir"])
-    n = np.cross(a, b); n /= np.linalg.norm(n)
-    o = 0.5 * (np.array(S[p]["line_origin"]) + np.array(S[q]["line_origin"]))
-    o = o - n * np.dot(o, n) + n * np.dot(np.array(S[p]["line_origin"]), n)
+    # the plane holds bore p's axis and bore q's mid point (eccentric lines need not be coplanar): both bores show
+    Pp, Pq = np.array(S[p]["line_origin"]), np.array(S[q]["line_origin"])
+    mp, mq = Pp + a * (S[p]["setback"] + 5.0), Pq + b * (S[q]["setback"] + 5.0)
+    n = np.cross(a, mq - Pp); n = np.cross(a, b) if np.linalg.norm(n) < 1e-6 else n; n /= np.linalg.norm(n)
+    o = Pp
     sec = loc.section(plane_origin=o, plane_normal=n)
     fig, ax = plt.subplots(figsize=(4.2, 4.2), dpi=110)
     if sec is not None:
-        e1 = (a + b) / np.linalg.norm(a + b); e2 = np.cross(n, e1)
+        e1 = a.copy(); e2 = np.cross(n, e1)
         T = np.eye(4); T[:3, 0], T[:3, 1], T[:3, 2], T[:3, 3] = e1, e2, n, o
-        p2, _ = sec.to_planar(to_2D=np.linalg.inv(T))
+        p2, _ = sec.to_2D(to_2D=np.linalg.inv(T))
         for poly in p2.polygons_full:
             x, y = poly.exterior.xy; ax.fill(x, y, color="#c9a227", alpha=0.85, lw=0)
             for h in poly.interiors:
