@@ -378,3 +378,25 @@ it  83 beta   32 J   0.5432 vol 0.1238 (dil 0.2517 g -0.000) grey  2.3% ch 0.100
 it  83 beta   32 J   0.5432 vol 0.1238 (dil 0.2517 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 93.5s
 it  84 beta   32 J   0.5431 vol 0.1238 (dil 0.2517 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 92.9s
 it  84 beta   32 J   0.5431 vol 0.1238 (dil 0.2517 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 92.9s
+it  85 beta   32 J   0.5429 vol 0.1239 (dil 0.2517 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 86.2s
+it  85 beta   32 J   0.5429 vol 0.1239 (dil 0.2517 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 86.2s
+it  86 beta   32 J   0.5428 vol 0.1239 (dil 0.2517 g +0.000) grey  2.3% ch 0.100 worst held b1 mx 137 85.2s
+it  86 beta   32 J   0.5428 vol 0.1239 (dil 0.2517 g +0.000) grey  2.3% ch 0.100 worst held b1 mx 137 85.2s
+it  87 beta   32 J   0.5435 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 85.0s
+it  87 beta   32 J   0.5435 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 85.0s
+it  88 beta   32 J   0.5434 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 89.4s
+it  88 beta   32 J   0.5434 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 89.4s
+it  89 beta   32 J   0.5433 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 84.2s
+it  89 beta   32 J   0.5433 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 84.2s
+it  90 beta   32 J   0.5432 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 84.0s
+it  90 beta   32 J   0.5432 vol 0.1238 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 84.0s
+it  91 beta   32 J   0.5431 vol 0.1238 (dil 0.2516 g +0.000) grey  2.3% ch 0.100 worst held b1 mx 137 82.0s
+it  91 beta   32 J   0.5431 vol 0.1238 (dil 0.2516 g +0.000) grey  2.3% ch 0.100 worst held b1 mx 137 82.0s
+it  92 beta   32 J   0.5435 vol 0.1237 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 81.5s
+it  92 beta   32 J   0.5435 vol 0.1237 (dil 0.2516 g -0.000) grey  2.3% ch 0.100 worst held b1 mx 137 81.5s
+layout: stopped (max_stage) at it 92, beta 32, 6453 s
+layout: stopped (max_stage) at it 92, beta 32, 6453 s
+layout: beta 32 done: eroded design 3 bodies, main 100.0%; drawn bodies outside the main body: 2
+layout: beta 32 done: eroded design 3 bodies, main 100.0%; drawn bodies outside the main body: 2
+layout done: 6618 s, peak 10.204628 GB
+layout done: 6618 s, peak 10.204628 GB
