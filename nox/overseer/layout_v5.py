@@ -58,7 +58,7 @@ SHELL_R = 3.0                            # 6 mm carbon tube (Spark 26 Oct), 6/4 
 SHELL_GPM = 1.55e-3 * math.pi / 4 * (6.0 ** 2 - 4.0 ** 2)        # 24.3 g/m (E)
 ROD_R, ROD_GPM = 1.5, 11.0e-3            # links: 3.0 solid (G Carbon rods), 11.0 g/m (C)
 NODE_R, NODE_G = 10.15, 4.5              # printed node round 6.3 sockets, Ø20 (E); 4.5 g (E)
-_NS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "cage_nodes", "v4", "saved.json")
+_NS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "cage_nodes", "v5", "saved.json")
 NODE_M = {r["node"]: r["mass_g"] for r in json.load(open(_NS))} if os.path.exists(_NS) else {}   # saved nodes (drawn first, M)
 node_g = lambda i: NODE_M.get(i, NODE_G)
 PROP_GAP, CAGE_GAP = 12.0, 3.0
@@ -1129,7 +1129,7 @@ for n_, gm, _c in it:
 links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items()])
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
-    ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
+    ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "M" if NODE_M else "E", "PETG", "cage", "#7d8a99", False),
     (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
     *([(HEADN, trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
