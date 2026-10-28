@@ -13,10 +13,10 @@ from assembly import Assembly
 
 ASM = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")
 RUN = os.path.join(ROOT, "runs", "scout_layout", "v12")
-CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
+CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v2", "scout_with_mount.assembly.json")   # v2 (topology, 27 Oct); v1 in runs/scout_camera_mount/v1
 ELEC_R = os.path.join(RUN, "electronics_envelope_r5.json")      # the electronics session's round 5 (SOURCE.txt), drawn at the v12 catch
 BELLY = os.path.join(ROOT, "runs", "scout_belly_mount", "v1")    # the electronics session's belly mount v1 (PR 150, concept): its system model
-CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant
+CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)", "camera mount (printed)")   # + an installed saved mount (v1 -> v2)   # the layout's camera mount part, by its CAM_MOUNT variant
 # the Radxa's 4 M2.5 holes, board coords (X along 65 from the SD end, Y along 30 from the ports edge; H, STEP, from the electronics
 # session's electronics_system.py RADXA_HOLES); its posts land on the PCB back (y -1.6) with Ø8.4 keep-outs (their round 5)
 RADXA_HOLES = [(3.55, 3.60), (3.60, 26.45), (61.40, 3.60), (61.40, 26.50)]
@@ -27,13 +27,13 @@ def camera_mount(a):
     CAMP = next((p["name"] for p in a["parts"] if p["name"] in CAMPS), None)
     if not os.path.exists(CAM_SAVED) or CAMP is None: return []
     sm = json.load(open(CAM_SAVED)); old = {CAMP, "camera cradle arms (printed)", "camera cradle clips (printed)"}
+    old |= {p["name"] for p in a["parts"] if p.get("owner") == "scout camera mount"}          # an installed v1 (mount + collars)
     mine = [p for p in sm["parts"] if p.get("owner") == "scout camera mount"]; mn = {p["name"] for p in mine}
     a["parts"] = [p for p in a["parts"] if p["name"] not in old] + mine
-    a["contact_pairs"] = [[("camera mount (printed)" if v == CAMP else v) for v in c[:2]] + c[2:] for c in a["contact_pairs"]
-                          if not ({c[0], c[1]} & (old - {CAMP}))] + [c for c in sm["contact_pairs"] if c[0] in mn - {"camera mount (printed)"}
-                                                                     or (c[0] == "camera mount (printed)" and c[1] == "cage shell tubes")]
+    a["contact_pairs"] = [c for c in a["contact_pairs"] if not ({c[0], c[1]} & old)] + [c for c in sm["contact_pairs"] if {c[0], c[1]} & mn]
+    a["access"] = [x for x in a.get("access", []) if not x["name"].startswith("camera mount")] + [x for x in sm.get("access", []) if x["name"].startswith("camera mount")]
     a["note"] = sm["note"]
-    return ["camera mount v1: " + ", ".join(f"{p['name']} {p['mass_g']} g" for p in mine)]
+    return [f"camera mount {mine[0].get('version', '')}: " + ", ".join(f"{p['name']} {p['mass_g']} g" for p in mine)]
 
 
 def electronics(a):

@@ -63,7 +63,8 @@ FOOT_Z = (PLATE_TOP, PLATE_TOP + 3.0)                    # 3.0 tall: rod 14-16's
 PAD = (15.0, 12.0, 3.0)                                  # bolt pad x, y, z (slot Ø3.4 +-1.5 in x: the clips set x), >= Ø12 web >= 2
 SLOT, SLOT_HALF, WASHER_D = 3.4, 1.5, 9.0                # M3 clearance, slot travel, washer seat + clearance (key path Ø9 up)
 FOOT_X = (22.5, 51.5)                                    # foot plate x (plate front edge 51.9 at |y| <= 20, M)
-STROKE, SWEEP_CLR = 110.0, 1.5                           # push-on stroke along -x (the foot starts in front of the cage face); clearance to swept members
+ENV_Y = 26.0                                             # design space half width (hood 22.5, the lane's width at the plate; the clip arms below get their own)
+STROKE, SWEEP_CLR = 110.0, 1.5                          # push-on stroke along -x (the foot starts in front of the cage face); clearance to swept members
 WASH_MARGIN = 1.0                                        # vertical prism of every swept disk, r 44.5 + 1.0
 HIT, CRASH, FLIGHT, G = 250.0, 35.0, 4.0, 9.81          # N frontal hit on the hood (35 g of a 735 g drone), g, g (dimensions.md L)
 CLIP_BEAR = 40.0                                         # N, a clip's share of the frontal hit (frame model concept: 31 N at 250 N, F on E)
@@ -230,7 +231,8 @@ def bodies():
     cuts += box(-120, 112.0, -80, 80, -80, 8.5)                        # receiver, lid, XT60, belly mount, cartridge (all below the rod 14-15 sweep)
     cuts += box(-120, 112.0, -80, 80, 31.0, 120)                        # behind the face only the bottom-front cell reaches the foot (the upper cell is a dead end)
     # --- envelope: the print box round the camera, the cell and the foot
-    env = box(FOOT_X[0] - 0.5, HOOD_X[1], -CLIP_Y - CLIP_L / 2 - 1, CLIP_Y + CLIP_L / 2 + 1, 5.5, HOOD_OUT[2])
+    env = box(FOOT_X[0] - 0.5, HOOD_X[1], -ENV_Y, ENV_Y, 5.5, HOOD_OUT[2]) + \
+        box(112.0, HOOD_X[1], -CLIP_Y - CLIP_L / 2 - 1, CLIP_Y + CLIP_L / 2 + 1, 5.5, 34.0)   # the clips' arms: low, in front of the cage face
     return dict(drawn=drawn, cuts=cuts, env=env, R=R)
 
 
@@ -296,11 +298,12 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("out", nargs="?", default=os.path.join(ROOT, "runs", "scout_camera_mount", "v2"))
     ap.add_argument("--h", type=float, default=1.0); ap.add_argument("--gen", type=float, default=12.0); ap.add_argument("--git", action="store_true")
     ap.add_argument("--smoke", action="store_true", help="build the Part once and report, no optimisation")
+    ap.add_argument("--no-coarse", action="store_true", help="fine stage only (h 1.5: the 2h coarse grid loses the loads' regions)")
     ap.add_argument("--backend", default="auto", help="topo solver: auto | direct | mg (mg on a shared box: the direct factor is sized on total RAM)")
     a = ap.parse_args()
     if a.smoke:
         print(json.dumps(fork_snap()))
         p = setup(a.h); print("grid", p.shape, "design", int(p.design.sum()), "drawn", int(p.solid.sum()), "cases", len(p.cases)); sys.exit(0)
     from topo import Settings, optimise
-    optimise(setup, h=a.h, gen_cm3=a.gen, out_dir=a.out, name="scout_camera_mount", settings=Settings(backend=a.backend), git=a.git,
+    optimise(setup, h=a.h, gen_cm3=a.gen, out_dir=a.out, name="scout_camera_mount", settings=Settings(backend=a.backend), coarse=not a.no_coarse, git=a.git,
              extra=dict(snap=fork_snap(), clip_y=CLIP_Y, stroke=STROKE))
