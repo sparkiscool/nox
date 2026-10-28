@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 28 Oct (Overseer arms): v8c (45° socket tapers) ran out to 1.0 walls; v8d = v8b + full 2.5 tube sleeves (no rebuild possible: the sleeves move the voxel design mask by 649 cells): full reruns, rear here (gen 55), front in a new sibling (gen 70; the v8b sibling never started).
 - 28 Oct (Overseer arms): rear v8b 124 g (M), organic: cage crash 0.89 in the arm (target 1.0), 1.15 at the top plate corner (joint), flight 0.09, handling 0.23; solid FAIL only on four 0.016 mm³ build specks at the flat socket faces. v8c: drawn 45° socket tapers, rebuilt from v8b's layout (same design mask).
 - 28 Oct (Overseer arms): v8 organic too thin. Rear 96 g: cage crash 1.77, solid FAIL (fragments at the collars). Front 123 g: cage crash 3.30, handling 1.30, solid FAIL. v8b: no collars, top third screw only, rear gen 55 (here), front gen 70 (sibling).
 - 27 Oct (Overseer arms): the bottom third screw has no driver path (over the receiver, cage session): DEFAULT top third screw only (NOX_ARM_THIRD_BOTTOM=0, 5 inserts per arm), applied in the final run after the head v5 rebalance; alt: a new bottom hole outside |y| 40. v8 runs (both tongues) finish as the method check.
