@@ -1,27 +1,27 @@
 {
  "name": "overseer_hub_deck",
  "h": 1.0,
- "gen_cm3": 8.0,
+ "gen_cm3": 11.0,
  "coarse": {
-  "s_per_it": 2.2,
+  "s_per_it": 2.1,
   "cells": 36864,
-  "design_cells": 8313,
-  "cases": 68,
+  "design_cells": 8686,
+  "cases": 104,
   "load_cases": 20,
   "backend": "direct",
-  "peak_gb": 0.94
+  "peak_gb": 1.07
  },
  "smoke_iterations": 3,
  "room_audit": "PASS",
  "room_audit_rows": [
   {
-   "share": 0.45,
+   "share": 0.43,
    "at": [
-    57.5,
-    -8.1,
+    65.0,
+    -17.6,
     3.0
    ],
-   "loaded_cells": 4134
+   "loaded_cells": 162
   },
   {
    "share": 0.47,
@@ -42,7 +42,7 @@
    "loaded_cells": 220
   },
   {
-   "share": 0.49,
+   "share": 0.5,
    "at": [
     27.9,
     -24.6,
@@ -51,7 +51,7 @@
    "loaded_cells": 220
   },
   {
-   "share": 0.49,
+   "share": 0.5,
    "at": [
     27.9,
     24.4,
@@ -60,29 +60,47 @@
    "loaded_cells": 220
   },
   {
-   "share": 0.49,
+   "share": 0.51,
    "at": [
-    43.7,
-    12.5,
+    45.0,
+    13.0,
     3.0
    ],
-   "loaded_cells": 1620
+   "loaded_cells": 1632
+  },
+  {
+   "share": 0.51,
+   "at": [
+    76.0,
+    -8.0,
+    3.0
+   ],
+   "loaded_cells": 1152
+  },
+  {
+   "share": 0.54,
+   "at": [
+    40.0,
+    -8.0,
+    3.0
+   ],
+   "loaded_cells": 1152
   }
  ],
  "room_audit_min_share": 0.35,
  "fine": {
-  "s_per_it": 18.2,
+  "s_per_it": 19.3,
   "cells": 282624,
-  "design_cells": 66324,
-  "cases": 68,
+  "design_cells": 68042,
+  "cases": 86,
   "load_cases": 20,
   "backend": "direct",
-  "peak_gb": 5.3
+  "peak_gb": 5.65
  },
- "peak_gb": 5.3,
+ "peak_gb": 5.65,
  "wall_h": [
-  0.36,
-  0.9
+  0.37,
+  0.93
  ],
  "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
 }

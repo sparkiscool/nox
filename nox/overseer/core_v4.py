@@ -3,31 +3,14 @@ the lidar to a max of 3": the head hangs on 3 rods to cage nodes 15 / 16 / 17; n
 load: no tower, no sockets, back to 6 feet (the (60, ±17) pair and its slot-top pockets dropped); the RX moved 6 to +y off arm 2's new
 top screw (arm v8: M3 from above at (-24.5, 24.5), an 8 driver + 1 clear); the 4 arm top screws are in the access list. Body tie roots
 (front, rear, side, bay) stay parked with the body nodes (Spark 27 Oct).
-Overseer core v3 (27 Oct): v2 plus the L2 head's 4 braces on the hub deck's front hub (a tower beside the keels; cage + arm
-sessions moved the braces off the front arm beams; core concept: tower B over a top-plate block A, which put 765..788 N on each of
-4 fasteners in the 1.6 top plate). Everything else as v2. Overseer core v2: system pass for everything inside the cage except the arms and the nodes (Spark 27 Oct: "design everything
-else left on the newest overseer design inside the cage, excluding the arms ... ignore the actual mechanism of the battery
-cartridge and pocket for now"; "also ignore all nodes on the body for now"; round 6, 27 Oct night: "the body needs to also include
-the part that the nodes from the lidar goes to, this should be everything except the arms and the nodes"; "check if a run is
-already using the camera mount" (it is: the cage session's head_mount v1, L2 + both cameras on one print); "we didnt need to
-generate the part thats on the battery, the drone side just have an empty rectangle slot for now").
+Otherwise as core v2 / v3 (`core_v2.py`, `core_v3.py` docstrings): FC stack on the top plate's slots, the Pi 5 on the hub deck's
+4 posts, UBEC + buck bays on the front wing, the flow clip under the front wing clamped by the 2 front feet's screws, the battery side
+an empty rectangular slot (latch later). Every screw goes straight in with a screwdriver in assembly order. Not this session's: arms,
+cage nodes and tubes, the sensor head and its rods, the latch mechanism.
 
-v2 (from v1 round 5, PR 123):
-  FC stack   unchanged: MicoAir743-Lite on a 4-in-1 ESC straight on the top plate, turned 45° into the plate's slots, M3 studs.
-  hub deck   PETG on the bottom plate, now one piece with the keel front hub: 6 feet, M3 x 8 up from under the plate into Ø4.0
-             heat-set inserts in the feet ((-24, ±36.5), (65, ±22.5) Ø3.1 and (96, ±17) Ø3.5, every one a 360° hole in the STEP, every head outside the slot);
-             the Pi 5 on 4 posts, the UBEC + buck bays on the front wing, and 2 keel sockets (6.2 x 15, Spark 27 Oct coupons) on the
-             head's keel roots (96, ±12, 8) aimed at its lugs, so the L2 head's keels land on the core (layout v5 links)
-  flow clip  PETG under the front wing: the MTF-02P pocket (lens down, ahead of the battery slot so its 42° view clears it),
-             clamped under its 3.0 flange by the 2 front feet's screws (no screws of its own)
-  battery    the drone side is an empty rectangular slot (the receiver v2 envelope in pose, the latch set's masses kept for
-             balance and loads); no sled, nothing generated there until the latch is designed
-Every screw goes straight in with a screwdriver in assembly order. Not this session's: arms, cage nodes and tubes (the keels'
-far ends, the braces on the front arm beams), the sensor head and its cameras (head_mount v1 run), the latch mechanism.
+Context: main's layout v5 manifest, or with CORE_CTX_REF=<git ref> that ref's (the cage branch, until its head-rod change merges).
 
-Context (not edited here): layout v5 / cage v5 (`nox/overseer/overseer.assembly.json`).
-
-python3 nox/overseer/core_v2.py [out_dir]     (~1 min)
+[CORE_CTX_REF=origin/<cage branch>] python3 nox/overseer/core_v4.py [out_dir]     (~1 min)
 Drone frame: x forward, y left, z up; z 0 = bottom plate top; plate centre x 0. Numbers: `nox/dimensions.md` O, M, L,
 "System Overseer core".
 """
@@ -116,11 +99,10 @@ CAP = (10.0, 20.0)                 # low-ESR cap on the ESC battery pads, 35 V 4
 RX_TP = (-30.0, -18.0, 30.0, 46.0)  # v4: 6 to +y, 5.5 off arm 2's top screw line (Ø8 driver + 1 needs 5); RadioMaster XR2 16 x 12 x 6 (spec) on the top plate beside the stack, taped / zip-tied through the plate
 FEET_XY = [(-24.0, 36.5), (-24.0, -36.5), (65.0, 22.5), (65.0, -22.5), (96.0, 17.0), (96.0, -17.0)]   # v4: the v2 six (no head load on the deck)   # bottom plate Ø3.1 / Ø3.5 (front) holes, 360° in the STEP
 # v2 (concept review 27 Oct): every foot outside the battery slot (heads clear its reserved top 6: |y| 36.5 - 2.75 > 33.4, x 65 - 2.75 > 61.9);
-# v3: except (60, ±17), whose heads sit in reserved pockets Ø7 x 3.5 in the slot top (asked of the latch session);
-# each keel root closes a triangle into the plate: (96, ±17), (65, ±22.5) and the cross bar at x 96. M3 up from under the plate into inserts
+# M3 up from under the plate into inserts
 INSERT = (4.0, 5.7)                # Ruthex M3 x 5.7 heat-set insert, hole Ø4.0 (Q17), pressed into each foot from the plate side
 FOOT_H = 6.5                       # feet Ø12 x 6.5 (the deck's floor height), the insert hole Ø4.0 through (no thin cap over it)
-CLIP_FLANGE = 3.0                  # the flow clip's flange under the 2 front screw heads (review: only 3 of PETG in the keel joint's clamp)
+CLIP_FLANGE = 3.0                  # the flow clip's flange under the 2 front screw heads
 # (Spark 27 Oct: "do we really need that many": 4 carry 193 N a bolt in the 35 g crash vs 137 N with 6, E)
 # (review 27 Oct: (-72.5, ±31.75) are R3 outline fillets, not holes; (-65, ±36.5) sit under the rear arm roots)
 # Pi 5: board 85 x 56 x 1.6, M2.5 holes Ø2.7 on 58 x 49, 3.5 from the far edge and 23.5 from the USB-A / RJ45 edge (spec);
@@ -150,25 +132,37 @@ ARM_TOP = [(sx * 24.5, sy * 24.5) for sx in (1, -1) for sy in (1, -1)]   # arm v
 ARM_SCREWS = [(sx * a, sy * b) for sx in (1, -1) for sy in (1, -1) for a, b in ((52.14, 38.0), (38.0, 52.14))]   # bottom plate (derived)
 
 # ---------------------------------------------------------------- context: v5 manifest
-v5 = json.load(open(V5))
+CTX_REF = os.environ.get("CORE_CTX_REF")    # v4 (concept review 28 Oct): the cage's head-rod change is on its branch, not main yet:
+if CTX_REF:                                 # build the context from that ref's manifest and meshes (cached under OUT/ctx, not committed)
+    import subprocess
+    CTX = os.path.join(OUT, "ctx"); os.makedirs(CTX, exist_ok=True)
+    open(os.path.join(CTX, ".gitignore"), "w").write("*\n")
+    gs = lambda pth: subprocess.run(["git", "-C", ROOT, "show", f"{CTX_REF}:{pth}"], capture_output=True, check=True).stdout
+    v5 = json.loads(gs("nox/overseer/overseer.assembly.json"))
+    for p in v5["parts"]:
+        dst = os.path.join(CTX, p["mesh"].replace("/", "__"))
+        if not os.path.exists(dst): open(dst, "wb").write(gs(p["mesh"]))
+        p["mesh"] = os.path.relpath(dst, ROOT)
+else:
+    v5 = json.load(open(V5))
 REPLACED = {"hub electronics (FC, Pi 5 + deck, PDB, UBEC, buck, RX)", "wires", "pack", "cartridge", "receiver", "belly sled + pods",
             "flow MTF-02P", "TPU feet"}
-KEELS_NM = "spokes, ties, keels, braces, head struts"
+KEELS_NM = next(p["name"] for p in v5["parts"] if p["name"].startswith("spokes, ties"))   # main: "..., keels, braces, head struts"; cage branch: "..., head rods"
 context = [dict(p) for p in v5["parts"] if p["name"] not in REPLACED]
 ctx_mesh = {p["name"]: trimesh.load(os.path.join(ROOT, p["mesh"])) for p in context}
-# Spark 27 Oct: the keels' front hub is the body's (v5 drew it as a block x 86..99 inside the head mount part): the hub deck takes it
+# v3: the head mount's front hub block (x 86..99) was the deck's; main's v5 head still draws it, so it is dropped from the context
 HEAD_NM = next(p["name"] for p in context if p["name"].startswith("sensor head mount"))
 _hb = [b for b in ctx_mesh[HEAD_NM].split(only_watertight=False) if b.bounds[0][0] > 120.0]
-ctx_mesh[HEAD_NM] = cat(_hb)
+ctx_mesh[HEAD_NM] = cat(_hb) if not CTX_REF else ctx_mesh[HEAD_NM]
 for p in context:
-    if p["name"] == HEAD_NM:
+    if p["name"] == HEAD_NM and not CTX_REF:
         p["mesh"] = os.path.relpath(os.path.join(PARTS, "sensor_head_mount_without_front_hub.stl"), ROOT); ctx_mesh[HEAD_NM].export(os.path.join(ROOT, p["mesh"]))
-        p["note"] = "v5 head mount without its front hub block (x 86..99 on the bottom plate): the keel sockets are the hub deck's now (Spark 27 Oct)"
-_lk = [b for b in ctx_mesh[KEELS_NM].split(only_watertight=False)
-       if min(np.linalg.norm(b.vertices - np.array(r_), axis=1).min() for r_ in OLD_ROOTS) > 10.0]
+        p["note"] = "v5 head mount without its front hub block (x 86..99 on the bottom plate): dropped from the context (core v4: the head hangs on 3 rods to the cage)"
+_lk = [b for b in ctx_mesh[KEELS_NM].split(only_watertight=False) if "keels" not in KEELS_NM or
+       (min(np.linalg.norm(b.vertices - np.array(r_), axis=1).min() for r_ in OLD_ROOTS) > 10.0)]
 ctx_mesh[KEELS_NM] = cat(_lk)
 for p in context:
-    if p["name"] == KEELS_NM:
+    if p["name"] == KEELS_NM and "keels" in KEELS_NM:
         p["mesh"] = os.path.relpath(os.path.join(PARTS, "links_without_keels_braces.stl"), ROOT); ctx_mesh[KEELS_NM].export(os.path.join(ROOT, p["mesh"]))
         p["note"] = "v5 links without the 2 keels and 4 L2 braces (cage session 27 Oct: the head hangs on 3 rods to the cage; their branch claude/gracious-mccarthy-5rctc9)"
 ARMS = [ctx_mesh[f"arm {i}"] for i in (1, 2, 3, 4)]
@@ -248,7 +242,7 @@ W = {
     "UBEC 5 V -> Pi GPIO 5 V pins (+y edge)": ([(40, 0, 9), (32, 20, 12), (PI_CX, 24, Z_PI + 4)], 1.5),
     "buck 12 V -> nose (the L2 owner takes it there): up off the buck and forward (v10: off the deck floor)": ([(46, 13, 15), (62, 4, 24), (100, 0, 33)], 1.5),
     "FC <-> Pi (USB), out past the top plate's -y edge": ([(0, -18, Z_STACK_TOP - 3), (0, -58, Z_TP + 2), (0, -62, 30), (PI_X0 - 8, -15, Z_PI + 8)], 1.5),
-    "FC <-> RX": ([(-18, 10, Z_STACK_TOP - 3), (-24, 31, Z_TP + 4)], 1.5),
+    "FC <-> RX (round the +x side of arm 2's top screw line, into the RX's +x end)": ([(-18, 10, Z_STACK_TOP - 3), (-12, 30, Z_TP + 4), (-17, 38, Z_TP + 4)], 1.5),
     "FC UART -> flow (over the top plate's front edge, down the front wing beside the UBEC, round the plate's nose to the clip)": (
         [(10, -10, Z_STACK_TOP - 4), (50, -4, Z_TP + 2), (64, -2, 32), (104, -2, 32), (104, -2, Z_PLATE_BOT - 1), (FLOW_X + 9, 0, LENS_Z + 3)], 1.5),   # v10: down in front of the hub, between the two sides' sockets
 }
@@ -341,12 +335,12 @@ for k, (sx, sy) in enumerate([(1, 1), (1, -1), (-1, 1), (-1, -1)]):
 
 man = {k: v for k, v in v5.items() if k not in ("parts", "contact_pairs", "openings", "access", "note", "name")}
 man.update({"name": "Overseer core v4", "machine": "overseer",
-            "note": ("Overseer core v2 (27 Oct, Spark: everything inside the cage except the arms and the nodes, the keel roots of the L2 head included; "
+            "note": ("Overseer core v4 (28 Oct, Spark: everything inside the cage except the arms and the nodes; no head load on the core since the cage's 3 head rods; "
                      "the battery side an empty rectangular slot; latch mechanism, cameras and the head not this session's; screwdriver access, fewest pieces): "
                      "v5 / cage v5 context parts unchanged (nox/overseer/overseer.assembly.json); the core, the latch set in pose (masses only: the slot's "
                      "contents, latch later) and the feet placeholders from nox/overseer/core_v2.py."),
             "parts": context + core, "contact_pairs": contact, "openings": openings, "access": acc})
-MAN = os.path.join(HERE, "overseer_core.assembly.json")
+MAN = os.path.join(HERE, "overseer_core.assembly.json") if not CTX_REF else os.path.join(OUT, "assembly_on_cage_branch.json")   # never point the shared manifest at uncommitted meshes
 with open(MAN, "w") as f:
     f.write("{\n" + ",\n".join(f' {json.dumps(k)}: ' + (("[\n" + ",\n".join("  " + json.dumps(p) for p in v) + "\n ]") if k == "parts" else json.dumps(v))
                                for k, v in man.items()) + "\n}\n")

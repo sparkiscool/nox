@@ -3,10 +3,10 @@ the lidar), so the deck carries no head load: no sockets, no tower (v9..v11 supe
 `runs/overseer_core/v4/result.json` and the assembly `nox/overseer/overseer_core.assembly.json`.
 
   hub deck   on the bottom plate, plate face on the bed (build +z). Drawn: 6 feet Ø14 x 6.5 with Ø4.0 insert holes through; 4 Pi
-             posts Ø7 to z 8 on Ø12 x 6 root webs; UBEC / buck seat rails (VHB tape). Envelope: z 0..6.5 over the plate x -76..100,
+             posts Ø7 to z 8 on Ø12 x 6 root webs; UBEC / buck seat pads Ø12, 4 a bay (VHB tape). Envelope: z 0..6.5 over the plate x -76..100,
              |y| <= 42; cuts: the UBEC / buck columns (placed straight down), the arm session's root envelopes and grown arms, the
-             cage's front tie tubes (parked body node), the core's wire routes, the top plate.
-             Loads: the payload (Pi 55 g at its CG through the posts, UBEC 15, buck 6) at 35 g in 14 directions (crash), flight 4 g,
+             the core's wire routes, the top plate.
+             Loads: the payload (Pi 55 g at its CG through the posts, UBEC 15, buck 6, the deck wires 20 g on the bays) at 35 g in 14 directions (crash), flight 4 g,
              2 g x / y, landing 6 g; USB plug 20 N; 50 N press on the Pi.
 
 python3 nox/overseer/core_topo_v4.py hub_deck [h] [gen_cm3] [--no-git] [--no-coarse] [--lean] [--ver=v12] [--set key=value]   (NOX_SETUP_ONLY=1: setup only)
@@ -25,7 +25,7 @@ if PIECE != "hub_deck":
     sys.exit(__doc__)
 args = [a for i, a in enumerate(sys.argv[2:], 2) if not a.startswith("-") and sys.argv[i - 1] != "--set"]
 H = float(args[0]) if args else 1.0
-GEN = float(args[1]) if len(args) > 1 else 8.0    # cm3 generated (v12: payload loads only, worst bolt 13.5 N; min member governs, E)
+GEN = float(args[1]) if len(args) > 1 else 11.0   # cm3 generated (v12: payload loads only, worst bolt 13.5 N; min member governs; pads not rails, so 11 (review), E)
 GIT = "--no-git" not in sys.argv
 COARSE = "--no-coarse" not in sys.argv          # sled v2: the 3.0 coarse grid went singular at h 1.5 (v1), so run the fine grid only
 LEAN = "--lean" in sys.argv                     # sled v2: flight / landing cases left out, the 35 g crash cases cover them
@@ -37,7 +37,7 @@ for i_, a_ in enumerate(sys.argv):              # engine keeps F and U for every
 
 R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v4", "result.json")))
 C = R["coupon"]
-A = json.load(open(os.path.join(HERE, "overseer_core.assembly.json")))
+A = json.load(open(os.environ.get("CORE_ASSEMBLY") or os.path.join(HERE, "overseer_core.assembly.json")))   # CORE_ASSEMBLY: core v4's manifest on the cage branch (runs/overseer_core/v4/assembly_on_cage_branch.json)
 M = {p["name"]: trimesh.load(os.path.join(ROOT, p["mesh"])) for p in A["parts"]}
 PI_NM = "Pi 5 + Active Cooler"
 G = 9.81e-3                                     # N per g per g
@@ -103,16 +103,10 @@ def hub_deck_bodies():
     feet = [tuple(f) for f in R["feet_xy"]]
     ph = [tuple(p) for p in R["pi_holes"]]
     zp = C["z_pi"]
-    # bay seats (hub deck v2): rails under the UBEC and the buck, inside the arm envelopes
+    # bay seats (v12, concept review 28 Oct: drawn is attachment only): 4 pads Ø12 x 6.5 under each bay's corners for its VHB tape
+    # (~450 mm² a bay against ~9 N in a 35 g crash, E); v2..v11's continuous seat rails were load-carrying bars (7.6 cm³ drawn)
     ub, bk = M["UBEC 5 V"].bounds, M["buck 12 V"].bounds
-    rails = [box(ub[0][0], ub[1][0], y - 3, y + 3, 0, T) for y in (ub[0][1] + 3, ub[1][1] - 3)]
-    rails += [box(bk[0][0], bk[1][0], y - 3, y + 3, 0, T) for y in (bk[0][1] + 3, min(bk[1][1] - 3, 17.0))]
-    rails += [box(ub[1][0] - 6, ub[1][0], ub[0][1], ub[1][1], 0, T), box(bk[0][0], bk[0][0] + 6, ub[0][1], bk[1][1], 0, T)]
-    # zip-tie channels 3 x 2.5 open on the plate side (the tie runs between deck and plate), 4.0 of deck above: v2's tunnels at z 2..4.5
-    # left 2.0 skins across the whole deck, and the smoke (27 Oct) found the front hub cut off from the rest at a 3.2 member
-    # v4: no zip-tie channels: the UBEC and the buck sit on the seat rails on 3M VHB foam tape (DEFAULT; ~576 mm² a bay against ~5 N in
-    # a 35 g crash). Any channel under the bays crosses the whole deck and leaves < 6.25 of it above, which cut the front hub off from
-    # the rest at the solid gate's member (v4 smoke 27 Oct: gate members capped at 4.96)
+    rails = [cyl(x, y, 0, T, 6.0) for b_ in (ub, bk) for x in (b_[0][0] + 6.0, b_[1][0] - 6.0) for y in (b_[0][1] + 6.0, b_[1][1] - 6.0)]
     slots = []
     # v5 (PR 148 review): a root web Ø12 x 6.0 under every Pi post (a gusset into the body; v4's bare Ø7 posts were 99.8 % in the main
     # body at the gate's 2.0 erosion, under its 99.9 % bar); 6.0 stays under the board's underside parts (z 6.5..8)
@@ -120,12 +114,9 @@ def hub_deck_bodies():
     drawn = U([cyl(x, y, 0, T, FOOT_R) for x, y in feet] + [cyl(x, y, 0, zp, 3.5) for x, y in ph] + roots + rails)
     wires = [U([man(b) for b in M["wires"].split(only_watertight=False) if len(b.faces) > 3])]   # the core's wire routes, exact tubes (a hull per
     # route would be a slab across the deck); the flow lead crosses it
-    ties = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result.json")))["links"]   # the cage's front core ties (parked body node)
-    tie_cut = [man(trimesh.creation.cylinder(4.0, np.linalg.norm(np.subtract(b, a)), sections=24, segment=np.array([a, b], float)))
-               for k, (a, b) in ties.items() if k.startswith("core tie front")]
     plates = [man(M["top plate"])]
     bays = [box(m.bounds[0][0] - 1, m.bounds[1][0] + 1, m.bounds[0][1] - 1, m.bounds[1][1] + 1, T, Z_UNDER) for m in (M["UBEC 5 V"], M["buck 12 V"])]
-    cuts = U(plates + bays + [cyl(x, y, -1, T + 1, INS[0] / 2) for x, y in feet] + tie_cut + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots + wires
+    cuts = U(plates + bays + [cyl(x, y, -1, T + 1, INS[0] / 2) for x, y in feet] + [cyl(x, y, zp - 4.0, zp + 1, 1.1) for x, y in ph] + slots + wires
              + [grown(f"arm {i}", 1.0) for i in (1, 2, 3, 4)]
              + [arm_env(a_) for a_ in (45, -45, 135, -135)])                                   # the arm session's root envelopes (u >= 58, |v| <= 21)
     env = box(-76, 100, -42, 42, 0, T)
@@ -145,7 +136,7 @@ def hub_deck_setup(h):
 
     def payload(name, a, cls):
         f = rigid_split(posts, -55 * G * a, pi_c)
-        reg = [(post_reg[i], f[i]) for i in range(4)] + [(bay(ub), -15 * G * a), (bay(bk), -6 * G * a)]
+        reg = [(post_reg[i], f[i]) for i in range(4)] + [(bay(ub), -(15 + 10) * G * a), (bay(bk), -(6 + 10) * G * a)]   # + the deck wires' 20 g, half on each bay (E)
         p.load_multi(name, reg, cls=cls, accel=-a)
     for k, d in enumerate(DIRS14):
         payload(f"crash {k} (35 g)", 35 * d, "crash")
