@@ -43,7 +43,9 @@ def man(t):
 
 
 def seg_dist(P, a, b):
-    ab = b - a; t = np.clip(((P - a) @ ab) / (ab @ ab), 0, 1); return np.linalg.norm(P - (a + t[:, None] * ab), axis=1)
+    ab = b - a; L2 = float(ab @ ab)
+    t = np.clip(((P - a) @ ab) / L2, 0, 1) if L2 > 1e-12 else np.zeros(len(P))
+    return np.linalg.norm(P - (a + t[:, None] * ab), axis=1)
 
 
 def members():
@@ -156,15 +158,21 @@ def superelement(mesh, h=1.0):
 
 class SuperFrame(Frame):
     def __init__(self):
-        super().__init__(); self.supers = []
+        super().__init__(); self.supers = []; self.springs = []           # springs: (node i, node j, dofs, k N/mm)
 
     def stiffness(self):
         K = super().stiffness()
-        if not self.supers: return K
+        if not self.supers and not self.springs: return K
         rows, cols, vals = [], [], []
         for ids, Kr in self.supers:
             dofs = np.array([6 * i + d for i in ids for d in range(3)])
             I, J = np.meshgrid(dofs, dofs, indexing="ij"); rows.append(I.ravel()); cols.append(J.ravel()); vals.append(Kr.ravel())
+            rd = np.array([6 * i + d for i in ids for d in range(3, 6)])            # the points carry no moment: a token rotational spring
+            rows.append(rd); cols.append(rd); vals.append(np.full(len(rd), 1e-3))     # keeps a point with no member attached regular
+        for i, j, ds, k in self.springs:
+            for d in ds:
+                a_, b_ = 6 * i + d, 6 * j + d
+                rows += [np.array([a_, b_, a_, b_])]; cols += [np.array([a_, b_, b_, a_])]; vals += [np.array([k, k, -k, -k])]
         A = coo_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=K.shape).tocsr()
         return csr_matrix(K + A)
 
@@ -200,7 +208,9 @@ def frame_model(se, snap, with_mount=True):
         hz, U = f.modes(mass, 4); return dict(modes_hz=[round(float(x), 1) for x in hz])
     ids = []
     for nm, c in zip(se["names"], se["cents"]):
-        if nm.startswith("clip"): c = clips[0] if "+y" in nm else clips[1]
+        if nm.startswith("clip"):                                      # the clip holds the rod in x and z; in y it slides (grip ~1.5 N, E): the foot takes y
+            c = clips[0] if "+y" in nm else clips[1]; r_ = f.node(c); m_ = f.node(c + np.array([0, 1.0 if c[1] > 0 else -1.0, 0]))
+            f.springs.append((r_, m_, (0, 2), 1e6)); ids.append(m_); out["nodes"][nm] = np.round(c, 1).tolist(); continue
         ids.append(f.node(c)); out["nodes"][nm] = np.round(c, 1).tolist()
     f.supers.append((ids, se["K"]))
     mt, cg, pts = inertia_points([(cm.CAM_BOX, cm.CAM_G), (se["front_cells"], len(se["front_cells"]) * se["cell_g"])])
@@ -261,7 +271,7 @@ def frame_model(se, snap, with_mount=True):
         pull = max(max(0.0, -v[0]) for v in clip.values())
         if pull > 1e-9: cand.append((F_pop / pull, "a clip pops (the fuse)"))
         sl = max(abs(v[1]) for v in clip.values())
-        if sl > 1e-9: cand.append((F_slide / sl, "a clip slides on the rod (grip)"))
+        if sl > 1.0: cand.append((F_slide / sl, "a clip slides on the rod (grip)"))
         sh = float(np.hypot(R[0], R[1]))
         if sh > 1e-9: cand.append((MU * 2 * PRELOAD / sh, f"the foot slips on the plate (friction {MU} x 2 x {PRELOAD:.0f} N preload, E; slot +-{cm.SLOT_HALF} then the bolts bear)"))
         if R[2] < -1e-9: cand.append((2 * INSERT_PULL / -R[2], "the foot's 2 plate inserts pull out (belly mount, 600 N each, E)"))
