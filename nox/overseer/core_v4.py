@@ -370,7 +370,7 @@ say(f"   battery slot (empty, x {RB[0][0]:.1f}..{RB[1][0]:.1f}, y ±{RB[1][1]:.1
 heads = cat([cyl(2.75, Z_PLATE_BOT - (CLIP_FLANGE if x > 90 else 0) - 3.0, Z_PLATE_BOT - (CLIP_FLANGE if x > 90 else 0), x, y) for x, y in FEET_XY])
 say(f"deck screw heads (M3 Ø5.5 x 3) x the battery slot {ov(heads, slot):.1f} mm³ (v4: the (60, ±17) pair and its slot pockets dropped) "
     f"")
-say(f"deck x arms {sum(ov(DECK, arm) for arm in ARMS):.1f}, x the v5 links (keels and braces dropped) {ov(DECK, ctx_mesh[KEELS_NM]):.1f}, "
+say(f"deck x arms {sum(ov(DECK, arm) for arm in ARMS):.1f}, x the links {ov(DECK, ctx_mesh[KEELS_NM]):.1f}, "
     f"x cage nodes {ov(DECK, ctx_mesh['cage shell nodes']):.1f} mm³")
 say(f"flow clip x bottom plate {ov(CLIP, ctx_mesh['bottom plate']):.1f}, x the v5 links and nodes {ov(CLIP, ctx_mesh[KEELS_NM]):.1f} / {ov(CLIP, ctx_mesh['cage shell nodes']):.1f}, "
     f"flow x clip {ov(flow, CLIP):.1f} (pocket cut in the piece), deck x clip {ov(DECK, CLIP):.1f} mm³")

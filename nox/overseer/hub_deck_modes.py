@@ -16,9 +16,11 @@ from topo.material import MATERIALS, stiffness
 from solid_check import voxels
 
 MESH = sys.argv[1]; OUTJ = sys.argv[2] if len(sys.argv) > 2 else None; H = float(sys.argv[3]) if len(sys.argv) > 3 else 1.0
-R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", "result.json")))   # core v3 (the tower)
-RF = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v3", "core_root_forces_low.json")))
-PTS = {k: (np.array(v["core"]), np.array(v["lug"])) for k, v in RF["points"].items()}   # core = the tube end
+CORE = os.environ.get("CORE_VER", "v4")                                # v4 (27 Oct): no head load, no sockets; v3: the tower
+R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", CORE, "result.json")))
+_RFP = os.path.join(ROOT, "runs", "overseer_core", CORE, "core_root_forces_low.json")
+RF = json.load(open(_RFP)) if os.path.exists(_RFP) else {"points": {}, "cases": {}}
+PTS = {k: (np.array(v["core"]), np.array(v["lug"])) for k, v in RF["points"].items()}   # core = the tube end (none in v4)
 A = json.load(open(os.path.join(HERE, "overseer_core.assembly.json"))); PM = {p["name"]: p for p in A["parts"]}
 mat = MATERIALS["PETG"]; RHO = mat.density * 1e-9                      # t/mm3 (mm, N, s)
 E_TUBE, A_TUBE = 100e3, np.pi * (3.0 ** 2 - 2.0 ** 2)                  # 6/4 carbon tube (E), MPa and mm2
@@ -81,9 +83,9 @@ for nm_, (a_, b_) in PTS.items():
 DIRS = {0: [1, 0, 0], 4: [0, 0, 1]}
 res_react = {}
 for k_, dv in DIRS.items():
-    case = next(c for c in RF["cases"] if c.startswith(f"crash {k_} "))
+    case = next((c for c in RF["cases"] if c.startswith(f"crash {k_} ")), f"crash {k_} (35 g, payload only)")
     F = np.zeros(3 * nn)
-    for nm_, n_ in RF["cases"][case].items():
+    for nm_, n_ in RF["cases"].get(case, {}).items():
         a_, b_ = PTS[nm_]; d = (b_ - a_) / np.linalg.norm(b_ - a_); L_s = 15.6 if nm_.startswith("L2") else 15.0
         rel = X - a_; t = rel @ d; r = np.linalg.norm(rel - np.outer(t, d), axis=1)
         wall = (t >= 0) & (t <= L_s) & (r >= 2.9) & (r <= 3.1 + 1.2 * H)
