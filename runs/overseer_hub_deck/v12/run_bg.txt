@@ -1,1 +1,2 @@
 run_bg: start 2026-10-28T00:30Z: python3 nox/overseer/core_topo_v4.py hub_deck 1.0 11 --no-git --ver=v12
+run_bg: exit 0, wall 0.70 h, peak 5.5 GB (M), 28 Oct 01:12: python3 nox/overseer/core_topo_v4.py hub_deck 1.0 11 --no-git --ver=v12
