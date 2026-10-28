@@ -1,0 +1,38 @@
+=== overseer_arm_rear: rebuild from /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/rear_v8b_src/density.npz (layout not rerun)
+=== overseer_arm_rear: rebuild from /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/rear_v8b_src/density.npz (layout not rerun)
+overseer_arm_rear: grid (104, 56, 32) h 1.5 = 186,368 cells; design 74,267 (250.7 cm3), drawn 10,546, void 101,555
+  insert rod 0: 546 cells, modulus x23.2
+  insert rod 1: 546 cells, modulus x23.2
+  insert rod 2: 546 cells, modulus x23.2
+  insert rod 3: 546 cells, modulus x23.2
+  support default: 630 cells, 1542 nodes
+  support bosses: 280 cells, 792 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_rear: grid (104, 56, 32) h 1.5 = 186,368 cells; design 74,267 (250.7 cm3), drawn 10,546, void 101,555
+  insert rod 0: 546 cells, modulus x23.2
+  insert rod 1: 546 cells, modulus x23.2
+  insert rod 2: 546 cells, modulus x23.2
+  insert rod 3: 546 cells, modulus x23.2
+  support default: 630 cells, 1542 nodes
+  support bosses: 280 cells, 792 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (40.77 cm3); 2.19 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (40.77 cm3); 2.19 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.226 of 74,916 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.226 of 74,916 design cells
+layout: WARNING nearly mirrored in y (6.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (6.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (7.5% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in z (7.5% of passive cells differ): no symmetry
+layout: 9 drawn bodies (12,081 cells), held solid in every realization; eroded filter: masked
+layout: 9 drawn bodies (12,081 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 42 tie cases (7 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 53 load cases + 42 tie cases (7 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (104, 56, 32) = 186,368 elements, 294,117 active dofs; backend direct (direct estimate 3.4 GB, budget 11.8 GB)
+fem: grid (104, 56, 32) = 186,368 elements, 294,117 active dofs; backend direct (direct estimate 3.4 GB, budget 11.8 GB)
+build: organic surface at pitch 0.300 mm (x5), skins 33.68 cm3, field 106.31 cm3, in env - cuts 97.51 cm3 (layout 97.51, level offset +0.353 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,053,380 faces, 187 s
+build: organic surface at pitch 0.300 mm (x5), skins 33.68 cm3, field 106.31 cm3, in env - cuts 97.51 cm3 (layout 97.51, level offset +0.353 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,053,380 faces, 187 s
+build: 31 shells, volumes [97650.0, 0.0, 0.0, 0.0, 0.0, 0.0] mm3; dropped specks [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; sealed cavities kept [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] mm3
+build: 31 shells, volumes [97650.0, 0.0, 0.0, 0.0, 0.0, 0.0] mm3; dropped specks [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]; sealed cavities kept [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] mm3
