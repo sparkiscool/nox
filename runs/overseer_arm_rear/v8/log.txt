@@ -326,3 +326,15 @@ layout: beta 16 done: eroded design 3 bodies, main 100.0%; drawn bodies outside 
 layout: beta 16 done: eroded design 3 bodies, main 100.0%; drawn bodies outside the main body: 2
 it  58 beta   32 J   0.5720 vol 0.1231 (dil 0.2515 g -0.005) grey  2.4% ch 0.100 worst held b1 mx 142 87.9s
 it  58 beta   32 J   0.5720 vol 0.1231 (dil 0.2515 g -0.005) grey  2.4% ch 0.100 worst held b1 mx 142 87.9s
+it  59 beta   32 J   0.5621 vol 0.1240 (dil 0.2526 g -0.001) grey  2.4% ch 0.100 worst held b1 mx 139 85.7s
+it  59 beta   32 J   0.5621 vol 0.1240 (dil 0.2526 g -0.001) grey  2.4% ch 0.100 worst held b1 mx 139 85.7s
+it  60 beta   32 J   0.5598 vol 0.1241 (dil 0.2527 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 138 87.1s
+it  60 beta   32 J   0.5598 vol 0.1241 (dil 0.2527 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 138 87.1s
+it  61 beta   32 J   0.5578 vol 0.1242 (dil 0.2527 g +0.001) grey  2.4% ch 0.100 worst held b1 mx 138 86.6s
+it  61 beta   32 J   0.5578 vol 0.1242 (dil 0.2527 g +0.001) grey  2.4% ch 0.100 worst held b1 mx 138 86.6s
+it  62 beta   32 J   0.5540 vol 0.1239 (dil 0.2524 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 139 87.3s
+it  62 beta   32 J   0.5540 vol 0.1239 (dil 0.2524 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 139 87.3s
+it  63 beta   32 J   0.5521 vol 0.1240 (dil 0.2525 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 139 87.8s
+it  63 beta   32 J   0.5521 vol 0.1240 (dil 0.2525 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 139 87.8s
+it  64 beta   32 J   0.5514 vol 0.1240 (dil 0.2524 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 139 88.1s
+it  64 beta   32 J   0.5514 vol 0.1240 (dil 0.2524 g -0.000) grey  2.4% ch 0.100 worst held b1 mx 139 88.1s
