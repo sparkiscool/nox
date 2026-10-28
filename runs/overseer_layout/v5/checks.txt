@@ -1,11 +1,11 @@
 balance (v2: motor square onto the CG; catch 30 aft, L2 base z 51; geodesic frequency 2); scan start [0.85] x prop snap [True] x dome [60.0]: structure first (the most compact valid shell sets the bar: volume, mass; no tube-length limit), then the least prop blockage among shells within 10 % / 3 % of it:
    motors  52.1 ahead: CG x  63.2,  3448 g, 63 tubes
-   motors  63.2 ahead: CG x  65.6,  3458 g, 63 tubes
-   motors  65.6 ahead: CG x  66.0,  3460 g, 63 tubes
+   motors  63.2 ahead: CG x  65.5,  3458 g, 63 tubes
+   motors  65.5 ahead: CG x  66.0,  3460 g, 63 tubes
    motors  66.0 ahead: CG x  66.1,  3461 g, 63 tubes
-   motors  66.1 ahead: CG x  66.2,  3461 g, 63 tubes
-start 0.85 dome 60 snap 1: valid: shell 59.3 L, 63 tubes, longest 446, props 20.3, 3461 g, prop blockage top 7.1 % / bottom 13.5 %
-structure bar: start 0.85 dome 60 snap 1 (59.3 L, longest 446, 3461 g, blockage 7.1 / 13.5 %); picked start 0.85 dome 60 snap 1 (blockage 7.1 / 13.5 %)
+   motors  66.1 ahead: CG x  66.1,  3461 g, 63 tubes
+start 0.85 dome 60 snap 1: valid: shell 59.3 L, 63 tubes, longest 446, props 20.3, 3461 g, prop blockage top 7.2 % / bottom 13.5 %
+structure bar: start 0.85 dome 60 snap 1 (59.3 L, longest 446, 3461 g, blockage 7.2 / 13.5 %); picked start 0.85 dome 60 snap 1 (blockage 7.2 / 13.5 %)
 
 chosen: start 0.85 (smallest valid shell); motor square 66.1 ahead of the plate centre; motors (205.6, ±139.5) and (-73.4, ±139.5); front arms r 248, rear r 158
 L2: base (384.0, 0, 51), axis 15 deg below +x (Spark 24 Oct)
@@ -13,7 +13,7 @@ cameras (Spark 27 Oct: no down camera; the two on either side of the L2, their f
    camera alternatives: portrait yaw 50.0 pitch -15: 3.45 sr, gap 29.0, 55 % of the L2 field; portrait yaw 37.5 pitch +0: 3.45 sr, gap 3.0, 55 % of the L2 field
 shell: 24 nodes (6 on the opening ring), 63 tubes, 40 triangles; tubes 116 .. 446 (mean 254), 15.99 m; node extents 670 x 655 x 211 (h/w 0.32); hull residual 13.77 (C)
 largest cell: inscribed circle Ø153 between tube surfaces (C)
-carbon: shell 63 tubes 6/4 (Spark 26 Oct), shortest 116; links 31 (25 tube 6/4, the rest rod 3.0), 5.54 m, shortest 35 (head rod c); printed struts (< 33): none
+carbon: shell 63 tubes 6/4 (Spark 26 Oct), shortest 116; links 31 (25 tube 6/4, the rest rod 3.0), 5.53 m, shortest 52 (head rod c); printed struts (< 33): none
 props: shell tubes 20.3 off the swept disks (≥ 12, 3D), nodes 34.0, links 16.5 (core tie front.1) (C)
    inside: props (disks) 14.3 from the nearest face plane (C)
    inside: arms + motors 51.1 from the nearest face plane (C)
@@ -21,15 +21,15 @@ props: shell tubes 20.3 off the swept disks (≥ 12, 3D), nodes 34.0, links 16.5
    inside: belly 3.0 from the nearest face plane (C)
 opening: 6 nodes, a ring 404 x 239 round the swap zone 240 x 136 (receiver 179.6 x 76.2 M + 30 a side), plane z -79.9 = cartridge bottom - 3; v2 TPU feet the floor contact (z -93.1)
 swap zone (receiver + spare, from the cartridge bottom down): clear (0 mm³, M)
-prop blockage (Spark 26 Oct, secondary to structure): 7.1 % of the disks' thrust shadowed from above, 13.5 % from below (plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell 7.1 / 7.9 %, links 0.0 / 6.6 %
-L2 field (Spark 26 Oct: outside the cage, not blocked at all): 0.0 % of its hemisphere crossed; the most forward cage member surface is 3.0 behind its base plane (head rod +1) (C)
+prop blockage (Spark 26 Oct, secondary to structure): 7.2 % of the disks' thrust shadowed from above, 13.5 % from below (plan shadow of tubes, nodes and links outside the arms' own shadow, annulus 0.2..1 R weighted by r, E); shell 7.2 / 7.9 %, links 0.0 / 6.6 %
+L2 field (Spark 26 Oct: outside the cage, not blocked at all): 0.0 % of its hemisphere crossed; the most forward cage member surface is 9.0 behind its base plane (head rod c) (C)
 cameras: nothing of the drone in either view (C)
 sensor head outside the frozen cage (cage_v5_shell.json): the L2 base where it was (384.0, 0, 51); the cameras' bodies 19.5 off its tubes and nodes, nothing of it in their views (C)
 L2 mount: the printed sensor head mount (one piece with both cameras): the L2 and camera bolt bosses and the sockets drawn, the topology between them; no guard ring or camera bars (the cage guards both, Spark 27 Oct); the cage's front centre node in it; on 0 keels to the front hub and 0 braces to the core's hub deck tower (BRACE_ROOT), 0 struts to the side cage nodes; break order: the apex lugs are the printed fuse (requirement: they let go before the L2 base, E)
    cartridge in the flow view (0.0 % of its points)
 flow: view checked (lines above list anything in view)
 cage: shell 734 g (tubes 389 E + nodes 345 M), links 125 g (C); v0 rings ~96 g, v1 sphere 802 + 98 g (E)
-mass ~3461 g (E; latch set 338.5 M), CG (66.2, -0.2, 16.0) vs thrust centre (66.1, 0): 0.2 off; pack + cartridge out: 26.8 off (2659 g; layout mass model, the gated number is system_check's)
+mass ~3461 g (E; latch set 338.5 M), CG (66.1, -0.2, 16.0) vs thrust centre (66.1, 0): 0.2 off; pack + cartridge out: 26.8 off (2658 g; layout mass model, the gated number is system_check's)
 T/W 1.91 (C on E mass, 1650 gf a motor); CG 66 under the prop plane; pitch inertia 109.2 g m² (E, point masses)
 compact: shell hull 59.3 L vs the parts-with-margins hull 37.8 L (C)
 assembly mass 3461 g (E) vs the layout model 3461 g

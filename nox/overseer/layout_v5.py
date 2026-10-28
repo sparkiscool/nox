@@ -212,11 +212,12 @@ KEELS = os.environ.get("V5_KEELS", "0") == "1"     # the 2 keels: off (DEFAULT 2
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
 BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
-HEAD_RODS = None if os.environ.get("V5_HEAD_RODS", "3") != "3" else ((-40.0, 0.0), (100.0, 70.0), (354.0, 223.0, 128.7))
+HEAD_RODS = None if os.environ.get("V5_HEAD_RODS", "3") != "3" else ((40.0, 0.0, 12.0), (100.0, 80.0, 12.0), (354.0, 223.0, 128.7))
 # the head on 3 rods (Spark 27 Oct: "reduce the number of rods going to the lidar to a max of 3"; runs/overseer_head_rods/v1, F on E):
 # a centre rod from the head's bottom (u -40 along the L2 up axis, 6 behind its base plane) to the cage's front centre node and a mirrored
-# pair from above the cameras (u +100, y ±70) to the top-side front nodes, which also guards both cameras (10.4 / 9.8 ahead, C); 151.8 Hz rigid /
-# 128.4 Hz PETG joints (F on E); the stiffer y ±85 (169 Hz) is 182 wide, over the A1 mini's 180. The head holds no cage node;
+# pair from above the cameras to the top-side front nodes, which also guards both cameras. 28 Oct: the sockets' bosses (12 deep + a 3.0 floor)
+# must stay behind the L2 base plane and out of the camera views (v5 sweep: the plane cut the side bosses to a 1.2 wall), so the socket points
+# sit 12 behind the plane: centre (u +40), pair (u +100, y ±80); 117.3 / 93.2 Hz rigid / PETG joints (F on E, mount 143.7 g E; 120.3 / 96.9 at 100 g). The head holds no cage node;
 # no braces, keels or struts. V5_HEAD_RODS=8 keeps the 4 braces + 4 struts
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
@@ -843,11 +844,11 @@ def attach(g, nodes, ring_ids):
         g["head_attach"] = sorted({tuple(np.round(np.asarray(b_, float), 2)) for k, (a_, b_) in head.items() if "strut" in k or "tie" in k})
         if HEAD_RODS:                                                  # the head on 3 rods to the cage (Spark 27 Oct: "max of 3"; head_rods.py)
             cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]; c17 = max(cn_, key=lambda k_: nodes[k_][0])
-            hp_ = lambda u_, y_: g["B"] - A * 6.0 + np.array([-A[2], 0, A[0]]) * u_ + np.array([0, y_, 0])
+            hp_ = lambda u_, y_, b_=6.0: g["B"] - A * b_ + np.array([-A[2], 0, A[0]]) * u_ + np.array([0, y_, 0])
             extra["head rod c"] = (hp_(*HEAD_RODS[0]), nodes[c17]); g["head_attach"] = [tuple(np.round(nodes[c17], 2))]
             for sy, nm in ((1, "+1"), (-1, "-1")):
                 k_ = int(np.argmin([np.linalg.norm(nodes[j_] - np.array(HEAD_RODS[2]) * [1, sy, 1]) for j_ in range(len(nodes))]))
-                extra[f"head rod {nm}"] = (hp_(HEAD_RODS[1][0], HEAD_RODS[1][1] * sy), nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
+                extra[f"head rod {nm}"] = (hp_(HEAD_RODS[1][0], HEAD_RODS[1][1] * sy, HEAD_RODS[1][2]), nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
         elif HEAD_ONE and not HEAD_ON_CAGE:                            # the one-piece head: its own node + 4 struts (head_mount.HEAD_STRUTS)
             cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]
             g["head_attach"] = [tuple(np.round(nodes[max(cn_, key=lambda k_: nodes[k_][0])], 2))]

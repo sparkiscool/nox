@@ -7,3 +7,4 @@ node_3: grid (56, 56, 56) h 1.25 = 175,616 cells; design 66,973 (130.8 cm3), dra
   support hold 5: 4445 cells, 7715 nodes
   support hold 6: 4682 cells, 8150 nodes
   support hold 7: 4750 cells, 8326 nodes
+node 3: 12.7 g (M), solid PASS, worst 0.049 (tube to 11 pull): PASS

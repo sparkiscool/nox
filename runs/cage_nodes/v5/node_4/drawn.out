@@ -5,3 +5,4 @@ node_4: grid (48, 48, 48) h 1.25 = 110,592 cells; design 42,257 (82.5 cm3), draw
   support hold 3: 3008 cells, 5275 nodes
   support hold 4: 3080 cells, 5358 nodes
   support hold 5: 3302 cells, 5757 nodes
+node 4: 8.99 g (M), solid PASS, worst 0.157 (tube to 11 pull): PASS
