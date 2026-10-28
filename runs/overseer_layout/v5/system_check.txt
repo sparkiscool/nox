@@ -93,7 +93,7 @@ system_check Overseer: PASS
     receiver / XT60 pair: -454.9 mm³ (E) limit inf contact [manifold3d]
   mass 3447.11 g (E), CG [66.7, -0.06, 16.31], offset [0.23, -0.06, -65.69] = 65.69 mm from [66.47, 0.0, 82.0]
     cage shell tubes: 389.25 g (E) at [56.7, 0.0, 49.69]
-    cage shell nodes: 289.35 g (E) at [43.43, 0.0, 38.91]
+    cage shell nodes: 289.35 g (M) at [43.43, 0.0, 38.91]
     spokes, ties, head rods: 124.79 g (C) at [20.28, 0.0, 10.55]
     TPU feet: 2.16 g (E) at [-27.92, 0.0, -91.55]
     sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them): 143.7 g (E) at [363.64, 0.0, 77.34]

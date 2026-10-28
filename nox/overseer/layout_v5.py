@@ -1129,7 +1129,7 @@ for n_, gm, _c in it:
 links = trimesh.util.concatenate([rod(p, q, lr(k)) for k, (p, q) in extra.items()])
 PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell tubes", trimesh.util.concatenate([rod(nodes[a], nodes[b], SHELL_R) for a, b in E]), "cage", False, grp["shell"], "E", "carbon", "cage", "#2b2b2b", False),
-    ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "E", "PETG", "cage", "#7d8a99", False),
+    ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "M" if NODE_M else "E", "PETG", "cage", "#7d8a99", False),
     (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
     *([(HEADN, trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]

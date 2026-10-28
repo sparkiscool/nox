@@ -12,7 +12,7 @@ Spark's asks, in order (26-27 Oct):
 
 Script `nox/overseer/layout_v5.py` (builds the drone round a fixed cage, `nox/overseer/cage_v5_shell.json`); the cage from `nox/overseer/cage_equal.py`; artifact `layout_v5_view.py`; camera alternatives `layout_v5_cams.py`; cage alternatives `layout_v5_cages.py`.
 
-Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (the layout, republished with each saved part; source `runs/overseer_layout/v5/motion.html`; stills `preview.png`, `preview_top.png`, `preview_under.png`, `cameras_alt.png`, `cages_alt.png`). Head on 3 rods: `runs/overseer_head_rods/v1/options.png`. Head support options before: https://claude.ai/artifact/4Z5Uv7N96VBaNhBLQyBE9e.
+Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (v16, republished 28 Oct 03:07 UTC with the saved v5 nodes and the 3-rod head; source `runs/overseer_layout/v5/motion.html`; stills `preview.png`, `preview_top.png`, `preview_under.png`, `cameras_alt.png`, `cages_alt.png`). Head on 3 rods: `runs/overseer_head_rods/v1/options.png`. Head support options before: https://claude.ai/artifact/4Z5Uv7N96VBaNhBLQyBE9e.
 
 System: Overseer, cage first 5.2 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 72.88 mm, camera left 55 deg, out 3.47 mm, camera right 55 deg, out 5.9 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm³ (E), bbox 126 L (E), extents 767 x 667 x 247 mm (E), mass 3447 of 2200 g (157 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -65.7], 25.4 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.68, -0.19, -0.71) (cartridge), access 37/37 clear (`system_check.txt`; the arms' third screw checked when arm v8 and core v4 merge: V5_THIRD_SCREW=1)
 

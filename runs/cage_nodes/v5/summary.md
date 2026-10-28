@@ -10,9 +10,9 @@ Spark 27 Oct: "are you telling me that overnight you only made two nodes" and "w
 
 v4 (2.5 walls, `runs/cage_nodes/v4/`) passed too at 345.1 g (M); 2.0 walls save 55.7 g (M) with the worst index still 0.252. Shorter 12-deep 6 mm sockets would save about 30 g more (C), but they would raise the worst socket's epoxy shear from about 5.0 to 6.2 MPa (E): kept at 15.
 
-**Result:** 24 print files, 289.4 g PETG (M) in all; every file solid_check PASS. Worst index 0.252 (node 17, head rod c side). Each prints with a socket mouth on the bed (a 51 mm² annulus, M): no thin-island run over 0.3 mm, tree supports under the side sockets, 5 mm brim (bed contact under 400 mm²).
+**Result:** 24 print files, 289.4 g PETG (M) in all; every file solid_check PASS. Worst index 0.252 (node 17, head rod c side). Each prints with a socket mouth on the bed (a 51 mm² annulus, M): no thin-island run over 0.3 mm (M), tree supports under the side sockets, a 5 mm brim (bed contact under 400 mm², docs/generative.md rule).
 
-| Node | Design | File | Preview | g (M) | solid | worst index (F loads) | bed | overhang mm² | extents mm |
+| Node | Design | File | Preview | g (M) | solid | worst index (F loads) | bed (mm², M) | overhang (mm², M) | extents (mm, M) |
 |---|---|---|---|---|---|---|---|---|---|
 | 0 | 4 | `print/overseer_cage_node_0_v5.stl` | `preview_0.png` | 8.99 | PASS | 0.157 (tube to 11 pull) | the mouth of socket 0 (tube to 3, mirrored), 51 mm² | 1308 | 32.9 x 48.6 x 50.9 |
 | 1 | 3 | `print/overseer_cage_node_1_v5.stl` | `preview_1.png` | 12.7 | PASS | 0.049 (tube to 11 pull) | the mouth of socket 3 (tube to 18, mirrored), 51 mm² | 1456 | 36.3 x 62.1 x 62.5 |
@@ -39,6 +39,12 @@ v4 (2.5 walls, `runs/cage_nodes/v4/`) passed too at 345.1 g (M); 2.0 walls save 
 | 22 | 23 | `print/overseer_cage_node_22_v5.stl` | `preview_22.png` | 6.07 | PASS | 0.04 (tube to 7 pull) | the mouth of socket 2 (tube to 10, mirrored), 51 mm² | 634 | 13.1 x 46.2 x 45.5 |
 | 23 | 23 | `print/overseer_cage_node_23_v5.stl` | `preview_23.png` | 6.07 | PASS | 0.04 (tube to 7 pull) | the mouth of socket 2 (tube to 10), 51 mm² | 634 | 13.1 x 46.2 x 45.5 |
 
-The 9 mirror nodes are their own files (a mirrored part); node 17 is a cage node again (the 3-rod head holds none). In the assembly (`overseer.assembly.json`, cage shell nodes) as their meshes: system_check PASS (cage first 5.2, fit, balance, probes, access).
+The 9 mirror nodes are their own files (a mirrored part); node 17 is a cage node again (the 3-rod head holds none).
 
-Carbon: none in this PR (the nodes take the cage's 6/4 tubes and the links, `runs/overseer_layout/v5/summary.md` Carbon). Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (the layout with every saved node).
+**Requirements:** `nox/dimensions.md` System Overseer v5, Node requirements (sockets, walls, floor, PETG, the frame's socket loads). The drawn check used the frame run before the v5 node masses (largest axial 1405 N, F); the frame rerun with them (`runs/overseer_frame/v1/node_loads.json`) gives 1485 N (+6 %, F), so the worst index is about 0.27 (E, linear), still far under 1.
+
+**System:** the 24 saved meshes are in `overseer.assembly.json` (cage shell nodes, 289.4 g M). system_check PASS: cage first 5.2 mm (E), fit 0.0 mm³ (E), mass 3447 g (E), CG 0.2 mm off the thrust axis pack in (E), 25.4 pack out (L exception), probes 8.5 mm (E), access clear. Assembled worst index: nodes 0.252 (F loads, drawn check); cage tubes 11-18 / 12-19 1.59 x Pcr in the 35 g crash (F).
+
+**Breaking order (L, DEFAULT):** the node should go first in a crash; here the long cage tubes buckle first (1.59 x Pcr against nodes <= 0.27, F). This is the halved cage's exception (Spark 27 Oct "ignore the tests"), reported, not fixed in the nodes: a weaker node would not stop a tube buckling.
+
+Carbon: none in this PR (the nodes take the cage's 6/4 tubes and the links, `runs/overseer_layout/v5/summary.md` Carbon). Visual: https://claude.ai/artifact/VhDfnp75uoVsj8SnyrW2Qg (v16, republished 28 Oct 03:07 UTC with every saved v5 node).
