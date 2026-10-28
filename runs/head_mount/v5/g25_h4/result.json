@@ -1,0 +1,535 @@
+{
+ "name": "head_mount",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   26939.0
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.037,
+    "erode 2.0"
+   ],
+   [
+    "0.12",
+    0.0,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [
+   {
+    "kind": "wall",
+    "thick_mm": 1.41,
+    "core_mm3": 5.31,
+    "at": [
+     409.8,
+     62.6,
+     149.1
+    ],
+    "span": [
+     1.6,
+     1.2,
+     0.2
+    ]
+   },
+   {
+    "kind": "wall",
+    "thick_mm": 1.41,
+    "core_mm3": 5.23,
+    "at": [
+     409.8,
+     -62.6,
+     149.1
+    ],
+    "span": [
+     1.6,
+     1.2,
+     0.2
+    ]
+   }
+  ],
+  "acute_edges": 3,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 5331.3,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "crash 0 [1.0, 0.0, 0.0] via node 17",
+    "cls": "misuse",
+    "inlayer": 0.12,
+    "across": 0.194,
+    "at": [
+     366.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 1 [-1.0, 0.0, 0.0] via node 13",
+    "cls": "misuse",
+    "inlayer": 0.09,
+    "across": 0.15,
+    "at": [
+     366.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 2 [0.0, 1.0, 0.0] via node 10",
+    "cls": "misuse",
+    "inlayer": 0.041,
+    "across": 0.063,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 3 [0.0, -1.0, 0.0] via node 9",
+    "cls": "misuse",
+    "inlayer": 0.042,
+    "across": 0.069,
+    "at": [
+     370.1,
+     -10.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 4 [0.0, 0.0, 1.0] via node 7",
+    "cls": "misuse",
+    "inlayer": 0.179,
+    "across": 0.284,
+    "at": [
+     382.1,
+     26.0,
+     78.0
+    ]
+   },
+   {
+    "case": "crash 5 [0.0, 0.0, -1.0] via node 0",
+    "cls": "misuse",
+    "inlayer": 0.014,
+    "across": 0.02,
+    "at": [
+     366.1,
+     -10.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 6 [0.58, 0.58, 0.58] via node 15",
+    "cls": "misuse",
+    "inlayer": 0.148,
+    "across": 0.328,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 7 [0.58, 0.58, -0.58] via node 18",
+    "cls": "misuse",
+    "inlayer": 0.068,
+    "across": 0.111,
+    "at": [
+     366.1,
+     -10.0,
+     14.0
+    ]
+   },
+   {
+    "case": "crash 8 [0.58, -0.58, 0.58] via node 16",
+    "cls": "misuse",
+    "inlayer": 0.167,
+    "across": 0.304,
+    "at": [
+     382.1,
+     -14.0,
+     62.0
+    ]
+   },
+   {
+    "case": "crash 9 [0.58, -0.58, -0.58] via node 19",
+    "cls": "misuse",
+    "inlayer": 0.07,
+    "across": 0.103,
+    "at": [
+     366.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 10 [-0.58, 0.58, 0.58] via node 13",
+    "cls": "misuse",
+    "inlayer": 0.087,
+    "across": 0.145,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 11 [-0.58, 0.58, -0.58] via node 11",
+    "cls": "misuse",
+    "inlayer": 0.137,
+    "across": 0.247,
+    "at": [
+     366.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 12 [-0.58, -0.58, 0.58] via node 14",
+    "cls": "misuse",
+    "inlayer": 0.086,
+    "across": 0.159,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 13 [-0.58, -0.58, -0.58] via node 12",
+    "cls": "misuse",
+    "inlayer": 0.131,
+    "across": 0.189,
+    "at": [
+     366.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 0 [1.0, 0.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 1.437,
+    "across": 2.291,
+    "at": [
+     386.1,
+     26.0,
+     78.0
+    ]
+   },
+   {
+    "case": "head inertia 1 [-1.0, 0.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 1.437,
+    "across": 2.244,
+    "at": [
+     382.1,
+     30.0,
+     78.0
+    ]
+   },
+   {
+    "case": "head inertia 2 [0.0, 1.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 1.205,
+    "across": 1.543,
+    "at": [
+     370.1,
+     -10.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 3 [0.0, -1.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 1.205,
+    "across": 1.375,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 4 [0.0, 0.0, 1.0]",
+    "cls": "misuse",
+    "inlayer": 1.169,
+    "across": 2.744,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 5 [0.0, 0.0, -1.0]",
+    "cls": "misuse",
+    "inlayer": 1.169,
+    "across": 1.531,
+    "at": [
+     366.1,
+     -10.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 6 [0.58, 0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.729,
+    "across": 1.233,
+    "at": [
+     382.1,
+     -10.0,
+     62.0
+    ]
+   },
+   {
+    "case": "head inertia 7 [0.58, 0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 1.23,
+    "across": 1.711,
+    "at": [
+     366.1,
+     -10.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 8 [0.58, -0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 1.04,
+    "across": 1.752,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 9 [0.58, -0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 1.259,
+    "across": 2.023,
+    "at": [
+     366.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 10 [-0.58, 0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 1.259,
+    "across": 1.827,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 11 [-0.58, 0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 1.04,
+    "across": 1.203,
+    "at": [
+     382.1,
+     30.0,
+     78.0
+    ]
+   },
+   {
+    "case": "head inertia 12 [-0.58, -0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 1.23,
+    "across": 2.714,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 13 [-0.58, -0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.729,
+    "across": 0.902,
+    "at": [
+     382.1,
+     -14.0,
+     62.0
+    ]
+   },
+   {
+    "case": "flight 4 g down",
+    "cls": "flight",
+    "inlayer": 0.211,
+    "across": 0.275,
+    "at": [
+     366.1,
+     -10.0,
+     18.0
+    ]
+   }
+  ],
+  "worst": 2.744,
+  "worst_case": "head inertia 4 [0.0, 0.0, 1.0]",
+  "worst_at": [
+   370.1,
+   -6.0,
+   18.0
+  ]
+ },
+ "mass_g": 53.64,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 42235.7,
+ "drawn_g": 21.58,
+ "stl": "head_mount.stl",
+ "view_stl": "head_mount_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 1.61064171853134,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.028178668273576377,
+  "nd": 16595,
+  "sym_axes": [],
+  "n_real": 29,
+  "n_ties": 162,
+  "backend": "direct",
+  "iterations": 122,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "head",
+  "h": 4.0,
+  "shape": [
+   24,
+   48,
+   48
+  ],
+  "origin": [
+   336.0534,
+   -96.0,
+   -19.9793
+  ],
+  "cells": 55296,
+  "design": 16518,
+  "drawn": 262,
+  "cases": [
+   "crash 0 [1.0, 0.0, 0.0] via node 17",
+   "crash 1 [-1.0, 0.0, 0.0] via node 13",
+   "crash 2 [0.0, 1.0, 0.0] via node 10",
+   "crash 3 [0.0, -1.0, 0.0] via node 9",
+   "crash 4 [0.0, 0.0, 1.0] via node 7",
+   "crash 5 [0.0, 0.0, -1.0] via node 0",
+   "crash 6 [0.58, 0.58, 0.58] via node 15",
+   "crash 7 [0.58, 0.58, -0.58] via node 18",
+   "crash 8 [0.58, -0.58, 0.58] via node 16",
+   "crash 9 [0.58, -0.58, -0.58] via node 19",
+   "crash 10 [-0.58, 0.58, 0.58] via node 13",
+   "crash 11 [-0.58, 0.58, -0.58] via node 11",
+   "crash 12 [-0.58, -0.58, 0.58] via node 14",
+   "crash 13 [-0.58, -0.58, -0.58] via node 12",
+   "head inertia 0 [1.0, 0.0, 0.0]",
+   "head inertia 1 [-1.0, 0.0, 0.0]",
+   "head inertia 2 [0.0, 1.0, 0.0]",
+   "head inertia 3 [0.0, -1.0, 0.0]",
+   "head inertia 4 [0.0, 0.0, 1.0]",
+   "head inertia 5 [0.0, 0.0, -1.0]",
+   "head inertia 6 [0.58, 0.58, 0.58]",
+   "head inertia 7 [0.58, 0.58, -0.58]",
+   "head inertia 8 [0.58, -0.58, 0.58]",
+   "head inertia 9 [0.58, -0.58, -0.58]",
+   "head inertia 10 [-0.58, 0.58, 0.58]",
+   "head inertia 11 [-0.58, 0.58, -0.58]",
+   "head inertia 12 [-0.58, -0.58, 0.58]",
+   "head inertia 13 [-0.58, -0.58, -0.58]",
+   "flight 4 g down"
+  ],
+  "supports": [
+   "core"
+  ]
+ },
+ "build_s": 504.1,
+ "layout_s": 902,
+ "peak_gb": 2.255688,
+ "gen_cm3": 25.0,
+ "h": 4.0,
+ "total_s": 1406
+}
