@@ -54,18 +54,18 @@ def model(clips, ties=(), cam_g=30.0):
 def main():
     L = lambda a, b: float(np.linalg.norm(N[a] - N[b]))
     bar = [(PLATE_EDGE, rect(15, 14))]
-    yc = 38.5; d14 = 62.163 - yc                                           # the picked clip points: y +-38.5 on rod 14-15
+    yc = 34.0; d14 = 62.163 - yc                                           # the picked clip points: y +-34.0 on rod 14-15 (nodes v1: 1.4 off the socket tip)
     rows = {
         "v1 clips mid-span on 7-8 / 14-15 (4)": ([(7, 8, L(7, 8) - 77.8), (8, 7, L(7, 8) - 77.8), (14, 15, L(14, 15) - 44.2), (15, 14, L(14, 15) - 44.2)], ()),
         "B: 4 clips next to nodes (16 on 14-16 / 15-16, 14 / 15 on 14-15)": ([(16, 14, 8), (16, 15, 8), (14, 15, 8), (15, 14, 8)], ()),
         "B: 6 clips next to nodes 16, 14 / 15, 17": ([(16, 14, 8), (16, 15, 8), (14, 15, 8), (15, 14, 8), (17, 14, 8), (17, 15, 8)], ()),
         "B: 6 clips next to nodes 16, 14 / 15, 7 / 8": ([(16, 14, 8), (16, 15, 8), (14, 15, 8), (15, 14, 8), (8, 16, 8), (7, 16, 8)], ()),
         "C: core tie only (bar 15 x 14 PETG from the plate edge)": ([], bar),
-        "A: core tie + 2 clips on 14-15 at y +-38.5 (picked)": ([(14, 15, d14), (15, 14, d14)], bar),
+        "A: core tie + 2 clips on 14-15 at y +-34 (picked)": ([(14, 15, d14), (15, 14, d14)], bar),
         "A with a 15 x 10 bar": ([(14, 15, d14), (15, 14, d14)], [(PLATE_EDGE, rect(15, 10))]),
         "A with 2 more clips next to node 16": ([(14, 15, d14), (15, 14, d14), (16, 14, 14), (16, 15, 14)], bar),
         "bound: camera rigid to the core, no clips": ([], [(PLATE_EDGE, cf.RIGID)]),
-        "bound: rigid tie + 2 clips at y +-38.5": ([(14, 15, d14), (15, 14, d14)], [(PLATE_EDGE, cf.RIGID)]),
+        "bound: rigid tie + 2 clips at y +-34": ([(14, 15, d14), (15, 14, d14)], [(PLATE_EDGE, cf.RIGID)]),
     }
     out = {}
     for k, (cl, ti) in rows.items():

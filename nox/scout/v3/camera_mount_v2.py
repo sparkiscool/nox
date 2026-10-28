@@ -55,7 +55,7 @@ CLIP_ROD = (14, 15)                                      # rod 14-15 (124 long, 
 X_BOSS, BOSS_L, BOSS_D, PAD_D, PAD_T = 134.0, 6.5, 9.2, 12.0, 2.0     # seat face (bought 1.0 washer: board at 135), boss wall 3 round Ø3.2, Ø12 pad 2.0 web
 HOOD_X = (150.0, 153.0)                                  # hood ring: 4.0 ahead of the lens front (gate 3, DEFAULT)
 HOOD_OUT, HOOD_IN = (22.5, 17.0, 67.0), (19.5, 20.0, 64.0)   # (y half, z0, z1) outer / inner (camera box + 0.5)
-CLIP_Y = 38.5                                            # clip centres y +-38.5 on rod 14-15 (23.7 from node 14 / 15: rods 14-16 / 14-17 clear)
+CLIP_Y = 34.0                                            # clip centres y +-34.0 on rod 14-15: 1.4 off the tip of node 14's 14-15 socket (y 39.4, nodes v1), rod 14-16 3.2 above
 CLIP_L, T_P, SLIT, SNAP, FLARE, GRIP = 8.0, 2.0, 0.8, 0.25, 30.0, 0.05   # length along the rod, prong, slit, snap a side, lead-in deg, grip rib (radial, E)
 U_ROOT, U_BLOCK = 8.2, 12.0                              # prong root (free length 9.2 to the lip) and the root block's back, local u (+x)
 RIB_ANG = (0.0, 95.0, -95.0)                             # grip ribs, deg from the closed back (v1)
@@ -86,6 +86,22 @@ def cyl_x(y, z, r, x0, x1):
 
 def cyl_z(x, y, r, z0, z1):
     return mf.Manifold.cylinder(z1 - z0, r, r, 32).translate([x, y, z0])
+
+
+_NS = os.path.join(ROOT, "runs", "scout_camera_mount", "v2", "node_sweeps.json")   # the saved nodes v1 (PR 166) as sweeps: camera_mount_v2_nodes.py
+NODE_SWEEPS = json.load(open(_NS)) if os.path.exists(_NS) else None
+
+
+def rod_ends(name, a, b):
+    """a rod's true ends (socket floors, eccentric sockets included) when the saved nodes are known, else the node centres"""
+    if NODE_SWEEPS and name in NODE_SWEEPS["rods"]:
+        r = NODE_SWEEPS["rods"][name]; return np.array(r["a"], float), np.array(r["b"], float)
+    return np.asarray(a, float), np.asarray(b, float)
+
+
+def prism_yz(cs, x0, x1):
+    """CrossSection in (y, z) extruded along x from x0 to x1"""
+    return cs.extrude(x1 - x0).translate([0, 0, x0]).transform([[0, 0, 1, 0], [1, 0, 0, 0], [0, 1, 0, 0]])
 
 
 def prism_xz(cs, y0, y1):
@@ -209,13 +225,19 @@ def bodies():
     for a, b in rods:
         if {a, b} == set(CLIP_ROD):
             continue
-        cuts += swept([N[a], N[b]], R_T + SWEEP_CLR)
+        cuts += swept(list(rod_ends(f"rod {a}-{b}", N[a], N[b])), R_T + SWEEP_CLR)
     for k, (p, q) in RES["links"].items():
-        cuts += swept([p, q], CG.get("link_r_mm", 1.5) + SWEEP_CLR)
+        cuts += swept(list(rod_ends(k, p, q)), CG.get("link_r_mm", 1.5) + SWEEP_CLR)
     for i, p in enumerate(N):
-        cuts += swept([p], (10.0 if i < NR else CG["node_r_mm"]) + SWEEP_CLR)
+        if NODE_SWEEPS:                                                # the saved node: its y-z outline, from its back - stroke to its front
+            nd = NODE_SWEEPS["nodes"][str(i)]
+            for ol in nd["yz"]:
+                cs = poly(ol).offset(SWEEP_CLR, mf.JoinType.Round)
+                cuts += prism_yz(cs, nd["x"][0] - STROKE, nd["x"][1] + SWEEP_CLR)
+        else:
+            cuts += swept([p], (10.0 if i < NR else CG["node_r_mm"]) + SWEEP_CLR)
     # rod 14-15: swept everywhere but the clip lengths (there the clip's own mouth / lead-in cut is the path)
-    a, b = N[CLIP_ROD[0]], N[CLIP_ROD[1]]
+    a, b = rod_ends("rod 14-15", N[CLIP_ROD[0]], N[CLIP_ROD[1]])
     sw = swept([a, b], R_T + SWEEP_CLR)
     for s in (1, -1):
         y0, y1 = sorted((s * (CLIP_Y - CLIP_L / 2), s * (CLIP_Y + CLIP_L / 2)))
@@ -228,7 +250,7 @@ def bodies():
     cuts += wash - pads                                                # the pads reach 2.1 into the disk prism, flat on the plate (E)
     pl = plate_outline()
     cuts += poly([tuple(p) for p in pl]).extrude(PLATE_TOP + 80).translate([0, 0, -80])
-    cuts += box(-120, 112.0, -80, 80, -80, 8.5)                        # receiver, lid, XT60, belly mount, cartridge (all below the rod 14-15 sweep)
+    cuts += box(-120, 112.0, -80, 80, -80, 9.0)                        # receiver, lid, XT60, belly mount, cartridge (all below the rod 14-15 sweep)
     cuts += box(-120, 112.0, -80, 80, 31.0, 120)                        # behind the face only the bottom-front cell reaches the foot (the upper cell is a dead end)
     # --- envelope: the print box round the camera, the cell and the foot
     env = box(FOOT_X[0] - 0.5, HOOD_X[1], -ENV_Y, ENV_Y, 5.5, HOOD_OUT[2]) + \

@@ -49,10 +49,29 @@ def seg_dist(P, a, b):
 
 
 def members():
-    """(name, a, b, r) every cage rod (3.0), saddle tie, and node (a = b, r node radius)"""
-    out = [(f"rod {a}-{b}", N[a], N[b], cm.R_T) for a, b in cm.CG["rods"]]
-    out += [(k, np.array(p, float), np.array(q, float), cm.CG.get("link_r_mm", 1.5)) for k, (p, q) in cm.RES["links"].items()]
-    out += [(f"node {i}", N[i], N[i], 10.0 if i < cm.NR else cm.CG["node_r_mm"]) for i in range(len(N))]
+    """(name, a, b, r) every cage rod (3.0) and saddle tie by its true ends; the nodes as spheres only without the saved nodes"""
+    out = [(f"rod {a}-{b}", *cm.rod_ends(f"rod {a}-{b}", N[a], N[b]), cm.R_T) for a, b in cm.CG["rods"]]
+    out += [(k, *cm.rod_ends(k, p, q), cm.CG.get("link_r_mm", 1.5)) for k, (p, q) in cm.RES["links"].items()]
+    if not cm.NODE_SWEEPS:
+        out += [(f"node {i}", N[i], N[i], 10.0 if i < cm.NR else cm.CG["node_r_mm"]) for i in range(len(N))]
+    return out
+
+
+def node_gaps(P, stroke=0.0):
+    """signed clearance (mm) of points P to every saved node (nodes v1, its y-z outline over its x range; with stroke, over the
+    x range the node sweeps relative to the mount while it is pushed on)"""
+    import shapely
+    from shapely.geometry import Polygon as SP
+    out = {}
+    if not cm.NODE_SWEEPS: return out
+    for i, nd in cm.NODE_SWEEPS["nodes"].items():
+        sel = (P[:, 0] >= nd["x"][0] - stroke) & (P[:, 0] <= nd["x"][1])
+        if not sel.any(): continue
+        pts = shapely.points(P[sel][:, 1:]); best = 1e9
+        for ol in nd["yz"]:
+            pg = SP(ol).buffer(0); d = shapely.distance(pg.exterior, pts); ins = shapely.contains(pg, pts)
+            best = min(best, float(np.where(ins, -d, d).min()))
+        out[f"node {i}"] = best
     return out
 
 
@@ -77,8 +96,9 @@ def fit_report(P, mesh):
     for nm, a, b, r in members():
         if nm == "rod 14-15": continue
         out[nm] = float(seg_dist(P, a, b).min() - r)
+    out.update(node_gaps(P))
     w = sorted(out.items(), key=lambda kv: kv[1])[:5]
-    d1415 = seg_dist(P, N[14], N[15]) - cm.R_T
+    d1415 = seg_dist(P, *cm.rod_ends("rod 14-15", N[14], N[15])) - cm.R_T
     lo, hi = np.array([c[0] for c in cm.CAM_BOX]), np.array([c[1] for c in cm.CAM_BOX])
     inside_cam = int(((P > lo + 0.01) & (P < hi - 0.01)).all(1).sum())
     wash = 0
@@ -107,6 +127,8 @@ def stroke_report(P):
                 if s > 0.3: clip = max(clip, float(-d.min()))
             elif d.min() < other:
                 other = float(d.min()); worst = f"{nm} at {s:.0f} out"
+    for nm, g in node_gaps(P, cm.STROKE).items():
+        if g < other: other, worst = g, f"{nm} (swept)"
     return dict(stroke_mm=cm.STROKE, other_members_min_clear_mm=round(other, 2), worst=worst, clip_rod_max_interference_mm=round(clip, 3),
                 allowed_mm=round(cm.SNAP + cm.GRIP + 0.05, 2))
 
