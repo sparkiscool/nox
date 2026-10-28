@@ -1,0 +1,713 @@
+{
+ "centre": [
+  44.808,
+  132.776,
+  44.145
+ ],
+ "mirror": 13,
+ "file": "runs/scout_nodes/v3/scout_node_12_v3.stl",
+ "mass_g": 10.47,
+ "solid_check": {
+  "ok": true,
+  "bodies_eroded": 1,
+  "thin_walls": 0,
+  "necks": 0
+ },
+ "up": [
+  0.0923,
+  -0.9922,
+  0.0839
+ ],
+ "bed_below_centre": 5.1,
+ "hub_r": 6.0,
+ "envelope": {
+  "r_max": 27.1,
+  "lo": [
+   -23.3,
+   -24.4,
+   -19.7
+  ],
+  "hi": [
+   14.0,
+   5.8,
+   8.0
+  ]
+ },
+ "sockets": [
+  {
+   "name": "rod 0-12",
+   "dir": [
+    0.3747,
+    -0.1623,
+    -0.9128
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 5.8,
+   "depth": 10.0,
+   "bell": false,
+   "mouth_r": 15.8,
+   "wall": 3.0,
+   "mouth_drone": [
+    50.73,
+    130.21,
+    29.72
+   ],
+   "floor_drone": [
+    46.98,
+    131.83,
+    38.85
+   ],
+   "elev_deg": 6.8,
+   "loads": {
+    "push": 612.9,
+    "pull": 612.9,
+    "side": 10.2,
+    "moment": 1590.4,
+    "bond": 603.2,
+    "pcr": 1583.4,
+    "frame_axial": 612.9,
+    "Lfree": 71.1
+   }
+  },
+  {
+   "name": "rod 1-12",
+   "dir": [
+    -0.7805,
+    -0.1078,
+    -0.6158
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 16.17,
+   "depth": 10.0,
+   "bell": false,
+   "mouth_r": 26.17,
+   "wall": 3.0,
+   "mouth_drone": [
+    24.38,
+    129.95,
+    28.03
+   ],
+   "floor_drone": [
+    32.19,
+    131.03,
+    34.19
+   ],
+   "elev_deg": -1.0,
+   "loads": {
+    "push": 351.0,
+    "pull": 351.0,
+    "side": 2.3,
+    "moment": 1590.4,
+    "bond": 603.2,
+    "pcr": 840.9,
+    "frame_axial": 351.0,
+    "Lfree": 97.6
+   }
+  },
+  {
+   "name": "rod 5-12",
+   "dir": [
+    -0.6658,
+    -0.1069,
+    -0.7384
+   ],
+   "line_origin": [
+    2.7,
+    0.07,
+    -2.22
+   ],
+   "ecc": 3.5,
+   "setback": 9.03,
+   "depth": 10.0,
+   "bell": false,
+   "mouth_r": 19.03,
+   "wall": 3.0,
+   "mouth_drone": [
+    34.84,
+    130.81,
+    27.88
+   ],
+   "floor_drone": [
+    41.5,
+    131.88,
+    35.26
+   ],
+   "elev_deg": -1.0,
+   "loads": {
+    "push": 169.2,
+    "pull": 169.2,
+    "side": 12.8,
+    "moment": 1590.4,
+    "bond": 603.2,
+    "pcr": 6631.7,
+    "frame_axial": 169.2,
+    "Lfree": 34.8
+   }
+  },
+  {
+   "name": "rod 8-12",
+   "dir": [
+    0.853,
+    -0.4731,
+    0.2204
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 3.6,
+   "depth": 10.0,
+   "bell": false,
+   "mouth_r": 13.6,
+   "wall": 3.0,
+   "mouth_drone": [
+    56.4,
+    126.34,
+    47.14
+   ],
+   "floor_drone": [
+    47.88,
+    131.07,
+    44.94
+   ],
+   "elev_deg": 34.5,
+   "loads": {
+    "push": 1042.8,
+    "pull": 1042.8,
+    "side": 10.7,
+    "moment": 1590.4,
+    "bond": 603.2,
+    "pcr": 3225.4,
+    "frame_axial": 1042.8,
+    "Lfree": 49.8
+   }
+  },
+  {
+   "name": "rod 11-12",
+   "dir": [
+    -0.9871,
+    -0.106,
+    0.1203
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 3.0,
+   "depth": 10.0,
+   "bell": false,
+   "mouth_r": 13.0,
+   "wall": 3.0,
+   "mouth_drone": [
+    31.98,
+    131.4,
+    45.71
+   ],
+   "floor_drone": [
+    41.85,
+    132.46,
+    44.51
+   ],
+   "elev_deg": 1.4,
+   "loads": {
+    "push": 617.1,
+    "pull": 1371.2,
+    "side": 3.2,
+    "moment": 1590.4,
+    "bond": 603.2,
+    "pcr": 617.1,
+    "frame_axial": 1371.2,
+    "Lfree": 113.9
+   }
+  },
+  {
+   "name": "saddle tie 2.1",
+   "dir": [
+    -0.5051,
+    -0.7472,
+    -0.4319
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 10.99,
+   "depth": 14.0,
+   "bell": true,
+   "mouth_r": 24.99,
+   "wall": 4.5,
+   "mouth_drone": [
+    32.19,
+    114.1,
+    33.35
+   ],
+   "floor_drone": [
+    39.26,
+    124.56,
+    39.4
+   ],
+   "elev_deg": 41.2,
+   "loads": {
+    "push": 1082.3,
+    "pull": 1082.3,
+    "side": 38.3,
+    "moment": 1590.4,
+    "bond": 723.8,
+    "pcr": 1710.4,
+    "frame_axial": 1082.3,
+    "Lfree": 68.4
+   }
+  }
+ ],
+ "fe": [
+  {
+   "iter": 0,
+   "walls": {
+    "rod 0-12": 3.0,
+    "rod 1-12": 3.0,
+    "rod 5-12": 3.0,
+    "rod 8-12": 3.0,
+    "rod 11-12": 3.0,
+    "saddle tie 2.1": 3.0
+   },
+   "bells": [],
+   "hub_r": 6.0,
+   "fillet": 2.5,
+   "worst": {
+    "socket": 5,
+    "name": "saddle tie 2.1",
+    "case": "5 bend -b",
+    "max": 1.974,
+    "p999": 1.045,
+    "inlayer": 0.739,
+    "across": 1.974,
+    "at_node": [
+     -9.9,
+     -6.6,
+     -8.2
+    ],
+    "at_r": 14.4,
+    "max_cell": 1.974,
+    "max_case": "5 bend -b"
+   },
+   "bend_worst": {
+    "value": 1.974,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "outlast": 3.05,
+   "max_cell": {
+    "value": 1.974,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "per_socket": {
+    "rod 0-12": {
+     "p999": 0.377,
+     "max_cell": 0.621,
+     "case": "0 bend -b",
+     "at_r": 15.0
+    },
+    "rod 1-12": {
+     "p999": 0.438,
+     "max_cell": 0.873,
+     "case": "1 bend +a",
+     "at_r": 20.5
+    },
+    "rod 5-12": {
+     "p999": 0.368,
+     "max_cell": 0.755,
+     "case": "2 bend +a",
+     "at_r": 19.7
+    },
+    "rod 8-12": {
+     "p999": 0.505,
+     "max_cell": 0.771,
+     "case": "3 bend -b",
+     "at_r": 13.2
+    },
+    "rod 11-12": {
+     "p999": 0.624,
+     "max_cell": 0.807,
+     "case": "4 pull",
+     "at_r": 2.4
+    },
+    "saddle tie 2.1": {
+     "p999": 1.045,
+     "max_cell": 1.974,
+     "case": "5 bend -b",
+     "at_r": 14.4
+    }
+   }
+  },
+  {
+   "iter": 1,
+   "walls": {
+    "rod 0-12": 3.0,
+    "rod 1-12": 3.0,
+    "rod 5-12": 3.0,
+    "rod 8-12": 3.0,
+    "rod 11-12": 3.0,
+    "saddle tie 2.1": 3.0
+   },
+   "bells": [
+    "saddle tie 2.1"
+   ],
+   "hub_r": 6.0,
+   "fillet": 3.5,
+   "worst": {
+    "socket": 5,
+    "name": "saddle tie 2.1",
+    "case": "5 bend -b",
+    "max": 1.799,
+    "p999": 1.012,
+    "inlayer": 0.719,
+    "across": 1.799,
+    "at_node": [
+     -9.8,
+     -7.5,
+     -9.1
+    ],
+    "at_r": 15.3,
+    "max_cell": 1.799,
+    "max_case": "5 bend -b"
+   },
+   "bend_worst": {
+    "value": 1.799,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "outlast": 2.78,
+   "max_cell": {
+    "value": 1.799,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "per_socket": {
+    "rod 0-12": {
+     "p999": 0.37,
+     "max_cell": 0.726,
+     "case": "0 bend -b",
+     "at_r": 15.2
+    },
+    "rod 1-12": {
+     "p999": 0.423,
+     "max_cell": 0.786,
+     "case": "1 bend +a",
+     "at_r": 20.5
+    },
+    "rod 5-12": {
+     "p999": 0.35,
+     "max_cell": 0.737,
+     "case": "2 bend +a",
+     "at_r": 19.7
+    },
+    "rod 8-12": {
+     "p999": 0.495,
+     "max_cell": 0.827,
+     "case": "3 bend -b",
+     "at_r": 13.1
+    },
+    "rod 11-12": {
+     "p999": 0.368,
+     "max_cell": 0.849,
+     "case": "4 bend +b",
+     "at_r": 12.7
+    },
+    "saddle tie 2.1": {
+     "p999": 1.012,
+     "max_cell": 1.799,
+     "case": "5 bend -b",
+     "at_r": 15.3
+    }
+   }
+  },
+  {
+   "iter": 2,
+   "walls": {
+    "rod 0-12": 3.0,
+    "rod 1-12": 3.0,
+    "rod 5-12": 3.0,
+    "rod 8-12": 3.0,
+    "rod 11-12": 3.0,
+    "saddle tie 2.1": 3.5
+   },
+   "bells": [
+    "saddle tie 2.1"
+   ],
+   "hub_r": 6.0,
+   "fillet": 4.5,
+   "worst": {
+    "socket": 5,
+    "name": "saddle tie 2.1",
+    "case": "5 bend -b",
+    "max": 1.474,
+    "p999": 0.751,
+    "inlayer": 0.572,
+    "across": 1.474,
+    "at_node": [
+     -11.1,
+     -8.4,
+     -10.0
+    ],
+    "at_r": 17.2,
+    "max_cell": 1.474,
+    "max_case": "5 bend -b"
+   },
+   "bend_worst": {
+    "value": 1.474,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "outlast": 2.28,
+   "max_cell": {
+    "value": 1.474,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "per_socket": {
+    "rod 0-12": {
+     "p999": 0.37,
+     "max_cell": 0.915,
+     "case": "0 bend -b",
+     "at_r": 15.3
+    },
+    "rod 1-12": {
+     "p999": 0.374,
+     "max_cell": 0.724,
+     "case": "1 bend +b",
+     "at_r": 25.5
+    },
+    "rod 5-12": {
+     "p999": 0.304,
+     "max_cell": 0.89,
+     "case": "2 bend +a",
+     "at_r": 20.4
+    },
+    "rod 8-12": {
+     "p999": 0.457,
+     "max_cell": 0.885,
+     "case": "3 bend -b",
+     "at_r": 13.1
+    },
+    "rod 11-12": {
+     "p999": 0.361,
+     "max_cell": 0.725,
+     "case": "4 bend +b",
+     "at_r": 12.5
+    },
+    "saddle tie 2.1": {
+     "p999": 0.751,
+     "max_cell": 1.474,
+     "case": "5 bend -b",
+     "at_r": 17.2
+    }
+   }
+  },
+  {
+   "iter": 3,
+   "walls": {
+    "rod 0-12": 3.0,
+    "rod 1-12": 3.0,
+    "rod 5-12": 3.0,
+    "rod 8-12": 3.0,
+    "rod 11-12": 3.0,
+    "saddle tie 2.1": 4.0
+   },
+   "bells": [
+    "saddle tie 2.1"
+   ],
+   "hub_r": 6.0,
+   "fillet": 5.5,
+   "worst": {
+    "socket": 5,
+    "name": "saddle tie 2.1",
+    "case": "5 bend -b",
+    "max": 1.364,
+    "p999": 0.598,
+    "inlayer": 0.441,
+    "across": 1.364,
+    "at_node": [
+     -13.0,
+     -8.1,
+     -11.9
+    ],
+    "at_r": 19.4,
+    "max_cell": 1.364,
+    "max_case": "5 bend -b"
+   },
+   "bend_worst": {
+    "value": 1.364,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "outlast": 2.11,
+   "max_cell": {
+    "value": 1.364,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "per_socket": {
+    "rod 0-12": {
+     "p999": 0.36,
+     "max_cell": 0.752,
+     "case": "0 bend -b",
+     "at_r": 15.2
+    },
+    "rod 1-12": {
+     "p999": 0.393,
+     "max_cell": 0.812,
+     "case": "1 bend +a",
+     "at_r": 21.9
+    },
+    "rod 5-12": {
+     "p999": 0.36,
+     "max_cell": 0.884,
+     "case": "2 bend +a",
+     "at_r": 21.2
+    },
+    "rod 8-12": {
+     "p999": 0.459,
+     "max_cell": 0.828,
+     "case": "3 bend -b",
+     "at_r": 13.1
+    },
+    "rod 11-12": {
+     "p999": 0.367,
+     "max_cell": 0.919,
+     "case": "4 bend +b",
+     "at_r": 12.7
+    },
+    "saddle tie 2.1": {
+     "p999": 0.598,
+     "max_cell": 1.364,
+     "case": "5 bend -b",
+     "at_r": 19.4
+    }
+   }
+  },
+  {
+   "iter": 4,
+   "walls": {
+    "rod 0-12": 3.0,
+    "rod 1-12": 3.0,
+    "rod 5-12": 3.0,
+    "rod 8-12": 3.0,
+    "rod 11-12": 3.0,
+    "saddle tie 2.1": 4.5
+   },
+   "bells": [
+    "saddle tie 2.1"
+   ],
+   "hub_r": 6.0,
+   "fillet": 5.5,
+   "worst": {
+    "socket": 5,
+    "name": "saddle tie 2.1",
+    "case": "5 bend -b",
+    "max": 0.976,
+    "p999": 0.529,
+    "inlayer": 0.374,
+    "across": 0.976,
+    "at_node": [
+     -12.9,
+     -8.9,
+     -12.3
+    ],
+    "at_r": 19.9,
+    "max_cell": 0.976,
+    "max_case": "5 bend -b"
+   },
+   "bend_worst": {
+    "value": 0.976,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "outlast": 1.51,
+   "max_cell": {
+    "value": 0.976,
+    "case": "5 bend -b",
+    "socket": "saddle tie 2.1"
+   },
+   "per_socket": {
+    "rod 0-12": {
+     "p999": 0.353,
+     "max_cell": 0.718,
+     "case": "0 bend +b",
+     "at_r": 15.3
+    },
+    "rod 1-12": {
+     "p999": 0.393,
+     "max_cell": 0.787,
+     "case": "1 bend +b",
+     "at_r": 25.4
+    },
+    "rod 5-12": {
+     "p999": 0.339,
+     "max_cell": 0.807,
+     "case": "2 bend +b",
+     "at_r": 20.2
+    },
+    "rod 8-12": {
+     "p999": 0.433,
+     "max_cell": 0.892,
+     "case": "3 bend -b",
+     "at_r": 12.6
+    },
+    "rod 11-12": {
+     "p999": 0.364,
+     "max_cell": 0.826,
+     "case": "4 bend +b",
+     "at_r": 12.5
+    },
+    "saddle tie 2.1": {
+     "p999": 0.529,
+     "max_cell": 0.976,
+     "case": "5 bend -b",
+     "at_r": 19.9
+    }
+   }
+  }
+ ],
+ "extents_print": [
+  26.9,
+  38.0,
+  27.9
+ ],
+ "placed": [
+  {
+   "name": "cage node 12",
+   "mesh": "runs/scout_nodes/v3/placed/node_12.stl",
+   "node": 12,
+   "mass_g": 10.47,
+   "tag": "M",
+   "design": 12,
+   "mirror": false
+  },
+  {
+   "name": "cage node 13",
+   "mesh": "runs/scout_nodes/v3/placed/node_13.stl",
+   "node": 13,
+   "mass_g": 10.47,
+   "tag": "M",
+   "design": 12,
+   "mirror": true
+  }
+ ]
+}
