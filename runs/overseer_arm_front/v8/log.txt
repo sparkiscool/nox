@@ -520,3 +520,17 @@ it  79 beta   16 J   1.2941 vol 0.0714 (dil 0.1605 g -0.000) grey  3.8% ch 0.100
 it  79 beta   16 J   1.2941 vol 0.0714 (dil 0.1605 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 6.59e+04 96.6s
 it  80 beta   16 J   1.2793 vol 0.0715 (dil 0.1605 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 6.5e+04 98.7s
 it  80 beta   16 J   1.2793 vol 0.0715 (dil 0.1605 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 6.5e+04 98.7s
+it  81 beta   16 J   1.2650 vol 0.0715 (dil 0.1605 g +0.003) grey  3.7% ch 0.100 worst tie b8 fx 6.42e+04 95.2s
+it  81 beta   16 J   1.2650 vol 0.0715 (dil 0.1605 g +0.003) grey  3.7% ch 0.100 worst tie b8 fx 6.42e+04 95.2s
+it  82 beta   16 J   1.2708 vol 0.0712 (dil 0.1600 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 6.44e+04 95.3s
+it  82 beta   16 J   1.2708 vol 0.0712 (dil 0.1600 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 6.44e+04 95.3s
+it  83 beta   16 J   1.2586 vol 0.0712 (dil 0.1600 g -0.000) grey  3.7% ch 0.100 worst tie b8 fx 6.39e+04 100.9s
+it  83 beta   16 J   1.2586 vol 0.0712 (dil 0.1600 g -0.000) grey  3.7% ch 0.100 worst tie b8 fx 6.39e+04 100.9s
+it  84 beta   16 J   1.2480 vol 0.0713 (dil 0.1600 g -0.000) grey  3.7% ch 0.100 worst tie b8 fx 6.33e+04 98.2s
+it  84 beta   16 J   1.2480 vol 0.0713 (dil 0.1600 g -0.000) grey  3.7% ch 0.100 worst tie b8 fx 6.33e+04 98.2s
+layout: beta 16 done: eroded design 14 bodies, main 99.2%; drawn bodies outside the main body: 0
+layout: beta 16 done: eroded design 14 bodies, main 99.2%; drawn bodies outside the main body: 0
+it  85 beta   32 J   6.3032 vol 0.0714 (dil 0.1587 g +0.009) grey  1.9% ch 0.100 worst tie b11 mx 3.35e+05 99.9s
+it  85 beta   32 J   6.3032 vol 0.0714 (dil 0.1587 g +0.009) grey  1.9% ch 0.100 worst tie b11 mx 3.35e+05 99.9s
+it  86 beta   32 J   9.4114 vol 0.0684 (dil 0.1564 g -0.006) grey  1.9% ch 0.100 worst tie b4 mx 6.08e+05 97.5s
+it  86 beta   32 J   9.4114 vol 0.0684 (dil 0.1564 g -0.006) grey  1.9% ch 0.100 worst tie b4 mx 6.08e+05 97.5s
