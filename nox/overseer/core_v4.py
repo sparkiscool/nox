@@ -132,7 +132,7 @@ ARM_TOP = [(sx * 24.5, sy * 24.5) for sx in (1, -1) for sy in (1, -1)]   # arm v
 ARM_SCREWS = [(sx * a, sy * b) for sx in (1, -1) for sy in (1, -1) for a, b in ((52.14, 38.0), (38.0, 52.14))]   # bottom plate (derived)
 
 # ---------------------------------------------------------------- context: v5 manifest
-CTX_REF = os.environ.get("CORE_CTX_REF")    # v4 (concept review 28 Oct): the cage's head-rod change is on its branch, not main yet:
+CTX_REF = os.environ.get("CORE_CTX_REF")    # v4 (concept review 27 Oct): the cage's head-rod change is on its branch, not main yet:
 if CTX_REF:                                 # build the context from that ref's manifest and meshes (cached under OUT/ctx, not committed)
     import subprocess
     CTX = os.path.join(OUT, "ctx"); os.makedirs(CTX, exist_ok=True)
@@ -335,7 +335,7 @@ for k, (sx, sy) in enumerate([(1, 1), (1, -1), (-1, 1), (-1, -1)]):
 
 man = {k: v for k, v in v5.items() if k not in ("parts", "contact_pairs", "openings", "access", "note", "name")}
 man.update({"name": "Overseer core v4", "machine": "overseer",
-            "note": ("Overseer core v4 (28 Oct, Spark: everything inside the cage except the arms and the nodes; no head load on the core since the cage's 3 head rods; "
+            "note": ("Overseer core v4 (27 Oct, Spark: everything inside the cage except the arms and the nodes; no head load on the core since the cage's 3 head rods; "
                      "the battery side an empty rectangular slot; latch mechanism, cameras and the head not this session's; screwdriver access, fewest pieces): "
                      "v5 / cage v5 context parts unchanged (nox/overseer/overseer.assembly.json); the core, the latch set in pose (masses only: the slot's "
                      "contents, latch later) and the feet placeholders from nox/overseer/core_v2.py."),

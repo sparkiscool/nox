@@ -1,4 +1,4 @@
-"""Overseer hub deck v12 (core v4, 28 Oct): the cage hangs the L2 head on 3 rods to its own nodes (Spark 27 Oct: "max of 3" rods to
+"""Overseer hub deck v12 (core v4, 27 Oct): the cage hangs the L2 head on 3 rods to its own nodes (Spark 27 Oct: "max of 3" rods to
 the lidar), so the deck carries no head load: no sockets, no tower (v9..v11 superseded). nox/topo setup on
 `runs/overseer_core/v4/result.json` and the assembly `nox/overseer/overseer_core.assembly.json`.
 
@@ -104,7 +104,7 @@ def hub_deck_bodies():
     feet = [tuple(f) for f in R["feet_xy"]]
     ph = [tuple(p) for p in R["pi_holes"]]
     zp = C["z_pi"]
-    # bay seats (v12, concept review 28 Oct: drawn is attachment only): 4 pads Ø12 x 6.5 under each bay's corners for its VHB tape
+    # bay seats (v12, concept review 27 Oct: drawn is attachment only): 4 pads Ø12 x 6.5 under each bay's corners for its VHB tape
     # (~450 mm² a bay against ~9 N in a 35 g crash, E); v2..v11's continuous seat rails were load-carrying bars (7.6 cm³ drawn)
     ub, bk = M["UBEC 5 V"].bounds, M["buck 12 V"].bounds
     rails = [cyl(x, y, 0, T, 6.0) for b_ in (ub, bk) for x in (b_[0][0] + 6.0, b_[1][0] - 6.0) for y in (b_[0][1] + 6.0, b_[1][1] - 6.0)]
