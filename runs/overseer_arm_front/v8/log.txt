@@ -558,3 +558,15 @@ it  97 beta   32 J   5.8238 vol 0.0721 (dil 0.1582 g -0.002) grey  1.9% ch 0.100
 it  97 beta   32 J   5.8238 vol 0.0721 (dil 0.1582 g -0.002) grey  1.9% ch 0.100 worst tie b11 mx 3.19e+05 95.8s
 it  98 beta   32 J   5.7970 vol 0.0722 (dil 0.1583 g -0.002) grey  1.8% ch 0.100 worst tie b11 mx 3.19e+05 93.3s
 it  98 beta   32 J   5.7970 vol 0.0722 (dil 0.1583 g -0.002) grey  1.8% ch 0.100 worst tie b11 mx 3.19e+05 93.3s
+it  99 beta   32 J   5.7782 vol 0.0724 (dil 0.1583 g -0.002) grey  1.8% ch 0.100 worst tie b11 mx 3.18e+05 93.2s
+it  99 beta   32 J   5.7782 vol 0.0724 (dil 0.1583 g -0.002) grey  1.8% ch 0.100 worst tie b11 mx 3.18e+05 93.2s
+it 100 beta   32 J   5.7593 vol 0.0727 (dil 0.1584 g -0.001) grey  1.8% ch 0.100 worst tie b11 mx 3.18e+05 92.0s
+it 100 beta   32 J   5.7593 vol 0.0727 (dil 0.1584 g -0.001) grey  1.8% ch 0.100 worst tie b11 mx 3.18e+05 92.0s
+it 101 beta   32 J   5.7467 vol 0.0729 (dil 0.1584 g +0.007) grey  1.8% ch 0.100 worst tie b11 mx 3.18e+05 92.8s
+it 101 beta   32 J   5.7467 vol 0.0729 (dil 0.1584 g +0.007) grey  1.8% ch 0.100 worst tie b11 mx 3.18e+05 92.8s
+layout: stopped (grey) at it 101, beta 32, 3035 s
+layout: stopped (grey) at it 101, beta 32, 3035 s
+layout: beta 32 done: eroded design 10 bodies, main 99.4%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 10 bodies, main 99.4%; drawn bodies outside the main body: 0
+layout done: 3199 s, peak 11.106924 GB
+layout done: 3199 s, peak 11.106924 GB
