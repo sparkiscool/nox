@@ -349,7 +349,7 @@
    },
    {
     "a": "cage shell tubes",
-    "b": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "b": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -367,7 +367,7 @@
    },
    {
     "a": "cage shell nodes",
-    "b": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "b": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
@@ -376,7 +376,7 @@
    },
    {
     "a": "spokes, ties, head rods",
-    "b": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "b": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "overlap_mm3": 1.19,
     "limit_mm3": Infinity,
     "contact": true,
@@ -438,7 +438,7 @@
     "pass_": true
    },
    {
-    "a": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "a": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "b": "Unitree L2",
     "overlap_mm3": 0.02,
     "limit_mm3": Infinity,
@@ -447,7 +447,7 @@
     "pass_": true
    },
    {
-    "a": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "a": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "b": "camera left",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
@@ -456,7 +456,7 @@
     "pass_": true
    },
    {
-    "a": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "a": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "b": "camera right",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
@@ -465,7 +465,7 @@
     "pass_": true
    },
    {
-    "a": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "a": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "b": "top plate",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
@@ -474,7 +474,7 @@
     "pass_": true
    },
    {
-    "a": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "a": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "b": "bottom plate",
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
@@ -979,7 +979,7 @@
     "swap": false
    },
    {
-    "name": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
+    "name": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "mass_g": 143.7,
     "cg": [
      363.64,

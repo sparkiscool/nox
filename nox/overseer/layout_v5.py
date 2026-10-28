@@ -132,7 +132,7 @@ HEAD_ON_CAGE = os.environ.get("V5_HEAD_ON", "core") == "cage"          # alt (V5
 # braces or wing struts (Spark 27 Oct tried it: ~32 Hz on TPU nodes, F on E, runs/overseer_head_cage/concept); Spark then: "keep the design we have
 # right now i need the lidar to have max performance": the keels and L2 braces stay (A, the stiffest: 200 / 119 Hz rigid / TPU)
 LINKN = "spokes, ties, head rods" if os.environ.get("V5_HEAD", "printed") == "printed" else "spokes, ties, keels, L2 guard ring"
-HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
+HEADN = "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
 CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
                                                                    # ties, guard ring and its struts, camera guards and brackets) become one printed
                                                                    # part. Its mass budget is what it replaces (rods, their nodes, the camera
@@ -1309,7 +1309,7 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
         say(f"core: {len(CP['parts'])} parts of the core session in place of the layout's placeholders ({', '.join(sorted(drop))})")
     asm = new_assembly("Overseer", "overseer", asm_parts,
                        note=("Layout v5 / cage v5 (26-27 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the two cameras (27 Oct: no down camera, the pair beside the L2) outside "
-                             "it with nothing in their views, a guard ring behind the L2; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
+                             "it with nothing in their views, on 3 rods to the cage; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
                              "layout v4 / cage v2. Rough layout: C geometry on E sizes. "
                              "Drone frame: x fwd, y left, z up, z 0 bottom plate top. Left out: ESC bodies (25 g each in the arm masses), catch features "
                              "(the new funnel's), scan stick mount, XT60 and leads; the latch set is drawn as v2's cartridge envelope."),

@@ -44,8 +44,8 @@
   "swap": false
  },
  {
-  "name": "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)",
-  "file": "sensor_head_mount__printed__drawn_seat__.stl",
+  "name": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
+  "file": "sensor_head_mount__printed__drawn_bolt_a.stl",
   "role": "structure",
   "protect": false,
   "mass_g": 143.7,
