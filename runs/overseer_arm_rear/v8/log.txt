@@ -294,3 +294,19 @@ it  43 beta    8 J   0.7443 vol 0.1294 (dil 0.2656 g -0.002) grey 10.6% ch 0.100
 it  43 beta    8 J   0.7443 vol 0.1294 (dil 0.2656 g -0.002) grey 10.6% ch 0.100 worst held b1 mx 199 88.5s
 it  44 beta    8 J   0.7205 vol 0.1299 (dil 0.2658 g -0.001) grey 10.6% ch 0.100 worst held b1 mx 191 86.8s
 it  44 beta    8 J   0.7205 vol 0.1299 (dil 0.2658 g -0.001) grey 10.6% ch 0.100 worst held b1 mx 191 86.8s
+it  45 beta    8 J   0.6986 vol 0.1306 (dil 0.2658 g -0.001) grey 10.5% ch 0.100 worst held b1 mx 183 88.9s
+it  45 beta    8 J   0.6986 vol 0.1306 (dil 0.2658 g -0.001) grey 10.5% ch 0.100 worst held b1 mx 183 88.9s
+it  46 beta    8 J   0.6778 vol 0.1315 (dil 0.2658 g +0.016) grey 10.4% ch 0.100 worst held b1 mx 177 89.1s
+it  46 beta    8 J   0.6778 vol 0.1315 (dil 0.2658 g +0.016) grey 10.4% ch 0.100 worst held b1 mx 177 89.1s
+it  47 beta    8 J   0.7252 vol 0.1282 (dil 0.2612 g -0.002) grey 10.3% ch 0.100 worst held b1 mx 191 87.9s
+it  47 beta    8 J   0.7252 vol 0.1282 (dil 0.2612 g -0.002) grey 10.3% ch 0.100 worst held b1 mx 191 87.9s
+layout: beta 8 done: eroded design 4 bodies, main 100.0%; drawn bodies outside the main body: 3
+layout: beta 8 done: eroded design 4 bodies, main 100.0%; drawn bodies outside the main body: 3
+it  48 beta   16 J   0.6328 vol 0.1251 (dil 0.2567 g +0.011) grey  4.8% ch 0.100 worst held b1 mx 162 90.5s
+it  48 beta   16 J   0.6328 vol 0.1251 (dil 0.2567 g +0.011) grey  4.8% ch 0.100 worst held b1 mx 162 90.5s
+it  49 beta   16 J   0.6684 vol 0.1224 (dil 0.2533 g -0.002) grey  4.8% ch 0.100 worst held b1 mx 175 90.3s
+it  49 beta   16 J   0.6684 vol 0.1224 (dil 0.2533 g -0.002) grey  4.8% ch 0.100 worst held b1 mx 175 90.3s
+it  50 beta   16 J   0.6548 vol 0.1229 (dil 0.2536 g -0.001) grey  4.8% ch 0.100 worst held b1 mx 171 86.9s
+it  50 beta   16 J   0.6548 vol 0.1229 (dil 0.2536 g -0.001) grey  4.8% ch 0.100 worst held b1 mx 171 86.9s
+it  51 beta   16 J   0.6492 vol 0.1231 (dil 0.2537 g -0.002) grey  4.7% ch 0.100 worst held b1 mx 169 90.6s
+it  51 beta   16 J   0.6492 vol 0.1231 (dil 0.2537 g -0.002) grey  4.7% ch 0.100 worst held b1 mx 169 90.6s
