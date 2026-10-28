@@ -53,8 +53,8 @@ CLIP_ROD = (14, 15)                                      # rod 14-15 (124 long, 
 
 # ---------------------------------------------------------------- design numbers (C unless tagged)
 X_BOSS, BOSS_L, BOSS_D, PAD_D, PAD_T = 134.0, 6.5, 9.2, 12.0, 2.0     # seat face (bought 1.0 washer: board at 135), boss wall 3 round Ø3.2, Ø12 pad 2.0 web
-HOOD_X = (150.0, 153.0)                                  # hood ring: 4.0 ahead of the lens front (gate 3, DEFAULT)
-HOOD_OUT, HOOD_IN = (22.5, 17.0, 67.0), (19.5, 20.0, 64.0)   # (y half, z0, z1) outer / inner (camera box + 0.5)
+HOOD_X = (148.0, 153.0)                                  # hood ring 5 deep: front 4.0 ahead of the lens front (gate 3, DEFAULT); deep and thick enough to stay in the eroded body
+HOOD_OUT, HOOD_IN = (24.0, 15.5, 68.5), (19.5, 20.0, 64.0)   # (y half, z0, z1) outer / inner (camera box + 0.5): wall 4.5 (run 1: 3.0 eroded away at 2.0)
 CLIP_Y = 34.0                                            # clip centres y +-34.0 on rod 14-15: 1.4 off the tip of node 14's 14-15 socket (y 39.4, nodes v1), rod 14-16 3.2 above
 CLIP_L, T_P, SLIT, SNAP, FLARE, GRIP = 8.0, 2.0, 0.8, 0.25, 30.0, 0.05   # length along the rod, prong, slit, snap a side, lead-in deg, grip rib (radial, E)
 U_ROOT, U_BLOCK = 8.2, 12.0                              # prong root (free length 9.2 to the lip) and the root block's back, local u (+x)
@@ -170,7 +170,8 @@ def clip_bodies(y_c):
     cut = cut + prism_xz(ends, y1, y1 + 3.0) + prism_xz(ends, y0 - 3.0, y0)       # the prongs' end faces stay free too
     ring = prism_xz((mf.CrossSection.circle(R_B + 1.2, 48) - mf.CrossSection.circle(R_B, 48)).translate([x0, z0]), y0, y1)
     block = prism_xz(poly([(U_ROOT, -vo), (U_BLOCK, -vo), (U_BLOCK, vo), (U_ROOT, vo)]).translate([x0, z0]), y0, y1)
-    return drawn, cut, ring, block, (ul, vo)
+    seat = prism_xz(((mf.CrossSection.circle(R_B + 1.0, 48) - mf.CrossSection.circle(R_B, 48)) ^ mf.CrossSection.square([R_B + 2, 2 * R_B + 4]).translate([0.2, -R_B - 2])).translate([x0, z0]), y0, y1)
+    return drawn, cut, ring, block, (ul, vo), seat
 
 
 # ---------------------------------------------------------------- all bodies
@@ -179,7 +180,7 @@ def bodies():
     # --- camera bosses and pads (the camera board seats on 4 bought 1.0 washers at x 134..135)
     bosses = []
     for (y, z) in BOARD_HOLES:
-        b = cyl_x(y, z, BOSS_D / 2, X_BOSS - BOSS_L, X_BOSS) + cyl_x(y, z, PAD_D / 2, X_BOSS - PAD_T, X_BOSS)
+        b = cyl_x(y, z, PAD_D / 2, X_BOSS - BOSS_L, X_BOSS)          # Ø12 the full length: wall 4.4 round the insert (run 1: the Ø9.2 boss eroded away at 2.0)
         drawn += b; bosses.append(b)
         cuts += cyl_x(y, z, INSERT_HOLE / 2, X_BOSS - BOSS_L - 1, X_BOSS + 1)
     R["seats"] = [cyl_x(y, z, PAD_D / 2, X_BOSS - 1.0, X_BOSS) - cyl_x(y, z, INSERT_HOLE / 2 + 0.3, X_BOSS - 2, X_BOSS + 1) for (y, z) in BOARD_HOLES]
@@ -194,8 +195,8 @@ def bodies():
     # --- the two clips on rod 14-15
     R["clip_rings"], R["clip_blocks"] = [], []
     for s in (1, -1):
-        d, c, ring, blk, (ul, vo) = clip_bodies(s * CLIP_Y)
-        drawn += d; cuts += c; R["clip_rings"].append(ring); R["clip_blocks"].append(blk)
+        d, c, ring, blk, (ul, vo), seat = clip_bodies(s * CLIP_Y)
+        drawn += d; cuts += c; R["clip_rings"].append(ring); R["clip_blocks"].append(blk); R.setdefault("clip_seats", []).append(seat)
     # --- foot: contact plate on the plate top (lane-limited) + 2 slotted bolt pads
     xs = np.linspace(FOOT_X[0], FOOT_X[1], 30)
     up = [(x, min(lane_half(x) - 0.5, 20.0)) for x in xs]
@@ -298,15 +299,20 @@ def setup(h):
     p.support("foot", R["pads"])                                     # the 2 bolt pads: clamped by the belly mount's front plate bolts
     nd = p.nodes_of(p.elems(R["foot_bottom"], p.solid | p.design, what="foot contact"))
     p.supports["foot"][nd, 2] = True                                 # the foot plate bears on the plate top (preloaded contact, z only)
+    # a hit on the hood: the foot plus the clips' closed backs bearing on rod 14-15 at node 14 / 15's socket tips (x only: the rod
+    # goes straight into saddle tie 4.1, 3.0 x 88, Euler ~1 kN); run 1 held it at the foot alone and the tie read index 18.6
+    p.support("hood", R["pads"]); p.supports["hood"][nd, 2] = True
+    for seat in R["clip_seats"]:
+        ns = p.nodes_of(p.elems(seat, p.solid | p.design, what="clip seat")); p.supports["hood"][ns, 0] = True
     seats = R["seats"]; at = CAM_CG; pts = [np.array([X_BOSS, y, z]) for (y, z) in BOARD_HOLES]
     dirs = {"+x": (1, 0, 0), "-x": (-1, 0, 0), "+y": (0, 1, 0), "-y": (0, -1, 0), "+z": (0, 0, 1), "-z": (0, 0, -1)}
     for nm, d in dirs.items():                                       # camera 35 g at its CG through the 4 seats + the mount's own mass
         d = np.array(d, float); F = CAM_G / 1000 * G * CRASH * d
         p.load_multi(f"crash 35 g {nm}", list(zip(seats, couple(F, at, pts))), cls="misuse", support="foot", accel=CRASH * d)
     fl = np.array([0, 0, -FLIGHT]); p.load_multi("flight 4 g", list(zip(seats, couple(CAM_G / 1000 * G * fl, at, pts))), cls="flight", support="foot", accel=fl)
-    p.load("hood hit centre -x", R["hood_front"], (-HIT, 0, 0), cls="misuse", support="foot")
+    p.load("hood hit centre -x", R["hood_front"], (-HIT, 0, 0), cls="misuse", support="hood")
     for nm, reg in R["hood_corners"].items():
-        p.load(f"hood hit {nm} corner -x", reg, (-HIT, 0, 0), cls="misuse", support="foot")
+        p.load(f"hood hit {nm} corner -x", reg, (-HIT, 0, 0), cls="misuse", support="hood")
     sp = fork_snap(); fp = F_POP_DESIGN * sp["pop_N"]
     for s, ring in zip(("+y", "-y"), R["clip_rings"]):               # the rod on the clip: bearing on the closed back, pull, up, down
         p.load(f"clip {s} bear +x", ring, (CLIP_BEAR, 0, 0), cls="misuse", support="foot")
