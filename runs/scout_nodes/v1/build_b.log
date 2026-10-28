@@ -1,0 +1,12 @@
+eccentric sockets from runs/scout_nodes/v1/offsets.json
+  node 16 iter 0: worst 99.9 % 0.499 in 0 bend +a (rod 7-16); single cell 0.797 in 2 bend +b
+node 16: 4.76 g, solid_check PASS, envelope r 21.6, 4 sockets, 38 s, FE 99.9 % 0.499, cell 0.797
+  node 5 iter 0: worst 99.9 % 0.774 in 4 bend +b (saddle tie 3.1); single cell 1.329 in 1 bend +b
+node 5: 5.11 g, solid_check PASS, envelope r 20.5, 5 sockets, 54 s, FE 99.9 % 0.774, cell 1.329
+  node 10 iter 0: worst 99.9 % 0.672 in 2 bend -b (rod 8-10); single cell 1.272 in 1 bend -b
+node 10: 5.76 g, solid_check PASS, envelope r 23.1, 5 sockets, 57 s, FE 99.9 % 0.672, cell 1.272
+  node 12 iter 0: worst 99.9 % 1.055 in 5 bend -b (saddle tie 2.1); single cell 1.995 in 5 bend -b
+  node 12 iter 1: worst 99.9 % 0.906 in 5 bend -b (saddle tie 2.1); single cell 1.578 in 5 bend -b
+node 12: 6.51 g, solid_check PASS, envelope r 22.9, 6 sockets, 156 s, FE 99.9 % 0.906, cell 1.578
+  node 1 iter 0: worst 99.9 % 0.714 in 3 bend -b (rod 1-10); single cell 1.191 in 3 bend +a
+node 1: 7.86 g, solid_check PASS, envelope r 19.6, 6 sockets, 105 s, FE 99.9 % 0.714, cell 1.191
