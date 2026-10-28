@@ -327,6 +327,17 @@ def rod_m(p0, p1, r, back=0.0, n=32):
     return c.rotate([0.0, pitch, 0.0]).rotate([0.0, 0.0, yaw]).translate(p0.tolist())
 
 
+def cone_m(p0, p1, r0, r1, n=48):
+    """truncated cone from radius r0 at p0 to r1 at p1"""
+    d = p1 - p0
+    L = float(np.linalg.norm(d))
+    u = d / L
+    yaw = math.degrees(math.atan2(u[1], u[0]))
+    pitch = math.degrees(math.atan2(-u[2], math.hypot(u[0], u[1])))
+    c = mf.Manifold.cylinder(L, r0, r1, n).rotate([0.0, 90.0, 0.0])
+    return c.rotate([0.0, pitch, 0.0]).rotate([0.0, 0.0, yaw]).translate(p0.tolist())
+
+
 def bodies(which):
     """everything in the drone frame (left arm), mapped to the arm frame; then the chords, in the arm frame"""
     F = frame(which)
@@ -454,7 +465,15 @@ def bodies(which):
                 c_ = a0 + (a1 - a0) * (k_ + 1) / (ncol + 1)
                 col += rod_m(p0 + (c_ - 4.0) * u, p0 + (c_ + 4.0) * u, r, n=48)
             sockets += col ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
-            B["cuts"] += rod_m(p0 + a0 * u, p0 + a1 * u, r, n=48) - col
+            # v8c: each socket ends in a drawn 45° taper to the bore, not a flat face on the cleared ring (rear v8b:
+            # 0.016 mm³ build specks where the flat socket face met the cleared ring)
+            tap = (cone_m(p0 + a0 * u, p0 + (a0 + r - ROD_BORE / 2) * u, r, ROD_BORE / 2 + 0.05)
+                   + cone_m(p0 + a1 * u, p0 + (a1 - (r - ROD_BORE / 2)) * u, r, ROD_BORE / 2 + 0.05))
+            if os.environ.get("NOX_ARM_TAPER") == "1":
+                sockets += tap ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
+                B["cuts"] += rod_m(p0 + a0 * u, p0 + a1 * u, r, n=48) - col - tap
+            else:
+                B["cuts"] += rod_m(p0 + a0 * u, p0 + a1 * u, r, n=48) - col
         if os.environ.get("NOX_ARM_SLEEVE") == "1":   # v5c: a full-length drawn sleeve (rear v5b: webs meeting the tube
             sockets += rod_m(p0, p1, r, n=48) ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)   # left 1.1 collar walls)
     B["cuts_base"] = B["cuts"]
