@@ -1,0 +1,49 @@
+   tail bay +25.0, catch -16.0 aft: CG pack in +13.5, pack out +12.9 (x, mm), 902 g, 56 rods, score 13.8
+   tail bay +25.0, catch -12.0 aft: CG pack in +10.8, pack out +10.6 (x, mm), 902 g, 56 rods, score 11.2
+   tail bay +25.0, catch -8.0 aft: CG pack in +5.4, pack out +4.6 (x, mm), 859 g, 45 rods, score 5.7
+   tail bay +25.0, catch -4.0 aft: CG pack in +4.0, pack out +4.1 (x, mm), 899 g, 55 rods, score 4.5
+   tail bay +25.0, catch  0.0 aft: CG pack in +1.2, pack out +1.6 (x, mm), 912 g, 58 rods, score 2.1
+   tail bay +25.0, catch  4.0 aft: CG pack in -1.5, pack out -0.6 (x, mm), 913 g, 58 rods, score 2.0
+   tail bay +25.0, catch  2.0 aft: CG pack in -0.2, pack out +0.5 (x, mm), 912 g, 58 rods, score 1.2
+   tail bay +25.0, catch  6.0 aft: CG pack in -2.8, pack out -1.7 (x, mm), 913 g, 58 rods, score 3.3
+   tail bay +25.0, catch  1.0 aft: CG pack in +0.5, pack out +1.1 (x, mm), 912 g, 58 rods, score 1.6
+   tail bay +25.0, catch  3.0 aft: CG pack in -0.8, pack out -0.1 (x, mm), 912 g, 58 rods, score 1.4
+   tail bay +25.0, catch  1.5 aft: CG pack in +0.2, pack out +0.8 (x, mm), 912 g, 58 rods, score 1.4
+   tail bay +25.0, catch  2.5 aft: CG pack in -0.5, pack out +0.2 (x, mm), 912 g, 58 rods, score 1.1
+   tail bay +25.0, catch  2.2 aft: CG pack in -0.3, pack out +0.4 (x, mm), 912 g, 58 rods, score 1.1
+   tail bay +25.0, catch  2.8 aft: CG pack in -0.7, pack out +0.1 (x, mm), 912 g, 58 rods, score 1.2
+Scout v3 layout v3 / cage v2 (pattern free, every rod 3 mm); ring v5side: 4 nodes; balance: tail bay +25.0, catch 2.5 aft of the thrust centre; tab line x -2.50, cartridge flat bottom z -44.50, ring plane z -49.62 (Overseer: catch x -30.0, cartridge bottom -76.9, ring -3.00 under it)
+camera: lens (149, 0, 42), head plane tilt 0 deg, in a printed cradle on the cage (no boom) (lens z 30..50 x tilt 0..90: the shell target 14.0 under its lower view plane and behind its back; closest to the drone with its cradle under the cage roof)
+offset 16.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 6.1 L, 111 tall, shell 242 g, props 14.5, shell shadow 5.8 / 5.3 %
+offset 20.0 dome 20 snap 0: valid: 23 nodes, 62 tubes, 6.5 L, 111 tall, shell 303 g, props 14.8, shell shadow 5.1 / 5.6 %
+offset 24.0 dome 20 snap 0: valid: 19 nodes, 50 tubes, 6.4 L, 111 tall, shell 245 g, props 13.9, shell shadow 3.0 / 5.4 %
+offset 28.0 dome 20 snap 0: valid: 21 nodes, 56 tubes, 6.8 L, 111 tall, shell 275 g, props 13.3, shell shadow 3.5 / 5.4 %
+offset 32.0 dome 20 snap 0: valid: 20 nodes, 53 tubes, 6.7 L, 111 tall, shell 261 g, props 13.6, shell shadow 3.2 / 5.3 %
+structure bar: start 24.0 dome 20 (6.4 L, 245 g); picked start 24.0 dome 20 snap 0
+shell: 19 nodes (4 on the ring), 50 tubes, 32 triangles; tubes 61 .. 239, 6.34 m; node extents 362 x 266 x 111; hull residual 0.00 (C)
+ring: the 4 side nodes of the Overseer cage v5 base loop (its nose and tail nodes dropped; Spark 27 Oct), about the catch (+85.8, +116.1), (-68.9, +119.7), (-68.9, -119.7), (+85.8, -116.1), 154.7 long, 239.4 wide at the tail, 232.2 at the nose; plane z -49.62 = cartridge flat bottom -3.00 − seat 2.12 (the 3.0 rods sit 2.12 lower on the 45 deg ramps than the Overseer's 6 mm tubes, so both cartridges stop at the same height); 4 ring rods (C)
+funnel band (within 30 above the plane, inside the opening or 40 past its ends): links in it 0 (rod axis; 0 graze its edge by up to the rod radius), shell rods between free nodes 2, shell rods leaving the 4 bottom nodes that stay in it past their first 10 % 14 (0-5, 0-8, 0-14, 0-18, 1-5, 1-9, 1-11, 2-6, 2-9, 2-10, 3-6, 3-7, 3-15, 3-18) (C)
+tail bay out of the prop wash (plan distance outside every disk, need ≥ 3): Radxa Zero 3W +12.4, UBEC +22.3, Radxa plugs (keep clear) +13.2, mount spine (envelope) -3.4, mount tail block (envelope) -11.3, XR2 +3.8 (C)
+electronics tool lines (Ø10, 80 out) clear of every rod by: SD card +6.4, USB-C 1 -4.9 (C; need ≥ 0)
+tail nodes past x -130 about the catch: lowest 91.1 above the plane (the Overseer tail-tip ramp, need ≥ 45) (C)
+largest cell: inscribed circle Ø129 between tube surfaces (C)
+links by kind: saddle tie 8
+carbon: shell 50 rods 3.0 solid, shortest 61; links 8 rods 3.0; total 58 rods (cage v1: 123), 0.76 m, shortest 82 (saddle tie 3.1)
+links apart: closest pair 1.8 between rod surfaces (saddle tie 1.1 / saddle tie 3.1) (C, need ≥ 1.0)
+props: shell tubes 13.9 off the swept disks (≥ 12, 3D), nodes 17.0, links 14.8 (saddle tie 2.1) (C)
+   inside: props 15.4 from the nearest face plane (C)
+   inside: body 3.1 from the nearest face plane (C)
+swap zone (receiver 105.6 x 65.5 + 17.6 at the ends (nose 26.5, tail 17.6 to the rectangle rods), 30 at the sides, cartridge bottom down): clear (0 mm³)
+front camera (horizon, landscape, 89 x 73 deg): nothing of the drone in its view (C)
+flow (23 deg cone, straight down): checked (lines above list anything in view)
+prop blockage (secondary to structure): 3.0 % of the disks' thrust shadowed from above, 8.2 % from below (plan shadow of tubes and links, annulus 0.2..1 R weighted by r, E)
+cage: shell 273 g (tubes 70 + nodes 203, E: fit model), links 8 g, guard nodes 0 g (C on E)
+mass ~912 g (E), CG (-0.5, 0.5, 5.8) vs thrust centre (0, 0): 0.7 off; pack + cartridge out: 0.7 off (697 g); CG 35 under the prop plane
+compact: shell hull 6.4 L vs the parts-with-margins hull 3.8 L (C)
+FC USB-C cable: from (-20.1, 0.0, 13.5) along (-0.66, -0.75, 0.01), 4 deg off the tail-left diagonal, out through a cell (C)
+camera mount: a printed PETG cradle round the camera (0.5 clear, lips 6 over and under, behind the lens) on 4 printed Ø9 round arms into a snap clip on the shell rod at (110.5, 18.0, 61.1) (16 long), a snap clip on the shell rod at (122.6, 18.0, 11.5) (9 long) and their mirrors: no rods, no boom (Spark 27 Oct)
+wrote nox/scout/v3/scout.assembly.json
+camera mount v1: camera mount (printed) 21.75 g, camera mount stop collar +y 0.25 g, camera mount stop collar -y 0.25 g
+electronics round 5: drawn on v12, stale on v13 (needs its redraw; the layout placeholder stands in)
+belly mount v1: drawn on v12, stale on v13 (needs its redraw; the layout placeholder stands in)
+wrote /home/user/nox/runs/scout_layout/v13/

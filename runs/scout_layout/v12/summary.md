@@ -1,5 +1,7 @@
 # Scout v3 layout v3 / cage v2, race-car shape: the tail bay with its real mount (27 Oct 2026, concept)
 
+**Superseded by `v13/` (28 Oct): the catch re-trim for the real node mass. Kept: summary, results, stills; the meshes are in git history.**
+
 **What changed from `v11/` (PR 133):** the Scout electronics mount session drew the tail bay mount for the v11 poses (PR 130, round 3; input copied as `electronics_envelope.json`, `SOURCE.txt`).
 - The real bay is heavier than the 25 g placeholder:
   - mount 38.6 g (belly-mount tail block 17.3, carrier 21.3);

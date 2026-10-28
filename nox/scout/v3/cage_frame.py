@@ -28,7 +28,8 @@ SIG_T, SIG_C = 1000.0, 600.0                       # MPa allowables, pultruded c
 ROD3 = tube(3.0, 0.0); TUBE6 = tube(6.0, 4.0); RIGID = dict(E=100e6, G=40e6, A=1e3, I=1e5, J=2e5, c=5.0)
 ROD_GPM = 7.07 * 1.55e-3                           # g/mm, 3.0 solid carbon (E)
 TUBE_GPM = 15.71 * 1.55e-3                         # g/mm, 6/4 carbon tube (E)
-NODE_G, RING_NODE_G = 1.5, 4.5                     # g (E, layout_v3.py)
+NODE_FIT, CAP_G = (2.34, 3.49, -0.57, -3.14), 0.86  # node g per shell socket, tie socket, ring, constant: layout_v3.py node_g (fit to the saved
+                                                   # nodes v2, M; E), + the TPU foot cap on a ring node
 CLIPS = [(110.5, 18.0, 61.1), (122.6, 18.0, 11.5)]  # the camera mount v1's snap clips (+y; mirrored) on rods 7-8 and 14-15 (v12, camera_mount.py)
 CAM_C, CAM_G = (136.0, 0.0, 41.7), 32.3             # camera + mount v1 + 2 collars, g at their CG (M mount, E camera; runs/scout_camera_mount/v1)
 K_TIE = 0.7                                        # a saddle tie: epoxied into the PETG saddle (~ fixed), pinned at its cage node
@@ -68,7 +69,15 @@ def masses(f, nid, H):
     m = {}
     for a, b in CG["rods"]:
         w = np.linalg.norm(N[a] - N[b]) * (TUBE_GPM if f"rod {a}-{b}" in UP6 or SHELL_SEC is TUBE6 else ROD_GPM); m[nid[a]] = m.get(nid[a], 0) + w / 2; m[nid[b]] = m.get(nid[b], 0) + w / 2
-    for i, j in enumerate(nid): m[j] = m.get(j, 0) + (RING_NODE_G if i < nR else NODE_G)
+    sd = np.zeros(len(N), int); td = np.zeros(len(N), int)
+    for a, b in CG["rods"]: sd[a] += 1; sd[b] += 1
+    for p, q in RES["links"].values():
+        for e in (p, q):
+            d = np.linalg.norm(N - np.asarray(e, float), axis=1)
+            if d.min() < 1.0: td[d.argmin()] += 1
+    for i, j in enumerate(nid):
+        g = max(1.5, NODE_FIT[0] * sd[i] + NODE_FIT[1] * td[i] + NODE_FIT[2] * (i < nR) + NODE_FIT[3]) + (CAP_G if i < nR else 0.0)
+        m[j] = m.get(j, 0) + g
     m[H] = m.get(H, 0) + CAM_G
     return m                                                             # g
 
@@ -120,7 +129,7 @@ def main():
     say = lambda s: (print(s), L_.append(s))
     say(f"# Scout cage frame model (F on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 shell rods, {K_TIE} saddle ties)\n")
     say(f"Cage `{os.path.relpath(RUN, ROOT)}/cage_shell.json`: {len(N)} nodes, {len(CG['rods'])} shell rods + {len(RES['links'])} saddle ties, " + (f"{len(UP6)} members 6/4 tube (the sized list), the rest 3.0 solid; " if UP6 else "every rod 3.0 solid; ") +
-        f"the ties' saddle ends fixed (the core held); the camera + mount ({CAM_G:.1f} g, M mount + E camera) rigid on its 4 clips. Drone {MASS * 1000:.0f} g (E): crash "
+        f"the ties' saddle ends fixed (the core held); the camera + mount ({CAM_G:.1f} g, M mount + E camera) rigid on its 4 clips; nodes lumped by the socket fit (E). Drone {MASS * 1000:.0f} g (E): crash "
         f"{F_crash:.0f} N through the most extreme node, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
     say("Lowest modes (rigid joints, lumped masses): " + ", ".join(f"{h_:.0f} Hz" + (" (the camera moves)" if hd[k] > 0.3 else "") for k, h_ in enumerate(hz)) + "\n")
     say(f"## Buckling: {len(bad_b)} members at or over 1.0 x their Euler load")

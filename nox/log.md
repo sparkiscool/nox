@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 28 Oct (Scout v3): layout v13 (`runs/scout_layout/v13/`): node mass fitted to the saved nodes v2 (192 g M; v12 assumed 39, CG read 4.65): catch 2.5 aft (was 5.0 fwd), 58 rods on 19 nodes, 912 g E, CG 0.7 / 0.7 E; frame v4 34 Hz F. Nodes, electronics stale (redraw); camera v1 for mass only (6.2 clips).
 - 28 Oct (Overseer): cage nodes v5 saved READY: 24 print files (15 designs + 9 mirrors), drawn first (no topology run), 2.0 walls (v4 2.5: 345 g), 289.4 g PETG (M), each solid_check PASS, worst 0.252 (F); in the assembly, system_check PASS; runs/cage_nodes/v5
 - 28 Oct (Overseer): head v5 sweep (3 rods) all solid FAIL, worst 1.6-2.7 (M): one held socket took all load; the L2 plane cut the side bosses (1.2 wall, M). Fix: all 3 sockets hold; bosses checked on the exact keep-outs; L2 rolled 180 (DEFAULT); rods 12 behind (C): 119.4 / 94.2 Hz (was 151.8, unbuildable) (F on E)
 - 27 Oct (Overseer hub deck v12): saved, READY. Core v4 deck (no head load): 6 feet, Pi posts, bay pads joined by topology, 37.1 g (v9 68.0), worst 0.17, 432 Hz, solid PASS; assembled on main (cage PR 165) fit 0, access 39/39. `print/overseer_hub_deck_v12.stl`, `runs/overseer_hub_deck/v12/summary.md`; v9 print removed.
