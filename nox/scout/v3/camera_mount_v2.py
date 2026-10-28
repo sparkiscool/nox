@@ -68,6 +68,7 @@ STROKE, SWEEP_CLR = 110.0, 1.5                          # push-on stroke along -
 WASH_MARGIN = 1.0                                        # vertical prism of every swept disk, r 44.5 + 1.0
 HIT, CRASH, FLIGHT, G = 250.0, 35.0, 4.0, 9.81          # N frontal hit on the hood (35 g of a 735 g drone), g, g (dimensions.md L)
 CLIP_BEAR = 40.0                                         # N, a clip's share of the frontal hit (frame model concept: 31 N at 250 N, F on E)
+CAM_COUPLE = 10.0                                        # N a seat, the rotation stiffness cases (vibration class)
 F_POP_DESIGN = 2.0                                       # the clip arms carry 2 x the pop force (the clips are the fuse)
 
 
@@ -309,6 +310,13 @@ def setup(h):
     for nm, d in dirs.items():                                       # camera 35 g at its CG through the 4 seats + the mount's own mass
         d = np.array(d, float); F = CAM_G / 1000 * G * CRASH * d
         p.load_multi(f"crash 35 g {nm}", list(zip(seats, couple(F, at, pts))), cls="misuse", support="foot", accel=CRASH * d)
+    # the camera's rotations on the mount (pitch, yaw, roll couples on the 4 seats): the modes rock the camera; run 1 left the
+    # upper seats on thin material (0.78 mm/N at the seats against 0.05 mid-tie, 74 Hz F)
+    s_ = seats; C_ = CAM_COUPLE
+    for nm, parts in (("camera pitch", [(s_[0], (C_, 0, 0)), (s_[2], (C_, 0, 0)), (s_[1], (-C_, 0, 0)), (s_[3], (-C_, 0, 0))]),
+                      ("camera yaw", [(s_[0], (C_, 0, 0)), (s_[1], (C_, 0, 0)), (s_[2], (-C_, 0, 0)), (s_[3], (-C_, 0, 0))]),
+                      ("camera roll", [(s_[0], (0, 0, C_)), (s_[1], (0, 0, C_)), (s_[2], (0, 0, -C_)), (s_[3], (0, 0, -C_))])):
+        p.load_multi(nm, parts, cls="vibration", support="foot")
     fl = np.array([0, 0, -FLIGHT]); p.load_multi("flight 4 g", list(zip(seats, couple(CAM_G / 1000 * G * fl, at, pts))), cls="flight", support="foot", accel=fl)
     p.load("hood hit centre -x", R["hood_front"], (-HIT, 0, 0), cls="misuse", support="hood")
     for nm, reg in R["hood_corners"].items():
@@ -324,7 +332,7 @@ def setup(h):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("out", nargs="?", default=os.path.join(ROOT, "runs", "scout_camera_mount", "v2"))
-    ap.add_argument("--h", type=float, default=1.0); ap.add_argument("--gen", type=float, default=12.0); ap.add_argument("--git", action="store_true")
+    ap.add_argument("--h", type=float, default=1.0); ap.add_argument("--gen", type=float, default=16.0); ap.add_argument("--git", action="store_true")
     ap.add_argument("--smoke", action="store_true", help="build the Part once and report, no optimisation")
     ap.add_argument("--no-coarse", action="store_true", help="fine stage only (h 1.5: the 2h coarse grid loses the loads' regions)")
     ap.add_argument("--backend", default="auto", help="topo solver: auto | direct | mg (mg on a shared box: the direct factor is sized on total RAM)")
