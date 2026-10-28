@@ -277,11 +277,11 @@ W = {
         [(-108.3, 0, xt60.bounds[1][2]), (-100, 0, 4), (-68, 0, 30), (-64, 0, Z_TP + 3), (-24, 0, Z_ESC + 2)], 4.0),
     "UBEC + buck in: ESC battery pads -> over the top plate's front edge -> front bays": ([(-20, -8, Z_ESC + 2), (40, -8, Z_TP + 2), (64, -8, 30), (60, -8, 10)], 1.5),
     "UBEC 5 V -> Pi GPIO 5 V pins (+y edge)": ([(40, 0, 9), (32, 20, 12), (PI_CX, 24, Z_PI + 4)], 1.5),
-    "buck 12 V -> nose (the L2 owner takes it there)": ([(56, 12, 8), (90, 0, 6)], 1.5),
+    "buck 12 V -> nose (the L2 owner takes it there): up off the buck and over the tower (v10: off the deck floor)": ([(46, 13, 15), (62, 4, 24), (100, 0, 33)], 1.5),
     "FC <-> Pi (USB), out past the top plate's -y edge": ([(0, -18, Z_STACK_TOP - 3), (0, -58, Z_TP + 2), (0, -62, 30), (PI_X0 - 8, -15, Z_PI + 8)], 1.5),
     "FC <-> RX": ([(-18, 10, Z_STACK_TOP - 3), (-32, 26, Z_TP + 4)], 1.5),
     "FC UART -> flow (over the top plate's front edge, down the front wing beside the UBEC, round the plate's nose to the clip)": (
-        [(10, -10, Z_STACK_TOP - 4), (50, -4, Z_TP + 2), (64, -2, 30), (84, -2, 9), (102, -2, 3), (103, -2, Z_PLATE_BOT - 1), (FLOW_X + 9, 0, LENS_Z + 3)], 1.5),
+        [(10, -10, Z_STACK_TOP - 4), (50, -4, Z_TP + 2), (64, -2, 32), (104, -2, 32), (104, -2, Z_PLATE_BOT - 1), (FLOW_X + 9, 0, LENS_Z + 3)], 1.5),   # v10: down in front of the hub, between the two sides' sockets
 }
 # motor leads: from each ESC corner straight out along the top of its arm (on top of the plate now: no root to pass)
 for k, ang in enumerate((45, 135, 225, 315)):   # the stack is turned 45°: its corners (motor pads, E) sit on the plate axes; each lead
@@ -325,9 +325,9 @@ core = [
     P("XT60 pair", xt60, "bought", 15, protect=True),
     P("hub deck", DECK, "structure", MASS["hub deck"], budget=BUDGET["hub deck"], tag="M" if os.path.exists(HUB_RUN) else "E"),
     P("flow clip", CLIP, "structure", BUDGET["flow clip"], budget=BUDGET["flow clip"]),
-    P("TPU feet (cage session, placeholders)", feet, "cage", 6.4, material="TPU", owner="overseer cage", version="placeholder"),
 ]
 CORE_NAMES = {p["name"] for p in core}
+context = [p for p in context if p["name"] not in CORE_NAMES]      # the cage's assembly now carries the core's saved parts: ours replace them
 contact = [list(c) for c in v5["contact_pairs"] if not (set(c) & REPLACED)]
 contact += [[STACK_NM, "top plate"], ["ESC cap", "top plate"], ["RX XR2", "top plate"],
             ["hub deck", "bottom plate"], ["hub deck", PI_NM], ["hub deck", "UBEC 5 V"], ["hub deck", "buck 12 V"],

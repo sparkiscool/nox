@@ -1,0 +1,108 @@
+{
+ "name": "overseer_hub_deck",
+ "h": 1.0,
+ "gen_cm3": 11.0,
+ "coarse": {
+  "s_per_it": 1.6,
+  "cells": 36864,
+  "design_cells": 8686,
+  "cases": 104,
+  "load_cases": 20,
+  "backend": "direct",
+  "peak_gb": 5.52
+ },
+ "smoke_iterations": 3,
+ "drawn": {
+  "name": "overseer_hub_deck",
+  "mass_g": 16.31,
+  "solid_ok": false,
+  "bodies_plain": 13,
+  "worst": 0.179,
+  "worst_case": "press 50 N on the Pi (assembly)",
+  "max": 1.0,
+  "h": 1.0,
+  "pass": false
+ },
+ "room_audit": "PASS",
+ "room_audit_rows": [
+  {
+   "share": 0.47,
+   "at": [
+    -30.1,
+    -24.6,
+    5.6
+   ],
+   "loaded_cells": 220
+  },
+  {
+   "share": 0.47,
+   "at": [
+    -30.1,
+    24.4,
+    5.6
+   ],
+   "loaded_cells": 220
+  },
+  {
+   "share": 0.5,
+   "at": [
+    27.9,
+    -24.6,
+    5.6
+   ],
+   "loaded_cells": 220
+  },
+  {
+   "share": 0.5,
+   "at": [
+    27.9,
+    24.4,
+    5.6
+   ],
+   "loaded_cells": 220
+  },
+  {
+   "share": 0.51,
+   "at": [
+    45.0,
+    13.0,
+    4.5
+   ],
+   "loaded_cells": 816
+  },
+  {
+   "share": 0.51,
+   "at": [
+    76.0,
+    -8.0,
+    4.5
+   ],
+   "loaded_cells": 576
+  },
+  {
+   "share": 0.55,
+   "at": [
+    40.0,
+    -8.0,
+    4.5
+   ],
+   "loaded_cells": 576
+  }
+ ],
+ "room_audit_min_share": 0.35,
+ "fine": {
+  "s_per_it": 20.2,
+  "cells": 282624,
+  "design_cells": 68042,
+  "cases": 86,
+  "load_cases": 20,
+  "backend": "direct",
+  "peak_gb": 5.96
+ },
+ "peak_gb": 5.96,
+ "wall_h": [
+  0.38,
+  0.95
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
