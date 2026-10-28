@@ -1,0 +1,391 @@
+{
+ "round": "v3",
+ "layout": "scout_layout v13 (PR 169, on main)",
+ "catch": 2.5000009536743164,
+ "funnel_line": [
+  -73.5,
+  -46.6,
+  -240.7,
+  44.5
+ ],
+ "files": {
+  "belly-mount tail block (PETG)": "runs/scout_electronics/v3/belly_mount_tail_block__petg_.stl",
+  "tail carrier (PETG)": "runs/scout_electronics/v3/tail_carrier__petg_.stl",
+  "Radxa Zero 3W": "runs/scout_electronics/v3/radxa_zero_3w__as_fitted.stl",
+  "UBEC": "runs/scout_electronics/v3/ubec__as_fitted.stl",
+  "XR2": "runs/scout_electronics/v3/xr2__as_fitted.stl"
+ },
+ "note": "drone frame (x nose, y left, z up, thrust centre x 0), catch 2.5 aft (v13); boxes [[x0, y0, z0], [x1, y1, z1]]; masses E unless tagged",
+ "items": {
+  "Radxa Zero 3W": {
+   "box": [
+    [
+     -146.4,
+     -4.6,
+     8.0
+    ],
+    [
+     -75.9,
+     6.0,
+     45.0
+    ]
+   ],
+   "mass_g": 10.0,
+   "tag": "E",
+   "cg": [
+    -111.9,
+    -0.8,
+    23.0
+   ],
+   "funnel_margin": 14.9,
+   "rods": 14.9,
+   "inset": 13.3,
+   "wash": 8.3
+  },
+  "UBEC": {
+   "box": [
+    [
+     -178.6,
+     18.2,
+     16.0
+    ],
+    [
+     -117.6,
+     33.6,
+     24.0
+    ]
+   ],
+   "mass_g": 15.0,
+   "tag": "E",
+   "cg": [
+    -148.1,
+    25.9,
+    20.0
+   ],
+   "funnel_margin": 5.4,
+   "rods": 8.7,
+   "inset": 5.0,
+   "wash": 22.9
+  },
+  "XR2": {
+   "box": [
+    [
+     -110.0,
+     -27.0,
+     23.0
+    ],
+    [
+     -94.0,
+     -15.0,
+     45.0
+    ]
+   ],
+   "mass_g": 1.0,
+   "tag": "P",
+   "cg": [
+    -102.0,
+    -21.0,
+    28.0
+   ],
+   "funnel_margin": 49.7,
+   "rods": 23.6,
+   "inset": 15.0,
+   "wash": 3.7
+  }
+ },
+ "mount": {
+  "belly-mount tail block (PETG)": {
+   "box": [
+    [
+     -76.9,
+     -21.0,
+     -8.0
+    ],
+    [
+     -14.0,
+     21.0,
+     34.0
+    ]
+   ],
+   "mass_g": 17.42,
+   "tag": "E",
+   "cg": [
+    -49.1,
+    0.6,
+    13.9
+   ],
+   "note": "block 21.4 x 11.05 between the tongues, gusset on the receiver's tail face, web under the plate tab to 2 plate-bolt bosses at [(-42.0, 16.0), (-42.0, -16.0)], fin through the notch, foot on the plate top to x -14.0; 6 inserts; cut out of the wash (948 mm3)",
+   "wash": -6.2,
+   "funnel_margin": 36.7,
+   "rods": 25.8,
+   "inset": 25.9
+  },
+  "tail carrier (PETG)": {
+   "box": [
+    [
+     -170.6,
+     -27.0,
+     -13.0
+    ],
+    [
+     -55.5,
+     33.6,
+     37.5
+    ]
+   ],
+   "mass_g": 34.21,
+   "tag": "E",
+   "cg": [
+    -109.6,
+    0.6,
+    9.6
+   ],
+   "note": "yoke (2 tongues, 4 M3, 2.0 side wall, lower back under the Radxa) + spine (2.0 inner wall, box y -13.05..-6.55 aft of x -78.5) + 4 \u00d88 posts + cross plate + UBEC tray + XR2 shelf; one print; cut out of the wash (3 mm3)",
+   "wash": 3.0,
+   "funnel_margin": 3.7,
+   "rods": 11.0,
+   "inset": 3.5
+  }
+ },
+ "keep_clear": {
+  "plugs": [
+   [
+    -107.3,
+    -4.0,
+    39.5
+   ],
+   [
+    -75.9,
+    6.0,
+    45.0
+   ]
+  ],
+  "tool_lines": {
+   "SD card": {
+    "start": [
+     -146.4,
+     -3.0,
+     23.0
+    ],
+    "dir": [
+     -1.0,
+     0.0,
+     0.0
+    ],
+    "d": 10.0
+   },
+   "USB-C 1": {
+    "start": [
+     -102.9,
+     1.6,
+     39.5
+    ],
+    "dir": [
+     0.0,
+     0.26,
+     0.97
+    ],
+    "d": 10.0
+   }
+  },
+  "keys": {
+   "M3 key, yoke top bolt (x -62.0)": {
+    "start": [
+     -62.0,
+     0.5,
+     23.5
+    ],
+    "dir": [
+     0.0,
+     0.259,
+     0.966
+    ],
+    "d": 4
+   },
+   "M3 key, yoke bottom bolt (x -62.0)": {
+    "start": [
+     -62.0,
+     0.5,
+     -13.0
+    ],
+    "dir": [
+     0.0,
+     0.0,
+     -1.0
+    ],
+    "d": 4
+   },
+   "M3 key, yoke top bolt (x -71.0)": {
+    "start": [
+     -71.0,
+     0.5,
+     23.5
+    ],
+    "dir": [
+     0.0,
+     0.259,
+     0.966
+    ],
+    "d": 4
+   },
+   "M3 key, yoke bottom bolt (x -71.0)": {
+    "start": [
+     -71.0,
+     0.5,
+     -13.0
+    ],
+    "dir": [
+     -0.259,
+     0.0,
+     -0.966
+    ],
+    "d": 4
+   },
+   "M3 key, plate bolt (-42.0, +16.0)": {
+    "start": [
+     -42.0,
+     16.0,
+     22.5
+    ],
+    "dir": [
+     0.171,
+     -0.296,
+     0.94
+    ],
+    "d": 4
+   },
+   "M3 key, plate bolt (-42.0, -16.0)": {
+    "start": [
+     -42.0,
+     -16.0,
+     22.5
+    ],
+    "dir": [
+     0.171,
+     0.296,
+     0.94
+    ],
+    "d": 4
+   }
+  }
+ },
+ "cables": {
+  "mass_g": 6.47,
+  "tag": "E",
+  "cg": [
+   -12.9,
+   3.2,
+   34.5
+  ],
+  "runs": {
+   "camera USB-C": {
+    "g": 4.23,
+    "mid": [
+     22.3,
+     0.8,
+     40.0
+    ],
+    "L": 282.0
+   },
+   "Radxa UART": {
+    "g": 0.37,
+    "mid": [
+     -55.2,
+     -0.8,
+     23.3
+    ],
+    "L": 146.0
+   },
+   "UBEC 5 V out": {
+    "g": 0.57,
+    "mid": [
+     -143.5,
+     12.1,
+     15.5
+    ],
+    "L": 86.0
+   },
+   "UBEC in (FC pads)": {
+    "g": 1.05,
+    "mid": [
+     -59.8,
+     12.9,
+     27.8
+    ],
+    "L": 159.0
+   },
+   "XR2 UART": {
+    "g": 0.27,
+    "mid": [
+     -50.0,
+     -10.5,
+     30.3
+    ],
+    "L": 133.0
+   }
+  }
+ },
+ "mount_total": {
+  "mass_g": 51.6,
+  "cg": [
+   -89.2,
+   0.6,
+   11.1
+  ]
+ },
+ "cg": {
+  "pack_in": [
+   -0.43,
+   0.5,
+   6.48
+  ],
+  "pack_out": [
+   0.29,
+   0.66,
+   14.16
+  ],
+  "h_in": 0.66,
+  "h_out": 0.72,
+  "mass": 919.5,
+  "best_catch_bay_riding": {
+   "catch": 2.5,
+   "h_in": 0.66,
+   "h_out": 0.72
+  }
+ },
+ "ubec_region": {
+  "at_layout_catch": {
+   "catch": 2.5,
+   "cg_now": [
+    0.66,
+    0.72
+   ],
+   "box_now": [
+    [
+     -178.6,
+     18.2,
+     16.0
+    ],
+    [
+     -117.6,
+     33.6,
+     24.0
+    ]
+   ],
+   "n": 12529,
+   "shift_x": [
+    -40.0,
+    20.0
+   ],
+   "shift_y": [
+    0.0,
+    20.0
+   ],
+   "shift_z_min_at_dx0": -5.0
+  }
+ },
+ "requirements": {
+  "belly_mount": "its tail face at x -31.0 over |y| <= 22, z 9.6..18.5 (plate-fixed): the tail block's web and the 2 plate-bolt bosses sit there under the plate; the block's gusset bears on the receiver's tail face",
+  "plate": "2 x \u00d83.4 at (-42.0, +-16.0) in the tail tabs (8.0 from the tail edge, 7.0 from the notch edge), unchanged from round 5"
+ }
+}
