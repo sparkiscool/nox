@@ -1,0 +1,32 @@
+=== scout_camera_mount: h 1.5, generated 12.0 cm3, min member 3.2 mm, cores 4
+=== scout_camera_mount: h 1.5, generated 12.0 cm3, min member 3.2 mm, cores 4
+scout_camera_mount: grid (96, 64, 48) h 1.5 = 294,912 cells; design 46,826 (158.0 cm3), drawn 2,114, void 245,972
+  support foot: 292 cells, 582 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+scout_camera_mount: grid (96, 64, 48) h 1.5 = 294,912 cells; design 46,826 (158.0 cm3), drawn 2,114, void 245,972
+  support foot: 292 cells, 582 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (6.80 cm3); 0.34 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (6.80 cm3); 0.34 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.078 of 46,926 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 4.30 cells, erosion depth 1.71 mm; volfrac 0.078 of 46,926 design cells
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: drawn bodies and keep-outs mirror about y: the design is held symmetric there
+layout: 8 drawn bodies (2,014 cells), held solid in every realization; eroded filter: masked
+layout: 8 drawn bodies (2,014 cells), held solid in every realization; eroded filter: masked
+layout: gate ties: held bodies thinner than 2.0 mm (716 cells) count by their cover; 6 bodies tied to body 8
+layout: gate ties: held bodies thinner than 2.0 mm (716 cells) count by their cover; 6 bodies tied to body 8
+layout: 20 load cases + 42 tie cases (7 bodies tied, 1 held by support 'foot') + 36 gate ties + 0 held ties
+layout: 20 load cases + 42 tie cases (7 bodies tied, 1 held by support 'foot') + 36 gate ties + 0 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (96, 64, 48) = 294,912 elements, 178,893 active dofs; backend direct (direct estimate 1.8 GB, budget 11.8 GB)
+fem: grid (96, 64, 48) = 294,912 elements, 178,893 active dofs; backend direct (direct estimate 1.8 GB, budget 11.8 GB)
+it   1 beta    1 J  10.0000 vol 0.0648 (dil 0.0796 g -0.168) grey  8.1% ch 0.100 worst tie b8 mx 1.43e+04 65.6s
+it   1 beta    1 J  10.0000 vol 0.0648 (dil 0.0796 g -0.168) grey  8.1% ch 0.100 worst tie b8 mx 1.43e+04 65.6s
+it   2 beta    1 J 182.9895 vol 0.0688 (dil 0.0833 g -0.129) grey 33.5% ch 0.100 worst gate b3 fy 3.36e+05 67.9s
+it   2 beta    1 J 182.9895 vol 0.0688 (dil 0.0833 g -0.129) grey 33.5% ch 0.100 worst gate b3 fy 3.36e+05 67.9s
+it   3 beta    1 J   9.4393 vol 0.0684 (dil 0.0833 g -0.129) grey 21.2% ch 0.100 worst tie b8 mx 1.37e+04 77.9s
+it   3 beta    1 J   9.4393 vol 0.0684 (dil 0.0833 g -0.129) grey 21.2% ch 0.100 worst tie b8 mx 1.37e+04 77.9s
+it   4 beta    1 J  96.1280 vol 0.0648 (dil 0.0786 g -0.178) grey 31.0% ch 0.100 worst gate b3 fx 1.93e+05 64.8s
+it   4 beta    1 J  96.1280 vol 0.0648 (dil 0.0786 g -0.178) grey 31.0% ch 0.100 worst gate b3 fx 1.93e+05 64.8s
