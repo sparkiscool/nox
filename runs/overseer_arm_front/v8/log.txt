@@ -448,3 +448,63 @@ it  67 beta   16 J   1.5853 vol 0.0713 (dil 0.1613 g -0.001) grey  3.9% ch 0.100
 it  67 beta   16 J   1.5853 vol 0.0713 (dil 0.1613 g -0.001) grey  3.9% ch 0.100 worst tie b8 fx 8.39e+04 97.0s
 it  68 beta   16 J   1.5463 vol 0.0712 (dil 0.1613 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 8.18e+04 96.4s
 it  68 beta   16 J   1.5463 vol 0.0712 (dil 0.1613 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 8.18e+04 96.4s
+it  69 beta   16 J   1.5122 vol 0.0710 (dil 0.1613 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.94e+04 96.7s
+it  69 beta   16 J   1.5122 vol 0.0710 (dil 0.1613 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.94e+04 96.7s
+it  70 beta   16 J   1.4808 vol 0.0709 (dil 0.1613 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.75e+04 94.4s
+it  70 beta   16 J   1.4808 vol 0.0709 (dil 0.1613 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.75e+04 94.4s
+it  71 beta   16 J   1.4490 vol 0.0710 (dil 0.1612 g +0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.56e+04 94.7s
+it  71 beta   16 J   1.4490 vol 0.0710 (dil 0.1612 g +0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.56e+04 94.7s
+it  72 beta   16 J   1.4221 vol 0.0711 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.39e+04 95.1s
+it  72 beta   16 J   1.4221 vol 0.0711 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.39e+04 95.1s
+it  73 beta   16 J   1.3879 vol 0.0714 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.19e+04 94.8s
+it  73 beta   16 J   1.3879 vol 0.0714 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.19e+04 94.8s
+it  74 beta   16 J   1.3594 vol 0.0716 (dil 0.1612 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.02e+04 93.8s
+it  74 beta   16 J   1.3594 vol 0.0716 (dil 0.1612 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.02e+04 93.8s
+=== overseer_arm_front: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+=== overseer_arm_front: h 2.0, generated 35.0 cm3, min member 3.2 mm, cores 4
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:550: RuntimeWarning: divide by zero encountered in divide
+  inverse_denominator = 1.0 / (dot00 * dot11 - dot01 * dot01)
+/usr/local/lib/python3.13/dist-packages/trimesh/triangles.py:555: RuntimeWarning: invalid value encountered in subtract
+  barycentric[:, 0] = 1 - barycentric[:, 1] - barycentric[:, 2]
+overseer_arm_front: grid (128, 48, 32) h 2.0 = 196,608 cells; design 66,255 (530.0 cm3), drawn 5,366, void 124,987
+  dropped 17 envelope speck cell(s) off the main body
+  insert rod 0: 564 cells, modulus x22.0
+  insert rod 1: 564 cells, modulus x22.0
+  insert rod 2: 564 cells, modulus x22.0
+  insert rod 3: 564 cells, modulus x22.0
+  support default: 401 cells, 1014 nodes
+  support bosses: 148 cells, 465 nodes
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+layout: min member 3.20 -> 6.25 mm so members survive the solid gate's 2.0 mm erosion round the drawn bodies
+overseer_arm_front: grid (128, 48, 32) h 2.0 = 196,608 cells; design 66,255 (530.0 cm3), drawn 5,366, void 124,987
+  dropped 17 envelope speck cell(s) off the main body
+  insert rod 0: 564 cells, modulus x22.0
+  insert rod 1: 564 cells, modulus x22.0
+  insert rod 2: 564 cells, modulus x22.0
+  insert rod 3: 564 cells, modulus x22.0
+  support default: 401 cells, 1014 nodes
+  support bosses: 148 cells, 465 nodes
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (56.76 cm3); 2.69 cm3 of drawn volume opened to the design
+layout: organic finish: drawn bodies kept as 2.5 mm functional skins (56.76 cm3); 2.69 cm3 of drawn volume opened to the design
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.071 of 66,591 design cells
+layout: min member 6.25 mm (rods), plates 5.68 mm, filter radius 6.44 mm = 3.22 cells, erosion depth 1.71 mm; volfrac 0.071 of 66,591 design cells
+layout: WARNING nearly mirrored in y (3.2% of passive cells differ): no symmetry
+layout: WARNING nearly mirrored in y (3.2% of passive cells differ): no symmetry
+layout: 25 drawn bodies (7,095 cells), held solid in every realization; eroded filter: masked
+layout: 25 drawn bodies (7,095 cells), held solid in every realization; eroded filter: masked
+layout: 53 load cases + 132 tie cases (22 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: 53 load cases + 132 tie cases (22 bodies tied, 2 held by support 'default') + 0 gate ties + 12 held ties
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+layout: reachability OK: every drawn body can be joined by members of 6.25 mm
+fem: grid (128, 48, 32) = 196,608 elements, 256,353 active dofs; backend direct (direct estimate 2.8 GB, budget 11.8 GB)
+fem: grid (128, 48, 32) = 196,608 elements, 256,353 active dofs; backend direct (direct estimate 2.8 GB, budget 11.8 GB)
+layout: resumed from /home/user/nox/runs/overseer_arm_front/v8/ck.npz at it 70, beta 16
+layout: resumed from /home/user/nox/runs/overseer_arm_front/v8/ck.npz at it 70, beta 16
+it  71 beta   16 J   1.4490 vol 0.0710 (dil 0.1612 g +0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.56e+04 89.6s
+it  71 beta   16 J   1.4490 vol 0.0710 (dil 0.1612 g +0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.56e+04 89.6s
+it  72 beta   16 J   1.4221 vol 0.0711 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.39e+04 103.6s
+it  72 beta   16 J   1.4221 vol 0.0711 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.39e+04 103.6s
+it  73 beta   16 J   1.3879 vol 0.0714 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.19e+04 104.2s
+it  73 beta   16 J   1.3879 vol 0.0714 (dil 0.1611 g -0.001) grey  3.8% ch 0.100 worst tie b8 fx 7.19e+04 104.2s
+it  74 beta   16 J   1.3594 vol 0.0716 (dil 0.1612 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.02e+04 109.2s
+it  74 beta   16 J   1.3594 vol 0.0716 (dil 0.1612 g -0.000) grey  3.8% ch 0.100 worst tie b8 fx 7.02e+04 109.2s
