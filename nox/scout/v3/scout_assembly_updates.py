@@ -18,7 +18,8 @@ ELEC_R = os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope
 # the layout run each other session's part was drawn on: a part drawn on another run is stale (its cage, catch or rods moved) and stays out
 # until its session redraws it; the layout's own placeholder stands in and the run's summary lists it
 DRAWN_ON = {"camera mount v1": ("v12", "v13"), "electronics round 5": ("v12",), "belly mount v1": ("v12",)}   # v13: the nose rods 7-8, 14-15 and
-                                                                     # the nose top node are where v12 had them (C), so the camera mount v1 fits
+# the nose top node are where v12 had them (C), so the camera mount v1 stands in for its mass and pose only: its clips are bored 6.2 for the 6/4
+# tube and do not grip the 3.0 rods (Spark 27 Oct); the camera mount v2 (3.2 clips, worker) replaces it
 STALE = []
 
 

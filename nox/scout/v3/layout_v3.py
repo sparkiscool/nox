@@ -64,12 +64,13 @@ GUARD_NODE_R, GUARD_NODE_G = 5.0, 1.5                      # camera guard bar no
 NODE_MODEL = os.environ.get("SCOUT_NODE_MODEL", "fit")      # fit: node mass from its socket count, fitted to the saved nodes v2 (M); flat: NODE_G
 NODE_FIT = (2.34, 3.49, -0.57, -3.14)                      # g per shell socket, per saddle-tie socket, ring node, constant (fit on runs/scout_nodes/v2,
                                                            # 18 nodes, 188.8 g M, max residual 1.9 g, E)
+CAP_G = 0.86                                               # TPU foot cap under each ring node (box catch F, runs/scout_nodes/v2, M)
 CAM_MOUNT_G = float(os.environ.get("SCOUT_CAM_MOUNT_G", 22.3))   # the camera mount as saved (v1 21.8 + 2 collars 0.5, M), camera excluded
 
 
 def node_g(sd, td=0, ring=False):
     if NODE_MODEL != "fit": return RING_NODE_G if ring else NODE_G
-    return max(1.5, NODE_FIT[0] * sd + NODE_FIT[1] * td + NODE_FIT[2] * ring + NODE_FIT[3])
+    return max(1.5, NODE_FIT[0] * sd + NODE_FIT[1] * td + NODE_FIT[2] * ring + NODE_FIT[3]) + (CAP_G if ring else 0.0)
 
 
 def node_masses(nodes, E, extra=None):
