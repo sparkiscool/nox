@@ -1,1 +1,2 @@
 run_bg: start 2026-10-28T03:31Z: python3 nox/overseer/arm_rebuild.py nox/overseer/arm_topo_v8c.py rear 55 /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/rear_v8b_src runs/overseer_arm_rear/v8c
+run_bg: exit 0, wall 0.30 h, peak 8.0 GB (M), 28 Oct 03:48: python3 nox/overseer/arm_rebuild.py nox/overseer/arm_topo_v8c.py rear 55 /tmp/claude-0/-home-user-nox/5f8b4ba0-7771-50b1-b8dc-6eeca4a31f40/scratchpad/rear_v8b_src runs/overseer_arm_rear/v8c
