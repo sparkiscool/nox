@@ -59,8 +59,12 @@ HOOD_X = (148.0, 153.0)                                  # hood ring 5 deep: fro
 HOOD_OUT, HOOD_IN = (24.0, 15.5, 68.5), (19.5, 20.0, 64.0)   # (y half, z0, z1) outer / inner (camera box + 0.5): wall 4.5 (run 1: 3.0 eroded away at 2.0)
 CLIP_Y = None                                            # clip centres on rod 14-15: set below from node 14's saved socket tip (NODE_CLR + 0.5 off it)
 CLIP_L, T_P, SLIT, SNAP, FLARE, GRIP = 8.0, 2.0, 0.8, 0.25, 30.0, 0.05   # length along the rod, prong, slit, snap a side, lead-in deg, grip rib (radial, E)
-U_ROOT, U_BLOCK = 8.2, 12.0                              # prong root (free length 9.2 to the lip) and the root block's back, local u (+x)
-RIB_ANG = (0.0, 95.0, -95.0)                             # grip ribs, deg from the closed back (v1)
+FLOAT = 1.0                                              # the rod floats in a Ø5.0 pocket (1.0 all round): no stiffness from the cage in flight (its
+                                                         # nose rings at 38 Hz on 3.0 rods with the real nodes, frame v4; 0.7 sag at 4 g), a crash stop in a hit
+R_P = R_T + FLOAT
+U_ROOT, U_BLOCK = 7.0, 12.8                              # prong root (free length 9.2 to the lip) and the root block's back, local u (+x)
+ZONE = 2.0                                               # free band round the prongs (+ the engine's 0.5 hold-off)
+RIB_ANG = ()                                             # no grip ribs: the rod floats
 FOOT_Z = (PLATE_TOP, PLATE_TOP + 3.0)                    # 3.0 tall: rod 14-16's sweep passes 3.4 over the pads' outer top edge                    # foot contact plate on the plate top
 PAD = (15.0, 12.0, 3.0)                                  # bolt pad x, y, z (slot Ø3.4 +-1.5 in x: the clips set x), >= Ø12 web >= 2
 SLOT, SLOT_HALF, WASHER_D = 3.4, 1.5, 9.0                # M3 clearance, slot travel, washer seat + clearance (key path Ø9 up)
@@ -173,39 +177,39 @@ def plate_outline():
 
 # ---------------------------------------------------------------- the slit-fork snap clip (local u = x, v = z about the rod)
 def clip_profile():
-    """seat tongue (back half of the 3.2 bore), two 2.0 prongs from a root block at u = U_ROOT past the rod to lips that leave
+    """seat tongue (back half of the Ø5.0 pocket), two 2.0 prongs from a root block at u = U_ROOT past the rod to lips that leave
     a mouth of 2(R_T - SNAP), 30 deg lead-in, 0.8 slits between tongue and prongs; grip ribs (v1) at 0 and +-95 deg"""
-    h = R_T - SNAP; ul = -math.sqrt(R_B ** 2 - h ** 2); vo = R_B + SLIT + T_P
+    h = R_T - SNAP; ul = -math.sqrt(R_P ** 2 - h ** 2); vo = R_P + SLIT + T_P
     tb = math.tan(math.radians(FLARE)); D = 3.0
     outer = poly([(U_BLOCK, -vo), (U_BLOCK, vo), (ul - 0.6, vo), (ul - D, h + D * tb + 0.4), (ul - D, -h - D * tb - 0.4), (ul - 0.6, -vo)])
-    bore = mf.CrossSection.circle(R_B, 64)
+    bore = mf.CrossSection.circle(R_P, 64)
     mouth = poly([(0.0, h), (ul, h), (ul - D - 1, h + (D + 1) * tb), (ul - D - 1, -h - (D + 1) * tb), (ul, -h), (0.0, -h)])
-    slits = poly([(0.0, R_B), (U_ROOT, R_B), (U_ROOT, R_B + SLIT), (0.0, R_B + SLIT)]) + poly([(0.0, -R_B), (U_ROOT, -R_B), (U_ROOT, -R_B - SLIT), (0.0, -R_B - SLIT)])
+    slits = poly([(0.0, R_P), (U_ROOT, R_P), (U_ROOT, R_P + SLIT), (0.0, R_P + SLIT)]) + poly([(0.0, -R_P), (U_ROOT, -R_P), (U_ROOT, -R_P - SLIT), (0.0, -R_P - SLIT)])
     c = outer - bore - mouth - slits
     for a in RIB_ANG:
         r0 = R_T - GRIP
-        rib = mf.CrossSection.square([R_B + 0.3 - r0, 1.2]).translate([r0, -0.6]).rotate(a)
+        rib = mf.CrossSection.square([R_P + 0.3 - r0, 1.2]).translate([r0, -0.6]).rotate(a)
         c = c + (rib - mouth)
     return c, h, ul, vo
 
 
 def clip_bodies(y_c):
-    """(drawn clip, its cuts, the bore ring for loads, the root block region) at y_c (axis along y)"""
+    """(drawn clip, its cuts, the pocket ring, the root block region) at y_c (axis along y)"""
     c, h, ul, vo = clip_profile(); x0, z0 = N[CLIP_ROD[0]][0], N[CLIP_ROD[0]][2]
     y0, y1 = y_c - CLIP_L / 2, y_c + CLIP_L / 2
     drawn = prism_xz(c.translate([x0, z0]), y0, y1)
     # cuts: bore + mouth + lead-in + slits (through, 1 past each end), and a finger zone round the prongs' outsides and in front
     # of the clip where nothing generated may touch them (they must flex); only the root block (u >= U_ROOT) takes material
     tb = math.tan(math.radians(FLARE))
-    hole = mf.CrossSection.circle(R_B, 64) + poly([(0.0, h), (ul, h), (ul - 6, h + 6 * tb), (ul - 6, -h - 6 * tb), (ul, -h), (0.0, -h)])
-    slits = poly([(0.0, R_B), (U_ROOT, R_B), (U_ROOT, R_B + SLIT), (0.0, R_B + SLIT)]) + poly([(0.0, -R_B), (U_ROOT, -R_B), (U_ROOT, -R_B - SLIT), (0.0, -R_B - SLIT)])
-    zone = poly([(U_ROOT - 0.3, -vo - 3.0), (U_ROOT - 0.3, vo + 3.0), (ul - 7.0, vo + 3.0), (ul - 7.0, -vo - 3.0)]) - c
+    hole = mf.CrossSection.circle(R_P, 64) + poly([(0.0, h), (ul, h), (ul - 6, h + 6 * tb), (ul - 6, -h - 6 * tb), (ul, -h), (0.0, -h)])
+    slits = poly([(0.0, R_P), (U_ROOT, R_P), (U_ROOT, R_P + SLIT), (0.0, R_P + SLIT)]) + poly([(0.0, -R_P), (U_ROOT, -R_P), (U_ROOT, -R_P - SLIT), (0.0, -R_P - SLIT)])
+    zone = poly([(U_ROOT - 0.3, -vo - ZONE), (U_ROOT - 0.3, vo + ZONE), (ul - 7.0, vo + ZONE), (ul - 7.0, -vo - ZONE)]) - c
     cut = prism_xz((hole + slits).translate([x0, z0]), y0 - 1, y1 + 1) + prism_xz(zone.translate([x0, z0]), y0 - 0.01, y1 + 0.01)
-    ends = poly([(U_ROOT - 0.3, -vo - 3.0), (U_ROOT - 0.3, vo + 3.0), (ul - 7.0, vo + 3.0), (ul - 7.0, -vo - 3.0)]).translate([x0, z0])
+    ends = poly([(U_ROOT - 0.3, -vo - ZONE), (U_ROOT - 0.3, vo + ZONE), (ul - 7.0, vo + ZONE), (ul - 7.0, -vo - ZONE)]).translate([x0, z0])
     cut = cut + prism_xz(ends, y1, y1 + 3.0) + prism_xz(ends, y0 - 3.0, y0)       # the prongs' end faces stay free too
-    ring = prism_xz((mf.CrossSection.circle(R_B + 1.2, 48) - mf.CrossSection.circle(R_B, 48)).translate([x0, z0]), y0, y1)
+    ring = prism_xz((mf.CrossSection.circle(R_P + 1.2, 48) - mf.CrossSection.circle(R_P, 48)).translate([x0, z0]), y0, y1)
     block = prism_xz(poly([(U_ROOT, -vo), (U_BLOCK, -vo), (U_BLOCK, vo), (U_ROOT, vo)]).translate([x0, z0]), y0, y1)
-    seat = prism_xz(((mf.CrossSection.circle(R_B + 1.0, 48) - mf.CrossSection.circle(R_B, 48)) ^ mf.CrossSection.square([R_B + 2, 2 * R_B + 4]).translate([0.2, -R_B - 2])).translate([x0, z0]), y0, y1)
+    seat = prism_xz(((mf.CrossSection.circle(R_P + 1.0, 48) - mf.CrossSection.circle(R_P, 48)) ^ mf.CrossSection.square([R_P + 2, 2 * R_P + 4]).translate([0.2, -R_P - 2])).translate([x0, z0]), y0, y1)
     return drawn, cut, ring, block, (ul, vo), seat
 
 
@@ -307,10 +311,10 @@ def couple(F, at, pts):
 def fork_snap(t_p=T_P, snap=SNAP, L=CLIP_L, u_root=U_ROOT, mu=0.25, E=2000.0):
     """slit-fork clip, per clip (E): two prongs, cantilevers from u_root to the lip; push-on and pop by a contact sweep of the
     rod past the lip profile (v1's method), root stress at full opening"""
-    h = R_T - snap; ul = -math.sqrt(R_B ** 2 - h ** 2); lc = u_root - ul
+    h = R_T - snap; ul = -math.sqrt(R_P ** 2 - h ** 2); lc = u_root - ul
     I = L * t_p ** 3 / 12; k = 3 * E * I / lc ** 3
     s = np.linspace(0, 4, 300); prof = np.column_stack([ul - s * math.cos(math.radians(FLARE)), h + s * math.sin(math.radians(FLARE))])
-    ang = np.linspace(math.pi / 2, math.pi - math.asin(h / R_B), 120); prof = np.vstack([prof, np.column_stack([R_B * np.cos(ang), R_B * np.sin(ang)])])
+    ang = np.linspace(math.pi / 2, math.pi - math.asin(h / R_P), 120); prof = np.vstack([prof, np.column_stack([R_P * np.cos(ang), R_P * np.sin(ang)])])
     def sweep(cus):
         Fm = dm = 0.0
         for cu in cus:
@@ -356,7 +360,8 @@ def setup(h):
     for nm, reg in R["hood_corners"].items():
         p.load(f"hood hit {nm} corner -x", reg, (-HIT, 0, 0), cls="misuse", support="hood")
     sp = fork_snap(); fp = F_POP_DESIGN * sp["pop_N"]
-    for s, ring in zip(("+y", "-y"), R["clip_rings"]):               # the rod on the clip: bearing on the closed back, pull, up, down
+    for s, ring in zip(("+y", "-y"), R["clip_blocks"]):              # the rod on the clip (through the drawn prongs / tongue, flexures sized by
+                                                                      # fork_snap) into the root block: bearing on the closed back, pull, up, down
         p.load(f"clip {s} bear +x", ring, (CLIP_BEAR, 0, 0), cls="misuse", support="foot")
         p.load(f"clip {s} pull -x", ring, (-fp, 0, 0), cls="misuse", support="foot")
         p.load(f"clip {s} up +z", ring, (0, 0, fp), cls="misuse", support="foot")

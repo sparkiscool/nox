@@ -3,8 +3,9 @@ every rod 3.0 solid carbon (Spark 27 Oct). The v12 cage frame model (nox/scout/v
 ties fixed at the saddle, carbon E 100 GPa, E) with the camera + mount (30 g, E) as one lumped body, clipped to rods (rigid
 links) and / or tied to the core by a PETG bar (E 2000 MPa, E) from the plate edge, clamped there.
 
-Weighed: clip placements on the cage only (v1's mid-span points, next to node 16, next to nodes 14 / 15, 4 and 6 clips), a
-core tie only, and a core tie + 2 clips next to nodes 14 / 15 (picked). Modes with the camera's share of the kinetic energy,
+Weighed (v13, the saved nodes' real masses, frame v4): clip placements on the cage only (v1's mid-span points, next to the nose
+nodes, 4 and 6 clips), a core tie + 2 gripping clips next to nodes 14 / 15, and the picked one: the core tie with the 2 clips floating
+(Ø5.0 pocket on the 3.0 rod, 1.0 all round): in flight they never touch, so the camera is out of the cage's 38 Hz nose modes. Modes with the camera's share of the kinetic energy,
 and the clips' share of a 250 N frontal hit (the topology run's clip-bearing case).
 
 python3 nox/scout/v3/camera_mount_v2_concept.py [out.json]   (default runs/scout_camera_mount/v2/concept.json)
@@ -47,9 +48,10 @@ def model(clips, ties=(), cam_g=30.0):
     for p, sec in ties:
         t_ = f.node(p); f.member(H, t_, sec, "tie"); f.fix(t_)
     m = cf.masses(f, nid, H); m[H] = m.get(H, 0) - cf.CAM_G + cam_g
-    hz, U = f.modes(m, 4)
+    hz, U = f.modes(m, 6)
     share = [float(m[H] * np.sum(U[6 * H:6 * H + 3, k] ** 2) / sum(m[j] * np.sum(U[6 * j:6 * j + 3, k] ** 2) for j in m)) for k in range(len(hz))]
-    return f, H, [round(float(h), 1) for h in hz], [round(s, 2) for s in share]
+    hd = [float(np.linalg.norm(U[6 * H:6 * H + 3, k]) / max(1e-12, np.abs(U[:, k]).max())) for k in range(len(hz))]   # cage_frame.py's "the camera moves" (> 0.3)
+    return f, H, [round(float(h), 1) for h in hz], [round(s, 2) for s in share], [round(x, 2) for x in hd]
 
 
 def main():
@@ -61,26 +63,26 @@ def main():
         "B: 4 clips next to nodes (17 on 14-17 / 15-17, 14 / 15 on 14-15)": ([(17, 14, 8), (17, 15, 8), (14, 15, 8), (15, 14, 8)], ()),
         "B: 6 clips next to nodes 17, 14 / 15, 18": ([(17, 14, 8), (17, 15, 8), (14, 15, 8), (15, 14, 8), (18, 14, 8), (18, 15, 8)], ()),
         "B: 6 clips next to nodes 17, 14 / 15, 7 / 8": ([(17, 14, 8), (17, 15, 8), (14, 15, 8), (15, 14, 8), (8, 17, 8), (7, 17, 8)], ()),
-        "C: core tie only (bar 15 x 14 PETG from the plate edge)": ([], bar),
-        f"A: core tie + 2 clips on 14-15 at y +-{cm.CLIP_Y} (picked)": ([(14, 15, d14), (15, 14, d14)], bar),
-        "A with a 15 x 10 bar": ([(14, 15, d14), (15, 14, d14)], [(PLATE_EDGE, rect(15, 10))]),
-        "A with 2 more clips next to node 17 (nose top)": ([(14, 15, d14), (15, 14, d14), (17, 14, 14), (17, 15, 14)], bar),
+        "A (picked): core tie, the 2 clips float in flight (bar 15 x 14 PETG)": ([], bar),
+        f"C: core tie + 2 gripping clips on 14-15 at y +-{cm.CLIP_Y}": ([(14, 15, d14), (15, 14, d14)], bar),
+        "C with a 15 x 10 bar": ([(14, 15, d14), (15, 14, d14)], [(PLATE_EDGE, rect(15, 10))]),
+        "C with 2 more gripping clips next to node 17 (nose top)": ([(14, 15, d14), (15, 14, d14), (17, 14, 14), (17, 15, 14)], bar),
         "bound: camera rigid to the core, no clips": ([], [(PLATE_EDGE, cf.RIGID)]),
         f"bound: rigid tie + 2 clips at y +-{cm.CLIP_Y}": ([(14, 15, d14), (15, 14, d14)], [(PLATE_EDGE, cf.RIGID)]),
     }
     out = {}
     for k, (cl, ti) in rows.items():
-        f, H, hz, sh = model(cl, ti)
-        cam_modes = [h for h, s in zip(hz, sh) if s > 0.2]
-        out[k] = dict(modes_hz=hz, camera_share=sh, first_mode_hz=hz[0], first_camera_mode_hz=cam_modes[0] if cam_modes else None)
-        print(f"{k:70s} " + "  ".join(f"{h:6.1f} ({s:.0%})" for h, s in zip(hz, sh)))
-    f, H, hz, sh = model([(14, 15, d14), (15, 14, d14)], bar)                 # the clips' share of a 250 N frontal hit on the picked concept
+        f, H, hz, sh, hd = model(cl, ti)
+        cam_modes = [h for h, x in zip(hz, hd) if x > 0.3]
+        out[k] = dict(modes_hz=hz, camera_share=sh, camera_disp_ratio=hd, first_mode_hz=hz[0], first_camera_mode_hz=cam_modes[0] if cam_modes else None)
+        print(f"{k:62s} cam {str(out[k]['first_camera_mode_hz']):>6s} | " + "  ".join(f"{h:6.1f} ({s:.0%} {x:.2f})" for h, s, x in zip(hz, sh, hd)))
+    f, H, hz, sh, hd = model([(14, 15, d14), (15, 14, d14)], bar)                 # the clips' share of a 250 N frontal hit on the picked concept
     u = f.solve({H: np.array([-250.0, 0, 0])}); share = []
     for m_ in f.M:
         if m_["name"] == "camera clip":
             kg, T, kl, Lm = f._k(m_); ue = np.concatenate([u[6 * m_["a"]:6 * m_["a"] + 6], u[6 * m_["b"]:6 * m_["b"] + 6]])
             share.append(np.round((kg @ ue)[6:9], 1).tolist())
-    out["frontal 250 N on A: force from each clip on its rod (N)"] = share
+    out["frontal 250 N on C (gap closed): force from each clip on its rod (N)"] = share
     print("frontal 250 N, clip on rod:", share)
     os.makedirs(os.path.dirname(OUT), exist_ok=True); json.dump(out, open(OUT, "w"), indent=1)
 

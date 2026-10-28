@@ -34,7 +34,7 @@ def views(mesh):
             ax.plot([N[a][i], N[b][i]], [N[a][j], N[b][j]], color=CAGE, lw=1.0, alpha=0.75, zorder=2)
         for p, q in cm.RES["links"].values():
             ax.plot([p[i], q[i]], [p[j], q[j]], color=CAGE, lw=0.8, ls=":", alpha=0.7, zorder=2)
-        for k in (14, 15, 16, 17, 7, 8):
+        for k in (14, 15, 17, 18, 7, 8):                                # v13: nose top 17, nose low 18
             ax.add_patch(plt.Circle((N[k][i], N[k][j]), 6.0, color=CAGE, alpha=0.35, zorder=2))
             ax.annotate(str(k), (N[k][i], N[k][j]), color=CAGE, fontsize=8, ha="center", va="center", zorder=6)
         (x0, x1), (y0, y1), (z0, z1) = cm.CAM_BOX

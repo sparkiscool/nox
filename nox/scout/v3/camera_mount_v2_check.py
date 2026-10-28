@@ -217,7 +217,8 @@ def inertia_points(parts):
     return mt, cg, [cg + s * math.sqrt(max(a2[k], 1e-6)) * V[:, k] for k in range(3) for s in (1, -1)]
 
 
-def frame_model(se, snap, with_mount=True):
+def frame_model(se, snap, with_mount=True, engaged=False):
+    """engaged=False: the rods float in the clips' pockets (flight, the modes); True: the gap closed, the clips hold x and z (hits, crash)"""
     f = SuperFrame(); nid = [f.node(p) for p in N]; rods = [tuple(r) for r in cm.CG["rods"]]
     clips = [np.array([N[14][0], s * cm.CLIP_Y, N[14][2]]) for s in (1, -1)]
     for a, b in rods:
@@ -233,7 +234,8 @@ def frame_model(se, snap, with_mount=True):
     for nm, c in zip(se["names"], se["cents"]):
         if nm.startswith("clip"):                                      # the clip holds the rod in x and z; in y it slides (grip ~1.5 N, E): the foot takes y
             c = clips[0] if "+y" in nm else clips[1]; r_ = f.node(c); m_ = f.node(c + np.array([0, 1.0 if c[1] > 0 else -1.0, 0]))
-            f.springs.append((r_, m_, (0, 2), 1e6)); ids.append(m_); out["nodes"][nm] = np.round(c, 1).tolist(); continue
+            if engaged: f.springs.append((r_, m_, (0, 2), 1e6))
+            ids.append(m_); out["nodes"][nm] = np.round(c, 1).tolist(); continue
         ids.append(f.node(c)); out["nodes"][nm] = np.round(c, 1).tolist()
     f.supers.append((ids, se["K"]))
     mt, cg, pts = inertia_points([(cm.CAM_BOX, cm.CAM_G), (se["front_cells"], len(se["front_cells"]) * se["cell_g"])])
@@ -353,7 +355,12 @@ def main():
     res["stroke"] = stroke_report(np.vstack([mesh.vertices[::5], mesh.sample(20000)])); print("stroke", res["stroke"])
     se = superelement(mesh)
     print("super-element: solid cells", se["n_solid"], "tie", round(se["tie_g"], 1), "g; hood stress per N", se["sig_per_N"])
-    res["frame"] = frame_model(se, snap)
+    res["frame"] = frame_model(se, snap, engaged=True)                # hits, crash, breaking order: the 1.0 gap closed
+    fl = frame_model(se, snap, engaged=False)                          # flight: the rods float, the modes
+    for k in ("modes_hz", "camera_share", "camera_disp_ratio", "first_mode_hz", "first_camera_mode_hz", "mode1_largest_motion_at"):
+        res["frame"][k + "_engaged"] = res["frame"][k]; res["frame"][k] = fl[k]
+    res["frame"]["first_camera_mode_hz"] = round(float(next((h for h, r in zip(fl["modes_hz"], fl["camera_disp_ratio"]) if r > 0.3), fl["modes_hz"][-1])), 1)
+    res["frame"]["camera_mode_rule"] = "first mode with the camera's displacement over 0.3 of the largest (cage_frame.py 'the camera moves')"
     res["frame"]["cage_alone_modes_hz"] = frame_model(se, snap, with_mount=False)["modes_hz"]
     print("frame", json.dumps({k: res["frame"][k] for k in ("modes_hz", "camera_share", "first_mode_hz", "first_camera_mode_hz", "body_g", "cage_alone_modes_hz")}))
     for k, v in res["frame"]["cases"].items(): print("  ", k, v)
