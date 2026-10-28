@@ -280,3 +280,17 @@ it  36 beta    8 J   1.3785 vol 0.1109 (dil 0.2436 g -0.103) grey 10.0% ch 0.100
 it  36 beta    8 J   1.3785 vol 0.1109 (dil 0.2436 g -0.103) grey 10.0% ch 0.100 worst held b1 mx 407 92.2s
 it  37 beta    8 J   1.0680 vol 0.1234 (dil 0.2658 g -0.022) grey 11.0% ch 0.100 worst held b1 mx 301 92.1s
 it  37 beta    8 J   1.0680 vol 0.1234 (dil 0.2658 g -0.022) grey 11.0% ch 0.100 worst held b1 mx 301 92.1s
+it  38 beta    8 J   0.9056 vol 0.1276 (dil 0.2680 g -0.014) grey 11.0% ch 0.100 worst held b1 mx 244 93.1s
+it  38 beta    8 J   0.9056 vol 0.1276 (dil 0.2680 g -0.014) grey 11.0% ch 0.100 worst held b1 mx 244 93.1s
+it  39 beta    8 J   0.8143 vol 0.1305 (dil 0.2701 g -0.006) grey 11.0% ch 0.100 worst held b1 mx 215 93.2s
+it  39 beta    8 J   0.8143 vol 0.1305 (dil 0.2701 g -0.006) grey 11.0% ch 0.100 worst held b1 mx 215 93.2s
+it  40 beta    8 J   0.7627 vol 0.1321 (dil 0.2708 g -0.003) grey 11.0% ch 0.100 worst held b1 mx 202 93.1s
+it  40 beta    8 J   0.7627 vol 0.1321 (dil 0.2708 g -0.003) grey 11.0% ch 0.100 worst held b1 mx 202 93.1s
+it  41 beta    8 J   0.7280 vol 0.1331 (dil 0.2711 g +0.019) grey 11.0% ch 0.100 worst held b1 mx 194 88.7s
+it  41 beta    8 J   0.7280 vol 0.1331 (dil 0.2711 g +0.019) grey 11.0% ch 0.100 worst held b1 mx 194 88.7s
+it  42 beta    8 J   0.7780 vol 0.1287 (dil 0.2651 g -0.004) grey 10.7% ch 0.100 worst held b1 mx 211 89.7s
+it  42 beta    8 J   0.7780 vol 0.1287 (dil 0.2651 g -0.004) grey 10.7% ch 0.100 worst held b1 mx 211 89.7s
+it  43 beta    8 J   0.7443 vol 0.1294 (dil 0.2656 g -0.002) grey 10.6% ch 0.100 worst held b1 mx 199 88.5s
+it  43 beta    8 J   0.7443 vol 0.1294 (dil 0.2656 g -0.002) grey 10.6% ch 0.100 worst held b1 mx 199 88.5s
+it  44 beta    8 J   0.7205 vol 0.1299 (dil 0.2658 g -0.001) grey 10.6% ch 0.100 worst held b1 mx 191 86.8s
+it  44 beta    8 J   0.7205 vol 0.1299 (dil 0.2658 g -0.001) grey 10.6% ch 0.100 worst held b1 mx 191 86.8s
