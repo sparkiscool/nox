@@ -422,3 +422,41 @@ it  95 beta   32 J   0.0386 vol 0.0423 (dil 0.0585 g -0.022) grey  0.5% ch 0.100
 it  95 beta   32 J   0.0386 vol 0.0423 (dil 0.0585 g -0.022) grey  0.5% ch 0.100 worst tie b3 fy 3.29e+03 11.6s
 it  96 beta   32 J   0.0316 vol 0.0431 (dil 0.0592 g -0.009) grey  0.5% ch 0.100 worst tie b3 fy 2.76e+03 12.1s
 it  96 beta   32 J   0.0316 vol 0.0431 (dil 0.0592 g -0.009) grey  0.5% ch 0.100 worst tie b3 fy 2.76e+03 12.1s
+it  97 beta   32 J   0.0289 vol 0.0434 (dil 0.0594 g -0.005) grey  0.4% ch 0.100 worst tie b3 fy 2.5e+03 11.7s
+it  97 beta   32 J   0.0289 vol 0.0434 (dil 0.0594 g -0.005) grey  0.4% ch 0.100 worst tie b3 fy 2.5e+03 11.7s
+it  98 beta   32 J   0.0274 vol 0.0436 (dil 0.0595 g -0.004) grey  0.4% ch 0.100 worst tie b3 fy 2.44e+03 12.4s
+it  98 beta   32 J   0.0274 vol 0.0436 (dil 0.0595 g -0.004) grey  0.4% ch 0.100 worst tie b3 fy 2.44e+03 12.4s
+it  99 beta   32 J   0.0263 vol 0.0438 (dil 0.0595 g -0.004) grey  0.4% ch 0.100 worst tie b3 fy 2.38e+03 12.0s
+it  99 beta   32 J   0.0263 vol 0.0438 (dil 0.0595 g -0.004) grey  0.4% ch 0.100 worst tie b3 fy 2.38e+03 12.0s
+it 100 beta   32 J   0.0252 vol 0.0440 (dil 0.0596 g -0.003) grey  0.4% ch 0.100 worst tie b3 fy 2.28e+03 11.4s
+it 100 beta   32 J   0.0252 vol 0.0440 (dil 0.0596 g -0.003) grey  0.4% ch 0.100 worst tie b3 fy 2.28e+03 11.4s
+it 101 beta   32 J   0.0239 vol 0.0442 (dil 0.0596 g +0.005) grey  0.4% ch 0.100 worst tie b3 fy 2.04e+03 11.5s
+it 101 beta   32 J   0.0239 vol 0.0442 (dil 0.0596 g +0.005) grey  0.4% ch 0.100 worst tie b3 fy 2.04e+03 11.5s
+it 102 beta   32 J   0.0237 vol 0.0443 (dil 0.0592 g -0.002) grey  0.4% ch 0.100 worst tie b3 fy 2.03e+03 11.4s
+it 102 beta   32 J   0.0237 vol 0.0443 (dil 0.0592 g -0.002) grey  0.4% ch 0.100 worst tie b3 fy 2.03e+03 11.4s
+it 103 beta   32 J   0.0232 vol 0.0445 (dil 0.0592 g -0.001) grey  0.4% ch 0.100 worst tie b3 fy 2.03e+03 11.9s
+it 103 beta   32 J   0.0232 vol 0.0445 (dil 0.0592 g -0.001) grey  0.4% ch 0.100 worst tie b3 fy 2.03e+03 11.9s
+it 104 beta   32 J   0.0228 vol 0.0446 (dil 0.0592 g -0.002) grey  0.4% ch 0.100 worst tie b3 fy 2.02e+03 11.3s
+it 104 beta   32 J   0.0228 vol 0.0446 (dil 0.0592 g -0.002) grey  0.4% ch 0.100 worst tie b3 fy 2.02e+03 11.3s
+it 105 beta   32 J   0.0225 vol 0.0447 (dil 0.0592 g -0.001) grey  0.4% ch 0.100 worst tie b3 fy 2.01e+03 11.4s
+it 105 beta   32 J   0.0225 vol 0.0447 (dil 0.0592 g -0.001) grey  0.4% ch 0.100 worst tie b3 fy 2.01e+03 11.4s
+it 106 beta   32 J   0.0223 vol 0.0448 (dil 0.0592 g +0.010) grey  0.4% ch 0.100 worst tie b3 fy 2e+03 11.5s
+it 106 beta   32 J   0.0223 vol 0.0448 (dil 0.0592 g +0.010) grey  0.4% ch 0.100 worst tie b3 fy 2e+03 11.5s
+it 107 beta   32 J   0.0227 vol 0.0444 (dil 0.0586 g -0.001) grey  0.4% ch 0.100 worst tie b3 fy 2.02e+03 11.7s
+it 107 beta   32 J   0.0227 vol 0.0444 (dil 0.0586 g -0.001) grey  0.4% ch 0.100 worst tie b3 fy 2.02e+03 11.7s
+layout: stopped (grey) at it 107, beta 32, 1266 s
+layout: stopped (grey) at it 107, beta 32, 1266 s
+layout: beta 32 done: eroded design 28 bodies, main 51.1%; drawn bodies outside the main body: 25
+layout: beta 32 done: eroded design 28 bodies, main 51.1%; drawn bodies outside the main body: 25
+layout done: 1323 s, peak 1.971236 GB
+layout done: 1323 s, peak 1.971236 GB
+build: organic surface at pitch 0.400 mm (x10), skins 13.52 cm3, field 61.78 cm3, in env - cuts 58.28 cm3 (layout 58.28, level offset +0.340 mm), fillet 2.5 mm, rims 1.0 mm, mesh 418,448 faces, 278 s
+build: organic surface at pitch 0.400 mm (x10), skins 13.52 cm3, field 61.78 cm3, in env - cuts 58.28 cm3 (layout 58.28, level offset +0.340 mm), fillet 2.5 mm, rims 1.0 mm, mesh 418,448 faces, 278 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [39853.8], "necks": [], "drawn_not_in_main": [["0.5", 0.998, "erode 2.0"], ["0.8", 0.0, "erode 2.0"], ["0.9", 0.423, "erode 2.0"], ["0.10", 0.551, "erode 2.0"], ["0.13", 0.998, "erode 2.0"], ["0.14", 0.998, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [39853.8], "necks": [], "drawn_not_in_main": [["0.5", 0.998, "erode 2.0"], ["0.8", 0.0, "erode 2.0"], ["0.9", 0.423, "erode 2.0"], ["0.10", 0.551, "erode 2.0"], ["0.13", 0.998, "erode 2.0"], ["0.14", 0.998, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 5252.9, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 5252.9, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.98 in 'head inertia 13 [-0.58, -0.58, -0.58]' at [389.5, 6.0, 83.5]
+strength: worst index 0.98 in 'head inertia 13 [-0.58, -0.58, -0.58]' at [389.5, 6.0, 83.5]
+RESULT {"name": "head_mount", "solid_ok": false, "mass_g": 74.0, "worst": 0.983, "function_ok": true, "bodies": 1}
+RESULT {"name": "head_mount", "solid_ok": false, "mass_g": 74.0, "worst": 0.983, "function_ok": true, "bodies": 1}
