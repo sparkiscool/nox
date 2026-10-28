@@ -365,6 +365,19 @@ def main():
     print("frame", json.dumps({k: res["frame"][k] for k in ("modes_hz", "camera_share", "first_mode_hz", "first_camera_mode_hz", "body_g", "cage_alone_modes_hz")}))
     for k, v in res["frame"]["cases"].items(): print("  ", k, v)
     for k, v in res["frame"]["breaking_order"].items(): print("  break", k, v)
+    # the mount for cage_frame.py (the cage session's frame model, on the same layout run): SCOUT_FRAME_MOUNT
+    mt, cg, pts = inertia_points([(cm.CAM_BOX, cm.CAM_G), (se["front_cells"], len(se["front_cells"]) * se["cell_g"])])
+    clips = {"clip +y": [N[14][0], cm.CLIP_Y, N[14][2]], "clip -y": [N[14][0], -cm.CLIP_Y, N[14][2]]}
+    fm = dict(source=os.path.relpath(RUN, ROOT), names=se["names"], points=[clips.get(n, np.round(c, 3).tolist()) for n, c in zip(se["names"], se["cents"])],
+              K=np.asarray(se["K"]).tolist(), clip_points=list(clips.values()), body_g=round(mt, 2), body_cg=np.round(cg, 3).tolist(),
+              body_points=[np.round(q, 3).tolist() for q in pts], tie_g=round(se["tie_g"], 2), layout=os.path.relpath(cm.LAY, ROOT))
+    json.dump(fm, open(os.path.join(RUN, "frame_mount.json"), "w"), default=float)
+    res["cage_frame"] = {}
+    for tag, eng in (("frame", "0"), ("frame_engaged", "1")):
+        env = dict(os.environ, SCOUT_FRAME_RUN=cm.LAY, SCOUT_FRAME_MOUNT=os.path.join(RUN, "frame_mount.json"), SCOUT_FRAME_MOUNT_ENGAGED=eng)
+        r_ = subprocess.run([sys.executable, os.path.join(HERE, "cage_frame.py"), os.path.join(RUN, tag)], env=env, capture_output=True, text=True, cwd=ROOT)
+        line = next((l for l in r_.stdout.splitlines() if l.startswith("Lowest modes")), r_.stderr[-300:])
+        res["cage_frame"][tag] = line; print("cage_frame", tag, ":", line)
     # print file + gate
     pm = print_pose(mesh); os.makedirs(os.path.dirname(PRINT), exist_ok=True); pm.export(PRINT)
     ok, info = solid_check(trimesh.load(PRINT, force="mesh"))

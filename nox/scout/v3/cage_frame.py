@@ -32,6 +32,9 @@ NODE_FIT, CAP_G = (2.34, 3.49, -0.57, -3.14), 0.86  # node g per shell socket, t
                                                    # nodes v2, M; E), + the TPU foot cap on a ring node
 CLIPS = [(110.5, 18.0, 61.1), (122.6, 18.0, 11.5)]  # the camera mount v1's snap clips (+y; mirrored) on rods 7-8 and 14-15 (v12, camera_mount.py)
 CAM_C, CAM_G = (136.0, 0.0, 41.7), 32.3             # camera + mount v1 + 2 collars, g at their CG (M mount, E camera; runs/scout_camera_mount/v1)
+_MNT = os.environ.get("SCOUT_FRAME_MOUNT")                                       # a saved camera mount as a super-element in place of v1's
+MOUNT = json.load(open(_MNT)) if _MNT else None                                 # rigid body on 4 clips (runs/scout_camera_mount/v2/frame_mount.json)
+MOUNT_ENGAGED = os.environ.get("SCOUT_FRAME_MOUNT_ENGAGED") == "1"              # its clips' gap closed (a hit); default: the rods float (flight)
 K_TIE = 0.7                                        # a saddle tie: epoxied into the PETG saddle (~ fixed), pinned at its cage node
 N = np.array(CG["nodes"], float); nR = len(CG["open"][0]["ring"])
 SHELL_SEC = TUBE6 if os.environ.get("SCOUT_FRAME_SHELL") == "6" else ROD3      # variants: 6/4 tube shell, 6/4 tube ties (Spark rule: 3.0)
@@ -47,9 +50,32 @@ def seg_d(c, p, q):
     t = np.clip(np.dot(c - p, q - p) / np.dot(q - p, q - p), 0, 1); return np.linalg.norm(c - (p + t * (q - p)))
 
 
+class SFrame(Frame):
+    """Frame + super-elements (a part's stiffness on its interface points, translations; flexibility method from the part's own
+    FE) and x / z springs between two nodes (a clip holding its rod)"""
+    def __init__(self):
+        super().__init__(); self.supers = []; self.springs = []                # supers: (node ids, K 3n x 3n); springs: (i, j, dofs, k)
+
+    def stiffness(self):
+        from scipy.sparse import coo_matrix, csr_matrix
+        K = super().stiffness()
+        if not self.supers and not self.springs: return K
+        rows, cols, vals = [], [], []
+        for ids, Kr in self.supers:
+            dofs = np.array([6 * i + d for i in ids for d in range(3)]); I, J = np.meshgrid(dofs, dofs, indexing="ij")
+            rows.append(I.ravel()); cols.append(J.ravel()); vals.append(np.asarray(Kr).ravel())
+            rd = np.array([6 * i + d for i in ids for d in range(3, 6)]); rows.append(rd); cols.append(rd); vals.append(np.full(len(rd), 1e-3))
+        for i, j, ds, k in self.springs:
+            for d in ds:
+                a_, b_ = 6 * i + d, 6 * j + d
+                rows.append(np.array([a_, b_, a_, b_])); cols.append(np.array([a_, b_, b_, a_])); vals.append(np.array([k, k, -k, -k]))
+        A = coo_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))), shape=K.shape).tocsr()
+        return csr_matrix(K + A)
+
+
 def build():
-    f = Frame(); nid = [f.node(p) for p in N]; rods = [tuple(r) for r in CG["rods"]]
-    clips = [np.array(c) * [1, s, 1] for c in CLIPS for s in (1, -1)]
+    f = SFrame(); nid = [f.node(p) for p in N]; rods = [tuple(r) for r in CG["rods"]]
+    clips = [np.array(c) * [1, s, 1] for c in CLIPS for s in (1, -1)] if not MOUNT else [np.array(c, float) for c in MOUNT["clip_points"]]
     split = {}
     for c in clips:                                                      # the rod each clip sits on
         best = min(rods, key=lambda r: seg_d(c, N[r[0]], N[r[1]]))     # distance to the segment, not its line
@@ -58,8 +84,25 @@ def build():
         pts = [N[a]] + sorted(split.get((a, b), []), key=lambda c: np.linalg.norm(c - N[a])) + [N[b]]
         sec_ = TUBE6 if f"rod {a}-{b}" in UP6 else SHELL_SEC
         for p_, q_ in zip(pts[:-1], pts[1:]): f.member(f.node(p_), f.node(q_), sec_, f"rod {a}-{b}")
-    H = f.node(CAM_C)
-    for c in clips: f.member(H, f.node(c), RIGID, "camera clip")
+    f.mount_mass = {}
+    if MOUNT:                                                            # the saved mount: its super-element; the camera + the mount's front
+        H = f.node(MOUNT["body_cg"]); ids = []                           # as one rigid body (inertia points); the tie's mass at mid-tie
+        for nm, p in zip(MOUNT["names"], MOUNT["points"]):
+            if nm.startswith("clip"):
+                c = np.array(p, float); r_ = f.node(c); m_ = f.node(c + [0, 1.0 if c[1] > 0 else -1.0, 0])
+                if MOUNT_ENGAGED: f.springs.append((r_, m_, (0, 2), 1e6))
+                ids.append(m_)
+            else:
+                ids.append(f.node(p))
+        f.supers.append((ids, np.array(MOUNT["K"], float)))
+        for nm, i in zip(MOUNT["names"], ids):
+            if nm.startswith("seat"): f.member(H, i, RIGID, "body")
+            if nm == "mid-tie": f.mount_mass[i] = f.mount_mass.get(i, 0.0) + MOUNT["tie_g"]
+        for q in MOUNT["body_points"]:
+            j = f.node(q); f.member(H, j, RIGID, "body"); f.mount_mass[j] = f.mount_mass.get(j, 0.0) + MOUNT["body_g"] / len(MOUNT["body_points"])
+    else:
+        H = f.node(CAM_C)
+        for c in clips: f.member(H, f.node(c), RIGID, "camera clip")
     for k, (p, q) in RES["links"].items():
         p, q = np.array(p), np.array(q); C_ = f.node(p); f.member(C_, f.node(q), TUBE6 if k in UP6 else TIE_SEC, k, k=K_TIE); f.fix(C_)
     return f, nid, H
@@ -78,7 +121,10 @@ def masses(f, nid, H):
     for i, j in enumerate(nid):
         g = max(1.5, NODE_FIT[0] * sd[i] + NODE_FIT[1] * td[i] + NODE_FIT[2] * (i < nR) + NODE_FIT[3]) + (CAP_G if i < nR else 0.0)
         m[j] = m.get(j, 0) + g
-    m[H] = m.get(H, 0) + CAM_G
+    if MOUNT:
+        for j, g_ in f.mount_mass.items(): m[j] = m.get(j, 0) + g_
+    else:
+        m[H] = m.get(H, 0) + CAM_G
     return m                                                             # g
 
 
@@ -95,7 +141,7 @@ def main():
     for cn, loads in cases.items():
         u = f.solve(loads); mf_ = f.member_forces(u); res[cn] = mf_
         for r in mf_:
-            if r["name"] == "camera clip": continue
+            if r["name"] in ("camera clip", "body"): continue
             w = worst.setdefault(r["name"], dict(L=0.0, buckle=0.0, sigma=0.0, N_max=0.0, N_min=0.0, case_b="", case_s=""))
             w["L"] = max(w["L"], r["L"])
             if r["buckle"] > w["buckle"]: w["buckle"], w["case_b"] = r["buckle"], cn
@@ -111,14 +157,14 @@ def main():
     nl = {}                                                              # node socket loads (largest axial / side per member)
     for cn, mf_ in res.items():
         for r in mf_:
-            if r["name"] == "camera clip": continue
+            if r["name"] in ("camera clip", "body"): continue
             for end, fe in ((r["a"], r["f_end_a"]), (r["b"], r["f_end_b"])):
                 if end not in nid: continue
                 i = nid.index(end); e = nl.setdefault(str(i), {}).setdefault(r["name"], dict(axial=0.0, side=0.0))
                 e["axial"] = max(e["axial"], abs(float(fe[0]))); e["side"] = max(e["side"], float(np.hypot(fe[1], fe[2])))
     json.dump(worst, open(os.path.join(OUT, "members.json"), "w"), indent=1)
     json.dump(nl, open(os.path.join(OUT, "node_loads.json"), "w"), indent=1)
-    hz, U = f.modes(m, 3)
+    hz, U = f.modes(m, 6)                                                # 6: a floating camera mount sits above the cage own modes
     hd = [float(np.linalg.norm(U[6 * H:6 * H + 3, k]) / max(1e-12, np.abs(U[:, k]).max())) for k in range(len(hz))]
     rods = {k: v for k, v in worst.items() if k.startswith("rod ")}; ties = {k: v for k, v in worst.items() if not k.startswith("rod ")}
     bad_b = sorted([(v["buckle"], k, v["L"]) for k, v in worst.items() if v["buckle"] >= 1.0], reverse=True)
@@ -129,7 +175,7 @@ def main():
     say = lambda s: (print(s), L_.append(s))
     say(f"# Scout cage frame model (F on E properties: carbon E 100 GPa, allowables {SIG_T:.0f} / {SIG_C:.0f} MPa; buckling k 1.0 shell rods, {K_TIE} saddle ties)\n")
     say(f"Cage `{os.path.relpath(RUN, ROOT)}/cage_shell.json`: {len(N)} nodes, {len(CG['rods'])} shell rods + {len(RES['links'])} saddle ties, " + (f"{len(UP6)} members 6/4 tube (the sized list), the rest 3.0 solid; " if UP6 else "every rod 3.0 solid; ") +
-        f"the ties' saddle ends fixed (the core held); the camera + mount ({CAM_G:.1f} g, M mount + E camera) rigid on its 4 clips; nodes lumped by the socket fit (E). Drone {MASS * 1000:.0f} g (E): crash "
+        f"the ties' saddle ends fixed (the core held); " + (f"the camera + the saved mount {MOUNT.get('source', '')} as a super-element ({MOUNT['body_g'] + MOUNT['tie_g']:.1f} g; its clips' rods {'held' if MOUNT_ENGAGED else 'floating, flight'})" if MOUNT else f"the camera + mount ({CAM_G:.1f} g, M mount + E camera) rigid on its 4 clips") + "; nodes lumped by the socket fit (E). " + f"Drone {MASS * 1000:.0f} g (E): crash "
         f"{F_crash:.0f} N through the most extreme node, 14 directions; flight 4 g; handling {HANDLE:.0f} N at mid-span (closed form).\n")
     say("Lowest modes (rigid joints, lumped masses): " + ", ".join(f"{h_:.0f} Hz" + (" (the camera moves)" if hd[k] > 0.3 else "") for k, h_ in enumerate(hz)) + "\n")
     say(f"## Buckling: {len(bad_b)} members at or over 1.0 x their Euler load")
