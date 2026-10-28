@@ -62,6 +62,9 @@ ROD_A, ROD_Z = math.pi * 1.5 ** 2, math.pi * 3.0 ** 3 / 32.0
 M_ROD = SIG_C * ROD_Z                                 # 1590 N mm: a 3.0 rod's bending at its 600 MPa allowable (E)
 K_BUCK = 0.7                                          # rod ends epoxied in PETG sockets (between pinned 1.0 and fixed 0.5, E)
 BOND_TAU = 6.0                                        # MPa epoxy on roughened PETG, lap shear (E)
+FLARE_L, FLARE_R = 2.0, 1.0                           # bell mouth: the bore opens from Ø3.2 to Ø5.2 over the last 2.0 (lip fillet, DEFAULT 28 Oct v2:
+                                                      # v2's first pass put the worst cells 0.8 inside sharp mouths, the rod prying on the edge)
+COLLAR, COLLAR_L = 1.0, 3.0                           # mouth collar: the boss 1.0 thicker over its last 3.0, so the wall stays >= 3 round the bell
 RIM_EX = 1.0                                          # FE: cells this close to a bonded rod's rim are left out (singular corner)
 STUB = 8.0                                            # rod stub modelled past the mouth (FE)
 PETG_RHO = 1.27
@@ -173,9 +176,9 @@ def layout(i, walls=None, free=False):
                 if p == q: continue
                 if p < q:                                                    # bore to bore: 3.0 of PETG
                     g.append(segdist(P[p] + d[p] * r[p], P[p] + d[p] * (r[p] + DEPTH), P[q] + d[q] * r[q], P[q] + d[q] * (r[q] + DEPTH))
-                             - (BORE + max(R[p], R[q]) - BORE / 2))                # the web between two bores is the thicker wall of the two
+                             - (BORE + max(R[p], R[q]) - BORE / 2 + FLARE_R))      # the web between two bores: the thicker wall, flares included
                 # the rod beyond p's mouth clears q's boss (axis from P[q] to its mouth)
-                g.append(segdist(P[p] + d[p] * (r[p] + DEPTH), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + DEPTH)) - (ROD_R + R[q] + ROD_CLEAR))
+                g.append(segdist(P[p] + d[p] * (r[p] + DEPTH), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + DEPTH)) - (ROD_R + R[q] + COLLAR + ROD_CLEAR))
         for j, k in enumerate(ecc):
             g.append(ecc_cap(i, M[k]["name"]) - math.hypot(x[n + 2 * j], x[n + 2 * j + 1]))
         if lim is not None:
@@ -244,6 +247,13 @@ def solve_offsets(passes=3, log=print, cache=None):
 
 
 # ---------------------------------------------------------------------------------------------------------- geometry
+def cone(a, b, r1, r2, n=40):
+    a, b = np.asarray(a, float), np.asarray(b, float); d = b - a; L = float(np.linalg.norm(d))
+    z = d / L; x, y = _perp(z)
+    T = np.eye(4); T[:3, 0], T[:3, 1], T[:3, 2], T[:3, 3] = x, y, z, a
+    return mf.Manifold.cylinder(L, r1, r2, n).transform(T[:3, :4])
+
+
 def seg(a, b, r, n=40):
     a, b = np.asarray(a, float), np.asarray(b, float); d = b - a; L = float(np.linalg.norm(d))
     z = d / L; x, y = _perp(z)
@@ -318,7 +328,11 @@ def bodies(i, socks, hub_r=None, fillet=None):
     for s in socks:
         a, d = s["P"], s["d"]
         prims.append(("cyl", a, a + d * (s["r"] + DEPTH), s["R"]))
-        b = seg(a + d * s["r"], a + d * (s["r"] + DEPTH + 0.01), BORE / 2) + seg(a + d * (s["r"] + DEPTH), a + d * (s["r"] + DEPTH + 300.0), BORE / 2 + 0.4)
+        prims.append(("cyl", a + d * (s["r"] + DEPTH - COLLAR_L), a + d * (s["r"] + DEPTH), s["R"] + COLLAR))   # the mouth collar
+        m0 = a + d * (s["r"] + DEPTH)
+        b = (seg(a + d * s["r"], m0 - d * (FLARE_L - 0.01), BORE / 2)
+             + cone(m0 - d * FLARE_L, m0 + d * 0.01, BORE / 2, BORE / 2 + FLARE_R)          # the bell mouth (lip fillet)
+             + seg(m0, a + d * (s["r"] + DEPTH + 300.0), max(BORE / 2 + 0.4, BORE / 2 + FLARE_R)))
         bores = b if bores is None else bores + b                        # the bore, and the rod's path out of the mouth 0.4 clear
     u = up_dir(i, socks)
     if ring:
@@ -392,7 +406,7 @@ def socket_loads(i, s):
     Lfree = max(s["L"] - 2 * (s["r"] + DEPTH), 20.0)               # free length between the two mouths (this end's set-back both ends, E)
     push = min(ax_f, pcr(Lfree), SIG_C * ROD_A)
     pull = ax_f
-    bond = BOND_TAU * math.pi * BORE * DEPTH
+    bond = BOND_TAU * math.pi * BORE * (DEPTH - FLARE_L)               # the bell mouth's length carries only an epoxy fillet
     return dict(push=push, pull=pull, side=side_f, moment=M_ROD, bond=bond, pcr=pcr(Lfree), frame_axial=ax_f, Lfree=Lfree)
 
 
@@ -446,9 +460,9 @@ def fe_check(i, socks, B, h=0.5, log=print):
     rim = np.zeros(p.nel, bool)
     for s in socks:
         a = Rr @ s["P"] + Tp[:3, 3]; d = Rr @ s["d"]
-        for c0 in (a + d * s["r"], a + d * (s["r"] + DEPTH)):
+        for c0, rr in ((a + d * s["r"], BORE / 2), (a + d * (s["r"] + DEPTH - FLARE_L), BORE / 2), (a + d * (s["r"] + DEPTH), BORE / 2 + FLARE_R)):
             v = cen - c0; ax_ = v @ d; rad = np.linalg.norm(v - ax_[:, None] * d[None], axis=1)
-            rim |= np.hypot(ax_, rad - BORE / 2) < RIM_EX
+            rim |= np.hypot(ax_, rad - rr) < RIM_EX                  # the bore floor rim, where the bond starts under the bell, the mouth rim
     # the bond line: PETG cells sharing a node with the rod insert (a voxel bore is a staircase round a 36x stiffer rod, so single
     # cells there read 2..4x their neighbours). The bond itself is checked by hand (socket_loads "bond"); the wall behind it here.
     ins_nodes = np.zeros(p.nn, bool); ins_nodes[enodes[ins].ravel()] = True
