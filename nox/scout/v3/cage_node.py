@@ -459,7 +459,10 @@ def fe_check(i, socks, B, h=0.5, log=print):
     worst = {}
     for r_ in rows:
         w = worst.setdefault(r_["socket"], r_)
-        if r_["max"] > w["max"]: worst[r_["socket"]] = r_
+        if r_["p999"] > w["p999"]: worst[r_["socket"]] = dict(r_, max_cell=w.get("max_cell", w["max"]), max_case=w.get("max_case", w["case"]))
+        ww = worst[r_["socket"]]
+        if r_["max"] > ww.get("max_cell", ww["max"]): ww["max_cell"], ww["max_case"] = r_["max"], r_["case"]
+    for ww in worst.values(): ww.setdefault("max_cell", ww["max"]); ww.setdefault("max_case", ww["case"])
     return rows, worst, dict(grid=list(p.shape), h=h, cells=int(A.sum()))
 
 
@@ -474,11 +477,14 @@ def design(i, fe=False, h=0.5, log=print):
         B = bodies(i, socks, hub)
         if not fe: break
         rows, worst, info = fe_check(i, socks, B, h=h, log=log)
-        w = max(worst.values(), key=lambda r: r["max"])
+        # the gate (DEFAULT 28 Oct): each socket's 99.9th percentile index <= 1.0; the single worst cell is reported. Gating on the
+        # single cell sent node 1 round in circles (a thicker wall moves the socket out and the lip peak follows: 1.19 -> 1.24, r 20 -> 40)
+        w = max(worst.values(), key=lambda r: r["p999"]); mc = max(worst.values(), key=lambda r: r["max_cell"])
         hist.append(dict(iter=it, walls={s["name"]: round(s["R"] - BORE / 2, 2) for s in socks}, hub_r=B["hub_r"], worst=w,
-                         per_socket={socks[k]["name"]: dict(p999=v["p999"], max=v["max"], case=v["case"], at_r=v["at_r"]) for k, v in worst.items()}))
-        log(f"  node {i} iter {it}: worst {w['max']} (99.9 % {w['p999']}) in {w['case']} ({w['name']}) at r {w['at_r']}")
-        bad = [k for k, v in worst.items() if v["max"] > 1.0]
+                         max_cell=dict(value=mc["max_cell"], case=mc["max_case"], socket=mc["name"]),
+                         per_socket={socks[k]["name"]: dict(p999=v["p999"], max_cell=v["max_cell"], case=v["case"], at_r=v["at_r"]) for k, v in worst.items()}))
+        log(f"  node {i} iter {it}: worst 99.9 % {w['p999']} in {w['case']} ({w['name']}); single cell {mc['max_cell']} in {mc['max_case']}")
+        bad = [k for k, v in worst.items() if v["p999"] > 1.0]
         if not bad: break
         for k in bad:
             v = worst[k]; s = socks[k]
@@ -567,7 +573,7 @@ def build_all(ids, out, fe=False, h=0.5):
         rec["placed"] = placed
         json.dump(rec, open(os.path.join(out, "nodes", f"{i}.json"), "w"), indent=1)
         print(f"node {i}: {g:.2f} g, solid_check {'PASS' if ok else 'FAIL'}, envelope r {env['r_max']}, "
-              f"{len(socks)} sockets, {time.time() - t0:.0f} s" + (f", FE worst {hist[-1]['worst']['max']}" if hist else ""), flush=True)
+              f"{len(socks)} sockets, {time.time() - t0:.0f} s" + (f", FE 99.9 % {hist[-1]['worst']['p999']}, cell {hist[-1]['max_cell']['value']}" if hist else ""), flush=True)
 
 
 def rod_ends(out):

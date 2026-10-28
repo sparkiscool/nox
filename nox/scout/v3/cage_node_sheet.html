@@ -114,7 +114,7 @@ document.getElementById("facts").innerHTML = [
 const cardsEl = document.getElementById("cards"), btns = document.getElementById("btns");
 for (const c of D.cards) {
   const el = document.createElement("article"); el.className = "card"; el.id = "n" + c.i;
-  const fe = c.fe ? `FE worst ${c.fe.worst.toFixed(2)} (99.9 % ${c.fe.p999.toFixed(2)}) in ${c.fe.name}, ${c.fe.case.replace(/^\d+ /, "")}` : "FE not run";
+  const fe = c.fe ? `FE (crash allowable, rod push, pull and full moment): 99.9 % index <b>${c.fe.p999.toFixed(2)}</b> (${c.fe.name}, ${c.fe.case.replace(/^\d+ /, "")}); worst single cell ${c.fe.worst.toFixed(2)} (${c.fe.wname}, ${c.fe.wcase.replace(/^\d+ /, "")})` : "FE not run";
   el.innerHTML = `<header><h3>Node ${c.i}${c.mirror !== null ? ` <span class="note">+ node ${c.mirror} (mirror)</span>` : ` <span class="note">centre plane</span>`}</h3>
     <span class="pill ${c.solid ? "pass" : "fail"}">solid_check ${c.solid ? "PASS" : "FAIL"}</span></header>
     <div class="facts"><span><b>${c.g} g</b> M</span><span>envelope r <b>${c.env.r_max}</b></span><span>print ${c.ext.join(" x ")}</span><span>hub r ${c.hub}</span></div>
