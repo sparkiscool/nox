@@ -5,3 +5,4 @@ node_10: grid (64, 64, 64) h 1.25 = 262,144 cells; design 107,583 (210.1 cm3), d
   support hold 3: 4127 cells, 7104 nodes
   support hold 4: 4131 cells, 7165 nodes
   support hold 5: 4006 cells, 6780 nodes
+node 10: 12.29 g (M), solid PASS, worst 0.054 (tube to 6 pull): PASS

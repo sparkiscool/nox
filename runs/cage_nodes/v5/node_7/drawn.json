@@ -1,0 +1,56 @@
+{
+ "name": "node_7",
+ "mass_g": 13.01,
+ "solid_ok": true,
+ "bodies_plain": 1,
+ "worst": 0.01,
+ "worst_case": "tube to 15 pull",
+ "max": 1.0,
+ "h": 1.25,
+ "pass": true,
+ "members": [
+  "tube to 6",
+  "tube to 8",
+  "tube to 15",
+  "tube to 16",
+  "tube to 21",
+  "tube to 22",
+  "tube to 23",
+  "core tie front.1"
+ ],
+ "loads": {
+  "tube to 6": {
+   "axial": 108.24138819156212,
+   "side": 0.7228412509788823
+  },
+  "tube to 8": {
+   "axial": 108.24138818753829,
+   "side": 0.7228412510077299
+  },
+  "tube to 15": {
+   "axial": 336.4353060375081,
+   "side": 1.9968241224042047
+  },
+  "tube to 16": {
+   "axial": 336.4353060459474,
+   "side": 1.9968241220974003
+  },
+  "tube to 21": {
+   "axial": 256.93707699367906,
+   "side": 1.5777609463497069
+  },
+  "tube to 22": {
+   "axial": 278.6179398149843,
+   "side": 1.2444784782447915
+  },
+  "tube to 23": {
+   "axial": 278.6179398067543,
+   "side": 1.2444784782564131
+  },
+  "core tie front.1": {
+   "axial": 1384.0192279058829,
+   "side": 10.133150327625167
+  }
+ },
+ "mirror": null
+}

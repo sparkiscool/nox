@@ -1,0 +1,8 @@
+node_21: grid (48, 48, 48) h 1.25 = 110,592 cells; design 41,176 (80.4 cm3), drawn 3,986, void 65,430
+  support hold 0: 3234 cells, 5591 nodes
+  support hold 1: 3285 cells, 5643 nodes
+  support hold 2: 3285 cells, 5643 nodes
+  support hold 3: 3200 cells, 5450 nodes
+  support hold 4: 3304 cells, 5621 nodes
+  support hold 5: 3304 cells, 5621 nodes
+node 21: 9.61 g (M), solid PASS, worst 0.013 (tube to 20 pull): PASS
