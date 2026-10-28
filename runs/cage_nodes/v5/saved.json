@@ -1,0 +1,458 @@
+[
+ {
+  "node": 0,
+  "design": 4,
+  "file": "print/overseer_cage_node_0_v5.stl",
+  "mass_g": 8.99,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1308,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 0 (tube to 3, mirrored)",
+  "extents_mm": [
+   32.9,
+   48.6,
+   50.9
+  ],
+  "worst_index": 0.157,
+  "worst_case": "tube to 11 pull",
+  "preview": "runs/cage_nodes/v5/node_4/preview_0.png"
+ },
+ {
+  "node": 1,
+  "design": 3,
+  "file": "print/overseer_cage_node_1_v5.stl",
+  "mass_g": 12.7,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1456,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 3 (tube to 18, mirrored)",
+  "extents_mm": [
+   36.3,
+   62.1,
+   62.5
+  ],
+  "worst_index": 0.049,
+  "worst_case": "tube to 11 pull",
+  "preview": "runs/cage_nodes/v5/node_3/preview_1.png"
+ },
+ {
+  "node": 2,
+  "design": 2,
+  "file": "print/overseer_cage_node_2_v5.stl",
+  "mass_g": 9.7,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1209,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 2 (tube to 18)",
+  "extents_mm": [
+   25.4,
+   55.4,
+   55.0
+  ],
+  "worst_index": 0.036,
+  "worst_case": "tube to 18 pull",
+  "preview": "runs/cage_nodes/v5/node_2/preview_2.png"
+ },
+ {
+  "node": 3,
+  "design": 3,
+  "file": "print/overseer_cage_node_3_v5.stl",
+  "mass_g": 12.7,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1456,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 3 (tube to 18)",
+  "extents_mm": [
+   36.3,
+   62.1,
+   62.5
+  ],
+  "worst_index": 0.049,
+  "worst_case": "tube to 11 pull",
+  "preview": "runs/cage_nodes/v5/node_3/preview_3.png"
+ },
+ {
+  "node": 4,
+  "design": 4,
+  "file": "print/overseer_cage_node_4_v5.stl",
+  "mass_g": 8.99,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1308,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 0 (tube to 3)",
+  "extents_mm": [
+   32.9,
+   48.6,
+   50.9
+  ],
+  "worst_index": 0.157,
+  "worst_case": "tube to 11 pull",
+  "preview": "runs/cage_nodes/v5/node_4/preview_4.png"
+ },
+ {
+  "node": 5,
+  "design": 5,
+  "file": "print/overseer_cage_node_5_v5.stl",
+  "mass_g": 10.89,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1403,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 1 (tube to 4)",
+  "extents_mm": [
+   32.3,
+   58.0,
+   56.4
+  ],
+  "worst_index": 0.065,
+  "worst_case": "tube to 13 pull",
+  "preview": "runs/cage_nodes/v5/node_5/preview_5.png"
+ },
+ {
+  "node": 6,
+  "design": 6,
+  "file": "print/overseer_cage_node_6_v5.stl",
+  "mass_g": 10.58,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1201,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 1 (tube to 10)",
+  "extents_mm": [
+   29.5,
+   36.7,
+   59.4
+  ],
+  "worst_index": 0.02,
+  "worst_case": "tube to 15 pull",
+  "preview": "runs/cage_nodes/v5/node_6/preview_6.png"
+ },
+ {
+  "node": 7,
+  "design": 7,
+  "file": "print/overseer_cage_node_7_v5.stl",
+  "mass_g": 13.01,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1475,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 0 (tube to 6)",
+  "extents_mm": [
+   32.2,
+   51.3,
+   57.7
+  ],
+  "worst_index": 0.01,
+  "worst_case": "tube to 15 pull",
+  "preview": "runs/cage_nodes/v5/node_7/preview_7.png"
+ },
+ {
+  "node": 8,
+  "design": 6,
+  "file": "print/overseer_cage_node_8_v5.stl",
+  "mass_g": 10.58,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1201,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 1 (tube to 10, mirrored)",
+  "extents_mm": [
+   29.5,
+   36.7,
+   59.4
+  ],
+  "worst_index": 0.02,
+  "worst_case": "tube to 15 pull",
+  "preview": "runs/cage_nodes/v5/node_6/preview_8.png"
+ },
+ {
+  "node": 9,
+  "design": 10,
+  "file": "print/overseer_cage_node_9_v5.stl",
+  "mass_g": 12.29,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1527,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 4 (tube to 21, mirrored)",
+  "extents_mm": [
+   42.9,
+   69.5,
+   42.6
+  ],
+  "worst_index": 0.054,
+  "worst_case": "tube to 6 pull",
+  "preview": "runs/cage_nodes/v5/node_10/preview_9.png"
+ },
+ {
+  "node": 10,
+  "design": 10,
+  "file": "print/overseer_cage_node_10_v5.stl",
+  "mass_g": 12.29,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1527,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 4 (tube to 21)",
+  "extents_mm": [
+   42.9,
+   69.5,
+   42.6
+  ],
+  "worst_index": 0.054,
+  "worst_case": "tube to 6 pull",
+  "preview": "runs/cage_nodes/v5/node_10/preview_10.png"
+ },
+ {
+  "node": 11,
+  "design": 11,
+  "file": "print/overseer_cage_node_11_v5.stl",
+  "mass_g": 20.91,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 2410,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 8 (core tie left.1)",
+  "extents_mm": [
+   66.3,
+   84.6,
+   51.0
+  ],
+  "worst_index": 0.012,
+  "worst_case": "tube to 10 pull",
+  "preview": "runs/cage_nodes/v5/node_11/preview_11.png"
+ },
+ {
+  "node": 12,
+  "design": 11,
+  "file": "print/overseer_cage_node_12_v5.stl",
+  "mass_g": 20.91,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 2410,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 8 (core tie left.1, mirrored)",
+  "extents_mm": [
+   66.3,
+   84.6,
+   51.0
+  ],
+  "worst_index": 0.012,
+  "worst_case": "tube to 10 pull",
+  "preview": "runs/cage_nodes/v5/node_11/preview_12.png"
+ },
+ {
+  "node": 13,
+  "design": 13,
+  "file": "print/overseer_cage_node_13_v5.stl",
+  "mass_g": 15.41,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1706,
+  "thin_island_run_mm": 0.3,
+  "bed_face": "the mouth of socket 5 (core tie rear.1)",
+  "extents_mm": [
+   45.9,
+   77.2,
+   47.2
+  ],
+  "worst_index": 0.018,
+  "worst_case": "tube to 5 pull",
+  "preview": "runs/cage_nodes/v5/node_13/preview_13.png"
+ },
+ {
+  "node": 14,
+  "design": 13,
+  "file": "print/overseer_cage_node_14_v5.stl",
+  "mass_g": 15.41,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1706,
+  "thin_island_run_mm": 0.3,
+  "bed_face": "the mouth of socket 5 (core tie rear.1, mirrored)",
+  "extents_mm": [
+   45.9,
+   77.2,
+   47.2
+  ],
+  "worst_index": 0.018,
+  "worst_case": "tube to 5 pull",
+  "preview": "runs/cage_nodes/v5/node_13/preview_14.png"
+ },
+ {
+  "node": 15,
+  "design": 15,
+  "file": "print/overseer_cage_node_15_v5.stl",
+  "mass_g": 12.13,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1229,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 2 (tube to 16)",
+  "extents_mm": [
+   47.8,
+   50.6,
+   59.2
+  ],
+  "worst_index": 0.129,
+  "worst_case": "tube to 6 pull",
+  "preview": "runs/cage_nodes/v5/node_15/preview_15.png"
+ },
+ {
+  "node": 16,
+  "design": 15,
+  "file": "print/overseer_cage_node_16_v5.stl",
+  "mass_g": 12.13,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1229,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 2 (tube to 16, mirrored)",
+  "extents_mm": [
+   47.8,
+   50.6,
+   59.2
+  ],
+  "worst_index": 0.129,
+  "worst_case": "tube to 6 pull",
+  "preview": "runs/cage_nodes/v5/node_15/preview_16.png"
+ },
+ {
+  "node": 17,
+  "design": 17,
+  "file": "print/overseer_cage_node_17_v5.stl",
+  "mass_g": 9.48,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1197,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 0 (tube to 15)",
+  "extents_mm": [
+   46.8,
+   35.9,
+   53.0
+  ],
+  "worst_index": 0.252,
+  "worst_case": "head rod c side b",
+  "preview": "runs/cage_nodes/v5/node_17/preview_17.png"
+ },
+ {
+  "node": 18,
+  "design": 18,
+  "file": "print/overseer_cage_node_18_v5.stl",
+  "mass_g": 15.57,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1896,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 1 (tube to 3)",
+  "extents_mm": [
+   42.9,
+   61.9,
+   50.9
+  ],
+  "worst_index": 0.121,
+  "worst_case": "tube to 15 pull",
+  "preview": "runs/cage_nodes/v5/node_18/preview_18.png"
+ },
+ {
+  "node": 19,
+  "design": 18,
+  "file": "print/overseer_cage_node_19_v5.stl",
+  "mass_g": 15.57,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1896,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 1 (tube to 3, mirrored)",
+  "extents_mm": [
+   42.9,
+   61.9,
+   50.9
+  ],
+  "worst_index": 0.121,
+  "worst_case": "tube to 15 pull",
+  "preview": "runs/cage_nodes/v5/node_18/preview_19.png"
+ },
+ {
+  "node": 20,
+  "design": 20,
+  "file": "print/overseer_cage_node_20_v5.stl",
+  "mass_g": 7.36,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 822,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 0 (tube to 9)",
+  "extents_mm": [
+   15.3,
+   46.1,
+   46.2
+  ],
+  "worst_index": 0.036,
+  "worst_case": "tube to 13 pull",
+  "preview": "runs/cage_nodes/v5/node_20/preview_20.png"
+ },
+ {
+  "node": 21,
+  "design": 21,
+  "file": "print/overseer_cage_node_21_v5.stl",
+  "mass_g": 9.61,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 1103,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 1 (tube to 9)",
+  "extents_mm": [
+   16.2,
+   54.4,
+   54.0
+  ],
+  "worst_index": 0.013,
+  "worst_case": "tube to 20 pull",
+  "preview": "runs/cage_nodes/v5/node_21/preview_21.png"
+ },
+ {
+  "node": 22,
+  "design": 23,
+  "file": "print/overseer_cage_node_22_v5.stl",
+  "mass_g": 6.07,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 634,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 2 (tube to 10, mirrored)",
+  "extents_mm": [
+   13.1,
+   46.2,
+   45.5
+  ],
+  "worst_index": 0.04,
+  "worst_case": "tube to 7 pull",
+  "preview": "runs/cage_nodes/v5/node_23/preview_22.png"
+ },
+ {
+  "node": 23,
+  "design": 23,
+  "file": "print/overseer_cage_node_23_v5.stl",
+  "mass_g": 6.07,
+  "solid_check": "PASS",
+  "bed_mm2": 51,
+  "overhang_mm2": 634,
+  "thin_island_run_mm": 0,
+  "bed_face": "the mouth of socket 2 (tube to 10)",
+  "extents_mm": [
+   13.1,
+   46.2,
+   45.5
+  ],
+  "worst_index": 0.04,
+  "worst_case": "tube to 7 pull",
+  "preview": "runs/cage_nodes/v5/node_23/preview_23.png"
+ }
+]

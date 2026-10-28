@@ -1,8 +1,8 @@
 """Save the Overseer cage nodes drawn first (CLAUDE.md Drawn first, Spark 27 Oct): each node design whose drawn part passed
-(runs/cage_nodes/v4/node_<i>/drawn.json, `cage_node.py <i> --drawn`) is oriented, checked and saved, with its mirror where it has one.
+(runs/cage_nodes/<v>/node_<i>/drawn.json, `cage_node.py <i> --drawn`) is oriented, checked and saved, with its mirror where it has one.
 
 Orientation: every socket mouth on the bed (the socket axis vertical, the bore printed round), scored by print_orient's measures:
-no first-layer island under 20 mm2 lasting over 10 mm, then the least overhang. Print files print/overseer_cage_node_<n>_v4.stl
+no first-layer island under 20 mm2 lasting over 10 mm, then the least overhang. Print files print/overseer_cage_node_<n>_<v>.stl
 (n the cage node; a mirror node is its own file, a mirrored part), solid_check on each exact file, a preview, and a decimated copy
 in the drone frame in runs/overseer_layout/v5/saved/ for the assembly.
 
@@ -18,7 +18,8 @@ sys.argv, _args = sys.argv[:1], sys.argv[1:]
 import cage_node as cn
 import print_orient as po
 
-RUN = os.path.join(ROOT, "runs", "cage_nodes", "v4")
+VER = os.environ.get("NODE_VER", "v5")
+RUN = os.path.join(ROOT, "runs", "cage_nodes", VER)
 SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 
 
@@ -51,7 +52,7 @@ def save(i):
     out = []
     for n_, mesh, ds in ((i, src, dirs), *(((cn.mirror_of(i), _mirror(src), [np.asarray(v) * [1, -1, 1] for v in dirs]),) if cn.N[i, 1] > 0.5 else ())):
         pm, k, bed, over, run = orient(mesh, ds)
-        f = os.path.join(ROOT, "print", f"overseer_cage_node_{n_}_v4.stl"); pm.export(f)
+        f = os.path.join(ROOT, "print", f"overseer_cage_node_{n_}_{VER}.stl"); pm.export(f)
         sc = subprocess.run([sys.executable, os.path.join(ROOT, "nox", "solid_check.py"), f], capture_output=True, text=True)
         ok = sc.returncode == 0
         prev = os.path.join(RUN, f"node_{i}", f"preview_{n_}.png")
