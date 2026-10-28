@@ -73,18 +73,18 @@ button.node:focus-visible { outline: 2px solid var(--petg); }
       <div>
         <h2>Concept: two socket layouts weighed</h2>
         <table>
-          <tr><th>Option</th><th>18 nodes, wall 3.0</th><th>Largest node</th><th>Costs</th></tr>
-          <tr><td>A, every axis through the node centre</td><td class="n">123.9 g C</td><td class="n">r 38.5</td><td>tight pairs (12.7 to 16.5°) start 22 to 28 out; node 1 forks 38 long, half of rod 1-5 becomes PETG</td></tr>
-          <tr><td class="pick">B, tight pairs run up to 3.5 off centre at one end (picked, DEFAULT)</td><td class="n">108.7 g C</td><td class="n">r 24.8</td><td>10 rod ends a side off centre (≤ 3.5, line tilt ≤ 3°), F x e moments in the node; the cage's tube lines move at those ends</td></tr>
+          <tr><th>Option</th><th>18 nodes at the drawn minimum</th><th>Largest node</th><th>Costs</th></tr>
+          <tr><td>A, every axis through the node centre</td><td class="n">168.9 g C</td><td class="n">r 43.7</td><td>tight pairs (12.7 to 16.5°) start 22 to 28 out; node 1 forks over 40 long, half of rod 1-5 becomes PETG</td></tr>
+          <tr><td class="pick">B, tight pairs off centre at one rod end (picked, DEFAULT)</td><td class="n">152.3 g C</td><td class="n">r 35.9</td><td>10 rod ends a side, offset ≤ 3.5 and axial x offset ≤ 1590 N mm (rod 10-12 capped to 1.51); the cage's tube lines move at those ends</td></tr>
         </table>
-        <p class="note" style="margin-top:6px">Both carry wall 3.0 round every bore and a 3.0 floor behind it. The floor of the mass is about 1 g per socket end (102 ends); the layout's 39 g was an estimate before any socket was drawn.</p>
+        <p class="note" style="margin-top:6px">Both with v2 sockets: wall ≥ 3.0, floor ≥ 3.0, a bell mouth (Ø3.2 to Ø5.2 over the last 2.0) and a mouth collar (+1.0 over 3.0); saddle ties 14 deep. The concept review was not run: this worker cannot spawn the review agent; the two options are weighed here.</p>
       </div>
       <div>
         <h2>Breaking order</h2>
-        <ol class="order">
-          <li>A rod buckles (elastic, it springs back): 25 of 55 do in the 35 g crash (frame model v3, F).</li>
-          <li>A rod snaps or its epoxy bond lets go (pull-out about 600 N E at 10 deep): re-glue or replace the rod.</li>
-          <li>The node: sized to hold every rod's push, pull and full bending moment (1590 N mm) at the crash allowable, so it does not go first.</li>
+        <ol class="order" id="order">
+          <li>A rod buckles (elastic, it springs back): 25 of 55 do in the 35 g crash (frame model v3, F). The rods are the fuse there, and every node holds each rod's push and pull (frame, F) at the crash allowable.</li>
+          <li>A rod pulls out of its socket when its bond lets go (8 mm of contact, 482 N E; ties 12 mm, 724 N E), under the frame's largest pulls (to 1264 N, F): re-glue.</li>
+          <li id="bendline"></li>
         </ol>
         <p class="note">The TPU caps and the ring nodes take the landing; the camera mount's clips stay the camera's own fuse.</p>
       </div>
@@ -110,18 +110,22 @@ document.getElementById("facts").innerHTML = [
   `<span>option <b>${D.option}</b></span>`,
   `<span>eccentric ends <b>${Object.keys(D.ecc).length}</b> a side, max <b>${Math.max(...Object.values(D.ecc)).toFixed(1)}</b> mm</span>`,
   `<span>solid_check <b>${D.cards.every(c => c.solid) ? "PASS x " + D.cards.length : "FAIL"}</b></span>`].join("");
+{
+  const ol = D.cards.filter(c => c.fe).map(c => c.fe.outlast), lo = Math.min(...ol), hi = Math.max(...ol);
+  document.getElementById("bendline").textContent = `Pure bending: the node holds the rod's 600 MPa allowable moment (worst cell ≤ 1.0), but a pultruded rod breaks near 1200 MPa (E). At that moment the nodes read ${lo.toFixed(2)} to ${hi.toFixed(2)} of their PETG strength, so under a pure bending overload ${hi > 1 ? "the socket goes before the rod: the node is the cheap part then, a reprint of a few grams" : "the rod still goes first"}.`;
+}
 
 const cardsEl = document.getElementById("cards"), btns = document.getElementById("btns");
 for (const c of D.cards) {
   const el = document.createElement("article"); el.className = "card"; el.id = "n" + c.i;
-  const fe = c.fe ? `FE (crash allowable, rod push, pull and full moment): 99.9 % index <b>${c.fe.p999.toFixed(2)}</b> (${c.fe.name}, ${c.fe.case.replace(/^\d+ /, "")}); worst single cell ${c.fe.worst.toFixed(2)} (${c.fe.wname}, ${c.fe.wcase.replace(/^\d+ /, "")})` : "FE not run";
+  const fe = c.fe ? `FE (crash allowable; each rod's push, pull and 1590 N mm moment): worst cell <b>${c.fe.worst.toFixed(2)}</b> (${c.fe.wname}, ${c.fe.wcase.replace(/^\d+ /, "")}; gate 1.0), 99.9 % ${c.fe.p999.toFixed(2)}, ${c.fe.iters} pass${c.fe.iters > 1 ? "es" : ""}; at a rod's real bending strength (1200 MPa, E) this node reads <b>${c.fe.outlast.toFixed(2)}</b> of its PETG strength` : "FE not run";
   el.innerHTML = `<header><h3>Node ${c.i}${c.mirror !== null ? ` <span class="note">+ node ${c.mirror} (mirror)</span>` : ` <span class="note">centre plane</span>`}</h3>
     <span class="pill ${c.solid ? "pass" : "fail"}">solid_check ${c.solid ? "PASS" : "FAIL"}</span></header>
     <div class="facts"><span><b>${c.g} g</b> M</span><span>envelope r <b>${c.env.r_max}</b></span><span>print ${c.ext.join(" x ")}</span><span>hub r ${c.hub}</span></div>
     <div class="imgs"><img alt="node ${c.i} as printed" src="${c.prev}"><img alt="node ${c.i} section" src="${c.sec}"></div>
     <div class="note">${fe}</div>
-    <div class="tbl"><table><tr><th>socket</th><th>floor at</th><th>wall</th><th>off centre</th><th>elev</th><th>push / pull N</th></tr>
-    ${c.socks.map(s => `<tr><td>${s.n}</td><td class="n">${s.r.toFixed(1)}</td><td class="n">${s.w.toFixed(1)}</td><td class="n">${s.e > 0.05 ? s.e.toFixed(1) : "-"}</td><td class="n">${s.el}°</td><td class="n">${Math.round(s.push)} / ${Math.round(s.pull)}</td></tr>`).join("")}
+    <div class="tbl"><table><tr><th>socket</th><th>floor at</th><th>depth</th><th>wall</th><th>off centre</th><th>elev</th><th>push / pull N</th></tr>
+    ${c.socks.map(s => `<tr><td>${s.n}</td><td class="n">${s.r.toFixed(1)}</td><td class="n">${s.dp}</td><td class="n">${s.w.toFixed(1)}</td><td class="n">${s.e > 0.05 ? s.e.toFixed(1) : "-"}</td><td class="n">${s.el}°</td><td class="n">${Math.round(s.push)} / ${Math.round(s.pull)}</td></tr>`).join("")}
     </table></div>`;
   cardsEl.appendChild(el);
   const b = document.createElement("button"); b.className = "node"; b.textContent = "node " + c.i; b.id = "b" + c.i;

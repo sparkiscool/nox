@@ -75,8 +75,8 @@ def main():
         fe = rec["fe"][-1] if rec["fe"] else None
         cards.append(dict(i=i, mirror=rec["mirror"], g=rec["mass_g"], env=rec["envelope"], solid=rec["solid_check"]["ok"], prev=img(pv), sec=img(sp),
                           ext=rec["extents_print"], bed=rec["bed_below_centre"], hub=rec["hub_r"],
-                          fe=None if fe is None else dict(worst=fe["max_cell"]["value"], wcase=fe["max_cell"]["case"], wname=fe["max_cell"]["socket"], p999=fe["worst"]["p999"], case=fe["worst"]["case"], name=fe["worst"]["name"], iters=len(rec["fe"])),
-                          socks=[dict(n=s["name"], r=s["setback"], w=s["wall"], e=s["ecc"], el=s["elev_deg"], push=s["loads"]["push"], pull=s["loads"]["pull"],
+                          fe=None if fe is None else dict(worst=fe["max_cell"]["value"], wcase=fe["max_cell"]["case"], wname=fe["max_cell"]["socket"], p999=fe["worst"]["p999"], case=fe["worst"]["case"], name=fe["worst"]["name"], iters=len(rec["fe"]), outlast=fe.get("outlast", 0.0)),
+                          socks=[dict(n=s["name"], r=s["setback"], dp=s.get("depth", 10.0), w=s["wall"], e=s["ecc"], el=s["elev_deg"], push=s["loads"]["push"], pull=s["loads"]["pull"],
                                       side=s["loads"]["side"]) for s in rec["sockets"]]))
     cards.sort(key=lambda c: c["i"])
     data = dict(meshes=meshes, rods=rods, cards=cards, total=R["total_nodes_g"], cap=R["cap"], ecc=R.get("eccentric", {}), option=R["option"])
