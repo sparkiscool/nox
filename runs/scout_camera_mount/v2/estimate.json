@@ -1,0 +1,100 @@
+{
+ "name": "scout_camera_mount",
+ "h": 1.5,
+ "gen_cm3": 16.0,
+ "coarse": false,
+ "smoke_iterations": 3,
+ "drawn": {
+  "name": "scout_camera_mount",
+  "mass_g": 14.54,
+  "solid_ok": false,
+  "bodies_plain": 8,
+  "worst": 3.17,
+  "worst_case": "hood hit +y top corner -x",
+  "max": 1.0,
+  "h": 1.5,
+  "pass": false
+ },
+ "room_audit": "PASS",
+ "room_audit_rows": [
+  {
+   "share": 0.36,
+   "at": [
+    131.8,
+    -29.2,
+    11.5
+   ],
+   "loaded_cells": 200
+  },
+  {
+   "share": 0.36,
+   "at": [
+    131.8,
+    29.2,
+    11.5
+   ],
+   "loaded_cells": 200
+  },
+  {
+   "share": 0.53,
+   "at": [
+    132.5,
+    -13.7,
+    28.0
+   ],
+   "loaded_cells": 92
+  },
+  {
+   "share": 0.53,
+   "at": [
+    132.5,
+    13.7,
+    28.0
+   ],
+   "loaded_cells": 92
+  },
+  {
+   "share": 0.54,
+   "at": [
+    132.5,
+    -14.0,
+    56.0
+   ],
+   "loaded_cells": 92
+  },
+  {
+   "share": 0.54,
+   "at": [
+    132.5,
+    14.0,
+    56.0
+   ],
+   "loaded_cells": 92
+  },
+  {
+   "share": 0.68,
+   "at": [
+    151.5,
+    0.0,
+    42.2
+   ],
+   "loaded_cells": 876
+  }
+ ],
+ "room_audit_min_share": 0.35,
+ "fine": {
+  "s_per_it": 36.8,
+  "cells": 221184,
+  "design_cells": 36799,
+  "cases": 101,
+  "load_cases": 23,
+  "backend": "direct",
+  "peak_gb": 4.83
+ },
+ "peak_gb": 4.83,
+ "wall_h": [
+  0.59,
+  1.48
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
