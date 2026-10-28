@@ -1,12 +1,12 @@
 receiver in pose x -121.8..61.9, y ±33.4, z -76.7..-8.1 (M); pack top z -19.9, cartridge bottom z -76.9; XT60 male top z -4.6
-hub deck: the saved run mesh (37.1 g PETG, M) in the assembly (CORE_CONCEPT=1: the concept body)
+hub deck: the saved run mesh (37.1 g PETG, M) in the assembly (run with CORE_CONCEPT=1 for the concept body)
 stack straight on the top plate: ESC z 49.6..54.8 on its own 3 standoffs / grommets, FC top z 67.1; leads to ~70.1; x props 0.0 mm³; nearest blade band z 77 (C on E)
 Pi right side up between the plates: board x -53.5..31.5, z 8.0..9.6; Active Cooler top z 23.3 (21.7 under the top plate for the blower intake); ports aft, top z 25.6 (C on E)
    x arms (v5 meshes), mm³: hub deck 0.0, Pi + plugs 0.0, UBEC 0.0, buck 0.0, stack 0.0, cap 0.0, RX 0.0
    deck x Pi 0.0 (posts on its holes), deck x UBEC 0.0, deck x buck -0.0, Pi + intake x top plate 0.0, Pi x UBEC 0.0, cap x stack 0.0, RX x stack 0.0 mm³
    battery slot (empty, x -121.8..61.9, y ±33.4, z -76.9..-2.1): x deck 0.0, x flow clip 0.0, x flow 0.0, x wires 163.4 mm³
 deck screw heads (M3 Ø5.5 x 3) x the battery slot 0.0 mm³ (v4: the (60, ±17) pair and its slot pockets dropped) 
-deck x arms 0.0, x the v5 links (keels and braces dropped) 0.0, x cage nodes 0.0 mm³
+deck x arms 0.0, x the links 0.0, x cage nodes 0.0 mm³
 flow clip x bottom plate -0.0, x the v5 links and nodes 0.0 / 0.0, flow x clip 2246.4 (pocket cut in the piece), deck x clip 0.0 mm³
 arm bottom screw keys (Ø8 below the plate): all 8 clear of the core (C); the slot's contents come later
 flow view (42°, +2°, from the clip's window): clear (C)

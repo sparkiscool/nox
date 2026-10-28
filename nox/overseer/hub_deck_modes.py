@@ -98,7 +98,7 @@ for k_, dv in DIRS.items():
         v = Rf[sel].sum(0); react[f"({x:g}, {y:g})"] = {"N": round(float(np.linalg.norm(v)), 1), "pull_N": round(float(-v[2]), 1)}
     res_react[case] = {"per_foot": react, "max_N": max(r_["N"] for r_ in react.values()), "max_pull_N": max(r_["pull_N"] for r_ in react.values())}
 res = {"mesh": os.path.relpath(MESH, ROOT), "pitch_mm": H, "elements": int(len(el)), "dofs_free": int(len(fd)), "material": "PETG (nox/topo)",
-       "masses_g": {"Pi 5 + cooler on the post tops": 55.0, "UBEC": 15.0, "buck": 6.0}, "modes": modes, "keel_sockets": sock, "bolt_reactions_fe": res_react,
-       "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses); socket stiffness along the keel"}
+       "masses_g": {"Pi 5 + cooler on the post tops": 55.0, "UBEC": 15.0, "buck": 6.0}, "modes": modes, **({"keel_sockets": sock} if PTS else {}), "bolt_reactions_fe": res_react,
+       "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses)" + ("; socket stiffness along each tube" if PTS else "; no sockets (core v4)")}
 print(json.dumps(res, indent=1))
 if OUTJ: json.dump(res, open(OUTJ, "w"), indent=1)

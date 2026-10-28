@@ -18,9 +18,9 @@
     3.0
    ],
    "dir": [
-    0.0,
-    0.0,
-    1.0
+    -0.0,
+    -0.0,
+    -1.0
    ]
   },
   {
@@ -31,9 +31,9 @@
     2.0
    ],
    "dir": [
-    0.01,
-    0.03,
-    1.0
+    -0.01,
+    -0.03,
+    -1.0
    ]
   },
   {
@@ -63,7 +63,6 @@
    ]
   }
  ],
- "keel_sockets": {},
  "bolt_reactions_fe": {
   "crash 0 (35 g, payload only)": {
    "per_foot": {
@@ -126,5 +125,5 @@
    "max_pull_N": -0.5
   }
  },
- "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses); socket stiffness along the keel"
+ "note": "first modes of the deck with the Pi, UBEC and buck lumped on their seats, feet fixed (C on M mesh, E masses); no sockets (core v4)"
 }

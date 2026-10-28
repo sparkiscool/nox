@@ -1,6 +1,6 @@
 # overseer_hub_deck v12: saved (core v4: no head load)
 
-Part: the Overseer hub deck, one PETG print on the bottom plate (`nox/overseer/core_topo_v4.py hub_deck 1.0 11 --ver=v12`, nox/topo, organic finish, members 6.25). Drawn: 6 feet Ø14 x 6.5 with M3 x 5.7 inserts (M3 up from under the plate), 4 Pi posts Ø7 x 8 on Ø12 root webs (M2.5 self-tapping), 4 pads Ø12 a bay under the UBEC and the buck (VHB); the topology joins them. Requirements: `nox/dimensions.md` System Overseer core (core v4, `runs/overseer_core/v4/`). The cage hangs the L2 head on 3 rods to its own nodes (PR 165), so nothing of the head lands on the deck: v9's tower and its 6 sockets are gone.
+Part: the Overseer hub deck, one PETG print on the bottom plate (`nox/overseer/core_topo_v4.py hub_deck 1.0 11 --ver=v12`, nox/topo, organic finish, members 6.25 (C)). Drawn (C): 6 feet Ø14 x 6.5 with M3 x 5.7 inserts (M3 up from under the plate), 4 Pi posts Ø7 x 8 on Ø12 root webs (M2.5 self-tapping), 4 pads Ø12 a bay under the UBEC and the buck (VHB); the topology joins them. Requirements: `nox/dimensions.md` System Overseer core (core v4, `runs/overseer_core/v4/`). The cage hangs the L2 head on 3 rods to its own nodes (PR 165), so nothing of the head lands on the deck: v9's tower and its 6 sockets are gone.
 
 Waited for: the cage's head-rod change on main (PR 165, merged 27 Oct 17:41 PDT); the run used the cage branch's arms (`CORE_ASSEMBLY` = core v4 on that branch), the assembled recheck below is on main after the merge.
 
@@ -10,7 +10,7 @@ Smoke (`estimate.json`): drawn first FAIL (the drawn set alone is 13 bodies, sol
 overseer_hub_deck v12: ready to print
 System: Overseer core v4 assembled on main (v12 mesh, `runs/overseer_core/v4/checks.txt`): fit 0 mm³ with arms, Pi, UBEC, buck, both plates, cage tubes and nodes, links, wires (C on M); cage first 9.6 (E); access 39/39 clear; mass 3235 g (E), CG 0.3 off the thrust axis pack in, 28.2 pack out (L exception) (E); system_check PASS
 Weight: 37.1 g (M), was 68.0 (v9, tower); budget 30 (DEFAULT, E)
-Strength: worst index 0.17 (M) in "press 50 N on the Pi (assembly)" at (57, 18.5, 0.5); crash cases 35 g x 14 with the payload (Pi 55, UBEC 15 + 10 wires, buck 6 + 10)
+Strength: worst index 0.17 (M) in "press 50 N on the Pi (assembly)" at (57, 18.5, 0.5); crash cases 35 g x 14 (E) with the payload (Pi 55, UBEC 15 + 10 wires, buck 6 + 10; g, E)
 Solid: solid_check PASS (print/overseer_hub_deck_v12.stl), 1 body; the build's drawn-body test PASS
 Print: plate face down, bed contact 2245 mm² (M, print_orient), 139.1 x 87.0 x 8.0, tree supports under the frame; file print/overseer_hub_deck_v12.stl
 ```

@@ -232,7 +232,7 @@ def flow_clip():
 DECK, CLIP = hub_deck(), flow_clip()
 HUB_RUN = os.path.join(ROOT, "runs", "overseer_hub_deck", "v12", "overseer_hub_deck.stl")   # v12: no head load (v4)
 if os.path.exists(HUB_RUN) and not os.environ.get("CORE_CONCEPT"):
-    DECK = trimesh.load(HUB_RUN); say(f"hub deck: the saved run mesh ({DECK.volume * 1.27e-3:.1f} g PETG, M) in the assembly (CORE_CONCEPT=1: the concept body)")
+    DECK = trimesh.load(HUB_RUN); say(f"hub deck: the saved run mesh ({DECK.volume * 1.27e-3:.1f} g PETG, M) in the assembly (run with CORE_CONCEPT=1 for the concept body)")
 
 # ---------------------------------------------------------------- wiring: drawn routes, each ending in a plug (clean wiring, L 8)
 W = {
@@ -254,11 +254,11 @@ for k, ang in enumerate((45, 135, 225, 315)):   # the stack is turned 45°: its 
 wires = cat([tube(p, r) for p, r in W.values()])
 
 # ---------------------------------------------------------------- manifest
-def P(name, m, role, mass=None, material="PETG", protect=False, tag="E", swap=False, owner="overseer core", budget=None, version="core v2"):
+def P(name, m, role, mass=None, material="PETG", protect=False, tag="E", swap=False, owner="overseer core", budget=None, version="core v4", source="nox/overseer/core_v4.py"):
     fn = name.lower().replace(" ", "_").replace("/", "_").replace("+", "").replace("(", "").replace(")", "").replace(",", "")[:40] + ".stl"
     m.export(os.path.join(PARTS, fn))
     d = {"name": name, "role": role, "mesh": os.path.relpath(os.path.join(PARTS, fn), ROOT), "material": material, "tag": tag,
-         "owner": owner, "version": version, "source": "nox/overseer/core_v1.py"}
+         "owner": owner, "version": version, "source": source}
     if mass is not None: d["mass_g"] = round(float(mass), 2)
     if protect: d["protect"] = True
     if swap: d["swap"] = True
@@ -286,8 +286,9 @@ core = [
     P("cartridge", cartridge, "protected", 105.6, protect=True, swap=True, tag="M", owner="box swap (battery latch, later: the slot's contents)", version="cartridge v6 + sliders v6"),
     P("receiver", receiver, "protected", 229.3, protect=True, tag="M", owner="box swap (battery latch, later: the slot's contents)", version="receiver v2 + carrier v1 + cap + strips"),
     P("XT60 pair", xt60, "bought", 15, protect=True),
-    P("hub deck", DECK, "structure", MASS["hub deck"], budget=BUDGET["hub deck"], tag="M" if os.path.exists(HUB_RUN) else "E"),
-    P("flow clip", CLIP, "structure", BUDGET["flow clip"], budget=BUDGET["flow clip"]),
+    P("hub deck", DECK, "structure", MASS["hub deck"], budget=BUDGET["hub deck"], tag="M" if os.path.exists(HUB_RUN) else "E",
+      version="hub deck v12" if os.path.exists(HUB_RUN) else "core v4 concept", source="nox/overseer/core_topo_v4.py" if os.path.exists(HUB_RUN) else "nox/overseer/core_v4.py"),
+    P("flow clip", CLIP, "structure", BUDGET["flow clip"], budget=BUDGET["flow clip"], tag="M", version="flow clip v1", source="nox/overseer/core_coupons_v2.py"),
 ]
 CORE_NAMES = {p["name"] for p in core}
 context = [p for p in context if p["name"] not in CORE_NAMES]      # the cage's assembly now carries the core's saved parts: ours replace them
