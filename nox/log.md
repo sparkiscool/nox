@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 28 Oct (Scout v3): camera mount v2 WIP, stopped (Spark: stop all): topology setup on v13 + saved nodes v2 (+2), core tie to the plate (belly mount's front M3 at (30, ±13)), 2 floating snap clips on rod 14-15 at y ±29.4; run 4 stopped at it 24, no mesh. Resume: run_estimate then run_bg (part/scout-camera-mount-v2, `runs/scout_camera_mount/v2/`), then camera_mount_v2_check.py
 - 28 Oct (Scout v3): layout v13 (`runs/scout_layout/v13/`): node mass fitted to the saved nodes v2 (192 g M; v12 assumed 39, CG read 4.65): catch 2.5 aft (was 5.0 fwd), 58 rods on 19 nodes, 912 g E, CG 0.7 / 0.7 E; frame v4 34 Hz F. Nodes, electronics stale (redraw); camera v1 for mass only (6.2 clips).
 - 28 Oct (Overseer): cage nodes v5 saved READY: 24 print files (15 designs + 9 mirrors), drawn first (no topology run), 2.0 walls (v4 2.5: 345 g), 289.4 g PETG (M), each solid_check PASS, worst 0.252 (F); in the assembly, system_check PASS; runs/cage_nodes/v5
 - 28 Oct (Overseer): head v5 sweep (3 rods) all solid FAIL, worst 1.6-2.7 (M): one held socket took all load; the L2 plane cut the side bosses (1.2 wall, M). Fix: all 3 sockets hold; bosses checked on the exact keep-outs; L2 rolled 180 (DEFAULT); rods 12 behind (C): 119.4 / 94.2 Hz (was 151.8, unbuildable) (F on E)
