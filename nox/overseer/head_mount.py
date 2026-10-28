@@ -287,29 +287,66 @@ def couple(F, at, pts):
 
 
 def head_bodies():
-    b = centre_bodies(skip_pads=True)
-    drawn, cuts = b["drawn"], b["cuts"]; plates, cguards, struts = [], [], []
-    CN = np.array(CG["nodes"])
-    for c in HS["cameras"]:
-        Tc = cam_frame(c); pl = xf(box(-9.5, -1.5, -20, 20, -20, 20), Tc); drawn += pl; plates.append(pl)
+    """v5 (Spark 27 Oct, v4 "way too flimsy and a waste of materials", "that ring around the lidar does nothing"): only what bolts
+    or plugs in is drawn: 4 L2 bolt bosses, 4 insert bosses per camera, the 4 L2 brace sockets, the 4 strut sockets and the cage's
+    front centre node with its tube sockets. No seat disc, back block, lugs, camera plates, guard ring or camera guard bars: the
+    cage tubes and links guard the L2 (52.8 ahead) and both cameras (7.7 / 8.9) outside their fields (system_check, E); the
+    topology carries everything between the bosses."""
+    T = T_l2(); drawn = cuts = None
+    def add(m):
+        nonlocal drawn; drawn = m if drawn is None else drawn + m
+    def addcut(m):
+        nonlocal cuts; cuts = m if cuts is None else cuts + m
+    l2b = []
+    for k in range(4):                                                  # L2: 4 x M3 on Ø51, heads and driver from behind
+        a = math.radians(22.5 + 90 * k); p = np.array([25.5 * math.cos(a), 25.5 * math.sin(a)])
+        bo = xf(mf.Manifold.cylinder(L2_BOSS_L, L2_BOSS_R, L2_BOSS_R, 32).translate([p[0], p[1], -L2_BOSS_L]), T); add(bo); l2b.append(bo)
+        addcut(xf(mf.Manifold.cylinder(L2_BOSS_L + 2.0, 1.7, 1.7, 24).translate([p[0], p[1], -L2_BOSS_L - 1.0]), T))   # M3 clearance
+        addcut(xf(mf.Manifold.cylinder(60.0, 4.5, 4.5, 24).translate([p[0], p[1], -60.0 - L2_PAD]), T))     # head + driver Ø9 behind the pad
+    addcut(xf(box(-50, -32, -8, 8, -40, 2), T))                         # the L2 cable at its base, -x
+    camb = []
+    for c in HS["cameras"]:                                             # cameras: 4 M2.5 heat-set inserts on 28 x 28, from the board face
+        Tc = cam_frame(c); bs = []
         for a_ in (-14, 14):
-            for b_ in (-14, 14): cuts += xf(seg([-7.5, a_, b_], [0.5, a_, b_], 1.6), Tc)
-    for k_ in ("cam guard bar", "cam guard bar m"):
-        gb = [np.array(v, float) for v in HS["guards"][k_]]
-        g_ = ball(gb[0], GUARD_NODE_R) + ball(gb[1], GUARD_NODE_R) + seg(gb[0], gb[1], GUARD_R); drawn += g_; cguards.append(g_)
-    for W, q in head_struts():                                          # struts to the side cage nodes
-        k_ = int(np.argmin(np.linalg.norm(CN - q, axis=1))); six = f"head strut {k_}" in LINK6
-        boss, cut, keep = socket(W, q, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
-        drawn += boss; cuts += cut + keep; struts.append(boss)
-    for c in HS["cameras"]:                                             # the camera bodies and views stay clear (plates excepted)
-        cuts += frustum(c) + xf(box(-1.4, 10, -21, 21, -21, 21), cam_frame(c))
-    pts = np.vstack([np.asarray(mf_mesh_pts(drawn))])
-    lo, hi = pts.min(0) - 6.0, pts.max(0) + 6.0
+            for b_ in (-14, 14):
+                bo = xf(seg([-9.5, a_, b_], [-1.5, a_, b_], CAM_BOSS_R), Tc); add(bo); bs.append(bo)
+                addcut(xf(seg([-7.5, a_, b_], [0.5, a_, b_], 1.6), Tc))   # 6 deep, a 2.0 floor behind
+        camb.append(bs)
+    braces = []
+    for k, (p, q) in HS["carbon_kept"].items():                        # the L2 braces (to the core's hub deck tower): the supports
+        end, far = np.array(p, float), np.array(q, float)
+        six = k in LINK6; boss, cut, keep = socket(end, far, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
+        add(boss); addcut(cut + keep); braces.append((k, boss, end))
+    struts = []; node = None
+    if HS.get("rods"):                                                  # the 3-rod head (Spark 27 Oct: "max of 3"): a 6/4 tube socket per rod, no cage node
+        for k, (W, q) in HS["rods"].items():
+            W, q = np.array(W, float), np.array(q, float)
+            boss, cut, keep = socket(W, q, TUBE_BORE, 15.0, wall=2.5); add(boss); addcut(cut + keep); struts.append((W, boss, k))
+    else:
+        CN = np.array(CG["nodes"])
+        for W, q in head_struts():                                      # struts to the side cage nodes
+            k_ = int(np.argmin(np.linalg.norm(CN - q, axis=1))); six = f"head strut {k_}" in LINK6
+            boss, cut, keep = socket(W, q, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
+            add(boss); addcut(cut + keep); struts.append((W, boss, f"head strut {k_}"))
+        node = ball(CENTRE_NODE, NODE_R); add(node)                     # the cage's front centre node, printed in the head, its tube sockets
+        for far in tubes_at(CENTRE_NODE):
+            boss, cut, keep = socket(CENTRE_NODE + (np.array(far) - CENTRE_NODE) / np.linalg.norm(np.array(far) - CENTRE_NODE) * NODE_R,
+                                     far, TUBE_BORE, 14.0, wall=2.5)
+            add(boss); addcut(cut + keep); node = node + boss
+    addcut(l2_body() + half_space(A, B, 0.0))                          # keep-outs: the L2 and its field, the cameras and their views, the cage
+    for c in HS["cameras"]:
+        addcut(frustum(c) + xf(box(-1.4, 10, -21, 21, -21, 21), cam_frame(c)))
+    addcut(cage_tubes(skip_node=None if HS.get("rods") else CENTRE_NODE))
+    pts = np.asarray(mf_mesh_pts(drawn)); lo, hi = pts.min(0) - 8.0, pts.max(0) + 8.0
     for ax in range(3):                                                 # the print box: no axis over 178 (A1 mini 180, C)
         if hi[ax] - lo[ax] > 178.0: c_ = (hi[ax] + lo[ax]) / 2; lo[ax], hi[ax] = c_ - 89.0, c_ + 89.0
     env = box(lo[0], hi[0], lo[1], hi[1], lo[2], hi[2]) - half_space(A, B, -1.0)
-    return dict(drawn=drawn, cuts=cuts, env=env, seat=b["seat"], frame=b["frame"], sockets=b["sockets"] + struts, guard=b["guard"],
-                cguards=cguards, plates=plates)
+    return dict(drawn=drawn, cuts=cuts, env=env, l2b=l2b, camb=camb, braces=braces, struts=struts, node=node)
+
+
+L2_BOSS_R, L2_BOSS_L, L2_PAD = 8.0, 11.0, 5.0   # L2 bolt boss Ø16 x 11: a 5 pad under the bolt head, a 3.5 wall round the Ø9 driver (C)
+CAM_BOSS_R = 6.0                                # camera insert boss Ø12 x 8 (pads >= Ø12, CLAUDE.md) (C)
+HEAD_LOADS = os.path.join(ROOT, "runs", "overseer_frame", "v1", "head_loads.json")
 
 
 def mf_mesh_pts(m):
@@ -317,27 +354,44 @@ def mf_mesh_pts(m):
 
 
 def setup_head(h):
+    """loads from the system (cage_frame.py head_loads.json, F on E): every case the frame runs. The 3-rod head: the centre rod's
+    socket held (the cage's front node), the forces the frame puts on the head through the 2 side rods applied at their sockets;
+    in the head's own inertia and flight cases also the L2 at its CG through its 4 bolts (force and moment), each camera on its 4
+    bosses, and the mount's own mass (accel). (Older heads: the L2 braces held, struts and node 17 loaded.) Moments at the
+    attachments (<= 0.4 N m, F) are left out."""
     from topo import Part
     b = head_bodies()
     p = Part("head", h, b["drawn"], b["cuts"], b["env"], build="+z", material="PETG")
-    sup = b["frame"][0]
-    for s_ in b["frame"][1:] + b["sockets"]: sup = sup + s_
-    p.support("frame", sup)                                            # keels, braces, struts and the cage tubes at the centre node
-    bolts, sc = l2_bolts(); L2CG = np.array(HS["l2"]["cg"]); breg = [ball(q, 6.0) for q in bolts]
-    dirs = [np.array(v, float) for v in [(1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)]]
-    dirs += [np.array((sx, sy, sz), float) / math.sqrt(3) for sx in (1, -1) for sy in (1, -1) for sz in (1, -1)]
-    def case(acc):                                                      # the L2 at its CG through its bolts + both cameras at their plates
-        F = M_L2 * G * acc; parts = list(zip(breg, couple(F, L2CG, bolts)))
-        return parts + [(pl, M_CAM * G * acc) for pl in b["plates"]]
-    for k, d in enumerate(dirs):
-        p.load_multi(f"crash {k}", case(CRASH * d), cls="misuse", support="frame", accel=CRASH * d)
-    fl = np.array([FLIGHT_LAT, 0, -FLIGHT_UP]); p.load_multi("flight", case(fl), cls="flight", support="frame", accel=fl)
-    for i, q in enumerate(b["guard"]):                                 # a guard ring node takes the head's crash, inward and back
-        inward = (B - A * 8 - q); inward[0] = 0; inward = inward / max(np.linalg.norm(inward), 1e-6) - A * 0.5
-        p.load(f"guard hit {i}", ball(q, GUARD_NODE_R), M_HEAD * G * CRASH * inward / np.linalg.norm(inward), cls="misuse", support="frame")
-    for i, g_ in enumerate(b["cguards"]):
-        for k, d in enumerate([np.array([0, 0, -1.0]), np.array([-1.0, 0, 0])]):
-            p.load(f"camera guard hit {i}.{k}", g_, M_HEAD * G * CRASH * 0.5 * d, cls="misuse", support="frame")   # half the head on a bar (E)
+    if HS.get("rods"):
+        held = [bo for W, bo, k in b["struts"] if k == "head rod c"]; sup = held[0]
+        loaded = {k: (W, bo) for W, bo, k in b["struts"] if k != "head rod c"}
+    else:
+        sup = b["braces"][0][1]
+        for _, bo, _ in b["braces"][1:]: sup = sup + bo
+        loaded = {k: (W, bo) for W, bo, k in b["struts"]}
+    p.support("core", sup)
+    bolts, _ = l2_bolts(); L2CG = np.array(HS["l2"]["cg"])
+    HL = json.load(open(HEAD_LOADS))["cases"]
+    def at(a):
+        pt = np.asarray(a["at"], float)
+        if b["node"] is not None and np.linalg.norm(pt - CENTRE_NODE) < 1.0: return b["node"]
+        for W, bo in loaded.values():
+            if np.linalg.norm(pt - W) < 1.0: return bo
+        return None
+    for cn, att in HL.items():
+        parts = [(at(a), np.array(a["F"], float)) for a in att]
+        parts = [(r, F) for r, F in parts if r is not None and np.linalg.norm(F) > 0.05]
+        acc = None
+        if cn.startswith(("head inertia", "flight")):
+            d = np.array(json.loads(cn[cn.index("["):cn.index("]") + 1]), float) if "[" in cn else np.array([0, 0, -1.0])
+            acc = d * (CRASH if cn.startswith("head inertia") else FLIGHT_UP)
+            F = M_L2 * G * acc
+            parts += [(bo, f_) for bo, f_ in zip(b["l2b"], couple(F, L2CG, bolts))]
+            for bs in b["camb"]:
+                parts += [(bo, M_CAM * G * acc / 4) for bo in bs]
+        if not parts: continue
+        cls = "flight" if cn.startswith("flight") else "misuse"
+        p.load_multi(cn, parts, cls=cls, support="core", accel=acc)
     return p
 
 
@@ -351,5 +405,5 @@ if __name__ == "__main__":
         p = setup(a.h); print(a.piece, "grid", p.shape, "ok"); sys.exit(0)
     from topo import Settings, optimise
     out = a.out or os.path.join(ROOT, "runs", f"head_{a.piece}" if a.piece != "head" else "head_mount", "v1")
-    gen = a.gen if a.gen is not None else {"head": 26.0, "centre": 16.0, "wing": 5.0}[a.piece]   # cm3 generated (the head ~100 g, E)
+    gen = a.gen if a.gen is not None else {"head": 60.0, "centre": 16.0, "wing": 5.0}[a.piece]   # cm3 generated (head v5: sized by the coarse sweep)
     optimise(setup, h=a.h, gen_cm3=gen, out_dir=out, name="head_mount" if a.piece == "head" else f"head_{a.piece}", settings=Settings(), git=a.git)

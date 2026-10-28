@@ -11,7 +11,8 @@ Checks the branch's diff against the base (review items 1, 2, 6, 9, 10, 11, 12, 
   11 carbon  a Scout / Overseer / cage / mount PR (nox/scout, nox/overseer, runs or print scout_ overseer_ cage motor_mount) lists carbon (rod list with any non-3.0 stock sizes)
   12 parallel the runs the PR adds started within 30 min of each other (run_bg.txt start lines), or the later run's summary.md says `Waited for:`
   13 scout rods  a PR that changes the Scout assembly: every cage rod 3.0 (shell and links) and at most 62 rods in all (cage_shell total_rods; Spark 27 Oct)
-  14 estimate  every topo run the PR adds that started after 2026-10-27T08:00Z (run_bg.txt) has estimate.json from tools/run_estimate.py (Spark 27 Oct);
+  14 estimate  every topo run the PR adds that started after 2026-10-27T08:00Z (run_bg.txt) has estimate.json from tools/run_estimate.py (Spark 27 Oct),
+               with the drawn-first result (runs from 28 Oct), and none ran on a drawn part that passed without a `Forced:` line (Spark 27 Oct)
               after 2026-10-28T00:00Z its room audit must read PASS (loaded drawn features on the design room, Spark 27 Oct)
   16 drawn    a topo run whose part's previous version FAILED may not grow the drawn mass (result.json drawn_g) by > 5 % and > 1 g unless
               its summary.md has a `Drawn added:` line naming each added feature (the review checks each is an attachment; Spark 27 Oct)
@@ -105,8 +106,18 @@ if topo_runs:
     RULE14B = _dt.datetime(2026, 10, 28, 0, 0)                          # the room audit (Spark 27 Oct: drawn filler on hub deck v7 / v9)
     miss += [f"{d} (room audit not PASS)" for d in topo_runs if starts[d] >= RULE14B and (ROOT / d / "estimate.json").exists()
              and json.loads((ROOT / d / "estimate.json").read_text()).get("room_audit") != "PASS"]
-    out("14 estimate", not miss, f"{len(topo_runs)} topo run(s) measured" if not miss else
-        f"{', '.join(miss)}: no estimate.json (tools/run_estimate.py before the run; CLAUDE.md Measure before quoting)")
+    import json as _j2                                                 # drawn first (Spark 27 Oct): no run on a part whose drawn bodies pass
+    RULE14D = _dt.datetime(2026, 10, 28, 0, 0)
+    nodrawn = [d for d in topo_runs if starts[d] >= RULE14D and (ROOT / d / "estimate.json").exists()
+               and "drawn" not in _j2.loads((ROOT / d / "estimate.json").read_text())]
+    forced = [d for d in topo_runs if (ROOT / d / "estimate.json").exists()
+              and (_j2.loads((ROOT / d / "estimate.json").read_text()).get("drawn") or {}).get("pass")
+              and "Forced:" not in ((ROOT / d / "summary.md").read_text() if (ROOT / d / "summary.md").exists() else "")]
+    bad = miss + nodrawn + forced
+    out("14 estimate", not bad, f"{len(topo_runs)} topo run(s) measured, drawn first checked" if not bad else
+        "; ".join([f"{d}: no estimate.json (tools/run_estimate.py before the run; CLAUDE.md Measure before quoting)" for d in miss]
+                  + [f"{d}: estimate.json without the drawn-first check (CLAUDE.md Drawn first)" for d in nodrawn]
+                  + [f"{d}: the drawn part passed, yet a run started with no `Forced:` line in its summary (CLAUDE.md Drawn first)" for d in forced]))
 else:
     out("14 estimate", None, "no topo run started after the rule in the PR")
 # 16 drawn growth after a failed version (Spark 27 Oct: "the issue that happened here with the extra materials cannot happen again")
