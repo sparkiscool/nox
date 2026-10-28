@@ -53,7 +53,7 @@ def smoke(setup, h, gen_cm3, out_dir, name, settings=None, coarse=True, git=Fals
                     "cases": len(L.cases), "load_cases": int(getattr(L, "n_real", len(L.cases))),
                     "backend": getattr(getattr(L, "fe_solver", None), "backend", None), "peak_gb": round(peak_gb(), 2)}
         del L
-    c = est.get("coarse", {"s_per_it": 0.0}); f = est["fine"]
+    c = est["coarse"] if coarse else {"s_per_it": 0.0}; f = est["fine"]   # "coarse" holds the flag when there is no coarse stage
     lo = c["s_per_it"] * (C_IT[0] if coarse else 0) + f["s_per_it"] * F_IT[0] + BUILD_S[0]
     hi = c["s_per_it"] * (C_IT[1] if coarse else 0) + f["s_per_it"] * F_IT[1] + BUILD_S[1]
     est.update(peak_gb=round(peak_gb(), 2), wall_h=[round(lo / 3600, 2), round(hi / 3600, 2)],
