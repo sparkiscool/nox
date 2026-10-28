@@ -331,3 +331,21 @@ it  80 beta   32 J   1.4360 vol 0.2269 (dil 0.3746 g -0.000) grey  3.1% ch 0.100
 it  80 beta   32 J   1.4360 vol 0.2269 (dil 0.3746 g -0.000) grey  3.1% ch 0.100 worst held b1 my 29.4 70.1s
 it  81 beta   32 J   1.4345 vol 0.2270 (dil 0.3746 g +0.001) grey  3.1% ch 0.100 worst held b1 my 29.3 68.3s
 it  81 beta   32 J   1.4345 vol 0.2270 (dil 0.3746 g +0.001) grey  3.1% ch 0.100 worst held b1 my 29.3 68.3s
+it  82 beta   32 J   1.4385 vol 0.2267 (dil 0.3742 g -0.000) grey  3.1% ch 0.100 worst held b1 my 29.4 65.5s
+it  82 beta   32 J   1.4385 vol 0.2267 (dil 0.3742 g -0.000) grey  3.1% ch 0.100 worst held b1 my 29.4 65.5s
+layout: stopped (max_stage) at it 82, beta 32, 5163 s
+layout: stopped (max_stage) at it 82, beta 32, 5163 s
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout: beta 32 done: eroded design 1 bodies, main 100.0%; drawn bodies outside the main body: 0
+layout done: 5449 s, peak 9.221384 GB
+layout done: 5449 s, peak 9.221384 GB
+build: organic surface at pitch 0.300 mm (x5), skins 33.05 cm3, field 105.77 cm3, in env - cuts 97.51 cm3 (layout 97.51, level offset +0.397 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,040,968 faces, 167 s
+build: organic surface at pitch 0.300 mm (x5), skins 33.05 cm3, field 105.77 cm3, in env - cuts 97.51 cm3 (layout 97.51, level offset +0.397 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,040,968 faces, 167 s
+solid check: FAIL {"bodies_plain": 5, "bodies_eroded": 1, "eroded_volumes_mm3": [70134.6], "necks": [], "drawn_not_in_main": [["0.0", 0.999, "erode 2.0"], ["0.6", 0.997, "erode 2.0"], ["0.8", 0.999, "erode 2.0"]], "thin_walls": [], "acute_edges": 1, "ok": false}
+solid check: FAIL {"bodies_plain": 5, "bodies_eroded": 1, "eroded_volumes_mm3": [70134.6], "necks": [], "drawn_not_in_main": [["0.0", 0.999, "erode 2.0"], ["0.6", 0.997, "erode 2.0"], ["0.8", 0.999, "erode 2.0"]], "thin_walls": [], "acute_edges": 1, "ok": false}
+function check: {'skin_mm3': 17550.5, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+function check: {'skin_mm3': 17550.5, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': -0.0, 'ok': True}
+strength: worst index 1.15 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [11.9, -17.2, 44.2]
+strength: worst index 1.15 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [11.9, -17.2, 44.2]
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 124.06, "worst": 1.147, "function_ok": true, "bodies": 1}
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 124.06, "worst": 1.147, "function_ok": true, "bodies": 1}
