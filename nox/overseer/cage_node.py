@@ -81,7 +81,8 @@ def socket_load(i, name):
 
 def designs():
     """one design per mirror pair (the y >= 0 node) and per centre-plane node; the head's node left out"""
-    return [i for i in range(len(N)) if N[i, 1] > -0.5 and (HS.get("rods") or not np.allclose(N[i], HEAD_NODE, atol=0.5))]   # the 3-rod head holds no node
+    held = "head rod c" not in (HS.get("rods") or {})                # node 17 printed in the head (Spark 28 Oct), unless a centre rod holds the head
+    return [i for i in range(len(N)) if N[i, 1] > -0.5 and not (held and np.allclose(N[i], HEAD_NODE, atol=0.5))]
 
 
 def seg(a, b, r, n=32):

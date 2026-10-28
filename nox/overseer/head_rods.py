@@ -170,9 +170,10 @@ def rods_all():
     return out
 
 
-def evaluate(rods, Kc, keep, M, soft=False):
-    """rods: [(name, p, q, cage node or None)] full set (mirrors included): head modes (Hz), L2 deflection and rod forces at 35 g"""
-    cn = sorted({r[3] for r in rods if r[3] is not None}); kidx = [keep.index(i) for i in cn]
+def evaluate(rods, Kc, keep, M, soft=False, merged=()):
+    """rods: [(name, p, q, cage node or None)] full set (mirrors included): head modes (Hz), L2 deflection and rod forces at 35 g.
+    merged: cage nodes printed into the head (their 6 dof follow the head rigidly; Spark 28 Oct: node 17 in the head print)"""
+    cn = sorted({r[3] for r in rods if r[3] is not None} | set(merged)); kidx = [keep.index(i) for i in cn]
     sel = np.array([6 * j + c for j in kidx for c in range(6)], int); oth = np.array([d for d in range(len(Kc)) if d not in set(sel.tolist())], int)
     Ks = Kc[np.ix_(sel, sel)] - (Kc[np.ix_(sel, oth)] @ np.linalg.solve(Kc[np.ix_(oth, oth)], Kc[np.ix_(oth, sel)]) if len(oth) else 0)
     n = 6 + len(sel); K = np.zeros((n, n)); K[6:, 6:] = Ks
@@ -185,6 +186,12 @@ def evaluate(rods, Kc, keep, M, soft=False):
         Ta = rigid_T(p); Tm = np.zeros((12, n)); Tm[:6, :6] = Ta
         if i is not None: j = cn.index(i); Tm[6:, 6 + 6 * j:12 + 6 * j] = np.eye(6)
         K += Tm.T @ Kr @ Tm; mats.append((nm, Tm, p, q))
+    if merged:                                                         # slave each merged node to the head: u_node = T(node) u_H
+        free = [j for j, i in enumerate(cn) if i not in merged]; nr = 6 + 6 * len(free); Ts = np.zeros((n, nr)); Ts[:6, :6] = np.eye(6)
+        for j, i in enumerate(cn):
+            if i in merged: Ts[6 + 6 * j:12 + 6 * j, :6] = rigid_T(N[i])
+            else: f_ = free.index(j); Ts[6 + 6 * j:12 + 6 * j, 6 + 6 * f_:12 + 6 * f_] = np.eye(6)
+        K = Ts.T @ K @ Ts; mats = [(nm, Tm @ Ts, p, q) for nm, Tm, p, q in mats]; n = nr
     # the head's 6 dof: condense the cage nodes out
     if n > 6: KH = K[:6, :6] - K[:6, 6:] @ np.linalg.solve(K[6:, 6:], K[6:, :6])
     else: KH = K
@@ -291,5 +298,32 @@ def main():
     return res, cen, sid
 
 
+def main_node17():
+    """Spark 28 Oct: "i want the back of the camera mount to just be connected to that node since they are so close anyways and get rid
+    of that tiny rod on the mount and just make all that a printed structure": node 17 printed into the head (its 4 cage tubes end
+    in the head), no centre rod; the side pair searched as before, and node 17 alone for reference"""
+    Kc, keep = cage_frame_k(); M = head_mass(); G_ = guard_setup(); out = []
+    sid = []
+    for r in rods_all():
+        if r[4] != "side": continue
+        ok, why = rod_ok(r[1], r[2], r[3])
+        if ok: sid.append(r)
+    hz, dl2, _ = evaluate([], Kc, keep, M, merged=(17,)); hzs, dls, _ = evaluate([], Kc, keep, M, soft=True, merged=(17,))
+    out.append(dict(pair="none (node 17 only)", hz=hz, hz_petg_joints=hzs, l2_defl_mm=dl2, guard_mm=guard_margins([], G_)))
+    for s_ in sid:
+        rods = [s_[:4], mirror(s_)]
+        hz, dl2, nmax = evaluate(rods, Kc, keep, M, merged=(17,)); gm = guard_margins(rods, G_)
+        out.append(dict(pair=s_[0], hz=hz, l2_defl_mm=dl2, rod_N_max=nmax, guard_mm=gm, guarded=bool(min(gm.values()) >= 3.0),
+                        carbon_mm=round(float(2 * np.linalg.norm(s_[2] - s_[1])), 0)))
+    out[1:] = sorted(out[1:], key=lambda r: (not r["guarded"], -r["hz"][0]))
+    for r in out[1:4]:
+        s_ = next(x for x in sid if x[0] == r["pair"])
+        r["hz_petg_joints"], r["l2_defl_petg_mm"], _ = evaluate([s_[:4], mirror(s_)], Kc, keep, M, soft=True, merged=(17,))
+    json.dump(dict(note="node 17 printed into the head (Spark 28 Oct), no centre rod; mirror side pairs; rigid / PETG joints (F on E)", sets=out),
+              open(os.path.join(OUT, "result_node17.json"), "w"), indent=1)
+    for r in out[:8]:
+        print(r["hz"][0], r.get("hz_petg_joints", [None])[0], r["l2_defl_mm"], r.get("guard_mm"), r["pair"], r.get("carbon_mm"))
+
+
 if __name__ == "__main__":
-    main()
+    main_node17() if "node17" in sys.argv[1:] else main()

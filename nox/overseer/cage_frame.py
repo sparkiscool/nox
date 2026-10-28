@@ -44,7 +44,7 @@ def build():
     f = Frame(); nid = [f.node(p) for p in N]
     for a, b in CG["rods"]: f.member(nid[a], nid[b], TUBE6, f"tube {a}-{b}")
     H = f.node(B - A * 20.0)                                            # the head mount, rigid
-    if not HS.get("rods"): f.member(H, nid[HEAD_NODE], RIGID, "head-centre node")   # (the 3-rod head holds no cage node)
+    if "head rod c" not in (HS.get("rods") or {}): f.member(H, nid[HEAD_NODE], RIGID, "head-centre node")   # node 17 printed in the head (Spark 28 Oct)
     for k, (p, q) in RES["links"].items():
         if k.startswith("head strut"): continue                        # built with the head below
         if k.startswith("head rod"):                                   # the 3-rod head (Spark 27 Oct): head socket rigid on H, the rod to its cage node

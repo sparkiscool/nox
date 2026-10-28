@@ -336,10 +336,15 @@ def head_bodies():
         six = k in LINK6; boss, cut, keep = socket(end, far, TUBE_BORE if six else ROD_BORE, 15.0 if six else 12.0, wall=2.5 if six else 3.0)
         add(boss); addcut(cut + keep); braces.append((k, boss, end))
     struts = []; node = None
-    if HS.get("rods"):                                                  # the 3-rod head (Spark 27 Oct: "max of 3"): a 6/4 tube socket per rod, no cage node
+    if HS.get("rods"):                                                  # the head on rods to the cage (Spark 27 Oct: "max of 3"): a 6/4 tube socket per rod
         for k, (W, q) in HS["rods"].items():
             W, q = np.array(W, float), np.array(q, float)
             boss, cut, keep = socket(W, q, TUBE_BORE, HEAD_DEPTH, wall=2.5); add(boss); addcut(cut + keep); struts.append((W, boss, k))
+        if "head rod c" not in HS["rods"]:                             # node 17 printed in the head (Spark 28 Oct: "get rid of that tiny rod ... make
+            import cage_node as CN_                                     # all that a printed structure"): node 17's own drawn node (cage_node.py:
+            i17 = int(np.argmin(np.linalg.norm(np.array(CG["nodes"]) - CENTRE_NODE, axis=1)))   # sockets set back so the bores clear, 2.0 walls,
+            b17 = CN_.bodies(i17); node = b17["drawn"]; add(node); addcut(b17["cuts"])          # a 3.0 floor, arms to a hub)
+            for s_ in b17["sockets"]: struts.append((CENTRE_NODE + s_["d"] * b17["r0"], s_["boss"], f"node 17 {s_['name']}"))
     else:
         CN = np.array(CG["nodes"])
         for W, q in head_struts():                                      # struts to the side cage nodes
@@ -354,7 +359,7 @@ def head_bodies():
     addcut(l2_body() + half_space(A, B, 0.0))                          # keep-outs: the L2 and its field, the cameras and their views, the cage
     for c in HS["cameras"]:
         addcut(frustum(c) + xf(box(-1.4, 10, -21, 21, -21, 21), cam_frame(c)))
-    addcut(cage_tubes(skip_node=None if HS.get("rods") else CENTRE_NODE))
+    addcut(cage_tubes(skip_node=None if (HS.get("rods") and "head rod c" in HS["rods"]) else CENTRE_NODE))
     pts = np.asarray(mf_mesh_pts(drawn)); lo, hi = pts.min(0) - 8.0, pts.max(0) + 8.0
     for ax in range(3):                                                 # the print box: no axis over 178 (A1 mini 180, C)
         if hi[ax] - lo[ax] > 178.0: c_ = (hi[ax] + lo[ax]) / 2; lo[ax], hi[ax] = c_ - 89.0, c_ + 89.0
