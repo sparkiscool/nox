@@ -408,3 +408,39 @@ it 187 beta   32 J  21.8603 vol 0.0901 (dil 0.1983 g -0.007) grey  2.7% ch 0.100
 it 187 beta   32 J  21.8603 vol 0.0901 (dil 0.1983 g -0.007) grey  2.7% ch 0.100 worst tie b8 fx 2.34e+04 24.9s
 it 188 beta   32 J  15.0840 vol 0.0909 (dil 0.1987 g -0.005) grey  2.7% ch 0.100 worst gate b7 fy 1.88e+04 24.8s
 it 188 beta   32 J  15.0840 vol 0.0909 (dil 0.1987 g -0.005) grey  2.7% ch 0.100 worst gate b7 fy 1.88e+04 24.8s
+it 189 beta   32 J  83.1071 vol 0.0884 (dil 0.1973 g -0.012) grey  2.6% ch 0.100 worst tie b8 fx 9.69e+04 26.0s
+it 189 beta   32 J  83.1071 vol 0.0884 (dil 0.1973 g -0.012) grey  2.6% ch 0.100 worst tie b8 fx 9.69e+04 26.0s
+it 190 beta   32 J 297.1110 vol 0.0868 (dil 0.1960 g -0.018) grey  2.9% ch 0.100 worst gate b7 fx 3.97e+05 25.4s
+it 190 beta   32 J 297.1110 vol 0.0868 (dil 0.1960 g -0.018) grey  2.9% ch 0.100 worst gate b7 fx 3.97e+05 25.4s
+it 191 beta   32 J  91.7260 vol 0.0873 (dil 0.1959 g -0.024) grey  2.7% ch 0.100 worst tie b8 fx 1.07e+05 25.8s
+it 191 beta   32 J  91.7260 vol 0.0873 (dil 0.1959 g -0.024) grey  2.7% ch 0.100 worst tie b8 fx 1.07e+05 25.8s
+it 192 beta   32 J  30.1781 vol 0.0895 (dil 0.1971 g -0.018) grey  2.8% ch 0.100 worst gate b2 fx 3.74e+04 24.4s
+it 192 beta   32 J  30.1781 vol 0.0895 (dil 0.1971 g -0.018) grey  2.8% ch 0.100 worst gate b2 fx 3.74e+04 24.4s
+it 193 beta   32 J  11.1441 vol 0.0898 (dil 0.1977 g -0.016) grey  2.7% ch 0.100 worst gate b7 fy 1.32e+04 27.0s
+it 193 beta   32 J  11.1441 vol 0.0898 (dil 0.1977 g -0.016) grey  2.7% ch 0.100 worst gate b7 fy 1.32e+04 27.0s
+it 194 beta   32 J   8.1411 vol 0.0908 (dil 0.1991 g -0.009) grey  2.6% ch 0.100 worst gate b5 fy 9.8e+03 25.3s
+it 194 beta   32 J   8.1411 vol 0.0908 (dil 0.1991 g -0.009) grey  2.6% ch 0.100 worst gate b5 fy 9.8e+03 25.3s
+it 195 beta   32 J   6.4430 vol 0.0911 (dil 0.1997 g -0.006) grey  2.7% ch 0.100 worst gate b5 fy 7.37e+03 25.6s
+it 195 beta   32 J   6.4430 vol 0.0911 (dil 0.1997 g -0.006) grey  2.7% ch 0.100 worst gate b5 fy 7.37e+03 25.6s
+it 196 beta   32 J   5.3846 vol 0.0917 (dil 0.2002 g +0.002) grey  2.7% ch 0.100 worst gate b7 fy 5.87e+03 25.8s
+it 196 beta   32 J   5.3846 vol 0.0917 (dil 0.2002 g +0.002) grey  2.7% ch 0.100 worst gate b7 fy 5.87e+03 25.8s
+it 197 beta   32 J   5.0812 vol 0.0913 (dil 0.1995 g -0.002) grey  2.7% ch 0.100 worst gate b5 fy 5.14e+03 26.4s
+it 197 beta   32 J   5.0812 vol 0.0913 (dil 0.1995 g -0.002) grey  2.7% ch 0.100 worst gate b5 fy 5.14e+03 26.4s
+it 198 beta   32 J   4.6015 vol 0.0916 (dil 0.1996 g -0.001) grey  2.7% ch 0.100 worst gate b5 fy 4.6e+03 27.2s
+it 198 beta   32 J   4.6015 vol 0.0916 (dil 0.1996 g -0.001) grey  2.7% ch 0.100 worst gate b5 fy 4.6e+03 27.2s
+it 199 beta   32 J   4.2233 vol 0.0918 (dil 0.1996 g -0.001) grey  2.7% ch 0.100 worst gate b7 fy 3.96e+03 26.5s
+it 199 beta   32 J   4.2233 vol 0.0918 (dil 0.1996 g -0.001) grey  2.7% ch 0.100 worst gate b7 fy 3.96e+03 26.5s
+it 200 beta   32 J   3.9198 vol 0.0920 (dil 0.1997 g -0.001) grey  2.7% ch 0.100 worst gate b6 fy 3.64e+03 26.0s
+it 200 beta   32 J   3.9198 vol 0.0920 (dil 0.1997 g -0.001) grey  2.7% ch 0.100 worst gate b6 fy 3.64e+03 26.0s
+it 201 beta   32 J   3.6886 vol 0.0922 (dil 0.1997 g +0.006) grey  2.7% ch 0.100 worst gate b6 fy 3.42e+03 26.3s
+it 201 beta   32 J   3.6886 vol 0.0922 (dil 0.1997 g +0.006) grey  2.7% ch 0.100 worst gate b6 fy 3.42e+03 26.3s
+it 202 beta   32 J   4.1098 vol 0.0912 (dil 0.1984 g -0.001) grey  2.7% ch 0.100 worst gate b6 fy 3.88e+03 26.4s
+it 202 beta   32 J   4.1098 vol 0.0912 (dil 0.1984 g -0.001) grey  2.7% ch 0.100 worst gate b6 fy 3.88e+03 26.4s
+layout: stopped (max_stage) at it 202, beta 32, 5135 s
+layout: stopped (max_stage) at it 202, beta 32, 5135 s
+layout: beta 32 done: eroded design 13 bodies, main 35.8%; drawn bodies outside the main body: 7
+layout: beta 32 done: eroded design 13 bodies, main 35.8%; drawn bodies outside the main body: 7
+layout done: 5175 s, peak 5.0531 GB
+layout done: 5175 s, peak 5.0531 GB
+build: organic surface at pitch 0.300 mm (x5), skins 7.15 cm3, field 22.91 cm3, in env - cuts 19.31 cm3 (layout 19.31, level offset +0.038 mm), fillet 2.5 mm, rims 1.0 mm, mesh 396,764 faces, 206 s
+build: organic surface at pitch 0.300 mm (x5), skins 7.15 cm3, field 22.91 cm3, in env - cuts 19.31 cm3 (layout 19.31, level offset +0.038 mm), fillet 2.5 mm, rims 1.0 mm, mesh 396,764 faces, 206 s
