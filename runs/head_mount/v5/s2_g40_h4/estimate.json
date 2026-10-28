@@ -1,0 +1,153 @@
+{
+ "name": "head_mount",
+ "h": 4.0,
+ "gen_cm3": 40.0,
+ "coarse": {
+  "s_per_it": 0.4,
+  "cells": 12288,
+  "design_cells": 2084,
+  "cases": 39,
+  "load_cases": 15,
+  "backend": "direct",
+  "peak_gb": 5.32
+ },
+ "smoke_iterations": 3,
+ "drawn": {
+  "name": "head",
+  "mass_g": 22.08,
+  "solid_ok": false,
+  "bodies_plain": 15,
+  "worst": null,
+  "worst_case": "no solve (ValueError)",
+  "max": 1.0,
+  "h": 4.0,
+  "pass": false
+ },
+ "room_audit": "PASS",
+ "room_audit_rows": [
+  {
+   "share": 0.53,
+   "at": [
+    373.2,
+    9.3,
+    29.7
+   ],
+   "loaded_cells": 27
+  },
+  {
+   "share": 0.55,
+   "at": [
+    385.5,
+    -8.9,
+    75.8
+   ],
+   "loaded_cells": 21
+  },
+  {
+   "share": 0.57,
+   "at": [
+    381.5,
+    23.8,
+    62.3
+   ],
+   "loaded_cells": 31
+  },
+  {
+   "share": 0.61,
+   "at": [
+    377.2,
+    -23.9,
+    43.7
+   ],
+   "loaded_cells": 30
+  },
+  {
+   "share": 0.75,
+   "at": [
+    387.3,
+    -53.3,
+    110.7
+   ],
+   "loaded_cells": 11
+  },
+  {
+   "share": 0.75,
+   "at": [
+    390.7,
+    -57.4,
+    138.5
+   ],
+   "loaded_cells": 13
+  },
+  {
+   "share": 0.75,
+   "at": [
+    387.3,
+    53.3,
+    110.7
+   ],
+   "loaded_cells": 11
+  },
+  {
+   "share": 0.75,
+   "at": [
+    390.7,
+    57.4,
+    138.5
+   ],
+   "loaded_cells": 13
+  },
+  {
+   "share": 0.8,
+   "at": [
+    370.7,
+    -77.4,
+    138.5
+   ],
+   "loaded_cells": 13
+  },
+  {
+   "share": 0.8,
+   "at": [
+    370.7,
+    77.4,
+    138.5
+   ],
+   "loaded_cells": 13
+  },
+  {
+   "share": 0.82,
+   "at": [
+    367.5,
+    -72.8,
+    111.1
+   ],
+   "loaded_cells": 10
+  },
+  {
+   "share": 0.82,
+   "at": [
+    367.5,
+    72.8,
+    111.1
+   ],
+   "loaded_cells": 10
+  }
+ ],
+ "room_audit_min_share": 0.35,
+ "fine": {
+  "s_per_it": 12.2,
+  "cells": 55296,
+  "design_cells": 15894,
+  "cases": 171,
+  "load_cases": 15,
+  "backend": "direct",
+  "peak_gb": 5.32
+ },
+ "peak_gb": 5.32,
+ "wall_h": [
+  0.26,
+  0.66
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
