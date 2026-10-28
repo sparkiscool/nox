@@ -117,6 +117,9 @@ def seg_band_dist(p0, p1, mxy):
 
 
 # ---------------------------------------------------------------- the v2 drone (everything but its cage)
+_HM = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "overseer_layout", "v5", "saved", "sensor_head_v5_s2g60.stl")
+HEAD_MESH = os.environ.get("V5_HEAD_MESH", _HM if os.path.exists(_HM) else "")   # the head's newest run mesh in pose (28 Oct: v5 sweep 2, 60 cm3, 99.8 g M,
+                                                   # solid_check PASS; coarse h 4, the fine run replaces it); its mass stays HEAD_G until a head saves
 HEAD_G = float(os.environ.get("V5_HEAD_G", "143.7"))   # the printed head in the system model (E): v4's M mass until the redo's own (27 Oct)
 HEAD_GUARDS = os.environ.get("V5_HEAD_GUARDS", "0") == "1"   # the L2 guard ring and the camera guard bars on the printed head: off (Spark 27 Oct:
                                                    # "that ring around the lidar does nothing"; system_check counts only role "cage", so the
@@ -1132,7 +1135,7 @@ PARTS = [  # name, mesh, role, protect, g, tag, material, group, colour, swap
     ("cage shell nodes", trimesh.util.concatenate([saved_node(n) or node_m(n) for n in nodes]), "cage", False, grp["nodes"], "M" if NODE_M else "E", "PETG", "cage", "#7d8a99", False),
     (LINKN, links, "cage", False, grp["links"], "C", "carbon", "cage", "#444444", False),
     ("TPU feet", trimesh.util.concatenate(g["feet"]), "cage", False, grp["feet"], "E", "TPU", "cage", "#555555", False),
-    *([(HEADN, trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
+    *([(HEADN, trimesh.load(HEAD_MESH, force="mesh") if HEAD_MESH else trimesh.util.concatenate([apex_head(g), g["cam_bracket"]] + [rod(p_, q_, CAM_STRUT_R) for p_, q_ in g["head_guards"].values()]
                                         + [trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]),
          "structure", False, grp["head"], "E", "PETG", "printed", "#aab4c0", False)] if PRINTED_HEAD else
       [("L2 guard ring nodes", trimesh.util.concatenate([trimesh.creation.icosphere(1, HALO_NODE_R).apply_translation(h_) for h_ in g["halo_nodes"]]), "cage", False, grp.get("halo nodes", 0.0), "E", "PETG", "cage", "#7d8a99", False),

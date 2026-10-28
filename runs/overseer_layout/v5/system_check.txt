@@ -23,13 +23,13 @@ system_check Overseer: PASS
     receiver: min margin 16.35 mm, outside openings 62.27, slack 16.35 at -Z
     XT60 pair: min margin 48.75 mm, outside openings 48.75, slack 45.75 at -Z
   shell PASS: 24 nodes, 63 rods, 40 triangles, closed outside the declared openings (15.6 %), h/w 0.316, longest rod 445.9 mm, largest cell Ø152.7 mm, mirror y: nodes within 0.0 mm, 0 rods without a mirror
-  compact: bbox 126.138 L (E), hull 71.466 L (E), extents [766.8, 666.8, 246.7] mm (E), largest 766.8 mm, guards {'shell tubes to prop disks, 3D (G)': 20.3}
+  compact: bbox 128.599 L (E), hull 71.927 L (E), extents [766.8, 666.8, 251.5] mm (E), largest 766.8 mm, guards {'shell tubes to prop disks, 3D (G)': 20.3}
   fit PASS (tol 0.5 mm³):
     cage shell tubes / cage shell nodes: 11992.13 mm³ (E) limit inf contact [manifold3d]
     cage shell tubes / spokes, ties, head rods: 8238.68 mm³ (E) limit inf contact [manifold3d]
-    cage shell tubes / sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them): 0.0 mm³ (E) limit inf contact [aabb]
+    cage shell tubes / sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them): 0.0 mm³ (E) limit inf contact [manifold3d]
     cage shell nodes / spokes, ties, head rods: 2265.68 mm³ (E) limit inf contact [manifold3d]
-    cage shell nodes / sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them): 0.0 mm³ (E) limit inf contact [manifold3d]
+    cage shell nodes / sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them): 27.18 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, head rods / sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them): 0.0 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, head rods / bottom plate: 58.87 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, head rods / arm 1: 6.66 mm³ (E) limit inf contact [manifold3d]
@@ -37,7 +37,7 @@ system_check Overseer: PASS
     spokes, ties, head rods / arm 3: -2276.58 mm³ (E) limit inf contact [manifold3d]
     spokes, ties, head rods / arm 4: 6.66 mm³ (E) limit inf contact [manifold3d]
     TPU feet / wires: 0.0 mm³ (E) limit inf contact [aabb]
-    sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them) / Unitree L2: 0.02 mm³ (E) limit inf contact [manifold3d]
+    sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them) / Unitree L2: 0.01 mm³ (E) limit inf contact [manifold3d]
     sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them) / camera left: 0.0 mm³ (E) limit inf contact [manifold3d]
     sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them) / camera right: 0.0 mm³ (E) limit inf contact [manifold3d]
     sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them) / top plate: 0.0 mm³ (E) limit inf contact [aabb]
@@ -208,4 +208,4 @@ WARN  over budget: total 3447.11 of 2200.0 g (156.7 %); hub deck 68.0 of 55.0 g
     step 6: M3 nylon nut 1 on its stud over the FC (nut driver from above, before the cage shell; v5's top tubes cross the x-axis nut lines) (FC stack (MicoAir743-Lite on 55A 4-in-1), type cylinder, d 6, 150 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     step 6: M3 nylon nut 2 on its stud over the FC (nut driver from above, before the cage shell; v5's top tubes cross the x-axis nut lines) (FC stack (MicoAir743-Lite on 55A 4-in-1), type cylinder, d 6, 150 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     step 6: M3 nylon nut 3 on its stud over the FC (nut driver from above, before the cage shell; v5's top tubes cross the x-axis nut lines) (FC stack (MicoAir743-Lite on 55A 4-in-1), type cylinder, d 6, 150 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
-System: Overseer, cage first 5.2 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 72.88 mm, camera left 55 deg, out 3.47 mm, camera right 55 deg, out 5.9 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm³ (E), bbox 126 L (E), extents 767 x 667 x 247 mm (E), mass 3447 of 2200 g (157 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -65.7], 25.4 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.68, -0.19, -0.71) (cartridge), access 37/37 clear
+System: Overseer, cage first 5.2 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 72.88 mm, camera left 55 deg, out 3.47 mm, camera right 55 deg, out 5.9 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm³ (E), bbox 129 L (E), extents 767 x 667 x 252 mm (E), mass 3447 of 2200 g (157 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -65.7], 25.4 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.68, -0.19, -0.71) (cartridge), access 37/37 clear

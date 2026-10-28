@@ -310,16 +310,16 @@
   "bbox_max": [
    448.34,
    333.4,
-   153.65
+   158.46
   ],
   "extents_mm": [
    766.8,
    666.8,
-   246.7
+   251.5
   ],
   "largest_extent_mm": 766.8,
-  "bbox_L": 126.138,
-  "hull_L": 71.466,
+  "bbox_L": 128.599,
+  "hull_L": 71.927,
   "guard_offsets_mm": {
    "shell tubes to prop disks, 3D (G)": 20.3
   }
@@ -353,7 +353,7 @@
     "overlap_mm3": 0.0,
     "limit_mm3": Infinity,
     "contact": true,
-    "method": "aabb",
+    "method": "manifold3d",
     "pass_": true
    },
    {
@@ -368,7 +368,7 @@
    {
     "a": "cage shell nodes",
     "b": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
-    "overlap_mm3": 0.0,
+    "overlap_mm3": 27.18,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -440,7 +440,7 @@
    {
     "a": "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)",
     "b": "Unitree L2",
-    "overlap_mm3": 0.02,
+    "overlap_mm3": 0.01,
     "limit_mm3": Infinity,
     "contact": true,
     "method": "manifold3d",
@@ -3118,6 +3118,6 @@
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer, cage first 5.2 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 72.88 mm, camera left 55 deg, out 3.47 mm, camera right 55 deg, out 5.9 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm\u00b3 (E), bbox 126 L (E), extents 767 x 667 x 247 mm (E), mass 3447 of 2200 g (157 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -65.7], 25.4 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.68, -0.19, -0.71) (cartridge), access 37/37 clear",
+ "summary": "System: Overseer, cage first 5.2 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 72.88 mm, camera left 55 deg, out 3.47 mm, camera right 55 deg, out 5.9 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm\u00b3 (E), bbox 129 L (E), extents 767 x 667 x 252 mm (E), mass 3447 of 2200 g (157 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -65.7], 25.4 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.68, -0.19, -0.71) (cartridge), access 37/37 clear",
  "pass": true
 }
