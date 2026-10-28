@@ -1,1 +1,2 @@
 run_bg: start 2026-10-28T03:58Z: python3 nox/overseer/head_mount.py head runs/head_mount/v5/final_g60_h2.25 --h 2.25 --gen 60
+run_bg: exit -15, wall 0.30 h, peak 9.3 GB (M), 28 Oct 04:16: python3 nox/overseer/head_mount.py head runs/head_mount/v5/final_g60_h2.25 --h 2.25 --gen 60
