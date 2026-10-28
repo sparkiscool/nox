@@ -7,10 +7,13 @@ waist pair 5/6 and on nodes 12/13, 14/15). Drone frame (x nose, y left, z up), m
 Each node is drawn, nothing generated (the rule's drawn set: rod sockets with their boss walls, the hub they join in, the bottom nodes'
 TPU cap seat, a flat bed face): a socket per member, bore 3.2 x DEPTH 10, a boss wall >= 3.0 round it, a solid floor >= RMIN 3.0 behind
 it (each boss is solid from its line's origin near the node centre to the socket mouth), a hub sphere Ø12 (the layout's node) where the
-bosses meet. The sockets are set back from the centre only as far as they must so that every two bores keep 3.0 of PETG between them and
-every rod leaves its mouth 0.5 clear of the other bosses (per-socket set-backs solved per node, COBYLA, `layout()`).
-Option B (DEFAULT, SCN_ECC=3.5): a rod in a tight pair (< 25 deg) may run up to 3.5 off the node centre at that one end (its line
-tilts <= 3.5 / L, its other end stays on its node centre); option A (SCN_ECC=0): every socket axis through the node centre.
+bosses meet, every junction filleted (smooth union, FILLET). The sockets are set back from the centre only as far as they must so that
+every two bores keep the thicker of their walls of PETG between them and every rod leaves its mouth 0.5 clear of the other bosses
+(per-socket set-backs solved per node, COBYLA, `layout()`). Print pose: the bed is the node's outside, "up" lays the bosses as flat as
+they go (smallest steepest elevation, none below -1 deg) so a rod's bending runs in the layers.
+Option B (DEFAULT, SCN_ECC=3.5): a rod in a tight pair (< 25 deg) may run off the node centre at that one end (its line tilts <= e / L,
+its other end stays on its node centre), e <= 3.5 and e x its frame axial force <= M_ROD (1590 N mm, so the eccentric moment stays
+under one rod's allowable moment even if that rod took all of it); option A (SCN_ECC=0): every socket axis through the node centre.
 Bottom ring nodes (0..3, the shared Overseer loop): hub Ø16 down to a flat seat 10.15 under the rod centres for a TPU foot cap Ø16 x 3
 (box catch F, the Overseer's caps; plug Ø8 x 2 into a Ø8.3 x 2.2 recess, bonded). Node 16: nothing past its layout sphere toward +x
 (x <= +6; the camera mount v1 sits 5.45 off that sphere).
@@ -18,13 +21,16 @@ Bottom ring nodes (0..3, the shared Overseer loop): hub Ø16 down to a flat seat
 Strength (as-built voxel FE, nox/topo Part + Solver, the engine's PETG transversely isotropic allowables, crash class): each socket
 in turn loaded through a carbon insert in its bore (bonded, EA exact), every other rod's stub held; cases: push min(frame axial,
 Pcr k 0.7), pull frame axial (runs/scout_frame/v3/node_loads.json, F), and the rod's full bending moment at the mouth (600 MPa x Z of a
-3.0 rod = 1590 N mm, as a couple on the stub) in 4 directions plus the frame side force. So the node outlasts what its rods can deliver:
-the rod buckles or breaks, or its bond lets go, first (breaking order). A socket whose own cases read over 1.0 gets 0.5 more wall,
-the hub 1.0 more radius, until every case reads <= 1.0.
+3.0 rod = 1590 N mm, as a couple on the stub) in 4 directions plus the frame side force. Gate (dimensions.md L index target): the worst
+cell of each socket's cases <= 1.0, with the bond line (PETG cells sharing a node with the rod insert) and 1.0 round each bore rim left
+out (voxel staircase / bi-material corner). A socket over 1.0 gets 0.5 more wall (the hub 1.0 more radius) and the node's fillet
+grows 1.0, until every socket reads <= 1.0. `outlast` in the result: each node's worst bending cell scaled to a rod's real bending
+strength (ROD_STRENGTH, E) and compared with the PETG strength (no safety factor): over 1 means that node goes before its rod in a
+pure bending overload.
 
 python3 nox/scout/v3/cage_node.py list                     # members, set-backs, envelopes
 python3 nox/scout/v3/cage_node.py fe [--nodes ..]          # one FE pass at the drawn minimum
-python3 nox/scout/v3/cage_node.py build [out] [--fe] [--h 0.5] [--nodes 0,1,..]   # meshes (+ FE sizing) -> runs/scout_nodes/v1/nodes/<i>.json
+python3 nox/scout/v3/cage_node.py build [out] [--fe] [--h 0.5] [--nodes 0,1,..]   # meshes (+ FE sizing) -> runs/scout_nodes/<VER>/nodes/<i>.json
 python3 nox/scout/v3/cage_node.py merge [out]              # result.json, placed.json, the TPU foot cap
 """
 import os, sys, json, math, argparse, time
@@ -59,7 +65,10 @@ BOND_TAU = 6.0                                        # MPa epoxy on roughened P
 RIM_EX = 1.0                                          # FE: cells this close to a bonded rod's rim are left out (singular corner)
 STUB = 8.0                                            # rod stub modelled past the mouth (FE)
 PETG_RHO = 1.27
-FILLET = 2.5                                          # smooth-union blend at every boss / hub junction (fillet ~ r 2.5, DEFAULT 28 Oct)
+FILLET, FILLET_MAX = 2.5, 5.5                         # smooth-union blend at every boss / hub junction (start, largest), DEFAULT 28 Oct
+VER = os.environ.get("SCN_VER", "v2")                 # run folder and print-file version (v1: max-elevation pose, uncapped offsets)
+ROD_STRENGTH = 1200.0                                 # MPa, a pultruded 3.0 carbon rod's bending strength (E, about 2 x the 600 allowable)
+KNOCK_SF = 0.85 / 1.1                                 # crash index -> stress / PETG strength (the engine's knock-down and crash factor)
 MC_PITCH = 0.2                                        # the blend's sampling pitch
 
 
@@ -113,6 +122,13 @@ def _perp(d):
     return x, np.cross(d, x)
 
 
+def ecc_cap(i, name):
+    """the largest offset a socket may take: ECC, and its frame axial force x offset <= M_ROD (review 28 Oct: rod 10-12 at 3.5 x 1052 N
+    was 3680 N mm, 2.3 x a 3.0 rod's allowable moment)"""
+    ax = max([float(v[name]["axial"]) for v in NL.values() if name in v] or [1.0])    # the member's largest axial at either end
+    return min(ECC, M_ROD / max(ax, 1.0))
+
+
 def owned_offsets():
     """option B: which socket of each tight pair may run off-centre (one end of a rod only; no rod crossing the mirror plane;
     no offsets at centre-plane nodes, which stay mirror-symmetric by construction)"""
@@ -161,7 +177,7 @@ def layout(i, walls=None, free=False):
                 # the rod beyond p's mouth clears q's boss (axis from P[q] to its mouth)
                 g.append(segdist(P[p] + d[p] * (r[p] + DEPTH), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + DEPTH)) - (ROD_R + R[q] + ROD_CLEAR))
         for j, k in enumerate(ecc):
-            g.append(ECC - math.hypot(x[n + 2 * j], x[n + 2 * j + 1]))
+            g.append(ecc_cap(i, M[k]["name"]) - math.hypot(x[n + 2 * j], x[n + 2 * j + 1]))
         if lim is not None:
             ax, mx = lim
             for k in range(n):
@@ -236,15 +252,16 @@ def seg(a, b, r, n=40):
 
 
 def up_dir(i, socks):
-    """print 'up': the bed face is the node's outside; up maximises the lowest member elevation (every boss rises from the bed)"""
+    """print 'up': the bed face is the node's outside. v1 maximised the lowest member elevation, which stood some bosses up to 64..76 deg
+    and loaded their bending across the layers (node 12's 1.58 cell, tie 2.1 at 64 deg); v2 lays the bosses as flat as they go: the
+    smallest steepest elevation with none below -1 deg (DEFAULT 28 Oct)"""
     if i in RING: return np.array([0.0, 0, 1.0])
     D = np.array([s["d"] for s in socks])
-    g = np.random.default_rng(0).normal(size=(40000, 3)); g /= np.linalg.norm(g, axis=1)[:, None]
+    g = np.random.default_rng(0).normal(size=(200000, 3)); g /= np.linalg.norm(g, axis=1)[:, None]
     if is_centre(i): g[:, 1] = 0.0; g /= np.linalg.norm(g, axis=1)[:, None]
-    sc = (g @ D.T).min(1); u = g[np.argmax(sc)]
-    from scipy.optimize import minimize
-    f = lambda v: -np.min(D @ (v / np.linalg.norm(v)))
-    u = minimize(f, u, method="Nelder-Mead", options=dict(xatol=1e-6, fatol=1e-8)).x; u /= np.linalg.norm(u)
+    E = g @ D.T; ok = E.min(1) >= -math.sin(math.radians(1.0))
+    if not ok.any(): ok = E.min(1) >= E.min(1).max() - 1e-9
+    sc = np.where(ok, E.max(1), 9.0); u = g[np.argmin(sc)]
     if is_centre(i): u[1] = 0.0; u /= np.linalg.norm(u)
     return u
 
@@ -291,7 +308,7 @@ def blend(prims, k=None, pitch=None):
     return mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
 
 
-def bodies(i, socks, hub_r=None):
+def bodies(i, socks, hub_r=None, fillet=None):
     """node i in its own frame (centre at the origin, drone axes): solid, bores, the bed plane (up, height)"""
     ring = i in RING
     hub_r = hub_r or (RING_HUB_R if ring else HUB_R)
@@ -310,10 +327,11 @@ def bodies(i, socks, hub_r=None):
         zb = -PAD_DZ
         cut_extra = recess
     else:
-        zb = min([float(s["P"] @ u - s["R"] * math.sqrt(max(0.0, 1 - (s["d"] @ u) ** 2))) for s in socks] + [-hub_r + 0.9])
+        zb = min([float(s["P"] @ u + min(0.0, (s["r"] + DEPTH) * (s["d"] @ u)) - s["R"] * math.sqrt(max(0.0, 1 - (s["d"] @ u) ** 2)))
+                  for s in socks] + [-hub_r + 0.9])                       # the lowest boss point (either end of a boss)
         prims.append(("cyl", u * (zb - 2.0), O, 4.0))                    # a foot under the hub: the flat bed face, Ø8 at least
         cut_extra = None
-    body = blend(prims)
+    body = blend(prims, k=fillet)
     # cut everything below the bed plane (a half space along -u)
     big = mf.Manifold.cube([400, 400, 400], center=True).translate([0, 0, -200.0])
     T = np.eye(4); z = u; x, y = _perp(z); T[:3, 0], T[:3, 1], T[:3, 2] = x, y, z; T[:3, 3] = u * zb
@@ -459,7 +477,7 @@ def fe_check(i, socks, B, h=0.5, log=print):
     worst = {}
     for r_ in rows:
         w = worst.setdefault(r_["socket"], r_)
-        if r_["p999"] > w["p999"]: worst[r_["socket"]] = dict(r_, max_cell=w.get("max_cell", w["max"]), max_case=w.get("max_case", w["case"]))
+        if r_["max"] > w["max"]: worst[r_["socket"]] = dict(r_, max_cell=w.get("max_cell", w["max"]), max_case=w.get("max_case", w["case"]))
         ww = worst[r_["socket"]]
         if r_["max"] > ww.get("max_cell", ww["max"]): ww["max_cell"], ww["max_case"] = r_["max"], r_["case"]
     for ww in worst.values(): ww.setdefault("max_cell", ww["max"]); ww.setdefault("max_case", ww["case"])
@@ -471,25 +489,29 @@ def node_name(i): return f"scout_node_{i}"
 
 
 def design(i, fe=False, h=0.5, log=print):
-    walls, hub = {}, None; hist = []
-    for it in range(6):
+    walls, hub, fil = {}, None, FILLET; hist = []
+    for it in range(8):
         socks = symmetrise(i, layout(i, walls))
-        B = bodies(i, socks, hub)
+        B = bodies(i, socks, hub, fil)
         if not fe: break
         rows, worst, info = fe_check(i, socks, B, h=h, log=log)
-        # the gate (DEFAULT 28 Oct): each socket's 99.9th percentile index <= 1.0; the single worst cell is reported. Gating on the
-        # single cell sent node 1 round in circles (a thicker wall moves the socket out and the lip peak follows: 1.19 -> 1.24, r 20 -> 40)
-        w = max(worst.values(), key=lambda r: r["p999"]); mc = max(worst.values(), key=lambda r: r["max_cell"])
-        hist.append(dict(iter=it, walls={s["name"]: round(s["R"] - BORE / 2, 2) for s in socks}, hub_r=B["hub_r"], worst=w,
+        # the gate (dimensions.md L index target): each socket's worst cell <= 1.0 (the exclusions above); the 99.9th percentile is reported
+        w = max(worst.values(), key=lambda r: r["max"]); mc = w
+        bend = max((r_ for r_ in rows if " bend " in r_["case"]), key=lambda r_: r_["max"])
+        hist.append(dict(iter=it, walls={s["name"]: round(s["R"] - BORE / 2, 2) for s in socks}, hub_r=B["hub_r"], fillet=fil, worst=w,
+                         bend_worst=dict(value=bend["max"], case=bend["case"], socket=bend["name"]),
+                         outlast=round(bend["max"] * ROD_STRENGTH / SIG_C * KNOCK_SF, 2),
                          max_cell=dict(value=mc["max_cell"], case=mc["max_case"], socket=mc["name"]),
                          per_socket={socks[k]["name"]: dict(p999=v["p999"], max_cell=v["max_cell"], case=v["case"], at_r=v["at_r"]) for k, v in worst.items()}))
-        log(f"  node {i} iter {it}: worst 99.9 % {w['p999']} in {w['case']} ({w['name']}); single cell {mc['max_cell']} in {mc['max_case']}")
-        bad = [k for k, v in worst.items() if v["p999"] > 1.0]
+        log(f"  node {i} iter {it}: worst cell {w['max']} in {w['case']} ({w['name']}, {w['inlayer']} in / {w['across']} across layers); "
+            f"99.9 % {w['p999']}; walls {dict((k_, v_) for k_, v_ in walls.items())}, fillet {fil}")
+        bad = [k for k, v in worst.items() if v["max"] > 1.0]
         if not bad: break
         for k in bad:
             v = worst[k]; s = socks[k]
             if v["at_r"] <= B["hub_r"] + 0.5: hub = B["hub_r"] + 1.0     # at the hub: a larger hub
             else: walls[s["name"]] = walls.get(s["name"], WALL0) + 0.5
+        fil = min(fil + 1.0, FILLET_MAX)                                  # and a rounder crotch (the peaks sit in the fillets)
         if is_centre(i):                                                  # keep a mirror pair's walls equal
             for a in socks:
                 for b in socks:
@@ -510,7 +532,7 @@ def main():
     ap.add_argument("--nodes", default=None)
     a = ap.parse_args()
     ids = [int(v) for v in a.nodes.split(",")] if a.nodes else designs()
-    out = a.out or os.path.join(ROOT, "runs", "scout_nodes", "v1")
+    out = a.out or os.path.join(ROOT, "runs", "scout_nodes", VER)
     solve_offsets(cache=os.path.join(out, "offsets.json"))
     if a.cmd == "list":
         tot = 0.0
@@ -545,7 +567,7 @@ def build_all(ids, out, fe=False, h=0.5):
         socks, B, hist = design(i, fe=fe, h=h)
         loc = to_tm(B["solid"])                                          # node frame, centre at the origin
         Tp = print_pose(B["up"], B["zb"]); pr = loc.copy(); pr.apply_transform(Tp)
-        f = os.path.join(out, f"{node_name(i)}_v1.stl"); pr = save(pr, f)
+        f = os.path.join(out, f"{node_name(i)}_{VER}.stl"); pr = save(pr, f)
         ok, info = solid_check(pr)
         g = pr.volume / 1000 * PETG_RHO
         socket_rows = []
@@ -569,11 +591,11 @@ def build_all(ids, out, fe=False, h=0.5):
             j = mirror_of(i); mt = mirror_tm(loc); mt.apply_translation(N[j])
             mf_ = os.path.join(out, "placed", f"node_{j}.stl"); save(mt, mf_)
             placed.append(dict(name=f"cage node {j}", mesh=os.path.relpath(mf_, ROOT), node=j, mass_g=round(g, 2), tag="M", design=i, mirror=True))
-            mp = mirror_tm(pr); save(mp, os.path.join(out, f"{node_name(i)}_v1_mirror.stl"))
+            mp = mirror_tm(pr); save(mp, os.path.join(out, f"{node_name(i)}_{VER}_mirror.stl"))
         rec["placed"] = placed
         json.dump(rec, open(os.path.join(out, "nodes", f"{i}.json"), "w"), indent=1)
         print(f"node {i}: {g:.2f} g, solid_check {'PASS' if ok else 'FAIL'}, envelope r {env['r_max']}, "
-              f"{len(socks)} sockets, {time.time() - t0:.0f} s" + (f", FE 99.9 % {hist[-1]['worst']['p999']}, cell {hist[-1]['max_cell']['value']}" if hist else ""), flush=True)
+              f"{len(socks)} sockets, {time.time() - t0:.0f} s" + (f", FE worst cell {hist[-1]['worst']['max']} (99.9 % {hist[-1]['worst']['p999']}), outlast {hist[-1]['outlast']}" if hist else ""), flush=True)
 
 
 def rod_ends(out):

@@ -10,7 +10,7 @@ import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
-RUN = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scout_nodes", "v1")
+RUN = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "runs", "scout_nodes", os.environ.get("SCN_VER", "v2"))
 LAY = os.path.join(ROOT, "runs", "scout_layout", "v12")
 
 
