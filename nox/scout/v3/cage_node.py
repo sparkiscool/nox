@@ -5,7 +5,7 @@ Members: runs/scout_layout/v12/cage_shell.json (47 shell rods) + the 8 saddle ti
 waist pair 5/6 and on nodes 12/13, 14/15). Drone frame (x nose, y left, z up), mm, N.
 
 Each node is drawn, nothing generated (the rule's drawn set: rod sockets with their boss walls, the hub they join in, the bottom nodes'
-TPU cap seat, a flat bed face): a socket per member, bore 3.2 x DEPTH 10, a boss wall >= 3.0 round it, a solid floor >= RMIN 3.0 behind
+TPU cap seat, a flat bed face): a socket per member, bore 3.2 x DEPTH 10 (saddle ties TIE_DEPTH 14) with a bell mouth and a mouth collar, a boss wall >= 3.0 round it, a solid floor >= RMIN 3.0 behind
 it (each boss is solid from its line's origin near the node centre to the socket mouth), a hub sphere Ø12 (the layout's node) where the
 bosses meet, every junction filleted (smooth union, FILLET). The sockets are set back from the centre only as far as they must so that
 every two bores keep the thicker of their walls of PETG between them and every rod leaves its mouth 0.5 clear of the other bosses
@@ -47,6 +47,8 @@ NL = json.load(open(os.path.join(ROOT, "runs", "scout_frame", "v3", "node_loads.
 RING = list(CG["open"][0]["ring"])
 
 BORE, DEPTH, WALL0, RMIN = 3.2, 10.0, 3.0, 3.0      # socket bore (Spark 27 Oct coupons), depth (the Overseer's 3 mm socket), wall (hard rule), floor
+TIE_DEPTH = 14.0                                      # saddle-tie sockets (v2, DEFAULT 28 Oct): the ties carry the frame's largest side forces (to 100 N, F);
+                                                      # at 10 deep tie 4.1 stalled at 1.2..1.3 where the rod pries at the start of its contact
 SEP_BORE = BORE + 3.0                                 # two bores keep 3.0 of PETG between them (boss wall rule)
 ROD_R, ROD_CLEAR = 1.5, 0.5                           # a rod leaving its mouth clears every other boss by 0.5 (C, DEFAULT)
 HUB_R = 6.0                                           # hub sphere Ø12 (the layout's printed node, pad rule)
@@ -156,6 +158,7 @@ def layout(i, walls=None, free=False):
     free: the node's own eccentric sockets (OWN) are variables (solve_offsets); else their offsets are the frozen OFFS"""
     M = members(i); n = len(M); walls = walls or {}
     R = np.array([BORE / 2 + walls.get(m["name"], WALL0) for m in M])
+    Dk = [TIE_DEPTH if m["tie"] else DEPTH for m in M]
     dirs0 = [(m["far"] - N[i]) / m["L"] for m in M]
     ecc = [k for k, m in enumerate(M) if (i, m["name"]) in OWN] if free else []
     basis = {k: _perp(dirs0[k]) for k in ecc}
@@ -175,17 +178,17 @@ def layout(i, walls=None, free=False):
             for q in range(n):
                 if p == q: continue
                 if p < q:                                                    # bore to bore: 3.0 of PETG
-                    g.append(segdist(P[p] + d[p] * r[p], P[p] + d[p] * (r[p] + DEPTH), P[q] + d[q] * r[q], P[q] + d[q] * (r[q] + DEPTH))
+                    g.append(segdist(P[p] + d[p] * r[p], P[p] + d[p] * (r[p] + Dk[p]), P[q] + d[q] * r[q], P[q] + d[q] * (r[q] + Dk[q]))
                              - (BORE + max(R[p], R[q]) - BORE / 2 + FLARE_R))      # the web between two bores: the thicker wall, flares included
                 # the rod beyond p's mouth clears q's boss (axis from P[q] to its mouth)
-                g.append(segdist(P[p] + d[p] * (r[p] + DEPTH), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + DEPTH)) - (ROD_R + R[q] + COLLAR + ROD_CLEAR))
+                g.append(segdist(P[p] + d[p] * (r[p] + Dk[p]), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + Dk[q])) - (ROD_R + R[q] + COLLAR + ROD_CLEAR))
         for j, k in enumerate(ecc):
             g.append(ecc_cap(i, M[k]["name"]) - math.hypot(x[n + 2 * j], x[n + 2 * j + 1]))
         if lim is not None:
             ax, mx = lim
             for k in range(n):
                 s_ = math.sqrt(max(0.0, 1 - (d[k] @ ax) ** 2)) * R[k]
-                for s in (0.0, r[k] + DEPTH): g.append(mx - (P[k] @ ax + s * (d[k] @ ax) + s_))
+                for s in (0.0, r[k] + Dk[k]): g.append(mx - (P[k] @ ax + s * (d[k] @ ax) + s_))
         return np.array(g)
 
     def cost(x):
@@ -206,7 +209,7 @@ def layout(i, walls=None, free=False):
     if best is None: raise RuntimeError(f"node {i}: no feasible socket layout")
     r, P, d = unpack(best)
     socks = [dict(name=M[k]["name"], d=d[k], P=P[k], r=float(r[k]), R=float(R[k]), far=M[k]["far"], far_node=M[k]["far_node"],
-                  L=M[k]["L"], tie=M[k]["tie"], ecc=float(np.linalg.norm(P[k]))) for k in range(n)]
+                  L=M[k]["L"], tie=M[k]["tie"], D=Dk[k], ecc=float(np.linalg.norm(P[k]))) for k in range(n)]
     return socks
 
 
@@ -327,12 +330,12 @@ def bodies(i, socks, hub_r=None, fillet=None):
     bores = None
     for s in socks:
         a, d = s["P"], s["d"]
-        prims.append(("cyl", a, a + d * (s["r"] + DEPTH), s["R"]))
-        prims.append(("cyl", a + d * (s["r"] + DEPTH - COLLAR_L), a + d * (s["r"] + DEPTH), s["R"] + COLLAR))   # the mouth collar
-        m0 = a + d * (s["r"] + DEPTH)
+        prims.append(("cyl", a, a + d * (s["r"] + s["D"]), s["R"]))
+        prims.append(("cyl", a + d * (s["r"] + s["D"] - COLLAR_L), a + d * (s["r"] + s["D"]), s["R"] + COLLAR))   # the mouth collar
+        m0 = a + d * (s["r"] + s["D"])
         b = (seg(a + d * s["r"], m0 - d * (FLARE_L - 0.01), BORE / 2)
              + cone(m0 - d * FLARE_L, m0 + d * 0.01, BORE / 2, BORE / 2 + FLARE_R)          # the bell mouth (lip fillet)
-             + seg(m0, a + d * (s["r"] + DEPTH + 300.0), max(BORE / 2 + 0.4, BORE / 2 + FLARE_R)))
+             + seg(m0, a + d * (s["r"] + s["D"] + 300.0), max(BORE / 2 + 0.4, BORE / 2 + FLARE_R)))
         bores = b if bores is None else bores + b                        # the bore, and the rod's path out of the mouth 0.4 clear
     u = up_dir(i, socks)
     if ring:
@@ -341,7 +344,7 @@ def bodies(i, socks, hub_r=None, fillet=None):
         zb = -PAD_DZ
         cut_extra = recess
     else:
-        zb = min([float(s["P"] @ u + min(0.0, (s["r"] + DEPTH) * (s["d"] @ u)) - s["R"] * math.sqrt(max(0.0, 1 - (s["d"] @ u) ** 2)))
+        zb = min([float(s["P"] @ u + min(0.0, (s["r"] + s["D"]) * (s["d"] @ u)) - s["R"] * math.sqrt(max(0.0, 1 - (s["d"] @ u) ** 2)))
                   for s in socks] + [-hub_r + 0.9])                       # the lowest boss point (either end of a boss)
         prims.append(("cyl", u * (zb - 2.0), O, 4.0))                    # a foot under the hub: the flat bed face, Ø8 at least
         cut_extra = None
@@ -403,10 +406,10 @@ def pcr(L):
 def socket_loads(i, s):
     fl = NL.get(str(i), {}).get(s["name"]) or {}
     ax_f, side_f = float(fl.get("axial", 50.0)), float(fl.get("side", 10.0))
-    Lfree = max(s["L"] - 2 * (s["r"] + DEPTH), 20.0)               # free length between the two mouths (this end's set-back both ends, E)
+    Lfree = max(s["L"] - 2 * (s["r"] + s["D"]), 20.0)               # free length between the two mouths (this end's set-back both ends, E)
     push = min(ax_f, pcr(Lfree), SIG_C * ROD_A)
     pull = ax_f
-    bond = BOND_TAU * math.pi * BORE * (DEPTH - FLARE_L)               # the bell mouth's length carries only an epoxy fillet
+    bond = BOND_TAU * math.pi * BORE * (s["D"] - FLARE_L)               # the bell mouth's length carries only an epoxy fillet
     return dict(push=push, pull=pull, side=side_f, moment=M_ROD, bond=bond, pcr=pcr(Lfree), frame_axial=ax_f, Lfree=Lfree)
 
 
@@ -421,7 +424,7 @@ def fe_check(i, socks, B, h=0.5, log=print):
     solid = tf(B["solid"]); cuts = tf(B["cuts"])
     stubs, holds, tips, necks, rods = [], [], [], [], []
     for s in socks:
-        a = Rr @ s["P"] + Tp[:3, 3]; d = Rr @ s["d"]; m0 = a + d * (s["r"] + DEPTH)
+        a = Rr @ s["P"] + Tp[:3, 3]; d = Rr @ s["d"]; m0 = a + d * (s["r"] + s["D"])
         rods.append(seg(a + d * s["r"], m0 + d * STUB, ROD_R, 24))
         holds.append(seg(m0 + d * 3.0, m0 + d * STUB, ROD_R + 0.3, 24))
         tips.append(seg(m0 + d * (STUB - 2.5), m0 + d * STUB, ROD_R + 0.3, 24))
@@ -431,8 +434,7 @@ def fe_check(i, socks, B, h=0.5, log=print):
     quiet = lambda s_: None
     p = Part(f"scout_node_{i}", h, solid, cuts, env, build="+z", material="PETG", log=quiet)
     for k, s in enumerate(socks):
-        Lr = s["r"] and (DEPTH + STUB)
-        p.insert(f"rod {k}", rods[k], E_ROD / MATERIALS["PETG"].E, area_mm2=ROD_A, length_mm=DEPTH + STUB)
+        p.insert(f"rod {k}", rods[k], E_ROD / MATERIALS["PETG"].E, area_mm2=ROD_A, length_mm=s["D"] + STUB)
     cases = []
     for k, s in enumerate(socks):
         hold = None
@@ -460,7 +462,7 @@ def fe_check(i, socks, B, h=0.5, log=print):
     rim = np.zeros(p.nel, bool)
     for s in socks:
         a = Rr @ s["P"] + Tp[:3, 3]; d = Rr @ s["d"]
-        for c0, rr in ((a + d * s["r"], BORE / 2), (a + d * (s["r"] + DEPTH - FLARE_L), BORE / 2), (a + d * (s["r"] + DEPTH), BORE / 2 + FLARE_R)):
+        for c0, rr in ((a + d * s["r"], BORE / 2), (a + d * (s["r"] + s["D"] - FLARE_L), BORE / 2), (a + d * (s["r"] + s["D"]), BORE / 2 + FLARE_R)):
             v = cen - c0; ax_ = v @ d; rad = np.linalg.norm(v - ax_[:, None] * d[None], axis=1)
             rim |= np.hypot(ax_, rad - rr) < RIM_EX                  # the bore floor rim, where the bond starts under the bell, the mouth rim
     # the bond line: PETG cells sharing a node with the rod insert (a voxel bore is a staircase round a 36x stiffer rod, so single
@@ -588,8 +590,8 @@ def build_all(ids, out, fe=False, h=0.5):
         for s in socks:
             Ld = socket_loads(i, s)
             socket_rows.append(dict(name=s["name"], dir=np.round(s["d"], 4).tolist(), line_origin=np.round(s["P"], 2).tolist(), ecc=round(s["ecc"], 2),
-                                    setback=round(s["r"], 2), mouth_r=round(s["r"] + DEPTH, 2), wall=round(s["R"] - BORE / 2, 2),
-                                    mouth_drone=np.round(N[i] + s["P"] + s["d"] * (s["r"] + DEPTH), 2).tolist(),
+                                    setback=round(s["r"], 2), depth=s["D"], mouth_r=round(s["r"] + s["D"], 2), wall=round(s["R"] - BORE / 2, 2),
+                                    mouth_drone=np.round(N[i] + s["P"] + s["d"] * (s["r"] + s["D"]), 2).tolist(),
                                     floor_drone=np.round(N[i] + s["P"] + s["d"] * s["r"], 2).tolist(),
                                     elev_deg=round(math.degrees(math.asin(np.clip(s["d"] @ B["up"], -1, 1))), 1),
                                     loads={k: round(v, 1) for k, v in Ld.items()}))
@@ -639,7 +641,7 @@ def rod_ends(out):
 
 
 def merge(out):
-    res = dict(option="B" if ECC > 0 else "A", ecc_max=ECC, bore=BORE, depth=DEPTH, wall_min=WALL0, floor_min=RMIN, hub_r=HUB_R,
+    res = dict(option="B" if ECC > 0 else "A", ecc_max=ECC, bore=BORE, depth=DEPTH, tie_depth=TIE_DEPTH, flare=[FLARE_L, FLARE_R], collar=[COLLAR, COLLAR_L], wall_min=WALL0, floor_min=RMIN, hub_r=HUB_R,
                ring=dict(hub_r=RING_HUB_R, seat_below_centre=PAD_DZ, cap=[CAP_D, CAP_T], plug=[PLUG_D, PLUG_H], recess=[RECESS_D, RECESS_H]),
                moment_Nmm=round(M_ROD, 1), k_buckling=K_BUCK, bond_tau=BOND_TAU, rim_excluded_mm=RIM_EX, nodes={})
     placed = []
