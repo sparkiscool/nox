@@ -1,0 +1,427 @@
+{
+ "name": "scout_camera_mount",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   9933.1
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.0",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.1",
+    0.326,
+    "erode 2.0"
+   ],
+   [
+    "0.2",
+    0.0,
+    "erode 2.0"
+   ],
+   [
+    "0.3",
+    0.319,
+    "erode 2.0"
+   ],
+   [
+    "0.4",
+    0.564,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 6,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 3536.4,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "crash 35 g +x",
+    "cls": "misuse",
+    "inlayer": 0.167,
+    "across": 0.104,
+    "at": [
+     119.8,
+     17.2,
+     22.0
+    ]
+   },
+   {
+    "case": "crash 35 g -x",
+    "cls": "misuse",
+    "inlayer": 0.167,
+    "across": 0.097,
+    "at": [
+     119.8,
+     17.2,
+     22.0
+    ]
+   },
+   {
+    "case": "crash 35 g +y",
+    "cls": "misuse",
+    "inlayer": 0.901,
+    "across": 0.473,
+    "at": [
+     58.2,
+     3.8,
+     25.0
+    ]
+   },
+   {
+    "case": "crash 35 g -y",
+    "cls": "misuse",
+    "inlayer": 0.901,
+    "across": 0.472,
+    "at": [
+     58.2,
+     3.8,
+     25.0
+    ]
+   },
+   {
+    "case": "crash 35 g +z",
+    "cls": "misuse",
+    "inlayer": 1.225,
+    "across": 0.398,
+    "at": [
+     61.2,
+     0.8,
+     23.5
+    ]
+   },
+   {
+    "case": "crash 35 g -z",
+    "cls": "misuse",
+    "inlayer": 1.225,
+    "across": 0.41,
+    "at": [
+     61.2,
+     0.8,
+     23.5
+    ]
+   },
+   {
+    "case": "flight 4 g",
+    "cls": "flight",
+    "inlayer": 0.224,
+    "across": 0.075,
+    "at": [
+     61.2,
+     0.8,
+     23.5
+    ]
+   },
+   {
+    "case": "hood hit centre -x",
+    "cls": "misuse",
+    "inlayer": 6.277,
+    "across": 3.252,
+    "at": [
+     89.8,
+     -2.2,
+     23.5
+    ]
+   },
+   {
+    "case": "hood hit +y top corner -x",
+    "cls": "misuse",
+    "inlayer": 18.578,
+    "across": 9.499,
+    "at": [
+     88.2,
+     -2.2,
+     23.5
+    ]
+   },
+   {
+    "case": "hood hit +y bottom corner -x",
+    "cls": "misuse",
+    "inlayer": 6.493,
+    "across": 5.301,
+    "at": [
+     76.2,
+     -3.8,
+     26.5
+    ]
+   },
+   {
+    "case": "hood hit -y top corner -x",
+    "cls": "misuse",
+    "inlayer": 18.577,
+    "across": 9.498,
+    "at": [
+     88.2,
+     2.2,
+     23.5
+    ]
+   },
+   {
+    "case": "hood hit -y bottom corner -x",
+    "cls": "misuse",
+    "inlayer": 6.493,
+    "across": 5.3,
+    "at": [
+     76.2,
+     3.8,
+     26.5
+    ]
+   },
+   {
+    "case": "clip +y bear +x",
+    "cls": "misuse",
+    "inlayer": 1.991,
+    "across": 1.537,
+    "at": [
+     76.2,
+     -3.8,
+     26.5
+    ]
+   },
+   {
+    "case": "clip +y pull -x",
+    "cls": "misuse",
+    "inlayer": 0.906,
+    "across": 0.639,
+    "at": [
+     76.2,
+     -3.8,
+     26.5
+    ]
+   },
+   {
+    "case": "clip +y up +z",
+    "cls": "misuse",
+    "inlayer": 2.14,
+    "across": 1.274,
+    "at": [
+     59.8,
+     0.8,
+     23.5
+    ]
+   },
+   {
+    "case": "clip +y down -z",
+    "cls": "misuse",
+    "inlayer": 2.14,
+    "across": 1.234,
+    "at": [
+     59.8,
+     0.8,
+     23.5
+    ]
+   },
+   {
+    "case": "clip -y bear +x",
+    "cls": "misuse",
+    "inlayer": 1.991,
+    "across": 1.537,
+    "at": [
+     76.2,
+     3.8,
+     26.5
+    ]
+   },
+   {
+    "case": "clip -y pull -x",
+    "cls": "misuse",
+    "inlayer": 0.906,
+    "across": 0.639,
+    "at": [
+     76.2,
+     3.8,
+     26.5
+    ]
+   },
+   {
+    "case": "clip -y up +z",
+    "cls": "misuse",
+    "inlayer": 2.14,
+    "across": 1.274,
+    "at": [
+     59.8,
+     -0.8,
+     23.5
+    ]
+   },
+   {
+    "case": "clip -y down -z",
+    "cls": "misuse",
+    "inlayer": 2.14,
+    "across": 1.234,
+    "at": [
+     59.8,
+     -0.8,
+     23.5
+    ]
+   }
+  ],
+  "worst": 18.578,
+  "worst_case": "hood hit +y top corner -x",
+  "worst_at": [
+   88.2,
+   -2.2,
+   23.5
+  ]
+ },
+ "mass_g": 24.51,
+ "watertight": false,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 19297.5,
+ "drawn_g": 9.58,
+ "stl": "scout_camera_mount.stl",
+ "view_stl": "scout_camera_mount_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "direct",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 4.29504458275024,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.09018492020416331,
+  "nd": 40534,
+  "sym_axes": [
+   1
+  ],
+  "n_real": 20,
+  "n_ties": 78,
+  "backend": "direct",
+  "iterations": 202,
+  "stopped": "max_stage"
+ },
+ "grid": {
+  "name": "scout_camera_mount",
+  "h": 1.5,
+  "shape": [
+   96,
+   56,
+   48
+  ],
+  "origin": [
+   15.5,
+   -42.0,
+   0.25
+  ],
+  "cells": 258048,
+  "design": 40434,
+  "drawn": 2114,
+  "cases": [
+   "crash 35 g +x",
+   "crash 35 g -x",
+   "crash 35 g +y",
+   "crash 35 g -y",
+   "crash 35 g +z",
+   "crash 35 g -z",
+   "flight 4 g",
+   "hood hit centre -x",
+   "hood hit +y top corner -x",
+   "hood hit +y bottom corner -x",
+   "hood hit -y top corner -x",
+   "hood hit -y bottom corner -x",
+   "clip +y bear +x",
+   "clip +y pull -x",
+   "clip +y up +z",
+   "clip +y down -z",
+   "clip -y bear +x",
+   "clip -y pull -x",
+   "clip -y up +z",
+   "clip -y down -z"
+  ],
+  "supports": [
+   "foot"
+  ]
+ },
+ "build_s": 382.2,
+ "layout_s": 5175,
+ "peak_gb": 5.0531,
+ "gen_cm3": 12.0,
+ "h": 1.5,
+ "snap": {
+  "t_p": 2.0,
+  "snap": 0.25,
+  "L": 8.0,
+  "free_length": 9.2,
+  "k_prong_N_mm": 41.1,
+  "install_N": 9.1,
+  "pop_N": 9.1,
+  "open_mm": 0.25,
+  "prong_sigma_MPa": 17.7,
+  "mouth_mm": 2.5
+ },
+ "clip_y": 34.0,
+ "stroke": 110.0,
+ "total_s": 5557
+}
