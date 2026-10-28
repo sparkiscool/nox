@@ -1,0 +1,273 @@
+{
+ "centre": [
+  116.548,
+  0.0,
+  36.328
+ ],
+ "mirror": null,
+ "file": "runs/scout_nodes/v2/scout_node_16_v2.stl",
+ "mass_g": 5.93,
+ "solid_check": {
+  "ok": true,
+  "bodies_eroded": 1,
+  "thin_walls": 0,
+  "necks": 0
+ },
+ "up": [
+  -0.9718,
+  0.0,
+  -0.2357
+ ],
+ "bed_below_centre": 5.1,
+ "hub_r": 6.0,
+ "envelope": {
+  "r_max": 24.2,
+  "lo": [
+   -7.0,
+   -24.1,
+   -10.3
+  ],
+  "hi": [
+   6.7,
+   24.1,
+   10.7
+  ]
+ },
+ "sockets": [
+  {
+   "name": "rod 7-16",
+   "dir": [
+    -0.052,
+    -0.9751,
+    0.2158
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 13.06,
+   "mouth_r": 23.06,
+   "wall": 3.0,
+   "mouth_drone": [
+    115.35,
+    -22.48,
+    41.3
+   ],
+   "floor_drone": [
+    115.87,
+    -12.73,
+    39.15
+   ],
+   "elev_deg": -0.0,
+   "loads": {
+    "push": 346.9,
+    "pull": 346.9,
+    "side": 3.7,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 2787.0,
+    "frame_axial": 346.9,
+    "Lfree": 53.6
+   }
+  },
+  {
+   "name": "rod 8-16",
+   "dir": [
+    -0.052,
+    0.9751,
+    0.2158
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 13.06,
+   "mouth_r": 23.06,
+   "wall": 3.0,
+   "mouth_drone": [
+    115.35,
+    22.48,
+    41.3
+   ],
+   "floor_drone": [
+    115.87,
+    12.73,
+    39.15
+   ],
+   "elev_deg": -0.0,
+   "loads": {
+    "push": 346.9,
+    "pull": 346.9,
+    "side": 4.4,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 2787.0,
+    "frame_axial": 346.9,
+    "Lfree": 53.6
+   }
+  },
+  {
+   "name": "rod 14-16",
+   "dir": [
+    0.0835,
+    0.9358,
+    -0.3425
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 3.91,
+   "mouth_r": 13.91,
+   "wall": 3.0,
+   "mouth_drone": [
+    117.71,
+    13.02,
+    31.56
+   ],
+   "floor_drone": [
+    116.87,
+    3.66,
+    34.99
+   ],
+   "elev_deg": -0.0,
+   "loads": {
+    "push": 353.6,
+    "pull": 353.6,
+    "side": 11.3,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 5158.6,
+    "frame_axial": 353.6,
+    "Lfree": 39.4
+   }
+  },
+  {
+   "name": "rod 15-16",
+   "dir": [
+    0.0835,
+    -0.9358,
+    -0.3425
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 3.91,
+   "mouth_r": 13.91,
+   "wall": 3.0,
+   "mouth_drone": [
+    117.71,
+    -13.02,
+    31.56
+   ],
+   "floor_drone": [
+    116.87,
+    -3.66,
+    34.99
+   ],
+   "elev_deg": -0.0,
+   "loads": {
+    "push": 353.6,
+    "pull": 353.6,
+    "side": 7.8,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 5158.6,
+    "frame_axial": 353.6,
+    "Lfree": 39.4
+   }
+  }
+ ],
+ "fe": [
+  {
+   "iter": 0,
+   "walls": {
+    "rod 7-16": 3.0,
+    "rod 8-16": 3.0,
+    "rod 14-16": 3.0,
+    "rod 15-16": 3.0
+   },
+   "hub_r": 6.0,
+   "fillet": 2.5,
+   "worst": {
+    "socket": 1,
+    "name": "rod 8-16",
+    "case": "1 bend +b",
+    "max": 0.713,
+    "p999": 0.421,
+    "inlayer": 0.439,
+    "across": 0.713,
+    "at_node": [
+     -3.2,
+     21.2,
+     3.3
+    ],
+    "at_r": 21.7,
+    "max_cell": 0.713,
+    "max_case": "1 bend +b"
+   },
+   "bend_worst": {
+    "value": 0.713,
+    "case": "1 bend +b",
+    "socket": "rod 8-16"
+   },
+   "outlast": 1.1,
+   "max_cell": {
+    "value": 0.713,
+    "case": "1 bend +b",
+    "socket": "rod 8-16"
+   },
+   "per_socket": {
+    "rod 7-16": {
+     "p999": 0.419,
+     "max_cell": 0.709,
+     "case": "0 bend +b",
+     "at_r": 21.7
+    },
+    "rod 8-16": {
+     "p999": 0.421,
+     "max_cell": 0.713,
+     "case": "1 bend +b",
+     "at_r": 21.7
+    },
+    "rod 14-16": {
+     "p999": 0.334,
+     "max_cell": 0.663,
+     "case": "2 bend +a",
+     "at_r": 12.9
+    },
+    "rod 15-16": {
+     "p999": 0.327,
+     "max_cell": 0.644,
+     "case": "3 bend +a",
+     "at_r": 12.9
+    }
+   }
+  }
+ ],
+ "extents_print": [
+  21.2,
+  48.3,
+  11.5
+ ],
+ "placed": [
+  {
+   "name": "cage node 16",
+   "mesh": "runs/scout_nodes/v2/placed/node_16.stl",
+   "node": 16,
+   "mass_g": 5.93,
+   "tag": "M",
+   "design": 16,
+   "mirror": false
+  }
+ ]
+}
