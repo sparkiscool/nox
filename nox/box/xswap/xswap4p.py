@@ -26,6 +26,8 @@ TWIN_DY = 18.0                       # anchor post outboard of the drive post (t
 ANC_HY = 6.0                         # anchor flange half length (y): clears the bar's knee at y 70.5
 PAD_HX, PAD_HY = 7.0, 7.0            # bearing pad round each post, under the lid
 STEEL_R = 1.5                        # 3 mm dowel
+PIN_L_DRIVE, PIN_L_ANCHOR = 20.0, 12.0   # standard 3 x 20 and 3 x 12 dowels, inserted from under the arm
+PRESS_R = 1.475                      # 2.95 hole: press fit in PETG (+ a drop of CA)
 LID_SCREWS = [(sx * 17.0, None) for sx in (-1, 1)]
 
 class G:
@@ -69,8 +71,8 @@ def finger_A(key, u):
     f = U(*parts)
     if c["steel"]:
         for y, drive in posts:
-            top = (g.post_top - 2.5) if drive else (g.fl1 - 0.8)
-            f = f - cyl("z", x, y, STEEL_R + 0.05, g.z_arm0 + 1.0, top)
+            L = PIN_L_DRIVE if drive else PIN_L_ANCHOR
+            f = f - cyl("z", x, y, PRESS_R, g.z_arm0 - 1.0, g.z_arm0 + L)          # open under the arm: press in from below
     return f
 
 def finger_B(key, u): return sym(finger_A(key, u))
@@ -80,8 +82,8 @@ def steel_pins(key, u):
     if not c["steel"]: return None
     x = -u; out = []
     for y, drive in [(X.FIN_Y, True)] + ([(X.FIN_Y + TWIN_DY, False)] if c["twin"] else []):
-        top = (g.post_top - 2.5) if drive else (g.fl1 - 0.8)
-        out.append(cyl("z", x, y, STEEL_R, g.z_arm0 + 1.0, top))
+        L = PIN_L_DRIVE if drive else PIN_L_ANCHOR
+        out.append(cyl("z", x, y, PRESS_R, g.z_arm0, g.z_arm0 + L))
     a = U(*out)
     return a + sym(a)
 
@@ -215,3 +217,12 @@ def safety(key):
         s = stresses(key, pl, ps)
         rows[case] = {k: dict(mpa=round(v[0], 2), allow=v[1], layer=v[2], sf=round(v[1] / max(v[0], 1e-6), 2)) for k, v in s.items()}
     return rows
+
+
+def steel_pins_A(key, u):
+    """steel pins of finger A only (B's are its 180 deg copy), for animation."""
+    c = VARIANTS[key]; g = G(c)
+    if not c["steel"]: return None
+    x = -u
+    return U(*[cyl("z", x, y, PRESS_R, g.z_arm0, g.z_arm0 + (PIN_L_DRIVE if d else PIN_L_ANCHOR))
+               for y, d in [(X.FIN_Y, True)] + ([(X.FIN_Y + TWIN_DY, False)] if c["twin"] else [])])

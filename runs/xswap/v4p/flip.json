@@ -1,0 +1,24 @@
+{
+ "P3": {
+  "pin top z": -60.9,
+  "post top z": -57.3,
+  "steel vs fingers (mm3, ~0 = sits in its hole)": 0.0,
+  "steel vs base / lid / shell / bars (mm3)": 0.0,
+  "rail before flip": 80,
+  "rail into bay": 80,
+  "bay insert sweep (mm3)": 0.0,
+  "flip radius": 142.1,
+  "flip axis z": -115.7
+ },
+ "P4": {
+  "pin top z": -61.9,
+  "post top z": -57.3,
+  "steel vs fingers (mm3, ~0 = sits in its hole)": 0.0,
+  "steel vs base / lid / shell / bars (mm3)": 0.0,
+  "rail before flip": 80,
+  "rail into bay": 80,
+  "bay insert sweep (mm3)": 0.0,
+  "flip radius": 142.9,
+  "flip axis z": -116.7
+ }
+}
