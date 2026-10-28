@@ -58,6 +58,9 @@ SHELL_R = 3.0                            # 6 mm carbon tube (Spark 26 Oct), 6/4 
 SHELL_GPM = 1.55e-3 * math.pi / 4 * (6.0 ** 2 - 4.0 ** 2)        # 24.3 g/m (E)
 ROD_R, ROD_GPM = 1.5, 11.0e-3            # links: 3.0 solid (G Carbon rods), 11.0 g/m (C)
 NODE_R, NODE_G = 10.15, 4.5              # printed node round 6.3 sockets, Ø20 (E); 4.5 g (E)
+_NS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "cage_nodes", "v4", "saved.json")
+NODE_M = {r["node"]: r["mass_g"] for r in json.load(open(_NS))} if os.path.exists(_NS) else {}   # saved nodes (drawn first, M)
+node_g = lambda i: NODE_M.get(i, NODE_G)
 PROP_GAP, CAGE_GAP = 12.0, 3.0
 M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0   # hull margins to the tube axis (+1 for facet sampling)
 SPARE = 30.0                             # room a side round the receiver at the opening (DEFAULT, Spark 26 Oct)
@@ -895,7 +898,7 @@ def masses(g, nodes, E, extra):
     for i, f in enumerate(g["feet"]): add(f"foot {i}", abs(f.volume) * 1.21e-3 * 0.5, f.centroid)
     for i, (a, b) in enumerate(E): add(f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2)
     for k, (p, q) in extra.items(): add(k, np.linalg.norm(np.subtract(q, p)) * lgpm(k), (np.asarray(p) + np.asarray(q)) / 2)
-    for i, n in enumerate(nodes): add(f"node {i}", NODE_G, n)
+    for i, n in enumerate(nodes): add(f"node {i}", node_g(i), n)
     for i, n in enumerate(g.get("halo_nodes", [])): add(f"halo node {i}", 1.5, n)            # printed, r 5 (E)
     for k, (p, q) in g.get("head_guards", {}).items(): add(f"head guard {k}", np.linalg.norm(np.subtract(q, p)) * 36 * 1.27e-3 * 0.8, (np.asarray(p) + np.asarray(q)) / 2)
     if g.get("head_attach"):                                           # the topology's joining material (E) between the head and the cage nodes
@@ -1090,8 +1093,8 @@ for lens, hh, hv, nm in ((g["flow_lens"], 23.0, 23.0, "flow"),):
         n_ = ((zz > 0) & (np.abs(np.degrees(np.arctan2(d[:, 0], np.maximum(zz, 1e-6)))) < hh) & (np.abs(np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))) < hv)).mean()
         if n_: say(f"   {k} in the {nm} view ({100 * n_:.1f} % of its points)")
 say("flow: view checked (lines above list anything in view)")
-shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(v * lgpm(k) for k, v in rl.items())
-say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} E + nodes {NODE_G * len(nodes):.0f} E), links {link_g:.0f} g (C); "
+shell_g = sh.sum() * SHELL_GPM + sum(node_g(i) for i in range(len(nodes))); link_g = sum(v * lgpm(k) for k, v in rl.items())
+say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} E + nodes {sum(node_g(i) for i in range(len(nodes))):.0f} {"M" if NODE_M else "E"}), links {link_g:.0f} g (C); "
     f"v0 rings ~96 g, v1 sphere 802 + 98 g (E)")
 t2, c2 = cg([x for x in it if x[0] not in ("pack",)] + [("cartridge out", -LATCH_G * 0.45, g["cart"].bounding_box.centroid)])
 Iyy = sum(m_ * ((c_[0] - cgv[0]) ** 2 + (c_[2] - cgv[2]) ** 2) for _, m_, c_ in it) * 1e-6

@@ -1,0 +1,8 @@
+node_17: grid (48, 48, 48) h 1.25 = 110,592 cells; design 37,374 (73.0 cm3), drawn 4,696, void 68,522
+  support hold 0: 3885 cells, 6455 nodes
+  support hold 1: 3885 cells, 6455 nodes
+  support hold 2: 3898 cells, 6470 nodes
+  support hold 3: 3898 cells, 6470 nodes
+  support hold 4: 3818 cells, 6363 nodes
+  support hold 5: 3826 cells, 6329 nodes
+node 17: 11.65 g (M), solid PASS, worst 0.333 (head rod c side b): PASS
