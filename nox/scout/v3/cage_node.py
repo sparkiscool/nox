@@ -160,11 +160,13 @@ def owned_offsets():
     return own
 
 
-def layout(i, walls=None, free=False):
+def layout(i, walls=None, free=False, bells=()):
     """per-socket line origin P (offset from the centre, option B), direction d, set-back r (socket floor from P), boss radius R.
     free: the node's own eccentric sockets (OWN) are variables (solve_offsets); else their offsets are the frozen OFFS"""
     M = members(i); n = len(M); walls = walls or {}
     R = np.array([BORE / 2 + walls.get(m["name"], WALL0) for m in M])
+    Fl = [FLARE_R if m["name"] in bells else 0.0 for m in M]           # v3: the bell mouth and collar only where the FE asked for them
+    Co = [COLLAR if m["name"] in bells else 0.0 for m in M]
     Dk = [TIE_DEPTH if m["tie"] else DEPTH for m in M]
     dirs0 = [(m["far"] - N[i]) / m["L"] for m in M]
     ecc = [k for k, m in enumerate(M) if (i, m["name"]) in OWN] if free else []
@@ -186,9 +188,9 @@ def layout(i, walls=None, free=False):
                 if p == q: continue
                 if p < q:                                                    # bore to bore: 3.0 of PETG
                     g.append(segdist(P[p] + d[p] * r[p], P[p] + d[p] * (r[p] + Dk[p]), P[q] + d[q] * r[q], P[q] + d[q] * (r[q] + Dk[q]))
-                             - (BORE + max(R[p], R[q]) - BORE / 2 + FLARE_R))      # the web between two bores: the thicker wall, flares included
+                             - (BORE + max(R[p], R[q]) - BORE / 2 + max(Fl[p], Fl[q])))   # the web between two bores: the thicker wall, bells included
                 # the rod beyond p's mouth clears q's boss (axis from P[q] to its mouth)
-                g.append(segdist(P[p] + d[p] * (r[p] + Dk[p]), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + Dk[q])) - (ROD_R + R[q] + COLLAR + ROD_CLEAR))
+                g.append(segdist(P[p] + d[p] * (r[p] + Dk[p]), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + Dk[q])) - (ROD_R + R[q] + Co[q] + ROD_CLEAR))
         for j, k in enumerate(ecc):
             g.append(ecc_cap(i, M[k]["name"]) - math.hypot(x[n + 2 * j], x[n + 2 * j + 1]))
         if lim is not None:
@@ -216,7 +218,7 @@ def layout(i, walls=None, free=False):
     if best is None: raise RuntimeError(f"node {i}: no feasible socket layout")
     r, P, d = unpack(best)
     socks = [dict(name=M[k]["name"], d=d[k], P=P[k], r=float(r[k]), R=float(R[k]), far=M[k]["far"], far_node=M[k]["far_node"],
-                  L=M[k]["L"], tie=M[k]["tie"], D=Dk[k], ecc=float(np.linalg.norm(P[k]))) for k in range(n)]
+                  L=M[k]["L"], tie=M[k]["tie"], D=Dk[k], bell=M[k]["name"] in bells, ecc=float(np.linalg.norm(P[k]))) for k in range(n)]
     return socks
 
 
@@ -338,11 +340,14 @@ def bodies(i, socks, hub_r=None, fillet=None):
     for s in socks:
         a, d = s["P"], s["d"]
         prims.append(("cyl", a, a + d * (s["r"] + s["D"]), s["R"]))
-        prims.append(("cyl", a + d * (s["r"] + s["D"] - COLLAR_L), a + d * (s["r"] + s["D"]), s["R"] + COLLAR))   # the mouth collar
         m0 = a + d * (s["r"] + s["D"])
-        b = (seg(a + d * s["r"], m0 - d * (FLARE_L - 0.01), BORE / 2)
-             + cone(m0 - d * FLARE_L, m0 + d * 0.01, BORE / 2, BORE / 2 + FLARE_R)          # the bell mouth (lip fillet)
-             + seg(m0, a + d * (s["r"] + s["D"] + 300.0), max(BORE / 2 + 0.4, BORE / 2 + FLARE_R)))
+        if s.get("bell"):
+            prims.append(("cyl", a + d * (s["r"] + s["D"] - COLLAR_L), m0, s["R"] + COLLAR))   # the mouth collar
+            b = (seg(a + d * s["r"], m0 - d * (FLARE_L - 0.01), BORE / 2)
+                 + cone(m0 - d * FLARE_L, m0 + d * 0.01, BORE / 2, BORE / 2 + FLARE_R)      # the bell mouth (lip fillet)
+                 + seg(m0, a + d * (s["r"] + s["D"] + 300.0), BORE / 2 + FLARE_R))
+        else:
+            b = seg(a + d * s["r"], m0 + d * 0.01, BORE / 2) + seg(m0, a + d * (s["r"] + s["D"] + 300.0), BORE / 2 + 0.4)
         bores = b if bores is None else bores + b                        # the bore, and the rod's path out of the mouth 0.4 clear
     u = up_dir(i, socks)
     if ring:
@@ -416,7 +421,7 @@ def socket_loads(i, s):
     Lfree = max(s["L"] - 2 * (s["r"] + s["D"]), 20.0)               # free length between the two mouths (this end's set-back both ends, E)
     push = min(ax_f, pcr(Lfree), SIG_C * ROD_A)
     pull = ax_f
-    bond = BOND_TAU * math.pi * BORE * (s["D"] - FLARE_L)               # the bell mouth's length carries only an epoxy fillet
+    bond = BOND_TAU * math.pi * BORE * (s["D"] - (FLARE_L if s.get("bell") else 0.0))   # a bell mouth's length carries only an epoxy fillet
     return dict(push=push, pull=pull, side=side_f, moment=M_ROD, bond=bond, pcr=pcr(Lfree), frame_axial=ax_f, Lfree=Lfree)
 
 
@@ -473,7 +478,8 @@ def fe_check(i, socks, B, h=0.5, log=print):
     rim = np.zeros(p.nel, bool)
     for s in socks:
         a = Rr @ s["P"] + Tp[:3, 3]; d = Rr @ s["d"]
-        for c0, rr in ((a + d * s["r"], BORE / 2), (a + d * (s["r"] + s["D"] - FLARE_L), BORE / 2), (a + d * (s["r"] + s["D"]), BORE / 2 + FLARE_R)):
+        fl, fr = (FLARE_L, FLARE_R) if s.get("bell") else (0.0, 0.0)
+        for c0, rr in ((a + d * s["r"], BORE / 2), (a + d * (s["r"] + s["D"] - fl), BORE / 2), (a + d * (s["r"] + s["D"]), BORE / 2 + fr)):
             v = cen - c0; ax_ = v @ d; rad = np.linalg.norm(v - ax_[:, None] * d[None], axis=1)
             rim |= np.hypot(ax_, rad - rr) < RIM_EX                  # the bore floor rim, where the bond starts under the bell, the mouth rim
     # the bond line: PETG cells sharing a node with the rod insert (a voxel bore is a staircase round a 36x stiffer rod, so single
@@ -516,27 +522,28 @@ def node_name(i): return f"scout_node_{i}"
 
 
 def design(i, fe=False, h=0.5, log=print):
-    walls, hub, fil = {}, None, FILLET; hist = []
+    walls, hub, fil, bells = {}, None, FILLET, set(); hist = []
     for it in range(8):
-        socks = symmetrise(i, layout(i, walls))
+        socks = symmetrise(i, layout(i, walls, bells=bells))
         B = bodies(i, socks, hub, fil)
         if not fe: break
         rows, worst, info = fe_check(i, socks, B, h=h, log=log)
         # the gate (dimensions.md L index target): each socket's worst cell <= 1.0 (the exclusions above); the 99.9th percentile is reported
         w = max(worst.values(), key=lambda r: r["max"]); mc = w
         bend = max((r_ for r_ in rows if " bend " in r_["case"]), key=lambda r_: r_["max"])
-        hist.append(dict(iter=it, walls={s["name"]: round(s["R"] - BORE / 2, 2) for s in socks}, hub_r=B["hub_r"], fillet=fil, worst=w,
+        hist.append(dict(iter=it, walls={s["name"]: round(s["R"] - BORE / 2, 2) for s in socks}, bells=sorted(bells), hub_r=B["hub_r"], fillet=fil, worst=w,
                          bend_worst=dict(value=bend["max"], case=bend["case"], socket=bend["name"]),
                          outlast=round(bend["max"] * ROD_STRENGTH / SIG_C * KNOCK_SF, 2),
                          max_cell=dict(value=mc["max_cell"], case=mc["max_case"], socket=mc["name"]),
                          per_socket={socks[k]["name"]: dict(p999=v["p999"], max_cell=v["max_cell"], case=v["case"], at_r=v["at_r"]) for k, v in worst.items()}))
         log(f"  node {i} iter {it}: worst cell {w['max']} in {w['case']} ({w['name']}, {w['inlayer']} in / {w['across']} across layers); "
-            f"99.9 % {w['p999']}; walls {dict((k_, v_) for k_, v_ in walls.items())}, fillet {fil}")
+            f"99.9 % {w['p999']}; walls {dict((k_, v_) for k_, v_ in walls.items())}, bells {sorted(bells)}, fillet {fil}")
         bad = [k for k, v in worst.items() if v["max"] > 1.0]
         if not bad: break
         for k in bad:
             v = worst[k]; s = socks[k]
             if v["at_r"] <= B["hub_r"] + 0.5: hub = B["hub_r"] + 1.0     # at the hub: a larger hub
+            elif s["name"] not in bells: bells.add(s["name"])          # first the lip fix: bell mouth + collar (v3: only where needed)
             else: walls[s["name"]] = walls.get(s["name"], WALL0) + 0.5
         fil = min(fil + 1.0, FILLET_MAX)                                  # and a rounder crotch (the peaks sit in the fillets)
         if is_centre(i):                                                  # keep a mirror pair's walls equal
@@ -544,6 +551,7 @@ def design(i, fe=False, h=0.5, log=print):
                 for b in socks:
                     if a is not b and np.allclose(a["d"] * [1, -1, 1], b["d"], atol=1e-6):
                         m = max(walls.get(a["name"], WALL0), walls.get(b["name"], WALL0)); walls[a["name"]] = walls[b["name"]] = m
+                        if a["name"] in bells or b["name"] in bells: bells.update((a["name"], b["name"]))
     return socks, B, hist
 
 
@@ -601,7 +609,7 @@ def build_all(ids, out, fe=False, h=0.5):
         for s in socks:
             Ld = socket_loads(i, s)
             socket_rows.append(dict(name=s["name"], dir=np.round(s["d"], 4).tolist(), line_origin=np.round(s["P"], 2).tolist(), ecc=round(s["ecc"], 2),
-                                    setback=round(s["r"], 2), depth=s["D"], mouth_r=round(s["r"] + s["D"], 2), wall=round(s["R"] - BORE / 2, 2),
+                                    setback=round(s["r"], 2), depth=s["D"], bell=bool(s.get("bell")), mouth_r=round(s["r"] + s["D"], 2), wall=round(s["R"] - BORE / 2, 2),
                                     mouth_drone=np.round(N[i] + s["P"] + s["d"] * (s["r"] + s["D"]), 2).tolist(),
                                     floor_drone=np.round(N[i] + s["P"] + s["d"] * s["r"], 2).tolist(),
                                     elev_deg=round(math.degrees(math.asin(np.clip(s["d"] @ B["up"], -1, 1))), 1),

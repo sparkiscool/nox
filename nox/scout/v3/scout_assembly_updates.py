@@ -19,7 +19,7 @@ CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_m
 ELEC_R = os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope_r5.json")   # the electronics session's round 5, drawn at the v12 catch
 # the layout run each other session's part was drawn on: a part drawn on another run is stale (its cage, catch or rods moved) and stays out
 # until its session redraws it; the layout's own placeholder stands in and the run's summary lists it
-DRAWN_ON = {"camera mount v1": ("v12", "v13"), "electronics round 5": ("v12",), "belly mount v1": ("v12",)}   # v13: the nose rods 7-8, 14-15 and
+DRAWN_ON = {"camera mount v1": ("v12", "v13"), "electronics round 5": ("v12",), "belly mount v1": ("v12",), "cage nodes v3": ("v13",)}   # v13: the nose rods 7-8, 14-15 and
 # the nose top node are where v12 had them (C), so the camera mount v1 stands in for its mass and pose only: its clips are bored 6.2 for the 6/4
 # tube and do not grip the 3.0 rods (Spark 27 Oct); the camera mount v2 (3.2 clips, worker) replaces it
 STALE = []
@@ -31,7 +31,7 @@ def fits(what):
     STALE.append(f"{what}: drawn on {', '.join(DRAWN_ON[what])}, stale on {os.path.basename(os.path.normpath(RUN))} (needs its redraw; the layout placeholder stands in)")
     return False
 BELLY = os.path.join(ROOT, "runs", "scout_belly_mount", "v1")    # the electronics session's belly mount v1 (PR 150, concept): its system model
-NODES = os.path.join(ROOT, "runs", "scout_nodes", "v2")          # the saved cage nodes v2: placed.json lists every node / cap mesh in the drone frame
+NODES = os.path.join(ROOT, "runs", "scout_nodes", "v3")          # the saved cage nodes v3 (drawn on v13): placed.json lists every node / cap mesh in the drone frame
 CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant
 # the Radxa's 4 M2.5 holes, board coords (X along 65 from the SD end, Y along 30 from the ports edge; H, STEP, from the electronics
 # session's electronics_system.py RADXA_HOLES); its posts land on the PCB back (y -1.6) with Ø8.4 keep-outs (their round 5)
@@ -117,17 +117,17 @@ def belly(a):
 
 
 def nodes(a):
-    """the saved cage nodes v2 (runs/scout_nodes/v2, nox/scout/v3/cage_node.py): every node's mesh at its node position (the mirror
+    """the saved cage nodes v3 (runs/scout_nodes/v3 on layout v13, nox/scout/v3/cage_node.py): every node's mesh at its node position (the mirror
     nodes as mirror prints) and the 4 TPU foot caps under the ring nodes, in place of the layout's 'cage shell nodes' spheres; each rod
     in its socket is a designed joint (the shell tubes and the ties are drawn centre to centre, so they cross each node's hub)"""
     man = os.path.join(NODES, "placed.json")
-    if not os.path.exists(man): return []
+    if not os.path.exists(man) or not fits("cage nodes v3"): return []
     pl = json.load(open(man)); old = {"cage shell nodes"} | {p["name"] for p in a["parts"] if p["name"].startswith(("cage node ", "foot cap "))}
     if not old & {p["name"] for p in a["parts"]}: return []
     new = [dict(name=q["name"], role="cage", mesh=q["mesh"], material=q.get("material", "PETG"), mass_g=q["mass_g"], tag="M",
-                owner="scout cage nodes", version="v2", source="nox/scout/v3/cage_node.py",
+                owner="scout cage nodes", version="v3", source="nox/scout/v3/cage_node.py",
                 note=("TPU foot cap Ø16 x 3 under the ring node (box catch F)" if q["name"].startswith("foot cap") else
-                      f"print/scout_node_{q['design']}_v2{'_mirror' if q.get('mirror') else ''}.stl at node {q['node']}")) for q in pl]
+                      f"print/scout_node_{q['design']}_v3{'_mirror' if q.get('mirror') else ''}.stl at node {q['node']}")) for q in pl]
     a["parts"] = [p for p in a["parts"] if p["name"] not in old] + new
     a["contact_pairs"] = [c for c in a["contact_pairs"] if not ({c[0], c[1]} & old)]
     for q in pl:
@@ -136,7 +136,7 @@ def nodes(a):
         else:
             a["contact_pairs"].append([q["name"], f"cage node {q['node']}", 1e9])
     nn = sum(1 for q in pl if q["name"].startswith("cage node")); nc = len(pl) - nn
-    return [f"cage nodes v2: {nn} nodes + {nc} foot caps, {sum(q['mass_g'] for q in pl):.1f} g (M)"]
+    return [f"cage nodes v3: {nn} nodes + {nc} foot caps, {sum(q['mass_g'] for q in pl):.1f} g (M)"]
 
 
 def main():
