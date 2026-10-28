@@ -1,0 +1,196 @@
+[
+ {
+  "name": "cage node 0",
+  "mesh": "runs/scout_nodes/v1/placed/node_0.stl",
+  "node": 0,
+  "mass_g": 9.34,
+  "tag": "M",
+  "design": 0,
+  "mirror": false
+ },
+ {
+  "name": "foot cap 0 (TPU)",
+  "mesh": "runs/scout_nodes/v1/placed/foot_cap_0.stl",
+  "node": 0,
+  "mass_g": 0.86,
+  "tag": "M",
+  "material": "TPU"
+ },
+ {
+  "name": "cage node 1",
+  "mesh": "runs/scout_nodes/v1/placed/node_1.stl",
+  "node": 1,
+  "mass_g": 7.86,
+  "tag": "M",
+  "design": 1,
+  "mirror": false
+ },
+ {
+  "name": "foot cap 1 (TPU)",
+  "mesh": "runs/scout_nodes/v1/placed/foot_cap_1.stl",
+  "node": 1,
+  "mass_g": 0.86,
+  "tag": "M",
+  "material": "TPU"
+ },
+ {
+  "name": "cage node 2",
+  "mesh": "runs/scout_nodes/v1/placed/node_2.stl",
+  "node": 2,
+  "mass_g": 7.86,
+  "tag": "M",
+  "design": 1,
+  "mirror": true
+ },
+ {
+  "name": "foot cap 2 (TPU)",
+  "mesh": "runs/scout_nodes/v1/placed/foot_cap_2.stl",
+  "node": 2,
+  "mass_g": 0.86,
+  "tag": "M",
+  "material": "TPU"
+ },
+ {
+  "name": "cage node 3",
+  "mesh": "runs/scout_nodes/v1/placed/node_3.stl",
+  "node": 3,
+  "mass_g": 9.34,
+  "tag": "M",
+  "design": 0,
+  "mirror": true
+ },
+ {
+  "name": "foot cap 3 (TPU)",
+  "mesh": "runs/scout_nodes/v1/placed/foot_cap_3.stl",
+  "node": 3,
+  "mass_g": 0.86,
+  "tag": "M",
+  "material": "TPU"
+ },
+ {
+  "name": "cage node 4",
+  "mesh": "runs/scout_nodes/v1/placed/node_4.stl",
+  "node": 4,
+  "mass_g": 5.12,
+  "tag": "M",
+  "design": 4,
+  "mirror": false
+ },
+ {
+  "name": "cage node 5",
+  "mesh": "runs/scout_nodes/v1/placed/node_5.stl",
+  "node": 5,
+  "mass_g": 5.11,
+  "tag": "M",
+  "design": 5,
+  "mirror": false
+ },
+ {
+  "name": "cage node 6",
+  "mesh": "runs/scout_nodes/v1/placed/node_6.stl",
+  "node": 6,
+  "mass_g": 5.11,
+  "tag": "M",
+  "design": 5,
+  "mirror": true
+ },
+ {
+  "name": "cage node 7",
+  "mesh": "runs/scout_nodes/v1/placed/node_7.stl",
+  "node": 7,
+  "mass_g": 7.17,
+  "tag": "M",
+  "design": 8,
+  "mirror": true
+ },
+ {
+  "name": "cage node 8",
+  "mesh": "runs/scout_nodes/v1/placed/node_8.stl",
+  "node": 8,
+  "mass_g": 7.17,
+  "tag": "M",
+  "design": 8,
+  "mirror": false
+ },
+ {
+  "name": "cage node 9",
+  "mesh": "runs/scout_nodes/v1/placed/node_9.stl",
+  "node": 9,
+  "mass_g": 5.76,
+  "tag": "M",
+  "design": 10,
+  "mirror": true
+ },
+ {
+  "name": "cage node 10",
+  "mesh": "runs/scout_nodes/v1/placed/node_10.stl",
+  "node": 10,
+  "mass_g": 5.76,
+  "tag": "M",
+  "design": 10,
+  "mirror": false
+ },
+ {
+  "name": "cage node 11",
+  "mesh": "runs/scout_nodes/v1/placed/node_11.stl",
+  "node": 11,
+  "mass_g": 6.11,
+  "tag": "M",
+  "design": 11,
+  "mirror": false
+ },
+ {
+  "name": "cage node 12",
+  "mesh": "runs/scout_nodes/v1/placed/node_12.stl",
+  "node": 12,
+  "mass_g": 6.51,
+  "tag": "M",
+  "design": 12,
+  "mirror": false
+ },
+ {
+  "name": "cage node 13",
+  "mesh": "runs/scout_nodes/v1/placed/node_13.stl",
+  "node": 13,
+  "mass_g": 6.51,
+  "tag": "M",
+  "design": 12,
+  "mirror": true
+ },
+ {
+  "name": "cage node 14",
+  "mesh": "runs/scout_nodes/v1/placed/node_14.stl",
+  "node": 14,
+  "mass_g": 7.46,
+  "tag": "M",
+  "design": 14,
+  "mirror": false
+ },
+ {
+  "name": "cage node 15",
+  "mesh": "runs/scout_nodes/v1/placed/node_15.stl",
+  "node": 15,
+  "mass_g": 7.46,
+  "tag": "M",
+  "design": 14,
+  "mirror": true
+ },
+ {
+  "name": "cage node 16",
+  "mesh": "runs/scout_nodes/v1/placed/node_16.stl",
+  "node": 16,
+  "mass_g": 4.76,
+  "tag": "M",
+  "design": 16,
+  "mirror": false
+ },
+ {
+  "name": "cage node 17",
+  "mesh": "runs/scout_nodes/v1/placed/node_17.stl",
+  "node": 17,
+  "mass_g": 5.45,
+  "tag": "M",
+  "design": 17,
+  "mirror": false
+ }
+]

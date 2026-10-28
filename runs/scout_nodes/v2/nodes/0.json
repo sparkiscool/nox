@@ -1,0 +1,510 @@
+{
+ "centre": [
+  90.8,
+  116.1,
+  -49.621
+ ],
+ "mirror": 3,
+ "file": "runs/scout_nodes/v2/scout_node_0_v2.stl",
+ "mass_g": 12.97,
+ "solid_check": {
+  "ok": true,
+  "bodies_eroded": 1,
+  "thin_walls": 0,
+  "necks": 0
+ },
+ "up": [
+  0.0,
+  0.0,
+  1.0
+ ],
+ "bed_below_centre": 10.15,
+ "hub_r": 8.0,
+ "envelope": {
+  "r_max": 29.8,
+  "lo": [
+   -22.3,
+   -28.1,
+   -10.1
+  ],
+  "hi": [
+   12.0,
+   8.9,
+   24.9
+  ]
+ },
+ "sockets": [
+  {
+   "name": "rod 0-1",
+   "dir": [
+    -0.9995,
+    0.027,
+    0.0169
+   ],
+   "line_origin": [
+    -0.01,
+    -0.59,
+    -2.62
+   ],
+   "ecc": 2.68,
+   "setback": 3.0,
+   "depth": 10.0,
+   "mouth_r": 13.0,
+   "wall": 3.0,
+   "mouth_drone": [
+    77.79,
+    115.87,
+    -52.02
+   ],
+   "floor_drone": [
+    87.79,
+    115.6,
+    -52.19
+   ],
+   "elev_deg": 1.0,
+   "loads": {
+    "push": 464.9,
+    "pull": 464.9,
+    "side": 3.6,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 483.2,
+    "frame_axial": 464.9,
+    "Lfree": 128.7
+   }
+  },
+  {
+   "name": "rod 0-3",
+   "dir": [
+    0.0,
+    -1.0,
+    0.0
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 9.57,
+   "depth": 10.0,
+   "mouth_r": 19.57,
+   "wall": 3.5,
+   "mouth_drone": [
+    90.8,
+    96.53,
+    -49.62
+   ],
+   "floor_drone": [
+    90.8,
+    106.53,
+    -49.62
+   ],
+   "elev_deg": 0.0,
+   "loads": {
+    "push": 214.8,
+    "pull": 656.6,
+    "side": 2.3,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 214.8,
+    "frame_axial": 656.6,
+    "Lfree": 193.1
+   }
+  },
+  {
+   "name": "rod 0-5",
+   "dir": [
+    -0.9082,
+    0.0962,
+    0.4073
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 11.35,
+   "depth": 10.0,
+   "mouth_r": 21.35,
+   "wall": 3.0,
+   "mouth_drone": [
+    71.41,
+    118.15,
+    -40.93
+   ],
+   "floor_drone": [
+    80.49,
+    117.19,
+    -45.0
+   ],
+   "elev_deg": 24.0,
+   "loads": {
+    "push": 297.9,
+    "pull": 297.9,
+    "side": 25.6,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 3206.8,
+    "frame_axial": 297.9,
+    "Lfree": 50.0
+   }
+  },
+  {
+   "name": "rod 0-8",
+   "dir": [
+    0.1726,
+    -0.1731,
+    0.9697
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 13.54,
+   "depth": 10.0,
+   "mouth_r": 23.54,
+   "wall": 3.0,
+   "mouth_drone": [
+    94.86,
+    112.03,
+    -26.79
+   ],
+   "floor_drone": [
+    93.14,
+    113.76,
+    -36.49
+   ],
+   "elev_deg": 75.9,
+   "loads": {
+    "push": 589.1,
+    "pull": 589.1,
+    "side": 1.3,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 1777.6,
+    "frame_axial": 589.1,
+    "Lfree": 67.1
+   }
+  },
+  {
+   "name": "rod 0-12",
+   "dir": [
+    -0.4349,
+    0.1577,
+    0.8866
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 5.04,
+   "depth": 10.0,
+   "mouth_r": 15.04,
+   "wall": 3.0,
+   "mouth_drone": [
+    84.26,
+    118.47,
+    -36.29
+   ],
+   "floor_drone": [
+    88.61,
+    116.89,
+    -45.15
+   ],
+   "elev_deg": 62.4,
+   "loads": {
+    "push": 438.4,
+    "pull": 438.4,
+    "side": 7.6,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 1398.2,
+    "frame_axial": 438.4,
+    "Lfree": 75.7
+   }
+  },
+  {
+   "name": "rod 0-14",
+   "dir": [
+    0.3632,
+    -0.6163,
+    0.6988
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 7.49,
+   "depth": 10.0,
+   "mouth_r": 17.49,
+   "wall": 3.0,
+   "mouth_drone": [
+    97.15,
+    105.32,
+    -37.4
+   ],
+   "floor_drone": [
+    93.52,
+    111.48,
+    -44.39
+   ],
+   "elev_deg": 44.3,
+   "loads": {
+    "push": 1263.5,
+    "pull": 1263.5,
+    "side": 16.9,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 2900.8,
+    "frame_axial": 1263.5,
+    "Lfree": 52.5
+   }
+  },
+  {
+   "name": "rod 0-17",
+   "dir": [
+    0.1325,
+    -0.9654,
+    0.2246
+   ],
+   "line_origin": [
+    -0.15,
+    0.86,
+    3.36
+   ],
+   "ecc": 3.48,
+   "setback": 17.86,
+   "depth": 10.0,
+   "mouth_r": 27.86,
+   "wall": 3.0,
+   "mouth_drone": [
+    94.34,
+    90.07,
+    -40.0
+   ],
+   "floor_drone": [
+    93.01,
+    99.72,
+    -42.25
+   ],
+   "elev_deg": 13.0,
+   "loads": {
+    "push": 342.5,
+    "pull": 342.5,
+    "side": 5.0,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 1873.3,
+    "frame_axial": 342.5,
+    "Lfree": 65.4
+   }
+  }
+ ],
+ "fe": [
+  {
+   "iter": 0,
+   "walls": {
+    "rod 0-1": 3.0,
+    "rod 0-3": 3.0,
+    "rod 0-5": 3.0,
+    "rod 0-8": 3.0,
+    "rod 0-12": 3.0,
+    "rod 0-14": 3.0,
+    "rod 0-17": 3.0
+   },
+   "hub_r": 8.0,
+   "fillet": 2.5,
+   "worst": {
+    "socket": 1,
+    "name": "rod 0-3",
+    "case": "1 bend +b",
+    "max": 1.021,
+    "p999": 0.348,
+    "inlayer": 0.55,
+    "across": 1.021,
+    "at_node": [
+     -0.4,
+     -15.6,
+     2.4
+    ],
+    "at_r": 15.7,
+    "max_cell": 1.021,
+    "max_case": "1 bend +b"
+   },
+   "bend_worst": {
+    "value": 1.021,
+    "case": "1 bend +b",
+    "socket": "rod 0-3"
+   },
+   "outlast": 1.58,
+   "max_cell": {
+    "value": 1.021,
+    "case": "1 bend +b",
+    "socket": "rod 0-3"
+   },
+   "per_socket": {
+    "rod 0-1": {
+     "p999": 0.339,
+     "max_cell": 0.755,
+     "case": "0 bend +b",
+     "at_r": 11.5
+    },
+    "rod 0-3": {
+     "p999": 0.348,
+     "max_cell": 1.021,
+     "case": "1 bend +b",
+     "at_r": 15.7
+    },
+    "rod 0-5": {
+     "p999": 0.451,
+     "max_cell": 0.853,
+     "case": "2 bend -b",
+     "at_r": 20.0
+    },
+    "rod 0-8": {
+     "p999": 0.393,
+     "max_cell": 0.928,
+     "case": "3 bend -b",
+     "at_r": 17.0
+    },
+    "rod 0-12": {
+     "p999": 0.352,
+     "max_cell": 0.786,
+     "case": "4 bend -b",
+     "at_r": 12.7
+    },
+    "rod 0-14": {
+     "p999": 0.648,
+     "max_cell": 0.952,
+     "case": "5 pull",
+     "at_r": 12.6
+    },
+    "rod 0-17": {
+     "p999": 0.326,
+     "max_cell": 0.781,
+     "case": "6 bend +b",
+     "at_r": 25.0
+    }
+   }
+  },
+  {
+   "iter": 1,
+   "walls": {
+    "rod 0-1": 3.0,
+    "rod 0-3": 3.5,
+    "rod 0-5": 3.0,
+    "rod 0-8": 3.0,
+    "rod 0-12": 3.0,
+    "rod 0-14": 3.0,
+    "rod 0-17": 3.0
+   },
+   "hub_r": 8.0,
+   "fillet": 3.5,
+   "worst": {
+    "socket": 3,
+    "name": "rod 0-8",
+    "case": "3 bend -b",
+    "max": 0.937,
+    "p999": 0.49,
+    "inlayer": 0.405,
+    "across": 0.937,
+    "at_node": [
+     -1.4,
+     -2.4,
+     17.2
+    ],
+    "at_r": 17.4,
+    "max_cell": 0.937,
+    "max_case": "3 bend -b"
+   },
+   "bend_worst": {
+    "value": 0.937,
+    "case": "3 bend -b",
+    "socket": "rod 0-8"
+   },
+   "outlast": 1.45,
+   "max_cell": {
+    "value": 0.937,
+    "case": "3 bend -b",
+    "socket": "rod 0-8"
+   },
+   "per_socket": {
+    "rod 0-1": {
+     "p999": 0.295,
+     "max_cell": 0.915,
+     "case": "0 bend +b",
+     "at_r": 11.4
+    },
+    "rod 0-3": {
+     "p999": 0.308,
+     "max_cell": 0.785,
+     "case": "1 bend +b",
+     "at_r": 18.1
+    },
+    "rod 0-5": {
+     "p999": 0.322,
+     "max_cell": 0.646,
+     "case": "2 bend +b",
+     "at_r": 18.6
+    },
+    "rod 0-8": {
+     "p999": 0.49,
+     "max_cell": 0.937,
+     "case": "3 bend -b",
+     "at_r": 17.4
+    },
+    "rod 0-12": {
+     "p999": 0.319,
+     "max_cell": 0.672,
+     "case": "4 bend -b",
+     "at_r": 12.3
+    },
+    "rod 0-14": {
+     "p999": 0.347,
+     "max_cell": 0.711,
+     "case": "5 bend -b",
+     "at_r": 15.2
+    },
+    "rod 0-17": {
+     "p999": 0.393,
+     "max_cell": 0.758,
+     "case": "6 bend -b",
+     "at_r": 26.3
+    }
+   }
+  }
+ ],
+ "extents_print": [
+  34.3,
+  37.0,
+  35.0
+ ],
+ "placed": [
+  {
+   "name": "cage node 0",
+   "mesh": "runs/scout_nodes/v2/placed/node_0.stl",
+   "node": 0,
+   "mass_g": 12.97,
+   "tag": "M",
+   "design": 0,
+   "mirror": false
+  },
+  {
+   "name": "cage node 3",
+   "mesh": "runs/scout_nodes/v2/placed/node_3.stl",
+   "node": 3,
+   "mass_g": 12.97,
+   "tag": "M",
+   "design": 0,
+   "mirror": true
+  }
+ ]
+}

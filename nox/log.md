@@ -1,5 +1,7 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 28 Oct (Scout v3, WIP, stopped by Spark): cage nodes v3 on layout v13 (bells only where the FE asks): all 12 designs built, worst cell ≤ 0.99, solid PASS (runs/scout_nodes/v3/nodes); not done: merge, print files, previews, system_check, rows, page
+- 28 Oct (Scout v3): cage nodes v2 (review FAIL on v1): worst-cell gate, bell mouths + collars, flat-boss pose, ties 14 deep, offsets ≤ 1590 N mm; worst ≤ 0.94, 188.8 + 3.4 g M, solid PASS x 19; bending overload: node before rod (stated). CG 4.7 FAIL: re-trim. `runs/scout_nodes/v2/`
 - 28 Oct (Scout v3): layout v13 (`runs/scout_layout/v13/`): node mass fitted to the saved nodes v2 (192 g M; v12 assumed 39, CG read 4.65): catch 2.5 aft (was 5.0 fwd), 58 rods on 19 nodes, 912 g E, CG 0.7 / 0.7 E; frame v4 34 Hz F. Nodes, electronics stale (redraw); camera v1 for mass only (6.2 clips).
 - 28 Oct (Overseer): cage nodes v5 saved READY: 24 print files (15 designs + 9 mirrors), drawn first (no topology run), 2.0 walls (v4 2.5: 345 g), 289.4 g PETG (M), each solid_check PASS, worst 0.252 (F); in the assembly, system_check PASS; runs/cage_nodes/v5
 - 28 Oct (Overseer): head v5 sweep (3 rods) all solid FAIL, worst 1.6-2.7 (M): one held socket took all load; the L2 plane cut the side bosses (1.2 wall, M). Fix: all 3 sockets hold; bosses checked on the exact keep-outs; L2 rolled 180 (DEFAULT); rods 12 behind (C): 119.4 / 94.2 Hz (was 151.8, unbuildable) (F on E)

@@ -1,0 +1,20 @@
+eccentric sockets from runs/scout_nodes/v3/offsets.json
+  node 12 iter 0: worst cell 1.974 in 5 bend -b (saddle tie 2.1, 0.739 in / 1.974 across layers); 99.9 % 1.045; walls {}, bells [], fillet 2.5
+  node 12 iter 1: worst cell 1.799 in 5 bend -b (saddle tie 2.1, 0.719 in / 1.799 across layers); 99.9 % 1.012; walls {}, bells ['saddle tie 2.1'], fillet 3.5
+  node 12 iter 2: worst cell 1.474 in 5 bend -b (saddle tie 2.1, 0.572 in / 1.474 across layers); 99.9 % 0.751; walls {'saddle tie 2.1': 3.5}, bells ['saddle tie 2.1'], fillet 4.5
+  node 12 iter 3: worst cell 1.364 in 5 bend -b (saddle tie 2.1, 0.441 in / 1.364 across layers); 99.9 % 0.598; walls {'saddle tie 2.1': 4.0}, bells ['saddle tie 2.1'], fillet 5.5
+  node 12 iter 4: worst cell 0.976 in 5 bend -b (saddle tie 2.1, 0.374 in / 0.976 across layers); 99.9 % 0.529; walls {'saddle tie 2.1': 4.5}, bells ['saddle tie 2.1'], fillet 5.5
+node 12: 10.47 g, solid_check PASS, envelope r 27.1, 6 sockets, 442 s, FE worst cell 0.976 (99.9 % 0.529), outlast 1.51
+  node 1 iter 0: worst cell 1.479 in 2 bend +b (rod 1-5, 0.847 in / 1.479 across layers); 99.9 % 0.341; walls {}, bells [], fillet 2.5
+  node 1 iter 1: worst cell 1.153 in 4 bend +b (rod 1-11, 0.492 in / 1.153 across layers); 99.9 % 0.633; walls {}, bells ['rod 1-11', 'rod 1-12', 'rod 1-5'], fillet 3.5
+  node 1 iter 2: worst cell 1.04 in 5 bend -b (rod 1-12, 0.623 in / 1.04 across layers); 99.9 % 0.343; walls {'rod 1-11': 3.5}, bells ['rod 0-1', 'rod 1-11', 'rod 1-12', 'rod 1-5'], fillet 4.5
+  node 1 iter 3: worst cell 0.751 in 1 bend +b (rod 1-2, 0.492 in / 0.751 across layers); 99.9 % 0.323; walls {'rod 1-11': 3.5, 'rod 1-12': 3.5}, bells ['rod 0-1', 'rod 1-11', 'rod 1-12', 'rod 1-5'], fillet 5.5
+node 1: 15.41 g, solid_check PASS, envelope r 40.8, 6 sockets, 538 s, FE worst cell 0.751 (99.9 % 0.323), outlast 1.16
+  node 5 iter 0: worst cell 1.525 in 3 pull (saddle tie 1.1, 0.562 in / 1.525 across layers); 99.9 % 0.97; walls {}, bells [], fillet 2.5
+  node 5 iter 1: worst cell 1.387 in 3 bend +b (saddle tie 1.1, 0.936 in / 1.387 across layers); 99.9 % 0.717; walls {}, bells ['rod 0-5', 'rod 1-5', 'saddle tie 1.1', 'saddle tie 3.1'], fillet 3.5
+  node 5 iter 2: worst cell 1.132 in 3 bend +b (saddle tie 1.1, 0.72 in / 1.132 across layers); 99.9 % 0.511; walls {'rod 0-5': 3.5, 'saddle tie 1.1': 3.5}, bells ['rod 0-5', 'rod 1-5', 'saddle tie 1.1', 'saddle tie 3.1'], fillet 4.5
+  node 5 iter 3: worst cell 0.858 in 3 pull (saddle tie 1.1, 0.392 in / 0.858 across layers); 99.9 % 0.662; walls {'rod 0-5': 3.5, 'saddle tie 1.1': 4.0}, bells ['rod 0-5', 'rod 1-5', 'saddle tie 1.1', 'saddle tie 3.1'], fillet 5.5
+node 5: 11.07 g, solid_check PASS, envelope r 28.8, 5 sockets, 274 s, FE worst cell 0.858 (99.9 % 0.662), outlast 1.32
+  node 11 iter 0: worst cell 1.028 in 1 bend -b (rod 4-11, 0.531 in / 1.028 across layers); 99.9 % 0.629; walls {}, bells [], fillet 2.5
+  node 11 iter 1: worst cell 0.987 in 1 bend -b (rod 4-11, 0.509 in / 0.987 across layers); 99.9 % 0.599; walls {}, bells ['rod 4-11'], fillet 3.5
+node 11: 7.68 g, solid_check PASS, envelope r 26.0, 6 sockets, 132 s, FE worst cell 0.987 (99.9 % 0.599), outlast 1.53

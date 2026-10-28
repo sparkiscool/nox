@@ -1,0 +1,277 @@
+{
+ "centre": [
+  106.695,
+  0.0,
+  -19.043
+ ],
+ "mirror": null,
+ "file": "runs/scout_nodes/v2/scout_node_17_v2.stl",
+ "mass_g": 6.81,
+ "solid_check": {
+  "ok": true,
+  "bodies_eroded": 1,
+  "thin_walls": 0,
+  "necks": 0
+ },
+ "up": [
+  0.8785,
+  0.0,
+  -0.4777
+ ],
+ "bed_below_centre": 5.1,
+ "hub_r": 6.0,
+ "envelope": {
+  "r_max": 21.5,
+  "lo": [
+   -8.4,
+   -21.5,
+   -10.3
+  ],
+  "hi": [
+   10.2,
+   21.5,
+   14.0
+  ]
+ },
+ "sockets": [
+  {
+   "name": "rod 0-17",
+   "dir": [
+    -0.1325,
+    0.9654,
+    -0.2246
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 10.35,
+   "depth": 10.0,
+   "mouth_r": 20.35,
+   "wall": 3.0,
+   "mouth_drone": [
+    104.0,
+    19.64,
+    -23.61
+   ],
+   "floor_drone": [
+    105.32,
+    9.99,
+    -21.37
+   ],
+   "elev_deg": -0.5,
+   "loads": {
+    "push": 342.5,
+    "pull": 342.5,
+    "side": 5.0,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 1236.9,
+    "frame_axial": 342.5,
+    "Lfree": 80.5
+   }
+  },
+  {
+   "name": "rod 3-17",
+   "dir": [
+    -0.1325,
+    -0.9654,
+    -0.2246
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 10.35,
+   "depth": 10.0,
+   "mouth_r": 20.35,
+   "wall": 3.0,
+   "mouth_drone": [
+    104.0,
+    -19.64,
+    -23.61
+   ],
+   "floor_drone": [
+    105.32,
+    -9.99,
+    -21.37
+   ],
+   "elev_deg": -0.5,
+   "loads": {
+    "push": 342.5,
+    "pull": 342.5,
+    "side": 4.3,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 1236.9,
+    "frame_axial": 342.5,
+    "Lfree": 80.5
+   }
+  },
+  {
+   "name": "rod 14-17",
+   "dir": [
+    0.2236,
+    0.8746,
+    0.4302
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 10.35,
+   "depth": 10.0,
+   "mouth_r": 20.35,
+   "wall": 3.0,
+   "mouth_drone": [
+    111.24,
+    17.79,
+    -10.29
+   ],
+   "floor_drone": [
+    109.01,
+    9.05,
+    -14.59
+   ],
+   "elev_deg": -0.5,
+   "loads": {
+    "push": 373.9,
+    "pull": 373.9,
+    "side": 5.4,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 8673.6,
+    "frame_axial": 373.9,
+    "Lfree": 30.4
+   }
+  },
+  {
+   "name": "rod 15-17",
+   "dir": [
+    0.2236,
+    -0.8746,
+    0.4302
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 10.35,
+   "depth": 10.0,
+   "mouth_r": 20.35,
+   "wall": 3.0,
+   "mouth_drone": [
+    111.24,
+    -17.79,
+    -10.29
+   ],
+   "floor_drone": [
+    109.01,
+    -9.05,
+    -14.59
+   ],
+   "elev_deg": -0.5,
+   "loads": {
+    "push": 373.9,
+    "pull": 373.9,
+    "side": 4.4,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 8673.6,
+    "frame_axial": 373.9,
+    "Lfree": 30.4
+   }
+  }
+ ],
+ "fe": [
+  {
+   "iter": 0,
+   "walls": {
+    "rod 0-17": 3.0,
+    "rod 3-17": 3.0,
+    "rod 14-17": 3.0,
+    "rod 15-17": 3.0
+   },
+   "hub_r": 6.0,
+   "fillet": 2.5,
+   "worst": {
+    "socket": 0,
+    "name": "rod 0-17",
+    "case": "0 bend +a",
+    "max": 0.901,
+    "p999": 0.472,
+    "inlayer": 0.901,
+    "across": 0.533,
+    "at_node": [
+     0.1,
+     13.8,
+     1.4
+    ],
+    "at_r": 13.8,
+    "max_cell": 0.901,
+    "max_case": "0 bend +a"
+   },
+   "bend_worst": {
+    "value": 0.901,
+    "case": "0 bend +a",
+    "socket": "rod 0-17"
+   },
+   "outlast": 1.39,
+   "max_cell": {
+    "value": 0.901,
+    "case": "0 bend +a",
+    "socket": "rod 0-17"
+   },
+   "per_socket": {
+    "rod 0-17": {
+     "p999": 0.472,
+     "max_cell": 0.901,
+     "case": "0 bend +a",
+     "at_r": 13.8
+    },
+    "rod 3-17": {
+     "p999": 0.473,
+     "max_cell": 0.879,
+     "case": "1 bend +a",
+     "at_r": 13.8
+    },
+    "rod 14-17": {
+     "p999": 0.463,
+     "max_cell": 0.766,
+     "case": "2 bend +a",
+     "at_r": 13.9
+    },
+    "rod 15-17": {
+     "p999": 0.46,
+     "max_cell": 0.761,
+     "case": "3 bend +a",
+     "at_r": 13.9
+    }
+   }
+  }
+ ],
+ "extents_print": [
+  25.9,
+  43.0,
+  11.5
+ ],
+ "placed": [
+  {
+   "name": "cage node 17",
+   "mesh": "runs/scout_nodes/v2/placed/node_17.stl",
+   "node": 17,
+   "mass_g": 6.81,
+   "tag": "M",
+   "design": 17,
+   "mirror": false
+  }
+ ]
+}

@@ -1,0 +1,135 @@
+{
+ "scout_foot_cap_v1.stl": {
+  "solid": "PASS",
+  "bed_mm2": 201.0,
+  "thin_island_run": "0 mm",
+  "extents": "[16. 16.  5.]",
+  "g": 0.85
+ },
+ "scout_node_0_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 148.0,
+  "thin_island_run": "0 mm",
+  "extents": "[34.3 37.  35. ]",
+  "g": 12.97
+ },
+ "scout_node_0_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 148.0,
+  "thin_island_run": "0 mm",
+  "extents": "[34.3 37.  35. ]",
+  "g": 12.97
+ },
+ "scout_node_10_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 90.0,
+  "thin_island_run": "0 mm",
+  "extents": "[32.  58.6 24.3]",
+  "g": 9.94
+ },
+ "scout_node_10_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 90.0,
+  "thin_island_run": "0 mm",
+  "extents": "[32.  58.6 24.3]",
+  "g": 9.94
+ },
+ "scout_node_11_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 102.0,
+  "thin_island_run": "0 mm",
+  "extents": "[28.1 40.5 20.9]",
+  "g": 7.47
+ },
+ "scout_node_12_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 456.0,
+  "thin_island_run": "0 mm",
+  "extents": "[35.4 38.7 27.8]",
+  "g": 13.55
+ },
+ "scout_node_12_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 456.0,
+  "thin_island_run": "0 mm",
+  "extents": "[35.4 38.7 27.8]",
+  "g": 13.55
+ },
+ "scout_node_14_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 375.0,
+  "thin_island_run": "0 mm",
+  "extents": "[37.1 41.1 28.4]",
+  "g": 13.3
+ },
+ "scout_node_14_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 375.0,
+  "thin_island_run": "0 mm",
+  "extents": "[37.1 41.1 28.4]",
+  "g": 13.3
+ },
+ "scout_node_16_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 175.0,
+  "thin_island_run": "0 mm",
+  "extents": "[21.2 48.3 11.5]",
+  "g": 5.93
+ },
+ "scout_node_17_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 185.0,
+  "thin_island_run": "0 mm",
+  "extents": "[25.9 43.  11.5]",
+  "g": 6.81
+ },
+ "scout_node_1_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 147.0,
+  "thin_island_run": "0 mm",
+  "extents": "[41.8 26.5 27.2]",
+  "g": 9.99
+ },
+ "scout_node_1_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 147.0,
+  "thin_island_run": "0 mm",
+  "extents": "[41.8 26.5 27.2]",
+  "g": 9.99
+ },
+ "scout_node_4_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 88.0,
+  "thin_island_run": "2 mm",
+  "extents": "[37.1 30.7 13.6]",
+  "g": 6.68
+ },
+ "scout_node_5_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 189.0,
+  "thin_island_run": "0 mm",
+  "extents": "[30.1 37.3 31.2]",
+  "g": 9.45
+ },
+ "scout_node_5_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 189.0,
+  "thin_island_run": "0 mm",
+  "extents": "[30.1 37.3 31.2]",
+  "g": 9.45
+ },
+ "scout_node_8_v2.stl": {
+  "solid": "PASS",
+  "bed_mm2": 85.0,
+  "thin_island_run": "0 mm",
+  "extents": "[38.6 46.4 28.2]",
+  "g": 11.75
+ },
+ "scout_node_8_v2_mirror.stl": {
+  "solid": "PASS",
+  "bed_mm2": 85.0,
+  "thin_island_run": "0 mm",
+  "extents": "[38.6 46.4 28.2]",
+  "g": 11.75
+ }
+}
