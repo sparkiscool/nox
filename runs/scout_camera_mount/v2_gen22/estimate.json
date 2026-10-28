@@ -1,0 +1,22 @@
+{
+ "name": "scout_camera_mount",
+ "h": 1.5,
+ "gen_cm3": 22.0,
+ "coarse": false,
+ "smoke_iterations": 3,
+ "fine": {
+  "s_per_it": 31.7,
+  "cells": 258048,
+  "design_cells": 40814,
+  "cases": 101,
+  "load_cases": 23,
+  "backend": "direct",
+  "peak_gb": 5.01
+ },
+ "peak_gb": 5.01,
+ "wall_h": [
+  0.52,
+  1.31
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
