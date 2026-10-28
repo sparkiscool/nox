@@ -32,21 +32,27 @@ L2CG = np.array(HS["l2"]["cg"]); CAMS = [np.array(c["cg"]) for c in HS["cameras"
 TUBE6 = cf.TUBE6
 JOINT = dict(tube(11.3, 0.0, E=2000.0), G=2000.0 / 3.0)            # PETG node stub (E), as head_cage_concept with V5_JOINT_E=2000
 SET = 6.0
-M_L2, M_CAM, M_MOUNT = 230.0, 15.0, float(HS["mass_budget_g"])     # g (P, E, E)
+M_L2, M_CAM, M_MOUNT = 230.0, 15.0, float(os.environ.get("V5_HEAD_MOUNT_G", HS["mass_budget_g"]))     # g (P, E, E)
 G, CRASH = 9.81, 35.0
 PROP_GAP, CAM_EXTRA = 12.0, 2.0
+_KO = None
+BOSS_R = 6.2 / 2 + 2.5                                            # the head's socket boss (head_mount.socket, 6/4 tube)
+HEAD_DEPTH = float(os.environ.get("V5_HEAD_DEPTH", "12"))     # head rod socket depth: rod forces <= 126 N (F), epoxy shear ~0.6 MPa at 12 (E)
 H0 = B - A * 20.0                                                  # the head's reference point (as cage_frame)
 
 # candidate rod ends on the head: behind the L2 base plane by 6, (u along UPB, y) (C)
 HEAD_PTS = {f"c u{u:+.0f}": (u, 0.0) for u in (-40.0, -20.0, 0.0, 20.0, 40.0, 60.0, 85.0)}
+HEAD_PTS.update({f"c u{u:+.0f} b{b:.0f}": (u, 0.0, b) for u in (-40.0, -20.0, 0.0, 20.0, 40.0, 60.0, 85.0) for b in (9.0, 12.0, 18.0, 24.0)})
 HEAD_PTS.update({f"s u{u:+.0f} y{y:.0f}": (u, y) for u in (-30.0, -10.0, 10.0, 30.0, 50.0, 70.0, 90.0, 100.0, 110.0) for y in (30.0, 50.0, 70.0, 85.0)})
+HEAD_PTS.update({f"s u{u:+.0f} y{y:.0f} b{b:.0f}": (u, y, b) for u in (60.0, 80.0, 90.0, 100.0, 110.0) for y in (50.0, 60.0, 70.0, 80.0) for b in (9.0, 12.0, 18.0, 24.0)})   # deeper behind the plane (the sockets' bosses stay behind it)
 MIN_ROD = 33.0                                                     # carbon break-even (CLAUDE.md): a shorter rod is printed, so its node joins the head
 CORE_PTS = {"tower front": (114.0, 0.0, 20.0), "tower top": (97.0, 0.0, 24.0), "brace lo": (97.0, 26.0, 12.0), "brace hi": (97.0, 14.0, 18.0)}
 CAGE_C = [i for i in range(len(N)) if N[i, 0] > 150 and (abs(N[i, 1]) < 0.5 or N[i, 1] > 0)]   # front cage nodes (y >= 0 designs)
 
 
 def hp(name, sy=1):
-    u, y = HEAD_PTS[name]; return B - A * 6.0 + UPB * u + np.array([0, y * sy, 0])
+    v = HEAD_PTS[name]; u, y = v[0], v[1]; back = v[2] if len(v) > 2 else 6.0
+    return B - A * back + UPB * u + np.array([0, y * sy, 0])
 
 
 def cage_frame_k():
@@ -96,13 +102,21 @@ def head_mass():
 
 
 # ---------------------------------------------------------------- the rod checks (geometry, C)
+def l2_cable_hit(pts, margin=1.0):
+    """head_mount.centre_bodies' L2 cable keep-out: box (-50..-32, -8..8, -40..2) in the L2 frame (T_l2, TILT 105)"""
+    import head_mount as hm
+    R = hm.T_l2()[:3, :3]; loc = (np.asarray(pts) - B) @ R           # drone -> L2 frame (R orthonormal; the L2's roll included)
+    lo, hi = np.array([-50, -8, -40.0]) - margin, np.array([-32, 8, 2.0]) + margin
+    return ((loc >= lo) & (loc <= hi)).all(1)
+
+
 def cam_frustum_hit(pts):
     hit = np.zeros(len(pts), bool)
     for c in HS["cameras"]:
         lens, f, u, r = (np.array(c[k], float) for k in ("lens", "f", "u", "r"))
         ha, hv = math.radians(c["half_across"] + CAM_EXTRA), math.radians(c["half_up"] + CAM_EXTRA)
         d = pts - lens; z = d @ f
-        hit |= (z > 0) & (np.abs(d @ r) <= z * math.tan(ha) + 4) & (np.abs(d @ u) <= z * math.tan(hv) + 4)
+        hit |= (z > -2.5) & (np.abs(d @ r) <= z * math.tan(ha) + 4) & (np.abs(d @ u) <= z * math.tan(hv) + 4)
     return hit
 
 
@@ -123,6 +137,16 @@ def rod_ok(p, q, far_node=None):
     s = p[None] + np.linspace(0, 1, 80)[:, None] * (q - p)[None]
     if ((s - B) @ A > -(3.0 + 1.0)).any(): return False, "L2 field"
     if cam_frustum_hit(s).any(): return False, "camera view"
+    d_ = (q - p) / np.linalg.norm(q - p); x_ = np.cross(d_, [0, 0, 1.0]); x_ = x_ / np.linalg.norm(x_) if np.linalg.norm(x_) > 1e-6 else np.array([1.0, 0, 0]); y_ = np.cross(d_, x_)
+    boss = np.array([p + d_ * t + (x_ * np.cos(a) + y_ * np.sin(a)) * (BOSS_R + 1.0) for t in np.linspace(-(HEAD_DEPTH + 3.0 + 1.0), 1.0, 9) for a in np.linspace(0, 2 * np.pi, 16, endpoint=False)])
+    if cam_frustum_hit(boss).any(): return False, "socket boss in a camera view"
+    if ((boss - B) @ A > -1.0).any(): return False, "socket boss in the L2 field"     # (v5 sweep: the L2 plane cut the side bosses to a 1.2 wall)
+    if l2_cable_hit(np.vstack([s, boss])).any(): return False, "the L2 cable exit"     # (28 Oct: the centre boss sat in the cable keep-out)
+    import head_mount as hm                                            # the head's own keep-outs (exact): the boss must lose nothing to them
+    global _KO
+    if _KO is None: _KO = hm.head_keepouts()
+    bo, cut_, keep_ = hm.socket(p, q, hm.TUBE_BORE, HEAD_DEPTH, wall=2.5)
+    if (bo ^ _KO).volume() > 1.0: return False, "socket boss clipped by a head keep-out"
     for c, R, hz in PROPS:
         dr = np.hypot(s[:, 0] - c[0], s[:, 1] - c[1]) - R; dz = np.abs(s[:, 2] - c[2]) - hz
         if (np.hypot(np.maximum(dr, 0), np.maximum(dz, 0)) < PROP_GAP).any(): return False, "prop"
@@ -136,8 +160,8 @@ def rod_ok(p, q, far_node=None):
 def rods_all():
     """(name, head point, far point, far cage node or None, side) for every candidate rod, y >= 0 side and centre"""
     out = []
-    for hn, (u, y) in HEAD_PTS.items():
-        p = hp(hn)
+    for hn, v_ in HEAD_PTS.items():
+        u, y = v_[0], v_[1]; p = hp(hn)
         for cn, c in CORE_PTS.items():
             q = np.array(c)
             if (y == 0) == (c[1] == 0): out.append((f"{hn} -> core {cn}", p, q, None, "centre" if y == 0 else "side"))

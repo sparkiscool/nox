@@ -12,9 +12,22 @@ sys.path.insert(0, os.path.join(ROOT, "nox"))
 from assembly import Assembly
 
 ASM = os.path.join(ROOT, "nox", "scout", "v3", "scout.assembly.json")
-RUN = os.path.join(ROOT, "runs", "scout_layout", "v12")
+RUN = os.environ.get("SCOUT_RUN") or os.path.join(ROOT, "runs", "scout_layout", "v13")   # the layout run the assembly was written from
 CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
-ELEC_R = os.path.join(RUN, "electronics_envelope_r5.json")      # the electronics session's round 5 (SOURCE.txt), drawn at the v12 catch
+ELEC_R = os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope_r5.json")   # the electronics session's round 5, drawn at the v12 catch
+# the layout run each other session's part was drawn on: a part drawn on another run is stale (its cage, catch or rods moved) and stays out
+# until its session redraws it; the layout's own placeholder stands in and the run's summary lists it
+DRAWN_ON = {"camera mount v1": ("v12", "v13"), "electronics round 5": ("v12",), "belly mount v1": ("v12",)}   # v13: the nose rods 7-8, 14-15 and
+# the nose top node are where v12 had them (C), so the camera mount v1 stands in for its mass and pose only: its clips are bored 6.2 for the 6/4
+# tube and do not grip the 3.0 rods (Spark 27 Oct); the camera mount v2 (3.2 clips, worker) replaces it
+STALE = []
+
+
+def fits(what):
+    run = os.path.basename(os.path.normpath(RUN))
+    if run in DRAWN_ON.get(what, (run,)): return True
+    STALE.append(f"{what}: drawn on {', '.join(DRAWN_ON[what])}, stale on {os.path.basename(os.path.normpath(RUN))} (needs its redraw; the layout placeholder stands in)")
+    return False
 BELLY = os.path.join(ROOT, "runs", "scout_belly_mount", "v1")    # the electronics session's belly mount v1 (PR 150, concept): its system model
 CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant
 # the Radxa's 4 M2.5 holes, board coords (X along 65 from the SD end, Y along 30 from the ports edge; H, STEP, from the electronics
@@ -24,6 +37,7 @@ POST_R, PCB_BACK_Y = 4.2, -1.6
 
 
 def camera_mount(a):
+    if not fits("camera mount v1"): return []
     CAMP = next((p["name"] for p in a["parts"] if p["name"] in CAMPS), None)
     if not os.path.exists(CAM_SAVED) or CAMP is None: return []
     sm = json.load(open(CAM_SAVED)); old = {CAMP, "camera cradle arms (printed)", "camera cradle clips (printed)"}
@@ -37,6 +51,7 @@ def camera_mount(a):
 
 
 def electronics(a):
+    if not fits("electronics round 5"): return []
     if not os.path.exists(ELEC_R): return []
     e = json.load(open(ELEC_R)); P = {p["name"]: p for p in a["parts"]}; out = []
     blk = e["mount"]["belly-mount tail block (PETG)"]; tot = e["mount_total"]
@@ -66,6 +81,7 @@ def electronics(a):
 def belly(a):
     """the belly mount v1 system model (runs/scout_belly_mount/v1/manifest.json: main's assembly with the belly mount in place of the
     25 g placeholder, the tail block and carrier as drawn, the real FC board, the flow re-placed): its parts, contacts, clearances, access"""
+    if not fits("belly mount v1"): return []
     man = os.path.join(BELLY, "manifest.json")
     if not os.path.exists(man) or not any(p["name"] == "mount + nose legs (Scout)" for p in a["parts"]): return []
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -102,7 +118,7 @@ def main():
     Assembly(a, ASM).save(ASM)
     subprocess.run([sys.executable, os.path.join(ROOT, "nox", "system_check.py"), ASM, "--report", "--out", os.path.join(RUN, "system_check_mount.json")],
                    capture_output=True, cwd=ROOT)                 # the view's and summary's numbers with these in
-    return done
+    return done + STALE
 
 
 if __name__ == "__main__":

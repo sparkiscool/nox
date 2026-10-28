@@ -50,10 +50,16 @@ def xf(m, T):
     return m.transform(np.asarray(T, float)[:3, :4])
 
 
+L2_ROLL = float(os.environ.get("V5_L2_ROLL", "180"))   # the L2 rolled about its own axis (28 Oct, DEFAULT): its cable leaves the base downward, so
+                                                    # a centre rod to the cage's front node can sit above it; the field is the same hemisphere
+                                                    # (only the L2's data frame turns: a config setting); the bolt circle is symmetric under 180
+
+
 def T_l2():
     c, s = math.cos(math.radians(TILT)), math.sin(math.radians(TILT))
     T = np.array([[c, 0, s, 0], [0, 1, 0, 0], [-s, 0, c, 0], [0, 0, 0, 1.0]]); T[:3, 3] = B
-    return T
+    cr, sr = math.cos(math.radians(L2_ROLL)), math.sin(math.radians(L2_ROLL))
+    return T @ np.array([[cr, -sr, 0, 0], [sr, cr, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1.0]])
 
 
 def seg(a, b, r, n=24):
@@ -286,6 +292,18 @@ def couple(F, at, pts):
     return [x[3 * k:3 * k + 3] for k in range(len(pts))]
 
 
+def head_keepouts():
+    """everything head_bodies() cuts except the rod bores: the L2 body and its field (ahead of the base plane), the L2 bolt and
+    driver holes, the L2 cable exit, the camera insert holes, the camera bodies and views, the cage tubes (for the rod search)"""
+    T = T_l2(); k = l2_body() + half_space(A, B, 0.0) + xf(box(-50, -32, -8, 8, -40, 2), T)
+    for j in range(4):
+        a = math.radians(22.5 + 90 * j); p = np.array([25.5 * math.cos(a), 25.5 * math.sin(a)])
+        k = k + xf(mf.Manifold.cylinder(60.0, 4.5, 4.5, 24).translate([p[0], p[1], -60.0 - L2_PAD]), T)
+    for c in HS["cameras"]:
+        k = k + frustum(c) + xf(box(-1.4, 10, -21, 21, -21, 21), cam_frame(c))
+    return k + cage_tubes()
+
+
 def head_bodies():
     """v5 (Spark 27 Oct, v4 "way too flimsy and a waste of materials", "that ring around the lidar does nothing"): only what bolts
     or plugs in is drawn: 4 L2 bolt bosses, 4 insert bosses per camera, the 4 L2 brace sockets, the 4 strut sockets and the cage's
@@ -321,7 +339,7 @@ def head_bodies():
     if HS.get("rods"):                                                  # the 3-rod head (Spark 27 Oct: "max of 3"): a 6/4 tube socket per rod, no cage node
         for k, (W, q) in HS["rods"].items():
             W, q = np.array(W, float), np.array(q, float)
-            boss, cut, keep = socket(W, q, TUBE_BORE, 15.0, wall=2.5); add(boss); addcut(cut + keep); struts.append((W, boss, k))
+            boss, cut, keep = socket(W, q, TUBE_BORE, HEAD_DEPTH, wall=2.5); add(boss); addcut(cut + keep); struts.append((W, boss, k))
     else:
         CN = np.array(CG["nodes"])
         for W, q in head_struts():                                      # struts to the side cage nodes
@@ -346,6 +364,7 @@ def head_bodies():
 
 L2_BOSS_R, L2_BOSS_L, L2_PAD = 8.0, 11.0, 5.0   # L2 bolt boss Ø16 x 11: a 5 pad under the bolt head, a 3.5 wall round the Ø9 driver (C)
 CAM_BOSS_R = 6.0                                # camera insert boss Ø12 x 8 (pads >= Ø12, CLAUDE.md) (C)
+HEAD_DEPTH = 12.0                               # head rod sockets 12 deep: rod forces <= 126 N (F), epoxy shear ~0.6 MPa (E); keeps the bosses behind the L2 plane
 HEAD_LOADS = os.path.join(ROOT, "runs", "overseer_frame", "v1", "head_loads.json")
 
 
@@ -362,9 +381,10 @@ def setup_head(h):
     from topo import Part
     b = head_bodies()
     p = Part("head", h, b["drawn"], b["cuts"], b["env"], build="+z", material="PETG")
-    if HS.get("rods"):
-        held = [bo for W, bo, k in b["struts"] if k == "head rod c"]; sup = held[0]
-        loaded = {k: (W, bo) for W, bo, k in b["struts"] if k != "head rod c"}
+    if HS.get("rods"):                                                  # all 3 rod sockets hold the head (28 Oct: one held socket took the whole
+        sup = b["struts"][0][1]                                         # load across its layers, worst 1.6..2.7 in the v5 sweep); the cage-crash
+        for _, bo, _ in b["struts"][1:]: sup = sup + bo                 # forces through the rods (<= 25 N, F) are left out, the head's own 35 g stays
+        loaded = {}
     else:
         sup = b["braces"][0][1]
         for _, bo, _ in b["braces"][1:]: sup = sup + bo
@@ -389,7 +409,7 @@ def setup_head(h):
             parts += [(bo, f_) for bo, f_ in zip(b["l2b"], couple(F, L2CG, bolts))]
             for bs in b["camb"]:
                 parts += [(bo, M_CAM * G * acc / 4) for bo in bs]
-        if not parts: continue
+        if not parts or (HS.get("rods") and not cn.startswith(("head inertia", "flight"))): continue
         cls = "flight" if cn.startswith("flight") else "misuse"
         p.load_multi(cn, parts, cls=cls, support="core", accel=acc)
     return p

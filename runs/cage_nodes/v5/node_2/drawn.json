@@ -1,0 +1,46 @@
+{
+ "name": "node_2",
+ "mass_g": 9.7,
+ "solid_ok": true,
+ "bodies_plain": 1,
+ "worst": 0.036,
+ "worst_case": "tube to 18 pull",
+ "max": 1.0,
+ "h": 1.25,
+ "pass": true,
+ "members": [
+  "tube to 1",
+  "tube to 3",
+  "tube to 18",
+  "tube to 19",
+  "spoke 1.1",
+  "spoke 4.1"
+ ],
+ "loads": {
+  "tube to 1": {
+   "axial": 265.2562231312576,
+   "side": 1.41326669085402
+  },
+  "tube to 3": {
+   "axial": 265.25622313920763,
+   "side": 1.4132666906318894
+  },
+  "tube to 18": {
+   "axial": 575.9082908295052,
+   "side": 0.7391275978683867
+  },
+  "tube to 19": {
+   "axial": 575.9082909029662,
+   "side": 0.7391275978931455
+  },
+  "spoke 1.1": {
+   "axial": 342.4022928309944,
+   "side": 0.8458357860198488
+  },
+  "spoke 4.1": {
+   "axial": 342.4022928921206,
+   "side": 0.845835785962942
+  }
+ },
+ "mirror": null
+}

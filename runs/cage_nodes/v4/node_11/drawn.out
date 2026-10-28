@@ -1,10 +1,11 @@
-node_11: grid (80, 80, 80) h 1.25 = 512,000 cells; design 195,420 (381.7 cm3), drawn 9,777, void 306,803
-  support hold 0: 8598 cells, 13989 nodes
-  support hold 1: 8633 cells, 14126 nodes
-  support hold 2: 8621 cells, 14073 nodes
-  support hold 3: 8516 cells, 13872 nodes
-  support hold 4: 8475 cells, 13875 nodes
-  support hold 5: 8513 cells, 13818 nodes
-  support hold 6: 8557 cells, 13971 nodes
-  support hold 7: 8886 cells, 14635 nodes
-  support hold 8: 8918 cells, 14673 nodes
+node_11: grid (64, 64, 64) h 1.5 = 262,144 cells; design 113,169 (381.9 cm3), drawn 5,629, void 143,346
+  support hold 0: 4923 cells, 8635 nodes
+  support hold 1: 4959 cells, 8728 nodes
+  support hold 2: 4948 cells, 8695 nodes
+  support hold 3: 4926 cells, 8625 nodes
+  support hold 4: 4890 cells, 8599 nodes
+  support hold 5: 4898 cells, 8537 nodes
+  support hold 6: 4910 cells, 8621 nodes
+  support hold 7: 5107 cells, 9042 nodes
+  support hold 8: 5120 cells, 9069 nodes
+node 11: 24.08 g (M), solid PASS, worst 0.012 (tube to 10 pull): PASS
