@@ -1,0 +1,36 @@
+{
+ "name": "node_23",
+ "mass_g": 7.56,
+ "solid_ok": true,
+ "bodies_plain": 1,
+ "worst": 0.037,
+ "worst_case": "tube to 7 pull",
+ "max": 1.0,
+ "h": 1.25,
+ "pass": true,
+ "members": [
+  "tube to 6",
+  "tube to 7",
+  "tube to 10",
+  "tube to 21"
+ ],
+ "loads": {
+  "tube to 6": {
+   "axial": 123.64312806091334,
+   "side": 1.3977373434955456
+  },
+  "tube to 7": {
+   "axial": 278.6179398149843,
+   "side": 1.2444784782564131
+  },
+  "tube to 10": {
+   "axial": 281.6938860699802,
+   "side": 1.0719991740152128
+  },
+  "tube to 21": {
+   "axial": 127.03703921769511,
+   "side": 2.733591598741709
+  }
+ },
+ "mirror": 22
+}

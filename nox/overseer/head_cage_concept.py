@@ -31,7 +31,7 @@ G, CRASH, FLIGHT = cf.G, cf.CRASH, cf.FLIGHT
 TUBE6, ROD3 = cf.TUBE6, cf.ROD3
 RIGID = dict(E=100e3, G=40e3, A=1e3, I=1e5, J=2e5, c=5.0)                # 'rigid' head links: ~2000 x a tube's EI (cf's 1e6 x leaves K
                                                                   # near singular, condition 8e13, and the modes wrong)
-TPU = dict(tube(11.3, 0.0, E=26.0), G=26.0 / 3.0)               # TPU 95A node core stub (E)
+TPU = dict(tube(11.3, 0.0, E=float(os.environ.get("V5_JOINT_E", "26.0"))), G=float(os.environ.get("V5_JOINT_E", "26.0")) / 3.0)   # the soft joint (E): TPU 95A, or PETG 2000 with V5_JOINT_E               # TPU 95A node core stub (E)
 SET = 6.0                                                         # tube end short of the node centre (E)
 M_L2, M_CAM, M_MOUNT = 230.0, 15.0, 100.0                         # g (P, E, E system model)
 M_DRONE = RES["mass"] / 1000.0
@@ -79,7 +79,7 @@ def build(var, soft):
                 Wn = f.node(w); f.member(H, Wn, RIGID, "head-wing"); f.member(Wn, end(i, w), sec, f"wing strut {i}")
                 L = np.linalg.norm(w - q); carbon += L * (24.3 if sec is TUBE6 else 10.5) / 1000; add_m(nid[i], L * 24.3e-3 / 2); struts.append(i)
     tops = []
-    if var == "A" and os.environ.get("V5_WS"):                         # the one-piece head's struts (cage_frame.HEAD_STRUTS)
+    if var in ("A", "H") and os.environ.get("V5_WS"):                         # the one-piece head's struts (cage_frame.HEAD_STRUTS)
         for w, q in cf.HEAD_STRUTS:
             for sy in (1, -1):
                 w_, i = np.array(w) * [1, sy, 1], int(np.argmin(np.linalg.norm(N - np.array(q) * [1, sy, 1], axis=1)))
@@ -106,7 +106,7 @@ def cases(f, nid, H, Lc, mass):
     cs = {}
     for k, d in enumerate(dirs):
         sup = N @ d; i = int(np.argmax(sup))
-        if (guard @ d).max() > sup[i] + 3.0: cs[f"nose hit {k}"] = {H: -d * Fc}
+        if len(guard) and (guard @ d).max() > sup[i] + 3.0: cs[f"nose hit {k}"] = {H: -d * Fc}   # no guard ring (Spark 27 Oct): cage nodes only
         else: cs[f"crash {k} via node {i}"] = {nid[i]: -d * Fc}
         cs[f"head inertia {k}"] = {Lc: d * Fh}
     cs["flight 4 g"] = {i: np.array([0, 0, -m * 1e-3 * G * FLIGHT]) for i, m in mass.items()}

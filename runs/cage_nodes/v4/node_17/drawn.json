@@ -1,0 +1,46 @@
+{
+ "name": "node_17",
+ "mass_g": 11.65,
+ "solid_ok": true,
+ "bodies_plain": 1,
+ "worst": 0.333,
+ "worst_case": "head rod c side b",
+ "max": 1.0,
+ "h": 1.25,
+ "pass": true,
+ "members": [
+  "tube to 15",
+  "tube to 16",
+  "tube to 18",
+  "tube to 19",
+  "core tie front.2",
+  "head rod c"
+ ],
+ "loads": {
+  "tube to 15": {
+   "axial": 289.8894898079884,
+   "side": 2.039611962776545
+  },
+  "tube to 16": {
+   "axial": 289.88948984286884,
+   "side": 2.0396119628563656
+  },
+  "tube to 18": {
+   "axial": 302.7863215061656,
+   "side": 2.1231982351954297
+  },
+  "tube to 19": {
+   "axial": 302.7863215384992,
+   "side": 2.123198235141442
+  },
+  "core tie front.2": {
+   "axial": 1114.6905748478468,
+   "side": 3.310589794747231
+  },
+  "head rod c": {
+   "axial": 129.2403748432389,
+   "side": 113.32793049062232
+  }
+ },
+ "mirror": null
+}

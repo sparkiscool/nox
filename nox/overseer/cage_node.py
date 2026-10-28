@@ -22,7 +22,7 @@ RES = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result
 HS = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "head_system.json")))
 N = np.array(CG["nodes"])
 KINDS = {6: dict(bore=6.2, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.2, depth=10.0, axial=80.0, side=15.0)}   # E; bores Spark 27 Oct (coupons v2: the largest fits)
-WALL = 2.5
+WALL = float(os.environ.get("V5_NODE_WALL", "2.0"))   # socket boss wall (C, DEFAULT 28 Oct: 2.0, the rule floor; 2.5 made 345 g of nodes, 2.0 makes ~289 g, worst index <= 0.25)
 _LS = os.path.join(HERE, "link_sizes.json")
 LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()      # links the frame model made 6/4 tube
 _NL = os.path.join(ROOT, "runs", "overseer_frame", "v1", "node_loads.json")
@@ -48,7 +48,7 @@ def members(i):
         for e, o in ((p, q), (q, p)):
             if np.linalg.norm(np.array(e) - N[i]) < 0.6:
                 o = np.array(o); out.append(((o - N[i]) / np.linalg.norm(o - N[i]), 6 if k in LINK6 else 3, k))
-    for w, q in HEAD_STRUTS:                            # the one-piece head's struts to the side nodes (head_mount.HEAD_STRUTS)
+    for w, q in ([] if HS.get("rods") else HEAD_STRUTS):   # the one-piece head's struts to the side nodes (the 3-rod head's rods are links)
         for sy in (1, -1):
             w_, q_ = np.array(w) * [1, sy, 1], np.array(q) * [1, sy, 1]
             if np.linalg.norm(q_ - N[i]) < 1.0:
@@ -56,9 +56,32 @@ def members(i):
     return out
 
 
+def mirror_of(i):
+    q = N[i] * [1, -1, 1]; return int(np.argmin(np.linalg.norm(N - q, axis=1)))
+
+
+def socket_load(i, name):
+    """the frame model's largest socket force (node_loads.json) for member `name` at node i or at its mirror (one design for the
+    pair): {"axial", "side"} in N, or None. Tubes are "tube a-b" there in the cage file's order (27 Oct: the old lookup took
+    min-max and missed most tubes, so the node runs took the E loads), links by name, mirrored links with or without " m"."""
+    out = None
+    for j in {i, mirror_of(i)}:
+        L = NL.get(str(j), {})
+        if name.startswith("tube to"):
+            o = int(name.split()[-1]); o = o if j == i else mirror_of(o)
+            keys = [f"tube {j}-{o}", f"tube {o}-{j}"]
+        else:
+            keys = [name, name + " m", name[:-2] if name.endswith(" m") else name]
+            if j != i: keys += [k.replace("+1", "-1") if "+1" in k else k.replace("-1", "+1") for k in keys]
+        for k in keys:
+            if k in L:
+                e = L[k]; out = {"axial": max(e["axial"], (out or {}).get("axial", 0.0)), "side": max(e["side"], (out or {}).get("side", 0.0))}; break
+    return out
+
+
 def designs():
     """one design per mirror pair (the y >= 0 node) and per centre-plane node; the head's node left out"""
-    return [i for i in range(len(N)) if N[i, 1] > -0.5 and not np.allclose(N[i], HEAD_NODE, atol=0.5)]
+    return [i for i in range(len(N)) if N[i, 1] > -0.5 and (HS.get("rods") or not np.allclose(N[i], HEAD_NODE, atol=0.5))]   # the 3-rod head holds no node
 
 
 def seg(a, b, r, n=32):
@@ -140,9 +163,7 @@ def setup_for(i):
                 if t != j: hold = o["boss"] if hold is None else hold + o["boss"]
             p.support(f"hold {j}", hold)
             K = dict(KINDS[s["kind"]]); d = s["d"]
-            fl = NL.get(str(i), {}).get(s["name"] if not s["name"].startswith("tube to") else None)
-            if fl is None and s["name"].startswith("tube to"):
-                o = int(s["name"].split()[-1]); fl = NL.get(str(i), {}).get(f"tube {min(i, o)}-{max(i, o)}")
+            fl = socket_load(i, s["name"])
             if fl: K["axial"], K["side"] = max(fl["axial"], 20.0), max(fl["side"], 5.0)   # the frame model's crash forces (F)
             x = np.cross(d, [0, 0, 1.0]) if abs(d[2]) < 0.9 else np.cross(d, [1.0, 0, 0]); x /= np.linalg.norm(x); y = np.cross(d, x)
             for nm, f in (("pull", K["axial"] * d), ("push", -K["axial"] * d), ("side a", K["side"] * x), ("side b", K["side"] * y)):
@@ -160,6 +181,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser(); ap.add_argument("node"); ap.add_argument("out", nargs="?")
     ap.add_argument("--h", type=float, default=0.8); ap.add_argument("--gen", type=float, default=None)
     ap.add_argument("--git", action="store_true"); ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--drawn", action="store_true", help="drawn first: the drawn node alone, solid gate + strength on the frame loads; saved if it passes")
     a = ap.parse_args()
     if a.node == "list":
         for i in designs():
@@ -170,6 +192,15 @@ if __name__ == "__main__":
     i = int(a.node); setup = setup_for(i)
     if a.smoke:
         p = setup(a.h); print(f"node {i} grid", p.shape, "ok"); sys.exit(0)
+    if a.drawn:                                                         # drawn first (CLAUDE.md): no topology run when the drawn node passes
+        from topo import drawn_check
+        out = a.out or os.path.join(ROOT, "runs", "cage_nodes", "v4", f"node_{i}"); os.makedirs(out, exist_ok=True)
+        stl = os.path.join(out, f"cage_node_{i}.stl")
+        d = drawn_check(setup, a.h, gen_cm3=1.2, stl=stl); d["members"] = [nm for _, _, nm in members(i)]
+        d["loads"] = {nm: socket_load(i, nm) for _, _, nm in members(i)}; d["mirror"] = mirror_of(i) if N[i, 1] > 0.5 else None
+        json.dump(d, open(os.path.join(out, "drawn.json"), "w"), indent=1)
+        print(f"node {i}: {d['mass_g']} g (M), solid {'PASS' if d['solid_ok'] else 'FAIL'}, worst {d['worst']} ({d['worst_case']}): {'PASS' if d['pass'] else 'FAIL'}")
+        sys.exit(0 if d["pass"] else 1)
     from topo import Settings, optimise
     out = a.out or os.path.join(ROOT, "runs", f"cage_node_{i}", "v1")
     gen = a.gen if a.gen is not None else 1.2                       # cm3 generated (E; v3's node estimate 4.5 g in all)

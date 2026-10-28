@@ -1,0 +1,1 @@
+electronics_envelope.json: the Scout electronics mount session round 5 (runs/scout_electronics/v2/envelope.json at eda4f2fb, branch claude/intelligent-bardeen-z3lzbu), drawn on v12 at catch 5.0 forward. overseer_cage_v5_shell.json: as v12 (the ghost). Node masses: fitted to the saved nodes v2 (runs/scout_nodes/v2, PR 166). Camera mount: saved v1 mass (22.3 g M).
