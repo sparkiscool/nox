@@ -37,7 +37,8 @@ for i_, a_ in enumerate(sys.argv):              # engine keeps F and U for every
 
 R = json.load(open(os.path.join(ROOT, "runs", "overseer_core", "v4", "result.json")))
 C = R["coupon"]
-A = json.load(open(os.environ.get("CORE_ASSEMBLY") or os.path.join(HERE, "overseer_core.assembly.json")))   # CORE_ASSEMBLY: core v4's manifest on the cage branch (runs/overseer_core/v4/assembly_on_cage_branch.json)
+_CB = os.path.join(ROOT, "runs", "overseer_core", "v4", "assembly_on_cage_branch.json")   # core v4 on the cage branch's meshes (head rods, arms), while it exists
+A = json.load(open(os.environ.get("CORE_ASSEMBLY") or (_CB if os.path.exists(_CB) else os.path.join(HERE, "overseer_core.assembly.json"))))   # CORE_ASSEMBLY: core v4's manifest on the cage branch (runs/overseer_core/v4/assembly_on_cage_branch.json)
 M = {p["name"]: trimesh.load(os.path.join(ROOT, p["mesh"])) for p in A["parts"]}
 PI_NM = "Pi 5 + Active Cooler"
 G = 9.81e-3                                     # N per g per g
@@ -132,7 +133,7 @@ def hub_deck_setup(h):
     posts = [np.array([x, y, C["z_pi"]]) for x, y in ph]
     post_reg = [cyl(x, y, C["z_pi"] - 3.0, C["z_pi"] + 0.5, 4.0) for x, y in ph]
     ub, bk = M["UBEC 5 V"], M["buck 12 V"]
-    bay = lambda m: box(m.bounds[0][0], m.bounds[1][0], m.bounds[0][1], m.bounds[1][1], 0, 6.5)
+    bay = lambda m: U([cyl(x, y, T - 2.0, T + 0.5, 6.0) for x in (m.bounds[0][0] + 6.0, m.bounds[1][0] - 6.0) for y in (m.bounds[0][1] + 6.0, m.bounds[1][1] - 6.0)])   # its 4 pads' tops (VHB)
 
     def payload(name, a, cls):
         f = rigid_split(posts, -55 * G * a, pi_c)
