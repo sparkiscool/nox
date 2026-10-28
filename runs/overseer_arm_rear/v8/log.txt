@@ -400,3 +400,15 @@ layout: beta 32 done: eroded design 3 bodies, main 100.0%; drawn bodies outside 
 layout: beta 32 done: eroded design 3 bodies, main 100.0%; drawn bodies outside the main body: 2
 layout done: 6618 s, peak 10.204628 GB
 layout done: 6618 s, peak 10.204628 GB
+build: organic surface at pitch 0.300 mm (x5), skins 36.50 cm3, field 85.72 cm3, in env - cuts 75.40 cm3 (layout 75.40, level offset +0.371 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,014,644 faces, 172 s
+build: organic surface at pitch 0.300 mm (x5), skins 36.50 cm3, field 85.72 cm3, in env - cuts 75.40 cm3 (layout 75.40, level offset +0.371 mm), fillet 2.5 mm, rims 1.0 mm, mesh 1,014,644 faces, 172 s
+build: 9 shells, volumes [75628.0, 2.7, 0.0, 0.0, 0.0, 0.0] mm3; dropped specks [2.72, 0.02, 0.0, 0.0, 0.0, 0.0, 0.04]; sealed cavities kept [0.0] mm3
+build: 9 shells, volumes [75628.0, 2.7, 0.0, 0.0, 0.0, 0.0] mm3; dropped specks [2.72, 0.02, 0.0, 0.0, 0.0, 0.0, 0.04]; sealed cavities kept [0.0] mm3
+solid check: FAIL {"bodies_plain": 55, "bodies_eroded": 5, "eroded_volumes_mm3": [48839.6, 8.2, 7.1, 2.7, 2.2], "necks": [], "drawn_not_in_main": [["0.5", 0.0, "erode 2.0"], ["0.6", 0.0, "erode 2.0"], ["0.7", 0.659, "erode 2.0"], ["0.8", 0.0, "erode 2.0"], ["0.10", 0.652, "erode 2.0"], ["0.11", 0.0, "erode 2.0"], ["0.12", 0.0, "erode 2.0"], ["0.13", 0.655, "erode 2.0"], ["0.14", 0.0, "erode 2.0"], ["0.16", 0.707, "erode 2.0"], ["0.17", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.58, "core_mm3": 35.7, "at": [49.2, -18.0, 6.6], "span": [2.8, 2.0, 0.8]}, {"kind": "wall", "thick_mm": 1.5, "cor
+solid check: FAIL {"bodies_plain": 55, "bodies_eroded": 5, "eroded_volumes_mm3": [48839.6, 8.2, 7.1, 2.7, 2.2], "necks": [], "drawn_not_in_main": [["0.5", 0.0, "erode 2.0"], ["0.6", 0.0, "erode 2.0"], ["0.7", 0.659, "erode 2.0"], ["0.8", 0.0, "erode 2.0"], ["0.10", 0.652, "erode 2.0"], ["0.11", 0.0, "erode 2.0"], ["0.12", 0.0, "erode 2.0"], ["0.13", 0.655, "erode 2.0"], ["0.14", 0.0, "erode 2.0"], ["0.16", 0.707, "erode 2.0"], ["0.17", 0.0, "erode 2.0"]], "thin_walls": [{"kind": "wall", "thick_mm": 1.58, "core_mm3": 35.7, "at": [49.2, -18.0, 6.6], "span": [2.8, 2.0, 0.8]}, {"kind": "wall", "thick_mm": 1.5, "cor
+function check: {'skin_mm3': 19727.9, 'skin_missing_mm3': 331.15, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': False}
+function check: {'skin_mm3': 19727.9, 'skin_missing_mm3': 331.15, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': False}
+strength: worst index 1.77 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [9.3, -21.8, 44.2]
+strength: worst index 1.77 in 'cage crash 11 [-0.58, 0.58, -0.58] via node 11' at [9.3, -21.8, 44.2]
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 96.05, "worst": 1.766, "function_ok": false, "bodies": 2}
+RESULT {"name": "overseer_arm_rear", "solid_ok": false, "mass_g": 96.05, "worst": 1.766, "function_ok": false, "bodies": 2}
