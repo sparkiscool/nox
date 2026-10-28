@@ -1,0 +1,13 @@
+eccentric sockets from runs/scout_nodes/v2/offsets.json
+  node 14 iter 0: worst cell 2.34 in 5 bend -b (saddle tie 4.1, 0.949 in / 2.34 across layers); 99.9 % 1.233; walls {}, fillet 2.5
+  node 14 iter 1: worst cell 1.413 in 5 bend -b (saddle tie 4.1, 0.651 in / 1.413 across layers); 99.9 % 0.911; walls {'rod 0-14': 3.5, 'saddle tie 4.1': 3.5}, fillet 3.5
+  node 14 iter 2: worst cell 1.036 in 5 bend -b (saddle tie 4.1, 0.48 in / 1.036 across layers); 99.9 % 0.701; walls {'rod 0-14': 3.5, 'saddle tie 4.1': 4.0}, fillet 4.5
+  node 14 iter 3: worst cell 0.916 in 5 bend -b (saddle tie 4.1, 0.557 in / 0.916 across layers); 99.9 % 0.558; walls {'rod 0-14': 3.5, 'saddle tie 4.1': 4.5}, fillet 5.5
+node 14: 13.30 g, solid_check PASS, envelope r 26.7, 6 sockets, 729 s, FE worst cell 0.916 (99.9 % 0.558), outlast 1.42
+  node 0 iter 0: worst cell 1.021 in 1 bend +b (rod 0-3, 0.55 in / 1.021 across layers); 99.9 % 0.348; walls {}, fillet 2.5
+  node 0 iter 1: worst cell 0.937 in 3 bend -b (rod 0-8, 0.405 in / 0.937 across layers); 99.9 % 0.49; walls {'rod 0-3': 3.5}, fillet 3.5
+node 0: 12.97 g, solid_check PASS, envelope r 29.8, 7 sockets, 368 s, FE worst cell 0.937 (99.9 % 0.49), outlast 1.45
+  node 4 iter 0: worst cell 0.764 in 0 bend -b (rod 4-7, 0.692 in / 0.764 across layers); 99.9 % 0.382; walls {}, fillet 2.5
+node 4: 6.68 g, solid_check PASS, envelope r 21.9, 5 sockets, 71 s, FE worst cell 0.764 (99.9 % 0.382), outlast 1.18
+  node 17 iter 0: worst cell 0.901 in 0 bend +a (rod 0-17, 0.901 in / 0.533 across layers); 99.9 % 0.472; walls {}, fillet 2.5
+node 17: 6.81 g, solid_check PASS, envelope r 21.5, 4 sockets, 45 s, FE worst cell 0.901 (99.9 % 0.472), outlast 1.39

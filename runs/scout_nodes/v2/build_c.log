@@ -1,0 +1,8 @@
+eccentric sockets from runs/scout_nodes/v2/offsets.json
+  node 8 iter 0: worst cell 1.017 in 6 bend -b (rod 8-16, 0.496 in / 1.017 across layers); 99.9 % 0.586; walls {}, fillet 2.5
+  node 8 iter 1: worst cell 0.771 in 6 bend -b (rod 8-16, 0.367 in / 0.771 across layers); 99.9 % 0.473; walls {'rod 8-16': 3.5}, fillet 3.5
+node 8: 11.75 g, solid_check PASS, envelope r 31.5, 7 sockets, 475 s, FE worst cell 0.771 (99.9 % 0.473), outlast 1.19
+  node 11 iter 0: worst cell 0.859 in 1 bend -b (rod 2-11, 0.426 in / 0.859 across layers); 99.9 % 0.477; walls {}, fillet 2.5
+node 11: 7.47 g, solid_check PASS, envelope r 25.2, 5 sockets, 94 s, FE worst cell 0.859 (99.9 % 0.477), outlast 1.33
+  node 16 iter 0: worst cell 0.7 in 1 bend +b (rod 8-16, 0.431 in / 0.7 across layers); 99.9 % 0.414; walls {}, fillet 2.5
+node 16: 5.93 g, solid_check PASS, envelope r 24.2, 4 sockets, 55 s, FE worst cell 0.7 (99.9 % 0.414), outlast 1.08

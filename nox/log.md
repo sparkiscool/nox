@@ -1,6 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
-- 28 Oct (Scout v3): cage nodes v1 READY: 18 PETG nodes (11 designs) + 4 TPU caps, 123.3 g M, solid PASS x 19; tight pairs eccentric ≤ 3.5 (DEFAULT; alt concurrent 123.9 g, r 38.5); FE gate 99.9 % ≤ 1 (≤ 0.91). Assembly: 830 g, CG 2.2. `runs/scout_nodes/v1/`, dimensions Nodes
+- 28 Oct (Scout v3): cage nodes v2 (review FAIL on v1): worst-cell gate, bell mouths + collars, flat-boss pose, ties 14 deep, offsets ≤ 1590 N mm; worst ≤ 0.94, 188.8 + 3.4 g M, solid PASS x 19; bending overload: node before rod (stated). CG 4.7 FAIL: re-trim. `runs/scout_nodes/v2/`
 
 - 27 Oct (Overseer, Spark: max 3 rods to the lidar): head on 3 6/4 rods to the cage only (centre to node 17, pair from above the cameras to 15/16; head_rods.py search 2241 sets): 151.8 / 128.4 Hz rigid / PETG (F on E), cams guarded 9.6 (system_check), no braces/keels/struts, node 17 a cage node. Alt y±85 169 Hz, over the bed
 - 27 Oct (rule, Spark: why run topology after checks passed): Drawn first: run_estimate runs topo.drawn_check (drawn part alone: solid gate + strength on system loads); PASS = save drawn, no run (run_bg refuses, --force + Forced: line); review_precheck 14. Node load lookup missed every tube (fixed). All 14 nodes drawn-first running
