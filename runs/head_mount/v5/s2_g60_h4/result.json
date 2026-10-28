@@ -1,0 +1,351 @@
+{
+ "name": "head_mount",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   54381.5
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.4",
+    0.999,
+    "erode 2.0"
+   ],
+   [
+    "0.7",
+    0.998,
+    "erode 2.0"
+   ],
+   [
+    "0.12",
+    0.995,
+    "erode 2.0"
+   ],
+   [
+    "0.13",
+    0.998,
+    "erode 2.0"
+   ],
+   [
+    "0.14",
+    0.999,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [],
+  "acute_edges": 0,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 5252.9,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "head inertia 0 [1.0, 0.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.214,
+    "across": 0.402,
+    "at": [
+     365.5,
+     14.0,
+     63.5
+    ]
+   },
+   {
+    "case": "head inertia 1 [-1.0, 0.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.214,
+    "across": 0.41,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   },
+   {
+    "case": "head inertia 2 [0.0, 1.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.231,
+    "across": 0.338,
+    "at": [
+     365.5,
+     10.0,
+     51.5
+    ]
+   },
+   {
+    "case": "head inertia 3 [0.0, -1.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.231,
+    "across": 0.443,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   },
+   {
+    "case": "head inertia 4 [0.0, 0.0, 1.0]",
+    "cls": "misuse",
+    "inlayer": 0.206,
+    "across": 0.395,
+    "at": [
+     365.5,
+     14.0,
+     63.5
+    ]
+   },
+   {
+    "case": "head inertia 5 [0.0, 0.0, -1.0]",
+    "cls": "misuse",
+    "inlayer": 0.206,
+    "across": 0.412,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   },
+   {
+    "case": "head inertia 6 [0.58, 0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.347,
+    "across": 0.568,
+    "at": [
+     365.5,
+     10.0,
+     51.5
+    ]
+   },
+   {
+    "case": "head inertia 7 [0.58, 0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.15,
+    "across": 0.236,
+    "at": [
+     365.5,
+     10.0,
+     51.5
+    ]
+   },
+   {
+    "case": "head inertia 8 [0.58, -0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.193,
+    "across": 0.392,
+    "at": [
+     365.5,
+     18.0,
+     67.5
+    ]
+   },
+   {
+    "case": "head inertia 9 [0.58, -0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.124,
+    "across": 0.25,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   },
+   {
+    "case": "head inertia 10 [-0.58, 0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.124,
+    "across": 0.157,
+    "at": [
+     365.5,
+     10.0,
+     51.5
+    ]
+   },
+   {
+    "case": "head inertia 11 [-0.58, 0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.193,
+    "across": 0.378,
+    "at": [
+     381.5,
+     -10.0,
+     59.5
+    ]
+   },
+   {
+    "case": "head inertia 12 [-0.58, -0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.15,
+    "across": 0.266,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   },
+   {
+    "case": "head inertia 13 [-0.58, -0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.347,
+    "across": 0.72,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   },
+   {
+    "case": "flight 4 g down",
+    "cls": "flight",
+    "inlayer": 0.038,
+    "across": 0.075,
+    "at": [
+     369.5,
+     14.0,
+     55.5
+    ]
+   }
+  ],
+  "worst": 0.72,
+  "worst_case": "head inertia 13 [-0.58, -0.58, -0.58]",
+  "worst_at": [
+   369.5,
+   14.0,
+   55.5
+  ]
+ },
+ "mass_g": 99.76,
+ "watertight": true,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 78551.4,
+ "drawn_g": 22.08,
+ "stl": "head_mount.stl",
+ "view_stl": "head_mount_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 1.61064171853134,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.06275953189882974,
+  "nd": 15894,
+  "sym_axes": [],
+  "n_real": 15,
+  "n_ties": 156,
+  "backend": "direct",
+  "iterations": 124,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "head",
+  "h": 4.0,
+  "shape": [
+   24,
+   48,
+   48
+  ],
+  "origin": [
+   335.5142,
+   -96.0,
+   -6.5318
+  ],
+  "cells": 55296,
+  "design": 15834,
+  "drawn": 263,
+  "cases": [
+   "head inertia 0 [1.0, 0.0, 0.0]",
+   "head inertia 1 [-1.0, 0.0, 0.0]",
+   "head inertia 2 [0.0, 1.0, 0.0]",
+   "head inertia 3 [0.0, -1.0, 0.0]",
+   "head inertia 4 [0.0, 0.0, 1.0]",
+   "head inertia 5 [0.0, 0.0, -1.0]",
+   "head inertia 6 [0.58, 0.58, 0.58]",
+   "head inertia 7 [0.58, 0.58, -0.58]",
+   "head inertia 8 [0.58, -0.58, 0.58]",
+   "head inertia 9 [0.58, -0.58, -0.58]",
+   "head inertia 10 [-0.58, 0.58, 0.58]",
+   "head inertia 11 [-0.58, 0.58, -0.58]",
+   "head inertia 12 [-0.58, -0.58, 0.58]",
+   "head inertia 13 [-0.58, -0.58, -0.58]",
+   "flight 4 g down"
+  ],
+  "supports": [
+   "core"
+  ]
+ },
+ "build_s": 491.7,
+ "layout_s": 1463,
+ "peak_gb": 1.9692,
+ "gen_cm3": 60.0,
+ "h": 4.0,
+ "total_s": 1955
+}

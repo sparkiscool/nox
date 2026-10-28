@@ -464,3 +464,11 @@ layout done: 1463 s, peak 1.9692 GB
 layout done: 1463 s, peak 1.9692 GB
 build: organic surface at pitch 0.400 mm (x10), skins 13.52 cm3, field 82.31 cm3, in env - cuts 78.75 cm3 (layout 78.75, level offset +0.543 mm), fillet 2.5 mm, rims 1.0 mm, mesh 553,288 faces, 266 s
 build: organic surface at pitch 0.400 mm (x10), skins 13.52 cm3, field 82.31 cm3, in env - cuts 78.75 cm3 (layout 78.75, level offset +0.543 mm), fillet 2.5 mm, rims 1.0 mm, mesh 553,288 faces, 266 s
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [54381.5], "necks": [], "drawn_not_in_main": [["0.4", 0.999, "erode 2.0"], ["0.7", 0.998, "erode 2.0"], ["0.12", 0.995, "erode 2.0"], ["0.13", 0.998, "erode 2.0"], ["0.14", 0.999, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+solid check: FAIL {"bodies_plain": 1, "bodies_eroded": 1, "eroded_volumes_mm3": [54381.5], "necks": [], "drawn_not_in_main": [["0.4", 0.999, "erode 2.0"], ["0.7", 0.998, "erode 2.0"], ["0.12", 0.995, "erode 2.0"], ["0.13", 0.998, "erode 2.0"], ["0.14", 0.999, "erode 2.0"]], "thin_walls": [], "acute_edges": 0, "ok": false}
+function check: {'skin_mm3': 5252.9, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+function check: {'skin_mm3': 5252.9, 'skin_missing_mm3': 0.0, 'in_cuts_mm3': 0.0, 'outside_env_mm3': 0.0, 'ok': True}
+strength: worst index 0.72 in 'head inertia 13 [-0.58, -0.58, -0.58]' at [369.5, 14.0, 55.5]
+strength: worst index 0.72 in 'head inertia 13 [-0.58, -0.58, -0.58]' at [369.5, 14.0, 55.5]
+RESULT {"name": "head_mount", "solid_ok": false, "mass_g": 99.76, "worst": 0.72, "function_ok": true, "bodies": 1}
+RESULT {"name": "head_mount", "solid_ok": false, "mass_g": 99.76, "worst": 0.72, "function_ok": true, "bodies": 1}
