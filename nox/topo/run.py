@@ -18,6 +18,8 @@ import argparse
 import subprocess
 from dataclasses import replace
 
+import numpy as np
+
 from .layout import Layout, Settings, gate_member_mm
 from .build import build_and_check
 
@@ -55,6 +57,37 @@ def peak_gb():
         return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6
     except Exception:
         return None
+
+
+DRAWN_MAX = 1.0                    # the drawn part passes at a worst as-built index <= this (a finished part's own bar)
+
+
+def drawn_check(setup, h, gen_cm3=None, settings=None, stl=None):
+    """Drawn first (Spark 27 Oct: "why were they doing [topology] after checks passed ... fix it for the future"): the drawn
+    bodies minus the cuts, alone, through the solid gate (nox/solid_check.py) and the as-built strength check on every real
+    load case of the part. If they pass, topology can only add mass: the drawn part is the part and no run starts
+    (tools/run_estimate.py stops there). Writes the drawn mesh to `stl` when given. Returns a dict (name, mass_g, solid_ok,
+    worst, worst_case, pass)."""
+    import trimesh
+    from .layout import Layout
+    from .build import strength
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    import solid_check as SC
+    s = settings or Settings()
+    part = setup(h)
+    g = (part.drawn_m - part.cuts_m).to_mesh()
+    mesh = trimesh.Trimesh(np.asarray(g.vert_properties)[:, :3], np.asarray(g.tri_verts))
+    if stl: mesh.export(stl)
+    ok_solid, info = SC.solid_check(trimesh.load(stl, force="mesh") if stl else mesh)
+    L = Layout(part, gen_cm3=gen_cm3, settings=s, log=lambda *a: None)
+    try:
+        st = strength(L, mesh, log=lambda *a: None); worst, case = st["worst"], st["worst_case"]
+    except Exception as e:                                             # a drawn set that is not one body cannot carry the loads
+        worst, case = None, f"no solve ({type(e).__name__})"
+    ok = bool(ok_solid and worst is not None and worst <= DRAWN_MAX)
+    return {"name": part.name, "mass_g": round(float(mesh.volume) * L.mat.density * 1e-3, 2), "solid_ok": bool(ok_solid),
+            "bodies_plain": info.get("bodies_plain"), "worst": None if worst is None else round(float(worst), 3), "worst_case": case,
+            "max": DRAWN_MAX, "h": h, "pass": ok}
 
 
 def optimise(setup, h, gen_cm3, out_dir, name, settings=None, coarse=True, git=False, log=None, maxit=400,
