@@ -469,7 +469,9 @@ def bodies(which):
             # 0.016 mm³ build specks where the flat socket face met the cleared ring)
             tap = (cone_m(p0 + a0 * u, p0 + (a0 + r - ROD_BORE / 2) * u, r, ROD_BORE / 2 + 0.05)
                    + cone_m(p0 + a1 * u, p0 + (a1 - (r - ROD_BORE / 2)) * u, r, ROD_BORE / 2 + 0.05))
-            if os.environ.get("NOX_ARM_TAPER") == "1":
+            if os.environ.get("NOX_ARM_SLEEVE") == "1":      # v8d: the full sleeve below fills the ring instead
+                pass
+            elif os.environ.get("NOX_ARM_TAPER") == "1":
                 sockets += tap ^ box(-50, F["L"] + 50, -60, 60, 0.0, ROOT_H)
                 B["cuts"] += rod_m(p0 + a0 * u, p0 + a1 * u, r, n=48) - col - tap
             else:
