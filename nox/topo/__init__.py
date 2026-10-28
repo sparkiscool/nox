@@ -6,7 +6,7 @@ See README.md in this folder for the method, the sources and the compute plan.
 from .part import Part, tm, man, voxelise
 from .layout import Layout, Settings, calibration, ReachabilityError
 from .build import build_and_check, solid_check, strength
-from .run import optimise
+from .run import optimise, drawn_check
 
 __all__ = ["Part", "Layout", "Settings", "calibration", "ReachabilityError", "build_and_check", "solid_check",
-           "strength", "optimise", "tm", "man", "voxelise"]
+           "strength", "optimise", "drawn_check", "tm", "man", "voxelise"]
