@@ -18,6 +18,8 @@ Every part of the box, the Scout and the Overseer: what it is, how many, where i
 | microSD ≥ 32 GB A1 | 1 | Radxa boot | CHECK | |
 | DECXIN 2633V2 USB global-shutter camera, 102° | 1 | camera | on hand | A (P); measure lens |
 | M2.5 heat-set inserts for the camera (OD 3.5 x 5.7 E, Ø3.2 hole) | 4 | camera mount (Spark 23 Oct: the board takes M2.5) | CHECK | A, M |
+| Cage nodes v1, printed PETG (`print/scout_node_<i>_v1.stl` for 0, 1, 4, 5, 8, 10, 11, 12, 14, 16, 17; `_mirror` for 0, 1, 5, 8, 10, 12, 14) | 18 (11 + 7 mirror) | cage nodes, 3.2 sockets epoxied | to print | System Scout v3 Nodes |
+| Foot cap v1, printed TPU (`print/scout_foot_cap_v1.stl`) | 4 | under the ring nodes 0..3, bonded (box catch F) | to print | System Scout v3 Nodes, Landing |
 | Camera mount v1, printed PETG (`print/scout_camera_mount_v1.stl`) | 1 | cradle, lens hood, 4 snap clips on cage tubes 7-8 / 14-15 | to print | System Scout v3 Camera |
 | Camera mount stop collar, printed PETG (`print/scout_camera_mount_collar_v1.stl`) | 2 | y stop on tube 14-15, CA'd | to print | System Scout v3 Camera |
 | M2.5 x 8 screws + bought M2.5 nylon or silicone washers, 1.0 thick (E), about Ø6 / Ø2.7 (E) | 4 + 4 | camera board onto the mount pads | CHECK | System Scout v3 Camera |
