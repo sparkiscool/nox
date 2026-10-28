@@ -52,8 +52,7 @@ def members():
     """(name, a, b, r) every cage rod (3.0) and saddle tie by its true ends; the nodes as spheres only without the saved nodes"""
     out = [(f"rod {a}-{b}", *cm.rod_ends(f"rod {a}-{b}", N[a], N[b]), cm.R_T) for a, b in cm.CG["rods"]]
     out += [(k, *cm.rod_ends(k, p, q), cm.CG.get("link_r_mm", 1.5)) for k, (p, q) in cm.RES["links"].items()]
-    if not cm.NODE_SWEEPS:
-        out += [(f"node {i}", N[i], N[i], 10.0 if i < cm.NR else cm.CG["node_r_mm"]) for i in range(len(N))]
+    out += [(f"node {i}", N[i], N[i], 10.0 if i < cm.NR else cm.CG["node_r_mm"]) for i in range(len(N)) if cm.node_sweep(i) is None]
     return out
 
 
@@ -64,11 +63,13 @@ def node_gaps(P, stroke=0.0):
     from shapely.geometry import Polygon as SP
     out = {}
     if not cm.NODE_SWEEPS: return out
-    for i, nd in cm.NODE_SWEEPS["nodes"].items():
-        sel = (P[:, 0] >= nd["x"][0] - stroke) & (P[:, 0] <= nd["x"][1])
+    for i in range(len(N)):
+        ns = cm.node_sweep(i)
+        if ns is None: continue
+        sel = (P[:, 0] >= ns[1][0] - stroke) & (P[:, 0] <= ns[1][1])
         if not sel.any(): continue
         pts = shapely.points(P[sel][:, 1:]); best = 1e9
-        for ol in nd["yz"]:
+        for ol in ns[0]:
             pg = SP(ol).buffer(0); d = shapely.distance(pg.exterior, pts); ins = shapely.contains(pg, pts)
             best = min(best, float(np.where(ins, -d, d).min()))
         out[f"node {i}"] = best

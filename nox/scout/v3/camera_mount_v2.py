@@ -29,7 +29,9 @@ import manifold3d as mf
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
-LAY = os.path.join(ROOT, "runs", "scout_layout", "v12")
+LAY = os.environ.get("SCM_LAYOUT") or os.path.join(ROOT, "runs", "scout_layout", "v13")   # the layout run (cage, links, parts): v13 (PR 169), nose as v12
+if not os.path.isabs(LAY): LAY = os.path.join(ROOT, LAY)
+os.environ.setdefault("SCOUT_FRAME_RUN", LAY)                   # cage_frame.py (the frame models) on the same cage
 CG = json.load(open(os.path.join(LAY, "cage_shell.json"))); RES = json.load(open(os.path.join(LAY, "result.json")))
 N = np.array(CG["nodes"], float); NR = len(CG["open"][0]["ring"])
 mf.set_circular_segments(40)
@@ -55,7 +57,7 @@ CLIP_ROD = (14, 15)                                      # rod 14-15 (124 long, 
 X_BOSS, BOSS_L, BOSS_D, PAD_D, PAD_T = 134.0, 6.5, 9.2, 12.0, 2.0     # seat face (bought 1.0 washer: board at 135), boss wall 3 round Ø3.2, Ø12 pad 2.0 web
 HOOD_X = (148.0, 153.0)                                  # hood ring 5 deep: front 4.0 ahead of the lens front (gate 3, DEFAULT); deep and thick enough to stay in the eroded body
 HOOD_OUT, HOOD_IN = (24.0, 15.5, 68.5), (19.5, 20.0, 64.0)   # (y half, z0, z1) outer / inner (camera box + 0.5): wall 4.5 (run 1: 3.0 eroded away at 2.0)
-CLIP_Y = 34.0                                            # clip centres y +-34.0 on rod 14-15: 1.4 off the tip of node 14's 14-15 socket (y 39.4, nodes v1), rod 14-16 3.2 above
+CLIP_Y = None                                            # clip centres on rod 14-15: set below from node 14's saved socket tip (NODE_CLR + 0.5 off it)
 CLIP_L, T_P, SLIT, SNAP, FLARE, GRIP = 8.0, 2.0, 0.8, 0.25, 30.0, 0.05   # length along the rod, prong, slit, snap a side, lead-in deg, grip rib (radial, E)
 U_ROOT, U_BLOCK = 8.2, 12.0                              # prong root (free length 9.2 to the lip) and the root block's back, local u (+x)
 RIB_ANG = (0.0, 95.0, -95.0)                             # grip ribs, deg from the closed back (v1)
@@ -64,6 +66,7 @@ PAD = (15.0, 12.0, 3.0)                                  # bolt pad x, y, z (slo
 SLOT, SLOT_HALF, WASHER_D = 3.4, 1.5, 9.0                # M3 clearance, slot travel, washer seat + clearance (key path Ø9 up)
 FOOT_X = (22.5, 51.5)                                    # foot plate x (plate front edge 51.9 at |y| <= 20, M)
 ENV_Y = 26.0                                             # design space half width (hood 22.5, the lane's width at the plate; the clip arms below get their own)
+NODE_CLR = 2.0                                           # clearance to the saved nodes v2 (parent 28 Oct: >= 2, the v3 nodes on v13 may grow)
 STROKE, SWEEP_CLR = 110.0, 1.5                          # push-on stroke along -x (the foot starts in front of the cage face); clearance to swept members
 WASH_MARGIN = 1.0                                        # vertical prism of every swept disk, r 44.5 + 1.0
 HIT, CRASH, FLIGHT, G = 250.0, 35.0, 4.0, 9.81          # N frontal hit on the hood (35 g of a 735 g drone), g, g (dimensions.md L)
@@ -94,10 +97,41 @@ NODE_SWEEPS = json.load(open(_NS)) if os.path.exists(_NS) else None
 
 
 def rod_ends(name, a, b):
-    """a rod's true ends (socket floors, eccentric sockets included) when the saved nodes are known, else the node centres"""
-    if NODE_SWEEPS and name in NODE_SWEEPS["rods"]:
-        r = NODE_SWEEPS["rods"][name]; return np.array(r["a"], float), np.array(r["b"], float)
-    return np.asarray(a, float), np.asarray(b, float)
+    """a rod's true ends (socket floors, eccentric sockets included) when the saved nodes know it (matched by geometry: both
+    floors within 4 of the centre line a-b, so a renumbered layout still finds it), else the node centres"""
+    a, b = np.asarray(a, float), np.asarray(b, float)
+    if NODE_SWEEPS:
+        d = b - a; L = float(np.linalg.norm(d)); u = d / L
+        for r in NODE_SWEEPS["rods"].values():
+            fa, fb = np.array(r["a"], float), np.array(r["b"], float)
+            if np.linalg.norm(fa - a) > np.linalg.norm(fb - a): fa, fb = fb, fa
+            ok = True
+            for f in (fa, fb):
+                t = float((f - a) @ u); off = float(np.linalg.norm(f - a - t * u))
+                ok &= (-2.0 < t < L + 2.0) and off < 4.0
+            if ok and float((fb - fa) @ u) > 0.5 * L: return fa, fb
+    return a, b
+
+
+def node_sweep(i):
+    """the saved node at layout node i: (y-z outlines moved to the layout node, x range), or None (no saved node within 6 mm)"""
+    if not NODE_SWEEPS: return None
+    for nd in NODE_SWEEPS["nodes"].values():
+        dl = N[i] - np.asarray(nd["centre"], float)
+        if np.linalg.norm(dl) < 6.0:
+            return [np.asarray(ol) + dl[1:] for ol in nd["yz"]], (nd["x"][0] + dl[0], nd["x"][1] + dl[0])
+    return None
+
+
+def clip_y():
+    """clip centre: the clip's far end NODE_CLR + 0.5 inside the tip of node 14's rod 14-15 socket (lowest y of its outline at the rod's height)"""
+    s = node_sweep(CLIP_ROD[0])
+    if s is None: return 38.5
+    z0 = N[CLIP_ROD[0]][2]; P = np.vstack(s[0]); P = P[np.abs(P[:, 1] - z0) < 6.0]
+    return round(float(P[:, 0].min()) - NODE_CLR - 0.5 - CLIP_L / 2, 1)
+
+
+CLIP_Y = clip_y()
 
 
 def prism_yz(cs, x0, x1):
@@ -231,13 +265,13 @@ def bodies():
     for k, (p, q) in RES["links"].items():
         cuts += swept(list(rod_ends(k, p, q)), CG.get("link_r_mm", 1.5) + SWEEP_CLR)
     for i, p in enumerate(N):
-        if NODE_SWEEPS:                                                # the saved node: its y-z outline, from its back - stroke to its front
-            nd = NODE_SWEEPS["nodes"][str(i)]
-            for ol in nd["yz"]:
-                cs = poly(ol).offset(SWEEP_CLR, mf.JoinType.Round)
-                cuts += prism_yz(cs, nd["x"][0] - STROKE, nd["x"][1] + SWEEP_CLR)
+        ns = node_sweep(i)
+        if ns:                                                         # the saved node: its y-z outline, from its back - stroke to its front
+            for ol in ns[0]:
+                cs = poly(ol).offset(NODE_CLR, mf.JoinType.Round)
+                cuts += prism_yz(cs, ns[1][0] - STROKE, ns[1][1] + NODE_CLR)
         else:
-            cuts += swept([p], (10.0 if i < NR else CG["node_r_mm"]) + SWEEP_CLR)
+            cuts += swept([p], (10.0 if i < NR else CG["node_r_mm"]) + NODE_CLR)
     # rod 14-15: swept everywhere but the clip lengths (there the clip's own mouth / lead-in cut is the path)
     a, b = rod_ends("rod 14-15", N[CLIP_ROD[0]], N[CLIP_ROD[1]])
     sw = swept([a, b], R_T + SWEEP_CLR)
