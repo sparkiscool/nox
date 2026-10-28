@@ -43,7 +43,7 @@ SADDLE_X = (-45.0, -15.0, 15.0, 38.0)                     # tie saddle (printed 
 SADDLE_Y = (36.3, 42.3)                                    # receiver's TPU end pieces (y 36.3..42.3, x -50..42, z -15..6), 2 tabs a side up to the
 SADDLE_Z = (-15.0, 6.0)                                    # plate underside between the arms (x ±14..26, 4 M3 into the plate); tie roots on its face
 FUNNEL_BAND = 30.0                                         # nothing but the ring rods within this height above the plane, outside the swap column (funnel ramps)
-OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v12", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
+OUT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("SCOUT_OUT") or os.path.join(ROOT, "runs", "scout_layout", "v13", "" if RING_MODE == "v5side" else "alt_" + RING_MODE + "_ring")
 DR = os.path.join(ROOT, "runs", "scout_layout", "v6", "drone")          # drone meshes: PR 94 run v5 assembly (24 Oct), as drawn
 OV = os.path.join(ROOT, "runs", "overseer_layout", "v5")                # the Overseer cage v3 (ring source)
 LOG = io.StringIO()
@@ -61,6 +61,26 @@ ROD_R, ROD_GPM = 1.5, 11.0e-3                              # links 3.0 solid, 11
 NODE_R, NODE_G = 6.0, 1.5                                  # printed shell node round 3.2 epoxy sockets (Spark coupon pick), Ø12 (pad rule), 1.5 g (E)
 RING_NODE_R, RING_NODE_G = 10.15, 4.5                      # the shared ring nodes stay the Overseer's Ø20 (the funnel contact), 4.5 g (E)
 GUARD_NODE_R, GUARD_NODE_G = 5.0, 1.5                      # camera guard bar nodes (E)
+NODE_MODEL = os.environ.get("SCOUT_NODE_MODEL", "fit")      # fit: node mass from its socket count, fitted to the saved nodes v2 (M); flat: NODE_G
+NODE_FIT = (2.34, 3.49, -0.57, -3.14)                      # g per shell socket, per saddle-tie socket, ring node, constant (fit on runs/scout_nodes/v2,
+                                                           # 18 nodes, 188.8 g M, max residual 1.9 g, E)
+CAM_MOUNT_G = float(os.environ.get("SCOUT_CAM_MOUNT_G", 22.3))   # the camera mount as saved (v1 21.8 + 2 collars 0.5, M), camera excluded
+
+
+def node_g(sd, td=0, ring=False):
+    if NODE_MODEL != "fit": return RING_NODE_G if ring else NODE_G
+    return max(1.5, NODE_FIT[0] * sd + NODE_FIT[1] * td + NODE_FIT[2] * ring + NODE_FIT[3])
+
+
+def node_masses(nodes, E, extra=None):
+    """each node's mass from its sockets: shell rods, and saddle ties ending on it"""
+    sd = np.zeros(len(nodes), int); td = np.zeros(len(nodes), int)
+    for a, b in E: sd[a] += 1; sd[b] += 1
+    for p, q in (extra or {}).values():
+        for e in (p, q):
+            d = np.linalg.norm(nodes - np.asarray(e, float), axis=1)
+            if d.min() < 1.0: td[d.argmin()] += 1
+    return np.array([node_g(sd[i], td[i], i < nR) for i in range(len(nodes))])
 PROP_GAP, CAGE_GAP = 12.0, 3.0
 M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0
 FREQ = int(os.environ.get("SCOUT_FREQ", 2))                # geodesic frequency
@@ -109,7 +129,7 @@ UBEC_Z = float(os.environ.get("SCOUT_UBEC_Z", 16.0))      # stand: the UBEC flat
 RADXA_T = 6.31                                             # board thickness over the parts (dimensions H, C from the STEP; 7.62 over the SD slot)
 WASH_X = -(MOTOR + PROP_R + 3.0)                           # behind this x nothing is under a rear disk (disk + 3)
 TB = 0.0                                                   # tail bay shift aft (scanned with the catch for the balance)
-ELEC = os.environ.get("SCOUT_ELEC", os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope.json"))   # the electronics
+ELEC = os.environ.get("SCOUT_ELEC", os.path.join(ROOT, "runs", "scout_layout", "v13", "electronics_envelope.json"))   # the electronics
 ELEC = json.load(open(ELEC)) if ELEC and os.path.exists(ELEC) else None    # session's mount, XR2, cables and keep-clears (drawn at catch ELEC["catch"])
 LEN_W = float(os.environ.get("SCOUT_LEN_W", 0.01))         # balance-scan length term: 0.01 mm of CG per mm of cage length (DEFAULT: 30 mm buys 0.3)
 TAIL_BAY = os.environ.get("SCOUT_TAIL_BAY", "1") == "1"   # Radxa + UBEC in a tail bay behind the receiver (balance, race-car tail, Spark 27 Oct)
@@ -952,7 +972,10 @@ def masses(nodes, E, extra, guard):
     it.append(("wires", 20.0, D["FC"][0].bounding_box.centroid))
     for i, (a, b) in enumerate(E): it.append((f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2))
     for k, (p, q) in extra.items(): it.append((k, np.linalg.norm(np.subtract(q, p)) * ROD_GPM, (np.asarray(p) + np.asarray(q)) / 2))
-    for i, n in enumerate(nodes): it.append((f"node {i}", RING_NODE_G if i < nR else NODE_G, n))
+    for i, (n, g) in enumerate(zip(nodes, node_masses(nodes, E, extra))): it.append((f"node {i}", g, n))
+    if CAMP in D and CAM_MOUNT == "printed":                 # the camera mount at its saved mass (the layout's cradle, arms and clips are rough)
+        mod = sum(D[k][3] for k in (CAMP, "camera cradle arms (printed)", "camera cradle clips (printed)") if k in D)
+        it.append(("camera mount (saved mass delta)", CAM_MOUNT_G - mod, ctr_(D[CAMP][0])))
     for i, n in enumerate(guard): it.append((f"guard node {i}", GUARD_NODE_G, n))
     return it
 
@@ -982,7 +1005,7 @@ def run(DC):
         nodes, E, tris, viol = r
         pg = min(seg_band_dist(nodes[a], nodes[b]) for a, b in E) - SHELL_R
         vol = ConvexHull(nodes).volume / 1e6; sh = sum(np.linalg.norm(nodes[a] - nodes[b]) for a, b in E)
-        mass = sh * SHELL_GPM + NODE_G * (len(nodes) - nR) + RING_NODE_G * nR
+        mass = sh * SHELL_GPM + node_masses(nodes, E).sum()
         ok = viol <= 0.05 and pg >= PROP_GAP
         bt, bb = blockage(nodes, E, {}) if ok else (np.nan, np.nan)
         lines.append(f"{'offset' if PATTERN in ('free', 'race') else 'start'} {START} dome {DOME:.0f} snap {int(SNAP)}: {'valid' if ok else 'invalid'}: {len(nodes)} nodes, {len(E)} tubes, {vol:.1f} L, "
@@ -992,7 +1015,7 @@ def run(DC):
         cap_ = [c for c in cands if len(c["r"][1]) <= SHELL_CAP] or [min(cands, key=lambda c: len(c["r"][1]))]   # most compact,
         for c in cap_:                                        # among the shells balanced on their own (x moment about the thrust
             nd_, E_ = c["r"][0], c["r"][1]                    # centre under 400 g mm, ~0.6 mm of CG: a lopsided shell leaves the
-            c["mom"] = sum(np.linalg.norm(nd_[a] - nd_[b]) * SHELL_GPM * (nd_[a][0] + nd_[b][0]) / 2 for a, b in E_) + NODE_G * nd_[nR:, 0].sum()
+            c["mom"] = sum(np.linalg.norm(nd_[a] - nd_[b]) * SHELL_GPM * (nd_[a][0] + nd_[b][0]) / 2 for a, b in E_) + (node_masses(nd_, E_) * nd_[:, 0]).sum()
         def small_(c):                                        # triangles with every edge under SMALL_TRI left in the final shell
             nd_, _, tr_, _ = c["r"]
             return sum(max(np.linalg.norm(nd_[t[i]] - nd_[t[(i + 1) % 3]]) for i in range(3)) < SMALL_TRI for t in tr_)
@@ -1162,9 +1185,9 @@ say("flow (23 deg cone, straight down): checked (lines above list anything in vi
 BT, BB = blockage(nodes, E, extra)
 say(f"prop blockage (secondary to structure): {BT:.1f} % of the disks' thrust shadowed from above, {BB:.1f} % from below (plan shadow of tubes and links, "
     f"annulus 0.2..1 R weighted by r, E)")
-shell_g = sh.sum() * SHELL_GPM + NODE_G * (len(nodes) - nR) + RING_NODE_G * nR; link_g = sum(rl.values()) * ROD_GPM
+nodes_g = sum(x for k, x, _ in it if k.startswith("node ")); shell_g = sh.sum() * SHELL_GPM + nodes_g; link_g = sum(rl.values()) * ROD_GPM
 t2, c2 = cg([x for x in it if not D.get(x[0], (0,) * 9)[8]])
-say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} + nodes {NODE_G * (len(nodes) - nR) + RING_NODE_G * nR:.0f}, E), links {link_g:.0f} g, guard nodes "
+say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} + nodes {nodes_g:.0f}, E: {NODE_MODEL} model), links {link_g:.0f} g, guard nodes "
     f"{GUARD_NODE_G * len(guard):.0f} g (C on E)")
 say(f"mass ~{tot:.0f} g (E), CG ({cgv[0]:.1f}, {cgv[1]:.1f}, {cgv[2]:.1f}) vs thrust centre (0, 0): {math.hypot(*cgv[:2]):.1f} off; pack + cartridge out: "
     f"{math.hypot(*c2[:2]):.1f} off ({t2:.0f} g); CG {PROP_Z - cgv[2]:.0f} under the prop plane")
@@ -1239,7 +1262,7 @@ if CAM_MOUNT == "printed":
 if CAM_MOUNT != "printed": say("camera ties: " + ", ".join(k for k in extra if k.startswith(("cam brace", "cam cradle", "cam guard strut"))) + (" (the cradle hangs from the cage only, Spark 27 Oct)" if CAM_MOUNT == "cage" else " (the seat on the boom + these: not a stalk)"))
 if CAM_MOUNT == "boom": say(f"camera boom: {'one bar' if CAM['boom_w'] == 0 else 'a fork of 2 bars at y ±%.0f' % CAM['boom_w']}, {CAM['boom']:.0f} long, "
     f"{CAM['boom_sec']:.0f} x {CAM['boom_sec']:.0f} PETG from the plate nose to the camera seat, {CAM['boom_gap']:.1f} clear of the shell tubes (C)")
-if OUT == os.path.join(ROOT, "runs", "scout_layout", "v12", ""):
+if OUT == os.path.join(ROOT, "runs", "scout_layout", "v13", ""):
     from assembly import new as new_assembly
     asm_parts = []
     for n_, m_, r_, pr_, gm_, t_, mat_, gr_, co_, sw_ in PARTS:
