@@ -1,10 +1,6 @@
 {
  "note": "links the frame model sized up to 6/4 carbon tube (nox/overseer/cage_frame.py); every other link 3.0 solid",
  "tube6": [
-  "L2 brace hi +1",
-  "L2 brace hi -1",
-  "L2 brace lo +1",
-  "L2 brace lo -1",
   "bay tie +1+1.2",
   "bay tie +1-1.2",
   "core tie front.1",
@@ -15,12 +11,9 @@
   "core tie rear.2",
   "core tie right.1",
   "core tie right.2",
-  "head strut 15",
-  "head strut 16",
-  "head strut 18",
-  "head strut 19",
-  "keel +1",
-  "keel -1",
+  "head rod +1",
+  "head rod -1",
+  "head rod c",
   "spoke 1.1",
   "spoke 1.2",
   "spoke 1.3",
@@ -32,8 +25,6 @@
   "spoke 3.3",
   "spoke 4.1",
   "spoke 4.2",
-  "spoke 4.3",
-  "wing strut 18",
-  "wing strut 19"
+  "spoke 4.3"
  ]
 }

@@ -1,0 +1,8 @@
+node_5: grid (56, 56, 56) h 1.25 = 175,616 cells; design 70,996 (138.7 cm3), drawn 4,470, void 100,150
+  support hold 0: 3658 cells, 6513 nodes
+  support hold 1: 3658 cells, 6513 nodes
+  support hold 2: 3711 cells, 6567 nodes
+  support hold 3: 3711 cells, 6567 nodes
+  support hold 4: 3586 cells, 6283 nodes
+  support hold 5: 3586 cells, 6283 nodes
+node 5: 10.89 g (M), solid PASS, worst 0.065 (tube to 13 pull): PASS

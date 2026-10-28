@@ -17,7 +17,7 @@ Inputs you are given: part name, version, the part script path, the system model
 
 Steps:
 1. `git fetch && git checkout -b run/<part>-<version> origin/main` (or check it out if it exists).
-2. Smoke it first (`docs/generative.md` Heavy runs, Measure before quoting): `python3 tools/run_estimate.py runs/<part>/<version> -- python3 <script> <args>`; commit `estimate.json`. Its peak x 1.15 over your share: stop and report. Your report gives its range in Pacific time.
+2. Smoke it first (`docs/generative.md` Heavy runs, Measure before quoting): `python3 tools/run_estimate.py runs/<part>/<version> -- python3 <script> <args>`; commit `estimate.json`. Its peak x 1.15 over your share, or its room audit FAIL (exit 3): stop and report; never draw solid to pass it (CLAUDE.md Drawn is attachment only). Your report gives its range in Pacific time.
 3. Start the job with the Bash tool's `run_in_background`: `python3 tools/run_bg.py runs/<part>/<version> -- python3 <script>`. It writes `log.txt`, commits and pushes checkpoints every 10 min, stops at the 6 h cap and writes `run_bg.txt` (exit, wall time, peak memory M).
 4. Do not poll, sleep or tail the log: end your turn; the task notification when the job exits is your only wake (`docs/sessions.md` Usage). Then read only the end of `log.txt`.
 5. When the job has exited, run `python3 nox/solid_check.py <mesh>` and `python3 nox/print_orient.py <mesh>`. Put the exact output of both in `summary.md`. A solid_check FAIL means the run result is FAILED in `summary.md`; do not patch the mesh.

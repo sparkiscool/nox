@@ -129,17 +129,54 @@ def main():
             continue
         mp = p.get("mesh", "")
         if "receiver" in nm or "cartridge" in nm:
-            ang = nm.split()[1]
-            if "cartridge" in nm and ang in ("-210", "30"): continue      # the arm's moving packs stand for the pick and return bays
-            m = trimesh.load(os.path.join(ROOT, mp), force="mesh", process=False)
-            pack = "Overseer" if ang in ("0", "-60", "-120", "-180") else "Scout"
-            ver = ("receiver v2" if pack == "Overseer" else "receiver v3") if "receiver" in nm else ("cartridge v6" if pack == "Overseer" else "cartridge v7")
-            add(nm, "latch", m, pose=pose, faces=4000, role=p.get("role"), material="PETG", mass_g=p.get("mass_g") or mesh_mass(m, "PETG"), tag=p.get("tag", "M"),
-                owner="box swap: latch", version=f"{pack} {ver} (latch on main)", file=mp, note=f"bay {ang}, {pack}")
+            continue                                                       # the full latch sets are built below from battery_latch
         elif "envelope" in nm or nm.startswith("arm:") or nm.startswith("drone"):
             m = trimesh.load(os.path.join(ROOT, mp), force="mesh", process=False)
             add(nm, "envelopes", m, pose=pose, faces=3000, role="envelope", material="", mass_g=None, tag="C", owner="box structure (layout v2)", version="v2 layout", file=mp, note="keep-out / design space, not a part")
         # catch (funnel) and the v1 mast: left out (no funnel; the v2 cut has its own mast)
+
+    # ---------------- battery latch: the full set in every bay (battery_latch.latch_assembly, cartridge coords -> W as box_layout_v2.place)
+    import battery_latch as BL, box_layout_v2 as LAY
+    meta = json.load(open(os.path.join(ROOT, "runs", "box_system", "v2", "latch_ctx", "meta.json")))
+    VER = {"scout": dict(cartridge="cartridge v7", slider="slider v6", cartridge_skid="TPU end skid v2", cartridge_strip="TPU strip v1", receiver="receiver v3", receiver_lid="lid v2", receiver_strips="TPU strips v1", xt60_carrier="XT60 carrier v2", receiver_skid="TPU end piece (nose v2 / tail v1)"),
+           "overseer": dict(cartridge="cartridge v6", slider="slider v6", cartridge_skid="skid", cartridge_strip="strip", receiver="receiver v2", receiver_lid="lid v1", receiver_strips="TPU strips v1", xt60_carrier="XT60 carrier v1", receiver_skid="end piece")}
+    CART_SIDE = ("cartridge", "slider", "pack", "xt60_plug")
+    sets = {pk: BL.latch_assembly(pk, "latched") for pk in ("scout", "overseer")}
+    for ang, pk in LAY.BAYS.items():
+        zT = float(meta[pk]["Z_T"]); R = 113.0
+        T = np.array([[1, 0, 0, 0], [0, 0, -1, LAY.Y_C + zT], [0, 1, 0, R], [0, 0, 0, 1]], dtype=float)
+        T = trimesh.transformations.rotation_matrix(np.radians(90 - ang), [0, 1, 0]) @ T
+        for key, man in sets[pk].items():
+            if man is None or man.is_empty(): continue
+            if ang in (-210, 30) and key.startswith(CART_SIDE): continue      # the arm's moving packs stand for the pick and return bays
+            base = key.rsplit("_", 1)[0] if key.startswith(("cartridge_skid", "cartridge_strip", "receiver_skid", "slider")) else key
+            if key.startswith("slider"): base = "slider"
+            ver = VER[pk].get(base, "")
+            mat = "TPU" if ("skid" in key or "strip" in key) else ("bought" if key in ("pack", "xt60_plug", "xt60e1m") else "PETG")
+            m = BL.tm(man)
+            mass = None if mat == "bought" else mesh_mass(m, mat)
+            add(f"bay {ang} {pk} {key.replace('_', ' ')}", "latch", m, pose=T, faces=2500, role="bought" if mat == "bought" else "structure", material="" if mat == "bought" else mat,
+                mass_g=mass, tag="M" if mass else "E", owner="box swap: latch", version=f"{pk.capitalize()} {ver} (latch on main)".strip(),
+                file="nox/box/battery_latch.py latch_assembly('%s', 'latched'); files runs/battery_latch/v4/stl/" % pk, note=f"bay {ang}; cartridge frame -> W as box_layout_v2.place (grip line Y_C {LAY.Y_C}, R 113)")
+
+    # ---------------- structure v1 demo (printed 19 Oct; superseded by v2): W meshes from box_structure.assembly.json
+    v1 = AS.load(os.path.join(BOX, "box_structure.assembly.json"))
+    for p in v1.parts:
+        nm = p["name"]; mp = p.get("mesh", "")
+        if not mp or "box" in p: continue
+        path = os.path.join(ROOT, mp)
+        if not os.path.exists(path): print("missing", path); continue
+        m = trimesh.load(path, force="mesh", process=False)
+        mat = p.get("material", "PETG")
+        add("v1 " + nm, "structure_v1", m, pose=np.asarray(v1.pose(nm)), faces=5000, role="structure", material=mat, mass_g=mesh_mass(m, mat, p.get("mass_g")), tag=p.get("tag", "M"),
+            owner="box structure (v1 demo)", version=f"{p.get('version', '')} (printed demo, superseded by v2)", file=mp, note=p.get("note", "system v1 FAIL 24 Oct; files in print/"))
+
+    # ---------------- superseded catch (funnel panels v7 / v9 plain + hook latch v2), the one W mesh the v2 layout used
+    cw = os.path.join(ROOT, "runs", "box_system", "v2", "layout", "catch_W.stl")
+    if os.path.exists(cw):
+        m = trimesh.load(cw, force="mesh", process=False)
+        add("funnel panels v7 / v9 plain + hook latch v2 (superseded)", "catch_old", m, faces=12000, role="structure", material="PETG", mass_g=None, tag="M", owner="box catch (superseded 27 Oct)",
+            version="panels v9 plain ±x, v7 ±y, hook latch v2", file="runs/box_system/v2/layout/catch_W.stl", note="READY files kept in print/, do not print: replaced by catch concept F (flat deck, push bars)")
 
     # ---------------- electronics boards on the rear sheet (result.json rects: x0, x1, z0, z1 in W X / Z; Y from the sheet's inner face)
     el = json.load(open(os.path.join(ROOT, "runs", "box_electronics", "v1", "result.json")))
