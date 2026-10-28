@@ -1,0 +1,137 @@
+<title>Scout Belly Mount v2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* layout: a drawing sheet: title block, the pick full width, the options sheet full width, then spec columns that stack on a phone */
+:root {
+  --bg: #f4f6f8; --paper: #ffffff; --ink: #18222d; --muted: #5b6876; --line: #d5dce3;
+  --petg: #2f7fd8; --fail: #b3261e; --pass: #2e7d32; --warn: #9a5b00; --figbg: #ffffff; --figcap: #5b6876;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11161c; --paper: #182029; --ink: #e3e9ef; --muted: #9aa8b6; --line: #2c3743;
+  --petg: #6aa9f0; --fail: #f2867c; --pass: #7cc583; --warn: #e3b25c; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #11161c; --paper: #182029; --ink: #e3e9ef; --muted: #9aa8b6; --line: #2c3743;
+  --petg: #6aa9f0; --fail: #f2867c; --pass: #7cc583; --warn: #e3b25c; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 24px 40px; }
+.sheet { max-width: 1180px; margin: 0 auto; display: grid; gap: 20px; }
+header { display: grid; gap: 6px; border-bottom: 2px solid var(--ink); padding-bottom: 12px; }
+h1 { font-size: 1.6rem; margin: 0; text-wrap: balance; }
+.sub { color: var(--muted); max-width: 72ch; margin: 0; }
+.tags { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); letter-spacing: 0.02em; }
+figure { margin: 0; background: var(--figbg); border: 1px solid var(--line); padding: 10px; overflow-x: auto; }
+figure img { display: block; width: 100%; min-width: 760px; max-width: none; height: auto; }
+figcaption { font-size: 0.82rem; color: var(--figcap); padding-top: 8px; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+section { min-width: 0; }
+h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 8px; }
+dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; }
+dt { color: var(--muted); font-size: 0.88rem; }
+dd { margin: 0; font-family: var(--mono); font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+.fail { color: var(--fail); font-weight: 500; }
+.pass { color: var(--pass); }
+.warn { color: var(--warn); }
+ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+li { max-width: 65ch; }
+.alt { background: var(--paper); border: 1px solid var(--line); padding: 12px 14px; display: grid; gap: 6px; min-width: 0; }
+.alt b { color: var(--petg); }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; font-size: 0.86rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 4px 10px 4px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; font-size: 0.8rem; }
+td.n { font-family: var(--mono); }
+tr.pick td { color: var(--petg); font-weight: 600; }
+</style>
+<div class="sheet">
+  <header>
+    <h1>Scout v3: the FC on top, belly mount v2</h1>
+    <p class="sub">Spark, 27 Oct: "the fc can live anywhere lets just do on top". The FC sits on the plate top at x 0, on the Bee35's own AIO holes, on 4 bonded silicone columns (lateral 111 Hz, E). The belly mount carries nothing of the FC now. It is a U-frame, 25.5 g (E), bolted through the Bee35's 2 side holes, so it needs no new plate hole. One requirement on another part: the tail block's foot tip is trimmed from x −14 to −20.</p>
+    <div class="tags">drone frame: x nose, y left, z up, mm · C computed on layout v12 · E estimate · P measured · F frame model · runs/scout_belly_mount/v2</div>
+  </header>
+  <figure>
+    <img src="preview.png" alt="The FC on top and the belly mount v2 in the assembled Scout v3: side, top and rear views, a section through 2 dampers, the plate top with the wiring routes, the belly mount slice at z 14, the flow bipod, and the damper modes chart">
+    <figcaption>The pick. Top row: side, top and rear. Middle: the FC on its 4 columns (dashed violet, the tail block's foot as drawn), the plate top with the wiring routes and the lead notch, the belly mount at z 14. Bottom: the flow bipod, the column modes against rubber height. Scroll sideways on a phone.</figcaption>
+  </figure>
+  <figure>
+    <img src="preview_alternatives.png" alt="The options from the same model: four FC poses on the plate top (A x +6, B x 0 picked, C turned 45 at x +13.5, D turned 45 at x +7.5) and three ways to bolt the belly mount (side holes only picked, plus 2 new, v1's 4 new)">
+    <figcaption>Top: where the FC sits. Red x marks the AIO holes, circles the FC's 4 holes, yellow the swept prop disks. Bottom: how the belly mount bolts to the plate. Yellow squares are the Bee35's own side holes, red squares new holes.</figcaption>
+  </figure>
+  <div class="cols">
+    <section>
+      <h2>Checks</h2>
+      <dl>
+        <dt>solid_check</dt><dd class="pass">PASS, 1 body</dd>
+        <dt>system_check</dt><dd class="pass">PASS</dd>
+        <dt>fit</dt><dd>0.0 mm³; contacts 0.000; others ≥ 2.0</dd>
+        <dt>access</dt><dd>23 / 23 clear</dd>
+        <dt>CG in / out</dt><dd>0.2 / 2.1 (gate 3.0)</dd>
+        <dt>cage first</dt><dd>6.2 (camera, as main)</dd>
+        <dt>FC to the disks</dt><dd>6.55 in plan (rule 8 ≥ 3)</dd>
+        <dt>FC to the tail block</dt><dd>2.00 (foot trimmed)</dd>
+        <dt>roof over the FC</dt><dd>no member; prop sweep 4.2 above</dd>
+        <dt>ESC open</dt><dd>sides 94 %, top 100 %</dd>
+        <dt>reproducible</dt><dd>2 runs byte-identical</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>Soft mount and loads (E)</h2>
+      <dl>
+        <dt>columns</dt><dd>4 × Ø6 × 5.2, 30A, bonded</dd>
+        <dt>lateral / yaw</dt><dd class="pass">111 / 137 Hz (gate 100)</dd>
+        <dt>vertical / rocking</dt><dd class="warn">242 / 290 Hz (near 1P)</dd>
+        <dt>blade pass 500..670</dt><dd>isolates: 0.05 lateral, 0.31 vertical</dd>
+        <dt>crash 35 g × 14</dt><dd>worst 0.52 (rails at the side bolts)</dd>
+        <dt>receiver inserts</dt><dd>0.081</dd>
+        <dt>plate inserts</dt><dd>0.154, prying 2.5×</dd>
+        <dt>flight / landing</dt><dd>≤ 0.09, limit 0.5</dd>
+        <dt>flow bipod</dt><dd>296 Hz; crash 0.04 (twist: −7 % mode)</dd>
+        <dt>breaking order</dt><dd>3.0 rods fail first (fuse)</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>Attachments and wiring</h2>
+      <ul>
+        <li>FC: 4 silicone columns, M3 studs through the AIO holes into nuts epoxied under the plate; PCB clamped on the column tops by 4 M3 screws from above.</li>
+        <li>Belly mount: 2 M3 from the plate top through the side holes (3.9, ±31) into inserts; the receiver's 4 M3 up into inserts, unchanged.</li>
+        <li>Battery leads: straight up from the XT60 through a notch in the plate's nose edge, x 44..edge, |y| ≤ 7.5.</li>
+        <li>Motor leads on the arm tops; bay leads along the fin; USB-C out the +y edge; flow lead up the front strut and through the notch.</li>
+      </ul>
+    </section>
+  </div>
+  <div class="cols">
+    <div class="alt"><b>Where the FC sits</b>
+      <div class="tbl"><table>
+        <tr><th>Option</th><th>Plan margin</th><th>Holes</th><th>Other part</th></tr>
+        <tr><td>A: x +6</td><td class="n">2.50 (fails 3)</td><td>4 new</td><td>none</td></tr>
+        <tr class="pick"><td>B: x 0, picked</td><td class="n">6.55</td><td>AIO, none new</td><td>foot tip to −20</td></tr>
+        <tr><td>C: 45°, x +13.5</td><td class="n">4.46</td><td>4 new</td><td>none</td></tr>
+        <tr><td>D: 45°, x +7.5</td><td class="n">8.71</td><td>4 new</td><td>foot tip to −20</td></tr>
+      </table></div>
+      <span>C is the choice if the tail block must not change. It puts the IMU 13.5 forward and needs 4 new holes.</span>
+    </div>
+    <div class="alt"><b>How the belly mount bolts on</b>
+      <div class="tbl"><table>
+        <tr><th>Variant</th><th>g (E)</th><th>New holes</th><th>Crash</th></tr>
+        <tr class="pick"><td>VA: side holes, picked</td><td class="n">25.5</td><td class="n">0</td><td class="n">0.52</td></tr>
+        <tr><td>VB: + 2 rear</td><td class="n">26.9</td><td class="n">2</td><td class="n">0.57</td></tr>
+        <tr><td>VC: v1's 4 new</td><td class="n">24.6</td><td class="n">4</td><td class="n">0.17</td></tr>
+        <tr><td>VA, damper pods here</td><td class="n">29.1</td><td class="n">0</td><td class="n">0.49</td></tr>
+      </table></div>
+      <span>Target 0.67 (1 / 1.5). Within it, the fewest new holes win; VC would save 0.9 g for 4 holes in the carbon.</span>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="alt"><b>Requirements on other parts</b>
+      <span>Plate: the notch at the nose edge, 4 bonded M3 nuts under the AIO holes; no new round holes (v1's 4 are dropped).</span>
+      <span>Tail block: the foot tip from x −14 to −20.</span>
+      <span>Receiver: v1's rib cut is dropped, no change.</span>
+      <span>Cables: the bay's 3 FC runs end at the FC's tail edge on the plate top, each lead with a 10 mm service loop.</span>
+    </div>
+    <div class="alt"><b>Open</b>
+      <span>The vertical mode at 242 Hz sits at the low end of rotor 1P (E). The vibration log decides; the RPM notch covers 1P.</span>
+      <span>Measure the AIO hole size, the board's hole keep-out and the damper listing. Set SENS_FLOW_ROT 4 and SENS_BOARD_ROT at the bench.</span>
+    </div>
+  </div>
+</div>

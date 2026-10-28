@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 27 Oct (Scout v3, Spark: FC on top): belly mount v2 concept: FC on the plate top at x 0 on the AIO holes, 4 silicone columns Ø6 x 5.2 30A (111 / 242 Hz E); belly U-frame 25.5 g E on the Bee35 side holes, 0 new holes (alt v1's 4 new, 24.6 g); tail block foot tip to x −20 (DEFAULT; alt FC 45° at x +13.5, 4 new holes); plate lead notch. `runs/scout_belly_mount/v2/`
 - 27 Oct (Scout v3, Spark): every rod 3.0, sockets 3.2 (6/4 sizing dropped; crash fails accepted, rods are the fuse); FC on top of the plate; camera mount v2 by topology (worker). Rows: dimensions Rods, Strength; current-parts; v12 summary.
 - 27 Oct (Scout v3): Scout artifact v24 (Spark: no visible part updates): the other sessions' parts now stand out, saved teal (camera mount v1), concepts amber (belly v1, tail block, carrier), listed first, plus "camera mount" and "belly" views (`layout_v3_view.py`).
 - 27 Oct (Overseer): cage nodes: solid boss floor 3.0 behind each socket (was 1.0; `cage_node.py` FLOOR, DEFAULT). Node 2 at the lowered loop failed solid_check: the Ø7 arm met the boss through the 1.0 floor, a neck under 1.8. All 14 designs pass drawn-alone; node 2 to rerun (alt: flared arms, cut into by neighbour bores) (C)

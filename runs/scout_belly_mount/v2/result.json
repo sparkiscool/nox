@@ -1,0 +1,6473 @@
+{
+ "version": "v2 (concept): the FC on top (Spark 27 Oct), belly mount without the FC",
+ "layout": "scout_layout v12 + main's assembly (camera mount v1, PR 146) + the tail bay as drawn (PR 130), the tail block's foot tip trimmed (requirement)",
+ "fc": {
+  "pose": {
+   "x": 0.0,
+   "y": 0.0,
+   "yaw": 0.0,
+   "holes": [
+    [
+     -12.75,
+     -12.75
+    ],
+    [
+     -12.75,
+     12.75
+    ],
+    [
+     12.75,
+     -12.75
+    ],
+    [
+     12.75,
+     12.75
+    ]
+   ],
+   "on": "the Bee35's AIO holes"
+  },
+  "stack": {
+   "rubber": [
+    22.5,
+    27.7
+   ],
+   "pcb": [
+    28.2,
+    29.8
+   ],
+   "env": [
+    25.0,
+    33.0
+   ]
+  },
+  "plan_margin_column": 6.55,
+  "plan_margin_contracted": 10.11,
+  "gap_tail_block": 2.0,
+  "gap_tail_block_as_drawn": 0.0,
+  "roof": {
+   "lowest": null,
+   "member": null
+  },
+  "prop_sweep_gap": 4.2,
+  "esc": {
+   "side_open": 0.943,
+   "top_open": 1.0,
+   "side_area_mm2": 1493,
+   "top_area_mm2": 1296
+  }
+ },
+ "soft_mount": {
+  "pick": {
+   "shore": 30,
+   "G": 0.381,
+   "h": 5.2,
+   "modes": [
+    [
+     110.9,
+     "y"
+    ],
+    [
+     110.9,
+     "x"
+    ],
+    [
+     137.4,
+     "yaw"
+    ],
+    [
+     242.2,
+     "z"
+    ],
+    [
+     290.2,
+     "pitch"
+    ],
+    [
+     290.2,
+     "roll"
+    ]
+   ],
+   "lateral": 110.9,
+   "vertical": 242.2,
+   "first": 110.9,
+   "k": {
+    "lat": 1.4329331746203102,
+    "v": 6.83173108844218,
+    "tor": 9.317249930975617
+   }
+  },
+  "crash_travel_mm": {
+   "lateral": 0.71,
+   "vertical": 0.15
+  },
+  "table": [
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 4.2,
+    "modes": [
+     [
+      128.6,
+      "x"
+     ],
+     [
+      128.6,
+      "y"
+     ],
+     [
+      159.3,
+      "yaw"
+     ],
+     [
+      275.9,
+      "z"
+     ],
+     [
+      330.6,
+      "roll"
+     ],
+     [
+      330.6,
+      "pitch"
+     ]
+    ],
+    "lateral": 128.6,
+    "vertical": 275.9,
+    "first": 128.6
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 4.4,
+    "modes": [
+     [
+      124.7,
+      "x"
+     ],
+     [
+      124.7,
+      "y"
+     ],
+     [
+      154.5,
+      "yaw"
+     ],
+     [
+      268.0,
+      "z"
+     ],
+     [
+      321.1,
+      "roll"
+     ],
+     [
+      321.1,
+      "pitch"
+     ]
+    ],
+    "lateral": 124.7,
+    "vertical": 268.0,
+    "first": 124.7
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 4.6,
+    "modes": [
+     [
+      121.0,
+      "x"
+     ],
+     [
+      121.0,
+      "y"
+     ],
+     [
+      149.9,
+      "yaw"
+     ],
+     [
+      260.7,
+      "z"
+     ],
+     [
+      312.4,
+      "pitch"
+     ],
+     [
+      312.4,
+      "roll"
+     ]
+    ],
+    "lateral": 121.0,
+    "vertical": 260.7,
+    "first": 121.0
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 4.8,
+    "modes": [
+     [
+      117.4,
+      "x"
+     ],
+     [
+      117.4,
+      "y"
+     ],
+     [
+      145.5,
+      "yaw"
+     ],
+     [
+      254.1,
+      "z"
+     ],
+     [
+      304.4,
+      "roll"
+     ],
+     [
+      304.4,
+      "pitch"
+     ]
+    ],
+    "lateral": 117.4,
+    "vertical": 254.1,
+    "first": 117.4
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 5.0,
+    "modes": [
+     [
+      114.1,
+      "x"
+     ],
+     [
+      114.1,
+      "y"
+     ],
+     [
+      141.4,
+      "yaw"
+     ],
+     [
+      247.9,
+      "z"
+     ],
+     [
+      297.1,
+      "roll"
+     ],
+     [
+      297.1,
+      "pitch"
+     ]
+    ],
+    "lateral": 114.1,
+    "vertical": 247.9,
+    "first": 114.1
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 5.2,
+    "modes": [
+     [
+      110.9,
+      "y"
+     ],
+     [
+      110.9,
+      "x"
+     ],
+     [
+      137.4,
+      "yaw"
+     ],
+     [
+      242.2,
+      "z"
+     ],
+     [
+      290.2,
+      "pitch"
+     ],
+     [
+      290.2,
+      "roll"
+     ]
+    ],
+    "lateral": 110.9,
+    "vertical": 242.2,
+    "first": 110.9
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 5.4,
+    "modes": [
+     [
+      107.8,
+      "x"
+     ],
+     [
+      107.8,
+      "y"
+     ],
+     [
+      133.7,
+      "yaw"
+     ],
+     [
+      236.9,
+      "z"
+     ],
+     [
+      283.8,
+      "roll"
+     ],
+     [
+      283.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 107.8,
+    "vertical": 236.9,
+    "first": 107.8
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 5.6,
+    "modes": [
+     [
+      104.9,
+      "x"
+     ],
+     [
+      104.9,
+      "y"
+     ],
+     [
+      130.1,
+      "yaw"
+     ],
+     [
+      231.9,
+      "z"
+     ],
+     [
+      277.9,
+      "roll"
+     ],
+     [
+      277.9,
+      "pitch"
+     ]
+    ],
+    "lateral": 104.9,
+    "vertical": 231.9,
+    "first": 104.9
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 5.8,
+    "modes": [
+     [
+      102.1,
+      "y"
+     ],
+     [
+      102.1,
+      "x"
+     ],
+     [
+      126.7,
+      "yaw"
+     ],
+     [
+      227.3,
+      "z"
+     ],
+     [
+      272.3,
+      "pitch"
+     ],
+     [
+      272.3,
+      "roll"
+     ]
+    ],
+    "lateral": 102.1,
+    "vertical": 227.3,
+    "first": 102.1
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 6.0,
+    "modes": [
+     [
+      99.5,
+      "y"
+     ],
+     [
+      99.5,
+      "x"
+     ],
+     [
+      123.4,
+      "yaw"
+     ],
+     [
+      222.9,
+      "z"
+     ],
+     [
+      267.1,
+      "pitch"
+     ],
+     [
+      267.1,
+      "roll"
+     ]
+    ],
+    "lateral": 99.5,
+    "vertical": 222.9,
+    "first": 99.5
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 6.2,
+    "modes": [
+     [
+      96.9,
+      "x"
+     ],
+     [
+      96.9,
+      "y"
+     ],
+     [
+      120.3,
+      "yaw"
+     ],
+     [
+      218.8,
+      "z"
+     ],
+     [
+      262.2,
+      "roll"
+     ],
+     [
+      262.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 96.9,
+    "vertical": 218.8,
+    "first": 96.9
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 6.4,
+    "modes": [
+     [
+      94.5,
+      "x"
+     ],
+     [
+      94.5,
+      "y"
+     ],
+     [
+      117.3,
+      "yaw"
+     ],
+     [
+      214.9,
+      "z"
+     ],
+     [
+      257.5,
+      "roll"
+     ],
+     [
+      257.5,
+      "pitch"
+     ]
+    ],
+    "lateral": 94.5,
+    "vertical": 214.9,
+    "first": 94.5
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 6.6,
+    "modes": [
+     [
+      92.1,
+      "x"
+     ],
+     [
+      92.1,
+      "y"
+     ],
+     [
+      114.4,
+      "yaw"
+     ],
+     [
+      211.2,
+      "z"
+     ],
+     [
+      253.1,
+      "roll"
+     ],
+     [
+      253.1,
+      "pitch"
+     ]
+    ],
+    "lateral": 92.1,
+    "vertical": 211.2,
+    "first": 92.1
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 6.8,
+    "modes": [
+     [
+      89.9,
+      "x"
+     ],
+     [
+      89.9,
+      "y"
+     ],
+     [
+      111.6,
+      "yaw"
+     ],
+     [
+      207.8,
+      "z"
+     ],
+     [
+      248.9,
+      "roll"
+     ],
+     [
+      248.9,
+      "pitch"
+     ]
+    ],
+    "lateral": 89.9,
+    "vertical": 207.8,
+    "first": 89.9
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 7.0,
+    "modes": [
+     [
+      87.7,
+      "x"
+     ],
+     [
+      87.7,
+      "y"
+     ],
+     [
+      108.9,
+      "yaw"
+     ],
+     [
+      204.5,
+      "z"
+     ],
+     [
+      245.0,
+      "roll"
+     ],
+     [
+      245.0,
+      "pitch"
+     ]
+    ],
+    "lateral": 87.7,
+    "vertical": 204.5,
+    "first": 87.7
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 7.2,
+    "modes": [
+     [
+      85.6,
+      "x"
+     ],
+     [
+      85.6,
+      "y"
+     ],
+     [
+      106.3,
+      "yaw"
+     ],
+     [
+      201.3,
+      "z"
+     ],
+     [
+      241.2,
+      "roll"
+     ],
+     [
+      241.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 85.6,
+    "vertical": 201.3,
+    "first": 85.6
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 7.4,
+    "modes": [
+     [
+      83.6,
+      "x"
+     ],
+     [
+      83.6,
+      "y"
+     ],
+     [
+      103.8,
+      "yaw"
+     ],
+     [
+      198.3,
+      "z"
+     ],
+     [
+      237.6,
+      "roll"
+     ],
+     [
+      237.6,
+      "pitch"
+     ]
+    ],
+    "lateral": 83.6,
+    "vertical": 198.3,
+    "first": 83.6
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 7.6,
+    "modes": [
+     [
+      81.6,
+      "x"
+     ],
+     [
+      81.6,
+      "y"
+     ],
+     [
+      101.4,
+      "yaw"
+     ],
+     [
+      195.4,
+      "z"
+     ],
+     [
+      234.2,
+      "roll"
+     ],
+     [
+      234.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 81.6,
+    "vertical": 195.4,
+    "first": 81.6
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 7.8,
+    "modes": [
+     [
+      79.7,
+      "x"
+     ],
+     [
+      79.7,
+      "y"
+     ],
+     [
+      99.1,
+      "yaw"
+     ],
+     [
+      192.7,
+      "z"
+     ],
+     [
+      230.9,
+      "roll"
+     ],
+     [
+      230.9,
+      "pitch"
+     ]
+    ],
+    "lateral": 79.7,
+    "vertical": 192.7,
+    "first": 79.7
+   },
+   {
+    "shore": 30,
+    "G": 0.381,
+    "h": 8.0,
+    "modes": [
+     [
+      77.9,
+      "x"
+     ],
+     [
+      77.9,
+      "y"
+     ],
+     [
+      96.9,
+      "yaw"
+     ],
+     [
+      190.1,
+      "z"
+     ],
+     [
+      227.7,
+      "roll"
+     ],
+     [
+      227.7,
+      "pitch"
+     ]
+    ],
+    "lateral": 77.9,
+    "vertical": 190.1,
+    "first": 77.9
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 4.2,
+    "modes": [
+     [
+      156.4,
+      "x"
+     ],
+     [
+      156.4,
+      "y"
+     ],
+     [
+      193.8,
+      "yaw"
+     ],
+     [
+      335.6,
+      "z"
+     ],
+     [
+      402.1,
+      "roll"
+     ],
+     [
+      402.1,
+      "pitch"
+     ]
+    ],
+    "lateral": 156.4,
+    "vertical": 335.6,
+    "first": 156.4
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 4.4,
+    "modes": [
+     [
+      151.6,
+      "x"
+     ],
+     [
+      151.6,
+      "y"
+     ],
+     [
+      187.9,
+      "yaw"
+     ],
+     [
+      325.9,
+      "z"
+     ],
+     [
+      390.5,
+      "roll"
+     ],
+     [
+      390.5,
+      "pitch"
+     ]
+    ],
+    "lateral": 151.6,
+    "vertical": 325.9,
+    "first": 151.6
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 4.6,
+    "modes": [
+     [
+      147.1,
+      "x"
+     ],
+     [
+      147.1,
+      "y"
+     ],
+     [
+      182.3,
+      "yaw"
+     ],
+     [
+      317.1,
+      "z"
+     ],
+     [
+      380.0,
+      "roll"
+     ],
+     [
+      380.0,
+      "pitch"
+     ]
+    ],
+    "lateral": 147.1,
+    "vertical": 317.1,
+    "first": 147.1
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 4.8,
+    "modes": [
+     [
+      142.8,
+      "x"
+     ],
+     [
+      142.8,
+      "y"
+     ],
+     [
+      177.0,
+      "yaw"
+     ],
+     [
+      309.0,
+      "z"
+     ],
+     [
+      370.2,
+      "roll"
+     ],
+     [
+      370.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 142.8,
+    "vertical": 309.0,
+    "first": 142.8
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 5.0,
+    "modes": [
+     [
+      138.7,
+      "x"
+     ],
+     [
+      138.7,
+      "y"
+     ],
+     [
+      171.9,
+      "yaw"
+     ],
+     [
+      301.5,
+      "z"
+     ],
+     [
+      361.3,
+      "roll"
+     ],
+     [
+      361.3,
+      "pitch"
+     ]
+    ],
+    "lateral": 138.7,
+    "vertical": 301.5,
+    "first": 138.7
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 5.2,
+    "modes": [
+     [
+      134.8,
+      "x"
+     ],
+     [
+      134.8,
+      "y"
+     ],
+     [
+      167.2,
+      "yaw"
+     ],
+     [
+      294.6,
+      "z"
+     ],
+     [
+      352.9,
+      "roll"
+     ],
+     [
+      352.9,
+      "pitch"
+     ]
+    ],
+    "lateral": 134.8,
+    "vertical": 294.6,
+    "first": 134.8
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 5.4,
+    "modes": [
+     [
+      131.1,
+      "x"
+     ],
+     [
+      131.1,
+      "y"
+     ],
+     [
+      162.6,
+      "yaw"
+     ],
+     [
+      288.1,
+      "z"
+     ],
+     [
+      345.2,
+      "roll"
+     ],
+     [
+      345.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 131.1,
+    "vertical": 288.1,
+    "first": 131.1
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 5.6,
+    "modes": [
+     [
+      127.6,
+      "x"
+     ],
+     [
+      127.6,
+      "y"
+     ],
+     [
+      158.2,
+      "yaw"
+     ],
+     [
+      282.1,
+      "z"
+     ],
+     [
+      338.0,
+      "roll"
+     ],
+     [
+      338.0,
+      "pitch"
+     ]
+    ],
+    "lateral": 127.6,
+    "vertical": 282.1,
+    "first": 127.6
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 5.8,
+    "modes": [
+     [
+      124.2,
+      "x"
+     ],
+     [
+      124.2,
+      "y"
+     ],
+     [
+      154.1,
+      "yaw"
+     ],
+     [
+      276.4,
+      "z"
+     ],
+     [
+      331.2,
+      "roll"
+     ],
+     [
+      331.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 124.2,
+    "vertical": 276.4,
+    "first": 124.2
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 6.0,
+    "modes": [
+     [
+      121.0,
+      "y"
+     ],
+     [
+      121.0,
+      "x"
+     ],
+     [
+      150.1,
+      "yaw"
+     ],
+     [
+      271.1,
+      "z"
+     ],
+     [
+      324.8,
+      "pitch"
+     ],
+     [
+      324.8,
+      "roll"
+     ]
+    ],
+    "lateral": 121.0,
+    "vertical": 271.1,
+    "first": 121.0
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 6.2,
+    "modes": [
+     [
+      117.9,
+      "x"
+     ],
+     [
+      117.9,
+      "y"
+     ],
+     [
+      146.3,
+      "yaw"
+     ],
+     [
+      266.1,
+      "z"
+     ],
+     [
+      318.8,
+      "roll"
+     ],
+     [
+      318.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 117.9,
+    "vertical": 266.1,
+    "first": 117.9
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 6.4,
+    "modes": [
+     [
+      114.9,
+      "x"
+     ],
+     [
+      114.9,
+      "y"
+     ],
+     [
+      142.6,
+      "yaw"
+     ],
+     [
+      261.4,
+      "z"
+     ],
+     [
+      313.2,
+      "roll"
+     ],
+     [
+      313.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 114.9,
+    "vertical": 261.4,
+    "first": 114.9
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 6.6,
+    "modes": [
+     [
+      112.0,
+      "x"
+     ],
+     [
+      112.0,
+      "y"
+     ],
+     [
+      139.1,
+      "yaw"
+     ],
+     [
+      256.9,
+      "z"
+     ],
+     [
+      307.8,
+      "roll"
+     ],
+     [
+      307.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 112.0,
+    "vertical": 256.9,
+    "first": 112.0
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 6.8,
+    "modes": [
+     [
+      109.3,
+      "x"
+     ],
+     [
+      109.3,
+      "y"
+     ],
+     [
+      135.7,
+      "yaw"
+     ],
+     [
+      252.7,
+      "z"
+     ],
+     [
+      302.8,
+      "roll"
+     ],
+     [
+      302.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 109.3,
+    "vertical": 252.7,
+    "first": 109.3
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 7.0,
+    "modes": [
+     [
+      106.6,
+      "x"
+     ],
+     [
+      106.6,
+      "y"
+     ],
+     [
+      132.4,
+      "yaw"
+     ],
+     [
+      248.7,
+      "z"
+     ],
+     [
+      297.9,
+      "roll"
+     ],
+     [
+      297.9,
+      "pitch"
+     ]
+    ],
+    "lateral": 106.6,
+    "vertical": 248.7,
+    "first": 106.6
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 7.2,
+    "modes": [
+     [
+      104.1,
+      "x"
+     ],
+     [
+      104.1,
+      "y"
+     ],
+     [
+      129.3,
+      "yaw"
+     ],
+     [
+      244.8,
+      "z"
+     ],
+     [
+      293.3,
+      "roll"
+     ],
+     [
+      293.3,
+      "pitch"
+     ]
+    ],
+    "lateral": 104.1,
+    "vertical": 244.8,
+    "first": 104.1
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 7.4,
+    "modes": [
+     [
+      101.6,
+      "x"
+     ],
+     [
+      101.6,
+      "y"
+     ],
+     [
+      126.3,
+      "yaw"
+     ],
+     [
+      241.2,
+      "z"
+     ],
+     [
+      289.0,
+      "roll"
+     ],
+     [
+      289.0,
+      "pitch"
+     ]
+    ],
+    "lateral": 101.6,
+    "vertical": 241.2,
+    "first": 101.6
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 7.6,
+    "modes": [
+     [
+      99.3,
+      "x"
+     ],
+     [
+      99.3,
+      "y"
+     ],
+     [
+      123.4,
+      "yaw"
+     ],
+     [
+      237.7,
+      "z"
+     ],
+     [
+      284.8,
+      "roll"
+     ],
+     [
+      284.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 99.3,
+    "vertical": 237.7,
+    "first": 99.3
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 7.8,
+    "modes": [
+     [
+      97.0,
+      "x"
+     ],
+     [
+      97.0,
+      "y"
+     ],
+     [
+      120.6,
+      "yaw"
+     ],
+     [
+      234.4,
+      "z"
+     ],
+     [
+      280.8,
+      "roll"
+     ],
+     [
+      280.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 97.0,
+    "vertical": 234.4,
+    "first": 97.0
+   },
+   {
+    "shore": 40,
+    "G": 0.563,
+    "h": 8.0,
+    "modes": [
+     [
+      94.8,
+      "x"
+     ],
+     [
+      94.8,
+      "y"
+     ],
+     [
+      117.8,
+      "yaw"
+     ],
+     [
+      231.2,
+      "z"
+     ],
+     [
+      277.0,
+      "roll"
+     ],
+     [
+      277.0,
+      "pitch"
+     ]
+    ],
+    "lateral": 94.8,
+    "vertical": 231.2,
+    "first": 94.8
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 4.2,
+    "modes": [
+     [
+      188.6,
+      "x"
+     ],
+     [
+      188.6,
+      "y"
+     ],
+     [
+      233.6,
+      "yaw"
+     ],
+     [
+      404.6,
+      "z"
+     ],
+     [
+      484.8,
+      "roll"
+     ],
+     [
+      484.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 188.6,
+    "vertical": 404.6,
+    "first": 188.6
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 4.4,
+    "modes": [
+     [
+      182.8,
+      "x"
+     ],
+     [
+      182.8,
+      "y"
+     ],
+     [
+      226.5,
+      "yaw"
+     ],
+     [
+      392.9,
+      "z"
+     ],
+     [
+      470.8,
+      "roll"
+     ],
+     [
+      470.8,
+      "pitch"
+     ]
+    ],
+    "lateral": 182.8,
+    "vertical": 392.9,
+    "first": 182.8
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 4.6,
+    "modes": [
+     [
+      177.3,
+      "x"
+     ],
+     [
+      177.3,
+      "y"
+     ],
+     [
+      219.7,
+      "yaw"
+     ],
+     [
+      382.3,
+      "z"
+     ],
+     [
+      458.1,
+      "roll"
+     ],
+     [
+      458.1,
+      "pitch"
+     ]
+    ],
+    "lateral": 177.3,
+    "vertical": 382.3,
+    "first": 177.3
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 4.8,
+    "modes": [
+     [
+      172.2,
+      "y"
+     ],
+     [
+      172.2,
+      "x"
+     ],
+     [
+      213.4,
+      "yaw"
+     ],
+     [
+      372.5,
+      "z"
+     ],
+     [
+      446.4,
+      "pitch"
+     ],
+     [
+      446.4,
+      "roll"
+     ]
+    ],
+    "lateral": 172.2,
+    "vertical": 372.5,
+    "first": 172.2
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 5.0,
+    "modes": [
+     [
+      167.2,
+      "x"
+     ],
+     [
+      167.2,
+      "y"
+     ],
+     [
+      207.3,
+      "yaw"
+     ],
+     [
+      363.5,
+      "z"
+     ],
+     [
+      435.5,
+      "roll"
+     ],
+     [
+      435.5,
+      "pitch"
+     ]
+    ],
+    "lateral": 167.2,
+    "vertical": 363.5,
+    "first": 167.2
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 5.2,
+    "modes": [
+     [
+      162.6,
+      "x"
+     ],
+     [
+      162.6,
+      "y"
+     ],
+     [
+      201.5,
+      "yaw"
+     ],
+     [
+      355.1,
+      "z"
+     ],
+     [
+      425.5,
+      "roll"
+     ],
+     [
+      425.5,
+      "pitch"
+     ]
+    ],
+    "lateral": 162.6,
+    "vertical": 355.1,
+    "first": 162.6
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 5.4,
+    "modes": [
+     [
+      158.1,
+      "x"
+     ],
+     [
+      158.1,
+      "y"
+     ],
+     [
+      196.0,
+      "yaw"
+     ],
+     [
+      347.3,
+      "z"
+     ],
+     [
+      416.2,
+      "roll"
+     ],
+     [
+      416.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 158.1,
+    "vertical": 347.3,
+    "first": 158.1
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 5.6,
+    "modes": [
+     [
+      153.8,
+      "x"
+     ],
+     [
+      153.8,
+      "y"
+     ],
+     [
+      190.8,
+      "yaw"
+     ],
+     [
+      340.1,
+      "z"
+     ],
+     [
+      407.5,
+      "roll"
+     ],
+     [
+      407.5,
+      "pitch"
+     ]
+    ],
+    "lateral": 153.8,
+    "vertical": 340.1,
+    "first": 153.8
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 5.8,
+    "modes": [
+     [
+      149.8,
+      "x"
+     ],
+     [
+      149.8,
+      "y"
+     ],
+     [
+      185.8,
+      "yaw"
+     ],
+     [
+      333.2,
+      "z"
+     ],
+     [
+      399.3,
+      "roll"
+     ],
+     [
+      399.3,
+      "pitch"
+     ]
+    ],
+    "lateral": 149.8,
+    "vertical": 333.2,
+    "first": 149.8
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 6.0,
+    "modes": [
+     [
+      145.9,
+      "x"
+     ],
+     [
+      145.9,
+      "y"
+     ],
+     [
+      180.9,
+      "yaw"
+     ],
+     [
+      326.8,
+      "z"
+     ],
+     [
+      391.6,
+      "roll"
+     ],
+     [
+      391.6,
+      "pitch"
+     ]
+    ],
+    "lateral": 145.9,
+    "vertical": 326.8,
+    "first": 145.9
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 6.2,
+    "modes": [
+     [
+      142.1,
+      "x"
+     ],
+     [
+      142.1,
+      "y"
+     ],
+     [
+      176.3,
+      "yaw"
+     ],
+     [
+      320.8,
+      "z"
+     ],
+     [
+      384.4,
+      "roll"
+     ],
+     [
+      384.4,
+      "pitch"
+     ]
+    ],
+    "lateral": 142.1,
+    "vertical": 320.8,
+    "first": 142.1
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 6.4,
+    "modes": [
+     [
+      138.5,
+      "x"
+     ],
+     [
+      138.5,
+      "y"
+     ],
+     [
+      171.9,
+      "yaw"
+     ],
+     [
+      315.1,
+      "z"
+     ],
+     [
+      377.6,
+      "roll"
+     ],
+     [
+      377.6,
+      "pitch"
+     ]
+    ],
+    "lateral": 138.5,
+    "vertical": 315.1,
+    "first": 138.5
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 6.6,
+    "modes": [
+     [
+      135.1,
+      "x"
+     ],
+     [
+      135.1,
+      "y"
+     ],
+     [
+      167.7,
+      "yaw"
+     ],
+     [
+      309.7,
+      "z"
+     ],
+     [
+      371.1,
+      "roll"
+     ],
+     [
+      371.1,
+      "pitch"
+     ]
+    ],
+    "lateral": 135.1,
+    "vertical": 309.7,
+    "first": 135.1
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 6.8,
+    "modes": [
+     [
+      131.8,
+      "x"
+     ],
+     [
+      131.8,
+      "y"
+     ],
+     [
+      163.6,
+      "yaw"
+     ],
+     [
+      304.6,
+      "z"
+     ],
+     [
+      365.0,
+      "roll"
+     ],
+     [
+      365.0,
+      "pitch"
+     ]
+    ],
+    "lateral": 131.8,
+    "vertical": 304.6,
+    "first": 131.8
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 7.0,
+    "modes": [
+     [
+      128.6,
+      "x"
+     ],
+     [
+      128.6,
+      "y"
+     ],
+     [
+      159.7,
+      "yaw"
+     ],
+     [
+      299.8,
+      "z"
+     ],
+     [
+      359.2,
+      "roll"
+     ],
+     [
+      359.2,
+      "pitch"
+     ]
+    ],
+    "lateral": 128.6,
+    "vertical": 299.8,
+    "first": 128.6
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 7.2,
+    "modes": [
+     [
+      125.5,
+      "x"
+     ],
+     [
+      125.5,
+      "y"
+     ],
+     [
+      155.9,
+      "yaw"
+     ],
+     [
+      295.2,
+      "z"
+     ],
+     [
+      353.6,
+      "roll"
+     ],
+     [
+      353.6,
+      "pitch"
+     ]
+    ],
+    "lateral": 125.5,
+    "vertical": 295.2,
+    "first": 125.5
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 7.4,
+    "modes": [
+     [
+      122.5,
+      "y"
+     ],
+     [
+      122.5,
+      "x"
+     ],
+     [
+      152.2,
+      "yaw"
+     ],
+     [
+      290.8,
+      "z"
+     ],
+     [
+      348.4,
+      "pitch"
+     ],
+     [
+      348.4,
+      "roll"
+     ]
+    ],
+    "lateral": 122.5,
+    "vertical": 290.8,
+    "first": 122.5
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 7.6,
+    "modes": [
+     [
+      119.7,
+      "x"
+     ],
+     [
+      119.7,
+      "x"
+     ],
+     [
+      148.7,
+      "yaw"
+     ],
+     [
+      286.6,
+      "z"
+     ],
+     [
+      343.3,
+      "pitch"
+     ],
+     [
+      343.3,
+      "roll"
+     ]
+    ],
+    "lateral": 119.7,
+    "vertical": 286.6,
+    "first": 119.7
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 7.8,
+    "modes": [
+     [
+      116.9,
+      "x"
+     ],
+     [
+      116.9,
+      "y"
+     ],
+     [
+      145.3,
+      "yaw"
+     ],
+     [
+      282.5,
+      "z"
+     ],
+     [
+      338.5,
+      "roll"
+     ],
+     [
+      338.5,
+      "pitch"
+     ]
+    ],
+    "lateral": 116.9,
+    "vertical": 282.5,
+    "first": 116.9
+   },
+   {
+    "shore": 50,
+    "G": 0.819,
+    "h": 8.0,
+    "modes": [
+     [
+      114.3,
+      "x"
+     ],
+     [
+      114.3,
+      "y"
+     ],
+     [
+      142.1,
+      "yaw"
+     ],
+     [
+      278.7,
+      "z"
+     ],
+     [
+      333.9,
+      "roll"
+     ],
+     [
+      333.9,
+      "pitch"
+     ]
+    ],
+    "lateral": 114.3,
+    "vertical": 278.7,
+    "first": 114.3
+   }
+  ]
+ },
+ "fc_pose_search": {
+  "as_drawn_yaw0": {
+   "x": 6.0,
+   "yaw": 0.0,
+   "col": 2.5,
+   "contracted": 6.06,
+   "foot": 2.0,
+   "foot_trim": 8.0,
+   "rods": 39.92,
+   "aio": false
+  },
+  "as_drawn_yaw45": {
+   "x": 13.5,
+   "yaw": 45.0,
+   "col": 4.46,
+   "contracted": 8.02,
+   "foot": 2.05,
+   "foot_trim": 8.04,
+   "rods": 35.67,
+   "aio": false
+  },
+  "trimmed": {
+   "x": 7.5,
+   "yaw": 45.0,
+   "col": 8.71,
+   "contracted": 12.26,
+   "foot": 0.0,
+   "foot_trim": 2.04,
+   "rods": 36.39,
+   "aio": false
+  },
+  "picked": {
+   "x": 0.0,
+   "yaw": 0.0,
+   "col": 6.55,
+   "contracted": 10.11,
+   "foot": 0.0,
+   "foot_trim": 2.0,
+   "rods": 39.92,
+   "aio": true
+  }
+ },
+ "usb": {
+  "edge": "+y",
+  "offset": 0.0,
+  "azimuth": 0.0,
+  "elevation": 0.0,
+  "dir": [
+   0.0,
+   1.0,
+   0.0
+  ],
+  "p0": [
+   0.0,
+   18.0,
+   31.4
+  ],
+  "n_clear": 1268,
+  "n_clear_sides": 1112
+ },
+ "flow": {
+  "c": [
+   0.0,
+   -40.0
+  ],
+  "zb": -30.0,
+  "ori": "x+",
+  "post_x": 0.0,
+  "post_y": -30.5,
+  "score": 45.2963,
+  "strut_L": 31.1,
+  "in_swap_column": true,
+  "side": -1,
+  "bipod": {
+   "by_kind": {
+    "flight": [
+     0.0022,
+     "flight 2 g y"
+    ],
+    "landing": [
+     0.0026,
+     "landing 6 g"
+    ],
+    "crash": [
+     0.0385,
+     "crash 35 g y"
+    ]
+   },
+   "worst": [
+    0.03848018919928854,
+    "crash 35 g y"
+   ],
+   "modes_Hz": [
+    296.0,
+    774.0,
+    1018.0,
+    2143.0
+   ],
+   "modes_no_offset_Hz": [
+    319.0,
+    1316.0,
+    1547.0,
+    1626.0
+   ],
+   "worst_no_offset": 0.0385,
+   "offset_y": -9.5,
+   "strut_L": 34.6
+  },
+  "n_scored": 518,
+  "n_feasible": 8349
+ },
+ "belly_mount": {
+  "pick": "VA",
+  "mass_g": 25.54,
+  "mass_solid_g": 28.81,
+  "cg": [
+   -0.92,
+   -10.55,
+   6.84
+  ],
+  "bounds": [
+   [
+    -44.0,
+    -50.0,
+    -32.0
+   ],
+   [
+    53.28,
+    36.0,
+    18.5
+   ]
+  ],
+  "solid_check": {
+   "pass_": true,
+   "bodies_plain": 1,
+   "bodies_eroded": 1,
+   "eroded_volumes_mm3": [
+    13110.4
+   ],
+   "necks": [],
+   "drawn_not_in_main": [],
+   "thin_walls": [],
+   "acute_edges": 0
+  },
+  "cradle_g": 3.33,
+  "plate_bolts": [
+   [
+    3.9,
+    31.0
+   ],
+   [
+    3.9,
+    -31.0
+   ]
+  ],
+  "receiver_inserts": [
+   [
+    -37.65,
+    26.55
+   ],
+   [
+    -37.65,
+    -26.55
+   ],
+   [
+    48.28,
+    26.55
+   ],
+   [
+    48.28,
+    -26.55
+   ]
+  ],
+  "damper_inserts": [
+   [
+    -12.75,
+    -12.75
+   ],
+   [
+    -12.75,
+    12.75
+   ],
+   [
+    12.75,
+    -12.75
+   ],
+   [
+    12.75,
+    12.75
+   ]
+  ],
+  "tail_face_x": -31.0,
+  "ear_y": 21.0,
+  "variants": {
+   "VA": {
+    "g": 25.54,
+    "g_solid": 28.81,
+    "crash": 0.523,
+    "flight_landing": 0.09,
+    "new_holes": 0,
+    "solid": true,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0143,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0597,
+       "flight 4 g thrust",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.045,
+       "flight 4 g thrust",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0011,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       2.54,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0215,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.0896,
+       "landing 6 g",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.0674,
+       "landing 6 g",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       2.54,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.1536,
+       "crash 35 g +x+y-z",
+       null
+      ],
+      "frame_x_idx": [
+       0.5227,
+       "crash 35 g -z",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.3934,
+       "crash 35 g -z",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0242,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       2.54,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   },
+   "VA, damper pods": {
+    "g": 29.1,
+    "g_solid": 32.59,
+    "crash": 0.491,
+    "flight_landing": 0.084,
+    "new_holes": 0,
+    "solid": true,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0145,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0561,
+       "flight 4 g thrust",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.0395,
+       "flight 4 g thrust",
+       0.0
+      ],
+      "carbon_idx": [
+       0.0012,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       2.57,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0217,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.0842,
+       "landing 6 g",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.0592,
+       "landing 6 g",
+       0.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       2.57,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.1548,
+       "crash 35 g +x+y-z",
+       null
+      ],
+      "frame_x_idx": [
+       0.4912,
+       "crash 35 g -z",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.3456,
+       "crash 35 g -z",
+       0.0
+      ],
+      "carbon_idx": [
+       0.0244,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       2.57,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   },
+   "VA, damper rungs": {
+    "g": 30.92,
+    "g_solid": 34.75,
+    "crash": 0.491,
+    "flight_landing": 0.084,
+    "new_holes": 0,
+    "solid": true,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0146,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0561,
+       "flight 4 g thrust",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.0144,
+       "flight 4 g thrust",
+       8.0
+      ],
+      "carbon_idx": [
+       0.0012,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       2.58,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0219,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.0842,
+       "landing 6 g",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.0216,
+       "landing 6 g",
+       8.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       2.58,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.1554,
+       "crash 35 g +x+y-z",
+       null
+      ],
+      "frame_x_idx": [
+       0.4912,
+       "crash 35 g -z",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.1258,
+       "crash 35 g -z",
+       8.0
+      ],
+      "carbon_idx": [
+       0.0245,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       2.58,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   },
+   "VA + front rung": {
+    "g": 27.88,
+    "g_solid": 31.67,
+    "crash": 0.523,
+    "flight_landing": 0.09,
+    "new_holes": 0,
+    "solid": true,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0144,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0598,
+       "flight 4 g thrust",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.0227,
+       "flight 4 g thrust",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0011,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       2.56,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0216,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.0897,
+       "landing 6 g",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.034,
+       "landing 6 g",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       2.56,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.1544,
+       "crash 35 g +x+y-z",
+       null
+      ],
+      "frame_x_idx": [
+       0.5232,
+       "crash 35 g -z",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.1984,
+       "crash 35 g -z",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0244,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       2.56,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   },
+   "VA, rails 5.5": {
+    "g": 25.06,
+    "g_solid": 27.74,
+    "crash": 0.602,
+    "flight_landing": 0.103,
+    "new_holes": 0,
+    "solid": false,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0143,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0688,
+       "flight 4 g thrust",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.0449,
+       "flight 4 g thrust",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0011,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       2.53,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0215,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.1032,
+       "landing 6 g",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.0673,
+       "landing 6 g",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       2.53,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.1534,
+       "crash 35 g +x+y-z",
+       null
+      ],
+      "frame_x_idx": [
+       0.6019,
+       "crash 35 g -z",
+       9.5
+      ],
+      "frame_y_idx": [
+       0.3928,
+       "crash 35 g -z",
+       15.0
+      ],
+      "carbon_idx": [
+       0.0242,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       2.53,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   },
+   "VB": {
+    "g": 26.95,
+    "g_solid": 30.83,
+    "crash": 0.571,
+    "flight_landing": 0.098,
+    "new_holes": 2,
+    "solid": true,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0109,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0652,
+       "flight 4 g thrust",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.0128,
+       "flight 4 g thrust",
+       0.0
+      ],
+      "carbon_idx": [
+       0.0006,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       1.93,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0163,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.0979,
+       "landing 6 g",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.0192,
+       "landing 6 g",
+       0.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       1.93,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.095,
+       "crash 35 g -z",
+       null
+      ],
+      "frame_x_idx": [
+       0.5708,
+       "crash 35 g -z",
+       -1.5
+      ],
+      "frame_y_idx": [
+       0.1637,
+       "crash 35 g -x",
+       0.0
+      ],
+      "carbon_idx": [
+       0.0122,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       1.93,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   },
+   "VC": {
+    "g": 24.63,
+    "g_solid": 28.4,
+    "crash": 0.173,
+    "flight_landing": 0.021,
+    "new_holes": 4,
+    "solid": true,
+    "zmin": [
+     139.4,
+     52.5
+    ],
+    "by": {
+     "flight": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0056,
+       "flight 4 g thrust",
+       null
+      ],
+      "plate_idx": [
+       0.0079,
+       "flight 4 g thrust",
+       null
+      ],
+      "frame_x_idx": [
+       0.0141,
+       "flight 4 g thrust",
+       -19.5
+      ],
+      "frame_y_idx": [
+       0.0134,
+       "flight 4 g thrust",
+       -8.0
+      ],
+      "carbon_idx": [
+       0.0006,
+       "flight 2 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "hover 1 g",
+       null
+      ],
+      "pry": [
+       1.4,
+       "hover 1 g",
+       null
+      ]
+     },
+     "landing": {
+      "limit": 0.5,
+      "rec_idx": [
+       0.0085,
+       "landing 6 g",
+       null
+      ],
+      "plate_idx": [
+       0.0118,
+       "landing 6 g",
+       null
+      ],
+      "frame_x_idx": [
+       0.0211,
+       "landing 6 g",
+       -19.5
+      ],
+      "frame_y_idx": [
+       0.02,
+       "landing 6 g",
+       -8.0
+      ],
+      "carbon_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "tongue_idx": [
+       0.0,
+       "landing 6 g",
+       null
+      ],
+      "pry": [
+       1.4,
+       "landing 6 g",
+       null
+      ]
+     },
+     "crash": {
+      "limit": 1.0,
+      "rec_idx": [
+       0.0808,
+       "crash 35 g -x+y-z",
+       null
+      ],
+      "plate_idx": [
+       0.0827,
+       "crash 35 g +x+y-z",
+       null
+      ],
+      "frame_x_idx": [
+       0.1734,
+       "crash 35 g -x-y-z",
+       24.5
+      ],
+      "frame_y_idx": [
+       0.132,
+       "crash 35 g +x+y-z",
+       -8.0
+      ],
+      "carbon_idx": [
+       0.0121,
+       "crash 35 g x",
+       null
+      ],
+      "tongue_idx": [
+       0.0046,
+       "crash 35 g x",
+       null
+      ],
+      "pry": [
+       1.4,
+       "crash 35 g -z",
+       null
+      ]
+     }
+    }
+   }
+  },
+  "sections_x": {
+   "-43.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-42.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-41.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-40.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-39.5": {
+    "A": 169.0,
+    "I": 1144.4,
+    "c": 4.59,
+    "Z": 249.3
+   },
+   "-38.5": {
+    "A": 141.8,
+    "I": 990.7,
+    "c": 4.85,
+    "Z": 204.4
+   },
+   "-37.5": {
+    "A": 137.1,
+    "I": 961.4,
+    "c": 4.9,
+    "Z": 196.1
+   },
+   "-36.5": {
+    "A": 146.3,
+    "I": 1017.4,
+    "c": 4.8,
+    "Z": 212.0
+   },
+   "-35.5": {
+    "A": 145.0,
+    "I": 1191.6,
+    "c": 4.5,
+    "Z": 264.8
+   },
+   "-34.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-33.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-32.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-31.5": {
+    "A": 141.1,
+    "I": 1178.8,
+    "c": 4.45,
+    "Z": 264.9
+   },
+   "-30.5": {
+    "A": 433.2,
+    "I": 2960.3,
+    "c": 4.46,
+    "Z": 663.0
+   },
+   "-29.5": {
+    "A": 495.3,
+    "I": 3368.0,
+    "c": 4.45,
+    "Z": 756.8
+   },
+   "-28.5": {
+    "A": 492.8,
+    "I": 3353.1,
+    "c": 4.45,
+    "Z": 753.1
+   },
+   "-27.5": {
+    "A": 493.3,
+    "I": 3356.6,
+    "c": 4.45,
+    "Z": 754.1
+   },
+   "-26.5": {
+    "A": 490.2,
+    "I": 3333.4,
+    "c": 4.49,
+    "Z": 743.1
+   },
+   "-25.5": {
+    "A": 490.2,
+    "I": 3332.6,
+    "c": 4.48,
+    "Z": 743.2
+   },
+   "-24.5": {
+    "A": 128.7,
+    "I": 1038.0,
+    "c": 4.64,
+    "Z": 223.7
+   },
+   "-23.5": {
+    "A": 126.6,
+    "I": 1028.9,
+    "c": 4.67,
+    "Z": 220.5
+   },
+   "-22.5": {
+    "A": 124.7,
+    "I": 1017.1,
+    "c": 4.7,
+    "Z": 216.5
+   },
+   "-21.5": {
+    "A": 128.1,
+    "I": 1032.6,
+    "c": 4.65,
+    "Z": 221.9
+   },
+   "-20.5": {
+    "A": 124.4,
+    "I": 1011.8,
+    "c": 4.71,
+    "Z": 214.9
+   },
+   "-19.5": {
+    "A": 152.0,
+    "I": 1130.9,
+    "c": 4.52,
+    "Z": 250.1
+   },
+   "-18.5": {
+    "A": 151.6,
+    "I": 1128.0,
+    "c": 4.52,
+    "Z": 249.8
+   },
+   "-17.5": {
+    "A": 101.8,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "-16.5": {
+    "A": 101.8,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "-15.5": {
+    "A": 101.8,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "-14.5": {
+    "A": 101.8,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "-13.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-12.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-11.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-10.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-9.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-8.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-7.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-6.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-5.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-4.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-3.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-2.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-1.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "-0.5": {
+    "A": 185.7,
+    "I": 1298.4,
+    "c": 4.45,
+    "Z": 291.8
+   },
+   "0.5": {
+    "A": 211.3,
+    "I": 1574.1,
+    "c": 4.45,
+    "Z": 353.7
+   },
+   "1.5": {
+    "A": 225.2,
+    "I": 1727.8,
+    "c": 4.45,
+    "Z": 388.3
+   },
+   "2.5": {
+    "A": 206.4,
+    "I": 1610.6,
+    "c": 4.67,
+    "Z": 345.2
+   },
+   "3.5": {
+    "A": 201.8,
+    "I": 1564.1,
+    "c": 4.75,
+    "Z": 329.2
+   },
+   "4.5": {
+    "A": 199.5,
+    "I": 1563.5,
+    "c": 4.75,
+    "Z": 329.4
+   },
+   "5.5": {
+    "A": 207.9,
+    "I": 1630.3,
+    "c": 4.63,
+    "Z": 352.3
+   },
+   "6.5": {
+    "A": 223.0,
+    "I": 1703.2,
+    "c": 4.45,
+    "Z": 382.7
+   },
+   "7.5": {
+    "A": 207.6,
+    "I": 1533.4,
+    "c": 4.45,
+    "Z": 344.6
+   },
+   "8.5": {
+    "A": 171.3,
+    "I": 1203.1,
+    "c": 4.45,
+    "Z": 270.4
+   },
+   "9.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "10.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "11.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "12.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "13.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "14.5": {
+    "A": 101.9,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "15.5": {
+    "A": 101.9,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "16.5": {
+    "A": 101.8,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "17.5": {
+    "A": 101.9,
+    "I": 745.4,
+    "c": 4.46,
+    "Z": 167.2
+   },
+   "18.5": {
+    "A": 137.3,
+    "I": 1076.2,
+    "c": 4.53,
+    "Z": 237.4
+   },
+   "19.5": {
+    "A": 153.2,
+    "I": 1139.8,
+    "c": 4.54,
+    "Z": 251.1
+   },
+   "20.5": {
+    "A": 125.0,
+    "I": 1021.0,
+    "c": 4.69,
+    "Z": 217.7
+   },
+   "21.5": {
+    "A": 136.4,
+    "I": 1072.6,
+    "c": 4.55,
+    "Z": 236.0
+   },
+   "22.5": {
+    "A": 133.7,
+    "I": 1060.9,
+    "c": 4.58,
+    "Z": 231.8
+   },
+   "23.5": {
+    "A": 124.9,
+    "I": 1020.9,
+    "c": 4.69,
+    "Z": 217.7
+   },
+   "24.5": {
+    "A": 124.9,
+    "I": 1020.9,
+    "c": 4.69,
+    "Z": 217.7
+   },
+   "25.5": {
+    "A": 130.8,
+    "I": 994.7,
+    "c": 4.63,
+    "Z": 215.0
+   },
+   "26.5": {
+    "A": 130.0,
+    "I": 989.5,
+    "c": 4.61,
+    "Z": 214.5
+   },
+   "27.5": {
+    "A": 129.8,
+    "I": 988.1,
+    "c": 4.61,
+    "Z": 214.3
+   },
+   "28.5": {
+    "A": 129.6,
+    "I": 994.2,
+    "c": 4.46,
+    "Z": 222.9
+   },
+   "29.5": {
+    "A": 131.4,
+    "I": 1004.9,
+    "c": 4.46,
+    "Z": 225.3
+   },
+   "30.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "31.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "32.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "33.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "34.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "35.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "36.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "37.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "38.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "39.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "40.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "41.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "42.5": {
+    "A": 101.8,
+    "I": 744.2,
+    "c": 4.45,
+    "Z": 167.2
+   },
+   "43.5": {
+    "A": 116.1,
+    "I": 902.2,
+    "c": 4.45,
+    "Z": 202.7
+   },
+   "44.5": {
+    "A": 133.5,
+    "I": 1094.7,
+    "c": 4.45,
+    "Z": 246.0
+   },
+   "45.5": {
+    "A": 142.0,
+    "I": 1188.7,
+    "c": 4.45,
+    "Z": 267.1
+   },
+   "46.5": {
+    "A": 168.4,
+    "I": 1177.2,
+    "c": 4.63,
+    "Z": 254.1
+   },
+   "47.5": {
+    "A": 156.5,
+    "I": 1090.7,
+    "c": 4.82,
+    "Z": 226.4
+   },
+   "48.5": {
+    "A": 126.1,
+    "I": 886.2,
+    "c": 4.94,
+    "Z": 179.4
+   },
+   "49.5": {
+    "A": 131.5,
+    "I": 917.1,
+    "c": 4.82,
+    "Z": 190.1
+   },
+   "50.5": {
+    "A": 125.1,
+    "I": 1002.5,
+    "c": 4.45,
+    "Z": 225.3
+   },
+   "51.5": {
+    "A": 112.6,
+    "I": 863.4,
+    "c": 4.45,
+    "Z": 194.0
+   },
+   "52.5": {
+    "A": 90.5,
+    "I": 620.1,
+    "c": 4.45,
+    "Z": 139.4
+   }
+  },
+  "sections_y": {
+   "-15.0": {
+    "A": 48.5,
+    "I": 345.7,
+    "c": 4.45,
+    "Z": 77.7
+   },
+   "-8.0": {
+    "A": 48.5,
+    "I": 345.6,
+    "c": 4.45,
+    "Z": 77.7
+   },
+   "0.0": {
+    "A": 50.9,
+    "I": 347.3,
+    "c": 4.45,
+    "Z": 78.0
+   },
+   "8.0": {
+    "A": 48.5,
+    "I": 345.6,
+    "c": 4.45,
+    "Z": 77.7
+   },
+   "15.0": {
+    "A": 48.5,
+    "I": 345.6,
+    "c": 4.45,
+    "Z": 77.7
+   }
+  },
+  "cases": [
+   {
+    "case": "hover 1 g",
+    "kind": "flight",
+    "limit": 0.5,
+    "rec_T": 0.8,
+    "rec_idx": 0.0014,
+    "plate_T": 2.1,
+    "plate_S": 0.0,
+    "plate_idx": 0.0036,
+    "pry": 2.54,
+    "frame_x_idx": 0.0149,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.0112,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "flight 4 g thrust",
+    "kind": "flight",
+    "limit": 0.5,
+    "rec_T": 3.4,
+    "rec_idx": 0.0056,
+    "plate_T": 8.6,
+    "plate_S": 0.0,
+    "plate_idx": 0.0143,
+    "pry": 2.54,
+    "frame_x_idx": 0.0597,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.045,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "flight 2 g x",
+    "kind": "flight",
+    "limit": 0.5,
+    "rec_T": 1.0,
+    "rec_idx": 0.0032,
+    "plate_T": 1.9,
+    "plate_S": 3.6,
+    "plate_idx": 0.0068,
+    "pry": 1.95,
+    "frame_x_idx": 0.0173,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.0097,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0011,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "flight 2 g -x",
+    "kind": "flight",
+    "limit": 0.5,
+    "rec_T": 1.0,
+    "rec_idx": 0.0032,
+    "plate_T": 1.8,
+    "plate_S": 3.6,
+    "plate_idx": 0.0067,
+    "pry": 1.93,
+    "frame_x_idx": 0.018,
+    "frame_x_at": -1.5,
+    "frame_y_idx": 0.0162,
+    "frame_y_at": 0.0,
+    "carbon_idx": 0.0011,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "flight 2 g y",
+    "kind": "flight",
+    "limit": 0.5,
+    "rec_T": 1.5,
+    "rec_idx": 0.0038,
+    "plate_T": 2.9,
+    "plate_S": 3.6,
+    "plate_idx": 0.0077,
+    "pry": 1.86,
+    "frame_x_idx": 0.0134,
+    "frame_x_at": -1.5,
+    "frame_y_idx": 0.0053,
+    "frame_y_at": -15.0,
+    "carbon_idx": 0.0011,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "flight 2 g -y",
+    "kind": "flight",
+    "limit": 0.5,
+    "rec_T": 1.5,
+    "rec_idx": 0.0038,
+    "plate_T": 2.9,
+    "plate_S": 3.6,
+    "plate_idx": 0.0077,
+    "pry": 1.86,
+    "frame_x_idx": 0.0134,
+    "frame_x_at": -1.5,
+    "frame_y_idx": 0.0051,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0011,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "landing 6 g",
+    "kind": "landing",
+    "limit": 0.5,
+    "rec_T": 5.1,
+    "rec_idx": 0.0085,
+    "plate_T": 12.9,
+    "plate_S": 0.0,
+    "plate_idx": 0.0215,
+    "pry": 2.54,
+    "frame_x_idx": 0.0896,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.0674,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g x",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 16.7,
+    "rec_idx": 0.0556,
+    "plate_T": 32.6,
+    "plate_S": 76.3,
+    "plate_idx": 0.1383,
+    "pry": 1.95,
+    "frame_x_idx": 0.3026,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.1691,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0242,
+    "tongue_N": 26.7,
+    "tongue_idx": 0.0046
+   },
+   {
+    "case": "crash 35 g -x",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 16.7,
+    "rec_idx": 0.0556,
+    "plate_T": 32.2,
+    "plate_S": 63.0,
+    "plate_idx": 0.1178,
+    "pry": 1.93,
+    "frame_x_idx": 0.3145,
+    "frame_x_at": -1.5,
+    "frame_y_idx": 0.284,
+    "frame_y_at": 0.0,
+    "carbon_idx": 0.02,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g y",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 27.0,
+    "rec_idx": 0.0666,
+    "plate_T": 50.3,
+    "plate_S": 63.0,
+    "plate_idx": 0.1343,
+    "pry": 1.86,
+    "frame_x_idx": 0.2336,
+    "frame_x_at": -1.5,
+    "frame_y_idx": 0.0928,
+    "frame_y_at": -15.0,
+    "carbon_idx": 0.02,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g -y",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 27.0,
+    "rec_idx": 0.0666,
+    "plate_T": 50.2,
+    "plate_S": 63.0,
+    "plate_idx": 0.1343,
+    "pry": 1.86,
+    "frame_x_idx": 0.2336,
+    "frame_x_at": -1.5,
+    "frame_y_idx": 0.0897,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.02,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 0.0,
+    "rec_idx": 0.0,
+    "plate_T": 0.0,
+    "plate_S": 0.0,
+    "plate_idx": 0.0,
+    "pry": 0.0,
+    "frame_x_idx": 0.0,
+    "frame_x_at": 52.5,
+    "frame_y_idx": 0.0,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g -z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 29.6,
+    "rec_idx": 0.0494,
+    "plate_T": 75.2,
+    "plate_S": 0.0,
+    "plate_idx": 0.1253,
+    "pry": 2.54,
+    "frame_x_idx": 0.5227,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.3934,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g +x+y+z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 9.0,
+    "rec_idx": 0.0419,
+    "plate_T": 10.2,
+    "plate_S": 59.1,
+    "plate_idx": 0.1,
+    "pry": 1.13,
+    "frame_x_idx": 0.0823,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.0441,
+    "frame_y_at": 8.0,
+    "carbon_idx": 0.0188,
+    "tongue_N": 15.4,
+    "tongue_idx": 0.0027
+   },
+   {
+    "case": "crash 35 g +x+y-z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 41.5,
+    "rec_idx": 0.0795,
+    "plate_T": 70.7,
+    "plate_S": 59.1,
+    "plate_idx": 0.1536,
+    "pry": 1.7,
+    "frame_x_idx": 0.4765,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.2011,
+    "frame_y_at": -8.0,
+    "carbon_idx": 0.0188,
+    "tongue_N": 15.4,
+    "tongue_idx": 0.0027
+   },
+   {
+    "case": "crash 35 g +x-y+z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 9.0,
+    "rec_idx": 0.0419,
+    "plate_T": 10.2,
+    "plate_S": 59.1,
+    "plate_idx": 0.1,
+    "pry": 1.13,
+    "frame_x_idx": 0.0824,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.0442,
+    "frame_y_at": -8.0,
+    "carbon_idx": 0.0188,
+    "tongue_N": 15.4,
+    "tongue_idx": 0.0027
+   },
+   {
+    "case": "crash 35 g +x-y-z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 41.5,
+    "rec_idx": 0.0795,
+    "plate_T": 69.0,
+    "plate_S": 59.1,
+    "plate_idx": 0.1514,
+    "pry": 1.66,
+    "frame_x_idx": 0.4735,
+    "frame_x_at": 9.5,
+    "frame_y_idx": 0.2007,
+    "frame_y_at": 8.0,
+    "carbon_idx": 0.0188,
+    "tongue_N": 15.4,
+    "tongue_idx": 0.0027
+   },
+   {
+    "case": "crash 35 g -x+y+z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 8.1,
+    "rec_idx": 0.0417,
+    "plate_T": 8.0,
+    "plate_S": 51.4,
+    "plate_idx": 0.0867,
+    "pry": 0.99,
+    "frame_x_idx": 0.0966,
+    "frame_x_at": 52.5,
+    "frame_y_idx": 0.0143,
+    "frame_y_at": -15.0,
+    "carbon_idx": 0.0163,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g -x+y-z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 42.3,
+    "rec_idx": 0.0808,
+    "plate_T": 67.9,
+    "plate_S": 51.4,
+    "plate_idx": 0.1419,
+    "pry": 1.6,
+    "frame_x_idx": 0.2901,
+    "frame_x_at": 52.5,
+    "frame_y_idx": 0.1708,
+    "frame_y_at": -8.0,
+    "carbon_idx": 0.0163,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g -x-y+z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 8.1,
+    "rec_idx": 0.0417,
+    "plate_T": 8.2,
+    "plate_S": 51.4,
+    "plate_idx": 0.0868,
+    "pry": 1.01,
+    "frame_x_idx": 0.0907,
+    "frame_x_at": 52.5,
+    "frame_y_idx": 0.0195,
+    "frame_y_at": 15.0,
+    "carbon_idx": 0.0163,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   },
+   {
+    "case": "crash 35 g -x-y-z",
+    "kind": "crash",
+    "limit": 1.0,
+    "rec_T": 42.3,
+    "rec_idx": 0.0808,
+    "plate_T": 66.5,
+    "plate_S": 51.4,
+    "plate_idx": 0.1401,
+    "pry": 1.57,
+    "frame_x_idx": 0.2962,
+    "frame_x_at": 52.5,
+    "frame_y_idx": 0.0784,
+    "frame_y_at": -8.0,
+    "carbon_idx": 0.0163,
+    "tongue_N": 0.0,
+    "tongue_idx": 0.0
+   }
+  ],
+  "hung_g": 336.4,
+  "hung_cg": [
+   6.41,
+   -0.0,
+   -15.24
+  ]
+ },
+ "tail_block_requirement": {
+  "foot_tip_x": [
+   -14.0,
+   -20.0
+  ],
+  "removed_mm3": 465.3,
+  "g": [
+   15.92,
+   15.44
+  ]
+ },
+ "plate": {
+  "aio_holes": "the FC's dampers",
+  "side_holes": [
+   [
+    3.9,
+    31.0
+   ],
+   [
+    3.9,
+    -31.0
+   ]
+  ],
+  "nose_hole": "inside the notch (was empty)",
+  "notch": {
+   "x": [
+    44.0,
+    51.0
+   ],
+   "y": 7.5
+  },
+  "new_holes": [],
+  "v1_new_holes_dropped": [
+   [
+    -25,
+    13
+   ],
+   [
+    -25,
+    -13
+   ],
+   [
+    30,
+    13
+   ],
+   [
+    30,
+    -13
+   ]
+  ]
+ },
+ "fit": [
+  {
+   "a": "belly mount (PETG)",
+   "b": "cage shell tubes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 42.29,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "cage shell nodes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 59.84,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "spokes, bay ties, core ties, camera guard",
+   "overlap_mm3": 0.0,
+   "gap_mm": 9.82,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "frame plate (Bee35 carbon)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "motor 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 11.35,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "prop 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 18.7,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "motor 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 11.35,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "prop 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 18.7,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "motor 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 12.76,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "prop 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 18.7,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "motor 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 12.76,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "prop 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 18.7,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "UBEC",
+   "overlap_mm3": 0.0,
+   "gap_mm": 66.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "XR2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 50.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "Radxa Zero 3W",
+   "overlap_mm3": 0.0,
+   "gap_mm": 27.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "receiver v3 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "receiver lid (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "receiver TPU strips (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 6.1,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "receiver TPU end pieces (latch, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 15.6,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "XT60E1-M",
+   "overlap_mm3": 0.0,
+   "gap_mm": 8.81,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "cartridge v6 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.5,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "slider +y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 34.21,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "slider -y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.66,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "cartridge v6 strips (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 13.09,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "cartridge skid closed end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 18.2,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "cartridge skid lead end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 24.52,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "pack 4S 1500",
+   "overlap_mm3": 0.0,
+   "gap_mm": 10.1,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "pack XT60 plug",
+   "overlap_mm3": 0.0,
+   "gap_mm": 16.13,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "tail bay cables (Scout electronics, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 23.91,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "camera",
+   "overlap_mm3": 0.0,
+   "gap_mm": 81.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "tie saddle (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.8,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "camera mount (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 53.9,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "camera mount stop collar +y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 66.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "camera mount stop collar -y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 66.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "electronics tail block (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "electronics tail carrier (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 14.63,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "FC",
+   "overlap_mm3": 0.0,
+   "gap_mm": 6.8,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "FC dampers (4, silicone)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 5.51,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "wires",
+   "overlap_mm3": 0.0,
+   "gap_mm": 20.55,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "flow MTF-02P",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "cage shell tubes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 40.16,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "cage shell nodes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 92.61,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "spokes, bay ties, core ties, camera guard",
+   "overlap_mm3": 0.0,
+   "gap_mm": 39.94,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "frame plate (Bee35 carbon)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 3.0,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "motor 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 33.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "prop 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.83,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "motor 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 33.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "prop 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.83,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "motor 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 33.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "prop 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.83,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "motor 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 33.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "prop 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.83,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "UBEC",
+   "overlap_mm3": 0.0,
+   "gap_mm": 92.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "XR2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 76.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "Radxa Zero 3W",
+   "overlap_mm3": 0.0,
+   "gap_mm": 53.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "receiver v3 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 15.57,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "receiver lid (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 25.4,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "receiver TPU strips (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 21.5,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "receiver TPU end pieces (latch, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 31.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "XT60E1-M",
+   "overlap_mm3": 0.0,
+   "gap_mm": 26.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "cartridge v6 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 23.9,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "slider +y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 58.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "slider -y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 58.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "cartridge v6 strips (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 66.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "cartridge skid closed end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 59.6,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "cartridge skid lead end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 46.6,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "pack 4S 1500",
+   "overlap_mm3": 0.0,
+   "gap_mm": 25.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "pack XT60 plug",
+   "overlap_mm3": 0.0,
+   "gap_mm": 36.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "tail bay cables (Scout electronics, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.8,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "camera",
+   "overlap_mm3": 0.0,
+   "gap_mm": 117.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "tie saddle (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 19.42,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "camera mount (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 89.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "camera mount stop collar +y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 101.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "camera mount stop collar -y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 101.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "electronics tail block (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.0,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "electronics tail carrier (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 30.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "FC dampers (4, silicone)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "wires",
+   "overlap_mm3": 0.0,
+   "gap_mm": 17.81,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC",
+   "b": "flow MTF-02P",
+   "overlap_mm3": 0.0,
+   "gap_mm": 49.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cage shell tubes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 46.16,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cage shell nodes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 94.66,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "spokes, bay ties, core ties, camera guard",
+   "overlap_mm3": 0.0,
+   "gap_mm": 39.31,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "frame plate (Bee35 carbon)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "motor 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 36.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "prop 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 14.23,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "motor 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 36.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "prop 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 14.23,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "motor 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 36.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "prop 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 14.23,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "motor 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 36.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "prop 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 14.23,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "UBEC",
+   "overlap_mm3": 0.0,
+   "gap_mm": 94.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "XR2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 78.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "Radxa Zero 3W",
+   "overlap_mm3": 0.0,
+   "gap_mm": 56.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "receiver v3 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 13.21,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "receiver lid (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 25.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "receiver TPU strips (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 18.5,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "receiver TPU end pieces (latch, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 28.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "XT60E1-M",
+   "overlap_mm3": 0.0,
+   "gap_mm": 27.4,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cartridge v6 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 20.91,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "slider +y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 55.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "slider -y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 55.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cartridge v6 strips (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 63.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cartridge skid closed end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 56.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cartridge skid lead end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 44.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "pack 4S 1500",
+   "overlap_mm3": 0.0,
+   "gap_mm": 22.5,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "pack XT60 plug",
+   "overlap_mm3": 0.0,
+   "gap_mm": 36.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "tail bay cables (Scout electronics, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 11.1,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "camera",
+   "overlap_mm3": 0.0,
+   "gap_mm": 119.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "tie saddle (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 20.88,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "camera mount (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 91.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "camera mount stop collar +y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 103.9,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "camera mount stop collar -y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 103.9,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "electronics tail block (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 5.67,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "electronics tail carrier (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 32.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "wires",
+   "overlap_mm3": 0.0,
+   "gap_mm": 23.25,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "flow MTF-02P",
+   "overlap_mm3": 0.0,
+   "gap_mm": 46.9,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cage shell tubes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 55.13,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cage shell nodes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 71.73,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "spokes, bay ties, core ties, camera guard",
+   "overlap_mm3": 0.0,
+   "gap_mm": 13.75,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "frame plate (Bee35 carbon)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 40.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "motor 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 91.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "prop 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 72.4,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "motor 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 53.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "prop 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 59.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "motor 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 91.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "prop 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 72.4,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "motor 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 53.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "prop 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 59.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "UBEC",
+   "overlap_mm3": 0.0,
+   "gap_mm": 114.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "XR2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 94.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "Radxa Zero 3W",
+   "overlap_mm3": 0.0,
+   "gap_mm": 73.9,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "receiver v3 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 6.1,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "receiver lid (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 34.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "receiver TPU strips (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 25.9,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "receiver TPU end pieces (latch, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 20.08,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "XT60E1-M",
+   "overlap_mm3": 0.0,
+   "gap_mm": 39.4,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cartridge v6 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 13.0,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "slider +y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 37.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "slider -y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 10.21,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cartridge v6 strips (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 15.91,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cartridge skid closed end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 21.66,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cartridge skid lead end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 27.92,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "pack 4S 1500",
+   "overlap_mm3": 0.0,
+   "gap_mm": 15.5,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "pack XT60 plug",
+   "overlap_mm3": 0.0,
+   "gap_mm": 41.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "tail bay cables (Scout electronics, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 67.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "camera",
+   "overlap_mm3": 0.0,
+   "gap_mm": 132.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "tie saddle (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 7.0,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "camera mount (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 101.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "camera mount stop collar +y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 124.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "camera mount stop collar -y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 112.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "electronics tail block (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 40.89,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "electronics tail carrier (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 38.6,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "wires",
+   "overlap_mm3": 0.0,
+   "gap_mm": 61.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cage shell tubes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 40.12,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cage shell nodes",
+   "overlap_mm3": 0.0,
+   "gap_mm": 93.39,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "spokes, bay ties, core ties, camera guard",
+   "overlap_mm3": 0.0,
+   "gap_mm": 27.66,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "frame plate (Bee35 carbon)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "motor 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 65.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "prop 1",
+   "overlap_mm3": 0.0,
+   "gap_mm": 29.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "motor 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 65.1,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "prop 2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 29.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "motor 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 22.88,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "prop 3",
+   "overlap_mm3": 0.0,
+   "gap_mm": 4.48,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "motor 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 22.88,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "prop 4",
+   "overlap_mm3": 0.0,
+   "gap_mm": 4.48,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "UBEC",
+   "overlap_mm3": 0.0,
+   "gap_mm": 40.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "XR2",
+   "overlap_mm3": 0.0,
+   "gap_mm": 27.06,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "Radxa Zero 3W",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.4,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "receiver v3 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "receiver lid (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 58.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "receiver TPU strips (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 6.1,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "receiver TPU end pieces (latch, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.0,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "XT60E1-M",
+   "overlap_mm3": 0.0,
+   "gap_mm": 62.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cartridge v6 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 6.3,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "slider +y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 28.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "slider -y (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 28.7,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cartridge v6 strips (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 33.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cartridge skid closed end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 26.5,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cartridge skid lead end (latch, TPU)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 52.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "pack 4S 1500",
+   "overlap_mm3": 0.0,
+   "gap_mm": 8.8,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "pack XT60 plug",
+   "overlap_mm3": 0.0,
+   "gap_mm": 64.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "tail bay cables (Scout electronics, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 14.07,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "camera",
+   "overlap_mm3": 0.0,
+   "gap_mm": 155.0,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "tie saddle (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 15.72,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "camera mount (printed)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 127.2,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "camera mount stop collar +y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 139.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "camera mount stop collar -y",
+   "overlap_mm3": 0.0,
+   "gap_mm": 139.3,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "electronics tail carrier (PETG)",
+   "overlap_mm3": 0.0,
+   "gap_mm": -0.0,
+   "lower_bound": false,
+   "kind": "declared contact",
+   "pass_": true
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "wires",
+   "overlap_mm3": 0.0,
+   "gap_mm": 55.8,
+   "lower_bound": true,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount below z 9.0 (bipod, gussets, cradle)",
+   "b": "receiver v3 (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.2,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount below z 9.0 (bipod, gussets, cradle)",
+   "b": "receiver lid (latch)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 11.55,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount below z 9.0 (bipod, gussets, cradle)",
+   "b": "receiver TPU end pieces (latch, E)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 17.41,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "FC component layer under the PCB",
+   "overlap_mm3": 0.0,
+   "gap_mm": 2.1,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true
+  },
+  {
+   "a": "belly mount (PETG)",
+   "b": "cage rods / links (nearest)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 9.34,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true,
+   "rod": [
+    [
+     15.0,
+     -44.3,
+     -7.0
+    ],
+    [
+     6.6,
+     -125.0,
+     -11.9
+    ]
+   ]
+  },
+  {
+   "a": "FC",
+   "b": "cage rods / links (nearest)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 39.98,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true,
+   "rod": [
+    [
+     -15.0,
+     -44.3,
+     -7.0
+    ],
+    [
+     44.8,
+     -132.8,
+     44.2
+    ]
+   ]
+  },
+  {
+   "a": "FC dampers (4, silicone)",
+   "b": "cage rods / links (nearest)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 39.26,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true,
+   "rod": [
+    [
+     -15.0,
+     44.3,
+     -7.0
+    ],
+    [
+     44.8,
+     132.8,
+     44.2
+    ]
+   ]
+  },
+  {
+   "a": "flow MTF-02P",
+   "b": "cage rods / links (nearest)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 13.71,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true,
+   "rod": [
+    [
+     15.0,
+     -44.3,
+     -7.0
+    ],
+    [
+     6.6,
+     -125.0,
+     -11.9
+    ]
+   ]
+  },
+  {
+   "a": "electronics tail block (PETG)",
+   "b": "cage rods / links (nearest)",
+   "overlap_mm3": 0.0,
+   "gap_mm": 26.98,
+   "lower_bound": false,
+   "kind": ">= 2",
+   "pass_": true,
+   "rod": [
+    [
+     -45.0,
+     44.3,
+     -7.0
+    ],
+    [
+     6.6,
+     125.0,
+     -11.9
+    ]
+   ]
+  }
+ ],
+ "system_check": {
+  "summary": "System: Scout v3 with the FC on top and the belly mount v2 (concept), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm\u00b3 (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 748 of 500 g (150 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.1, -38.2], 2.1 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 23/23 clear",
+  "pass_": true,
+  "cg_offset_in": 0.16,
+  "cg_offset_out": 2.09,
+  "mass_g": 748.22,
+  "cg": [
+   -0.14,
+   -0.08,
+   2.98
+  ],
+  "access": [
+   [
+    "swap: cartridge v6 (latch) down",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "swap: pack 4S 1500 down",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "swap: pack XT60 plug down",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, receiver bolt (-37.6, -26.6)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, receiver bolt (-37.6, +26.6)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, receiver bolt (+48.2, -26.6)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, receiver bolt (+48.2, +26.6)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, yoke top bolt (x -54.5)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, yoke bottom bolt (x -54.5)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, yoke top bolt (x -63.5)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, yoke bottom bolt (x -63.5)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, plate bolt (-42.0, +16.0)",
+    true,
+    0.28,
+    []
+   ],
+   [
+    "M3 key, plate bolt (-42.0, -16.0)",
+    true,
+    0.28,
+    []
+   ],
+   [
+    "Radxa SD card (\u00d810)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "Radxa USB-C 1 (\u00d810)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "FC USB-C cable (12 x 7, from the FC's +y edge on the plate top, E)",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, FC damper screw (-12.75, -12.75) from the top",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, FC damper screw (-12.75, +12.75) from the top",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, FC damper screw (+12.75, -12.75) from the top",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, FC damper screw (+12.75, +12.75) from the top",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, belly-mount plate bolt (3.9, +31) from the top",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "M3 key, belly-mount plate bolt (3.9, -31) from the top",
+    true,
+    0.0,
+    []
+   ],
+   [
+    "flow SH1.0 plug out of its end (6 x 4, E)",
+    true,
+    0.0,
+    []
+   ]
+  ]
+ },
+ "px4": {
+  "cg": [
+   -0.14,
+   -0.08,
+   2.98
+  ],
+  "EKF2_IMU_POS": [
+   0.0001,
+   -0.0001,
+   -0.026
+  ],
+  "EKF2_OF_POS": [
+   -0.0053,
+   0.0399,
+   0.033
+  ],
+  "EKF2_RNG_POS": [
+   0.0055,
+   0.0399,
+   0.033
+  ],
+  "SENS_FLOW_ROT": "4 (yaw 180: plug to the nose, the lens aft; v1 as built 0), CHECK on the bench",
+  "SENS_BOARD_ROT": "from the USB-C edge (+y) and the battery pads at the nose; set at the bench",
+  "note": "IMU at the board centre, PCB middle (E: the chip's place is not published)"
+ },
+ "masses": {
+  "belly mount (PETG)": {
+   "g": 25.54,
+   "cg": [
+    -0.92,
+    -10.55,
+    6.84
+   ]
+  },
+  "FC": {
+   "g": 10.0,
+   "cg": [
+    0.0,
+    0.0,
+    29.0
+   ]
+  },
+  "FC dampers (4, silicone)": {
+   "g": 2.4,
+   "cg": [
+    0.0,
+    0.0,
+    25.1
+   ]
+  },
+  "wires": {
+   "g": 20.0,
+   "cg": [
+    5.0,
+    0.0,
+    25.0
+   ]
+  },
+  "flow MTF-02P": {
+   "g": 1.5,
+   "cg": [
+    0.0,
+    -40.0,
+    -26.0
+   ]
+  },
+  "electronics tail block (PETG)": {
+   "g": 15.44,
+   "cg": [
+    -46.17,
+    0.72,
+    12.54
+   ]
+  }
+ },
+ "wires": {
+  "box": [
+   [
+    35.8,
+    -0.2,
+    24.0
+   ],
+   [
+    36.2,
+    0.2,
+    24.4
+   ]
+  ],
+  "cg": [
+   5.0,
+   0.0,
+   25.0
+  ],
+  "note": "20 g E: motor leads on the arm tops, battery leads from the notch to the FC's nose edge, signal leads; CG (5, 0, 25) E; for the fit a 0.4 box in the battery-lead lane on the plate top, no allowance"
+ },
+ "cables_box": [
+  -8.5,
+  -8.1,
+  2.1,
+  2.5,
+  35.8,
+  36.2
+ ],
+ "alternatives": {
+  "fc": {
+   "A": {
+    "x": 6.0,
+    "yaw": 0.0,
+    "trim": false,
+    "aio": false,
+    "picked": false,
+    "what": "the foot as drawn, 4 new holes",
+    "col": 2.5,
+    "con": 6.06,
+    "gap": 2.0,
+    "lines": [
+     "plan 2.50 outside the swept disks (column, rule 8 >= 3: FAIL);",
+     "6.06 outside the contracted slipstream; tail block 2.00",
+     "IMU +6.0 in x from the thrust centre; holes: 4 new M3 in the carbon",
+     "tail block unchanged",
+     "nearest new hole 6.0 from an AIO hole (2.6 of carbon between)"
+    ]
+   },
+   "B": {
+    "x": 0.0,
+    "yaw": 0.0,
+    "trim": true,
+    "aio": true,
+    "picked": true,
+    "what": "on the AIO holes, the foot tip to x -20",
+    "col": 6.55,
+    "con": 10.11,
+    "gap": 2.0,
+    "lines": [
+     "plan 6.55 outside the swept disks (column, rule 8 >= 3: PASS);",
+     "10.11 outside the contracted slipstream; tail block 2.00",
+     "IMU +0.0 in x from the thrust centre; holes: the AIO ones (none new)",
+     "tail block: foot tip x -14 -> -20 (its piece pass)"
+    ]
+   },
+   "C": {
+    "x": 13.5,
+    "yaw": 45.0,
+    "trim": false,
+    "aio": false,
+    "picked": false,
+    "what": "turned 45, the foot as drawn, 4 new holes",
+    "col": 4.46,
+    "con": 8.02,
+    "gap": 2.05,
+    "lines": [
+     "plan 4.46 outside the swept disks (column, rule 8 >= 3: PASS);",
+     "8.02 outside the contracted slipstream; tail block 2.05",
+     "IMU +13.5 in x from the thrust centre; holes: 4 new M3 in the carbon",
+     "tail block unchanged",
+     "damper bosses on the centre line (x -4.5, 31.5): a spine in the belly mount"
+    ]
+   },
+   "D": {
+    "x": 7.5,
+    "yaw": 45.0,
+    "trim": true,
+    "aio": false,
+    "picked": false,
+    "what": "turned 45, the foot trimmed, 4 new holes",
+    "col": 8.71,
+    "con": 12.26,
+    "gap": 2.04,
+    "lines": [
+     "plan 8.71 outside the swept disks (column, rule 8 >= 3: PASS);",
+     "12.26 outside the contracted slipstream; tail block 2.04",
+     "IMU +7.5 in x from the thrust centre; holes: 4 new M3 in the carbon",
+     "tail block: foot tip x -14 -> -20 (its piece pass)"
+    ]
+   }
+  }
+ }
+}
