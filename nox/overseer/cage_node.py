@@ -22,7 +22,7 @@ RES = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "result
 HS = json.load(open(os.path.join(ROOT, "runs", "overseer_layout", "v5", "head_system.json")))
 N = np.array(CG["nodes"])
 KINDS = {6: dict(bore=6.2, depth=15.0, axial=250.0, side=60.0), 3: dict(bore=3.2, depth=10.0, axial=80.0, side=15.0)}   # E; bores Spark 27 Oct (coupons v2: the largest fits)
-WALL = 2.5
+WALL = float(os.environ.get("V5_NODE_WALL", "2.0"))   # socket boss wall (C, DEFAULT 28 Oct: 2.0, the rule floor; 2.5 made 345 g of nodes, 2.0 makes ~289 g, worst index <= 0.25)
 _LS = os.path.join(HERE, "link_sizes.json")
 LINK6 = set(json.load(open(_LS))["tube6"]) if os.path.exists(_LS) else set()      # links the frame model made 6/4 tube
 _NL = os.path.join(ROOT, "runs", "overseer_frame", "v1", "node_loads.json")

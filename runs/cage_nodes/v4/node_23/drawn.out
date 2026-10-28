@@ -1,0 +1,6 @@
+node_23: grid (40, 40, 40) h 1.25 = 64,000 cells; design 24,108 (47.1 cm3), drawn 3,048, void 36,844
+  support hold 0: 2217 cells, 3809 nodes
+  support hold 1: 2211 cells, 3833 nodes
+  support hold 2: 2212 cells, 3810 nodes
+  support hold 3: 2204 cells, 3799 nodes
+node 23: 7.56 g (M), solid PASS, worst 0.037 (tube to 7 pull): PASS

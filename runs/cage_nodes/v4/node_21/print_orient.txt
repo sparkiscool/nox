@@ -1,0 +1,2 @@
+runs/cage_nodes/v4/node_21/cage_node_21.stl extents [54.4 54.  16.4] g PETG 11.75 watertight True
+   saved: bed      0 mm2  overhang   1957 mm2  height  16.4  first layer 1 islands [3.7] (total 3.7)  thin-island run 0 mm

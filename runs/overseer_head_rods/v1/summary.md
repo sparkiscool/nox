@@ -24,7 +24,8 @@ The sets are ranked by:
 
 | Set | Head mode rigid / PETG joints (Hz, F on E) | L2 move at 35 g (mm, F on E) | Cameras / L2 guard (mm, C) | Carbon (mm, C) |
 |---|---|---|---|---|
-| **centre (u -40) to node 17 + pair (u +100, y ±70) to nodes 15 / 16 (chosen, DEFAULT)** | **151.8 / 128.4** | **0.24** | **10.4 / 9.8, L2 52.6** | **360** |
+| **centre (u +40, 12 behind) to node 17 + pair (u +100, y ±80, 12 behind) to nodes 15 / 16, L2 rolled 180 (chosen 28 Oct, DEFAULT)** | **119.4 / 94.2** | **0.59** | **6.5 / 5.4, L2 51.3** | **354** |
+| centre (u -40, 6 behind) to node 17 + pair (u +100, y ±70) (chosen 27 Oct; its bosses cross the L2 plane: the v5 sweep's 1.2 wall) | 151.8 / 128.4 | 0.24 | 10.4 / 9.8 | 360 |
 | centre to node 17 + pair (u +110, y ±85) to 15 / 16 | 169.0 / 141.0 | 0.22 | 17.7 / 16.5 | 337 |
 | centre to node 17 + pair (u +10, y ±70) to 15 / 16 | 143.6 / 125.9 | 0.42 | -32.9 / -34.1 (cameras unguarded) | 373 |
 | centre to the core tower front + pair to 15 / 16 | 89.6 / 78.4 | 0.37 | (not guarded) | 563 |
@@ -35,3 +36,6 @@ The sets are ranked by:
 - **Frame model (`runs/overseer_frame/v1`):** the head mode is 167 Hz with lumped masses. The rods carry at most 126 N in the head's own 35 g, and 25 N in a crash through the cage (F on E).
 - **Carbon:** 3 rods, 360 mm of 6/4 tube in all (C). It replaces 4 braces (about 290 each, C), 2 keels and 4 struts, about 2.3 m in all (C).
 - **Cost of 3 rods:** with only 3 rods the head is held partly by the rods' bending at their epoxied ends. The PETG-joint number (128.4 Hz) is the one that counts; it is still over the 100 Hz target.
+
+## 28 Oct: the bosses on the exact keep-outs (v5 sweep FAIL)
+The first 3-rod sweep (run/head_mount-v5, G 25 / 40 / 60: 53.6 / 72.6 / 98.4 g M, worst 2.74 / 2.71 / 1.58, solid FAIL) found the side sockets' bosses cut to a 1.2 wall by the L2 base plane; the search had checked only the rod lines. Each candidate socket boss (12 deep, 6/4 rod forces <= 126 N F, epoxy shear ~0.6 MPa E, + a 3.0 floor) is now tested against `head_mount.head_keepouts()` (the L2 body and field, its bolt drivers and cable exit, the camera bodies and views, the cage tubes): a rod is kept only if its boss loses nothing. Socket points also 9 / 12 / 18 / 24 behind the plane. The L2's cable exit (up at TILT 105) blocked every centre rod to node 17 that is long enough for carbon; rolled 180 about its own axis (cable down; the same field, only its data frame turns) it leaves room above. Result (mount 143.7 g E): 119.4 / 94.2 Hz rigid / PETG joints, under the 100 Hz DEFAULT on the PETG bound (120.3 / 96.9 at a 100 g mount): Spark's call between 3 rods and 100 Hz (the 8-rod head was ~150 Hz). The head topology now holds all 3 sockets (one held socket took the whole load across its layers).
