@@ -16,6 +16,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("dir")
 ap.add_argument("--every", type=int, default=600, help="seconds between checkpoint commits")
 ap.add_argument("--cap-h", type=float, default=6.0, help="hard cap in hours")
+ap.add_argument("--force", action="store_true", help="run although estimate.json says the drawn part passes (a Forced: line in the summary)")
 argv = sys.argv[1:]
 cut = argv.index("--") if "--" in argv else len(argv)
 a, cmd = ap.parse_args(argv[:cut]), argv[cut + 1:]
@@ -23,6 +24,9 @@ if not cmd:
     sys.exit("run_bg: no command after --")
 d = pathlib.Path(a.dir)
 d.mkdir(parents=True, exist_ok=True)
+_est = d / "estimate.json"                                             # drawn first (CLAUDE.md, Spark 27 Oct): no run on a passing drawn part
+if _est.exists() and "not needed" in str(__import__("json").loads(_est.read_text()).get("run", "")) and not a.force:
+    sys.exit(f"run_bg: {_est} says the drawn part passes (drawn first): save it, no run; --force only with a `Forced:` line in the summary")
 git = lambda *g: subprocess.run(["git", *g], capture_output=True, text=True)
 n = 0
 
