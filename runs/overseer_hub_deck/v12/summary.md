@@ -25,3 +25,6 @@ Print: plate face down, bed contact 2245 mm² (M, print_orient), 139.1 x 87.0 x 
 Previews: `preview_overseer_hub_deck_v12.png` (the print file), `preview.png` (the run).
 Supersedes: hub deck v9 (HOLD, the tower), v10 (room audit FAIL), v11 (lost to a box restart), v11b (stopped); `print/overseer_hub_deck_v9.stl` removed (in git).
 Open (Spark's scope): body tie roots (front, rear, side, bay) stay parked with the body nodes; the cage's front core ties at (114, 0, 20) root on nothing now (the cage's to re-root).
+
+Artifact: https://claude.ai/artifact/JSamk2HosoRiVZgo3KHBH3 (core v4 + hub deck v12, republished 27 Oct 18:40 PDT).
+System sync: the core manifest `nox/overseer/overseer_core.assembly.json` carries the v12 mesh (core v4 on main); the cage session told on save (file, commit, 37.1 g M).
