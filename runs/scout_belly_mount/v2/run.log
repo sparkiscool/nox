@@ -1,35 +1,36 @@
-Scout v3 FC on top + belly mount v2: system pass on main's assembly (layout v12, catch 5.0 forward, camera mount v1, tail bay PR 130). Spark 27 Oct: the FC on top of the plate; every rod 3.0
-tail block requirement (its owner's piece pass): foot tip x -14.0 -> -20.0: 465 mm3 off, 15.92 -> 15.44 g (E, pro rata), CG [-46.17, 0.72, 12.54]
-soft mount 30A (G 0.381 MPa, Gent E): lateral >= 110 up to h 5.2: lateral 110.9, vertical 242.2 Hz
-soft mount 40A (G 0.563 MPa, Gent E): lateral >= 110 up to h 6.6: lateral 112.0, vertical 256.9 Hz
-soft mount 50A (G 0.819 MPa, Gent E): lateral >= 110 up to h 8.0: lateral 114.3, vertical 278.7 Hz
-soft mount pick (30A, G 0.381 MPa, Ø6 x 5.2 rubber, ends 0.5 each; board 11.8 g, CG 0.8 over the column tops): k lateral 1.43, vertical 6.83 N/mm per column; modes y 111, x 111, yaw 137, z 242, pitch 290, roll 290 Hz (E)
-FC stack: plate top 22.0, rubber [22.5, 27.7], PCB [28.2, 29.8], envelope [25.0, 33.0] (C on E)
-soft mount in a 35 g crash: 0.71 sideways, 0.15 vertical (E); shear stress 0.036 MPa
-FC pose, as drawn yaw0: x +6.0, yaw 0: plan 2.50 outside the swept disks (column; 6.06 outside the contracted slipstream), tail block 2.00, rods 39.9
-FC pose, as drawn yaw45: x +13.5, yaw 45: plan 4.46 outside the swept disks (column; 8.02 outside the contracted slipstream), tail block 2.05, rods 35.7
-FC pose, trimmed: x +7.5, yaw 45: plan 8.71 outside the swept disks (column; 12.26 outside the contracted slipstream), tail block 2.04, rods 36.4
-FC pose picked (B): x 0, yaw 0 on the plate's AIO holes: plan 6.55 outside the swept disks (column), 10.11 (contracted), tail block 2.00 with the tip trimmed (0.00 as drawn), rods 39.9
-roof over the FC's plan (+3): no cage member; the board top 33.0 is 4.2 under the prop sweep and 6.5 outside it in plan
-USB-C search: 1268 clear of 11700 (edge, offset, azimuth, elevation); by edge: +y 512, -y 512, -x 88, +x 156
-USB-C picked: the +y edge at +0 along it, azimuth +0, elevation +0: 250 clear (C); the battery pads keep the nose edge (DEFAULT, toward the notch)
+Scout v3 FC on top + belly mount v2, round 2 (concept review 27 Oct FAIL: the hole pattern, the mount's modes, the hung set): system pass on main's assembly (layout v12, catch 5.0 forward, camera mount v1, tail bay PR 130). Spark 27 Oct: the FC on top of the plate; every rod 3.0
+rotor (E: C_T 0.1..0.18, motor KV not recorded): hover thrust 1.834 N a motor at 748 g; 1P hover [365, 490] Hz, in flight (0.5..4.0 x hover thrust) [258, 979]; blade pass (3 blades) hover [1095, 1469], flight [774, 2938]; isolation needs every mode <= 184.3 (lowest 1P / 1.4), or >= 4113 (top blade pass x 1.4)
+isolator search: 1170 layouts, 6 inside [110, 184.3] with the pedestals 3 off the disks; vertical columns (round 1's layout) at best D8xH8 40A r 14: yaw 91, x 95, y 98, roll 193, pitch 196, z 225 Hz: the vertical / lateral stiffness ratio of a column (about 5) spreads the modes 2.5 x, no column fits the window
+isolator pick: D8xH8 40A, 45 deg from vertical, midpoint radius 18: modes (search mass) yaw 113, roll 130, x 133, y 155, pitch 157, z 176 Hz, margin 1.03 to both bounds, the base 3.9 off the disks
+isolator as drawn: tray 7.4 g, base 5.2 g (PETG, E), mounts 4 x 1.6 g (E); moving set 23.0 g, CG [1.9, -0.0, 46.3]; per mount k axial 11.41, transverse 2.27 N/mm; modes yaw 106, roll 124, pitch 124, y 154, x 154, z 174 Hz; with the leads (loops battery 30, motor 20, signal 25) yaw 114, roll 130, x 133, y 156, x 158, z 177; rubber modulus -20 % / +20 %: 104..159 / 124..193 Hz
+the leads as springs (E): 1.03 N/mm in all against 9.1 N/mm of the mounts' transverse stiffness; with the round-1 loops (20 / 15 / 20) they would add 3.5 N/mm to the battery side: the loops are a requirement
+hard mount (alternative): the board on 4 M3 aluminium standoffs, lateral about 14491 Hz (E), over the top blade pass x 1.4 (4113): no isolation, every rotor tone reaches the IMU unattenuated (PX4 filters only)
+tail block foot (this session's piece, PR 130): every part of the FC tower stays 2.0 off it as drawn (tip x -14.0): no trim; its tail-up couple (crash 35 g z) stays 46.7 N (foot index 0.193)
+FC pose (B, picked): the diamond at (1.9, 0) on the AIO holes (P), board z 47.2..55.2: plan 12.67 outside the swept disks, the base 3.85; roof over it (+3): no cage member
+FC option B: the diamond on the AIO holes (P),
+inclined isolator, mounts on the diagonals: board plan 12.67 outside the swept disks; base 3.85 (rule 8 >= 3: PASS); tail block foot tip x -14.0; holes: the AIO ones (none new); IMU x +1.9; the base 17.9 behind the lead notch
+FC option A: the board square (yaw 0) at x 1.9, 4 new holes:
+the mounts fall on the plate axes: board plan 5.23 outside the swept disks; base 7.65 (rule 8 >= 3: PASS); tail block foot tip x -27.0 (couple x 1.76); holes: 4 new M3 in the carbon; IMU x +1.9; the base 14.1 behind the lead notch
+FC option V: round 1: 4 vertical columns on the AIO holes: best column D8xH8 40A: modes 91..225 Hz; the window is 110..184: a column is ~5 x stiffer along than across,; so its 6 modes spread 2.5 x: none fits (vertical in 1P); board z ~33..41
+FC option H: hard mount: the diamond on 4 standoffs (AIO holes), no isolation: board plan 12.67 outside the swept disks (rule 8 >= 3: PASS); tail block foot tip x -26.0 (couple x 1.67); holes: the AIO ones (none new); IMU x +1.9; lateral ~14491 Hz (E): over the top blade pass; no isolation; board z 24..32
+USB-C search (tail corner, P): 1200 clear of 3150; right edge 602, left 598
+USB-C picked: the tail corner's right edge, 2 from the corner, azimuth +0, elevation +20: 250 clear (C)
 flow search: rejected by fit 2045236, under the swap set 12977, funnel band 317672, cage hull 40858, cone 135425, wash 61939; of the feasible, 0 also pass the column measure
-flow search: 2622456 poses, 8349 feasible before the strut (76 s)
+flow search: 2622456 poses, 8349 feasible before the strut (77 s)
    x-: 2411 poses, x -6..6, y 38..54, z_b -40..-22
    x+: 2406 poses, x -6..6, y 38..54, z_b -40..-24
    y-: 1774 poses, x -8..78, y 0..52, z_b -40..-28
    y+: 1758 poses, x -8..78, y 0..46, z_b -40..-28
-flow search: 518 with a clear strut (483 s)
-flow picked: centre (0, -40), z -30..-22, long side along x, plug end x+ (toward the nose: the lead goes up the front strut and the notch), strut search 31.1, inside the swap column below the funnel band; 518 poses with a clear strut
-belly VA: 25.5 g as printed (solid 28.8), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; crash worst 0.523: receiver inserts 0.081, plate inserts 0.154 (prying 2.54 x), frame about y 0.523 at x 9.5 (crash 35 g -z), about x 0.393 at y 15.0; flight / landing worst 0.090; weakest x cut Z 139 mm3 at x 52.5
-belly VA, damper pods: 29.1 g as printed (solid 32.6), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; crash worst 0.491: receiver inserts 0.081, plate inserts 0.155 (prying 2.57 x), frame about y 0.491 at x -1.5 (crash 35 g -z), about x 0.346 at y 0.0; flight / landing worst 0.084; weakest x cut Z 139 mm3 at x 52.5
-belly VA, damper rungs: 30.9 g as printed (solid 34.7), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; crash worst 0.491: receiver inserts 0.081, plate inserts 0.155 (prying 2.58 x), frame about y 0.491 at x -1.5 (crash 35 g -z), about x 0.126 at y 8.0; flight / landing worst 0.084; weakest x cut Z 139 mm3 at x 52.5
-belly VA + front rung: 27.9 g as printed (solid 31.7), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; crash worst 0.523: receiver inserts 0.081, plate inserts 0.154 (prying 2.56 x), frame about y 0.523 at x 9.5 (crash 35 g -z), about x 0.198 at y 15.0; flight / landing worst 0.090; weakest x cut Z 139 mm3 at x 52.5
-belly VA, rails 5.5: 25.1 g as printed (solid 27.7), solid_check FAIL (eroded bodies 3, necks 2); new plate holes 0; crash worst 0.602: receiver inserts 0.081, plate inserts 0.153 (prying 2.53 x), frame about y 0.602 at x 9.5 (crash 35 g -z), about x 0.393 at y 15.0; flight / landing worst 0.103; weakest x cut Z 139 mm3 at x 52.5
-belly VB: 26.9 g as printed (solid 30.8), solid_check PASS (eroded bodies 1, necks 0); new plate holes 2; crash worst 0.571: receiver inserts 0.081, plate inserts 0.095 (prying 1.93 x), frame about y 0.571 at x -1.5 (crash 35 g -z), about x 0.164 at y 0.0; flight / landing worst 0.098; weakest x cut Z 139 mm3 at x 52.5
-belly VC: 24.6 g as printed (solid 28.4), solid_check PASS (eroded bodies 1, necks 0); new plate holes 4; crash worst 0.173: receiver inserts 0.081, plate inserts 0.083 (prying 1.40 x), frame about y 0.173 at x 24.5 (crash 35 g -x-y-z), about x 0.132 at y -8.0; flight / landing worst 0.021; weakest x cut Z 139 mm3 at x 52.5
-belly pick (crash <= 0.67 DEFAULT, flight / landing <= 0.5, solid_check PASS; then the fewest new plate holes, then the lightest): VA
-flow bipod (3D frame, E): struts 34.6 long, the flow + cradle (4.83 g) 9.5 off the strut plane: crash worst 0.0385 (crash 35 g y), flight 0.0022, landing 0.0026; modes [296.0, 774.0, 1018.0, 2143.0] Hz; with the CG in the strut plane 0.0385, [319.0, 1316.0, 1547.0, 1626.0] Hz: what the twist costs
+flow search: 518 with a clear strut (480 s)
+flow picked: centre (0, -40), z -30..-22, long side along x, plug end x+ (toward the nose: the lead goes up the front strut and the notch; 180 deg from as built, SENS_FLOW_ROT 4 -> 0), strut search 31.1, inside the swap column below the funnel band; 518 poses with a clear strut
+belly VA: 25.5 g as printed (solid 28.8), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; hung set modes [65.0, 102.0, 180.0] Hz (OUTSIDE 100..184); crash worst 0.523: receiver inserts 0.081, plate inserts 0.154 (prying 2.54 x), frame about y 0.523 at x 9.5, about x 0.393 at y 15.0; flight / landing worst 0.090
+belly VA, rails 11.6: 28.7 g as printed (solid 35.1), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; hung set modes [81.0, 167.0, 236.0] Hz (OUTSIDE 100..184); crash worst 0.398: receiver inserts 0.081, plate inserts 0.155 (prying 2.57 x), frame about y 0.323 at x -0.5, about x 0.398 at y 15.0; flight / landing worst 0.068
+belly VA + front rung: 27.9 g as printed (solid 31.7), solid_check PASS (eroded bodies 1, necks 0); new plate holes 0; hung set modes [65.0, 102.0, 180.0] Hz (OUTSIDE 100..184); crash worst 0.523: receiver inserts 0.081, plate inserts 0.154 (prying 2.56 x), frame about y 0.523 at x 9.5, about x 0.198 at y 15.0; flight / landing worst 0.090
+belly VB: 26.9 g as printed (solid 30.8), solid_check PASS (eroded bodies 1, necks 0); new plate holes 2; hung set modes [115.0, 300.0, 635.0] Hz (inside 100..184); crash worst 0.571: receiver inserts 0.081, plate inserts 0.095 (prying 1.93 x), frame about y 0.571 at x -1.5, about x 0.164 at y 0.0; flight / landing worst 0.098
+belly VB, rails 11.6: 30.2 g as printed (solid 37.1), solid_check PASS (eroded bodies 1, necks 0); new plate holes 2; hung set modes [151.0, 324.0, 617.0] Hz (inside 100..184); crash worst 0.376: receiver inserts 0.081, plate inserts 0.096 (prying 1.94 x), frame about y 0.376 at x 8.5, about x 0.164 at y 0.0; flight / landing worst 0.064
+belly VC: 24.6 g as printed (solid 28.4), solid_check PASS (eroded bodies 1, necks 0); new plate holes 4; hung set modes [287.0, 323.0, 621.0] Hz (OUTSIDE 100..184); crash worst 0.173: receiver inserts 0.081, plate inserts 0.083 (prying 1.40 x), frame about y 0.173 at x 24.5, about x 0.132 at y -8.0; flight / landing worst 0.021
+belly pick (solid_check PASS, crash <= 0.67 DEFAULT, flight / landing <= 0.5, the hung set's first mode in 100..184 Hz (DEFAULT: >= 100, the flow sensor rides on this frame; <= the lowest flight 1P / 1.4, the pack isolates the rotor tones); then the fewest new plate holes, then the lightest): VB
+flow bipod (3D frame, E): struts 34.6 long, the flow + cradle (4.83 g) 9.5 off the strut plane: crash worst 0.0385 (crash 35 g y), flight 0.0022, landing 0.0026; modes [296.0, 774.0, 1018.0] Hz on the frame held rigid; with the CG in the strut plane 0.0385, [319.0, 1316.0, 1547.0] Hz
 fit, full pairwise table (ours against every part; >= 2.0 or a declared face contact <= 0.05 mm3; '>' = box gap, a lower bound):
    belly mount (PETG) / cage shell tubes: overlap 0.000 mm3, gap 42.29, >= 2: PASS
    belly mount (PETG) / cage shell nodes: overlap 0.000 mm3, gap 59.84, >= 2: PASS
@@ -59,7 +60,7 @@ fit, full pairwise table (ours against every part; >= 2.0 or a declared face con
    belly mount (PETG) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap 24.52, >= 2: PASS
    belly mount (PETG) / pack 4S 1500: overlap 0.000 mm3, gap 10.10, >= 2: PASS
    belly mount (PETG) / pack XT60 plug: overlap 0.000 mm3, gap 16.13, >= 2: PASS
-   belly mount (PETG) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 23.91, >= 2: PASS
+   belly mount (PETG) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 21.48, >= 2: PASS
    belly mount (PETG) / camera: overlap 0.000 mm3, gap >81.80, >= 2: PASS
    belly mount (PETG) / tie saddle (printed): overlap 0.000 mm3, gap 2.80, >= 2: PASS
    belly mount (PETG) / camera mount (printed): overlap 0.000 mm3, gap >53.90, >= 2: PASS
@@ -67,87 +68,170 @@ fit, full pairwise table (ours against every part; >= 2.0 or a declared face con
    belly mount (PETG) / camera mount stop collar -y: overlap 0.000 mm3, gap >66.00, >= 2: PASS
    belly mount (PETG) / electronics tail block (PETG): overlap 0.000 mm3, gap -0.00, declared contact: PASS
    belly mount (PETG) / electronics tail carrier (PETG): overlap 0.000 mm3, gap 14.63, >= 2: PASS
-   belly mount (PETG) / FC: overlap 0.000 mm3, gap 6.80, >= 2: PASS
-   belly mount (PETG) / FC dampers (4, silicone): overlap 0.000 mm3, gap 5.51, >= 2: PASS
+   belly mount (PETG) / FC: overlap 0.000 mm3, gap >28.70, >= 2: PASS
+   belly mount (PETG) / FC isolator tray (PETG): overlap 0.000 mm3, gap 19.35, >= 2: PASS
+   belly mount (PETG) / FC isolator base (PETG): overlap 0.000 mm3, gap 3.50, >= 2: PASS
+   belly mount (PETG) / FC mounts (4 rubber, M3 male-female): overlap 0.000 mm3, gap 11.28, >= 2: PASS
    belly mount (PETG) / wires: overlap 0.000 mm3, gap 20.55, >= 2: PASS
    belly mount (PETG) / flow MTF-02P: overlap 0.000 mm3, gap -0.00, declared contact: PASS
-   FC / cage shell tubes: overlap 0.000 mm3, gap 40.16, >= 2: PASS
-   FC / cage shell nodes: overlap 0.000 mm3, gap 92.61, >= 2: PASS
-   FC / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 39.94, >= 2: PASS
-   FC / frame plate (Bee35 carbon): overlap 0.000 mm3, gap 3.00, >= 2: PASS
-   FC / motor 1: overlap 0.000 mm3, gap >33.50, >= 2: PASS
-   FC / prop 1: overlap 0.000 mm3, gap 7.83, >= 2: PASS
-   FC / motor 2: overlap 0.000 mm3, gap >33.50, >= 2: PASS
-   FC / prop 2: overlap 0.000 mm3, gap 7.83, >= 2: PASS
-   FC / motor 3: overlap 0.000 mm3, gap >33.50, >= 2: PASS
-   FC / prop 3: overlap 0.000 mm3, gap 7.83, >= 2: PASS
-   FC / motor 4: overlap 0.000 mm3, gap >33.50, >= 2: PASS
-   FC / prop 4: overlap 0.000 mm3, gap 7.83, >= 2: PASS
-   FC / UBEC: overlap 0.000 mm3, gap >92.10, >= 2: PASS
-   FC / XR2: overlap 0.000 mm3, gap >76.00, >= 2: PASS
-   FC / Radxa Zero 3W: overlap 0.000 mm3, gap >53.80, >= 2: PASS
-   FC / receiver v3 (latch): overlap 0.000 mm3, gap 15.57, >= 2: PASS
-   FC / receiver lid (latch): overlap 0.000 mm3, gap >25.40, >= 2: PASS
-   FC / receiver TPU strips (latch): overlap 0.000 mm3, gap 21.50, >= 2: PASS
-   FC / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap >31.00, >= 2: PASS
-   FC / XT60E1-M: overlap 0.000 mm3, gap >26.30, >= 2: PASS
-   FC / cartridge v6 (latch): overlap 0.000 mm3, gap 23.90, >= 2: PASS
-   FC / slider +y (latch): overlap 0.000 mm3, gap >58.00, >= 2: PASS
-   FC / slider -y (latch): overlap 0.000 mm3, gap >58.00, >= 2: PASS
-   FC / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >66.50, >= 2: PASS
-   FC / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >59.60, >= 2: PASS
-   FC / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >46.60, >= 2: PASS
-   FC / pack 4S 1500: overlap 0.000 mm3, gap >25.50, >= 2: PASS
-   FC / pack XT60 plug: overlap 0.000 mm3, gap >36.80, >= 2: PASS
-   FC / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 2.80, >= 2: PASS
-   FC / camera: overlap 0.000 mm3, gap >117.00, >= 2: PASS
-   FC / tie saddle (printed): overlap 0.000 mm3, gap 19.42, >= 2: PASS
-   FC / camera mount (printed): overlap 0.000 mm3, gap >89.20, >= 2: PASS
-   FC / camera mount stop collar +y: overlap 0.000 mm3, gap >101.80, >= 2: PASS
-   FC / camera mount stop collar -y: overlap 0.000 mm3, gap >101.80, >= 2: PASS
-   FC / electronics tail block (PETG): overlap 0.000 mm3, gap 2.00, >= 2: PASS
-   FC / electronics tail carrier (PETG): overlap 0.000 mm3, gap >30.00, >= 2: PASS
-   FC / FC dampers (4, silicone): overlap 0.000 mm3, gap -0.00, declared contact: PASS
-   FC / wires: overlap 0.000 mm3, gap 17.81, >= 2: PASS
-   FC / flow MTF-02P: overlap 0.000 mm3, gap >49.00, >= 2: PASS
-   FC dampers (4, silicone) / cage shell tubes: overlap 0.000 mm3, gap 46.16, >= 2: PASS
-   FC dampers (4, silicone) / cage shell nodes: overlap 0.000 mm3, gap 94.66, >= 2: PASS
-   FC dampers (4, silicone) / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 39.31, >= 2: PASS
-   FC dampers (4, silicone) / frame plate (Bee35 carbon): overlap 0.000 mm3, gap -0.00, declared contact: PASS
-   FC dampers (4, silicone) / motor 1: overlap 0.000 mm3, gap >36.70, >= 2: PASS
-   FC dampers (4, silicone) / prop 1: overlap 0.000 mm3, gap 14.23, >= 2: PASS
-   FC dampers (4, silicone) / motor 2: overlap 0.000 mm3, gap >36.70, >= 2: PASS
-   FC dampers (4, silicone) / prop 2: overlap 0.000 mm3, gap 14.23, >= 2: PASS
-   FC dampers (4, silicone) / motor 3: overlap 0.000 mm3, gap >36.70, >= 2: PASS
-   FC dampers (4, silicone) / prop 3: overlap 0.000 mm3, gap 14.23, >= 2: PASS
-   FC dampers (4, silicone) / motor 4: overlap 0.000 mm3, gap >36.70, >= 2: PASS
-   FC dampers (4, silicone) / prop 4: overlap 0.000 mm3, gap 14.23, >= 2: PASS
-   FC dampers (4, silicone) / UBEC: overlap 0.000 mm3, gap >94.30, >= 2: PASS
-   FC dampers (4, silicone) / XR2: overlap 0.000 mm3, gap >78.20, >= 2: PASS
-   FC dampers (4, silicone) / Radxa Zero 3W: overlap 0.000 mm3, gap >56.10, >= 2: PASS
-   FC dampers (4, silicone) / receiver v3 (latch): overlap 0.000 mm3, gap 13.21, >= 2: PASS
-   FC dampers (4, silicone) / receiver lid (latch): overlap 0.000 mm3, gap >25.70, >= 2: PASS
-   FC dampers (4, silicone) / receiver TPU strips (latch): overlap 0.000 mm3, gap 18.50, >= 2: PASS
-   FC dampers (4, silicone) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap >28.00, >= 2: PASS
-   FC dampers (4, silicone) / XT60E1-M: overlap 0.000 mm3, gap >27.40, >= 2: PASS
-   FC dampers (4, silicone) / cartridge v6 (latch): overlap 0.000 mm3, gap 20.91, >= 2: PASS
-   FC dampers (4, silicone) / slider +y (latch): overlap 0.000 mm3, gap >55.00, >= 2: PASS
-   FC dampers (4, silicone) / slider -y (latch): overlap 0.000 mm3, gap >55.00, >= 2: PASS
-   FC dampers (4, silicone) / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >63.50, >= 2: PASS
-   FC dampers (4, silicone) / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >56.70, >= 2: PASS
-   FC dampers (4, silicone) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >44.50, >= 2: PASS
-   FC dampers (4, silicone) / pack 4S 1500: overlap 0.000 mm3, gap 22.50, >= 2: PASS
-   FC dampers (4, silicone) / pack XT60 plug: overlap 0.000 mm3, gap >36.50, >= 2: PASS
-   FC dampers (4, silicone) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 11.10, >= 2: PASS
-   FC dampers (4, silicone) / camera: overlap 0.000 mm3, gap >119.20, >= 2: PASS
-   FC dampers (4, silicone) / tie saddle (printed): overlap 0.000 mm3, gap 20.88, >= 2: PASS
-   FC dampers (4, silicone) / camera mount (printed): overlap 0.000 mm3, gap >91.50, >= 2: PASS
-   FC dampers (4, silicone) / camera mount stop collar +y: overlap 0.000 mm3, gap >103.90, >= 2: PASS
-   FC dampers (4, silicone) / camera mount stop collar -y: overlap 0.000 mm3, gap >103.90, >= 2: PASS
-   FC dampers (4, silicone) / electronics tail block (PETG): overlap 0.000 mm3, gap 5.67, >= 2: PASS
-   FC dampers (4, silicone) / electronics tail carrier (PETG): overlap 0.000 mm3, gap >32.30, >= 2: PASS
-   FC dampers (4, silicone) / wires: overlap 0.000 mm3, gap 23.25, >= 2: PASS
-   FC dampers (4, silicone) / flow MTF-02P: overlap 0.000 mm3, gap >46.90, >= 2: PASS
+   FC / cage shell tubes: overlap 0.000 mm3, gap 29.32, >= 2: PASS
+   FC / cage shell nodes: overlap 0.000 mm3, gap 83.90, >= 2: PASS
+   FC / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 55.64, >= 2: PASS
+   FC / frame plate (Bee35 carbon): overlap 0.000 mm3, gap >25.20, >= 2: PASS
+   FC / motor 1: overlap 0.000 mm3, gap 45.92, >= 2: PASS
+   FC / prop 1: overlap 0.000 mm3, gap 12.88, >= 2: PASS
+   FC / motor 2: overlap 0.000 mm3, gap 45.92, >= 2: PASS
+   FC / prop 2: overlap 0.000 mm3, gap 12.88, >= 2: PASS
+   FC / motor 3: overlap 0.000 mm3, gap >26.40, >= 2: PASS
+   FC / prop 3: overlap 0.000 mm3, gap 15.54, >= 2: PASS
+   FC / motor 4: overlap 0.000 mm3, gap >26.40, >= 2: PASS
+   FC / prop 4: overlap 0.000 mm3, gap 15.54, >= 2: PASS
+   FC / UBEC: overlap 0.000 mm3, gap >89.60, >= 2: PASS
+   FC / XR2: overlap 0.000 mm3, gap >70.50, >= 2: PASS
+   FC / Radxa Zero 3W: overlap 0.000 mm3, gap >49.20, >= 2: PASS
+   FC / receiver v3 (latch): overlap 0.000 mm3, gap >37.60, >= 2: PASS
+   FC / receiver lid (latch): overlap 0.000 mm3, gap >39.20, >= 2: PASS
+   FC / receiver TPU strips (latch): overlap 0.000 mm3, gap >43.70, >= 2: PASS
+   FC / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap >53.20, >= 2: PASS
+   FC / XT60E1-M: overlap 0.000 mm3, gap >35.70, >= 2: PASS
+   FC / cartridge v6 (latch): overlap 0.000 mm3, gap >46.10, >= 2: PASS
+   FC / slider +y (latch): overlap 0.000 mm3, gap >80.20, >= 2: PASS
+   FC / slider -y (latch): overlap 0.000 mm3, gap >80.20, >= 2: PASS
+   FC / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >88.70, >= 2: PASS
+   FC / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >81.70, >= 2: PASS
+   FC / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >67.20, >= 2: PASS
+   FC / pack 4S 1500: overlap 0.000 mm3, gap >47.70, >= 2: PASS
+   FC / pack XT60 plug: overlap 0.000 mm3, gap >51.00, >= 2: PASS
+   FC / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 17.10, >= 2: PASS
+   FC / camera: overlap 0.000 mm3, gap >107.60, >= 2: PASS
+   FC / tie saddle (printed): overlap 0.000 mm3, gap >28.70, >= 2: PASS
+   FC / camera mount (printed): overlap 0.000 mm3, gap >79.90, >= 2: PASS
+   FC / camera mount stop collar +y: overlap 0.000 mm3, gap >96.90, >= 2: PASS
+   FC / camera mount stop collar -y: overlap 0.000 mm3, gap >96.90, >= 2: PASS
+   FC / electronics tail block (PETG): overlap 0.000 mm3, gap 17.85, >= 2: PASS
+   FC / electronics tail carrier (PETG): overlap 0.000 mm3, gap >26.40, >= 2: PASS
+   FC / FC isolator tray (PETG): overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   FC / FC isolator base (PETG): overlap 0.000 mm3, gap 14.51, >= 2: PASS
+   FC / FC mounts (4 rubber, M3 male-female): overlap 0.000 mm3, gap 6.31, >= 2: PASS
+   FC / wires: overlap 0.000 mm3, gap 24.35, >= 2: PASS
+   FC / flow MTF-02P: overlap 0.000 mm3, gap >69.60, >= 2: PASS
+   FC isolator tray (PETG) / cage shell tubes: overlap 0.000 mm3, gap 32.73, >= 2: PASS
+   FC isolator tray (PETG) / cage shell nodes: overlap 0.000 mm3, gap 83.36, >= 2: PASS
+   FC isolator tray (PETG) / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 51.14, >= 2: PASS
+   FC isolator tray (PETG) / frame plate (Bee35 carbon): overlap 0.000 mm3, gap 12.57, >= 2: PASS
+   FC isolator tray (PETG) / motor 1: overlap 0.000 mm3, gap 45.01, >= 2: PASS
+   FC isolator tray (PETG) / prop 1: overlap 0.000 mm3, gap 12.72, >= 2: PASS
+   FC isolator tray (PETG) / motor 2: overlap 0.000 mm3, gap 45.01, >= 2: PASS
+   FC isolator tray (PETG) / prop 2: overlap 0.000 mm3, gap 12.72, >= 2: PASS
+   FC isolator tray (PETG) / motor 3: overlap 0.000 mm3, gap 47.68, >= 2: PASS
+   FC isolator tray (PETG) / prop 3: overlap 0.000 mm3, gap 15.40, >= 2: PASS
+   FC isolator tray (PETG) / motor 4: overlap 0.000 mm3, gap 47.68, >= 2: PASS
+   FC isolator tray (PETG) / prop 4: overlap 0.000 mm3, gap 15.40, >= 2: PASS
+   FC isolator tray (PETG) / UBEC: overlap 0.000 mm3, gap >87.20, >= 2: PASS
+   FC isolator tray (PETG) / XR2: overlap 0.000 mm3, gap >70.40, >= 2: PASS
+   FC isolator tray (PETG) / Radxa Zero 3W: overlap 0.000 mm3, gap >48.30, >= 2: PASS
+   FC isolator tray (PETG) / receiver v3 (latch): overlap 0.000 mm3, gap 26.10, >= 2: PASS
+   FC isolator tray (PETG) / receiver lid (latch): overlap 0.000 mm3, gap >27.20, >= 2: PASS
+   FC isolator tray (PETG) / receiver TPU strips (latch): overlap 0.000 mm3, gap >31.10, >= 2: PASS
+   FC isolator tray (PETG) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap >40.60, >= 2: PASS
+   FC isolator tray (PETG) / XT60E1-M: overlap 0.000 mm3, gap 33.12, >= 2: PASS
+   FC isolator tray (PETG) / cartridge v6 (latch): overlap 0.000 mm3, gap >33.50, >= 2: PASS
+   FC isolator tray (PETG) / slider +y (latch): overlap 0.000 mm3, gap >67.60, >= 2: PASS
+   FC isolator tray (PETG) / slider -y (latch): overlap 0.000 mm3, gap >67.60, >= 2: PASS
+   FC isolator tray (PETG) / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >76.10, >= 2: PASS
+   FC isolator tray (PETG) / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >69.10, >= 2: PASS
+   FC isolator tray (PETG) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >54.50, >= 2: PASS
+   FC isolator tray (PETG) / pack 4S 1500: overlap 0.000 mm3, gap >35.10, >= 2: PASS
+   FC isolator tray (PETG) / pack XT60 plug: overlap 0.000 mm3, gap >39.30, >= 2: PASS
+   FC isolator tray (PETG) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 15.65, >= 2: PASS
+   FC isolator tray (PETG) / camera: overlap 0.000 mm3, gap >107.60, >= 2: PASS
+   FC isolator tray (PETG) / tie saddle (printed): overlap 0.000 mm3, gap 28.26, >= 2: PASS
+   FC isolator tray (PETG) / camera mount (printed): overlap 0.000 mm3, gap >79.90, >= 2: PASS
+   FC isolator tray (PETG) / camera mount stop collar +y: overlap 0.000 mm3, gap >93.70, >= 2: PASS
+   FC isolator tray (PETG) / camera mount stop collar -y: overlap 0.000 mm3, gap >93.70, >= 2: PASS
+   FC isolator tray (PETG) / electronics tail block (PETG): overlap 0.000 mm3, gap 10.80, >= 2: PASS
+   FC isolator tray (PETG) / electronics tail carrier (PETG): overlap 0.000 mm3, gap 27.14, >= 2: PASS
+   FC isolator tray (PETG) / FC isolator base (PETG): overlap 0.000 mm3, gap 10.00, >= 2: PASS
+   FC isolator tray (PETG) / FC mounts (4 rubber, M3 male-female): overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   FC isolator tray (PETG) / wires: overlap 0.000 mm3, gap 19.20, >= 2: PASS
+   FC isolator tray (PETG) / flow MTF-02P: overlap 0.000 mm3, gap >56.90, >= 2: PASS
+   FC isolator base (PETG) / cage shell tubes: overlap 0.000 mm3, gap 39.58, >= 2: PASS
+   FC isolator base (PETG) / cage shell nodes: overlap 0.000 mm3, gap 85.51, >= 2: PASS
+   FC isolator base (PETG) / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 35.90, >= 2: PASS
+   FC isolator base (PETG) / frame plate (Bee35 carbon): overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   FC isolator base (PETG) / motor 1: overlap 0.000 mm3, gap >25.10, >= 2: PASS
+   FC isolator base (PETG) / prop 1: overlap 0.000 mm3, gap 5.89, >= 2: PASS
+   FC isolator base (PETG) / motor 2: overlap 0.000 mm3, gap >25.10, >= 2: PASS
+   FC isolator base (PETG) / prop 2: overlap 0.000 mm3, gap 5.89, >= 2: PASS
+   FC isolator base (PETG) / motor 3: overlap 0.000 mm3, gap >29.50, >= 2: PASS
+   FC isolator base (PETG) / prop 3: overlap 0.000 mm3, gap 7.93, >= 2: PASS
+   FC isolator base (PETG) / motor 4: overlap 0.000 mm3, gap >29.50, >= 2: PASS
+   FC isolator base (PETG) / prop 4: overlap 0.000 mm3, gap 7.93, >= 2: PASS
+   FC isolator base (PETG) / UBEC: overlap 0.000 mm3, gap >91.20, >= 2: PASS
+   FC isolator base (PETG) / XR2: overlap 0.000 mm3, gap >75.10, >= 2: PASS
+   FC isolator base (PETG) / Radxa Zero 3W: overlap 0.000 mm3, gap >53.00, >= 2: PASS
+   FC isolator base (PETG) / receiver v3 (latch): overlap 0.000 mm3, gap 12.40, >= 2: PASS
+   FC isolator base (PETG) / receiver lid (latch): overlap 0.000 mm3, gap 18.20, >= 2: PASS
+   FC isolator base (PETG) / receiver TPU strips (latch): overlap 0.000 mm3, gap 18.50, >= 2: PASS
+   FC isolator base (PETG) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap >28.00, >= 2: PASS
+   FC isolator base (PETG) / XT60E1-M: overlap 0.000 mm3, gap 22.81, >= 2: PASS
+   FC isolator base (PETG) / cartridge v6 (latch): overlap 0.000 mm3, gap 20.90, >= 2: PASS
+   FC isolator base (PETG) / slider +y (latch): overlap 0.000 mm3, gap >55.00, >= 2: PASS
+   FC isolator base (PETG) / slider -y (latch): overlap 0.000 mm3, gap >55.00, >= 2: PASS
+   FC isolator base (PETG) / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >63.50, >= 2: PASS
+   FC isolator base (PETG) / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >56.50, >= 2: PASS
+   FC isolator base (PETG) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >42.30, >= 2: PASS
+   FC isolator base (PETG) / pack 4S 1500: overlap 0.000 mm3, gap 22.50, >= 2: PASS
+   FC isolator base (PETG) / pack XT60 plug: overlap 0.000 mm3, gap >29.90, >= 2: PASS
+   FC isolator base (PETG) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 17.34, >= 2: PASS
+   FC isolator base (PETG) / camera: overlap 0.000 mm3, gap >110.10, >= 2: PASS
+   FC isolator base (PETG) / tie saddle (printed): overlap 0.000 mm3, gap 15.90, >= 2: PASS
+   FC isolator base (PETG) / camera mount (printed): overlap 0.000 mm3, gap >82.30, >= 2: PASS
+   FC isolator base (PETG) / camera mount stop collar +y: overlap 0.000 mm3, gap >94.50, >= 2: PASS
+   FC isolator base (PETG) / camera mount stop collar -y: overlap 0.000 mm3, gap >94.50, >= 2: PASS
+   FC isolator base (PETG) / electronics tail block (PETG): overlap 0.000 mm3, gap 2.92, >= 2: PASS
+   FC isolator base (PETG) / electronics tail carrier (PETG): overlap 0.000 mm3, gap >29.20, >= 2: PASS
+   FC isolator base (PETG) / FC mounts (4 rubber, M3 male-female): overlap 0.000 mm3, gap -0.00, declared contact: PASS
+   FC isolator base (PETG) / wires: overlap 0.000 mm3, gap 10.87, >= 2: PASS
+   FC isolator base (PETG) / flow MTF-02P: overlap 0.000 mm3, gap >44.90, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cage shell tubes: overlap 0.000 mm3, gap 40.57, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cage shell nodes: overlap 0.000 mm3, gap 91.11, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 44.68, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / frame plate (Bee35 carbon): overlap 0.000 mm3, gap 6.21, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / motor 1: overlap 0.000 mm3, gap >31.20, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / prop 1: overlap 0.000 mm3, gap 7.21, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / motor 2: overlap 0.000 mm3, gap >31.20, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / prop 2: overlap 0.000 mm3, gap 7.21, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / motor 3: overlap 0.000 mm3, gap >33.90, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / prop 3: overlap 0.000 mm3, gap 9.67, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / motor 4: overlap 0.000 mm3, gap >33.90, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / prop 4: overlap 0.000 mm3, gap 9.67, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / UBEC: overlap 0.000 mm3, gap >93.40, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / XR2: overlap 0.000 mm3, gap >77.20, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / Radxa Zero 3W: overlap 0.000 mm3, gap >55.10, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / receiver v3 (latch): overlap 0.000 mm3, gap 19.71, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / receiver lid (latch): overlap 0.000 mm3, gap >25.70, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / receiver TPU strips (latch): overlap 0.000 mm3, gap 24.80, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap >34.20, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / XT60E1-M: overlap 0.000 mm3, gap >25.40, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cartridge v6 (latch): overlap 0.000 mm3, gap >27.10, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / slider +y (latch): overlap 0.000 mm3, gap >61.20, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / slider -y (latch): overlap 0.000 mm3, gap >61.20, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >69.70, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >62.80, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >49.10, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / pack 4S 1500: overlap 0.000 mm3, gap >28.70, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / pack XT60 plug: overlap 0.000 mm3, gap >37.50, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 18.51, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / camera: overlap 0.000 mm3, gap >114.40, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / tie saddle (printed): overlap 0.000 mm3, gap 22.14, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / camera mount (printed): overlap 0.000 mm3, gap >86.60, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / camera mount stop collar +y: overlap 0.000 mm3, gap >99.50, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / camera mount stop collar -y: overlap 0.000 mm3, gap >99.50, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / electronics tail block (PETG): overlap 0.000 mm3, gap 4.82, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / electronics tail carrier (PETG): overlap 0.000 mm3, gap >31.30, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / wires: overlap 0.000 mm3, gap 21.04, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / flow MTF-02P: overlap 0.000 mm3, gap >51.90, >= 2: PASS
    flow MTF-02P / cage shell tubes: overlap 0.000 mm3, gap 55.13, >= 2: PASS
    flow MTF-02P / cage shell nodes: overlap 0.000 mm3, gap 71.73, >= 2: PASS
    flow MTF-02P / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 13.75, >= 2: PASS
@@ -176,7 +260,7 @@ fit, full pairwise table (ours against every part; >= 2.0 or a declared face con
    flow MTF-02P / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap 27.92, >= 2: PASS
    flow MTF-02P / pack 4S 1500: overlap 0.000 mm3, gap 15.50, >= 2: PASS
    flow MTF-02P / pack XT60 plug: overlap 0.000 mm3, gap >41.30, >= 2: PASS
-   flow MTF-02P / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap >67.10, >= 2: PASS
+   flow MTF-02P / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap >79.20, >= 2: PASS
    flow MTF-02P / camera: overlap 0.000 mm3, gap >132.70, >= 2: PASS
    flow MTF-02P / tie saddle (printed): overlap 0.000 mm3, gap 7.00, >= 2: PASS
    flow MTF-02P / camera mount (printed): overlap 0.000 mm3, gap >101.00, >= 2: PASS
@@ -189,10 +273,10 @@ fit, full pairwise table (ours against every part; >= 2.0 or a declared face con
    electronics tail block (PETG) / cage shell nodes: overlap 0.000 mm3, gap 93.39, >= 2: PASS
    electronics tail block (PETG) / spokes, bay ties, core ties, camera guard: overlap 0.000 mm3, gap 27.66, >= 2: PASS
    electronics tail block (PETG) / frame plate (Bee35 carbon): overlap 0.000 mm3, gap -0.00, declared contact: PASS
-   electronics tail block (PETG) / motor 1: overlap 0.000 mm3, gap >65.10, >= 2: PASS
-   electronics tail block (PETG) / prop 1: overlap 0.000 mm3, gap >29.80, >= 2: PASS
-   electronics tail block (PETG) / motor 2: overlap 0.000 mm3, gap >65.10, >= 2: PASS
-   electronics tail block (PETG) / prop 2: overlap 0.000 mm3, gap >29.80, >= 2: PASS
+   electronics tail block (PETG) / motor 1: overlap 0.000 mm3, gap >59.40, >= 2: PASS
+   electronics tail block (PETG) / prop 1: overlap 0.000 mm3, gap 39.41, >= 2: PASS
+   electronics tail block (PETG) / motor 2: overlap 0.000 mm3, gap >59.40, >= 2: PASS
+   electronics tail block (PETG) / prop 2: overlap 0.000 mm3, gap 39.41, >= 2: PASS
    electronics tail block (PETG) / motor 3: overlap 0.000 mm3, gap 22.88, >= 2: PASS
    electronics tail block (PETG) / prop 3: overlap 0.000 mm3, gap 4.48, >= 2: PASS
    electronics tail block (PETG) / motor 4: overlap 0.000 mm3, gap 22.88, >= 2: PASS
@@ -201,36 +285,41 @@ fit, full pairwise table (ours against every part; >= 2.0 or a declared face con
    electronics tail block (PETG) / XR2: overlap 0.000 mm3, gap 27.06, >= 2: PASS
    electronics tail block (PETG) / Radxa Zero 3W: overlap 0.000 mm3, gap 2.40, >= 2: PASS
    electronics tail block (PETG) / receiver v3 (latch): overlap 0.000 mm3, gap -0.00, declared contact: PASS
-   electronics tail block (PETG) / receiver lid (latch): overlap 0.000 mm3, gap >58.30, >= 2: PASS
+   electronics tail block (PETG) / receiver lid (latch): overlap 0.000 mm3, gap >52.30, >= 2: PASS
    electronics tail block (PETG) / receiver TPU strips (latch): overlap 0.000 mm3, gap 6.10, >= 2: PASS
    electronics tail block (PETG) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap 2.00, >= 2: PASS
-   electronics tail block (PETG) / XT60E1-M: overlap 0.000 mm3, gap >62.20, >= 2: PASS
+   electronics tail block (PETG) / XT60E1-M: overlap 0.000 mm3, gap >56.20, >= 2: PASS
    electronics tail block (PETG) / cartridge v6 (latch): overlap 0.000 mm3, gap 6.30, >= 2: PASS
-   electronics tail block (PETG) / slider +y (latch): overlap 0.000 mm3, gap >28.70, >= 2: PASS
-   electronics tail block (PETG) / slider -y (latch): overlap 0.000 mm3, gap >28.70, >= 2: PASS
+   electronics tail block (PETG) / slider +y (latch): overlap 0.000 mm3, gap >26.20, >= 2: PASS
+   electronics tail block (PETG) / slider -y (latch): overlap 0.000 mm3, gap >26.20, >= 2: PASS
    electronics tail block (PETG) / cartridge v6 strips (latch, TPU): overlap 0.000 mm3, gap >33.50, >= 2: PASS
    electronics tail block (PETG) / cartridge skid closed end (latch, TPU): overlap 0.000 mm3, gap >26.50, >= 2: PASS
-   electronics tail block (PETG) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >52.20, >= 2: PASS
+   electronics tail block (PETG) / cartridge skid lead end (latch, TPU): overlap 0.000 mm3, gap >46.30, >= 2: PASS
    electronics tail block (PETG) / pack 4S 1500: overlap 0.000 mm3, gap 8.80, >= 2: PASS
-   electronics tail block (PETG) / pack XT60 plug: overlap 0.000 mm3, gap >64.20, >= 2: PASS
-   electronics tail block (PETG) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 14.07, >= 2: PASS
-   electronics tail block (PETG) / camera: overlap 0.000 mm3, gap >155.00, >= 2: PASS
+   electronics tail block (PETG) / pack XT60 plug: overlap 0.000 mm3, gap >58.20, >= 2: PASS
+   electronics tail block (PETG) / tail bay cables (Scout electronics, E): overlap 0.000 mm3, gap 8.67, >= 2: PASS
+   electronics tail block (PETG) / camera: overlap 0.000 mm3, gap >149.00, >= 2: PASS
    electronics tail block (PETG) / tie saddle (printed): overlap 0.000 mm3, gap 15.72, >= 2: PASS
-   electronics tail block (PETG) / camera mount (printed): overlap 0.000 mm3, gap >127.20, >= 2: PASS
-   electronics tail block (PETG) / camera mount stop collar +y: overlap 0.000 mm3, gap >139.30, >= 2: PASS
-   electronics tail block (PETG) / camera mount stop collar -y: overlap 0.000 mm3, gap >139.30, >= 2: PASS
+   electronics tail block (PETG) / camera mount (printed): overlap 0.000 mm3, gap >121.20, >= 2: PASS
+   electronics tail block (PETG) / camera mount stop collar +y: overlap 0.000 mm3, gap >133.30, >= 2: PASS
+   electronics tail block (PETG) / camera mount stop collar -y: overlap 0.000 mm3, gap >133.30, >= 2: PASS
    electronics tail block (PETG) / electronics tail carrier (PETG): overlap 0.000 mm3, gap -0.00, declared contact: PASS
-   electronics tail block (PETG) / wires: overlap 0.000 mm3, gap >55.80, >= 2: PASS
+   electronics tail block (PETG) / wires: overlap 0.000 mm3, gap >49.80, >= 2: PASS
    belly mount below z 9.0 (bipod, gussets, cradle) / receiver v3 (latch): overlap 0.000 mm3, gap 2.20, >= 2: PASS
    belly mount below z 9.0 (bipod, gussets, cradle) / receiver lid (latch): overlap 0.000 mm3, gap 11.55, >= 2: PASS
    belly mount below z 9.0 (bipod, gussets, cradle) / receiver TPU end pieces (latch, E): overlap 0.000 mm3, gap 17.41, >= 2: PASS
-   FC dampers (4, silicone) / FC component layer under the PCB: overlap 0.000 mm3, gap 2.10, >= 2: PASS
-   belly mount (PETG) / cage rods / links (nearest): overlap 0.000 mm3, gap 9.34, >= 2: PASS
-   FC / cage rods / links (nearest): overlap 0.000 mm3, gap 39.98, >= 2: PASS
-   FC dampers (4, silicone) / cage rods / links (nearest): overlap 0.000 mm3, gap 39.26, >= 2: PASS
+   FC isolator base (PETG): links and bosses / FC mounts (4 rubber, M3 male-female): overlap 0.000 mm3, gap 2.80, >= 2: PASS
+   FC isolator tray (PETG) / FC component layer under the PCB: overlap 0.000 mm3, gap 2.10, >= 2: PASS
+   belly mount (PETG) / cage rods / links (nearest): overlap 0.000 mm3, gap 9.35, >= 2: PASS
+   FC / cage rods / links (nearest): overlap 0.000 mm3, gap 29.29, >= 2: PASS
+   FC isolator tray (PETG) / cage rods / links (nearest): overlap 0.000 mm3, gap 32.73, >= 2: PASS
+   FC isolator base (PETG) / cage rods / links (nearest): overlap 0.000 mm3, gap 35.87, >= 2: PASS
+   FC mounts (4 rubber, M3 male-female) / cage rods / links (nearest): overlap 0.000 mm3, gap 40.54, >= 2: PASS
    flow MTF-02P / cage rods / links (nearest): overlap 0.000 mm3, gap 13.71, >= 2: PASS
    electronics tail block (PETG) / cage rods / links (nearest): overlap 0.000 mm3, gap 26.98, >= 2: PASS
-System: Scout v3 with the FC on top and the belly mount v2 (concept), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 748 of 500 g (150 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.1, -38.2], 2.1 mm without swap parts, probes 7.2 mm (E) edge at (-0.53, +0.03, -0.85) (UBEC), access 23/23 clear
+FC isolator tray (PETG): 7.4 g as printed, solid_check PASS (eroded bodies 1, necks 0)
+FC isolator base (PETG): 5.2 g as printed, solid_check PASS (eroded bodies 1, necks 0)
+System: Scout v3 with the FC on top (isolator) and the belly mount v2 round 2 (concept), cage first 6.2 mm (E) at +Z (camera) (field cones open: camera 55 deg, out 0 mm), shell 47 rods closed, h/w 0.31, fit 0.0 mm³ (E) (cartridge v6 (latch)/cartridge skid lead end (latch, TPU)), bbox 13.8 L (E), extents 390 x 278 x 127 mm (E), mass 772 of 500 g (154 %) (E) over budget (total), CG 0.2 mm off thrust axis (E) [-0.1, -0.1, -36.7], 2.0 mm without swap parts, probes 7.0 mm (E) edge at +Z (FC), access 25/25 clear
    access swap: cartridge v6 (latch) down: clear
    access swap: pack 4S 1500 down: clear
    access swap: pack XT60 plug down: clear
@@ -246,16 +335,19 @@ System: Scout v3 with the FC on top and the belly mount v2 (concept), cage first
    access M3 key, plate bolt (-42.0, -16.0): clear
    access Radxa SD card (Ø10): clear
    access Radxa USB-C 1 (Ø10): clear
-   access FC USB-C cable (12 x 7, from the FC's +y edge on the plate top, E): clear
-   access M3 key, FC damper screw (-12.75, -12.75) from the top: clear
-   access M3 key, FC damper screw (-12.75, +12.75) from the top: clear
-   access M3 key, FC damper screw (+12.75, -12.75) from the top: clear
-   access M3 key, FC damper screw (+12.75, +12.75) from the top: clear
+   access FC USB-C cable (12 x 7, the tail corner's right edge, P, E): clear
+   access M3 key, FC screw (+1.90, -18.03) from the top: clear
+   access M3 key, FC screw (-16.13, +0.00) from the top: clear
+   access M3 key, FC screw (+19.93, -0.00) from the top: clear
+   access M3 key, FC screw (+1.90, +18.03) from the top: clear
    access M3 key, belly-mount plate bolt (3.9, +31) from the top: clear
    access M3 key, belly-mount plate bolt (3.9, -31) from the top: clear
+   access M3 key, belly-mount plate bolt (-25, +13) from the top: clear
+   access M3 key, belly-mount plate bolt (-25, -13) from the top: clear
    access flow SH1.0 plug out of its end (6 x 4, E): clear
-ESC (the AIO) in free air: its 4 sides 94 % open 3 mm out (1493 of 1584 mm2, plate top to the board top), its top 100 % open 3 mm up (1296 mm2); under it 3.0 of air over the plate; 6.5 outside the swept disks in plan (v1: 641 mm2 of side vents, the plate 1.0 above it and the receiver below)
-plate: the FC's 4 dampers on the Bee35's AIO holes (±12.75, ±12.75) (P, as built; M3 studs: CHECK the hole size, open to Ø3.4 if smaller); the belly mount on the 2 side holes [(3.9, 31.0), (3.9, -31.0)] (VA); a battery-lead notch x 44.0..51.0 (the nose edge), |y| <= 7.5 over the XT60's cups (it takes the empty nose hole (45, 0)); v1's 4 new holes (-25, ±13), (30, ±13): not needed
-PX4 (FRD from the CG [-0.14, -0.08, 2.98], m): EKF2_IMU_POS [0.0001, -0.0001, -0.026], EKF2_OF_POS [-0.0053, 0.0399, 0.033], EKF2_RNG_POS [0.0055, 0.0399, 0.033]; SENS_FLOW_ROT 4 (yaw 180: plug to the nose, the lens aft; v1 as built 0), CHECK on the bench
-masses and CGs for the cage session (E): belly mount (PETG) 25.54 g at [-0.92, -10.55, 6.84]; FC 10.0 g at [0.0, 0.0, 29.0]; FC dampers (4, silicone) 2.4 g at [0.0, 0.0, 25.1]; wires 20.0 g at [5.0, 0.0, 25.0]; flow MTF-02P 1.5 g at [0.0, -40.0, -26.0]; electronics tail block (PETG) 15.44 g at [-46.17, 0.72, 12.54]
-done in 999 s
+ESC (the AIO) in free air: its 4 sides 100 % open 3 mm out, its top 100 %; 12.7 outside the swept disks in plan, level with the props (board z 47..55, prop plane 41.2). Cooling (E): hover current 10.1..12.6 A at 748 g (4..5 g/W, 4S), the AIO's heat 2..4 W over 2592 mm2 (both faces): rise still 77..154 K, hover_inflow 26..51 K, forward_8ms 13..27 K: rule 8 (heat sources in airflow) holds in hover only through the disks' inflow (E) and holds in forward flight; still air on the bench overheats it: log the temperature
+plate: the isolator's base on 3 of the Bee35's AIO holes (the diamond at (1.9, 0), P; M3 into nuts bonded under the plate; CHECK the hole size, open to Ø3.4); the belly mount on [(3.9, 31.0), (3.9, -31.0), (-25.0, 13.0), (-25.0, -13.0)] (VB: new [(-25.0, 13.0), (-25.0, -13.0)]); the battery-lead notch x 42.8..51.0 (the nose edge), |y| <= 6.2, corners r 1.5 (it takes the empty nose hole (45, 0) whole, 0.5 to spare): the leads at the cups' y ± 1.6 + 1.0, the flow lead (Ø2.5) between them; a silicone edge strip on the notch's carbon edges; the cups' tops sit 3.7 under the plate, so the slack goes above it
+PX4 (FRD from the CG [-0.15, -0.08, 4.52], m): EKF2_IMU_POS [0.002, -0.0001, -0.0467], EKF2_OF_POS [-0.0052, 0.0399, 0.0345], EKF2_RNG_POS [0.0056, 0.0399, 0.0345]; SENS_FLOW_ROT 0 (as built 4, dimensions.md A; the board turned 180: plug to the nose), CHECK on the bench
+masses and CGs for the cage session (E): belly mount (PETG) 26.95 g at [-2.33, -9.85, 7.31]; FC 10.0 g at [1.9, 0.0, 51.24]; FC isolator tray (PETG) 7.38 g at [1.9, -0.0, 43.13]; FC isolator base (PETG) 5.23 g at [4.0, 0.0, 25.75]; FC mounts (4 rubber, M3 male-female) 11.2 g at [1.9, -0.0, 34.57]; wires 20.0 g at [3.0, 0.0, 36.0]; flow MTF-02P 1.5 g at [0.0, -40.0, -26.0]; electronics tail block (PETG) 15.92 g at [-45.3, 0.7, 12.9]
+Bench (Spark): with the FC off, measure the plate's 4 AIO holes: the pattern (25.5 square turned 45 about (1.9, 0)?), the hole size, and which corner the USB-C faces
+done in 1166 s

@@ -1,7 +1,7 @@
 {
- "name": "Scout v3 with the FC on top and the belly mount v2 (concept)",
+ "name": "Scout v3 with the FC on top (isolator) and the belly mount v2 round 2 (concept)",
  "machine": "scout",
- "note": "main's Scout v3 assembly (v12, camera mount v1, tail bay PR 130) with the FC on the plate top on 4 silicone columns, the belly mount v2, the flow re-placed, the tail block's foot tip trimmed to x -20 (requirement)",
+ "note": "main's Scout v3 assembly (v12, camera mount v1, tail bay PR 130) with the FC on the plate top on a 4-mount inclined isolator (tray, pedestals on the AIO holes), the belly mount v2, the flow re-placed, the tail block's foot tip trimmed (requirement on our next piece pass)",
  "cg_ref": [
   0.0,
   0.0,
@@ -313,12 +313,22 @@
   ],
   [
    "FC",
-   "FC dampers (4, silicone)",
+   "FC isolator tray (PETG)",
    0.05
   ],
   [
-   "FC dampers (4, silicone)",
+   "FC isolator base (PETG)",
+   "FC mounts (4 rubber, M3 male-female)",
+   0.05
+  ],
+  [
+   "FC isolator base (PETG)",
    "frame plate (Bee35 carbon)",
+   0.05
+  ],
+  [
+   "FC isolator tray (PETG)",
+   "FC mounts (4 rubber, M3 male-female)",
    0.05
   ],
   [
@@ -405,6 +415,16 @@
   ],
   [
    "FC",
+   "FC mounts (4 rubber, M3 male-female)",
+   2.0
+  ],
+  [
+   "FC",
+   "FC isolator base (PETG)",
+   2.0
+  ],
+  [
+   "FC",
    "tail bay cables (Scout electronics, E)",
    2.0
   ],
@@ -414,7 +434,17 @@
    2.0
   ],
   [
-   "FC dampers (4, silicone)",
+   "FC isolator tray (PETG)",
+   "electronics tail block (PETG)",
+   2.0
+  ],
+  [
+   "FC isolator base (PETG)",
+   "electronics tail block (PETG)",
+   2.0
+  ],
+  [
+   "FC mounts (4 rubber, M3 male-female)",
    "electronics tail block (PETG)",
    2.0
   ]
@@ -809,17 +839,17 @@
    ]
   },
   {
-   "name": "FC USB-C cable (12 x 7, from the FC's +y edge on the plate top, E)",
+   "name": "FC USB-C cable (12 x 7, the tail corner's right edge, P, E)",
    "part": "FC",
    "from": [
-    0.0,
-    18.0,
-    31.4
+    -22.14,
+    -1.41,
+    53.64
    ],
    "dir": [
-    0.0,
-    1.0,
-    0.0
+    -0.6645,
+    -0.6645,
+    0.342
    ],
    "length_mm": 250.0,
    "tool": {
@@ -827,23 +857,22 @@
     "w": 12.0,
     "h": 7.0,
     "w_axis": [
-     -1.0,
-     0.0,
+     0.7071,
+     -0.7071,
      0.0
     ]
    },
    "ignore": [
-    "wires",
-    "FC dampers (4, silicone)"
+    "wires"
    ]
   },
   {
-   "name": "M3 key, FC damper screw (-12.75, -12.75) from the top",
+   "name": "M3 key, FC screw (+1.90, -18.03) from the top",
    "part": "FC",
    "from": [
-    -12.75,
-    -12.75,
-    30.3
+    1.9,
+    -18.031,
+    52.54213562373095
    ],
    "dir": [
     0,
@@ -860,12 +889,12 @@
    ]
   },
   {
-   "name": "M3 key, FC damper screw (-12.75, +12.75) from the top",
+   "name": "M3 key, FC screw (-16.13, +0.00) from the top",
    "part": "FC",
    "from": [
-    -12.75,
-    12.75,
-    30.3
+    -16.131,
+    0.0,
+    52.54213562373095
    ],
    "dir": [
     0,
@@ -882,12 +911,12 @@
    ]
   },
   {
-   "name": "M3 key, FC damper screw (+12.75, -12.75) from the top",
+   "name": "M3 key, FC screw (+19.93, -0.00) from the top",
    "part": "FC",
    "from": [
-    12.75,
-    -12.75,
-    30.3
+    19.931,
+    -0.0,
+    52.54213562373095
    ],
    "dir": [
     0,
@@ -904,12 +933,12 @@
    ]
   },
   {
-   "name": "M3 key, FC damper screw (+12.75, +12.75) from the top",
+   "name": "M3 key, FC screw (+1.90, +18.03) from the top",
    "part": "FC",
    "from": [
-    12.75,
-    12.75,
-    30.3
+    1.9,
+    18.031,
+    52.54213562373095
    ],
    "dir": [
     0,
@@ -953,6 +982,50 @@
    "from": [
     3.9,
     -31.0,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, belly-mount plate bolt (-25, +13) from the top",
+   "part": "belly mount (PETG)",
+   "from": [
+    -25.0,
+    13.0,
+    22.5
+   ],
+   "dir": [
+    0,
+    0,
+    1
+   ],
+   "length_mm": 150.0,
+   "tool": {
+    "type": "cylinder",
+    "d": 4
+   },
+   "ignore": [
+    "wires"
+   ]
+  },
+  {
+   "name": "M3 key, belly-mount plate bolt (-25, -13) from the top",
+   "part": "belly mount (PETG)",
+   "from": [
+    -25.0,
+    -13.0,
     22.5
    ],
    "dir": [
@@ -1346,14 +1419,14 @@
    "version": "electronics round 5 (concept)",
    "source": "nox/scout/v3/layout_v3.py",
    "box": [
-    -8.5,
-    -8.1,
-    2.1,
-    2.5,
-    35.8,
-    36.2
+    -34.2,
+    -33.8,
+    11.8,
+    12.2,
+    39.8,
+    40.2
    ],
-   "note": "6.27 g at its CG (-8.3, 2.3, 31.6) as main; for the fit a 0.4 box over the FC on top (main's box sat where the FC now is)"
+   "note": "6.27 g at its CG (-8.3, 2.3, 31.6) as main; for the fit a 0.4 box beside the fin (main's box sat inside the FC tower)"
   },
   {
    "name": "camera",
@@ -1413,18 +1486,17 @@
   {
    "name": "electronics tail block (PETG)",
    "role": "structure",
-   "mesh": "runs/scout_belly_mount/v2/tail_block_foot_trimmed__requirement.stl",
+   "mesh": "runs/scout_electronics/v2/belly_mount_tail_block__petg_.stl",
    "material": "PETG",
-   "mass_g": 15.44,
+   "mass_g": 15.92,
    "cg": [
-    -46.17,
-    0.72,
-    12.54
+    -45.3,
+    0.7,
+    12.9
    ],
    "tag": "E",
    "owner": "scout electronics",
-   "version": "v2 (PR 130)",
-   "note": "PR 130's block with the requirement applied: its foot tip on the plate top cut back from x -14.0 to -20.0 (belly mount v2)"
+   "version": "v2 (PR 130)"
   },
   {
    "name": "electronics tail carrier (PETG)",
@@ -1448,27 +1520,61 @@
    "mesh": "runs/scout_belly_mount/v2/fc_on_top.stl",
    "mass_g": 10.0,
    "cg": [
+    1.9,
     0.0,
-    0.0,
-    29.0
+    51.24
    ],
    "tag": "P",
    "geom_tag": "C",
-   "note": "MicoAir743v2-AIO 36 x 36 x 8 on the plate top, on the AIO holes, z 25.0..33.0 (belly mount v2)"
+   "note": "MicoAir743v2-AIO 36 x 36 x 8, the diamond at (1.9, 0) (P), on the isolator tray, z 47.2..55.2"
   },
   {
-   "name": "FC dampers (4, silicone)",
-   "role": "bought",
-   "mesh": "runs/scout_belly_mount/v2/fc_dampers.stl",
-   "mass_g": 2.4000000000000004,
+   "name": "FC isolator tray (PETG)",
+   "role": "structure",
+   "mesh": "runs/scout_belly_mount/v2/fc_isolator_tray__petg_.stl",
+   "material": "PETG",
+   "mass_g": 7.38,
    "cg": [
-    0.0,
-    0.0,
-    25.1
+    1.9,
+    -0.0,
+    43.13
    ],
    "tag": "E",
    "geom_tag": "C",
-   "note": "4 M3 male-female bonded silicone columns \u00d86, rubber 5.2, 30A (E), studs into 4 M3 nuts epoxied under the plate (0.8 g of the 2.4 g)"
+   "owner": "scout electronics",
+   "version": "FC isolator v1 (concept, belly mount v2 pass)",
+   "source": "nox/scout/v3/belly_mount_v2.py"
+  },
+  {
+   "name": "FC isolator base (PETG)",
+   "role": "structure",
+   "mesh": "runs/scout_belly_mount/v2/fc_isolator_base__petg_.stl",
+   "material": "PETG",
+   "mass_g": 5.23,
+   "cg": [
+    4.0,
+    0.0,
+    25.75
+   ],
+   "tag": "E",
+   "geom_tag": "C",
+   "owner": "scout electronics",
+   "version": "FC isolator v1 (concept, belly mount v2 pass)",
+   "source": "nox/scout/v3/belly_mount_v2.py"
+  },
+  {
+   "name": "FC mounts (4 rubber, M3 male-female)",
+   "role": "bought",
+   "mesh": "runs/scout_belly_mount/v2/fc_mounts.stl",
+   "mass_g": 11.2,
+   "cg": [
+    1.9,
+    -0.0,
+    34.57
+   ],
+   "tag": "E",
+   "geom_tag": "C",
+   "note": "4 x D8xH8 M3 male-female rubber mounts, 40A (E, CHECK the listing), 45 deg; with the 8 M3 screws and nylocs / bonded nuts of the isolator (11.2 g)"
   },
   {
    "name": "wires",
@@ -1482,13 +1588,13 @@
     24.4
    ],
    "cg": [
-    5.0,
+    3.0,
     0.0,
-    25.0
+    36.0
    ],
    "mass_g": 20.0,
    "tag": "E",
-   "note": "20 g E: motor leads on the arm tops, battery leads from the notch to the FC's nose edge, signal leads; CG (5, 0, 25) E; for the fit a 0.4 box in the battery-lead lane on the plate top, no allowance"
+   "note": "20 g E: motor leads from the board's corners down to the arm tops, battery leads up the notch to the board, signal leads; CG (3, 0, 36) E; for the fit a 0.4 box in the battery-lead lane on the plate top, no allowance"
   },
   {
    "name": "flow MTF-02P",
@@ -1504,16 +1610,16 @@
    "role": "structure",
    "mesh": "runs/scout_belly_mount/v2/belly_mount_v2__petg_.stl",
    "material": "PETG",
-   "mass_g": 25.54,
+   "mass_g": 26.95,
    "cg": [
-    -0.92,
-    -10.55,
-    6.84
+    -2.33,
+    -9.85,
+    7.31
    ],
    "tag": "E",
    "geom_tag": "C",
    "owner": "scout electronics",
-   "version": "belly mount v2 (concept)",
+   "version": "belly mount v2 round 2 (concept)",
    "source": "nox/scout/v3/belly_mount_v2.py"
   }
  ],
