@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 28 Oct (Overseer arms): v8 organic too thin. Rear 96 g: cage crash 1.77, solid FAIL (fragments at the collars). Front 123 g: cage crash 3.30, handling 1.30, solid FAIL. v8b: no collars, top third screw only, rear gen 55 (here), front gen 70 (sibling).
 - 27 Oct (Overseer arms): the bottom third screw has no driver path (over the receiver, cage session): DEFAULT top third screw only (NOX_ARM_THIRD_BOTTOM=0, 5 inserts per arm), applied in the final run after the head v5 rebalance; alt: a new bottom hole outside |y| 40. v8 runs (both tongues) finish as the method check.
 - 27 Oct (Overseer arms, Spark): the plates have a third hole per arm on the arm line (top Ø3.1 u 34.66, bottom Ø3.1 u 32.9 v ∓1.1, M): v8 adds a 9-thick tongue to each, 6 M3 inserts per arm (was 4; the third top screw had been dropped for the Pi deck). v8 runs restarted.
 - 27 Oct (Overseer arms, Spark): too bulky, natural structures; cage crash index <= 1.0 (was 0.5), front first mode >= 175 Hz (was 190), only long 6 mm carbon tubes (no 3.0 diagonals). v8: drawn = attachments only, collar rings on the tubes, topology grows the rest; rear gen 30, front 35. `arm_topo_v8.py`
