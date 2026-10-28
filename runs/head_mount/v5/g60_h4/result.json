@@ -1,0 +1,530 @@
+{
+ "name": "head_mount",
+ "engine": "nox/topo",
+ "solid_ok": false,
+ "solid": {
+  "bodies_plain": 1,
+  "bodies_eroded": 1,
+  "eroded_volumes_mm3": [
+   57297.8
+  ],
+  "necks": [],
+  "drawn_not_in_main": [
+   [
+    "0.12",
+    0.998,
+    "erode 2.0"
+   ]
+  ],
+  "thin_walls": [
+   {
+    "kind": "wall",
+    "thick_mm": 1.41,
+    "core_mm3": 5.67,
+    "at": [
+     409.8,
+     -62.5,
+     149.1
+    ],
+    "span": [
+     1.9,
+     1.2,
+     0.2
+    ]
+   },
+   {
+    "kind": "wall",
+    "thick_mm": 1.41,
+    "core_mm3": 5.59,
+    "at": [
+     409.8,
+     62.5,
+     149.1
+    ],
+    "span": [
+     1.9,
+     1.2,
+     0.2
+    ]
+   }
+  ],
+  "acute_edges": 2,
+  "ok": false
+ },
+ "function_check": {
+  "skin_mm3": 5331.3,
+  "skin_missing_mm3": 0.0,
+  "in_cuts_mm3": 0.0,
+  "outside_env_mm3": 0.0,
+  "ok": true
+ },
+ "strength": {
+  "rows": [
+   {
+    "case": "crash 0 [1.0, 0.0, 0.0] via node 17",
+    "cls": "misuse",
+    "inlayer": 0.057,
+    "across": 0.084,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "crash 1 [-1.0, 0.0, 0.0] via node 13",
+    "cls": "misuse",
+    "inlayer": 0.043,
+    "across": 0.062,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "crash 2 [0.0, 1.0, 0.0] via node 10",
+    "cls": "misuse",
+    "inlayer": 0.008,
+    "across": 0.011,
+    "at": [
+     390.1,
+     -14.0,
+     94.0
+    ]
+   },
+   {
+    "case": "crash 3 [0.0, -1.0, 0.0] via node 9",
+    "cls": "misuse",
+    "inlayer": 0.013,
+    "across": 0.019,
+    "at": [
+     386.1,
+     22.0,
+     78.0
+    ]
+   },
+   {
+    "case": "crash 4 [0.0, 0.0, 1.0] via node 7",
+    "cls": "misuse",
+    "inlayer": 0.053,
+    "across": 0.078,
+    "at": [
+     386.1,
+     22.0,
+     78.0
+    ]
+   },
+   {
+    "case": "crash 5 [0.0, 0.0, -1.0] via node 0",
+    "cls": "misuse",
+    "inlayer": 0.007,
+    "across": 0.01,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "crash 6 [0.58, 0.58, 0.58] via node 15",
+    "cls": "misuse",
+    "inlayer": 0.05,
+    "across": 0.098,
+    "at": [
+     390.1,
+     42.0,
+     94.0
+    ]
+   },
+   {
+    "case": "crash 7 [0.58, 0.58, -0.58] via node 18",
+    "cls": "misuse",
+    "inlayer": 0.022,
+    "across": 0.032,
+    "at": [
+     386.1,
+     22.0,
+     78.0
+    ]
+   },
+   {
+    "case": "crash 8 [0.58, -0.58, 0.58] via node 16",
+    "cls": "misuse",
+    "inlayer": 0.045,
+    "across": 0.107,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 9 [0.58, -0.58, -0.58] via node 19",
+    "cls": "misuse",
+    "inlayer": 0.017,
+    "across": 0.02,
+    "at": [
+     378.1,
+     10.0,
+     54.0
+    ]
+   },
+   {
+    "case": "crash 10 [-0.58, 0.58, 0.58] via node 13",
+    "cls": "misuse",
+    "inlayer": 0.042,
+    "across": 0.069,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 11 [-0.58, 0.58, -0.58] via node 11",
+    "cls": "misuse",
+    "inlayer": 0.064,
+    "across": 0.093,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "crash 12 [-0.58, -0.58, 0.58] via node 14",
+    "cls": "misuse",
+    "inlayer": 0.042,
+    "across": 0.067,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "crash 13 [-0.58, -0.58, -0.58] via node 12",
+    "cls": "misuse",
+    "inlayer": 0.065,
+    "across": 0.096,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "head inertia 0 [1.0, 0.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.527,
+    "across": 0.768,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "head inertia 1 [-1.0, 0.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.527,
+    "across": 0.978,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 2 [0.0, 1.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.366,
+    "across": 0.642,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 3 [0.0, -1.0, 0.0]",
+    "cls": "misuse",
+    "inlayer": 0.366,
+    "across": 0.416,
+    "at": [
+     366.1,
+     6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 4 [0.0, 0.0, 1.0]",
+    "cls": "misuse",
+    "inlayer": 0.591,
+    "across": 1.154,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 5 [0.0, 0.0, -1.0]",
+    "cls": "misuse",
+    "inlayer": 0.591,
+    "across": 0.847,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "head inertia 6 [0.58, 0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.237,
+    "across": 0.459,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 7 [0.58, 0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.677,
+    "across": 1.026,
+    "at": [
+     366.1,
+     -10.0,
+     22.0
+    ]
+   },
+   {
+    "case": "head inertia 8 [0.58, -0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.232,
+    "across": 0.418,
+    "at": [
+     378.1,
+     10.0,
+     46.0
+    ]
+   },
+   {
+    "case": "head inertia 9 [0.58, -0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.654,
+    "across": 0.891,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   },
+   {
+    "case": "head inertia 10 [-0.58, 0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.654,
+    "across": 1.579,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 11 [-0.58, 0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.232,
+    "across": 0.338,
+    "at": [
+     390.1,
+     42.0,
+     94.0
+    ]
+   },
+   {
+    "case": "head inertia 12 [-0.58, -0.58, 0.58]",
+    "cls": "misuse",
+    "inlayer": 0.677,
+    "across": 0.926,
+    "at": [
+     370.1,
+     -6.0,
+     18.0
+    ]
+   },
+   {
+    "case": "head inertia 13 [-0.58, -0.58, -0.58]",
+    "cls": "misuse",
+    "inlayer": 0.237,
+    "across": 0.289,
+    "at": [
+     386.1,
+     -26.0,
+     78.0
+    ]
+   },
+   {
+    "case": "flight 4 g down",
+    "cls": "flight",
+    "inlayer": 0.106,
+    "across": 0.152,
+    "at": [
+     366.1,
+     -6.0,
+     22.0
+    ]
+   }
+  ],
+  "worst": 1.579,
+  "worst_case": "head inertia 10 [-0.58, 0.58, 0.58]",
+  "worst_at": [
+   370.1,
+   -6.0,
+   18.0
+  ]
+ },
+ "mass_g": 98.42,
+ "watertight": false,
+ "bodies": {
+  "bodies_raw": 1,
+  "dropped_specks_mm3": [],
+  "cavities_mm3": [],
+  "bodies": 1
+ },
+ "volume_mm3": 77496.2,
+ "drawn_g": 21.58,
+ "stl": "head_mount.stl",
+ "view_stl": "head_mount_view.stl",
+ "view_faces": 120000,
+ "preview": "preview.png",
+ "layout": {
+  "settings": {
+   "min_member_mm": 6.25,
+   "eta": [
+    0.75,
+    0.5,
+    0.25
+   ],
+   "betas": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "penal": 3.0,
+   "emin": 1e-06,
+   "pmean": 6.0,
+   "tie_weight": 0.5,
+   "tie_moments": true,
+   "tie_min_cells": 4,
+   "move": 0.1,
+   "min_stage": 10,
+   "max_stage": 35,
+   "grey_stop": 0.02,
+   "vol_gain": 0.3,
+   "geometric": false,
+   "geo_margin": 0.05,
+   "geo_beta": 16.0,
+   "geo_eps": 0.0,
+   "erosion": "masked",
+   "gate_ties": true,
+   "gate_thin_mm": 2.0,
+   "case_norm": "solid",
+   "held_ties": true,
+   "gate_member": true,
+   "collar_mm": 0.0,
+   "finish": "organic",
+   "skin_mm": 2.5,
+   "fillet_mm": 2.5,
+   "skin_round_mm": 1.0,
+   "reach_check": "raise",
+   "auto_sym": true,
+   "backend": "auto",
+   "mg_tol": 1e-05,
+   "time_limit_s": 19800.0,
+   "checkpoint_every": 10
+  },
+  "R_mm": 6.44256687412536,
+  "R_cells": 1.61064171853134,
+  "calibration": {
+   "rod": 0.9701102250255644,
+   "plate": 0.8809289894691206,
+   "erode": 0.26588526507976606,
+   "dilate": 0.2668852650798993,
+   "rod_input": 1.2608727148268373,
+   "plate_input": 0.8849130530977847
+  },
+  "volfrac": 0.061132871346791205,
+  "nd": 16595,
+  "sym_axes": [],
+  "n_real": 29,
+  "n_ties": 162,
+  "backend": "direct",
+  "iterations": 72,
+  "stopped": "grey"
+ },
+ "grid": {
+  "name": "head",
+  "h": 4.0,
+  "shape": [
+   24,
+   48,
+   48
+  ],
+  "origin": [
+   336.0534,
+   -96.0,
+   -19.9793
+  ],
+  "cells": 55296,
+  "design": 16518,
+  "drawn": 262,
+  "cases": [
+   "crash 0 [1.0, 0.0, 0.0] via node 17",
+   "crash 1 [-1.0, 0.0, 0.0] via node 13",
+   "crash 2 [0.0, 1.0, 0.0] via node 10",
+   "crash 3 [0.0, -1.0, 0.0] via node 9",
+   "crash 4 [0.0, 0.0, 1.0] via node 7",
+   "crash 5 [0.0, 0.0, -1.0] via node 0",
+   "crash 6 [0.58, 0.58, 0.58] via node 15",
+   "crash 7 [0.58, 0.58, -0.58] via node 18",
+   "crash 8 [0.58, -0.58, 0.58] via node 16",
+   "crash 9 [0.58, -0.58, -0.58] via node 19",
+   "crash 10 [-0.58, 0.58, 0.58] via node 13",
+   "crash 11 [-0.58, 0.58, -0.58] via node 11",
+   "crash 12 [-0.58, -0.58, 0.58] via node 14",
+   "crash 13 [-0.58, -0.58, -0.58] via node 12",
+   "head inertia 0 [1.0, 0.0, 0.0]",
+   "head inertia 1 [-1.0, 0.0, 0.0]",
+   "head inertia 2 [0.0, 1.0, 0.0]",
+   "head inertia 3 [0.0, -1.0, 0.0]",
+   "head inertia 4 [0.0, 0.0, 1.0]",
+   "head inertia 5 [0.0, 0.0, -1.0]",
+   "head inertia 6 [0.58, 0.58, 0.58]",
+   "head inertia 7 [0.58, 0.58, -0.58]",
+   "head inertia 8 [0.58, -0.58, 0.58]",
+   "head inertia 9 [0.58, -0.58, -0.58]",
+   "head inertia 10 [-0.58, 0.58, 0.58]",
+   "head inertia 11 [-0.58, 0.58, -0.58]",
+   "head inertia 12 [-0.58, -0.58, 0.58]",
+   "head inertia 13 [-0.58, -0.58, -0.58]",
+   "flight 4 g down"
+  ],
+  "supports": [
+   "core"
+  ]
+ },
+ "build_s": 553.3,
+ "layout_s": 555,
+ "peak_gb": 2.247776,
+ "gen_cm3": 60.0,
+ "h": 4.0,
+ "total_s": 1108
+}
