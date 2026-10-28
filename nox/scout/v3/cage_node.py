@@ -21,8 +21,8 @@ Bottom ring nodes (0..3, the shared Overseer loop): hub Ø16 down to a flat seat
 Strength (as-built voxel FE, nox/topo Part + Solver, the engine's PETG transversely isotropic allowables, crash class): each socket
 in turn loaded through a carbon insert in its bore (bonded, EA exact), every other rod's stub held; cases: push min(frame axial,
 Pcr k 0.7), pull frame axial (runs/scout_frame/v3/node_loads.json, F), and the rod's full bending moment at the mouth (600 MPa x Z of a
-3.0 rod = 1590 N mm, as a couple on the stub) in 4 directions plus the frame side force. Gate (dimensions.md L index target): the worst
-cell of each socket's cases <= 1.0, with the bond line (PETG cells sharing a node with the rod insert) and 1.0 round each bore rim left
+Pcr k 0.7), pull frame axial (runs/scout_frame/v3/node_loads.json, F), and the rod at its allowable bending moment at the mouth (600 MPa x Z
+of a 3.0 rod = 1590 N mm) with the frame side force as its shear, in 4 directions. Gate (dimensions.md L index target): the worst
 out (voxel staircase / bi-material corner). A socket over 1.0 gets 0.5 more wall (the hub 1.0 more radius) and the node's fillet
 grows 1.0, until every socket reads <= 1.0. `outlast` in the result: each node's worst bending cell scaled to a rod's real bending
 strength (ROD_STRENGTH, E) and compared with the PETG strength (no safety factor): over 1 means that node goes before its rod in a
@@ -442,7 +442,11 @@ def fe_check(i, socks, B, h=0.5, log=print):
             if t != k: hold = hh if hold is None else hold + hh
         p.support(f"hold {k}", hold)
         Ld = socket_loads(i, s); d = Rr @ s["d"]; x, y = _perp(d)
-        Fc = Ld["moment"] / (STUB - 1.25 - 1.5)                       # the couple: tip centre (STUB - 1.25) to neck centre (1.5) past the mouth
+        # the bend case: the side force at the tip centre (Lt past the mouth) plus a couple (tip, neck centre Ln), sized so the moment at the
+        # mouth is exactly the rod's allowable moment: a rod cannot bring more moment than it carries (v2 28 Oct; before, M_ROD + side x Lt
+        # was applied, 2265 N mm on tie 4.1 for its 100 N side force)
+        Lt, Ln = STUB - 1.25, 1.5
+        Fc = max(Ld["moment"] - Ld["side"] * Lt, 0.0) / (Lt - Ln)
         p.load(f"{k} push", tips[k], -Ld["push"] * d, cls="crash", support=f"hold {k}")
         p.load(f"{k} pull", tips[k], Ld["pull"] * d, cls="crash", support=f"hold {k}")
         for nm, v in (("+a", x), ("-a", -x), ("+b", y), ("-b", -y)):
