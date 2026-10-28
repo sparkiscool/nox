@@ -17,13 +17,15 @@ CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_m
 ELEC_R = os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope_r5.json")   # the electronics session's round 5, drawn at the v12 catch
 # the layout run each other session's part was drawn on: a part drawn on another run is stale (its cage, catch or rods moved) and stays out
 # until its session redraws it; the layout's own placeholder stands in and the run's summary lists it
-DRAWN_ON = {"camera mount v1": "v12", "electronics round 5": "v12", "belly mount v1": "v12"}
+DRAWN_ON = {"camera mount v1": ("v12", "v13"), "electronics round 5": ("v12",), "belly mount v1": ("v12",)}   # v13: the nose rods 7-8, 14-15 and
+                                                                     # the nose top node are where v12 had them (C), so the camera mount v1 fits
 STALE = []
 
 
 def fits(what):
-    if DRAWN_ON.get(what, os.path.basename(os.path.normpath(RUN))) == os.path.basename(os.path.normpath(RUN)): return True
-    STALE.append(f"{what}: drawn on {DRAWN_ON[what]}, stale on {os.path.basename(os.path.normpath(RUN))} (needs its redraw; the layout placeholder stands in)")
+    run = os.path.basename(os.path.normpath(RUN))
+    if run in DRAWN_ON.get(what, (run,)): return True
+    STALE.append(f"{what}: drawn on {', '.join(DRAWN_ON[what])}, stale on {os.path.basename(os.path.normpath(RUN))} (needs its redraw; the layout placeholder stands in)")
     return False
 BELLY = os.path.join(ROOT, "runs", "scout_belly_mount", "v1")    # the electronics session's belly mount v1 (PR 150, concept): its system model
 CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant

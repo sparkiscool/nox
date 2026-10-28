@@ -1,5 +1,6 @@
 # Nox: log (from 14 Oct; Scout v2 lines are history)
 
+- 28 Oct (Scout v3): layout v13 (`runs/scout_layout/v13/`): node mass fitted to the saved nodes v2 (192 g M; v12 assumed 39, CG read 4.65): catch 2.2 aft (was 5.0 fwd), 58 rods on 19 nodes, 909 g E, CG 0.6 / 0.7 E; frame v4. Nodes, electronics stale (redraw); camera mount v1 fits.
 - 27 Oct (rule, Spark): "Saved parts go into their system as CAD" replaces the cage-sync line: the turn a part is saved its mesh replaces its placeholder in the system assembly and the system artifact is republished (CLAUDE.md, `docs/generative.md` Save and print, `docs/sessions.md`, review item 15).
 - 27 Oct (Overseer): head mount v4 (run/head_mount-v4) solid FAIL: 8 voxel specks where each drawn socket boss ended on its bore floor. `head_mount.py` socket gets a 3.0 solid floor (FLOOR, as the cage nodes, DEFAULT); the v4 mesh plus the new drawn passes solid_check (C). v5 run next (strike 3) (alt: ream the floors on the mesh, not allowed)
 - 27 Oct (Scout v3, Spark): every rod 3.0, sockets 3.2 (6/4 sizing dropped; crash fails accepted, rods are the fuse); FC on top of the plate; camera mount v2 by topology (worker). Rows: dimensions Rods, Strength; current-parts; v12 summary.

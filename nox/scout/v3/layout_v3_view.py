@@ -40,12 +40,12 @@ DROP = {n for n in LAY if n not in AN or os.path.normpath(os.path.join(ROOT, AN[
 OTHER = [p for n, p in AN.items() if "mesh" in p and (n not in LAY or n in DROP) and not n.startswith("prop")]   # the assembly's parts from
                                                                               # other sessions (camera mount, belly mount, re-placed FC / flow)
 SC_ = os.path.join(RUN, "system_check_mount.json")             # system_check on the assembly with the saved mount (its numbers, not the layout's)
-if SAVED and os.path.exists(SC_):
+if os.path.exists(SC_):
     bc_ = json.load(open(SC_))["balance"]["cases"]; MASS_, CGI_, CGO_ = bc_["all"]["mass_g"], bc_["all"]["horizontal_mm"], bc_["no_swap"]["horizontal_mm"]
 else:
     MASS_, CGI_, CGO_ = r["mass"], math.hypot(*r["cg"][:2]), math.hypot(*r["cg_pack_out"][:2])
 s = Scene("Scout v3 Cage",
-          f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the 4 side nodes of the Overseer's base loop (same funnel, fewer ramps), one camera close in at the nose " + ("on its saved clip-on mount with a lens hood" if SAVED else "on snap clips") + ", carbon base kept; "
+          f"Scout v3, race-car cage: {len(E) + len(r['links'])} x 3 mm rods (any length), flat roof, pointed nose and tail, bottom = the 4 side nodes of the Overseer's base loop (same funnel, fewer ramps), one camera close in at the nose " + ("on its saved clip-on mount with a lens hood" if SAVED else "on the layout cradle (its mount v2 is being drawn)") + ", carbon base kept; "
           f" {r['extents'][0]:.0f} x {r['extents'][1]:.0f} x {r['extents'][2]:.0f} (node centres), ~{MASS_:.0f} g (E), "
           f"CG {CGI_:.1f} mm pack in / {CGO_:.1f} pack out")
 names = []
