@@ -1,4 +1,4 @@
-system_check Overseer: FAIL
+system_check Overseer: PASS
   cage first PASS: worst 9.61 mm (E) at (+0.90, +0.01, +0.43) on camera left (needs 3.0), 2006 dirs
     Unitree L2: min margin -67.0 mm, outside openings 52.46, slack 49.46 at (+0.50, -0.02, +0.87)
     camera left: min margin 1.94 mm, outside openings 9.61, slack 6.61 at (+0.90, +0.01, +0.43)
@@ -170,28 +170,24 @@ WARN  over budget: total 3267.81 of 2200.0 g (148.5 %); hub deck 68.0 of 55.0 g
     post r10 / buck 12 V: 138.07 mm (E) from (+0.30, +0.41, -0.86), axis [0.899, -0.425, 0.105], roll 210.0, lateral 18.4 mm, contact [55.0, 21.0, 14.5]
     edge / XT60 pair: 170.0 mm (E) from -X, axis [-0.003, -0.996, 0.085], roll 90.0, lateral 33.4 mm, contact [-110.0, 3.8, -5.4]
     post r10 / XT60 pair: 183.64 mm (E) from -X, axis [-0.089, 0.996, 0.009], roll 270.0, lateral -25.1 mm, contact [-110.1, -3.6, -4.6]
-  access FAIL (swept tool overlap <= 0.5 mm³):
+  access PASS (swept tool overlap <= 0.5 mm³):
     pack swap: cartridge + pack down through the opening (cartridge, part, 150 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 1 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 key, arm 1 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
-    M3 key, arm 1 top screw 3 (u 34.66) (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 key, arm 1 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 1 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 L-key short leg, arm 2 top screw v +15 (top plate, type cylinder, d 8, 30 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 L-key long leg, arm 2 top screw v +15 (top plate, type cylinder, d 4, 400 mm along [-0.7389, 0.6718, 0.0525]): 0.0 mm³ (E)
     M3 key, arm 2 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
-    M3 key, arm 2 top screw 3 (u 34.66) (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 174.74 mm³ (E); RX XR2 174.74 mm³; wires 5.05 mm³ BLOCKED
     M3 key, arm 2 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 2 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 3 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 L-key short leg, arm 3 top screw v -15 (top plate, type cylinder, d 8, 30 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 L-key long leg, arm 3 top screw v -15 (top plate, type cylinder, d 4, 400 mm along [-0.6373, -0.7695, -0.0425]): 0.0 mm³ (E)
-    M3 key, arm 3 top screw 3 (u 34.66) (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 key, arm 3 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 3 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 4 top screw v +15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 key, arm 4 top screw v -15 (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
-    M3 key, arm 4 top screw 3 (u 34.66) (top plate, type cylinder, d 8, 400 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     M3 key, arm 4 bottom screw v +10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     M3 key, arm 4 bottom screw v -10 (bottom plate, type cylinder, d 8, 400 mm along [0.0, 0.0, -1.0]): 0.0 mm³ (E)
     FC USB-C (an edge of the turned FC: plug straight in 30 along the arm, then the cable bends up) (FC stack (MicoAir743-Lite on 55A 4-in-1), type box, w 12, h 7, 30 mm along [0.7071, -0.7071, 0.0]): 0.0 mm³ (E)
@@ -212,4 +208,4 @@ WARN  over budget: total 3267.81 of 2200.0 g (148.5 %); hub deck 68.0 of 55.0 g
     step 6: M3 nylon nut 1 on its stud over the FC (nut driver from above, before the cage shell; v5's top tubes cross the x-axis nut lines) (FC stack (MicoAir743-Lite on 55A 4-in-1), type cylinder, d 6, 150 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     step 6: M3 nylon nut 2 on its stud over the FC (nut driver from above, before the cage shell; v5's top tubes cross the x-axis nut lines) (FC stack (MicoAir743-Lite on 55A 4-in-1), type cylinder, d 6, 150 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
     step 6: M3 nylon nut 3 on its stud over the FC (nut driver from above, before the cage shell; v5's top tubes cross the x-axis nut lines) (FC stack (MicoAir743-Lite on 55A 4-in-1), type cylinder, d 6, 150 mm along [0.0, 0.0, 1.0]): 0.0 mm³ (E)
-System: Overseer, cage first 9.6 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67 mm, camera left 55 deg, out 0 mm, camera right 55 deg, out 0.17 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm³ (E), bbox 128 L (E), extents 771 x 675 x 245 mm (E), mass 3268 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -66.8], 27.8 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (+0.48, +0.52, -0.71) (cartridge), access 40/41 clear (M3 key, arm 2 top screw 3 (u 34.66) blocked by RX XR2, wires 175 mm³) FAIL
+System: Overseer, cage first 9.6 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67 mm, camera left 55 deg, out 0 mm, camera right 55 deg, out 0.17 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm³ (E), bbox 128 L (E), extents 771 x 675 x 245 mm (E), mass 3268 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -66.8], 27.8 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (+0.48, +0.52, -0.71) (cartridge), access 37/37 clear

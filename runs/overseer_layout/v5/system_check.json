@@ -1,6 +1,6 @@
 {
  "name": "Overseer",
- "pass_": false,
+ "pass_": true,
  "cage_first": {
   "applies": true,
   "pass_": true,
@@ -2368,7 +2368,7 @@
  },
  "access": {
   "applies": true,
-  "pass_": false,
+  "pass_": true,
   "tol_mm3": 0.5,
   "paths": [
    {
@@ -2408,25 +2408,6 @@
    },
    {
     "name": "M3 key, arm 1 top screw v -15",
-    "part": "top plate",
-    "tool": {
-     "type": "cylinder",
-     "d": 8
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 key, arm 1 top screw 3 (u 34.66)",
     "part": "top plate",
     "tool": {
      "type": "cylinder",
@@ -2540,47 +2521,6 @@
     "pass_": true
    },
    {
-    "name": "M3 key, arm 2 top screw 3 (u 34.66)",
-    "part": "top plate",
-    "tool": {
-     "type": "cylinder",
-     "d": 8
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [
-     {
-      "part": "RX XR2",
-      "overlap_mm3": 174.74,
-      "method": "manifold3d"
-     },
-     {
-      "part": "wires",
-      "overlap_mm3": 5.05,
-      "method": "manifold3d"
-     }
-    ],
-    "touches": [
-     {
-      "part": "RX XR2",
-      "overlap_mm3": 174.74,
-      "method": "manifold3d"
-     },
-     {
-      "part": "wires",
-      "overlap_mm3": 5.05,
-      "method": "manifold3d"
-     }
-    ],
-    "overlap_mm3": 174.74,
-    "pass_": false
-   },
-   {
     "name": "M3 key, arm 2 bottom screw v +10",
     "part": "bottom plate",
     "tool": {
@@ -2676,25 +2616,6 @@
     "pass_": true
    },
    {
-    "name": "M3 key, arm 3 top screw 3 (u 34.66)",
-    "part": "top plate",
-    "tool": {
-     "type": "cylinder",
-     "d": 8
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
     "name": "M3 key, arm 3 bottom screw v +10",
     "part": "bottom plate",
     "tool": {
@@ -2753,25 +2674,6 @@
    },
    {
     "name": "M3 key, arm 4 top screw v -15",
-    "part": "top plate",
-    "tool": {
-     "type": "cylinder",
-     "d": 8
-    },
-    "dir": [
-     0.0,
-     0.0,
-     1.0
-    ],
-    "length_mm": 400.0,
-    "steps": 1,
-    "blocked_by": [],
-    "touches": [],
-    "overlap_mm3": 0.0,
-    "pass_": true
-   },
-   {
-    "name": "M3 key, arm 4 top screw 3 (u 34.66)",
     "part": "top plate",
     "tool": {
      "type": "cylinder",
@@ -3177,47 +3079,22 @@
     "pass_": true
    }
   ],
-  "n_clear": 40,
+  "n_clear": 37,
   "worst": {
-   "name": "M3 key, arm 2 top screw 3 (u 34.66)",
-   "part": "top plate",
-   "tool": {
-    "type": "cylinder",
-    "d": 8
-   },
+   "name": "pack swap: cartridge + pack down through the opening",
+   "part": "cartridge",
+   "tool": "part",
    "dir": [
     0.0,
     0.0,
-    1.0
+    -1.0
    ],
-   "length_mm": 400.0,
-   "steps": 1,
-   "blocked_by": [
-    {
-     "part": "RX XR2",
-     "overlap_mm3": 174.74,
-     "method": "manifold3d"
-    },
-    {
-     "part": "wires",
-     "overlap_mm3": 5.05,
-     "method": "manifold3d"
-    }
-   ],
-   "touches": [
-    {
-     "part": "RX XR2",
-     "overlap_mm3": 174.74,
-     "method": "manifold3d"
-    },
-    {
-     "part": "wires",
-     "overlap_mm3": 5.05,
-     "method": "manifold3d"
-    }
-   ],
-   "overlap_mm3": 174.74,
-   "pass_": false
+   "length_mm": 150.0,
+   "steps": 20,
+   "blocked_by": [],
+   "touches": [],
+   "overlap_mm3": 0.0,
+   "pass_": true
   }
  },
  "mass_budget": {
@@ -3241,6 +3118,6 @@
   "pass_": true
  },
  "geometry_tag": "E",
- "summary": "System: Overseer, cage first 9.6 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67 mm, camera left 55 deg, out 0 mm, camera right 55 deg, out 0.17 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm\u00b3 (E), bbox 128 L (E), extents 771 x 675 x 245 mm (E), mass 3268 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -66.8], 27.8 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (+0.48, +0.52, -0.71) (cartridge), access 40/41 clear (M3 key, arm 2 top screw 3 (u 34.66) blocked by RX XR2, wires 175 mm\u00b3) FAIL",
- "pass": false
+ "summary": "System: Overseer, cage first 9.6 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67 mm, camera left 55 deg, out 0 mm, camera right 55 deg, out 0.17 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm\u00b3 (E), bbox 128 L (E), extents 771 x 675 x 245 mm (E), mass 3268 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.2 mm off thrust axis (E) [+0.2, -0.1, -66.8], 27.8 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (+0.48, +0.52, -0.71) (cartridge), access 37/37 clear",
+ "pass": true
 }

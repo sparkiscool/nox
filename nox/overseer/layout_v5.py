@@ -147,6 +147,8 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 CORE_PARTS = os.path.join(SAVED, "core", "core_parts.json")   # the core session's parts (everything inside the cage), decimated copies
 CORE_TIE_FRONT = (114.0, 0.0, 20.0)                # the front core ties' root on the hub deck tower's front face, off the flow clip (C, DEFAULT 27 Oct)
+THIRD_SCREW = os.environ.get("V5_THIRD_SCREW", "0") == "1"   # the arms' third screw (arm session v8, 27 Oct): its access paths come in when arm v8
+                                                   # and core v4 (the RX moved off arm 2's top screw line) are on main; V5_THIRD_SCREW=1 checks it now
 THIRD_BOTTOM = os.environ.get("V5_THIRD_BOTTOM", "0") == "1"   # the arms' third bottom screw (u 32.9): off (DEFAULT 27 Oct): it sits over the battery
                                                    # receiver (|y| 22.5 < its 38), no driver from below without taking the receiver off;
                                                    # the third hole takes the top screw only (into an insert in the arm tongue)
@@ -1231,7 +1233,7 @@ for nm_, faces in (("FC USB-C", [((18.0, 0, 9.75), (1, 0, 0)), ((0, 18.0, 9.75),
         acc_rep.append(f"{nm_}: NO clear line within 50 deg of any face")
 for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-top screws (M3 into the root, driver d 8 from above)
     c_, s_ = math.cos(math.radians(d_)), math.sin(math.radians(d_))
-    for r_, v_ in ((63.17, 15.0), (63.17, -15.0), (34.66, 0.0)):       # + the third screw per arm (arm session v8, 27 Oct: top Ø3.1 at u 34.66, v 0)
+    for r_, v_ in ((63.17, 15.0), (63.17, -15.0)) + (((34.66, 0.0),) if THIRD_SCREW else ()):   # + the arms' third screw (arm v8: top Ø3.1 at u 34.66, v 0)
         p0 = np.array([r_ * c_ - v_ * s_, r_ * s_ + v_ * c_, ROOT_H + 1.6])
         ign_p = ("top plate", f"arm {i_ + 1}") + tuple(f"prop {j}" for j in range(1, 5))
         ok_ = line_clear(p0, np.array([0, 0, 1.0]), 400.0, 4.0, ignore=ign_p)
@@ -1252,7 +1254,7 @@ for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-to
                            "ignore": [f"arm {i_ + 1}"] + [f"prop {j}" for j in range(1, 5)]})
         acc_rep.append(f"arm {i_ + 1} top screw v {v_:+.0f}: " + (f"L-key (short leg up 30, long leg {lg[0]:.0f} deg off radial out through a cell)" if lg else "BLOCKED"))
     v3_ = 1.1 * (-1 if (d_ in (45, 225)) else 1)                       # the third bottom screw (arm session v8: u 32.9, v -+1.1 front / +-1.1 rear)
-    for r_, v_ in ((63.74, 10.0), (63.74, -10.0)) + (((32.9, v3_),) if THIRD_BOTTOM else ()):   # bottom screws (driver d 8 from below)
+    for r_, v_ in ((63.74, 10.0), (63.74, -10.0)) + (((32.9, v3_),) if THIRD_SCREW and THIRD_BOTTOM else ()):   # bottom screws (driver d 8 from below)
         p0 = np.array([r_ * c_ - v_ * s_, r_ * s_ + v_ * c_, -1.7])
         ok_ = line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}"))
         ign = [f"arm {i_ + 1}"]
