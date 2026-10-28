@@ -1,0 +1,41 @@
+{
+ "name": "head_mount",
+ "h": 4.0,
+ "gen_cm3": 40.0,
+ "coarse": {
+  "s_per_it": 0.3,
+  "cells": 16384,
+  "design_cells": 2047,
+  "cases": 35,
+  "load_cases": 29,
+  "backend": "direct",
+  "peak_gb": 6.77
+ },
+ "smoke_iterations": 3,
+ "drawn": {
+  "name": "head",
+  "mass_g": 21.58,
+  "solid_ok": false,
+  "bodies_plain": 15,
+  "worst": null,
+  "worst_case": "no solve (ValueError)",
+  "max": 1.0,
+  "h": 4.0,
+  "pass": false
+ },
+ "fine": {
+  "s_per_it": 7.8,
+  "cells": 55296,
+  "design_cells": 16595,
+  "cases": 191,
+  "load_cases": 29,
+  "backend": "direct",
+  "peak_gb": 6.77
+ },
+ "peak_gb": 6.77,
+ "wall_h": [
+  0.2,
+  0.52
+ ],
+ "note": "s per iteration and peak M (this smoke); the wall range E (iteration counts of past nox/topo runs)"
+}
