@@ -577,7 +577,7 @@ def main():
             print(f"node {i:2d} {np.round(N[i], 1).tolist()}: {len(socks)} sockets, set-backs " +
                   ", ".join(f"{s['name']} {s['r']:.1f}" + (f" (ecc {s['ecc']:.1f})" if s["ecc"] > 0.05 else "") for s in socks) +
                   f"; {g:.2f} g, envelope r {envelope(i, t)['r_max']}" + ("" if is_centre(i) else " (+ its mirror)"), flush=True)
-        print(f"all 18 nodes {tot:.1f} g (C)")
+        print(f"all {len(N)} nodes {tot:.1f} g (C)")
         return
     if a.cmd == "fe":                                                     # one FE pass at the drawn minimum (no sizing)
         for i in ids:
