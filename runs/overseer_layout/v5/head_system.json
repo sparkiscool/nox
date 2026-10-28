@@ -108,9 +108,9 @@
  "rods": {
   "head rod c": [
    [
-    367.86,
+    382.77,
     0.0,
-    13.92
+    92.74
    ],
    [
     357.08,
@@ -120,9 +120,9 @@
   ],
   "head rod +1": [
    [
-    404.1,
-    70.0,
-    149.15
+    398.3,
+    80.0,
+    150.7
    ],
    [
     353.98,
@@ -132,9 +132,9 @@
   ],
   "head rod -1": [
    [
-    404.1,
-    -70.0,
-    149.15
+    398.3,
+    -80.0,
+    150.7
    ],
    [
     353.98,
@@ -155,5 +155,5 @@
  "mass_budget_g": 143.7,
  "cases": "dimensions.md L (flight 4 g / 2 g, crash 35 g in 14 directions at each payload's CG, sensor mounts first mode >= 100 Hz, breaking order: the lugs let go before the L2 base)",
  "print_": "Bambu A1 mini 180 cube, PETG; cut DEFAULT: centre piece |y| <= 75 (seat, lugs, guard ring, the centre node) and two mirrored wings (camera pad, camera guard, the side nodes), bolted M3 on drawn pads",
- "drawn_mesh": "parts/sensor_head_mount__printed__drawn_seat__.stl"
+ "drawn_mesh": "parts/sensor_head_mount__printed__drawn_bolt_a.stl"
 }

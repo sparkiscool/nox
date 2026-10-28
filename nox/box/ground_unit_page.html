@@ -8,19 +8,22 @@
   --bg: #f3f4f2; --paper: #fbfbf9; --ink: #1c2126; --muted: #5d6771; --line: #cfd5d9; --line2: #e4e8ea;
   --accent: #b5471b; --accent-soft: #f5e1d6;
   --ok: #2d7a4f; --ok-soft: #dcefe2; --warn: #8a6a14; --warn-soft: #f4ebcf; --bad: #a3322b; --bad-soft: #f6dbd8; --hold: #4f5b66; --hold-soft: #e2e6e9;
-  --scout: #2f6f9f; --scout-soft: #d9e7f2; --over: #6e4fa0; --over-soft: #e6ddf1; --reserve: #b5471b;
+  --scout: #2f6f9f; --scout-soft: #d9e7f2; --over: #6e4fa0; --over-soft: #e6ddf1; --reserve: #b5471b; --stage: #e4e7e6; --grid: #c9cfd2; --panel: var(--paper);
+  --c-structure: #8d98a3; --c-arm: #c7612f; --c-latch: #3b7fb6; --c-electronics: #3f9d5f; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb;
   --display: "Barlow Semi Condensed", "Arial Narrow", sans-serif; --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #15191d; --paper: #1c2126; --ink: #e6e9eb; --muted: #97a3ad; --line: #343c44; --line2: #272e35;
   --accent: #e0772f; --accent-soft: #3a2415;
   --ok: #5fc78b; --ok-soft: #173223; --warn: #d8b352; --warn-soft: #33291a; --bad: #e4756c; --bad-soft: #3a1f1d; --hold: #aab4bd; --hold-soft: #2a3239;
-  --scout: #6fb0e0; --scout-soft: #1b2f3f; --over: #b094dc; --over-soft: #2a2140; --reserve: #e0772f; color-scheme: dark } }
+  --scout: #6fb0e0; --scout-soft: #1b2f3f; --over: #b094dc; --over-soft: #2a2140; --reserve: #e0772f; --stage: #1d2328; --grid: #313a42; --panel: var(--paper);
+  --c-structure: #a7b1bb; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark } } color-scheme: dark } }
 :root[data-theme="dark"] {
   --bg: #15191d; --paper: #1c2126; --ink: #e6e9eb; --muted: #97a3ad; --line: #343c44; --line2: #272e35;
   --accent: #e0772f; --accent-soft: #3a2415;
   --ok: #5fc78b; --ok-soft: #173223; --warn: #d8b352; --warn-soft: #33291a; --bad: #e4756c; --bad-soft: #3a1f1d; --hold: #aab4bd; --hold-soft: #2a3239;
-  --scout: #6fb0e0; --scout-soft: #1b2f3f; --over: #b094dc; --over-soft: #2a2140; --reserve: #e0772f; color-scheme: dark }
+  --scout: #6fb0e0; --scout-soft: #1b2f3f; --over: #b094dc; --over-soft: #2a2140; --reserve: #e0772f; --stage: #1d2328; --grid: #313a42; --panel: var(--paper);
+  --c-structure: #a7b1bb; --c-arm: #e8803f; --c-latch: #6fb0e0; --c-electronics: #5fc78b; --c-enclosure: #7fb4d6; --c-reserved: #e07a35; --c-envelopes: #b39ddb; color-scheme: dark } } color-scheme: dark }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
 .wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 22px 48px; display: grid; gap: 26px; }
@@ -75,16 +78,86 @@ ul.plain { margin: 0; padding-left: 1.1em; display: grid; gap: 5px; font-size: 1
 a { color: var(--accent); }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 860px) { .draws, .two { grid-template-columns: 1fr; } h1 { font-size: 32px; } .log li { grid-template-columns: 1fr; gap: 2px; } .board header .own { margin-left: 0; } }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+/* ---- 3D viewer (from ground_unit_3d.html) ---- */
+[hidden] { display: none !important; }
+
+/* Source: nox/box/ground_unit_3d.html (Nox repo); data: runs/ground_unit/v1/scene.json + scene.b64.txt from nox/box/ground_unit_export.py.
+   Layout: one-screen viewer. A 3D stage with a transport bar under it, a side panel (systems, parts, the picked part). One column on a phone. */
+.app { height: min(88vh, 920px); margin-top: 6px; display: grid; grid-template-rows: auto 1fr auto; grid-template-columns: 1fr 340px; grid-template-areas: "head head" "stage side" "bar side"; gap: 10px;
+  padding: 0; }
+.app header { grid-area: head; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.app h2.vt { font: 600 22px/1.15 var(--display); margin: 0; }
+.app h2.vt small { font: 500 12px/1 var(--mono); color: var(--muted); margin-left: 8px; letter-spacing: 0.04em; }
+.views { display: inline-flex; border: 1px solid var(--line); border-radius: 5px; overflow: hidden; margin-left: auto; }
+.views button, .bar button { font: 500 12px/1 var(--mono); padding: 7px 10px; border: 0; background: var(--panel); color: var(--ink); cursor: pointer; }
+.views button + button { border-left: 1px solid var(--line); }
+.views button:hover, .bar button:hover { background: var(--accent-soft); }
+.stage { grid-area: stage; position: relative; min-height: 320px; border: 1px solid var(--line); border-radius: 6px; background: var(--stage); overflow: hidden; }
+.stage canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.hint { position: absolute; left: 10px; bottom: 8px; font: 11px/1.3 var(--mono); color: var(--muted); pointer-events: none; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; font: 500 13px var(--mono); color: var(--muted); }
+.bar { grid-area: bar; display: grid; grid-template-columns: auto 1fr auto; gap: 8px 12px; align-items: center; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 8px 12px; }
+.bar .row { display: contents; }
+.bar label { font: 600 11px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.bar input[type=range] { width: 100%; accent-color: var(--accent); }
+.bar .val { font: 500 12px/1 var(--mono); min-width: 84px; text-align: right; font-variant-numeric: tabular-nums; }
+.bar button { border: 1px solid var(--line); border-radius: 4px; }
+.side { grid-area: side; min-width: 0; display: grid; grid-template-rows: auto auto 1fr; gap: 10px; overflow: hidden; }
+.card { border: 1px solid var(--line); border-radius: 6px; background: var(--panel); padding: 10px 12px; min-width: 0; }
+.card h3 { font: 600 13px/1 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+.sys { display: grid; gap: 4px; }
+.sys label { display: grid; grid-template-columns: auto 12px 1fr auto; align-items: center; gap: 8px; font-size: 13.5px; cursor: pointer; }
+.sys .sw { width: 12px; height: 12px; border-radius: 2px; background: var(--sw); }
+.sys .n { font: 12px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.plist { overflow: auto; min-height: 0; }
+.plist input { width: 100%; font: 13px var(--body); padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); color: var(--ink); margin-bottom: 6px; }
+.plist ul { list-style: none; margin: 0; padding: 0; }
+.plist li { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; padding: 3px 4px; border-radius: 3px; font-size: 13px; cursor: pointer; }
+.plist li:hover, .plist li.on { background: var(--accent-soft); }
+.plist li .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sw); }
+.plist li .g { font: 11px var(--mono); color: var(--muted); }
+.pick dl { margin: 0; display: grid; grid-template-columns: 70px 1fr; gap: 3px 10px; font-size: 13px; }
+.pick dt { font: 600 11px/1.5 var(--mono); letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
+.pick dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.pick dd.mono { font: 12px/1.5 var(--mono); }
+.st { font: 600 10.5px/1 var(--mono); padding: 3px 6px; border-radius: 3px; background: var(--accent-soft); color: var(--accent); }
+a { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 900px) { .app { height: auto; grid-template-columns: 1fr; grid-template-rows: auto minmax(320px, 55vh) auto auto; grid-template-areas: "head" "stage" "bar" "side"; height: auto; } .side { grid-template-rows: auto auto auto; } .plist { max-height: 260px; } .views { margin-left: 0; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
 </style>
 
 <div class="wrap">
 <header>
   <div class="eyebrow">Nox · box · master view · <span id="updated"></span></div>
   <h1>Nox Ground Unit</h1>
-  <p class="lede"><b>3D assembly from the real mesh files:</b> <a href="https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG" target="_blank" rel="noopener">Nox Ground Unit 3D</a> (orbit, pick, the swap cycle, explode, section). The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved: the landing mechanism is being designed by the design center. There is no funnel any more.</p>
+  <p class="lede">The box that catches a drone, swaps its battery and charges it. One design for the Scout v3 and the Overseer. Every number carries its tag (P measured, M mesh, C CAD, E estimate, F frame model); the sources are the part docs in <code>nox/box/</code> and <code>nox/dimensions.md</code>. The slot at the top is reserved for the catch the design center is designing (concept F, push bars on a flat deck; nothing drawn yet). There is no funnel any more. The 3D below is every designed box component from its real mesh file.</p>
   <div class="pills" id="pills"></div>
 </header>
+
+<section class="sheet" style="padding: 12px 14px">
+<div class="app">
+  <header>
+    <h2 class="vt">3D assembly from the real mesh files <small id="sub">loading scene</small></h2>
+    <div class="views" role="group" aria-label="Views">
+      <button id="v-iso">iso</button><button id="v-front">front</button><button id="v-side">side</button><button id="v-top">top</button><button id="v-fit">fit</button>
+    </div>
+  </header>
+  <div class="stage" id="stage"><canvas id="c"></canvas><div class="hint">drag: orbit · right / two fingers: pan · wheel / pinch: zoom · click: pick</div><div class="loading" id="loading">loading the real meshes</div></div>
+  <div class="bar">
+    <div class="row"><label for="t">swap cycle</label><input type="range" id="t" min="0" max="22" step="0.05" value="0"><span class="val" id="tv">0.00 s</span></div>
+    <div class="row"><label for="ex">explode</label><input type="range" id="ex" min="0" max="1" step="0.01" value="0"><span class="val" id="exv">0 %</span></div>
+    <div class="row"><label for="cut">section</label><input type="range" id="cut" min="0" max="1" step="0.005" value="1"><span class="val"><select id="cutax" style="font: 12px var(--mono); background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 3px"><option value="none">off</option><option value="x">X</option><option value="y">Y</option><option value="z">Z</option></select></span></div>
+    <div class="row"><label>play</label><div><button id="play">play cycle</button> <button id="reset">park</button></div><span class="val" id="fps"></span></div>
+  </div>
+  <aside class="side">
+    <section class="card"><h3>Systems</h3><div class="sys" id="sys"></div></section>
+    <section class="card pick" id="pick"><h3>Picked part</h3><p style="margin: 0; color: var(--muted); font-size: 13px">Click a part in the scene or in the list.</p></section>
+    <section class="card plist"><h3>Parts <span id="np" style="font-weight: 400"></span></h3><input id="q" type="search" placeholder="filter by name" aria-label="filter parts"><ul id="list"></ul></section>
+  </aside>
+</div>
+</section>
 
 <section class="sheet">
   <h2>The box to scale (W frame: X across, Y along the axle, Z up)</h2>
@@ -120,7 +193,7 @@ a { color: var(--accent); }
 <script>
 // ---------- DATA: the only block the master session edits on an update ----------
 const D = {
-  updated: "27 Oct 2026, 07:30 PT",
+  updated: "27 Oct 2026, 08:05 PT",
   master: "https://claude.ai/code/session_01EtHMZPwaEwEqxCkwFCWf7X",
   pills: [
     ["enclosure", "418 x 409 x 470 mm, 80.4 L (C / E)"],
@@ -128,7 +201,7 @@ const D = {
     ["structure", "38 PETG pieces + 8 TPU feet, 5144 g (M, cut PR 113)"],
     ["arm", "~2900 g (E)"], ["electronics + PSU", "~2000 g (E)"],
     ["top", "RESERVED: concept F push-bar catch (design center, PR 125 merged), not drawn yet"],
-    ["3D", "assembled from the real mesh files: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG"],
+    ["3D", "262 real meshes below: every designed box component, the swap cycle, explode, section"],
   ],
   W: { X_IN: 206, Y_BACK: -66, Y_FRONT: 337, FLOOR: -236, Z_TOP: 234, R: 113, Y_C: 167.1, sheet: 3 },
   bays: [ [30, "scout"], [0, "overseer"], [-30, "scout"], [-60, "overseer"], [-90, "scout"], [-120, "overseer"], [-150, "scout"], [-180, "overseer"], [-210, "scout"] ],
@@ -245,6 +318,7 @@ const D = {
     "<b>Head brake bench drop</b> before the first Overseer swap; strength and XT60 force tests dropped (assumed numbers).",
   ],
   log: [
+    ["27 Oct 08:05 PT", "Spark: every designed box component into the one artifact. The 3D viewer is now on this page (262 real meshes): the full battery latch set in every bay (cartridge, sliders, skids, strips, receiver, lid, carrier, XT60s), the printed v1 stand and frames (off by default, superseded), the superseded funnel + hook latch (off by default), with the arm v7 cycle, the PR 113 cut, electronics and sheets as before."],
     ["27 Oct 07:30 PT", "Design center merged PR 125: box catch concept F, a one-motor push-bar catch on a flat deck for both drones (deck 656 x 528 from the parks, wider than the enclosure). Top board, system text, numbers and decisions updated; the 3D page shows the deck footprint in the reserved slot. Nothing drawn, no part changed."],
     ["27 Oct 02:30 PT", "Spark: no design work yet, an assembled artifact from the real CAD files. The four part sessions stopped and archived (nothing merged). 3D assembly published: https://claude.ai/artifact/VyTyzuieTjrbBnURYPDgmG (143 real meshes in W: cut pieces of PR 113, arm v7 with its cycle, receivers and cartridges, electronics, sheets, the reserved top slot)."],
     ["27 Oct 02:10 PT", "The four part sessions restarted with the repo attached (the first four had none, archived); owner links updated."],
@@ -406,4 +480,178 @@ function drawAll() { $("xsec").innerHTML = ""; $("ysec").innerHTML = ""; drawX()
 drawAll();
 if (window.matchMedia) { const mq = window.matchMedia("(prefers-color-scheme: dark)"); if (mq.addEventListener) mq.addEventListener("change", drawAll); }
 new MutationObserver(drawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const SYS = {
+  structure: { label: "Structure v2 cut (PR 113, unmerged)", on: true, opacity: 1 },
+  arm: { label: "Swap arm v7", on: true, opacity: 1 },
+  latch: { label: "Battery latch sets in every bay (cartridge, sliders, receiver, lid, carrier, XT60, TPU)", on: true, opacity: 1 },
+  electronics: { label: "Electronics (boxes, placement v1)", on: true, opacity: 1 },
+  enclosure: { label: "Clear sheets", on: true, opacity: 0.1 },
+  reserved: { label: "Reserved top slot (landing, design center)", on: true, opacity: 0.16 },
+  envelopes: { label: "Arm envelopes and keep-outs", on: false, opacity: 0.25 },
+  structure_v1: { label: "Structure v1 demo (printed 19 Oct, superseded by v2)", on: false, opacity: 1 },
+  catch_old: { label: "Funnel panels + hook latch (superseded, no funnel)", on: false, opacity: 0.6 },
+};
+const cssv = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const $v = (id) => document.getElementById(id);
+
+// ---------- renderer, scene, camera
+const canvas = $v("c"), stage = $v("stage");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.localClippingEnabled = true;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(32, 1, 5, 20000);
+const root = new THREE.Group(); scene.add(root);
+// W frame: X across, Y along the axle, Z up. three.js is Y up: rotate the root so W Z points up on screen.
+root.rotation.x = -Math.PI / 2;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x667788, 0.9));
+const key = new THREE.DirectionalLight(0xffffff, 0.8); key.position.set(600, 900, 700); scene.add(key);
+const fill = new THREE.DirectionalLight(0xffffff, 0.35); fill.position.set(-700, 300, -500); scene.add(fill);
+const grid = new THREE.GridHelper(1600, 32, 0x888888, 0x888888); grid.material.transparent = true; grid.material.opacity = 0.25; scene.add(grid);
+
+// ---------- orbit controls (own, small)
+const ctl = { target: new THREE.Vector3(0, 0, 0), theta: Math.PI - 0.85, phi: 1.05, dist: 1500 };
+function applyCam() {
+  const s = Math.sin(ctl.phi); camera.position.set(ctl.target.x + ctl.dist * s * Math.sin(ctl.theta), ctl.target.y + ctl.dist * Math.cos(ctl.phi), ctl.target.z + ctl.dist * s * Math.cos(ctl.theta));
+  camera.lookAt(ctl.target);
+}
+let drag = null, pinch = null;
+canvas.addEventListener("pointerdown", (e) => { canvas.setPointerCapture(e.pointerId); drag = { x: e.clientX, y: e.clientY, b: e.button, moved: 0, id: e.pointerId, pts: {} }; drag.pts[e.pointerId] = [e.clientX, e.clientY]; });
+canvas.addEventListener("pointermove", (e) => {
+  if (!drag) return; drag.pts[e.pointerId] = [e.clientX, e.clientY]; const ids = Object.keys(drag.pts);
+  if (ids.length >= 2) { const a = drag.pts[ids[0]], b = drag.pts[ids[1]]; const d = Math.hypot(a[0] - b[0], a[1] - b[1]); const cx = (a[0] + b[0]) / 2, cy = (a[1] + b[1]) / 2;
+    if (pinch) { ctl.dist *= pinch.d / d; pan(cx - pinch.x, cy - pinch.y); } pinch = { d, x: cx, y: cy }; applyCam(); return; }
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y; drag.x = e.clientX; drag.y = e.clientY; drag.moved += Math.abs(dx) + Math.abs(dy);
+  if (drag.b === 2 || drag.b === 1 || e.shiftKey) pan(dx, dy); else { ctl.theta -= dx * 0.006; ctl.phi = Math.min(Math.PI - 0.05, Math.max(0.05, ctl.phi - dy * 0.006)); }
+  applyCam();
+});
+function pan(dx, dy) { const v = new THREE.Vector3(), u = new THREE.Vector3(); camera.matrix.extractBasis(u, v, new THREE.Vector3()); const k = ctl.dist * 0.0012; ctl.target.addScaledVector(u, -dx * k).addScaledVector(v, dy * k); }
+canvas.addEventListener("pointerup", (e) => { if (drag && drag.moved < 4 && Object.keys(drag.pts).length === 1) pickAt(e); if (drag) delete drag.pts[e.pointerId]; if (!drag || !Object.keys(drag.pts).length) { drag = null; pinch = null; } });
+canvas.addEventListener("pointercancel", () => { drag = null; pinch = null; });
+canvas.addEventListener("wheel", (e) => { e.preventDefault(); ctl.dist *= Math.exp(e.deltaY * 0.0012); ctl.dist = Math.min(12000, Math.max(80, ctl.dist)); applyCam(); }, { passive: false });
+canvas.addEventListener("contextmenu", (e) => e.preventDefault());
+function view(which) { const b = { iso: [Math.PI - 0.85, 1.05], front: [Math.PI, 1.45], side: [Math.PI / 2, 1.45], top: [Math.PI, 0.06] }[which]; ctl.theta = b[0]; ctl.phi = b[1]; applyCam(); }
+function fit() { const box = new THREE.Box3().setFromObject(root); if (box.isEmpty()) return; const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3()).length(); ctl.target.copy(c); ctl.dist = s * 1.1; applyCam(); }
+for (const v of ["iso", "front", "side", "top"]) $v("v-" + v).onclick = () => view(v);
+$v("v-fit").onclick = fit;
+
+// ---------- resize + render loop
+function resize() { const w = stage.clientWidth, h = stage.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+new ResizeObserver(resize).observe(stage); resize();
+let playing = false, last = performance.now(), frames = 0, fpsT = last;
+function loop(now) {
+  requestAnimationFrame(loop);
+  if (playing) { const t = (+$v("t").value + (now - last) / 1000) % (META ? META.t_end : 22); $v("t").value = t.toFixed(2); setTime(t); }
+  last = now; renderer.render(scene, camera);
+  frames++; if (now - fpsT > 1000) { $v("fps").textContent = frames + " fps"; frames = 0; fpsT = now; }
+}
+requestAnimationFrame(loop);
+
+// ---------- load the scene
+let META = null, BIN = null; const PARTS = []; const byName = {};
+const colorOf = (sys) => new THREE.Color(cssv("--c-" + sys) || "#888888");
+async function load() {
+  const [mj, b64] = await Promise.all([fetch("scene.json").then(r => r.json()), fetch("scene.b64.txt").then(r => r.text())]);
+  const bin = atob(b64.trim()); const mb = new ArrayBuffer(bin.length); const u8 = new Uint8Array(mb); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+  META = mj; BIN = mb; $v("t").max = META.t_end;
+  const counts = {};
+  for (const p of META.parts) {
+    const m = p.mesh; const q = new Uint16Array(BIN, m.off_v, m.nV * 3); const pos = new Float32Array(m.nV * 3);
+    for (let i = 0; i < m.nV; i++) for (let k = 0; k < 3; k++) pos[i * 3 + k] = m.origin[k] + q[i * 3 + k] * m.scale;
+    const idx = m.idx_bytes === 2 ? new Uint16Array(BIN, m.off_i, m.nF * 3) : new Uint32Array(BIN, m.off_i, m.nF * 3);
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(pos, 3)); g.setIndex(new THREE.BufferAttribute(idx, 1)); g.computeVertexNormals(); g.computeBoundingBox();
+    const S = SYS[p.system] || SYS.structure;
+    const mat = new THREE.MeshStandardMaterial({ color: colorOf(p.system), flatShading: p.system !== "arm", metalness: 0.05, roughness: 0.75, transparent: S.opacity < 1, opacity: S.opacity, side: THREE.DoubleSide, depthWrite: S.opacity >= 1 });
+    if (p.system === "reserved") { mat.wireframe = false; }
+    const mesh = new THREE.Mesh(g, mat); mesh.userData = p; mesh.visible = S.on;
+    mesh.matrixAutoUpdate = false; setMatrix(mesh, p.pose); root.add(mesh);
+    const lc = g.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(mesh.matrix);
+    PARTS.push({ p, mesh, base: mesh.matrix.clone(), center: lc }); byName[p.name] = PARTS[PARTS.length - 1];
+    counts[p.system] = (counts[p.system] || 0) + 1;
+  }
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(418, 409, 470)), new THREE.LineBasicMaterial({ color: cssv("--muted"), transparent: true, opacity: 0.5 }));
+  edges.position.set(0, (337 - 66) / 2, (234 - 236) / 2); root.add(edges);
+  grid.position.y = -236;
+  $v("loading").hidden = true; $v("sub").textContent = `${META.parts.length} parts · W frame, mm · ${META.n_frames} frames of the ${META.t_end} s cycle`;
+  buildPanel(counts); fit(); view("iso"); setTime(0);
+}
+function setMatrix(mesh, a) { mesh.matrix.set(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], 0, 0, 0, 1); mesh.matrixWorldNeedsUpdate = true; }
+
+// ---------- cycle time: slerp between stored frames
+const _m1 = new THREE.Matrix4(), _m2 = new THREE.Matrix4(), _p1 = new THREE.Vector3(), _p2 = new THREE.Vector3(), _q1 = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _s = new THREE.Vector3(1, 1, 1);
+function frameMatrix(fr, i, out) { const a = new Float32Array(BIN, fr.off + i * 48, 12); out.set(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], 0, 0, 0, 1); return out; }
+function setTime(t) {
+  if (!META) return; $v("tv").textContent = t.toFixed(2) + " s";
+  const f = t * META.fps, i0 = Math.min(META.n_frames - 1, Math.floor(f)), i1 = Math.min(META.n_frames - 1, i0 + 1), u = f - i0;
+  for (const P of PARTS) {
+    const fr = P.p.frames; if (!fr) continue;
+    frameMatrix(fr, i0, _m1); frameMatrix(fr, i1, _m2);
+    _m1.decompose(_p1, _q1, _s); _m2.decompose(_p2, _q2, _s); _p1.lerp(_p2, u); _q1.slerp(_q2, u);
+    P.base.compose(_p1, _q1, _s.set(1, 1, 1)); P.mesh.matrix.copy(P.base); applyExplode(P);
+  }
+}
+$v("t").addEventListener("input", (e) => { playing = false; $v("play").textContent = "play cycle"; setTime(+e.target.value); });
+$v("play").onclick = () => { playing = !playing; $v("play").textContent = playing ? "pause" : "play cycle"; last = performance.now(); };
+$v("reset").onclick = () => { playing = false; $v("play").textContent = "play cycle"; $v("t").value = 0; setTime(0); };
+
+// ---------- explode: each part slides away from the box centre by its offset x factor
+const CENTRE = new THREE.Vector3(0, 135, 0); let EX = 0; const _d = new THREE.Vector3(), _t = new THREE.Matrix4();
+function applyExplode(P) {
+  if (EX <= 0) { P.mesh.matrix.copy(P.base); P.mesh.matrixWorldNeedsUpdate = true; return; }
+  const c = P.p.frames ? new THREE.Vector3().setFromMatrixPosition(P.base) : P.center;
+  _d.copy(c).sub(CENTRE); _t.makeTranslation(_d.x * EX * 0.9, _d.y * EX * 0.9, _d.z * EX * 0.9); P.mesh.matrix.multiplyMatrices(_t, P.base); P.mesh.matrixWorldNeedsUpdate = true;
+}
+$v("ex").addEventListener("input", (e) => { EX = +e.target.value; $v("exv").textContent = Math.round(EX * 100) + " %"; for (const P of PARTS) applyExplode(P); });
+
+// ---------- section plane
+const planes = { x: new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0), y: new THREE.Plane(new THREE.Vector3(0, 0, 1), 0), z: new THREE.Plane(new THREE.Vector3(0, -1, 0), 0) };
+// in three.js space after the root rotation: W X -> x, W Y -> -z, W Z -> y
+const RANGE = { x: [-215, 215], y: [-75, 345], z: [-240, 240] };
+function setCut() {
+  const ax = $v("cutax").value, u = +$v("cut").value;
+  for (const P of PARTS) P.mesh.material.clippingPlanes = ax === "none" ? [] : [planes[ax]];
+  if (ax === "none") return;
+  const [a, b] = RANGE[ax], v = a + (b - a) * u;
+  if (ax === "x") planes.x.constant = v; else if (ax === "y") planes.y.constant = v; else planes.z.constant = v;
+  $v("cut").previousElementSibling.textContent = "section " + ax.toUpperCase();
+}
+$v("cut").addEventListener("input", setCut); $v("cutax").addEventListener("change", setCut);
+
+// ---------- panel: systems, parts, pick
+function buildPanel(counts) {
+  const sys = $v("sys"); sys.innerHTML = "";
+  for (const [k, S] of Object.entries(SYS)) {
+    const mass = PARTS.filter(P => P.p.system === k && P.p.mass_g).reduce((s, P) => s + P.p.mass_g, 0);
+    const l = document.createElement("label"); l.innerHTML = `<input type="checkbox" id="sys-${k}" ${S.on ? "checked" : ""}><span class="sw" style="--sw: var(--c-${k})"></span><span>${S.label}</span><span class="n">${counts[k] || 0}${mass ? " · " + (mass / 1000).toFixed(2) + " kg" : ""}</span>`;
+    l.querySelector("input").addEventListener("change", (e) => { S.on = e.target.checked; for (const P of PARTS) if (P.p.system === k) P.mesh.visible = S.on; renderList(); });
+    sys.appendChild(l);
+  }
+  renderList(); $v("q").addEventListener("input", renderList);
+}
+function renderList() {
+  const q = $v("q").value.toLowerCase(); const ul = $v("list"); ul.innerHTML = ""; let n = 0;
+  for (const P of PARTS) {
+    if (!SYS[P.p.system].on || (q && !P.p.name.toLowerCase().includes(q))) continue; n++;
+    const li = document.createElement("li"); li.innerHTML = `<span class="dot" style="--sw: var(--c-${P.p.system})"></span><span>${P.p.name}</span><span class="g">${P.p.mass_g ? P.p.mass_g + " g" : ""}</span>`;
+    li.onclick = () => pick(P); li.dataset.name = P.p.name; ul.appendChild(li);
+  }
+  $v("np").textContent = "(" + n + ")";
+}
+const ray = new THREE.Raycaster(); let picked = null;
+function pickAt(e) {
+  const r = canvas.getBoundingClientRect(); const v = new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(v, camera); const hits = ray.intersectObjects(PARTS.filter(P => P.mesh.visible && P.p.system !== "reserved" && P.p.system !== "enclosure").map(P => P.mesh), false);
+  if (hits.length) pick(byName[hits[0].object.userData.name]);
+}
+function pick(P) {
+  if (picked) picked.mesh.material.emissive.setHex(0);
+  picked = P; P.mesh.material.emissive.set(cssv("--accent")); P.mesh.material.emissiveIntensity = 0.35;
+  for (const li of $v("list").children) li.classList.toggle("on", li.dataset.name === P.p.name);
+  const p = P.p; const rows = [["system", SYS[p.system].label], ["version", p.version || ""], ["owner", p.owner || ""], ["material", p.material || ""], ["mass", p.mass_g ? p.mass_g + " g (" + (p.tag || "") + ")" : "n/a"], ["file", p.file || ""], ["moves", p.frames ? "yes, in the cycle" : "fixed"], ["note", p.note || ""]];
+  $v("pick").innerHTML = `<h3>Picked part</h3><p style="margin: 0 0 8px; font: 600 15px var(--display)">${p.name}</p><dl>` + rows.filter(r => r[1]).map(r => `<dt>${r[0]}</dt><dd class="${r[0] === "file" ? "mono" : ""}">${r[1]}</dd>`).join("") + "</dl>";
+}
+load().catch(e => { $v("loading").textContent = "could not load the scene: " + e.message; });
+if (window.matchMedia) { const mq = window.matchMedia("(prefers-color-scheme: dark)"); const recolor = () => { for (const P of PARTS) P.mesh.material.color.copy(colorOf(P.p.system)); }; if (mq.addEventListener) mq.addEventListener("change", recolor); new MutationObserver(recolor).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); }
 </script>

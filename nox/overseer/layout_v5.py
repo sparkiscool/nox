@@ -58,6 +58,9 @@ SHELL_R = 3.0                            # 6 mm carbon tube (Spark 26 Oct), 6/4 
 SHELL_GPM = 1.55e-3 * math.pi / 4 * (6.0 ** 2 - 4.0 ** 2)        # 24.3 g/m (E)
 ROD_R, ROD_GPM = 1.5, 11.0e-3            # links: 3.0 solid (G Carbon rods), 11.0 g/m (C)
 NODE_R, NODE_G = 10.15, 4.5              # printed node round 6.3 sockets, Ø20 (E); 4.5 g (E)
+_NS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "runs", "cage_nodes", "v4", "saved.json")
+NODE_M = {r["node"]: r["mass_g"] for r in json.load(open(_NS))} if os.path.exists(_NS) else {}   # saved nodes (drawn first, M)
+node_g = lambda i: NODE_M.get(i, NODE_G)
 PROP_GAP, CAGE_GAP = 12.0, 3.0
 M_PROP, M_BODY = PROP_GAP + SHELL_R + 1.0, CAGE_GAP + SHELL_R + 1.0   # hull margins to the tube axis (+1 for facet sampling)
 SPARE = 30.0                             # room a side round the receiver at the opening (DEFAULT, Spark 26 Oct)
@@ -132,7 +135,7 @@ HEAD_ON_CAGE = os.environ.get("V5_HEAD_ON", "core") == "cage"          # alt (V5
 # braces or wing struts (Spark 27 Oct tried it: ~32 Hz on TPU nodes, F on E, runs/overseer_head_cage/concept); Spark then: "keep the design we have
 # right now i need the lidar to have max performance": the keels and L2 braces stay (A, the stiffest: 200 / 119 Hz rigid / TPU)
 LINKN = "spokes, ties, head rods" if os.environ.get("V5_HEAD", "printed") == "printed" else "spokes, ties, keels, L2 guard ring"
-HEADN = "sensor head mount (printed: drawn seat, lugs, camera pads, guards; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
+HEADN = "sensor head mount (printed: drawn bolt and insert bosses and 3 rod sockets; topology joins them)"   # Spark 27 Oct: "for the mounts on the lidar and the camera, replace the bunch
 CAM_BRACKET_G = 10.0                                               # of little rods with a topology printed mount": the short rods at the head (L2
                                                                    # ties, guard ring and its struts, camera guards and brackets) become one printed
                                                                    # part. Its mass budget is what it replaces (rods, their nodes, the camera
@@ -147,6 +150,8 @@ DOME = float(os.environ.get("V5_DOME", 60.0))    # minimum top semi-axis of the 
 SAVED = os.path.join(ROOT, "runs", "overseer_layout", "v5", "saved")
 CORE_PARTS = os.path.join(SAVED, "core", "core_parts.json")   # the core session's parts (everything inside the cage), decimated copies
 CORE_TIE_FRONT = (114.0, 0.0, 20.0)                # the front core ties' root on the hub deck tower's front face, off the flow clip (C, DEFAULT 27 Oct)
+THIRD_SCREW = os.environ.get("V5_THIRD_SCREW", "0") == "1"   # the arms' third screw (arm session v8, 27 Oct): its access paths come in when arm v8
+                                                   # and core v4 (the RX moved off arm 2's top screw line) are on main; V5_THIRD_SCREW=1 checks it now
 THIRD_BOTTOM = os.environ.get("V5_THIRD_BOTTOM", "0") == "1"   # the arms' third bottom screw (u 32.9): off (DEFAULT 27 Oct): it sits over the battery
                                                    # receiver (|y| 22.5 < its 38), no driver from below without taking the receiver off;
                                                    # the third hole takes the top screw only (into an insert in the arm tongue)
@@ -207,11 +212,12 @@ KEELS = os.environ.get("V5_KEELS", "0") == "1"     # the 2 keels: off (DEFAULT 2
 KEEL_INSET = 5.0                                   # the keel tube's core end, 5 along the keel from v5's root (96, ±12, 8): the hub deck socket
 BRACE_ROOT = ({"lo": 97.0, "hi": 97.0}, {"lo": 26.0, "hi": 14.0}, {"lo": 12.0, "hi": 18.0})   # (x, y, z per level): the hub deck's front tower between the plates beside the keels, low (core v3, 27 Oct: halves the worst root force to 190 N, the keels near idle in the top hit; was z 22 / 32, alt head 166 Hz)
 HEAD_STRUTS = [((401.0, 83.0, 151.0), (354.0, 223.0, 128.7)), ((383.0, 83.0, 73.0), (336.5, 219.0, -29.3))]   # = head_mount.HEAD_STRUTS
-HEAD_RODS = None if os.environ.get("V5_HEAD_RODS", "3") != "3" else ((-40.0, 0.0), (100.0, 70.0), (354.0, 223.0, 128.7))
+HEAD_RODS = None if os.environ.get("V5_HEAD_RODS", "3") != "3" else ((40.0, 0.0, 12.0), (100.0, 80.0, 12.0), (354.0, 223.0, 128.7))
 # the head on 3 rods (Spark 27 Oct: "reduce the number of rods going to the lidar to a max of 3"; runs/overseer_head_rods/v1, F on E):
 # a centre rod from the head's bottom (u -40 along the L2 up axis, 6 behind its base plane) to the cage's front centre node and a mirrored
-# pair from above the cameras (u +100, y ±70) to the top-side front nodes, which also guards both cameras (10.4 / 9.8 ahead, C); 151.8 Hz rigid /
-# 128.4 Hz PETG joints (F on E); the stiffer y ±85 (169 Hz) is 182 wide, over the A1 mini's 180. The head holds no cage node;
+# pair from above the cameras to the top-side front nodes, which also guards both cameras. 28 Oct: the sockets' bosses (12 deep + a 3.0 floor)
+# must stay behind the L2 base plane and out of the camera views (v5 sweep: the plane cut the side bosses to a 1.2 wall), so the socket points
+# sit 12 behind the plane: centre (u +40), pair (u +100, y ±80); 117.3 / 93.2 Hz rigid / PETG joints (F on E, mount 143.7 g E; 120.3 / 96.9 at 100 g). The head holds no cage node;
 # no braces, keels or struts. V5_HEAD_RODS=8 keeps the 4 braces + 4 struts
 HEAD_FIT = 175.0                                   # head (seat, guard ring, both cameras and plates) one print: its oriented box in the
                                                    # A1 mini's 180 cube with 2.5 a side (C); off: centre + 2 wings, cameras at ±120
@@ -838,11 +844,11 @@ def attach(g, nodes, ring_ids):
         g["head_attach"] = sorted({tuple(np.round(np.asarray(b_, float), 2)) for k, (a_, b_) in head.items() if "strut" in k or "tie" in k})
         if HEAD_RODS:                                                  # the head on 3 rods to the cage (Spark 27 Oct: "max of 3"; head_rods.py)
             cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]; c17 = max(cn_, key=lambda k_: nodes[k_][0])
-            hp_ = lambda u_, y_: g["B"] - A * 6.0 + np.array([-A[2], 0, A[0]]) * u_ + np.array([0, y_, 0])
+            hp_ = lambda u_, y_, b_=6.0: g["B"] - A * b_ + np.array([-A[2], 0, A[0]]) * u_ + np.array([0, y_, 0])
             extra["head rod c"] = (hp_(*HEAD_RODS[0]), nodes[c17]); g["head_attach"] = [tuple(np.round(nodes[c17], 2))]
             for sy, nm in ((1, "+1"), (-1, "-1")):
                 k_ = int(np.argmin([np.linalg.norm(nodes[j_] - np.array(HEAD_RODS[2]) * [1, sy, 1]) for j_ in range(len(nodes))]))
-                extra[f"head rod {nm}"] = (hp_(HEAD_RODS[1][0], HEAD_RODS[1][1] * sy), nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
+                extra[f"head rod {nm}"] = (hp_(HEAD_RODS[1][0], HEAD_RODS[1][1] * sy, HEAD_RODS[1][2]), nodes[k_]); g["head_attach"].append(tuple(np.round(nodes[k_], 2)))
         elif HEAD_ONE and not HEAD_ON_CAGE:                            # the one-piece head: its own node + 4 struts (head_mount.HEAD_STRUTS)
             cn_ = [k_ for k_ in range(len(nodes)) if abs(nodes[k_][1]) < 0.5 and nodes[k_][0] > 300]
             g["head_attach"] = [tuple(np.round(nodes[max(cn_, key=lambda k_: nodes[k_][0])], 2))]
@@ -893,7 +899,7 @@ def masses(g, nodes, E, extra):
     for i, f in enumerate(g["feet"]): add(f"foot {i}", abs(f.volume) * 1.21e-3 * 0.5, f.centroid)
     for i, (a, b) in enumerate(E): add(f"shell {i}", np.linalg.norm(nodes[a] - nodes[b]) * SHELL_GPM, (nodes[a] + nodes[b]) / 2)
     for k, (p, q) in extra.items(): add(k, np.linalg.norm(np.subtract(q, p)) * lgpm(k), (np.asarray(p) + np.asarray(q)) / 2)
-    for i, n in enumerate(nodes): add(f"node {i}", NODE_G, n)
+    for i, n in enumerate(nodes): add(f"node {i}", node_g(i), n)
     for i, n in enumerate(g.get("halo_nodes", [])): add(f"halo node {i}", 1.5, n)            # printed, r 5 (E)
     for k, (p, q) in g.get("head_guards", {}).items(): add(f"head guard {k}", np.linalg.norm(np.subtract(q, p)) * 36 * 1.27e-3 * 0.8, (np.asarray(p) + np.asarray(q)) / 2)
     if g.get("head_attach"):                                           # the topology's joining material (E) between the head and the cage nodes
@@ -1088,8 +1094,8 @@ for lens, hh, hv, nm in ((g["flow_lens"], 23.0, 23.0, "flow"),):
         n_ = ((zz > 0) & (np.abs(np.degrees(np.arctan2(d[:, 0], np.maximum(zz, 1e-6)))) < hh) & (np.abs(np.degrees(np.arctan2(d[:, 1], np.maximum(zz, 1e-6)))) < hv)).mean()
         if n_: say(f"   {k} in the {nm} view ({100 * n_:.1f} % of its points)")
 say("flow: view checked (lines above list anything in view)")
-shell_g = sh.sum() * SHELL_GPM + NODE_G * len(nodes); link_g = sum(v * lgpm(k) for k, v in rl.items())
-say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} E + nodes {NODE_G * len(nodes):.0f} E), links {link_g:.0f} g (C); "
+shell_g = sh.sum() * SHELL_GPM + sum(node_g(i) for i in range(len(nodes))); link_g = sum(v * lgpm(k) for k, v in rl.items())
+say(f"cage: shell {shell_g:.0f} g (tubes {sh.sum() * SHELL_GPM:.0f} E + nodes {sum(node_g(i) for i in range(len(nodes))):.0f} {"M" if NODE_M else "E"}), links {link_g:.0f} g (C); "
     f"v0 rings ~96 g, v1 sphere 802 + 98 g (E)")
 t2, c2 = cg([x for x in it if x[0] not in ("pack",)] + [("cartridge out", -LATCH_G * 0.45, g["cart"].bounding_box.centroid)])
 Iyy = sum(m_ * ((c_[0] - cgv[0]) ** 2 + (c_[2] - cgv[2]) ** 2) for _, m_, c_ in it) * 1e-6
@@ -1231,7 +1237,7 @@ for nm_, faces in (("FC USB-C", [((18.0, 0, 9.75), (1, 0, 0)), ((0, 18.0, 9.75),
         acc_rep.append(f"{nm_}: NO clear line within 50 deg of any face")
 for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-top screws (M3 into the root, driver d 8 from above)
     c_, s_ = math.cos(math.radians(d_)), math.sin(math.radians(d_))
-    for r_, v_ in ((63.17, 15.0), (63.17, -15.0), (34.66, 0.0)):       # + the third screw per arm (arm session v8, 27 Oct: top Ø3.1 at u 34.66, v 0)
+    for r_, v_ in ((63.17, 15.0), (63.17, -15.0)) + (((34.66, 0.0),) if THIRD_SCREW else ()):   # + the arms' third screw (arm v8: top Ø3.1 at u 34.66, v 0)
         p0 = np.array([r_ * c_ - v_ * s_, r_ * s_ + v_ * c_, ROOT_H + 1.6])
         ign_p = ("top plate", f"arm {i_ + 1}") + tuple(f"prop {j}" for j in range(1, 5))
         ok_ = line_clear(p0, np.array([0, 0, 1.0]), 400.0, 4.0, ignore=ign_p)
@@ -1252,7 +1258,7 @@ for i_, d_ in enumerate((45, 135, 225, 315)):                           # arm-to
                            "ignore": [f"arm {i_ + 1}"] + [f"prop {j}" for j in range(1, 5)]})
         acc_rep.append(f"arm {i_ + 1} top screw v {v_:+.0f}: " + (f"L-key (short leg up 30, long leg {lg[0]:.0f} deg off radial out through a cell)" if lg else "BLOCKED"))
     v3_ = 1.1 * (-1 if (d_ in (45, 225)) else 1)                       # the third bottom screw (arm session v8: u 32.9, v -+1.1 front / +-1.1 rear)
-    for r_, v_ in ((63.74, 10.0), (63.74, -10.0)) + (((32.9, v3_),) if THIRD_BOTTOM else ()):   # bottom screws (driver d 8 from below)
+    for r_, v_ in ((63.74, 10.0), (63.74, -10.0)) + (((32.9, v3_),) if THIRD_SCREW and THIRD_BOTTOM else ()):   # bottom screws (driver d 8 from below)
         p0 = np.array([r_ * c_ - v_ * s_, r_ * s_ + v_ * c_, -1.7])
         ok_ = line_clear(p0, np.array([0, 0, -1.0]), 400.0, 4.0, ignore=("bottom plate", f"arm {i_ + 1}"))
         ign = [f"arm {i_ + 1}"]
@@ -1307,7 +1313,7 @@ if ("V5_ASM" in os.environ or not any(k in os.environ for k in ("V5_FREQ", "V5_S
         say(f"core: {len(CP['parts'])} parts of the core session in place of the layout's placeholders ({', '.join(sorted(drop))})")
     asm = new_assembly("Overseer", "overseer", asm_parts,
                        note=("Layout v5 / cage v5 (26-27 Oct, Spark: the v2 drone with a triangulated shell formed to it; the L2 and the two cameras (27 Oct: no down camera, the pair beside the L2) outside "
-                             "it with nothing in their views, a guard ring behind the L2; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
+                             "it with nothing in their views, on 3 rods to the cage; funnel redesigned later) from nox/overseer/layout_v5.py; supersedes "
                              "layout v4 / cage v2. Rough layout: C geometry on E sizes. "
                              "Drone frame: x fwd, y left, z up, z 0 bottom plate top. Left out: ESC bodies (25 g each in the arm masses), catch features "
                              "(the new funnel's), scan stick mount, XT60 and leads; the latch set is drawn as v2's cartridge envelope."),
