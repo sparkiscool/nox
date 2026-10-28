@@ -17,8 +17,9 @@ CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v2", "scout_with_m
 ELEC_R = os.path.join(ROOT, "runs", "scout_layout", "v12", "electronics_envelope_r5.json")   # the electronics session's round 5, drawn at the v12 catch
 # the layout run each other session's part was drawn on: a part drawn on another run is stale (its cage, catch or rods moved) and stays out
 # until its session redraws it; the layout's own placeholder stands in and the run's summary lists it
-DRAWN_ON = {"camera mount v2": ("v13",), "electronics round 5": ("v12",), "belly mount v1": ("v12",)}   # camera mount v2: drawn on v13's cage
-                                                                     # and the saved nodes v2 (+2 mm), runs/scout_camera_mount/v2
+DRAWN_ON = {"camera mount v2": ("v13",), "camera mount v1": ("v12", "v13"), "electronics round 5": ("v12",), "belly mount v1": ("v12",)}
+# camera mount v2: drawn on v13's cage and the saved nodes v2 (+2 mm), runs/scout_camera_mount/v2; it replaces v1, which until then stands in on
+# v13 for its mass and pose only (its clips are bored 6.2 for the 6/4 tube and do not grip the 3.0 rods, Spark 27 Oct)
 STALE = []
 
 

@@ -1,138 +1,74 @@
 {
  "v1 clips mid-span on 7-8 / 14-15 (4)": {
   "modes_hz": [
-   48.0,
-   66.0,
-   155.9,
-   159.7
+   34.6,
+   43.3,
+   106.1,
+   110.9
   ],
   "camera_share": [
-   0.38,
-   0.12,
-   0.04,
-   0.0
-  ],
-  "first_mode_hz": 48.0,
-  "first_camera_mode_hz": 48.0
- },
- "B: 4 clips next to nodes (17 on 14-17 / 15-17, 14 / 15 on 14-15)": {
-  "modes_hz": [
-   47.9,
-   66.2,
-   158.3,
-   159.4
-  ],
-  "camera_share": [
-   0.39,
-   0.11,
-   0.03,
-   0.0
-  ],
-  "first_mode_hz": 47.9,
-  "first_camera_mode_hz": 47.9
- },
- "B: 6 clips next to nodes 17, 14 / 15, 18": {
-  "modes_hz": [
-   48.1,
-   66.3,
-   159.4,
-   160.9
-  ],
-  "camera_share": [
-   0.38,
-   0.12,
+   0.19,
+   0.05,
    0.0,
    0.03
   ],
-  "first_mode_hz": 48.1,
-  "first_camera_mode_hz": 48.1
+  "first_mode_hz": 34.6,
+  "first_camera_mode_hz": null
+ },
+ "B: 4 clips next to nodes (17 on 14-17 / 15-17, 14 / 15 on 14-15)": {
+  "modes_hz": [
+   34.7,
+   43.4,
+   105.9,
+   112.4
+  ],
+  "camera_share": [
+   0.2,
+   0.05,
+   0.0,
+   0.02
+  ],
+  "first_mode_hz": 34.7,
+  "first_camera_mode_hz": null
+ },
+ "B: 6 clips next to nodes 17, 14 / 15, 18": {
+  "modes_hz": [
+   34.8,
+   43.5,
+   105.9,
+   114.1
+  ],
+  "camera_share": [
+   0.2,
+   0.05,
+   0.0,
+   0.02
+  ],
+  "first_mode_hz": 34.8,
+  "first_camera_mode_hz": null
  },
  "B: 6 clips next to nodes 17, 14 / 15, 7 / 8": {
   "modes_hz": [
-   51.0,
-   72.2,
-   161.6,
-   183.3
+   36.4,
+   47.1,
+   107.3,
+   131.0
   ],
   "camera_share": [
-   0.34,
-   0.11,
-   0.0,
-   0.06
-  ],
-  "first_mode_hz": 51.0,
-  "first_camera_mode_hz": 51.0
- },
- "C: core tie only (bar 15 x 14 PETG from the plate edge)": {
-  "modes_hz": [
-   59.4,
-   70.0,
-   158.6,
-   158.6
-  ],
-  "camera_share": [
-   0.0,
-   0.0,
-   1.0,
-   1.0
-  ],
-  "first_mode_hz": 59.4,
-  "first_camera_mode_hz": 158.6
- },
- "A: core tie + 2 clips on 14-15 at y +-29.4 (picked)": {
-  "modes_hz": [
-   104.6,
-   128.6,
-   159.7,
-   165.3
-  ],
-  "camera_share": [
-   0.07,
-   0.23,
-   0.01,
-   0.06
-  ],
-  "first_mode_hz": 104.6,
-  "first_camera_mode_hz": 128.6
- },
- "A with a 15 x 10 bar": {
-  "modes_hz": [
-   86.4,
-   97.9,
-   159.4,
-   159.5
-  ],
-  "camera_share": [
-   0.1,
-   0.28,
+   0.17,
+   0.04,
    0.0,
    0.04
   ],
-  "first_mode_hz": 86.4,
-  "first_camera_mode_hz": 97.9
+  "first_mode_hz": 36.4,
+  "first_camera_mode_hz": null
  },
- "A with 2 more clips next to node 17 (nose top)": {
+ "C: core tie only (bar 15 x 14 PETG from the plate edge)": {
   "modes_hz": [
-   108.2,
-   139.4,
-   160.0,
-   166.2
-  ],
-  "camera_share": [
-   0.08,
-   0.32,
-   0.02,
-   0.07
-  ],
-  "first_mode_hz": 108.2,
-  "first_camera_mode_hz": 139.4
- },
- "bound: camera rigid to the core, no clips": {
-  "modes_hz": [
-   59.4,
-   70.0,
-   159.0,
-   159.5
+   37.9,
+   44.3,
+   105.9,
+   112.1
   ],
   "camera_share": [
    0.0,
@@ -140,15 +76,79 @@
    0.0,
    0.0
   ],
-  "first_mode_hz": 59.4,
+  "first_mode_hz": 37.9,
+  "first_camera_mode_hz": null
+ },
+ "A: core tie + 2 clips on 14-15 at y +-29.4 (picked)": {
+  "modes_hz": [
+   67.5,
+   88.9,
+   106.1,
+   118.9
+  ],
+  "camera_share": [
+   0.03,
+   0.1,
+   0.0,
+   0.03
+  ],
+  "first_mode_hz": 67.5,
+  "first_camera_mode_hz": null
+ },
+ "A with a 15 x 10 bar": {
+  "modes_hz": [
+   56.2,
+   68.6,
+   105.9,
+   114.0
+  ],
+  "camera_share": [
+   0.04,
+   0.13,
+   0.0,
+   0.03
+  ],
+  "first_mode_hz": 56.2,
+  "first_camera_mode_hz": null
+ },
+ "A with 2 more clips next to node 17 (nose top)": {
+  "modes_hz": [
+   70.1,
+   99.6,
+   107.0,
+   120.1
+  ],
+  "camera_share": [
+   0.03,
+   0.13,
+   0.03,
+   0.04
+  ],
+  "first_mode_hz": 70.1,
+  "first_camera_mode_hz": null
+ },
+ "bound: camera rigid to the core, no clips": {
+  "modes_hz": [
+   37.9,
+   44.3,
+   105.9,
+   112.1
+  ],
+  "camera_share": [
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  "first_mode_hz": 37.9,
   "first_camera_mode_hz": null
  },
  "bound: rigid tie + 2 clips at y +-29.4": {
   "modes_hz": [
-   152.0,
-   158.8,
-   210.8,
-   318.7
+   97.9,
+   105.5,
+   140.8,
+   231.9
   ],
   "camera_share": [
    0.0,
@@ -156,7 +156,7 @@
    0.0,
    0.0
   ],
-  "first_mode_hz": 152.0,
+  "first_mode_hz": 97.9,
   "first_camera_mode_hz": null
  },
  "frontal 250 N on A: force from each clip on its rod (N)": [
