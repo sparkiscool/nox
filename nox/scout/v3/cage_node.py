@@ -1,7 +1,7 @@
 """Scout v3 cage nodes (printed PETG, drawn; Spark 27 Oct: every rod 3.0 solid carbon in 3.2 epoxy sockets, perfect mirror symmetry).
 
 One design per mirror pair (the +y node; the -y node is its mirror print) and per centre-plane node: 11 designs, 18 nodes.
-Members: runs/scout_layout/v12/cage_shell.json (47 shell rods) + the 8 saddle ties of result.json "links" (their cage ends sit on the
+Members: <layout run>/cage_shell.json (v13: 50 shell rods; v12: 47) + the 8 saddle ties of result.json "links" (their cage ends sit on the
 waist pair 5/6 and on nodes 12/13, 14/15). Drone frame (x nose, y left, z up), mm, N.
 
 Each node is drawn, nothing generated (the rule's drawn set: rod sockets with their boss walls, the hub they join in, the bottom nodes'
@@ -15,7 +15,7 @@ Option B (DEFAULT, SCN_ECC=3.5): a rod in a tight pair (< 25 deg) may run off th
 its other end stays on its node centre), e <= 3.5 and e x its frame axial force <= M_ROD (1590 N mm, so the eccentric moment stays
 under one rod's allowable moment even if that rod took all of it); option A (SCN_ECC=0): every socket axis through the node centre.
 Bottom ring nodes (0..3, the shared Overseer loop): hub Ø16 down to a flat seat 10.15 under the rod centres for a TPU foot cap Ø16 x 3
-(box catch F, the Overseer's caps; plug Ø8 x 2 into a Ø8.3 x 2.2 recess, bonded). Node 16: nothing past its layout sphere toward +x
+(box catch F, the Overseer's caps; plug Ø8 x 2 into a Ø8.3 x 2.2 recess, bonded). The nose-top node (CAM_NODE): nothing past its layout sphere toward +x
 (x <= +6; the camera mount v1 sits 5.45 off that sphere).
 
 Strength (as-built voxel FE, nox/topo Part + Solver, the engine's PETG transversely isotropic allowables, crash class): each socket
@@ -40,10 +40,16 @@ import trimesh
 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "nox"))
-LAY = os.path.join(ROOT, "runs", "scout_layout", "v12")
+def _in(env, rel):
+    """an input path: the env override (a run folder outside the tree), else the repo path"""
+    return os.environ.get(env) or os.path.join(ROOT, rel)
+
+
+LAY = _in("SCN_LAYOUT", os.path.join("runs", "scout_layout", "v13"))     # v3 nodes: layout v13 (PR 169); v1 / v2 were on v12
 CG = json.load(open(os.path.join(LAY, "cage_shell.json"))); RES = json.load(open(os.path.join(LAY, "result.json")))
 N = np.array(CG["nodes"], float)
-NL = json.load(open(os.path.join(ROOT, "runs", "scout_frame", "v3", "node_loads.json")))
+FRAME = _in("SCN_FRAME", os.path.join("runs", "scout_frame", "v4"))     # the frame model on the same layout (v4 on v13; v3 on v12)
+NL = json.load(open(os.path.join(FRAME, "node_loads.json")))
 RING = list(CG["open"][0]["ring"])
 
 BORE, DEPTH, WALL0, RMIN = 3.2, 10.0, 3.0, 3.0      # socket bore (Spark 27 Oct coupons), depth (the Overseer's 3 mm socket), wall (hard rule), floor
@@ -58,7 +64,8 @@ CAP_D, CAP_T, PLUG_D, PLUG_H = 16.0, 3.0, 8.0, 2.0    # TPU foot cap (box catch 
 RECESS_D, RECESS_H = 8.3, 2.2                         # the plug's recess in the node seat (0.15 a side, 0.2 deep for the bond)
 TIGHT_DEG = 25.0                                      # option B: pairs under this may take an eccentric socket
 ECC = float(os.environ.get("SCN_ECC", "3.5"))         # option B (DEFAULT): max socket line offset from the node centre; 0 = option A
-LIMITS = {16: (np.array([1.0, 0.0, 0.0]), 6.0)}       # node 16: nothing past x + 6 (its layout sphere; camera mount v1 5.45 off it)
+CAM_NODE = int(np.argmin(np.linalg.norm(N - [116.548, 0.0, 36.328], axis=1)))   # the nose-top node by position (16 on v12, 17 on v13)
+LIMITS = {CAM_NODE: (np.array([1.0, 0.0, 0.0]), 6.0)}  # the nose-top node: nothing past x + 6 (its layout sphere; camera mount v1 5.45 off it)
 E_ROD, SIG_C = 100000.0, 600.0                        # carbon (E, the frame model's), MPa
 ROD_A, ROD_Z = math.pi * 1.5 ** 2, math.pi * 3.0 ** 3 / 32.0
 M_ROD = SIG_C * ROD_Z                                 # 1590 N mm: a 3.0 rod's bending at its 600 MPa allowable (E)
@@ -71,7 +78,7 @@ RIM_EX = 1.0                                          # FE: cells this close to 
 STUB = 8.0                                            # rod stub modelled past the mouth (FE)
 PETG_RHO = 1.27
 FILLET, FILLET_MAX = 2.5, 5.5                         # smooth-union blend at every boss / hub junction (start, largest), DEFAULT 28 Oct
-VER = os.environ.get("SCN_VER", "v2")                 # run folder and print-file version (v1: max-elevation pose, uncapped offsets)
+VER = os.environ.get("SCN_VER", "v3")                 # run folder and print-file version (v1: max-elevation pose, uncapped offsets)
 ROD_STRENGTH = 1200.0                                 # MPa, a pultruded 3.0 carbon rod's bending strength (E, about 2 x the 600 allowable)
 KNOCK_SF = 0.85 / 1.1                                 # crash index -> stress / PETG strength (the engine's knock-down and crash factor)
 MC_PITCH = 0.2                                        # the blend's sampling pitch
@@ -645,7 +652,8 @@ def rod_ends(out):
 
 
 def merge(out):
-    res = dict(option="B" if ECC > 0 else "A", ecc_max=ECC, bore=BORE, depth=DEPTH, tie_depth=TIE_DEPTH, flare=[FLARE_L, FLARE_R], collar=[COLLAR, COLLAR_L], wall_min=WALL0, floor_min=RMIN, hub_r=HUB_R,
+    res = dict(layout="runs/scout_layout/" + os.path.basename(LAY.rstrip("/")), frame="runs/scout_frame/" + os.path.basename(FRAME.rstrip("/")), cam_node=CAM_NODE,
+               option="B" if ECC > 0 else "A", ecc_max=ECC, bore=BORE, depth=DEPTH, tie_depth=TIE_DEPTH, flare=[FLARE_L, FLARE_R], collar=[COLLAR, COLLAR_L], wall_min=WALL0, floor_min=RMIN, hub_r=HUB_R,
                ring=dict(hub_r=RING_HUB_R, seat_below_centre=PAD_DZ, cap=[CAP_D, CAP_T], plug=[PLUG_D, PLUG_H], recess=[RECESS_D, RECESS_H]),
                moment_Nmm=round(M_ROD, 1), k_buckling=K_BUCK, bond_tau=BOND_TAU, rim_excluded_mm=RIM_EX, nodes={})
     placed = []
