@@ -1,6 +1,6 @@
 """Updates to nox/scout/v3/scout.assembly.json from other sessions' parts, applied after layout_v3.py writes it (and runnable alone,
 idempotent): the saved camera mount (PR 146) in place of the layout's cradle, and the electronics session's tail bay round
-(its mount and cable masses at their CGs, the Radxa's post keep-outs, then the belly mount v1's system model), and the saved cage nodes v1
+(its mount and cable masses at their CGs, the Radxa's post keep-outs, then the belly mount v1's system model), and the saved cage nodes v2
 (18 PETG nodes + 4 TPU foot caps at their node positions) in place of the layout's "cage shell nodes" spheres.
 Then system_check writes the run's system_check_mount.json.
 
@@ -18,7 +18,7 @@ RUN = os.path.join(ROOT, "runs", "scout_layout", "v12")
 CAM_SAVED = os.path.join(ROOT, "runs", "scout_camera_mount", "v1", "scout_with_mount.assembly.json")
 ELEC_R = os.path.join(RUN, "electronics_envelope_r5.json")      # the electronics session's round 5 (SOURCE.txt), drawn at the v12 catch
 BELLY = os.path.join(ROOT, "runs", "scout_belly_mount", "v1")    # the electronics session's belly mount v1 (PR 150, concept): its system model
-NODES = os.path.join(ROOT, "runs", "scout_nodes", "v1")          # the saved cage nodes v1: placed.json lists every node / cap mesh in the drone frame
+NODES = os.path.join(ROOT, "runs", "scout_nodes", "v2")          # the saved cage nodes v2: placed.json lists every node / cap mesh in the drone frame
 CAMPS = ("camera cradle (printed)", "camera mount (boom + seat)")   # the layout's camera mount part, by its CAM_MOUNT variant
 # the Radxa's 4 M2.5 holes, board coords (X along 65 from the SD end, Y along 30 from the ports edge; H, STEP, from the electronics
 # session's electronics_system.py RADXA_HOLES); its posts land on the PCB back (y -1.6) with Ø8.4 keep-outs (their round 5)
@@ -101,7 +101,7 @@ def belly(a):
 
 
 def nodes(a):
-    """the saved cage nodes v1 (runs/scout_nodes/v1, nox/scout/v3/cage_node.py): every node's mesh at its node position (the mirror
+    """the saved cage nodes v2 (runs/scout_nodes/v2, nox/scout/v3/cage_node.py): every node's mesh at its node position (the mirror
     nodes as mirror prints) and the 4 TPU foot caps under the ring nodes, in place of the layout's 'cage shell nodes' spheres; each rod
     in its socket is a designed joint (the shell tubes and the ties are drawn centre to centre, so they cross each node's hub)"""
     man = os.path.join(NODES, "placed.json")
@@ -109,9 +109,9 @@ def nodes(a):
     pl = json.load(open(man)); old = {"cage shell nodes"} | {p["name"] for p in a["parts"] if p["name"].startswith(("cage node ", "foot cap "))}
     if not old & {p["name"] for p in a["parts"]}: return []
     new = [dict(name=q["name"], role="cage", mesh=q["mesh"], material=q.get("material", "PETG"), mass_g=q["mass_g"], tag="M",
-                owner="scout cage nodes", version="v1", source="nox/scout/v3/cage_node.py",
+                owner="scout cage nodes", version="v2", source="nox/scout/v3/cage_node.py",
                 note=("TPU foot cap Ø16 x 3 under the ring node (box catch F)" if q["name"].startswith("foot cap") else
-                      f"print/scout_node_{q['design']}_v1{'_mirror' if q.get('mirror') else ''}.stl at node {q['node']}")) for q in pl]
+                      f"print/scout_node_{q['design']}_v2{'_mirror' if q.get('mirror') else ''}.stl at node {q['node']}")) for q in pl]
     a["parts"] = [p for p in a["parts"] if p["name"] not in old] + new
     a["contact_pairs"] = [c for c in a["contact_pairs"] if not ({c[0], c[1]} & old)]
     for q in pl:
@@ -120,7 +120,7 @@ def nodes(a):
         else:
             a["contact_pairs"].append([q["name"], f"cage node {q['node']}", 1e9])
     nn = sum(1 for q in pl if q["name"].startswith("cage node")); nc = len(pl) - nn
-    return [f"cage nodes v1: {nn} nodes + {nc} foot caps, {sum(q['mass_g'] for q in pl):.1f} g (M)"]
+    return [f"cage nodes v2: {nn} nodes + {nc} foot caps, {sum(q['mass_g'] for q in pl):.1f} g (M)"]
 
 
 def main():
