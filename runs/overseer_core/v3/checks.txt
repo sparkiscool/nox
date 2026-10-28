@@ -7,13 +7,13 @@ Pi right side up between the plates: board x -53.5..31.5, z 8.0..9.6; Active Coo
    battery slot (empty, x -121.8..61.9, y ±33.4, z -76.9..-2.1): x deck 0.0, x flow clip 0.0, x flow 0.0, x wires 163.4 mm³
 deck screw heads (M3 Ø5.5 x 3) x the battery slot 126.1 mm³: the 2 heads at (60, ±17) sit in its top 6 (reserved pockets Ø7 x 3.5 for the receiver mount to clear, v3 DEFAULT); every other head 0
 keel sockets: bore Ø6.2 x 15.0 from 5.0 past each root, boss Ø13.0; deck x keel tubes 527.8 mm³ (inside the bores and the boss root, cut in the run); deck x arms 0.0; deck x the other v5 links and nodes 0.0, x cage nodes 0.0 mm³
-flow clip x bottom plate -0.0, x the v5 links and nodes 28.0 / 0.0, flow x clip 2246.4 (pocket cut in the piece), deck x clip 0.0 mm³
+flow clip x bottom plate -0.0, x the v5 links and nodes 0.0 / 0.0, flow x clip 2246.4 (pocket cut in the piece), deck x clip 0.0 mm³
 arm bottom screw keys (Ø8 below the plate): all 8 clear of the core (C); the slot's contents come later
 flow view (42°, +2°, from the clip's window): clear (C)
 swap column (receiver + 30 a side, below the cartridge bottom): flow clip 0.0, flow 0.0, feet 0.0 mm³
-prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 0.93, flow clip 0.0, battery slot 1.83
+prop wash (plan area under the disks, % of the disk area): hub deck + Pi + bays 0.94, flow clip 0.0, battery slot 1.83
 tower: 4 brace sockets Ø6.2 x 15.0 (+0.6), walls 2.5, ends lo (97, ±26, 12), hi (97, ±14, 18); x arms 0.0, x top plate 0.0, x bottom plate 0.0, x UBEC 0.0, x buck 0.0, x wires 0.0, x props 0.0, x cage nodes 0.0, x cage tubes 0.0, x the v5 links 1855.5 (all of it the keels and braces at their roots: links minus those tubes 0.0), x the brace tubes 2240.4 mm³ (inside the bores; C); x the buck 0.0, x the Pi 0.0
-System: Overseer core v3, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.28, fit 28.0 mm³ (E) (spokes, ties, keels, braces, head struts/flow clip) FAIL, bbox 124 L (E), extents 771 x 675 x 239 mm (E), mass 3255 of 2200 g (148 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 2.0 mm off thrust axis (E) [+2.0, -0.1, -67.1], 29.7 mm without swap parts (reported, L exception), probes -210.0 mm (E) edge at -X (receiver, unshielded) FAIL, access 37/37 clear
+System: Overseer core v3, cage first 7.7 mm (E) at (+0.90, +0.01, +0.43) (camera left) (field cones open: Unitree L2 75 deg, out 67.48 mm, camera left 55 deg, out 0.27 mm, camera right 55 deg, out 0.01 mm), shell 63 rods closed, h/w 0.32, fit 0.0 mm³ (E), bbox 128 L (E), extents 771 x 675 x 246 mm (E), mass 3269 of 2200 g (149 %) (E) over budget (total, hub deck 68.0 of 55 g), CG 0.4 mm off thrust axis (E) [+0.4, -0.1, -67.6], 27.6 mm without swap parts (reported, L exception), probes 8.5 mm (E) edge at (-0.70, -0.06, -0.71) (cartridge), access 37/37 clear
 joint reactions (rigid body, least-norm, E masses; floor loads go to the cage feet, review alternative B):
    tower tipping (SF 1.1, the cage's per-case root forces, F, the deep webs carrying it to the feet): forward 6.4 N m a side (crash 4 [0.0, 0.0, 1.0] via head guard) -> 77 N pull on each of the 2 mid inserts a side over 42 toe -> mid feet; back 8.0 N m (crash 0 [1.0, 0.0, 0.0] via head guard) -> 238 N on the front insert a side over 33.5 (E: insert pull-out ~600, coupon P to come)
    hub deck: max 194.8 N per bolt (braces pull alone (E)), shear 175.1, axial 85.3
@@ -22,4 +22,4 @@ joint reactions (rigid body, least-norm, E masses; floor loads go to the cage fe
    Pi screws: max 6.7 N per bolt (crash 35 g 5), shear 6.0, axial 6.7
    stack screws: max 3.5 N per bolt (crash 35 g 0), shear 2.5, axial 2.8
    the 2 front deck screws clamp the flow clip's 3 flange and the plate (M3 x 10, inserts in the deck); the front 4 bound puts every keel load on (96, ±17) + (65, ±22.5)
-mass 3255 g (E), T/W 2.03 at 1650 gf a motor; CG (68.5, -0.1, 14.9)
+mass 3269 g (E), T/W 2.02 at 1650 gf a motor; CG (67.4, -0.1, 14.4)
