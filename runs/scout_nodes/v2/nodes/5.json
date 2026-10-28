@@ -1,0 +1,404 @@
+{
+ "centre": [
+  6.638,
+  125.013,
+  -11.877
+ ],
+ "mirror": 6,
+ "file": "runs/scout_nodes/v2/scout_node_5_v2.stl",
+ "mass_g": 9.45,
+ "solid_check": {
+  "ok": true,
+  "bodies_eroded": 1,
+  "thin_walls": 0,
+  "necks": 0
+ },
+ "up": [
+  -0.0042,
+  -0.9656,
+  0.2599
+ ],
+ "bed_below_centre": 5.39,
+ "hub_r": 6.0,
+ "envelope": {
+  "r_max": 27.8,
+  "lo": [
+   -19.8,
+   -26.0,
+   -13.1
+  ],
+  "hi": [
+   19.0,
+   7.5,
+   15.0
+  ]
+ },
+ "sockets": [
+  {
+   "name": "rod 0-5",
+   "dir": [
+    0.9082,
+    -0.0962,
+    -0.4073
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 7.49,
+   "depth": 10.0,
+   "mouth_r": 17.49,
+   "wall": 3.5,
+   "mouth_drone": [
+    22.52,
+    123.33,
+    -19.0
+   ],
+   "floor_drone": [
+    13.44,
+    124.29,
+    -14.93
+   ],
+   "elev_deg": -1.0,
+   "loads": {
+    "push": 297.9,
+    "pull": 297.9,
+    "side": 25.6,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 2406.6,
+    "frame_axial": 297.9,
+    "Lfree": 57.7
+   }
+  },
+  {
+   "name": "rod 1-5",
+   "dir": [
+    -0.8799,
+    -0.1091,
+    -0.4625
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 3.9,
+   "depth": 10.0,
+   "mouth_r": 13.9,
+   "wall": 3.5,
+   "mouth_drone": [
+    -5.59,
+    123.5,
+    -18.3
+   ],
+   "floor_drone": [
+    3.21,
+    124.59,
+    -13.68
+   ],
+   "elev_deg": -0.6,
+   "loads": {
+    "push": 280.2,
+    "pull": 280.2,
+    "side": 23.7,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 2910.0,
+    "frame_axial": 280.2,
+    "Lfree": 52.5
+   }
+  },
+  {
+   "name": "rod 5-12",
+   "dir": [
+    0.601,
+    0.106,
+    0.7922
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 3.99,
+   "depth": 10.0,
+   "mouth_r": 13.99,
+   "wall": 3.0,
+   "mouth_drone": [
+    15.05,
+    126.5,
+    -0.8
+   ],
+   "floor_drone": [
+    9.04,
+    125.44,
+    -8.72
+   ],
+   "elev_deg": 5.8,
+   "loads": {
+    "push": 137.7,
+    "pull": 137.7,
+    "side": 12.6,
+    "moment": 1590.4,
+    "bond": 482.5,
+    "pcr": 4920.4,
+    "frame_axial": 137.7,
+    "Lfree": 40.3
+   }
+  },
+  {
+   "name": "saddle tie 1.1",
+   "dir": [
+    -0.5382,
+    -0.8413,
+    0.0508
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 12.38,
+   "depth": 14.0,
+   "mouth_r": 26.38,
+   "wall": 3.5,
+   "mouth_drone": [
+    -7.56,
+    102.82,
+    -10.54
+   ],
+   "floor_drone": [
+    -0.02,
+    114.6,
+    -11.25
+   ],
+   "elev_deg": 55.9,
+   "loads": {
+    "push": 719.4,
+    "pull": 719.4,
+    "side": 23.6,
+    "moment": 1590.4,
+    "bond": 723.8,
+    "pcr": 4294.2,
+    "frame_axial": 719.4,
+    "Lfree": 43.2
+   }
+  },
+  {
+   "name": "saddle tie 3.1",
+   "dir": [
+    0.1029,
+    -0.9929,
+    0.06
+   ],
+   "line_origin": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "ecc": 0.0,
+   "setback": 6.6,
+   "depth": 14.0,
+   "mouth_r": 20.6,
+   "wall": 3.5,
+   "mouth_drone": [
+    8.76,
+    104.56,
+    -10.64
+   ],
+   "floor_drone": [
+    7.32,
+    118.46,
+    -11.48
+   ],
+   "elev_deg": 76.9,
+   "loads": {
+    "push": 588.5,
+    "pull": 588.5,
+    "side": 67.9,
+    "moment": 1590.4,
+    "bond": 723.8,
+    "pcr": 4983.8,
+    "frame_axial": 588.5,
+    "Lfree": 40.1
+   }
+  }
+ ],
+ "fe": [
+  {
+   "iter": 0,
+   "walls": {
+    "rod 0-5": 3.0,
+    "rod 1-5": 3.0,
+    "rod 5-12": 3.0,
+    "saddle tie 1.1": 3.0,
+    "saddle tie 3.1": 3.0
+   },
+   "hub_r": 6.0,
+   "fillet": 2.5,
+   "worst": {
+    "socket": 4,
+    "name": "saddle tie 3.1",
+    "case": "4 bend -a",
+    "max": 2.065,
+    "p999": 0.79,
+    "inlayer": 1.005,
+    "across": 2.065,
+    "at_node": [
+     -3.3,
+     -15.7,
+     1.4
+    ],
+    "at_r": 16.1,
+    "max_cell": 2.065,
+    "max_case": "4 bend -a"
+   },
+   "bend_worst": {
+    "value": 2.065,
+    "case": "4 bend -a",
+    "socket": "saddle tie 3.1"
+   },
+   "outlast": 3.19,
+   "max_cell": {
+    "value": 2.065,
+    "case": "4 bend -a",
+    "socket": "saddle tie 3.1"
+   },
+   "per_socket": {
+    "rod 0-5": {
+     "p999": 0.616,
+     "max_cell": 1.033,
+     "case": "0 bend +b",
+     "at_r": 7.8
+    },
+    "rod 1-5": {
+     "p999": 0.551,
+     "max_cell": 1.011,
+     "case": "1 bend +b",
+     "at_r": 12.1
+    },
+    "rod 5-12": {
+     "p999": 0.459,
+     "max_cell": 0.661,
+     "case": "2 bend +b",
+     "at_r": 7.6
+    },
+    "saddle tie 1.1": {
+     "p999": 0.779,
+     "max_cell": 1.241,
+     "case": "3 bend -b",
+     "at_r": 12.6
+    },
+    "saddle tie 3.1": {
+     "p999": 0.79,
+     "max_cell": 2.065,
+     "case": "4 bend -a",
+     "at_r": 16.1
+    }
+   }
+  },
+  {
+   "iter": 1,
+   "walls": {
+    "rod 0-5": 3.5,
+    "rod 1-5": 3.5,
+    "rod 5-12": 3.0,
+    "saddle tie 1.1": 3.5,
+    "saddle tie 3.1": 3.5
+   },
+   "hub_r": 6.0,
+   "fillet": 3.5,
+   "worst": {
+    "socket": 3,
+    "name": "saddle tie 1.1",
+    "case": "3 bend +b",
+    "max": 0.9,
+    "p999": 0.469,
+    "inlayer": 0.608,
+    "across": 0.9,
+    "at_node": [
+     -6.3,
+     -19.3,
+     2.2
+    ],
+    "at_r": 20.4,
+    "max_cell": 0.9,
+    "max_case": "3 bend +b"
+   },
+   "bend_worst": {
+    "value": 0.9,
+    "case": "3 bend +b",
+    "socket": "saddle tie 1.1"
+   },
+   "outlast": 1.39,
+   "max_cell": {
+    "value": 0.9,
+    "case": "3 bend +b",
+    "socket": "saddle tie 1.1"
+   },
+   "per_socket": {
+    "rod 0-5": {
+     "p999": 0.467,
+     "max_cell": 0.769,
+     "case": "0 bend +b",
+     "at_r": 9.1
+    },
+    "rod 1-5": {
+     "p999": 0.408,
+     "max_cell": 0.741,
+     "case": "1 bend +b",
+     "at_r": 12.4
+    },
+    "rod 5-12": {
+     "p999": 0.354,
+     "max_cell": 0.657,
+     "case": "2 bend -b",
+     "at_r": 12.8
+    },
+    "saddle tie 1.1": {
+     "p999": 0.469,
+     "max_cell": 0.9,
+     "case": "3 bend +b",
+     "at_r": 20.4
+    },
+    "saddle tie 3.1": {
+     "p999": 0.417,
+     "max_cell": 0.75,
+     "case": "4 bend +a",
+     "at_r": 19.2
+    }
+   }
+  }
+ ],
+ "extents_print": [
+  30.1,
+  37.3,
+  31.2
+ ],
+ "placed": [
+  {
+   "name": "cage node 5",
+   "mesh": "runs/scout_nodes/v2/placed/node_5.stl",
+   "node": 5,
+   "mass_g": 9.45,
+   "tag": "M",
+   "design": 5,
+   "mirror": false
+  },
+  {
+   "name": "cage node 6",
+   "mesh": "runs/scout_nodes/v2/placed/node_6.stl",
+   "node": 6,
+   "mass_g": 9.45,
+   "tag": "M",
+   "design": 5,
+   "mirror": true
+  }
+ ]
+}
