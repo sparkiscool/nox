@@ -1109,7 +1109,7 @@ if TAIL_BAY:                                                           # the rea
     extra_w = []
     if ELEC:                                                           # the mount's spine section (y -13.05..-4.6, its summary) and tail block,
         dxw = 0.0 if BAY_FIXED else -(DC - ELEC["catch"])              # bounding boxes shifted with the bay (their real geometry is the
-        sp_ = ELEC["mount"]["tail carrier: yoke + spine (PETG)"]["box"]; bk_ = ELEC["mount"]["belly-mount tail block (PETG)"]["box"]   # electronics session's)
+        sp_ = (ELEC["mount"].get("tail carrier: yoke + spine (PETG)") or ELEC["mount"]["tail carrier (PETG)"])["box"]; bk_ = ELEC["mount"]["belly-mount tail block (PETG)"]["box"]   # electronics session's)
         extra_w = [("mount spine (envelope)", box(sp_[0][0] + dxw, sp_[1][0] + dxw, -13.05, -4.6, sp_[0][2], sp_[1][2])),
                    ("mount tail block (envelope)", box(bk_[0][0] - (DC - ELEC["catch"]), bk_[1][0] - (DC - ELEC["catch"]), bk_[0][1], bk_[1][1], bk_[0][2], bk_[1][2])),
                    ("XR2", D["XR2"][0])]
