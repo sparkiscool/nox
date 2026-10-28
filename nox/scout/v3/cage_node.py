@@ -59,6 +59,8 @@ BOND_TAU = 6.0                                        # MPa epoxy on roughened P
 RIM_EX = 1.0                                          # FE: cells this close to a bonded rod's rim are left out (singular corner)
 STUB = 8.0                                            # rod stub modelled past the mouth (FE)
 PETG_RHO = 1.27
+FILLET = 2.5                                          # smooth-union blend at every boss / hub junction (fillet ~ r 2.5, DEFAULT 28 Oct)
+MC_PITCH = 0.2                                        # the blend's sampling pitch
 
 
 def is_centre(i): return abs(N[i, 1]) < 0.5
@@ -154,7 +156,8 @@ def layout(i, walls=None, free=False):
             for q in range(n):
                 if p == q: continue
                 if p < q:                                                    # bore to bore: 3.0 of PETG
-                    g.append(segdist(P[p] + d[p] * r[p], P[p] + d[p] * (r[p] + DEPTH), P[q] + d[q] * r[q], P[q] + d[q] * (r[q] + DEPTH)) - SEP_BORE)
+                    g.append(segdist(P[p] + d[p] * r[p], P[p] + d[p] * (r[p] + DEPTH), P[q] + d[q] * r[q], P[q] + d[q] * (r[q] + DEPTH))
+                             - (BORE + max(R[p], R[q]) - BORE / 2))                # the web between two bores is the thicker wall of the two
                 # the rod beyond p's mouth clears q's boss (axis from P[q] to its mouth)
                 g.append(segdist(P[p] + d[p] * (r[p] + DEPTH), P[p] + d[p] * 300.0, P[q], P[q] + d[q] * (r[q] + DEPTH)) - (ROD_R + R[q] + ROD_CLEAR))
         for j, k in enumerate(ecc):
@@ -246,41 +249,100 @@ def up_dir(i, socks):
     return u
 
 
+def _sd_cyl(P, a, b, r):
+    """exact signed distance to a flat-ended cylinder a..b of radius r"""
+    ba = b - a; L = float(np.linalg.norm(ba)); u = ba / L
+    v = P - a; t = v @ u; rad = np.linalg.norm(v - t[:, None] * u[None], axis=1)
+    dx, dy = rad - r, np.abs(t - L / 2) - L / 2
+    return np.minimum(np.maximum(dx, dy), 0.0) + np.hypot(np.maximum(dx, 0.0), np.maximum(dy, 0.0))
+
+
+def _smin(a, b, k):
+    h = np.clip(k - np.abs(a - b), 0.0, None) / k
+    return np.minimum(a, b) - h * h * k / 4.0
+
+
+def blend(prims, k=None, pitch=None):
+    """the union of the drawn bodies with every concave junction filleted (smooth union, k = FILLET): the crotches between bosses,
+    and between a boss and the hub, were the across-layer peaks of the first FE pass (1.8 on node 1, sharp). Returns a manifold."""
+    from skimage import measure
+    k = k or FILLET; pitch = pitch or MC_PITCH
+    lo = np.min([np.minimum(a, b) - r for kind, a, b, r in prims], 0) - k - 2 * pitch
+    hi = np.max([np.maximum(a, b) + r for kind, a, b, r in prims], 0) + k + 2 * pitch
+    xs, ys, zs = (np.arange(lo[j], hi[j] + pitch, pitch) for j in range(3))
+    F = np.empty((len(xs), len(ys), len(zs)), np.float32)
+    YY, ZZ = np.meshgrid(ys, zs, indexing="ij")
+    for ix, x in enumerate(xs):
+        P = np.column_stack([np.full(YY.size, x), YY.ravel(), ZZ.ravel()]); d = None
+        for kind, a, b, r in prims:
+            e = np.linalg.norm(P - a, axis=1) - r if kind == "sphere" else _sd_cyl(P, a, b, r)
+            d = e if d is None else _smin(d, e, k)
+        F[ix] = d.reshape(YY.shape)
+    F[0], F[-1], F[:, 0], F[:, -1], F[:, :, 0], F[:, :, -1] = 1, 1, 1, 1, 1, 1
+    F[np.abs(F) < 1e-4] = 1e-4                                            # no sample exactly on the surface (degenerate MC faces)
+    v, f, _, _ = measure.marching_cubes(F, 0.0, spacing=(pitch, pitch, pitch))
+    v = v + lo; t = trimesh.Trimesh(v, f[:, ::-1], process=True)
+    if t.volume < 0: t.invert()
+    try:
+        t2 = t.simplify_quadric_decimation(face_count=min(len(t.faces), 30000))
+        if t2.is_watertight and abs(t2.volume - t.volume) < 0.003 * abs(t.volume): t = t2
+    except Exception:
+        pass
+    return mf.Manifold(mf.Mesh(vert_properties=np.asarray(t.vertices, np.float32), tri_verts=np.asarray(t.faces, np.uint32)))
+
+
 def bodies(i, socks, hub_r=None):
     """node i in its own frame (centre at the origin, drone axes): solid, bores, the bed plane (up, height)"""
     ring = i in RING
     hub_r = hub_r or (RING_HUB_R if ring else HUB_R)
-    body = mf.Manifold.sphere(hub_r, 64)
+    O = np.zeros(3)
+    prims = [("sphere", O, O, hub_r)]
     bores = None
     for s in socks:
         a, d = s["P"], s["d"]
-        body = body + seg(a, a + d * (s["r"] + DEPTH), s["R"])
-        b = seg(a + d * s["r"], a + d * (s["r"] + DEPTH + 300.0), BORE / 2)
-        bores = b if bores is None else bores + b
+        prims.append(("cyl", a, a + d * (s["r"] + DEPTH), s["R"]))
+        b = seg(a + d * s["r"], a + d * (s["r"] + DEPTH + 0.01), BORE / 2) + seg(a + d * (s["r"] + DEPTH), a + d * (s["r"] + DEPTH + 300.0), BORE / 2 + 0.4)
+        bores = b if bores is None else bores + b                        # the bore, and the rod's path out of the mouth 0.4 clear
     u = up_dir(i, socks)
     if ring:
-        body = body + seg([0, 0, -PAD_DZ], [0, 0, 0.0], RING_HUB_R)
+        prims.append(("cyl", np.array([0, 0, -PAD_DZ - 2.0]), O, RING_HUB_R))   # seat column, cut flat at the seat below
         recess = seg([0, 0, -PAD_DZ - 1.0], [0, 0, -PAD_DZ + RECESS_H], RECESS_D / 2)
         zb = -PAD_DZ
         cut_extra = recess
     else:
-        zb = min(float(s["P"] @ u - s["R"] * math.sqrt(max(0.0, 1 - (s["d"] @ u) ** 2))) for s in socks)
-        zb = max(zb, -hub_r + 0.9)
-        if zb > -hub_r + 0.9 + 1e-6 or True:
-            body = body + seg(u * zb, u * 0.0 + u * 0.01, 4.0)          # a short foot under the hub: a flat bed face Ø8 at least
+        zb = min([float(s["P"] @ u - s["R"] * math.sqrt(max(0.0, 1 - (s["d"] @ u) ** 2))) for s in socks] + [-hub_r + 0.9])
+        prims.append(("cyl", u * (zb - 2.0), O, 4.0))                    # a foot under the hub: the flat bed face, Ø8 at least
         cut_extra = None
+    body = blend(prims)
     # cut everything below the bed plane (a half space along -u)
     big = mf.Manifold.cube([400, 400, 400], center=True).translate([0, 0, -200.0])
     T = np.eye(4); z = u; x, y = _perp(z); T[:3, 0], T[:3, 1], T[:3, 2] = x, y, z; T[:3, 3] = u * zb
     body = body - big.transform(T[:3, :4])
     cuts = bores if cut_extra is None else bores + cut_extra
-    lim = LIMITS.get(i)
     return dict(solid=body - cuts, bores=bores, cuts=cuts, up=u, zb=zb, hub_r=hub_r)
 
 
 def to_tm(m):
     me = m.to_mesh()
-    return trimesh.Trimesh(np.asarray(me.vert_properties)[:, :3], np.asarray(me.tri_verts), process=True)
+    t = trimesh.Trimesh(np.asarray(me.vert_properties)[:, :3], np.asarray(me.tri_verts), process=True, validate=True)
+    return clean(t)
+
+
+def clean(t):
+    """drop the zero-area face doublets a boolean on a marching-cubes surface leaves (collinear vertices; no volume, no feature)"""
+    b = t.split(only_watertight=False)
+    if len(b) == 1: return t
+    keep = [x for x in b if x.area > 1e-6]                                  # a component of zero area only: never a feature
+    return trimesh.util.concatenate(keep) if len(keep) > 1 else keep[0]
+
+
+def save(t, f):
+    """export as STL and make sure the file reads back as one watertight body (float32 rounding can make new zero-area doublets)"""
+    t.export(f); r = clean(trimesh.load(f, force="mesh"))
+    if len(r.faces) != len(trimesh.load(f, force="mesh").faces): r.export(f); r = trimesh.load(f, force="mesh")
+    b = r.split(only_watertight=False)
+    if not (r.is_watertight and len(b) == 1): raise RuntimeError(f"{f}: {len(b)} bodies, watertight {r.is_watertight}")
+    return r
 
 
 def print_pose(u, zb):
@@ -369,6 +431,10 @@ def fe_check(i, socks, B, h=0.5, log=print):
         for c0 in (a + d * s["r"], a + d * (s["r"] + DEPTH)):
             v = cen - c0; ax_ = v @ d; rad = np.linalg.norm(v - ax_[:, None] * d[None], axis=1)
             rim |= np.hypot(ax_, rad - BORE / 2) < RIM_EX
+    # the bond line: PETG cells sharing a node with the rod insert (a voxel bore is a staircase round a 36x stiffer rod, so single
+    # cells there read 2..4x their neighbours). The bond itself is checked by hand (socket_loads "bond"); the wall behind it here.
+    ins_nodes = np.zeros(p.nn, bool); ins_nodes[enodes[ins].ravel()] = True
+    rim |= ins_nodes[enodes].any(1)
     for k in range(len(socks)):
         cs = [c for c in p.cases if c.support == f"hold {k}"]
         F = np.stack([c.F for c in cs], 1)
@@ -473,7 +539,7 @@ def build_all(ids, out, fe=False, h=0.5):
         socks, B, hist = design(i, fe=fe, h=h)
         loc = to_tm(B["solid"])                                          # node frame, centre at the origin
         Tp = print_pose(B["up"], B["zb"]); pr = loc.copy(); pr.apply_transform(Tp)
-        f = os.path.join(out, f"{node_name(i)}_v1.stl"); pr.export(f)
+        f = os.path.join(out, f"{node_name(i)}_v1.stl"); pr = save(pr, f)
         ok, info = solid_check(pr)
         g = pr.volume / 1000 * PETG_RHO
         socket_rows = []
@@ -491,13 +557,13 @@ def build_all(ids, out, fe=False, h=0.5):
                    up=np.round(B["up"], 4).tolist(), bed_below_centre=round(-B["zb"], 2), hub_r=B["hub_r"], envelope=env, sockets=socket_rows,
                    fe=hist, extents_print=np.round(pr.extents, 1).tolist())
         placed = []
-        pl = loc.copy(); pl.apply_translation(N[i]); pf = os.path.join(out, "placed", f"node_{i}.stl"); pl.export(pf)
+        pl = loc.copy(); pl.apply_translation(N[i]); pf = os.path.join(out, "placed", f"node_{i}.stl"); save(pl, pf)
         placed.append(dict(name=f"cage node {i}", mesh=os.path.relpath(pf, ROOT), node=i, mass_g=round(g, 2), tag="M", design=i, mirror=False))
         if not is_centre(i):
             j = mirror_of(i); mt = mirror_tm(loc); mt.apply_translation(N[j])
-            mf_ = os.path.join(out, "placed", f"node_{j}.stl"); mt.export(mf_)
+            mf_ = os.path.join(out, "placed", f"node_{j}.stl"); save(mt, mf_)
             placed.append(dict(name=f"cage node {j}", mesh=os.path.relpath(mf_, ROOT), node=j, mass_g=round(g, 2), tag="M", design=i, mirror=True))
-            mp = mirror_tm(pr); mp.export(os.path.join(out, f"{node_name(i)}_v1_mirror.stl"))
+            mp = mirror_tm(pr); save(mp, os.path.join(out, f"{node_name(i)}_v1_mirror.stl"))
         rec["placed"] = placed
         json.dump(rec, open(os.path.join(out, "nodes", f"{i}.json"), "w"), indent=1)
         print(f"node {i}: {g:.2f} g, solid_check {'PASS' if ok else 'FAIL'}, envelope r {env['r_max']}, "
@@ -539,10 +605,10 @@ def merge(out):
         f = os.path.join(out, "nodes", f"{i}.json")
         if not os.path.exists(f): continue
         rec = json.load(open(f)); placed += rec.pop("placed"); res["nodes"][str(i)] = rec
-    cap = cap_mesh(); cap.export(os.path.join(out, "scout_foot_cap_v1.stl"))
+    cap = cap_mesh(); save(cap, os.path.join(out, "scout_foot_cap_v1.stl"))
     for j in RING:
         c = cap_mesh(); c.apply_translation(N[j] + [0, 0, -PAD_DZ - CAP_T])         # disc under the seat, plug up into its recess
-        cf = os.path.join(out, "placed", f"foot_cap_{j}.stl"); c.export(cf)
+        cf = os.path.join(out, "placed", f"foot_cap_{j}.stl"); save(c, cf)
         placed.append(dict(name=f"foot cap {j} (TPU)", mesh=os.path.relpath(cf, ROOT), node=j, mass_g=round(cap.volume / 1000 * 1.22, 2), tag="M",
                            material="TPU"))
     res["cap"] = dict(file="scout_foot_cap_v1.stl", mass_g=round(cap.volume / 1000 * 1.22, 2), contact_below_centre=PAD_DZ + CAP_T)

@@ -1,0 +1,165 @@
+<title>Scout Cage Nodes v1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* layout: a build sheet. One 3D bench of the assembled cage on top, the decision and breaking order beside it, then one card per printed design */
+:root {
+  --bg: #f3f4f1; --panel: #ffffff; --ink: #1d2324; --muted: #5d6766; --line: #d5d9d4;
+  --petg: #c08a1e; --petg-soft: #f4e6c6; --carbon: #2e3436; --tpu: #3c7d74; --ok: #2f7a3e; --warn: #a3531a;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif; --body: "Source Sans 3", "Segoe UI", sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #151918; --panel: #1e2322; --ink: #e6e9e4; --muted: #9aa49f; --line: #333b39;
+  --petg: #e0aa3e; --petg-soft: #3a3020; --carbon: #b9c0bd; --tpu: #66b3a7; --ok: #6cc07d; --warn: #e08a50; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #151918; --panel: #1e2322; --ink: #e6e9e4; --muted: #9aa49f; --line: #333b39;
+  --petg: #e0aa3e; --petg-soft: #3a3020; --carbon: #b9c0bd; --tpu: #66b3a7; --ok: #6cc07d; --warn: #e08a50; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 60px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 600; letter-spacing: .01em; text-wrap: balance; margin: 0; }
+h1 { font-size: 2.3rem; line-height: 1.05; }
+h2 { font-size: 1.45rem; }
+h3 { font-size: 1.2rem; }
+.kicker { font: 500 .78rem var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; font: .86rem var(--mono); color: var(--muted); }
+.facts b { color: var(--ink); font-weight: 500; }
+.bench { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 20px; }
+@media (max-width: 860px) { .bench { grid-template-columns: 1fr; } }
+#view { width: 100%; aspect-ratio: 4 / 3; max-width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; display: block; touch-action: none; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .82rem; color: var(--muted); margin-top: 8px; }
+.sw { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -1px; margin-right: 5px; }
+.side { display: grid; gap: 16px; align-content: start; min-width: 0; }
+.side p { margin: 0; max-width: 62ch; }
+table { border-collapse: collapse; width: 100%; font-size: .84rem; }
+th, td { text-align: left; padding: 4px 8px 4px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 500 .72rem var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+td.n { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pick { color: var(--ok); font-weight: 600; }
+.order { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); gap: 18px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.card.hl { outline: 2px solid var(--petg); }
+.card header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pill { font: 500 .72rem var(--mono); padding: 2px 7px; border-radius: 99px; border: 1px solid currentColor; }
+.pass { color: var(--ok); } .fail { color: var(--warn); }
+.imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.imgs img { width: 100%; border-radius: 4px; background: #fff; border: 1px solid var(--line); }
+.tbl { overflow-x: auto; }
+.note { font-size: .84rem; color: var(--muted); }
+button.node { font: 500 .78rem var(--mono); border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 4px; padding: 3px 8px; cursor: pointer; }
+button.node:focus-visible { outline: 2px solid var(--petg); }
+.btns { display: flex; flex-wrap: wrap; gap: 6px; }
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:10px">
+    <div class="kicker">Scout v3 · cage nodes v1 · PETG, 3.2 epoxy sockets · drone frame x nose, y left, z up</div>
+    <h1>Scout Cage Nodes v1</h1>
+    <div class="facts" id="facts"></div>
+  </header>
+
+  <section class="bench">
+    <div style="min-width:0">
+      <canvas id="view" aria-label="3D view of the cage with every node placed"></canvas>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--petg)"></i>PETG node (saved mesh)</span>
+        <span><i class="sw" style="background:var(--tpu)"></i>TPU foot cap Ø16 x 3</span>
+        <span><i class="sw" style="background:var(--carbon)"></i>3.0 carbon rod, floor to floor</span>
+        <span><i class="sw" style="background:#d1452b"></i>rod with an eccentric end</span>
+      </div>
+      <div class="btns" id="btns" style="margin-top:10px"></div>
+    </div>
+    <div class="side">
+      <div>
+        <h2>Concept: two socket layouts weighed</h2>
+        <table>
+          <tr><th>Option</th><th>18 nodes, wall 3.0</th><th>Largest node</th><th>Costs</th></tr>
+          <tr><td>A, every axis through the node centre</td><td class="n">123.9 g C</td><td class="n">r 38.5</td><td>tight pairs (12.7 to 16.5°) start 22 to 28 out; node 1 forks 38 long, half of rod 1-5 becomes PETG</td></tr>
+          <tr><td class="pick">B, tight pairs run up to 3.5 off centre at one end (picked, DEFAULT)</td><td class="n">108.7 g C</td><td class="n">r 24.8</td><td>10 rod ends a side off centre (≤ 3.5, line tilt ≤ 3°), F x e moments in the node; the cage's tube lines move at those ends</td></tr>
+        </table>
+        <p class="note" style="margin-top:6px">Both carry wall 3.0 round every bore and a 3.0 floor behind it. The floor of the mass is about 1 g per socket end (102 ends); the layout's 39 g was an estimate before any socket was drawn.</p>
+      </div>
+      <div>
+        <h2>Breaking order</h2>
+        <ol class="order">
+          <li>A rod buckles (elastic, it springs back): 25 of 55 do in the 35 g crash (frame model v3, F).</li>
+          <li>A rod snaps or its epoxy bond lets go (pull-out about 600 N E at 10 deep): re-glue or replace the rod.</li>
+          <li>The node: sized to hold every rod's push, pull and full bending moment (1590 N mm) at the crash allowable, so it does not go first.</li>
+        </ol>
+        <p class="note">The TPU caps and the ring nodes take the landing; the camera mount's clips stay the camera's own fuse.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:14px">
+    <h2>Designs (one print each; the −y node is the mirror print)</h2>
+    <div class="cards" id="cards"></div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const D = /*DATA*/null;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const dec = (s, T) => { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return new T(u.buffer); };
+
+document.getElementById("facts").innerHTML = [
+  `<span>nodes <b>${D.total} g</b> M, 18 nodes in 11 designs</span>`,
+  `<span>foot cap <b>${D.cap.mass_g} g</b> TPU x 4</span>`,
+  `<span>option <b>${D.option}</b></span>`,
+  `<span>eccentric ends <b>${Object.keys(D.ecc).length}</b> a side, max <b>${Math.max(...Object.values(D.ecc)).toFixed(1)}</b> mm</span>`,
+  `<span>solid_check <b>${D.cards.every(c => c.solid) ? "PASS x " + D.cards.length : "FAIL"}</b></span>`].join("");
+
+const cardsEl = document.getElementById("cards"), btns = document.getElementById("btns");
+for (const c of D.cards) {
+  const el = document.createElement("article"); el.className = "card"; el.id = "n" + c.i;
+  const fe = c.fe ? `FE worst ${c.fe.worst.toFixed(2)} (99.9 % ${c.fe.p999.toFixed(2)}) in ${c.fe.name}, ${c.fe.case.replace(/^\d+ /, "")}` : "FE not run";
+  el.innerHTML = `<header><h3>Node ${c.i}${c.mirror !== null ? ` <span class="note">+ node ${c.mirror} (mirror)</span>` : ` <span class="note">centre plane</span>`}</h3>
+    <span class="pill ${c.solid ? "pass" : "fail"}">solid_check ${c.solid ? "PASS" : "FAIL"}</span></header>
+    <div class="facts"><span><b>${c.g} g</b> M</span><span>envelope r <b>${c.env.r_max}</b></span><span>print ${c.ext.join(" x ")}</span><span>hub r ${c.hub}</span></div>
+    <div class="imgs"><img alt="node ${c.i} as printed" src="${c.prev}"><img alt="node ${c.i} section" src="${c.sec}"></div>
+    <div class="note">${fe}</div>
+    <div class="tbl"><table><tr><th>socket</th><th>floor at</th><th>wall</th><th>off centre</th><th>elev</th><th>push / pull N</th></tr>
+    ${c.socks.map(s => `<tr><td>${s.n}</td><td class="n">${s.r.toFixed(1)}</td><td class="n">${s.w.toFixed(1)}</td><td class="n">${s.e > 0.05 ? s.e.toFixed(1) : "-"}</td><td class="n">${s.el}°</td><td class="n">${Math.round(s.push)} / ${Math.round(s.pull)}</td></tr>`).join("")}
+    </table></div>`;
+  cardsEl.appendChild(el);
+  const b = document.createElement("button"); b.className = "node"; b.textContent = "node " + c.i; b.id = "b" + c.i;
+  b.onclick = () => { highlight(c.i); el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" }); };
+  btns.appendChild(b);
+}
+
+let highlight = () => {};
+(function () {
+  if (!window.THREE) return;
+  const cv = document.getElementById("view");
+  const r = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true, preserveDrawingBuffer: true });
+  r.setPixelRatio(Math.min(devicePixelRatio, 2));
+  const sc = new THREE.Scene(), cam = new THREE.PerspectiveCamera(32, 4 / 3, 1, 5000);
+  cam.up.set(0, 0, 1); cam.position.set(420, -520, 330);
+  const ctl = new THREE.OrbitControls(cam, cv); ctl.target.set(-40, 0, 5); ctl.enableDamping = true;
+  sc.add(new THREE.HemisphereLight(0xffffff, 0x445555, 0.85)); const dl = new THREE.DirectionalLight(0xffffff, 0.6); dl.position.set(300, -200, 500); sc.add(dl);
+  const petg = new THREE.MeshStandardMaterial({ color: css("--petg"), roughness: 0.55 }), hi = new THREE.MeshStandardMaterial({ color: 0x2f6fd0, roughness: 0.5 });
+  const tpu = new THREE.MeshStandardMaterial({ color: css("--tpu"), roughness: 0.8 });
+  const byNode = {};
+  for (const m of D.meshes) {
+    const g = new THREE.BufferGeometry(); g.setAttribute("position", new THREE.BufferAttribute(dec(m.v, Float32Array), 3));
+    g.setIndex(new THREE.BufferAttribute(dec(m.f, Uint32Array), 1)); g.computeVertexNormals();
+    const me = new THREE.Mesh(g, m.tpu ? tpu : petg); sc.add(me);
+    if (!m.tpu) (byNode[m.design] = byNode[m.design] || []).push(me);
+  }
+  const rodMat = new THREE.MeshStandardMaterial({ color: css("--carbon"), roughness: 0.4 }), eMat = new THREE.MeshStandardMaterial({ color: 0xd1452b, roughness: 0.4 });
+  for (const rd of D.rods) {
+    const a = new THREE.Vector3(...rd.a), b = new THREE.Vector3(...rd.b), L = a.distanceTo(b);
+    const g = new THREE.CylinderGeometry(1.5, 1.5, L, 10); const m = new THREE.Mesh(g, rd.ecc > 0.05 ? eMat : rodMat);
+    m.position.copy(a.clone().add(b).multiplyScalar(0.5)); m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize()); sc.add(m);
+  }
+  function size() { const w = cv.clientWidth, h = cv.clientHeight; r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); }
+  new ResizeObserver(size).observe(cv); size();
+  highlight = i => {
+    for (const k in byNode) for (const me of byNode[k]) me.material = (+k === i) ? hi : petg;
+    document.querySelectorAll(".card").forEach(e => e.classList.toggle("hl", e.id === "n" + i));
+  };
+  (function loop() { ctl.update(); r.render(sc, cam); requestAnimationFrame(loop); })();
+})();
+</script>
